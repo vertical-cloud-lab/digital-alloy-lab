@@ -1,0 +1,51 @@
+{
+  "run_id": "pkgfn-noFb2-20260501T071019Z",
+  "cost_cap": 1720.0,
+  "cost_min": 1080.0,
+  "true_max": 18.02274465296157,
+  "init_best": 15.208457260195878,
+  "ranking_at_cap": [
+    {
+      "algo": "TSFN",
+      "n_seeds": 20,
+      "final_mean": 17.48864691258721,
+      "final_std": 0.26101549338178015
+    },
+    {
+      "algo": "HighFidOnly",
+      "n_seeds": 20,
+      "final_mean": 17.353397672843165,
+      "final_std": 0.3632733707735788
+    },
+    {
+      "algo": "Random",
+      "n_seeds": 20,
+      "final_mean": 17.24624940328025,
+      "final_std": 0.378418066896711
+    },
+    {
+      "algo": "Sobol",
+      "n_seeds": 20,
+      "final_mean": 17.22801629601924,
+      "final_std": 0.4262764211183824
+    },
+    {
+      "algo": "pKGFN",
+      "n_seeds": 20,
+      "final_mean": 17.191262012175606,
+      "final_std": 0.6037281023764902
+    },
+    {
+      "algo": "Node2Only",
+      "n_seeds": 20,
+      "final_mean": 17.0741790192416,
+      "final_std": 0.5659358496157871
+    },
+    {
+      "algo": "LowFidOnly",
+      "n_seeds": 20,
+      "final_mean": 17.052069552529236,
+      "final_std": 0.5727215649830504
+    }
+  ]
+}

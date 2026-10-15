@@ -1,0 +1,87 @@
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/torch/autograd/graph.py:869: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 12080). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:119.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/botorch/models/utils/assorted.py:276: InputDataWarning: Data (input features) is not contained to the unit cube. Please consider min-max scaling the input data.
+  check_min_max_scaling(
+/home/sbaird9/fsl_groups/fslg_vcl/compute/digital-alloy-lab-private/.venv/lib/python3.11/site-packages/linear_operator/utils/cholesky.py:41: NumericalWarning: A not p.d., added jitter of 1.0e-08 to the diagonal
+  warnings.warn(
+slurmstepd: error: *** JOB 11675353 ON m9-18-1 CANCELLED AT 2026-05-02T01:11:00 DUE TO TIME LIMIT ***

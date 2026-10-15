@@ -1,0 +1,41 @@
+{
+  "submitted_at": "2026-04-30T23:55:59.614401+00:00",
+  "tasks": [
+    {
+      "purpose": "spotcheck-q1-inner-kg-fantasies",
+      "task_id": "da0e968a-25cc-4f91-bc37-0cbad1140a07",
+      "submitted_at": "2026-04-30T23:55:59.614401+00:00",
+      "n_files": 11
+    },
+    {
+      "purpose": "spotcheck-q2-gp-network-propagation",
+      "task_id": "6088b59d-9b24-499f-a051-1914bd3f33a6",
+      "submitted_at": "2026-04-30T23:55:59.614401+00:00",
+      "n_files": 10
+    },
+    {
+      "purpose": "spotcheck-q3-cost-accounting",
+      "task_id": "1fca9c89-7888-450c-83c0-369674e78e57",
+      "submitted_at": "2026-04-30T23:55:59.614401+00:00",
+      "n_files": 11
+    },
+    {
+      "purpose": "spotcheck-q4-synthetic-problem",
+      "task_id": "c1fc4e5b-f769-46ec-aeba-71d2d4107305",
+      "submitted_at": "2026-04-30T23:55:59.614401+00:00",
+      "n_files": 10
+    },
+    {
+      "purpose": "spotcheck-q5-harness-fairness",
+      "task_id": "16d341db-a17b-4715-acfc-22343599dd9e",
+      "submitted_at": "2026-04-30T23:55:59.614401+00:00",
+      "n_files": 11
+    },
+    {
+      "purpose": "spotcheck-q6-overview",
+      "task_id": "92f2f351-ee50-49bb-b51d-08f42dc0f60d",
+      "submitted_at": "2026-05-01T00:12:19.372910+00:00",
+      "n_files": 21
+    }
+  ]
+}
