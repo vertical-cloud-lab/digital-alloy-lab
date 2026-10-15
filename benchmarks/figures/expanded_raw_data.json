@@ -1,0 +1,46 @@
+{
+  "dag_nodes": 9,
+  "global_dim": 14,
+  "max_per_node_dim": 5,
+  "n_training": 50,
+  "n_screening": 50,
+  "screening_result": {
+    "n_total": 50,
+    "stages": [
+      {
+        "name": "CALPHAD screening",
+        "n_in": 50,
+        "n_out": 19,
+        "cost": 50.0
+      },
+      {
+        "name": "Powder + LPBF",
+        "n_in": 19,
+        "n_out": 19,
+        "cost": 13680.0
+      },
+      {
+        "name": "Mechanical characterization",
+        "n_in": 19,
+        "n_out": 19,
+        "cost": 5700.0
+      }
+    ],
+    "total_cost": 19430.0,
+    "naive_cost": 52550.0,
+    "savings": 33120.0,
+    "savings_pct": 63.02568981921979
+  },
+  "node_costs": {
+    "calphad": 1.0,
+    "powder_psd": 50.0,
+    "powder_flow": 30.0,
+    "powder_dens": 20.0,
+    "energy": 100.0,
+    "scan": 100.0,
+    "thermal": 50.0,
+    "density": 200.0,
+    "mech": 300.0
+  },
+  "full_pipeline_cost": 1051.0
+}

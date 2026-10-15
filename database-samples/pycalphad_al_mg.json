@@ -1,0 +1,61 @@
+{
+  "source": "pycalphad built-in test database (Al-Mg_Zhong.tdb)",
+  "reference": "Zhong et al., Al-Mg binary system",
+  "phases": [
+    "ALMG_BETA",
+    "ALMG_EPSILON",
+    "ALMG_GAMMA",
+    "FCC_A1",
+    "HCP_A3",
+    "LIQUID"
+  ],
+  "elements": [
+    "/-",
+    "AL",
+    "MG",
+    "VA"
+  ],
+  "pycalphad_version": "0.11.1",
+  "sample_calculations": [
+    {
+      "x_Mg": 0.0,
+      "T_K": 700,
+      "error": "\"'component' is not a valid dimension or coordinate for Dataset with dimensions FrozenMappingWarning"
+    },
+    {
+      "x_Mg": 0.05,
+      "T_K": 700,
+      "error": "\"'component' is not a valid dimension or coordinate for Dataset with dimensions FrozenMappingWarning"
+    },
+    {
+      "x_Mg": 0.1,
+      "T_K": 700,
+      "error": "\"'component' is not a valid dimension or coordinate for Dataset with dimensions FrozenMappingWarning"
+    },
+    {
+      "x_Mg": 0.15,
+      "T_K": 700,
+      "error": "\"'component' is not a valid dimension or coordinate for Dataset with dimensions FrozenMappingWarning"
+    },
+    {
+      "x_Mg": 0.2,
+      "T_K": 700,
+      "error": "\"'component' is not a valid dimension or coordinate for Dataset with dimensions FrozenMappingWarning"
+    },
+    {
+      "x_Mg": 0.3,
+      "T_K": 700,
+      "error": "\"'component' is not a valid dimension or coordinate for Dataset with dimensions FrozenMappingWarning"
+    },
+    {
+      "x_Mg": 0.4,
+      "T_K": 700,
+      "error": "\"'component' is not a valid dimension or coordinate for Dataset with dimensions FrozenMappingWarning"
+    },
+    {
+      "x_Mg": 0.5,
+      "T_K": 700,
+      "error": "\"'component' is not a valid dimension or coordinate for Dataset with dimensions FrozenMappingWarning"
+    }
+  ]
+}

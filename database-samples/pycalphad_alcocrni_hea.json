@@ -1,0 +1,36 @@
+{
+  "source": "pycalphad built-in test database (alcocrni.tdb)",
+  "phases": [
+    "AL11CR2",
+    "AL13CO4",
+    "AL13CR2",
+    "AL3CO",
+    "AL3NI1",
+    "AL3NI2",
+    "AL3NI5",
+    "AL4CR",
+    "AL5CO2",
+    "AL8CR5_H",
+    "AL8CR5_L",
+    "AL9CO2",
+    "AL9CR4_H",
+    "AL9CR4_L",
+    "ALCR2",
+    "BCC_A2",
+    "BCC_B2",
+    "FCC_A1",
+    "GAS",
+    "HCP_A3",
+    "L12_FCC",
+    "LIQUID",
+    "SIGMA_SGTE"
+  ],
+  "elements": [
+    "/-",
+    "AL",
+    "CO",
+    "CR",
+    "NI",
+    "VA"
+  ]
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "compound": "Al1",
+    "auid": "aflow:001fed6f461c4fe7",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlNb_sv/f1",
+    "spacegroup_relax": 225,
+    "Pearson_symbol_relax": "cF4",
+    "species": [
+      "Al"
+    ],
+    "nspecies": 1,
+    "enthalpy_formation_atom": -4e-06
+  },
+  {
+    "compound": "Al1",
+    "auid": "aflow:006652a18155af8d",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlAu/b1",
+    "spacegroup_relax": 229,
+    "Pearson_symbol_relax": "cI2",
+    "species": [
+      "Al"
+    ],
+    "nspecies": 1,
+    "enthalpy_formation_atom": 0.095822
+  },
+  {
+    "compound": "Al2",
+    "auid": "aflow:00bf18d9f38b2478",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlTc_pv/301",
+    "spacegroup_relax": 227,
+    "Pearson_symbol_relax": "cF8",
+    "species": [
+      "Al"
+    ],
+    "nspecies": 1,
+    "enthalpy_formation_atom": 0.745547
+  },
+  {
+    "compound": "Al2",
+    "auid": "aflow:01a641c5ba8e5e3b",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlBe_sv/305",
+    "spacegroup_relax": 141,
+    "Pearson_symbol_relax": "tI4",
+    "species": [
+      "Al"
+    ],
+    "nspecies": 1,
+    "enthalpy_formation_atom": 0.278395
+  },
+  {
+    "compound": "Al3",
+    "auid": "aflow:0196c827927cff1d",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlMn_pv/323",
+    "spacegroup_relax": 225,
+    "Pearson_symbol_relax": "cF4",
+    "species": [
+      "Al"
+    ],
+    "nspecies": 1,
+    "enthalpy_formation_atom": 0.000293333
+  },
+  {
+    "compound": "Al1",
+    "auid": "aflow:01d7cfb3b3b5511e",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlW_pv/59",
+    "spacegroup_relax": 229,
+    "Pearson_symbol_relax": "cI2",
+    "species": [
+      "Al"
+    ],
+    "nspecies": 1,
+    "enthalpy_formation_atom": 0.095822
+  },
+  {
+    "compound": "Al1",
+    "auid": "aflow:014fbf39e47c6974",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlBa_sv/2",
+    "spacegroup_relax": 225,
+    "Pearson_symbol_relax": "cF4",
+    "species": [
+      "Al"
+    ],
+    "nspecies": 1,
+    "enthalpy_formation_atom": -4e-06
+  },
+  {
+    "compound": "Al4",
+    "auid": "aflow:02b98e1a7d50a0a3",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlIn_d/317",
+    "spacegroup_relax": 64,
+    "Pearson_symbol_relax": "oS8",
+    "species": [
+      "Al"
+    ],
+    "nspecies": 1,
+    "enthalpy_formation_atom": 0.181453
+  },
+  {
+    "compound": "Al1",
+    "auid": "aflow:02e6d492123197cb",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB0_WEB/Al_h:PAW_GGA:08Apr2002/0",
+    "spacegroup_relax": null,
+    "Pearson_symbol_relax": null,
+    "species": [
+      "Al"
+    ],
+    "nspecies": 1,
+    "enthalpy_formation_atom": null
+  },
+  {
+    "compound": "Al4",
+    "auid": "aflow:044f0f44b2f85279",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlB_h/317",
+    "spacegroup_relax": 64,
+    "Pearson_symbol_relax": "oS8",
+    "species": [
+      "Al"
+    ],
+    "nspecies": 1,
+    "enthalpy_formation_atom": 0.181453
+  }
+]

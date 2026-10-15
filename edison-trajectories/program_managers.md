@@ -1,0 +1,122 @@
+# Program Managers
+
+*Edison Scientific LITERATURE_HIGH query*
+
+Question: For the following US federal grant programs, identify the current program managers/directors, their research backgrounds and interests, and how they relate to AI-accelerated alloy development and additive manufacturing research:
+NSF AM (Advanced Manufacturing), AFOSR YIP, ARO YIP, DARPA YFA (Young Faculty Award), DoD DURIP, NSF CAREER, NSF EAGER, NSF DMR TMRP (Metals & Metallic Nanostructures), NSF MEP (Materials Engineering and Processing)
+
+The research program is at BYU (Brigham Young University) in a new lab called the Vertical Cloud Lab (VCL) focused on digital alloy development using:
+- AI/ML-accelerated alloy composition screening and design
+- Autonomous powder production via ultrasonic atomization (Amazemet rePOWDER)
+- Laser powder bed fusion (LPBF) additive manufacturing for rapid alloy validation
+- High-throughput characterization (SEM/EDS/EBSD, PIP indentation plastometry)
+- Closed-loop integration connecting computational prediction to experimental validation
+
+The PI is an early-career assistant professor. The alloy systems of interest include aluminum alloys, high-entropy alloys, and compositionally complex alloys for structural applications. The lab emphasizes autonomous experimentation, materials informatics, and accelerated materials discovery.
+
+For each program, provide: (1) the program manager name, (2) their academic/research background, (3) their known research interests and priorities, (4) how the VCL research aligns with their interests.
+
+## Federal Grant Program Managers and Alignment with BYU Vertical Cloud Lab (VCL) Research
+
+This report identifies the program managers/directors for nine U.S. federal grant programs relevant to AI-accelerated alloy development and additive manufacturing research, their backgrounds, and how BYU's Vertical Cloud Lab research aligns with their priorities. **Important caveat: Program manager/director assignments at federal agencies change frequently through rotations. All names should be verified on current agency websites before proposal submission.**
+
+| Program Name | Program Manager/Director | Academic/Research Background | Research Interests & Priorities | Alignment with VCL Research |
+| :--- | :--- | :--- | :--- | :--- |
+| **NSF AM** (Advanced Manufacturing) | **Dr. Kevin Chou** (CMMI)<br>**Dr. Linkan Bian** (CMMI) | **Chou:** Professor (U. Louisville), metal AM (electron beam/laser powder bed), thermal modeling, residual stress.<br>**Bian:** Professor (Mississippi State), industrial engineering, data analytics, process monitoring. | Fundamental research in manufacturing processes; physics-based and data-driven modeling; in-situ sensing and control; process-structure-property relationships in AM. | Strong fit for **LPBF research**, **process monitoring**, and **closed-loop control**. VCL's use of AI for process optimization aligns with the program's push for data-driven manufacturing. |
+| **AFOSR YIP** | **Dr. Ali Sayir** (Aerospace Materials for Extreme Environments) | PhD in Materials Science; background in ceramics, directionally solidified eutectics, high-temperature materials, and wide bandgap semiconductors (formerly NASA/CWRU). | Structural materials for extreme environments (hypersonics, propulsion); tunable properties; novel synthesis/processing routes; fundamental material behavior under extreme conditions. | VCL's focus on **high-entropy alloys (HEAs)** and **compositionally complex alloys** for structural applications directly targets AFOSR's need for next-gen aerospace materials. |
+| **ARO YIP** | **Dr. David Stepp** (Mechanical Behavior)<br>**Dr. Michael Bakas** (Synthesis & Processing)<br>**Dr. Paul Baker** (Materials Design) | **Stepp:** Mechanical behavior, fatigue, fracture mechanics, damage mechanisms.<br>**Bakas:** Materials synthesis, processing science.<br>**Baker:** Computational materials science, ab initio methods. | **Materials Science Division:** Fundamental research on deformation and failure; novel processing for control of microstructure; bottom-up design of materials with tailored properties for Army applications (armor, lethality). | Aligns with **AI-driven alloy design** for specific mechanical performance. **Ultrasonic atomization** (rapid powder synthesis) fits Synthesis/Processing interests. |
+| **DARPA YFA** | **Defense Sciences Office (DSO) Program Managers** (Rotates) | Varies; PMs typically have backgrounds in disruptive technologies, physics, math, or materials science. | **Disruptive capabilities**; high-risk/high-reward research; **AI/ML for accelerated discovery**; autonomous experimentation (e.g., similar to previous programs like AMII). | VCL's core premise of **autonomous experimentation** and **AI-accelerated discovery** is highly aligned with DARPA's interest in reducing development timelines for critical materials. |
+| **DoD DURIP** | **Program Officers from AFOSR, ARO, ONR** | Same as the research program officers (e.g., Sayir, Stepp, Bakas). | Providing **state-of-the-art equipment** to enable DoD-relevant research; infrastructure that enhances educational capabilities in defense areas. | VCL's requests for equipment (e.g., **Amazemet rePOWDER**, **LPBF systems**) can be justified by their necessity for defense-aligned alloy development projects. |
+| **NSF CAREER** | **Divisional Program Officers** (e.g., Lewis, Madison, Chou) | Varies by division (CMMI, DMR, etc.). | **Integration of research and education**; establishing a lifetime leadership foundation in the field. | VCL provides an excellent platform for **training students in interdisciplinary skills** (AI + Manufacturing + Metallurgy), satisfying the educational impact requirement. |
+| **NSF EAGER** | **Divisional Program Officers** | Varies by division. | **High-risk, high-reward** exploratory research; testing radically new concepts or methodologies that are not yet “proven” enough for standard grants. | The **autonomous, closed-loop** nature of the VCL is a strong candidate for EAGER if proposing a radically new algorithm or experimental methodology. |
+| **NSF DMR TMRP** (Metals & Metallic Nanostructures) | **Dr. Jonathan Madison** | PhD in Materials Science; formerly Sandia National Labs. Expertise in 3D characterization, solidification, fatigue/fracture, and experimental/computational quantitative stereology. | Fundamental understanding of **processing-structure-property relationships** in metals; phase transformations; solidification; mechanical behavior; metallic nanostructures. | VCL's focus on **fundamental alloy metallurgy**, **phase stability in HEAs**, and **microstructural characterization** (SEM/EBSD) fits perfectly here. |
+| **NSF MEP** (Materials Engineering and Processing) | **Dr. Alexis Lewis** | PhD in Materials Science (Johns Hopkins); formerly Naval Research Lab (NRL). Expertise in 3D microstructural characterization, deformation, and processing. | **Manufacturing processes** that control microstructure; bridging the gap between processing capabilities and material performance; scale-up of novel materials. | VCL's **powder production** and **LPBF processing** research aligns with MEP's focus on controlling microstructure through processing conditions. |
+
+
+*Table: Overview of relevant federal grant programs, their current managers, and the specific alignment with VCL's AI-driven alloy development and additive manufacturing research. Program manager assignments are subject to change and should be verified prior to proposal submission. Citations: (kizer2019armyresearchofficearo pages 48-50, kizer2019armyresearchofficearo pages 291-294, trautt2024drivingu.s.innovation pages 1-5, accelerating2017nsfsponsoredworkshopaccelerating pages 1-7, bevans2025inprocessmonitoringof pages 49-51, thornton2008threedimensionalmaterialsscience pages 6-7).*
+
+### Detailed Program-by-Program Analysis
+
+**1. NSF Advanced Manufacturing (AM) — CMMI Division**
+
+The NSF Advanced Manufacturing program within the Division of Civil, Mechanical, and Manufacturing Innovation (CMMI) has been managed by program directors including **Dr. Kevin Chou** and **Dr. Linkan Bian**. Dr. Chou is a recognized expert in metal additive manufacturing, with extensive research on electron beam and laser powder bed fusion processes, thermal modeling, and residual stress in AM parts, conducted during his tenure at the University of Louisville (accelerating2017nsfsponsoredworkshopaccelerating pages 1-7). Dr. Bian, formerly at Mississippi State University, has expertise in data-driven manufacturing, process monitoring, and machine learning for AM quality assurance; he has been confirmed as an NSF Program Officer at CSSI/Cybertraining PI meetings. The VCL's LPBF-based alloy validation, AI/ML-driven process optimization, and closed-loop manufacturing approach align strongly with this program's emphasis on fundamental manufacturing process science and data-driven process control.
+
+**2. AFOSR Young Investigator Program (YIP)**
+
+AFOSR YIP proposals in materials areas are evaluated by the relevant AFOSR program manager. For structural and aerospace materials, the key program manager is **Dr. Ali Sayir**, who manages the "Aerospace Materials for Extreme Environments" portfolio. Dr. Sayir's involvement has been confirmed across numerous funded grants spanning ceramics, wide-bandgap semiconductors, ferroelectric materials, and structural alloys (thornton2008threedimensionalmaterialsscience pages 6-7). His background includes expertise in high-temperature materials, directionally solidified eutectics, and materials processing. The VCL's focus on high-entropy alloys and compositionally complex alloys for structural applications directly targets AFOSR's persistent need for advanced aerospace materials capable of operating under extreme conditions.
+
+**3. ARO Young Investigator Program (YIP)**
+
+The ARO YIP is managed through the Materials Science Division within the Engineering Sciences Directorate. Key program managers identified include: **Dr. David Stepp** (Mechanical Behavior of Materials, also Director of Engineering Sciences), **Dr. Michael Bakas** (Synthesis and Processing of Materials), **Dr. Paul Baker** (Materials Design), and **Dr. Sara Gamble** (Mechanical Behavior of Materials). The Division Chief has been **Dr. Chakrapani (Pani) Varanasi** (kizer2019armyresearchofficearo pages 291-294, kizer2019armyresearchofficearo pages 10-12, kizer2019armyresearchofficearo pages 137-138, kizer2019armyresearchofficearo pages 48-50). The Synthesis and Processing program specifically targets fabrication of nano- or micro-structural bulk structural materials (kizer2019armyresearchofficearo pages 291-294), making it highly relevant to the VCL's autonomous powder production via ultrasonic atomization. The VCL's AI-accelerated alloy screening for structural applications (armor, vehicle lightweighting) maps to Army modernization priorities.
+
+**4. DARPA Young Faculty Award (YFA)**
+
+The DARPA YFA is administered through the **Defense Sciences Office (DSO)**, with specific program managers rotating based on research topic areas. DARPA program managers typically have backgrounds in disruptive technologies and seek transformative, high-risk/high-reward research. The VCL's core concept—autonomous, closed-loop alloy discovery combining AI/ML with experimental validation—represents exactly the paradigm-shifting approach DARPA favors. The national vision for autonomous materials science, as articulated in the NIST SP 1320 report, highlights that autonomous experimentation can "reduce the time and resources needed to discover new materials by orders of magnitude" (trautt2024drivingu.s.innovation pages 1-5, trautt2024drivingu.s.innovation pages 5-9), aligning with DARPA's mission to create breakthrough technologies.
+
+**5. DoD DURIP (Defense University Research Instrumentation Program)**
+
+DURIP is administered through **AFOSR, ARO, and ONR**, with the same program managers who oversee research grants in their respective topic areas. For the VCL, the relevant contacts would be **Dr. Ali Sayir** (AFOSR) and the ARO Materials Science Division PMs (**Stepp, Bakas, Baker**) (kizer2019armyresearchofficearo pages 291-294). DURIP proposals must be linked to active or pending DoD research. The VCL's equipment needs—the Amazemet rePOWDER ultrasonic atomizer, LPBF systems, SEM/EDS/EBSD characterization suite, and PIP indentation plastometry—can be framed as enabling infrastructure for defense-critical alloy development.
+
+**6. NSF CAREER**
+
+NSF CAREER proposals are submitted through specific programs and managed by the same program directors. For the VCL, the most relevant programs are AM (CMMI), MEP (CMMI), and TMRP (DMR), with respective PDs as listed above. The VCL provides an ideal platform for the CAREER program's emphasis on integrated research and education: the autonomous experimentation workflow trains students in interdisciplinary skills spanning AI, manufacturing, and metallurgy, while the open-data philosophy aligns with broader impacts.
+
+**7. NSF EAGER**
+
+EAGER proposals require program director approval and target high-risk, exploratory research. The VCL's autonomous closed-loop alloy discovery methodology—particularly novel AI algorithms for composition screening or untested integration of ultrasonic atomization with LPBF—could qualify as sufficiently exploratory. The NIST vision document describes how these autonomous approaches can "address grand challenges in materials research and development that are otherwise intractable" (trautt2024drivingu.s.innovation pages 1-5).
+
+**8. NSF DMR TMRP (Metals & Metallic Nanostructures)**
+
+The program director for the Metals and Metallic Nanostructures cluster within DMR's Topical Materials Research Programs is **Dr. Jonathan Madison**. Dr. Madison's background is at Sandia National Laboratories, where his expertise centered on 3D materials science, solidification science, quantitative stereology, fatigue and fracture mechanisms, and computational/experimental metallography. His interests emphasize fundamental understanding of processing-structure-property relationships in metallic systems, phase transformations, and solidification behavior. The VCL's research on LPBF-processed aluminum alloys, high-entropy alloys, and compositionally complex alloys—including non-equilibrium solidification, phase stability, and composition-microstructure-property mapping—aligns directly with this program's scope.
+
+**9. NSF MEP (Materials Engineering and Processing)**
+
+The program director for Materials Engineering and Processing is **Dr. Alexis Lewis**. Dr. Lewis holds a BS from MIT (1997) and PhD from Johns Hopkins University (2003), both in materials science and engineering, and was formerly a staff scientist in the Multifunctional Materials Branch at the Naval Research Laboratory (thornton2008threedimensionalmaterialsscience pages 6-7). Her expertise includes 3D microstructural characterization, deformation mechanisms, and materials processing. The VCL's powder atomization processing, LPBF manufacturing, and high-throughput characterization pipeline (SEM/EDS/EBSD, PIP indentation) fit naturally within MEP's focus on controlling microstructure through novel processing routes.
+
+| Grant Program | Estimated Award Size | Eligibility Notes | Key VCL Research Thrusts to Emphasize | Specific Framing Recommendations |
+| --- | --- | --- | --- | --- |
+| NSF AM (Advanced Manufacturing) | $300K–$500K for 3–4 years | Standard PI eligibility | LPBF process science; AI/ML for process–property prediction; in-situ monitoring | Fundamental understanding of how AI-guided process parameter optimization accelerates alloy qualification (accelerating2017nsfsponsoredworkshopaccelerating pages 1-7, trautt2024drivingu.s.innovation pages 1-5) |
+| AFOSR YIP | ~$150K/yr for 3 years | Within 5 years of PhD (or equivalent) | HEAs for extreme aerospace environments; autonomous discovery of oxidation-resistant structural alloys | Disruptive alloy discovery methodology for Air Force structural material needs (trautt2024drivingu.s.innovation pages 1-5) |
+| ARO YIP | ~$120K–$150K/yr for 3 years | Within 5 years of PhD | Rapid alloy screening for Army structural applications (armor, lightweighting); autonomous processing | Accelerated materials development for Army modernization priorities in the Materials Science Division (kizer2019armyresearchofficearo pages 291-294, kizer2019armyresearchofficearo pages 10-12, kizer2019armyresearchofficearo pages 137-138, kizer2019armyresearchofficearo pages 48-50) |
+| DARPA YFA | ~$500K for 2 years (+ possible $500K extension) | Within first 5 years of tenure-track appointment | Autonomous closed-loop alloy discovery; paradigm-shifting speed of materials development | Orders-of-magnitude acceleration in structural alloy development via AI-autonomous labs (trautt2024drivingu.s.innovation pages 1-5, trautt2024drivingu.s.innovation pages 15-17, trautt2024drivingu.s.innovation pages 17-20) |
+| DoD DURIP | Up to ~$500K (equipment) | Typically requires active DoD research funding with service agency (AFOSR/ARO/ONR) | Specific equipment needs: ultrasonic atomizer (Amazemet rePOWDER), LPBF, SEM/EDS/EBSD, PIP indentation plastometry | Equipment enables defense-critical alloy development research and student training aligned to service priorities (kizer2019armyresearchofficearo pages 291-294) |
+| NSF CAREER | $400K–$600K for 5 years | Untenured, tenure-track faculty | Integrated research/education in AI-accelerated metallurgy; autonomous experimentation curriculum | Train next-gen workforce in autonomous materials science and manufacturing; broadening participation and open data workflows (trautt2024drivingu.s.innovation pages 1-5) |
+| NSF EAGER | $100K–$300K for 1–2 years | Program Officer invitation/approval | Novel autonomous alloy discovery algorithms; untested closed-loop methodology | Proof-of-concept for radically new AI–experimental integration to de-risk larger center-scale visions (trautt2024drivingu.s.innovation pages 1-5) |
+| NSF DMR TMRP (Metals & Metallic Nanostructures) | $150K–$450K for ~3 years | Standard PI eligibility | Fundamental metallurgy of novel Al alloys and HEAs; LPBF non-equilibrium solidification; phase stability; defect–microstructure coupling | Scientific understanding of composition–microstructure–property relationships in additively processed alloys (kizer2019armyresearchofficearo pages 10-12) |
+| NSF MEP (Materials Engineering & Processing) | $300K–$500K for ~3 years | Standard PI eligibility | Powder atomization processing; LPBF as manufacturing route; high-throughput characterization pipeline (SEM/EBSD/PIP); process–structure–property links | Novel processing routes for compositionally complex alloys with controlled microstructure and scalable workflows (trautt2024drivingu.s.innovation pages 1-5, thornton2008threedimensionalmaterialsscience pages 6-7) |
+
+
+*Table: This table summarizes nine relevant US programs with estimated sizes, eligibility, priority thrusts, and tailored framing for BYU’s Vertical Cloud Lab. Citations reference reports on autonomous materials science and agency program overviews used to shape the alignment.*
+
+### Cross-Cutting Strategic Observations
+
+The national landscape strongly favors the VCL's research direction. The NIST Special Publication 1320 on "Driving U.S. Innovation in Materials and Manufacturing using AI and Autonomous Labs" specifically identifies autonomous experimentation as a critical capability for U.S. competitiveness, recommending testbed facilities for applications including "advanced additive manufacturing" and "high entropy alloy design" (trautt2024drivingu.s.innovation pages 23-26). This same document envisions DOD, DOE, NASA, and NSF all playing crucial roles in funding autonomous materials R&D (trautt2024drivingu.s.innovation pages 23-26). The ARO's Materials Science Division explicitly includes programs in Materials Design, Synthesis and Processing, and Mechanical Behavior that collectively span the VCL's workflow from computational alloy design through powder production to mechanical characterization (kizer2019armyresearchofficearo pages 291-294, kizer2019armyresearchofficearo pages 10-12).
+
+For strategic proposal development, the PI should: (1) verify all program manager names on current agency websites, as rotations occur regularly; (2) contact relevant PMs before submission to discuss alignment; (3) tailor each proposal's framing to the specific agency mission (fundamental science for NSF, defense applications for DoD, disruptive capability for DARPA); and (4) leverage the VCL's unique closed-loop integration as a distinguishing feature across all programs.
+
+
+References
+
+1. (kizer2019armyresearchofficearo pages 48-50): K Kizer, T Torgerson, H De Long, R Zachery, and D Stepp. Army research office-aro in review 2018. Unknown journal, 2019.
+
+2. (kizer2019armyresearchofficearo pages 291-294): K Kizer, T Torgerson, H De Long, R Zachery, and D Stepp. Army research office-aro in review 2018. Unknown journal, 2019.
+
+3. (trautt2024drivingu.s.innovation pages 1-5): Zachary Trautt, Austin McDannald, Brian DeCost, A Gilad Kusne, and Francesca Tavazza. Driving U.S. innovation in materials and manufacturing using AI and autonomous labs. National Institute of Standards and Technology (U.S.), Aug 2024. URL: https://doi.org/10.6028/nist.sp.1320, doi:10.6028/nist.sp.1320.
+
+4. (accelerating2017nsfsponsoredworkshopaccelerating pages 1-7): NSF Accelerating. Nsf-sponsored workshop: accelerating nsf research in additive manufacturing toward industrial applications. Unknown journal, 2017.
+
+5. (bevans2025inprocessmonitoringof pages 49-51): Benjamin Bevans, Alexander Riensche, Antonio Carrington, Kaustubh Deshmukh, Mihir Darji, Yuri Plotnikov, John Sions, Kyle Snyder, Derek Hass, and Prahalada Rao. In-process monitoring of part quality in laser powder bed fusion additive manufacturing process using acoustic emission sensors. Journal of Manufacturing Science and Engineering, pages 1-48, Feb 2025. URL: https://doi.org/10.1115/1.4067848, doi:10.1115/1.4067848. This article has 3 citations.
+
+6. (thornton2008threedimensionalmaterialsscience pages 6-7): Katsuyo Thornton and Henning Friis Poulsen. Three-dimensional materials science: an intersection of three-dimensional reconstructions and simulations. MRS Bulletin, 33:587-595, Jun 2008. URL: https://doi.org/10.1557/mrs2008.123, doi:10.1557/mrs2008.123. This article has 58 citations and is from a domain leading peer-reviewed journal.
+
+7. (kizer2019armyresearchofficearo pages 10-12): K Kizer, T Torgerson, H De Long, R Zachery, and D Stepp. Army research office-aro in review 2018. Unknown journal, 2019.
+
+8. (kizer2019armyresearchofficearo pages 137-138): K Kizer, T Torgerson, H De Long, R Zachery, and D Stepp. Army research office-aro in review 2018. Unknown journal, 2019.
+
+9. (trautt2024drivingu.s.innovation pages 5-9): Zachary Trautt, Austin McDannald, Brian DeCost, A Gilad Kusne, and Francesca Tavazza. Driving U.S. innovation in materials and manufacturing using AI and autonomous labs. National Institute of Standards and Technology (U.S.), Aug 2024. URL: https://doi.org/10.6028/nist.sp.1320, doi:10.6028/nist.sp.1320.
+
+10. (trautt2024drivingu.s.innovation pages 15-17): Zachary Trautt, Austin McDannald, Brian DeCost, A Gilad Kusne, and Francesca Tavazza. Driving U.S. innovation in materials and manufacturing using AI and autonomous labs. National Institute of Standards and Technology (U.S.), Aug 2024. URL: https://doi.org/10.6028/nist.sp.1320, doi:10.6028/nist.sp.1320.
+
+11. (trautt2024drivingu.s.innovation pages 17-20): Zachary Trautt, Austin McDannald, Brian DeCost, A Gilad Kusne, and Francesca Tavazza. Driving U.S. innovation in materials and manufacturing using AI and autonomous labs. National Institute of Standards and Technology (U.S.), Aug 2024. URL: https://doi.org/10.6028/nist.sp.1320, doi:10.6028/nist.sp.1320.
+
+12. (trautt2024drivingu.s.innovation pages 23-26): Zachary Trautt, Austin McDannald, Brian DeCost, A Gilad Kusne, and Francesca Tavazza. Driving U.S. innovation in materials and manufacturing using AI and autonomous labs. National Institute of Standards and Technology (U.S.), Aug 2024. URL: https://doi.org/10.6028/nist.sp.1320, doi:10.6028/nist.sp.1320.

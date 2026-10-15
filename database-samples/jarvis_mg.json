@@ -1,0 +1,212 @@
+[
+  {
+    "jid": "JVASP-18912",
+    "formula": "YMg",
+    "elements": [
+      "Y",
+      "Mg"
+    ],
+    "formation_energy_peratom": -0.10473,
+    "ehull": 0.0,
+    "optb88vdw_bandgap": 0.0,
+    "bulk_modulus_kv": 42.93,
+    "shear_modulus_gv": 28.46,
+    "spacegroup": "Pm-3m",
+    "density": 3.485
+  },
+  {
+    "jid": "JVASP-64427",
+    "formula": "Ba4MgBi",
+    "elements": [
+      "Ba",
+      "Ba",
+      "Ba",
+      "Ba",
+      "Mg",
+      "Bi"
+    ],
+    "formation_energy_peratom": 0.131,
+    "ehull": 0.6159,
+    "optb88vdw_bandgap": 0.0,
+    "bulk_modulus_kv": "na",
+    "shear_modulus_gv": "na",
+    "spacegroup": "F-43m",
+    "density": 4.866
+  },
+  {
+    "jid": "JVASP-97732",
+    "formula": "LaMgSi2",
+    "elements": [
+      "La",
+      "La",
+      "La",
+      "La",
+      "Mg",
+      "Mg",
+      "Mg",
+      "Mg",
+      "Si",
+      "Si",
+      "Si",
+      "Si",
+      "Si",
+      "Si",
+      "Si",
+      "Si"
+    ],
+    "formation_energy_peratom": -0.59934,
+    "ehull": 0.0,
+    "optb88vdw_bandgap": 0.0,
+    "bulk_modulus_kv": "na",
+    "shear_modulus_gv": "na",
+    "spacegroup": "I4_1/amd",
+    "density": 4.208
+  },
+  {
+    "jid": "JVASP-53071",
+    "formula": "MgIn2O4",
+    "elements": [
+      "Mg",
+      "Mg",
+      "In",
+      "In",
+      "In",
+      "In",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "formation_energy_peratom": -2.06549,
+    "ehull": 0.0179,
+    "optb88vdw_bandgap": 1.509,
+    "bulk_modulus_kv": "na",
+    "shear_modulus_gv": "na",
+    "spacegroup": "Imma",
+    "density": 5.866
+  },
+  {
+    "jid": "JVASP-64783",
+    "formula": "Ba4MgGe",
+    "elements": [
+      "Ba",
+      "Ba",
+      "Ba",
+      "Ba",
+      "Mg",
+      "Ge"
+    ],
+    "formation_energy_peratom": 0.38165,
+    "ehull": 0.7222,
+    "optb88vdw_bandgap": 0.0,
+    "bulk_modulus_kv": "na",
+    "shear_modulus_gv": "na",
+    "spacegroup": "F-43m",
+    "density": 4.198
+  },
+  {
+    "jid": "JVASP-91653",
+    "formula": "Mg3In",
+    "elements": [
+      "Mg",
+      "Mg",
+      "Mg",
+      "Mg",
+      "Mg",
+      "Mg",
+      "In",
+      "In"
+    ],
+    "formation_energy_peratom": -0.07756,
+    "ehull": 0.0271,
+    "optb88vdw_bandgap": 0.0,
+    "bulk_modulus_kv": "na",
+    "shear_modulus_gv": "na",
+    "spacegroup": "P6_3/mmc",
+    "density": 3.45
+  },
+  {
+    "jid": "JVASP-64515",
+    "formula": "Ba4MgIn",
+    "elements": [
+      "Ba",
+      "Ba",
+      "Ba",
+      "Ba",
+      "Mg",
+      "In"
+    ],
+    "formation_energy_peratom": 0.28297,
+    "ehull": 0.537,
+    "optb88vdw_bandgap": 0.0,
+    "bulk_modulus_kv": "na",
+    "shear_modulus_gv": "na",
+    "spacegroup": "F-43m",
+    "density": 4.245
+  },
+  {
+    "jid": "JVASP-63957",
+    "formula": "Ba4MgTc",
+    "elements": [
+      "Ba",
+      "Ba",
+      "Ba",
+      "Ba",
+      "Mg",
+      "Tc"
+    ],
+    "formation_energy_peratom": 1.08591,
+    "ehull": 1.1364,
+    "optb88vdw_bandgap": 0.0,
+    "bulk_modulus_kv": "na",
+    "shear_modulus_gv": "na",
+    "spacegroup": "F-43m",
+    "density": 4.826
+  },
+  {
+    "jid": "JVASP-92194",
+    "formula": "Mg6ZnFe",
+    "elements": [
+      "Mg",
+      "Mg",
+      "Mg",
+      "Mg",
+      "Mg",
+      "Mg",
+      "Zn",
+      "Fe"
+    ],
+    "formation_energy_peratom": 0.12011,
+    "ehull": 0.1478,
+    "optb88vdw_bandgap": 0.0,
+    "bulk_modulus_kv": "na",
+    "shear_modulus_gv": "na",
+    "spacegroup": "Amm2",
+    "density": 2.879
+  },
+  {
+    "jid": "JVASP-91608",
+    "formula": "Mg3NiO4",
+    "elements": [
+      "Mg",
+      "Mg",
+      "Mg",
+      "Ni",
+      "O",
+      "O",
+      "O",
+      "O"
+    ],
+    "formation_energy_peratom": -2.43793,
+    "ehull": 0.0287,
+    "optb88vdw_bandgap": 0.0,
+    "bulk_modulus_kv": "na",
+    "shear_modulus_gv": "na",
+    "spacegroup": "Pm-3m",
+    "density": 4.371
+  }
+]

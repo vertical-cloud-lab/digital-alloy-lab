@@ -1,0 +1,108 @@
+{
+  "links": {
+    "next": "http://oqmd.org/oqmdapi/formationenergy?composition=Mg&fields=name%2Centry_id%2Ccomposition%2Cdelta_e%2Cstability%2Cband_gap%2Cvolume_pa&format=json&limit=10&offset=10",
+    "previous": null,
+    "base_url": {
+      "href": "https://oqmd.org/oqmdapi",
+      "meta": {
+        "_oqmd_version": "1.0"
+      }
+    }
+  },
+  "resource": {},
+  "data": [
+    {
+      "name": "Mg",
+      "entry_id": 8597,
+      "composition": "Mg1",
+      "band_gap": 0.0,
+      "delta_e": 0.0288302008333299,
+      "stability": 0.0288302008333299
+    },
+    {
+      "name": "Mg",
+      "entry_id": 9226,
+      "composition": "Mg1",
+      "band_gap": 0.0,
+      "delta_e": 0.000193605833329835,
+      "stability": 0.000193605833329835
+    },
+    {
+      "name": "Mg",
+      "entry_id": 31750,
+      "composition": "Mg1",
+      "band_gap": 0.0,
+      "delta_e": 0.000219735966660028,
+      "stability": 0.000219735966660028
+    },
+    {
+      "name": "Mg",
+      "entry_id": 51988,
+      "composition": "Mg1",
+      "band_gap": 0.0,
+      "delta_e": 0.000313510833329866,
+      "stability": 0.000313510833329866
+    },
+    {
+      "name": "Mg",
+      "entry_id": 116205,
+      "composition": "Mg1",
+      "band_gap": 0.0,
+      "delta_e": 0.000472560833330027,
+      "stability": 0.000472560833330027
+    },
+    {
+      "name": "Mg",
+      "entry_id": 116613,
+      "composition": "Mg1",
+      "band_gap": 0.0,
+      "delta_e": 0.000315090833330034,
+      "stability": 0.000315090833330034
+    },
+    {
+      "name": "Mg",
+      "entry_id": 110170,
+      "composition": "Mg1",
+      "band_gap": 0.0,
+      "delta_e": 0.000455170833330021,
+      "stability": 0.000455170833330021
+    },
+    {
+      "name": "Mg",
+      "entry_id": 1214631,
+      "composition": "Mg1",
+      "band_gap": 0.0,
+      "delta_e": 0.0127010808333299,
+      "stability": 0.0127010808333299
+    },
+    {
+      "name": "Mg",
+      "entry_id": 675311,
+      "composition": "Mg1",
+      "band_gap": 0.0,
+      "delta_e": 0.00032177583333004,
+      "stability": 0.00032177583333004
+    },
+    {
+      "name": "Mg",
+      "entry_id": 752497,
+      "composition": "Mg1",
+      "band_gap": 0.0,
+      "delta_e": 0.000266475833329949,
+      "stability": 0.000266475833329949
+    }
+  ],
+  "meta": {
+    "query": {
+      "representation": "http://oqmd.org/oqmdapi/formationenergy?composition=Mg&limit=10&fields=name,entry_id,composition,delta_e,stability,band_gap,volume_pa&format=json"
+    },
+    "api_version": "1.0",
+    "time_stamp": "2026-03-07 19:17:26",
+    "data_returned": 10,
+    "data_available": 62,
+    "comments": "",
+    "query_tree": "",
+    "more_data_available": true
+  },
+  "response_message": "OK"
+}

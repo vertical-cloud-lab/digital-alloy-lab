@@ -1,0 +1,122 @@
+[
+  {
+    "compound": "Ag2Al1Mg1",
+    "auid": "aflow:0150c3fdf4247cff",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB3_WEB/AgAlMg_pv/TBCC010.ABC",
+    "spacegroup_relax": 10,
+    "Pearson_symbol_relax": "mP4",
+    "species": [
+      "Ag",
+      "Al",
+      "Mg"
+    ]
+  },
+  {
+    "compound": "Ag1Al1Mg1",
+    "auid": "aflow:0616ab5224b4e7d2",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB3_WEB/AgAlMg_pv/T0003.ABC",
+    "spacegroup_relax": 216,
+    "Pearson_symbol_relax": "cF12",
+    "species": [
+      "Ag",
+      "Al",
+      "Mg"
+    ]
+  },
+  {
+    "compound": "Ag1Al1Mg2",
+    "auid": "aflow:09353b2787bf608a",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB3_WEB/AgAlMg_pv/TBCC010.CAB",
+    "spacegroup_relax": 10,
+    "Pearson_symbol_relax": "mP4",
+    "species": [
+      "Ag",
+      "Al",
+      "Mg"
+    ]
+  },
+  {
+    "compound": "Ag2Al2Mg1",
+    "auid": "aflow:090cad8a0c8048b4",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB3_WEB/AgAlMg_pv/T0011.ACB",
+    "spacegroup_relax": 139,
+    "Pearson_symbol_relax": "tI10",
+    "species": [
+      "Ag",
+      "Al",
+      "Mg"
+    ]
+  },
+  {
+    "compound": "Ag2Al1Mg1",
+    "auid": "aflow:0c51248afa5ca605",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB3_WEB/AgAlMg_pv/TBCC014.ABC",
+    "spacegroup_relax": 12,
+    "Pearson_symbol_relax": "mS8",
+    "species": [
+      "Ag",
+      "Al",
+      "Mg"
+    ]
+  },
+  {
+    "compound": "Ag1Al1Mg2",
+    "auid": "aflow:11b1790e6b088dae",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB3_WEB/AgAlMg_pv/TFCC009.CAB",
+    "spacegroup_relax": 166,
+    "Pearson_symbol_relax": "hR4",
+    "species": [
+      "Ag",
+      "Al",
+      "Mg"
+    ]
+  },
+  {
+    "compound": "Ag1Al2Mg1",
+    "auid": "aflow:147cb95622065c68",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB3_WEB/AgAlMg_pv/TBCC016.BCA",
+    "spacegroup_relax": 123,
+    "Pearson_symbol_relax": "tP4",
+    "species": [
+      "Ag",
+      "Al",
+      "Mg"
+    ]
+  },
+  {
+    "compound": "Ag2Al1Mg2",
+    "auid": "aflow:154c4d64491c5f42",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB3_WEB/AgAlMg_pv/T0011.ABC",
+    "spacegroup_relax": 139,
+    "Pearson_symbol_relax": "tI10",
+    "species": [
+      "Ag",
+      "Al",
+      "Mg"
+    ]
+  },
+  {
+    "compound": "Ag1Al2Mg1",
+    "auid": "aflow:1697671a2b018b56",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB3_WEB/AgAlMg_pv/TBCC012.BCA",
+    "spacegroup_relax": 71,
+    "Pearson_symbol_relax": "oI8",
+    "species": [
+      "Ag",
+      "Al",
+      "Mg"
+    ]
+  },
+  {
+    "compound": "Ag1Al2Mg1",
+    "auid": "aflow:16671b4868f87288",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB3_WEB/AgAlMg_pv/TFCC004.BCA",
+    "spacegroup_relax": 160,
+    "Pearson_symbol_relax": "hR4",
+    "species": [
+      "Ag",
+      "Al",
+      "Mg"
+    ]
+  }
+]

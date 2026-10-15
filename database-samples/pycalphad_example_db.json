@@ -1,0 +1,20 @@
+{
+  "file": "alni_dupin_2001.tdb",
+  "phases": [
+    "AL3NI1",
+    "AL3NI2",
+    "AL3NI5",
+    "BCC_A2",
+    "BCC_B2",
+    "FCC_A1",
+    "FCC_L12",
+    "LIQUID"
+  ],
+  "elements": [
+    "/-",
+    "AL",
+    "NI",
+    "VA"
+  ],
+  "pycalphad_version": "0.11.1"
+}

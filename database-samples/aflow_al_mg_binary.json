@@ -1,0 +1,132 @@
+[
+  {
+    "compound": "Al3Mg1",
+    "auid": "aflow:01c215756874ae8b",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlMg_pv/551",
+    "spacegroup_relax": 44,
+    "Pearson_symbol_relax": "oI8",
+    "species": [
+      "Al",
+      "Mg"
+    ],
+    "nspecies": 2,
+    "enthalpy_formation_atom": 0.033194
+  },
+  {
+    "compound": "Al4Mg4",
+    "auid": "aflow:04c71d992219b92d",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlMg_pv/407",
+    "spacegroup_relax": 194,
+    "Pearson_symbol_relax": "hP8",
+    "species": [
+      "Al",
+      "Mg"
+    ],
+    "nspecies": 2,
+    "enthalpy_formation_atom": 0.190273
+  },
+  {
+    "compound": "Al2Mg2",
+    "auid": "aflow:0481a9e8abcafd2b",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlMg_pv/80",
+    "spacegroup_relax": 74,
+    "Pearson_symbol_relax": "oI8",
+    "species": [
+      "Al",
+      "Mg"
+    ],
+    "nspecies": 2,
+    "enthalpy_formation_atom": 0.003062
+  },
+  {
+    "compound": "Al2Mg2",
+    "auid": "aflow:0406aaabee777260",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlMg_pv/126",
+    "spacegroup_relax": 164,
+    "Pearson_symbol_relax": "hP4",
+    "species": [
+      "Al",
+      "Mg"
+    ],
+    "nspecies": 2,
+    "enthalpy_formation_atom": 0.044356
+  },
+  {
+    "compound": "Al1Mg3",
+    "auid": "aflow:097d787f5f5a2e2f",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlMg_pv/76",
+    "spacegroup_relax": 123,
+    "Pearson_symbol_relax": "tP4",
+    "species": [
+      "Al",
+      "Mg"
+    ],
+    "nspecies": 2,
+    "enthalpy_formation_atom": 0.0380898
+  },
+  {
+    "compound": "Al3Mg1",
+    "auid": "aflow:0a16b5afddddfbcb",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlMg_pv/21",
+    "spacegroup_relax": 47,
+    "Pearson_symbol_relax": "oP4",
+    "species": [
+      "Al",
+      "Mg"
+    ],
+    "nspecies": 2,
+    "enthalpy_formation_atom": 0.0097655
+  },
+  {
+    "compound": "Al1Mg3",
+    "auid": "aflow:0a5eda476e5cec0f",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlMg_pv/84",
+    "spacegroup_relax": 225,
+    "Pearson_symbol_relax": "cF16",
+    "species": [
+      "Al",
+      "Mg"
+    ],
+    "nspecies": 2,
+    "enthalpy_formation_atom": 0.0368138
+  },
+  {
+    "compound": "Al6Mg2",
+    "auid": "aflow:0be41c35d1a969bf",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlMg_pv/185",
+    "spacegroup_relax": 223,
+    "Pearson_symbol_relax": "cP8",
+    "species": [
+      "Al",
+      "Mg"
+    ],
+    "nspecies": 2,
+    "enthalpy_formation_atom": 0.0753267
+  },
+  {
+    "compound": "Al4Mg1",
+    "auid": "aflow:0c7670fb5225ee0f",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlMg_pv/286",
+    "spacegroup_relax": 87,
+    "Pearson_symbol_relax": "tI10",
+    "species": [
+      "Al",
+      "Mg"
+    ],
+    "nspecies": 2,
+    "enthalpy_formation_atom": 0.0065824
+  },
+  {
+    "compound": "Al2Mg2",
+    "auid": "aflow:0c48c89f01ef82c7",
+    "aurl": "aflowlib.duke.edu:AFLOWDATA/LIB2_WEB/AlMg_pv/14",
+    "spacegroup_relax": 129,
+    "Pearson_symbol_relax": "tP4",
+    "species": [
+      "Al",
+      "Mg"
+    ],
+    "nspecies": 2,
+    "enthalpy_formation_atom": 0.0206805
+  }
+]

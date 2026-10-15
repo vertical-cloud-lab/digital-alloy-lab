@@ -1,0 +1,16 @@
+{
+  "source": "pycalphad built-in test database (cumg.tdb)",
+  "phases": [
+    "CU2MG",
+    "CUMG2",
+    "FCC_A1",
+    "HCP_A3",
+    "LIQUID"
+  ],
+  "elements": [
+    "/-",
+    "CU",
+    "MG",
+    "VA"
+  ]
+}

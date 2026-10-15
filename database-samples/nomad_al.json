@@ -1,0 +1,117 @@
+{
+  "owner": "public",
+  "query": {
+    "name": "results.material.elements",
+    "value": {
+      "all": [
+        "Al"
+      ]
+    }
+  },
+  "pagination": {
+    "page_size": 10,
+    "order_by": "entry_id",
+    "order": "asc",
+    "total": 891821,
+    "next_page_after_value": "--2M5AJFS7t7QBleEjgWQye7unCA"
+  },
+  "required": {
+    "include": [
+      "entry_id",
+      "results.material.chemical_formula_hill",
+      "results.material.structural_type"
+    ]
+  },
+  "data": [
+    {
+      "results": {
+        "material": {
+          "structural_type": "bulk",
+          "chemical_formula_hill": "AlAuTi2"
+        }
+      },
+      "entry_id": "---CU_ejqV7yjEFteUAH0rG0SKIS"
+    },
+    {
+      "results": {
+        "material": {
+          "structural_type": "bulk",
+          "chemical_formula_hill": "AlBeLuSc"
+        }
+      },
+      "entry_id": "---hc8_hXpe8X0J1ibGSATQeJh4O"
+    },
+    {
+      "results": {
+        "material": {
+          "structural_type": "bulk",
+          "chemical_formula_hill": "AlNa3Se"
+        }
+      },
+      "entry_id": "--0KY3_q9IN3YFhPurrMKqI_9vCl"
+    },
+    {
+      "results": {
+        "material": {
+          "structural_type": "unavailable",
+          "chemical_formula_hill": "Al17B7H6Na2O62Si11"
+        }
+      },
+      "entry_id": "--0TXFv_aZUPi2bqjewWq3CTSGfc"
+    },
+    {
+      "results": {
+        "material": {
+          "structural_type": "bulk",
+          "chemical_formula_hill": "AlCoHfMo"
+        }
+      },
+      "entry_id": "--0YiQaORLdcHSBdWoMGHKChbJmT"
+    },
+    {
+      "results": {
+        "material": {
+          "structural_type": "bulk",
+          "chemical_formula_hill": "Al4Ni15Ti"
+        }
+      },
+      "entry_id": "--13QwLPLYhECG_BN3k-YpYPpdod"
+    },
+    {
+      "results": {
+        "material": {
+          "structural_type": "bulk",
+          "chemical_formula_hill": "Al2Co6U4"
+        }
+      },
+      "entry_id": "--1CTb8-iLRm88THos5m7w7WWyu4"
+    },
+    {
+      "results": {
+        "material": {
+          "structural_type": "bulk",
+          "chemical_formula_hill": "Al10Rh8"
+        }
+      },
+      "entry_id": "--1bNRe-dF20Df8_t8hzara5mDGz"
+    },
+    {
+      "results": {
+        "material": {
+          "structural_type": "atom",
+          "chemical_formula_hill": "Al"
+        }
+      },
+      "entry_id": "--27AIi0NmiM33Ri5VQzrUq4_HHk"
+    },
+    {
+      "results": {
+        "material": {
+          "structural_type": "bulk",
+          "chemical_formula_hill": "AlClNi"
+        }
+      },
+      "entry_id": "--2M5AJFS7t7QBleEjgWQye7unCA"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "links": {
+    "next": "http://oqmd.org/oqmdapi/formationenergy?composition=Al-Mg&fields=name%2Centry_id%2Ccomposition%2Cdelta_e%2Cstability%2Cband_gap%2Cvolume_pa&format=json&limit=10&offset=10",
+    "previous": null,
+    "base_url": {
+      "href": "https://oqmd.org/oqmdapi",
+      "meta": {
+        "_oqmd_version": "1.0"
+      }
+    }
+  },
+  "resource": {},
+  "data": [
+    {
+      "name": "Al",
+      "entry_id": 8100,
+      "composition": "Al1",
+      "band_gap": 0.0,
+      "delta_e": 0.000788779999999711,
+      "stability": 0.000788779999999711
+    },
+    {
+      "name": "Al",
+      "entry_id": 1214503,
+      "composition": "Al1",
+      "band_gap": 0.0,
+      "delta_e": 0.000788839999999791,
+      "stability": 0.000788839999999791
+    },
+    {
+      "name": "Al",
+      "entry_id": 1214592,
+      "composition": "Al1",
+      "band_gap": 0.0,
+      "delta_e": 0.0018258999999996,
+      "stability": 0.0018258999999996
+    },
+    {
+      "name": "Al",
+      "entry_id": 1214681,
+      "composition": "Al1",
+      "band_gap": 0.0,
+      "delta_e": 0.18226135,
+      "stability": 0.18226135
+    },
+    {
+      "name": "Al",
+      "entry_id": 1214770,
+      "composition": "Al1",
+      "band_gap": 0.0,
+      "delta_e": 0.0556848268965497,
+      "stability": 0.0556848268965497
+    },
+    {
+      "name": "Al",
+      "entry_id": 1214859,
+      "composition": "Al1",
+      "band_gap": 0.0,
+      "delta_e": 0.0616434164999999,
+      "stability": 0.0616434164999999
+    },
+    {
+      "name": "Al",
+      "entry_id": 1214948,
+      "composition": "Al1",
+      "band_gap": 0.0,
+      "delta_e": 0.0787322537499997,
+      "stability": 0.0787322537499997
+    },
+    {
+      "name": "Al",
+      "entry_id": 1215037,
+      "composition": "Al1",
+      "band_gap": 0.0,
+      "delta_e": 0.1297105575,
+      "stability": 0.1297105575
+    },
+    {
+      "name": "Al",
+      "entry_id": 1215126,
+      "composition": "Al1",
+      "band_gap": 0.0,
+      "delta_e": 0.0955510899999998,
+      "stability": 0.0955510899999998
+    },
+    {
+      "name": "Al",
+      "entry_id": 1215215,
+      "composition": "Al1",
+      "band_gap": 0.0,
+      "delta_e": 0.033116825,
+      "stability": 0.033116825
+    }
+  ],
+  "meta": {
+    "query": {
+      "representation": "http://oqmd.org/oqmdapi/formationenergy?composition=Al-Mg&limit=10&fields=name,entry_id,composition,delta_e,stability,band_gap,volume_pa&format=json"
+    },
+    "api_version": "1.0",
+    "time_stamp": "2026-03-07 19:22:28",
+    "data_returned": 10,
+    "data_available": 196,
+    "comments": "",
+    "query_tree": "",
+    "more_data_available": true
+  },
+  "response_message": "OK"
+}

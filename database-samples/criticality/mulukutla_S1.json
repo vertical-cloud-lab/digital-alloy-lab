@@ -1,0 +1,74 @@
+{
+  "name": "S indicator",
+  "statistics": [
+    {
+      "binclass": "Does this text possibly contain information about the recent worldwide production of @Element? The date is @Date",
+      "extract": "Within the following text, please find the statistic for @Element production.",
+      "keyword": "production",
+      "name": "production",
+      "return": {
+        "date": "The year the production was recorded for. Can be empty if you cannot determine.",
+        "production": "The production of @Element",
+        "success": "True or False, if you were able to extract the information",
+        "units": "The units the production is reported in."
+      },
+      "searchMethod": "header",
+      "source": "https://pubs.usgs.gov/periodicals/mcs@year/mcs@year.pdf"
+    },
+    {
+      "binclass": "Does this text possibly contain information about the recent worldwide reserves of @Element? The date is @Date",
+      "extract": "Within the following text, please find the statistic for @Element reserves.",
+      "keyword": "reserve",
+      "name": "reserve",
+      "return": {
+        "date": "The year the reserves was recorded for. Can be empty if you cannot determine.",
+        "reserve": "The reserves of @Element",
+        "success": "True or False, if you were able to extract the information",
+        "units": "The units the reserves is reported in."
+      },
+      "searchMethod": "header",
+      "source": "https://pubs.usgs.gov/periodicals/mcs@year/mcs@year.pdf"
+    },
+    {
+      "binclass": "Does this text possibly contain information about the amount of @Element resources? Resources are typically reported as an estimate of the number of tons of material ore that are undiscovered or unrealized.",
+      "extract": "Within the following text, please find the statistic for @Element resources.",
+      "keyword": "resource",
+      "name": "resource",
+      "return": {
+        "date": "The year the resource was recorded for. Can be empty if you cannot determine.",
+        "resource": "The @Element resource",
+        "success": "True or False, if you were able to extract the information",
+        "units": "The units the resource is reported in."
+      },
+      "searchMethod": "header",
+      "source": "https://pubs.usgs.gov/periodicals/mcs@year/mcs@year.pdf"
+    },
+    {
+      "binclass": "Does this text possibly contain information about the Old Scrap Ratio of @Element? This represents the proportion of scrap material from old sources (end-of-life products) used in the production of new materials.",
+      "extract": "Within the following text, please find the statistic for @Element Old Scrap Ratio.",
+      "keyword": "old scrap ratio",
+      "name": "osr",
+      "return": {
+        "date": "The year the resource was recorded for. Can be empty if you cannot determine.",
+        "osr": "The @Element old scrap ratio",
+        "success": "True or False, if you were able to extract the information"
+      },
+      "searchMethod": "none",
+      "source": "~/metals_status_report_full_report_english.pdf"
+    },
+    {
+      "binclass": "Does this text possibly contain information about the Recycled Content Ratio of @Element? This indicates the percentage of recycled material in the total input for producing new materials.",
+      "extract": "Within the following text, please find the statistic for @Element recycled content ratio.",
+      "keyword": "recycled content ratio",
+      "name": "rcr",
+      "return": {
+        "date": "The year the resource was recorded for. Can be empty if you cannot determine.",
+        "rcr": "The @Element recycled content ratio.",
+        "success": "True or False, if you were able to extract the information"
+      },
+      "searchMethod": "none",
+      "source": "~/metals_status_report_full_report_english.pdf"
+    }
+  ],
+  "calculation": "return ((100 - 0.2 * (reserve / production) - 0.008 * (reserve / production)**2) + (100 - 0.1 * (resource / production) - 0.002 * (resource / production)**2) + (100 - (osr * rcr / 100))) / 3 "
+}
