@@ -77,20 +77,17 @@ def draw_interaction_network(ax, show_title=False):
                                                foreground='white')])
 
     # Draw nodes — larger for label readability (iter 6 fix #3)
-    # White mask circle behind labels to prevent edge wash (Edison iter 8, Issue 3)
+    # Edison R12: all nodes use dark text + white stroke for universal WCAG AA compliance
+    # (white mask removed — it was defeating contrast on dark nodes)
     for label, (x, y, cat) in nodes.items():
         color = CAT_COLORS[cat]
         circle = plt.Circle((x, y), 0.35, facecolor=color, edgecolor='white',
                              linewidth=1.8, alpha=0.88, zorder=2)
         ax.add_patch(circle)
-        # White mask to prevent edge lines from degrading label readability
-        mask = plt.Circle((x, y), 0.28, facecolor='white', edgecolor='none',
-                          alpha=0.45, zorder=2.5)
-        ax.add_patch(mask)
         ax.text(x, y, label, ha='center', va='center', fontsize=7.5,
-                color='white', fontweight='bold', zorder=3, linespacing=0.9,
-                path_effects=[pe.withStroke(linewidth=2.5, foreground='black',
-                                           alpha=0.3)])
+                color='#1D3557', fontweight='bold', zorder=3, linespacing=0.9,
+                path_effects=[pe.withStroke(linewidth=3.0, foreground='white',
+                                           alpha=0.85)])
 
     # VED callout — repositioned to avoid Spot size node overlap
     # (was at xytext=(3.6, 2.65) which overlapped Spot size at (3.2, 3.0))
@@ -98,16 +95,16 @@ def draw_interaction_network(ax, show_title=False):
         "VED = P/(v\u00b7h\u00b7t)\ncollapses 4D \u2192 1D\n"
         "Same VED \u2260 same outcome",
         xy=(1.1, 2.4), xytext=(4.2, 2.35),
-        fontsize=7.0, color='#D55E00', fontstyle='italic',
+        fontsize=7.0, color='#B84D00', fontstyle='italic',
         fontweight='medium',
-        arrowprops=dict(arrowstyle='->', color='#D55E00', lw=0.9),
+        arrowprops=dict(arrowstyle='->', color='#B84D00', lw=0.9),
         ha='center', va='center',
         bbox=dict(boxstyle='round,pad=0.3', facecolor='#FFF7ED',
-                  edgecolor='#D55E00', alpha=0.85))
+                  edgecolor='#B84D00', alpha=0.85))
 
     # Qualitative note — positioned near Recoater node area
     ax.text(4.8, -0.35, "Schematic coupling map;\nedge weight is qualitative",
-            fontsize=7.0, color='#9FB3C8', ha='right', va='center',
+            fontsize=7.0, color='#6B859B', ha='right', va='center',
             fontstyle='italic')
 
 
