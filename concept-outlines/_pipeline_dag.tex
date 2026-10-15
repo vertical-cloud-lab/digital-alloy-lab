@@ -1,0 +1,31 @@
+% Shared FLAIME pipeline DAG used by all three concept outlines.
+% Requires \usepackage{tikz} and \usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit}
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    node distance=4.5mm and 5mm,
+    every node/.style={font=\small},
+    block/.style={rectangle, draw, rounded corners=2pt, align=center,
+                  minimum height=10mm, minimum width=22mm, inner sep=3pt,
+                  fill=black!3},
+    ai/.style={block, fill=blue!10, line width=0.6pt},
+    expt/.style={block, fill=orange!10},
+    arr/.style={-{Latex[length=1.8mm,width=1.6mm]}, thick}
+]
+  \node[ai] (cal) {CALPHAD\\\footnotesize{pycalphad / TC-Python / AM~Module}};
+  \node[ai, right=of cal] (bofn) {\bfseries pKGFN BOFN\\\footnotesize{multi-fidelity inference; GA inner}};
+  \node[block, left=of cal] (feed) {Feedstock\\\footnotesize{wire / scrap / powder}};
+  \node[expt, right=of bofn] (ua) {Atomization\\\footnotesize{UA (BYU)}};
+  \node[expt, right=of ua] (lpbf) {LPBF\\\footnotesize{coupon}};
+  \node[expt, right=of lpbf] (test) {Phase ID + Test\\\footnotesize{SEM/TEM, tensile}};
+  \draw[arr] (feed) -- (cal);
+  \draw[arr] (cal) -- (bofn);
+  \draw[arr] (bofn) -- (ua);
+  \draw[arr] (ua) -- (lpbf);
+  \draw[arr] (lpbf) -- (test);
+  % Loop-closure feedback arrow under the row.
+  \draw[arr, dashed] (test.south) -- ++(0,-3mm) -| node[below, pos=0.25, font=\footnotesize]
+      {closed-loop feedback: phase ID + property update CALPHAD priors and BOFN posterior} (bofn.south);
+\end{tikzpicture}%
+}
+\end{center}

@@ -57,7 +57,7 @@
 
 **Program manager alignment:**
 - Submitted through CMMI (Advanced Manufacturing) or DMR (Metals & Metallic Nanostructures)
-- **Dr. Kevin Chou** (CMMI AM) — metal AM, thermal modeling, process-structure-property. Strong alignment with LPBF research and AI-driven process optimization
+- **CMMI AM program** (contact AdvancedManufacturing@nsf.gov) — metal AM, thermal modeling, process-structure-property. Strong alignment with LPBF research and AI-driven process optimization. *(Note: Dr. Kevin Chou's NSF rotation ended Jul 2023; he returned to University of Louisville. Contact the program email for current POs.)*
 - **Dr. Jonathan Madison** (DMR TMRP) — 3D characterization, solidification, fatigue/fracture. Alignment with alloy design and characterization aspects
 - Contact PO before submission to discuss division placement
 
@@ -99,7 +99,7 @@ See [detailed submission guidance in alloy-workflow-review.md](alloy-workflow-re
 
 ### 4. NSF AM / NSF MEP — **Alternatives to DMR TMRP**
 
-- **NSF AM** (Dr. Kevin Chou, Dr. Linkan Bian): More process-focused. Frame around LPBF process optimization, in-situ monitoring, process-structure-property relationships. Email PO a 1-page summary first.
+- **NSF AM** (contact AdvancedManufacturing@nsf.gov): More process-focused. Frame around LPBF process optimization, in-situ monitoring, process-structure-property relationships. Email PO a 1-page summary first. *(Note: Dr. Kevin Chou's rotation ended Jul 2023.)*
 - **NSF MEP** (email mep@nsf.gov): Materials engineering perspective. Frame around processing science of novel alloy powders via ultrasonic atomization and LPBF consolidation.
 - Choose one of DMR TMRP / AM / MEP based on PO feedback — don't submit to multiple simultaneously.
 
@@ -380,7 +380,7 @@ The Edison venues analysis provides a strategic conference calendar for building
 | **Periodic** | GRC Combinatorial & HT Materials Science | ★★★☆☆ | Deep community engagement for HT methods |
 
 **Immediate networking actions:**
-1. Contact **Dr. Jonathan Madison** (NSF DMR TMRP) and **Dr. Kevin Chou** (NSF AM) to discuss CAREER proposal division placement
+1. Contact **Dr. Jonathan Madison** (NSF DMR TMRP) and the **NSF AM program** (AdvancedManufacturing@nsf.gov) to discuss CAREER proposal division placement *(Dr. Kevin Chou's rotation ended Jul 2023)*
 2. Attend **TMS Annual Meeting** for PM engagement and reviewer networking
 3. Submit abstract to **SFF Symposium** for LPBF alloy work
 4. Submit to **AI4Mat workshop** (NeurIPS/ICLR) to build visibility in the autonomous materials community
@@ -455,6 +455,7 @@ The Edison reviewers analysis identified 40+ potential reviewers across 5 fields
 
 ## Cross-References
 
+- [NSF Funding Opportunities Search](nsf-funding-opportunities.md) — comprehensive search of NSF programs (10 additional programs identified); updated for FLAIME / Topic 3B framing
 - [Alloy Workflow Review](alloy-workflow-review.md) — full pipeline status, infrastructure, and vendor collaboration details
 - [Publication Strategy](edison-trajectories/publication_strategy.md) — prioritized 16-paper publication roadmap (14 original + 2 new 3B-native papers) with partnership integration (Valimet, AMAZEMET, Thermo-Calc collaboration + 8 support letters), preliminary results evidence, and Partner × Publication matrix for maximizing proposal fundability under Topic 3B
 - [Edison trajectories](edison-trajectories/) — full Edison Scientific research outputs
