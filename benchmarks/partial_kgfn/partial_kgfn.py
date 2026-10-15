@@ -30,56 +30,58 @@ from botorch.utils.transforms import t_batch_mode_transform
 from torch import Tensor
 
 
-def _network_posterior_mean(model, X: Tensor) -> Tensor:
-    """Compute posterior mean of the final node output through the network.
+def _network_posterior_mean(
+    model,
+    X: Tensor,
+    n_saa: int = 64,
+    sampler: "MCSampler | None" = None,
+) -> Tensor:
+    """Monte-Carlo (SAA) estimate of E[g(f(X))] for the final network node.
 
-    Propagates posterior means through the DAG, handling arbitrary batch shapes
-    from fantasy models (where some nodes have fantasy dims and others don't).
+    The original ``frazier-lab/partial_kgfn`` implementation integrates the
+    inner KG value with a Sample Average Approximation (SAA) over the
+    fantasy network posterior. Earlier versions of this file deterministically
+    propagated posterior means through the DAG (computing ``g(E[f(x)])``),
+    which is biased by Jensen's inequality whenever the downstream node
+    functions are non-linear and the parent-node posteriors are non-degenerate.
+
+    This routine instead draws ``n_saa`` reparameterised samples through the
+    full GP network via :class:`MultivariateNormalNetwork.rsample` and
+    averages the final-node value across the SAA dimension, recovering an
+    unbiased estimate of ``E[g(f(x))]``.
+
+    To support **common random numbers (CRN)** across the per-candidate /
+    per-fantasy inner KG comparisons, callers should pass a single
+    :class:`SobolQMCNormalSampler` instance constructed once per outer
+    ``forward`` call and reuse it across every ``_network_posterior_mean``
+    invocation. The sampler caches its base samples, so identical
+    standard-normal draws are reused whenever the posterior shape matches
+    — this is what removes the variance-of-difference noise that previously
+    made KG ranking dominated by SAA Monte Carlo error.
+
+    Args:
+        model: A fitted (possibly fantasised) ``GaussianProcessNetwork``.
+        X: ``(*batch, n_candidates, d)`` tensor of network inputs.
+        n_saa: Number of SAA Monte Carlo samples (used only when ``sampler``
+            is ``None`` and a fresh ``SobolQMCNormalSampler`` is constructed
+            on the fly).
+        sampler: Optional pre-constructed ``MCSampler`` to use for CRN.
 
     Returns:
-        Tensor of shape ``(*batch_shape, n_candidates)`` containing the
-        posterior mean of the final node for each candidate.
+        Tensor of shape ``(*batch, n_candidates)`` with the SAA estimate of
+        the final node's posterior mean at each candidate.
     """
-    n_nodes = model.n_nodes
-    nodes_mean = {}
-    available = [False] * n_nodes
-
-    for k in model.root_nodes:
-        X_k = (
-            X[..., model.active_input_indices[k]]
-            if model.active_input_indices
-            else X
+    posterior = model.posterior(X)
+    if sampler is None:
+        # Lazy fallback: a fresh seeded Sobol sampler so single-shot callers
+        # at least get reproducible draws within one call. CRN across
+        # multiple calls requires the caller to pass a shared sampler.
+        sampler = SobolQMCNormalSampler(
+            sample_shape=torch.Size([n_saa]), seed=0,
         )
-        nodes_mean[k] = model.node_GPs[k].posterior(X_k).mean[..., 0]
-        available[k] = True
-
-    while not all(available):
-        for k in range(n_nodes):
-            parents = model.dag.get_parent_nodes(k)
-            if not available[k] and all(available[j] for j in parents):
-                # Broadcast parent means to common shape
-                parent_means = [nodes_mean[p] for p in parents]
-                target_shape = torch.broadcast_shapes(
-                    *[m.shape for m in parent_means]
-                )
-                parent_means = [m.expand(target_shape) for m in parent_means]
-                parent_mean = torch.stack(parent_means, dim=-1)
-
-                X_k = X[..., model.active_input_indices[k]]
-                # Broadcast X_k to match parent_mean batch dims
-                if parent_mean.dim() > X_k.dim():
-                    extra = parent_mean.dim() - X_k.dim()
-                    for _ in range(extra):
-                        X_k = X_k.unsqueeze(0)
-                    X_k = X_k.expand(
-                        parent_mean.shape[:-1] + X_k.shape[-1:]
-                    )
-                X_k = torch.cat([X_k, parent_mean], -1)
-                nodes_mean[k] = model.node_GPs[k].posterior(X_k).mean[..., 0]
-                available[k] = True
-
-    # Return the final node's posterior mean
-    return nodes_mean[n_nodes - 1]
+    samples = sampler(posterior)
+    # samples shape: (n_saa, *batch, n_candidates, n_nodes)
+    return samples[..., -1].mean(dim=0)
 
 
 class PartialKnowledgeGradientFN(MCAcquisitionFunction):
@@ -220,14 +222,34 @@ class PartialKnowledgeGradientFN(MCAcquisitionFunction):
         b = X.shape[0]
         values = torch.zeros(b, dtype=torch.double)
 
+        # CRN: a single seeded SAA sampler reused across every candidate i
+        # and every fantasy f. As long as the inner posterior shape matches,
+        # the same standard-normal base samples are reused, so the
+        # KG-difference between candidates/fantasies is dominated by the
+        # mean change rather than fresh Monte-Carlo noise.
+        n_saa = int(getattr(self, "n_inner_saa", 64))
+        saa_seed = int(getattr(self, "saa_seed", 12345))
+        inner_saa_sampler = SobolQMCNormalSampler(
+            sample_shape=torch.Size([n_saa]), seed=saa_seed,
+        )
+
         for i in range(b):
             x_i = X[i: i + 1]  # (1, q, d_k)
             fantasy_values = []
 
+            # Draw all fantasy observations at once using the Sobol sampler
+            # for lower-variance quasi-random samples. Pass
+            # ``observation_noise=True`` to match the upstream
+            # frazier-lab/partial_kgfn behaviour: when the problem has
+            # observation noise, fantasies must include it, otherwise KG
+            # over-values noiseless fantasy observations.
+            post_k = self.model.node_GPs[k].posterior(
+                x_i.squeeze(1), observation_noise=True
+            )
+            all_y_fantasies = self.sampler[0](post_k)  # (num_fantasies, 1, 1)
+
             for f in range(self.num_fantasies):
-                # Sample a fantasy observation at x_i for node k
-                post_k = self.model.node_GPs[k].posterior(x_i.squeeze(1))
-                y_fantasy = post_k.rsample()  # (1, 1)
+                y_fantasy = all_y_fantasies[f]  # (1, 1) — matches X_cond shape
 
                 # Condition node k on the fantasy observation
                 X_cond = [None] * self.model.n_nodes
@@ -241,7 +263,9 @@ class PartialKnowledgeGradientFN(MCAcquisitionFunction):
 
                 # Compute the best posterior mean of the fantasy model at grid
                 grid_vals = _network_posterior_mean(
-                    fantasy_model, self.X_fantasies_candidates
+                    fantasy_model,
+                    self.X_fantasies_candidates,
+                    sampler=inner_saa_sampler,
                 )  # (n_grid,)
                 fantasy_values.append(grid_vals.max().item())
 

@@ -1,0 +1,51 @@
+{
+  "HighFidOnly": {
+    "final_mean": 17.60995446512517,
+    "final_std": 0.26059584579104367,
+    "iters_mean": 11.0,
+    "n_partial": 0,
+    "n_seeds": 20
+  },
+  "LowFidOnly": {
+    "final_mean": 17.056171846262092,
+    "final_std": 0.5751857899327146,
+    "iters_mean": 264.0,
+    "n_partial": 0,
+    "n_seeds": 20
+  },
+  "Node2Only": {
+    "final_mean": 17.108682028841518,
+    "final_std": 0.5690142982997567,
+    "iters_mean": 132.0,
+    "n_partial": 0,
+    "n_seeds": 20
+  },
+  "Random": {
+    "final_mean": 17.33588819299039,
+    "final_std": 0.29078606369309185,
+    "iters_mean": 11.0,
+    "n_partial": 0,
+    "n_seeds": 20
+  },
+  "Sobol": {
+    "final_mean": 17.38530127253204,
+    "final_std": 0.3261257841295389,
+    "iters_mean": 11.0,
+    "n_partial": 0,
+    "n_seeds": 20
+  },
+  "TSFN": {
+    "final_mean": 17.583902401908286,
+    "final_std": 0.21200758323263208,
+    "iters_mean": 11.0,
+    "n_partial": 0,
+    "n_seeds": 20
+  },
+  "pKGFN": {
+    "final_mean": 17.191262012175603,
+    "final_std": 0.6037281023764902,
+    "iters_mean": 13.65,
+    "n_partial": 20,
+    "n_seeds": 20
+  }
+}
