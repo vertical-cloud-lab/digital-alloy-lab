@@ -43,13 +43,13 @@
 
 ## 6 Headline KPIs (Topic 3B — Proposal-Ready)
 
-The transition from Topic 12F to Topic 3B reframes headline KPIs to foreground critical-mineral demand reduction alongside autonomous discovery. Three original KPIs survive with modification (Discovery Yield, AI Acceleration Factor, Throughput), one survives as-is (Digital Thread Completeness), one is retired (Autonomy Level, folded into go/no-go gates), and two new KPIs are introduced (Critical Mineral Demand Reduction Index, Mineral-Burden Optimization Efficacy). Iterations 9-14 refined each KPI with literature-grounded deep-dives.
+The headline KPIs foreground critical-mineral demand reduction alongside autonomous discovery. Three original KPIs survive with modification (Discovery Yield, AI Acceleration Factor, Throughput), one survives as-is (Digital Thread Completeness), one is retired (Autonomy Level, folded into go/no-go gates), and two new KPIs are introduced (Critical Mineral Demand Reduction Index, Mineral-Burden Optimization Efficacy). Iterations 9-14 refined each KPI with literature-grounded deep-dives.
 
 | # | KPI | Phase I Baseline | Phase I Target (9 mo) | Phase II Target | Measurement |
 |:---:|---|---|---|---|---|
-| 1 | **Supply-Risk-Reduced Discovery Yield** — fraction of BOFN-proposed alloys meeting family-specific performance thresholds AND supply-risk reduction vs incumbent (Scalmalloy/Be-Cu) | 0% (no data yet) | ≥20% of tested compositions (Stretch: ≥30%) | ≥50% | ASTM E8 tensile + ICP-OES composition verification + Helbig SRI calculation; family-specific thresholds: Al-Mn-Cr-Zr YS≥250/EL≥5%, Al-Zr YS≥200/EL≥8%, Cu-Cr-Zr YS≥200/≥50% IACS; per Ge et al. (2025), Arena et al. (2024), Biffi et al. (2024) |
+| 1 | **Supply-Risk-Reduced Discovery Yield** — fraction of BOFN-proposed alloys meeting family-specific performance thresholds AND supply-risk reduction vs incumbent (Scalmalloy/Be-Cu) | 0% (no data yet) | ≥20% of tested compositions (Stretch: ≥30%) | ≥50% | ASTM E8 tensile + ICP-OES composition verification + Helbig SRI calculation; family-specific thresholds: Al-Mn-Cr-Zr YS≥250 aged/EL≥5%, Al-Zr YS≥200 as-built/EL≥8%, Cu-Cr-Zr YS≥200 aged/≥50% IACS; per Ge et al. (2025), Arena et al. (2024), Biffi et al. (2024) |
 | 2 | **Critical Mineral Demand Reduction Index (CMDRI)** — composite supply-risk score reduction vs Scalmalloy (Al-Mg-Sc-Zr, primary comparator) and AlSi10Mg (LPBF process benchmark), using Helbig 12-indicator + Ferro & Bonollo Alloy Criticality Index | SRI_mean of Scalmalloy ≈ 0.65 (Sc-dominated) | ≥40% SRI_mean reduction vs Scalmalloy in best alloy; ≥15% vs AlSi10Mg (Stretch: ≥50% vs Scalmalloy) | ≥50% mean reduction across 3+ families | Dual reporting: Helbig 12-indicator per Mulukutla et al. (2024) + Ferro & Bonollo (2019) alloy criticality index; element-level waterfall decomposition |
-| 3 | **AI Acceleration Factor** — iterations to reach performance threshold vs baselines | Random search baseline | ≥3× fewer than random, ≥1.5× vs standard BO (Base: ≥2× vs random); report win rate across seeds | ≥5× vs random | Pre-registered benchmark with 5 baselines (random, expert DOE, standard BO, BOFN, BOFN−mineral), ≥20 seeds (increase to ≥30 if power analysis indicates), bootstrap CI; per Hastings et al. (2024), Adesiji et al. (2026), Turner et al. (2021) |
+| 3 | **AI Acceleration Factor** — iterations to reach performance threshold vs baselines | Random search baseline | ≥3× fewer than random, ≥1.5× vs standard BO (Base: ≥2× vs random); report win rate across seeds | ≥5× vs random | Pre-registered benchmark with 4 baselines (random, expert DOE, standard BO, BOFN−mineral ablation) + BOFN as method under test, ≥20 seeds (increase to ≥30 if power analysis indicates), bootstrap CI; per Hastings et al. (2024), Adesiji et al. (2026), Turner et al. (2021) |
 | 4 | **Closed-Loop Throughput** — alloy compositions with complete property records per month through full pipeline | 0 (manual workflow) | ≥8 compositions/month sustained (Base: ≥5/month); pipeline completion rate ≥70% | ≥20 compositions/month | Tiered: Primary = compositions with full tensile records; Secondary = compositions entered into pipeline (including failures); Tertiary = compositions with ≥ density data; per Volk & Abolhasani (2024) demonstrated vs theoretical throughput |
 | 5 | **Mineral-Burden Optimization Efficacy** — Pareto improvement when mineral-burden objective is added to BOFN vs performance-only BO over a broader composition space | Performance-only BO over expanded search space (including Sc/Mg-containing candidates) | Hypervolume ratio ≥1.15 (Base: ≥1.10); demonstrate mineral-burden/performance trade-off conflict exists before claiming improvement | Multi-objective Pareto with ≥3 performance + mineral-burden objectives | Pareto hypervolume indicator + number of non-dominated solutions + mineral-burden variance across Pareto set, ≥20 seeds; per Mulukutla et al. (2024), Daulton et al. (2020) qEHVI |
 | 6 | **Digital Thread Completeness** — fraction of alloy iterations with full provenance from CALPHAD through tensile result per formal schema | 0% | ≥90% (Base: ≥85%) with supply-risk metadata linked to every composition | 100% with FAIR compliance | Automated schema-validation audit against defined minimum metadata set (composition, CALPHAD version, powder batch, LPBF params, ASTM E8 results, BOFN trace, SRI score); FAIR sub-metrics (Findable, Accessible, Interoperable, Reusable) tracked separately |
@@ -79,11 +79,11 @@ All mandatory gates must pass for a GO decision. Gates 2 and 4 are Topic 3B-spec
 | Gate | Criterion | Minimum Threshold | Evidence Required | Timing |
 |:---:|---|---|---|---|
 | 1 | **Closed-loop autonomy** | ≥3 autonomous CALPHAD→atomization→LPBF→tensile→BOFN cycles without manual intervention; pipeline completion rate ≥60% | Timestamped logs showing end-to-end autonomous execution + completion rate calculation | Month 4 |
-| 2 | **Supply-risk-reduced alloy discovery** | ≥1 Al-Zr or Al-Mn-Cr-Zr alloy meets family-specific YS/EL threshold (Al-Mn-Cr-Zr: YS≥250/EL≥5%; Al-Zr: YS≥200/EL≥8%) with SRI_mean ≥25% below Scalmalloy, verified by ICP-OES | Tensile test certificate + ICP-OES composition report + Helbig SRI calculation with element-level waterfall | Month 6 |
+| 2 | **Supply-risk-reduced alloy discovery** | ≥1 Al-Zr or Al-Mn-Cr-Zr alloy meets family-specific YS/EL threshold (Al-Mn-Cr-Zr: YS≥250 aged/EL≥5%; Al-Zr: YS≥200 as-built/EL≥8%) with SRI_mean ≥25% below Scalmalloy, verified by ICP-OES | Tensile test certificate + ICP-OES composition report + Helbig SRI calculation with element-level waterfall | Month 6 |
 | 3 | **Printable process window** | ≥99.0% relative density for ≥2 distinct supply-risk-reduced compositions via LPBF; specify as-built condition and build orientation | Archimedes density or CT scan data with orientation documented | Month 5 |
 | 4 | **Mineral-burden BOFN demonstration** | BOFN with supply-risk objective shows Pareto improvement over performance-only BO on broader search space (including Sc/Mg-containing candidates), hypervolume ratio ≥1.10; must first demonstrate trade-off conflict exists | Benchmark comparison plot with ≥20 seeds and bootstrap CI + conflict pre-check correlation analysis | Month 7 |
-| 5 | **Mechanical property threshold** | ≥2 supply-risk-reduced compositions meet family-specific targets: Al-Zr YS≥200/EL≥8%; Al-Mn-Cr-Zr YS≥250/EL≥5%; tested in most conservative build orientation (Z or whichever is weakest) | ASTM E8 tensile data with ≥3 replicates per composition, orientation specified | Month 7 |
-| 6 | **AI optimization advantage** | BOFN reaches performance threshold in ≥2× fewer iterations than random and ≥1.3× vs standard BO; win rate ≥ 60% across seeds; report vs all 5 baselines | Pre-registered benchmark statistical analysis with win rate, median AF, and bootstrap CI | Month 8 |
+| 5 | **Mechanical property threshold** | ≥2 supply-risk-reduced compositions meet family-specific targets: Al-Zr YS≥200 as-built/EL≥8%; Al-Mn-Cr-Zr YS≥250 aged/EL≥5%; tested in most conservative build orientation (Z or whichever is weakest) | ASTM E8 tensile data with ≥3 replicates per composition, orientation specified | Month 7 |
+| 6 | **AI optimization advantage** | BOFN reaches performance threshold in ≥2× fewer iterations than random and ≥1.3× vs standard BO; win rate ≥ 65% across seeds; report vs all 4 baselines + ablation | Pre-registered benchmark statistical analysis with win rate, median AF, and bootstrap CI | Month 8 |
 | 7 | **Digital thread & scaling evidence** | ≥85% digital thread completeness per formal provenance schema; supply-risk metadata linked to ≥90% of compositions; documented Phase II scale-up pathway | Schema validation report + FAIR sub-metric audit + Phase II scaling plan | Month 9 |
 
 ### Scoring Rubric (0-100)
@@ -109,7 +109,7 @@ All mandatory gates must pass for a GO decision. Gates 2 and 4 are Topic 3B-spec
 | Month | Warning Signal | Risk |
 |:---:|---|---|
 | 2 | <1 autonomous cycle executed end-to-end | Integration risk |
-| 2 | No locked baseline defined for EF/AF benchmarking (all 5 baselines) | Evaluation risk |
+| 2 | No locked baseline defined for EF/AF benchmarking (all 4 baselines + ablation) | Evaluation risk |
 | 2 | Al-Zr/Al-Mn-Cr-Zr powder atomization not demonstrated | Material risk |
 | 2 | Supply-risk index calculator not built (Helbig + Ferro & Bonollo) | CMDRI risk |
 | 4 | No supply-risk-reduced parameter set achieves ≥99.0% density | Printability risk |
@@ -124,7 +124,7 @@ All mandatory gates must pass for a GO decision. Gates 2 and 4 are Topic 3B-spec
 | Month | Milestone | Target |
 |:---:|---|---|
 | 1 | Infrastructure: BOFN deployed, CALPHAD pipeline for Al-Zr/Al-Mn-Cr-Zr operational, first powder batch, SRI calculator built (Helbig + Ferro & Bonollo) | Systems operational; Scalmalloy SRI benchmark calculated |
-| 2 | First 3 supply-risk-reduced compositions through full pipeline; all 5 baselines locked; formal provenance schema deployed | 3 complete datasets; pre-registration filed; benchmark design frozen |
+| 2 | First 3 supply-risk-reduced compositions through full pipeline; all 4 baselines + ablation locked; formal provenance schema deployed | 3 complete datasets; pre-registration filed; benchmark design frozen |
 | 3 | LPBF batching validated (≥2 compositions/build); mineral-burden conflict pre-check completed | Demonstrated; ≥10 compositions total; trade-off between performance and supply-risk confirmed |
 | 4 | Steady-state throughput; BOFN mineral-burden objective active over broader search space | ≥5 compositions/month; mineral-burden objective integrated; pipeline completion rate tracked |
 | 5 | Mid-project performance assessment | ≥25 compositions; initial EF/AF estimates with win rates; ≥2 compositions at ≥99.0% density |
@@ -143,7 +143,7 @@ Al₃Zr L1₂ nanoprecipitates provide precipitation strengthening without Sc or
 
 ### Al-Mn-Cr-Zr Family (Primary, ~40% of Phase I effort)
 
-All constituents (Al, Mn, Cr, Zr) are non-critical. Arena et al. (2024) reported Al-HS1 (Al-5Mn-0.8Cr-0.6Zr-0.17Fe-0.24Si) with YS 250 MPa as-printed, ~350 MPa after aging at 375°C. Mehta et al. (2022) demonstrated crack-free LPBF at ~99.5% density with 98.9–103.4 HV as-printed, 130–144 HV after direct aging.
+All constituents (Al, Mn, Cr, Zr) have moderate-to-low supply risk (Helbig SRI ~0.3–0.5) compared to Sc (~0.9) and REE (~0.7–0.9) in incumbent alloys, though Mn and Cr appear on the USGS 2022 Critical Minerals List. Arena et al. (2024) reported Al-HS1 (Al-5Mn-0.8Cr-0.6Zr-0.17Fe-0.24Si) with YS 250 MPa as-printed, ~350 MPa after aging at 375°C. Mehta et al. (2022) demonstrated crack-free LPBF at ~99.5% density with 98.9–103.4 HV as-printed, 130–144 HV after direct aging.
 
 ### Cu-Cr-Zr (Stretch, ~20% of Phase I effort)
 
@@ -153,11 +153,11 @@ Be-Cu replacement pathway. Biffi et al. (2024) reported LPBF Cu-Cr-Zr (99.3% den
 |---|---|---|---|---|
 | Al-Zr family | Yield strength (YS) | 279 MPa as-built; 395 MPa peak-aged (Ge et al., 2025) | ≥200 MPa as-built; ≥280 MPa aged | ≥350 MPa aged |
 | Al-Zr family | UTS | ~400 MPa (Ge et al., 2025) | ≥250 MPa as-built; ≥320 MPa aged | ≥400 MPa |
-| Al-Zr family | Elongation | 0.9–16% depending on composition (Ge et al., 2025) | ≥5% | ≥8% |
+| Al-Zr family | Elongation | 0.9–16% depending on composition (Ge et al., 2025) | ≥5% (Base); ≥8% (Tier 1 pass) | ≥8% |
 | Al-Zr family | Relative density | >99.5% (Ge et al., 2025) | ≥99.0% | ≥99.5% |
 | Al-Mn-Cr-Zr family | Yield strength (YS) | 250 MPa as-printed, ~350 MPa aged (Arena et al., 2024) | ≥250 MPa aged | ≥350 MPa |
 | Al-Mn-Cr-Zr family | UTS | ~350–400 MPa range (Arena et al., 2024) | ≥300 MPa | ≥400 MPa |
-| Al-Mn-Cr-Zr family | Elongation | ≥3–5% est. (Mehta et al., 2022; Arena et al., 2024) | ≥4% | ≥6% |
+| Al-Mn-Cr-Zr family | Elongation | ≥3–5% est. (Mehta et al., 2022; Arena et al., 2024) | ≥5% (Tier 1 pass) | ≥6% |
 | Al-Mn-Cr-Zr family | Hardness | 103 HV as-built; 130–144 HV peak-aged (Mehta et al., 2022) | ≥110 HV as-built; ≥130 HV aged | ≥140 HV |
 | Cu-Cr-Zr (stretch) | YS | 141–167 MPa LPBF as-built (Biffi et al., 2024) | ≥200 MPa aged | ≥400 MPa |
 | Cu-Cr-Zr (stretch) | UTS | 230–265 MPa LPBF (Biffi et al., 2024) | ≥300 MPa | ≥500 MPa |
@@ -173,19 +173,19 @@ Be-Cu replacement pathway. Biffi et al. (2024) reported LPBF Cu-Cr-Zr (99.3% den
 
 FLAIME will pre-register a benchmark protocol before experiments begin, following SDL benchmarking best practices (Adesiji et al., 2026; Volk & Abolhasani, 2024).
 
-**Five baselines** ensure the AI advantage claim is defensible and isolate each component's contribution:
+**Four baselines plus one BOFN ablation** ensure the AI advantage claim is defensible and isolate each component's contribution:
 
-| Baseline | Description | Budget | Purpose |
+| ID | Description | Budget | Purpose |
 |---|---|---|---|
 | B1: Random | Uniform random sampling from CALPHAD-feasible supply-risk-reduced space | 20 compositions | Lower bound; any method should beat this |
 | B2: Expert DOE | Latin hypercube or factorial design by domain expert | 20 compositions | Tests whether structure alone suffices |
 | B3: Standard BO | Single-task GP-BO (no function networks, no mineral-burden objective) | 20 compositions | Isolates BOFN's multi-node advantage |
-| B4: BOFN | Full BOFN with mineral-burden scalarization and cost-aware p-KGFN acquisition | 20 compositions | The method under test |
-| B5: BOFN−mineral | BOFN without mineral-burden objective (performance-only BOFN) | 20 compositions | Isolates the mineral-burden objective's contribution from the BOFN architecture advantage |
+| **BOFN** (method under test) | Full BOFN with mineral-burden scalarization and cost-aware p-KGFN acquisition | 20 compositions | The method under test — not a baseline |
+| B4: BOFN−mineral (ablation) | BOFN without mineral-burden objective (performance-only BOFN) | 20 compositions | Isolates the mineral-burden objective's contribution from the BOFN architecture advantage |
 
-All baselines use identical search spaces, property evaluation methods, and stopping criteria. ≥20 replicate seeds per baseline for statistical power (increase to ≥30 if prospective power analysis using CALPHAD surrogates indicates marginal power at 20 seeds). Primary metrics: Enhancement Factor `EF(n) = y*_BOFN(n) / y*_baseline(n)` and Acceleration Factor `AF(y) = n_baseline / n_BOFN` to reach target y. Pre-specify whether AF is computed at a fixed performance threshold (80% of best-known) or at the campaign's realized best.
+All baselines and the BOFN ablation use identical search spaces, property evaluation methods, and stopping criteria. ≥20 replicate seeds per condition for statistical power (increase to ≥30 if prospective power analysis using CALPHAD surrogates indicates marginal power at 20 seeds). Primary metrics: Enhancement Factor `EF(n) = y*_BOFN(n) / y*_baseline(n)` and Acceleration Factor `AF(y) = n_baseline / n_BOFN` to reach target y. Pre-specify whether AF is computed at a fixed performance threshold (80% of best-known) or at the campaign's realized best.
 
-**Statistical analysis**: Paired bootstrap CI (1000 resamples) on EF/AF following Adesiji et al. (2026) *Digital Discovery* and Volk & Abolhasani (2024) *Nature Communications*; Mann-Whitney U test; Bonferroni correction for 4 pairwise comparisons (B1-B4, B2-B4, B3-B4, B5-B4). Effect size reported as Cohen's d. Pre-declared α=0.05. Minimum meaningful effect: EF≥1.2 (corresponding to ≥20% property improvement at fixed budget). **Report win rate** (fraction of seeds where BOFN outperforms each baseline) alongside median AF to transparently handle the "BO sometimes loses" problem per Turner et al. (2021). Report EF trajectories as a function of normalized experiment number (n/d, where d is dimensionality) per Adesiji et al. (2026).
+**Statistical analysis**: Paired bootstrap CI (1000 resamples) on EF/AF following Adesiji et al. (2026) *Digital Discovery* and Volk & Abolhasani (2024) *Nature Communications*; Mann-Whitney U test; Bonferroni correction for 4 pairwise comparisons (B1-BOFN, B2-BOFN, B3-BOFN, B4-BOFN). Effect size reported as Cohen's d. Pre-declared α=0.05. Minimum meaningful effect: EF≥1.2 (corresponding to ≥20% property improvement at fixed budget). **Report win rate** (fraction of seeds where BOFN outperforms each baseline) alongside median AF to transparently handle the "BO sometimes loses" problem per Turner et al. (2021). Report EF trajectories as a function of normalized experiment number (n/d, where d is dimensionality) per Adesiji et al. (2026).
 
 ### Time-Ledger Methodology
 
@@ -233,7 +233,7 @@ A dedicated metric category quantifying the central deliverable of Topic 3B. The
 | Platform | Throughput: compositions entered pipeline/month | 0 | ≥12/month | ≥30/month | Pipeline log (secondary metric) |
 | Platform | Pipeline completion rate | — | ≥70% | ≥85% | Completed/initiated runs |
 | Platform | Hands-free fraction | <20% | ≥70% | ≥90% | Workflow audit |
-| AI/BOFN | Acceleration factor vs random | 1.0× | ≥3.0× | ≥5.0× | Pre-registered 5-baseline benchmark per Hastings et al. (2024), Adesiji et al. (2026) |
+| AI/BOFN | Acceleration factor vs random | 1.0× | ≥3.0× | ≥5.0× | Pre-registered 4-baseline + ablation benchmark per Hastings et al. (2024), Adesiji et al. (2026) |
 | AI/BOFN | Win rate vs random (across seeds) | 50% | ≥80% | ≥90% | Bootstrap analysis per Turner et al. (2021) |
 | AI/BOFN | Mineral-burden hypervolume ratio (broader space) | 1.0 | ≥1.15 | MOBO with ≥3 objectives | Pareto hypervolume per Mulukutla et al. (2024), Daulton et al. (2020) |
 | AI/BOFN | Predictive MAE (YS) | >75 MPa | ≤40 MPa | ≤25 MPa across families | Nested CV + prospective holdout |
@@ -248,6 +248,8 @@ A dedicated metric category quantifying the central deliverable of Topic 3B. The
 | Qualification | ASTM E8/E8M compliance rate | <25% | 100% | 100% | QA audit |
 | Qualification | Digital-thread completeness (per schema) | <30% | ≥90% with SRI metadata | ≥99% with FAIR | UUID-linked provenance audit + schema validation |
 | Scaling | Transfer-learning lift (new family) | 0% | ≥20% data efficiency for Cu-Cr-Zr | ≥40% for expanded families | Warm vs cold start campaigns |
+
+> **Tier note**: "Phase I Target" values in this table correspond to Expected-tier targets. Mandatory go/no-go gate thresholds use Base-tier minimums (see §Go/No-Go Gates above).
 
 ---
 
@@ -288,7 +290,7 @@ A dedicated metric category quantifying the central deliverable of Topic 3B. The
 
 | Metric | Base | Expected | Stretch | Measurement |
 |---|---:|---:|---:|---|
-| BOFN acceleration factor vs random | ≥2× | ≥3× | ≥5× | Pre-registered 5-baseline benchmark |
+| BOFN acceleration factor vs random | ≥2× | ≥3× | ≥5× | Pre-registered 4-baseline + ablation benchmark |
 | BOFN acceleration vs standard BO | ≥1.3× | ≥1.5× | ≥2× | Multi-seed comparison |
 | BOFN vs BOFN−mineral (mineral-burden contribution) | ≥1.05× | ≥1.15× | ≥1.3× | Isolates mineral-burden objective value |
 | Win rate vs random (across seeds) | ≥65% | ≥80% | ≥90% | Bootstrap per Turner et al. (2021) |
@@ -374,12 +376,12 @@ The Phase II narrative is reoriented from temperature upgrade to expanded supply
 2. **Cu-Cr-Zr full optimization pathway**: Phase I printability demonstration (≥99.0% density) + initial BOFN-guided property data; Phase II BOFN configuration incorporating conductivity as additional objective per BIRDSHOT paradigm (Hastings et al., 2024)
 3. **Multi-alloy-family platform validation**: Pipeline is alloy-system-agnostic — can switch between Al-Zr, Al-Mn-Cr-Zr, and Cu-Cr-Zr without architectural changes, validated by ≥1 closed-loop cycle in each family
 4. **Supply-risk Pareto portfolio**: BOFN Pareto frontier in (performance, supply-risk) space demonstrated over broader search space; Phase II extends to ≥3 performance + 1 supply-risk objective in full MOBO per Mulukutla et al. (2024) and Daulton et al. (2020) qEHVI
-5. **Demonstrated AI advantage**: Pre-registered AF≥2× vs random (minimum meaningful effect EF≥1.2) with CI excluding 1.0 and win rate ≥60% proves BOFN adds value beyond automation alone; mineral-burden objective contribution isolated via B5 baseline comparison
+5. **Demonstrated AI advantage**: Pre-registered AF≥2× vs random (minimum meaningful effect EF≥1.2) with CI excluding 1.0 and win rate ≥65% proves BOFN adds value beyond automation alone; mineral-burden objective contribution isolated via BOFN−mineral ablation comparison
 6. **Scaling evidence**: Atomization batch sizes, LPBF build rates, and tensile throughput sufficient to project Phase II at ≥20 compositions/month; pipeline completion rate ≥70%; bottlenecks identified with mitigation plans
 
 **Narrative bridge**: FLAIME's autonomous closed-loop framework is the invariant asset; the alloy search space is the expandable variable. Phase I proves supply-risk-reduced Al alloy discovery and supply-risk-aware optimization on accessible alloys; Phase II scales into Cu-Cr-Zr (Be-Cu replacement), expanded Al families (Al-Ce for REE supply chain stabilization), and potentially Ni-free/Co-free steels using the same BOFN engine, data schemas, and qualification metrics. The critical mineral demand reduction grows with each alloy family added.
 
-> **Note on Phase II availability**: DE-FOA-0003612 states "PHASE II APPLICATIONS WILL NOT BE ACCEPTED IN THIS FOCUS AREA" for Topic 3B. This exclusion is round-specific — it applies only to this solicitation. Future Genesis Mission rounds may accept Phase II applications under Topic 3B or similar focus areas. Phase I teams can also pivot to a Phase-II-eligible focus area within the current round. Phase II readiness indicators above are therefore framed as evidence that Phase I would generate to justify a future Phase II application.
+> **Note on Phase II availability**: DE-FOA-0003612 states "PHASE II APPLICATIONS WILL NOT BE ACCEPTED IN THIS FOCUS AREA" for Topic 3B. This exclusion applies to the current solicitation. Future solicitations may offer Phase II opportunities under different focus areas, and Phase I teams can also pivot to a Phase-II-eligible focus area within the current round. Phase II readiness indicators above are therefore framed as evidence that Phase I would generate to justify a future Phase II application.
 
 ---
 
@@ -393,7 +395,7 @@ The Phase II narrative is reoriented from temperature upgrade to expanded supply
 | Mulukutla et al. (2024) | MoNbTiVW refractory HEA | Computational only | Yes — Helbig SRmean objective | Supply-risk steered search to lower-risk compositions (Mulukutla et al., 2024) | FLAIME closes loop experimentally on Al/Cu LPBF |
 | CMI Hub Al-Ce (Ames Lab) | Al-Ce binary/ternary | No — conventional | Indirect (Ce coproduct) | 459 MPa UTS / 274 MPa YS for Al-7Cu-3Ce SLM (Czerwinski, 2020; Sims et al., 2017) | FLAIME avoids REEs entirely; autonomous discovery |
 | AlSi10Mg (benchmark) | Commercial LPBF | No | No (SRI ≈ 0.25, low criticality) | YS 250–300, UTS 350–400, EL 5–10% (Arena et al., 2024) | LPBF process benchmark only; weak supply-risk comparator |
-| A-Lab (Berkeley) | Inorganic synthesis | Yes (L4-L5) | No | 2.4 mat/day; XRD only (Szymanski et al., 2023) | A-Lab stops at powder+XRD — no AM manufacturing or tensile testing |
+| A-Lab (Berkeley) | Inorganic synthesis | Yes (L4-L5) | No | 2.4 mat/day; XRD only (Szymanski et al., 2023) | A-Lab performs inorganic synthesis with XRD characterization — no AM manufacturing or tensile testing |
 | AMASE (thin-film) | Thin-film combinatorial | Yes | No | Thin-film only; no bulk alloy | FLAIME targets bulk AM alloys with full tensile qualification |
 | Nelaturu et al. (DED) | DED alloy exploration | Partial | No | Hardness screening only; no tensile, no atomization | FLAIME integrates atomization + LPBF + ASTM E8 tensile |
 | ORNL Peregrine | LPBF process monitoring | Yes (in-situ) | No | Process control, not composition discovery | FLAIME discovers new compositions; Peregrine monitors known alloys |
@@ -405,7 +407,7 @@ The Phase II narrative is reoriented from temperature upgrade to expanded supply
 
 ## Partnership & Collaboration Structure
 
-FLAIME's partnership structure meets Genesis Mission's collaborative requirements (academia + industry + national lab) with 3 letters of collaboration (funded partners) and 8 letters of support.
+FLAIME's partnership structure supports Genesis Mission's collaborative requirements with 3 funded industry partners (letters of collaboration) and 8 letters of support (including Ames National Lab).
 
 ### Letters of Collaboration (Funded)
 
@@ -437,15 +439,15 @@ The following preliminary results demonstrate FLAIME's readiness to begin Phase 
 | # | Evidence Item | Status | Relevance to Metrics |
 |---|---|---|---|
 | 1 | AMAZEMET ultrasonic atomizer installed at BYU | ✅ Complete | Enables KPI 4 (throughput); supports Gate 1 (closed-loop autonomy) |
-| 2 | AlSi10Mg tensile specimen printed at University of Utah (Taylor Sparks) | ✅ Complete | Validates LPBF pipeline for process baseline |
-| 3 | Tensile data for U of Utah AlSi10Mg specimen | ✅ Complete | Provides benchmark for KPI 1 (discovery yield) comparison |
-| 4 | AlSi10Mg tensile specimen from 3D Powder Tech | ✅ Complete | Cross-validates tensile testing methodology |
+| 2 | AlSi10Mg tensile specimen printed at University of Utah (Taylor Sparks) | ✅ Complete | Validates LPBF pipeline for process baseline; supports KPI 1 (discovery yield benchmark) |
+| 3 | Tensile data for U of Utah AlSi10Mg specimen | ✅ Complete | Provides benchmark data for KPI 1 comparison and Gate 5 (mechanical property threshold) |
+| 4 | AlSi10Mg tensile specimen from 3D Powder Tech | ✅ Complete | Cross-validates tensile testing methodology; supports KPI 4 (throughput pipeline) |
 | 5 | SEM and EDS for precursor powders (AlSi10Mg, Si powder) | ✅ Complete | Validates powder characterization pipeline; supports KPI 6 (digital thread) |
 | 6 | SEM and EDS for AMAZEMET-atomized mixture (Al wire + Si addition → slight composition change from original AlSi10Mg) | ✅ Complete | Demonstrates UA composition control; supports Gate 2 (alloy discovery) |
-| 7 | High-temperature tensile data using standard aluminum tensile specimen | ✅ Complete | Validates high-T mechanical testing capability |
+| 7 | High-temperature tensile data using standard aluminum tensile specimen | ✅ Complete | Validates high-T mechanical testing capability; supports Gate 5 |
 | 8 | Thermo-Calc AM Module simulations provided by Thermo-Calc | ✅ Complete | Validates CALPHAD node; supports KPI 6 (digital thread) |
-| 9 | Thermo-Calc CALPHAD simulations run on BYU HPC clusters | ✅ Complete | Demonstrates computational throughput for CALPHAD screening |
-| 10 | Full pKGFN pipeline implementation (BoTorch 0.12+) | ✅ Complete | Core of KPI 3 (AI acceleration); enables Gate 6 (AI advantage) |
+| 9 | Thermo-Calc CALPHAD simulations run on BYU HPC clusters | ✅ Complete | Demonstrates computational throughput for CALPHAD screening; supports KPIs 5 (mineral-burden optimization) and 6 (digital thread) |
+| 10 | Full pKGFN pipeline implementation (BoTorch 0.12+) | ✅ Complete | Core of KPI 3 (AI acceleration); enables Gate 6 (AI advantage); supports KPI 5 (mineral-burden BOFN) |
 | 11 | Automated powder dispensing demonstration | ✅ Complete | Supports KPI 4 (throughput); enables Gate 1 (closed-loop autonomy) |
 
 > These 11 evidence items collectively demonstrate that FLAIME has operational infrastructure (items 1, 11), validated characterization pipelines (items 2–7), computational readiness (items 8–10), and the AI optimization engine (item 10) needed to begin Phase I immediately. No major capability gaps remain.
