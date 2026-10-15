@@ -1,0 +1,35 @@
+{
+  "algo": "TSFN",
+  "seed": 2,
+  "best_vals": [
+    0.942008480537656,
+    0.9991428433063616,
+    0.9991428433063616
+  ],
+  "cost_trace": [
+    348,
+    464,
+    580
+  ],
+  "node_selections": [
+    "full",
+    "full"
+  ],
+  "true_max": 1.3073009839057945,
+  "config": {
+    "n_init": 3,
+    "cost_budget": 600,
+    "node_costs": [
+      1,
+      10,
+      10,
+      45,
+      20,
+      30
+    ],
+    "noise_std": 0.05,
+    "coupling": 0.3,
+    "n_nodes": 6,
+    "smoke_test": true
+  }
+}

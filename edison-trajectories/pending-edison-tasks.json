@@ -1,0 +1,110 @@
+{
+  "submitted_at": "2026-04-18T05:50:04.822861+00:00",
+  "retrieved_at": "2026-04-18T15:55:00+00:00",
+  "tasks": [
+    {
+      "purpose": "property-sensitivity-vs-composition",
+      "addresses_comment": 3104607177,
+      "job_name": "LITERATURE_HIGH",
+      "task_id": "278f1234-e2f7-438f-8583-17e92b53a6a5",
+      "status": "success",
+      "answer_file": "edison-trajectories/property-sensitivity-vs-composition.md",
+      "answer_chars": 22586
+    },
+    {
+      "purpose": "reframed-composition-scaling-review",
+      "addresses_comment": 4272901731,
+      "job_name": "ANALYSIS",
+      "task_id": "b117d942-7764-4847-8672-6754b2966bc3",
+      "status": "success",
+      "answer_file": "edison-trajectories/composition-scaling-edison-r2-unified.md",
+      "answer_chars": 6902,
+      "grade": "B+",
+      "attached_files": [
+        "composition-scaling-analysis.md",
+        "thermocalc-scaling-strategy.md",
+        "bofn-llm-bo-synthesis.md",
+        "llm_bayesian_optimization.md",
+        "bofn_pkgfn_demo.py",
+        "gp_network.py"
+      ],
+      "file_uris": [
+        "data_entry:4c905f9d-0c63-4ef7-b61b-ae7300574521",
+        "data_entry:b25cf18c-f696-46a7-bce4-9d306605fc04",
+        "data_entry:87e69a4f-340d-4927-aac3-ab5c01824f49",
+        "data_entry:67ae600e-5885-40dc-b6e8-e131f43ee6cc",
+        "data_entry:8cdf2e30-9754-460e-a4d6-d42f26908908",
+        "data_entry:43b57df8-3100-4e0f-b6d9-d92b5afcc4ab"
+      ]
+    },
+    {
+      "purpose": "pkgfn-underperformance-analysis",
+      "addresses_comment": 4291093320,
+      "job_name": "ANALYSIS",
+      "task_id": "590a2f3d-17b7-4c96-945f-a373f690484f",
+      "status": "success",
+      "answer_file": "edison-trajectories/pkgfn-underperformance-analysis.md",
+      "answer_chars": 10595,
+      "submitted_at": "2026-04-21T19:13:25.330957+00:00",
+      "retrieved_at": "2026-04-21T21:50:00+00:00",
+      "attached_files": [
+        "benchmarks/bofn_actions_benchmark.py",
+        "benchmarks/partial_kgfn/manufacturing_problem.py",
+        "benchmarks/partial_kgfn/gp_network.py",
+        "benchmarks/bofn_pkgfn_demo.py",
+        "benchmarks/bofn_node_correlations.py",
+        "benchmarks/figures/actions_full/bofn_actions_cost_efficiency.png",
+        "benchmarks/figures/actions_full/bofn_actions_summary.json",
+        "benchmarks/results/actions_full/bofn-combined-24736409107.zip",
+        "benchmarks/figures/node_correlations.png",
+        "benchmarks/figures/node_correlations.json",
+        "main (2).pdf"
+      ]
+    },
+    {
+      "purpose": "calphad-lpbf-ht-correlation-literature",
+      "addresses_comment": 4292571270,
+      "job_name": "LITERATURE_HIGH",
+      "task_id": "af7e6370-cd81-47fd-a3f7-8eafb6fa87c7",
+      "status": "submitted",
+      "submitted_at": "2026-04-21T23:48:49.863930+00:00"
+    },
+    {
+      "purpose": "pkgfn-post-fix-analysis-with-correct-pdfs",
+      "addresses_comment": 4292571270,
+      "job_name": "ANALYSIS",
+      "task_id": "d0d3b9e3-6865-454f-ac41-435e47d9d5ae",
+      "status": "submitted",
+      "submitted_at": "2026-04-21T23:48:49.863930+00:00",
+      "attached_files": [
+        "benchmarks/bofn_actions_benchmark.py",
+        "benchmarks/bofn_pkgfn_demo.py",
+        "benchmarks/partial_kgfn/gp_network.py",
+        "benchmarks/partial_kgfn/manufacturing_problem.py",
+        "benchmarks/partial_kgfn/partial_kgfn.py",
+        "benchmarks/figures/actions_full/bofn_actions_cost_efficiency.png",
+        "benchmarks/figures/actions_full/bofn_actions_summary.json",
+        "benchmarks/figures/node_correlations.png",
+        "benchmarks/figures/node_correlations.json",
+        "benchmarks/results/actions_full/bofn-combined-24736409107.zip",
+        "flaime-genesis-proposal.pdf",
+        "DE-FOA-0003612-000003.pdf"
+      ],
+      "file_uris": [
+        "data_entry:c3d29046-2596-4506-9f35-de3db54ee9a4",
+        "data_entry:946bf1fd-e17d-48b6-9fbc-06a8ddd8f191",
+        "data_entry:24a35b63-e989-4d18-8593-529e75b8b0cb",
+        "data_entry:d0098c9d-2a99-4a92-a4e2-d9501d5e19ea",
+        "data_entry:f904cc03-8cab-4ce7-8f2c-e279ab3566c3",
+        "data_entry:4435a2bb-4f32-4c01-90cf-73cf5a48194b",
+        "data_entry:d28078ee-735f-471d-b317-ccee85878a70",
+        "data_entry:58140ba6-72ca-4af2-b400-5078102c473a",
+        "data_entry:c6b14a01-bcbe-4795-897a-f1df90f96be2",
+        "data_entry:c22f9189-2229-4c6e-8e5a-c398374c5a63",
+        "data_entry:bbe70801-b5ac-4b52-bc14-05d930a2073f",
+        "data_entry:9c4b0452-eb32-4563-840f-00198dea6cd6"
+      ]
+    }
+  ],
+  "last_submitted_at": "2026-04-21T19:13:25.330975+00:00"
+}
