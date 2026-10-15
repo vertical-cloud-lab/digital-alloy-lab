@@ -1,0 +1,46 @@
+# Adversarial / refusal eval for the NSF requirements snippet store.
+#
+# These queries ask about rules NSF PAPPG / GSS / GWSW do NOT contain. A
+# good retrieval-grounded mock reviewer should *refuse* to answer
+# (per `MOCK_REVIEWER_PLAYBOOK.md` §"INSUFFICIENT EVIDENCE rule"), not
+# return a plausible-but-wrong PAPPG section.
+#
+# Scoring (see scripts/run_eval.py --adversarial):
+#   * `must_not_top_id`  — top-1 hit MUST NOT match these ids. If it does
+#     the system has confidently retrieved a rule that does not actually
+#     answer the question.
+#   * `max_score`        — top-1 BM25 score must be ≤ this. Used as a
+#     proxy refusal threshold; the playbook should treat scores below
+#     this as INSUFFICIENT EVIDENCE.
+#   * `tag`              — adversarial subtype.
+#
+# Subtypes covered:
+#   * out-of-scope-regulator (NIH / DoD / FDA rules that NSF doesn't enforce)
+#   * fabricated-section      (made-up §IDs that look real)
+#   * out-of-scope-policy     (export control, copyright, FDA 21 CFR)
+#   * negation                (queries about what NSF does NOT require)
+#   * paraphrase-trap         (sounds like an NSF question but isn't covered)
+
+# Out-of-scope regulator
+{"query": "What NIH Specific Aims page count is required?", "tag": "out-of-scope-regulator", "max_score": 8.0}
+{"query": "What DoD DARPA cost share is required for the DARPA Young Faculty Award?", "tag": "out-of-scope-regulator", "max_score": 8.0}
+{"query": "What FDA 21 CFR Part 11 electronic signature requirements apply to NSF audits?", "tag": "out-of-scope-regulator", "max_score": 8.0}
+{"query": "What is the NIH Vertebrate Animals Section length limit?", "tag": "out-of-scope-regulator", "max_score": 8.0}
+
+# Fabricated sections that look real
+{"query": "What does PAPPG section II.Q.99 say about quantum entanglement disclosures?", "tag": "fabricated-section", "max_score": 8.0}
+{"query": "What does PAPPG section V.Z.7 require for AI-generated proposals?", "tag": "fabricated-section", "max_score": 8.0}
+{"query": "Does PAPPG chapter VII allow cryptocurrency as cost share?", "tag": "fabricated-section", "max_score": 8.0}
+
+# Out-of-scope policy domains
+{"query": "What export control license do I need for ITAR-controlled hardware shipped abroad?", "tag": "out-of-scope-policy", "max_score": 8.0}
+{"query": "What are the copyright assignment rules for journal articles funded by NSF?", "tag": "out-of-scope-policy", "max_score": 8.0}
+{"query": "Does NSF require IRB approval to use OpenAI APIs in research?", "tag": "out-of-scope-policy", "max_score": 8.0}
+
+# Negation / contrastive (asking about what is forbidden often retrieves the allowed clause)
+{"query": "What font sizes does NSF prohibit?", "tag": "negation", "max_score": 10.0}
+{"query": "Which pages of the Project Description are exempt from the 15-page limit?", "tag": "negation", "max_score": 10.0}
+
+# Paraphrase-trap: sounds NSF-shaped but is actually about a different policy
+{"query": "What ORCID fields are mandatory in the NSF biosketch?", "tag": "paraphrase-trap", "max_score": 10.0}
+{"query": "What is NSF's threshold for requiring a single-audit report under 2 CFR 200 subpart F?", "tag": "paraphrase-trap", "max_score": 10.0}

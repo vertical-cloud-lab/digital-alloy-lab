@@ -1,0 +1,166 @@
+{
+  "n_snippets": 666,
+  "n_docs": 38,
+  "total_est_tokens": 206640,
+  "by_strength": {
+    "prohibited": 44,
+    "required": 265,
+    "recommended": 78,
+    "permitted": 119,
+    "informational": 160
+  },
+  "by_doc": {
+    "federal-register-2024-29244-gss": {
+      "n_snippets": 3,
+      "est_tokens": 3498
+    },
+    "gold-standard-science-implementation-plan-2025": {
+      "n_snippets": 4,
+      "est_tokens": 3308
+    },
+    "grant-writers-seminars-workshops/any-agency/BackgroundandNeedsAssessment": {
+      "n_snippets": 2,
+      "est_tokens": 940
+    },
+    "grant-writers-seminars-workshops/any-agency/BeforeYouBegintoWrite": {
+      "n_snippets": 2,
+      "est_tokens": 808
+    },
+    "grant-writers-seminars-workshops/any-agency/DevelopmentofAbstract": {
+      "n_snippets": 2,
+      "est_tokens": 896
+    },
+    "grant-writers-seminars-workshops/any-agency/DevelopmentofOverviewSection": {
+      "n_snippets": 2,
+      "est_tokens": 896
+    },
+    "grant-writers-seminars-workshops/any-agency/TableofContents": {
+      "n_snippets": 2,
+      "est_tokens": 457
+    },
+    "grant-writers-seminars-workshops/any-agency/WritingtheBodyofYourProposal": {
+      "n_snippets": 2,
+      "est_tokens": 975
+    },
+    "grant-writers-seminars-workshops/biomedical-publication/Deciding-on-Co-Authors": {
+      "n_snippets": 2,
+      "est_tokens": 798
+    },
+    "grant-writers-seminars-workshops/biomedical-publication/Deciding-on-a-Journal": {
+      "n_snippets": 2,
+      "est_tokens": 883
+    },
+    "grant-writers-seminars-workshops/biomedical-publication/Review-of-the-Manuscript": {
+      "n_snippets": 2,
+      "est_tokens": 884
+    },
+    "grant-writers-seminars-workshops/biomedical-publication/Table-of-Contents-BP": {
+      "n_snippets": 2,
+      "est_tokens": 479
+    },
+    "grant-writers-seminars-workshops/biomedical-publication/The-Discussion": {
+      "n_snippets": 2,
+      "est_tokens": 653
+    },
+    "grant-writers-seminars-workshops/biomedical-publication/The-Introduction": {
+      "n_snippets": 2,
+      "est_tokens": 822
+    },
+    "grant-writers-seminars-workshops/biomedical-publication/What-When-to-Publish": {
+      "n_snippets": 2,
+      "est_tokens": 879
+    },
+    "grant-writers-seminars-workshops/nih/Find-Program-Grant-Mechanism-2022": {
+      "n_snippets": 2,
+      "est_tokens": 782
+    },
+    "grant-writers-seminars-workshops/nih/Learning-Milestones-Chapter-11": {
+      "n_snippets": 3,
+      "est_tokens": 1608
+    },
+    "grant-writers-seminars-workshops/nih/NIH25-Significance-Innovation-Subsections": {
+      "n_snippets": 3,
+      "est_tokens": 710
+    },
+    "grant-writers-seminars-workshops/nih/NIH25-Table-of-Contents": {
+      "n_snippets": 2,
+      "est_tokens": 859
+    },
+    "grant-writers-seminars-workshops/nih/Preface-for-website": {
+      "n_snippets": 2,
+      "est_tokens": 1618
+    },
+    "grant-writers-seminars-workshops/nih/Principle-Changes-in-this-Edition": {
+      "n_snippets": 2,
+      "est_tokens": 884
+    },
+    "grant-writers-seminars-workshops/nih/Rigor-of-Research-Design": {
+      "n_snippets": 1,
+      "est_tokens": 916
+    },
+    "grant-writers-seminars-workshops/nih/Senior-Key-Personnel": {
+      "n_snippets": 2,
+      "est_tokens": 853
+    },
+    "grant-writers-seminars-workshops/nsf/NSF-Budget-Justification": {
+      "n_snippets": 3,
+      "est_tokens": 853
+    },
+    "grant-writers-seminars-workshops/nsf/NSF-Learning-Milestones-for-Chapter-12": {
+      "n_snippets": 3,
+      "est_tokens": 1352
+    },
+    "grant-writers-seminars-workshops/nsf/OverviewTemplateMasterPlanNSF2021": {
+      "n_snippets": 2,
+      "est_tokens": 735
+    },
+    "grant-writers-seminars-workshops/nsf/Pre-SubmissionReviewNSF2021": {
+      "n_snippets": 3,
+      "est_tokens": 716
+    },
+    "grant-writers-seminars-workshops/nsf/Principal-Changes-in-this-Edition": {
+      "n_snippets": 2,
+      "est_tokens": 623
+    },
+    "grant-writers-seminars-workshops/nsf/Table-of-Contents": {
+      "n_snippets": 5,
+      "est_tokens": 623
+    },
+    "grant-writers-seminars-workshops/usda-nifa/USDABlueprintforProjectNarrative2021": {
+      "n_snippets": 2,
+      "est_tokens": 781
+    },
+    "grant-writers-seminars-workshops/usda-nifa/USDABudgetJustification2021": {
+      "n_snippets": 1,
+      "est_tokens": 942
+    },
+    "grant-writers-seminars-workshops/usda-nifa/USDAFacilitiesandOtherResources2021": {
+      "n_snippets": 2,
+      "est_tokens": 1056
+    },
+    "grant-writers-seminars-workshops/usda-nifa/USDAPrincipalChanges2021": {
+      "n_snippets": 2,
+      "est_tokens": 573
+    },
+    "grant-writers-seminars-workshops/usda-nifa/USDAScoringandRanking2021": {
+      "n_snippets": 1,
+      "est_tokens": 852
+    },
+    "grant-writers-seminars-workshops/usda-nifa/USDASentenceStemsforOverview2021": {
+      "n_snippets": 1,
+      "est_tokens": 838
+    },
+    "grant-writers-seminars-workshops/usda-nifa/USDATableofContents2021": {
+      "n_snippets": 2,
+      "est_tokens": 616
+    },
+    "ostp-gss-guidance-june-2025": {
+      "n_snippets": 6,
+      "est_tokens": 4741
+    },
+    "pappg-24-1": {
+      "n_snippets": 581,
+      "est_tokens": 165933
+    }
+  }
+}
