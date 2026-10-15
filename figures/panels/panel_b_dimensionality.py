@@ -54,7 +54,7 @@ def draw_dimensionality_scaling(ax, show_title=False):
     ax.set_yticks(range(len(scenarios)))
     ax.set_yticklabels(scenarios, fontsize=8, color='#1D3557')
     ax.set_xlabel("Number of independent parameters",
-                  fontsize=8.5, color='#627D98')
+                  fontsize=8.5, color='#546E88')
     ax.set_xlim(0, 135)
     ax.invert_yaxis()
     ax.spines['top'].set_visible(False)
@@ -74,12 +74,13 @@ def draw_dimensionality_scaling(ax, show_title=False):
     ax.text(113, 3.5, "+31\nper\nmaterial", fontsize=7.0, color="#0072B2",
             ha='left', va='center', fontstyle='italic')
 
-    # D(n) equation — single line, positioned below bars with clearance
-    # (Edison iter 10: moved to y=5.2 to avoid overlapping "3-material" label)
-    ax.text(62, 5.15,
+    # D(n) equation — positioned in Panel B whitespace using axes coordinates
+    # (Edison R12: y=-0.85 overlapped subtitle; use axes transform to place above bars)
+    ax.text(0.55, -0.12,
             r"Illustrative partition:  $D(n) = D_{\mathrm{shared}} + n \cdot D_{\mathrm{material}}$"
             r"   (shared: 5, per-material: 31)",
-            fontsize=7.0, color='#1D3557', ha='center', va='center',
+            fontsize=7.0, color='#1D3557', ha='center', va='top',
+            transform=ax.transAxes,
             bbox=dict(boxstyle="round,pad=0.25", facecolor="#F7FAFC",
                       edgecolor="#BCCCDC", alpha=0.9))
 

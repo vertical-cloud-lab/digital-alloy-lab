@@ -64,7 +64,7 @@ def create_figure():
              "Power/scan-speed studies explore 2\u20134 variables,"
              " while practical LPBF control spans 36+ dimensions"
              " \u2014 and grows with each added material",
-             ha='center', va='center', fontsize=8, color='#627D98',
+             ha='center', va='center', fontsize=8, color='#546E88',
              fontstyle='italic')
 
     # Panel labels with takeaway subtitles — offset A subtitle to avoid collision
@@ -95,9 +95,9 @@ def create_figure():
     draw_dimensionality_scaling(ax_bar)
     draw_interaction_network(ax_net)
 
-    # BO callout — below panels, above legend (Edison iter 8 Issue 1 fix)
+    # BO callout — below panels, above legend (Edison R11: moved down from 0.080 to 0.065)
     fig.text(
-        0.50, 0.080,
+        0.50, 0.065,
         "36\u201398D search spaces with strong coupling are intractable\n"
         "for conventional DoE \u2192 autonomous Bayesian optimization is well-suited",
         ha='center', va='center', fontsize=7.5, color='#7C2D12',
@@ -129,18 +129,18 @@ def create_figure():
         for (name, k, _) in CATEGORIES
     ]
     fig.legend(handles=cat_handles, loc='upper right',
-               bbox_to_anchor=(0.98, 0.895), ncol=7,
+               bbox_to_anchor=(0.98, 0.885), ncol=7,
                frameon=True, fancybox=True,
                edgecolor='#BCCCDC', facecolor='white',
                fontsize=7.0, handlelength=1.0,
                title="Category (A dots / C nodes)",
                title_fontsize=7.0)
 
-    # Source attribution — positioned below legend
+    # Source attribution — positioned below legend (Edison R13: darkened for full WCAG AA)
     fig.text(0.98, -0.020,
              "Literature synthesis (38 studies)"
              " | Oliveira et al. 2020, Buhairi et al. 2023, Ferro et al. 2020",
-             fontsize=7.0, ha='right', va='bottom', color='#9FB3C8',
+             fontsize=7.0, ha='right', va='bottom', color='#6B859B',
              fontstyle='italic')
 
     return fig
