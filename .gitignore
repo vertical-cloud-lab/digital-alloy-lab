@@ -165,7 +165,7 @@ dist/
 dmypy.json
 docs/_build/
 downloads/
-edison-trajectories/*.json
+edison-reviews/.r8-task-id
 eggs/
 env.bak/
 env/
@@ -192,5 +192,6 @@ venv.bak/
 venv/
 wheels/
 
-# Per-proposal private files (cloned from <slug>-private repos)
-private/
+# Gantt scheduling generated artifacts
+gantt-scheduling/schedule_data.json
+gantt-scheduling/schedule_summary.txt
