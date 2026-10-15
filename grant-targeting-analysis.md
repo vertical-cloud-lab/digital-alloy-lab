@@ -19,6 +19,7 @@
 | **NSF AM** | Rolling | Standard | ★★★★☆ | Medium (15-page) | Neutral | **5 — Alternative** |
 | **NSF MEP** | Rolling | Standard | ★★★★☆ | Medium (15-page) | Neutral | **5 — Alternative** |
 | **AFOSR YIP** | ~Jul–Sep 2026 | $450K / 3 yr | ★★★★☆ | Medium | Early career only | **6 — If CAREER delayed** |
+| **DOE ECRP** (Office of Science) | Pre-app fall, full proposal winter | $875K / 5 yr | ★★★★☆ | High (3-pg pre-app + ~20-pg full) | Early career only | **6 — Natural DOE successor if Genesis Mission misses** |
 | **DARPA YFA** | ~Oct 2026 | $500K + $500K | ★★★★★ | Medium (exec summary first) | Early career only | **6 — Fall submission** |
 | **ARO YIP** | Rolling | $360K / 3 yr | ★★★☆☆ | Medium | Early career only | **7 — Backup** |
 | **DoD DURIP** | ~Early 2027 | Up to $3M (equip.) | ★★★★☆ | Medium | Needs active DoD project | **8 — After DoD award** |
@@ -103,6 +104,10 @@ See [detailed submission guidance in alloy-workflow-review.md](alloy-workflow-re
 - **NSF MEP** (email mep@nsf.gov): Materials engineering perspective. Frame around processing science of novel alloy powders via ultrasonic atomization and LPBF consolidation.
 - Choose one of DMR TMRP / AM / MEP based on PO feedback — don't submit to multiple simultaneously.
 
+> **Section-by-section adaptation of the FLAIME Genesis Mission proposal (PR #58)
+> for AFOSR YIP and the DOE Early Career Research Program is documented
+> separately in [`early-career-award-adaptation.md`](early-career-award-adaptation.md).**
+
 ### 5. AFOSR YIP / DARPA YFA — **Fall 2026 Targets**
 
 **AFOSR YIP** (~Jul–Sep 2026, $450K / 3 yr):
@@ -121,14 +126,23 @@ See [detailed submission guidance in alloy-workflow-review.md](alloy-workflow-re
 - Frame around fundamental deformation/failure mechanisms in AI-designed alloys, or novel processing via ultrasonic atomization
 - Lower award ($360K / 3 yr) but rolling deadline and Army-relevant framing (armor, structural materials)
 
-### 7. DoD DURIP — **After Establishing DoD Relationship** (~early 2027)
+### 7. DOE Early Career Research Program (ECRP) — **Natural DOE successor to Genesis Mission**
+
+- DOE Office of Science early-career mechanism: ~$875K over 5 years for academia ($175K/yr), single PI, no subawards, untenured tenure-track within 10 years of PhD
+- **Primary route:** BES → Materials Sciences and Engineering Division → Synthesis & Processing Science (best fit for FLAIME's atomization-to-LPBF processing science)
+- Secondary route: BES → Mechanical Behavior of Materials; alternative: ASCR → AI/ML for Science
+- Requires hypothesis-driven, basic-science reframing of the FLAIME applied/manufacturing narrative — see [`early-career-award-adaptation.md`](early-career-award-adaptation.md) §3
+- Mandatory 3-page pre-application (fall) gates the full ~20-page proposal (winter); ~70% discouragement at pre-app stage, so pre-app investment is high-leverage
+- Best timed *after* Genesis Mission notification — recycles FLAIME preliminary results and Ames National Lab LOS, reframes for SC basic-science audience
+
+### 8. DoD DURIP — **After Establishing DoD Relationship** (~early 2027)
 
 - Requires an existing DoD-funded research project as context
 - Best pursued *after* winning an AFOSR YIP, ARO YIP, or DARPA YFA/DSO award
 - Can request up to $3M for major equipment (Amazemet rePOWDER, LPBF system, characterization instruments)
 - No cost sharing required; sole PI eligible
 
-### 8. NSF EAGER — **Opportunistic**
+### 9. NSF EAGER — **Opportunistic**
 
 - Up to $300K for high-risk/high-reward exploratory research
 - Requires prior PO discussion and buy-in — cannot be submitted cold
@@ -275,7 +289,7 @@ The VCL pipeline is unique in combining *all* stages — from AI screening throu
 
 *This section synthesizes critical findings from the [Edison Scientific trajectory data](edison-trajectories/) that should directly inform grant strategy, proposal framing, and competitive positioning.*
 
-### 1. Gus L.W. Hart (BYU) — Critical Local Collaborator
+### Gus L.W. Hart (BYU) — Critical Local Collaborator
 
 The Edison reviewers analysis surfaces a highly strategic fact: **Gus L.W. Hart at BYU** is a co-author of [Hart et al. (2021) "Machine learning for alloys"](https://doi.org/10.1038/s41578-021-00340-w) in *Nature Reviews Materials* — a seminal paper with **714 citations** that defines the state of the art in ML-driven alloy design (jointly with Tim Mueller, Cormac Toher, and Stefano Curtarolo). Hart's expertise spans cluster expansion methods for configurational energetics, ML interatomic potentials, and crystal structure prediction.
 
@@ -286,7 +300,7 @@ The Edison reviewers analysis surfaces a highly strategic fact: **Gus L.W. Hart 
 - For **DARPA proposals**: Hart's track record de-risks the computational screening component
 - **Reviewer conflict note**: Hart may be conflicted out of reviewing VCL proposals — account for this in reviewer nomination strategies
 
-### 2. The "Processability Gap" — VCL's Unique Market Position
+### The "Processability Gap" — VCL's Unique Market Position
 
 The literature analysis explicitly confirms that **no fully autonomous pipeline integrating AI screening → powder production → LPBF validation → automated characterization has been reported in the literature** (literature_alloy_discovery.md, Section 6). This is the single most important finding for proposal framing.
 
@@ -305,7 +319,7 @@ The literature analysis explicitly confirms that **no fully autonomous pipeline 
 
 **Proposal language:** Frame VCL as closing the "processability gap" between computationally predicted compositions and their actual performance when manufactured via AM — a gap explicitly identified in Liu et al. (2024, *Int. J. Extreme Manufacturing*, 93 citations).
 
-### 3. NIST SP 1320 — Policy Validation for VCL
+### NIST SP 1320 — Policy Validation for VCL
 
 The Edison program managers analysis references **NIST Special Publication 1320: "Driving U.S. Innovation in Materials and Manufacturing using AI and Autonomous Labs"** (Trautt et al. 2024) as a key policy document. This report:
 - Identifies autonomous experimentation as a **critical national capability** for U.S. competitiveness
@@ -316,7 +330,7 @@ The Edison program managers analysis references **NIST Special Publication 1320:
 
 **Cite NIST SP 1320 in every proposal** — it provides federal policy alignment for the VCL mission.
 
-### 4. Simulation Tools for Generating Preliminary Data
+### Simulation Tools for Generating Preliminary Data
 
 The Edison simulation methods analysis identifies a clear priority stack for generating computational preliminary data with minimal cost:
 
@@ -345,7 +359,7 @@ Zhu and Arroyave (Texas A&M, 2025) demonstrated that integrating uMLIPs (M3GNet,
 - **NIST databases**: Ni-superalloy, Sn-solder systems
 - **NIMS/MatNavi**: Publicly accessible phase diagram data
 
-### 5. Heilmeier Questions Template for DARPA
+### Heilmeier Questions Template for DARPA
 
 The Edison best practices analysis emphasizes that DARPA proposals are evaluated against the **Heilmeier Questions**. Template for VCL:
 
@@ -365,7 +379,7 @@ The Edison best practices analysis emphasizes that DARPA proposals are evaluated
 
 8. **What are the midterm and final "exams"?** Midterm: demonstrate closed-loop discovery of one new printable alloy composition not in existing databases. Final: autonomous discovery campaign that screens 100+ compositions and identifies 5+ validated alloys with targeted properties.
 
-### 6. Conference Engagement Timeline
+### Conference Engagement Timeline
 
 The Edison venues analysis provides a strategic conference calendar for building community and PM engagement:
 
@@ -385,7 +399,7 @@ The Edison venues analysis provides a strategic conference calendar for building
 3. Submit abstract to **SFF Symposium** for LPBF alloy work
 4. Submit to **AI4Mat workshop** (NeurIPS/ICLR) to build visibility in the autonomous materials community
 
-### 7. Key Literature to Cite in Proposals
+### Key Literature to Cite in Proposals
 
 **Must-cite papers (high citation, define the field):**
 
@@ -410,7 +424,7 @@ The Edison venues analysis provides a strategic conference calendar for building
 | Lookman et al. (2026) "Materials informatics: emergence to autonomous discovery" *Advanced Materials* | Comprehensive review of current state |
 | Zhu & Arroyave (2025) "Accelerating CALPHAD-based phase diagram predictions with uMLIPs" | >1000× speedup; directly relevant to VCL's screening |
 
-### 8. Fundamental vs. Applied Research Framing
+### Fundamental vs. Applied Research Framing
 
 The Edison literature analysis reveals a clear split that should inform which program receives which version of the VCL story:
 
@@ -426,11 +440,11 @@ The Edison literature analysis reveals a clear split that should inform which pr
 - *Key citations:* Stach et al. (2021), Conn & Baker (2025), Trautt et al. (2024) NIST SP 1320
 - **Avoid:** purely academic framing without defense relevance
 
-### 9. Process-Synergistic Active Learning (Emerging Opportunity)
+### Process-Synergistic Active Learning (Emerging Opportunity)
 
 The literature trajectory identified Cai et al. (2025) in *npj Computational Materials* describing a **process-synergistic active learning framework** for high-strength Al-Si alloys. This framework co-optimizes alloy composition AND processing parameters simultaneously — directly relevant to VCL's integrated pipeline. This represents a methodological frontier that VCL could advance by incorporating LPBF process parameters into the active learning loop alongside composition.
 
-### 10. Key Observations on the Reviewer Pool
+### Key Observations on the Reviewer Pool
 
 The Edison reviewers analysis identified 40+ potential reviewers across 5 fields. Critical strategic notes:
 
