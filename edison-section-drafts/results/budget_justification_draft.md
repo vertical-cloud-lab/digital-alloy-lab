@@ -4,7 +4,7 @@
 # FLAIME Budget Justification Narrative (SF-424, DOE Genesis Mission Phase I)
 
 **BUDGET JUSTIFICATION — FLAIME (Fast Learning AI for Mineral Efficiency)**
-DOE Genesis Mission Phase I | DE-FOA-0003612, Topic 3-B (AMMTO)
+DOE Genesis Mission Phase I | DE-FOA-0003612, Topic 3B (AMMTO)
 Brigham Young University (Lead) | Period of Performance: July 1, 2026 – March 31, 2027
 Total Requested: $750,000
 
@@ -12,7 +12,7 @@ Total Requested: $750,000
 
 **A. SENIOR/KEY PERSONNEL**
 
-The Principal Investigator (PI), Dr. Sterling G. Baird, is budgeted as senior/key personnel [per-person effort and salary detail removed]. This role ensures sustained technical leadership of the four-node autonomous discovery pipeline (CALPHAD screening → ultrasonic atomization → LPBF additive manufacturing → mechanical testing) and coordination of 12 student researchers across six-day-per-week operations. The PI directs the Bayesian Optimization with Flow Networks (BOFN) campaign design, oversees go/no-go milestone evaluation, and serves as primary liaison with DOE program management, Valimet, AMAZEMET, and Thermo-Calc.
+The Principal Investigator (PI), Dr. Sterling G. Baird, is budgeted as senior/key personnel [per-person effort and salary detail removed]. This role ensures sustained technical leadership of the four-node autonomous discovery pipeline (CALPHAD screening → ultrasonic atomization → LPBF additive manufacturing → mechanical testing) and coordination of 12 student researchers across six-day-per-week operations. The PI directs the Bayesian Optimization over Function Networks (BOFN) campaign design, oversees go/no-go milestone evaluation, and serves as primary liaison with DOE program management, Valimet, AMAZEMET, and Thermo-Calc.
 
 **B. OTHER PERSONNEL**
 

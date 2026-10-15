@@ -61,10 +61,9 @@ class ManufacturingGPNetwork:
         rather than covar_module.base_kernel.
         Uses get_matheron_path_model for BoTorch >=0.13 compatibility.
         """
-        # Seed torch RNG before any torch.rand() calls so that the GP
-        # scaffold data (X0/Y0, X1/Y1, …) is deterministic for a given seed.
+        # Seed ALL random ops so the problem is fully deterministic for a
+        # given seed, regardless of external random state.
         torch.manual_seed(seed * 7919 + 42)
-
         X0 = torch.rand(5, 2, dtype=torch.double)
         Y0 = torch.rand(5, 1, dtype=torch.double)
         model0 = SingleTaskGP(train_X=X0, train_Y=Y0)

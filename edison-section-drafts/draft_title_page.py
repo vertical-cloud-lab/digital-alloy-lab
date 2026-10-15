@@ -23,7 +23,7 @@ Draft the following fields:
 
 1. **Full Project Title:** "FLAIME: Fast Learning AI for Mineral Efficiency — Autonomous Discovery of Critical-Mineral-Lean Alloys for Advanced Manufacturing"
 
-2. **Challenge and Focus Area:** Topic 3, Focus Area B: AI-Enabled Materials Discovery and Engineering (AMMTO)
+2. **Challenge and Focus Area:** Topic 3B: AI-Enabled Materials Discovery and Engineering (AMMTO)
 
 3. **Senior/Key Personnel Table:**
 | Institution | Role | Senior/Key Personnel |
