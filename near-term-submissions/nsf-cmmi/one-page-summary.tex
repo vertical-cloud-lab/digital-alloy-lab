@@ -1,0 +1,120 @@
+% ============================================================================
+% NSF ENG CMMI, solicitation NSF 26-515 (posted Aug 17, 2026)
+% One-page project summary for the Advanced Manufacturing, Design, and
+% Operations (AMDO) program, to email to cmmi-amdo@nsf.gov before submitting.
+% Solicitation, Sec. II: "Proposers are strongly encouraged to email a
+% one-page project summary to the Cognizant Program Director(s) before
+% submitting a full proposal for guidance on whether the proposed research
+% topic falls within the scope of the program."
+% The solicitation sets no format for this summary; we use Times New Roman
+% 11 pt and 1 in margins. Sources and open questions are in README.md.
+%
+% Base text: afosr-yip-white-paper/afosr-yip-white-paper-a2c.tex.
+% Simulation numbers are only those in that paper's Section 5.
+%
+% Build:  xelatex one-page-summary.tex
+% Lint:   cringe-filter lint  -c proposal one-page-summary.tex
+%         cringe-filter score -c proposal one-page-summary.tex
+% ============================================================================
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{fontspec}
+\IfFontExistsTF{Times New Roman}
+  {\setmainfont{Times New Roman}}
+  {\setmainfont{TeX Gyre Termes}}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,urlcolor=blue!70!black]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt plus 1pt minus 1pt}
+\pagestyle{empty}
+
+\newcommand{\head}[1]{\textbf{#1.}\ }
+\hyphenation{re-POW-DER AMA-ZE-MET}
+
+\begin{document}
+
+\begin{center}
+{\large\bfseries Choosing the Next Experiment in a Multi-Step Powder-to-Part
+Workflow,\\ with Printable High-Strength Aluminum Alloys as the Test
+Case\par}
+\vspace{4pt}
+Sterling G.\ Baird, Ph.D., Assistant Professor of Mechanical Engineering\\
+Brigham Young University (BYU), Provo, UT 84602;
+\href{mailto:sterling.baird@byu.edu}{sterling.baird@byu.edu}; (801) 422-5344\\
+Summary for the Advanced Manufacturing, Design, and Operations (AMDO)
+program, NSF 26-515
+\end{center}
+\vspace{-4pt}
+
+\head{Research question}
+Developing a new alloy for laser powder bed fusion (LPBF) runs through a chain
+of steps, from a thermodynamic calculation to powder, printed tracks and
+cubes, microscopy, and tensile tests. A calculation takes minutes and a
+tensile test takes days. Campaigns often send every candidate through the
+whole chain, or screen many by simulation and test a few. We ask how to
+decide, as data arrive, which step of a multi-step manufacturing workflow to
+run next and on which candidate, while carrying uncertainty through the
+chain. Two features make this harder: several properties compete, and results
+from many experiments in progress return at different times. Our test case is high-strength
+aluminum, since alloys such as 7075 crack as they solidify during LPBF.
+Grain-refining additions such as zirconium can prevent the cracking (Martin et
+al., \emph{Nature} 2017), but each change in composition means the laser
+settings must be tuned again.
+
+\head{Approach}
+We will give each step its own statistical model and link the models in
+order, so the outputs of one step feed the next. Recent work on
+such linked models picks the experiment with the largest expected gain per
+unit cost and lets a candidate stop at any step (Astudillo and Frazier,
+NeurIPS 2021; Buathong et al., ICML 2024). It has been shown for one
+objective and one experiment at a time, on test functions and simulators. We
+will extend it to weigh competing objectives (freedom from cracks and pores,
+strength, and ductility) with no weighting known in advance, and to choose
+new experiments while others are pending, since microscopy results arrive days
+after printing. We will demonstrate it on the five-step workflow,
+with real build-to-build scatter and with incomplete physics inputs from
+calculation of phase diagrams (CALPHAD), which ignores the fast cooling of the
+melt pool. We will test whether the method reaches a target set of trade-offs at
+lower total cost than standard multi-objective Bayesian optimization run on
+the full chain. We will also test whether its predicted chance of a dense,
+crack-free build matches observed rates on held-out builds.
+
+\head{Resources and preliminary results}
+Our laboratory atomizes aluminum alloy powder (AMAZEMET rePOWDER
+ultrasonic atomizer, induction melting), four compositions per week. We buy
+LPBF builds from a University of Utah user facility (\$800 per build) and use
+the BYU Microscopy Center. Since the
+lab started in December 2025, we have run CALPHAD on BYU high-performance
+computing and completed a powder-to-part demonstration on a baseline aluminum
+alloy, with microscopy and tensile data. In a hand-built, noise-free
+simulation with one objective, where the CALPHAD crack screen missed
+zirconium's effect, screening and then tuning stalled at 63\% of the optimum
+after \$100,000. The cost-aware search reached that level after about
+\$26,500 (3.8 times less spend; 90\% confidence interval 2.0 to 5.7).
+Screening kept pace when its physics was right.
+
+\head{Intellectual merit}
+To our knowledge, neither a multi-objective nor an asynchronous version of
+cost-aware optimization over linked steps has been developed, and none has
+been tested on a physical manufacturing workflow. The project will show
+how to carry uncertainty through a multi-step process while keeping model
+uncertainty, which more data reduces, separate from build-to-build scatter,
+which it does not. The decision method is the subject of the research and
+applies to other multi-step workflows, such as qualifying a new material or
+process.
+
+\head{Broader impacts}
+Undergraduates will make powder and prepare specimens, and a Ph.D.\ student
+will run the printing and microscopy campaigns, all gaining training in metal
+additive manufacturing and autonomous experimentation. We will release
+software, data, and models openly each year so other laboratories can apply
+the method to their own materials, printers, and tests.
+
+\head{Question for the program director}
+Does this topic fall within the scope of AMDO, or would it fit better in
+another program under NSF 26-515?
+
+\end{document}
