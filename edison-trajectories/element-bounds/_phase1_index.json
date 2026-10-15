@@ -1,0 +1,74 @@
+{
+  "01_per_element_Al": {
+    "task_id": "cd97bf21-0430-4c8b-975a-b1cdd7294e3e",
+    "path": "edison-trajectories/element-bounds/01_per_element_Al.md"
+  },
+  "01_per_element_Cu": {
+    "task_id": "edaa4a5d-10b9-45c0-996b-2c071314ffde",
+    "path": "edison-trajectories/element-bounds/01_per_element_Cu.md"
+  },
+  "01_per_element_Si": {
+    "task_id": "792b16bb-4708-4933-a5ac-674d40a10e1c",
+    "path": "edison-trajectories/element-bounds/01_per_element_Si.md"
+  },
+  "01_per_element_Fe": {
+    "task_id": "4bc97047-8a4f-4cc4-8798-f81e8ce49990",
+    "path": "edison-trajectories/element-bounds/01_per_element_Fe.md"
+  },
+  "01_per_element_Zr": {
+    "task_id": "6f403085-5c64-4837-b305-93ee368b3afb",
+    "path": "edison-trajectories/element-bounds/01_per_element_Zr.md"
+  },
+  "01_per_element_Mn": {
+    "task_id": "0ae4892f-563e-46cb-9c55-a4721dac86b0",
+    "path": "edison-trajectories/element-bounds/01_per_element_Mn.md"
+  },
+  "01_per_element_Ce": {
+    "task_id": "73d9e126-4f4e-4db7-8411-e9ad7134e9ac",
+    "path": "edison-trajectories/element-bounds/01_per_element_Ce.md"
+  },
+  "01_per_element_Sn": {
+    "task_id": "a99be181-350a-4992-863d-2a80ce674a9e",
+    "path": "edison-trajectories/element-bounds/01_per_element_Sn.md"
+  },
+  "01_per_element_Cr": {
+    "task_id": "ff7dbd72-632d-4ec9-9cf6-f760d214c51e",
+    "path": "edison-trajectories/element-bounds/01_per_element_Cr.md"
+  },
+  "01_per_element_Mg": {
+    "task_id": "f2312e42-605c-468d-8028-f21c3b3b5d15",
+    "path": "edison-trajectories/element-bounds/01_per_element_Mg.md"
+  },
+  "01_per_element_Er": {
+    "task_id": "ab2f5e02-d7fb-4676-8618-f65c6a5ce13e",
+    "path": "edison-trajectories/element-bounds/01_per_element_Er.md"
+  },
+  "01_per_element_Ni": {
+    "task_id": "da66e079-d3ef-4c71-8a63-60c46e296bf9",
+    "path": "edison-trajectories/element-bounds/01_per_element_Ni.md"
+  },
+  "01_per_element_Ti": {
+    "task_id": "da117924-dac8-448e-bb45-6331e37b41cf",
+    "path": "edison-trajectories/element-bounds/01_per_element_Ti.md"
+  },
+  "01_per_element_Zn": {
+    "task_id": "b42d3e02-4b02-4ac0-871a-dba383d4e49f",
+    "path": "edison-trajectories/element-bounds/01_per_element_Zn.md"
+  },
+  "01_per_element_Li": {
+    "task_id": "33d44d1f-07b8-466d-b8ff-232de5a85e7c",
+    "path": "edison-trajectories/element-bounds/01_per_element_Li.md"
+  },
+  "01_lower_bound": {
+    "task_id": "d1e23d47-6ded-4f8e-a61d-50a158894d53",
+    "path": "edison-trajectories/element-bounds/01_lower_bound.md"
+  },
+  "01_per_element_Sc": {
+    "task_id": "2fc74fd6-087f-476c-9f0c-708b561e29f3",
+    "path": "edison-trajectories/element-bounds/01_per_element_Sc.md"
+  },
+  "01_simultaneous_all_bounds": {
+    "task_id": "1d872481-5007-4e13-b937-ea9a7d130dcf",
+    "path": "edison-trajectories/element-bounds/01_simultaneous_all_bounds.md"
+  }
+}
