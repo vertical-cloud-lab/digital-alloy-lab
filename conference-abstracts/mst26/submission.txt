@@ -1,0 +1,21 @@
+TITLE (sentence case)
+Cost-aware Bayesian optimization across a CALPHAD–atomization–LPBF function network for critical-mineral-lean aluminum alloy discovery
+
+AUTHORS
+Sterling Baird, Xavier Zaitzeff, Gage Erickson, Ronnie Guymon, Carl Robison, Timothy Commins
+Department of Mechanical Engineering, Brigham Young University, 701 E University Parkway, 350 EB, Provo, UT 84602
+
+ABSTRACT BODY (150 words; paste as one paragraph — no hard returns; special characters use the portal's \####; codes per organizer guidance)
+
+Autonomous alloy discovery for additive manufacturing is a multi-stage decision problem with per-query costs spanning more than an order of magnitude: \8776;$1500 per ultrasonic atomization run, \8776;$1–5k per LPBF build, \8776;$200 per ASTM E8 tensile bar, and substantially more per industrial gas atomization batch. Tiered screening (e.g., experimentally validating top-performing simulations) wastes budget on uninformative expensive queries and forfeits the algorithm's ability to strategically sample and learn cross-measurement biases early. We present FLAIME (Fast Learning AI for Mineral Efficiency), which applies the partial Knowledge Gradient for Function Networks (pKGFN) to a directed acyclic graph of CALPHAD (TC-Python/TCAl10/AM Module), atomization, LPBF, and microstructure–hardness–tensile nodes; each is a Gaussian process whose posterior feeds its children. Ultimate tensile strength, yield strength, elongation, and a printability score are jointly maximized via expected hypervolume improvement while penalizing a USGS-derived critical-mineral burden. We present synthetic-network benchmarks showing \8805;3\215; sample efficiency and an initial campaign spanning 10+ atomization/print cycles.
+
+NOTES
+- Word count: 150 (portal cap = 150).
+- Title is sentence case (only first word and proper nouns/acronyms capitalized) per portal rule "Use initial capitalization only for your title."
+- The body above is shown wrapped for readability; paste as a single paragraph and let the portal wrap lines naturally.
+- Special-character substitutions used (per portal table):
+  \8776;  →  ≈
+  \8805;  →  ≥
+  \215;   →  × (multiplication sign)
+- En-dashes (–) and em-dashes (—) and the dollar sign ($) are entered as literal characters; the portal's table does not list them.
+- Click "Preview My Abstract" in the portal to confirm all codes render correctly before final submission.
