@@ -1,0 +1,45 @@
+PROJECT SUMMARY
+
+Project Title: AI-Guided Discovery of Critical-Mineral-Lean Aluminum Alloys
+PI: J. Doe (Made-Up University)
+
+(Page 1)
+
+This proposal will develop a closed-loop machine learning platform for the
+discovery of aluminum alloys that minimize use of critical minerals (Mn,
+Zr, Cr) while maintaining structural performance. Over three years we
+will (a) curate a CALPHAD-derived training set of 50,000 candidate
+compositions, (b) implement a multi-fidelity Bayesian optimization
+acquisition function that jointly considers manufacturability and
+mechanical-property targets, (c) print and characterise approximately 200
+candidate compositions on a laser-powder-bed-fusion system, (d) close the
+loop by retraining the surrogate after every batch of 8 specimens, and
+(e) release all data, models, and pipeline code openly.
+
+The project builds on the PI's prior work on graph-neural-network
+surrogates for high-throughput thermodynamics
+(https://example.edu/doe-prior-work) and on the lab's existing partnership
+with two domestic powder atomisation companies. Year 1 will focus on
+data curation and surrogate training; Year 2 on the closed-loop pilot
+campaign; Year 3 on scale-up to a second alloy family and on the public
+release of the trained models and benchmark suite.
+
+Expected outcomes include: a >10x reduction in time-to-discover for a
+new alloy meeting a given property target relative to a Latin-hypercube
+baseline; an open dataset of >1,000 LPBF tensile coupons with paired
+process and property measurements; and a trained surrogate model that
+the broader AI-for-materials community can fine-tune for related
+problems. We will also train two graduate students and four
+undergraduates in the intersection of ML and materials science, and
+will run a one-week summer workshop for high-school teachers on
+AI-for-materials curricula.
+
+In summary, the proposed work integrates Bayesian optimization,
+high-throughput characterisation, and CALPHAD modelling to address the
+national strategic priority of reducing dependence on imported critical
+minerals while advancing the state of the art in autonomous materials
+discovery. Section 2 of this proposal describes the technical approach in
+detail; Section 3 describes the team and facilities; Section 4 presents
+preliminary results from a six-month feasibility study.
+
+----- end Project Summary, page 1 of 1 -----

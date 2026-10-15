@@ -1,0 +1,151 @@
+Source: eager-concept-outline.tex from PR #10 (branch
+copilot/discuss-vertical-cloud-lab-idea, commit cb59e56), rendered to
+plain prose for input to the snippet-store reviewer. Figures, table,
+and LaTeX layout commands omitted; word counts and numbers preserved.
+========================================================================
+
+EAGER Concept Outline — A Vertical Cloud Laboratory as a Hardware
+Backbone for an Asynchronous, Multi-Material FDM Desktop 3D-Print Farm
+
+PI: Sterling Baird (Brigham Young University, Mechanical Engineering /
+Materials).
+Unit: ENG/CMMI Advanced Manufacturing.
+Type: EAGER, ~$300K, 2 yr.
+Keywords: self-driving lab, vertical lift module, fused deposition
+modeling, print farm, generative design, robotic integration.
+
+
+Problem
+-------
+Self-driving laboratories (autonomous experimental systems that plan,
+run, and analyze their own experiments) for manufacturing research keep
+hitting the same wall: physically moving samples and consumables among
+many different instruments. Mobile manipulators (wheeled robots with
+arms) are flexible but slow and unreliable in cluttered rooms. Linear-
+rail and SCARA robots (fixed-track and jointed industrial arms) are
+fast but lock the layout in place and are hard to extend. A 2024
+community survey of autonomous laboratories (Hung 2024) and the NIST
+self-driving lab roadmap (Trautt 2024, NIST SP 1320) both find that
+integration overhead, not algorithms, is the main bottleneck. The
+community needs a denser, more reliable, and easier-to-maintain physical
+backbone that lets a single robot serve many parallel workstations.
+
+
+Idea
+----
+A Vertical Cloud Laboratory (VCL) repurposes an industrial vertical
+lift module (VLM) — a warehouse-style elevator whose trays carry power
+and data — as the integration backbone for a self-driving lab. A single
+UR5e collaborative robot arm (~$35K) sits in front of the VLM and
+reaches any tray on demand. To stress-test the backbone, the EAGER will
+load the trays with a print farm of 50 Bambu Lab A1 Mini multi-material
+desktop 3D printers (~$15K total). Side-by-side, those 50 printers
+would take ~100 linear feet of bench — the footprint problem the VLM is
+meant to solve — so the build directly tests whether a vertical, robot-
+served farm can produce, retrieve, and characterize parts asynchronously
+at a useful rate. [Figure 1 contrasts the VCL backbone with three
+competing integration paradigms.]
+
+The PI's prior feasibility study at U. Toronto's Acceleration Consortium
+(Baird 2025) showed that one VLM provides ~3× the automation-friendly
+working surface of equivalent floor space (273 ft^2 in 92 ft^2),
+retrieves any tray in ≤60 s, and keeps an optical microscope in focus
+at 40× during belt-driven motion. The consortium asked the PI to
+derisk at smaller scale after the move to BYU; the proposed VCL — one
+VLM, one arm, 50 printers — is that step, replicable elsewhere for
+under $300K.
+
+Hypothesis: a VLM with electrified trays, served by a single
+collaborative arm, can asynchronously orchestrate a desktop print farm
+and a small characterization suite as the backbone of a manufacturing
+self-driving lab, with higher reliability and lower integration
+overhead than mobile-robot or rigid-rail approaches.
+
+
+Why EAGER
+---------
+The work is genuinely untested: no scientific deployment has used an
+electrified-tray VLM as an instrument backbone, and no published
+autonomous lab pairs a single collaborative arm with a 50-station
+asynchronous print farm. The thermal, vibration, and electromagnetic-
+interference (EMI) coupling among the VLM, the UR5e, and continuously
+running desktop printers cannot be settled by simulation alone. The
+work is transformative if it succeeds: a sub-$300K, replicable backbone
+would lower the barrier to autonomous manufacturing labs by an order of
+magnitude. And the central question — can warehouse-class material-
+handling hardware serve as a science-grade integrator — sits between
+Advanced Manufacturing, robotics, and digital-design programs, which
+makes it awkward for any standard solicitation but a natural fit for
+EAGER.
+
+
+Approach
+--------
+Year 1 commissions the hardware backbone (Figure 2). We procure and
+install the VLM and UR5e, then load the trays with the 50 Bambu Lab A1
+Mini printers (multi-material AMS Lite), filament spools, build-plate
+magazines, and a small characterization tray (digital calipers, optical
+inspection camera, scale). The PI and an integration buyout lead
+systems integration: tray fixturing, build-plate hand-off poses,
+AprilTag fiducials (printed visual markers the robot uses for pose
+estimation), safety interlocks, and a unified scheduler that talks to
+the printers' Bambu API and the UR5e simultaneously. Two part-time
+undergraduate research assistants handle daily maintenance — nozzle
+changes, build-plate prep, filament swaps, jam recovery — on a rotating
+schedule that itself stress-tests how the system tolerates asynchronous
+human and robot activity.
+
+Year 2 measures the backbone under realistic loads. One half-time MS
+student leads the campaigns: print throughput across the farm vs. a
+side-by-side baseline; print quality on a standard test artifact;
+UR5e/VLM motion effects on adjacent in-progress prints (tray-mounted
+MEMS accelerometer); queue and retrieval bottlenecks; and the practical
+gain of asynchronous over synchronous batch operation. As a generative-
+design demonstration, we couple the farm to a topology-optimization
+pipeline that prints candidate lattices and brackets in parallel and
+retires designs from inspection feedback — a workflow impractical with
+one or two printers.
+
+Year 1 go/no-go gates (instrument in parentheses): (i) UR5e build-plate
+pick/place repeatability ≤ ±1 mm across all 50 trays (laser tracker,
+fiducial on each tray); (ii) <50 µm peak vibration at an in-progress
+print bed during a worst-case adjacent retrieval (tray-mounted MEMS
+accelerometer at 1 kHz); (iii) ≥200 fully autonomous print→retrieve→
+inspect cycles with no human between job dispatch and data export;
+(iv) ≥24 h of continuous powered cross-tray operation with no operator
+intervention.
+
+Risk and mitigation. If electrified-tray power proves unreliable, we
+fall back to umbilical power that retracts during retrieval. If a
+tray-pick is out of UR5e reach, we operate that tray manually with
+operator hand-off. If scheduler latency dominates, we drop to a one-
+printer-per-tray static schedule that still tests the core hypothesis.
+The print farm itself — the most replaceable component in the build —
+is the dependent variable, so any single printer failure is absorbed by
+the asynchronous schedule rather than blocking the experiment.
+
+
+Future direction (out of scope)
+-------------------------------
+A natural follow-on is to swap a tray or two of FDM printers for
+desktop laser powder-bed fusion (e.g. Mastrex MX-100, ~$39K) and re-run
+the same orchestration on metal additive manufacturing with autonomous
+post-print characterization. This EAGER deliberately stops short of
+that step.
+
+
+Use of funds (2 yr, ~$300K)
+---------------------------
+Equipment (no F&A) covers the VLM ($120K) and UR5e ($35K). Materials &
+supplies cover 50× Bambu A1 Mini printers ($15K), AMS/filament/build
+plates ($8K), and the characterization tray ($5K). Personnel funds one
+half-time MS student ($25K), two part-time undergraduate research
+assistants ($10K), and an integration buyout ($10K). Other direct costs
+cover cloud/software ($5K) and travel ($4K). F&A is computed at BYU's
+federally negotiated rate of 51.5% on MTDC. The total fits comfortably
+under the $300K EAGER ceiling, leaving headroom for contingency at
+full-proposal stage.
+
+[Table 1: Two-yr budget. Equipment (no F&A) $155K; M&S (MTDC) $28K;
+Personnel (MTDC) $45K; ODC (MTDC) $9K; F&A (51.5% MTDC) $42K;
+Total ≈ $279K.]

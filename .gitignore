@@ -166,6 +166,7 @@ dmypy.json
 docs/_build/
 downloads/
 edison-trajectories/*.json
+edison-trajectories/**/*.json
 eggs/
 env.bak/
 env/

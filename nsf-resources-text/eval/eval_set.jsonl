@@ -1,0 +1,110 @@
+# Retrieval evaluation set for the NSF requirements snippet store.
+#
+# Hand-curated query → expected snippet id pairs, used by `run_eval.py` to
+# compute Recall@5 and MRR over the BM25 retriever (and any future hybrid /
+# dense extensions).
+#
+# Schema: one JSON object per line.
+#   {
+#     "query":            "<natural-language question a PI/reviewer might ask>",
+#     "expected_id":      "<canonical snippet id that should answer it>",
+#     "also_acceptable":  ["<other snippet ids that also count>"],   (optional)
+#     "tag":              "<short topic tag>"
+#   }
+#
+# Coverage targets the most common compliance questions for an NSF proposal.
+# Per `edison-trajectories/llm-doc-tokenization/result.md` §8 the production
+# eval set should grow to 50-100 items; this is the v1 seed (15 items) and
+# every `expected_id` was verified to exist in `snippets/snippets.jsonl` at
+# build time.
+{"query": "What is the page limit on the Project Summary?", "expected_id": "pappg-24-1#II.D.2.b", "tag": "page-limits"}
+{"query": "How many pages can the Project Description be?", "expected_id": "pappg-24-1#II.D.2.d.(ii)", "tag": "page-limits"}
+{"query": "Are URLs allowed in the Project Description?", "expected_id": "pappg-24-1#II.D.2.d.(ii)", "tag": "url-prohibition"}
+{"query": "Should I number the pages of my proposal sections myself?", "expected_id": "pappg-24-1#II.C.1", "tag": "pagination"}
+{"query": "What three sections must be in the Project Summary?", "expected_id": "pappg-24-1#II.D.2.b", "tag": "project-summary-structure"}
+{"query": "Can the Project Summary be an abstract of the proposal?", "expected_id": "pappg-24-1#II.D.2.b", "tag": "project-summary-structure"}
+{"query": "What are the font and margin requirements for an NSF proposal?", "expected_id": "pappg-24-1#II.C.2", "tag": "formatting"}
+{"query": "What is required for the biographical sketch in an NSF proposal?", "expected_id": "pappg-24-1#II.D.2.h.(i)", "tag": "biosketch"}
+{"query": "What is required for Current and Pending Other Support?", "expected_id": "pappg-24-1#II.D.2.h.(ii)", "also_acceptable": ["pappg-24-1#II.D.2.h.(ii)~p1", "pappg-24-1#II.D.2.h.(ii)~p2"], "tag": "current-and-pending"}
+{"query": "When is a Data Management and Sharing Plan required?", "expected_id": "pappg-24-1#II.D.2.i.(ii)", "also_acceptable": ["pappg-24-1#II.D.2.a.(ii)"], "tag": "dmsp"}
+{"query": "What are the two NSF merit review criteria?", "expected_id": "pappg-24-1#III.A", "also_acceptable": ["pappg-24-1#III.A.1", "pappg-24-1#III.A.2"], "tag": "merit-review"}
+{"query": "Do EAGER proposals require contacting a program officer first?", "expected_id": "pappg-24-1#II.F.3", "tag": "eager"}
+{"query": "What is required in the postdoc Mentoring Plan?", "expected_id": "pappg-24-1#II.D.2.i.(i)", "tag": "mentoring-plan"}
+{"query": "Can I include cost information in the Facilities, Equipment and Other Resources section?", "expected_id": "pappg-24-1#II.D.2.g", "tag": "facilities"}
+{"query": "What happens to a proposal that does not comply with the format requirements?", "expected_id": "pappg-24-1#IV.B", "also_acceptable": ["pappg-24-1#IV.D.2.c"], "tag": "compliance"}
+
+# --- v2 expansion (PR #11 round 4): grow 15 → 55 stratified items ---
+# Each new item was hand-validated against snippets/snippets.jsonl. Tags
+# cover the 12 most common pre-award compliance topics (page limits,
+# format, sections, budgets, sponsored personnel, special information,
+# post-award disclosures, merit review, post-submission, special
+# proposal types, eligibility, conflicts).
+
+# Page limits, format, and pagination
+{"query": "What size paper can I use for the proposal?", "expected_id": "pappg-24-1#II.C.2.d", "tag": "formatting"}
+{"query": "Which fonts are allowed in an NSF proposal?", "expected_id": "pappg-24-1#II.C.2.a", "tag": "formatting"}
+{"query": "How should I format the headers and footers of my proposal?", "expected_id": "pappg-24-1#II.C.3", "tag": "formatting"}
+{"query": "Can I request a deviation from NSF's preparation requirements?", "expected_id": "pappg-24-1#II.A.1", "tag": "deviations"}
+{"query": "What accessibility accommodations does NSF provide for proposers?", "expected_id": "pappg-24-1#II.A.2", "tag": "accommodations"}
+
+# Project description and references
+{"query": "What goes in the Project Description section?", "expected_id": "pappg-24-1#II.D.2.d.(i)", "tag": "project-description"}
+{"query": "How do I list results from prior NSF support?", "expected_id": "pappg-24-1#II.D.2.d.(iii)", "tag": "prior-support"}
+{"query": "How should I cite references in the References Cited section?", "expected_id": "pappg-24-1#II.D.2.e", "tag": "references"}
+{"query": "Can I list unfunded collaborations in the Project Description?", "expected_id": "pappg-24-1#II.D.2.d.(iv)", "tag": "project-description"}
+{"query": "What rules apply to group proposals?", "expected_id": "pappg-24-1#II.D.2.d.(v)", "tag": "project-description"}
+
+# Budget categories
+{"query": "What goes on Line A and B for salaries and wages?", "expected_id": "pappg-24-1#II.D.2.f.(i)", "tag": "budget"}
+{"query": "How do I justify equipment on Line D of the budget?", "expected_id": "pappg-24-1#II.D.2.f.(iii)", "tag": "budget"}
+{"query": "What costs go in Participant Support on Line F?", "expected_id": "pappg-24-1#II.D.2.f.(v)", "tag": "budget"}
+{"query": "How are indirect costs (F&A) calculated on Line I?", "expected_id": "pappg-24-1#II.D.2.f.(viii)", "tag": "budget"}
+{"query": "When is cost sharing on Line M permitted?", "expected_id": "pappg-24-1#II.D.2.f.(xii)", "tag": "budget"}
+{"query": "Are alcoholic beverages allowable on an NSF budget?", "expected_id": "pappg-24-1#II.D.2.f.(c)", "tag": "budget-unallowable"}
+{"query": "What is required for foreign travel in the budget?", "expected_id": "pappg-24-1#II.D.2.f.(c)", "tag": "budget"}
+
+# Single-copy and certifications
+{"query": "Which documents in my proposal are single-copy?", "expected_id": "pappg-24-1#II.D.1", "tag": "single-copy"}
+{"query": "Can I provide a list of reviewers I do not want to review my proposal?", "expected_id": "pappg-24-1#II.D.1.b", "tag": "single-copy"}
+{"query": "What certification does the AOR need to make about organizational support?", "expected_id": "pappg-24-1#II.D.1.d.(v)", "tag": "certifications"}
+{"query": "What is the Malign Foreign Talent Recruitment certification about?", "expected_id": "pappg-24-1#II.D.1.d.(ix)", "tag": "certifications"}
+
+# Disclosures
+{"query": "What preaward disclosures must I make about other support?", "expected_id": "pappg-24-1#II.B.1", "tag": "disclosures"}
+{"query": "What happens if I violate pre- and post-award disclosure requirements?", "expected_id": "pappg-24-1#II.B.3", "tag": "disclosures"}
+
+# Senior personnel
+{"query": "Where do I list Synergistic Activities for senior personnel?", "expected_id": "pappg-24-1#II.D.2.h.(iv)", "tag": "senior-personnel"}
+{"query": "How do I report Collaborators and Other Affiliations?", "expected_id": "pappg-24-1#II.D.2.h.(iii)", "tag": "senior-personnel"}
+{"query": "What in-kind contributions need to be reported in Current and Pending?", "expected_id": "pappg-24-1#II.D.2.h.(iv)", "tag": "current-and-pending"}
+
+# Special information and compliance
+{"query": "When does my proposal need IRB approval for human subjects?", "expected_id": "pappg-24-1#II.E.5.a", "tag": "human-subjects"}
+{"query": "What IACUC information is required for vertebrate animals?", "expected_id": "pappg-24-1#II.E.4.a", "tag": "vertebrate-animals"}
+{"query": "Do I need approvals for projects on Tribal Nation lands?", "expected_id": "pappg-24-1#II.E.10", "tag": "tribal-nations"}
+{"query": "What is required for off-campus and field research safety plans?", "expected_id": "pappg-24-1#II.E.9", "tag": "field-safety"}
+{"query": "How does NSF treat proprietary or privileged information in proposals?", "expected_id": "pappg-24-1#II.E.1", "tag": "proprietary-info"}
+{"query": "What counts as an international activity for NSF?", "expected_id": "pappg-24-1#II.E.8.b", "tag": "international"}
+
+# Special proposal types
+{"query": "What is a Planning Proposal at NSF?", "expected_id": "pappg-24-1#II.F.1", "tag": "planning"}
+{"query": "When can I submit a RAPID proposal?", "expected_id": "pappg-24-1#II.F.2", "tag": "rapid"}
+{"query": "What is GOALI and who is the industrial partner?", "expected_id": "pappg-24-1#II.F.5", "also_acceptable": ["pappg-24-1#II.F.5.a"], "tag": "goali"}
+{"query": "Who can submit a Concept Outline?", "expected_id": "pappg-24-1#I.D.1", "tag": "concept-outline"}
+{"query": "When is a Letter of Intent (LOI) required?", "expected_id": "pappg-24-1#I.D.2", "tag": "loi"}
+
+# Eligibility and submission
+{"query": "Which organizations are eligible to submit proposals to NSF?", "expected_id": "pappg-24-1#I.E.1", "tag": "eligibility"}
+{"query": "Are foreign organizations eligible for direct NSF funding?", "expected_id": "pappg-24-1#I.E.2.(c)", "tag": "eligibility"}
+{"query": "Which organizations are NOT eligible to submit to NSF?", "expected_id": "pappg-24-1#I.E.3", "tag": "eligibility"}
+{"query": "What is a Target Date as opposed to a Deadline?", "expected_id": "pappg-24-1#I.F.1", "tag": "deadlines"}
+{"query": "What UEI and SAM registration is required to submit?", "expected_id": "pappg-24-1#I.G.2", "tag": "registration"}
+
+# Collaborative proposals
+{"query": "How do I submit a collaborative proposal from a single organization?", "expected_id": "pappg-24-1#II.E.3.a", "tag": "collaborative"}
+{"query": "How do I submit a collaborative proposal across multiple organizations?", "expected_id": "pappg-24-1#II.E.3.b", "tag": "collaborative"}
+
+# Merit review (broader)
+{"query": "What is Intellectual Merit as a review criterion?", "expected_id": "pappg-24-1#III.A.1", "tag": "merit-review"}
+{"query": "What is Broader Impacts as a review criterion?", "expected_id": "pappg-24-1#III.A.2", "tag": "merit-review"}
+
