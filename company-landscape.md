@@ -2,6 +2,8 @@
 
 This document identifies companies involved in the autonomous alloy discovery, high-throughput additive manufacturing, and AI-accelerated materials development space. Companies are categorized by role in the VCL pipeline, maturity, geography, and **Genesis Mission partnership potential** (DOE DE-FOA-0003612, Topic 3B: Critical Minerals, AMMTO). Includes companies relevant to critical mineral substitution, Be-Cu replacement, and supply chain resilience.
 
+> **See also:** [`powder-master-alloy-shopping-list.md`](powder-master-alloy-shopping-list.md) — element-by-element procurement reference (powders, master alloys, indicative prices, ≥2 suppliers per element) for the 15-element FLAIME palette.
+
 > **Sources:** All PRs in this repository (#2–#14, #26 for Topic 3B context), Edison trajectory analyses (including 3 dedicated Edison Scientific LITERATURE_HIGH queries on powder atomization, alloy design software, and LPBF/characterization equipment — results in `edison-trajectories/companies_*.md`), [RAPID+TCT 2026](https://www.rapid3devent.com/) exhibitor directory and conference schedule (April 13–16, 2026, Boston, MA; Edison review in `edison-trajectories/companies_rapid2026_review.md`), alloy-workflow-review.md, grant-targeting-analysis.md, DOE Critical Materials Innovation Hub partner lists, USGS 2025 Critical Minerals List, and supplementary web research.
 
 ---
