@@ -1,0 +1,4 @@
+# Beamer/LaTeX build artifacts not covered by the repository-level .gitignore
+*.nav
+*.snm
+*.vrb
