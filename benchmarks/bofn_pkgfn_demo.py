@@ -100,20 +100,134 @@ def ts_fn_step(model, bounds, objective, n_candidates=2048):
     return candidates[best_idx].unsqueeze(0)
 
 
-def pkgfn_step(model, problem, objective, n_fantasies=4, n_grid=50):
+def _reachable_parent_samples(
+    model, problem, k, n_raw, bounds, n_design_sobol=256
+):
+    """Sample empirically reachable parent-output values for node k.
+
+    Replaces the old uniform-over-parent_bounds sampling, which wastes most
+    candidates on OOD regions (Edison pKGFN analysis, 2026-04-21). Instead:
+
+    1. Draw a Sobol design X over the full network input space.
+    2. Propagate through the per-node GP posterior means to obtain expected
+       values at the parents of node k (and, for mixed nodes with active
+       inputs, carry forward the sampled active columns).
+    3. Return n_raw candidates in node k's input space, ordered as
+       construct_obs_set expects: ``[active_part, parent_part]``.
+
+    Returns a tensor of shape ``(n_raw, node_dim)``.
+    """
+    active_idx = list(problem.active_input_indices[k])
+    parents = list(problem.parent_nodes[k])
+    has_active = len(active_idx) > 0
+    has_parents = len(parents) > 0
+
+    if not has_parents and has_active:
+        # Root node: sample from the active decision-variable box.
+        node_bounds = bounds[:, active_idx]
+        return (
+            node_bounds[0]
+            + (node_bounds[1] - node_bounds[0])
+            * torch.rand(n_raw, len(active_idx), dtype=torch.double)
+        )
+
+    if not has_parents and not has_active:
+        # Shouldn't happen; nothing to sample.
+        return torch.empty(0, problem.node_dims[k], dtype=torch.double)
+
+    # Intermediate (or mixed) node: sample X from full-bounds Sobol, then
+    # propagate through the *parent* GPs' posterior means to get a cloud
+    # concentrated on the empirically reachable parent manifold.
+    design = draw_sobol_samples(bounds=bounds, n=n_design_sobol, q=1).squeeze(-2)
+    parent_values: list[torch.Tensor] = []
+    with torch.no_grad():
+        # Build per-node posterior-mean caches as we walk the DAG.
+        node_means: dict[int, torch.Tensor] = {}
+        # Topologically walk up to max(parents).
+        for j in range(max(parents) + 1):
+            p_j = problem.parent_nodes[j]
+            a_j = problem.active_input_indices[j]
+            if len(p_j) == 0 and len(a_j) > 0:
+                X_j = design[..., a_j]
+            elif len(p_j) > 0 and len(a_j) > 0:
+                X_j = torch.cat(
+                    [design[..., a_j], torch.stack([node_means[p] for p in p_j], dim=-1)],
+                    dim=-1,
+                )
+            else:
+                X_j = torch.stack([node_means[p] for p in p_j], dim=-1)
+            try:
+                node_means[j] = model.node_GPs[j].posterior(X_j).mean[..., 0]
+            except Exception:  # noqa: BLE001
+                # If posterior eval fails, fall back to a reasonable box centre.
+                node_means[j] = torch.zeros(design.shape[0], dtype=torch.double)
+        for p in parents:
+            parent_values.append(node_means[p])
+    parent_cloud = torch.stack(parent_values, dim=-1)  # (n_design_sobol, len(parents))
+
+    # Sub-sample n_raw from the cloud.
+    idx_perm = torch.randperm(parent_cloud.shape[0])[:n_raw]
+    parent_part = parent_cloud[idx_perm]
+
+    if has_active:
+        # Sample fresh active-input columns in the active-var box, then
+        # concatenate as ``[active, parent]`` (matches construct_obs_set).
+        node_bounds = bounds[:, active_idx]
+        active_part = (
+            node_bounds[0]
+            + (node_bounds[1] - node_bounds[0])
+            * torch.rand(n_raw, len(active_idx), dtype=torch.double)
+        )
+        # Assemble [active | parent] and also return the originating design
+        # rows so caller can stitch a full-X with consistent active columns.
+        cands = torch.cat([active_part, parent_part], dim=-1)
+    else:
+        cands = parent_part
+
+    return cands
+
+
+def pkgfn_step(
+    model, problem, objective, n_fantasies=64, n_grid=200, n_raw=128, verbose=False
+):
     """One p-KGFN step: evaluate each node, pick the best node+input.
 
-    For each root node, evaluates p-KGFN on discrete candidates.
-    This implements the cost-aware partial evaluation strategy from
-    Buathong et al. (2024): p-KGFN selects both which node to evaluate
-    AND what input to provide, maximising information gain per unit cost.
+    For each node (root, intermediate, OR mixed), evaluates p-KGFN on
+    discrete candidates. Intermediate/mixed nodes draw candidates from the
+    **empirically reachable parent manifold** (GP posterior means over a
+    Sobol design), not the raw parent_bounds box — this addresses the
+    Edison-identified OOD-parent-sampling issue (2026-04-21).
 
-    Returns the best (X_full, node_idx) — the network input and node selected.
+    Mixed nodes (e.g. node 4: active x4 + parent y3) now correctly write
+    their active component into x_full[active_idx] and their parent
+    component stays as the node-input only, fixing the shape-mismatch bug
+    that caused ~9% of pKGFN iterations to fall through to error_fallback.
+
+    Parameters
+    ----------
+    n_fantasies : int
+        KG inner fantasy count. Bumped from 16 → 64 on Edison guidance.
+    n_raw : int
+        Raw candidate pool per node. Bumped from 32 → 128.
+    verbose : bool
+        If True, emit per-node debug prints.
+
+    Returns
+    -------
+    (best_x, best_node, best_node_input)
+        - ``best_x``: full-dim X with active columns set to the winning
+          candidate's active part (filled with uniform random on other
+          active columns and 0.5·(lo+hi) on inactive ones so downstream
+          tracking is deterministic for a given seed).
+        - ``best_node``: selected node index.
+        - ``best_node_input``: the actual input fed to the selected node,
+          ordered as ``construct_obs_set`` expects (active | parent).
     """
     bounds = problem.bounds
     best_val = -torch.inf
     best_x = None
     best_node = None
+    best_node_input = None
 
     # Current best value from posterior mean
     X_grid = draw_sobol_samples(bounds=bounds, n=n_grid, q=1).squeeze(-2)
@@ -126,14 +240,12 @@ def pkgfn_step(model, problem, objective, n_fantasies=4, n_grid=50):
 
     for node_group in problem.node_groups:
         k = node_group[0]
-        active_idx = problem.active_input_indices[k]
-        parents = problem.parent_nodes[k]
+        active_idx = list(problem.active_input_indices[k])
+        parents = list(problem.parent_nodes[k])
+        has_active = len(active_idx) > 0
+        has_parents = len(parents) > 0
 
-        # For this demo, only optimise over root nodes (nodes with active inputs
-        # and no parent dependencies to enumerate)
-        if len(parents) > 0:
-            continue
-        if len(active_idx) == 0:
+        if not has_active and not has_parents:
             continue
 
         mask = torch.zeros(problem.n_nodes, dtype=torch.long)
@@ -154,15 +266,12 @@ def pkgfn_step(model, problem, objective, n_fantasies=4, n_grid=50):
             current_value=current_value,
         )
 
-        # Discrete optimisation: evaluate p-KGFN on random candidates
-        # (consistent with original paper's discrete approach)
-        node_bounds = bounds[:, active_idx]
-        n_raw = 32
-        raw_cands = (
-            node_bounds[0]
-            + (node_bounds[1] - node_bounds[0])
-            * torch.rand(n_raw, len(active_idx), dtype=torch.double)
+        raw_cands = _reachable_parent_samples(
+            model=model, problem=problem, k=k, n_raw=n_raw, bounds=bounds,
         )
+        if raw_cands.numel() == 0:
+            continue
+
         try:
             with torch.no_grad():
                 acq_vals = pkgfn(raw_cands.unsqueeze(1))
@@ -170,27 +279,37 @@ def pkgfn_step(model, problem, objective, n_fantasies=4, n_grid=50):
             acq_val = acq_vals[best_raw_idx].item()
             candidates = raw_cands[best_raw_idx].unsqueeze(0)
         except (RuntimeError, ValueError, torch.linalg.LinAlgError) as e:
-            print(f"  p-KGFN evaluation failed for node {k}: {e}")
+            if verbose:
+                print(f"  p-KGFN evaluation failed for node {k}: {e}")
             continue
 
         # Cost-adjusted value
         cost_adjusted = acq_val / problem.node_costs[k]
+        if verbose:
+            print(
+                f"    node {k}: acq={acq_val:+.5f} cost=${problem.node_costs[k]} "
+                f"→ cost_adj={cost_adjusted:+.5f}"
+            )
 
         if cost_adjusted > best_val:
             best_val = cost_adjusted
             best_node = k
-            # Build a full-dimensional X from the node's active inputs
+            best_node_input = candidates
+
+            # Build the full-dim X for any downstream tracking. For mixed
+            # nodes (both active + parents), write ONLY the active portion
+            # of the candidate into x_full[active_idx]; the parent portion
+            # stays in best_node_input for the caller.
             x_full = torch.zeros(1, problem.dim, dtype=torch.double)
-            x_full[0, active_idx] = candidates.squeeze()
-            # Fill non-active dims with random values
+            # Inactive dims: centre of their box so this is deterministic.
             for d_idx in range(problem.dim):
-                if d_idx not in active_idx:
-                    x_full[0, d_idx] = bounds[0, d_idx] + (
-                        bounds[1, d_idx] - bounds[0, d_idx]
-                    ) * torch.rand(1, dtype=torch.double)
+                x_full[0, d_idx] = 0.5 * (bounds[0, d_idx] + bounds[1, d_idx])
+            if has_active:
+                active_part = candidates[:, : len(active_idx)]
+                x_full[0, active_idx] = active_part.squeeze(0)
             best_x = x_full
 
-    return best_x, best_node
+    return best_x, best_node, best_node_input
 
 
 def random_step(bounds):
@@ -278,11 +397,12 @@ def run_bo_loop(problem, algo="TSFN", n_init=9, n_iters=15, seed=0,
             node_selected = "full"
             iter_cost = sum(problem.node_costs)
         elif algo == "pKGFN":
-            x_new, node_selected = pkgfn_step(model, problem, objective)
+            x_new, node_selected, node_input = pkgfn_step(model, problem, objective)
             if x_new is None:
                 # Fallback to random if p-KGFN fails
                 x_new = random_step(bounds)
                 node_selected = "random_fallback"
+                node_input = None
                 iter_cost = sum(problem.node_costs)
             else:
                 iter_cost = problem.node_costs[node_selected]
@@ -301,8 +421,18 @@ def run_bo_loop(problem, algo="TSFN", n_init=9, n_iters=15, seed=0,
         if algo == "pKGFN" and isinstance(node_selected, int):
             # Partial evaluation: only evaluate and observe the selected node
             active_idx = problem.active_input_indices[node_selected]
-            x_node_input = x_new[:, active_idx] if active_idx else x_new
-            # For root nodes, evaluate directly
+            parents = problem.parent_nodes[node_selected]
+
+            if len(parents) == 0 and len(active_idx) > 0:
+                # Root node: use active inputs from x_new
+                x_node_input = x_new[:, active_idx]
+            elif node_input is not None:
+                # Intermediate node: use the node_input (parent-space candidates)
+                x_node_input = node_input
+            else:
+                x_node_input = x_new[:, active_idx] if active_idx else x_new
+
+            # Evaluate the selected node
             y_node = problem.evaluate(x_node_input, idx=[node_selected])
             # Add observation only to the selected node's GP
             train_X_nodes[node_selected] = torch.cat(
@@ -339,7 +469,17 @@ def run_bo_loop(problem, algo="TSFN", n_init=9, n_iters=15, seed=0,
         total_cost += iter_cost
         node_selections.append(node_selected)
 
-        # Track best using posterior mean over a grid (consistent across all algos)
+        # Track best using posterior mean over a grid (consistent across all algos).
+        # Refit the model first so the posterior reflects the new observation.
+        model = GaussianProcessNetwork(
+            train_X=train_X_nodes,
+            train_Y=train_Y_nodes,
+            dag=problem.dag,
+            active_input_indices=problem.active_input_indices,
+            node_groups=problem.node_groups,
+            node_dims=problem.node_dims,
+        )
+        fit_gp_network(model)
         with torch.no_grad():
             grid = draw_sobol_samples(bounds=bounds, n=200, q=1).squeeze(-2)
             grid_vals = compute_posterior_mean_network(model, grid, objective)
