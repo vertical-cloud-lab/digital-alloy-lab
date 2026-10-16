@@ -48,6 +48,8 @@ the abstract's; $10 for CALPHAD is an assumption.
 | [`bofn_dag_full_chain.png`](bofn_dag_full_chain.png) | All four stages red | Or run the whole chain for **$4,210**: what the full-pipeline policies buy per design |
 | [`bofn_dag_partial_evaluation.gif`](bofn_dag_partial_evaluation.gif) | Flip-book (1.6 s a frame): the network, then the four actions, then the chain | |
 | [`contact-sheet.jpg`](contact-sheet.jpg) | All eleven PNGs on one sheet | |
+| [`bofn_dag_timelapse.mp4`](bofn_dag_timelapse.mp4), [`.gif`](bofn_dag_timelapse.gif) | Timelapse, 72 s: one seed-0 run per policy, one after another, tiered screening first. Every purchase lights its stage on the network, and the run's best demonstrated alloy is traced against spend underneath (see [Timelapse](#timelapse)) | Where each policy puts its $100k |
+| [`bofn_dag_timelapse_final.png`](bofn_dag_timelapse_final.png) | The timelapse's last frame: all eight seed-0 traces | |
 | [`bofn-dag-slides.pptx`](bofn-dag-slides.pptx) | Nine slides on the Utah master, native shapes with Morph: network, GPs, the four actions, the chain, the missed effect, network again. Built by [`scripts/slides/bofn_dag_slides.py`](../../../../scripts/slides/bofn_dag_slides.py); notes carry the detail | |
 | [`bofn-dag-figure.pptx`](bofn-dag-figure.pptx) | The network alone on a blank slide, editable | |
 | [`bofn-dag-slides-contact-sheet.jpg`](bofn-dag-slides-contact-sheet.jpg), [`-slides.pdf`](bofn-dag-slides-slides.pdf) | LibreOffice renders of the deck (Aptos installed) | |
@@ -56,6 +58,38 @@ Both `.pptx` files pass the Open XML SDK validator with 0 errors
 ([`scripts/slides/ooxml_validate/`](../../../../scripts/slides/ooxml_validate/)).
 Morph needs PowerPoint 2019 or 365; elsewhere the transition falls back to a
 fade. Paste with *Use Destination Theme* and keep the slide order.
+
+## Timelapse
+
+[`timelapse.py`](timelapse.py) plays back the purchase log of one run per policy
+on the network above, all on seed 0 at κ = 1, so every policy starts from the
+same seed alloys. The order is tiered screening, tiered with no powder reuse,
+random, standard BO, BOFN full pipeline, KGFN full pipeline, BOFN + powder
+reuse, then pKGFN.
+
+- **A purchase is a button press.** The stage it buys lights red: its header,
+  its node(s), the edges into them, and the input that the action chooses
+  (composition, atomizer setting, or laser settings). The light then fades
+  like a fluorescent tube settling after it strikes: 70% of the brightness goes
+  with a 0.12 s time constant and the rest with 0.7 s. A new press lights it
+  again at full brightness. The objective box lights when a tensile test beats
+  the best alloy so far.
+- **Video time is proportional to spend**, at 7 s per $100k, so every run
+  takes as long. A $10 CALPHAD call is a blink, and tiered screening's 224-call
+  screen is a single flash. The counter under each stage header counts that
+  stage's purchases, and the figure at the top right is the money committed so
+  far.
+- **The trace** is that run's best demonstrated alloy (% of the true optimum)
+  against spend. The y range is the finished plot's range from the first frame.
+  Finished runs stay on the plot in the slide figures' styles, with labels at
+  the positions they take in the last frame.
+- **Data.** Only runs made after the port carry a purchase log:
+  [`../results-rerun/k1`](../results-rerun/k1) (identical to the stored runs,
+  action for action; see [`../PORT.md`](../PORT.md)) and
+  [`../quality/kgfn-smoke/k1`](../quality/kgfn-smoke/k1) for KGFN. One seed is
+  an anecdote, not a result: on seed 0, full-pipeline BOFN ends below standard
+  BO, the reverse of the 20-seed means in the slide figures.
+- The burden note above the dashed bypass makes way for the purchase counters.
 
 ## Layout notes
 
@@ -78,9 +112,12 @@ Regenerate with
 ```bash
 python presentations/2026-10-mst26/bofn-prelim/dag/network_dag.py
 python scripts/slides/bofn_dag_slides.py
+python benchmarks/bofn-paper/dag/timelapse.py   # about 6 min on 2 cores; --seed, --policies
 python scripts/slides/render_deck.py presentations/2026-10-mst26/bofn-prelim/dag/bofn-dag-slides.pptx \
     --out-dir presentations/2026-10-mst26/bofn-prelim/dag --name bofn-dag-slides --cols 3
 ```
 
 (matplotlib, Pillow, python-pptx, lxml; LibreOffice and PyMuPDF for the renders;
-Aptos from Microsoft's download, see the gap-slides README).
+Aptos from Microsoft's download, see the gap-slides README; the timelapse also
+needs `../requirements.txt` for the true optimum, and ffmpeg, for which the
+`imageio-ffmpeg` wheel's binary is enough).
