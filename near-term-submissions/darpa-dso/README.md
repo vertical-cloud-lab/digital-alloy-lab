@@ -152,7 +152,7 @@ HR001126S0015@darpa.mil; the question deadline is Aug 6, 2027, 4:00 PM ET
   compositions per week, LPBF builds bought at $800 per build from a
   University of Utah user facility, BYU Microscopy Center, BYU computing
   cluster, CALPHAD workflow and powder-to-part demonstration in hand. The
-  plasma module and more printer capacity are named as what a
+  plasma module (about $150,000) and more printer capacity are named as what a
   DARPA-scale effort would add.
 
 ## Unverified items
