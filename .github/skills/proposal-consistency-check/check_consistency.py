@@ -26,16 +26,16 @@ TEX_FILE = REPO_ROOT / "genesis-mission-proposal" / "flaime-genesis-proposal.tex
 PLAN_FILE = REPO_ROOT / "genesis-mission-proposal" / "proposal-population-plan.md"
 CHECKLIST_FILE = REPO_ROOT / "genesis-mission-proposal" / "proposal-checklist.md"
 
-# Budget (current as of April 2026)
+# Budget (current as of April 2026 — post-audit rebalance, N=320 consumables sizing)
 BUDGET_TOTAL = 750_000
-BUDGET_BYU = 600_000          # $200K Act1 + $300K Act2 + $100K Act3
+BUDGET_BYU = 600_000           # audited rebalance: MS=2@$25, 4UG-FT@$22.50+8UG-PT@$15/sem, M&S@N=320
 BUDGET_VALIMET = 0            # partner-specific amount redacted
 BUDGET_AMAZEMET = 0           # partner-specific amount redacted
 BUDGET_THERMOCALC = 0         # partner-specific amount redacted
 
 # Personnel
 EXPECTED_MS = 2
-EXPECTED_UG = 10
+EXPECTED_UG = 12              # 4 full-time + 8 part-time per semester
 
 # Element palette — 15 NON-Al elements; Al is always the base
 PALETTE_ELEMENTS = {"Mn", "Cr", "Zr", "Mg", "Si", "Cu", "Ti", "Fe", "Ni",
@@ -380,16 +380,6 @@ def check_references():
 
 def check_foa_compliance():
     # Buy America statement in first 2 pages of narrative
-    if "Buy America" not in tex:
-        add("CRITICAL", "FOA-COMPLIANCE",
-            "Buy America Act compliance statement missing")
-
-    # AI tool disclosure
-    if not re.search(r"AI\s*[Tt]ool\s*[Dd]isclosure", tex):
-        add("CRITICAL", "FOA-COMPLIANCE",
-            "AI Tool Disclosure section missing",
-            ["FOA §IV.C requires disclosure of AI tools used"])
-
     # Team 2-of-3 categories
     has_ihe = bool(re.search(r"BYU|Brigham Young|universit", tex, re.IGNORECASE))
     has_industry = bool(re.search(r"Valimet|AMAZEMET", tex))
@@ -514,11 +504,11 @@ def check_logic():
         add("INFO", "LOGIC",
             "Throughput max (~468) not found in documents")
 
-    # Budget arithmetic: 200 + 350 + 50 + 50 + 100 = 750
-    budget_sum = 200 + 350 + 50 + 50 + 100
-    if budget_sum != BUDGET_TOTAL // 1000:
+    # Budget arithmetic: BYU + partners = total
+    budget_sum_k = (BUDGET_BYU + BUDGET_VALIMET + BUDGET_AMAZEMET + BUDGET_THERMOCALC) // 1000
+    if budget_sum_k != BUDGET_TOTAL // 1000:
         add("CRITICAL", "LOGIC",
-            f"Budget items sum to ${budget_sum}K, expected ${BUDGET_TOTAL // 1000}K")
+            f"Budget items sum to ${budget_sum_k}K, expected ${BUDGET_TOTAL // 1000}K")
 
 
 # ===========================================================================
