@@ -1,0 +1,175 @@
+% ============================================================================
+% DARPA DSO Office-wide BAA HR001126S0015: Executive Summary
+% (Attachment A template, mandatory for executive summaries)
+%
+% Format (Attachment A, Executive Summary Template, pp. 1-3):
+%   - PDF or Word; English; 8.5 x 11 in paper; 1 in margins
+%   - font no smaller than 12 pt (8 or 10 pt allowed in figures, tables, charts)
+%   - at most 2 pages: 1 page cover sheet + 1 page technical description
+%   - cover sheet: prime organization logo, executive summary title, DSO thrust
+%     area, proposer organization, technical POC and administrative POC (name,
+%     mailing address, telephone, email)
+%   - technical description: answers to four Heilmeier questions
+% Labeling (DARPA Proposer Instructions: General Terms and Conditions, "Content
+% and Form of Application Submission"): every document carries the BAA number,
+% proposer organization,
+% and title or short title. The running header does that on both pages.
+% Thrust areas named as in the BAA, Section I.A, p. 3.
+%
+% Evidence numbers come only from afosr-yip-white-paper-a2c.tex, Section 5,
+% and benchmarks/bofn-prelim/README.md.
+%
+% Build:  xelatex executive-summary.tex  (one pass is enough)
+% Lint:   cringe-filter lint -c proposal executive-summary.tex
+% ============================================================================
+
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage[margin=1in,headheight=15pt,headsep=0.3in]{geometry}
+
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{mathptmx}
+\else
+  \usepackage{fontspec}
+  \IfFontExistsTF{Times New Roman}
+    {\setmainfont{Times New Roman}}
+    {\setmainfont{TeX Gyre Termes}}
+\fi
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage[colorlinks=true,urlcolor=blue!70!black,linkcolor=blue!70!black]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus 1pt minus 1pt}
+
+% Running header: BAA number, organization, short title (12 pt).
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{HR001126S0015}
+\fancyhead[C]{Brigham Young University}
+\fancyhead[R]{Choosing the Next Experiment}
+\fancyfoot[C]{\thepage}
+
+% Red notes for Sterling; remove all before submission.
+\newcommand{\todo}[1]{\textcolor{red}{[TODO Sterling: #1]}}
+
+\newcommand{\q}[1]{\textbf{#1}\enspace}
+
+\begin{document}
+
+% ===========================================================================
+% Page 1: cover sheet
+% ===========================================================================
+\begin{center}
+\fbox{\parbox[c][0.9in][c]{2.8in}{\centering
+  \todo{insert the official BYU logo here}}}
+
+\vspace{14pt}
+{\bfseries COVER SHEET\par}
+\vspace{4pt}
+Executive Summary, DARPA Defense Sciences Office (DSO)\\
+Office-wide Broad Agency Announcement HR001126S0015
+\end{center}
+
+\vspace{10pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}>{\bfseries\raggedright}p{2.0in}>{\raggedright\arraybackslash}p{4.3in}@{}}
+Executive Summary Title &
+  Choosing the Next Experiment: Finding Printable Alloys at One Tenth
+  the Cost \\[4pt]
+DSO Thrust Area &
+  (1) Materials, Manufacturing, and Energy Systems;\newline
+  (4) Complex, Dynamic, and Intelligent Systems \\[4pt]
+Proposer Organization &
+  Brigham Young University (BYU), Provo, Utah \\[10pt]
+\multicolumn{2}{@{}l}{\bfseries Technical Point of Contact (POC)} \\
+\quad Name & Sterling G.\ Baird, Ph.D., Assistant Professor,
+  Department of Mechanical Engineering \\
+\quad Mailing Address & Brigham Young University, 350 EB, Provo, UT 84602 \\
+\quad Telephone & (801) 422-5344 \\
+\quad Email & \href{mailto:sterling.baird@byu.edu}{sterling.baird@byu.edu}
+  \\[10pt]
+\multicolumn{2}{@{}l}{\bfseries Administrative POC} \\
+\quad Name & \todo{name and title of the BYU research administration
+  contact} \\
+\quad Mailing Address & \todo{mailing address} \\
+\quad Telephone & \todo{telephone} \\
+\quad Email & \todo{email} \\
+\end{tabular}
+
+\clearpage
+
+% ===========================================================================
+% Page 2: technical description (one page)
+% ===========================================================================
+{\bfseries Executive Summary Technical Description\par}
+\vspace{2pt}
+
+\q{What is the proposed work attempting to accomplish or do?}
+We aim to cut the cost and time of finding and qualifying a new printable
+alloy by about ten times, and to do the same for other multi-step materials
+workflows. Developing an alloy for laser powder bed fusion (LPBF), a form of
+metal 3D printing, takes five steps: a thermodynamic
+calculation (minutes), powder production (a day), printed tracks and cubes
+(hours), electron microscopy (a day), and tensile tests (days). We will
+build and prove a method that decides, as each result arrives, which step to
+run next and on which candidate alloy.
+
+\q{How is the work performed today, and what are the limitations?}
+Experimental campaigns usually send every candidate through every step, so
+much of the budget goes to full tests of alloys that a cheap early
+measurement could have ruled out. Computational campaigns work as a funnel:
+many simulations, then a few survivors go to experiments. The funnel is only
+as good as its physics. Standard thermodynamic screens miss effects such as
+zirconium additions that keep printed high-strength
+aluminum from cracking (Martin et al.,
+\emph{Nature} 2017), so the funnel can discard the best alloys. Published
+methods that learn from partial results optimize a single property, wait
+for each result before choosing the next experiment, and have been tested only on synthetic problems.
+
+\q{What is new in our approach, and why will it succeed?}
+Each step gets its own statistical model, and the models are linked in the
+order of the steps, so uncertainty carries through the chain (Astudillo and
+Frazier, NeurIPS 2021). For each possible experiment, the algorithm divides
+the expected gain by the cost and runs the best one, so a candidate can stop
+at any step (Buathong et al., ICML 2024). Simulations run continuously at full
+throughput on BYU's computing cluster, and each choice uses all data available at that
+moment. We will add three things not done before: balancing several
+properties at once (freedom from cracks, strength, ductility); choosing new
+experiments while others are still running; and a demonstration on a real
+five-step workflow with build-to-build scatter. In a hand-built simulation of
+this chain whose crack screen ignores zirconium, the screening funnel
+stalled at 63\% of the best possible alloy after \$100,000. The algorithm
+reached that level after about \$26,500, or 3.8 times less spend (90\%
+confidence interval 2.0 to 5.7; 20 campaigns). When the screen's physics was
+right, screening kept pace. The simulation is noise-free, with one objective
+and one experiment at a time, so ten times is our target, not yet a
+result. The
+full chain already runs for aluminum alloys: our ultrasonic atomizer makes
+powder of four compositions per week, LPBF builds cost \$800 each at a
+University of Utah facility, and the BYU Microscopy Center supplies electron
+microscopy. We have completed a powder-to-part demonstration on a baseline
+aluminum alloy. The PI developed Honegumi, open software that helps
+experimentalists set up such searches, and co-authored the
+\emph{Chemical Reviews} survey of self-driving laboratories.
+
+\q{Who will care, and what will the impact be if the work is successful?}
+Qualifying a new material for a Department of War (DoW) system takes many
+expensive tests in a fixed order. A method that picks the next test and
+states its confidence shortens that path for any multi-step materials or
+manufacturing workflow. The first target is high-strength aluminum alloys
+that print without cracking, for aircraft structures and for replacement
+parts no longer made. The method moves to a new workflow by swapping in its
+steps and their costs. A DARPA-scale effort would add a plasma melting module
+for our atomizer (about \$150,000), extending the chain to refractory alloys
+for hypersonic structures, and more printer capacity to run many builds at
+once. We will release software, data, and models openly for DoW
+laboratories to use on their own materials.
+
+\end{document}
