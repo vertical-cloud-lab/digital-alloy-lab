@@ -555,6 +555,7 @@ def encode(frames, stem, gif_width, gif_fps, colors, parts):
     palette = frames / "palette.png"
     subprocess.run(common + ["-i", pattern, "-vf", f"{scale},palettegen=max_colors={colors}:stats_mode=full", str(palette)],
                    check=True)
+    keep_colours(palette, [MADE, mix(MADE, nd.WHITE, 0.5)] + [mix(MADE, nd.RED, w) for w in (0.25, 0.5, 0.75)])
     out = [Path(f"{stem}.mp4")]
     for k, (start, count) in enumerate(parts, 1):
         gif = Path(f"{stem}_{k}.gif" if len(parts) > 1 else f"{stem}.gif")
@@ -564,6 +565,22 @@ def encode(frames, stem, gif_width, gif_fps, colors, parts):
                                  str(gif)], check=True)
         out.append(gif)
     return out
+
+
+def keep_colours(palette, colours):
+    """Write `colours` into the palette's unused (repeated) entries. The alloy map's blue covers too few pixels
+    across the frames for palettegen to keep it, and without it the made alloys would come out gray."""
+    from PIL import Image
+
+    im = Image.open(palette).convert("RGBA")
+    p = np.asarray(im).reshape(-1, 4).copy()
+    _, first = np.unique(p, axis=0, return_index=True)
+    free = np.setdiff1d(np.arange(len(p)), first)
+    if len(free) < len(colours):
+        raise ValueError(f"no room for {len(colours)} more colours in a {len(first)}-colour palette")
+    for k, c in zip(free, colours):
+        p[k] = [*np.round(np.array(to_rgb(c)) * 255), 255]
+    Image.fromarray(p.reshape(im.size[1], im.size[0], 4)).save(palette)
 
 
 def split(frames, n_runs, parts):
