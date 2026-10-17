@@ -187,7 +187,7 @@ Edison's verdict, the decision taken here, and the reason. The bounds are in
 | --- | --- | --- | --- | --- |
 | [Cu](phase1/el-01-Cu.md) | LIMIT | balance | Balance, at least 65 wt%. The calculated liquidus (at most 1,250 C) is the binding limit: Cu-Ni above about 33 Ni melts too high to atomize. The 60 wt% floor Edison offered is not used in the first campaign. | matrix |
 | [Ni](phase1/el-02-Ni.md) | INCLUDE | search | Main film-former in Cu-Ni and a kappa former in NAB; the strongest route to C71500-class resistance. Capped by the liquidus near the atomizer limit (70-30 melts to about 1,240 C). Nickel burden is an objective, not a bound. | 1 |
-| [Al](phase1/el-03-Al.md) | INCLUDE | search | Defines the aluminum bronze branch and the Cu-Ni-Al region between the families. The upper range keeps the retained-beta boundary inside the space so that the process-aware CALPHAD screen (H3) can be tested on it. | 1 |
+| [Al](phase1/el-03-Al.md) | INCLUDE | search | Defines the aluminum bronze branch and the Cu-Ni-Al region between the families. The upper range keeps the retained-beta boundary inside the space, so the process-aware CALPHAD screen (H3) can be tested on it, and it includes the duplex alpha+beta bronzes, which crack less as weld filler than single-phase ones but risk selective attack of beta. | 1 |
 | [Fe](phase1/el-04-Fe.md) | INCLUDE | search | Needed for the Cu-Ni film and for kappa phases in NAB. Bounded by family rules: kept in solid solution in Cu-Ni (at most 2.3), Ni at least equal to Fe in NAB. | 1 |
 | [Mn](phase1/el-05-Mn.md) | INCLUDE | search | Deoxidizer and partial nickel substitute (C71640, MARINEL). Upper bound set by evaporation and oxidation in melting and DED; Mn-Al bronze (11-14 Mn) is left out for that reason. | 1 |
 | [Cr](phase1/el-06-Cr.md) | INCLUDE | search | Raises erosion-corrosion resistance of Cu-Ni (C72200 critical velocity about 3 times that of C71500), but higher-Cr Cu-Ni had worse crevice attack in still water. Cu-Ni and Cu-Ni-Al only. | 1 |
@@ -353,6 +353,28 @@ up to three DOIs per element.
   - C71640: Fe 1.7-2.3, Mn 1.5-2.5;
   - the 2025 critical-minerals list: 60 minerals, adding Cu, Ag, Si, Pb, B
     and others.
+
+## The options left open last round
+
+The previous round ([`../cu-ded-2026-10/README.md`](../cu-ded-2026-10/README.md))
+ended with optional alloy-space changes and one testing idea. They are now
+settled as follows:
+
+- **0-2 wt% Cr in Cu-Ni (C72200-like):** in, at 0-1, Cu-Ni only. The
+  evidence is strongest for erosion-corrosion resistance, while still-water
+  crevice attack is the risk.
+- **Mn-Al bronze as a nickel-lean family:** out for now. At 11-14 Mn it
+  loses Mn and gives off Mn fume in melting and DED, and its selective-phase
+  corrosion is worse than NAB's. Mn is searched up to 4 instead, which
+  covers C71640 (1.5-2.5) and the low end of MARINEL's range (3.8-5.3).
+- **Duplex α+β bronzes, to avoid cracking:** inside the space, since Al runs
+  to 10.5. The CALPHAD screen along the thermal history (H3) weighs the
+  crack resistance of duplex structures against selective attack of β.
+- **Reading immersion coupons at about 1, 10 and 30 days:** in the proposal
+  now, done by the CubXL. It draws small samples of each immersion solution
+  for ICP-MS at about 1, 3, 10 and 30 days, so the metal released over time
+  is an intermediate result between the one-hour screen and the 30-day mass
+  loss.
 
 ## Open items for Sterling
 

@@ -27,10 +27,10 @@ literature behind it is in
     driver family.
   - **Cross-check:** a borrowed laboratory potentiostat (Dr. Porter's)
     serves as the reference instrument.
-- **The CubXL is what makes the screen cheap.** The cost-aware search needs
-  the screen to cost little, so the CubXL is what earns the screen its place
-  as a cheap step in the search. It also makes three measurements possible
-  that a hand-run flat cell does not:
+- **The CubXL is what would make the screen cheap.** The cost-aware search
+  treats the screen as a cheap step, so each spot must take little of a
+  person's time. The CubXL would also make three measurements possible that
+  a hand-run flat cell does not:
   - many spots on one specimen, including across the fusion line of a
     repair coupon;
   - the used electrolyte of every spot, collected for ICP-MS;
@@ -53,8 +53,9 @@ literature behind it is in
     chronoamperometry and chronopotentiometry.
   - **Missing methods:** it has no linear sweep below 1 mV/s, no reversal
     at a set current, and no impedance (#278).
-  - **Hardware owned:** the lab owns no potentiostat, cell or electrodes
-    (#26, #231). Jarrett plans to use Dr. Porter's potentiostat the week of
+  - **Hardware owned:** the lab owns no potentiostat or electrodes (#26,
+    #231). Its one printed cell (#27) was designed for KOH electrolysis and
+    is untested. Jarrett plans to use Dr. Porter's potentiostat the week of
     Oct 19 (#231); its model is not known.
 - **Corrosion plan (PR #278, aluminum, on paper):**
   - **Cell:** printed clamps with 3-4 mm FKM O-ring wells (0.071-0.126 cm²,
@@ -233,8 +234,8 @@ The DOIs named here were checked on Crossref.
      and the cell parts. PR #278 prices those parts at a few hundred
      dollars; the mini-reference is not yet priced. Borrow a benchtop unit
      (Dr. Porter's, or another BYU lab's) for the flat-cell cross-checks.
-   - **What (b) changes:** it frees about $17,000, roughly what a few DED
-     sessions cost, and moves the item from Equipment (Field 11) to
+   - **What (b) changes:** it frees about $17,000 for DED sessions, whose
+     price is still unknown, and moves the item from Equipment (Field 11) to
      Materials and supplies, since it is below the equipment threshold.
      Check BYU's threshold.
    - **Risk of (b):** reviewers may trust a module instrument less, which

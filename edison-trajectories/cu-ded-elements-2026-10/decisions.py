@@ -11,7 +11,7 @@ needed beyond normal feedstock certificates.
 DECISIONS = {
     "Cu": ("balance", "Balance, at least 65 wt%. The calculated liquidus (at most 1,250 C) is the binding limit: Cu-Ni above about 33 Ni melts too high to atomize. The 60 wt% floor Edison offered is not used in the first campaign."),
     "Ni": ("search", "Main film-former in Cu-Ni and a kappa former in NAB; the strongest route to C71500-class resistance. Capped by the liquidus near the atomizer limit (70-30 melts to about 1,240 C). Nickel burden is an objective, not a bound."),
-    "Al": ("search", "Defines the aluminum bronze branch and the Cu-Ni-Al region between the families. The upper range keeps the retained-beta boundary inside the space so that the process-aware CALPHAD screen (H3) can be tested on it."),
+    "Al": ("search", "Defines the aluminum bronze branch and the Cu-Ni-Al region between the families. The upper range keeps the retained-beta boundary inside the space, so the process-aware CALPHAD screen (H3) can be tested on it, and it includes the duplex alpha+beta bronzes, which crack less as weld filler than single-phase ones but risk selective attack of beta."),
     "Fe": ("search", "Needed for the Cu-Ni film and for kappa phases in NAB. Bounded by family rules: kept in solid solution in Cu-Ni (at most 2.3), Ni at least equal to Fe in NAB."),
     "Mn": ("search", "Deoxidizer and partial nickel substitute (C71640, MARINEL). Upper bound set by evaporation and oxidation in melting and DED; Mn-Al bronze (11-14 Mn) is left out for that reason."),
     "Cr": ("search", "Raises erosion-corrosion resistance of Cu-Ni (C72200 critical velocity about 3 times that of C71500), but higher-Cr Cu-Ni had worse crevice attack in still water. Cu-Ni and Cu-Ni-Al only."),
