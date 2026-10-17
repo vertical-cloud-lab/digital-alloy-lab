@@ -37,7 +37,9 @@ Dear Selection Committee,
 
 I write to support Dr. Sterling G. Baird's proposal, "Cost-Aware Selection of
 Experiments for Printable, Corrosion-Resistant High-Strength Aluminum
-Alloys," and to state
+Alloys," [TODO Sterling: if the copper version is submitted instead, use its
+title, "Cost-Aware Design of Seawater-Resistant Copper Alloy Powders for
+Blown-Powder Directed Energy Deposition."] and to state
 Brigham Young University's long-term commitment to him and his research.
 
 Dr. Baird joined the Department of Mechanical Engineering as a tenure-track

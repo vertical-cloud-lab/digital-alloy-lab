@@ -1,0 +1,1338 @@
+% ============================================================================
+% ONR FY2027 Young Investigator Program (YIP), Technical Proposal (Volume 1)
+% ALTERNATIVE VERSION: seawater-resistant copper alloys designed as powders for
+% single-stream, blown-powder directed energy deposition (DED).
+% NOFO N0001426SF004 (posted 17 Aug 2026, file FY27_YIP_NOFO_N0001426SF004__003.pdf)
+% Due 30 Oct 2026, 5:00 PM Eastern, via Grants.gov (NOFO p. 27).
+%
+% This file is an alternative to onr-yip-technical-proposal.tex (aluminum
+% alloys, laser powder bed fusion). Only one of the two would be submitted.
+% Kept from the aluminum version: the linked-model, cost-aware search
+% (Advances 1, 2 and 5 here; H1, H2 and H4), the staged specimens with a 99%
+% density gate, the audit of screened-out candidates, the synthetic benchmark
+% (Figs. 2 and 3, still aluminum), and the management, responsibility, and
+% data sections. Changed: the alloy system and naval application (70-30
+% copper-nickel and nickel-aluminum bronze replacements), the process (DED,
+% with a repair branch), the powder step (sized and checked for blown
+% powder), the physics inputs (CALPHAD along the DED thermal history, new
+% Advance 3 and H3), and the corrosion tests (seawater screen, then
+% immersion). See README.md, "Alternative: copper alloys for blown-powder DED".
+%
+% Format, page limit, required sections, and page numbering are as in
+% onr-yip-technical-proposal.tex (NOFO pp. 15-20): 8.5 x 11 in, 1 in margins,
+% single-spaced, Times New Roman 12 pt, 20 counted pages.
+%
+% The budget macros are the aluminum version's (budget/budget-numbers.tex).
+% Its LPBF build line has not been re-priced as DED sessions; see the README.
+%
+% Red [TODO Sterling: ...] markers are guesses or facts not yet confirmed.
+%
+% Build: xelatex onr-yip-technical-proposal-cu-ded.tex (twice)
+% ============================================================================
+
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{mathptmx}
+\else
+  \usepackage{fontspec}
+  \IfFontExistsTF{Times New Roman}
+    {\setmainfont{Times New Roman}}
+    {\setmainfont{TeX Gyre Termes}}
+\fi
+\usepackage{microtype}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 2pt minus 1pt}
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{pdfpages}
+\usepackage[labelfont=bf,labelsep=period,skip=4pt]{caption}
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=blue!70!black,citecolor=blue!70!black,
+  urlcolor=blue!70!black]{hyperref}
+
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\normalsize\bfseries}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{10pt plus 2pt minus 2pt}{2pt}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{8pt plus 2pt minus 2pt}{1pt}
+\titleformat{\subsubsection}[runin]{\normalfont\normalsize\bfseries}{}{0pt}{}[.]
+\titlespacing*{\subsubsection}{0pt}{5pt plus 2pt minus 1pt}{0.5em}
+
+\pagestyle{plain}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO Sterling: #1]}}
+\hyphenation{re-POW-DER AMA-ZE-MET}
+
+\input{budget/budget-numbers.tex}
+\begin{document}
+
+% ===========================================================================
+% Cover page (excluded from the page limit)
+% ===========================================================================
+\pagenumbering{roman}
+\begin{titlepage}
+\begin{center}
+{\Large\bfseries Technical Proposal\par}
+\vspace{10pt}
+{\large\bfseries Cost-Aware Design of Seawater-Resistant Copper Alloy\\
+Powders for Blown-Powder Directed Energy Deposition\par}
+\vspace{10pt}
+Office of Naval Research (ONR)\\
+Fiscal Year 2027 Young Investigator Program (YIP)
+\end{center}
+\vspace{12pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}>{\bfseries\raggedright\arraybackslash}p{1.95in}>{\raggedright\arraybackslash}p{4.3in}@{}}
+NOFO number & N0001426SF004 \\
+Title & Cost-Aware Design of Seawater-Resistant Copper Alloy Powders for
+  Blown-Powder Directed Energy Deposition \\
+Prime applicant & Brigham Young University (BYU), Provo, Utah \\
+Subawardees & None \\
+ONR S\&T Focus Areas & Primary: Manufacturing (Integrated Manufacturing and
+  Sustainment Technologies). Secondary: Materials and Electronics
+  (Sustainable and Operationally Robust Materials). \\
+ONR program & Materials \& Processes for Additive Manufacturing, Code 332
+  (Dr.~Charles Fisher) \\
+Technical contact & Sterling G.\ Baird, Ph.D., Assistant Professor,
+  Department of Mechanical Engineering, Brigham Young University, 350 EB,
+  Provo, UT 84602. Phone (801) 422-5344. Email
+  \href{mailto:sterling.baird@byu.edu}{sterling.baird@byu.edu} \\
+Administrative and business contact & \todo{name, title, address, phone,
+  and email of the BYU Research Administration officer who signs as the
+  Authorized Organization Representative} \\
+Period of performance & Base period only, 36 months: 1 April 2027 to
+  31 March 2030. No option periods. \\
+Requested amount & \$\BudgetTotal{} total: \$\BudgetYearOne, \$\BudgetYearTwo,
+  and \$\BudgetYearThree{} in the three 12-month periods \todo{these are the
+  aluminum version's figures; re-price the LPBF builds as DED sessions, then
+  final figures from BYU Research Administration} \\
+\end{tabular}
+\end{titlepage}
+
+% ===========================================================================
+% Table of contents (excluded from the page limit)
+% ===========================================================================
+\setcounter{page}{2}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\clearpage
+
+% ===========================================================================
+% Pages 1 to N count toward the 20-page limit
+% ===========================================================================
+\pagenumbering{arabic}
+
+\section{Technical Approach}
+
+\subsection{Problem and objectives}
+
+Much of the Navy's seawater service runs on two kinds of copper alloy.
+Copper-nickel alloys, 90-10 (UNS C70600) and 70-30 (UNS C71500), carry
+seawater in piping, condensers, and heat exchangers, and nickel-aluminum
+bronze (NAB, UNS C95800) is cast into propellers, valves, and pump
+parts~\cite{milt16420,milb24480,cda222}. Both were developed for casting or wrought processing.
+Directed energy deposition (DED), in which a laser melts a stream of powder
+blown into a moving melt pool, can build large parts and restore worn or
+damaged ones without a foundry~\cite{saboori2019}. DED, however, cools each
+layer from the melt within seconds and reheats it many times as later layers
+pass, so it produces microstructures these alloys were never designed for. In
+NAB, fast cooling retains a martensitic phase that corrodes selectively in
+seawater~\cite{NAB-AM-MICRO}, and the Navy's specification for NAB deposited
+by wire-arc DED requires the same 6-hour anneal as castings~\cite{milprf32816}.
+That step is costly for a large part and impractical for many repairs made in
+place. The Navy's specifications for printed copper alloys all use the cast
+compositions~\cite{milprf32804,milprf32815,milprf32816}; to our knowledge, no
+seawater copper alloy has yet been designed for blown-powder DED.
+
+Designing one runs through a chain of steps: a thermodynamic calculation, a
+powder, deposited test specimens, microscopy, and property tests. The costs of
+the steps differ greatly. A thermodynamic calculation takes minutes, a powder
+lot a day, a DED session days including turnaround, and a corrosion immersion
+weeks; the protective film that gives copper-nickel its resistance takes weeks
+to months to mature~\cite{ma2015}. Experimental campaigns often send each
+candidate through the whole chain, spending much of the budget on full tests
+of candidates that a cheap early measurement could have ruled out.
+Computational campaigns often work as a funnel: many simulations, then a few
+candidates passed on to experiments. If the simulation misses a physical
+effect, the funnel discards good candidates before any experiment can catch
+the error.
+
+The powder is a second obstacle. Single-stream blown-powder DED, the form in
+use today, feeds a pre-alloyed powder from one hopper, so each new composition
+needs its own powder lot in a size range that flows through the nozzle.
+Industrial gas atomizers make powder in lots of tens of kilograms or more, so
+new compositions are rarely tried \todo{cite a minimum lot size, e.g., a
+vendor's}. Our ultrasonic atomizer makes a lot of a new composition in a day
+from about half a kilogram of feedstock (Section~\ref{sec:task2}). That turns
+the powder from a purchase into a step the search can choose, and it lets the
+search design the powder along with the alloy.
+
+This project asks a basic question. When the steps of a materials workflow
+differ in cost by orders of magnitude, and results arrive at different times,
+how should one choose the next measurement and the next candidate? It answers
+the question on a concrete design problem: a pre-alloyed copper alloy powder
+for single-stream blown-powder DED that deposits without cracks or pores, on
+itself and on the alloys it would repair, and that resists seawater as
+deposited, without heat treatment, at least as well as 70-30 copper-nickel.
+The project has five objectives:
+\begin{enumerate}\setlength{\itemsep}{0pt}
+\item Extend a cost-aware search method that learns from partial results to
+several competing objectives: dense and crack-free deposits, strength,
+ductility, and resistance to corrosion in seawater.
+\item Extend it to many experiments in progress at once, with results that
+return at different times.
+\item Give it physics computed for the process, thermodynamic calculations
+evaluated along the thermal history of a DED deposit, and measure what that
+physics is worth.
+\item Demonstrate the method on a physical workflow that designs copper alloy
+powders for blown-powder DED, from powder to deposit, repair coupon, tensile
+test, and seawater corrosion test, and test whether its stated confidence in
+a candidate matches what the deposits and tests later show.
+\item Measure how well a one-hour electrochemical screen predicts immersion
+tests that take weeks, so that the long tests run only where they can change
+a decision.
+\end{enumerate}
+
+\subsection{Copper alloys in naval seawater service}
+\label{sec:naval-cu}
+
+Navy specifications cover copper-nickel tube for the piping systems of
+surface ships and submarines~\cite{milt16420} and NAB castings for seawater
+service~\cite{milb24480}, and NAB is widely used for valve bodies, pump
+casings, and impellers, with a large market in submarine
+fleets~\cite{cda222}. Copper-nickel owes its resistance to a thin, adherent
+film of corrosion products, mainly cuprous oxide with nickel and iron, that
+builds up over weeks to months of exposure~\cite{ma2015}. NAB is a cast alloy of copper with about 9\%
+aluminum and 4 to 5\% each of iron and nickel (by weight). Its microstructure
+of $\alpha$ grains and several intermetallic $\kappa$ phases resists seawater
+well, but the $\alpha$ phase in the lamellar $\alpha+\kappa$ eutectoid, and
+any retained $\beta$ phase, corrode selectively, above all in
+crevices~\cite{wharton2005,culpan1979}. Navy NAB castings therefore get a temper
+anneal at 1250 $\pm$ 50\,\textdegree{}F (about 677\,\textdegree{}C) for at
+least 6 hours, propellers excepted~\cite{milb24480}, which improves their
+corrosion resistance~\cite{cda222}.
+
+Printing changes these microstructures, and printing changes how alloys
+corrode~\cite{sander2018}. \todo{NAB and copper-nickel AM literature: as-built microstructure and corrosion,
+being checked} NAVSEA has written specifications for 70-30 copper-nickel made by
+wire-arc DED and by laser powder bed fusion, and for NAB made by wire-arc DED,
+each as an alternative to castings and each with the existing
+composition~\cite{milprf32804,milprf32815,milprf32816}. We found none for
+either alloy made by blown-powder laser DED. In 2023 a Navy official
+pointed out, as reported by Defense News, that for metals specific to naval
+use, ``including copper-nickel and some steel alloys, more research is needed
+on what happens when these materials are used for printing, particularly how
+it affects the metals' fatigue and corrosion properties''~\cite{defensenews2023}. A composition chosen for casting is not
+necessarily the best one for DED, and each composition and set of deposition
+settings needs its own tests.
+
+Corrosion tests of copper alloys follow the same cost pattern as the rest of
+the workflow. Open-circuit potential, linear polarization, and impedance
+measurements in substitute ocean water~\cite{astmD1141} take about an hour and
+give a corrosion rate and a measure of the surface film~\cite{astmG59,astmG102}.
+Immersion tests with mass loss~\cite{astmG31,astmG1} and cross-sections that
+measure the depth of selective attack take weeks. Tests in flowing seawater,
+which set the velocity limits used in piping design, take months. The search
+can therefore treat corrosion the way it treats cracking and strength: a cheap
+screen for many candidates and long tests for a few. The cheap screen can
+mislead, though. An hour-long measurement on a fresh surface sees neither the
+film that forms over weeks on copper-nickel nor slow selective attack in NAB.
+Knowing when the screen can be trusted is part of the research.
+
+Supply and melting add one more objective. Nickel has been on the U.S. list
+of critical minerals since 2022, and copper joined it in
+2025~\cite{usgs2022,usgs2025}. Nickel also raises the melting range: 70-30
+copper-nickel melts between about 1,171 and 1,238\,\textdegree{}C, 90-10
+between 1,099 and 1,149\,\textdegree{}C, and NAB between 1,043 and
+1,060\,\textdegree{}C~\cite{cdadata}. A replacement for 70-30 copper-nickel
+that needs less nickel would use less of a critical mineral and would be
+easier to atomize and deposit. The search will carry nickel content as an
+objective to minimize where the corrosion trade-offs allow.
+
+\subsection{Scientific concepts}
+\label{sec:concepts}
+
+The search method treats the workflow as a network of linked
+models~\cite{astudillo2021}. Each step gets its own statistical model, a
+Gaussian process, which predicts the outputs of that step together with their
+uncertainty. The models are linked in the same order as the steps
+(Fig.~\ref{fig:network}), so the outputs of one step are inputs to the next
+and uncertainty carries through the whole network. Because each step has its
+own model, the network learns from partial results, and a candidate can stop
+at any step. Buathong et al.\ added a cost-aware rule to this
+network~\cite{buathong2024}. For each possible experiment, the rule estimates
+how much the result is expected to improve the search, divides that by the
+experiment's cost, and runs the best one.
+
+The physics comes first, in the manner of integrated computational materials
+engineering (ICME)~\cite{olson1997,nrc2008}: calculations decide where
+experiments go, and experiments correct the calculations. Calculation of
+phase diagrams (CALPHAD) in Thermo-Calc and pycalphad~\cite{andersson2002,otis2017}
+gives the liquidus and freezing range of each composition and an index of how
+prone it is to cracking as it solidifies~\cite{kou2015}. It also gives the
+segregation of nickel, iron, and aluminum between dendrites and the phases
+stable at each temperature, including the $\beta$ and $\kappa$ phases of the
+bronzes. DED adds a thermal history. A moving point-source model of heat
+flow~\cite{rosenthal1946}, calibrated to measured melt-pool sizes, gives for
+each set of deposition settings the cooling rate through solidification and
+the peak temperatures that later passes impose on each layer. The CALPHAD
+calculations are then evaluated at those temperatures, to estimate which
+phases can form as the deposit solidifies and which can form or dissolve as
+it is reheated. These outputs enter the statistical models as inputs with
+learned weights, so the search can discount any of them that proves
+uninformative. The calculations run continuously on BYU high-performance
+computing, and each new result is available to the next decision.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  font=\small,
+  box/.style={draw, rounded corners=2pt, fill=black!5, align=center,
+    text width=2.05cm, minimum height=1.55cm, inner sep=2pt},
+  arr/.style={-{Latex[length=2mm]}, thick},
+  input/.style={font=\small\itshape, align=center}
+]
+\node[box] (s1) at (0,0) {CALPHAD\\and heat\\flow\\\textit{minutes}};
+\node[box] (s2) at (2.6,0) {Powder\\(ultrasonic\\atomization)\\\textit{a day}};
+\node[box] (s3) at (5.2,0) {DED\\deposits\\\textit{days}};
+\node[box] (s4) at (7.8,0) {Micro-\\structure\\(SEM, EDS,\\EBSD)\\\textit{a day}};
+\node[box] (s5) at (10.4,0.95) {Tensile\\tests\\\textit{days}};
+\node[box] (s6) at (10.4,-0.95) {Corrosion\\screen\\(seawater)\\\textit{an hour}};
+\node[box, text width=2.35cm] (s7) at (13.15,-0.95) {Immersion\\(selective\\attack, film)\\\textit{weeks}};
+\foreach \a/\b in {s1/s2, s2/s3, s3/s4, s6/s7} \draw[arr] (\a) -- (\b);
+\draw[arr] (s4.east) -- ++(0.25,0) |- (s5.west);
+\draw[arr] (s4.east) -- ++(0.25,0) |- (s6.west);
+\node[input] (comp) at (1.3,1.55) {composition};
+\draw[arr] (comp.south) -- ++(0,-0.1) -| (s1.north);
+\draw[arr] (comp.south) -- ++(0,-0.1) -| (s2.north);
+\node[input] (atom) at (2.6,-1.6) {atomizer settings};
+\draw[arr] (atom) -- (s2);
+\node[input] (dep) at (5.2,1.55) {deposition settings};
+\draw[arr] (dep) -- (s3);
+\draw[arr, dashed] (s7.south) -- ++(0,-0.3) -| (s1.south);
+\end{tikzpicture}
+\caption{The workflow as linked models, with typical times per result in
+italics (DED sessions include turnaround at the facility; deposits are tracks,
+walls, blocks, and repair coupons). Composition enters
+at the first two steps, atomizer settings at the second, and deposition
+settings (laser power, travel speed, powder feed rate) at the third; the heat
+flow model also takes the deposition settings. After microscopy the network
+branches to tensile tests and to corrosion tests. Dashed arrow: each result
+updates the models, which choose the next experiments and steps by expected
+gain per cost.}
+\label{fig:network}
+\end{figure}
+
+\subsection{Comparison with other approaches}
+
+To our knowledge, neither a multi-objective nor an asynchronous version of
+cost-aware, partial-evaluation optimization of linked models has been
+developed, and none has been demonstrated on a physical alloy workflow.
+Published tests of the linked-model methods use test functions and
+simulators~\cite{astudillo2021,buathong2024}. Multi-stage Bayesian
+optimization for self-driving laboratories was tested on synthetic and
+retrospective data with one objective~\cite{torresi2026}. Cost-aware batch
+optimization of refractory alloys treats measurements of unequal cost as
+separate sources rather than linked steps, in a computational
+campaign~\cite{alvi2026}. Closed-loop campaigns on printed alloys use one
+model and a fixed set of measurements~\cite{talbot2026}. Alloys designed for
+printing by computation, such as an oxide-dispersion-strengthened NiCoCr
+alloy~\cite{smith2023} and high-strength aluminum
+alloys~\cite{thapliyal2020,taheri2025}, were designed and then printed as
+single compositions. Standard multi-objective Bayesian optimization handles
+competing properties and batches~\cite{daulton2021} but treats the whole
+chain as one costly experiment. Printed copper alloys for seawater have used
+the cast or wrought compositions~\cite{milprf32804,milprf32815,milprf32816},
+and their corrosion studies characterize one alloy and one process at a
+time~\cite{NAB-AM-CORR}. Autonomous and
+high-throughput corrosion work has used a scanning droplet cell to screen
+coatings and has run fast screens before slower, more thorough
+tests~\cite{decost2022,sur2023}, but without deciding, candidate by
+candidate, when a long test is worth its cost. This project combines the
+linked network, the cost per step, physics computed for the process, several
+objectives including corrosion, and results that arrive out of order, and
+tests the combination on real deposits.
+
+\subsection{Preliminary results}
+\label{sec:prelim}
+
+Since the lab started at BYU in December 2025, we have set up a CALPHAD
+workflow on BYU high-performance computing, installed the ultrasonic
+atomizer, and completed a powder-to-part demonstration on a baseline aluminum
+alloy. Atomized powder, laser powder bed fusion builds, scanning electron
+microscopy (SEM) and energy-dispersive X-ray spectroscopy (EDS) results, and
+tensile data are in hand. The atomizer's induction module also melts copper
+alloys. NAB and 90-10 copper-nickel melt well below its upper limit, and
+70-30 copper-nickel melts near it \todo{confirm the module's maximum melt
+temperature and add the first copper alloy powder (SEM image and size
+distribution) if a run is possible before 23 October; 7 pages of the 20-page
+limit are still free.}
+
+% Fig. 2 redraws the synthetic network from the MS&T26 talk
+% (benchmarks/bofn-prelim/explain/frames/00-network.png); functions and costs
+% are in benchmarks/bofn-prelim/README.md. It is the aluminum network, kept
+% as is: it tests the method, not the alloy.
+\begin{figure}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\small,
+  nd/.style={draw=black!65, rounded corners=2pt, fill=black!5, align=center,
+    minimum height=0.6cm, inner sep=2pt},
+  inp/.style={draw=black!35, rounded corners=2pt, align=center,
+    font=\footnotesize, inner sep=2pt},
+  hd/.style={font=\small, anchor=base},
+  e/.style={-{Latex[length=1.6mm]}, black!75, semithick}
+]
+\foreach \x/\t in {0.95/Inputs, 4.3/{CALPHAD \textbf{\$10}},
+  7.55/{Atomize \textbf{\$1,500}}, 10.5/{Print \textbf{\$2,500}},
+  13.1/{Test \textbf{\$200}}, 15.45/Objective}
+  \node[hd] at (\x,2.75) {\t};
+\node[inp, text width=1.9cm] (c) at (0.95,1.4) {Composition\\Zn+Mg, Cu,\\Zr, Sc};
+\node[nd, text width=3.2cm] (s) at (4.3,2.1) {Strengthening phase};
+\node[nd, text width=3.2cm] (f) at (4.3,1.4) {Freezing range};
+\node[nd, text width=3.2cm] (g) at (4.3,0.7) {Nucleant fraction};
+\node[draw=black!35, dashed, rounded corners=3pt, inner sep=2pt,
+  fit=(s)(f)(g)] {};
+\node[nd, text width=2.4cm] (q) at (7.55,0.1) {Powder quality};
+\node[nd, text width=2.3cm] (r) at (10.5,0.75) {Dense, crack-\\free fraction};
+\node[nd, text width=1.5cm] (u) at (13.1,1.5) {Strength};
+\node[nd, draw=black, thick, fill=white, text width=2.1cm] (o) at (15.45,1.5)
+  {Strength $-$\\0.3\,$\times$\,burden};
+\node[inp] (a) at (7.55,-0.75) {Atomizer setting};
+\node[inp] (l) at (10.5,-0.75) {Laser power, speed};
+\foreach \n in {s,f,g} \draw[e] (c.east) to[out=0, in=180] (\n.west);
+\draw[e] (s.east) to[out=0, in=175] (u.west);
+\draw[e] (f.east) to[out=0, in=170] (r.west);
+\draw[e] (g.east) to[out=0, in=180] (r.west);
+\draw[e] (g.east) to[out=0, in=180] (q.west);
+\draw[e] (q.east) to[out=0, in=190] (r.west);
+\draw[e] (r.east) to[out=0, in=185] (u.west);
+\draw[e] (u) -- (o);
+\draw[e] (a) -- (q);
+\draw[e] (l) -- (r);
+\end{tikzpicture}}
+\caption{Synthetic workflow used for Fig.~\ref{fig:sim}, built for the
+aluminum version of this workflow: a hand-written function for each box and
+a rough total cost (time, materials, supplies) for each step. Burden is a
+penalty on scarce elements such as scandium. The nucleant (Zr, Sc) cuts
+cracking, an effect the CALPHAD crack screen does not see. Task~1 replaces
+these functions with copper and DED ones.}
+\label{fig:synth}
+\end{figure}
+
+% Results: benchmarks/bofn-prelim/README.md (kappa = 1 headline, 20 seeds).
+\begin{figure}[t]
+\centering
+\begin{minipage}[c]{3.1in}
+\includegraphics[width=\linewidth]{../../benchmarks/bofn-prelim/bofn_best_vs_spend_k1_partial_vs_full.png}
+\end{minipage}\hfill
+\begin{minipage}[c]{3.25in}
+\caption{Best result found versus spend in simulations where the CALPHAD
+crack screen ignores zirconium (means of 20 campaigns, $\pm$1 standard
+error). Red searches choose the next step; gray ones follow a fixed order.
+pKGFN is the cost-aware method~\cite{buathong2024} and BOFN the linked-model
+method~\cite{astudillo2021}; reuse reprints earlier powders.}
+\label{fig:sim}
+\end{minipage}
+\end{figure}
+
+We also simulated the cost-aware method on a synthetic version of the
+workflow (Figs.~\ref{fig:synth} and~\ref{fig:sim}), built for the aluminum
+version of this project. With the crack screen ignoring zirconium, screening
+and then tuning the process stalled at 63\% of the optimum after \$100,000.
+The cost-aware search, and a simpler one that reused powders, reached that
+level after about \$26,500 (3.8 times less spend; 90\% confidence interval
+2.0 to 5.7). Searches that ran every candidate through the full chain caught
+up later, and screening kept pace when its physics was right. The simulation
+is hand-built and noise-free, with one objective, no corrosion branch, no
+process physics, and one experiment at a time, so it does not test the
+advances proposed here. It does show that letting the search choose the step
+can pay off when the physics model is incomplete. The DED workflow
+has the same structure: a physics screen that can miss effects, a powder
+step, a deposition step, and tests.
+
+\subsection{Method advances}
+
+\subsubsection{Advance 1: several competing objectives}
+The published cost-aware method optimizes a single objective. A copper alloy
+for DED repair must balance deposit quality (dense, crack-free, and sound at
+the fusion line with the part it repairs), strength, ductility, and corrosion
+resistance in seawater, with no weighting known in advance. We will extend
+the cost-aware rule to several objectives. The expected improvement in one
+objective will be replaced by the expected growth of the set of best
+trade-offs (the Pareto front), measured by hypervolume as in multi-objective
+Bayesian optimization~\cite{daulton2021}, and divided by cost as before. The
+difficulty is that each cheap measurement informs some objectives strongly
+and others weakly. Single tracks show cracking and dilution well but say
+little about strength or corrosion, and a polarization measurement says much
+about corrosion rate and nothing about strength. The rule has to account for
+that through the network. We will derive the rule, check it against
+brute-force estimates on small problems, and measure its computing time on
+BYU high-performance computing.
+
+\subsubsection{Advance 2: results that arrive out of order}
+The published method chooses one experiment at a time and waits for its
+result. In this workflow a DED session deposits many specimens, microscopy
+results arrive days later, immersion tests run for weeks, and thermodynamic
+calculations finish in minutes. We will extend the rule to batches whose
+results arrive at different times, so that new experiments are chosen while
+others are still pending. Pending experiments will enter the models as
+simulated results drawn from the current predictions, a standard way to avoid
+choosing the same experiment twice~\cite{snoek2012}. We will also test how
+stable the choices are when a late result contradicts early ones. For
+example, a block that looked dense on its surface may show cracks under the
+microscope, or an alloy that passed the polarization screen may show
+selective attack after a month of immersion.
+
+\subsubsection{Advance 3: physics computed for the process}
+Standard CALPHAD inputs describe equilibrium, or solidification without
+diffusion in the solid, and ignore the thermal history of the
+process~\cite{debroy2018}. We will add inputs computed along the DED thermal
+history (Section~\ref{sec:concepts}): cooling rate through solidification, the peak
+temperatures of reheating, and the phases that CALPHAD allows at those
+temperatures. Hypothesis H3 tests whether these inputs make the models'
+predictions more reliable than equilibrium inputs, and whether equilibrium
+inputs beat data alone. The answer measures what incomplete, process-aware
+physics is worth inside a search, which sets how much simulation a campaign
+should buy before it buys experiments.
+
+\subsubsection{Advance 4: a physical workflow from powder to repair}
+We will demonstrate the advances on a physical workflow (Fig.~\ref{fig:network})
+in which the search chooses the composition, the atomizer settings, and the
+deposition settings, and decides at each step whether a candidate goes on.
+After microscopy, specimens go to tensile tests, or to the corrosion screen
+and, for selected candidates, to immersion tests. Candidates that deposit well
+get a repair coupon: a deposit on cast NAB or wrought copper-nickel plate,
+checked for cracks, dilution, and hardness across the fusion line. The
+demonstration includes real deposit-to-deposit scatter, outputs computed from
+microscopy images, and three inputs that enter at different steps.
+
+\subsubsection{Advance 5: checking what the screens discard}
+A cheap screen saves money only if it does not discard good candidates, and
+Section~\ref{sec:naval-cu} shows that a short corrosion screen can also pass
+bad ones. Each round, the search will send a small random share of the
+candidates it would stop, about one in ten, on to the next step anyway. These
+audited candidates measure how often each screen is wrong, and they keep the
+models from learning only from candidates that the screens favored.
+
+\subsection{Hypotheses and rejection criteria}
+
+\textbf{H1 (cost).} The cost-aware, multi-objective search that handles
+pending results will reach a target set of trade-offs at lower total cost
+than standard batch multi-objective Bayesian optimization, which carries
+every candidate through the full chain. H1 will be rejected if, across
+matched campaigns with the same budget, the median cost to reach the target is
+not lower than the full-chain baseline's.
+
+\textbf{H2 (calibration).} The predicted probabilities that a candidate will
+deposit dense and crack-free, fuse to the repair substrate without cracks,
+and stay close to its intended composition will match the observed rates on
+held-out deposits. H2 will be rejected if observed success rates differ from
+predicted probabilities by more than 10 percentage points.
+
+\textbf{H3 (process-aware physics).} CALPHAD outputs evaluated along the DED
+thermal history will improve that calibration over CALPHAD outputs at
+equilibrium, which will in turn improve it over models trained on data
+alone. H3 will be rejected if the process-aware inputs do not reduce
+calibration error on held-out deposits compared with the equilibrium inputs.
+
+\textbf{H4 (pending results).} Choosing new experiments while others are
+pending will reach the target in less calendar time than waiting for each
+batch to finish, at equal spend. H4 will be rejected if, in median calendar
+time, the version that works around pending results is no faster than the
+version that waits.
+
+\textbf{H5 (corrosion screen).} Corrosion rates, breakdown potentials, and
+impedance from the one-hour screen, together with composition and
+microstructure, will predict which candidates pass a 30-day immersion test,
+defined as a mass loss no greater than that of the 70-30 copper-nickel
+reference and selective attack no deeper than \todo{depth}. H5 will be
+rejected if, among tested candidates (audited ones included), those that the
+model ranks in the top half pass no more often than those in the bottom half.
+
+The targets, baselines, budgets, and number of matched campaigns will be
+fixed and posted before each test starts \todo{confirm a public
+pre-registration site, e.g., OSF}. H1 and H4 are tested first on simulated
+and retrospective benchmarks, where many matched campaigns are affordable, and
+then in live campaigns, where only a few are.
+
+\subsection{Research plan}
+
+\subsubsection{Task 1: methods (Ph.D. student 1)}
+Derive and implement the multi-objective rule (Advance 1), the rule for
+pending results (Advance 2), the process-aware physics inputs (Advance 3),
+and the audit of screened-out candidates (Advance 5). Build simulated
+benchmarks that replace the functions of Fig.~\ref{fig:synth} with copper and
+DED ones, with noise, several objectives, a corrosion branch, and delays
+drawn from measured turnaround times. Build retrospective benchmarks from the
+lab's aluminum data and from the copper data that Task 2 adds each year.
+
+\subsubsection{Task 2: experimental platform (Ph.D. student 2)}
+\label{sec:task2}
+Powder for each candidate will be made in our laboratory. Oxygen-free copper
+bar is machined into cups that hold the charge. Nickel, iron, manganese,
+aluminum, and other additions are weighed in to 0.1~mg as pure metals or
+copper master alloys, about 0.5~kg per composition \todo{confirm the charge size
+and crucible material for copper alloys}. The charge is melted in the
+induction module of the ultrasonic atomizer (AMAZEMET rePOWDER) and dripped
+onto a vibrating plate, where it breaks into droplets. The median droplet
+size follows the wavelength of capillary waves on the plate, so it falls as
+the frequency to the power $-2/3$~\cite{lang1962}. For a copper melt, Lang's
+relation gives a median near 75~$\mu$m at 20~kHz, inside the size range that
+blown-powder nozzles feed~\cite{CITE-DED-PSD} \todo{confirm the plate
+frequencies available on our unit and the size range the DED system
+accepts}. Each lot is sieved to that range and checked for size distribution
+(laser diffraction), flow and apparent density with a Hall
+funnel~\cite{astmB213,astmB212}, shape and satellites (SEM), and oxygen
+content \todo{name the oxygen analysis, e.g., inert-gas fusion at a service
+laboratory}. The search chooses the atomizer settings along with the
+composition, so the powder, not only the alloy, is designed for blown powder.
+
+DED sessions will be bought from \todo{name the facility with a
+single-stream, blown-powder laser DED system, the system model, and the
+price per session}. A first session for each chosen powder deposits single
+tracks at several laser powers, travel speeds, and powder feed rates
+(melt-pool size, dilution, cracking, and the share of the powder caught in the
+melt pool), thin walls (cracking and heat buildup), and small blocks (density
+and porosity). Powders whose blocks reach 99\% relative density can get a
+second session with blocks for sub-size tensile bars (ASTM E8/E8M) and
+corrosion coupons at the chosen settings, and a repair coupon on cast NAB or
+wrought copper-nickel plate. Commercial 70-30 copper-nickel and NAB powders,
+deposited the same way, are the baselines \todo{confirm commercial powder
+sources}. The search decides which powders are deposited at all, since the
+atomizer makes powder faster than the budget can deposit it.
+
+Selected deposits will be examined by SEM, by EDS and inductively coupled
+plasma mass spectrometry for composition (manganese and aluminum can be lost
+to evaporation and oxidation~\cite{debroy2018}), and by electron backscatter
+diffraction (EBSD) for grain size, texture, and phase fractions, including
+martensitic $\beta'$ in the bronzes, at BYU. Replicate tracks and blocks at
+fixed settings will measure deposit-to-deposit scatter. Image analysis
+scripts will turn micrographs into porosity, crack length, dilution, grain
+size, and phase fractions with stated uncertainty.
+
+Corrosion tests follow the same staging. Polished faces get open-circuit
+potential, linear polarization, impedance, and cyclic polarization
+measurements in substitute ocean water~\cite{astmD1141,astmG59,astmG61} on a
+potentiostat dedicated to the loop, so that the search can schedule the screen
+like any other step. ASTM G61 is written for iron-, nickel-, and
+cobalt-based alloys, so the project will report how its procedure behaves on
+deposited copper alloys. Wrought 70-30 copper-nickel and heat-treated cast
+NAB are measured as references in every round. Candidates that the search
+selects get 30-day immersion tests with mass loss~\cite{astmG31,astmG1} and
+cross-sections that measure the depth of selective attack; the leading
+candidates get crevice and longer immersion tests \todo{confirm the
+durations, and natural or substitute seawater}. Tests in flowing seawater,
+which take months, are left to Navy laboratories for the final candidates
+(Section~\ref{sec:naval}).
+
+The alloy space starts from two families. The first is copper-nickel with 10
+to 30\% nickel and additions of iron, manganese, and chromium. The second is
+aluminum bronze with nickel, iron, and manganese, where the aim is a
+composition whose as-deposited microstructure avoids the phases that corrode
+selectively. Compositions are bounded by the atomizer's melting limit, and
+nickel content is carried as an objective \todo{confirm the alloy families
+and the element ranges to search}.
+
+\subsubsection{Task 3: live campaigns and hypothesis tests (both students)}
+Run live campaigns in which the search chooses each experiment and step.
+Compare it on equal budgets with random selection and with standard batch
+multi-objective Bayesian optimization over the full chain. Test H2 and H3 on
+held-out deposits, H5 on the audited and selected candidates, and H1 and H4
+in matched campaigns.
+
+\subsubsection{Task 4: release and transition}
+Release the software, data, and models each year (Section~\ref{sec:dmp}).
+Write a short guide for applying the method to other alloys, deposition
+processes, and test sequences, aimed at Navy laboratory and depot engineers.
+For each final candidate, publish a powder specification, the deposition
+settings, and the tensile, corrosion, and repair-coupon data, and share them
+with Navy materials engineers, who can decide which candidates merit
+flowing-seawater and service tests.
+
+\subsection{Expected results and new knowledge}
+
+If successful, the project will produce:
+\begin{enumerate}\setlength{\itemsep}{0pt}
+\item The first cost-aware method of this kind for competing properties and
+staggered results.
+\item A measured answer to how much a staged, cost-aware search saves over
+full-chain testing on a real alloy workflow.
+\item A measured value of process-aware physics: how much CALPHAD evaluated
+along the DED thermal history improves predictions over equilibrium
+calculations and over data alone.
+\item Corrosion data for copper alloys deposited by DED, and a measured link
+between a one-hour electrochemical screen and immersion tests that take
+weeks.
+\item New copper alloy compositions designed for blown-powder DED, each with
+its powder specification, deposition settings, tensile properties, corrosion
+behavior, and repair coupons, using less nickel where the trade-offs allow.
+\end{enumerate}
+Results that reject a hypothesis are also new knowledge. For example, if H1
+fails, the data will show which step's cost or noise erased the advantage; if
+H3 fails, they will show which process effects the calculations missed; if
+H5 fails, they will show which microstructural features the screen missed.
+
+\subsection{Future Naval Relevance}
+\label{sec:naval}
+
+\textbf{ONR S\&T Focus Areas.} The primary focus area is Manufacturing,
+research area Integrated Manufacturing and Sustainment Technologies. The
+secondary focus area is Materials and Electronics, research area Sustainable
+and Operationally Robust Materials. Within Code 332 the project fits the
+program Materials \& Processes for Additive Manufacturing~\cite{onram}. That
+program lists five thrusts: ``(i) rapid qualification frameworks; (ii)
+tailored AM materials and processes; (iii) large scale AM; (iv) additive
+repair and (v) AM and digital logistics.'' Its research challenges include
+to ``develop and validate computational approaches for AM materials and
+processes for engineering applications'' and to ``develop large-scale AM
+processes for naval materials of interest''~\cite{onram}. The project serves
+thrusts (ii) to (iv) with an alloy designed for a large-scale process that
+also repairs, and thrust (i) with a search method that decides which test to
+run next and states its confidence in the outcome. It is ICME for additive
+manufacturing, the approach ONR's Structural Metals program calls ``an
+efficient rigorous framework for optimizing processing and manufacturing
+schemes''~\cite{onrsm}: computation first, and experiments where they change
+a decision. It also fits two other Code
+332 programs: Corrosion Science and Corrosion Control Technologies, which
+asks for a ``fundamental understanding of corrosion mechanism in additive
+manufactured (AM) alloys''~\cite{onrcorr}, and Computer-Aided Materials
+Design, whose thrusts include high-throughput screening concepts and
+informatics~\cite{onrcamd}.
+
+\textbf{Copper alloys, castings, and repair.} The slow production of large
+castings ``has historically gated progress and throughput for both the
+Columbia and Virginia submarine programs''~\cite{navsup2026}, and the Navy is
+replacing castings with printed parts. In August 2026 it set out ``a
+streamlined, repeatable technical pathway to substitute legacy cast and
+wrought parts with 3D-printed metallic materials''~\cite{navy2026ppd}. A
+printed copper-nickel deck drain, made ``to provide an alternative to
+traditional copper-nickel castings,'' has been installed on a
+new-construction submarine~\cite{hii2023,nns2025}, and the Navy's Maritime
+Industrial Base program has made copper-nickel ship-service ball valves by
+wire-arc deposition~\cite{dvids2025}. These parts use the cast compositions.
+A copper alloy designed for blown-powder DED, one that resists seawater as
+deposited, would let a shipyard or depot build a part that now waits on a
+casting, or restore a worn part in place without the heat treatment the cast
+alloys need. ONR's corrosion program asks for this kind of work: ``modify the
+chemistry of feed stock materials to enhance AM processing and corrosion
+resistance of additive-manufactured alloys''~\cite{onrcorr}.
+
+\textbf{The longer horizon.} The project designs for single-stream,
+pre-alloyed powder, which existing DED systems can use now. The same models
+can later choose blends of elemental and master-alloy powders fed from
+several hoppers and alloyed in the melt pool, which would let a depot make a
+new composition without a new powder lot. The guide of Task~4 will describe
+that extension. The method needs only a network of steps, their costs, and
+their measurements, so it also applies to wire-arc and laser-wire deposition
+and to other Navy alloys, including titanium. A plasma melting module for our
+atomizer (not part of this request) would extend the powder work to alloys
+that melt above the induction module's limit.
+
+\textbf{Navy engagement and people.} The PI presented autonomous
+experimentation for alloy discovery at the Naval Surface Warfare Center
+(NSWC) Carderock Division on 14 October 2026 \todo{name any Carderock
+contacts who agree to be listed}. The PI will apply to the Summer Faculty
+Research Program to spend a summer at a Navy laboratory \todo{confirm; the
+2027 application closes 14 December 2026}. The project will train two Ph.D.\
+students and undergraduates in powder making, deposition,
+characterization, corrosion testing, and autonomous experimentation. We will
+encourage them to apply to the Naval Research Enterprise Internship Program
+and the SMART and NDSEG programs, which the NOFO names as goals of the YIP.
+
+\subsection{Project Schedule and Milestones}
+
+Table~\ref{tab:schedule} lists the schedule by year. The award start date is
+1 April 2027.
+
+\begin{table}[h]
+\centering
+\caption{Schedule and milestones (Y = project year, starting 1 April 2027).}
+\label{tab:schedule}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}p{0.4in}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.05in}@{}}
+\toprule
+\textbf{Year} & \textbf{Work} & \textbf{Milestone (month)} \\
+\midrule
+Y1 & Derive the multi-objective rule; build simulated and retrospective
+benchmarks; build the process-aware physics inputs; first copper powder lots
+in the DED size range; deposit the commercial baselines and replicate them to
+measure scatter; set up the corrosion screen on wrought and cast references;
+automate image analysis. & M1: first copper powder lot sieved and checked
+(4).\newline M2: baseline deposits and scatter measured (7).\newline M3:
+corrosion screen repeatability measured (8).\newline M4: multi-objective rule
+passes small-problem checks (9).\newline M5: benchmarks frozen and posted
+(12). \\
+Y2 & Derive the rule for pending results; first live campaign with tensile,
+corrosion, and repair branches; first 30-day immersions; test H2 and H3 on
+held-out deposits. & M6: first live campaign done (18).\newline M7: H2 and H3
+tested (22).\newline M8: methods paper and software release 1 (24). \\
+Y3 & Matched live campaigns against the full-chain baseline; test H1, H4, and
+H5; release software, data, and guide; share powder, deposition, corrosion,
+and repair data with Navy engineers. & M9: matched campaigns done
+(32).\newline M10: H1, H4, and H5 tested (34).\newline M11: final release and
+report (36). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Goals and Benchmarks}
+
+Table~\ref{tab:goals} lists each goal and the benchmark used to measure
+progress. Progress will be reported at each ONR program review.
+
+\begin{table}[h]
+\centering
+\caption{Goals and the benchmarks that measure them.}
+\label{tab:goals}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.75in}>{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Goal} & \textbf{Benchmark} \\
+\midrule
+Multi-objective cost-aware rule & Matches brute-force estimates on small
+problems; finds a larger set of trade-offs per dollar than full-chain
+multi-objective search on the simulated benchmark. \\
+Rule for pending results & Same final quality as the one-at-a-time rule in
+less calendar time on the simulated benchmark with measured delays (H4). \\
+Calibrated predictions & Observed success rates within 10 percentage points
+of predicted probabilities on held-out deposits (H2). \\
+Process-aware physics & Lower calibration error with thermal-history inputs
+than with equilibrium inputs, and with equilibrium inputs than without (H3). \\
+Powder for blown-powder DED & Every deposited composition made in-house,
+sieved to the DED size range, with its size distribution, flow, and oxygen
+content recorded. \\
+Corrosion screen & Top-ranked candidates pass the 30-day immersion test
+more often than bottom-ranked ones (H5). \\
+Lower cost on real deposits & Lower median cost to reach the target than the
+full-chain baseline in matched live campaigns (H1). \\
+New alloys & At least \todo{number} new compositions deposited dense and
+crack-free, with tensile, corrosion, and repair-coupon data, beyond the
+commercial baselines. \\
+Open release & Software, data, and models posted each year with tests and
+documentation. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Gold Standard Science}
+
+Executive Order 14303 lists nine tenets of Gold Standard
+Science~\cite{eo14303}. Such science is reproducible, transparent,
+communicative of error and uncertainty, collaborative and interdisciplinary,
+and skeptical of its findings and assumptions. It is also structured for
+falsifiability of hypotheses, subject to unbiased peer review, accepting of
+negative results as positive outcomes, and without conflicts of interest. The
+plan follows each point. Each hypothesis above has a stated rejection
+criterion, and the targets and baselines are fixed before each test. Every
+prediction carries an uncertainty, and the calibration tests (H2, H3) check
+whether that uncertainty is honest. The audit of screened-out candidates
+(Advance 5) tests the screens' own assumptions. Replicate deposits and
+reference specimens measure scatter so that it is not mistaken for a real
+effect. Code, data, and models are released each year so others can rerun
+every analysis. Results that reject a hypothesis will be published like any
+other result. The PI's record supports this: the PI co-authored a review of
+self-driving laboratories and led open benchmark and software projects (see
+Section~\ref{sec:quals}).
+
+\section{Management Approach}
+\label{sec:mgmt}
+
+This is a single-PI project with no co-PIs or subawards. The PI will lead the
+method development, set the campaign plans, and supervise all students.
+Ph.D.\ student 1 will lead Task 1 (methods, physics inputs, benchmarks,
+software). Ph.D.\ student 2 will lead Task 2 (powder, deposits, microscopy,
+tensile and corrosion tests). An undergraduate researcher will help make and
+check powder, prepare specimens, and run the corrosion screen. Both Ph.D.\
+students share Task 3, so the methods are tested on the data they will face.
+
+DED sessions are bought at a set rate from \todo{facility}, and any outside
+tests from a commercial laboratory; neither is a subaward. \todo{number}
+sessions per year fit the budget. All other work is at BYU: the PI's
+atomizer laboratory, the BYU Microscopy Center (SEM, EDS, EBSD), and BYU
+high-performance computing. The team meets weekly to review new results and
+choose the next experiments. A shared data pipeline records every step, so the
+search always sees the latest results. The schedule and milestones are in
+Table~\ref{tab:schedule}.
+
+\textbf{Risks and responses.} If the multi-objective rule is too slow to
+compute, we will use a cheaper approximation and measure the loss on the
+simulated benchmark. If deposit scatter is large, more replicates will be
+added and the scatter will enter the models directly. If a composition cannot
+be atomized, for example because it melts too close to the module's limit,
+the search records the failure as a result, since predicting which
+compositions can be made is part of the task. If a lot flows poorly, the
+search sees that at the powder step and can change the atomizer settings
+before paying for a deposit. If DED turnaround is slow, the rule for pending
+results is designed for exactly that case. If the electrochemical screen
+predicts the immersion tests poorly (H5 rejected), the search will rely more
+on immersion, at higher cost, and the audited candidates will show which
+features the screen missed.
+
+\section{Principal Investigator Qualifications}
+\label{sec:quals}
+
+Sterling G.\ Baird received a Ph.D.\ in Materials Science and Engineering
+from the University of Utah in August 2023. He has been an Assistant
+Professor of Mechanical Engineering at BYU since December 2025, his first
+tenure-track position. Before BYU, he was Director of Training and Programs
+and then a Principal Investigator and Staff Scientist at the Acceleration
+Consortium, University of Toronto, where he built the Acceleration
+Consortium's development laboratory, including about \$600,000 of equipment.
+
+The PI's work combines Bayesian optimization with laboratory hardware. He
+developed Honegumi, which helps experimentalists set up Bayesian
+optimization, consulted for Meta on the version 1.0 release of the Ax
+platform, and organized an international Bayesian optimization hackathon. He
+co-authored the structural materials section of the \emph{Chemical Reviews}
+survey of self-driving laboratories and led a review of low-cost
+self-driving laboratories. His graduate work used Bayesian inference with
+propagated uncertainty to model grain boundaries. He also designed a
+semi-automated induction furnace for temperatures up to 2500\,\textdegree{}C.
+At BYU he supervises eight undergraduate researchers and has set up the
+CALPHAD workflow, the atomizer, and the powder-to-part demonstration
+described in Section~\ref{sec:prelim}. \todo{add any corrosion or
+electrochemistry experience; if there is none, say how the students will
+learn the corrosion methods, e.g., a BYU colleague's training or a Navy
+laboratory visit. Add any DED or welding experience.} The CV lists all
+publications and presentations.
+
+% ===========================================================================
+% CV (excluded from the page limit)
+% ===========================================================================
+\clearpage
+\newcounter{savedpage}
+\setcounter{savedpage}{\value{page}}
+\setcounter{page}{1}
+\renewcommand{\thepage}{CV-\arabic{page}}
+\phantomsection
+\addcontentsline{toc}{section}{Principal Investigator's Curriculum Vitae
+  (excluded from page limit)}
+\IfFileExists{../../bios/baird-CV.pdf}{%
+  \includepdf[pages=-,pagecommand={\thispagestyle{empty}}]{../../bios/baird-CV.pdf}%
+}{\textbf{Principal Investigator's Curriculum Vitae}\par
+  \todo{insert the full CV PDF here.}\clearpage}
+
+% ===========================================================================
+% Letter of support (excluded from the page limit)
+% ===========================================================================
+\setcounter{page}{1}
+\renewcommand{\thepage}{L-\arabic{page}}
+\phantomsection
+\addcontentsline{toc}{section}{Letter of Support (excluded from page limit)}
+\begin{center}\textbf{Letter of Support}\end{center}
+\todo{insert the signed letter from the BYU official here as a PDF page
+(draft in support-letter-draft.md; it names aluminum, so revise it for this
+version).}
+\clearpage
+
+% ===========================================================================
+% Responsibility (counts toward the page limit; numbering resumes)
+% ===========================================================================
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{\value{savedpage}}
+
+\section{Responsibility}
+
+\textbf{Resources.} The PI's laboratory at BYU holds the ultrasonic atomizer
+and the equipment for powder handling and specimen preparation \todo{list
+the main items bought with start-up funds}. A potentiostat for the corrosion
+screen is requested in Year 1. The BYU Microscopy Center provides SEM, EDS,
+and EBSD, and BYU provides high-performance computing. DED sessions are
+bought as a service, as described under Task 2. Tensile tests use
+\todo{name the BYU load frame or test service}.
+
+\textbf{Ability to comply.} The PI's current commitments are teaching,
+start-up research, and the pending requests listed under current and pending
+support. The effort proposed here fits within those commitments.
+
+\textbf{Performance history.} \todo{list any federal awards managed as PI or
+key person; if none, state that this would be the PI's first federal award
+as PI and that BYU Research Administration manages the award.}
+
+\textbf{Integrity and business ethics.} The PI has no findings of research
+misconduct and follows BYU's policies on research integrity and conflicts of
+interest. \todo{confirm.}
+
+\textbf{Qualifications and eligibility.} The PI received his Ph.D.\ after
+1 January 2019, holds his first full-time tenure-track position, and has not
+received an ONR YIP award. \todo{confirm U.S. citizenship or permanent
+residency.} BYU is registered in SAM.gov (UEI JWSYC7RUMJD1, CAGE 52534)
+\todo{BYU's SAM registration is listed as ending 4 March 2027, before the
+award start; confirm that RAO will renew it}.
+
+\textbf{Organization and controls.} BYU Research Administration manages
+federal awards, with accounting, purchasing, and property control systems
+\todo{confirm wording with BYU Research Administration}. Laboratory safety
+follows BYU Risk Management and Safety procedures. Metal powders are handled
+under the lab's written powder safety plan; nickel-bearing powders are
+handled in a fume hood or glove bag with respiratory protection
+\todo{confirm the plan and the handling steps for nickel powder}. Corrosion
+tests use salt solutions; the dilute acids used to clean immersion
+coupons~\cite{astmG1} are handled in a fume hood under BYU chemical safety
+procedures.
+
+% ===========================================================================
+% Data Management Plan (excluded from the page limit; 2 pages max)
+% ===========================================================================
+\clearpage
+\setcounter{page}{1}
+\renewcommand{\thepage}{D-\arabic{page}}
+\section{Data Management Plan}
+\label{sec:dmp}
+
+\textbf{Types of data, software, and other materials.} Thermodynamic and heat
+flow calculation results; atomizer settings and powder size, flow, density,
+and oxygen records; DED deposition settings and session logs; optical and
+electron micrographs, EDS spectra, and EBSD maps; tensile and hardness data;
+polarization and impedance data, immersion mass losses, and cross-sections of
+corrosion attack; the search software, benchmark problems, and trained
+models.
+
+\textbf{How the data will be acquired.} Calculations run on BYU
+high-performance computing. Powder is made in the PI's laboratory. DED
+sessions are bought as a service (Section~\ref{sec:mgmt}). Microscopy,
+corrosion screens, immersion tests, and mechanical tests are done at BYU.
+
+\textbf{Time and location.} Data are collected at BYU and at the DED facility
+from April 2027 to March 2030.
+
+\textbf{Processing.} Scripts kept under version control turn raw images and
+test records into derived quantities (porosity, crack length, dilution, grain
+size, phase fractions, strength, corrosion rate, attack depth) with stated
+uncertainty. Each derived value links to its raw files.
+
+\textbf{File formats and naming.} Open formats: CSV and JSON for tables, TIFF
+for images, and the instruments' native formats alongside open exports.
+Each sample receives an identifier that encodes powder lot, deposition
+session, and specimen, used in every file name.
+
+\textbf{Quality assurance and control.} Replicate deposits measure scatter;
+reference specimens of wrought 70-30 copper-nickel and cast NAB are measured
+in every round of corrosion screening; scripts are tested; and the same
+benchmarks are rerun before each software release.
+
+\textbf{Existing data.} The retrospective benchmarks use the lab's own
+aluminum data from 2026, with its origin recorded in the metadata.
+
+\textbf{Standards.} Metadata will record composition, powder properties,
+process settings, instrument settings, and the ASTM method behind each test
+in a documented schema \todo{choose a schema, e.g., one used by the NIST AM
+Bench or Materials Data Facility}.
+
+\textbf{Preservation.} Data and software will be deposited in public
+repositories (for example, Zenodo with a DOI, and GitHub for code) at each
+annual release and kept for at least 10 years.
+
+\textbf{Balance of value and cost.} Raw session logs and micrographs will be
+kept in full; very large intermediate files that scripts can regenerate will
+not be archived.
+
+\textbf{Release restrictions.} Results are expected to be fundamental
+research. Any data that cannot be cleared for public release under DoD
+Instruction 5230.09 will not be made public.
+
+% ===========================================================================
+% Current and pending support (excluded from the page limit). The official
+% version is the common form attached to the R&R Senior/Key Person Profile
+% (Expanded) (NOFO p. 23); this summary is for review.
+% ===========================================================================
+\clearpage
+\setcounter{page}{1}
+\renewcommand{\thepage}{S-\arabic{page}}
+\section*{Current and Pending Support (summary)}
+\addcontentsline{toc}{section}{Current and Pending Support (excluded from
+page limit)}
+
+\textbf{Current.} \todo{list current awards, if any, including BYU internal
+funds that must be reported under the common form.}
+
+\textbf{Pending.} AFOSR FY2027 Young Investigator Program, white paper
+submitted 9 October 2026 (NOFO FA955026S0003, Dynamic Data and Information
+Processing, Dr.~Erik Blasch). Title: ``Dynamic Data-Driven Selection of
+Experiments for Laser-Printed Aluminum Alloys.'' Up to \$150,000 per year for
+36 months. The two share the search method. This proposal applies it to
+copper alloys for blown-powder DED, with corrosion and repair branches; the
+AFOSR work applies it to aluminum alloys for laser powder bed fusion, so the
+experimental work does not overlap. \todo{state how the method work (Task 1)
+would be divided if both are selected. Add any other proposals submitted
+before 30 October, and list collaborators, even unfunded ones (NOFO p. 38).}
+
+% ===========================================================================
+% References (excluded from the page limit; also uploaded to Field 9)
+% ===========================================================================
+\clearpage
+\setcounter{page}{1}
+\renewcommand{\thepage}{R-\arabic{page}}
+\phantomsection
+\addcontentsline{toc}{section}{Cited References (excluded from page limit)}
+\begin{thebibliography}{99}
+\setlength{\itemsep}{1pt}
+
+\bibitem{milt16420}
+MIL-T-16420K, \emph{Tube, Copper-Nickel Alloy, Seamless and Welded (Copper Alloy Numbers 715 and 706)}, Naval Sea Systems Command (validation notice 18 Feb 2026).
+\url{https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=11860}
+
+\bibitem{milb24480}
+MIL-B-24480A, \emph{Bronze, Nickel-Aluminum (UNS No. C95800) Castings for Seawater Service}, Naval Sea Systems Command (20 Jun 1985; validation notice 24 Dec 2020).
+\url{https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=17349}
+
+\bibitem{cda222}
+Copper Development Association, \emph{Guide to Nickel Aluminium Bronze for Engineers}, CDA Publication 222 (January 2016).
+\url{https://www.copper.org/applications/marine/nickel_al_bronze/pub-222-nickel-al-bronze-guide-engineers.pdf}
+
+\bibitem{saboori2019}
+\textcolor{red}{[MISSING REFERENCE saboori2019]}
+
+\bibitem{NAB-AM-MICRO}
+\textcolor{red}{[MISSING REFERENCE NAB-AM-MICRO]}
+
+\bibitem{milprf32816}
+MIL-PRF-32816, \emph{Nickel Aluminum Bronze, Wire Arc, Directed Energy Deposition, Additively Manufactured}, Naval Sea Systems Command (29 Jun 2026).
+\url{https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=287090}
+
+\bibitem{milprf32804}
+MIL-PRF-32804, \emph{Copper-Nickel (70-30), Wire Arc, Directed Energy Deposition, Additively Manufactured}, Naval Sea Systems Command (27 Oct 2025).
+\url{https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=286541}
+
+\bibitem{milprf32815}
+MIL-PRF-32815, performance specification for additively manufactured 70-30 copper-nickel made by laser powder bed fusion, Naval Sea Systems Command (29 Jun 2026).
+\url{https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=287089}
+
+\bibitem{ma2015}
+\textcolor{red}{[MISSING REFERENCE ma2015]}
+
+\bibitem{wharton2005}
+\textcolor{red}{[MISSING REFERENCE wharton2005]}
+
+\bibitem{culpan1979}
+\textcolor{red}{[MISSING REFERENCE culpan1979]}
+
+\bibitem{sander2018}
+G.~Sander, J.~Tan, P.~Balan, O.~Gharbi, D.~R. Feenstra, L.~Singer,
+S.~Thomas, R.~G. Kelly, J.~R. Scully, and N.~Birbilis, ``Corrosion of
+additively manufactured alloys: A review,'' \emph{Corrosion} \textbf{74}(12),
+1318-1350 (2018).
+\href{https://doi.org/10.5006/2926}{doi:10.5006/2926}
+
+\bibitem{defensenews2023}
+M.~Eckstein, ``Shipbuilding industry looks to 3D printing to accelerate pace,'' \emph{Defense News} (2 Feb 2023).
+\url{https://www.defensenews.com/naval/2023/02/02/shipbuilding-industry-looks-to-3d-printing-to-accelerate-pace/}
+
+\bibitem{astmD1141}
+ASTM D1141, \emph{Standard Practice for the Preparation of Substitute Ocean Water}, ASTM International.
+
+\bibitem{astmG59}
+ASTM G59, \emph{Standard Test Method for Conducting Potentiodynamic Polarization Resistance Measurements}, ASTM International.
+
+\bibitem{astmG102}
+ASTM G102, \emph{Standard Practice for Calculation of Corrosion Rates and Related Information from Electrochemical Measurements}, ASTM International.
+
+\bibitem{astmG31}
+ASTM G31, \emph{Standard Guide for Laboratory Immersion Corrosion Testing of Metals}, ASTM International.
+
+\bibitem{astmG1}
+ASTM G1, \emph{Standard Practice for Preparing, Cleaning, and Evaluating Corrosion Test Specimens}, ASTM International.
+
+\bibitem{usgs2022}
+U.S. Department of the Interior, ``2022 final list of critical minerals,'' \emph{Federal Register} \textbf{87}, 10381 (24 Feb 2022).
+\url{https://www.federalregister.gov/documents/2022/02/24/2022-04027/2022-final-list-of-critical-minerals}
+
+\bibitem{usgs2025}
+U.S. Department of the Interior, ``Final 2025 list of critical minerals,'' \emph{Federal Register} \textbf{90}, 50494 (7 Nov 2025).
+\url{https://www.federalregister.gov/documents/2025/11/07/2025-19813/final-2025-list-of-critical-minerals}
+
+\bibitem{cdadata}
+Copper Development Association, alloy data sheets for C70600, C71500, and C95800, physical properties (liquidus and solidus given in \textdegree{}F; read from Internet Archive snapshots of 2025 and 2026).
+\url{https://alloys.copper.org/alloy/C71500}
+
+\bibitem{astudillo2021}
+R.~Astudillo and P.~I. Frazier, ``Bayesian optimization of function
+networks,'' \emph{Advances in Neural Information Processing Systems}
+\textbf{34}, 14463-14475 (2021).
+\href{https://arxiv.org/abs/2112.15311}{arXiv:2112.15311}
+
+\bibitem{buathong2024}
+P.~Buathong, J.~Wan, R.~Astudillo, S.~Daulton, M.~Balandat, and P.~I.
+Frazier, ``Bayesian optimization of function networks with partial
+evaluations,'' \emph{Proc. 41st Int. Conf. Machine Learning (ICML)}, PMLR
+\textbf{235}, 4752-4784 (2024).
+\href{https://proceedings.mlr.press/v235/buathong24a.html}{proceedings.mlr.press/v235/buathong24a.html}
+
+\bibitem{olson1997}
+\textcolor{red}{[MISSING REFERENCE olson1997]}
+
+\bibitem{nrc2008}
+\textcolor{red}{[MISSING REFERENCE nrc2008]}
+
+\bibitem{andersson2002}
+J.-O. Andersson, T.~Helander, L.~H{\"o}glund, P.~Shi, and B.~Sundman,
+``Thermo-Calc \& DICTRA, computational tools for materials science,''
+\emph{Calphad} \textbf{26}(2), 273-312 (2002).
+\href{https://doi.org/10.1016/S0364-5916(02)00037-8}{doi:10.1016/S0364-5916(02)00037-8}
+
+\bibitem{otis2017}
+R.~Otis and Z.-K. Liu, ``pycalphad: CALPHAD-based computational
+thermodynamics in Python,'' \emph{J. Open Res. Softw.} \textbf{5}(1), 1
+(2017). \href{https://doi.org/10.5334/jors.140}{doi:10.5334/jors.140}
+
+\bibitem{kou2015}
+S.~Kou, ``A criterion for cracking during solidification,''
+\emph{Acta Mater.} \textbf{88}, 366-374 (2015).
+\href{https://doi.org/10.1016/j.actamat.2015.01.034}{doi:10.1016/j.actamat.2015.01.034}
+
+\bibitem{rosenthal1946}
+D.~Rosenthal, ``The theory of moving sources of heat and its application to metal treatments,'' \emph{Trans. ASME} \textbf{68}(8), 849-865 (1946).
+\href{https://doi.org/10.1115/1.4018624}{doi:10.1115/1.4018624}
+
+\bibitem{torresi2026}
+L.~Torresi and P.~Friederich, ``Multi-stage Bayesian optimisation for dynamic
+decision-making in self-driving labs,'' \emph{Digital Discovery} \textbf{5},
+1900-1912 (2026).
+\href{https://doi.org/10.1039/d5dd00572h}{doi:10.1039/d5dd00572h}
+
+\bibitem{alvi2026}
+S.~M.~A.~A. Alvi, B.~Vela, V.~Attari, J.~Janssen, D.~Perez, D.~Allaire, and
+R.~Arr{\'o}yave, ``Deep Gaussian process-based cost-aware batch Bayesian
+optimization for complex materials design campaigns,'' \emph{npj Comput.
+Mater.} \textbf{12}, 105 (2026).
+\href{https://doi.org/10.1038/s41524-026-01981-7}{doi:10.1038/s41524-026-01981-7}
+
+\bibitem{talbot2026}
+A.~Talbot, S.~S. Dash, J.~Li, C.~Cheng, M.~Ramesh, X.~Shang, J.~Zhang,
+C.~Cojocaru, J.~Hattrick-Simpers, and Y.~Zou, ``Active learning for the
+accelerated discovery of complex concentrated NiCoCr alloys in additive
+manufacturing,'' \emph{npj Adv. Manuf.} (2026), published online 23 Jun 2026.
+\href{https://doi.org/10.1038/s44334-026-00098-5}{doi:10.1038/s44334-026-00098-5}
+
+\bibitem{smith2023}
+\textcolor{red}{[MISSING REFERENCE smith2023]}
+
+\bibitem{thapliyal2020}
+S.~Thapliyal, M.~Komarasamy, S.~Shukla, L.~Zhou, H.~Hyer, S.~Park, Y.~Sohn,
+and R.~S. Mishra, ``An integrated computational materials engineering-anchored
+closed-loop method for design of aluminum alloys for additive
+manufacturing,'' \emph{Materialia} \textbf{9}, 100574 (2020).
+\href{https://doi.org/10.1016/j.mtla.2019.100574}{doi:10.1016/j.mtla.2019.100574}
+
+\bibitem{taheri2025}
+S.~M. Taheri-Mousavi, M.~Xu, F.~Hengsbach, C.~Houser, Z.~Ge, B.~Glaser,
+S.~Wei, M.~Schaper, J.~M. LeBeau, G.~B. Olson, and A.~J. Hart, ``Additively
+manufacturable high-strength aluminum alloys with coarsening-resistant
+microstructures achieved via rapid solidification,'' \emph{Adv. Mater.}
+\textbf{38}(4), e09507 (2026), published online 2 Oct 2025.
+\href{https://doi.org/10.1002/adma.202509507}{doi:10.1002/adma.202509507}
+
+\bibitem{daulton2021}
+S.~Daulton, M.~Balandat, and E.~Bakshy, ``Parallel Bayesian optimization of
+multiple noisy objectives with expected hypervolume improvement,''
+\emph{Advances in Neural Information Processing Systems} \textbf{34} (2021).
+\href{https://arxiv.org/abs/2105.08195}{arXiv:2105.08195}
+
+\bibitem{NAB-AM-CORR}
+\textcolor{red}{[MISSING REFERENCE NAB-AM-CORR]}
+
+\bibitem{decost2022}
+B.~DeCost, H.~Joress, S.~Sarker, A.~Mehta, and J.~Hattrick-Simpers,
+``Towards automated design of corrosion resistant alloy coatings with an
+autonomous scanning droplet cell,'' \emph{JOM} \textbf{74}, 2941-2950 (2022).
+\href{https://doi.org/10.1007/s11837-022-05367-0}{doi:10.1007/s11837-022-05367-0}
+
+\bibitem{sur2023}
+D.~Sur, E.~F. Holcombe, W.~H. Blades, E.~A. Anber, D.~L. Foley, B.~L. DeCost,
+J.~Liu, J.~Hattrick-Simpers, \emph{et al.}, ``An experimental high-throughput
+to high-fidelity study towards discovering Al-Cr containing
+corrosion-resistant compositionally complex alloys,'' \emph{High Entropy
+Alloys Mater.} \textbf{1}, 336-353 (2023).
+\href{https://doi.org/10.1007/s44210-023-00020-0}{doi:10.1007/s44210-023-00020-0}
+
+\bibitem{snoek2012}
+J.~Snoek, H.~Larochelle, and R.~P. Adams, ``Practical Bayesian optimization of
+machine learning algorithms,'' \emph{Advances in Neural Information Processing
+Systems} \textbf{25} (2012).
+\href{https://arxiv.org/abs/1206.2944}{arXiv:1206.2944}
+
+\bibitem{debroy2018}
+T.~DebRoy, H.~L. Wei, J.~S. Zuback, T.~Mukherjee, J.~W. Elmer,
+J.~O. Milewski, A.~M. Beese, A.~Wilson-Heid, A.~De, and W.~Zhang, ``Additive
+manufacturing of metallic components: Process, structure and properties,''
+\emph{Prog. Mater. Sci.} \textbf{92}, 112-224 (2018).
+\href{https://doi.org/10.1016/j.pmatsci.2017.10.001}{doi:10.1016/j.pmatsci.2017.10.001}
+
+\bibitem{lang1962}
+\textcolor{red}{[MISSING REFERENCE lang1962]}
+
+\bibitem{CITE-DED-PSD}
+\textcolor{red}{[MISSING REFERENCE CITE-DED-PSD]}
+
+\bibitem{astmB213}
+ASTM B213, \emph{Standard Test Methods for Flow Rate of Metal Powders Using the Hall Flowmeter Funnel}, ASTM International.
+
+\bibitem{astmB212}
+ASTM B212, \emph{Standard Test Method for Apparent Density of Free-Flowing Metal Powders Using the Hall Flowmeter Funnel}, ASTM International.
+
+\bibitem{astmG61}
+ASTM G61, \emph{Standard Test Method for Conducting Cyclic Potentiodynamic
+Polarization Measurements for Localized Corrosion Susceptibility of Iron-,
+Nickel-, or Cobalt-Based Alloys}, ASTM International.
+
+\bibitem{onram}
+Office of Naval Research, ``Materials \& Processes for Additive Manufacturing,'' Code 33 Manufacturing Focus Area (accessed 17 Oct 2026).
+\url{https://www.onr.navy.mil/organization/departments/code-33/manufacturing-focus-area/additive-manufacturing}
+
+\bibitem{onrsm}
+Office of Naval Research, ``Structural Metals,'' Code 33 Materials Focus Area (updated November 2020; accessed 17 Oct 2026).
+\url{https://www.onr.navy.mil/organization/departments/code-33/materials-focus-area/structural-metals}
+
+\bibitem{onrcorr}
+Office of Naval Research, ``Corrosion Science and Corrosion Control Technologies,'' Code 33 Materials Focus Area (accessed 17 Oct 2026).
+\url{https://www.onr.navy.mil/organization/departments/code-33/materials-focus-area/corrosion-science-and-corrosion-control}
+
+\bibitem{onrcamd}
+Office of Naval Research, ``Computer-Aided Materials Design (CAMD),'' Code 33
+Materials Focus Area (accessed 10 Oct 2026).
+\url{https://www.onr.navy.mil/organization/departments/code-33/materials-focus-area/computer-aided-materials-design}
+
+\bibitem{navsup2026}
+NAVSUP Weapon Systems Support, ``Shattering bottlenecks: NAVSUP WSS partners with DLA and NAVSEA on submarine advanced manufacturing,'' DVIDS (30 Jun 2026).
+\url{https://www.dvidshub.net/news/569018/shattering-bottlenecks-navsup-wss-partners-with-dla-and-navsea-submarine-advanced-manufacturing}
+
+\bibitem{navy2026ppd}
+U.S. Navy, ``Navy removes bureaucratic barriers to accelerate 3D printing and
+accelerate submarine production,'' press release (21 Aug 2026), on Project
+Peculiar Document 802-8436658.
+\url{https://www.navy.mil/Press-Office/Press-Releases/display-pressreleases/Article/4580193/navy-removes-bureaucratic-barriers-to-accelerate-3d-printing-and-accelerate-sub/}
+
+\bibitem{hii2023}
+HII, ``HII partners to advance additive manufacturing on a Virginia-class submarine,'' news release (25 Sep 2023).
+\url{https://www.hii.com/news/hii-additive-manufacturing-virginia-class-submarine-newport-news-shipbuilding-2023}
+
+\bibitem{nns2025}
+Newport News Shipbuilding, ``One small part for the Virginia-class submarine program, one giant leap for additive manufacturing,'' NNS To Go (17 Sep 2025).
+\url{https://www.nnstogo.com/articles/one-small-part-for-the-virginia-class-submarine-program-one-giant-leap-for-additive-manufacturing/}
+
+\bibitem{dvids2025}
+Navy Maritime Industrial Base Program, ``Navy's MIB program celebrates year of focused effort to strengthen maritime industrial capability and capacity,'' DVIDS (5 Sep 2025).
+\url{https://www.dvidshub.net/news/549872/navys-mib-program-celebrates-year-focused-effort-strengthen-maritime-industrial-capability-and-capacity}
+
+\bibitem{eo14303}
+Executive Order 14303, ``Restoring Gold Standard Science,'' \emph{Federal
+Register} \textbf{90}, 22601 (29 May 2025).
+\url{https://www.federalregister.gov/documents/2025/05/29/2025-09802/restoring-gold-standard-science}
+
+\end{thebibliography}
+
+\end{document}

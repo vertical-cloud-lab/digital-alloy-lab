@@ -26,6 +26,13 @@ printed aluminum as the naval application.
 | `support-letter-draft.md` | Letter of support for the chair or dean | Needs signer and real figures |
 | `preview/` | PNG renders of the proposal pages other than the CV (110 dpi) | Generated |
 | `budget/preview/` | PNG renders of the budget justification's first pages | Generated |
+| `onr-yip-technical-proposal-cu-ded.tex` / `.pdf` | **Alternative** technical proposal: seawater-resistant copper alloys designed as powders for blown-powder DED (section 9) | Draft, 13 of 20 counted pages |
+| `abstract-cu-ded.txt` | SF-424 abstract for the alternative | Draft, 3,947 of 4,000 characters |
+| `preview-cu-ded/` | PNG renders of the alternative's pages (110 dpi) | Generated |
+| `attachments/field10-facilities-cu-ded.tex` / `.pdf`, `attachments/field11-equipment-cu-ded.tex` / `.pdf` | Fields 10 and 11 for the alternative (DED instead of LPBF, copper feedstock, powder checks) | Draft, 1 page each, TODOs |
+
+Only one of the two technical proposals would be submitted. Section 9
+compares them.
 
 ## 1. Page limits and format (NOFO pp. 15-20)
 
@@ -215,3 +222,55 @@ cringe-filter score -c proposal onr-yip-technical-proposal.tex
   ONR Summer Faculty Research Program dates (applications close Dec 14,
   2026).
 - USGS Mineral Commodity Summaries 2026, Scandium.
+
+## 9. Alternative: copper alloys for blown-powder DED
+
+`onr-yip-technical-proposal-cu-ded.tex` and `abstract-cu-ded.txt`, drafted
+2026-10-17 after the Oct 16 call with Dr. Fisher (the call notes are private
+and are not in this repo). Same NOFO, same program (Materials & Processes for
+AM, Code 332), same method. What it designs is different: a pre-alloyed
+copper alloy powder for single-stream, blown-powder directed energy
+deposition (DED) that deposits dense and crack-free, on itself and on the
+alloys it would repair, and resists seawater as deposited at least as well as
+70-30 copper-nickel. Nickel-aluminum bronze (NAB) is the second family.
+
+| | Aluminum version | Copper/DED version |
+| --- | --- | --- |
+| Title | Cost-Aware Selection of Experiments for Printable, Corrosion-Resistant High-Strength Aluminum Alloys | Cost-Aware Design of Seawater-Resistant Copper Alloy Powders for Blown-Powder Directed Energy Deposition |
+| Alloys | Al with Zr or Sc, plus Cu, Mg, Zn, Mn, Cr | Cu-Ni (10-30 Ni) with Fe, Mn, Cr; Al bronzes with Ni, Fe, Mn |
+| Process | LPBF builds bought from a Utah user facility | Single-stream blown-powder DED sessions, facility TBD |
+| Powder | Ultrasonic atomization, LPBF size range | Same atomizer; sized for blown powder; flow, density, oxygen checked; atomizer settings chosen by the search |
+| Physics inputs | CALPHAD at equilibrium / Scheil | CALPHAD evaluated along a heat-flow model of the DED thermal history (new Advance 3, new H3: process-aware beats equilibrium beats none) |
+| Corrosion | Polarization screen, then intergranular and salt-spray tests | Polarization, LPR, and impedance in substitute ocean water, then 30-day immersion with mass loss and depth of selective attack; flowing seawater left to Navy labs |
+| New branch | none | Repair coupons on cast NAB and wrought Cu-Ni plate (cracks, dilution, hardness across the fusion line) |
+| Supply objective | Scandium content | Nickel content |
+| Kept as is | | Linked-model cost-aware search, Advances 1, 2 and the audit (now Advance 5), H1, H2, H4, the synthetic benchmark figures (still aluminum, captioned as such), management, responsibility, DMP |
+| Overlap with the AFOSR white paper | Same alloy system and method | Method only, so the scopes separate cleanly |
+
+**Placeholders specific to this version** (red TODOs in the PDF):
+
+1. **DED facility, system, and price per session.** The budget macros are
+   still the aluminum version's: its G line is 28, 29, and 26 LPBF builds at
+   $800. DED sessions will cost more and there will be fewer; re-price in
+   `budget/budget.py` (private) and the totals on the cover page change.
+   Materials lines also change (copper bar, nickel and master alloys instead
+   of aluminum bar and Al master alloys).
+2. **Atomizer limits for copper:** the induction module's maximum melt
+   temperature (70-30 Cu-Ni melts close to it), the crucible material, the
+   charge size, and the plate frequencies (sets the median size; Lang's
+   relation gives about 75 um for a copper melt at 20 kHz).
+3. Commercial 70-30 Cu-Ni and NAB powders for the baselines.
+4. A first copper powder lot (SEM and size distribution) as preliminary
+   data, if a run fits before Oct 23.
+5. Thermo-Calc: confirm the BYU license includes a copper database.
+6. Oxygen analysis (inert-gas fusion) at a service lab.
+7. Immersion durations, the selective-attack depth limit in H5, and natural
+   or substitute seawater.
+8. Alloy families and element ranges; number of new alloys promised.
+9. Handling nickel powders (safety plan).
+10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`). The
+    letter of support carries the copper title as a bracketed option; its
+    "powder-to-part demonstration on an aluminum alloy" holds for both.
+
+All other TODOs (cover contacts, CV, responsibility, DMP schema, current and
+pending) are the same as in section 4.
