@@ -26,8 +26,8 @@ printed aluminum as the naval application.
 | `support-letter-draft.md` | Letter of support for the chair or dean | Needs signer and real figures |
 | `preview/` | PNG renders of the proposal pages other than the CV (110 dpi) | Generated |
 | `budget/preview/` | PNG renders of the budget justification's first pages | Generated |
-| `onr-yip-technical-proposal-cu-ded.tex` / `.pdf` | **Alternative** technical proposal: seawater-resistant copper alloys designed as powders for blown-powder DED (section 9) | Draft, 14 of 20 counted pages |
-| `abstract-cu-ded.txt` | SF-424 abstract for the alternative | Draft, 3,947 of 4,000 characters |
+| `onr-yip-technical-proposal-cu-ded.tex` / `.pdf` | **Alternative** technical proposal: seawater-resistant copper alloys designed as powders for blown-powder DED (section 9) | Draft, 15 of 20 counted pages |
+| `abstract-cu-ded.txt` | SF-424 abstract for the alternative | Draft, 3,944 of 4,000 characters |
 | `preview-cu-ded/` | PNG renders of the alternative's pages (110 dpi) | Generated |
 | `attachments/field10-facilities-cu-ded.tex` / `.pdf`, `attachments/field11-equipment-cu-ded.tex` / `.pdf` | Fields 10 and 11 for the alternative (DED instead of LPBF, copper feedstock, powder checks) | Draft, 1 page each, TODOs |
 
@@ -256,11 +256,31 @@ Pub 222, the ONR program pages (the AM program's thrusts include "large scale
 AM" and "additive repair"), the Federal Register critical-minerals lists
 (nickel since 2022, copper since 2025), and HII, NNS, NAVSUP, and DVIDS
 releases on printed Cu-Ni parts and the casting bottleneck. Every literature
-reference was checked on Crossref. The 45-150 um powder range often quoted for
-DED is a vendor convention with no peer-reviewed source found, so it stays in
-a TODO. The proposal also cites NSWC Carderock's NAB processing paper and its
-temperature-dependent property databases for NAB and Cu-Ni, as inputs to the
-heat-flow model.
+reference was checked on Crossref. The proposal also cites NSWC Carderock's NAB
+processing paper and its temperature-dependent property databases for NAB and
+Cu-Ni, as inputs to the heat-flow model.
+
+**Edison follow-up (2026-10-17, 50 queries).** The full synthesis is in
+[`edison-trajectories/cu-ded-2026-10/README.md`](../../edison-trajectories/cu-ded-2026-10/README.md).
+Its section 2 lists the 12 edits it made to the proposal. They raise the
+draft to 15 counted pages and 100 references. The main ones:
+
+- **A wrong claim removed.** The earlier draft said there was no corrosion
+  study of Cu-Ni made by blown-powder laser DED. There is one: Cu-30Ni made
+  by direct metal deposition on C71500 (Bhattacharya et al. 2011). A 2012
+  ISSC review reports that it corroded faster than the plate.
+- **Prior art for the powder route.** Ultrasonic atomization of NAB chips
+  (and of copper scrap) for laser DED is already published, in existing
+  compositions.
+- **Annealing.** Evidence that annealing NAB helps or hurts depending on the
+  starting microstructure.
+- **Short screens.** Numbers showing that one-hour screens can mislead.
+- **Comparison section.** New entries for the nearest ML, BO and DED work.
+- **Powder size.** Peer-reviewed DED powder cuts (45-106 and 45-150 um)
+  replace the vendor convention.
+
+Jia et al. 2026 is still unread: Edison could not open it, and the Pi is not
+reachable from this repo's workflow.
 
 **Placeholders specific to this version** (red TODOs in the PDF):
 
@@ -270,17 +290,27 @@ heat-flow model.
    `budget/budget.py` (private) and the totals on the cover page change.
    Materials lines also change (copper bar, nickel and master alloys instead
    of aluminum bar and Al master alloys).
-2. **Atomizer limits for copper:** the induction module's maximum melt
-   temperature (70-30 Cu-Ni melts close to it), the crucible material, the
-   charge size, and the plate frequencies (sets the median size; Lang's
-   relation gives about 75 um for a copper melt at 20 kHz).
+2. **Atomizer limits for copper:**
+   - the induction module's maximum melt temperature (70-30 Cu-Ni melts close
+     to it);
+   - the **plate (sonotrode) material**: copper reacts with Ti-6Al-4V, and the
+     published NAB runs used a carbon-fiber plate that shed fibers;
+   - the crucible material (no published comparison exists; try alumina or
+     stabilized zirconia first);
+   - the charge size;
+   - the plate frequencies. Lang's relation gives about 75 um for a copper
+     melt at 20 kHz, but measured NAB powder at 40 kHz was about twice the
+     relation's estimate.
 3. Commercial 70-30 Cu-Ni and NAB powders for the baselines.
 4. A first copper powder lot (SEM and size distribution) as preliminary
    data, if a run fits before Oct 23.
 5. Thermo-Calc: confirm the BYU license includes a copper database.
 6. Oxygen analysis (inert-gas fusion) at a service lab.
-7. Immersion durations, the selective-attack depth limit in H5, and natural
-   or substitute seawater.
+7. Immersion durations, the selective-attack depth limit in H5 (the TODO now
+   lists published 21- and 30-day depths of 1.8 to 3.4 um and more than 3 um),
+   and natural or substitute seawater.
+11. Check the 2011 Cu-30Ni corrosion study's conditions and numbers, and get
+    Jia et al. 2026, through the Pi (byu-vcl) or the library.
 8. Alloy families and element ranges; number of new alloys promised.
 9. Handling nickel powders (safety plan).
 10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`). The
