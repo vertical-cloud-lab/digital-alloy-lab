@@ -6,7 +6,7 @@ Everything here comes from public vendor pages and search results. Nothing comes
 
 | File | sha256 | Source | Purpose |
 |---|---|---|---|
-| `README.md` | `5cd84f341a7122ad4be41ea6a54097df9f913424657cb05915017be7d6eb7507` | Written in that session from vendor pages, McMaster category tables (headless Chrome on the runner) and web search, all read 2026-10-17 | Summary of the best rod and filler-wire option per alloy, plus melting notes, ready to post |
+| `README.md` | `56d8c6292b15cc6da74bc49f5771c96ef7df878b40ac56dd7b6897ee502a5b48` | Written in that session from vendor pages, McMaster category tables (headless Chrome on the runner) and web search, all read 2026-10-17 | Summary of the best rod and filler-wire option per alloy, plus melting notes, ready to post |
 | `navy_copper_alloys.csv` | `570ee462a2452e13bd170173d8f689d69c387823b27b1cfe81a97ca786b759f9` | The same reads, 141 listings | One row per listing, size and package: vendor, part number, link, diameter and tolerance, length or weight, price, computed $/ft or $/lb, stock or lead time, cert, quote-only flag, specs, and how each was read |
 
 To fetch one file at the commit named in the digital-alloy-lab#123 comment:
