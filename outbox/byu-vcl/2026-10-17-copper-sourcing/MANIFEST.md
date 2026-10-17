@@ -8,7 +8,7 @@ On 2026-10-17 the GitHub API reported this repo as private, even though its CLAU
 
 | File | sha256 | Source | Purpose |
 |---|---|---|---|
-| `README.md` | `0ecdaab12c36202d6ccbfbcc5a0e1eb311bd0b7530c3a91501cfb44727c352d4` | Written in that session from McMaster (headless Chrome on the runner), vendor pages and web research, all read 2026-10-17 | The answer to byu-vcl#286, ready to post as a comment |
+| `README.md` | `5e275fda315d60b40e37d17efc16a15f9bb3df09996102f16c61dacffbb2f2ff` | Written in that session from McMaster (headless Chrome on the runner), vendor pages and web research, all read 2026-10-17 | The answer to byu-vcl#286, ready to post as a comment |
 | `mcmaster_copper_rods.csv` | `600605bc4762a3e1e22611784c0f1a40a940f31d194f45874e7548beb7ef7e35` | McMaster category pages, read 2026-10-17 | Every 1/2" to 1" row of the 11 copper-alloy rod families checked: part number, tolerance, temper, spec, and price by length |
 
 To fetch one file at the commit named in the digital-alloy-lab#123 comment:

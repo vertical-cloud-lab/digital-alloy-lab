@@ -1,6 +1,6 @@
-### Copper alloys and high-purity Cu rod for the atomizer (#286)
+### Copper alloys and high-purity Cu rod for the atomizer
 
-Run from [digital-alloy-lab#123](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/123) while this repo is out of credits. Prices and stock were read on 2026-10-17. The Pi isn't reachable from that repo, so McMaster was read with headless Chrome on the GitHub runner. Its category tables loaded without a login, and so did the product pages after one early login prompt. Every McMaster part number below matches its page title.
+Run from [digital-alloy-lab#123](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/123) while byu-vcl is out of Claude credits. Prices and stock were read on 2026-10-17. The Pi isn't reachable from that repo, so McMaster was read with headless Chrome on the GitHub runner. Its category tables loaded without a login, and so did the product pages after one early login prompt. Every McMaster part number below matches its page title.
 
 **Size: 3/4" round, same as the 6063 bar** ([1640T16](https://www.mcmaster.com/1640T16/)). Cups (2.750" long, 1/2" drill 2.25" deep) and plugs are made the same way, with each plug turned from the same bar as its cup. A cup and plug take about 3.5" of bar, so 1 ft makes three. 5/8" is the fallback if 3/4" won't get past the sealing rod's adapter.
 
@@ -51,7 +51,7 @@ C10100 is already a 99.99 % spec. A lab supplier only buys you a fifth or sixth 
 
 ### Before melting any of it
 
-- **Temperature.** With Indutherm's 50–80 °C superheat rule (#232):
+- **Temperature.** With Indutherm's 50–80 °C superheat rule (vertical-cloud-lab/byu-vcl#232):
   - Cu: about 1135–1165 °C
   - NAB: about 1105–1140 °C
   - 90/10 CuNi: about 1200–1230 °C
@@ -89,7 +89,7 @@ C10100 is already a 99.99 % spec. A lab supplier only buys you a fifth or sixth 
 **Blocked or not reached.** Aviva Metals, Midwest Steel & Aluminum and National Bronze blocked the fetches. Kurt J. Lesker, Surepure, Princeton Scientific and MSE Supplies weren't checked.
 
 **Method.**
-- McMaster: headless Chrome on the GitHub runner read the category pages (`/products/101-copper-rods/`, `/products/aluminum-bronze-rods/` and so on). Every 1/2"–1" row from the families checked is in [`mcmaster_copper_rods.csv`](mcmaster_copper_rods.csv), with prices by length.
+- McMaster: headless Chrome on the GitHub runner read the category pages (`/products/101-copper-rods/`, `/products/aluminum-bronze-rods/` and so on). Every 1/2"–1" row from the families checked is in `mcmaster_copper_rods.csv`, with prices by length. That file is in the same drop folder as this answer: `outbox/byu-vcl/2026-10-17-copper-sourcing/` in digital-alloy-lab.
 - Other vendors: web search and page fetches. Atlas Bronze and the 70/30 Online Metals page were also checked in Chrome.
 - Navy uses and specs: CDA, Concast datasheets, EverySpec, DTIC and trade press. Liquidus values are from Concast and MakeItFrom, because copper.org blocked the fetch.
 
