@@ -26,7 +26,7 @@ printed aluminum as the naval application.
 | `support-letter-draft.md` | Letter of support for the chair or dean | Needs signer and real figures |
 | `preview/` | PNG renders of the proposal pages other than the CV (110 dpi) | Generated |
 | `budget/preview/` | PNG renders of the budget justification's first pages | Generated |
-| `onr-yip-technical-proposal-cu-ded.tex` / `.pdf` | **Alternative** technical proposal: seawater-resistant copper alloys designed as powders for blown-powder DED (section 9) | Draft, 13 of 20 counted pages |
+| `onr-yip-technical-proposal-cu-ded.tex` / `.pdf` | **Alternative** technical proposal: seawater-resistant copper alloys designed as powders for blown-powder DED (section 9) | Draft, 14 of 20 counted pages |
 | `abstract-cu-ded.txt` | SF-424 abstract for the alternative | Draft, 3,947 of 4,000 characters |
 | `preview-cu-ded/` | PNG renders of the alternative's pages (110 dpi) | Generated |
 | `attachments/field10-facilities-cu-ded.tex` / `.pdf`, `attachments/field11-equipment-cu-ded.tex` / `.pdf` | Fields 10 and 11 for the alternative (DED instead of LPBF, copper feedstock, powder checks) | Draft, 1 page each, TODOs |
