@@ -123,16 +123,6 @@ def _speedup_arrow(ax, C, x, base="tiered"):
     ax.text((xp + xb) / 2, target - 1.2, f"{xb / xp:.1f}× less spend", ha="center", va="top", fontsize=15, color=INK)
 
 
-if __name__ == "__main__":
-    kap = float(sys.argv[1]) if len(sys.argv) > 1 else 1.0
-    for m in ("best_validated", "rec_printed"):
-        print(main_curve(kap, m))
-    if kap == 1.0:
-        print(slide_figure(1.0))
-        (HERE / "variants").mkdir(exist_ok=True)
-        print(slide_figure(1.0, out=HERE / "variants" / "bofn_best_vs_spend_k1_partial_vs_full_all_bands.png", bands="all"))
-
-
 STAGE_COLORS = {"C": "#D9D9D9", "A": "#A6A6A6", "L": "#595959", "T": RED}
 STAGE_NAMES = {"C": "CALPHAD", "A": "Atomize", "L": "Print (LPBF)", "T": "Tensile"}
 
@@ -249,10 +239,11 @@ FADE = {RED: "#E6B3B3", "#404040": "#BDBDBD", "#8C8C8C": "#CFCFCF", "#B4B4B4": "
 
 
 def slide_figure(kappa=1.0, metric="best_validated", kinds=PV_KINDS, out=None, style=None, short=None, base="tiered", ref="pkgfn",
-                 size=22, bands="highlight", figsize=(11, 6), right=0.655):
+                 size=22, bands="highlight", figsize=(11, 6), right=0.655, x_lab=103.2, dashed_leaders=False):
     """Best alloy vs spend for a slide: large type, leader lines instead of a legend (no arrowheads),
     a horizontal left-aligned y label, and ticks only at the axis ends plus the two called-out values
-    (the spend at which `ref` reaches `base`'s $100k level, and that level)."""
+    (the spend at which `ref` reaches `base`'s $100k level, and that level). With `dashed_leaders`, a dashed
+    trace's leader line is dashed too, which tells apart two traces that end at the same value."""
     style = {**STYLE, **PV_STYLE, **(style or {})}
     short = {**PV_SHORT, **(short or {})}
     ys = optimum(kappa)
@@ -298,10 +289,10 @@ def slide_figure(kappa=1.0, metric="best_validated", kinds=PV_KINDS, out=None, s
     shift = (np.mean([ypos[k] - finals[k] for k in order]))
     for k in order:
         ypos[k] -= shift
-    x_lab = 103.2
     for k in order:
         col = style[k]["color"]
-        ax.plot([100.3, x_lab - 0.9], [finals[k], ypos[k]], color=FADE.get(col, "#CCCCCC"), lw=1.8, clip_on=False, zorder=1, solid_capstyle="round")
+        ax.plot([100.3, x_lab - 0.9], [finals[k], ypos[k]], color=FADE.get(col, "#CCCCCC"), lw=1.8, clip_on=False, zorder=1, solid_capstyle="round",
+                ls=style[k]["ls"] if dashed_leaders else "-")
         ax.text(x_lab, ypos[k], short[k], ha="left", va="center", fontsize=size, color=RED if col == RED else lab_c, clip_on=False)
     # axes: ends plus the called-out values only
     ax.set_xlim(0, 100)
@@ -350,3 +341,30 @@ def check_overlaps(fig, ax):
                 out.append(f"a line ({ln.get_color()}, lw {ln.get_linewidth()}) passes through '{name}'")
     return out
 
+
+# --------------------------------------------------------------------------- slide figure with KGFN, Oct 17
+# The 2 x 2 of PORT.md step 3: red is partial evaluation and gray the full pipeline, as above, and now
+# solid is KG and dashed is EI per dollar, so full-pipeline BOFN is dashed here (solid in the MS&T26 figure).
+KG_KINDS = ("pkgfn", "eifn_reuse", "kgfn", "eifn", "tiered")
+KG_STYLE = {"kgfn": dict(color="#404040", lw=2.0, z=4, ls="-"), "eifn": dict(color="#404040", lw=2.0, z=4, ls=(0, (4, 2)))}
+KG_SHORT = {"kgfn": "Full: KGFN"}
+
+
+def slide_figure_kgfn(kappa=1.0, kinds=KG_KINDS, out=None, **kw):
+    """The slide figure with KGFN added (PORT.md step 5): the 2 x 2 of policies plus tiered screening.
+    KGFN and BOFN end level, so the leader lines carry each trace's dash and are longer to show it."""
+    out = out or HERE / f"bofn_best_vs_spend_k{kappa:g}_partial_vs_full_kgfn.png"
+    kw = {"x_lab": 106.0, "dashed_leaders": True, **kw}
+    return slide_figure(kappa, kinds=kinds, out=out, style=KG_STYLE, short=KG_SHORT, **kw)
+
+
+if __name__ == "__main__":
+    kap = float(sys.argv[1]) if len(sys.argv) > 1 else 1.0
+    for m in ("best_validated", "rec_printed"):
+        print(main_curve(kap, m))
+    if kap == 1.0:
+        print(slide_figure(1.0))
+        (HERE / "variants").mkdir(exist_ok=True)
+        print(slide_figure(1.0, out=HERE / "variants" / "bofn_best_vs_spend_k1_partial_vs_full_all_bands.png", bands="all"))
+        print(slide_figure_kgfn(1.0))
+        print(slide_figure_kgfn(1.0, kinds=KG_KINDS[:-1] + ("ei", "tiered"), out=HERE / "variants" / "bofn_best_vs_spend_k1_partial_vs_full_kgfn_with_bo.png"))
