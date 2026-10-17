@@ -717,29 +717,104 @@ fixed settings will measure deposit-to-deposit scatter. Image analysis
 scripts will turn micrographs into porosity, crack length, dilution, grain
 size, and phase fractions with stated uncertainty.
 
-Corrosion tests follow the same staging. Polished faces get open-circuit
-potential, linear polarization, impedance, and cyclic polarization
-measurements in substitute ocean water~\cite{astmD1141,astmG59,astmG61} on a
-potentiostat dedicated to the loop, so that the search can schedule the screen
-like any other step. ASTM G61 is written for iron-, nickel-, and
+Corrosion tests follow the same staging. The screen runs on the
+laboratory's liquid-handling gantry (CubXL, Ursa Laboratories), which is
+already driven by scripts, so the search can schedule it like any other
+step. The gantry fills small O-ring wells, 3 to 4~mm across, clamped on
+polished faces, with substitute ocean water~\cite{astmD1141}, and a
+potentiostat dedicated to the loop measures open-circuit potential, linear
+polarization, impedance, and cyclic polarization~\cite{astmG59,astmG61}.
+Small cells can add crevice attack at the seal and shift breakdown
+potentials~\cite{frankel1998}. Each spot is therefore photographed before
+and after, and the wells are checked against a conventional 1~cm$^2$ flat
+cell on the references \todo{choose the potentiostat: a module unit with
+impedance on the gantry, cross-checked on a borrowed laboratory instrument,
+or the benchtop unit and flat cell in Field 11; see cubxl-electrochemistry.md}.
+Several wells fit on one specimen, so a repair coupon is measured in the
+deposit, at the fusion line, and in the substrate's heat-affected zone, the
+zone where welded NAB was attacked selectively~\cite{dobson2024}.
+The gantry then pipettes the used electrolyte of each well into a tube for
+inductively coupled plasma mass spectrometry, which shows which elements
+left the surface, for example aluminum from NAB or nickel from
+copper-nickel. ASTM G61 is written for iron-, nickel-, and
 cobalt-based alloys, so the project will report how its procedure behaves on
 deposited copper alloys. Wrought 70-30 copper-nickel and heat-treated cast
 NAB are measured as references in every round. Candidates that the search
-selects get 30-day immersion tests, weighed before and
-after~\cite{astmG31,astmG1} and sectioned to measure the depth of selective
-attack; the leading
+selects get 30-day immersion tests in capped vials on the gantry's deck. The
+gantry draws a few microliters of each solution at about 1, 3, 10, and 30
+days for the same analysis, so the metal released over time enters the
+models as an intermediate result between the one-hour screen and the final
+mass loss. The coupons are weighed before and after~\cite{astmG31,astmG1}
+and sectioned to measure the depth of selective attack; the leading
 candidates get crevice and longer immersion tests \todo{confirm the
 durations, and natural or substitute seawater}. Tests in flowing seawater,
 which take months, are left to Navy laboratories for the final candidates
 (Section~\ref{sec:naval}).
 
-The alloy space starts from two families. The first is copper-nickel with 10
-to 30\% nickel and additions of iron, manganese, and chromium. The second is
-aluminum bronze with nickel, iron, and manganese, where the aim is a
-composition whose as-deposited microstructure avoids the phases that corrode
-selectively. Compositions are bounded by the atomizer's melting limit, and
-nickel content is carried as an objective \todo{confirm the alloy families
-and the element ranges to search}.
+The search space was chosen the way the laboratory chose its aluminum
+palette: a literature review of each candidate element, then a check of its
+coverage in the CALPHAD database. Fifty elements were reviewed one at a
+time: copper, and every element that appears in a commercial copper alloy, a
+copper alloy or welding filler specification, a deoxidizing practice, or the
+atomizer's crucible and plate materials. Each review asked whether the
+element helps seawater resistance, deposit soundness, or repair; what sets
+its upper limit; whether it can be melted and atomized in a ceramic crucible
+below about 1,300\,\textdegree{}C; and whether Thermo-Calc's copper database
+(TCCU7~\cite{tccu7}) assesses its systems. Eight elements are searched from
+the start (Table~\ref{tab:space}), with copper as the balance at no less
+than 65\% and a calculated liquidus no higher than 1,250\,\textdegree{}C.
+Zirconium, boron, tin (in NAB only), and one rare earth, lanthanum or
+cerium, which improved a 90-10 alloy in salt solution~\cite{du2025}, are
+added in Year~2. Rules tied to the aluminum content keep each candidate near
+known metallurgy. Above 7\% aluminum, nickel must at least equal iron, as in
+the Navy's NAB specification~\cite{milb24480}. Below 1.5\%, iron stays at or
+below 2.3\%, the upper limit of the iron-rich 70-30 grade C71640, so that it
+remains in solid solution~\cite{astmB111}. Chromium and niobium are used only
+where aluminum is at most 3\%, and silicon above 0.1\% only with niobium, as
+in cast 70-30 copper-nickel~\cite{astmB369}. Retained $\beta$ is not limited
+by a fixed formula; the process-aware CALPHAD inputs predict it
+(Advance~3). The space includes the region between the two families,
+copper-nickel-aluminum alloys such as the high-strength
+MARINEL~\cite{campbell2002}, where low-nickel candidates may lie. Beryllium
+and cadmium (toxic powder and fume), zinc (it evaporates in the melt pool and
+dezincifies in seawater), and the refractory metals (immiscible, and far
+above the melting limit) are excluded. Lead, sulfur, phosphorus, carbon,
+bismuth, and the other impurities are held at or below the welding-grade
+limits for copper-nickel~\cite{awsA57}. All the searched elements but iron
+are on the 2025 U.S. list of critical minerals~\cite{usgs2025}; nickel
+dominates by mass and is carried as an objective.
+
+\begin{table}[h]
+\centering
+\caption{Elements searched from the start (wt\%), with copper as the balance
+(at least 65\%) and a calculated liquidus of at most
+1,250\,\textdegree{}C. ``Cu-Ni only'': used where aluminum is at most 3\%
+(silicon: below 7\%).}
+\label{tab:space}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabularx}{\textwidth}{@{}l l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
+\toprule
+\textbf{Element} & \textbf{Range} & \textbf{Role} & \textbf{Upper limit set by} \\
+\midrule
+Ni & 0--33 & Protective film in Cu-Ni; $\kappa$ phases in NAB & Liquidus near
+  the atomizer's limit; supply (an objective) \\
+Al & 0--10.5 & Aluminum bronze; Cu-Ni-Al alloys & Retained $\beta'$
+  martensite as deposited \\
+Fe & 0--5 & Film in Cu-Ni; $\kappa$ phases in NAB & Iron out of solution in
+  Cu-Ni; coarse $\kappa$ in NAB \\
+Mn & 0--4 & Deoxidizer; partial nickel substitute & Evaporation and
+  oxidation in melting and DED \\
+Cr & 0--1, Cu-Ni only & Resistance to fast flow~\cite{lewis1981} & Cr-rich
+  particles; crevice attack in still water \\
+Si & 0--0.5, Cu-Ni only & Deoxidizer; strength with Nb & Silicides; weld
+  cracking \\
+Nb & 0--1, Cu-Ni only & Weldability of cast Cu-Ni & Undissolved Nb-rich
+  particles \\
+Ti & 0--0.5 & Deoxidizer in Cu-Ni welding filler~\cite{awsA57} & Oxide and
+  nitride inclusions; crucible attack \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \subsubsection{Task 3: live campaigns and hypothesis tests (both students)}
 Run live campaigns in which the search chooses each experiment and step.
@@ -1583,6 +1658,46 @@ ASTM B212, \emph{Standard Test Method for Apparent Density of Free-Flowing Metal
 ASTM G61, \emph{Standard Test Method for Conducting Cyclic Potentiodynamic
 Polarization Measurements for Localized Corrosion Susceptibility of Iron-,
 Nickel-, or Cobalt-Based Alloys}, ASTM International.
+
+\bibitem{frankel1998}
+G.~S. Frankel, ``Pitting corrosion of metals: a review of the critical
+factors,'' \emph{J. Electrochem. Soc.} \textbf{145}, 2186-2198 (1998).
+\href{https://doi.org/10.1149/1.1838615}{doi:10.1149/1.1838615}
+
+\bibitem{tccu7}
+Thermo-Calc Software, \emph{TCS Cu-based Alloys Database (TCCU7):
+Technical Information}, for Thermo-Calc 2026b (2026): 34 elements, 175
+assessed binary and 79 assessed ternary systems.
+\url{https://thermocalc.com/wp-content/uploads/Documentation/Databases/Thermodynamic/tccu7-technical-info.pdf}
+
+\bibitem{du2025}
+P.~Du, T.~Chen, G.~Xie, Q.~Wang, and X.~Liu, ``The difference in
+anti-corrosion effect between the addition of La and Ce of a B10 alloy,''
+\emph{J. Mater. Res. Technol.} \textbf{36}, 8062-8074 (2025).
+\href{https://doi.org/10.1016/j.jmrt.2025.05.090}{doi:10.1016/j.jmrt.2025.05.090}
+
+\bibitem{astmB111}
+ASTM B111/B111M, \emph{Standard Specification for Copper and Copper-Alloy
+Seamless Condenser Tubes and Ferrule Stock}, ASTM International.
+
+\bibitem{astmB369}
+ASTM B369/B369M, \emph{Standard Specification for Copper-Nickel Alloy
+Castings}, ASTM International.
+
+\bibitem{campbell2002}
+S.~A. Campbell, G.~J.~W. Radford, C.~D.~S. Tuck, and B.~D. Barker,
+``Corrosion and galvanic compatibility studies of a high-strength
+copper-nickel alloy,'' \emph{Corrosion} \textbf{58}, 57-71 (2002).
+\href{https://doi.org/10.5006/1.3277305}{doi:10.5006/1.3277305}
+
+\bibitem{awsA57}
+AWS A5.7/A5.7M, \emph{Specification for Copper and Copper-Alloy Bare Welding
+Rods and Electrodes}, American Welding Society.
+
+\bibitem{lewis1981}
+R.~O. Lewis and F.~L. LaQue, ``Evaluation of copper-nickel alloys for OTEC
+applications,'' Argonne National Laboratory report ANL/OTEC-BCM-019 (1981).
+\href{https://doi.org/10.2172/6255887}{doi:10.2172/6255887}
 
 \bibitem{onram}
 Office of Naval Research, ``Materials \& Processes for Additive Manufacturing,'' Code 33 Manufacturing Focus Area (accessed 17 Oct 2026).

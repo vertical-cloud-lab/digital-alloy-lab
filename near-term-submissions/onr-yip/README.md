@@ -302,6 +302,36 @@ of the synthesis. In short:
   powders into a cheap, lower-fidelity node ahead of atomizing. It is in
   section 6.3 of the synthesis, not in the proposal.
 
+**Search space and the CubXL (2026-10-17, evening).** Sterling asked for
+the copper search space to be backed the way the aluminum one was, and for a
+look at the CubXL for the corrosion screen.
+- **Search space.** 50 Edison queries, one per element, plus a joint query,
+  two ANALYSIS syntheses, subagent checks of every answer, and a TCCU7
+  coverage table. All of it is in
+  [`edison-trajectories/cu-ded-elements-2026-10/`](../../edison-trajectories/cu-ded-elements-2026-10/README.md).
+  - **Searched from the start:** Ni 0-33, Al 0-10.5, Fe 0-5, Mn 0-4,
+    Ti 0-0.5, plus Cr 0-1, Si 0-0.5 and Nb 0-1 in Cu-Ni only.
+  - **Hard limits:** Cu at least 65, and a CALPHAD liquidus of at most
+    1,250 °C.
+  - **Rules keyed to Al:** Ni at least Fe above 7 Al; Fe at most 2.3 below
+    1.5 Al.
+  - **Year 2 additions:** Zr, B, Sn (NAB only), and La or Ce.
+  - **In the proposal:** a new Task 2 paragraph and Table 1 replace the
+    two-sentence alloy space and its TODO. The draft is now 16 counted
+    pages, with 111 references.
+- **CubXL.** The one-hour screen needs a potentiostat, but probably not an
+  $18,000 benchtop unit.
+  - **Instrument:** an EmStat Pico (about $580, with impedance) on the CubXL
+    covers the currents copper alloys give in 3-4 mm wells.
+  - **Cross-check:** a borrowed benchtop instrument covers the flat-cell
+    checks.
+  - **What the CubXL adds:** wells across repair fusion lines, ICP-MS of
+    every used electrolyte, and immersion vials sampled over time.
+  - **Write-up:** `cubxl-electrochemistry.md`. The proposal's corrosion
+    paragraph and Fields 10 and 11 now describe the CubXL.
+  - **Still open:** the equipment line is a TODO (option a or b in that
+    file), because `budget.py` is private.
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
 1. **DED facility, system, and price per session.** Candidate: the InssTek
@@ -328,12 +358,15 @@ of the synthesis. In short:
 3. Commercial 70-30 Cu-Ni and NAB powders for the baselines.
 4. A first copper powder lot (SEM and size distribution) as preliminary
    data, if a run fits before Oct 23.
-5. Thermo-Calc: confirm the BYU license includes a copper database.
+5. Thermo-Calc: confirm the BYU license includes TCCU, and which version
+   (the search-space coverage numbers are for TCCU7, Thermo-Calc 2026b).
 6. Oxygen analysis (inert-gas fusion) at a service lab.
 7. Immersion durations, the selective-attack depth limit in H5 (the TODO now
    lists published 21- and 30-day depths of 1.8 to 3.4 um and more than 3 um),
    and natural or substitute seawater.
-8. Alloy families and element ranges; number of new alloys promised.
+8. Search space: proposed (Table 1, `search_space.py`). Still open: the
+   number of new alloys promised, and whether to add Mn-Al bronze
+   (C95700) as a Ni-free branch.
 9. Handling nickel powders (safety plan).
 10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`). The
     letter of support carries the copper title as a bracketed option; its
@@ -343,6 +376,9 @@ of the synthesis. In short:
     literally, the 2011 abstract ranks the deposit above the plate, the
     reverse of the ISSC review the draft cites, so check the direction
     before submission.
+12. The potentiostat and equipment line: a module potentiostat on the
+    CubXL plus a borrowed benchtop for cross-checks, or the $18,000 benchtop
+    unit (`cubxl-electrochemistry.md`).
 
 All other TODOs (cover contacts, CV, responsibility, DMP schema, current and
 pending) are the same as in section 4.
