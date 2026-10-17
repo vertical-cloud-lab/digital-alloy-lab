@@ -1,8 +1,11 @@
 # How each policy behaves, across seeds
 
 These are static companions to the timelapse in [`../dag`](../dag), which plays
-back one seed. Here every seed is on the page at once. Both figures come from
-[`behaviour.py`](behaviour.py), at κ = 1 with $100k of new spend per run.
+back one seed. These put many seeds on the page at once: all 20 stored seeds
+for what each policy buys, and the five re-run seeds that log each purchase's
+inputs for where it makes alloys and how good its builds are. All three
+figures come from [`behaviour.py`](behaviour.py), at κ = 1 with $100k of new
+spend per run.
 
 ## What each policy buys, run by run
 
@@ -75,6 +78,40 @@ near the optimum, spread over a few alloys that it prints many times.
 These are five seeds, so the table describes behaviour. It is not a result.
 The distance in (f, g) is a summary of where the policies look; it is not the
 objective.
+
+## How good are the builds each policy prints?
+
+![](bofn_behaviour_builds_k1.png)
+
+Each point is one build, placed at the spend when it was printed and scored
+by the true objective of its alloy and settings, as % of the optimum. That is
+the value a tensile test of the build would return, since the runs are
+noise-free. Filled points were tested and open points were printed but never
+tested. The line is the mean over each $10k of spend. The runs are the same
+as in the composition figure.
+
+| policy | builds per run | tested | mean of builds in the last $20k | builds above 80% of the optimum (5 seeds), tested / not tested |
+|---|---|---|---|---|
+| Random | 23 | 100% | −8% | 0 / 0 |
+| Standard BO | 23 | 100% | 65% | 21 / 0 |
+| BOFN, full pipeline | 23 | 100% | 30% | 20 / 0 |
+| KGFN, full pipeline (2 seeds) | 23 | 100% | 76% | 11 / 0 |
+| Tiered, no powder reuse | 23 | 100% | 21% | 0 / 0 |
+| Tiered screening | 29 | 100% | 33% | 0 / 0 |
+| BOFN + powder reuse | 30 | 100% | 35% | 20 / 0 |
+| pKGFN | 37 | 19% | 52% | 6 / 20 |
+
+- The full-pipeline BO policies climb steadily: they spend the budget moving
+  from exploring to exploiting. On these seeds, BOFN's builds drop again in the
+  last $20k.
+- Neither tiered policy ever prints a build above 80%, because the screen has
+  ruled those alloys out.
+- BOFN + powder reuse keeps a wide spread to the end. Cheap reprints let it
+  keep trying settings on powders that are not the best ones.
+- pKGFN prints the most builds, tests one in five, and tests the better ones:
+  its tested builds average 53% and its untested ones 38%. Still, 20 of its 26
+  builds above 80% were never tested. Its score, the best *tested* alloy,
+  counts only what it chose to test.
 
 Regenerate with `python benchmarks/bofn-paper/behaviour/behaviour.py`, which
 takes a few seconds and needs `../requirements.txt` and the Aptos fonts (see

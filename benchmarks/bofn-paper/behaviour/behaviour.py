@@ -1,6 +1,6 @@
 """How each policy behaves across seeds: what it buys and when, and where it makes alloys.
 
-    python behaviour.py            # bofn_behaviour_purchases_k1.png and bofn_behaviour_composition_k1.png
+    python behaviour.py            # bofn_behaviour_{purchases,composition,builds}_k1.png
 
 Static companions to ../dag/timelapse.py, which plays back a single seed:
 
@@ -21,6 +21,10 @@ Static companions to ../dag/timelapse.py, which plays back a single seed:
   purchase, so it uses only the runs that log them: ../results-rerun (seeds
   0-4, identical to the stored runs action for action) and
   ../quality/kgfn-smoke (KGFN, seeds 0-1).
+- builds: every build a policy printed, scored by the true objective of its
+  alloy and settings (% of the optimum) against the spend when it was printed,
+  filled if it was tensile-tested, with the mean over each $10k of spend. Same
+  runs as the composition figure.
 """
 
 from __future__ import annotations
@@ -316,12 +320,76 @@ def check(kappa):
     print(f"{n} runs with a purchase log: the purchases rebuilt from their actions match it")
 
 
+# --------------------------------------------------------------------------- builds
+def builds(run, truth, ystar):
+    """(spend after, true objective % of the optimum, tested) of every build the run printed."""
+    tested = Counter(tuple(round(v, 6) for v in inp) for g, _, inp in run["purchases"] if g == "T")
+    out = []
+    for g, end, inp in run["purchases"]:
+        if g == "L":
+            key = tuple(round(v, 6) for v in inp)
+            y = float(truth.objective(torch.tensor(inp))) / ystar * 100
+            out.append((end, y, tested[key] > 0))
+            if tested[key]:
+                tested[key] -= 1  # one test per build
+    return out
+
+
+def figure_builds(kappa, out):
+    ystar, truth = optimum(kappa), AlloyTruth(kappa)
+    budget, step = 100_000, 10_000
+    fig, axes = plt.subplots(4, 2, figsize=(15.5, 13.0), sharex=True, sharey=True)
+    fig.subplots_adjust(left=0.07, right=0.985, top=0.835, bottom=0.06, wspace=0.07, hspace=0.42)
+    fig.text(0.07, 0.965, "How good are the builds each policy prints?", fontsize=22, fontweight="bold", color=INK, va="center")
+    fig.text(0.07, 0.937, "Every build printed, scored by the true objective of its alloy and settings, against the spend when it "
+             "was printed. Filled: tensile-tested; open: printed,", fontsize=13.5, color=GRAY, va="center")
+    fig.text(0.07, 0.917, f"never tested. The line is the mean over each $10k of spend. Seeds 0–4 pooled (KGFN: seeds 0–1, a smoke "
+             f"test), κ = {kappa:g}. The burden penalty puts poor alloys below zero.", fontsize=13.5, color=GRAY, va="center")
+    for j, text in enumerate(COLUMNS):
+        fig.text(0.07 + j * 0.4625, 0.888, text, fontsize=14, color=INK, va="bottom")
+        fig.add_artist(Line2D([0.07 + j * 0.4625, 0.07 + j * 0.4625 + 0.4525], [0.885] * 2, color=LIGHT, lw=0.8))
+    edges = np.arange(0, budget + 1, step)
+    for i, pair in enumerate(GRID):
+        for j, kind in enumerate(pair):
+            ax = axes[i, j]
+            runs, _ = load(kind, kappa, LOGGED)
+            b = np.array([x for r in runs for x in builds(r, truth, ystar)])
+            spend, y, tested = b[:, 0], b[:, 1], b[:, 2].astype(bool)
+            ax.axhline(100, color=RED, lw=0.9, ls=(0, (4, 3)), zorder=1)
+            ax.axhline(0, color=LIGHT, lw=0.8, zorder=1)
+            ax.scatter(spend[tested] / 1e3, y[tested], s=16, color="#8C8C8C", lw=0, zorder=2)
+            ax.scatter(spend[~tested] / 1e3, y[~tested], s=16, facecolors="none", edgecolors="#8C8C8C", lw=0.8, zorder=2)
+            k = np.digitize(spend, edges[1:-1])
+            mean = np.array([y[k == m].mean() if (k == m).any() else np.nan for m in range(len(edges) - 1)])
+            ax.plot((edges[:-1] + step / 2) / 1e3, mean, color=RED if kind == "pkgfn" else INK, lw=2.6, zorder=3,
+                    solid_capstyle="round", marker="o", ms=4.5)
+            late = y[spend > budget - 2 * step]
+            ax.set_title(SHORT[kind], loc="left", fontsize=15, color=INK, fontweight="bold" if kind == "pkgfn" else "normal",
+                         pad=24)
+            ax.text(0, 1.04, f"{len(y) / len(runs):.0f} builds per run, {tested.mean():.0%} tested; builds in the last $20k "
+                    f"average {late.mean():.0f}%", transform=ax.transAxes, fontsize=12, color=MUTED, va="bottom")
+            ax.set_xlim(0, budget / 1e3)
+            ax.set_ylim(-66, 105)
+            ax.set_yticks([-50, 0, 50, 100])
+            ax.yaxis.grid(True, color="#EDEDED", lw=0.7)
+            ax.set_axisbelow(True)
+            ax.tick_params(labelsize=12)
+            if i == len(GRID) - 1:
+                ax.set_xlabel("New spend ($k)", fontsize=12.5)
+            if j == 0:
+                ax.set_ylabel("% of the optimum", fontsize=12.5)
+    axes[0, 0].text(99, 97, "optimum", ha="right", va="top", fontsize=11.5, color=RED)
+    fig.savefig(out, dpi=200)
+    plt.close(fig)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--kappa", type=float, default=1.0)
     a = ap.parse_args()
     check(a.kappa)
-    for f in (figure_purchases, figure_composition):
+    for f in (figure_purchases, figure_composition, figure_builds):
         name = f.__name__.split("_", 1)[1]
         print(f(a.kappa, HERE / f"bofn_behaviour_{name}_k{a.kappa:g}.png"))
 
