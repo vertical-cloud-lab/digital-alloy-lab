@@ -52,6 +52,8 @@ The paper's claim that pKGFN beats full-evaluation BOFN is not reproduced on thi
 
 *Best alloy demonstrated (printed and tensile-tested), as a percentage of the true optimum, against new spend, at `kappa = 1`. Lines are means over 20 seeds. Partial evaluation is red (pKGFN solid, BOFN + powder reuse dashed), full-pipeline evaluation gray. The ticks mark the axis ends and the two called-out values: $26.5k, where pKGFN's mean first reaches screening's $100k level, and that level, 63%. The value axis starts at 35%, the level of the five shared seed alloys. Bands are ±1 SE, drawn only for the two red traces and for screening; the variant with bands on every trace is [`variants/bofn_best_vs_spend_k1_partial_vs_full_all_bands.png`](variants/bofn_best_vs_spend_k1_partial_vs_full_all_bands.png). The last-step rise in pKGFN comes from four seeds' end-of-budget tensile tests on builds printed earlier (the mean jumps from 81.1% at $99.5k to 83.8% at $99.75k), not from a smooth improvement.*
 
+The same figure with KGFN added (Oct 17), so that it shows all four of {KG, EI per dollar} × {partial, full}, is [`bofn_best_vs_spend_k1_partial_vs_full_kgfn.png`](bofn_best_vs_spend_k1_partial_vs_full_kgfn.png); its caption is in [`PORT.md`](PORT.md), step 5.
+
 The earlier diagnostic version with pKGFN alone highlighted and a legend is [`bofn_best_vs_spend_k1_best_validated.png`](bofn_best_vs_spend_k1_best_validated.png).
 
 ![sensitivity](bofn_sensitivity_at100k.png)
@@ -304,7 +306,7 @@ BOFN_NO_REC=1 python run_sweep.py --kappas 0.0 0.5 --seeds 0-7 --kinds eifn_reus
 BOFN_NO_REC=1 BOFN_SACQ=32 BOFN_NCAND=10 python run_sweep.py --kappas 1.0 --seeds 0-19 --kinds pkgfn_free
 BOFN_NO_REC=1 BOFN_SACQ=32 BOFN_NCAND=10 python run_sweep.py --kappas 0.0 0.5 --seeds 0-7 --kinds pkgfn_free
 python analyze.py 1.0 0.5 0.0     # tables
-python plot.py 1.0                # figures, including the slide figure and its all-bands variant
+python plot.py 1.0                # figures, including the slide figure, its all-bands variant and the version with KGFN
 DIAG_ITS=4,12,24,40 BOFN_NO_REC=1 python quality/mc_noise.py 0 1.0 quality/mc_noise_k1_s0.json   # KG noise check
 BOFN_NO_REC=1 BOFN_SACQ=256 python run_sweep.py --kappas 1.0 --seeds 0-7 --kinds pkgfn --out quality/results-hq/sacq256-ncand16
 BOFN_NO_REC=1 BOFN_SACQ=128 BOFN_NCAND=32 python run_sweep.py --kappas 1.0 --seeds 0-3 --kinds pkgfn --out quality/results-hq/sacq128-ncand32

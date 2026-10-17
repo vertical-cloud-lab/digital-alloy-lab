@@ -26,7 +26,7 @@ the MS&T26 results, and none of its claims were changed.
 | `compare_runs.py` (new) | Checks re-runs against stored runs action for action (see below). |
 | `requirements.txt` (new) | Exact pins of the environment behind `results-rerun/`. |
 | `quality/check_kgfn.py` (new) | Brute-force check of `kg_full`. |
-| `quality/mc_noise.py`, `plot.py` | The `TinyGP` wrapper now passes keyword arguments through. `plot.py` has a style for `kgfn`. |
+| `quality/mc_noise.py`, `plot.py` | The `TinyGP` wrapper now passes keyword arguments through. `plot.py` has a style for `kgfn` and `slide_figure_kgfn()`, the slide figure with KGFN (step 5). Its `__main__` block moved to the end of the file: it called `slide_figure()` before the function was defined, so `python plot.py 1.0` stopped with a NameError. The MS&T26 figures it draws are unchanged, byte for byte. |
 
 With noise off (the default), these changes leave every number the code
 produces unchanged. The re-run check below tests that. With noise on, each
@@ -178,9 +178,27 @@ In the 2 × 2 of step 3, at $25k and at $100k:
   standard BO (2.1×). At $100k KGFN is 23.5 points ahead of screening, on 18
   of 20 seeds (p = 8.2e-5).
 
+**Slide figure with KGFN** (`plot.slide_figure_kgfn()`, Oct 17; `python plot.py 1.0` draws it):
+
+![partial vs full evaluation, with KGFN](bofn_best_vs_spend_k1_partial_vs_full_kgfn.png)
+
+*Best alloy demonstrated, as % of the true optimum, against new spend at κ = 1.
+Lines are means over the same 20 seeds, and the style is the MS&T26 slide
+figure's. Color is the evaluation (red partial, gray full pipeline) and the
+dash is the acquisition function (solid KG, dashed EI per dollar), so
+full-pipeline BOFN is dashed here and solid in the MS&T26 figure. KGFN and BOFN
+end level (86.2% and 85.8%), so the leader lines carry the dashes too. The
+callout is the MS&T26 one: pKGFN's mean reaches screening's $100k level
+(62.7%) at $26.5k. The other means get there at $26.25k (BOFN + powder reuse),
+$38k (BOFN) and $42.25k (KGFN). Bands are ±1 SE, for the red traces and
+screening only. Standard BO is left out to keep the 2 × 2 readable (its mean
+gets there at $46.5k); the version with it is
+[`variants/bofn_best_vs_spend_k1_partial_vs_full_kgfn_with_bo.png`](variants/bofn_best_vs_spend_k1_partial_vs_full_kgfn_with_bo.png).*
+
 These are the first KGFN results. The README's MS&T26 claims, tables and
-slide figures do not include KGFN and are unchanged. The p-values are
-per-comparison, with no correction for testing several pairs and spend levels.
+slide figures do not include KGFN and are unchanged; the figure above is
+the one with KGFN. The p-values are per-comparison, with no correction for
+testing several pairs and spend levels.
 
 ## Rerun one cell by hand (Xavier, before Oct 23)
 
