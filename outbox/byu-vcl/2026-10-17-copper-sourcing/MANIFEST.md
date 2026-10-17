@@ -2,7 +2,9 @@
 
 Made on 2026-10-17 in [digital-alloy-lab#123](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/123) ([run](https://github.com/vertical-cloud-lab/digital-alloy-lab/actions/runs/39005236421)), because byu-vcl was out of Claude credits.
 
-That job couldn't write to `sgbaird/agent-staging`, because its `GH_READ_PAT_STAGING` is read-only. It couldn't write to byu-vcl either, because its app token covers digital-alloy-lab only. So the drop lives in this public repo. If it's copied into the drop box, the path is `for/vertical-cloud-lab/byu-vcl/2026-10-17-copper-sourcing/`. Both repos are public, and nothing here comes from a private source.
+That job couldn't write to `sgbaird/agent-staging`, because its `GH_READ_PAT_STAGING` is read-only. It couldn't write to byu-vcl either, because its app token covers digital-alloy-lab only. So the drop lives in this repo. If it's copied into the drop box, the path is `for/vertical-cloud-lab/byu-vcl/2026-10-17-copper-sourcing/`.
+
+On 2026-10-17 the GitHub API reported this repo as private, even though its CLAUDE.md calls it public. A byu-vcl session that holds only its own token may get a 404 here. Nothing in the drop comes from a private source, so it can be posted on byu-vcl#286, which is public, as it stands.
 
 | File | sha256 | Source | Purpose |
 |---|---|---|---|
