@@ -247,6 +247,21 @@ alloys it would repair, and resists seawater as deposited at least as well as
 | Kept as is | | Linked-model cost-aware search, Advances 1, 2 and the audit (now Advance 5), H1, H2, H4, the synthetic benchmark figures (still aluminum, captioned as such), management, responsibility, DMP |
 | Overlap with the AFOSR white paper | Same alloy system and method | Method only, so the scopes separate cleanly |
 
+**What the new sections rest on (checked 2026-10-17).** Navy facts come from
+primary sources: NAVSEA's AM material specifications on ASSIST (MIL-PRF-32804,
+wire-arc 70-30 Cu-Ni; MIL-PRF-32815, LPBF 70-30 Cu-Ni; MIL-PRF-32816, wire-arc
+NAB, which keeps the castings' 1250 F, 6-hour anneal; none for blown-powder
+laser DED of either alloy), MIL-B-24480A, MIL-T-16420K, CDA data sheets and
+Pub 222, the ONR program pages (the AM program's thrusts include "large scale
+AM" and "additive repair"), the Federal Register critical-minerals lists
+(nickel since 2022, copper since 2025), and HII, NNS, NAVSUP, and DVIDS
+releases on printed Cu-Ni parts and the casting bottleneck. Every literature
+reference was checked on Crossref. The 45-150 um powder range often quoted for
+DED is a vendor convention with no peer-reviewed source found, so it stays in
+a TODO. The proposal also cites NSWC Carderock's NAB processing paper and its
+temperature-dependent property databases for NAB and Cu-Ni, as inputs to the
+heat-flow model.
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
 1. **DED facility, system, and price per session.** The budget macros are

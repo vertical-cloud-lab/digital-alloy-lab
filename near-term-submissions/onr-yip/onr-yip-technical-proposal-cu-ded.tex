@@ -152,8 +152,8 @@ NAB, fast cooling retains a martensitic phase that corrodes selectively in
 seawater~\cite{liu2021,dobson2024}, and the Navy's specification for NAB deposited
 by wire-arc DED requires the same 6-hour anneal as castings~\cite{milprf32816}.
 That step is costly for a large part and impractical for many repairs made in
-place. The Navy's specifications for printed copper alloys all use the cast
-compositions~\cite{milprf32804,milprf32815,milprf32816}, and the design of
+place. The Navy's specifications for printed copper alloys all use existing
+compositions~\cite{milprf32816,milprf32804,milprf32815}, and the design of
 compositions for laser deposition has only begun~\cite{jia2026}.
 
 Designing one runs through a chain of steps: a thermodynamic calculation, a
@@ -184,9 +184,10 @@ This project asks a basic question. When the steps of a materials workflow
 differ in cost by orders of magnitude, and results arrive at different times,
 how should one choose the next measurement and the next candidate? It answers
 the question on a concrete design problem: a pre-alloyed copper alloy powder
-for single-stream blown-powder DED that deposits without cracks or pores, on
-itself and on the alloys it would repair, and that resists seawater as
-deposited, without heat treatment, at least as well as 70-30 copper-nickel.
+for single-stream blown-powder DED. The powder must deposit without cracks or
+pores, on itself and on the alloys it would repair, and the deposit must
+resist seawater without heat treatment at least as well as 70-30
+copper-nickel.
 The project has five objectives:
 \begin{enumerate}\setlength{\itemsep}{0pt}
 \item Extend a cost-aware search method that learns from partial results to
@@ -214,8 +215,8 @@ surface ships and submarines~\cite{milt16420} and NAB castings for seawater
 service~\cite{milb24480}, and NAB is widely used for valve bodies, pump
 casings, and impellers, with a large market in submarine
 fleets~\cite{cda222}. Copper-nickel owes its resistance to a thin, adherent
-film of corrosion products, mainly cuprous oxide with nickel and iron, that
-builds up over weeks to months of exposure~\cite{ma2015}; in one study the
+film of corrosion products, mainly cuprous oxide with nickel and iron. The
+film builds up over weeks to months of exposure~\cite{ma2015}; in one study the
 films on 90-10 tubes in natural seawater were still changing after six
 months~\cite{ekerenam2018}. The iron content of the alloy changes the makeup
 of the film~\cite{zhu2021}. NAB is a cast alloy of copper with about 9\%
@@ -247,14 +248,13 @@ and the corrosion film forms unevenly~\cite{song2024,liu2024}, and the
 corrosion resistance of powder-bed parts depends on the laser
 settings~\cite{nadimi2025}. We found no corrosion study of copper-nickel
 deposited by blown-powder laser DED. NAVSEA has written specifications for 70-30 copper-nickel made by
-wire-arc DED and by laser powder bed fusion, and for NAB made by wire-arc DED,
-each as an alternative to castings and each with the existing
-composition~\cite{milprf32804,milprf32815,milprf32816}. We found none for
-either alloy made by blown-powder laser DED. In 2023 a Navy official
-pointed out, as reported by Defense News, that for metals specific to naval
-use, ``including copper-nickel and some steel alloys, more research is needed
-on what happens when these materials are used for printing, particularly how
-it affects the metals' fatigue and corrosion properties''~\cite{defensenews2023}. A composition chosen for casting is not
+wire-arc DED and by laser powder bed fusion, and for NAB made by wire-arc DED;
+the wire-arc ones are alternatives to castings, and all three keep the
+existing compositions~\cite{milprf32816,milprf32804,milprf32815}. We found none for
+either alloy made by blown-powder laser DED. In 2023 a Navy official said,
+as Defense News reported, that for naval metals ``including copper-nickel,''
+``more research is needed'' on how printing ``affects the metals' fatigue and
+corrosion properties''~\cite{defensenews2023}. A composition chosen for casting is not
 necessarily the best one for DED, and each composition and set of deposition
 settings needs its own tests.
 
@@ -284,8 +284,8 @@ objective to minimize where the corrosion trade-offs allow.
 \subsection{Scientific concepts}
 \label{sec:concepts}
 
-The search method treats the workflow as a network of linked
-models~\cite{astudillo2021}. Each step gets its own statistical model, a
+The search method treats the manufacturing workflow as a network of linked
+models, a function network~\cite{astudillo2021}. Each step gets its own statistical model, a
 Gaussian process, which predicts the outputs of that step together with their
 uncertainty. The models are linked in the same order as the steps
 (Fig.~\ref{fig:network}), so the outputs of one step are inputs to the next
@@ -376,7 +376,7 @@ alloys~\cite{thapliyal2020,taheri2025}, were designed and then printed as
 single compositions. Standard multi-objective Bayesian optimization handles
 competing properties and batches~\cite{daulton2021} but treats the whole
 chain as one costly experiment. Printed copper alloys for seawater have used
-the cast or wrought compositions~\cite{milprf32804,milprf32815,milprf32816},
+the cast or wrought compositions~\cite{milprf32816,milprf32804,milprf32815},
 and their corrosion studies characterize one alloy and one process at a
 time~\cite{morshed2024,cai2023,song2024,nadimi2025}. A 2026 study adjusted the
 composition of NAB for laser additive manufacturing to improve its
@@ -402,7 +402,7 @@ tensile data are in hand. The atomizer's induction module also melts copper
 alloys. NAB and 90-10 copper-nickel melt well below its upper limit, and
 70-30 copper-nickel melts near it \todo{confirm the module's maximum melt
 temperature and add the first copper alloy powder (SEM image and size
-distribution) if a run is possible before 23 October; 7 pages of the 20-page
+distribution) if a run is possible before 23 October; 6 pages of the 20-page
 limit are still free.}
 
 % Fig. 2 redraws the synthetic network from the MS&T26 talk
@@ -475,8 +475,8 @@ method~\cite{astudillo2021}; reuse reprints earlier powders.}
 \end{figure}
 
 We also simulated the cost-aware method on a synthetic version of the
-workflow (Figs.~\ref{fig:synth} and~\ref{fig:sim}), built for the aluminum
-version of this project. With the crack screen ignoring zirconium, screening
+workflow (Figs.~\ref{fig:synth} and~\ref{fig:sim}), made for the aluminum
+work. With the crack screen ignoring zirconium, screening
 and then tuning the process stalled at 63\% of the optimum after \$100,000.
 The cost-aware search, and a simpler one that reused powders, reached that
 level after about \$26,500 (3.8 times less spend; 90\% confidence interval
@@ -635,8 +635,8 @@ tracks at several laser powers, travel speeds, and powder feed rates
 melt pool), thin walls (cracking and heat buildup), and small blocks (density
 and porosity). Powders whose blocks reach 99\% relative density can get a
 second session with blocks for sub-size tensile bars (ASTM E8/E8M) and
-corrosion coupons at the chosen settings, and a repair coupon on cast NAB or
-wrought copper-nickel plate. Commercial 70-30 copper-nickel and NAB powders,
+corrosion coupons at the chosen settings, and a repair coupon (Advance 4).
+Commercial 70-30 copper-nickel and NAB powders,
 deposited the same way, are the baselines \todo{confirm commercial powder
 sources}. The search decides which powders are deposited at all, since the
 atomizer makes powder faster than the budget can deposit it.
@@ -658,8 +658,9 @@ like any other step. ASTM G61 is written for iron-, nickel-, and
 cobalt-based alloys, so the project will report how its procedure behaves on
 deposited copper alloys. Wrought 70-30 copper-nickel and heat-treated cast
 NAB are measured as references in every round. Candidates that the search
-selects get 30-day immersion tests with mass loss~\cite{astmG31,astmG1} and
-cross-sections that measure the depth of selective attack; the leading
+selects get 30-day immersion tests, weighed before and
+after~\cite{astmG31,astmG1} and sectioned to measure the depth of selective
+attack; the leading
 candidates get crevice and longer immersion tests \todo{confirm the
 durations, and natural or substitute seawater}. Tests in flowing seawater,
 which take months, are left to Navy laboratories for the final candidates
@@ -722,7 +723,8 @@ and Operationally Robust Materials. Within Code 332 the project fits the
 program Materials \& Processes for Additive Manufacturing~\cite{onram}. That
 program lists five thrusts: ``(i) rapid qualification frameworks; (ii)
 tailored AM materials and processes; (iii) large scale AM; (iv) additive
-repair and (v) AM and digital logistics.'' Its research challenges include
+repair and (v) AM and digital logistics''~\cite{onram}. Its research
+challenges include
 to ``develop and validate computational approaches for AM materials and
 processes for engineering applications'' and to ``develop large-scale AM
 processes for naval materials of interest''~\cite{onram}. The project serves
