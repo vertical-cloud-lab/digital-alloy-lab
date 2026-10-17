@@ -398,5 +398,29 @@
     "submitted": "2026-10-17T06:20:10Z",
     "status": "success",
     "fetched": "2026-10-17T06:52:02Z"
+  },
+  "b6-01-laser-and-system-for-cu-ded": {
+    "batch": 6,
+    "task_id": "5626113e-ae05-4b3a-93ef-b9f9ba99807c",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-17T18:37:39Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:07:36Z"
+  },
+  "b6-02-claims-audit": {
+    "batch": 6,
+    "task_id": "06cfe424-fd60-4a82-823b-9cc69dbf795a",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-17T18:37:41Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:07:38Z"
+  },
+  "b6-03-blended-vs-prealloyed-ded": {
+    "batch": 6,
+    "task_id": "9b7269e1-9196-4f5c-88ed-239c947fcec6",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-17T18:37:41Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:07:39Z"
   }
 }

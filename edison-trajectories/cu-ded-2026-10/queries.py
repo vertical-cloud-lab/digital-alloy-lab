@@ -903,3 +903,178 @@ calculation predict the measured contrast, and does it predict corrosion?
 """),
     },
 }
+
+# Batch 6 (2026-10-17, afternoon): three LITERATURE_HIGH follow-ups, asked for
+# as "a couple high effort follow ups" after the 50-query run. b6-01 follows
+# up the open DED-facility TODO and the question of whether the University of
+# Utah's InssTek (an MX-Lab: 300-500 W ytterbium fiber laser, 400 um beam,
+# six hoppers) can deposit Cu-Ni and NAB, or whether a blue laser is needed;
+# it builds on b2-07 and b5-07 (pure-Cu optics only). b6-02 audits the draft's
+# claims that rest on Edison readings or abstracts, after a manual check found
+# one written backwards (Ni is enriched in the dendrite cores of printed 70-30,
+# not between them; b5-10). b6-03 asks whether the MX-Lab's multi-hopper
+# blending can be a cheap, lower-fidelity node ahead of atomizing a
+# pre-alloyed lot (builds on b4-07, b5-01 and Yao et al. 2025).
+AUDIT_OUTPUT = """\
+OUTPUT FORMAT: Go claim by claim (C1, C2, ...). For each give a verdict:
+SUPPORTED (as written), WEAKER (supported only in a narrower or different
+form; give corrected wording of at most two sentences), CONTRADICTED (give
+the contrary evidence), or UNCHECKABLE (say what could not be read). Cite the
+best source with DOI and state the exact finding it reports: process,
+composition, test medium and duration, and the numbers. Say whether you read
+the full text, the abstract, or a later paper or review that reports it.
+Then, for the novelty claim N, list any published study that combines two or
+more of its three parts, with DOI and what it did. End with a ranked list of
+the corrections the PI must make before submission.
+"""
+
+BATCHES[6] = {
+    "b6-01-laser-and-system-for-cu-ded": {
+        "job": "LITERATURE_HIGH",
+        "query": q("""
+QUESTION: The blown-powder DED system the PI can reach is an InssTek MX-Lab
+at the University of Utah (InssTek's DMT process: coaxial blown-powder laser
+DED with closed-loop melt-pool height control; ytterbium fiber laser near
+1.07 um, 300 W or 500 W maximum depending on configuration; 400 um beam;
+150 x 150 x 150 mm stroke; up to six powder hoppers; optional argon
+atmosphere with O2 at or below 50 ppm). Is this adequate for depositing
+90-10 and 70-30 Cu-Ni (with Fe, Mn, Cr) and NAB, both built on themselves and
+on cast NAB and wrought Cu-Ni plate, or is a blue (about 450 nm) or green
+(about 515 nm) laser, or a multi-kilowatt infrared system, needed?
+(1) Which papers deposited Cu-Ni, NAB, aluminum bronze, Mn-Al bronze,
+CuNi2SiCr, CuSn or other copper alloys by blown-powder laser DED with an
+infrared laser at or below 1 kW? Give spot, power, travel speed, feed rate,
+density, cracking and dilution. Include LENS (Optomec) work at 400-500 W
+(e.g. GRCop-84 on Inconel 718), Missouri S&T work on Cu-Ni from blended
+powders, and the direct metal deposition (DMD) Cu-30Ni papers (Bhattacharya
+et al. 2011, J. Alloys Compd. 509:6364; Mukherjee and Ghosh 2011, Mater. Sci.
+Eng. A 528:3289), with their laser type and power.
+(2) Which copper alloy papers used InssTek DMT machines (MX-3, MX-400,
+MX-600, MX-1000, MX-Grande, MX-Lab)? In particular, which machine and laser
+power did D.-S. Shim's group (Korea Maritime and Ocean University) use for
+CuNi2SiCr and in-situ Cu-Al deposited on cast NAB (Yao et al. 2022, J. Mater.
+Res. Technol. 18:5337 and J. Alloys Compd. 918:165776; Yao et al. 2025,
+Addit. Manuf. 105:104787)? Any Korean propeller repair or Cu/steel bimetal
+work on InssTek machines?
+(3) How do Cu-Ni and NAB differ from pure Cu and CuCrZr in absorptivity near
+1.07 um (solid, powder, melt pool) and in thermal conductivity, and what does
+that imply for the minimum power to melt them with a 0.4 mm beam (e.g. a
+normalized-enthalpy or Rosenthal estimate)? Report measured or modeled values
+for Cu-Ni or NAB, not only pure Cu.
+(4) Where have blue or green lasers been shown to matter for copper alloy DED
+or cladding (pure Cu, CuCrZr, GRCop, CuSn, Cu-Ni, NAB)? Quantify the gain
+over infrared on the same alloy: deposition or catchment efficiency,
+porosity, dilution, minimum power, width of the process window. Has any Cu-Ni
+or NAB been deposited with a blue or green laser?
+(5) For deposits on large copper alloy substrates (cast NAB, wrought Cu-Ni,
+pure Cu), what power, preheat and travel speed avoided lack of fusion at the
+interface, and what dilution and heat-affected zone resulted? Does a
+300-500 W, 0.4 mm beam limit repair coupons, and how have others worked
+around low power (preheating, thin substrates, higher feed)?
+(6) Is back-reflection from copper into fiber lasers documented as a risk in
+DED, and what protections are used?
+(7) Which US university, national laboratory, Navy laboratory or commercial
+service has published blown-powder laser DED of copper alloys with blue
+lasers or with infrared lasers of 1 kW or more, and on which systems?
+"""),
+    },
+    "b6-02-claims-audit": {
+        "job": "LITERATURE_HIGH",
+        "query": CONTEXT + """
+QUESTION: Audit these claims from the draft proposal. Each gives the source
+the draft cites. Several were taken from abstracts or from a literature
+agent's reading, not from the full text.
+C1. In laser-deposited NAB, fast cooling can retain martensitic beta' that
+corrodes selectively in seawater (Liu et al. 2021, Mater. Sci. Eng. A
+826:142006; Dobson et al. 2024, Corros. Sci. 232:112004).
+C2. Laser-deposited NAB contains martensitic beta' along with alpha and kappa
+phases and is much stronger than cast NAB (Liu et al. 2021; Li et al. 2021,
+Addit. Manuf. 39:101825).
+C3. NAB made by laser powder bed fusion formed stronger films than wrought NAB
+but resisted localized corrosion worse, and annealing reversed both
+(Morshed-Behbahani et al. 2024, Corros. Sci. 228:111846).
+C4. Wire-arc NAB corroded in its residual beta phase (Cai et al. 2023,
+Corros. Sci. 214:111040).
+C5. The same 700 C anneal lowered the corrosion current of cast NAB after
+480 h in salt solution and raised that of sintered NAB (Fayanas et al. 2025,
+J. Jpn. Soc. Powder Powder Metall. 72:S819).
+C6. As-built wire-arc NAB resisted corrosion better than annealed coupons, in
+a test with unequal immersion times (Shahriari et al. 2023, npj Mater.
+Degrad. 7:85).
+C7. Laser-deposited NAB on SUS630 stainless steel was attacked 1.8 to 3.4 um
+deep in 21 days in 3.5% NaCl, most where iron from the steel diluted it (Zhao
+et al. 2022, Metals 12:781).
+C8. In plasma-welded NAB, retained beta' in the heat-affected zone corroded
+selectively in seawater (Dobson et al. 2024, Corros. Sci. 232:112004), and
+welded NAB corroded faster in natural than in simulated seawater (Dobson et
+al. 2024, Biofouling 40:193).
+C9. In printed 70-30 Cu-Ni, Ni is enriched in the dendrite or cell cores, the
+Ni-poor regions between them are attacked first, and the corrosion film forms
+unevenly (Song et al. 2024, Materials 17:876, wire-arc; Liu et al. 2024,
+Corros. Sci. 232:112040, LPBF).
+C10. The corrosion resistance of LPBF 70-30 depends on the laser settings
+(Nadimi et al. 2025, J. Alloys Metall. Syst. 9:100155).
+C11. As-built wire-arc 70-30 beat wrought plate in three-hour tests in salt
+solution (Song et al. 2024).
+C12. The one corrosion study of Cu-Ni made by blown-powder laser DED is
+Bhattacharya et al. 2011 (J. Alloys Compd. 509:6364; CO2-laser direct metal
+deposition of Cu-30Ni on wrought 70-30 plate), and the deposit corroded
+faster than the plate because of porosity (ISSC 2012 Committee V.3 report).
+Give the electrolyte, duration and numbers if any source reports them, and
+name any other corrosion study of laser-deposited or laser-clad Cu-Ni.
+C13. On 70-30 Cu-Ni in synthetic seawater, the corrosion current fell more
+than eightfold over the first ten days, 8.44 to 1.01 uA/cm2 (Yuan and
+Pehkonen 2007, Corros. Sci. 49:1276).
+C14. The corrosion product film on Cu-Ni builds up over weeks to months, and
+films on 90-10 tubes in natural seawater were still changing after six months
+(Ma et al. 2015, Corros. Sci. 91:245; Ekerenam et al. 2018, Acta Metall. Sin.
+Engl. Lett. 31:1148); the alloy's iron content changes the film (Zhu et al.
+2021, Anti-Corros. Methods Mater. 68:113).
+C15. Ultrasonic atomizers have made powder for blown-powder DED from NAB
+grinding chips (Mueller et al. 2023, IOP Conf. Ser. Mater. Sci. Eng.
+1296:012036; Uhlmann et al. 2024, Materials 17:3396) and from copper cable
+scrap (Cabrioli et al. 2025, J. Manuf. Mater. Process. 9:320), but only in
+existing compositions.
+C16. Solidification-cracking indices (Kou 2015 and similar) have been checked
+against printed aluminum alloys, steels, nickel superalloys and high-entropy
+alloys, but not copper alloys (Jordan and Zhang 2026).
+N. Novelty: no published study combines (a) a copper alloy composition
+search that evaluates CALPHAD along a modeled DED thermal history, (b)
+in-house pre-alloyed powder for every candidate, and (c) as-deposited
+seawater corrosion tests against wrought C71500, including deposits on cast
+NAB and wrought Cu-Ni.
+
+""" + AUDIT_OUTPUT,
+    },
+    "b6-03-blended-vs-prealloyed-ded": {
+        "job": "LITERATURE_HIGH",
+        "query": q("""
+QUESTION: The University of Utah's InssTek MX-Lab can feed up to six powders
+at once, so a composition can also be made in the melt pool from blends of
+elemental, master-alloy, or commercial pre-alloyed copper alloy powders
+before the ultrasonic atomizer makes a pre-alloyed lot of it. Could such
+in-situ alloyed deposits be a cheap, lower-fidelity stand-in for deposits
+from pre-alloyed powder in a multi-fidelity search? Cover copper alloys first
+(Cu-Ni from Cu + Ni or Cu + Cu-Ni powders; Cu-Al and NAB from Cu + Al or
+Cu + Al-alloy powders, e.g. Yao et al. 2025, Addit. Manuf. 105:104787;
+graded Cu-Ni or Cu-Al deposits; Missouri S&T work on Cu-Ni from blended
+elemental powders), then other alloys (Ti-6Al-4V and Ti alloys from elemental
+blends, Ni superalloys, steels, high-entropy alloys, e.g. Nelaturu et al.
+2024 and Kitt et al. 2024; compositionally graded libraries). Report:
+(1) composition accuracy and homogeneity against the target (EDS or ICP maps,
+unmelted or partly melted particles, macrosegregation, evaporation losses of
+Mn and Al); (2) porosity, cracking and microstructure (phases, grain size,
+martensite) compared with the same composition deposited from pre-alloyed
+powder; (3) differences in hardness, tensile properties and especially
+corrosion in NaCl or seawater between blended and pre-alloyed deposits;
+(4) whether rankings of compositions by hardness, cracking or corrosion from
+blended deposits agree with rankings from pre-alloyed deposits or from cast
+or wrought material, with numbers; (5) any multi-fidelity, transfer-learning
+or active-learning work that used blended-powder DED or graded libraries as a
+lower-fidelity source; (6) practical problems of multi-hopper feeding with
+powders of different density and size (e.g. Cu, Al, Ni), feed-rate
+calibration, and separation of particles in the stream. Say plainly where no
+blended-versus-pre-alloyed comparison exists for copper alloys.
+"""),
+    },
+}

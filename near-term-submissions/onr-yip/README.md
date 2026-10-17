@@ -238,7 +238,7 @@ alloys it would repair, and resists seawater as deposited at least as well as
 | --- | --- | --- |
 | Title | Cost-Aware Selection of Experiments for Printable, Corrosion-Resistant High-Strength Aluminum Alloys | Cost-Aware Design of Seawater-Resistant Copper Alloy Powders for Blown-Powder Directed Energy Deposition |
 | Alloys | Al with Zr or Sc, plus Cu, Mg, Zn, Mn, Cr | Cu-Ni (10-30 Ni) with Fe, Mn, Cr; Al bronzes with Ni, Fe, Mn |
-| Process | LPBF builds bought from a Utah user facility | Single-stream blown-powder DED sessions, facility TBD |
+| Process | LPBF builds bought from a Utah user facility | Single-stream blown-powder DED sessions, facility TBD (candidate: the U of U InssTek, likely an MX-Lab) |
 | Powder | Ultrasonic atomization, LPBF size range | Same atomizer; sized for blown powder; flow, density, oxygen checked; atomizer settings chosen by the search |
 | Physics inputs | CALPHAD at equilibrium / Scheil | CALPHAD evaluated along a heat-flow model of the DED thermal history (new Advance 3, new H3: process-aware beats equilibrium beats none) |
 | Corrosion | Polarization screen, then intergranular and salt-spray tests | Polarization, LPR, and impedance in substitute ocean water, then 30-day immersion with mass loss and depth of selective attack; flowing seawater left to Navy labs |
@@ -282,9 +282,33 @@ draft to 15 counted pages and 100 references. The main ones:
 Jia et al. 2026 is still unread: Edison could not open it, and the Pi is not
 reachable from this repo's workflow.
 
+**High-effort follow-ups and the U of U InssTek (2026-10-17, afternoon).**
+Three `LITERATURE_HIGH` Edison jobs (batch 6) and the answer to "does the
+InssTek at UofU have a DED laser that works with copper?" are in section 6
+of the synthesis. In short:
+- **The machine.** The InssTek in Prof. Zak Fang's Metal AM lab is most
+  likely an MX-Lab: a 500 W ytterbium fiber laser (infrared, not blue), a
+  400 um beam, six hoppers, and 45-150 um powder.
+- **Infrared is likely enough for these alloys.** 70-30 Cu-Ni, 90-10 and NAB
+  conduct heat at about a tenth of pure copper's rate, and infrared DED of
+  aluminum bronze has been reported. Pure copper would need a blue laser.
+- **Power is the limit.** No published infrared DED of Cu-Ni or NAB at
+  500 W or less was found, and thick repair plates are the hard case.
+- **Claims audit.** Five sentences of the draft were corrected or qualified.
+  One was backwards: nickel is richer in the dendrite cores of printed 70-30,
+  not between them. Three references were added (blended-powder DED of
+  Cu-Ni), for 103 in total; the draft is still 15 counted pages.
+- **Option, not adopted.** The MX-Lab's hoppers could blend pre-alloyed
+  powders into a cheap, lower-fidelity node ahead of atomizing. It is in
+  section 6.3 of the synthesis, not in the proposal.
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
-1. **DED facility, system, and price per session.** The budget macros are
+1. **DED facility, system, and price per session.** Candidate: the InssTek
+   in Prof. Zak Fang's lab at the University of Utah (likely an MX-Lab,
+   500 W infrared fiber laser). Ask for the model and installed power,
+   whether copper alloys are allowed, back-reflection protection, substrate
+   preheat, the argon option, and the rate. The budget macros are
    still the aluminum version's: its G line is 28, 29, and 26 LPBF builds at
    $800. DED sessions will cost more and there will be fewer; re-price in
    `budget/budget.py` (private) and the totals on the cover page change.
@@ -309,13 +333,16 @@ reachable from this repo's workflow.
 7. Immersion durations, the selective-attack depth limit in H5 (the TODO now
    lists published 21- and 30-day depths of 1.8 to 3.4 um and more than 3 um),
    and natural or substitute seawater.
-11. Check the 2011 Cu-30Ni corrosion study's conditions and numbers, and get
-    Jia et al. 2026, through the Pi (byu-vcl) or the library.
 8. Alloy families and element ranges; number of new alloys promised.
 9. Handling nickel powders (safety plan).
 10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`). The
     letter of support carries the copper title as a bracketed option; its
     "powder-to-part demonstration on an aluminum alloy" holds for both.
+11. Check the 2011 Cu-30Ni corrosion study's conditions and numbers, and get
+    Jia et al. 2026, through the Pi (byu-vcl) or the library. Read
+    literally, the 2011 abstract ranks the deposit above the plate, the
+    reverse of the ISSC review the draft cites, so check the direction
+    before submission.
 
 All other TODOs (cover contacts, CV, responsibility, DMP schema, current and
 pending) are the same as in section 4.

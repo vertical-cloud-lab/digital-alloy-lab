@@ -1,7 +1,7 @@
 """Edison queries for the copper-alloy / blown-powder DED version of the ONR
-FY27 YIP proposal (PR #117). Five batches of ten; each batch is written after
-reading the previous one, so the questions live in queries.py and grow batch
-by batch.
+FY27 YIP proposal (PR #117). Five batches of ten, then a sixth of three
+LITERATURE_HIGH follow-ups; each batch is written after reading the previous
+one, so the questions live in queries.py and grow batch by batch.
 
 Usage (from repo root):
     python edison-trajectories/cu-ded-2026-10/edison_cu_ded.py submit <batch>

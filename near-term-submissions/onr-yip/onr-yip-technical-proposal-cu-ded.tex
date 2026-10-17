@@ -243,13 +243,15 @@ process. NAB from laser powder bed fusion formed stronger films than wrought
 NAB but resisted localized corrosion worse, and annealing reversed
 both~\cite{morshed2024}; wire-arc NAB corroded in its residual $\beta$
 phase~\cite{cai2023}. Whether annealing helps depends on the starting
-microstructure. The same 700\,\textdegree{}C anneal lowered the corrosion
-current of cast NAB after 480 hours in salt solution and raised that of
-sintered NAB~\cite{fayanas2025}, and as-built wire-arc NAB resisted
-corrosion better than annealed coupons, in a test with unequal immersion
-times~\cite{shahriari2023}. Laser-deposited NAB on stainless steel was
-attacked to a depth of 1.8 to 3.4\,$\mu$m in 21 days in salt solution, most
-where iron from the steel had diluted it~\cite{zhao2022}. In welded NAB,
+microstructure. After 480 hours in salt solution, the same 700\,\textdegree{}C
+anneal had lowered the corrosion current of cast NAB and raised that of
+sintered and hot isostatically pressed NAB, each about threefold, though the
+authors call the differences small~\cite{fayanas2025}. As-built wire-arc NAB
+resisted corrosion better than annealed coupons, in a test with unequal
+immersion times~\cite{shahriari2023}. Laser-deposited NAB on stainless steel
+was attacked to a depth of 3.4\,$\mu$m in 21 days in salt solution where iron
+from the steel had diluted it, and 1.8\,$\mu$m over a nickel-chromium
+interlayer~\cite{zhao2022}. In welded NAB,
 retained $\beta'$ in the heat-affected zone corroded selectively in
 seawater~\cite{dobson2024}, a warning for repairs. Laser cladding of cast
 NAB has used an NAB consumable~\cite{hyatt1998}, and DED repair of cast NAB
@@ -257,18 +259,26 @@ a low-nickel copper alloy powder~\cite{yao2022a,yao2022b}, later blended in
 the melt pool with an aluminum alloy powder to vary the aluminum
 content~\cite{yao2025}.
 
-In printed 70-30 copper-nickel, nickel segregates between dendrites or cells
-and the corrosion film forms unevenly~\cite{song2024,liu2024}, and the
-corrosion resistance of powder-bed parts depends on the laser
-settings~\cite{nadimi2025}. Even so, as-built wire-arc 70-30 has beaten
-wrought plate in three-hour tests in salt solution~\cite{song2024}. Laser
-cladding of Cu-30Ni dates to 2005~\cite{adak2005}. The one corrosion study
+In wire-arc 70-30 copper-nickel, the dendrite cores hold more nickel than the
+regions between them, and those regions corrode first~\cite{song2024}. The
+corrosion of powder-bed 70-30 has also been studied~\cite{liu2024}, and its
+resistance depends on the laser settings~\cite{nadimi2025}. At their best
+settings, both wire-arc and powder-bed 70-30 have matched or beaten wrought
+plate in electrochemical tests in salt solution~\cite{song2024,nadimi2025}.
+Laser cladding of Cu-30Ni dates to 2005~\cite{adak2005}, and later
+blown-powder DED of copper-nickel has mixed copper and nickel-alloy powders
+in the melt pool to make graded layers and thermoelectric
+alloys~\cite{karnati2019,yadav2020,williams2025}. The one corrosion study
 we found of copper-nickel deposited by blown-powder laser DED is from 2011:
 Cu-30Ni made by CO$_2$-laser direct metal deposition on wrought 70-30
 plate~\cite{bhattacharya2011}. A later review reports that the deposit
 corroded faster than the plate and attributes this to its
-porosity~\cite{issc2012} \todo{check the 2011 article's test conditions and
-numbers. Neither Edison nor this runner could open it}. NAVSEA has written specifications for 70-30 copper-nickel made by
+porosity~\cite{issc2012} \todo{check the 2011 article before citing a
+direction. Read literally, its abstract ranks the deposit as the most
+corrosion resistant and the plate as the least, the reverse of the review. A
+secondary source found by web search quotes ASTM G31 rates of 0.36~mpy for
+the deposit and 0.08~mpy for the plate. Neither Edison nor this runner could
+open the article}. NAVSEA has written specifications for 70-30 copper-nickel made by
 wire-arc DED and by laser powder bed fusion, and for NAB made by wire-arc DED;
 the wire-arc ones are alternatives to castings, and all three keep the
 existing compositions~\cite{milprf32816,milprf32804,milprf32815}. We found none for
@@ -328,9 +338,9 @@ phase diagrams (CALPHAD) in Thermo-Calc and pycalphad~\cite{andersson2002,otis20
 gives the liquidus and freezing range of each composition and an index of how
 prone it is to cracking as it solidifies~\cite{kou2015}. Such indices have
 been checked against printed aluminum alloys, steels, and nickel
-superalloys, but not copper alloys~\cite{jordan2026}. It also gives the
-segregation of nickel, iron, and aluminum between dendrites and the phases
-stable at each temperature, including the $\beta$ and $\kappa$ phases of the
+superalloys, but not copper alloys~\cite{jordan2026}. It also gives how
+nickel, iron, and aluminum divide between the dendrite cores and the last
+liquid to freeze, and the phases stable at each temperature, including the $\beta$ and $\kappa$ phases of the
 bronzes. DED adds a thermal history. A moving point-source model of heat
 flow~\cite{rosenthal1946,pinkerton2015}, with temperature-dependent properties
 of copper-nickel and NAB~\cite{norkett2025,norkett2026a,norkett2026b} and
@@ -681,7 +691,12 @@ composition, so the powder, not only the alloy, is designed for blown powder.
 
 DED sessions will be bought from \todo{name the facility with a
 single-stream, blown-powder laser DED system, the system model, and the
-price per session}. A first session for each chosen powder deposits single
+price per session. The nearest candidate is the InssTek DED unit in
+Prof.\ Zak Fang's laboratory at the University of Utah, most likely an
+MX-Lab. Vendor specifications list an infrared ytterbium fiber laser of
+500~W, a 400~$\mu$m beam, and powder of 45 to 150~$\mu$m, with an optional
+argon atmosphere at no more than 50~ppm oxygen. Confirm the model and laser
+power, whether copper alloys may be run on it, and the rate}. A first session for each chosen powder deposits single
 tracks at several laser powers, travel speeds, and powder feed rates
 (melt-pool size, dilution, cracking, and the share of the powder caught in the
 melt pool), thin walls (cracking and heat buildup), and small blocks (density
@@ -960,7 +975,9 @@ standard plate of the atomizer, we will test the carbon-fiber plate already
 used for NAB~\cite{uhlmann2024} and a molybdenum-alloy
 plate~\cite{ciftcli2025}. If a lot flows poorly, the
 search sees that at the powder step and can change the atomizer settings
-before paying for a deposit. If DED turnaround is slow, the rule for pending
+before paying for a deposit. If the first layer will not fuse to thick cast
+NAB or copper-nickel plate, the repair coupons will be preheated or made
+thinner. If DED turnaround is slow, the rule for pending
 results is designed for exactly that case. If the electrochemical screen
 predicts the immersion tests poorly (H5 rejected), the search will rely more
 on immersion, at higher cost, and the audited candidates will show which
@@ -1328,6 +1345,18 @@ M.~Nadimi, J.~Song, L.~Cheng, and Y.~Fu, ``Corrosion evaluation and microstructu
 \bibitem{adak2005}
 B.~Adak, P.~Nash, D.~Chen, and A.~Swiglo, ``Microstructural characterization of laser cladding of Cu-30Ni,'' \emph{J. Mater. Sci.} \textbf{40}(8), 2051-2054 (2005).
 \href{https://doi.org/10.1007/s10853-005-1231-5}{doi:10.1007/s10853-005-1231-5}
+
+\bibitem{karnati2019}
+S.~Karnati, F.~F. Liou, and J.~W. Newkirk, ``Characterization of copper-nickel alloys fabricated using laser metal deposition and blended powder feedstocks,'' \emph{Int. J. Adv. Manuf. Technol.} \textbf{103}, 239-250 (2019).
+\href{https://doi.org/10.1007/s00170-019-03553-0}{doi:10.1007/s00170-019-03553-0}
+
+\bibitem{yadav2020}
+S.~Yadav, A.~N. Jinoop, N.~Sinha, C.~P. Paul, and K.~S. Bindra, ``Parametric investigation and characterization of laser directed energy deposited copper-nickel graded layers,'' \emph{Int. J. Adv. Manuf. Technol.} \textbf{108}, 3779-3791 (2020).
+\href{https://doi.org/10.1007/s00170-020-05644-9}{doi:10.1007/s00170-020-05644-9}
+
+\bibitem{williams2025}
+N.~Williams, K.~Snyder, I.~Smith, A.~Duong, E.~Carpenter, and R.~Barua, ``The first layer: Single-track insights into direct energy deposition processed Cu-Ni thermoelectric alloys,'' \emph{J. Manuf. Mater. Process.} \textbf{9}(6), 170 (2025).
+\href{https://doi.org/10.3390/jmmp9060170}{doi:10.3390/jmmp9060170}
 
 \bibitem{bhattacharya2011}
 S.~Bhattacharya, G.~P. Dinda, A.~K. Dasgupta, H.~Natu, B.~Dutta, and J.~Mazumder, ``Microstructural evolution and mechanical, and corrosion property evaluation of Cu-30Ni alloy formed by direct metal deposition process,'' \emph{J. Alloys Compd.} \textbf{509}(22), 6364-6373 (2011).

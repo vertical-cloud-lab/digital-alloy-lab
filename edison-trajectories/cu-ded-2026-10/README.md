@@ -1,11 +1,14 @@
-# Copper alloy powders for blown-powder DED: 50 Edison queries (2026-10-17)
+# Copper alloy powders for blown-powder DED: 53 Edison queries (2026-10-17)
 
 *Prepared for PR #117, the copper/DED version of the ONR FY27 YIP proposal
 (`near-term-submissions/onr-yip/onr-yip-technical-proposal-cu-ded.tex`).
 Sterling asked for two things on 2026-10-17: source Jia et al. 2026 with the
 Pi, and run five batches of ten Edison queries that build on each other. The
 queries cover single-stream blown-powder DED and copper alloys: naval
-applications first, then copper alloy powder making in general.*
+applications first, then copper alloy powder making in general. Later the
+same day he asked for "a couple high effort follow ups" and whether the
+University of Utah's InssTek DED machine can deposit copper; those three
+LITERATURE_HIGH jobs (batch 6) and the answer are in Section 6.*
 
 ## What was run
 
@@ -16,11 +19,12 @@ applications first, then copper alloy powder making in general.*
 | 3 | 05:46 | batch 1 | 8 LITERATURE, 1 LITERATURE_HIGH, 1 PRECEDENT | 06:16 |
 | 4 | 06:11 | batch 2 | 9 LITERATURE, 1 PRECEDENT | 06:41 |
 | 5 | 06:20 | batch 3, plus a final novelty check | 9 LITERATURE, 1 PRECEDENT | 06:42-06:52 |
+| 6 | 18:37 | open TODOs, the U of U question, a claims audit | 3 LITERATURE_HIGH | 19:05-19:07 |
 
 Every job, including standard LITERATURE, took about 30 minutes, so five
 sequential batches would not have fit the 3-hour job limit. The batches were
 staggered instead: each one was written from the batches that had finished.
-`queries.py` holds all 50 questions, and the comment above each batch says
+`queries.py` holds all 53 questions, and the comment above each batch says
 what it follows up on. `edison_cu_ded.py` submits, waits, and fetches.
 `batchN/` holds the answers (question first, then Edison's answer), `raw/`
 the gzipped verbose trajectories, and `_task_ids.json` the task IDs and times.
@@ -486,6 +490,188 @@ None reports savings in physical corrosion experiments.
 - **Verbosity.** Standard LITERATURE jobs now return 20-50 K characters with
   tables and run ~30 minutes, about as long as LITERATURE_HIGH.
 
+## 6. Batch 6: three high-effort follow-ups and the U of U InssTek
+
+Asked for on the PR on 2026-10-17 ("run a couple high effort follow ups.
+Also, does the innstek at UofU have a DED laser that works with copper? Blue
+I guess"). "High effort" was read as Edison's `LITERATURE_HIGH` job
+(`job-futurehouse-paperqa3-high`). The three jobs ran together and took 28-30
+minutes.
+
+| Job | Question | Built on |
+| --- | --- | --- |
+| [`b6-01`](batch6/b6-01-laser-and-system-for-cu-ded.md) | Can a 300-500 W infrared MX-Lab deposit Cu-Ni and NAB, on themselves and on cast NAB and wrought Cu-Ni, or is blue, green or multi-kW needed? | the DED-facility TODO; b2-07 and b5-07 (pure-Cu optics only) |
+| [`b6-02`](batch6/b6-02-claims-audit.md) | Audit 16 claims in the draft, plus the novelty claim | claims taken from abstracts or Edison readings |
+| [`b6-03`](batch6/b6-03-blended-vs-prealloyed-ded.md) | Can multi-hopper blending in the melt pool be a cheap, lower-fidelity stand-in for pre-alloyed powder? | b4-07, b5-01, Yao et al. 2025 |
+
+### 6.1 The University of Utah InssTek (web sources, checked 2026-10-17)
+
+- **Where and what.** Prof. Zak Fang's Metal AM laboratory in Metallurgical
+  Engineering has an "InssTek laboratory unit that has just been installed",
+  which "can feed six different powders at the same time"; the group plans
+  to use it for new alloys, including titanium alloys
+  ([U of U page](https://3dprinting.metallurgy.utah.edu/direct_energy_deposition/index.php),
+  last updated 2 Jan 2026). The page does not name the model. Six hoppers in
+  a laboratory unit matches InssTek's **MX-Lab**; confirm with Prof. Fang.
+- **MX-Lab specifications** (distributor pages:
+  [Phillips](https://shop.phillipscorp.com/products/insstek-mx-lab),
+  [Additive Plus](https://additiveplus.com/product/insstek-mx-lab/),
+  [3Dnatives](https://www.3dnatives.com/en/insstek-alloy-research-mx-lab-ded-3d-printer-051120244/),
+  [Chalmers listing](https://labbokning.ims.chalmers.se/WebForms/Equipment/EquipmentView.aspx?toolId=40)):
+  - ytterbium fiber laser, 500 W maximum (about 300 W typical); infrared,
+    about 1.07 um, so **not blue**;
+  - 400 um beam; 150 x 150 x 150 mm travel;
+  - built-in feeder with up to six hoppers, 0.03-2.0 g/min (for Ti);
+  - spherical 45-150 um powder;
+  - optional argon atmosphere, at most 50 ppm O2;
+  - DMT melt-pool height control that adjusts laser power.
+  - Additive Plus lists "Cu-Sn, Al-bronze" among the materials it runs.
+- **Why infrared can still work for these alloys.**
+  - Pure copper absorbs only about 4-5% at 1 um.
+  - Its thermal conductivity is 391 W/m K, against 29 for 70-30 Cu-Ni, 45 for
+    90-10 and 36 for NAB (CDA data sheets at 20 C, via the Internet
+    Archive). That is about a tenth of copper's.
+  - DMG MORI reports infrared DED of CuAl10, CuSn8 and CuCrZr. Infrared
+    struggled only with pure Cu and low-alloy CuAl1, which its blue (450 nm)
+    LASERTEC 65 DED hybrid did deposit
+    ([SME, June 2023](https://www.sme.org/technologies/articles/2023/june/advances-in-bimetallic-ded-enables-copper-alloy-processing1/)).
+  - Cu-30Ni has been laser-deposited with a CO2 laser, at 10.6 um, where
+    metals absorb even less (Bhattacharya et al. 2011, OSTI abstract).
+- **A rough estimate (mine, not a measurement).** A stationary 0.4 mm,
+  500 W spot on a thick plate first reaches the liquidus at its centre
+  (T - T0 = Q / (pi a k)) if the plate absorbs this fraction of the beam:
+
+  | Alloy | Fraction absorbed to reach the liquidus |
+  | --- | --- |
+  | 70-30 Cu-Ni | 4.5% |
+  | NAB | 4.7% |
+  | 90-10 Cu-Ni | 6.4% |
+  | 316L | 2.8% |
+  | Pure Cu | 52% (blue-laser territory) |
+
+  These are minimums for any melting, not for a usable melt pool. Travel
+  speed and conductivity rising with temperature push them up.
+- **What limits it is power, not wavelength.**
+  - `b6-01` found no published blown-powder infrared DED of Cu-Ni or NAB at
+    500 W or less. The nearest are Cu-35Ni single tracks at 800 W from an
+    elemental blend on 316L (Williams et al. 2025, VCU) and Cu-Ni graded
+    layers at 1.2-1.8 kW with a 2 mm beam on Cu plate preheated to 250 C
+    (Yadav et al. 2020, RRCAT). Both details are Edison readings.
+  - It found no blue- or green-laser deposition of Cu-Ni or NAB at all.
+  - Small parts heat up and help themselves. First-layer fusion on thick
+    cast NAB or C71500 plate is the hard case: plan for preheat or thin
+    coupons. The proposal's Risks paragraph now says so.
+- **Ask Prof. Fang:**
+  - the model and installed laser power (300 or 500 W);
+  - whether copper alloys may be run, and whether the laser has
+    back-reflection protection (b6-01 cites mirror damage from pure Cu in
+    LPBF; Cu-Ni and NAB reflect less);
+  - substrate preheat, the argon option, and the powder size range of the
+    nozzle;
+  - access for BYU students and the price per session.
+- **If more power or a blue laser is needed**, published US options for
+  blown-powder copper DED include:
+  - UC San Diego (Liu, Wang, Kaufmann and Vecchio, *J. Manuf. Process.* 85,
+    314, 2023, 10.1016/j.jmapro.2022.11.064: pure Cu with a blue laser);
+  - Texas A&M (J. Jeong, blue-laser DED of Cu and Cu/IN718);
+  - Fraunhofer USA in Plymouth, MI, with Fraunhofer IWS (green and blue
+    L-DED of Cu, IMAT 2023 abstract);
+  - DMG MORI's blue LASERTEC 65 DED hybrid.
+
+  None of these has published Cu-Ni or NAB.
+
+### 6.2 Claims audit (b6-02) and checks of my own
+
+Edison could read only a few of the papers (most were "UNCHECKABLE"), so
+the open-access ones were read here directly. Verdicts:
+
+| Claim (draft) | Edison | Checked here | Action |
+| --- | --- | --- | --- |
+| C5 Fayanas 2025: 700 C anneal lowered cast NAB's corrosion current after 480 h, raised sintered NAB's | uncheckable | Full text (J-STAGE). 3.5% NaCl, RT, anneal 700 C / 2 h. At 480 h: cast 6.45 to 2.12 uA/cm2 after annealing, sinter+HIP 3.02 to 10.4. The authors call the differences small. | Numbers, "sintered and hot isostatically pressed", and the caveat added |
+| C6 Shahriari 2023: as-built WAAM NAB beat annealed, unequal immersion | uncheckable | Full text (nature.com): as-built and cast measured after 96 h, heat-treated after 24 h; as-built best | Holds as written |
+| C7 Zhao 2022: 1.8-3.4 um in 21 days | supported (full text) | Edison: 3.4 um deposited directly on SUS630, 2.0 um over a Ni and 1.8 um over a NiCr interlayer | Sentence now gives depths by configuration |
+| C8 Dobson 2024 (*Biofouling*): faster in natural seawater | uncheckable | Abstract (Europe PMC): 1.27 mm/yr in the first months, 0.11 mm/yr annual average, against 0.06 mm/yr in simulated seawater | Holds |
+| C9 Ni distribution in printed 70-30 | supported (Song, full text) | Full text (Europe PMC): interdendritic regions are less resistant; Ni varies up to 20% between cores and interdendritic regions | **The draft said nickel "segregates between dendrites". Rewritten:** Ni-richer cores, Ni-poorer regions between them corrode first. Liu 2024 (unread) now cited only for having studied LPBF 70-30 corrosion |
+| C10 Nadimi 2025: depends on laser settings | uncheckable | Abstract (DOAJ): 3.5% NaCl; best 58-73 kOhm cm2 at 125-200 um hatch and 1.7-2 J/mm, slightly above wrought; other settings worse | Holds; also cited for "matched or beaten wrought" |
+| C11 Song 2024: WAAM beat wrought in 3 h tests | weaker | Full text: EIS and cyclic polarization after a 3 h hold at open circuit; best conditions (e.g. 8 m/min wire feed, 1000 mm/min travel) beat wrought C71500 | Now "at their best settings ... in electrochemical tests" |
+| C12 Bhattacharya 2011 | uncheckable | Abstract and highlights (OSTI): CO2-laser DMD on rolled C71500; "The corrosion resistance of the specimens was found to decrease in the order DMD Cu-30Ni clad, half-and-half ..., and C71500 substrate", read literally the reverse of the ISSC review. A web snippet of unknown origin quotes ASTM G31 rates of 0.36 mpy (deposit) and 0.08 mpy (C71500). | TODO now states the conflict; check the full text before citing a direction |
+| C15 ultrasonic atomization of NAB chips | weaker | Edison read Mueller et al. 2021 (sieved grinding waste), not the cited 2023 paper, whose title is "Using ultrasonic atomization to recycle aluminium bronze chips..."; Uhlmann 2024's AUS 500 run was read in full in the earlier pass | Holds; Edison wrong |
+| C16 crack indices not tested on copper | supported | Edison read A. M. Jordan's 2026 thesis, not the cited IMMI paper: 460 PBF observations from 128 sources; the 44 copper alloy entries were held out because none had cracked | Holds; the hold-out detail is not in the proposal |
+| C1-C4, C13, C14 (Ma, Ekerenam), C8 first half | uncheckable | not open to this runner | Still to read |
+| N novelty | none found combining two or more parts for copper | - | Unchanged |
+
+### 6.3 Blended powder as a cheap node (b6-03)
+
+- **No comparison for copper alloys.** No study compares blended and
+  pre-alloyed copper alloy powders for DED: not for density, not for
+  cracking, not for corrosion. No study checks whether blended deposits
+  rank compositions the same way.
+- **Homogeneous is not equivalent.**
+  - 430 stainless deposited from an elemental blend was homogeneous by EDS
+    but fully ferritic, at 150 HV. The pre-alloyed powder gave ferrite plus
+    martensite, at 356 HV (Clayton 2013, Missouri S&T thesis; Edison
+    reading).
+  - Expect a biased stand-in, not a noisy copy.
+- **Stream separation.**
+  - A 50:50 (by volume) Cu-Al premix left the nozzle at first as about 93%
+    Al (Li 2018, Missouri S&T).
+  - Matching density times diameter squared fixes it.
+  - Separate hoppers avoid premix separation but leave all the mixing to the
+    melt pool.
+- **Closest analog.** Gerdt et al. 2026 alloyed IN625 and 316L in situ with
+  a multi-wire head, with Scheil predictions and NaCl polarization, but not
+  as one fidelity among several.
+- **No precedent** was found for using blended DED as a lower-fidelity
+  source in multi-fidelity or cost-aware BO.
+
+**A suggestion, not added to the proposal** (it changes the method, so it is
+Sterling's call):
+- The MX-Lab's hoppers could blend two commercial pre-alloyed powders of
+  equal density, for example 90-10 and 70-30 Cu-Ni (both 8.94 g/cm3), to
+  make intermediate nickel contents. This would be a cheap, biased node ahead
+  of atomizing each candidate.
+- Two or three compositions deposited both ways would measure the bias, as
+  b6-03 recommends.
+- Final candidates would still be single-stream pre-alloyed powder.
+
+### 6.4 Edits made to the copper proposal in this pass
+
+1. The Cu-Ni segregation sentence (C9), the wire-arc/LPBF-vs-wrought
+   sentence (C11, now with Nadimi 2025), the Fayanas numbers (C5), and the
+   Zhao depths (C7), as above.
+2. New sentence: later blown-powder DED of Cu-Ni mixed copper and nickel-alloy
+   powders in the melt pool, for graded layers and thermoelectric alloys
+   (Karnati et al. 2019; Yadav et al. 2020; Williams et al. 2025). All three
+   checked on Crossref; Williams's abstract read.
+3. The Bhattacharya TODO now records the abstract-versus-review conflict.
+4. The CALPHAD sentence says how Ni, Fe and Al divide between dendrite cores
+   and the last liquid, instead of "segregation ... between dendrites".
+5. The DED-facility TODOs (proposal, Fields 10 and 11) name the U of U
+   InssTek as the candidate.
+6. Risks: if the first layer will not fuse to thick cast NAB or Cu-Ni plate,
+   the repair coupons are preheated or made thinner.
+
+The PDF is still 15 of 20 counted pages and now has 103 references (was 100).
+cringe-filter (proposal) reports 0 errors.
+
+### 6.5 Where Edison was wrong this time
+
+- **C15:** it judged the ultrasonic-atomization claim "weaker" after reading
+  the 2021 Mueller paper instead of the 2023 one.
+- **Missed open copies:** b6-02 called Fayanas, Shahriari, Dobson
+  (*Biofouling*) and Nadimi unobtainable. All four were readable here
+  (J-STAGE, nature.com, Europe PMC, DOAJ).
+- **Beam-size reasoning:** b6-01 argued that a 0.4 mm beam's 25x higher
+  irradiance makes 300-500 W comparable to 1.2-1.8 kW at 2 mm. It does not:
+  - peak temperature scales with power over beam radius (5x, not 25x);
+  - melt volume and deposition rate scale with absorbed power.
+- **Units:** b6-01 quotes Liu et al. 2023 "at 1000 mm/s", implausible for
+  DED (probably mm/min). Not used.
+- **Unmeasured value:** b6-01's 15-30% absorptivity for Cu-30Ni at 1.07 um
+  is its own estimate; it says so.
+- **Different source:** b6-02 checked C16 against a thesis, not the paper
+  the draft cites.
+
 ## Task IDs
 
 All times are UTC on 2026-10-17. Raw trajectories: `raw/<name>.json.gz`.
@@ -542,3 +728,6 @@ All times are UTC on 2026-10-17. Raw trajectories: `raw/<name>.json.gz`.
 | [`b5-08-point-of-need-recycling`](batch5/b5-08-point-of-need-recycling.md) | LITERATURE | `3dc07109-89a5-41f4-a7f8-cef0e9d895c6` | 06:20 | 06:51 | success |
 | [`b5-09-bo-delayed-long-experiments`](batch5/b5-09-bo-delayed-long-experiments.md) | LITERATURE | `04c29905-5680-4dc7-9348-8204ec420901` | 06:20 | 06:52 | success |
 | [`b5-10-cuni-segregation-film-am`](batch5/b5-10-cuni-segregation-film-am.md) | LITERATURE | `1a8c4326-4281-450f-bdf7-31ac5fcb5a78` | 06:20 | 06:52 | success |
+| [`b6-01-laser-and-system-for-cu-ded`](batch6/b6-01-laser-and-system-for-cu-ded.md) | LITERATURE_HIGH | `5626113e-ae05-4b3a-93ef-b9f9ba99807c` | 18:37 | 19:07 | success |
+| [`b6-02-claims-audit`](batch6/b6-02-claims-audit.md) | LITERATURE_HIGH | `06cfe424-fd60-4a82-823b-9cc69dbf795a` | 18:37 | 19:07 | success |
+| [`b6-03-blended-vs-prealloyed-ded`](batch6/b6-03-blended-vs-prealloyed-ded.md) | LITERATURE_HIGH | `9b7269e1-9196-4f5c-88ed-239c947fcec6` | 18:37 | 19:07 | success |
