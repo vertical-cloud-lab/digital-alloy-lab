@@ -20,6 +20,7 @@ from bofn_alloy import D, AlloyTruth
 
 HERE = Path(__file__).parent
 RES = HERE / "results"
+EXTRA = [HERE / "results-kgfn"]  # policies the stored runs lack, run after the port (PORT.md); results/ wins on overlap
 GRID = np.arange(0, 100_001, 250.0)
 NAMES = {
     "pkgfn": "pKGFN (stage by stage)",
@@ -52,9 +53,13 @@ def optimum(kappa: float) -> float:
 
 def load(kappa: float, budget: float | None = None):
     out = {}
-    for p in sorted((RES / f"k{kappa:g}").glob("*.json")):
-        r = json.loads(p.read_text())
-        out.setdefault(r["kind"], []).append(r)
+    for root in (RES, *EXTRA):
+        found = {}
+        for p in sorted((root / f"k{kappa:g}").glob("*.json")):
+            r = json.loads(p.read_text())
+            found.setdefault(r["kind"], []).append(r)
+        for k, v in found.items():
+            out.setdefault(k, v)
     return out
 
 

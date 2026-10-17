@@ -98,11 +98,14 @@ reuse, then pKGFN.
   Finished runs stay on the plot in the slide figures' styles, with labels at
   the positions they take in the last frame.
 - **Data.** Only runs made after the port carry a purchase log:
-  [`../results-rerun/k1`](../results-rerun/k1) (identical to the stored runs,
-  action for action; see [`../PORT.md`](../PORT.md)) and
-  [`../quality/kgfn-smoke/k1`](../quality/kgfn-smoke/k1) for KGFN. One seed is
-  an anecdote, not a result: on seed 0, full-pipeline BOFN ends below standard
-  BO, the reverse of the 20-seed means in the slide figures.
+  [`../results-rerun/k1`](../results-rerun/k1), all 20 seeds of the seven
+  stored policies (identical to the stored runs, action for action; see
+  [`../PORT.md`](../PORT.md)), and [`../results-kgfn/k1`](../results-kgfn/k1),
+  KGFN's 20 seeds. The video was rendered from KGFN's smoke-test run of seed 0,
+  which the 20-seed run reproduces purchase for purchase. `--seed` takes any
+  seed from 0 to 19. One seed is an anecdote, not a result: on seed 0,
+  full-pipeline BOFN ends below standard BO, the reverse of the 20-seed means
+  in the slide figures.
 - The burden note above the dashed bypass makes way for the purchase counters.
 - **Files.** The MP4 is the smooth version, at 1600 px and 20 fps. The GIF is 800 px at 5 fps, split into
   two files of four runs each, so that each stays under the 10 MB GitHub shows inline.

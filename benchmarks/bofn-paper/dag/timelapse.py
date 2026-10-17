@@ -20,8 +20,8 @@ at 18 s per $100k, so every run takes as long and a $10 CALPHAD call is a blink
 next to a $2,500 print.
 
 Only runs made after the port carry a purchase log (PORT.md, step 1):
-../results-rerun (seeds 0-4, identical to the stored runs action for action) and
-../quality/kgfn-smoke (KGFN, seeds 0-1). Every policy runs the same seed, so all
+../results-rerun (seeds 0-19, identical to the stored runs action for action) and
+../results-kgfn (KGFN, seeds 0-19). Every policy runs the same seed, so all
 start from the same seed alloys. Needs matplotlib, numpy, Pillow, torch (the
 true optimum, via analyze.py) and ffmpeg (imageio-ffmpeg's binary will do).
 """
@@ -68,7 +68,7 @@ WHAT = {
     "eifn_reuse": "Network expected improvement per dollar, over new designs and reprints of existing powders",
     "pkgfn": "Knowledge gradient per dollar for every stage; buys whichever single stage is worth most",
 }
-SOURCES = [HERE.parent / "results-rerun", HERE.parent / "quality" / "kgfn-smoke"]
+SOURCES = [HERE.parent / "results-rerun", HERE.parent / "results-kgfn", HERE.parent / "quality" / "kgfn-smoke"]
 CHOSEN = {"comp": "C", "a": "A", "pv": "L"}  # the input each stage's action chooses
 
 FPS, LEAD_S, RUN_S, HOLD_S, OUTRO_S = 20, 1.0, 18.0, 2.0, 4.0

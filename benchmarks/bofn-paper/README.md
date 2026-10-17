@@ -1,6 +1,6 @@
 # BOFN preliminary results: does choosing the stage beat tiered screening?
 
-> **Paper port (Oct 10, 2026).** This folder is `benchmarks/bofn-prelim` (`75b3b10`), carried over to start the BOFN methods paper (issue #121). Everything below is the MS&T26 write-up, and its claims are unchanged. [`PORT.md`](PORT.md) covers what changed in the code, the check that the port reproduces the stored runs, the KGFN policy, the matched-seed bootstrap, and how to rerun one cell by hand.
+> **Paper port (Oct 10, 2026).** This folder is `benchmarks/bofn-prelim` (`75b3b10`), carried over to start the BOFN methods paper (issue #121). Everything below is the MS&T26 write-up, and its claims are unchanged. [`PORT.md`](PORT.md) covers what changed in the code, the check that the port reproduces the stored runs (all 140 runs at `kappa = 1`, re-run with purchase logs), the KGFN policy and its 20-seed run at `kappa = 1`, the matched-seed bootstrap, and how to rerun one cell by hand.
 
 Synthetic benchmark for the MS&T26 talk (issue 83). It tests the claim in the
 abstract: cost-aware partial evaluation of the alloy DAG (pKGFN,

@@ -22,7 +22,7 @@ the MS&T26 results, and none of its claims were changed.
 | `run_sweep.py` | Flags: `--policies` (alias of `--kinds`), `--kappa` (alias of `--kappas`), `--seeds` with ranges and lists (`0-4`, `7`, `0,3,10-12`), `--costs STAGE=USD` and `--noise SD` or `--noise STAGE=SD`. The defaults are unchanged. With non-default costs or noise it will not write into `results/`, and if an existing JSON's recorded settings differ from the requested ones, it raises an error instead of skipping the cell. Every JSON now records `settings`, `git` (commit, plus whether tracked files here were modified), `versions`, `platform`, `argv`, `env` (`BOFN_*`) and `finished_utc`. |
 | `bofn_alloy.py` | `set_costs()` and `set_noise()` change the shared `COSTS`/`NOISE` dicts. `Lab` can add Gaussian noise to the atomize, print and tensile measurements. The noise comes from its own generator (seed 6000 + seed). The physics runs on true values and the data get the measured ones. CALPHAD stays deterministic, because its error is the bias κ. Node GPs use the known noise variance. Every purchase after the seed data is logged with its inputs (`purchases` in the JSON). New `Network.kg_full`, the full-chain knowledge gradient (KGFN, below). |
 | `policies.py` | `run(kind, kappa, seed, budget, costs=None, noise=None)`. `settings()` lists every knob. `best_validated` is computed from true objectives. Noise-free, these are the same floats as before; with noise, rows also carry `best_validated_obs`, the true value of the alloy with the best *measured* objective. New policy `kgfn` (`run_pkgfn(..., full_chain=True)`). |
-| `analyze.py` | Matched-seed bootstrap (`matched()`, `speedup(..., matched=True)`, `boot_ratio(..., matched=True)`). The old independent-seed bootstrap still prints alongside as a sensitivity check. New `speedup_table(kappa, over="tiered")` prints the README's "speed-up over tiered screening" table. |
+| `analyze.py` | Matched-seed bootstrap (`matched()`, `speedup(..., matched=True)`, `boot_ratio(..., matched=True)`). The old independent-seed bootstrap still prints alongside as a sensitivity check. New `speedup_table(kappa, over="tiered")` prints the README's "speed-up over tiered screening" table. `load()` also reads `results-kgfn/` for policies that `results/` lacks (KGFN, step 5). |
 | `compare_runs.py` (new) | Checks re-runs against stored runs action for action (see below). |
 | `requirements.txt` (new) | Exact pins of the environment behind `results-rerun/`. |
 | `quality/check_kgfn.py` (new) | Brute-force check of `kg_full`. |
@@ -38,22 +38,26 @@ smoke-tested; nothing has been run with it.
 ## Step 2: does the port reproduce the stored runs?
 
 Seeds 0–4 at κ = 1 were re-run with the step-1 code (`9462e01`, a clean
-worktree) into [`results-rerun/k1/`](results-rerun/k1/). The recipe was the
+worktree) into [`results-rerun/k1/`](results-rerun/k1/). Seeds 5–19 followed
+on Oct 17 with the code at `28a89f6`, also from a clean worktree and with the
+step-3 KGFN code in place. `results-rerun/k1/` now holds all 20 stored seeds of
+the seven policies, 140 runs, each with its purchase log. The recipe was the
 stored runs' own: recommender on, except `eifn_reuse` (`BOFN_NO_REC=1`). The
 environment was the one pinned in `requirements.txt` (torch 2.14.1+cpu,
 BoTorch 0.18.1, GPyTorch 1.15.2, linear_operator 0.6.1, NumPy 2.5.3, SciPy
-1.18.1, Python 3.12.3, on an AMD EPYC 9V45 GitHub runner). Full per-run output
-is in [`results-rerun/compare_k1.txt`](results-rerun/compare_k1.txt).
+1.18.1, Python 3.12.3), on AMD EPYC 9V45 (seeds 0–4) and 9V74 (seeds 5–19)
+GitHub runners. Full per-run output is in
+[`results-rerun/compare_k1.txt`](results-rerun/compare_k1.txt).
 
 | policy | seeds | match action for action | max abs diff, best validated | max abs diff, rec_printed | max abs diff, rec |
 |---|---|---|---|---|---|
-| pkgfn | 0–4 | 5/5 | 5.6e-17 | 5.6e-17 | 2.2e-16 |
-| eifn | 0–4 | 5/5 | 1.1e-16 | 1.1e-16 | 1.1e-16 |
-| eifn_reuse | 0–4 | 5/5 | 1.1e-16 | 1.1e-16 | n/a (no recommender) |
-| ei | 0–4 | 5/5 | 2.8e-17 | 2.8e-17 | 1.1e-16 |
-| tiered | 0–4 | 5/5 | 2.8e-17 | 5.6e-17 | 1.1e-16 |
-| tiered_naive | 0–4 | 5/5 | 2.8e-17 | 2.8e-17 | 5.6e-17 |
-| random | 0–4 | 5/5 | 2.8e-17 | 2.8e-17 | 1.1e-16 |
+| pkgfn | 0–19 | 20/20 | 1.1e-16 | 1.1e-16 | 2.2e-16 |
+| eifn | 0–19 | 20/20 | 1.1e-16 | 1.1e-16 | 2.2e-16 |
+| eifn_reuse | 0–19 | 20/20 | 1.1e-16 | 1.1e-16 | n/a (no recommender) |
+| ei | 0–19 | 20/20 | 2.2e-16 | 2.2e-16 | 2.2e-16 |
+| tiered | 0–19 | 20/20 | 1.1e-16 | 1.1e-16 | 1.1e-16 |
+| tiered_naive | 0–19 | 20/20 | 1.1e-16 | 1.1e-16 | 1.1e-16 |
+| random | 0–19 | 20/20 | 1.1e-16 | 1.1e-16 | 1.1e-16 |
 
 "Match action for action" means the following. Every row (one per purchase
 decision) has the same `action` at the same cumulative `spent`, and the
@@ -62,9 +66,9 @@ within 1e-9. The stored runs do not log the designs bought, but
 `best_validated` and `rec_printed` are true-objective values of designs the
 run bought, so the score check is what shows that the designs were the same
 too. The remaining differences are in the last bit, and none of them changed a
-decision. No GP fit failed. Mean wall time per run on the 2-core runner:
+decision. No GP fit failed. Mean wall time per run on the 2-core 9V45 runner:
 pkgfn 183 s, tiered 26 s, tiered_naive 20 s, eifn_reuse 13 s, eifn 11 s, ei
-10 s, random 8 s.
+10 s, random 8 s. The 9V74 runner was about 1.3 times slower (pkgfn 239 s).
 
 ## Step 3: KGFN, so the policies form a 2 × 2
 
@@ -106,7 +110,7 @@ KG of observing every node, per dollar:
   flat, so the fallback was never used, and no GP fit failed. Each run took
   about 6.5 min on the 2-core runner with both running at once, against about
   3 min for pKGFN. These runs only check that the policy works. They are not
-  results, and the grid has not been run.
+  results; the 20-seed run at κ = 1 is step 5.
 
 Re-running pKGFN seed 0 with the KGFN code in place reproduces
 `results-rerun/k1/pkgfn_s0.json` purchase for purchase. The `full_chain`
@@ -127,6 +131,56 @@ following. The README is unchanged.
 - BOFN + powder reuse 3.8×: matched 2.6–5.5, independent 2.2–5.9
 - BOFN, full pipeline 2.6×: matched 2.1–3.7, independent 2.1–3.9
 - standard BO 2.1×: matched 1.5–2.9, independent 1.5–2.9
+
+## Step 5: KGFN on all 20 seeds (κ = 1)
+
+KGFN ran on seeds 0–19 at κ = 1 into [`results-kgfn/k1/`](results-kgfn/k1/)
+on Oct 17. It used a clean worktree at `28a89f6` and the pinned environment,
+with the recommender on, as in the smoke test. Seeds 0 and 1 reproduce the
+smoke-test runs (`83b5667`) purchase for purchase, with zero difference. Every
+run bought 23 full chains and stopped between $96,700 and $96,790. KG was flat
+once in the 460 decisions, so the fallback chose one purchase. No GP fit failed
+(0 of 2,400). A run calls CALPHAD 15 times on average (10–19), because the rest
+of its chains go to alloys that were simulated before. Runs took 558 s on
+average, two at a time on the 2-core 9V74 runner.
+
+`analyze.py` reads `results-kgfn/` for the policies that `results/` lacks, so
+`python analyze.py 1.0` now includes KGFN. It is compared with the stored runs
+on matched seeds, which is sound because the re-runs in step 2 reproduce them.
+The best alloy demonstrated, as % of the optimum (mean ± SE over 20 seeds):
+
+| Policy | $25k | $50k | $100k | median $ to 60% | median $ to 70% | median $ to 80% |
+|---|---|---|---|---|---|---|
+| pKGFN: picks the stage | 62% ± 5 | 70% ± 3 | 84% ± 2 | $15k (95% of seeds) | $25k (95% of seeds) | $86k (75% of seeds) |
+| **KGFN, full pipeline** | 45% ± 6 | 65% ± 6 | 86% ± 4 | $27k (90% of seeds) | $42k (85% of seeds) | $55k (80% of seeds) |
+| BOFN + powder reuse | 61% ± 6 | 74% ± 5 | 90% ± 2 | $19k (100% of seeds) | $26k (90% of seeds) | $52k (85% of seeds) |
+| BOFN, full pipeline | 50% ± 6 | 77% ± 5 | 86% ± 4 | $32k (90% of seeds) | $36k (85% of seeds) | $42k (80% of seeds) |
+| Standard BO | 48% ± 7 | 63% ± 5 | 84% ± 3 | $40k (95% of seeds) | $46k (85% of seeds) | $59k (70% of seeds) |
+| Tiered screening | 46% ± 5 | 56% ± 3 | 63% ± 2 | $56k (60% of seeds) | >$100k (15% of seeds) | >$100k (10% of seeds) |
+
+In the 2 × 2 of step 3, at $25k and at $100k:
+
+| | partial evaluation | full evaluation |
+|---|---|---|
+| **KG per dollar** | pKGFN: 62%, 84% | KGFN: 45%, 86% |
+| **EI per dollar** | BOFN + powder reuse: 61%, 90% | BOFN: 50%, 86% |
+
+- **Partial evaluation buys the early lead with either acquisition
+  function.** At $25k pKGFN is 16.5 points ahead of KGFN (ahead on 12 of 20
+  matched seeds, 2 ties; Wilcoxon p = 0.014), and BOFN + powder reuse is 11
+  points ahead of BOFN. By $100k the four are within 6 points of each other,
+  and pKGFN and KGFN are level (−2.4 points, p = 0.22).
+- **KGFN behaves like full-pipeline BOFN with a slower middle.** The two are
+  level at $25k (−4.6 points, p = 0.33) and at $100k (+0.5, p = 0.96). At $50k
+  KGFN is 11.9 points behind (p = 0.076).
+- **Speed-up over tiered screening:** 2.4× (90% matched-seed bootstrap
+  1.7–3.4; independent-seed 1.6–3.4). That is between BOFN (2.6×) and
+  standard BO (2.1×). At $100k KGFN is 23.5 points ahead of screening, on 18
+  of 20 seeds (p = 8.2e-5).
+
+These are the first KGFN results. The README's MS&T26 claims, tables and
+slide figures do not include KGFN and are unchanged. The p-values are
+per-comparison, with no correction for testing several pairs and spend levels.
 
 ## Rerun one cell by hand (Xavier, before Oct 23)
 

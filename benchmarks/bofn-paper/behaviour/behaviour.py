@@ -7,24 +7,27 @@ Static companions to ../dag/timelapse.py, which plays back a single seed:
 - purchases: every run is a tape of its purchases against spend, one row per
   seed, with one block per purchase, as wide as its cost and coloured by stage.
   Tensile tests that beat the best alloy so far are tall red ticks. Uses all 20
-  stored seeds. The stored runs record each decision's action and the spend
-  after it, not the stages one by one, but those follow from the action and the
-  spend step: a "full" chain is atomize, print and test, plus a $10 CALPHAD
-  call when the alloy is new; "reuse" is print and test; the screen is $10
-  calls. `purchases()` rebuilds them this way and checks the result against
-  the purchase log wherever a run has one (all 37 such runs match).
+  stored seeds, and KGFN's 20 seeds in ../results-kgfn. The stored runs record
+  each decision's action and the spend after it, not the stages one by one, but
+  those follow from the action and the spend step: a "full" chain is atomize,
+  print and test, plus a $10 CALPHAD call when the alloy is new; "reuse" is
+  print and test; the screen is $10 calls. `purchases()` rebuilds them this way
+  and checks the result against the purchase log wherever a run has one (all
+  162 such runs match).
 - composition: every alloy a policy made into powder or printed, placed by two
   CALPHAD outputs: the freezing-range index f, which is all the tiered screen
   reads, against the nucleant fraction g, which suppresses hot cracking in the
   print and which the screen cannot see. Size is the number of prints on the
   alloy and colour is when it was first made. This needs the inputs of every
   purchase, so it uses only the runs that log them: ../results-rerun (seeds
-  0-4, identical to the stored runs action for action) and
-  ../quality/kgfn-smoke (KGFN, seeds 0-1).
+  0-19, identical to the stored runs action for action) and ../results-kgfn
+  (KGFN, seeds 0-19).
 - builds: every build a policy printed, scored by the true objective of its
   alloy and settings (% of the optimum) against the spend when it was printed,
   filled if it was tensile-tested, with the mean over each $10k of spend. Same
   runs as the composition figure.
+
+It also prints the two tables in README.md, from the same runs as the figures.
 """
 
 from __future__ import annotations
@@ -52,8 +55,9 @@ from bofn_alloy import COMP, D, DEFAULT_COSTS, AlloyTruth  # noqa: E402
 from plot import INK, MUTED, RED, SHORT  # noqa: E402  (also sets Aptos and the slide rcParams)
 from policies import F_SAFE  # noqa: E402
 
-TAPES = [HERE.parent / "results", HERE.parent / "quality" / "kgfn-smoke"]  # first folder with runs of a policy wins
-LOGGED = [HERE.parent / "results-rerun", HERE.parent / "quality" / "kgfn-smoke"]
+KGFN = [HERE.parent / "results-kgfn", HERE.parent / "quality" / "kgfn-smoke"]  # the 20-seed grid, else the smoke test
+TAPES = [HERE.parent / "results", *KGFN]  # first folder with runs of a policy wins
+LOGGED = [HERE.parent / "results-rerun", *KGFN]
 # columns pair each full-pipeline policy with its counterpart that screens, reuses powder or picks the stage;
 # the bottom two rows are the paper's 2 x 2, {EI, KG} x {full, partial}
 GRID = [("random", "tiered_naive"), ("ei", "tiered"), ("eifn", "eifn_reuse"), ("kgfn", "pkgfn")]
@@ -76,6 +80,29 @@ def load(kind, kappa, roots):
         if ps:
             return [json.loads(p.read_text()) for p in ps], root
     return [], None
+
+
+def seeds(kind, kappa, roots):
+    """The seeds `load` would return, from the file names."""
+    for root in roots:
+        s = sorted(int(p.stem.rsplit("_s", 1)[1]) for p in (root / f"k{kappa:g}").glob(f"{kind}_s*.json"))
+        if s:
+            return s
+    return []
+
+
+def span(s):
+    if not s:
+        return "none"
+    return f"{s[0]}–{s[-1]}" if s == list(range(s[0], s[-1] + 1)) else ", ".join(map(str, s))
+
+
+def pooled(kappa):
+    """Which seeds the composition and builds figures pool, e.g. 'Seeds 0–19 pooled'."""
+    by = {k: seeds(k, kappa, LOGGED) for pair in GRID for k in pair}
+    common = Counter(tuple(s) for s in by.values()).most_common(1)[0][0]
+    odd = [f"{SHORT[k].split(':')[0]}: seeds {span(s)}" for k, s in by.items() if tuple(s) != common]
+    return f"Seeds {span(list(common))} pooled" + (f" ({'; '.join(odd)})" if odd else "")
 
 
 def purchases(run):
@@ -232,7 +259,7 @@ def alloys(run):
 
 
 def size(prints):
-    return 14 + 15 * np.asarray(prints, dtype=float)
+    return 9 + 10 * np.asarray(prints, dtype=float)  # small enough for 20 seeds' alloys in one panel
 
 
 def figure_composition(kappa, out):
@@ -245,8 +272,7 @@ def figure_composition(kappa, out):
     fig.text(0.065, 0.903, "Every alloy a policy atomized or printed, placed by what CALPHAD predicts for it. The screen keeps only "
              f"f ≤ {F_SAFE:g}, but enough nucleant lets an alloy", fontsize=13.5, color=GRAY, va="center")
     fig.text(0.065, 0.873, f"with a wider freezing range print without cracking. The optimum (red star) has f = {fo:.2f} and "
-             f"g = {go:.2f}. Seeds 0–4 pooled (KGFN: seeds 0–1, a smoke test), κ = {kappa:g}.", fontsize=13.5, color=GRAY,
-             va="center")
+             f"g = {go:.2f}. {pooled(kappa)}, κ = {kappa:g}.", fontsize=13.5, color=GRAY, va="center")
     gg = np.linspace(0, 1.0, 200)
     fc = crack_line(kappa, gg)
     for j in range(4):
@@ -269,7 +295,7 @@ def figure_composition(kappa, out):
                 pts.sort(key=lambda p: p[1])  # late alloys on top
                 f, g = calphad([p[0] for p in pts])
                 when = np.array([p[1] for p in pts]) / 100_000
-                ax.scatter(f, g, s=size([p[2] for p in pts]), c=WHEN(when), ec="white", lw=0.6, zorder=3, alpha=0.95)
+                ax.scatter(f, g, s=size([p[2] for p in pts]), c=WHEN(when), ec="white", lw=0.45, zorder=3, alpha=0.9)
             ax.plot([fo], [go], marker="*", ms=17, color=RED, mec="white", mew=1.0, zorder=6, ls="none")
             ax.set_xlim(0, 1.05)
             ax.set_ylim(0, 1.0)
@@ -343,8 +369,8 @@ def figure_builds(kappa, out):
     fig.text(0.07, 0.965, "How good are the builds each policy prints?", fontsize=22, fontweight="bold", color=INK, va="center")
     fig.text(0.07, 0.937, "Every build printed, scored by the true objective of its alloy and settings, against the spend when it "
              "was printed. Filled: tensile-tested; open: printed,", fontsize=13.5, color=GRAY, va="center")
-    fig.text(0.07, 0.917, f"never tested. The line is the mean over each $10k of spend. Seeds 0–4 pooled (KGFN: seeds 0–1, a smoke "
-             f"test), κ = {kappa:g}. The burden penalty puts poor alloys below zero.", fontsize=13.5, color=GRAY, va="center")
+    fig.text(0.07, 0.917, f"never tested. The line is the mean over each $10k of spend. {pooled(kappa)}, κ = {kappa:g}. "
+             "The burden penalty puts poor alloys below zero.", fontsize=13.5, color=GRAY, va="center")
     for j, text in enumerate(COLUMNS):
         fig.text(0.07 + j * 0.4625, 0.888, text, fontsize=14, color=INK, va="bottom")
         fig.add_artist(Line2D([0.07 + j * 0.4625, 0.07 + j * 0.4625 + 0.4525], [0.885] * 2, color=LIGHT, lw=0.8))
@@ -357,8 +383,9 @@ def figure_builds(kappa, out):
             spend, y, tested = b[:, 0], b[:, 1], b[:, 2].astype(bool)
             ax.axhline(100, color=RED, lw=0.9, ls=(0, (4, 3)), zorder=1)
             ax.axhline(0, color=LIGHT, lw=0.8, zorder=1)
-            ax.scatter(spend[tested] / 1e3, y[tested], s=16, color="#8C8C8C", lw=0, zorder=2)
-            ax.scatter(spend[~tested] / 1e3, y[~tested], s=16, facecolors="none", edgecolors="#8C8C8C", lw=0.8, zorder=2)
+            # full-pipeline runs all print at the same spends, so 20 seeds' builds stack: translucent marks show the pile-up
+            ax.scatter(spend[tested] / 1e3, y[tested], s=11, color="#8C8C8C", lw=0, alpha=0.45, zorder=2)
+            ax.scatter(spend[~tested] / 1e3, y[~tested], s=11, facecolors="none", edgecolors="#8C8C8C", lw=0.6, alpha=0.6, zorder=2)
             k = np.digitize(spend, edges[1:-1])
             mean = np.array([y[k == m].mean() if (k == m).any() else np.nan for m in range(len(edges) - 1)])
             ax.plot((edges[:-1] + step / 2) / 1e3, mean, color=RED if kind == "pkgfn" else INK, lw=2.6, zorder=3,
@@ -367,7 +394,7 @@ def figure_builds(kappa, out):
             ax.set_title(SHORT[kind], loc="left", fontsize=15, color=INK, fontweight="bold" if kind == "pkgfn" else "normal",
                          pad=24)
             ax.text(0, 1.04, f"{len(y) / len(runs):.0f} builds per run, {tested.mean():.0%} tested; builds in the last $20k "
-                    f"average {late.mean():.0f}%", transform=ax.transAxes, fontsize=12, color=MUTED, va="bottom")
+                    f"average {pct(late.mean())}", transform=ax.transAxes, fontsize=12, color=MUTED, va="bottom")
             ax.set_xlim(0, budget / 1e3)
             ax.set_ylim(-66, 105)
             ax.set_yticks([-50, 0, 50, 100])
@@ -384,6 +411,46 @@ def figure_builds(kappa, out):
     return out
 
 
+# --------------------------------------------------------------------------- tables
+def pct(v):
+    return f"{v:.0f}%".replace("-", "−")
+
+
+def tables(kappa):
+    """README.md's two tables (composition, builds) as markdown, from the same runs as the figures."""
+    xo = optimum_design(kappa)
+    fo, go = (float(v[0]) for v in calphad(xo[COMP].numpy()))
+    ystar, truth = optimum(kappa), AlloyTruth(kappa)
+    kinds = [pair[0] for pair in GRID] + [pair[1] for pair in GRID]
+    data = {k: load(k, kappa, LOGGED)[0] for k in kinds}
+    n = Counter(len(runs) for runs in data.values()).most_common(1)[0][0]
+    name = {k: SHORT[k].split(":")[0] + ("" if len(data[k]) == n else f" ({len(data[k])} seeds)") for k in kinds}
+    comp = [f"| policy | alloys made ({n} seeds) | prints per alloy | mean distance to the optimum in (f, g), made before / "
+            "after $50k | share of prints within 0.15 of the optimum |", "|---|---|---|---|---|"]
+    build = [f"| policy | builds per run | tested | mean of builds in the last $20k | builds above 80% of the optimum ({n} seeds), "
+             "tested / not tested |", "|---|---|---|---|---|"]
+    notes = []
+    for k in kinds:
+        made = [m for r in data[k] for m in alloys(r)[0].items()]
+        f, g = calphad([c for c, _ in made])
+        dist = np.hypot(f - fo, g - go)
+        first = np.array([m["first"] for _, m in made])
+        prints = np.array([m["prints"] for _, m in made])
+        early = first < 50_000
+        comp.append(f"| {name[k]} | {len(made)} | {prints.sum() / len(made):.1f} | {dist[early].mean():.2f} / "
+                    f"{dist[~early].mean():.2f} | {prints[dist < 0.15].sum() / prints.sum():.0%} |")
+        cracked = f[early] > crack_line(kappa, g[early])
+        notes.append(f"{name[k]}: {cracked.mean():.0%} of the alloys made before $50k are in the cracking zone")
+        b = np.array([x for r in data[k] for x in builds(r, truth, ystar)])
+        spend, y, tested = b[:, 0], b[:, 1], b[:, 2].astype(bool)
+        good = y > 80
+        build.append(f"| {name[k]} | {len(y) / len(data[k]):.0f} | {tested.mean():.0%} | {pct(y[spend > 80_000].mean())} | "
+                     f"{(good & tested).sum()} / {(good & ~tested).sum()} |")
+        if not tested.all():
+            notes.append(f"{name[k]}: tested builds average {pct(y[tested].mean())}, untested ones {pct(y[~tested].mean())}")
+    return "\n".join(comp) + "\n\n" + "\n".join(build) + "\n\n" + "\n".join(notes)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--kappa", type=float, default=1.0)
@@ -392,6 +459,7 @@ def main():
     for f in (figure_purchases, figure_composition, figure_builds):
         name = f.__name__.split("_", 1)[1]
         print(f(a.kappa, HERE / f"bofn_behaviour_{name}_k{a.kappa:g}.png"))
+    print(tables(a.kappa))
 
 
 if __name__ == "__main__":
