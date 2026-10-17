@@ -315,8 +315,8 @@ look at the CubXL for the corrosion screen.
     1,250 °C.
   - **Rules keyed to Al:** Ni at least Fe above 7 Al; Fe at most 2.3 below
     1.5 Al.
-  - **Year 2 additions, as matched tests:** Zr, B, Sn and Ge (NAB only),
-    and La or Ce.
+  - **Year 2 additions, as matched tests:** Zr and B; Sn and Ge, in NAB
+    only; and La or Ce.
   - **In the proposal:** a new Task 2 paragraph and Table 1 replace the
     two-sentence alloy space and its TODO. The draft is now 16 counted
     pages, with 111 references.

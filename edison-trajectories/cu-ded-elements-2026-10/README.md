@@ -16,8 +16,8 @@ from the two Edison queries in [`electrochem/`](electrochem/).*
   - Ni 0-30, Al 0-9.5, Fe 0-4.5, Mn 0-4 and Ti 0-0.5 wt%;
   - Cr 0-0.7, Si 0-0.5 and Nb 0-0.8 wt%, in Cu-Ni only.
 - **Year 2 adds five microalloying options,** each tested against matched
-  controls: Zr, B, Sn and Ge (NAB only), and one rare earth (La or Ce, with
-  Y as the alternative).
+  controls: Zr and B; Sn and Ge, in NAB only; and one rare earth (La or Ce,
+  with Y as the alternative).
 - **Hard constraints:** Cu ≥ 65 wt% and a CALPHAD liquidus ≤ 1,250 °C for
   every candidate, because the atomizer's induction module reaches about
   1,300 °C. Ni is boxed at 30 (nominal 70-30), which already melts at about
