@@ -428,7 +428,8 @@
     "task_id": "ea13ca40-78dd-4b62-9748-76c8cdd5e641",
     "job": "ANALYSIS",
     "submitted": "2026-10-17T19:36:01Z",
-    "status": "in progress"
+    "status": "success",
+    "fetched": "2026-10-17T20:02:36Z"
   },
   "multi-element-constraints": {
     "phase": 3,

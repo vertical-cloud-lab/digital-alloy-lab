@@ -1,8 +1,8 @@
 | Element | Edison | Decision | Reason | TCCU7 tier |
 | --- | --- | --- | --- | --- |
 | [Cu](phase1/el-01-Cu.md) | LIMIT | balance | Balance, at least 65 wt%. The calculated liquidus (at most 1,250 C) is the binding limit: Cu-Ni above about 33 Ni melts too high to atomize. The 60 wt% floor Edison offered is not used in the first campaign. | matrix |
-| [Ni](phase1/el-02-Ni.md) | INCLUDE | search | Main film-former in Cu-Ni and a kappa former in NAB; the strongest route to C71500-class resistance. Capped by the liquidus near the atomizer limit (70-30 melts to about 1,240 C). Nickel burden is an objective, not a bound. | 1 |
-| [Al](phase1/el-03-Al.md) | INCLUDE | search | Defines the aluminum bronze branch and the Cu-Ni-Al region between the families. The upper range keeps the retained-beta boundary inside the space, so the process-aware CALPHAD screen (H3) can be tested on it, and it includes the duplex alpha+beta bronzes, which crack less as weld filler than single-phase ones but risk selective attack of beta. | 1 |
+| [Ni](phase1/el-02-Ni.md) | INCLUDE | search | Main film-former in Cu-Ni and a kappa former in NAB; the strongest route to C71500-class resistance. Capped at 30 (nominal 70-30) because 70-30 already melts to about 1,240 C, near the atomizer limit; every candidate also passes the liquidus gate. Nickel burden is an objective, not a bound. | 1 |
+| [Al](phase1/el-03-Al.md) | INCLUDE | search | Defines the aluminum bronze branch and the Cu-Ni-Al region between the families. Capped at the C95800 maximum (9.5): laser-deposited C95800 already retains martensitic beta-prime, so the boundary the process-aware CALPHAD screen (H3) must predict lies inside the space, as do duplex alpha+beta structures, which crack less as weld filler but risk selective attack of beta. | 1 |
 | [Fe](phase1/el-04-Fe.md) | INCLUDE | search | Needed for the Cu-Ni film and for kappa phases in NAB. Bounded by family rules: kept in solid solution in Cu-Ni (at most 2.3), Ni at least equal to Fe in NAB. | 1 |
 | [Mn](phase1/el-05-Mn.md) | INCLUDE | search | Deoxidizer and partial nickel substitute (C71640, MARINEL). Upper bound set by evaporation and oxidation in melting and DED; Mn-Al bronze (11-14 Mn) is left out for that reason. | 1 |
 | [Cr](phase1/el-06-Cr.md) | INCLUDE | search | Raises erosion-corrosion resistance of Cu-Ni (C72200 critical velocity about 3 times that of C71500), but higher-Cr Cu-Ni had worse crevice attack in still water. Cu-Ni and Cu-Ni-Al only. | 1 |
@@ -36,13 +36,13 @@
 | [W](phase1/el-34-W.md) | EXCLUDE | exclude | Immiscible with Cu; melts at 3,422 C. | 4 |
 | [Ta](phase1/el-35-Ta.md) | EXCLUDE | exclude | Immiscible; melts at 3,017 C; nanocrystalline Cu-Ta needs mechanical alloying. | 3 |
 | [Ga](phase1/el-36-Ga.md) | LIMIT | exclude | No seawater use found; critical mineral; not in TCCU7. | 4 |
-| [Ge](phase1/el-37-Ge.md) | INCLUDE | exclude | Edison's 'include' rested on one heat-treated powder-metallurgy NAB sample whose Mn, Fe and Ni also changed; Ge costs about $1,000-4,000/kg, is a critical mineral under export controls, and Cu-Al-Ge and Cu-Ni-Ge are not in TCCU7. | 3 |
+| [Ge](phase1/el-37-Ge.md) | INCLUDE | optional | A single matched 0 vs 0.2 test in NAB in Year 2, as the bounds ANALYSIS and the check both suggest. The only lead is one heat-treated powder-metallurgy NAB sample whose Mn, Fe and Ni also changed (31% lower jet erosion-corrosion loss); Ge is a critical mineral under export controls (about 1 g per charge at 0.2), and Cu-Al-Ge and Cu-Ni-Ge are not in TCCU7. | 3 |
 | [In](phase1/el-38-In.md) | LIMIT | exclude | No benefit found; critical mineral; not in TCCU7. | 4 |
 | [Li](phase1/el-39-Li.md) | LIMIT | exclude | Deoxidizer only; volatile and reactive with crucibles; not in TCCU7. | 4 |
 | [Ca](phase1/el-40-Ca.md) | EXCLUDE | exclude | Deoxidizer only; no use in Cu-Ni or bronzes found. | 3 |
 | [Sr](phase1/el-41-Sr.md) | EXCLUDE | exclude | No use in copper alloys found (stands in for Sr and Ba). | 4 |
 | [Sc](phase1/el-42-Sc.md) | EXCLUDE | exclude | No seawater benefit; very costly; not in TCCU7. | 4 |
-| [Y](phase1/el-43-Y.md) | INCLUDE | exclude | One cast 90-10 abstract only; not in TCCU7. Ce or La would take the single rare-earth slot. | 4 |
+| [Y](phase1/el-43-Y.md) | INCLUDE | exclude | One cast Cu-10Ni study (best at 0.021, worse above as Y-rich oxysulfides grew); not in TCCU7. The bounds ANALYSIS preferred Y to La/Ce, but it had not seen the Du 2025 La/Ce result; Y stays the alternative for the one rare-earth variable. | 4 |
 | [La](phase1/el-44-La.md) | INCLUDE | optional | Shares one rare-earth variable with Ce (0-0.1 retained, Cu-Ni, Year 2). B10 with 0.1 La resisted 3.5% NaCl better than Cu-10Ni, and better than with Ce (Du et al. 2025); Cu-La-Ni is assessed in TCCU7. | 2 |
 | [Ce](phase1/el-45-Ce.md) | LIMIT | optional | Shares one rare-earth variable with La (0-0.1 retained, Cu-Ni, Year 2). B10 with 0.1 Ce resisted 3.5% NaCl better than Cu-10Ni (Du et al. 2025); Edison's 0.04 cap came from mischmetal retention in brass. Cu-Ni-Ce and Al-Ce-Cu are assessed in TCCU7. | 2 |
 | [Pr](phase1/el-46-Pr.md) | EXCLUDE | exclude | No data in copper alloys; not in TCCU7. | 4 |

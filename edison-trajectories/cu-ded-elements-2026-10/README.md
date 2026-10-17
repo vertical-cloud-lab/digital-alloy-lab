@@ -13,15 +13,17 @@ from the two Edison queries in [`electrochem/`](electrochem/).*
 ## The result in short
 
 - **Eight elements are searched from the start,** with Cu as the balance:
-  - Ni 0-33, Al 0-10.5, Fe 0-5, Mn 0-4 and Ti 0-0.5 wt%;
-  - Cr 0-1, Si 0-0.5 and Nb 0-1 wt%, in Cu-Ni only.
-- **Year 2 adds four microalloying options:** Zr, B, Sn (NAB only), and one
-  rare earth (La or Ce).
-- **Hard constraints:** Cu ≥ 65 wt% and a CALPHAD liquidus ≤ 1,250 °C.
-  Because the atomizer's induction module reaches about 1,300 °C, the
-  liquidus, not the box bound, is what limits Ni.
+  - Ni 0-30, Al 0-9.5, Fe 0-4.5, Mn 0-4 and Ti 0-0.5 wt%;
+  - Cr 0-0.7, Si 0-0.5 and Nb 0-0.8 wt%, in Cu-Ni only.
+- **Year 2 adds five microalloying options,** each tested against matched
+  controls: Zr, B, Sn and Ge (NAB only), and one rare earth (La or Ce, with
+  Y as the alternative).
+- **Hard constraints:** Cu ≥ 65 wt% and a CALPHAD liquidus ≤ 1,250 °C for
+  every candidate, because the atomizer's induction module reaches about
+  1,300 °C. Ni is boxed at 30 (nominal 70-30), which already melts at about
+  1,240 °C.
 - **Rules keyed to the Al content:**
-  - **Above 7 Al (NAB):** Ni ≥ Fe and Si ≤ 0.1.
+  - **Above 7 Al (NAB):** Fe ≤ Ni ≤ 5.5, Si ≤ 0.1 and Ti ≤ 0.1.
   - **Below 1.5 Al (Cu-Ni):** Fe ≤ 2.3.
   - **Between, in the Cu-Ni-Al bridge with Ni ≥ 10:** Fe ≤ 1.
   - **Cr and Nb:** only up to 3 Al.
@@ -35,7 +37,7 @@ from the two Edison queries in [`electrochem/`](electrochem/).*
 - **Excluded,** each with a reason in the table below:
   - Be and Cd (toxic powder and fume);
   - W and Ta (immiscible with Cu, melting far above the atomizer limit);
-  - Ag, Ge and Pd (cost, single-study evidence);
+  - Ag and Pd (cost, single-study evidence);
   - Co (counted with Ni);
   - seven others with no seawater benefit found, and six rare earths.
 
@@ -118,7 +120,7 @@ EXCLUDE.
 | --- | --- | --- | --- |
 | 1 | 50 LITERATURE, one per element | 18:58-19:02 | 19:20-19:35 (19-34 min each) |
 | 1 | 1 LITERATURE_HIGH, joint bounds for a 20-element short list | 19:02 | 19:35 |
-| 2 | 1 ANALYSIS, palette and bounds table (53 files uploaded) | 19:36 | see [`phase2/`](phase2/) |
+| 2 | 1 ANALYSIS, palette and bounds table (53 files uploaded) | 19:36 | 20:02 |
 | 3 | 1 ANALYSIS, multi-element constraints (53 files uploaded) | 19:36 | 19:48 |
 | 4 | 2 LITERATURE, electrochemistry for the CubXL question | 19:03 | 19:28-19:31 |
 
@@ -186,8 +188,8 @@ Edison's verdict, the decision taken here, and the reason. The bounds are in
 | Element | Edison | Decision | Reason | TCCU7 tier |
 | --- | --- | --- | --- | --- |
 | [Cu](phase1/el-01-Cu.md) | LIMIT | balance | Balance, at least 65 wt%. The calculated liquidus (at most 1,250 C) is the binding limit: Cu-Ni above about 33 Ni melts too high to atomize. The 60 wt% floor Edison offered is not used in the first campaign. | matrix |
-| [Ni](phase1/el-02-Ni.md) | INCLUDE | search | Main film-former in Cu-Ni and a kappa former in NAB; the strongest route to C71500-class resistance. Capped by the liquidus near the atomizer limit (70-30 melts to about 1,240 C). Nickel burden is an objective, not a bound. | 1 |
-| [Al](phase1/el-03-Al.md) | INCLUDE | search | Defines the aluminum bronze branch and the Cu-Ni-Al region between the families. The upper range keeps the retained-beta boundary inside the space, so the process-aware CALPHAD screen (H3) can be tested on it, and it includes the duplex alpha+beta bronzes, which crack less as weld filler than single-phase ones but risk selective attack of beta. | 1 |
+| [Ni](phase1/el-02-Ni.md) | INCLUDE | search | Main film-former in Cu-Ni and a kappa former in NAB; the strongest route to C71500-class resistance. Capped at 30 (nominal 70-30) because 70-30 already melts to about 1,240 C, near the atomizer limit; every candidate also passes the liquidus gate. Nickel burden is an objective, not a bound. | 1 |
+| [Al](phase1/el-03-Al.md) | INCLUDE | search | Defines the aluminum bronze branch and the Cu-Ni-Al region between the families. Capped at the C95800 maximum (9.5): laser-deposited C95800 already retains martensitic beta-prime, so the boundary the process-aware CALPHAD screen (H3) must predict lies inside the space, as do duplex alpha+beta structures, which crack less as weld filler but risk selective attack of beta. | 1 |
 | [Fe](phase1/el-04-Fe.md) | INCLUDE | search | Needed for the Cu-Ni film and for kappa phases in NAB. Bounded by family rules: kept in solid solution in Cu-Ni (at most 2.3), Ni at least equal to Fe in NAB. | 1 |
 | [Mn](phase1/el-05-Mn.md) | INCLUDE | search | Deoxidizer and partial nickel substitute (C71640, MARINEL). Upper bound set by evaporation and oxidation in melting and DED; Mn-Al bronze (11-14 Mn) is left out for that reason. | 1 |
 | [Cr](phase1/el-06-Cr.md) | INCLUDE | search | Raises erosion-corrosion resistance of Cu-Ni (C72200 critical velocity about 3 times that of C71500), but higher-Cr Cu-Ni had worse crevice attack in still water. Cu-Ni and Cu-Ni-Al only. | 1 |
@@ -221,13 +223,13 @@ Edison's verdict, the decision taken here, and the reason. The bounds are in
 | [W](phase1/el-34-W.md) | EXCLUDE | exclude | Immiscible with Cu; melts at 3,422 C. | 4 |
 | [Ta](phase1/el-35-Ta.md) | EXCLUDE | exclude | Immiscible; melts at 3,017 C; nanocrystalline Cu-Ta needs mechanical alloying. | 3 |
 | [Ga](phase1/el-36-Ga.md) | LIMIT | exclude | No seawater use found; critical mineral; not in TCCU7. | 4 |
-| [Ge](phase1/el-37-Ge.md) | INCLUDE | exclude | Edison's 'include' rested on one heat-treated powder-metallurgy NAB sample whose Mn, Fe and Ni also changed; Ge costs about $1,000-4,000/kg, is a critical mineral under export controls, and Cu-Al-Ge and Cu-Ni-Ge are not in TCCU7. | 3 |
+| [Ge](phase1/el-37-Ge.md) | INCLUDE | optional | A single matched 0 vs 0.2 test in NAB in Year 2, as the bounds ANALYSIS and the check both suggest. The only lead is one heat-treated powder-metallurgy NAB sample whose Mn, Fe and Ni also changed (31% lower jet erosion-corrosion loss); Ge is a critical mineral under export controls (about 1 g per charge at 0.2), and Cu-Al-Ge and Cu-Ni-Ge are not in TCCU7. | 3 |
 | [In](phase1/el-38-In.md) | LIMIT | exclude | No benefit found; critical mineral; not in TCCU7. | 4 |
 | [Li](phase1/el-39-Li.md) | LIMIT | exclude | Deoxidizer only; volatile and reactive with crucibles; not in TCCU7. | 4 |
 | [Ca](phase1/el-40-Ca.md) | EXCLUDE | exclude | Deoxidizer only; no use in Cu-Ni or bronzes found. | 3 |
 | [Sr](phase1/el-41-Sr.md) | EXCLUDE | exclude | No use in copper alloys found (stands in for Sr and Ba). | 4 |
 | [Sc](phase1/el-42-Sc.md) | EXCLUDE | exclude | No seawater benefit; very costly; not in TCCU7. | 4 |
-| [Y](phase1/el-43-Y.md) | INCLUDE | exclude | One cast 90-10 abstract only; not in TCCU7. Ce or La would take the single rare-earth slot. | 4 |
+| [Y](phase1/el-43-Y.md) | INCLUDE | exclude | One cast Cu-10Ni study (best at 0.021, worse above as Y-rich oxysulfides grew); not in TCCU7. The bounds ANALYSIS preferred Y to La/Ce, but it had not seen the Du 2025 La/Ce result; Y stays the alternative for the one rare-earth variable. | 4 |
 | [La](phase1/el-44-La.md) | INCLUDE | optional | Shares one rare-earth variable with Ce (0-0.1 retained, Cu-Ni, Year 2). B10 with 0.1 La resisted 3.5% NaCl better than Cu-10Ni, and better than with Ce (Du et al. 2025); Cu-La-Ni is assessed in TCCU7. | 2 |
 | [Ce](phase1/el-45-Ce.md) | LIMIT | optional | Shares one rare-earth variable with La (0-0.1 retained, Cu-Ni, Year 2). B10 with 0.1 Ce resisted 3.5% NaCl better than Cu-10Ni (Du et al. 2025); Edison's 0.04 cap came from mischmetal retention in brass. Cu-Ni-Ce and Al-Ce-Cu are assessed in TCCU7. | 2 |
 | [Pr](phase1/el-46-Pr.md) | EXCLUDE | exclude | No data in copper alloys; not in TCCU7. | 4 |
@@ -238,18 +240,19 @@ Edison's verdict, the decision taken here, and the reason. The bounds are in
 
 ## Where the decision differs from Edison, and why
 
-The decision differs from Edison's per-element verdict for 11 elements.
+The decision changes Edison's category for 9 elements, and holds 5 more of
+Edison's "include" elements for Year 2.
 
-**Edison said include; dropped here (four):**
+**Edison said include; dropped here:**
 - **Ag:** Edison's "include" rested on one Ag-nanoparticle study in a
   Cu-Al-Ni shape-memory alloy, read through a review, and Edison reversed
   that study's result.
-- **Ge:** one heat-treated powder-metallurgy NAB sample whose Mn, Fe and Ni
-  also changed. Ge also costs about $1,000-4,000/kg and is under export
-  controls.
-- **Y:** one cast 90-10 abstract; Y is not in TCCU7.
-- **Co:** the specifications count Co with Ni, and the joint answer dropped
-  it too.
+- **Y:** one cast Cu-10Ni study (best at 0.021). The bounds ANALYSIS
+  preferred Y to La and Ce, but it had not seen the Du 2025 result below,
+  and Y is not in TCCU7. Y is kept as the alternative for the one
+  rare-earth variable.
+- **Co:** the specifications count Co with Ni, and the joint answer and the
+  bounds ANALYSIS dropped it too.
 
 **Edison said limit; changed here:**
 - **Ce becomes an option:** its 0.04 cap came from mischmetal retention in
@@ -258,20 +261,38 @@ The decision differs from Edison's per-element verdict for 11 elements.
 - **Be, Nd, Ga, In and Li are excluded outright:** nothing in the feedstock
   would carry them, and Be is a toxic powder.
 
-**Edison said include; held for Year 2:**
+**Edison said include; held for Year 2, each as a matched test:**
 - **Sn:** the only chloride series behind the "include" is a porous sintered
   shape-memory alloy. Sn is an impurity in the target alloys (C63000 ≤ 0.20;
-  EN Cu-Ni grades ≤ 0.03-0.05).
+  EN Cu-Ni grades ≤ 0.03-0.05). The bounds ANALYSIS kept Sn in its main
+  search at 1.0; the check's view, followed here, is that a cast-NAB grain
+  refinement result does not justify it yet.
 - **Zr:** loss on melting, solubility, and no assessed Cu-Ni-Zr.
 - **B:** a Ni-B eutectic (about 1,090 °C) below the Cu-30Ni solidus, and
   dosing at 0.5 kg scale.
+- **Ge:** the only lead is one heat-treated powder-metallurgy NAB sample
+  whose Mn, Fe and Ni also changed. Ge is also under export controls. The
+  bounds ANALYSIS and the check both suggested a single 0 vs 0.2 test in
+  NAB; at 0.2 wt% a charge needs about 1 g.
+- **La:** shares the one rare-earth variable with Ce.
 
 **Bounds changed from Edison's VERDICT lines:**
-- **Ni:** Edison gave 33/35. 35 Ni melts above the 1,250 °C limit, so 33
-  is kept only as the box bound, with the liquidus constraint binding.
-- **Fe and Al:** Edison mixed the families in one line. The Fe ceiling is
-  5.5, not 6 (no commercial NAB has more), and the Al floor of 1.8 came
-  from aluminum brass, so 1.5 (MARINEL) is used.
+- **Ni:** Edison gave 33/35. 35 Ni melts above the 1,250 °C limit, and even
+  70-30 melts to about 1,240 °C. The search uses 30 (nominal 70-30), as the
+  joint answer and the bounds ANALYSIS did, and every candidate also passes
+  the liquidus gate.
+- **Fe and Al:** Edison mixed the families in one line.
+  - **Fe:** searched to 4.5 (the C95800 maximum), with 5.5 as the
+    non-conservative bound, not 6.
+  - **Al:** searched to 9.5, not Edison's 10.5. Laser-deposited C95800
+    already retains martensitic β′, so the boundary the process-aware
+    CALPHAD screen has to predict is inside the space without going higher.
+  - **Al floor:** Edison's 1.8 came from aluminum brass, so 1.5 (MARINEL) is
+    used.
+- **Cr and Nb:** searched to the commercial anchors.
+  - **Cr:** 0.7 (C72200), not 1-2.
+  - **Nb:** 0.8, from the Nb ≥ 2 Si practice. C96400 castings allow 1.5,
+    but dissolving Nb in a 1,300 °C melt still has to be shown.
 - **Ti:** Edison's VERDICT used NAB numbers. The Cu-Ni range follows the
   ERCuNi filler (0.20-0.50), and NAB is limited to 0.1.
 - **Si:** Edison gave 2.0/3.8, from silicon bronze. The target alloys allow
@@ -327,8 +348,39 @@ of its numbers are its own policy choices.
   - **Its preference for a 1,200 °C liquidus in a conservative tier.** The
     atomizer limit is not yet confirmed, so the cap stays at 1,250 °C.
 
-**Palette and bounds table ([`phase2/`](phase2/)).** Still running at the
-first push (submitted 19:36 UTC); summarized here once it returns.
+**Palette and bounds table ([`phase2/palette-bounds-table.md`](phase2/palette-bounds-table.md)).**
+It returned at 20:02 UTC, after the first push, and the bounds above were
+then tightened to match it where it was better supported.
+
+- **Its palette:** 13 additions.
+  - **Main search (eight):** Ni 30, Al 9.5, Fe 4.5, Mn 4.4 (1.5 outside a
+    bridge), Cr 0.5, Sn 1.0, Si 2.0 (1.0 in Cu-Ni, 0.1 in NAB) and Ti 0.5
+    (0.1 in NAB).
+  - **Probes (five):** Nb 0.8, Zr 0.15, Y 0.021, B 0.02 and Ge 0.2.
+- **Adopted from it:**
+  - Ni 30, Al 9.5 and Fe 4.5 (all three were higher in the first push);
+  - Nb 0.8;
+  - the NAB caps (Ni ≤ 5.5, Ti ≤ 0.1, Mn ≤ 1.5 to start);
+  - Ge as a single matched test;
+  - Ti by family.
+- **Where this space differs, and why:**
+  - **Sn and Nb:** Sn is a Year-2 option rather than a main variable, and
+    Nb is a main variable rather than a probe. Nb has seawater-alloy
+    precedent in cast Cu-Ni (C96200, C96400) for weldability, which is the
+    property DED needs; Sn's support in the target alloys is indirect.
+  - **Si:** stays at 0.5 in Cu-Ni. Its low-Al silicon-bronze branch at 2.0
+    is not a seawater-repair target.
+  - **Cr:** 0.7 (the C72200 maximum) rather than 0.5.
+  - **Mn:** 0-4 everywhere, rather than 1.5 outside a bridge, because C71640
+    (1.5-2.5) is a standard Cu-Ni grade.
+  - **The rare earth:** La or Ce first (both in TCCU7; Du 2025), with Y as
+    the alternative.
+  - **Impurity limits:** its tighter values (C ≤ 0.005, S ≤ 0.005,
+    P ≤ 0.010, O ≤ 0.013, As ≤ 0.0005) are kept as aims. The limits follow
+    the specifications, since the checks found several of its numbers
+    borrowed from unalloyed or nuclear-canister copper.
+- **Its exclusions match the ones here** (Be, Cd, W, Ta, Mo, V, Co, Ag, Pd
+  and the rest), except that it kept Ge and Y as probes.
 
 
 ## How the answers were checked

@@ -309,13 +309,14 @@ look at the CubXL for the corrosion screen.
   two ANALYSIS syntheses, subagent checks of every answer, and a TCCU7
   coverage table. All of it is in
   [`edison-trajectories/cu-ded-elements-2026-10/`](../../edison-trajectories/cu-ded-elements-2026-10/README.md).
-  - **Searched from the start:** Ni 0-33, Al 0-10.5, Fe 0-5, Mn 0-4,
-    Ti 0-0.5, plus Cr 0-1, Si 0-0.5 and Nb 0-1 in Cu-Ni only.
+  - **Searched from the start:** Ni 0-30, Al 0-9.5, Fe 0-4.5, Mn 0-4,
+    Ti 0-0.5, plus Cr 0-0.7, Si 0-0.5 and Nb 0-0.8 in Cu-Ni only.
   - **Hard limits:** Cu at least 65, and a CALPHAD liquidus of at most
     1,250 °C.
   - **Rules keyed to Al:** Ni at least Fe above 7 Al; Fe at most 2.3 below
     1.5 Al.
-  - **Year 2 additions:** Zr, B, Sn (NAB only), and La or Ce.
+  - **Year 2 additions, as matched tests:** Zr, B, Sn and Ge (NAB only),
+    and La or Ce.
   - **In the proposal:** a new Task 2 paragraph and Table 1 replace the
     two-sentence alloy space and its TODO. The draft is now 16 counted
     pages, with 111 references.
