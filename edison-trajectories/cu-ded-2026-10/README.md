@@ -212,6 +212,11 @@ to a DED thermal history to choose a copper alloy composition.
   - Ciftcli et al. 2025 (10.2497/jjspm.15E-SIS13-03) show a photo of a copper
     alloy stream on a rePOWDER, with no numbers. They also used a TZM
     sonotrode at 40 kHz, for C103.
+  - *Added 2026-10-17, not found by Edison:* Choma et al. 2026
+    (10.3390/ma19132803, AMAZEMET) atomized about 500 g CuSn8 charges on a
+    rePOWDER induction module at about 1300 °C and 40 kHz, on C/C plates
+    with Si-Mo, Si-W and other coatings and a 0.5 mm graphite nozzle. Each
+    run turned 80-90% of the feed into powder, much of it 63-150 µm.
   - Ultrasonic powder has been deposited by blown-powder DED for other alloys:
     Fe-Al (10.21741/9781644903599-28) and an Al-Ni-Ce-Mn-Fe alloy, >99% dense
     (10.1088/2631-7990/ae3349).
@@ -444,6 +449,12 @@ None reports savings in physical corrosion experiments.
    - the induction module's maximum melt temperature;
    - the plate frequencies available.
    - Consider 90-10 Cu-Ni or NAB first, since both melt well below 1300 °C.
+
+   *Answered 2026-10-17 by AMAZEMET and the rePOWDER manual, except the
+   frequencies:* 1300 °C working limit; a BN-coated graphite crucible, with
+   an hBN nozzle for Ni- and Fe-bearing melts; a Mo- or W-coated C/C plate
+   on the 1:1.5 booster. NAB goes first. Details are in
+   `near-term-submissions/onr-yip/README.md`, section 9.
 4. **Alloy space:**
    - add Cr to 0-2 wt% in Cu-Ni (C72200-like);
    - consider Mn-Al bronze as the nickel-lean bronze family;

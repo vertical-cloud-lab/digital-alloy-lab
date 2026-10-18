@@ -26,7 +26,7 @@ printed aluminum as the naval application.
 | `support-letter-draft.md` | Letter of support for the chair or dean | Needs signer and real figures |
 | `preview/` | PNG renders of the proposal pages other than the CV (110 dpi) | Generated |
 | `budget/preview/` | PNG renders of the budget justification's first pages | Generated |
-| `onr-yip-technical-proposal-cu-ded.tex` / `.pdf` | **Alternative** technical proposal: seawater-resistant copper alloys designed as powders for blown-powder DED (section 9) | Draft, 15 of 20 counted pages |
+| `onr-yip-technical-proposal-cu-ded.tex` / `.pdf` | **Alternative** technical proposal: seawater-resistant copper alloys designed as powders for blown-powder DED (section 9) | Draft, 16 of 20 counted pages |
 | `abstract-cu-ded.txt` | SF-424 abstract for the alternative | Draft, 3,944 of 4,000 characters |
 | `preview-cu-ded/` | PNG renders of the alternative's pages (110 dpi) | Generated |
 | `attachments/field10-facilities-cu-ded.tex` / `.pdf`, `attachments/field11-equipment-cu-ded.tex` / `.pdf` | Fields 10 and 11 for the alternative (DED instead of LPBF, copper feedstock, powder checks) | Draft, 1 page each, TODOs |
@@ -333,6 +333,41 @@ look at the CubXL for the corrosion screen.
   - **Still open:** the equipment line is a TODO (option a or b in that
     file), because `budget.py` is private.
 
+**Atomizer set-up for copper, from AMAZEMET (2026-10-17, night).** Bartosz
+Kalicki answered the copper questions by message
+([PR #117](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/117#issuecomment-6243956526)).
+- **Pure copper:** a 0.5 mm nozzle, the 1:1.5 booster, and a carbon-carbon
+  (CFC) part with a Mo coating. He wrote "CFC nozzle"; he most likely means
+  the plate. In the consumables tour on Sep 30 (Training Video 9 at 39:01,
+  [byu-vcl notes](https://github.com/vertical-cloud-lab/byu-vcl/blob/88eeace/atomizer-training/notes/groupC.md))
+  he showed us a CF plate with a Mo-coated tip "used mostly for copper", and
+  he has said CF plates only run on the 1:1.5 booster (byu-vcl#268). Asked to
+  confirm. The first pour heats the plate; once the melt wets it,
+  atomization is continuous.
+- **NAB and 90-10:** nickel and iron "can lead to high reactivity with the
+  crucible", so coat the crucible and use an hBN nozzle. He said the same in
+  training (Video 4 at 3:35). The same tour shows BN nozzles, alumina
+  sealing rods for reactive melts, and Mo- and W-coated CF plates in our
+  kit (Video 9 at 34:17-39:22).
+- **Published basis:** AMAZEMET's Choma et al. 2026 (*Materials* 19, 2803,
+  doi:10.3390/ma19132803; Bartosz is a co-author) atomized about 500 g of
+  CuSn8 per run on a rePOWDER induction module at about 1300 °C. They used
+  C/C plates with Si-Mo, Si-W and three other coatings, a standard 0.5 mm
+  graphite nozzle, about 50 ppm O2, and 0.6 bar working pressure after a
+  1.5 bar burst at the start. 80-90% of the feed became powder, much of it
+  63-150 um. The Edison runs (cu-ded-2026-10) did not find this paper.
+- **In the proposal:** Preliminary results state the 1,300 °C working limit.
+  Task 2 describes the BN-coated crucible, the hBN nozzle for Ni- and
+  Fe-bearing melts, and the coated plate, cites Choma 2026, adds an SEM check
+  for plate fibers, and adds carbon to the oxygen analysis. Risks covers
+  coating wear and carbon pickup, and Fields 10 and 11 match. The
+  Ti-6Al-4V-plate and ceramic-crucible TODOs are gone. Still 16 counted
+  pages, now with 112 references.
+- **First run:** NAB (McMaster 8203K41) on a copper-only crucible set, with
+  oxygen-free copper (8965K72) as a fallback that uses the pure-copper set-up
+  as given; 90-10 is on hold. The run checklist and the questions sent back
+  to Bartosz are in the PR comment linked above.
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
 1. **DED facility, system, and price per session.** Candidate: the InssTek
@@ -344,24 +379,25 @@ look at the CubXL for the corrosion screen.
    $800. DED sessions will cost more and there will be fewer; re-price in
    `budget/budget.py` (private) and the totals on the cover page change.
    Materials lines also change (copper bar, nickel and master alloys instead
-   of aluminum bar and Al master alloys).
-2. **Atomizer limits for copper:**
-   - the induction module's maximum melt temperature (70-30 Cu-Ni melts close
-     to it);
-   - the **plate (sonotrode) material**: copper reacts with Ti-6Al-4V, and the
-     published NAB runs used a carbon-fiber plate that shed fibers;
-   - the crucible material (no published comparison exists; try alumina or
-     stabilized zirconia first);
+   of aluminum bar and Al master alloys), and should add coated plates, BN
+   nozzles and BN spray, which wear out.
+2. **Atomizer for copper.** Settled (see above): the 1,300 °C working limit,
+   a BN-coated graphite crucible, an hBN nozzle for Ni- and Fe-bearing melts,
+   and a Mo- or W-coated C/C plate on the 1:1.5 booster. Still open:
+   - the plate, nozzle bore and setpoint for NAB and Cu-Ni (asked);
    - the charge size;
    - the plate frequencies. Lang's relation gives about 75 um for a copper
-     melt at 20 kHz, but measured NAB powder at 40 kHz was about twice the
-     relation's estimate.
+     melt at 20 kHz. Measured NAB powder at 40 kHz was about twice the
+     relation's estimate, and much of AMAZEMET's CuSn8 at 40 kHz fell
+     between 63 and 150 um.
 3. Commercial 70-30 Cu-Ni and NAB powders for the baselines.
-4. A first copper powder lot (SEM and size distribution) as preliminary
-   data, if a run fits before Oct 23.
+4. A first NAB powder lot (SEM and size distribution) as preliminary data.
+   The run is planned for the week of Oct 19; attachments can be replaced
+   until SPO submits on Oct 28.
 5. Thermo-Calc: confirm the BYU license includes TCCU, and which version
    (the search-space coverage numbers are for TCCU7, Thermo-Calc 2026b).
-6. Oxygen analysis (inert-gas fusion) at a service lab.
+6. Oxygen (inert-gas fusion) and carbon (combustion) analysis at a service
+   lab. Carbon, because the crucible is graphite and the plates are C/C.
 7. Immersion durations, the selective-attack depth limit in H5 (the TODO now
    lists published 21- and 30-day depths of 1.8 to 3.4 um and more than 3 um),
    and natural or substitute seawater.

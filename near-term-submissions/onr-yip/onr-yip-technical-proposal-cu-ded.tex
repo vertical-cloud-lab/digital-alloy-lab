@@ -447,11 +447,12 @@ atomizer, and completed a powder-to-part demonstration on a baseline aluminum
 alloy. Atomized powder, laser powder bed fusion builds, scanning electron
 microscopy (SEM) and energy-dispersive X-ray spectroscopy (EDS) results, and
 tensile data are in hand. The atomizer's induction module also melts copper
-alloys. NAB and 90-10 copper-nickel melt well below its upper limit, and
-70-30 copper-nickel melts near it \todo{confirm the module's maximum melt
-temperature and add the first copper alloy powder (SEM image and size
-distribution) if a run is possible before 23 October; 6 pages of the 20-page
-limit are still free.}
+alloys, up to its working limit of 1,300\,\textdegree{}C. NAB and 90-10
+copper-nickel melt about 250 and 150\,\textdegree{}C below that limit, and
+70-30 copper-nickel within about 60\,\textdegree{}C of it \todo{add the first
+NAB powder (SEM image and size distribution) from the run planned for the
+week of 19 October; attachments can be replaced until SPO submits on
+28 October, and 4 pages of the 20-page limit are still free.}
 
 % Fig. 2 redraws the synthetic network from the MS&T26 talk
 % (benchmarks/bofn-prelim/explain/frames/00-network.png); functions and costs
@@ -661,31 +662,36 @@ lab's aluminum data and from the copper data that Task 2 adds each year.
 Powder for each candidate will be made in our laboratory. Oxygen-free copper
 bar is machined into cups that hold the charge. Nickel, iron, manganese,
 aluminum, and other additions are weighed in to 0.1~mg as pure metals or
-copper master alloys, about 0.5~kg per composition \todo{confirm the charge size
-and crucible material for copper alloys. No published study compares
-crucibles for small Cu-Ni or NAB melts, and alumina or stabilized zirconia
-would be the first to try, since graphite can add carbon to nickel-bearing
-melts}. The charge is melted in the
-induction module of the ultrasonic atomizer (AMAZEMET rePOWDER) and dripped
-onto a vibrating plate, where it breaks into droplets \todo{confirm the plate
-material for copper melts: copper wets and dissolves titanium alloys, with
-Cu-Ti eutectics at 875 and 960\,\textdegree{}C, and the published NAB runs
-used a carbon-fiber plate that left fibers in the powder~\cite{uhlmann2024}}.
-The median droplet
+copper master alloys, about 0.5~kg per composition \todo{confirm the charge
+size after the first NAB run}. The charge is melted in the induction module
+of the ultrasonic atomizer (AMAZEMET rePOWDER), in a graphite crucible coated
+with boron nitride, and poured through a 0.5~mm nozzle onto a vibrating
+plate, where it breaks into droplets. Nickel and iron take up carbon from
+graphite, so melts that contain them are poured through a boron nitride
+nozzle, as the manufacturer advises. Many alloys wet bare carbon-carbon
+composite poorly~\cite{choma2026}, so the plate is carbon-carbon with a
+molybdenum- or tungsten-based coating where the melt lands. The first part of
+each pour heats the plate until the melt wets it, and atomization is then
+continuous. With such plates on our model of atomizer, the manufacturer
+turned 80 to 90\% of each charge of a tin bronze (CuSn8) into
+powder~\cite{choma2026} \todo{confirm with AMAZEMET the plate and nozzle
+for NAB and copper-nickel; the published NAB runs used a bare carbon-fiber
+plate that left fibers in the powder~\cite{uhlmann2024}}. The median droplet
 size follows the wavelength of capillary waves on the plate, so it falls as
 the frequency to the power $-2/3$~\cite{lang1962}. For a copper melt, Lang's
 relation gives a median near 75~$\mu$m at 20~kHz, coarse enough for a
-blown-powder nozzle. Measured powders can be coarser: NAB atomized at
+blown-powder nozzle. Measured powders can be coarser. NAB atomized at
 40~kHz had a median of 98~$\mu$m~\cite{uhlmann2024}, about twice the
-relation's estimate, so the plate frequency is one of the atomizer settings
-the search chooses \todo{confirm the plate frequencies available on our unit
-and the size range the DED system accepts; published blown-powder work on
-bronzes used 45 to 106 and 45 to 150~$\mu$m cuts~\cite{li2021,pi2025}}.
-Each lot is sieved to that range and checked for size
-distribution (laser diffraction), flow and apparent density with a Hall
-funnel~\cite{astmB213,astmB212}, shape and satellites (SEM), and oxygen
-content \todo{name the oxygen analysis, e.g., inert-gas fusion at a service
-laboratory}. With the gas flows and the laser spot, the size distribution sets
+relation's estimate, and much of the CuSn8 powder made at 40~kHz fell
+between 63 and 150~$\mu$m~\cite{choma2026}. The plate frequency is therefore
+one of the atomizer settings the search chooses \todo{confirm the plate frequencies
+available on our unit and the size range the DED system accepts; published
+blown-powder work on bronzes used 45 to 106 and 45 to 150~$\mu$m
+cuts~\cite{li2021,pi2025}}. Each lot is sieved to that range and checked for
+size distribution (laser diffraction), flow and apparent density with a Hall
+funnel~\cite{astmB213,astmB212}, shape, satellites, and stray plate fibers
+(SEM), and oxygen and carbon content \todo{name the service laboratory:
+inert-gas fusion for oxygen, combustion for carbon}. With the gas flows and the laser spot, the size distribution sets
 how much of the powder the melt pool catches~\cite{ancalmo2025}. The search chooses the atomizer settings along with the
 composition, so the powder, not only the alloy, is designed for blown powder.
 
@@ -758,8 +764,9 @@ were reviewed one at a time, including every element that appears in a
 commercial copper alloy, a copper alloy or welding filler specification, a
 deoxidizing practice, or the atomizer's crucible and plate materials. Each review asked whether the
 element helps seawater resistance, deposit soundness, or repair; what sets
-its upper limit; whether it can be melted and atomized in a ceramic crucible
-below about 1,300\,\textdegree{}C; and whether Thermo-Calc's copper database
+its upper limit; whether it can be melted and atomized below the atomizer's
+1,300\,\textdegree{}C limit without attacking the crucible or plate; and
+whether Thermo-Calc's copper database
 (TCCU7~\cite{tccu7}) assesses its systems. Eight elements are searched from
 the start (Table~\ref{tab:space}), with copper as the balance at no less
 than 65\% and a calculated liquidus no higher than 1,250\,\textdegree{}C.
@@ -986,7 +993,7 @@ Process-aware physics & Lower calibration error with thermal-history inputs
 than with equilibrium inputs, and with equilibrium inputs than without (H3). \\
 Powder for blown-powder DED & Every deposited composition made in-house,
 sieved to the DED size range, with its size distribution, flow, and oxygen
-content recorded. \\
+and carbon content recorded. \\
 Corrosion screen & Top-ranked candidates pass the 30-day immersion test
 more often than bottom-ranked ones (H5). \\
 Lower cost on real deposits & Lower median cost to reach the target than the
@@ -1046,10 +1053,14 @@ simulated benchmark. If deposit scatter is large, more replicates will be
 added and the scatter will enter the models directly. If a composition cannot
 be atomized, for example because it melts too close to the module's limit,
 the search records the failure as a result, since predicting which
-compositions can be made is part of the task. If copper attacks the
-standard plate of the atomizer, we will test the carbon-fiber plate already
-used for NAB~\cite{uhlmann2024} and a molybdenum-alloy
-plate~\cite{ciftcli2025}. If a lot flows poorly, the
+compositions can be made is part of the task. If a plate's coating wears and
+the melt stops wetting it, the plate is replaced; the tungsten-based coating,
+the best balanced in the manufacturer's comparison~\cite{choma2026}, is the
+alternative. If melts that contain nickel or iron still pick up carbon, which
+each lot's carbon analysis will show, the crucible will be recoated before
+every run, and an alumina sealing rod and a molybdenum-alloy
+plate~\cite{ciftcli2025} will replace the graphite rod and the carbon-carbon
+plate. If a lot flows poorly, the
 search sees that at the powder step and can change the atomizer settings
 before paying for a deposit. If the first layer will not fuse to thick cast
 NAB or copper-nickel plate, the repair coupons will be preheated or made
@@ -1173,7 +1184,7 @@ procedures.
 
 \textbf{Types of data, software, and other materials.} Thermodynamic and heat
 flow calculation results; atomizer settings and powder size, flow, density,
-and oxygen records; DED deposition settings and session logs; optical and
+oxygen, and carbon records; DED deposition settings and session logs; optical and
 electron micrographs, EDS spectra, and EBSD maps; tensile and hardness data;
 polarization and impedance data, immersion mass losses, and cross-sections of
 corrosion attack; the search software, benchmark problems, and trained
@@ -1640,6 +1651,10 @@ manufacturing of metallic components: Process, structure and properties,''
 \bibitem{tan2024}
 Y.~Tan, H.~Xie, X.~Feng, S.~Huang, W.~Zhang, L.~Peng, W.~Wang, and Y.~Zhao, ``Effect of Al/Ni ratio on the microstructure and properties of nickel-aluminum bronze alloys,'' \emph{Materials} \textbf{17}(6), 1330 (2024).
 \href{https://doi.org/10.3390/ma17061330}{doi:10.3390/ma17061330}
+
+\bibitem{choma2026}
+T.~Choma, M.~J. Kruszewski, A.~Chądzyńska, B.~Kalicki, B.~Morończyk, J.~Ciftci, {\L}.~\.{Z}rodowski, J.~Zdunek, and M.~Leonowicz, ``Design-oriented comparison of Si--Me (Me = Mo, Ti, Zr, Ta, W) infiltration coatings on C/C sonotrodes for ultrasonic atomization of CuSn8: microstructure, phase constitution, wettability, nanoindentation, and process performance,'' \emph{Materials} \textbf{19}(13), 2803 (2026).
+\href{https://doi.org/10.3390/ma19132803}{doi:10.3390/ma19132803}
 
 \bibitem{lang1962}
 R.~J. Lang, ``Ultrasonic atomization of liquids,'' \emph{J. Acoust. Soc. Am.} \textbf{34}(1), 6-8 (1962).
