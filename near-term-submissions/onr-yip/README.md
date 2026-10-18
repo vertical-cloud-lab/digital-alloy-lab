@@ -357,16 +357,50 @@ Kalicki answered the copper questions by message
   1.5 bar burst at the start. 80-90% of the feed became powder, much of it
   63-150 um. The Edison runs (cu-ded-2026-10) did not find this paper.
 - **In the proposal:** Preliminary results state the 1,300 °C working limit.
-  Task 2 describes the BN-coated crucible, the hBN nozzle for Ni- and
-  Fe-bearing melts, and the coated plate, cites Choma 2026, adds an SEM check
-  for plate fibers, and adds carbon to the oxygen analysis. Risks covers
+  Task 2 describes the hBN nozzle for Ni- and Fe-bearing melts and the
+  coated plate, cites Choma 2026, adds an SEM check for plate fibers, and
+  adds carbon to the oxygen analysis. It also said the crucible was
+  BN-coated, which was wrong (corrected 2026-10-18, below). Risks covers
   coating wear and carbon pickup, and Fields 10 and 11 match. The
   Ti-6Al-4V-plate and ceramic-crucible TODOs are gone. Still 16 counted
   pages, now with 112 references.
-- **First run:** NAB (McMaster 8203K41) on a copper-only crucible set, with
-  oxygen-free copper (8965K72) as a fallback that uses the pure-copper set-up
-  as given; 90-10 is on hold. The run checklist and the questions sent back
-  to Bartosz are in the PR comment linked above.
+- **First run** (superseded 2026-10-18, below): NAB (McMaster 8203K41) on a
+  copper-only crucible set, with oxygen-free copper (8965K72) as a fallback
+  that uses the pure-copper set-up as given; 90-10 is on hold.
+
+**Crucible coating, corrected (2026-10-18).** The lab has no BN-coated
+crucible
+([PR #117](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/117#issuecomment-6244476716)).
+The previous entry took a pre-run checklist item in the training SOP,
+"Crucible BN-coated the night before and dry" (byu-vcl PR #255,
+`atomizer-training/sop.md`), as lab practice. It records Bartosz's advice;
+the aluminum runs have used bare graphite.
+- **What he said in training:** crucibles are not sold coated. Users spray
+  their own, like paint: a thin coat of BN in an alcohol carrier with
+  inorganic binders, applied the night before and left to dry. A bottle is
+  about $50, and a coat lasts a few runs (Training Video 1, Sep 29,
+  41:59-43:10). On Sep 28 he said a coating is good for reactive melts and
+  that aluminum and magnesium are fine without one. He named a US maker in
+  Oak Ridge (ZYP Coatings) and offered to name the spray AMAZEMET uses
+  (phone recording, 10:34-11:36).
+- **Spray:** ZYP's 13 oz BN aerosol is listed at $52.95 at Delphi Glass,
+  ground shipping only. ZYP rates its BN coatings to 1,800 °C in inert gas,
+  on graphite. Henze's HeBoCoat SL-E 125 (ethanol, inorganic binders) fits
+  his description best, but I found it only from a UK seller.
+- **NAB from bare graphite has precedent:** Müller et al. 2023 atomized NAB
+  grinding chips on an AMAZEMET rePowder with "a graphite-based crucible and
+  pouring system", a 1 mm nozzle, 1300 °C and a 40 kHz CF plate. Yield was
+  77% and oxygen 0.0125%. The paper doesn't mention a coating and didn't
+  measure carbon. Earlier notes put this run on an AUS 500; that is the
+  machine Uhlmann et al. 2024 name (the version AMAZEMET developed with Blue
+  Power).
+- **In the proposal:** Task 2 now says the crucible is graphite and is
+  sprayed with BN before Ni- and Fe-bearing melts, and cites Müller 2023 for
+  NAB from graphite on our model. The Preliminary-results TODO, the Risks
+  wording and Field 10 match. Still 16 counted pages, 112 references.
+- **First runs:** oxygen-free copper (C10100) first, in the bare crucible,
+  with the pure-copper set-up Bartosz gave. NAB follows once the crucible is
+  sprayed, or goes in a spare bare crucible if he agrees.
 
 **Placeholders specific to this version** (red TODOs in the PDF):
 
@@ -382,8 +416,9 @@ Kalicki answered the copper questions by message
    of aluminum bar and Al master alloys), and should add coated plates, BN
    nozzles and BN spray, which wear out.
 2. **Atomizer for copper.** Settled (see above): the 1,300 °C working limit,
-   a BN-coated graphite crucible, an hBN nozzle for Ni- and Fe-bearing melts,
-   and a Mo- or W-coated C/C plate on the 1:1.5 booster. Still open:
+   graphite crucibles sprayed with BN before Ni- and Fe-bearing melts (the
+   spray still has to be bought), an hBN nozzle for those melts, and a Mo- or
+   W-coated C/C plate on the 1:1.5 booster. Still open:
    - the plate, nozzle bore and setpoint for NAB and Cu-Ni (asked);
    - the charge size;
    - the plate frequencies. Lang's relation gives about 75 um for a copper
@@ -391,8 +426,9 @@ Kalicki answered the copper questions by message
      relation's estimate, and much of AMAZEMET's CuSn8 at 40 kHz fell
      between 63 and 150 um.
 3. Commercial 70-30 Cu-Ni and NAB powders for the baselines.
-4. A first NAB powder lot (SEM and size distribution) as preliminary data.
-   The run is planned for the week of Oct 19; attachments can be replaced
+4. A first copper powder lot (SEM and size distribution) as preliminary
+   data: C10100 in the bare crucible, then NAB once the crucible is sprayed.
+   The runs are planned for the week of Oct 19; attachments can be replaced
    until SPO submits on Oct 28.
 5. Thermo-Calc: confirm the BYU license includes TCCU, and which version
    (the search-space coverage numbers are for TCCU7, Thermo-Calc 2026b).

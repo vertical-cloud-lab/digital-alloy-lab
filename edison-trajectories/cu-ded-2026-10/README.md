@@ -110,10 +110,15 @@ which has no DOI.
    copper alloy powder for blown-powder DED, but only in existing
    compositions:
    - Müller et al. 2023 and Uhlmann et al. 2024 used NAB propeller grinding
-     chips, on an AMAZEMET AUS 500 (not a rePOWDER). Conditions: induction at
-     1300 °C, a 40 kHz carbon-fiber sonotrode, argon 5.0. Median particle size
-     was 98 µm, with ~20 µm carbon fibers in the powder. All verified in the
-     full text.
+     chips. Conditions: induction at 1300 °C, a 40 kHz carbon-fiber
+     sonotrode, argon 5.0. Median particle size was 98 µm (96 µm in Müller
+     2023), with ~20 µm carbon fibers in the powder. All verified in the full
+     text.
+   - *Corrected 2026-10-18:* this said both runs were on an AUS 500 "(not a
+     rePOWDER)". Uhlmann 2024 names an AUS 500, the atomizer AMAZEMET
+     developed with Blue Power. Müller 2023 names an AMAZEMET rePowder, with
+     "a graphite-based crucible and pouring system" and a 1 mm nozzle (77%
+     yield). It doesn't mention a crucible coating.
    - Cabrioli et al. 2025 used offshore-cable copper and printed it by laser
      DED (verified in the abstract).
 3. **As-deposited vs annealed NAB.** Whether annealing helps depends on the
@@ -451,10 +456,13 @@ None reports savings in physical corrosion experiments.
    - Consider 90-10 Cu-Ni or NAB first, since both melt well below 1300 °C.
 
    *Answered 2026-10-17 by AMAZEMET and the rePOWDER manual, except the
-   frequencies:* 1300 °C working limit; a BN-coated graphite crucible, with
-   an hBN nozzle for Ni- and Fe-bearing melts; a Mo- or W-coated C/C plate
-   on the 1:1.5 booster. NAB goes first. Details are in
-   `near-term-submissions/onr-yip/README.md`, section 9.
+   frequencies:* 1300 °C working limit; graphite crucibles, sprayed in-house
+   with BN before Ni- and Fe-bearing melts, with an hBN nozzle for those
+   melts; a Mo- or W-coated C/C plate on the 1:1.5 booster. *Corrected
+   2026-10-18:* the lab has no coated crucible yet, so oxygen-free copper
+   goes first, in the bare crucible, and NAB follows once the crucible is
+   sprayed. Details are in `near-term-submissions/onr-yip/README.md`,
+   section 9.
 4. **Alloy space:**
    - add Cr to 0-2 wt% in Cu-Ni (C72200-like);
    - consider Mn-Al bronze as the nickel-lean bronze family;
@@ -490,8 +498,10 @@ None reports savings in physical corrosion experiments.
   powder; b3-04 and b4-03 give 130 ppm, with 190 ppm for the gas-atomized
   reference. The values are in a figure that could not be read from the text,
   so neither is quoted in the proposal.
-- **Equipment.** Early answers implied the NAB run was on a rePOWDER. b3-04
-  found it was an AUS 500.
+- **Equipment.** Early answers implied the NAB run was on a rePOWDER, and
+  b3-04 said it was an AUS 500. Each fits one paper: Müller 2023 names a
+  rePowder and Uhlmann 2024 an AUS 500 (checked in both full texts,
+  2026-10-18).
 - **Navy documents.** Several answers said a Navy AM specification for
   wire-arc NAB or Cu-Ni could not be verified. Edison does not search
   ASSIST; MIL-PRF-32804, -32815 and -32816 were checked there on 2026-10-17.

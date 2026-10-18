@@ -441,10 +441,11 @@ settled as follows:
 
    *Answered 2026-10-17:* the working limit is 1,300 °C (rePOWDER manual
    and AMAZEMET), so the 1,250 °C liquidus cap stands. AMAZEMET added that
-   Ni and Fe react with the graphite crucible, so those melts get a coated
-   crucible and an hBN nozzle. Cr, Ti and Nb form carbides more readily
-   than Ni or Fe, so ask AMAZEMET before the first charge that contains
-   them.
+   Ni and Fe react with the graphite crucible, so those melts get a crucible
+   sprayed with BN and an hBN nozzle. The spray is applied in-house; the lab
+   has no coated crucible yet (2026-10-18). Cr, Ti and Nb form carbides more
+   readily than Ni or Fe, so ask AMAZEMET before the first charge that
+   contains them.
 3. **Read the full texts behind three numbers:** Du et al. 2025 (rare
    earths), Poojary et al. 2023 (Sn in NAB, doi:10.1038/s41598-023-44146-y),
    and Tuck's MARINEL work (the joint answer's Cu-Ni-Al bridge ranges). The
