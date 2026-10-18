@@ -383,10 +383,15 @@ the aluminum runs have used bare graphite.
   that aluminum and magnesium are fine without one. He named a US maker in
   Oak Ridge (ZYP Coatings) and offered to name the spray AMAZEMET uses
   (phone recording, 10:34-11:36).
-- **Spray:** ZYP's 13 oz BN aerosol is listed at $52.95 at Delphi Glass,
-  ground shipping only. ZYP rates its BN coatings to 1,800 °C in inert gas,
-  on graphite. Henze's HeBoCoat SL-E 125 (ethanol, inorganic binders) fits
-  his description best, but I found it only from a UK seller.
+- **Spray:** ZYP's BN Aerosol Lubricoat (13 oz) is $45 from ZYP and
+  $52.95 at Delphi Glass, ground shipping only. Its carrier is ethanol and
+  acetone and its binder magnesium silicate, which fits his description.
+  ZYP's datasheet for the aerosol gives 1,000 °C (1,832 °F) in air,
+  1,400 °C in vacuum and 1,800 °C in inert gas; Delphi's "1800 °F" is the
+  in-air figure for glass kilns. (This line first cited the datasheet for
+  EAS-25, a water-based paint ZYP makes for Pyrotek; its limits are the
+  same.) Henze's HeBoCoat SL-E 125 (ethanol, inorganic binders) also fits,
+  but I found it only from a UK seller.
 - **NAB from bare graphite has precedent:** Müller et al. 2023 atomized NAB
   grinding chips on an AMAZEMET rePowder with "a graphite-based crucible and
   pouring system", a 1 mm nozzle, 1300 °C and a 40 kHz CF plate. Yield was
@@ -401,6 +406,40 @@ the aluminum runs have used bare graphite.
 - **First runs:** oxygen-free copper (C10100) first, in the bare crucible,
   with the pure-copper set-up Bartosz gave. NAB follows once the crucible is
   sprayed, or goes in a spare bare crucible if he agrees.
+
+**Coating sources and alumina (2026-10-18, later)**
+([PR #117](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/117#issuecomment-6245344292)).
+- **ZYP Coatings:** 120 Valley Court, Oak Ridge, TN 37830; +1-865-482-5717;
+  info@zypcoatings.com; Mon-Fri 8-5 Eastern. It sells direct online (US and
+  Canada prices).
+- **Fastest BN options:** ZYP's BN Lubricoat Blue Spray (SKU 1066, $31,
+  12 oz trigger bottle) is water-based with an alumina binder and has the
+  same three limits. ZYP says it is non-flammable and non-pressurized, so it
+  need not go by ground like the aerosol (SKU 1047-00). McMaster 10515K35 is
+  a 13 oz BN-and-ceramic aerosol rated 32-1,560 °F; McMaster doesn't name
+  the maker, and the product detail and SDS need a login.
+- **Alumina:** ZYP's A Aerosol (SKU 4039, $72) has the same carrier and
+  binder as the BN aerosol and is rated to 1,500 °C in vacuum with carbon
+  present. It would suit these alloys chemically. Molten Cu makes 110-117°
+  with alumina at 1,150-1,400 °C (Shen et al. 2005, doi:10.1557/JMR.2005.0127),
+  and Cu-rich Al-Cu melts about 120° at 1,100 °C (Schmitz 2011, RWTH
+  dissertation). AMAZEMET's patent EP4192985B1 melts CuCrZr in an alumina
+  crucible. Oxygen in the copper lowers the angle, to as little as 22° at
+  1,300 °C (Diemer et al. 1999, doi:10.1111/j.1151-2916.1999.tb02163.x),
+  another reason to use C10100 rather than C11000. BN stays first: it is
+  what Bartosz advised, and hBN is soft, while a flake of alumina is a hard
+  particle that could block the 0.5 mm nozzle or end up in the powder. ZYP
+  rates its solvent-based oxide aerosols "low adherence". Of the Year-2
+  additions, Ti and Zr can react with both alumina and BN, and La and Ce
+  form oxides more stable than alumina; ZYP sells yttria (Y Aerosol,
+  Type Y) for reactive melts like those.
+- **McMaster:** no alumina coating that fits. It has alumina casting
+  compounds and ceramic adhesives, which go on thick, and 0.5 um BN powder
+  (1402N13), which could be stirred into ethanol as a weak, binder-free
+  stopgap.
+- **Coating service:** none found that could coat a crucible this week.
+  CVD pBN or SiC on graphite is custom work, and a plasma-sprayed coating
+  would change how the nozzle and sealing rod seat.
 
 **Placeholders specific to this version** (red TODOs in the PDF):
 
