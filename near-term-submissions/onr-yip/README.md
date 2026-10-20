@@ -417,7 +417,8 @@ the aluminum runs have used bare graphite.
   same three limits. ZYP says it is non-flammable and non-pressurized, so it
   need not go by ground like the aerosol (SKU 1047-00). McMaster 10515K35 is
   a 13 oz BN-and-ceramic aerosol rated 32-1,560 °F; McMaster doesn't name
-  the maker, and the product detail and SDS need a login.
+  the maker, and the product detail and SDS need a login (the SDS names
+  Momentive; see 2026-10-20, below).
 - **Alumina:** ZYP's A Aerosol (SKU 4039, $72) has the same carrier and
   binder as the BN aerosol and is rated to 1,500 °C in vacuum with carbon
   present. It would suit these alloys chemically. Molten Cu makes 110-117°
@@ -440,6 +441,35 @@ the aluminum runs have used bare graphite.
 - **Coating service:** none found that could coat a crucible this week.
   CVD pBN or SiC on graphite is custom work, and a plasma-sprayed coating
   would change how the nozzle and sealing rod seat.
+
+**McMaster 10515K35 SDS (2026-10-20)**
+([PR #117](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/117#issuecomment-6282838103)).
+- **What it is:** Momentive Technologies' Boron Nitride Spray II (part
+  2111750, Strongsville, OH; SDS v1.1 of 2024-12-12), a "high temperature
+  mold release for metals and glasses". $52.73 from McMaster.
+- **Carrier:** ethanol 30-60%, acetone 10-30%, methanol 1-5% and MIBK
+  0.1-1%, with propane, n-butane and isobutane as propellant. This is the
+  same family as ZYP's aerosol (ethanol/acetone, propane/butane). The
+  contents are 94.5% volatile, so the dried coat is about 5.5% of the can;
+  BN is 1-5%.
+- **Binder:** not named; non-hazardous ingredients need not be listed. The
+  Prop 65 table lists 0.034% quartz, which suggests a silicate mineral such
+  as a clay. Momentive's water-based grades use bentonite or alumina. ZYP's
+  aerosol uses magnesium silicate and fires to 97% BN.
+- **Ratings:** Momentive's
+  [coatings page](https://www.momentivetech.com/products/boron-nitride-coatings-2024)
+  rates its dried BN coatings to 850 °C in oxidizing atmospheres and
+  1,800 °C in inert gas or vacuum; McMaster's 1,560 °F (849 °C) is the
+  in-air figure. About 100 ft² per 13 oz can (ZYP: 30-50).
+- **Silicon bound:** the can holds about 20 g of solids for its 100 ft², so
+  a coat is about 0.2 mg/cm². Even 0.5 g of coat, all of it silica (47% Si)
+  and all dissolved into a 300 g NAB charge, would add 0.08% Si; C63000
+  allows 0.25%.
+- **Handling:** signal word Danger: extremely flammable aerosol. The
+  methanol brings the organ-damage statement (H370) and the MIBK the
+  suspected-carcinogen one (H351). Spray outside the atomizer, in a fume
+  hood away from ignition sources, with gloves and goggles, and let it dry
+  there. Ships as UN1950, Limited Quantity.
 
 **Placeholders specific to this version** (red TODOs in the PDF):
 
