@@ -23,7 +23,10 @@
 % single-spaced, Times New Roman 12 pt, 20 counted pages.
 %
 % The budget macros are the aluminum version's (budget/budget-numbers.tex).
-% Its LPBF build line has not been re-priced as DED sessions; see the README.
+% A DED session on the FormAlloy X2 at the facility's external rates ($795:
+% 3 machine hours at $155, 2 labor hours at $165) costs about what an LPBF
+% build did ($800), but budget.py (private) still needs the DED, track, and
+% copper lines; see README.md section 9, entry of 2026-10-21.
 %
 % Red [TODO Sterling: ...] markers are guesses or facts not yet confirmed.
 %
@@ -116,8 +119,11 @@ Period of performance & Base period only, 36 months: 1 April 2027 to
   31 March 2030. No option periods. \\
 Requested amount & \$\BudgetTotal{} total: \$\BudgetYearOne, \$\BudgetYearTwo,
   and \$\BudgetYearThree{} in the three 12-month periods \todo{these are the
-  aluminum version's figures; re-price the LPBF builds as DED sessions, then
-  final figures from BYU Research Administration} \\
+  aluminum version's figures. A DED session at the X2 facility's external
+  rates (\$795) costs about what an LPBF build did (\$800), and the session
+  line fills what remains under the annual cap, so each year should again
+  come to just under \$250,000. Re-run budget.py with the DED, track, and
+  copper lines, then final figures from BYU Research Administration} \\
 \end{tabular}
 \end{titlepage}
 
@@ -172,16 +178,19 @@ the error.
 The powder is a second obstacle. Single-stream blown-powder DED, the form in
 use today, feeds a pre-alloyed powder from one hopper, so each new composition
 needs its own powder lot, in a size range that flows through the nozzle and
-that the melt pool catches~\cite{ancalmo2025,singh2020}.
+that the melt pool catches~\cite{ancalmo2025,singh2020}. The lot must also
+fill the hopper, about 2~kg on the system this project will use
+(Section~\ref{sec:task2}).
 Industrial gas atomizers make powder in lots of tens of kilograms or more, so
 new compositions are rarely tried \todo{cite a minimum lot size, e.g., a
 vendor's}. Our ultrasonic atomizer makes a lot of a new composition in a day
-from about half a kilogram of feedstock (Section~\ref{sec:task2}). Ultrasonic
+from about half a kilogram of feedstock, and 2~kg in about six runs. Ultrasonic
 atomizers have already made powder for blown-powder DED from NAB
 propeller grinding chips~\cite{muller2023,uhlmann2024} and from copper cable
 scrap~\cite{cabrioli2025}, but only in existing compositions. That turns
-the powder from a purchase into a step the search can choose, and it lets the
-search design the powder along with the alloy.
+the powder from a purchase into steps the search can choose: a small lot for
+cheap tests of many compositions, and a full lot only for those worth
+depositing. It also lets the search design the powder along with the alloy.
 
 This project asks a basic question. When the steps of a materials workflow
 differ in cost by orders of magnitude, and results arrive at different times,
@@ -364,33 +373,37 @@ computing, and each new result is available to the next decision.
   input/.style={font=\small\itshape, align=center}
 ]
 \node[box] (s1) at (0,0) {CALPHAD\\and heat\\flow\\\textit{minutes}};
-\node[box] (s2) at (2.6,0) {Powder\\(ultrasonic\\atomization)\\\textit{a day}};
-\node[box] (s3) at (5.2,0) {DED\\deposits\\\textit{days}};
-\node[box] (s4) at (7.8,0) {Micro-\\structure\\(SEM, EDS,\\EBSD)\\\textit{a day}};
-\node[box] (s5) at (10.4,0.95) {Tensile\\tests\\\textit{days}};
-\node[box] (s6) at (10.4,-0.95) {Corrosion\\screen\\(seawater)\\\textit{an hour}};
-\node[box, text width=2.35cm] (s7) at (13.15,-0.95) {Immersion\\(selective\\attack, film)\\\textit{weeks}};
-\foreach \a/\b in {s1/s2, s2/s3, s3/s4, s6/s7} \draw[arr] (\a) -- (\b);
-\draw[arr] (s4.east) -- ++(0.25,0) |- (s5.west);
-\draw[arr] (s4.east) -- ++(0.25,0) |- (s6.west);
-\node[input] (comp) at (1.3,1.55) {composition};
+\node[box] (s2) at (2.6,0) {Powder lot\\(ultrasonic\\atomization)\\\textit{a day}};
+\node[box] (s3) at (5.2,0) {Pre-placed\\tracks\\\textit{days}};
+\node[box] (s4) at (7.8,0) {Blown-\\powder DED\\(2~kg lot)\\\textit{weeks}};
+\node[box] (s5) at (10.4,0) {Micro-\\structure\\(SEM, EDS,\\EBSD)\\\textit{a day}};
+\node[box] (s6) at (13.0,0.95) {Tensile\\tests\\\textit{days}};
+\node[box] (s7) at (13.0,-0.95) {Corrosion\\screen\\(seawater)\\\textit{an hour}};
+\node[box, text width=2.35cm] (s8) at (13.0,-3.25) {Immersion\\(selective\\attack, film)\\\textit{weeks}};
+\foreach \a/\b in {s1/s2, s2/s3, s3/s4, s4/s5, s7/s8} \draw[arr] (\a) -- (\b);
+\draw[arr] (s5.east) -- ++(0.25,0) |- (s6.west);
+\draw[arr] (s5.east) -- ++(0.25,0) |- (s7.west);
+\node[input] (comp) at (1.3,1.85) {composition};
 \draw[arr] (comp.south) -- ++(0,-0.1) -| (s1.north);
 \draw[arr] (comp.south) -- ++(0,-0.1) -| (s2.north);
 \node[input] (atom) at (2.6,-1.6) {atomizer settings};
 \draw[arr] (atom) -- (s2);
-\node[input] (dep) at (5.2,1.55) {deposition settings};
-\draw[arr] (dep) -- (s3);
-\draw[arr, dashed] (s7.south) -- ++(0,-0.3) -| (s1.south);
+\node[input] (dep) at (6.5,1.85) {deposition settings};
+\draw[arr] (dep.south) -- ++(0,-0.1) -| (s3.north);
+\draw[arr] (dep.south) -- ++(0,-0.1) -| (s4.north);
+\draw[arr, dashed] (s8.west) -| (s1.south);
 \end{tikzpicture}
 \caption{The workflow as linked models, with typical times per result in
-italics (DED sessions include turnaround at the facility; deposits are tracks,
-walls, blocks, and repair coupons). Composition enters
-at the first two steps, atomizer settings at the second, and deposition
-settings (laser power, travel speed, powder feed rate) at the third; the heat
-flow model also takes the deposition settings. After microscopy the network
-branches to tensile tests and to corrosion tests. Dashed arrow: each result
-updates the models, which choose the next experiments and steps by expected
-gain per cost.}
+italics. Pre-placed tracks use grams of a first powder lot. A composition
+that passes is scaled up to the 2~kg lot that the hopper of the DED system needs,
+so its blown-powder deposits (tracks, walls, blocks, and repair coupons) take
+weeks, including the extra atomizer runs and turnaround at the facility.
+Composition enters at the first two steps, atomizer settings at the second,
+and deposition settings (laser power, travel speed, and for blown powder the
+feed rate) at the third and fourth; the heat flow model also takes the
+deposition settings. After microscopy the network branches to tensile tests
+and to corrosion tests. Dashed arrow: each result updates the models, which
+choose the next experiments and steps by expected gain per cost.}
 \label{fig:network}
 \end{figure}
 
@@ -452,7 +465,10 @@ copper-nickel melt about 250 and 150\,\textdegree{}C below that limit, and
 70-30 copper-nickel within about 60\,\textdegree{}C of it \todo{add the first
 copper powder (SEM image and size distribution) from the runs planned for the
 week of 19 October; attachments can be replaced until SPO submits on
-28 October, and 4 pages of the 20-page limit are still free.}
+28 October, and 3 pages of the 20-page limit are still free.} The DED
+facility of Task~2 has already melted copper-nickel powder spread in grooves,
+the pre-placed tracks that Task~2 uses as its first deposition step
+\todo{ask Sam whether these tracks, and a photo, may be shown}.
 
 % Fig. 2 redraws the synthetic network from the MS&T26 talk
 % (benchmarks/bofn-prelim/explain/frames/00-network.png); functions and costs
@@ -590,7 +606,8 @@ deposition settings, and decides at each step whether a candidate goes on.
 After microscopy, specimens go to tensile tests, or to the corrosion screen
 and, for selected candidates, to immersion tests. Candidates that deposit well
 get a repair coupon: a deposit on cast NAB or wrought copper-nickel plate,
-checked for cracks, dilution, and hardness across the fusion line. The
+checked for cracks, dilution, and hardness across the fusion line.
+Pre-placed tracks on the same plates come first. The
 demonstration includes real deposit-to-deposit scatter, outputs computed from
 microscopy images, and three inputs that enter at different steps.
 
@@ -662,8 +679,9 @@ lab's aluminum data and from the copper data that Task 2 adds each year.
 Powder for each candidate will be made in our laboratory. Oxygen-free copper
 bar is machined into cups that hold the charge. Nickel, iron, manganese,
 aluminum, and other additions are weighed in to 0.1~mg as pure metals or
-copper master alloys, about 0.5~kg per composition \todo{confirm the charge
-size after the first copper runs}. The charge is melted in a graphite
+copper master alloys, about 0.5~kg per run, as in the published CuSn8
+runs~\cite{choma2026} \todo{confirm the charge size after the first copper
+runs}. The charge is melted in a graphite
 crucible in the induction module of the ultrasonic atomizer (AMAZEMET
 rePOWDER) and poured through a 0.5~mm nozzle onto a vibrating plate, where it
 breaks into droplets. Nickel and iron react with graphite, so before melts
@@ -680,31 +698,47 @@ powder~\cite{choma2026} \todo{confirm with AMAZEMET the plate and nozzle
 for NAB and copper-nickel; the published NAB runs used a bare carbon-fiber
 plate that left fibers in the powder~\cite{uhlmann2024}}. The median droplet
 size follows the wavelength of capillary waves on the plate, so it falls as
-the frequency to the power $-2/3$~\cite{lang1962}. For a copper melt, Lang's
-relation gives a median near 75~$\mu$m at 20~kHz, coarse enough for a
-blown-powder nozzle. Measured powders can be coarser. NAB atomized at
-40~kHz had a median of 98~$\mu$m~\cite{uhlmann2024}, about twice the
-relation's estimate, and much of the CuSn8 powder made at 40~kHz fell
-between 63 and 150~$\mu$m~\cite{choma2026}. The plate frequency is therefore
-one of the atomizer settings the search chooses \todo{confirm the plate frequencies
-available on our unit and the size range the DED system accepts; published
-blown-powder work on bronzes used 45 to 106 and 45 to 150~$\mu$m
-cuts~\cite{li2021,pi2025}}. Each lot is sieved to that range and checked for
+the frequency to the power $-2/3$~\cite{lang1962}. The plates on our unit vibrate
+at 40~kHz, where Lang's relation gives a median near 47~$\mu$m for a copper
+melt. Measured powders are coarser. NAB atomized at 40~kHz had a median of
+98~$\mu$m~\cite{uhlmann2024}, about twice the relation's estimate, and much
+of the CuSn8 powder made at 40~kHz on our model fell between 63 and
+150~$\mu$m~\cite{choma2026}. Both suit the DED system described below,
+which takes powder of about 50 to 150~$\mu$m, sometimes up to 200~$\mu$m, and
+is usually fed cuts of 45 to 105 or 100 to 200~$\mu$m. Published blown-powder
+work on bronzes used 45 to 106 and 45 to 150~$\mu$m
+cuts~\cite{li2021,pi2025}. Each lot is sieved into those two cuts and checked for
 size distribution (laser diffraction), flow and apparent density with a Hall
 funnel~\cite{astmB213,astmB212}, shape, satellites, and stray plate fibers
 (SEM), and oxygen and carbon content \todo{name the service laboratory:
-inert-gas fusion for oxygen, combustion for carbon}. With the gas flows and the laser spot, the size distribution sets
+inert-gas fusion for oxygen, combustion for carbon}. The atomizer settings
+the search chooses are the melt temperature, the pour pressures, and the
+plate amplitude, and the share of each lot in each cut is an output of the
+powder step. With the gas flows and the laser spot, the size distribution sets
 how much of the powder the melt pool catches~\cite{ancalmo2025}. The search chooses the atomizer settings along with the
 composition, so the powder, not only the alloy, is designed for blown powder.
 
-DED sessions will be bought from \todo{name the facility with a
-single-stream, blown-powder laser DED system, the system model, and the
-price per session. The nearest candidate is the InssTek DED unit in
-Prof.\ Zak Fang's laboratory at the University of Utah, most likely an
-MX-Lab. Vendor specifications list an infrared ytterbium fiber laser of
-500~W, a 400~$\mu$m beam, and powder of 45 to 150~$\mu$m, with an optional
-argon atmosphere at no more than 50~ppm oxygen. Confirm the model and laser
-power, whether copper alloys may be run on it, and the rate}. A first session for each chosen powder deposits single
+DED sessions will be bought from \todo{facility name and location}, which
+runs a FormAlloy X2 blown-powder laser DED system, at its external rates for
+machine time and labor. A typical session, four 25~mm cubes, takes
+about 3~hours of machine time and 2~hours of labor. \todo{Confirm the
+laser (wavelength, power, spot size), its shielding (chamber or local argon),
+substrate preheat, turnaround, that powder left in the hopper comes back to
+us, and whether a smaller hopper can run a few hundred grams.} The facility
+plans on the melt pool catching about half the powder fed, and the hoppers
+of the X2 need about 2~kg of each powder. Since 2~kg takes
+about six atomizer runs, each composition first gets a cheaper deposition
+step that the facility has already used for copper-nickel. Powder from a
+first lot is spread in grooves machined in plates, including cast NAB and
+wrought copper-nickel plate, and melted by the same laser at several powers
+and speeds. These pre-placed tracks use a few grams of powder each and show
+cracking, porosity, dilution, and fusion to the repair substrates. They
+differ from blown-powder tracks in heat input and in how the powder reaches
+the melt pool, so the models treat them as a cheaper, less faithful
+measurement. The heat flow model is calibrated separately for each kind of
+track, and the audit of Advance~5 measures how often the tracks mislead. A
+composition whose tracks are sound can be scaled up to 2~kg. Its first
+blown-powder session deposits single
 tracks at several laser powers, travel speeds, and powder feed rates
 (melt-pool size, dilution, cracking, and the share of the powder caught in the
 melt pool), thin walls (cracking and heat buildup), and small blocks (density
@@ -713,8 +747,9 @@ second session with blocks for sub-size tensile bars (ASTM E8/E8M) and
 corrosion coupons at the chosen settings, and a repair coupon (Advance 4).
 Commercial 70-30 copper-nickel and NAB powders,
 deposited the same way, are the baselines \todo{confirm commercial powder
-sources}. The search decides which powders are deposited at all, since the
-atomizer makes powder faster than the budget can deposit it.
+sources, at least 2~kg of each; the facility can also supply powder at
+cost}. The search decides which compositions are scaled up at all, since a
+full lot takes about six atomizer runs.
 
 Selected deposits will be examined by SEM, by EDS and inductively coupled
 plasma mass spectrometry for composition (manganese and aluminum can be lost
@@ -950,10 +985,10 @@ Table~\ref{tab:schedule} lists the schedule by year. The award start date is
 \midrule
 Y1 & Derive the multi-objective rule; build simulated and retrospective
 benchmarks; build the process-aware physics inputs; first copper powder lots
-in the DED size range; deposit the commercial baselines and replicate them to
-measure scatter; set up the corrosion screen on wrought and cast references;
-automate image analysis. & M1: first copper powder lot sieved and checked
-(4).\newline M2: baseline deposits and scatter measured (7).\newline M3:
+in the DED size range and their pre-placed tracks; deposit the commercial
+baselines and replicate them to measure scatter; set up the corrosion screen on wrought and cast references;
+automate image analysis. & M1: first copper powder lot sieved, checked, and
+melted in pre-placed tracks (4).\newline M2: baseline deposits and scatter measured (7).\newline M3:
 corrosion screen repeatability measured (8).\newline M4: multi-objective rule
 passes small-problem checks (9).\newline M5: benchmarks frozen and posted
 (12). \\
@@ -1040,9 +1075,15 @@ tensile and corrosion tests). An undergraduate researcher will help make and
 check powder, prepare specimens, and run the corrosion screen. Both Ph.D.\
 students share Task 3, so the methods are tested on the data they will face.
 
-DED sessions are bought at a set rate from \todo{facility}, and any outside
-tests from a commercial laboratory; neither is a subaward. \todo{number}
-sessions per year fit the budget. All other work is at BYU: the PI's
+DED sessions are bought at the external hourly rates of \todo{facility},
+and any outside tests from a commercial laboratory; neither is a subaward.
+Staff at the facility run each session to the settings the search chooses
+\todo{if Sam agrees to be named as an unfunded collaborator, say so here and
+list Sam under current and pending support (NOFO p.~38)}. About 14
+blown-powder sessions and 6 sessions of pre-placed tracks a year fit the
+budget \todo{confirm in budget.py; replacing the \$18,000 potentiostat
+(Field 11) would add about 14 blown-powder sessions in Year~1}. All other
+work is at BYU: the PI's
 atomizer laboratory, the BYU Microscopy Center (SEM, EDS, EBSD), and BYU
 high-performance computing. The team meets weekly to review new results and
 choose the next experiments. A shared data pipeline records every step, so the
@@ -1064,9 +1105,11 @@ every run instead of every few. An alumina sealing rod and a molybdenum-alloy
 plate~\cite{ciftcli2025} will also replace the graphite rod and the
 carbon-carbon plate. If a lot flows poorly, the
 search sees that at the powder step and can change the atomizer settings
-before paying for a deposit. If the first layer will not fuse to thick cast
-NAB or copper-nickel plate, the repair coupons will be preheated or made
-thinner. If DED turnaround is slow, the rule for pending
+before paying for a deposit. The pre-placed tracks on cast NAB and
+copper-nickel plate show early whether the first layer fuses to thick plate;
+if it does not, the repair coupons will be preheated or made thinner. If
+making 2~kg lots slows the campaigns, the pre-placed tracks will carry more of
+the screening, and fewer compositions will be scaled up. If DED turnaround is slow, the rule for pending
 results is designed for exactly that case. If the electrochemical screen
 predicts the immersion tests poorly (H5 rejected), the search will rely more
 on immersion, at higher cost, and the audited candidates will show which
@@ -1186,7 +1229,8 @@ procedures.
 
 \textbf{Types of data, software, and other materials.} Thermodynamic and heat
 flow calculation results; atomizer settings and powder size, flow, density,
-oxygen, and carbon records; DED deposition settings and session logs; optical and
+oxygen, and carbon records; settings and session logs for pre-placed tracks
+and DED deposits; optical and
 electron micrographs, EDS spectra, and EBSD maps; tensile and hardness data;
 polarization and impedance data, immersion mass losses, and cross-sections of
 corrosion attack; the search software, benchmark problems, and trained

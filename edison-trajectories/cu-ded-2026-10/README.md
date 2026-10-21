@@ -462,7 +462,9 @@ None reports savings in physical corrosion experiments.
    2026-10-18:* the lab has no coated crucible yet, so oxygen-free copper
    goes first, in the bare crucible, and NAB follows once the crucible is
    sprayed. Details are in `near-term-submissions/onr-yip/README.md`,
-   section 9.
+   section 9. *2026-10-21:* the frequency is settled too. The rePOWDER is a
+   40 kHz system, and the cuts the DED facility uses (45-105 and
+   100-200 µm) fit 40 kHz powder, so no 20 kHz stack is needed.
 4. **Alloy space:**
    - add Cr to 0-2 wt% in Cu-Ni (C72200-like);
    - consider Mn-Al bronze as the nickel-lean bronze family;
@@ -526,6 +528,10 @@ minutes.
 | [`b6-03`](batch6/b6-03-blended-vs-prealloyed-ded.md) | Can multi-hopper blending in the melt pool be a cheap, lower-fidelity stand-in for pre-alloyed powder? | b4-07, b5-01, Yao et al. 2025 |
 
 ### 6.1 The University of Utah InssTek (web sources, checked 2026-10-17)
+
+*2026-10-21:* the proposal now buys DED sessions on a FormAlloy X2 at Sam's
+facility, with rates in hand; the InssTek is the fallback
+(`near-term-submissions/onr-yip/README.md`, section 9).
 
 - **Where and what.** Prof. Zak Fang's Metal AM laboratory in Metallurgical
   Engineering has an "InssTek laboratory unit that has just been installed",

@@ -26,8 +26,8 @@ printed aluminum as the naval application.
 | `support-letter-draft.md` | Letter of support for the chair or dean | Needs signer and real figures |
 | `preview/` | PNG renders of the proposal pages other than the CV (110 dpi) | Generated |
 | `budget/preview/` | PNG renders of the budget justification's first pages | Generated |
-| `onr-yip-technical-proposal-cu-ded.tex` / `.pdf` | **Alternative** technical proposal: seawater-resistant copper alloys designed as powders for blown-powder DED (section 9) | Draft, 16 of 20 counted pages |
-| `abstract-cu-ded.txt` | SF-424 abstract for the alternative | Draft, 3,944 of 4,000 characters |
+| `onr-yip-technical-proposal-cu-ded.tex` / `.pdf` | **Alternative** technical proposal: seawater-resistant copper alloys designed as powders for blown-powder DED (section 9) | Draft, 17 of 20 counted pages |
+| `abstract-cu-ded.txt` | SF-424 abstract for the alternative | Draft, 3,970 of 4,000 characters |
 | `preview-cu-ded/` | PNG renders of the alternative's pages (110 dpi) | Generated |
 | `attachments/field10-facilities-cu-ded.tex` / `.pdf`, `attachments/field11-equipment-cu-ded.tex` / `.pdf` | Fields 10 and 11 for the alternative (DED instead of LPBF, copper feedstock, powder checks) | Draft, 1 page each, TODOs |
 
@@ -238,8 +238,8 @@ alloys it would repair, and resists seawater as deposited at least as well as
 | --- | --- | --- |
 | Title | Cost-Aware Selection of Experiments for Printable, Corrosion-Resistant High-Strength Aluminum Alloys | Cost-Aware Design of Seawater-Resistant Copper Alloy Powders for Blown-Powder Directed Energy Deposition |
 | Alloys | Al with Zr or Sc, plus Cu, Mg, Zn, Mn, Cr | Cu-Ni (10-30 Ni) with Fe, Mn, Cr; Al bronzes with Ni, Fe, Mn |
-| Process | LPBF builds bought from a Utah user facility | Single-stream blown-powder DED sessions, facility TBD (candidate: the U of U InssTek, likely an MX-Lab) |
-| Powder | Ultrasonic atomization, LPBF size range | Same atomizer; sized for blown powder; flow, density, oxygen checked; atomizer settings chosen by the search |
+| Process | LPBF builds bought from a Utah user facility | Single-stream blown-powder DED sessions on a FormAlloy X2 at an outside facility (Sam's), with pre-placed powder tracks on the same laser as a cheaper first step |
+| Powder | Ultrasonic atomization, LPBF size range | Same atomizer at 40 kHz; sieved into 45-105 and 100-200 um cuts; flow, density, oxygen and carbon checked; a first lot of about 0.5 kg for tracks, then about 2 kg (about six runs) for each composition the search sends to blown powder |
 | Physics inputs | CALPHAD at equilibrium / Scheil | CALPHAD evaluated along a heat-flow model of the DED thermal history (new Advance 3, new H3: process-aware beats equilibrium beats none) |
 | Corrosion | Polarization screen, then intergranular and salt-spray tests | Polarization, LPR, and impedance in substitute ocean water, then 30-day immersion with mass loss and depth of selective attack; flowing seawater left to Navy labs |
 | New branch | none | Repair coupons on cast NAB and wrought Cu-Ni plate (cracks, dilution, hardness across the fusion line) |
@@ -471,34 +471,115 @@ the aluminum runs have used bare graphite.
   hood away from ignition sources, with gloves and goggles, and let it dry
   there. Ships as UN1950, Limited Quantity.
 
+**DED facility: a FormAlloy X2 (2026-10-21)**
+([PR #117](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/117#issuecomment-6321072541)).
+Sam, at a facility with a FormAlloy X2 (name and location still to fill in),
+sent external rates and photos of copper-nickel tracks from a senior design
+project. The photos are not in this repo.
+- **Rates:** machine time $155 per hour and labor $165 per hour (the
+  facility's external SIF rate). A typical build of four 1-inch cubes is
+  3 machine hours and about 2 labor hours, so **$795**, or $1,204 with BYU's
+  51.5% F&A (a purchase of services, not a subaward, so it is in MTDC).
+  Machine time scales with deposition rate and volume. We supply the powder,
+  or the facility supplies it at cost.
+- **Powder size:** about 50 to 150 um, sometimes up to 200 um; the usual cuts
+  are 45-105 and 100-200 um. Our rePOWDER is a 40 kHz system (training notes:
+  scan 39-41 kHz). At 40 kHz, NAB came out at d10/d50/d90 = 48/98/174 um
+  (Uhlmann 2024), and on our model 80-90% of each ~500 g CuSn8 charge became
+  powder, much of it 63-150 um (Choma 2026, checked in the full text). So
+  nearly all of a lot is usable, and a 20 kHz stack isn't needed.
+- **Quantity:** the X2's hoppers need about 2 kg of each powder, and the
+  facility plans on 50% catchment. Four 1-inch cubes are 65.5 cm3: 0.59 kg of
+  Cu-Ni or 0.50 kg of NAB, so about 1.2 or 1.0 kg fed. Whether one 2 kg lot
+  covers both sessions for a composition depends on whether the powder left
+  in the hopper comes back and whether a part-filled hopper still feeds (ask
+  Sam). At about 0.36 kg of in-cut powder per 0.5 kg run, 2 kg is **about
+  six atomizer runs** (about ten at AMAZEMET's general advice of 250-300 g
+  per run), and coated plates wear out after a few runs.
+- **What it does to the design:** the proposal said a composition costs one
+  atomizer run. Blown powder now costs about six. The draft therefore adds
+  the step Sam's group already used: powder spread in grooves and melted by
+  the same laser. These **pre-placed tracks** need a few grams per groove,
+  so the first 0.5 kg lot is plenty. Tracks on cast NAB and wrought Cu-Ni
+  plate also show early whether a composition fuses to the repair
+  substrates. The models treat them as a cheaper, less faithful measurement;
+  the audit (Advance 5) checks how often they mislead. Only compositions
+  whose tracks are sound get the 2 kg lot. The scale-up becomes one more
+  decision the cost-aware rule makes.
+- **Laser:** not stated. Cornell's X2 has a 500 W infrared laser, a 1.2 mm
+  spot, two powder feeders and an 8 x 8 in bed
+  ([Moridi lab](https://moridi.mae.cornell.edu/equipment-2)), and FormAlloy
+  also sells blue lasers. Sam's tracks suggest this X2 already melts Cu-Ni
+  (confirm they were made on it). Pure copper would still need blue (see the
+  U of U entry above).
+- **U of U InssTek:** now the fallback. It has no rate yet, and its 45-150 um
+  window is narrower.
+- **Budget (for `budget.py`, which is private).** The session line still
+  fills what remains under the $250,000 cap, so the cover totals should move
+  by less than one session. Proposed changes, with my guesses marked:
+
+  | Line | Basis | Per year |
+  | --- | --- | --- |
+  | DED sessions (replaces LPBF builds) | $795: 3 h at $155 + 2 h at $165 | what remains |
+  | Pre-placed track sessions | guess: 1 machine h + 2 labor h = $485, 6 a year | $2,910 |
+  | Copper feedstock (OFC bar, Ni, Fe, Mn, Al, Cu master alloys), replacing the Al master alloys and Al bar | guess: about 35 kg a year (about 7 scale-ups and 25 first lots) | $4,000 |
+  | Coated C/C plates, hBN nozzles, BN spray, crucibles | guess: about 65 copper runs a year; ask AMAZEMET for prices | $6,000 |
+  | Commercial 70-30 Cu-Ni and NAB powder, 45-105 um | at least 2 kg each; quote needed | $1,500, then $750 |
+  | Cast NAB and wrought C71500 plate (repair substrates, build plates) | guess | $1,500 |
+  | Oxygen and carbon analyses, outside lab | guess: about 20 lots | $2,000 |
+  | Shipping powder and deposits | guess | $600 |
+
+  These lines take about $18,500 of the $29,750 (Year 1) that the LPBF
+  builds and aluminum feedstock had. The rest buys about **14, 16 and 13
+  blown-powder sessions** in Years 1-3, or about 7 compositions a year at
+  two sessions each. Replacing the $18,000 potentiostat with option (b) in
+  `cubxl-electrochemistry.md` frees about $11,300 of MTDC in Year 1, about
+  14 more sessions.
+- **In the proposal:**
+  - Fig. 1 has a pre-placed-tracks node, and immersion now sits under the
+    corrosion screen.
+  - §1.1 notes the 2 kg hopper and about six runs; Preliminary results
+    mentions Sam's Cu-Ni tracks (TODO: ask Sam's permission).
+  - Task 2 gives the 40 kHz sizes and Sam's cuts (the frequency TODO is
+    gone; the search's atomizer settings are now melt temperature, pour
+    pressures and plate amplitude). It names the X2, the session, the
+    2 kg / 50% figures and the track step.
+  - Management gives the session count. Risks, Table 2 (Y1, M1), Advance 4,
+    the DMP and the abstract (3,970 of 4,000 characters) mention the
+    tracks.
+  - Fields 10 and 11 name the X2; Field 10 still fits on one page.
+  - 17 of 20 counted pages (was 16), 112 references; cringe-filter 0
+    errors.
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
-1. **DED facility, system, and price per session.** Candidate: the InssTek
-   in Prof. Zak Fang's lab at the University of Utah (likely an MX-Lab,
-   500 W infrared fiber laser). Ask for the model and installed power,
-   whether copper alloys are allowed, back-reflection protection, substrate
-   preheat, the argon option, and the rate. The budget macros are
-   still the aluminum version's: its G line is 28, 29, and 26 LPBF builds at
-   $800. DED sessions will cost more and there will be fewer; re-price in
-   `budget/budget.py` (private) and the totals on the cover page change.
-   Materials lines also change (copper bar, nickel and master alloys instead
-   of aluminum bar and Al master alloys), and should add coated plates, BN
-   nozzles and BN spray, which wear out.
+1. **DED facility.** Sam's FormAlloy X2 (2026-10-21, above). Still to fill
+   in: the facility's name and location, the laser (wavelength, power,
+   spot), the shielding, preheat, turnaround, whether unused hopper powder
+   comes back, and whether a smaller hopper can run a few hundred grams.
+   Get the rates in writing for the budget justification. The budget macros
+   are still the aluminum version's (28, 29 and 26 LPBF builds at $800);
+   enter the lines in the 2026-10-21 table in `budget/budget.py` (private).
+   The totals should move by less than one session a year.
 2. **Atomizer for copper.** Settled (see above): the 1,300 °C working limit,
    graphite crucibles sprayed with BN before Ni- and Fe-bearing melts (the
    spray still has to be bought), an hBN nozzle for those melts, and a Mo- or
    W-coated C/C plate on the 1:1.5 booster. Still open:
    - the plate, nozzle bore and setpoint for NAB and Cu-Ni (asked);
-   - the charge size;
-   - the plate frequencies. Lang's relation gives about 75 um for a copper
-     melt at 20 kHz. Measured NAB powder at 40 kHz was about twice the
-     relation's estimate, and much of AMAZEMET's CuSn8 at 40 kHz fell
-     between 63 and 150 um.
-3. Commercial 70-30 Cu-Ni and NAB powders for the baselines.
+   - the charge size (the draft assumes about 0.5 kg, as in Choma 2026);
+   - the price of coated C/C plates and hBN nozzles, now that each
+     composition sent to blown powder takes about six runs.
+   The plate frequency is settled: our unit runs at 40 kHz, which fits the
+   X2's cuts.
+3. Commercial 70-30 Cu-Ni and NAB powders for the baselines, at least 2 kg
+   each in 45-105 um (the facility can also supply powder at cost).
 4. A first copper powder lot (SEM and size distribution) as preliminary
    data: C10100 in the bare crucible, then NAB once the crucible is sprayed.
    The runs are planned for the week of Oct 19; attachments can be replaced
-   until SPO submits on Oct 28.
+   until SPO submits on Oct 28. Also ask Sam whether the facility's Cu-Ni
+   tracks, and a photo, may be shown; if not, cut the sentence in
+   Preliminary results and the "already used for copper-nickel" clause in
+   Task 2.
 5. Thermo-Calc: confirm the BYU license includes TCCU, and which version
    (the search-space coverage numbers are for TCCU7, Thermo-Calc 2026b).
 6. Oxygen (inert-gas fusion) and carbon (combustion) analysis at a service
@@ -507,12 +588,14 @@ the aluminum runs have used bare graphite.
    lists published 21- and 30-day depths of 1.8 to 3.4 um and more than 3 um),
    and natural or substitute seawater.
 8. Search space: proposed (Table 1, `search_space.py`). Still open: the
-   number of new alloys promised, and whether to add Mn-Al bronze
-   (C95700) as a Ni-free branch.
+   number of new alloys promised (about 7 compositions a year can go to
+   blown powder at the estimated session count, so 6 over three years would
+   be safe), and whether to add Mn-Al bronze (C95700) as a Ni-free branch.
 9. Handling nickel powders (safety plan).
-10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`). The
-    letter of support carries the copper title as a bracketed option; its
-    "powder-to-part demonstration on an aluminum alloy" holds for both.
+10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`), now
+    naming the X2. The letter of support carries the copper title as a
+    bracketed option; its "powder-to-part demonstration on an aluminum
+    alloy" holds for both.
 11. Check the 2011 Cu-30Ni corrosion study's conditions and numbers, and get
     Jia et al. 2026, through the Pi (byu-vcl) or the library. Read
     literally, the 2011 abstract ranks the deposit above the plate, the
@@ -520,7 +603,10 @@ the aluminum runs have used bare graphite.
     before submission.
 12. The potentiostat and equipment line: a module potentiostat on the
     CubXL plus a borrowed benchtop for cross-checks, or the $18,000 benchtop
-    unit (`cubxl-electrochemistry.md`).
+    unit (`cubxl-electrochemistry.md`). The first option now buys about 14
+    more DED sessions in Year 1.
+13. Collaborators: if Sam agrees, name Sam as an unfunded collaborator in
+    the Management section and in current and pending support (NOFO p. 38).
 
 All other TODOs (cover contacts, CV, responsibility, DMP schema, current and
 pending) are the same as in section 4.

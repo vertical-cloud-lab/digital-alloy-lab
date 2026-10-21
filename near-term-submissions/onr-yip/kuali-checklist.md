@@ -67,7 +67,10 @@ and the chair is asked whether space and facilities are available [S2].
   equipment (p. 22). Drop the line if a BYU potentiostat can be dedicated.
 - [ ] **Service rates**: Utah LPBF builds ($800 per build, on a purchase
   order, not a subaward), BYU Microscopy Center, ICP-MS, machining, and the
-  outside salt-spray lab.
+  outside salt-spray lab. For the copper/DED version: the FormAlloy X2
+  facility's external rates ($155 per machine hour, $165 per labor hour; a
+  typical session is about 3 and 2 hours, $795), in writing from the
+  facility.
 - [ ] **Travel** on ONR's travel estimate spreadsheet (per trip: purpose,
   origin and destination, days, travelers, cost; NOFO p. 22).
 
