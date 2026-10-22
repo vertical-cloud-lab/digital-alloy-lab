@@ -117,3 +117,48 @@ GH_TOKEN=$GH_READ_PAT_STAGING gh api "repos/sgbaird/agent-staging/contents/<path
   Sterling asked to bring over, and don't copy `MANIFEST.md` in.
 - Never echo the token or save it in a remote or a commit. If it is unset or returns
   401/403/404, say so and stop; don't rebuild the content some other way.
+
+## The lab Pi (`rpi-5-3ray`) over Tailscale
+
+A Raspberry Pi is on the lab tailnet as `PI_HOSTNAME`, tagged `tag:rpi-5-3ray` (login
+`PI_USERNAME`, sudo password `PI_PASSWORD`; the hostname and username are repo variables, the
+password a secret). **This repo is public: never print the hostname, username, password, or the
+Pi's IP or MAC addresses in comments, commits, or logs.** Treat it as shared lab hardware.
+Inspect read-only first (`systemctl status`, `journalctl`, `crontab -l`) before changing
+anything, and restart services only when necessary. Changes made on the Pi (packages, systemd
+units, udev rules, cron, config) do not live in this repo, so record them here so they can be
+reproduced.
+
+**How CI gets on the tailnet.** `claude.yml`'s `Connect to Tailscale` step joins every session
+as an ephemeral node carrying `tag:rpi-5-3ray`, so you are already on the tailnet; run
+`tailscale status` to confirm, and do not run `tailscale up` or mint keys yourself. The step
+uses a Tailscale **federated identity** (GitHub OIDC), so no Tailscale secret is stored:
+Tailscale checks the job's OIDC subject against
+`repo:vertical-cloud-lab@228975003/digital-alloy-lab@1421253647:*` (GitHub's immutable subject
+format, with org and repo IDs) and issues a key carrying exactly `tag:rpi-5-3ray`.
+`TS_OAUTH_CLIENT_ID` and `TS_AUDIENCE` are stored as secrets, though Tailscale says neither is
+secret. The step has `continue-on-error`, so if `tailscale status` fails, check that step's log
+before anything else. The manual **Tailscale check** workflow (`tailscale-check.yml`) is the
+read-only proof of the whole path: it joins, prints the runner's tags, checks `tcp:22`, and
+logs in over SSH once `PI_USERNAME` is set.
+
+**What the policy allows.** The policy lives in
+[`vertical-cloud-lab/tailscale-policy`](https://github.com/vertical-cloud-lab/tailscale-policy)
+(`policy.hujson`, edited by PR). CI may reach the Pi on `tcp:22` only, and Tailscale SSH accepts
+it as a non-root user; use `sudo` on the Pi for root. A service on the Pi (a web UI, a stream)
+is unreachable from a runner until a port is added to the tag's grant, so bind new services to
+`127.0.0.1` and reach them over SSH. Keep `tag:tailscale-ssh` off the Pi.
+
+**Connecting.** Tailscale SSH is authorized by the policy, not by keys:
+
+```bash
+ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new "$PI_USERNAME@$PI_HOSTNAME" 'hostname >/dev/null && uptime -p && id -un'
+```
+
+If SSH is refused (`tailnet policy does not permit you to SSH to this node`), the fix is a
+policy or tag change only the tailnet admin can make; report it and stop. sudo is
+password-gated: feed the password over stdin, and always pass `-k`, as in
+`ssh … "sudo -S -k -p '' <cmd>" <<< "$PI_PASSWORD"`. Without `-k`, a credential cached by any
+recent `sudo` (Raspberry Pi OS caches it globally for 15 minutes) lets sudo skip reading stdin,
+and the password is then read by whatever runs next, for example as a shell command whose
+"command not found" error echoes it back.
