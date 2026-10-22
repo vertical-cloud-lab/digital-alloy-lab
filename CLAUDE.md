@@ -19,6 +19,11 @@ comment, is public, and comment edit histories are public too. Never commit or p
 A proposal that needs private files (the real budget, letters, disclosures) keeps them in its own
 private repo, cloned into the proposal's `private/` folder, which `.gitignore` excludes.
 
+The atomizer, powder-enclosure and metal-AM threads moved here from the public
+`vertical-cloud-lab/byu-vcl` on 2026-10-22: issues #125–#164 and PRs #166–#203. They keep their
+original text, which predates these rules and includes supplier prices and vendor contacts.
+Don't copy that material into new files or comments here.
+
 ## Edison Scientific
 
 When waiting on an Edison task in GitHub Actions, NEVER run the polling script in the background (run_in_background, nohup, &, or the Monitor tool) — the runner is destroyed the moment you post your final comment, killing background processes; Monitor counts as background and dies the same way. Also be aware that the agent harness BLOCKS the shell `sleep` builtin in foreground Bash calls (the error message suggests Monitor — do NOT follow that suggestion, it recreates the background-death failure; this killed several past sessions). The pattern that works: put the wait INSIDE a single blocking Python call — Python-side `time.sleep` is not blocked — and run it as ONE foreground Bash call with an explicit long timeout (max 3600000 ms). Run exactly this (adjust only the task-id path):
@@ -179,3 +184,47 @@ password-gated: feed the password over stdin, and always pass `-k`, as in
 recent `sudo` (Raspberry Pi OS caches it globally for 15 minutes) lets sudo skip reading stdin,
 and the password is then read by whatever runs next, for example as a shell command whose
 "command not found" error echoes it back.
+
+### Room camera: the atomizer livestream
+
+These notes came over from byu-vcl's `CLAUDE.md` with the atomizer work on 2026-10-22. On YouTube
+the room camera is still the device `picam-ot2` (the ID in its `my_secrets.py` didn't change).
+byu-vcl CI can no longer reach this Pi.
+
+- **What it streams.** Since 2026-10-01 it streams the atomizer room at 144p and 2 fps, under the
+  workflow name `atomizer`.
+  - It is pixelated on the Pi, so it shows activity rather than detail: 128×72 blocks since
+    2026-10-01 22:59 MDT, set by `PIXELATE_BLOCKS` in its `my_secrets.py` (a local `device.py`
+    patch). The overlay is drawn after the pixelation and stays sharp.
+  - Broadcasts are titled *atomizer stream picam-ot2, …* and go into the *atomizer Livestreams
+    Playlist* (`PLeosQpHvsjiY`) on the "BYU VCL Hardware Streams" channel.
+  - The streaming Lambda matches a workflow name to playlists by substring, so check that before
+    renaming the workflow.
+  - Its settings and change log, and the archive tooling's 720p assumptions, are in byu-vcl's
+    [`docs/stream-cams.md`](https://github.com/vertical-cloud-lab/byu-vcl/blob/d12504c/docs/stream-cams.md).
+- **The overlay is the clock.**
+  - Every frame carries `%Y-%m-%d_%H-%M-%S` in lab local time (UTC−6), top left.
+  - The Pi's `device.py` runs `rpicam-vid --flush` and ffmpeg with `-flags low_delay`, another
+    local patch, so the overlay is about one frame behind capture. Without them, at 240p and 2 fps,
+    the overlay stood still for 3–4 s at a time and a third of the frames were copies.
+  - Any picam at a low resolution or frame rate needs the same patch.
+- **Reading the archive back.**
+  - YouTube won't do player extraction from a GitHub Actions runner: `yt-dlp` gets *"Sign in to
+    confirm you're not a bot"* for `--dump-json`, `-g` and any download. Listing a channel or
+    playlist works from anywhere; download from a Pi instead.
+  - The byu-vcl stream-cam Pis had `~/.venvs/ytframes/bin/yt-dlp --js-runtimes node` and a static
+    ffmpeg in `~/ytframes/bin`. That ffmpeg can't resolve DNS (statically linked glibc has no NSS),
+    so fetch HLS segments with urllib or curl and hand ffmpeg a local file;
+    `~/ytframes/grab.py` does that.
+  - On 2026-10-09 that tooling was not on this Pi. Check with `ls ~/ytframes` before relying on it,
+    and record here if you install it.
+  - The archive timeline isn't wall clock. `release_timestamp + offset` can be off by a step: one
+    archive ran 67 s late after a stall. Trust the overlay instead.
+    [`frames_from_stream.py`](https://github.com/vertical-cloud-lab/byu-vcl/blob/d12504c/wireless-color-sensor/ot2/frames_from_stream.py)
+    grabs a frame, OCRs the overlay (`tesseract --psm 7`), and re-grabs shifted by the error.
+
+### Enclosure air monitor (AirGradient)
+
+`AIRGRADIENT_API_KEY` (a secret, the same key byu-vcl uses) reads the AirGradient monitor inside the
+strip-curtain enclosure. That covers the dehumidifier and powder-storage threads: issues #131 and
+#150, PR #188, and the AirGradient scripts on draft PR #192.
