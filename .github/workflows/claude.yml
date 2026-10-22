@@ -89,6 +89,9 @@ jobs:
       ROOM_CAM_PASSWORD: ${{ secrets.ROOM_CAM_PASSWORD }}
       ROOM_CAM_USERNAME: ${{ vars.ROOM_CAM_USERNAME }}
       ROOM_CAM_HOSTNAME: ${{ vars.ROOM_CAM_HOSTNAME }}
+      # AirGradient API key for the monitor inside the powder enclosure (see
+      # CLAUDE.md, "Enclosure air monitor"). Same key as byu-vcl's.
+      AIRGRADIENT_API_KEY: ${{ secrets.AIRGRADIENT_API_KEY }}
       # Allow long-blocking foreground commands (e.g., Edison polling)
       BASH_DEFAULT_TIMEOUT_MS: "900000" # 15 min default per Bash call
       BASH_MAX_TIMEOUT_MS: "3600000" # 60 min ceiling per Bash call

@@ -14,6 +14,22 @@ This repo was split out of the private `vertical-cloud-lab/digital-alloy-lab-pri
 - **Files that stay private** were left out: signed letters, per-person budget detail, CVs and similar.
   Publisher PDFs are listed by DOI in [`literature/DOIs.md`](literature/DOIs.md) instead.
 
+## Atomizer, powder enclosure and metal AM (moved from byu-vcl, 2026-10-22)
+
+The atomizer work moved here from [vertical-cloud-lab/byu-vcl](https://github.com/vertical-cloud-lab/byu-vcl):
+the rePowder install, runs, charges, SOPs and cameras; the strip-curtain powder enclosure in CB154;
+alloy powders and feedstock; and LPBF access.
+
+- **Issues #125–#164** were transferred, so old byu-vcl issue links redirect.
+- **PRs #166–#190** were recreated from the same byu-vcl branches, one import commit each. Their
+  review comments and commit-by-commit history stay on the closed byu-vcl PRs.
+- **Draft PRs #191–#203** carry `claude/issue-*` branches that never had a PR there, one PR per issue.
+- **Stayed in byu-vcl:**
+  - room-wide lab operations: layout, sink and drench hose, fume hood, the punch list;
+  - the CubXL and powder doser;
+  - alloy characterization (SEM/EDS/EBSD, ICP-MS, XRF);
+  - the TMS 2027 paper kit, [vertical-cloud-lab/byu-vcl#273](https://github.com/vertical-cloud-lab/byu-vcl/issues/273).
+
 ## Contents
 
 - [Alloy Workflow Review](alloy-workflow-review.md) — Comprehensive review of the alloy synthesis, processing, characterization, and performance pipeline, including current status, equipment needs, and funding strategy. References issues and PRs in [vertical-cloud-lab/byu-vcl](https://github.com/vertical-cloud-lab/byu-vcl).
