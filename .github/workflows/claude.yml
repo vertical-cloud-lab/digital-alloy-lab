@@ -73,13 +73,17 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       EDISON_PLATFORM_API_KEY: ${{ secrets.EDISON_PLATFORM_API_KEY }}
       GH_READ_PAT_STAGING: ${{ secrets.GH_READ_PAT_STAGING }}
-      # The lab Pi on the tailnet (tag:rpi-5-3ray). Password is its sudo password.
+      # The lab Pis on the tailnet (PI_*: tag:rpi-5-3ray, PI2_*: tag:rpi-5-6ktj).
+      # Each password is that Pi's sudo password.
       # Username and hostname are repo *variables*, not secrets: a short secret is
       # masked everywhere it appears as a substring, and a tailnet name grants
       # nothing on its own.
       PI_PASSWORD: ${{ secrets.PI_PASSWORD }}
       PI_USERNAME: ${{ vars.PI_USERNAME }}
       PI_HOSTNAME: ${{ vars.PI_HOSTNAME }}
+      PI2_PASSWORD: ${{ secrets.PI2_PASSWORD }}
+      PI2_USERNAME: ${{ vars.PI2_USERNAME }}
+      PI2_HOSTNAME: ${{ vars.PI2_HOSTNAME }}
       # Allow long-blocking foreground commands (e.g., Edison polling)
       BASH_DEFAULT_TIMEOUT_MS: "900000" # 15 min default per Bash call
       BASH_MAX_TIMEOUT_MS: "3600000" # 60 min ceiling per Bash call
@@ -92,17 +96,18 @@ jobs:
           filter: blob:none     # ...without historical blobs (i.e., low total size)
 
       # Join the tailnet as an ephemeral node (auto-removed at job end) so sessions
-      # can reach the lab Pi without hand-rolling `tailscale up`. Auth is a
+      # can reach the lab Pis without hand-rolling `tailscale up`. Auth is a
       # Tailscale federated identity (Settings > Trust credentials > OpenID
       # Connect): the action trades this job's GitHub OIDC token for an auth key,
       # so no Tailscale secret is stored anywhere. The identity accepts only
       # subjects matching
       # repo:vertical-cloud-lab@228975003/digital-alloy-lab@1421253647:* and mints
-      # keys for exactly tag:rpi-5-3ray, so `tags:` must list exactly that. It is
-      # separate from robot-arms' identity, so neither repo reaches the other's
-      # Pis. What a runner may do on the Pi is bounded by the tailnet policy in
-      # vertical-cloud-lab/tailscale-policy (SSH within the tag, tcp:22 only).
-      # continue-on-error: most sessions here never touch the Pi, so a Tailscale
+      # keys for exactly tag:rpi-5-3ray + tag:rpi-5-6ktj, so `tags:` must list
+      # both; requesting a subset fails. It is separate from robot-arms' identity,
+      # so neither repo reaches the other's Pis. What a runner may do on the Pis
+      # is bounded by the tailnet policy in vertical-cloud-lab/tailscale-policy
+      # (SSH within each tag, tcp:22 only).
+      # continue-on-error: most sessions here never touch the Pis, so a Tailscale
       # problem must not stop them.
       - name: Connect to Tailscale
         continue-on-error: true
@@ -110,7 +115,7 @@ jobs:
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           audience: ${{ secrets.TS_AUDIENCE }}
-          tags: tag:rpi-5-3ray
+          tags: tag:rpi-5-3ray,tag:rpi-5-6ktj
 
       # Copilot-style model selector: @claude+<model>[:<effort>]
       # Examples: @claude, @claude+opus-5, @claude+opus-4.8:max, @claude:high
