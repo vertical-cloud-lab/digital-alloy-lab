@@ -1,0 +1,441 @@
+{
+  "design_space_wtpct": {
+    "Mn": [
+      0.0,
+      5.0
+    ],
+    "Cr": [
+      0.0,
+      2.0
+    ],
+    "Zr": [
+      0.0,
+      2.0
+    ],
+    "Mg": [
+      0.0,
+      6.0
+    ],
+    "Si": [
+      0.0,
+      12.6
+    ],
+    "Cu": [
+      0.0,
+      6.0
+    ],
+    "Ti": [
+      0.0,
+      0.5
+    ],
+    "Fe": [
+      0.0,
+      2.0
+    ],
+    "Ni": [
+      0.0,
+      5.0
+    ],
+    "Ce": [
+      0.0,
+      12.0
+    ],
+    "Sc": [
+      0.0,
+      0.8
+    ],
+    "Li": [
+      0.0,
+      3.0
+    ],
+    "Er": [
+      0.0,
+      3.0
+    ],
+    "Zn": [
+      0.0,
+      7.0
+    ],
+    "Sn": [
+      0.0,
+      2.0
+    ]
+  },
+  "S_total_wtpct": 20.0,
+  "elements": [
+    "Mn",
+    "Cr",
+    "Zr",
+    "Mg",
+    "Si",
+    "Cu",
+    "Ti",
+    "Fe",
+    "Ni",
+    "Ce",
+    "Sc",
+    "Li",
+    "Er",
+    "Zn",
+    "Sn"
+  ],
+  "box_fraction_inside_cap": 0.011307758047071912,
+  "y_floor_percent": {
+    "Mn": 5.882352941176471,
+    "Cr": 2.4390243902439024,
+    "Zr": 2.4390243902439024,
+    "Mg": 6.976744186046512,
+    "Si": 13.606911447084236,
+    "Cu": 6.976744186046512,
+    "Ti": 0.6211180124223603,
+    "Fe": 2.4390243902439024,
+    "Ni": 5.882352941176471,
+    "Ce": 13.043478260869565,
+    "Sc": 0.9900990099009901,
+    "Li": 3.614457831325301,
+    "Er": 3.614457831325301,
+    "Zn": 8.045977011494255,
+    "Sn": 2.4390243902439024
+  },
+  "scenarios": {
+    "A. all elemental": {
+      "V": 0.20000000000000007,
+      "feasible": true,
+      "worst_vertex_wtpct": {
+        "Mn": 5.0,
+        "Cr": 2.0,
+        "Zr": 2.0,
+        "Mg": 6.0,
+        "Si": 5.0
+      },
+      "source_grams_per_100g": {
+        "Mn": 5.0,
+        "Cr": 2.0,
+        "Zr": 2.0,
+        "Mg": 6.0,
+        "Si": 5.0
+      },
+      "pure_Al_grams": 80.0,
+      "scipy_V": 0.2,
+      "reachable_fraction_mc": 1.0,
+      "reachable_fraction_se": 0.0,
+      "sources": {},
+      "min_y_given_others_percent": {},
+      "uniform_concentration_factor_needed": 1.0,
+      "impurity_worst_ppm_masters_on_commercial_Al": 280.0,
+      "impurity_worst_ppm_masters_on_4N_Al": 280.0
+    },
+    "B. 2026-08 shopping chart": {
+      "V": 1.7600000000000002,
+      "feasible": false,
+      "worst_vertex_wtpct": {
+        "Zr": 2.0,
+        "Ce": 11.2,
+        "Sc": 0.8,
+        "Li": 3.0,
+        "Er": 3.0
+      },
+      "source_grams_per_100g": {
+        "Zr": 20.0,
+        "Ce": 56.0,
+        "Sc": 40.0,
+        "Li": 30.0,
+        "Er": 30.0
+      },
+      "pure_Al_grams": -76.0,
+      "scipy_V": 1.7600000000000002,
+      "reachable_fraction_mc": 0.946858407079646,
+      "reachable_fraction_se": 0.0014921262969131955,
+      "sources": {
+        "Zr": "Al-10Zr",
+        "Ce": "Al-20Ce",
+        "Sc": "Al-2Sc",
+        "Er": "Al-10Er",
+        "Li": "Al-10Li"
+      },
+      "min_y_given_others_percent": {
+        "Zr": null,
+        "Ce": null,
+        "Sc": null,
+        "Li": null,
+        "Er": null
+      },
+      "uniform_concentration_factor_needed": 1.76,
+      "impurity_worst_ppm_masters_on_commercial_Al": 4804.0,
+      "impurity_worst_ppm_masters_on_4N_Al": 280.0
+    },
+    "C. every reactive element as a commercial master": {
+      "V": 2.085,
+      "feasible": false,
+      "worst_vertex_wtpct": {
+        "Zr": 2.0,
+        "Ti": 0.5,
+        "Ce": 10.7,
+        "Sc": 0.8,
+        "Li": 3.0,
+        "Er": 3.0
+      },
+      "source_grams_per_100g": {
+        "Zr": 20.0,
+        "Ti": 5.0,
+        "Ce": 53.5,
+        "Sc": 40.0,
+        "Li": 60.0,
+        "Er": 30.0
+      },
+      "pure_Al_grams": -108.5,
+      "scipy_V": 2.085,
+      "reachable_fraction_mc": 0.7219026548672567,
+      "reachable_fraction_se": 0.002980461535225467,
+      "sources": {
+        "Li": "Al-5Li",
+        "Sc": "Al-2Sc",
+        "Zr": "Al-10Zr",
+        "Er": "Al-10Er",
+        "Ti": "Al-10Ti",
+        "Ce": "Al-20Ce",
+        "Mg": "Al-50Mg"
+      },
+      "min_y_given_others_percent": {
+        "Zr": null,
+        "Mg": null,
+        "Ti": null,
+        "Ce": null,
+        "Sc": null,
+        "Li": null,
+        "Er": null
+      },
+      "uniform_concentration_factor_needed": 2.085,
+      "impurity_worst_ppm_masters_on_commercial_Al": 5746.5,
+      "impurity_worst_ppm_masters_on_4N_Al": 280.0
+    },
+    "D. 2026-09 plan (Thermo/ESPI elemental RE, ESPI Al-Zr pieces)": {
+      "V": 0.995,
+      "feasible": true,
+      "worst_vertex_wtpct": {
+        "Mn": 5.0,
+        "Cr": 2.0,
+        "Zr": 2.0,
+        "Mg": 6.0,
+        "Si": 1.5,
+        "Ti": 0.5,
+        "Li": 3.0
+      },
+      "source_grams_per_100g": {
+        "Mn": 5.0,
+        "Cr": 2.0,
+        "Zr": 20.0,
+        "Mg": 6.0,
+        "Si": 1.5,
+        "Ti": 5.0,
+        "Li": 60.0
+      },
+      "pure_Al_grams": 0.5,
+      "scipy_V": 0.9950000000000001,
+      "reachable_fraction_mc": 1.0,
+      "reachable_fraction_se": 0.0,
+      "sources": {
+        "Li": "Al-5Li",
+        "Zr": "Al-10Zr pieces (ESPI Knd2760)",
+        "Ti": "Al-10Ti pieces (ESPI Knc6829)"
+      },
+      "min_y_given_others_percent": {
+        "Zr": 9.756097560975602,
+        "Ti": 9.09090909090907,
+        "Li": 4.958677685950413
+      },
+      "uniform_concentration_factor_needed": 1.0,
+      "impurity_worst_ppm_masters_on_commercial_Al": 2585.5,
+      "impurity_worst_ppm_masters_on_4N_Al": 280.0
+    },
+    "F. plan D but Sc as Al-2Sc": {
+      "V": 1.387,
+      "feasible": false,
+      "worst_vertex_wtpct": {
+        "Mn": 5.0,
+        "Cr": 2.0,
+        "Zr": 2.0,
+        "Mg": 6.0,
+        "Si": 0.7,
+        "Ti": 0.5,
+        "Sc": 0.8,
+        "Li": 3.0
+      },
+      "source_grams_per_100g": {
+        "Mn": 5.0,
+        "Cr": 2.0,
+        "Zr": 20.0,
+        "Mg": 6.0,
+        "Si": 0.7,
+        "Ti": 5.0,
+        "Sc": 40.0,
+        "Li": 60.0
+      },
+      "pure_Al_grams": -38.7,
+      "scipy_V": 1.387,
+      "reachable_fraction_mc": 0.9324336283185841,
+      "reachable_fraction_se": 0.0016696292458356625,
+      "sources": {
+        "Li": "Al-5Li",
+        "Zr": "Al-10Zr pieces",
+        "Ti": "Al-10Ti pieces",
+        "Sc": "Al-2Sc"
+      },
+      "min_y_given_others_percent": {
+        "Zr": null,
+        "Ti": null,
+        "Sc": 61.53846153846083,
+        "Li": 14.084507042253517
+      },
+      "uniform_concentration_factor_needed": 1.4484356894553878,
+      "impurity_worst_ppm_masters_on_commercial_Al": 3722.2999999999997,
+      "impurity_worst_ppm_masters_on_4N_Al": 280.0
+    },
+    "G. all-master but Al-10Li": {
+      "V": 1.7850000000000001,
+      "feasible": false,
+      "worst_vertex_wtpct": {
+        "Zr": 2.0,
+        "Ti": 0.5,
+        "Ce": 10.7,
+        "Sc": 0.8,
+        "Li": 3.0,
+        "Er": 3.0
+      },
+      "source_grams_per_100g": {
+        "Zr": 20.0,
+        "Ti": 5.0,
+        "Ce": 53.5,
+        "Sc": 40.0,
+        "Li": 30.0,
+        "Er": 30.0
+      },
+      "pure_Al_grams": -78.5,
+      "scipy_V": 1.7850000000000001,
+      "reachable_fraction_mc": 0.9302212389380531,
+      "reachable_fraction_se": 0.001694730061344078,
+      "sources": {
+        "Li": "Al-10Li",
+        "Sc": "Al-2Sc",
+        "Zr": "Al-10Zr pieces",
+        "Ti": "Al-10Ti pieces",
+        "Er": "Al-10Er",
+        "Ce": "Al-20Ce"
+      },
+      "min_y_given_others_percent": {
+        "Zr": null,
+        "Ti": null,
+        "Ce": null,
+        "Sc": null,
+        "Li": null,
+        "Er": null
+      },
+      "uniform_concentration_factor_needed": 1.7849999999999997,
+      "impurity_worst_ppm_masters_on_commercial_Al": 4876.5,
+      "impurity_worst_ppm_masters_on_4N_Al": 280.0
+    },
+    "E. recommended (see report)": {
+      "V": 0.535,
+      "feasible": true,
+      "worst_vertex_wtpct": {
+        "Mn": 5.0,
+        "Cr": 2.0,
+        "Zr": 2.0,
+        "Mg": 6.0,
+        "Si": 1.5,
+        "Ti": 0.5,
+        "Li": 3.0
+      },
+      "source_grams_per_100g": {
+        "Mn": 5.0,
+        "Cr": 2.0,
+        "Zr": 4.0,
+        "Mg": 6.0,
+        "Si": 1.5,
+        "Ti": 5.0,
+        "Li": 30.0
+      },
+      "pure_Al_grams": 46.5,
+      "scipy_V": 0.5350000000000001,
+      "reachable_fraction_mc": 1.0,
+      "reachable_fraction_se": 0.0,
+      "sources": {
+        "Li": "Al-10Li (or Al-5Li if Sc/Zr/Ce are elemental)",
+        "Zr": "Al-Zr50 pieces (ESPI Knd2756), crushed",
+        "Ti": "Al-10Ti pieces"
+      },
+      "min_y_given_others_percent": {
+        "Zr": 3.96039603960396,
+        "Ti": 0.9708737864077669,
+        "Li": 3.92156862745098
+      },
+      "uniform_concentration_factor_needed": 1.0,
+      "impurity_worst_ppm_masters_on_commercial_Al": 1251.5,
+      "impurity_worst_ppm_masters_on_4N_Al": 280.0
+    }
+  },
+  "impurity_floor_percent_masters_on_commercial_Al": {
+    "Mn": 7.249999999999999,
+    "Cr": 2.9896907216494846,
+    "Zr": 2.9896907216494846,
+    "Mg": 8.613861386138613,
+    "Si": 16.979553903345725,
+    "Cu": 8.613861386138613,
+    "Ti": 0.7591623036649214,
+    "Fe": 2.9896907216494846,
+    "Ni": 7.249999999999999,
+    "Ce": 16.261682242990656,
+    "Sc": 1.210855949895616,
+    "Li": 4.438775510204081,
+    "Er": 4.438775510204081,
+    "Zn": 9.950980392156863,
+    "Sn": 2.9896907216494846
+  },
+  "S_sweep": {
+    "10.0": {
+      "A. all elemental": 0.1,
+      "B. 2026-08 shopping chart": 1.26,
+      "C. every reactive element as a commercial master": 1.585,
+      "D. 2026-09 plan (Thermo/ESPI elemental RE, ESPI Al-Zr pieces)": 0.895,
+      "F. plan D but Sc as Al-2Sc": 1.287,
+      "G. all-master but Al-10Li": 1.285,
+      "E. recommended (see report)": 0.43499999999999994
+    },
+    "15.0": {
+      "A. all elemental": 0.15,
+      "B. 2026-08 shopping chart": 1.51,
+      "C. every reactive element as a commercial master": 1.835,
+      "D. 2026-09 plan (Thermo/ESPI elemental RE, ESPI Al-Zr pieces)": 0.945,
+      "F. plan D but Sc as Al-2Sc": 1.337,
+      "G. all-master but Al-10Li": 1.535,
+      "E. recommended (see report)": 0.485
+    },
+    "20.0": {
+      "A. all elemental": 0.20000000000000007,
+      "B. 2026-08 shopping chart": 1.7600000000000002,
+      "C. every reactive element as a commercial master": 2.085,
+      "D. 2026-09 plan (Thermo/ESPI elemental RE, ESPI Al-Zr pieces)": 0.995,
+      "F. plan D but Sc as Al-2Sc": 1.387,
+      "G. all-master but Al-10Li": 1.7850000000000001,
+      "E. recommended (see report)": 0.535
+    },
+    "25.0": {
+      "A. all elemental": 0.25000000000000006,
+      "B. 2026-08 shopping chart": 1.842,
+      "C. every reactive element as a commercial master": 2.2239999999999998,
+      "D. 2026-09 plan (Thermo/ESPI elemental RE, ESPI Al-Zr pieces)": 1.045,
+      "F. plan D but Sc as Al-2Sc": 1.4369999999999998,
+      "G. all-master but Al-10Li": 1.887,
+      "E. recommended (see report)": 0.585
+    },
+    "30.0": {
+      "A. all elemental": 0.30000000000000004,
+      "B. 2026-08 shopping chart": 1.892,
+      "C. every reactive element as a commercial master": 2.2969999999999997,
+      "D. 2026-09 plan (Thermo/ESPI elemental RE, ESPI Al-Zr pieces)": 1.095,
+      "F. plan D but Sc as Al-2Sc": 1.487,
+      "G. all-master but Al-10Li": 1.937,
+      "E. recommended (see report)": 0.635
+    }
+  }
+}
