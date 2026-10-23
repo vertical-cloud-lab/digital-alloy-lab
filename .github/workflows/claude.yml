@@ -49,8 +49,6 @@ jobs:
        (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')) &&
         contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)))
     runs-on: ubuntu-latest
-    # Secrets live in the `claude` environment; on a public repo it can require a reviewer.
-    environment: claude
     # Allow long waits (e.g., Edison polling) without hitting a job-level limit.
     # This budget now covers both attempts, so a fallback after a long first
     # attempt gets whatever is left of the 180 minutes.
@@ -74,9 +72,23 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       EDISON_PLATFORM_API_KEY: ${{ secrets.EDISON_PLATFORM_API_KEY }}
-      # Read-only access to the sgbaird/agent-staging drop box, for files staged
-      # from other repos (see CLAUDE.md, "Receiving files from other repos").
       GH_READ_PAT_STAGING: ${{ secrets.GH_READ_PAT_STAGING }}
+      # The lab Pis on the tailnet, named for what each one watches:
+      # PANEL_CAM_* (tag:rpi-5-3ray) and HMI_CAM_* (tag:rpi-5-6ktj) point at the
+      # atomizer's control panel and HMI; ROOM_CAM_* (tag:rpi-zero2w-ex3f) is the
+      # full-room livestream camera. Each password is that Pi's sudo password.
+      # Username and hostname are repo *variables*, not secrets: a short secret is
+      # masked everywhere it appears as a substring, and a tailnet name grants
+      # nothing on its own.
+      PANEL_CAM_PASSWORD: ${{ secrets.PANEL_CAM_PASSWORD }}
+      PANEL_CAM_USERNAME: ${{ vars.PANEL_CAM_USERNAME }}
+      PANEL_CAM_HOSTNAME: ${{ vars.PANEL_CAM_HOSTNAME }}
+      HMI_CAM_PASSWORD: ${{ secrets.HMI_CAM_PASSWORD }}
+      HMI_CAM_USERNAME: ${{ vars.HMI_CAM_USERNAME }}
+      HMI_CAM_HOSTNAME: ${{ vars.HMI_CAM_HOSTNAME }}
+      ROOM_CAM_PASSWORD: ${{ secrets.ROOM_CAM_PASSWORD }}
+      ROOM_CAM_USERNAME: ${{ vars.ROOM_CAM_USERNAME }}
+      ROOM_CAM_HOSTNAME: ${{ vars.ROOM_CAM_HOSTNAME }}
       # Allow long-blocking foreground commands (e.g., Edison polling)
       BASH_DEFAULT_TIMEOUT_MS: "900000" # 15 min default per Bash call
       BASH_MAX_TIMEOUT_MS: "3600000" # 60 min ceiling per Bash call
@@ -87,6 +99,28 @@ jobs:
         with:
           fetch-depth: 0        # all history, all branches
           filter: blob:none     # ...without historical blobs (i.e., low total size)
+
+      # Join the tailnet as an ephemeral node (auto-removed at job end) so sessions
+      # can reach the lab Pis without hand-rolling `tailscale up`. Auth is a
+      # Tailscale federated identity (Settings > Trust credentials > OpenID
+      # Connect): the action trades this job's GitHub OIDC token for an auth key,
+      # so no Tailscale secret is stored anywhere. The identity accepts only
+      # subjects matching
+      # repo:vertical-cloud-lab@228975003/digital-alloy-lab@1421253647:* and mints
+      # keys for exactly tag:rpi-5-3ray + tag:rpi-5-6ktj + tag:rpi-zero2w-ex3f, so
+      # `tags:` must list all three; requesting a subset fails. It is separate from robot-arms' identity,
+      # so neither repo reaches the other's Pis. What a runner may do on the Pis
+      # is bounded by the tailnet policy in vertical-cloud-lab/tailscale-policy
+      # (SSH within each tag, tcp:22 only).
+      # continue-on-error: most sessions here never touch the Pis, so a Tailscale
+      # problem must not stop them.
+      - name: Connect to Tailscale
+        continue-on-error: true
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          audience: ${{ secrets.TS_AUDIENCE }}
+          tags: tag:rpi-5-3ray,tag:rpi-5-6ktj,tag:rpi-zero2w-ex3f
 
       # Copilot-style model selector: @claude+<model>[:<effort>]
       # Examples: @claude, @claude+opus-5, @claude+opus-4.8:max, @claude:high
