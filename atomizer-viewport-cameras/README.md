@@ -17,7 +17,13 @@ in the lab's vcl-shared folder. Every machine dimension that is a guess is a var
 (measure these)** tab, with where the number came from and how far off it may be. Change one there and everything
 rebuilds. Nothing has been printed yet.
 
-![The three units on an approximate rePowder](renders/overall.png)
+![The three units on the lab's CadQuery model of the rePowder](renders/overall.png)
+
+![The units put together and fitted, step by step](renders/assembly_steps.gif)
+
+The assembly animation is also an [MP4](renders/mp4/assembly_steps.mp4) (1280 × 720, 15 fps, every frame). The machine in
+these pictures is the lab's CadQuery model of the rePowder from `atomizer-training/viz3d/`; see
+[Renders and the assembly animation](#renders-and-the-assembly-animation).
 
 | Front unit | Section through the front port |
 |---|---|
@@ -54,7 +60,7 @@ design, and two of them correct #255's model:
 
 The rePowder reference summary from #232 (`repowder-reference.zip`) agrees where it overlaps: module envelope
 1000 × 800 × 1600 mm, feet at 714 × 600, 57 L chamber, HMI 400 × 263 mm, and the furnace's "bell window frame / glass"
-(Indutherm C015/C016). Bartosz: the view ports are hardened glass, the furnace window glass-ceramic
+(Indutherm C015/C016). AMAZEMET's trainer: the view ports are hardened glass, the furnace window glass-ceramic
 ([T5 25:10](https://www.youtube.com/embed/58wJ_Khwgyk?start=1510)). It does not dimension any window.
 
 ### Other sources, checked 22 October
@@ -69,7 +75,8 @@ The rePowder reference summary from #232 (`repowder-reference.zip`) agrees where
 - **There is no better Onshape model of the machine.** The only other rePowder in the lab's Onshape is in vcl-shared ›
   Lab Models › *Lab equipment (48a9e11)*. It is a rough model built to the 1000 × 800 × 1600 mm spec envelope, and its
   own README says #255's model replaces it. #255's CadQuery model, which this design is built from, is still the most
-  detailed model of the machine, and it isn't in Onshape.
+  detailed model of the machine, and it isn't in Onshape. Its latest version (PR #173 here) is what the renders and the
+  assembly animation now show (see [below](#renders-and-the-assembly-animation)).
 - **digital-alloy-lab has no machine dimensions**, only proposal and literature text about the rePowder.
 
 ### What to measure (for @ronnie-guymon)
@@ -126,7 +133,7 @@ shows it).
   axis at `aim_z` (the crucible datum plus about 20 mm of melt).
   - With the 16 mm lens it sees about 190 mm across at the melt. The lab's 8–50 mm zoom, at 35–50 mm, would fill the
     frame with the crucible.
-- **Heat.** The furnace runs to 1300 °C, and Bartosz says it is too bright to watch by eye at that temperature
+- **Heat.** The furnace runs to 1300 °C, and AMAZEMET's trainer says it is too bright to watch by eye at that temperature
   ([T5 54:24](https://www.youtube.com/embed/58wJ_Khwgyk?start=3264)). The team has felt heat through the window
   ([Oct 2, 24:18](https://www.youtube.com/embed/of5-LhkX_VQ?start=1458)). So the lens gets a hot mirror and a
   variable ND. The camera stays 250 mm away and in front of the lid's edge, mostly out of the hot air rising off it.
@@ -197,7 +204,7 @@ Two things worth knowing if you script Onshape:
 
 [`cad/check.py`](cad/check.py) reads Onshape's own STEP export ([`exports/onshape_partstudio.step`](exports/onshape_partstudio.step)),
 with part names, and writes [`exports/checks.json`](exports/checks.json) and the STLs in [`exports/stl/`](exports/stl/).
-[`cad/render.py`](cad/render.py) makes the renders.
+[`cad/render.py`](cad/render.py) makes the stills, on the CadQuery model of the machine (next section).
 
 - **Interference: none.** Every printed part was checked against every machine part, every bought part and the
   other printed parts.
@@ -221,6 +228,76 @@ with part names, and writes [`exports/checks.json`](exports/checks.json) and the
 That is 589 cm³, or about 750 g of PETG. Everything fits the H2D's bed. The front socket (169 mm across flats) also
 just fits an A1 mini. Use black PETG for the front and left units, and ASA (or the PA6-CF in the BOM) for the top
 pod and display box above the furnace.
+
+## Renders and the assembly animation
+
+The stills and the animation put Onshape's parts on the most detailed model of the rePowder the lab has: the CadQuery
+model in `atomizer-training/viz3d/` (PR #173, brought over from byu-vcl PR #255), at its latest version, with the
+ultrasonic stack measured on 8 October (commit `7ec59ab`). It is also the model that the miniature powder doser's
+in-chamber animation (vertical-cloud-lab/byu-vcl#274) was drawn in. Its `model.py` and `scene.py` are copied unchanged
+into [`cad/viz3d/`](cad/viz3d/README.md), so this folder renders on its own. Until 23 October the renders here showed
+the Onshape model's rough machine instead.
+
+[`cad/units.py`](cad/units.py) reads the Onshape export and moves each unit, rigidly, from the window where the
+Onshape model has it to the window where the CadQuery model has it. The two models share axes and origin. They place
+the windows differently because both are estimates from the same training videos:
+
+| | Onshape (frame measurements, ±) | CadQuery model | How the unit is moved |
+|---|---|---|---|
+| Front port, where its axis leaves the chamber face | x −15 ±25, z 1035 ±40; axis 20° ±12 up, not turned | x 6.2, z 1026.8; axis 21.6° up, 8.5° to the left | with the axis: 21 mm right, 8 mm down, turned to match |
+| Door sight glass | y +20 ±50, z 1015 ±50; ring 30 proud of the door | y −45, z 1060; ring 22 proud (12 on a 10 mm raised panel) | 65 mm forward, 45 mm up, 10 mm out |
+| Lid window centre | y −93.9, z 1455 ±60, on a 50° ±15 facet | y −105.7, z 1465, on a 60° facet | the arm 16.9 mm lower on the post |
+| Door hinge | the back edge (the swing bolts, T5 24:54) | the front edge | not used: the door stays shut |
+
+- **Front.** The unit fits AMAZEMET's LED cover, which the CadQuery model draws only as a 12-sided flange (174 mm
+  across flats, 46 deep). The renders leave that flange out and draw the Onshape model's port nut, glass, LED cover
+  and cable pod in its place.
+- **Left.** The Onshape model's sight-glass ring is drawn over the CadQuery model's.
+- **Top.** Only the hub and what it carries move. The magnetic base and the post stay on the blue frame's top, which
+  is in the same place in both models. With the arm 16.9 mm lower (the detent collar sets that height), the camera's
+  line passes through the CadQuery model's window and meets the furnace axis at z 1223, 4 mm above the crucible
+  datum, instead of 1240.
+- **Where they disagree most:** the sight glass's y, the only offset outside the Onshape model's ± range, and which
+  edge the door hinges on. Measuring the machine with the guide settles both.
+
+On the CadQuery model nothing overlaps (`python units.py`, which writes [`exports/placement.json`](exports/placement.json)).
+The front unit is 21.1 mm from the chamber, the left one 2.9 mm from the door, and the top unit's magnetic base sits
+on the blue frame.
+
+**The animation** ([`cad/assembly.py`](cad/assembly.py)) uses the CadQuery model's `Scene` framework, so it looks and
+runs like the atomizer step animations in `atomizer-training/viz3d/`. It follows [Assembly, briefly](#assembly-briefly),
+in 24 steps:
+
+- **F.1–F.8, front.** The socket and tray, then the HQ Camera with its M12 lens, the Camera Module 3 Wide, the Pi 5,
+  the display and the face plate go in along the port axis, with the unit off the machine (the tray turns
+  see-through while the cameras go in). Then the unit is pushed onto the LED cover.
+- **L.1–L.5, left.** The same for the collar and tray, the camera, the Pi, the display and the face plate. Then the
+  collar slides onto the sight glass ring.
+- **T.1–T.9, top.** The magnetic base and post on the blue frame, the detent collar and hub, the extrusion, the camera
+  pod and the display box, then the line of sight (red). The arm swings to its parked dimple, the lid opens and
+  closes, and the arm swings back to the working dimple.
+
+Screws, inserts, ball plungers and cables aren't modelled; the captions name them. The files:
+
+| File | What it is |
+|---|---|
+| [`renders/assembly_steps.gif`](renders/assembly_steps.gif) | 800 × 450, 10 fps, for GitHub |
+| [`renders/mp4/assembly_steps.mp4`](renders/mp4/assembly_steps.mp4) | 1280 × 720, 15 fps, h264, every frame |
+| [`renders/assembly_steps.json`](renders/assembly_steps.json) | each step's caption and MP4 frame range, for timing narration |
+| [`renders/assembly_steps_still.png`](renders/assembly_steps_still.png) | the front unit seated (F.8) |
+
+To render again:
+
+```bash
+pip install cadquery pyvista             # plus: apt-get install xvfb libgl1-mesa-dri gifsicle ffmpeg
+cd atomizer-viewport-cameras/cad
+python units.py                                                           # moves, clearances -> ../exports/placement.json
+xvfb-run -a -s "-screen 0 1920x1080x24" python render.py                  # the five stills
+xvfb-run -a -s "-screen 0 1920x1080x24" python assembly.py                # the animation
+PREVIEW=1 xvfb-run -a -s "-screen 0 1920x1080x24" python assembly.py      # the last frame of each step, in /tmp
+```
+
+The stills take about 30 s. The animation took about 4 minutes on a four-core GitHub runner.
 
 ## Bill of materials
 
@@ -278,6 +355,6 @@ resellers (the HQ Camera $55 against $99.99). Prices are as of 7 October 2026, b
   before printing the face plate.
 - **No software has been written.** The display and stream approach above is from the streamingLambda prototypes.
 - **Not sliced.** The STLs are in machine orientation, not print orientation.
-- **Bartosz's laser-fixture idea from #264** (a laser in the sealing-pin seat, shining through the nozzle onto the
+- **The laser-fixture idea from #264** (AMAZEMET's suggestion: a laser in the sealing-pin seat, shining through the nozzle onto the
   plate during setup) isn't part of this. It would complement the left camera: the laser sets the plate before the
   run, the camera confirms it during the run.
