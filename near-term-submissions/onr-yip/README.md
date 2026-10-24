@@ -26,10 +26,11 @@ printed aluminum as the naval application.
 | `support-letter-draft.md` | Letter of support for the chair or dean | Needs signer and real figures |
 | `preview/` | PNG renders of the proposal pages other than the CV (110 dpi) | Generated |
 | `budget/preview/` | PNG renders of the budget justification's first pages | Generated |
-| `onr-yip-technical-proposal-cu-ded.tex` / `.pdf` | **Alternative** technical proposal: seawater-resistant copper alloys designed as powders for blown-powder DED (section 9) | Draft, 17 of 20 counted pages |
-| `abstract-cu-ded.txt` | SF-424 abstract for the alternative | Draft, 3,970 of 4,000 characters |
+| `onr-yip-technical-proposal-cu-ded.tex` / `.pdf` | **Alternative** technical proposal: seawater-resistant copper alloys designed as powders for blown-powder DED (section 9) | Draft, 20 of 20 counted pages |
+| `figures-cu-ded/`, `pycalphad-cu/` | The copper draft's powder-doser and pycalphad figures, and the script and results behind the second | From the Oct 24 revision |
+| `abstract-cu-ded.txt` | SF-424 abstract for the alternative, as on ONR's Project Abstract Summary form | 3,854 of 4,000 characters |
 | `preview-cu-ded/` | PNG renders of the alternative's pages (110 dpi) | Generated |
-| `attachments/field10-facilities-cu-ded.tex` / `.pdf`, `attachments/field11-equipment-cu-ded.tex` / `.pdf` | Fields 10 and 11 for the alternative (DED instead of LPBF, copper feedstock, powder checks) | Draft, 1 page each, TODOs |
+| `attachments/field10-facilities-cu-ded.tex` / `.pdf`, `attachments/field11-equipment-cu-ded.tex` / `.pdf` | Fields 10 and 11 for the alternative (two DED facilities, powder doser, copper feedstock, powder checks) | Field 10 2 pages, Field 11 1 page, TODOs |
 
 Only one of the two technical proposals would be submitted. Section 9
 compares them.
@@ -238,7 +239,7 @@ alloys it would repair, and resists seawater as deposited at least as well as
 | --- | --- | --- |
 | Title | Cost-Aware Selection of Experiments for Printable, Corrosion-Resistant High-Strength Aluminum Alloys | Cost-Aware Design of Seawater-Resistant Copper Alloy Powders for Blown-Powder Directed Energy Deposition |
 | Alloys | Al with Zr or Sc, plus Cu, Mg, Zn, Mn, Cr | Cu-Ni (10-30 Ni) with Fe, Mn, Cr; Al bronzes with Ni, Fe, Mn |
-| Process | LPBF builds bought from a Utah user facility | Single-stream blown-powder DED sessions on a FormAlloy X2 at an outside facility (Sam's), with pre-placed powder tracks on the same laser as a cheaper first step |
+| Process | LPBF builds bought from a Utah user facility | Single-stream blown-powder DED bought at two facilities as two steps of different cost: the InssTek MX-Lab at the University of Utah (pre-placed and blown-powder tracks, walls and small blocks) and the FormAlloy X2 at the Colorado School of Mines (2 kg builds and repair coupons) |
 | Powder | Ultrasonic atomization, LPBF size range | Same atomizer at 40 kHz; sieved into 45-105 and 100-200 um cuts; flow, density, oxygen and carbon checked; a first lot of about 0.5 kg for tracks, then about 2 kg (about six runs) for each composition the search sends to blown powder |
 | Physics inputs | CALPHAD at equilibrium / Scheil | CALPHAD evaluated along a heat-flow model of the DED thermal history (new Advance 3, new H3: process-aware beats equilibrium beats none) |
 | Corrosion | Polarization screen, then intergranular and salt-spray tests | Polarization, LPR, and impedance in substitute ocean water, then 30-day immersion with mass loss and depth of selective attack; flowing seawater left to Navy labs |
@@ -476,10 +477,11 @@ the aluminum runs have used bare graphite.
 Sam, at a facility with a FormAlloy X2 (name and location still to fill in),
 sent external rates and photos of copper-nickel tracks from a senior design
 project. The photos are not in this repo.
-- **Rates:** machine time $155 per hour and labor $165 per hour (the
-  facility's external SIF rate). A typical build of four 1-inch cubes is
-  3 machine hours and about 2 labor hours, so **$795**, or $1,204 with BYU's
-  51.5% F&A (a purchase of services, not a subaward, so it is in MTDC).
+- **Rates:** the facility's posted external rates for machine time and
+  labor; the numbers are in the private budget, not here (rates removed
+  from this entry 2026-10-24). A typical build of four 1-inch cubes is
+  3 machine hours and about 2 labor hours. It is a purchase of services,
+  not a subaward, so it is in MTDC and carries F&A.
   Machine time scales with deposition rate and volume. We supply the powder,
   or the facility supplies it at cost.
 - **Powder size:** about 50 to 150 um, sometimes up to 200 um; the usual cuts
@@ -520,8 +522,8 @@ project. The photos are not in this repo.
 
   | Line | Basis | Per year |
   | --- | --- | --- |
-  | DED sessions (replaces LPBF builds) | $795: 3 h at $155 + 2 h at $165 | what remains |
-  | Pre-placed track sessions | guess: 1 machine h + 2 labor h = $485, 6 a year | $2,910 |
+  | DED sessions (replaces LPBF builds) | 3 machine h + 2 labor h at the posted rates | what remains |
+  | Pre-placed track sessions | guess: 1 machine h + 2 labor h, 6 a year | in budget.py |
   | Copper feedstock (OFC bar, Ni, Fe, Mn, Al, Cu master alloys), replacing the Al master alloys and Al bar | guess: about 35 kg a year (about 7 scale-ups and 25 first lots) | $4,000 |
   | Coated C/C plates, hBN nozzles, BN spray, crucibles | guess: about 65 copper runs a year; ask AMAZEMET for prices | $6,000 |
   | Commercial 70-30 Cu-Ni and NAB powder, 45-105 um | at least 2 kg each; quote needed | $1,500, then $750 |
@@ -551,16 +553,74 @@ project. The photos are not in this repo.
   - 17 of 20 counted pages (was 16), 112 references; cringe-filter 0
     errors.
 
+**Oct 24 revisions (2026-10-24).** From the agent-staging drop
+`for/vertical-cloud-lab/digital-alloy-lab/2026-10-24-onr-yip-revisions-and-reviewers/`
+(`sgbaird/agent-staging` at `6c27df4`; all 32 sha256 hashes in its
+MANIFEST.md match), worked through in the order of its HANDOFF.md.
+- **Patch:** `dal-pr117-a7c4e9a.patch` applied cleanly; the result is
+  byte-identical to the drop-in `.tex`. It adds the CNO epigraph (Adm. Daryl
+  Caudle, verbatim from the NAVSUP WSS article already cited), splits DED
+  into two steps of different cost (the Utah InssTek MX-Lab for pre-placed
+  and blown-powder tracks, walls and small blocks from 0.5 kg; the Mines
+  FormAlloy X2 for 2 kg builds and repair coupons), a Carderock paragraph,
+  the powder doser and pycalphad results with two new figures
+  (`figures-cu-ded/`, `pycalphad-cu/`; the MatCalc `.tdb` is downloaded by
+  the script, not committed), a plain-language pass, and the cover amount
+  from the copper budget ($748,087, TODO for SPO's final figures).
+- **cringe-filter** (0.2.0 from main, `-c paper`): all 38 items of the
+  post-patch audit (the drop's 27 plus 11 from the patch), semicolons
+  between clauses turned into periods (49 to 15), possessives rephrased (45
+  to 9), and "we" as the subject where a sentence says what we will do. The
+  TODOs, the quoted ONR thrusts and "Operationally Robust Materials" (a
+  program name) are unchanged, and so is every citation, label, math span
+  and number. Size distribution is now by sieve analysis and SEM images, as
+  in the new Field 10, instead of laser diffraction.
+- **Abstract and Fields 10 and 11:** the submission text from the drop.
+  Field 10 says "posted external rates" without the numbers and now runs to
+  2 pages; Field 11 is 1 page.
+- **Reviewer notes:**
+  [`edison-trajectories/onr-yip-reviewers-2026-10/`](../../edison-trajectories/onr-yip-reviewers-2026-10/README.md),
+  eight Edison answers on the program officer (Dr. Charles R. Fisher), the
+  YIP program manager and likely Government reviewers. The raw trajectories
+  are not committed because they hold contact emails. All 14 of its
+  proposal changes are in the draft, with 15 new references, each checked on
+  Crossref (and the Materials Commons dataset on DataCite) and against an
+  abstract or the open full text; its README lists what changed where.
+- **Rates:** the Mines rates and session cost are gone from this README's
+  2026-10-21 entry, the Kuali checklist and the `.tex` header; they stay in
+  the private budget (git history and the PR comments still have them).
+- **Support letter:** the eligibility sentence from the structure notes,
+  without pronouns, with the citizenship status as a bracketed item; notes
+  on a personal mentoring line and the associate dean co-signing if dollar
+  amounts appear.
+- **Not done from the structure notes:** the Gantt chart. It needs
+  quarter-level dates the draft does not set, and the free space on page 19
+  is better kept for the first copper powder figure. The student sentence
+  is in, with a TODO for the courses.
+
+  | | `a7c4e9a` | After the patch | After the cringe-filter edits | Final |
+  | --- | --- | --- | --- | --- |
+  | Counted pages (of 20) | 17 | 19 | 19 | 20 |
+  | Total PDF pages | 32 | 35 | 35 | 37 |
+  | References | 112 | 117 | 117 | 132 |
+  | cringe-filter score (log-odds) | +151.56 | +152.90 | -83.15 | -99.03 |
+  | Words scored | 8,653 | 9,738 | 9,783 | 10,443 |
+
+  Page 19 (PI Qualifications) has about 26 lines free. Responsibility
+  always starts its own page after the CV and letter, so the draft stays at
+  20 counted pages until page 19 fills.
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
-1. **DED facility.** Sam's FormAlloy X2 (2026-10-21, above). Still to fill
-   in: the facility's name and location, the laser (wavelength, power,
-   spot), the shielding, preheat, turnaround, whether unused hopper powder
-   comes back, and whether a smaller hopper can run a few hundred grams.
-   Get the rates in writing for the budget justification. The budget macros
-   are still the aluminum version's (28, 29 and 26 LPBF builds at $800);
-   enter the lines in the 2026-10-21 table in `budget/budget.py` (private).
-   The totals should move by less than one session a year.
+1. **DED facilities.** The InssTek MX-Lab at the University of Utah (Prof.
+   Z. Zak Fang) and the FormAlloy X2 at the Colorado School of Mines (ADAPT
+   and the Shared Instrumentation Facility, Golden). From Prof. Fang, by
+   Oct 27: the rate, the smallest powder charge per feeder, the argon
+   chamber and any preheat, and who runs it. From Mines: the X2's laser
+   (wavelength, power, spot), shielding, preheat, turnaround, and whether
+   unused hopper powder comes back. Get both rates in writing for the
+   budget justification. The cover now carries the copper budget from SPO's
+   planning sheet of Oct 23 (a TODO asks for the final figures).
 2. **Atomizer for copper.** Settled (see above): the 1,300 °C working limit,
    graphite crucibles sprayed with BN before Ni- and Fe-bearing melts (the
    spray still has to be bought), an hBN nozzle for those melts, and a Mo- or
@@ -575,13 +635,15 @@ project. The photos are not in this repo.
    each in 45-105 um (the facility can also supply powder at cost).
 4. A first copper powder lot (SEM and size distribution) as preliminary
    data: C10100 in the bare crucible, then NAB once the crucible is sprayed.
-   The runs are planned for the week of Oct 19; attachments can be replaced
-   until SPO submits on Oct 28. Also ask Sam whether the facility's Cu-Ni
+   The NAB bar and BN spray arrived Oct 23; attachments can be replaced
+   until SPO submits on Oct 28, and page 19 has room for the figure. Also ask Sam whether the facility's Cu-Ni
    tracks, and a photo, may be shown; if not, cut the sentence in
    Preliminary results and the "already used for copper-nickel" clause in
    Task 2.
 5. Thermo-Calc: confirm the BYU license includes TCCU, and which version
    (the search-space coverage numbers are for TCCU7, Thermo-Calc 2026b).
+   Also whether showing an open nickel-alloy database (MatCalc mc_ni) in the
+   pycalphad figure is fair.
 6. Oxygen (inert-gas fusion) and carbon (combustion) analysis at a service
    lab. Carbon, because the crucible is graphite and the plates are C/C.
 7. Immersion durations, the selective-attack depth limit in H5 (the TODO now
@@ -592,8 +654,9 @@ project. The photos are not in this repo.
    blown powder at the estimated session count, so 6 over three years would
    be safe), and whether to add Mn-Al bronze (C95700) as a Ni-free branch.
 9. Handling nickel powders (safety plan).
-10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`), now
-    naming the X2. The letter of support carries the copper title as a
+10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`), with
+    the submission text of Oct 24; their TODOs are the Instron frames, the
+    Thermo-Calc license, the Utah questions and the X2 laser. The letter of support carries the copper title as a
     bracketed option; its "powder-to-part demonstration on an aluminum
     alloy" holds for both.
 11. Check the 2011 Cu-30Ni corrosion study's conditions and numbers, and get
@@ -605,8 +668,27 @@ project. The photos are not in this repo.
     CubXL plus a borrowed benchtop for cross-checks, or the $18,000 benchtop
     unit (`cubxl-electrochemistry.md`). The first option now buys about 14
     more DED sessions in Year 1.
-13. Collaborators: if Sam agrees, name Sam as an unfunded collaborator in
-    the Management section and in current and pending support (NOFO p. 38).
+13. Collaborators: if Prof. Fang or Sam agrees, name them as unfunded
+    collaborators in the Management section and in current and pending
+    support (NOFO p. 38).
+14. Carderock: Dr. Nicholas J. Jones's title and code, whether Dr. Jones or
+    others agree to be named, whether the lead-role wording still matches
+    Carderock's pages, and how many candidates to send for flowing-seawater
+    tests (the draft says the three leading candidates and the two
+    references).
+15. The epigraph: Adm. Caudle is in (checked verbatim against the DVIDS
+    article on Oct 24). The alternative in the same article fits copper
+    more closely but is from a civilian: "I earnestly believe that metallic
+    additive manufacturing is the path to the capability and capacity you
+    need for critical materials in the submarine industrial base. ... And
+    that same holds true for surface ships, and its systems, and for
+    sustainment as well." (Matt Sermon, then executive director of PEO
+    Strategic Submarines, to ASNE, 2023; the article puts "said Matt
+    Sermon ..." between the two sentences).
+16. The powder doser numbers, against powder-doser PR 166, PR 175 and issue
+    186.
+17. The courses the PI teaches (student sentence in Navy engagement), and
+    the citizenship status in the support letter and Responsibility.
 
 All other TODOs (cover contacts, CV, responsibility, DMP schema, current and
 pending) are the same as in section 4.
