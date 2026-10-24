@@ -21,6 +21,13 @@ and save as PDF.
 Every bracketed item needs a real number or fact from the signer. Delete any
 commitment BYU will not make; do not leave a guessed figure in the letter.
 
+Two notes from a funded recent YIP (structure notes, 2026-10-24): its chair
+letter stated eligibility outright, since the FY2027 NOFO makes citizenship,
+being untenured, a first tenure-track position, and no prior ONR YIP or
+PECASE award conditions of eligibility (p. 9); and it had a personal
+mentoring line from the chair. If the letter names start-up dollar amounts,
+BYU's research office asks that the associate dean co-sign.
+
 ---
 
 [Date]
@@ -50,6 +57,10 @@ the development laboratory of the Acceleration Consortium at the University
 of Toronto, where he also served as Director of Training and Programs and
 then as a Principal Investigator.
 
+Dr. Baird is a U.S. [citizen / permanent resident], is untenured, holds a
+first tenure-track position, and has not received an ONR Young Investigator
+or PECASE award. [TODO Sterling: fill in the citizenship status.]
+
 We view Dr. Baird as a potential leading faculty member in autonomous
 materials research. In his first [N] months at BYU he has set up a laboratory
 for making alloy powder, established a thermodynamic modeling workflow on
@@ -69,7 +80,8 @@ BYU has made the following commitments to Dr. Baird and his research:
 - Access to the BYU Microscopy Center and BYU high-performance computing
   [and any fee waivers or allocations].
 - Mentoring through [the department's faculty mentoring program; name
-  mentor(s) if assigned].
+  mentor(s) if assigned]. [Optional, in the signer's own words: a personal
+  mentoring commitment, e.g., "I will personally ..."]
 - [Any other related research funding or equipment investment.]
 
 These commitments continue beyond the term of the proposed award. [TODO
