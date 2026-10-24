@@ -170,6 +170,9 @@ Measured on the GitHub Actions runner, single process:
 | NAB phase-fraction scan (276 temperatures) | a few seconds |
 | Whole script | about 85 s |
 
+Rerun on 2026-10-24 on another GitHub Actions runner (same versions, same database): the three result CSVs
+were reproduced exactly; one equilibrium melting range took 0.9 to 2.9 s and the 42-composition map 70 s.
+
 "A thermodynamic calculation takes minutes" is therefore conservative for pycalphad. It is seconds
 per composition, and minutes for a few hundred compositions, or for Scheil across a whole map (about
 10 s per composition).

@@ -589,6 +589,13 @@ MANIFEST.md match), worked through in the order of its HANDOFF.md.
 - **Rates:** the Mines rates and session cost are gone from this README's
   2026-10-21 entry, the Kuali checklist and the `.tex` header; they stay in
   the private budget (git history and the PR comments still have them).
+- **pycalphad check:** `run_calphad.py`, rerun on this runner with the
+  drop's `mc_ni_v2036.tdb` (sha256 as in `pycalphad-cu/README.md`),
+  reproduced `reference_alloys.csv`, `composition_map.csv` and
+  `nab_phase_fractions.csv` exactly. The 42-point map took 70 s here
+  against 46 s in the drop's run, so the draft now says "one to three
+  seconds" per composition and "46 to 70 seconds" for the map, not "under a
+  minute".
 - **Support letter:** the eligibility sentence from the structure notes,
   without pronouns, with the citizenship status as a bracketed item; notes
   on a personal mentoring line and the associate dean co-signing if dollar
@@ -603,8 +610,8 @@ MANIFEST.md match), worked through in the order of its HANDOFF.md.
   | Counted pages (of 20) | 17 | 19 | 19 | 20 |
   | Total PDF pages | 32 | 35 | 35 | 37 |
   | References | 112 | 117 | 117 | 132 |
-  | cringe-filter score (log-odds) | +151.56 | +152.90 | -83.15 | -99.03 |
-  | Words scored | 8,653 | 9,738 | 9,783 | 10,443 |
+  | cringe-filter score (log-odds) | +151.56 | +152.90 | -83.15 | -98.98 |
+  | Words scored | 8,653 | 9,738 | 9,783 | 10,448 |
 
   Page 19 (PI Qualifications) has about 26 lines free. Responsibility
   always starts its own page after the CV and letter, so the draft stays at
