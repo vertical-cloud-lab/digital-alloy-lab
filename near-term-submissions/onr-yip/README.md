@@ -617,6 +617,51 @@ MANIFEST.md match), worked through in the order of its HANDOFF.md.
   always starts its own page after the CV and letter, so the draft stays at
   20 counted pages until page 19 fills.
 
+**Oct 24 h merge (2026-10-24).** From the agent-staging drop
+`for/vertical-cloud-lab/digital-alloy-lab/2026-10-24-onr-yip-oct24h-merge/`
+(`sgbaird/agent-staging` at `ee473d2`; all 9 sha256 hashes in its
+MANIFEST.md match). It replaces the project-description part of the
+`6c27df4` drop: the copper `.tex` as Sterling directed it in byu-finances
+(Oct 24 b to h), merged with this branch's commits through `1c5b6c8`.
+- **Patch:** `dal-pr117-1c5b6c8.patch` applied cleanly, and the `.tex` and
+  the two new figures are byte-identical to the drop-in files. It brings
+  both epigraphs (Caudle, then Sermon, without years), the field terms
+  alone, Sterling's answers to the reviewer notes, a Fig. 4 placeholder for
+  the first copper powder (labeled PLACEHOLDER, not data), gas atomization
+  at Ames National Laboratory with Dr. Jordan A. Tiarks as an unfunded
+  collaborator, the powder-safety paragraph and Fig. 7 (the enclosure and
+  the installed atomizer), the potentiostat on loan with no equipment
+  requested, NSL Analytical for certified chemistry, the BYU Electron
+  Microscopy Facility by name, the atomizer at up to 1,400 °C (typically up
+  to 1,300 °C; the 1,250 °C liquidus cap is unchanged), and the cover's
+  budget total of the Oct 24 evening.
+- **Not carried:** eleven of this branch's reviewer additions and its H5
+  sentence on rank agreement, listed verbatim in the drop's
+  `payload/project-description/SET-ASIDE.md`. Sterling has not ruled on
+  them. The TODOs for the courses and for the number of candidates sent to
+  Carderock went with their sentences; the flowing-seawater sentence now
+  says "the final candidates".
+- **Build here** (TeX Live 2023 xelatex, Times New Roman 2.82): 36 pages,
+  20 of 20 counted (pages 3 to 21, and Responsibility on page 24), 0
+  overfull lines, 34 red TODOs, Fig. 7 on page 21. The drop's reference
+  build (MiKTeX) has the same counts but does no automatic hyphenation, so
+  its lines break differently and its page 21 is full, where this build
+  leaves about 9 lines free. Built here without hyphenation, the text
+  matches the reference page for page through page 21, and Fig. 7 then no
+  longer fits on page 21 (21 counted pages). In the MiKTeX build, any line
+  added to pages 3 to 21 will push Fig. 7 to a new page.
+- **Fields 10 and 11:** the submission text of the Oct 24 evening, without
+  rates, prices or quote numbers. The photographs are left out and their
+  captions kept as plain text. As text copies, Field 10 runs to 3 pages and
+  Field 11 to 2. The extract drops every sentence that has a rate, and it
+  left one Field 11 item empty; the electron microscopy item there is
+  carried from the morning text, without a rate.
+- **cringe-filter** (0.2.0, `-c paper`): +24.17 log-odds on 10,505 words
+  (was -98.98 on 10,448), 0 errors. Most of the change comes from fewer
+  sentences with "we" as the subject (45 to 25) and more possessives,
+  which the tool counts as contractions (9 to 22), where the merge kept the
+  byu-finances wording.
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
 1. **DED facilities.** The InssTek MX-Lab at the University of Utah (Prof.
@@ -628,8 +673,8 @@ MANIFEST.md match), worked through in the order of its HANDOFF.md.
    unused hopper powder comes back. Get both rates in writing for the
    budget justification. The cover now carries the copper budget from SPO's
    planning sheet of Oct 23 (a TODO asks for the final figures).
-2. **Atomizer for copper.** Settled (see above): the 1,300 °C working limit,
-   graphite crucibles sprayed with BN before Ni- and Fe-bearing melts (the
+2. **Atomizer for copper.** Settled (see above): melting at up to 1,400 °C,
+   typically up to 1,300 °C (Sterling, Oct 24), graphite crucibles sprayed with BN before Ni- and Fe-bearing melts (the
    spray still has to be bought), an hBN nozzle for those melts, and a Mo- or
    W-coated C/C plate on the 1:1.5 booster. Still open:
    - the plate, nozzle bore and setpoint for NAB and Cu-Ni (asked);
@@ -643,7 +688,8 @@ MANIFEST.md match), worked through in the order of its HANDOFF.md.
 4. A first copper powder lot (SEM and size distribution) as preliminary
    data: C10100 in the bare crucible, then NAB once the crucible is sprayed.
    The NAB bar and BN spray arrived Oct 23; attachments can be replaced
-   until SPO submits on Oct 28, and page 19 has room for the figure. Also ask Sam whether the facility's Cu-Ni
+   until SPO submits on Oct 28. Fig. 4 is a placeholder with the footprint
+   of the CALPHAD figure, so the real one drops in without moving pages. Also ask Sam whether the facility's Cu-Ni
    tracks, and a photo, may be shown; if not, cut the sentence in
    Preliminary results and the "already used for copper-nickel" clause in
    Task 2.
@@ -651,8 +697,10 @@ MANIFEST.md match), worked through in the order of its HANDOFF.md.
    (the search-space coverage numbers are for TCCU7, Thermo-Calc 2026b).
    Also whether showing an open nickel-alloy database (MatCalc mc_ni) in the
    pycalphad figure is fair.
-6. Oxygen (inert-gas fusion) and carbon (combustion) analysis at a service
-   lab. Carbon, because the crucible is graphite and the plates are C/C.
+6. Settled Oct 24: NSL Analytical certifies the composition, oxygen and
+   carbon of every lot sent to Mines, after a full survey of the first
+   copper lots. Carbon, because the crucible is graphite and the plates are
+   C/C.
 7. Immersion durations, the selective-attack depth limit in H5 (the TODO now
    lists published 21- and 30-day depths of 1.8 to 3.4 um and more than 3 um),
    and natural or substitute seawater.
@@ -660,10 +708,13 @@ MANIFEST.md match), worked through in the order of its HANDOFF.md.
    number of new alloys promised (about 7 compositions a year can go to
    blown powder at the estimated session count, so 6 over three years would
    be safe), and whether to add Mn-Al bronze (C95700) as a Ni-free branch.
-9. Handling nickel powders (safety plan).
-10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`), with
-    the submission text of Oct 24; their TODOs are the Instron frames, the
-    Thermo-Calc license, the Utah questions and the X2 laser. The letter of support carries the copper title as a
+9. Settled Oct 24: powder handling is in the powder-safety paragraph of
+   Responsibility and in Field 10.
+10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`), text
+    copies of the submission text of the Oct 24 evening (the submission
+    PDFs, with photographs, are built in byu-finances); their TODOs are the
+    Instron frames, the Thermo-Calc license, the Utah questions and the X2
+    laser. The letter of support carries the copper title as a
     bracketed option; its "powder-to-part demonstration on an aluminum
     alloy" holds for both.
 11. Check the 2011 Cu-30Ni corrosion study's conditions and numbers, and get
@@ -671,31 +722,27 @@ MANIFEST.md match), worked through in the order of its HANDOFF.md.
     literally, the 2011 abstract ranks the deposit above the plate, the
     reverse of the ISSC review the draft cites, so check the direction
     before submission.
-12. The potentiostat and equipment line: a module potentiostat on the
-    CubXL plus a borrowed benchtop for cross-checks, or the $18,000 benchtop
-    unit (`cubxl-electrochemistry.md`). The first option now buys about 14
-    more DED sessions in Year 1.
-13. Collaborators: if Prof. Fang or Sam agrees, name them as unfunded
-    collaborators in the Management section and in current and pending
-    support (NOFO p. 38).
+12. Settled Oct 24: the screen runs on a NuVant EZstat Pro lent by a BYU
+    colleague, and Field 11 requests no equipment. Still open: whether the
+    loan covers the award period.
+13. Collaborators: Dr. Jordan A. Tiarks (Ames National Laboratory) is named
+    as an unfunded collaborator; get his letter of collaboration and list
+    every unfunded collaborator under current and pending support (NOFO
+    p. 38). The Oct 24 h text no longer asks whether Prof. Fang or Sam
+    should be named too.
 14. Carderock: Dr. Nicholas J. Jones's title and code, whether Dr. Jones or
-    others agree to be named, whether the lead-role wording still matches
-    Carderock's pages, and how many candidates to send for flowing-seawater
-    tests (the draft says the three leading candidates and the two
-    references).
-15. The epigraph: Adm. Caudle is in (checked verbatim against the DVIDS
-    article on Oct 24). The alternative in the same article fits copper
-    more closely but is from a civilian: "I earnestly believe that metallic
-    additive manufacturing is the path to the capability and capacity you
-    need for critical materials in the submarine industrial base. ... And
-    that same holds true for surface ships, and its systems, and for
-    sustainment as well." (Matt Sermon, then executive director of PEO
-    Strategic Submarines, to ASNE, 2023; the article puts "said Matt
-    Sermon ..." between the two sentences).
+    others agree to be named, and whether the lead-role wording still
+    matches Carderock's pages. The flowing-seawater sentence now says "the
+    final candidates", so there is no number to confirm.
+15. The epigraphs: both are in, Adm. Caudle and then Matt Sermon, without
+    years (Sterling, Oct 24). Their words match the article as checked on
+    Oct 24; the Sermon epigraph joins two sentences that the article
+    separates with "said Matt Sermon ...".
 16. The powder doser numbers, against powder-doser PR 166, PR 175 and issue
     186.
-17. The courses the PI teaches (student sentence in Navy engagement), and
-    the citizenship status in the support letter and Responsibility.
+17. The citizenship status in the support letter and Responsibility. The
+    student sentence and its TODO for the courses are set aside (Oct 24 h
+    entry above).
 
 All other TODOs (cover contacts, CV, responsibility, DMP schema, current and
 pending) are the same as in section 4.
