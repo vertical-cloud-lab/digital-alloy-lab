@@ -1,0 +1,51 @@
+{
+ "code-review": {
+  "task_id": "35369660-e8bc-44c6-9468-236eafcf2001",
+  "job": "ANALYSIS",
+  "uploads": [
+   {
+    "file": "bofn_alloy.py",
+    "entry_id": "data_entry:fd2ffeaf-bc1e-48e8-85b1-8dc9a822c695"
+   },
+   {
+    "file": "policies.py",
+    "entry_id": "data_entry:78b2152b-32ee-41d6-abee-716cfd13c771"
+   },
+   {
+    "file": "run_sweep.py",
+    "entry_id": "data_entry:a91ccfce-a694-40e9-a416-1ddadbb290d4"
+   },
+   {
+    "file": "check_truth.py",
+    "entry_id": "data_entry:b3176456-6d5c-4e0a-9733-3f6e348efa8d"
+   },
+   {
+    "file": "analyze.py",
+    "entry_id": "data_entry:45bad339-a8b2-43f3-946e-486d7d13e934"
+   },
+   {
+    "file": "plot.py",
+    "entry_id": "data_entry:065eafa8-3f50-4cc3-b0e9-6a66385988ea"
+   },
+   {
+    "file": "README.md",
+    "entry_id": "data_entry:0d6ee932-abe3-47c1-b00f-d111e2325a16"
+   },
+   {
+    "file": "truth_tables.md",
+    "entry_id": "data_entry:b932586f-e5f6-4055-b8ae-d88c32b2b110"
+   },
+   {
+    "file": "settings.md",
+    "entry_id": "data_entry:52c4122a-27d9-4d9a-96a2-0714679e1521"
+   },
+   {
+    "file": "results.zip",
+    "entry_id": "data_entry:49145513-ae26-48b6-b334-e66007c95aad"
+   }
+  ],
+  "submitted": "2026-10-25T01:15:40Z",
+  "brief": "benchmarks/bofn-cu-ded/edison/brief-code.md",
+  "runs_uploaded": 2
+ }
+}
