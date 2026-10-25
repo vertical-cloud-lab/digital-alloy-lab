@@ -44,7 +44,35 @@ Hand-written closed forms on [0, 1] inputs, nothing fitted, as in PR 86. The spe
 
 The CALPHAD crack screen keeps compositions with `f <= 0.34` (about 1% crack probability at `kappa = 0`). The one-hour screen's gate, for the policies that use it, is the top quartile of every screened build so far.
 
-<!-- TRUTH -->
+**The optimum**, by multi-start local search from the 20 best of 400,000 random designs (`check_truth.py`; every "% of optimum" in this README is normalized by it):
+
+| (kappa, eta) | J* | Ni | Al | Fe | Mn | a | P | v | s | f | g | h | q | rho_u | rho_m | beta | U | w | m | burden |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| (1, 1) headline | **0.492** | 0.43 | 0.58 | 0.50 | 0.00 | 0.64 | 0.58 | 0.34 | 0.73 | 0.74 | 0.41 | 0.12 | 0.81 | 0.79 | 0.93 | 0.15 | 0.76 | 0.88 | 0.95 | 0.61 |
+| (0, 0) | **0.382** | 0.32 | 0.38 | 0.40 | 0.00 | 0.50 | 0.63 | 0.48 | 0.55 | 0.40 | 0.29 | 0.21 | 0.94 | 0.63 | 0.95 | 0.11 | 0.64 | 0.97 | 0.92 | 0.43 |
+| (1, 0) | **0.492** | 0.43 | 0.58 | 0.50 | 0.00 | 0.64 | 0.58 | 0.34 | 0.73 | 0.74 | 0.41 | 0.12 | 0.81 | 0.79 | 0.93 | 0.15 | 0.76 | 1.00 | 0.95 | 0.61 |
+| (0, 1) | **0.382** | 0.32 | 0.38 | 0.40 | 0.00 | 0.50 | 0.63 | 0.48 | 0.55 | 0.40 | 0.29 | 0.21 | 0.94 | 0.63 | 0.95 | 0.11 | 0.64 | 0.79 | 0.92 | 0.43 |
+
+- At `kappa = 1` the optimum is a copper-nickel-aluminum alloy with iron and no manganese: about 13 wt% Ni, 5.6 wt% Al and 2.2 wt% Fe, in the family of the high-strength Cu-Ni-Al alloys. Its solidification index is 0.74, far above the screen's 0.34, yet it deposits 93% dense because the iron-rich nucleant cuts the effective index to about a third. `eta` changes only the one-hour screen, so (1, 0) has the same optimum, and (0, 1) the same as (0, 0).
+- At `kappa = 0` the optimum is leaner (about 10 wt% Ni, 3.6 wt% Al, 1.8 wt% Fe) at `f` = 0.40, just above the screen's cutoff.
+
+**Required property 1 (the screens and the optimum).** At (1, 1) the optimum fails the CALPHAD crack screen (`f` = 0.74 > 0.34). The best design that passes it scores 72% of the optimum (about 8.5 wt% Ni, 3.3 wt% Al, 2.3 wt% Fe), which is the ceiling for tiered screening. At (0, 0) the best design passing both screens keeps 92% of the optimum (the spec asks for at least 85%). The one-hour screen ranks the optimum at the top of the dense candidates in every cell, so it is the CALPHAD screen that cuts the optimum off (see Caveats).
+
+**Required property 2 (reference alloys at their best settings for J, headline world).**
+
+| Alloy | J (% of J*) | strength U | rho_m | beta | immersion m | passes immersion | burden |
+|---|---|---|---|---|---|---|---|
+| C71500 (70-30 Cu-Ni) | -0.073 (-15%) | 0.48 | 0.85 | 0.00 | 0.85 | yes | 1.04 |
+| C70600 (90-10 Cu-Ni) | 0.120 (24%) | 0.38 | 0.96 | 0.00 | 0.87 | yes | 0.37 |
+| C95800 (NAB) | -0.146 (-30%) | 0.79 | 0.92 | 0.48 | 0.55 | no | 0.49 |
+
+C71500 passes by definition (`m_ref` is its immersion index); C70600 is weaker and passes with a third of the nickel; C95800 (NAB) is the strongest but carries retained beta-prime (0.48) and fails. C71500 and NAB score below zero because of their burden and the immersion gate. At `kappa = 0` C71500 cracks (see Caveats).
+
+**Required property 3 (a ridge, not a point).** With the other inputs at the optimum, 17 points of a 101 × 101 (P, v) grid lie within 0.5% of J* (P from 0.53 to 0.64 along P − v ≈ 0.23) and 63 within 2% (P from 0.47 to 0.68). The ridge is shorter than the aluminum one because lack of fusion ends it at low power and keyholing at high power.
+
+**Required property 4 (Utah's power cap).** For 200 random copper-rich compositions (Ni ≤ 0.07 and Al ≤ 0.2 scaled, under about 2 wt% each), the median best `rho_u` at Utah's cap is 0.40 against 0.88 at Mines; 15% cannot reach 0.3 at Utah, and 100% reach 0.7 at Mines. At the optimum's composition the cap does not bind (0.92 at Utah, 0.93 at Mines).
+
+Every value above is in [`truth_tables.md`](truth_tables.md), for all four cells.
 
 ## Policies (all on equal $100k of new spend)
 
@@ -79,6 +107,10 @@ The CALPHAD crack screen keeps compositions with `f <= 0.34` (about 1% crack pro
 - **Simplifications.** Observations are noise-free. There is one scalar objective (strength gated by immersion, minus the burden), not the proposal's several objectives (Advance 1). One experiment at a time, with no delays (the delays are in `step-costs` but not modelled; Advance 2 is future work). One parameter set per Mines build.
 - **Costs.** The step costs are the project's own round all-in estimates. Outside the loop and not modelled: the yearly gas atomization of the finalist (about $12,500 a run), the combustible-dust tests, and the flowing-seawater tests at Carderock (free to the project, months).
 - **pKGFN implementation.** It is discrete and one-step myopic, with lighter MC settings than PR 86. Treat its numbers as those of this implementation at these settings.
+
+## Quality checks
+
+<!-- QUALITY -->
 
 ## Reproduce
 
