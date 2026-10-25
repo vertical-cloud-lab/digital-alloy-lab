@@ -662,6 +662,40 @@ MANIFEST.md match). It replaces the project-description part of the
   which the tool counts as contractions (9 to 22), where the merge kept the
   byu-finances wording.
 
+**Oct 25 b flow and compliance (2026-10-25).** From the agent-staging drop
+`for/vertical-cloud-lab/digital-alloy-lab/2026-10-25-onr-yip-oct25b-flow-compliance/`
+(`sgbaird/agent-staging` at `bb902cd`; all 13 sha256 hashes in its
+MANIFEST.md match). Two passes Sterling directed in byu-finances on Oct 25,
+over the Oct 24 h text.
+- **Patch:** `dal-pr117-06221fa.patch` applied cleanly, and the `.tex` and
+  the nine figure files are byte-identical to the drop-in files. The flow
+  and readability pass splits four long paragraphs (Comparison with other
+  approaches, Task 2's powder and corrosion paragraphs, and the search
+  space), reorders a few sentences and gives pronouns subjects, with no
+  claim, number, citation, quotation or TODO changed. The compliance pass
+  names the administrative and business contact on the cover (NOFO p. 18),
+  redraws Fig. 1 as photo tiles (credited in its caption and in
+  `figures-cu-ded/README.md`; no person appears in any tile), adds Fig. 7,
+  the search space on a periodic table with the UNS alloys in the
+  nickel-aluminum plane (after Iver Anderson's advice on the aluminum
+  version), and moves the enclosure to Fig. 8. Nine paragraphs lost a few
+  words to pay for the figures.
+- **TODOs:** 33 (was 34); the one filled is the cover's administrative
+  contact. Every citation key is unchanged; the 2025 critical-minerals list
+  is cited once more, in the Fig. 7 caption. The `SET-ASIDE.md` passages
+  and the issue 205 work (Figs. synth and sim, Task 1) are untouched; the
+  paragraph after Fig. sim now opens with the run-in head "Simulated
+  search."
+- **Build here** (TeX Live 2023 xelatex, Times New Roman): 36 pages, 20 of
+  20 counted (pages 3 to 21, and Responsibility on page 24), 0 overfull
+  lines, no undefined references. Every figure and table is on the same
+  page as in the MiKTeX reference (Fig. 1 on page 7, Fig. 7 on page 16,
+  Fig. 8 ending page 21). Page 21 ends about 4 lines above the bottom
+  margin here and about 2 in the reference, which does not hyphenate (Oct
+  24 h entry).
+- **cringe-filter** (0.2.0, `-c paper`): +24.70 log-odds on 10,431 words
+  (was +24.17 on 10,505 at `06221fa`), 0 errors, 10 findings (was 12).
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
 1. **DED facilities.** The InssTek MX-Lab at the University of Utah (Prof.
@@ -744,5 +778,6 @@ MANIFEST.md match). It replaces the project-description part of the
     student sentence and its TODO for the courses are set aside (Oct 24 h
     entry above).
 
-All other TODOs (cover contacts, CV, responsibility, DMP schema, current and
-pending) are the same as in section 4.
+All other TODOs (the cover's requested amount, CV, responsibility, DMP
+schema, current and pending) are the same as in section 4. The copper
+cover's contacts are complete (Oct 25 b entry above).
