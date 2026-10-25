@@ -114,9 +114,10 @@ Technical contact & Sterling G.\ Baird, Ph.D., Assistant Professor,
   Department of Mechanical Engineering, Brigham Young University, 350 EB,
   Provo, UT 84602. Phone (801) 422-5344. Email
   \href{mailto:sterling.baird@byu.edu}{sterling.baird@byu.edu} \\
-Administrative and business contact & \todo{name, title, address, phone,
-  and email of the BYU Research Administration officer who signs as the
-  Authorized Organization Representative} \\
+Administrative and business contact & Katie Gomez, Research Administrator,
+  Research Administration Office, Brigham Young University, A285 ASB,
+  Provo, UT 84602-1231. Phone (801) 422-0678. Email
+  \href{mailto:katie.gomez@byu.edu}{katie.gomez@byu.edu} \\
 Period of performance & Base period only, 36 months: 1 April 2027 to
   31 March 2030. No option periods. \\
 Requested amount & \$747,832 total: \$248,964, \$249,181, and \$249,687
@@ -170,7 +171,7 @@ Submarines~\cite{navsup2026}\par}
 
 \subsection{Problem and objectives}
 
-In the Navy, much of the seawater service runs on two kinds of copper alloy.
+Much of the Navy's seawater service runs on two kinds of copper alloy.
 Copper-nickel alloys, 90-10 (UNS C70600) and 70-30 (UNS C71500), carry
 seawater in piping, condensers, and heat exchangers, and nickel-aluminum
 bronze (NAB, UNS C95800) is cast into propellers, valves, and pump
@@ -183,17 +184,18 @@ pass, so it produces microstructures these alloys were never designed for. In
 NAB, fast cooling can retain a martensitic phase that corrodes selectively in
 seawater~\cite{liu2021,dobson2024}, and the Navy specification for NAB deposited
 by wire-arc DED requires the same 6-hour anneal as castings~\cite{milprf32816}.
-That step is costly for a large part and impractical for many repairs made in
-place. Navy specifications for printed copper alloys all use existing
-compositions~\cite{milprf32816,milprf32804,milprf32815}, and the design of
+That step is costly for a large part and impractical for many repairs in
+place. Navy specifications for printed copper alloys use existing
+compositions~\cite{milprf32816,milprf32804,milprf32815}, and designing
 compositions for laser deposition has only begun~\cite{jia2026}.
 
-Designing one runs through a chain of steps: a thermodynamic calculation, a
-powder, deposited test specimens, microscopy, and property tests. The costs of
-the steps differ greatly. A thermodynamic calculation takes minutes, a powder
-lot a day, a DED session days including turnaround, and a corrosion immersion
-weeks. The protective film that gives copper-nickel its resistance takes weeks
-to months to mature~\cite{ma2015,ekerenam2018}. Experimental campaigns often send each
+Designing a new composition runs through a chain of steps: a thermodynamic
+calculation, a powder, deposited test specimens, microscopy, and property
+tests. The steps differ greatly in cost. A thermodynamic calculation takes
+minutes, a powder lot a day, a DED session days including turnaround, and a
+corrosion immersion weeks, because the protective film that gives
+copper-nickel its resistance takes weeks to months to
+mature~\cite{ma2015,ekerenam2018}. Experimental campaigns often send each
 candidate through the whole chain, spending much of the budget on full tests
 of candidates that a cheap early measurement could have ruled out.
 Computational campaigns often work as a funnel: many simulations, then a few
@@ -215,8 +217,9 @@ atomizers have already made powder for blown-powder DED from NAB
 propeller grinding chips~\cite{muller2023,uhlmann2024} and from copper cable
 scrap~\cite{cabrioli2025}.
 Both kept the existing compositions.
-Making our own powder turns it from a purchase into steps the search can choose: a small lot for cheap deposits of many compositions on a small DED system near BYU, and a full lot only for those worth building on the larger system.
-It also lets the search design the powder along with the alloy.
+Making our own powder turns it from a purchase into a choice the search makes.
+A small lot buys cheap deposits of many compositions on a small DED system near BYU, and a full lot goes only to the compositions worth building on the larger system.
+Making the powder also lets the search design it along with the alloy.
 
 This project asks a basic question. When the steps of a materials workflow
 differ in cost by orders of magnitude, and results arrive at different times,
@@ -233,13 +236,13 @@ evaluations to multiple objectives: dense and crack-free deposits, strength,
 ductility, and resistance to corrosion in seawater.
 \item Extend it to many pending experiments at once, with asynchronous
 results.
-\item Give it physics computed for the process, thermodynamic calculations
-evaluated along the thermal history of a DED deposit, and measure what that
+\item Give it physics computed for the process: thermodynamic calculations
+evaluated along the thermal history of a DED deposit. Measure what that
 physics is worth.
 \item Demonstrate the method on a physical workflow that designs copper alloy
 powders for blown-powder DED, from powder to deposit, repair coupon, tensile
 test, and seawater corrosion test.
-Test whether its stated confidence in a candidate matches what the deposits and tests later show.
+Test whether its stated confidence matches what the deposits and tests show.
 \item Measure how well a one-hour electrochemical screen predicts immersion
 tests that take weeks, so that the long tests run only where they can change
 a decision.
@@ -250,26 +253,26 @@ a decision.
 
 Navy specifications cover copper-nickel tube for the piping systems of
 surface ships and submarines~\cite{milt16420} and NAB castings for seawater
-service~\cite{milb24480}. NAB is widely used for valve bodies, pump
-casings, and impellers, with a large market in submarine
-fleets~\cite{cda222}. Copper-nickel owes its resistance to a thin, adherent
-film of corrosion products, mainly cuprous oxide with nickel and iron. The
-film builds up over weeks to months of exposure~\cite{ma2015}. In one study the
-films on 90-10 tubes in natural seawater were still changing after six
-months~\cite{ekerenam2018}. The iron content of the alloy changes the makeup
-of the film~\cite{zhu2021}. NAB is a cast alloy of copper with about 9\%
-aluminum and 4 to 5\% each of iron and nickel (by weight). Its microstructure
-of $\alpha$ grains and several intermetallic $\kappa$ phases resists seawater
-well, but the $\alpha$ phase in the lamellar $\alpha+\kappa$ eutectoid, and
-any retained $\beta$ phase, corrode selectively, above all in
-crevices~\cite{wharton2005,culpan1979}. Navy NAB castings therefore get a temper
-anneal at 1250 $\pm$ 50\,\textdegree{}F (about 677\,\textdegree{}C) for at
-least 6 hours, propellers excepted~\cite{milb24480}, which improves their
-corrosion resistance~\cite{cda222}.
+service~\cite{milb24480}. Copper-nickel owes its resistance to a thin,
+adherent film of corrosion products, mainly cuprous oxide with nickel and
+iron, which builds up over weeks to months of exposure~\cite{ma2015}. In one
+study the films on 90-10 tubes in natural seawater were still changing after
+six months~\cite{ekerenam2018}. The iron content of the alloy changes the
+makeup of the film~\cite{zhu2021}. NAB is a cast alloy of copper with about
+9\% aluminum and 4 to 5\% each of iron and nickel (by weight). It is widely
+used for valve bodies, pump casings, and impellers, with a large market in
+submarine fleets~\cite{cda222}. Its microstructure of $\alpha$ grains and several
+intermetallic $\kappa$ phases resists seawater well, but the $\alpha$ phase
+in the lamellar $\alpha+\kappa$ eutectoid, and any retained $\beta$ phase,
+corrode selectively, above all in crevices~\cite{wharton2005,culpan1979}.
+Navy NAB castings therefore get a temper anneal at 1250 $\pm$
+50\,\textdegree{}F (about 677\,\textdegree{}C) for at least 6 hours,
+propellers excepted~\cite{milb24480}, which improves their corrosion
+resistance~\cite{cda222}.
 
-Printing changes these microstructures, and printing changes how alloys
-corrode~\cite{sander2018}. How NAB is processed sets its
-microstructure~\cite{orzolek2022}, and NAB has now been printed by laser
+Printing changes these microstructures, and with them how the alloys
+corrode~\cite{sander2018}. The microstructure of NAB follows its processing
+route~\cite{orzolek2022}, and NAB has now been printed by laser
 powder bed fusion~\cite{murray2020}, wire-arc deposition~\cite{ding2016,dharmendra2019},
 and laser DED~\cite{liu2021,li2021}. Laser-deposited NAB contains martensitic
 $\beta'$ along with $\alpha$ and $\kappa$ phases~\cite{liu2021,li2021} and
@@ -283,21 +286,24 @@ anneal had lowered the corrosion current of cast NAB about threefold and raised 
 The authors call the differences small~\cite{fayanas2025}.
 As-built wire-arc NAB
 resisted corrosion better than annealed coupons, in a test with unequal
-immersion times~\cite{shahriari2023}. Laser-deposited NAB on stainless steel
-was attacked to a depth of 3.4\,$\mu$m in 21 days in salt solution where iron
-from the steel had diluted it, and 1.8\,$\mu$m over a nickel-chromium
-interlayer~\cite{zhao2022}. In welded NAB,
-retained $\beta'$ in the heat-affected zone corroded selectively in
-seawater~\cite{dobson2024}, a warning for repairs. Laser cladding of cast
-NAB has used an NAB consumable~\cite{hyatt1998}.
-DED repair of cast NAB has used a low-nickel copper alloy powder~\cite{yao2022a,yao2022b}, later blended in the melt pool with an aluminum alloy powder to vary the aluminum content~\cite{yao2025}.
+immersion times~\cite{shahriari2023}. The substrate matters as well.
+Laser-deposited NAB on stainless steel was attacked to a depth of
+3.4\,$\mu$m in 21 days in salt solution where iron from the steel had diluted
+it, and to 1.8\,$\mu$m over a nickel-chromium interlayer~\cite{zhao2022}. In
+welded NAB, retained $\beta'$ in the heat-affected zone corroded selectively
+in seawater~\cite{dobson2024}, a warning for repairs. Repair work has used an
+NAB consumable for laser cladding of cast NAB~\cite{hyatt1998}. DED repair of
+cast NAB has used a low-nickel copper alloy powder~\cite{yao2022a,yao2022b},
+later blended in the melt pool with an aluminum alloy powder to vary the
+aluminum content~\cite{yao2025}.
 
-In wire-arc 70-30 copper-nickel, the dendrite cores hold more nickel than the
-regions between them, and those regions corrode first~\cite{song2024}. The
-corrosion of powder-bed 70-30 has also been studied~\cite{liu2024}, and its
-resistance depends on the laser settings~\cite{nadimi2025}. At their best
-settings, both wire-arc and powder-bed 70-30 have matched or beaten wrought
-plate in electrochemical tests in salt solution~\cite{song2024,nadimi2025}.
+Copper-nickel depends on the process as well. In wire-arc 70-30, the
+dendrite cores hold more nickel than the regions between them, and those
+regions corrode first~\cite{song2024}. Powder-bed 70-30 has been studied
+too~\cite{liu2024}, and its resistance depends on the laser
+settings~\cite{nadimi2025}. At their best settings, both wire-arc and
+powder-bed 70-30 have matched or beaten wrought plate in electrochemical
+tests in salt solution~\cite{song2024,nadimi2025}.
 Laser cladding of Cu-30Ni dates to 2005~\cite{adak2005}, and later
 blown-powder DED of copper-nickel has mixed copper and nickel-alloy powders
 in the melt pool to make graded layers and thermoelectric
@@ -361,18 +367,18 @@ they are. The models are linked in the same order as the steps
 (Fig.~\ref{fig:network}), so the outputs of one step are inputs to the next
 and uncertainty carries through the whole network. Because each step has its
 own model, the network learns from partial evaluations, and a candidate can
-stop at any step. Buathong et al.\ added a cost-aware acquisition function to
-this network, the rule that chooses the next experiment~\cite{buathong2024}.
-For each possible experiment, the rule estimates
-how much the result is expected to improve the search, divides that by the
-cost of the experiment, and runs the best one. In this project the deposition
-step is itself split in two by cost. A small DED system at the University of
-Utah, 45 miles from BYU, deposits tracks, walls, and small blocks from grams
-to half a kilogram of powder on a day trip. A larger one at the Colorado
-School of Mines, 500 miles away, builds tensile, corrosion, and repair
-specimens from 2~kg lots, with results in weeks. Our rule treats the two as
-linked steps with their own costs and pays for the larger one only where the
-smaller one shows that a composition could change the outcome
+stop at any step. Buathong et al.\ added to this network a cost-aware
+acquisition function, the rule that chooses the next
+experiment~\cite{buathong2024}. For each possible experiment, the rule
+estimates how much the result is expected to improve the search, divides that
+by the cost of the experiment, and runs the best one. In this project the
+deposition step is itself split in two by cost. A small DED system at the
+University of Utah, 45 miles from BYU, deposits tracks, walls, and small
+blocks from grams to half a kilogram of powder on a day trip. A larger one at
+the Colorado School of Mines, 500 miles away, builds tensile, corrosion, and
+repair specimens from 2~kg lots, with results in weeks. Our rule treats the
+two as linked steps with their own costs and pays for the larger one only
+where the smaller one shows that a composition could change the outcome
 (Section~\ref{sec:task2}).
 
 The physics comes first, in the manner of integrated computational materials
@@ -380,12 +386,12 @@ engineering (ICME)~\cite{olson1997,nrc2008}: calculations decide where
 experiments go, and experiments correct the calculations. Calculation of
 phase diagrams (CALPHAD) in Thermo-Calc and pycalphad~\cite{andersson2002,otis2017}
 gives the liquidus and freezing range of each composition and an index of how
-prone it is to cracking as it solidifies~\cite{kou2015}. Such indices have
-been checked against printed aluminum alloys, steels, and nickel
-superalloys, but not copper alloys~\cite{jordan2026}. It also gives how
+prone it is to cracking as it solidifies~\cite{kou2015}. It also gives how
 nickel, iron, and aluminum divide between the dendrite cores and the last
-liquid to freeze, and the phases stable at each temperature, including the $\beta$ and $\kappa$ phases of the
-bronzes.
+liquid to freeze, and which phases are stable at each temperature, including
+the $\beta$ and $\kappa$ phases of the bronzes. Crack indices of this kind
+have been checked against printed aluminum alloys, steels, and nickel
+superalloys, but not copper alloys~\cite{jordan2026}.
 DED adds a thermal history.
 We model it with a moving point source of heat~\cite{rosenthal1946,pinkerton2015}, using the temperature-dependent properties of copper-nickel and NAB measured at NSWC Carderock~\cite{norkett2025,norkett2026a,norkett2026b,orzolek2023}, calibrated to measured melt-pool sizes.
 The temperature dependence matters: in a thermo-mechanical model of laser hot-wire NAB deposition from Penn State and Carderock, constant room-temperature properties changed the predicted distortion, at times reversing its direction~\cite{hatala2021}.
@@ -400,97 +406,115 @@ computing, and each new result is available to the next decision.
 
 \begin{figure}[t]
 \centering
+% Photo tiles from figures/make_fig1_tiles.py (sources in figures/README.md
+% and attachments/src/img/SOURCES.md of the byu-finances working folder).
 \begin{tikzpicture}[
-  font=\small,
-  box/.style={draw, rounded corners=2pt, fill=black!5, align=center,
-    text width=2.05cm, minimum height=1.55cm, inner sep=2pt},
-  arr/.style={-{Latex[length=2mm]}, thick},
-  input/.style={font=\small\itshape, align=center}
+  x=1in, y=1in, font=\footnotesize,
+  ph/.style={inner sep=0pt, draw=black!45, line width=0.4pt},
+  lab/.style={align=center, text width=1.0in, inner sep=0pt, anchor=north},
+  tl/.style={align=left, text width=0.8in, inner sep=0pt, anchor=west},
+  arr/.style={-{Latex[length=1.5mm]}, semithick},
+  input/.style={font=\footnotesize\itshape, align=center, inner sep=1pt}
 ]
-\node[box] (s1) at (0,0) {CALPHAD\\and heat\\flow\\\textit{minutes}};
-\node[box] (s2) at (2.6,0) {Powder lot\\(ultrasonic\\atomization)\\\textit{a day}};
-\node[box] (s3) at (5.2,0) {Small DED\\(Utah;\\grams to\\0.5~kg)\\\textit{days}};
-\node[box] (s4) at (7.8,0) {Large DED\\(Mines;\\2~kg lot)\\\textit{weeks}};
-\node[box] (s5) at (10.4,0) {Micro-\\structure\\(SEM, EDS,\\EBSD)\\\textit{a day}};
-\node[box] (s6) at (13.0,0.95) {Tensile\\tests\\\textit{days}};
-\node[box] (s7) at (13.0,-0.95) {Corrosion\\screen\\(seawater)\\\textit{an hour}};
-\node[box, text width=2.35cm] (s8) at (13.0,-3.25) {Immersion\\(selective\\attack, film)\\\textit{weeks}};
-\foreach \a/\b in {s1/s2, s2/s3, s3/s4, s4/s5, s7/s8} \draw[arr] (\a) -- (\b);
-\draw[arr] (s5.east) -- ++(0.25,0) |- (s6.west);
-\draw[arr] (s5.east) -- ++(0.25,0) |- (s7.west);
-\node[input] (comp) at (1.3,1.85) {composition};
-\draw[arr] (comp.south) -- ++(0,-0.1) -| (s1.north);
-\draw[arr] (comp.south) -- ++(0,-0.1) -| (s2.north);
-\node[input] (atom) at (2.6,-1.6) {atomizer settings};
-\draw[arr] (atom) -- (s2);
-\node[input] (dep) at (6.5,1.85) {deposition settings};
-\draw[arr] (dep.south) -- ++(0,-0.1) -| (s3.north);
-\draw[arr] (dep.south) -- ++(0,-0.1) -| (s4.north);
-\draw[arr, dashed] (s8.west) -| (s1.south);
+\foreach \n/\x/\f in {p1/0.55/calphad, p2/1.55/atomizer, p3/2.55/utah,
+    p4/3.55/mines, p5/4.55/sem}
+  \node[ph] (\n) at (\x,0)
+    {\includegraphics[width=0.88in,height=0.66in]{figures-cu-ded/fig1/\f.jpg}};
+\node[lab] at ([yshift=-2pt]p1.south) {\textbf{CALPHAD and}\\\textbf{heat flow}\\\textit{minutes}};
+\node[lab] at ([yshift=-2pt]p2.south) {\textbf{Powder lot}\\our atomizer\\\textit{a day}};
+\node[lab] at ([yshift=-2pt]p3.south) {\textbf{Small DED}\\Utah, $\le$0.5~kg\\\textit{days}};
+\node[lab] at ([yshift=-2pt]p4.south) {\textbf{Large DED}\\Mines, 2~kg lot\\\textit{weeks}};
+\node[lab] at ([yshift=-2pt]p5.south) {\textbf{Microstructure}\\SEM, EBSD\\\textit{a day}};
+\foreach \a/\b in {p1/p2, p2/p3, p3/p4, p4/p5} \draw[arr] (\a) -- (\b);
+% Tests: tensile, and the seawater screen ahead of immersion
+\node[ph] (t1) at (5.42,0.42)
+  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/tensile.pdf}};
+\node[ph] (t2) at (5.42,-0.04)
+  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/screen.jpg}};
+\node[ph] (t3) at (5.42,-0.62)
+  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/immersion.pdf}};
+\node[tl] at ([xshift=3pt]t1.east) {\textbf{Tensile}\\\textit{days}};
+\node[tl] at ([xshift=3pt]t2.east) {\textbf{Seawater}\\\textbf{screen}\\\textit{an hour}};
+\node[tl] at ([xshift=3pt]t3.east) {\textbf{Immersion}\\\textit{weeks}};
+\draw[arr] (p5.east) -- ++(0.1,0) |- (t1.west);
+\draw[arr] (p5.east) -- ++(0.1,0) |- (t2.west);
+\draw[arr] (t2.south) -- (t3.north);
+% Inputs
+\node[input] (comp) at (1.05,0.64) {composition};
+\draw[arr] (comp.south) -- ++(0,-0.06) -| (p1.north);
+\draw[arr] (comp.south) -- ++(0,-0.06) -| ([xshift=-0.15in]p2.north);
+\node[input] (atom) at (2.0,0.64) {atomizer settings};
+\draw[arr] (atom.south) -- ++(0,-0.06) -| ([xshift=0.15in]p2.north);
+\node[input] (dep) at (3.1,0.64) {deposition settings};
+\draw[arr] (dep.south) -- ++(0,-0.06) -| (p3.north);
+\draw[arr] (dep.south) -- ++(0,-0.06) -| (p4.north);
+% Each result updates the models, which pick the next step
+\draw[arr, dashed] (t3.south) -- (5.42,-1.0) -| (0.0,0) -- (p1.west);
+\node[input, fill=white] at (2.65,-1.0) {each result updates the models, which
+  choose the next step by expected gain per cost};
 \end{tikzpicture}
 \caption{The workflow as linked models, with typical times per result in
 italics. DED is bought at two facilities that the search treats as two steps
-of different cost. The small system at Utah melts pre-placed tracks from
-grams of a first powder lot, then blown-powder tracks, walls, and small
-blocks from about 0.5~kg.
-A composition that earns it is scaled up to a 2~kg lot, enough for the hoppers of the large system at Mines, for tensile, corrosion, and repair specimens.
-That step takes weeks, including the extra
-atomizer runs and turnaround at the facility.
-Composition enters at the first two steps, atomizer settings at the second,
-and deposition settings (laser power, travel speed, and for blown powder the
-feed rate) at the third and fourth. The heat flow model also takes the
-deposition settings. After microscopy the network branches to tensile tests
-and to corrosion tests. Dashed arrow: each result updates the models, which
-choose the next experiments and steps by expected gain per cost.}
+of different cost (Section~\ref{sec:concepts}). Utah makes small deposits
+from grams to about 0.5~kg of a lot. Mines takes a 2~kg lot for its hoppers,
+and its weeks include the extra atomizer runs and turnaround. Deposition
+settings are laser power, travel speed, and for blown powder the feed rate.
+Photographs: our laboratory, the University of Utah, the Colorado School of
+Mines, and the BYU Electron Microscopy Facility.}
 \label{fig:network}
 \end{figure}
 
 \subsection{Comparison with other approaches}
 
 To our knowledge, no cost-aware search over linked models that can stop a
-candidate at any step has been extended to multiple objectives or to asynchronous results.
-None has been demonstrated on a physical alloy
-workflow.
-Published tests of the linked-model methods use test functions and
+candidate at any step has been extended to multiple objectives or to
+asynchronous results, and none has been demonstrated on a physical alloy
+workflow. Published tests of the linked-model methods use test functions and
 simulators~\cite{astudillo2021,buathong2024}. Multi-stage Bayesian
 optimization for self-driving laboratories was tested on synthetic and
 past data with one objective~\cite{torresi2026}. Cost-aware batch
 optimization of refractory alloys treats measurements of unequal cost as
 separate sources rather than linked steps, in a computational
-campaign~\cite{alvi2026}. Closed-loop campaigns on printed alloys use one
-model and a fixed set of measurements~\cite{talbot2026}. A search guided by model
-uncertainty has chosen compositions of multi-principal element alloys
-deposited by DED, scored on hardness~\cite{nelaturu2024}.
-Another study
-combined a cheap analytical heat-flow model with costlier finite-element
-simulations to map DED settings~\cite{menon2022}. Neither linked the steps nor their costs. Alloys designed for
-printing by computation, such as an oxide-dispersion-strengthened NiCoCr
-alloy~\cite{smith2023} and high-strength aluminum
-alloys~\cite{thapliyal2020,taheri2025}, were designed and then printed as
-single compositions. A nickel superalloy has been designed with a neural
-network for laser repair~\cite{markanday2022}. Machine learning has refined
-powder-bed settings for 70-30 copper-nickel at the Naval Postgraduate
-School~\cite{sparrow2026}, and Bayesian optimization has tuned a gas
-atomizer~\cite{tamura2021}. Both tune the process for one fixed alloy.
-Standard multi-objective Bayesian optimization handles competing
-properties and several experiments at once~\cite{daulton2021} but treats the
-whole chain as one costly experiment. Printed copper alloys for seawater have used
-the cast or wrought compositions~\cite{milprf32816,milprf32804,milprf32815},
-and their corrosion studies characterize one alloy and one process at a
-time~\cite{morshed2024,cai2023,song2024,nadimi2025}. A 2026 study adjusted the
-composition of NAB for laser additive manufacturing to improve its
+campaign~\cite{alvi2026}. Standard multi-objective Bayesian optimization
+handles competing properties and several experiments at
+once~\cite{daulton2021} but treats the whole chain as one costly experiment.
+Closed-loop campaigns on printed alloys use one model and a fixed set of
+measurements~\cite{talbot2026}. A search guided by model uncertainty has
+chosen multi-principal element alloys deposited by DED,
+scored on hardness~\cite{nelaturu2024}, and another study combined a cheap
+analytical heat-flow model with costlier finite-element simulations to map
+DED settings~\cite{menon2022}. Neither linked the steps nor their costs.
+
+Alloys designed for printing by computation, such as an
+oxide-dispersion-strengthened NiCoCr alloy~\cite{smith2023} and
+high-strength aluminum alloys~\cite{thapliyal2020,taheri2025}, were designed
+and then printed as single compositions. A nickel superalloy has been
+designed with a neural network for laser repair~\cite{markanday2022}.
+Machine learning has refined powder-bed settings for 70-30 copper-nickel at
+the Naval Postgraduate School~\cite{sparrow2026}, and Bayesian optimization
+has tuned a gas atomizer~\cite{tamura2021}. Both tune the process for one
+fixed alloy. Printed copper alloys for seawater have used the cast or wrought
+compositions~\cite{milprf32816,milprf32804,milprf32815}, and their corrosion
+studies characterize one alloy and one process at a
+time~\cite{morshed2024,cai2023,song2024,nadimi2025}. A 2026 study adjusted
+the composition of NAB for laser additive manufacturing to improve its
 as-deposited strength and corrosion resistance~\cite{jia2026}, and adding
 0.1\% titanium to wire-arc NAB lowered its corrosion current by
 16\%~\cite{zhang2026}. Both show the payoff of designing for the process.
-Autonomous and
-high-throughput corrosion work has used a scanning droplet cell to screen
-coatings and has run fast screens before slower, more thorough
+
+Autonomous and high-throughput corrosion work has used a scanning droplet
+cell to screen coatings and has run fast screens before slower, more thorough
 tests~\cite{decost2022,sur2023}, but without deciding, candidate by
-candidate, when a long test is worth its cost.
-An ONR-supported perspective on autonomous laboratories built around additive manufacturing sets out a ten-year road map and takes as its worked example a naval brass deposited by DED, screened by a surrogate test before erosion-corrosion tests~\cite{collins2026}.
-The workflow proposed here is a working instance of that idea: real step costs, DED bought by the session, and audited screens.
-This project brings these pieces together: the linked network, the cost of each step, physics computed for the process, multiple objectives including corrosion, and asynchronous results.
-It then tests the combination on real deposits.
+candidate, when a long test is worth its cost. An ONR-supported perspective
+on autonomous laboratories built around additive manufacturing sets out a
+ten-year road map and takes as its worked example a naval brass deposited by
+DED, screened by a surrogate test before erosion-corrosion
+tests~\cite{collins2026}. The workflow proposed here is a working instance of
+that idea: real step costs, DED bought by the session, and audited
+screens. This project combines the pieces: the linked network, the
+cost of each step, physics computed for the process, multiple objectives
+including corrosion, and asynchronous results. It then tests the combination
+on real deposits.
 
 \subsection{Preliminary results}
 \label{sec:prelim}
@@ -518,27 +542,28 @@ rose (Spearman $\rho=-0.84$), so its dosing record may also serve as a cheap
 reading of how a lot flows. Task~2 uses it the same way, for the powdered
 additions to each copper charge.
 
-\textbf{CALPHAD for copper alloys.} We already run the CALPHAD step on copper.
-We use pycalphad~\cite{otis2017} with an open database that covers copper, nickel, aluminum, iron, and manganese~\cite{mcni}.
-It puts the equilibrium solidus and liquidus of 70-30 copper-nickel at 1,171 and
+\textbf{CALPHAD for copper alloys.} We already run the CALPHAD step on
+copper, in pycalphad~\cite{otis2017} with an open database that covers
+copper, nickel, aluminum, iron, and manganese~\cite{mcni}. It puts the equilibrium
+solidus and liquidus of 70-30 copper-nickel at 1,171 and
 1,229\,\textdegree{}C, against handbook values of 1,171 and
 1,238\,\textdegree{}C~\cite{cdadata}, and those of 90-10 within
 18\,\textdegree{}C (Fig.~\ref{fig:calphad}). Each composition takes one to
 three seconds on one processor, and a 42-point map of the nickel and
-aluminum ranges took 46 to 70 seconds in two runs. It shows the liquidus passing the 1,250\,\textdegree{}C
-cap of Table~\ref{tab:space} only where nickel and aluminum are both high.
-For NAB the database places the solidus within 7\,\textdegree{}C of the
-handbook value and predicts that $\beta$ is gone below about
-730\,\textdegree{}C at equilibrium. Any $\beta$ left in a deposit is
-therefore set by the cooling rate, the effect that the process-aware inputs
-of Advance~3 compute. Its NAB liquidus, though, is
-51\,\textdegree{}C too high, so open calculations will serve as a check on
-the Thermo-Calc copper database~\cite{tccu7}.
+aluminum ranges took 46 to 70 seconds in two runs. The map shows the liquidus
+passing the 1,250\,\textdegree{}C cap of Table~\ref{tab:space} only where
+nickel and aluminum are both high. For NAB the database places the solidus
+within 7\,\textdegree{}C of the handbook value and predicts that $\beta$ is
+gone below about 730\,\textdegree{}C at equilibrium. Any $\beta$ left in a
+deposit is therefore set by the cooling rate, the effect that the
+process-aware inputs of Advance~3 compute. The database puts the NAB liquidus
+51\,\textdegree{}C too high, though, so the open calculations will serve as a
+check on the Thermo-Calc copper database~\cite{tccu7}.
 
-\textbf{Deposition.} Mines has already melted copper-nickel powder spread in
+\textbf{Deposition.} Mines has melted copper-nickel powder spread in
 grooves, the pre-placed tracks that start Task~2 \todo{ask Sam whether these
 tracks, and a photo, may be shown}. At Utah, the Fang group installed its
-MX-Lab to develop new alloys, feeding up to six powders at once~\cite{utahded}.
+MX-Lab to develop alloys, feeding up to six powders at once~\cite{utahded}.
 
 % Fig. (doser): the salt campaign's Pareto slide from powder-doser PR 175
 % (docs/optimization/slides/pareto/log, ff074df), cropped to its axes; see
@@ -657,20 +682,20 @@ method~\cite{astudillo2021}. Reuse reprints earlier powders.}
 \end{minipage}
 \end{figure}
 
-We also simulated the cost-aware method on a synthetic version of the
-workflow (Figs.~\ref{fig:synth} and~\ref{fig:sim}), made for the aluminum
-work. With the crack screen ignoring zirconium, screening
-and then tuning the process stalled at 63\% of the optimum after \$100,000.
-The cost-aware search, and a simpler one that reused powders, reached that
-level after about \$26,500 (3.8 times less spend; 90\% confidence interval
-2.0 to 5.7). Searches that ran every candidate through the full chain caught
-up later, and screening kept pace when its physics was right. The simulation
-is hand-built and has no measurement noise, with one objective, no corrosion branch, no
-process physics, and one experiment at a time, so it does not test the
-advances proposed here. It does show that letting the search choose the step
-can pay off when the physics model is incomplete. The DED workflow
-has the same structure: a physics screen that can miss effects, a powder
-step, a deposition step, and tests.
+\textbf{Simulated search.} We also simulated the cost-aware method on a
+synthetic version of the workflow (Figs.~\ref{fig:synth} and~\ref{fig:sim}),
+made for the aluminum work. With the crack screen ignoring zirconium,
+screening and then tuning the process stalled at 63\% of the optimum after
+\$100,000. The cost-aware search, and a simpler one that reused powders,
+reached that level after about \$26,500 (3.8 times less spend; 90\%
+confidence interval 2.0 to 5.7). Searches that ran every candidate through
+the full chain caught up later, and screening kept pace when its physics was
+right. The simulation is hand-built, with no measurement noise, one
+objective, no corrosion branch, no process physics, and one experiment at a
+time, so it does not test the advances proposed here. It does show that
+letting the search choose the step can pay off when the physics model is
+incomplete. The DED workflow has the same structure: a physics screen that
+can miss effects, a powder step, a deposition step, and tests.
 
 \subsection{Method advances}
 
@@ -679,15 +704,16 @@ The published cost-aware method optimizes a single objective. A copper alloy
 for DED repair must balance deposit quality (dense, crack-free, and sound at
 the fusion line with the part it repairs), strength, ductility, and corrosion
 resistance in seawater, with no weighting known in advance. We will extend
-the cost-aware rule to multiple objectives.
-In place of the expected improvement in one objective, the rule will use the expected growth of the set of best trade-offs (the Pareto front).
-That growth is measured by the hypervolume~\cite{daulton2021} and is divided by cost as before.
+the cost-aware rule to multiple objectives. In place of the expected
+improvement in one objective, it will use the expected growth of the set of
+best trade-offs (the Pareto front), measured by the
+hypervolume~\cite{daulton2021} and divided by cost as before.
 The difficulty is that each cheap measurement informs some objectives strongly
 and others weakly. Single tracks show cracking and dilution well but say
 little about strength or corrosion, and a polarization measurement says much
 about corrosion rate and nothing about strength. The rule has to account for
 that through the network. We will derive the rule, check it against
-brute-force estimates on small problems, and measure its computing time on
+brute-force estimates on small problems, and time it on
 BYU high-performance computing.
 
 \subsubsection{Advance 2: pending experiments and asynchronous results}
@@ -722,11 +748,11 @@ in which the search chooses the composition, the atomizer settings, and the
 deposition settings, and decides at each step whether a candidate goes on.
 After microscopy, specimens go to tensile tests, or to the corrosion screen
 and, for selected candidates, to immersion tests. Candidates that deposit well
-get a repair coupon: a deposit on cast NAB or wrought copper-nickel plate,
-checked for cracks, dilution, and hardness across the fusion line.
-Pre-placed tracks on the same plates, at Utah, come first. The
-demonstration includes real deposit-to-deposit scatter, outputs computed from
-microscopy images, and three inputs that enter at different steps.
+get a repair coupon on cast NAB or wrought copper-nickel plate, checked for
+cracks, dilution, and hardness across the fusion line, after pre-placed
+tracks on the same plates at Utah. The demonstration includes real
+deposit-to-deposit scatter, outputs computed from microscopy images, and
+three inputs that enter at different steps.
 
 \subsubsection{Advance 5: checking what the screens discard}
 A cheap screen saves money only if it does not discard good candidates, and
@@ -764,8 +790,7 @@ calibration error on unseen deposits compared with the equilibrium inputs.
 \textbf{H4 (pending results).} Choosing new experiments while others are
 pending will reach the target in less calendar time than waiting for each
 batch to finish, at equal spend. H4 will be rejected if, in median calendar
-time, the version that works around pending results is no faster than the
-version that waits.
+time, working around pending results is no faster than waiting.
 
 \textbf{H5 (corrosion screen).} Corrosion rates, breakdown potentials, and
 impedance from the one-hour screen, together with composition and
@@ -816,41 +841,45 @@ continuous. With such plates on our model of atomizer, the manufacturer
 turned 80 to 90\% of each charge of a tin bronze (CuSn8) into
 powder~\cite{choma2026}. \todo{confirm with AMAZEMET the plate and nozzle
 for NAB and copper-nickel; the published NAB runs used a bare carbon-fiber
-plate that left fibers in the powder~\cite{uhlmann2024}}. The median droplet
-size follows the wavelength of capillary waves on the plate, so it falls as
-the frequency to the power $-2/3$~\cite{lang1962}. The plates on our unit vibrate
-at 40~kHz, where the Lang relation gives a median near 47~$\mu$m for a copper
-melt. Measured powders are coarser. NAB atomized at 40~kHz had a median of
-98~$\mu$m~\cite{uhlmann2024}, about twice that estimate, and much
-of the CuSn8 powder made at 40~kHz on our model fell between 63 and
-150~$\mu$m~\cite{choma2026}. Both suit the DED system described below,
-which takes powder of about 50 to 150~$\mu$m, sometimes up to 200~$\mu$m, and
-is usually fed cuts of 45 to 105 or 100 to 200~$\mu$m. Published blown-powder
-work on bronzes used 45 to 106 and 45 to 150~$\mu$m
-cuts~\cite{li2021,pi2025}.
-Each lot is sieved into those two cuts.
-We then measure its size distribution by sieve analysis and from SEM images, and its flow and apparent density with a Hall funnel~\cite{astmB213,astmB212}.
-SEM shows its shape, satellites, and stray plate fibers.
-NSL Analytical, an accredited laboratory, certifies the composition, oxygen, and carbon of every lot sent to Mines, after a full survey of the first copper lots.
-The atomizer settings
-the search chooses are the melt temperature, the pour pressures, and the
-plate amplitude. The share of each lot in each cut is an output of the
-powder step. With the gas flows and the laser spot, the size distribution sets
-how much of the powder the melt pool catches~\cite{ancalmo2025}. The search chooses the atomizer settings along with the
-composition, so the powder, not only the alloy, is designed for blown powder.
+plate that left fibers in the powder~\cite{uhlmann2024}}.
+
+The median droplet size follows the wavelength of capillary waves on the
+plate, so it falls as the frequency to the power $-2/3$~\cite{lang1962}. The
+plates on our unit vibrate at 40~kHz, where the Lang relation gives a median
+near 47~$\mu$m for a copper melt. Measured powders are coarser. NAB atomized
+at 40~kHz had a median of 98~$\mu$m~\cite{uhlmann2024}, about twice that
+estimate, and much of the CuSn8 powder made at 40~kHz on our model fell
+between 63 and 150~$\mu$m~\cite{choma2026}. Both suit the DED system
+described below, which takes powder of about 50 to 150~$\mu$m, sometimes up
+to 200~$\mu$m, and is usually fed cuts of 45 to 105 or 100 to 200~$\mu$m.
+Published blown-powder work on bronzes used 45 to 106 and 45 to 150~$\mu$m
+cuts~\cite{li2021,pi2025}. Each lot is sieved into the two cuts that system
+is fed. We then measure its size distribution by sieve analysis and from SEM
+images, and its flow and apparent density with a Hall
+funnel~\cite{astmB213,astmB212}. SEM also shows its shape, satellites, and
+stray plate fibers. NSL Analytical, an accredited laboratory, certifies the
+composition, oxygen, and carbon of every lot sent to Mines, after a full
+survey of the first copper lots.
+
+Along with the composition, the search chooses the atomizer settings: the
+melt temperature, the pour pressures, and the plate amplitude. The share of
+each lot in each cut is an output of the powder step, and with the gas flows
+and the laser spot, the size distribution sets how much of the powder the
+melt pool catches~\cite{ancalmo2025}. The powder, not only the alloy, is thus
+designed for blown-powder DED.
 
 We buy DED as machine time at two facilities, and the search treats them as
 two steps of different cost (Fig.~\ref{fig:network}). Neither facility is a
 subawardee. For the small step we use an InssTek MX-Lab in the laboratory
-of Professor Z.~Zak Fang at the University of Utah, 45 miles from BYU. His
-group has offered it to the project. It has a 500~W fiber laser, 150~mm of travel on each
-axis, control of melt-pool height, and six powder feeders that can each be
-run separately~\cite{insstek,utahded}. \todo{confirm with Fang: the rate, the
+of Professor Z.~Zak Fang at the University of Utah, 45 miles from BYU, which
+his group has offered to the project. It has a 500~W fiber laser, 150~mm of
+travel on each axis, control of melt-pool height, and six powder feeders that
+can each be run separately~\cite{insstek,utahded}. \todo{confirm with Fang: the rate, the
 smallest powder charge per feeder, the argon chamber and any preheat, and
-that a BYU student runs it after training}. We start every composition here.
-We spread powder from a first lot in grooves machined in plates, including
-cast NAB and wrought copper-nickel plate, and melt it at several laser powers
-and speeds. These pre-placed tracks use a few grams of powder each and show
+that a BYU student runs it after training}. We start every composition
+here, spreading powder from a first lot in grooves machined in plates,
+including cast NAB and wrought copper-nickel plate, and melting it at several
+laser powers and speeds. These pre-placed tracks use a few grams of powder each and show
 cracking, porosity, dilution, and fusion to the repair substrates. They
 differ from blown-powder tracks in heat input and in how the powder reaches
 the melt pool, so the models treat them as a cheaper, less faithful
@@ -868,8 +897,7 @@ machine time and labor.
 A typical session, four 25~mm cubes, takes about 3~hours of machine time and 2~hours of labor.
 The staff plan on the melt pool catching about half the powder fed and need about 2~kg of each powder to fill the hoppers of the X2.
 Since 2~kg takes about six atomizer runs, only compositions whose small blocks at Utah reach 99\% relative density are scaled up.
-Their sessions at Mines build blocks for sub-size tensile bars (ASTM E8/E8M) and corrosion coupons at the chosen settings.
-They also build repair coupons on thick cast NAB and wrought copper-nickel plate (Advance~4).
+Their sessions at Mines build blocks for sub-size tensile bars (ASTM E8/E8M) and corrosion coupons at the chosen settings, and repair coupons on thick cast NAB and wrought copper-nickel plate (Advance~4).
 Fusing the first layer to such a large heat sink needs more laser power than the MX-Lab has \todo{confirm the X2's laser (wavelength, power, spot size), its
 shielding, substrate preheat, turnaround, and that powder left in the hopper
 comes back to us}. Commercial 70-30 copper-nickel and NAB powders, deposited
@@ -877,12 +905,11 @@ at both facilities, are the baselines \todo{confirm commercial powder
 sources, at least 2~kg of each; Mines can also supply powder at cost}. The
 search decides which compositions go to Mines at all.
 
-At BYU, selected deposits will be examined by SEM and by electron backscatter diffraction (EBSD) for grain size, texture, and phase fractions, including martensitic $\beta'$ in the bronzes.
+At BYU, selected deposits are examined by SEM and by electron backscatter diffraction (EBSD) for grain size, texture, and phase fractions, including martensitic $\beta'$ in the bronzes.
 EDS and inductively coupled plasma mass spectrometry measure their composition, since manganese and aluminum can be lost to evaporation and oxidation~\cite{debroy2018}.
-Replicate tracks and blocks at
-fixed settings will measure deposit-to-deposit scatter. Image analysis
-scripts will turn micrographs into porosity, crack length, dilution, grain
-size, and phase fractions with stated uncertainty.
+Replicate tracks and blocks at fixed settings measure deposit-to-deposit
+scatter, and image analysis scripts turn micrographs into porosity, crack
+length, dilution, grain size, and phase fractions with stated uncertainty.
 
 At the end of each year, the year's leading composition is gas atomized at
 Ames National Laboratory by the powder group of Dr.~Jordan A. Tiarks, an
@@ -891,9 +918,9 @@ into gas-atomized powder of the kind a commercial producer supplies
 \todo{letter of collaboration from Tiarks; list him under current and pending
 support (NOFO p.~38)}. One run a year is budgeted as a purchased service. The
 gas-atomized lot is deposited at Mines beside the ultrasonic lot of the same
-composition, so the project measures what changes between the two routes,
-supplies the finalists' replicate and repair builds, and sends each final
-candidate to Carderock in the form a supplier would make.
+composition, so the project measures what changes between the two routes.
+That lot also supplies the finalists' replicate and repair builds and goes to
+Carderock in the form a supplier would make.
 
 Corrosion tests follow the same staging. The screen runs on the
 liquid-handling gantry in our laboratory (CubXL, Ursa Laboratories), which is
@@ -902,30 +929,37 @@ step. The gantry fills small O-ring wells, 3 to 4~mm across, clamped on
 polished faces, with substitute ocean water~\cite{astmD1141}, and a
 potentiostat dedicated to the loop measures open-circuit potential, linear
 polarization, impedance, and cyclic polarization~\cite{astmG59,astmG61}.
+ASTM G61 is written for iron-, nickel-, and cobalt-based alloys, so the
+project will report how its procedure behaves on deposited copper alloys.
+The potentiostat is a NuVant EZstat Pro lent by a BYU colleague, on the
+gantry since October 2026 \todo{confirm the loan covers the award period}.
 Small cells can add crevice attack at the seal and shift breakdown
-potentials~\cite{frankel1998}.
-Each spot is therefore photographed before and after, and the wells are checked against a conventional 1~cm$^2$ flat cell on the references.
-The loop's potentiostat is a NuVant EZstat Pro lent by a BYU colleague, on the gantry since October 2026 \todo{confirm the loan covers the award period}.
-Several wells fit on one specimen, so a repair coupon is measured in the
-deposit, at the fusion line, and in the heat-affected zone of the substrate,
-where welded NAB was attacked selectively~\cite{dobson2024}.
-The gantry then pipettes the used electrolyte of each well into a tube for
-inductively coupled plasma mass spectrometry, which shows which elements
-left the surface, for example aluminum from NAB or nickel from
-copper-nickel.
-ASTM G61 is written for iron-, nickel-, and cobalt-based alloys, so the project will report how its procedure behaves on deposited copper alloys.
-Wrought 70-30 copper-nickel and heat-treated cast NAB are measured as references in every round.
-Because the gantry runs unattended, it can also re-measure specimens left immersed for days at little extra cost, a step between the one-hour screen and the 30-day immersion.
-Candidates that the search selects get 30-day immersion tests in capped vials on the gantry's deck.
-The gantry draws a few microliters of each solution at about 1, 3, 10, and 30 days for the same analysis.
-The metal released over time then enters the models as an intermediate result between the one-hour screen and the final mass loss.
-The coupons are weighed before and after~\cite{astmG31,astmG1} and sectioned to measure the depth of selective attack.
+potentials~\cite{frankel1998}, so each spot is photographed before and after,
+and the wells are checked against a conventional 1~cm$^2$ flat cell on the
+references. Several wells fit on one specimen, so a repair coupon is measured
+in the deposit, at the fusion line, and in the heat-affected zone of the
+substrate, where welded NAB was attacked selectively~\cite{dobson2024}. The
+gantry then pipettes the used electrolyte of each well into a tube for
+inductively coupled plasma mass spectrometry, which shows which elements left
+the surface, for example aluminum from NAB or nickel from copper-nickel.
+Wrought 70-30 copper-nickel and heat-treated cast NAB are measured as
+references in every round. Because the gantry runs unattended, it can also
+re-measure specimens left immersed for days at little extra cost, a step
+between the one-hour screen and the 30-day immersion.
+
+Candidates that the search selects get 30-day immersion tests in capped
+vials on the deck of the gantry. It draws a few microliters of each solution
+at about 1, 3, 10, and 30 days for the same analysis. The metal released
+over time then enters the models as an intermediate result between the
+one-hour screen and the final mass loss. The coupons are weighed before and
+after~\cite{astmG31,astmG1} and sectioned to measure the depth of selective
+attack.
 Repair coupons are immersed as galvanic couples, the deposit on its cast NAB or wrought copper-nickel substrate with the fusion line exposed and the area ratio recorded, and are sectioned across the fusion line to find the deepest attack.
 The leading candidates get crevice and longer immersion tests \todo{confirm the durations, and natural or substitute seawater}.
 Tests in flowing seawater, which take months, are left to Navy laboratories, such as the marine corrosion laboratories at NSWC Carderock~\cite{carderockpartner}, for the final candidates, with replicate coupons of each (Section~\ref{sec:naval}).
 
 The search space was chosen the way the laboratory chose its aluminum palette: a literature review of each candidate element, then a check of its coverage in the CALPHAD database.
-Fifty elements from the periodic table were reviewed one at a time, including every element that appears in a commercial copper alloy, a copper alloy or welding filler specification, a deoxidizing practice, or the atomizer's crucible and plate materials.
+Fifty elements from the periodic table (Fig.~\ref{fig:space}) were reviewed one at a time, including every element that appears in a commercial copper alloy, a copper alloy or welding filler specification, a deoxidizing practice, or the atomizer's crucible and plate materials.
 Each review asked four questions.
 Does the element help seawater resistance, deposit soundness, or repair?
 What sets its upper limit?
@@ -936,16 +970,18 @@ the start (Table~\ref{tab:space}), with copper as the balance at no less
 than 65\% and a calculated liquidus no higher than 1,250\,\textdegree{}C.
 In Year~2 we will test zirconium and boron, tin and germanium in NAB, and
 one rare earth, lanthanum or cerium, which improved a 90-10 alloy in salt
-solution~\cite{du2025}. Rules tied to the aluminum content keep each candidate near
-known metallurgy. Above 7\% aluminum, nickel must at least equal iron, as it
-does in the nominal composition of Navy NAB castings~\cite{milb24480}. Below
-1.5\%, iron stays at or
-below 2.3\%, the upper limit of the iron-rich 70-30 grade C71640, so that it
-remains in solid solution~\cite{astmB111}. Chromium and niobium are used only
-where aluminum is at most 3\%, and silicon above 0.1\% only with niobium, as
-in cast 70-30 copper-nickel~\cite{astmB369}. Retained $\beta$ is not limited
-by a fixed formula. The process-aware CALPHAD inputs predict it
-(Advance~3). The space includes the region between the two families,
+solution~\cite{du2025}.
+
+Rules tied to the aluminum content keep each candidate near known
+metallurgy. Above 7\% aluminum, nickel must at least equal iron, as it does
+in the nominal composition of Navy NAB castings~\cite{milb24480}. Below 1.5\%
+aluminum, iron stays at or below 2.3\%, the upper limit of the iron-rich
+70-30 grade C71640, so that it remains in solid solution~\cite{astmB111}.
+Chromium and niobium are used only where aluminum is at most 3\%, and silicon
+above 0.1\% only with niobium, as in cast 70-30
+copper-nickel~\cite{astmB369}. No fixed formula limits retained $\beta$,
+which the process-aware CALPHAD inputs predict (Advance~3). The space
+includes the region between the two families,
 copper-nickel-aluminum alloys such as the high-strength
 MARINEL~\cite{campbell2002}, where low-nickel candidates may lie. Beryllium
 and cadmium (toxic powder and fume), zinc (it evaporates in the melt pool and
@@ -956,11 +992,24 @@ limits for copper-nickel~\cite{awsA57}. All the searched elements but iron
 are on the 2025 U.S. list of critical minerals~\cite{usgs2025}. Nickel
 dominates by mass and is carried as an objective.
 
+\begin{figure}[t]
+\centering
+% figures/make_search_space_figure.py in the byu-finances working folder;
+% the periodic-table background and the UNS designations follow Iver
+% Anderson's advice on the aluminum version (Ames Laboratory, 16 Oct 2026).
+\includegraphics[width=\textwidth]{figures-cu-ded/cu_search_space_periodic.pdf}
+\caption{The search space. (a)~Elements searched from the start, shaded by
+upper bound (Table~\ref{tab:space}), with copper as the balance; critical
+minerals from the 2025 U.S. list~\cite{usgs2025}. (b)~Familiar alloys at
+their nominal compositions in the nickel-aluminum plane.}
+\label{fig:space}
+\end{figure}
+
 \begin{table}[h]
 \centering
 \caption{Elements searched from the start (wt\%), with copper as the balance
 (at least 65\%) and a calculated liquidus of at most
-1,250\,\textdegree{}C. ``Cu-Ni only'': used where aluminum is at most 3\%
+1,250\,\textdegree{}C. ``Cu-Ni only'': where aluminum is at most 3\%
 (silicon: below 7\%).}
 \label{tab:space}
 \renewcommand{\arraystretch}{1.1}
@@ -996,10 +1045,10 @@ Test H2 and H3 on held-out deposits, H5 on the audited and selected candidates, 
 \subsubsection{Task 4: release and transition}
 Release the software, data, and models each year (Section~\ref{sec:dmp}).
 The dataset records every step and measurement for every candidate: charge preparation, atomization, sieving, storage and transport, deposition, and the mechanical and corrosion tests.
-Each property therefore traces back to its powder lot and thermal history.
+Each property thus traces back to its powder lot and thermal history.
 The dataset follows the form of the temperature-dependent property databases that Carderock publishes~\cite{orzolek2023,norkett2025}, and the PI has deposited widely used datasets before~\cite{mptimesplit,baird2024}.
 Write a short guide for applying the method to other alloys, deposition processes, and test sequences, aimed at Navy laboratory and depot engineers.
-For each final candidate, publish a powder specification, the deposition settings, and the tensile, corrosion, and repair-coupon data.
+For each final candidate, publish its powder specification, deposition settings, and tensile, corrosion, and repair-coupon data.
 Share them with materials engineers at NSWC Carderock, who can decide which merit flowing-seawater tests and, beyond this project, Navy qualification testing.
 
 \subsection{Expected results and new knowledge}
@@ -1016,7 +1065,7 @@ calculations and over data alone.
 \item Corrosion data for copper alloys deposited by DED, and a measured link
 between a one-hour electrochemical screen and immersion tests that take
 weeks.
-\item New copper alloy compositions designed for blown-powder DED, each with
+\item New copper alloys designed for blown-powder DED, each with
 its powder specification, deposition settings, tensile properties, corrosion
 behavior, and repair coupons, using less nickel where the trade-offs allow,
 and each a candidate for Navy qualification testing.
@@ -1035,11 +1084,11 @@ and Operationally Robust Materials. Within Code 332 the project fits the
 program Materials \& Processes for Additive Manufacturing~\cite{onram}. That
 program lists five thrusts: ``(i) rapid qualification frameworks; (ii)
 tailored AM materials and processes; (iii) large scale AM; (iv) additive
-repair and (v) AM and digital logistics''~\cite{onram}. Its research
-challenges include
-to ``develop and validate computational approaches for AM materials and
-processes for engineering applications'' and to ``develop large-scale AM
-processes for naval materials of interest''~\cite{onram}. The project serves
+repair and (v) AM and digital logistics''~\cite{onram}. Among its research
+challenges are to ``develop and validate computational approaches for AM
+materials and processes for engineering applications'' and to ``develop
+large-scale AM processes for naval materials of interest''~\cite{onram}. The
+project serves
 thrusts (ii) to (iv) with an alloy designed for a large-scale process that
 also repairs, and thrust (i) with a search method that decides which test to
 run next and states its confidence in the outcome. It is ICME for additive
@@ -1102,13 +1151,13 @@ spend a summer at Carderock \todo{confirm; the 2027 application closes
 corrosion science}. The project will train two Ph.D.\
 students and undergraduates in powder making, deposition,
 characterization, corrosion testing, and autonomous experimentation. We will
-encourage them to apply to the Naval Research Enterprise Internship Program
-and the SMART and NDSEG programs, which the NOFO names as goals of the YIP.
+urge them to apply to the Naval Research Enterprise Internship Program
+and the SMART and NDSEG programs, which the NOFO names as YIP goals.
 
 \subsection{Project Schedule and Milestones}
 
-Table~\ref{tab:schedule} lists the schedule by year. The award start date is
-1 April 2027.
+Table~\ref{tab:schedule} lists the schedule by year from the award start
+date of 1 April 2027.
 
 \begin{table}[h]
 \centering
@@ -1183,12 +1232,12 @@ documentation. \\
 \subsection{Gold Standard Science}
 
 Executive Order 14303 lists nine tenets of Gold Standard
-Science~\cite{eo14303}. Such science is reproducible, transparent,
-communicative of error and uncertainty, collaborative and interdisciplinary,
-and skeptical of its findings and assumptions. It is also structured for
-falsifiability of hypotheses, subject to unbiased peer review, accepting of
-negative results as positive outcomes, and without conflicts of interest. The
-plan follows each point. Each hypothesis above has a stated rejection
+Science~\cite{eo14303}: reproducible, transparent, communicative of error and
+uncertainty, collaborative and interdisciplinary, and skeptical of its
+findings and assumptions. Such science is also structured for falsifiability
+of hypotheses, subject to unbiased peer review, accepting of negative results
+as positive outcomes, and without conflicts of interest. The plan follows
+each point. Each hypothesis above has a stated rejection
 criterion, and we fix the targets and baselines before each test. Every
 prediction carries an uncertainty, and the calibration tests (H2, H3) check
 whether that uncertainty is honest. The random audit of Advance~5 tests the
@@ -1197,7 +1246,7 @@ reference specimens measure scatter so that it is not mistaken for a real
 effect.
 Code, data, and models are released each year, so others can rerun every analysis.
 Results that reject a hypothesis will be published like any other result.
-The PI's record supports this: the PI co-authored a review of self-driving laboratories and led open benchmark and software projects~\cite{mptimesplit,baird2024} (see Section~\ref{sec:quals}).
+The PI's record supports this: he co-authored a review of self-driving laboratories and led open benchmark and software projects~\cite{mptimesplit,baird2024}.
 
 \section{Management Approach}
 \label{sec:mgmt}
@@ -1218,8 +1267,7 @@ Our budget buys about eight half-day sessions a year at Utah, 5, 5, and 3 sessio
 All other work is at BYU: the PI's atomizer laboratory, the BYU Electron Microscopy Facility (SEM, EDS, EBSD), and
 BYU high-performance computing. The team meets weekly to review new results and
 choose the next experiments. A shared database records every step, so the
-search always sees the latest results. The schedule and milestones are in
-Table~\ref{tab:schedule}.
+search always sees the latest results.
 
 \textbf{Risks and responses.} If the multi-objective rule is too slow to
 compute, we will use a cheaper approximation and measure the loss on the
@@ -1228,25 +1276,24 @@ enter the scatter in the models directly. If a composition cannot
 be atomized, for example because it melts too close to the limit of the
 module, the search records the failure as a result, since predicting which
 compositions can be made is part of the task. If the coating of a plate
-wears and the melt stops wetting it, we replace the plate. The
+wears and the melt stops wetting it, we replace the plate, with the
 tungsten-based coating, the best balanced in a comparison by the
-manufacturer~\cite{choma2026}, is the alternative. If melts that contain
+manufacturer~\cite{choma2026}, as the alternative. If melts that contain
 nickel or iron still pick up carbon, which the carbon analysis of each lot
 will show, we will recoat the crucible before every run instead of every
 few. We will also replace the graphite rod and the carbon-carbon plate with
 an alumina sealing rod and a molybdenum-alloy plate~\cite{ciftcli2025}. If a
-lot flows poorly, the
-search sees that at the powder step and can change the atomizer settings
-before paying for a deposit. The pre-placed tracks on cast NAB and
+lot flows poorly, the search sees that at the powder step and can change the
+atomizer settings before paying for a deposit. The pre-placed tracks on cast NAB and
 copper-nickel plate show early whether the first layer fuses to thick plate.
 If it does not, we will preheat the repair coupons or make them thinner. If 500~W
 at Utah cannot melt a composition well, its tracks move to Mines at higher
 cost, and the search learns which compositions need the larger
 system. If making 2~kg lots slows the campaigns, the Utah step will carry
 more of the screening, and fewer compositions will be scaled up. If either
-facility becomes unavailable, the other takes its work at its own cost,
-which the search already knows. If DED turnaround is slow, the rule for
-pending results is designed for exactly that case. If the electrochemical screen
+facility becomes unavailable, the other takes its work at its known cost.
+If DED turnaround is slow, the rule for
+pending results is designed for that case. If the electrochemical screen
 predicts the immersion tests poorly (H5 rejected), the search will rely more
 on immersion, at higher cost, and the audited candidates will show which
 features the screen missed.
@@ -1258,9 +1305,9 @@ Sterling G.\ Baird received a Ph.D.\ in Materials Science and Engineering
 from the University of Utah in August 2023. He has been an Assistant
 Professor of Mechanical Engineering at BYU since December 2025, his first
 tenure-track position. Before BYU, he was Director of Training and Programs
-and then a Principal Investigator and Staff Scientist at the Acceleration
-Consortium, University of Toronto, where he built the development laboratory
-of the Acceleration Consortium, including about \$600,000 of equipment.
+then Principal Investigator and Staff Scientist at the Acceleration
+Consortium, University of Toronto, where he built its development
+laboratory with about \$600,000 of equipment.
 
 The PI combines Bayesian optimization with laboratory hardware. He
 developed Honegumi, which helps experimentalists set up Bayesian
@@ -1281,7 +1328,7 @@ publications and presentations.
 
 \begin{figure}[!hb]
 \centering
-\includegraphics[width=0.56\textwidth]{figures-cu-ded/enclosure-atomizer-2026.jpg}
+\includegraphics[width=0.52\textwidth]{figures-cu-ded/enclosure-atomizer-2026.jpg}
 \caption{The atomizer enclosure in the PI's laboratory (3 September 2026,
 left) and the installed atomizer with its induction module open (28
 September 2026, right).}
@@ -1329,7 +1376,7 @@ version).}
 the powder doser, the liquid-handling gantry, and the equipment for powder
 handling and specimen preparation \todo{list the main items bought with
 start-up funds}.
-The corrosion screen runs on a potentiostat lent by a BYU colleague; no equipment is requested.
+The corrosion screen runs on a potentiostat lent by a BYU colleague, and no equipment is requested.
 The BYU Electron Microscopy Facility provides SEM, EDS, and EBSD, and BYU provides high-performance computing.
 DED time is bought from the University of Utah and the Colorado School of Mines, as described under Task 2.
 Tensile tests use the Instron load frames in the
