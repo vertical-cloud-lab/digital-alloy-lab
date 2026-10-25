@@ -690,11 +690,12 @@ over the Oct 24 h text.
   20 counted (pages 3 to 21, and Responsibility on page 24), 0 overfull
   lines, no undefined references. Every figure and table is on the same
   page as in the MiKTeX reference (Fig. 1 on page 7, Fig. 7 on page 16,
-  Fig. 8 ending page 21). Page 21 ends about 4 lines above the bottom
-  margin here and about 2 in the reference, which does not hyphenate (Oct
-  24 h entry).
-- **cringe-filter** (0.2.0, `-c paper`): +24.70 log-odds on 10,431 words
-  (was +24.17 on 10,505 at `06221fa`), 0 errors, 10 findings (was 12).
+  Fig. 8 ending page 21). Fig. 8's caption ends two lines higher on page
+  21 here than in the reference, which does not hyphenate (Oct 24 h
+  entry) and which the drop says has about one line to spare.
+- **cringe-filter** (`-c paper`; 0.2.0 and `main` at `00cc9a6` agree):
+  +24.70 log-odds on 10,431 words (was +24.17 on 10,505 at `06221fa`), 0
+  errors, 10 findings (was 12).
 
 **Placeholders specific to this version** (red TODOs in the PDF):
 
