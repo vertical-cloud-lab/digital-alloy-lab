@@ -613,10 +613,9 @@ and the 50 to 200~$\mu$m cut fed to DED.}
 \label{fig:cupowder}
 \end{figure}
 
-% Fig. 2 redraws the synthetic network from the MS&T26 talk
-% (benchmarks/bofn-prelim/explain/frames/00-network.png); functions and costs
-% are in benchmarks/bofn-prelim/README.md. It is the aluminum network, kept
-% as is: it tests the method, not the alloy.
+% Fig. 2 is the copper/DED synthetic network of benchmarks/bofn-cu-ded/
+% (functions, round costs, and the optimum are in its README). It tests the
+% method, not the alloy.
 \begin{figure}[t]
 \centering
 \resizebox{\textwidth}{!}{%
@@ -629,55 +628,66 @@ and the 50 to 200~$\mu$m cut fed to DED.}
   hd/.style={font=\small, anchor=base},
   e/.style={-{Latex[length=1.6mm]}, black!75, semithick}
 ]
-\foreach \x/\t in {0.95/Inputs, 4.3/{CALPHAD \textbf{\$10}},
-  7.55/{Atomize \textbf{\$1,500}}, 10.5/{Print \textbf{\$2,500}},
-  13.1/{Test \textbf{\$200}}, 15.45/Objective}
-  \node[hd] at (\x,2.75) {\t};
-\node[inp, text width=1.9cm] (c) at (0.95,1.4) {Composition\\Zn+Mg, Cu,\\Zr, Sc};
-\node[nd, text width=3.2cm] (s) at (4.3,2.1) {Strengthening phase};
-\node[nd, text width=3.2cm] (f) at (4.3,1.4) {Freezing range};
-\node[nd, text width=3.2cm] (g) at (4.3,0.7) {Nucleant fraction};
+\foreach \x/\t/\c in {0.95/Inputs/{}, 4.0/{CALPHAD, heat flow}/{\$10},
+  6.9/Atomize/{\$400}, 9.15/{Small DED}/{\$500}, 11.45/{Large DED}/{\$3{,}100},
+  13.8/Microscopy/{\$100}, 16.65/Tests/{}, 19.65/Objective/{}} {
+  \node[hd] at (\x,3.15) {\t};
+  \node[hd] at (\x,2.75) {\textbf{\c}};
+}
+\node[inp, text width=1.9cm] (c) at (0.95,1.1) {Composition\\Ni, Al,\\Fe, Mn};
+\node[nd, text width=2.7cm] (s) at (4.0,2.1) {Strengthening};
+\node[nd, text width=2.7cm] (f) at (4.0,1.45) {Freezing range};
+\node[nd, text width=2.7cm] (g) at (4.0,0.8) {Fe-rich nucleant};
+\node[nd, text width=2.7cm] (h) at (4.0,0.15) {Conductivity};
 \node[draw=black!35, dashed, rounded corners=3pt, inner sep=2pt,
-  fit=(s)(f)(g)] {};
-\node[nd, text width=2.4cm] (q) at (7.55,0.1) {Powder quality};
-\node[nd, text width=2.3cm] (r) at (10.5,0.75) {Dense, crack-\\free fraction};
-\node[nd, text width=1.5cm] (u) at (13.1,1.5) {Strength};
-\node[nd, draw=black, thick, fill=white, text width=2.1cm] (o) at (15.45,1.5)
-  {Strength $-$\\0.3\,$\times$\,burden};
-\node[inp] (a) at (7.55,-0.75) {Atomizer setting};
-\node[inp] (l) at (10.5,-0.75) {Laser power, speed};
-\foreach \n in {s,f,g} \draw[e] (c.east) to[out=0, in=180] (\n.west);
-\draw[e] (s.east) to[out=0, in=175] (u.west);
-\draw[e] (f.east) to[out=0, in=170] (r.west);
-\draw[e] (g.east) to[out=0, in=180] (r.west);
-\draw[e] (g.east) to[out=0, in=180] (q.west);
-\draw[e] (q.east) to[out=0, in=190] (r.west);
-\draw[e] (r.east) to[out=0, in=185] (u.west);
-\draw[e] (u) -- (o);
+  fit=(s)(f)(g)(h)] (cal) {};
+\node[nd, text width=1.8cm] (q) at (6.9,0.15) {Powder quality};
+\node[nd, text width=1.9cm] (ru) at (9.15,0.8) {Dense index};
+\node[nd, text width=1.9cm] (rm) at (11.45,0.8) {Dense fraction};
+\node[nd, text width=1.9cm] (b) at (13.8,0.8) {Beta-prime};
+\node[nd, text width=2.6cm] (u) at (16.65,2.1) {Strength \textbf{\$200}};
+\node[nd, text width=2.6cm] (w) at (16.65,1.3) {1-h screen \textbf{\$50}};
+\node[nd, text width=2.6cm] (m) at (16.65,0.5) {Immersion \textbf{\$400}};
+\node[nd, draw=black, thick, fill=white, text width=2.9cm] (o) at (19.65,1.3)
+  {Strength, if\\immersion passes,\\$-$\,0.3\,$\times$\,burden};
+\node[inp] (a) at (6.9,-0.75) {Atomizer setting};
+\node[inp] (l) at (10.3,-0.75) {Laser power, speed};
+\foreach \n in {s,f,g,h} \draw[e] (c.east) to[out=0, in=180] (\n.west);
+\draw[e] (f.east) to[out=0, in=180] (q.west);
+\draw[e] (cal.east) to[out=0, in=180] (ru.west);
+\draw[e] (q.east) to[out=0, in=200] (ru.west);
+\draw[e] (ru) -- (rm);
+\draw[e] (rm) -- (b);
+\draw[e] (s.east) to[out=0, in=180] (u.west);
+\foreach \n in {u,w,m} \draw[e] (b.east) to[out=0, in=180] (\n.west);
+\draw[e] (w) -- (m);
+\draw[e] (u.east) to[out=0, in=170] (o.west);
+\draw[e] (m.east) to[out=0, in=190] (o.west);
 \draw[e] (a) -- (q);
-\draw[e] (l) -- (r);
+\draw[e] (l) -- (ru);
+\draw[e] (l) -- (rm);
 \end{tikzpicture}}
-\caption{Synthetic workflow used for Fig.~\ref{fig:sim}, built for the
-aluminum version of this workflow: a handwritten function for each box and
-a rough total cost (time, materials, supplies) for each step. Burden is a
-penalty on scarce elements such as scandium. The nucleant (Zr, Sc) cuts
-cracking, an effect the CALPHAD crack screen does not see. Task~1 replaces
-these functions with copper and DED ones.}
+\caption{Synthetic workflow used for Fig.~\ref{fig:sim}: a handwritten function
+for each box and a rough all-in cost for each step (\$1,500 for a repeat
+session at Mines). Burden is a penalty on nickel, aluminum, and manganese.
+The crack screen misses the iron-rich nucleant, the 1-hour screen misses the
+attack of beta-prime, and Utah's capped laser cannot fuse copper-rich alloys.}
 \label{fig:synth}
 \end{figure}
 
-% Results: benchmarks/bofn-prelim/README.md (kappa = 1 headline, 20 seeds).
+% Results: benchmarks/bofn-cu-ded/README.md ((kappa, eta) = (1, 1), 20 seeds).
 \begin{figure}[t]
 \centering
 \begin{minipage}[c]{3.1in}
-\includegraphics[width=\linewidth]{../../benchmarks/bofn-prelim/bofn_best_vs_spend_k1_partial_vs_full.png}
+\includegraphics[width=\linewidth]{../../benchmarks/bofn-cu-ded/bofn_cu_best_vs_spend_k1_partial_vs_full.png}
 \end{minipage}\hfill
 \begin{minipage}[c]{3.25in}
 \caption{Best result found versus spend in simulations where the CALPHAD
-crack screen ignores zirconium (means of 20 campaigns, $\pm$1 standard
-error). Red searches choose the next step. Gray ones follow a fixed order.
-pKGFN is the cost-aware method~\cite{buathong2024} and BOFN the linked-model
-method~\cite{astudillo2021}. Reuse reprints earlier powders.}
+crack screen ignores the iron-rich nucleant and the 1-hour screen ignores
+beta-prime (means of 20 campaigns, $\pm$1 standard error). Red searches
+choose the next step. Gray ones follow a fixed order. pKGFN is the cost-aware
+method~\cite{buathong2024} and BOFN the linked-model
+method~\cite{astudillo2021}. Reuse redeposits earlier powder lots.}
 \label{fig:sim}
 \end{minipage}
 \end{figure}
@@ -811,10 +821,9 @@ H1 and H4 are tested first on simulated and retrospective benchmarks, where many
 \subsubsection{Task 1: methods (Ph.D. student 1)}
 Derive and implement the multi-objective rule (Advance 1), the rule for
 pending results (Advance 2), the process-aware physics inputs (Advance 3),
-and the audit of screened-out candidates (Advance 5). Build simulated
-benchmarks that replace the functions of Fig.~\ref{fig:synth} with copper and
-DED ones, with noise, multiple objectives, a corrosion branch, and delays
-drawn from measured turnaround times. Build retrospective benchmarks from our
+and the audit of screened-out candidates (Advance 5). Extend the benchmark
+of Fig.~\ref{fig:synth} with noise, several objectives, and delays drawn from
+measured turnaround times. Build retrospective benchmarks from our
 aluminum data and the copper data that Task 2 adds each year.
 
 \subsubsection{Task 2: experimental platform (Ph.D. student 2)}

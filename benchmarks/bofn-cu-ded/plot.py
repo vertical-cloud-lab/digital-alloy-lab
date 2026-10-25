@@ -103,9 +103,11 @@ def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn"
     C = {k: curves(data[k], cell) * 100 for k in kinds if k in data}
     M = {k: np.nanmean(c, 0) for k, c in C.items()}
     SE = {k: np.nanstd(c, 0) / np.sqrt(c.shape[0]) for k, c in C.items()}
-    target = float(np.nanmean(C[base][:, -1]))
-    x_ref = x[np.argmax(M[ref] >= target)] if (M[ref] >= target).any() else None
-    x_base = x[np.argmax(M[base] >= target - 1e-9)]
+    target = float(np.nanmean(C[base][:, -1])) if base in C else float("nan")
+    x_ref = x[np.argmax(M[ref] >= target)] if base in C and (M[ref] >= target).any() else None
+    x_base = x[np.argmax(M[base] >= target - 1e-9)] if base in C else None
+    if x_ref is not None and not (0 < x_ref < x_base):  # no callout when the baseline never improves on the seed alloys
+        x_ref = None
     start = float(min(m[0] for m in M.values()))
     top = float(max(m[-1] for m in M.values()))
     y_lo, y_hi = start - 9, top + 4
@@ -144,7 +146,8 @@ def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn"
     ax.set_ylim(y_lo, y_hi)
     xt = [0, 100] if x_ref is None else [0, x_ref, 100]
     ax.set_xticks(xt, [f"{v:g}" for v in xt])
-    ax.set_yticks([start, target, top], [f"{start:.0f}", f"{target:.0f}", f"{top:.0f}"])
+    yt = [start, top] if x_ref is None else [start, target, top]
+    ax.set_yticks(yt, [f"{v:.0f}" for v in yt])
     ax.tick_params(axis="both", which="major", length=6, width=0.8, color="#8C8C8C", labelsize=size, labelcolor="#404040", pad=6)
     for side in ("left", "bottom"):
         ax.spines[side].set_position(("outward", 12))
