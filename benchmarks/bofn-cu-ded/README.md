@@ -110,7 +110,20 @@ Every value above is in [`truth_tables.md`](truth_tables.md), for all four cells
 
 ## Quality checks
 
-<!-- QUALITY -->
+**GP fitting.** Fit failures are counted in every run (`gp_fits`); the table at the end of [`tables.md`](tables.md) sums them per cell, with the share of pKGFN-type purchases chosen by the EI fallback because KG was flat. In the replayed seed-0 run below, none of 137 fits failed; fitted lengthscales ranged from 0.13 to 254 (median 0.91), none at BoTorch's lower bound of 0.025 and 3% above 10 (input directions learned as nearly flat).
+
+**Monte-Carlo noise in the knowledge gradient** ([`quality/mc_noise.py`](quality/mc_noise.py), seed 0 at (1, 1)). The run was replayed (it reproduces the stored run: 62.8% of the optimum at $100k), and at iterations 4, 12, 24 and 40 the very same candidate sets were re-scored with five other base-sample draws at S = 32 (for the MC standard error) and with S = 1,024 as a reference:
+
+| iteration | stage chosen at S = 32 | stage at S = 1,024 | same design | gap between best and second-best stage, in MC standard errors |
+|---|---|---|---|---|
+| 4 | Mines | Mines | no | 1.6 |
+| 12 | microscopy + screen + immersion | microscopy + screen + immersion | yes | 0.7 |
+| 24 | tensile | tensile | yes | 0.4 |
+| 40 | Mines | CALPHAD | no | 0.3 |
+
+The stage choice survived at three of four probed iterations and the design at two. The gaps between the best and second-best stage were all within 1.6 MC standard errors, so these were close calls, and at iteration 40 the reference put CALPHAD first by a wide margin (KG per dollar 3.3e-5 against 4.4e-7 for the Mines session chosen at S = 32), where S = 32 returned zero for CALPHAD. As in the aluminum version, the production setting underestimates the small knowledge gradients of cheap stages. Results are in [`quality/mc_noise_k1e1_s0.json`](quality/mc_noise_k1e1_s0.json).
+
+**Higher-fidelity re-runs (S = 256, two to four seeds): not run yet.** They are queued at the end of [`logs/plan.sh`](logs/plan.sh), after the sensitivity cells; until then, treat pKGFN's numbers as those of S = 32.
 
 ## Reproduce
 
