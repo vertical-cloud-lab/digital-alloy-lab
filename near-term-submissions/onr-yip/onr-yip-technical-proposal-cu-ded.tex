@@ -692,20 +692,19 @@ method~\cite{astudillo2021}. Reuse redeposits earlier powder lots.}
 \end{minipage}
 \end{figure}
 
-\textbf{Simulated search.} We also simulated the cost-aware method on a
-synthetic version of the workflow (Figs.~\ref{fig:synth} and~\ref{fig:sim}),
-made for the aluminum work. With the crack screen ignoring zirconium,
-screening and then tuning the process stalled at 63\% of the optimum after
-\$100,000. The cost-aware search, and a simpler one that reused powders,
-reached that level after about \$26,500 (3.8 times less spend; 90\%
-confidence interval 2.0 to 5.7). Searches that ran every candidate through
-the full chain caught up later, and screening kept pace when its physics was
-right. The simulation is hand-built, with no measurement noise, one
-objective, no corrosion branch, no process physics, and one experiment at a
-time, so it does not test the advances proposed here. It does show that
-letting the search choose the step can pay off when the physics model is
-incomplete. The DED workflow has the same structure: a physics screen that
-can miss effects, a powder step, a deposition step, and tests.
+\textbf{Simulated search.} We also simulated the search on a synthetic
+version of this workflow (Figs.~\ref{fig:synth} and~\ref{fig:sim}), in which
+each screen misses an effect. Screening the strongest alloys that passed the
+crack screen chose aluminum bronzes that fail immersion. Searches that model
+the linked steps reached 73\% of the optimum after \$100,000 by running every
+candidate through the full chain and 72\% by also redepositing earlier lots,
+against 14\% for standard Bayesian optimization. The cost-aware method
+reached 59\%: it bought about 40 large deposits per campaign but tested few.
+The simulation is hand-built and noise-free, with one objective and one
+experiment at a time, so it does not test the advances proposed here. It
+does show that modeling the linked steps pays off when the physics screens
+are incomplete, and that choosing the step needs more than the published
+one-step rule.
 
 \subsection{Method advances}
 
