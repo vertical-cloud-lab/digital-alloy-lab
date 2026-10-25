@@ -49,7 +49,7 @@
   "runs_uploaded": 2,
   "note": "submitted before the fallback fix of commit 1256d66 and cancelled; resubmitted"
  },
- "code-review": {
+ "code-review-failed": {
   "task_id": "fb8d9275-8aeb-4336-863a-8b6a0f5ed379",
   "job": "ANALYSIS",
   "uploads": [
@@ -96,6 +96,57 @@
   ],
   "submitted": "2026-10-25T01:20:39Z",
   "brief": "benchmarks/bofn-cu-ded/edison/brief-code.md",
-  "runs_uploaded": 0
+  "runs_uploaded": 0,
+  "status": "fail",
+  "note": "the task failed with no answer or failure reason; its results.zip held no runs. Resubmitted after the tiered fixes"
+ },
+ "code-review": {
+  "task_id": "42ee31fc-c717-40bc-aef2-276e2b689a3f",
+  "job": "ANALYSIS",
+  "uploads": [
+   {
+    "file": "bofn_alloy.py",
+    "entry_id": "data_entry:064f575e-801a-41b8-a3c7-7c6b7ce13a99"
+   },
+   {
+    "file": "policies.py",
+    "entry_id": "data_entry:a6a49294-7840-4230-b464-1a2b9afbb66a"
+   },
+   {
+    "file": "run_sweep.py",
+    "entry_id": "data_entry:8eb88eb0-8228-401e-9e90-765166c06522"
+   },
+   {
+    "file": "check_truth.py",
+    "entry_id": "data_entry:73998bc9-b246-4071-8550-75249175c739"
+   },
+   {
+    "file": "analyze.py",
+    "entry_id": "data_entry:8a2ba76e-27e3-4719-ac45-4281144f024d"
+   },
+   {
+    "file": "plot.py",
+    "entry_id": "data_entry:a219a81d-148e-41dd-a55f-90fad1de7e6b"
+   },
+   {
+    "file": "README.md",
+    "entry_id": "data_entry:21d8a3ff-57a4-4bb0-b861-f64b7d573d0f"
+   },
+   {
+    "file": "truth_tables.md",
+    "entry_id": "data_entry:3964688e-263a-42a9-9e67-1f47112d16a6"
+   },
+   {
+    "file": "settings.md",
+    "entry_id": "data_entry:fefb19fb-61ab-49f8-a5bd-0de24cfa1abe"
+   },
+   {
+    "file": "results.zip",
+    "entry_id": "data_entry:ac3bdeaf-8749-47b9-9348-82eb6ebe6596"
+   }
+  ],
+  "submitted": "2026-10-25T02:45:43Z",
+  "brief": "benchmarks/bofn-cu-ded/edison/brief-code.md",
+  "runs_uploaded": 78
  }
 }

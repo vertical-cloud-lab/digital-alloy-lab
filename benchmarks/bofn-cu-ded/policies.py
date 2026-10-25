@@ -51,6 +51,8 @@ from bofn_alloy import (
 N_CALPHAD0, N_FULL0 = 32, 5
 SCREEN_N, SCREEN_TOP = 256, 4
 RHO_GATE = 0.5  # the screening policies' Utah density gate ("small blocks reach the density target")
+UTAH_SCAN = (0.25, 0.45, 0.65)  # the careful lab's Utah process scan: travel speeds at Utah's full (capped) power
+UTAH_TRIES = len(UTAH_SCAN)  # a lot that misses the density gate at all three is retired
 W_QUANTILE = 0.75  # the one-hour screen gate: immersion only for builds in the top quartile of screened builds
 NEAR = {"A": 0.03, "M": 0.05, "I": 0.03}  # "just either side of each cutoff" for the audit
 FUNNEL_K = (12, 6, 3, 3)  # fixed top-k at the CALPHAD, powder, Utah and screen gates
@@ -144,7 +146,8 @@ def expected_improvement(gp, P, best):
 def calphad_shortlist(d, lab, seed, top=SCREEN_TOP):
     """Stage 1 of tiered screening: simulate SCREEN_N compositions, keep the `top`
     strongest that CALPHAD predicts crack-free (solidification index at or below
-    F_SAFE), net of the critical-mineral penalty."""
+    F_SAFE), net of the critical-mineral penalty. On this network that shortlist is
+    aluminum bronzes with 2 to 6 wt% Ni, which the 30-day immersion test fails."""
     for c in sobol(SCREEN_N, NC, seed=4000 + seed)[: SCREEN_N - N_CALPHAD0]:
         lab.calphad(c)
     comps = torch.tensor([list(k) for k in d.calphad])
@@ -153,6 +156,7 @@ def calphad_shortlist(d, lab, seed, top=SCREEN_TOP):
     fom = s - LAMBDA * burden(torch.cat([comps, torch.zeros(len(comps), D - NC)], -1))
     fom = torch.where(f <= F_SAFE, fom, torch.full_like(fom, -9.0))
     order = fom.argsort(descending=True)
+    order = order[fom[order] > -9.0]
     return comps[order[:top]], comps, fom, f
 
 
@@ -170,14 +174,17 @@ def chain(lab, d, lot, pv, need_utah, rows):
     (top quartile of screened builds). Appends the lab's own record (x, y) to rows, with a proxy
     value for a stopped chain. Returns the action label."""
     L = d.lots[lot]
-    x = torch.cat([L["c"], torch.tensor([L["a"]] + [float(v) for v in pv])])
     if need_utah:
-        # the small step runs at Utah's capped power on the same energy-density line (speed reduced with the power)
-        pu = [min(float(pv[0]), P_CAP), max(float(pv[1]) - max(float(pv[0]) - P_CAP, 0.0), 0.0)]
+        # the small step scans travel speed at Utah's full (capped) power, one setting per visit
+        pu = [P_CAP, UTAH_SCAN[len(L["utah"]) % len(UTAH_SCAN)]]
         r = lab.utah(lot, pu)
         if r < RHO_GATE:
-            rows.append((x, -LAMBDA * float(burden(x))))  # nothing fused: recorded as a failure
+            xu = torch.cat([L["c"], torch.tensor([L["a"]] + pu)])
+            rows.append((xu, -LAMBDA * float(burden(xu))))  # did not deposit dense: recorded as a failure
             return "utah-fail"
+    if not any(B["lot"] == lot for B in d.builds):
+        pv = list(max(L["utah"], key=lambda t: t[2])[:2])  # the first Mines build on a lot uses the setting that passed at Utah
+    x = torch.cat([L["c"], torch.tensor([L["a"]] + [float(v) for v in pv])])
     b = lab.mines(lot, pv)
     lab.microscopy(b)
     U = lab.tensile(b)
@@ -304,6 +311,8 @@ def run_full_policy(kind, truth, seed, budget):
             for c in shortlist:
                 for i, L in enumerate(d.lots):
                     if torch.allclose(L["c"], c):
+                        if not lot_passed_utah(L) and len(L["utah"]) >= UTAH_TRIES:
+                            continue  # retired: this powder does not deposit dense at Utah
                         pv = sobol(64, 2, seed=it + 50 * seed + i)
                         pools.append(torch.cat([c.expand(64, NC), torch.full((64, 1), L["a"]), pv], -1))
                         passed = lot_passed_utah(L)
@@ -316,6 +325,8 @@ def run_full_policy(kind, truth, seed, budget):
                     costs.append(torch.full((128,), COSTS["A"] + COSTS["U"] + M_FIRST + TAIL))
                     lots += [-1] * 128
                     needs += [True] * 128
+            if not pools:
+                break
             P, cost = torch.cat(pools), torch.cat(costs)
             score = expected_improvement(gp, P, max(v for _, v in rows))
             score[cost > left] = -1.0
