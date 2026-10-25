@@ -1,0 +1,154 @@
+{
+ "code-review-superseded": {
+  "task_id": "35369660-e8bc-44c6-9468-236eafcf2001",
+  "job": "ANALYSIS",
+  "uploads": [
+   {
+    "file": "bofn_alloy.py",
+    "entry_id": "data_entry:fd2ffeaf-bc1e-48e8-85b1-8dc9a822c695"
+   },
+   {
+    "file": "policies.py",
+    "entry_id": "data_entry:78b2152b-32ee-41d6-abee-716cfd13c771"
+   },
+   {
+    "file": "run_sweep.py",
+    "entry_id": "data_entry:a91ccfce-a694-40e9-a416-1ddadbb290d4"
+   },
+   {
+    "file": "check_truth.py",
+    "entry_id": "data_entry:b3176456-6d5c-4e0a-9733-3f6e348efa8d"
+   },
+   {
+    "file": "analyze.py",
+    "entry_id": "data_entry:45bad339-a8b2-43f3-946e-486d7d13e934"
+   },
+   {
+    "file": "plot.py",
+    "entry_id": "data_entry:065eafa8-3f50-4cc3-b0e9-6a66385988ea"
+   },
+   {
+    "file": "README.md",
+    "entry_id": "data_entry:0d6ee932-abe3-47c1-b00f-d111e2325a16"
+   },
+   {
+    "file": "truth_tables.md",
+    "entry_id": "data_entry:b932586f-e5f6-4055-b8ae-d88c32b2b110"
+   },
+   {
+    "file": "settings.md",
+    "entry_id": "data_entry:52c4122a-27d9-4d9a-96a2-0714679e1521"
+   },
+   {
+    "file": "results.zip",
+    "entry_id": "data_entry:49145513-ae26-48b6-b334-e66007c95aad"
+   }
+  ],
+  "submitted": "2026-10-25T01:15:40Z",
+  "brief": "benchmarks/bofn-cu-ded/edison/brief-code.md",
+  "runs_uploaded": 2,
+  "note": "submitted before the fallback fix of commit 1256d66 and cancelled; resubmitted",
+  "status": "cancelled"
+ },
+ "code-review-failed": {
+  "task_id": "fb8d9275-8aeb-4336-863a-8b6a0f5ed379",
+  "job": "ANALYSIS",
+  "uploads": [
+   {
+    "file": "bofn_alloy.py",
+    "entry_id": "data_entry:3a2887a2-75ca-4ae5-83cd-628df3d7350a"
+   },
+   {
+    "file": "policies.py",
+    "entry_id": "data_entry:64a1e01f-8cd7-440c-829d-8445a5b89907"
+   },
+   {
+    "file": "run_sweep.py",
+    "entry_id": "data_entry:9c671b40-2956-4adb-8079-817e6cb83a1b"
+   },
+   {
+    "file": "check_truth.py",
+    "entry_id": "data_entry:93fcd0c7-0815-42ab-ac3d-260a3c62164c"
+   },
+   {
+    "file": "analyze.py",
+    "entry_id": "data_entry:3fa1e561-a796-49ca-b9ea-6f5a9f6d123a"
+   },
+   {
+    "file": "plot.py",
+    "entry_id": "data_entry:601a57a9-76ba-4182-a6b9-11a9e84c6bfc"
+   },
+   {
+    "file": "README.md",
+    "entry_id": "data_entry:3d7036a2-a30e-414e-ba85-4a96b55be47f"
+   },
+   {
+    "file": "truth_tables.md",
+    "entry_id": "data_entry:ce093677-bc97-409c-8da6-5782d608ee59"
+   },
+   {
+    "file": "settings.md",
+    "entry_id": "data_entry:34c53919-4471-43b5-add3-469ae1c7e260"
+   },
+   {
+    "file": "results.zip",
+    "entry_id": "data_entry:f254d5c5-4154-46ad-9ffa-02dfeebeb456"
+   }
+  ],
+  "submitted": "2026-10-25T01:20:39Z",
+  "brief": "benchmarks/bofn-cu-ded/edison/brief-code.md",
+  "runs_uploaded": 0,
+  "status": "fail",
+  "note": "the task failed with no answer or failure reason; its results.zip held no runs. Resubmitted after the tiered fixes"
+ },
+ "code-review": {
+  "task_id": "42ee31fc-c717-40bc-aef2-276e2b689a3f",
+  "job": "ANALYSIS",
+  "uploads": [
+   {
+    "file": "bofn_alloy.py",
+    "entry_id": "data_entry:064f575e-801a-41b8-a3c7-7c6b7ce13a99"
+   },
+   {
+    "file": "policies.py",
+    "entry_id": "data_entry:a6a49294-7840-4230-b464-1a2b9afbb66a"
+   },
+   {
+    "file": "run_sweep.py",
+    "entry_id": "data_entry:8eb88eb0-8228-401e-9e90-765166c06522"
+   },
+   {
+    "file": "check_truth.py",
+    "entry_id": "data_entry:73998bc9-b246-4071-8550-75249175c739"
+   },
+   {
+    "file": "analyze.py",
+    "entry_id": "data_entry:8a2ba76e-27e3-4719-ac45-4281144f024d"
+   },
+   {
+    "file": "plot.py",
+    "entry_id": "data_entry:a219a81d-148e-41dd-a55f-90fad1de7e6b"
+   },
+   {
+    "file": "README.md",
+    "entry_id": "data_entry:21d8a3ff-57a4-4bb0-b861-f64b7d573d0f"
+   },
+   {
+    "file": "truth_tables.md",
+    "entry_id": "data_entry:3964688e-263a-42a9-9e67-1f47112d16a6"
+   },
+   {
+    "file": "settings.md",
+    "entry_id": "data_entry:fefb19fb-61ab-49f8-a5bd-0de24cfa1abe"
+   },
+   {
+    "file": "results.zip",
+    "entry_id": "data_entry:ac3bdeaf-8749-47b9-9348-82eb6ebe6596"
+   }
+  ],
+  "submitted": "2026-10-25T02:45:43Z",
+  "brief": "benchmarks/bofn-cu-ded/edison/brief-code.md",
+  "runs_uploaded": 78,
+  "status": "success"
+ }
+}
