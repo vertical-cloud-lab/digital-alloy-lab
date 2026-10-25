@@ -94,10 +94,10 @@ PV_KINDS = ("pkgfn", "eifn_reuse", "eifn", "ei", "tiered")
 PV_SHORT = {"pkgfn": "Partial: pKGFN", "eifn_reuse": "Partial: BOFN + reuse", "eifn": "Full: BOFN", "ei": "Full: standard BO", "tiered": "Tiered screening"}
 
 
-def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn", size=24, bands="highlight", figsize=(11, 6.2), right=0.64):
+def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn", size=24, bands="highlight", figsize=(11, 6.2), right=0.64, callout=False):
     """Best alloy vs spend in the bofn-prelim slide style: leader lines instead of a legend, a horizontal
     y label, and ticks only at the axis ends plus the two called-out values (the spend at which `ref`
-    reaches `base`'s $100k level, and that level). Placed 3.1 in wide in the proposal."""
+    reaches `base`'s $100k level, and that level, only if `callout`). Placed 3.1 in wide in the proposal."""
     data = load(cell)
     x = GRID / 1e3
     C = {k: curves(data[k], cell) * 100 for k in kinds if k in data}
@@ -106,7 +106,9 @@ def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn"
     target = float(np.nanmean(C[base][:, -1])) if base in C else float("nan")
     x_ref = x[np.argmax(M[ref] >= target)] if base in C and (M[ref] >= target).any() else None
     x_base = x[np.argmax(M[base] >= target - 1e-9)] if base in C else None
-    if x_ref is not None and not (0 < x_ref < x_base):  # no callout when the baseline never improves on the seed alloys
+    if not callout or (x_ref is not None and not (0 < x_ref < x_base)):
+        # no "x times less spend" callout: on the copper network tiered screening never finds an alloy that
+        # passes immersion, so the spend to reach its $100k level only measures a policy's first small gain
         x_ref = None
     start = float(min(m[0] for m in M.values()))
     top = float(max(m[-1] for m in M.values()))

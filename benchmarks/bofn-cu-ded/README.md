@@ -5,14 +5,14 @@ Copper and blown-powder DED version of [`../bofn-prelim/`](../bofn-prelim/README
 <!-- RESULTS -->
 ## Bottom line
 
-**The aluminum headline does not carry over.** On the copper network at `(kappa, eta) = (1, 1)` (both screens biased; 20 seeds of pKGFN, 14 to 20 of the others), the policy that chooses the stage is not the one that wins, and the tiered baseline as specified never finds an alloy that passes immersion:
+**The aluminum headline does not carry over.** On the copper network at `(kappa, eta) = (1, 1)` (both screens biased; 20 seeds of pKGFN, 20 to 20 of the others), the policy that chooses the stage is not the one that wins, and the tiered baseline as specified never finds an alloy that passes immersion:
 
-- **Network-aware BO is far ahead of the model-free baselines.** BOFN reaches 74% of the optimum by $100k when it runs every candidate through the full chain and 75% when it also redeposits existing lots (EI per dollar), against 21% for standard BO on the seven inputs and 23% for random designs. The seed alloys start at -10% on average (most fail immersion).
-- **pKGFN reaches 59%**: ahead of standard BO (+45 points, 12 wins, 0 ties and 2 losses on 14 matched seeds, Wilcoxon p = 0.00085) and random, behind both BOFN policies (against the full pipeline: -10 points, 4 wins, 0 ties and 11 losses on 15 matched seeds, Wilcoxon p = 0.15; against lot reuse: -10 points, 2 wins, 0 ties and 13 losses on 15 matched seeds, Wilcoxon p = 0.083). It is behind from the start (12% at $25k against 20% and 20%).
-- **Why pKGFN lags.** It buys about 40 Mines sessions per $100k but only 7 tensile tests and 13 immersions, so 33 of its 40 new builds are never tensile-tested and earn nothing under the metric. Until some alloy passes immersion the objective is gated shut, one-step KG is flat, and 20% of its purchases were made by the EI fallback. A one-step gain also values a test only by its own result, not by the immersion it unlocks; the test bundles help but do not close the gap. The KG noise check (below) adds that S = 32 base samples misses the small KG of cheap stages such as CALPHAD.
-- **Tiered screening, as specified, never demonstrates an alloy that passes immersion.** Its shortlist (CALPHAD on 256 compositions, the four strongest that pass the crack screen, net of burden) is aluminum bronzes with 2 to 6 wt% Ni, which the 30-day immersion test fails in this truth however they are deposited. Over 7 seeds, 0 of its 36 immersed builds passed; it ends at -11% ± 7 of the optimum, and its small rises come from lower-burden bronzes that also fail immersion (a failing alloy scores minus 0.3 times its burden). Every other policy reaches tiered screening's $100k level within its first few purchases, so the bofn-prelim speed-up ("the spend each method needs to reach tiered screening's $100k level") is not meaningful here and is not reported as a headline. This is the shortlist rule meeting an immersion-gated objective, and it makes tiered screening a weak baseline here; it is not evidence about what a careful lab would do. Adding a nickel floor of 10 wt% does not rescue it: in this truth Cu-Ni freezes wide, and only 0.2% of compositions with at least 10 wt% Ni pass the crack screen.
+- **Network-aware BO is far ahead of the model-free baselines.** BOFN reaches 73% of the optimum by $100k when it runs every candidate through the full chain and 72% when it also redeposits existing lots (EI per dollar), against 14% for standard BO on the seven inputs and 22% for random designs. The seed alloys start at -10% on average (most fail immersion).
+- **pKGFN reaches 59%**: ahead of standard BO (+44 points, 17 wins, 0 ties and 3 losses on 20 matched seeds, Wilcoxon p = 4.8e-05) and random, behind both BOFN policies (against the full pipeline: -15 points, 4 wins, 0 ties and 16 losses on 20 matched seeds, Wilcoxon p = 0.024; against lot reuse: -13 points, 2 wins, 0 ties and 18 losses on 20 matched seeds, Wilcoxon p = 0.0094). It is behind from the start (12% at $25k against 15% and 14%).
+- **Why pKGFN lags.** It buys about 40 Mines sessions per $100k but only 7 tensile tests and 13 immersions, so 33 of its 40 new builds are never tensile-tested and earn nothing under the metric. Until some alloy passes immersion the objective is gated shut, one-step KG is flat, and 20% of its purchases were made by the EI fallback. A one-step gain also values a test only by its own result, not by the immersion it unlocks; pricing three test bundles was meant to cover that and does not close the gap. The KG noise check (below) adds that S = 32 base samples misses the small KG of cheap stages such as CALPHAD.
+- **Tiered screening, as specified, never demonstrates an alloy that passes immersion.** Its shortlist (CALPHAD on 256 compositions, the four strongest that pass the crack screen, net of burden) is aluminum bronzes with 2 to 6 wt% Ni, which the 30-day immersion test fails in this truth however they are deposited. Over 20 seeds, 0 of its 80 immersed builds passed; it ends at -8% ± 5 of the optimum, and its small rises come from lower-burden bronzes that also fail immersion (a failing alloy scores minus 0.3 times its burden). Every other policy's mean curve reaches tiered screening's $100k level within its first $10k of new spend; so the bofn-prelim speed-up ("the spend each method needs to reach tiered screening's $100k level") measures only how soon a policy makes its first small gain, and is not reported as a headline (it is in [`tables.md`](tables.md)). This is the shortlist rule meeting an immersion-gated objective, and it makes tiered screening a weak baseline here; it is not evidence about what a careful lab would do. Adding a nickel floor of 10 wt% does not rescue it: in this truth Cu-Ni freezes wide, and only 0.2% of compositions with at least 10 wt% Ni pass the crack screen.
 
-**What the data supports for the proposal.** "In a synthetic version of the copper workflow, with both screens biased, searches that model the linked steps reached about 74% of the optimum after $100,000, against about 21% for standard Bayesian optimization; screening on CALPHAD strength and crack index chose aluminum bronzes that fail immersion; the published one-step cost-aware rule reached 59%." The claim that choosing the stage beats running the full chain is not supported on this network at these settings.
+**What the data supports for the proposal.** "In a synthetic version of the copper workflow, with both screens biased, searches that model the linked steps reached about 73% of the optimum after $100,000, against about 14% for standard Bayesian optimization; screening on CALPHAD strength and crack index chose aluminum bronzes that fail immersion; the published one-step cost-aware rule reached 59%." The claim that choosing the stage beats running the full chain is not supported on this network at these settings.
 
 **Not done yet** (next session; [`logs/plan.sh`](logs/plan.sh) resumes where this one stopped): the sensitivity cells (0, 0), (1, 0) and (0, 1); the new policies (`pkgfn_screen`, `pkgfn_audit`, `mines_only`, `funnel`) and so the screen-audit and two-step tables; the S = 256 fidelity runs; a corrosion-aware tiered variant; the Edison analysis review.
 
@@ -33,43 +33,43 @@ Copper and blown-powder DED version of [`../bofn-prelim/`](../bofn-prelim/README
 | Policy | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | median $ to 80% |
 |---|---|---|---|---|---|---|---|
 | pKGFN: picks the stage | 20 | 12% ± 6 | 27% ± 7 | 59% ± 5 | $86k (60% of seeds) | >$100k (35% of seeds) | >$100k (5% of seeds) |
-| BOFN, full pipeline | 15 | 20% ± 7 | 46% ± 10 | 74% ± 8 | $48k (87% of seeds) | $52k (73% of seeds) | $72k (73% of seeds) |
-| BOFN + lot reuse | 15 | 20% ± 5 | 39% ± 9 | 75% ± 8 | $52k (87% of seeds) | $71k (87% of seeds) | $78k (73% of seeds) |
-| Tiered screening | 7 | -14% ± 7 | -13% ± 7 | -11% ± 7 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
-| Standard BO | 14 | 8% ± 5 | 10% ± 4 | 21% ± 8 | >$100k (21% of seeds) | >$100k (7% of seeds) | >$100k (7% of seeds) |
-| Random | 14 | 5% ± 5 | 10% ± 5 | 23% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| BOFN, full pipeline | 20 | 15% ± 6 | 39% ± 9 | 73% ± 7 | $67k (85% of seeds) | $74k (75% of seeds) | $88k (70% of seeds) |
+| BOFN + lot reuse | 20 | 14% ± 5 | 32% ± 8 | 72% ± 7 | $54k (85% of seeds) | $65k (85% of seeds) | $81k (65% of seeds) |
+| Tiered screening | 20 | -9% ± 5 | -9% ± 5 | -8% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Standard BO | 20 | 6% ± 3 | 7% ± 3 | 14% ± 6 | >$100k (15% of seeds) | >$100k (5% of seeds) | >$100k (5% of seeds) |
+| Random | 20 | -1% ± 4 | 7% ± 5 | 22% ± 5 | >$100k (5% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
 
 Scored by the deposited alloy each policy's own model ranks best (`rec_printed`), which credits builds not yet tested:
 
 | Policy | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | median $ to 80% |
 |---|---|---|---|---|---|---|---|
 | pKGFN: picks the stage | 20 | 19% ± 6 | 37% ± 7 | 68% ± 4 | $52k (80% of seeds) | $78k (60% of seeds) | >$100k (25% of seeds) |
-| BOFN, full pipeline | 15 | 20% ± 7 | 46% ± 10 | 74% ± 8 | $48k (87% of seeds) | $52k (73% of seeds) | $72k (73% of seeds) |
-| BOFN + lot reuse | 15 | 18% ± 5 | 38% ± 9 | 75% ± 8 | $52k (87% of seeds) | $71k (87% of seeds) | $78k (73% of seeds) |
-| Tiered screening | 7 | -12% ± 7 | -11% ± 7 | -11% ± 7 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
-| Standard BO | 14 | 8% ± 5 | 10% ± 4 | 21% ± 8 | >$100k (21% of seeds) | >$100k (7% of seeds) | >$100k (7% of seeds) |
-| Random | 14 | 5% ± 5 | 10% ± 5 | 23% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| BOFN, full pipeline | 20 | 15% ± 6 | 39% ± 9 | 73% ± 7 | $67k (85% of seeds) | $74k (75% of seeds) | $88k (70% of seeds) |
+| BOFN + lot reuse | 20 | 13% ± 4 | 32% ± 8 | 72% ± 7 | $54k (85% of seeds) | $65k (85% of seeds) | $81k (65% of seeds) |
+| Tiered screening | 20 | -8% ± 5 | -8% ± 5 | -6% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Standard BO | 20 | 6% ± 3 | 7% ± 3 | 14% ± 6 | >$100k (15% of seeds) | >$100k (5% of seeds) | >$100k (5% of seeds) |
+| Random | 20 | -1% ± 4 | 7% ± 5 | 22% ± 5 | >$100k (5% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
 
 Matched seeds (Wilcoxon signed-rank; every pair in [`tables.md`](tables.md)):
 
 | pKGFN: picks the stage against | n | $25k: mean difference (wins/ties/losses; p) | $50k | $100k |
 |---|---|---|---|---|
-| Tiered screening | 7 | +26 points (5/2/0; p = 0.062) | +47 points (7/0/0; p = 0.016) | +78 points (7/0/0; p = 0.016) |
-| BOFN, full pipeline | 15 | -5 points (2/1/12; p = 0.084) | -12 points (3/0/12; p = 0.083) | -10 points (4/0/11; p = 0.15) |
-| BOFN + lot reuse | 15 | -4 points (2/2/11; p = 0.1) | -5 points (5/0/10; p = 0.36) | -10 points (2/0/13; p = 0.083) |
-| Standard BO | 14 | +8 points (4/3/7; p = 0.93) | +26 points (9/0/5; p = 0.025) | +45 points (12/0/2; p = 0.00085) |
-| Random | 14 | +11 points (9/3/2; p = 0.062) | +26 points (12/0/2; p = 0.0067) | +43 points (14/0/0; p = 0.00012) |
+| Tiered screening | 20 | +21 points (16/4/0; p = 0.00044) | +37 points (20/0/0; p = 1.9e-06) | +66 points (20/0/0; p = 1.9e-06) |
+| BOFN, full pipeline | 20 | -3 points (3/1/16; p = 0.07) | -11 points (6/0/14; p = 0.23) | -15 points (4/0/16; p = 0.024) |
+| BOFN + lot reuse | 20 | -2 points (4/2/14; p = 0.16) | -5 points (8/0/12; p = 0.65) | -13 points (2/0/18; p = 0.0094) |
+| Standard BO | 20 | +6 points (5/3/12; p = 0.62) | +20 points (12/0/8; p = 0.019) | +44 points (17/0/3; p = 4.8e-05) |
+| Random | 20 | +13 points (14/3/3; p = 0.0075) | +21 points (16/0/4; p = 0.012) | +36 points (19/0/1; p = 3.6e-05) |
 
 Purchases per $100k:
 
 | Policy | n | C ($10) | A ($400) | U ($500) | M ($1,500+) | S ($100) | T ($200) | K ($50) | I ($400) | new lots | Mines sessions that paid a scale-up |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | pKGFN: picks the stage | 20 | 6.7 | 12.4 | 11.3 | 40.5 | 15.7 | 7.2 | 14.0 | 12.8 | 12.4 | 12.3 |
-| BOFN, full pipeline | 15 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
-| BOFN + lot reuse | 15 | 12.3 | 12.3 | 12.3 | 29.5 | 29.5 | 29.5 | 29.5 | 29.5 | 12.3 |  |
-| Tiered screening | 7 | 224.0 | 15.9 | 21.0 | 30.1 | 30.1 | 30.1 | 30.1 | 5.1 | 15.9 |  |
-| Standard BO | 14 | 20.6 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
-| Random | 14 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
+| BOFN, full pipeline | 20 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
+| BOFN + lot reuse | 20 | 12.6 | 12.6 | 12.6 | 29.3 | 29.3 | 29.3 | 29.3 | 29.3 | 12.6 |  |
+| Tiered screening | 20 | 224.0 | 22.8 | 44.2 | 24.9 | 24.9 | 24.9 | 24.9 | 4.0 | 22.8 |  |
+| Standard BO | 20 | 19.7 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
+| Random | 20 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
 
 <!-- /RESULTS -->
 
