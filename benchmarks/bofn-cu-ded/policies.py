@@ -555,10 +555,28 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
             if float(ratio[j]) > best[1]:
                 best = (grp, float(ratio[j]), j)
         grp, ratio, j = best
+
+        def to_validation(k, i, c):
+            """This purchase plus the cheapest remaining path to a validated build (tensile and immersion)."""
+            if k == "A":
+                return c + (COSTS["U"] if screens and utah else 0.0) + M_FIRST + TAIL
+            if k == "U":
+                return c + lab.mines_cost(meta["U"][i]) + TAIL
+            if k == "M":
+                return c + TAIL
+            B = d.builds[meta[k][i]]
+            done = set(k.split("+"))
+            rest = (COSTS["S"] if B["beta"] is None and "S" not in done else 0.0) + (COSTS["T"] if B["U"] is None and "T" not in done else 0.0)
+            if B["m"] is None and "I" not in done:
+                rest += COSTS["I"] + (COSTS["K"] if B["w"] is None and "K" not in done else 0.0)
+            return c + rest
+
         if grp is None or ratio < 1e-10:
-            # KG is flat (no single result can move the incumbent on this
-            # discretization): fall back to network EI per dollar on the same
-            # candidates, as fast-pKGFN does to propose candidates
+            # KG is flat (no single result can move the incumbent on this discretization): fall back
+            # to network EI on the same candidates, as fast-pKGFN does to propose candidates, per
+            # dollar of the cheapest path to a validated build. (Dividing by the next stage's cost
+            # alone, as the aluminum version did, made the copper runs buy lot after lot and Utah
+            # session after session, since a design's EI only pays off once it is tested.)
             fb = []
             for k in ("A", "U", "M", "S", "T", "K", "I", "S+T", "S+K+I", "K+I"):
                 if k not in cands:
@@ -566,7 +584,7 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
                 cv = cost_of(k, cands[k][0])
                 for i, e in enumerate(ei_of[k][: len(cands[k][0])]):
                     if float(cv[i]) <= left:
-                        fb.append((e / float(cv[i]), float(smp_of[k][i].max()), k, i))
+                        fb.append((e / to_validation(k, i, float(cv[i])), float(smp_of[k][i].max()), k, i))
             if not fb:
                 break
             pos = [t for t in fb if t[0] > 0]
