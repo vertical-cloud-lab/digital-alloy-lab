@@ -62,6 +62,7 @@ N_POOL = int(os.environ.get("BOFN_NPOOL", 256))  # Sobol designs in the per-iter
 REC = bool(os.environ.get("BOFN_REC"))  # the paper's (slow, noisy) recommender metric; off by default
 TAIL = COSTS["S"] + COSTS["T"] + COSTS["K"] + COSTS["I"]  # $750 of tests after a Mines build
 PKGFN_KINDS = ("pkgfn", "pkgfn_screen", "pkgfn_audit", "mines_only")
+KG_HOOK = None  # quality/mc_noise.py sets this to re-score each KG with other base samples
 
 
 def initial_data(truth, seed):
@@ -545,6 +546,8 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
                 continue
             w, ww = (w4, ww4) if grp == "C" else (w1, gh_w)
             kg = net.kg(kg_group.get(grp, grp), Z, Xi, eps, w, ww).clamp_min(0)
+            if KG_HOOK is not None:
+                KG_HOOK(it, grp, net, kg_group.get(grp, grp), Z, Xi, eps, w, ww, cv, kg)
             ratio = kg / cv
             ratio[cv > left] = -1.0
             j = int(ratio.argmax())
