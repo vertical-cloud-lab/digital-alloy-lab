@@ -47,7 +47,8 @@
   "submitted": "2026-10-25T01:15:40Z",
   "brief": "benchmarks/bofn-cu-ded/edison/brief-code.md",
   "runs_uploaded": 2,
-  "note": "submitted before the fallback fix of commit 1256d66 and cancelled; resubmitted"
+  "note": "submitted before the fallback fix of commit 1256d66 and cancelled; resubmitted",
+  "status": "cancelled"
  },
  "code-review-failed": {
   "task_id": "fb8d9275-8aeb-4336-863a-8b6a0f5ed379",
@@ -147,6 +148,7 @@
   ],
   "submitted": "2026-10-25T02:45:43Z",
   "brief": "benchmarks/bofn-cu-ded/edison/brief-code.md",
-  "runs_uploaded": 78
+  "runs_uploaded": 78,
+  "status": "success"
  }
 }
