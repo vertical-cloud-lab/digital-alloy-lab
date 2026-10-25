@@ -401,10 +401,13 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
         nuQ = net.mean(Q, eps_for(Q.shape[0], S_ACQ, 20_000 + it))
         P, nuP = torch.cat([P, Q]), torch.cat([nuP, nuQ])
         smpP = net.samples(P, eps_for(P.shape[0], S_ACQ, 30_000 + it))
-        inc = smpP.mean(-1).max()
+        # candidates are ranked by network EI over the best alloy demonstrated so far, as in EIFN. (The
+        # aluminum version measured EI from the best posterior mean. On this network that is a pure-copper
+        # design whose immersion gate is shut, so every EI came out zero and one seed stopped after $4,750.)
+        inc = torch.tensor(max(v for _, v in d.full))
         eiP = (smpP - inc).clamp_min(0).mean(-1)
         anchors = [P[nuP.topk(24).indices], P[eiP.topk(12).indices]]
-        cands, ei_of, meta, costs = {}, {}, {}, {}
+        cands, ei_of, smp_of, meta, costs = {}, {}, {}, {}, {}
         # ---- CALPHAD candidates: compositions of promising designs, plus space filling
         cx = torch.cat([P[eiP.topk(N_CAND - 4).indices], P[nuP.topk(4).indices]])
         cx = torch.cat([cx, torch.cat([sobol(4, NC, seed=it + 7 * seed), cx[:4, NC:]], -1)])
@@ -418,17 +421,18 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
         PA = torch.cat([comps.unsqueeze(1).expand(-1, 48, -1), apv.unsqueeze(0).expand(len(comps), -1, -1)], -1)
         sA = net.samples(PA.reshape(-1, D), eps_for(PA.shape[0] * 48, S_ACQ, 40_000 + it))
         eiA = (sA - inc).clamp_min(0).mean(-1).reshape(len(comps), 48)
-        best_apv = eiA.argmax(1)
-        score = eiA.max(1).values
+        mA = sA.mean(-1).reshape(len(comps), 48)
+        best_apv = (eiA + 1e-9 * mA).argmax(1)  # the posterior mean breaks ties when EI is zero
+        score = eiA.gather(1, best_apv[:, None]).squeeze(1)
         allowed = torch.tensor([passes("A", k, float(fa[i]), F_SAFE, above=False)[0] for i, k in enumerate(keys)])
-        score = torch.where(allowed, score, torch.full_like(score, -1.0))
-        keep = score.topk(min(N_CAND, len(comps))).indices
-        keep = keep[score[keep] >= 0]
+        rank = torch.where(allowed, score + 1e-9 * mA.gather(1, best_apv[:, None]).squeeze(1), torch.full_like(score, -float("inf")))
+        keep = rank.topk(min(N_CAND, int(allowed.sum()))).indices
         if len(keep):
             xa = PA[keep, best_apv[keep]]
             za = torch.stack([xa[:, IA], xa[:, IMN], fa[keep]], -1)
             cands["A"] = (za, xa)
             ei_of["A"] = score[keep].tolist()
+            smp_of["A"] = sA.reshape(len(comps), 48, -1)[keep, best_apv[keep]]
         # ---- small-DED (Utah) and large-DED (Mines) candidates: existing lots, promising (P, v) for each
         if d.lots:
             pv = sobol(32, 2, seed=it + 13 * seed)
@@ -460,6 +464,7 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
                 keep = eiG.topk(min(N_CAND, Xg.shape[0])).indices
                 cands[grp] = (Zg[keep], Xg[keep])
                 ei_of[grp] = eiG[keep].tolist()
+                smp_of[grp] = sG[keep]
                 meta[grp] = [lots_[k] for k in keep.tolist()]
                 if c_ is not None:
                     costs[grp] = torch.cat(c_)[keep]
@@ -474,9 +479,10 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
             Xb = torch.stack([design_of_build(d, j) for j in idx])
             sB = net.samples(Xb, eps_for(len(idx), S_ACQ, sd + it))
             e = (sB - inc).clamp_min(0).mean(-1)
-            keep = e.topk(min(N_CAND, len(idx))).indices
+            keep = (e + 1e-9 * sB.mean(-1)).topk(min(N_CAND, len(idx))).indices
             cands[grp] = (Z[keep], Xb[keep])
             ei_of[grp] = e[keep].tolist()
+            smp_of[grp] = sB[keep]
             meta[grp] = [idx[k] for k in keep.tolist()]
 
         def binfo(j):
@@ -556,12 +562,15 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
                     continue
                 cv = cost_of(k, cands[k][0])
                 for i, e in enumerate(ei_of[k][: len(cands[k][0])]):
-                    if float(cv[i]) <= left and e > 0:
-                        fb.append((e / float(cv[i]), k, i))
+                    if float(cv[i]) <= left:
+                        fb.append((e / float(cv[i]), float(smp_of[k][i].max()), k, i))
             if not fb:
                 break
-            _, grp, j = max(fb)
-            kg_log["fallback"] = grp
+            pos = [t for t in fb if t[0] > 0]
+            # when no candidate has positive EI either, buy the one with the most optimistic posterior
+            # sample, so the policy never stops with money left
+            _, _, grp, j = max(pos) if pos else max(fb, key=lambda t: t[1])
+            kg_log["fallback"] = grp if pos else grp + " (optimistic)"
         Z, Xz = cands[grp]
         if grp == "C":
             lab.calphad(Z[j])

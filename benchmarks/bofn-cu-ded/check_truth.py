@@ -139,7 +139,7 @@ def markdown(reports):
         L.append("")
     L += ["## Required property 3: the optimum is a ridge in (P, v)", "", "| (kappa, eta) | grid points within 0.5% of J* (of 10,201) | P range | v range | P - v range |", "|---|---|---|---|---|"]
     for r in reports:
-        rr = r["ridge"]
+        rr = r["ridge"]["0.5%"]
         L.append(f"| ({r['kappa']:g}, {r['eta']:g}) | {rr['n_points']} ({rr['frac_of_grid']:.1%}) | {rr['P_range'][0]:.2f} to {rr['P_range'][1]:.2f} | {rr['v_range'][0]:.2f} to {rr['v_range'][1]:.2f} | {rr['P_minus_v_range'][0]:.2f} to {rr['P_minus_v_range'][1]:.2f} |")
     L += ["", "## Required property 4: the Utah power cap binds for copper-rich compositions", "", "| (kappa, eta) | compositions | median best rho_u (Utah, P <= 0.5) | median best rho_m (Mines) | share with best rho_u < 0.3 | share with best rho_m > 0.7 | optimum's composition: best rho_u, best rho_m |", "|---|---|---|---|---|---|---|"]
     for r in reports:

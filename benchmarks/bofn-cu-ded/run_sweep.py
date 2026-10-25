@@ -14,6 +14,7 @@ from multiprocessing import Pool
 from pathlib import Path
 
 OUT = Path(__file__).parent / "results"
+SLOW = ("pkgfn", "pkgfn_screen", "pkgfn_audit", "mines_only")
 
 
 def cell_dir(kappa, eta):
@@ -51,6 +52,7 @@ def main():
     lo, hi = (int(v) for v in a.seeds.split("-"))
     cells = [tuple(float(v) for v in c.split(",")) for c in a.cells]
     jobs = [(k, kap, eta, s, a.budget, a.out) for (kap, eta) in cells for s in range(lo, hi + 1) for k in a.kinds]
+    jobs.sort(key=lambda j: j[0] not in SLOW)  # the pKGFN runs first, so the fast ones fill the last cores
     with Pool(a.workers) as pool:
         for path, wall in pool.imap_unordered(job, jobs):
             print(f"{time.strftime('%H:%M:%S')} {path} {wall:.0f}s", flush=True)

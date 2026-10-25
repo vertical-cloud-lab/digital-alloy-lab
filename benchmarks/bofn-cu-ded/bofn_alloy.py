@@ -87,7 +87,7 @@ STAGE_NAMES = {"C": "CALPHAD + heat flow", "A": "Atomize (0.5 kg)", "U": "Small 
 
 # truth constants (tuned; see README "The truth functions and the optimum")
 F_CRACK = 0.56  # crack onset on the effective solidification index
-F_SAFE = 0.32  # the CALPHAD crack screen's threshold (conservative: 1% crack probability at kappa = 0)
+F_SAFE = 0.34  # the CALPHAD crack screen's threshold (conservative: about 1% crack probability at kappa = 0)
 
 # reference alloys (scaled levels): Ni, Al, Fe, Mn
 REFERENCE = {
@@ -130,7 +130,7 @@ class AlloyTruth:
                 return (0.65 * ni + 0.30 * mn - 0.35 * al + 2.5 * ni * al + 0.05 * fe).clamp(0, 1)
             if name == "g":  # Fe-rich primary kappa particles nucleate alpha and refine grains
                 return (0.7 * fe.clamp(min=0) * (1 + 0.5 * al) + 0.15 * al * ni) / 1.2
-            return 0.8 / (1 + 12 * ni + 4 * al + 2 * mn)  # h: conductivity index (drops steeply with the first few wt% of Ni or Al)
+            return 0.6 * (1 - ni).clamp(min=0) ** 2 * (1 - 0.6 * al)  # h: conductivity index (falls with Ni and Al)
         if name == "q":
             a, mn, f = inp[..., 0], inp[..., 1], inp[..., 2]
             a_opt = 0.35 + 0.40 * f  # hotter melts need another setting; near the atomizer's limit the powder coarsens
