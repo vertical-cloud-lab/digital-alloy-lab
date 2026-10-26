@@ -26,6 +26,7 @@ commits. Nothing in it has been bought, built or tested.
 | [`plot_deck_layout.py`](plot_deck_layout.py) → [`deck-layout.png`](deck-layout.png), [`deck-layout-check.json`](deck-layout-check.json) | The deck and head figure, and a static tool-shadow check of every planned tool-down event |
 | [`bom.csv`](bom.csv) | Bill of materials by phase, with price, source and date seen (the 2026-10-17 plan) |
 | [`bom/`](bom/README.md) | **What to print and buy to build it**, for both alloys: a STEP file for every printed part, a checked link for every bought part, and the v2 well lid |
+| [`build-guide.md`](build-guide.md) | **How to build it, in order**: print, assemble, bench-test, set up the deck, first checks. It collects the latest decisions from `bom/`, `copper/cad/` and `cubxl-setup.md` |
 
 ## In short
 
