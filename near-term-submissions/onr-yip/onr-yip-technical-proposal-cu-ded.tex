@@ -10,7 +10,7 @@
 % Kept from the aluminum version: the linked-model, cost-aware search
 % (Advances 1, 2 and 5 here; H1, H2 and H4), the staged specimens with a 99%
 % density gate, the audit of screened-out candidates, the synthetic benchmark
-% (Figs. 2 and 3, still aluminum), and the management, responsibility, and
+% (now the copper/DED network of benchmarks/bofn-cu-ded/), and the management, responsibility, and
 % data sections. Changed: the alloy system and naval application (70-30
 % copper-nickel and nickel-aluminum bronze replacements), the process (DED,
 % with a repair branch), the powder step (sized and checked for blown
@@ -120,7 +120,7 @@ Administrative and business contact & Katie Gomez, Research Administrator,
   \href{mailto:katie.gomez@byu.edu}{katie.gomez@byu.edu} \\
 Period of performance & Base period only, 36 months: 1 April 2027 to
   31 March 2030. No option periods. \\
-Requested amount & \$747,832 total: \$248,964, \$249,181, and \$249,687
+Requested amount & \$747,522 total: \$249,813, \$249,621, and \$248,089
   in the three 12-month periods \todo{the copper budget on SPO's planning
   sheet of 23 Oct 2026; final figures from BYU
   Research Administration} \\
@@ -191,7 +191,7 @@ compositions for laser deposition has only begun~\cite{jia2026}.
 
 Designing a new composition runs through a chain of steps: a thermodynamic
 calculation, a powder, deposited test specimens, microscopy, and property
-tests. The steps differ greatly in cost. A thermodynamic calculation takes
+tests (Fig.~\ref{fig:network}). The steps differ greatly in cost. A thermodynamic calculation takes
 minutes, a powder lot a day, a DED session days including turnaround, and a
 corrosion immersion weeks, because the protective film that gives
 copper-nickel its resistance takes weeks to months to
@@ -202,6 +202,66 @@ Computational campaigns often work as a funnel: many simulations, then a few
 candidates passed on to experiments. If the simulation misses a physical
 effect, the funnel discards good candidates before any experiment can catch
 the error.
+
+\begin{figure}[t]
+\centering
+% Photo tiles from figures/make_fig1_tiles.py (sources in figures/README.md
+% and attachments/src/img/SOURCES.md of the byu-finances working folder).
+\begin{tikzpicture}[
+  x=1in, y=1in, font=\footnotesize,
+  ph/.style={inner sep=0pt, draw=black!45, line width=0.4pt},
+  lab/.style={align=center, text width=1.0in, inner sep=0pt, anchor=north},
+  tl/.style={align=left, text width=0.8in, inner sep=0pt, anchor=west},
+  arr/.style={-{Latex[length=1.5mm]}, semithick},
+  input/.style={font=\footnotesize\itshape, align=center, inner sep=1pt}
+]
+\foreach \n/\x/\f in {p1/0.55/calphad, p2/1.55/atomizer, p3/2.55/utah,
+    p4/3.55/mines, p5/4.55/sem}
+  \node[ph] (\n) at (\x,0)
+    {\includegraphics[width=0.88in,height=0.66in]{figures-cu-ded/fig1/\f.jpg}};
+\node[lab] at ([yshift=-2pt]p1.south) {\textbf{CALPHAD and}\\\textbf{heat flow}\\\textit{minutes}};
+\node[lab] at ([yshift=-2pt]p2.south) {\textbf{Powder lot}\\our atomizer\\\textit{a day}};
+\node[lab] at ([yshift=-2pt]p3.south) {\textbf{Small DED}\\Utah, $\le$0.5~kg\\\textit{days}};
+\node[lab] at ([yshift=-2pt]p4.south) {\textbf{Large DED}\\Mines, 2~kg lot\\\textit{weeks}};
+\node[lab] at ([yshift=-2pt]p5.south) {\textbf{Microstructure}\\SEM, EBSD\\\textit{a day}};
+\foreach \a/\b in {p1/p2, p2/p3, p3/p4, p4/p5} \draw[arr] (\a) -- (\b);
+% Tests: tensile, and the seawater screen ahead of immersion
+\node[ph] (t1) at (5.42,0.42)
+  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/tensile.pdf}};
+\node[ph] (t2) at (5.42,-0.04)
+  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/screen.jpg}};
+\node[ph] (t3) at (5.42,-0.62)
+  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/immersion.pdf}};
+\node[tl] at ([xshift=3pt]t1.east) {\textbf{Tensile}\\\textit{days}};
+\node[tl] at ([xshift=3pt]t2.east) {\textbf{Seawater}\\\textbf{screen}\\\textit{an hour}};
+\node[tl] at ([xshift=3pt]t3.east) {\textbf{Immersion}\\\textit{weeks}};
+\draw[arr] (p5.east) -- ++(0.1,0) |- (t1.west);
+\draw[arr] (p5.east) -- ++(0.1,0) |- (t2.west);
+\draw[arr] (t2.south) -- (t3.north);
+% Inputs
+\node[input] (comp) at (1.05,0.64) {composition};
+\draw[arr] (comp.south) -- ++(0,-0.06) -| (p1.north);
+\draw[arr] (comp.south) -- ++(0,-0.06) -| ([xshift=-0.15in]p2.north);
+\node[input] (atom) at (2.0,0.64) {atomizer settings};
+\draw[arr] (atom.south) -- ++(0,-0.06) -| ([xshift=0.15in]p2.north);
+\node[input] (dep) at (3.1,0.64) {deposition settings};
+\draw[arr] (dep.south) -- ++(0,-0.06) -| (p3.north);
+\draw[arr] (dep.south) -- ++(0,-0.06) -| (p4.north);
+% Each result updates the models, which pick the next step
+\draw[arr, dashed] (t3.south) -- (5.42,-1.0) -| (0.0,0) -- (p1.west);
+\node[input, fill=white] at (2.65,-1.0) {each result updates the models, which
+  choose the next step by expected gain per cost};
+\end{tikzpicture}
+\caption{The workflow as linked models, with typical times per result in
+italics. DED is bought at two facilities that the search treats as two steps
+of different cost (detailed in Section~\ref{sec:concepts}). Utah makes small deposits
+from grams to about 0.5~kg of a lot. Mines takes a 2~kg lot for its hoppers,
+and its weeks include the extra atomizer runs and turnaround. Deposition
+settings are laser power, travel speed, and for blown powder the feed rate.
+Photographs: our laboratory, the University of Utah, the Colorado School of
+Mines, and the BYU Electron Microscopy Facility.}
+\label{fig:network}
+\end{figure}
 
 The powder is a second obstacle. Single-stream blown-powder DED, the form in
 use today, feeds a pre-alloyed powder from one hopper.
@@ -404,66 +464,6 @@ learned weights, so the search can discount any of them that proves
 uninformative. The calculations run continuously on BYU high-performance
 computing, and each new result is available to the next decision.
 
-\begin{figure}[t]
-\centering
-% Photo tiles from figures/make_fig1_tiles.py (sources in figures/README.md
-% and attachments/src/img/SOURCES.md of the byu-finances working folder).
-\begin{tikzpicture}[
-  x=1in, y=1in, font=\footnotesize,
-  ph/.style={inner sep=0pt, draw=black!45, line width=0.4pt},
-  lab/.style={align=center, text width=1.0in, inner sep=0pt, anchor=north},
-  tl/.style={align=left, text width=0.8in, inner sep=0pt, anchor=west},
-  arr/.style={-{Latex[length=1.5mm]}, semithick},
-  input/.style={font=\footnotesize\itshape, align=center, inner sep=1pt}
-]
-\foreach \n/\x/\f in {p1/0.55/calphad, p2/1.55/atomizer, p3/2.55/utah,
-    p4/3.55/mines, p5/4.55/sem}
-  \node[ph] (\n) at (\x,0)
-    {\includegraphics[width=0.88in,height=0.66in]{figures-cu-ded/fig1/\f.jpg}};
-\node[lab] at ([yshift=-2pt]p1.south) {\textbf{CALPHAD and}\\\textbf{heat flow}\\\textit{minutes}};
-\node[lab] at ([yshift=-2pt]p2.south) {\textbf{Powder lot}\\our atomizer\\\textit{a day}};
-\node[lab] at ([yshift=-2pt]p3.south) {\textbf{Small DED}\\Utah, $\le$0.5~kg\\\textit{days}};
-\node[lab] at ([yshift=-2pt]p4.south) {\textbf{Large DED}\\Mines, 2~kg lot\\\textit{weeks}};
-\node[lab] at ([yshift=-2pt]p5.south) {\textbf{Microstructure}\\SEM, EBSD\\\textit{a day}};
-\foreach \a/\b in {p1/p2, p2/p3, p3/p4, p4/p5} \draw[arr] (\a) -- (\b);
-% Tests: tensile, and the seawater screen ahead of immersion
-\node[ph] (t1) at (5.42,0.42)
-  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/tensile.pdf}};
-\node[ph] (t2) at (5.42,-0.04)
-  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/screen.jpg}};
-\node[ph] (t3) at (5.42,-0.62)
-  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/immersion.pdf}};
-\node[tl] at ([xshift=3pt]t1.east) {\textbf{Tensile}\\\textit{days}};
-\node[tl] at ([xshift=3pt]t2.east) {\textbf{Seawater}\\\textbf{screen}\\\textit{an hour}};
-\node[tl] at ([xshift=3pt]t3.east) {\textbf{Immersion}\\\textit{weeks}};
-\draw[arr] (p5.east) -- ++(0.1,0) |- (t1.west);
-\draw[arr] (p5.east) -- ++(0.1,0) |- (t2.west);
-\draw[arr] (t2.south) -- (t3.north);
-% Inputs
-\node[input] (comp) at (1.05,0.64) {composition};
-\draw[arr] (comp.south) -- ++(0,-0.06) -| (p1.north);
-\draw[arr] (comp.south) -- ++(0,-0.06) -| ([xshift=-0.15in]p2.north);
-\node[input] (atom) at (2.0,0.64) {atomizer settings};
-\draw[arr] (atom.south) -- ++(0,-0.06) -| ([xshift=0.15in]p2.north);
-\node[input] (dep) at (3.1,0.64) {deposition settings};
-\draw[arr] (dep.south) -- ++(0,-0.06) -| (p3.north);
-\draw[arr] (dep.south) -- ++(0,-0.06) -| (p4.north);
-% Each result updates the models, which pick the next step
-\draw[arr, dashed] (t3.south) -- (5.42,-1.0) -| (0.0,0) -- (p1.west);
-\node[input, fill=white] at (2.65,-1.0) {each result updates the models, which
-  choose the next step by expected gain per cost};
-\end{tikzpicture}
-\caption{The workflow as linked models, with typical times per result in
-italics. DED is bought at two facilities that the search treats as two steps
-of different cost (Section~\ref{sec:concepts}). Utah makes small deposits
-from grams to about 0.5~kg of a lot. Mines takes a 2~kg lot for its hoppers,
-and its weeks include the extra atomizer runs and turnaround. Deposition
-settings are laser power, travel speed, and for blown powder the feed rate.
-Photographs: our laboratory, the University of Utah, the Colorado School of
-Mines, and the BYU Electron Microscopy Facility.}
-\label{fig:network}
-\end{figure}
-
 \subsection{Comparison with other approaches}
 
 To our knowledge, no cost-aware search over linked models that can stop a
@@ -532,8 +532,7 @@ SPO submits on 28 October.}
 
 \textbf{Powder doser.} We have built an open-source auger powder doser that
 weighs each dose on an analytical balance (0.1~mg). A Bayesian optimization
-campaign tuned its eight settings unattended in under 2.5~hours
-(Fig.~\ref{fig:doser}). With the recommended settings it dispenses 0.5~g of
+campaign tuned its eight settings unattended in under 2.5~hours. With the recommended settings it dispenses 0.5~g of
 salt in under two minutes, within 3~mg, where hand-tuned settings took three to six
 minutes. In October 2026 it began dosing atomizer charges, Al 4047
 powder into aluminum cups for a composition series. The 15~wt\% cup ended
@@ -564,23 +563,6 @@ check on the Thermo-Calc copper database~\cite{tccu7}.
 grooves, the pre-placed tracks that start Task~2 \todo{ask Sam whether these
 tracks, and a photo, may be shown}. At Utah, the Fang group installed its
 MX-Lab to develop alloys, feeding up to six powders at once~\cite{utahded}.
-
-% Fig. (doser): the salt campaign's Pareto slide from powder-doser PR 175
-% (docs/optimization/slides/pareto/log, ff074df), cropped to its axes; see
-% figures-cu-ded/README.md.
-\begin{figure}[t]
-\centering
-\begin{minipage}[c]{3.1in}
-\includegraphics[width=\linewidth]{figures-cu-ded/doser-salt-pareto.png}
-\end{minipage}\hfill
-\begin{minipage}[c]{3.25in}
-\caption{Bayesian optimization of the powder doser, on salt. Each gray
-circle is one 0.5~g dose of the campaign, plotted by time and error. Light
-blue joins the best single doses, blue marks doses at the recommended
-settings, and orange marks hand-tuned settings.}
-\label{fig:doser}
-\end{minipage}
-\end{figure}
 
 % Fig. (CALPHAD): pycalphad-cu/run_calphad.py, MatCalc mc_ni v2.036 (ODbL).
 \begin{figure}[t]
@@ -613,8 +595,8 @@ and the 50 to 200~$\mu$m cut fed to DED.}
 \label{fig:cupowder}
 \end{figure}
 
-% Fig. 2 is the copper/DED synthetic network of benchmarks/bofn-cu-ded/
-% (functions, round costs, and the optimum are in its README). It tests the
+% Fig. (synth) is the copper/DED synthetic network of benchmarks/bofn-cu-ded/
+% (PR 206 at 68e9a80; functions, round costs, and the optimum are in its README). It tests the
 % method, not the alloy.
 \begin{figure}[t]
 \centering
@@ -704,7 +686,9 @@ The simulation is hand-built and noise-free, with one objective and one
 experiment at a time, so it does not test the advances proposed here. It
 does show that modeling the linked steps pays off when the physics screens
 are incomplete, and that choosing the step needs more than the published
-one-step rule.
+one-step rule. \todo{refresh these numbers and Fig.~\ref{fig:sim} from DAL
+PR 206 once its high-fidelity pKGFN reruns and the corrosion-aware tiered
+baseline push}
 
 \subsection{Method advances}
 
@@ -923,8 +907,7 @@ At the end of each year, the year's leading composition is gas atomized at
 Ames National Laboratory by the powder group of Dr.~Jordan A. Tiarks, an
 unfunded collaborator who has offered to turn a few of the best compositions
 into gas-atomized powder of the kind a commercial producer supplies
-\todo{letter of collaboration from Tiarks; list him under current and pending
-support (NOFO p.~38)}. One run a year is budgeted as a purchased service. The
+\todo{letter of collaboration from Tiarks}. One run a year is budgeted as a purchased service. The
 gas-atomized lot is deposited at Mines beside the ultrasonic lot of the same
 composition, so the project measures what changes between the two routes.
 That lot also supplies the finalists' replicate and repair builds and goes to
@@ -939,8 +922,8 @@ potentiostat dedicated to the loop measures open-circuit potential, linear
 polarization, impedance, and cyclic polarization~\cite{astmG59,astmG61}.
 ASTM G61 is written for iron-, nickel-, and cobalt-based alloys, so the
 project will report how its procedure behaves on deposited copper alloys.
-The potentiostat is a NuVant EZstat Pro lent by a BYU colleague, on the
-gantry since October 2026 \todo{confirm the loan covers the award period}.
+A potentiostat lent by a BYU colleague has run the screen on the gantry
+since October 2026; the budget buys a dedicated instrument with impedance capability.
 Small cells can add crevice attack at the seal and shift breakdown
 potentials~\cite{frankel1998}, so each spot is photographed before and after,
 and the wells are checked against a conventional 1~cm$^2$ flat cell on the
@@ -1148,7 +1131,7 @@ uses~\cite{norkett2025,norkett2026a,norkett2026b,orzolek2023,hatala2021}. The
 dataset of Task~4 will be released in the same form.
 The PI presented autonomous experimentation for alloy discovery at Carderock
 on 14 October 2026, hosted by
-Dr.~Nicholas J.~Jones, to an audience of 54 \todo{name any Carderock
+Dr.~Nicholas J.~Jones, to an audience of approximately 20 \todo{name any Carderock
 contacts who agree to be listed, and confirm Dr.~Jones's title and code}.
 Each year we will send the candidates and data to materials and corrosion
 engineers at Carderock and ask which flowing-seawater and repair tests the final candidates should get.
@@ -1270,8 +1253,8 @@ students share Task 3, so the methods are tested on the data they will face.
 DED time is bought from the University of Utah and the Colorado School of Mines, and any outside tests from a commercial laboratory.
 None is a subaward.
 A BYU student runs the Utah sessions after training by the Utah group, and staff at Mines run each session there, both to the settings the search chooses.
-Dr.~Jordan A. Tiarks of Ames National Laboratory is an unfunded collaborator for the gas atomization runs \todo{list every unfunded collaborator under current and pending support (NOFO p.~38)}.
-Our budget buys about eight half-day sessions a year at Utah, 5, 5, and 3 sessions at Mines in Years 1 to 3, and one gas atomization run a year \todo{the Utah line is an allowance until Fang sets a rate}.
+Dr.~Jordan A. Tiarks of Ames National Laboratory is an unfunded collaborator for the gas atomization runs; Fang and Webster are unfunded collaborators too, and all three are listed under current and pending support.
+Our budget buys about twelve half-day sessions a year at Utah, several compositions to a session, 3, 7, and 4 sessions at Mines in Years 1 to 3, and one gas atomization run a year \todo{the Utah line is an allowance until Fang sets a rate}.
 All other work is at BYU: the PI's atomizer laboratory, the BYU Electron Microscopy Facility (SEM, EDS, EBSD), and
 BYU high-performance computing. The team meets weekly to review new results and
 choose the next experiments. A shared database records every step, so the
@@ -1384,7 +1367,7 @@ version).}
 the powder doser, the liquid-handling gantry, and the equipment for powder
 handling and specimen preparation \todo{list the main items bought with
 start-up funds}.
-The corrosion screen runs on a potentiostat lent by a BYU colleague, and no equipment is requested.
+The corrosion screen runs on a potentiostat lent by a BYU colleague until the one item of equipment requested, a dedicated potentiostat with impedance capability, arrives.
 The BYU Electron Microscopy Facility provides SEM, EDS, and EBSD, and BYU provides high-performance computing.
 DED time is bought from the University of Utah and the Colorado School of Mines, as described under Task 2.
 Tensile tests use the Instron load frames in the
@@ -1405,8 +1388,7 @@ interest. \todo{confirm.}
 
 \textbf{Qualifications and eligibility.} The PI received his Ph.D.\ after
 1 January 2019, holds his first full-time tenure-track position, and has not
-received an ONR YIP award. \todo{confirm U.S. citizenship or permanent
-residency.} BYU is registered in SAM.gov (UEI JWSYC7RUMJD1, CAGE 52534)
+received an ONR YIP award. He is a U.S. citizen. BYU is registered in SAM.gov (UEI JWSYC7RUMJD1, CAGE 52534)
 \todo{BYU's SAM registration is listed as ending 4 March 2027, before the
 award start; confirm that RAO will renew it}.
 
@@ -1500,19 +1482,23 @@ Instruction 5230.09 will not be made public.
 \addcontentsline{toc}{section}{Current and Pending Support (excluded from
 page limit)}
 
-\textbf{Current.} \todo{list current awards, if any, including BYU internal
-funds that must be reported under the common form.}
+The full disclosure is the Current and Pending (Other) Support common form
+generated in SciENcv and submitted with this proposal. In summary:
 
-\textbf{Pending.} AFOSR FY2027 Young Investigator Program, white paper
-submitted 9 October 2026 (NOFO FA955026S0003, Dynamic Data and Information
-Processing, Dr.~Erik Blasch). Title: ``Dynamic Data-Driven Selection of
-Experiments for Laser-Printed Aluminum Alloys.'' Up to \$150,000 per year for
-36 months. The two share the search method. This proposal applies it to
-copper alloys for blown-powder DED, with corrosion and repair branches. The
-AFOSR work applies it to aluminum alloys for laser powder bed fusion, so the
-experimental work does not overlap. \todo{state how the method work (Task 1)
-would be divided if both are selected. Add any other proposals submitted
-before 30 October, and list collaborators, even unfunded ones (NOFO p. 38).}
+\textbf{Current.} None.
+
+\textbf{Pending.} This proposal, and two Department of Energy Nuclear Energy
+University Program proposals on which the PI is a co-investigator: a
+self-driving laboratory for nuclear materials and fuel qualification, and
+on-line sensors for molten-salt flow systems. Neither involves copper alloys,
+powder making, DED, or seawater corrosion, and none shares equipment,
+personnel effort, or costs with this proposal.
+
+\textbf{Unfunded collaborators.} Prof.~Z. Zak Fang (University of Utah,
+MX-Lab DED sessions), Sam Webster (Colorado School of Mines, Shared
+Instrumentation Facility, FormAlloy X2 sessions), and Dr.~Jordan A. Tiarks
+(Ames National Laboratory, gas atomization).
+None receives funds from this proposal.
 
 % ===========================================================================
 % References (excluded from the page limit; also uploaded to Field 9)
