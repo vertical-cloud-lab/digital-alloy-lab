@@ -4,19 +4,20 @@
 (a) Periodic-table background. The eight searched elements are filled on one
     sequential (log) scale by their upper bound in wt%, with copper as the balance.
     Red outline: on the 2025 U.S. list of critical minerals. Dashed outline: tested
-    from Year 2 (no bound yet; La stands for "La or Ce"). Hatched gray: excluded.
-    Light gray: impurities held at or below welding-grade limits. Dagger: used only
-    in copper-nickel, where Al is at most 3 wt%.
+    from Year 2 (no bound yet; La stands for "La or Ce"). Light gray: impurities
+    held at or below welding-grade limits. Dagger: used only in copper-nickel, where
+    Al is at most 3 wt%. Below the colorbar, mini tiles on the same scale give the
+    nominal compositions of the three reference alloys (C70600, C71500, C95800).
 (b) The UNS alloys metallurgists know, at their nominal compositions in the Ni-Al
     plane, against the searched region: the designated alloys sit on its edges and
     the Cu-Ni-Al interior between the two families is open.
 
-The design (graded periodic table plus UNS designations) follows Iver Anderson's
-(Ames Lab) review comment.
+The design (graded periodic table plus UNS designations) follows a review
+comment from Ames Laboratory.
 
 Run:  /tmp/venv/bin/python make_search_space_figure.py
 Out:  cu_search_space_periodic.pdf (vector, TrueType Times New Roman embedded) and
-      cu_search_space_periodic.png (200-dpi preview), next to this script.
+      cu_search_space_periodic.png (200-dpi preview), in ../figures-cu-ded/.
 """
 from pathlib import Path
 
@@ -49,7 +50,6 @@ plt.rcParams.update({
     "ps.fonttype": 42,
     "font.size": 8,
     "axes.linewidth": 0.6,
-    "hatch.linewidth": 0.5,
     "lines.scale_dashes": False,           # dash patterns below are in points
 })
 PT = 1 / 72                                # one point, in inches
@@ -63,7 +63,6 @@ HAIR = "#cfcec8"                                       # neutral tile edge
 COPPER = "#b87333"
 RED = "#e34948"                                        # critical-mineral outline
 DASH_INK = "#4a4946"                                   # Year-2 dashed outline
-EXCL, EXCL_HATCH = "#a6a59f", "#dad9d3"                # excluded: mid gray, light hatch
 IMPURITY = "#e2e1dc"                                   # impurity: light gray
 BLUE = ["#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7", "#3987e5",
         "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281", "#0d366b"]
@@ -118,7 +117,6 @@ UPPER = {"Ni": 30, "Al": 9.5, "Fe": 4.5, "Mn": 4, "Nb": 0.8, "Cr": 0.7, "Si": 0.
 CU_NI_ONLY = {"Cr", "Si", "Nb"}            # Cr, Nb only where Al <= 3 wt%; Si where Al < 7 wt% (Table 1 caption)
 CRITICAL = set(UPPER) - {"Fe"}             # 2025 U.S. critical minerals (all but Fe)
 YEAR2 = {"Zr", "B", "Sn", "Ge", "La"}      # tested from Year 2
-EXCLUDED = {"Be", "Cd", "Zn", "Mo", "Ta", "W", "Re"}   # toxic; evaporates; refractory
 IMPURITIES = {"Pb", "S", "P", "C", "Bi"}   # held at or below welding-grade limits
 
 # UNS alloys at nominal composition: label, Ni, Al (wt%), hollow?, label offset (pt), ha
@@ -132,11 +130,18 @@ ALLOYS = [
 ]
 NI_MAX, AL_MAX, AL_CUNI = 30, 9.5, 3      # searched region and the Cu-Ni-only band
 
+# Reference alloys at nominal composition (wt%, copper the balance), as in ../pycalphad-cu
+REFERENCE = [
+    ("C70600 · 90-10 Cu-Ni", [("Ni", "10"), ("Fe", "1.4"), ("Mn", "0.8")]),
+    ("C71500 · 70-30 Cu-Ni", [("Ni", "30"), ("Fe", "0.6"), ("Mn", "0.6")]),
+    ("C95800 · NAB", [("Al", "9.2"), ("Ni", "4.5"), ("Fe", "4.0"), ("Mn", "1.2")]),
+]
+
 # ---------------------------------------------------------------------------------
 # Layout (inches). Panel (a) is drawn on an invisible axes whose data units are inches
 # from the figure's lower-left corner, so tile sizes and stroke insets are exact.
 # ---------------------------------------------------------------------------------
-FIG_W, FIG_H = 6.5, 2.45
+FIG_W, FIG_H = 6.5, 2.65
 SPLIT = 0.63 * FIG_W                       # boundary between the panels
 TOP = FIG_H - 0.19                         # top of period 1 = top of panel (b)'s axes
 X0 = 0.01                                  # left edge of group 1
@@ -178,21 +183,18 @@ def advance(text, size, weight="normal"):
 def draw_tile(sym):
     x, y = corner(sym)
     cx = x + S / 2
-    fill, edge, hatch, color, weight, sub = "#ffffff", HAIR, None, MUTED, "normal", None
+    fill, edge, color, weight, sub = "#ffffff", HAIR, MUTED, "normal", None
     if sym == "Cu":
         fill, edge, color, weight, sub = COPPER, None, "#ffffff", "bold", "bal."
     elif sym in UPPER:
         fill = to_hex(CMAP(NORM(UPPER[sym])))
         edge, color, weight, sub = None, ink_on(fill), "bold", f"{UPPER[sym]:g}"
-    elif sym in EXCLUDED:
-        fill, edge, hatch, color = EXCL, None, "///", INK
     elif sym in IMPURITIES:
         fill, edge, color = IMPURITY, None, INK2
     elif sym in YEAR2:
         edge, color = None, INK2
     axa.add_patch(Rectangle((x, y), S, S, facecolor=fill, edgecolor=edge or "none",
-                            lw=0.4 if edge else 0, hatch=hatch, hatchcolor=EXCL_HATCH,
-                            clip_on=False))
+                            lw=0.4 if edge else 0, clip_on=False))
     if sym in CRITICAL:
         axa.add_patch(inset_box(x, y, S, RED_W, edgecolor=RED))
     if sym in YEAR2:
@@ -217,11 +219,25 @@ def draw_tile(sym):
 for sym in POS:
     draw_tile(sym)
 
-# Legend in the empty block above the transition metals (periods 1-3, groups 3-12):
-# one row per period band, outlines on row 1, fills on row 2, the dagger on row 3.
+# Legend in the empty block above the transition metals: one row per period band.
+# The longer row (impurity and the dagger note) goes in period 1, where only H and He
+# sit; in period 2 it would run into B to O. The outlines go in period 2, centered
+# between Be and B, and both rows start at the same x.
 SW = 8.5 * PT                              # swatch side
-col1 = X0 + 2 * PITCH + 0.4 * PITCH        # first swatch column
-col2 = col1 + SW + 3 * PT + advance("impurity, welding-grade limit", 7) + 7 * PT
+SEP = 7 * PT                               # between the entries of a row
+LEGEND = {1: [("impurity, welding-grade limit", "impurity"),
+              ("Cu-Ni only: Al ≤ 3% (Si: Al < 7%)", "dagger")],
+          2: [("2025 U.S. critical mineral", "critical"),
+              ("tested from Year 2", "year2")]}
+
+
+def entry_width(label):
+    return SW + 3 * PT + advance(label, 7)
+
+
+row2 = sum(entry_width(label) + SEP for label, _ in LEGEND[2]) - SEP
+be_right, b_left = X0 + 2 * PITCH - GAP / 2, X0 + 12 * PITCH + GAP / 2
+col1 = be_right + (b_left - be_right - row2) / 2
 
 
 def legend_entry(xl, period, label, kind):
@@ -233,8 +249,6 @@ def legend_entry(xl, period, label, kind):
     else:
         styles = {"critical": dict(facecolor="#ffffff", edgecolor="none"),
                   "year2": dict(facecolor="#ffffff", edgecolor="none"),
-                  "excluded": dict(facecolor=EXCL, edgecolor="none", hatch="///",
-                                   hatchcolor=EXCL_HATCH),
                   "impurity": dict(facecolor=IMPURITY, edgecolor="none")}
         axa.add_patch(Rectangle((xs, ys), SW, SW, lw=0, clip_on=False, **styles[kind]))
         if kind == "critical":
@@ -245,11 +259,11 @@ def legend_entry(xl, period, label, kind):
              fontsize=7, color=INK)
 
 
-legend_entry(col1, 1, "2025 U.S. critical mineral", "critical")
-legend_entry(col2, 1, "tested from Year 2", "year2")
-legend_entry(col1, 2, "impurity, welding-grade limit", "impurity")
-legend_entry(col2, 2, "excluded", "excluded")
-legend_entry(col1, 3, "Cu-Ni only: Al ≤ 3% (Si: Al < 7%)", "dagger")
+for period, entries in LEGEND.items():
+    xl = col1
+    for label, kind in entries:
+        legend_entry(xl, period, label, kind)
+        xl += entry_width(label) + SEP
 
 # Colorbar under the transition-metal block (groups 3-12)
 cb_x0, cb_x1 = X0 + 2 * PITCH + GAP / 2, X0 + 12 * PITCH - GAP / 2
@@ -262,10 +276,48 @@ cb.outline.set_visible(False)
 cb.ax.tick_params(length=2.5, width=0.5, color=INK2, labelsize=7.5, labelcolor=INK, pad=1.5)
 cb.set_label("Upper bound (wt%)", fontsize=8, color=INK, labelpad=2)
 
+# Under the colorbar, across the panel: the reference alloys at nominal composition,
+# each a 7 pt label over a row of mini tiles in the table's encoding (copper the
+# balance, then each element filled on the upper-bound scale, with its wt%).
+MS = 0.8 * S                               # mini-tile side
+MSYM_PT, MNUM_PT = 6.5, 6                  # mini-tile symbol and number sizes
+MCAP, MNUM_H = 0.662 * MSYM_PT * PT, 0.676 * MNUM_PT * PT
+MLINE_GAP = 1.2 * PT
+CARD_Y = 0.04                              # bottom of the mini tiles
+LABEL_Y = CARD_Y + MS + 2.5 * PT           # card-label baseline
+HEAD_Y = LABEL_Y + 9 * PT                  # heading baseline
+
+
+def mini_tile(x, sym, sub, fill, color):
+    axa.add_patch(Rectangle((x, CARD_Y), MS, MS, facecolor=fill, lw=0, clip_on=False))
+    base = CARD_Y + (MS - (MNUM_H + MLINE_GAP + MCAP)) / 2  # number baseline
+    axa.text(x + MS / 2, base + MNUM_H + MLINE_GAP, sym, ha="center", va="baseline",
+             fontsize=MSYM_PT, color=color, fontweight="bold")
+    axa.text(x + MS / 2, base, sub, ha="center", va="baseline", fontsize=MNUM_PT,
+             color=color)
+
+
+cards = [(label, [("Cu", "bal.", COPPER)]
+          + [(sym, wt, to_hex(CMAP(NORM(float(wt))))) for sym, wt in elems])
+         for label, elems in REFERENCE]
+widths = [max(advance(label, 7), len(tiles) * (MS + GAP) - GAP) for label, tiles in cards]
+x_left, x_right = X0 + GAP / 2, X0 + 18 * PITCH - GAP / 2      # groups 1 to 18
+space = (x_right - x_left - sum(widths)) / (len(cards) - 1)
+axa.text(x_left, HEAD_Y, "Nominal compositions (wt%)", ha="left", va="baseline",
+         fontsize=7, style="italic", color=INK)
+x = x_left
+for (label, tiles), w in zip(cards, widths):
+    axa.text(x, LABEL_Y, label, ha="left", va="baseline", fontsize=7, color=INK)
+    for i, (sym, sub, fill) in enumerate(tiles):
+        mini_tile(x + i * (MS + GAP), sym, sub, fill,
+                  "#ffffff" if sym == "Cu" else ink_on(fill))
+    x += w + space
+
 # ---------------------------------------------------------------------------------
 # Panel (b): the alloys metallurgists know, in the Ni-Al plane
 # ---------------------------------------------------------------------------------
-B_LEFT, B_RIGHT, B_BOTTOM = SPLIT + 0.42, FIG_W - 0.06, 0.33
+B_LEFT, B_RIGHT = SPLIT + 0.42, FIG_W - 0.06
+B_BOTTOM = TOP - 1.93                      # axes 1.93 in tall, as in the 2.45 in figure
 axb = fig.add_axes((B_LEFT / FIG_W, B_BOTTOM / FIG_H,
                     (B_RIGHT - B_LEFT) / FIG_W, (TOP - B_BOTTOM) / FIG_H))
 # A strip below Al = 0 holds the labels of the Cu-Ni alloys that sit on that edge;
