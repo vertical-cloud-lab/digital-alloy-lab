@@ -697,6 +697,43 @@ over the Oct 24 h text.
   +24.70 log-odds on 10,431 words (was +24.17 on 10,505 at `06221fa`), 0
   errors, 10 findings (was 12).
 
+**Oct 27 budget and current and pending (2026-10-27).** From the
+agent-staging drop
+`for/vertical-cloud-lab/digital-alloy-lab/2026-10-27-onr-yip-budget-cp/`
+(`sgbaird/agent-staging` at `bb692e2`; all 4 sha256 hashes in its
+MANIFEST.md match). Three rounds Sterling directed in byu-finances after
+the Oct 25 b drop (Oct 25 d, the Oct 25 third pass, and Oct 27).
+- **Patch:** `dal-pr117-360685b.patch` applied cleanly, and the `.tex` and
+  PDF are byte-identical to the drop-in `.tex` and the MiKTeX reference.
+  It changes the cover total (Sterling's budget calls of Oct 25); two
+  places in Task 2, where the Tiarks TODO keeps only the letter of
+  collaboration and the loaned potentiostat runs the screen until the
+  budget's dedicated potentiostat with impedance arrives; Management,
+  which names Fang and Webster as unfunded collaborators with Tiarks and
+  gives the new Utah and Mines session counts; Resources, where the
+  potentiostat is the one item of equipment requested; and the Current
+  and Pending summary, which now points to the SciENcv common form and
+  lists no current awards, this proposal and two DOE NEUP proposals
+  (topics only) as pending, and the three unfunded collaborators. The
+  AFOSR paragraph is gone.
+- **Checks:** red TODOs 33 to 29 (the loan, Management's
+  unfunded-collaborator TODO, and the Current and Pending TODOs closed);
+  all 125 citation keys unchanged; no figure changed. The three period
+  totals add to $1 more than the cover total, because each is rounded
+  separately; the cover TODO asks for BYU Research Administration's final
+  figures, so no number was changed.
+- **Not in this drop:** Fields 10 and 11 and the abstract. Kuali holds
+  newer Facilities and Equipment text (since Oct 25 d, Equipment requests
+  the potentiostat); the `*-cu-ded` copies here still describe the loaned
+  NuVant and request no equipment.
+- **Build here** (TeX Live 2023 xelatex, Times New Roman): 36 pages, 20 of
+  20 counted (pages 3 to 21, and Responsibility on page 24), 0 overfull
+  lines, no undefined references, every figure and table on the same page
+  as in the reference. Page 21 ends about 4 lines above the bottom margin
+  here, against about 1 in the reference. There, the longer Management
+  paragraph moved a line from page 20 to page 21; here, with hyphenation,
+  page 21 did not change.
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
 1. **DED facilities.** The InssTek MX-Lab at the University of Utah (Prof.
@@ -706,8 +743,8 @@ over the Oct 24 h text.
    chamber and any preheat, and who runs it. From Mines: the X2's laser
    (wavelength, power, spot), shielding, preheat, turnaround, and whether
    unused hopper powder comes back. Get both rates in writing for the
-   budget justification. The cover now carries the copper budget from SPO's
-   planning sheet of Oct 23 (a TODO asks for the final figures).
+   budget justification. The cover now carries the totals of Sterling's
+   budget calls of Oct 25 (a TODO asks for the final figures).
 2. **Atomizer for copper.** Settled (see above): melting at up to 1,400 °C,
    typically up to 1,300 °C (Sterling, Oct 24), graphite crucibles sprayed with BN before Ni- and Fe-bearing melts (the
    spray still has to be bought), an hBN nozzle for those melts, and a Mo- or
@@ -740,9 +777,11 @@ over the Oct 24 h text.
    lists published 21- and 30-day depths of 1.8 to 3.4 um and more than 3 um),
    and natural or substitute seawater.
 8. Search space: proposed (Table 1, `search_space.py`). Still open: the
-   number of new alloys promised (about 7 compositions a year can go to
-   blown powder at the estimated session count, so 6 over three years would
-   be safe), and whether to add Mn-Al bronze (C95700) as a Ni-free branch.
+   number of new alloys promised, and whether to add Mn-Al bronze (C95700)
+   as a Ni-free branch. The earlier estimate of about 7 compositions a year
+   assumed 13 to 16 blown-powder sessions a year; the budget now buys 3, 7
+   and 4 sessions at Mines and about twelve half-day sessions a year at Utah
+   (Oct 27 entry above), so the count needs redoing.
 9. Settled Oct 24: powder handling is in the powder-safety paragraph of
    Responsibility and in Field 10.
 10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`), text
@@ -757,14 +796,15 @@ over the Oct 24 h text.
     literally, the 2011 abstract ranks the deposit above the plate, the
     reverse of the ISSC review the draft cites, so check the direction
     before submission.
-12. Settled Oct 24: the screen runs on a NuVant EZstat Pro lent by a BYU
-    colleague, and Field 11 requests no equipment. Still open: whether the
-    loan covers the award period.
-13. Collaborators: Dr. Jordan A. Tiarks (Ames National Laboratory) is named
-    as an unfunded collaborator; get his letter of collaboration and list
-    every unfunded collaborator under current and pending support (NOFO
-    p. 38). The Oct 24 h text no longer asks whether Prof. Fang or Sam
-    should be named too.
+12. Settled Oct 25 d: a potentiostat lent by a BYU colleague runs the
+    screen until the budget's dedicated potentiostat with impedance
+    capability arrives, the one item of equipment requested, so the loan
+    TODO is closed. The Field 10 and 11 copies here still have the Oct 24
+    text (Oct 27 entry above).
+13. Collaborators: Prof. Z. Zak Fang (Utah), Sam Webster (Mines) and Dr.
+    Jordan A. Tiarks (Ames) are named as unfunded collaborators in
+    Management and on the Current and Pending summary page (Oct 27). Still
+    open: Dr. Tiarks's letter of collaboration.
 14. Carderock: Dr. Nicholas J. Jones's title and code, whether Dr. Jones or
     others agree to be named, and whether the lead-role wording still
     matches Carderock's pages. The flowing-seawater sentence now says "the
@@ -780,5 +820,6 @@ over the Oct 24 h text.
     entry above).
 
 All other TODOs (the cover's requested amount, CV, responsibility, DMP
-schema, current and pending) are the same as in section 4. The copper
-cover's contacts are complete (Oct 25 b entry above).
+schema) are the same as in section 4. The copper cover's contacts are
+complete (Oct 25 b entry above), and its Current and Pending summary has no
+TODOs left (Oct 27 entry above).
