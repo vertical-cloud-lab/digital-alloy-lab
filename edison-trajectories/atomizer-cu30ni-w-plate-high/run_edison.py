@@ -23,8 +23,26 @@ from edison_client import EdisonClient, JobNames, TaskRequest
 HERE = Path(__file__).resolve().parent
 IDS_FILE = HERE / "_task_ids.json"
 TERMINAL = {"success", "fail", "failed", "cancelled", "error"}
-# Paper excerpts in a trajectory carry authors' e-mail addresses; this repo is public, so drop them.
-EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+# Paper excerpts in a trajectory carry authors' e-mail addresses and phone numbers, and patents name
+# inventors; this repo is public and CLAUDE.md bars those, so scrub every decoded string before saving.
+REDACTIONS = [
+    (re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"), "[email redacted]"),
+    (re.compile(r"(?i)\b(?:tel|phone|fax)\b\.?:?\s*[\d\s().+-]{7,}\d"), "[phone redacted]"),
+    (re.compile(r"\+\d[\d\s().-]{8,}\d"), "[phone redacted]"),
+    (re.compile(r"(?:\u0141ukasz\s+|Lukasz\s+)?[\u017bZ]rodowski", re.I), "[name redacted]"),
+]
+
+
+def scrub(obj):
+    if isinstance(obj, str):
+        for pattern, repl in REDACTIONS:
+            obj = pattern.sub(repl, obj)
+        return obj
+    if isinstance(obj, list):
+        return [scrub(v) for v in obj]
+    if isinstance(obj, dict):
+        return {k: scrub(v) for k, v in obj.items()}
+    return obj
 
 CONTEXT = """\
 Context. We will ultrasonically atomize 1.1 kg of 70 wt% Cu / 30 wt% Ni (binary cupronickel, near
@@ -152,7 +170,7 @@ def fetch():
     for key, task_id in ids.items():
         task = c.get_task(task_id=task_id)
         data = task.model_dump(mode="json")
-        answer = data.get("formatted_answer") or data.get("answer") or ""
+        answer = scrub(data.get("formatted_answer") or data.get("answer") or "")
         meta = {k: data.get(k) for k in ("task_id", "status", "job_name", "created_at", "query",
                                           "has_successful_answer", "total_cost", "total_queries")}
         (HERE / f"{key}.json").write_text(json.dumps(meta, indent=2) + "\n")
@@ -162,9 +180,8 @@ def fetch():
                 f"**Task ID:** `{task_id}`  \n**Status:** {meta['status']}\n\n"
                 f"<details><summary>Query</summary>\n\n```text\n{meta['query']}\n```\n\n</details>\n\n"
                 f"{answer}\n")
-        verbose = c.get_task(task_id=task_id, verbose=True).model_dump(mode="json")
-        (HERE / f"{key}_trajectory.json").write_text(
-            EMAIL.sub("[email redacted]", json.dumps(verbose, indent=1, default=str)) + "\n")
+        verbose = scrub(c.get_task(task_id=task_id, verbose=True).model_dump(mode="json"))
+        (HERE / f"{key}_trajectory.json").write_text(json.dumps(verbose, indent=1, default=str) + "\n")
         print(key, meta["status"], len(answer), "chars", flush=True)
 
 
