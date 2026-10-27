@@ -15,6 +15,7 @@ ffmpeg at the time given.
 | `utah-insstek-mxlab.jpg` | Facilities Fig. 3a | University of Utah metallurgy 3D printing center, DED page (`_resources/images/ded_pics/ded_machine.jpg`) |
 | `mines-formalloy-x2.jpg` | Facilities Fig. 3b | Colorado School of Mines ADAPT capabilities page (`wp-content/uploads/sites/329/2023/01/Form-Alloy.png`) |
 | `lab-powder-doser.jpg` | Equipment Fig. 1a | BYU VCL YouTube `prj_xgeuQtM` ("Atomizer charge prep (Sep 29): dosing AlSi10Mg", public), frame at 34:27 |
+| `cup_plug.png` | Fig. 1, charge tile (the "assembled and filled" section, cropped by `../make_fig1_tiles.py`) | The lab's shop drawing of the atomizer charge cup and plug, `atomizer-charge/drawing/cup_plug.png` on PR #179 (`claude/issue-248-20261005-1038` at `4ead07c`, drawn by `cup_plug.py` there); copied unchanged with `git show` |
 | `lab-cubxl-gantry.jpg` | Equipment Fig. 1b | BYU VCL YouTube `lmQbUWNqTmM` ("Pipette test on CubXL", public), 1080p frame at 3:00 |
 | `lab-cubxl-corrosion-plan.jpg` | Equipment Fig. 2 | BYU VCL YouTube `CTQMzOfOmBI` ("Copper corrosion on the CubXL: one spot, start to finish (proposal)", unlisted), frame at 1:40 |
 
