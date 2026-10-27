@@ -13,6 +13,7 @@ The API key is read from EDISON_PLATFORM_API_KEY and never printed.
 
 import json
 import os
+import re
 import sys
 import time
 from pathlib import Path
@@ -22,6 +23,8 @@ from edison_client import EdisonClient, JobNames, TaskRequest
 HERE = Path(__file__).resolve().parent
 IDS_FILE = HERE / "_task_ids.json"
 TERMINAL = {"success", "fail", "failed", "cancelled", "error"}
+# Paper excerpts in a trajectory carry authors' e-mail addresses; this repo is public, so drop them.
+EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 
 CONTEXT = """\
 Context. We will ultrasonically atomize 1.1 kg of 70 wt% Cu / 30 wt% Ni (binary cupronickel, near
@@ -160,7 +163,8 @@ def fetch():
                 f"<details><summary>Query</summary>\n\n```text\n{meta['query']}\n```\n\n</details>\n\n"
                 f"{answer}\n")
         verbose = c.get_task(task_id=task_id, verbose=True).model_dump(mode="json")
-        (HERE / f"{key}_trajectory.json").write_text(json.dumps(verbose, indent=1, default=str) + "\n")
+        (HERE / f"{key}_trajectory.json").write_text(
+            EMAIL.sub("[email redacted]", json.dumps(verbose, indent=1, default=str)) + "\n")
         print(key, meta["status"], len(answer), "chars", flush=True)
 
 

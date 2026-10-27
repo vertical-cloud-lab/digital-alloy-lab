@@ -1,0 +1,10 @@
+{
+  "task_id": "d2c6002e-f3e3-4ba4-b6ae-1ee93097fefd",
+  "status": "success",
+  "job_name": "job-futurehouse-paperqa3-precedent",
+  "created_at": "2026-10-27T21:34:29.581668Z",
+  "query": "Has anyone used tungsten, a tungsten alloy (W-Re, W-La2O3, W-Ni-Fe or W-Ni-Cu heavy alloy) or a\ntungsten-coated carbon or graphite part as an ultrasonic sonotrode, horn tip or atomizing plate in\ncontact with molten metal, especially copper, nickel or copper-nickel alloys (for example in an\nAMAZEMET rePOWDER or another ultrasonic atomizer, or in ultrasonic melt treatment)? If so, report the\nmelt, temperature, frequency and amplitude, how long the part lasted, how much it eroded or dissolved,\nand how much W ended up in the product. If not, give the closest precedents: W or W-coated parts in\ncontact with molten Cu or Ni alloys (crucibles, nozzles, thermocouple sheaths, casting molds), and Mo\nor Nb sonotrodes used with Cu or Ni melts.\n",
+  "has_successful_answer": true,
+  "total_cost": null,
+  "total_queries": null
+}
