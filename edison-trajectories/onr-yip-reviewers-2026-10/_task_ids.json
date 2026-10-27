@@ -1,0 +1,66 @@
+{
+  "r1-01-fisher-program-officer": {
+    "batch": 1,
+    "task_id": "b015d49c-ac52-4ff0-88b0-ad0e3c1e0bbe",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-24T05:25:54Z",
+    "status": "success",
+    "fetched": "2026-10-24T05:50:12Z"
+  },
+  "r1-02-carderock-copper-am": {
+    "batch": 1,
+    "task_id": "b34e5c11-1cc8-4a0a-b262-f253aed4728f",
+    "job": "LITERATURE",
+    "submitted": "2026-10-24T05:25:55Z",
+    "status": "success",
+    "fetched": "2026-10-24T05:57:56Z"
+  },
+  "r1-03-shifler-corrosion": {
+    "batch": 1,
+    "task_id": "05081768-ce75-4de3-95a5-5ece9d64e64d",
+    "job": "LITERATURE",
+    "submitted": "2026-10-24T05:25:56Z",
+    "status": "success",
+    "fetched": "2026-10-24T05:58:49Z"
+  },
+  "r1-04-varanasi-camd": {
+    "batch": 1,
+    "task_id": "615a9ce5-3d2a-498d-a207-df32b7ce454a",
+    "job": "LITERATURE",
+    "submitted": "2026-10-24T05:25:58Z",
+    "status": "success",
+    "fetched": "2026-10-24T05:46:28Z"
+  },
+  "r1-05-wolk-manufacturing": {
+    "batch": 1,
+    "task_id": "636c855c-73ae-4283-8881-07b1c69ea597",
+    "job": "LITERATURE",
+    "submitted": "2026-10-24T05:25:59Z",
+    "status": "success",
+    "fetched": "2026-10-24T05:46:29Z"
+  },
+  "r1-06-yip-program-and-pm": {
+    "batch": 1,
+    "task_id": "ca860c2f-4b64-4ce6-b5d1-7863b5292af9",
+    "job": "LITERATURE",
+    "submitted": "2026-10-24T05:25:59Z",
+    "status": "success",
+    "fetched": "2026-10-24T05:57:58Z"
+  },
+  "r1-07-navy-lab-am-corrosion-experts": {
+    "batch": 1,
+    "task_id": "39e538a2-db36-4194-9025-950a2ec1d749",
+    "job": "LITERATURE",
+    "submitted": "2026-10-24T05:26:01Z",
+    "status": "success",
+    "fetched": "2026-10-24T05:46:31Z"
+  },
+  "r1-08-navy-ml-autonomous-materials": {
+    "batch": 1,
+    "task_id": "8bd7b931-a979-4239-9eaa-debbc9977e60",
+    "job": "LITERATURE",
+    "submitted": "2026-10-24T05:26:01Z",
+    "status": "success",
+    "fetched": "2026-10-24T05:59:16Z"
+  }
+}
