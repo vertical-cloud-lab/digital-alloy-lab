@@ -734,6 +734,29 @@ the Oct 25 b drop (Oct 25 d, the Oct 25 third pass, and Oct 27).
   paragraph moved a line from page 20 to page 21; here, with hyphenation,
   page 21 did not change.
 
+**First copper run: 630 bronze (2026-10-27).** The first copper run on the
+atomizer uses 630 bronze from McMaster
+[8203K41 in the 3 ft length, 8203K412](https://www.mcmaster.com/8203K41-8203K412/)
+([PR #117](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/117#issuecomment-6454484050)).
+The run plan, with its 1,300 °C setpoint, is in PR #220
+(`atomizer-runs/2026-10-630-bronze-run-plan.md`).
+- **The rod:** McMaster's product data for 8203K412 give 630 bronze, 3/4"
+  diameter, 3 ft, temper HR50, ASTM B150, with a lot certificate in Order
+  History. 630 bronze is UNS C63000, a wrought nickel-aluminum bronze with
+  Al 9-11, Ni 4-5.5, Fe 2-4, Mn up to 1.5 and Si up to 0.25 wt% (AMS 4640
+  limits on [Concast's data sheet](https://www.concast.com/c63000.php)). It
+  melts between 1,035 and 1,054 °C (CDA).
+- **Not the draft's NAB, and outside the search space:** the NAB alloys in
+  the draft are cast C95800 and wrought C63200, both at about 9% Al
+  (Fig. 7b). At its nominal 10% Al, C63000 sits above the 9.5% Al bound of
+  Table 1 and Fig. 7b, which is set by retained β′. Its Si limit is also
+  above the 0.1% that `search_space.py` allows in NAB. The lot certificate
+  gives this lot's numbers.
+- **The `.tex` needs no change:** Fig. 4 and its TODO say only "first
+  copper powder". If the 630 bronze powder replaces the placeholder, the
+  caption should call it a commercial alloy rather than a candidate, and
+  keep its length: the MiKTeX build has about one line to spare on page 21.
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
 1. **DED facilities.** The InssTek MX-Lab at the University of Utah (Prof.
@@ -747,7 +770,7 @@ the Oct 25 b drop (Oct 25 d, the Oct 25 third pass, and Oct 27).
    budget calls of Oct 25 (a TODO asks for the final figures).
 2. **Atomizer for copper.** Settled (see above): melting at up to 1,400 °C,
    typically up to 1,300 °C (Sterling, Oct 24), graphite crucibles sprayed with BN before Ni- and Fe-bearing melts (the
-   spray still has to be bought), an hBN nozzle for those melts, and a Mo- or
+   spray, McMaster 10515K35, arrived Oct 23), an hBN nozzle for those melts, and a Mo- or
    W-coated C/C plate on the 1:1.5 booster. Still open:
    - the plate, nozzle bore and setpoint for NAB and Cu-Ni (asked);
    - the charge size (the draft assumes about 0.5 kg, as in Choma 2026);
@@ -758,10 +781,13 @@ the Oct 25 b drop (Oct 25 d, the Oct 25 third pass, and Oct 27).
 3. Commercial 70-30 Cu-Ni and NAB powders for the baselines, at least 2 kg
    each in 45-105 um (the facility can also supply powder at cost).
 4. A first copper powder lot (SEM and size distribution) as preliminary
-   data: C10100 in the bare crucible, then NAB once the crucible is sprayed.
-   The NAB bar and BN spray arrived Oct 23; attachments can be replaced
+   data. The first run, attempted Oct 27, is 630 bronze (UNS C63000) from
+   the 3 ft rod, in the BN-sprayed crucible; no C10100 was ordered (entry
+   above; run plan in PR #220). Attachments can be replaced
    until SPO submits on Oct 28. Fig. 4 is a placeholder with the footprint
-   of the CALPHAD figure, so the real one drops in without moving pages. Also ask Sam whether the facility's Cu-Ni
+   of the CALPHAD figure, so the real one drops in without moving pages. If
+   the 630 bronze powder goes in, its caption should call it a commercial
+   alloy rather than a candidate, since it lies above the 9.5% Al bound. Also ask Sam whether the facility's Cu-Ni
    tracks, and a photo, may be shown; if not, cut the sentence in
    Preliminary results and the "already used for copper-nickel" clause in
    Task 2.
