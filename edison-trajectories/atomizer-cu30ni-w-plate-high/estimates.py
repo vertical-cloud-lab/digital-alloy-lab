@@ -66,29 +66,29 @@ x_mo = wt_to_x(3.7, "Mo", 32)
 rtlng_mo = R * T * math.log(ideal_x("Mo", T) / x_mo) / 1e3
 print(f"Measured Mo: 3.7 wt% in Cu-32Ni at 1300 C is x = {x_mo:.4f}, an excess term RT ln(gamma) = "
       f"{rtlng_mo:.0f} kJ/mol against liquid Mo.\n")
-print("For W, a regular-solution extrapolation RT ln(gamma_W) = x_Cu*W_CuW + x_Ni*W_NiW - x_Cu*x_Ni*W_CuNi, "
-      "with W_NiW ~ 0 (Ni-W liquid near ideal), W_CuNi ~ 10 kJ/mol and the poorly known Cu-W term "
-      "(Cu and W are immiscible) spanning 60-120 kJ/mol:\n")
-print("| W_CuW (kJ/mol) | RT ln gamma_W (kJ/mol) | x_W at 1300 C | W solubility (wt%) |")
+print("For W, anchor on that measurement: W melts 800 K higher (ideal solubility 0.37x Mo's), and its excess "
+      "term in Cu-Ni is taken as 0-15 kJ/mol less favourable than Mo's (Cu repels W at least as much as Mo; "
+      "Ni attracts W less: the Ni-W liquid at the 1495 C invariant holds 20.7 at% W, the Ni-Mo eutectic "
+      "liquid 35 at% Mo):\n")
+print("| W excess vs Mo (kJ/mol) | x_W | W solubility (wt%) | x_W / x_Mo |")
 print("|---|---|---|---|")
-for w_cuw in (60, 75, 90, 105, 120):
-    rtlng = (1 - x_ni) * w_cuw - (1 - x_ni) * x_ni * 10
-    x_w = ideal_x("W", T) / math.exp(rtlng * 1e3 / (R * T))
-    print(f"| {w_cuw} | {rtlng:.0f} | {x_w:.2e} | {x_to_wt(x_w, 'W', 30):.2f} |")
-print("\nSecond route: take the measured Mo excess term and make W 5-15 kJ/mol less favourable "
-      "(Cu repels W more than Mo; Ni attracts W less than Mo):\n")
-for extra in (5, 10, 15):
+for extra in (0, 5, 10, 15):
     x_w = ideal_x("W", T) / math.exp((rtlng_mo + extra) * 1e3 / (R * T))
-    print(f"- +{extra} kJ/mol: x_W = {x_w:.4f}, {x_to_wt(x_w, 'W', 30):.2f} wt% W")
-print("\nBoth routes put W at roughly **0.1-1.5 wt%** against 3.7 wt% for Mo, so 2.5-35x less by mass. "
-      "Per unit of coating *thickness* the gap is wider again, because W is 1.9x denser than Mo.")
+    print(f"| +{extra} | {x_w:.4f} | {x_to_wt(x_w, 'W', 30):.2f} | {x_w / x_mo:.2f} |")
+print("\nSo W solubility is about **0.8-2.6 wt%** (Edison's interpolation: 1-2 wt%). W and Mo have nearly the "
+      "same molar volume (9.55 vs 9.38 cm3/mol), so the mole-fraction ratio sets the recession ratio: a "
+      "dense W coat should recede roughly **3-8x more slowly** than a Mo coat, not orders of magnitude.\n")
+print("Not used: a regular-solution extrapolation from W's near-zero solubility in pure liquid Cu (<=1e-3 %, "
+      "Naidich 1977 via Edison) predicts ~0.03 wt% W. The same construction, if Mo is similarly insoluble in "
+      "pure Cu, predicts ~0.1 wt% Mo where 3.7 wt% is measured, so it badly underestimates refractory-metal "
+      "solubility in Cu-Ni.")
 
 section("2. How fast the melt eats a dense coat (mass-transfer-limited dissolution)")
 print("Recession rate r = k * rho_melt * w_sat / rho_coat. k = D/delta with D ~ 2e-9 m2/s (W in liquid Ni is "
       "2.4e-9 m2/s at 1480-1750 C) and a boundary layer delta of 10-70 um under a thin, ultrasonically "
       "agitated film gives k ~ 3e-5 to 1.5e-4 m/s. Under the falling stream (jet ~1.5 m/s, 2 mm, "
       "Sc ~ 250) a stagnation-point correlation gives k ~ 5e-4 m/s.\n")
-cases = [("Mo", 3.7), ("W", 1.5), ("W", 0.5), ("W", 0.15)]
+cases = [("Mo", 3.7), ("W", 2.6), ("W", 1.2), ("W", 0.8)]
 ks = [("film, low", 3e-5), ("film, high", 1.5e-4), ("under the stream", 5e-4)]
 print("| Coat | Solubility (wt%) | " + " | ".join(f"r, {n} (um/min)" for n, _ in ks) + " |")
 print("|---|---|" + "---|" * len(ks))

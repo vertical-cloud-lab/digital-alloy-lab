@@ -8,23 +8,18 @@ Cu-30Ni (wt%) has x_Ni = 0.317. At 1300 C the ideal solubility (solid -> liquid,
 
 Measured Mo: 3.7 wt% in Cu-32Ni at 1300 C is x = 0.0242, an excess term RT ln(gamma) = 32 kJ/mol against liquid Mo.
 
-For W, a regular-solution extrapolation RT ln(gamma_W) = x_Cu*W_CuW + x_Ni*W_NiW - x_Cu*x_Ni*W_CuNi, with W_NiW ~ 0 (Ni-W liquid near ideal), W_CuNi ~ 10 kJ/mol and the poorly known Cu-W term (Cu and W are immiscible) spanning 60-120 kJ/mol:
+For W, anchor on that measurement: W melts 800 K higher (ideal solubility 0.37x Mo's), and its excess term in Cu-Ni is taken as 0-15 kJ/mol less favourable than Mo's (Cu repels W at least as much as Mo; Ni attracts W less: the Ni-W liquid at the 1495 C invariant holds 20.7 at% W, the Ni-Mo eutectic liquid 35 at% Mo):
 
-| W_CuW (kJ/mol) | RT ln gamma_W (kJ/mol) | x_W at 1300 C | W solubility (wt%) |
+| W excess vs Mo (kJ/mol) | x_W | W solubility (wt%) | x_W / x_Mo |
 |---|---|---|---|
-| 60 | 39 | 5.17e-03 | 1.52 |
-| 75 | 49 | 2.36e-03 | 0.70 |
-| 90 | 59 | 1.08e-03 | 0.32 |
-| 105 | 70 | 4.93e-04 | 0.15 |
-| 120 | 80 | 2.25e-04 | 0.07 |
+| +0 | 0.0090 | 2.63 | 0.37 |
+| +5 | 0.0062 | 1.80 | 0.25 |
+| +10 | 0.0042 | 1.23 | 0.17 |
+| +15 | 0.0029 | 0.84 | 0.12 |
 
-Second route: take the measured Mo excess term and make W 5-15 kJ/mol less favourable (Cu repels W more than Mo; Ni attracts W less than Mo):
+So W solubility is about **0.8-2.6 wt%** (Edison's interpolation: 1-2 wt%). W and Mo have nearly the same molar volume (9.55 vs 9.38 cm3/mol), so the mole-fraction ratio sets the recession ratio: a dense W coat should recede roughly **3-8x more slowly** than a Mo coat, not orders of magnitude.
 
-- +5 kJ/mol: x_W = 0.0062, 1.80 wt% W
-- +10 kJ/mol: x_W = 0.0042, 1.23 wt% W
-- +15 kJ/mol: x_W = 0.0029, 0.84 wt% W
-
-Both routes put W at roughly **0.1-1.5 wt%** against 3.7 wt% for Mo, so 2.5-35x less by mass. Per unit of coating *thickness* the gap is wider again, because W is 1.9x denser than Mo.
+Not used: a regular-solution extrapolation from W's near-zero solubility in pure liquid Cu (<=1e-3 %, Naidich 1977 via Edison) predicts ~0.03 wt% W. The same construction, if Mo is similarly insoluble in pure Cu, predicts ~0.1 wt% Mo where 3.7 wt% is measured, so it badly underestimates refractory-metal solubility in Cu-Ni.
 
 ## 2. How fast the melt eats a dense coat (mass-transfer-limited dissolution)
 
@@ -33,18 +28,18 @@ Recession rate r = k * rho_melt * w_sat / rho_coat. k = D/delta with D ~ 2e-9 m2
 | Coat | Solubility (wt%) | r, film, low (um/min) | r, film, high (um/min) | r, under the stream (um/min) |
 |---|---|---|---|---|
 | Mo | 3.7 | 52 | 258 | 860 |
-| W | 1.5 | 11 | 55 | 184 |
-| W | 0.5 | 3.7 | 18 | 61 |
-| W | 0.15 | 1.1 | 5.5 | 18 |
+| W | 2.6 | 19 | 96 | 319 |
+| W | 1.2 | 8.8 | 44 | 147 |
+| W | 0.8 | 5.9 | 29 | 98 |
 
 Minutes to cut through a dense coat of a given thickness, using the film-zone range (the spot under the stream goes 3-15x faster):
 
 | Coat | Solubility (wt%) | 25 um | 100 um | 250 um |
 |---|---|---|---|---|
 | Mo | 3.7 | 0.1-0.5 | 0.4-1.9 | 1.0-4.8 |
-| W | 1.5 | 0.5-2.3 | 1.8-9.0 | 4.5-23 |
-| W | 0.5 | 1.4-6.8 | 5.4-27 | 14-68 |
-| W | 0.15 | 4.5-23 | 18-90 | 45-226 |
+| W | 2.6 | 0.3-1.3 | 1.0-5.2 | 2.6-13 |
+| W | 1.2 | 0.6-2.8 | 2.3-11 | 5.7-28 |
+| W | 0.8 | 0.8-4.2 | 3.4-17 | 8.5-42 |
 
 Sanity check against the one measurement: a solid Mo sonotrode with ~10 cm2 wetted for 20 min at the film-zone Mo rate loses 11-53 g, i.e. 1-5 wt% of a 1.1 kg charge, bracketing the ~2.6 wt% Mo that Goncharov 2026 found in powder from a Mo sonotrode.
 
