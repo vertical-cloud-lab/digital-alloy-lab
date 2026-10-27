@@ -31,18 +31,21 @@ Sep 28–30 training:
 | Booster | 1:1.5 | CF plates only work on 1:1.5. If the stack was reversed for the Mo aluminum runs, turn it back. |
 | Amplitude | Slider 80–90 | As for the aluminum CF runs |
 | Charge | Two or three 2.75" slugs, about 150 g each | Each slug must sit fully inside the crucible: copper above the coil is "extremely hard to melt" (Video 4, 5:02). |
-| Setpoint | Open, see below | |
+| Setpoint | 1,300 °C | The published NAB and CuSn8 runs on this atomizer; see below |
 | Start-up | Pour more at the start, pulse the turbo pressure | "You may need to do a bit more pouring at the beginning to heat it up but after it wets, it will atomize continuously" |
 
-**Setpoint.** NAB's liquidus is about 1,054 °C. The two published NAB-on-AMAZEMET runs and AMAZEMET's
-CuSn8 runs all melted at about 1,300 °C:
+**Setpoint: 1,300 °C.** McMaster lists 1,045 °C as the melting point of 8203K41, and C63000's
+liquidus is about 1,054 °C, so 1,300 °C gives about 250 °C of superheat. That is the temperature
+the two published NAB-on-AMAZEMET runs and AMAZEMET's CuSn8 runs all melted at:
 Müller et al. 2023 ([10.1088/1757-899X/1296/1/012036](https://doi.org/10.1088/1757-899X/1296/1/012036)),
 Uhlmann et al. 2024 ([10.3390/ma17143396](https://doi.org/10.3390/ma17143396)) and
 Choma et al. 2026 ([10.3390/ma19132803](https://doi.org/10.3390/ma19132803)).
-The manual gives 1,300 °C as the maximum working temperature; the current proposal text says the module
-reaches 1,400 °C and is typically run up to 1,300 °C. Start near 1,200 °C (about 150 °C of superheat,
-close to our 6063 runs) and raise toward 1,300 °C only if the melt won't wet the plate. Ask AMAZEMET to
-confirm.
+NAB's aluminum forms a tough alumina skin, so the extra superheat helps the melt flow through the
+0.5 mm bore and stay liquid long enough to wet a cold plate. The manual gives 1,300 °C as the maximum
+working temperature (the proposal text says the module reaches 1,400 °C and is typically run up to
+1,300 °C), so there is no headroom above it: do not exceed 1,300 °C, and if the melt freezes in the
+nozzle, fix the start-up (more pouring, turbo pulses) rather than the temperature. If AMAZEMET
+recommends a lower setpoint, 1,200–1,250 °C still leaves 150–200 °C of superheat.
 
 ## Steps
 
@@ -79,7 +82,8 @@ confirm.
 
 ## Risks
 
-- **Hottest run so far.** Aluminum runs were at 830–840 °C.
+- **Hottest run so far, at the manual's maximum.** Aluminum runs were at 830–840 °C; this one is
+  at 1,300 °C. Watch the heater power and the temperature overshoot on the way up.
 - **Plate wetting.** The Oct 2, 6 and 8 aluminum runs all went wrong where the melt meets the plate.
   Treat this run as a learning run; the 3 ft rod leaves stock for retries.
 - **Cross-contamination.** Copper left in a shared crucible, nozzle or rod would show up in the aluminum
@@ -97,7 +101,7 @@ confirm.
 2. What bore are the hBN nozzles in our kit?
 3. Is the McMaster BN spray (Momentive Boron Nitride Spray II) acceptable, or which spray does AMAZEMET
    use? (The product link has been sent.)
-4. What setpoint for NAB? Is 90/10 Cu-Ni (liquidus about 1,150 °C) OK at 1,250–1,300 °C?
+4. Is 1,300 °C right for NAB, or would you go lower? Is 90/10 Cu-Ni (liquidus about 1,150 °C) OK at 1,250–1,300 °C?
 5. How fast can more coated plates and hBN nozzles ship?
 
 ## Timing
