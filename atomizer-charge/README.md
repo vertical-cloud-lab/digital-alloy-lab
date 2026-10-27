@@ -150,6 +150,10 @@ plugs 3:1), with a [PNG preview](cad/drawings/charge_parts.png). STEP: [`cad/ste
 [STL files](cad/stl) in a 3D viewer, including a
 [cutaway of the crucible with four cups](cad/stl/crucible_cutaway_4x_std_cup.stl).
 
+This is the design as first drawn. The cups actually made are 2.750" long ([below](#composition-spread-4047-powder-in-6063-cups-264)),
+and **P4/P5 are not the thin cup the composition spread needs**: that one has its own sheet,
+[`cad/drawings/thin_cup_plug.pdf`](cad/drawings/thin_cup_plug.pdf).
+
 | | Part | Key dimensions, inches [mm] | E1–E3 (bar on hand) | E4–E7 | Mass |
 | --- | --- | --- | ---: | ---: | ---: |
 | <img src="cad/renders/insets/P_solid_slug.png" width="72"> | **P1** Solid slug | Ø.750 as received × 2.500 [63.5], .02 × 45° ends | 2 | — | 48.7 g |
@@ -296,11 +300,11 @@ tapped. Ranges are the Aluminum Association limits for 6063 and 4047 taken at bo
 | Cup | Wall | 6063 (cup + plug) | Powder when full |
 |---|---|---|---|
 | As made | .120" | 38.7 ± 0.7 g | 8.8 ± 0.4 g = 18.6 wt% |
-| Thin: 5/8" drill, 1/4" plug | .060" | 26.8 ± 1.3 g | 15.9 ± 0.8 g = 37 wt% |
+| Thin: 5/8" drill, 1/4" plug ([shop drawing](cad/drawings/thin_cup_plug.pdf)) | .060" | 26.8 ± 1.3 g | 15.9 ± 0.8 g = 37 wt% |
 
 The ± is whether the 2.25" was measured to the drill tip or to full diameter.
 
-| ID | Powder, wt% | Cup | 4047 per cup | Si, wt% | Mg, wt% | Made (as of 2026-10-20) |
+| ID | Powder, wt% | Cup | 4047 per cup | Si, wt% | Mg, wt% | Made (as of 2026-10-27) |
 |---|---|---|---|---|---|---|
 | `gnvr` | 0 | 6063 only (the #261 repeats) | — | 0.20–0.60 | 0.45–0.90 | no bag needed |
 | `gd4e` | 7.5 | As made, ~35 % full | 3.1 g | 1.0–1.5 | 0.42–0.84 | 1 cup, 3.0432 g dosed |
@@ -322,6 +326,16 @@ at 18.6 wt%, so `wf6g` and `k2ka` wait for thin cups to be machined. Livestream 
 - The thin cup takes a 1/4" plug, not 9/16". At the top of the .0005–.0008" fit, a 9/16" plug needs ~1–1.3 t,
   which loads the .060" wall to about its 110 MPa yield in compression. A 1/4" plug needs 0.3–0.6 t. The same
   arithmetic puts the as-made 9/16" plug near yield at .0008" too (1.8–2.3 t on the .120" wall), so aim for .0005".
+- **The thin cup's plug can go tighter than the as-made one's:** +.0005 to +.0010" over its cup's measured bore,
+  aiming for +.0007". `fit_check()` puts the 5/8" bore at 0.47–0.93 of the 110 MPa minimum yield across that range
+  (the 1/2" bore is already at 0.90 at +.0008") and the press force at 0.3–0.7 t. That widens the window from .0003"
+  to .0005", which matters because the Oct 19 plugs came out just undersize and slid in and out
+  ([byu-vcl#277](https://github.com/vertical-cloud-lab/byu-vcl/pull/277#issuecomment-6279422003)). It supersedes the
+  "+.0005, no more" in the thin-wall column of PR #179's drawing.
+- **How many thin cups depends on the run plan.** This table puts one cup in each bag, as for `gd4e` and `8mmz`, so
+  `wf6g` and `k2ka` need two, plus spares. Block B of the runs plan in PR #202 makes every run up to 250 g with
+  3–5 cups and plain 6063 rod, which takes 17 thin cups and 6 as-made ones, with different doses per cup (12.5–15 g
+  in each thin cup).
 
 **Machining doesn't move the composition** (Edison, 2026-10-07: [machining](../outputs/issue-222-machining-contamination/literature_machining_answer.md),
 [cleaning](../outputs/issue-222-machining-contamination/literature_cleaning_answer.md)). A 1 mg steel chip in a 200 g
@@ -367,5 +381,6 @@ cd atomizer-charge/cad
 python charge_cad.py          # step/, stl/, parts.json, experiments.json (masses, compositions, bar budget)
 xvfb-run -a python render.py  # renders/ (VTK needs a display; xvfb-run on a headless machine)
 python drawings.py            # drawings/charge_parts.pdf + .png
+python thin_cup_drawing.py    # drawings/thin_cup_plug.pdf + .png: the spread's thin cup, sized from ../composition_spread.py
 xvfb-run -a python machining.py  # anim/*.gif (also needs pillow)
 ```

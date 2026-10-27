@@ -200,8 +200,8 @@ def std_cup_profile(d=STOCK_D, length=SLUG_L, bore=CUP_BORE_D, depth=CUP_BORE_DE
     ]
 
 
-def plug_profile(d=CUP_BORE_D, length=PLUG_L):
-    r, rv = d / 2, VENT_D / 2
+def plug_profile(d=CUP_BORE_D, length=PLUG_L, vent=VENT_D):
+    r, rv = d / 2, vent / 2
     return [
         (rv, 0),
         (r - PLUG_LEADIN_R, 0),
