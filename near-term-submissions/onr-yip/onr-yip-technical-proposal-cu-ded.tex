@@ -1333,10 +1333,22 @@ publications and presentations.
 
 \begin{figure}[!hb]
 \centering
-\includegraphics[width=0.52\textwidth]{figures-cu-ded/enclosure-atomizer-2026.jpg}
-\caption{The atomizer enclosure in the PI's laboratory (3 September 2026,
-left) and the installed atomizer with its induction module open (28
-September 2026, right).}
+% (a) figures-src/make_room_figure.py; (b) atomizer-training/viz3d/proposal_strip.py
+% at the repository root (provenance in figures-cu-ded/README.md).
+\begin{tikzpicture}[lbl/.style={font=\fontsize{8}{9.6}\selectfont, inner sep=0pt}]
+\node[inner sep=0pt, anchor=north] (a) at (0,0)
+  {\includegraphics[width=0.52\textwidth]{figures-cu-ded/room-atomizer-2026.jpg}};
+\node[inner sep=0pt, anchor=north] (b) at ([yshift=-4pt]a.south)
+  {\includegraphics[width=\textwidth]{figures-cu-ded/atomizer-sequence.png}};
+\node[lbl, anchor=north east] at ([xshift=-3pt]a.north west) {(a)};
+\node[lbl, anchor=south west] at ([yshift=2pt]b.north west) {(b)};
+\end{tikzpicture}
+\caption{(a)~The atomizer enclosure in the PI's laboratory from its stream
+camera (1 October 2026) and the installed atomizer with its induction module
+open (28 September 2026). (b)~One run, rendered from a CAD model of the
+atomizer: (i)~a machined cup filled with powder and its plug, (ii)~the plugged
+cups in the crucible, (iii)~melting and stirring, (iv)~pouring onto the
+ultrasonic plate.}
 \label{fig:enclosure}
 \end{figure}
 
