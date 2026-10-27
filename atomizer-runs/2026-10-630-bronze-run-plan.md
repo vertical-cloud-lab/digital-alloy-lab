@@ -1,4 +1,4 @@
-# First copper-alloy run on the rePOWDER: NAB in a BN-coated crucible
+# First copper-alloy run on the rePOWDER: 630 bronze in a BN-coated crucible
 
 Status: **planned, not run.** Feedstock and crucible spray arrived Oct 23, 2026
 ([#117 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/117#issuecomment-6377115493)).
@@ -9,13 +9,24 @@ Sourcing is in #123 and #162. The copper/DED proposal that wants this powder is 
 
 | Item | McMaster part | Notes |
 |---|---|---|
-| C63000 nickel-aluminum bronze (NAB) rod, ASTM B150, 3/4" dia., 3 ft | [8203K41](https://www.mcmaster.com/8203K41/) | Cu-10Al-5Ni-3Fe, liquidus about 1,054 °C. Download the lot certificate from Order History. |
+| 630 bronze rod (UNS C63000), ASTM B150, temper HR50, 3/4" dia., 3 ft | [8203K41](https://www.mcmaster.com/8203K41-8203K412/) (3 ft) | McMaster: "Also known as nickel aluminum bronze." Download the lot certificate from Order History. |
 | Boron nitride spray, 13 oz aerosol | [10515K35](https://www.mcmaster.com/10515K35/) | Momentive "Boron Nitride Spray II". Dried BN rated to 1,800 °C in inert gas or vacuum (850 °C in air). |
+
+**What 630 bronze is.** UNS C63000, a wrought nickel-aluminum bronze. From
+[Concast's data sheet](https://www.concast.com/c63000.php) (AMS 4640 limits, CDA physical properties):
+- **Composition:** nominally Cu-10Al-5Ni-3Fe, within Al 9–11, Ni 4–5.5, Fe 2–4, Mn ≤ 1.5 and
+  Si ≤ 0.25 wt%. McMaster's page gives the same.
+- **Melting:** solidus 1,035 °C, liquidus 1,054 °C. McMaster lists a single "melting point" of
+  1,913 °F (1,045 °C), the middle of that range, so superheat here is counted from the liquidus.
+- **Slug mass:** at 7.58 g/cm³, a 2.75" slug of the 3/4" rod is about 150 g.
+- **Not the proposal's NAB:** the copper proposal's "NAB" is cast C95800 (Cu-9.2Al-4.5Ni-4Fe-1.2Mn,
+  liquidus about 1,060 °C), and the published NAB runs below atomized chips from cast propellers. The
+  chemistries are close, so those runs are still the nearest comparison.
 
 Not on hand: oxygen-free copper (C10100, [8965K72](https://www.mcmaster.com/8965K72/)) and 90/10 Cu-Ni
 (C70600, [4644N14](https://www.mcmaster.com/4644N14/)). The Oct 18 plan ran C10100 first because no
-crucible was coated; the order that was approved has NAB and the spray instead, so **NAB is the first
-run** and C10100 is not part of this plan.
+crucible was coated. The order that was approved has the 630 bronze and the spray instead, so
+**630 bronze is the first run** and C10100 is not part of this plan.
 
 ## Set-up
 
@@ -34,13 +45,12 @@ Sep 28–30 training:
 | Setpoint | 1,300 °C | The published NAB and CuSn8 runs on this atomizer; see below |
 | Start-up | Pour more at the start, pulse the turbo pressure | "You may need to do a bit more pouring at the beginning to heat it up but after it wets, it will atomize continuously" |
 
-**Setpoint: 1,300 °C.** McMaster lists 1,045 °C as the melting point of 8203K41, and C63000's
-liquidus is about 1,054 °C, so 1,300 °C gives about 250 °C of superheat. That is the temperature
-the two published NAB-on-AMAZEMET runs and AMAZEMET's CuSn8 runs all melted at:
+**Setpoint: 1,300 °C.** That is about 250 °C above 630 bronze's 1,054 °C liquidus, and it is the
+temperature the two published NAB-on-AMAZEMET runs and AMAZEMET's CuSn8 runs all melted at:
 Müller et al. 2023 ([10.1088/1757-899X/1296/1/012036](https://doi.org/10.1088/1757-899X/1296/1/012036)),
 Uhlmann et al. 2024 ([10.3390/ma17143396](https://doi.org/10.3390/ma17143396)) and
 Choma et al. 2026 ([10.3390/ma19132803](https://doi.org/10.3390/ma19132803)).
-NAB's aluminum forms a tough alumina skin, so the extra superheat helps the melt flow through the
+The bronze's aluminum forms a tough alumina skin, so the extra superheat helps the melt flow through the
 0.5 mm bore and stay liquid long enough to wet a cold plate. The manual gives 1,300 °C as the maximum
 working temperature (the proposal text says the module reaches 1,400 °C and is typically run up to
 1,300 °C), so there is no headroom above it: do not exceed 1,300 °C, and if the melt freezes in the
@@ -50,7 +60,7 @@ recommends a lower setpoint, 1,200–1,250 °C still leaves 150–200 °C of sup
 ## Steps
 
 **The day before**
-1. Cut two or three 2.75" NAB slugs. Degrease them.
+1. Cut two or three 2.75" slugs from the 630 bronze rod. Degrease them.
 2. Clean the copper-only crucible. Spray a thin, even BN coat inside it **in a fume hood**, away from
    ignition sources, with gloves and goggles. The can is an extremely flammable aerosol, and its
    carrier contains methanol and MIBK. Store it in the flammables cabinet.
@@ -78,30 +88,31 @@ recommends a lower setpoint, 1,200–1,250 °C still leaves 150–200 °C of sup
 4. Look for stray carbon fibres in the SEM images (Uhlmann's bare CF plate shed them).
 5. Send a sample for oxygen **and carbon**, to see whether the melt picked up carbon from the crucible.
 6. Inspect the crucible coat, nozzle and plate tip, and photograph them.
-7. Compare with Uhlmann 2024 (d10/d50/d90 = 48/98/174 µm at 40 kHz for CuAl10Ni5Fe5).
+7. Compare with Uhlmann 2024 (d10/d50/d90 = 48/98/174 µm at 40 kHz for CuAl10Ni5Fe5 propeller chips).
 
 ## Risks
 
 - **Hottest run so far, at the manual's maximum.** Aluminum runs were at 830–840 °C; this one is
   at 1,300 °C. Watch the heater power and the temperature overshoot on the way up.
 - **Plate wetting.** The Oct 2, 6 and 8 aluminum runs all went wrong where the melt meets the plate.
-  Treat this run as a learning run; the 3 ft rod leaves stock for retries.
+  Treat this run as a learning run; the 3 ft rod makes about 12 slugs, so there is stock for retries.
 - **Cross-contamination.** Copper left in a shared crucible, nozzle or rod would show up in the aluminum
   repeatability runs (#160). Keep every copper part separate and labelled. A charge that freezes in the
   crucible can cast the sealing rod in place.
 - **Consumables.** Coated plates wear out after a few runs, and Mo plates last about 4–6 runs while the
   aluminum series needs 12–15 (#160). Spares ship from Poland.
-- **Binder silicon.** If NAB's aluminum reduces a silicate binder, the worst case (0.5 g of coat, all
-  silica, all dissolved into 300 g) adds 0.08% Si; C63000 allows up to 0.25%.
+- **Binder silicon.** If the bronze's aluminum reduces a silicate binder, the worst case (0.5 g of coat,
+  all silica, all dissolved into 300 g) adds 0.08% Si; 630 bronze allows up to 0.25%.
 
 ## Open questions for AMAZEMET
 
-1. Is "CFC nozzle with Mo coating" the CF plate with the Mo-coated tip? For NAB, that plate or the
-   W-coated one?
+1. Is "CFC nozzle with Mo coating" the CF plate with the Mo-coated tip? For 630 bronze, that plate or
+   the W-coated one?
 2. What bore are the hBN nozzles in our kit?
 3. Is the McMaster BN spray (Momentive Boron Nitride Spray II) acceptable, or which spray does AMAZEMET
    use? (The product link has been sent.)
-4. Is 1,300 °C right for NAB, or would you go lower? Is 90/10 Cu-Ni (liquidus about 1,150 °C) OK at 1,250–1,300 °C?
+4. Is 1,300 °C right for 630 bronze (liquidus 1,054 °C), or would you go lower? Is 90/10 Cu-Ni
+   (liquidus about 1,150 °C) OK at 1,250–1,300 °C?
 5. How fast can more coated plates and hBN nozzles ship?
 
 ## Timing
