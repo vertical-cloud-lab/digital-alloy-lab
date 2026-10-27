@@ -205,59 +205,70 @@ the error.
 
 \begin{figure}[t]
 \centering
-% Photo tiles from figures/make_fig1_tiles.py (sources in figures/README.md
-% and attachments/src/img/SOURCES.md of the byu-finances working folder).
+% Photo tiles from figures-src/make_fig1_tiles.py (sources in
+% figures-cu-ded/README.md and figures-src/img/SOURCES.md). The steps are
+% those of Fig. synth: inputs, CALPHAD and heat flow, charge, atomize, small
+% and large DED, microscopy, and the tests, here with the repair branch.
 \begin{tikzpicture}[
-  x=1in, y=1in, font=\footnotesize,
+  x=1in, y=1in, font=\scriptsize,
   ph/.style={inner sep=0pt, draw=black!45, line width=0.4pt},
-  lab/.style={align=center, text width=1.0in, inner sep=0pt, anchor=north},
-  tl/.style={align=left, text width=0.8in, inner sep=0pt, anchor=west},
+  lab/.style={align=center, text width=0.82in, inner sep=0pt, anchor=north,
+    execute at begin node={\hyphenpenalty=10000}},
+  tl/.style={align=left, text width=0.93in, inner sep=0pt, anchor=north west,
+    execute at begin node={\hyphenpenalty=10000}},
   arr/.style={-{Latex[length=1.5mm]}, semithick},
-  input/.style={font=\footnotesize\itshape, align=center, inner sep=1pt}
+  input/.style={font=\scriptsize\itshape, align=center, inner sep=1pt}
 ]
-\foreach \n/\x/\f in {p1/0.55/calphad, p2/1.55/atomizer, p3/2.55/utah,
-    p4/3.55/mines, p5/4.55/sem}
+\foreach \n/\x/\f in {p1/0.45/calphad, p2/1.29/charge, p3/2.13/atomizer,
+    p4/2.97/utah, p5/3.81/mines, p6/4.65/sem}
   \node[ph] (\n) at (\x,0)
-    {\includegraphics[width=0.88in,height=0.66in]{figures-cu-ded/fig1/\f.jpg}};
-\node[lab] at ([yshift=-2pt]p1.south) {\textbf{CALPHAD and}\\\textbf{heat flow}\\\textit{minutes}};
-\node[lab] at ([yshift=-2pt]p2.south) {\textbf{Powder lot}\\our atomizer\\\textit{a day}};
-\node[lab] at ([yshift=-2pt]p3.south) {\textbf{Small DED}\\Utah, $\le$0.5~kg\\\textit{days}};
-\node[lab] at ([yshift=-2pt]p4.south) {\textbf{Large DED}\\Mines, 2~kg lot\\\textit{weeks}};
-\node[lab] at ([yshift=-2pt]p5.south) {\textbf{Microstructure}\\SEM, EBSD\\\textit{a day}};
-\foreach \a/\b in {p1/p2, p2/p3, p3/p4, p4/p5} \draw[arr] (\a) -- (\b);
-% Tests: tensile, and the seawater screen ahead of immersion
-\node[ph] (t1) at (5.42,0.42)
-  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/tensile.pdf}};
-\node[ph] (t2) at (5.42,-0.04)
-  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/screen.jpg}};
-\node[ph] (t3) at (5.42,-0.62)
-  {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/immersion.pdf}};
-\node[tl] at ([xshift=3pt]t1.east) {\textbf{Tensile}\\\textit{days}};
-\node[tl] at ([xshift=3pt]t2.east) {\textbf{Seawater}\\\textbf{screen}\\\textit{an hour}};
-\node[tl] at ([xshift=3pt]t3.east) {\textbf{Immersion}\\\textit{weeks}};
-\draw[arr] (p5.east) -- ++(0.1,0) |- (t1.west);
-\draw[arr] (p5.east) -- ++(0.1,0) |- (t2.west);
+    {\includegraphics[width=0.70in,height=0.525in]{figures-cu-ded/fig1/\f.jpg}};
+\node[lab] at ([yshift=-2pt]p1.south) {\textbf{CALPHAD and}\\\textbf{heat flow}\\freezing range,
+  crack index, phases along the DED thermal history\\\textit{minutes}};
+\node[lab] at ([yshift=-2pt]p2.south) {\textbf{Charge}\\machined cup and plug, filled by the
+  powder doser\\\textit{minutes}};
+\node[lab] at ([yshift=-2pt]p3.south) {\textbf{Atomize}\\size distribution, flow, oxygen and
+  carbon\\\textit{a day}};
+\node[lab] at ([yshift=-2pt]p4.south) {\textbf{Small DED,}\\\textbf{Utah}\\tracks and walls, dense index,
+  dilution\\\textit{days}};
+\node[lab] at ([yshift=-2pt]p5.south) {\textbf{Large DED,}\\\textbf{Mines}\\blocks, tensile and corrosion
+  specimens, repair coupons\\\textit{weeks}};
+\node[lab] at ([yshift=-2pt]p6.south) {\textbf{Microscopy}\\porosity, cracks,
+  $\beta'$\\\textit{a day}};
+\foreach \a/\b in {p1/p2, p2/p3, p3/p4, p4/p5, p5/p6} \draw[arr] (\a) -- (\b);
+% Tests: tensile, the seawater screen ahead of immersion, and the repair branch
+\foreach \n/\y/\f in {t1/0.58/tensile.pdf, t2/0.17/screen.jpg,
+    t3/-0.25/immersion.pdf, t4/-0.70/repair.jpg}
+  \node[ph] (\n) at (5.33,\y)
+    {\includegraphics[width=0.4in,height=0.3in]{figures-cu-ded/fig1/\f}};
+\node[tl] at ([xshift=3pt]t1.north east) {\textbf{Tensile}\\\textit{days}};
+\node[tl] at ([xshift=3pt]t2.north east) {\textbf{Seawater screen}\\\textit{an hour}};
+\node[tl] at ([xshift=3pt]t3.north east) {\textbf{Immersion}\\\textit{weeks}};
+\node[tl] at ([xshift=3pt]t4.north east) {\textbf{Repair coupon}\\on cast NAB or wrought
+  Cu-Ni: cracks, dilution, hardness across the fusion line\\\textit{weeks}};
+\foreach \t in {t1, t2, t4} \draw[arr] (p6.east) -- ++(0.07,0) |- (\t.west);
 \draw[arr] (t2.south) -- (t3.north);
-% Inputs
-\node[input] (comp) at (1.05,0.64) {composition};
+% Inputs, entering where they are set
+\node[input] (comp) at (0.87,0.60) {composition: Ni, Al, Fe, Mn;\\Cr, Si, Nb, Ti in Cu-Ni};
 \draw[arr] (comp.south) -- ++(0,-0.06) -| (p1.north);
-\draw[arr] (comp.south) -- ++(0,-0.06) -| ([xshift=-0.15in]p2.north);
-\node[input] (atom) at (2.0,0.64) {atomizer settings};
-\draw[arr] (atom.south) -- ++(0,-0.06) -| ([xshift=0.15in]p2.north);
-\node[input] (dep) at (3.1,0.64) {deposition settings};
-\draw[arr] (dep.south) -- ++(0,-0.06) -| (p3.north);
+\draw[arr] (comp.south) -- ++(0,-0.06) -| (p2.north);
+\node[input] (atom) at (2.13,0.60) {atomizer\\settings};
+\draw[arr] (atom.south) -- (p3.north);
+\node[input] (dep) at (3.39,0.60) {deposition settings: laser power,\\travel speed, feed rate};
 \draw[arr] (dep.south) -- ++(0,-0.06) -| (p4.north);
-% Each result updates the models, which pick the next step
-\draw[arr, dashed] (t3.south) -- (5.42,-1.0) -| (0.0,0) -- (p1.west);
-\node[input, fill=white] at (2.65,-1.0) {each result updates the models, which
+\draw[arr] (dep.south) -- ++(0,-0.06) -| (p5.north);
+% Each result updates the models, which choose the next step
+\draw[arr, dashed] (t4.south) -- (5.33,-1.45) -| (0.02,0) -- (p1.west);
+\node[input, fill=white] at (2.64,-1.45) {each result updates the models, which
   choose the next step by expected gain per cost};
 \end{tikzpicture}
 \caption{The workflow as linked models, with typical times per result in
-italics. DED is bought at two facilities that the search treats as two steps
-of different cost (detailed in Section~\ref{sec:concepts}). Utah makes small deposits
+italics. Under each photograph is what the step passes on, as material or as
+inputs to the models of later steps. DED is bought at two facilities that the
+search treats as two steps of different cost (detailed in
+Section~\ref{sec:concepts}). Utah makes small deposits
 from grams to about 0.5~kg of a lot. Mines takes a 2~kg lot for its hoppers,
-and its weeks include the extra atomizer runs and turnaround. Deposition
-settings are laser power, travel speed, and for blown powder the feed rate.
+and its weeks include the extra atomizer runs and turnaround.
 Photographs: our laboratory, the University of Utah, the Colorado School of
 Mines, and the BYU Electron Microscopy Facility.}
 \label{fig:network}
