@@ -518,7 +518,7 @@ def _label_fits(comp, cand, w, h, ang, cell):
 
 
 def draw_isopleth(ax, iso, fs=6.5, pad=1.5, verbose=True):
-    """C95800 vertical section: phase boundaries as thin lines, every field labelled, no fills or legend.
+    """C95800 vertical section: phase boundaries as thin lines, every field labelled, light fills, no legend.
 
     Call after the figure layout is final: label sizes are measured on the axes as drawn. Each phase's
     boundary is the 0.5 contour of its presence, Gaussian-smoothed over the 0.1 wt% x 2 C grid. Each
@@ -528,6 +528,15 @@ def draw_isopleth(ax, iso, fs=6.5, pad=1.5, verbose=True):
     from scipy import ndimage
     _iso_frame(ax)
     al, T, sm, code = iso_fields(iso)
+    # Light fills by the major phases present (liquid warm, beta blue, alpha green, blended where they
+    # coexist), from the same smoothed presence fields as the boundaries; the kappa phases are left to the labels.
+    tints = {'L': (0.99, 0.86, 0.72), r'$\beta$': (0.80, 0.88, 0.97), r'$\alpha$': (0.84, 0.93, 0.80)}
+    w = np.stack([(sm[s] > 0.5).astype(float) if s in sm else np.zeros(code.shape) for s in tints], -1)
+    tot = w.sum(-1, keepdims=True)
+    rgb = np.where(tot > 0.05, (w @ np.array(list(tints.values()))) / np.maximum(tot, 1e-9), 1.0)
+    ax.imshow(rgb, extent=(al[0], al[-1], T[0], T[-1]), origin='lower', aspect='auto',
+              interpolation='nearest', zorder=0)
+    _iso_frame(ax)  # imshow resets the limits
     for v in sm.values():
         ax.contour(al, T, v, levels=[0.5], colors='black', linewidths=0.6, zorder=2)
     nab = ALLOYS[2]

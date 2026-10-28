@@ -28,7 +28,7 @@
 % used here. Facility rates for the Utah and Mines DED sessions stay in the
 % private budget, not in this repository.
 %
-% Red [TODO Sterling: ...] markers are guesses or facts not yet confirmed.
+% Red TODO markers flag guesses or facts not yet confirmed; their text is listed at the end.
 %
 % Build: xelatex onr-yip-technical-proposal-cu-ded.tex (twice)
 % ============================================================================
@@ -77,7 +77,9 @@
 \titlespacing*{\subsubsection}{0pt}{5pt plus 2pt minus 1pt}{0.5em}
 
 \pagestyle{plain}
-\newcommand{\todo}[1]{\textcolor{red}{[TODO Sterling: #1]}}
+% Each \todo prints a small red marker only, so open notes don't take space in the counted
+% pages; make_todo_list.py collects their text into todo-list.tex, input at the very end.
+\newcommand{\todo}[1]{\textcolor{red}{\textsuperscript{TODO}}}
 \hyphenation{re-POW-DER AMA-ZE-MET}
 
 \input{budget/budget-numbers.tex}
@@ -555,13 +557,12 @@ reading of how a lot flows. Task~2 uses it the same way, for the powdered
 additions to each copper charge.
 
 \textbf{CALPHAD for copper alloys.} The CALPHAD step will run primarily in
-Thermo-Calc (TC-Python) with its copper database~\cite{andersson2002,tccu7};
-Thermo-Calc already runs for our aluminum work on BYU high-performance
-computing.%
-% TODO (Sterling): BYU's Thermo-Calc license has TCAL8, TCFE12/13 and MOBAL7/MOBFE7/8 but not
-% TCCU (DAL-private #4), and no budget line buys it; confirm the license.
-We
-already run the step on copper in pycalphad~\cite{otis2017} with an open database that covers
+Thermo-Calc (TC-Python)~\cite{andersson2002}, which already runs for our aluminum
+work on BYU high-performance computing; we are procuring the license for its
+copper database~\cite{tccu7}. Open calculations supplement it: pycalphad with
+public databases, and machine-learning interatomic potentials adapted to phase
+diagrams~\cite{zhu2025phaseforge}. We already run the step on copper in
+pycalphad~\cite{otis2017} with an open database that covers
 copper, nickel, aluminum, iron, and manganese~\cite{mcni}. It puts the equilibrium
 solidus and liquidus of 70-30 copper-nickel at 1,171 and
 1,229\,\textdegree{}C, against handbook values of 1,171 and
@@ -587,7 +588,7 @@ MX-Lab to develop alloys, feeding up to six powders at once~\cite{utahded}.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{figures-cu-ded/cu_calphad_prelim.pdf}
-\caption{pycalphad calculations with an open database, mc\_ni from
+\caption{Our pycalphad calculations with an open database, mc\_ni from
 MatCalc~\cite{mcni}, which covers Cu-Ni-Al-Fe-Mn but was built for nickel
 alloys. (a)~Equilibrium freezing range (shading, 25\,\textdegree{}C steps) and
 liquidus (lines, \textdegree{}C) over the nickel and aluminum ranges of
@@ -596,7 +597,8 @@ Table~\ref{tab:space}, with 1~wt\% iron. Orange lines mark the
 atomizer typically runs; symbols mark reference alloys. Where hatched, NiAl
 forms first and the liquidus is an upper bound. (b)~Vertical section through
 C95800 (Cu-$x$Al-4.5Ni-4Fe-1.2Mn, wt\%), dashed, with its handbook solidus and
-liquidus as ticks~\cite{cdadata}. $\kappa_\mathrm{I}$ is iron-rich and
+liquidus as ticks~\cite{cdadata}. Tints mark where liquid (orange), $\beta$
+(blue) or $\alpha$ (green) is present. $\kappa_\mathrm{I}$ is iron-rich and
 $\kappa_\mathrm{III}$ NiAl-type.}
 \label{fig:calphad}
 \end{figure}
@@ -637,7 +639,7 @@ mounting tape.}
 ]
 \foreach \x/\t/\c in {0.95/Inputs/{}, 4.0/{CALPHAD, heat flow}/{\$10},
   6.9/Atomize/{\$400}, 9.15/{Small DED}/{\$500}, 11.45/{Large DED}/{\$3{,}100},
-  13.8/Microscopy/{\$100}, 16.65/Tests/{}, 19.65/Objective/{}} {
+  13.8/Microscopy/{\$100}, 16.65/Tests/{}, 20.4/Objective/{}} {
   \node[hd] at (\x,3.15) {\t};
   \node[hd] at (\x,2.75) {\textbf{\c}};
 }
@@ -655,7 +657,7 @@ mounting tape.}
 \node[nd, text width=2.6cm] (u) at (16.65,2.1) {Strength \textbf{\$200}};
 \node[nd, text width=2.6cm] (w) at (16.65,1.3) {1-h screen \textbf{\$50}};
 \node[nd, text width=2.6cm] (m) at (16.65,0.5) {Immersion \textbf{\$400}};
-\node[nd, draw=black, thick, fill=white, text width=2.9cm] (o) at (19.65,1.3)
+\node[nd, draw=black, thick, fill=white, text width=2.9cm] (o) at (20.4,1.3)
   {Strength, if\\immersion passes,\\$-$\,0.3\,$\times$\,burden};
 \node[inp] (a) at (6.9,-0.75) {Atomizer setting};
 \node[inp] (l) at (10.3,-0.75) {Laser power, speed};
@@ -678,7 +680,8 @@ mounting tape.}
 for each box and a rough all-in cost for each step (\$1,500 for a repeat
 session at Mines). Burden is a penalty on nickel, aluminum, and manganese.
 The crack screen misses the iron-rich nucleant, the 1-hour screen misses the
-attack of beta-prime, and Utah's capped laser cannot fuse copper-rich alloys.}
+attack of beta-prime, and Utah's lower laser power leaves more lack of fusion
+in high-conductivity, copper-rich alloys.}
 \label{fig:synth}
 \end{figure}
 
@@ -1416,9 +1419,8 @@ materials testing laboratory of the Department of Mechanical Engineering
 start-up research, and the pending requests listed under current and pending
 support. The effort proposed here fits within those commitments.
 
-\textbf{Performance history.} \todo{list any federal awards managed as PI or
-key person; if none, state that this would be the PI's first federal award
-as PI and that BYU Research Administration manages the award.}
+\textbf{Performance history.} This would be the PI's first federal award since
+he began as a PI at BYU. BYU Research Administration will manage it.
 
 \textbf{Integrity and business ethics.} The PI has no findings of research
 misconduct and follows BYU policies on research integrity and conflicts of
@@ -1434,10 +1436,10 @@ award start; confirm that RAO will renew it}.
 federal awards, with accounting, purchasing, and property control systems
 \todo{confirm wording with BYU Research Administration}. Laboratory safety
 follows BYU Risk Management and Safety procedures.
-The atomizer stands in a steel-panelled enclosure built inside the laboratory in 2026 with the college's industrial hygienist (Fig.~\ref{fig:enclosure}): its own exhaust, argon supply, and dehumidifier, a Class~D extinguisher, an explosion-proof vacuum, and respirators.
+The atomizer stands in a steel-panelled enclosure built inside the laboratory in 2026 with the college safety officer (Fig.~\ref{fig:enclosure}): its own exhaust, argon supply, and dehumidifier, a Class~D extinguisher, an explosion-proof vacuum, and respirators.
 The handling rules were set for aluminum powders, the most hazardous case in the Bureau of Mines series~\cite{jacobson1964}.
 They came out of conversations through 2026 with Ames National Laboratory (Iver Anderson and Jordan Tiarks), North Carolina State University (Tim Horn), the Johns Hopkins group that runs the same atomizer, the manufacturer, and an aluminum powder producer.
-Copper alloy powders are far less reactive, and the same controls apply: nickel-bearing powders are handled in glove bags with respiratory protection, and each new family is tested for ignition energy, explosion severity, and transport class before it ships.
+Copper alloy powders are far less reactive, and the same controls apply: nickel-bearing powders are handled in glove bags with respiratory protection, and the first copper alloy powder is tested for ignition energy, explosion severity, and transport class before any lot ships, with ignition energy retested on each gas-atomized lot.
 Corrosion tests use salt solutions; the dilute acids used to clean immersion
 coupons~\cite{astmG1} are handled in a fume hood under BYU chemical safety
 procedures.
@@ -1766,6 +1768,10 @@ Y.~Chen, X.~Zhang, M.~M. Parvez, and F.~Liou, ``A review on metallic alloys fabr
 \bibitem{li2018}
 W.~Li, S.~Karnati, Y.~Zhang, and F.~Liou, ``Investigating and eliminating powder separation in pre-mixed powder supply for laser metal deposition process,'' \emph{J. Mater. Process. Technol.} \textbf{254}, 294-301 (2018).
 \href{https://doi.org/10.1016/j.jmatprotec.2017.11.045}{doi:10.1016/j.jmatprotec.2017.11.045}
+
+\bibitem{zhu2025phaseforge}
+S.~Zhu, D.~Sar{\i}t{\"u}rk, and R.~Arr{\'o}yave, ``Accelerating CALPHAD-based phase diagram predictions in complex alloys using universal machine learning potentials: opportunities and challenges,'' \emph{Acta Mater.} \textbf{286}, 120747 (2025).
+\href{https://doi.org/10.1016/j.actamat.2025.120747}{doi:10.1016/j.actamat.2025.120747}
 
 \bibitem{baird2026furnace}
 S.~G. Baird, R.~Weber, C.~Nyborg, R.~Guymon, G.~Erickson, and O.~K. Johnson, ``Retrofitting a commercial RF induction generator into a computer-controlled, vacuum and gas integrated annealing system for reactive-metal grain growth,'' arXiv:2609.22118 (2026).
@@ -2139,4 +2145,5 @@ U.S. Bureau of Mines Report of Investigations 6516 (1964).
 
 \end{thebibliography}
 
+\IfFileExists{todo-list.tex}{\input{todo-list.tex}}{}
 \end{document}

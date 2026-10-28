@@ -76,11 +76,15 @@ def scalebar(ax, im, name, um, text):
 # Top row: (a) four run frames, (b) the jar; five equal panels
 w1 = (W - 4 * GAP) / 5
 y1 = H2 + GAP
-for k, (name, sub) in enumerate([("run_t060s.png", "i"), ("run_t240s.png", "ii"),
-                                 ("run_t330s.png", "iii"), ("run_t570s.png", "iv")]):
+# Frames re-cropped Oct 28 so the crucible rim sits at the same place in (i)-(iii); the time is
+# from the start of the run video (2brsz-90seg).
+for k, (name, sub, t) in enumerate([("run_t060s.png", "i", 60), ("run_t240s.png", "ii", 240),
+                                    ("run_t330s.png", "iii", 330), ("run_t570s.png", "iv", 570)]):
     ax = axes(k * (w1 + GAP), y1, w1, H1)
     show(ax, name)
     label(ax, f"(a{sub})" if k == 0 else f"({sub})")
+    ax.text(0.96, 0.04, f"t = {t} s", transform=ax.transAxes, ha="right", va="bottom", fontsize=7,
+            color="white", zorder=5, bbox=dict(boxstyle="square,pad=0.15", fc="black", ec="none", alpha=0.55))
 ax = axes(4 * (w1 + GAP), y1, w1, H1)
 show(ax, "lot_jar.jpg")
 label(ax, "(b)")
@@ -118,7 +122,7 @@ for name, kev in peaks:
     top = c[max(i - 4, 0):i + 5].max() / 1000
     ax.annotate(name, (kev, top), xytext=(0, 2), textcoords="offset points", ha="center",
                 va="bottom", fontsize=6.5)
-ax.text(-0.17, 1.08, "(e)", transform=ax.transAxes, ha="left", va="top", fontsize=8, weight="bold")
+fig.text((wc + wd + 2 * GAP + 0.04) / W, (H2 - 0.02) / H, "(e)", ha="left", va="top", fontsize=8, weight="bold")
 
 if __name__ == "__main__":
     # dpi matters for the PDF too: matplotlib resamples imshow images to it (default 100 dpi,
