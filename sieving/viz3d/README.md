@@ -48,7 +48,7 @@ the sieving starts: blue < 63 µm (the print fraction), orange 63–250 µm, dar
 | Funnels | Ø146 mm top, Ø14 mm stem, resting on the jar's lip | stand-in |
 | Balance | 190 × 210 × 42 mm body, Ø120 mm pan | stand-in for a top-loading balance |
 | Powder doser cartridge | Ø25.0 × 100 mm tube with cap | [vertical-cloud-lab/powder-doser PR #170](https://github.com/vertical-cloud-lab/powder-doser/pull/170): the auger tube is Ø25.0 from the STEP files |
-| Batch | 100 g, of which one pass (two scoops, about 25 g in the run committed) is sieved | **an example**. DIN 66165 allows 26 cm³ on a 200 mm, 63 µm sieve, about 35–40 g of Al powder, so a 100 g run is three passes or more |
+| Batch | 100 g, of which one pass (two scoops, 26.5 g in the run committed) is sieved | **an example**. DIN 66165 allows 26 cm³ on a 200 mm, 63 µm sieve, about 35–40 g of Al powder, so a 100 g run is three passes or more |
 | Split | 75 % under 63 µm, 22 % 63–250 µm, 3 % over 250 µm, by mass | **an example**, after Yankin et al. (2025), whose ultrasonically atomized AlSi12 was about 75 % through 63 µm; not a measurement |
 
 ## The collision audit

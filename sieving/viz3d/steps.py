@@ -211,8 +211,9 @@ class Powder:
         sel = test(self.sim.x)
         return {k: float(self.mass[sel & (self.sim.cls == k)].sum()) for k in (FINE, COARSE, GRIT, PIECE)}
 
-    def in_sieve(self, group: str, lo=-3.0, hi=60.0) -> dict:
-        """Grams on a sieve (or in the pan), in that part's frame: inside the frame, between lo and hi above the cloth."""
+    def in_sieve(self, group: str, lo=-3.0, hi=40.0) -> dict:
+        """Grams on a sieve (or in the pan), in that part's frame: inside the frame, between lo and hi above the cloth
+        (the cloth above is 50.8 mm up, so hi stays well short of it)."""
         Mw = np.linalg.inv(self.sc.world(group))
         z0 = M.MESH_Z[group]
 
