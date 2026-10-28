@@ -63,10 +63,11 @@ into any part every frame. The result for the committed render is in [`out/audit
 - **1090 frames checked, no pair of parts more than 0.3 mm into each other.**
 - The leads' deepest point into any part: 0.44 mm for the container's lead (one frame), 0.0 mm for the tray's, 0.02 mm for the pan's.
 
-It caught four real faults on the way, all fixed: the container's bottom swung through the bench and the tray as it
-tipped (it is now lifted first); the emptied No. 60 was carried through the coarse funnel and the doser; the cover
-grazed the No. 60's rim on its way to the bench; and the base of the container and of the parked cover sat 0.4–0.6 mm
-into the bench. It does not check the powder against the parts: the DEM does that every 90 µs, and a parcel at rest
+It caught five real faults on the way, all fixed: the container's bottom swung through the bench and the tray as it
+tipped (it is now lifted first); each sieve arrived over its funnel level and low, through the funnel's rim (the No. 60
+through the dish and the bus bar), and now arrives already leaning; the emptied No. 60 was carried home through the
+coarse funnel and the doser; the cover grazed the No. 60's rim on its way to the bench; and the base of the container
+and of the parked cover sat 0.4–0.6 mm into the bench. It does not check the powder against the parts: the DEM does that every 90 µs, and a parcel at rest
 overlaps a wall by a few per cent of its radius (soft contacts), more for a moment when it lands.
 
 ## Running
