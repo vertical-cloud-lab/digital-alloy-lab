@@ -964,24 +964,25 @@ gantry then pipettes the used electrolyte of each well into a tube for
 inductively coupled plasma mass spectrometry, which shows which elements left
 the surface, for example aluminum from NAB or nickel from copper-nickel.
 
-\begin{figure}[t]
+\begin{figure}[!h]
 \centering
-% Left: the gantry as built (figures-src/img/lab-cubxl-gantry.jpg, cropped to 4:3; Equipment
-% Fig. 1b). Right: the keyframe reel of the one-spot copper screening animation, re-rendered
-% by alloy-corrosion/copper/keyframes/make_keyframes.py (PR 180, fd05f68); 1950 x 249 px, its
-% panels the top 201 px. The photo is as tall as the reel's panels, and its label sits on the
-% reel's label line.
+% Left: the gantry as it is now, with the P20 head and capper (figures-src/img/lab-cubxl-oct12.jpg:
+% YouTube Short wLhKt2Qzj70, "Mix testing protocol on CubXL", Oct 12, 2026, frame at 2 s,
+% cropped square). Right: the keyframe reel of the one-spot copper screening animation,
+% re-rendered by alloy-corrosion/copper/keyframes/make_keyframes.py (PR 180, fd05f68);
+% 1950 x 249 px, its panels the top 201 px. The photo is as tall as the reel's panels, and its
+% label sits on the reel's label line.
 \begin{tikzpicture}
-% Reel 5.66 in wide, so 0.7228 in tall (x 249/1950); its panels are the top 0.5834 in
-% (201 px) and its labels are centered 0.6531 in down (225 px).
+% Reel 5.838 in wide, so 0.7455 in tall (x 249/1950); its panels are the top 0.6018 in
+% (201 px) and its labels are centered 0.6736 in down (225 px).
 \node[inner sep=0pt, anchor=north west] (p) at (0,0)
-  {\includegraphics[height=0.5834in]{figures-cu-ded/cubxl_gantry_photo.jpg}};
+  {\includegraphics[height=0.6018in]{figures-cu-ded/cubxl_gantry_photo.jpg}};
 \node[inner sep=0pt, anchor=north west] (r) at ([xshift=0.06in]p.north east)
-  {\includegraphics[width=5.66in]{figures-cu-ded/cubxl_screen_reel.png}};
+  {\includegraphics[width=5.838in]{figures-cu-ded/cubxl_screen_reel.png}};
 \node[inner sep=0pt, anchor=center, font=\fontsize{7}{8.4}\selectfont]
-  at ($(p.north)+(0,-0.672in)$) {Gantry today};
+  at ($(p.north)+(0,-0.692in)$) {Gantry};
 \end{tikzpicture}
-\caption{Our corrosion screen on the gantry. Left, the gantry today; right,
+\caption{Our corrosion screen on the gantry. Left, the gantry as it is now; right,
 one spot of the planned protocol, rendered from the laboratory's animation: (i)~specimens and well lids,
 (ii)~substitute seawater fill, (iii)~electrode cap, (iv)~open-circuit potential,
 linear polarization, and a potential hold (cut-away; simulated), (v)~cap rinsed,
@@ -1005,7 +1006,7 @@ Repair coupons are immersed as galvanic couples, the deposit on its cast NAB or 
 The leading candidates get crevice and longer immersion tests\todo{confirm the durations, and natural or substitute seawater}.
 Tests in flowing seawater, which take months, are left to Navy laboratories, such as the marine corrosion laboratories at NSWC Carderock~\cite{carderockpartner}, for the final candidates, with replicate coupons of each (Section~\ref{sec:naval}).
 
-The search space was chosen the way the laboratory chose its aluminum palette: a literature review of each candidate element, then a check of its coverage in the CALPHAD database.
+The search space was chosen by a literature review of each candidate element, then a check of its coverage in the CALPHAD database.
 Fifty elements from the periodic table (Fig.~\ref{fig:space}) were reviewed one at a time, including every element that appears in a commercial copper alloy, a copper alloy or welding filler specification, a deoxidizing practice, or the atomizer's crucible and plate materials.
 Each review asked four questions.
 Does the element help seawater resistance, deposit soundness, or repair?
@@ -1383,7 +1384,11 @@ The PI combines Bayesian optimization with laboratory hardware. He
 developed Honegumi, which helps experimentalists set up Bayesian
 optimization, consulted for Meta on the version 1.0 release of the Ax
 platform, and organized an international Bayesian optimization hackathon. He
-wrote the structural materials section of the \emph{Chemical Reviews}
+co-wrote the proposal for an industry-funded project with Fehrmann Alloys on
+discovering additively manufactured aluminum alloys through ICME and
+multi-task, multi-objective Bayesian optimization, and the proposal for an NSF
+EAGER award on extracting materials data from the literature with large
+language models. He wrote the structural materials section of the \emph{Chemical Reviews}
 survey of self-driving laboratories and led a review of low-cost
 self-driving laboratories. His M.S. work used Bayesian inference with
 propagated uncertainty to model grain boundaries. He also designed a

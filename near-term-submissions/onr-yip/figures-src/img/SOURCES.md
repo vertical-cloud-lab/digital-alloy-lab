@@ -28,3 +28,4 @@ changes those attachments too.
 The Utah, Mines, Electron Microscopy Facility and Spectroscopic Facility images
 are the institutions' own and are credited in the captions; ask the facility if
 a reviewer copy needs written permission.
+| `lab-cubxl-oct12.jpg` | Fig. `fig:screen` left panel (`../figures-cu-ded/cubxl_gantry_photo.jpg`): the gantry as it is now, with the P20 head and capper | BYU VCL YouTube Short `wLhKt2Qzj70` ("Mix testing protocol on CubXL", Oct 12, 2026, public, 1080 x 1920), frame at 2 s cropped to 1080 x 1080 at y = 380 |
