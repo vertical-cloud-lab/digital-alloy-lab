@@ -5,6 +5,11 @@ dropped). No person appears in any of them. YouTube frames were pulled on the
 lab Pi (YouTube blocks player access from Actions runners) and extracted with
 ffmpeg at the time given.
 
+The attachment HTML in `../../attachments/src/` reads the Facilities and
+Equipment images in this folder directly and keeps no copy of its own (see
+`../../attachments/src/img/SOURCES.md`). Renaming or re-cropping one of them
+changes those attachments too.
+
 | File | Used in | Source |
 |---|---|---|
 | `../../../project-description/figures/enclosure-2026-09-03.jpg`, `atomizer-installed-2026-09-28.jpg` | Facilities Fig. 1a and 1b | The enclosure frames pulled by the Oct 24 gas-atomization run (see that folder's README); read from there, not copied |
