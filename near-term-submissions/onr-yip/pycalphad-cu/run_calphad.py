@@ -66,6 +66,7 @@ MAP_FE = 1.0
 ISO_AL = np.round(np.arange(6.0, 13.01, 0.1), 1)
 ISO_T_C = np.arange(600.0, 1150.1, 2.0)
 ISO_MIN = 1e-4  # a phase counts as present above this amount (mol)
+ISO_PDENS = 300  # starting-grid density; pycalphad's default (60) lands in metastable states near the liquidus
 
 
 # ----------------------------------------------------------------------------- database handling
@@ -195,11 +196,11 @@ def setup(db, key, wt):
     return comps, x, phases
 
 
-def equilibrium_at(db, comps, phases, x, T):
+def equilibrium_at(db, comps, phases, x, T, calc_opts=None):
     from pycalphad import equilibrium, variables as v
     conds = {v.T: T, v.P: P0, v.N: 1.0}
     conds.update({v.X(e): x[e] for e in x if e != 'CU'})
-    return equilibrium(db, comps, phases, conds)
+    return equilibrium(db, comps, phases, conds, calc_opts=calc_opts)
 
 
 def points(eq):
@@ -329,12 +330,19 @@ ISO_ORDER = ['liquid', 'alpha (fcc)', 'beta (Cu-rich bcc)', 'kappa Fe-rich bcc',
 
 def run_nab_isopleth(db):
     """Phases present on the C95800 vertical section (Al_wt x T_C), with their amounts (mol)."""
-    rows = []
+    rows, retried, failed = [], 0, 0
     t_all = time.time()
     for al in ISO_AL:
         comps, x, phases = setup(db, 'mc_ni', wt_with_cu(dict(ALLOYS[2]['wt'], AL=al)))
         t0 = time.time()
-        pts = points(equilibrium_at(db, comps, phases, x, ISO_T_C + 273.15))
+        pts = points(equilibrium_at(db, comps, phases, x, ISO_T_C + 273.15, calc_opts={'pdens': ISO_PDENS}))
+        bad = [i for i, pt in enumerate(pts) if not pt]
+        if bad:  # unconverged points: one retry with a denser starting grid
+            for i, pt in zip(bad, points(equilibrium_at(db, comps, phases, x, ISO_T_C[bad] + 273.15,
+                                                        calc_opts={'pdens': 4 * ISO_PDENS}))):
+                pts[i] = pt
+            retried += len(bad)
+            failed += sum(not pts[i] for i in bad)
         for t, pt in zip(ISO_T_C, pts):
             amt = {}
             for p, a, xx in pt:  # duplicate composition sets of one phase are summed
@@ -344,7 +352,8 @@ def run_nab_isopleth(db):
             rows.append(dict(Al_wt=al, T_C=t, phases='+'.join(present), **{k: round(amt[k], 5) for k in amt}))
         print(f'  isopleth Al {al:.1f}: {rows[-1]["phases"]} at {ISO_T_C[-1]:.0f} C, '
               f'{time.time() - t0:.1f} s', flush=True)
-    print(f'  isopleth total {time.time() - t_all:.0f} s')
+    print(f'  isopleth total {time.time() - t_all:.0f} s; {retried} of {len(rows)} points retried, '
+          f'{failed} still unconverged')
     df = pd.DataFrame(rows)
     cols = [c for c in ISO_ORDER if c in df.columns] + [c for c in df.columns[3:] if c not in ISO_ORDER]
     return df[['Al_wt', 'T_C', 'phases'] + cols].fillna(0.0)
@@ -362,7 +371,7 @@ def beta_out(db, al=9.2, iso=None, tol=0.1):
     lo, hi = T[i - 1], T[i]
     while hi - lo > tol:
         mid = 0.5 * (lo + hi)
-        pt = points(equilibrium_at(db, comps, phases, x, [mid + 273.15]))[0]
+        pt = points(equilibrium_at(db, comps, phases, x, [mid + 273.15], calc_opts={'pdens': ISO_PDENS}))[0]
         beta = sum(a for p, a, xx in pt if label(p, xx) == 'beta (Cu-rich bcc)')
         lo, hi = (lo, mid) if beta > ISO_MIN else (mid, hi)
     return T[i], 0.5 * (lo + hi)
@@ -401,6 +410,7 @@ def _style():
 
 
 def draw_map(ax, fig, m, ref, note=(16.5, 8.75)):
+    from matplotlib import patheffects
     ni = np.array(sorted(m.Ni_wt.unique())); al = np.array(sorted(m.Al_wt.unique()))
     L = m.pivot(index='Al_wt', columns='Ni_wt', values='eq_liquidus_C').loc[al, ni].values
     R = m.pivot(index='Al_wt', columns='Ni_wt', values='eq_range_C').loc[al, ni].values
@@ -416,18 +426,26 @@ def draw_map(ax, fig, m, ref, note=(16.5, 8.75)):
     ax.text(*note, 'NiAl first: upper bound', fontsize=6.5, ha='center', va='center', zorder=4,
             bbox=dict(boxstyle='square,pad=0.15', fc='white', ec='none'))
     levels = [lv for lv in range(1050, 1400, 50) if np.nanmin(L) < lv < np.nanmax(L)]
+    halo = [patheffects.withStroke(linewidth=1.8, foreground='white')]  # legible over the hatching
     cs = ax.contour(ni, al, L, levels=[lv for lv in levels if lv not in (1250, 1300)], colors='0.25', linewidths=0.6)
-    ax.clabel(cs, fmt='%d', fontsize=7, inline_spacing=2)
+    for t in ax.clabel(cs, fmt='%d', fontsize=7, inline_spacing=2):
+        t.set_path_effects(halo)
     for lv, ls in ((1250, '--'), (1300, ':')):
         if np.nanmin(L) < lv < np.nanmax(L):
             c2 = ax.contour(ni, al, L, levels=[lv], colors='#D55E00', linewidths=1.3, linestyles=ls)
-            ax.clabel(c2, fmt={lv: f'{lv} °C'}, fontsize=7, inline_spacing=2)
+            xy = np.concatenate([pth.vertices for pth in c2.get_paths()])
+            if xy[:, 1].min() > al[-1] - 0.5:  # runs along the top edge: label it just below, not inline
+                ax.text(xy[:, 0].max() - 0.3, xy[:, 1].min() - 0.45, f'{lv} °C', color='#D55E00', fontsize=7,
+                        ha='right', va='center', path_effects=halo, zorder=4)
+                continue
+            for t in ax.clabel(c2, fmt={lv: f'{lv} °C'}, fontsize=7, inline_spacing=2):
+                t.set_path_effects(halo)
     for r in ref:
         ax.plot(r['ni'], r['al'], marker=r['marker'], ms=6, mfc='white', mec='black', mew=0.9, clip_on=False, zorder=5)
         ax.annotate(r['name'], (r['ni'], r['al']), xytext=r['offset'], textcoords='offset points', fontsize=7,
                     ha=r.get('ha', 'left'), va='center', zorder=6)
     ax.set_xlabel('Ni (wt%)'); ax.set_ylabel('Al (wt%)')
-    ax.set_xlim(-1.5, 31.5); ax.set_ylim(-0.4, 9.9)
+    ax.set_xlim(ni[0], ni[-1]); ax.set_ylim(al[0], al[-1])
 
 
 # Field names on the vertical section, as in published NAB sections (Cook, Fentiman and Davis)
@@ -437,6 +455,7 @@ SYMBOL = {'liquid': 'L', 'alpha (fcc)': r'$\alpha$', 'beta (Cu-rich bcc)': r'$\b
           'fcc (Fe/Ni-rich)': r'$\gamma_\mathrm{Fe}$', 'HCP_A3': 'hcp'}
 # Fields too small to hold their label: label position (Al wt%, deg C); a leader line points into the field
 ISO_NUDGE = {}
+ISO_SMOOTH = (4, 1)  # Gaussian sigma (T rows, Al columns) under each boundary, so grid steps do not show
 
 
 def iso_presence(iso):
@@ -454,52 +473,87 @@ def _iso_frame(ax):
     ax.set_xlabel('Al (wt%)'); ax.set_ylabel('Temperature (°C)')
 
 
-def draw_isopleth(ax, iso, fs=6.5, min_cells=6):
+def _label_fits(comp, cand, w, h, ang, cell):
+    """Which candidate cells (k x 2: row, col) can centre a w x h px label, rotated by ang degrees, in comp."""
+    u, v = np.meshgrid(np.linspace(-w / 2, w / 2, max(3, int(w / 2))), np.linspace(-h / 2, h / 2, max(3, int(h / 2))))
+    c, s = np.cos(np.radians(ang)), np.sin(np.radians(ang))
+    cols = np.rint(cand[:, 1:] + (u * c - v * s).ravel() / cell[0]).astype(int)
+    rows = np.rint(cand[:, :1] + (u * s + v * c).ravel() / cell[1]).astype(int)
+    ok = (rows >= 0) & (rows < comp.shape[0]) & (cols >= 0) & (cols < comp.shape[1])
+    return np.where(ok, comp[rows.clip(0, comp.shape[0] - 1), cols.clip(0, comp.shape[1] - 1)], False).all(axis=1)
+
+
+def draw_isopleth(ax, iso, fs=6.5, min_cells=6, pad=1.5):
     """C95800 vertical section: phase boundaries as thin lines, fields labelled in place.
 
-    Call after the figure layout is final: label sizes are measured on the axes as drawn."""
+    Call after the figure layout is final: label sizes are measured on the axes as drawn. Each connected
+    field gets one label at its distance_transform_edt maximum, or the most central point where it fits:
+    on one line, on two lines, or along the field (bands); otherwise a leader line from ISO_NUDGE."""
     from scipy import ndimage
     _iso_frame(ax)
     al, T, pres = iso_presence(iso)
     for p in pres.values():
-        ax.contour(al, T, p.astype(float), levels=[0.5], colors='black', linewidths=0.6)
+        ax.contour(al, T, ndimage.gaussian_filter(p.astype(float), ISO_SMOOTH, mode='nearest'), levels=[0.5],
+                   colors='black', linewidths=0.6)
     nab = ALLOYS[2]
     x0 = nab['wt']['AL']
     ax.axvline(x0, color='0.45', ls=(0, (4, 2)), lw=0.8, zorder=1)
     for t in (nab['hb_sol'], nab['hb_liq']):
         ax.plot([x0 - 0.13, x0 + 0.13], [t, t], color='0.3', lw=0.9, solid_capstyle='butt', zorder=3)
-    ax.text(x0, ISO_T_C[-1] - 7, 'C95800', fontsize=fs, color='0.3', ha='center', va='top', zorder=4,
-            bbox=dict(boxstyle='square,pad=0.1', fc='white', ec='none'))
+    name = ax.text(x0, ISO_T_C[-1] - 7, 'C95800', fontsize=fs, color='0.3', ha='center', va='top', zorder=4,
+                   bbox=dict(boxstyle='square,pad=0.1', fc='white', ec='none'))
     syms = list(pres)
     code = sum(p.astype(int) << i for i, p in enumerate(pres.values()))
     r = ax.figure.canvas.get_renderer()
     cell = np.abs(ax.transData.transform((al[1], T[1])) - ax.transData.transform((al[0], T[0])))  # px
+    # cells no field label may cover: the C95800 line, its ticks and its name
+    xy = ax.transData.transform(np.stack(np.meshgrid(al, T), -1).reshape(-1, 2)).reshape(len(T), len(al), 2)
+    px0 = ax.transData.transform((x0, 0))[0]
+    free = np.abs(xy[..., 0] - px0) > 2 + pad
+    for t in (nab['hb_sol'], nab['hb_liq']):
+        y = ax.transData.transform((0, t))[1]
+        free &= ~((np.abs(xy[..., 0] - px0) < 0.13 / (al[1] - al[0]) * cell[0] + pad) & (np.abs(xy[..., 1] - y) < 1 + pad))
+    bb = name.get_window_extent(r).expanded(1, 1).padded(pad)
+    free &= ~((xy[..., 0] > bb.x0) & (xy[..., 0] < bb.x1) & (xy[..., 1] > bb.y0) & (xy[..., 1] < bb.y1))
     for c in np.unique(code):
-        txt = ' + '.join(s for i, s in enumerate(syms) if c >> i & 1)
+        terms = [s for i, s in enumerate(syms) if c >> i & 1]
+        txt = ' + '.join(terms)
+        half = (len(terms) + 1) // 2
+        two = ' + '.join(terms[:half]) + ' +\n' + ' + '.join(terms[half:]) if len(terms) > 1 else txt
         lab, n = ndimage.label(code == c)
         for k in range(1, n + 1):
             comp = lab == k
             if comp.sum() < min_cells:
                 continue
-            t = ax.text(0, 0, txt, fontsize=fs, ha='center', va='center', zorder=4)
-            bb = t.get_window_extent(r)
-            hw = int(np.ceil((bb.width / 2 + 1.5) / cell[0])); hh = int(np.ceil((bb.height / 2 + 1) / cell[1]))
             d = ndimage.distance_transform_edt(np.pad(comp, 1), sampling=cell[::-1])[1:-1, 1:-1]
-            fits = ndimage.binary_erosion(comp, structure=np.ones((2 * hh + 1, 2 * hw + 1)))
-            i, j = np.unravel_index(np.argmax(d), d.shape)  # distance_transform_edt maximum
-            if not fits[i, j] and fits.any():
-                i, j = np.unravel_index(np.argmax(np.where(fits, d, -1)), d.shape)
-            if fits[i, j]:
-                t.set_position((al[j], T[i]))
-                continue
-            t.remove()
-            pos = ISO_NUDGE.get(txt)
-            print(f'  isopleth: field {txt!r} ({comp.sum()} cells) at {al[j]:.1f} Al, {T[i]:.0f} C is too small'
-                  + ('' if pos else ' for its label; add it to ISO_NUDGE'))
-            if pos:
-                ax.annotate(txt, (al[j], T[i]), xytext=pos, fontsize=fs, ha='center', va='center', zorder=4,
-                            arrowprops=dict(arrowstyle='-', color='black', lw=0.5, shrinkA=1, shrinkB=0),
-                            bbox=dict(boxstyle='square,pad=0.1', fc='white', ec='none'))
+            cand = np.argwhere(comp)
+            cand = cand[np.argsort(-d[comp], kind='stable')]  # distance_transform_edt maximum first
+            yx = cand * cell[::-1]
+            w, v = np.linalg.eigh(np.cov((yx - yx.mean(0)).T)) if len(cand) > 2 else (None, np.eye(2))
+            ang = (np.degrees(np.arctan2(v[0, -1], v[1, -1])) + 90) % 180 - 90  # long axis of the field
+            for s_, a_ in [(txt, 0), (two, 0), (txt, ang), (two, ang)]:
+                if a_ != 0 and abs(a_) < 15:
+                    continue
+                t = ax.text(0, 0, s_, fontsize=fs, ha='center', va='center', zorder=4, linespacing=1.0,
+                            rotation=a_, rotation_mode='anchor')
+                t.set_rotation(0)
+                bb = t.get_window_extent(r)
+                t.set_rotation(a_)
+                ok = _label_fits(comp & free, cand, bb.width + 2 * pad, bb.height + 2 * pad, a_, cell)
+                if ok.any():
+                    i, j = cand[np.argmax(ok)]
+                    t.set_position((al[j], T[i]))
+                    break
+                t.remove()
+            else:
+                i, j = cand[0]
+                pos = ISO_NUDGE.get(txt)
+                print(f'  isopleth: field {txt!r} ({comp.sum()} cells) at {al[j]:.1f} Al, {T[i]:.0f} C is too small'
+                      + ('' if pos else ' for its label; add it to ISO_NUDGE'))
+                if pos:
+                    ax.annotate(txt, (al[j], T[i]), xytext=pos, fontsize=fs, ha='center', va='center', zorder=4,
+                                arrowprops=dict(arrowstyle='-', color='black', lw=0.5, shrinkA=1, shrinkB=0),
+                                bbox=dict(boxstyle='square,pad=0.1', fc='white', ec='none'))
 
 
 def make_figures():
