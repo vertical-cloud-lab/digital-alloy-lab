@@ -177,6 +177,15 @@ def ln_rate(c):
     return z(ni, al, fe) - z(wr[0], wr[1], wr[2])
 
 
+def fit_id():
+    """Short hash of the fitted coefficients, stored with every run so runs on different fits are not mixed."""
+    import hashlib
+
+    f = load_fit()
+    key = json.dumps({k: f[k] for k in ("coef", "ni_form", "ni_scale", "fe_sol", "al_form")}, sort_keys=True)
+    return hashlib.sha256(key.encode()).hexdigest()[:10]
+
+
 M_LEVEL, SLOPE = 0.85, 0.30  # m of dense C71500, and m per unit of ln(rate)
 
 
@@ -212,3 +221,9 @@ def reference_m(name, kappa=1.0, eta=1.0):
 
 def phys_m_ref():
     return reference_m("C70600 (90-10 Cu-Ni)" if BAR == "9010" else "C71500 (70-30 Cu-Ni)")
+
+
+if BA.TRUTH == "phys" and not getattr(BA, "_PHYS_READY", False):  # see the end of bofn_alloy.py
+    BA.M_REF, BA.RHO_REF, BA.X_REF = phys_m_ref()
+    BA.FEASIBLE = feasible
+    BA._PHYS_READY = True

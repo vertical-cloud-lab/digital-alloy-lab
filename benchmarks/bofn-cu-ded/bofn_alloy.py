@@ -540,10 +540,9 @@ def local_perturb(x, n, scale, gen):
 # --------------------------------------------------------------------------- truth selection
 FEASIBLE = None  # the search-space limits (a mask over designs), applied to every candidate pool; none for the toy truth
 if TRUTH == "phys":
+    # truth_phys sets M_REF (the bar: dense 90-10 Cu-Ni; BOFN_BAR=7030 for 70-30), RHO_REF, X_REF and FEASIBLE
+    # here when it finishes loading, whichever of the two modules is imported first
     import truth_phys
-
-    M_REF, RHO_REF, X_REF = truth_phys.phys_m_ref()  # the bar: dense 90-10 Cu-Ni (BOFN_BAR=7030 for 70-30)
-    FEASIBLE = truth_phys.feasible
 elif TRUTH != "toy":
     raise ValueError(f"BOFN_TRUTH={TRUTH!r}: expected 'toy' or 'phys'")
 

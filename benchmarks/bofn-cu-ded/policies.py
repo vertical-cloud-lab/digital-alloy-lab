@@ -728,7 +728,7 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
 def settings_for(kind):
     """What a stored run must match to be resumed (run_sweep.py, Edison F9): the truth and screens for
     every policy, and the Monte Carlo settings for the pKGFN-type ones (the others do not use them)."""
-    s = {"TRUTH": bofn_alloy.TRUTH, **({"BAR": __import__("truth_phys").BAR} if bofn_alloy.TRUTH == "phys" else {}), "S_REC": S_REC, "REC": REC, "RHO_GATE": RHO_GATE, "W_QUANTILE": W_QUANTILE, "F_SAFE": F_SAFE}
+    s = {"TRUTH": bofn_alloy.TRUTH, **({"BAR": __import__("truth_phys").BAR, "CORROSION_FIT": __import__("truth_phys").fit_id()} if bofn_alloy.TRUTH == "phys" else {}), "S_REC": S_REC, "REC": REC, "RHO_GATE": RHO_GATE, "W_QUANTILE": W_QUANTILE, "F_SAFE": F_SAFE}
     if kind in ("tiered_ni", "tiered_ni_ref"):
         s.update(NI_FLOOR=NI_FLOOR)
     if kind in PKGFN_KINDS:
