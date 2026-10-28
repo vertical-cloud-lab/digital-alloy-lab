@@ -271,8 +271,8 @@ the error.
   choose the next step by expected gain per cost};
 \end{tikzpicture}
 \caption{The workflow as linked models, with typical times per result in
-italics. Under each photograph is what the step passes on, as material or as
-inputs to the models of later steps. DED is bought at two facilities that the
+italics. Each photograph is labeled with what its step passes on, as material or
+as inputs to the models of later steps. DED is bought at two facilities that the
 search treats as two steps of different cost (detailed in
 Section~\ref{sec:concepts}). Utah makes small deposits
 from grams to about 0.5~kg of a lot. Mines takes a 2~kg lot for its hoppers,
@@ -290,7 +290,7 @@ fill the hopper, about 2~kg on the larger of the two systems this project
 will use (Section~\ref{sec:task2}).
 Industrial gas atomizers make powder in lots of tens of kilograms or more, so
 new compositions are rarely tried. Our ultrasonic atomizer makes a lot of a new composition in a day
-from one charge of about 1~kg, and 2~kg in two runs (225~cm$^3$ crucible; a 400~cm$^3$ one is available). Ultrasonic
+from one charge of about 1~kg, and 2~kg in two runs (225~cm$^3$ crucible, with a 400~cm$^3$ one available). Ultrasonic
 atomizers have already made powder for blown-powder DED from NAB
 propeller grinding chips~\cite{muller2023,uhlmann2024} and from copper cable
 scrap~\cite{cabrioli2025}.
@@ -390,7 +390,7 @@ we found of copper-nickel deposited by blown-powder laser DED is from 2011:
 Cu-30Ni made by CO$_2$-laser direct metal deposition on wrought 70-30
 plate~\cite{bhattacharya2011}. Its abstract and a later review's summary
 of it~\cite{issc2012} disagree on whether the deposit or the plate corroded
-faster; the review attributes the difference to porosity.
+faster. The review attributes the difference to porosity.
 % Oct 28: the full text was not reachable (Elsevier sign-in). The abstract ranks
 % the deposit as most resistant; ISSC 2012 says it corroded faster; a secondary
 % source quotes ASTM G31 rates of 0.36 mpy (deposit) and 0.08 mpy (plate).
@@ -543,7 +543,7 @@ scanning electron microscopy (SEM) and energy-dispersive X-ray spectroscopy
 (EDS) results, and tensile data are in hand.
 The induction module of the atomizer also melts copper alloys. It reaches 1,400\,\textdegree{}C and is typically run up to 1,300\,\textdegree{}C.
 NAB and 90-10 copper-nickel melt about 250 and 150\,\textdegree{}C below 1,300\,\textdegree{}C, and 70-30 copper-nickel within about 60\,\textdegree{}C of it.
-On 27 October 2026 we atomized our first copper-alloy lot (Fig.~\ref{fig:cupowder}), 1,080~g of the NAB 630 bronze (UNS C63000; about 10\% Al, 5\% Ni, 3\% Fe), at 1,300\,\textdegree{}C on a tungsten-coated carbon-fiber plate, with an estimated 97\% yield.
+On 27 October 2026 we atomized our first copper-alloy lot (Fig.~\ref{fig:cupowder}), 1,080~g of the NAB 630 bronze (UNS C63000, about 10\% Al, 5\% Ni, 3\% Fe), at 1,300\,\textdegree{}C on a tungsten-coated carbon-fiber plate, with an estimated 97\% yield.
 % Sizes: DAL PR 226 (watershed on 9 registered SEM fields, 5,937 particles, validated against
 % hand measurements); EDS: vertical-cloud-lab/caliber PR 28 (DTSA-II, standardless, 20 kV).
 In SEM images of 5,937 particles the powder is spherical (median circularity 0.99), with a volume-weighted median diameter of 104~$\mu$m and 70\% of the volume in the 50 to 200~$\mu$m cut fed to DED.
@@ -562,7 +562,7 @@ additions to each copper charge.
 
 \textbf{CALPHAD for copper alloys.} The CALPHAD step will run primarily in
 Thermo-Calc (TC-Python)~\cite{andersson2002}, which already runs for our aluminum
-work on BYU high-performance computing; we are procuring the license for its
+work on BYU high-performance computing. We are procuring the license for its
 copper database~\cite{tccu7}. Open calculations supplement it: pycalphad with
 public databases, and machine-learning interatomic potentials adapted to phase
 diagrams~\cite{zhu2025phaseforge}. We already run the step on copper in
@@ -598,7 +598,7 @@ alloys. (a)~Equilibrium freezing range (shading, 25\,\textdegree{}C steps) and
 liquidus (lines, \textdegree{}C) over the nickel and aluminum ranges of
 Table~\ref{tab:space}, with 1~wt\% iron. Orange lines mark the
 1,250\,\textdegree{}C liquidus cap and the 1,300\,\textdegree{}C at which the
-atomizer typically runs; symbols mark reference alloys. Where hatched, NiAl
+atomizer typically runs. Symbols mark reference alloys. Where hatched, NiAl
 forms first and the liquidus is an upper bound. (b)~Vertical section through
 C95800 (Cu-$x$Al-4.5Ni-4Fe-1.2Mn, wt\%), dashed, with its handbook solidus and
 liquidus as ticks~\cite{cdadata}. Tints mark where liquid (orange), $\beta$
@@ -685,10 +685,10 @@ for each box and a rough all-in cost for each step (\$1,500 for a repeat
 session at Mines). Burden is a penalty on nickel, aluminum, and manganese.
 Importantly, specific gaps based on literature between lower- and
 higher-fidelity measurements are introduced to better mimic a real-world
-campaign: the crack screen misses the iron-rich nucleant, as freezing-range
-crack indices miss nucleants that stop cracking~\cite{martin2017,opprecht2020};
-the 1-hour screen misses the attack of beta-prime, which develops over
-weeks~\cite{wharton2005,culpan1979}; and Utah's lower laser power leaves more
+campaign. The crack screen misses the iron-rich nucleant, as freezing-range
+crack indices miss nucleants that stop cracking~\cite{martin2017,opprecht2020}.
+The 1-hour screen misses the attack of beta-prime, which develops over
+weeks~\cite{wharton2005,culpan1979}. Utah's lower laser power leaves more
 lack of fusion in high-conductivity, copper-rich
 alloys~\cite{colopi2019,prasad2020}.}
 \label{fig:synth}
@@ -849,7 +849,7 @@ aluminum data and the copper data that Task 2 adds each year.
 We will make powder for each candidate in our laboratory.
 Oxygen-free copper bar is machined into cups that hold the charge.
 Nickel, iron, manganese, aluminum, and other additions are weighed in to 0.1~mg as pure metals or copper master alloys.
-Each run melts about 1.1~kg; the first copper run, 1,080~g of NAB, gave an estimated 97\% powder (Section~\ref{sec:prelim}). Minor additions that come as powder are dispensed into the cup by our
+Each run melts about 1.1~kg. The first copper run, 1,080~g of NAB, gave an estimated 97\% powder (Section~\ref{sec:prelim}). Minor additions that come as powder are dispensed into the cup by our
 powder doser (Section~\ref{sec:prelim}), which weighs and logs each dose, so every lot carries a record of what went into it. The charge is
 melted in a graphite
 crucible in the induction module of the ultrasonic atomizer (AMAZEMET
@@ -895,7 +895,7 @@ designed for blown-powder DED.
 We buy DED as machine time at two facilities, and the search treats them as
 two steps of different cost (Fig.~\ref{fig:network}). Neither facility is a
 subawardee. For the small step we use an InssTek MX-Lab in the laboratory
-of Professor Z.~Zak Fang at the University of Utah, 45 miles from BYU, which
+of Professor Z.~Zak Fang at the University of Utah, which
 his group has offered to the project. It has a 500~W fiber laser, 150~mm of
 travel on each axis, control of melt-pool height, and six powder feeders that
 can each be run separately~\cite{insstek,utahded}.\todo{confirm with Fang: the laser power (300 or 500~W), the rate, the
@@ -922,7 +922,7 @@ A typical session, four 25~mm cubes, takes about 3~hours of machine time and 2~h
 The staff plan on the melt pool catching about half the powder fed and need about 2~kg of each powder to fill the hoppers of the X2.
 Since 2~kg takes two atomizer runs, only compositions whose small blocks at Utah reach 99\% relative density are scaled up.
 Their sessions at Mines build blocks for sub-size tensile bars (ASTM E8/E8M) and corrosion coupons at the chosen settings, and repair coupons on thick cast NAB and wrought copper-nickel plate (Advance~4).
-Fusing the first layer to such a large heat sink needs more laser power than the MX-Lab has; the X2 has 1~kW~\cite{adaptmines}. Commercial 70-30 copper-nickel and NAB powders, deposited
+Fusing the first layer to such a large heat sink needs more laser power than the MX-Lab has. The X2 has 1~kW~\cite{adaptmines}. Commercial 70-30 copper-nickel and NAB powders, deposited
 at both facilities, are the baselines\todo{confirm commercial powder
 sources, at least 2~kg of each; Mines can also supply powder at cost}. The
 search decides which compositions go to Mines at all.
@@ -952,7 +952,7 @@ polarization, impedance, and cyclic polarization~\cite{astmG59,astmG61}.
 ASTM G61 is written for iron-, nickel-, and cobalt-based alloys, so the
 project will report how its procedure behaves on deposited copper alloys.
 A potentiostat lent by a BYU colleague was integrated into the gantry's automated
-workflow in October 2026, although the screen itself has not yet been run; the
+workflow in October 2026, although the screen itself has not yet been run. The
 budget buys a dedicated instrument with impedance capability.
 Small cells can add crevice attack at the seal and shift breakdown
 potentials~\cite{frankel1998}, so each spot is photographed before and after,
@@ -982,10 +982,11 @@ the surface, for example aluminum from NAB or nickel from copper-nickel.
 \node[inner sep=0pt, anchor=center, font=\fontsize{7}{8.4}\selectfont]
   at ($(p.north)+(0,-0.692in)$) {Gantry};
 \end{tikzpicture}
-\caption{Our corrosion screen on the gantry. Left, the gantry as it is now; right,
-one spot of the planned protocol, rendered from the laboratory's animation: (i)~specimens and well lids,
-(ii)~substitute seawater fill, (iii)~electrode cap, (iv)~open-circuit potential,
-linear polarization, and a potential hold (cut-away; simulated), (v)~cap rinsed,
+\caption{Our corrosion screen on the gantry. Left: the gantry as it is now.
+Right: one spot of the planned protocol, rendered from the laboratory's
+animation. (i)~Specimens and well lids, (ii)~substitute seawater fill,
+(iii)~electrode cap, (iv)~open-circuit potential, linear polarization, and a
+potential hold (cut-away, simulated), (v)~cap rinsed,
 (vi)~the well's liquid sampled for ICP-MS, (vii)~the spot imaged. Impedance and
 cyclic polarization run on the requested potentiostat.}
 \label{fig:screen}
@@ -1038,6 +1039,7 @@ limits for copper-nickel~\cite{awsA57}. All the searched elements but iron
 are on the 2025 U.S. list of critical minerals~\cite{usgs2025}. Nickel
 dominates by mass and is carried as an objective.
 
+
 \begin{figure}[t]
 \centering
 % figures/make_search_space_figure.py in the byu-finances working folder;
@@ -1045,16 +1047,16 @@ dominates by mass and is carried as an objective.
 % Anderson's advice on the aluminum version (Ames Laboratory, 16 Oct 2026).
 \includegraphics[width=\textwidth]{figures-cu-ded/cu_search_space_periodic.pdf}
 \caption{Our search space. (a)~Elements searched from the start, shaded by
-upper bound (Table~\ref{tab:space}), with copper as the balance; critical
-minerals from the 2025 U.S. list~\cite{usgs2025}. Gray tiles are
+upper bound (Table~\ref{tab:space}), with copper as the balance. Red outlines
+mark critical minerals on the 2025 U.S. list~\cite{usgs2025}. Gray tiles are
 impurities that are not searched but are held at or below the limits for
 copper-nickel welding filler~\cite{awsA57}. $^\dagger$Added only where
 aluminum is at most 3\%. Below,
 on the same scale, the nominal compositions of the three reference
 alloys~\cite{cdadata}. (b)~Familiar alloys at their nominal compositions in
 the nickel-aluminum plane. The shaded box is the searched range, which
-includes the copper-nickel-aluminum alloys between the two families;
-$^\dagger$elements only below the 3\% aluminum line. Open circle: outside the
+includes the copper-nickel-aluminum alloys between the two families. The
+$^\dagger$elements are allowed only below the 3\% aluminum line. Open circle: outside the
 range.}
 \label{fig:space}
 \end{figure}
@@ -1064,11 +1066,13 @@ range.}
 \caption{Elements searched from the start (wt\%), with copper as the balance
 (at least 65\%) and a calculated liquidus of at most
 1,250\,\textdegree{}C, and the additions tested from Year~2 (gray).
-$^\dagger$Only where aluminum is at most 3\% (silicon above 0.1\% only with
+$^\dagger$Only in alloys with at most 3\% aluminum (silicon above 0.1\% only with
 niobium).}
 \label{tab:space}
 \small
 \renewcommand{\arraystretch}{1.05}
+% Year-2 rows in gray; \leavevmode keeps a colored X cell from opening on a blank line.
+\newcommand{\yr}[1]{\leavevmode\textcolor{darkgray}{#1}}
 \begin{tabularx}{\textwidth}{@{}l l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{Element} & \textbf{Range} & \textbf{Role} & \textbf{Upper limit set by} \\
@@ -1091,16 +1095,16 @@ Ti & 0--0.5 & Deoxidizer in Cu-Ni welding filler~\cite{awsA57} & Oxide and
   nitride inclusions; crucible attack \\
 \midrule
 \multicolumn{4}{@{}l}{\textcolor{darkgray}{\textit{Microalloying additions tested from Year~2}}} \\
-\textcolor{darkgray}{Zr} & \textcolor{darkgray}{0--0.15} & \textcolor{darkgray}{Grain refiner} &
-  \textcolor{darkgray}{ZrO$_2$ inclusions; excess at grain boundaries} \\
-\textcolor{darkgray}{B} & \textcolor{darkgray}{0--0.02} & \textcolor{darkgray}{Grain refiner} &
-  \textcolor{darkgray}{Borides; Ni-B eutectic below the Cu-Ni solidus} \\
-\textcolor{darkgray}{Sn} & \textcolor{darkgray}{0--1, NAB only} & \textcolor{darkgray}{Grain
-  refinement and strength in cast NAB} & \textcolor{darkgray}{Wider freezing range} \\
-\textcolor{darkgray}{Ge} & \textcolor{darkgray}{0--0.2, NAB only} & \textcolor{darkgray}{Erosion-corrosion (one study)} &
-  \textcolor{darkgray}{Cost; export controls} \\
-\textcolor{darkgray}{La or Ce} & \textcolor{darkgray}{0--0.1$^\dagger$} & \textcolor{darkgray}{Resistance in
-  salt solution~\cite{du2025}} & \textcolor{darkgray}{Oxide and oxysulfide inclusions} \\
+\yr{Zr} & \yr{0--0.15} & \yr{Grain refiner} &
+  \yr{ZrO$_2$ inclusions; excess at grain boundaries} \\
+\yr{B} & \yr{0--0.02} & \yr{Grain refiner} &
+  \yr{Borides; Ni-B eutectic below the Cu-Ni solidus} \\
+\yr{Sn} & \yr{0--1, NAB only} & \yr{Grain
+  refinement and strength in cast NAB} & \yr{Wider freezing range} \\
+\yr{Ge} & \yr{0--0.2, NAB only} & \yr{Erosion-corrosion (one study)} &
+  \yr{Cost; export controls} \\
+\yr{La or Ce} & \yr{0--0.1$^\dagger$} & \yr{Resistance in
+  salt solution~\cite{du2025}} & \yr{Oxide and oxysulfide inclusions} \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1323,7 +1327,7 @@ The PI's record supports this: he co-authored a review of self-driving laborator
 \section{Management Approach}
 \label{sec:mgmt}
 
-This is a single-PI project with no co-PIs or subawards. The PI will lead the
+In this single-PI project, with no co-PIs or subawards, the PI will lead the
 method development, set the campaign plans, and supervise all students.
 Ph.D.\ student 1 will lead Task 1 (methods, physics inputs, benchmarks,
 software). Ph.D.\ student 2 will lead Task 2 (powder, deposits, microscopy,
@@ -1334,8 +1338,8 @@ students share Task 3, so the methods are tested on the data they will face.
 DED time is bought from the University of Utah and the Colorado School of Mines, and any outside tests from a commercial laboratory.
 None is a subaward.
 A BYU student runs the Utah sessions after training by the Utah group, and staff at Mines run each session there, both to the settings the search chooses.
-Dr.~Jordan A. Tiarks of Ames National Laboratory is an unfunded collaborator for the gas atomization runs; Fang and Webster are unfunded collaborators too, and all three are listed under current and pending support.
-Our budget buys about twelve half-day sessions a year at Utah, several compositions to a session, 3, 7, and 4 sessions at Mines in Years 1 to 3, and one gas atomization run a year\todo{the Utah line is an allowance until Fang sets a rate}.
+Dr.~Jordan A. Tiarks of Ames National Laboratory is an unfunded collaborator for the gas atomization runs. Fang and Webster are unfunded collaborators too, and all three are listed under current and pending support.
+Our budget buys about twelve half-day sessions a year at Utah, with several compositions to a session. It also buys 3, 7, and 4 sessions at Mines in Years 1 to 3 and one gas atomization run a year\todo{the Utah line is an allowance until Fang sets a rate}.
 All other work is at BYU: the PI's atomizer laboratory, the BYU Electron Microscopy Facility (SEM, EDS, EBSD), and
 BYU high-performance computing. The team meets weekly to review new results and
 choose the next experiments. A shared database records every step, so the
@@ -1373,9 +1377,9 @@ features the screen missed.
 Sterling G.\ Baird received a Ph.D.\ in Materials Science and Engineering
 from the University of Utah in August 2023. He has been an Assistant
 Professor of Mechanical Engineering at BYU since December 2025, his first
-tenure-track position. Before BYU, he was Director of Training and Programs
-then Principal Investigator and Staff Scientist at the Acceleration
-Consortium, University of Toronto, where he built its development
+tenure-track position. Before BYU, he was Director of Training and Programs,
+then Principal Investigator and Staff Scientist, at the Acceleration
+Consortium, University of Toronto. There he built its development
 laboratory with about \$600,000 of equipment and helped direct the
 organization's growth from 6 to 60 full-time employees (35 staff scientists)
 in his three years there.
@@ -1386,9 +1390,9 @@ optimization, consulted for Meta on the version 1.0 release of the Ax
 platform, and organized an international Bayesian optimization hackathon. He
 co-wrote the proposal for an industry-funded project with Fehrmann Alloys on
 discovering additively manufactured aluminum alloys through ICME and
-multi-task, multi-objective Bayesian optimization, and the proposal for an NSF
-EAGER award on extracting materials data from the literature with large
-language models. He wrote the structural materials section of the \emph{Chemical Reviews}
+multi-task, multi-objective Bayesian optimization. He also co-wrote the
+proposal for an NSF EAGER award on extracting materials data from the
+literature with large language models. He wrote the structural materials section of the \emph{Chemical Reviews}
 survey of self-driving laboratories and led a review of low-cost
 self-driving laboratories. His M.S. work used Bayesian inference with
 propagated uncertainty to model grain boundaries. He also designed a
@@ -1446,9 +1450,9 @@ version).}
 the powder doser, the liquid-handling gantry, and the equipment for powder
 handling and specimen preparation\todo{list the main items bought with
 start-up funds}.
-A potentiostat lent by a BYU colleague is integrated into the gantry's automated workflow and serves until the one item of equipment requested, a dedicated potentiostat with impedance capability, arrives.
+The loaned potentiostat is integrated into the gantry's automated workflow and serves until the one item of equipment requested, a dedicated potentiostat with impedance capability, arrives.
 The BYU Electron Microscopy Facility provides SEM, EDS, and EBSD, and BYU provides high-performance computing.
-DED time is bought from the University of Utah and the Colorado School of Mines, as described under Task 2.
+We buy DED time at Utah and Mines, as described under Task 2.
 Tensile tests use the Instron load frames in the
 materials testing laboratory of the Department of Mechanical Engineering%
 \todo{confirm}.
@@ -1500,8 +1504,8 @@ stirring, (iv)~pouring onto the ultrasonic plate.}
 \end{figure}
 The handling rules were set for aluminum powders, the most hazardous case in the Bureau of Mines series~\cite{jacobson1964}.
 They came out of conversations through 2026 with Ames National Laboratory (Iver Anderson and Jordan Tiarks), North Carolina State University (Tim Horn), the Johns Hopkins group that runs the same atomizer, the manufacturer, and an aluminum powder producer.
-Copper alloy powders are far less reactive, and the same controls apply: nickel-bearing powders are handled in glove bags with respiratory protection, and the first copper alloy powder is tested for ignition energy, explosion severity, and transport class before any lot ships, with ignition energy retested on each gas-atomized lot.
-Corrosion tests use salt solutions; the dilute acids used to clean immersion
+Copper alloy powders are far less reactive, and the same controls apply. Nickel-bearing powders are handled in glove bags with respiratory protection. The first copper alloy powder is tested for ignition energy, explosion severity, and transport class before any lot ships, and ignition energy is retested on each gas-atomized lot.
+Corrosion tests use salt solutions. The dilute acids used to clean immersion
 coupons~\cite{astmG1} are handled in a fume hood under BYU chemical safety
 procedures.
 
@@ -1554,10 +1558,10 @@ aluminum data from 2026, with its origin recorded in the metadata.
 \textbf{Standards.} Metadata will record every step from charge preparation
 through atomization, sieving, storage, transport, deposition, and testing.
 For each step it will hold the composition, powder properties, process and
-instrument settings, dates, operators, and the ASTM method behind each test,
-in a documented schema informed by the one used by NIST AM
+instrument settings, dates, operators, and the ASTM method behind each test.
+The schema is informed by the one used by NIST AM
 Bench~\cite{ambench2022schema}, which covers builds, specimens, and
-measurements; we extend it to powder making and corrosion tests.
+measurements, and we extend it to powder making and corrosion tests.
 
 \textbf{Preservation.} Data and software will be deposited in public
 repositories at each annual release and kept for at least 10 years.
