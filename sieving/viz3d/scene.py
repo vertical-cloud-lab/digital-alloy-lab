@@ -7,7 +7,7 @@ u = 0 -> 1, an optional camera move, leader-line labels, then a hold. Frames are
 1280 x 720 and written two ways:
 
 * ``out/mp4/<name>.mp4``: every frame, 15 fps, h264 yuv420p (for the narrated tutorials)
-* ``out/<name>.gif``: every 3rd frame (5 fps), 640 x 360, one palette, gifsicle -O3 --lossy
+* ``out/<name>.gif``: every 3rd frame (5 fps), 800 x 450, one palette, gifsicle -O3 --lossy
 
 Text (title, step label, caption, gauge readouts, leader labels) is drawn with PIL on top of
 each output at its own resolution, so the GIF's text is drawn at GIF size rather than shrunk.
@@ -43,7 +43,7 @@ GIF_FPS = 5
 SIZE = tuple(int(v) for v in os.environ.get("VIZ3D_SIZE", "1280x720").split("x"))
 CLEAN = bool(os.environ.get("VIZ3D_CLEAN"))     # no text at all; writes out/clean/ only (see the docstring)
 HD = bool(os.environ.get("VIZ3D_HD"))           # out/hd/ with the text and out/clean/ without (see the docstring)
-GIF_SIZE = (640, 360)
+GIF_SIZE = (800, 450)
 FONT_DIR = Path("/usr/share/fonts/truetype/dejavu")
 PREVIEW = bool(os.environ.get("PREVIEW"))   # render only the last frame of each sub-step, to /tmp
 PREVIEW_EVERY = int(os.environ.get("PREVIEW_EVERY", "0"))   # ... and every n-th frame too

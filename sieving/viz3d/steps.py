@@ -353,7 +353,7 @@ class Stop(Exception):
 
 
 def anim_sieving():
-    sc = Scene("sieving", "Sieving atomized powder: 8 in stack, No. 60 / No. 230 / pan (#222)")
+    sc = Scene("sieving", "Sieving atomized powder: 8 in stack, No. 60 / 230 / pan (#222)")
     last = int(os.environ.get("STEPS", "99"))          # stop after this many sub-steps (for quick looks)
     step0 = sc.step
 
@@ -429,7 +429,6 @@ def _sieving(sc):
             labels=[lab("powder container (size assumed, #255)", over + (0, 0, 150), 0.06, 0.28),
                     lab("bonding lead and clip", (M.TRAY_C[0] - 100, M.TRAY_C[1] + M.TRAY_D / 2 + 20, 20), 0.10, 0.62),
                     lab("ground bus bar", (-300, M.BUS_Y, M.BUS_Z), 0.62, 0.20)])
-    end_pour = sc.gmat["container"].copy()
 
     # 2 · container back, pieces out --------------------------------------------------------------------------
     sim.act[:] = True
@@ -462,7 +461,6 @@ def _sieving(sc):
     def picks(u):
         if "order" not in state:
             state["order"] = exposed()
-            state["home"] = sc.gmat["container"].copy()
         w = window(u, 0.0, 0.24)                        # the pour in reverse: up, untip over the tray, home
         sc.gmat["container"] = cont_pose(path(w, [over, over + (0, 0, 240), mouth + (0, 0, 75), mouth]),
                                          165.0 - 70.0 * window(w, 0.0, 0.33) - 95.0 * window(w, 0.33, 0.70))
@@ -598,8 +596,8 @@ def _sieving(sc):
             "Cut open: grit stays on the No. 60, 63-250 µm on the No. 230, and under 63 µm, the print fraction, falls "
             "to the pan. Inset: the No. 230 at real size.", sieve_s, sieve, hold=1.2, cam_to=CAM["stack_cut"],
             live=True, still=True,
-            labels=[lab("> 250 µm", (SX - 60, SY + 40, M.MESH_Z["s60"] + 3), 0.10, 0.30),
-                    lab("63-250 µm", (SX - 60, SY + 40, M.MESH_Z["s230"] + 3), 0.10, 0.48),
+            labels=[lab("> 250 µm", (SX - 60, SY + 40, M.MESH_Z["s60"] + 3), 0.10, 0.37),
+                    lab("63-250 µm", (SX - 60, SY + 40, M.MESH_Z["s230"] + 3), 0.10, 0.52),
                     lab("< 63 µm: print fraction", (SX - 60, SY + 40, 4), 0.10, 0.70)])
     mag.a = 0.0
     sc.notes = []
@@ -638,7 +636,7 @@ def _sieving(sc):
                 ang += 3.0 * math.sin(2 * math.pi * 6.0 * u) * (window(u, a0 + 0.04, a0 + 0.06) - window(u, a1 - 0.05, a1))
             else:
                 v = window(u, a1, 1.0)
-                carry = path(v, [target, pre, pk + (0, 0, 230), pk])
+                carry = path(v, [target, pre, pk + (0, 0, 230), pk + (0, 0, 40), pk])   # set down slowly
                 ang = 135.0 - 95.0 * ease(min(1.0, 3 * v)) - 40.0 * ease(min(1.0, max(0.0, 3 * v - 1)))
             sc.gmat[group] = tip_matrix(r0, carry, ang)
             pw.activate(lambda x: ~on_tray(x))
