@@ -616,7 +616,7 @@ $\kappa_\mathrm{III}$ NiAl-type.}
 \includegraphics[width=\textwidth]{figures-cu-ded/cu_prelim.pdf}
 \caption{Our first copper-alloy powder, NAB (C63000), 27 October 2026. (a)~The run,
 through the furnace port and the chamber window: (i)~the charge in the
-crucible, (ii)~melting, (iii)~the melt around the stopper rod, (iv)~the
+crucible, (ii)~melting, (iii)~the inductively stirred melt around the stopper rod, (iv)~the
 stream on the ultrasonic plate. (b)~The lot. (c)~SEM image of the powder and
 (d)~one particle. (e)~EDS spectrum at 20~kV; the carbon peak is from the
 mounting tape.}
@@ -898,7 +898,8 @@ subawardee. For the small step we use an InssTek MX-Lab in the laboratory
 of Professor Z.~Zak Fang at the University of Utah, which
 his group has offered to the project. It has a 500~W fiber laser, 150~mm of
 travel on each axis, control of melt-pool height, and six powder feeders that
-can each be run separately~\cite{insstek,utahded}.\todo{confirm with Fang: the laser power (300 or 500~W), the rate, the
+can each be run separately~\cite{insstek,utahded}, of which we use one, with
+pre-alloyed powder, as a single stream (Section~\ref{sec:naval}).\todo{confirm with Fang: the laser power (300 or 500~W), the rate, the
 smallest powder charge per feeder, the argon chamber and any preheat, and
 that a BYU student runs it after training}. We start every composition
 here, spreading powder from a first lot in grooves machined in plates,
@@ -986,7 +987,7 @@ the surface, for example aluminum from NAB or nickel from copper-nickel.
 Right: one spot of the planned protocol, rendered from the laboratory's
 animation. (i)~Specimens and well lids, (ii)~substitute seawater fill,
 (iii)~electrode cap, (iv)~open-circuit potential, linear polarization, and a
-potential hold (cut-away, simulated), (v)~cap rinsed,
+potential hold (cut-away), (v)~cap rinsed,
 (vi)~the well's liquid sampled for ICP-MS, (vii)~the spot imaged. Impedance and
 cyclic polarization run on the requested potentiostat.}
 \label{fig:screen}
@@ -1069,7 +1070,9 @@ range.}
 $^\dagger$Only in alloys with at most 3\% aluminum (silicon above 0.1\% only with
 niobium).}
 \label{tab:space}
-\small
+% Rows cite the Edison element review's sources (edison-trajectories/cu-ded-elements-2026-10),
+% each new one checked on Crossref (Oct 28).
+\footnotesize
 \renewcommand{\arraystretch}{1.05}
 % Year-2 rows in gray; \leavevmode keeps a colored X cell from opening on a blank line.
 \newcommand{\yr}[1]{\leavevmode\textcolor{darkgray}{#1}}
@@ -1077,34 +1080,34 @@ niobium).}
 \toprule
 \textbf{Element} & \textbf{Range} & \textbf{Role} & \textbf{Upper limit set by} \\
 \midrule
-Ni & 0--30 & Protective film in Cu-Ni; $\kappa$ phases in NAB & Liquidus near
-  the atomizer's limit; supply (an objective) \\
-Al & 0--9.5 & Aluminum bronze; Cu-Ni-Al alloys & Retained $\beta'$
-  martensite as deposited \\
-Fe & 0--4.5 & Film in Cu-Ni; $\kappa$ phases in NAB & Iron out of solution in
-  Cu-Ni; coarse $\kappa$ in NAB \\
-Mn & 0--4 & Deoxidizer; partial nickel substitute & Evaporation and
-  oxidation in melting and DED \\
+Ni & 0--30 & Protective film in Cu-Ni; $\kappa$ phases in NAB~\cite{ma2015,wharton2005} & Liquidus near
+  the atomizer's limit; supply (an objective)~\cite{cdadata,usgs2025} \\
+Al & 0--9.5 & Aluminum bronze; Cu-Ni-Al alloys~\cite{cda222,campbell2002} & Retained $\beta'$
+  martensite as deposited~\cite{li2021} \\
+Fe & 0--4.5 & Film in Cu-Ni; $\kappa$ phases in NAB~\cite{zhu2021,wharton2005} & Iron out of solution in
+  Cu-Ni; coarse $\kappa$ in NAB~\cite{kievits1972,hasan1982} \\
+Mn & 0--4 & Deoxidizer; partial nickel substitute~\cite{pi2025} & Evaporation in melting
+  and DED~\cite{khan1984} \\
 Cr & 0--0.7$^\dagger$ & Resistance to fast flow~\cite{lewis1981} & Cr-rich
-  particles; crevice attack in still water \\
-Si & 0--0.5$^\dagger$ & Deoxidizer; strength with Nb & Silicides; weld
-  cracking \\
-Nb & 0--0.8$^\dagger$ & Weldability of cast Cu-Ni & Undissolved Nb-rich
-  particles \\
+  particles; crevice attack in still water~\cite{lewis1981} \\
+Si & 0--0.5$^\dagger$ & Deoxidizer; strength with Nb~\cite{vankonynenburg1990,astmB369} & Silicides; weld
+  cracking~\cite{vankonynenburg1990} \\
+Nb & 0--0.8$^\dagger$ & Weldability of cast Cu-Ni~\cite{vankonynenburg1990,astmB369} & Undissolved Nb-rich
+  particles~\cite{chakrabarti1982} \\
 Ti & 0--0.5 & Deoxidizer in Cu-Ni welding filler~\cite{awsA57} & Oxide and
-  nitride inclusions; crucible attack \\
+  nitride inclusions; crucible attack~\cite{kritsalis1991} \\
 \midrule
 \multicolumn{4}{@{}l}{\textcolor{darkgray}{\textit{Microalloying additions tested from Year~2}}} \\
-\yr{Zr} & \yr{0--0.15} & \yr{Grain refiner} &
-  \yr{ZrO$_2$ inclusions; excess at grain boundaries} \\
-\yr{B} & \yr{0--0.02} & \yr{Grain refiner} &
-  \yr{Borides; Ni-B eutectic below the Cu-Ni solidus} \\
+\yr{Zr} & \yr{0--0.15} & \yr{Grain refiner~\cite{sadayappan2005}} &
+  \yr{ZrO$_2$ inclusions; excess at grain boundaries~\cite{sadayappan2005}} \\
+\yr{B} & \yr{0--0.02} & \yr{Grain refiner~\cite{sadayappan2005}} &
+  \yr{Borides; Ni-B eutectic below the Cu-Ni solidus~\cite{ren2021}} \\
 \yr{Sn} & \yr{0--1, NAB only} & \yr{Grain
-  refinement and strength in cast NAB} & \yr{Wider freezing range} \\
-\yr{Ge} & \yr{0--0.2, NAB only} & \yr{Erosion-corrosion (one study)} &
-  \yr{Cost; export controls} \\
+  refinement and strength in cast NAB~\cite{poojary2023}} & \yr{Wider freezing range~\cite{saunders1990}} \\
+\yr{Ge} & \yr{0--0.2, NAB only} & \yr{Erosion-corrosion (one study)~\cite{aslan2020}} &
+  \yr{Cost; export controls~\cite{tolcin2025}} \\
 \yr{La or Ce} & \yr{0--0.1$^\dagger$} & \yr{Resistance in
-  salt solution~\cite{du2025}} & \yr{Oxide and oxysulfide inclusions} \\
+  salt solution~\cite{du2025}} & \yr{Coarse rare-earth inclusions above about 0.1\%~\cite{mao2009}} \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1113,6 +1116,8 @@ Ti & 0--0.5 & Deoxidizer in Cu-Ni welding filler~\cite{awsA57} & Oxide and
 Run live campaigns in which the search chooses each experiment and step.
 Compare it on equal budgets with random selection and with standard multi-objective Bayesian optimization over the full chain.
 Test H2 and H3 on held-out deposits, H5 on the audited and selected candidates, and H1 and H4 in matched campaigns.
+Researchers review each batch before it runs, can veto or add candidates, and log every override.
+As a stretch goal, a language model will turn their written feedback into preferences the search can model~\cite{kobalczyk2025lilo}.
 
 \subsubsection{Task 4: release and transition}
 Release the software, data, and models each year (Section~\ref{sec:dmp}).
@@ -1200,9 +1205,10 @@ several hoppers and alloyed in the melt pool, which would let a depot make a
 new composition without a new powder lot. The guide of Task~4 will describe
 that extension. The method needs only a network of steps, their costs, and
 their measurements, so it also applies to wire-arc and laser-wire deposition
-and to other Navy alloys, including titanium. A plasma melting module for our
-atomizer (not part of this request) would extend the powder work to alloys
-that melt above the limit of the induction module.
+and to other Navy alloys, including titanium.
+% Cut Oct 28 for space: "A plasma melting module for our atomizer (not part of this request)
+% would extend the powder work to alloys that melt above the limit of the induction module."
+
 
 \textbf{Navy engagement and people.} The Naval Surface Warfare Center
 (NSWC) Carderock Division is the Navy lead for additive manufacturing
@@ -1296,7 +1302,7 @@ Corrosion screen & Top-ranked candidates pass the 30-day immersion test
 more often than bottom-ranked ones (H5). \\
 Lower cost on real deposits & Lower median cost to reach the target than the
 full-chain baseline in matched live campaigns (H1). \\
-New alloys & At least\todo{number} new compositions deposited dense and
+New alloys & At least three new compositions, one a year, deposited dense and
 crack-free, with tensile, corrosion, and repair-coupon data, beyond the
 commercial baselines. \\
 Open release & Software, data, and models posted each year with tests and
@@ -1382,17 +1388,16 @@ then Principal Investigator and Staff Scientist, at the Acceleration
 Consortium, University of Toronto. There he built its development
 laboratory with about \$600,000 of equipment and helped direct the
 organization's growth from 6 to 60 full-time employees (35 staff scientists)
-in his three years there.
+in three years.
 
 The PI combines Bayesian optimization with laboratory hardware. He
 developed Honegumi, which helps experimentalists set up Bayesian
 optimization, consulted for Meta on the version 1.0 release of the Ax
 platform, and organized an international Bayesian optimization hackathon. He
-co-wrote the proposal for an industry-funded project with Fehrmann Alloys on
-discovering additively manufactured aluminum alloys through ICME and
-multi-task, multi-objective Bayesian optimization. He also co-wrote the
-proposal for an NSF EAGER award on extracting materials data from the
-literature with large language models. He wrote the structural materials section of the \emph{Chemical Reviews}
+co-wrote the proposals for a Fehrmann Alloys industry project on designing
+additively manufactured aluminum alloys with ICME and multi-task,
+multi-objective Bayesian optimization and for an NSF EAGER award on
+extracting materials data with large language models. He wrote the structural materials section of the \emph{Chemical Reviews}
 survey of self-driving laboratories and led a review of low-cost
 self-driving laboratories. His M.S. work used Bayesian inference with
 propagated uncertainty to model grain boundaries. He also designed a
@@ -1401,12 +1406,10 @@ semi-automated induction furnace for temperatures up to
 includes battery research, among it lithium-oxygen batteries at NASA Langley
 Research Center, hydrogen embrittlement studies, and electrochemical
 metallographic preparation. At BYU he supervises about 20 undergraduate
-researchers and one M.S. student and has set up the
-CALPHAD workflow, the atomizer, the powder doser, and the powder-to-part
-demonstration described in Section~\ref{sec:prelim}.
+researchers and one M.S. student and has set up the CALPHAD workflow,
+atomizer, powder doser, and powder-to-part demonstration
+(Section~\ref{sec:prelim}).
 % TODO (Sterling): add any DED or welding experience.
-The CV lists all
-publications and presentations.
 
 
 % ===========================================================================
@@ -2103,16 +2106,72 @@ copper-nickel alloy,'' \emph{Corrosion} \textbf{58}, 57-71 (2002).
 AWS A5.7/A5.7M, \emph{Specification for Copper and Copper-Alloy Bare Welding
 Rods and Electrodes}, American Welding Society.
 
+\bibitem{kievits1972}
+F.~J. Kievits and F.~P. IJsseling, ``Research into the corrosion behaviour of CuNi10Fe alloys in seawater,'' \emph{Werkst. Korros.} \textbf{23}(12), 1084-1096 (1972).
+\href{https://doi.org/10.1002/maco.19720231203}{doi:10.1002/maco.19720231203}
+
+\bibitem{hasan1982}
+F.~Hasan, A.~Jahanafrooz, G.~W. Lorimer, and N.~Ridley, ``The morphology, crystallography, and chemistry of phases in as-cast nickel-aluminum bronze,'' \emph{Metall. Trans. A} \textbf{13}(8), 1337-1345 (1982).
+\href{https://doi.org/10.1007/BF02642870}{doi:10.1007/BF02642870}
+
+\bibitem{khan1984}
+P.~A.~A. Khan and T.~DebRoy, ``Alloying element vaporization and weld pool temperature during laser welding of AISI 202 stainless steel,'' \emph{Metall. Trans. B} \textbf{15}(4), 641-644 (1984).
+\href{https://doi.org/10.1007/BF02657284}{doi:10.1007/BF02657284}
+
 \bibitem{lewis1981}
 R.~O. Lewis and F.~L. LaQue, ``Evaluation of copper-nickel alloys for OTEC
 applications,'' Argonne National Laboratory report ANL/OTEC-BCM-019 (1981).
 \href{https://doi.org/10.2172/6255887}{doi:10.2172/6255887}
+
+\bibitem{vankonynenburg1990}
+R.~A. Van Konynenburg, K.~J.~A. Kundig, W.~S. Lyman, M.~Prager, J.~R. Meyers, and I.~S. Servi, ``Background studies in support of a feasibility assessment on the use of copper-base materials for nuclear waste packages in a repository in tuff,'' Lawrence Livermore National Laboratory report UCRL-21082 (1990).
+\href{https://doi.org/10.2172/137782}{doi:10.2172/137782}
+
+\bibitem{chakrabarti1982}
+D.~J. Chakrabarti and D.~E. Laughlin, ``The Cu-Nb (copper-niobium) system,'' \emph{Bull. Alloy Phase Diagrams} \textbf{2}(4), 455-460 (1982).
+\href{https://doi.org/10.1007/BF02876162}{doi:10.1007/BF02876162}
+
+\bibitem{kritsalis1991}
+P.~Kritsalis, L.~Coudurier, and N.~Eustathopoulos, ``Contribution to the study of reactive wetting in the CuTi/Al$_2$O$_3$ system,'' \emph{J. Mater. Sci.} \textbf{26}(12), 3400-3408 (1991).
+\href{https://doi.org/10.1007/BF01124693}{doi:10.1007/BF01124693}
+
+\bibitem{sadayappan2005}
+M.~Sadayappan, J.~P. Thomson, M.~Elboujdaini, G.~P. Gu, and M.~Sahoo, ``Grain refinement of permanent mold cast copper base alloys,'' final report, Copper Development Association, U.S. Department of Energy (2005).
+\href{https://doi.org/10.2172/840819}{doi:10.2172/840819}
+
+\bibitem{ren2021}
+X.~Ren, G.~Zhang, H.~Xu, Z.~Wang, Y.~Liu, F.~Sun, Y.~Kang, M.~Wang, W.~Lv, and Z.~Yin, ``Effects of B on the structure and properties of lead-tin bronze alloy and the mechanism of strengthening and toughening,'' \emph{Materials} \textbf{14}(24), 7806 (2021).
+\href{https://doi.org/10.3390/ma14247806}{doi:10.3390/ma14247806}
+
+\bibitem{poojary2023}
+S.~Poojary, V.~Marakini, R.~N. Rao, and V.~Vijayan, ``Enhancing microstructure and mechanical properties of nickel aluminium bronze alloy through tin addition,'' \emph{Sci. Rep.} \textbf{13}, 16907 (2023).
+\href{https://doi.org/10.1038/s41598-023-44146-y}{doi:10.1038/s41598-023-44146-y}
+
+\bibitem{saunders1990}
+N.~Saunders and A.~P. Miodownik, ``The Cu-Sn (copper-tin) system,'' \emph{Bull. Alloy Phase Diagrams} \textbf{11}(3), 278-287 (1990).
+\href{https://doi.org/10.1007/BF03029299}{doi:10.1007/BF03029299}
+
+\bibitem{aslan2020}
+N.~S. Aslan, A.~K. Rajih, and A.~H. Haleem, ``Effect of alloying elements on the erosion-corrosion behaviour of Cu-based alloys,'' \emph{IOP Conf. Ser.: Mater. Sci. Eng.} \textbf{987}, 012018 (2020).
+\href{https://doi.org/10.1088/1757-899X/987/1/012018}{doi:10.1088/1757-899X/987/1/012018}
+
+\bibitem{tolcin2025}
+A.~C. Tolcin, ``Germanium,'' in \emph{Mineral Commodity Summaries 2025} (U.S. Geological Survey, 2025), pp.~80-81.
+\href{https://doi.org/10.3133/mcs2025}{doi:10.3133/mcs2025}
 
 \bibitem{du2025}
 P.~Du, T.~Chen, G.~Xie, Q.~Wang, and X.~Liu, ``The difference in
 anti-corrosion effect between the addition of La and Ce of a B10 alloy,''
 \emph{J. Mater. Res. Technol.} \textbf{36}, 8062-8074 (2025).
 \href{https://doi.org/10.1016/j.jmrt.2025.05.090}{doi:10.1016/j.jmrt.2025.05.090}
+
+\bibitem{mao2009}
+X.~Mao, F.~Fang, J.~Jiang, and R.~Tan, ``Effect of rare earth on the microstructure and mechanical properties of as-cast Cu-30Ni alloy,'' \emph{Rare Met.} \textbf{28}(6), 590-595 (2009).
+\href{https://doi.org/10.1007/s12598-009-0113-4}{doi:10.1007/s12598-009-0113-4}
+
+\bibitem{kobalczyk2025lilo}
+K.~Kobalczyk, Z.~J. Lin, B.~Letham, Z.~Zhao, M.~Balandat, and E.~Bakshy, ``LILO: Bayesian optimization with interactive natural language feedback,'' arXiv:2510.17671 (2025).
+\href{https://arxiv.org/abs/2510.17671}{arXiv:2510.17671}
 
 \bibitem{mptimesplit}
 S.~G. Baird and T.~D. Sparks, ``Materials Project time split data,'' figshare, dataset, version 4 (2022).
