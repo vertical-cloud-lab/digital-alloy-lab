@@ -1,6 +1,6 @@
 """Keyframes of the copper spot animation, for print. Renders chosen moments of
 ../render_cubxl_cu.py at 2560 x 1440 without its text (top bar, tool panel, caption, labels,
-plot insets), then lays them out as a reel. The scene, the deck state and the camera at each
+plot insets, the illustrative Nyquist plot), then lays them out as a reel. The scene, the deck state and the camera at each
 moment are the animation's own: this file only picks times and crops.
 
 Writes, next to this file:
@@ -53,8 +53,9 @@ KEYS = [
      "P20 pipette: dispenses into well S1, above the meniscus", "Seawater fill", (630, 260, 480)),
     ("electrode-cap", 2805, "one spot", "5  The capper carries the electrode cap (leak-free Ag/AgCl, Pt coil) from its park cup and sets it over S1's boss",
      "Capper: sets the cap over S1's boss", "Electrode cap", (720, 290, 640)),
-    ("measure", 3154, "one spot", "6  Measured with the cap on: OCP 30 min, LPR ±10 mV, rest 5 min, +50 mV hold 10 min, OCP 5 min. The head is free meanwhile",
-     "Potentiostat: OCP, LPR, hold: the head is free", "OCP, LPR, hold", (617, 390, 480)),
+    ("measure", 3017, "one spot", "6  Measured with the cap on: OCP 20 min, EIS at OCP 10 min (10 mV rms, 100 kHz to 10 mHz, on the requested "
+     "potentiostat), LPR ±10 mV, rest 5 min, +50 mV hold 10 min, OCP 5 min. The head is free meanwhile",
+     "Potentiostat: OCP, EIS, LPR, hold: the head is free", "OCP, EIS, LPR", (617, 390, 480)),
     ("cap-rinse", 3254, "one spot", "7  The magnet lifts the cap off S1; it is dipped in DI water, then seawater, and parked",
      "Capper: dips the cap in DI water", "Cap rinsed", (550, 240, 420)),
     ("icp-sample", 3510, "one spot", "8  A new tip moves the 150 µL, then a 150 µL DI rinse, into tube 1 for ICP-MS",

@@ -26,6 +26,9 @@ Where the geometry comes from:
 
     xvfb-run -a python render_cubxl_cu.py                 # about 12 min on 4 cores
     xvfb-run -a python render_cubxl_cu.py --stills 2,9,40  # PNG stills at these seconds, no video
+
+The capper's three STEP files stayed in byu-vcl when this folder moved to digital-alloy-lab;
+point --capper-cad at a folder holding them (keyframes/README.md has the pinned fetch).
 """
 
 from __future__ import annotations
@@ -70,6 +73,15 @@ CAP_PROTRUDE = 6.0 - REF_TIP  # electrodes below the skirt, which rests on the 6
 CAP_HANG = MAGNET_HANG + 16.0 + CAP_PROTRUDE  # 35.0
 CUT0, CUT_SWEEP = -45.0, 270.0  # section views keep -45..225 deg; the front quadrant is cut away
 PARK = (236.0, 25.0)  # the capper's park position in Ben's gantry file
+
+# the measurement, in simulated minutes (protocol.md section 4, steps 4-9). EIS at OCP is drawn as open
+# circuit: a 10 mV rms sine passes no net charge to first order (copper_numbers.json "eis").
+PHASES = [(0, 20, "OCP"), (20, 30, "EIS at OCP"), (30, 32, "LPR"), (32, 37, "rest"), (37, 47, "+50 mV hold"), (47, 1e9, "OCP")]
+EIS_WINDOW_MIN = (20.0, 30.0)
+EIS_F = [1e5 * 10 ** (-k / 10) for k in range(71)]  # 100 kHz to 10 mHz, 10 per decade, swept down
+EIS_T = np.cumsum([max(1.0 / f, 0.5) for f in EIS_F])  # s from the start of the sweep: one cycle, at least 0.5 s
+R_U = 60.0  # ohm, sim_well.py cap B
+C_DL = 30e-6  # F/cm2, sim_well_hf.py (assumed there)
 
 # the machine frame (schematic; PROVerXL 4030 V2 proportions from the photos)
 GANTRY_DY = 60.0  # the X beam's front face is 60 mm behind the capper axis
@@ -743,11 +755,12 @@ def build_story(t0):
 
     t_meas0 = s.t + 1.6
     close_cam = ((S1[0] + 2.2, S1[1] - 20, FACE_Z + 7.5), (S1[0], S1[1], FACE_Z + 2.6))
-    s.act("pstat", None, "OCP, LPR, hold: the head is free")
+    s.act("pstat", None, "OCP, EIS, LPR, hold: the head is free")
     s.cam(s.t + 1.6, *close_cam, angle=30)
     s.travel(PARK[0], PARK[1], 1.2)
     meas = 10.0
-    s.caption("6  Measured with the cap on: OCP 30 min, LPR ±10 mV, rest 5 min, +50 mV hold 10 min, OCP 5 min. The head is free meanwhile", meas + 1.6)
+    s.caption("6  Measured with the cap on: OCP 20 min, EIS at OCP 10 min (10 mV rms, 100 kHz to 10 mHz, on the requested potentiostat), "
+              "LPR ±10 mV, rest 5 min, +50 mV hold 10 min, OCP 5 min. The head is free meanwhile", meas + 1.6)
     s.wait(t_meas0 + meas - s.t)
     fields = HERE / "sim_well_hf_fields.npz"
     t_last = float(np.load(fields if fields.exists() else HERE / "sim_well_fields.npz")["trace_t"][-1])
@@ -1281,6 +1294,9 @@ def make_trace_inset(scene):
         sp_.set_color("#e1e0d9")
     ax.grid(True, color="#e1e0d9", lw=0.5)
     ax.set_title(f"current through the spot ({scene.field_src})", fontsize=8, color="#0b0b0b", loc="left")
+    ax.axvspan(*EIS_WINDOW_MIN, color=ORANGE_HEX, alpha=0.13, lw=0)
+    ax.text(sum(EIS_WINDOW_MIN) / 2, 0.97, "EIS\n(as open circuit)", transform=ax.get_xaxis_transform(), ha="center", va="top",
+            fontsize=6.5, color="#9a4a22")
     fig.tight_layout(pad=0.4)
     fig.canvas.draw()
     img = Image.fromarray(np.asarray(fig.canvas.buffer_rgba())[:, :, :3].copy())
@@ -1310,7 +1326,57 @@ def make_colorbar(cmap, lo, hi, label):
 
 
 def phase_of(mins):
-    return "OCP" if mins < 30 else "LPR" if mins < 32 else "rest" if mins < 37 else "+50 mV hold" if mins < 47 else "OCP"
+    return next(name for a, b, name in PHASES if a <= mins < b)
+
+
+def make_nyquist_inset(scene):
+    """What EIS returns, illustrated: a Randles circuit (R_u, then R_p in parallel with the double layer)
+    with R_u from sim_well.py, R_p from sim_well_hf.py's LPR on C71500 and its assumed C_dl. Not a
+    measurement, and not computed by the well model. Returns the empty axes and each frequency's pixel."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    w = json.loads((HERE / "sim_well_hf.json").read_text())["wells"]["C71500"]
+    a_nom = json.loads((HERE / "sim_well_hf.json").read_text())["geometry"]["nominal_area_cm2"]
+    rp = w["Rp_well_nominal_area_ohm_cm2"] / a_nom  # ohm, on the spot
+    a_wet = w["Rp_well_wetted_area_ohm_cm2"] / rp  # the wetted area the simulation used, cm2
+    om = 2 * np.pi * np.array(EIS_F)
+    z = R_U + rp / (1 + 1j * om * rp * C_DL * a_wet)
+    zr, zi = z.real / 1e3, -z.imag / 1e3
+    fig, ax = plt.subplots(figsize=(3.4, 2.5), dpi=100, facecolor="#fcfcfb")
+    ax.plot(zr, zi, color="#c9c7c0", lw=1.0, ls=(0, (2, 2)))
+    top = float(zr.max()) * 1.06
+    ax.set_xlim(0, top)
+    ax.set_ylim(0, top * 0.62)
+    ax.set_aspect("equal")
+    ax.set_xlabel("Z′, kΩ", fontsize=8, color="#52514e", labelpad=1)
+    ax.set_ylabel("−Z″, kΩ", fontsize=8, color="#52514e", labelpad=1)
+    ax.tick_params(labelsize=7, colors="#898781")
+    for sp_ in ax.spines.values():
+        sp_.set_color("#e1e0d9")
+    ax.set_title("EIS, illustrative only: not measured", fontsize=8, color="#0b0b0b", loc="left")
+    fig.text(0.02, 0.015, f"Randles circuit: R_u {R_U:.0f} Ω, R_p {rp / 1e3:.1f} kΩ (C71500 well, simulated),\n"
+             f"C_dl {C_DL * 1e6:.0f} µF/cm² (assumed)", fontsize=6.8, color="#52514e", va="bottom")
+    fig.subplots_adjust(left=0.15, right=0.97, top=0.9, bottom=0.31)
+    fig.canvas.draw()
+    img = Image.fromarray(np.asarray(fig.canvas.buffer_rgba())[:, :, :3].copy())
+    h = img.size[1]
+    pts = [(float(x), h - float(y)) for x, y in ax.transData.transform(np.c_[zr, zi])]
+    plt.close(fig)
+    return img, pts
+
+
+def eis_progress(sim_t):
+    """Frequencies measured by sim_t (s), and the one being measured now (Hz), or None outside the sweep."""
+    t = sim_t - EIS_WINDOW_MIN[0] * 60
+    if t < 0:
+        return 0, None
+    n = int(np.searchsorted(EIS_T, t, side="right"))
+    return n, (EIS_F[n] if n < len(EIS_F) else None)
+
+
+def hz(f):
+    return f"{f / 1e3:.0f} kHz" if f >= 1e3 else f"{f:.0f} Hz" if f >= 10 else f"{f:.2g} Hz" if f >= 0.1 else f"{f * 1e3:.0f} mHz"
 
 
 class Renderer:
@@ -1318,6 +1384,7 @@ class Renderer:
         self.v = Video()
         self.scene = Scene()
         self.inset, self.xpix = make_trace_inset(self.scene)
+        self.nyq, self.nyq_pts = make_nyquist_inset(self.scene)
         self.cb_o2 = make_colorbar(self.scene.cmap_o2, 0, 1, "O₂, fraction of air saturation (right face)")
         self.cb_cu = make_colorbar(self.scene.cmap_cu, *self.scene.cu_clim, "dissolved Cu, µM (left face)")
         self._front_frame = None
@@ -1405,9 +1472,22 @@ class Renderer:
             im.paste(sc.cb_cu, (16, H - 80 - sc.cb_cu.size[1] - 12))
             im.paste(sc.cb_o2, (16 + sc.cb_cu.size[0] + 10, H - 80 - sc.cb_o2.size[1] - 12))
             mins = sim_t / 60
-            d.rectangle([14, 92, 420, 152], fill=(252, 252, 251, 215))
+            n_eis, f_now = eis_progress(sim_t)
+            in_eis = EIS_WINDOW_MIN[0] <= mins < EIS_WINDOW_MIN[1]
+            d.rectangle([14, 92, 420, 172 if in_eis else 152], fill=(252, 252, 251, 215))
             d.text((24, 98), f"t = {mins:4.1f} min   {phase_of(mins)}", font=font(22, True), fill=INK)
             d.text((24, 128), "AS568-006 spot, 150 µL seawater, reference tip 3 mm up", font=font(12), fill=INK2)
+            if in_eis:
+                now = f"now at {hz(f_now)}" if f_now else "sweep done"
+                d.text((24, 148), f"10 mV rms sine, {now}; colours drawn at open circuit", font=font(12), fill=INK2)
+            if n_eis:
+                nx0, ny0 = W - sc.nyq.size[0] - 16, 84
+                im.paste(sc.nyq, (nx0, ny0))
+                pts = [(nx0 + x, ny0 + y) for x, y in sc.nyq_pts[:n_eis]]
+                if len(pts) > 1:
+                    d.line(pts, fill=(42, 120, 214, 255), width=2)
+                for x, y in pts[-1:]:
+                    d.ellipse([x - 4, y - 4, x + 4, y + 4], fill=ORANGE + (255,) if f_now else (42, 120, 214, 255))
             for text, xyz in (("2 mm Ag/AgCl capillary", (S1[0], S1[1], FACE_Z + 8)), ("Pt coil", (S1[0] - 2.6, S1[1] - 0.2, FACE_Z + 3.2)),
                               ("FKM O-ring, squeezed 21 %", (S1[0] + 2.3, S1[1] - 0.5, FACE_Z + 0.9)),
                               ("C71500, wetted to Ø4.0 mm (ID 2.90)", (S1[0] + 0.4, S1[1] - 1.3, FACE_Z + 0.15))):
@@ -1444,7 +1524,11 @@ def main():
     ap.add_argument("--stills", default="", help="comma-separated times in seconds to save as PNG stills, no video")
     ap.add_argument("--part", default="", help="i/n: render the i-th of n equal frame ranges to /tmp/cubxl_seg_i.mp4")
     ap.add_argument("--assemble", type=int, default=0, help="n: join /tmp/cubxl_seg_*.mp4 and build the GIF")
+    ap.add_argument("--capper-cad", default="", help="folder with the capper module's three STEP files (from byu-vcl)")
     args = ap.parse_args()
+    if args.capper_cad:
+        global CAD
+        CAD = Path(args.capper_cad).resolve()
     v = Video()
     n = int(math.ceil(v.total * FPS))
     gif_ranges = [(v.t_run[0], v.t_run[1])]

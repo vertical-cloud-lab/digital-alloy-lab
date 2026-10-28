@@ -15,9 +15,9 @@
     201
    ],
    "label_px": 33.33,
-   "min_label_clearance_px": 24.0,
+   "min_label_clearance_px": 28.2,
    "widest_label_vs_panel_px": [
-    271.3,
+    270.3,
     268
    ]
   },
@@ -36,9 +36,9 @@
     358
    ],
    "label_px": 33.33,
-   "min_label_clearance_px": 234.0,
+   "min_label_clearance_px": 238.2,
    "widest_label_vs_panel_px": [
-    271.3,
+    270.3,
     478
    ]
   }
@@ -102,12 +102,12 @@
   {
    "panel": "(iv)",
    "file": "frames/04-measure.png",
-   "mp4_frame": 3154,
-   "t_s": 105.133,
+   "mp4_frame": 3017,
+   "t_s": 100.567,
    "chapter": "one spot",
-   "sub_step": "6  Measured with the cap on: OCP 30 min, LPR ±10 mV, rest 5 min, +50 mV hold 10 min, OCP 5 min. The head is free meanwhile",
-   "lit_action": "Potentiostat: OCP, LPR, hold: the head is free",
-   "label": "OCP, LPR, hold",
+   "sub_step": "6  Measured with the cap on: OCP 20 min, EIS at OCP 10 min (10 mV rms, 100 kHz to 10 mHz, on the requested potentiostat), LPR ±10 mV, rest 5 min, +50 mV hold 10 min, OCP 5 min. The head is free meanwhile",
+   "lit_action": "Potentiostat: OCP, EIS, LPR, hold: the head is free",
+   "label": "OCP, EIS, LPR",
    "crop_1280x720": {
     "cx": 617,
     "cy": 390,

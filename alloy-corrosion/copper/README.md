@@ -91,7 +91,9 @@ at 640 × 360. Chapters and sources are in §1.
 
 **[Watch it on YouTube](https://youtu.be/CTQMzOfOmBI)** (unlisted, 2 min 22 s), or the file:
 [`cubxl-cu-spot.mp4`](cubxl-cu-spot.mp4) (1280 × 720, 30 fps). The GIF above is the run
-alone, at 640 × 360 and about three times the video's speed.
+alone, at 640 × 360 and about three times the video's speed. The file and the GIF were
+re-rendered on 2026-10-28 with EIS in the measurement; the YouTube copy is the earlier version,
+without it.
 
 | Time | Chapter |
 | --- | --- |
@@ -100,7 +102,7 @@ alone, at 640 × 360 and about three times the video's speed.
 | 0:09 | **Deck modules, one at a time**, each with a short name: coupon tray, specimens, PTFE blank, well lids, stock holder, stocks, two tip racks, ICP-MS tubes, rinse and park cups, electrode cap, tip waste, potentiostat, electrode bus |
 | 0:33 | **Tools on the gantry head**: electromagnetic capper, P20 pipette, head camera, the Arduino + TMC2209 pipette driver |
 | 0:42 | **Before the night, off the deck**: stock alloys and DED pads, specimen prep, seawater, sulfide and acid, tubes and the reference check |
-| 1:06 | **One spot**: tip, seawater, sulfide last, tip off, leak check, electrode cap on, the measurement in section, cap off and rinsed, collection, acid, image |
+| 1:06 | **One spot**: tip, seawater, sulfide last, tip off, leak check, electrode cap on, the measurement in section (OCP, EIS at OCP, LPR, rest, hold, OCP), cap off and rinsed, collection, acid, image |
 | 2:11 | **After the night**: ICP-MS of the tubes, SEM/EDS of the spots |
 | 2:17 | Summary |
 
@@ -115,14 +117,18 @@ and the head is shown free.
 | **Real** | The opening photo. Frame proportions checked against frames of the channel's [setup](https://youtu.be/XUobYYZ1vzQ) and [calibration](https://youtu.be/Kr37dRIVfqo) videos, pulled through the stream-cam Pi |
 | **Exact models** | Ben's 9-position 20 mL holder, the magnetic vial cap and the PAW-V2 electromagnet mount (the STEP files in [`modules/electromagnetic-capper/cad/`](../../modules/electromagnetic-capper/cad/), meshed by gmsh), and the new electrode cap, carrier, electrodes, well lids, squeezed O-ring, pads and coupon tray from [`cad/`](cad/README.md) |
 | **Exact numbers** | Deck positions, tool offsets (pipette +55, +11; camera −40, +10), the magnet face 16 mm below the carriage, the 35 mm tip, travel at z 122, the working volume 361 × 278 × 122 mm: Ben's 2026-10-02 gantry and deck files, through [`deck_cu.py`](deck_cu.py) |
-| **Computed** | The O₂ field (left cut face), the dissolved-Cu field (right cut face) and the current trace in the close-up: [`sim_well_hf.py`](sim_well_hf.md), C71500 on S1 |
+| **Computed** | The dissolved-Cu field (left cut face), the O₂ field (right cut face) and the current trace in the close-up: [`sim_well_hf.py`](sim_well_hf.md), C71500 on S1. The model has no AC, so during the EIS the colours and the trace are its open-circuit ones: a 10 mV rms sine about OCP passes no net charge to first order ([`protocol.md`](protocol.md) §4) |
+| **Illustrative** | The Nyquist plot that appears in the close-up during the EIS: a Randles circuit with R_u 60 Ω from [`sim_well.py`](sim_well.py), R_p 48.8 kΩ from `sim_well_hf.py`'s LPR on C71500, and the 30 µF/cm² double layer `sim_well_hf.py` assumes. It shows what EIS returns, not a measurement, and the well model does not compute it |
 | **Schematic** | The PROVerXL 4030 V2 frame, gantry, carriage and tool plate, the P20 body, the camera and the driver boards: right proportions, not measured |
 
 Motion is eased between real waypoints at real carriage heights, but the timing is compressed: a
 gantry move takes about a second, a fill is shown as one transfer for seven, and the 52 min
 measurement takes 10 s.
 
-To render it again (about 15 min on the runner's four cores, in two parallel halves):
+To render it again (about 15 min on the runner's four cores, in two parallel halves; on
+2026-10-28, four parts took 6 min). The capper's STEP files stayed in byu-vcl: fetch them as in
+[`keyframes/README.md`](keyframes/README.md#commands) and add `--capper-cad /tmp/byu-vcl-capper-cad`
+to every render line below.
 
 ```bash
 pip install numpy scipy matplotlib pyvista vtk gmsh imageio imageio-ffmpeg pillow cadquery

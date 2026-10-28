@@ -176,14 +176,14 @@ That is 9 tubes with the stock blank, and at least 17 tips (`timing`).
 
 Notes on EIS (step 5):
 
-- **The settings follow the bulk-cell papers on these alloys**, all at open circuit in chloride,
-  after 10 min to 3 h at OCP ([c1-02]): 10 mV and 100 kHz–5 mHz on 70/30 Cu–Ni in nine-salt
-  simulated seawater at pH 8.2 (Yuan 2007); 10 mV and 100 kHz–10 mHz on C71500 in NaCl with
-  sulfide (Gao 2022), on wire-arc 70/30 Cu–Ni (Song 2024, rms), on wire-arc and cast NAB
-  (Shahriari 2023) and on cast NAB (Tan 2024); 5 mV on cast C95800 (Ding 2019). The nearest to a
-  well is Luo 2026: 10 mV and 100 kHz–0.1 Hz on a 0.06 cm² NAB anode in D1141-type seawater, after
-  10 min at OCP. None used a cell this small, so the window is checked on the reference coupons
-  first (§5), as [c1-02] advises.
+- **The settings follow the bulk-cell papers on these alloys**, all at open circuit in chloride, on
+  fresh surfaces after 10 min to 3 h at OCP or after days of immersion ([c1-02]): 10 mV and 100
+  kHz–5 mHz on 70/30 Cu–Ni in nine-salt simulated seawater at pH 8.2 (Yuan 2007); 10 mV and 100
+  kHz–10 mHz on C71500 in NaCl with sulfide (Gao 2022), on wire-arc 70/30 Cu–Ni (Song 2024, rms), on
+  wire-arc and cast NAB (Shahriari 2023) and on cast NAB (Tan 2024); 5 mV on cast C95800 (Ding
+  2019). The nearest to a well is Luo 2026: 10 mV and 100 kHz–0.1 Hz on a 0.06 cm² NAB anode in
+  D1141-type seawater, after 10 min at OCP. None used a cell this small, so the window is checked on
+  the reference coupons first (§5), as [c1-02] advises.
 - **Why 20 min of OCP is enough first.** In [`sim_well_hf.py`](sim_well_hf.md) the well's E_corr
   on C71500 moves 0.5 mV over minutes 15–30, a twentieth of the amplitude. The sweep runs from high
   to low frequency, so the slow points, which drift spoils, come last.
@@ -200,13 +200,14 @@ Notes on EIS (step 5):
 - **The 10 mHz end.** For R_p of 400 to 50,000 Ω·cm² and the simulation's assumed 30 µF/cm² double
   layer, a Randles arc peaks between 13 and 0.1 Hz, and at 10 mHz Z′ has reached at least 99 % of
   R_p (`eis`). Films and transport add slower arcs, so the low end stays at 10 mHz.
-- **The instrument.** 10 mV rms drives 167 µA rms through R_u at 100 kHz and 13 nA to 1.6 µA rms
-  at 10 mHz, so the potentiostat must autorange over four decades within one sweep (`eis`). EIS
-  runs only on the requested potentiostat: the EZstat-Pro lent by Dr. Porter, now on the gantry,
-  has no impedance. Until the new instrument arrives, skip step 5 and run step 4 for 30 min, which
-  is the sequence from before EIS was added. If it needs two cycles per frequency, the sweep takes
-  16.5 min; five points per decade below 1 Hz bring it back to 9.4 min. The EmStat Pico of the BOM
-  stops at 16 mHz ([`../README.md` §5](../README.md#5-which-potentiostat-what-corrosion-needs-input-for-231)).
+- **The instrument.** 10 mV rms drives 167 µA rms through R_u at 100 kHz and 13 nA to 1.6 µA rms at
+  10 mHz, so the potentiostat must autorange over four decades within one sweep (`eis`). EIS runs
+  only on the requested potentiostat: the EZstat-Pro lent by Dr. Porter, now on the gantry, has no
+  impedance. Until the new instrument arrives, skip step 5 and run step 4 for 30 min, which is the
+  sequence from before EIS was added. On an instrument that needs two cycles per frequency the sweep
+  takes 16.5 min; five points per decade below 1 Hz bring it back to 9.4 min. The EmStat Pico of the
+  BOM stops at 16 mHz
+  ([`../README.md` §5](../README.md#5-which-potentiostat-what-corrosion-needs-input-for-231)).
 
 Notes on the rest:
 

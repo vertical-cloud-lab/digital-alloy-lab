@@ -68,7 +68,9 @@ second path is the Al- and Fe-rich phases, which is also what Ding 2019 saw atta
 ## Results: the well against its bulk cell
 
 The protocol's main sequence (OCP 30 min, LPR ±10 mV at 0.167 mV/s, rest 5 min, +50 mV hold
-10 min, OCP 5 min), 150 µL of D1141 seawater, cap B (reference tip 3.0 mm up).
+10 min, OCP 5 min), 150 µL of D1141 seawater, cap B (reference tip 3.0 mm up). Since 2026-10-28
+the protocol splits the 30 min at open circuit into 20 min of OCP and 10 min of EIS at OCP. The
+model has no AC and treats both as open circuit ([`protocol.md`](protocol.md) §4, notes on EIS).
 
 | | C70600 | C71500 | C95800 (NAB) |
 | --- | --- | --- | --- |
