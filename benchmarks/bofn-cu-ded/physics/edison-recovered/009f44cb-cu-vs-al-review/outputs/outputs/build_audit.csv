@@ -1,0 +1,9 @@
+policy,new_builds_per_run,tensile_per_run,immersed_per_run,complete_per_run,immersion_pass_per_run,positive_failing_immersion,screenfail_per_run,utahfail_per_run,retired_per_run
+pkgfn,40.5,7.2,12.85,6.15,4.5,6,0.0,0.0,0.45
+eifn,21.0,21.0,21.0,21.0,7.5,50,0.0,0.0,0.0
+eifn_reuse,29.3,29.3,29.3,29.3,11.1,85,0.0,0.0,0.0
+ei,21.0,21.0,21.0,21.0,1.55,215,0.0,0.0,0.0
+random,21.0,21.0,21.0,21.0,1.0,3,0.0,0.0,0.0
+tiered,24.85,24.85,4.0,4.0,0.0,0,20.85,34.7,7.95
+tiered_ni,18.35,18.35,2.55,2.55,0.75,17,15.8,58.5,17.55
+tiered_ni_ref,21.15,21.15,9.9,9.9,2.65,52,11.25,44.4,12.6

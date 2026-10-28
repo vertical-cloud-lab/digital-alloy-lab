@@ -1,0 +1,64 @@
+1: """Where the copper needle is: composition or process? (compare/needle.json)
+2: 
+3: For each truth: (1) at the optimum's composition, the share of random (a, P, v) settings within 60% of
+4: the optimum; (2) at the optimum's settings, the share of random compositions; (3) the share of random
+5: compositions whose best settings (over 2,048) reach 60%; and for copper the share of random designs whose
+6: deposit is dense enough to pass immersion if the composition allowed it.
+7: """
+8: 
+9: from __future__ import annotations
+10: 
+11: import json
+12: import sys
+13: from pathlib import Path
+14: 
+15: import torch
+16: 
+17: HERE = Path(__file__).parent
+18: sys.path.insert(0, str(HERE))
+19: from landscape import CU, al, cu  # noqa: E402
+20: 
+21: torch.set_default_dtype(torch.double)
+22: 
+23: 
+24: def main():
+25:     g = torch.Generator().manual_seed(7)
+26:     opt_a = json.loads((HERE / "al_optimum.json").read_text())["kappa1"]
+27:     tt = json.loads((CU / "truth_tables.json").read_text())
+28:     r11 = next(r for r in tt if (r["kappa"], r["eta"]) == (1.0, 1.0))
+29:     opt_c, x_c = r11["optimum"], torch.tensor(r11["x_opt"])
+30:     ta, tc = al.AlloyTruth(1.0), cu.AlloyTruth(1.0, 1.0)
+31:     # aluminum optimum (bofn-prelim README): Zn+Mg 0.65, Cu 0.60, Zr 1.00, Sc 0, a 0.47, P 0.23, v 0
+32:     x_a = torch.tensor([0.65, 0.60, 1.00, 0.0, 0.47, 0.23, 0.0])
+33:     out = {}
+34:     for name, t, x0, opt in (("aluminum (kappa = 1)", ta, x_a, opt_a), ("copper (1, 1)", tc, x_c, opt_c)):
+35:         n = 200_000
+36:         apv = torch.rand(n, 3, generator=g)
+37:         comp = torch.rand(n, 4, generator=g)
+38:         y_proc = t.objective(torch.cat([x0[:4].expand(n, 4), apv], -1)) / opt  # optimum composition, random settings
+39:         y_comp = t.objective(torch.cat([comp, x0[4:].expand(n, 3)], -1)) / opt  # random composition, optimum settings
+40:         grid = torch.quasirandom.SobolEngine(3, scramble=True, seed=5).draw(2048).double()
+41:         best = []
+42:         for c in comp[:3000]:
+43:             best.append(float(t.objective(torch.cat([c.expand(grid.shape[0], 4), grid], -1)).max() / opt))
+44:         best = torch.tensor(best)
+45:         out[name] = {"value_at_optimum_check": float(t.objective(x0.unsqueeze(0))[0] / opt),
+46:                      "optimum composition, random settings: share >= 60%": float((y_proc >= 0.6).double().mean()),
+47:                      "optimum composition, random settings: share > 0": float((y_proc > 0).double().mean()),
+48:                      "random composition, optimum settings: share >= 60%": float((y_comp >= 0.6).double().mean()),
+49:                      "random composition, its best of 2,048 settings: share >= 60%": float((best >= 0.6).double().mean()),
+50:                      "random composition, its best of 2,048 settings: share > 0": float((best > 0).double().mean())}
+51:     # copper: is it the composition or the deposit that fails immersion?
+52:     X = torch.rand(400_000, cu.D, generator=g)
+53:     o = tc.full(X)
+54:     m_dense = (o["m"] + 0.30 * (1 - o["rho_m"])).clamp(0, 1)  # the same build had it deposited fully dense (beta unchanged)
+55:     out["copper (1, 1)"]["random designs passing immersion"] = float((o["m"] >= tc.m_ref).double().mean())
+56:     out["copper (1, 1)"]["random designs that would pass if deposited fully dense"] = float((m_dense >= tc.m_ref).double().mean())
+57:     out["copper (1, 1)"]["random designs with rho_m >= 0.9"] = float((o["rho_m"] >= 0.9).double().mean())
+58:     out["copper (1, 1)"]["immersion index lost per 0.1 of rho_m (gate scale 0.05)"] = 0.03
+59:     (HERE / "needle.json").write_text(json.dumps(out, indent=1))
+60:     print(json.dumps(out, indent=1))
+61: 
+62: 
+63: if __name__ == "__main__":
+64:     main()

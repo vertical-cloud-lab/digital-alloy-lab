@@ -1,0 +1,748 @@
+1: """Sampling policies compared on the synthetic copper/DED alloy network, all on equal $ budgets.
+2: 
+3: Every policy starts from the same data (CALPHAD on 32 compositions plus five
+4: random designs carried through every stage, Utah included) and is scored by the
+5: true objective of the best design deposited at Mines and carried through tensile
+6: and immersion ("best alloy demonstrated"). Two secondary metrics: the printed
+7: alloy the policy's own model ranks best (`rec_printed`) and, if BOFN_REC is set,
+8: the paper's recommender (`rec`, the argmax of the network posterior mean).
+9: """
+10: 
+11: from __future__ import annotations
+12: 
+13: import hashlib
+14: import os
+15: import time
+16: 
+17: import torch
+18: 
+19: import bofn_alloy
+20: from bofn_alloy import (
+21:     COMP,
+22:     COSTS,
+23:     D,
+24:     F_SAFE,
+25:     FULL_COST,
+26:     GROUPS,
+27:     IA,
+28:     IAL,
+29:     IFE,
+30:     IMN,
+31:     INI,
+32:     IPV,
+33:     LAMBDA,
+34:     M_FIRST,
+35:     P_CAP,
+36:     SPEC,
+37:     AlloyTruth,
+38:     Data,
+39:     Lab,
+40:     Network,
+41:     TinyGP,
+42:     burden,
+43:     design_of_build,
+44:     gauss_hermite,
+45:     local_perturb,
+46:     sig,
+47:     sobol,
+48:     transform,
+49: )
+50: 
+51: N_CALPHAD0, N_FULL0 = 32, 5
+52: SCREEN_N, SCREEN_TOP = 256, 4
+53: RHO_GATE = 0.5  # the screening policies' Utah density gate ("small blocks reach the density target")
+54: UTAH_SCAN = (0.25, 0.45, 0.65)  # the careful lab's Utah process scan: travel speeds at Utah's full (capped) power
+55: UTAH_TRIES = len(UTAH_SCAN)  # a lot that misses the density gate at all three is retired
+56: W_QUANTILE = 0.75  # the one-hour screen gate: immersion only for builds in the top quartile of screened builds
+57: NEAR = {"A": 0.03, "M": 0.05, "I": 0.03}  # "just either side of each cutoff" for the audit
+58: FUNNEL_K = (12, 6, 3, 3)  # fixed top-k at the CALPHAD, powder, Utah and screen gates
+59: NI_FLOOR = 10.0 / 30.0  # corrosion-aware tiered screening: at least 10 wt% Ni (the 90-10 Cu-Ni seawater floor), on the 0-30 wt% axis
+60: SCREEN_REF = "C70600 (90-10 Cu-Ni)"  # tiered_ni_ref: immerse a build whose one-hour screen is at least this reference coupon's
+61: NC = len(COMP)
+62: S_REC = 64
+63: # pKGFN Monte Carlo settings. The defaults are the aluminum benchmark's production settings (bofn-prelim:
+64: # 64 base samples, 16 candidates per stage, a 512-design Sobol pool, 32 + 16 anchors, 24 perturbations of
+65: # each of the 8 best designs). The first copper sweep ran lighter (32, 10, 256, 24 + 12, 16); those runs
+66: # are kept in quality/results-light/.
+67: S_ACQ = int(os.environ.get("BOFN_SACQ", 64))  # MC base samples inside pKGFN
+68: N_CAND = int(os.environ.get("BOFN_NCAND", 16))  # candidates per stage scored by pKGFN each iteration
+69: N_POOL = int(os.environ.get("BOFN_NPOOL", 512))  # Sobol designs in the per-iteration pool
+70: N_ANCHOR = tuple(int(v) for v in os.environ.get("BOFN_NANCHOR", "32,16").split(","))  # top posterior-mean, top-EI designs in the inner-max set
+71: N_PERTURB = int(os.environ.get("BOFN_NPERTURB", 24))  # local perturbations of each of the 8 best pool designs
+72: CODE_VERSION = "2026-10-27"  # fallback EI test without the tie-break; inner set anchored on every deposited design, deduplicated
+73: REC = bool(os.environ.get("BOFN_REC"))  # the paper's (slow, noisy) recommender metric; off by default
+74: TAIL = COSTS["S"] + COSTS["T"] + COSTS["K"] + COSTS["I"]  # $750 of tests after a Mines build
+75: PKGFN_KINDS = ("pkgfn", "pkgfn_screen", "pkgfn_audit", "mines_only")
+76: KG_HOOK = None  # quality/mc_noise.py sets this to re-score each KG with other base samples
+77: 
+78: 
+79: def initial_data(truth, seed):
+80:     d = Data()
+81:     lab = Lab(truth, d)
+82:     for c in sobol(N_CALPHAD0, NC, seed=1000 + seed):
+83:         lab.calphad(c)
+84:     g = torch.Generator().manual_seed(2000 + seed)
+85:     for x in torch.rand(N_FULL0, D, generator=g):
+86:         lab.full_eval(x)
+87:     d.spent = 0.0  # seed data is shared and sunk; budgets count new spend only
+88:     d.log = []  # and purchase counts are new purchases only
+89:     return d, lab
+90: 
+91: 
+92: def eps_for(m, S, seed):
+93:     g = torch.Generator().manual_seed(seed)
+94:     return {n: torch.randn(m, S, generator=g) for n in SPEC}
+95: 
+96: 
+97: def recommend(net: Network, d: Data, truth: AlloyTruth, it: int):
+98:     """True objective at argmax of the network posterior mean (paper's metric)."""
+99:     g = torch.Generator().manual_seed(77 + it)
+100:     pool = [sobol(1024, D, seed=it)]
+101:     if d.full:
+102:         pool.append(torch.stack([x for x, _ in d.full]))
+103:     if d.builds:
+104:         pool.append(torch.stack([design_of_build(d, j) for j in range(len(d.builds))]))
+105:     P = torch.cat(pool)
+106:     nu = net.mean(P, eps_for(P.shape[0], S_REC, 5))
+107:     for _ in range(2):
+108:         top = P[nu.topk(8).indices]
+109:         Q = local_perturb(top, 32, 0.04, g)
+110:         nq = net.mean(Q, eps_for(Q.shape[0], S_REC, 5))
+111:         P, nu = torch.cat([P, Q]), torch.cat([nu, nq])
+112:     xr = P[nu.argmax()]
+113:     return float(truth.objective(xr.unsqueeze(0))[0]), xr
+114: 
+115: 
+116: class Recorder:
+117:     def __init__(self, truth, d):
+118:         self.truth, self.d = truth, d
+119:         self.rows = []
+120: 
+121:     def __call__(self, net, it, action):
+122:         if REC:
+123:             rec, xr = recommend(net, self.d, self.truth, it)
+124:         else:
+125:             rec, xr = float("nan"), torch.zeros(D)
+126:         best = max(v for _, v in self.d.full) if self.d.full else float("nan")
+127:         # best deposited alloy by the model (tested or not), scored by its true value
+128:         Xb = torch.stack([design_of_build(self.d, j) for j in range(len(self.d.builds))])
+129:         nub = net.mean(Xb, eps_for(Xb.shape[0], S_REC, 6))
+130:         printed = float(self.truth.objective(Xb[nub.argmax()].unsqueeze(0))[0])
+131:         self.rows.append(
+132:             {"spent": self.d.spent, "rec": rec, "best_validated": best, "rec_printed": printed, "action": action, "x_rec": [round(v, 4) for v in xr.tolist()]}
+133:         )
+134: 
+135: 
+136: def w_gate(d: Data):
+137:     """The one-hour screen's gate: the top quartile of every screened build so far (seed builds included)."""
+138:     return float(torch.tensor(d.obs["w"][1]).quantile(W_QUANTILE))
+139: 
+140: 
+141: _W_REF = {}
+142: 
+143: 
+144: def w_reference(truth: AlloyTruth):
+145:     """One-hour screen index of the SCREEN_REF reference coupon deposited dense (its densest build over
+146:     16,384 settings), as a lab would measure it alongside its builds; it passes immersion in every cell."""
+147:     key = (truth.kappa, truth.eta)
+148:     if key not in _W_REF:
+149:         c = torch.tensor(bofn_alloy.REFERENCE[SCREEN_REF])
+150:         apv = torch.quasirandom.SobolEngine(3, scramble=True, seed=0).draw(16384).double()
+151:         o = truth.full(torch.cat([c.expand(apv.shape[0], 4), apv], -1))
+152:         _W_REF[key] = float(o["w"][o["rho_m"].argmax()])
+153:     return _W_REF[key]
+154: 
+155: 
+156: def network_ei_pool(net, d, P, eps, best):
+157:     smp = net.samples(P, eps)
+158:     return (smp - best).clamp_min(0).mean(-1), smp.mean(-1)
+159: 
+160: 
+161: # --------------------------------------------------------------------------- full-evaluation policies
+162: def expected_improvement(gp, P, best):
+163:     m, v = gp.post_std(P)
+164:     mu, sd = m * gp.ys + gp.ym, v.sqrt() * gp.ys
+165:     z = (mu - best) / sd
+166:     nrm = torch.distributions.Normal(0.0, 1.0)
+167:     return sd * (z * nrm.cdf(z) + nrm.log_prob(z).exp())
+168: 
+169: 
+170: def calphad_shortlist(d, lab, seed, top=SCREEN_TOP, ni_floor=None):
+171:     """Stage 1 of tiered screening: simulate SCREEN_N compositions, keep the `top`
+172:     strongest that CALPHAD predicts crack-free (solidification index at or below
+173:     F_SAFE), net of the critical-mineral penalty. On this network that shortlist is
+174:     aluminum bronzes with 2 to 6 wt% Ni, which the 30-day immersion test fails.
+175: 
+176:     With `ni_floor` (corrosion-aware tiered screening, `tiered_ni`), only compositions with at
+177:     least that much nickel are eligible. So few of them pass the crack screen (none in 14 of 20
+178:     seeds at 10 wt%) that the rule needs a decision: when fewer than `top` pass, the shortlist is
+179:     filled with the eligible compositions CALPHAD rates least crack-prone (lowest f), i.e. the
+180:     crack screen becomes a ranking rather than a cutoff."""
+181:     for c in sobol(SCREEN_N, NC, seed=4000 + seed)[: SCREEN_N - N_CALPHAD0]:
+182:         lab.calphad(c)
+183:     comps = torch.tensor([list(k) for k in d.calphad])
+184:     s = torch.tensor([v["s"] for v in d.calphad.values()])
+185:     f = torch.tensor([v["f"] for v in d.calphad.values()])
+186:     fom = s - LAMBDA * burden(torch.cat([comps, torch.zeros(len(comps), D - NC)], -1))
+187:     eligible = comps[:, INI] >= ni_floor - 1e-12 if ni_floor is not None else torch.ones(len(comps), dtype=torch.bool)
+188:     fom = torch.where((f <= F_SAFE) & eligible, fom, torch.full_like(fom, -9.0))
+189:     order = fom.argsort(descending=True)
+190:     order = order[fom[order] > -9.0][:top]
+191:     if ni_floor is not None and len(order) < top:
+192:         rest = torch.where(eligible & (f > F_SAFE))[0]
+193:         order = torch.cat([order, rest[f[rest].argsort()][: top - len(order)]])
+194:     return comps[order], comps, fom, f
+195: 
+196: 
+197: def lab_gp(rows):
+198:     return TinyGP(torch.stack([x for x, _ in rows]), torch.tensor([y for _, y in rows]))
+199: 
+200: 
+201: def lot_passed_utah(L):
+202:     return any(r >= RHO_GATE for _, _, r in L["utah"])
+203: 
+204: 
+205: def chain(lab, d, lot, pv, need_utah, rows, w_ref=None):
+206:     """The careful lab's chain on one lot at settings pv: Utah unless the lot already passed the
+207:     density gate, then Mines, microscopy, tensile, the screen, and immersion if the screen passes
+208:     (top quartile of screened builds, or with `w_ref` at least the reference coupon's screen index).
+209:     Appends the lab's own record (x, y) to rows, with a proxy value for a stopped chain. Returns the
+210:     action label."""
+211:     L = d.lots[lot]
+212:     if need_utah:
+213:         # the small step scans travel speed at Utah's full (capped) power, one setting per visit
+214:         pu = [P_CAP, UTAH_SCAN[len(L["utah"]) % len(UTAH_SCAN)]]
+215:         r = lab.utah(lot, pu)
+216:         if r < RHO_GATE:
+217:             xu = torch.cat([L["c"], torch.tensor([L["a"]] + pu)])
+218:             rows.append((xu, -LAMBDA * float(burden(xu))))  # did not deposit dense: recorded as a failure
+219:             return "utah-fail"
+220:     if not any(B["lot"] == lot for B in d.builds):
+221:         pv = list(max(L["utah"], key=lambda t: t[2])[:2])  # the first Mines build on a lot uses the setting that passed at Utah
+222:     x = torch.cat([L["c"], torch.tensor([L["a"]] + [float(v) for v in pv])])
+223:     b = lab.mines(lot, pv)
+224:     lab.microscopy(b)
+225:     U = lab.tensile(b)
+226:     w = lab.screen(b)
+227:     gate = w_gate(d) if w_ref is None else w_ref
+228:     if w >= gate:
+229:         lab.immersion(b)
+230:         rows.append((x, d.builds[b]["J"]))
+231:         return "full"
+232:     rows.append((x, U * float(sig(torch.tensor((w - gate) / 0.05))) - LAMBDA * float(burden(x))))  # the screen stands in for immersion
+233:     return "screen-fail"
+234: 
+235: 
+236: def run_funnel_stages(lab, d, comps, fom, fvals, rows):
+237:     """A fixed top-k funnel at every gate (CALPHAD, powder, Utah, screen); returns the finalist
+238:     compositions and the record of what each gate kept and rejected."""
+239:     k1, k2, k3, k4 = FUNNEL_K
+240:     gates = []
+241:     order = fom.argsort(descending=True).tolist()
+242:     keep = [i for i in order if float(fom[i]) > -9.0][:k1]
+243:     gates.append({"gate": "CALPHAD", "rule": f"top {k1} by s - 0.3 B with f <= {F_SAFE}", "kept": [comps[i].tolist() for i in keep],
+244:                   "rejected": [comps[i].tolist() for i in order if i not in keep]})
+245:     lots = [lab.atomize(comps[i], torch.tensor(0.5)) for i in keep]
+246:     qs = sorted(lots, key=lambda l: -d.lots[l]["q"])
+247:     keep2 = qs[:k2]
+248:     gates.append({"gate": "powder", "rule": f"top {k2} of {len(lots)} lots by q (atomized at a = 0.5)", "kept": [d.lots[l]["c"].tolist() for l in keep2],
+249:                   "rejected": [d.lots[l]["c"].tolist() for l in qs[k2:]]})
+250:     best = {}
+251:     for l in keep2:
+252:         best[l] = max((lab.utah(l, [0.5, v]), v) for v in (0.25, 0.45, 0.65))
+253:     us = sorted(keep2, key=lambda l: -best[l][0])
+254:     keep3 = us[:k3]
+255:     gates.append({"gate": "Utah", "rule": f"top {k3} of {len(keep2)} lots by the best of three small-DED settings", "kept": [d.lots[l]["c"].tolist() for l in keep3],
+256:                   "rejected": [d.lots[l]["c"].tolist() for l in us[k3:]]})
+257:     builds = []
+258:     for l in keep3:
+259:         v = best[l][1]
+260:         for pv in ([0.5, v], [0.75, min(v + 0.25, 1.0)]):
+261:             b = lab.mines(l, pv)
+262:             lab.microscopy(b)
+263:             lab.tensile(b)
+264:             lab.screen(b)
+265:             builds.append(b)
+266:     ws = sorted(builds, key=lambda b: -d.builds[b]["w"])
+267:     keep4 = ws[:k4]
+268:     for b in builds:
+269:         x = design_of_build(d, b)
+270:         B = d.builds[b]
+271:         if b in keep4:
+272:             lab.immersion(b)
+273:             rows.append((x, B["J"]))
+274:         else:
+275:             rows.append((x, B["U"] * float(sig(torch.tensor((B["w"] - d.builds[keep4[-1]]["w"]) / 0.05))) - LAMBDA * float(burden(x))))
+276:     gates.append({"gate": "screen", "rule": f"top {k4} of {len(builds)} Mines builds by the one-hour screen go to immersion",
+277:                   "kept": [design_of_build(d, b).tolist() for b in keep4], "rejected": [design_of_build(d, b).tolist() for b in ws[k4:]]})
+278:     return torch.stack([d.lots[l]["c"] for l in keep3]), gates
+279: 
+280: 
+281: def run_full_policy(kind, truth, seed, budget):
+282:     d, lab = initial_data(truth, seed)
+283:     rec = Recorder(truth, d)
+284:     net = Network(d)
+285:     lab.net = net
+286:     rec(net, 0, "init")
+287:     g = torch.Generator().manual_seed(3000 + seed)
+288:     it = 0
+289:     rows = list(d.full)  # the lab's own records for tiered screening and the funnel
+290:     gates = None
+291:     w_ref = w_reference(truth) if kind == "tiered_ni_ref" else None
+292:     if kind in ("tiered", "tiered_ni", "tiered_ni_ref", "funnel"):
+293:         shortlist, comps, fom, fvals = calphad_shortlist(d, lab, seed, ni_floor=NI_FLOOR if kind in ("tiered_ni", "tiered_ni_ref") else None)
+294:         net = Network(d)
+295:         lab.net = net
+296:         it += 1
+297:         rec(net, it, "C-screen")
+298:         if kind == "funnel":
+299:             shortlist, gates = run_funnel_stages(lab, d, comps, fom, fvals, rows)
+300:             net = Network(d)
+301:             lab.net = net
+302:             it += 1
+303:             rec(net, it, "funnel")
+304:     reuse = kind in ("tiered", "tiered_ni", "tiered_ni_ref", "funnel", "eifn_reuse")
+305:     cheapest = COSTS["M"] + TAIL if reuse else FULL_COST
+306:     while d.spent + cheapest <= budget:
+307:         it += 1
+308:         left = budget - d.spent
+309:         X = torch.stack([x for x, _ in d.full])
+310:         y = torch.tensor([v for _, v in d.full])
+311:         if kind == "eifn_reuse":
+312:             # ablation: network EI per dollar over new designs and new Mines sessions on
+313:             # existing lots (partial evaluation without KG's stage choice; every remaining stage runs)
+314:             best = float(y.max())
+315:             Pn = torch.cat([sobol(1024, D, seed=it + 50 * seed), local_perturb(X, 16, 0.05, g)])
+316:             pools, lots = [Pn], [-1] * Pn.shape[0]
+317:             costs = [torch.full((Pn.shape[0],), FULL_COST)]
+318:             for i, L in enumerate(d.lots):
+319:                 pv = sobol(64, 2, seed=it + 50 * seed + i)
+320:                 pools.append(torch.cat([L["c"].expand(64, NC), torch.full((64, 1), L["a"]), pv], -1))
+321:                 costs.append(torch.full((64,), lab.mines_cost(i) + TAIL))
+322:                 lots += [i] * 64
+323:             P, cost = torch.cat(pools), torch.cat(costs)
+324:             ei, _ = network_ei_pool(net, d, P, eps_for(P.shape[0], 64, it), best)
+325:             score = ei / cost
+326:             score[cost > left] = -1.0
+327:             j = int(score.argmax())
+328:             if float(score[j]) < 0:
+329:                 break
+330:             if lots[j] >= 0:
+331:                 b = lab.mines(lots[j], P[j, IPV])
+332:                 lab.microscopy(b)
+333:                 lab.tensile(b)
+334:                 lab.screen(b)
+335:                 lab.immersion(b)
+336:             else:
+337:                 lab.full_eval(P[j])
+338:             net = Network(d)
+339:             lab.net = net
+340:             rec(net, it, "reuse" if lots[j] >= 0 else "full")
+341:             continue
+342:         if reuse:
+343:             # Stage 2, done the way a careful lab would: EI on its own records over the
+344:             # shortlist only, reusing each lot (and its scale-up) across sessions.
+345:             gp = lab_gp(rows)
+346:             pools, costs, lots, needs = [], [], [], []
+347:             for c in shortlist:
+348:                 for i, L in enumerate(d.lots):
+349:                     if torch.allclose(L["c"], c):
+350:                         if not lot_passed_utah(L) and len(L["utah"]) >= UTAH_TRIES:
+351:                             continue  # retired: this powder does not deposit dense at Utah
+352:                         pv = sobol(64, 2, seed=it + 50 * seed + i)
+353:                         pools.append(torch.cat([c.expand(64, NC), torch.full((64, 1), L["a"]), pv], -1))
+354:                         passed = lot_passed_utah(L)
+355:                         costs.append(torch.full((64,), (0.0 if passed else COSTS["U"]) + lab.mines_cost(i) + TAIL))
+356:                         lots += [i] * 64
+357:                         needs += [not passed] * 64
+358:                 if kind in ("tiered", "tiered_ni", "tiered_ni_ref"):  # a new lot of a shortlisted composition
+359:                     apv = sobol(128, 3, seed=it + 50 * seed)
+360:                     pools.append(torch.cat([c.expand(128, NC), apv], -1))
+361:                     costs.append(torch.full((128,), COSTS["A"] + COSTS["U"] + M_FIRST + TAIL))
+362:                     lots += [-1] * 128
+363:                     needs += [True] * 128
+364:             if not pools:
+365:                 break
+366:             P, cost = torch.cat(pools), torch.cat(costs)
+367:             score = expected_improvement(gp, P, max(v for _, v in rows))
+368:             score[cost > left] = -1.0
+369:             j = int(score.argmax())
+370:             if float(score[j]) < 0:
+371:                 break
+372:             if lots[j] >= 0:
+373:                 action = chain(lab, d, lots[j], P[j, IPV], needs[j], rows, w_ref)
+374:             else:
+375:                 lot = lab.atomize(P[j, COMP], P[j, IA])
+376:                 action = chain(lab, d, lot, P[j, IPV], True, rows, w_ref)
+377:             net = Network(d)
+378:             lab.net = net
+379:             rec(net, it, action)
+380:             continue
+381:         if kind == "random":
+382:             x = torch.rand(D, generator=g)
+383:         elif kind == "ei":
+384:             gp = TinyGP(X, y)
+385:             P = torch.cat([sobol(2048, D, seed=it + 50 * seed), local_perturb(X[y.topk(min(5, len(y))).indices], 64, 0.05, g)])
+386:             x = P[expected_improvement(gp, P, y.max()).argmax()]
+387:         elif kind == "eifn":
+388:             best = float(y.max())
+389:             P = torch.cat([sobol(1024, D, seed=it + 50 * seed), local_perturb(X, 16, 0.05, g)])
+390:             ei, _ = network_ei_pool(net, d, P, eps_for(P.shape[0], 64, it), best)
+391:             Q = local_perturb(P[ei.topk(8).indices], 32, 0.03, g)
+392:             eq, _ = network_ei_pool(net, d, Q, eps_for(Q.shape[0], 64, it), best)
+393:             P, ei = torch.cat([P, Q]), torch.cat([ei, eq])
+394:             x = P[ei.argmax()]
+395:         else:
+396:             raise KeyError(kind)
+397:         lab.full_eval(x)
+398:         net = Network(d)
+399:         lab.net = net
+400:         rec(net, it, "full")
+401:     return rec.rows, d, {"gates": gates, "shortlist": shortlist.tolist() if kind in ("tiered", "tiered_ni", "tiered_ni_ref", "funnel") else None, "w_ref": w_ref}
+402: 
+403: 
+404: # --------------------------------------------------------------------------- pKGFN
+405: def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audit=False):
+406:     """pKGFN over the eight stages. `utah=False` removes the small-DED stage (`mines_only`).
+407:     `screens=True` makes it trust the screens (no atomizing a composition the CALPHAD crack
+408:     screen rejects, no Mines session on a lot that has not passed the Utah density gate, no
+409:     immersion on a build the one-hour screen stops); `audit=True` lets about one in ten stopped
+410:     candidates go on anyway, plus those just either side of each cutoff (Advance 5)."""
+411:     d, lab = initial_data(truth, seed)
+412:     rec = Recorder(truth, d)
+413:     net = Network(d)
+414:     lab.net = net
+415:     rec(net, 0, "init")
+416:     g = torch.Generator().manual_seed(5000 + seed)
+417:     gh_t, gh_w = gauss_hermite(10)
+418:     w1 = gh_t.unsqueeze(-1)
+419:     # 4-output CALPHAD fantasy: 2-point Gauss-Hermite product rule
+420:     pm = torch.tensor([-1.0, 1.0])
+421:     w4 = torch.cartesian_prod(pm, pm, pm, pm)
+422:     ww4 = torch.full((16,), 1 / 16)
+423:     it = 0
+424:     events = []
+425: 
+426:     def passes(kind_, key, value, cutoff, above=True):
+427:         """May a candidate go on past this screen? Returns (allowed, how)."""
+428:         ok = value >= cutoff if above else value <= cutoff
+429:         if not screens:
+430:             return True, "pass" if ok else "nogate"
+431:         if ok:
+432:             return True, "pass"
+433:         if audit:
+434:             if abs(value - cutoff) < NEAR[kind_]:
+435:                 return True, "near"
+436:             if int(hashlib.md5(f"{seed}:{kind_}:{key}".encode()).hexdigest(), 16) % 10 == 0:
+437:                 return True, "audit"
+438:         return False, "stopped"
+439: 
+440:     while d.spent + COSTS["C"] <= budget:
+441:         it += 1
+442:         t0 = time.time()
+443:         left = budget - d.spent
+444:         # ---- pool and anchoring set
+445:         Xv = torch.stack([x for x, _ in d.full])
+446:         P = torch.cat([sobol(N_POOL, D, seed=it + 100 * seed), local_perturb(Xv, 8, 0.05, g)])
+447:         nuP = net.mean(P, eps_for(P.shape[0], S_ACQ, 10_000 + it))
+448:         Q = local_perturb(P[nuP.topk(8).indices], N_PERTURB, 0.03, g)
+449:         nuQ = net.mean(Q, eps_for(Q.shape[0], S_ACQ, 20_000 + it))
+450:         P, nuP = torch.cat([P, Q]), torch.cat([nuP, nuQ])
+451:         smpP = net.samples(P, eps_for(P.shape[0], S_ACQ, 30_000 + it))
+452:         # candidates are ranked by network EI over the best alloy demonstrated so far, as in EIFN. (The
+453:         # aluminum version measured EI from the best posterior mean. On this network that is a pure-copper
+454:         # design whose immersion gate is shut, so every EI came out zero and one seed stopped after $4,750.)
+455:         inc = torch.tensor(max(v for _, v in d.full))
+456:         eiP = (smpP - inc).clamp_min(0).mean(-1)
+457:         # the inner max is anchored on every deposited design (the incumbent among them) as well as on the
+458:         # top posterior-mean and top-EI designs of the pool (Edison code review 42ee31fc, finding F2)
+459:         Xd = torch.stack([design_of_build(d, j) for j in range(len(d.builds))])
+460:         anchors = [Xd, P[nuP.topk(N_ANCHOR[0]).indices], P[eiP.topk(N_ANCHOR[1]).indices]]
+461:         cands, ei_of, smp_of, meta, costs = {}, {}, {}, {}, {}
+462:         # ---- CALPHAD candidates: compositions of promising designs, plus space filling
+463:         cx = torch.cat([P[eiP.topk(N_CAND - 4).indices], P[nuP.topk(4).indices]])
+464:         cx = torch.cat([cx, torch.cat([sobol(4, NC, seed=it + 7 * seed), cx[:4, NC:]], -1)])
+465:         cands["C"] = (cx[:, COMP], cx)
+466:         ei_of["C"] = eiP.topk(N_CAND - 4).values.tolist() + [0.0] * 8
+467:         # ---- atomization candidates: simulated compositions, best (a, P, v) for each
+468:         keys = list(d.calphad)
+469:         comps = torch.tensor([list(k) for k in keys])
+470:         fa = torch.tensor([d.calphad[k]["f"] for k in keys])
+471:         apv = sobol(48, 3, seed=it + 11 * seed)
+472:         PA = torch.cat([comps.unsqueeze(1).expand(-1, 48, -1), apv.unsqueeze(0).expand(len(comps), -1, -1)], -1)
+473:         sA = net.samples(PA.reshape(-1, D), eps_for(PA.shape[0] * 48, S_ACQ, 40_000 + it))
+474:         eiA = (sA - inc).clamp_min(0).mean(-1).reshape(len(comps), 48)
+475:         mA = sA.mean(-1).reshape(len(comps), 48)
+476:         best_apv = (eiA + 1e-9 * mA).argmax(1)  # the posterior mean breaks ties when EI is zero
+477:         score = eiA.gather(1, best_apv[:, None]).squeeze(1)
+478:         allowed = torch.tensor([passes("A", k, float(fa[i]), F_SAFE, above=False)[0] for i, k in enumerate(keys)])
+479:         rank = torch.where(allowed, score + 1e-9 * mA.gather(1, best_apv[:, None]).squeeze(1), torch.full_like(score, -float("inf")))
+480:         keep = rank.topk(min(N_CAND, int(allowed.sum()))).indices
+481:         if len(keep):
+482:             xa = PA[keep, best_apv[keep]]
+483:             za = torch.stack([xa[:, IA], xa[:, IMN], fa[keep]], -1)
+484:             cands["A"] = (za, xa)
+485:             ei_of["A"] = score[keep].tolist()
+486:             smp_of["A"] = sA.reshape(len(comps), 48, -1)[keep, best_apv[keep]]
+487:         # ---- small-DED (Utah) and large-DED (Mines) candidates: existing lots, promising (P, v) for each
+488:         if d.lots:
+489:             pv = sobol(32, 2, seed=it + 13 * seed)
+490:             xsU, zU, lotU, xsM, zM, lotM, cM = [], [], [], [], [], [], []
+491:             for i, L in enumerate(d.lots):
+492:                 cal = lab.calphad(L["c"])
+493:                 xs = torch.cat([L["c"].expand(32, NC), torch.full((32, 1), L["a"]), pv], -1)
+494:                 base = torch.cat([pv, torch.tensor([[cal["f"], cal["g"], cal["h"], L["q"]]]).expand(32, 4)], -1)
+495:                 if utah:
+496:                     xsU.append(xs)
+497:                     zU.append(transform("rho_u", base))
+498:                     lotU += [i] * 32
+499:                 allowed_m = True
+500:                 if screens and utah:
+501:                     best_u = max((r for _, _, r in L["utah"]), default=None)
+502:                     allowed_m = best_u is not None and passes("M", i, best_u, RHO_GATE)[0]  # the careful lab runs the small step first
+503:                 if allowed_m:
+504:                     rhat = net.gp["rho_u"].mean_raw(transform("rho_u", base))
+505:                     xsM.append(xs)
+506:                     zM.append(torch.cat([base, rhat.unsqueeze(-1)], -1))
+507:                     lotM += [i] * 32
+508:                     cM.append(torch.full((32,), lab.mines_cost(i)))
+509:             for grp, xs_, z_, lots_, c_, sd in (("U", xsU, zU, lotU, None, 50_000), ("M", xsM, zM, lotM, cM, 51_000)):
+510:                 if not xs_:
+511:                     continue
+512:                 Xg, Zg = torch.cat(xs_), torch.cat(z_)
+513:                 sG = net.samples(Xg, eps_for(Xg.shape[0], S_ACQ, sd + it))
+514:                 eiG = (sG - inc).clamp_min(0).mean(-1)
+515:                 # the posterior mean breaks ties for the ranking only; the fallback tests the raw EI (Edison F4)
+516:                 keep = (eiG + 1e-9 * sG.mean(-1)).topk(min(N_CAND, Xg.shape[0])).indices
+517:                 cands[grp] = (Zg[keep], Xg[keep])
+518:                 ei_of[grp] = eiG[keep].tolist()
+519:                 smp_of[grp] = sG[keep]
+520:                 meta[grp] = [lots_[k] for k in keep.tolist()]
+521:                 if c_ is not None:
+522:                     costs[grp] = torch.cat(c_)[keep]
+523:         # ---- test candidates: Mines builds at the next stage they have not had
+524:         gate = w_gate(d)
+525: 
+526:         def build_cands(grp, cond, zfun, sd):
+527:             idx = [j for j, B in enumerate(d.builds) if cond(j, B)]
+528:             if not idx:
+529:                 return
+530:             Z = torch.stack([zfun(j) for j in idx])
+531:             Xb = torch.stack([design_of_build(d, j) for j in idx])
+532:             sB = net.samples(Xb, eps_for(len(idx), S_ACQ, sd + it))
+533:             e = (sB - inc).clamp_min(0).mean(-1)
+534:             keep = (e + 1e-9 * sB.mean(-1)).topk(min(N_CAND, len(idx))).indices
+535:             cands[grp] = (Z[keep], Xb[keep])
+536:             ei_of[grp] = e[keep].tolist()
+537:             smp_of[grp] = sB[keep]
+538:             meta[grp] = [idx[k] for k in keep.tolist()]
+539: 
+540:         def binfo(j):
+541:             B = d.builds[j]
+542:             L = d.lots[B["lot"]]
+543:             return B, L, lab.calphad(L["c"])
+544: 
+545:         def z_beta(j):
+546:             B, L, cal = binfo(j)
+547:             return torch.tensor([float(L["c"][IAL]), float(L["c"][INI]), B["pv"][0], B["pv"][1], B["rho_m"]])
+548: 
+549:         def z_U(j):
+550:             B, L, cal = binfo(j)
+551:             return torch.tensor([cal["s"], B["rho_m"], B["beta"]])
+552: 
+553:         def z_corr(j, with_w=False):
+554:             B, L, cal = binfo(j)
+555:             return torch.tensor([float(L["c"][INI]), float(L["c"][IAL]), float(L["c"][IFE]), B["rho_m"], B["beta"]] + ([B["w"]] if with_w else []))
+556: 
+557:         build_cands("S", lambda j, B: B["beta"] is None, z_beta, 55_000)
+558:         build_cands("T", lambda j, B: B["beta"] is not None and B["U"] is None, z_U, 56_000)
+559:         build_cands("K", lambda j, B: B["beta"] is not None and B["w"] is None, lambda j: z_corr(j), 57_000)
+560:         build_cands("I", lambda j, B: B["w"] is not None and B["m"] is None and passes("I", j, B["w"], gate)[0], lambda j: z_corr(j, True), 58_000)
+561:         # ---- test bundles: one-step KG cannot see that microscopy's value is to unlock the tensile test and
+562:         # the screen, nor that the screen's is to unlock immersion. After a Mines build the policy therefore
+563:         # also prices the bundles S+T, S+K+I and K+I, each valued by the knowledge gradient of its last stage
+564:         # with the intermediate outputs plugged in at their posterior means (the aluminum version's lookahead).
+565:         kg_group = {"S+T": "T", "S+K+I": "I", "K+I": "I"}
+566: 
+567:         def z_U_hat(j):
+568:             B, L, cal = binfo(j)
+569:             beta_hat = float(net.gp["beta"].mean_raw(z_beta(j).unsqueeze(0))[0])
+570:             return torch.tensor([cal["s"], B["rho_m"], beta_hat])
+571: 
+572:         def z_m_hat(j, beta_known):
+573:             B, L, cal = binfo(j)
+574:             beta = B["beta"] if beta_known else float(net.gp["beta"].mean_raw(z_beta(j).unsqueeze(0))[0])
+575:             zc = torch.tensor([float(L["c"][INI]), float(L["c"][IAL]), float(L["c"][IFE]), B["rho_m"], beta])
+576:             w_hat = float(net.gp["w"].mean_raw(zc.unsqueeze(0))[0])
+577:             return torch.cat([zc, torch.tensor([w_hat])])
+578: 
+579:         build_cands("S+T", lambda j, B: B["beta"] is None, z_U_hat, 59_000)
+580:         build_cands("S+K+I", lambda j, B: B["beta"] is None, lambda j: z_m_hat(j, False), 59_500)
+581:         build_cands("K+I", lambda j, B: B["beta"] is not None and B["w"] is None, lambda j: z_m_hat(j, True), 59_800)
+582:         for key, c in (("S+T", COSTS["S"] + COSTS["T"]), ("S+K+I", COSTS["S"] + COSTS["K"] + COSTS["I"]), ("K+I", COSTS["K"] + COSTS["I"])):
+583:             if key in cands:
+584:                 costs[key] = torch.full((cands[key][0].shape[0],), c)
+585:         # ---- shared inner-max set (anchored on the incumbent) and CRN base samples
+586:         Xi = torch.unique(torch.cat(anchors + [v[1] for v in cands.values()]), dim=0)  # duplicates would get independent MC errors
+587:         eps = eps_for(Xi.shape[0], S_ACQ, 60_000 + it)
+588:         best = (None, -1.0, None)
+589:         kg_log = {}
+590: 
+591:         def cost_of(grp, Z):
+592:             return costs[grp] if grp in costs else torch.full((Z.shape[0],), COSTS[grp])
+593: 
+594:         for grp, (Z, Xz) in cands.items():
+595:             cv = cost_of(grp, Z)
+596:             if float(cv.min()) > left:
+597:                 continue
+598:             w, ww = (w4, ww4) if grp == "C" else (w1, gh_w)
+599:             kg = net.kg(kg_group.get(grp, grp), Z, Xi, eps, w, ww).clamp_min(0)
+600:             if KG_HOOK is not None:
+601:                 KG_HOOK(it, grp, net, kg_group.get(grp, grp), Z, Xi, eps, w, ww, cv, kg)
+602:             ratio = kg / cv
+603:             ratio[cv > left] = -1.0
+604:             j = int(ratio.argmax())
+605:             kg_log[grp] = float(kg[j])
+606:             if float(ratio[j]) > best[1]:
+607:                 best = (grp, float(ratio[j]), j)
+608:         grp, ratio, j = best
+609: 
+610:         def to_validation(k, i, c):
+611:             """This purchase plus the cheapest remaining path to a validated build (tensile and immersion)."""
+612:             if k == "A":
+613:                 return c + (COSTS["U"] if screens and utah else 0.0) + M_FIRST + TAIL
+614:             if k == "U":
+615:                 return c + lab.mines_cost(meta["U"][i]) + TAIL
+616:             if k == "M":
+617:                 return c + TAIL
+618:             B = d.builds[meta[k][i]]
+619:             done = set(k.split("+"))
+620:             rest = (COSTS["S"] if B["beta"] is None and "S" not in done else 0.0) + (COSTS["T"] if B["U"] is None and "T" not in done else 0.0)
+621:             if B["m"] is None and "I" not in done:
+622:                 rest += COSTS["I"] + (COSTS["K"] if B["w"] is None and "K" not in done else 0.0)
+623:             return c + rest
+624: 
+625:         if grp is None or ratio < 1e-10:
+626:             # KG is flat (no single result can move the incumbent on this discretization): fall back
+627:             # to network EI on the same candidates, as fast-pKGFN does to propose candidates, per
+628:             # dollar of the cheapest path to a validated build. (Dividing by the next stage's cost
+629:             # alone, as the aluminum version did, made the copper runs buy lot after lot and Utah
+630:             # session after session, since a design's EI only pays off once it is tested.)
+631:             fb = []
+632:             for k in ("A", "U", "M", "S", "T", "K", "I", "S+T", "S+K+I", "K+I"):
+633:                 if k not in cands:
+634:                     continue
+635:                 cv = cost_of(k, cands[k][0])
+636:                 for i, e in enumerate(ei_of[k][: len(cands[k][0])]):
+637:                     if float(cv[i]) <= left:
+638:                         fb.append((e / to_validation(k, i, float(cv[i])), float(smp_of[k][i].max()), k, i))
+639:             if not fb:
+640:                 break
+641:             pos = [t for t in fb if t[0] > 0]
+642:             # when no candidate has positive EI either, buy the one with the most optimistic posterior
+643:             # sample, so the policy never stops with money left
+644:             _, _, grp, j = max(pos) if pos else max(fb, key=lambda t: t[1])
+645:             kg_log["fallback"] = grp if pos else grp + " (optimistic)"
+646:         Z, Xz = cands[grp]
+647:         if grp == "C":
+648:             lab.calphad(Z[j])
+649:             changed = GROUPS["C"]
+650:         elif grp == "A":
+651:             lab.atomize(Xz[j, COMP], Xz[j, IA])
+652:             changed = ["q"]
+653:         elif grp == "U":
+654:             lab.utah(meta["U"][j], Xz[j, IPV])
+655:             changed = ["rho_u"]
+656:         elif grp == "M":
+657:             lab.mines(meta["M"][j], Xz[j, IPV], rho_u_in=float(Z[j, -1]))
+658:             changed = ["rho_m"]
+659:         elif grp == "S":
+660:             lab.microscopy(meta["S"][j])
+661:             changed = ["beta"]
+662:         elif grp == "T":
+663:             lab.tensile(meta["T"][j])
+664:             changed = ["U"]
+665:         elif grp == "K":
+666:             lab.screen(meta["K"][j])
+667:             changed = ["w"]
+668:         elif grp == "I":
+669:             b = meta["I"][j]
+670:             B = d.builds[b]
+671:             how = passes("I", b, B["w"], gate)[1]
+672:             lab.immersion(b)
+673:             events.append({"it": it, "build": b, "w": B["w"], "gate": gate, "screen_pass": B["w"] >= gate, "how": how, "m": B["m"], "immersion_pass": B["m"] >= truth.m_ref})
+674:             changed = ["m"]
+675:         else:  # a test bundle; a trusting variant still checks the screen's gate before immersion
+676:             b = meta[grp][j]
+677:             B = d.builds[b]
+678:             changed = []
+679:             if "S" in grp.split("+"):
+680:                 lab.microscopy(b)
+681:                 changed.append("beta")
+682:             if grp == "S+T":
+683:                 lab.tensile(b)
+684:                 changed.append("U")
+685:             else:
+686:                 lab.screen(b)
+687:                 changed.append("w")
+688:                 gate = w_gate(d)
+689:                 ok, how = passes("I", b, B["w"], gate)
+690:                 if ok:
+691:                     lab.immersion(b)
+692:                     events.append({"it": it, "build": b, "w": B["w"], "gate": gate, "screen_pass": B["w"] >= gate, "how": how + "-bundle", "m": B["m"], "immersion_pass": B["m"] >= truth.m_ref})
+693:                     changed.append("m")
+694:         net.refit(d, changed)
+695:         lab.net = net
+696:         rec(net, it, grp)
+697:         rec.rows[-1]["fallback"] = "fallback" in kg_log  # True when KG was flat and EI per dollar chose the purchase
+698:         if verbose:
+699:             r = rec.rows[-1]
+700:             print(f"it {it:3d} {grp} spent ${d.spent:8.0f} best_val {r['best_validated']:.3f} printed {r['rec_printed']:.3f} KG {{{', '.join(f'{k}: {v:.2e}' if isinstance(v, float) else f'{k}: {v}' for k, v in kg_log.items())}}} {time.time() - t0:.1f}s", flush=True)
+701:     return rec.rows, d, {"events": events}
+702: 
+703: 
+704: def run(kind, kappa, eta, seed, budget, verbose=False):
+705:     truth = AlloyTruth(kappa, eta)
+706:     torch.manual_seed(seed)
+707:     bofn_alloy.FIT_LOG.update(calls=0, failures=0)
+708:     if kind in PKGFN_KINDS:
+709:         rows, d, extra = run_pkgfn(truth, seed, budget, verbose=verbose, utah=kind != "mines_only", screens=kind in ("pkgfn_screen", "pkgfn_audit"), audit=kind == "pkgfn_audit")
+710:     else:
+711:         rows, d, extra = run_full_policy(kind, truth, seed, budget)
+712:     counts = {grp: sum(1 for g_, _ in d.log if g_ == grp) for grp in COSTS}
+713:     settings = {"S_ACQ": S_ACQ, "N_CAND": N_CAND, "N_POOL": N_POOL, "N_ANCHOR": list(N_ANCHOR), "N_PERTURB": N_PERTURB, "S_REC": S_REC, "REC": REC,
+714:                 "RHO_GATE": RHO_GATE, "W_QUANTILE": W_QUANTILE, "F_SAFE": F_SAFE, "CODE_VERSION": CODE_VERSION, "NOGATE": bofn_alloy.NOGATE}
+715:     builds = []
+716:     for j, B in enumerate(d.builds):
+717:         L = d.lots[B["lot"]]
+718:         builds.append({"c": [round(float(v), 4) for v in L["c"]], "a": L["a"], "pv": B["pv"], "q": L["q"], "rho_u_in": B["rho_u_in"], "rho_m": B["rho_m"],
+719:                        "beta": B["beta"], "U": B["U"], "w": B["w"], "m": B["m"], "J": B["J"]})
+720:     lots = [{"c": [round(float(v), 4) for v in L["c"]], "a": L["a"], "q": L["q"], "utah": L["utah"], "sessions_left": L["sessions_left"]} for L in d.lots]
+721:     out = {"kind": kind, "kappa": kappa, "eta": eta, "seed": seed, "budget": budget, "m_ref": truth.m_ref, "rows": rows, "counts": counts, "settings": settings,
+722:            "gp_fits": dict(bofn_alloy.FIT_LOG), "builds": builds, "lots": lots, "w_gate_final": w_gate(d)}
+723:     if extra.get("events") is not None:
+724:         out["events"] = extra["events"]
+725:     if extra.get("shortlist") is not None:
+726:         out["shortlist"] = [[round(v, 4) for v in c] for c in extra["shortlist"]]
+727:     if extra.get("w_ref") is not None:
+728:         out["w_ref"] = extra["w_ref"]
+729:     if extra.get("gates") is not None:
+730:         # false rejections per gate, judged by the truth after the fact: a rejected composition
+731:         # (or build) whose best achievable objective beats what the funnel finally demonstrated
+732:         final = max(v for _, v in d.full)
+733:         apv = sobol(4096, 3, seed=9)
+734:         gates = []
+735:         for gt in extra["gates"]:
+736:             rej = []
+737:             for x in gt["rejected"]:
+738:                 if len(x) == NC:
+739:                     Xr = torch.cat([torch.tensor(x).expand(apv.shape[0], NC), apv], -1)
+740:                     pot = float(truth.objective(Xr).max())
+741:                 else:
+742:                     pot = float(truth.objective(torch.tensor(x).unsqueeze(0))[0])
+743:                 rej.append(pot)
+744:             gates.append({"gate": gt["gate"], "rule": gt["rule"], "n_kept": len(gt["kept"]), "n_rejected": len(gt["rejected"]), "rejected_potential": rej,
+745:                           "false_rejections": int(sum(p > final for p in rej)), "best_rejected_potential": max(rej) if rej else None})
+746:         out["gates"] = gates
+747:         out["final_best_validated"] = final
+748:     return out

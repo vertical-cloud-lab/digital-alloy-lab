@@ -1,0 +1,35 @@
+{
+ "upload_id": null,
+ "timeout": null,
+ "max_steps": null,
+ "agent": null,
+ "environment_config": {
+  "data_storage_uris": [
+   "data_entry:74f128d7-5fc1-4e2d-bae0-3e298bbe4f0a",
+   "data_entry:efc6cc8e-98c2-47d4-89c9-b2d43cc8c591",
+   "data_entry:7c58dd65-7a12-45ab-b67e-1aa624ac0217",
+   "data_entry:6dfd2797-2aec-45fa-bf83-d536d9adb382",
+   "data_entry:4f903b0e-8bca-44b1-ae89-9e2e3cb03452",
+   "data_entry:34df7f59-ed10-47b4-b3e0-889df6bb8a1b",
+   "data_entry:d4be7fa6-86a2-479e-8017-b1cc880d1e1e",
+   "data_entry:a30f4dad-d6bc-459d-a6ab-5e940d5566df",
+   "data_entry:a8146aef-141a-4dde-aefd-d6ff9b7b4d39",
+   "data_entry:05f00001-60c6-4485-93c1-9b53212d6ebd",
+   "data_entry:96004f24-4af6-4153-b8d9-8f892474fc97",
+   "data_entry:6ee0532c-51d0-4680-88e8-428b2728832e",
+   "data_entry:152ef5d1-1c48-46c2-8fd2-4a1b2d684001",
+   "data_entry:a669bef0-41bc-4bac-b9be-50d3ffb5be15",
+   "data_entry:9ff71a1a-7c91-4150-adab-e05810371bf6",
+   "data_entry:3b2dcc67-773d-4f02-8fc4-c470fbcc78fd",
+   "data_entry:8e284d69-fe25-4e04-9a93-dd03dd2b6cc7",
+   "data_entry:62016fc4-251a-44e2-b7e1-48a9190f3b99",
+   "data_entry:04b45a86-79bc-4308-87ad-1ddaf2214571",
+   "data_entry:290ee087-a027-43d1-b845-36253ca00348",
+   "data_entry:3bff2ef3-108f-4a34-8471-48eaef246cd0",
+   "data_entry:c56aa936-a7bc-4de5-afba-5370e65d88db",
+   "data_entry:aa036e93-c501-49b5-bc13-978c181f7e28"
+  ]
+ },
+ "continued_job_id": null,
+ "world_model_id": null
+}

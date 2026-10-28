@@ -1,0 +1,100 @@
+1: """What the "dense index" of the copper truth is, and why copper-rich alloys read 0.40 at Utah.
+2: 
+3:     python compare/density.py        # writes compare/density.json and compare/density_factors.png
+4: 
+5: The deposition nodes are rho = window * q^0.3 * (1 - 0.75 crack) * (1 - lof) (times 0.95 + 0.05 q
+6: at Utah): a product of four factors in [0, 1], not a relative density. This script takes the
+7: README's 200 copper-rich compositions (Ni <= 0.07, Al <= 0.2 on the scaled axes), finds each one's
+8: best Utah and Mines settings, and reports every factor at those settings. It also reads the index
+9: as the tensile knockdown exp(-b * porosity) of a porous metal (b = 4, 7, 10) to show what relative
+10: density each value would correspond to if it were read that way.
+11: """
+12: 
+13: from __future__ import annotations
+14: 
+15: import json
+16: import math
+17: import sys
+18: from pathlib import Path
+19: 
+20: import torch
+21: 
+22: HERE = Path(__file__).parent
+23: sys.path.insert(0, str(HERE.parent))
+24: from bofn_alloy import P_CAP, AlloyTruth, D, sig  # noqa: E402
+25: 
+26: torch.set_default_dtype(torch.double)
+27: 
+28: 
+29: def factors(t, X, utah):
+30:     o = t.full(X)
+31:     P = X[:, 5].clamp(max=P_CAP) if utah else X[:, 5]
+32:     v, f, g, h, q = X[:, 6], o["f"], o["g"].clamp(min=0), o["h"], o["q"].clamp(min=0)
+33:     u = P - v - (0.05 + 0.25 * f)
+34:     window = torch.exp(-((u / 0.2) ** 2)) * (1 - 0.35 * sig((P - 0.85) / 0.05))
+35:     f_eff = f * (1 - t.kappa * 0.85 * g / (g + 0.12))
+36:     crack = sig((f_eff - 0.56) / 0.05)
+37:     lof = sig((h - P) / 0.08)
+38:     out = {"window": window, "powder q^0.3": q**0.3, "crack factor 1 - 0.75 crack": 1 - 0.75 * crack, "fusion 1 - lof": 1 - lof, "h": h, "P": P}
+39:     out["rho"] = o["rho_u"] if utah else o["rho_m"]
+40:     if utah:
+41:         out["thin wall 0.95 + 0.05 q"] = 0.95 + 0.05 * q
+42:     return out
+43: 
+44: 
+45: def main():
+46:     t = AlloyTruth(1.0, 1.0)
+47:     g = torch.Generator().manual_seed(0)
+48:     X = torch.rand(400_000, D, generator=g)
+49:     rich = (X[:, 0] <= 0.07) & (X[:, 1] <= 0.2)
+50:     comps = X[rich][:200, :4]
+51:     apv = torch.quasirandom.SobolEngine(3, scramble=True, seed=1).draw(16384).double()
+52:     rows = {"Utah (P capped at 0.5)": [], "Mines (full power)": []}
+53:     for c in comps:
+54:         Xr = torch.cat([c.expand(apv.shape[0], 4), apv], -1)
+55:         for name, utah in (("Utah (P capped at 0.5)", True), ("Mines (full power)", False)):
+56:             fa = factors(t, Xr, utah)
+57:             j = int(fa["rho"].argmax())
+58:             rows[name].append({k: float(v[j]) for k, v in fa.items()})
+59:     summary = {}
+60:     for name, rr in rows.items():
+61:         keys = rr[0].keys()
+62:         med = {k: float(torch.tensor([r[k] for r in rr]).median()) for k in keys}
+63:         summary[name] = {"median_at_best_settings": med, "n": len(rr)}
+64:     # reading the index as a porosity knockdown of strength: index = exp(-b phi) -> relative density 1 - phi
+65:     reading = {}
+66:     for idx in (0.30, 0.40, 0.50, 0.70, 0.88, 0.93, 0.99):
+67:         reading[f"{idx:.2f}"] = {f"b = {b}": round(1 + math.log(idx) / b, 3) for b in (4, 7, 10)}
+68:     out = {"copper_rich": summary, "relative_density_if_read_as_exp(-b*porosity)": reading}
+69:     (HERE / "density.json").write_text(json.dumps(out, indent=1))
+70:     print(json.dumps(out, indent=1))
+71:     # figure: the median factor at each site's best settings
+72:     import matplotlib
+73: 
+74:     matplotlib.use("Agg")
+75:     import matplotlib.pyplot as plt
+76: 
+77:     import plot as PL  # noqa: F401  (the benchmark's fonts and styles)
+78: 
+79:     names = ["window", "powder q^0.3", "crack factor 1 - 0.75 crack", "fusion 1 - lof", "rho"]
+80:     labels = ["process\nwindow", "powder\nq$^{0.3}$", "crack\nfactor", "fusion\n1 - lof", "index\n(product)"]
+81:     fig, ax = plt.subplots(figsize=(10, 4.6))
+82:     wdt = 0.38
+83:     for k, (name, col) in enumerate((("Utah (P capped at 0.5)", PL.RED), ("Mines (full power)", "#8C8C8C"))):
+84:         vals = [summary[name]["median_at_best_settings"][n] for n in names]
+85:         bars = ax.bar([i + (k - 0.5) * wdt for i in range(len(names))], vals, wdt, color=col, label=name)
+86:         for b_, v in zip(bars, vals):
+87:             ax.text(b_.get_x() + b_.get_width() / 2, v + 0.02, f"{v:.2f}", ha="center", va="bottom", fontsize=12, color=PL.INK)
+88:     ax.set_xticks(range(len(names)), labels, fontsize=13)
+89:     ax.set_ylim(0, 1.32)
+90:     ax.set_yticks([0, 0.5, 1.0])
+91:     ax.set_ylabel("Median over 200\ncompositions", fontsize=13)
+92:     ax.tick_params(axis="y", labelsize=12)
+93:     ax.set_title("Copper-rich alloys (Ni and Al under 2 wt%), each at its best settings", fontsize=14, loc="left", color=PL.INK)
+94:     ax.legend(fontsize=12, frameon=False, loc="upper center", ncol=2)
+95:     fig.tight_layout()
+96:     fig.savefig(HERE / "density_factors.png")
+97: 
+98: 
+99: if __name__ == "__main__":
+100:     main()
