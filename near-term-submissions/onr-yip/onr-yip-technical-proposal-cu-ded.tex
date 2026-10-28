@@ -778,13 +778,12 @@ should buy before it buys experiments.
 We will demonstrate the advances on a physical workflow (Fig.~\ref{fig:network})
 in which the search chooses the composition, the atomizer settings, and the
 deposition settings, and decides at each step whether a candidate goes on.
-After microscopy, specimens go to tensile tests, or to the corrosion screen
-and, for selected candidates, to immersion tests. Candidates that deposit well
-get a repair coupon on cast NAB or wrought copper-nickel plate, checked for
-cracks, dilution, and hardness across the fusion line, after pre-placed
-tracks on the same plates at Utah. The demonstration includes real
-deposit-to-deposit scatter, outputs computed from microscopy images, and
-three inputs that enter at different steps.
+After microscopy, specimens go to tensile tests or to the corrosion screen,
+and selected candidates to immersion. Candidates that deposit well get a
+repair coupon on cast NAB or wrought copper-nickel plate, checked for cracks,
+dilution, and hardness across the fusion line, after pre-placed tracks on
+them at Utah. It has real scatter between deposits, outputs measured
+on micrographs, and inputs that enter late.
 
 \subsubsection{Advance 5: checking what the screens discard}
 A cheap screen saves money only if it does not discard good candidates, and
@@ -943,7 +942,7 @@ composition, so the project measures what changes between the two routes.
 That lot also supplies the finalists' replicate and repair builds and goes to
 Carderock in the form a supplier would make.
 
-Corrosion tests follow the same staging. The screen runs on the
+Corrosion tests follow the same staging (Fig.~\ref{fig:screen}). The screen runs on the
 liquid-handling gantry in our laboratory (CubXL, Ursa Laboratories), which is
 already driven by scripts, so the search can schedule it like any other
 step. The gantry fills small O-ring wells, 3 to 4~mm across, clamped on
@@ -964,6 +963,20 @@ substrate, where welded NAB was attacked selectively~\cite{dobson2024}. The
 gantry then pipettes the used electrolyte of each well into a tube for
 inductively coupled plasma mass spectrometry, which shows which elements left
 the surface, for example aluminum from NAB or nickel from copper-nickel.
+
+\begin{figure}[t]
+\centering
+% Keyframe reel of the one-spot copper screening animation, re-rendered by
+% alloy-corrosion/copper/keyframes/make_keyframes.py (PR 180, fd05f68); 6.5 x 0.83 in at 300 dpi.
+\includegraphics[width=\textwidth]{figures-cu-ded/cubxl_screen_reel.png}
+\caption{Our planned corrosion screen on the gantry, one spot, rendered from
+the laboratory's animation of the protocol: (i)~specimens and well lids,
+(ii)~substitute seawater fill, (iii)~electrode cap, (iv)~open-circuit potential,
+linear polarization, and a potential hold (cut-away; simulated), (v)~cap rinsed,
+(vi)~the well's liquid sampled for ICP-MS, (vii)~the spot imaged. Impedance and
+cyclic polarization run on the requested potentiostat.}
+\label{fig:screen}
+\end{figure}
 Wrought 70-30 copper-nickel and heat-treated cast NAB are measured as
 references in every round. Because the gantry runs unattended, it can also
 re-measure specimens left immersed for days at little extra cost, a step
