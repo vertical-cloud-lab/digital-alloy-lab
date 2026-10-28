@@ -1,0 +1,12 @@
+{
+  "truth_phys.py": "f56368df72ee78847c5854a1e8073fdcd65bcab33da1322373ad8f3370298c4a",
+  "corrosion_data.csv": "70ac441c72fcdbc7dc7effd69bbfba841a2db0d98ef17f3a17d646c228366940",
+  "fit_corrosion.py": "b17ba21a3c4bbd402a380345650580ade5f03bccc780309d5d5bd2554cd294a1",
+  "corrosion_fit.json": "bff91ea056d84983e52e5dcc77eab11a51ed7b7a32007b17106171a20cc1ce61",
+  "corrosion_fit.md": "3c2d16506fd4b33aecd9ebb193924dfe091c153c1aee61675ad7d7eff5a07db9",
+  "phys_tables.md": "72d152afcd5b1e427bc7c46ea89ea7ed2555c088e9a78ac3ccdc0b15ce3bd5db",
+  "phys_tables.json": "596793c94d1299a54e0f7e574ee78e5406a8c095b11db60e7341db7784f2de64",
+  "copper-anchor.md": "9096c9ea9f8e83172da6ec3e4c37a4f55709ccb907c51da6e1fa2ffeb651ee6b",
+  "calphad_grid.csv": "a4d984392efb562f77d4ff5d576ed480143ac0c8ba0b943834c3864b5876e8b2",
+  "bofn_alloy.py": "acbb3bf9bcf902035dc5c902bc538ef8e4f1bcf3308e65e4a02e2910c5c664fa"
+}

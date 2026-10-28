@@ -248,6 +248,7 @@
   ],
   "submitted": "2026-10-28T04:46:53Z",
   "brief": "benchmarks/bofn-cu-ded/edison/brief-phys-v2.md",
-  "runs_uploaded": 134
+  "runs_uploaded": 134,
+  "status": "success"
  }
 }

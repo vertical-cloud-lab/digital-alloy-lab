@@ -304,7 +304,20 @@ The floor is not robust. What moves it most is whether a few wt% of Al helps the
   - **One grid point disagrees.** At a NAB-like point (Cu-4.3Ni-9.5Al-3.6Fe), the stored state one degree above the solidus is mostly liquid with Fe-rich kappa. Its independent solve finds mostly beta there, so `g` is 0.61 in the grid and 0 in its solve.
   - **Two grid rows have empty phase inventories at the solidus.**
   - These matter only through `g`, which acts through the crack term when the freezing range exceeds about 90 °C. The physics optimum's range is 33 °C.
-- A second review, of the refit with the copper anchors (task `e8550274`), was submitted on Oct 28 and is fetched with `python edison/edison_review.py fetch phys-review-v2`.
+**Second review** (Edison Analysis, task `e8550274`, of the refit with the copper anchors; [`edison/results/phys-review-v2.md`](edison/results/phys-review-v2.md), artifacts in [`edison/results/phys-review-v2-files/`](edison/results/phys-review-v2-files/)).
+
+- **Verdict:** "No: I would not restrict the search to Ni ≥10 wt%."
+- **Certified floors:** its independent refit matches the base coefficients to 3e-11. Optimized continuously and certified as global for the film model, the floors are **1.51 wt% Ni (90-10 bar) and 2.50 wt% (70-30 bar)**; the shipped 0.1 wt% grid gives 1.6 and 2.6.
+- **Al form:** with linear Al they become 10 and 30 wt%, the largest effect of any modelling choice.
+- **Over 32 refits:** 0 to 10 and 0.57 to 30 wt%. The two extreme subsets leave the Al response unidentified, so they are evidence gaps, not floors.
+- **A witness under the 10 wt% floor:** in the full truth an alloy with 5.0 wt% Ni (Cu-5.0Ni-2.9Al-3.9Fe) passes both bars (m = 0.881 against 0.810 and 0.842). A Ni ≥ 10 wt% restriction would discard passing alloys even under this truth.
+- **Bar:** use dense C70600 as the primary bar, with C71500 as a separate, stricter requirement.
+- **Open number-level findings:**
+  - The "dense" bar alloys are the best DED deposits (density index 0.98), which slightly relaxes the bar; with truly dense references the full-truth boundaries are 2.39 and 3.57 wt%.
+  - Two Wheatfall exposures (751 and 1,064 days, the second with copper below Cu-30Ni) were left out; with them the floors are 1.11 and 2.02 wt%.
+  - Several compositions are nominal or assumed, not assays; the "11 studies" are 11 fitted blocks.
+  - The fitter's comment that Mn = 0 minimizes the liquidus is not true in general; it does not change the floors.
+  - Packaging: the uploaded files are flat while `truth_phys.py` expects `phys/`, and the reference compositions differ slightly between the fitter and the truth.
 
 ## Policies (all on equal $100k of new spend)
 

@@ -1,0 +1,17 @@
+{
+  "independent_refit": "executed before calling supplied fitter",
+  "continuous_film_floors": "executed; separable global lower bound attained for all 32 scenarios",
+  "source_pdf_ravindran": "inspected primary PDF",
+  "source_gdowski": "inspected parsed compilation Tables 34\u201335",
+  "source_banning": "inspected compilation PDF Tables 7\u20138",
+  "source_alfozan": "anchor inspected only; direct source attempts blocked or metadata-only",
+  "source_lewis": "inspected parsed compilation Table XIV",
+  "supplied_fit_function": "executed; coefficients match to 2.84e-11",
+  "supplied_fit_main_and_grid_floor": "inspected only; not executed",
+  "full_truth": "executed with input paths overridden in memory",
+  "full_truth_floor": "executed six-start local constrained optimization in middle-Al branch; not global certification",
+  "reported_global_objective_optimum": "point re-evaluated; global search not repeated",
+  "reported_pass_shares": "inspected only; not re-sampled",
+  "calphad": "grid inspected and interpolated; thermodynamic calculation/database validation not rerun",
+  "experiments": "not executed"
+}
