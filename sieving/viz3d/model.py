@@ -2,19 +2,22 @@
 
 Everything is in millimetres, z up from the bench top, the operator stands at -y. Sizes:
 
-* The three Gilson 3 in all-stainless full-height sieves, pan and cover of the order (V3SF #60 / #230 / #635,
-  V3SFXPN, V3SFXCV): frame OD 3 in (76.2 mm), overall height 1.75 in (44.5 mm), stacked height 1-1/8 in
-  (28.6 mm), so the skirt that nests into the sieve below is 5/8 in (15.9 mm). From globalgilson.com, read
-  2026-10-07. The mesh is drawn as a thin disc, since 20-250 um wires are far below the drawing's resolution.
-* The rePowder powder container as drawn in #255's ``atomizer-training/viz3d/model.py`` (O130 x 202 mm with a
-  O108 top tube and a handle): its position was observed on video, its size was assumed there and is still not
-  measured. Nobody has put a rule on it.
-* A letter sheet of paper (279 x 216 mm), the stainless dish for pieces that go back as feedstock, 100 mL glass
-  jars (O50 x 80 mm, a smaller jar than Chem Stores' per #222), a O75 mm powder funnel, a top-loading balance, and
-  the powder doser's cartridge: the O25.0 mm auger tube from vertical-cloud-lab/powder-doser (PR #170).
+* The 8 in stack bought on ME Order 13553 (McMaster-Carr 7969T19 cover, 7969T38 No. 60, 7969T46 No. 230, 7969T21
+  pan; all 304 stainless, cloth included): 8 in (203.2 mm) frames, 2 in (50.8 mm) deep, which is also what each
+  nested sieve adds to the stack. The 5/8 in skirt that nests in the sieve below, the 1.2 mm sheet and the rolled
+  rim are the usual 8 in full-height frame, assumed: McMaster gives only diameter and depth. The cloth is drawn as a
+  thin disc, since 63 and 250 um openings are far below the drawing's resolution (zoom.py draws the No. 230 at size).
+* The rePowder powder container as drawn in #255's ``atomizer-training/viz3d/model.py`` (O130 x 202 mm with a top
+  tube and a handle): its position was observed on video, its size was assumed there and is still not measured.
+* Stand-ins, sized to the job: a 320 x 240 mm stainless tray, a flat 50 x 90 mm stainless scoop, 140 mm tweezers,
+  100 mL glass jars (O50 x 80 mm, the "smaller jars" of #222), two O146 mm stainless funnels, a top-loading balance,
+  the dish for pieces, and a copper ground bus bar on insulated standoffs with an earth lead off the back of the bench.
+  The doser cartridge is the O25.0 mm auger tube from vertical-cloud-lab/powder-doser (PR #170).
 
-``parts()`` returns the named solids; ``meshes()`` tessellates them (whole, and halved at y = 0 for the cutaway)
-and caches them in ``.cache/``; ``heap_meshes()`` prebuilds the powder heaps at a series of levels.
+Every part that powder touches is built from the same centre lines (``*_LINE``) and half thickness that dem.py
+collides with, so the particles meet the surfaces that are drawn. ``parts()`` returns the named solids; ``meshes()``
+tessellates them (whole, and halved at y = 0 for the cutaway) and caches them in ``.cache/``; ``colliders()`` lists
+the DEM walls.
 
     python model.py      # builds and caches the meshes, prints the part list
 """
@@ -36,60 +39,77 @@ CACHE = HERE / ".cache"
 STEEL = (0.80, 0.81, 0.83)
 STEEL_DK = (0.60, 0.62, 0.65)
 MESH_C = (0.50, 0.52, 0.56)
-MESH_F = (0.44, 0.46, 0.50)
+MESH_F = (0.42, 0.44, 0.48)
 BENCH = (0.92, 0.91, 0.88)
-PAPER = (0.985, 0.985, 0.97)
-POWDER = (0.70, 0.72, 0.76)
-CHUNK = (0.58, 0.60, 0.64)
 GLASS = (0.72, 0.86, 0.94)
 LID = (0.12, 0.12, 0.13)
-BLACK = (0.07, 0.07, 0.08)
 PANEL = (0.95, 0.95, 0.96)
 LCD = (0.25, 0.55, 0.95)
 BLUE = (0.16, 0.36, 0.78)
 WHITE = (0.96, 0.96, 0.96)
-RED = (0.80, 0.10, 0.08)
 LABEL = (1.0, 1.0, 1.0)
-BRASS = (0.80, 0.65, 0.32)
-GROUND = (0.12, 0.60, 0.28)
+COPPER = (0.78, 0.45, 0.28)
+CREAM = (0.93, 0.90, 0.80)
+CHUNK = (0.58, 0.60, 0.64)
+EARTH = (0.20, 0.62, 0.25)
+
+T_SHEET = 0.6              # half thickness of the stainless sheet (1.2 mm)
 
 # ------------------------------------------------------------------------------------- the sieves
-SIEVE_OD = 76.2            # 3 in
-SIEVE_H = 44.5             # overall, 1.75 in
-STACKED_H = 28.6           # 1-1/8 in: what each nested sieve adds
-SKIRT_H = SIEVE_H - STACKED_H     # 15.9 mm, nests inside the frame below
-WALL = 0.8
-SKIRT_OD = SIEVE_OD - 2 * WALL - 0.6
-MESH_R = SIEVE_OD / 2 - WALL - 0.3
-PAN_H = SIEVE_H            # the full-height pan matches the sieves
-COVER_H = 12.0
-COVER_SKIRT = 9.0
+SIEVE_OD = 203.2           # 8 in
+DEPTH = 50.8               # 2 in deep; also the nesting height
+SKIRT_H = 15.9             # 5/8 in skirt (assumed)
+RW = SIEVE_OD / 2 - T_SHEET            # frame wall centre line
+RS = RW - 2 * T_SHEET - 0.5            # skirt centre line: 0.5 mm clear inside the frame below
+LIP = 1.8                  # rolled rim, outwards
+SIEVE_LINE = [(RS, 0.0), (RS, SKIRT_H), (RW, SKIRT_H), (RW, SKIRT_H + DEPTH - 2 * T_SHEET),
+              (RW + LIP, SKIRT_H + DEPTH - 2 * T_SHEET)]
+PAN_LINE = [(0.0, T_SHEET), (RW, T_SHEET), (RW, DEPTH - T_SHEET), (RW + LIP, DEPTH - T_SHEET)]
+COVER_SKIRT = 10.0
+COVER_LINE = [(RS, 0.0), (RS, COVER_SKIRT), (RW + LIP, COVER_SKIRT)]
+COVER_TOP = [(0.0, COVER_SKIRT), (RS, COVER_SKIRT)]
+MESH_R = RW - T_SHEET - 0.1
+MESH_T = 0.25              # cloth half thickness
+MESH_DZ = SKIRT_H + T_SHEET + MESH_T   # cloth centre above the skirt's bottom edge
 
-STACK_XY = (70.0, 0.0)     # the stack's axis on the bench
-ORDER = ("pan", "s635", "s230", "s60")       # bottom to top
-MESH_Z = {"pan": 1.2, "s635": PAN_H, "s230": PAN_H + STACKED_H, "s60": PAN_H + 2 * STACKED_H}
-TOP_RIM_Z = PAN_H + 3 * STACKED_H              # 130.3: rim of the top sieve, where the cover sits
-SIEVE_LABEL = {"s60": "No. 60 (250 um)", "s230": "No. 230 (63 um)", "s635": "No. 635 (20 um)", "pan": "pan"}
+STACK_XY = (150.0, -20.0)
+ORDER = ("pan", "s230", "s60")          # bottom to top
+SKIRT_Z = {"s230": DEPTH - (SKIRT_H - T_SHEET), "s60": 2 * DEPTH - (SKIRT_H - T_SHEET)}   # skirt bottoms, stacked
+MESH_Z = {"pan": 2 * T_SHEET, "s230": SKIRT_Z["s230"] + MESH_DZ, "s60": SKIRT_Z["s60"] + MESH_DZ}
+TOP_RIM_Z = 3 * DEPTH                   # 152.4: rim of the No. 60, where the cover sits
+COVER_Z = TOP_RIM_Z - (COVER_SKIRT - T_SHEET)
+SIEVE_LABEL = {"s60": "No. 60 (250 µm)", "s230": "No. 230 (63 µm)", "pan": "pan"}
 
 # ------------------------------------------------------------------------------- other things
-PAPER_C = (-120.0, 15.0)   # the tray's centre (the name is kept: it was a letter sheet in the first draft)
-PAPER_W, PAPER_D = 280.0, 220.0   # stainless tray, outside
-TRAY_H, TRAY_WALL = 18.0, 1.0
-SCOOP_L, SCOOP_R = 70.0, 15.0     # a stainless lab scoop: a half-tube with a round handle
-GROUND_XY = (-40.0, 235.0)        # bonding point at the back of the bench
-CONT_R, CONT_H = 65.0, 202.0     # #255's assumed powder container (not measured)
-CONT_XY = (-275.0, 110.0)
-DISH_XY = (-70.0, 160.0)
-JAR_R, JAR_H = 25.0, 80.0        # 100 mL jar
-JAR_COARSE_XY = (195.0, 150.0)
-JAR_FINES_XY = (195.0, -70.0)
-BAL_XY = (305.0, 65.0)           # balance body centre; the print jar sits on its pan
+TRAY_C = (-230.0, 0.0)
+TRAY_W, TRAY_D, TRAY_H = 320.0, 240.0, 18.0
+CONT_R, CONT_H = 65.0, 202.0           # #255's assumed powder container (not measured)
+CONT_LINE = [(0.0, 1.0), (54.0, 1.0), (64.0, 11.0), (64.0, 190.0), (44.0, 200.0), (44.0, 228.0)]
+CONT_T = 1.0
+CONT_XY = (-470.0, 170.0)
+DISH_XY = (-30.0, 215.0)
+DISH_LINE = [(0.0, 0.6), (27.0, 0.6), (32.0, 11.0), (33.5, 11.5)]
+JAR_R, JAR_H = 25.0, 80.0              # 100 mL jar
+JAR_LINE = [(0.0, 1.0), (23.6, 1.0), (23.6, 70.0), (21.6, 74.0), (21.6, JAR_H)]
+JAR_T = 1.0
+FUNNEL_LINE = [(7.0, 0.0), (7.0, 28.0), (70.0, 98.0), (73.0, 98.0)]
+FUNNEL_SEAT = JAR_H + JAR_T - 42.2 + 0.3   # funnel base above the jar's base: its cone rests on the lip
+BAL_XY = (480.0, -60.0)
 BAL_W, BAL_D, BAL_H = 190.0, 210.0, 42.0
 BAL_PAN_R, BAL_PAN_Z = 60.0, BAL_H + 10.0
-JAR_PRINT_XY = BAL_XY
-FUNNEL_TOP_R, FUNNEL_H = 37.5, 50.0
-DOSER_XY = (290.0, -95.0)
-DOSER_R, DOSER_L = 12.5, 100.0   # O25.0 auger tube (powder-doser PR #170)
+JAR_Z = {"coarse": 0.0, "print": BAL_PAN_Z + 2.0}
+JAR_XY = {"coarse": (400.0, 190.0), "print": BAL_XY}
+DOSER_XY = (575.0, 175.0)
+DOSER_R, DOSER_L = 12.5, 100.0         # O25.0 auger tube (powder-doser PR #170)
+COVER_PARK = (190.0, 215.0)            # where the cover waits while the No. 60 is filled
+SIEVE_PARK = {"s60": (720.0, 185.0), "s230": (720.0, -95.0)}     # where each sieve goes once it is emptied
+SCOOP_REST = (-215.0, -215.0)          # scoop origin (front edge, bottom centre) at rest, pointing +x
+SCOOP_L, SCOOP_W, SCOOP_WALL, SCOOP_BACK = 90.0, 50.0, 16.0, 20.0
+TWEEZ_REST = (-60.0, -200.0)           # tweezer tips at rest, pointing -x
+TWEEZ_L, TWEEZ_GAP = 140.0, 12.0
+BUS_Y, BUS_X0, BUS_X1, BUS_Z = 300.0, -500.0, -120.0, 30.0
+GROUND_PTS = {"container": (-460.0, BUS_Y, BUS_Z + 3.0), "tray": (-330.0, BUS_Y, BUS_Z + 3.0),
+              "pan": (-170.0, BUS_Y, BUS_Z + 3.0)}
 
 # ------------------------------------------------------------------------------------- primitives
 V = cq.Vector
@@ -101,10 +121,6 @@ def box(x0, x1, y0, y1, z0, z1) -> cq.Shape:
 
 def cyl(r, h, base=(0, 0, 0), d=(0, 0, 1)) -> cq.Shape:
     return cq.Solid.makeCylinder(r, h, V(*base), V(*d))
-
-
-def tube(ro, ri, h, base=(0, 0, 0), d=(0, 0, 1)) -> cq.Shape:
-    return cyl(ro, h, base, d).cut(cyl(ri, h + 2, np.array(base, float) - np.array(d, float) * 1.0, d))
 
 
 def sphere(r, c=(0, 0, 0)) -> cq.Shape:
@@ -124,6 +140,21 @@ def fuse(*shapes) -> cq.Shape:
     return out.clean()
 
 
+def shell(line, t, x=0.0, y=0.0, z0=0.0) -> cq.Shape:
+    """The solid that dem.py collides with: each segment of a centre line in (r, z) thickened by t on both sides
+    and run on by t at its ends (so corners close), revolved about z and moved to (x, y, z0)."""
+    out = []
+    pts = [np.asarray(p, float) for p in line]
+    for a, b in zip(pts[:-1], pts[1:]):
+        d = (b - a) / np.linalg.norm(b - a)
+        nrm = np.array([-d[1], d[0]])
+        a2, b2 = a - d * t, b + d * t
+        quad = [a2 + nrm * t, b2 + nrm * t, b2 - nrm * t, a2 - nrm * t]
+        quad = [(max(0.0, float(q[0])), float(q[1])) for q in quad]
+        out.append(lathe(quad))
+    return fuse(*out).translate(V(x, y, z0))
+
+
 def torus(R, r, c=(0, 0, 0)) -> cq.Shape:
     return cq.Solid.makeTorus(R, r, V(*c), V(0, 0, 1))
 
@@ -141,74 +172,37 @@ class Part:
     tags: tuple = field(default_factory=tuple)
 
 
-def sieve_frame(z_skirt: float, x: float, y: float) -> cq.Shape:
-    """A full-height sieve with its skirt bottom at z_skirt: skirt, the step that rests on the sieve below, frame,
-    rolled rim. The mesh is a separate part (so it can be coloured by fineness)."""
-    zs, zm, zt = z_skirt, z_skirt + SKIRT_H, z_skirt + SIEVE_H
-    ro, ri = SIEVE_OD / 2, SIEVE_OD / 2 - WALL
-    rs = SKIRT_OD / 2
-    prof = [(rs - WALL, zs), (rs, zs), (rs, zm - 1.0), (ro, zm - 1.0), (ro, zt - 1.5), (ro + 1.2, zt - 1.5),
-            (ro + 1.2, zt), (ri, zt), (ri, zm + 0.6), (rs - WALL, zm + 0.6)]
-    return lathe(prof, 0.0, x, y)
-
-
-def sieve_mesh(z_skirt: float, x: float, y: float) -> cq.Shape:
-    zm = z_skirt + SKIRT_H
-    return cyl(MESH_R, 0.45, (x, y, zm - 0.2))
-
-
-def pan(x: float, y: float) -> cq.Shape:
-    ro, ri = SIEVE_OD / 2, SIEVE_OD / 2 - WALL
-    prof = [(0, 0), (ro, 0), (ro, PAN_H - 1.5), (ro + 1.2, PAN_H - 1.5), (ro + 1.2, PAN_H), (ri, PAN_H),
-            (ri, 1.2), (0, 1.2)]
-    return lathe(prof, 0.0, x, y)
-
-
-def cover(z_rim: float, x: float, y: float) -> cq.Shape:
-    """A shallow lid: a skirt inside the top sieve's rim and a flat top with a rolled edge and a centre knob."""
-    ri = SIEVE_OD / 2 - WALL - 0.4
-    ro = SIEVE_OD / 2 + 1.2
-    z0, z1 = z_rim - COVER_SKIRT, z_rim + 1.0
-    prof = [(ri - WALL, z0), (ri, z0), (ri, z_rim), (ro, z_rim), (ro, z1 + 1.5), (ro - 1.5, z1 + 1.5), (ro - 1.5, z1),
-            (0, z1), (0, z1 - 1.0), (ri - WALL, z1 - 1.0)]
-    lid = lathe(prof, 0.0, x, y)
-    knob = fuse(cyl(6, 3, (x, y, z1)), cyl(9, 2.5, (x, y, z1 + 3)))
-    return fuse(lid, knob)
-
-
 def container(x: float, y: float) -> cq.Shape:
-    """#255's powder container: a stainless cylinder with a top tube (the valve seat) and a handle. Assumed size."""
-    h = CONT_H
-    body = lathe([(0, 0), (CONT_R - 12, 0), (CONT_R, 12), (CONT_R, h - 12), (52, h - 4), (52, h), (0, h)], 0.0, x, y)
-    body = body.cut(lathe([(0, 4), (CONT_R - 15, 4), (CONT_R - 4, 15), (CONT_R - 4, h - 14), (40, h - 6),
-                           (40, h + 40), (0, h + 40)], 0.0, x, y))
-    body = body.fuse(tube(54, 40, 26, (x, y, h)))
-    handle = fuse(box(x - 8, x + 8, y - 88, y - 54, h + 5, h + 21),
-                  box(x - 4, x + 85, y - 100, y - 88, h + 7, h + 19))
+    """#255's powder container: a stainless can with a top tube and a handle on the tube. Assumed size."""
+    body = shell(CONT_LINE, CONT_T, x, y)
+    handle = fuse(box(x - 8, x + 8, y - 88, y - 44.5, CONT_H + 5, CONT_H + 21),
+                  box(x - 4, x + 85, y - 100, y - 88, CONT_H + 7, CONT_H + 19))
     return fuse(body, handle)
-
-
-def jar(x: float, y: float, z0: float = 0.0) -> cq.Shape:
-    r = JAR_R
-    prof = [(0, 0), (r - 3, 0), (r, 3), (r, JAR_H - 8), (r - 2, JAR_H - 5), (r - 2, JAR_H), (r - 3.5, JAR_H),
-            (r - 3.5, JAR_H - 5), (r - 1.8, JAR_H - 9), (r - 1.8, 4), (r - 4, 1.8), (0, 1.8)]
-    return lathe(prof, z0, x, y)
 
 
 def jar_lid(x: float, y: float, z0: float = 0.0) -> cq.Shape:
     r = JAR_R - 1.4
-    return lathe([(0, JAR_H - 6), (r, JAR_H - 6), (r, JAR_H + 2), (r - 1.2, JAR_H + 2.6), (0, JAR_H + 2.6)], z0, x, y)
+    return lathe([(0, JAR_H + 0.4), (r, JAR_H + 0.4), (r, JAR_H + 9), (r - 1.2, JAR_H + 9.6), (0, JAR_H + 9.6)], z0, x, y)
 
 
-def funnel(x: float, y: float, z0: float) -> cq.Shape:
-    R, h = FUNNEL_TOP_R, FUNNEL_H
-    prof = [(5.0, 0), (6.2, 0), (6.2, 14), (R, h + 14), (R + 1.5, h + 14), (R + 1.5, h + 12.5), (R - 0.3, h + 12.5),
-            (5.0, 14)]
-    return lathe(prof, z0, x, y)
+def scoop_shape() -> cq.Shape:
+    """Flat stainless scoop in its own frame: front edge at x = 0, bowl back to x = -90, 50 wide, a handle."""
+    t = 2 * T_SHEET
+    L, W, H, B = SCOOP_L, SCOOP_W, SCOOP_WALL, SCOOP_BACK
+    s = fuse(box(-L, 0, -W / 2, W / 2, 0, t),
+             box(-L, 0, -W / 2, -W / 2 + t, 0, H), box(-L, 0, W / 2 - t, W / 2, 0, H),
+             box(-L, -L + t, -W / 2, W / 2, 0, B))
+    handle = cyl(4.0, 115.0, (-L + 1.0, 0, B - 4.0), (-math.cos(math.radians(22)), 0, math.sin(math.radians(22))))
+    return fuse(s, handle)
 
 
-def dish(x: float, y: float) -> cq.Shape:
-    return lathe([(0, 0), (28, 0), (32, 11), (33.5, 11), (33.5, 12), (31, 12), (27, 1.2), (0, 1.2)], 0.0, x, y)
+def tweezer_prong(side: float) -> cq.Shape:
+    """One prong of a pair of tweezers, tip at the origin and the body back along -x, on the side y = side * gap / 2;
+    the two prongs meet at the back."""
+    s, g = side, TWEEZ_GAP / 2
+    p = cq.Workplane("XY").polyline([(0, s * (g - 0.6)), (-TWEEZ_L, s * 0.4), (-TWEEZ_L, s * 1.6),
+                                     (0, s * (g + 0.6))]).close()
+    return p.extrude(5.0).val()
 
 
 def balance(x: float, y: float) -> list[Part]:
@@ -225,121 +219,142 @@ def balance(x: float, y: float) -> list[Part]:
 def doser_tube(x: float, y: float) -> list[Part]:
     """The doser's cartridge: the O25.0 auger tube with its screw-on cap, standing on end for scale."""
     r = DOSER_R
-    P = [Part("doser_tube", fuse(cyl(r, DOSER_L - 14, (x, y, 0)), cyl(r - 0.5, 14, (x, y, DOSER_L - 14))), WHITE,
-              "doser", cut=False, tol=0.2),
-         Part("doser_band", tube(r + 0.6, r - 1, 22, (x, y, 30)), BLUE, "doser", cut=False, tol=0.2),
-         Part("doser_cap", fuse(cyl(13.2, 9, (x, y, DOSER_L - 2)), cyl(10, 3, (x, y, DOSER_L + 7))), BLUE, "doser",
-              cut=False, tol=0.2)]
-    return P
+    return [Part("doser_tube", fuse(cyl(r, DOSER_L - 14, (x, y, 0)), cyl(r - 0.5, 14, (x, y, DOSER_L - 14))), WHITE,
+                 "doser", cut=False, tol=0.2),
+            Part("doser_band", cyl(r + 0.6, 22, (x, y, 30)).cut(cyl(r - 1, 24, (x, y, 29))), BLUE, "doser", cut=False,
+                 tol=0.2),
+            Part("doser_cap", fuse(cyl(13.2, 9, (x, y, DOSER_L - 2)), cyl(10, 3, (x, y, DOSER_L + 7))), BLUE, "doser",
+                 cut=False, tol=0.2)]
 
 
-CHUNK_POS: list[np.ndarray] = []      # each piece's centre on the paper heap (filled by chunk_shapes)
+def piece_shape(rng: np.random.Generator, r0: float) -> cq.Shape:
+    """An unatomized piece, a splat or bead of a few millimetres: two or three fused spheres about the origin."""
+    parts = [sphere(r0)]
+    for _ in range(rng.integers(1, 3)):
+        off = rng.normal(0, 0.45 * r0, 3)
+        off[2] *= 0.5
+        parts.append(sphere(rng.uniform(0.45, 0.75) * r0, off))
+    return fuse(*parts)
 
 
-def chunk_shapes(rng: np.random.Generator, n: int) -> list[cq.Shape]:
-    """Irregular unatomized pieces, 2-6 mm: two or three fused spheres each, half-buried in the surface of the
-    full heap on the paper (heap_cone(1.0): 50 mm radius, 19 mm high)."""
-    out = []
-    CHUNK_POS.clear()
-    for _ in range(n):
-        a = rng.uniform(0, 2 * math.pi)
-        rr = rng.uniform(8, 30)
-        r0 = rng.uniform(1.2, 3.0)
-        zc = 19.0 * (1 - rr / 50.0) * 0.9 - r0 * 0.3
-        c = np.array([rr * math.cos(a), rr * math.sin(a), zc])
-        CHUNK_POS.append(c.copy())
-        parts = []
-        for k in range(rng.integers(2, 4)):
-            r = r0 if k == 0 else rng.uniform(1.0, 2.6)
-            off = rng.normal(0, 1.5, 3) if k else np.zeros(3)
-            parts.append(sphere(r, c + off))
-        out.append(fuse(*parts))
-    return out
-
-
-def bonding_leads() -> dict:
-    """Flexible bonding leads with clips, as point lists: tray to the ground stud, and sieve stack to the stud."""
-    px, py = PAPER_C
-    gx, gy = GROUND_XY
-    sx, sy = STACK_XY
-    return {
-        "lead_tray": [(px + 60.0, py + PAPER_D / 2 - 2.0, TRAY_H + 1.0), (px + 50.0, py + PAPER_D / 2 + 25.0, 30.0),
-                      (gx - 20.0, gy - 40.0, 24.0), (gx - 2.0, gy - 4.0, 18.0)],
-        "lead_stack": [(sx - 2.0, sy + SIEVE_OD / 2 + 1.0, 30.0), (sx - 20.0, sy + 80.0, 40.0),
-                       (gx + 30.0, gy - 60.0, 30.0), (gx + 2.0, gy - 4.0, 18.0)],
-    }
-
-
-def heap_cone(v: float, R0=50.0, H0=19.0) -> cq.Shape:
-    """A heap poured onto the paper: volume fraction v (0-1) of the full heap, keeping the angle of repose."""
-    s = max(v, 0.02) ** (1 / 3)
-    R, h = R0 * s, H0 * s
-    return lathe([(0, 0), (R, 0), (R * 0.88, h * 0.12), (R * 0.45, h * 0.62), (0, h)])
-
-
-def heap_disc(d: float, R=MESH_R - 1.0) -> cq.Shape:
-    """A layer d mm deep on a mesh or in the pan, slightly domed."""
-    d = max(d, 0.5)
-    return lathe([(0, 0), (R, 0), (R, d * 0.75), (R * 0.6, d * 1.05), (0, d * 1.25)])
-
-
-def heap_jar(d: float, R=JAR_R - 2.0) -> cq.Shape:
-    d = max(d, 0.6)
-    return lathe([(0, 0), (R, 0), (R, d * 0.85), (R * 0.5, d * 1.08), (0, d * 1.15)])
+PIECE_R = (3.2, 2.6, 3.6, 2.9, 3.4, 2.7, 3.0)      # the DEM spheres that stand for the pieces
 
 
 def parts() -> list[Part]:
     P = []
-    # bench top (the drawing's floor), matte
-    P.append(Part("bench", box(-420, 440, -210, 260, -18, 0), BENCH, "static", cut=False, tol=2.0))
-    # a grounded stainless tray (NFPA 484 / Benson 2012: never pour powder over a nonconductive surface), and a scoop
-    px, py = PAPER_C
-    tray = box(px - PAPER_W / 2, px + PAPER_W / 2, py - PAPER_D / 2, py + PAPER_D / 2, 0, TRAY_H).cut(
-        box(px - PAPER_W / 2 + TRAY_WALL, px + PAPER_W / 2 - TRAY_WALL, py - PAPER_D / 2 + TRAY_WALL,
-            py + PAPER_D / 2 - TRAY_WALL, TRAY_WALL, TRAY_H + 1))
-    P.append(Part("paper", tray, STEEL, "paper", cut=False, tol=0.5))
-    bowl = cyl(SCOOP_R, SCOOP_L, (0, 0, 0), (1, 0, 0)).cut(cyl(SCOOP_R - 0.8, SCOOP_L + 2, (-1, 0, 0), (1, 0, 0)))
-    bowl = bowl.cut(box(-5, SCOOP_L + 5, -SCOOP_R - 2, SCOOP_R + 2, 0, SCOOP_R + 2))          # keep the lower half
-    bowl = bowl.fuse(cyl(SCOOP_R, 0.8, (0, 0, 0), (1, 0, 0)).cut(box(-2, 2, -SCOOP_R - 2, SCOOP_R + 2, 0, SCOOP_R + 2)))
-    handle = cyl(3.0, 90.0, (-90.0, 0, -4.0), (1, 0, 0))
-    scoop = fuse(bowl, handle).translate(V(px - 150.0, py - 80.0, SCOOP_R + 0.5))   # resting beside the tray
-    P.append(Part("scoop", scoop, STEEL, "scoop", cut=False, tol=0.3))
-    gx, gy = GROUND_XY
-    P.append(Part("ground_stud", fuse(box(gx - 14, gx + 14, gy - 10, gy + 10, 0, 6), cyl(3.0, 14, (gx, gy, 6))),
-                  BRASS, "static", cut=False, tol=0.2))
+    P.append(Part("bench", box(-560, 880, -300, 330, -18, 0), BENCH, "static", cut=False, tol=2.0))
+    # grounded stainless tray
+    tx, ty = TRAY_C
+    t = 2 * T_SHEET
+    tray = box(tx - TRAY_W / 2, tx + TRAY_W / 2, ty - TRAY_D / 2, ty + TRAY_D / 2, 0, TRAY_H).cut(
+        box(tx - TRAY_W / 2 + t, tx + TRAY_W / 2 - t, ty - TRAY_D / 2 + t, ty + TRAY_D / 2 - t, t, TRAY_H + 1))
+    P.append(Part("tray", tray, STEEL, "tray", cut=False, tol=0.5))
+    # ground bus bar on two insulated standoffs, and the earth lead that leaves the bench at the back
+    P.append(Part("bus_bar", box(BUS_X0, BUS_X1, BUS_Y - 10, BUS_Y + 10, BUS_Z - 6, BUS_Z), COPPER, "static",
+                  cut=False, tol=0.3))
+    for k, xs in enumerate((BUS_X0 + 25, BUS_X1 - 25)):
+        P.append(Part(f"standoff{k}", cyl(8.0, BUS_Z - 6, (xs, BUS_Y, 0)), CREAM, "static", cut=False, tol=0.3))
+    for k, (gx, gy, gz) in enumerate(GROUND_PTS.values()):
+        P.append(Part(f"bus_screw{k}", cyl(4.5, 3.0, (gx, gy, BUS_Z)), STEEL_DK, "static", cut=False, tol=0.2))
     # the sieve stack, assembled, pan on the bench
     sx, sy = STACK_XY
-    P.append(Part("pan", pan(sx, sy), STEEL, "pan", tol=0.25))
-    for name, meshc in (("s635", MESH_F), ("s230", MESH_F), ("s60", MESH_C)):
-        zs = MESH_Z[name] - SKIRT_H
-        P.append(Part(name, sieve_frame(zs, sx, sy), STEEL, name, tol=0.25))
-        P.append(Part(name + "_mesh", sieve_mesh(zs, sx, sy), meshc, name, tol=0.6))
-    P.append(Part("cover", cover(TOP_RIM_Z, sx, sy), STEEL, "cover", tol=0.25))
-    # the powder container, standing beside the paper
+    P.append(Part("pan", shell(PAN_LINE, T_SHEET, sx, sy), STEEL, "pan", tol=0.25))
+    for name in ("s230", "s60"):
+        P.append(Part(name, shell(SIEVE_LINE, T_SHEET, sx, sy, SKIRT_Z[name]), STEEL, name, tol=0.25))
+        P.append(Part(name + "_mesh", cyl(MESH_R, 2 * MESH_T, (sx, sy, MESH_Z[name] - MESH_T)),
+                      MESH_F if name == "s230" else MESH_C, name, tol=0.6))
+    cov = fuse(shell(COVER_LINE, T_SHEET, sx, sy, COVER_Z), shell(COVER_TOP, T_SHEET, sx, sy, COVER_Z),
+               cyl(7, 4, (sx, sy, COVER_Z + COVER_SKIRT + T_SHEET)), cyl(11, 3, (sx, sy, COVER_Z + COVER_SKIRT + 4.6)))
+    P.append(Part("cover", cov, STEEL, "cover", tol=0.25))
+    # the powder container in its place beside the tray
     P.append(Part("container", container(*CONT_XY), STEEL, "container", cut=False, tol=0.5))
-    # dish for the pieces, jars with lids, funnel, balance, doser cartridge
-    P.append(Part("dish", dish(*DISH_XY), STEEL, "dish", cut=False, tol=0.3))
-    for name, (x, y), z0 in (("coarse", JAR_COARSE_XY, 0.0), ("fines", JAR_FINES_XY, 0.0),
-                             ("print", JAR_PRINT_XY, BAL_PAN_Z + 2.0)):
-        P.append(Part(f"jar_{name}", jar(x, y, z0), GLASS, f"jar_{name}", opacity=0.40, cut=False, tol=0.3))
+    # scoop and tweezers, built in their own frames and placed at rest
+    sxr, syr = SCOOP_REST
+    P.append(Part("scoop", scoop_shape().translate(V(sxr, syr, 0.0)), STEEL, "scoop", cut=False, tol=0.3))
+    wx, wy = TWEEZ_REST
+    for side, nm in ((1.0, "tweezer_a"), (-1.0, "tweezer_b")):
+        pr = tweezer_prong(side).translate(V(wx, wy, 0.0))
+        P.append(Part(nm, pr, STEEL_DK, nm, cut=False, tol=0.2))
+    # dish for the pieces, jars with funnels and lids, balance, doser cartridge
+    P.append(Part("dish", shell(DISH_LINE, T_SHEET, *DISH_XY), STEEL, "dish", cut=False, tol=0.3))
+    for name in ("coarse", "print"):
+        (x, y), z0 = JAR_XY[name], JAR_Z[name]
+        P.append(Part(f"jar_{name}", shell(JAR_LINE, JAR_T, x, y, z0), GLASS, f"jar_{name}", opacity=0.40, cut=False,
+                      tol=0.3))
         P.append(Part(f"lid_{name}", jar_lid(x, y, z0), LID, f"lid_{name}", cut=False, tol=0.3))
-    P.append(Part("funnel", funnel(JAR_COARSE_XY[0], JAR_COARSE_XY[1], JAR_H - 10), STEEL, "funnel", cut=False,
-                  tol=0.3))
+        P.append(Part(f"funnel_{name}", shell(FUNNEL_LINE, T_SHEET, x, y, z0 + FUNNEL_SEAT), STEEL, f"funnel_{name}",
+                      cut=False, tol=0.3))
     P += balance(*BAL_XY)
     P += doser_tube(*DOSER_XY)
-    P.append(Part("label", box(JAR_PRINT_XY[0] - 14, JAR_PRINT_XY[0] + 14,
-                               JAR_PRINT_XY[1] - JAR_R - 0.4, JAR_PRINT_XY[1] - JAR_R + 0.3,
-                               BAL_PAN_Z + 2.0 + 22, BAL_PAN_Z + 2.0 + 44), LABEL, "label", cut=False, tol=0.3))
-    # unatomized pieces on the paper heap (group "chunks") and the grit that stays on the No. 60 (group "grit")
-    rng = np.random.default_rng(7)
-    for k, s in enumerate(chunk_shapes(rng, 7)):
-        P.append(Part(f"chunk{k}", s.translate(V(px, py, TRAY_WALL + 0.2)), CHUNK, f"chunk{k}", cut=False, tol=0.15))
-    rng = np.random.default_rng(11)
-    for k in range(9):
-        a, rr, r = rng.uniform(0, 2 * math.pi), rng.uniform(4, 30), rng.uniform(0.6, 1.4)
-        P.append(Part(f"grit{k}", sphere(r, (sx + rr * math.cos(a), sy + rr * math.sin(a), MESH_Z["s60"] + 0.3 + r)),
-                      CHUNK, "grit", cut=False, tol=0.1))
+    x, y = JAR_XY["print"]
+    P.append(Part("label", box(x - 14, x + 14, y - JAR_R - 0.4, y - JAR_R + 0.6, JAR_Z["print"] + 22,
+                               JAR_Z["print"] + 44), LABEL, "label", cut=False, tol=0.3))
     return P
+
+
+def piece_meshes() -> list:
+    """The pieces as meshes about the origin (dem.py moves them)."""
+    rng = np.random.default_rng(7)
+    return [tess(piece_shape(rng, r), 0.15) for r in PIECE_R]
+
+
+def colliders() -> list[dict]:
+    """The DEM walls: dicts for dem.Collider, in each part's model coordinates."""
+    def at(x, y, z=0.0):
+        m = np.eye(4)
+        m[:3, 3] = (x, y, z)
+        return m
+    sx, sy = STACK_XY
+    tx, ty = TRAY_C
+    hw, hd, t = TRAY_W / 2 - T_SHEET, TRAY_D / 2 - T_SHEET, T_SHEET
+    tray = [((tx, ty, t), (1, 0, 0), (0, 1, 0), hw, hd),
+            ((tx - hw, ty, TRAY_H / 2), (0, 1, 0), (0, 0, 1), hd, TRAY_H / 2),
+            ((tx + hw, ty, TRAY_H / 2), (0, 1, 0), (0, 0, 1), hd, TRAY_H / 2),
+            ((tx, ty - hd, TRAY_H / 2), (1, 0, 0), (0, 0, 1), hw, TRAY_H / 2),
+            ((tx, ty + hd, TRAY_H / 2), (1, 0, 0), (0, 0, 1), hw, TRAY_H / 2)]
+    L, W, H, B = SCOOP_L, SCOOP_W, SCOOP_WALL, SCOOP_BACK
+    scoop = [((-L / 2, 0, t), (1, 0, 0), (0, 1, 0), L / 2, W / 2),
+             ((-L / 2, -W / 2 + t, H / 2), (1, 0, 0), (0, 0, 1), L / 2, H / 2),
+             ((-L / 2, W / 2 - t, H / 2), (1, 0, 0), (0, 0, 1), L / 2, H / 2),
+             ((-L + t, 0, B / 2), (0, 1, 0), (0, 0, 1), W / 2, B / 2)]
+    wx, wy = TWEEZ_REST
+    C = [dict(name="bench", group="static", kind="plates", elems=[((150, 15, -5.0), (1, 0, 0), (0, 1, 0), 720, 315)],
+              half=5.0, mu=0.5),
+         dict(name="tray", group="tray", kind="plates", elems=tray, half=T_SHEET, mu=0.45),
+         dict(name="container", group="container", kind="lathe", elems=CONT_LINE, half=CONT_T, base=at(*CONT_XY),
+              mu=0.35),
+         dict(name="scoop", group="scoop", kind="plates", elems=scoop, half=T_SHEET, base=at(*SCOOP_REST), mu=0.40),
+         dict(name="pan", group="pan", kind="lathe", elems=PAN_LINE, half=T_SHEET, base=at(sx, sy), mu=0.40),
+         dict(name="dish", group="dish", kind="lathe", elems=DISH_LINE, half=T_SHEET, base=at(*DISH_XY), mu=0.45)]
+    for name in ("s230", "s60"):
+        C.append(dict(name=name, group=name, kind="lathe", elems=SIEVE_LINE, half=T_SHEET,
+                      base=at(sx, sy, SKIRT_Z[name]), mu=0.40))
+        # the cloth: fines (class 0) cross the No. 230; fines and 63-250 um (classes 0, 1) cross the No. 60
+        C.append(dict(name=name + "_mesh", group=name, kind="lathe", elems=[(0.0, MESH_DZ), (MESH_R, MESH_DZ)],
+                      half=MESH_T, base=at(sx, sy, SKIRT_Z[name]), mu=0.45,
+                      pass_mask=0b001 if name == "s230" else 0b011, rate=1.0))
+    C.append(dict(name="cover", group="cover", kind="lathe", elems=COVER_LINE, half=T_SHEET,
+                  base=at(sx, sy, COVER_Z), mu=0.40))
+    C.append(dict(name="cover_top", group="cover", kind="lathe", elems=COVER_TOP, half=T_SHEET,
+                  base=at(sx, sy, COVER_Z), mu=0.40))
+    for name in ("coarse", "print"):
+        (x, y), z0 = JAR_XY[name], JAR_Z[name]
+        C.append(dict(name=f"jar_{name}", group=f"jar_{name}", kind="lathe", elems=JAR_LINE, half=JAR_T,
+                      base=at(x, y, z0), mu=0.35))
+        C.append(dict(name=f"funnel_{name}", group=f"funnel_{name}", kind="lathe", elems=FUNNEL_LINE, half=T_SHEET,
+                      base=at(x, y, z0 + FUNNEL_SEAT), mu=0.30))
+    C.append(dict(name="balance_pan", group="balance", kind="lathe",
+                  elems=[(0.0, BAL_PAN_Z + 1.0), (BAL_PAN_R, BAL_PAN_Z + 1.0)], half=1.0, mu=0.4,
+                  base=at(*BAL_XY)))
+    # tweezer prongs: a thin plate along the 60 mm nearest each tip, in the prong's frame
+    for side, nm in ((1.0, "tweezer_a"), (-1.0, "tweezer_b")):
+        g = TWEEZ_GAP / 2
+        slope = (g - 1.0) / TWEEZ_L
+        u = np.array([-1.0, -side * slope, 0.0])
+        C.append(dict(name=nm, group=nm, kind="plates",
+                      elems=[((wx - 30.0, wy + side * (g - 30.0 * slope), 2.5), u, (0, 0, 1), 30.0, 2.5)], half=0.6,
+                      mu=0.3))
+    return C
 
 
 # ----------------------------------------------------------------------------------------- meshing
@@ -363,7 +378,7 @@ def tess(shape: cq.Shape, tol: float = 0.3, split_cut: bool = False):
             continue
         if split_cut and f.geomType() == "PLANE":
             bb = f.BoundingBox()
-            if abs(bb.ymin) < 1e-4 and abs(bb.ymax) < 1e-4:
+            if abs(bb.ymin - STACK_XY[1]) < 1e-4 and abs(bb.ymax - STACK_XY[1]) < 1e-4:
                 cut.append(p)
                 continue
         body.append(p)
@@ -378,8 +393,8 @@ def tess(shape: cq.Shape, tol: float = 0.3, split_cut: bool = False):
 
 
 def halve(shape: cq.Shape) -> cq.Shape:
-    """Keep y >= 0 (the camera looks from -y, so the cut faces point at it)."""
-    return shape.cut(box(-3000, 3000, -3000, 0, -3000, 3000))
+    """Keep the back half of the stack, y >= its axis (the camera looks from -y, so the cut faces point at it)."""
+    return shape.cut(box(-3000, 3000, -3000, STACK_XY[1], -3000, 3000))
 
 
 def _source_hash() -> str:
@@ -403,35 +418,12 @@ def meshes(force: bool = False) -> dict:
                 if h.isValid() and h.Volume() > 1e-3:
                     half, half_cut = tess(h, p.tol, split_cut=True)
                 else:
-                    gone = p.shape.BoundingBox().ymax <= 1e-6
+                    gone = True
             except Exception as exc:  # noqa: BLE001
                 print("halve failed:", p.name, exc)
         out[p.name] = dict(whole=whole, half=half, half_cut=half_cut, color=p.color, group=p.group,
                            opacity=p.opacity, cut=p.cut, gone=gone)
-    path.write_bytes(pickle.dumps(out))
-    return out
-
-
-HEAP_LEVELS = {"cone": np.linspace(0.0, 1.0, 26), "disc": np.linspace(0.5, 10.0, 24),
-               "jar": np.linspace(0.6, 36.0, 24)}
-
-
-def heap_meshes(force: bool = False) -> dict:
-    """Powder heaps at a series of levels, as (whole, half, half_cut) meshes, built about the origin: the animation
-    moves them into place. Cached."""
-    CACHE.mkdir(exist_ok=True)
-    path = CACHE / f"heaps_{_source_hash()}.pkl"
-    if path.exists() and not force:
-        return pickle.loads(path.read_bytes())
-    out = {"levels": HEAP_LEVELS, "cone": [], "disc": [], "jar": []}
-    for v in HEAP_LEVELS["cone"]:
-        out["cone"].append((tess(heap_cone(v), 0.3), None, None))
-    for d in HEAP_LEVELS["disc"]:
-        s = heap_disc(d)
-        hb, hc = tess(halve(s), 0.3, split_cut=True)
-        out["disc"].append((tess(s, 0.3), hb, hc))
-    for d in HEAP_LEVELS["jar"]:
-        out["jar"].append((tess(heap_jar(d), 0.3), None, None))
+    out["_pieces"] = piece_meshes()
     path.write_bytes(pickle.dumps(out))
     return out
 
@@ -442,8 +434,7 @@ if __name__ == "__main__":
     m = meshes(force=True)
     print(f"{len(m)} parts in {time.time() - t:.0f} s")
     for k, v in m.items():
-        print(f"  {k:18s} {v['group']:10s} {v['whole'].n_cells if v['whole'] is not None else 0:7d} tris"
+        if k.startswith("_"):
+            continue
+        print(f"  {k:18s} {v['group']:12s} {v['whole'].n_cells if v['whole'] is not None else 0:7d} tris"
               f"{'  (cutaway)' if v['half'] is not None else ''}")
-    t = time.time()
-    heap_meshes(force=True)
-    print(f"heaps in {time.time() - t:.0f} s")
