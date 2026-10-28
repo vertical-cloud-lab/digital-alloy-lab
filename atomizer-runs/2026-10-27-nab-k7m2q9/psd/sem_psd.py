@@ -636,12 +636,13 @@ def make_figures(df: pd.DataFrame, summary: dict, fields: list[dict], label_maps
         ax2.set_ylabel("Cumulative (%)")
         ax2.spines["top"].set_visible(False)
         s = summary["size"][key]
-        for qn, ls in (("D10", ":"), ("D50", "--"), ("D90", ":")):
+        for (qn, ls), yf in zip((("D10", ":"), ("D50", "--"), ("D90", ":")), (0.97, 0.89, 0.81)):
             ax.axvline(s[qn]["value"], color="#333333", lw=0.9, ls=ls)
-            ax.text(s[qn]["value"], ax.get_ylim()[1] * 0.97, f" {qn} {s[qn]['value']:.0f}", fontsize=7.5,
-                    va="top", ha="left", color="#333333")
+            ax.text(s[qn]["value"], ax.get_ylim()[1] * yf, f" {qn} {s[qn]['value']:.0f} µm", fontsize=7.5,
+                    va="top", ha="left", color="#333333",
+                    bbox=dict(boxstyle="square,pad=0.1", fc="white", ec="none", alpha=0.8))
         ax.set_title(f"{nm}  (n = {summary['n_counted']:,})", loc="left")
-        ax.legend(loc="upper left", frameon=False, fontsize=7.5, bbox_to_anchor=(0, 0.88))
+        ax.legend(loc="upper left", frameon=False, fontsize=7.5)
     fig.tight_layout()
     p = figdir / "size_distribution.png"
     fig.savefig(p)
@@ -660,7 +661,8 @@ def make_figures(df: pd.DataFrame, summary: dict, fields: list[dict], label_maps
     pxs = sorted({f["px_um"] for f in fields})
     ax.axvline(summary["settings"]["shape_min_px"] * max(pxs), color="#555555", ls="--", lw=0.8)
     ax.text(summary["settings"]["shape_min_px"] * max(pxs), 0.42,
-            f" {summary['settings']['shape_min_px']} px\n (shape limit)", fontsize=7, color="#555555")
+            f"{summary['settings']['shape_min_px']:g} px at {max(pxs):.2f} µm/px\n(shape limit) ", fontsize=7,
+            color="#555555", ha="right")
     ax.set_xscale("log")
     ax.set_ylim(0.4, 1.01)
     ax.set_xlabel("Equivalent circle diameter (µm)")
@@ -672,10 +674,10 @@ def make_figures(df: pd.DataFrame, summary: dict, fields: list[dict], label_maps
     for col, nm, c in (("circularity", "Circularity", "#2a6fdb"), ("aspect_ratio", "Aspect ratio (Fmin/Fmax)", "#2a9d8f"),
                        ("solidity", "Solidity", "#d1495b"), ("convexity", "Convexity", "#8d6cab")):
         v = shp[col].dropna().to_numpy()
-        hb = np.linspace(0.5, 1.0, 51)
-        hh, e = np.histogram(v, bins=hb, weights=shp.loc[shp[col].notna(), "weight"])
+        hb = np.linspace(0.8, 1.0, 81)
+        hh, e = np.histogram(np.clip(v, 0.8, 1.0), bins=hb, weights=shp.loc[shp[col].notna(), "weight"])
         ax.stairs(hh / hh.sum(), e, color=c, lw=1.3, label=f"{nm}: median {np.median(v):.3f}")
-    ax.set_xlabel("Descriptor value")
+    ax.set_xlabel("Descriptor value (values below 0.8 in the first bin)")
     ax.set_ylabel("Fraction of particles")
     ax.set_title(f"ISO 9276-6 shape descriptors (particles ≥ {summary['settings']['shape_min_px']} px)", loc="left")
     ax.legend(frameon=False, fontsize=7.5, loc="upper left")
@@ -1036,6 +1038,11 @@ def main(argv=None) -> int:
                         ("circularity", "form_factor", "aspect_ratio", "ellipse_ratio", "solidity", "convexity",
                          "aspect_ratio_norm", "solidity_norm")}
     summary["shape"]["n"] = int(len(shp))
+    # stricter resolution rule from the literature (about 3,000 px per particle for perimeter-based shape)
+    shp3 = use[use["area_px"] >= 3000]
+    summary["shape_3000px"] = {c: describe(shp3[c], shp3["weight"]) for c in
+                               ("circularity", "form_factor", "aspect_ratio", "ellipse_ratio", "solidity", "convexity")}
+    summary["shape_3000px"]["n"] = int(len(shp3))
     flags = use["flag"].value_counts().to_dict()
     summary["flags"] = {k if k else "none": int(v) for k, v in flags.items()}
     summary["flagged_number_share"] = float(w[use["flag"].isin(["irregular", "agglomerate_or_elongated", "irregular+oversize",
@@ -1135,7 +1142,15 @@ def write_summary_md(s: dict, out: Path) -> None:
               "aspect_ratio_norm", "solidity_norm"):
         z = s["shape"][c]
         L.append(f"| {c} | {z['median']:.3f} | {z['q1']:.3f}–{z['q3']:.3f} | {z['p10']:.3f} | {z['p90']:.3f} |")
-    L += ["", f"Flags among counted particles: {s['flags']}", ""]
+    z3 = s["shape_3000px"]
+    L += ["", f"Particles of at least 3,000 px only (n = {z3['n']:,}): form factor median {z3['form_factor']['median']:.3f} "
+          f"(IQR {z3['form_factor']['q1']:.3f}–{z3['form_factor']['q3']:.3f}), circularity {z3['circularity']['median']:.3f}, "
+          f"aspect ratio {z3['aspect_ratio']['median']:.3f}, solidity {z3['solidity']['median']:.3f}.", "",
+          "circularity = 2√(πA)/P (ISO 9276-6 square-root form); form_factor = 4πA/P² (often also called circularity); "
+          "P = Crofton perimeter; aspect_ratio = Feret min / Feret max; ellipse_ratio = minor / major axis of the "
+          "moment ellipse; solidity = A / convex-hull area; convexity = convex-hull perimeter / P; *_norm = divided by "
+          "the value for an ideal digitised disc of the same size (pixelation_bias.csv).", "",
+          f"Flags among counted particles: {s['flags']}", ""]
     (out / "summary.md").write_text("\n".join(L) + "\n")
 
 

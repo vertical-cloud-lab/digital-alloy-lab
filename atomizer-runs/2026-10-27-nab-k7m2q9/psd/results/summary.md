@@ -34,5 +34,9 @@
 | aspect_ratio_norm | 0.965 | 0.940–0.978 | 0.871 | 0.987 |
 | solidity_norm | 0.997 | 0.992–0.999 | 0.981 | 1.001 |
 
+Particles of at least 3,000 px only (n = 3,667): form factor median 0.987 (IQR 0.971–0.995), circularity 0.994, aspect ratio 0.952, solidity 0.983.
+
+circularity = 2√(πA)/P (ISO 9276-6 square-root form); form_factor = 4πA/P² (often also called circularity); P = Crofton perimeter; aspect_ratio = Feret min / Feret max; ellipse_ratio = minor / major axis of the moment ellipse; solidity = A / convex-hull area; convexity = convex-hull perimeter / P; *_norm = divided by the value for an ideal digitised disc of the same size (pixelation_bias.csv).
+
 Flags among counted particles: {'none': 5442, 'irregular': 305, 'agglomerate_or_elongated': 178, 'oversize': 9, 'agglomerate_or_elongated+oversize': 2, 'irregular+oversize': 1}
 

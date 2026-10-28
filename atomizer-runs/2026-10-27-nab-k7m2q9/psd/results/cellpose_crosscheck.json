@@ -1,0 +1,28 @@
+{
+  "image": "not annotated.tif",
+  "px_um": 0.674479,
+  "cellpose_model": "cyto3",
+  "cellpose_diameter_px": 69.68341490246546,
+  "cellpose_seconds": 106.7,
+  "n_watershed": 727,
+  "n_cellpose": 766,
+  "n_matched_iou50": 718,
+  "watershed_matched_frac": 0.9876203576341128,
+  "cellpose_matched_frac": 0.9373368146214099,
+  "median_iou": 0.9468389363764664,
+  "ecd_rel_diff_cellpose_vs_watershed_median": 0.04170080550891253,
+  "ecd_rel_diff_iqr": [
+    0.03223395302360277,
+    0.05292698185924216
+  ],
+  "number_D10_D50_D90_watershed": [
+    35.31857527148402,
+    46.79746151240335,
+    66.6229671692398
+  ],
+  "number_D10_D50_D90_cellpose": [
+    36.590650745285124,
+    48.23033888901112,
+    66.57044447569176
+  ]
+}
