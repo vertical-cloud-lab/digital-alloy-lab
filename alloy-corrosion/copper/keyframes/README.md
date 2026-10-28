@@ -41,7 +41,7 @@ at that frame.
 
 | Panel | Line | MP4 frame (time) | The script's sub-step | What is happening |
 | --- | --- | --- | --- | --- |
-| (i) | Specimens, lids | 449 (14.97 s) | "Placing the modules" chapter: deck module 4 of 14, "Well lids, FKM O-rings", coming down onto module 2, "Specimens: Cu–Ni, NAB, DED", and module 3, "PTFE blank on S4" | The four lids, lit, are halfway down onto the coupon tray. The three specimens and the PTFE blank show beneath them |
+| (i) | Specimens, lids | 449 (14.97 s) | "Placing the modules" chapter: deck module 4 of 14, "Well lids, FKM O-rings", coming down onto module 2, "Specimens: Cu–Ni, NAB, DED", and module 3, "PTFE blank on S4" | The four lids, lit, are coming down onto the coupon tray, 37 mm above their seats. The three specimens and the PTFE blank show beneath them |
 | (ii) | Seawater fill | 2236 (74.53 s) | 2 "The capper lifts the seawater cap; the P20 builds the well from 135 µL of ASTM D1141 seawater (7 transfers)" | P20 pipette: "dispenses into well S1, above the meniscus". The capper holds the seawater vial's cap |
 | (iii) | Electrode cap | 2805 (93.50 s) | 5 "The capper carries the electrode cap (leak-free Ag/AgCl, Pt coil) from its park cup and sets it over S1's boss: 0.12 mm clearance, no O-ring, two small lid magnets hold it" | Capper: "sets the cap over S1's boss". The cap is seated and the magnet is still down |
 | (iv) | OCP, LPR, hold | 3154 (105.13 s) | 6 "Measured with the cap on: OCP 30 min, LPR ±10 mV, rest 5 min, +50 mV hold 10 min, OCP 5 min. The head is free meanwhile" | Potentiostat: "OCP, LPR, hold: the head is free". A cut-away of well S1 at 51.3 simulated minutes, in the last OCP after the hold. The video labels the parts as the 2 mm Ag/AgCl capillary (grey, centre), the Pt coil (the dots), the FKM O-ring squeezed 21 % (black) and the C71500 specimen. The left cut face shows dissolved Cu, the right one O₂ |
@@ -49,15 +49,20 @@ at that frame.
 | (vi) | ICP-MS sample | 3510 (117.00 s) | 8 "A new tip moves the 150 µL, then a 150 µL DI rinse, into tube 1 for ICP-MS" | P20 pipette: "dispenses into tube 1" |
 | (vii) | Spot imaged | 3867 (128.90 s) | 10 "The head camera images the spot. Next spot: S2" | Head camera: "images the spot". It sits above S1, which is ringed |
 
+Panels (ii)–(vii) are steps 1, 3, 4–8, 9, 10 and 12 of the per-spot sequence in
+[`../protocol.md`](../protocol.md) §4.
+
 **Left out of the reel:**
 - Sub-step 1, picking up a tip.
 - 3, the sulfide spike. In print it looks like (ii).
 - 4, the camera's leak check. It looks like (vii).
 - 9, acidifying tube 1 with 20 µL of 1 M HNO₃. It looks like (vi).
-- The video's photo, its before-the-night and after-the-night cards, and its outro. They are 2D, so there is no scene to re-render.
+- The rest of the video. The photo and the before- and after-the-night cards are 2D. The turning
+  model, the other modules and tools being placed, and the outro show no step of the spot.
 
-**EIS is not in the animation.** Its electrochemistry is OCP, LPR, a +50 mV hold and OCP again
-([`../protocol.md`](../protocol.md)). Panel (iv) is labelled with what the video shows.
+**EIS is not in the animation.** Its measurement is OCP, LPR, a rest, a +50 mV hold and OCP again,
+as in the protocol's sequence, which has no EIS either. Panel (iv) is labelled with what the video
+shows.
 
 ## What is not built yet
 
@@ -69,10 +74,10 @@ panel:
 | Panel | Exists on the real CubXL | Not built, or drawn differently from the plan |
 | --- | --- | --- |
 | all | The PROVerXL 4030 V2 frame and gantry, the P20 pipette, the head camera and the electromagnetic capper ([BOM](../../bom/README.md#3-already-on-hand-borrowed-or-shared) H01, H02), and Ben's tip rack 1 | The frame, gantry, Z carriage, P20 body and camera are schematic in the video, drawn to the photos' proportions. No CubOS deck file or protocol for this workflow has been written |
-| (i) | — | The printed coupon tray, the specimens (C71500, C95800 NAB, DED pads), the PTFE blank and the well lids with FKM O-rings. The lids come down from above because that is how the video places every module. In the plan they are screwed down by hand the evening before (video card 4). The lids drawn are the first design ([`../cad/well_lid.stl`](../cad/well_lid.stl)). The build guide replaces it with the v2 lid ([`../../bom/cad/well_lid_v2_006.step`](../../bom/cad/well_lid_v2_006.step)), which differs only inside the bore, so it looks the same from outside |
+| (i) | — | The printed coupon tray, the specimens (C71500, C95800 NAB, DED pads), the PTFE blank and the well lids with FKM O-rings. The lids come down from above because that is how the video places every module. In the plan they are screwed down by hand the evening before (the video's prep card 4, "Consumables and checks"). The lids drawn are the first design ([`../cad/well_lid.stl`](../cad/well_lid.stl)). The build guide replaces it with the v2 lid ([`../../bom/cad/well_lid_v2_006.step`](../../bom/cad/well_lid_v2_006.step)), which differs only inside the bore, so it looks the same from outside |
 | (ii) | The P20 and the capper | The seawater and sulfide stocks. The full 9-position holder at x 318 is printed only if the deck doesn't have one yet (BOM P14). The video shows one aspirate and one dispense. The caption says the well is built from 135 µL in 7 transfers |
 | (iii) | The capper | The electrode cap: the printed clearance cap (P01), the leak-free Ag/AgCl reference (not yet quoted), the Pt coil and the pogo pins, the lid's pads and magnets, and the three-wire bus to a potentiostat. The ±0.15 mm decap height has not been jogged |
-| (iv) | — | No potentiostat is wired to the CubXL. The bench potentiostat in view, Dr. Porter's EZstat-Pro, runs only from its own Windows PC, and the CubXL's own potentiostat hasn't been chosen. CubOS still needs a linear-sweep technique and scan rates below its 1 mV/s minimum: the LPR runs at 0.167 mV/s ([`../protocol.md`](../protocol.md)). **The colours are simulated** by [`../sim_well_hf.py`](../sim_well_hf.py), not measured. The simulation and this cut-away use the first lid's bore. It hasn't been rerun for the v2 lid |
+| (iv) | — | No potentiostat is wired to the CubXL. The bench potentiostat planned for the first checks, Dr. Porter's EZstat-Pro, runs only from its own Windows PC, and the CubXL's own potentiostat hasn't been chosen. CubOS still needs a linear-sweep technique and scan rates below its 1 mV/s minimum: the LPR runs at 0.167 mV/s ([`../protocol.md`](../protocol.md)). **The colours are simulated** by [`../sim_well_hf.py`](../sim_well_hf.py), not measured. The simulation and this cut-away use the first lid's bore. It hasn't been rerun for the v2 lid |
 | (v) | The capper | The DI and seawater rinse cups and the park cup |
 | (vi) | The P20 | The printed tube rack and the 0.5 mL tubes. The video shows one pickup from the well and one dispense. The caption's 150 µL plus a 150 µL DI rinse takes several 20 µL transfers. Who runs the ICP-MS isn't settled (BOM H11: a quote) |
 | (vii) | The head camera | Imaging the spot is planned, not tried. "Next spot: S2" appears only in the caption. The video ends this spot here |
@@ -82,14 +87,17 @@ panel:
 As run on the GitHub Actions runner (Ubuntu 24.04, Python 3.12, PyVista 0.49, VTK 9.7, gmsh 4.15), from the repository root:
 
 ```bash
-# Python packages, the GL libraries gmsh needs, and Microsoft's core fonts (Times New Roman)
+# Python packages, the GL libraries gmsh needs, and Microsoft's core fonts (Times New Roman).
+# xvfb-run was already on the runner; elsewhere, also install xvfb.
 pip install pyvista gmsh matplotlib imageio imageio-ffmpeg numpy pillow
 echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libglu1-mesa libxcursor1 libxinerama1 libxft2 libxrender1 libgl1 ttf-mscorefonts-installer
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libglu1-mesa libxcursor1 libxinerama1 libxft2 libxrender1 libgl1 libosmesa6 ttf-mscorefonts-installer
 
 # The capper module's three STEP files. render_cubxl_cu.py looks for them in
 # modules/electromagnetic-capper/cad/, which stayed in byu-vcl when this folder moved here.
-# They are unchanged there since c129db5 (2026-07-02).
+# They are unchanged there since c129db5 (2026-07-02). Git blob SHAs: 9VialHolder20mL_TightFit
+# fa9f8225, PAW-V2-ElectromagnetMount c1cfa4d0, VialCap16mm 65417e8f. (The run fetched them from
+# byu-vcl's main with gh api; this pinned fetch gives byte-identical files.)
 mkdir -p /tmp/byu-vcl-capper-cad
 for f in 9VialHolder20mL_TightFit PAW-V2-ElectromagnetMount VialCap16mm; do
   curl -sfL -o /tmp/byu-vcl-capper-cad/$f.step \
@@ -117,7 +125,7 @@ MP4 frames n − 1, n and n + 1 ([`check_vs_mp4.json`](check_vs_mp4.json)). Ever
 own frame at 35–40 dB PSNR. The MP4 is lossy (CRF 21), so a perfect copy wouldn't score higher.
 Where something is moving, the neighbouring frames score lower: for (iii) the camera is zooming,
 and frames n ± 1 score 18 dB. (v)–(vii) fall during a pause, so all three frames match equally.
-So the panels are the video's own frames, without the text.
+So each panel is the video's own frame n, re-rendered larger and without the text.
 
 | Panel | MP4 frame n | PSNR vs n − 1, n, n + 1 (dB) |
 | --- | --- | --- |

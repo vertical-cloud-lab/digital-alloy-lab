@@ -12,7 +12,7 @@ Writes, next to this file:
 The animation meshes three STEP files from the electromagnetic capper module, which stayed in
 byu-vcl (modules/electromagnetic-capper/cad/); point --capper-cad at a folder holding them.
 
-    xvfb-run -a python make_keyframes.py --capper-cad /tmp/capper-cad   # frames and reels, ~2 min
+    xvfb-run -a python make_keyframes.py --capper-cad /tmp/capper-cad   # frames and reels, under a minute
     python make_keyframes.py --reel-only                                  # reels from frames/
     xvfb-run -a python make_keyframes.py --capper-cad /tmp/capper-cad --check   # vs the MP4
 """
