@@ -33,6 +33,7 @@ at 640 × 360. Chapters and sources are in §1.
 | [`sim_well.py`](sim_well.py) → [`sim_well.json`](sim_well.json), [`sim_well.png`](sim_well.png), [`sim_well_fields.npz`](sim_well_fields.npz) | The first-order well simulation: oxygen transport only, placeholder kinetics (§2.1–2.6) |
 | [`deck_cu.py`](deck_cu.py) → [`deck-check-cu.json`](deck-check-cu.json) | The copper deck, and the aluminum plan's tool-shadow check rerun on it (§3) |
 | [`render_cubxl_cu.py`](render_cubxl_cu.py) → [`cubxl-cu-spot.mp4`](cubxl-cu-spot.mp4), [`cubxl-cu-spot.gif`](cubxl-cu-spot.gif), stills | The video (§1) |
+| [`keyframes/`](keyframes/README.md) | Seven moments of the spot, re-rendered at 2560 × 1440 without the text, as a 6.5 in reel for print (one strip and two rows), with what each panel shows that isn't built yet |
 | [`media/cubxl-empty-ben-2026-06-26.jpg`](media/cubxl-empty-ben-2026-06-26.jpg) | Ben's photo of the empty CubXL from [#133](https://github.com/vertical-cloud-lab/byu-vcl/issues/133), which opens the video |
 
 ## In short

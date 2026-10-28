@@ -1,0 +1,65 @@
+[
+ {
+  "slug": "specimens-lids",
+  "mp4_frame": 449,
+  "psnr_db_vs_frames_n-1_n_n+1": [
+   34.0,
+   39.6,
+   34.0
+  ]
+ },
+ {
+  "slug": "seawater-fill",
+  "mp4_frame": 2236,
+  "psnr_db_vs_frames_n-1_n_n+1": [
+   33.0,
+   36.9,
+   33.6
+  ]
+ },
+ {
+  "slug": "electrode-cap",
+  "mp4_frame": 2805,
+  "psnr_db_vs_frames_n-1_n_n+1": [
+   18.1,
+   35.1,
+   18.4
+  ]
+ },
+ {
+  "slug": "measure",
+  "mp4_frame": 3154,
+  "psnr_db_vs_frames_n-1_n_n+1": [
+   36.5,
+   40.0,
+   35.7
+  ]
+ },
+ {
+  "slug": "cap-rinse",
+  "mp4_frame": 3254,
+  "psnr_db_vs_frames_n-1_n_n+1": [
+   39.3,
+   39.3,
+   39.3
+  ]
+ },
+ {
+  "slug": "icp-sample",
+  "mp4_frame": 3510,
+  "psnr_db_vs_frames_n-1_n_n+1": [
+   37.7,
+   37.7,
+   37.7
+  ]
+ },
+ {
+  "slug": "spot-imaged",
+  "mp4_frame": 3867,
+  "psnr_db_vs_frames_n-1_n_n+1": [
+   39.3,
+   39.3,
+   39.3
+  ]
+ }
+]
