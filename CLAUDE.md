@@ -179,3 +179,22 @@ password-gated: feed the password over stdin, and always pass `-k`, as in
 recent `sudo` (Raspberry Pi OS caches it globally for 15 minutes) lets sudo skip reading stdin,
 and the password is then read by whatever runs next, for example as a shell command whose
 "command not found" error echoes it back.
+
+**A browser on the panel Pi.** For web lookups that block cloud runners (eBay, distributors), the
+panel Pi runs a headed Chromium on its desktop, with DevTools bound to its own `127.0.0.1:9222`
+and a throwaway profile in `/tmp/claude-cdp-profile`. Nothing starts it at boot. If
+`curl -s 127.0.0.1:9222/json/version` on the Pi returns nothing, relaunch it:
+
+```bash
+ssh -o BatchMode=yes "$PANEL_CAM_USERNAME@$PANEL_CAM_HOSTNAME" 'export WAYLAND_DISPLAY=wayland-0 XDG_RUNTIME_DIR=/run/user/$(id -u); nohup setsid chromium --ozone-platform=wayland --password-store=basic --use-mock-keychain --disable-gpu --disable-features=Translate,OptimizationHints,OnDeviceModelPerformanceParams --remote-debugging-port=9222 --remote-debugging-address=127.0.0.1 --user-data-dir=/tmp/claude-cdp-profile --no-first-run --no-default-browser-check --window-size=1280,900 about:blank >/tmp/claude-cdp.log 2>&1 </dev/null &'
+```
+
+- **Driving it:** tunnel with
+  `ssh -f -N -L 9222:127.0.0.1:9222 "$PANEL_CAM_USERNAME@$PANEL_CAM_HOSTNAME"`, then use
+  `scripts/pi_browser.py`, which sends only mouse and keyboard events. Don't attach Playwright:
+  eBay served its error page to Playwright's `connect_over_cdp`.
+- **Memory:** the Pi has 1 GB of RAM. Use one tab at a time and keep images blocked (the script
+  does this). Photo-heavy eBay pages crashed Chromium on 28 Oct 2026.
+- **Stopping it:** use `pkill -x chromium`, not `pkill -f`, which also matches the SSH command's
+  own shell.
+- **Screenshots:** don't post them. Block pages can show the lab's public IP.
