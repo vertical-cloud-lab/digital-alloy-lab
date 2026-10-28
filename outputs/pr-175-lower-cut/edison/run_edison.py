@@ -210,6 +210,14 @@ def download_files(c, key, files):
         seen.add(rel)
         dest = dest_root / rel
         dest.parent.mkdir(parents=True, exist_ok=True)
+        if rel.endswith(".pkl"):
+            # The literature jobs' pickled PaperQA document stores (70-130 MB) are over GitHub's 100 MB file
+            # limit and are opaque; <key>_files.json keeps their IDs so they can be fetched again.
+            dest.with_name(dest.name + ".SKIPPED.txt").write_text(
+                f"Pickled PaperQA document store {ds['name']} ({(ds.get('metadata') or {}).get('size')} bytes), "
+                f"data_storage_id {ds['id']}: not committed (size).\n")
+            print(key, "skipped", rel, flush=True)
+            continue
         got = c.fetch_data_from_storage(data_storage_id=ds["id"])
         if isinstance(got, list):
             got = got[0] if got else None
