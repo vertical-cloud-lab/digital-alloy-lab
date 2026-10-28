@@ -36,7 +36,10 @@ REDACTIONS = [
 if os.environ.get("EDISON_REDACT_NAMES_FILE"):
     for name in Path(os.environ["EDISON_REDACT_NAMES_FILE"]).read_text().splitlines():
         if name.strip():
-            REDACTIONS.append((re.compile(re.escape(name.strip()), re.I), "[name redacted]"))
+            # Not inside a longer word ("Duran" spares "endurance"), but citation keys such as
+            # "name2023title" are still caught.
+            pattern = r"(?<![^\W\d_])" + re.escape(name.strip()) + r"(?![^\W\d_])"
+            REDACTIONS.append((re.compile(pattern, re.I), "[name redacted]"))
 
 
 def scrub(obj):

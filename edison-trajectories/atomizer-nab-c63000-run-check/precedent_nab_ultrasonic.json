@@ -1,0 +1,10 @@
+{
+  "task_id": "2a5625ea-d501-44d9-84db-50de5876054a",
+  "status": "success",
+  "job_name": "job-futurehouse-paperqa3-precedent",
+  "created_at": "2026-10-28T04:00:53.756283Z",
+  "query": "Has anyone ultrasonically atomized nickel aluminum bronze or aluminum bronze (UNS C63000, C95800,\nC95500, CuAl10Ni5Fe4, CuAl10Fe3 and similar), for example in an AMAZEMET rePOWDER or another\nultrasonic atomizer? For each report give the feedstock, melt temperature, crucible, nozzle and plate\n(sonotrode) materials, frequency and amplitude, atmosphere and oxygen level, yield, particle size\ndistribution, morphology (satellites, flakes, irregular particles), oxygen content, and any problems\nsuch as nozzle clogging, plate wear or interrupted flow. If there are none, give the closest\nprecedents: ultrasonic atomization of other aluminum-containing copper alloys, and gas atomization of\nnickel aluminum bronze powder for laser powder-bed fusion or directed energy deposition.\n",
+  "has_successful_answer": true,
+  "total_cost": null,
+  "total_queries": null
+}
