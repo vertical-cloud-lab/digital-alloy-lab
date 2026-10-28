@@ -1,5 +1,11 @@
 # Sieves for atomized powder (#222)
 
+> **Update, 2026-10-28.** The stack that was bought is 8 in, not the 3 in Gilson stack below. ME Order 13553
+> (McMaster, 304 stainless throughout, 8 × 2 in) arrived on Oct 27 with a cover, No. 60, No. 230 and pan, and a
+> No. 325, No. 100 and No. 140 are on order (sgbaird/byu-finances#144). The 3 in sections below are kept as the
+> record of the first plan. For the 15–20 µm end and for a shaker, see
+> [the lower cut, revisited](#the-lower-cut-revisited-2026-10-28).
+
 The atomized Al 4047 has chunks in it (splats, beads, a few millimetres across), and an LPBF print wants it cut to
 the usual laser powder bed fusion range, **20–63 µm**. The order below is a stack of 3 in all-stainless Gilson test
 sieves. It was checked on 2026-10-07 against the experimental sections of the LPBF and ultrasonic-atomization
@@ -14,10 +20,54 @@ sieve-maker guidance, and against the combustible-dust rules for aluminium. Thre
 - **Grounding is not optional.** NFPA 484 (combustible metals) and NFPA 77 want every piece of equipment in the
   process bonded and grounded, movable things clipped to a flexible lead during transfer, the person grounded, and
   powder never poured over an insulator. So: a bonding lead on the stack and on the tray, the ESD coat and wrist strap
-  that came with the atomizer, and a stainless tray instead of the sheet of paper Bartosz uses.
+  that came with the atomizer, and a stainless tray instead of the sheet of paper AMAZEMET's trainer uses.
 - **A dust mask is not enough.** NIOSH's 2025 evaluation of an AM powder facility recommends a powered air-purifying
-  respirator for sieving; the floor is a half-face respirator with P100 filters. Bartosz cleans the atomizer in a
+  respirator for sieving; the floor is a half-face respirator with P100 filters. AMAZEMET's trainer cleans the atomizer in a
   full-face respirator.
+
+## The lower cut, revisited (2026-10-28)
+
+Evidence, prices and links: [`outputs/pr-175-lower-cut/`](../outputs/pr-175-lower-cut/README.md). It includes
+three Edison tasks, two literature and one analysis of our particle data.
+
+- **No lower cut for test builds.** Our only image PSD from the atomizer is the NAB lot in PR #226. Of the powder
+  that passes 63 µm, under 20 µm is 2.4 % by number but **0.05 % by mass**; of the powder that passes 45 µm,
+  4.9 % and **0.19 %**. A 20 µm cut would remove well under 1 g per 100 g. Lang's scaling makes Al droplets about
+  1.26× coarser than NAB at the same frequency, so the Al should have even fewer fines. That fits the first SEM
+  look at the Al lots (#159). Commercial AlSi10Mg that prints well has about 10 % of its mass below 18–27 µm.
+  - **Precedent:** the ultrasonic-atomization papers mostly cut only the top (Yankin 2025, AlSi12, 63 µm; Ge 2025
+    (preprint), Al on a rePOWDER, no cut, > 99.95 % dense).
+  - **Specs:** commercial powder made to SLM's 20–63 µm or EOS's 25–70 µm spec carries more fines than ours.
+- **Measure, then decide.** Run a laser-diffraction PSD of the first sieved Al jar, plus a Hall or Carney flow and
+  apparent and tap density. Utah's Particle Size & Characterization Lab charges outside users $9.10 a dry sample
+  plus $64.40 a job; ask first whether it takes Al powder. Higher-magnification SEM at the BYU microscopy facility
+  can also count the fines below the 7–10 µm limit of PR #226's images. Revisit the cut only if more than a few per
+  cent by volume is below 20 µm, or the powder flows like a cohesive one.
+- **If a lower cut is ever needed, don't do it with woven sieves or water.**
+  - **Woven sieves:** an 8 in No. 635 with backing cloth is $545.00 at Gilson; McMaster stops at No. 325. DIN
+    66165 allows only about 10 g retained per pass on a 20–25 µm sieve, and dry sieving below about 45 µm blinds.
+  - **Water:** it evolves hydrogen and oxidizes the Al.
+  - **What works:**
+    - an air-jet sieve: Gilson's Mikro AJ-103B for 8 in sieves is $7,788.80, or a refurbished Retsch AS 200 jet is
+      $5,500. It needs a vacuum rated for Al dust;
+    - a sonic sifter: the GilSonic GA-8 is $9,109.40, up to 100 g a run;
+    - toll classification once kilograms accumulate: Elcan documents screening Al AM powder at 25 µm under
+      nitrogen, and Valimet is an option through the partnership.
+
+    Nothing of this kind was found at BYU, and a benchtop air classifier is out of reach (> €50k, inert gas).
+- **Shaker: hand-sieve at 63 µm for now, buy a used Ro-Tap before 45 µm becomes routine.**
+  - **The 63 µm cut by hand:** most particles are far from the aperture, so it works, at 20–25 g a pass. DIN 66165
+    allows 13 cm³ retained on a 200 mm, 63 µm sieve.
+  - **The 45 µm cut needs a shaker:** it sits near the number median (about 59 µm estimated for Al), where
+    completeness depends on agitation, and ASTM B214 and ISO 4497 call for a rotary-tapping shaker.
+  - **Ro-Tap RX-29 prices:** about $1,500–2,300 used or refurbished, $2,950 with a sound enclosure; $3,460–4,210 new
+    (Gilson SS-30 $3,762.40).
+  - **Cheapest new 8 in shaker:** McMaster 3323K12, $1,420.73 (aggregate-grade, unproven at 45 µm). Skip Gilson's
+    SS-15 orbital: Gilson rates it only to 75 µm.
+- **The top cut limits yield, not the bottom.** Suppose the Al is the NAB distribution scaled by 1.26. Then only
+  about 17 % of the powder's mass passes 63 µm and about 1 % passes 45 µm, against 75 % through 63 µm for Yankin's
+  AlSi12. Weigh the fractions of the first Al run before planning around the 15–45 µm window; 20–63 µm may give
+  ten times more powder.
 
 BYU Chem Stores has no online catalog. Ask them first (801-422-2678, chemstores@chem.byu.edu); if they have nothing,
 order these. Prices read from globalgilson.com on 2026-10-07.
@@ -80,7 +130,7 @@ under a microscope after use.
 
 **3 in is right for tens of grams.** Sieve analysis uses 75 mm or 200 mm rings; the 100–300 g charges in the
 standards are for 200 mm sieves, which have seven times the area. On a 3 in mesh (74 mm clear, 43 cm²) a 50 g batch
-of Al at 1.6 g/cm³ tapped is a **7.7 mm bed**, and one layer of 50 µm particles is only **3–4 g**. Gilson's own rule
+of Al at 1.6 g/cm³ tapped is a **7.7 mm bed**, and one layer of 50 µm particles is only **about 0.3 g** (2.4 g on an 8 in). Gilson's own rule
 is that no more than one or two particle layers should remain on a mesh at the end. So feed the top sieve in parts
 of 10–20 g, not the whole batch at once; it is the bed depth, not the frame diameter, that sets the rate.
 
@@ -88,7 +138,7 @@ of 10–20 g, not the whole batch at once; it is the bed depth, not the frame di
 tube; the position was observed on video, the size is assumed, and nobody has put a rule on it yet. Whatever the
 exact number, its mouth is wider than a 3 in sieve, so the powder cannot be poured straight in: it goes onto the
 tray (where the pieces are picked out) and from there by scoop into a funnel sitting in the top sieve. That is
-Bartosz's practice (pour onto paper, remove the larger pieces by hand or through a mesh, T2 50:51 and 55:12) with the
+the trainer's practice (pour onto paper, remove the larger pieces by hand or through a mesh, T2 50:51 and 55:12) with the
 paper replaced by a grounded tray.
 
 **The other end is the doser.** The powder doser's cartridge is a Ø25.0 mm auger tube
@@ -170,7 +220,7 @@ of our runs makes.
 ## Automating this step
 
 **The worry about a thick bed is right.** Sieving is a probability game played at the mesh: a particle has to reach
-an aperture, and on a 3 in screen a single layer of 50 µm Al is 3–4 g. Tapping and vibration move the bed and
+an aperture, and on a 3 in screen a single layer of 50 µm Al is about 0.3 g. Tapping and vibration move the bed and
 re-present particles; they do not push a 7 mm bed through 63 µm wires, and a cohesive, charged Al powder bridges and
 blinds long before that. Overloading is the main failure mode the powder handbooks name. So a sieve *inside* the
 doser, with a whole dose sitting on it, is the wrong architecture, however versatile the doser has turned out to be.
