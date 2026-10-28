@@ -145,29 +145,29 @@ Requested amount & \$747,522 total: \$249,813, \$249,621, and \$248,089
 \section{Technical Approach}
 
 % Epigraphs, both verbatim from the NAVSUP WSS article of 30 Jun 2026
-% (navsup2026): the CNO's remarks to the Surface Navy Association earlier in
-% 2026, then Matt Sermon's 2023 remarks to the American Society of Naval
-% Engineers (ASNE). Years are left out of the attributions (Sterling, Oct 24)
-% so they are not read as citation years, and ``Program Executive Office'' is
-% dropped from Sermon's title so it fits on one line. Each block is 4.9 in wide and
-% indented 0.5 in from the left margin, with a little space between the two.
+% (navsup2026): Matt Sermon's 2023 remarks to the American Society of Naval
+% Engineers (ASNE), when he was executive director of the Program Executive
+% Office, Strategic Submarines, then the CNO's remarks to the Surface Navy
+% Association earlier in 2026. Sermon's quote stops at the end of his first
+% sentence; the second (``And that same holds true for surface ships, and its
+% systems, and for sustainment as well.'') was cut for length (Sterling, Oct 28).
+% Each block is 6.0 in wide, indented 0.5 in, so it ends at the right margin.
 \begin{flushleft}
-\hspace*{0.5in}\begin{minipage}{4.9in}
+\hspace*{0.5in}\begin{minipage}{6.0in}
+\itshape ``I earnestly believe that metallic additive manufacturing is the
+path to the capability and capacity you need for critical materials in the
+submarine industrial base.''\par
+\vspace{2pt}{\raggedleft\upshape Matt Sermon, Executive Director, Strategic
+Submarines, 2023~\cite{navsup2026}\par}
+\end{minipage}
+
+\vspace{6pt}
+\hspace*{0.5in}\begin{minipage}{6.0in}
 \itshape ``Over the last year, we placed nearly 120 additive manufacturing
 parts into development, installed 20 of those parts, and eliminated more than
 1,400 cumulative days of delay.''\par
 \vspace{2pt}{\raggedleft\upshape Admiral Daryl Caudle, Chief of Naval
-Operations~\cite{navsup2026}\par}
-\end{minipage}
-
-\vspace{6pt}
-\hspace*{0.5in}\begin{minipage}{4.9in}
-\itshape ``I earnestly believe that metallic additive manufacturing is the
-path to the capability and capacity you need for critical materials in the
-submarine industrial base. And that same holds true for surface ships, and
-its systems, and for sustainment as well.''\par
-\vspace{2pt}{\raggedleft\upshape Matt Sermon, Executive Director, Strategic
-Submarines~\cite{navsup2026}\par}
+Operations, 2026~\cite{navsup2026}\par}
 \end{minipage}
 \end{flushleft}
 
@@ -676,10 +676,12 @@ mounting tape.}
 \draw[e] (l) -- (ru);
 \draw[e] (l) -- (rm);
 \end{tikzpicture}}
-\caption{Synthetic workflow used for Fig.~\ref{fig:sim}: a handwritten function
+\caption{Synthetic workflow used for Fig.~\ref{fig:sim}: a synthetic function
 for each box and a rough all-in cost for each step (\$1,500 for a repeat
 session at Mines). Burden is a penalty on nickel, aluminum, and manganese.
-The crack screen misses the iron-rich nucleant, the 1-hour screen misses the
+Importantly, specific gaps based on literature between lower- and
+higher-fidelity measurements are introduced to better mimic a real-world
+campaign: the crack screen misses the iron-rich nucleant, the 1-hour screen misses the
 attack of beta-prime, and Utah's lower laser power leaves more lack of fusion
 in high-conductivity, copper-rich alloys.}
 \label{fig:synth}
@@ -1494,8 +1496,9 @@ aluminum data from 2026, with its origin recorded in the metadata.
 through atomization, sieving, storage, transport, deposition, and testing.
 For each step it will hold the composition, powder properties, process and
 instrument settings, dates, operators, and the ASTM method behind each test,
-in a documented schema \todo{choose a schema, e.g., one used by the NIST AM
-Bench or Materials Data Facility}.
+in a documented schema informed by the one used by NIST AM
+Bench~\cite{ambench2022schema}, which covers builds, specimens, and
+measurements; we extend it to powder making and corrosion tests.
 
 \textbf{Preservation.} Data and software will be deposited in public
 repositories at each annual release and kept for at least 10 years.
@@ -1511,36 +1514,6 @@ research. Any data that cannot be cleared for public release under DoD
 Instruction 5230.09 will not be made public.
 
 % ===========================================================================
-% Current and pending support (excluded from the page limit). The official
-% version is the common form attached to the R&R Senior/Key Person Profile
-% (Expanded) (NOFO p. 23); this summary is for review.
-% ===========================================================================
-\clearpage
-\setcounter{page}{1}
-\renewcommand{\thepage}{S-\arabic{page}}
-\section*{Current and Pending Support (summary)}
-\addcontentsline{toc}{section}{Current and Pending Support (excluded from
-page limit)}
-
-The full disclosure is the Current and Pending (Other) Support common form
-generated in SciENcv and submitted with this proposal. In summary:
-
-\textbf{Current.} None.
-
-\textbf{Pending.} This proposal, and two Department of Energy Nuclear Energy
-University Program proposals on which the PI is a co-investigator: a
-self-driving laboratory for nuclear materials and fuel qualification, and
-on-line sensors for molten-salt flow systems. Neither involves copper alloys,
-powder making, DED, or seawater corrosion, and none shares equipment,
-personnel effort, or costs with this proposal.
-
-\textbf{Unfunded collaborators.} Prof.~Z. Zak Fang (University of Utah,
-MX-Lab DED sessions), Sam Webster (Colorado School of Mines, Shared
-Instrumentation Facility, FormAlloy X2 sessions), and Dr.~Jordan A. Tiarks
-(Ames National Laboratory, gas atomization).
-None receives funds from this proposal.
-
-% ===========================================================================
 % References (excluded from the page limit; also uploaded to Field 9)
 % ===========================================================================
 \clearpage
@@ -1550,6 +1523,10 @@ None receives funds from this proposal.
 \addcontentsline{toc}{section}{Cited References (excluded from page limit)}
 \begin{thebibliography}{100}
 \setlength{\itemsep}{1pt}
+
+\bibitem{ambench2022schema}
+J.~W. Kim, L.~Levine, G.~Lemson, G.~Greene, K.~Brady, B.~Long, C.~Becker, C.~Campbell, and B.~Lane, ``Additive Manufacturing Benchmark 2022 schema,'' National Institute of Standards and Technology (2023).
+\href{https://doi.org/10.18434/mds2-2933}{doi:10.18434/mds2-2933}
 
 \bibitem{navsup2026}
 NAVSUP Weapon Systems Support, ``Shattering bottlenecks: NAVSUP WSS partners with DLA and NAVSEA on submarine advanced manufacturing,'' DVIDS (30 Jun 2026).
