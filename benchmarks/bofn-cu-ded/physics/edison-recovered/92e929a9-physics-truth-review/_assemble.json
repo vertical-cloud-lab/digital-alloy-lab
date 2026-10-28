@@ -1,0 +1,101 @@
+{
+ "copied": [
+  "uploads/README.md",
+  "uploads/calibrate_corrosion.py",
+  "uploads/calibration_fit.txt",
+  "uploads/calphad_grid.csv",
+  "uploads/calphad_grid.py",
+  "uploads/check_phys.py",
+  "uploads/kinetics-constants.md",
+  "uploads/phys_tables.md",
+  "uploads/phys_tables_c70600.md",
+  "uploads/same-test-rates.md",
+  "uploads/truth_phys.py",
+  "outputs/citations/local-physics-audit/92e929a9-38ce-45ff-855f-de856bce8435.bib",
+  "outputs/memory/92e929a9-38ce-45ff-855f-de856bce8435_memory_heron_c0_20261027T195025745918.jsonl",
+  "outputs/notebooks/92e929a9-38ce-45ff-855f-de856bce8435.ipynb",
+  "outputs/review/REPRODUCE.txt",
+  "outputs/review/audit_reproduce.py",
+  "outputs/review/calibrate_corrosion.py.original_run.txt",
+  "outputs/review/check_C70600.log",
+  "outputs/review/check_C71500.log",
+  "outputs/review/check_phys.py.original_run.txt",
+  "outputs/review/check_phys_adapter.py",
+  "outputs/review/floor_bar_and_density_checks.json",
+  "outputs/review/floor_sensitivities.json",
+  "outputs/review/floor_sensitivities_verified.json",
+  "outputs/review/phys_tables.json",
+  "outputs/review/phys_tables_c70600.json",
+  "outputs/review/property_source_C61400.md",
+  "outputs/review/property_source_C70600.md",
+  "outputs/review/property_source_C71500.md",
+  "outputs/review/property_source_C95800.md",
+  "outputs/review/refit_parameters_and_floors.csv",
+  "outputs/review/refits.json",
+  "outputs/review/reproduced_calibration.txt",
+  "outputs/review/verify_all_floors.py"
+ ],
+ "excluded": [
+  {
+   "file": "outputs/__pycache__/calibrate_corrosion.cpython-313.pyc",
+   "bytes": 8690,
+   "sha256": "ecedb4adad125a6fb0e5746ba7e72ab00520cc656d70f2dc9fc8c1349de74438",
+   "reason": "Python bytecode cache (the repo's .gitignore excludes *.pyc)"
+  },
+  {
+   "file": "outputs/__pycache__/truth_phys.cpython-313.pyc",
+   "bytes": 27203,
+   "sha256": "69512c832f3b760316906a6a0416bfe843cb8c8e09f6fd220858332d35d78750",
+   "reason": "Python bytecode cache (the repo's .gitignore excludes *.pyc)"
+  },
+  {
+   "file": "outputs/review/21760.json",
+   "bytes": 313672,
+   "sha256": "70c7dd0d9a05138a639195a23f6615dfdf5d18e054c750919e110edd301ebb5b",
+   "reason": "parsed full text of Yang 2019 (UNSW MSc thesis), https://doi.org/10.26190/unsworks/21760"
+  },
+  {
+   "file": "outputs/review/21760.txt",
+   "bytes": 295831,
+   "sha256": "844624ec9cbeeee3654619af706be59f9bcb8a8bc27a5e0c2752bed90b97d07e",
+   "reason": "parsed full text of Yang 2019 (UNSW MSc thesis), https://doi.org/10.26190/unsworks/21760"
+  },
+  {
+   "file": "outputs/review/6255887.json",
+   "bytes": 192060,
+   "sha256": "0ca433b4d556673b6c31df975819d3af37aa81e5f570d85dc84c09e0c0e2b8ec",
+   "reason": "parsed full text of Lewis & LaQue 1981 (ANL/OTEC-BCM-019), https://doi.org/10.2172/6255887"
+  },
+  {
+   "file": "outputs/review/6255887.txt",
+   "bytes": 180944,
+   "sha256": "ef625cb9325d599fdf74e589753c10e19028c50696f772573063a6233759e079",
+   "reason": "parsed full text of Lewis & LaQue 1981 (ANL/OTEC-BCM-019), https://doi.org/10.2172/6255887"
+  },
+  {
+   "file": "outputs/review/__pycache__/audit_reproduce.cpython-313.pyc",
+   "bytes": 27996,
+   "sha256": "62e774030dd062b73d1e0c40b4cb5c3d6886a2f5e66c6538ec6af1180cdbf48a",
+   "reason": "Python bytecode cache (the repo's .gitignore excludes *.pyc)"
+  },
+  {
+   "file": "outputs/review/ma11091777.json",
+   "bytes": 35527,
+   "sha256": "27b550d2d5b4b34c5b52efa6c1b7ff877cbcd3009b6a2e5c50cd323c554ada2a",
+   "reason": "parsed full text of Yang et al. 2018, Materials 11, 1777, https://doi.org/10.3390/ma11091777"
+  },
+  {
+   "file": "outputs/review/ma11091777.txt",
+   "bytes": 32845,
+   "sha256": "ecbd97133420b6bb6ce6126168e32c722cdfe934bb37956e0b090de7a61228ba",
+   "reason": "parsed full text of Yang et al. 2018, Materials 11, 1777, https://doi.org/10.3390/ma11091777"
+  }
+ ],
+ "redacted_files": {
+  "outputs/memory/92e929a9-38ce-45ff-855f-de856bce8435_memory_heron_c0_20261027T195025745918.jsonl": 10,
+  "outputs/notebooks/92e929a9-38ce-45ff-855f-de856bce8435.ipynb": 9,
+  "outputs/review/property_source_C95800.md": 2,
+  "task.json": 29,
+  "trajectory.json": 1375
+ }
+}

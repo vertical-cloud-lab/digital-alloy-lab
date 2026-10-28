@@ -1,0 +1,200 @@
+[
+ {
+  "entry_id": "85343db2-442d-449a-8d1f-5f35f0a2527f",
+  "name": "truth_phys.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/physics/truth_phys.py",
+  "created_at": "2026-10-27T19:50:02.798839Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "truth_phys.py",
+    "bytes": 17967,
+    "sha256": "e8818b4398dc8e6754e6edf66189b3cbd5ec239ead96e008c681c3dcdf44e01d"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "3f08219b-552b-475e-b622-3bda97350712",
+  "name": "calphad_grid.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/physics/calphad_grid.py",
+  "created_at": "2026-10-27T19:50:04.835029Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "calphad_grid.py",
+    "bytes": 5881,
+    "sha256": "06ee0d22441f4ac330b8df73123a3eea4b4c1b74d878fcc1f637d2c70d64a91b"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "bdfc9aed-600a-48cb-acaf-7ed89baef2f1",
+  "name": "calphad_grid.csv",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/physics/calphad_grid.csv",
+  "created_at": "2026-10-27T19:50:07.245160Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "calphad_grid.csv",
+    "bytes": 418694,
+    "sha256": "11ec1c728d2eff4bcd23a1c0666e8c6ea17a4b362533c4cf0ac64fddedf5ef84"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "dbc024ec-af09-4056-8cb1-2d9822166957",
+  "name": "calibrate_corrosion.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/physics/calibrate_corrosion.py",
+  "created_at": "2026-10-27T19:50:07.933786Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "calibrate_corrosion.py",
+    "bytes": 4621,
+    "sha256": "3cea82fa7404e44005398cc86b51d3d1bccaeff59bfbe182a7a7f18305141eca"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "1d830ca9-bac2-4f07-9378-2582f66be314",
+  "name": "calibration_fit.txt",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/physics/calibration_fit.txt",
+  "created_at": "2026-10-27T19:50:09.887334Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "calibration_fit.txt",
+    "bytes": 1122,
+    "sha256": "4b956ed45dd1f6b13de8a1d537aa73d317f8a186151709af853c4a170888be91"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "50a76219-a4ee-4a45-860e-be145dfc990c",
+  "name": "check_phys.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/physics/check_phys.py",
+  "created_at": "2026-10-27T19:50:10.200557Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "check_phys.py",
+    "bytes": 11254,
+    "sha256": "c7ee6c07e7b953abedbff8c1f0010133cdc35925d6b237dc3ed662fdf794fb6f"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "8676623a-a8d0-49b3-b2fc-cf826914c6ab",
+  "name": "phys_tables.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/physics/phys_tables.md",
+  "created_at": "2026-10-27T19:50:12.409221Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "phys_tables.md",
+    "bytes": 4862,
+    "sha256": "e77f80fcb84f234d6d94798dd07af61f18dcf80c3ed3c789f494edbb52967a71"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "46157be7-2c5b-4aaf-bd47-b7b98ee41c89",
+  "name": "phys_tables_c70600.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/physics/phys_tables_c70600.md",
+  "created_at": "2026-10-27T19:50:12.667357Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "phys_tables_c70600.md",
+    "bytes": 4860,
+    "sha256": "e5fdd2052969baf0c2cb64a7ad40530c2f029c51b68a31dff1e0239fd7d4d2ad"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "0afe14ad-51a3-47b7-86cd-91095eeef7ce",
+  "name": "README.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/physics/README.md",
+  "created_at": "2026-10-27T19:50:12.949344Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "README.md",
+    "bytes": 14487,
+    "sha256": "8b5b1b8a698b6b05e4e3a1bcc5b75ae8c77862b57c478e0bb41aee53c3147a0e"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "546af032-e3d1-458d-a462-517912dee911",
+  "name": "same-test-rates.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/physics/edison/same-test-rates.md",
+  "created_at": "2026-10-27T19:50:13.254816Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "same-test-rates.md",
+    "bytes": 27609,
+    "sha256": "b0526b62ae6b19bb623c7b9202a09c0dae781d029b8d442fc7f231d1192ad43f"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "c34d3632-f2e2-4a18-8c0f-5ed8e07666a9",
+  "name": "kinetics-constants.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/physics/edison/kinetics-constants.md",
+  "created_at": "2026-10-27T19:50:13.666868Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "kinetics-constants.md",
+    "bytes": 22237,
+    "sha256": "a140d4efde756d3ba8e8e99535d8d5e4aaa19d804538b9e981805a4205e6553c"
+   }
+  ],
+  "error": null
+ }
+]
