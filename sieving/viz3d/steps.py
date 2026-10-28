@@ -4,47 +4,55 @@
     PREVIEW=1 xvfb-run -a -s "-screen 0 1920x1080x24" python steps.py    # last frame of each sub-step, /tmp/preview_sieving.png
 
 Same pipeline as #255's ``atomizer-training/viz3d`` (``scene.py`` is a copy of its Scene framework): parts move
-along the paths an operator's hands would take them, there is no operator figure, and the stack is cut open only
-while the powder is moving through it. The masses in the readouts are an example split of a 50 g batch, not a
-measurement: the real yield is whatever the balance says.
+along the paths an operator's hands would take them, and there is no operator figure. The powder is a DEM
+(``dem.py``): it is poured, scooped, sieved and tipped out by the moving parts, and the readouts are what the
+simulation holds where. The batch (100 g) and its split (75 % under 63 um, 22 % 63-250 um, 3 % over 250 um, after
+Yankin et al. 2025's 75 % through 63 um) are an example, not a measurement. The magnified No. 230 is ``zoom.py``'s
+DEM at real particle size; the bonding leads are ``cables.py``'s simulated cables.
 """
 from __future__ import annotations
 
 import math
+import os
 import sys
 
 import numpy as np
 import pyvista as pv
+from PIL import Image, ImageDraw
 
+import dem as D
 import model as M
 from scene import FPS, R, Scene, T, ease, lighter, window
 
-STACK_GROUPS = ("pan", "s635", "s230", "s60", "cover")
+CB = Z = None
+if not os.environ.get("NO_CABLES"):
+    import cables as CB
+if not os.environ.get("NO_ZOOM"):
+    import zoom as Z
+
+STACK_GROUPS = ("pan", "s230", "s60", "cover")
 SX, SY = M.STACK_XY
-PX, PY = M.PAPER_C
-DENSITY = 1.6            # g/cm3, tapped Al powder (#232)
-MESH_AREA = math.pi * (M.MESH_R - 1.0) ** 2 / 100.0     # cm2
-JAR_AREA = math.pi * (M.JAR_R - 2.0) ** 2 / 100.0
-BATCH = 50.0             # g, example
-SPLIT = {"s60": 3.0, "s230": 8.0, "s635": 33.0, "pan": 6.0}      # example, g
-
-
-def depth(mass_g, area_cm2=MESH_AREA):
-    """Layer depth in mm of a mass of powder on an area."""
-    return mass_g / DENSITY / area_cm2 * 10.0
-
+TX, TY = M.TRAY_C
+FINE, COARSE, GRIT, PIECE = 0, 1, 2, 3
+CLASS_R = {FINE: 1.2, COARSE: 1.7, GRIT: 2.4}
+BATCH = 100.0                                   # g, example
+SPLIT = {FINE: 0.75, COARSE: 0.22, GRIT: 0.03}  # by mass, example
+RHO = 2.7e-3                                    # g/mm3, Al
+POWDER = (0.70, 0.72, 0.76)
+FALSE = {FINE: (0.20, 0.45, 0.85), COARSE: (0.95, 0.55, 0.15), GRIT: (0.30, 0.30, 0.33)}
+HEAP = np.array([TX + 20.0, TY, 0.0])            # where the pour lands
 
 CAM = {
-    "bench": [(-120.0, -980.0, 560.0), (10.0, 30.0, 50.0), (0, 0, 1)],
-    "pour": [(-420.0, -640.0, 330.0), (-170.0, 50.0, 70.0), (0, 0, 1)],
-    "paper": [(-230.0, -520.0, 330.0), (-110.0, 30.0, 15.0), (0, 0, 1)],
-    "fill": [(-60.0, -520.0, 330.0), (0.0, 10.0, 80.0), (0, 0, 1)],
-    "stack": [(40.0, -400.0, 190.0), (70.0, 0.0, 72.0), (0, 0, 1)],
-    "stack_cut": [(70.0, -330.0, 120.0), (70.0, 0.0, 66.0), (0, 0, 1)],
-    "unstack": [(0.0, -560.0, 330.0), (90.0, 40.0, 70.0), (0, 0, 1)],
-    "jars": [(90.0, -640.0, 400.0), (210.0, 50.0, 60.0), (0, 0, 1)],
-    "balance": [(160.0, -520.0, 330.0), (280.0, 40.0, 70.0), (0, 0, 1)],
-    "final": [(-60.0, -900.0, 520.0), (40.0, 30.0, 50.0), (0, 0, 1)],
+    "bench": [(-40.0, -1250.0, 760.0), (60.0, 40.0, 40.0), (0, 0, 1)],
+    "pour": [(-520.0, -640.0, 420.0), (-280.0, 60.0, 80.0), (0, 0, 1)],
+    "tray": [(-300.0, -470.0, 330.0), (-200.0, 20.0, 10.0), (0, 0, 1)],
+    "scoop": [(-120.0, -760.0, 470.0), (-40.0, 10.0, 80.0), (0, 0, 1)],
+    "stack": [(150.0, -620.0, 330.0), (150.0, -10.0, 80.0), (0, 0, 1)],
+    "stack_cut": [(150.0, -470.0, 210.0), (150.0, -10.0, 70.0), (0, 0, 1)],
+    "unstack": [(160.0, -860.0, 520.0), (250.0, 40.0, 90.0), (0, 0, 1)],
+    "jars": [(300.0, -700.0, 470.0), (380.0, 40.0, 110.0), (0, 0, 1)],
+    "balance": [(300.0, -640.0, 420.0), (380.0, -40.0, 120.0), (0, 0, 1)],
+    "final": [(120.0, -1250.0, 760.0), (180.0, 40.0, 50.0), (0, 0, 1)],
 }
 
 
@@ -61,39 +69,35 @@ def path(u, pts):
     return pts[k] + (pts[k + 1] - pts[k]) * ease(u * n - k)
 
 
-def gauges(sc, **kv):
-    fmt = {"batch": ("Batch", "{}"), "s60": ("No. 60", "{}"), "s230": ("No. 230", "{}"), "s635": ("No. 635", "{}"),
-           "pan": ("Pan", "{}"), "balance": ("Balance", "{}"), "status": ("", "{}")}
-    sc.gauges = [(fmt[k][0], fmt[k][1].format(v)) for k, v in kv.items() if v is not None]
-
-
-def load_parts(sc: Scene, ghost: dict | None = None, hidden=()):
-    """Add every model part. Cuttable parts are added twice (whole and halved at y = 0); set_cut() blends them."""
+def load_parts(sc: Scene, hidden=()):
+    """Add every model part. The stack's parts are added twice (whole and halved at its axis); set_cut() blends."""
     ms = M.meshes()
-    ghost = ghost or {}
     sc.cut_f["*"] = 0.0
     for name, m in ms.items():
-        op = ghost.get(name, m["opacity"])
+        if name.startswith("_"):
+            continue
         shown = name not in hidden
         if name == "bench":
             sc.add(name, m["whole"], m["color"], m["group"], ambient=0.95, diffuse=0.05, specular=0.0,
                    smooth_shading=False, shown=shown)
-        elif name in ("paper", "trough", "label"):
+        elif name == "label":
             sc.add(name, m["whole"], m["color"], m["group"], ambient=0.80, diffuse=0.30, specular=0.0,
                    smooth_shading=False, shown=shown)
         elif m["cut"] and m["half"] is not None:
-            sc.add(name, m["half"], m["color"], m["group"], opacity=op, shown=shown)
+            sc.add(name, m["half"], m["color"], m["group"], opacity=m["opacity"], shown=shown)
             if m["half_cut"] is not None:
-                sc.add(name + "#cut", m["half_cut"], lighter(m["color"]), m["group"], opacity=op,
+                sc.add(name + "#cut", m["half_cut"], lighter(m["color"]), m["group"], opacity=m["opacity"],
                        smooth_shading=False, ambient=0.55, diffuse=0.5, specular=0.0, shown=shown)
-            sc.add("w:" + name, m["whole"], m["color"], m["group"], opacity=op, shown=shown)
+            sc.add("w:" + name, m["whole"], m["color"], m["group"], opacity=m["opacity"], shown=shown)
             sc.cutrole.update({name: "half", name + "#cut": "half", "w:" + name: "whole"})
             sc.cut_f[m["group"]] = 0.0
         else:
-            sc.add(name, m["whole"], m["color"], m["group"], opacity=op, shown=shown)
+            sc.add(name, m["whole"], m["color"], m["group"], opacity=m["opacity"], shown=shown, specular=0.5,
+                   specular_power=30)
     for g in STACK_GROUPS:
         sc.parent[g] = "stack"
-    sc.parent["grit"] = "s60"
+    for g in ("tweezer_a", "tweezer_b"):
+        sc.parent[g] = "tweezers"
     return ms
 
 
@@ -107,410 +111,579 @@ def show_group(sc: Scene, group: str, a: float):
         sc.alpha[n] = a
 
 
-class Heap:
-    """A powder heap from the prebuilt meshes, placed at `pos` in its group's assembled coordinates. With half=True
-    it has a halved copy too, blended by the group's cut factor like the sieves."""
-
-    def __init__(self, sc: Scene, name: str, kind: str, group: str, pos, half=False, color=M.POWDER):
-        v = M.heap_meshes()
-        self.sc, self.name, self.half = sc, name, half
-        self.levels, self.meshes = v["levels"][kind], v[kind]
-        self.pos = np.asarray(pos, float)
-        self.level = None
-        style = dict(ambient=0.30, diffuse=0.80, specular=0.15, specular_power=12)
-        sc.add(name, self.meshes[0][0].copy(), color, group, **style)
-        if half:
-            sc.add("h:" + name, self.meshes[0][1].copy(), color, group, **style)
-            sc.add("h:" + name + "#cut", self.meshes[0][2].copy(), lighter(color), group, smooth_shading=False,
-                   ambient=0.55, diffuse=0.5, specular=0.0)
-            sc.cutrole.update({name: "whole", "h:" + name: "half", "h:" + name + "#cut": "half"})
-        self.set(0.0, shown=False)
-
-    def set(self, level: float, shown=True):
-        i = int(np.argmin(np.abs(self.levels - level)))
-        if i != self.level:
-            body, hb, hc = self.meshes[i]
-            self.sc.set_mesh(self.name, body.translate(self.pos, inplace=False))
-            if self.half:
-                self.sc.set_mesh("h:" + self.name, hb.translate(self.pos, inplace=False))
-                self.sc.set_mesh("h:" + self.name + "#cut", hc.translate(self.pos, inplace=False))
-            self.level = i
-        a = 1.0 if shown and level > 0.05 else 0.0
-        self.sc.alpha[self.name] = a
-        if self.half:
-            self.sc.alpha["h:" + self.name] = a
-            self.sc.alpha["h:" + self.name + "#cut"] = a
+# ------------------------------------------------------------------------------------ the powder
+def fill_container(rng) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Parcels for the batch on a loose lattice inside the container (model coordinates), sizes shuffled, and the
+    pieces in among them; DEM.settle drops them into a bed."""
+    n = {k: int(round(BATCH * SPLIT[k] / (RHO * 4 / 3 * math.pi * CLASS_R[k] ** 3))) for k in CLASS_R}
+    cls = np.concatenate([np.full(n[k], k) for k in (FINE, COARSE, GRIT)])
+    rng.shuffle(cls)
+    s = 5.0
+    cx, cy = M.CONT_XY
+    sites = []
+    for k, z in enumerate(np.arange(4.0, 190.0, s)):          # staggered layers, so nothing lands in a column
+        o = 0.5 * s * (k % 2)
+        for x in np.arange(-52.0, 52.1, s):
+            for y in np.arange(-52.0, 52.1, s):
+                if (x + o) ** 2 + (y + o) ** 2 < 52.0 ** 2:
+                    sites.append((cx + x + o, cy + y + o, z))
+    sites = np.array(sites)
+    npc = len(M.PIECE_R)
+    # the pieces at every 9th site in the first part of the bed, their face neighbours left empty
+    pick = np.arange(40, 40 + 9 * 60, 60)[:npc] * 3
+    taken = np.zeros(len(sites), bool)
+    for p in pick:
+        taken[np.linalg.norm(sites - sites[p], axis=1) < s * 1.01] = True
+    free = np.nonzero(~taken)[0][:len(cls)]
+    x = np.vstack([sites[free], sites[pick]]) + rng.uniform(-0.6, 0.6, (len(free) + npc, 3))
+    r = np.concatenate([[CLASS_R[c] for c in cls], M.PIECE_R])
+    cls = np.concatenate([cls, np.full(npc, PIECE)])
+    return x, r, cls
 
 
-class Drops:
-    """Powder in motion: points rendered as spheres, falling in slow motion until they reach their floor."""
+class Powder:
+    """The DEM, its drawing (one glyph actor per size class, the pieces as meshes) and its bookkeeping."""
 
-    def __init__(self, sc: Scene, name: str, color=M.POWDER, size=4.0, slowmo=0.30, seed=1):
-        self.sc, self.name, self.slowmo = sc, name, slowmo
-        self.rng = np.random.default_rng(seed)
-        self.p = np.zeros((0, 3))
-        self.v = np.zeros((0, 3))
-        self.floor = np.zeros(0)
-        self.axis = None          # (x, y, r): keep particles inside a vertical cylinder (a sieve frame, a jar)
-        self.landed = 0
-        sc.add(name, pv.PolyData(np.array([[0.0, 0.0, -500.0]])), color, "static", render_points_as_spheres=True,
-               point_size=size, ambient=0.45, smooth_shading=False)
+    def __init__(self, sc: Scene, seed=3):
+        self.sc = sc
+        rng = np.random.default_rng(seed)
+        x, r, cls = fill_container(rng)
+        self.sim = D.DEM(x, r, cls)
+        for c in M.colliders():
+            self.sim.add(D.Collider(**c))
+        self.sim.compile()
+        self.mass = self.sim.m.copy()
+        self.pieces = np.nonzero(cls == PIECE)[0]
+        self.agit = 0.15
+        self.cut = 0.0
+        self.colour_f = 0.0                     # 0: all powder grey, 1: false colour by size
+        self.sphere = pv.Icosphere(radius=1.0, nsub=1)
+        style = dict(smooth_shading=True, specular=0.25, specular_power=14, ambient=0.25, diffuse=0.85)
+        for k in (FINE, COARSE, GRIT):
+            sc.add(f"pw{k}", pv.PolyData(np.zeros((1, 3))), POWDER, "static", **style)
+        for j, mesh in enumerate(M.meshes()["_pieces"]):
+            sc.add(f"piece{j}", mesh, M.CHUNK, f"piece{j}", specular=0.4, specular_power=20)
+        self.settle()
+        self.draw()
 
-    def emit(self, n, pos, vel, floor, spread=(2.0, 2.0, 1.0), vspread=25.0, y_min=None):
-        if n <= 0:
+    def world(self):
+        return {c.group: self.sc.world(c.group) for c in self.sim.colliders}
+
+    def settle(self, seconds=1.6):
+        """Drop the parcels into a bed: nearly frictionless at first so they pack, then with friction to rest."""
+        w = self.world()
+        mu, cmu = self.sim.mu, self.sim.cMu.copy()
+        for f in range(int(seconds * FPS)):
+            slick = f < seconds * FPS * 0.6
+            self.sim.mu = 0.05 if slick else mu
+            self.sim.cMu[:] = 0.05 if slick else cmu
+            self.sim.advance(1.0 / FPS, w, 0.0)
+        self.sim.mu, self.sim.cMu[:] = mu, cmu
+        self.sim.v[:] = 0.0
+
+    def tick(self, seconds=1.0 / FPS, agit=None):
+        self.sim.advance(seconds, self.world(), self.agit if agit is None else agit)
+        self.draw()
+
+    def draw(self):
+        x, cls = self.sim.x, self.sim.cls
+        hide = np.zeros(len(x), bool)
+        if self.cut > 0.5:         # the stack is cut open: drop the parcels in its front half
+            d = np.hypot(x[:, 0] - SX, x[:, 1] - SY)
+            hide = (x[:, 1] < SY) & (d < M.SIEVE_OD / 2 + 3) & (x[:, 2] < 175)
+        for k in (FINE, COARSE, GRIT):
+            sel = (cls == k) & ~hide
+            name = f"pw{k}"
+            if sel.any():
+                pts = pv.PolyData(x[sel])
+                pts["s"] = self.sim.r[sel]
+                self.sc.set_mesh(name, pts.glyph(geom=self.sphere, scale="s", orient=False))
+                self.sc.alpha[name] = 1.0
+            else:
+                self.sc.alpha[name] = 0.0
+            self.sc.color[name] = tuple(a + (b - a) * self.colour_f for a, b in zip(POWDER, FALSE[k]))
+        for j, i in enumerate(self.pieces):
+            self.sc.gmat[f"piece{j}"] = T(x[i])
+
+    def where(self, test) -> dict:
+        """Grams of each class whose parcel centre passes test(x) (a boolean array function)."""
+        sel = test(self.sim.x)
+        return {k: float(self.mass[sel & (self.sim.cls == k)].sum()) for k in (FINE, COARSE, GRIT, PIECE)}
+
+    def in_sieve(self, group: str, lo=-3.0, hi=60.0) -> dict:
+        """Grams on a sieve (or in the pan), in that part's frame: inside the frame, between lo and hi above the cloth."""
+        Mw = np.linalg.inv(self.sc.world(group))
+        z0 = M.MESH_Z[group]
+
+        def test(x):
+            q = x @ Mw[:3, :3].T + Mw[:3, 3]
+            return (np.hypot(q[:, 0] - SX, q[:, 1] - SY) < M.RW) & (q[:, 2] > z0 + lo) & (q[:, 2] < z0 + hi)
+        return self.where(test)
+
+    def activate(self, test):
+        self.sim.act[:] = test(self.sim.x)
+
+
+def grams(d, keys=(FINE, COARSE, GRIT)) -> float:
+    return sum(d[k] for k in keys)
+
+
+# ------------------------------------------------------------------------------- leads and zoom
+class Leads:
+    """The three bonding leads as simulated cables (cables.py): an alligator clip on the container, the tray and the
+    pan, a ring lug under a screw on the bus bar."""
+
+    def __init__(self, sc: Scene):
+        self.sc = sc
+        self.cables = {}
+        if CB is None:
             return
-        p = np.asarray(pos, float)[None, :] + self.rng.normal(0, 1, (n, 3)) * np.asarray(spread, float)
-        if y_min is not None:
-            p[:, 1] = np.maximum(p[:, 1], y_min)
-        v = np.asarray(vel, float)[None, :] + self.rng.normal(0, vspread, (n, 3))
-        self.p, self.v = np.vstack([self.p, p]), np.vstack([self.v, v])
-        self.floor = np.concatenate([self.floor, np.full(n, float(floor))])
+        cx, cy = M.CONT_XY
+        tx, ty = M.TRAY_C
+        a = math.radians(140.0)
+        rad = np.array([math.cos(a), math.sin(a), 0.0])
+        rim = M.RW + M.T_SHEET
+        # (part group, the clip in that part's model coordinates, lead length)
+        self.clips = {
+            "container": ("container", CB.clip_matrix([cx, cy + 44.0, 223.0], [0, 0.6, 0.8], [0, 1, 0]), 470.0),
+            "tray": ("tray", CB.clip_matrix([tx - 100.0, ty + M.TRAY_D / 2, M.TRAY_H - 6.0], [0, 0.9, 0.44],
+                                            [0, 1, 0]), 280.0),
+            "pan": ("pan", CB.clip_matrix([SX + rim * rad[0], SY + rim * rad[1], M.DEPTH - 7.0], rad + [0, 0, -0.25],
+                                          [0, 0, 1]), 560.0),
+        }
+        self.lugs = {k: CB.clip_matrix(M.GROUND_PTS[k], [0, -1, 0], [0, 0, 1]) for k in self.clips}
+        for i, (k, (g, Mc, length)) in enumerate(self.clips.items()):
+            a_, ad = CB.lead_end(sc.world(g) @ Mc)
+            b_, bd = CB.lead_end(self.lugs[k], lug=True)
+            cab = CB.Cable(a_, b_, length, radius=1.6, seed=i)
+            cab.settle(a_, b_, ad, bd, self.obstacles(), seconds=3.0)
+            self.cables[k] = cab
+            sc.add(f"lead_{k}", cab.polydata(), CB.GREEN, "static", specular=0.3, specular_power=20)
+            for nm, mesh, col in CB.clip_parts():
+                sc.add(f"clip_{k}_{nm}", mesh, col, f"clip_{k}", specular=0.4)
+            for nm, mesh, col in CB.lug_parts():
+                sc.add(f"lug_{k}_{nm}", mesh.transform(self.lugs[k], inplace=False), col, "static", specular=0.4)
+            sc.gmat[f"clip_{k}"] = sc.world(g) @ Mc
 
-    def step(self):
-        if len(self.p):
-            h = self.slowmo / FPS
-            self.v[:, 2] -= 9810 * h
-            self.v *= (1 - 1.2 * h)
-            self.p += self.v * h
-            if self.axis is not None:
-                x, y, r = self.axis
-                off = self.p[:, :2] - np.array([x, y])
-                d = np.linalg.norm(off, axis=1) + 1e-9
-                k = np.minimum(1.0, r / d)
-                self.p[:, :2] = np.array([x, y]) + off * k[:, None]
-            gone = self.p[:, 2] <= self.floor
-            self.landed += int(gone.sum())
-            self.p, self.v, self.floor = self.p[~gone], self.v[~gone], self.floor[~gone]
-        pts = self.p if len(self.p) else np.array([[0.0, 0.0, -500.0]])
-        self.sc.set_mesh(self.name, pv.PolyData(pts.copy()))
-        self.sc.alpha[self.name] = 1.0 if len(self.p) else 0.0
+    def obstacles(self):
+        sc = self.sc
+        tx, ty = M.TRAY_C
+        rs = M.RW + M.T_SHEET + M.LIP + M.T_SHEET
+        cx, cy = M.CONT_XY
+        bx, by = M.BAL_XY
+        jx, jy = M.JAR_XY["coarse"]
+        return [("plane", 0.0),
+                ("box", np.eye(4), (tx - M.TRAY_W / 2, ty - M.TRAY_D / 2, 0.0), (tx + M.TRAY_W / 2, ty + M.TRAY_D / 2,
+                                                                              M.TRAY_H)),
+                ("cyl", sc.world("pan") @ T((SX, SY, 0.0)), rs, 0.0, M.DEPTH),
+                ("cyl", sc.world("s230") @ T((SX, SY, M.SKIRT_Z["s230"])), rs, -0.6, M.SKIRT_H + M.DEPTH),
+                ("cyl", sc.world("s60") @ T((SX, SY, M.SKIRT_Z["s60"])), rs, -0.6, M.SKIRT_H + M.DEPTH),
+                ("cyl", sc.world("cover") @ T((SX, SY, M.COVER_Z)), rs, -0.6, 18.0),
+                ("cyl", sc.world("container") @ T((cx, cy, 0.0)), M.CONT_R, 0.0, 229.0),
+                ("box", np.eye(4), (M.BUS_X0, M.BUS_Y - 10, 0.0), (M.BUS_X1, M.BUS_Y + 10, M.BUS_Z)),
+                ("cyl", T((*M.DISH_XY, 0.0)), 34.2, 0.0, 12.2),
+                ("box", np.eye(4), (bx - M.BAL_W / 2, by - M.BAL_D / 2, 0.0), (bx + M.BAL_W / 2, by + M.BAL_D / 2,
+                                                                               M.BAL_PAN_Z + 2.0)),
+                ("cyl", T((jx, jy, 0.0)), M.JAR_R, 0.0, M.JAR_H + 1.0)]
+
+    def update(self):
+        if CB is None:
+            return
+        obs = self.obstacles()
+        for k, cab in self.cables.items():
+            g, Mc, _ = self.clips[k]
+            W = self.sc.world(g) @ Mc
+            self.sc.gmat[f"clip_{k}"] = W
+            a_, ad = CB.lead_end(W)
+            b_, bd = CB.lead_end(self.lugs[k], lug=True)
+            cab.step(a_, b_, ad, bd, obs)
+            self.sc.set_mesh(f"lead_{k}", cab.polydata())
+
+    def penetration(self) -> float:
+        obs = self.obstacles()
+        return max([cab.penetration(obs) for cab in self.cables.values()] or [0.0])
 
 
-def rim_point(side=-1.0, z=None):
-    """A point on a sieve's rim (assembled coordinates), on the -x side by default."""
-    return np.array([SX + side * (M.SIEVE_OD / 2 - 1.0), SY, z])
+class Magnifier:
+    """zoom.py's real-scale DEM of the No. 230 cloth, drawn as a round inset with a leader to the cloth."""
 
+    def __init__(self, sc: Scene, px=300):
+        self.sc, self.px = sc, px
+        self.z = Z.Zoom(size_px=px, seed=1) if Z is not None else None
+        self.a = 0.0
+        self.anchor = np.array([SX + 30.0, SY + 30.0, M.MESH_Z["s230"]])
+        self.centre = (0.80, 0.42)            # inset centre, as a fraction of the frame
 
-def tip_matrix(group_rim: np.ndarray, target: np.ndarray, ang: float):
-    """Carry a sieve so that `group_rim` (a point on its rim) sits at `target`, then tip it `ang` degrees about the
-    bench-parallel y axis through that point (the far side goes up and over, the rim point stays put)."""
-    return T(target - group_rim) @ R((0, 1, 0), ang, group_rim)
+    def __call__(self, base: np.ndarray) -> np.ndarray:
+        if self.z is None or self.a <= 0.02:
+            return base
+        img = Image.fromarray(base).convert("RGBA")
+        W, H = img.size
+        k = H / 720.0
+        size = int(round(self.px * k))
+        inset = self.z.render().resize((size, size), Image.LANCZOS)
+        if self.a < 1.0:
+            al = np.asarray(inset).copy()
+            al[..., 3] = (al[..., 3] * self.a).astype(np.uint8)
+            inset = Image.fromarray(al)
+        cx, cy = self.centre[0] * W, self.centre[1] * H
+        ax, ay = self.sc.project(self.sc.world("s230")[:3, :3] @ self.anchor + self.sc.world("s230")[:3, 3])
+        d = ImageDraw.Draw(img, "RGBA")
+        a8 = int(200 * self.a)
+        ang = math.atan2(ay * H - cy, ax * W - cx)
+        ex, ey = cx + math.cos(ang) * size / 2, cy + math.sin(ang) * size / 2
+        d.line([(ex, ey), (ax * W, ay * H)], fill=(40, 40, 46, a8), width=max(1, int(round(2 * k))))
+        rr = 7 * k
+        d.ellipse((ax * W - rr, ay * H - rr, ax * W + rr, ay * H + rr), outline=(40, 40, 46, a8),
+                  width=max(1, int(round(2 * k))))
+        img.alpha_composite(inset, (int(round(cx - size / 2)), int(round(cy - size / 2))))
+        return np.asarray(img.convert("RGB"))
+
+    def advance(self, agit=1.0, tap=False):
+        if self.z is not None:
+            self.z.advance(1.0 / FPS, agitation=agit, tap=tap)
 
 
 # ------------------------------------------------------------------------------- the animation
+class Stop(Exception):
+    pass
+
+
 def anim_sieving():
-    sc = Scene("sieving", "Sieving atomized powder: 3 in stack, No. 60 / 230 / 635 (#222)")
+    sc = Scene("sieving", "Sieving atomized powder: 8 in stack, No. 60 / No. 230 / pan (#222)")
+    last = int(os.environ.get("STEPS", "99"))          # stop after this many sub-steps (for quick looks)
+    step0 = sc.step
+
+    def step(*a, **kw):
+        step0(*a, **kw)
+        if len(sc.substeps) >= last:
+            raise Stop
+    sc.step = step
+    try:
+        return _sieving(sc)
+    except Stop:
+        return sc.save()
+    except Exception:
+        if os.environ.get("PREVIEW"):
+            sc.save()
+        raise
+
+
+def _sieving(sc):
     sc.cam = CAM["bench"]
-    load_parts(sc, hidden=("label", "doser_tube", "doser_band", "doser_cap", "funnel", "lid_coarse",
-                           "lid_print", "lid_fines")
-               + tuple(f"chunk{k}" for k in range(7)) + tuple(f"grit{k}" for k in range(9)))
-    chunk_groups = [f"chunk{k}" for k in range(7)]
-    M.parts()                     # fills M.CHUNK_POS (the meshes come from the cache)
-    rng = np.random.default_rng(2)
-    chunk_targets = []
-    for c in M.CHUNK_POS:
-        a, rr = rng.uniform(0, 2 * math.pi), rng.uniform(0, 19)
-        tgt = np.array([M.DISH_XY[0] + rr * math.cos(a), M.DISH_XY[1] + rr * math.sin(a), 1.2 + 2.2])
-        chunk_targets.append(tgt - (np.array([PX, PY, M.TRAY_WALL + 0.2]) + c))
-    for name, pts in M.bonding_leads().items():          # flexible bonding leads, tray and stack to the ground stud
-        line = pv.Spline(np.array(pts, float), 60)
-        sc.add(name, line.tube(radius=1.3, n_sides=10), M.GROUND, "static", ambient=0.4)
-        for p in (pts[0], pts[-1]):
-            sc.add(name + "_clip" + str(pts.index(p)), pv.Cube(center=p, x_length=9, y_length=5, z_length=6),
-                   M.STEEL_DK, "static")
-    # powder: a cone on the tray, a layer on each mesh and in the pan, and a layer in each jar
-    cone = Heap(sc, "heap_paper", "cone", "paper", (PX, PY, M.TRAY_WALL + 0.1))
-    heaps = {"s60": Heap(sc, "heap_s60", "disc", "s60", (SX, SY, M.MESH_Z["s60"] + 0.3), half=True),
-             "s230": Heap(sc, "heap_s230", "disc", "s230", (SX, SY, M.MESH_Z["s230"] + 0.3), half=True),
-             "s635": Heap(sc, "heap_s635", "disc", "s635", (SX, SY, M.MESH_Z["s635"] + 0.3), half=True),
-             "pan": Heap(sc, "heap_pan", "disc", "pan", (SX, SY, M.MESH_Z["pan"] + 0.1), half=True)}
-    jars = {"coarse": Heap(sc, "heap_jar_coarse", "jar", "jar_coarse", (*M.JAR_COARSE_XY, 2.0)),
-            "print": Heap(sc, "heap_jar_print", "jar", "jar_print", (*M.JAR_PRINT_XY, M.BAL_PAN_Z + 4.0)),
-            "fines": Heap(sc, "heap_jar_fines", "jar", "jar_fines", (*M.JAR_FINES_XY, 2.0))}
-    drops = Drops(sc, "drops", size=4.0, seed=3)
-    bits = Drops(sc, "bits", color=M.CHUNK, size=7.0, slowmo=0.30, seed=5)
-    # the container stands beside the paper; its mouth (the top tube's centre) and the direction to the paper
+    load_parts(sc, hidden=("label", "lid_coarse", "lid_print"))
+    pw = Powder(sc)
+    leads = Leads(sc)
+    mag = Magnifier(sc)
+    sc.inset = mag
+    sim = pw.sim
+
+    def gauges(**kv):
+        names = {"batch": "Batch", "s60": "No. 60", "s230": "No. 230", "pan": "Pan", "tray": "Tray",
+                 "balance": "Balance", "status": ""}
+        sc.gauges = [(names[k], v) for k, v in kv.items() if v is not None]
+
+    cable_mm = []
+
+    def tick(agit=None, mag_on=False, tap=False):
+        pw.tick(agit=agit)
+        leads.update()
+        cable_mm.append(leads.penetration())
+        if mag_on:
+            mag.advance(1.0, tap)
+
+    on_tray = lambda x: (np.abs(x[:, 0] - TX) < M.TRAY_W / 2) & (np.abs(x[:, 1] - TY) < M.TRAY_D / 2) & (x[:, 2] < 60)
+    gauges(batch=f"{BATCH:.0f} g (example)", status="leads on: container, tray, pan")
+
+    # 1 · pour out ------------------------------------------------------------------------------------------
     cx, cy = M.CONT_XY
-    mouth = np.array([cx, cy, M.CONT_H + 26.0])
-    to_paper = np.array([PX - cx, PY - cy, 0.0])
-    to_paper /= np.linalg.norm(to_paper)
-    tilt_axis = np.array([-to_paper[1], to_paper[0], 0.0])     # horizontal, perpendicular: the top tips towards the paper
-    mouth_target = np.array([PX, PY, 0.0]) - to_paper * 58.0 + np.array([0.0, 0.0, 92.0])
-    gauges(sc, batch=f"{BATCH:.0f} g (example)", status="after a run: the container, opened cold")
+    mouth = np.array([cx, cy, 229.0])
+    to_tray = HEAP - np.array([cx, cy, 0.0])
+    to_tray[2] = 0
+    to_tray /= np.linalg.norm(to_tray)
+    axis = np.array([-to_tray[1], to_tray[0], 0.0])        # tipping about this turns the top towards the tray
+    over = HEAP + np.array([0.0, 0.0, 88.0]) - to_tray * 10.0
 
-    # 1 · pour out -------------------------------------------------------------------------------------------
+    def cont_pose(p, ang):
+        return T(p - mouth) @ R(axis, ang, mouth)
+
     def pour(u):
-        w = window(u, 0.0, 0.42)
-        lift = path(w, [mouth, mouth + (0, 0, 70), mouth_target + (0, 0, 40), mouth_target])
-        ang = 118.0 * window(u, 0.30, 0.62)
-        sc.gmat["container"] = T(lift - mouth) @ R(tilt_axis, ang, mouth)
-        if 0.52 < u < 0.97:
-            lip = mouth_target + to_paper * 48.0 - (0, 0, 6.0)
-            drops.emit(int(round(14 * (15 / FPS))), lip, to_paper * 160.0 + (0, 0, -120.0), M.TRAY_WALL + 0.4,
-                       spread=(4.0, 4.0, 2.0))
-        cone.set(window(u, 0.55, 0.98))
-        drops.step()
-        if u > 0.93:
-            for g in chunk_groups:
-                show_group(sc, g, (u - 0.93) / 0.07)
-    sc.step("1 · pour out", "After a run, with the dust settled: tip the powder container out onto a grounded stainless "
-            "tray (Bartosz pours onto paper, T2 50:51; paper is an insulator and NFPA 484 practice says never pour "
-            "powder over one). The heap is mostly spheres with unatomized pieces in it.", 4.5, pour,
-            hold=1.2, cam_to=CAM["pour"], live=True,
-            labels=[lab("powder container (size assumed, #255)", mouth + (0, 0, -60), 0.06, 0.30),
-                    lab("bonded, grounded tray", (PX + 60, PY - 80, M.TRAY_H), 0.60, 0.80),
-                    lab("bonding lead to ground", (M.GROUND_XY[0] - 2, M.GROUND_XY[1] - 4, 20), 0.56, 0.18)])
+        p = path(window(u, 0.0, 0.40), [mouth, mouth + (0, 0, 60), over + (0, 0, 150), over + (0, 0, 70)])
+        ang = 165.0 * window(u, 0.22, 0.55)
+        if u > 0.40:
+            p = over + np.array([0, 0, 70.0]) * (1 - window(u, 0.40, 0.55))
+        if u > 0.62:                                     # a few taps on the container to get the last of it out
+            ang += 5.0 * math.sin(2 * math.pi * 3.0 * (u - 0.62) * 9.0) * (1 - window(u, 0.85, 1.0))
+        sc.gmat["container"] = cont_pose(p, ang)
+        tick()
+        tray = grams(pw.where(on_tray))
+        gauges(batch=f"{BATCH:.0f} g (example)", tray=f"{tray:5.1f} g", status="tipping out onto the tray")
+    sc.step("1 · pour out", "After a run, with the dust settled: every lead clipped on first, then tip the container "
+            "out onto the grounded stainless tray, never over paper or plastic (NFPA 484). The heap is mostly powder "
+            "with a few unatomized pieces in it.", 9.0, pour, hold=0.6, cam_to=CAM["pour"], live=True,
+            labels=[lab("powder container (size assumed, #255)", mouth + (0, 0, -40), 0.06, 0.28),
+                    lab("bonding lead and clip", (cx, cy + 60, 200), 0.10, 0.62),
+                    lab("ground bus bar", (-300, M.BUS_Y, M.BUS_Z), 0.62, 0.20)])
+    end_pour = sc.gmat["container"].copy()
 
-    # 2 · pick out the pieces ---------------------------------------------------------------------------------
-    def pick(u):
-        w = window(u, 0.0, 0.5)
-        back = path(w, [mouth_target, mouth_target + (0, 0, 50), mouth + (0, 0, 70), mouth])
-        sc.gmat["container"] = T(back - mouth) @ R(tilt_axis, 118.0 * (1 - window(u, 0.0, 0.35)), mouth)
-        for k, (g, d) in enumerate(zip(chunk_groups, chunk_targets)):
-            v = window(u, 0.20 + 0.07 * k, 0.55 + 0.07 * k)
-            sc.gmat[g] = T(path(v, [(0, 0, 0), (d[0] * 0.5, d[1] * 0.5, 70.0), d]))
-        drops.step()
-    sc.step("2 · pieces out", "Pick the pieces out by hand: splats, beads and anything over a few millimetres go to "
-            "the dish. They are feedstock again (TA 04:50), not waste.", 3.5, pick, hold=1.2, cam_to=CAM["paper"],
-            labels=[lab("pieces: back into the next charge", (*M.DISH_XY, 14), 0.55, 0.22)])
+    # 2 · container back, pieces out --------------------------------------------------------------------------
+    sim.act[:] = True
+    tip0 = np.array([M.TWEEZ_REST[0], M.TWEEZ_REST[1], 2.5])
+    dish = np.array([M.DISH_XY[0], M.DISH_XY[1], 30.0])
+    state = {}
 
-    # 3 · scoop from the tray into a funnel on the No. 60 -----------------------------------------------------
-    # the cover's parking place on the bench, as a translation from where it sits on the stack
-    cover_delta = np.array([95.0, -60.0, -(M.TOP_RIM_Z - M.COVER_SKIRT) + 0.5])
-    funnel_home = np.array([M.JAR_COARSE_XY[0], M.JAR_COARSE_XY[1], M.JAR_H - 10.0])
-    funnel_stack = np.array([SX, SY, M.TOP_RIM_Z - 12.0])
-    full_s60 = depth(BATCH)
-    scoop_rest = np.array([PX - 150.0, PY - 80.0, M.SCOOP_R + 0.5])      # where the scoop's bowl starts (its origin)
-    heap_c = np.array([PX, PY, M.TRAY_WALL + 0.1])
-    dip = heap_c + (-30.0, 0.0, 6.0)
-    over_funnel = np.array([SX - 18.0, SY, M.TOP_RIM_Z + 62.0])
-    n_scoops = 3
+    def exposed():
+        """Pieces lying on the tray with their top clear of powder, nearest the dish first."""
+        x, r = sim.x, sim.r
+        out = []
+        for j, i in enumerate(pw.pieces):
+            if not on_tray(x[i:i + 1])[0]:
+                continue
+            d = np.hypot(x[:, 0] - x[i, 0], x[:, 1] - x[i, 1])
+            above = (d < r[i] + 0.5) & (x[:, 2] > x[i, 2] + 0.5 * r[i])
+            if above.sum() <= 1:
+                out.append(j)
+        out.sort(key=lambda j: np.linalg.norm(x[pw.pieces[j], :2] - dish[:2]))
+        return out[:4]
 
-    def fill(u):
-        w = window(u, 0.0, 0.22)
-        sc.gmat["cover"] = T(path(w, [(0, 0, 0), (0, 0, 55), cover_delta + (0, 0, 50), cover_delta]))
-        show_group(sc, "funnel", 1.0 if u > 0.05 else 0.0)
-        f = window(u, 0.05, 0.28)
-        sc.gmat["funnel"] = T(path(f, [funnel_home, funnel_home + (0, 0, 80), funnel_stack + (0, 0, 60), funnel_stack])
-                              - funnel_home)
-        # three scoops: dip, carry, tip over the funnel, back
-        k = window(u, 0.25, 0.97) * n_scoops
-        i = min(int(k), n_scoops - 1)
-        t = k - i
-        carry = path(min(t / 0.55, 1.0), [scoop_rest if i == 0 else dip, dip, dip + (0, 0, 70), over_funnel + (-40, 0, 20),
-                                           over_funnel])
-        if t > 0.55:
-            back = path((t - 0.55) / 0.45, [over_funnel, over_funnel + (-40, 0, 20), dip + (0, 0, 70), dip])
-            carry = back
-        tip = 70.0 * (window(t, 0.50, 0.62) - window(t, 0.70, 0.85))
-        sc.gmat["scoop"] = T(carry - scoop_rest) @ R((0, 1, 0), tip, carry + (M.SCOOP_L, 0, 0))
-        pouring = 0.58 < t < 0.80 and u < 0.97
-        if pouring:
-            drops.axis = (SX, SY, M.MESH_R - 1.5)
-            drops.emit(int(round(14 * (15 / FPS))), over_funnel + (M.SCOOP_L + 6.0, 0, -12.0), (10.0, 0, -90.0),
-                       M.MESH_Z["s60"] + 0.5, spread=(3.0, 3.0, 2.0))
-        done = (i + max(0.0, (t - 0.58) / 0.22)) / n_scoops if t > 0.58 else i / n_scoops
-        done = min(1.0, done)
-        cone.set(1.0 - done)
-        heaps["s60"].set(full_s60 * min(1.0, max(0.0, done - 0.05) / 0.95))
-        drops.step()
-    sc.step("3 · into the No. 60", "A conductive scoop carries the powder to a funnel on the top sieve, the No. 60 "
-            "(250 µm): it scalps what the hand missed and keeps the fine meshes safe. 50 g is a 7.7 mm bed on a "
-            "3 in mesh; feed it in parts rather than all at once.", 7.0, fill, hold=1.2, cam_to=CAM["fill"],
-            live=True,
-            labels=[lab("No. 60 (250 µm)", (SX + 38, SY, M.MESH_Z["s60"] + 14), 0.70, 0.30),
-                    lab("No. 230 (63 µm)", (SX + 38, SY, M.MESH_Z["s230"] + 14), 0.70, 0.46),
-                    lab("No. 635 (20 µm)", (SX + 38, SY, M.MESH_Z["s635"] + 14), 0.70, 0.62),
-                    lab("pan", (SX + 38, SY, 20), 0.70, 0.78)])
+    def tweez_pose(p, yaw, pitch, grip):
+        Mw = T(p - tip0) @ R((0, 0, 1), yaw, tip0) @ R((0, 1, 0), pitch, tip0)
+        sc.gmat["tweezers"] = Mw
+        for side, g in ((1.0, "tweezer_a"), (-1.0, "tweezer_b")):
+            back = tip0 + np.array([-M.TWEEZ_L, side * 1.0, 0.0])
+            sc.gmat[g] = R((0, 0, 1), -side * grip, back)
+
+    def picks(u):
+        if "order" not in state:
+            state["order"] = exposed()
+            state["home"] = sc.gmat["container"].copy()
+        sc.gmat["container"] = cont_pose(path(window(u, 0.0, 0.22), [over, over + (0, 0, 120), mouth + (0, 0, 60),
+                                                                   mouth]), 165.0 * (1 - window(u, 0.0, 0.18)))
+        order = state["order"]
+        n = max(1, len(order))
+        t = window(u, 0.12, 0.96) * n
+        k = min(int(t), n - 1)
+        f = t - k
+        yaw, pitch = 90.0, 50.0
+        if order:
+            i = pw.pieces[order[k]]
+            if "target" not in state or state.get("k") != k:
+                state["k"], state["target"] = k, sim.x[i].copy()
+                state["grip"] = math.degrees(math.atan((M.TWEEZ_GAP / 2 - sim.r[i] - 0.7) / M.TWEEZ_L))
+            P = state["target"]
+            if f < 0.30:
+                p = path(f / 0.30, [tip0 + (0, 0, 60) if k == 0 else dish + (0, 0, 30), P + (0, 0, 50), P])
+                grip = 0.0
+            elif f < 0.40:
+                p, grip = P, state["grip"] * window(f, 0.30, 0.40)
+                if f > 0.36:
+                    sim.held[i] = True
+            elif f < 0.85:
+                p, grip = path((f - 0.40) / 0.45, [P, P + (0, 0, 60), dish + (0, 0, 40), dish]), state["grip"]
+            else:
+                p, grip = dish, state["grip"] * (1 - window(f, 0.85, 0.93))
+                if f > 0.88:
+                    sim.held[i] = False
+            if sim.held[i]:
+                sim.v[i] = (p - sim.x[i]) * FPS
+            if u > 0.96:
+                p = path(window(u, 0.96, 1.0), [p, tip0])
+        else:
+            p, grip = tip0, 0.0
+        if u <= 0.12:
+            p = path(window(u, 0.0, 0.12), [tip0, tip0 + (0, 0, 60)])
+            pitch = 50.0 * window(u, 0.0, 0.12)
+            yaw = 90.0 * window(u, 0.0, 0.12)
+        if u > 0.96:
+            pitch = 50.0 * (1 - window(u, 0.96, 1.0))
+            yaw = 90.0 * (1 - window(u, 0.96, 1.0))
+        tweez_pose(p, yaw, pitch, grip)
+        tick()
+    sc.step("2 · pieces out", "Container back. Pick the pieces out with tweezers: splats, beads and anything over a "
+            "few millimetres go to the dish. They are feedstock again (TA 04:50), not waste.", 7.0, picks, hold=0.6,
+            cam_to=CAM["tray"], live=True,
+            labels=[lab("pieces: back into the next charge", (*M.DISH_XY, 14), 0.62, 0.20)])
+    for i in pw.pieces:
+        sim.held[i] = False
+
+    # 3 · cover off, scoop onto the No. 60 -------------------------------------------------------------------------
+    rest = np.array([M.SCOOP_REST[0], M.SCOOP_REST[1], 0.0])
+    cover_park = np.array([M.COVER_PARK[0] - SX, M.COVER_PARK[1] - SY, -M.COVER_Z + 0.02])
+    drop = np.array([SX - 30.0, SY, M.TOP_RIM_Z + 40.0])
+
+    def scoop_pose(p, pitch):
+        sc.gmat["scoop"] = T(p - rest) @ R((0, 1, 0), pitch, rest)
+
+    def scoop(u):
+        sc.gmat["cover"] = T(path(window(u, 0.0, 0.12), [(0, 0, 0), (0, 0, 60), cover_park + (0, 0, 60), cover_park]))
+        passes = ((HEAP[1] - 2.0, 1.2), (HEAP[1] - 30.0, 1.2))
+        n = len(passes)
+        t = window(u, 0.10, 1.0) * n
+        k = min(int(t), n - 1)
+        f = t - k
+        y, z = passes[k]
+        x0, x1 = HEAP[0] - 62.0, HEAP[0] + 32.0
+        start = np.array([x0, y, z + 0.05])
+        if f < 0.12:
+            p = path(f / 0.12, [rest if k == 0 else drop, start + (0, 0, 70), start])
+            pitch = 12.0 * window(f, 0.0, 0.12)
+        elif f < 0.34:
+            p, pitch = start + np.array([x1 - x0, 0.0, 0.0]) * window(f, 0.12, 0.34), 12.0 - 6.0 * window(f, 0.12, 0.34)
+        elif f < 0.40:
+            p, pitch = np.array([x1, y, z + 0.05]), 6.0 * (1 - window(f, 0.34, 0.40))
+        elif f < 0.62:
+            p, pitch = path((f - 0.40) / 0.22, [np.array([x1, y, z + 0.05]), np.array([x1, y, 230.0]),
+                                                drop + (0, 0, 40), drop]), 0.0
+        else:
+            p = drop
+            pitch = 62.0 * window(f, 0.62, 0.78) + 4.0 * math.sin(2 * math.pi * 4.0 * f) * window(f, 0.72, 0.8)
+            pitch -= 62.0 * window(f, 0.88, 1.0)
+        scoop_pose(p, pitch)
+        tick()
+        g60 = grams(pw.in_sieve("s60"))
+        gauges(batch=f"{BATCH:.0f} g (example)", tray=f"{grams(pw.where(on_tray)):5.1f} g", s60=f"{g60:5.1f} g",
+               status="about 35-40 g a pass on an 8 in No. 230")
+    sc.step("3 · onto the No. 60", "Cover off. A conductive scoop carries the powder to the top sieve, the No. 60 "
+            "(250 µm): it scalps what the tweezers missed and keeps the No. 230 below it clean. An 8 in No. 230 takes "
+            "about 35-40 g a pass (DIN 66165's 26 cm³), so a 100 g run is three passes.", 12.0, scoop, hold=0.4,
+            cam_to=CAM["scoop"], live=True,
+            labels=[lab("No. 60 (250 µm)", (SX + 95, SY - 30, M.MESH_Z["s60"] + 20), 0.78, 0.30),
+                    lab("No. 230 (63 µm)", (SX + 95, SY - 30, M.MESH_Z["s230"] + 20), 0.78, 0.46),
+                    lab("pan", (SX + 95, SY - 30, 20), 0.78, 0.62)])
 
     def lid_on(u):
-        f = window(u, 0.0, 0.45)
-        sc.gmat["funnel"] = T(path(f, [funnel_stack, funnel_stack + (0, 0, 60), funnel_home + (0, 0, 80), funnel_home])
-                              - funnel_home)
-        sc.gmat["scoop"] = T(path(window(u, 0.0, 0.4), [dip, dip + (0, 0, 40), scoop_rest + (0, 0, 40), scoop_rest])
-                             - scoop_rest)
-        w = window(u, 0.3, 0.9)
-        sc.gmat["cover"] = T(path(w, [cover_delta, cover_delta + (0, 0, 60), (0, 0, 60),
-                                      (0, 0, 0)]))
-        drops.axis = None
-        drops.step()
-    sc.step("3 · cover on", "Cover on before anything is shaken. Fine aluminium is a combustible dust and the "
-            "cover is the containment.", 2.0, lid_on, hold=1.0, cam_to=CAM["stack"],
+        scoop_pose(path(window(u, 0.0, 0.5), [drop, drop + (-60, 0, 30), rest + (0, 0, 80), rest]), 0.0)
+        sc.gmat["cover"] = T(path(window(u, 0.35, 0.95), [cover_park, cover_park + (0, 0, 60), (0, 0, 60), (0, 0, 0)]))
+        tick()
+    sc.step("3 · cover on", "Cover on before anything is shaken: fine aluminium is a combustible dust and the cover "
+            "is the containment.", 3.0, lid_on, hold=0.4, cam_to=CAM["stack"], live=True,
             labels=[lab("cover", (SX, SY, M.TOP_RIM_Z + 8), 0.68, 0.22)])
 
-    # 4 · sieve -------------------------------------------------------------------------------------------------
-    sieve_s = 7.0
-    final = {k: depth(SPLIT[k]) for k in ("s60", "s230", "s635", "pan")}
+    # 4 · sieve ------------------------------------------------------------------------------------------------
+    sieve_s = 10.0
+    in_stack = lambda x: np.hypot(x[:, 0] - SX, x[:, 1] - SY) < M.SIEVE_OD / 2 + 8
+    pw.activate(in_stack)
+    state["t"] = 0.0
 
     def sieve(u):
-        t = u * sieve_s
-        amp = 5.0
-        wob = (amp * math.cos(2 * math.pi * 2.2 * t), amp * math.sin(2 * math.pi * 2.2 * t), 0.0)
-        tap = 1.6 if (int(t * FPS) % int(round(0.6 * FPS))) == 0 else 0.0
-        sc.gmat["stack"] = T((wob[0], wob[1], tap))
-        set_cut(sc, window(u, 0.0, 0.18))
-        k = window(u, 0.12, 0.96)
-        heaps["s60"].set(full_s60 + (final["s60"] - full_s60) * k)
-        heaps["s230"].set(final["s230"] * min(1.0, k * 1.25))
-        heaps["s635"].set(final["s635"] * k)
-        heaps["pan"].set(final["pan"] * max(0.0, (k - 0.15) / 0.85))
-        show_group(sc, "grit", window(u, 0.70, 0.95))
-        if 0.12 < u < 0.95:
-            rate = int(round(9 * (15 / FPS)))
-            drops.axis = (SX, SY, M.MESH_R - 2.0)
-            for src, dst in (("s60", "s230"), ("s230", "s635"), ("s635", "pan")):
-                for _ in range(rate):
-                    a, rr = drops.rng.uniform(0, math.pi), drops.rng.uniform(0, M.MESH_R - 4)
-                    pos = (SX + rr * math.cos(a), SY + abs(rr * math.sin(a)) + 2.0, M.MESH_Z[src] - 0.8)
-                    drops.emit(1, pos, (0, 0, -30.0), M.MESH_Z[dst] + 0.4 + heaps[dst].levels[heaps[dst].level or 0],
-                               spread=(0.5, 0.5, 0.3), vspread=8.0, y_min=SY + 1.5)
-        drops.step()
-        gauges(sc, batch=f"{BATCH:.0f} g (example)", s60=f"{BATCH + (SPLIT['s60'] - BATCH) * k:.0f} g",
-               s230=f"{SPLIT['s230'] * k:.0f} g", s635=f"{SPLIT['s635'] * k:.0f} g", pan=f"{SPLIT['pan'] * k:.0f} g",
-               status="sieving by hand, 3 min")
-    sc.step("4 · sieve", "Rotate the stack in a flat circle and tap the frame with the other hand, about 3 minutes. "
-            "Cut open here: pieces stay on the No. 60, 63-250 µm on the No. 230, the 20-63 µm print fraction on "
-            "the No. 635, dust in the pan. The fine meshes blind: tap, and do 10-20 g at a time.", sieve_s, sieve,
-            hold=1.6, cam_to=CAM["stack_cut"], live=True, still=True,
-            labels=[lab("20-63 µm: the print fraction", (SX + 20, SY + 10, M.MESH_Z["s635"] + 6), 0.66, 0.60),
-                    lab("< 20 µm: dust, flows badly", (SX + 20, SY + 10, 8), 0.66, 0.80)])
+        t = state["t"]
+        state["t"] += 1.0 / FPS
+        amp = 5.0 * window(u, 0.0, 0.08) * (1 - window(u, 0.94, 1.0))
+        w = 2 * math.pi * 2.2 * t
+        k = int(t * FPS)
+        tap = 0 < u < 0.94 and k % 9 == 0
+        dz = 1.5 if (k % 9) in (1, 2) and u < 0.94 else 0.0
+        sc.gmat["stack"] = T((amp * math.cos(w), amp * math.sin(w), dz))
+        set_cut(sc, window(u, 0.0, 0.10))
+        pw.cut = window(u, 0.0, 0.10)
+        pw.colour_f = window(u, 0.05, 0.20)
+        mag.a = window(u, 0.12, 0.22)
+        sc.notes = [("No. 230 at real size, slow motion: 63 µm openings, 44 µm wire\n"
+                     "blue < 63 µm goes through, orange 63-250 µm stays", (mag.centre[0], mag.centre[1] + 0.25), mag.a)]
+        tick(agit=5.0 * (amp > 0.5), mag_on=u > 0.12, tap=tap)
+        g = {k_: pw.in_sieve(k_) for k_ in ("s60", "s230", "pan")}
+        gauges(batch=f"{BATCH:.0f} g (example)", s60=f"{grams(g['s60']):5.1f} g", s230=f"{grams(g['s230']):5.1f} g",
+               pan=f"{grams(g['pan']):5.1f} g", status="by hand: circles and taps, ~3 min")
+    sc.step("4 · sieve", "Rotate the stack in a flat circle and tap the frame, about 3 minutes (here in time-lapse). "
+            "Cut open: grit stays on the No. 60, 63-250 µm on the No. 230, and under 63 µm, the print fraction, falls "
+            "to the pan. Inset: the No. 230 at real size.", sieve_s, sieve, hold=1.2, cam_to=CAM["stack_cut"],
+            live=True, still=True,
+            labels=[lab("> 250 µm", (SX - 60, SY + 40, M.MESH_Z["s60"] + 3), 0.10, 0.30),
+                    lab("63-250 µm", (SX - 60, SY + 40, M.MESH_Z["s230"] + 3), 0.10, 0.48),
+                    lab("< 63 µm: print fraction", (SX - 60, SY + 40, 4), 0.10, 0.70)])
+    mag.a = 0.0
+    sc.notes = []
 
-    # 5 · unstack and weigh --------------------------------------------------------------------------------------
-    rest60 = np.array([SX + 100.0, SY - 60.0, M.SIEVE_H])
-    dish_target = np.array([M.DISH_XY[0] - 20.0, M.DISH_XY[1], 46.0])
-    rim60 = rim_point(-1.0, M.MESH_Z["s60"] + M.STACKED_H)
+    # 5 · unstack --------------------------------------------------------------------------------------------------
+    sc.gmat["stack"] = np.eye(4)
 
-    def unstack1(u):
-        sc.gmat["stack"] = T((0, 0, 0))
-        set_cut(sc, 1.0 - window(u, 0.0, 0.25))
-        w = window(u, 0.15, 0.45)
-        sc.gmat["cover"] = T(path(w, [(0, 0, 0), (0, 0, 60), cover_delta + (0, 0, 60), cover_delta]))
-        v = window(u, 0.35, 0.75)
-        carry = path(v, [rim60, rim60 + (0, 0, 90), dish_target + (40, 0, 40), dish_target])
-        ang = -150.0 * window(u, 0.70, 0.90)
-        sc.gmat["s60"] = tip_matrix(rim60, carry, ang)
-        if 0.76 < u < 0.92:
-            show_group(sc, "grit", 0.0)
-            heaps["s60"].set(0.0)
-            bits.emit(int(round(3 * (15 / FPS))), dish_target + (-6, 0, -4), (-40.0, 0, -40.0), 3.0,
-                      spread=(4.0, 6.0, 2.0), vspread=15.0)
-        bits.step()
-        drops.step()
-        gauges(sc, batch=f"{BATCH:.0f} g (example)", s60=f"{SPLIT['s60']:.0f} g", s230=f"{SPLIT['s230']:.0f} g",
-               s635=f"{SPLIT['s635']:.0f} g", pan=f"{SPLIT['pan']:.0f} g", status="unstacking")
-    sc.step("5 · unstack", "Cover off, then the No. 60: what it held joins the pieces in the dish.", 5.0, unstack1,
-            hold=1.0, cam_to=CAM["unstack"], live=True)
+    def rim(group, ang_deg, z):
+        a = math.radians(ang_deg)
+        return np.array([SX + (M.RW + 0.6) * math.cos(a), SY + (M.RW + 0.6) * math.sin(a), z])
 
-    funnel_home = np.array([M.JAR_COARSE_XY[0], M.JAR_COARSE_XY[1], 0.0])
-    rim230 = rim_point(-1.0, M.MESH_Z["s230"] + M.STACKED_H)
-    over_coarse = np.array([M.JAR_COARSE_XY[0] - 12.0, M.JAR_COARSE_XY[1], M.JAR_H + 60.0])
+    def tip_matrix(rim_pt, target, ang, axis_=(0, 1, 0)):
+        """Carry a part so `rim_pt` on its rim sits at `target`, tipped `ang` degrees about a horizontal axis there."""
+        return T(target - rim_pt) @ R(axis_, ang, rim_pt)
 
-    def unstack2(u):
-        sc.gmat["s60"] = tip_matrix(rim60, path(window(u, 0.0, 0.3), [dish_target, dish_target + (60, -80, 40),
-                                                                        rest60 + (0, 0, 60), rest60]), 0.0)
-        show_group(sc, "funnel", 1.0)
-        v = window(u, 0.25, 0.62)
-        carry = path(v, [rim230, rim230 + (0, 0, 70), over_coarse + (40, 0, 40), over_coarse])
-        ang = -150.0 * window(u, 0.60, 0.80)
-        sc.gmat["s230"] = tip_matrix(rim230, carry, ang)
-        if 0.66 < u < 0.92:
-            heaps["s230"].set(final["s230"] * (1 - window(u, 0.66, 0.90)))
-            drops.axis = (M.JAR_COARSE_XY[0], M.JAR_COARSE_XY[1], M.JAR_R - 3.0)
-            drops.emit(int(round(10 * (15 / FPS))), over_coarse + (6, 0, -6), (10.0, 0, -80.0), 3.0,
-                       spread=(3.0, 3.0, 2.0), vspread=12.0)
-        jars["coarse"].set(depth(SPLIT["s230"], JAR_AREA) * window(u, 0.72, 0.96))
-        drops.step()
-        bits.step()
-    sc.step("5 · No. 230", "The No. 230 next, through the funnel into its own jar: 63-250 µm, too coarse for the "
-            "bed. Keep it; it can be re-atomized (E6 in #222).", 5.0, unstack2, hold=1.0, cam_to=CAM["jars"],
-            live=True, labels=[lab("63-250 µm", (*M.JAR_COARSE_XY, 40), 0.30, 0.30)])
+    def unstack(group, top_z, target, park, t0=0.0, extra=None):
+        """Lift a sieve (or the pan) off by its +x rim, tip it over `target` to pour, then set it down at `park`."""
+        r0 = rim(group, 0.0, top_z)       # the +x rim point: the sieve tips towards +x about it
+        base = 0.0 if group == "pan" else M.SKIRT_Z[group] - M.T_SHEET
+        pk = r0 + np.array([park[0] - SX, park[1] - SY, -base])
+        a0, a1 = t0 + 0.30 * (1 - t0), t0 + 0.62 * (1 - t0)
 
-    rest230 = np.array([SX + 100.0, SY + 70.0, M.SIEVE_H])
-    rim635 = rim_point(-1.0, M.MESH_Z["s635"] + M.STACKED_H)
-    over_print = np.array([M.JAR_PRINT_XY[0] - 12.0, M.JAR_PRINT_XY[1], M.BAL_PAN_Z + 2.0 + M.JAR_H + 60.0])
-    funnel_print = np.array([M.JAR_PRINT_XY[0], M.JAR_PRINT_XY[1], M.BAL_PAN_Z + 2.0])
+        def update(u):
+            if extra is not None:
+                extra(u)
+            carry = path(window(u, t0, a0), [r0, r0 + (0, 0, 90), target + (-40, 0, 60), target])
+            ang = 105.0 * window(u, a0, a0 + 0.10) - 105.0 * window(u, a1, a1 + 0.08)
+            ang += 4.0 * math.sin(2 * math.pi * 5.0 * u) * (window(u, a0 + 0.10, a0 + 0.13) - window(u, a1 - 0.04, a1))
+            if u > a1 + 0.08:
+                carry = path(window(u, a1 + 0.08, 1.0), [target, target + (0, 0, 60), pk + (0, 0, 60), pk])
+            sc.gmat[group] = tip_matrix(r0, carry, ang)
+            pw.activate(lambda x: ~on_tray(x))
+            tick()
+        return update
 
-    def unstack3(u):
-        sc.gmat["s230"] = tip_matrix(rim230, path(window(u, 0.0, 0.28), [over_coarse, over_coarse + (0, 0, 40),
-                                                                          rest230 + (0, 0, 60), rest230]), 0.0)
-        f = window(u, 0.05, 0.32)
-        sc.gmat["funnel"] = T(path(f, [(0, 0, 0), (0, 0, 60), funnel_print - funnel_home + (0, 0, 60),
-                                       funnel_print - funnel_home]))
-        v = window(u, 0.25, 0.62)
-        carry = path(v, [rim635, rim635 + (0, 0, 70), over_print + (40, 0, 40), over_print])
-        ang = -150.0 * window(u, 0.60, 0.80)
-        sc.gmat["s635"] = tip_matrix(rim635, carry, ang)
-        if 0.66 < u < 0.94:
-            heaps["s635"].set(final["s635"] * (1 - window(u, 0.66, 0.92)))
-            drops.axis = (M.JAR_PRINT_XY[0], M.JAR_PRINT_XY[1], M.JAR_R - 3.0)
-            drops.emit(int(round(12 * (15 / FPS))), over_print + (6, 0, -6), (10.0, 0, -80.0), M.BAL_PAN_Z + 5.0,
-                       spread=(3.0, 3.0, 2.0), vspread=12.0)
-        k = window(u, 0.72, 0.97)
-        jars["print"].set(depth(SPLIT["s635"], JAR_AREA) * k)
-        drops.step()
-        bits.step()
-        gauges(sc, batch=f"{BATCH:.0f} g (example)", balance=f"{SPLIT['s635'] * k:5.1f} g",
-               status="tared with the empty jar")
-    sc.step("5 · No. 635", "The No. 635 holds the print fraction, 20-63 µm. It goes through the funnel into a jar "
-            "already tared on the balance. Weigh every fraction: the yield says how many runs a print needs.", 5.5,
-            unstack3, hold=1.4, cam_to=CAM["balance"], live=True,
-            labels=[lab("20-63 µm: print fraction", (M.JAR_PRINT_XY[0], M.JAR_PRINT_XY[1] - 30, M.BAL_PAN_Z + 50),
-                        0.26, 0.26)])
+    def lift_cover(u):
+        set_cut(sc, 1.0 - window(u, 0.0, 0.10))
+        pw.cut = 1.0 - window(u, 0.0, 0.10)
+        sc.gmat["cover"] = T(path(window(u, 0.0, 0.22), [(0, 0, 0), (0, 0, 60), cover_park + (0, 0, 60), cover_park]))
 
-    rest635 = np.array([SX + 170.0, SY + 130.0, M.SIEVE_H])
-    rim_pan = rim_point(-1.0, M.PAN_H)
-    over_fines = np.array([M.JAR_FINES_XY[0] - 12.0, M.JAR_FINES_XY[1], M.JAR_H + 60.0])
-    funnel_fines = np.array([M.JAR_FINES_XY[0], M.JAR_FINES_XY[1], 0.0])
+    over_dish = np.array([M.DISH_XY[0] + 26.0, M.DISH_XY[1], 70.0])
+    s60_top = M.TOP_RIM_Z
+    sc.step("5 · No. 60", "Cover off, then the No. 60: what it held joins the pieces in the dish.", 6.0,
+            unstack("s60", s60_top, over_dish, M.SIEVE_PARK["s60"], t0=0.24, extra=lift_cover), hold=0.4, cam_to=CAM["unstack"],
+            live=True)
 
-    def unstack4(u):
-        sc.gmat["s635"] = tip_matrix(rim635, path(window(u, 0.0, 0.28), [over_print, over_print + (0, 0, 40),
-                                                                          rest635 + (0, 0, 60), rest635]), 0.0)
-        f = window(u, 0.05, 0.32)
-        sc.gmat["funnel"] = T(path(f, [funnel_print - funnel_home, funnel_print - funnel_home + (0, 0, 60),
-                                       funnel_fines - funnel_home + (0, 0, 60), funnel_fines - funnel_home]))
-        v = window(u, 0.25, 0.62)
-        carry = path(v, [rim_pan, rim_pan + (0, 0, 70), over_fines + (40, 0, 40), over_fines])
-        ang = -150.0 * window(u, 0.60, 0.80)
-        sc.gmat["pan"] = tip_matrix(rim_pan, carry, ang)
-        if 0.66 < u < 0.92:
-            heaps["pan"].set(final["pan"] * (1 - window(u, 0.66, 0.90)))
-            drops.axis = (M.JAR_FINES_XY[0], M.JAR_FINES_XY[1], M.JAR_R - 3.0)
-            drops.emit(int(round(8 * (15 / FPS))), over_fines + (6, 0, -6), (10.0, 0, -80.0), 3.0,
-                       spread=(3.0, 3.0, 2.0), vspread=12.0)
-        jars["fines"].set(depth(SPLIT["pan"], JAR_AREA) * window(u, 0.72, 0.96))
-        drops.step()
-        bits.step()
-    sc.step("5 · pan", "The pan last: under 20 um is dust. It flows badly on a bed and it is the fraction most "
-            "likely to go airborne, so it gets its own closed jar, not the bin.", 4.5, unstack4, hold=1.0,
-            cam_to=CAM["jars"], live=True, labels=[lab("< 20 µm", (*M.JAR_FINES_XY, 40), 0.60, 0.72)])
+    def coarse_gauge(u):
+        gauges(batch=f"{BATCH:.0f} g (example)", s230=f"{grams(pw.in_sieve('s230')):5.1f} g",
+               status="63-250 µm: re-atomize (E6, #222)")
+    jx, jy = M.JAR_XY["coarse"]
+    over_coarse = np.array([jx - 30.0, jy, M.JAR_Z["coarse"] + M.FUNNEL_SEAT + 98.0 + 30.0])
+    sc.step("5 · No. 230", "The No. 230 next, through the funnel into its own jar: 63-250 µm, too coarse for the bed. "
+            "Keep it; it can be re-atomized (E6 in #222).", 6.0,
+            unstack("s230", 2 * M.DEPTH, over_coarse, M.SIEVE_PARK["s230"], extra=coarse_gauge), hold=0.4,
+            cam_to=CAM["jars"], live=True, labels=[lab("63-250 µm", (jx, jy - 30, 40), 0.20, 0.30)])
 
-    # 6 · lids, label, and on to the doser ----------------------------------------------------------------------
-    rest_pan = np.array([SX + 170.0, SY - 110.0, M.PAN_H])
+    px_, py_ = M.JAR_XY["print"]
+    over_print = np.array([px_ - 30.0, py_, M.JAR_Z["print"] + M.FUNNEL_SEAT + 98.0 + 30.0])
+    in_print = lambda x: (np.hypot(x[:, 0] - px_, x[:, 1] - py_) < M.JAR_R) & (x[:, 2] > M.JAR_Z["print"]) & \
+        (x[:, 2] < M.JAR_Z["print"] + M.JAR_H)
 
+    def print_gauge(u):
+        g = grams(pw.where(in_print))
+        gauges(batch=f"{BATCH:.0f} g (example)", balance=f"{g:5.1f} g", status="jar and funnel tared")
+    sc.step("5 · pan", "The pan holds the print fraction, under 63 µm. It goes through the funnel into a jar already "
+            "tared on the balance. Weigh every fraction: the yield says how many runs a print needs.", 7.0,
+            unstack("pan", M.DEPTH, over_print, (SX, SY), extra=print_gauge), hold=1.0, cam_to=CAM["balance"],
+            live=True, labels=[lab("< 63 µm: print fraction", (px_, py_ - 30, M.JAR_Z["print"] + 50), 0.20, 0.26)])
+
+    # 6 · lids, label, and the rest of the heap ----------------------------------------------------------------------
     def finish(u):
-        sc.gmat["pan"] = tip_matrix(rim_pan, path(window(u, 0.0, 0.25), [over_fines, over_fines + (0, 0, 40),
-                                                                         rest_pan + (0, 0, 60), rest_pan]), 0.0)
-        f = window(u, 0.0, 0.25)
-        sc.gmat["funnel"] = T(path(f, [funnel_fines - funnel_home, funnel_fines - funnel_home + (0, 0, 80),
-                                       (0, 0, 80), (0, 0, 0)]))
-        show_group(sc, "funnel", 1.0 - window(u, 0.2, 0.3))
-        for j in ("coarse", "print", "fines"):
-            w = window(u, 0.25, 0.55)
-            sc.gmat[f"lid_{j}"] = T((0, 0, 70.0 * (1 - w)))
-            show_group(sc, f"lid_{j}", 1.0 if u > 0.25 else 0.0)
-        show_group(sc, "label", window(u, 0.55, 0.70))
-        show_group(sc, "doser", window(u, 0.70, 0.90))
-        drops.step()
-        bits.step()
-    sc.step("6 · label, store, dose", "Lids on, a 6-character ID on the print jar (#249), and the jar lives in the "
-            "desiccant box. The 20-63 µm jar is what feeds the doser's 25 mm cartridge: the Sep 30 clog was "
-            "unsieved powder.", 4.5, finish, hold=2.0, cam_to=CAM["final"],
-            labels=[lab("doser cartridge, Ø25 mm tube", (M.DOSER_XY[0], M.DOSER_XY[1] - 14, 60), 0.72, 0.62),
-                    lab("6-character ID (#249)", (M.JAR_PRINT_XY[0], M.JAR_PRINT_XY[1] - 26, M.BAL_PAN_Z + 36), 0.72,
-                        0.30)])
-    for j in ("coarse", "print", "fines"):
-        show_group(sc, f"lid_{j}", 1.0)
-    return sc.save()
+        for j in ("coarse", "print"):
+            sc.gmat[f"funnel_{j}"] = T((0, 0, 120.0 * window(u, 0.0, 0.40)))
+            show_group(sc, f"funnel_{j}", 1.0 - window(u, 0.30, 0.40))
+            sim.colliders[sim.index[f"funnel_{j}"]].on = u < 0.40
+            sc.gmat[f"lid_{j}"] = T((0, 0, 80.0 * (1 - window(u, 0.40, 0.70))))
+            show_group(sc, f"lid_{j}", 1.0 if u > 0.40 else 0.0)
+        show_group(sc, "label", window(u, 0.70, 0.85))
+        pw.activate(lambda x: ~on_tray(x))
+        tick()
+        g = grams(pw.where(in_print))
+        gauges(batch=f"{BATCH:.0f} g (example)", balance=f"{g:5.1f} g", tray=f"{grams(pw.where(on_tray)):5.1f} g",
+               status="then the next pass")
+    sc.step("6 · label, store, repeat", "Lids on, a 6-character ID on the print jar (#249), the jar into the "
+            "desiccant box. Then the next 35-40 g from the tray. The print jar is what feeds the doser's 25 mm "
+            "cartridge: the Sep 30 clog was unsieved powder.", 4.5, finish, hold=2.0, cam_to=CAM["final"],
+            labels=[lab("doser cartridge, Ø25 mm tube", (M.DOSER_XY[0], M.DOSER_XY[1] - 14, 60), 0.80, 0.30),
+                    lab("6-character ID (#249)", (px_, py_ - 26, M.JAR_Z["print"] + 36), 0.80, 0.55)])
+    info = sc.save()
+    audit_path = M.HERE / "out" / "audit_frames.pkl"
+    if not os.environ.get("PREVIEW"):
+        import pickle
+        audit_path.write_bytes(pickle.dumps(dict(record=sc.record, fps=FPS, cable_mm=cable_mm)))
+    return info
 
 
 ANIMS = {"sieving": anim_sieving}

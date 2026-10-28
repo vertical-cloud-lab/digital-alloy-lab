@@ -182,7 +182,7 @@ def _build(x, r, act, small, bigs, h, rmax_small, skin, count, order, cellc, nbr
 
 @njit(parallel=True, fastmath=True, cache=True)
 def _forces(x, v, r, m, cls, act, ghost, nbr, nnbr, kn, kt, zeta, mu,
-            CM, CMi, CV, ctype, ce0, ce1, cT, cMu, cPass, cRate, cOn, cLo, cHi,
+            CM, CMi, CV, ctype, ce0, ce1, cT, cMu, cPass, cRate, cOn, cLo, cHi, Wlo, Whi,
             sa, sb, pc, pu, pv, ph, hj, hs, hn, nj, ns, nn, wk, ws, wn, nwk, nws, nwn, dt, agit, F):
     n = x.shape[0]
     nc = ctype.shape[0]
@@ -205,6 +205,9 @@ def _forces(x, v, r, m, cls, act, ghost, nbr, nnbr, kn, kt, zeta, mu,
         # walls
         for c in range(nc):
             if not cOn[c]:
+                continue
+            if ghost[i] != c and (xi0 < Wlo[c, 0] - ri or xi0 > Whi[c, 0] + ri or xi1 < Wlo[c, 1] - ri or
+                                  xi1 > Whi[c, 1] + ri or xi2 < Wlo[c, 2] - ri or xi2 > Whi[c, 2] + ri):
                 continue
             q0 = CMi[c, 0, 0] * xi0 + CMi[c, 0, 1] * xi1 + CMi[c, 0, 2] * xi2 + CMi[c, 0, 3]
             q1 = CMi[c, 1, 0] * xi0 + CMi[c, 1, 1] * xi1 + CMi[c, 1, 2] * xi2 + CMi[c, 1, 3]
@@ -342,6 +345,8 @@ def _run(nsub, dt, x, v, F, r, m, cls, act, held, ghost, small, bigs, cellc, h, 
     CV = np.empty((nc, 3, 4))
     T = nsub * dt
     disp = np.zeros(x.shape[0])
+    Wlo = np.empty((nc, 3))
+    Whi = np.empty((nc, 3))
     rebuild = True
     for c in range(nc):
         for a in range(3):
@@ -354,12 +359,23 @@ def _run(nsub, dt, x, v, F, r, m, cls, act, held, ghost, small, bigs, cellc, h, 
                 for b in range(4):
                     CM[c, a, b] = M0[c, a, b] + (M1[c, a, b] - M0[c, a, b]) * u
             _inv3x4(CM[c], CMi[c])
+            for a in range(3):
+                Wlo[c, a] = 1e30
+                Whi[c, a] = -1e30
+            for k in range(8):
+                p0 = cLo[c, 0] if k & 1 else cHi[c, 0]
+                p1 = cLo[c, 1] if k & 2 else cHi[c, 1]
+                p2 = cLo[c, 2] if k & 4 else cHi[c, 2]
+                for a in range(3):
+                    w = CM[c, a, 0] * p0 + CM[c, a, 1] * p1 + CM[c, a, 2] * p2 + CM[c, a, 3]
+                    Wlo[c, a] = min(Wlo[c, a], w)
+                    Whi[c, a] = max(Whi[c, a], w)
         if rebuild:
             count, order = _grid(x, small, h, cellc)
             _build(x, r, act, small, bigs, h, rmax_small, skin, count, order, cellc, nbr, nnbr, x0)
         _forces(x, v, r, m, cls, act, ghost, nbr, nnbr, kn, kt, zeta, mu,
-                CM, CMi, CV, ctype, ce0, ce1, cT, cMu, cPass, cRate, cOn, cLo, cHi, sa, sb, pc, pu, pv, ph,
-                hj, hs, hn, nj, ns, nn, wk, ws, wn, nwk, nws, nwn, dt, agit, F)
+                CM, CMi, CV, ctype, ce0, ce1, cT, cMu, cPass, cRate, cOn, cLo, cHi, Wlo, Whi, sa, sb, pc, pu, pv,
+                ph, hj, hs, hn, nj, ns, nn, wk, ws, wn, nwk, nws, nwn, dt, agit, F)
         _integrate(x, v, F, m, act, held, dt, drag, vmax, x0, disp)
         rebuild = disp.max() > 0.25 * skin * skin
         # the new contact lists become the old ones (swap the buffers, copy back once at the end if needed)
@@ -391,7 +407,7 @@ class Collider:
 
 
 class DEM:
-    def __init__(self, x, r, cls, rho=2.7e-3, kn=1.2e5, mu=0.45, zeta=0.30, drag=0.4, vmax=2500.0):
+    def __init__(self, x, r, cls, rho=2.7e-3, kn=4e4, mu=0.45, zeta=0.30, drag=0.4, vmax=2500.0):
         self.x = np.ascontiguousarray(x, float)
         n = len(self.x)
         self.v = np.zeros((n, 3))
@@ -408,8 +424,8 @@ class DEM:
         self.bigs = np.nonzero(~self.small)[0].astype(np.int64)
         self.h = 2.0 * self.rmax_small
         self.cellc = np.zeros((n, 3), np.int64)
-        self.skin = 0.35
-        self.nbr = np.zeros((n, 48), np.int64)
+        self.skin = 1.0
+        self.nbr = np.zeros((n, 64), np.int64)
         self.nnbr = np.zeros(n, np.int64)
         self.x0 = self.x.copy()
         self.kn, self.kt, self.zeta, self.mu, self.drag, self.vmax = kn, kn * 2.0 / 7.0, zeta, mu, drag, vmax

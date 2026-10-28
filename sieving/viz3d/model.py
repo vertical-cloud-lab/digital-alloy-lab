@@ -94,22 +94,22 @@ JAR_LINE = [(0.0, 1.0), (23.6, 1.0), (23.6, 70.0), (21.6, 74.0), (21.6, JAR_H)]
 JAR_T = 1.0
 FUNNEL_LINE = [(7.0, 0.0), (7.0, 28.0), (70.0, 98.0), (73.0, 98.0)]
 FUNNEL_SEAT = JAR_H + JAR_T - 42.2 + 0.3   # funnel base above the jar's base: its cone rests on the lip
-BAL_XY = (480.0, -60.0)
+BAL_XY = (420.0, -70.0)
 BAL_W, BAL_D, BAL_H = 190.0, 210.0, 42.0
 BAL_PAN_R, BAL_PAN_Z = 60.0, BAL_H + 10.0
 JAR_Z = {"coarse": 0.0, "print": BAL_PAN_Z + 2.0}
-JAR_XY = {"coarse": (400.0, 190.0), "print": BAL_XY}
-DOSER_XY = (575.0, 175.0)
+JAR_XY = {"coarse": (390.0, 185.0), "print": BAL_XY}
+DOSER_XY = (560.0, 180.0)
 DOSER_R, DOSER_L = 12.5, 100.0         # O25.0 auger tube (powder-doser PR #170)
 COVER_PARK = (190.0, 215.0)            # where the cover waits while the No. 60 is filled
-SIEVE_PARK = {"s60": (720.0, 185.0), "s230": (720.0, -95.0)}     # where each sieve goes once it is emptied
+SIEVE_PARK = {"s60": (700.0, 165.0), "s230": (690.0, -125.0)}     # where each sieve goes once it is emptied
 SCOOP_REST = (-215.0, -215.0)          # scoop origin (front edge, bottom centre) at rest, pointing +x
 SCOOP_L, SCOOP_W, SCOOP_WALL, SCOOP_BACK = 90.0, 50.0, 16.0, 20.0
 TWEEZ_REST = (-60.0, -200.0)           # tweezer tips at rest, pointing -x
 TWEEZ_L, TWEEZ_GAP = 140.0, 12.0
-BUS_Y, BUS_X0, BUS_X1, BUS_Z = 300.0, -500.0, -120.0, 30.0
-GROUND_PTS = {"container": (-460.0, BUS_Y, BUS_Z + 3.0), "tray": (-330.0, BUS_Y, BUS_Z + 3.0),
-              "pan": (-170.0, BUS_Y, BUS_Z + 3.0)}
+BUS_Y, BUS_X0, BUS_X1, BUS_Z = 300.0, -500.0, 40.0, 30.0
+GROUND_PTS = {"container": (-460.0, BUS_Y, BUS_Z), "tray": (-330.0, BUS_Y, BUS_Z),   # ring lugs, screwed down
+              "pan": (15.0, BUS_Y, BUS_Z)}
 
 # ------------------------------------------------------------------------------------- primitives
 V = cq.Vector
@@ -182,7 +182,8 @@ def container(x: float, y: float) -> cq.Shape:
 
 def jar_lid(x: float, y: float, z0: float = 0.0) -> cq.Shape:
     r = JAR_R - 1.4
-    return lathe([(0, JAR_H + 0.4), (r, JAR_H + 0.4), (r, JAR_H + 9), (r - 1.2, JAR_H + 9.6), (0, JAR_H + 9.6)], z0, x, y)
+    z = JAR_H + JAR_T + 0.2
+    return lathe([(0, z), (r, z), (r, z + 8.6), (r - 1.2, z + 9.2), (0, z + 9.2)], z0, x, y)
 
 
 def scoop_shape() -> cq.Shape:
@@ -228,12 +229,15 @@ def doser_tube(x: float, y: float) -> list[Part]:
 
 
 def piece_shape(rng: np.random.Generator, r0: float) -> cq.Shape:
-    """An unatomized piece, a splat or bead of a few millimetres: two or three fused spheres about the origin."""
-    parts = [sphere(r0)]
+    """An unatomized piece, a splat or bead of a few millimetres: a sphere with one or two lobes fused on, all inside
+    a sphere of r0 about the origin (the DEM sphere that stands for it)."""
+    parts = [sphere(0.82 * r0)]
     for _ in range(rng.integers(1, 3)):
-        off = rng.normal(0, 0.45 * r0, 3)
-        off[2] *= 0.5
-        parts.append(sphere(rng.uniform(0.45, 0.75) * r0, off))
+        d = rng.normal(0, 1, 3)
+        d[2] *= 0.4
+        d /= np.linalg.norm(d)
+        rl = rng.uniform(0.42, 0.55) * r0
+        parts.append(sphere(rl, d * (0.97 * r0 - rl)))
     return fuse(*parts)
 
 
@@ -254,8 +258,6 @@ def parts() -> list[Part]:
                   cut=False, tol=0.3))
     for k, xs in enumerate((BUS_X0 + 25, BUS_X1 - 25)):
         P.append(Part(f"standoff{k}", cyl(8.0, BUS_Z - 6, (xs, BUS_Y, 0)), CREAM, "static", cut=False, tol=0.3))
-    for k, (gx, gy, gz) in enumerate(GROUND_PTS.values()):
-        P.append(Part(f"bus_screw{k}", cyl(4.5, 3.0, (gx, gy, BUS_Z)), STEEL_DK, "static", cut=False, tol=0.2))
     # the sieve stack, assembled, pan on the bench
     sx, sy = STACK_XY
     P.append(Part("pan", shell(PAN_LINE, T_SHEET, sx, sy), STEEL, "pan", tol=0.25))

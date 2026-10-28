@@ -52,9 +52,14 @@ FLATTISH = {"cabinet", "heat_exchanger", "base_frame", "platform", "chamber", "v
             "hmi", "door"}
 
 
+_XDISPLAY = None
+
+
 def _wait_for_x(timeout=60.0):
     """Under heavy load Xvfb can still be starting when xvfb-run hands over; VTK then fails with 'bad X server
-    connection'. Wait until the display accepts a connection."""
+    connection'. Wait until the display accepts a connection, and keep it open: an X server resets when its last
+    client leaves, and VTK would then connect in the middle of the reset."""
+    global _XDISPLAY
     if not os.environ.get("DISPLAY"):
         return
     import ctypes
@@ -66,9 +71,8 @@ def _wait_for_x(timeout=60.0):
     x11.XOpenDisplay.restype = ctypes.c_void_p
     t0 = time.time()
     while time.time() - t0 < timeout:
-        d = x11.XOpenDisplay(None)
-        if d:
-            x11.XCloseDisplay(ctypes.c_void_p(d))
+        _XDISPLAY = x11.XOpenDisplay(None)
+        if _XDISPLAY:
             return
         time.sleep(0.5)
 
@@ -178,6 +182,7 @@ class Scene:
         self.label = ""
         self.gauges: list[tuple[str, str]] = []
         self.labels: list[tuple[str, tuple, tuple, float]] = []   # (text, xyz, (fx, fy), alpha)
+        self.notes: list[tuple[str, tuple, float]] = []           # (text, (fx, fy) of the box centre, alpha)
         self.n = 0                     # frames written to the MP4
         self.substeps: list[dict] = []
         self.gif_frames: list[Image.Image] = []
@@ -200,6 +205,8 @@ class Scene:
                 self.mp4 = encoder(self.mp4_path, size, crf=16 if CLEAN else 21)
         self.gif = gif
         self.intro = 1.0          # seconds of establishing view before the first sub-step's motion
+        self.inset = None         # optional callable(base RGB array) -> array, composited before the text
+        self.record: list[dict] = []   # every frame's group matrices and shown actors, for the collision audit
 
     # ------------------------------------------------------------------------------- actors
     def add(self, name, poly, color, group="static", opacity=1.0, shown=True, **kw):
@@ -321,6 +328,18 @@ class Scene:
             d.rounded_rectangle(box, 5 * s, fill=(255, 255, 255, int(225 * a)), outline=(120, 124, 130, al))
             for i, t in enumerate(lines):
                 d.text((bx0 + 6 * s, box[1] + 4 * s + i * 17 * s), t, font=fl, fill=(20, 20, 24, al))
+        # notes: text boxes without a leader (the inset's key)
+        for text, (fx, fy), a in self.notes:
+            if a <= 0.02:
+                continue
+            al = int(255 * a)
+            lines = text.split("\n")
+            tw = max(d.textlength(t, font=fl) for t in lines)
+            th = len(lines) * 17 * s
+            box = (fx * W - tw / 2 - 6 * s, fy * H - th / 2 - 4 * s, fx * W + tw / 2 + 6 * s, fy * H + th / 2 + 4 * s)
+            d.rounded_rectangle(box, 5 * s, fill=(255, 255, 255, int(225 * a)), outline=(120, 124, 130, al))
+            for i, t in enumerate(lines):
+                d.text((box[0] + 6 * s, box[1] + 4 * s + i * 17 * s), t, font=fl, fill=(20, 20, 24, al))
         # caption, bottom
         if self.caption:
             fc = font(18 * s)
@@ -355,6 +374,11 @@ class Scene:
 
     def snap(self, n=1):
         base = self.render_base()
+        if self.inset is not None:
+            base = self.inset(base)
+        groups = set(self.group_of.values())
+        shown = [k for k, a in self.actors.items() if a.GetVisibility()]
+        self.record.append(dict(n=self.n, count=n, mats={g: self.world(g) for g in groups}, shown=shown))
         anchors = [self.project(xyz) for _, xyz, _, _ in self.labels]
         # HD: the text keeps the share of the frame it has at 1280 x 720
         hi = self.overlay(Image.fromarray(base), size_scale(self.size) if HD else 1.0, anchors)
