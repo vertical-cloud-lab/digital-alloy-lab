@@ -4,14 +4,16 @@
 Open database only: MatCalc mc_ni v2.036 (TU Wien, ODbL 1.0), copied next to this script
 (downloaded and sha256-checked if missing). Nothing from Thermo-Calc TCCU is used.
 
-    python run_calphad.py               # all calculations, CSVs, figures (about 2 to 3 min)
+    python run_calphad.py               # all calculations, CSVs, figures (about 10 min)
     python run_calphad.py --crosscheck  # also the three reference alloys with mc_fe v2.062
                                         # and COST 507 (pycalphad's bundled copy)
+    python run_calphad.py --step map --no-figures   # one calculation only (reference, fractions,
+                                                    # isopleth, map); repeatable
     python run_calphad.py --figures-only
 
-Outputs (in this folder): reference_alloys.csv, nab_phase_fractions.csv, composition_map.csv,
-crosscheck.csv (with --crosscheck), cu_calphad_prelim.{png,pdf}, cu_map.{png,pdf},
-cu_panel2.{png,pdf}.
+Outputs (in this folder): reference_alloys.csv, nab_phase_fractions.csv, nab_isopleth.csv,
+composition_map.csv, crosscheck.csv (with --crosscheck), cu_calphad_prelim.{png,pdf} (also
+written to ../figures-cu-ded/), cu_map.{png,pdf}, cu_panel2.{png,pdf}.
 """
 import argparse
 import hashlib
@@ -57,9 +59,13 @@ ALLOYS = [
     dict(alloy='C70600 90-10 Cu-Ni', wt={'NI': 10.0, 'FE': 1.4, 'MN': 0.8}, hb_sol=1099, hb_liq=1149),
     dict(alloy='C95800 NAB', wt={'AL': 9.2, 'NI': 4.5, 'FE': 4.0, 'MN': 1.2}, hb_sol=1043, hb_liq=1060),
 ]
-MAP_NI = [0, 5, 10, 15, 20, 25, 30]
-MAP_AL = [0.0, 1.9, 3.8, 5.7, 7.6, 9.5]
+MAP_NI = np.arange(0, 30.1, 2.5)  # 13 x 20 = 260 compositions
+MAP_AL = np.arange(0, 9.51, 0.5)
 MAP_FE = 1.0
+# Vertical section through C95800: Cu-xAl-4.5Ni-4Fe-1.2Mn (wt%), one equilibrium call per Al
+ISO_AL = np.round(np.arange(6.0, 13.01, 0.1), 1)
+ISO_T_C = np.arange(600.0, 1150.1, 2.0)
+ISO_MIN = 1e-4  # a phase counts as present above this amount (mol)
 
 
 # ----------------------------------------------------------------------------- database handling
@@ -317,6 +323,51 @@ def run_nab_fractions(db):
     return df.loc[:, (df != 0).any(axis=0)]
 
 
+ISO_ORDER = ['liquid', 'alpha (fcc)', 'beta (Cu-rich bcc)', 'kappa Fe-rich bcc', 'kappa NiAl (B2)',
+             'kappa NiAl-type bcc', "gamma' Ni3Al", 'fcc (Fe/Ni-rich)', 'HCP_A3']
+
+
+def run_nab_isopleth(db):
+    """Phases present on the C95800 vertical section (Al_wt x T_C), with their amounts (mol)."""
+    rows = []
+    t_all = time.time()
+    for al in ISO_AL:
+        comps, x, phases = setup(db, 'mc_ni', wt_with_cu(dict(ALLOYS[2]['wt'], AL=al)))
+        t0 = time.time()
+        pts = points(equilibrium_at(db, comps, phases, x, ISO_T_C + 273.15))
+        for t, pt in zip(ISO_T_C, pts):
+            amt = {}
+            for p, a, xx in pt:  # duplicate composition sets of one phase are summed
+                amt[label(p, xx)] = amt.get(label(p, xx), 0.0) + a
+            present = sorted((k for k in amt if amt[k] > ISO_MIN),
+                             key=lambda k: ISO_ORDER.index(k) if k in ISO_ORDER else len(ISO_ORDER))
+            rows.append(dict(Al_wt=al, T_C=t, phases='+'.join(present), **{k: round(amt[k], 5) for k in amt}))
+        print(f'  isopleth Al {al:.1f}: {rows[-1]["phases"]} at {ISO_T_C[-1]:.0f} C, '
+              f'{time.time() - t0:.1f} s', flush=True)
+    print(f'  isopleth total {time.time() - t_all:.0f} s')
+    df = pd.DataFrame(rows)
+    cols = [c for c in ISO_ORDER if c in df.columns] + [c for c in df.columns[3:] if c not in ISO_ORDER]
+    return df[['Al_wt', 'T_C', 'phases'] + cols].fillna(0.0)
+
+
+def beta_out(db, al=9.2, iso=None, tol=0.1):
+    """Lowest temperature with beta (Cu-rich bcc) on the 2 C grid, then bisection to tol (deg C)."""
+    col = iso[np.isclose(iso.Al_wt, al)].sort_values('T_C')
+    T = col.T_C.values
+    has = col['beta (Cu-rich bcc)'].values > ISO_MIN
+    i = np.argmax(has)
+    if i == 0:
+        return np.nan, np.nan
+    comps, x, phases = setup(db, 'mc_ni', wt_with_cu(dict(ALLOYS[2]['wt'], AL=al)))
+    lo, hi = T[i - 1], T[i]
+    while hi - lo > tol:
+        mid = 0.5 * (lo + hi)
+        pt = points(equilibrium_at(db, comps, phases, x, [mid + 273.15]))[0]
+        beta = sum(a for p, a, xx in pt if label(p, xx) == 'beta (Cu-rich bcc)')
+        lo, hi = (lo, mid) if beta > ISO_MIN else (mid, hi)
+    return T[i], 0.5 * (lo + hi)
+
+
 def run_map(db):
     rows = []
     t_all = time.time()
@@ -331,19 +382,13 @@ def run_map(db):
                              eq_range_C=round(liq - sol, 1), primary_phase=primary,
                              wall_s=round(time.time() - t0, 2)))
             print(f'  map Ni {ni} Al {al}: {sol:.0f}-{liq:.0f} C {primary} ({rows[-1]["wall_s"]} s)', flush=True)
-    print(f'  map total {time.time() - t_all:.0f} s')
+    w = pd.DataFrame(rows).wall_s
+    print(f'  map total {time.time() - t_all:.0f} s for {len(rows)} compositions '
+          f'({w.min():.2f} to {w.max():.2f} s each, mean {w.mean():.2f} s)')
     return pd.DataFrame(rows)
 
 
 # ----------------------------------------------------------------------------- figures
-OKABE_ITO = {'liquid': '#000000', 'alpha (fcc)': '#0072B2', 'beta (Cu-rich bcc)': '#D55E00',
-             'kappa Fe-rich bcc': '#009E73', 'kappa NiAl (B2)': '#CC79A7'}
-STYLE = {'liquid': (0, (4, 2)), 'alpha (fcc)': '-', 'beta (Cu-rich bcc)': '-',
-         'kappa Fe-rich bcc': (0, (1, 1.2)), 'kappa NiAl (B2)': (0, (5, 1.5, 1, 1.5))}
-SHORT = {'liquid': 'liquid', 'alpha (fcc)': r'$\alpha$ (fcc)', 'beta (Cu-rich bcc)': r'$\beta$ (Cu-rich bcc)',
-         'kappa Fe-rich bcc': r'Fe-rich bcc ($\kappa_{I,II,IV}$)', 'kappa NiAl (B2)': r'NiAl B2 ($\kappa_{III}$)'}
-
-
 def _style():
     import matplotlib
     matplotlib.use('Agg')
@@ -355,15 +400,21 @@ def _style():
     return plt
 
 
-def draw_map(ax, fig, m, ref):
+def draw_map(ax, fig, m, ref, note=(16.5, 8.75)):
     ni = np.array(sorted(m.Ni_wt.unique())); al = np.array(sorted(m.Al_wt.unique()))
     L = m.pivot(index='Al_wt', columns='Ni_wt', values='eq_liquidus_C').loc[al, ni].values
     R = m.pivot(index='Al_wt', columns='Ni_wt', values='eq_range_C').loc[al, ni].values
-    vmax = np.ceil(np.nanmax(R) / 10) * 10
-    pc = ax.pcolormesh(ni, al, R, shading='nearest', cmap='Blues', vmin=0, vmax=vmax, edgecolors='white', linewidth=0.6)
-    cb = fig.colorbar(pc, ax=ax, pad=0.02, fraction=0.06)
+    P = m.pivot(index='Al_wt', columns='Ni_wt', values='primary_phase').loc[al, ni].values == 'kappa NiAl (B2)'
+    cf = ax.contourf(ni, al, R, levels=np.arange(0, np.nanmax(R) + 25, 25), cmap='Blues')
+    cb = fig.colorbar(cf, ax=ax, pad=0.02, fraction=0.06, ticks=np.arange(0, np.nanmax(R) + 25, 50))
     cb.set_label('Equilibrium freezing range (°C)')
     cb.outline.set_linewidth(0.5)
+    # NiAl (B2) first from the melt: a database artifact, so the liquidus there is an upper bound
+    hz = ax.contourf(ni, al, P.astype(float), levels=[0.5, 1.5], colors='none', hatches=['////'])
+    hz.set_hatchcolor('0.45')
+    hz.set_hatch_linewidth(0.5)
+    ax.text(*note, 'NiAl first: upper bound', fontsize=6.5, ha='center', va='center', zorder=4,
+            bbox=dict(boxstyle='square,pad=0.15', fc='white', ec='none'))
     levels = [lv for lv in range(1050, 1400, 50) if np.nanmin(L) < lv < np.nanmax(L)]
     cs = ax.contour(ni, al, L, levels=[lv for lv in levels if lv not in (1250, 1300)], colors='0.25', linewidths=0.6)
     ax.clabel(cs, fmt='%d', fontsize=7, inline_spacing=2)
@@ -379,36 +430,95 @@ def draw_map(ax, fig, m, ref):
     ax.set_xlim(-1.5, 31.5); ax.set_ylim(-0.4, 9.9)
 
 
-def draw_nab(ax, f):
-    ax.axvspan(1043, 1060, color='0.85', lw=0, zorder=0)
-    ax.annotate('CDA\nmelting\nrange', xy=(1060, 0.55), xytext=(1072, 0.55), ha='left', va='center',
-                fontsize=7, color='0.3', arrowprops=dict(arrowstyle='-', color='0.5', lw=0.6))
-    for k in OKABE_ITO:
-        if k in f.columns:
-            ax.plot(f.T_C, f[k], color=OKABE_ITO[k], ls=STYLE[k], lw=1.4, label=SHORT[k])
-    ax.set_xlim(600, 1150); ax.set_ylim(0, 1.0)
-    ax.set_xlabel('Temperature (°C)'); ax.set_ylabel('Equilibrium phase fraction (mol)')
-    ax.legend(loc='center left', bbox_to_anchor=(0.0, 0.45), frameon=False, handlelength=2.2,
-              borderaxespad=0.1, fontsize=7, labelspacing=0.3)
-    for s in ('top', 'right'):
-        ax.spines[s].set_visible(False)
+# Field names on the vertical section, as in published NAB sections (Cook, Fentiman and Davis)
+SYMBOL = {'liquid': 'L', 'alpha (fcc)': r'$\alpha$', 'beta (Cu-rich bcc)': r'$\beta$',
+          'kappa Fe-rich bcc': r'$\kappa_\mathrm{I}$', 'kappa NiAl (B2)': r'$\kappa_\mathrm{III}$',
+          'kappa NiAl-type bcc': r'$\kappa_\mathrm{III}$', "gamma' Ni3Al": r"$\gamma'$",
+          'fcc (Fe/Ni-rich)': r'$\gamma_\mathrm{Fe}$', 'HCP_A3': 'hcp'}
+# Fields too small to hold their label: label position (Al wt%, deg C); a leader line points into the field
+ISO_NUDGE = {}
+
+
+def iso_presence(iso):
+    """Grids (T x Al) of which field symbols are present; NiAl B2 and NiAl-type bcc both count as kappa_III."""
+    al = np.sort(iso.Al_wt.unique()); T = np.sort(iso.T_C.unique())
+    amt = {}
+    for k in iso.columns[3:]:
+        s = SYMBOL.get(k, k)
+        amt[s] = amt.get(s, 0.0) + iso.pivot(index='T_C', columns='Al_wt', values=k).loc[T, al].values
+    return al, T, {s: a > ISO_MIN for s, a in amt.items() if (a > ISO_MIN).any()}
+
+
+def _iso_frame(ax):
+    ax.set_xlim(ISO_AL[0], ISO_AL[-1]); ax.set_ylim(ISO_T_C[0], ISO_T_C[-1])
+    ax.set_xlabel('Al (wt%)'); ax.set_ylabel('Temperature (°C)')
+
+
+def draw_isopleth(ax, iso, fs=6.5, min_cells=6):
+    """C95800 vertical section: phase boundaries as thin lines, fields labelled in place.
+
+    Call after the figure layout is final: label sizes are measured on the axes as drawn."""
+    from scipy import ndimage
+    _iso_frame(ax)
+    al, T, pres = iso_presence(iso)
+    for p in pres.values():
+        ax.contour(al, T, p.astype(float), levels=[0.5], colors='black', linewidths=0.6)
+    nab = ALLOYS[2]
+    x0 = nab['wt']['AL']
+    ax.axvline(x0, color='0.45', ls=(0, (4, 2)), lw=0.8, zorder=1)
+    for t in (nab['hb_sol'], nab['hb_liq']):
+        ax.plot([x0 - 0.13, x0 + 0.13], [t, t], color='0.3', lw=0.9, solid_capstyle='butt', zorder=3)
+    ax.text(x0, ISO_T_C[-1] - 7, 'C95800', fontsize=fs, color='0.3', ha='center', va='top', zorder=4,
+            bbox=dict(boxstyle='square,pad=0.1', fc='white', ec='none'))
+    syms = list(pres)
+    code = sum(p.astype(int) << i for i, p in enumerate(pres.values()))
+    r = ax.figure.canvas.get_renderer()
+    cell = np.abs(ax.transData.transform((al[1], T[1])) - ax.transData.transform((al[0], T[0])))  # px
+    for c in np.unique(code):
+        txt = ' + '.join(s for i, s in enumerate(syms) if c >> i & 1)
+        lab, n = ndimage.label(code == c)
+        for k in range(1, n + 1):
+            comp = lab == k
+            if comp.sum() < min_cells:
+                continue
+            t = ax.text(0, 0, txt, fontsize=fs, ha='center', va='center', zorder=4)
+            bb = t.get_window_extent(r)
+            hw = int(np.ceil((bb.width / 2 + 1.5) / cell[0])); hh = int(np.ceil((bb.height / 2 + 1) / cell[1]))
+            d = ndimage.distance_transform_edt(np.pad(comp, 1), sampling=cell[::-1])[1:-1, 1:-1]
+            fits = ndimage.binary_erosion(comp, structure=np.ones((2 * hh + 1, 2 * hw + 1)))
+            i, j = np.unravel_index(np.argmax(d), d.shape)  # distance_transform_edt maximum
+            if not fits[i, j] and fits.any():
+                i, j = np.unravel_index(np.argmax(np.where(fits, d, -1)), d.shape)
+            if fits[i, j]:
+                t.set_position((al[j], T[i]))
+                continue
+            t.remove()
+            pos = ISO_NUDGE.get(txt)
+            print(f'  isopleth: field {txt!r} ({comp.sum()} cells) at {al[j]:.1f} Al, {T[i]:.0f} C is too small'
+                  + ('' if pos else ' for its label; add it to ISO_NUDGE'))
+            if pos:
+                ax.annotate(txt, (al[j], T[i]), xytext=pos, fontsize=fs, ha='center', va='center', zorder=4,
+                            arrowprops=dict(arrowstyle='-', color='black', lw=0.5, shrinkA=1, shrinkB=0),
+                            bbox=dict(boxstyle='square,pad=0.1', fc='white', ec='none'))
 
 
 def make_figures():
     plt = _style()
     m = pd.read_csv(os.path.join(HERE, 'composition_map.csv'))
-    f = pd.read_csv(os.path.join(HERE, 'nab_phase_fractions.csv'))
+    iso = pd.read_csv(os.path.join(HERE, 'nab_isopleth.csv'))
     ref = [dict(name='90-10', ni=10, al=0, marker='o', offset=(0, 9), ha='center'),
            dict(name='70-30', ni=30, al=0, marker='s', offset=(-5, 9), ha='right'),
            dict(name='NAB', ni=4.5, al=9.2, marker='D', offset=(6, -5))]
     fig, axs = plt.subplots(1, 2, figsize=(6.5, 2.6), gridspec_kw=dict(width_ratios=[1.08, 1]))
     draw_map(axs[0], fig, m, ref)
-    draw_nab(axs[1], f)
+    _iso_frame(axs[1])
     for ax, letter in zip(axs, 'ab'):
         ax.text(-0.2, 1.0, f'({letter})', transform=ax.transAxes, fontsize=9, fontweight='bold', va='top')
     fig.tight_layout(pad=0.3, w_pad=1.2)
+    draw_isopleth(axs[1], iso)
     for ext in ('png', 'pdf'):
         fig.savefig(os.path.join(HERE, f'cu_calphad_prelim.{ext}'), dpi=300)
+    fig.savefig(os.path.join(HERE, '..', 'figures-cu-ded', 'cu_calphad_prelim.pdf'))  # the proposal's copy
     plt.close(fig)
     fig, ax = plt.subplots(figsize=(3.1, 2.4))
     draw_map(ax, fig, m, ref)
@@ -417,20 +527,27 @@ def make_figures():
         fig.savefig(os.path.join(HERE, f'cu_map.{ext}'), dpi=300)
     plt.close(fig)
     fig, ax = plt.subplots(figsize=(3.1, 2.4))
-    draw_nab(ax, f)
+    _iso_frame(ax)
     fig.tight_layout(pad=0.3)
+    draw_isopleth(ax, iso)
     for ext in ('png', 'pdf'):
         fig.savefig(os.path.join(HERE, f'cu_panel2.{ext}'), dpi=300)
     plt.close(fig)
 
 
 # ----------------------------------------------------------------------------- main
+STEPS = ('reference', 'fractions', 'isopleth', 'map')
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--crosscheck', action='store_true')
     ap.add_argument('--crosscheck-only', action='store_true')
     ap.add_argument('--figures-only', action='store_true')
     ap.add_argument('--no-scheil', action='store_true')
+    ap.add_argument('--step', action='append', choices=STEPS,
+                    help='run only these calculations (repeatable); the other CSVs are kept')
+    ap.add_argument('--no-figures', action='store_true')
     args = ap.parse_args()
     if args.crosscheck_only:
         args.crosscheck = args.figures_only = True
@@ -438,20 +555,31 @@ def main():
         import pycalphad
         import scheil
         print(f'pycalphad {pycalphad.__version__}, scheil {scheil.__version__}, python {sys.version.split()[0]}')
+        steps = args.step or STEPS
         t0 = time.time()
         db = load_db('mc_ni')
         print(f'mc_ni loaded in {time.time() - t0:.1f} s')
-        ref = run_reference_alloys(db, 'mc_ni', do_scheil=not args.no_scheil)
-        ref.to_csv(os.path.join(HERE, 'reference_alloys.csv'), index=False)
-        frac = run_nab_fractions(db)
-        frac.round(5).to_csv(os.path.join(HERE, 'nab_phase_fractions.csv'), index=False)
-        beta = frac[frac['beta (Cu-rich bcc)'] > 1e-3].T_C
-        print(f'  NAB beta (Cu-rich bcc) present from {beta.max():.0f} down to {beta.min():.0f} C (2 C grid)')
-        run_map(db).to_csv(os.path.join(HERE, 'composition_map.csv'), index=False)
+        if 'reference' in steps:
+            ref = run_reference_alloys(db, 'mc_ni', do_scheil=not args.no_scheil)
+            ref.to_csv(os.path.join(HERE, 'reference_alloys.csv'), index=False)
+        if 'fractions' in steps:
+            frac = run_nab_fractions(db)
+            frac.round(5).to_csv(os.path.join(HERE, 'nab_phase_fractions.csv'), index=False)
+            beta = frac[frac['beta (Cu-rich bcc)'] > 1e-3].T_C
+            print(f'  NAB beta (Cu-rich bcc) present from {beta.max():.0f} down to {beta.min():.0f} C (2 C grid)')
+        if 'isopleth' in steps:
+            iso = run_nab_isopleth(db)
+            iso.to_csv(os.path.join(HERE, 'nab_isopleth.csv'), index=False)
+            grid, t_beta = beta_out(db, 9.2, iso)
+            print(f'  isopleth at 9.2 Al: alpha+beta -> alpha+kappa at {t_beta:.1f} C '
+                  f'(lowest 2 C grid point with beta: {grid:.0f} C)')
+        if 'map' in steps:
+            run_map(db).to_csv(os.path.join(HERE, 'composition_map.csv'), index=False)
     if args.crosscheck:
         rows = [run_reference_alloys(load_db(key), key, do_scheil=False) for key in ('mc_ni', 'mc_fe', 'cost507')]
         pd.concat(rows).to_csv(os.path.join(HERE, 'crosscheck.csv'), index=False)
-    make_figures()
+    if not args.no_figures:
+        make_figures()
 
 
 if __name__ == '__main__':
