@@ -374,6 +374,7 @@ def anim_sieving():
 
 def _sieving(sc):
     sc.cam = CAM["bench"]
+    sc.swatches = [(0.10, 0.55, 0.25), *FALSE.values(), M.COPPER, (0.95, 0.55, 0.15), (0.20, 0.45, 0.85)]
     load_parts(sc, hidden=("label", "lid_coarse", "lid_print"))
     pw = Powder(sc)
     leads = Leads(sc)
@@ -587,7 +588,7 @@ def _sieving(sc):
         mag.a = window(u, 0.12, 0.22)
         sc.notes = [("No. 230 at real size, slow motion: 63 µm openings, 44 µm wire\n"
                      "blue < 63 µm goes through, orange 63-250 µm stays; bar 100 µm",
-                     (mag.centre[0], mag.centre[1] + 0.25), mag.a)]
+                     (mag.centre[0] - 0.08, mag.centre[1] + 0.25), mag.a)]
         tick(agit=5.0 * (amp > 0.5), mag_on=u > 0.12, tap=tap)
         g = {k_: pw.in_sieve(k_) for k_ in ("s60", "s230", "pan")}
         gauges(batch=f"{BATCH:.0f} g (example)", s60=f"{grams(g['s60']):5.1f} g", s230=f"{grams(g['s230']):5.1f} g",

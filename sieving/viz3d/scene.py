@@ -207,6 +207,7 @@ class Scene:
         self.gif = gif
         self.intro = 1.0          # seconds of establishing view before the first sub-step's motion
         self.inset = None         # optional callable(base RGB array) -> array, composited before the text
+        self.swatches: list[tuple] = []   # colours the GIF palette must keep (small saturated parts)
         self.record: list[dict] = []   # every frame's group matrices and shown actors, for the collision audit
 
     # ------------------------------------------------------------------------------- actors
@@ -481,7 +482,7 @@ class Scene:
             info += f", with text {self.mp4_text_path.stat().st_size / 1e6:.1f} MB"
         if self.gif and self.gif_frames:
             path = OUT / f"{self.name}.gif"
-            write_gif(self.gif_frames, path)
+            write_gif(self.gif_frames, path, swatches=self.swatches)
             info += f", gif {len(self.gif_frames)} frames {path.stat().st_size / 1e6:.2f} MB"
         self.pl.close()
         print(info, flush=True)
@@ -497,13 +498,21 @@ def encoder(path: Path, size, crf, preset="medium") -> subprocess.Popen:
          "-movflags", "+faststart", str(path)], stdin=subprocess.PIPE)
 
 
-def write_gif(frames, path: Path, colors=128, lossy=80, limit_mb=9.5):
-    # palette from a 3 x 3 mosaic at half size, so small saturated parts (the yellow switch, the coil) get colours
+def write_gif(frames, path: Path, colors=128, lossy=80, limit_mb=9.5, swatches=()):
+    # palette from a 3 x 3 mosaic at half size, so small saturated parts (the yellow switch, the coil) get colours;
+    # `swatches` adds a strip of colours that must survive (each in three shades), as blocks big enough to get entries
     picks = frames[:: max(1, len(frames) // 8)][:9]
     tw, th = frames[0].width // 2, frames[0].height // 2
-    mosaic = Image.new("RGB", (tw * 3, th * 3), "white")
+    strip = 90 if swatches else 0
+    mosaic = Image.new("RGB", (tw * 3, th * 3 + strip), "white")
     for i, f in enumerate(picks):
         mosaic.paste(f.resize((tw, th)), ((i % 3) * tw, (i // 3) * th))
+    if swatches:
+        shades = [tuple(min(255, int(round(255 * c * k))) for c in sw) for sw in swatches for k in (0.6, 0.85, 1.1)]
+        bw = tw * 3 / len(shades)
+        d = ImageDraw.Draw(mosaic)
+        for i, col in enumerate(shades):
+            d.rectangle((int(i * bw), th * 3, int((i + 1) * bw), th * 3 + strip), fill=col)
     pal = mosaic.quantize(colors=colors, method=Image.Quantize.MEDIANCUT)
     q = [f.quantize(palette=pal, dither=Image.Dither.NONE) for f in frames]
     q[0].save(path, save_all=True, append_images=q[1:], duration=int(1000 / GIF_FPS), loop=0, optimize=False,
