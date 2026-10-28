@@ -407,7 +407,7 @@ class Collider:
 
 
 class DEM:
-    def __init__(self, x, r, cls, rho=2.7e-3, kn=4e4, mu=0.45, zeta=0.30, drag=0.4, vmax=2500.0):
+    def __init__(self, x, r, cls, rho=2.7e-3, kn=4e4, mu=0.62, zeta=0.50, drag=0.4, vmax=2500.0):
         self.x = np.ascontiguousarray(x, float)
         n = len(self.x)
         self.v = np.zeros((n, 3))

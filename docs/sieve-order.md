@@ -91,8 +91,11 @@ a fine mesh without it stretches.
 
 ![The procedure, from the CAD model](../sieving/viz3d/out/sieving.gif)
 
-*The whole procedure at real dimensions: [`sieving/viz3d/`](../sieving/viz3d/README.md). The No. 635 is drawn
-because it is in the stack as first proposed; the split of the 50 g batch is an example, not a measurement.*
+*The procedure on the 8 in stack that was bought (ME Order 13553), from the CAD model:
+[`sieving/viz3d/`](../sieving/viz3d/README.md). The powder is a DEM simulation, poured, scooped, sieved and tipped out
+by the moving parts; the inset is the No. 230 at real particle size; the green leads bond the container, the tray and
+the pan to a ground bus bar. The 100 g batch and its split are an example, not a measurement, and the tray, scoop,
+jars and funnels are stand-ins. [Full-size MP4](../sieving/viz3d/out/sieving.mp4).*
 
 ## Why these cuts
 

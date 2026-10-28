@@ -9,7 +9,7 @@ Everything is in millimetres, z up from the bench top, the operator stands at -y
   thin disc, since 63 and 250 um openings are far below the drawing's resolution (zoom.py draws the No. 230 at size).
 * The rePowder powder container as drawn in #255's ``atomizer-training/viz3d/model.py`` (O130 x 202 mm with a top
   tube and a handle): its position was observed on video, its size was assumed there and is still not measured.
-* Stand-ins, sized to the job: a 320 x 240 mm stainless tray, a flat 50 x 90 mm stainless scoop, 140 mm tweezers,
+* Stand-ins, sized to the job: a 320 x 240 mm stainless tray, a flat 64 x 100 mm stainless scoop, 140 mm tweezers,
   100 mL glass jars (O50 x 80 mm, the "smaller jars" of #222), two O146 mm stainless funnels, a top-loading balance,
   the dish for pieces, and a copper ground bus bar on insulated standoffs with an earth lead off the back of the bench.
   The doser cartridge is the O25.0 mm auger tube from vertical-cloud-lab/powder-doser (PR #170).
@@ -86,6 +86,7 @@ TRAY_W, TRAY_D, TRAY_H = 320.0, 240.0, 18.0
 CONT_R, CONT_H = 65.0, 202.0           # #255's assumed powder container (not measured)
 CONT_LINE = [(0.0, 1.0), (54.0, 1.0), (64.0, 11.0), (64.0, 190.0), (44.0, 200.0), (44.0, 228.0)]
 CONT_T = 1.0
+CONT_Z0 = 0.45                         # the can's base on the bench (the floor's chamfer runs 0.41 mm below its line)
 CONT_XY = (-470.0, 170.0)
 DISH_XY = (-30.0, 215.0)
 DISH_LINE = [(0.0, 0.6), (27.0, 0.6), (32.0, 11.0), (33.5, 11.5)]
@@ -104,7 +105,7 @@ DOSER_R, DOSER_L = 12.5, 100.0         # O25.0 auger tube (powder-doser PR #170)
 COVER_PARK = (190.0, 215.0)            # where the cover waits while the No. 60 is filled
 SIEVE_PARK = {"s60": (700.0, 165.0), "s230": (690.0, -125.0)}     # where each sieve goes once it is emptied
 SCOOP_REST = (-215.0, -215.0)          # scoop origin (front edge, bottom centre) at rest, pointing +x
-SCOOP_L, SCOOP_W, SCOOP_WALL, SCOOP_BACK = 90.0, 50.0, 16.0, 20.0
+SCOOP_L, SCOOP_W, SCOOP_WALL, SCOOP_BACK = 100.0, 64.0, 20.0, 24.0
 TWEEZ_REST = (-60.0, -200.0)           # tweezer tips at rest, pointing -x
 TWEEZ_L, TWEEZ_GAP = 140.0, 12.0
 BUS_Y, BUS_X0, BUS_X1, BUS_Z = 300.0, -500.0, 40.0, 30.0
@@ -174,9 +175,9 @@ class Part:
 
 def container(x: float, y: float) -> cq.Shape:
     """#255's powder container: a stainless can with a top tube and a handle on the tube. Assumed size."""
-    body = shell(CONT_LINE, CONT_T, x, y)
-    handle = fuse(box(x - 8, x + 8, y - 88, y - 44.5, CONT_H + 5, CONT_H + 21),
-                  box(x - 4, x + 85, y - 100, y - 88, CONT_H + 7, CONT_H + 19))
+    body = shell(CONT_LINE, CONT_T, x, y, CONT_Z0)
+    z = CONT_H + CONT_Z0
+    handle = fuse(box(x - 8, x + 8, y - 88, y - 44.5, z + 5, z + 21), box(x - 4, x + 85, y - 100, y - 88, z + 7, z + 19))
     return fuse(body, handle)
 
 
@@ -187,7 +188,7 @@ def jar_lid(x: float, y: float, z0: float = 0.0) -> cq.Shape:
 
 
 def scoop_shape() -> cq.Shape:
-    """Flat stainless scoop in its own frame: front edge at x = 0, bowl back to x = -90, 50 wide, a handle."""
+    """Flat stainless scoop in its own frame: front edge at x = 0, bowl back to x = -100, 64 wide, a handle."""
     t = 2 * T_SHEET
     L, W, H, B = SCOOP_L, SCOOP_W, SCOOP_WALL, SCOOP_BACK
     s = fuse(box(-L, 0, -W / 2, W / 2, 0, t),
@@ -289,8 +290,10 @@ def parts() -> list[Part]:
     P += balance(*BAL_XY)
     P += doser_tube(*DOSER_XY)
     x, y = JAR_XY["print"]
-    P.append(Part("label", box(x - 14, x + 14, y - JAR_R - 0.4, y - JAR_R + 0.6, JAR_Z["print"] + 22,
-                               JAR_Z["print"] + 44), LABEL, "label", cut=False, tol=0.3))
+    ro = JAR_LINE[1][0] + JAR_T                                   # the jar's outside
+    band = cyl(ro + 0.35, 22, (x, y, JAR_Z["print"] + 22)).cut(cyl(ro + 0.05, 24, (x, y, JAR_Z["print"] + 21)))
+    P.append(Part("label", band.intersect(box(x - 15, x + 15, y - 40, y, 0, 200)), LABEL, "label", cut=False,
+                  tol=0.1))
     return P
 
 
@@ -321,10 +324,10 @@ def colliders() -> list[dict]:
              ((-L + t, 0, B / 2), (0, 1, 0), (0, 0, 1), W / 2, B / 2)]
     wx, wy = TWEEZ_REST
     C = [dict(name="bench", group="static", kind="plates", elems=[((150, 15, -5.0), (1, 0, 0), (0, 1, 0), 720, 315)],
-              half=5.0, mu=0.5),
-         dict(name="tray", group="tray", kind="plates", elems=tray, half=T_SHEET, mu=0.45),
-         dict(name="container", group="container", kind="lathe", elems=CONT_LINE, half=CONT_T, base=at(*CONT_XY),
-              mu=0.35),
+              half=5.0, mu=0.6),
+         dict(name="tray", group="tray", kind="plates", elems=tray, half=T_SHEET, mu=0.6),
+         dict(name="container", group="container", kind="lathe", elems=CONT_LINE, half=CONT_T,
+              base=at(*CONT_XY, CONT_Z0), mu=0.35),
          dict(name="scoop", group="scoop", kind="plates", elems=scoop, half=T_SHEET, base=at(*SCOOP_REST), mu=0.40),
          dict(name="pan", group="pan", kind="lathe", elems=PAN_LINE, half=T_SHEET, base=at(sx, sy), mu=0.40),
          dict(name="dish", group="dish", kind="lathe", elems=DISH_LINE, half=T_SHEET, base=at(*DISH_XY), mu=0.45)]

@@ -38,7 +38,7 @@ def part_meshes():
     try:
         import cables as CB
         for k in ("container", "tray", "pan"):
-            for nm, mesh, _ in CB.clip_parts():
+            for nm, mesh, _ in CB.clip_parts(0.25):
                 p = mesh.triangulate()
                 out[f"clip_{k}_{nm}"] = (f"clip_{k}", trimesh.Trimesh(np.asarray(p.points),
                                                                      p.faces.reshape(-1, 4)[:, 1:], process=False))
@@ -52,10 +52,8 @@ def base(name: str) -> str:
 
 
 def allowed(a: str, b: str) -> bool:
-    """Pairs that are designed to touch."""
+    """Pairs that are built to touch (the bench is checked on its own: nothing may go below z = 0)."""
     pair = {a, b}
-    if "bench" in pair:
-        return True
     if any(n.startswith("clip_") for n in pair):
         k = [n for n in pair if n.startswith("clip_")][0].split("_")[1]
         other = [n for n in pair if not n.startswith("clip_")]
@@ -66,50 +64,82 @@ def allowed(a: str, b: str) -> bool:
     return pair in designed
 
 
-def main():
-    rec = pickle.loads((HERE / "out" / "audit_frames.pkl").read_bytes())
+def depth(a, Ma, b, Mb, n=600) -> float:
+    """How far the two placed meshes go into each other: the deepest vertex of either inside the other (mm). FCL's
+    own depth is not reliable for two triangle meshes, so this is what is reported."""
+    out = 0.0
+    for (s, Ms), (t, Mt) in (((a, Ma), (b, Mb)), ((b, Mb), (a, Ma))):
+        v = s.vertices
+        if len(v) > n:
+            v = v[np.linspace(0, len(v) - 1, n).astype(int)]
+        q = (np.c_[v, np.ones(len(v))] @ (np.linalg.inv(Mt) @ Ms).T)[:, :3]
+        inside = t.contains(q)
+        if inside.any():
+            _, dist, _ = trimesh.proximity.closest_point(t, q[inside])
+            out = max(out, float(dist.max()))
+    return out
+
+
+def main(path=HERE / "out" / "audit_frames.pkl", out=HERE / "out" / "audit.json"):
+    rec = pickle.loads(Path(path).read_bytes())
     frames, cable = rec["record"], rec.get("cable_mm", [])
     meshes = part_meshes()
+    solid = {}
+    for name, (g, tm) in meshes.items():
+        tm = tm.copy()
+        tm.merge_vertices()
+        solid[name] = tm
     cm = CollisionManager()
     for name, (g, tm) in meshes.items():
-        cm.add_object(name, tm)
+        if name != "bench":
+            cm.add_object(name, tm)
     hits = defaultdict(list)
     n_checked = 0
     for fr in frames:
         shown = {base(s) for s in fr["shown"]}
-        for i, (n, (g, _)) in enumerate(meshes.items()):
+        for i, (n, (g, tm)) in enumerate(meshes.items()):
+            if n == "bench":
+                continue
             if n in shown:
-                cm.set_transform(n, fr["mats"].get(g, np.eye(4)))
-            else:                           # hidden: park it far away, each in its own place
+                Mw = fr["mats"].get(g, np.eye(4))
+                cm.set_transform(n, Mw)
+                zmin = float((tm.vertices @ Mw[:3, :3].T + Mw[:3, 3])[:, 2].min())
+                if zmin < -TOL:                     # the bench top is z = 0
+                    hits[f"bench / {n}"].append((fr["n"], round(-zmin, 2)))
+            else:                                   # hidden: park it far away, each in its own place
                 far = np.eye(4)
                 far[:3, 3] = (1e5 + 1e3 * i, 0.0, 0.0)
                 cm.set_transform(n, far)
-        hit, pairs, data = cm.in_collision_internal(return_names=True, return_data=True)
         n_checked += 1
+        hit, pairs = cm.in_collision_internal(return_names=True)
         if not hit:
             continue
-        depth = defaultdict(float)
-        for d in data:
-            a, b = sorted(d.names)
-            depth[(a, b)] = max(depth[(a, b)], float(d.depth))
-        for (a, b), dep in depth.items():
-            if meshes[a][0] == meshes[b][0]:
-                continue                    # the same group: one rigid part
-            if dep <= TOL or (allowed(a, b) and dep <= 1.0):
-                continue
-            hits[f"{a} / {b}"].append((fr["n"], round(dep, 2)))
-    worst_cable = max(cable) if cable else None
+        for a, b in pairs:
+            a, b = sorted((a, b))
+            if meshes[a][0] == meshes[b][0] or allowed(a, b):
+                continue                            # one rigid part, or built to touch
+            d = depth(solid[a], fr["mats"].get(meshes[a][0], np.eye(4)), solid[b], fr["mats"].get(meshes[b][0],
+                                                                                                    np.eye(4)))
+            if d > TOL:
+                hits[f"{a} / {b}"].append((fr["n"], round(d, 2)))
+    by_lead = defaultdict(float)
+    for d in cable:
+        for k, v in (d.items() if isinstance(d, dict) else [("all", d)]):
+            by_lead[k] = max(by_lead[k], v)
+    worst_cable = max(by_lead.values()) if by_lead else None
     report = dict(frames=n_checked, tolerance_mm=TOL, pairs={k: dict(frames=len(v), first=v[0][0], last=v[-1][0],
                                                                        max_depth_mm=max(d for _, d in v))
                                                              for k, v in sorted(hits.items())},
-                  cable_max_penetration_mm=worst_cable)
-    (HERE / "out" / "audit.json").write_text(json.dumps(report, indent=1) + "\n")
-    print(f"{n_checked} frames checked; {len(hits)} interpenetrating pairs beyond {TOL} mm")
+                  cable_max_penetration_mm=None if worst_cable is None else round(worst_cable, 2),
+                  cable_by_lead_mm={k: round(v, 2) for k, v in by_lead.items()})
+    Path(out).write_text(json.dumps(report, indent=1) + "\n")
+    print(f"{n_checked} frames checked; {len(hits)} pairs go more than {TOL} mm into each other")
     for k, v in report["pairs"].items():
         print(f"  {k:40s} frames {v['first']}-{v['last']} ({v['frames']}), max {v['max_depth_mm']} mm")
-    print("leads: deepest point", worst_cable, "mm")
+    print("leads: deepest point", report["cable_max_penetration_mm"], "mm", report["cable_by_lead_mm"])
     return report
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    main(*sys.argv[1:])

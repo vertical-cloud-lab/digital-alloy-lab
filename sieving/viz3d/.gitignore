@@ -2,3 +2,5 @@
 out/mp4/
 out/clean/
 out/hd/
+out/audit_frames.pkl
+__pycache__/

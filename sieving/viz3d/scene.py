@@ -7,7 +7,7 @@ u = 0 -> 1, an optional camera move, leader-line labels, then a hold. Frames are
 1280 x 720 and written two ways:
 
 * ``out/mp4/<name>.mp4``: every frame, 15 fps, h264 yuv420p (for the narrated tutorials)
-* ``out/<name>.gif``: every 1.5th frame (10 fps), 800 x 450, one palette, gifsicle -O3 --lossy
+* ``out/<name>.gif``: every 3rd frame (5 fps), 640 x 360, one palette, gifsicle -O3 --lossy
 
 Text (title, step label, caption, gauge readouts, leader labels) is drawn with PIL on top of
 each output at its own resolution, so the GIF's text is drawn at GIF size rather than shrunk.
@@ -39,13 +39,14 @@ from PIL import Image, ImageDraw, ImageFont
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "out"
 FPS = int(os.environ.get("VIZ3D_FPS", "15"))
-GIF_FPS = 10
+GIF_FPS = 5
 SIZE = tuple(int(v) for v in os.environ.get("VIZ3D_SIZE", "1280x720").split("x"))
 CLEAN = bool(os.environ.get("VIZ3D_CLEAN"))     # no text at all; writes out/clean/ only (see the docstring)
 HD = bool(os.environ.get("VIZ3D_HD"))           # out/hd/ with the text and out/clean/ without (see the docstring)
-GIF_SIZE = (800, 450)
+GIF_SIZE = (640, 360)
 FONT_DIR = Path("/usr/share/fonts/truetype/dejavu")
 PREVIEW = bool(os.environ.get("PREVIEW"))   # render only the last frame of each sub-step, to /tmp
+PREVIEW_EVERY = int(os.environ.get("PREVIEW_EVERY", "0"))   # ... and every n-th frame too
 
 
 FLATTISH = {"cabinet", "heat_exchanger", "base_frame", "platform", "chamber", "vacuum_pump",
@@ -434,7 +435,7 @@ class Scene:
             self.labels = [l for l in self.labels if l[3] > 0.02 or l[0] in new_texts]
             if still and i == frames:
                 self.want_still = True
-            if PREVIEW and i < frames:
+            if PREVIEW and i < frames and not (PREVIEW_EVERY and i % PREVIEW_EVERY == 0):
                 self.n += 1
                 continue
             img = self.snap()
@@ -454,8 +455,8 @@ class Scene:
     def save(self):
         if PREVIEW:
             self.pl.close()
-            tw, th = 640, 360
-            cols = 3
+            tw, th = (640, 360) if len(self.preview) <= 9 else (480, 270)
+            cols = 3 if len(self.preview) <= 9 else 5
             rows = (len(self.preview) + cols - 1) // cols
             sheet = Image.new("RGB", (tw * cols, th * rows), "white")
             for i, im in enumerate(self.preview):
@@ -496,7 +497,7 @@ def encoder(path: Path, size, crf, preset="medium") -> subprocess.Popen:
          "-movflags", "+faststart", str(path)], stdin=subprocess.PIPE)
 
 
-def write_gif(frames, path: Path, colors=128, lossy=60, limit_mb=4.9):
+def write_gif(frames, path: Path, colors=128, lossy=80, limit_mb=9.5):
     # palette from a 3 x 3 mosaic at half size, so small saturated parts (the yellow switch, the coil) get colours
     picks = frames[:: max(1, len(frames) // 8)][:9]
     tw, th = frames[0].width // 2, frames[0].height // 2

@@ -41,6 +41,7 @@ RHO = 2.7e-3                                    # g/mm3, Al
 POWDER = (0.70, 0.72, 0.76)
 FALSE = {FINE: (0.20, 0.45, 0.85), COARSE: (0.95, 0.55, 0.15), GRIT: (0.30, 0.30, 0.33)}
 HEAP = np.array([TX + 20.0, TY, 0.0])            # where the pour lands
+CLIP_OPEN = 0.25                                 # alligator clips open about 3 mm at the tips: astride a 1-2 mm wall
 
 CAM = {
     "bench": [(-40.0, -1250.0, 760.0), (60.0, 40.0, 40.0), (0, 0, 1)],
@@ -245,7 +246,8 @@ class Leads:
         rim = M.RW + M.T_SHEET
         # (part group, the clip in that part's model coordinates, lead length)
         self.clips = {
-            "container": ("container", CB.clip_matrix([cx, cy + 44.0, 223.0], [0, 0.6, 0.8], [0, 1, 0]), 470.0),
+            "container": ("container", CB.clip_matrix([cx, cy + 44.0, 223.0 + M.CONT_Z0], [0, 0.6, 0.8], [0, 1, 0]),
+                          470.0),
             "tray": ("tray", CB.clip_matrix([tx - 100.0, ty + M.TRAY_D / 2, M.TRAY_H - 6.0], [0, 0.9, 0.44],
                                             [0, 1, 0]), 280.0),
             "pan": ("pan", CB.clip_matrix([SX + rim * rad[0], SY + rim * rad[1], M.DEPTH - 7.0], rad + [0, 0, -0.25],
@@ -259,7 +261,7 @@ class Leads:
             cab.settle(a_, b_, ad, bd, self.obstacles(), seconds=3.0)
             self.cables[k] = cab
             sc.add(f"lead_{k}", cab.polydata(), CB.GREEN, "static", specular=0.3, specular_power=20)
-            for nm, mesh, col in CB.clip_parts():
+            for nm, mesh, col in CB.clip_parts(CLIP_OPEN):
                 sc.add(f"clip_{k}_{nm}", mesh, col, f"clip_{k}", specular=0.4)
             for nm, mesh, col in CB.lug_parts():
                 sc.add(f"lug_{k}_{nm}", mesh.transform(self.lugs[k], inplace=False), col, "static", specular=0.4)
@@ -279,7 +281,7 @@ class Leads:
                 ("cyl", sc.world("s230") @ T((SX, SY, M.SKIRT_Z["s230"])), rs, -0.6, M.SKIRT_H + M.DEPTH),
                 ("cyl", sc.world("s60") @ T((SX, SY, M.SKIRT_Z["s60"])), rs, -0.6, M.SKIRT_H + M.DEPTH),
                 ("cyl", sc.world("cover") @ T((SX, SY, M.COVER_Z)), rs, -0.6, 18.0),
-                ("cyl", sc.world("container") @ T((cx, cy, 0.0)), M.CONT_R, 0.0, 229.0),
+                ("cyl", sc.world("container") @ T((cx, cy, M.CONT_Z0)), M.CONT_R, 0.0, 229.0),
                 ("box", np.eye(4), (M.BUS_X0, M.BUS_Y - 10, 0.0), (M.BUS_X1, M.BUS_Y + 10, M.BUS_Z)),
                 ("cyl", T((*M.DISH_XY, 0.0)), 34.2, 0.0, 12.2),
                 ("box", np.eye(4), (bx - M.BAL_W / 2, by - M.BAL_D / 2, 0.0), (bx + M.BAL_W / 2, by + M.BAL_D / 2,
@@ -299,9 +301,10 @@ class Leads:
             cab.step(a_, b_, ad, bd, obs)
             self.sc.set_mesh(f"lead_{k}", cab.polydata())
 
-    def penetration(self) -> float:
+    def penetration(self) -> dict:
+        """Each lead's deepest point inside any part, mm."""
         obs = self.obstacles()
-        return max([cab.penetration(obs) for cab in self.cables.values()] or [0.0])
+        return {k: cab.penetration(obs) for k, cab in self.cables.items()}
 
 
 class Magnifier:
@@ -380,7 +383,7 @@ def _sieving(sc):
 
     def gauges(**kv):
         names = {"batch": "Batch", "s60": "No. 60", "s230": "No. 230", "pan": "Pan", "tray": "Tray",
-                 "balance": "Balance", "status": ""}
+                 "balance": "Balance", "coarse": "Coarse jar", "print": "Print jar", "status": ""}
         sc.gauges = [(names[k], v) for k, v in kv.items() if v is not None]
 
     cable_mm = []
@@ -397,21 +400,23 @@ def _sieving(sc):
 
     # 1 · pour out ------------------------------------------------------------------------------------------
     cx, cy = M.CONT_XY
-    mouth = np.array([cx, cy, 229.0])
+    mouth = np.array([cx, cy, 229.0 + M.CONT_Z0])
     to_tray = HEAP - np.array([cx, cy, 0.0])
     to_tray[2] = 0
     to_tray /= np.linalg.norm(to_tray)
     axis = np.array([-to_tray[1], to_tray[0], 0.0])        # tipping about this turns the top towards the tray
-    over = HEAP + np.array([0.0, 0.0, 88.0]) - to_tray * 10.0
+    over = HEAP + np.array([0.0, 0.0, 64.0]) - to_tray * 10.0
 
     def cont_pose(p, ang):
         return T(p - mouth) @ R(axis, ang, mouth)
 
     def pour(u):
-        p = path(window(u, 0.0, 0.40), [mouth, mouth + (0, 0, 60), over + (0, 0, 150), over + (0, 0, 70)])
-        ang = 165.0 * window(u, 0.22, 0.55)
+        # up first (tipped, the can's bottom swings 237 mm below its mouth), over the tray tipping to 95 degrees,
+        # then down to the pour height only once the bottom is above the mouth
+        p = path(window(u, 0.0, 0.40), [mouth, mouth + (0, 0, 75), over + (0, 0, 240)])
+        ang = 95.0 * window(u, 0.12, 0.40) + 70.0 * window(u, 0.40, 0.55)
         if u > 0.40:
-            p = over + np.array([0, 0, 70.0]) * (1 - window(u, 0.40, 0.55))
+            p = over + np.array([0, 0, 240.0]) * (1 - window(u, 0.40, 0.55))
         if u > 0.62:                                     # a few taps on the container to get the last of it out
             ang += 5.0 * math.sin(2 * math.pi * 3.0 * (u - 0.62) * 9.0) * (1 - window(u, 0.85, 1.0))
         sc.gmat["container"] = cont_pose(p, ang)
@@ -421,8 +426,8 @@ def _sieving(sc):
     sc.step("1 · pour out", "After a run, with the dust settled: every lead clipped on first, then tip the container "
             "out onto the grounded stainless tray, never over paper or plastic (NFPA 484). The heap is mostly powder "
             "with a few unatomized pieces in it.", 9.0, pour, hold=0.6, cam_to=CAM["pour"], live=True,
-            labels=[lab("powder container (size assumed, #255)", mouth + (0, 0, -40), 0.06, 0.28),
-                    lab("bonding lead and clip", (cx, cy + 60, 200), 0.10, 0.62),
+            labels=[lab("powder container (size assumed, #255)", over + (0, 0, 150), 0.06, 0.28),
+                    lab("bonding lead and clip", (M.TRAY_C[0] - 100, M.TRAY_C[1] + M.TRAY_D / 2 + 20, 20), 0.10, 0.62),
                     lab("ground bus bar", (-300, M.BUS_Y, M.BUS_Z), 0.62, 0.20)])
     end_pour = sc.gmat["container"].copy()
 
@@ -433,18 +438,19 @@ def _sieving(sc):
     state = {}
 
     def exposed():
-        """Pieces lying on the tray with their top clear of powder, nearest the dish first."""
+        """The pieces on the tray under the least powder, nearest the dish first: the ones a hand would see."""
         x, r = sim.x, sim.r
-        out = []
+        cover = []
         for j, i in enumerate(pw.pieces):
             if not on_tray(x[i:i + 1])[0]:
                 continue
             d = np.hypot(x[:, 0] - x[i, 0], x[:, 1] - x[i, 1])
-            above = (d < r[i] + 0.5) & (x[:, 2] > x[i, 2] + 0.5 * r[i])
-            if above.sum() <= 1:
-                out.append(j)
+            above = (d < r[i] + r) & (x[:, 2] > x[i, 2] + 0.5 * r[i])
+            cover.append((int(above.sum()), j))
+        cover.sort()
+        out = [j for _, j in cover[:4]]
         out.sort(key=lambda j: np.linalg.norm(x[pw.pieces[j], :2] - dish[:2]))
-        return out[:4]
+        return out
 
     def tweez_pose(p, yaw, pitch, grip):
         Mw = T(p - tip0) @ R((0, 0, 1), yaw, tip0) @ R((0, 1, 0), pitch, tip0)
@@ -457,8 +463,9 @@ def _sieving(sc):
         if "order" not in state:
             state["order"] = exposed()
             state["home"] = sc.gmat["container"].copy()
-        sc.gmat["container"] = cont_pose(path(window(u, 0.0, 0.22), [over, over + (0, 0, 120), mouth + (0, 0, 60),
-                                                                   mouth]), 165.0 * (1 - window(u, 0.0, 0.18)))
+        w = window(u, 0.0, 0.24)                        # the pour in reverse: up, untip over the tray, home
+        sc.gmat["container"] = cont_pose(path(w, [over, over + (0, 0, 240), mouth + (0, 0, 75), mouth]),
+                                         165.0 - 70.0 * window(w, 0.0, 0.33) - 95.0 * window(w, 0.33, 0.70))
         order = state["order"]
         n = max(1, len(order))
         t = window(u, 0.12, 0.96) * n
@@ -508,36 +515,38 @@ def _sieving(sc):
 
     # 3 · cover off, scoop onto the No. 60 -------------------------------------------------------------------------
     rest = np.array([M.SCOOP_REST[0], M.SCOOP_REST[1], 0.0])
-    cover_park = np.array([M.COVER_PARK[0] - SX, M.COVER_PARK[1] - SY, -M.COVER_Z + 0.02])
+    cover_park = np.array([M.COVER_PARK[0] - SX, M.COVER_PARK[1] - SY, -(M.COVER_Z - M.T_SHEET) + 0.02])
+    cover_high = np.array([cover_park[0], cover_park[1], 60.0])     # across at the lifted height, then straight down
     drop = np.array([SX - 30.0, SY, M.TOP_RIM_Z + 40.0])
 
     def scoop_pose(p, pitch):
         sc.gmat["scoop"] = T(p - rest) @ R((0, 1, 0), pitch, rest)
 
     def scoop(u):
-        sc.gmat["cover"] = T(path(window(u, 0.0, 0.12), [(0, 0, 0), (0, 0, 60), cover_park + (0, 0, 60), cover_park]))
-        passes = ((HEAP[1] - 2.0, 1.2), (HEAP[1] - 30.0, 1.2))
+        sc.gmat["cover"] = T(path(window(u, 0.0, 0.12), [(0, 0, 0), (0, 0, 60), cover_high, cover_park]))
+        passes = ((HEAP[1] - 2.0, 1.2), (HEAP[1] + 40.0, 1.2))
         n = len(passes)
         t = window(u, 0.10, 1.0) * n
         k = min(int(t), n - 1)
         f = t - k
         y, z = passes[k]
-        x0, x1 = HEAP[0] - 62.0, HEAP[0] + 32.0
+        x0, x1 = HEAP[0] - 70.0, HEAP[0] + 40.0
         start = np.array([x0, y, z + 0.05])
-        if f < 0.12:
-            p = path(f / 0.12, [rest if k == 0 else drop, start + (0, 0, 70), start])
-            pitch = 12.0 * window(f, 0.0, 0.12)
-        elif f < 0.34:
-            p, pitch = start + np.array([x1 - x0, 0.0, 0.0]) * window(f, 0.12, 0.34), 12.0 - 6.0 * window(f, 0.12, 0.34)
-        elif f < 0.40:
-            p, pitch = np.array([x1, y, z + 0.05]), 6.0 * (1 - window(f, 0.34, 0.40))
-        elif f < 0.62:
-            p, pitch = path((f - 0.40) / 0.22, [np.array([x1, y, z + 0.05]), np.array([x1, y, 230.0]),
-                                                drop + (0, 0, 40), drop]), 0.0
+        if f < 0.10:
+            p = path(f / 0.10, [rest if k == 0 else drop, start + (0, 0, 70), start])
+            pitch = 12.0 * window(f, 0.0, 0.10)
+        elif f < 0.30:
+            p, pitch = start + np.array([x1 - x0, 0.0, 0.0]) * window(f, 0.10, 0.30), 12.0 - 6.0 * window(f, 0.10, 0.30)
+        elif f < 0.36:
+            p, pitch = np.array([x1, y, z + 0.05]), 6.0 * (1 - window(f, 0.30, 0.36))
+        elif f < 0.70:                # carried slowly, tilted back a little once clear, so the load sits at the back
+            p = path((f - 0.36) / 0.34, [np.array([x1, y, z + 0.05]), np.array([x1 + 20, y, 120.0]),
+                                         drop + (-30, 0, 30), drop])
+            pitch = -6.0 * window(f, 0.39, 0.46)
         else:
             p = drop
-            pitch = 62.0 * window(f, 0.62, 0.78) + 4.0 * math.sin(2 * math.pi * 4.0 * f) * window(f, 0.72, 0.8)
-            pitch -= 62.0 * window(f, 0.88, 1.0)
+            pitch = -6.0 + 68.0 * window(f, 0.70, 0.82) + 4.0 * math.sin(2 * math.pi * 4.0 * f) * window(f, 0.78, 0.84)
+            pitch -= 62.0 * window(f, 0.90, 1.0)
         scoop_pose(p, pitch)
         tick()
         g60 = grams(pw.in_sieve("s60"))
@@ -545,7 +554,7 @@ def _sieving(sc):
                status="about 35-40 g a pass on an 8 in No. 230")
     sc.step("3 · onto the No. 60", "Cover off. A conductive scoop carries the powder to the top sieve, the No. 60 "
             "(250 µm): it scalps what the tweezers missed and keeps the No. 230 below it clean. An 8 in No. 230 takes "
-            "about 35-40 g a pass (DIN 66165's 26 cm³), so a 100 g run is three passes.", 12.0, scoop, hold=0.4,
+            "about 35-40 g a pass (DIN 66165's 26 cm³), so a 100 g run is three passes.", 15.0, scoop, hold=0.4,
             cam_to=CAM["scoop"], live=True,
             labels=[lab("No. 60 (250 µm)", (SX + 95, SY - 30, M.MESH_Z["s60"] + 20), 0.78, 0.30),
                     lab("No. 230 (63 µm)", (SX + 95, SY - 30, M.MESH_Z["s230"] + 20), 0.78, 0.46),
@@ -553,7 +562,7 @@ def _sieving(sc):
 
     def lid_on(u):
         scoop_pose(path(window(u, 0.0, 0.5), [drop, drop + (-60, 0, 30), rest + (0, 0, 80), rest]), 0.0)
-        sc.gmat["cover"] = T(path(window(u, 0.35, 0.95), [cover_park, cover_park + (0, 0, 60), (0, 0, 60), (0, 0, 0)]))
+        sc.gmat["cover"] = T(path(window(u, 0.35, 0.95), [cover_park, cover_high, (0, 0, 60), (0, 0, 0)]))
         tick()
     sc.step("3 · cover on", "Cover on before anything is shaken: fine aluminium is a combustible dust and the cover "
             "is the containment.", 3.0, lid_on, hold=0.4, cam_to=CAM["stack"], live=True,
@@ -579,7 +588,8 @@ def _sieving(sc):
         pw.colour_f = window(u, 0.05, 0.20)
         mag.a = window(u, 0.12, 0.22)
         sc.notes = [("No. 230 at real size, slow motion: 63 µm openings, 44 µm wire\n"
-                     "blue < 63 µm goes through, orange 63-250 µm stays", (mag.centre[0], mag.centre[1] + 0.25), mag.a)]
+                     "blue < 63 µm goes through, orange 63-250 µm stays; bar 100 µm",
+                     (mag.centre[0], mag.centre[1] + 0.25), mag.a)]
         tick(agit=5.0 * (amp > 0.5), mag_on=u > 0.12, tap=tap)
         g = {k_: pw.in_sieve(k_) for k_ in ("s60", "s230", "pan")}
         gauges(batch=f"{BATCH:.0f} g (example)", s60=f"{grams(g['s60']):5.1f} g", s230=f"{grams(g['s230']):5.1f} g",
@@ -606,20 +616,30 @@ def _sieving(sc):
         return T(target - rim_pt) @ R(axis_, ang, rim_pt)
 
     def unstack(group, top_z, target, park, t0=0.0, extra=None):
-        """Lift a sieve (or the pan) off by its +x rim, tip it over `target` to pour, then set it down at `park`."""
+        """Lift a sieve (or the pan) by its +x rim, tip it on the way over so it arrives already leaning, pour at 75
+        then 135 degrees with `target` the low point of its rim, and come back the same way before setting it down at
+        `park`."""
         r0 = rim(group, 0.0, top_z)       # the +x rim point: the sieve tips towards +x about it
         base = 0.0 if group == "pan" else M.SKIRT_Z[group] - M.T_SHEET
         pk = r0 + np.array([park[0] - SX, park[1] - SY, -base])
-        a0, a1 = t0 + 0.30 * (1 - t0), t0 + 0.62 * (1 - t0)
+        pre = target + np.array([-60.0, 0.0, 110.0])
+        a0, a1 = t0 + 0.30 * (1 - t0), t0 + 0.68 * (1 - t0)
 
         def update(u):
             if extra is not None:
                 extra(u)
-            carry = path(window(u, t0, a0), [r0, r0 + (0, 0, 90), target + (-40, 0, 60), target])
-            ang = 105.0 * window(u, a0, a0 + 0.10) - 105.0 * window(u, a1, a1 + 0.08)
-            ang += 4.0 * math.sin(2 * math.pi * 5.0 * u) * (window(u, a0 + 0.10, a0 + 0.13) - window(u, a1 - 0.04, a1))
-            if u > a1 + 0.08:
-                carry = path(window(u, a1 + 0.08, 1.0), [target, target + (0, 0, 60), pk + (0, 0, 60), pk])
+            if u < a1:
+                v = window(u, t0, a0)
+                carry = path(v, [r0, r0 + (0, 0, 90), pre, target])
+                ang = 40.0 * ease(min(1.0, max(0.0, 3 * v - 1))) + 35.0 * ease(min(1.0, max(0.0, 3 * v - 2)))
+                # wait for the powder to run to the low point of the rim, tap, then on to 135: at 105 the frame's
+                # wall under the rim is still a 15 degree ledge, flatter than the powder's angle of friction
+                ang += 60.0 * window(u, a0 + 0.12, a0 + 0.22)
+                ang += 3.0 * math.sin(2 * math.pi * 6.0 * u) * (window(u, a0 + 0.04, a0 + 0.06) - window(u, a1 - 0.05, a1))
+            else:
+                v = window(u, a1, 1.0)
+                carry = path(v, [target, pre, pk + (0, 0, 230), pk])
+                ang = 135.0 - 95.0 * ease(min(1.0, 3 * v)) - 40.0 * ease(min(1.0, max(0.0, 3 * v - 1)))
             sc.gmat[group] = tip_matrix(r0, carry, ang)
             pw.activate(lambda x: ~on_tray(x))
             tick()
@@ -628,32 +648,36 @@ def _sieving(sc):
     def lift_cover(u):
         set_cut(sc, 1.0 - window(u, 0.0, 0.10))
         pw.cut = 1.0 - window(u, 0.0, 0.10)
-        sc.gmat["cover"] = T(path(window(u, 0.0, 0.22), [(0, 0, 0), (0, 0, 60), cover_park + (0, 0, 60), cover_park]))
+        sc.gmat["cover"] = T(path(window(u, 0.0, 0.22), [(0, 0, 0), (0, 0, 60), cover_high, cover_park]))
 
-    over_dish = np.array([M.DISH_XY[0] + 26.0, M.DISH_XY[1], 70.0])
+    over_dish = np.array([M.DISH_XY[0] + 14.0, M.DISH_XY[1], 52.0])
     s60_top = M.TOP_RIM_Z
     sc.step("5 · No. 60", "Cover off, then the No. 60: what it held joins the pieces in the dish.", 6.0,
             unstack("s60", s60_top, over_dish, M.SIEVE_PARK["s60"], t0=0.24, extra=lift_cover), hold=0.4, cam_to=CAM["unstack"],
             live=True)
 
+    in_jar = lambda name: (lambda x: (np.hypot(x[:, 0] - M.JAR_XY[name][0], x[:, 1] - M.JAR_XY[name][1]) < M.JAR_R)
+                           & (x[:, 2] > M.JAR_Z[name]) & (x[:, 2] < M.JAR_Z[name] + M.JAR_H))
+
     def coarse_gauge(u):
         gauges(batch=f"{BATCH:.0f} g (example)", s230=f"{grams(pw.in_sieve('s230')):5.1f} g",
-               status="63-250 µm: re-atomize (E6, #222)")
+               **{"coarse": f"{grams(pw.where(in_jar('coarse'))):5.1f} g"}, status="63-250 µm: re-atomize (E6, #222)")
     jx, jy = M.JAR_XY["coarse"]
-    over_coarse = np.array([jx - 30.0, jy, M.JAR_Z["coarse"] + M.FUNNEL_SEAT + 98.0 + 30.0])
+    over_coarse = np.array([jx - 14.0, jy, M.JAR_Z["coarse"] + M.FUNNEL_SEAT + 98.0 + 26.0])
     sc.step("5 · No. 230", "The No. 230 next, through the funnel into its own jar: 63-250 µm, too coarse for the bed. "
             "Keep it; it can be re-atomized (E6 in #222).", 6.0,
             unstack("s230", 2 * M.DEPTH, over_coarse, M.SIEVE_PARK["s230"], extra=coarse_gauge), hold=0.4,
             cam_to=CAM["jars"], live=True, labels=[lab("63-250 µm", (jx, jy - 30, 40), 0.20, 0.30)])
 
     px_, py_ = M.JAR_XY["print"]
-    over_print = np.array([px_ - 30.0, py_, M.JAR_Z["print"] + M.FUNNEL_SEAT + 98.0 + 30.0])
+    over_print = np.array([px_ - 14.0, py_, M.JAR_Z["print"] + M.FUNNEL_SEAT + 98.0 + 26.0])
     in_print = lambda x: (np.hypot(x[:, 0] - px_, x[:, 1] - py_) < M.JAR_R) & (x[:, 2] > M.JAR_Z["print"]) & \
         (x[:, 2] < M.JAR_Z["print"] + M.JAR_H)
 
     def print_gauge(u):
         g = grams(pw.where(in_print))
-        gauges(batch=f"{BATCH:.0f} g (example)", balance=f"{g:5.1f} g", status="jar and funnel tared")
+        gauges(batch=f"{BATCH:.0f} g (example)", pan=f"{grams(pw.in_sieve('pan')):5.1f} g", balance=f"{g:5.1f} g",
+               status="jar and funnel tared")
     sc.step("5 · pan", "The pan holds the print fraction, under 63 µm. It goes through the funnel into a jar already "
             "tared on the balance. Weigh every fraction: the yield says how many runs a print needs.", 7.0,
             unstack("pan", M.DEPTH, over_print, (SX, SY), extra=print_gauge), hold=1.0, cam_to=CAM["balance"],
@@ -671,7 +695,7 @@ def _sieving(sc):
         pw.activate(lambda x: ~on_tray(x))
         tick()
         g = grams(pw.where(in_print))
-        gauges(batch=f"{BATCH:.0f} g (example)", balance=f"{g:5.1f} g", tray=f"{grams(pw.where(on_tray)):5.1f} g",
+        gauges(batch=f"{BATCH:.0f} g (example)", **{"print": f"{g:5.1f} g"}, tray=f"{grams(pw.where(on_tray)):5.1f} g",
                status="then the next pass")
     sc.step("6 · label, store, repeat", "Lids on, a 6-character ID on the print jar (#249), the jar into the "
             "desiccant box. Then the next 35-40 g from the tray. The print jar is what feeds the doser's 25 mm "
