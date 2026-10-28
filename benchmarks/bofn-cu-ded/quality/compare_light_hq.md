@@ -8,5 +8,7 @@ Light: S = 32 base samples, 10 candidates, a 256 pool. Production: S = 64, 16 ca
 | 1 | -2% | -2% | -2% | 57% | 47% | 57% | 112 / 121 | 76 / 36 | 77 |
 | 2 | -3% | -8% | 60% | 76% | 60% | 78% | 110 / 102 | 17 / 30 | 33 |
 | 3 | -11% | -4% | -11% | -4% | 78% | 73% | 96 / 108 | 17 / 39 | 30 |
+| 4 | 73% | -9% | 73% | -9% | 73% | 65% | 87 / 103 | 5 / 52 | 19 |
+| 5 | 16% | 28% | 21% | 28% | 77% | 55% | 96 / 96 | 4 / 1 | 21 |
 
-Mean change at $100k on these 4 seeds: +2% of the optimum (production minus light).
+Mean change at $100k on these 6 seeds: -4% of the optimum (production minus light).
