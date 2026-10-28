@@ -31,8 +31,10 @@ FILES = {
 }
 FILES["phys-review"] = ["truth_phys.py", "phys/corrosion_data.csv", "phys/fit_corrosion.py", "phys/corrosion_fit.json", "phys/corrosion_fit.md", "phys/calphad_grid.py",
                         "phys/calphad_grid.csv", "phys/phys_tables.md", "phys/phys_tables.json", "bofn_alloy.py"]
-BRIEF = {"code-review": HERE / "brief-code.md", "analysis-review": HERE / "brief-analysis.md", "phys-review": HERE / "brief-phys.md"}
-NO_RESULTS_ZIP = {"phys-review"}  # the physics review needs the truth, not the runs
+FILES["phys-review-v2"] = ["truth_phys.py", "phys/corrosion_data.csv", "phys/fit_corrosion.py", "phys/corrosion_fit.json", "phys/corrosion_fit.md", "phys/phys_tables.md",
+                           "phys/phys_tables.json", "edison/literature/copper-anchor.md", "phys/calphad_grid.csv", "bofn_alloy.py"]
+BRIEF = {"code-review": HERE / "brief-code.md", "analysis-review": HERE / "brief-analysis.md", "phys-review": HERE / "brief-phys.md", "phys-review-v2": HERE / "brief-phys-v2.md"}
+NO_RESULTS_ZIP = {"phys-review", "phys-review-v2"}  # the physics reviews need the truth, not the runs
 DONE = {"success", "fail", "failed", "cancelled", "error"}
 
 
@@ -155,7 +157,7 @@ if __name__ == "__main__":
     if cmd == "settings":
         settings()
     elif cmd == "submit":
-        submit(sys.argv[2] if sys.argv[2].endswith("-review") else f"{sys.argv[2]}-review")
+        submit(sys.argv[2] if "-review" in sys.argv[2] else f"{sys.argv[2]}-review")
     elif cmd == "wait":
         wait(only=sys.argv[2:] or None)
     elif cmd == "fetch":

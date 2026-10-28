@@ -199,5 +199,54 @@
   "submitted": "2026-10-28T04:17:52Z",
   "brief": "benchmarks/bofn-cu-ded/edison/brief-phys.md",
   "runs_uploaded": 119
+ },
+ "phys-review-v2": {
+  "task_id": "e8550274-e07d-4d00-9af7-1a2a7d7da0c0",
+  "job": "ANALYSIS",
+  "uploads": [
+   {
+    "file": "truth_phys.py",
+    "entry_id": "data_entry:a5013873-b53f-4bbb-8dcb-b6cf7f8bbcaa"
+   },
+   {
+    "file": "corrosion_data.csv",
+    "entry_id": "data_entry:1874c4f5-e5c7-419a-9030-98e1a90561ca"
+   },
+   {
+    "file": "fit_corrosion.py",
+    "entry_id": "data_entry:b1a8b9ad-6b66-4b59-96c2-197c0ccf0794"
+   },
+   {
+    "file": "corrosion_fit.json",
+    "entry_id": "data_entry:836d50cf-358f-42a9-84a9-15c5cbab1e0e"
+   },
+   {
+    "file": "corrosion_fit.md",
+    "entry_id": "data_entry:64ef4c57-5db5-4088-9e09-35d9ab62174f"
+   },
+   {
+    "file": "phys_tables.md",
+    "entry_id": "data_entry:e8f63561-4a6f-4148-ac73-6d7ac8d9438f"
+   },
+   {
+    "file": "phys_tables.json",
+    "entry_id": "data_entry:fe4b13e7-8e29-46e4-a454-d2902d38cf1b"
+   },
+   {
+    "file": "copper-anchor.md",
+    "entry_id": "data_entry:8d9858cb-cdc8-40c4-be32-2b6f7726a4c7"
+   },
+   {
+    "file": "calphad_grid.csv",
+    "entry_id": "data_entry:99223b50-c42d-4d54-bfc8-408abb1a1dc0"
+   },
+   {
+    "file": "bofn_alloy.py",
+    "entry_id": "data_entry:42183f1d-7f63-4637-94a5-19643d4ec9f7"
+   }
+  ],
+  "submitted": "2026-10-28T04:46:53Z",
+  "brief": "benchmarks/bofn-cu-ded/edison/brief-phys-v2.md",
+  "runs_uploaded": 134
  }
 }
