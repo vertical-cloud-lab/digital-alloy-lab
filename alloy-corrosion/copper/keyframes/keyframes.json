@@ -1,0 +1,167 @@
+{
+ "reels": [
+  {
+   "file": "reel.png",
+   "px": [
+    1950,
+    249
+   ],
+   "in": [
+    6.5,
+    0.83
+   ],
+   "panel_px": [
+    268,
+    201
+   ],
+   "label_px": 33.33,
+   "min_label_clearance_px": 28.2,
+   "widest_label_vs_panel_px": [
+    270.3,
+    268
+   ]
+  },
+  {
+   "file": "reel_2rows.png",
+   "px": [
+    1950,
+    824
+   ],
+   "in": [
+    6.5,
+    2.747
+   ],
+   "panel_px": [
+    478,
+    358
+   ],
+   "label_px": 33.33,
+   "min_label_clearance_px": 238.2,
+   "widest_label_vs_panel_px": [
+    270.3,
+    478
+   ]
+  }
+ ],
+ "font": "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf",
+ "fps": 30,
+ "frame_px": [
+  2560,
+  1440
+ ],
+ "panel_aspect": 1.3333333333333333,
+ "frames": [
+  {
+   "panel": "(i)",
+   "file": "frames/01-specimens-lids.png",
+   "mp4_frame": 449,
+   "t_s": 14.967,
+   "chapter": "placing the modules",
+   "sub_step": "deck module 4 of 14, 'Well lids, FKM O-rings', coming down onto module 2, 'Specimens: Cu–Ni, NAB, DED', and module 3, 'PTFE blank on S4'",
+   "lit_action": "",
+   "label": "Specimens, lids",
+   "crop_1280x720": {
+    "cx": 690,
+    "cy": 335,
+    "w": 260,
+    "h": 195.0
+   }
+  },
+  {
+   "panel": "(ii)",
+   "file": "frames/02-seawater-fill.png",
+   "mp4_frame": 2236,
+   "t_s": 74.533,
+   "chapter": "one spot",
+   "sub_step": "2  The capper lifts the seawater cap; the P20 builds the well from 135 µL of ASTM D1141 seawater (7 transfers)",
+   "lit_action": "P20 pipette: dispenses into well S1, above the meniscus",
+   "label": "Seawater fill",
+   "crop_1280x720": {
+    "cx": 630,
+    "cy": 260,
+    "w": 480,
+    "h": 360.0
+   }
+  },
+  {
+   "panel": "(iii)",
+   "file": "frames/03-electrode-cap.png",
+   "mp4_frame": 2805,
+   "t_s": 93.5,
+   "chapter": "one spot",
+   "sub_step": "5  The capper carries the electrode cap (leak-free Ag/AgCl, Pt coil) from its park cup and sets it over S1's boss",
+   "lit_action": "Capper: sets the cap over S1's boss",
+   "label": "Electrode cap",
+   "crop_1280x720": {
+    "cx": 720,
+    "cy": 290,
+    "w": 640,
+    "h": 480.0
+   }
+  },
+  {
+   "panel": "(iv)",
+   "file": "frames/04-measure.png",
+   "mp4_frame": 3017,
+   "t_s": 100.567,
+   "chapter": "one spot",
+   "sub_step": "6  Measured with the cap on: OCP 20 min, EIS at OCP 10 min (10 mV rms, 100 kHz to 10 mHz, on the requested potentiostat), LPR ±10 mV, rest 5 min, +50 mV hold 10 min, OCP 5 min. The head is free meanwhile",
+   "lit_action": "Potentiostat: OCP, EIS, LPR, hold: the head is free",
+   "label": "OCP, EIS, LPR",
+   "crop_1280x720": {
+    "cx": 617,
+    "cy": 390,
+    "w": 480,
+    "h": 360.0
+   }
+  },
+  {
+   "panel": "(v)",
+   "file": "frames/05-cap-rinse.png",
+   "mp4_frame": 3254,
+   "t_s": 108.467,
+   "chapter": "one spot",
+   "sub_step": "7  The magnet lifts the cap off S1; it is dipped in DI water, then seawater, and parked",
+   "lit_action": "Capper: dips the cap in DI water",
+   "label": "Cap rinsed",
+   "crop_1280x720": {
+    "cx": 550,
+    "cy": 240,
+    "w": 420,
+    "h": 315.0
+   }
+  },
+  {
+   "panel": "(vi)",
+   "file": "frames/06-icp-sample.png",
+   "mp4_frame": 3510,
+   "t_s": 117.0,
+   "chapter": "one spot",
+   "sub_step": "8  A new tip moves the 150 µL, then a 150 µL DI rinse, into tube 1 for ICP-MS",
+   "lit_action": "P20 pipette: dispenses into tube 1",
+   "label": "ICP-MS sample",
+   "crop_1280x720": {
+    "cx": 560,
+    "cy": 370,
+    "w": 560,
+    "h": 420.0
+   }
+  },
+  {
+   "panel": "(vii)",
+   "file": "frames/07-spot-imaged.png",
+   "mp4_frame": 3867,
+   "t_s": 128.9,
+   "chapter": "one spot",
+   "sub_step": "10  The head camera images the spot. Next spot: S2",
+   "lit_action": "Head camera: images the spot",
+   "label": "Spot imaged",
+   "crop_1280x720": {
+    "cx": 740,
+    "cy": 240,
+    "w": 480,
+    "h": 360.0
+   }
+  }
+ ]
+}
