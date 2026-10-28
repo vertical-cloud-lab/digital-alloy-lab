@@ -30,7 +30,10 @@ printed aluminum as the naval application.
 | `figures-cu-ded/`, `pycalphad-cu/` | The copper draft's powder-doser and pycalphad figures, and the script and results behind the second | From the Oct 24 revision |
 | `abstract-cu-ded.txt` | SF-424 abstract for the alternative, as on ONR's Project Abstract Summary form | 3,854 of 4,000 characters |
 | `preview-cu-ded/` | PNG renders of the alternative's pages (110 dpi) | Generated |
-| `attachments/field10-facilities-cu-ded.tex` / `.pdf`, `attachments/field11-equipment-cu-ded.tex` / `.pdf` | Fields 10 and 11 for the alternative (two DED facilities, powder doser, copper feedstock, powder checks) | Field 10 2 pages, Field 11 1 page, TODOs |
+| `attachments/field10-facilities-cu-ded.tex` / `.pdf`, `attachments/field11-equipment-cu-ded.tex` / `.pdf` | Fields 10 and 11 for the alternative (two DED facilities, powder doser, copper feedstock, powder checks) | **Superseded by `attachments/src/*.html` as of Oct 28**; kept for reference, not updated |
+| `attachments/src/field10-facilities.html`, `field11-equipment.html`, `abstract.html`, `abstract.txt` | Sources of the alternative's Facilities, Equipment and abstract uploads in Kuali, from byu-finances; photos in `attachments/src/img/` and, where the repo already had them, `figures-src/img/` (see `attachments/src/img/SOURCES.md`) | Source of truth since Oct 24; here since Oct 28 |
+| `attachments/Baird_ONR_YIP_Facilities.pdf`, `_Equipment.pdf`, `_Abstract.pdf`; `attachments/render_pdf.py` | The rendered uploads, and the script that renders each HTML source to a Letter PDF with 1 in margins (Playwright Chromium) | Facilities 4 pages, Equipment 2, abstract 1 |
+| `build_latest.sh` | The byu-finances wrapper that builds the copper proposal as `Baird_ONR_YIP_ProjectDescription_LATEST.pdf`, or with `--submit` without the TODO markers (section 7) | Copied unchanged |
 
 Only one of the two technical proposals would be submitted. Section 9
 compares them.
@@ -212,6 +215,33 @@ cringe-filter score -c proposal onr-yip-technical-proposal.tex
 - Emails (email context): 0 findings, at or under the 170-word budget.
 - References: the new corrosion and Navy references were checked on
   Crossref (DOIs) or by opening the source page on 2026-10-10.
+
+**Copper version and its attachments.** `build_latest.sh` is the
+byu-finances wrapper, copied unchanged. From this folder,
+`sh build_latest.sh ../..` runs `make_todo_list.py` and three xelatex passes
+of `onr-yip-technical-proposal-cu-ded.tex` (rebuilding its PDF and
+`todo-list.tex` in place), prints the page, overfull-line and
+undefined-reference counts, and copies the PDF to
+`Baird_ONR_YIP_ProjectDescription_LATEST.pdf` beside the script. With
+`--submit` it builds without the TODO markers and the TODO list, into
+`Baird_ONR_YIP_ProjectDescription_SUBMIT.pdf`, and leaves LATEST alone. Leave
+out `--sync-tex`: it copies the byu-finances `.tex` over DAL's, and here both
+paths name the same file, so `cp` stops the script. The LATEST and SUBMIT
+PDFs are build outputs; don't commit them.
+
+```bash
+cd near-term-submissions/onr-yip
+sh build_latest.sh ../..             # LATEST
+sh build_latest.sh ../.. --submit    # SUBMIT, without TODO markers
+cd attachments && python render_pdf.py src/field10-facilities.html Baird_ONR_YIP_Facilities.pdf
+```
+
+`render_pdf.py` needs Playwright (`pip install playwright` and
+`playwright install chromium`) and Times New Roman (on Ubuntu,
+`ttf-mscorefonts-installer`); without the font, Chromium falls back to
+Liberation Serif. Render to the `Baird_ONR_YIP_*.pdf` names:
+`attachments/field10-facilities.pdf` and `field11-equipment.pdf` are the
+aluminum version's.
 
 ## 8. Sources read on 2026-10-10
 
@@ -734,6 +764,49 @@ the Oct 25 b drop (Oct 25 d, the Oct 25 third pass, and Oct 27).
   paragraph moved a line from page 20 to page 21; here, with hyphenation,
   page 21 did not change.
 
+**Oct 28 attachment sources (2026-10-28).** From the agent-staging drop
+`for/vertical-cloud-lab/digital-alloy-lab/2026-10-28-onr-yip-attachments-src/`
+(`sgbaird/agent-staging` at `6eb2a20`; all 24 sha256 hashes in its
+MANIFEST.md match). It holds the HTML sources the Kuali uploads have been
+built from since Oct 24 (Facilities, Equipment, abstract), their photos and
+renders, `render_pdf.py` and `build_latest.sh`, from byu-finances@d4d6ecb,
+with no budget or personal files.
+- **Where they went:** the HTML and `abstract.txt` to `attachments/src/`;
+  `SOURCES.md` and the four new `lab-enclosure-*.jpg` frames to
+  `attachments/src/img/`; the three `Baird_ONR_YIP_*.pdf` and
+  `render_pdf.py` to `attachments/`; `build_latest.sh` to this folder
+  (section 7). Files are byte-identical to the drop, except the two HTML
+  files whose image paths changed, `SOURCES.md` and the re-rendered PDFs.
+  The drop's `.gitattributes` and `MANIFEST.md` were not copied.
+  `src/abstract.txt` has the same text as `abstract-cu-ded.txt`, with CRLF
+  line ends.
+- **No image stored twice:** nine of the photos were already in
+  `figures-src/img/`, and so are the two enclosure photos of Facilities
+  Fig. 1a and 1b (read from `project-description/figures/` in
+  byu-finances). The Fig. 3c copper-nickel track is
+  `figures-cu-ded/mines_cuni_track.jpg`. All are byte-identical, so the HTML
+  reads them from there (12 `src` paths changed). `attachments/src/img/SOURCES.md`
+  lists the mapping and gains the Fig. 3c row its table lacked.
+- **Rendered here:** `render_pdf.py` (Playwright Chromium 156, Times New
+  Roman 2.82). Against the staged PDFs: the same page counts (Facilities 4,
+  Equipment 2, abstract 1), the same line breaks on every page, the same
+  embedded image bytes, and no pixel differs at 150 dpi.
+- **Superseded:** `field10-facilities-cu-ded.tex` and
+  `field11-equipment-cu-ded.tex` and their PDFs stay, with a first line
+  pointing to `src/*.html`. Changes since those copies, per the MANIFEST:
+  Facilities Fig. 1(d)-(g), four frames of the enclosure's services from the
+  Sep 1 walk-through Short; Fig. 3(c), the Mines track; "college safety
+  officer" for "industrial hygienist"; the proposal's atomizer and lot-size
+  wording; and the Oct 28 b text pass in Equipment. The HTML and PDFs name
+  the posted Mines and Electron Microscopy Facility rates and NSL's
+  quotation number, which the Oct 24 text copies left out.
+- **Open:** the two attachments disagree about the loaned potentiostat.
+  Facilities says it was integrated in October and "the screen itself has
+  not yet been run", as the proposal does. Equipment says it "has run the
+  electrochemical corrosion screen since October 2026", and its Fig. 2
+  caption says it "runs it now". The MANIFEST describes the Equipment pass
+  as "integrated, screen not yet run".
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
 1. **DED facilities.** The InssTek MX-Lab at the University of Utah (Prof.
@@ -784,10 +857,12 @@ the Oct 25 b drop (Oct 25 d, the Oct 25 third pass, and Oct 27).
    (Oct 27 entry above), so the count needs redoing.
 9. Settled Oct 24: powder handling is in the powder-safety paragraph of
    Responsibility and in Field 10.
-10. Fields 10 and 11 have copper versions (`attachments/*-cu-ded.*`), text
-    copies of the submission text of the Oct 24 evening (the submission
-    PDFs, with photographs, are built in byu-finances); their TODOs are the
-    Instron frames, the Thermo-Calc license, the Utah questions and the X2
+10. Fields 10 and 11 for the copper version are, since Oct 28, the HTML
+    sources of the Kuali uploads and their renders (`attachments/src/`,
+    `attachments/Baird_ONR_YIP_*.pdf`; Oct 28 entry above), which carry no
+    TODO markers. The text copies of the Oct 24 evening
+    (`attachments/*-cu-ded.*`) are superseded; their TODOs were the Instron
+    frames, the Thermo-Calc license, the Utah questions and the X2
     laser. The letter of support carries the copper title as a
     bracketed option; its "powder-to-part demonstration on an aluminum
     alloy" holds for both.
@@ -799,8 +874,8 @@ the Oct 25 b drop (Oct 25 d, the Oct 25 third pass, and Oct 27).
 12. Settled Oct 25 d: a potentiostat lent by a BYU colleague runs the
     screen until the budget's dedicated potentiostat with impedance
     capability arrives, the one item of equipment requested, so the loan
-    TODO is closed. The Field 10 and 11 copies here still have the Oct 24
-    text (Oct 27 entry above).
+    TODO is closed. The Field 10 and 11 text copies kept the Oct 24 text;
+    the Oct 28 HTML sources replace them (Oct 28 entry above).
 13. Collaborators: Prof. Z. Zak Fang (Utah), Sam Webster (Mines) and Dr.
     Jordan A. Tiarks (Ames) are named as unfunded collaborators in
     Management and on the Current and Pending summary page (Oct 27). Still

@@ -167,6 +167,63 @@ def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn"
     return out
 
 
+PROP_SHORT = {"pkgfn": "pKGFN + reuse", "eifn_reuse": "BOFN + reuse", "eifn": "BOFN", "ei": "Standard BO", "tiered": "Tiered screening"}
+PROP_STYLE = {"pkgfn": dict(color=RED, lw=1.4, ls="-"), "eifn_reuse": dict(color=RED, lw=1.2, ls=(0, (4, 2))),
+              "eifn": dict(color="black", lw=1.2, ls="-"), "ei": dict(color="#8C8C8C", lw=1.1, ls="-"),
+              "tiered": dict(color="#8C8C8C", lw=1.1, ls=(0, (1.5, 1.5)))}
+
+
+def proposal_figure(cell=HEAD, kinds=PV_KINDS, out=None, ref="eifn", base="ei", figsize=(3.9, 2.4)):
+    """The proposal's Fig. fig:sim at print size: Times New Roman 8 pt and black text like the other
+    figures, direct labels, and a bracket for the spend at which `ref` reaches `base`'s $100k level."""
+    data = load(cell)
+    x = GRID / 1e3
+    C = {k: curves(data[k], cell) * 100 for k in kinds if k in data}
+    M = {k: np.nanmean(c, 0) for k, c in C.items()}
+    SE = {k: np.nanstd(c, 0) / np.sqrt(c.shape[0]) for k, c in C.items()}
+    with plt.rc_context({"font.family": ["Times New Roman", "serif"], "font.size": 8, "axes.edgecolor": "black",
+                         "axes.linewidth": 0.6, "xtick.color": "black", "ytick.color": "black", "axes.labelcolor": "black",
+                         "xtick.major.size": 2.5, "ytick.major.size": 2.5, "pdf.fonttype": 42}):
+        fig, ax = plt.subplots(figsize=figsize)
+        for k in kinds:
+            st = PROP_STYLE[k]
+            if st["color"] == RED or k == ref:
+                ax.fill_between(x, M[k] - SE[k], M[k] + SE[k], color=st["color"], alpha=0.12, lw=0)
+            ax.plot(x, M[k], color=st["color"], lw=st["lw"], ls=st["ls"], solid_capstyle="round")
+        target = float(M[base][-1])
+        x_ref = float(x[np.argmax(M[ref] >= target)])
+        ax.plot([x_ref, 100], [target, target], color="black", lw=0.8, solid_capstyle="butt")
+        ax.plot([x_ref], [target], "o", color="black", ms=3)
+        ax.text(76, target + 1.5, f"{100 / x_ref:.1f}× less spend", ha="center", va="bottom",
+                bbox=dict(boxstyle="square,pad=0.1", fc="white", ec="none", alpha=0.85), zorder=6)
+        finals = {k: M[k][-1] for k in C}
+        order = sorted(finals, key=lambda k: finals[k])
+        ypos, last = {}, -1e9
+        for k in order:
+            ypos[k] = max(finals[k], last + 8)
+            last = ypos[k]
+        for k in order:
+            ax.plot([100.5, 104], [finals[k], ypos[k]], color="#BFBFBF", lw=0.6, clip_on=False)
+            ax.text(105, ypos[k], PROP_SHORT[k], ha="left", va="center", clip_on=False)
+        ax.set_xlim(0, 100)
+        ax.set_ylim(-12, 85)
+        ax.set_xticks(range(0, 101, 25))
+        ax.set_yticks(range(0, 81, 20))
+        ax.axhline(0, color="#D9D9D9", lw=0.5, zorder=0)
+        ax.set_xlabel("New spend ($k)", labelpad=1)
+        ax.set_ylabel("Best alloy demonstrated\n(% of true optimum)", labelpad=1)
+        ax.tick_params(pad=1.5)
+        fig.subplots_adjust(left=0.13, right=0.765, top=0.97, bottom=0.15)
+        out = out or HERE / f"bofn_cu_best_vs_spend_k{cell[0]:g}_proposal"
+        fig.savefig(Path(out).with_suffix(".pdf"), metadata={"CreationDate": None})
+        fig.savefig(Path(out).with_suffix(".png"), dpi=300)
+        problems = check_overlaps(fig, ax)
+        plt.close(fig)
+    if problems:
+        print(f"{Path(out).name}: {len(problems)} text/line overlaps:\n  " + "\n  ".join(problems))
+    return Path(out).with_suffix(".pdf")
+
+
 def check_overlaps(fig, ax):
     """Flag text boxes that overlap each other or that a plotted line passes through."""
     fig.canvas.draw()
@@ -293,6 +350,7 @@ if __name__ == "__main__":
     print(dag_strip())
     if load(HEAD):
         print(slide_figure())
+        print(proposal_figure())
         (HERE / "variants").mkdir(exist_ok=True)
         print(slide_figure(out=HERE / "variants" / "bofn_cu_best_vs_spend_k1_partial_vs_full_all_bands.png", bands="all"))
         print(main_curve())
