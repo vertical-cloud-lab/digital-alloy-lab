@@ -255,7 +255,8 @@
     "median_best_rho_u": 0.40483118009862645,
     "median_best_rho_m": 0.8815186371269255,
     "frac_rho_u_below_0.3": 0.15,
-    "frac_rho_m_above_0.7": 1.0
+    "frac_rho_m_above_0.7": 1.0,
+    "frac_rho_u_passing_utah_gate_0.5": 0.15
    },
    "optimum composition": {
     "best_rho_u": 0.9195455537095922,
@@ -519,7 +520,8 @@
     "median_best_rho_u": 0.4047640128137846,
     "median_best_rho_m": 0.8814530229104426,
     "frac_rho_u_below_0.3": 0.15,
-    "frac_rho_m_above_0.7": 1.0
+    "frac_rho_m_above_0.7": 1.0,
+    "frac_rho_u_passing_utah_gate_0.5": 0.15
    },
    "optimum composition": {
     "best_rho_u": 0.926978965526014,
@@ -783,7 +785,8 @@
     "median_best_rho_u": 0.40483118009862645,
     "median_best_rho_m": 0.8815186371269255,
     "frac_rho_u_below_0.3": 0.15,
-    "frac_rho_m_above_0.7": 1.0
+    "frac_rho_m_above_0.7": 1.0,
+    "frac_rho_u_passing_utah_gate_0.5": 0.15
    },
    "optimum composition": {
     "best_rho_u": 0.9195455537095922,
@@ -1047,7 +1050,8 @@
     "median_best_rho_u": 0.4047640128137846,
     "median_best_rho_m": 0.8814530229104426,
     "frac_rho_u_below_0.3": 0.15,
-    "frac_rho_m_above_0.7": 1.0
+    "frac_rho_m_above_0.7": 1.0,
+    "frac_rho_u_passing_utah_gate_0.5": 0.15
    },
    "optimum composition": {
     "best_rho_u": 0.926978965526014,

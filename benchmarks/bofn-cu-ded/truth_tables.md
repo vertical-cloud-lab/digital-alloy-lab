@@ -65,9 +65,9 @@
 
 ## Required property 4: the Utah power cap binds for copper-rich compositions
 
-| (kappa, eta) | compositions | median best rho_u (Utah, P <= 0.5) | median best rho_m (Mines) | share with best rho_u < 0.3 | share with best rho_m > 0.7 | optimum's composition: best rho_u, best rho_m |
-|---|---|---|---|---|---|---|
-| (1, 1) | copper-rich (Ni <= 0.07, Al <= 0.2, i.e. under about 2 wt% Ni and 2 wt% Al) (first 200) | 0.40 | 0.88 | 15% | 100% | 0.92, 0.93 |
-| (0, 0) | copper-rich (Ni <= 0.07, Al <= 0.2, i.e. under about 2 wt% Ni and 2 wt% Al) (first 200) | 0.40 | 0.88 | 15% | 100% | 0.93, 0.94 |
-| (1, 0) | copper-rich (Ni <= 0.07, Al <= 0.2, i.e. under about 2 wt% Ni and 2 wt% Al) (first 200) | 0.40 | 0.88 | 15% | 100% | 0.92, 0.93 |
-| (0, 1) | copper-rich (Ni <= 0.07, Al <= 0.2, i.e. under about 2 wt% Ni and 2 wt% Al) (first 200) | 0.40 | 0.88 | 15% | 100% | 0.93, 0.94 |
+| (kappa, eta) | compositions | median best rho_u (Utah, P <= 0.5) | median best rho_m (Mines) | share with best rho_u < 0.3 | share passing the Utah gate (rho_u >= 0.5) | share with best rho_m > 0.7 | optimum's composition: best rho_u, best rho_m |
+|---|---|---|---|---|---|---|---|
+| (1, 1) | copper-rich (Ni <= 0.07, Al <= 0.2, i.e. under about 2 wt% Ni and 2 wt% Al) (first 200) | 0.40 | 0.88 | 15% | 15% | 100% | 0.92, 0.93 |
+| (0, 0) | copper-rich (Ni <= 0.07, Al <= 0.2, i.e. under about 2 wt% Ni and 2 wt% Al) (first 200) | 0.40 | 0.88 | 15% | 15% | 100% | 0.93, 0.94 |
+| (1, 0) | copper-rich (Ni <= 0.07, Al <= 0.2, i.e. under about 2 wt% Ni and 2 wt% Al) (first 200) | 0.40 | 0.88 | 15% | 15% | 100% | 0.92, 0.93 |
+| (0, 1) | copper-rich (Ni <= 0.07, Al <= 0.2, i.e. under about 2 wt% Ni and 2 wt% Al) (first 200) | 0.40 | 0.88 | 15% | 15% | 100% | 0.93, 0.94 |

@@ -42,6 +42,7 @@ in README.md hold (checked by `check_truth.py`).
 from __future__ import annotations
 
 import math
+import os
 
 import torch
 from botorch.fit import fit_gpytorch_mll
@@ -54,6 +55,7 @@ D = 7
 COMP, IA, IPV = [0, 1, 2, 3], 4, [5, 6]
 INI, IAL, IFE, IMN = 0, 1, 2, 3
 P_CAP = 0.5  # Utah's MX-Lab laser power cap on the scaled axis (about 500 W of 1 kW)
+TRUTH = os.environ.get("BOFN_TRUTH", "toy")  # "toy": the hand-written truth below
 
 # round all-in step costs (the project's own estimates; see README)
 COSTS = {"C": 10.0, "A": 400.0, "U": 500.0, "M": 1500.0, "S": 100.0, "T": 200.0, "K": 50.0, "I": 400.0}

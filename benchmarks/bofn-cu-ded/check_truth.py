@@ -100,7 +100,8 @@ def cell_report(kappa, eta):
             res_m.append(float(o["rho_m"].max()))
         ru, rm = torch.tensor(res_u), torch.tensor(res_m)
         cap[name] = {"n": len(res_u), "median_best_rho_u": float(ru.median()), "median_best_rho_m": float(rm.median()),
-                     "frac_rho_u_below_0.3": float((ru < 0.3).double().mean()), "frac_rho_m_above_0.7": float((rm > 0.7).double().mean())}
+                     "frac_rho_u_below_0.3": float((ru < 0.3).double().mean()), "frac_rho_m_above_0.7": float((rm > 0.7).double().mean()),
+                     "frac_rho_u_passing_utah_gate_0.5": float((ru >= 0.5).double().mean())}
     # the same for the optimum's composition
     Xr = torch.cat([xs[:4].expand(apv.shape[0], 4), apv], -1)
     o = t.full(Xr)
@@ -141,13 +142,50 @@ def markdown(reports):
     for r in reports:
         rr = r["ridge"]["0.5%"]
         L.append(f"| ({r['kappa']:g}, {r['eta']:g}) | {rr['n_points']} ({rr['frac_of_grid']:.1%}) | {rr['P_range'][0]:.2f} to {rr['P_range'][1]:.2f} | {rr['v_range'][0]:.2f} to {rr['v_range'][1]:.2f} | {rr['P_minus_v_range'][0]:.2f} to {rr['P_minus_v_range'][1]:.2f} |")
-    L += ["", "## Required property 4: the Utah power cap binds for copper-rich compositions", "", "| (kappa, eta) | compositions | median best rho_u (Utah, P <= 0.5) | median best rho_m (Mines) | share with best rho_u < 0.3 | share with best rho_m > 0.7 | optimum's composition: best rho_u, best rho_m |", "|---|---|---|---|---|---|---|"]
+    L += ["", "## Required property 4: the Utah power cap binds for copper-rich compositions", "", "| (kappa, eta) | compositions | median best rho_u (Utah, P <= 0.5) | median best rho_m (Mines) | share with best rho_u < 0.3 | share passing the Utah gate (rho_u >= 0.5) | share with best rho_m > 0.7 | optimum's composition: best rho_u, best rho_m |", "|---|---|---|---|---|---|---|---|"]
     for r in reports:
         c = r["utah_cap"]
         k = next(k for k in c if k != "optimum composition")
         v, o = c[k], c["optimum composition"]
-        L.append(f"| ({r['kappa']:g}, {r['eta']:g}) | {k} (first {v['n']}) | {v['median_best_rho_u']:.2f} | {v['median_best_rho_m']:.2f} | {v['frac_rho_u_below_0.3']:.0%} | {v['frac_rho_m_above_0.7']:.0%} | {o['best_rho_u']:.2f}, {o['best_rho_m']:.2f} |")
+        L.append(f"| ({r['kappa']:g}, {r['eta']:g}) | {k} (first {v['n']}) | {v['median_best_rho_u']:.2f} | {v['median_best_rho_m']:.2f} | {v['frac_rho_u_below_0.3']:.0%} | {v['frac_rho_u_passing_utah_gate_0.5']:.0%} | {v['frac_rho_m_above_0.7']:.0%} | {o['best_rho_u']:.2f}, {o['best_rho_m']:.2f} |")
     return "\n".join(L) + "\n"
+
+
+def assert_properties(reports):
+    """The required properties (README), asserted rather than only printed (Edison F7). Returns the
+    checks that ran, so the tables can say which held."""
+    done = []
+
+    def check(ok, what):
+        assert ok, f"required property failed: {what}"
+        done.append(what)
+
+    by = {(r["kappa"], r["eta"]): r for r in reports}
+    if (1.0, 1.0) in by:
+        r = by[(1.0, 1.0)]
+        # 1: the screens cut the optimum off in the headline world
+        check(r["optimum_fails_calphad_screen"] or r["optimum_below_top_quartile"], "1. at (1, 1) the optimum fails the CALPHAD screen or the one-hour screen")
+        # 2: the reference alloys
+        ref = r["reference_alloys"]
+        c715, c706, nab = ref["C71500 (70-30 Cu-Ni)"], ref["C70600 (90-10 Cu-Ni)"], ref["C95800 (NAB)"]
+        check(c715["m"] >= M_REF - 1e-6, "2a. C71500 passes immersion (m_ref is its index)")
+        check(nab["U"] > max(c715["U"], c706["U"]), "2b. NAB is the strongest reference alloy")
+        check(not nab["passes_immersion"] and nab["beta"] > 0.1, "2c. NAB, deposited at its best settings for J, carries beta-prime and fails immersion")
+        check(c706["passes_immersion"] and c706["U"] < nab["U"] and c706["burden"] < c715["burden"], "2d. C70600 is weaker than NAB, uses less nickel than C71500, and passes")
+    if (0.0, 0.0) in by:
+        check(by[(0.0, 0.0)]["best_passing_both_screens"]["pct"] >= 0.85, "1. at (0, 0) the screens keep at least 85% of the optimum")
+    for r in reports:
+        cell = f"({r['kappa']:g}, {r['eta']:g})"
+        rr = r["ridge"]["0.5%"]
+        # 3: a ridge, not a point: several grid points within 0.5% of J*, spread along P
+        check(rr["n_points"] >= 5 and rr["P_range"][1] - rr["P_range"][0] >= 0.05, f"3. {cell} the optimum is a ridge in (P, v)")
+        c = r["utah_cap"]
+        v = c[next(k for k in c if k != "optimum composition")]
+        # 4: Utah's cap binds for the median copper-rich composition (not for every one; the share that
+        # still passes the Utah density gate is reported in the tables), and Mines can fuse them
+        check(v["median_best_rho_u"] < 0.5 and v["frac_rho_u_passing_utah_gate_0.5"] < 0.5 and v["median_best_rho_m"] >= 0.7,
+              f"4. {cell} Utah's power cap keeps the median copper-rich composition below the density gate, Mines fuses it")
+    return done
 
 
 if __name__ == "__main__":
@@ -157,3 +195,5 @@ if __name__ == "__main__":
     md = markdown(reports)
     (HERE / "truth_tables.md").write_text(md)
     print(md)
+    for what in assert_properties(reports):
+        print("holds:", what)

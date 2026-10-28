@@ -56,11 +56,19 @@ UTAH_TRIES = len(UTAH_SCAN)  # a lot that misses the density gate at all three i
 W_QUANTILE = 0.75  # the one-hour screen gate: immersion only for builds in the top quartile of screened builds
 NEAR = {"A": 0.03, "M": 0.05, "I": 0.03}  # "just either side of each cutoff" for the audit
 FUNNEL_K = (12, 6, 3, 3)  # fixed top-k at the CALPHAD, powder, Utah and screen gates
+NI_FLOOR = 10 / 30  # corrosion-aware tiered variants: shortlist only compositions with at least 10 wt% Ni
+TIERED_KINDS = ("tiered", "tiered_ni", "tiered_ni_ref")
 NC = len(COMP)
 S_REC = 64
-S_ACQ = int(os.environ.get("BOFN_SACQ", 32))  # MC base samples inside pKGFN
-N_CAND = int(os.environ.get("BOFN_NCAND", 10))  # candidates per stage scored by pKGFN each iteration
-N_POOL = int(os.environ.get("BOFN_NPOOL", 256))  # Sobol designs in the per-iteration pool
+# pKGFN Monte Carlo settings: the aluminum production run's (bofn-prelim, PR 86). The first copper
+# sweep used lighter ones (32, 10, 256; 16 perturbations; 24 + 12 anchors); those runs are kept in
+# quality/results-light/ and run_sweep.py refuses to mix them with these.
+S_ACQ = int(os.environ.get("BOFN_SACQ", 64))  # MC base samples inside pKGFN
+N_CAND = int(os.environ.get("BOFN_NCAND", 16))  # candidates per stage scored by pKGFN each iteration
+N_POOL = int(os.environ.get("BOFN_NPOOL", 512))  # Sobol designs in the per-iteration pool
+N_PERT = 24  # local perturbations around each of the 8 designs with the best posterior mean
+N_ANCHOR = (32, 16)  # inner-max anchors: the best by posterior mean, the best by EI
+N_INCUMBENT = 4  # the best validated designs, always in the inner-max set
 REC = bool(os.environ.get("BOFN_REC"))  # the paper's (slow, noisy) recommender metric; off by default
 TAIL = COSTS["S"] + COSTS["T"] + COSTS["K"] + COSTS["I"]  # $750 of tests after a Mines build
 PKGFN_KINDS = ("pkgfn", "pkgfn_screen", "pkgfn_audit", "mines_only")
@@ -143,21 +151,41 @@ def expected_improvement(gp, P, best):
     return sd * (z * nrm.cdf(z) + nrm.log_prob(z).exp())
 
 
-def calphad_shortlist(d, lab, seed, top=SCREEN_TOP):
+def calphad_shortlist(d, lab, seed, top=SCREEN_TOP, ni_floor=None):
     """Stage 1 of tiered screening: simulate SCREEN_N compositions, keep the `top`
     strongest that CALPHAD predicts crack-free (solidification index at or below
     F_SAFE), net of the critical-mineral penalty. On this network that shortlist is
-    aluminum bronzes with 2 to 6 wt% Ni, which the 30-day immersion test fails."""
+    aluminum bronzes with 2 to 6 wt% Ni, which the 30-day immersion test fails.
+    With `ni_floor` (the corrosion-aware variants) only compositions with at least that
+    much nickel are eligible; when fewer than `top` of them pass the crack screen, the
+    shortlist is topped up with the least crack-prone (lowest f) of the rest."""
     for c in sobol(SCREEN_N, NC, seed=4000 + seed)[: SCREEN_N - N_CALPHAD0]:
         lab.calphad(c)
     comps = torch.tensor([list(k) for k in d.calphad])
     s = torch.tensor([v["s"] for v in d.calphad.values()])
     f = torch.tensor([v["f"] for v in d.calphad.values()])
     fom = s - LAMBDA * burden(torch.cat([comps, torch.zeros(len(comps), D - NC)], -1))
-    fom = torch.where(f <= F_SAFE, fom, torch.full_like(fom, -9.0))
+    ok = f <= F_SAFE
+    if ni_floor is not None:
+        ok = ok & (comps[:, INI] >= ni_floor)
+    fom = torch.where(ok, fom, torch.full_like(fom, -9.0))
     order = fom.argsort(descending=True)
-    order = order[fom[order] > -9.0]
-    return comps[order[:top]], comps, fom, f
+    order = order[fom[order] > -9.0][:top]
+    if ni_floor is not None and len(order) < top:
+        rest = [i for i in f.argsort().tolist() if float(comps[i, INI]) >= ni_floor and i not in order.tolist()]
+        order = torch.cat([order, torch.tensor(rest[: top - len(order)], dtype=torch.long)])
+    return comps[order], comps, fom, f
+
+
+def w_ref_9010(truth):
+    """The one-hour screen reading of a dense 90-10 Cu-Ni (C70600) reference coupon: its densest deposit
+    in this truth (the corrosion-aware lab screens one beside its builds and immerses what beats it)."""
+    from bofn_alloy import REFERENCE
+
+    apv = sobol(4096, 3, seed=1)
+    X = torch.cat([torch.tensor(REFERENCE["C70600 (90-10 Cu-Ni)"]).expand(apv.shape[0], NC), apv], -1)
+    out = truth.full(X)
+    return float(out["w"][out["rho_m"].argmax()])
 
 
 def lab_gp(rows):
@@ -168,11 +196,12 @@ def lot_passed_utah(L):
     return any(r >= RHO_GATE for _, _, r in L["utah"])
 
 
-def chain(lab, d, lot, pv, need_utah, rows):
+def chain(lab, d, lot, pv, need_utah, rows, w_fixed=None):
     """The careful lab's chain on one lot at settings pv: Utah unless the lot already passed the
     density gate, then Mines, microscopy, tensile, the screen, and immersion if the screen passes
-    (top quartile of screened builds). Appends the lab's own record (x, y) to rows, with a proxy
-    value for a stopped chain. Returns the action label."""
+    (top quartile of screened builds, or with `w_fixed` the reading of a reference coupon).
+    Appends the lab's own record (x, y) to rows, with a proxy value for a stopped chain.
+    Returns the action label."""
     L = d.lots[lot]
     if need_utah:
         # the small step scans travel speed at Utah's full (capped) power, one setting per visit
@@ -189,7 +218,7 @@ def chain(lab, d, lot, pv, need_utah, rows):
     lab.microscopy(b)
     U = lab.tensile(b)
     w = lab.screen(b)
-    gate = w_gate(d)
+    gate = w_gate(d) if w_fixed is None else w_fixed
     if w >= gate:
         lab.immersion(b)
         rows.append((x, d.builds[b]["J"]))
@@ -253,8 +282,12 @@ def run_full_policy(kind, truth, seed, budget):
     it = 0
     rows = list(d.full)  # the lab's own records for tiered screening and the funnel
     gates = None
-    if kind in ("tiered", "funnel"):
-        shortlist, comps, fom, fvals = calphad_shortlist(d, lab, seed)
+    w_fixed = None
+    if kind == "tiered_ni_ref":  # one screen of the reference coupon, then it is the gate
+        w_fixed = w_ref_9010(truth)
+        lab._pay("K")
+    if kind in TIERED_KINDS + ("funnel",):
+        shortlist, comps, fom, fvals = calphad_shortlist(d, lab, seed, ni_floor=NI_FLOOR if kind in ("tiered_ni", "tiered_ni_ref") else None)
         net = Network(d)
         lab.net = net
         it += 1
@@ -265,7 +298,7 @@ def run_full_policy(kind, truth, seed, budget):
             lab.net = net
             it += 1
             rec(net, it, "funnel")
-    reuse = kind in ("tiered", "funnel", "eifn_reuse")
+    reuse = kind in TIERED_KINDS + ("funnel", "eifn_reuse")
     cheapest = COSTS["M"] + TAIL if reuse else FULL_COST
     while d.spent + cheapest <= budget:
         it += 1
@@ -319,7 +352,7 @@ def run_full_policy(kind, truth, seed, budget):
                         costs.append(torch.full((64,), (0.0 if passed else COSTS["U"]) + lab.mines_cost(i) + TAIL))
                         lots += [i] * 64
                         needs += [not passed] * 64
-                if kind == "tiered":  # a new lot of a shortlisted composition
+                if kind in TIERED_KINDS:  # a new lot of a shortlisted composition
                     apv = sobol(128, 3, seed=it + 50 * seed)
                     pools.append(torch.cat([c.expand(128, NC), apv], -1))
                     costs.append(torch.full((128,), COSTS["A"] + COSTS["U"] + M_FIRST + TAIL))
@@ -334,10 +367,10 @@ def run_full_policy(kind, truth, seed, budget):
             if float(score[j]) < 0:
                 break
             if lots[j] >= 0:
-                action = chain(lab, d, lots[j], P[j, IPV], needs[j], rows)
+                action = chain(lab, d, lots[j], P[j, IPV], needs[j], rows, w_fixed)
             else:
                 lot = lab.atomize(P[j, COMP], P[j, IA])
-                action = chain(lab, d, lot, P[j, IPV], True, rows)
+                action = chain(lab, d, lot, P[j, IPV], True, rows, w_fixed)
             net = Network(d)
             lab.net = net
             rec(net, it, action)
@@ -362,7 +395,7 @@ def run_full_policy(kind, truth, seed, budget):
         net = Network(d)
         lab.net = net
         rec(net, it, "full")
-    return rec.rows, d, {"gates": gates}
+    return rec.rows, d, {"gates": gates, "shortlist": shortlist.tolist() if kind in TIERED_KINDS else None, "w_fixed": w_fixed}
 
 
 # --------------------------------------------------------------------------- pKGFN
@@ -409,16 +442,19 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
         Xv = torch.stack([x for x, _ in d.full])
         P = torch.cat([sobol(N_POOL, D, seed=it + 100 * seed), local_perturb(Xv, 8, 0.05, g)])
         nuP = net.mean(P, eps_for(P.shape[0], S_ACQ, 10_000 + it))
-        Q = local_perturb(P[nuP.topk(8).indices], 16, 0.03, g)
+        Q = local_perturb(P[nuP.topk(8).indices], N_PERT, 0.03, g)
         nuQ = net.mean(Q, eps_for(Q.shape[0], S_ACQ, 20_000 + it))
         P, nuP = torch.cat([P, Q]), torch.cat([nuP, nuQ])
         smpP = net.samples(P, eps_for(P.shape[0], S_ACQ, 30_000 + it))
         # candidates are ranked by network EI over the best alloy demonstrated so far, as in EIFN. (The
         # aluminum version measured EI from the best posterior mean. On this network that is a pure-copper
         # design whose immersion gate is shut, so every EI came out zero and one seed stopped after $4,750.)
-        inc = torch.tensor(max(v for _, v in d.full))
+        yv = torch.tensor([v for _, v in d.full])
+        inc = yv.max()
         eiP = (smpP - inc).clamp_min(0).mean(-1)
-        anchors = [P[nuP.topk(24).indices], P[eiP.topk(12).indices]]
+        # the inner max is anchored on the incumbent: the best validated designs themselves (not only
+        # perturbations of them), the posterior-mean maximizer of the pool, and the best by EI (Edison F2)
+        anchors = [Xv[yv.topk(min(N_INCUMBENT, len(yv))).indices], P[nuP.topk(N_ANCHOR[0]).indices], P[eiP.topk(N_ANCHOR[1]).indices]]
         cands, ei_of, smp_of, meta, costs = {}, {}, {}, {}, {}
         # ---- CALPHAD candidates: compositions of promising designs, plus space filling
         cx = torch.cat([P[eiP.topk(N_CAND - 4).indices], P[nuP.topk(4).indices]])
@@ -472,8 +508,10 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
                     continue
                 Xg, Zg = torch.cat(xs_), torch.cat(z_)
                 sG = net.samples(Xg, eps_for(Xg.shape[0], S_ACQ, sd + it))
-                eiG = (sG - inc).clamp_min(0).mean(-1) + 1e-9 * sG.mean(-1)
-                keep = eiG.topk(min(N_CAND, Xg.shape[0])).indices
+                eiG = (sG - inc).clamp_min(0).mean(-1)
+                # the posterior mean breaks ties for the ranking only: the fallback's positive-EI test
+                # must see the raw EI (Edison F4; the tie-break once sent all-zero-EI cases down the EI branch)
+                keep = (eiG + 1e-9 * sG.mean(-1)).topk(min(N_CAND, Xg.shape[0])).indices
                 cands[grp] = (Zg[keep], Xg[keep])
                 ei_of[grp] = eiG[keep].tolist()
                 smp_of[grp] = sG[keep]
@@ -542,8 +580,9 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
         for key, c in (("S+T", COSTS["S"] + COSTS["T"]), ("S+K+I", COSTS["S"] + COSTS["K"] + COSTS["I"]), ("K+I", COSTS["K"] + COSTS["I"])):
             if key in cands:
                 costs[key] = torch.full((cands[key][0].shape[0],), c)
-        # ---- shared inner-max set (anchored on the incumbent) and CRN base samples
-        Xi = torch.cat(anchors + [v[1] for v in cands.values()])
+        # ---- shared inner-max set (anchored on the incumbent) and CRN base samples; duplicates removed,
+        # so a build that is a candidate for several tests gets one Monte Carlo estimate, not several (F2)
+        Xi = torch.unique(torch.cat(anchors + [v[1] for v in cands.values()]), dim=0)
         eps = eps_for(Xi.shape[0], S_ACQ, 60_000 + it)
         best = (None, -1.0, None)
         kg_log = {}
@@ -603,6 +642,7 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
             # sample, so the policy never stops with money left
             _, _, grp, j = max(pos) if pos else max(fb, key=lambda t: t[1])
             kg_log["fallback"] = grp if pos else grp + " (optimistic)"
+            kg_log["fallback_branch"] = "ei" if pos else "optimistic"
         Z, Xz = cands[grp]
         if grp == "C":
             lab.calphad(Z[j])
@@ -655,10 +695,24 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
         lab.net = net
         rec(net, it, grp)
         rec.rows[-1]["fallback"] = "fallback" in kg_log  # True when KG was flat and EI per dollar chose the purchase
+        if "fallback" in kg_log:
+            rec.rows[-1]["fallback_branch"] = kg_log["fallback_branch"]  # "ei" (EI per dollar) or "optimistic" (every EI zero)
+        rec.rows[-1]["n_inner"] = int(Xi.shape[0])
         if verbose:
             r = rec.rows[-1]
             print(f"it {it:3d} {grp} spent ${d.spent:8.0f} best_val {r['best_validated']:.3f} printed {r['rec_printed']:.3f} KG {{{', '.join(f'{k}: {v:.2e}' if isinstance(v, float) else f'{k}: {v}' for k, v in kg_log.items())}}} {time.time() - t0:.1f}s", flush=True)
     return rec.rows, d, {"events": events}
+
+
+def settings_for(kind):
+    """What a stored run must match to be resumed (run_sweep.py, Edison F9): the truth and screens for
+    every policy, and the Monte Carlo settings for the pKGFN-type ones (the others do not use them)."""
+    s = {"TRUTH": bofn_alloy.TRUTH, "S_REC": S_REC, "REC": REC, "RHO_GATE": RHO_GATE, "W_QUANTILE": W_QUANTILE, "F_SAFE": F_SAFE}
+    if kind in ("tiered_ni", "tiered_ni_ref"):
+        s.update(NI_FLOOR=NI_FLOOR)
+    if kind in PKGFN_KINDS:
+        s.update(S_ACQ=S_ACQ, N_CAND=N_CAND, N_POOL=N_POOL, N_PERT=N_PERT, N_ANCHOR=list(N_ANCHOR), N_INCUMBENT=N_INCUMBENT, FIXES=["F2", "F4"])
+    return s
 
 
 def run(kind, kappa, eta, seed, budget, verbose=False):
@@ -670,7 +724,7 @@ def run(kind, kappa, eta, seed, budget, verbose=False):
     else:
         rows, d, extra = run_full_policy(kind, truth, seed, budget)
     counts = {grp: sum(1 for g_, _ in d.log if g_ == grp) for grp in COSTS}
-    settings = {"S_ACQ": S_ACQ, "N_CAND": N_CAND, "N_POOL": N_POOL, "S_REC": S_REC, "REC": REC, "RHO_GATE": RHO_GATE, "W_QUANTILE": W_QUANTILE, "F_SAFE": F_SAFE}
+    settings = settings_for(kind)
     builds = []
     for j, B in enumerate(d.builds):
         L = d.lots[B["lot"]]
@@ -681,6 +735,10 @@ def run(kind, kappa, eta, seed, budget, verbose=False):
            "gp_fits": dict(bofn_alloy.FIT_LOG), "builds": builds, "lots": lots, "w_gate_final": w_gate(d)}
     if extra.get("events") is not None:
         out["events"] = extra["events"]
+    if extra.get("shortlist") is not None:
+        out["shortlist"] = extra["shortlist"]
+    if extra.get("w_fixed") is not None:
+        out["w_ref_9010"] = extra["w_fixed"]
     if extra.get("gates") is not None:
         # false rejections per gate, judged by the truth after the fact: a rejected composition
         # (or build) whose best achievable objective beats what the funnel finally demonstrated
