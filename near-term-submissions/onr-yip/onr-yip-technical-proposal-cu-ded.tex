@@ -79,7 +79,13 @@
 \pagestyle{plain}
 % Each \todo prints a small red marker only, so open notes don't take space in the counted
 % pages; make_todo_list.py collects their text into todo-list.tex, input at the very end.
-\newcommand{\todo}[1]{\textcolor{red}{\textsuperscript{TODO}}}
+% A submission build (xelatex "\def\submissionbuild{}\input{...}") prints no
+% markers and leaves out the TODO list.
+\ifdefined\submissionbuild
+  \newcommand{\todo}[1]{}
+\else
+  \newcommand{\todo}[1]{\textcolor{red}{\textsuperscript{TODO}}}
+\fi
 \hyphenation{re-POW-DER AMA-ZE-MET}
 
 \input{budget/budget-numbers.tex}
@@ -2159,5 +2165,5 @@ U.S. Bureau of Mines Report of Investigations 6516 (1964).
 
 \end{thebibliography}
 
-\IfFileExists{todo-list.tex}{\input{todo-list.tex}}{}
+\ifdefined\submissionbuild\else\IfFileExists{todo-list.tex}{\input{todo-list.tex}}{}\fi
 \end{document}
