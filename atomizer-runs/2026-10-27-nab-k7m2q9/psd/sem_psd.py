@@ -263,35 +263,51 @@ def feret(coords: np.ndarray) -> tuple[float, float, float]:
     return float(widths.max()), float(widths.min()), float(np.hypot(hp[:, 0], hp[:, 1]).sum())
 
 
-def free_boundary_circle(labels: np.ndarray, region, pad: int = 2) -> tuple[float, float]:
-    """Circle fitted (Kasa) to the part of a region's boundary that borders background.
+def sphere_fit(image: np.ndarray, n_iter: int = 200, tol: float = 1.5, seed: int = 0) -> tuple[float, float]:
+    """Diameter (px) of the dominant circle on a region's outline, by RANSAC, and its inlier fraction.
 
-    Returns (diameter_px, free_fraction). For a sphere that is touching or partly hidden by a neighbour
-    this recovers the full diameter; NaN if less than 40 % of the boundary is free.
+    A sphere with a satellite or with a small neighbour that the watershed did not split keeps most of its
+    outline on one circle; this recovers that sphere's diameter where the ECD of the merged region would
+    not. NaN if fewer than 40 % of outline pixels lie on any circle.
     """
-    y0, x0, y1, x1 = region.bbox
-    a, b = max(y0 - pad, 0), min(y1 + pad, labels.shape[0])
-    c, d = max(x0 - pad, 0), min(x1 + pad, labels.shape[1])
-    lab = labels[a:b, c:d]
-    me = lab == region.label
-    edge = me & ~morphology.erosion(me, morphology.disk(1))
-    if edge.sum() < 8:
+    im = np.pad(image, 1)
+    rim = im & ~ndi.binary_erosion(im)
+    yy, xx = np.nonzero(rim)
+    n = len(xx)
+    if n < 12:
         return float("nan"), 0.0
-    bgnb = morphology.dilation(lab == 0, morphology.disk(1))
-    free = edge & bgnb
-    frac = free.sum() / edge.sum()
-    if frac < 0.4 or free.sum() < 8:
-        return float("nan"), float(frac)
-    yy, xx = np.nonzero(free)
-    A = np.stack([xx, yy, np.ones_like(xx)], 1).astype(float)
-    bb = (xx.astype(float) ** 2 + yy.astype(float) ** 2)
-    sol = np.linalg.lstsq(A, bb, rcond=None)[0]
+    xy = np.stack([xx, yy], 1).astype(float)
+    rng = np.random.default_rng(seed)
+    idx = rng.integers(0, n, (n_iter, 3))
+    a, b, c = xy[idx[:, 0]], xy[idx[:, 1]], xy[idx[:, 2]]
+    d = 2 * (a[:, 0] * (b[:, 1] - c[:, 1]) + b[:, 0] * (c[:, 1] - a[:, 1]) + c[:, 0] * (a[:, 1] - b[:, 1]))
+    ok = np.abs(d) > 1e-6
+    d = np.where(ok, d, 1.0)
+    sa, sb, sc = (a ** 2).sum(1), (b ** 2).sum(1), (c ** 2).sum(1)
+    ux = (sa * (b[:, 1] - c[:, 1]) + sb * (c[:, 1] - a[:, 1]) + sc * (a[:, 1] - b[:, 1])) / d
+    uy = (sa * (c[:, 0] - b[:, 0]) + sb * (a[:, 0] - c[:, 0]) + sc * (b[:, 0] - a[:, 0])) / d
+    r = np.hypot(a[:, 0] - ux, a[:, 1] - uy)
+    ext = max(image.shape)
+    ok &= (r > 2) & (r < 0.75 * ext)
+    dist = np.abs(np.hypot(xy[None, :, 0] - ux[:, None], xy[None, :, 1] - uy[:, None]) - r[:, None])
+    cnt = np.where(ok, (dist < tol).sum(1), 0)
+    best = int(np.argmax(cnt))
+    if cnt[best] < 0.4 * n:
+        return float("nan"), float(cnt[best] / n)
+    inl = xy[dist[best] < tol]
+    A = np.stack([inl[:, 0], inl[:, 1], np.ones(len(inl))], 1)
+    sol = np.linalg.lstsq(A, (inl ** 2).sum(1), rcond=None)[0]
     cx, cy = sol[0] / 2, sol[1] / 2
     r2 = sol[2] + cx ** 2 + cy ** 2
     if r2 <= 0:
-        return float("nan"), float(frac)
-    # boundary pixel centres sit ~0.5 px inside the region outline
-    return 2 * (math.sqrt(r2) + 0.5), float(frac)
+        return float("nan"), 0.0
+    # outline pixel centres sit ~0.5 px inside the region outline
+    return 2 * (math.sqrt(r2) + 0.5), float(cnt[best] / n)
+
+
+def free_boundary_circle(labels: np.ndarray, region, pad: int = 2) -> tuple[float, float]:
+    """Compatibility wrapper: RANSAC sphere fit on the region's outline (see sphere_fit)."""
+    return sphere_fit(region.image)
 
 
 def measure_field(f: dict, labels: np.ndarray, delta_px: float) -> pd.DataFrame:
@@ -324,8 +340,8 @@ def measure_field(f: dict, labels: np.ndarray, delta_px: float) -> pd.DataFrame:
             "ecd_um": max(ecd_raw - 2 * delta_px, 0.5) * px,
             "feret_max_um": fmax * px,
             "feret_min_um": fmin * px,
-            "circle_fit_um": dfit * px if np.isfinite(dfit) else np.nan,
-            "free_boundary_frac": free,
+            "circle_fit_um": (dfit - 2 * delta_px) * px if np.isfinite(dfit) else np.nan,
+            "circle_inlier_frac": free,
             "circularity": min(2 * math.sqrt(math.pi * area) / per, 1.0) if per > 0 else np.nan,
             "form_factor": min(4 * math.pi * area / per ** 2, 1.0) if per > 0 else np.nan,
             "aspect_ratio": fmin / fmax if fmax > 0 else np.nan,
@@ -711,8 +727,8 @@ def make_figures(df: pd.DataFrame, summary: dict, fields: list[dict], label_maps
         sub = df[df["field"] == f["field"]]
         cls = dict(zip(sub["label"], sub["class"]))
         rgb = overlay_rgb(f, label_maps[f["field"]], cls, scale=0.5)
-        Image.fromarray(rgb).save(figdir / f"overlay_{f['field'].replace(' ', '_')}.png", optimize=True)
-        made.append(f"overlay_{f['field'].replace(' ', '_')}.png")
+        Image.fromarray(rgb).save(figdir / f"overlay_{f['field'].replace(' ', '_')}.jpg", quality=85, optimize=True)
+        made.append(f"overlay_{f['field'].replace(' ', '_')}.jpg")
     if overlay_field and overlay_field in label_maps:
         f = next(ff for ff in fields if ff["field"] == overlay_field)
         sub = df[df["field"] == f["field"]]
@@ -947,6 +963,12 @@ def main(argv=None) -> int:
     df["weight"] = weights
     pix = pixelation_bias()
     df = classify(df, args, pix)
+    # where a flagged region holds one dominant sphere plus attachments, its sphere-fit diameter
+    d_sph = df["ecd_um"].to_numpy().copy()
+    rep = (df["flag"].str.contains("irregular|agglomerate").to_numpy() & np.isfinite(df["circle_fit_um"].to_numpy())
+           & (df["circle_fit_um"].to_numpy() < df["ecd_um"].to_numpy()) & (df["circle_inlier_frac"].to_numpy() >= 0.5))
+    d_sph[rep] = df["circle_fit_um"].to_numpy()[rep]
+    df["d_sphere_um"] = d_sph
     cls = np.where(df["touches_edge"], "edge",
           np.where(~df["in_own_patch"], "duplicate",
           np.where(df["below_cut"], "below_cut",
@@ -1022,12 +1044,11 @@ def main(argv=None) -> int:
     summary["size_excluding_flagged"] = {
         key: dict(zip(("D10", "D50", "D90"), map(float, wquantile(d[nonflag], ww[nonflag], qs))))
         for key, ww in (("number", w), ("volume", w * d ** 3))}
-    cf = use["circle_fit_um"].to_numpy()
-    okc = np.isfinite(cf)
-    dd_ = np.where(okc, cf, d)
-    summary["size_circle_fit"] = {
+    dd_ = use["d_sphere_um"].to_numpy()
+    summary["size_sphere_fit"] = {
         key: dict(zip(("D10", "D50", "D90"), map(float, wquantile(dd_, ww, qs))))
         for key, ww in (("number", w), ("volume", w * dd_ ** 3))}
+    summary["n_sphere_fit_replaced"] = int((use["d_sphere_um"] < use["ecd_um"]).sum())
     summary["size_no_edge_offset_correction"] = {
         key: dict(zip(("D10", "D50", "D90"), map(float, wquantile(use["ecd_raw_um"].to_numpy(), ww, qs))))
         for key, ww in (("number", w), ("volume", w * use["ecd_raw_um"].to_numpy() ** 3))}
@@ -1062,7 +1083,7 @@ def main(argv=None) -> int:
             "feret_max_um", "feret_min_um", "circularity", "form_factor", "aspect_ratio", "ellipse_ratio", "solidity",
             "convexity", "aspect_ratio_norm", "solidity_norm",
             "area_px", "perimeter_px", "px_um", "cx_px", "cy_px", "gx_um", "gy_um", "bbox_w_px", "bbox_h_px",
-            "touches_edge", "in_own_patch", "below_cut", "shape_ok", "free_boundary_frac"]
+            "touches_edge", "in_own_patch", "below_cut", "shape_ok", "circle_inlier_frac", "d_sphere_um"]
     df[cols].round(4).to_csv(out / "particles.csv", index=False)
     pd.DataFrame(summary["fields"]).drop(columns=["bg_coef"], errors="ignore").to_csv(out / "fields.csv", index=False)
     if not mt.empty:
