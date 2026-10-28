@@ -676,30 +676,35 @@ mounting tape.}
 \draw[e] (l) -- (ru);
 \draw[e] (l) -- (rm);
 \end{tikzpicture}}
-\caption{Synthetic workflow used for Fig.~\ref{fig:sim}: a synthetic function
+\caption{Our synthetic workflow used for Fig.~\ref{fig:sim}: a synthetic function
 for each box and a rough all-in cost for each step (\$1,500 for a repeat
 session at Mines). Burden is a penalty on nickel, aluminum, and manganese.
 Importantly, specific gaps based on literature between lower- and
 higher-fidelity measurements are introduced to better mimic a real-world
-campaign: the crack screen misses the iron-rich nucleant, the 1-hour screen misses the
-attack of beta-prime, and Utah's lower laser power leaves more lack of fusion
-in high-conductivity, copper-rich alloys.}
+campaign: the crack screen misses the iron-rich nucleant, as freezing-range
+crack indices miss nucleants that stop cracking~\cite{martin2017,opprecht2020};
+the 1-hour screen misses the attack of beta-prime, which develops over
+weeks~\cite{wharton2005,culpan1979}; and Utah's lower laser power leaves more
+lack of fusion in high-conductivity, copper-rich
+alloys~\cite{colopi2019,prasad2020}.}
 \label{fig:synth}
 \end{figure}
 
 % Results: benchmarks/bofn-cu-ded/README.md ((kappa, eta) = (1, 1), 20 seeds).
 \begin{figure}[t]
 \centering
-\begin{minipage}[c]{3.1in}
-\includegraphics[width=\linewidth]{../../benchmarks/bofn-cu-ded/bofn_cu_best_vs_spend_k1_partial_vs_full.png}
+\begin{minipage}[c]{3.9in}
+\includegraphics[width=\linewidth]{../../benchmarks/bofn-cu-ded/bofn_cu_best_vs_spend_k1_proposal.pdf}
 \end{minipage}\hfill
-\begin{minipage}[c]{3.25in}
-\caption{Best result found versus spend in simulations where the CALPHAD
-crack screen ignores the iron-rich nucleant and the 1-hour screen ignores
-beta-prime (means of 20 campaigns, $\pm$1 standard error). Red searches
-choose the next step. Gray ones follow a fixed order. pKGFN is the cost-aware
-method~\cite{buathong2024} and BOFN the linked-model
-method~\cite{astudillo2021}. Reuse redeposits earlier powder lots.}
+\begin{minipage}[c]{2.45in}
+\caption{Our best result found versus spend on the workflow of
+Fig.~\ref{fig:synth} (means of 20 campaigns, $\pm$1 standard error).
+Modeling the linked steps (BOFN~\cite{astudillo2021}) matches standard BO's
+\$100,000 result with 4.2 times less spend (dot) and reaches 73\% of the
+optimum at \$100,000, against 14\%. The cost-aware pKGFN~\cite{buathong2024}
+needs 3.4 times less and reaches 59\%. Red searches choose the next step;
+black and gray ones follow a fixed order. Reuse redeposits earlier powder
+lots. Tiered screening never finds an alloy that passes immersion.}
 \label{fig:sim}
 \end{minipage}
 \end{figure}
@@ -1011,7 +1016,7 @@ dominates by mass and is carried as an objective.
 % the periodic-table background and the UNS designations follow Iver
 % Anderson's advice on the aluminum version (Ames Laboratory, 16 Oct 2026).
 \includegraphics[width=\textwidth]{figures-cu-ded/cu_search_space_periodic.pdf}
-\caption{The search space. (a)~Elements searched from the start, shaded by
+\caption{Our search space. (a)~Elements searched from the start, shaded by
 upper bound (Table~\ref{tab:space}), with copper as the balance; critical
 minerals from the 2025 U.S. list~\cite{usgs2025}. Below, on the same scale,
 the nominal compositions of the three reference alloys~\cite{cdadata}.
@@ -1835,6 +1840,22 @@ J.-O. Andersson, T.~Helander, L.~H{\"o}glund, P.~Shi, and B.~Sundman,
 R.~Otis and Z.-K. Liu, ``pycalphad: CALPHAD-based computational
 thermodynamics in Python,'' \emph{J. Open Res. Softw.} \textbf{5}(1), 1
 (2017). \href{https://doi.org/10.5334/jors.140}{doi:10.5334/jors.140}
+
+\bibitem{martin2017}
+J.~H. Martin, B.~D. Yahata, J.~M. Hundley, J.~A. Mayer, T.~A. Schaedler, and T.~M. Pollock, ``3D printing of high-strength aluminium alloys,'' \emph{Nature} \textbf{549}, 365-369 (2017).
+\href{https://doi.org/10.1038/nature23894}{doi:10.1038/nature23894}
+
+\bibitem{opprecht2020}
+M.~Opprecht, J.-P. Garandet, G.~Roux, C.~Flament, and M.~Soulier, ``A solution to the hot cracking problem for aluminium alloys manufactured by laser beam melting,'' \emph{Acta Mater.} \textbf{197}, 40-53 (2020).
+\href{https://doi.org/10.1016/j.actamat.2020.07.015}{doi:10.1016/j.actamat.2020.07.015}
+
+\bibitem{colopi2019}
+M.~Colopi, A.~G. Demir, L.~Caprio, and B.~Previtali, ``Limits and solutions in processing pure Cu via selective laser melting using a high-power single-mode fiber laser,'' \emph{Int. J. Adv. Manuf. Technol.} \textbf{104}, 2473-2486 (2019).
+\href{https://doi.org/10.1007/s00170-019-04015-3}{doi:10.1007/s00170-019-04015-3}
+
+\bibitem{prasad2020}
+H.~Siva Prasad, F.~Brueckner, J.~Volpp, and A.~F.~H. Kaplan, ``Laser metal deposition of copper on diverse metals using green laser sources,'' \emph{Int. J. Adv. Manuf. Technol.} \textbf{107}, 1559-1568 (2020).
+\href{https://doi.org/10.1007/s00170-020-05117-z}{doi:10.1007/s00170-020-05117-z}
 
 \bibitem{kou2015}
 S.~Kou, ``A criterion for cracking during solidification,''
