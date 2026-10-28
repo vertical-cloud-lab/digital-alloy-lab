@@ -1,4 +1,4 @@
-"""The first copper-alloy powder lot (Preliminary results, fig:cupowder), 6.5 x 2.56 in.
+"""The first copper-alloy powder lot (Preliminary results, fig:cupowder), 6.5 x 2.42 in.
 
 Real data throughout. Sterling's Oct 27 review replaced the placeholders with the first copper run
 of the ultrasonic atomizer (Gage Erickson, Oct 27, 2026, powder code k7m2q9, DAL #219) and Ronnie
@@ -39,7 +39,7 @@ plt.rcParams.update({"font.family": ["Times New Roman", "serif"], "font.size": 8
                      "axes.linewidth": 0.6, "pdf.fonttype": 42})
 
 W, GAP = 6.5, 0.06
-H1, H2 = 1.25, 1.25                      # top row (run, lot), bottom row (SEM, EDS)
+H1, H2 = 1.18, 1.18                      # top row (run, lot), bottom row (SEM, EDS)
 H = H1 + GAP + H2
 UM_PER_PX = {"sem_200x.png": 2070 / 1800, "sem_2548x_particle.png": 163 / 3072}  # HFW / width (px)
 
