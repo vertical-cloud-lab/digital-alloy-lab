@@ -121,6 +121,8 @@ for name, kev in peaks:
 ax.text(-0.17, 1.08, "(e)", transform=ax.transAxes, ha="left", va="top", fontsize=8, weight="bold")
 
 if __name__ == "__main__":
-    fig.savefig(OUT.with_suffix(".pdf"), metadata={"CreationDate": None})
+    # dpi matters for the PDF too: matplotlib resamples imshow images to it (default 100 dpi,
+    # which left the photos and SEM images about 120-150 px across in print).
+    fig.savefig(OUT.with_suffix(".pdf"), dpi=600, metadata={"CreationDate": None})
     fig.savefig(OUT.with_suffix(".png"), dpi=200)
     print("wrote", OUT.with_suffix(".pdf"))
