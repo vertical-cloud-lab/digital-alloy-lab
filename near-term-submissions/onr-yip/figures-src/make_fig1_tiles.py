@@ -40,7 +40,8 @@ TILES = [
     ("utah", IMG / "utah-insstek-mxlab.jpg", (0.06, 0.0, 0.82, 1.0)),
     ("mines", IMG / "mines-formalloy-x2.jpg", (0.0, 0.10, 1.0, 0.77)),
     ("sem", IMG / "byu-emf-apreo.jpg", (0.0, 0.14, 1.0, 0.82)),
-    ("screen", IMG / "lab-cubxl-gantry.jpg", (0.09, 0.0, 0.91, 1.0)),
+    # The CubXL pipetting into a vial (YouTube Short wLhKt2Qzj70, "Mix testing protocol on CubXL", Oct 12, 2026, at 104 s)
+    ("screen", IMG / "lab-cubxl-mix.jpg", (0.0, 0.0, 1.0, 1.0)),
     # Repair branch: the polisher that sections a coupon across its fusion line.
     ("repair", IMG / "byu-px300-polisher.jpg", (0.0, 0.10, 1.0, 0.79)),
 ]

@@ -17,6 +17,7 @@ ffmpeg at the time given.
 | `lab-powder-doser.jpg` | Equipment Fig. 1a | BYU VCL YouTube `prj_xgeuQtM` ("Atomizer charge prep (Sep 29): dosing AlSi10Mg", public), frame at 34:27 |
 | `cup_plug.png` | Fig. 1, charge tile (the "assembled and filled" section, cropped by `../make_fig1_tiles.py`) | The lab's shop drawing of the atomizer charge cup and plug, `atomizer-charge/drawing/cup_plug.png` on PR #179 (`claude/issue-248-20261005-1038` at `4ead07c`, drawn by `cup_plug.py` there); copied unchanged with `git show` |
 | `lab-cubxl-gantry.jpg` | Equipment Fig. 1b | BYU VCL YouTube `lmQbUWNqTmM` ("Pipette test on CubXL", public), 1080p frame at 3:00 |
+| `lab-cubxl-mix.jpg` | Fig. 1 screen tile (`../figures-cu-ded/fig1/screen.jpg`) | BYU VCL YouTube Short `wLhKt2Qzj70` ("Mix testing protocol on CubXL", Oct 12, 2026, public, 1080 x 1920), frame at 104 s cropped to 1080 x 810 at y = 880 |
 | `lab-cubxl-corrosion-plan.jpg` | Equipment Fig. 2 | BYU VCL YouTube `CTQMzOfOmBI` ("Copper corrosion on the CubXL: one spot, start to finish (proposal)", unlisted), frame at 1:40 |
 
 The Utah, Mines, Electron Microscopy Facility and Spectroscopic Facility images

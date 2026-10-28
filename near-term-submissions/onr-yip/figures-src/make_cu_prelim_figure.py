@@ -8,7 +8,7 @@ The alloy is 630 bronze (UNS C63000, a nickel-aluminum bronze), not the "Cu70/Ni
 since that powder is not ours.
 
 Top row, (a) the run, frames of BYU VCL YouTube 2brsz-90seg ("10/27/2026 Atomizer Run ... Video 5
-of atomizer and furnace ports", public) at 60, 240, 330 and 570 s: the charge rods in the crucible,
+of atomizer and furnace ports", public) at 60, 240, 330 and 571 s: the charge rods in the crucible,
 the rods slumping, the melt pool around the stopper rod, and the stream on the plate through the
 chamber window. (b) the lot, Gage's photograph of the jar (DAL #219).
 Bottom row, (c) SEM at 200x (HFW 2.07 mm, databar removed), (d) one particle at 2,548x (HFW 163 um),
@@ -79,7 +79,7 @@ y1 = H2 + GAP
 # Frames re-cropped Oct 28 so the crucible rim sits at the same place in (i)-(iii); the time is
 # from the start of the run video (2brsz-90seg).
 for k, (name, sub, t) in enumerate([("run_t060s.png", "i", 60), ("run_t240s.png", "ii", 240),
-                                    ("run_t330s.png", "iii", 330), ("run_t570s.png", "iv", 570)]):
+                                    ("run_t330s.png", "iii", 330), ("run_t571s.png", "iv", 571)]):
     ax = axes(k * (w1 + GAP), y1, w1, H1)
     show(ax, name)
     label(ax, f"(a{sub})" if k == 0 else f"({sub})")

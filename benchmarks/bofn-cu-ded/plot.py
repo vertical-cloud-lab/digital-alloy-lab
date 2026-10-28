@@ -167,7 +167,7 @@ def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn"
     return out
 
 
-PROP_SHORT = {"pkgfn": "pKGFN", "eifn_reuse": "BOFN + reuse", "eifn": "BOFN", "ei": "Standard BO", "tiered": "Tiered screening"}
+PROP_SHORT = {"pkgfn": "pKGFN + reuse", "eifn_reuse": "BOFN + reuse", "eifn": "BOFN", "ei": "Standard BO", "tiered": "Tiered screening"}
 PROP_STYLE = {"pkgfn": dict(color=RED, lw=1.4, ls="-"), "eifn_reuse": dict(color=RED, lw=1.2, ls=(0, (4, 2))),
               "eifn": dict(color="black", lw=1.2, ls="-"), "ei": dict(color="#8C8C8C", lw=1.1, ls="-"),
               "tiered": dict(color="#8C8C8C", lw=1.1, ls=(0, (1.5, 1.5)))}

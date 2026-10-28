@@ -5,8 +5,8 @@
     sequential (log) scale by their upper bound in wt%, with copper as the balance.
     Red outline: on the 2025 U.S. list of critical minerals. Dashed outline: tested
     from Year 2 (no bound yet; La stands for "La or Ce"). Light gray: impurities
-    held at or below welding-grade limits. Dagger: used only in copper-nickel, where
-    Al is at most 3 wt%. Below the colorbar, mini tiles on the same scale give the
+    not searched but capped at the welding-filler limits. Dagger: used only where Al
+    is at most 3 wt% (Si above 0.1 wt% only with Nb, which needs Al at most 3 wt%). Below the colorbar, mini tiles on the same scale give the
     nominal compositions of the three reference alloys (C70600, C71500, C95800).
 (b) The UNS alloys metallurgists know, at their nominal compositions in the Ni-Al
     plane, against the searched region: the designated alloys sit on its edges and
@@ -225,8 +225,8 @@ for sym in POS:
 # between Be and B, and both rows start at the same x.
 SW = 8.5 * PT                              # swatch side
 SEP = 7 * PT                               # between the entries of a row
-LEGEND = {1: [("impurity, welding-grade limit", "impurity"),
-              ("Cu-Ni only: Al ≤ 3% (Si: Al < 7%)", "dagger")],
+LEGEND = {1: [("impurity, capped (not searched)", "impurity"),
+              ("only where Al ≤ 3%", "dagger")],
           2: [("2025 U.S. critical mineral", "critical"),
               ("tested from Year 2", "year2")]}
 
@@ -345,7 +345,7 @@ axb.add_patch(Rectangle((0, 0), NI_MAX, AL_CUNI, facecolor="#f3f8fe", lw=0))
 axb.plot([0, NI_MAX], [AL_CUNI] * 2, color=BLUE[3], lw=0.5, solid_capstyle="butt")
 axb.add_patch(Rectangle((0, 0), NI_MAX, AL_MAX, fill=False, edgecolor=BLUE[6], lw=0.8,
                         joinstyle="miter"))
-axb.text(NI_MAX - 0.8, AL_CUNI - 0.25, "Cr, Nb allowed", ha="right", va="top",
+axb.text(NI_MAX - 0.8, AL_CUNI - 0.25, "Al ≤ 3%: Cr†, Nb†, Si† allowed", ha="right", va="top",
          fontsize=7, color=INK2)
 
 # Alloys: dark markers with a white ring; hollow where outside the searched region
@@ -364,7 +364,7 @@ axb.text(23.3, 0.22, "copper-nickel", ha="center", va="baseline", fontsize=7,
 axb.annotate("nickel-aluminum bronze", (4.45, 9.05), xytext=(4.5, -11),
              textcoords="offset points", ha="left", va="baseline", fontsize=7,
              style="italic", color=INK2)
-axb.text(17, 5.6, "Cu-Ni-Al alloys\nbetween the families", ha="center", va="center",
+axb.text(17, 5.6, "Searched, including\nCu-Ni-Al alloys\nbetween the families", ha="center", va="center",
          fontsize=8, style="italic", color=INK, linespacing=1.15)
 
 # Panel labels

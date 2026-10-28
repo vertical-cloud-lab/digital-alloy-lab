@@ -283,8 +283,7 @@ The lot must also
 fill the hopper, about 2~kg on the larger of the two systems this project
 will use (Section~\ref{sec:task2}).
 Industrial gas atomizers make powder in lots of tens of kilograms or more, so
-new compositions are rarely tried \todo{cite a minimum lot size, e.g., a
-vendor's}. Our ultrasonic atomizer makes a lot of a new composition in a day
+new compositions are rarely tried. Our ultrasonic atomizer makes a lot of a new composition in a day
 from one charge of about 1~kg, and 2~kg in two runs (225~cm$^3$ crucible; a 400~cm$^3$ one is available). Ultrasonic
 atomizers have already made powder for blown-powder DED from NAB
 propeller grinding chips~\cite{muller2023,uhlmann2024} and from copper cable
@@ -700,11 +699,11 @@ alloys~\cite{colopi2019,prasad2020}.}
 \caption{Our best result found versus spend on the workflow of
 Fig.~\ref{fig:synth} (means of 20 campaigns, $\pm$1 standard error).
 Modeling the linked steps (BOFN~\cite{astudillo2021}) matches standard BO's
-\$100,000 result with 4.2 times less spend (dot) and reaches 73\% of the
+\$100,000 result with 4.2 times less spend and reaches 73\% of the
 optimum at \$100,000, against 14\%. The cost-aware pKGFN~\cite{buathong2024}
 needs 3.4 times less and reaches 59\%. Red searches choose the next step;
-black and gray ones follow a fixed order. Reuse redeposits earlier powder
-lots. Tiered screening never finds an alloy that passes immersion.}
+black and gray ones follow a fixed order. Reuse redeposits earlier lots,
+as pKGFN always may. Tiered screening never passes immersion.}
 \label{fig:sim}
 \end{minipage}
 \end{figure}
@@ -933,7 +932,7 @@ length, dilution, grain size, and phase fractions with stated uncertainty.
 At the end of each year, the year's leading composition is gas atomized at
 Ames National Laboratory by the powder group of Dr.~Jordan A. Tiarks, an
 unfunded collaborator with state-of-the-art facilities and deep expertise in gas
-atomization \todo{letter of collaboration from Tiarks}. One run a year is budgeted as a purchased service. The
+atomization. One run a year is budgeted as a purchased service. The
 gas-atomized lot is deposited at Mines beside the ultrasonic lot of the same
 composition, so the project measures what changes between the two routes.
 That lot also supplies the finalists' replicate and repair builds and goes to
@@ -986,9 +985,7 @@ Does Thermo-Calc's copper database (TCCU7~\cite{tccu7}) assess its systems?
 Eight elements are searched from
 the start (Table~\ref{tab:space}), with copper as the balance at no less
 than 65\% and a calculated liquidus no higher than 1,250\,\textdegree{}C.
-In Year~2 we will test zirconium and boron, tin and germanium in NAB, and
-one rare earth, lanthanum or cerium, which improved a 90-10 alloy in salt
-solution~\cite{du2025}.
+From Year~2 we will also test five microalloying additions (Table~\ref{tab:space}).
 
 Rules tied to the aluminum content keep each candidate near known
 metallurgy. Above 7\% aluminum, nickel must at least equal iron, as it does
@@ -1018,10 +1015,16 @@ dominates by mass and is carried as an objective.
 \includegraphics[width=\textwidth]{figures-cu-ded/cu_search_space_periodic.pdf}
 \caption{Our search space. (a)~Elements searched from the start, shaded by
 upper bound (Table~\ref{tab:space}), with copper as the balance; critical
-minerals from the 2025 U.S. list~\cite{usgs2025}. Below, on the same scale,
-the nominal compositions of the three reference alloys~\cite{cdadata}.
-(b)~Familiar alloys at their nominal compositions in the nickel-aluminum
-plane.}
+minerals from the 2025 U.S. list~\cite{usgs2025}. Gray tiles are
+impurities that are not searched but are held at or below the limits for
+copper-nickel welding filler~\cite{awsA57}. $^\dagger$Added only where
+aluminum is at most 3\%. Below,
+on the same scale, the nominal compositions of the three reference
+alloys~\cite{cdadata}. (b)~Familiar alloys at their nominal compositions in
+the nickel-aluminum plane. The shaded box is the searched range, which
+includes the copper-nickel-aluminum alloys between the two families;
+$^\dagger$elements only below the 3\% aluminum line. Open circle: outside the
+range.}
 \label{fig:space}
 \end{figure}
 
@@ -1029,10 +1032,12 @@ plane.}
 \centering
 \caption{Elements searched from the start (wt\%), with copper as the balance
 (at least 65\%) and a calculated liquidus of at most
-1,250\,\textdegree{}C. ``Cu-Ni only'': where aluminum is at most 3\%
-(silicon: below 7\%).}
+1,250\,\textdegree{}C, and the additions tested from Year~2 (gray).
+$^\dagger$Only where aluminum is at most 3\% (silicon above 0.1\% only with
+niobium).}
 \label{tab:space}
-\renewcommand{\arraystretch}{1.1}
+\small
+\renewcommand{\arraystretch}{1.05}
 \begin{tabularx}{\textwidth}{@{}l l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{Element} & \textbf{Range} & \textbf{Role} & \textbf{Upper limit set by} \\
@@ -1045,14 +1050,26 @@ Fe & 0--4.5 & Film in Cu-Ni; $\kappa$ phases in NAB & Iron out of solution in
   Cu-Ni; coarse $\kappa$ in NAB \\
 Mn & 0--4 & Deoxidizer; partial nickel substitute & Evaporation and
   oxidation in melting and DED \\
-Cr & 0--0.7, Cu-Ni only & Resistance to fast flow~\cite{lewis1981} & Cr-rich
+Cr & 0--0.7$^\dagger$ & Resistance to fast flow~\cite{lewis1981} & Cr-rich
   particles; crevice attack in still water \\
-Si & 0--0.5, Cu-Ni only & Deoxidizer; strength with Nb & Silicides; weld
+Si & 0--0.5$^\dagger$ & Deoxidizer; strength with Nb & Silicides; weld
   cracking \\
-Nb & 0--0.8, Cu-Ni only & Weldability of cast Cu-Ni & Undissolved Nb-rich
+Nb & 0--0.8$^\dagger$ & Weldability of cast Cu-Ni & Undissolved Nb-rich
   particles \\
 Ti & 0--0.5 & Deoxidizer in Cu-Ni welding filler~\cite{awsA57} & Oxide and
   nitride inclusions; crucible attack \\
+\midrule
+\multicolumn{4}{@{}l}{\textcolor{darkgray}{\textit{Microalloying additions tested from Year~2}}} \\
+\textcolor{darkgray}{Zr} & \textcolor{darkgray}{0--0.15} & \textcolor{darkgray}{Grain refiner} &
+  \textcolor{darkgray}{ZrO$_2$ inclusions; excess at grain boundaries} \\
+\textcolor{darkgray}{B} & \textcolor{darkgray}{0--0.02} & \textcolor{darkgray}{Grain refiner} &
+  \textcolor{darkgray}{Borides; Ni-B eutectic below the Cu-Ni solidus} \\
+\textcolor{darkgray}{Sn} & \textcolor{darkgray}{0--1, NAB only} & \textcolor{darkgray}{Grain
+  refinement and strength in cast NAB} & \textcolor{darkgray}{Wider freezing range} \\
+\textcolor{darkgray}{Ge} & \textcolor{darkgray}{0--0.2, NAB only} & \textcolor{darkgray}{Erosion-corrosion (one study)} &
+  \textcolor{darkgray}{Cost; export controls} \\
+\textcolor{darkgray}{La or Ce} & \textcolor{darkgray}{0--0.1$^\dagger$} & \textcolor{darkgray}{Resistance in
+  salt solution~\cite{du2025}} & \textcolor{darkgray}{Oxide and oxysulfide inclusions} \\
 \bottomrule
 \end{tabularx}
 \end{table}
