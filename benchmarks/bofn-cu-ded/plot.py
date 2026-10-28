@@ -45,7 +45,7 @@ STYLE = {
     "pkgfn_audit": dict(color="#E06666", lw=2.2, z=5, ls="-"),
     "mines_only": dict(color="#E06666", lw=2.2, z=5, ls=(0, (4, 2))),
     "eifn": dict(color="#404040", lw=2.0, z=4, ls="-"),
-    "pkgfn_light": dict(color="#E06666", lw=2.0, z=4, ls=(0, (1.5, 1.5))),
+    "pkgfn_light": dict(color="#E06666", lw=2.0, z=4, ls=(0, (5, 1.5, 1, 1.5))),  # dash-dot: pkgfn_screen is the dotted one
     "tiered": dict(color="#8C8C8C", lw=2.0, z=3, ls="-"),
     "tiered_ni": dict(color="#8C8C8C", lw=2.0, z=3, ls=(0, (4, 2))),
     "tiered_ni_ref": dict(color="#595959", lw=2.0, z=3, ls=(0, (1.5, 1.5))),
@@ -60,7 +60,7 @@ HEAD = (1.0, 1.0)
 def main_curve(cell=HEAD, kinds=("pkgfn", "pkgfn_light", "pkgfn_audit", "pkgfn_screen", "mines_only", "eifn_reuse", "eifn", "tiered", "tiered_ni", "tiered_ni_ref", "funnel", "ei", "random"), out=None):
     """Every policy's best alloy demonstrated against spend, with direct labels."""
     data = load(cell)
-    fig, ax = plt.subplots(figsize=(10, 5.8))
+    fig, ax = plt.subplots(figsize=(11.2, 5.8))
     x = GRID / 1e3
     finals = {}
     for k in kinds:
@@ -86,7 +86,7 @@ def main_curve(cell=HEAD, kinds=("pkgfn", "pkgfn_light", "pkgfn_audit", "pkgfn_s
     ax.yaxis.grid(True, color="#E6E6E6", lw=0.8)
     ax.set_axisbelow(True)
     fig.tight_layout()
-    fig.subplots_adjust(right=0.68)
+    fig.subplots_adjust(right=0.64)
     out = out or HERE / f"{PREFIX}_best_vs_spend_k{cell[0]:g}e{cell[1]:g}_all_policies.png"
     fig.savefig(out)
     plt.close(fig)
@@ -108,7 +108,7 @@ def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn"
     M = {k: np.nanmean(c, 0) for k, c in C.items()}
     SE = {k: np.nanstd(c, 0) / np.sqrt(c.shape[0]) for k, c in C.items()}
     target = float(np.nanmean(C[base][:, -1])) if base in C else float("nan")
-    x_ref = x[np.argmax(M[ref] >= target)] if base in C and (M[ref] >= target).any() else None
+    x_ref = x[np.argmax(M[ref] >= target)] if base in C and ref in M and (M[ref] >= target).any() else None
     x_base = x[np.argmax(M[base] >= target - 1e-9)] if base in C else None
     if not callout or (x_ref is not None and not (0 < x_ref < x_base)):
         # no "x times less spend" callout: on the copper network tiered screening never finds an alloy that
