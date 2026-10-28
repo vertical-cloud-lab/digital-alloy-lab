@@ -1374,27 +1374,6 @@ demonstration described in Section~\ref{sec:prelim}.
 The CV lists all
 publications and presentations.
 
-\begin{figure}[!hb]
-\centering
-% (a) figures-src/make_room_figure.py; (b) atomizer-training/viz3d/proposal_strip.py
-% at the repository root (provenance in figures-cu-ded/README.md).
-% (a) and (b) side by side, one row, so the figure fits on the last counted page.
-\begin{tikzpicture}[lbl/.style={font=\fontsize{8}{9.6}\selectfont, inner sep=0pt,
-  fill=white, fill opacity=0.85, text opacity=1}]
-\node[inner sep=0pt, anchor=north west] (a) at (0,0)
-  {\includegraphics[height=0.675in]{figures-cu-ded/room-atomizer-2026.jpg}};
-\node[inner sep=0pt, anchor=north west] (b) at ([xshift=4pt]a.north east)
-  {\includegraphics[height=0.675in]{figures-cu-ded/atomizer-sequence.png}};
-\node[lbl, anchor=north west] at ([shift={(1pt,-1pt)}]a.north west) {(a)};
-\node[lbl, anchor=north west] at ([shift={(1pt,-1pt)}]b.north west) {(b)};
-\end{tikzpicture}
-\caption{(a)~The humidity-controlled, ventilated powder enclosure in the PI's
-laboratory that houses the atomizer, and the atomizer with its induction module
-open (28 September 2026). (b)~One run, rendered from a CAD model of the
-atomizer: (i)~cup and plug, (ii)~cups in the crucible, (iii)~melting and
-stirring, (iv)~pouring onto the ultrasonic plate.}
-\label{fig:enclosure}
-\end{figure}
 
 % ===========================================================================
 % CV (excluded from the page limit)
@@ -1466,6 +1445,29 @@ federal awards, with accounting, purchasing, and property control systems
 \todo{confirm wording with BYU Research Administration}. Laboratory safety
 follows BYU Risk Management and Safety procedures.
 The atomizer stands in a steel-panelled enclosure built inside the laboratory in 2026 with the college safety officer (Fig.~\ref{fig:enclosure}): its own exhaust, argon supply, and dehumidifier, a Class~D extinguisher, an explosion-proof vacuum, and respirators.
+
+\begin{figure}[h]
+\centering
+% (a) figures-src/make_room_figure.py; (b) atomizer-training/viz3d/proposal_strip.py
+% at the repository root (provenance in figures-cu-ded/README.md).
+% (a) and (b) side by side, one row. It sits in Responsibility, the only section that
+% cites it, where the page has room (it used to end PI Qualifications).
+\begin{tikzpicture}[lbl/.style={font=\fontsize{8}{9.6}\selectfont, inner sep=0pt,
+  fill=white, fill opacity=0.85, text opacity=1}]
+\node[inner sep=0pt, anchor=north west] (a) at (0,0)
+  {\includegraphics[height=0.675in]{figures-cu-ded/room-atomizer-2026.jpg}};
+\node[inner sep=0pt, anchor=north west] (b) at ([xshift=4pt]a.north east)
+  {\includegraphics[height=0.675in]{figures-cu-ded/atomizer-sequence.png}};
+\node[lbl, anchor=north west] at ([shift={(1pt,-1pt)}]a.north west) {(a)};
+\node[lbl, anchor=north west] at ([shift={(1pt,-1pt)}]b.north west) {(b)};
+\end{tikzpicture}
+\caption{(a)~The humidity-controlled, ventilated powder enclosure in the PI's
+laboratory that houses the atomizer, and the atomizer with its induction module
+open (28 September 2026). (b)~One run, rendered from a CAD model of the
+atomizer: (i)~cup and plug, (ii)~cups in the crucible, (iii)~melting and
+stirring, (iv)~pouring onto the ultrasonic plate.}
+\label{fig:enclosure}
+\end{figure}
 The handling rules were set for aluminum powders, the most hazardous case in the Bureau of Mines series~\cite{jacobson1964}.
 They came out of conversations through 2026 with Ames National Laboratory (Iver Anderson and Jordan Tiarks), North Carolina State University (Tim Horn), the Johns Hopkins group that runs the same atomizer, the manufacturer, and an aluminum powder producer.
 Copper alloy powders are far less reactive, and the same controls apply: nickel-bearing powders are handled in glove bags with respiratory protection, and the first copper alloy powder is tested for ignition energy, explosion severity, and transport class before any lot ships, with ignition energy retested on each gas-atomized lot.
