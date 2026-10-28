@@ -75,6 +75,16 @@ HOLD_CHARGE_CAP_MC = 3.0                  # ASSUMED charge budget per hold
 REVERSALS_MA_CM2 = [1.0, 10.0]            # 1 = the Al plan; 10 = Shahriari 2023 (c1-02)
 SCAN_V_S = {"1 mV/s": 1e-3, "0.167 mV/s (0.6 V/h)": 0.6 / 3600}
 
+# --- EIS at open circuit (protocol section 4, step 5) ---
+EIS_RMS_V = 0.010                         # 10 mV, as Yuan 2007, Gao 2022, Song 2024, Shahriari 2023, Tan 2024, Luo 2026 (c1-02)
+EIS_F_HI_HZ, EIS_F_LO_HZ = 1e5, 1e-2      # 100 kHz to 10 mHz; the c1-02 papers stop between 5 mHz and 0.1 Hz
+EIS_PER_DECADE = 10                       # ASSUMED
+EIS_MIN_POINT_S = 0.5                     # ASSUMED time per frequency where one cycle is shorter than this
+EIS_SLOT_MIN = 10.0                       # the step's slot in STEPS_MIN
+R_U_OHM = 60.0                            # sim_well.py, cap B: reference tip 3 mm above a -006 spot, seawater
+C_DL_F_CM2 = 30e-6                        # sim_well_hf.py's C_DL, ASSUMED there
+PICO_F_LO_HZ = 0.016                      # EmStat Pico's lowest EIS frequency (../README.md section 5)
+
 # --- Bench calibration cell, galvanic couples, oxide coulometry ---
 BULK_AREA_CM2, BULK_ML = 1.0, 200.0       # c1-01's comparison cell
 GALVANIC_UA_CM2 = {"Luo 2026 NAB/duplex 1:50, at the start (c1-02)": 38.0,
@@ -82,8 +92,8 @@ GALVANIC_UA_CM2 = {"Luo 2026 NAB/duplex 1:50, at the start (c1-02)": 38.0,
 OXIDE_MC_CM2_PER_NM = {"Cu2O": 0.81, "CuO": 1.53}  # ../copper-ded-edison/check_numbers.json
 
 # --- Timing, ASSUMED (protocol section 4) ---
-STEPS_MIN = {"fill": 4, "leak check": 2, "cap on": 1, "OCP": 30, "LPR": 2, "rest": 5,
-             "anodic hold": HOLD_MIN, "OCP after hold": 5, "decap and rinse cap": 1,
+STEPS_MIN = {"fill": 4, "leak check": 2, "cap on": 1, "OCP": 20, "EIS at OCP": EIS_SLOT_MIN, "LPR": 2,
+             "rest": 5, "anodic hold": HOLD_MIN, "OCP after hold": 5, "decap and rinse cap": 1,
              "collect and acidify": 6, "image": 1}
 WELLS_PER_NIGHT = 8   # 3 pieces x (main + companion) + fixture blank + carry-over blank
 NIGHT_H = 12.0
@@ -254,6 +264,41 @@ def cyclic():
     return {"area_cm2": round(a, 4), "O2_inventory_mC": round(o2_mc, 2), "rows": rows}
 
 
+def eis():
+    """EIS at open circuit on the -006 well: how long the sweep takes, the currents it asks the
+    potentiostat to range over, where a Randles arc (R_u, then R_p in parallel with the double
+    layer) has its apex, and the net current a sine rectifies on the anodic Tafel branch."""
+    a = area_cm2(ORINGS_MM["-006"])
+    n = int(round(math.log10(EIS_F_HI_HZ / EIS_F_LO_HZ) * EIS_PER_DECADE))
+    freqs = [EIS_F_HI_HZ * 10 ** (-k / EIS_PER_DECADE) for k in range(n + 1)]
+
+    def sweep_min(fs, cycles):
+        return round(sum(max(cycles / f, EIS_MIN_POINT_S) for f in fs) / 60, 1)
+    coarse = [f for f in freqs if f >= 1.0] + [10 ** (-k / 5) for k in range(1, 11)]  # 5 per decade below 1 Hz
+    peak = EIS_RMS_V * math.sqrt(2)
+    x = peak / (TAFEL_A_V / math.log(10))
+    i0 = sum((x / 2) ** (2 * k) / math.factorial(k) ** 2 for k in range(8))  # modified Bessel I0
+    arc = {}
+    for rp in RP_OHM_CM2:
+        wrc = 2 * math.pi * EIS_F_LO_HZ * rp * C_DL_F_CM2  # area cancels in R_p * C_dl
+        arc[f"{rp:g} ohm cm2"] = {"apex_Hz": round(1 / (2 * math.pi * rp * C_DL_F_CM2), 3),
+                                  "Zre_at_f_lo_over_Rp": round(1 / (1 + wrc ** 2), 3),
+                                  "Z_at_f_lo_kohm": round((R_U_OHM + rp / a) / 1e3, 1),
+                                  "current_nA_rms_at_f_lo": round(EIS_RMS_V / (R_U_OHM + rp / a) * 1e9, 1)}
+    return {"area_cm2": round(a, 4), "amplitude_mV_rms": EIS_RMS_V * 1e3,
+            "range_Hz": [EIS_F_HI_HZ, EIS_F_LO_HZ], "points": len(freqs), "per_decade": EIS_PER_DECADE,
+            "sweep_min": {"1 cycle per frequency": sweep_min(freqs, 1),
+                          "2 cycles per frequency": sweep_min(freqs, 2),
+                          "2 cycles, 5 per decade below 1 Hz": sweep_min(coarse, 2)},
+            "slot_min": EIS_SLOT_MIN,
+            "current_uA_rms_at_f_hi": round(EIS_RMS_V / R_U_OHM * 1e6, 1),
+            "R_u_ohm": R_U_OHM, "C_dl_uF_cm2": C_DL_F_CM2 * 1e6, "randles_arc": arc,
+            "rectified_anodic_gain": round(i0, 3),
+            "rectified_net_over_icorr_transport_limited_cathode": round(i0 - 1, 3),
+            "rectified_charge_mC_in_slot_at_max_icorr": round((i0 - 1) * max(ICORR_UA_CM2) * 1e-6 * a * EIS_SLOT_MIN * 60 * 1e3, 3),
+            "pico_lowest_Hz": PICO_F_LO_HZ}
+
+
 def bulk_cell():
     """The same Earley release rates on the bench calibration cell: 1 cm2 in 200 mL."""
     out = {}
@@ -305,6 +350,7 @@ def main():
         "lpr": lpr(),
         "anodic_hold": hold(),
         "cyclic_polarization": cyclic(),
+        "eis": eis(),
         "bulk_cell": bulk_cell(),
         "zra": zra(),
         "coulometry": coulometry(),
@@ -344,6 +390,14 @@ def main():
         print(f"  reverse at {r['reversal_mA_cm2']:g} mA/cm2, {r['scan']}: {r['charge_mC']} mC, "
               f"{r['Cu_mg_L_in_150uL']:.0f} mg/L Cu, OH- {r['counter_OH_mM_if_unbuffered']} mM, "
               f"O2 gone in {r['O2_inventory_lasts_s_at_reversal']:.0f} s at reversal")
+    e = out["eis"]
+    print(f"\nEIS at OCP, -006 well: {e['amplitude_mV_rms']:g} mV rms, {e['points']} frequencies; sweep {e['sweep_min']} min "
+          f"in a {e['slot_min']:g} min slot; {e['current_uA_rms_at_f_hi']} uA rms at 100 kHz")
+    for name, r in e["randles_arc"].items():
+        print(f"  R_p {name}: apex {r['apex_Hz']} Hz, Z' at 10 mHz {r['Zre_at_f_lo_over_Rp']} of R_p, "
+              f"{r['current_nA_rms_at_f_lo']} nA rms")
+    print(f"  rectified anodic gain {e['rectified_anodic_gain']}: net {e['rectified_net_over_icorr_transport_limited_cathode']} "
+          f"of i_corr, {e['rectified_charge_mC_in_slot_at_max_icorr']} mC in the slot at the top i_corr")
     print(f"\nBulk cell (1 cm2, 200 mL): {out['bulk_cell']}")
     print(f"Galvanic currents: {out['zra']}")
     print(f"Oxide coulometry: {out['coulometry']}")

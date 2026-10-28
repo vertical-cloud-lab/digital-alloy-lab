@@ -6,7 +6,7 @@
 spot_id:            # e.g. <specimen_id>-<well>-<yyyymmdd>
 night_id:           # e.g. cu-<yyyymmdd>; links the spot to that night's blanks and stock checks
 test_matrix_row:    # id from test-matrix.csv (S0, R1, R2, R3, F1, D1, D2, P1, L1, S1, CP1, X1)
-role:               # main | companion | cathodic_hold | cyclic_spare | stock_blank | fixture_blank | carryover_blank
+role:               # main | companion | cathodic_hold | cyclic_selected | stock_blank | fixture_blank | carryover_blank
 
 specimen:
   specimen_id:
@@ -73,22 +73,27 @@ potentiostat:
   current_range:    # fixed range(s), or "autorange"
 
 steps:
-  ocp:        {duration_s: 1800, sample_period_s: 1}
+  ocp:        {duration_s: 1200, sample_period_s: 1}  # 1800 when there is no EIS
+  eis:        {amplitude_mV_rms: 10, from_Hz: 100000, to_Hz: 0.01, points_per_decade: 10, at: ocp}  # null on an instrument without EIS
   lpr:        {from_mV_vs_ocp: -10, to_mV_vs_ocp: 10, rate_mV_s: 0.167}
   rest:       {duration_s: 300}
   hold:       {kind: anodic, mV_vs_ocp: 50, duration_s: 600, charge_cap_mC: 3}  # or kind: cathodic, mV_vs_ref
   ocp_after:  {duration_s: 300}
-  cpp:        null  # spare spots only: {start_mV_vs_ocp: -50, rate_mV_s: 1, reverse_at_uA_cm2: 1000, stop: "E_corr"}
+  cpp:        null  # selected spots only, after the EIS and instead of steps 6-9: {start_mV_vs_ocp: -50, rate_mV_s: 1, reverse_at_uA_cm2: 1000, stop: "E_corr"}
 
 results:
   E_corr_mV_vs_ref:
   ocp_drift_mV_per_min:
+  eis_file:         # the spectrum: f, Z', Z''
+  eis_Ru_ohm:       # high-frequency intercept
+  eis_Z_10mHz_ohm:
+  eis_fit:          # {circuit: , R_f_ohm_cm2: , R_ct_ohm_cm2: }: never reported as R_p
   Rp_ohm_cm2:
   hold_mean_uA:
   hold_charge_mC:
   hold_stopped_on_charge: false
   E_after_hold_mV_vs_ref:
-  cpp_charge_mC:    # spare spots only
+  cpp_charge_mC:    # selected spots only
 
 collected:
   tube_id:
@@ -114,6 +119,7 @@ icp_ms:
 validity:
   leak_free_at_fill: true
   ocp_drift_ok:
+  eis_kramers_kronig_ok:
   lpr_linear_ok:
   hold_under_charge_cap:
   recovered_volume_ok:

@@ -365,6 +365,55 @@
    }
   ]
  },
+ "eis": {
+  "area_cm2": 0.0661,
+  "amplitude_mV_rms": 10.0,
+  "range_Hz": [
+   100000.0,
+   0.01
+  ],
+  "points": 71,
+  "per_decade": 10,
+  "sweep_min": {
+   "1 cycle per frequency": 8.5,
+   "2 cycles per frequency": 16.5,
+   "2 cycles, 5 per decade below 1 Hz": 9.4
+  },
+  "slot_min": 10.0,
+  "current_uA_rms_at_f_hi": 166.7,
+  "R_u_ohm": 60.0,
+  "C_dl_uF_cm2": 30.0,
+  "randles_arc": {
+   "400 ohm cm2": {
+    "apex_Hz": 13.263,
+    "Zre_at_f_lo_over_Rp": 1.0,
+    "Z_at_f_lo_kohm": 6.1,
+    "current_nA_rms_at_f_lo": 1635.1
+   },
+   "1000 ohm cm2": {
+    "apex_Hz": 5.305,
+    "Zre_at_f_lo_over_Rp": 1.0,
+    "Z_at_f_lo_kohm": 15.2,
+    "current_nA_rms_at_f_lo": 657.9
+   },
+   "8000 ohm cm2": {
+    "apex_Hz": 0.663,
+    "Zre_at_f_lo_over_Rp": 1.0,
+    "Z_at_f_lo_kohm": 121.2,
+    "current_nA_rms_at_f_lo": 82.5
+   },
+   "50000 ohm cm2": {
+    "apex_Hz": 0.106,
+    "Zre_at_f_lo_over_Rp": 0.991,
+    "Z_at_f_lo_kohm": 757.0,
+    "current_nA_rms_at_f_lo": 13.2
+   }
+  },
+  "rectified_anodic_gain": 1.075,
+  "rectified_net_over_icorr_transport_limited_cathode": 0.075,
+  "rectified_charge_mC_in_slot_at_max_icorr": 0.033,
+  "pico_lowest_Hz": 0.016
+ },
  "bulk_cell": {
   "initial, high": {
    "Cu_ug": 8.75,
@@ -414,7 +463,8 @@
    "fill": 4,
    "leak check": 2,
    "cap on": 1,
-   "OCP": 30,
+   "OCP": 20,
+   "EIS at OCP": 10.0,
    "LPR": 2,
    "rest": 5,
    "anodic hold": 10.0,

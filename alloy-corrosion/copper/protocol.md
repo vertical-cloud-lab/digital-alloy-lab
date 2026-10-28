@@ -15,7 +15,7 @@ Positions are in the CubOS deck frame of Ben's 2026-10-02 calibration, as in
 
 | | Aluminum plan | Copper |
 | --- | --- | --- |
-| Headline result | E_pit and E_rp from cyclic polarization | OCP, R_p, the charge of a potential hold, and ICP-MS of the used liquid. Cyclic polarization only on spare spots ([c1-02], [c1-04], [c1-09]) |
+| Headline result | E_pit and E_rp from cyclic polarization | OCP, an impedance spectrum at OCP, R_p, the charge of a potential hold, and ICP-MS of the used liquid. Cyclic polarization only on selected spots, last on each ([c1-02], [c1-04], [c1-09]) |
 | Main chemistry metric | ICP of the tubes in the 2027 batch | ICP-MS of every spot, acidified in the tube at once ([c1-03]) |
 | Electrolyte axis | chloride, 0.006–0.6 M NaCl | sulfide dose against exposure history, in fixed substitute ocean water ([c1-06]) |
 | Cell | open well, cap resting on the lid | the cap nearly seals the well: a 0.12 mm clearance skirt over the lid's boss, 1.6 µL of water lost an hour ([c1-01], [`cad/`](cad/README.md)) |
@@ -63,7 +63,7 @@ changes.
 | Well | FKM O-ring AS568-006, ID 2.90 mm, cross-section 1.78 mm, squeezed 21 % in a 7.30 × 1.40 mm counterbore: **0.0661 cm² nominal, 0.101–0.126 cm² wetted**. An 8 mm bore above it holds 150 µL | The squeezed ring touches the metal only from r ≈ 1.8–2.0 mm, so the liquid wets 1.5–1.9 times the ID's area, including a thin crevice under the ring ([`cad/README.md`](cad/README.md)). Measure the real area from the attack ring after every test, and report current densities on that area. In [`sim_well_hf.py`](sim_well_hf.md) the crevice carries about 35 % of the anodic current at open circuit on Cu–Ni and 45 % on NAB |
 | Calibration wells only | AS568-008 (ID 4.47 mm, 0.157 cm², 10 mm bore) and -010 (ID 6.07 mm, 0.289 cm², 12 mm bore), each in its own lid, same FKM compound as the -006 | Three sizes against a bulk cell (§5) |
 | Cap seal | No O-ring. The cap's skirt slides over a Ø16 mm boss around each well with 0.12 mm radial clearance; two 4 × 2 mm magnets in the lid pull on two steel slugs in the skirt and hold it down at an estimated 1.6–2.3 N ([`cad/`](cad/README.md)) | This is the humidified lid c1-01 asks for: the headspace sits near 89 % RH, and water escapes through the gap at 1.6 µL/h, 1.1 % of the well in a 63 min spot (6.1 µL/h with no cap). The surface stays in contact with room air, so it stays air-saturated. A radial AS568-016 seal was the first design. Its pull-off force (2.3–85 N with tolerances and friction) is too close to what the electromagnet can pull on a 1 mm disc (about 23 N), so it is kept only as a fallback (`electrode_cap_oring`, which needs its 0.3 mm vent) |
-| Reference | Leak-free Ag/AgCl, ≤ 2 mm, through the cap. Tip **3.0 mm above the metal, in the bore**, not 1.5 mm down in the O-ring's throat as in the aluminum cap | In [`sim_well.py`](sim_well.py) (cap B) the raised tip gives 22 % more O₂ at the spot after 30 min than the 1.5 mm tip, with the current density uniform within 1.4 %. Its uncompensated resistance is 60 Ω in seawater: 4 mV of iR at a 1 mA/cm² reversal, about 0.1 mV in LPR, and under 0.3 mV in the anodic hold. Check it against the master reference each night (*choose* a limit, e.g. ±5 mV) and log the offset |
+| Reference | Leak-free Ag/AgCl, ≤ 2 mm, through the cap. Tip **3.0 mm above the metal, in the bore**, not 1.5 mm down in the O-ring's throat as in the aluminum cap | In [`sim_well.py`](sim_well.py) (cap B) the raised tip gives 22 % more O₂ at the spot after 30 min than the 1.5 mm tip, with the current density uniform within 1.4 %. Its uncompensated resistance is 60 Ω in seawater: 4 mV of iR at a 1 mA/cm² reversal, about 0.1 mV in LPR, and under 0.3 mV in the anodic hold. The EIS of §4 measures it on every spot, as the spectrum's high-frequency intercept. Check it against the master reference each night (*choose* a limit, e.g. ±5 mV) and log the offset |
 | Counter | Pt coil around the reference, as for aluminum | During an anodic step the Pt is the cathode, and it can plate out dissolved copper and carry it to the next well ([c1-01]). The carry-over blank (§6) measures this |
 
 Notes:
@@ -158,21 +158,57 @@ The main spot, on the first well of each piece:
 | 1 | Fill | 150 µL, 8 P20 transfers, ASW first and sulfide last, dispensed from above the meniscus; image the well | — | — |
 | 2 | Leak check | 2 min, head camera | — | no liquid outside the O-ring |
 | 3 | Cap on | `decap park_cup` (or a rinse cup), `cap S_k`; tipless | — | OCP reads inside an expected window within 30 s (*choose*) |
-| 4 | OCP | 30 min (*choose*; the simulated O₂ supply to the spot levels off by then, and E_corr drifts only about 2 mV more over the next 30 min: [`sim_well.json`](sim_well.json) `ocp_in_well`), ≥ 1 point/s | E_corr (mean of the last 60 s), drift | drift over the last 5 min below a limit (*choose*) |
-| 5 | LPR (after ASTM G59) | −10 → +10 mV about OCP at 0.167 mV/s, 2 min | R_p in Ω·cm², from the slope at zero current | the fit is linear (*choose* an R² limit) |
-| 6 | Rest | OCP, 5 min | — | back within 5 mV of E_corr |
-| 7 | Anodic hold | E_corr + 50 mV for 10 min (*choose*), stopped early at 3 mC (*choose*) | i(t) and the charge | charge below the cap |
-| 8 | OCP | 5 min | how far E_corr recovers | — |
-| 9 | Cap off | `decap S_k`, dip in rinse 1 (DI), then in rinse 2 (ASW) | — | — |
-| 10 | Collect | 150 µL plus one 150 µL DI rinse into a pre-weighed 0.5 mL PP tube | tube ID | recovered mass within *choose* % of what was dispensed (weighed in the morning) |
-| 11 | Acidify | 20 µL of 1 M trace-metal HNO₃ from the capped acid vial (318, 68), dispensed from above the tube rim with the night's one acid tip, which never touches a sample | 62 mM HNO₃ in 320 µL, pH about 1.2 | — |
-| 12 | Image | head camera | — | — |
+| 4 | OCP | 20 min (*choose*), ≥ 1 point/s. Step 5 is at open circuit too, so LPR still starts after 30 min at open circuit, when the simulated O₂ supply to the spot has levelled off ([`sim_well.json`](sim_well.json) `ocp_in_well`) | E_corr (mean of the last 60 s), drift | drift over the last 5 min below a limit (*choose*) |
+| 5 | EIS at OCP | 10 mV rms about step 4's E_corr, 100 kHz → 10 mHz, 10 points per decade, one cycle per frequency below 2 Hz: an 8.5 min sweep in a 10 min slot (`eis`). Only on the requested potentiostat (notes) | the spectrum; R_u from its high-frequency intercept; \|Z\| at 10 mHz | passes a Kramers–Kronig check (*choose* a residual limit); the OCP just after it within *choose* mV of step 4's E_corr |
+| 6 | LPR (after ASTM G59) | −10 → +10 mV about OCP at 0.167 mV/s, 2 min | R_p in Ω·cm², from the slope at zero current | the fit is linear (*choose* an R² limit) |
+| 7 | Rest | OCP, 5 min | — | back within 5 mV of E_corr |
+| 8 | Anodic hold | E_corr + 50 mV for 10 min (*choose*), stopped early at 3 mC (*choose*) | i(t) and the charge | charge below the cap |
+| 9 | OCP | 5 min | how far E_corr recovers | — |
+| 10 | Cap off | `decap S_k`, dip in rinse 1 (DI), then in rinse 2 (ASW) | — | — |
+| 11 | Collect | 150 µL plus one 150 µL DI rinse into a pre-weighed 0.5 mL PP tube | tube ID | recovered mass within *choose* % of what was dispensed (weighed in the morning) |
+| 12 | Acidify | 20 µL of 1 M trace-metal HNO₃ from the capped acid vial (318, 68), dispensed from above the tube rim with the night's one acid tip, which never touches a sample | 62 mM HNO₃ in 320 µL, pH about 1.2 | — |
+| 13 | Image | head camera | — | — |
 
-A main spot is about 67 min of deck time and 63 min of liquid contact. Eight wells (three pieces
+A main spot is still about 67 min of deck time and 63 min of liquid contact: EIS takes the last
+10 min of what was a 30 min OCP, and nothing else was shortened. Eight wells (three pieces
 with two wells each, plus the two blanks on S4) take about 9 h, so they fit in a 12 h night.
 That is 9 tubes with the stock blank, and at least 17 tips (`timing`).
 
-Notes:
+Notes on EIS (step 5):
+
+- **The settings follow the bulk-cell papers on these alloys**, all at open circuit in chloride,
+  after 10 min to 3 h at OCP ([c1-02]): 10 mV and 100 kHz–5 mHz on 70/30 Cu–Ni in nine-salt
+  simulated seawater at pH 8.2 (Yuan 2007); 10 mV and 100 kHz–10 mHz on C71500 in NaCl with
+  sulfide (Gao 2022), on wire-arc 70/30 Cu–Ni (Song 2024, rms), on wire-arc and cast NAB
+  (Shahriari 2023) and on cast NAB (Tan 2024); 5 mV on cast C95800 (Ding 2019). The nearest to a
+  well is Luo 2026: 10 mV and 100 kHz–0.1 Hz on a 0.06 cm² NAB anode in D1141-type seawater, after
+  10 min at OCP. None used a cell this small, so the window is checked on the reference coupons
+  first (§5), as [c1-02] advises.
+- **Why 20 min of OCP is enough first.** In [`sim_well_hf.py`](sim_well_hf.md) the well's E_corr
+  on C71500 moves 0.5 mV over minutes 15–30, a twentieth of the amplitude. The sweep runs from high
+  to low frequency, so the slow points, which drift spoils, come last.
+- **The simulation's 30 min at open circuit stands for steps 4 and 5.** A sine about OCP passes no
+  net charge to first order. On the 60 mV/dec anodic branch a 10 mV rms sine raises the mean
+  anodic current by 7.5 %, so with the cathode transport-limited the spot passes at most
+  0.075 i_corr: 0.033 mC over the slot at 11 µA/cm², against the hold's 0.2–2.8 mC (`eis`).
+- **What it adds.** The high-frequency intercept measures R_u on every spot (60 Ω in
+  [`sim_well.py`](sim_well.py)) for the iR correction of LPR and of any cyclic scan. The arcs below
+  it separate a film from charge transfer, which one R_p cannot, and follow the film as it ages: on
+  70/30 Cu–Ni, EIS told a resistant clean-water oxide from a porous sulfide product (Yuan 2007, via
+  [c1-02]). Report R_ct and R_f only with the equivalent circuit used, and never as R_p or as a
+  corrosion rate ([c1-02]).
+- **The 10 mHz end.** For R_p of 400 to 50,000 Ω·cm² and the simulation's assumed 30 µF/cm² double
+  layer, a Randles arc peaks between 13 and 0.1 Hz, and at 10 mHz Z′ has reached at least 99 % of
+  R_p (`eis`). Films and transport add slower arcs, so the low end stays at 10 mHz.
+- **The instrument.** 10 mV rms drives 167 µA rms through R_u at 100 kHz and 13 nA to 1.6 µA rms
+  at 10 mHz, so the potentiostat must autorange over four decades within one sweep (`eis`). EIS
+  runs only on the requested potentiostat: the EZstat-Pro lent by Dr. Porter, now on the gantry,
+  has no impedance. Until the new instrument arrives, skip step 5 and run step 4 for 30 min, which
+  is the sequence from before EIS was added. If it needs two cycles per frequency, the sweep takes
+  16.5 min; five points per decade below 1 Hz bring it back to 9.4 min. The EmStat Pico of the BOM
+  stops at 16 mHz ([`../README.md` §5](../README.md#5-which-potentiostat-what-corrosion-needs-input-for-231)).
+
+Notes on the rest:
 
 - **Report R_p, not a corrosion rate.** The cathodic branch is limited by oxygen transport, and an
   assumed Stern–Geary B is unreliable for these alloys ([c1-03], [`queries.py`][queries]). LPR
@@ -213,14 +249,20 @@ for it ([c1-02]), and this series measures it directly. Keep the bracket above w
 shows hydrogen bubbles. In seawater a cathodic spot also grows calcareous deposits; that is real
 cathodic-protection behaviour, so record it rather than avoid it.
 
-**Cyclic polarization only on spare spots, labelled destructive.** Start 50 mV below OCP, sweep at
+**Cyclic polarization only on selected spots, and last on each.** It is destructive, so it never
+runs on a main spot or a companion. A selected spot (*choose* which, for example one per reference
+coupon a night and one per deposit picked for it) gets steps 1–5, so it still gives its own OCP and
+impedance, then the cyclic scan, then steps 10–13 into its own tube, labelled destructive. At the
+end of every main spot instead, it would lengthen each spot, and its charge would swamp the main
+tube: about 3.4 mC, or 15 mg/L of Cu, against the hold's 0.2–2.8 mC (`cyclic_polarization`,
+`anodic_hold`). Start 50 mV below OCP, sweep at
 1 mV/s, reverse at **1 mA/cm², not 10**, and stop back at E_corr. The order-of-magnitude estimate in
 `cyclic_polarization` gives the reason. At 1 mA/cm² one scan is about 3.4 mC, or 15 mg/L of Cu in
 the well. At 10 mA/cm² it is about 34 mC: 150 mg/L of Cu, and 2.4 mM of OH⁻ from the counter,
 as much as the ASW's whole alkalinity. The well's O₂ also runs out in about 3.5 min at 1 mA/cm²,
 or 22 s at 10 mA/cm². The ohmic drop stays small: with the reference tip 3 mm up, [`sim_well.py`](sim_well.py) puts the uncompensated resistance at 60 Ω in seawater, about 4 mV at 1 mA/cm² and 40 mV at 10 mA/cm² on a -006 spot. Report the curve as an anodic response, not as E_pit and E_rp:
-most wire-arc NAB samples showed no clear pitting range ([c1-02]). Run it last in the night, then
-the carry-over blank.
+most wire-arc NAB samples showed no clear pitting range ([c1-02]). Run these spots last in the
+night, then the carry-over blank.
 
 ## 5. Calibrate first
 
@@ -233,7 +275,13 @@ calibration is the first experiment and a result in its own right.
   0.52 mL/cm²), against a 1 cm² bulk cell on the bench (200 mL, 200 mL/cm²). Use the same ASW batch,
   potentiostat, reference and sequence, open to air with a loose cover, unstirred.
 - **Replicates:** at least 8 per condition over at least 2 nights. Report the mean and SD of
-  E_corr, log R_p, the hold charge, and ICP-MS Cu per cm² per hour. On the bench cell the same
+  E_corr, log R_p, R_u and |Z| at 10 mHz from EIS, the hold charge, and ICP-MS Cu per cm² per hour.
+- **Check EIS before trusting it in the well**, once the requested potentiostat is here. Verify
+  the instrument as in ASTM G106, then measure with the leak-free reference in the cap: a
+  high-impedance reference can distort the high-frequency end, so keep only the band that passes
+  the Kramers–Kronig check. On the reference coupons, run step 5 at 10 and at 5 mV rms on the same
+  spots: if the two spectra agree, 10 mV is small enough. Compare the wells' spectra with the bench
+  cell's, as for E_corr and R_p. On the bench cell the same
   release rates give 22–44 µg/L of Cu in 200 mL, measurable without dilution (`bulk_cell`).
 - **What it decides:** whether the well's bias is small next to the spot-to-spot SD. If E_corr or
   R_p trend with O-ring size, the trend is the artifact and the bulk cell is the anchor.
@@ -310,7 +358,7 @@ calibration is the first experiment and a result in its own right.
     ESPICO-DK has two channels ([`bom.csv`][bom]).
   - Currents: Luo 2026's 38 µA/cm² at the start is 2.5 µA on a 0.0661 cm² anode. Xing 2023's
     4.43 µA/cm² between a 90/10 HAZ and its weld is 0.29 µA (`zra`), so the range is nA to µA.
-  - The measured couple potential then replaces the +50 mV of the anodic hold (§4, step 7).
+  - The measured couple potential then replaces the +50 mV of the anodic hold (§4, step 8).
 
 ## 8. Later modules
 

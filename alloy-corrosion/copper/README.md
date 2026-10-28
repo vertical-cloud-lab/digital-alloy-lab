@@ -39,8 +39,9 @@ at 640 × 360. Chapters and sources are in §1.
 ## In short
 
 - **What changes from aluminum.** Copper alloys corrode actively under a film rather than pitting,
-  so the headline results are OCP, the LPR slope, the charge of a potential hold, and ICP-MS of
-  every spot's liquid, acidified in its tube at once. Cyclic polarization moves to spare spots.
+  so the headline results are OCP, an impedance spectrum at OCP, the LPR slope, the charge of a
+  potential hold, and ICP-MS of every spot's liquid, acidified in its tube at once. Cyclic
+  polarization moves to selected spots, last on each.
   The electrolyte axis becomes sulfide dose in fixed substitute ocean water. The electrode cap now
   nearly seals the well. The first experiment is the well against a bulk cell on C71500 and C95800
   ([protocol](protocol.md)).
@@ -314,9 +315,10 @@ jogged.
 ## 4. Protocol, specimens and what to buy
 
 The full procedure is [`protocol.md`](protocol.md). One main spot is about 67 min of deck time:
-fill (ASW first, sulfide last) → leak check → cap on → OCP 30 min → LPR ±10 mV → rest 5 min →
-+50 mV hold 10 min → OCP 5 min → cap off and rinse → collect 150 µL plus a 150 µL rinse → 20 µL of
-1 M HNO₃ at once. Each piece's second well is an OCP-only companion. A night holds eight wells, two
+fill (ASW first, sulfide last) → leak check → cap on → OCP 20 min → EIS at OCP, 10 min (on the
+requested potentiostat; without it, OCP runs 30 min) → LPR ±10 mV → rest 5 min → +50 mV hold
+10 min → OCP 5 min → cap off and rinse → collect 150 µL plus a 150 µL rinse → 20 µL of 1 M HNO₃
+at once. Each piece's second well is an OCP-only companion. A night holds eight wells, two
 of them the fixture and carry-over blanks on S4, plus a stock blank: nine tubes.
 
 Specimens ([`test-matrix.csv`](test-matrix.csv)) start with purchased C71500, C95800 and C70600
