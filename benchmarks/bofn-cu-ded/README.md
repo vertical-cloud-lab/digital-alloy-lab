@@ -5,20 +5,32 @@ Copper and blown-powder DED version of [`../bofn-prelim/`](../bofn-prelim/README
 <!-- RESULTS -->
 ## Bottom line
 
-**The aluminum headline does not carry over.** On the copper network at `(kappa, eta) = (1, 1)` (both screens biased; 20 seeds of pKGFN, 20 to 20 of the others), the policy that chooses the stage is not the one that wins, and the tiered baseline as specified never finds an alloy that passes immersion:
+**Oct 28 update.** Four changes, each with its own section below.
+
+1. **pKGFN now runs at the aluminum production settings**: 64 base samples, 16 candidates, a 512-point pool, 24 perturbations and 32 + 16 anchors, plus Edison's fixes F2 and F4. 4 of 20 seeds have finished at (1, 1). They end at 64% of the optimum at $100k, against 62% for the light settings on the same seeds ([`quality/compare_light_hq.md`](quality/compare_light_hq.md)), so there is no clear change yet. Until the other 16 finish ([`logs/plan.sh`](logs/plan.sh)), the 20-seed pKGFN numbers below and in the proposal's Fig. `fig:sim` are the light settings' (59%).
+2. **Corrosion-aware tiered screening finds alloys that pass immersion once its shortlist has nickel, but stays far behind the network-aware searches.**
+   - A shortlist of compositions with at least 10 wt% Ni ends at 6% ± 6 of the optimum.
+   - The same shortlist with a dense 90-10 reference coupon as the one-hour screen's gate ends at 23% ± 5.
+   - These are 20 seeds each, against -8% for the spec's shortlist and 73% for BOFN.
+3. **The "dense index" of 0.40 is the lack-of-fusion factor alone.** It is a strength knockdown, not a density; the section lists the options.
+4. **A physics-based truth**: a pycalphad grid, a corrosion model fitted to 30 same-test seawater rates, and the proposal's search-space limits.
+   - **Nickel floor:** 1.6 wt% against dense 90-10 (2.6 wt% against 70-30) in the base fit, but anywhere from 0 to 10 wt% (0 to 30 wt%) across defensible refits. An independent Edison review found the same and advises against restricting the space.
+   - **Runs at (1, 1):** BOFN reaches 76% ± 14 of that truth's optimum and BOFN + reuse 89% ± 3. Standard BO reaches 5% ± 5, random 12% ± 15 and tiered screening -2% ± 8 (5 to 6 seeds). pKGFN reaches 71% (one seed).
+
+**First sweep (Oct 25 to 26, the hand-written truth, pKGFN at the light settings).** The aluminum headline does not carry over. On the copper network at `(kappa, eta) = (1, 1)` (both screens biased), the policy that chooses the stage is not the one that wins, and the tiered baseline as specified never finds an alloy that passes immersion:
 
 - **Network-aware BO is far ahead of the model-free baselines.** BOFN reaches 73% of the optimum by $100k when it runs every candidate through the full chain and 72% when it also redeposits existing lots (EI per dollar), against 14% for standard BO on the seven inputs and 22% for random designs. The seed alloys start at -10% on average (most fail immersion).
-- **pKGFN reaches 59%**: ahead of standard BO (+44 points, 17 wins, 0 ties and 3 losses on 20 matched seeds, Wilcoxon p = 4.8e-05) and random, behind both BOFN policies (against the full pipeline: -15 points, 4 wins, 0 ties and 16 losses on 20 matched seeds, Wilcoxon p = 0.024; against lot reuse: -13 points, 2 wins, 0 ties and 18 losses on 20 matched seeds, Wilcoxon p = 0.0094). It is behind from the start (12% at $25k against 15% and 14%).
+- **pKGFN at the light settings reaches 59%**: ahead of standard BO (+44 points, 17 wins, 0 ties and 3 losses on 20 matched seeds, Wilcoxon p = 4.8e-05) and random, behind both BOFN policies (against the full pipeline: -15 points, 4 wins, 0 ties and 16 losses on 20 matched seeds, Wilcoxon p = 0.024; against lot reuse: -13 points, 2 wins, 0 ties and 18 losses on 20 matched seeds, Wilcoxon p = 0.0094). It is behind from the start (12% at $25k against 15% and 14%).
 - **Why pKGFN lags.** It buys about 40 Mines sessions per $100k but only 7 tensile tests and 13 immersions, so 33 of its 40 new builds are never tensile-tested and earn nothing under the metric. Until some alloy passes immersion the objective is gated shut, one-step KG is flat, and 20% of its purchases were made by the EI fallback. A one-step gain also values a test only by its own result, not by the immersion it unlocks; pricing three test bundles was meant to cover that and does not close the gap. The KG noise check (below) adds that S = 32 base samples misses the small KG of cheap stages such as CALPHAD.
-- **Tiered screening, as specified, never demonstrates an alloy that passes immersion.** Its shortlist (CALPHAD on 256 compositions, the four strongest that pass the crack screen, net of burden) is aluminum bronzes with 2 to 6 wt% Ni, which the 30-day immersion test fails in this truth however they are deposited. Over 20 seeds, 0 of its 80 immersed builds passed; it ends at -8% ± 5 of the optimum, and its small rises come from lower-burden bronzes that also fail immersion (a failing alloy scores minus 0.3 times its burden). Every other policy's mean curve reaches tiered screening's $100k level within its first $10k of new spend; so the bofn-prelim speed-up ("the spend each method needs to reach tiered screening's $100k level") measures only how soon a policy makes its first small gain, and is not reported as a headline (it is in [`tables.md`](tables.md)). This is the shortlist rule meeting an immersion-gated objective, and it makes tiered screening a weak baseline here; it is not evidence about what a careful lab would do. Adding a nickel floor of 10 wt% does not rescue it: in this truth Cu-Ni freezes wide, and only 0.2% of compositions with at least 10 wt% Ni pass the crack screen.
+- **Tiered screening, as specified, never demonstrates an alloy that passes immersion.** Its shortlist (CALPHAD on 256 compositions, the four strongest that pass the crack screen, net of burden) is aluminum bronzes with 2 to 6 wt% Ni, which the 30-day immersion test fails in this truth however they are deposited. Over 20 seeds, 0 of its 80 immersed builds passed; it ends at -8% ± 5 of the optimum, and its small rises come from lower-burden bronzes that also fail immersion (a failing alloy scores minus 0.3 times its burden). Every other policy's mean curve reaches tiered screening's $100k level within its first $10k of new spend; so the bofn-prelim speed-up ("the spend each method needs to reach tiered screening's $100k level") measures only how soon a policy makes its first small gain, and is not reported as a headline (it is in [`tables.md`](tables.md)). This is the shortlist rule meeting an immersion-gated objective, and it makes tiered screening a weak baseline here; it is not evidence about what a careful lab would do. A nickel floor on the shortlist helps but does not rescue it (the corrosion-aware variants, below): in this truth Cu-Ni freezes wide, and only 0.2% of compositions with at least 10 wt% Ni pass the crack screen.
 
 **What the data supports for the proposal.** "In a synthetic version of the copper workflow, with both screens biased, searches that model the linked steps reached about 73% of the optimum after $100,000, against about 14% for standard Bayesian optimization; screening on CALPHAD strength and crack index chose aluminum bronzes that fail immersion; the published one-step cost-aware rule reached 59%." The claim that choosing the stage beats running the full chain is not supported on this network at these settings.
 
-**Not done yet** (next session; [`logs/plan.sh`](logs/plan.sh) resumes where this one stopped): the sensitivity cells (0, 0), (1, 0) and (0, 1); the new policies (`pkgfn_screen`, `pkgfn_audit`, `mines_only`, `funnel`) and so the screen-audit and two-step tables; the S = 256 fidelity runs; a corrosion-aware tiered variant; the fixes from the Edison code review (below); the Edison analysis review.
+**Not done yet** (next session; [`logs/plan.sh`](logs/plan.sh) resumes where this one stopped): pKGFN at the production settings for seeds 4 to 19 at (1, 1); more seeds of the physics-based truth (and its pKGFN); the sensitivity cells (0, 0), (1, 0) and (0, 1); the new policies (`pkgfn_screen`, `pkgfn_audit`, `mines_only`, `funnel`) and so the screen-audit and two-step tables; the S = 256 fidelity runs; the Edison analysis review of the complete results.
 
 ![partial vs full evaluation](bofn_cu_best_vs_spend_k1_partial_vs_full.png)
 
-*Best alloy demonstrated (deposited at Mines and carried through tensile and immersion), as a percentage of the true optimum, against new spend, at `(kappa, eta) = (1, 1)`. Lines are means over seeds; partial evaluation is red (pKGFN solid, BOFN + lot reuse dashed), full-pipeline evaluation and screening gray. Bands are ±1 SE on the red traces and on screening. Placed 3.1 in wide in the proposal as Fig. `fig:sim`; the variant with bands on every trace is [`variants/bofn_cu_best_vs_spend_k1_partial_vs_full_all_bands.png`](variants/bofn_cu_best_vs_spend_k1_partial_vs_full_all_bands.png).*
+*Best alloy demonstrated (deposited at Mines and carried through tensile and immersion), as a percentage of the true optimum, against new spend, at `(kappa, eta) = (1, 1)`. Lines are means over seeds; partial evaluation is red (pKGFN solid, BOFN + lot reuse dashed), full-pipeline evaluation and screening gray. Bands are ±1 SE on the red traces and on screening. Placed 3.1 in wide in the proposal as Fig. `fig:sim`. Its pKGFN line is the first sweep's (light settings, 20 seeds); the same figure with the production-setting runs beside it, with n on every line, is [`variants/bofn_cu_best_vs_spend_k1_partial_vs_full_production_pkgfn.png`](variants/bofn_cu_best_vs_spend_k1_partial_vs_full_production_pkgfn.png). The variant with bands on every trace is [`variants/bofn_cu_best_vs_spend_k1_partial_vs_full_all_bands.png`](variants/bofn_cu_best_vs_spend_k1_partial_vs_full_all_bands.png).*
 
 ![all policies](bofn_cu_best_vs_spend_k1e1_all_policies.png)
 
@@ -28,14 +40,17 @@ Copper and blown-powder DED version of [`../bofn-prelim/`](../bofn-prelim/README
 
 ### Every policy, best alloy demonstrated (% of optimum, mean ± SE over seeds)
 
-**`(kappa, eta) = (1, 1)`** (the crack screen misses the nucleant; the one-hour screen misses beta-prime):
+**`(kappa, eta) = (1, 1)`** (the crack screen misses the nucleant; the one-hour screen misses beta-prime). "pKGFN: picks the stage" is the production settings (4 seeds so far); "pKGFN, light settings" is the first sweep's 20 seeds:
 
 | Policy | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | median $ to 80% |
 |---|---|---|---|---|---|---|---|
-| pKGFN: picks the stage | 20 | 12% ± 6 | 27% ± 7 | 59% ± 5 | $86k (60% of seeds) | >$100k (35% of seeds) | >$100k (5% of seeds) |
+| pKGFN: picks the stage | 4 | 4% ± 8 | 44% ± 15 | 64% ± 6 | >$100k (50% of seeds) | >$100k (50% of seeds) | >$100k (0% of seeds) |
 | BOFN, full pipeline | 20 | 15% ± 6 | 39% ± 9 | 73% ± 7 | $67k (85% of seeds) | $74k (75% of seeds) | $88k (70% of seeds) |
 | BOFN + lot reuse | 20 | 14% ± 5 | 32% ± 8 | 72% ± 7 | $54k (85% of seeds) | $65k (85% of seeds) | $81k (65% of seeds) |
+| pKGFN, light settings | 20 | 12% ± 6 | 27% ± 7 | 59% ± 5 | $86k (60% of seeds) | >$100k (35% of seeds) | >$100k (5% of seeds) |
 | Tiered screening | 20 | -9% ± 5 | -9% ± 5 | -8% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10% | 20 | -7% ± 5 | 1% ± 5 | 6% ± 6 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10%, coupon gate | 20 | 8% ± 4 | 16% ± 4 | 23% ± 5 | >$100k (10% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
 | Standard BO | 20 | 6% ± 3 | 7% ± 3 | 14% ± 6 | >$100k (15% of seeds) | >$100k (5% of seeds) | >$100k (5% of seeds) |
 | Random | 20 | -1% ± 4 | 7% ± 5 | 22% ± 5 | >$100k (5% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
 
@@ -43,10 +58,13 @@ Scored by the deposited alloy each policy's own model ranks best (`rec_printed`)
 
 | Policy | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | median $ to 80% |
 |---|---|---|---|---|---|---|---|
-| pKGFN: picks the stage | 20 | 19% ± 6 | 37% ± 7 | 68% ± 4 | $52k (80% of seeds) | $78k (60% of seeds) | >$100k (25% of seeds) |
+| pKGFN: picks the stage | 4 | 7% ± 10 | 47% ± 15 | 78% ± 1 | $50k (100% of seeds) | $57k (100% of seeds) | >$100k (25% of seeds) |
 | BOFN, full pipeline | 20 | 15% ± 6 | 39% ± 9 | 73% ± 7 | $67k (85% of seeds) | $74k (75% of seeds) | $88k (70% of seeds) |
 | BOFN + lot reuse | 20 | 13% ± 4 | 32% ± 8 | 72% ± 7 | $54k (85% of seeds) | $65k (85% of seeds) | $81k (65% of seeds) |
+| pKGFN, light settings | 20 | 19% ± 6 | 37% ± 7 | 68% ± 4 | $52k (80% of seeds) | $78k (60% of seeds) | >$100k (25% of seeds) |
 | Tiered screening | 20 | -8% ± 5 | -8% ± 5 | -6% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10% | 20 | 2% ± 4 | 7% ± 4 | 9% ± 4 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Tiered, Ni ≥ 10%, coupon gate | 20 | 8% ± 4 | 15% ± 4 | 23% ± 5 | >$100k (10% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
 | Standard BO | 20 | 6% ± 3 | 7% ± 3 | 14% ± 6 | >$100k (15% of seeds) | >$100k (5% of seeds) | >$100k (5% of seeds) |
 | Random | 20 | -1% ± 4 | 7% ± 5 | 22% ± 5 | >$100k (5% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
 
@@ -54,22 +72,60 @@ Matched seeds (Wilcoxon signed-rank; every pair in [`tables.md`](tables.md)):
 
 | pKGFN: picks the stage against | n | $25k: mean difference (wins/ties/losses; p) | $50k | $100k |
 |---|---|---|---|---|
-| Tiered screening | 20 | +21 points (16/4/0; p = 0.00044) | +37 points (20/0/0; p = 1.9e-06) | +66 points (20/0/0; p = 1.9e-06) |
-| BOFN, full pipeline | 20 | -3 points (3/1/16; p = 0.07) | -11 points (6/0/14; p = 0.23) | -15 points (4/0/16; p = 0.024) |
-| BOFN + lot reuse | 20 | -2 points (4/2/14; p = 0.16) | -5 points (8/0/12; p = 0.65) | -13 points (2/0/18; p = 0.0094) |
-| Standard BO | 20 | +6 points (5/3/12; p = 0.62) | +20 points (12/0/8; p = 0.019) | +44 points (17/0/3; p = 4.8e-05) |
-| Random | 20 | +13 points (14/3/3; p = 0.0075) | +21 points (16/0/4; p = 0.012) | +36 points (19/0/1; p = 3.6e-05) |
+| Tiered screening | 4 | +20 points (4/0/0; p = 0.12) | +59 points (4/0/0; p = 0.12) | +75 points (4/0/0; p = 0.12) |
+| Tiered, Ni ≥ 10% | 4 | +21 points (4/0/0; p = 0.12) | +61 points (4/0/0; p = 0.12) | +64 points (4/0/0; p = 0.12) |
+| Tiered, Ni ≥ 10%, coupon gate | 4 | +3 points (2/0/2; p = 0.62) | +32 points (3/0/1; p = 0.38) | +39 points (3/0/1; p = 0.25) |
+| BOFN, full pipeline | 4 | -18 points (0/0/4; p = 0.12) | +9 points (2/0/2; p = 0.88) | -25 points (0/0/4; p = 0.12) |
+| BOFN + lot reuse | 4 | -22 points (0/0/4; p = 0.12) | -15 points (1/0/3; p = 0.62) | -2 points (1/0/3; p = 0.88) |
+| Standard BO | 4 | +2 points (1/0/3; p = 0.88) | +40 points (3/0/1; p = 0.25) | +47 points (3/0/1; p = 0.25) |
+| Random | 4 | +12 points (4/0/0; p = 0.12) | +46 points (4/0/0; p = 0.12) | +41 points (3/0/1; p = 0.25) |
+| pKGFN, light settings | 4 | +1 points (2/0/2; p = 0.88) | +21 points (4/0/0; p = 0.12) | +2 points (2/0/2; p = 0.88) |
 
 Purchases per $100k:
 
 | Policy | n | C ($10) | A ($400) | U ($500) | M ($1,500+) | S ($100) | T ($200) | K ($50) | I ($400) | new lots | Mines sessions that paid a scale-up |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| pKGFN: picks the stage | 20 | 6.7 | 12.4 | 11.3 | 40.5 | 15.7 | 7.2 | 14.0 | 12.8 | 12.4 | 12.3 |
+| pKGFN: picks the stage | 4 | 6.8 | 14.2 | 17.8 | 39.5 | 17.8 | 7.8 | 15.2 | 14.0 | 14.2 | 10.2 |
 | BOFN, full pipeline | 20 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
 | BOFN + lot reuse | 20 | 12.6 | 12.6 | 12.6 | 29.3 | 29.3 | 29.3 | 29.3 | 29.3 | 12.6 |  |
+| pKGFN, light settings | 20 | 6.7 | 12.4 | 11.3 | 40.5 | 15.7 | 7.2 | 14.0 | 12.8 | 12.4 |  |
 | Tiered screening | 20 | 224.0 | 22.8 | 44.2 | 24.9 | 24.9 | 24.9 | 24.9 | 4.0 | 22.8 |  |
+| Tiered, Ni ≥ 10% | 20 | 224.0 | 31.6 | 68.0 | 18.0 | 18.0 | 18.0 | 18.0 | 2.1 | 31.6 |  |
+| Tiered, Ni ≥ 10%, coupon gate | 20 | 224.0 | 26.6 | 55.0 | 21.1 | 21.1 | 21.1 | 22.1 | 9.1 | 26.6 |  |
 | Standard BO | 20 | 19.7 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
 | Random | 20 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 | 21.0 |  |
+
+Immersion outcomes (new builds only; the five seed builds are shared):
+
+| Policy | n | immersions per run | passing immersions per run | seeds with a passing alloy | lowest Ni (wt%) among passing builds |
+|---|---|---|---|---|---|
+| pKGFN: picks the stage | 4 | 14.0 | 6.2 | 4/4 | 8.8 |
+| BOFN, full pipeline | 20 | 21.0 | 7.5 | 17/20 | 8.2 |
+| BOFN + lot reuse | 20 | 29.3 | 11.1 | 17/20 | 9.6 |
+| pKGFN, light settings | 20 | 12.8 | 4.5 | 19/20 | 10.7 |
+| Tiered screening | 20 | 4.0 | 0.0 | 0/20 | none |
+| Tiered, Ni ≥ 10% | 20 | 2.1 | 0.5 | 4/20 | 11.0 |
+| Tiered, Ni ≥ 10%, coupon gate | 20 | 9.1 | 2.6 | 10/20 | 10.1 |
+| Standard BO | 20 | 21.0 | 1.6 | 5/20 | 12.1 |
+| Random | 20 | 21.0 | 1.0 | 12/20 | 12.0 |
+
+### Corrosion-aware tiered screening
+
+The spec's shortlist is the four strongest compositions that pass the crack screen, net of burden. On this network that is aluminum bronzes with 2 to 6 wt% Ni, and none of its 80 immersions passed. The two variants keep the spec's loop and change only the shortlist and the gate:
+
+| Tiered variant | n | best alloy at $100k (% of optimum) | immersions per run | passing immersions per run | seeds with a passing alloy | leanest passing alloy (wt% Ni) | Utah sessions per run |
+|---|---|---|---|---|---|---|---|
+| Spec: strongest that pass the crack screen | 20 | -8% ± 5 | 4.0 | 0.0 | 0/20 | none | 44 |
+| `tiered_ni`: Ni ≥ 10 wt% shortlist | 20 | 6% ± 6 | 2.1 | 0.5 | 4/20 | 11.0 | 68 |
+| `tiered_ni_ref`: the same, gated by a dense 90-10 coupon | 20 | 23% ± 5 | 9.1 | 2.6 | 10/20 | 10.1 | 55 |
+
+- **With the nickel floor alone, the one-hour screen stops most builds before immersion.**
+  - The screen's gate is the top quartile of everything screened so far, and seed builds richer in nickel than the shortlist set it high.
+  - The Ni ≥ 10 wt% compositions also freeze wide in this truth, so few pass the crack screen, and the shortlist is topped up with the least crack-prone.
+  - Many of their lots then miss the Utah density gate, and the loop atomizes new lots of the same compositions, which explains the 68 Utah sessions per run.
+- **A lab would gate on a reference coupon instead.** With a dense 90-10 coupon as the gate, immersion runs about 9 times per run, and 10 of 20 seeds demonstrate an alloy that passes.
+- **The shortlist caps it.** The best alloy each Ni ≥ 10 wt% shortlist allows averages 58% of the optimum (40% to 85% across seeds), because its four compositions carry little aluminum. The variant reaches about half of that ceiling.
+- **The comparison:** it matches random designs (22%) and beats standard BO (14%), but stays far behind BOFN (73%). Restricting the shortlist to nickel-rich alloys fixes immersion and gives away strength.
 
 <!-- /RESULTS -->
 
@@ -169,17 +225,86 @@ Option 1 is what this README now does. Option 3 is the one that answers the ques
 
 ## A physics-based truth (`BOFN_TRUTH=phys`)
 
-Built on Oct 28 to answer "is the nickel floor real?". The hand-written immersion formula lets only 3.2% of the box pass immersion, and nothing under 6.1 wt% Ni (optimized; 7.0 wt% is the lowest of 400,000 random designs). That floor comes from the formula (`film = 1 - exp(-Ni/0.15)` against dense 70-30), not from data. The physics-based truth keeps the network and the process nodes and replaces what simulation or data can supply. The whole recipe is in the docstring of [`truth_phys.py`](truth_phys.py).
+Built on Oct 28 to answer "is the nickel floor real, and should it restrict the search space?". The hand-written immersion formula lets only 3.2% of the box pass immersion, and nothing under 6.1 wt% Ni (optimized; 7.0 wt% is the lowest of 400,000 random designs). That floor comes from the formula (`film = 1 - exp(-Ni/0.15)` against dense 70-30), not from data. The physics-based truth keeps the network and the process nodes and replaces what simulation or data can supply. The whole recipe is in the docstring of [`truth_phys.py`](truth_phys.py).
 
 | Node | Hand-written truth | Physics-based truth |
 |---|---|---|
-| f, g, s (CALPHAD) | closed forms | interpolated from an 864-composition pycalphad grid with the open MatCalc `mc_ni` database ([`phys/calphad_grid.py`](phys/calphad_grid.py), [`phys/calphad_grid.csv`](phys/calphad_grid.csv)): f = equilibrium freezing range / 200 °C; g = Fe-rich solid one degree above the solidus / 0.045 (NAB's); s = a yield-strength estimate from the 600 °C phase fractions (Orowan-type square roots of NiAl/Ni3Al and Fe-rich bcc kappa, solid solution in alpha) |
-| h (conductivity) | `0.6 (1 - Ni)^2 (1 - 0.6 Al)` | `0.6 sqrt(k / k_Cu)`, with k from Wiedemann-Franz on a Matthiessen resistivity (C70600 comes out at 46 W/m K, C71500 at 22) |
-| m (30-day immersion) | hand-written film | a film model fitted to same-test seawater data ([`phys/fit_corrosion.py`](phys/fit_corrosion.py), [`phys/corrosion_data.csv`](phys/corrosion_data.csv), [`phys/corrosion_fit.md`](phys/corrosion_fit.md)) |
-| search space | the box | the proposal's limits on every candidate pool: liquidus at most 1,250 °C (from the grid), Cu at least 65 wt%, Ni ≥ Fe above 7 wt% Al, Fe ≤ 2.3 wt% below 1.5 wt% Al (74% of the box) |
+| f, g, s (CALPHAD) | closed forms | interpolated from an 864-composition pycalphad grid with the open MatCalc `mc_ni` database ([`phys/calphad_grid.py`](phys/calphad_grid.py), [`phys/calphad_grid.csv`](phys/calphad_grid.csv); Ni 8 levels × Al 6 × Fe 6 × Mn 3, all converged): f = equilibrium freezing range / 200 °C; g = Fe-rich solid one degree above the solidus / 0.045 (NAB's); s = a yield-strength estimate from the 600 °C phase fractions (Orowan-type square roots of NiAl/Ni3Al and Fe-rich bcc kappa, solid solution in alpha) |
+| h (conductivity) | `0.6 (1 - Ni)^2 (1 - 0.6 Al)` | `0.6 sqrt(k / k_Cu)`, with k from Wiedemann-Franz on a Matthiessen resistivity (C70600 comes out at 46 W/m K, C71500 at 22, copper at 435) |
+| m (30-day immersion) | hand-written film | a film model fitted to same-test seawater data (below) |
+| search space | the box | the proposal's limits on every candidate pool of every policy: liquidus at most 1,250 °C (from the grid), Cu at least 65 wt%, Ni ≥ Fe above 7 wt% Al, Fe ≤ 2.3 wt% below 1.5 wt% Al (74% of the box) |
 | the bar for "passes immersion" | dense 70-30 Cu-Ni | dense 90-10 Cu-Ni (`BOFN_BAR=7030` for 70-30) |
 
-Results, the Edison review and the runs follow below as they finish ([`phys/phys_tables.md`](phys/phys_tables.md)).
+**The corrosion data and fit** ([`phys/corrosion_data.csv`](phys/corrosion_data.csv), [`phys/fit_corrosion.py`](phys/fit_corrosion.py), [`phys/corrosion_fit.md`](phys/corrosion_fit.md)). Only within-study ratios are used (one intercept per study), so units and absolute levels cancel. 30 rates from 11 studies:
+
+- From the Edison literature outputs already in the repo (`edison-trajectories/cu-ded-2026-10/`, each row traced to a file and line): Tan et al. 2024 (four cast NAB, Al 6.9 to 9.9 wt% with Ni falling from 6.8 to 4.0, 30 d), Yang et al. 2018 (Cu-7Ni-3Al-1Fe-1Mn beat C70600 in the same test), Qian et al. 2025 (B10 vs B30), Lewis and LaQue 1981 (quiet seawater; and a one-year flowing test with unspecified aluminum bronze and NAB grades, half weight), Zhao et al. 2022 (laser-deposited NAB diluted by a steel substrate, half weight).
+- Those files hold no copper and no Cu-Ni under 10 wt% Ni, and the first fit made nickel look harmful. An Edison literature query ([`edison/literature/copper-anchor.md`](edison/literature/copper-anchor.md), task `0ed56496`) found same-test copper anchors: Ravindran 1983 (120 days in a harbour: copper 61 µm/y, 90-10 and 70-30 both 22.5), Wheatfall 1967 as compiled by Gdowski 1991 (copper vs Cu-30Ni, half weight), Cohen and Whitted 1971 as compiled by Banning and Oden 1973 (hot brine: copper 0.99 mpy, two aluminum bronzes 0.75 and 0.73, 90-10 0.70, 70-30 0.46; half weight), and Al-Fozan and Malik 2008 (90-10 0.145 vs 70-30 0.067 mpy).
+- Model: `ln rate = a_study + b_Ni (1 - exp(-Ni/5)) + b_Al Al + b_Al2 Al²/10 + b_Fe min(Fe, 1.5)` (wt%), with the film's signs fixed (nickel and dissolved iron can only help) and a weak ridge. Fit: b_Ni = -0.84, b_Al = -0.28, b_Al2 = +0.39, b_Fe = 0 (at its bound); ln-rate RMSE 0.23. A little aluminum helps (to about 3.6 wt%) and a lot hurts, as Yang 2018 and Cohen and Whitted against Tan 2024 and NAB require. A linear Al term cannot do both; it fits worse (RMSE 0.32).
+- The first fit, before the copper anchors (16 rates, 6 studies; b_Ni = -0.32), is kept with its 24 runs in [`quality/results-phys-v1/`](quality/results-phys-v1/).
+
+**The nickel floor** (the lowest Ni at which some composition inside the limits corrodes no faster than the bar alloy):
+
+| | 90-10 bar | 70-30 bar |
+|---|---|---|
+| Base fit, dense and free of beta-prime (composition only) | 1.6 wt% (Cu-1.6Ni-3.1Al) | 2.6 wt% (Cu-2.6Ni-3.2Al) |
+| Full physics truth, optimized over composition and process ([`phys/phys_tables.md`](phys/phys_tables.md)) | 2.2 wt% | 3.3 wt% |
+| Range over 26 alternative fits (Ni scale, linear Ni or Al, signs free, weights, ridge, each study left out, Reinhart 1968 added) | 0 to 10.0 wt% | 0 to 30.0 wt% |
+| Hand-written truth, for comparison | — | 6.1 wt% |
+
+The floor is not robust. What moves it most is whether a few wt% of Al helps the film: with Al linear, nothing but the bar alloys passes (10 and 30 wt% Ni), and with the quadratic it falls to 1.6 and 2.6 wt%. Adding the deep-sea Reinhart 1968 series that the Edison review recovered (copper about equal to 90-10 there) lowers it to 0.4 and 1.1 wt%, and to zero with that report's bronzes. The data that decide it are thin (Yang 2018's one cast Cu-7Ni-3Al alloy, and two aluminum bronzes in hot brine). **So the evidence does not justify restricting the search space to a nickel floor**, and it does not support the hand-written truth's 6 wt% either. The proposal's own limits are applied instead. One 30-day immersion test of C70600, C71500, a nickel-free Cu-3Al bronze and a Cu-2Ni-3Al alloy side by side, deposited the same way, would settle it.
+
+**In this truth at (1, 1)** the optimum is J* = 0.429 at Cu-11.7Ni-4.3Al-3.2Fe (a = 0.42, P = 0.63, v = 0.54): strength estimate 396 MPa, freezing range 33 °C, rho_m 0.99, beta-prime 0.17, m = 0.93 against a bar of 0.81. It passes the CALPHAD crack screen (f = 0.16), so here the screen does not cut the optimum off; the one-hour screen and the immersion gate do the work. 5.2% of designs inside the limits pass immersion against dense 90-10 (3.2% against 70-30). C71500 scores -21% of J*, C70600 +6% and NAB -35% (it fails immersion).
+
+**Runs on this truth at (1, 1)** (`results-phys/`, [`tables-phys.md`](tables-phys.md); the policies, costs, seed data and budget are the same as above, and every candidate pool is filtered by the limits):
+
+| Policy | n | $25k | $50k | $100k | median $ to 60% | median $ to 70% | median $ to 80% |
+|---|---|---|---|---|---|---|---|
+| pKGFN: picks the stage | 1 | 18% ± 0 | 32% ± 0 | 71% ± 0 | $100k (100% of seeds) | $100k (100% of seeds) | >$100k (0% of seeds) |
+| BOFN, full pipeline | 6 | 18% ± 8 | 53% ± 16 | 76% ± 14 | $38k (83% of seeds) | $50k (83% of seeds) | $76k (67% of seeds) |
+| BOFN + lot reuse | 6 | 11% ± 10 | 44% ± 16 | 89% ± 3 | $51k (100% of seeds) | $54k (100% of seeds) | $62k (83% of seeds) |
+| Tiered screening | 6 | -16% ± 9 | -16% ± 9 | -2% ± 8 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Standard BO | 6 | 4% ± 5 | 4% ± 5 | 5% ± 5 | >$100k (0% of seeds) | >$100k (0% of seeds) | >$100k (0% of seeds) |
+| Random | 5 | 11% ± 16 | 11% ± 16 | 12% ± 15 | >$100k (20% of seeds) | >$100k (20% of seeds) | >$100k (0% of seeds) |
+
+| Policy | n | immersions per run | passing immersions per run | seeds with a passing alloy | lowest Ni (wt%) among passing builds |
+|---|---|---|---|---|---|
+| pKGFN: picks the stage | 1 | 14.0 | 3.0 | 1/1 | 6.1 |
+| BOFN, full pipeline | 6 | 21.0 | 9.8 | 5/6 | 7.4 |
+| BOFN + lot reuse | 6 | 30.2 | 14.2 | 6/6 | 5.5 |
+| Tiered screening | 6 | 5.3 | 0.0 | 0/6 | none |
+| Standard BO | 6 | 21.0 | 1.7 | 1/6 | 16.4 |
+| Random | 5 | 21.0 | 0.8 | 3/5 | 18.1 |
+
+![physics-based truth, partial vs full](bofn_cu_phys_best_vs_spend_k1_partial_vs_full.png)
+
+![physics-based truth, all policies](bofn_cu_phys_best_vs_spend_k1e1_all_policies.png)
+
+- **The ranking holds.**
+  - The network-aware searches lead again: BOFN + reuse 89% ± 3, BOFN 76% ± 14, and pKGFN 71% (one seed).
+  - Tiered screening, standard BO and random designs trail.
+- **Tiered screening fails for the same reason as in the hand-written truth.**
+  - Its shortlist (the strongest compositions that pass the crack screen, net of burden) carries 5.5 to 9.4 wt% Al, past the fitted optimum of about 3.6 wt%.
+  - None of its immersed builds reaches the bar (the best m is 0.68 to 0.80, against 0.81).
+- **Fewer of the model-free baselines' seeds find an alloy that passes immersion:** standard BO does in 1 of 6 seeds, random designs in 3 of 5, against 6 of 6 for BOFN + reuse.
+- **The first fit gives the same order.** Its runs (pkgfn 87% (one seed), eifn 34% ± 17, eifn_reuse 64% ± 12, tiered -29% ± 7, ei 13% ± 10, random -15% ± 7, % of that truth's J* = 0.298) are in [`quality/results-phys-v1/`](quality/results-phys-v1/). That fit had no copper anchors and a different optimum.
+- **Fewer seeds** than in the hand-written truth, and only 1 seed of pKGFN: treat this as a what-if, not a second headline.
+
+**Independent review** (Edison Analysis, task `363efb39`, of the first fit; [`edison/results/phys-review.md`](edison/results/phys-review.md), artifacts in [`edison/results/phys-review-files/`](edison/results/phys-review-files/)).
+
+- **Verdict:** "the evidence does not establish a robust positive nickel floor, and I would not restrict the search to Ni ≥ 10 wt%". The physics truth is "defensible as an explicitly qualified what-if simulator, not as validated prediction".
+- **Reproduction:** it re-implemented the fit independently and reproduced the coefficients to 1e-15. It also reproduced the floors by continuous optimization: 0.95 and 1.82 wt% film-only, with full-network witnesses at 1.63 and 2.43 wt%.
+- **Refits:** 41 refits span 0 to 5.5 wt% against 90-10 and 0 to 15.9 wt% against 70-30. A strict data subset returns the bar alloys themselves (10 and 30 wt%).
+- **New data:** it recovered a same-deployment copper series, Reinhart 1968: oxygen-free copper 1.6 mpy, Cu-6.25Ni 1.5, 90-10 1.6, 70-30 1.2, all 123 days at 5,640 ft. That is not in the fit yet; with it the floors fall to 0.2 and 0.9 wt%.
+- **Bar:** it recommends dense C70600 as the primary bar, with C71500 as a stricter scenario.
+- **Experiments:** C70600 against one sub-10 wt% Ni alloy (for example Cu-2Ni-2.1Al-3.6Fe) in the same 30-day test, in triplicate. To tell the models apart: Ni 0/2/5/10 × Al 0/2.5, plus copper and 70-30, which is 10 materials and 30 coupons.
+- Its other findings, all open:
+  - **The immersion gate is soft.** The logistic gives half the strength credit at the bar.
+  - **mc_ni is used far outside its validated range.** Its header gives Cu < 0.5 wt%.
+  - **The Qian and quiet-water rows are proxies.** They are an inverse resistance and range midpoints. Replacing Qian's with its Tafel pair barely moves the floor (1.60 and 2.61 wt%).
+  - **One grid point disagrees.** At a NAB-like point (Cu-4.3Ni-9.5Al-3.6Fe), the stored state one degree above the solidus is mostly liquid with Fe-rich kappa. Its independent solve finds mostly beta there, so `g` is 0.61 in the grid and 0 in its solve.
+  - **Two grid rows have empty phase inventories at the solidus.**
+  - These matter only through `g`, which acts through the crack term when the freezing range exceeds about 90 °C. The physics optimum's range is 33 °C.
+- A second review, of the refit with the copper anchors (task `e8550274`), was submitted on Oct 28 and is fetched with `python edison/edison_review.py fetch phys-review-v2`.
 
 ## Policies (all on equal $100k of new spend)
 
@@ -216,7 +341,12 @@ Results, the Edison review and the runs follow below as they finish ([`phys/phys
 - **The one-hour screen never stops the optimum.** In every cell the optimum ranks in the top quartile of dense candidates on the one-hour screen, so the screen's blind spot (`eta = 1`) costs wasted immersions and false rejections of other candidates, not the optimum itself. The CALPHAD screen is the one that cuts the optimum off at `kappa = 1`.
 - **Simplifications.** Observations are noise-free. There is one scalar objective (strength gated by immersion, minus the burden), not the proposal's several objectives (Advance 1). One experiment at a time, with no delays (the delays are in `step-costs` but not modelled; Advance 2 is future work). One parameter set per Mines build.
 - **Costs.** The step costs are the project's own round all-in estimates. Outside the loop and not modelled: the yearly gas atomization of the finalist (about $12,500 a run), the combustible-dust tests, and the flowing-seawater tests at Carderock (free to the project, months).
-- **pKGFN implementation.** It is discrete and one-step myopic, with lighter MC settings than PR 86. Treat its numbers as those of this implementation at these settings.
+- **pKGFN implementation.** It is discrete and one-step myopic. The first sweep used lighter MC settings than PR 86; the production-setting re-runs use PR 86's. Treat its numbers as those of this implementation at these settings.
+- **The physics-based truth is a what-if.**
+  - **CALPHAD:** `mc_ni` is extrapolated far outside its validated range (Cu < 0.5 wt%), and it has no Cu-Al-Ni ternary.
+  - **Corrosion model:** it rests on 30 rates from 11 studies, several of them compilations, proxies or range midpoints, and the floor it implies is not robust.
+  - **Still hand-written:** the process nodes, beta-prime, tensile strength, the porosity and beta-prime terms of immersion, and the soft immersion gate (half the strength credit at the bar).
+  - **Not a validation:** use it to check that the ranking of the policies does not depend on the hand-written formulas, not to predict alloys.
 
 ## Quality checks
 
@@ -255,7 +385,14 @@ cd benchmarks/bofn-cu-ded
 python check_truth.py             # required properties, truth_tables.md
 logs/plan.sh                      # the sweep in priority order (resumable; one JSON per run)
 python analyze.py                 # tables.md
-python plot.py                    # figures
+python plot.py --keep-proposal-figure   # figures (without the flag it also redraws Fig. fig:sim and the sensitivity figures)
+# the physics-based truth
+python phys/calphad_grid.py && python phys/calphad_grid.py --fractions-only   # the pycalphad grid (about 30 min on 3 cores)
+python phys/fit_corrosion.py      # the corrosion fit and the floors
+BOFN_TRUTH=phys python phys/check_phys.py
+BOFN_TRUTH=phys python run_sweep.py --cells 1,1 --seeds 0-19 --kinds pkgfn eifn eifn_reuse tiered ei random
+BOFN_TRUTH=phys python analyze.py # tables-phys.md
+BOFN_TRUTH=phys python plot.py    # bofn_cu_phys_*.png
 ```
 
 The figures need the Aptos fonts in `~/.local/share/fonts/aptos/` (Microsoft's zip: `download.microsoft.com/download/8/6/0/860a94fa-7feb-44ef-ac79-c072d9113d69/Microsoft%20Aptos%20Fonts.zip`).
