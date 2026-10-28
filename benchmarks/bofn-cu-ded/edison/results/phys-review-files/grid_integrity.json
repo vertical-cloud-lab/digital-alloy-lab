@@ -1,0 +1,11 @@
+{
+  "n": 864,
+  "ok": 864,
+  "missing_liquidus": 33,
+  "zero_phase_sum_sol": [
+    245,
+    854
+  ],
+  "missing_alpha600_compositions": 6,
+  "sha256_mcni": "84ba813156e1f7d8bde495d74420319afec03572b981f6b56103807f305313ab"
+}

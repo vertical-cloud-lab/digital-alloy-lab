@@ -1,0 +1,242 @@
+[
+  {
+    "name": "Base",
+    "data": "variant_00.csv",
+    "options": {}
+  },
+  {
+    "name": "No ridge",
+    "data": "variant_01.csv",
+    "options": {
+      "ridge": 0
+    }
+  },
+  {
+    "name": "Ridge 0.5",
+    "data": "variant_02.csv",
+    "options": {
+      "ridge": 0.5
+    }
+  },
+  {
+    "name": "Linear Al",
+    "data": "variant_03.csv",
+    "options": {
+      "quadratic": false
+    }
+  },
+  {
+    "name": "Free signs",
+    "data": "variant_04.csv",
+    "options": {
+      "signs": false
+    }
+  },
+  {
+    "name": "Linear Al; free signs",
+    "data": "variant_05.csv",
+    "options": {
+      "quadratic": false,
+      "signs": false
+    }
+  },
+  {
+    "name": "Ni scale 3",
+    "data": "variant_06.csv",
+    "options": {
+      "scale": 3
+    }
+  },
+  {
+    "name": "Ni scale 8",
+    "data": "variant_07.csv",
+    "options": {
+      "scale": 8
+    }
+  },
+  {
+    "name": "Ni scale 12",
+    "data": "variant_08.csv",
+    "options": {
+      "scale": 12
+    }
+  },
+  {
+    "name": "Linear Ni",
+    "data": "variant_09.csv",
+    "options": {
+      "linear": true
+    }
+  },
+  {
+    "name": "Fe cap 1.0",
+    "data": "variant_10.csv",
+    "options": {
+      "fe_cap": 1.0
+    }
+  },
+  {
+    "name": "Fe cap 2.5",
+    "data": "variant_11.csv",
+    "options": {
+      "fe_cap": 2.5
+    }
+  },
+  {
+    "name": "Fe nominal (no cap)",
+    "data": "variant_12.csv",
+    "options": {
+      "fe_cap": 100
+    }
+  },
+  {
+    "name": "Equal row weights",
+    "data": "variant_13.csv",
+    "options": {
+      "weights": "equal"
+    }
+  },
+  {
+    "name": "Equal study weights",
+    "data": "variant_14.csv",
+    "options": {
+      "weights": "study_equal"
+    }
+  },
+  {
+    "name": "Add Mn",
+    "data": "variant_15.csv",
+    "options": {
+      "mn": true
+    }
+  },
+  {
+    "name": "Add Ni x Al",
+    "data": "variant_16.csv",
+    "options": {
+      "interaction": true
+    }
+  },
+  {
+    "name": "Drop Tan2024",
+    "data": "variant_17.csv",
+    "options": {}
+  },
+  {
+    "name": "Drop Yang2018",
+    "data": "variant_18.csv",
+    "options": {}
+  },
+  {
+    "name": "Drop Qian2025",
+    "data": "variant_19.csv",
+    "options": {}
+  },
+  {
+    "name": "Drop LewisLaQue1981_quiet",
+    "data": "variant_20.csv",
+    "options": {}
+  },
+  {
+    "name": "Drop LewisLaQue1981_1y",
+    "data": "variant_21.csv",
+    "options": {}
+  },
+  {
+    "name": "Drop Zhao2022",
+    "data": "variant_22.csv",
+    "options": {}
+  },
+  {
+    "name": "Drop Lewis + Zhao (weak rows)",
+    "data": "variant_23.csv",
+    "options": {}
+  },
+  {
+    "name": "Only Tan + Yang",
+    "data": "variant_24.csv",
+    "options": {}
+  },
+  {
+    "name": "Yang nominal corrected",
+    "data": "source_00.csv",
+    "options": {}
+  },
+  {
+    "name": "No unconfirmed Yang comparator",
+    "data": "source_01.csv",
+    "options": {}
+  },
+  {
+    "name": "Replace Qian EIS by 7d Tafel",
+    "data": "source_02.csv",
+    "options": {}
+  },
+  {
+    "name": "Add Lewis 30d clean-water pair",
+    "data": "source_03.csv",
+    "options": {}
+  },
+  {
+    "name": "Add Lewis untreated 62d/132d pairs",
+    "data": "source_04.csv",
+    "options": {}
+  },
+  {
+    "name": "Replace Tan30d by Tan10d",
+    "data": "source_05.csv",
+    "options": {}
+  },
+  {
+    "name": "Mn excluding unreported Zhao",
+    "data": "source_06.csv",
+    "options": {
+      "mn": true
+    }
+  },
+  {
+    "name": "Add 123d Cu/CuNi-only bridge",
+    "data": "source_07.csv",
+    "options": {}
+  },
+  {
+    "name": "Add 123d Cu/CuNi/Al bronze bridge",
+    "data": "source_08.csv",
+    "options": {}
+  },
+  {
+    "name": "Add all historical bridges; report weight2",
+    "data": "source_09.csv",
+    "options": {}
+  },
+  {
+    "name": "Add all historical Cu/CuNi; report weight2",
+    "data": "source_10.csv",
+    "options": {}
+  },
+  {
+    "name": "Strict data +123d Cu/CuNi bridge",
+    "data": "source_11.csv",
+    "options": {}
+  },
+  {
+    "name": "Add Gudic Cu/CuAl pair only",
+    "data": "source_12.csv",
+    "options": {}
+  },
+  {
+    "name": "Add Gudic all alloys (outside box)",
+    "data": "source_13.csv",
+    "options": {}
+  },
+  {
+    "name": "Add secondary 60d Fe series",
+    "data": "source_14.csv",
+    "options": {}
+  },
+  {
+    "name": "Add 1y tropical Cu/CuAl bridge",
+    "data": "source_15.csv",
+    "options": {}
+  }
+]

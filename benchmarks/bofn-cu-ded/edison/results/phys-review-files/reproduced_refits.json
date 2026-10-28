@@ -1,0 +1,3305 @@
+[
+  {
+    "fit": "Base",
+    "model": {
+      "label": "Base",
+      "coef": {
+        "ni": -0.3183709929324111,
+        "al": -0.1686592875388539,
+        "al2": 0.32270569341924804,
+        "fe": -1.8826917152994006e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.6009622954160118,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.06532722829953,
+        1.7670015557840486,
+        1.0713189505783076,
+        0.3858861996560145
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.9466253643271685,
+        "witness": [
+          0.9466253643271685,
+          2.613205942520137,
+          0.6106458091275128,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000029883,
+        "liquidus": 1085.5466862794904,
+        "min_constraint": -2.9883318042323026e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 0.9466253643838838,
+          "witness": [
+            0.9466253643838838,
+            2.613205948612403,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.7045824257339,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.8216571261698025,
+        "witness": [
+          1.8216571261698025,
+          2.6132059503216527,
+          0.7072733580165783,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000682,
+        "liquidus": 1088.1231082197912,
+        "min_constraint": -6.822320486321587e-14,
+        "successful": true,
+        "certificate": {
+          "floor": 1.8216571261713437,
+          "witness": [
+            1.8216571261713437,
+            2.613205948612403,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1086.9851305780671,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "No ridge",
+    "model": {
+      "label": "No ridge",
+      "coef": {
+        "ni": -0.4115890976437751,
+        "al": -0.1829963790985796,
+        "al2": 0.33212632702100864,
+        "fe": -6.307975746957667e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0,
+      "sse": 0.5992054896008627,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.06532722829953,
+        1.7670015557840486,
+        1.0713189505783076,
+        0.3858861996560145
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 1.4533176908931091,
+        "witness": [
+          1.4533176908931091,
+          2.7549213131634613,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.000000000577077,
+        "liquidus": 1085.4014580563644,
+        "min_constraint": -5.770770528101821e-10,
+        "successful": false,
+        "certificate": {
+          "floor": 1.4533177002681594,
+          "witness": [
+            1.4533177002681594,
+            2.754921308707397,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1085.4014580996964,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 2.4313911381888156,
+        "witness": [
+          2.4313911381888156,
+          2.7549212825732354,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.000000000000321,
+        "liquidus": 1087.8761720423986,
+        "min_constraint": -3.2096547641913276e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 2.4313911381951585,
+          "witness": [
+            2.4313911381951585,
+            2.754921308707397,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1087.8761719136805,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Ridge 0.5",
+    "model": {
+      "label": "Ridge 0.5",
+      "coef": {
+        "ni": -0.09272853674820068,
+        "al": -0.11589416276109095,
+        "al2": 0.28053108827409656,
+        "fe": -5.54139149094813e-20
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.5,
+      "sse": 0.6251146380487811,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.06532722829953,
+        1.7670015557840486,
+        1.0713189505783076,
+        0.3858861996560145
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.8787462893814341,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0,
+        "liquidus": 1084.6533743945831,
+        "min_constraint": 0.0,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.065620667465116,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.2202788462316,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          1.0809794483371795,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000002,
+        "liquidus": 1084.6863703310446,
+        "min_constraint": -2.3592239273284576e-16,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.065620667465116,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.2202788462316,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Linear Al",
+    "model": {
+      "label": "Linear Al",
+      "coef": {
+        "ni": -1.5665481236919085e-14,
+        "al": 0.14023831675205675,
+        "fe": -3.8518269143886335e-23
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": false,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 1.1788447933254973,
+      "rank": 3,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        6.642082680328059,
+        1.072690298008369,
+        0.4167653162782263
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000135,
+        "liquidus": 1084.51,
+        "min_constraint": -1.3545388950608376e-14,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.51,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          1.5,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000155,
+        "liquidus": 1088.8833333333332,
+        "min_constraint": -1.5626650356538105e-14,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.51,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Free signs",
+    "model": {
+      "label": "Free signs",
+      "coef": {
+        "ni": -0.007572457009958546,
+        "al": -0.13390136795222063,
+        "al2": 0.2910165652511042,
+        "fe": 0.38696503072401295
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.4496979178727853,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.06532722829953,
+        1.7670015557840486,
+        1.0713189505783076,
+        0.3858861996560145
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 0.5855501732502709,
+        "liquidus": 1084.51,
+        "min_constraint": 0.5352034066178993,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.3005798284486585,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1083.3694793580385,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 0.7988154535519392,
+        "liquidus": 1084.51,
+        "min_constraint": 0.22462533166874535,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.3005798284486585,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1083.3694793580385,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Linear Al; free signs",
+    "model": {
+      "label": "Linear Al; free signs",
+      "coef": {
+        "ni": 0.4421181437089914,
+        "al": 0.15051591677526374,
+        "fe": 0.5113197274633527
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": false,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.8820248940268597,
+      "rank": 3,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        6.642082680328059,
+        1.072690298008369,
+        0.4167653162782263
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 0.33349360875774575,
+        "liquidus": 1084.51,
+        "min_constraint": 1.0981315779547836,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.51,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 0.4734002381327164,
+        "liquidus": 1084.51,
+        "min_constraint": 0.7478140788759406,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.51,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Ni scale 3",
+    "model": {
+      "label": "Ni scale 3",
+      "coef": {
+        "ni": -0.03053474848954874,
+        "al": -0.13675886802297862,
+        "al2": 0.3069839599427796,
+        "fe": -6.98218502165065e-20
+      },
+      "options": {
+        "scale": 3,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.6311919234554196,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.063047090391068,
+        1.7682281116287113,
+        1.0590783332414948,
+        0.45003297676713594
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.22686197291829724,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0,
+        "liquidus": 1084.5470143218972,
+        "min_constraint": -3.469446951953614e-18,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.2274595071428136,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1083.634251889925,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.23573868584068294,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0,
+        "liquidus": 1084.5484626276898,
+        "min_constraint": -3.469446951953614e-18,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.2274595071428136,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1083.634251889925,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Ni scale 8",
+    "model": {
+      "label": "Ni scale 8",
+      "coef": {
+        "ni": -0.5842087226319305,
+        "al": -0.19655951075837935,
+        "al2": 0.33462792377161554,
+        "fe": -6.229534052304947e-16
+      },
+      "options": {
+        "scale": 8,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.5263179482636282,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.065908412586033,
+        1.7656787929277633,
+        1.1003927799162323,
+        0.3122397699848621
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 1.9816876903345781,
+        "witness": [
+          1.9816876903345781,
+          2.936986099796182,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.000000000642765,
+        "liquidus": 1085.8854426047278,
+        "min_constraint": -6.427649523743639e-10,
+        "successful": false,
+        "certificate": {
+          "floor": 1.9816877016105403,
+          "witness": [
+            1.9816877016105403,
+            2.936986079089618,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1085.8854427291578,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 5.268443810183498,
+        "witness": [
+          5.268443810183498,
+          2.9369861397031354,
+          1.5,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000043543,
+        "liquidus": 1098.3306262040703,
+        "min_constraint": -4.354294702579864e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 5.268443810298717,
+          "witness": [
+            5.268443810298717,
+            2.936986079089618,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1094.3825996146174,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Ni scale 12",
+    "model": {
+      "label": "Ni scale 12",
+      "coef": {
+        "ni": -0.6829593501084145,
+        "al": -0.20120799485828253,
+        "al2": 0.33586129742416626,
+        "fe": -2.1291834068202176e-14
+      },
+      "options": {
+        "scale": 12,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.4763282210143727,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.064976046987846,
+        1.7636222438324327,
+        1.127544786996144,
+        0.2512529921108172
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 1.5908758898882178,
+        "witness": [
+          1.5908758898882178,
+          2.9954031001852286,
+          0.4603122541966336,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000169194,
+        "liquidus": 1085.2982580799257,
+        "min_constraint": -1.6919410317228767e-11,
+        "successful": true,
+        "certificate": {
+          "floor": 1.590875890227844,
+          "witness": [
+            1.590875890227844,
+            2.995403108387519,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.6733933488597,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 7.770612917227815,
+        "witness": [
+          7.770612917227815,
+          2.9954031104341095,
+          1.5,
+          0.0
+        ],
+        "rate_ratio": 1.000000000001957,
+        "liquidus": 1106.440204820182,
+        "min_constraint": -1.9569901255067634e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 7.7706129172945975,
+          "witness": [
+            7.7706129172945975,
+            2.995403108387519,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1101.292551167156,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Linear Ni",
+    "model": {
+      "label": "Linear Ni",
+      "coef": {
+        "ni": -0.19000382541833277,
+        "al": -0.18788031672253067,
+        "al2": 0.32838649782301776,
+        "fe": -4.296469788420711e-12
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": true,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.43829063042795446,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.129032493675046,
+        2.551075378613604,
+        1.7197836704589753,
+        0.29491883547306363
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          1.3123093626217965,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0,
+        "liquidus": 1084.7241136328487,
+        "min_constraint": 0.0,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.8606583700616675,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1081.3414054810398,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 15.856563692007908,
+        "witness": [
+          15.856563692007908,
+          2.8606581506241993,
+          0.30179281579780265,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000081144,
+        "liquidus": 1133.757572729503,
+        "min_constraint": -8.114398042380344e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 15.856563692503137,
+          "witness": [
+            15.856563692503137,
+            2.8606583700616675,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1131.8394085619082,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Fe cap 1.0",
+    "model": {
+      "label": "Fe cap 1.0",
+      "coef": {
+        "ni": -0.31837099293241106,
+        "al": -0.1686592875388539,
+        "al2": 0.3227056934192481,
+        "fe": -1.6124570824547315e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.0,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.6009622954160116,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.063126044635066,
+        1.7672239652903403,
+        0.5170487589968159,
+        0.3555433076660683
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.9466253643255348,
+        "witness": [
+          0.9466253643255348,
+          2.613205907267978,
+          0.610645789021346,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000030744,
+        "liquidus": 1085.5466864068744,
+        "min_constraint": -3.0744295997919835e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 0.9466253643838829,
+          "witness": [
+            0.9466253643838829,
+            2.613205948612403,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.7045824257339,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.8216571261695391,
+        "witness": [
+          1.8216571261695391,
+          2.613205957069533,
+          0.707273361865188,
+          0.0
+        ],
+        "rate_ratio": 1.00000000000008,
+        "liquidus": 1088.1231081924736,
+        "min_constraint": -7.982503547054876e-14,
+        "successful": true,
+        "certificate": {
+          "floor": 1.821657126171343,
+          "witness": [
+            1.821657126171343,
+            2.613205948612403,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1086.9851305780671,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Fe cap 2.5",
+    "model": {
+      "label": "Fe cap 2.5",
+      "coef": {
+        "ni": -0.3183709929324114,
+        "al": -0.16865928753885384,
+        "al2": 0.32270569341924804,
+        "fe": -3.641558058048053e-16
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 2.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.600962295416012,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.099375172177142,
+        1.7897151510071276,
+        1.2952318369860008,
+        0.3814771945016438
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.9466253643750195,
+        "witness": [
+          0.9466253643750195,
+          2.613205894711811,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.000000000000468,
+        "liquidus": 1084.7045826482702,
+        "min_constraint": -4.679590048795035e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 0.9466253643838993,
+          "witness": [
+            0.9466253643838993,
+            2.613205948612402,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.7045824257336,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.8216571260058005,
+        "witness": [
+          1.8216571260058005,
+          2.613205959734993,
+          1.5108212221380506,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000073224,
+        "liquidus": 1089.7942538798495,
+        "min_constraint": -7.322253914310295e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 1.8216571261713566,
+          "witness": [
+            1.8216571261713566,
+            2.613205948612402,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1086.9851305780671,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Fe nominal (no cap)",
+    "model": {
+      "label": "Fe nominal (no cap)",
+      "coef": {
+        "ni": -0.3183709929324108,
+        "al": -0.1686592875388538,
+        "al2": 0.322705693419248,
+        "fe": -1.0146510688232442e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 100,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.6009622954160116,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.150680152545931,
+        3.985998085044185,
+        1.734909657585998,
+        0.3916244362730616
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.946625364381971,
+        "witness": [
+          0.946625364381971,
+          2.613205906173769,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000001008,
+        "liquidus": 1084.7045826009607,
+        "min_constraint": -1.0080825063596421e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 0.9466253643838828,
+          "witness": [
+            0.9466253643838828,
+            2.613205948612402,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.7045824257334,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.821657126169928,
+        "witness": [
+          1.821657126169928,
+          2.613205889559201,
+          0.7072733233608689,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000626,
+        "liquidus": 1088.12310846577,
+        "min_constraint": -6.267208974009009e-14,
+        "successful": true,
+        "certificate": {
+          "floor": 1.8216571261713423,
+          "witness": [
+            1.8216571261713423,
+            2.613205948612402,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1086.9851305780671,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Equal row weights",
+    "model": {
+      "label": "Equal row weights",
+      "coef": {
+        "ni": -0.2956012517805422,
+        "al": -0.16740279333755978,
+        "al2": 0.3366342911223468,
+        "fe": -6.628224511371859e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.8540958254768698,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        11.937707050086269,
+        1.95311723814319,
+        1.1613622827786299,
+        0.49887151280302633
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.8754535225959855,
+        "witness": [
+          0.8754535225959855,
+          2.486419209627173,
+          0.5304739625428331,
+          0.0
+        ],
+        "rate_ratio": 1.000000000002283,
+        "liquidus": 1085.788830810025,
+        "min_constraint": -2.2830071166879407e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 0.8754535226419912,
+          "witness": [
+            0.8754535226419912,
+            2.4864192055336205,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1085.0377603576512,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.7369880530381245,
+        "witness": [
+          1.7369880530381245,
+          2.4864192208623845,
+          4.499999999999996,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000638498,
+        "liquidus": 1152.7058459684336,
+        "min_constraint": -6.384975881346122e-11,
+        "successful": true,
+        "certificate": {
+          "floor": 1.7369880545667304,
+          "witness": [
+            1.7369880545667304,
+            2.4864192055336205,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1087.3417521278543,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Equal study weights",
+    "model": {
+      "label": "Equal study weights",
+      "coef": {
+        "ni": -0.516723559192621,
+        "al": -0.20293040817261163,
+        "al2": 0.35302024187476105,
+        "fe": -2.317770312733664e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.3164397755466297,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        6.066928734298731,
+        1.1048957752338373,
+        0.7554145524574104,
+        0.28189497708361494
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 1.7853644353861735,
+        "witness": [
+          1.7853644353861735,
+          2.8742035465579785,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000024154,
+        "liquidus": 1085.6953831589417,
+        "min_constraint": -2.415290190072028e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 1.7853644354195741,
+          "witness": [
+            1.7853644354195741,
+            2.8742035739214646,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1085.695383033721,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 2.8381708045676177,
+        "witness": [
+          2.8381708045676177,
+          2.8742035837150945,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000003394838,
+        "liquidus": 1088.291790273648,
+        "min_constraint": -3.3948377442527544e-10,
+        "successful": false,
+        "certificate": {
+          "floor": 2.8381708103625893,
+          "witness": [
+            2.8381708103625893,
+            2.8742035739214646,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1088.2917903383197,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add Mn",
+    "model": {
+      "label": "Add Mn",
+      "coef": {
+        "ni": -0.6322181165080055,
+        "al": -0.18609385797001546,
+        "al2": 0.3136008346202007,
+        "fe": -3.744312576137177e-17,
+        "mn": 0.38415063121029813
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": true,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.5157806635796054,
+      "rank": 5,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.066416956972407,
+        1.7756296485813396,
+        1.071698953108852,
+        0.7832048306169936,
+        0.2486637646521753
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          1.884686251663935,
+          5.293955920339385e-23,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000107,
+        "liquidus": 1084.8175014410608,
+        "min_constraint": -1.074140776324839e-14,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.9670497879157773,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1080.9561565574418,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.3884336655607772,
+        "witness": [
+          0.3884336655607772,
+          2.9670497764443415,
+          8.080876812814704e-16,
+          0.0
+        ],
+        "rate_ratio": 1.000000000352642,
+        "liquidus": 1081.8947482686215,
+        "min_constraint": -3.5264186015737664e-10,
+        "successful": false,
+        "certificate": {
+          "floor": 0.38843366857500305,
+          "witness": [
+            0.38843366857500305,
+            2.9670497879157773,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1081.894748231975,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add Ni x Al",
+    "model": {
+      "label": "Add Ni x Al",
+      "coef": {
+        "ni": -4.331302777261518e-16,
+        "al": -0.11232958569164693,
+        "al2": 0.302139553028921,
+        "fe": -1.1083712655104152e-25,
+        "nial": -0.057825631711428474
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": true
+      },
+      "ridge": 0.05,
+      "sse": 0.5456992054586763,
+      "rank": 5,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.389339638040887,
+        4.935332563122933,
+        1.760947726362265,
+        1.063326560839822,
+        0.22498105680268554
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000004,
+        "liquidus": 1084.51,
+        "min_constraint": -3.745124690669023e-16,
+        "successful": true,
+        "certificate": null
+      },
+      "7030": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000004,
+        "liquidus": 1084.51,
+        "min_constraint": -4.320566551739602e-16,
+        "successful": true,
+        "certificate": null
+      }
+    }
+  },
+  {
+    "fit": "Drop Tan2024",
+    "model": {
+      "label": "Drop Tan2024",
+      "coef": {
+        "ni": -0.6495581406485287,
+        "al": -0.3661969701151494,
+        "al2": 0.5609254462971605,
+        "fe": -1.0967519085849752e-16
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.35746706263364736,
+      "rank": 4,
+      "n": 12,
+      "contrasts": 7,
+      "singular_values": [
+        8.031420384830463,
+        1.2209756767904483,
+        1.0237209585253748,
+        0.2904903437077908
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          2.462832494567825,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000033,
+        "liquidus": 1082.781953914407,
+        "min_constraint": -3.219646771412954e-15,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            3.2642214088568013,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1079.8800824774028,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.40278295015236637,
+        "witness": [
+          0.40278295015236637,
+          3.264221500384195,
+          1.5,
+          0.0
+        ],
+        "rate_ratio": 1.0000000006584573,
+        "liquidus": 1082.5349578001951,
+        "min_constraint": -6.584571776713233e-10,
+        "successful": false,
+        "certificate": {
+          "floor": 0.4027829556460613,
+          "witness": [
+            0.4027829556460613,
+            3.2642214088568013,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1080.7891103780769,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Drop Yang2018",
+    "model": {
+      "label": "Drop Yang2018",
+      "coef": {
+        "ni": -0.10926482537352755,
+        "al": -0.04381675818731864,
+        "al2": 0.2202478584567325,
+        "fe": -5.850884736050025e-19
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.5111663372784565,
+      "rank": 4,
+      "n": 14,
+      "contrasts": 9,
+      "singular_values": [
+        8.853750800034911,
+        1.4639613912040954,
+        0.9672046491608622,
+        0.3745985972145827
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 5.471368014183679,
+        "witness": [
+          5.471368014183679,
+          0.9947147313570884,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000029583,
+        "liquidus": 1104.697288668061,
+        "min_constraint": -2.958383538143039e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 5.471368014588052,
+          "witness": [
+            5.471368014588052,
+            0.9947147385300548,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1104.697288646542,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 7.999265648733418,
+        "witness": [
+          7.999265648733418,
+          0.9947147249564102,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.000000000000023,
+        "liquidus": 1114.6859527766787,
+        "min_constraint": -2.310651670001107e-14,
+        "successful": true,
+        "certificate": {
+          "floor": 7.999265648738653,
+          "witness": [
+            7.999265648738653,
+            0.9947147385300548,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1114.6859527158467,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Drop Qian2025",
+    "model": {
+      "label": "Drop Qian2025",
+      "coef": {
+        "ni": -0.19077210710747555,
+        "al": -0.1545449985145385,
+        "al2": 0.31563545465606285,
+        "fe": -8.70570785174803e-19
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.4282220364310437,
+      "rank": 4,
+      "n": 14,
+      "contrasts": 9,
+      "singular_values": [
+        9.065311248410174,
+        1.7669847526846099,
+        0.9193747476976163,
+        0.3833136993458731
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          1.5721537099588414,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000005742,
+        "liquidus": 1084.7665092895195,
+        "min_constraint": -5.741518371848997e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.4481565083197148,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1082.8350964330316,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.029547898410322126,
+        "witness": [
+          0.029547898410322126,
+          2.4481564632420745,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000203213,
+        "liquidus": 1082.9147229435766,
+        "min_constraint": -2.0321383464860787e-11,
+        "successful": true,
+        "certificate": {
+          "floor": 0.029547898946089158,
+          "witness": [
+            0.029547898946089158,
+            2.4481565083197148,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1082.9147227810768,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Drop LewisLaQue1981_quiet",
+    "model": {
+      "label": "Drop LewisLaQue1981_quiet",
+      "coef": {
+        "ni": -0.33044717397158574,
+        "al": -0.16999508846215283,
+        "al2": 0.32337483314364623,
+        "fe": -3.1498766824368683e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.5995978210454642,
+      "rank": 4,
+      "n": 14,
+      "contrasts": 9,
+      "singular_values": [
+        9.06530060048295,
+        1.7669759271793197,
+        0.8025453561096213,
+        0.37987014276167375
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 1.0448149935054145,
+        "witness": [
+          1.0448149935054145,
+          2.6284525883605117,
+          0.6304816882554262,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000586178,
+        "liquidus": 1085.7781072107557,
+        "min_constraint": -5.861772178761271e-11,
+        "successful": true,
+        "certificate": {
+          "floor": 1.0448149945984835,
+          "witness": [
+            1.0448149945984835,
+            2.6284526660527003,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.8967305047845,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.9388475566035503,
+        "witness": [
+          1.9388475566035503,
+          2.628452596901708,
+          4.499999999999994,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000038543,
+        "liquidus": 1151.9437660719066,
+        "min_constraint": -3.854305763439925e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 1.9388475566894945,
+          "witness": [
+            1.9388475566894945,
+            2.6284526660527003,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1087.2194840830534,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Drop LewisLaQue1981_1y",
+    "model": {
+      "label": "Drop LewisLaQue1981_1y",
+      "coef": {
+        "ni": -1.0073085515628208,
+        "al": -0.28895732513174094,
+        "al2": 0.3041753821451745,
+        "fe": -3.236955329688821e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.2380086514671124,
+      "rank": 4,
+      "n": 12,
+      "contrasts": 7,
+      "singular_values": [
+        4.780799483348272,
+        1.4482422284932566,
+        0.8798516284392063,
+        0.20860209116213033
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 1.012981993916932,
+        "witness": [
+          1.012981993916932,
+          4.749847237833928,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000014689927,
+        "liquidus": 1073.169535281029,
+        "min_constraint": -1.468992594233498e-09,
+        "successful": false,
+        "certificate": {
+          "floor": 1.0129820028461525,
+          "witness": [
+            1.0129820028461525,
+            4.749847326464928,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1073.1695346627807,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.9008056583451094,
+        "witness": [
+          1.9008056583451094,
+          4.749846985684296,
+          1.4892619007418308,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000688247,
+        "liquidus": 1075.6361635814537,
+        "min_constraint": -6.882472369795778e-11,
+        "successful": true,
+        "certificate": {
+          "floor": 1.900805658844722,
+          "witness": [
+            1.900805658844722,
+            4.749847326464928,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1074.465386032362,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Drop Zhao2022",
+    "model": {
+      "label": "Drop Zhao2022",
+      "coef": {
+        "ni": -1.4173643106954328e-15,
+        "al": -0.15205651558938052,
+        "al2": 0.32895988517394725,
+        "fe": -2.214153812369168e-35
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.4631513928532064,
+      "rank": 4,
+      "n": 14,
+      "contrasts": 9,
+      "singular_values": [
+        9.043570934092912,
+        1.749072781561242,
+        1.0695910305128835,
+        0.3399171125090077
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000013,
+        "liquidus": 1084.51,
+        "min_constraint": -1.225544910258e-15,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.311171094751814,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1083.3311278253198,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000013,
+        "liquidus": 1084.51,
+        "min_constraint": -1.4138510158251673e-15,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.311171094751814,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1083.3311278253198,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Drop Lewis + Zhao (weak rows)",
+    "model": {
+      "label": "Drop Lewis + Zhao (weak rows)",
+      "coef": {
+        "ni": -0.539230436275596,
+        "al": -0.2804656482630855,
+        "al2": 0.32423066578125326,
+        "fe": -4.061455235992202e-17
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.224897742645374,
+      "rank": 4,
+      "n": 8,
+      "contrasts": 5,
+      "singular_values": [
+        4.735419372011643,
+        1.4317389908847131,
+        0.5417021085857243,
+        0.026037406173850208
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          2.2451573107814466,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.000000000000043,
+        "liquidus": 1083.570167211486,
+        "min_constraint": -4.313216450668733e-14,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            4.3250944136836456,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1074.4854314889235,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          2.870243395838672,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 0.9999999999999999,
+        "liquidus": 1081.3066975982263,
+        "min_constraint": 1.1102230246251565e-16,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            4.3250944136836456,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1074.4854314889235,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Only Tan + Yang",
+    "model": {
+      "label": "Only Tan + Yang",
+      "coef": {
+        "ni": -1.4378035839404005e-13,
+        "al": -0.2643534099465302,
+        "al2": 0.33542405121858143,
+        "fe": -3.9205939269899807e-20
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.06343662096431774,
+      "rank": 4,
+      "n": 6,
+      "contrasts": 4,
+      "singular_values": [
+        4.73540879455905,
+        1.4277194816507406,
+        0.030092719238998554,
+        0.0022593190854161872
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000001243,
+        "liquidus": 1084.51,
+        "min_constraint": -1.2432185775523595e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            3.9405851933715756,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1077.015097412029,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000001434,
+        "liquidus": 1084.51,
+        "min_constraint": -1.434239860412725e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            3.9405851933715756,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1077.015097412029,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Yang nominal corrected",
+    "model": {
+      "label": "Yang nominal corrected",
+      "coef": {
+        "ni": -0.318370992932411,
+        "al": -0.16865928753885384,
+        "al2": 0.32270569341924804,
+        "fe": -3.333336450109545e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.6009622954160115,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.067111403712238,
+        1.7729516572118036,
+        1.002598846514734,
+        0.3975090867817001
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.9466253643359628,
+        "witness": [
+          0.9466253643359628,
+          2.6132059727893533,
+          0.6106458263924613,
+          0.0
+        ],
+        "rate_ratio": 1.000000000002525,
+        "liquidus": 1085.546686170134,
+        "min_constraint": -2.5250357360562248e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 0.9466253643838846,
+          "witness": [
+            0.9466253643838846,
+            2.613205948612402,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.7045824257336,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.821657126168757,
+        "witness": [
+          1.821657126168757,
+          2.61320608210208,
+          0.7072734331771249,
+          0.0
+        ],
+        "rate_ratio": 1.000000000000115,
+        "liquidus": 1088.1231076863141,
+        "min_constraint": -1.1501910535116622e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 1.8216571261713452,
+          "witness": [
+            1.8216571261713452,
+            2.613205948612402,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1086.9851305780671,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "No unconfirmed Yang comparator",
+    "model": {
+      "label": "No unconfirmed Yang comparator",
+      "coef": {
+        "ni": -0.10926482537352755,
+        "al": -0.04381675818731864,
+        "al2": 0.2202478584567325,
+        "fe": -5.850884736050025e-19
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.5111663372784565,
+      "rank": 4,
+      "n": 14,
+      "contrasts": 9,
+      "singular_values": [
+        8.853750800034911,
+        1.4639613912040954,
+        0.9672046491608622,
+        0.3745985972145827
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 5.471368014183679,
+        "witness": [
+          5.471368014183679,
+          0.9947147313570884,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000029583,
+        "liquidus": 1104.697288668061,
+        "min_constraint": -2.958383538143039e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 5.471368014588052,
+          "witness": [
+            5.471368014588052,
+            0.9947147385300548,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1104.697288646542,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 7.999265648733418,
+        "witness": [
+          7.999265648733418,
+          0.9947147249564102,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.000000000000023,
+        "liquidus": 1114.6859527766787,
+        "min_constraint": -2.310651670001107e-14,
+        "successful": true,
+        "certificate": {
+          "floor": 7.999265648738653,
+          "witness": [
+            7.999265648738653,
+            0.9947147385300548,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1114.6859527158467,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Replace Qian EIS by 7d Tafel",
+    "model": {
+      "label": "Replace Qian EIS by 7d Tafel",
+      "coef": {
+        "ni": -0.4142634018171541,
+        "al": -0.17926637995574232,
+        "al2": 0.328019080146796,
+        "fe": -5.6761532748034316e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 1.4914310353600917,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        9.067099510778167,
+        1.7723791541377827,
+        0.9250043295070924,
+        0.39677345227603145
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 1.59708252287456,
+        "witness": [
+          1.59708252287456,
+          2.7325602462989487,
+          0.7505476010152915,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000007483,
+        "liquidus": 1086.9838830224023,
+        "min_constraint": -7.482903185973555e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 1.597082522886991,
+          "witness": [
+            1.597082522886991,
+            2.7325602503902604,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1085.8653469904557,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 2.606768126535634,
+        "witness": [
+          2.606768126535634,
+          2.7325602385295324,
+          1.5943944286003033,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000181062,
+        "liquidus": 1091.6567617118294,
+        "min_constraint": -1.8106127708250597e-11,
+        "successful": true,
+        "certificate": {
+          "floor": 2.606768126903712,
+          "witness": [
+            2.606768126903712,
+            2.7325602503902604,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1088.4321623275732,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add Lewis 30d clean-water pair",
+    "model": {
+      "label": "Add Lewis 30d clean-water pair",
+      "coef": {
+        "ni": -0.29846027278650633,
+        "al": -0.16645687286254454,
+        "al2": 0.321602442834665,
+        "fe": -3.150854203125753e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.6078230610987817,
+      "rank": 4,
+      "n": 20,
+      "contrasts": 13,
+      "singular_values": [
+        9.067138858474033,
+        1.7746053211590282,
+        1.152186028331967,
+        0.39767620943276927
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.7715661647746528,
+        "witness": [
+          0.7715661647746528,
+          2.587929234517659,
+          0.5768979537424854,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000023626,
+        "liquidus": 1085.125611501827,
+        "min_constraint": -2.3626101075535644e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 0.771566164820837,
+          "witness": [
+            0.771566164820837,
+            2.5879292364100546,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.3503297930088,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.6138042980400362,
+        "witness": [
+          1.6138042980400362,
+          2.5879291940517284,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000942508,
+        "liquidus": 1086.556834970023,
+        "min_constraint": -9.425077385216696e-11,
+        "successful": true,
+        "certificate": {
+          "floor": 1.6138043002204618,
+          "witness": [
+            1.6138043002204618,
+            2.5879292364100546,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1086.556834785668,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add Lewis untreated 62d/132d pairs",
+    "model": {
+      "label": "Add Lewis untreated 62d/132d pairs",
+      "coef": {
+        "ni": -0.5493546780810576,
+        "al": -0.194209436123712,
+        "al2": 0.3355044713540487,
+        "fe": -2.841604872906984e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.882609679258093,
+      "rank": 4,
+      "n": 22,
+      "contrasts": 14,
+      "singular_values": [
+        9.06715976429732,
+        1.776455441467726,
+        1.2812356476498614,
+        0.4083793589961924
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 2.1775542921351296,
+        "witness": [
+          2.1775542921351296,
+          2.8942898453689905,
+          2.3234637790089535e-15,
+          0.0
+        ],
+        "rate_ratio": 1.00000000000261,
+        "liquidus": 1086.566386120113,
+        "min_constraint": -2.6098567751375867e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 2.1775542921718474,
+          "witness": [
+            2.1775542921718474,
+            2.8942898337525893,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1086.5663861758421,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 3.326905651254716,
+        "witness": [
+          3.326905651254716,
+          2.8942897687551574,
+          0.3411536815125958,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000029288,
+        "liquidus": 1090.0101467728057,
+        "min_constraint": -2.9286573166587004e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 3.3269056513065633,
+          "witness": [
+            3.3269056513065633,
+            2.8942898337525893,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1089.3885009620979,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Replace Tan30d by Tan10d",
+    "model": {
+      "label": "Replace Tan30d by Tan10d",
+      "coef": {
+        "ni": -0.4774146132433499,
+        "al": -0.273469774748397,
+        "al2": 0.452539319958026,
+        "fe": -4.288212242544834e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.5447584223335264,
+      "rank": 4,
+      "n": 16,
+      "contrasts": 10,
+      "singular_values": [
+        8.559672377362928,
+        1.537647103461938,
+        1.0025074056712848,
+        0.3815934401557856
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          2.934660248862995,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000004,
+        "liquidus": 1081.0734407830646,
+        "min_constraint": -3.885780586188048e-16,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            3.021502913534253,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1080.7589789236233,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.7086339096982722,
+        "witness": [
+          0.7086339096982722,
+          3.0215029227962007,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000109217,
+        "liquidus": 1082.4505778623468,
+        "min_constraint": -1.0921763493598746e-11,
+        "successful": true,
+        "certificate": {
+          "floor": 0.7086339098300742,
+          "witness": [
+            0.7086339098300742,
+            3.021502913534253,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1082.4505778997218,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Mn excluding unreported Zhao",
+    "model": {
+      "label": "Mn excluding unreported Zhao",
+      "coef": {
+        "ni": -0.29064446437657937,
+        "al": -0.15498232907786375,
+        "al2": 0.3082729604165287,
+        "fe": -1.9310614118111686e-17,
+        "mn": 0.3289545571551629
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": true,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.41389786011675134,
+      "rank": 5,
+      "n": 14,
+      "contrasts": 9,
+      "singular_values": [
+        9.046039558975218,
+        1.7729846918928978,
+        1.0154609896942894,
+        0.7404962147637613,
+        0.16932768585520844
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 0.9882163452748346,
+        "liquidus": 1084.51,
+        "min_constraint": 0.011853632255108937,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.513719154421726,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1082.5976906408307,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.1790436524171377,
+          0.0,
+          9.529120656625248e-22
+        ],
+        "rate_ratio": 1.0000000000023201,
+        "liquidus": 1084.5392123853944,
+        "min_constraint": -2.320067749028709e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            2.513719154421726,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1082.5976906408307,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add 123d Cu/CuNi-only bridge",
+    "model": {
+      "label": "Add 123d Cu/CuNi-only bridge",
+      "coef": {
+        "ni": -0.24456135903182807,
+        "al": -0.1604948705933875,
+        "al2": 0.31861591057101546,
+        "fe": -1.3040724661688105e-19
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.6237624832718577,
+      "rank": 4,
+      "n": 20,
+      "contrasts": 13,
+      "singular_values": [
+        9.0671299549915,
+        1.773965786152894,
+        1.2235464505405262,
+        0.6813902042786165
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.1949148310509405,
+        "witness": [
+          0.1949148310509405,
+          2.5186261160248926,
+          1.3355030127948926,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000001121,
+        "liquidus": 1084.9772572125053,
+        "min_constraint": -1.1213252548714081e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 0.19491483105332438,
+          "witness": [
+            0.19491483105332438,
+            2.518626114837652,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1083.0978117617553,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.9382150726990861,
+        "witness": [
+          0.9382150726990861,
+          2.5186261204047566,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.000000000722771,
+        "liquidus": 1085.0727634429252,
+        "min_constraint": -7.227709819535022e-10,
+        "successful": false,
+        "certificate": {
+          "floor": 0.938215090525961,
+          "witness": [
+            0.938215090525961,
+            2.518626114837652,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1085.072763513253,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add 123d Cu/CuNi/Al bronze bridge",
+    "model": {
+      "label": "Add 123d Cu/CuNi/Al bronze bridge",
+      "coef": {
+        "ni": -0.1329066191317338,
+        "al": -0.30233726125173593,
+        "al2": 0.4184578024685413,
+        "fe": -9.094730376843836e-19
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 1.2326092125691106,
+      "rank": 4,
+      "n": 21,
+      "contrasts": 14,
+      "singular_values": [
+        10.3330622427738,
+        1.9681501628909308,
+        1.2328685236091665,
+        0.6855756917448669
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.40253050238523835,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0,
+        "liquidus": 1084.5756760293366,
+        "min_constraint": 0.0,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            3.612517910625707,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1078.6188825131028,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          0.4689446600190566,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0,
+        "liquidus": 1084.5865120234766,
+        "min_constraint": 0.0,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            3.612517910625707,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1078.6188825131028,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add all historical bridges; report weight2",
+    "model": {
+      "label": "Add all historical bridges; report weight2",
+      "coef": {
+        "ni": -0.6538255322171596,
+        "al": -0.2712130780985688,
+        "al2": 0.3054986209286213,
+        "fe": -7.589963214554347e-19
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 1.8947432066264382,
+      "rank": 4,
+      "n": 86,
+      "contrasts": 69,
+      "singular_values": [
+        11.764186846205135,
+        2.07952033834399,
+        1.2410340267410387,
+        0.6584794239719093
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.0,
+        "witness": [
+          0.0,
+          4.25,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 0.9651142129679727,
+        "liquidus": 1074.9794736842105,
+        "min_constraint": 0.03550882923937415,
+        "successful": true,
+        "certificate": {
+          "floor": 0,
+          "witness": [
+            0.0,
+            4.438859286404714,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1073.7369783789163,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 0.3999835945502108,
+        "witness": [
+          0.3999835945502108,
+          4.4388593911385925,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000001855198,
+        "liquidus": 1074.3875425241304,
+        "min_constraint": -1.8551982172709813e-10,
+        "successful": false,
+        "certificate": {
+          "floor": 0.39998359608708844,
+          "witness": [
+            0.39998359608708844,
+            4.438859286404714,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1074.3875432381508,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add all historical Cu/CuNi; report weight2",
+    "model": {
+      "label": "Add all historical Cu/CuNi; report weight2",
+      "coef": {
+        "ni": -0.29120943723007825,
+        "al": -0.1656548251953602,
+        "al2": 0.3212006749172956,
+        "fe": -1.2982809094112322e-19
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.6740096056913413,
+      "rank": 4,
+      "n": 54,
+      "contrasts": 37,
+      "singular_values": [
+        9.067130218530188,
+        1.7739815772798853,
+        1.2577373625497286,
+        0.7045161537959833
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.7033373338872962,
+        "witness": [
+          0.7033373338872962,
+          2.5786811481655385,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.000000000132129,
+        "liquidus": 1084.2085617064915,
+        "min_constraint": -1.321289189171182e-10,
+        "successful": false,
+        "certificate": {
+          "floor": 0.7033373364985772,
+          "witness": [
+            0.7033373364985772,
+            2.578681150623576,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.208561703517,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.533158236151793,
+        "witness": [
+          1.533158236151793,
+          2.5786810549002683,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.000000000000204,
+        "liquidus": 1086.38665482369,
+        "min_constraint": -2.0394796962364126e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 1.5331582361565455,
+          "witness": [
+            1.5331582361565455,
+            2.578681150623576,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1086.3866543983227,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Strict data +123d Cu/CuNi bridge",
+    "model": {
+      "label": "Strict data +123d Cu/CuNi bridge",
+      "coef": {
+        "ni": -0.24430144541534435,
+        "al": 0.06683648694896642,
+        "al2": 0.13179624637132004,
+        "fe": -5.270323039366492e-17
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.25899899836055973,
+      "rank": 4,
+      "n": 10,
+      "contrasts": 7,
+      "singular_values": [
+        4.4115619703182825,
+        0.9440463111725277,
+        0.46458123440694304,
+        0.10069051131900196
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 9.99999999999882,
+        "witness": [
+          9.99999999999882,
+          0.0,
+          1.5,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000000078,
+        "liquidus": 1138.9166666666601,
+        "min_constraint": -7.771561172376096e-15,
+        "successful": true,
+        "certificate": {
+          "floor": 10.00000000000001,
+          "witness": [
+            10.00000000000001,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1128.3566666666668,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 29.999999994169386,
+        "witness": [
+          29.999999994169386,
+          2.2108534304189598e-14,
+          1.5,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000007077,
+        "liquidus": 1243.98666663889,
+        "min_constraint": -7.075451335936123e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 30.000000000000185,
+          "witness": [
+            30.000000000000185,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1227.010000000001,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add Gudic Cu/CuAl pair only",
+    "model": {
+      "label": "Add Gudic Cu/CuAl pair only",
+      "coef": {
+        "ni": -0.9203523770858671,
+        "al": -0.28541099630525435,
+        "al2": 0.35072871666604116,
+        "fe": -3.7592662231738185e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 1.0622402318255866,
+      "rank": 4,
+      "n": 18,
+      "contrasts": 11,
+      "singular_values": [
+        10.952863204928036,
+        1.7760236349381882,
+        1.026456161147844,
+        0.43845224228124563
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 1.3313734068644285,
+        "witness": [
+          1.3313734068644285,
+          4.0688284535424835,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.000000000022328,
+        "liquidus": 1078.6012308499187,
+        "min_constraint": -2.2327806270538986e-11,
+        "successful": true,
+        "certificate": {
+          "floor": 1.3313734070227374,
+          "witness": [
+            1.3313734070227374,
+            4.068828452633073,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1078.6012308568406,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 2.2834859780172896,
+        "witness": [
+          2.2834859780172896,
+          4.068828383642366,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000998817,
+        "liquidus": 1080.338895929018,
+        "min_constraint": -9.988165849961206e-11,
+        "successful": true,
+        "certificate": {
+          "floor": 2.2834859788740176,
+          "witness": [
+            2.2834859788740176,
+            4.068828452633073,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1080.3388953921492,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add Gudic all alloys (outside box)",
+    "model": {
+      "label": "Add Gudic all alloys (outside box)",
+      "coef": {
+        "ni": -1.2390830143031581,
+        "al": -0.1436883008583359,
+        "al2": 0.13007655731426418,
+        "fe": -2.2192829836782268e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 2.128147239135472,
+      "rank": 4,
+      "n": 21,
+      "contrasts": 14,
+      "singular_values": [
+        14.489685504237798,
+        2.615908947862795,
+        1.0368272843607365,
+        0.5235710829739911
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 3.930908275747787,
+        "witness": [
+          3.930908275747787,
+          5.52322051153675,
+          2.2582101229675926,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000029987,
+        "liquidus": 1072.9410949055205,
+        "min_constraint": -2.998712389512548e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 3.9309082757743474,
+          "witness": [
+            3.9309082757743474,
+            5.523220472048081,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1070.709007641489,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 5.654781103636902,
+        "witness": [
+          5.654781103636902,
+          5.523220538338501,
+          2.8815981473938233,
+          0.0
+        ],
+        "rate_ratio": 1.000000000146649,
+        "liquidus": 1081.8579815662151,
+        "min_constraint": -1.4664891523352708e-10,
+        "successful": false,
+        "certificate": {
+          "floor": 5.654781105470551,
+          "witness": [
+            5.654781105470551,
+            5.523220472048081,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1085.3372160565405,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add secondary 60d Fe series",
+    "model": {
+      "label": "Add secondary 60d Fe series",
+      "coef": {
+        "ni": -0.3183709929324496,
+        "al": -0.16865928753885415,
+        "al2": 0.32270569341924876,
+        "fe": -5.838613951557451e-14
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.7949519422811895,
+      "rank": 4,
+      "n": 19,
+      "contrasts": 12,
+      "singular_values": [
+        9.06712984171238,
+        1.7740572201737221,
+        1.1436467434388489,
+        0.40747300100168216
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.9466253643801438,
+        "witness": [
+          0.9466253643801438,
+          2.6132059700053936,
+          1.5,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000002176,
+        "liquidus": 1087.1275036255543,
+        "min_constraint": -2.1765922397776194e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 0.9466253643859369,
+          "witness": [
+            0.9466253643859369,
+            2.6132059486124013,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1084.7045824257389,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.8216571261583994,
+        "witness": [
+          1.8216571261583994,
+          2.613205930598519,
+          1.5,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000005465,
+        "liquidus": 1089.770141774322,
+        "min_constraint": -5.463962615692708e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 1.821657126172733,
+          "witness": [
+            1.821657126172733,
+            2.6132059486124013,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1086.9851305780708,
+          "proposal_feasible": true
+        }
+      }
+    }
+  },
+  {
+    "fit": "Add 1y tropical Cu/CuAl bridge",
+    "model": {
+      "label": "Add 1y tropical Cu/CuAl bridge",
+      "coef": {
+        "ni": -0.6446820813081141,
+        "al": -0.28379329691594135,
+        "al2": 0.40467276376063704,
+        "fe": -3.484569881502615e-18
+      },
+      "options": {
+        "scale": 5.0,
+        "linear": false,
+        "quadratic": true,
+        "fe_cap": 1.5,
+        "mn": false,
+        "interaction": false
+      },
+      "ridge": 0.05,
+      "sse": 0.9337280637238417,
+      "rank": 4,
+      "n": 18,
+      "contrasts": 11,
+      "singular_values": [
+        9.268841773997803,
+        1.8590374461899315,
+        1.0088481144911408,
+        0.41672831245588715
+      ]
+    },
+    "floors": {
+      "9010": {
+        "floor": 0.4874171007465975,
+        "witness": [
+          0.4874171007465975,
+          3.5064540367732473,
+          0.0,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000004752,
+        "liquidus": 1080.0396180293533,
+        "min_constraint": -4.75175454539567e-13,
+        "successful": true,
+        "certificate": {
+          "floor": 0.4874171007506572,
+          "witness": [
+            0.4874171007506572,
+            3.506454131958883,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1080.039617659791,
+          "proposal_feasible": true
+        }
+      },
+      "7030": {
+        "floor": 1.2792322317531373,
+        "witness": [
+          1.2792322317531373,
+          3.506454186541693,
+          0.6395120030956807,
+          0.0
+        ],
+        "rate_ratio": 1.0000000000016918,
+        "liquidus": 1082.3915713455078,
+        "min_constraint": -1.691646822621351e-12,
+        "successful": true,
+        "certificate": {
+          "floor": 1.2792322317700817,
+          "witness": [
+            1.2792322317700817,
+            3.506454131958883,
+            0.0,
+            0.0
+          ],
+          "liquidus": 1081.7237052033256,
+          "proposal_feasible": true
+        }
+      }
+    }
+  }
+]

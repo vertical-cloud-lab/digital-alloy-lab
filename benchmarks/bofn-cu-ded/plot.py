@@ -98,7 +98,7 @@ PV_KINDS = ("pkgfn", "eifn_reuse", "eifn", "ei", "tiered")
 PV_SHORT = {"pkgfn": "Partial: pKGFN", "eifn_reuse": "Partial: BOFN + reuse", "eifn": "Full: BOFN", "ei": "Full: standard BO", "tiered": "Tiered screening"}
 
 
-def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn", size=24, bands="highlight", figsize=(11, 6.2), right=0.64, callout=False):
+def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn", size=24, bands="highlight", figsize=(11, 6.2), right=0.64, callout=False, show_n=False):
     """Best alloy vs spend in the bofn-prelim slide style: leader lines instead of a legend, a horizontal
     y label, and ticks only at the axis ends plus the two called-out values (the spend at which `ref`
     reaches `base`'s $100k level, and that level, only if `callout`). Placed 3.1 in wide in the proposal."""
@@ -147,7 +147,8 @@ def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn"
     for k in order:
         col = STYLE[k]["color"]
         ax.plot([100.3, x_lab - 0.9], [finals[k], ypos[k]], color=FADE.get(col, "#CCCCCC"), lw=1.8, clip_on=False, zorder=1, solid_capstyle="round")
-        ax.text(x_lab, ypos[k], PV_SHORT.get(k, SHORT[k]), ha="left", va="center", fontsize=size, color=RED if col == RED else "#404040", clip_on=False)
+        label = PV_SHORT.get(k, SHORT[k]) + (f" (n = {len(data[k])})" if show_n else "")
+        ax.text(x_lab, ypos[k], label, ha="left", va="center", fontsize=size, color=RED if col == RED else "#404040", clip_on=False)
     ax.set_xlim(0, 100)
     ax.set_ylim(y_lo, y_hi)
     xt = [0, 100] if x_ref is None else [0, x_ref, 100]
@@ -293,15 +294,29 @@ def dag_strip(out=None):
     return out
 
 
+PV_SHORT["pkgfn_light"] = "Partial: pKGFN, light settings"
+
+
 if __name__ == "__main__":
+    import sys
+
+    keep = "--keep-proposal-figure" in sys.argv  # leave the proposal's Fig. fig:sim and the sensitivity figures as they are
     if TRUTH == "toy":
         print(dag_strip())
     if load(HEAD):
-        print(slide_figure())
         (HERE / "variants").mkdir(exist_ok=True)
-        print(slide_figure(out=HERE / "variants" / f"{PREFIX}_best_vs_spend_k1_partial_vs_full_all_bands.png", bands="all"))
+        if TRUTH == "phys":
+            # the physics-based truth: run counts differ by policy, so they go in the labels
+            print(slide_figure(show_n=True, figsize=(13.5, 6.2), right=0.56))
+        elif not keep:
+            print(slide_figure())
+            print(slide_figure(out=HERE / "variants" / f"{PREFIX}_best_vs_spend_k1_partial_vs_full_all_bands.png", bands="all"))
+        else:
+            # pKGFN at the production settings (fewer seeds so far) beside the light-settings runs, as a variant
+            print(slide_figure(kinds=("pkgfn", "pkgfn_light", "eifn_reuse", "eifn", "ei", "tiered"), show_n=True, figsize=(13.5, 6.2), right=0.56,
+                               out=HERE / "variants" / f"{PREFIX}_best_vs_spend_k1_partial_vs_full_production_pkgfn.png"))
         print(main_curve())
         print(allocation())
-    if TRUTH == "toy":
+    if TRUTH == "toy" and not keep:
         for s in (100_000, 50_000):
             print(sensitivity(s))

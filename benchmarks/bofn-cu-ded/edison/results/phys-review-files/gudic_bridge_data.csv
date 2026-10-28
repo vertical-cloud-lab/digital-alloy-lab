@@ -1,0 +1,6 @@
+study,alloy,ni,al,fe,mn,rate,weight,unit,test,source,use
+Gudic2021,Cu,0.0,0.0,0,0.0,13.95,0.5,uA/cm2,0.5M NaCl; 20C; OCP60min+EIS then polarization,"10.2298/CICEQ200701007G Tables1,2",1
+Gudic2021,Cu-Al,0.0,9.1,0,0.0,6.56,0.5,uA/cm2,0.5M NaCl; 20C; OCP60min+EIS then polarization,"10.2298/CICEQ200701007G Tables1,2",1
+Gudic2021,Cu-Al-Ni,4.05,11.29,0,0.0,5.17,0.5,uA/cm2,0.5M NaCl; 20C; OCP60min+EIS then polarization,"10.2298/CICEQ200701007G Tables1,2",1
+Gudic2021,Cu-Al-Mn,0.0,8.3,0,9.4,3.48,0.5,uA/cm2,0.5M NaCl; 20C; OCP60min+EIS then polarization,"10.2298/CICEQ200701007G Tables1,2",1
+Gudic2021,Cu-Al-Mn-Ni,2.5,13.0,0,2.5,2.83,0.5,uA/cm2,0.5M NaCl; 20C; OCP60min+EIS then polarization,"10.2298/CICEQ200701007G Tables1,2",1
