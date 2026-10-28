@@ -58,7 +58,7 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{positioning,arrows.meta,fit}
+\usetikzlibrary{positioning,arrows.meta,fit,calc}
 \usepackage{array}
 \usepackage{booktabs}
 \usepackage{tabularx}
@@ -129,7 +129,7 @@ Administrative and business contact & Katie Gomez, Research Administrator,
 Period of performance & Base period only, 36 months: 1 April 2027 to
   31 March 2030. No option periods. \\
 Requested amount & \$747,522 total: \$249,813, \$249,621, and \$248,089
-  in the three 12-month periods \todo{the copper budget on SPO's planning
+  in the three 12-month periods\todo{the copper budget on SPO's planning
   sheet of 23 Oct 2026; final figures from BYU
   Research Administration} \\
 \end{tabular}
@@ -831,7 +831,7 @@ copper-nickel reference and selective attack no deeper than in the cast NAB refe
 rejected if, among tested candidates (audited ones included), those that the
 model ranks in the top half pass no more often than those in the bottom half.
 
-The targets, baselines, budgets, and number of matched campaigns will be fixed and posted before each test starts \todo{confirm a public pre-registration site, e.g., OSF}.
+The targets, baselines, budgets, and number of matched campaigns will be fixed and posted before each test starts\todo{confirm a public pre-registration site, e.g., OSF}.
 H1 and H4 are tested first on simulated and retrospective benchmarks, where many matched campaigns are affordable, and then in live campaigns, where only a few are.
 
 \subsection{Research plan}
@@ -898,7 +898,7 @@ subawardee. For the small step we use an InssTek MX-Lab in the laboratory
 of Professor Z.~Zak Fang at the University of Utah, 45 miles from BYU, which
 his group has offered to the project. It has a 500~W fiber laser, 150~mm of
 travel on each axis, control of melt-pool height, and six powder feeders that
-can each be run separately~\cite{insstek,utahded}. \todo{confirm with Fang: the laser power (300 or 500~W), the rate, the
+can each be run separately~\cite{insstek,utahded}.\todo{confirm with Fang: the laser power (300 or 500~W), the rate, the
 smallest powder charge per feeder, the argon chamber and any preheat, and
 that a BYU student runs it after training}. We start every composition
 here, spreading powder from a first lot in grooves machined in plates,
@@ -923,7 +923,7 @@ The staff plan on the melt pool catching about half the powder fed and need abou
 Since 2~kg takes two atomizer runs, only compositions whose small blocks at Utah reach 99\% relative density are scaled up.
 Their sessions at Mines build blocks for sub-size tensile bars (ASTM E8/E8M) and corrosion coupons at the chosen settings, and repair coupons on thick cast NAB and wrought copper-nickel plate (Advance~4).
 Fusing the first layer to such a large heat sink needs more laser power than the MX-Lab has; the X2 has 1~kW~\cite{adaptmines}. Commercial 70-30 copper-nickel and NAB powders, deposited
-at both facilities, are the baselines \todo{confirm commercial powder
+at both facilities, are the baselines\todo{confirm commercial powder
 sources, at least 2~kg of each; Mines can also supply powder at cost}. The
 search decides which compositions go to Mines at all.
 
@@ -966,11 +966,23 @@ the surface, for example aluminum from NAB or nickel from copper-nickel.
 
 \begin{figure}[t]
 \centering
-% Keyframe reel of the one-spot copper screening animation, re-rendered by
-% alloy-corrosion/copper/keyframes/make_keyframes.py (PR 180, fd05f68); 6.5 x 0.83 in at 300 dpi.
-\includegraphics[width=\textwidth]{figures-cu-ded/cubxl_screen_reel.png}
-\caption{Our planned corrosion screen on the gantry, one spot, rendered from
-the laboratory's animation of the protocol: (i)~specimens and well lids,
+% Left: the gantry as built (figures-src/img/lab-cubxl-gantry.jpg, cropped to 4:3; Equipment
+% Fig. 1b). Right: the keyframe reel of the one-spot copper screening animation, re-rendered
+% by alloy-corrosion/copper/keyframes/make_keyframes.py (PR 180, fd05f68); 1950 x 249 px, its
+% panels the top 201 px. The photo is as tall as the reel's panels, and its label sits on the
+% reel's label line.
+\begin{tikzpicture}
+% Reel 5.66 in wide, so 0.7228 in tall (x 249/1950); its panels are the top 0.5834 in
+% (201 px) and its labels are centered 0.6531 in down (225 px).
+\node[inner sep=0pt, anchor=north west] (p) at (0,0)
+  {\includegraphics[height=0.5834in]{figures-cu-ded/cubxl_gantry_photo.jpg}};
+\node[inner sep=0pt, anchor=north west] (r) at ([xshift=0.06in]p.north east)
+  {\includegraphics[width=5.66in]{figures-cu-ded/cubxl_screen_reel.png}};
+\node[inner sep=0pt, anchor=center, font=\fontsize{7}{8.4}\selectfont]
+  at ($(p.north)+(0,-0.672in)$) {Gantry today};
+\end{tikzpicture}
+\caption{Our corrosion screen on the gantry. Left, the gantry today; right,
+one spot of the planned protocol, rendered from the laboratory's animation: (i)~specimens and well lids,
 (ii)~substitute seawater fill, (iii)~electrode cap, (iv)~open-circuit potential,
 linear polarization, and a potential hold (cut-away; simulated), (v)~cap rinsed,
 (vi)~the well's liquid sampled for ICP-MS, (vii)~the spot imaged. Impedance and
@@ -990,7 +1002,7 @@ one-hour screen and the final mass loss. The coupons are weighed before and
 after~\cite{astmG31,astmG1} and sectioned to measure the depth of selective
 attack.
 Repair coupons are immersed as galvanic couples, the deposit on its cast NAB or wrought copper-nickel substrate with the fusion line exposed and the area ratio recorded, and are sectioned across the fusion line to find the deepest attack.
-The leading candidates get crevice and longer immersion tests \todo{confirm the durations, and natural or substitute seawater}.
+The leading candidates get crevice and longer immersion tests\todo{confirm the durations, and natural or substitute seawater}.
 Tests in flowing seawater, which take months, are left to Navy laboratories, such as the marine corrosion laboratories at NSWC Carderock~\cite{carderockpartner}, for the final candidates, with replicate coupons of each (Section~\ref{sec:naval}).
 
 The search space was chosen the way the laboratory chose its aluminum palette: a literature review of each candidate element, then a check of its coverage in the CALPHAD database.
@@ -1199,13 +1211,13 @@ uses~\cite{norkett2025,norkett2026a,norkett2026b,orzolek2023,hatala2021}. The
 dataset of Task~4 will be released in the same form.
 The PI remotely presented autonomous experimentation for alloy discovery to
 Carderock on 14 October 2026, hosted by
-Dr.~Nicholas J.~Jones, to an audience of approximately 20 \todo{name any Carderock
+Dr.~Nicholas J.~Jones, to an audience of approximately 20\todo{name any Carderock
 contacts who agree to be listed, and confirm Dr.~Jones's title and code}.
 Each year we will send the candidates and data to materials and corrosion
 engineers at Carderock and ask which flowing-seawater and repair tests the final candidates should get.
 We will visit in Years~2 and~3, and both trips are in the budget.
 The PI will apply to the Summer Faculty Research Program to
-spend a summer at Carderock \todo{confirm; the 2027 application closes
+spend a summer at Carderock\todo{confirm; the 2027 application closes
 14 December 2026; Carderock's SFRP topics include sustainment, repair, and
 corrosion science}. The project will train two Ph.D.\
 students and undergraduates in powder making, deposition,
@@ -1279,7 +1291,7 @@ Corrosion screen & Top-ranked candidates pass the 30-day immersion test
 more often than bottom-ranked ones (H5). \\
 Lower cost on real deposits & Lower median cost to reach the target than the
 full-chain baseline in matched live campaigns (H1). \\
-New alloys & At least \todo{number} new compositions deposited dense and
+New alloys & At least\todo{number} new compositions deposited dense and
 crack-free, with tensile, corrosion, and repair-coupon data, beyond the
 commercial baselines. \\
 Open release & Software, data, and models posted each year with tests and
@@ -1322,7 +1334,7 @@ DED time is bought from the University of Utah and the Colorado School of Mines,
 None is a subaward.
 A BYU student runs the Utah sessions after training by the Utah group, and staff at Mines run each session there, both to the settings the search chooses.
 Dr.~Jordan A. Tiarks of Ames National Laboratory is an unfunded collaborator for the gas atomization runs; Fang and Webster are unfunded collaborators too, and all three are listed under current and pending support.
-Our budget buys about twelve half-day sessions a year at Utah, several compositions to a session, 3, 7, and 4 sessions at Mines in Years 1 to 3, and one gas atomization run a year \todo{the Utah line is an allowance until Fang sets a rate}.
+Our budget buys about twelve half-day sessions a year at Utah, several compositions to a session, 3, 7, and 4 sessions at Mines in Years 1 to 3, and one gas atomization run a year\todo{the Utah line is an allowance until Fang sets a rate}.
 All other work is at BYU: the PI's atomizer laboratory, the BYU Electron Microscopy Facility (SEM, EDS, EBSD), and
 BYU high-performance computing. The team meets weekly to review new results and
 choose the next experiments. A shared database records every step, so the
@@ -1402,7 +1414,7 @@ publications and presentations.
 \IfFileExists{../../bios/baird-CV.pdf}{%
   \includepdf[pages=-,pagecommand={\thispagestyle{empty}}]{../../bios/baird-CV.pdf}%
 }{\textbf{Principal Investigator's Curriculum Vitae}\par
-  \todo{insert the full CV PDF here.}\clearpage}
+ \todo{insert the full CV PDF here.}\clearpage}
 
 % ===========================================================================
 % Letter of support (excluded from the page limit)
@@ -1411,7 +1423,7 @@ publications and presentations.
 \renewcommand{\thepage}{L-\arabic{page}}
 \phantomsection
 \addcontentsline{toc}{section}{Letter of Support (excluded from page limit)}
-\begin{center}\textbf{Letter of Support}\end{center}
+\begin{center}\textbf{Letter of Support}\end{center}%
 \todo{insert the signed letter from the BYU official here as a PDF page
 (draft in support-letter-draft.md; it names aluminum, so revise it for this
 version).}
@@ -1427,13 +1439,13 @@ version).}
 
 \textbf{Resources.} Our laboratory at BYU holds the ultrasonic atomizer,
 the powder doser, the liquid-handling gantry, and the equipment for powder
-handling and specimen preparation \todo{list the main items bought with
+handling and specimen preparation\todo{list the main items bought with
 start-up funds}.
 A potentiostat lent by a BYU colleague is integrated into the gantry's automated workflow and serves until the one item of equipment requested, a dedicated potentiostat with impedance capability, arrives.
 The BYU Electron Microscopy Facility provides SEM, EDS, and EBSD, and BYU provides high-performance computing.
 DED time is bought from the University of Utah and the Colorado School of Mines, as described under Task 2.
 Tensile tests use the Instron load frames in the
-materials testing laboratory of the Department of Mechanical Engineering
+materials testing laboratory of the Department of Mechanical Engineering%
 \todo{confirm}.
 
 \textbf{Ability to comply.} The current commitments of the PI are teaching,
@@ -1445,16 +1457,16 @@ he began as a PI at BYU. BYU Research Administration will manage it.
 
 \textbf{Integrity and business ethics.} The PI has no findings of research
 misconduct and follows BYU policies on research integrity and conflicts of
-interest. \todo{confirm.}
+interest.\todo{confirm.}
 
 \textbf{Qualifications and eligibility.} The PI received his Ph.D.\ after
 1 January 2019, holds his first full-time tenure-track position, and has not
-received an ONR YIP award. He is a U.S. citizen. BYU is registered in SAM.gov (UEI JWSYC7RUMJD1, CAGE 52534)
+received an ONR YIP award. He is a U.S. citizen. BYU is registered in SAM.gov (UEI JWSYC7RUMJD1, CAGE 52534)%
 \todo{BYU's SAM registration is listed as ending 4 March 2027, before the
 award start; confirm that RAO will renew it}.
 
 \textbf{Organization and controls.} BYU Research Administration manages
-federal awards, with accounting, purchasing, and property control systems
+federal awards, with accounting, purchasing, and property control systems%
 \todo{confirm wording with BYU Research Administration}. Laboratory safety
 follows BYU Risk Management and Safety procedures.
 The atomizer stands in a steel-panelled enclosure built inside the laboratory in 2026 with the college safety officer (Fig.~\ref{fig:enclosure}): its own exhaust, argon supply, and dehumidifier, a Class~D extinguisher, an explosion-proof vacuum, and respirators.
