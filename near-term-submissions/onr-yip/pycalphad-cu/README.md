@@ -1,11 +1,11 @@
 # Preliminary pycalphad calculations: Cu-Ni and nickel-aluminum bronze (open database)
 
-> In this repository the database file and the figure PNGs are not committed: `run_calphad.py` downloads `mc_ni_v2036.tdb` from MatCalc, checks its sha256 and regenerates the figures. The two-panel figure used in the proposal is `../figures-cu-ded/cu_calphad_prelim.pdf`.
+> In this repository the database file is not committed: `run_calphad.py` downloads `mc_ni_v2036.tdb` from MatCalc and checks its sha256. The two-panel figure used in the proposal is `../figures-cu-ded/cu_calphad_prelim.pdf`; `cu_calphad_prelim.png` and `cu_panel2.png` (the source of `../figures-cu-ded/fig1/calphad.jpg`) are committed here.
 
 These are equilibrium and Scheil calculations run in pycalphad with an **openly licensed** thermodynamic
 database: the MatCalc open Ni database `mc_ni` v2.036 (TU Wien, ODbL 1.0). It covers Cu-Ni-Al-Fe-Mn.
 **No Thermo-Calc database (TCCU or any other) was used.** Everything here is reproduced by
-`python run_calphad.py` (about 1.5 min). Add `--crosscheck` to also run two other open databases.
+`python run_calphad.py` (about 15 min; see Timing). Add `--crosscheck` to also run two other open databases.
 
 ## Files
 
@@ -16,8 +16,9 @@ database: the MatCalc open Ni database `mc_ni` v2.036 (TU Wien, ODbL 1.0). It co
 | `reference_alloys.csv` | Equilibrium and Scheil melting ranges for C71500, C70600 and C95800, with handbook values |
 | `crosscheck.csv` | Equilibrium melting ranges of the same three alloys with mc_ni, mc_fe v2.062 and COST 507 |
 | `nab_phase_fractions.csv` | Equilibrium phase fractions for C95800, 1150 to 600 °C in 2 °C steps |
-| `composition_map.csv` | Liquidus, solidus, freezing range, primary phase and wall time on the 7 × 6 map grid |
-| `cu_calphad_prelim.png/.pdf` | Two-panel figure, 6.5 × 2.6 in |
+| `nab_isopleth.csv` | The C95800 vertical section: phases present and their amounts (mol) at Al 6.0 to 13.0 wt% (0.1 steps) × 600 to 1150 °C (2 °C steps), 19,596 points |
+| `composition_map.csv` | Liquidus, solidus, freezing range, primary phase and wall time on the 13 × 20 map grid (260 compositions) |
+| `cu_calphad_prelim.png/.pdf` | Two-panel figure, 6.5 × 2.6 in: (a) the map, (b) the vertical section |
 | `cu_map.png/.pdf`, `cu_panel2.png/.pdf` | The same panels as separate 3.1 × 2.4 in files, without panel letters |
 
 ## Database and provenance
@@ -55,7 +56,8 @@ database: the MatCalc open Ni database `mc_ni` v2.036 (TU Wien, ODbL 1.0). It co
   that was missing its `!` terminator is split off. As a check, the converted mc_fe gives NiAl melting
   at about 1,650 °C, close to the accepted 1,638 °C.
 - **Software:** pycalphad 0.11.2, scheil 0.3.0, Python 3.12.3, numpy 2.5.4, pandas 3.1.0 and
-  matplotlib 3.11.2, on a GitHub Actions Linux runner.
+  matplotlib 3.11.2, on a GitHub Actions Linux runner. The vertical section (2026-10-27) was computed
+  with pycalphad 0.11.2 and Python 3.12.12 on a Windows 11 workstation.
 
 ### Other open databases checked
 
@@ -109,7 +111,7 @@ Cross-check: equilibrium solidus–liquidus in °C (`crosscheck.csv`).
 
 ## NAB phase fractions vs temperature (mc_ni, equilibrium)
 
-Panel (b), `nab_phase_fractions.csv`.
+`nab_phase_fractions.csv` (panel (b) of the figure until 2026-10-27; panel (b) is now the vertical section below).
 
 | T (°C) | liquid | α (fcc) | β (Cu-rich bcc) | Fe-rich bcc (κ_I/II/IV-like) | NiAl B2 (κ_III-like) |
 |---|---|---|---|---|---|
@@ -140,22 +142,63 @@ Values are mole fractions.
 
 ## Composition map (mc_ni, equilibrium)
 
-The grid is Ni = 0, 5, …, 30 wt% by Al = 0, 1.9, 3.8, 5.7, 7.6, 9.5 wt%, with Fe fixed at 1 wt%, no Mn
-and Cu as balance. 1 wt% Fe sits inside the C70600 Fe spec (1.0 to 1.8 wt%) and near the C71500
-range (0.4 to 1.0 wt%). It keeps the map close to the Cu-Ni-Al ternary that the search space spans.
+The grid is Ni = 0, 2.5, …, 30 wt% by Al = 0, 0.5, …, 9.5 wt% (13 × 20 = 260 compositions; until
+2026-10-27 it was 7 × 6 = 42), with Fe fixed at 1 wt%, no Mn and Cu as balance. 1 wt% Fe sits inside
+the C70600 Fe spec (1.0 to 1.8 wt%) and near the C71500 range (0.4 to 1.0 wt%). It keeps the map close
+to the Cu-Ni-Al ternary that the search space spans. Panel (a) shades the freezing range with
+`contourf` in 25 °C steps, draws liquidus contours every 50 °C, and hatches the compositions whose
+first solid is NiAl (B2).
 
-- **Liquidus** ranges from 1,047 °C (Cu-7.6Al-1Fe) to 1,303 °C (Cu-25Ni-9.5Al-1Fe).
-- **Freezing range** runs from under 1 °C at Cu-1Fe to 227 °C at Cu-25Ni-9.5Al-1Fe.
-- **Primary phase:** α (fcc) at low Al. Once Al ≳ 5.7 wt% with Ni ≥ 5 wt%, it is NiAl (B2), and
-  then both the liquidus and the freezing range climb steeply. β is primary only at Cu-9.5Al-1Fe.
-- **Liquidus above the proposal's 1,250 °C cap:** only where Ni ≥ 15 and Al = 9.5, or Ni ≥ 25 and
-  Al ≥ 7.6. The atomizer's 1,300 °C limit is reached only at Ni 25 to 30 with Al 9.5. Both contours
-  are marked in panel (a).
-- **Weakest part of the map:** that high-Ni, high-Al corner rests on the NiAl description in a melt
-  with no Cu-Al-Ni ternary data. NAB's own liquidus is already 51 °C too high, so treat liquidus and
-  freezing range in that corner as upper bounds.
+- **Liquidus** ranges from 1,036 °C (Cu-2.5Ni-8.5Al-1Fe) to 1,304 °C (Cu-27.5Ni-9.5Al-1Fe).
+- **Freezing range** runs from under 1 °C at Cu-1Fe to 227 °C at Cu-20Ni-9.5Al-1Fe.
+- **Primary phase:** α (fcc) at low Al. Once Al ≳ 5 wt% with Ni ≳ 7.5 wt% (Al ≥ 6.5 with Ni ≥ 5;
+  Al ≥ 9 with Ni ≥ 2.5) it is NiAl (B2), and then both the liquidus and the freezing range climb
+  steeply. β is primary only without Ni, at Al 8.5 to 9.5 (α + β at Al 8).
+- **Liquidus above the proposal's 1,250 °C cap:** only where Al ≥ 7.5 with Ni ≥ 25, Al ≥ 8 with
+  Ni ≥ 20, Al ≥ 8.5 with Ni ≥ 15, or Al = 9.5 with Ni ≥ 12.5. The atomizer's 1,300 °C limit is
+  reached only at Al 9.5 with Ni 22.5 to 30 (1,300.5 to 1,303.5 °C). Both contours are marked in
+  panel (a).
+- **Weakest part of the map:** the hatched NiAl-first region rests on the NiAl description in a melt
+  with no Cu-Al-Ni ternary data. NAB's own liquidus is already 51 °C too high (also from a bcc phase
+  forming first), so treat liquidus and freezing range there as upper bounds.
 - **Reference alloys:** they are marked at their Ni and Al contents only; their actual Fe and Mn
   differ from the map's 1 wt% Fe.
+
+## Vertical section through C95800 (mc_ni, equilibrium)
+
+Panel (b), `nab_isopleth.csv`: Cu-xAl-4.5Ni-4Fe-1.2Mn (wt%), the C95800 composition with Al varied
+from 6.0 to 13.0 wt% in 0.1 steps, at 600 to 1150 °C in 2 °C steps (71 × 276 = 19,596 points; one
+`equilibrium` call per Al value).
+
+- **Method.** Every point is first solved with a starting grid of `pdens=300` (`ISO_PDENS`; pycalphad's
+  default of 60 left about 1 % of points unconverged and others in metastable states near the
+  liquidus). pdens 300 still misses the last 0.2 to 1 % of Fe-rich bcc just below the κ_I liquidus: it
+  returns single-phase liquid at a higher Gibbs energy than a denser grid finds (checked at 9.2 Al,
+  1,108 °C and 7.4 Al, 1,110 °C), which left that liquidus ragged. So every point that is unconverged,
+  holds liquid, or has a phase set different from both of its temperature neighbours is solved again
+  at pdens 1,200, and the solution with the lower Gibbs energy is kept. On 2026-10-27 that re-solved
+  3,790 of the 19,596 points and changed the phase set of 239 (mostly liquid → liquid + κ_I near the
+  liquidus, and a few metastable L + Fe/Ni-rich fcc points that disappeared). **No point is
+  unconverged.** A phase counts as present above 10⁻⁴ mol.
+- **Phase names**, as in published NAB sections: L (liquid), α (Cu-rich fcc), β (Cu-rich bcc), κ_I
+  (Fe-rich bcc) and κ_III (the NiAl B2 phase, or a NiAl-type bcc set).
+- **Fields** (all labelled in the figure): L; L + κ_I; L + κ_I + κ_III; L + κ_III; L + α + κ_I;
+  α + κ_I; L + β + κ_I + κ_III; L + β + κ_III; β + κ_III; α + κ_I + κ_III; α + β + κ_I + κ_III;
+  β + κ_I + κ_III. A 2 °C L + α + β + κ_I + κ_III band at about 1,035 °C (Al 6.9 to 8.1) is too thin
+  to label, and a few one-to-four-cell islands are grid noise.
+- **At C95800 (9.2 Al)**, on the 2 °C grid: L + κ_I from 1,114 °C, + κ_III from 1,072 °C, + β from
+  1,048 °C (κ_I briefly redissolves), liquid gone at 1,042 °C, β + κ_III down to 1,008 °C, κ_I back
+  from 1,006 °C, α from 954 °C, and β gone at **729.5 °C** (α + β → α + κ; bisection to 0.1 °C
+  between the grid points 728 and 730 °C, unchanged by the pdens 1,200 re-solve). The reference-alloy
+  bisection, which uses pycalphad's default grid, puts the liquidus at 1,111.5 °C and the solidus at
+  1,035.6 °C; the denser grid here finds κ_I 2 to 3 °C higher and the last liquid 6 to 8 °C higher.
+  The handbook solidus and liquidus (1,043 and 1,060 °C) are the ticks on the dashed line.
+- **Drawing** (`draw_isopleth`): each phase's boundary is the 0.5 contour of its presence (1 or 0),
+  Gaussian-smoothed with σ = 6 °C × 0.2 wt% (`ISO_SMOOTH`) so the 0.1 wt% × 2 °C grid steps do not
+  show; fields are the cells between those lines. Labels go at each field's
+  `distance_transform_edt` maximum, or the most central spot where they fit; `ISO_PLACE` fixes four
+  crowded ones and `ISO_LEADER` gives the five small fields near the liquidus and solidus a label
+  with a leader line.
 
 ## Timing
 
@@ -172,6 +215,20 @@ Measured on the GitHub Actions runner, single process:
 
 Rerun on 2026-10-24 on another GitHub Actions runner (same versions, same database): the three result CSVs
 were reproduced exactly; one equilibrium melting range took 0.9 to 2.9 s and the 42-composition map 70 s.
+
+2026-10-27, after the map grid and the vertical section were added:
+
+| Task | Time |
+|---|---|
+| The 260-composition map (GitHub Actions runner, single process) | 319 s in total, 0.71 to 2.04 s per composition (mean 1.23 s) |
+| Vertical section, pdens 300 only (Windows 11 workstation, single process, Python 3.12.12) | 322 s, about 4.5 s per Al value (276 temperatures) |
+| Vertical section with the pdens 1,200 re-solve (same workstation) | 544 s, about 7.5 s per Al value |
+| Whole script | about 15 min |
+
+The vertical section needs about 2 GB of memory per process at pdens 300 (one 276-temperature call);
+twelve such processes in parallel ran out of memory on a 64 GB workstation, so run at most a few at a
+time. The two GitHub Actions runs that computed the section were cancelled about 20 min in. The
+reference-alloy rows were rerun on the workstation and match `reference_alloys.csv` to 0.1 °C.
 
 "A thermodynamic calculation takes minutes" is therefore conservative for pycalphad. It is seconds
 per composition, and minutes for a few hundred compositions, or for Scheil across a whole map (about

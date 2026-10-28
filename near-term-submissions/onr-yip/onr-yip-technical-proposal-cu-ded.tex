@@ -561,9 +561,9 @@ copper, nickel, aluminum, iron, and manganese~\cite{mcni}. It puts the equilibri
 solidus and liquidus of 70-30 copper-nickel at 1,171 and
 1,229\,\textdegree{}C, against handbook values of 1,171 and
 1,238\,\textdegree{}C~\cite{cdadata}, and those of 90-10 within
-18\,\textdegree{}C (Fig.~\ref{fig:calphad}). Each composition takes one to
-three seconds on one processor, and a 42-point map of the nickel and
-aluminum ranges took 46 to 70 seconds in two runs. The map shows the liquidus
+18\,\textdegree{}C (Fig.~\ref{fig:calphad}). Each composition takes about one to
+two seconds on one processor, and a 260-point map of the nickel and
+aluminum ranges took 319 seconds. The map shows the liquidus
 passing the 1,250\,\textdegree{}C cap of Table~\ref{tab:space} only where
 nickel and aluminum are both high. For NAB the database places the solidus
 within 7\,\textdegree{}C of the handbook value and predicts that $\beta$ is
@@ -584,14 +584,18 @@ MX-Lab to develop alloys, feeding up to six powders at once~\cite{utahded}.
 \includegraphics[width=\textwidth]{figures-cu-ded/cu_calphad_prelim.pdf}
 \caption{pycalphad calculations with an open database, mc\_ni from
 MatCalc~\cite{mcni}, which covers Cu-Ni-Al-Fe-Mn but was built for nickel
-alloys. (a)~Equilibrium freezing range (color) and liquidus (contours,
-\textdegree{}C) over the nickel and aluminum ranges of
+alloys. (a)~Equilibrium freezing range (shading, 25\,\textdegree{}C steps) and
+liquidus (lines, \textdegree{}C) over the nickel and aluminum ranges of
 Table~\ref{tab:space}, with 1~wt\% iron. Orange lines mark the
 1,250\,\textdegree{}C liquidus cap and the 1,300\,\textdegree{}C at which the
-atomizer typically runs, and symbols mark the reference alloys. Values in the high-nickel,
-high-aluminum corner are upper bounds. (b)~Equilibrium phase fractions of NAB
-(C95800) against temperature. The gray band is the handbook melting
-range~\cite{cdadata}.}
+atomizer typically runs, and symbols mark the reference alloys. Where hatched,
+the database's NiAl phase forms first, so the liquidus there is an upper
+bound. (b)~Calculated vertical section through C95800
+(Cu-$x$Al-4.5Ni-4Fe-1.2Mn, wt\%); the dashed line is C95800, and its ticks
+mark the handbook solidus and liquidus~\cite{cdadata}. $\kappa_\mathrm{I}$ is
+iron-rich and $\kappa_\mathrm{III}$ NiAl-type; a 2\,\textdegree{}C
+L\,+\,$\alpha$\,+\,$\beta$\,+\,$\kappa_\mathrm{I}$\,+\,$\kappa_\mathrm{III}$ band near
+1,035\,\textdegree{}C is too thin to label.}
 \label{fig:calphad}
 \end{figure}
 
