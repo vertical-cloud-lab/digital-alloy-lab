@@ -537,9 +537,9 @@ baseline aluminum alloy. Atomized powder, laser powder bed fusion builds,
 scanning electron microscopy (SEM) and energy-dispersive X-ray spectroscopy
 (EDS) results, and tensile data are in hand.
 The induction module of the atomizer also melts copper alloys. It reaches 1,400\,\textdegree{}C and is typically run up to 1,300\,\textdegree{}C.
-NAB and 90-10 copper-nickel melt about 250 and 150\,\textdegree{}C below 1,300\,\textdegree{}C, and 70-30 copper-nickel within about 60\,\textdegree{}C of it (Fig.~\ref{fig:cupowder}) \todo{replace the placeholder Fig.~\ref{fig:cupowder} with the first copper powder (SEM image and size distribution) from the
-runs planned for the week of 19 October; attachments can be replaced until
-SPO submits on 28 October.}
+NAB and 90-10 copper-nickel melt about 250 and 150\,\textdegree{}C below 1,300\,\textdegree{}C, and 70-30 copper-nickel within about 60\,\textdegree{}C of it.
+On 27 October 2026 we atomized our first copper-alloy lot (Fig.~\ref{fig:cupowder}): a 1,080~g charge, melted at 1,300\,\textdegree{}C and atomized on a tungsten-coated carbon-fiber plate, with an estimated 97\% of the charge collected as powder.
+The particles are spherical, and EDS finds copper, nickel, aluminum, and iron. \todo{name the alloy. The run log and video title say Cu70/Ni30, but the EDS (aluminum and iron peaks, a weak Ni K$\alpha$) and the gold color of the rods and powder look like the 630 bronze (C63000) bought for the first copper run. Confirm with Gage and Ronnie.}
 
 \textbf{Powder doser.} We have built an open-source auger powder doser that
 weighs each dose on an analytical balance (0.1~mg). A Bayesian optimization
@@ -571,7 +571,7 @@ process-aware inputs of Advance~3 compute. The database puts the NAB liquidus
 check on the Thermo-Calc copper database~\cite{tccu7}.
 
 \textbf{Deposition.} Mines has melted copper-nickel powder spread in
-grooves, the pre-placed tracks that start Task~2 (Fig.~\ref{fig:cupowder}c).
+grooves, the pre-placed tracks that start Task~2 (Facilities, Fig.~3c).
 At Utah, the Fang group installed its
 MX-Lab to develop alloys, feeding up to six powders at once~\cite{utahded}.
 
@@ -592,21 +592,25 @@ range~\cite{cdadata}.}
 \label{fig:calphad}
 \end{figure}
 
-% Fig. (copper powder): figures-src/make_cu_prelim_figure.py, sized like the CALPHAD
-% figure (6.5 x 2.6 in). (a) and (b) are PLACEHOLDERS, not data: replace them with
-% the SEM image and EDS map of the first copper lot, keeping the same footprint.
-% (c) is Sam Webster's photograph of the tracks melted at Mines (email of 21 October
-% 2026), cropped to the track; it gives no dimension, so there is no scale bar.
+% Fig. (copper powder): figures-src/make_cu_prelim_figure.py (6.5 x 2.56 in), from the
+% Oct 27, 2026 run (powder k7m2q9, DAL #219), its YouTube video (2brsz-90seg) and the SEM
+% and EDS of that day (Box Baird_S_SEM/Ronnie Guymon/Bronze); sources in
+% figures-src/img/cu-lot-2026-10-27/README.md.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{figures-cu-ded/cu_prelim.pdf}
-\caption{(a)~SEM image and (b)~EDS map of the first copper lot from the
-ultrasonic atomizer, both \textcolor{red}{PLACEHOLDER, not data.}
-(c)~Copper-nickel powder spread in grooves and melted into tracks at the
-Colorado School of Mines (photograph: S.~Webster).}
+\caption{Our first copper-alloy powder (27 October 2026). (a)~The run,
+through the furnace port and the chamber window: (i)~the charge in the
+crucible, (ii)~melting, (iii)~the melt around the stopper rod, (iv)~the
+stream on the ultrasonic plate. (b)~The lot. (c)~SEM image of the powder and
+(d)~one particle. (e)~EDS spectrum at 20~kV; the carbon peak is from the
+mounting tape.}
 \label{fig:cupowder}
 \end{figure}
 
+% Sam Webster's Mines track photograph (email of 21 October 2026, agent-staging 032e391) is
+% Facilities Fig. 3c, kept apart from fig:cupowder because that powder is not from our
+% atomizer; as a figure here it pushed the last figure past the 20 counted pages.
 % Fig. (synth) is the copper/DED synthetic network of benchmarks/bofn-cu-ded/
 % (PR 206 at 68e9a80; functions, round costs, and the optimum are in its README). It tests the
 % method, not the alloy.
