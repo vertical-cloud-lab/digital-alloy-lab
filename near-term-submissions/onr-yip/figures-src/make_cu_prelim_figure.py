@@ -3,7 +3,9 @@
 Real data throughout. Sterling's Oct 27 review replaced the placeholders with the first copper run
 of the ultrasonic atomizer (Gage Erickson, Oct 27, 2026, powder code k7m2q9, DAL #219) and Ronnie
 Guymon's SEM and EDS of that powder (BYU Apreo, Oct 27, Box `Baird_S_SEM/Ronnie Guymon/Bronze`).
-Sam Webster's Mines tracks moved to their own figure (fig:minestracks), since that powder is not ours.
+The alloy is 630 bronze (UNS C63000, a nickel-aluminum bronze), not the "Cu70/Ni30" of the run log
+(Sterling, #219, Oct 28). Sam Webster's Mines tracks moved to the Facilities attachment (Fig. 3c),
+since that powder is not ours.
 
 Top row, (a) the run, frames of BYU VCL YouTube 2brsz-90seg ("10/27/2026 Atomizer Run ... Video 5
 of atomizer and furnace ports", public) at 60, 240, 330 and 570 s: the charge rods in the crucible,

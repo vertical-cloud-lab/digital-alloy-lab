@@ -2,10 +2,11 @@
 
 Powder code `k7m2q9`. Gage Erickson's run report is in #219: a 1,079.886 g charge, carbon-fiber
 plate dipped in tungsten, 1:1.5 booster, 24 ppm O2, amplitude 90, 1,300 °C melt, graining pressure
-0.19 bar, 2 minute melt, estimated 97% yield. Neither the run log nor the video title (both "Cu70/Ni30")
-has yet been checked against the EDS below, which shows aluminum and iron and a weak Ni Kα peak, as
-the 630 bronze (C63000) bought for the first copper run would. The proposal text carries a TODO
-until Gage and Ronnie confirm the alloy.
+0.19 bar, 2 minute melt, estimated 97% yield. **The alloy is 630 bronze** (UNS C63000, a wrought
+nickel-aluminum bronze, about 82Cu-10Al-5Ni-3Fe; McMaster 8203K41, receipt "High-Strength 630 Bronze"),
+not the "Cu70/Ni30" of the run log and video title: Sterling's clarification in #219
+(comment 6460235121, Oct 28, 03:54 UTC). The EDS below agrees: aluminum and iron peaks, and a Ni Kα
+about a tenth of Cu Kα.
 
 | File | Source | Processing |
 |---|---|---|
