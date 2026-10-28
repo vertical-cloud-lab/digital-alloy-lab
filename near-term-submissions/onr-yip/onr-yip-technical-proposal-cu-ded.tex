@@ -154,7 +154,7 @@ Requested amount & \$747,522 total: \$249,813, \$249,621, and \$248,089
 \itshape ``Over the last year, we placed nearly 120 additive manufacturing
 parts into development, installed 20 of those parts, and eliminated more than
 1,400 cumulative days of delay.''\par
-\vspace{2pt}{\raggedleft\upshape Adm.\ Daryl Caudle, Chief of Naval
+\vspace{2pt}{\raggedleft\upshape Admiral Daryl Caudle, Chief of Naval
 Operations~\cite{navsup2026}\par}
 \end{minipage}
 
@@ -283,7 +283,7 @@ will use (Section~\ref{sec:task2}).
 Industrial gas atomizers make powder in lots of tens of kilograms or more, so
 new compositions are rarely tried \todo{cite a minimum lot size, e.g., a
 vendor's}. Our ultrasonic atomizer makes a lot of a new composition in a day
-from about half a kilogram of feedstock, and 2~kg in about six runs. Ultrasonic
+from one charge of about 1~kg, and 2~kg in two runs (225~cm$^3$ crucible; a 400~cm$^3$ one is available). Ultrasonic
 atomizers have already made powder for blown-powder DED from NAB
 propeller grinding chips~\cite{muller2023,uhlmann2024} and from copper cable
 scrap~\cite{cabrioli2025}.
@@ -426,7 +426,7 @@ between 1,099 and 1,149\,\textdegree{}C, and NAB between 1,043 and
 1,060\,\textdegree{}C~\cite{cdadata}. A replacement for 70-30 copper-nickel
 that needs less nickel would use less of a critical mineral and would be
 easier to atomize and deposit. The search will carry nickel content as an
-objective to minimize where the corrosion trade-offs allow.
+objective to minimize~\cite{mulukutla2025} where the corrosion trade-offs allow.
 
 \subsection{Scientific concepts}
 \label{sec:concepts}
@@ -453,7 +453,7 @@ where the smaller one shows that a composition could change the outcome
 (Section~\ref{sec:task2}).
 
 The physics comes first, in the manner of integrated computational materials
-engineering (ICME)~\cite{olson1997,nrc2008}: calculations decide where
+engineering (ICME)~\cite{olson1997,nrc2008,arroyave2019,arroyave2026}: calculations decide where
 experiments go, and experiments correct the calculations. Calculation of
 phase diagrams (CALPHAD) in Thermo-Calc and pycalphad~\cite{andersson2002,otis2017}
 gives the liquidus and freezing range of each composition and an index of how
@@ -483,12 +483,11 @@ asynchronous results, and none has been demonstrated on a physical alloy
 workflow. Published tests of the linked-model methods use test functions and
 simulators~\cite{astudillo2021,buathong2024}. Multi-stage Bayesian
 optimization for self-driving laboratories was tested on synthetic and
-past data with one objective~\cite{torresi2026}. Cost-aware batch
-optimization of refractory alloys treats measurements of unequal cost as
-separate sources rather than linked steps, in a computational
-campaign~\cite{alvi2026}. Standard multi-objective Bayesian optimization
+past data with one objective~\cite{torresi2026}. Multi-information-source alloy optimization treats measurements of unequal
+cost as separate sources, not linked steps, even with asynchronous results, in
+computational campaigns~\cite{khatamsaz2021,alvi2026,khatamsaz2024}. Standard multi-objective Bayesian optimization
 handles competing properties and several experiments at
-once~\cite{daulton2021} but treats the whole chain as one costly experiment.
+once~\cite{daulton2021,hastings2025,khatamsaz2022} but treats the whole chain as one costly experiment.
 Closed-loop campaigns on printed alloys use one model and a fixed set of
 measurements~\cite{talbot2026}. A search guided by model uncertainty has
 chosen multi-principal element alloys deposited by DED,
@@ -555,8 +554,14 @@ rose (Spearman $\rho=-0.84$), so its dosing record may also serve as a cheap
 reading of how a lot flows. Task~2 uses it the same way, for the powdered
 additions to each copper charge.
 
-\textbf{CALPHAD for copper alloys.} We already run the CALPHAD step on
-copper, in pycalphad~\cite{otis2017} with an open database that covers
+\textbf{CALPHAD for copper alloys.} The CALPHAD step will run primarily in
+Thermo-Calc (TC-Python) with its copper database~\cite{andersson2002,tccu7};
+Thermo-Calc already runs for our aluminum work on BYU high-performance
+computing.%
+% TODO (Sterling): BYU's Thermo-Calc license has TCAL8, TCFE12/13 and MOBAL7/MOBFE7/8 but not
+% TCCU (DAL-private #4), and no budget line buys it; confirm the license.
+We
+already run the step on copper in pycalphad~\cite{otis2017} with an open database that covers
 copper, nickel, aluminum, iron, and manganese~\cite{mcni}. It puts the equilibrium
 solidus and liquidus of 70-30 copper-nickel at 1,171 and
 1,229\,\textdegree{}C, against handbook values of 1,171 and
@@ -706,9 +711,9 @@ The simulation is hand-built and noise-free, with one objective and one
 experiment at a time, so it does not test the advances proposed here. It
 does show that modeling the linked steps pays off when the physics screens
 are incomplete, and that choosing the step needs more than the published
-one-step rule. \todo{refresh these numbers and Fig.~\ref{fig:sim} from DAL
-PR 206 once its high-fidelity pKGFN reruns and the corrosion-aware tiered
-baseline push}
+one-step rule. A version built from a CALPHAD grid and immersion rates fitted to
+published same-test data gave the same order: 89\% for the linked-model search
+with lot reuse, against 5\% for standard Bayesian optimization.
 
 \subsection{Method advances}
 
@@ -737,7 +742,7 @@ calculations finish in minutes. We will extend the rule to batches of experiment
 with asynchronous results, so that new experiments are chosen while others
 are still pending. Pending experiments will enter the models as
 ``fantasies,'' outcomes drawn from the current predictions, a standard way to
-avoid choosing the same experiment twice~\cite{snoek2012}. We will also test how
+avoid choosing the same experiment twice~\cite{snoek2012,khatamsaz2024}. We will also test how
 stable the choices are when a late result contradicts early ones. For
 example, a block that looked dense on its surface may show cracks under the
 microscope, or an alloy that passed the polarization screen may show
@@ -809,10 +814,7 @@ time, working around pending results is no faster than waiting.
 impedance from the one-hour screen, together with composition and
 microstructure, will predict which candidates pass a 30-day immersion test.
 To pass, a candidate needs a mass loss no greater than that of the 70-30
-copper-nickel reference and selective attack no deeper than \todo{depth. Immersions of 21 and 30 days in salt
-solution found at most 1.8 to 3.4~$\mu$m in laser-deposited NAB~\cite{zhao2022}
-and more than 3~$\mu$m in cast NAB~\cite{tan2024}. Options: a few micrometers, or
-no deeper than in the cast NAB reference}. H5 will be
+copper-nickel reference and selective attack no deeper than in the cast NAB reference. H5 will be
 rejected if, among tested candidates (audited ones included), those that the
 model ranks in the top half pass no more often than those in the bottom half.
 
@@ -834,26 +836,23 @@ aluminum data and the copper data that Task 2 adds each year.
 We will make powder for each candidate in our laboratory.
 Oxygen-free copper bar is machined into cups that hold the charge.
 Nickel, iron, manganese, aluminum, and other additions are weighed in to 0.1~mg as pure metals or copper master alloys.
-Each run melts about 0.5~kg, as in the published CuSn8
-runs~\cite{choma2026} \todo{confirm the charge size after the first copper
-runs}. Minor additions that come as powder are dispensed into the cup by our
+Each run melts about 1.1~kg; the first copper run, 1,080~g of NAB, gave an estimated 97\% powder (Section~\ref{sec:prelim}). Minor additions that come as powder are dispensed into the cup by our
 powder doser (Section~\ref{sec:prelim}), which weighs and logs each dose, so every lot carries a record of what went into it. The charge is
 melted in a graphite
 crucible in the induction module of the ultrasonic atomizer (AMAZEMET
 rePOWDER) and poured through a 0.5~mm nozzle onto a vibrating plate, where it
 breaks into droplets.
 Nickel and iron react with graphite.
-Before melts that contain them, the crucible is therefore sprayed with a thin boron nitride coating, which lasts a few runs, and the melt is poured through a boron nitride nozzle, as the manufacturer advises.
+The crucible is therefore coated with boron nitride, and the sealing rod, nozzle, and other parts the melt touches are ceramic or ceramic-coated.
 NAB has already been atomized from a
 graphite crucible on a rePOWDER~\cite{muller2023}. Many alloys wet bare carbon-carbon
-composite poorly~\cite{choma2026}, so the plate is carbon-carbon with a
-molybdenum- or tungsten-based coating where the melt lands. The first part of
+composite poorly~\cite{choma2026}, and a bare carbon-fiber plate left fibers in
+NAB powder~\cite{uhlmann2024}, so the plate is tungsten-coated carbon fiber,
+as in our first NAB run. The first part of
 each pour heats the plate until the melt wets it, and atomization is then
 continuous. With such plates on our model of atomizer, the manufacturer
 turned 80 to 90\% of each charge of a tin bronze (CuSn8) into
-powder~\cite{choma2026}. \todo{confirm with AMAZEMET the plate and nozzle
-for NAB and copper-nickel; the published NAB runs used a bare carbon-fiber
-plate that left fibers in the powder~\cite{uhlmann2024}}.
+powder~\cite{choma2026}.
 
 The median droplet size follows the wavelength of capillary waves on the
 plate, so it falls as the frequency to the power $-2/3$~\cite{lang1962}. The
@@ -886,7 +885,7 @@ subawardee. For the small step we use an InssTek MX-Lab in the laboratory
 of Professor Z.~Zak Fang at the University of Utah, 45 miles from BYU, which
 his group has offered to the project. It has a 500~W fiber laser, 150~mm of
 travel on each axis, control of melt-pool height, and six powder feeders that
-can each be run separately~\cite{insstek,utahded}. \todo{confirm with Fang: the rate, the
+can each be run separately~\cite{insstek,utahded}. \todo{confirm with Fang: the laser power (300 or 500~W), the rate, the
 smallest powder charge per feeder, the argon chamber and any preheat, and
 that a BYU student runs it after training}. We start every composition
 here, spreading powder from a first lot in grooves machined in plates,
@@ -908,11 +907,9 @@ system at the Colorado School of Mines, run by facility staff at its external ra
 machine time and labor.
 A typical session, four 25~mm cubes, takes about 3~hours of machine time and 2~hours of labor.
 The staff plan on the melt pool catching about half the powder fed and need about 2~kg of each powder to fill the hoppers of the X2.
-Since 2~kg takes about six atomizer runs, only compositions whose small blocks at Utah reach 99\% relative density are scaled up.
+Since 2~kg takes two atomizer runs, only compositions whose small blocks at Utah reach 99\% relative density are scaled up.
 Their sessions at Mines build blocks for sub-size tensile bars (ASTM E8/E8M) and corrosion coupons at the chosen settings, and repair coupons on thick cast NAB and wrought copper-nickel plate (Advance~4).
-Fusing the first layer to such a large heat sink needs more laser power than the MX-Lab has \todo{confirm the X2's laser (wavelength, power, spot size), its
-shielding, substrate preheat, turnaround, and that powder left in the hopper
-comes back to us}. Commercial 70-30 copper-nickel and NAB powders, deposited
+Fusing the first layer to such a large heat sink needs more laser power than the MX-Lab has; the X2 has 1~kW~\cite{adaptmines}. Commercial 70-30 copper-nickel and NAB powders, deposited
 at both facilities, are the baselines \todo{confirm commercial powder
 sources, at least 2~kg of each; Mines can also supply powder at cost}. The
 search decides which compositions go to Mines at all.
@@ -925,9 +922,8 @@ length, dilution, grain size, and phase fractions with stated uncertainty.
 
 At the end of each year, the year's leading composition is gas atomized at
 Ames National Laboratory by the powder group of Dr.~Jordan A. Tiarks, an
-unfunded collaborator who has offered to turn a few of the best compositions
-into gas-atomized powder of the kind a commercial producer supplies
-\todo{letter of collaboration from Tiarks}. One run a year is budgeted as a purchased service. The
+unfunded collaborator with state-of-the-art facilities and deep expertise in gas
+atomization \todo{letter of collaboration from Tiarks}. One run a year is budgeted as a purchased service. The
 gas-atomized lot is deposited at Mines beside the ultrasonic lot of the same
 composition, so the project measures what changes between the two routes.
 That lot also supplies the finalists' replicate and repair builds and goes to
@@ -942,8 +938,9 @@ potentiostat dedicated to the loop measures open-circuit potential, linear
 polarization, impedance, and cyclic polarization~\cite{astmG59,astmG61}.
 ASTM G61 is written for iron-, nickel-, and cobalt-based alloys, so the
 project will report how its procedure behaves on deposited copper alloys.
-A potentiostat lent by a BYU colleague has run the screen on the gantry
-since October 2026; the budget buys a dedicated instrument with impedance capability.
+A potentiostat lent by a BYU colleague was integrated into the gantry's automated
+workflow in October 2026, although the screen itself has not yet been run; the
+budget buys a dedicated instrument with impedance capability.
 Small cells can add crevice attack at the seal and shift breakdown
 potentials~\cite{frankel1998}, so each spot is photographed before and after,
 and the wells are checked against a conventional 1~cm$^2$ flat cell on the
@@ -1131,7 +1128,11 @@ chemistry of feed stock materials to enhance AM processing and corrosion
 resistance of additive-manufactured alloys''~\cite{onrcorr}.
 
 \textbf{The longer horizon.} The project designs for single-stream,
-pre-alloyed powder, which existing DED systems can use now. The same models
+pre-alloyed powder, which existing DED systems can use now. Blended powders
+separate in the feed stream and are caught by the melt pool at different
+rates, which shifts the deposited composition~\cite{li2018,chen2020,karnati2019};
+a pre-alloyed lot carries one measured composition into every
+deposit~\cite{chen2020}. The same models
 can later choose blends of elemental and master-alloy powders fed from
 several hoppers and alloyed in the melt pool, which would let a depot make a
 new composition without a new powder lot. The guide of Task~4 will describe
@@ -1289,13 +1290,10 @@ enter the scatter in the models directly. If a composition cannot
 be atomized, for example because it melts too close to the limit of the
 module, the search records the failure as a result, since predicting which
 compositions can be made is part of the task. If the coating of a plate
-wears and the melt stops wetting it, we replace the plate, with the
-tungsten-based coating, the best balanced in a comparison by the
-manufacturer~\cite{choma2026}, as the alternative. If melts that contain
-nickel or iron still pick up carbon, which the carbon analysis of each lot
-will show, we will recoat the crucible before every run instead of every
-few. We will also replace the graphite rod and the carbon-carbon plate with
-an alumina sealing rod and a molybdenum-alloy plate~\cite{ciftcli2025}. If a
+wears and the melt stops wetting it, we replace the plate or move to a
+molybdenum-alloy plate~\cite{ciftcli2025}. If melts that contain nickel or iron
+still pick up carbon, which the carbon analysis of each lot will show, we will
+recoat the crucible before every run instead of every few. If a
 lot flows poorly, the search sees that at the powder step and can change the
 atomizer settings before paying for a deposit. The pre-placed tracks on cast NAB and
 copper-nickel plate show early whether the first layer fuses to thick plate.
@@ -1320,43 +1318,49 @@ Professor of Mechanical Engineering at BYU since December 2025, his first
 tenure-track position. Before BYU, he was Director of Training and Programs
 then Principal Investigator and Staff Scientist at the Acceleration
 Consortium, University of Toronto, where he built its development
-laboratory with about \$600,000 of equipment.
+laboratory with about \$600,000 of equipment and helped direct the
+organization's growth from 6 to 60 full-time employees (35 staff scientists)
+in his three years there.
 
 The PI combines Bayesian optimization with laboratory hardware. He
 developed Honegumi, which helps experimentalists set up Bayesian
 optimization, consulted for Meta on the version 1.0 release of the Ax
 platform, and organized an international Bayesian optimization hackathon. He
-co-authored the structural materials section of the \emph{Chemical Reviews}
+wrote the structural materials section of the \emph{Chemical Reviews}
 survey of self-driving laboratories and led a review of low-cost
-self-driving laboratories. His graduate work used Bayesian inference with
+self-driving laboratories. His M.S. work used Bayesian inference with
 propagated uncertainty to model grain boundaries. He also designed a
-semi-automated induction furnace for temperatures up to 2500\,\textdegree{}C.
-At BYU he supervises eight undergraduate researchers and has set up the
+semi-automated induction furnace for temperatures up to
+2500\,\textdegree{}C~\cite{baird2026furnace}. His electrochemistry experience
+includes battery research, among it lithium-oxygen batteries at NASA Langley
+Research Center, hydrogen embrittlement studies, and electrochemical
+metallographic preparation. At BYU he supervises about 20 undergraduate
+researchers and one M.S. student and has set up the
 CALPHAD workflow, the atomizer, the powder doser, and the powder-to-part
-demonstration described in Section~\ref{sec:prelim}. \todo{add any corrosion or
-electrochemistry experience; if there is none, say how the students will
-learn the corrosion methods, e.g., a BYU colleague's training or a Navy
-laboratory visit. Add any DED or welding experience.} The CV lists all
+demonstration described in Section~\ref{sec:prelim}.
+% TODO (Sterling): add any DED or welding experience.
+The CV lists all
 publications and presentations.
 
 \begin{figure}[!hb]
 \centering
 % (a) figures-src/make_room_figure.py; (b) atomizer-training/viz3d/proposal_strip.py
 % at the repository root (provenance in figures-cu-ded/README.md).
-\begin{tikzpicture}[lbl/.style={font=\fontsize{8}{9.6}\selectfont, inner sep=0pt}]
-\node[inner sep=0pt, anchor=north] (a) at (0,0)
-  {\includegraphics[width=0.52\textwidth]{figures-cu-ded/room-atomizer-2026.jpg}};
-\node[inner sep=0pt, anchor=north] (b) at ([yshift=-4pt]a.south)
-  {\includegraphics[width=\textwidth]{figures-cu-ded/atomizer-sequence.png}};
-\node[lbl, anchor=north east] at ([xshift=-3pt]a.north west) {(a)};
-\node[lbl, anchor=south west] at ([yshift=2pt]b.north west) {(b)};
+% (a) and (b) side by side, one row, so the figure fits on the last counted page.
+\begin{tikzpicture}[lbl/.style={font=\fontsize{8}{9.6}\selectfont, inner sep=0pt,
+  fill=white, fill opacity=0.85, text opacity=1}]
+\node[inner sep=0pt, anchor=north west] (a) at (0,0)
+  {\includegraphics[height=0.68in]{figures-cu-ded/room-atomizer-2026.jpg}};
+\node[inner sep=0pt, anchor=north west] (b) at ([xshift=5pt]a.north east)
+  {\includegraphics[height=0.68in]{figures-cu-ded/atomizer-sequence.png}};
+\node[lbl, anchor=north west] at ([shift={(1pt,-1pt)}]a.north west) {(a)};
+\node[lbl, anchor=north west] at ([shift={(1pt,-1pt)}]b.north west) {(b)};
 \end{tikzpicture}
-\caption{(a)~The atomizer enclosure in the PI's laboratory from its stream
-camera (1 October 2026) and the installed atomizer with its induction module
+\caption{(a)~The humidity-controlled, ventilated powder enclosure in the PI's
+laboratory that houses the atomizer, and the atomizer with its induction module
 open (28 September 2026). (b)~One run, rendered from a CAD model of the
-atomizer: (i)~a machined cup filled with powder and its plug, (ii)~the plugged
-cups in the crucible, (iii)~melting and stirring, (iv)~pouring onto the
-ultrasonic plate.}
+atomizer: (i)~cup and plug, (ii)~cups in the crucible, (iii)~melting and
+stirring, (iv)~pouring onto the ultrasonic plate.}
 \label{fig:enclosure}
 \end{figure}
 
@@ -1401,7 +1405,7 @@ version).}
 the powder doser, the liquid-handling gantry, and the equipment for powder
 handling and specimen preparation \todo{list the main items bought with
 start-up funds}.
-The corrosion screen runs on a potentiostat lent by a BYU colleague until the one item of equipment requested, a dedicated potentiostat with impedance capability, arrives.
+A potentiostat lent by a BYU colleague is integrated into the gantry's automated workflow and serves until the one item of equipment requested, a dedicated potentiostat with impedance capability, arrives.
 The BYU Electron Microscopy Facility provides SEM, EDS, and EBSD, and BYU provides high-performance computing.
 DED time is bought from the University of Utah and the Colorado School of Mines, as described under Task 2.
 Tensile tests use the Instron load frames in the
@@ -1723,6 +1727,49 @@ S.~Yadav, A.~N. Jinoop, N.~Sinha, C.~P. Paul, and K.~S. Bindra, ``Parametric inv
 \bibitem{williams2025}
 N.~Williams, K.~Snyder, I.~Smith, A.~Duong, E.~Carpenter, and R.~Barua, ``The first layer: Single-track insights into direct energy deposition processed Cu-Ni thermoelectric alloys,'' \emph{J. Manuf. Mater. Process.} \textbf{9}(6), 170 (2025).
 \href{https://doi.org/10.3390/jmmp9060170}{doi:10.3390/jmmp9060170}
+
+\bibitem{khatamsaz2024}
+D.~Khatamsaz, R.~Arr{\'o}yave, and D.~L. Allaire, ``Asynchronous multi-information source Bayesian optimization,'' \emph{J. Mech. Des.} \textbf{146}(10), 101708 (2024).
+\href{https://doi.org/10.1115/1.4065064}{doi:10.1115/1.4065064}
+
+\bibitem{khatamsaz2021}
+D.~Khatamsaz, A.~Molkeri, R.~Couperthwaite, J.~James, R.~Arr{\'o}yave, D.~Allaire, and A.~Srivastava, ``Efficiently exploiting process-structure-property relationships in material design by multi-information source fusion,'' \emph{Acta Mater.} \textbf{206}, 116619 (2021).
+\href{https://doi.org/10.1016/j.actamat.2020.116619}{doi:10.1016/j.actamat.2020.116619}
+
+\bibitem{hastings2025}
+T.~Hastings, M.~Mulukutla, D.~Khatamsaz, D.~Salas, W.~Xu, D.~Lewis, N.~Person, M.~Skokan, B.~Miller, J.~Paramore, B.~Butler, D.~Allaire, V.~Attari, I.~Karaman, G.~Pharr, A.~Srivastava, and R.~Arr{\'o}yave, ``Accelerated multi-objective alloy discovery through efficient Bayesian methods: application to the FCC high entropy alloy space,'' \emph{Acta Mater.} \textbf{297}, 121173 (2025).
+\href{https://doi.org/10.1016/j.actamat.2025.121173}{doi:10.1016/j.actamat.2025.121173}
+
+\bibitem{khatamsaz2022}
+D.~Khatamsaz, B.~Vela, P.~Singh, D.~D. Johnson, D.~Allaire, and R.~Arr{\'o}yave, ``Multi-objective materials Bayesian optimization with active learning of design constraints: design of ductile refractory multi-principal-element alloys,'' \emph{Acta Mater.} \textbf{236}, 118133 (2022).
+\href{https://doi.org/10.1016/j.actamat.2022.118133}{doi:10.1016/j.actamat.2022.118133}
+
+\bibitem{arroyave2019}
+R.~Arr{\'o}yave and D.~L. McDowell, ``Systems approaches to materials design: past, present, and future,'' \emph{Annu. Rev. Mater. Res.} \textbf{49}, 103-126 (2019).
+\href{https://doi.org/10.1146/annurev-matsci-070218-125955}{doi:10.1146/annurev-matsci-070218-125955}
+
+\bibitem{arroyave2026}
+R.~Arr{\'o}yave, ``Metallurgy-informed Bayesian optimization: rethinking alloy discovery and design,'' \emph{Digital Discovery} \textbf{5}(9), 3474-3511 (2026).
+\href{https://doi.org/10.1039/d6dd00251j}{doi:10.1039/d6dd00251j}
+
+\bibitem{mulukutla2025}
+M.~Mulukutla, R.~Robinson, D.~Khatamsaz, B.~Vela, T.~Hastings, N.~Vu, and R.~Arr{\'o}yave, ``Supply risk-aware alloy discovery and design: a case study on the MoNbTiVW system,'' \emph{Materialia} \textbf{39}, 102332 (2025).
+\href{https://doi.org/10.1016/j.mtla.2024.102332}{doi:10.1016/j.mtla.2024.102332}
+
+\bibitem{adaptmines}
+Colorado School of Mines, Alliance for the Development of Additive Processing Technologies (ADAPT), ``Capabilities: equipment,'' \url{https://adapt.mines.edu/capabilities/} (accessed 28 October 2026).
+
+\bibitem{chen2020}
+Y.~Chen, X.~Zhang, M.~M. Parvez, and F.~Liou, ``A review on metallic alloys fabrication using elemental powder blends by laser powder directed energy deposition process,'' \emph{Materials} \textbf{13}(16), 3562 (2020).
+\href{https://doi.org/10.3390/ma13163562}{doi:10.3390/ma13163562}
+
+\bibitem{li2018}
+W.~Li, S.~Karnati, Y.~Zhang, and F.~Liou, ``Investigating and eliminating powder separation in pre-mixed powder supply for laser metal deposition process,'' \emph{J. Mater. Process. Technol.} \textbf{254}, 294-301 (2018).
+\href{https://doi.org/10.1016/j.jmatprotec.2017.11.045}{doi:10.1016/j.jmatprotec.2017.11.045}
+
+\bibitem{baird2026furnace}
+S.~G. Baird, R.~Weber, C.~Nyborg, R.~Guymon, G.~Erickson, and O.~K. Johnson, ``Retrofitting a commercial RF induction generator into a computer-controlled, vacuum and gas integrated annealing system for reactive-metal grain growth,'' arXiv:2609.22118 (2026).
+\href{https://doi.org/10.48550/arXiv.2609.22118}{doi:10.48550/arXiv.2609.22118}
 
 \bibitem{bhattacharya2011}
 S.~Bhattacharya, G.~P. Dinda, A.~K. Dasgupta, H.~Natu, B.~Dutta, and J.~Mazumder, ``Microstructural evolution and mechanical, and corrosion property evaluation of Cu-30Ni alloy formed by direct metal deposition process,'' \emph{J. Alloys Compd.} \textbf{509}(22), 6364-6373 (2011).
