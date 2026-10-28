@@ -139,9 +139,33 @@ C71500 passes by definition (`m_ref` is its immersion index); C70600 is weaker a
 
 **Required property 3 (a ridge, not a point).** With the other inputs at the optimum, 17 points of a 101 × 101 (P, v) grid lie within 0.5% of J* (P from 0.53 to 0.64 along P − v ≈ 0.23) and 63 within 2% (P from 0.47 to 0.68). The ridge is shorter than the aluminum one because lack of fusion ends it at low power and keyholing at high power.
 
-**Required property 4 (Utah's power cap).** For 200 random copper-rich compositions (Ni ≤ 0.07 and Al ≤ 0.2 scaled, under about 2 wt% each), the median best `rho_u` at Utah's cap is 0.40 against 0.88 at Mines; 15% cannot reach 0.3 at Utah, and 100% reach 0.7 at Mines. At the optimum's composition the cap does not bind (0.92 at Utah, 0.93 at Mines).
+**Required property 4 (Utah's power cap).** For 200 random copper-rich compositions (Ni ≤ 0.07 and Al ≤ 0.2 scaled, under about 2 wt% each), the median best `rho_u` at Utah's cap is 0.40 against 0.88 at Mines; 15% cannot reach 0.3 at Utah, 15% still pass the Utah gate of 0.5, and 100% reach 0.7 at Mines. At the optimum's composition the cap does not bind (0.92 at Utah, 0.93 at Mines). The index is a strength knockdown, not a density (next section).
 
 Every value above is in [`truth_tables.md`](truth_tables.md), for all four cells.
+
+### What the "dense index" of 0.40 is: a strength knockdown, not a density
+
+`rho_u` and `rho_m` are called a "dense, crack-free index", and the only thing they do in the objective is scale strength: `U = (0.25 + 0.75 s) rho_m (1 + 0.15 beta)`. They are not relative densities. A deposit at 40% relative density would be loose powder, not a part, so "a median dense index of 0.40 at Utah" should not be read as a density. For the 200 copper-rich compositions of property 4, at each one's best Utah setting (P at the cap, v chosen freely), the factors of `rho_u` have these medians:
+
+| Factor of `rho_u` | Median |
+|---|---|
+| process window `exp(-(u/0.2)^2) (1 - 0.35 sig((P - 0.85)/0.05))` | 1.00 |
+| powder `q^0.3` | 0.98 |
+| cracking `1 - 0.75 crack` | 1.00 |
+| thin-wall porosity `0.95 + 0.05 q` | 1.00 |
+| lack of fusion `1 - lof`, with `lof = sig((h - P)/0.08)` at P = 0.5 | **0.41** |
+| product, `rho_u` | **0.40** |
+
+The 0.40 is therefore the lack-of-fusion factor alone. These compositions have a conductivity index `h` of about 0.53, just above Utah's power cap of 0.5, and the logistic puts them about halfway to "unfused". The share of them that passes the screening policies' Utah gate (`rho_u >= 0.5`) is 15%, all with `h` below about 0.5. At Mines, at full power (P of about 0.75), the same compositions reach a median of 0.88.
+
+Read as a strength knockdown, 0.40 says that a Utah block of nearly pure copper keeps 40% of a fully fused block's strength. That is harsh but possible for a deposit riddled with lack-of-fusion voids, since in AM metals tensile strength falls by several percent for each percent of lack-of-fusion porosity. Read as a density, it is wrong. Options:
+
+1. **Rename only.** Call the node a deposit-quality index (the share of the composition's strength that the deposit keeps), and the Utah gate a "half-strength" gate. No number changes, and every stored run stays valid.
+2. **Report a relative density beside the index.** Map it to what a lab would measure, for example relative density = 1 - 0.15 (1 - index). The copper-rich Utah blocks are then about 91% dense, the optimum's Mines builds 99%, and the Utah gate (index of at least 0.5) means "at least 92.5% dense". Only labels and the gate's description change; no run changes.
+3. **Make lack of fusion physical.** Replace the logistic in `h - P` with a melt-pool overlap criterion: the Rosenthal or Eagar-Tsai melt depth against the layer height, as in the lack-of-fusion model of Tang, Pistorius and Beuth (2017). The thermal diffusivity would come from the composition (Wiedemann-Franz on a Matthiessen resistivity), with copper's low absorptivity at 1 µm. The index becomes the fused fraction, and strength follows a porosity law. This changes the truth, so every run would be redone. It would also shrink the region where Utah cannot fuse to alloys with a few percent of solute at most: conductivity falls about tenfold by 10 wt% Ni (C70600 is about 40 W/m K, against about 390 for copper), while `h` here still has 60% of its copper value at 10 wt% Ni.
+4. **Soften the knockdown,** for example `1 - 0.5 lof`, so an unfused deposit keeps at least half its strength. This is ad hoc, and it changes every run.
+
+Option 1 is what this README now does. Option 3 is the one that answers the question properly; it is listed under the physics-based truth below as not done.
 
 ## Policies (all on equal $100k of new spend)
 
