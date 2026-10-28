@@ -13,7 +13,7 @@ import warnings
 from multiprocessing import Pool
 from pathlib import Path
 
-OUT = Path(__file__).parent / "results"
+OUT = Path(__file__).parent / ("results-phys" if os.environ.get("BOFN_TRUTH") == "phys" else "results")  # BOFN_TRUTH=phys: the physics-based truth
 SLOW = ("pkgfn", "pkgfn_screen", "pkgfn_audit", "mines_only")
 
 
@@ -46,7 +46,7 @@ def code_hash():
 
 
 def job(args):
-    kind, kappa, eta, seed, budget, out = args
+    kind, kappa, eta, seed, budget, out, sha = args
     warnings.filterwarnings("ignore")
     import torch
 
@@ -67,7 +67,7 @@ def job(args):
     t0 = time.time()
     res = run(kind, kappa, eta, seed, budget)
     res["wall_s"] = time.time() - t0
-    res["code_sha256"] = code_hash()
+    res["code_sha256"] = sha  # of the code on disk when the sweep started
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(res))
     return str(path), res["wall_s"]
@@ -84,7 +84,8 @@ def main():
     a = ap.parse_args()
     lo, hi = (int(v) for v in a.seeds.split("-"))
     cells = [tuple(float(v) for v in c.split(",")) for c in a.cells]
-    jobs = [(k, kap, eta, s, a.budget, a.out) for (kap, eta) in cells for s in range(lo, hi + 1) for k in a.kinds]
+    sha = code_hash()
+    jobs = [(k, kap, eta, s, a.budget, a.out, sha) for (kap, eta) in cells for s in range(lo, hi + 1) for k in a.kinds]
     jobs.sort(key=lambda j: j[0] not in SLOW)  # the pKGFN runs first, so the fast ones fill the last cores
     refused = 0
     with Pool(a.workers) as pool:

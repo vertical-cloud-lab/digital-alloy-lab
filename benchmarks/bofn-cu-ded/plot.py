@@ -14,9 +14,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import font_manager
 
-from analyze import CELLS, GRID, SHORT, at, curves, load
+from analyze import CELLS, GRID, SHORT, TRUTH, at, curves, load
 
 HERE = Path(__file__).parent
+PREFIX = "bofn_cu_phys" if TRUTH == "phys" else "bofn_cu"  # figures of the physics-based truth get their own names
 for f in (Path.home() / ".local/share/fonts/aptos").glob("Aptos*.ttf"):
     font_manager.fontManager.addfont(str(f))
 plt.rcParams.update(
@@ -44,7 +45,10 @@ STYLE = {
     "pkgfn_audit": dict(color="#E06666", lw=2.2, z=5, ls="-"),
     "mines_only": dict(color="#E06666", lw=2.2, z=5, ls=(0, (4, 2))),
     "eifn": dict(color="#404040", lw=2.0, z=4, ls="-"),
+    "pkgfn_light": dict(color="#E06666", lw=2.0, z=4, ls=(0, (1.5, 1.5))),
     "tiered": dict(color="#8C8C8C", lw=2.0, z=3, ls="-"),
+    "tiered_ni": dict(color="#8C8C8C", lw=2.0, z=3, ls=(0, (4, 2))),
+    "tiered_ni_ref": dict(color="#595959", lw=2.0, z=3, ls=(0, (1.5, 1.5))),
     "funnel": dict(color="#8C8C8C", lw=2.0, z=3, ls=(0, (4, 2))),
     "ei": dict(color="#B4B4B4", lw=2.0, z=2, ls="-"),
     "random": dict(color="#D0D0D0", lw=2.0, z=1, ls="-"),
@@ -53,7 +57,7 @@ FADE = {RED: "#E6B3B3", "#404040": "#BDBDBD", "#8C8C8C": "#CFCFCF", "#B4B4B4": "
 HEAD = (1.0, 1.0)
 
 
-def main_curve(cell=HEAD, kinds=("pkgfn", "pkgfn_audit", "pkgfn_screen", "mines_only", "eifn_reuse", "eifn", "tiered", "funnel", "ei", "random"), out=None):
+def main_curve(cell=HEAD, kinds=("pkgfn", "pkgfn_light", "pkgfn_audit", "pkgfn_screen", "mines_only", "eifn_reuse", "eifn", "tiered", "tiered_ni", "tiered_ni_ref", "funnel", "ei", "random"), out=None):
     """Every policy's best alloy demonstrated against spend, with direct labels."""
     data = load(cell)
     fig, ax = plt.subplots(figsize=(10, 5.8))
@@ -83,7 +87,7 @@ def main_curve(cell=HEAD, kinds=("pkgfn", "pkgfn_audit", "pkgfn_screen", "mines_
     ax.set_axisbelow(True)
     fig.tight_layout()
     fig.subplots_adjust(right=0.68)
-    out = out or HERE / f"bofn_cu_best_vs_spend_k{cell[0]:g}e{cell[1]:g}_all_policies.png"
+    out = out or HERE / f"{PREFIX}_best_vs_spend_k{cell[0]:g}e{cell[1]:g}_all_policies.png"
     fig.savefig(out)
     plt.close(fig)
     return out
@@ -158,7 +162,7 @@ def slide_figure(cell=HEAD, kinds=PV_KINDS, out=None, base="tiered", ref="pkgfn"
     ax.set_xlabel("New spend ($k)", fontsize=size, color="#404040", labelpad=10)
     ax.text(-0.11, 1.03, "Best alloy demonstrated\n(% of true optimum)", transform=ax.transAxes, ha="left", va="bottom", fontsize=size, color="#404040", linespacing=0.95)
     fig.subplots_adjust(left=0.11, right=right, top=0.86, bottom=0.21)
-    out = out or HERE / f"bofn_cu_best_vs_spend_k{cell[0]:g}_partial_vs_full.png"
+    out = out or HERE / f"{PREFIX}_best_vs_spend_k{cell[0]:g}_partial_vs_full.png"
     fig.savefig(out, dpi=300)
     problems = check_overlaps(fig, ax)
     plt.close(fig)
@@ -210,7 +214,7 @@ def allocation(cell=HEAD, kinds=("pkgfn", "mines_only", "eifn_reuse", "eifn", "t
         ax.set_xticks([])
         ax.spines["bottom"].set_visible(False)
     fig.tight_layout()
-    out = out or HERE / f"bofn_cu_allocation_k{cell[0]:g}e{cell[1]:g}.png"
+    out = out or HERE / f"{PREFIX}_allocation_k{cell[0]:g}e{cell[1]:g}.png"
     fig.savefig(out)
     plt.close(fig)
     return out
@@ -290,12 +294,14 @@ def dag_strip(out=None):
 
 
 if __name__ == "__main__":
-    print(dag_strip())
+    if TRUTH == "toy":
+        print(dag_strip())
     if load(HEAD):
         print(slide_figure())
         (HERE / "variants").mkdir(exist_ok=True)
-        print(slide_figure(out=HERE / "variants" / "bofn_cu_best_vs_spend_k1_partial_vs_full_all_bands.png", bands="all"))
+        print(slide_figure(out=HERE / "variants" / f"{PREFIX}_best_vs_spend_k1_partial_vs_full_all_bands.png", bands="all"))
         print(main_curve())
         print(allocation())
-    for s in (100_000, 50_000):
-        print(sensitivity(s))
+    if TRUTH == "toy":
+        for s in (100_000, 50_000):
+            print(sensitivity(s))

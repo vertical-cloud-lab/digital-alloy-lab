@@ -75,13 +75,34 @@ PKGFN_KINDS = ("pkgfn", "pkgfn_screen", "pkgfn_audit", "mines_only")
 KG_HOOK = None  # quality/mc_noise.py sets this to re-score each KG with other base samples
 
 
+def feas(X):
+    """The rows of X inside the search-space limits (physics-based truth only; the toy truth keeps the box)."""
+    return X if bofn_alloy.FEASIBLE is None else X[bofn_alloy.FEASIBLE(X)]
+
+
+def sobol_feas(n, d, seed):
+    """The first n Sobol points inside the limits (the same points as `sobol` for the toy truth)."""
+    if bofn_alloy.FEASIBLE is None:
+        return sobol(n, d, seed)
+    return feas(sobol(8 * n, d, seed))[:n]
+
+
+def rand_feas(n, g):
+    if bofn_alloy.FEASIBLE is None:
+        return torch.rand(n, D, generator=g)
+    out = torch.empty(0, D)
+    while out.shape[0] < n:
+        out = torch.cat([out, feas(torch.rand(4 * n, D, generator=g))])
+    return out[:n]
+
+
 def initial_data(truth, seed):
     d = Data()
     lab = Lab(truth, d)
-    for c in sobol(N_CALPHAD0, NC, seed=1000 + seed):
+    for c in sobol_feas(N_CALPHAD0, NC, seed=1000 + seed):
         lab.calphad(c)
     g = torch.Generator().manual_seed(2000 + seed)
-    for x in torch.rand(N_FULL0, D, generator=g):
+    for x in rand_feas(N_FULL0, g):
         lab.full_eval(x)
     d.spent = 0.0  # seed data is shared and sunk; budgets count new spend only
     d.log = []  # and purchase counts are new purchases only
@@ -159,7 +180,7 @@ def calphad_shortlist(d, lab, seed, top=SCREEN_TOP, ni_floor=None):
     With `ni_floor` (the corrosion-aware variants) only compositions with at least that
     much nickel are eligible; when fewer than `top` of them pass the crack screen, the
     shortlist is topped up with the least crack-prone (lowest f) of the rest."""
-    for c in sobol(SCREEN_N, NC, seed=4000 + seed)[: SCREEN_N - N_CALPHAD0]:
+    for c in sobol_feas(SCREEN_N, NC, seed=4000 + seed)[: SCREEN_N - N_CALPHAD0]:
         lab.calphad(c)
     comps = torch.tensor([list(k) for k in d.calphad])
     s = torch.tensor([v["s"] for v in d.calphad.values()])
@@ -309,7 +330,7 @@ def run_full_policy(kind, truth, seed, budget):
             # ablation: network EI per dollar over new designs and new Mines sessions on
             # existing lots (partial evaluation without KG's stage choice; every remaining stage runs)
             best = float(y.max())
-            Pn = torch.cat([sobol(1024, D, seed=it + 50 * seed), local_perturb(X, 16, 0.05, g)])
+            Pn = feas(torch.cat([sobol(1024, D, seed=it + 50 * seed), local_perturb(X, 16, 0.05, g)]))
             pools, lots = [Pn], [-1] * Pn.shape[0]
             costs = [torch.full((Pn.shape[0],), FULL_COST)]
             for i, L in enumerate(d.lots):
@@ -376,16 +397,16 @@ def run_full_policy(kind, truth, seed, budget):
             rec(net, it, action)
             continue
         if kind == "random":
-            x = torch.rand(D, generator=g)
+            x = rand_feas(1, g)[0]
         elif kind == "ei":
             gp = TinyGP(X, y)
-            P = torch.cat([sobol(2048, D, seed=it + 50 * seed), local_perturb(X[y.topk(min(5, len(y))).indices], 64, 0.05, g)])
+            P = feas(torch.cat([sobol(2048, D, seed=it + 50 * seed), local_perturb(X[y.topk(min(5, len(y))).indices], 64, 0.05, g)]))
             x = P[expected_improvement(gp, P, y.max()).argmax()]
         elif kind == "eifn":
             best = float(y.max())
-            P = torch.cat([sobol(1024, D, seed=it + 50 * seed), local_perturb(X, 16, 0.05, g)])
+            P = feas(torch.cat([sobol(1024, D, seed=it + 50 * seed), local_perturb(X, 16, 0.05, g)]))
             ei, _ = network_ei_pool(net, d, P, eps_for(P.shape[0], 64, it), best)
-            Q = local_perturb(P[ei.topk(8).indices], 32, 0.03, g)
+            Q = feas(local_perturb(P[ei.topk(8).indices], 32, 0.03, g))
             eq, _ = network_ei_pool(net, d, Q, eps_for(Q.shape[0], 64, it), best)
             P, ei = torch.cat([P, Q]), torch.cat([ei, eq])
             x = P[ei.argmax()]
@@ -440,9 +461,9 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
         left = budget - d.spent
         # ---- pool and anchoring set
         Xv = torch.stack([x for x, _ in d.full])
-        P = torch.cat([sobol(N_POOL, D, seed=it + 100 * seed), local_perturb(Xv, 8, 0.05, g)])
+        P = feas(torch.cat([sobol(N_POOL, D, seed=it + 100 * seed), local_perturb(Xv, 8, 0.05, g)]))
         nuP = net.mean(P, eps_for(P.shape[0], S_ACQ, 10_000 + it))
-        Q = local_perturb(P[nuP.topk(8).indices], N_PERT, 0.03, g)
+        Q = feas(local_perturb(P[nuP.topk(8).indices], N_PERT, 0.03, g))
         nuQ = net.mean(Q, eps_for(Q.shape[0], S_ACQ, 20_000 + it))
         P, nuP = torch.cat([P, Q]), torch.cat([nuP, nuQ])
         smpP = net.samples(P, eps_for(P.shape[0], S_ACQ, 30_000 + it))
@@ -458,7 +479,7 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
         cands, ei_of, smp_of, meta, costs = {}, {}, {}, {}, {}
         # ---- CALPHAD candidates: compositions of promising designs, plus space filling
         cx = torch.cat([P[eiP.topk(N_CAND - 4).indices], P[nuP.topk(4).indices]])
-        cx = torch.cat([cx, torch.cat([sobol(4, NC, seed=it + 7 * seed), cx[:4, NC:]], -1)])
+        cx = torch.cat([cx, torch.cat([sobol_feas(4, NC, seed=it + 7 * seed), cx[:4, NC:]], -1)])
         cands["C"] = (cx[:, COMP], cx)
         ei_of["C"] = eiP.topk(N_CAND - 4).values.tolist() + [0.0] * 8
         # ---- atomization candidates: simulated compositions, best (a, P, v) for each
@@ -707,7 +728,7 @@ def run_pkgfn(truth, seed, budget, verbose=False, utah=True, screens=False, audi
 def settings_for(kind):
     """What a stored run must match to be resumed (run_sweep.py, Edison F9): the truth and screens for
     every policy, and the Monte Carlo settings for the pKGFN-type ones (the others do not use them)."""
-    s = {"TRUTH": bofn_alloy.TRUTH, "S_REC": S_REC, "REC": REC, "RHO_GATE": RHO_GATE, "W_QUANTILE": W_QUANTILE, "F_SAFE": F_SAFE}
+    s = {"TRUTH": bofn_alloy.TRUTH, **({"BAR": __import__("truth_phys").BAR} if bofn_alloy.TRUTH == "phys" else {}), "S_REC": S_REC, "REC": REC, "RHO_GATE": RHO_GATE, "W_QUANTILE": W_QUANTILE, "F_SAFE": F_SAFE}
     if kind in ("tiered_ni", "tiered_ni_ref"):
         s.update(NI_FLOOR=NI_FLOOR)
     if kind in PKGFN_KINDS:
@@ -716,7 +737,7 @@ def settings_for(kind):
 
 
 def run(kind, kappa, eta, seed, budget, verbose=False):
-    truth = AlloyTruth(kappa, eta)
+    truth = bofn_alloy.make_truth(kappa, eta)
     torch.manual_seed(seed)
     bofn_alloy.FIT_LOG.update(calls=0, failures=0)
     if kind in PKGFN_KINDS:

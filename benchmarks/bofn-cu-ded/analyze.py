@@ -1,7 +1,8 @@
 """Aggregate the copper/DED sweep: curves against new spend, cost to target, speed-ups, and the
-screen-audit, two-step and funnel tables. Writes tables.md.
+screen-audit, two-step and funnel tables. Writes tables.md (tables-phys.md for the physics-based truth).
 
     python analyze.py
+    BOFN_TRUTH=phys python analyze.py
 """
 
 from __future__ import annotations
@@ -13,10 +14,11 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from bofn_alloy import COSTS, D, M_REF, AlloyTruth
+from bofn_alloy import COSTS, D, M_REF, TRUTH, AlloyTruth
 
 HERE = Path(__file__).parent
-RES = HERE / "results"
+RES = HERE / ("results-phys" if TRUTH == "phys" else "results")
+LIGHT = HERE / "quality" / "results-light"  # the first sweep's pKGFN runs (S = 32), shown as their own row
 GRID = np.arange(0, 100_001, 250.0)
 CELLS = [(1.0, 1.0), (0.0, 0.0), (1.0, 0.0), (0.0, 1.0)]
 CELL_NAMES = {(1.0, 1.0): "both screens biased", (0.0, 0.0): "both screens right", (1.0, 0.0): "crack screen biased only",
@@ -28,7 +30,10 @@ SHORT = {
     "mines_only": "pKGFN, no Utah stage",
     "eifn": "BOFN, full pipeline",
     "eifn_reuse": "BOFN + lot reuse",
+    "pkgfn_light": "pKGFN, light MC settings (first sweep)",
     "tiered": "Tiered screening",
+    "tiered_ni": "Tiered, Ni ≥ 10 wt% shortlist",
+    "tiered_ni_ref": "Tiered, Ni ≥ 10 wt%, 90-10 coupon gate",
     "funnel": "Fixed top-k funnel",
     "ei": "Standard BO",
     "random": "Random",
@@ -44,6 +49,8 @@ def cell_dir(cell):
 @lru_cache
 def optimum(kappa: float, eta: float = 1.0) -> float:
     """J* per cell: read from truth_tables.json (check_truth.py), else the same multi-start search."""
+    if TRUTH == "phys":  # phys/check_phys.py, headline cell only
+        return json.loads((HERE / "phys" / "phys_tables.json").read_text())["optimum"]["J"]
     p = HERE / "truth_tables.json"
     if p.exists():
         for r in json.loads(p.read_text()):
@@ -71,6 +78,11 @@ def load(cell):
     for p in sorted(cell_dir(cell).glob("*.json")):
         r = json.loads(p.read_text())
         out.setdefault(r["kind"], []).append(r)
+    light = LIGHT / f"k{cell[0]:g}e{cell[1]:g}"
+    if TRUTH == "toy" and light.exists():
+        for p in sorted(light.glob("pkgfn_s*.json")):
+            r = json.loads(p.read_text())
+            out.setdefault("pkgfn_light", []).append({**r, "kind": "pkgfn_light"})
     for k in out:
         out[k].sort(key=lambda r: r["seed"])
     return out
@@ -193,7 +205,7 @@ def paired(cell, ref, base, spends=(25_000, 50_000, 100_000)):
     return out
 
 
-def paired_table(cell, ref="pkgfn", bases=("tiered", "eifn", "eifn_reuse", "ei", "random", "mines_only", "pkgfn_screen", "pkgfn_audit", "funnel")):
+def paired_table(cell, ref="pkgfn", bases=("tiered", "tiered_ni", "tiered_ni_ref", "eifn", "eifn_reuse", "ei", "random", "pkgfn_light", "mines_only", "pkgfn_screen", "pkgfn_audit", "funnel")):
     rows = [f"| {SHORT[ref]} against | n | $25k: mean difference (wins/ties/losses; p) | $50k | $100k |", "|---|---|---|---|---|"]
     for b in bases:
         res = paired(cell, ref, b)
@@ -364,6 +376,22 @@ def funnel_table(cell):
     return "\n".join(rows)
 
 
+def immersion_table(cell, kinds=KINDS):
+    """How often each policy's immersed builds passed (true m >= m_ref), and how many seeds demonstrated a passing alloy."""
+    data = load(cell)
+    rows = ["| Policy | n | immersions per run | passing immersions per run | seeds with a passing alloy | lowest Ni (wt%) among passing builds |", "|---|---|---|---|---|---|"]
+    for k in kinds:
+        if k not in data:
+            continue
+        runs = data[k]
+        imm = [[B for B in r["builds"][5:] if B["m"] is not None] for r in runs]  # the five seed builds are shared
+        ok = [[B for B in bb if B["m"] >= r["m_ref"]] for bb, r in zip(imm, runs)]
+        ni = [B["c"][0] * 30 for bb in ok for B in bb]
+        rows.append(f"| {SHORT[k]} | {len(runs)} | {np.mean([len(b) for b in imm]):.1f} | {np.mean([len(b) for b in ok]):.1f} | {sum(1 for b in ok if b)}/{len(runs)} | "
+                    f"{min(ni):.1f} |" if ni else f"| {SHORT[k]} | {len(runs)} | {np.mean([len(b) for b in imm]):.1f} | 0.0 | 0/{len(runs)} | none |")
+    return "\n".join(rows)
+
+
 def quality_table():
     rows = ["| Cell | runs | GP fits | fit failures | pKGFN-type purchases chosen by the EI fallback (KG flat) |", "|---|---|---|---|---|"]
     for c in CELLS:
@@ -391,6 +419,7 @@ def report():
         if st:
             L += ["### Speed-up over tiered screening", "", st, ""]
         L += ["### Matched seeds (Wilcoxon signed-rank)", "", paired_table(c), "", "### Purchases per $100k (mean over seeds, new purchases only)", "", allocation_table(c), ""]
+        L += ["### Immersion outcomes (new builds only)", "", immersion_table(c), ""]
         tt = two_step_table(c)
         if "mines_only" in load(c):
             L += ["### What the two-step DED split buys (pKGFN with and without the Utah stage)", "", tt, ""]
@@ -406,5 +435,5 @@ def report():
 
 if __name__ == "__main__":
     md = report()
-    (HERE / "tables.md").write_text(md)
+    (HERE / ("tables-phys.md" if TRUTH == "phys" else "tables.md")).write_text(md)
     print(md)

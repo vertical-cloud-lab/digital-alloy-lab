@@ -167,6 +167,20 @@ Read as a strength knockdown, 0.40 says that a Utah block of nearly pure copper 
 
 Option 1 is what this README now does. Option 3 is the one that answers the question properly; it is listed under the physics-based truth below as not done.
 
+## A physics-based truth (`BOFN_TRUTH=phys`)
+
+Built on Oct 28 to answer "is the nickel floor real?". The hand-written immersion formula lets only 3.2% of the box pass immersion, and nothing under 6.1 wt% Ni (optimized; 7.0 wt% is the lowest of 400,000 random designs). That floor comes from the formula (`film = 1 - exp(-Ni/0.15)` against dense 70-30), not from data. The physics-based truth keeps the network and the process nodes and replaces what simulation or data can supply. The whole recipe is in the docstring of [`truth_phys.py`](truth_phys.py).
+
+| Node | Hand-written truth | Physics-based truth |
+|---|---|---|
+| f, g, s (CALPHAD) | closed forms | interpolated from an 864-composition pycalphad grid with the open MatCalc `mc_ni` database ([`phys/calphad_grid.py`](phys/calphad_grid.py), [`phys/calphad_grid.csv`](phys/calphad_grid.csv)): f = equilibrium freezing range / 200 °C; g = Fe-rich solid one degree above the solidus / 0.045 (NAB's); s = a yield-strength estimate from the 600 °C phase fractions (Orowan-type square roots of NiAl/Ni3Al and Fe-rich bcc kappa, solid solution in alpha) |
+| h (conductivity) | `0.6 (1 - Ni)^2 (1 - 0.6 Al)` | `0.6 sqrt(k / k_Cu)`, with k from Wiedemann-Franz on a Matthiessen resistivity (C70600 comes out at 46 W/m K, C71500 at 22) |
+| m (30-day immersion) | hand-written film | a film model fitted to same-test seawater data ([`phys/fit_corrosion.py`](phys/fit_corrosion.py), [`phys/corrosion_data.csv`](phys/corrosion_data.csv), [`phys/corrosion_fit.md`](phys/corrosion_fit.md)) |
+| search space | the box | the proposal's limits on every candidate pool: liquidus at most 1,250 °C (from the grid), Cu at least 65 wt%, Ni ≥ Fe above 7 wt% Al, Fe ≤ 2.3 wt% below 1.5 wt% Al (74% of the box) |
+| the bar for "passes immersion" | dense 70-30 Cu-Ni | dense 90-10 Cu-Ni (`BOFN_BAR=7030` for 70-30) |
+
+Results, the Edison review and the runs follow below as they finish ([`phys/phys_tables.md`](phys/phys_tables.md)).
+
 ## Policies (all on equal $100k of new spend)
 
 | Policy | What it does each step |
@@ -174,6 +188,8 @@ Option 1 is what this README now does. Option 3 is the one that answers the ques
 | **pKGFN** | For each stage (CALPHAD; atomize a simulated composition; Utah or Mines on an existing lot; microscopy, tensile, screen or immersion on an existing build), it computes the knowledge gradient per dollar of one more query and buys the best one. It also prices three test bundles (microscopy + tensile, microscopy + screen + immersion, screen + immersion), each valued by the knowledge gradient of its last stage with the intermediate outputs at their posterior means, because one-step KG gives microscopy almost no value of its own (its value is to unlock the tests). |
 | BOFN, full pipeline (EIFN) | The same network model. It picks a design by network expected improvement, then runs all eight stages on it ([Astudillo & Frazier 2021](https://arxiv.org/abs/2112.15311)). |
 | Tiered screening | As the spec describes it: CALPHAD on 256 compositions (224 new calls on top of the 32 seed compositions); keep the four strongest with `f <= 0.34`, net of burden; then EI on its own records over those four, where each step is a chain: Utah tracks until the small blocks reach the density target (`rho_u >= 0.5`), scanning travel speed at Utah's full capped power (0.25, 0.45, 0.65) and retiring a lot that fails all three; then Mines (the first build on a lot at the setting that passed at Utah, later ones at the EI choice), microscopy, tensile, the screen, and immersion only if the screen passes. Lots and scale-ups are reused. The first version drew Utah settings from EI on records that a Utah failure leaves flat, and spent about $90k on 182 Utah sessions of one lot that cannot pass; those runs were discarded. On this network the shortlist is aluminum bronzes with 2 to 6 wt% Ni that fail immersion (see Bottom line). |
+| `tiered_ni` | Corrosion-aware tiered screening: the same loop, but the shortlist admits only compositions with at least 10 wt% Ni (the strongest that pass the crack screen, net of burden). In this truth few such compositions pass the crack screen, so the shortlist is topped up to four with the least crack-prone (lowest `f`) of the rest. |
+| `tiered_ni_ref` | `tiered_ni` with the gate a careful lab would use before immersion: a build is immersed if its one-hour screen reads at least as well as a dense 90-10 Cu-Ni (C70600) reference coupon screened once at the start ($50), instead of the top quartile of every build screened so far. |
 | Standard BO (EI) | A single GP from the 7 inputs to the objective, all eight stages run per design. |
 | Random | Uniform designs, all eight stages run. |
 | *Ablation:* BOFN + lot reuse | Network EI per dollar over new designs *and* new Mines sessions on existing lots (every later stage runs). This is partial evaluation without KG's choice of stage. |

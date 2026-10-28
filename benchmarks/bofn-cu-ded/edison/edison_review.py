@@ -29,7 +29,10 @@ FILES = {
     "analysis-review": ["README.md", "tables.md", "analyze.py", "plot.py", "bofn_alloy.py", "policies.py", "truth_tables.md", "truth_tables.json", "edison/settings.md",
                         "bofn_cu_best_vs_spend_k1_partial_vs_full.png"],
 }
-BRIEF = {"code-review": HERE / "brief-code.md", "analysis-review": HERE / "brief-analysis.md"}
+FILES["phys-review"] = ["truth_phys.py", "phys/corrosion_data.csv", "phys/fit_corrosion.py", "phys/corrosion_fit.json", "phys/corrosion_fit.md", "phys/calphad_grid.py",
+                        "phys/calphad_grid.csv", "phys/phys_tables.md", "phys/phys_tables.json", "bofn_alloy.py"]
+BRIEF = {"code-review": HERE / "brief-code.md", "analysis-review": HERE / "brief-analysis.md", "phys-review": HERE / "brief-phys.md"}
+NO_RESULTS_ZIP = {"phys-review"}  # the physics review needs the truth, not the runs
 DONE = {"success", "fail", "failed", "cancelled", "error"}
 
 
@@ -76,7 +79,7 @@ def submit(name):
             z.write(p, p.relative_to(ROOT))
     c = client()
     uploads = []
-    for f in FILES[name] + [str(zpath)]:
+    for f in FILES[name] + ([] if name in NO_RESULTS_ZIP else [str(zpath)]):
         p = Path(f) if Path(f).is_absolute() else ROOT / f
         entry = c.upload_file(str(p))
         uploads.append({"file": p.name, "entry_id": str(entry)})
@@ -90,9 +93,11 @@ def submit(name):
     print(name, "task", task_id, flush=True)
 
 
-def wait(max_minutes=float(os.environ.get("EDISON_WAIT_MIN", 45)), every=240):
+def wait(max_minutes=float(os.environ.get("EDISON_WAIT_MIN", 45)), every=240, only=None):
     c = client()
     tasks = json.loads(TASKS.read_text())
+    if only:
+        tasks = {k: v for k, v in tasks.items() if k in only}
     t0 = time.time()
     while True:
         status = {}
@@ -102,14 +107,16 @@ def wait(max_minutes=float(os.environ.get("EDISON_WAIT_MIN", 45)), every=240):
         if all(s in DONE for s in status.values()) or time.time() - t0 > max_minutes * 60:
             break
         time.sleep(every)
-    fetch()
+    fetch(only)
 
 
-def fetch():
+def fetch(only=None):
     c = client()
     tasks = json.loads(TASKS.read_text())
     OUT.mkdir(exist_ok=True)
     for name, t in tasks.items():
+        if only and name not in only:
+            continue
         task = c.get_task(task_id=t["task_id"], verbose=True)
         d = task.model_dump(mode="json") if hasattr(task, "model_dump") else json.loads(task.json())
         status = str(d.get("status"))
@@ -150,6 +157,6 @@ if __name__ == "__main__":
     elif cmd == "submit":
         submit(sys.argv[2] if sys.argv[2].endswith("-review") else f"{sys.argv[2]}-review")
     elif cmd == "wait":
-        wait()
+        wait(only=sys.argv[2:] or None)
     elif cmd == "fetch":
-        fetch()
+        fetch(sys.argv[2:] or None)

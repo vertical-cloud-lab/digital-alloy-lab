@@ -55,7 +55,7 @@ D = 7
 COMP, IA, IPV = [0, 1, 2, 3], 4, [5, 6]
 INI, IAL, IFE, IMN = 0, 1, 2, 3
 P_CAP = 0.5  # Utah's MX-Lab laser power cap on the scaled axis (about 500 W of 1 kW)
-TRUTH = os.environ.get("BOFN_TRUTH", "toy")  # "toy": the hand-written truth below
+TRUTH = os.environ.get("BOFN_TRUTH", "toy")  # "toy": the hand-written truth below; "phys": truth_phys.py
 
 # round all-in step costs (the project's own estimates; see README)
 COSTS = {"C": 10.0, "A": 400.0, "U": 500.0, "M": 1500.0, "S": 100.0, "T": 200.0, "K": 50.0, "I": 400.0}
@@ -535,3 +535,18 @@ def gauss_hermite(k):
 def local_perturb(x, n, scale, gen):
     pts = x.unsqueeze(1) + scale * torch.randn(x.shape[0], n, x.shape[-1], generator=gen)
     return pts.reshape(-1, x.shape[-1]).clamp(0, 1)
+
+
+# --------------------------------------------------------------------------- truth selection
+FEASIBLE = None  # the search-space limits (a mask over designs), applied to every candidate pool; none for the toy truth
+if TRUTH == "phys":
+    import truth_phys
+
+    M_REF, RHO_REF, X_REF = truth_phys.phys_m_ref()  # the bar: dense 90-10 Cu-Ni (BOFN_BAR=7030 for 70-30)
+    FEASIBLE = truth_phys.feasible
+elif TRUTH != "toy":
+    raise ValueError(f"BOFN_TRUTH={TRUTH!r}: expected 'toy' or 'phys'")
+
+
+def make_truth(kappa=1.0, eta=1.0):
+    return truth_phys.PhysTruth(kappa, eta) if TRUTH == "phys" else AlloyTruth(kappa, eta)
