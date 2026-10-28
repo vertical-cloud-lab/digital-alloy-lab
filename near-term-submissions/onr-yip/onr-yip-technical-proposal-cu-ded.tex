@@ -1573,11 +1573,18 @@ Instruction 5230.09 will not be made public.
 % ===========================================================================
 % References (excluded from the page limit; also uploaded to Field 9)
 % ===========================================================================
+% In the submission build (Field 8) the references are uploaded separately as Field 9
+% (SPO, Oct 28): they are typeset into a discarded box, so every \cite still gets its
+% number from the .aux, but no reference pages or contents line are printed.
+\ifdefined\submissionbuild
+\setbox0=\vbox\bgroup
+\else
 \clearpage
 \setcounter{page}{1}
 \renewcommand{\thepage}{R-\arabic{page}}
 \phantomsection
 \addcontentsline{toc}{section}{Cited References (excluded from page limit)}
+\fi
 \begin{thebibliography}{100}
 \setlength{\itemsep}{1pt}
 
@@ -2258,6 +2265,7 @@ C.~R. Fisher, ``Temperature-dependent material property database for HSLA-80 ste
 \href{https://doi.org/10.13011/m3-cz82-dw37}{doi:10.13011/m3-cz82-dw37}
 
 \end{thebibliography}
+\ifdefined\submissionbuild\egroup\fi
 
 \ifdefined\submissionbuild\else\IfFileExists{todo-list.tex}{\input{todo-list.tex}}{}\fi
 \end{document}
