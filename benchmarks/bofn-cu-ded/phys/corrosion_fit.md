@@ -28,8 +28,10 @@
 | without Wheatfall1967_surface | -0.78 | -0.273 | +0.382 | -0.000 | 0.23 | 1.5 | 2.4 |
 | without Yang2018 | -0.83 | -0.262 | +0.368 | -0.000 | 0.23 | 1.9 | 2.9 |
 | without Zhao2022 | -0.81 | -0.286 | +0.397 | -0.000 | 0.22 | 1.4 | 2.3 |
+| with Reinhart 1968 copper and Cu-Ni (Edison's bridge data; deep, cold) | -0.46 | -0.231 | +0.359 | -0.000 | 0.23 | 0.4 | 1.1 |
+| with all of Reinhart 1968 (also its Al bronzes and NAB) | -0.57 | -0.332 | +0.242 | -0.000 | 0.39 | 0.0 | 0.0 |
 
-Across these fits the floor ranges from 0.0 to 10.0 wt% Ni with the 90-10 bar and from 0.6 to 30.0 wt% with the 70-30 bar.
+Across these fits the floor ranges from 0.0 to 10.0 wt% Ni with the 90-10 bar and from 0.0 to 30.0 wt% with the 70-30 bar.
 
 Residuals of the base fit (ln rate, observed vs fitted, within each study's own intercept):
 

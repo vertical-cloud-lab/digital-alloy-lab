@@ -38,8 +38,13 @@ BASE = {"ni_form": "sat", "ni_scale": 5.0, "fe_sol": 1.5, "ridge": 0.05, "al_for
 REF_WT = {"C70600": (10.0, 0.0, 1.4), "C71500": (30.0, 0.0, 0.6)}  # Ni, Al, Fe (wt%) of the bars, as in bofn_alloy.REFERENCE
 
 
+BRIDGE = HERE.parent / "edison" / "results" / "phys-review-files" / "historical_bridge_data.csv"  # Reinhart 1968, recovered by the Edison review
+
+
 def load(path=DATA):
     rows = []
+    if not Path(path).exists():
+        return rows
     for r in csv.DictReader(open(path)):
         if r.get("use", "1").strip() in ("0", "no"):
             continue
@@ -157,9 +162,14 @@ def main():
     variants = dict(VARIANTS)
     for s in studies:
         variants[f"without {s}"] = {"_drop": s}
+    bridge = load(BRIDGE)  # sensitivity only: deep, cold Pacific deployments, several per material
+    if bridge:
+        cu_ni = [r for r in bridge if r["al"] == 0.0]
+        variants["with Reinhart 1968 copper and Cu-Ni (Edison's bridge data; deep, cold)"] = {"_extra": cu_ni}
+        variants["with all of Reinhart 1968 (also its Al bronzes and NAB)"] = {"_extra": bridge}
     for name, v in variants.items():
         cfg = {**BASE, **{k: x for k, x in v.items() if not k.startswith("_")}}
-        rr = [r for r in rows if r["study"] != v.get("_drop")]
+        rr = [r for r in rows if r["study"] != v.get("_drop")] + v.get("_extra", [])
         if v.get("_equal_weights"):
             rr = [{**r, "w": 1.0} for r in rr]
         if len({r["study"] for r in rr}) == 0:
