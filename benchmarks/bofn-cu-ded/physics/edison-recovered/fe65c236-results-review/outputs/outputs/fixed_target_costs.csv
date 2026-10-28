@@ -1,0 +1,10 @@
+policy,cost0,cost24.233129,cost55,cost60,cost65
+pkgfn,12000.0,47250.0,100000.0,inf,inf
+pkgfn_light,12250.0,46750.0,100000.0,inf,inf
+eifn,5000.0,33500.0,76250.0,85750.0,85750.0
+eifn_reuse,5000.0,35250.0,65750.0,71000.0,81000.0
+tiered,inf,inf,inf,inf,inf
+tiered_ni,47250.0,inf,inf,inf,inf
+tiered_ni_ref,14750.0,100000.0,inf,inf,inf
+ei,9750.0,inf,inf,inf,inf
+random,28750.0,inf,inf,inf,inf

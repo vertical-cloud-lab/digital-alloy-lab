@@ -1,0 +1,236 @@
+[
+ {
+  "entry_id": "6e085905-33f9-4bdf-8858-725fb346726b",
+  "name": "README.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/README.md",
+  "created_at": "2026-10-27T20:43:13.807053Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "README.md",
+    "bytes": 57114,
+    "sha256": "ef27a93c77e4b2171bf96b0e056fe59eada2f7d5a214250be5d0a01ace8327e2"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "92583b72-b8a9-4662-9014-cff1d2112a6d",
+  "name": "tables.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/tables.md",
+  "created_at": "2026-10-27T20:43:14.129300Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "tables.md",
+    "bytes": 11039,
+    "sha256": "5a41fdee2b8f7119f46bddffd768c38c23aa0c65a57c389766597d4bc3e3fbc3"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "40461a8a-af22-43ee-87ef-e7df31112d8c",
+  "name": "analyze.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/analyze.py",
+  "created_at": "2026-10-27T20:43:14.396272Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "analyze.py",
+    "bytes": 20261,
+    "sha256": "8d3263015e676e0386211449a64e64a9c80dcdfe5aabf170a22031537e2fd717"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "7d0d6762-8dfc-4fd4-8014-6bd8d7fe2fe1",
+  "name": "plot.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/plot.py",
+  "created_at": "2026-10-27T20:43:16.137254Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "plot.py",
+    "bytes": 16088,
+    "sha256": "f56e3d4af96c96ad613bbfedca46aa36ff0ec0c7bc7fb7f5357aa8f285cf0169"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "1d4f50c1-5013-4a2f-a0b6-a662765f2193",
+  "name": "bofn_alloy.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/bofn_alloy.py",
+  "created_at": "2026-10-27T20:43:17.729884Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "bofn_alloy.py",
+    "bytes": 24404,
+    "sha256": "7e7d4c13572a8d63096106f2b9fe3c9289e9400ca5141cea981c7b3c723d2f16"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "fab2bc34-2e93-45c9-86ef-537bcdea45d8",
+  "name": "policies.py",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/policies.py",
+  "created_at": "2026-10-27T20:43:19.350815Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "policies.py",
+    "bytes": 38025,
+    "sha256": "3fcebb560f5162fed2c5cdfe845ed127121a9a275d43ccde0e989f41b20b20f5"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "09a950ed-ffaf-4afe-9f9e-6b9fdf0b8c4f",
+  "name": "truth_tables.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/truth_tables.md",
+  "created_at": "2026-10-27T20:43:21.017292Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "truth_tables.md",
+    "bytes": 5632,
+    "sha256": "f02efb66b1c18b1d530a04499774c840545e67e430eeda237ad92442ad62c418"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "82df79ef-9fcf-4815-8aa3-56644e3a8bb7",
+  "name": "truth_tables.json",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/truth_tables.json",
+  "created_at": "2026-10-27T20:43:21.255595Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "truth_tables.json",
+    "bytes": 19064,
+    "sha256": "8d2267e897c65a9d4da51e335f85b774e03c0c32b45504b1703494dae3b5c3bb"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "c4fa56ef-2c55-4609-b77a-217f69a4747f",
+  "name": "settings.md",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/edison/settings.md",
+  "created_at": "2026-10-27T20:43:21.549755Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "settings.md",
+    "bytes": 3596,
+    "sha256": "1cf62fe0198367c082b04e656a89acf572e1c14d6b7c993ccf1066cd70194d0c"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "98538076-7385-4020-90ec-b8e73d29a998",
+  "name": "bofn_cu_best_vs_spend_k1_partial_vs_full.png",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/bofn_cu_best_vs_spend_k1_partial_vs_full.png",
+  "created_at": "2026-10-27T20:43:21.733735Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "bofn_cu_best_vs_spend_k1_partial_vs_full.png",
+    "bytes": 246871,
+    "sha256": "3ce40584bf388200489374af3b9ca936c0c4a61ad88a43c1f84c40b0f6393505"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "a920239a-27c1-4d0f-8269-4586538a5cc5",
+  "name": "bofn_cu_best_vs_spend_k1_partial_vs_full_current.png",
+  "file_path": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/benchmarks/bofn-cu-ded/variants/bofn_cu_best_vs_spend_k1_partial_vs_full_current.png",
+  "created_at": "2026-10-27T20:43:23.461994Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "bofn_cu_best_vs_spend_k1_partial_vs_full_current.png",
+    "bytes": 240260,
+    "sha256": "e09dd9a7e09c66f2bd8551fbbf03dbb0542df00c0e0e6ed153162971d3812d3a"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "7f8185cc-c333-4ad9-a577-c5c4db88a16c",
+  "name": "compare_tables.md",
+  "file_path": "/tmp/edison-upload-cu/compare_tables.md",
+  "created_at": "2026-10-27T20:43:25.366278Z",
+  "storage_types": [
+   "raw_content"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "compare_tables.md",
+    "bytes": 7164,
+    "sha256": "40fbe83becdb5e80b8194ba140814de867a3351b75bd4939599f3a3e418f6ce7"
+   }
+  ],
+  "error": null
+ },
+ {
+  "entry_id": "76140e05-554d-41ef-93a3-3bbdd3194dab",
+  "name": "results.zip",
+  "file_path": "/tmp/edison-upload-cu/results.zip",
+  "created_at": "2026-10-27T20:43:25.558301Z",
+  "storage_types": [
+   "gcs"
+  ],
+  "saved_as": [
+   {
+    "location": 0,
+    "file": "results.zip",
+    "bytes": 1311853,
+    "sha256": "72d57f72839da93b26d681dfc94f2cfdf9812be2162aca32baed6f3a4e184b96"
+   }
+  ],
+  "error": null
+ }
+]
