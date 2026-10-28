@@ -165,7 +165,17 @@ def segment(img: np.ndarray, k_sigma: float = 5.0, h_rel: float = 0.15, smooth: 
     res = sm - bg
     fg = res > k_sigma * sigma
     fg = morphology.remove_small_objects(fg, max_size=min_area_px)
-    fg = ndi.binary_fill_holes(fg)
+    # Fill holes inside particles (dim centres, dark surface patches) but not the carbon tape enclosed by a
+    # ring of touching particles: filling those merges whole clusters into one blob. A hole is filled if it
+    # is tiny or, on average, clearly brighter than the background.
+    holes = ndi.binary_fill_holes(fg) & ~fg
+    hl, nh = ndi.label(holes)
+    if nh:
+        idx = np.arange(1, nh + 1)
+        area = ndi.sum_labels(np.ones_like(res), hl, idx)
+        mean = ndi.mean(res, hl, idx)
+        fill = (area <= 4 * min_area_px) | (mean > 0.5 * k_sigma * sigma)
+        fg |= np.isin(hl, idx[fill])
     fg = morphology.opening(fg, morphology.disk(1))
     dist = ndi.distance_transform_edt(fg)
     dsm = filters.gaussian(dist, sigma=1.0, preserve_range=True)
@@ -319,6 +329,7 @@ def measure_field(f: dict, labels: np.ndarray, delta_px: float) -> pd.DataFrame:
             "circularity": min(2 * math.sqrt(math.pi * area) / per, 1.0) if per > 0 else np.nan,
             "form_factor": min(4 * math.pi * area / per ** 2, 1.0) if per > 0 else np.nan,
             "aspect_ratio": fmin / fmax if fmax > 0 else np.nan,
+            "ellipse_ratio": float(p.axis_minor_length / p.axis_major_length) if p.axis_major_length > 0 else np.nan,
             "solidity": float(p.solidity),
             "convexity": min(pconv / per, 1.0) if per > 0 else np.nan,
         })
@@ -728,16 +739,81 @@ def make_figures(df: pd.DataFrame, summary: dict, fields: list[dict], label_maps
     return made
 
 
+def pixelation_bias(diameters=(4, 5, 6, 8, 10, 12, 15, 20, 25, 30, 40, 60, 80, 120, 200), n_per=30,
+                    seed=0) -> pd.DataFrame:
+    """Descriptors of ideal digitised discs (random sub-pixel centres), measured exactly as particles are.
+
+    A perfect sphere has circularity, aspect ratio, solidity and convexity of 1, so the departure of these
+    medians from 1 is the bias that pixelation alone puts on a particle of that many pixels across.
+    """
+    rng = np.random.default_rng(seed)
+    rows = []
+    for D in diameters:
+        size = int(D + 10)
+        yy, xx = np.mgrid[0:size, 0:size]
+        recs = []
+        for _ in range(n_per):
+            cy, cx = size / 2 + rng.uniform(-0.5, 0.5, 2)
+            disc = ((yy - cy) ** 2 + (xx - cx) ** 2) <= (D / 2) ** 2
+            m = measure_field({"field": "disc", "px_um": 1.0}, disc.astype(np.int32), 0.0)
+            recs.append(m.iloc[0])
+        m = pd.DataFrame(recs)
+        circ_raw = 2 * np.sqrt(np.pi * m["area_px"]) / m["perimeter_px"]
+        rows.append({"diameter_px": D, "ecd_rel_err": float((m["ecd_raw_um"] / D - 1).median()),
+                     "circularity_unclipped": float(circ_raw.median()),
+                     "circularity": float(m["circularity"].median()), "form_factor": float(m["form_factor"].median()),
+                     "ellipse_ratio": float(m["ellipse_ratio"].median()),
+                     "aspect_ratio": float(m["aspect_ratio"].median()), "solidity": float(m["solidity"].median()),
+                     "convexity": float(m["convexity"].median())})
+    return pd.DataFrame(rows)
+
+
+def gallery(df: pd.DataFrame, fields: list[dict], label_maps: dict, path: Path, title: str, ncol: int = 6) -> None:
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    fmap = {f["field"]: f for f in fields}
+    n = len(df)
+    if n == 0:
+        return
+    nrow = int(math.ceil(n / ncol))
+    fig, axes = plt.subplots(nrow, ncol, figsize=(2.0 * ncol, 2.15 * nrow))
+    for ax in np.atleast_1d(axes).ravel():
+        ax.axis("off")
+    for ax, (_, r) in zip(np.atleast_1d(axes).ravel(), df.iterrows()):
+        f, lab = fmap[r["field"]], label_maps[r["field"]]
+        half = int(max(r["bbox_w_px"], r["bbox_h_px"]) * 0.8) + 10
+        cy, cx = int(r["cy_px"]), int(r["cx_px"])
+        a, b = max(cy - half, 0), min(cy + half, lab.shape[0])
+        c, d = max(cx - half, 0), min(cx + half, lab.shape[1])
+        ax.imshow(np.clip(f["img"][a:b, c:d], 0, 255), cmap="gray", vmin=40, vmax=220)
+        ax.contour(lab[a:b, c:d] == r["label"], levels=[0.5], colors=["#00c8ff"], linewidths=0.9)
+        ax.set_title(f"{r['field']} #{int(r['label'])}\n{r['ecd_um']:.0f} µm, C {r['circularity']:.2f}, "
+                     f"S {r['solidity']:.2f}\n{r['flag'] or r['class']}", fontsize=6.5)
+    fig.suptitle(title, fontsize=10, x=0.01, ha="left")
+    fig.tight_layout()
+    fig.savefig(path, dpi=130)
+    plt.close(fig)
+
+
 # ----------------------------------------------------------------------------------------------------
 # Driver
 # ----------------------------------------------------------------------------------------------------
 
-def classify(df: pd.DataFrame, args) -> pd.DataFrame:
-    """Flags for shape outliers. Flagged particles stay in the distribution and are listed separately."""
+def classify(df: pd.DataFrame, args, pix: pd.DataFrame) -> pd.DataFrame:
+    """Flags for shape outliers. Flagged particles stay in the distribution and are listed separately.
+
+    Solidity and Feret aspect ratio are divided by their value for an ideal digitised disc of the same
+    size in pixels (pixelation alone pulls both below 1), so one threshold works at every size.
+    """
+    dpx = np.log(np.clip(df["ecd_raw_um"] / df["px_um"], pix["diameter_px"].min(), pix["diameter_px"].max()))
+    lx = np.log(pix["diameter_px"].to_numpy(float))
+    df["solidity_norm"] = df["solidity"] / np.interp(dpx, lx, pix["solidity"])
+    df["aspect_ratio_norm"] = df["aspect_ratio"] / np.interp(dpx, lx, pix["aspect_ratio"])
     flag = np.full(len(df), "", dtype=object)
     shape_ok = df["ecd_um"] / df["px_um"] >= args.shape_min_px
-    irregular = shape_ok & ((df["aspect_ratio"] < args.ar_flag) | (df["solidity"] < args.solidity_flag))
-    agglom = shape_ok & ((df["solidity"] < args.agglomerate_solidity) | (df["aspect_ratio"] < args.agglomerate_ar))
+    irregular = shape_ok & ((df["ellipse_ratio"] < args.ar_flag) | (df["solidity_norm"] < args.solidity_flag))
+    agglom = shape_ok & ((df["solidity_norm"] < args.agglomerate_solidity) | (df["ellipse_ratio"] < args.agglomerate_ar))
     flag[irregular.to_numpy()] = "irregular"
     flag[agglom.to_numpy()] = "agglomerate_or_elongated"
     over = df["ecd_um"] > args.band[1]
@@ -763,10 +839,12 @@ def main(argv=None) -> int:
     ap.add_argument("--shape-min-px", type=float, default=20.0, help="lower size limit for shape statistics")
     ap.add_argument("--band", nargs=2, type=float, default=[50.0, 200.0], help="size band to report (um)")
     ap.add_argument("--fines", type=float, default=20.0, help="report the share below this size (um)")
-    ap.add_argument("--ar-flag", type=float, default=0.80, help="flag irregular if Fmin/Fmax below this")
-    ap.add_argument("--solidity-flag", type=float, default=0.93, help="flag irregular if solidity below this")
-    ap.add_argument("--agglomerate-solidity", type=float, default=0.85)
-    ap.add_argument("--agglomerate-ar", type=float, default=0.60)
+    ap.add_argument("--ar-flag", type=float, default=0.85,
+                    help="flag irregular if the moment-ellipse minor/major ratio is below this")
+    ap.add_argument("--solidity-flag", type=float, default=0.96,
+                    help="flag irregular if solidity / (solidity of an ideal disc of that size) is below this")
+    ap.add_argument("--agglomerate-solidity", type=float, default=0.90)
+    ap.add_argument("--agglomerate-ar", type=float, default=0.70)
     ap.add_argument("--no-edge-correction", action="store_true", help="skip the edge offset correction of ECD")
     ap.add_argument("--no-dedupe", action="store_true", help="treat fields as independent (no overlap removal)")
     ap.add_argument("--mask-annotations", action="store_true", help="inpaint burned-in xT annotation text")
@@ -867,7 +945,8 @@ def main(argv=None) -> int:
         adm = sum(admissible_area(f, bw, bh) for f in fields if row.ecd_um >= f["px_um"] * args.min_px)
         weights[i] = a_total / adm if adm > 0 else np.nan
     df["weight"] = weights
-    df = classify(df, args)
+    pix = pixelation_bias()
+    df = classify(df, args, pix)
     cls = np.where(df["touches_edge"], "edge",
           np.where(~df["in_own_patch"], "duplicate",
           np.where(df["below_cut"], "below_cut",
@@ -932,7 +1011,8 @@ def main(argv=None) -> int:
                 "share": share, "ci_particles": list(ci_p), "ci_fields": list(ci_f), "n_particles": int(inb.sum())}
     shp = use[use["shape_ok"]]
     summary["shape"] = {c: describe(shp[c], shp["weight"]) for c in
-                        ("circularity", "form_factor", "aspect_ratio", "solidity", "convexity")}
+                        ("circularity", "form_factor", "aspect_ratio", "ellipse_ratio", "solidity", "convexity",
+                         "aspect_ratio_norm", "solidity_norm")}
     summary["shape"]["n"] = int(len(shp))
     flags = use["flag"].value_counts().to_dict()
     summary["flags"] = {k if k else "none": int(v) for k, v in flags.items()}
@@ -974,11 +1054,13 @@ def main(argv=None) -> int:
         per_field.append(rec)
     summary["per_field"] = per_field
     summary["fields"] = [{k: v for k, v in f.items() if k not in ("img", "own", "own_cum", "_rescaled")} for f in fields]
+    summary["pixelation_bias"] = pix.round(4).to_dict("records")
     summary["runtime_s"] = round(time.time() - t0, 1)
 
     # --- write ---
     cols = ["field", "label", "class", "flag", "included", "weight", "ecd_um", "ecd_raw_um", "circle_fit_um",
-            "feret_max_um", "feret_min_um", "circularity", "form_factor", "aspect_ratio", "solidity", "convexity",
+            "feret_max_um", "feret_min_um", "circularity", "form_factor", "aspect_ratio", "ellipse_ratio", "solidity",
+            "convexity", "aspect_ratio_norm", "solidity_norm",
             "area_px", "perimeter_px", "px_um", "cx_px", "cy_px", "gx_um", "gy_um", "bbox_w_px", "bbox_h_px",
             "touches_edge", "in_own_patch", "below_cut", "shape_ok", "free_boundary_frac"]
     df[cols].round(4).to_csv(out / "particles.csv", index=False)
@@ -988,6 +1070,12 @@ def main(argv=None) -> int:
     (out / "summary.json").write_text(json.dumps(summary, indent=2, default=lambda o: o.item() if hasattr(o, "item") else str(o)) + "\n")
     overlay_field = args.overlay_field or fields[0]["field"]
     make_figures(df, summary, fields, label_maps, out, args.band, args.fines, overlay_field, log)
+    gallery(use.nlargest(24, "ecd_um"), fields, label_maps, out / "figures" / "gallery_largest.png",
+            "The 24 largest counted particles (contour = segmentation)")
+    fl = use[~use["flag"].isin(["", "oversize"])]
+    gallery(fl.nlargest(36, "ecd_um"), fields, label_maps, out / "figures" / "gallery_flagged.png",
+            f"Largest flagged particles ({len(fl)} flagged irregular / agglomerate in total)")
+    pd.DataFrame(summary["pixelation_bias"]).to_csv(out / "pixelation_bias.csv", index=False)
     write_summary_md(summary, out)
     log(f"done in {time.time() - t0:.0f} s: {summary['n_counted']} particles counted")
     return 0
@@ -1022,7 +1110,8 @@ def write_summary_md(s: dict, out: Path) -> None:
                  f"{100 * z['volume']['share']:.1f} % ({100 * z['volume']['ci_particles'][0]:.1f}–{100 * z['volume']['ci_particles'][1]:.1f}) |")
     L += ["", f"## Shape (ISO 9276-6), {s['shape']['n']:,} particles ≥ {s['settings']['shape_min_px']:g} px", "",
           "| Descriptor | Median | IQR | P10 | P90 |", "|---|---|---|---|---|"]
-    for c in ("circularity", "form_factor", "aspect_ratio", "solidity", "convexity"):
+    for c in ("circularity", "form_factor", "aspect_ratio", "ellipse_ratio", "solidity", "convexity",
+              "aspect_ratio_norm", "solidity_norm"):
         z = s["shape"][c]
         L.append(f"| {c} | {z['median']:.3f} | {z['q1']:.3f}–{z['q3']:.3f} | {z['p10']:.3f} | {z['p90']:.3f} |")
     L += ["", f"Flags among counted particles: {s['flags']}", ""]
