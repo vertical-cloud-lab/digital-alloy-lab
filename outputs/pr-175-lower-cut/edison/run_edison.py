@@ -195,10 +195,49 @@ def wait(max_minutes=float(os.environ.get("EDISON_WAIT_MINUTES", "45")), poll=12
         time.sleep(poll)
 
 
-def fetch():
+TEXT_SUFFIXES = {".md", ".csv", ".py", ".json", ".jsonl", ".bib", ".ipynb", ".txt"}
+
+
+def download_files(c, key, files):
+    """Save every file the trajectory wrote, under <key>_files/ by its workspace path, scrubbed if text."""
+    dest_root = HERE / f"{key}_files"
+    seen = set()
+    for entry in files.get("data", []):
+        ds = entry.get("data_storage") or {}
+        rel = (ds.get("file_path") or ds.get("name") or ds["id"]).removeprefix("/workspace/").lstrip("/")
+        if rel in seen or ds.get("is_collection"):
+            continue
+        seen.add(rel)
+        dest = dest_root / rel
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        got = c.fetch_data_from_storage(data_storage_id=ds["id"])
+        if isinstance(got, list):
+            got = got[0] if got else None
+        if isinstance(got, Path) and got.is_dir():
+            # The zip bundle comes back unpacked: outputs/ again plus our own uploaded inputs.
+            print(key, "skipped", rel, "(unpacked bundle:", ", ".join(sorted(p.name for p in got.rglob("*"))[:6]), "...)")
+            dest.with_name(dest.name + ".SKIPPED.txt").write_text(
+                "Unpacked bundle; it duplicates outputs/ and the uploaded inputs, so it is not committed.\n")
+            continue
+        if isinstance(got, Path):
+            data = got.read_bytes()
+        elif got is not None and getattr(got, "content", None) is not None:
+            data = got.content if isinstance(got.content, bytes) else str(got.content).encode()
+        else:
+            print(key, "could not fetch", rel, type(got).__name__, flush=True)
+            continue
+        if dest.suffix in TEXT_SUFFIXES:
+            data = scrub(data.decode("utf-8", errors="replace")).encode()
+        dest.write_bytes(data)
+        print(key, "saved", rel, len(data), "bytes", flush=True)
+
+
+def fetch(keys=None):
     c = client()
     ids = json.loads(IDS_FILE.read_text())["tasks"]
     for key, info in ids.items():
+        if keys and key not in keys:
+            continue
         task_id = info["task_id"]
         data = c.get_task(task_id=task_id).model_dump(mode="json")
         answer = scrub(data.get("formatted_answer") or data.get("answer") or "")
@@ -219,9 +258,14 @@ def fetch():
         except Exception as exc:  # literature jobs have no output files
             print(key, "list_files:", type(exc).__name__, flush=True)
             continue
+        for entry in files.get("data", []):  # account identifiers, not needed to read the files
+            (entry.get("data_storage") or {}).pop("user_id", None)
         (HERE / f"{key}_files.json").write_text(json.dumps(files, indent=1, default=str) + "\n")
-        print(key, "files:", json.dumps(files, default=str)[:400], flush=True)
+        download_files(c, key, files)
 
 
 if __name__ == "__main__":
-    {"submit": submit, "wait": wait, "fetch": fetch}[sys.argv[1]]()
+    if sys.argv[1] == "fetch":
+        fetch(sys.argv[2:] or None)
+    else:
+        {"submit": submit, "wait": wait}[sys.argv[1]]()
