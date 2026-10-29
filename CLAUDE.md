@@ -179,3 +179,10 @@ password-gated: feed the password over stdin, and always pass `-k`, as in
 recent `sudo` (Raspberry Pi OS caches it globally for 15 minutes) lets sudo skip reading stdin,
 and the password is then read by whatever runs next, for example as a shell command whose
 "command not found" error echoes it back.
+
+**DNS.** If a Pi can't resolve any hostname while `ping 1.1.1.1` works, and
+`journalctl -u tailscaled` shows `no upstream resolvers set, returning SERVFAIL`, Tailscale (which
+writes `/etc/resolv.conf` on these Pis) has adopted an empty upstream config. On 29 Oct 2026 the
+panel Pi was in this state for about 13 hours: NetworkManager briefly wrote a `resolv.conf` with no
+nameservers, and Tailscale kept it as its backup. `sudo nmcli general reload dns-rc` makes
+NetworkManager rewrite the file and fixes it without restarting anything.

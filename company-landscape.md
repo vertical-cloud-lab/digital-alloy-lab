@@ -75,6 +75,17 @@ The following companies manufacture atomization *equipment* (as opposed to selli
 | **[Aconity3D](https://www.aconity3d.com/)** | Herzogenrath, Germany | — | Startup | Aconity MINI modular open-architecture LPBF research platform | Open-architecture with modular design for research flexibility. Equispheres partnership. | ★★★ — Non-US; research-focused open platform. |
 | **[3D Systems](https://www.3dsystems.com/)** | Rock Hill, SC, USA | 1986 | Established | ProX DMP 200 LPBF; used in HT AM studies at Sandia (250 tensile bars/build) | Proven for high-throughput AM research. Sandia validated 25 tensile bars per array. | ★★ — Large corporation; limited Genesis Mission fit. |
 
+### Sinter-Based Vat Photopolymerization (DLP + MIM-style debind and sinter)
+
+These processes print a green part from metal powder in a light-cured binder, then debind and sinter it as in MIM.
+Added for issue #228; details are in [vat-photopolymerization-metal-am.md](vat-photopolymerization-metal-am.md).
+
+| Company | HQ | Founded | Stage | What They Do | VCL Relevance | Genesis Mission Fit |
+|---|---|---|---|---|---|---|
+| **[Greene Group Industries (PureForm™)](https://www.greenegroup.com/capabilities/metal-3d-printing/)** | Oceanside, CA, USA | — (bought Holo's assets in March 2024) | Established SME (private-equity owned) | MIM contract manufacturer for medical devices (ISO 13485). PureForm cures MIM powder in a photopolymer slurry by bottom-up DLP, then debinds and sinters it on the MIM line. 17-4PH and 316 only; 0.07 mm walls; ±0.025 mm up to 12 mm. Sells parts, not printers | No fit for the LPBF Al alloys: no aluminum, and sintering would erase the rapid-solidification microstructure. Cu-Cr-Zr unproven: PureForm began as Holo's pure-copper process (>92% IACS, Holo-reported), but a 2026 GRCop-42 LMM thesis found pressureless sintering hard (PR #229 Edison vetting) | ★★ — US-based, but a parts shop with no alloy R&D and no aluminum. |
+| **[Incus](https://www.incus3d.com/)** | Austria | 2019 | Startup | Lithography-based Metal Manufacturing (LMM). Sells Hammer Evo35 (R&D) and Pro25 (production) printers and makes its own feedstock. Steels, Ti, 99.9% Cu, precious metals | The VPP option if the lab ever wanted to buy a printer and develop custom feedstock ("standard and customized materials"). Same aluminum limits as PureForm | ★ — Non-US printer vendor. |
+| **Admatec Additive Solutions** | Netherlands | — | Relaunched (2025) | Admaflex 130/300 DLP printers for ceramics and metals (Cu, IN625, steel). Nano Dimension bought Admatec in 2022, dropped it in 2025, and former management relaunched it | Context only | ★ — Non-US; unsettled after the relaunch. |
+
 ---
 
 ## 3. Characterization & Testing Equipment
