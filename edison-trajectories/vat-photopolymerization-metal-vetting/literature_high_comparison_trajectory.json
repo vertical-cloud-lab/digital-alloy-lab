@@ -11687,7 +11687,7 @@
          "embedding": null,
          "docname": "forien2019effectoflaser",
          "dockey": "698afe2768f1b4dc",
-         "citation": "Jean-Baptiste Forien, Philip J. DePond, Gabe M. Guss, Bradley H. Jared, Jonathan D. Madison, and Manyalibo J. Matthews. Effect of laser power on roughness and porosity in laser powder bed fusion of stainless steel 316l alloys measured by x-ray tomography. International Journal of Materials Research, 111:47-54, Dec 2019. URL: https://doi.org/10.3139/146.111816, doi:10.3139/146.111816.",
+         "citation": "[name redacted], Philip J. DePond, Gabe M. Guss, Bradley H. Jared, Jonathan D. Madison, and Manyalibo J. Matthews. Effect of laser power on roughness and porosity in laser powder bed fusion of stainless steel 316l alloys measured by x-ray tomography. International Journal of Materials Research, 111:47-54, Dec 2019. URL: https://doi.org/10.3139/146.111816, doi:10.3139/146.111816.",
          "content_hash": null,
          "fields_to_overwrite_from_metadata": [
           "citation",
@@ -11700,7 +11700,7 @@
          "key": "forien2019effectoflaser",
          "bibtex": "@article{forien2019effectoflaser,\n    author = \"Forien, Jean-Baptiste and DePond, Philip J. and Guss, Gabe M. and Jared, Bradley H. and Madison, Jonathan D. and Matthews, Manyalibo J.\",\n    title = \"Effect of laser power on roughness and porosity in laser powder bed fusion of stainless steel 316L alloys measured by X-ray tomography\",\n    year = \"2019\",\n    journal = \"International Journal of Materials Research\",\n    volume = \"111\",\n    pages = \"47-54\",\n    month = \"Dec\",\n    doi = \"10.3139/146.111816\",\n    url = \"https://doi.org/10.3139/146.111816\",\n    publisher = \"Walter de Gruyter GmbH\",\n    issue = \"1\",\n    issn = \"1862-5282\"\n}\n",
          "authors": [
-          "Jean-Baptiste Forien",
+          "[name redacted]",
           "Philip J. DePond",
           "Gabe M. Guss",
           "Bradley H. Jared",
@@ -11755,7 +11755,7 @@
            "self_generated"
           ]
          },
-         "formatted_citation": "Jean-Baptiste Forien, Philip J. DePond, Gabe M. Guss, Bradley H. Jared, Jonathan D. Madison, and Manyalibo J. Matthews. Effect of laser power on roughness and porosity in laser powder bed fusion of stainless steel 316l alloys measured by x-ray tomography. International Journal of Materials Research, 111:47-54, Dec 2019. URL: https://doi.org/10.3139/146.111816, doi:10.3139/146.111816. This article has 14 citations and is from a peer-reviewed journal."
+         "formatted_citation": "[name redacted], Philip J. DePond, Gabe M. Guss, Bradley H. Jared, Jonathan D. Madison, and Manyalibo J. Matthews. Effect of laser power on roughness and porosity in laser powder bed fusion of stainless steel 316l alloys measured by x-ray tomography. International Journal of Materials Research, 111:47-54, Dec 2019. URL: https://doi.org/10.3139/146.111816, doi:10.3139/146.111816. This article has 14 citations and is from a peer-reviewed journal."
         },
         {
          "embedding": null,
