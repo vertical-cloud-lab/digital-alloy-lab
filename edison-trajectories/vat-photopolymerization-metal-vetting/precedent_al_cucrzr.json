@@ -1,0 +1,10 @@
+{
+  "task_id": "52ef6442-b92e-4d13-9cf9-d712fccc5e33",
+  "status": "success",
+  "job_name": "job-futurehouse-paperqa3-precedent",
+  "created_at": "2026-10-29T04:59:16.305391Z",
+  "query": "Has anyone made aluminum-alloy or copper-chromium-zirconium (Cu-Cr-Zr, C18150 or C18200) parts by\nvat photopolymerization of a metal-powder slurry (DLP, stereolithography or lithography-based metal\nmanufacturing) followed by debinding and sintering? If so, report density, oxygen and carbon\ncontent, strength, electrical conductivity and the sintering atmosphere. Also report any vat\nphotopolymerization of aluminum powder at all (including cure-depth studies of Al-filled resins),\nand any Cu-Cr, Cu-Zr or oxide-dispersion-strengthened copper made by photopolymerization of a metal\nor metal-oxide feedstock.\n",
+  "has_successful_answer": true,
+  "total_cost": null,
+  "total_queries": null
+}
