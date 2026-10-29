@@ -4,7 +4,10 @@ Uses the Tab class in pi_browser.py, so every page loads in the Pi's own browser
 tunnel described there. Each site is opened first and the pointer moves and scrolls on it before the
 query runs. The NSF API is a GET, so it is loaded as a page; NIH RePORTER and USAspending take POSTs,
 which are sent with fetch() from a tab on the API's own origin. Results go to /tmp/pi_grants/*.json,
-with e-mail and phone fields dropped.
+with e-mail and phone fields dropped (NSF's coPDPI strings still embed co-PI e-mails, so don't commit raw dumps).
+
+Keep to JSON APIs and light pages. On 29 Oct 2026 loading NASA TechPort froze the 1 GB Pi until it rebooted itself
+(Tailscale ping and SSH timed out for ~10 minutes), and Chromium had to be relaunched afterwards.
 
     python scripts/pi_grant_search.py nsf '"vat photopolymerization"' stereolithography ...
     python scripts/pi_grant_search.py nih '(stereolithography OR "digital light processing") AND metal'
