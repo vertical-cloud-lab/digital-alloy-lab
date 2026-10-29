@@ -421,7 +421,12 @@ What this adds up to:
     "Digital light processing", "vat photopolymerization" and "hydrogel infusion" found nothing.
   - NASA's other TechPort hits: copper and nickel plated onto SLA parts (Sears Scientific SBIR, 2021), and Goddard's
     micro-AM (Center Innovation Fund, 2015–17), which replicated polymer templates in refractory ceramics by CVD.
-- **Not searched:** DTIC's report collection, which refuses the runner (HTTP 403).
+- **DTIC, only partly.** On 29 Oct 2026 DTIC's own search was offline ("offline while we enhance the capability"),
+  and its report server (`apps.dtic.mil`) answered with a maintenance page, even from the Pi; from the runner it
+  returns HTTP 403. The results page falls back to a Google site search, and eight metal-VPP queries through it, in the
+  Pi's Chromium, found only AM overviews. One hit, ADB195810 (a 1990s limited-distribution report, since released),
+  has a snippet that pairs stereolithography with tungsten, nickel aluminides, MoSi₂ and copper. It may be the
+  Ceramic Composites SBIR work above, but the PDF couldn't be opened. Rerun when DTIC is back.
 
 ## Questions for Greene Group, if Cu-Cr-Zr moves forward
 
