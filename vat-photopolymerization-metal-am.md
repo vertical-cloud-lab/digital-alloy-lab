@@ -272,7 +272,7 @@ What this adds up to:
 - **No federal program targets metal VPP.** The money is one NSF CAREER award, three 1990s DoD SBIRs and one NASA
   SBIR, none of which led to a product. The rest is basic-science grants (DOE BES, ONR, ARO, NIH) that support
   photopolymer-template routes as a side line.
-- **Program officers.** At NSF, Janis Terpenny (CMMI, Advanced Manufacturing) oversees four of the six NSF awards
+- **Program officers.** At NSF, Janis Terpenny (CMMI, Advanced Manufacturing) oversees four of the five NSF awards
   above, including the Michigan State CAREER award, and Lesley Sneed handled the UTEP MRI. Earlier NSF awards on VPP
   composites with metal flakes or particles (USC, 2016–17) went through Khershed Cooper and Steve Schmid.
   DOE BES and NASA program staff were not identified.
