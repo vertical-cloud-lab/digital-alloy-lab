@@ -27,7 +27,7 @@ public web sources only; nothing here comes from talking to Greene Group.
   award search. The one squarely on-topic federal grant is an NSF CMMI Advanced Manufacturing CAREER award to Michigan
   State (2023–28, $567k). The others are a 2015–18 NASA SBIR and three 1996–98 DoD SBIRs, plus basic-science and
   space-technology grants (DOE BES, NASA, ONR, ARO, NIH, DoD) behind the photopolymer-template and salt-infusion routes
-  such as Caltech's hydrogel infusion. ARPA-E has funded none of it. Holo, GGI, Incus, Admatec, Tethon 3D and Trio
+  such as Caltech's hydrogel infusion. ARPA-E has no project on it. Holo, GGI, Incus, Admatec, Tethon 3D and Trio
   Labs have no SBIR/STTR awards; the companies are privately or EU funded.
 - **Formulation work on the lab's OT-2: best for hydrogel infusion, not FLAIME's alloys.** Hydrogel infusion sets the
   alloy with an aqueous metal-salt bath at 70 °C, which the digital-wetlab OT-2 is set up to mix. I found no published
@@ -357,10 +357,10 @@ The second pass filled the first one's gaps (`scripts/federal_dump_screen.py`, a
   stereolithography, photopolymer(ization), photocurable resin, DLP, hydrogel or metal injection.
 - **DOE Office of Science (PAMS):** award-number and abstract-keyword searches over all award statuses, in the Pi's
   Chromium. PAMS gives the program manager on each award's public abstract.
-- **OSTI.gov:** 19 queries, 720 DOE-sponsored records, screened the same way. Their contract numbers name the funding
-  office.
+- **OSTI.gov:** 19 queries, 720 records, screened the same way. Their contract numbers name the funding office.
 - **Paper acknowledgments (OpenAlex):** 20 queries, 2,697 papers, 102 with a metal-VPP title, checked for US funders.
   This is the way to find DoD basic-research grants, which USAspending describes too vaguely to find by keyword.
+  OpenAlex has funder data for only some papers, so it undercounts.
 
 Only awards that end in a metal part are listed. Sinter-based metal VPP (metal powder in a photopolymer, debound and
 sintered):
@@ -378,8 +378,8 @@ Photopolymer-template and salt-infusion routes that end in metal, and adjacent w
 
 | Agency, program | Award | Recipient | PI | Program officer | Work |
 |---|---|---|---|---|---|
-| DOE Office of Science, BES Materials Sciences and Engineering (CFDA 81.049) | DE-SC0016945, 2016–24, $1,409,478 (USAspending) | Caltech | Julia R. Greer | John Vetrano, Mechanical Behavior and Radiation Effects (PAMS) | A core grant on small-scale metal mechanics, first titled for nano-sized metallic glasses. The 2023–24 renewal, *New Deformation Mechanisms in Nanocrystalline Nano-porous Small Scale Metals*, proposes AM of sub-micron Ni and Cu outright, and its final report covers hydrogel-infusion nickel nanopillars made by two-photon lithography ([OSTI 2571089](https://www.osti.gov/biblio/2571089)). Acknowledged by the 2022 *Nature* hydrogel-infusion paper (Cu, Ni, Ag, Cu-Ni), the 2025 Cu–Ni follow-up in *Small* and a 2026 *Nat. Rev. Mater.* review. PAMS lists it inactive after seven support periods. Edison ranks it the largest single public funder of metal-photopolymer work |
-| NASA STMD, Space Technology Research Grants | TechPort [183708](https://techport.nasa.gov/projects/183708), 2025–29 | Caltech | not listed (a Caltech co-investigator is) | Technical monitor Christopher J. Wohl (Langley); program director Matthew C. Deans, program manager Hung D. Nguyen | *Micro-Architected Metallic Lattices for Lunar Dust Mitigation*: hydrogel-infusion lattices of alloys and refractory metals, 100 nm to 50 µm features, TRL 2 to 3. The one active federal award found whose own abstract names a photopolymer-to-metal process, besides the two NSF awards above |
+| DOE Office of Science, BES Materials Sciences and Engineering (CFDA 81.049) | DE-SC0016945, 2016–24, $1,409,478 (USAspending) | Caltech | Julia R. Greer | John Vetrano, Mechanical Behavior and Radiation Effects (PAMS) | A core grant on small-scale metal mechanics, first titled for nano-sized metallic glasses. Its renewal, *New Deformation Mechanisms in Nanocrystalline Nano-porous Small Scale Metals*, proposes AM of sub-micron Ni and Cu outright, and its final report covers hydrogel-infusion nickel nanopillars made by two-photon lithography ([OSTI 2571089](https://www.osti.gov/biblio/2571089)). Acknowledged by the 2022 *Nature* hydrogel-infusion paper (Cu, Ni, Ag, Cu-Ni), the 2025 Cu–Ni follow-up in *Small* and a 2026 *Nat. Rev. Mater.* review. PAMS lists it inactive after seven support periods. Edison ranks it the largest single public funder of metal-photopolymer work |
+| NASA STMD, Space Technology Research Grants | TechPort [183708](https://techport.nasa.gov/projects/183708), 2025–29 | Caltech | not listed (a Caltech co-investigator is) | Technical monitor Christopher J. Wohl (Langley); program director Matthew C. Deans, program manager Hung D. Nguyen | *Micro-Architected Metallic Lattices for Lunar Dust Mitigation*: hydrogel-infusion lattices of alloys and refractory metals, 100 nm to 50 µm features, TRL 2 to 3 |
 | NASA STMD, Space Technology Research Grants | TechPort [95502](https://techport.nasa.gov/projects/95502), 2018–21 | UC Irvine, with HRL Laboratories | Lorenzo Valdevit | Technical monitor Brett A. Bednarcyk (Glenn) | Ceramic (SiOC) and hollow metallic truss-core lattices grown from self-propagating photopolymer waveguides, for large space structures |
 | DoD (award not given in the paper's metadata); INL; UT System | — | UTEP | Alexis Maurel's group | — | Compositionally graded W–Ni lattices by "ionic solution-enabled" VPP (*Addit. Manuf. Lett.* 2026). The group's earlier VPP copper current collectors were printed, soaked in a precursor solution and fired (*Adv. Manuf.* 2024, with Sandia and ORNL co-authors under their DOE operating contracts). Same PI as the NSF MRI above |
 | ONR MURI | N00014-24-1-2313, 2024–27, $3,750,000 | Penn State (lead) | — | — | *Photochemical and Photothermal Additive Manufacturing of Preceramic Polymers*. Acknowledged by Michigan State's hydrogel-infusion carbides of Ti, Mo and W (*ACS Materials Lett.* 2025). Carbides, not metals |
