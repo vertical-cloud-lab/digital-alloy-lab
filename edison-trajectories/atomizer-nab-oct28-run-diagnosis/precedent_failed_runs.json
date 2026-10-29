@@ -1,0 +1,10 @@
+{
+  "task_id": "c49b2ff1-8c92-4f0d-8389-9999ad0ece21",
+  "status": "success",
+  "job_name": "job-futurehouse-paperqa3-precedent",
+  "created_at": "2026-10-29T02:15:57.462684Z",
+  "query": "Find reports of ultrasonic atomization of metals (plate or sonotrode atomizers such as the AMAZEMET\nrePOWDER, or laboratory ultrasonic atomizers) where a run partly failed: melt that did not atomize and\nran off the plate or sonotrode into the collector, solid build-up on the plate, lower yield on a\nsecond run with a reused plate or sonotrode, nozzle clogging, or loss of resonance. Prefer copper\nalloys, aluminum bronze or other aluminum-containing melts. For each report give the alloy, set-up,\nthe cause the authors identified and the fix. Also report any published guidance on where the melt\nstream should land on the plate, on plate inclination, and on how plates are cleaned or replaced\nbetween runs.\n",
+  "has_successful_answer": true,
+  "total_cost": null,
+  "total_queries": null
+}
