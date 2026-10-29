@@ -7,12 +7,18 @@ which are sent with fetch() from a tab on the API's own origin. Results go to /t
 with e-mail and phone fields dropped (NSF's coPDPI strings still embed co-PI e-mails, so don't commit raw dumps).
 
 Keep to JSON APIs and light pages. On 29 Oct 2026 loading NASA TechPort froze the 1 GB Pi until it rebooted itself
-(Tailscale ping and SSH timed out for ~10 minutes), and Chromium had to be relaunched afterwards.
+(Tailscale ping and SSH timed out for ~10 minutes), and Chromium had to be relaunched afterwards. TechPort's API sends
+all ~21,000 projects whatever the query, so screen it on the runner instead (scripts/federal_dump_screen.py).
+
+DOE Office of Science's PAMS award search is an ASP.NET form that timed out from the runner, so it runs here: the
+award number or abstract keyword is typed into the form, the status filter is set to All, and Search is clicked.
+Each hit's public abstract names the DOE program manager (PM).
 
     python scripts/pi_grant_search.py nsf '"vat photopolymerization"' stereolithography ...
     python scripts/pi_grant_search.py nih '(stereolithography OR "digital light processing") AND metal'
     python scripts/pi_grant_search.py usaspending stereolithography "digital light processing" ...
     python scripts/pi_grant_search.py sbir "metal stereolithography" ...
+    python scripts/pi_grant_search.py pams SC0016945 "abstract:digital light processing" ...
 """
 
 import json
@@ -159,10 +165,45 @@ def sbir_award(tab, url):
                                        " : document.body.innerText")[:6000]}
 
 
+PAMS = "https://pamspublic.science.energy.gov/WebPAMSExternal/Interface/Awards/AwardSearchExternal.aspx"
+PAMS_ROWS = r"""(() => Array.from(document.querySelectorAll('table tr')).map(tr => {
+  const tds = Array.from(tr.querySelectorAll('td')).map(td => td.innerText.trim().replace(/\s+/g, ' '));
+  const a = Array.from(tr.querySelectorAll('a')).find(a => /View Abstract/.test(a.innerText));
+  const m = a && a.href.match(/OpenPopupWithMenuBar\("([^"]+)"/);
+  return {cells: tds, abstract: m ? decodeURIComponent(m[1]) : null};
+}).filter(r => r.cells.length >= 5 && /DE-[A-Z]{2}\d{7}/.test(r.cells.join(' '))))()"""
+
+
+def pams(tab, query):
+    """PAMS awards by award number, or by abstract keyword with an "abstract:" prefix; PM read from each abstract."""
+    field = "txtAbstractKeyword" if query.startswith("abstract:") else "txtAwardNumber"
+    value = query.split(":", 1)[1] if query.startswith("abstract:") else query
+    visit(tab, PAMS)
+    tab.click(f"#ctl00_MainContent_pnlSearch_{field}")
+    tab.type(value)
+    pb.pause(0.3, 0.7)
+    tab.js("""(() => { const s = document.querySelector('#ctl00_MainContent_pnlSearch_ddAwardStatus');
+        s.value = '0'; s.dispatchEvent(new Event('change', {bubbles: true})); })()""")  # status: All
+    tab.js("window.__oldDoc = 1")
+    tab.click("#btnSearch")
+    tab.wait_loaded(settle=(3, 5))
+    rows = tab.js(PAMS_ROWS)
+    for r in rows:
+        if r["abstract"]:
+            tab.goto(urllib.parse.urljoin(PAMS, r["abstract"]))
+            text = tab.js("document.body.innerText")
+            r["pm"] = (re.search(r"PM: (.+)", text) or [None, None])[1]
+            r["abstract_text"] = text[:4000]
+    print(f"== PAMS {query!r}: {len(rows)}")
+    for r in rows:
+        print("   " + " | ".join(r["cells"][1:5]) + f" | PM: {r.get('pm')}")
+    return rows
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     cmd, args = sys.argv[1], sys.argv[2:]
-    fn = {"nsf": nsf, "nih": nih, "usaspending": usaspending, "sbir": sbir, "sbir-award": sbir_award}[cmd]
+    fn = {"nsf": nsf, "nih": nih, "usaspending": usaspending, "sbir": sbir, "sbir-award": sbir_award, "pams": pams}[cmd]
     with pb.Tab() as tab:
         if cmd == "nsf":
             visit(tab, "https://www.nsf.gov/awardsearch/")

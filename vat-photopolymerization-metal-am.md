@@ -25,9 +25,10 @@ public web sources only; nothing here comes from talking to Greene Group.
   PureForm today.
 - **Who funds it (US government): very little, and no program targets it.** Section "Who funds it" below has the
   award search. The one squarely on-topic federal grant is an NSF CMMI Advanced Manufacturing CAREER award to Michigan
-  State (2023–28, $567k). The others are a 2015–16 NASA SBIR and three 1996–98 DoD SBIRs, plus basic-science grants
-  (DOE BES, ONR, ARO, NIH) behind the photopolymer-template routes such as Caltech's hydrogel infusion. Holo, GGI,
-  Incus, Admatec, Tethon 3D and Trio Labs have no SBIR/STTR awards; the companies are privately or EU funded.
+  State (2023–28, $567k). The others are a 2015–18 NASA SBIR and three 1996–98 DoD SBIRs, plus basic-science and
+  space-technology grants (DOE BES, NASA, ONR, ARO, NIH, DoD) behind the photopolymer-template and salt-infusion routes
+  such as Caltech's hydrogel infusion. ARPA-E has funded none of it. Holo, GGI, Incus, Admatec, Tethon 3D and Trio
+  Labs have no SBIR/STTR awards; the companies are privately or EU funded.
 - **Formulation work on the lab's OT-2: best for hydrogel infusion, not FLAIME's alloys.** Hydrogel infusion sets the
   alloy with an aqueous metal-salt bath at 70 °C, which the digital-wetlab OT-2 is set up to mix. I found no published
   map from bath composition to alloy composition. Hydrogen reduces only metals such as Cu, Ni, Co and Fe, though, so
@@ -334,8 +335,8 @@ MIM-versus-VPP part costs with no traceable source.
 
 ## Who funds it: US federal awards
 
-Searched on 29 Oct 2026, from the atomizer panel Pi's headed Chromium driven by mouse and keyboard events
-(`scripts/pi_browser.py`, `scripts/pi_grant_search.py`):
+Searched on 29 Oct 2026 in two passes. The first went through the atomizer panel Pi's headed Chromium, driven by
+mouse and keyboard events (`scripts/pi_browser.py`, `scripts/pi_grant_search.py`):
 
 - **NSF:** 30 phrase queries through NSF's award API (851 unique awards).
 - **NIH RePORTER:** one Boolean query, 64 projects, none of which make metal parts.
@@ -344,51 +345,83 @@ Searched on 29 Oct 2026, from the atomizer panel Pi's headed Chromium driven by 
 
 SBIR.gov's search box misses most matches, so `scripts/sbir_metal_vpp_screen.py` also screened SBIR.gov's full award
 file (219,770 awards with abstracts, downloaded on the runner). It kept awards that pair a photopolymerization term
-with a metal term, 85 in all, and each was read by hand. Only awards that end in a metal part are listed below.
+with a metal term, 85 in all, and each was read by hand.
 
-Loading NASA TechPort froze the Pi, which rebooted itself about 05:28 UTC. TechPort was not searched, and the NASA
-technical monitor is not given here.
+The second pass filled the first one's gaps (`scripts/federal_dump_screen.py`, and `pams` in
+`scripts/pi_grant_search.py`):
 
-Sinter-based metal VPP (metal powder in a photopolymer, debound and sintered):
+- **NASA TechPort:** its project API ignores the search term and returns all 21,162 projects (~115 MB) at once. That is
+  what froze the 1 GB Pi in the first pass. The runner screened the whole dump with the same terms (17 hits, read by
+  hand), and TechPort lists each project's NASA contacts.
+- **ARPA-E:** all 1,729 projects, through the full-text index behind the site's search page. None mentions
+  stereolithography, photopolymer(ization), photocurable resin, DLP, hydrogel or metal injection.
+- **DOE Office of Science (PAMS):** award-number and abstract-keyword searches over all award statuses, in the Pi's
+  Chromium. PAMS gives the program manager on each award's public abstract.
+- **OSTI.gov:** 19 queries, 720 DOE-sponsored records, screened the same way. Their contract numbers name the funding
+  office.
+- **Paper acknowledgments (OpenAlex):** 20 queries, 2,697 papers, 102 with a metal-VPP title, checked for US funders.
+  This is the way to find DoD basic-research grants, which USAspending describes too vaguely to find by keyword.
+
+Only awards that end in a metal part are listed. Sinter-based metal VPP (metal powder in a photopolymer, debound and
+sintered):
 
 | Agency, program | Award | Years | Recipient | PI | Program officer | Amount | Work |
 |---|---|---|---|---|---|---|---|
-| NSF ENG/CMMI, Advanced Manufacturing + CAREER | [2236894](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2236894) | 2023–28 | Michigan State University | Haseung Chung | Janis Terpenny | $567,121 | DLP of photopolymer and metal-powder mixtures of tunable viscosity, then debind and sinter, for large-area, high-speed metal AM. The only on-topic federal research grant found |
+| NSF ENG/CMMI, Advanced Manufacturing + CAREER | [2236894](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2236894) | 2023–28 | Michigan State University | Haseung Chung | Janis Terpenny | $567,121 | DLP of photopolymer and metal-powder mixtures of tunable viscosity, then debind and sinter, for large-area, high-speed metal AM. The only on-topic federal research grant found. Its first paper is on dispersants for metal–photopolymer slurries (*J. Manuf. Mater. Process.* 2025) |
 | NSF ENG/CMMI, Major Research Instrumentation | [2511215](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2511215) | 2026–29 | University of Texas at El Paso | Alexis Maurel (four co-PIs) | Lesley Sneed | $715,278 | Buys a multi-material VPP printer for polymers, ceramics and metals, "only the third in North America" |
-| NASA SBIR, topic Z6.01 | NNX15CP38P (I), NNX16CP82C (II) | 2015, 2016 | AlphaSense, Inc., Wilmington, DE | Pengcheng Lv | not in SBIR records | $118,395 + $748,536 | DLP of slurries of metal particles in photocurable resin, to make green parts for gradient metal alloys. AlphaSense's other ~30 SBIRs are mostly sensors, and no follow-on metal-AM award was found |
+| NASA SBIR, topic Z6.01 | NNX15CP38P (I), NNX16CP82C (II); TechPort [33603](https://techport.nasa.gov/projects/33603), [92583](https://techport.nasa.gov/projects/92583) | Jun–Dec 2015; Sep 2016–Sep 2018 | AlphaSense, Inc., Wilmington, DE | Pengcheng Lv | Technical monitor at JPL, the supporting center (named in TechPort). TechPort lists Jason L. Kessler and Carlos Torrez as the SBIR/STTR program's director and manager, which may be current rather than 2015 staff | $118,395 + $748,536 | DLP of slurries of metal particles in photocurable resin, to make green parts for gradient metal alloys. AlphaSense's other ~30 SBIRs are mostly sensors, and no follow-on metal-AM award was found |
 | Air Force SBIR I | — | 1996 | Ceramic Composites, Inc., Annapolis, MD | Walter Zimbeck | — | $96,943 | Freeform fabrication of tungsten absorber/thruster parts. The abstract doesn't name the process; the same PI's next two awards are stereolithography |
 | DARPA SBIR I | — | 1997 | Ceramic Composites, Inc. | Walter Zimbeck | — | $98,926 | Visible-light stereolithography of metal foams with designed porosity |
 | MDA SBIR I | — | 1998 | Ceramic Composites, Inc. | Walter Zimbeck | — | $69,991 | Photocurable rhenium resins for stereolithography of hot-gas valve bodies |
 
-Photopolymer-template routes that end in metal, and adjacent work:
+Photopolymer-template and salt-infusion routes that end in metal, and adjacent work:
 
 | Agency, program | Award | Recipient | PI | Program officer | Work |
 |---|---|---|---|---|---|
-| DOE Office of Science, BES (CFDA 81.049) | DE-SC0016945, 2016–24, $1,409,478 (USAspending) | Caltech | Julia R. Greer | not looked up (DOE's PAMS search wasn't reached) | A core grant on small-scale metal mechanics, first titled for nano-sized metallic glasses. Acknowledged by the 2022 *Nature* hydrogel-infusion paper (Cu, Ni, Ag, Cu-Ni), later HIAM work and a 2026 *Nat. Rev. Mater.* review. Edison ranks it the largest single public funder of metal-photopolymer work |
-| ONR; ARO; NIH | N00014-17-1-2977; W911NF1510548; NIH grants including 1R01EB024261 | MIT | Edward S. Boyden | — | Implosion fabrication, *Science* 2018: silver deposited in a photopatterned hydrogel, then shrunk |
+| DOE Office of Science, BES Materials Sciences and Engineering (CFDA 81.049) | DE-SC0016945, 2016–24, $1,409,478 (USAspending) | Caltech | Julia R. Greer | John Vetrano, Mechanical Behavior and Radiation Effects (PAMS) | A core grant on small-scale metal mechanics, first titled for nano-sized metallic glasses. The 2023–24 renewal, *New Deformation Mechanisms in Nanocrystalline Nano-porous Small Scale Metals*, proposes AM of sub-micron Ni and Cu outright, and its final report covers hydrogel-infusion nickel nanopillars made by two-photon lithography ([OSTI 2571089](https://www.osti.gov/biblio/2571089)). Acknowledged by the 2022 *Nature* hydrogel-infusion paper (Cu, Ni, Ag, Cu-Ni), the 2025 Cu–Ni follow-up in *Small* and a 2026 *Nat. Rev. Mater.* review. PAMS lists it inactive after seven support periods. Edison ranks it the largest single public funder of metal-photopolymer work |
+| NASA STMD, Space Technology Research Grants | TechPort [183708](https://techport.nasa.gov/projects/183708), 2025–29 | Caltech | not listed (a Caltech co-investigator is) | Technical monitor Christopher J. Wohl (Langley); program director Matthew C. Deans, program manager Hung D. Nguyen | *Micro-Architected Metallic Lattices for Lunar Dust Mitigation*: hydrogel-infusion lattices of alloys and refractory metals, 100 nm to 50 µm features, TRL 2 to 3. The one active federal award found whose own abstract names a photopolymer-to-metal process, besides the two NSF awards above |
+| NASA STMD, Space Technology Research Grants | TechPort [95502](https://techport.nasa.gov/projects/95502), 2018–21 | UC Irvine, with HRL Laboratories | Lorenzo Valdevit | Technical monitor Brett A. Bednarcyk (Glenn) | Ceramic (SiOC) and hollow metallic truss-core lattices grown from self-propagating photopolymer waveguides, for large space structures |
+| DoD (award not given in the paper's metadata); INL; UT System | — | UTEP | Alexis Maurel's group | — | Compositionally graded W–Ni lattices by "ionic solution-enabled" VPP (*Addit. Manuf. Lett.* 2026). The group's earlier VPP copper current collectors were printed, soaked in a precursor solution and fired (*Adv. Manuf.* 2024, with Sandia and ORNL co-authors under their DOE operating contracts). Same PI as the NSF MRI above |
+| ONR MURI | N00014-24-1-2313, 2024–27, $3,750,000 | Penn State (lead) | — | — | *Photochemical and Photothermal Additive Manufacturing of Preceramic Polymers*. Acknowledged by Michigan State's hydrogel-infusion carbides of Ti, Mo and W (*ACS Materials Lett.* 2025). Carbides, not metals |
+| NIH NCI R01; ARPA-E IDEAS | R01CA194533 (UCSF, endovascular chemofiltration); DE-AR0000884 (Caltech, *Nanomechanics of Electrodeposited Li*, 2017–18, $290,000) | Caltech | Julia R. Greer and co-inventors | NCI: Pushpa Tandon | The government-interest statement of Caltech's US 11,318,435 (2018 priority): a photopolymerized metal-salt hydrogel, then heat treatment in an atmosphere that sets the composition. Neither grant was for metal AM, so the support is incidental |
+| ONR; ARO; NIH | N00014-17-1-2977; W911NF1510548; NIH grants including 1R01EB024261 | MIT | Edward S. Boyden | — | Implosion fabrication, *Science* 2018: silver deposited in a photopatterned hydrogel, then shrunk. A DOE Office of Science SBIR (DE-SC0021593, Irradiant Technologies, Cambridge, MA; PI Daniel Oran; PM Claudia Cantoni) develops line-scan temporal focusing and implosion-fabrication lithography |
 | NSF CMMI Advanced Manufacturing, EAGER | [2528559](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2528559), 2025–27, $99,105 | NC State | Henry Oliver Ware | Janis Terpenny | DLP with acoustically aligned fillers sintered in place by intense pulsed light, for composite electrodes |
 | NSF CMMI Advanced Manufacturing, CAREER | [2542270](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2542270), 2026–31, $549,994 | University of Connecticut | SeungYeon Kang | Janis Terpenny | One-step DLP printing of micro- and sub-micron conductors ("3D OHMIC") |
 | NSF CMMI, CAREER | [2338752](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2338752), 2024–29, $600,857 | Arizona State | Xiangjia Li | Janis Terpenny | Electrically assisted printing of metal patterns inside polymer parts. The same PI holds a patent on DLP of CuSO₄ photoresin reduced to copper (US20250222650A1); Edison found no government-interest statement in it |
-| DOE NNSA (LLNL operating contract DE-AC52-07NA27344) | — | LLNL team | (national-lab staff, not named here) | — | Precursor design for hydrogel-infusion ceramics, including CuO, *Inorg. Chem. Front.* 2025 |
+| DOE NNSA (LLNL and LANL operating contracts) | — | LLNL; LANL | (national-lab staff, not named here) | — | LLNL: hollow Ni-P metamaterials on large-area projection-microstereolithography templates (*Nat. Mater.* 2016) and precursor design for hydrogel-infusion ceramics including CuO (*Inorg. Chem. Front.* 2025). LANL: a 2020 talk on binder-jet and DLP options for ceramics and porous metals ([OSTI 1711365](https://www.osti.gov/biblio/1711365)), and a 2026 study of nickel content in VPP tungsten lists LANL as funder |
 
 What this adds up to:
 
 - **No federal program targets metal VPP.** The money is one NSF CAREER award, three 1990s DoD SBIRs and one NASA
-  SBIR, none of which led to a product. The rest is basic-science grants (DOE BES, ONR, ARO, NIH) that support
-  photopolymer-template routes as a side line.
-- **Program officers.** At NSF, Janis Terpenny (CMMI, Advanced Manufacturing) oversees four of the five NSF awards
-  above, including the Michigan State CAREER award, and Lesley Sneed handled the UTEP MRI. Earlier NSF awards on VPP
-  composites with metal flakes or particles (USC, 2016–17) went through Khershed Cooper and Steve Schmid.
-  DOE BES and NASA program staff were not identified.
+  SBIR, none of which led to a product. The rest is basic-science and space-technology grants (DOE BES, NASA STRG,
+  ONR, ARO, NIH, DoD) that support photopolymer-template and salt-infusion routes as a side line.
+- **Program officers.**
+  - NSF: Janis Terpenny (CMMI, Advanced Manufacturing) oversees four of the five NSF awards above, including the
+    Michigan State CAREER award, and Lesley Sneed handled the UTEP MRI. Earlier NSF awards on VPP composites with metal
+    flakes or particles (USC, 2016–17) went through Khershed Cooper and Steve Schmid.
+  - DOE: John Vetrano (BES, Mechanical Behavior and Radiation Effects) managed DE-SC0016945, the grant behind
+    hydrogel infusion.
+  - NASA: the AlphaSense SBIR had a JPL technical monitor. The Caltech hydrogel-infusion grant sits in Space Technology
+    Research Grants (program director Matthew C. Deans, program manager Hung D. Nguyen), monitored from Langley.
 - **The companies.** Holo, GGI, Incus, Admatec, Tethon 3D and Trio Labs have no SBIR/STTR awards in SBIR.gov's full
   file. Edison found no government-interest statement on Holo's patents (US10245785B2 and family), so Holo was
   venture funded. Abroad, Fraunhofer's LMM copper work was funded by the EU's ERDF (AddiMet project, 100405446). The
   TU Wien Incus-printer thesis names no public funder.
-- **Searched with nothing on-topic found:** NIH; DOE EERE, whose closest award is ceramic (DE-EE0010216 to GE,
-  photopolymerization AM of fiber-reinforced SiC, 2022, $968,825); NIST, whose closest is a $50k grant on
-  ceramic-filled VPP defects to Colorado School of Mines; and DoD contracts, which were stereolithography equipment,
-  resin and maintenance, plus an ONR grant for ceramic stereolithography casting molds.
-- **Not searched:** ARPA-E, DOE PAMS and DTIC.
+- **Searched with nothing on-topic found:**
+  - NIH.
+  - DOE EERE, whose closest award is ceramic (DE-EE0010216 to GE, photopolymerization AM of fiber-reinforced SiC,
+    2022, $968,825).
+  - NIST, whose closest is a $50k grant on ceramic-filled VPP defects to Colorado School of Mines.
+  - DoD contracts, which were stereolithography equipment, resin and maintenance, plus an ONR grant for ceramic
+    stereolithography casting molds.
+  - ARPA-E. Its nearest projects are GE's lithographically printed ceramic cores and shells for single-crystal
+    turbine-blade casting (OPEN 2021, $2,696,056), and Georgia Tech's extruded iron-oxide lattices reduced to steel in
+    hydrogen (ROSIE, 2023, $2,843,195).
+  - PAMS abstracts: "stereolithography" 1 hit, "photopolymer" 3 and "two-photon lithography" 1 (the Irradiant SBIR).
+    "Digital light processing", "vat photopolymerization" and "hydrogel infusion" found nothing.
+  - NASA's other TechPort hits: copper and nickel plated onto SLA parts (Sears Scientific SBIR, 2021), and Goddard's
+    micro-AM (Center Innovation Fund, 2015–17), which replicated polymer templates in refractory ceramics by CVD.
+- **Not searched:** DTIC's report collection, which refuses the runner (HTTP 403).
 
 ## Questions for Greene Group, if Cu-Cr-Zr moves forward
 
