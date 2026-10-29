@@ -28,6 +28,11 @@ public web sources only; nothing here comes from talking to Greene Group.
   State (2023–28, $567k). The others are a 2015–16 NASA SBIR and three 1996–98 DoD SBIRs, plus basic-science grants
   (DOE BES, ONR, ARO, NIH) behind the photopolymer-template routes such as Caltech's hydrogel infusion. Holo, GGI,
   Incus, Admatec, Tethon 3D and Trio Labs have no SBIR/STTR awards; the companies are privately or EU funded.
+- **Formulation work on the lab's OT-2: best for hydrogel infusion, not FLAIME's alloys.** Hydrogel infusion sets the
+  alloy with an aqueous metal-salt bath at 70 °C, which the digital-wetlab OT-2 is set up to mix. I found no published
+  map from bath composition to alloy composition. Hydrogen reduces only metals such as Cu, Ni, Co and Fe, though, so
+  Al, Zr and Cr are out. For powder slurries the OT-2 can mix binders and screen viscosity, but cure depth and
+  debinding carbon are measured off the deck. Section "Formulation work on the OT-2" below has the details.
 
 ## What PureForm is
 
@@ -168,6 +173,105 @@ Against:
 - **In-house back end.** BYU's CM hydrogen furnace (1600 °C; H₂ and N₂ atmospheres) is the right kind of furnace for
   sintering copper or stainless, so a VPP route's back end already exists on campus. Debinding residue can foul a
   hydrogen furnace, so check with its owner before running green parts in it.
+
+### Formulation work on the OT-2
+
+Asked on PR #229: could the OT-2 that [`digital-wetlab`](https://github.com/vertical-cloud-lab/digital-wetlab) uses
+for precipitation experiments do formulation work for metal VPP? It fits hydrogel infusion best, because there the
+metal comes from a salt bath. For powder slurries it can mix binders and act as a rough viscometer, but the tests
+that decide whether a binder works happen off the deck.
+
+**What the robot has** (digital-wetlab and byu-vcl records, October 2026):
+
+- P300 and P20 single-channel GEN2 pipettes, and no 8-channel;
+- a heater-shaker (37–95 °C), installed but not yet wired as of 10-21;
+- the AS7341 colour-sensor tool, which the pipette picks up;
+- an Ax optimization script and PHREEQC tooling.
+
+It has no plate reader and no overhead camera yet, CB154 has no fume hood, and the lead-sulfide campaign
+([digital-wetlab#80](https://github.com/vertical-cloud-lab/digital-wetlab/issues/80)) is next in line for the robot.
+The lab has outsourced resin printing so far, and the BYU Prototyping Lab's Form 4s run only Formlabs resins.
+
+1. **Hydrogel infusion (HIAM) baths: the best fit.** HIAM sets the composition with an aqueous salt bath, not with
+   the resin. Making the baths means mixing concentrated salt solutions, which the wetlab already does, and holding
+   them at 70 °C, which its heater-shaker can do.
+   - *Published recipe.* Saccone et al. printed PEGDA-575 gels from a DMF-based resin, then washed them and exchanged
+     them into water at 70 °C. They infused the gels with 2 M nitrates of Cu, Ni, Fe, Co or Ag, or with ammonium
+     metatungstate, for 24 h at 70 °C. Then they calcined at 700 °C in air and reduced at 900 °C in forming gas
+     ([Nature 2022](https://doi.org/10.1038/s41586-022-05433-2)). Linear shrinkage was 60–70%. The Cu and Cu-Ni parts
+     were 93 and 86 wt% metal, the rest mostly carbon and aluminosilicate from the furnace tube.
+   - *Open question.* The alloy doesn't come out in bath proportion: Saccone used a 1:1.21 Cu:Ni bath to get
+     Cu50.5Ni49.5. A 2025 LLNL study found that the salt and the gel formulation both change part quality, and put
+     that down to differences in how each cation infuses
+     ([Inorg. Chem. Front., doi:10.1039/D5QI00139K](https://doi.org/10.1039/D5QI00139K)). I found no published map
+     from bath composition to gel or alloy composition.
+   - *An OT-2 campaign.*
+     - Cast PEGDA disks in polypropylene wells (DMF attacks polystyrene) and cure them under a 405 nm flood lamp.
+     - Run the washes on the heater-shaker.
+     - Dispense mixed-nitrate baths over a design: Cu/Ni/Co/Fe fractions, total molarity, anion, temperature and
+       time.
+     - Read bath depletion on diluted aliquots with the colour sensor, after calibration. Co²⁺ absorbs near 510 nm,
+       Ni²⁺ near 395 and 720 nm, and Cu²⁺ in the red and near infrared.
+     - Check a subset by ICP-OES or XRF.
+     - Calcine and reduce a subset, to check phase and composition. CuO and NiO from HIAM reduced fully at 350–400 °C
+       in forming gas ([MS&T 2023](https://www.programmaster.org/PM/PM.nsf/ApprovedAbstracts/2D3434C8F121DA1985258A1B006F29D7)).
+
+     Finding the bath recipe for a target alloy is then an inverse problem for the Ax loop. Start with Cu-Ni, so the
+     1:1.21 point can be reproduced.
+   - *Link to digital-wetlab's science.* Baths of 2 M mixed nitrates at 70 °C are concentrated mixed electrolytes.
+     PHREEQC's `pitzer.dat` has no Cu, Ni, Co or nitrate (checked 2026-10-29), so these baths fall in the same kind
+     of Pitzer gap as the sulfide brines.
+   - *What it needs.*
+     - PEGDA, a photoinitiator and an absorber. The published resin uses DMF and Michler's ketone, a reproductive
+       toxicant and a carcinogen. An aqueous PEGDA resin with LAP and tartrazine would avoid both, but no one has
+       tried it for HIAM.
+     - The nitrates. Nickel and cobalt salts are carcinogens.
+     - Sealed plates or capped vials that hold 70 °C for 24 h.
+     - ICP-OES or XRF time.
+     - Furnaces for both steps, with exhaust for the NOx that comes off during calcination. Nitrate-loaded gels can
+       decompose violently if heated fast; Saccone ramped at 0.25 °C/min.
+     - For printed lattices instead of cast disks, a 405 nm printer that accepts custom resin.
+   - *FLAIME fit: low.* Hydrogen reduces Cu, Ni, Co, Fe, Ag and W, but Al, Zr, Cr and Mn stay as oxides. None of
+     FLAIME's alloys can be made this way. The nearest copper variant is copper with oxide inclusions, which is
+     dispersion strengthening, not the precipitation hardening Cu-Cr-Zr relies on. A 2025 Caltech thesis found that
+     unreduced oxide nano-inclusions raised Cu-Ni hardness up to about four times
+     ([Tran](https://thesis.library.caltech.edu/17290)). Its bibliography lists an ODS-by-HIAM paper whose status I
+     couldn't find. This would link the two repos as a student-sized project, but it is not FLAIME work.
+2. **Binders for powder slurries (PureForm, Incus): possible, but the tests that decide them are off the deck.**
+   - *What the OT-2 can mix.* The low-viscosity parts: diluents and crosslinkers such as HDDA, TPGDA, IBOA, PEGDA and
+     TMPTA (about 10–100 mPa·s), plus photoinitiator (TPO, BAPO), absorber, inhibitor, dispersant and porogen.
+   - *What the OT-2 can measure.* An A*STAR group has shown how far the OT-2 goes with thick liquids:
+     - It tuned OT-2 flow rates by Bayesian optimization for standards of 204–1275 cP
+       ([Digital Discovery 2024, doi:10.1039/D3DD00255A](https://doi.org/10.1039/D3DD00255A)).
+     - It used the OT-2 as a proxy viscometer for Newtonian fluids of 1.5–12 Pa·s
+       ([2023, doi:10.1039/D2DD00126H](https://doi.org/10.1039/D2DD00126H)), and later for power-law fluids
+       ([2025, doi:10.1039/D4DD00368C](https://doi.org/10.1039/D4DD00368C)).
+
+     That range covers slurries at printable loading (18.7 Pa·s at 50 vol% Ti). With the powder mixed in off the
+     deck, the OT-2 could screen viscosity against loading, binder and dispersant. Highly loaded slurries can have a
+     yield stress, though, which those methods don't treat. The 2024 paper also used a P1000, while the lab has a P300
+     and a P20.
+   - *What it can't measure.*
+     - Cure depth and critical dose, which need a windowpane test and a micrometer. The test is poorly standardized:
+       in a 24-lab study, Dp varied up to 7× and Ec up to 70× between labs
+       ([Addit. Manuf. 2024, doi:10.1016/j.addma.2024.104082](https://doi.org/10.1016/j.addma.2024.104082)). NIST
+       released a working-curve reference resin, [RM 8047](https://www.nist.gov/node/1915556), in June 2026.
+     - Carbon left after debinding, which needs TGA.
+   - *What matters for Cu-Cr-Zr.* Which binder leaves the least carbon and oxygen to lock up Cr and Zr. TGA
+     throughput, not dispensing, would set the pace.
+3. **Lower value.**
+   - Dispersant screens by settling at low loading could reuse the camera pipeline the lead work is building, but
+     they only loosely predict rheology at printable loading.
+   - Resins with the metal dissolved in them (metal acrylates, or nitrates in the monomer) could reuse the wetlab's
+     precipitation-boundary imaging. HIAM was designed so the resin doesn't have to change with the metal.
+
+The closest precedents involve no metals:
+
+- The Allen and Gu groups at Toronto built a camera tool that the OT-2 picks up, and used it to image hydrogel
+  formation in wells ([HardwareX 2025, doi:10.1016/j.ohx.2025.e00653](https://doi.org/10.1016/j.ohx.2025.e00653)).
+- A Georgia Tech self-driving lab formulates photopolymers with a robot arm, liquid dispensing, and a powder
+  dispenser for photoinitiators
+  ([thesis](https://repository.gatech.edu/entities/publication/0f1b2235-375f-488f-bd67-4f6884473b7b)).
 
 ## Edison vetting (29 Oct 2026)
 
