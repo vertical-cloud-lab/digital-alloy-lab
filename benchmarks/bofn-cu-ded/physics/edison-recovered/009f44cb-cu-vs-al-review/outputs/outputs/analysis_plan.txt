@@ -1,0 +1,5 @@
+1. Independently extract budget-censored demonstrated scores and paired statistics.
+2. Audit comparison formulas, policy and truth code.
+3. Execute truth counterfactuals, shortlist and gating audits, cost-standardized and seed analyses.
+4. Separate causal ablations from observational explanations; report missing fidelity runs.
+5. Write report.md and machine-readable evidence.

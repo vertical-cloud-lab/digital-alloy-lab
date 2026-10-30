@@ -1,0 +1,105 @@
+{
+ "window_utc": [
+  "2026-10-27T18:16:00Z",
+  "2026-10-27T21:06:59Z"
+ ],
+ "listed_on": "2026-10-28",
+ "from_pr_206": [
+  {
+   "task_id": "f14b36cf-9e08-4ed0-8fa4-6e747f3a684a",
+   "job": "job-futurehouse-paperqa3",
+   "created_at": "2026-10-27T19:02:48.310002Z",
+   "started_at": "2026-10-27T19:02:51.241524Z",
+   "finished_at": "2026-10-27T19:31:41.514894Z",
+   "status": "success",
+   "edison_title": "Comparative Corrosion Data For Copper Alloys In Identical Short To Medium Term Immersion Tests",
+   "folder": "f14b36cf-lit-same-test-corrosion",
+   "uploads": 0,
+   "outputs_committed": 1,
+   "outputs_excluded": 1,
+   "run": "run 2 (40563168340)",
+   "query": "f14b36cf-lit-same-test-corrosion/query.md",
+   "answer": "f14b36cf-lit-same-test-corrosion/answer.md"
+  },
+  {
+   "task_id": "cfce38b0-cab4-4625-b966-0049fcb0920c",
+   "job": "job-futurehouse-paperqa3",
+   "created_at": "2026-10-27T19:02:49.305167Z",
+   "started_at": "2026-10-27T19:02:52.122432Z",
+   "finished_at": "2026-10-27T19:26:54.940866Z",
+   "status": "success",
+   "edison_title": "Measured Constants For Oxygen Reduction Limiting Current Corrosion Decay Phase Dissolution And Film Conductivity",
+   "folder": "cfce38b0-lit-film-model-constants",
+   "uploads": 0,
+   "outputs_committed": 1,
+   "outputs_excluded": 1,
+   "run": "run 2 (40563168340)",
+   "query": "cfce38b0-lit-film-model-constants/query.md",
+   "answer": "cfce38b0-lit-film-model-constants/answer.md"
+  },
+  {
+   "task_id": "009f44cb-d47e-42ba-8cb7-c279768d14ca",
+   "job": "job-futurehouse-data-analysis-crow-high",
+   "created_at": "2026-10-27T19:23:52.755116Z",
+   "started_at": "2026-10-27T19:23:55.453983Z",
+   "finished_at": "2026-10-27T19:59:29.800538Z",
+   "status": "success",
+   "edison_title": "Reanalyze Cost-Aware Bayesian Optimization Discrepancies Between Aluminum And Copper Alloy Benchmarks",
+   "folder": "009f44cb-cu-vs-al-review",
+   "uploads": 23,
+   "outputs_committed": 54,
+   "outputs_excluded": 8,
+   "run": "run 1 (40558407419)",
+   "query": "009f44cb-cu-vs-al-review/query.md",
+   "answer": "009f44cb-cu-vs-al-review/answer.md"
+  },
+  {
+   "task_id": "92e929a9-38ce-45ff-855f-de856bce8435",
+   "job": "job-futurehouse-data-analysis-crow-high",
+   "created_at": "2026-10-27T19:50:14.849664Z",
+   "started_at": "2026-10-27T19:50:17.809339Z",
+   "finished_at": "2026-10-27T20:24:34.145102Z",
+   "status": "success",
+   "edison_title": "Validate Corrosion Model Fit And CALPHAD Grid Implementation And Quantify Nickel Floor Sensitivity",
+   "folder": "92e929a9-physics-truth-review",
+   "uploads": 11,
+   "outputs_committed": 23,
+   "outputs_excluded": 9,
+   "run": "run 2 (40563168340)",
+   "query": "92e929a9-physics-truth-review/query.md",
+   "answer": "92e929a9-physics-truth-review/answer.md"
+  },
+  {
+   "task_id": "fe65c236-7b04-437b-b122-806f0ac8b9b9",
+   "job": "job-futurehouse-data-analysis-crow-high",
+   "created_at": "2026-10-27T20:43:27.988597Z",
+   "started_at": "2026-10-27T20:43:30.643686Z",
+   "finished_at": "2026-10-27T21:06:44.982016Z",
+   "status": "success",
+   "edison_title": "Independent Reanalysis Of Copper Alloy Bayesian Optimization Benchmarks Recomputing Metrics And Statistical Tests",
+   "folder": "fe65c236-results-review",
+   "uploads": 13,
+   "outputs_committed": 24,
+   "outputs_excluded": 0,
+   "run": "run 1 (40558407419)",
+   "query": "fe65c236-results-review/query.md",
+   "answer": "fe65c236-results-review/answer.md"
+  }
+ ],
+ "in_window_not_pr_206": [
+  {
+   "task_id": "a67d522e-7d56-4ad9-a324-5d8765ec4423",
+   "job": "job-futurehouse-paperqa3-high",
+   "created_at": "2026-10-27T20:26:22.900500Z",
+   "status": "success",
+   "note": "issue #219's atomizer run, not #206; committed on branch claude/issue-219-20261027-2020"
+  },
+  {
+   "task_id": "c5d7048c-574b-4721-98cd-847e0fbb0dbd",
+   "job": "job-futurehouse-paperqa3-precedent",
+   "created_at": "2026-10-27T20:26:23.763238Z",
+   "status": "success",
+   "note": "issue #219's atomizer run, not #206; committed on branch claude/issue-219-20261027-2020"
+  }
+ ]
+}
