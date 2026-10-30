@@ -21,7 +21,6 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
-import shapely  # noqa: E402
 import trimesh  # noqa: E402
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection  # noqa: E402
 from shapely import affinity  # noqa: E402
@@ -36,6 +35,8 @@ PLATE_MARGIN = 5.0  # keep parts this far in from the plate edge
 MAX_Z = 190.0  # lowest published AconityMINI build height (others say 200)
 LAYER = 0.030  # typical AlSi10Mg layer thickness, for layer counts only
 DENSITY = {"AlSi10Mg": 2.67, "316L": 7.98}  # g/cm^3
+TAP_DENSITY = 1.7  # AlSi10Mg powder, g/cm^3, as used for the MIDI estimate in #138
+FEED_FACTOR = 3.0  # fill the supply to ~3x the build height (#138)
 OVERHANG_DEG = 45.0  # down-facing surfaces flatter than this need support
 FONT = "DejaVu Sans"
 
@@ -322,7 +323,9 @@ def glove_bracket(side="left"):
     for z in p["screw_z"]:
         br = br.cut(teardrop((x, p["back_t"] / 2, z), (0, 1, 0), p["screw_d"], p["back_t"] + 2))
         br = br.cut(countersink((x, p["back_t"], z), (0, -1, 0), p["csk_d"]))
-    if side == "right":
+    # As modelled the side wall is at x = 0, which is on your right when you
+    # face the wall (+Y points out of the wall toward you).
+    if side == "left":
         br = br.mirror("YZ").translate((x1, 0, 0))
     return br
 
@@ -455,6 +458,9 @@ def pack(items, gap=5.0, step=2.5):
 
 # --- Rendering --------------------------------------------------------------
 def render(ax, mesh, color=(0.62, 0.66, 0.72)):
+    # matplotlib has no depth buffer and sorts whole triangles, so long thin
+    # CAD triangles draw in the wrong order; split them small first.
+    mesh = mesh.subdivide_to_size(max_edge=2.5, max_iter=12)
     light = np.array([0.4, -0.6, 0.7])
     light /= np.linalg.norm(light)
     shade = 0.45 + 0.55 * np.clip(mesh.face_normals @ light, 0, 1)
@@ -476,10 +482,11 @@ def main():
     out_stl = HERE / "stl"
     out_step = HERE / "step"
     out_prev = HERE / "previews"
-    for d in (out_stl, out_step, out_prev):
+    out_builds = HERE / "builds"
+    for d in (out_stl, out_step, out_prev, out_builds):
         d.mkdir(exist_ok=True)
 
-    meshes, rows, items, part_of = {}, [], [], {}
+    meshes, rows, items, part_of, centroid = {}, [], [], {}, {}
     for name, (build, qty, desc) in PARTS.items():
         print("building", name)
         wp = build()
@@ -503,6 +510,7 @@ def main():
             )
         )
         outline = footprint(mesh)
+        centroid[name] = (outline.centroid.x, outline.centroid.y)
         for k in range(qty):
             copy = name if qty == 1 else f"{name}_{k + 1}"
             part_of[copy] = name
@@ -529,7 +537,7 @@ def main():
 
     # Plate layouts, short parts and tall parts in separate builds.
     builds = pack(items)
-    layout = []
+    layout, summary = [], []
     for bi, b in enumerate(builds, 1):
         fig, ax = plt.subplots(figsize=(4.2, 4.2), dpi=150)
         ax.add_patch(plt.Circle((0, 0), PLATE_D / 2, fc="#eceff3", ec="#5b6573", lw=1.2))
@@ -542,6 +550,17 @@ def main():
             ax.fill(xs, ys, fc="#8fa3bf", ec="#2f3b4c", lw=0.8)
             ax.text(poly.centroid.x, poly.centroid.y, name.replace("_", "\n"), ha="center", va="center", fontsize=5.5)
             layout.append(dict(build=bi, part=base_name, copy=name, x=round(x, 1), y=round(y, 1), rot_deg=rot))
+        placed = []
+        for name, poly, x, y, rot in b:
+            cx, cy = centroid[part_of[name]]
+            m = meshes[part_of[name]].copy()
+            m.apply_translation((-cx, -cy, 0))
+            m.apply_transform(trimesh.transformations.rotation_matrix(math.radians(rot), (0, 0, 1)))
+            m.apply_translation((x, y, 0))
+            placed.append(m)
+        trimesh.util.concatenate(placed).export(out_builds / f"build_{bi}.stl")
+        powder_kg = FEED_FACTOR * math.pi * (PLATE_D / 20) ** 2 * height / 10 * TAP_DENSITY / 1000
+        summary.append((bi, height, math.ceil(height / LAYER), powder_kg, [n for n, *_ in b]))
         ax.set_title(f"Build {bi}: {height:.0f} mm tall, {math.ceil(height / LAYER)} layers at 30 µm", fontsize=8)
         ax.set_xlim(-PLATE_D / 2 - 3, PLATE_D / 2 + 3)
         ax.set_ylim(-PLATE_D / 2 - 3, PLATE_D / 2 + 3)
@@ -581,6 +600,16 @@ def main():
         f"Stub holder fit: lid seated on the skirt overlaps the base by {clash_mm3:.3f} mm³; "
         f"{STUB['clearance']} mm clearance per side on the {STUB['taper_deg']:g}° seat; "
         f"{headroom:.1f} mm headroom above the base for stub heads and samples.",
+        "",
+        f"| Build | Height (mm) | Layers @ 30 µm | AlSi10Mg powder to load (kg, {FEED_FACTOR:g}× height at {TAP_DENSITY} g/cm³) | Parts |",
+        "| --- | --- | --- | --- | --- |",
+    ]
+    for bi, height, layers, kg, names in summary:
+        lines.append(f"| {bi} | {height:.0f} | {layers} | {kg:.1f} | {', '.join(f'`{n}`' for n in names)} |")
+    lines += [
+        "",
+        "`builds/build_N.stl` has every part of a build already placed. Placement, if you lay the plate out yourself",
+        "(x, y is where the centre of the part's outline goes on a plate centred at 0, 0; rotation is about +Z):",
         "",
         "| Build | Part | x (mm) | y (mm) | Rotation (°) |",
         "| --- | --- | --- | --- | --- |",

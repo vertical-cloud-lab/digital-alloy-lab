@@ -12,6 +12,16 @@
 
 Stub holder fit: lid seated on the skirt overlaps the base by 0.000 mm³; 0.25 mm clearance per side on the 10° seat; 6.0 mm headroom above the base for stub heads and samples.
 
+| Build | Height (mm) | Layers @ 30 µm | AlSi10Mg powder to load (kg, 3× height at 1.7 g/cm³) | Parts |
+| --- | --- | --- | --- | --- |
+| 1 | 62 | 2067 | 4.9 | `ipa_bottle_holder`, `coat_hook_1` |
+| 2 | 70 | 2334 | 5.5 | `brush_cup`, `coat_hook_2` |
+| 3 | 18 | 600 | 1.4 | `stub_holder_lid`, `stub_holder_base` |
+| 4 | 60 | 2000 | 4.7 | `glove_bracket_left`, `glove_bracket_right` |
+
+`builds/build_N.stl` has every part of a build already placed. Placement, if you lay the plate out yourself
+(x, y is where the centre of the part's outline goes on a plate centred at 0, 0; rotation is about +Z):
+
 | Build | Part | x (mm) | y (mm) | Rotation (°) |
 | --- | --- | --- | --- | --- |
 | 1 | `ipa_bottle_holder` | 17.5 | 12.5 | 255 |
@@ -20,5 +30,5 @@ Stub holder fit: lid seated on the skirt overlaps the base by 0.000 mm³; 0.25 m
 | 2 | `coat_hook_2` | -45.0 | -15.0 | 0 |
 | 3 | `stub_holder_lid` | 35.0 | 0.0 | 90 |
 | 3 | `stub_holder_base` | -35.0 | 0.0 | 90 |
-| 4 | `glove_bracket_right` | 32.5 | 7.5 | 15 |
-| 4 | `glove_bracket_left` | -32.5 | 7.5 | 165 |
+| 4 | `glove_bracket_left` | 32.5 | 7.5 | 15 |
+| 4 | `glove_bracket_right` | -32.5 | 7.5 | 165 |
