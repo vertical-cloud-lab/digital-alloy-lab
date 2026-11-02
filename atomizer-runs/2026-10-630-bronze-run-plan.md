@@ -157,20 +157,49 @@ The first coat went onto bare graphite and didn't crack, though the Oct 27 skull
 it. The second (Oct 30) went over the old, fired coat and cracked on the floor as it dried; the walls,
 under the same two coats, did not. On Nov 2 the floor was scraped back to a thin gray layer and
 recoated ([#220 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/220#issuecomment-6589106730),
-with a video). The parts that looked thicker seemed to scrape off most easily.
+with a video). The parts that looked thicker seemed to scrape off most easily. From then on, the
+routine after each run is the touch-up below: brush out, scrape off what is flaking, wipe, and
+respray only those spots
+([#220 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/220#issuecomment-6589928141)).
 
 **Spraying.** The can's directions: the surface clean and dry; the can 6–8" (15–20 cm) from the
 surface being coated, in a sweeping motion; "successive light coats rather than one heavy coat", with
 enough drying between them to prevent running; afterwards, the can upside down and sprayed for 4 s
 to clear the valve. Also:
 - Shake the can for at least a minute after the ball starts to rattle. BN settles fast.
-- The hood's draft pulls the mist out of the crucible, so stand the crucible in an open-topped box in
-  the hood. Don't turn the hood down.
-- Use short bursts, turning the crucible between them, and stop as soon as a spot looks wet. Wait
-  about 5 min between passes.
+- Stand the crucible upright in an open-topped box in the hood, set up as below. Don't turn the hood
+  down.
+- Use short, quick bursts, turning the crucible between them, and stop as soon as a spot looks wet.
+  Wait about 5 min between passes, and longer if the last pass still looks wet: the coat dries more
+  slowly in the box.
 - Keep the spray out of the nozzle seat and bore.
 - On bare graphite, two or three light passes make a coat. On a touch-up, one or two light passes over
   the repaired spots are enough. Don't respray the whole interior.
+- Stop when the sprayed spots are matte white once dry. They don't need to match the shine of the old
+  coat, but a spot that still looks shiny or gray once dry is thin and gets one more light pass.
+
+**Why the box, and how to set it up.** The hood pulls air in through the sash at 80–120 ft/min, about
+1 mph ([a typical university hood policy](https://www.safety.pitt.edu/sites/default/files/docs/04-005%20CHEMICAL%20FUME%20HOODS%20revised.pdf)),
+and on across the work surface to the slots at the back. That draft bends the spray where it is
+slowest, just before it reaches the crucible, and carries off the mist that the spray's own gas brings
+back out of the crucible. Air can't flow into a dead end, so the draft goes over an open-topped box
+rather than into it, stirring only a slow swirl under the rim, and the crucible inside sits in still
+air.
+- Use a box a few inches taller than the crucible, with just enough room around it to reach in and
+  turn it. In a wide, shallow box the swirl reaches the crucible.
+- Put it at least 6" behind the sash, the same policy's rule for any work in a hood, and clear of the
+  slots at the back.
+- Hold the can above the box, 6–8" from the spot being coated, tilted only as far as needed to aim
+  into the crucible. Upside down the can sprays only propellant, which is how the 4 s valve-clearing
+  step works, so if it sputters, tilt it back toward upright.
+- Check the air first: a strip of tissue taped to a pencil streams toward the back of the hood above
+  the box, and should hang almost still where the crucible's mouth will be. If it still flutters there,
+  use a taller or narrower box.
+- More of each burst now stays in the crucible, so go by the matte-white check, not the number of
+  passes.
+- The propellant (propane and butane) and the main solvents (ethanol and acetone) are heavier than
+  air, so after each pass the bottom of the box holds flammable vapour for a while. Keep the box in the
+  running hood, with nothing nearby that can spark, until the coat is dry.
 
 **Between runs: touch up, don't strip.** A fired coat doesn't have to come off down to bare graphite.
 [Colour de Verre's instructions](https://www.bullseyeglass.com/wp-content/uploads/CdV_Boron_Nitride.pdf)
@@ -185,7 +214,7 @@ to graphite after every run would also wear it, the nozzle seat most of all.
    won't come off: that is BN bonded to the graphite, and the new coat goes on top of it. Use a plastic
    or wooden edge, and don't scrape the nozzle seat, which the sealing rod has to seal against.
 3. Get the dust out dry, with a brush and then the vacuum. Wipe with IPA only if something oily has
-   touched it, then wait until the IPA smell is gone before spraying.
+   touched it, then wait until the IPA smell is gone before spraying. Don't wipe between passes.
 4. Spray the scraped areas as above. Aim at the middle of each, so the new coat doesn't pile up into a
    ridge where it meets the old one.
 
