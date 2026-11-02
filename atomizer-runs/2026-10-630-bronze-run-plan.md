@@ -2,8 +2,9 @@
 
 Status: **run on Oct 27 (k7m2q9) and Oct 28**; most of the Oct 28 charge ended up in the catch
 crucible. Both runs are recorded in #219 and #230. Apart from
-[Coating and recoating the crucible](#coating-and-recoating-the-crucible), added on Nov 2, the plan
-below is as written before the runs. Feedstock and crucible spray arrived Oct 23, 2026
+[Coating and recoating the crucible](#coating-and-recoating-the-crucible) and steps 2 and 3 of "The
+day before", added or changed on Nov 2, the plan below is as written before the runs. Feedstock and
+crucible spray arrived Oct 23, 2026
 ([#117 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/117#issuecomment-6377115493)).
 Sourcing is in #123 and #162. The copper/DED proposal that wants this powder is #117
 (`near-term-submissions/onr-yip/onr-yip-technical-proposal-cu-ded.tex` on `claude/onr-yip-fy27`).
@@ -105,10 +106,14 @@ no headroom above it: do not exceed 1,300 °C, and if the melt freezes in the no
    carbon baseline (After, step 5).
 2. Coat the copper-only crucible, or touch up its old coat, as in
    [Coating and recoating the crucible](#coating-and-recoating-the-crucible). Spray **in a fume
-   hood**, away from ignition sources, with gloves and goggles. The can is an extremely flammable
-   aerosol, and its carrier contains methanol and MIBK. Store it in the flammables cabinet.
-3. Let the coat dry overnight, then check it for cracks. **Never pour onto a wet coat.** The coat may
-   gray on first heating as its organic binder burns off; that is normal.
+   hood**, away from ignition sources, with gloves, goggles and a lab coat of cotton or
+   flame-resistant fabric, not polyester, with the gloves pulled over its cuffs. The can is an
+   extremely flammable aerosol. Its carrier contains methanol, which the SDS marks as damaging to
+   organs (H370), and under 1% MIBK, marked as suspected of causing cancer (H351). Store it in the
+   flammables cabinet.
+3. Let the coat dry overnight in the running hood, then check it as in "Drying and checking" in
+   the same section. **Never pour onto a wet coat.** The coat may gray on first heating as its
+   organic binder burns off; that is normal.
 4. Check the cabinet for the hBN nozzle (confirm the bore), the alumina sealing rod, the Mo-tipped
    and W-coated CF plates, and the spare thermocouples. These come from the Sep 30 consumables tour and
    haven't been counted.
@@ -157,9 +162,12 @@ The first coat went onto bare graphite and didn't crack, though the Oct 27 skull
 it. The second (Oct 30) went over the old, fired coat and cracked on the floor as it dried; the walls,
 under the same two coats, did not. On Nov 2 the floor was scraped back to a thin gray layer and
 recoated ([#220 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/220#issuecomment-6589106730),
-with a video). The parts that looked thicker seemed to scrape off most easily. From then on, the
-routine after each run is the touch-up below: brush out, scrape off what is flaking, wipe, and
-respray only those spots
+with a video). The parts that looked thicker seemed to scrape off most easily. Once dry, that
+touch-up was matte white, with a few small cracked flakes on one side of the floor and BN, not
+graphite, beneath them. It was judged fit for a run, with those spots left for the next touch-up
+([#220 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/220#issuecomment-6590805613),
+with a video). From then on, the routine after each run is the touch-up below: brush out, scrape off
+what is flaking, wipe, and respray only those spots
 ([#220 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/220#issuecomment-6589928141)).
 
 **Spraying.** The can's directions: the surface clean and dry; the can 6–8" (15–20 cm) from the
@@ -173,6 +181,10 @@ to clear the valve. Also:
   Wait about 5 min between passes, and longer if the last pass still looks wet: the coat dries more
   slowly in the box.
 - Keep the spray out of the nozzle seat and bore.
+- Aim at the walls, not straight down at the floor. The floor faces the spray head-on and also
+  catches the mist that settles, so it builds up fastest. The Oct 30 coat and the Nov 2 touch-up both
+  cracked only on the floor. Give a floor spot one quick burst, and a second only if it is still gray
+  once dry.
 - On bare graphite, two or three light passes make a coat. On a touch-up, one or two light passes over
   the repaired spots are enough. Don't respray the whole interior.
 - Stop when the sprayed spots are matte white once dry. They don't need to match the shine of the old
@@ -218,10 +230,17 @@ to graphite after every run would also wear it, the nozzle seat most of all.
 4. Spray the scraped areas as above. Aim at the middle of each, so the new coat doesn't pile up into a
    ridge where it meets the old one.
 
-**Drying and checking.** Dry overnight. Upside down is fine: nothing pools on the floor, and the hood's
-draft can't reach the inside. Before a run, look at the floor and the floor–wall corner under a strong
-side light for cracks, lifted edges or bare graphite. If a spot has cracked, scrape and redo that spot
-only.
+**Drying and checking.** Dry overnight in the running hood, either in the box or upside down: upside
+down, nothing pools on the floor and the hood's draft can't reach the inside. Overnight also gives the
+vapour time to leave the box, so there is no need to check by smell. Before a run, look at the floor
+and the floor–wall corner under a strong side light for cracks, lifted edges or bare graphite. A few
+cracked spots don't have to hold up a run:
+- Brush them lightly with a soft dry brush, then turn the crucible over a dark sheet and tap it. What
+  falls out would have come off in the furnace, where a loose flake can be carried to the 0.5 mm bore.
+  Make sure nothing loose is left near the hole in the floor.
+- If what is left is stuck down and shows white or gray BN, run it and fix those spots at the next
+  touch-up. Only if black graphite shows, spot spray it and dry it overnight again before the run.
+- Lower the slugs in rather than dropping them, so they don't knock the cracked spots loose.
 
 **When to strip it all.** Only if the coat flakes or lifts over a wide area, or has built up thick, for
 example if the step at the edge of a scraped spot is as thick as a sheet of paper (about 100 µm).
