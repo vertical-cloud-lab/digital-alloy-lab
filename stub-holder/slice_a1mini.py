@@ -15,7 +15,7 @@ vertical-cloud-lab/byu-vcl#234), cut down to one plate:
 - Three settings go on top: the filament colour (black), the build plate (Textured PEI) and
   Bambu's "Auto circle contour-hole compensation" (PROCESS_SETTINGS). Left alone, the CLI
   picks "Cool Plate" and heats the bed to 35 °C. The compensation is off in the stock process
-  preset. It lays the walls around the Bottom's Ø3.3 mm pin holes 0.21 mm further out, against
+  preset. It lays the walls around the Bottom's Ø3.5 mm pin holes 0.21 mm further out, against
   the shrink that Bambu's PLA Basic model predicts. Nothing else on this plate is round, so
   nothing else changes. --stock leaves it off, for a stock slice to compare.
 - Both parts stand as designed, on their flat faces, at pinned positions (auto-arrange can

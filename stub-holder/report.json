@@ -36,9 +36,9 @@
     }
   ],
   "estimate": {
-    "model_printing_time": "47m 46s",
-    "total_estimated_time": "53m 45s",
-    "prediction_s": 3225
+    "model_printing_time": "48m 6s",
+    "total_estimated_time": "54m 4s",
+    "prediction_s": 3244
   },
   "layers": 90,
   "max_z_mm": 18.0,
@@ -46,8 +46,8 @@
     "type": "PLA",
     "colour": "#000000",
     "tray_info_idx": "GFA00",
-    "used_g": 30.86,
-    "used_m": 10.18
+    "used_g": 30.9,
+    "used_m": 10.2
   },
   "bed_type": "Textured PEI Plate",
   "bed_temp_c": [
@@ -75,13 +75,13 @@
     "Bridge": 246,
     "Custom": 349,
     "Flush": 28,
-    "Gap infill": 4,
-    "Inner wall": 311,
-    "Internal solid infill": 429,
-    "Outer wall": 423,
-    "Sparse infill": 782,
+    "Gap infill": 5,
+    "Inner wall": 315,
+    "Internal solid infill": 424,
+    "Outer wall": 422,
+    "Sparse infill": 795,
     "Top surface": 135,
-    "Travel": 368,
-    "Undefined": 350
+    "Travel": 375,
+    "Undefined": 356
   }
 }
