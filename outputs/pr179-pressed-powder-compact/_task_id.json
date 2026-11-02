@@ -1,0 +1,7 @@
+{
+  "task_id": "b49700cb-4c69-40d5-ad98-df2fffa43971",
+  "job": "LITERATURE_HIGH (job-futurehouse-paperqa3-high)",
+  "submitted_utc": "2026-11-02T22:28:27Z",
+  "query_file": "query.md",
+  "requested_in": "https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/179#issuecomment-6590015569"
+}
