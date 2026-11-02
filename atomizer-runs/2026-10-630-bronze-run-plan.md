@@ -1,6 +1,9 @@
 # First copper-alloy run on the rePOWDER: 630 bronze in a BN-coated crucible
 
-Status: **planned, not run.** Feedstock and crucible spray arrived Oct 23, 2026
+Status: **run on Oct 27 (k7m2q9) and Oct 28**; most of the Oct 28 charge ended up in the catch
+crucible. Both runs are recorded in #219 and #230. Apart from
+[Coating and recoating the crucible](#coating-and-recoating-the-crucible), added on Nov 2, the plan
+below is as written before the runs. Feedstock and crucible spray arrived Oct 23, 2026
 ([#117 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/117#issuecomment-6377115493)).
 Sourcing is in #123 and #162. The copper/DED proposal that wants this powder is #117
 (`near-term-submissions/onr-yip/onr-yip-technical-proposal-cu-ded.tex` on `claude/onr-yip-fy27`).
@@ -100,11 +103,12 @@ no headroom above it: do not exceed 1,300 °C, and if the melt freezes in the no
 1. Cut two or three 2.75" slugs from the 630 bronze rod. It is much harder than 6063 (HB 187–241 in
    this temper), so saw slowly with coolant, then deburr and degrease. Keep an offcut as the oxygen and
    carbon baseline (After, step 5).
-2. Clean the copper-only crucible. Spray a thin, even BN coat inside it **in a fume hood**, away from
-   ignition sources, with gloves and goggles. The can is an extremely flammable aerosol, and its
-   carrier contains methanol and MIBK. Store it in the flammables cabinet.
-3. Let the coat dry overnight in the hood. **Never pour onto a wet coat.** The coat may gray on first
-   heating as its organic binder burns off; that is normal.
+2. Coat the copper-only crucible, or touch up its old coat, as in
+   [Coating and recoating the crucible](#coating-and-recoating-the-crucible). Spray **in a fume
+   hood**, away from ignition sources, with gloves and goggles. The can is an extremely flammable
+   aerosol, and its carrier contains methanol and MIBK. Store it in the flammables cabinet.
+3. Let the coat dry overnight, then check it for cracks. **Never pour onto a wet coat.** The coat may
+   gray on first heating as its organic binder burns off; that is normal.
 4. Check the cabinet for the hBN nozzle (confirm the bore), the alumina sealing rod, the Mo-tipped
    and W-coated CF plates, and the spare thermocouples. These come from the Sep 30 consumables tour and
    haven't been counted.
@@ -146,6 +150,54 @@ no headroom above it: do not exceed 1,300 °C, and if the melt freezes in the no
    the brass pre-filter and the filters between chamber and pump.
 7. Do the material-change clean before the next 6063 run.
 8. Compare with Uhlmann 2024 (d10/d50/d90 = 48/98/174 µm at 40 kHz for CuAl10Ni5Fe5 propeller chips).
+
+## Coating and recoating the crucible
+
+The first coat went onto bare graphite and didn't crack, though the Oct 27 skull pulled patches off
+it. The second (Oct 30) went over the old, fired coat and cracked on the floor as it dried; the walls,
+under the same two coats, did not. On Nov 2 the floor was scraped back to a thin gray layer and
+recoated ([#220 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/220#issuecomment-6589106730),
+with a video). The parts that looked thicker seemed to scrape off most easily.
+
+**Spraying.** The can's directions: the surface clean and dry; the can 6–8" (15–20 cm) from the
+surface being coated, in a sweeping motion; "successive light coats rather than one heavy coat", with
+enough drying between them to prevent running; afterwards, the can upside down and sprayed for 4 s
+to clear the valve. Also:
+- Shake the can for at least a minute after the ball starts to rattle. BN settles fast.
+- The hood's draft pulls the mist out of the crucible, so stand the crucible in an open-topped box in
+  the hood. Don't turn the hood down.
+- Use short bursts, turning the crucible between them, and stop as soon as a spot looks wet. Wait
+  about 5 min between passes.
+- Keep the spray out of the nozzle seat and bore.
+- On bare graphite, two or three light passes make a coat. On a touch-up, one or two light passes over
+  the repaired spots are enough. Don't respray the whole interior.
+
+**Between runs: touch up, don't strip.** A fired coat doesn't have to come off down to bare graphite.
+[Colour de Verre's instructions](https://www.bullseyeglass.com/wp-content/uploads/CdV_Boron_Nitride.pdf)
+for reusing a mould coated with ZYP's BN spray are to brush off the powdery fired coat, leaving a
+surface that "will look burnished and shiny", then "reapply one thin coat" and touch up any spots that
+still look shiny.
+What makes a coat crack or peel is thickness: one BN-coating maker says to keep it under 100 µm
+([ALU-STOP FAQ](https://www.a-m.de/englisch/faq/anwfehlertab.html)). Scraping the crucible back
+to graphite after every run would also wear it, the nozzle seat most of all.
+1. Take out the skull and brush out anything loose.
+2. Scrape off what is cracked or lifted, or has metal stuck to it. Stop at the thin gray layer that
+   won't come off: that is BN bonded to the graphite, and the new coat goes on top of it. Use a plastic
+   or wooden edge, and don't scrape the nozzle seat, which the sealing rod has to seal against.
+3. Get the dust out dry, with a brush and then the vacuum. Wipe with IPA only if something oily has
+   touched it, then wait until the IPA smell is gone before spraying.
+4. Spray the scraped areas as above. Aim at the middle of each, so the new coat doesn't pile up into a
+   ridge where it meets the old one.
+
+**Drying and checking.** Dry overnight. Upside down is fine: nothing pools on the floor, and the hood's
+draft can't reach the inside. Before a run, look at the floor and the floor–wall corner under a strong
+side light for cracks, lifted edges or bare graphite. If a spot has cracked, scrape and redo that spot
+only.
+
+**When to strip it all.** Only if the coat flakes or lifts over a wide area, or has built up thick, for
+example if the step at the edge of a scraped spot is as thick as a sheet of paper (about 100 µm).
+Weighing the dry crucible after each recoat shows build-up too: over about 200 cm² of interior, 1 g of
+dry coat is about 50 µm.
 
 ## Risks
 
