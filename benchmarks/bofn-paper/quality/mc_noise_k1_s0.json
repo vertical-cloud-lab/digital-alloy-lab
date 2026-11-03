@@ -1,0 +1,289 @@
+{
+ "seed": 0,
+ "kappa": 1.0,
+ "S_ACQ": 64,
+ "N_CAND": 16,
+ "S_hi": 1024,
+ "reps": 5,
+ "wall_s": 997.7632858753204,
+ "wall_s_diagnostics": 581.5951030254364,
+ "final_best_validated": 0.6052946407196008,
+ "fit_calls": 63,
+ "fit_failures": 0,
+ "fit_errors": {},
+ "iterations": [
+  {
+   "it": 4,
+   "chosen_S": [
+    "L",
+    3
+   ],
+   "chosen_S_hi": [
+    "L",
+    3
+   ],
+   "same_stage": true,
+   "same_candidate": true,
+   "ratio_S": 1.4019440923509153e-05,
+   "ratio_S_hi_of_same": 1.5509855881718047e-05,
+   "mc_std_of_chosen_ratio": 1.3570703842106222e-06,
+   "stage_gap_over_mc_std": 9.738625316539832,
+   "stage_ranking_S": [
+    [
+     "L",
+     1.4019e-05
+    ],
+    [
+     "A",
+     8.03e-07
+    ],
+    [
+     "T",
+     0.0
+    ],
+    [
+     "C",
+     0.0
+    ]
+   ],
+   "stage_ranking_S_hi": [
+    [
+     "L",
+     1.551e-05
+    ],
+    [
+     "T",
+     2.466e-06
+    ],
+    [
+     "A",
+     1.285e-06
+    ],
+    [
+     "C",
+     0.0
+    ]
+   ],
+   "mean_rel_err_vs_hi_by_stage": {
+    "C": 1.3877787807814457e-05,
+    "A": 0.8668157767128444,
+    "L": 0.2295187560744555,
+    "T": 0.9998915016524322
+   },
+   "candidates_per_stage": {
+    "C": 20,
+    "A": 16,
+    "L": 16,
+    "T": 1
+   },
+   "inner_set_m": 101
+  },
+  {
+   "it": 12,
+   "chosen_S": [
+    "L",
+    7
+   ],
+   "chosen_S_hi": [
+    "L",
+    0
+   ],
+   "same_stage": true,
+   "same_candidate": false,
+   "ratio_S": 2.018818247818155e-06,
+   "ratio_S_hi_of_same": 1.5762983543350818e-06,
+   "mc_std_of_chosen_ratio": 2.5307318359117943e-07,
+   "stage_gap_over_mc_std": 7.827775238328513,
+   "stage_ranking_S": [
+    [
+     "L",
+     2.019e-06
+    ],
+    [
+     "A",
+     3.8e-08
+    ],
+    [
+     "C",
+     0.0
+    ],
+    [
+     "T",
+     0.0
+    ]
+   ],
+   "stage_ranking_S_hi": [
+    [
+     "L",
+     1.88e-06
+    ],
+    [
+     "A",
+     2.8e-08
+    ],
+    [
+     "C",
+     0.0
+    ],
+    [
+     "T",
+     0.0
+    ]
+   ],
+   "mean_rel_err_vs_hi_by_stage": {
+    "C": 2.7755575615628914e-05,
+    "A": 0.6048100219825233,
+    "L": 0.2243519869908394,
+    "T": 2.220446049250313e-05
+   },
+   "candidates_per_stage": {
+    "C": 20,
+    "A": 16,
+    "L": 16,
+    "T": 5
+   },
+   "inner_set_m": 105
+  },
+  {
+   "it": 24,
+   "chosen_S": [
+    "L",
+    8
+   ],
+   "chosen_S_hi": [
+    "L",
+    8
+   ],
+   "same_stage": true,
+   "same_candidate": true,
+   "ratio_S": 4.516305640694718e-07,
+   "ratio_S_hi_of_same": 4.79461891583588e-07,
+   "mc_std_of_chosen_ratio": 2.4295108968224044e-08,
+   "stage_gap_over_mc_std": 18.604567717361462,
+   "stage_ranking_S": [
+    [
+     "L",
+     4.52e-07
+    ],
+    [
+     "A",
+     0.0
+    ],
+    [
+     "C",
+     0.0
+    ],
+    [
+     "T",
+     0.0
+    ]
+   ],
+   "stage_ranking_S_hi": [
+    [
+     "L",
+     4.79e-07
+    ],
+    [
+     "A",
+     0.0
+    ],
+    [
+     "C",
+     0.0
+    ],
+    [
+     "T",
+     0.0
+    ]
+   ],
+   "mean_rel_err_vs_hi_by_stage": {
+    "C": 1.1102230246251565e-05,
+    "A": 0.36435359018534813,
+    "L": 0.10430010309816484,
+    "T": 3.3306690738754696e-05
+   },
+   "candidates_per_stage": {
+    "C": 20,
+    "A": 16,
+    "L": 16,
+    "T": 10
+   },
+   "inner_set_m": 110
+  },
+  {
+   "it": 40,
+   "chosen_S": [
+    "L",
+    2
+   ],
+   "chosen_S_hi": [
+    "L",
+    2
+   ],
+   "same_stage": true,
+   "same_candidate": true,
+   "ratio_S": 2.7215896386358907e-07,
+   "ratio_S_hi_of_same": 4.813273049041999e-07,
+   "mc_std_of_chosen_ratio": 1.8383879779697535e-07,
+   "stage_gap_over_mc_std": 1.4088429814800565,
+   "stage_ranking_S": [
+    [
+     "L",
+     2.72e-07
+    ],
+    [
+     "A",
+     1.3e-08
+    ],
+    [
+     "C",
+     0.0
+    ],
+    [
+     "T",
+     0.0
+    ]
+   ],
+   "stage_ranking_S_hi": [
+    [
+     "L",
+     4.81e-07
+    ],
+    [
+     "A",
+     1.41e-07
+    ],
+    [
+     "T",
+     1e-09
+    ],
+    [
+     "C",
+     0.0
+    ]
+   ],
+   "mean_rel_err_vs_hi_by_stage": {
+    "C": 4.440892098500626e-05,
+    "A": 0.941588903276073,
+    "L": 0.5131062157027336,
+    "T": 0.9999999995431692
+   },
+   "candidates_per_stage": {
+    "C": 20,
+    "A": 16,
+    "L": 16,
+    "T": 23
+   },
+   "inner_set_m": 123
+  }
+ ],
+ "lengthscales": {
+  "n_fits": 63,
+  "min": 0.1027,
+  "median": 0.5151,
+  "max": 132.2947,
+  "frac_at_lower_bound_0.025": 0.0,
+  "frac_above_10": 0.04494382068514824,
+  "frac_below_0.1": 0.0
+ }
+}
