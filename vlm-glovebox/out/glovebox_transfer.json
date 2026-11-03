@@ -1,0 +1,521 @@
+{
+ "name": "glovebox_transfer",
+ "fps": 15,
+ "n_frames": 1428,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "1/12",
+   "caption": "The glovebox lives on tray G, in slot F2 of the Shuttle XP 500. In its slot it has power, so the purifier keeps the argon under 1 ppm of O2 and H2O.",
+   "start_frame": 0,
+   "end_frame": 56
+  },
+  {
+   "label": "1/12",
+   "caption": "The glovebox lives on tray G, in slot F2 of the Shuttle XP 500. In its slot it has power, so the purifier keeps the argon under 1 ppm of O2 and H2O.",
+   "start_frame": 57,
+   "end_frame": 83
+  },
+  {
+   "label": "2/12",
+   "caption": "A transfer is requested. The extractor brings tray G to the opening. There is no power in transit, so the box rides sealed, valves shut, a few mbar over ambient.",
+   "start_frame": 84,
+   "end_frame": 106
+  },
+  {
+   "label": "2/12",
+   "caption": "A transfer is requested. The extractor brings tray G to the opening. There is no power in transit, so the box rides sealed, valves shut, a few mbar over ambient.",
+   "start_frame": 107,
+   "end_frame": 138
+  },
+  {
+   "label": "2/12",
+   "caption": "A transfer is requested. The extractor brings tray G to the opening. There is no power in transit, so the box rides sealed, valves shut, a few mbar over ambient.",
+   "start_frame": 139,
+   "end_frame": 161
+  },
+  {
+   "label": "2/12",
+   "caption": "A transfer is requested. The extractor brings tray G to the opening. There is no power in transit, so the box rides sealed, valves shut, a few mbar over ambient.",
+   "start_frame": 162,
+   "end_frame": 170
+  },
+  {
+   "label": "2/12",
+   "caption": "A transfer is requested. The extractor brings tray G to the opening. There is no power in transit, so the box rides sealed, valves shut, a few mbar over ambient.",
+   "start_frame": 171,
+   "end_frame": 200
+  },
+  {
+   "label": "2/12",
+   "caption": "A transfer is requested. The extractor brings tray G to the opening. There is no power in transit, so the box rides sealed, valves shut, a few mbar over ambient.",
+   "start_frame": 201,
+   "end_frame": 209
+  },
+  {
+   "label": "2/12",
+   "caption": "At the opening, power and the gas dock reconnect. The PLC checks O2, H2O, pressure, and that both port covers are on, before it opens anything.",
+   "start_frame": 210,
+   "end_frame": 245
+  },
+  {
+   "label": "3/12",
+   "caption": "The outer gate slides open and the pallet runs out to the side, onto the landing inside the tray's footprint.",
+   "start_frame": 246,
+   "end_frame": 259
+  },
+  {
+   "label": "3/12",
+   "caption": "The outer gate slides open and the pallet runs out to the side, onto the landing inside the tray's footprint.",
+   "start_frame": 260,
+   "end_frame": 289
+  },
+  {
+   "label": "4/12",
+   "caption": "The UR10e brings a capped jar of Al powder (from the multi-doser or the atomizer) and sets it in the pallet's front nest. The landing's light grid tells the PLC when the arm is clear.",
+   "start_frame": 290,
+   "end_frame": 317
+  },
+  {
+   "label": "4/12",
+   "caption": "The UR10e brings a capped jar of Al powder (from the multi-doser or the atomizer) and sets it in the pallet's front nest. The landing's light grid tells the PLC when the arm is clear.",
+   "start_frame": 318,
+   "end_frame": 332
+  },
+  {
+   "label": "4/12",
+   "caption": "The UR10e brings a capped jar of Al powder (from the multi-doser or the atomizer) and sets it in the pallet's front nest. The landing's light grid tells the PLC when the arm is clear.",
+   "start_frame": 333,
+   "end_frame": 340
+  },
+  {
+   "label": "4/12",
+   "caption": "The UR10e brings a capped jar of Al powder (from the multi-doser or the atomizer) and sets it in the pallet's front nest. The landing's light grid tells the PLC when the arm is clear.",
+   "start_frame": 341,
+   "end_frame": 355
+  },
+  {
+   "label": "4/12",
+   "caption": "The UR10e brings a capped jar of Al powder (from the multi-doser or the atomizer) and sets it in the pallet's front nest. The landing's light grid tells the PLC when the arm is clear.",
+   "start_frame": 356,
+   "end_frame": 383
+  },
+  {
+   "label": "4/12",
+   "caption": "The UR10e brings a capped jar of Al powder (from the multi-doser or the atomizer) and sets it in the pallet's front nest. The landing's light grid tells the PLC when the arm is clear.",
+   "start_frame": 384,
+   "end_frame": 398
+  },
+  {
+   "label": "4/12",
+   "caption": "The UR10e brings a capped jar of Al powder (from the multi-doser or the atomizer) and sets it in the pallet's front nest. The landing's light grid tells the PLC when the arm is clear.",
+   "start_frame": 399,
+   "end_frame": 406
+  },
+  {
+   "label": "4/12",
+   "caption": "The UR10e brings a capped jar of Al powder (from the multi-doser or the atomizer) and sets it in the pallet's front nest. The landing's light grid tells the PLC when the arm is clear.",
+   "start_frame": 407,
+   "end_frame": 421
+  },
+  {
+   "label": "4/12",
+   "caption": "The UR10e brings a capped jar of Al powder (from the multi-doser or the atomizer) and sets it in the pallet's front nest. The landing's light grid tells the PLC when the arm is clear.",
+   "start_frame": 422,
+   "end_frame": 448
+  },
+  {
+   "label": "5/12",
+   "caption": "The pallet runs back into the lock and the outer gate shuts on its seal.",
+   "start_frame": 449,
+   "end_frame": 474
+  },
+  {
+   "label": "5/12",
+   "caption": "The pallet runs back into the lock and the outer gate shuts on its seal.",
+   "start_frame": 475,
+   "end_frame": 490
+  },
+  {
+   "label": "6/12",
+   "caption": "Three evacuate and argon-refill cycles, about 2 min each with a 6 m3/h dry pump. Shown sped up. Air never reaches the chamber.",
+   "start_frame": 491,
+   "end_frame": 506
+  },
+  {
+   "label": "6/12",
+   "caption": "Three evacuate and argon-refill cycles, about 2 min each with a 6 m3/h dry pump. Shown sped up. Air never reaches the chamber.",
+   "start_frame": 507,
+   "end_frame": 522
+  },
+  {
+   "label": "6/12",
+   "caption": "Three evacuate and argon-refill cycles, about 2 min each with a 6 m3/h dry pump. Shown sped up. Air never reaches the chamber.",
+   "start_frame": 523,
+   "end_frame": 538
+  },
+  {
+   "label": "6/12",
+   "caption": "Three evacuate and argon-refill cycles, about 2 min each with a 6 m3/h dry pump. Shown sped up. Air never reaches the chamber.",
+   "start_frame": 539,
+   "end_frame": 554
+  },
+  {
+   "label": "6/12",
+   "caption": "Three evacuate and argon-refill cycles, about 2 min each with a 6 m3/h dry pump. Shown sped up. Air never reaches the chamber.",
+   "start_frame": 555,
+   "end_frame": 570
+  },
+  {
+   "label": "6/12",
+   "caption": "Three evacuate and argon-refill cycles, about 2 min each with a 6 m3/h dry pump. Shown sped up. Air never reaches the chamber.",
+   "start_frame": 571,
+   "end_frame": 586
+  },
+  {
+   "label": "6/12",
+   "caption": "Three evacuate and argon-refill cycles, about 2 min each with a 6 m3/h dry pump. Shown sped up. Air never reaches the chamber.",
+   "start_frame": 587,
+   "end_frame": 601
+  },
+  {
+   "label": "7/12",
+   "caption": "The inner gate opens and the pallet runs into the chamber, under the gantry.",
+   "start_frame": 602,
+   "end_frame": 615
+  },
+  {
+   "label": "7/12",
+   "caption": "The inner gate opens and the pallet runs into the chamber, under the gantry.",
+   "start_frame": 616,
+   "end_frame": 643
+  },
+  {
+   "label": "8/12",
+   "caption": "The gantry weighs the jar under the draft ring (the blower pauses while it weighs) ...",
+   "start_frame": 644,
+   "end_frame": 659
+  },
+  {
+   "label": "8/12",
+   "caption": "The gantry weighs the jar under the draft ring (the blower pauses while it weighs) ...",
+   "start_frame": 660,
+   "end_frame": 670
+  },
+  {
+   "label": "8/12",
+   "caption": "The gantry weighs the jar under the draft ring (the blower pauses while it weighs) ...",
+   "start_frame": 671,
+   "end_frame": 676
+  },
+  {
+   "label": "8/12",
+   "caption": "The gantry weighs the jar under the draft ring (the blower pauses while it weighs) ...",
+   "start_frame": 677,
+   "end_frame": 687
+  },
+  {
+   "label": "8/12",
+   "caption": "The gantry weighs the jar under the draft ring (the blower pauses while it weighs) ...",
+   "start_frame": 688,
+   "end_frame": 703
+  },
+  {
+   "label": "8/12",
+   "caption": "The gantry weighs the jar under the draft ring (the blower pauses while it weighs) ...",
+   "start_frame": 704,
+   "end_frame": 714
+  },
+  {
+   "label": "8/12",
+   "caption": "The gantry weighs the jar under the draft ring (the blower pauses while it weighs) ...",
+   "start_frame": 715,
+   "end_frame": 720
+  },
+  {
+   "label": "8/12",
+   "caption": "The gantry weighs the jar under the draft ring (the blower pauses while it weighs) ...",
+   "start_frame": 721,
+   "end_frame": 731
+  },
+  {
+   "label": "8/12",
+   "caption": "The gantry weighs the jar under the draft ring (the blower pauses while it weighs) ...",
+   "start_frame": 732,
+   "end_frame": 754
+  },
+  {
+   "label": "9/12",
+   "caption": "... and puts it away in the sample hotel.",
+   "start_frame": 755,
+   "end_frame": 770
+  },
+  {
+   "label": "9/12",
+   "caption": "... and puts it away in the sample hotel.",
+   "start_frame": 771,
+   "end_frame": 781
+  },
+  {
+   "label": "9/12",
+   "caption": "... and puts it away in the sample hotel.",
+   "start_frame": 782,
+   "end_frame": 787
+  },
+  {
+   "label": "9/12",
+   "caption": "... and puts it away in the sample hotel.",
+   "start_frame": 788,
+   "end_frame": 798
+  },
+  {
+   "label": "9/12",
+   "caption": "... and puts it away in the sample hotel.",
+   "start_frame": 799,
+   "end_frame": 814
+  },
+  {
+   "label": "9/12",
+   "caption": "... and puts it away in the sample hotel.",
+   "start_frame": 815,
+   "end_frame": 825
+  },
+  {
+   "label": "9/12",
+   "caption": "... and puts it away in the sample hotel.",
+   "start_frame": 826,
+   "end_frame": 831
+  },
+  {
+   "label": "9/12",
+   "caption": "... and puts it away in the sample hotel.",
+   "start_frame": 832,
+   "end_frame": 842
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 843,
+   "end_frame": 858
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 859,
+   "end_frame": 869
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 870,
+   "end_frame": 875
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 876,
+   "end_frame": 886
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 887,
+   "end_frame": 902
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 903,
+   "end_frame": 913
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 914,
+   "end_frame": 919
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 920,
+   "end_frame": 930
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 931,
+   "end_frame": 946
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 947,
+   "end_frame": 957
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 958,
+   "end_frame": 963
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 964,
+   "end_frame": 974
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 975,
+   "end_frame": 990
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 991,
+   "end_frame": 1001
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 1002,
+   "end_frame": 1007
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 1008,
+   "end_frame": 1018
+  },
+  {
+   "label": "10/12",
+   "caption": "An XRD air-sensitive holder, filled earlier, gets its dome, so the powder stays under argon all the way to the diffractometer on tray D.",
+   "start_frame": 1019,
+   "end_frame": 1034
+  },
+  {
+   "label": "11/12",
+   "caption": "Out: the pallet goes back to the lock and the inner gate shuts. The lock is already argon, so the outer gate opens without a cycle.",
+   "start_frame": 1035,
+   "end_frame": 1060
+  },
+  {
+   "label": "11/12",
+   "caption": "Out: the pallet goes back to the lock and the inner gate shuts. The lock is already argon, so the outer gate opens without a cycle.",
+   "start_frame": 1061,
+   "end_frame": 1074
+  },
+  {
+   "label": "11/12",
+   "caption": "Out: the pallet goes back to the lock and the inner gate shuts. The lock is already argon, so the outer gate opens without a cycle.",
+   "start_frame": 1075,
+   "end_frame": 1088
+  },
+  {
+   "label": "11/12",
+   "caption": "Out: the pallet goes back to the lock and the inner gate shuts. The lock is already argon, so the outer gate opens without a cycle.",
+   "start_frame": 1089,
+   "end_frame": 1115
+  },
+  {
+   "label": "11/12",
+   "caption": "The arm takes the sealed holder to its cabinet, for the XRD. The pallet goes back in and the lock is cycled.",
+   "start_frame": 1116,
+   "end_frame": 1143
+  },
+  {
+   "label": "11/12",
+   "caption": "The arm takes the sealed holder to its cabinet, for the XRD. The pallet goes back in and the lock is cycled.",
+   "start_frame": 1144,
+   "end_frame": 1158
+  },
+  {
+   "label": "11/12",
+   "caption": "The arm takes the sealed holder to its cabinet, for the XRD. The pallet goes back in and the lock is cycled.",
+   "start_frame": 1159,
+   "end_frame": 1166
+  },
+  {
+   "label": "11/12",
+   "caption": "The arm takes the sealed holder to its cabinet, for the XRD. The pallet goes back in and the lock is cycled.",
+   "start_frame": 1167,
+   "end_frame": 1181
+  },
+  {
+   "label": "11/12",
+   "caption": "The arm takes the sealed holder to its cabinet, for the XRD. The pallet goes back in and the lock is cycled.",
+   "start_frame": 1182,
+   "end_frame": 1209
+  },
+  {
+   "label": "11/12",
+   "caption": "The arm takes the sealed holder to its cabinet, for the XRD. The pallet goes back in and the lock is cycled.",
+   "start_frame": 1210,
+   "end_frame": 1224
+  },
+  {
+   "label": "11/12",
+   "caption": "The arm takes the sealed holder to its cabinet, for the XRD. The pallet goes back in and the lock is cycled.",
+   "start_frame": 1225,
+   "end_frame": 1232
+  },
+  {
+   "label": "11/12",
+   "caption": "The arm takes the sealed holder to its cabinet, for the XRD. The pallet goes back in and the lock is cycled.",
+   "start_frame": 1233,
+   "end_frame": 1247
+  },
+  {
+   "label": "11/12",
+   "caption": "The arm takes the sealed holder to its cabinet, for the XRD. The pallet goes back in and the lock is cycled.",
+   "start_frame": 1248,
+   "end_frame": 1270
+  },
+  {
+   "label": "11/12",
+   "caption": "The arm takes the sealed holder to its cabinet, for the XRD. The pallet goes back in and the lock is cycled.",
+   "start_frame": 1271,
+   "end_frame": 1291
+  },
+  {
+   "label": "12/12",
+   "caption": "Tray G goes home to F2. Back in its slot it has power again, and the purifier restarts.",
+   "start_frame": 1292,
+   "end_frame": 1300
+  },
+  {
+   "label": "12/12",
+   "caption": "Tray G goes home to F2. Back in its slot it has power again, and the purifier restarts.",
+   "start_frame": 1301,
+   "end_frame": 1330
+  },
+  {
+   "label": "12/12",
+   "caption": "Tray G goes home to F2. Back in its slot it has power again, and the purifier restarts.",
+   "start_frame": 1331,
+   "end_frame": 1341
+  },
+  {
+   "label": "12/12",
+   "caption": "Tray G goes home to F2. Back in its slot it has power again, and the purifier restarts.",
+   "start_frame": 1342,
+   "end_frame": 1364
+  },
+  {
+   "label": "12/12",
+   "caption": "Tray G goes home to F2. Back in its slot it has power again, and the purifier restarts.",
+   "start_frame": 1365,
+   "end_frame": 1394
+  },
+  {
+   "label": "12/12",
+   "caption": "Tray G goes home to F2. Back in its slot it has power again, and the purifier restarts.",
+   "start_frame": 1395,
+   "end_frame": 1427
+  }
+ ]
+}

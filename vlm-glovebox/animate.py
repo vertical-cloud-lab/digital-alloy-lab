@@ -783,22 +783,24 @@ def stills(data):
 
     def front(sc):
         bare(sc)
-        sc.cam = [(2600, -4300, 1900), (0, 0, 330), (0, 0, 1)]
+        sc.cam = [(1700, -3300, 1500), (0, 0, 330), (0, 0, 1)]
 
     def cutaway(sc):
         bare(sc, ghost=1.0, pallet=M.X_OUT, door=1.0)
-        sc.cam = [(2900, -3700, 2500), (0, 0, 300), (0, 0, 1)]
+        sc.cam = [(2000, -2800, 1900), (80, 0, 300), (0, 0, 1)]
 
     def back(sc):
         bare(sc, ghost=1.0)
-        sc.cam = [(-2700, 3600, 2300), (0, 0, 300), (0, 0, 1)]
+        sc.cam = [(-1900, 2900, 1900), (0, 0, 300), (0, 0, 1)]
 
     def in_vlm(sc):
         L = Lab(sc, data, at_open=True)
         L.skin_f = 1.0
         L.gb.door_out, L.gb.x_pal = 1.0, M.X_OUT
+        sc.parent["jar"] = "gb_pallet"
+        sc.gmat["jar"] = T((M.NEST[0], 0, NEST_Z))
         L.apply()
-        sc.cam = [(4300, -6200, 3000), (300, -1200, 1300), (0, 0, 1)]
+        sc.cam = [(950, -4400, 2800), (350, -1250, 1250), (0, 0, 1)]
 
     for name, f in (("glovebox_front", front), ("glovebox_cutaway", cutaway), ("glovebox_back", back),
                     ("glovebox_in_vlm", in_vlm)):
