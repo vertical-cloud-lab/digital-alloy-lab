@@ -1,0 +1,11 @@
+{
+  "literature": {
+    "task_id": "069f76e5-4421-4a4a-b40d-a1febd8c01db",
+    "job_name": "job-futurehouse-paperqa3"
+  },
+  "literature_high": {
+    "task_id": "86a6b236-3e5c-4ab5-b7f3-4329019d43d1",
+    "job_name": "job-futurehouse-paperqa3-high"
+  },
+  "submitted_utc": "2026-11-03T21:21:06Z"
+}
