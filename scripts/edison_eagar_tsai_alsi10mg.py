@@ -24,6 +24,7 @@ from __future__ import annotations
 import json
 import os
 import pathlib
+import re
 import sys
 import time
 
@@ -34,6 +35,7 @@ OUT_DIR = REPO_ROOT / "edison-trajectories" / "eagar-tsai-alsi10mg-inputs"
 RAW_DIR = OUT_DIR / "raw"
 TASK_FILE = OUT_DIR / "_task_ids.json"
 TERMINAL = {"success", "fail", "failed", "cancelled", "error"}
+EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 
 ET_CONTEXT = (
     "Context: we are setting up the Eagar-Tsai analytical melt-pool model (a travelling Gaussian "
@@ -174,7 +176,9 @@ def fetch_one(c: EdisonClient, key: str, meta: dict) -> str:
         return status
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     dump = task.model_dump(mode="json")
-    (RAW_DIR / f"{key}-task-verbose.json").write_text(json.dumps(dump, indent=2, default=str) + "\n")
+    # The retrieved paper text carries corresponding-author emails; this repo is public.
+    raw = EMAIL_RE.sub("[email redacted]", json.dumps(dump, indent=2, default=str))
+    (RAW_DIR / f"{key}-task-verbose.json").write_text(raw + "\n")
 
     # Pull the answer out of the environment frame (PaperQA3 layout), with fallbacks.
     frame = dump.get("environment_frame") or {}
