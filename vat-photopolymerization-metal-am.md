@@ -274,6 +274,13 @@ The closest precedents involve no metals:
   dispenser for photoinitiators
   ([thesis](https://repository.gatech.edu/entities/publication/0f1b2235-375f-488f-bd67-4f6884473b7b)).
 
+**Call with Sam Hales, 29 Oct 2026.** Sam Hales (BYU, ceramic vat photopolymerization) is gathering project ideas
+for a metal DLP company that Nathan Crane (BYU) talked with after one of its talks. The company isn't named here,
+and nothing in this note should be read as identifying it. The call covered the company's slurry problems (particles
+about as large as the ~50 µm layers, shallow cure depth, separation, recycled-slurry gunk), what a formulation screen
+would vary and measure, and the OT-2 setup above with a curing light added. The transcript is in
+[`vat-photopolymerization-metal-am-call-2026-10-29.md`](vat-photopolymerization-metal-am-call-2026-10-29.md).
+
 ## Edison vetting (29 Oct 2026)
 
 Five Edison tasks, asked on PR #229. Answers and full trajectories are in
