@@ -155,6 +155,17 @@ shows it).
 | Left | Raspberry Pi Touch Display 2, 5 in, 720 × 1280 (outline 143.5 × 91.5, active 110.4 × 62.1) | The plate-position view, beside the operator's hands at the stack; official, Pi 5 cable in the box |
 | Top | Waveshare 2.8 in DSI, 480 × 640 (active 43 × 58; outline not published as text, 62 × 86 assumed) | A glance at whether it has melted, from a box at the end of an arm |
 
+**None of the three needs touch.** Each only shows the picture, and nothing is controlled from it. The top one
+shouldn't be touched anyway: it sits on the tip of the 470 mm arm, so every press pushes on the camera's aim. They are
+touch panels because that is what is sold at these sizes. The Touch Display 2 only comes with touch, and every
+Waveshare DSI panel found has it. The non-touch panels found cost more or don't say they work with the Pi 5:
+Adafruit's 5 in HDMI one is $59.95, against $36.79–45.99 for the Elecrow, and Spotpear's 5 in DSI one lists only the
+Pi 4B and 3B+. So keep these panels and leave touch off:
+
+- **Left and top:** add `disable_touch` to the overlay line, `dtoverlay=vc4-kms-dsi-ili9881-5inch,disable_touch` and
+  `dtoverlay=vc4-kms-dsi-waveshare-panel,2_8_inch,disable_touch`.
+- **Front:** nothing to switch off. A full-screen viewer with no desktop running ignores touches.
+
 The display shows the camera picture next to the window. The livestream to YouTube keeps running in parallel. This
 is the single-process approach that streamingLambda's prototypes found works best ([streamingLambda#6](https://github.com/vertical-cloud-lab/streamingLambda/issues/6),
 [borysgroup/streamingLambda#10](https://github.com/borysgroup/streamingLambda/pull/10), option A). One picamera2
