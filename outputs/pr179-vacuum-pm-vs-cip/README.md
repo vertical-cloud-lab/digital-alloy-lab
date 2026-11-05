@@ -16,21 +16,23 @@ isostatic pressing of powder sealed in an elastomer bag.
 | [`literature-high.references.md`](literature-high.references.md) | Its reference list, with DOIs |
 | [`literature-high.artifact-00.md`](literature-high.artifact-00.md), [`literature-high.artifact-01.md`](literature-high.artifact-01.md) | Its two tables: the pros-and-cons comparison and the starting recipes |
 | [`literature-high.verbose.json`](literature-high.verbose.json) | The whole trajectory: every search, evidence summary and candidate |
-| [`_task_ids.json`](_task_ids.json) | Task ids: `563cb545-…` (LITERATURE_HIGH, 01:59–02:26 UTC) and `31cfe6f4-…` (LITERATURE) |
+| [`literature.md`](literature.md), [`literature.references.md`](literature.references.md), [`literature.verbose.json`](literature.verbose.json) | The same question as a standard search (LITERATURE), used as a cross-check: answer, references, trajectory |
+| [`_task_ids.json`](_task_ids.json) | Task ids: `563cb545-…` (LITERATURE_HIGH, 01:59–02:26 UTC) and `31cfe6f4-…` (LITERATURE, 01:59–02:33 UTC) |
 
 Before commit, the trajectory JSON had its account fields (`user`, `build_owner`, `permitted_accessors`), cost
 fields, and the raw page text returned by Edison's `read_text` tool removed, since this repo is public. Evidence
-summaries, the agent's messages and tool calls, and source metadata (titles, authors, DOIs) are kept. The same
-question was also sent as a standard LITERATURE task as a cross-check; see `_task_ids.json` for whether it has
-been fetched.
+summaries, the agent's messages and tool calls, and source metadata (titles, authors, DOIs) are kept. Both tasks
+finished with status `success`.
 
 ## Short answer
 
 Edison prefers vacuum uniaxial die pressing (A) over CIP (B), and I agree, but the reasons are narrower than
 Edison's table suggests. Four properties make a green part safe to melt, and both routes can deliver them:
 
-1. **Open pores.** The part should be no more than about 85–88 % dense, so its gas gets out during the heat-up and
-   the 500 °C gas washes, before melting seals the surface.
+1. **Open pores, checked rather than assumed.** Gas has to get out during the heat-up and the 500 °C gas washes,
+   before melting seals the surface. The deep search puts pore closure at 85–90 % dense, but the standard search
+   found no measured threshold for pure Al, and degassing practice keeps preforms near 65–75 %. So aim for the
+   lowest density that survives handling, and test that gas flows through a sacrificial slug.
 2. **No organics or fluids.** That means no lubricant mixed into the powder, no oil or water from a CIP bag, and
    no mould release agent.
 3. **Dry powder, stored dry.**
@@ -107,7 +109,7 @@ search results on Nov 5, not quotes.
 - **"Oxide skins float up as dross" is unlikely here.** Alumina (3.6–4.0 g/cm³) is denser than liquid aluminium
   (about 2.37 g/cm³). Skins that hold no gas will tend to settle toward the bottom-pour nozzle.
 - **"90–95 % metal yield" is optimistic.** It comes from machining-chip briquettes, which carry far less oxide per
-  gram than 15–63 µm powder. Even for chips, Puga et al. (2009) got 81–85 % incorporation under argon at 850 °C. The
+  gram than 15–63 µm powder. Even for chips, Puga et al. (2009) got 81–91 % incorporation under argon at 850 °C. The
   94 % figure is from a 2026 preprint.
 - **Its dust numbers are for finer powder.** MIE "below 1 mJ" and K_St up to 1100 bar·m/s describe fine and
   nano powders. A 40 µm Al powder measured K_St 77 bar·m/s, MIE about 60 mJ and MEC 35 g/m³
@@ -123,6 +125,27 @@ search results on Nov 5, not quotes.
   desiccator for storage, cover the physisorbed water. One sacrificial slug taken through the real heat-up is the
   check.
 
+## Cross-check: the standard search
+
+The standard LITERATURE search on the same question ([`literature.md`](literature.md)) reaches the same
+recommendation: try small, lubricant-free, vacuum-dried, die-pressed slugs first, and don't buy a CIP for this. Send
+parts out for CIP only if die-pressed slugs shed powder or crack, and then only with a completely dry bag process.
+It is more cautious than the deep search, and adds three points:
+
+- **There is no measured pore-closure density for pure Al.** Degassing practice keeps preforms near 75 % dense, and
+  one Al–20Si study pre-pressed to about 65 % to keep the pores connected. Bulk density is not a permeability test.
+- **The water comes from humid storage.** Gas-atomized 99.99 % Al (about 25 µm) held 24 h in humid air released
+  H₂O from about 207 °C (peak 447 °C) and H₂ peaking near 452 °C. The same powder held in dry air or argon gave no
+  detectable H₂. Keep the powder and the pressed parts dry. It also confirms that the 13–25 ppm H figures come
+  from air-atomized alloy powders, not pure gas-atomized Al.
+- **More compaction can make melt-in worse.** In Puga et al. (2009), chip briquettes pressed at 300 bar gave 88–91 %
+  incorporation, and at 500 bar only 75–78 %, because the melt penetrated them less. Those briquettes took 50–70 min
+  to melt into a roughly 15 kg charge, so the times don't carry over to our 2–10 min hold.
+
+It also warns that an argon backfill isn't vacuum extraction. Leave the charge at about 500 °C until the chamber
+pressure and oxygen settle, rather than going straight to melting. A Ti–Al pressed mix showed its first exotherm at
+520–570 °C, below the Ni–Al figure.
+
 ## What I'd do
 
 1. **If you try green parts, start with A.**
@@ -130,7 +153,8 @@ search results on Nov 5, not quotes.
    - Press short slugs, 19 mm across and at most 25 mm tall (about 12–15 g), and stack two or three in the charge.
    - Mix no lubricant into the powder. Use a dry die-wall film only if ejection needs it. A dry hBN film is worth
      trying, since hBN is already on the crucible and nozzle (my suggestion, not tested).
-2. **Measure a pressure-to-density curve from 50 to 200 MPa,** and press at the pressure that gives about 85 %.
+2. **Measure a pressure-to-density curve from 50 to 200 MPa,** and press at the lowest pressure that gives a slug
+   you can handle (probably 75–85 %). Check on a sacrificial slug that gas flows through it.
 3. **Run the bench melt test from the Nov 2 review before the atomizer.**
    - Loose powder against slugs at about 85 % and about 92 %, each in a small crucible under argon at 850 °C, held
      5 min.
