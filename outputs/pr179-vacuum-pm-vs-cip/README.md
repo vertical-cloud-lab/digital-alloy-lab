@@ -143,7 +143,7 @@ It is more cautious than the deep search, and adds three points:
   to melt into a roughly 15 kg charge, so the times don't carry over to our 2–10 min hold.
 
 It also warns that an argon backfill isn't vacuum extraction. Leave the charge at about 500 °C until the chamber
-pressure and oxygen settle, rather than going straight to melting. A Ti–Al pressed mix showed its first exotherm at
+pressure stops rising between washes, rather than going straight to melting. A Ti–Al pressed mix showed its first exotherm at
 520–570 °C, below the Ni–Al figure.
 
 ## What I'd do
