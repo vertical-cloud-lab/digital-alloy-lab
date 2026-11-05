@@ -26,8 +26,8 @@ been fetched.
 
 ## Short answer
 
-Edison prefers vacuum uniaxial die pressing (A) over CIP (B), and I agree, but the reasons are narrower than the
-table suggests. Four properties make a green part safe to melt, and both routes can deliver them:
+Edison prefers vacuum uniaxial die pressing (A) over CIP (B), and I agree, but the reasons are narrower than
+Edison's table suggests. Four properties make a green part safe to melt, and both routes can deliver them:
 
 1. **Open pores.** The part should be no more than about 85–88 % dense, so its gas gets out during the heat-up and
    the 500 °C gas washes, before melting seals the surface.
@@ -74,8 +74,7 @@ search results on Nov 5, not quotes.
 ## What Edison found
 
 - **Gas in the powder.** Air- and nitrogen-atomized Al-alloy powders carried 13–25 ppm H, or 14.7–27.5 mL H₂ per
-  100 g.
-  That is 50–100× a degassed casting, and nearly all of it is water in the oxide skin. Physisorbed water leaves at
+  100 g. That is 50–100× a degassed casting, and nearly all of it is water in the oxide skin. Physisorbed water leaves at
   100–200 °C, hydrated oxide converts at about 350 °C, and H₂ release peaks near 450 °C.
 - **In-place degassing works if the pores are open.** A compact under about 85–90 % density, heated slowly through
   the washes to 500 °C, should lose most of that water before melting closes it in.
