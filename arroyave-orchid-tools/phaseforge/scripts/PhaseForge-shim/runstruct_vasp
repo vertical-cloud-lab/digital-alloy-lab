@@ -1,0 +1,12 @@
+#!/bin/bash
+# Shim for ATAT 3.52 'runstruct_vasp -nr', whose ezvasp awk step fails here (empty POSCAR).
+# Writes POSCAR from str.out with pymatgen, scaled to a Vegard volume from fcc lattice constants (Cu 3.615, Ni 3.524, Al 4.05 A).
+python - <<'PY'
+from pymatgen.io.atat import Mcsqs
+s = Mcsqs.structure_from_str(open("str.out").read())
+a0 = {"Cu": 3.615, "Ni": 3.524, "Al": 4.05}
+c = s.composition.fractional_composition
+a = sum(a0[str(e)] * f for e, f in c.items())
+s.scale_lattice(len(s) * a ** 3 / 4)
+s.to(filename="POSCAR", fmt="poscar")
+PY

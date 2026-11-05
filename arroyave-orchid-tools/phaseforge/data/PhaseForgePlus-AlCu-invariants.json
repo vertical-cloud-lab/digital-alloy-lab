@@ -1,0 +1,271 @@
+{
+ "sgte_start": {
+  "tdb": "PhaseForgePlus-AlCu-start.tdb",
+  "phases": [
+   "AL2CU_C16",
+   "BCC_A2",
+   "FCC_A1",
+   "LIQUID"
+  ],
+  "invariants": [
+   {
+    "phases": [
+     "BCC_A2",
+     "LIQUID",
+     "FCC_A1"
+    ],
+    "T_K": 1309.3,
+    "X(CU)": [
+     0.8074,
+     0.8169,
+     0.8366
+    ]
+   },
+   {
+    "phases": [
+     "BCC_A2",
+     "LIQUID",
+     "FCC_A1"
+    ],
+    "T_K": 868.26,
+    "X(CU)": [
+     0.4923,
+     0.3773,
+     0.4476
+    ]
+   },
+   {
+    "phases": [
+     "AL2CU_C16",
+     "LIQUID",
+     "FCC_A1"
+    ],
+    "T_K": 863.73,
+    "X(CU)": [
+     0.3311,
+     0.3718,
+     0.4421
+    ]
+   },
+   {
+    "phases": [
+     "FCC_A1",
+     "AL2CU_C16",
+     "LIQUID"
+    ],
+    "T_K": 820.61,
+    "X(CU)": [
+     0.0254,
+     0.3176,
+     0.1747
+    ]
+   }
+  ],
+  "map_s": 3.2
+ },
+ "sgte_tuned": {
+  "tdb": "PhaseForgePlus-AlCu-tuned.tdb",
+  "phases": [
+   "AL2CU_C16",
+   "BCC_A2",
+   "FCC_A1",
+   "LIQUID"
+  ],
+  "invariants": [
+   {
+    "phases": [
+     "BCC_A2",
+     "LIQUID",
+     "FCC_A1"
+    ],
+    "T_K": 1329.9,
+    "X(CU)": [
+     0.8087,
+     0.8218,
+     0.8381
+    ]
+   },
+   {
+    "phases": [
+     "BCC_A2",
+     "LIQUID",
+     "FCC_A1"
+    ],
+    "T_K": 885.27,
+    "X(CU)": [
+     0.4853,
+     0.3652,
+     0.4388
+    ]
+   },
+   {
+    "phases": [
+     "AL2CU_C16",
+     "LIQUID",
+     "FCC_A1"
+    ],
+    "T_K": 881.15,
+    "X(CU)": [
+     0.3305,
+     0.3602,
+     0.4339
+    ]
+   },
+   {
+    "phases": [
+     "FCC_A1",
+     "AL2CU_C16",
+     "LIQUID"
+    ],
+    "T_K": 830.86,
+    "X(CU)": [
+     0.0272,
+     0.3166,
+     0.1658
+    ]
+   }
+  ],
+  "map_s": 4.0
+ },
+ "perturbed_start": {
+  "tdb": "PhaseForgePlus-AlCu-perturbed-start.tdb",
+  "phases": [
+   "AL2CU_C16",
+   "BCC_A2",
+   "FCC_A1",
+   "LIQUID"
+  ],
+  "invariants": [
+   {
+    "phases": [
+     "LIQUID",
+     "BCC_A2",
+     "FCC_A1"
+    ],
+    "T_K": 1458.9,
+    "X(CU)": [
+     0.8553,
+     0.8171,
+     0.8467
+    ]
+   },
+   {
+    "phases": [
+     "BCC_A2",
+     "LIQUID",
+     "FCC_A1"
+    ],
+    "T_K": 1012.99,
+    "X(CU)": [
+     0.4326,
+     0.2363,
+     0.3691
+    ]
+   },
+   {
+    "phases": [
+     "AL2CU_C16",
+     "FCC_A1",
+     "FCC_A1#2"
+    ],
+    "T_K": 696.18,
+    "X(CU)": [
+     0.3267,
+     0.0317,
+     0.2464
+    ]
+   }
+  ],
+  "map_s": 5.2
+ },
+ "perturbed_tuned": {
+  "tdb": "PhaseForgePlus-AlCu-perturbed-tuned.tdb",
+  "phases": [
+   "AL2CU_C16",
+   "BCC_A2",
+   "FCC_A1",
+   "LIQUID"
+  ],
+  "invariants": [
+   {
+    "phases": [
+     "BCC_A2",
+     "LIQUID",
+     "FCC_A1"
+    ],
+    "T_K": 1316.12,
+    "X(CU)": [
+     0.8078,
+     0.8185,
+     0.8371
+    ]
+   },
+   {
+    "phases": [
+     "BCC_A2",
+     "LIQUID",
+     "FCC_A1"
+    ],
+    "T_K": 901.74,
+    "X(CU)": [
+     0.4786,
+     0.3527,
+     0.4302
+    ]
+   },
+   {
+    "phases": [
+     "AL2CU_C16",
+     "LIQUID",
+     "FCC_A1"
+    ],
+    "T_K": 838.65,
+    "X(CU)": [
+     0.3231,
+     0.249,
+     0.3198
+    ]
+   },
+   {
+    "phases": [
+     "FCC_A1",
+     "AL2CU_C16",
+     "LIQUID"
+    ],
+    "T_K": 822.57,
+    "X(CU)": [
+     0.249,
+     0.3195,
+     0.2052
+    ]
+   },
+   {
+    "phases": [
+     "FCC_A1",
+     "FCC_A1#2",
+     "LIQUID"
+    ],
+    "T_K": 820.06,
+    "X(CU)": [
+     0.0626,
+     0.1943,
+     0.1896
+    ]
+   },
+   {
+    "phases": [
+     "FCC_A1",
+     "AL2CU_C16",
+     "FCC_A1#2"
+    ],
+    "T_K": 809.02,
+    "X(CU)": [
+     0.0587,
+     0.3192,
+     0.2
+    ]
+   }
+  ],
+  "map_s": 2.4
+ }
+}
