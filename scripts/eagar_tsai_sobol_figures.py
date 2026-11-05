@@ -113,8 +113,9 @@ def fig_reduction(train: pd.DataFrame, peak: PeakFactor, sur: Surrogate, summary
     b.set_ylabel("Θ = S / (T_liq − T0)")
     b.set_title("Every sweep row, placed by its two numbers")
     i = int(len(p_line) * 0.06)
-    b.annotate("melting starts: Θ·G(p) = 1", (p_line[i], 1.0 / G[i]), xytext=(0, -13), textcoords="offset points", color=INK, fontsize=8.5)
-    b.annotate("boiling: Θ·G(p) = 4.3", (p_line[i], theta_boil / G[i]), xytext=(0, 5), textcoords="offset points", color=INK, fontsize=8.5)
+    box = {"boxstyle": "round,pad=0.2", "facecolor": SURFACE, "edgecolor": "none", "alpha": 0.85}
+    b.annotate("melting starts: Θ·G(p) = 1", (p_line[i], 1.0 / G[i]), xytext=(0, -14), textcoords="offset points", color=INK, fontsize=8.5, bbox=box)
+    b.annotate(f"Al boils: Θ·G(p) = {theta_boil:.1f}", (p_line[i], theta_boil / G[i]), xytext=(0, 6), textcoords="offset points", color=INK, fontsize=8.5, bbox=box)
     handles, labels = b.get_legend_handles_labels()
     if cs.allsegs[0]:
         from matplotlib.patches import Patch
@@ -152,7 +153,7 @@ def fig_sobol(summary: dict, path: pathlib.Path) -> None:
     sob = summary["sobol_surrogate"]
     outs = list(sob)
     fig, axes = plt.subplots(1, len(outs), figsize=(12, 3.6), sharey=True, layout="constrained")
-    inputs = list(INPUT_LABEL)
+    inputs = ["absorptivity", "power_w", "velocity_m_s", "beam_diameter_m"]  # A and P together: they act as A*P
     y = np.arange(len(inputs))
     for ax, o in zip(axes, outs, strict=True):
         st = np.array([sob[o][x]["ST"] for x in inputs])

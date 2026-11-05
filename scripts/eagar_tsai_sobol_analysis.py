@@ -37,7 +37,8 @@ import pathlib
 import numpy as np
 import pandas as pd
 from scipy.integrate import quad
-from scipy.interpolate import LinearNDInterpolator, NearestNDInterpolator, PchipInterpolator
+from scipy.interpolate import PchipInterpolator, RBFInterpolator
+from scipy.spatial import Delaunay
 from scipy.optimize import minimize_scalar
 
 import eagar_tsai_sobol_alsi10mg as sweep
@@ -105,10 +106,14 @@ class Surrogate:
 
     Coordinates: x1 = log10(Theta*G(p)) (> 0 means the peak passes the liquidus) and x2 = log10(p).
     Targets: log(Y**2 / (Theta*G - 1)) for Y = W/s, D/zeta, L/s. Each Y grows like sqrt(Theta*G - 1)
-    just above the melting threshold, so these targets stay finite and vary slowly. Linear
-    interpolation on the Delaunay triangulation of the training rows; nearest neighbour outside
-    their convex hull (flagged in ``extrapolated``).
+    just above the melting threshold, so these targets stay finite and vary slowly. A local
+    thin-plate-spline RBF (64 neighbours) with light smoothing averages out eagar-tsai's grid steps
+    (W comes in steps of two grid spacings, D and L in steps of one). Chosen by cross-validation on
+    the 4,096 sweep rows: it beat linear (Delaunay) and Clough-Tocher interpolation, most at the
+    edges of the box. Rows outside the convex hull of the training rows are flagged ``extrapolated``.
     """
+
+    SMOOTHING, NEIGHBORS = 0.03, 64
 
     def __init__(self, train: pd.DataFrame, peak: PeakFactor | None = None):
         self.peak = peak or PeakFactor()
@@ -119,8 +124,8 @@ class Surrogate:
         X = np.column_stack([np.log10(margin[ok]), np.log10(g["p"].to_numpy()[ok])])
         t = np.log(y[ok] ** 2 / (margin[ok, None] - 1.0))
         self.n_train = int(ok.sum())
-        self._lin = LinearNDInterpolator(X, t)
-        self._near = NearestNDInterpolator(X, t)
+        self._rbf = RBFInterpolator(X, t, kernel="thin_plate_spline", smoothing=self.SMOOTHING, neighbors=self.NEIGHBORS)
+        self._hull = Delaunay(X)
 
     @staticmethod
     def _dimensionless(df: pd.DataFrame, g: pd.DataFrame) -> np.ndarray:
@@ -140,10 +145,8 @@ class Surrogate:
         out["peak_temperature"] = T0_K + g["S_K"].to_numpy() * G
         melts = margin > 1.0
         X = np.column_stack([np.log10(margin[melts]), np.log10(g["p"].to_numpy()[melts])])
-        t = self._lin(X)
-        outside = np.isnan(t).any(axis=1)
-        if outside.any():
-            t[outside] = self._near(X[outside])
+        t = self._rbf(X) if len(X) else np.empty((0, 3))
+        outside = self._hull.find_simplex(X) < 0 if len(X) else np.zeros(0, dtype=bool)
         Y = np.zeros((len(rows), 3))
         Y[melts] = np.sqrt(np.exp(t) * (margin[melts, None] - 1.0))
         scale = np.column_stack([g["s_um"], g["zeta_um"], g["s_um"]])
@@ -361,7 +364,7 @@ def cmd_predict(args) -> None:
     rows = pd.read_csv(args.rows)
     out = rows.join(sur.predict(rows))
     out.to_csv(args.pred, index=False)
-    print(f"wrote {args.pred}: {len(out)} rows, {int(out['extrapolated'].sum())} outside the training hull (nearest neighbour)")
+    print(f"wrote {args.pred}: {len(out)} rows, {int(out['extrapolated'].sum())} outside the training rows' hull (extrapolated)")
 
 
 def main() -> None:
