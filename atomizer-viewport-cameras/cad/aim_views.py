@@ -5,7 +5,7 @@ axis) and tilted at the point where the stream lands, in one stack set-up (VIZ3D
 The camera sits where the Onshape model puts the HQ's lens, 15 mm left of the port's axis, its front 11 mm outside the
 glass. The port is drawn as its Ø63 glass only (a dark ring 33-41 mm out from the chamber face); the bore behind the
 glass isn't known. The dashed box is the 1332 x 990 mode's crop (126 fps on the current driver, about 200 fps at a
-750 MHz link). Depth of field isn't drawn: at f/2 and 240 mm only about 5 mm of depth is sharp.
+750 MHz link). Depth of field isn't drawn: at F1.9 and 240 mm only about 3-5 mm of depth is sharp.
 
     for s in training oct6 measured; do VIZ3D_STACK=$s xvfb-run -a -s "-screen 0 1920x1080x24" python aim_views.py; done
     python aim_views.py --sheet          # the six tiles -> ../renders/front_hq_aim.png

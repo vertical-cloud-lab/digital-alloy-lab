@@ -111,6 +111,22 @@ each letter to the Onshape variable it replaces.
     use, so about a quarter of its picture, on that side, will show the edge of the port. That figure rests on the
     weakest number here, how deep the glass sits behind the cover face. A standard Camera Module 3 (±33°) would just
     about fit inside the port.
+- **The HQ only sees where the stream lands if it is tilted** (checked 5 November). The socket holds it along the
+  port's axis, and the axis points at the landing point only in the training set-up. In the measured set-up the
+  stream lands 24° below the axis, 238 mm away; on 6 October it hit the upper sonotrode 5° above it. On the axis
+  the HQ shows the stream in mid-air and the end of the upper sonotrode, not the plate. Tilted, it shows the landing
+  point in all three set-ups ([`renders/front_hq_aim.png`](renders/front_hq_aim.png), from
+  [`cad/aim_views.py`](cad/aim_views.py)). The CAD doesn't tilt it yet. That would take:
+  - **an adjustable tilt,** about +10° to −30°, since the stack's slide is set by hand, and refocusing each time
+    (173–238 mm away; at F1.9 only about 3–5 mm of depth is sharp);
+  - **a clear bore behind the glass.** From where the lens is now, the 24° tilt needs a clear radius of 24–28 mm in
+    the glass, which has 31.5 mm. At 20 mm out from the chamber face it needs 36 mm, and that bore hasn't been
+    measured. With the lens on the axis it would need 27 mm there.
+- **Frame rates.** Raspberry Pi's driver update of 1 October 2025 ([raspberrypi/linux#6798](https://github.com/raspberrypi/linux/pull/6798))
+  runs the HQ at 2028 × 1520 (its whole view) at 46 fps, and at 1332 × 990 (the middle two-thirds, binned; dashed in
+  the render) at 126 fps. With the camera link at 750 MHz (`link-frequency=750000000` on the `imx477` overlay, which
+  the driver's author says is within the Pi 5's spec), these become 89 and 200 fps. None of this has been tested
+  here. The Pi 5 has no H.264 encoder, so video this fast would be recorded in short bursts, not streamed.
 - **Display: 5 in HDMI** (Elecrow, 800 × 480, outline 121 × 95 mm). It faces out along the port axis, so it tilts up
   about 20° towards a standing operator. Both cameras use the Pi 5's two MIPI ports, so this one can't be DSI. It
   takes 5 V from a Pi USB port.
@@ -306,6 +322,8 @@ python units.py                                                           # move
 xvfb-run -a -s "-screen 0 1920x1080x24" python render.py                  # the five stills
 xvfb-run -a -s "-screen 0 1920x1080x24" python assembly.py                # the animation
 PREVIEW=1 xvfb-run -a -s "-screen 0 1920x1080x24" python assembly.py      # the last frame of each step, in /tmp
+for s in training oct6 measured; do VIZ3D_STACK=$s xvfb-run -a -s "-screen 0 1920x1080x24" python aim_views.py; done
+python aim_views.py --sheet                                               # the HQ's view per set-up -> ../renders/front_hq_aim.png
 ```
 
 The stills take about 30 s. The animation took about 4 minutes on a four-core GitHub runner.
