@@ -1,0 +1,182 @@
+[
+ {
+  "doc": "syn-AgCu-06He-v0",
+  "tdb": "AgCu-06He.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "AgCu-06He.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-AgNi-04Din-v0",
+  "tdb": "AgNi-04Din.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "AgNi-04Din.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-AgSn-12Gie-v0",
+  "tdb": "AgSn-12Gie.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "AgSn-12Gie.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-AlBi-06Kim-v0",
+  "tdb": "AlBi-06Kim.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "AlBi-06Kim.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-AlCu-02Mie-v0",
+  "tdb": "AlCu-02Mie.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "AlCu-02Mie.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-AlMg-12Tan-v0",
+  "tdb": "AlMg-12Tan.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "AlMg-12Tan.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-AlNi-14Zhu-v0",
+  "tdb": "AlNi-14Zhu.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "AlNi-14Zhu.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-AlSi-12Tan-v0",
+  "tdb": "AlSi-12Tan.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "AlSi-12Tan.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-AlZn-93Mey-LB-v0",
+  "tdb": "AlZn-93Mey-LB.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "AlZn-93Mey-LB.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-BiSn-08Li-v0",
+  "tdb": "BiSn-08Li.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "BiSn-08Li.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-CrFe-11Xio-v0",
+  "tdb": "CrFe-11Xio.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "CrFe-11Xio.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-CuMg-16Hal-v0",
+  "tdb": "CuMg-16Hal.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "CuMg-16Hal.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-CuNi-87Jan-v0",
+  "tdb": "CuNi-87Jan.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "CuNi-87Jan.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-CuPb-86Hay-LB-v0",
+  "tdb": "CuPb-86Hay-LB.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "CuPb-86Hay-LB.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-CuZn-08Gie-v0",
+  "tdb": "CuZn-08Gie.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "CuZn-08Gie.json",
+  "diagram_present": true,
+  "diagram_sha_match": false
+ },
+ {
+  "doc": "syn-MgSi-12Sch-v0",
+  "tdb": "MgSi-12Sch.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "MgSi-12Sch.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-MgSn-04Fri-v0",
+  "tdb": "MgSn-04Fri.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "MgSn-04Fri.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-NiTi-04Tok-v0",
+  "tdb": "NiTi-04Tok.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "NiTi-04Tok.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-PbSn-17Gie-v0",
+  "tdb": "PbSn-17Gie.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "PbSn-17Gie.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ },
+ {
+  "doc": "syn-PbZn-98Jan-v0",
+  "tdb": "PbZn-98Jan.tdb",
+  "tdb_present": true,
+  "tdb_sha_match": true,
+  "diagram": "PbZn-98Jan.json",
+  "diagram_present": true,
+  "diagram_sha_match": true
+ }
+]

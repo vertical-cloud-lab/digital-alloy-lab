@@ -1,0 +1,15 @@
+51,52c51,52
+< Batch_size=29 # use more than 1 for batch BO
+< N_GP=1000; # if batch BO
+---
+> Batch_size=5 # use more than 1 for batch BO
+> N_GP=10; # if batch BO
+215a216,219
+> _sub = np.arange(0, N_test, 20)  # smoke test: every 20th candidate
+> x_test = x_test[_sub]; p_test = p_test[_sub]; N_test = x_test.shape[0]
+> test_priors = [[hys_prior_tests[_sub]],[ent_prior_tests[_sub]],[TS_prior_tests[_sub]]]
+> print('candidates evaluated:', N_test, flush=True)
+273c277
+<     n_jobs=multiprocessing.cpu_count()
+---
+>     n_jobs=2

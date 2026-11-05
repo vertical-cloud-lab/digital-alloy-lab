@@ -1,0 +1,910 @@
+{
+ "system": "Cu-Ni",
+ "server": "sdk",
+ "note": "trimmed: lists cut to 5 items, strings to 240 chars; payloads identical between the SDK and fallback servers",
+ "responses": {
+  "Cu-Ni/get_invariant_reactions(both)": {
+   "system": "CU-NI",
+   "source": "both",
+   "contexts": {},
+   "fields": "summary",
+   "literature_total": 0,
+   "literature_offset": 0,
+   "literature_truncated": false,
+   "literature": [],
+   "calculated": [
+    {
+     "tdb": "CuNi-07Tur.tdb",
+     "tdb_sha256": "10031ba89321cab1e44115d6fa90ffa375b8daa4c4ee8d4c0bf0b9f027b1c488",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s11106-007-0013-9",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-07Tur.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-07Tur.json",
+     "evidence_class": "model",
+     "invariants": [],
+     "n_invariants_raw": 0
+    },
+    {
+     "tdb": "CuNi-87Jan.tdb",
+     "tdb_sha256": "c378a4dea0f2dadf130df3dbfd46ff643d92c32242bb19a0a743b2d29d1f2d59",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-87Jan.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-87Jan.json",
+     "evidence_class": "model",
+     "invariants": [],
+     "n_invariants_raw": 0
+    },
+    {
+     "tdb": "CuNi-89Sri.tdb",
+     "tdb_sha256": "39b018ea8c7d3c13c313c0275c736b6516c8bfc5c0d2efaf0cf5b4a3963fc3f7",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1179/mst.1989.5.5.427",
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-89Sri.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-89Sri.json",
+     "evidence_class": "model",
+     "invariants": [],
+     "n_invariants_raw": 0
+    },
+    {
+     "tdb": "CuNi-92Mey-LB.tdb",
+     "tdb_sha256": "7e52adda858e302168ae26b5abfe17f4726ccbfaaff0880abcad5b38e3f559e1",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-92Mey-LB.json",
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-92Mey-LB.json",
+     "evidence_class": "model",
+     "invariants": [],
+     "n_invariants_raw": 0
+    }
+   ],
+   "matching_rule": "literature_matches: literature records whose mapped CALPHAD model phases equal the calculated invariant's phase set exactly (unmapped phases never match); dT = literature - calculated.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Cu-Ni/get_phase_diagram": {
+   "system": "CU-NI",
+   "fields": "summary",
+   "n_assessments": 4,
+   "assessments": [
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-07Tur.tdb",
+     "tdb_sha256": "10031ba89321cab1e44115d6fa90ffa375b8daa4c4ee8d4c0bf0b9f027b1c488",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-07Tur.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s11106-007-0013-9",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-07Tur.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-07Tur.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-87Jan.tdb",
+     "tdb_sha256": "c378a4dea0f2dadf130df3dbfd46ff643d92c32242bb19a0a743b2d29d1f2d59",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-87Jan.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-87Jan.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-87Jan.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-89Sri.tdb",
+     "tdb_sha256": "39b018ea8c7d3c13c313c0275c736b6516c8bfc5c0d2efaf0cf5b4a3963fc3f7",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-89Sri.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1179/mst.1989.5.5.427",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-89Sri.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-89Sri.json"
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-92Mey-LB.tdb",
+     "tdb_sha256": "7e52adda858e302168ae26b5abfe17f4726ccbfaaff0880abcad5b38e3f559e1",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-92Mey-LB.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-92Mey-LB.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-92Mey-LB.json"
+    }
+   ],
+   "note": "Each assessment is a separate CALPHAD model; results are never averaged across assessments.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Cu-Ni/get_phase_diagram(x_Ni=0.3,T=1000)": {
+   "system": "CU-NI",
+   "fields": "summary",
+   "n_assessments": 4,
+   "assessments": [
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-07Tur.tdb",
+     "tdb_sha256": "10031ba89321cab1e44115d6fa90ffa375b8daa4c4ee8d4c0bf0b9f027b1c488",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-07Tur.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s11106-007-0013-9",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-07Tur.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-07Tur.json",
+     "phase_at": {
+      "x_requested": 0.3,
+      "T_requested_K": 1000.0,
+      "grid_x": 0.3,
+      "grid_T_K": 1000.0,
+      "x_component": "NI",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-87Jan.tdb",
+     "tdb_sha256": "c378a4dea0f2dadf130df3dbfd46ff643d92c32242bb19a0a743b2d29d1f2d59",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-87Jan.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-87Jan.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-87Jan.json",
+     "phase_at": {
+      "x_requested": 0.3,
+      "T_requested_K": 1000.0,
+      "grid_x": 0.3,
+      "grid_T_K": 1000.0,
+      "x_component": "NI",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-89Sri.tdb",
+     "tdb_sha256": "39b018ea8c7d3c13c313c0275c736b6516c8bfc5c0d2efaf0cf5b4a3963fc3f7",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-89Sri.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1179/mst.1989.5.5.427",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-89Sri.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-89Sri.json",
+     "phase_at": {
+      "x_requested": 0.3,
+      "T_requested_K": 1000.0,
+      "grid_x": 0.3,
+      "grid_T_K": 1000.0,
+      "x_component": "NI",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-92Mey-LB.tdb",
+     "tdb_sha256": "7e52adda858e302168ae26b5abfe17f4726ccbfaaff0880abcad5b38e3f559e1",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-92Mey-LB.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-92Mey-LB.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-92Mey-LB.json",
+     "phase_at": {
+      "x_requested": 0.3,
+      "T_requested_K": 1000.0,
+      "grid_x": 0.3,
+      "grid_T_K": 1000.0,
+      "x_component": "NI",
+      "stable_phases": [
+       "FCC_A1"
+      ],
+      "label": "FCC_A1",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    }
+   ],
+   "note": "Each assessment is a separate CALPHAD model; results are never averaged across assessments.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Cu-Ni/get_phase_diagram(x_Ni=0.5,T=1650)": {
+   "system": "CU-NI",
+   "fields": "summary",
+   "n_assessments": 4,
+   "assessments": [
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-07Tur.tdb",
+     "tdb_sha256": "10031ba89321cab1e44115d6fa90ffa375b8daa4c4ee8d4c0bf0b9f027b1c488",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-07Tur.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1007/s11106-007-0013-9",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-07Tur.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-07Tur.json",
+     "phase_at": {
+      "x_requested": 0.5,
+      "T_requested_K": 1650.0,
+      "grid_x": 0.5,
+      "grid_T_K": 1650.0,
+      "x_component": "NI",
+      "stable_phases": [
+       "LIQUID"
+      ],
+      "label": "LIQUID",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-87Jan.tdb",
+     "tdb_sha256": "c378a4dea0f2dadf130df3dbfd46ff643d92c32242bb19a0a743b2d29d1f2d59",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-87Jan.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-87Jan.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-87Jan.json",
+     "phase_at": {
+      "x_requested": 0.5,
+      "T_requested_K": 1650.0,
+      "grid_x": 0.5,
+      "grid_T_K": 1650.0,
+      "x_component": "NI",
+      "stable_phases": [
+       "LIQUID"
+      ],
+      "label": "LIQUID",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-89Sri.tdb",
+     "tdb_sha256": "39b018ea8c7d3c13c313c0275c736b6516c8bfc5c0d2efaf0cf5b4a3963fc3f7",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-89Sri.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": "10.1179/mst.1989.5.5.427",
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-89Sri.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-89Sri.json",
+     "phase_at": {
+      "x_requested": 0.5,
+      "T_requested_K": 1650.0,
+      "grid_x": 0.5,
+      "grid_T_K": 1650.0,
+      "x_component": "NI",
+      "stable_phases": [
+       "LIQUID"
+      ],
+      "label": "LIQUID",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    },
+    {
+     "evidence_class": "model",
+     "tdb": "CuNi-92Mey-LB.tdb",
+     "tdb_sha256": "7e52adda858e302168ae26b5abfe17f4726ccbfaaff0880abcad5b38e3f559e1",
+     "tdb_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-92Mey-LB.tdb",
+     "assessment_citation": "[citation text omitted in this copy; see the doi field]",
+     "assessment_doi": null,
+     "engine": "pycalphad 0.11.2",
+     "status": "ok",
+     "components": [
+      "CU",
+      "NI"
+     ],
+     "x_component": "NI",
+     "T_range_K": [
+      300,
+      2500
+     ],
+     "phases": [
+      "BCC_A2",
+      "FCC_A1",
+      "HCP_A3",
+      "LIQUID"
+     ],
+     "invariants": [],
+     "data_url": "https://data.orchid-project.org/phase-diagrams/sgte/CuNi-92Mey-LB.json",
+     "viewer_url": "https://orchid-project.org/phase-diagrams/#CU-NI/CuNi-92Mey-LB.json",
+     "phase_at": {
+      "x_requested": 0.5,
+      "T_requested_K": 1650.0,
+      "grid_x": 0.5,
+      "grid_T_K": 1650.0,
+      "x_component": "NI",
+      "stable_phases": [
+       "LIQUID"
+      ],
+      "label": "LIQUID",
+      "note": "nearest node of the stored pycalphad equilibrium grid (stable phase set from pycalphad equilibrium; first/last columns evaluated at x=1e-05 and 1-1e-05); resolution dx=0.01, dT=10.0 K. Calculated (evidence class: model), not measured."
+     }
+    }
+   ],
+   "note": "Each assessment is a separate CALPHAD model; results are never averaged across assessments.",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Cu-Ni/list_tdb_files([Cu,Ni])": {
+   "query": {
+    "elements": [
+     "CU",
+     "NI"
+    ],
+    "exact": false,
+    "tier": null
+   },
+   "fields": "summary",
+   "total": 20,
+   "offset": 0,
+   "truncated": false,
+   "files": [
+    {
+     "name": "CuNi-07Tur.tdb",
+     "elements": "CU-NI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-07Tur.tdb",
+     "sha256": "10031ba89321cab1e44115d6fa90ffa375b8daa4c4ee8d4c0bf0b9f027b1c488"
+    },
+    {
+     "name": "CuNi-87Jan.tdb",
+     "elements": "CU-NI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-87Jan.tdb",
+     "sha256": "c378a4dea0f2dadf130df3dbfd46ff643d92c32242bb19a0a743b2d29d1f2d59"
+    },
+    {
+     "name": "CuNi-89Sri.tdb",
+     "elements": "CU-NI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-89Sri.tdb",
+     "sha256": "39b018ea8c7d3c13c313c0275c736b6516c8bfc5c0d2efaf0cf5b4a3963fc3f7"
+    },
+    {
+     "name": "CuNi-92Mey-LB.tdb",
+     "elements": "CU-NI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-92Mey-LB.tdb",
+     "sha256": "7e52adda858e302168ae26b5abfe17f4726ccbfaaff0880abcad5b38e3f559e1"
+    },
+    {
+     "name": "COST 531 Lead-free Solders",
+     "elements": "Ag-Au-Bi-Cu-In-Ni-Pb-Pd-Sb-Sn-Zn",
+     "category": "Solder (Sn-based)",
+     "tier": "manual",
+     "license": "Terms not explicit — verify before redistribution",
+     "license_status": "uncertain",
+     "source_url": "https://doi.org/10.1007/s11837-007-0084-6",
+     "orchid_download_url": null,
+     "sha256": null
+    },
+    "... 15 more items trimmed (of 20)"
+   ],
+   "tiers": {
+    "bundled": "redistributable; served by ORCHID",
+    "fetched": "public upstream download, not redistributed here",
+    "manual": "restricted / landing page only"
+   },
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Cu-Ni/list_tdb_files([Cu,Ni],exact)": {
+   "query": {
+    "elements": [
+     "CU",
+     "NI"
+    ],
+    "exact": true,
+    "tier": null
+   },
+   "fields": "summary",
+   "total": 4,
+   "offset": 0,
+   "truncated": false,
+   "files": [
+    {
+     "name": "CuNi-07Tur.tdb",
+     "elements": "CU-NI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-07Tur.tdb",
+     "sha256": "10031ba89321cab1e44115d6fa90ffa375b8daa4c4ee8d4c0bf0b9f027b1c488"
+    },
+    {
+     "name": "CuNi-87Jan.tdb",
+     "elements": "CU-NI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-87Jan.tdb",
+     "sha256": "c378a4dea0f2dadf130df3dbfd46ff643d92c32242bb19a0a743b2d29d1f2d59"
+    },
+    {
+     "name": "CuNi-89Sri.tdb",
+     "elements": "CU-NI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-89Sri.tdb",
+     "sha256": "39b018ea8c7d3c13c313c0275c736b6516c8bfc5c0d2efaf0cf5b4a3963fc3f7"
+    },
+    {
+     "name": "CuNi-92Mey-LB.tdb",
+     "elements": "CU-NI",
+     "category": "Binary (SGTE)",
+     "tier": "bundled",
+     "license": "CC BY 4.0",
+     "license_status": "confirmed",
+     "source_url": "https://doi.org/10.1016/j.calphad.2025.102833",
+     "orchid_download_url": "https://orchid-project.org/data/databases/sgte-binary/CuNi-92Mey-LB.tdb",
+     "sha256": "7e52adda858e302168ae26b5abfe17f4726ccbfaaff0880abcad5b38e3f559e1"
+    }
+   ],
+   "tiers": {
+    "bundled": "redistributable; served by ORCHID",
+    "fetched": "public upstream download, not redistributed here",
+    "manual": "restricted / landing page only"
+   },
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Cu-Ni/compare_to_dft": {
+   "system": "CU-NI",
+   "unit": "kJ/mol-atom",
+   "fields": "summary",
+   "compounds": [],
+   "residual_stats_default_subset": {},
+   "dft_hull_vertices": {
+    "mp": [
+     {
+      "formula": "Cu",
+      "x": 0.0,
+      "material_id": "mp-aaaaaabe",
+      "spacegroup": "Fm-3m",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     },
+     {
+      "formula": "Ni",
+      "x": 1.0,
+      "material_id": "mp-aaaaaaax",
+      "spacegroup": "Fm-3m",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     }
+    ],
+    "oqmd": [
+     {
+      "formula": "Cu1",
+      "x": 0.0,
+      "material_id": "oqmd-635950",
+      "spacegroup": "Fm-3m",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     },
+     {
+      "formula": "Cu8 Ni1",
+      "x": 0.1111111111111111,
+      "material_id": "oqmd-1365049",
+      "spacegroup": "I4/mmm",
+      "formation_energy_kJ_per_mol_atom": -0.071,
+      "theoretical": true
+     },
+     {
+      "formula": "Ni",
+      "x": 1.0,
+      "material_id": "oqmd-ref-Ni",
+      "spacegroup": "",
+      "formation_energy_kJ_per_mol_atom": 0.0,
+      "theoretical": false
+     }
+    ]
+   },
+   "dft_sources": {
+    "mp": {
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1063/1.4812323",
+     "doi2": null,
+     "label": "Materials Project",
+     "license": "CC BY 4.0",
+     "reference": {
+      "kind": "dft_elemental_ground_state_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "reference_note": "GGA/GGA+U mixing scheme with MP fitted energy corrections (notably anions and some transition-metal oxides); elemental ground states at 0 K.",
+     "release": "2026.04.13",
+     "snapshot": "open-tdb/hulls/snapshot/snapshot.json",
+     "snapshot_sha256": "b6deba8ecf1b67211b3d89cd33a5f98a1939d4bcd92db561818195e55187492a",
+     "thermo_type": "GGA_GGA+U",
+     "url": "https://next-gen.materialsproject.org/"
+    },
+    "oqmd": {
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s11837-013-0755-4",
+     "doi2": "10.1038/npjcompumats.2015.10",
+     "label": "OQMD",
+     "license": "CC BY 4.0",
+     "reference": {
+      "kind": "dft_fitted_elemental_reference_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "reference_note": "'standard' fit: elemental reference energies fitted to experimental formation enthalpies (fitted elemental reference, 0 K).",
+     "release": "qmdb_v1_8_022026",
+     "snapshot": "open-tdb/hulls/snapshot-oqmd/snapshot.json",
+     "snapshot_sha256": "2a9393262c52ec35600424236c352a4cdb3291c8b25c1c6588f5e62abe8e0d8d",
+     "thermo_type": "standard",
+     "url": "https://oqmd.org/"
+    }
+   },
+   "rules": {
+    "chem_class": {
+     "intermetallic": "intermetallics (metals and metalloids only)",
+     "other_nonmetal": "hydrides, borides, carbides, nitrides, phosphides, chalcogenides",
+     "oxide_halide": "oxides and halides (contains O, F, Cl, Br or I)"
+    },
+    "composition_offset": "dx_measured = max |x_printed - x_formula| for a printed (not formula-derived) overall composition; sigma_comp = |dx| x local hull slope (kJ/mol-atom, the Cu-Zr historical-formula rule); dx > 0.02 is not in the default subset (off_stoichiome... [288 chars]",
+    "default_subset": "evidence class experimental, extraction accepted, not unsigned-in-print, no uncorrected sign loss found by the page-image sign check, not flagged magnitude_suspect by the extraction checks (a flag set before and independently of this DFT co... [687 chars]",
+    "formula": "Parsed from the record's printed phase label(s): Greek and polymorph prefixes stripped, formula groups expanded, sublattice brackets read, tokens outside the record's system dropped; several distinct formulas in one record are refused. Fall... [293 chars]",
+    "layout": "records{rid: literature fields} + points[] (one per record x DFT source, joined by rid) + papers{paper id: citation, DOI}.",
+    "match": "Reduced composition (mole fractions rounded to 4 decimals) matched exactly to non-deprecated DFT entries; the lowest entry of the named space group (see structure), else the lowest formation energy at that composition, is used; npoly = numb... [335 chars]",
+    "method_class": {
+     "calorimetry": "calorimetry (solution, drop, combustion, direct reaction, DSC)",
+     "emf_vapour": "EMF / vapour pressure / Knudsen effusion / equilibrium",
+     "other_unknown": "other or not printed"
+    },
+    "quality_fixes": "data/literature/QUALITY_FIXES.md: the per-formula / per-atom basis of a column is decided on the printed page only (gate R2 table_basis; the earlier rule that converted a value when the converted value agreed with DFT was withdrawn in audit... [479 chars]",
+    "selection": "property HM_FORM; unit kJ/mol-atom; evidence class experimental, model or unspecified. 'kJ/mol (basis unstated)' is excluded (per-atom vs per-formula cannot be settled).",
+    "structure": "dft_structure_match (`smatch`): exact = the record names a structure (Strukturbericht designator or 'X-type' prototype in a printed label, or in a model-phase name whose formula is the compound; A1/A2/A3 ignored) and the lowest entry of tha... [469 chars]",
+    "units": "DFT eV/atom x 96.485 = kJ/mol-atom; ehull = energy above ORCHID's released hull of the same snapshot (hulls/dft-<src>/, kJ/mol-atom; one source of truth for MP and OQMD); ehull_upstream = the snapshot's upstream value (MP energy_above_hull;... [314 chars]",
+    "unsigned": "flags.unsigned_in_print, or a sign-check verdict no_minus_printed matched by paper (PDF hash prefix), page and |printed value|: such values are magnitudes by the paper's convention and are kept out of the default set."
+   },
+   "description": "Literature formation enthalpies (HM_FORM, kJ/mol-atom) against DFT formation energies at the same composition: the lowest entry of the space group the record names (Strukturbericht designator or prototype), else the ground state (lowest-ene... [385 chars]",
+   "viewer_url": "https://orchid-project.org/dft-parity/",
+   "selection_note": "compounds whose composition lies in this system, wherever reported (including papers on higher-order systems: see reported_in_system)",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts an... [247 chars]",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  }
+ }
+}
