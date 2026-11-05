@@ -18,13 +18,14 @@ with s = sqrt(2) * beam_diameter / 2, zeta = sqrt(alpha*s/v), p = alpha/(v*s), T
 S = A*P / (pi*rho*c*sqrt(pi*alpha*v*s**3)). The melt pool is where T > T_liq, i.e. where
 J > 1/Theta with Theta = S/(T_liq - T0). So W/s, L/s, D/zeta and (T_peak - T0)/S depend on
 (Theta, p) alone, for any beam, power, speed, absorptivity and material. A and P enter only as A*P.
-The script checks this against eagar-tsai itself (holdout and similarity) and then uses it as an
-interpolating surrogate: a few thousand eagar-tsai rows give every row of a 2**20 design in seconds.
+The script checks this against eagar-tsai itself (holdout, similarity, materials) and then uses it as an
+interpolating surrogate: 4,096 eagar-tsai rows give every row of a 2**20 design in about a minute.
 
     python scripts/eagar_tsai_sobol_alsi10mg.py --m 12 --out sobol-m12
     python scripts/eagar_tsai_sobol_analysis.py holdout --out sobol-m12
     python scripts/eagar_tsai_sobol_analysis.py similarity --out sobol-m12
     python scripts/eagar_tsai_sobol_analysis.py analyse --out sobol-m12 --figures figs/
+    python scripts/eagar_tsai_sobol_analysis.py materials --out sobol-m12
     python scripts/eagar_tsai_sobol_analysis.py predict --train sobol-m12/melt_pool_results.csv \
         --rows my_params.csv --pred my_predictions.csv
 """
@@ -40,8 +41,8 @@ import numpy as np
 import pandas as pd
 from scipy.integrate import quad
 from scipy.interpolate import PchipInterpolator, RBFInterpolator
-from scipy.spatial import Delaunay
 from scipy.optimize import minimize_scalar
+from scipy.spatial import Delaunay
 
 import eagar_tsai_sobol_alsi10mg as sweep
 
@@ -125,7 +126,7 @@ class Surrogate:
     just above the melting threshold, so these targets stay finite and vary slowly. A local
     thin-plate-spline RBF (64 neighbours) with light smoothing averages out eagar-tsai's grid steps
     (W comes in steps of two grid spacings, D and L in steps of one). Chosen by cross-validation on
-    the 4,096 sweep rows: it beat linear (Delaunay) and Clough-Tocher interpolation, most at the
+    the 4,096 sweep rows: it beat linear (Delaunay) and Clough-Tocher interpolation, mostly at the
     edges of the box. Rows outside the convex hull of the training rows are flagged ``extrapolated``.
     """
 

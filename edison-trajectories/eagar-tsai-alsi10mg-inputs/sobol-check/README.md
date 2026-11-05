@@ -115,9 +115,9 @@ length scales. Checked against eagar-tsai itself (numbers in `summary.json`):
 - **A row melts exactly when Θ·G(p) > 1.** That rule classifies all 4,096 rows correctly. Similarly, the peak
   passes Al's boiling point when Θ·G(p) > (2743 − 298)/(867 − 298) = 4.3.
 - **Similarity.** Multiplying the beam diameter and the power by f and dividing the speed by f leaves Θ and p
-  unchanged. Every length should then scale by f, and the peak temperature should not change. On 16 rows, rerun at a
-  1 µm grid with f = 0.5 and f = 2, W, D and L scaled by f to within one grid step, and the peak changed by less
-  than 0.1% (`similarity-64-rows-1um.csv`). For example, 104 µm, 324 W and 0.59 m/s (A = 0.106) give W/D/L of
+  unchanged. Every length should then scale by f, and the peak temperature should not change. I reran 16 rows at a
+  1 µm grid with f = 0.5 and f = 2. W, D and L came out at f times the originals to within 2.3 µm, which is at most two
+  grid steps, and the peak changed by less than 0.1% (`similarity-64-rows-1um.csv`). For example, 104 µm, 324 W and 0.59 m/s (A = 0.106) give W/D/L of
   138/29/146 µm and a peak of 1242 K. 52 µm, 162 W and 1.18 m/s give 68/14/73 µm and 1242 K. 208 µm, 648 W and
   0.30 m/s give 278/58/293 µm and 1242 K.
 - Trading absorptivity against power (A × 0.8, P ÷ 0.8) gives identical output.
@@ -142,8 +142,8 @@ steps. The regime (no melt, below boiling, above boiling) matches on all 2,048 r
 matches on 99.1%; the rest sit on a class boundary. The peak temperature is within 31 K, with a median of 0.01 K.
 
 Predicting all **2^20 rows** of Xavier's design from the surrogate takes about a minute. Running eagar-tsai on them at
-2 µm would take about 2.5 days on 4 vCPUs at this run's 0.21 s per row. The shares are 25.0% no melt, 48.2% melt below boiling and 26.8% above boiling, matching
-the 4,096 direct rows. 1.2% of the 2^20 rows fall outside the region the 4,096 rows cover in (Θ·G, p), and their output
+2 µm would take about 2.5 days on 4 vCPUs at this run's 0.21 s per row. The shares are 25.0% no melt, 48.2% melt below
+boiling and 26.8% above boiling, matching the 4,096 direct rows. 1.2% of the 2^20 rows fall outside the region the 4,096 rows cover in (Θ·G, p), and their output
 column `extrapolated` is set. To get predictions for any parameter file:
 
 ```bash
@@ -190,13 +190,13 @@ layer and 190 µm hatch assumed in [`../README.md`](../README.md):
 | Melt, peak above boiling | 102 | 842 | 5 | 148 |
 
 - Only 697 rows (17.0%) are both defect-free and below boiling. Another 148 rows come out "defect-free" with the
-  surface boiling, so the model does not apply to them. The surrogate gives the same 17.0% over all 2^20 rows.
+  surface boiling, so the model does not apply to them. Over all 2^20 rows the surrogate also gives about 17%.
 - **eagar-tsai's W/D never drops below 2.0** in any row. A moving surface heat source in a conduction model gives
   a cross-section no deeper than a semicircle, which is the point-source limit. So the KH1 test (W/D ≤ 2.5)
   fires when the pool is much wider than the beam, not when a keyhole forms. In this box that region almost coincides
   with boiling (842 of the 855 "keyhole" rows boil; aqua region in the first figure). To call keyholes, calibrate the
   threshold or the boiling line against our single-track cross-sections.
-- With a 190 µm hatch, the LOF2 criterion needs W of roughly 190 µm or more. That is why the defect-free rows mostly
+- With a 190 µm hatch, the LOF2 criterion needs W above 190 µm, and more for shallow pools. That is why the defect-free rows mostly
   have wide beams (mean `beam_diameter` 180 µm) and high absorptivity (mean 0.49). Set the layer and hatch to our
   machine's values before reading anything into these shares.
 
