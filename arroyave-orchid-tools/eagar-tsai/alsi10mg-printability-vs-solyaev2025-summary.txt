@@ -1,0 +1,11 @@
+grid 21 x 20, 2.0 um, 4 workers: 136 s
+eagar-tsai default keyhole (W/D <= 2.5): flags 157 of 420 points; 79 of 80 measured-keyhole points, 78 outside it, 1 missed
+eagar-tsai D/W > 0.75 (study's rule): flags 0 of 420 points; 0 of 80 measured-keyhole points, 0 outside it, 80 missed
+lack of fusion scored only below 1.13 m/s (231 points):
+  eagar-tsai default LOF (LOF1 or LOF2): flags 108 points; 16 of 16 measured-LOF points, 92 outside it, 0 missed
+  eagar-tsai depth <= 60 um (LOF1 only): flags 108 points; 16 of 16 measured-LOF points, 92 outside it, 0 missed
+largest eagar-tsai D/W on the grid: 0.48
+eagar-tsai default classes: {'lack_of_fusion': 254, 'keyhole': 157, 'defect_free': 9}
+measured classes: {'not_scored_pe_gt_2': 189, 'stable': 135, 'keyhole': 80, 'lack_of_fusion': 16}
+on the measured LOF line (E_l = 88 J/m +/-15%, v <= 1 m/s, 8 points): eagar-tsai depth 0-18 um, width 0-80 um (layer h = 60 um)
+P = 328 W, v = 0.335 m/s (the study's keyhole cross-sections): eagar-tsai W = 236 um, D = 108 um, D/W = 0.46, peak T = 4164 K
