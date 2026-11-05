@@ -66,9 +66,16 @@ or example run.
      useful part for us.
 4. **PhaseForge / PhaseForgePlus**, in [`phaseforge/`](phaseforge/).
    - **PhaseForge:** `sqscal -e Cu,Ni -l FCC_A1 -lv 1 -mlip Grace` exits 0 but writes an empty TDB, because it never
-     checks for errors. Done step by step, GRACE-2L-OMAT gives an FCC L0 of +8.72 kJ/mol (SGTE: 6877 + 4.6T J/mol)
-     and a miscibility-gap top of 520 K (SGTE: 600 K). With the SGTE liquid, solidus and liquidus come out
-     120–148 K too high.
+     checks for errors.
+     - Running its steps by hand (with a shim for ATAT's broken `runstruct_vasp -nr`) gives a real TDB:
+       L0(FCC, Cu–Ni) = +8.72 kJ/mol with GRACE-2L-OMAT in about 30 s. The same workaround did nothing in a fresh
+       Al–Cu directory, and why is unexplained.
+     - Against SGTE:
+       - GRACE's Cu–Ni mixing enthalpy is 27 % high (+2.18 vs +1.72 kJ/mol at x = 0.5).
+       - The miscibility-gap top is 520 K vs 600 K.
+       - With the SGTE liquid, solidus and liquidus come out up to 148 K too high.
+       - The Al–Cu FCC L0 is −45.3 vs −53.5 kJ/mol.
+     - The liquid (MLIP molecular dynamics) wasn't run; that is the part that costs CPU-hours.
    - **PhaseForgePlus:** installs only through `uv sync --frozen`; the README's `pip install` fails with PyPI ESPEI.
      All 18 tests pass, but every optimizer test is disabled. The MLIP regularizer is silently empty.
    - **MaterialsFramework:** 379 tests pass. GRACE-2L-OMAT gives a = 4.038 Å and B = 78.5 GPa for Al (experiment
@@ -109,7 +116,7 @@ Outcome codes:
 | [orchid-bench](https://github.com/orchid-calphad/orchid-bench) | benchmark for extracting thermodynamic data from documents | PARTIAL | scorer, oracle and results reproduce exactly. The OCR route needs Tesseract; the AI/raster/Camelot routes need a private pipeline. No dependency file | [orchid](orchid/README.md) |
 | [orchid-project.org](https://github.com/orchid-calphad/orchid-project.org) | website, build tools, open TDB bundle | PASS (tests) / PARTIAL (builds) | 46/46 test files pass with sibling checkouts. Several generated files are stale, and 5 builders need unpublished inputs | [orchid](orchid/README.md) |
 | [eagar-tsai](https://github.com/ArroyaveLab/eagar-tsai) | Eagar–Tsai melt-pool model and printability maps | PASS | 101/102 tests (the 3D plot test needs OpenGL). Against measured AlSi10Mg tracks, its default criteria leave 9 of 420 points defect-free | [eagar-tsai](eagar-tsai/README.md) |
-| [PhaseForge](https://github.com/ArroyaveLab/PhaseForge) | MLIP → SQS → CALPHAD TDB (with ATAT) | PARTIAL | `sqscal` writes an empty TDB but exits 0. Step-by-step Cu–Ni with GRACE works: L0 +8.72 kJ/mol, gap top 520 K vs SGTE 600 K. `make install` needs the LAMMPS submodule | [phaseforge](phaseforge/README.md) |
+| [PhaseForge](https://github.com/ArroyaveLab/PhaseForge) | MLIP → SQS → CALPHAD TDB (with ATAT) | PARTIAL | `sqscal` writes an empty TDB but exits 0. Its steps run by hand give a Cu–Ni TDB with GRACE: L0 +8.72 kJ/mol (ΔH 27 % above SGTE), gap top 520 K vs SGTE 600 K. Not reproducible in a fresh Al–Cu directory. `make install` needs the LAMMPS submodule | [phaseforge](phaseforge/README.md) |
 | [PhaseForgePlus](https://github.com/ArroyaveLab/PhaseForgePlus) | gradient tuning of CALPHAD models against ZPF data | PARTIAL | `uv sync --frozen` works; README `pip install` fails (PyPI ESPEI). 18/18 tests, optimizer tests disabled. Pt–W −logL 6628 → 2005 in 560 s. MLIP regularizer silently empty | [phaseforge](phaseforge/README.md) |
 | [MaterialsFramework](https://github.com/ArroyaveLab/MaterialsFramework) | MLIP framework (GRACE, MACE, CHGNet, ORB, …) | PASS | 379 passed, 71 skipped. GRACE-2L-OMAT Al 4.038 Å / 78.5 GPa, Cu 3.611 Å / 144.5 GPa | [phaseforge](phaseforge/README.md) |
 | [BLADE](https://github.com/ArroyaveLab/BLADE) | SQS + ML relaxation + TDB pipeline (borides) | PARTIAL | dependencies undeclared. ex01 passes; ex02/ex03 fail on stale kwargs, and a shrunk ex02 passes. The TDB stage needs a MaterialsFramework fork and hard-codes CUDA | [phaseforge](phaseforge/README.md) |

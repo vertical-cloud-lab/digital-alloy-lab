@@ -42,7 +42,10 @@ cmake .. -DCMAKE_INSTALL_PREFIX=/tmp/arroyave/work/PhaseForge/install && make -j
 sqscal -e Cu,Ni -l FCC_A1 -lv 1 -mlip Grace -model GRACE-2L-OMAT
 ```
 
-**Outcome: PARTIAL.** The build works. `sqscal` runs to the end and exits 0, but every MLIP energy is missing, so the TDB it writes has no Gibbs-energy parameters. The equivalent step-by-step calculation with the same SQS, MLIP and fit model does work. It is shown below and compared with SGTE.
+**Outcome: PARTIAL.** The build works.
+- **Single command fails:** `sqscal` exits 0 but silently produces no MLIP energies, and the TDB it writes has no Gibbs-energy parameters.
+- **Step-by-step pipeline works:** I ran sqscal's own steps one by one with the same tools. The steps were `sqs2tdb -cp`, then `foreachfile str.out pwd \; runstruct_MLIP -mlip=Grace -model=GRACE-2L-OMAT`, then `sqs2tdb -fit`, then `sqs2tdb -tdb -oc < /dev/null`. `runstruct_vasp` was replaced by a POSCAR shim.
+- **Result:** a real PhaseForge/ATAT TDB with **`L(FCC_A1,CU,NI;0) = +8722.3 J/mol`** (`data/PhaseForge-CuNi-sqscal-FCC_A1-lv1-GRACE.tdb`). It agrees within 0.3 J/mol with my independent Python check below.
 
 **Build.** `make` compiles `ternary_search` (C++14, < 2 s). `make install` then fails:
 `CMake Error at cmake_install.cmake:50 (file): file INSTALL cannot find ".../third_party/lammps/src/ML-GNNP": No such file or directory.`
@@ -54,10 +57,14 @@ The `install()` rule needs the `third_party/lammps` git submodule, a LAMMPS fork
   - `sqs2tdb -fit` then reported `Found no data for energy` … `Fit completed`.
   - `sqs2tdb -tdb -oc` printed `Phases found in SGTE database:` and then **blocked**, apparently reading stdin. With `< /dev/null` it finishes in 0.1 s.
 - **Cause** (`logs/PhaseForge-runstruct_MLIP-trace.log`, `csh -fx`): ATAT 3.52's `runstruct_vasp -nr` writes an empty POSCAR (ATAT item 3 above). `MLIPrelax.py` then fails with `ValueError: Empty POSCAR`, and `extract_MLIP` with `sed: can't read CONTCAR` and `numbers: Subscript out of range`. `runstruct_MLIP` only tests `-e POSCAR`, which is true for an empty file, and `sqscal` never checks exit codes.
-- **Re-runs** (`-rerun.log`, `-shim.log`): `sqscal` exits 0 in 0.14 s and writes `CU_NI.tdb` containing only ELEMENT/PHASE/CONSTITUENT lines, i.e. a silent failure. I replaced `runstruct_vasp` with a POSCAR-writing shim (`scripts/PhaseForge-shim/runstruct_vasp`), but `runstruct_MLIP` under `foreachfile` still returned without relaxing. I ran out of time to trace this.
+- **Re-runs** (`-rerun.log`, `-shim.log`): `sqscal` exits 0 in 0.14 s and writes `CU_NI.tdb` containing only ELEMENT/PHASE/CONSTITUENT lines, i.e. a silent failure. That holds even with `runstruct_vasp` replaced by a POSCAR-writing shim (`scripts/PhaseForge-shim/runstruct_vasp`); inside `sqscal`, `runstruct_MLIP` still returned without relaxing.
+- **Workaround that worked** (`logs/PhaseForge-foreachfile-test.log`, `logs/PhaseForge-sqs2tdb-fit-after-foreachfile.log`): the identical `foreachfile … runstruct_MLIP …` line, run directly with `csh -fc` in the same `FCC_A1/` directory with the shim on PATH, relaxed all three structures in about 30 s and wrote `energy` files. E(Cu16Ni16 cell) = −147.25782 eV.
+  - `sqs2tdb -fit` and `sqs2tdb -tdb -oc < /dev/null` then gave `L(FCC_A1,CU,NI;0) = +8722.3`. They use ATAT's own SGTE unaries (`FCC_A1_CU`, `FCC_A1_NI`) and the pure-Ni magnetic terms; there are no Cu–Ni magnetic interaction terms.
+  - Why the same line does nothing inside `sqscal` is still unexplained; I ran out of time.
+  - `runstruct_MLIP` also prints `then: then/endif not found.` at its `-checkrelax` block when no cutoff is given (`if ( $?checkrelaxcutoff && "$checkrelaxcutoff" != "" )` with an empty variable). It does no harm because it comes after `extract_MLIP`.
 - **LIQUID** (`MLIPliquid` + `ternary_search`, MD) was not attempted. At ~2 s per force call on 1 thread for ~100–250 atoms, a 2000-step NVT run per composition and volume costs CPU-hours.
 
-**Step-by-step equivalent** (`scripts/PhaseForge-mlip_stepwise.py`, `logs/PhaseForge-mlip_stepwise.log`)
+**Independent Python check of the same step** (`scripts/PhaseForge-mlip_stepwise.py`, `logs/PhaseForge-mlip_stepwise.log`)
 - **Method:** the same three ATAT SQS (`sqs_lev=0_a_Cu=1`, `sqs_lev=0_a_Ni=1`, `sqs_lev=1_a_Cu=0.5,a_Ni=0.5`, 32 atoms) were read with `pymatgen.io.atat` and scaled to a Vegard volume. They were relaxed with `GraceCalculator(model="GRACE-2L-OMAT", fmax=0.005).relax()` with the full cell free (MLIPrelax uses fmax 0.001).
 - **Timings:**
   - Model load plus the first EOS: 6.4 s.
@@ -71,7 +78,15 @@ The `install()` rule needs the `third_party/lammps` git submodule, a LAMMPS fork
   ΔH_mix(x=0.5) = **+22.6 meV/atom = +2.18 kJ/mol**, so the level-1 fit, which has only `terms.in` 1,0 and 2,0, gives **L0(FCC_A1) = +8.72 kJ/mol**. It has no temperature dependence because there is no `-vib` term.
 - **SGTE comparison:** the open SGTE CuNi-07Tur assessment (Turchanin et al. 2007, via Hallstedt's SGTE collection, doi:10.1016/j.calphad.2025.102833, CC BY 4.0) has L0 = 6877 + 4.6T J/mol (+8.26 kJ/mol at 300 K, +13.8 kJ/mol at 1500 K) and L1 = −2450 + 1.87T.
 
-  The MLIP value therefore matches SGTE near room temperature. It lacks the large positive excess-entropy term that SGTE needs at high temperature.
+  - **Enthalpy:** SGTE's enthalpy part, +6.88 kJ/mol, gives ΔH_mix(0.5) = +1.72 kJ/mol. GRACE's mixing enthalpy is **27 % larger**.
+  - **Entropy:** the level-1 fit has no excess entropy. Its L0 equals SGTE's total L0 only at about 400 K and falls about 5 kJ/mol short at 1500 K.
+
+**Al–Cu, FCC_A1, level 1** (same Python check; `data/PhaseForge-AlCu-GRACE-energies.json`, `logs/PhaseForge-mlip_stepwise-AlCu.log`)
+- GRACE gives ΔH_mix(Al16Cu16) = **−11.32 kJ/mol**, so L0 = **−45.3 kJ/mol**.
+- SGTE AlCu-04Wit has L0 = −53520 + 2T, so ΔH_mix(0.5) = −13.4 kJ/mol. GRACE is 15 % less negative.
+- The 32-atom relaxation took 18 s.
+- The hand-run `foreachfile … runstruct_MLIP` step did *not* relax anything in this fresh Al–Cu directory (`logs/PhaseForge-manual-AlCu-FCC-lv1.log`, `scripts/PhaseForge-manual_sqscal_fcc.sh`). It had worked in the Cu–Ni directory that `sqscal` had already processed once, so the silent failure depends on directory state and remains unexplained.
+- No Al–Cu phase diagram was computed: Al–Cu needs the intermetallics, and LIQUID was not run.
 
 **Cu–Ni phase diagram vs SGTE** (`scripts/PhaseForge-CuNi_pycalphad.py`, `data/PhaseForge-CuNi-GRACE-FCC-L0-on-SGTE07Tur.tdb`, `data/PhaseForge-CuNi-pycalphad-comparison.json`, `figures/PhaseForge-CuNi-SGTE-vs-GRACE.png`)
 
@@ -89,7 +104,7 @@ The `install()` rule needs the `third_party/lammps` git submodule, a LAMMPS fork
 
   The cause is the missing +4.6·T excess entropy in FCC, combined with a liquid that did not come from the MLIP. A consistent PhaseForge description needs the MLIP liquid, or at least a vibrational term.
 - **FCC miscibility gap top:** **520 K** with GRACE, against **600 K** for SGTE (10 K grid). The regular-solution estimate L0/2R = 525 K agrees. The gap is 80 K too low.
-- **Not done (time):** Al–Cu and Al–Si FCC_A1 + LIQUID.
+- **Not done (time):** LIQUID for any system, Al–Si, and the Al–Cu phase diagram. Only the Al–Cu FCC L0 was done (above).
 
 ## MaterialsFramework (ArroyaveLab/MaterialsFramework @ 0ec8168, v1.0.0)
 
@@ -458,7 +473,7 @@ Scripts: `scripts/PAIPAI-shim/sitecustomize.py`, `scripts/PAIPAI-make_small_stru
 | repo | install | tests/examples run | outcome | notes |
 |---|---|---|---|---|
 | ATAT 3.52 (dependency) | Official tarball. `make -j2` + `make install`, 34 s. Needs tcsh. | Binaries used by PhaseForge, BLADE, sqs-benchmark | PASS (build) | CC BY-ND 4.0. `runstruct_vasp -nr` writes an empty POSCAR (awk syntax error in tmp.awk:27); the first call only creates `~/.ezvasp.rc`. `sqs2tdb -cp` gives a dash `"&" unexpected` error. 1 mcsqs process gives no `bestsqs.out`. |
-| PhaseForge | CMake builds `ternary_search`. `make install` FAILS without the LAMMPS submodule (`ML-GNNP` missing). Needs csh. | `sqscal -e Cu,Ni -l FCC_A1 -lv 1 -mlip Grace` exits 0 with no energies and an empty TDB. Step-by-step equivalent with the same SQS and GRACE-2L-OMAT works (23 s). | PARTIAL | ΔH_mix(Cu0.5Ni0.5) = +2.18 kJ/mol, so L0(FCC) = +8.72 kJ/mol (SGTE: 6877 + 4.6T). FCC gap top 520 K vs 600 K (SGTE). With SGTE liquid: solidus/liquidus +120–148 K and a spurious ~1756 K maximum near x(Ni) 0.8. LIQUID MD, -vib, Al–Cu and Al–Si not run. sqscal never checks errors. |
+| PhaseForge | CMake builds `ternary_search`. `make install` FAILS without the LAMMPS submodule (`ML-GNNP` missing). Needs csh. | `sqscal -e Cu,Ni -l FCC_A1 -lv 1 -mlip Grace` exits 0 with no energies and an empty TDB. Its steps run by hand (`foreachfile … runstruct_MLIP`, plus a POSCAR shim for ATAT's broken `runstruct_vasp`, then `sqs2tdb -fit/-tdb`) give a TDB with L0(FCC) = +8722.3 J/mol in ~30 s. A Python cross-check gives the same value. | PARTIAL | ΔH_mix(Cu0.5Ni0.5) = +2.18 kJ/mol, so L0(FCC) = +8.72 kJ/mol (SGTE: 6877 + 4.6T, i.e. GRACE ΔH is 27 % high). Al–Cu FCC L0 = −45.3 kJ/mol (SGTE −53.5 kJ/mol). FCC gap top 520 K vs 600 K (SGTE). With SGTE liquid: solidus/liquidus +120–148 K and a spurious ~1756 K maximum near x(Ni) 0.8. LIQUID MD, -vib, Al–Cu and Al–Si not run. sqscal never checks errors. |
 | PhaseForgePlus | PASS via `uv sync --frozen` (py3.11, ESPEI cjkunselman18@4888897, 6 s). FAIL via README `pip install` (PyPI espei 0.9.1 → TypeError in objective). | pytest 18/18 pass (6 FIXME tests, including all optimizer tests, disabled). Pt–W example capped at 560 s. Cu–Ni and Al–Cu ORCHID ZPF tunes. | PARTIAL | Pt–W −logL 6628 → 2005, still falling. SGTE Cu–Ni/Al–Cu already fit ORCHID, so the tune is a no-op. MLIP regularizer still silently empty (3 bugs). ESPEI branch mutates the caller's Database. |
 | MaterialsFramework | venv py3.12 (`>=3.12,<3.13`), `[grace]` CPU; CUDA wheels removed by hand | pytest 379 passed / 71 skipped / 0 failed (10.5 s). GRACE-2L-OMAT EOS of fcc Al/Cu/Ni. | PASS | Al a0 4.038 Å, B 78.5 GPa (exp 4.05 / 76). Cu 3.611 Å, 144.5 GPa (exp 3.615 / 140). GRACE weights are academic-only. Elastic constants not run. |
 | BLADE | py3.12 `pip install -e .` OK, but dependencies are undeclared (8 added by hand) | ex01 PASS. ex02/ex03 FAIL as shipped (stale kwargs). Shrunk ex02 (Cr–Hf diboride, 24 atoms, ATAT mcsqs) PASS. TDB stage FAIL. | PARTIAL | mcsqs cutoffs are normalised shell ratios used as absolute lengths. The MLIP/TDB stage needs the ichasekatz MaterialsFramework fork and hard-codes CUDA. |

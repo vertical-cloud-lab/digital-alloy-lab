@@ -34,12 +34,12 @@ for d in sorted(glob.glob(os.path.join(root, "sqs_lev=*"))):
     st = Mcsqs.structure_from_str(open(os.path.join(d, "str.out")).read())
     # ATAT str.out has unit-less lattice; scale to a Vegard-like volume (Cu 3.615, Ni 3.524 A fcc)
     comp = st.composition.fractional_composition
-    a = 3.615 * comp["Cu"] + 3.524 * comp["Ni"]
+    a = sum({"Cu": 3.615, "Ni": 3.524, "Al": 4.05}[str(e)] * f for e, f in comp.items())
     st.scale_lattice(len(st) * a ** 3 / 4)
     r = calc.relax(st)
     n = len(st)
     res[os.path.basename(d)] = {"n_atoms": n, "E_eV_per_atom": float(r["energy"]) / n,
-                                "x_Ni": comp["Ni"], "V_A3_per_atom": r["final_structure"].volume / n}
+                                "composition": {str(e): f for e, f in comp.items()}, "V_A3_per_atom": r["final_structure"].volume / n}
     res["timings_s"][os.path.basename(d)] = time.time() - t
     print(os.path.basename(d), res[os.path.basename(d)], f"{time.time()-t:.1f}s", flush=True)
     json.dump(res, open(out, "w"), indent=1)
