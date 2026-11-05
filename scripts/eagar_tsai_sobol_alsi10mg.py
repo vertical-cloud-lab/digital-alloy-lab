@@ -108,6 +108,32 @@ def warn_if_slow_integrand() -> None:
         )
 
 
+def run_kwargs(n_rows: int, workers: int, chunk_size: int = 32) -> dict:
+    """compute_melt_pool arguments: no fields kept, and at least 4 tasks per worker."""
+    chunk = max(1, min(chunk_size, n_rows // (4 * workers)))
+    return dict(chunk_size=chunk, workers=workers, return_field=False, show_progress=False)
+
+
+def retry_failed(results: pd.DataFrame, input_columns: list[str], resolution_um: float, run: dict) -> pd.DataFrame:
+    """Pass 2: rerun rows whose domain expansion did not converge, on a larger start domain."""
+    failed = results["melt_width_um"].isna()
+    if failed.any():
+        print(f"pass 2: retrying {failed.sum()} row(s) on a larger domain", flush=True)
+        retry_domain = SimulationDomain(spatial_resolution_um=resolution_um, **RETRY_DOMAIN_UM)
+        retry = compute_melt_pool(results.loc[failed, input_columns], domain=retry_domain, **run)
+        results.loc[failed, retry.columns] = retry.set_index(results.index[failed])
+    return results
+
+
+def run_rows(rows: pd.DataFrame, resolution_um: float = 2.0, workers: int | None = None) -> pd.DataFrame:
+    """Run eagar-tsai on a modest number of rows (one batch), with the pass-2 retry."""
+    check_units(rows)
+    workers = workers or os.cpu_count() or 1
+    run = run_kwargs(len(rows), workers)
+    res = compute_melt_pool(rows, domain=SimulationDomain(spatial_resolution_um=resolution_um), **run)
+    return retry_failed(res, list(rows.columns), resolution_um, run)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0])
     ap.add_argument("--m", type=int, default=12, help="run 2**m Sobol points (default 12 = 4,096)")
@@ -128,8 +154,7 @@ def main() -> None:
 
     domain = SimulationDomain(spatial_resolution_um=args.resolution_um)
     # Keep at least 4 tasks per worker per batch, so a few slow rows don't idle the pool.
-    chunk = max(1, min(args.chunk_size, min(args.batch, len(design)) // (4 * args.workers)))
-    run = dict(chunk_size=chunk, workers=args.workers, return_field=False, show_progress=False)
+    run = run_kwargs(min(args.batch, len(design)), args.workers, args.chunk_size)
     starts = range(0, len(design), args.batch)
     print(f"{len(design)} rows in {len(starts)} batch(es), {args.resolution_um} um grid, {args.workers} workers", flush=True)
 
@@ -153,12 +178,7 @@ def main() -> None:
     results = results.sort_values("sample_id").reset_index(drop=True)
 
     # Pass 2: rows whose domain expansion did not converge, on a larger start domain.
-    failed = results["melt_width_um"].isna()
-    if failed.any():
-        print(f"pass 2: retrying {failed.sum()} row(s) on a larger domain", flush=True)
-        retry_domain = SimulationDomain(spatial_resolution_um=args.resolution_um, **RETRY_DOMAIN_UM)
-        retry = compute_melt_pool(results.loc[failed, design.columns], domain=retry_domain, **run)
-        results.loc[failed, retry.columns] = retry.set_index(results.index[failed])
+    results = retry_failed(results, list(design.columns), args.resolution_um, run)
 
     results.to_csv(args.out / "melt_pool_results.csv", index=False)
     melted = results["melt_width_um"] > 0
