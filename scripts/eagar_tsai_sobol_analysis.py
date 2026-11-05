@@ -6,6 +6,8 @@ Subcommands (run them in this order; each writes into --out):
   similarity  rerun sweep rows after rescaling the beam, power and speed together (similarity check)
   analyse     regimes, defect classes, the two-number reduction, surrogate error on the holdout rows,
               Sobol indices, figures and summary.json
+  materials   check the surrogate on rows with other material properties (AlSi10Mg ranges, pure Cu),
+              then 8-D Sobol indices with the AlSi10Mg property ranges (materials_summary.json)
   predict     predict W, D, L and the peak temperature for any parameter CSV from a finished sweep
 
 Why a 2**20 sweep is not needed. eagar-tsai 0.6.0 (``eagar_tsai/_core.py``) computes
@@ -48,6 +50,20 @@ T_BOIL_AL_K = 2743.0  # boiling point of Al at 1 atm; above it the conduction-on
 LAYER_UM, HATCH_UM = 30.0, 190.0  # assumed EOS-like values, as in scripts/eagar_tsai_alsi10mg.py
 OUT_UM = ["melt_width_um", "melt_depth_um", "melt_length_um"]
 INPUTS = list(sweep.BOUNDS)
+# For the `materials` check: the AlSi10Mg property ranges in edison-trajectories/eagar-tsai-alsi10mg-inputs/README.md,
+# and pure Cu at room-temperature handbook values (only to test the scaling, not a Cu process window).
+ALSI10MG_PROPERTY_RANGES = {
+    "liquidus_temperature_k": (860.0, 870.0),
+    "thermal_conductivity_w_mk": (63.0, 155.0),
+    "density_kg_m3": (2500.0, 2700.0),
+    "specific_heat_j_kgk": (920.0, 1200.0),
+}
+CU_PROPERTIES = {
+    "liquidus_temperature_k": 1358.0,
+    "thermal_conductivity_w_mk": 390.0,
+    "density_kg_m3": 8960.0,
+    "specific_heat_j_kgk": 385.0,
+}
 
 
 # ---------------------------------------------------------------------------------------------
@@ -253,15 +269,19 @@ def first_order_given_data(df: pd.DataFrame, outputs: list[str], bins: int = 32)
     return pd.DataFrame(rows).T
 
 
-def sobol_on_surrogate(sur: Surrogate, n: int, seed: int) -> dict:
+def sobol_on_surrogate(sur: Surrogate, n: int, seed: int, bounds: dict | None = None, fixed: dict | None = None) -> dict:
+    """Saltelli/Jansen Sobol indices of the surrogate over a box (default: the sweep box, fixed AlSi10Mg)."""
     from scipy.stats import sobol_indices, uniform
 
-    dists = [uniform(lo, hi - lo) for lo, hi in sweep.BOUNDS.values()]
+    bounds = bounds or sweep.BOUNDS
+    fixed = sweep.MATERIAL if fixed is None else fixed
+    inputs = list(bounds)
+    dists = [uniform(lo, hi - lo) for lo, hi in bounds.values()]
     names = ["melt_width_um", "melt_depth_um", "melt_length_um", "peak_temperature"]
 
     def f(x: np.ndarray) -> np.ndarray:
-        rows = pd.DataFrame(x.T, columns=INPUTS)
-        for k, v in sweep.MATERIAL.items():
+        rows = pd.DataFrame(x.T, columns=inputs)
+        for k, v in fixed.items():
             rows[k] = v
         p = sur.predict(rows)
         return np.vstack([p[c].to_numpy() for c in names])
@@ -277,7 +297,7 @@ def sobol_on_surrogate(sur: Surrogate, n: int, seed: int) -> dict:
                 "ST": round(float(res.total_order[i, j]), 4),
                 "ST_ci": [round(float(boot.total_order.confidence_interval.low[i, j]), 4), round(float(boot.total_order.confidence_interval.high[i, j]), 4)],
             }
-            for j, x in enumerate(INPUTS)
+            for j, x in enumerate(inputs)
         }
     return out
 
@@ -359,9 +379,75 @@ def cmd_analyse(args) -> None:
         figs.make_all(train, holdout, peak, sur, summary, args.figures)
 
 
+def cmd_materials(args) -> None:
+    """Does the surrogate, built from fixed-property AlSi10Mg rows, hold when the material changes?
+
+    (a) an 8-D Sobol design: the sweep box plus the AlSi10Mg property ranges; (b) pure Cu over the sweep box.
+    Both are run directly with eagar-tsai and compared with the surrogate; then 8-D Sobol indices.
+    """
+    from scipy.stats import qmc
+
+    box = {**sweep.BOUNDS, **ALSI10MG_PROPERTY_RANGES}
+    pts = qmc.Sobol(d=len(box), scramble=True, seed=args.rng_seed).random_base2(m=args.m)
+    a = pd.DataFrame(qmc.scale(pts, *zip(*box.values(), strict=True)), columns=list(box))
+    a.insert(0, "sample_id", np.arange(len(a)))
+    b = sweep.sobol_design(args.m, args.rng_seed)
+    for k, v in CU_PROPERTIES.items():
+        b[k] = v
+    rows = pd.concat([a.assign(case="AlSi10Mg_property_ranges"), b[a.columns].assign(case="pure_Cu")], ignore_index=True)
+    print(f"materials: {len(a)} AlSi10Mg rows with varied properties + {len(b)} pure-Cu rows", flush=True)
+    res = sweep.run_rows(rows.drop(columns="case"), args.resolution_um)
+    res.insert(1, "case", rows["case"])
+
+    train = pd.read_csv(args.out / "melt_pool_results.csv")
+    sur = Surrogate(train)
+    pred = sur.predict(res)
+    for c in [*OUT_UM, "peak_temperature"]:
+        res[f"{c}_surrogate"] = pred[c]
+    res["surrogate_extrapolated"] = pred["extrapolated"]
+    res.to_csv(args.out / "materials_results.csv", index=False)
+
+    check = {}
+    for case, df in res.groupby("case"):
+        g = groups(df)
+        melt = df["melt_width_um"] > 0
+        entry = {
+            "rows": len(df),
+            "melting_rows": int(melt.sum()),
+            "melt_threshold_misclassified": int(((g["theta"] * sur.peak(g["p"]) > 1) != melt).sum()),
+            "p_range": [round(float(g["p"].min()), 4), round(float(g["p"].max()), 4)],
+            "extrapolated_rows": int(df["surrogate_extrapolated"].sum()),
+        }
+        for label, sel in (("inside_hull", ~df["surrogate_extrapolated"]), ("extrapolated", df["surrogate_extrapolated"])):
+            sub = df[sel]
+            if len(sub):
+                pr = sub[[f"{c}_surrogate" for c in [*OUT_UM, "peak_temperature"]]].rename(columns=lambda c: c.removesuffix("_surrogate"))
+                entry[f"error_{label}"] = error_stats(pr, sub)
+        check[case] = entry
+    out = {
+        "materials_check": check,
+        "sobol_surrogate_8d_alsi10mg_property_ranges": sobol_on_surrogate(sur, args.sobol_n, args.seed, bounds=box, fixed={}),
+    }
+    args.out.joinpath("materials_summary.json").write_text(json.dumps(out, indent=2) + "\n")
+    print(json.dumps(out, indent=2))
+
+
+# Column names of the original sobol_params.csv in issue #235 -> eagar-tsai's names.
+SHORT_NAMES = {
+    "beam_diameter": "beam_diameter_m",
+    "power": "power_w",
+    "velocity": "velocity_m_s",
+    "liquidus_temperature": "liquidus_temperature_k",
+    "thermal_conductivity": "thermal_conductivity_w_mk",
+    "density": "density_kg_m3",
+    "specific_heat": "specific_heat_j_kgk",
+}
+
+
 def cmd_predict(args) -> None:
     sur = Surrogate(pd.read_csv(args.train))
-    rows = pd.read_csv(args.rows)
+    rows = pd.read_csv(args.rows).rename(columns=SHORT_NAMES)
+    sweep.check_units(rows)  # refuses a beam diameter in um, as in the original sobol_params.csv
     out = rows.join(sur.predict(rows))
     out.to_csv(args.pred, index=False)
     print(f"wrote {args.pred}: {len(out)} rows, {int(out['extrapolated'].sum())} outside the training rows' hull (extrapolated)")
@@ -370,7 +456,7 @@ def cmd_predict(args) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name in ("holdout", "similarity", "analyse"):
+    for name in ("holdout", "similarity", "analyse", "materials"):
         p = sub.add_parser(name)
         p.add_argument("--out", type=pathlib.Path, required=True, help="sweep output folder (has melt_pool_results.csv)")
         p.add_argument("--seed", type=int, default=42, help="Sobol seed of the sweep")
@@ -386,12 +472,16 @@ def main() -> None:
     an = sub.choices["analyse"]
     an.add_argument("--sobol-n", type=int, default=2**14, help="Saltelli base sample size for the surrogate")
     an.add_argument("--figures", type=pathlib.Path, default=None)
+    mp = sub.choices["materials"]
+    mp.add_argument("--m", type=int, default=9, help="2**m rows for each case")
+    mp.add_argument("--resolution-um", type=float, default=2.0)
+    mp.add_argument("--sobol-n", type=int, default=2**13)
     pr = sub.add_parser("predict")
     pr.add_argument("--train", type=pathlib.Path, required=True)
     pr.add_argument("--rows", type=pathlib.Path, required=True)
     pr.add_argument("--pred", type=pathlib.Path, required=True)
     args = ap.parse_args()
-    {"holdout": cmd_holdout, "similarity": cmd_similarity, "analyse": cmd_analyse, "predict": cmd_predict}[args.cmd](args)
+    {"holdout": cmd_holdout, "similarity": cmd_similarity, "analyse": cmd_analyse, "materials": cmd_materials, "predict": cmd_predict}[args.cmd](args)
 
 
 if __name__ == "__main__":

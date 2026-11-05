@@ -9,8 +9,8 @@ properties held at 867 K, 110 W/(m·K), 2650 kg/m³ and 1040 J/(kg·K).
 - **[Part 2](#part-2-the-first-4096-rows-and-why-220-rows-are-not-needed)** runs the first 4,096 rows with that script. For fixed
   material properties, eagar-tsai's answer depends on just **two numbers**. A surrogate built from those 4,096 rows
   reproduces eagar-tsai to within 8 µm on 2,048 rows it has not seen, and it gives all 2^20 rows in about a minute.
-  Part 2 also has Sobol indices and the defect classes, and explains why eagar-tsai's keyhole test is really
-  a pool-much-wider-than-the-beam test.
+  The same surrogate holds when the material properties vary, and for pure Cu. Part 2 also has Sobol indices and
+  the defect classes, and explains why eagar-tsai's keyhole test is really a pool-much-wider-than-the-beam test.
 - [`upstream-issue-exp-finite.md`](upstream-issue-exp-finite.md) is a draft bug report for ArroyaveLab/eagar-tsai
   about its Linux wheels. It hasn't been filed.
 
@@ -143,7 +143,7 @@ matches on 99.1%; the rest sit on a class boundary. The peak temperature is with
 
 Predicting all **2^20 rows** of Xavier's design from the surrogate takes about a minute. Running eagar-tsai on them at
 2 µm would take about 2.5 days on 4 vCPUs at this run's 0.21 s per row. The shares are 25.0% no melt, 48.2% melt below boiling and 26.8% above boiling, matching
-the 4,096 direct rows. 1.2% of the 2^20 rows fall slightly outside the region the 4,096 rows cover, and their output
+the 4,096 direct rows. 1.2% of the 2^20 rows fall outside the region the 4,096 rows cover in (Θ·G, p), and their output
 column `extrapolated` is set. To get predictions for any parameter file:
 
 ```bash
@@ -152,7 +152,8 @@ python scripts/eagar_tsai_sobol_analysis.py predict \
     --rows sobol_params_si.csv --pred melt_pool_predicted.csv
 ```
 
-`--rows` needs eagar-tsai's eight input columns in SI units (`beam_diameter_m` in metres).
+`--rows` takes eagar-tsai's eight input columns, or the short names used in the original `sobol_params.csv`, in SI units.
+It refuses a beam diameter given in µm.
 
 ![Surrogate against eagar-tsai on 2,048 unseen rows](sobol-surrogate-holdout.png)
 
@@ -167,8 +168,8 @@ agree with the table to within 0.004.
 |---|---|---|---|---|
 | W | 0.39 / 0.52 | 0.30 / 0.42 | 0.14 / 0.20 | 0.01 / 0.09 |
 | D | 0.31 / 0.44 | 0.25 / 0.37 | 0.18 / 0.28 | 0.09 / 0.11 |
-| L | 0.46 / 0.57 | 0.36 / 0.47 | 0.04 / 0.06 | 0.02 / 0.06 |
-| Peak temperature | 0.14 / 0.31 | 0.12 / 0.26 | 0.01 / 0.02 | 0.46 / 0.70 |
+| L | 0.45 / 0.57 | 0.36 / 0.47 | 0.04 / 0.06 | 0.02 / 0.06 |
+| Peak temperature | 0.14 / 0.31 | 0.11 / 0.26 | 0.01 / 0.02 | 0.46 / 0.70 |
 
 - Absorptivity ranks above power only because its range is wider: 0.05–0.7 is a factor of 14, and 50–400 W is a
   factor of 8. eagar-tsai only sees A·P. Most of the gap between the first-order and total indices is that product.
@@ -199,6 +200,37 @@ layer and 190 µm hatch assumed in [`../README.md`](../README.md):
   have wide beams (mean `beam_diameter` 180 µm) and high absorptivity (mean 0.49). Set the layer and hatch to our
   machine's values before reading anything into these shares.
 
+### Other material properties, and copper
+
+The two numbers absorb the material properties as well. So a surrogate built from fixed-property AlSi10Mg rows should
+also work for other properties, wherever their (Θ·G, p) falls inside the region the training rows cover. I checked
+this with two sets of rows over the same beam box, all run directly with eagar-tsai
+(`materials-1024-rows-2um.csv`, `materials_summary.json`):
+
+- 512 rows of an 8-D Sobol design: the beam box plus the Edison AlSi10Mg property ranges (T_liq 860–870 K,
+  k 63–155 W/(m·K), ρ 2500–2700 kg/m³, c 920–1200 J/(kg·K));
+- 512 rows of pure Cu (1358 K, 390 W/(m·K), 8960 kg/m³, 385 J/(kg·K)). These are room-temperature handbook values,
+  used here only to test the scaling, not to find a Cu process window.
+
+| Rows | Melting | Outside the training region | Worst error inside it (W / D / L) | Worst error outside it (W / D / L) |
+|---|---|---|---|---|
+| AlSi10Mg, properties varied | 386 of 512 | 23 | 6.0 / 2.6 / 4.5 µm | 5.5 / 3.9 / 21.0 µm |
+| Pure Cu | 103 of 512 | 21 | 3.0 / 1.6 / 3.1 µm | 4.4 / 4.1 / 3.9 µm |
+
+- The melting rule Θ·G(p) > 1 holds for 1,023 of the 1,024 rows. The exception is a Cu row right on the threshold
+  (Θ·G = 1.0004): eagar-tsai's peak is 0.3 K above the liquidus, but the pool covers a single grid point, so it
+  reports W = 0.
+- So one eagar-tsai sweep serves any material whose (Θ, p) falls inside the region it covers. Rows outside that region
+  are flagged `extrapolated` and are less reliable; L was off by up to 21 µm here. To cover more, run eagar-tsai on
+  rows in the missing region, append them to the `--train` CSV and rerun `predict`. Any material works for this,
+  because only (Θ, p) matter.
+- **Sobol indices with the property ranges included** (8-D, from the surrogate, 2^13 Saltelli base rows): over this beam
+  box, the Edison property ranges barely matter. Thermal conductivity's total index is 0.04 for W, 0.03 for D, 0.10 for
+  L and 0.07 for the peak temperature. Specific heat, density and liquidus all stay below 0.01, and the beam inputs
+  keep their 4-D ranking. Sobol indices are shares of variance, so this mostly reflects how wide the beam ranges are.
+  At one fixed machine setting, the properties are what's left: in the one-at-a-time table in
+  [`../README.md`](../README.md), k moves W from 200 to 160 µm at the nominal point.
+
 ## Files
 
 | File | What it is |
@@ -211,10 +243,11 @@ layer and 190 µm hatch assumed in [`../README.md`](../README.md):
 | `holdout-2048-rows-2um.csv` | 2,048 random rows of the 2^20 design beyond row 4,096 (`numpy` seed 235), run directly, with the surrogate's predictions (`*_surrogate`), `regime` and eagar-tsai's `defect` class |
 | `similarity-64-rows-1um.csv` | 16 sweep rows × 4 variants (`scale_1`, `scale_0.5`, `scale_2`, `A*0.8,P/0.8`) at a 1 µm grid |
 | `summary.json` | All Part 2 numbers, including the Sobol bootstrap intervals and the 2^20 shares |
+| `materials-1024-rows-2um.csv`, `materials_summary.json` | `materials`: 512 AlSi10Mg rows with varied properties and 512 pure-Cu rows, run directly and with the surrogate, plus the 8-D Sobol indices |
 | `sobol-reduction.png`, `sobol-surrogate-holdout.png`, `sobol-indices.png` | Part 2 figures |
 | [`upstream-issue-exp-finite.md`](upstream-issue-exp-finite.md) | Draft upstream report on the Linux wheels (not filed) |
 
-To redo Part 2 (about 25 minutes on 4 vCPUs):
+To redo Part 2 (about 30 minutes on 4 vCPUs):
 
 ```bash
 pip install --no-binary eagar-tsai eagar-tsai pandas scipy matplotlib   # Linux; see Part 1
@@ -222,4 +255,5 @@ python scripts/eagar_tsai_sobol_alsi10mg.py --m 12 --out sobol-m12
 python scripts/eagar_tsai_sobol_analysis.py holdout --out sobol-m12
 python scripts/eagar_tsai_sobol_analysis.py similarity --out sobol-m12
 python scripts/eagar_tsai_sobol_analysis.py analyse --out sobol-m12 --figures figs
+python scripts/eagar_tsai_sobol_analysis.py materials --out sobol-m12
 ```
