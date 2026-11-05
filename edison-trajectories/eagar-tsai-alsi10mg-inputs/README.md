@@ -13,6 +13,7 @@ for the eight inputs of [ArroyaveLab/eagar-tsai](https://github.com/ArroyaveLab/
 | `alsi10mg-temperature-field.png`, `alsi10mg-sensitivity.csv`, `alsi10mg-printability-map.png` | eagar-tsai run |
 | [`../../scripts/edison_eagar_tsai_alsi10mg.py`](../../scripts/edison_eagar_tsai_alsi10mg.py) | Prompts; submit / wait / fetch |
 | [`../../scripts/eagar_tsai_alsi10mg.py`](../../scripts/eagar_tsai_alsi10mg.py) | eagar-tsai run |
+| [`sobol-check/`](sobol-check/) | Xavier's Sobol sweep over these ranges: the `762 GiB` unit error, the corrected script, the first 4,096 rows, and a surrogate that gives all 2^20 rows |
 
 **Beam-diameter convention.** eagar-tsai's `beam_diameter` is **2σ** (σ = Gaussian standard deviation). That is
 **half** the 1/e² (D4σ) spot diameter that machine datasheets quote, and about 0.85 × FWHM.
