@@ -1,0 +1,941 @@
+################ test_assessed_assemblages.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_assessed_assemblages.py
+PASS guard: clean record passes
+PASS guard: image key
+PASS guard: crop key
+PASS guard: page_text key
+PASS guard: png path value
+PASS guard: pdf path value
+PASS guard: base64 blob
+PASS guard: data URI
+PASS guard: long free text
+PASS guard: build path
+PASS guard_text refuses an image path in a cell
+PASS rectangle -> centroid
+PASS crescent -> pole of inaccessibility, centroid outside
+PASS one-cell strip -> no point
+PASS tie line: endpoints a (left) and b (right)
+PASS tie line: unrelated neighbour -> omitted with reason
+PASS tie line: unnamed neighbour -> omitted
+PASS tie line: line-compound endpoint takes the printed composition
+PASS budget: same structure as the release
+PASS budget: digitisation = coordinate uncertainty
+PASS budget: handbook prior 10 K / 0.02
+PASS budget: margin reported, not combined
+PASS budget: effective = max(reading, prior)
+PASS budget: coordinate fields unchanged
+PASS budget: dashed reading 2x prior (20 K, 0.04), digitisation kept
+PASS budget: mixed reading 1.5x prior
+PASS budget: solid keeps digitisation
+PASS dashed: 5 dashes give 8 joins (both directions, as the tracer counts)
+PASS dashed: crossing on the dashed line
+PASS dashed: crossing on the solid line
+PASS dashed: both
+PASS dashed: frame only
+PASS release: every record has a budget, effective >= reading and >= prior (23129 records)
+PASS STD_PEARSON has no cF8 (diamond / rock salt / sphalerite share it)
+0 failure(s)
+
+--- stderr ---
+################ test_bibliography.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_bibliography.py
+PASS norm_doi url
+PASS norm_doi prefix
+PASS norm_doi junk
+PASS key stable
+PASS nodoi id stable under case/punctuation
+PASS nodoi id prefix
+PASS first author 'J. E. Kittl, T.B. Massalski, J. Inst. Met.'
+PASS first author 'J. Alloys Compd. 385, 133'
+PASS first author 'J. Thermal Anal. Calorim., 125'
+PASS first author 'Z. Metallkd., 83, 21'
+PASS first author 'A. Fernandez Guillermet, Metall. Trans.'
+PASS first author 'B. Joensson and J. Agren'
+PASS first author 'Kittl, J.E., foo'
+PASS crossref fields
+PASS crossref no abstract
+PASS crossref references
+PASS oa licence from crossref only
+PASS no oa without cc
+PASS 404 -> None
+PASS doi match verified
+PASS doi match fuzzy (OCR)
+PASS doi match mismatch (author)
+PASS doi match year off -> mismatch
+PASS no Crossref authors -> mismatch (Kittl/Massalski -> JAMA)
+PASS seawater DOI for a Nucl. Metall. source line -> mismatch
+PASS no authors but title in the printed reference -> weak
+PASS year typo with journal and volume/page agreeing -> weak
+PASS same, year right -> verified
+PASS system id
+0 failures
+
+--- stderr ---
+################ test_boride_evidence_review.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_boride_evidence_review.py
+...........                                                              [100%]
+11 passed in 0.25s
+
+--- stderr ---
+################ test_calculated_diagram_audit.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_calculated_diagram_audit.py
+.....                                                                    [100%]
+5 passed in 0.08s
+
+--- stderr ---
+################ test_contributions_hook.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_contributions_hook.py
+.                                                                        [100%]
+1 passed in 0.51s
+
+--- stderr ---
+################ test_dense_field_grid.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_dense_field_grid.py
+PASS synthetic: points inside the field
+PASS synthetic: clearance >= MARGIN
+PASS synthetic: at most 40 points
+PASS synthetic: deterministic
+PASS liquid band: only within 150 K of the lower boundary
+PASS sliver thinner than the margin: no points
+PASS validated set is Cu-Zr only
+PASS release Cu-Zr: 177 dense points map to CuZr-94Zen-LB (fit used 177)
+PASS release Cu-Zr: coordinates and assemblages equal the fit's 177 points, in order
+PASS dense records: point_method dense_field_grid, flags, no tie line
+PASS dense records: unique ids
+PASS dense records: field weight shares sum to one per field
+PASS dense records: budget structure of the primary records
+0 failure(s)
+
+--- stderr ---
+################ test_dft_evidence_identity.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_dft_evidence_identity.py
+..............                                                           [100%]
+14 passed in 0.07s
+
+--- stderr ---
+################ test_diagram_recovery.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_diagram_recovery.py
+............                                                             [100%]
+12 passed in 0.08s
+
+--- stderr ---
+################ test_doi_corrections.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_doi_corrections.py
+PASS table validates
+PASS 22 entries, 19 DOIs
+PASS version present
+PASS tca dropped for NiTi-14Hu.tdb
+PASS tca kept for its own paper (literature)
+PASS tca kept for another TDB
+PASS jinstmet dropped for IrPt-09Yam.tdb
+PASS jinstmet kept for MoB-09Yam.tdb
+PASS jinstmet kept as a cited work
+PASS 10.1557/jmr dropped everywhere (literature)
+PASS 10.1557/jmr dropped everywhere (unrelated tdb)
+PASS 10.1557/jmr dropped everywhere (handbook)
+PASS 10.1557/jmr dropped everywhere (anywhere)
+PASS anywhere() ignores context_only entries
+PASS handbook IN-TE dropped
+PASS handbook other system kept
+PASS mark nulls the DOI, keeps the citation
+PASS cited source: dropped DOI null with status
+PASS cited source: paper key = bibliography no-DOI id
+PASS cited source: correct DOI untouched
+PASS papers.json: doi null, status, printed citation
+PASS model link: TDB-header DOI dropped
+PASS model link: same DOI kept for another TDB
+PASS paper key: journal-level DOI falls back to the PDF's own DOI
+PASS paper key: journal-level DOI, unknown PDF -> sha256 key
+PASS colliding journal-level source ids: the file's own source wins
+PASS journal-level DOI never maps a PDF
+PASS release: papers.json carries no literature-dropped DOI
+PASS release: no dropped DOI in literature values (paper, cited sources, model links)
+PASS release: phase-diagram NiTi-14Hu source DOI dropped, citation kept
+PASS release: no handbook-dropped DOI in assessed assemblages
+PASS release: bibliography publishes the table
+0 failure(s)
+
+--- stderr ---
+################ test_espei_bundle_gate.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_espei_bundle_gate.py
+PASS espei_ready experimental value passes
+PASS G6-flagged experimental value excluded
+PASS experimental value not espei_ready excluded
+PASS model value without blocking gate passes; with one is excluded
+PASS flag-only gate does not exclude
+PASS every gate drop reason is documented
+PASS 298 K is 298.15 K
+PASS 298 K dataset matches a 298.15 K published value
+PASS page-converted value written from the release; an unrelated dataset value is not
+PASS composition-offset estimate alone is not a reported sigma
+PASS release: no ESPEI dataset value comes from a record the release marks not ESPEI-ready (3168 datasets; 0 bad)
+PASS release: no solver dataset below ESPEI's 298.15 K filter (0)
+PASS release: every page-converted value is written converted (6 values; 0 bad)
+0 failures
+
+--- stderr ---
+################ test_espei_fit_preflight.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_espei_fit_preflight.py
+.........                                                                [100%]
+=============================== warnings summary ===============================
+tools/tests/test_espei_fit_preflight.py::test_valid_selection
+  /tmp/arroyave/venvs/orchid-site/lib/python3.13/site-packages/emcee/ptsampler.py:17: SyntaxWarning: invalid escape sequence '\e'
+    """Returns a ladder of :math:`\beta \equiv 1/T` with temperatures
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+9 passed, 1 warning in 14.05s
+
+--- stderr ---
+################ test_human_review_corrections.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_human_review_corrections.py
+....                                                                     [100%]
+4 passed in 0.05s
+
+--- stderr ---
+################ test_independent_check.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_independent_check.py
+PASS a listed record is not ESPEI-ready or certified after annotation
+PASS the record stays accepted and its value is untouched
+PASS repeated annotation re-enforces readiness and certification
+PASS the flag mirror of gate codes is synchronized
+PASS record cleared on the page is not in the ledger as a confirmed defect: ORC-4OAJ3KNMAB
+PASS record cleared on the page is not in the ledger as a confirmed defect: ORC-INPXMODQVD
+PASS record cleared on the page is not in the ledger as a confirmed defect: ORC-YY4Y7EGCLN
+PASS an unlisted record is untouched
+PASS ledger has the expected size
+PASS release: every ledger id is present (692 of 692)
+PASS release: no listed record is ESPEI-ready or certified
+0 failures
+
+--- stderr ---
+################ test_individual_weights.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_individual_weights.py
+.....                                                                    [100%]
+5 passed in 0.24s
+
+--- stderr ---
+################ test_known_issues_20261027.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_known_issues_20261027.py
+..........                                                               [100%]
+10 passed in 0.24s
+
+--- stderr ---
+################ test_literature_gates.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_literature_gates.py
+PASS printed values / quotes / printed temperatures never altered
+PASS G1a °C table stored as K without a visual verdict: flagged, not ESPEI-ready, value kept
+PASS printed values / quotes / printed temperatures never altered
+PASS G1a confirmed °C table: whole table converted from the printed numbers
+PASS G1a correction carries rule, evidence and visual_check
+PASS G1a stale CALPHAD check moved aside
+PASS printed values / quotes / printed temperatures never altered
+PASS G1 sibling row: °C number stored as K is not accepted
+PASS G1b dash temperature not accepted
+PASS G1b temperature equal to a printed at.% not accepted
+PASS G1b superconducting 0.38 K printed with its unit is kept
+PASS G1d printed range stored as a point flagged
+PASS G1c liquid far below the SGTE liquid: not accepted
+PASS G1c liquid inside the margin: flagged, still accepted
+PASS printed values / quotes / printed temperatures never altered
+PASS G2 x10^3 activity header without verdict: not accepted (table scale)
+PASS printed values / quotes / printed temperatures never altered
+PASS G2 x10^3 activity header confirmed: value / 1000, printed kept
+PASS printed values / quotes / printed temperatures never altered
+PASS G2 J value under a printed J unit stored as kJ: divided by 1000
+PASS G2 per-gram heat capacity relabelled J/g/K and not ESPEI-ready
+PASS G2 per gram-atom is per mole of atoms: untouched
+PASS G2 unexplained out-of-range value not accepted, magnitude_suspect set
+PASS G2/G9 activity stored as 0 not ESPEI-ready
+PASS printed values / quotes / printed temperatures never altered
+PASS G2 value read from the page when unambiguous
+PASS printed values / quotes / printed temperatures never altered
+PASS G3 positive values under a (-Δ) heading without verdict: flagged
+PASS printed values / quotes / printed temperatures never altered
+... [trimmed 105 lines] ...
+PASS page: a record-level 'misread' of the phase list is not demoted once the table check corrects it
+PASS printed values / quotes / printed temperatures never altered
+PASS page_fix: value read on the page replaces the stored one (kept), magnitude flag cleared
+PASS 298 K is 298.15 K (printed string kept, correction entry)
+PASS G2 out-of-range value printed so: accepted, flagged, not ESPEI-ready
+PASS printed values / quotes / printed temperatures never altered
+PASS G7 spelling variants of one label merged (\sigma / σ; Fe3O4 / Magnetite (Fe3O4))
+PASS G7 two different readings of one printed value kept apart and flagged
+PASS printed values / quotes / printed temperatures never altered
+PASS G9 composition deviating from the formula (printed solubility) is flag-only
+PASS printed values / quotes / printed temperatures never altered
+PASS G5 liquid / amorphous property at room temperature not ESPEI-ready
+PASS printed values / quotes / printed temperatures never altered
+PASS page_fix: temperature and scatter-aware sigma replace the stored ones (kept); several page flags apply
+PASS printed values / quotes / printed temperatures never altered
+PASS page_fix: converted value with its conversion in the correction; printed value kept; flag-only flags keep espei_ready; cited source resolved (unresolved entry kept in the correction)
+PASS printed values / quotes / printed temperatures never altered
+PASS G4u Pa from MPa: not accepted
+PASS G4u Ar cover gas: not accepted
+PASS G4u real protactinium (PaO2) with a Pa unit elsewhere: kept
+PASS G4u garbled He prefix without a page check: not accepted
+PASS G4u page check reassigns He record to Cu-Te and the unit gate passes
+0 failures
+
+--- stderr ---
+################ test_mgpb_evidence_review.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_mgpb_evidence_review.py
+.....                                                                    [100%]
+5 passed in 0.24s
+
+--- stderr ---
+################ test_ml_folds.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_ml_folds.py
+PASS fold = int(sha256(key), 16) mod 5
+PASS chemical_system sorts and upper-cases
+PASS fields() keys
+PASS missing keys give None
+PASS balance counts
+PASS literature JSONL: chemical_system = system, paper_id = paper
+PASS literature JSONL: every row's folds follow the rule (73542 rows)
+PASS literature JSONL: no system in two folds
+   literature JSONL fold_lso: 0: 14799 (20.1%), 1: 14871 (20.2%), 2: 14695 (20.0%), 3: 13521 (18.4%), 4: 15656 (21.3%)
+PASS literature JSONL fold_lso: every fold holds 8-32% of rows
+   literature JSONL fold_lpo: 0: 14766 (20.1%), 1: 12770 (17.4%), 2: 15208 (20.7%), 3: 14622 (19.9%), 4: 16176 (22.0%)
+PASS literature JSONL fold_lpo: every fold holds 8-32% of rows
+PASS literature_values: every row's folds follow the rule (73542 rows)
+PASS literature_values: no system in two folds
+   literature_values fold_lso: 0: 14799 (20.1%), 1: 14871 (20.2%), 2: 14695 (20.0%), 3: 13521 (18.4%), 4: 15656 (21.3%)
+PASS literature_values fold_lso: every fold holds 8-32% of rows
+   literature_values fold_lpo: 0: 14766 (20.1%), 1: 12770 (17.4%), 2: 15208 (20.7%), 3: 14622 (19.9%), 4: 16176 (22.0%)
+PASS literature_values fold_lpo: every fold holds 8-32% of rows
+PASS dft_parity: every row's folds follow the rule (7646 rows)
+PASS dft_parity: no system in two folds
+   dft_parity fold_lso: 0: 1554 (20.3%), 1: 1727 (22.6%), 2: 1601 (20.9%), 3: 1127 (14.7%), 4: 1637 (21.4%)
+PASS dft_parity fold_lso: every fold holds 8-32% of rows
+   dft_parity fold_lpo: 0: 1549 (20.3%), 1: 1311 (17.1%), 2: 1743 (22.8%), 3: 1378 (18.0%), 4: 1665 (21.8%)
+PASS dft_parity fold_lpo: every fold holds 8-32% of rows
+PASS assessed points: every row's folds follow the rule (23129 rows)
+PASS assessed points: no system in two folds
+   assessed points fold_lso: 0: 4669 (20.2%), 1: 4644 (20.1%), 2: 4516 (19.5%), 3: 4274 (18.5%), 4: 5026 (21.7%)
+PASS assessed points fold_lso: every fold holds 8-32% of rows
+   assessed points fold_lpo: 0: 4293 (18.6%), 1: 4285 (18.5%), 2: 5437 (23.5%), 3: 4334 (18.7%), 4: 4780 (20.7%)
+PASS assessed points fold_lpo: every fold holds 8-32% of rows
+0 failed
+
+--- stderr ---
+################ test_phase_aliases.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_phase_aliases.py
+PASS label_key parses Greek core / prime / index / formula forms
+PASS validate(): alias keys unique, labels canonical, ranges sane, shared TDB phases only for disjoint ranges
+PASS alias uniqueness: one alias per (system, printed label)
+PASS every alias has a basis, a model phase, >= 1 TDB phase and >= 1 literature record
+PASS no global Greek -> structure rule: every alias names one system
+PASS evidence current and consistent (structure, composition range, calculated field, one phase per TDB)
+PASS structure / composition: each TDB phase is one independent model reaching the alias range, Pearson agrees
+PASS Cu-Sn eps -> the Cu3Sn phase (CU3SN_L by default), not BCC_A2
+PASS Cu-Sn eps: every Cu-Sn TDB names a Cu3Sn phase; none is BCC_A2
+PASS Cu-Sn eps in CuSn-12Gie -> CU3SN, in CuSn-14Don -> CU3SN_LT
+PASS Cu-Sn 'ε (Cu3Sn)' -> Cu3Sn phase; 'ε' at x(Sn) = 0.45 not mapped
+PASS aliases are per system: eps in Cu-Zn is HCP_IM_A3, eps in Fe-Ta is C14_LAVES, eps in Al-Fe is not BCC_A2
+PASS a system without an alias is untouched (beta in Cu-Zr: no alias)
+PASS label check: eps BCC_A2 -> CU3SN_L with model_phase_basis system_alias:cu-sn:epsilon and a PL correction
+PASS label check: eps outside the alias range -> alias not applied, Greek rule rejects BCC_A2
+PASS label check: beta brass (Cu-Zn beta -> BCC_A2) kept, provenance system_alias:cu-zn:beta, no correction
+PASS label check: an alias never puts two printed phases of one row on one model phase (Cu-Fe gamma + eps)
+PASS ESPEI ZPF: the corpus vertex BCC_A2 of the aliased eps becomes the target TDB's Cu3Sn phase
+PASS release: every system_alias mapping names a TDB phase of its alias at a consistent composition (1280)
+PASS release: no Cu-Sn eps on a bcc model phase
+all passed
+
+--- stderr ---
+################ test_phase_mapper_structures.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_phase_mapper_structures.py
+PASS cF8 no longer a standard compound key
+PASS B1 carbide HfC in HfC-16Pan.tdb -> FCC_A1
+PASS B1 carbide NbC in NbC-01Lee.tdb -> FCC_A1
+PASS B1 carbide CTi in TiC-03Fri.tdb -> FCC_A1
+PASS B1 carbide ZrC in ZrC-95Fer-LB.tdb -> FCC_A1
+PASS B1 carbide TaC in TaC-16Pan.tdb -> FCC_A1
+PASS B1 carbide VC in VC-06Hu.tdb -> FCC_A1
+PASS B1 carbide βWC in WC-86Gus.tdb -> FCC_A1
+PASS B1 PuC with its own PUC_B1 phase -> PUC_B1
+PASS B1 SnTe -> SNTE_B1
+PASS B1 AsSn -> SNAS_B1
+PASS B1 letter-named UC (delta, 47-50 at.% C) -> FCC_B1
+PASS B3 SiC -> SIC_B3
+PASS B20 CoSi -> COSI_B20
+PASS B20 CrSi never DIAMOND_A4
+PASS B20 MnSi never DIAMOND_A4
+PASS solution (Si) A4 still DIAMOND_A4
+PASS solution (Ge) A4 still DIAMOND_A4
+PASS B1 oxide NiO is not FCC_A1 (only C/N interstitial carbides/nitrides)
+PASS B1 oxide with a HALITE phase -> HALITE
+PASS B1 nitride TiN -> FCC_A1 (Ti)(N,VA)
+PASS Pearson-only hP4 does not override a printed B8_1 (NiAs type)
+PASS printed A3' with hP4 still DHCP
+0 failed
+
+--- stderr ---
+################ test_phase_rule.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_phase_rule.py
+PASS liquid label 'liquid'
+PASS liquid label 'L'
+PASS liquid label 'Liq'
+PASS liquid label '(Bi,U)liq'
+PASS liquid label 'melt'
+PASS liquid label 'liquid solution'
+PASS not a liquid label 'L12'
+PASS not a liquid label "γ'-L12"
+PASS not a liquid label 'Fe17Y2'
+PASS not a liquid label 'UNKNOWN'
+PASS not a liquid label 'liquidus'
+PASS not a liquid label 'B2'
+PASS not a liquid label 'L1_0'
+PASS not a liquid label 'solid'
+PASS model phase LIQUID is liquid
+PASS caption: Sb dropped into liquid Li
+PASS caption: Si-Ge liquid alloys
+PASS caption: reference state only is not liquid
+PASS caption: solid Li3Sb is not liquid
+PASS caption: intermetallic compounds is not liquid
+PASS activity 2.1 rejected
+PASS activity 0 rejected
+PASS activity 0.5 kept
+PASS negative SM rejected
+PASS per-gram Cp rejected
+PASS increment rejected
+PASS HM_FORM +196 kJ rejected
+PASS HM_FORM -40 kJ kept
+PASS no printed phase -> fail (no default LIQUID)
+PASS Fe-Y liquid at 800 K impossible
+PASS Fe-Y liquid at 1900 K possible
+PASS invariant at 18 K implausible
+PASS T = 0 implausible
+PASS FE-Y FeY-17Sae.hmr-03: no LIQUID dataset
+PASS FE-HF FeHf-08Idb.hmr-01: no LIQUID dataset
+PASS AL-CA AlCa-05Ozt.hmr-01: no LIQUID dataset
+PASS NI-SC NiSc-13Kar.hmr-00: no LIQUID dataset
+PASS RU-SI RuSi-01Liu.hmr-01: no LIQUID dataset
+PASS Fe-Y Saenko table 5: four datasets, one compound phase each (endmember `solver` where stoichiometric in FeY-17Sae.tdb)
+PASS Fe17Y2 endmember FE:Y
+PASS every ESPEI value is published (0 missing)
+PASS every ESPEI value passes the phase rule (0 fail)
+PASS no LIQUID without a printed liquid (0)
+PASS no LIQUID below the liquid bound (0)
+PASS no dataset names LIQUID beside a compound by default
+PASS espei_certified => espei_ready and plausibility pass; calphad_check vocabulary
+PASS index totals.espei agree with the records
+all passed
+
+--- stderr ---
+################ test_placeholder_reaccept.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_placeholder_reaccept.py
+PASS only the sole-failure record is accepted again
+PASS ESPEI readiness stays off
+PASS the lifted failure is recorded as a correction
+PASS a record with another not_accepted failure stays unaccepted
+PASS a placeholder label is not a recovered phase
+PASS records without the recovery gate are untouched
+PASS replay changes nothing
+all passed
+
+--- stderr ---
+################ test_placeholder_recovery_20261027.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_placeholder_recovery_20261027.py
+.......                                                                  [100%]
+7 passed in 0.22s
+
+--- stderr ---
+################ test_precision_sample.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_precision_sample.py
+PASS draw into a new directory
+PASS draw writes the freeze record
+PASS draw refuses an existing sample
+PASS draw refuses the distributed kit directory
+PASS check flags a packet missing from the freeze record
+PASS freeze refuses to rewrite a different freeze record
+PASS check passes on the untouched kit
+PASS default command is check (verify only)
+PASS freeze record lists every sampled id with reviewed values and hashes
+PASS population snapshot recorded
+PASS check still passes after the export changed (sample is frozen)
+PASS sample.json untouched by check
+PASS changed value reported (value question)
+PASS merged id counts as released
+PASS dropped paper DOI reported (citation question)
+PASS check fails when a sampled id is no longer released
+PASS check fails when sample.json changed
+PASS check fails when index.html changed
+PASS check passes again once restored
+PASS scorer runs on the frozen sample
+PASS scorer reports per item whether the release carries the reviewed value
+PASS scorer refuses an unfrozen sample
+PASS zenodo_release.py calls build_precision_sample.py only with --check
+PASS zenodo_release.py text replacement skips review/
+PASS distributed kit frozen at 5c3d02e5...
+PASS distributed kit: re-draw from its population reproduced it
+PASS distributed kit verifies against the current export
+0 failure(s)
+
+--- stderr ---
+################ test_quote_clip.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_quote_clip.py
+PASS short quote untouched
+PASS value start: clipped to <= 500 chars
+PASS value start: contiguous substring, value kept, no ellipsis
+PASS value start: word boundaries
+PASS value middle: clipped to <= 500 chars
+PASS value middle: contiguous substring, value kept, no ellipsis
+PASS value middle: word boundaries
+PASS value end: clipped to <= 500 chars
+PASS value end: contiguous substring, value kept, no ellipsis
+PASS value end: word boundaries
+PASS record clipped, flag, page kept, original length
+PASS record under the limit: no flag
+PASS context item clipped around its printed temperature
+PASS number match is whole-token (12 is not in 125)
+0 failures
+
+--- stderr ---
+################ test_r2_compositions.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_r2_compositions.py
+PASS pure_element parses terminal labels
+PASS expected_x of a formula and of a terminal phase
+PASS C1 table detected
+PASS C1 unchecked table: flagged, not ESPEI-ready, values unchanged
+PASS C1 confirmed table: x100, stored value kept, correction recorded
+PASS C1 page-rejected (genuinely dilute) table: untouched
+PASS C2 confirmed table flipped (Ba at x(Ge)=0, Ba2Ge at 1/3)
+PASS C2 unchecked reversed table: flagged, not ESPEI-ready
+PASS C3 swapped stoichiometric values re-assigned (one transposition)
+PASS C3 page-rejected swap keeps the stored order
+PASS C3 label rejected by its composition and no swap: label_conflicts_composition, not ESPEI-ready
+PASS C4 binary compound in a ternary table filed under its binary; source_system kept; zero keys dropped
+PASS C4 binary invariant (terminal solutions + compound) in a C-RE table filed under C-LA
+PASS C4 phase observed in a ternary alloy (caption does not name the subsystem) stays ternary
+PASS C6 stale zero element (fluorite 'F') dropped
+PASS C6 element symbol read from the page (S -> SI)
+PASS C7 table whose header the page shows as mol%: resolved, still accepted
+PASS C7 raw percentage not resolved: not accepted
+invariants on /tmp/arroyave/work/site_home/projects/orchid-data/literature/orchid-literature.jsonl.gz
+PASS INV C1 no table of fractions divided by 100 twice (0)
+PASS INV C2 no table with the composition axis reversed (0)
+PASS INV C2/C1 no ESPEI-ready record with a reversed or 1/100 cell (0)
+PASS INV C3 no ESPEI-ready stoichiometric phase > 0.15 off its formula without a flag (1)
+PASS INV C4 no record filed under a system larger than its own state (0)
+PASS INV C4 the state system is a subsystem of source_system (0)
+PASS INV C4/C5 chemical_system == system == sorted elements (0)
+PASS INV C5 fold_lso recomputed from the corrected system (0)
+PASS INV C6 every composition element is in the system (0)
+PASS INV C7 accepted compositions inside [0, 1] (0)
+PASS INV C7 no ESPEI-ready record with an unresolved composition basis (0)
+0 failures
+
+--- stderr ---
+################ test_r2_dft.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_r2_dft.py
+PASS E4 'αNiSi_2' parses as NiSi2
+PASS E4 'NiSi_{2}' parses as NiSi2
+PASS E4 underscore before a designator still separates it
+PASS E7 CaO(liq-am) is not paired with a crystalline DFT entry
+PASS E7 U0.5C0.5 is the compound UC
+PASS E7 Si0.3333Ta0.6667 is SiTa2
+PASS E1 'CuZr-B2' names B2
+PASS E1 "TiNi B19'" names B19'
+PASS E1 'Al3Li(D03)' names D03
+PASS E1 'MgZn2-type' names C14
+PASS E1 model phase C14_LAVES names C14
+PASS E1 model phase of another compound (NISI_B31 for NiSi2) names nothing
+PASS E1 a formula token is not a designator (B2 in a B system)
+PASS E1 solution designators A1/A2/A3 are ignored
+PASS E1 B2 -> Pm-3m (221), B19' -> P2_1/m (11), C14 -> 194, C15 -> 227
+PASS parity points carry smatch / default / ehull_upstream
+PASS E2 ehull = Ef - hull(x) of the released hull (MP and OQMD)
+PASS E5 no default point measured more than 0.02 off the compound
+PASS E6 experimental parity records are not stored at 0 K
+PASS E6 an experimental 0 K value is never in the default subset
+PASS C5 dft_parity chemical_system / fold_lso / fold_lpo = literature record's
+PASS C5 Parquet dft_parity fold_lso / chemical_system = literature_values (joined on record_id)
+PASS E7 dft-mp catalog correction_model names the provider scheme
+PASS E7 dft-mp provenance uses source_release (no mp_release)
+PASS E7 dft-oqmd catalog correction_model names the provider scheme
+PASS E7 dft-oqmd provenance uses source_release (no mp_release)
+PASS E8 every calibration set carries ci95_cluster_system
+0 failed
+
+--- stderr ---
+################ test_r2_phases.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_r2_phases.py
+PASS (a) Greek table covers theta..omega
+PASS (b) eta selects by name token, not substring of BETA/ZETA
+PASS (c) solution (alphaPr) hP4 never GRAPHITE_A9 (Pr not a constituent)
+PASS (c) solution (alphaPr) hP4 -> DHCP holding Pr
+PASS (d) Pearson-only standard name (hP12 -> C14) does not run before the formula
+PASS (e) a '?' label is never mapped
+PASS (f) ION is a liquid for L
+PASS liquid / glass TDB phases never match a solid formula
+PASS Pearson equality: hR counts x3 (hexagonal vs rhombohedral cell)
+PASS beta-PtZr B2 never PTZR_B33
+PASS alpha-PtZr B33 -> PTZR_B33 with +pearson
+PASS beta-MnTe B4 never MNTE_B81
+PASS beta-MoSi2 C40 never MOSI2_C11B
+PASS beta-Fe2Pu C36 never FE2PU_C15
+PASS solid SiO2 never SIO2_L
+PASS B20 CoSi still COSI_B20 (Strukturbericht token decides over a misread Pearson)
+PASS eps -> BCC_A2 rejected (Fe-Ta Laves)
+PASS beta-Ni3Ge -> BCC_A2 rejected
+PASS (alphaTi) -> HCP_A3 kept
+PASS bare beta in Cu-Zr (beta-Zr) -> BCC_A2 kept
+PASS L(phi2) -> GRAPHITE_A9 rejected
+PASS phi1 -> GRAPHITE_A9 rejected
+PASS bcc-La -> DHCP rejected
+PASS beta(B) -> BCC_A2 rejected (beta-B is rhombohedral)
+PASS TiC -> FCC_A1 (M)(C,VA) kept (SGTE interstitial convention)
+PASS composition outside the model phase range rejects the mapping
+PASS class 4: every model has as many sublattices as its PHASE statement
+PASS class 7: preferred_name is never a DIS_PART phase when an independent model exists
+PASS class 8: every registry phase has a TDB model or a printed paper label
+PASS class 5: an FCC_A1 (M)(X,VA) phase stable only as MX is not labelled A1 Cu cF4
+PASS structure of phase:ni-ti:niti-b19 is B19'
+PASS structure of phase:c-ti:fcc-a1 is B1
+PASS structure of phase:h-zr:fcc-a1 is C1
+PASS Al4C3 D7_1 is hR7
+PASS class 8: KAP_LIQ / ASSOCI / OXIDE_L are liquids
+PASS class 6: an ordered order/disorder phase reaching a pure end carries the unresolved-order caveat
+PASS class 6: one stability row per independent model of an assessment (no DIS_PART rows)
+PASS class 1/8: no paper alias a label check would reject on an element-structure phase
+PASS C8: every point has T_K > 0
+PASS C8: no point below room temperature in a schematic field without a lower boundary
+PASS class 3e: no '?' label mapped
+PASS class 2: basis '+pearson' only when the printed and TDB Pearson symbols agree
+PASS class 2: within a diagram, labels with different printed Strukturbericht never share a registry phase
+PASS class 3c: the element of an '(El)' label is a constituent of the mapped phase
+PASS class 7: every espei-zpf phase name is an independent PHASE in a TDB of the system
+PASS class 1: no Greek / compound label on an element-structure model phase (except element polymorph names)
+PASS class 1: every literature Pearson symbol / prototype says it comes from the mapped model phase (or the alias)
+all passed
+
+--- stderr ---
+################ test_r2_thermo.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_r2_thermo.py
+PASS A3 §1 method class: Knudsen cell / misprints / VPTM / HTMS are KEMS, never EMF
+PASS A3 §1 method class: galvanic cells and 'emf 3rd law' stay EMF
+PASS A3 §1 method class: evaluated / estimated / reviewed values are not an experimental method
+PASS A3 §10 reading resolution: 1.0 has one decimal, '1.00' two, 2 none
+PASS A3 §1 calibration: a per-formula value among per-atom values of one state is screened out
+PASS A3 §1 calibration: the state key separates liquid and solid reference states
+PASS A3 §1 calibration: the state composition comes from the printed compound, not a split row's overall composition
+PASS A3 §1 calibration: one cited work printed two ways is one source
+PASS A3 §6 expression terms: A / B / Cp coefficients recognised
+PASS A3 §8 temperature printed in the quantity label
+PASS A3 §10 printed sigma kind: a caption-stated 95 % interval enters as half the printed value
+PASS A4 E3 the DFT-driven basis conversion is gone from literature_quality
+PASS A4 E3: no value carries the circular basis_corrected_from_formula conversion
+PASS A3 §2 / A4 E3: one page-read basis per printed column (value = printed / atoms)
+PASS A3 §7: a column printed without signs is negative as a whole (Co-Y Co17Y2, Co5Y)
+PASS A3 §4: a printed sigma is divided by the same atom count as its value
+PASS A3 §3: no absolute entropy is labelled a formation entropy (SM_FORM <= 15 J/K/mol-atom)
+PASS A3 §5: an accepted H(T) - H(298) with a non-zero value is never stored at 298 K
+PASS A3 §6: no coefficient of a printed expression in T is stored as a value at one temperature
+PASS A3 §8: a quantity printed with a 298 subscript is stored at 298.15 K
+PASS A4 E6: no experimental value carries 0 K
+PASS A3 §8: direct-synthesis / solute-solvent drop standard enthalpies are stored at 298.15 K
+PASS A3 §9: no _FORM quantity is referred to compounds (oxides)
+PASS A3 §9: no reference state is a unit string
+PASS A3 §9: a per-atom unit printed 'kJ/mol/at' keeps its per-atom basis
+PASS A3 §8: a temperature printed in the quantity label is stored
+PASS A4 E7: first-principles rows of mixed tables are evidence class dft, not model
+PASS A4 E7: liquid / amorphous states printed at room temperature are flagged non_crystalline_state
+PASS A3 follow-up: energies referred to another phase (e.g. B2) are not formation quantities
+PASS A3 §1: the EMF formation-enthalpy floor is not inflated by basis errors (<= 6.5 kJ/mol-atom unless prior)
+PASS A3 §1: no spurious KEMS floor from per-formula values (calibrated <= 8 or prior)
+PASS PI rule: below the calibration threshold with >= 5 pairs, floor = max(prior, cleaned robust sigma)
+PASS A3 §1: evaluated / estimated values are never calibration pairs
+0 failures
+
+--- stderr ---
+################ test_r3.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_r3.py
+PASS A4-N1 unit prefix: 'k J' read as J is detected (value = printed / 1000)
+PASS A4-N1 unit prefix: a value printed in J under a kJ caption is not this class
+PASS A1-N1 C4: a corrupt overall composition (Nd = 1) cannot narrow Nd3Ru to a unary
+PASS A1-N1 C4: a generic label (Ln3Ru) is read with the row's element (Sm3Ru -> RU-SM)
+PASS A1-N1 C4: no unary oxygen state for an oxide phase
+PASS A1 C4 residual: a partial printed composition consistent with the formula moves Fe3Al to AL-FE
+PASS A1-N2 split row: a from-formula composition is the printed formula's (Ni5Si2 Si = 0.2857)
+PASS A3-N6 comma decimal: PuO1,52 has 2.52 atoms
+PASS A3-N2 normalised formula: Ru0.4Sn0.6 is per atom
+PASS A3 sec.10: a = 1 of the pure component has no reading uncertainty
+PASS A3-N4 EMF intercept / slope labels
+PASS A3 sec.6 three-term coefficients
+PASS A3-N7 heat content base temperature
+PASS A5 F2: a page range after 'p' is not a year (Kimizuka 1974, p 1801-1802)
+PASS A5 F2: volume:page is not a year (Helv Chim Acta 1953;36:1820)
+PASS invariants: reaction parse and class
+PASS invariants: peritectic / metatectic are not decided by the arrow direction
+PASS invariants: L1 / L2 are liquids (monotectic)
+PASS invariants: comma lists and labelled invariants are not parsed
+PASS A4-N2 parity: liquid element references are not the 0 K DFT reference
+PASS A4-N2 parity: SER solid references pass
+PASS A4-N1: no ESPEI-ready formation value below 0.1 kJ/mol-atom without a page check
+PASS A4-N1: no accepted value stored as printed/1000 under a kJ caption
+PASS A4-N1: Mg-B Table 2 MgB2 is -18.55 kJ/mol-atom
+PASS A1-N1: no record filed under a unary system carries a compound formula label
+PASS A3-N8: no reference-state key outside the record's system
+PASS A1-N2: every from-formula overall composition equals its printed formula
+PASS A3-N6: PuO1,52 -838.0 per formula = -332.5 kJ/mol-atom
+PASS state rule: no accepted invariant / transition / phase composition / formation value without phases
+PASS invariants (a): no table invariant misses a phase its printed reaction names (unless flagged)
+PASS invariants (b): a binary printed reaction that decides its class has a class
+PASS invariants (d): a printed / stored class is never replaced by a derived one
+PASS invariants (f): no ESPEI-ready invariant temperature below 20 K or above 6000 K
+PASS A6-N6: no model-class value whose own method / label names a first-principles method
+PASS A3-N4: no EMF intercept / slope stored as an EMF value
+PASS A3-N7: no heat content relative to a base T other than 298 K stored as HEAT_CONTENT
+PASS H9: no ESPEI-ready formation value in a unit other than kJ/mol-atom / kJ/mol (basis unstated)
+PASS A2-N2: no oxide / carbide compound label mapped to an element structure (betaSiC(Cubic), beta-Y2O3)
+PASS A2-N1: no variable-formula label (InxLa, LixSi) mapped to a fixed compound
+PASS A6-N5: no value read from the COST 507 book is filed under the Mg-Zr article DOI
+PASS A6-N5: the COST 507 book is registered with its own citation
+PASS A4-N2 / A5-N1: no default parity point with a non-SER reference state or a gate failure
+PASS outlier classification: the three classes sum to the examined total
+PASS A6-N1: dft_parity.json no longer describes the lowest-energy pairing only or the withdrawn conversion
+0 failures
+
+--- stderr ---
+################ test_r4_placeholder_phases.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_r4_placeholder_phases.py
+PASS no real phases: ['UNKNOWN']
+PASS no real phases: ['other']
+PASS no real phases: ['unspecified']
+PASS no real phases: ['unknown', 'Other']
+PASS no real phases: []
+PASS real phase present: ['AlNi']
+PASS real phase present: ['L', 'UNKNOWN']
+PASS real phase present: ['FCC_A1']
+PASS real phase present: ['Al3Ni2', 'other']
+PASS sodium is a real phase label, not a placeholder ('Na', 'NA', 'na')
+PASS placeholder variants: ['N/A']
+PASS placeholder variants: [' unknown ']
+PASS placeholder variants: ['-']
+PASS placeholder variants: [None]
+PASS state-phase family GM_FORM: placeholder-only is not accepted
+PASS state-phase family HM_FORM: placeholder-only is not accepted
+PASS state-phase family INVARIANT_TEMPERATURE: placeholder-only is not accepted
+PASS state-phase family PHASE_ASSEMBLAGE: placeholder-only is not accepted
+PASS state-phase family PHASE_COMPOSITION: placeholder-only is not accepted
+PASS state-phase family SM_FORM: placeholder-only is not accepted
+PASS state-phase family TRANSITION_TEMPERATURE: placeholder-only is not accepted
+PASS an elemental sodium record is not demoted
+PASS an already rejected record keeps a single gate entry
+PASS TRANSITION_TEMPERATURE with placeholder phases only is not accepted
+PASS HM_FORM with placeholder phases only is not accepted
+PASS INVARIANT_TEMPERATURE with placeholder phases only is not accepted
+PASS a property outside the state-phase families is untouched (lattice constant)
+PASS a real phase list is untouched
+PASS release: no accepted state-phase record has placeholder-only phases (73542 records read)
+0 failures
+
+--- stderr ---
+################ test_reaction_system_reconciliation.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_reaction_system_reconciliation.py
+...                                                                      [100%]
+3 passed in 0.23s
+
+--- stderr ---
+################ test_reader_agreement.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_reader_agreement.py
+PASS four values exported
+PASS multi_reader published with label
+PASS single_reader published as 'unconfirmed (single reader)'
+PASS single_reader_text_layer published
+PASS no flag in the store -> field absent after clean()
+PASS second Claude reader keeps its id in readers
+PASS first Claude reader unchanged
+PASS CSV columns include reader_agreement and its label
+PASS SCHEMA.md documents the field
+0 failures
+
+--- stderr ---
+################ test_release_integrity.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_release_integrity.py
+PASS distinct: repeated hit merged, label swap merged, two-sided polymorph kept apart
+PASS cited_year M. Fitzner, O.J. Kleppa, Metall. Trans.  -> 1993
+PASS cited_year Geist et al., Acta Cryst. B 26 (1970) 18 -> 1970
+PASS cited_year Y.K. Rao and B. V. Patil: Metall. Trans. -> 1971
+PASS cited_year P.S. Herle, and J.D. Corbett, Inorg. Che -> 2001
+PASS cited_year V. Regnault, Ann. Chim. Phys. 1 (1841) 1 -> 1841
+PASS cited_year E.A. Owen, D.P. Morris, J. Inst. Met. 76 -> 1950
+PASS cited_year Borzone G, Raggio R and Delsante S 2003  -> 2003
+PASS cited_year K.A. Gschneidner, Metall. Trans. B 1 (19 -> 1970
+PASS cited_year: a database year range (1991-2006) is kept as a year
+PASS lattice nm -> angstrom, stored value kept
+PASS lattice pm -> angstrom
+PASS lattice without a printed unit is not converted
+PASS invariants: n_mapper_hits sums to the hits in the JSON files
+PASS invariants: one row per distinct invariant of each file
+PASS invariants: no two rows share file, T (0.1 K), phases and compositions (0.01)
+PASS invariants: phase_diagram_index.n_invariants counts distinct invariants
+PASS cited years: none is a page number of the printed reference (34231 cited sources)
+PASS cited years: none after the citing paper
+PASS running text, lattice units, pressure, page-read signs (record-level checks above)
+PASS espei_ready: quality_fixes espei.espei_ready = released flag count
+PASS espei_ready: the gate-level count is labelled as before the phase rule
+PASS page-check ledger: entries counted as such
+PASS page-check ledger: says who inspected the pages
+PASS licence wording: no fair-use / single-sentence claim in LICENSES.md
+PASS licence wording: no fair-use / single-sentence claim in NOTICE.md
+PASS licence wording: no fair-use / single-sentence claim in llms.txt
+PASS licence wording: no fair-use / single-sentence claim in index.md
+PASS licence wording: no fair-use / single-sentence claim in README.md
+... [trimmed 62 lines] ...
+PASS licence wording: no fair-use claim in review/precision-sample/packets/ORCHID_review_packet_1.html
+PASS licence wording: no fair-use claim in review/precision-sample/packets/ORCHID_review_packet_2.html
+PASS licence wording: no fair-use claim in review/precision-sample/packets/ORCHID_review_packet_3.html
+PASS licence wording: no fair-use claim in review/precision-sample/packets/ORCHID_review_packet_4.html
+PASS licence wording: no fair-use claim in review/precision-sample/packets/ORCHID_review_packet_5.html
+PASS licence wording: no fair-use claim in review/precision-sample/packets/ORCHID_review_packet_6.html
+PASS bibliography: index papers = papers.jsonl lines
+PASS bibliography papers (9,570) stated in zenodo/bibliography.metadata.json
+PASS bibliography edges (60,235) stated in zenodo/bibliography.metadata.json
+PASS bibliography with DOI (7,813) stated in zenodo/bibliography.metadata.json
+PASS DATASET_CARD bibliography_papers row = papers.jsonl
+PASS DATASET_CARD bibliography_edges row = edges
+PASS DATASET_CARD phase_diagram_invariants row = Parquet rows
+PASS hull catalog dft-mp states the upstream energy corrections
+PASS hull catalog dft-oqmd states the upstream energy corrections
+PASS MP GGA_GGA+U hulls: MP2020 named
+PASS quotes: none of 5743 literature quotes is longer than 500 characters
+PASS quotes: 81 clipped quotes carry quote_clipped, keep the printed value and quote_page
+PASS quotes: no JSON file of the release has a `quote` field above 500 characters
+PASS quotes: Parquet literature_values.quote has no value above 500 characters (max 500)
+PASS quotes: Parquet experimental_context.quote has no value above 500 characters (max 500)
+PASS quotes: Parquet dft_parity.quote has no value above 500 characters (max 500)
+0 failures
+
+--- stderr ---
+################ test_report_links.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_report_links.py
+...                                                                      [100%]
+3 passed in 0.04s
+
+--- stderr ---
+################ test_source_reference_corrections.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_source_reference_corrections.py
+......                                                                   [100%]
+6 passed in 0.06s
+
+--- stderr ---
+################ test_srsi_evidence_review.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_srsi_evidence_review.py
+.....................                                                    [100%]
+21 passed in 0.08s
+
+--- stderr ---
+################ test_state_page_corrections.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_state_page_corrections.py
+...                                                                      [100%]
+3 passed in 0.18s
+
+--- stderr ---
+################ test_table_context_20261027.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_table_context_20261027.py
+.....                                                                    [100%]
+5 passed in 0.05s
+
+--- stderr ---
+################ test_table_context_batches_20261027.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_table_context_batches_20261027.py
+PASS one patch per record
+PASS before-guards exclude gate-derived flags
+PASS patches change phases and structure only
+PASS every patch carries page evidence
+PASS structure fields name their printed source
+PASS released records already carry every patch (replay applies nothing)
+all passed
+
+--- stderr ---
+################ test_table_defects_20261028.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_table_defects_20261028.py
+............                                                             [100%]
+12 passed in 0.84s
+
+--- stderr ---
+################ test_temperature_page_corrections.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_temperature_page_corrections.py
+......                                                                   [100%]
+6 passed in 0.15s
+
+--- stderr ---
+################ test_terminal_mapping.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_terminal_mapping.py
+.....                                                                    [100%]
+5 passed in 1.26s
+
+--- stderr ---
+################ test_uncertainty_budget.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_uncertainty_budget.py
+PASS calorimetry class calibrated from 36 same-class pairs of 12 states
+PASS floor = robust sigma rounded up to 0.1, >= ESPEI default 0.5
+PASS printed sigma kept as printed (0.08) and the floor applied
+PASS printed values and printed uncertainties unchanged
+PASS every record has a budget with every component field
+PASS no method printed: class unknown, prior (no pairs), never below 0.5 kJ/mol-atom
+PASS mass-basis unit: no sigma_effective, reason given
+PASS tiny printed sigma (0.01) raised to the floor
+PASS rule: max(printed, reading, method) in quadrature with composition
+PASS rule: scatter replaces when larger
+PASS rule: printed above the floor is kept (no double counting)
+PASS classes: KEMS second law, EMF, combustion, DTA temperature, EPMA composition
+PASS basis-error pair (ratio = formula atom count) excluded
+PASS release: every one of 73542 records has a budget of calibration orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec
+PASS release: budget quantities match the record's measured quantities; reasons where no sigma
+PASS release: sigma_effective >= max(printed, reading, method); formation floors >= 0.5 kJ/mol-atom
+PASS ESPEI calibration copy byte-identical to the literature calibration
+PASS ESPEI: all 1418 thermochemical datasets weighted by sigma_effective, budgets per value
+0 failures
+
+--- stderr ---
+################ test_uncertainty_separation.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python -m pytest -q -p no:cacheprovider tools/tests/test_uncertainty_separation.py
+...                                                                      [100%]
+3 passed in 0.17s
+
+--- stderr ---
+################ test_zenodo_writeback.log
+$ /tmp/arroyave/venvs/orchid-site/bin/python tools/tests/test_zenodo_writeback.py
+moved 2 destination-only file(s) to /tmp/orchid-writeback-test-57qgxgwe/superseded/2026-01-01-zenodo-writeback (listed in its README.md)
+synced literature/: 3 file(s) updated
+PASS changed file copied
+PASS destination-only file no longer in the data tree
+PASS destination-only file moved, content intact
+PASS earlier superseded copy not overwritten
+PASS README lists every moved file
+PASS two files reported moved
+synced literature/: 0 file(s) updated
+PASS nothing left to move on a second sync
+PASS ten records
+PASS partial DOI map refused (names the missing record)
+PASS partial map wrote nothing
+PASS partial DOI map refused in a dry run too
+PASS non-distinct DOIs refused
+PASS placeholder given as a DOI refused
+replaced placeholders in 2 file(s) in /tmp/orchid-writeback-test-57qgxgwe/wb/data
+    README.md
+    zenodo/dois.json
+replaced placeholders in 1 file(s) in /tmp/orchid-writeback-test-57qgxgwe/wb/site
+    index.html
+--no-rebuild: run the builders and `zenodo_release.py manifest` before bundling
+PASS complete map, clean tree: writeback passes
+PASS all placeholders replaced
+PASS dois.json holds the ten DOIs
+replaced placeholders in 2 file(s) in /tmp/orchid-writeback-test-57qgxgwe/wb/data
+    README.md
+    zenodo/dois.json
+replaced placeholders in 1 file(s) in /tmp/orchid-writeback-test-57qgxgwe/wb/site
+    index.html
+placeholder still present: data: literature/dump.jsonl.gz
+placeholder still present: data: notes.md
+FAIL: 2 file(s) still hold a zenodo.PENDING- placeholder (binary files such as Parquet and .gz need the staged rebuild; text files need inspection)
+PASS leftover placeholder fails writeback
+PASS leftover outside the map found
+PASS leftover inside a .gz found
+PASS tools/ code not reported
+0 failure(s)
+
+--- stderr ---

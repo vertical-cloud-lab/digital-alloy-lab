@@ -1,0 +1,21 @@
+$ python examples/01_compositions.py
+============================================================
+Example 1: Ternary TM systems (no rare earths)
+============================================================
+Total compositions: 10
+System sizes:       {3}
+First 5:            [['Cr', 'Hf', 'Mo'], ['Cr', 'Hf', 'Ta'], ['Cr', 'Hf', 'Ti'], ['Cr', 'Mo', 'Ta'], ['Cr', 'Mo', 'Ti']]
+
+============================================================
+Example 2: Binary and ternary TM systems (allow_lower_order=True)
+============================================================
+Total compositions: 10
+System sizes:       {2, 3}
+All compositions:   [['Cr', 'Hf'], ['Cr', 'Hf', 'Ta'], ['Cr', 'Hf', 'Zr'], ['Cr', 'Ta'], ['Cr', 'Ta', 'Zr'], ['Cr', 'Zr'], ['Hf', 'Ta'], ['Hf', 'Ta', 'Zr'], ['Hf', 'Zr'], ['Ta', 'Zr']]
+
+============================================================
+Example 3: Two TMs + one rare earth (ternary)
+============================================================
+Total compositions: 6
+All compositions:   [['Hf', 'La', 'Ta'], ['Hf', 'La', 'Zr'], ['Hf', 'Ta', 'Y'], ['Hf', 'Y', 'Zr'], ['La', 'Ta', 'Zr'], ['Ta', 'Y', 'Zr']]
+exit=0 wall=.025706699s

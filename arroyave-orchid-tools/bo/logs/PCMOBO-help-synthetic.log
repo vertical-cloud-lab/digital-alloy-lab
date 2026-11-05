@@ -1,0 +1,44 @@
+usage: pcmbo-synthetic [-h] --benchmark
+                       {c2dtlz2_2obj,c2dtlz2_3obj,constr,constrained_branin_currin,disc_brake}
+                       --policy POLICY [--seeds SEEDS]
+                       [--iterations ITERATIONS] [--q Q] [--n-init N_INIT]
+                       [--workers WORKERS] --results-dir RESULTS_DIR
+                       [--llm-model LLM_MODEL] [--llm-provider LLM_PROVIDER]
+                       [--llm-timeout LLM_TIMEOUT]
+                       [--memory-window MEMORY_WINDOW] [--env-path ENV_PATH]
+                       [--device DEVICE] [--dtype {float64,float32}]
+                       [--acq-mc-samples ACQ_MC_SAMPLES]
+                       [--acq-raw-samples ACQ_RAW_SAMPLES]
+                       [--acq-num-restarts ACQ_NUM_RESTARTS]
+                       [--acq-beta ACQ_BETA] [--bandit-c BANDIT_C]
+                       [--bandit-w-feas BANDIT_W_FEAS]
+                       [--bandit-w-hv BANDIT_W_HV]
+                       [--bandit-warmstart BANDIT_WARMSTART]
+
+Run constrained MO BO campaign for one benchmark/policy.
+
+options:
+  -h, --help            show this help message and exit
+  --benchmark {c2dtlz2_2obj,c2dtlz2_3obj,constr,constrained_branin_currin,disc_brake}
+  --policy POLICY
+  --seeds SEEDS
+  --iterations ITERATIONS
+  --q Q
+  --n-init N_INIT
+  --workers WORKERS
+  --results-dir RESULTS_DIR
+  --llm-model LLM_MODEL
+  --llm-provider LLM_PROVIDER
+  --llm-timeout LLM_TIMEOUT
+  --memory-window MEMORY_WINDOW
+  --env-path ENV_PATH
+  --device DEVICE
+  --dtype {float64,float32}
+  --acq-mc-samples ACQ_MC_SAMPLES
+  --acq-raw-samples ACQ_RAW_SAMPLES
+  --acq-num-restarts ACQ_NUM_RESTARTS
+  --acq-beta ACQ_BETA
+  --bandit-c BANDIT_C
+  --bandit-w-feas BANDIT_W_FEAS
+  --bandit-w-hv BANDIT_W_HV
+  --bandit-warmstart BANDIT_WARMSTART

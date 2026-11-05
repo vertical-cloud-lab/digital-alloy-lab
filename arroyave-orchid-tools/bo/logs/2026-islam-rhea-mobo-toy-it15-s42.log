@@ -1,0 +1,32 @@
+/tmp/arroyave/venvs/rhea-mobo/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Random: hypervolume/oracle = 0.7223
+Step 1: hypervolume/oracle = 0.7223
+Random: hypervolume/oracle = 0.7223
+Step 2: hypervolume/oracle = 0.7223
+Random: hypervolume/oracle = 0.7223
+Step 3: hypervolume/oracle = 0.8105
+Random: hypervolume/oracle = 0.7223
+Step 4: hypervolume/oracle = 0.8313
+Random: hypervolume/oracle = 0.7223
+Step 5: hypervolume/oracle = 0.8433
+Random: hypervolume/oracle = 0.7654
+Step 6: hypervolume/oracle = 0.8433
+Random: hypervolume/oracle = 0.7654
+Step 7: hypervolume/oracle = 0.8440
+Random: hypervolume/oracle = 0.7654
+Step 8: hypervolume/oracle = 0.8472
+Random: hypervolume/oracle = 0.7654
+Step 9: hypervolume/oracle = 0.8502
+Random: hypervolume/oracle = 0.7654
+Step 10: hypervolume/oracle = 0.8502
+Random: hypervolume/oracle = 0.7654
+Step 11: hypervolume/oracle = 0.8502
+Random: hypervolume/oracle = 0.7654
+Step 12: hypervolume/oracle = 0.8502
+Random: hypervolume/oracle = 0.7654
+Step 13: hypervolume/oracle = 0.8828
+Random: hypervolume/oracle = 0.7654
+Step 14: hypervolume/oracle = 0.8828
+Random: hypervolume/oracle = 0.7654
+Step 15: hypervolume/oracle = 0.8828

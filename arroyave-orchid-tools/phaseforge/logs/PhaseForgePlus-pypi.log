@@ -1,0 +1,16 @@
+Installed 149 packages in 379ms
+ + espei==0.9.1
+ + phaseforgeplus==0.1.0
+ + pycalphad==0.11.2
+install exit=0 elapsed=1s
+phaseforgeplus 0.1.0 espei 0.9.1 pycalphad 0.11.2
+Traceback (most recent call last):
+  File "/tmp/arroyave/results/phaseforge/scripts/PhaseForgePlus-pypi-check.py", line 20, in <module>
+    f, g = func(x0)
+           ^^^^^^^^
+  File "/tmp/arroyave/venvs/pfp-pypi/lib/python3.11/site-packages/phaseforgeplus/utils/objective.py", line 29, in func
+    likelihood_zpf, gradient_zpf = residual_func_zpf.get_likelihood(np.array(params))
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable numpy.float64 object
+objective FAILED: TypeError cannot unpack non-iterable numpy.float64 object
+run exit=0 elapsed=13s

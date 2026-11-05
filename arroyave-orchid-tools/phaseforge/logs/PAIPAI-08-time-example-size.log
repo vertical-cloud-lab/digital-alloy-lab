@@ -1,0 +1,10 @@
+$ python scripts/PAIPAI-time_example_size.py PAIPAI_master/fast/POSCAR1 5   (254-atom candidate from example/struc.in; 1 thread)
+[tensorpotential] Info: Environment variable TF_USE_LEGACY_KERAS is automatically set to '1'.
+[tensorpotential] Info: tf.experimental.numpy behavior enabled.
+[tensorpotential] Info: TensorFloat-32 execution disabled.
+Using cached GRACE model from /tmp/arroyave/work/PAIPAI_home/.cache/grace/GRACE-2L-OMAT
+Model license: Academic Software License
+atoms=254 formula=Hf37 Ta63 Ti37 Nb113 B2 O2
+model load 10.8 s; first relax (5 FIRE steps, includes graph build) 27.4 s; second relax (5 steps) 11.5 s -> 1.92 s per force call
+E after 5 steps = -2547.6661 eV (-10.0302 eV/atom)
+exit=0 wall=56s

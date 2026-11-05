@@ -1,0 +1,14 @@
+$ timeout 45 mcsqs -n=48 -l=rndstr.in -2=5.48194 -3=5.24856 -4=4.47599 -wr=20 -wn=0.75 -wd=1   (plain, no -ip; same dir as BLADE run 1)
+Terminated
+exit=124 wall=45s
+bestsqs.out
+clusters.out
+mcsqs.log
+rndstr.in
+rndstrgrp.out
+sqscell.out
+sym.out
+Generating supercells...
+Writing supercells...
+Initializing random supercells...
+grep: bestcorr.out: No such file or directory

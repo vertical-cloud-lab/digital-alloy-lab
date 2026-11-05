@@ -1,0 +1,17 @@
+sqs_lev=0_a_Cu=1 skipped for property func
+sqs_lev=0_a_Ni=1 skipped for property func
+sqs_lev=1_a_Cu=0.5,a_Ni=0.5 skipped for property func
+Found no data for func
+sqs_lev=0_a_Cu=1
+sqs_lev=0_a_Ni=1
+sqs_lev=1_a_Cu=0.5,a_Ni=0.5
+sqs_lev=0_a_Cu=1 skipped for property svib_ht
+sqs_lev=0_a_Ni=1 skipped for property svib_ht
+sqs_lev=1_a_Cu=0.5,a_Ni=0.5 skipped for property svib_ht
+Found no data for svib_ht
+Fit completed
+Found elements CU NI
+Phases found in SGTE database: FCC_A1_CU FCC_A1_NI
+Using:
+FCC_A1/FCC_A1.tdb
+TDB file created

@@ -1,0 +1,173 @@
+/tmp/arroyave/work/pf-CuNi3/FCC_A1/sqs_lev=0_a_Cu=1
+MLIP Name=Grace
+Model=GRACE-2L-OMAT
+Running relaxation with GraceCalculator and model 'GRACE-2L-OMAT'...
+2026-11-05 04:25:18.383117: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1793852718.394677   31583 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1793852718.398388   31583 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1793852718.408680   31583 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852718.408706   31583 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852718.408709   31583 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852718.408710   31583 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+WARNING:tensorflow:UserWarning: enabling the new type promotion must happen at the beginning of the program. Please ensure no TF APIs have been used yet.
+2026-11-05 04:25:19.914996: E external/local_xla/xla/stream_executor/cuda/cuda_platform.cc:51] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1793852720.947165   31583 service.cc:152] XLA service 0x4ae139a0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+I0000 00:00:1793852720.947209   31583 service.cc:160]   StreamExecutor device (0): Host, Default Version
+I0000 00:00:1793852723.165939   31583 device_compiler.h:188] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+[tensorpotential] Info: Environment variable TF_USE_LEGACY_KERAS is automatically set to '1'.
+[tensorpotential] Info: tf.experimental.numpy behavior enabled.
+[tensorpotential] Info: TensorFloat-32 execution disabled.
+Using cached GRACE model from /tmp/arroyave/home/.cache/grace/GRACE-2L-OMAT
+Model license: Academic Software License
+      Step     Time          Energy          fmax
+FIRE:    0 04:25:23       -3.754988        0.031557
+FIRE:    1 04:25:23       -3.755013        0.021611
+FIRE:    2 04:25:23       -3.755034        0.004772
+FIRE:    3 04:25:23       -3.755026        0.013693
+FIRE:    4 04:25:23       -3.755027        0.012599
+FIRE:    5 04:25:23       -3.755030        0.010499
+FIRE:    6 04:25:23       -3.755032        0.007563
+FIRE:    7 04:25:23       -3.755034        0.004027
+FIRE:    8 04:25:23       -3.755035        0.000176
+then: then/endif not found.
+/tmp/arroyave/work/pf-CuNi3/FCC_A1/sqs_lev=0_a_Ni=1
+MLIP Name=Grace
+Model=GRACE-2L-OMAT
+Running relaxation with GraceCalculator and model 'GRACE-2L-OMAT'...
+2026-11-05 04:25:25.949906: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1793852725.961541   31685 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1793852725.965092   31685 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1793852725.974957   31685 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852725.974998   31685 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852725.975000   31685 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852725.975002   31685 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+WARNING:tensorflow:UserWarning: enabling the new type promotion must happen at the beginning of the program. Please ensure no TF APIs have been used yet.
+2026-11-05 04:25:27.619423: E external/local_xla/xla/stream_executor/cuda/cuda_platform.cc:51] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1793852728.718974   31685 service.cc:152] XLA service 0x22333310 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+I0000 00:00:1793852728.719020   31685 service.cc:160]   StreamExecutor device (0): Host, Default Version
+I0000 00:00:1793852731.040596   31685 device_compiler.h:188] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+[tensorpotential] Info: Environment variable TF_USE_LEGACY_KERAS is automatically set to '1'.
+[tensorpotential] Info: tf.experimental.numpy behavior enabled.
+[tensorpotential] Info: TensorFloat-32 execution disabled.
+Using cached GRACE model from /tmp/arroyave/home/.cache/grace/GRACE-2L-OMAT
+Model license: Academic Software License
+      Step     Time          Energy          fmax
+FIRE:    0 04:25:31       -5.492466        0.186513
+FIRE:    1 04:25:31       -5.493303        0.112766
+FIRE:    2 04:25:31       -5.493776        0.007932
+FIRE:    3 04:25:31       -5.493777        0.007122
+FIRE:    4 04:25:31       -5.493777        0.005587
+FIRE:    5 04:25:31       -5.493778        0.003482
+FIRE:    6 04:25:31       -5.493778        0.001023
+FIRE:    7 04:25:31       -5.493778        0.001539
+FIRE:    8 04:25:31       -5.493778        0.001499
+FIRE:    9 04:25:31       -5.493778        0.001422
+FIRE:   10 04:25:31       -5.493778        0.001308
+FIRE:   11 04:25:31       -5.493778        0.001162
+FIRE:   12 04:25:31       -5.493778        0.000985
+then: then/endif not found.
+/tmp/arroyave/work/pf-CuNi3/FCC_A1/sqs_lev=1_a_Cu=0.5,a_Ni=0.5
+MLIP Name=Grace
+Model=GRACE-2L-OMAT
+Running relaxation with GraceCalculator and model 'GRACE-2L-OMAT'...
+2026-11-05 04:25:33.870198: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1793852733.881742   31804 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1793852733.885345   31804 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1793852733.895445   31804 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852733.895464   31804 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852733.895466   31804 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1793852733.895468   31804 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+WARNING:tensorflow:UserWarning: enabling the new type promotion must happen at the beginning of the program. Please ensure no TF APIs have been used yet.
+2026-11-05 04:25:35.544856: E external/local_xla/xla/stream_executor/cuda/cuda_platform.cc:51] failed call to cuInit: INTERNAL: CUDA error: Failed call to cuInit: UNKNOWN ERROR (303)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1793852736.730309   31804 service.cc:152] XLA service 0x42097620 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+I0000 00:00:1793852736.730351   31804 service.cc:160]   StreamExecutor device (0): Host, Default Version
+I0000 00:00:1793852739.285136   31804 device_compiler.h:188] Compiled cluster using XLA!  This line is logged at most once for the lifetime of the process.
+[tensorpotential] Info: Environment variable TF_USE_LEGACY_KERAS is automatically set to '1'.
+[tensorpotential] Info: tf.experimental.numpy behavior enabled.
+[tensorpotential] Info: TensorFloat-32 execution disabled.
+Using cached GRACE model from /tmp/arroyave/home/.cache/grace/GRACE-2L-OMAT
+Model license: Academic Software License
+      Step     Time          Energy          fmax
+FIRE:    0 04:25:39     -147.117608        0.441497
+FIRE:    1 04:25:39     -147.137570        0.398181
+FIRE:    2 04:25:39     -147.169949        0.313772
+FIRE:    3 04:25:39     -147.202504        0.193447
+FIRE:    4 04:25:39     -147.223193        0.154157
+FIRE:    5 04:25:39     -147.226388        0.137314
+FIRE:    6 04:25:40     -147.226858        0.137073
+FIRE:    7 04:25:40     -147.227755        0.136583
+FIRE:    8 04:25:40     -147.229006        0.135828
+FIRE:    9 04:25:40     -147.230509        0.134783
+FIRE:   10 04:25:40     -147.232151        0.133412
+FIRE:   11 04:25:40     -147.233825        0.131673
+FIRE:   12 04:25:40     -147.235443        0.129515
+FIRE:   13 04:25:40     -147.237103        0.126591
+FIRE:   14 04:25:40     -147.238763        0.122673
+FIRE:   15 04:25:41     -147.240446        0.117530
+FIRE:   16 04:25:41     -147.242259        0.110961
+FIRE:   17 04:25:41     -147.244362        0.102790
+FIRE:   18 04:25:41     -147.246857        0.092828
+FIRE:   19 04:25:41     -147.249649        0.080856
+FIRE:   20 04:25:41     -147.252353        0.066616
+FIRE:   21 04:25:41     -147.254445        0.049934
+FIRE:   22 04:25:41     -147.255766        0.048360
+FIRE:   23 04:25:41     -147.256624        0.043830
+FIRE:   24 04:25:42     -147.257019        0.025909
+FIRE:   25 04:25:42     -147.257072        0.024425
+FIRE:   26 04:25:42     -147.257166        0.021582
+FIRE:   27 04:25:42     -147.257279        0.017638
+FIRE:   28 04:25:42     -147.257388        0.013761
+FIRE:   29 04:25:42     -147.257474        0.013083
+FIRE:   30 04:25:42     -147.257530        0.012318
+FIRE:   31 04:25:42     -147.257561        0.012756
+FIRE:   32 04:25:42     -147.257584        0.013510
+FIRE:   33 04:25:43     -147.257610        0.012468
+FIRE:   34 04:25:43     -147.257641        0.009151
+FIRE:   35 04:25:43     -147.257670        0.007953
+FIRE:   36 04:25:43     -147.257679        0.008047
+FIRE:   37 04:25:43     -147.257682        0.007748
+FIRE:   38 04:25:43     -147.257687        0.007169
+FIRE:   39 04:25:43     -147.257693        0.006604
+FIRE:   40 04:25:43     -147.257701        0.006549
+FIRE:   41 04:25:43     -147.257709        0.006478
+FIRE:   42 04:25:44     -147.257717        0.006390
+FIRE:   43 04:25:44     -147.257724        0.006284
+FIRE:   44 04:25:44     -147.257732        0.006142
+FIRE:   45 04:25:44     -147.257740        0.005958
+FIRE:   46 04:25:44     -147.257747        0.005720
+FIRE:   47 04:25:44     -147.257754        0.005416
+FIRE:   48 04:25:44     -147.257758        0.005031
+FIRE:   49 04:25:44     -147.257761        0.004560
+FIRE:   50 04:25:44     -147.257762        0.004017
+FIRE:   51 04:25:45     -147.257765        0.003420
+FIRE:   52 04:25:45     -147.257769        0.003633
+FIRE:   53 04:25:45     -147.257776        0.004025
+FIRE:   54 04:25:45     -147.257785        0.003375
+FIRE:   55 04:25:45     -147.257794        0.003562
+FIRE:   56 04:25:45     -147.257799        0.003619
+FIRE:   57 04:25:45     -147.257800        0.003507
+FIRE:   58 04:25:45     -147.257801        0.003474
+FIRE:   59 04:25:46     -147.257803        0.003409
+FIRE:   60 04:25:46     -147.257804        0.003311
+FIRE:   61 04:25:46     -147.257806        0.003179
+FIRE:   62 04:25:46     -147.257807        0.003014
+FIRE:   63 04:25:46     -147.257809        0.002817
+FIRE:   64 04:25:46     -147.257810        0.002591
+FIRE:   65 04:25:46     -147.257811        0.002317
+FIRE:   66 04:25:46     -147.257812        0.002001
+FIRE:   67 04:25:46     -147.257813        0.001656
+FIRE:   68 04:25:47     -147.257814        0.001379
+FIRE:   69 04:25:47     -147.257816        0.001550
+FIRE:   70 04:25:47     -147.257817        0.001668
+FIRE:   71 04:25:47     -147.257819        0.001703
+FIRE:   72 04:25:47     -147.257820        0.001638
+FIRE:   73 04:25:47     -147.257821        0.001449
+FIRE:   74 04:25:47     -147.257823        0.001107
+FIRE:   75 04:25:47     -147.257825        0.000611
+then: then/endif not found.

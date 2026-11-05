@@ -1,0 +1,44 @@
+device: cpu | sam2 cfg: sam2.1_hiera_t.yaml | ckpt: sam2.1_hiera_tiny.pt
+{
+ "seconds_total": 91.9,
+ "stages": [
+  {
+   "stage": "classical",
+   "round": -1,
+   "num_proposals": 952,
+   "num_candidate_masks": 952,
+   "num_instances_selected": 250,
+   "union_area_frac": 0.51148223876758,
+   "top_scores": [
+    1.507,
+    1.485,
+    1.481,
+    1.473,
+    1.468
+   ]
+  },
+  {
+   "stage": "sam_light",
+   "round": 0,
+   "num_proposals": 400,
+   "num_candidate_masks": 120,
+   "num_instances_selected": 44,
+   "union_area_frac": 0.2972984313953503,
+   "top_scores": [
+    1.413,
+    1.4,
+    1.399,
+    1.398,
+    1.397
+   ]
+  }
+ ],
+ "final_union_area_frac": 0.2972984313964844,
+ "final_num_selected": 44,
+ "IoU_vs_bundled_mask (mask>127)": 0.004,
+ "IoU_vs_bundled_mask (mask<=127)": 0.348
+}
+
+real	1m44.269s
+user	1m7.768s
+sys	0m1.748s

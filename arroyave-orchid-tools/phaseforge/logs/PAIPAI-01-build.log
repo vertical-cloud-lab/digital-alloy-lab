@@ -1,0 +1,35 @@
+$ cmake .. -DCMAKE_INSTALL_PREFIX=/tmp/arroyave/work/PAIPAI/prefix && cmake --build . -j2 --target install
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Found Python3: /usr/bin/python3.12 (found version "3.12.3") found components: Interpreter
+-- Configuring done (2.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/arroyave/work/PAIPAI/build
+[ 20%] Building CXX object CMakeFiles/mc_paipai.dir/src/constants.cpp.o
+[ 40%] Building CXX object CMakeFiles/mc_paipai.dir/src/mcpaipai.cpp.o
+[ 60%] Building CXX object CMakeFiles/mc_paipai.dir/src/element.cpp.o
+[ 80%] Building CXX object CMakeFiles/mc_paipai.dir/src/structure.cpp.o
+/tmp/arroyave/work/PAIPAI/src/structure.cpp: In member function ‘double Structure::calculateEnergyORB()’:
+/tmp/arroyave/work/PAIPAI/src/structure.cpp:462:15: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  462 |         system("python calc.py");
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~
+/tmp/arroyave/work/PAIPAI/src/structure.cpp: In member function ‘double Structure::relaxedEnergyORB()’:
+/tmp/arroyave/work/PAIPAI/src/structure.cpp:471:15: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  471 |         system("python relax.py");
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~~
+[100%] Linking CXX executable mc_paipai
+[100%] Built target mc_paipai
+Install the project...
+-- Install configuration: "Release"
+-- Installing: /tmp/arroyave/work/PAIPAI/prefix/bin/mc_paipai
+-- Installing: /tmp/arroyave/work/PAIPAI/prefix/bin/paipai
+-- Installing: /tmp/arroyave/work/PAIPAI/prefix/bin/fast_worker.py
+-- Installing: /tmp/arroyave/work/PAIPAI/prefix/bin/slow_worker.py
+exit=0 wall=8s

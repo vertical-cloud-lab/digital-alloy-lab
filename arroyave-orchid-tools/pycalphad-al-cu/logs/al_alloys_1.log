@@ -1,0 +1,10 @@
+=== al-alloys:AlSi10Mg|AlSi12Mg (Si-enriched) ===
+[AlSi10Mg] 37 phases; models built 0 s
+[AlSi10Mg] events liquidus=595.4C, solidus=568.8C, FCC_A1=595.4C, SI_DIAMOND_A4=575.9C (2 s)
+[AlSi10Mg] equilibrium done (3 s); Scheil...
+[AlSi10Mg] liq 595.4 sol 568.8 Si-start 575.9; Scheil fs0.9 568.0 fs0.99 559.4 end 559.4 f_eut 0.766 (8.4 s)
+[AlSi12Mg (Si-enriched)] 37 phases; models built 1 s
+[AlSi12Mg (Si-enriched)] events liquidus=580.9C, solidus=568.6C, FCC_A1=580.9C, SI_DIAMOND_A4=576.2C (3 s)
+[AlSi12Mg (Si-enriched)] equilibrium done (3 s); Scheil...
+[AlSi12Mg (Si-enriched)] liq 580.9 sol 568.6 Si-start 576.2; Scheil fs0.9 567.9 fs0.99 559.5 end 559.4 f_eut 0.950 (6.4 s)
+=== al-alloys:AlSi10Mg|AlSi12Mg (Si-enriched) done in 19 s ===

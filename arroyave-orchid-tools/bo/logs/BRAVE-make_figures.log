@@ -1,0 +1,40 @@
+/tmp/arroyave/venvs/BRAVE/bin/python figures_code/make_figure13_hardness_bars.py       # fig_12_hdyn
+wrote /tmp/arroyave/work/BRAVE/paper/fig_12_hdyn.pdf
+wrote /tmp/arroyave/work/BRAVE/paper/fig_12_hdyn.png
+/tmp/arroyave/venvs/BRAVE/bin/python figures_code/make_figure14_ratio.py               # fig_13_dyn_qs_ratio
+wrote /tmp/arroyave/work/BRAVE/paper/fig_13_dyn_qs_ratio.pdf
+wrote /tmp/arroyave/work/BRAVE/paper/fig_13_dyn_qs_ratio.png
+/tmp/arroyave/venvs/BRAVE/bin/python figures_code/make_figure14_boxplots.py            # fig_14_boxplot
+wrote /tmp/arroyave/work/BRAVE/paper/fig_14_boxplot.pdf
+wrote /tmp/arroyave/work/BRAVE/paper/fig_14_boxplot.png
+/tmp/arroyave/venvs/BRAVE/bin/python figures_code/make_figure17_pair_plots.py          # fig_16_pair_plots
+wrote /tmp/arroyave/work/BRAVE/paper/fig_16_pair_plots.pdf
+wrote /tmp/arroyave/work/BRAVE/paper/fig_16_pair_plots.png
+/tmp/arroyave/venvs/BRAVE/bin/python figures_code/make_figure19_m_relationships.py     # fig_18_m_plots
+wrote /tmp/arroyave/work/BRAVE/paper/fig_18_m_plots.pdf
+wrote /tmp/arroyave/work/BRAVE/paper/fig_18_m_plots.png
+/tmp/arroyave/venvs/BRAVE/bin/python figures_code/make_figure_V_YS_feasibility.py      # fig_19_v_ys_feasibility
+/tmp/arroyave/work/BRAVE/figures_code/make_figure_V_YS_feasibility.py:208: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  fig.tight_layout()
+Campaign 2 total: 48
+Feasible (XRD Phase = FCC): 33
+Infeasible (sigma / processing failure): 15
+Feasible with measurable YS: n = 30
+Infeasible with measurable YS: n = 4
+Regression on feasible set: r = 0.836, P = 8.66e-09, slope = 8.3 MPa/at%
+Regression on all with measurable YS: r = 0.821, P = 2.84e-09
+V vs infeasibility (all 48): r = 0.535, P = 9.02e-05
+Bin V (at.%) | count | fails | rate
+     0       |     8 |     0 | 0.00
+     4       |    10 |     1 | 0.10
+     8       |     6 |     1 | 0.17
+    12       |     9 |     2 | 0.22
+    16       |     4 |     4 | 1.00
+    20       |     5 |     4 | 0.80
+    24       |     6 |     3 | 0.50
+
+Saved: /tmp/arroyave/work/BRAVE/paper/fig_19_v_ys_feasibility.pdf
+Saved: /tmp/arroyave/work/BRAVE/paper/fig_19_v_ys_feasibility.png
+/tmp/arroyave/venvs/BRAVE/bin/python figures_code/make_affine_projection.py            # fig_08_affine
+saved /tmp/arroyave/work/BRAVE/paper/fig_08_affine.pdf
+saved /tmp/arroyave/work/BRAVE/paper/fig_08_affine.png

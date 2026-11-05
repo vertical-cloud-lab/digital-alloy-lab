@@ -1,0 +1,13 @@
+functions loaded: ['add_pareto_as_col_to_df', 'assign_clusters', 'calculate_medoids_with_clusters', 'calculate_medoids_with_clusters_normalized', 'extract_elements', 'get_medoids', 'import_data', 'pareto_maximum']
+data_main shape: (3842, 11) | Pareto points: 50 | Sconf_class counts: {2: 2310, 1: 1532}
+elements: ['Al', 'Cr', 'Fe', 'Co', 'Ni']
+MED-EL: 60 k-medoid batches in 12.2 s
+MED-EL+S: 60 k-medoid batches in 11.1 s
+PERFECT: 60 output-space k-medoid batches in 24.8 s
+             n  bbox_median    bbox_mean  meandist_median  frac_with_pareto  n_selected_mean
+strategy                                                                                    
+RAND      1000   646.493587   782.076033        48.304879          0.232000             20.0
+MED-EL      60   833.061346   771.775406        51.258955          0.083333             20.0
+MED-EL+S    60   903.032431   899.452683        54.092160          0.033333             20.0
+PERFECT     60  1565.444263  1578.301395        93.763086          0.000000             20.0
+done

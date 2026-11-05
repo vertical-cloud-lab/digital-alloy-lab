@@ -1,0 +1,190 @@
+2026-11-05 04:13:45,023 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:13:45,023 - BAREFOOT - INFO - #                                                       #
+2026-11-05 04:13:45,023 - BAREFOOT - INFO - #        Start BAREFOOT Framework Initialization        #
+2026-11-05 04:13:45,023 - BAREFOOT - INFO - #                                                       #
+2026-11-05 04:13:45,023 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:13:45,023 - BAREFOOT - INFO - *********************************************************
+2026-11-05 04:13:45,023 - BAREFOOT - INFO - * Calculation Name: FullSingleNode_med   
+2026-11-05 04:13:45,023 - BAREFOOT - INFO - *********************************************************
+2026-11-05 04:13:46,287 - BAREFOOT - INFO - Initialization Completed
+2026-11-05 04:13:46,290 - BAREFOOT - INFO - Reification Object Initialized. Ready for Calculations
+2026-11-05 04:13:46,290 - BAREFOOT - INFO - Start Full BAREFOOT Framework Calculation
+2026-11-05 04:13:46,290 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:13:46,290 - BAREFOOT - INFO - #                Start Iteration : 0000                 #
+2026-11-05 04:13:46,290 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:13:46,304 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:13:50,700 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:13:50,705 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:13:50,705 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:13:51,838 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:13:51,841 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:13:51,841 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:13:51,841 - BAREFOOT - INFO - Iteration 0 Completed Successfully
+2026-11-05 04:13:51,841 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:13:51,841 - BAREFOOT - INFO - #                Start Iteration : 0001                 #
+2026-11-05 04:13:51,841 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:13:51,854 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:13:56,908 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:13:56,912 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:13:56,913 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:13:58,075 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:13:58,077 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:13:58,077 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:13:58,077 - BAREFOOT - INFO - Iteration 1 Completed Successfully
+2026-11-05 04:13:58,077 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:13:58,077 - BAREFOOT - INFO - #                Start Iteration : 0002                 #
+2026-11-05 04:13:58,077 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:13:58,087 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:14:02,458 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:14:02,463 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:14:02,463 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:14:03,667 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:14:03,667 - BAREFOOT - INFO - Start Truth Model Evaluations
+2026-11-05 04:14:03,673 - BAREFOOT - INFO - Start Max Value Calculations | 50 Sets
+2026-11-05 04:14:05,535 - BAREFOOT - INFO - Max Value Calculations Completed
+2026-11-05 04:14:05,537 - BAREFOOT - INFO - Start Truth Model Evaluations | 5 Sets
+2026-11-05 04:14:06,731 - BAREFOOT - INFO - Truth Model Evaluations Completed
+2026-11-05 04:14:06,734 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:14:06,734 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:14:06,734 - BAREFOOT - INFO - Iteration 2 Completed Successfully
+2026-11-05 04:14:06,734 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:06,734 - BAREFOOT - INFO - #                Start Iteration : 0003                 #
+2026-11-05 04:14:06,734 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:06,751 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:14:11,229 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:14:11,234 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:14:11,234 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:14:12,471 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:14:12,473 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:14:12,473 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:14:12,473 - BAREFOOT - INFO - Iteration 3 Completed Successfully
+2026-11-05 04:14:12,473 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:12,473 - BAREFOOT - INFO - #                Start Iteration : 0004                 #
+2026-11-05 04:14:12,473 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:12,488 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:14:17,215 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:14:17,219 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:14:17,219 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:14:18,472 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:14:18,472 - BAREFOOT - INFO - Start Truth Model Evaluations
+2026-11-05 04:14:18,479 - BAREFOOT - INFO - Start Max Value Calculations | 50 Sets
+2026-11-05 04:14:20,316 - BAREFOOT - INFO - Max Value Calculations Completed
+2026-11-05 04:14:20,316 - BAREFOOT - INFO - Start Truth Model Evaluations | 5 Sets
+2026-11-05 04:14:21,547 - BAREFOOT - INFO - Truth Model Evaluations Completed
+2026-11-05 04:14:21,550 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:14:21,550 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:14:21,550 - BAREFOOT - INFO - Iteration 4 Completed Successfully
+2026-11-05 04:14:21,550 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:21,550 - BAREFOOT - INFO - #                Start Iteration : 0005                 #
+2026-11-05 04:14:21,550 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:21,561 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:14:26,607 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:14:26,612 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:14:26,613 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:14:27,942 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:14:27,945 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:14:27,945 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:14:27,946 - BAREFOOT - INFO - Iteration 5 Completed Successfully
+2026-11-05 04:14:27,946 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:27,946 - BAREFOOT - INFO - #                Start Iteration : 0006                 #
+2026-11-05 04:14:27,946 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:27,957 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:14:32,988 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:14:32,992 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:14:32,993 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:14:34,294 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:14:34,294 - BAREFOOT - INFO - Start Truth Model Evaluations
+2026-11-05 04:14:34,302 - BAREFOOT - INFO - Start Max Value Calculations | 50 Sets
+2026-11-05 04:14:36,330 - BAREFOOT - INFO - Max Value Calculations Completed
+2026-11-05 04:14:36,332 - BAREFOOT - INFO - Start Truth Model Evaluations | 5 Sets
+2026-11-05 04:14:37,692 - BAREFOOT - INFO - Truth Model Evaluations Completed
+2026-11-05 04:14:37,697 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:14:37,697 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:14:37,697 - BAREFOOT - INFO - Iteration 6 Completed Successfully
+2026-11-05 04:14:37,697 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:37,697 - BAREFOOT - INFO - #                Start Iteration : 0007                 #
+2026-11-05 04:14:37,697 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:37,708 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:14:43,254 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:14:43,258 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:14:43,258 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:14:44,526 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:14:44,530 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:14:44,530 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:14:44,530 - BAREFOOT - INFO - Iteration 7 Completed Successfully
+2026-11-05 04:14:44,530 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:44,530 - BAREFOOT - INFO - #                Start Iteration : 0008                 #
+2026-11-05 04:14:44,530 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:44,545 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:14:49,997 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:14:50,002 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:14:50,003 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:14:51,278 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:14:51,278 - BAREFOOT - INFO - Start Truth Model Evaluations
+2026-11-05 04:14:51,293 - BAREFOOT - INFO - Start Max Value Calculations | 50 Sets
+2026-11-05 04:14:53,270 - BAREFOOT - INFO - Max Value Calculations Completed
+2026-11-05 04:14:53,272 - BAREFOOT - INFO - Start Truth Model Evaluations | 5 Sets
+2026-11-05 04:14:54,566 - BAREFOOT - INFO - Truth Model Evaluations Completed
+2026-11-05 04:14:54,569 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:14:54,569 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:14:54,569 - BAREFOOT - INFO - Iteration 8 Completed Successfully
+2026-11-05 04:14:54,569 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:54,569 - BAREFOOT - INFO - #                Start Iteration : 0009                 #
+2026-11-05 04:14:54,569 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:14:54,583 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:14:59,139 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:14:59,143 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:14:59,144 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:15:00,423 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:15:00,426 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:15:00,426 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:15:00,426 - BAREFOOT - INFO - Iteration 9 Completed Successfully
+2026-11-05 04:15:00,426 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:15:00,426 - BAREFOOT - INFO - #                Start Iteration : 0010                 #
+2026-11-05 04:15:00,426 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:15:00,447 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:15:05,473 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:15:05,478 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:15:05,478 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:15:06,819 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:15:06,819 - BAREFOOT - INFO - Start Truth Model Evaluations
+2026-11-05 04:15:06,830 - BAREFOOT - INFO - Start Max Value Calculations | 50 Sets
+2026-11-05 04:15:08,827 - BAREFOOT - INFO - Max Value Calculations Completed
+2026-11-05 04:15:08,829 - BAREFOOT - INFO - Start Truth Model Evaluations | 5 Sets
+2026-11-05 04:15:09,841 - BAREFOOT - INFO - Truth Model Evaluations Completed
+2026-11-05 04:15:09,845 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:15:09,845 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:15:09,845 - BAREFOOT - INFO - Iteration 10 Completed Successfully
+2026-11-05 04:15:09,845 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:15:09,845 - BAREFOOT - INFO - #                Start Iteration : 0011                 #
+2026-11-05 04:15:09,845 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:15:09,857 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:15:13,350 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:15:13,354 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:15:13,354 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:15:14,450 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:15:14,452 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:15:14,453 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:15:14,453 - BAREFOOT - INFO - Iteration 11 Completed Successfully
+2026-11-05 04:15:14,453 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:15:14,453 - BAREFOOT - INFO - #                Start Iteration : 0012                 #
+2026-11-05 04:15:14,453 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:15:14,465 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 3000 Parameter Sets
+2026-11-05 04:15:18,058 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 04:15:18,063 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 04:15:18,063 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 04:15:19,060 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 04:15:19,061 - BAREFOOT - INFO - Start Truth Model Evaluations
+2026-11-05 04:15:19,073 - BAREFOOT - INFO - Start Max Value Calculations | 50 Sets
+2026-11-05 04:15:20,806 - BAREFOOT - INFO - Max Value Calculations Completed
+2026-11-05 04:15:20,808 - BAREFOOT - INFO - Start Truth Model Evaluations | 5 Sets
+2026-11-05 04:15:21,886 - BAREFOOT - INFO - Truth Model Evaluations Completed
+2026-11-05 04:15:21,889 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 04:15:21,889 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 04:15:21,889 - BAREFOOT - INFO - Iteration 12 Completed Successfully
+2026-11-05 04:15:21,889 - BAREFOOT - INFO - #########################################################
+2026-11-05 04:15:21,889 - BAREFOOT - INFO - #                                                       #
+2026-11-05 04:15:21,889 - BAREFOOT - INFO - #       Iteration or Budget Limit Met or Exceeded       #
+2026-11-05 04:15:21,889 - BAREFOOT - INFO - #            BAREFOOT Calculation Completed             #
+2026-11-05 04:15:21,889 - BAREFOOT - INFO - #                                                       #
+2026-11-05 04:15:21,889 - BAREFOOT - INFO - #########################################################

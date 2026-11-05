@@ -1,0 +1,16 @@
+== mcp
+{'call': 'get_system_data("CU-ZR")', 'readme_bytes_after': 23234, 'measured_text_bytes': 83240, 'ratio': 3.583, 'envelope_bytes': 89993, 'ms': 156.9, 'is_error': False}
+{'call': 'get_invariant_reactions("CU-ZR")', 'readme_bytes_after': 83218, 'measured_text_bytes': 149078, 'ratio': 1.791, 'envelope_bytes': 164463, 'ms': 211.9, 'is_error': False}
+{'call': 'get_phase_diagram("CU-ZR")', 'readme_bytes_after': 38958, 'measured_text_bytes': 39813, 'ratio': 1.022, 'envelope_bytes': 45552, 'ms': 7.2, 'is_error': False}
+{'call': 'compare_to_dft("CU-ZR")', 'readme_bytes_after': 37597, 'measured_text_bytes': 53798, 'ratio': 1.431, 'envelope_bytes': 57133, 'ms': 112.1, 'is_error': False}
+{'call': 'get_formation_enthalpy("CuZr2")', 'readme_bytes_after': 15140, 'measured_text_bytes': 30698, 'ratio': 2.028, 'envelope_bytes': 33019, 'ms': 21.9, 'is_error': False}
+{'call': 'search_systems(["Cu"])', 'readme_bytes_after': 12135, 'measured_text_bytes': 12960, 'ratio': 1.068, 'envelope_bytes': 14261, 'ms': 40.1, 'is_error': False}
+{'call': 'list_tdb_files(["Cu","Zr"])', 'readme_bytes_after': 10294, 'measured_text_bytes': 11155, 'ratio': 1.084, 'envelope_bytes': 12080, 'ms': 41.0, 'is_error': False}
+== plain
+{'call': 'get_system_data("CU-ZR")', 'readme_bytes_after': 23234, 'measured_text_bytes': 83240, 'ratio': 3.583, 'envelope_bytes': 173267, 'ms': 112.3, 'is_error': False}
+{'call': 'get_invariant_reactions("CU-ZR")', 'readme_bytes_after': 83218, 'measured_text_bytes': 149078, 'ratio': 1.791, 'envelope_bytes': 313575, 'ms': 386.3, 'is_error': False}
+{'call': 'get_phase_diagram("CU-ZR")', 'readme_bytes_after': 38958, 'measured_text_bytes': 39813, 'ratio': 1.022, 'envelope_bytes': 85399, 'ms': 23.7, 'is_error': False}
+{'call': 'compare_to_dft("CU-ZR")', 'readme_bytes_after': 37597, 'measured_text_bytes': 53798, 'ratio': 1.431, 'envelope_bytes': 110965, 'ms': 236.4, 'is_error': False}
+{'call': 'get_formation_enthalpy("CuZr2")', 'readme_bytes_after': 15140, 'measured_text_bytes': 30698, 'ratio': 2.028, 'envelope_bytes': 63751, 'ms': 18.8, 'is_error': False}
+{'call': 'search_systems(["Cu"])', 'readme_bytes_after': 12135, 'measured_text_bytes': 12960, 'ratio': 1.068, 'envelope_bytes': 27255, 'ms': 2.7, 'is_error': False}
+{'call': 'list_tdb_files(["Cu","Zr"])', 'readme_bytes_after': 10294, 'measured_text_bytes': 11155, 'ratio': 1.084, 'envelope_bytes': 23269, 'ms': 34.5, 'is_error': False}

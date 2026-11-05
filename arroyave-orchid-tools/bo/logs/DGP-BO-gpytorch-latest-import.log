@@ -1,0 +1,2 @@
+ImportError: cannot import name 'DiagLazyTensor' from 'gpytorch.lazy' (/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/gpytorch/lazy/__init__.py)
+gpytorch 1.15.2

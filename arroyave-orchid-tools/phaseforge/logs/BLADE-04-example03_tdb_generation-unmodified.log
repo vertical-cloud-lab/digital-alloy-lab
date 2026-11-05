@@ -1,0 +1,7 @@
+$ PATH=$ATAT/bin:$PATH python examples/03_tdb_generation.py   (unmodified)
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/BLADE/examples/03_tdb_generation.py", line 46, in <module>
+    composer = BladeCompositions(
+               ^^^^^^^^^^^^^^^^^^
+TypeError: BladeCompositions.__init__() got an unexpected keyword argument 'transition_metals'
+exit=1 wall=0s

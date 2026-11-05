@@ -1,0 +1,26 @@
+2026-11-05 03:55:54,613 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:55:54,613 - BAREFOOT - INFO - #                                                       #
+2026-11-05 03:55:54,613 - BAREFOOT - INFO - #        Start BAREFOOT Framework Initialization        #
+2026-11-05 03:55:54,613 - BAREFOOT - INFO - #                                                       #
+2026-11-05 03:55:54,613 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:55:54,613 - BAREFOOT - INFO - *********************************************************
+2026-11-05 03:55:54,613 - BAREFOOT - INFO - * Calculation Name: FullSingleNode_small   
+2026-11-05 03:55:54,613 - BAREFOOT - INFO - *********************************************************
+2026-11-05 03:56:39,520 - BAREFOOT - INFO - Initialization Completed
+2026-11-05 03:56:39,528 - BAREFOOT - INFO - Reification Object Initialized. Ready for Calculations
+2026-11-05 03:56:39,528 - BAREFOOT - INFO - Start Full BAREFOOT Framework Calculation
+2026-11-05 03:56:39,528 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:56:39,528 - BAREFOOT - INFO - #                Start Iteration : 0000                 #
+2026-11-05 03:56:39,528 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:56:39,540 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 600 Parameter Sets
+2026-11-05 03:58:10,706 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 03:58:10,714 - BAREFOOT - INFO - Clustering of Acquisition Function Evaluations Completed
+2026-11-05 03:58:10,714 - BAREFOOT - INFO - Start ROM Function Evaluations | 5 Calculations
+2026-11-05 03:58:43,337 - BAREFOOT - INFO - ROM Function Evaluations Completed
+2026-11-05 03:58:43,347 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 03:58:43,348 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 03:58:43,348 - BAREFOOT - INFO - Iteration 0 Completed Successfully
+2026-11-05 03:58:43,348 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:58:43,348 - BAREFOOT - INFO - #                Start Iteration : 0001                 #
+2026-11-05 03:58:43,348 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:58:43,359 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 600 Parameter Sets

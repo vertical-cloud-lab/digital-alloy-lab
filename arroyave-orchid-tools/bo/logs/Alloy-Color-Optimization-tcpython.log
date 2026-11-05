@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/Alloy-Color-Optimization/color_dataset_generation.py", line 45, in <module>
+    from tc_python import CompositionUnit, TCPython
+ModuleNotFoundError: No module named 'tc_python'

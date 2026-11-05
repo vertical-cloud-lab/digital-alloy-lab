@@ -1,0 +1,70 @@
+### code cell 0: DIFFERS
+--- stored:
+Python version: 3.12.7 | packaged by conda-forge | (main, Oct  4 2024, 15:47:54) [MSC v.1941 64 bit (AMD64)]
+NumPy version: 1.26.4
+pandas version: 2.2.2
+SymPy version: 1.13.2
+scikit-learn version: 1.5.1
+CatBoost version: 1.2.7
+CBFV version: 1.1.0
+
+--- re-run:
+/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/CBFV/composition.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+
+Python version: 3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]
+NumPy version: 1.26.4
+pandas version: 2.2.2
+SymPy version: 1.14.0
+scikit-learn version: 1.9.1
+CatBoost version: 1.2.7
+CBFV version: 1.1.0
+
+### code cell 1: IDENTICAL
+### code cell 2: IDENTICAL
+### code cell 3: DIFFERS
+--- stored:
+Deformation direction: [1 1 0]
+V1: 7.19785%
+V1': -6.79041%
+V2: 7.19785%
+V2': -6.79041%
+V3: -6.79041%
+V3': 7.19785%
+V4: 7.19785%
+V4': -6.79041%
+V5: -6.84935% <- Lowest!
+V5': -6.84935% <- Lowest!
+V6: 10.00819% <- Highest!
+V6: 10.00819%
+V6': 10.00819% <- Highest!
+V6': 10.00819%
+Maximum transformation strain for tension in direction [1 1 0]: 10.00819% 
+Maximum transformation strain for compression in direction [1 1 0]: 6.84935% 
+
+--- re-run:
+Deformation direction: [1 1 0]
+
+V1: 7.19785%
+V1': -6.79041%
+V2: 7.19785%
+V2': -6.79041%
+V3: -6.79041%
+V3': 7.19785%
+V4: 7.19785%
+V4': -6.79041%
+V5: -6.84935% <- Lowest!
+V5': -6.84935% <- Lowest!
+V6: 10.00819% <- Highest!
+V6: 10.00819%
+V6': 10.00819% <- Highest!
+V6': 10.00819%
+Maximum transformation strain for tension in direction [1 1 0]: 10.00819% 
+Maximum transformation strain for compression in direction [1 1 0]: 6.84935% 
+
+### code cell 4: IDENTICAL
+### code cell 5: IDENTICAL
+### code cell 6: IDENTICAL
+### code cell 7: IDENTICAL
+### code cell 8: IDENTICAL
+### code cell 9: IDENTICAL

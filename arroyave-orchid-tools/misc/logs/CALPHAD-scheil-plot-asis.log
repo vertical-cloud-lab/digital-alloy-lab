@@ -1,0 +1,9 @@
+         ^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/CALPHAD/lib/python3.12/site-packages/pandas/io/common.py", line 954, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'Graph_Scheil_Example.xlsx'
+
+real	0m2.626s
+user	0m2.344s
+sys	0m0.166s

@@ -1,0 +1,44 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+system=AL-CU tdb=AlCu-21Kro cells modified=2
+executed in 3.5 s
+--- cell 1 [stream]
+data from /tmp/arroyave/src/orchid-calphad__orchid-data
+
+--- cell 3 [stream]
+114 Cu-Zr values
+
+--- cell 3 [execute_result]
+evidence_class          experimental  model  unspecified
+property                                                
+INVARIANT_TEMPERATURE             31     51            1
+PHASE_COMPOSITION                 19      0            3
+TRANSITION_TEMPERATURE             2      7            0
+--- cell 5 [stream]
+40 accepted multi-reader experimental values; 0 formation enthalpies
+
+--- cell 5 [execute_result]
+Empty DataFrame
+Columns: [phases, value, unit, sigma_printed, sigma_effective, temperature_K, method, paper_citation, page]
+Index: []
+--- cell 7 [execute_result]
+<IPython.core.display.Image object>
+--- cell 8 [execute_result]
+Empty DataFrame
+Columns: [count, mean, 50%, std]
+Index: []
+--- cell 10 [stream]
+3 datasets exported to /tmp/arroyave/work/qs-AL-CU/export/AlCu-21Kro
+
+--- cell 10 [execute_result]
+folder        output
+experimental  ZPF       1
+invariants    ZPF       2
+Name: datasets, dtype: int64
+--- cell 11 [stream]
+ESPEI load_datasets: 3 datasets loaded
+
+
+real	0m3.669s
+user	0m2.962s
+sys	0m0.496s
+exit=0

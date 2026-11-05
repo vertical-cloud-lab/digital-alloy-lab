@@ -1,0 +1,13 @@
+Thu Nov  5 04:12:28 UTC 2026
+  ok  cuzr-phaseforgeplus/gate.json: identical (sha256 6e52b0c1c9bc)
+  ok  cuzr-phaseforgeplus/fig_cuzr_overlay.png: bytes differ, pixel RMS 0.010 (tol 2.0)
+  ok  cuzr-phaseforgeplus/fig_cuzr_overlay.pdf: identical (sha256 f2a66cda8e30)
+  ok  cuzr-phaseforgeplus/fig_cuzr_panels.png: bytes differ, pixel RMS 0.009 (tol 2.0)
+  ok  cuzr-phaseforgeplus/fig_cuzr_panels.pdf: identical (sha256 cbd20055cf48)
+cuzr-phaseforgeplus: quick path 28 s
+all quick paths regenerate identically
+
+real	0m28.169s
+user	0m26.999s
+sys	0m1.168s
+exit=0
