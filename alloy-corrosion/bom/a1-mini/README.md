@@ -3,7 +3,8 @@
 On [#180](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/180) (2026-11-06) Ben asked
 for every printed part of this setup on the A1 mini's build plate, in PLA, split into batches if
 they don't all fit. They don't fit on one plate:
-- before any spacing, the parts cover about 1.3 of the A1 mini's 180 × 180 mm beds;
+- before any spacing, the parts' footprints add up to 1.4 of the A1 mini's 180 × 180 mm beds
+  (1.7 with the vial holder);
 - the 9-position vial holder is 297 mm long, more than the bed's 255 mm diagonal.
 
 So they are on **four plates, plus an optional fifth**. Each plate is laid out, checked and sliced
