@@ -423,10 +423,9 @@ That covers the use-case note's checklist:
 
 Ben's other idea, a doser close to PR 176's size on the head that clips into a stack of cartridges and fills about 50
 of the atomizer's charge cups, moved to its own PR,
-[byu-vcl PR 297](https://github.com/vertical-cloud-lab/byu-vcl/pull/297), with its specs and a model. Its files go in
-`../alloy-cubxl/`. It is stacked on byu-vcl's branch `claude/issue-150-20261011-0350`, and its script imports
-`cubxl_shuttle.py` and `module_views.py` from that branch's copy of this folder, so a change to either there can
-break it.
+[byu-vcl PR 297](https://github.com/vertical-cloud-lab/byu-vcl/pull/297), with its specs and a model. Its files are in
+[`../alloy-cubxl/`](../alloy-cubxl/README.md). Its script imports `cubxl_shuttle.py` and `module_views.py` from this
+folder, so a change to either can break it.
 
 ## Where it was first drawn: inside the atomizer chamber
 
