@@ -89,6 +89,16 @@ jobs:
       ROOM_CAM_PASSWORD: ${{ secrets.ROOM_CAM_PASSWORD }}
       ROOM_CAM_USERNAME: ${{ vars.ROOM_CAM_USERNAME }}
       ROOM_CAM_HOSTNAME: ${{ vars.ROOM_CAM_HOSTNAME }}
+      # The CubXL Pi (tag:rpi-5-des4), which fronts the EZstat Pro's Windows PC
+      # over a direct cable. scripts/ezstat-pc-rdp/drive.sh opens Remote Desktop
+      # to that PC from the Pi. The PC's address is a secret, not a variable,
+      # because this repo is public and byu-vcl's copy kept it out of the text.
+      CUBXL_PI_PASSWORD: ${{ secrets.CUBXL_PI_PASSWORD }}
+      CUBXL_PI_USERNAME: ${{ vars.CUBXL_PI_USERNAME }}
+      CUBXL_PI_HOSTNAME: ${{ vars.CUBXL_PI_HOSTNAME }}
+      POTENTIOSTAT_PC_ADDRESS: ${{ secrets.POTENTIOSTAT_PC_ADDRESS }}
+      POTENTIOSTAT_PC_USERNAME: ${{ secrets.POTENTIOSTAT_PC_USERNAME }}
+      POTENTIOSTAT_PC_PASSWORD: ${{ secrets.POTENTIOSTAT_PC_PASSWORD }}
       # Allow long-blocking foreground commands (e.g., Edison polling)
       BASH_DEFAULT_TIMEOUT_MS: "900000" # 15 min default per Bash call
       BASH_MAX_TIMEOUT_MS: "3600000" # 60 min ceiling per Bash call
@@ -107,8 +117,9 @@ jobs:
       # so no Tailscale secret is stored anywhere. The identity accepts only
       # subjects matching
       # repo:vertical-cloud-lab@228975003/digital-alloy-lab@1421253647:* and mints
-      # keys for exactly tag:rpi-5-3ray + tag:rpi-5-6ktj + tag:rpi-zero2w-ex3f, so
-      # `tags:` must list all three; requesting a subset fails. It is separate from robot-arms' identity,
+      # keys for exactly tag:rpi-5-3ray + tag:rpi-5-6ktj + tag:rpi-zero2w-ex3f +
+      # tag:rpi-5-des4 (the CubXL Pi, for the EZstat PC), so `tags:` must list
+      # all four; requesting a subset fails. It is separate from robot-arms' identity,
       # so neither repo reaches the other's Pis. What a runner may do on the Pis
       # is bounded by the tailnet policy in vertical-cloud-lab/tailscale-policy
       # (SSH within each tag, tcp:22 only).
@@ -120,7 +131,7 @@ jobs:
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           audience: ${{ secrets.TS_AUDIENCE }}
-          tags: tag:rpi-5-3ray,tag:rpi-5-6ktj,tag:rpi-zero2w-ex3f
+          tags: tag:rpi-5-3ray,tag:rpi-5-6ktj,tag:rpi-zero2w-ex3f,tag:rpi-5-des4
 
       # Copilot-style model selector: @claude+<model>[:<effort>]
       # Examples: @claude, @claude+opus-5, @claude+opus-4.8:max, @claude:high
