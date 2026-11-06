@@ -35,6 +35,10 @@ in the stocks, the cups in use, station S4 and the tip waste.
 
 ## 1. Print
 
+**On the A1 mini in PLA:** [`bom/a1-mini/`](bom/a1-mini/README.md) has every part below on four
+sliced plates, plus an optional fifth, with the magnet pauses set. Its README says what changes
+with PLA (2026-11-06).
+
 For every part ([`copper/cad/README.md`](copper/cad/README.md#printing-and-assembly)): PETG for
 anything that touches liquid, 0.12–0.16 mm layers, 100 % infill for the lids and the cap (four
 walls around every wetted bore elsewhere), slow outer walls. One 1 kg spool covers all of it: the

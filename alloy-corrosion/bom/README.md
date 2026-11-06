@@ -79,6 +79,10 @@ There are 18 printed parts: about 0.48 kg of PETG even at 100 % infill, so one 1
 
 ## 1. What to print
 
+**To print everything on the A1 mini in PLA,** use [`a1-mini/`](a1-mini/README.md): every part
+below laid out on four A1 mini plates (plus an optional fifth for P14, cut in two), sliced, with
+the magnet pauses set (2026-11-06).
+
 PETG for anything that touches liquid, at 100 % infill or with four walls around every wetted bore;
 0.12–0.16 mm layers. Print orientation, magnet pauses and post-processing for the cell parts are in
 [`../copper/cad/README.md`](../copper/cad/README.md#printing-and-assembly); the new parts follow the
