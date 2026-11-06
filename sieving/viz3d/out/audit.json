@@ -1,0 +1,11 @@
+{
+ "frames": 1090,
+ "tolerance_mm": 0.3,
+ "pairs": {},
+ "cable_max_penetration_mm": 0.44,
+ "cable_by_lead_mm": {
+  "container": 0.44,
+  "tray": 0.0,
+  "pan": 0.02
+ }
+}

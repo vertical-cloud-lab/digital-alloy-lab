@@ -1,0 +1,79 @@
+{
+ "data": [
+  {
+   "id": 30178383,
+   "data_storage_id": "56680f10-3d97-4c1e-b0c6-581efa81032c",
+   "operation": "create",
+   "actor_id": "3560c19f-10ab-43ea-962b-48254d3c697e",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T21:02:50.810718Z",
+   "data_storage": {
+    "name": "pqa:docs:3560c19f-10ab-43ea-962b-48254d3c697e",
+    "description": null,
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "b2703121d945",
+    "parent_id": null,
+    "dataset_id": "828a1b8c-2c97-4fd7-b354-0b21e17a315e",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "56680f10-3d97-4c1e-b0c6-581efa81032c",
+    "path": "b2703121d945",
+    "created_at": "2026-10-28T21:02:50.719839Z",
+    "modified_at": "2026-10-28T21:02:54.184242Z",
+    "tags": null,
+    "file_path": "/tmp/tmpmfs76mno.pkl",
+    "metadata": {
+     "size": 127246388
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30178192,
+   "data_storage_id": "68f0131f-d98d-44c0-ab7a-55a9b58afdb5",
+   "operation": "create",
+   "actor_id": "3560c19f-10ab-43ea-962b-48254d3c697e",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:58:04.343871Z",
+   "data_storage": {
+    "name": "Al Powder Classification Options",
+    "description": "Comparison of laboratory and outsourced approaches for classifying 200\u2013500 g aluminium-alloy powder lots. It highlights realistic throughput, losses, blinding, dust hazards, and suitability for a 15\u201325 \u00b5m lower cut.",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "665c24536154",
+    "parent_id": null,
+    "dataset_id": "e1b5120c-550d-4542-bf08-1cd9db5a7d49",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "68f0131f-d98d-44c0-ab7a-55a9b58afdb5",
+    "path": "665c24536154",
+    "created_at": "2026-10-28T20:58:04.316282Z",
+    "modified_at": "2026-10-28T20:58:04.316282Z",
+    "tags": null,
+    "file_path": null,
+    "metadata": {
+     "session_id": "3560c19f-10ab-43ea-962b-48254d3c697e",
+     "artifact_id": "3b6621e7-f21f-4290-ab86-909dfa53460c",
+     "state_artifact_id": "artifact-00",
+     "artifact_type": "table",
+     "artifact_title": "Al Powder Classification Options",
+     "artifact_caption": "Comparison of laboratory and outsourced approaches for classifying 200\u2013500 g aluminium-alloy powder lots. It highlights realistic throughput, losses, blinding, dust hazards, and suitability for a 15\u201325 \u00b5m lower cut."
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  }
+ ]
+}
