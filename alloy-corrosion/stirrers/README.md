@@ -33,7 +33,7 @@ frame of Ben's 2026-10-02 calibration, to be taught.
 The stirred vials hold the three copper stocks and a spare: ASW, ASW + 0.1 mg/L S, ASW + 10 mg/L S,
 and FeSO₄ on non-sulfide nights. On aluminium nights they hold the three NaCl stocks.
 
-Three things moved from Ben's sketch, because the check found clashes:
+Three placements came out of the check:
 
 - **The column is at x ≈ 76, not 101.** At 101, the capper would land on stirrer A whenever the
   pipette fills a tube at x 176.

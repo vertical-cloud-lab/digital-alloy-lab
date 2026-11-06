@@ -70,11 +70,12 @@ What is different here:
 3. **Test each new stirrer on stirrer 1's pins, today, before any firmware change.** Unplug A at
    the Uno, plug the new stirrer into A's socket (D10/D2), and run byu-vcl `BUILD.md`
    [stage 8](https://github.com/vertical-cloud-lab/byu-vcl/blob/bd46207/hardware/vial-stirrer-cubxl/BUILD.md#8-first-spins):
-   no vial at 300 and 1200 rpm, then a vial of 10 mL of water with the bar on the Ø15 × 4.6 mm
-   spacer, three starts from rest at 300 rpm. The Uno already runs the stirrer image (flashed
+   no vial at 300 and 1200 rpm, then a vial with 10 mL of water and the bar, standing on the
+   Ø15 × 4.6 mm spacer, three starts from rest at 300 rpm. The Uno already runs the stirrer image (flashed
    2026-11-03), so this works now, and it proves each stirrer before stage 5. Plug A back in after.
-4. **A spacer in every holder.** On 2026-11-05 the vial only started from rest once it sat 4.6 mm up.
-   Seated, the bar's pull stalled the fan. Glue nothing: the spacer just sits on the cup's floor.
+4. **A spacer in every holder.** On 2026-11-04, with the vial seated, the bar's pull stalled the fan.
+   On 2026-11-05 the fan started the bar from rest every time once the vial sat 4.6 mm up. Glue
+   nothing: the spacer just sits on the cup's floor, under the vial.
 
 ## 4. The hub at the Uno
 
