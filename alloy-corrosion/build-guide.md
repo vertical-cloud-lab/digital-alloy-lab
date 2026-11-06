@@ -16,6 +16,11 @@ you would build, with the latest decision in each place:
 deck frame of Ben's 2026-10-02 calibration (mm; origin front-left-bottom, +y away from the
 operator, +z up), to be re-jogged.
 
+**With four stir modules on the deck** (2026-11-06), follow [`stirrers/BUILD.md`](stirrers/BUILD.md),
+and order from [`stirrers/BOM.md`](stirrers/BOM.md). That deck moves tip rack 2 next to rack 1, puts
+the stirred stocks in a column at x ≈ 76, and keeps only DI water and acid in the 9-position holder.
+It changes §4's table, and adds a staging move to every protocol.
+
 **Which deck.** On 22 October Sterling put copper corrosion first for the CubXL
 ([byu-vcl#298](https://github.com/vertical-cloud-lab/byu-vcl/issues/298#issuecomment-6352253304)),
 so §4 lays out the copper deck. The aluminium deck uses the same printed parts. It differs only

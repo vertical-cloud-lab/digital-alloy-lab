@@ -28,6 +28,7 @@ commits. Nothing in it has been bought, built or tested.
 | [`bom/`](bom/README.md) | **What to print and buy to build it**, for both alloys: a STEP file for every printed part, a checked link for every bought part, and the v2 well lid |
 | [`bom/a1-mini/`](bom/a1-mini/README.md) | **Every printed part on A1 mini plates, in PLA**: four sliced plates plus an optional fifth, with the magnet pauses set and checked (2026-11-06) |
 | [`build-guide.md`](build-guide.md) | **How to build it, in order**: print, assemble, bench-test, set up the deck, first checks. It collects the latest decisions from `bom/`, `copper/cad/` and `cubxl-setup.md` |
+| [`stirrers/`](stirrers/README.md) | **With four stir modules on the deck** (byu-vcl#269): the order list for everything to buy now (no potentiostat, no tips), the build guide, and the deck with both tip racks side by side, checked (2026-11-06) |
 
 ## In short
 
