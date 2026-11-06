@@ -83,6 +83,10 @@ There are 18 printed parts: about 0.48 kg of PETG even at 100 % infill, so one 1
 below laid out on four A1 mini plates (plus an optional fifth for P14, cut in two), sliced, with
 the magnet pauses set (2026-11-06).
 
+**To print it all at once on the H2D in PLA,** use [`h2d/`](h2d/README.md): one sliced plate with
+every part below except P11, P13, P14 and the tip fit strip, which the lab already has or doesn't
+need (2026-11-06).
+
 PETG for anything that touches liquid, at 100 % infill or with four walls around every wetted bore;
 0.12–0.16 mm layers. Print orientation, magnet pauses and post-processing for the cell parts are in
 [`../copper/cad/README.md`](../copper/cad/README.md#printing-and-assembly); the new parts follow the

@@ -44,6 +44,10 @@ in the stocks, the cups in use, station S4 and the tip waste.
 sliced plates, plus an optional fifth, with the magnet pauses set. Its README says what changes
 with PLA (2026-11-06).
 
+**On the H2D in PLA, all at once:** [`bom/h2d/`](bom/h2d/README.md) has every part the lab doesn't
+already have (no vial caps, tip rack, vial holder or stirrer prints) on one sliced plate: 28 pieces,
+11.4 h, with both magnet pauses set. Check the fits after it prints (2026-11-06).
+
 For every part ([`copper/cad/README.md`](copper/cad/README.md#printing-and-assembly)): PETG for
 anything that touches liquid, 0.12–0.16 mm layers, 100 % infill for the lids and the cap (four
 walls around every wetted bore elsewhere), slow outer walls. One 1 kg spool covers all of it: the

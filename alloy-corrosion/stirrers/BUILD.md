@@ -26,7 +26,9 @@ of Ben's 2026-10-02 calibration (mm; origin front-left, +y away from you), to be
 
 ## 1. Print
 
-1. **Corrosion parts, in PLA:** plates 1–4 of [`../bom/a1-mini/`](../bom/a1-mini/README.md). Plate 1
+1. **Corrosion parts, in PLA:** the one H2D plate in [`../bom/h2d/`](../bom/h2d/README.md) (11.4 h,
+   without the vial caps and tip rack the lab already has; check the fits after it prints), or
+   plates 1–4 of [`../bom/a1-mini/`](../bom/a1-mini/README.md). Plate 1
    first: its cap-over-boss and fit-strip checks decide whether the others print as they are.
    Plate 3 has tip rack 2 (P11); if the file for Ben's tip rack 1 exists, print another of those
    instead, since it already fits.

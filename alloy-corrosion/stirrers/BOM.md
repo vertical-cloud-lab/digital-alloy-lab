@@ -150,6 +150,7 @@ for the set below. Order a spool of either if less is left
 | What | Qty | File | Material |
 | --- | --- | --- | --- |
 | Corrosion parts: well lids, electrode caps and carriers, tray, shims, cup block, tube rack, tip rack 2, tip waste, vial caps, bench cell | plates 1–4 | [`../bom/a1-mini/`](../bom/a1-mini/README.md) (sliced, magnet pauses set) | PLA, as Ben asked on 2026-11-06 |
+| Or, on the H2D: the same less the tip rack and vial caps, which the lab has | one plate | [`../bom/h2d/`](../bom/h2d/README.md) (sliced, magnet pauses set; 326 g) | PLA |
 | Compact stirrer base (the 2026-11-04 one: cable notch in −X, no board stop) | **3**: B, C, D | byu-vcl [`stl/compact/base_compact.stl`](https://github.com/vertical-cloud-lab/byu-vcl/blob/bd46207/hardware/vial-stirrer-cubxl/stl/compact/base_compact.stl) | PETG |
 | Compact vial holder | **2**: B, C. D reuses the 2026-10-30 holder | [`stl/compact/vial_holder_compact.stl`](https://github.com/vertical-cloud-lab/byu-vcl/blob/bd46207/hardware/vial-stirrer-cubxl/stl/compact/vial_holder_compact.stl) | PETG |
 | Magnet carrier | **2**: B, C | [`stl/magnet_carrier.stl`](https://github.com/vertical-cloud-lab/byu-vcl/blob/bd46207/hardware/vial-stirrer-cubxl/stl/magnet_carrier.stl) | PETG, 100 % infill |

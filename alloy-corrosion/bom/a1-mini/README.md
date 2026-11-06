@@ -7,7 +7,8 @@ they don't all fit. They don't fit on one plate:
   (1.7 with the vial holder);
 - the 9-position vial holder is 297 mm long, more than the bed's 255 mm diagonal.
 
-So they are on **four plates, plus an optional fifth**. Each plate is laid out, checked and sliced
+So they are on **four plates, plus an optional fifth**. To print everything the lab doesn't already
+have in one go on the H2D instead, see [`../h2d/`](../h2d/README.md). Each plate is laid out, checked and sliced
 for the A1 mini by [`make_plates.py`](make_plates.py). **Nothing has been printed yet.** Times and
 grams are Bambu Studio's estimates.
 
