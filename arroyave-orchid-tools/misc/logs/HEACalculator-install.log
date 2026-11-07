@@ -1,0 +1,29 @@
+Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+Creating virtual environment at: venvs/HEACalculator
+Activate with: source venvs/HEACalculator/bin/activate
+Using Python 3.12.3 environment at: venvs/HEACalculator
+Resolved 16 packages in 128ms
+   Building heacalculator @ file:///tmp/arroyave/work/HEACalculator
+      Built heacalculator @ file:///tmp/arroyave/work/HEACalculator
+Prepared 7 packages in 380ms
+Installed 16 packages in 37ms
+ + annotated-doc==0.0.5
+ + heacalculator==2.2.0 (from file:///tmp/arroyave/work/HEACalculator)
+ + iniconfig==2.3.1
+ + markdown-it-py==4.2.0
+ + mdurl==0.1.2
+ + numpy==2.5.4
+ + packaging==26.3
+ + pandas==3.1.1
+ + pluggy==1.7.0
+ + pygments==2.21.0
+ + pytest==9.2.0
+ + python-dateutil==4.0.0
+ + rich==15.0.0
+ + shellingham==1.5.4
+ + typer==0.27.3
+ + tzdata==2026.6
+
+real	0m0.600s
+user	0m0.326s
+sys	0m0.164s

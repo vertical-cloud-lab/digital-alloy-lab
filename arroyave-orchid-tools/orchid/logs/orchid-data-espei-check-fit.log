@@ -1,0 +1,19 @@
+=== AL-CU vs AlCu-21Kro.tdb
+/tmp/arroyave/work/orchid-data-fitcheck/AL-CU/selection.json: target AlCu-21Kro.tdb, 4 datasets from ['experimental', 'invariants']: experimental/AL-CU/AlCu-21Kro.zpf-00.json, invariants/AL-CU/AlCu-02Mie.zpf-00.json, invariants/AL-CU/AlCu-21Kro.zpf-00.json, invariants/AL-CU/AlCu-21Kro.zpf-01.json
+$ python espei/check_fit.py --bundle espei --selection /tmp/arroyave/work/orchid-data-fitcheck/AL-CU/selection.json
+exit=1 elapsed=12.412163439s
+=== AL-ZR vs AlZr-20Lon.tdb
+/tmp/arroyave/work/orchid-data-fitcheck/AL-ZR/selection.json: target AlZr-20Lon.tdb, 29 datasets from ['experimental', 'invariants']: experimental/AL-ZR/AlZr-01Wan.hmr-00-AL2ZR3.json, experimental/AL-ZR/AlZr-01Wan.hmr-00-AL2ZR_C14.json, experimental/AL-ZR/AlZr-01Wan.hmr-00-AL3ZR2.json, experimental/AL-ZR/AlZr-01Wan.hmr-00-AL3ZR5_D8M.json, experimental/AL-ZR/AlZr-01Wan.hmr-00-AL3ZR_D023.json, experimental/AL-ZR/AlZr-01Wan.hmr-00-AL4ZR5.json, experimental/AL-ZR/AlZr-01Wan.hmr-00-ALZR_B33.json, experimental/AL-ZR/AlZr-01Wan.hmr-01-AL2ZR_C14.json, experimental/AL-ZR/AlZr-01Wan.hmr-01-AL3ZR_D023.json, experimental/AL-ZR/AlZr-01Wan.hmr-02-AL2ZR_C14.json, experimental/AL-ZR/AlZr-01Wan.hmr-02-AL3ZR_D023.json, experimental/AL-ZR/AlZr-01Wan.hmr-03-AL2ZR_C14.json, experimental/AL-ZR/AlZr-15Fis.hmr-00-AL3ZR_D023.json, experimental/AL-ZR/AlZr-15Fis.hmr-02-AL2ZR_C14.json, experimental/AL-ZR/AlZr-15Fis.hmr-05-AL3ZR2.json, experimental/AL-ZR/AlZr-15Fis.hmr-06-ALZR_B33.json, experimental/AL-ZR/AlZr-15Fis.hmr-07-AL4ZR5.json, experimental/AL-ZR/AlZr-15Fis.hmr-08-AL2ZR3.json, experimental/AL-ZR/AlZr-15Fis.hmr-09-AL3ZR5_D8M.json, experimental/AL-ZR/AlZr-18Khv.zpf-00.json, invariants/AL-ZR/AlZr-15Fis.zpf-00.json, invariants/AL-ZR/AlZr-15Fis.zpf-01.json, invariants/AL-ZR/AlZr-15Fis.zpf-02.json, invariants/AL-ZR/AlZr-18Tam.zpf-00.json, invariants/AL-ZR/AlZr-18Tam.zpf-02.json, invariants/AL-ZR/AlZr-18Tam.zpf-03.json, invariants/AL-ZR/AlZr-20Lon.zpf-00.json, invariants/AL-ZR/AlZr-20Lon.zpf-03.json, invariants/AL-ZR/AlZr-20Lon.zpf-05.json
+$ python espei/check_fit.py --bundle espei --selection /tmp/arroyave/work/orchid-data-fitcheck/AL-ZR/selection.json
+exit=0 elapsed=14.829235546s
+=== AL-MG vs AlMg-23Hal.tdb
+/tmp/arroyave/work/orchid-data-fitcheck/AL-MG/selection.json: target AlMg-23Hal.tdb, 2 datasets from ['experimental', 'invariants']: invariants/AL-MG/AlMg-93Zuo.zpf-00.json, invariants/AL-MG/AlMg-93Zuo.zpf-01.json
+$ python espei/check_fit.py --bundle espei --selection /tmp/arroyave/work/orchid-data-fitcheck/AL-MG/selection.json
+exit=1 elapsed=11.825869260s
+=== AL-CU vs AlCu-21Kro.tdb, 21Kro datasets only
+$ python espei/check_fit.py --bundle espei --selection /tmp/arroyave/work/orchid-data-fitcheck/AL-CU-21Kro-only/selection.json
+exit=0 elapsed=10.761916161s
+=== AL-MG vs AlMg-93Zuo.tdb
+/tmp/arroyave/work/orchid-data-fitcheck/AL-MG-93Zuo/selection.json: target AlMg-93Zuo.tdb, 2 datasets from ['experimental', 'invariants']: invariants/AL-MG/AlMg-93Zuo.zpf-00.json, invariants/AL-MG/AlMg-93Zuo.zpf-01.json
+$ python espei/check_fit.py --bundle espei --selection /tmp/arroyave/work/orchid-data-fitcheck/AL-MG-93Zuo/selection.json
+exit=0 elapsed=6.215195202s

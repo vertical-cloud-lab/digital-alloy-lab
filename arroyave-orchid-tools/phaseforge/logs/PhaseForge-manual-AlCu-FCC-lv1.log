@@ -1,0 +1,41 @@
+Using species: Al,Cu
+Edit the file FCC_A1/species.in (if needed) and rerun the same command.
+Using species: Al,Cu
+Preparing sqs_lev=0_a_Al=1 directory
+sh: 1: Syntax error: "&" unexpected
+Preparing sqs_lev=0_a_Cu=1 directory
+sh: 1: Syntax error: "&" unexpected
+Preparing sqs_lev=1_a_Al=0.5,a_Cu=0.5 directory
+sh: 1: Syntax error: "&" unexpected
+Copied SQSs
+/tmp/arroyave/work/pf-AlCu/FCC_A1/sqs_lev=0_a_Cu=1
+MLIP Name=Grace
+Model=GRACE-2L-OMAT
+/tmp/arroyave/work/pf-AlCu/FCC_A1/sqs_lev=1_a_Al=0.5,a_Cu=0.5
+MLIP Name=Grace
+Model=GRACE-2L-OMAT
+/tmp/arroyave/work/pf-AlCu/FCC_A1/sqs_lev=0_a_Al=1
+MLIP Name=Grace
+Model=GRACE-2L-OMAT
+sqs_lev=0_a_Al=1 skipped for property func
+sqs_lev=0_a_Cu=1 skipped for property func
+sqs_lev=1_a_Al=0.5,a_Cu=0.5 skipped for property func
+Found no data for func
+sqs_lev=0_a_Al=1 skipped for property energy
+sqs_lev=0_a_Cu=1 skipped for property energy
+sqs_lev=1_a_Al=0.5,a_Cu=0.5 skipped for property energy
+Found no data for energy
+sqs_lev=0_a_Al=1 skipped for property svib_ht
+sqs_lev=0_a_Cu=1 skipped for property svib_ht
+sqs_lev=1_a_Al=0.5,a_Cu=0.5 skipped for property svib_ht
+Found no data for svib_ht
+Fit completed
+Found elements AL CU
+Phases found in SGTE database: 
+Using:
+FCC_A1/FCC_A1.tdb
+TDB file created
+TIMING copy_sqs=0s mlip_relax=0s fit_tdb=0s
+ENERGY FCC_A1/sqs_lev=0_a_Al=1 
+ENERGY FCC_A1/sqs_lev=0_a_Cu=1 
+ENERGY FCC_A1/sqs_lev=1_a_Al=0.5,a_Cu=0.5 

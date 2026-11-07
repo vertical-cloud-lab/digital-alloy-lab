@@ -1,0 +1,43 @@
+$ python examples/tdb_gen_bcc_mcsqs.py   (unmodified; ATAT on PATH; blade 9d3859c installed)
+BCC lattice estimate: a=3.1650 Å  (avg of ['V', 'W', 'Nb'])
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/sqs-benchmark/examples/tdb_gen_bcc_mcsqs.py", line 175, in <module>
+    composer = BladeCompositions(
+               ^^^^^^^^^^^^^^^^^^
+TypeError: BladeCompositions.__init__() missing 2 required positional arguments: 'system_size' and 'allow_lower_order'
+exit=1 wall=15s
+
+$ python examples/tdb_gen_bcc_random.py   (unmodified; ATAT on PATH; blade 9d3859c installed)
+BCC lattice estimate: a=3.1650 Å  (avg of ['V', 'W', 'Nb'])
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/sqs-benchmark/examples/tdb_gen_bcc_random.py", line 262, in <module>
+    composer = BladeCompositions(
+               ^^^^^^^^^^^^^^^^^^
+TypeError: BladeCompositions.__init__() missing 2 required positional arguments: 'system_size' and 'allow_lower_order'
+exit=1 wall=5s
+
+$ python examples/tdb_gen_bcc_scraps.py   (unmodified; ATAT on PATH; blade 9d3859c installed)
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/sqs-benchmark/examples/tdb_gen_bcc_scraps.py", line 18, in <module>
+    from blade.tools.blade_scraps_gen import ScrapsSQSGen
+ModuleNotFoundError: No module named 'blade.tools.blade_scraps_gen'
+exit=1 wall=3s
+
+$ python scripts/compare_methods.py   (unmodified; ATAT on PATH; blade 9d3859c installed)
+  File "/usr/lib/python3.12/pathlib.py", line 1317, in mkdir
+    self.parent.mkdir(parents=True, exist_ok=True)
+  [Previous line repeated 5 more times]
+  File "/usr/lib/python3.12/pathlib.py", line 1313, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [Errno 13] Permission denied: '/Users'
+exit=1 wall=4s
+
+$ python scripts/run_all.py --n-runs 1 --methods mcsqs   (unmodified; ATAT on PATH; blade 9d3859c installed)
+    exec(compile(tree, str(script_path), "exec"), namespace)  # noqa: S102
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/work/sqs-benchmark/examples/tdb_gen_bcc_mcsqs.py", line 175, in <module>
+    composer = BladeCompositions(
+               ^^^^^^^^^^^^^^^^^^
+TypeError: BladeCompositions.__init__() missing 2 required positional arguments: 'system_size' and 'allow_lower_order'
+exit=1 wall=6s
+

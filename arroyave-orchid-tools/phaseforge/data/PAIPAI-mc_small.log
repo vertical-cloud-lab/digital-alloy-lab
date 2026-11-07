@@ -1,0 +1,6 @@
+# MC with waiting_pool, fast=1 steps=3 temp=0.001
+INITIAL_STATE task_id=1793850348804751872_1_d5fbed8e E = -178.189470556
+STEP 1 proposal task_id=1793850352178582784_1_cfdef3ea E_new=-177.868661787 E_old=-178.189470556 -> REJECT
+STEP 2 proposal task_id=1793850377006991104_1_544ba3de E_new=-178.26368574 E_old=-178.189470556 -> ACCEPT
+STEP 3 proposal task_id=1793850384648184064_1_171fa423 E_new=-178.431018581 E_old=-178.26368574 -> ACCEPT
+# Finished. MC steps = 3, accepted = 2

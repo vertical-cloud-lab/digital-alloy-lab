@@ -1,0 +1,20 @@
+=== ITER=2 (03:50:40)
+Iteration 3 predicted and exported
+Hypervolume: from 238.66 to 244.7
+Optimization iteration completed
+rc=0 wall=13s
+=== ITER=3 (03:50:53)
+Iteration 4 predicted and exported
+Hypervolume: from 244.7 to 245.31
+Optimization iteration completed
+rc=0 wall=38s
+=== ITER=4 (03:51:31)
+Iteration 5 predicted and exported
+Hypervolume: from 245.31 to 250.31
+Optimization iteration completed
+rc=0 wall=31s
+=== ITER=5 (03:52:02)
+Iteration 6 predicted and exported
+Hypervolume: from 250.31 to 251.99
+Optimization iteration completed
+rc=0 wall=30s

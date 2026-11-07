@@ -1,0 +1,120 @@
+=== orchid ===
+ORCHID: 1349 invariant/transition records, 522 accepted experimental
+  AL-CR: 94 accepted experimental
+  AL-CU: 31 accepted experimental
+  AL-MG: 9 accepted experimental
+  AL-MN: 23 accepted experimental
+  AL-ZR: 100 accepted experimental
+  CR-CU: 7 accepted experimental
+  CU-SN: 26 accepted experimental
+  CU-ZR: 232 accepted experimental
+=== orchid done in 0 s ===
+=== al-alloys ===
+[AlSi10Mg] 37 phases; models built 0 s
+[AlSi10Mg] events liquidus=595.4C, solidus=568.8C, FCC_A1=595.4C, SI_DIAMOND_A4=575.9C (2 s)
+[AlSi10Mg] equilibrium done (2 s); Scheil...
+[AlSi10Mg] liq 595.4 sol 568.8 Si-start 575.9; Scheil fs0.9 568.0 fs0.99 559.4 end 559.4 f_eut 0.766 (7.1 s)
+[AlSi10Mg+0.3Fe] 67 phases; models built 1 s
+[AlSi10Mg+0.3Fe] events liquidus=594.9C, solidus=567.6C, FCC_A1=594.9C, SI_DIAMOND_A4=575.0C, ALFESI_T6=573.9C (6 s)
+[AlSi10Mg+0.3Fe] equilibrium done (7 s); Scheil...
+[AlSi10Mg+0.3Fe] liq 594.9 sol 567.6 Si-start 575.0; Scheil fs0.9 566.7 fs0.99 558.9 end 558.9 f_eut 0.766 (16.5 s)
+[AlSi12Mg (Si-enriched)] 37 phases; models built 0 s
+[AlSi12Mg (Si-enriched)] events liquidus=580.9C, solidus=568.6C, FCC_A1=580.9C, SI_DIAMOND_A4=576.2C (2 s)
+[AlSi12Mg (Si-enriched)] equilibrium done (2 s); Scheil...
+[AlSi12Mg (Si-enriched)] liq 580.9 sol 568.6 Si-start 576.2; Scheil fs0.9 567.9 fs0.99 559.5 end 559.4 f_eut 0.950 (6.0 s)
+[AlSi12Mg+0.3Fe (Si-enriched)] 67 phases; models built 1 s
+[AlSi12Mg+0.3Fe (Si-enriched)] events liquidus=580.5C, solidus=567.4C, FCC_A1=580.5C, SI_DIAMOND_A4=575.5C, ALFESI_T6=573.9C (8 s)
+[AlSi12Mg+0.3Fe (Si-enriched)] equilibrium done (9 s); Scheil...
+[AlSi12Mg+0.3Fe (Si-enriched)] liq 580.5 sol 567.4 Si-start 575.5; Scheil fs0.9 566.6 fs0.99 559.0 end 558.9 f_eut 0.939 (22.5 s)
+[AlSi12 (binary Al-12Si)] 27 phases; models built 0 s
+[AlSi12 (binary Al-12Si)] events liquidus=581.8C, solidus=577.7C, FCC_A1=581.8C, SI_DIAMOND_A4=577.7C (3 s)
+[AlSi12 (binary Al-12Si)] equilibrium done (3 s); Scheil...
+[AlSi12 (binary Al-12Si)] liq 581.8 sol 577.7 Si-start 577.7; Scheil fs0.9 577.6 fs0.99 577.6 end 577.6 f_eut 0.951 (5.3 s)
+[AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder)] 67 phases; models built 1 s
+[AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder)] events liquidus=595.9C, solidus=569.2C, FCC_A1=595.9C, SI_DIAMOND_A4=575.8C, ALFESI_T6=573.1C (10 s)
+[AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder)] equilibrium done (11 s); Scheil...
+[AlSi10Mg (Al-9.92Si-0.291Mg-0.137Fe powder)] liq 595.9 sol 569.2 Si-start 575.8; Scheil fs0.9 568.3 fs0.99 558.9 end 558.9 f_eut 0.755 (24.6 s)
+=== al-alloys done in 85 s ===
+=== alzr ===
+  Al-Zr SGTE AlZr-98Sau-LB.tdb: invariant 660.69 C (peritectic L + Al3Zr -> (Al)), x_liq 0.00027, x_fcc 0.00080 (wt 0.271); liquidus 0.5wt 815.0, 1.0wt 894.1
+  Al-Zr SGTE AlZr-86Sau.tdb: invariant 660.92 C (peritectic L + Al3Zr -> (Al)), x_liq 0.00010, x_fcc 0.00080 (wt 0.271); liquidus 0.5wt 828.8, 1.0wt 884.3
+  Al-Zr SGTE AlZr-01Wan.tdb: invariant 660.64 C (peritectic L + Al3Zr -> (Al)), x_liq 0.00039, x_fcc 0.00084 (wt 0.283); liquidus 0.5wt 794.9, 1.0wt 878.1
+  Al-Zr SGTE AlZr-10Hir.tdb: invariant 656.90 C (eutectic L -> (Al) + Al3Zr), x_liq 0.00511, x_fcc 0.00042 (wt 0.141); liquidus 0.5wt 659.4, 1.0wt 658.4
+  Al-Zr SGTE AlZr-15Fis.tdb: invariant 660.69 C (peritectic L + Al3Zr -> (Al)), x_liq 0.00030, x_fcc 0.00083 (wt 0.279); liquidus 0.5wt 808.0, 1.0wt 885.0
+  Al-Zr SGTE AlZr-18Khv.tdb: invariant 660.23 C (eutectic L -> (Al) + Al3Zr), x_liq 0.00029, x_fcc 0.00016 (wt 0.053); liquidus 0.5wt 808.0, 1.0wt 885.0
+  Al-Zr SGTE AlZr-18Tam.tdb: invariant 656.55 C (eutectic L -> (Al) + Al3Zr), x_liq 0.00511, x_fcc 0.00000 (wt 0.000); liquidus 0.5wt 659.3, 1.0wt 658.2
+  Al-Zr SGTE AlZr-20Lon.tdb: invariant 660.17 C (eutectic L -> (Al) + Al3Zr), x_liq 0.00037, x_fcc 0.00015 (wt 0.050); liquidus 0.5wt 803.9, 1.0wt 892.5
+  Al-Zr mc_al v2.032: invariant 656.62 C (eutectic L -> (Al) + Al3Zr), x_liq 0.00486, x_fcc 0.00042 (wt 0.141); liquidus 0.5wt 659.4, 1.0wt 656.6
+=== alzr done in 46 s ===
+=== almncrzr ===
+[Mehta A Al-4.8Mn-0.47Zr] liq 696.3 (AL6MN) fcc-start 654.5 sol 652.7; Scheil fs0.99 652.3 (12.6 s)
+[Mehta B Al-4.9Mn-0.8Cr] liq 812.2 (AL4CR) fcc-start 656.3 sol 656.0; Scheil fs0.99 655.1 (15.5 s)
+[Mehta C Al-5.0Mn-0.8Cr-0.6Zr] liq 814.9 (AL4CR) fcc-start 654.9 sol 653.2; Scheil fs0.99 652.6 (19.4 s)
+=== almncrzr done in 50 s ===
+=== binaries ===
+  AL-SI AlSi-97Feu-LB.tdb: 1 invariants, 5 s
+    figure /tmp/arroyave/work/pycalphad-al-cu/repro/figures/pd_al-si_full.png
+    figure /tmp/arroyave/work/pycalphad-al-cu/repro/figures/pd_al-si_alrich.png
+  AL-SI AlSi-14Lia.tdb: 1 invariants, 7 s
+  AL-CU AlCu-21Kro.tdb: 19 invariants, 39 s
+    figure /tmp/arroyave/work/pycalphad-al-cu/repro/figures/pd_al-cu_alrich.png
+    figure /tmp/arroyave/work/pycalphad-al-cu/repro/figures/pd_al-cu_curich.png
+    figure /tmp/arroyave/work/pycalphad-al-cu/repro/figures/pd_al-cu_full.png
+  AL-CU AlCu-98Sau-LB.tdb: 14 invariants, 12 s
+  CU-NI CuNi-92Mey-LB.tdb: 0 invariants, 4 s
+    figure /tmp/arroyave/work/pycalphad-al-cu/repro/figures/pd_cu-ni_full.png
+  CU-NI CuNi-07Tur.tdb: 0 invariants, 3 s
+  CR-CU CrCu-17Liu.tdb: 2 invariants, 4 s
+    figure /tmp/arroyave/work/pycalphad-al-cu/repro/figures/pd_cr-cu_full.png
+  CR-CU CrCu-95Zen-LB.tdb: 2 invariants, 8 s
+  CU-ZR CuZr-22Zho.tdb: 7 invariants, 12 s
+    figure /tmp/arroyave/work/pycalphad-al-cu/repro/figures/pd_cu-zr_full.png
+  CU-ZR CuZr-94Zen-LB.tdb: 6 invariants, 10 s
+  CU-SN CuSn-24Oik.tdb: 7 invariants, 20 s
+    figure /tmp/arroyave/work/pycalphad-al-cu/repro/figures/pd_cu-sn_full.png
+  CU-SN CuSn-96Shi-LB.tdb: 8 invariants, 8 s
+=== binaries done in 136 s ===
+=== cu-alloys ===
+  mc_ni C63000 NAB (Cu-10Al-5Ni-3Fe): 1044.2-1124.5 C primary kappa NiAl (B2); Scheil 99% 1033.0
+  mc_ni C63000 NAB (Cu-10Al-5Ni-3Fe-1Mn): 1037.1-1121.5 C primary kappa NiAl (B2); Scheil 99% 1023.5
+  mc_ni C95800 NAB (Cu-9.2Al-4.5Ni-4Fe-1.2Mn): 1035.6-1111.5 C primary kappa Fe-rich bcc; Scheil 99% 1019.5
+  mc_ni C70600 (Cu-10Ni-1.4Fe-0.8Mn): 1104.0-1131.3 C primary alpha (fcc); Scheil 99% 1018.3
+  mc_ni C71500 (Cu-30Ni-0.6Fe-0.6Mn): 1171.2-1229.2 C primary alpha (fcc); Scheil 99% 1061.2
+  mc_ni Cu-10Ni (binary): 1115.5-1128.1 C primary alpha (fcc); Scheil 99% 1093.1
+  mc_ni Cu-30Ni (binary): 1178.1-1227.1 C primary alpha (fcc); Scheil 99% 1104.1
+                  database  wt_Ni   liquidus_C    solidus_C
+0   SGTE CuNi-92Mey-LB.tdb      5  1116.810937  1105.873437
+1   SGTE CuNi-92Mey-LB.tdb     10  1146.732812  1126.185937
+2   SGTE CuNi-92Mey-LB.tdb     20  1200.482812  1164.076562
+3   SGTE CuNi-92Mey-LB.tdb     30  1246.732812  1199.467187
+4   SGTE CuNi-92Mey-LB.tdb     45  1302.435937  1251.185937
+5   SGTE CuNi-92Mey-LB.tdb     70  1374.232812  1344.232812
+6      SGTE CuNi-07Tur.tdb      5  1119.701562  1107.045312
+7      SGTE CuNi-07Tur.tdb     10  1151.420312  1127.748437
+8      SGTE CuNi-07Tur.tdb     20  1207.670312  1165.404687
+9      SGTE CuNi-07Tur.tdb     30  1255.248437  1199.857812
+10     SGTE CuNi-07Tur.tdb     45  1311.029687  1251.107812
+11     SGTE CuNi-07Tur.tdb     70  1381.576562  1350.092187
+12     SGTE CuNi-87Jan.tdb      5  1116.654687  1106.107812
+13     SGTE CuNi-87Jan.tdb     10  1145.560937  1126.654687
+14     SGTE CuNi-87Jan.tdb     20  1197.357812  1164.935937
+15     SGTE CuNi-87Jan.tdb     30  1243.764062  1200.639062
+16     SGTE CuNi-87Jan.tdb     45  1303.529687  1252.201562
+17     SGTE CuNi-87Jan.tdb     70  1379.623437  1346.576562
+18     SGTE CuNi-89Sri.tdb      5  1110.092187  1102.279687
+19     SGTE CuNi-89Sri.tdb     10  1136.029687  1119.467187
+20     SGTE CuNi-89Sri.tdb     20  1187.123437  1153.295312
+21     SGTE CuNi-89Sri.tdb     30  1234.545312  1187.670312
+22     SGTE CuNi-89Sri.tdb     45  1297.357812  1242.592187
+23     SGTE CuNi-89Sri.tdb     70  1380.951562  1345.326562
+24            mc_ni v2.036      5  1105.639062  1100.014062
+25            mc_ni v2.036     10  1128.139062  1115.482812
+26            mc_ni v2.036     20  1176.732812  1146.576562
+27            mc_ni v2.036     30  1227.123437  1178.060937
+28            mc_ni v2.036     45  1294.545312  1228.373437
+29            mc_ni v2.036     70  1377.670312  1335.170312
+=== cu-alloys done in 87 s ===
+=== figures ===
+=== figures done in 1 s ===
+=== literature ===
+wrote 42 rows to /tmp/arroyave/work/pycalphad-al-cu/repro/data/literature_values.csv

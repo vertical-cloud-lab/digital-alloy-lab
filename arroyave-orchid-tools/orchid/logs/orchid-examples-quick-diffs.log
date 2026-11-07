@@ -1,0 +1,17 @@
+cuzr-phaseforgeplus/gate.json: identical size got=4224 want=4224
+cuzr-phaseforgeplus/fig_cuzr_overlay.png: DIFFERS size got=271793 want=253548 pixel RMS=0.010 shape=(1275, 1417, 4) vs (1275, 1417, 4)
+cuzr-phaseforgeplus/fig_cuzr_overlay.pdf: identical size got=153841 want=153841
+cuzr-phaseforgeplus/fig_cuzr_panels.png: DIFFERS size got=243082 want=227138 pixel RMS=0.009 shape=(1122, 2161, 4) vs (1122, 2161, 4)
+cuzr-phaseforgeplus/fig_cuzr_panels.pdf: identical size got=283517 want=283517
+cuzr-espei-mcmc/gate_sgte_start.json: identical size got=2283 want=2283
+cuzr-espei-mcmc/fig_espei_negative.png: DIFFERS size got=216853 want=180099 pixel RMS=0.000 shape=(826, 2161, 4) vs (826, 2161, 4)
+cuzr-espei-mcmc/fig_espei_negative.pdf: identical size got=24093 want=24093
+oneshot-benchmark/grace_grid_score.json: DIFFERS size got=103378 want=103378 json leaves differing=1
+      /grid_sha256: committed='1ef9f5974c94f1e2578987bbb6bbc9e0326291e3aa61c1223a23346dd24a4d6a' regenerated='b3497bdc8902ebdae9b924080204ccbf8355d42f006ca5c9c266bb92dbfc6a87'
+oneshot-benchmark/fig_cuzr_oneshot.png: DIFFERS size got=259288 want=231127 pixel RMS=0.011 shape=(921, 2161, 4) vs (921, 2161, 4)
+oneshot-benchmark/fig_cuzr_oneshot.pdf: identical size got=911889 want=911889
+mlip-formation-enthalpy/summary.json: identical size got=47148 want=47148
+mlip-formation-enthalpy/mlip_benchmark.png: DIFFERS size got=628132 want=517254 pixel RMS=0.000 shape=(1629, 2161, 4) vs (1629, 2161, 4)
+mlip-formation-enthalpy/mlip_benchmark.pdf: DIFFERS size got=84761 want=84601 (cmp: 39562 bytes differ)
+quickstart/cuzr_exp_vs_dft.png: DIFFERS size got=97925 want=85976 pixel RMS=0.000 shape=(944, 1051, 4) vs (944, 1051, 4)
+quickstart/cuzr_exp_vs_dft.pdf: identical size got=16255 want=16255

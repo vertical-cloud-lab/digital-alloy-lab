@@ -1,0 +1,64 @@
+Traceback (most recent call last):
+  File "/tmp/arroyave/venvs/pfp/lib/python3.11/site-packages/espei/error_functions/non_equilibrium_thermochemical_error.py", line 193, in get_prop_samples
+    P, T, N = ravel_conditions(values, datum_P, datum_T, datum_N)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/pfp/lib/python3.11/site-packages/espei/core_utils.py", line 149, in ravel_conditions
+    cond_shape[cond_idx] = -1
+    ~~~~~~~~~~^^^^^^^^^^
+IndexError: list assignment index out of range
+{
+ "block_components": [
+  "W",
+  "PT"
+ ],
+ "first_configuration": [
+  [
+   "W",
+   "PT"
+  ]
+ ],
+ "values_shape": [
+  1,
+  9
+ ],
+ "occupancies_shape": [
+  9,
+  1,
+  2
+ ],
+ "error": "IndexError: list assignment index out of range"
+}
+exit=0 elapsed=6s
+--- with values reshaped to (1,1,n)
+{
+ "block_components": [
+  "PT",
+  "W"
+ ],
+ "first_configuration": [
+  [
+   "PT",
+   "W"
+  ]
+ ],
+ "values_shape": [
+  1,
+  9
+ ],
+ "occupancies_shape": [
+  9,
+  1,
+  2
+ ],
+ "blocks_used_after_patch": 3,
+ "configs_kept_per_block": [
+  9,
+  9,
+  9
+ ],
+ "neq_loglik_x0": -254.77555656476457,
+ "neq_grad_norm_x0": 8.018270138972982e-17,
+ "neq_loglik_ptw_tuned": -255.00826215092283,
+ "neq_grad_norm_ptw_tuned": 0.07821307441200899
+}
+exit=0 elapsed=4s

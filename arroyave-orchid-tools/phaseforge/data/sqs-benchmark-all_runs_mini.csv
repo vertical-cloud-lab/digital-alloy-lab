@@ -1,0 +1,7 @@
+method,run,phase_name,bestsqs_path,native_scale_objective,native_scale_computed,mcsqs_reported_objective,corrdump_objective,pair_objective,epa_eV
+mcsqs,1,BCCmcsqs1,"BLADE/SQS/BCCmcsqs1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/bestsqs.out",-46.241737,-46.241730706647715,-46.241737,-0.0119956046,-0.0002717102074074079,
+mcsqs,2,BCCmcsqs2,"BLADE/SQS/BCCmcsqs2_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/bestsqs.out",-46.241572,-46.24149721215789,-46.241572,-0.0094809942,-9.457867407407423e-05,
+SCRAPS,1,BCCscraps1,,,,,,,
+SCRAPS,2,BCCscraps2,,,,,,,
+Random,1,BCCrandom1,"SCRAPS/BCC_test_2/SQS/BCCrandom1_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/bestsqs.out",-46.238910589805236,-46.238910589805236,,-0.0181658725,-0.00024197660740740796,
+Random,2,BCCrandom2,"SCRAPS/BCC_test_2/SQS/BCCrandom2_3/sqsdb_lev=0_a=0.33333,0.33333,0.33333/bestsqs.out",-46.23702043179106,-46.23702043179106,,-0.020763712900000002,-0.0008328383185185193,

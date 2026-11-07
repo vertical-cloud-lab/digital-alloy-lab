@@ -1,0 +1,11 @@
+/tmp/arroyave/venvs/Kernels-BO/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+/tmp/arroyave/work/Kernels-BO/distances/js.py:19: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  return float(0.5 * (kl_pm + kl_qm))
+Generated 237 kernels (notebook output: 237)
+780 pairs x 32 QMC samples in 143.2 s -> 5.74 ms/sample; full notebook run (237 kernels, 128 samples) est. 5.71 h on this core
+MDS (k=15) mean abs error 1.021e-03 | relative error 1.633e-02 | parity R2/RMSE/MAE 0.9951, 0.0090, 0.0045
+vs shipped kernels_JS.csv: 40/40 kernels found; pairwise D Pearson r=0.9999, Spearman=0.9998; mean D ours=0.0642 shipped=0.0641
+pairs with D < 1e-10 (indistinguishable under the spectrum-based JS): 13/780
+total 143.6 s

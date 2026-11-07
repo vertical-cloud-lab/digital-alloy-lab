@@ -1,0 +1,8 @@
+26c26
+< folder_name = 'Test simulations/graph example 1'
+---
+> folder_name = 'Test Optimization Iteration/testBOloop_specificmetadata'  # patch: shipped path not in repo
+93c93
+< plt.text(0.02, 0.00, f'Batches of {data_input[(data_input['Iteration'] == 1)].shape[0]}', transform=ax.transAxes, fontfamily='Calibri', fontsize = 28, ha='left', va='bottom')
+---
+> plt.text(0.02, 0.00, f'Batches of {data_input[(data_input["Iteration"] == 1)].shape[0]}', transform=ax.transAxes, fontfamily='Calibri', fontsize = 28, ha='left', va='bottom')

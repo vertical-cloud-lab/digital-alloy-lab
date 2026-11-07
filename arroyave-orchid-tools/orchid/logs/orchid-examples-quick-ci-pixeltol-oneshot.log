@@ -1,0 +1,11 @@
+Thu Nov  5 04:12:56 UTC 2026
+  ok  oneshot-benchmark/fig_cuzr_oneshot.png: bytes differ, pixel RMS 0.011 (tol 2.0)
+  ok  oneshot-benchmark/fig_cuzr_oneshot.pdf: identical (sha256 45c0b2ca9c11)
+  warn oneshot-benchmark/grace_grid_score.json: differs (PNG rasterisation differs on this platform; not failed without --strict)
+oneshot-benchmark: quick path 131 s
+all quick paths regenerate identically
+
+real	2m11.582s
+user	2m9.592s
+sys	0m0.713s
+exit=0

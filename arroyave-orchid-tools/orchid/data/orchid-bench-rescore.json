@@ -1,0 +1,471 @@
+[
+ {
+  "extractor": "ai_claude",
+  "n_output_files": 10,
+  "exit": 0,
+  "seconds": 1.11,
+  "byte_identical": false,
+  "n_differing_leaves": 3,
+  "max_abs_numeric_diff": 1.1102230246251565e-16,
+  "examples": [
+   [
+    "/per_document/syn-AgCu-06He-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.2576295526666752,
+    0.25762955266667514
+   ],
+   [
+    "/per_document/syn-BiSn-08Li-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.7004295649410371,
+    0.7004295649410373
+   ],
+   [
+    "/per_document/syn-PbZn-98Jan-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.19964007581774207,
+    0.1996400758177421
+   ]
+  ]
+ },
+ {
+  "extractor": "ai_dual",
+  "n_output_files": 10,
+  "exit": 0,
+  "seconds": 0.75,
+  "byte_identical": false,
+  "n_differing_leaves": 3,
+  "max_abs_numeric_diff": 1.1102230246251565e-16,
+  "examples": [
+   [
+    "/per_document/syn-AgCu-06He-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.2576295526666752,
+    0.25762955266667514
+   ],
+   [
+    "/per_document/syn-BiSn-08Li-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.7004295649410371,
+    0.7004295649410373
+   ],
+   [
+    "/per_document/syn-PbZn-98Jan-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.19964007581774207,
+    0.1996400758177421
+   ]
+  ]
+ },
+ {
+  "extractor": "ai_gemini",
+  "n_output_files": 80,
+  "exit": 0,
+  "seconds": 5.11,
+  "byte_identical": false,
+  "n_differing_leaves": 16,
+  "max_abs_numeric_diff": 1.1102230246251565e-16,
+  "examples": [
+   [
+    "/per_document/syn-AgCu-06He-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.2576295526666752,
+    0.25762955266667514
+   ],
+   [
+    "/per_document/syn-AgNi-04Din-v0/degraded_raster/phase_diagram/boundary/mean_pred_to_true",
+    0.0014463350007161875,
+    0.0014463350007161877
+   ],
+   [
+    "/per_document/syn-AgNi-04Din-v0/image_only_pdf/phase_diagram/boundary/mean_pred_to_true",
+    0.0014463350007161875,
+    0.0014463350007161877
+   ],
+   [
+    "/per_document/syn-AlBi-06Kim-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.13608956597803162,
+    0.13608956597803165
+   ],
+   [
+    "/per_document/syn-AlBi-06Kim-v0/vector/phase_diagram/boundary/mean_true_to_pred",
+    0.016229813465796945,
+    0.016229813465796942
+   ],
+   [
+    "/per_document/syn-AlZn-93Mey-LB-v0/vector/phase_diagram/boundary/mean_true_to_pred",
+    0.005876876457837569,
+    0.00587687645783757
+   ],
+   [
+    "/per_document/syn-BiSn-08Li-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.7004295649410371,
+    0.7004295649410373
+   ],
+   [
+    "/per_document/syn-CrFe-11Xio-v0/degraded_raster/phase_diagram/boundary/hausdorff95",
+    0.11562552015594046,
+    0.11562552015594048
+   ]
+  ]
+ },
+ {
+  "extractor": "ai_gemini_subset",
+  "n_output_files": 10,
+  "exit": 0,
+  "seconds": 0.78,
+  "byte_identical": false,
+  "n_differing_leaves": 3,
+  "max_abs_numeric_diff": 1.1102230246251565e-16,
+  "examples": [
+   [
+    "/per_document/syn-AgCu-06He-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.2576295526666752,
+    0.25762955266667514
+   ],
+   [
+    "/per_document/syn-BiSn-08Li-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.7004295649410371,
+    0.7004295649410373
+   ],
+   [
+    "/per_document/syn-PbZn-98Jan-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.19964007581774207,
+    0.1996400758177421
+   ]
+  ]
+ },
+ {
+  "extractor": "ai_gemini_thermo_v5_pilot",
+  "n_output_files": 4,
+  "exit": 0,
+  "seconds": 0.26,
+  "byte_identical": true,
+  "n_differing_leaves": 0,
+  "max_abs_numeric_diff": 0.0,
+  "examples": []
+ },
+ {
+  "extractor": "ai_gemini_thermo_v6_pilot",
+  "n_output_files": 4,
+  "exit": 0,
+  "seconds": 0.18,
+  "byte_identical": true,
+  "n_differing_leaves": 0,
+  "max_abs_numeric_diff": 0.0,
+  "examples": []
+ },
+ {
+  "extractor": "ai_gemini_thermo_v71_pilot",
+  "n_output_files": 4,
+  "exit": 0,
+  "seconds": 0.17,
+  "byte_identical": true,
+  "n_differing_leaves": 0,
+  "max_abs_numeric_diff": 0.0,
+  "examples": []
+ },
+ {
+  "extractor": "assessed_pd",
+  "n_output_files": 80,
+  "exit": 0,
+  "seconds": 3.01,
+  "byte_identical": false,
+  "n_differing_leaves": 13,
+  "max_abs_numeric_diff": 1.1102230246251565e-16,
+  "examples": [
+   [
+    "/per_document/syn-AgSn-12Gie-v0/vector/phase_diagram/boundary/mean_pred_to_true",
+    0.011334666358212625,
+    0.011334666358212626
+   ],
+   [
+    "/per_document/syn-AlBi-06Kim-v0/vector/phase_diagram/boundary/mean_true_to_pred",
+    0.01621177684395548,
+    0.016211776843955483
+   ],
+   [
+    "/per_document/syn-AlCu-02Mie-v0/clean_raster/phase_diagram/boundary/mean_pred_to_true",
+    0.0009001944440674868,
+    0.0009001944440674867
+   ],
+   [
+    "/per_document/syn-AlMg-12Tan-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.09457961542815947,
+    0.09457961542815946
+   ],
+   [
+    "/per_document/syn-BiSn-08Li-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.7004295649410371,
+    0.7004295649410373
+   ],
+   [
+    "/per_document/syn-CrFe-11Xio-v0/degraded_raster/phase_diagram/boundary/mean_pred_to_true",
+    0.0019743428598493545,
+    0.001974342859849355
+   ],
+   [
+    "/per_document/syn-CrFe-11Xio-v0/image_only_pdf/phase_diagram/boundary/mean_pred_to_true",
+    0.0019743428598493545,
+    0.001974342859849355
+   ],
+   [
+    "/per_document/syn-CuMg-16Hal-v0/degraded_raster/phase_diagram/boundary/mean_pred_to_true",
+    0.032458869935061564,
+    0.03245886993506156
+   ]
+  ]
+ },
+ {
+  "extractor": "assessed_pd_auto",
+  "n_output_files": 80,
+  "exit": 0,
+  "seconds": 3.75,
+  "byte_identical": false,
+  "n_differing_leaves": 16,
+  "max_abs_numeric_diff": 1.1102230246251565e-16,
+  "examples": [
+   [
+    "/per_document/syn-AgCu-06He-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.2576295526666752,
+    0.25762955266667514
+   ],
+   [
+    "/per_document/syn-AgNi-04Din-v0/degraded_raster/phase_diagram/boundary/mean_pred_to_true",
+    0.0014463350007161875,
+    0.0014463350007161877
+   ],
+   [
+    "/per_document/syn-AgNi-04Din-v0/image_only_pdf/phase_diagram/boundary/mean_pred_to_true",
+    0.0014463350007161875,
+    0.0014463350007161877
+   ],
+   [
+    "/per_document/syn-AlBi-06Kim-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.13608956597803162,
+    0.13608956597803165
+   ],
+   [
+    "/per_document/syn-AlBi-06Kim-v0/vector/phase_diagram/boundary/mean_true_to_pred",
+    0.016229813465796945,
+    0.016229813465796942
+   ],
+   [
+    "/per_document/syn-AlZn-93Mey-LB-v0/vector/phase_diagram/boundary/mean_true_to_pred",
+    0.005876876457837569,
+    0.00587687645783757
+   ],
+   [
+    "/per_document/syn-BiSn-08Li-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.7004295649410371,
+    0.7004295649410373
+   ],
+   [
+    "/per_document/syn-CrFe-11Xio-v0/degraded_raster/phase_diagram/boundary/hausdorff95",
+    0.11562552015594046,
+    0.11562552015594048
+   ]
+  ]
+ },
+ {
+  "extractor": "camelot_lattice",
+  "n_output_files": 20,
+  "exit": 0,
+  "seconds": 1.8,
+  "byte_identical": true,
+  "n_differing_leaves": 0,
+  "max_abs_numeric_diff": 0.0,
+  "examples": []
+ },
+ {
+  "extractor": "camelot_stream",
+  "n_output_files": 20,
+  "exit": 0,
+  "seconds": 2.65,
+  "byte_identical": true,
+  "n_differing_leaves": 0,
+  "max_abs_numeric_diff": 0.0,
+  "examples": []
+ },
+ {
+  "extractor": "ocr_table_cells",
+  "n_output_files": 80,
+  "exit": 0,
+  "seconds": 10.64,
+  "byte_identical": true,
+  "n_differing_leaves": 0,
+  "max_abs_numeric_diff": 0.0,
+  "examples": []
+ },
+ {
+  "extractor": "oracle",
+  "n_output_files": 80,
+  "exit": 0,
+  "seconds": 17.08,
+  "byte_identical": true,
+  "n_differing_leaves": 0,
+  "max_abs_numeric_diff": 0.0,
+  "examples": []
+ },
+ {
+  "extractor": "raster_markers",
+  "n_output_files": 60,
+  "exit": 0,
+  "seconds": 2.08,
+  "byte_identical": false,
+  "n_differing_leaves": 36,
+  "max_abs_numeric_diff": 1.1102230246251565e-16,
+  "examples": [
+   [
+    "/per_document/syn-AgCu-06He-v0/degraded_raster/xy/by_quantity/NP/err/mean",
+    0.057864332290029526,
+    0.05786433229002951
+   ],
+   [
+    "/per_document/syn-AgCu-06He-v0/degraded_raster/xy/point_err/mean",
+    0.057864332290029526,
+    0.05786433229002951
+   ],
+   [
+    "/per_document/syn-AgCu-06He-v0/image_only_pdf/xy/by_quantity/NP/err/mean",
+    0.057864332290029526,
+    0.05786433229002951
+   ],
+   [
+    "/per_document/syn-AgCu-06He-v0/image_only_pdf/xy/point_err/mean",
+    0.057864332290029526,
+    0.05786433229002951
+   ],
+   [
+    "/per_document/syn-AlCu-02Mie-v0/clean_raster/xy/by_quantity/ACR/err/mean",
+    0.003575177046102532,
+    0.003575177046102533
+   ],
+   [
+    "/per_document/syn-AlCu-02Mie-v0/clean_raster/xy/by_quantity/HM_MIX/err/median",
+    0.0007986215581528957,
+    0.0007986215581528955
+   ],
+   [
+    "/per_document/syn-AlCu-02Mie-v0/clean_raster/xy/point_err/mean",
+    0.4547678008873213,
+    0.4547678008873214
+   ],
+   [
+    "/per_document/syn-AlCu-02Mie-v0/degraded_raster/xy/by_quantity/HM_MIX/err/mean",
+    0.011756703256076872,
+    0.011756703256076868
+   ]
+  ]
+ },
+ {
+  "extractor": "raster_topology",
+  "n_output_files": 80,
+  "exit": 0,
+  "seconds": 1.98,
+  "byte_identical": true,
+  "n_differing_leaves": 0,
+  "max_abs_numeric_diff": 0.0,
+  "examples": []
+ },
+ {
+  "extractor": "tables_pdfplumber",
+  "n_output_files": 20,
+  "exit": 0,
+  "seconds": 3.23,
+  "byte_identical": true,
+  "n_differing_leaves": 0,
+  "max_abs_numeric_diff": 0.0,
+  "examples": []
+ },
+ {
+  "extractor": "text_regex",
+  "n_output_files": 80,
+  "exit": 0,
+  "seconds": 1.73,
+  "byte_identical": true,
+  "n_differing_leaves": 0,
+  "max_abs_numeric_diff": 0.0,
+  "examples": []
+ },
+ {
+  "extractor": "vector_markers_tool",
+  "n_output_files": 20,
+  "exit": 0,
+  "seconds": 1.85,
+  "byte_identical": false,
+  "n_differing_leaves": 5,
+  "max_abs_numeric_diff": 1.1102230246251565e-16,
+  "examples": [
+   [
+    "/per_document/syn-AlCu-02Mie-v0/vector/xy/by_quantity/HM_MIX/err/median",
+    7.97277825800306e-07,
+    7.972778258003058e-07
+   ],
+   [
+    "/per_document/syn-AlMg-12Tan-v0/vector/xy/point_err/mean",
+    0.4615311239484194,
+    0.46153112394841933
+   ],
+   [
+    "/per_document/syn-AlNi-14Zhu-v0/vector/xy/by_quantity/NP/err/median",
+    0.5572287006443769,
+    0.557228700644377
+   ],
+   [
+    "/per_document/syn-CuMg-16Hal-v0/vector/xy/by_quantity/NP/err/median",
+    0.5319993287654574,
+    0.5319993287654573
+   ],
+   [
+    "/per_document/syn-CuNi-87Jan-v0/vector/xy/by_quantity/ACR/err/median",
+    1.8698428939150727e-06,
+    1.869842893915073e-06
+   ]
+  ]
+ },
+ {
+  "extractor": "vector_route",
+  "n_output_files": 20,
+  "exit": 0,
+  "seconds": 2.72,
+  "byte_identical": false,
+  "n_differing_leaves": 13,
+  "max_abs_numeric_diff": 5.551115123125783e-17,
+  "examples": [
+   [
+    "/per_document/syn-AgSn-12Gie-v0/vector/xy/by_quantity/NP/err/mean",
+    2.4968244714962644e-07,
+    2.496824471496265e-07
+   ],
+   [
+    "/per_document/syn-AlMg-12Tan-v0/vector/phase_diagram/boundary/hausdorff95",
+    0.24228710840116768,
+    0.2422871084011677
+   ],
+   [
+    "/per_document/syn-AlMg-12Tan-v0/vector/phase_diagram/boundary/mean_true_to_pred",
+    0.04169090044333967,
+    0.041690900443339673
+   ],
+   [
+    "/per_document/syn-AlMg-12Tan-v0/vector/xy/by_quantity/HM_MIX/err/median",
+    0.40799043365920834,
+    0.4079904336592083
+   ],
+   [
+    "/per_document/syn-AlZn-93Mey-LB-v0/vector/xy/by_quantity/ACR/err/mean",
+    0.0015208389344763234,
+    0.0015208389344763238
+   ],
+   [
+    "/per_document/syn-CrFe-11Xio-v0/vector/xy/by_quantity/GM/err/median",
+    1.0503208230283358e-07,
+    1.0503208230283359e-07
+   ],
+   [
+    "/per_document/syn-CrFe-11Xio-v0/vector/xy/by_quantity/NP/err/median",
+    1.4227719113929343e-07,
+    1.4227719113929346e-07
+   ],
+   [
+    "/per_document/syn-CuNi-87Jan-v0/vector/xy/by_quantity/ACR/err/median",
+    0.041580153681167284,
+    0.04158015368116728
+   ]
+  ]
+ }
+]

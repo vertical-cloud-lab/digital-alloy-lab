@@ -1,0 +1,39 @@
+akaitools 0.3.1
+--- go nife
+File   : /tmp/arroyave/work/akaitools/tests/data/out/nife
+Date   : 2-Apr-2026
+Lattice: fcc  a=6.55000 bohr  V=70.25 a.u.
+XC     : mjw  reltyp=nrl
+Types  : 1   Atoms: 1   Components: 2
+Converged : yes
+Iterations: 68
+Final moment : 1.5020 μB
+Final energy : -2767.22162227 Ry
+
+Type                 Element      Z     Charge   Spin(μB)     Hf(kG)
+--------------------------------------------------------------------
+NiFe                 Ni          28    27.2789     0.6960   -181.578
+NiFe                 Fe          26    25.1495     2.3473   -247.341
+--- go fe --json (atomic_properties)
+['file_date', 'lattice', 'calculation', 'converged', 'n_iterations', 'final_moment_muB', 'final_energy_Ry', 'atomic_properties', 'timing']
+[{"type": "Fe", "element": "Fe", "z": 26.0, "total_charge": 26.0, "spin_moment_muB": 2.16862, "orbital_moment_muB": 0.0, "hyperfine_kG": -259.216}]
+--- dos nife
+File   : /tmp/arroyave/work/akaitools/tests/data/out/nife.dos
+Date   : 2-Apr-2026
+Lattice: fcc  a=6.55000 bohr
+Energy : [-0.5000, 0.5000] Ry  (201 points)
+
+  Comp       DOS@Ef  f-orbital
+--------------------------------
+     1       1.6810         no
+     2       3.3644         no
+     1       9.6587         no
+     2      10.1506         no
+--- plots
+Saved plot to /tmp/arroyave/results/misc/figures/akaitools_nife_dos.png
+Saved plot to /tmp/arroyave/results/misc/figures/akaitools_nife_scf.png
+Saved plot to /tmp/arroyave/results/misc/figures/akaitools_nife_bsf.png
+
+real	0m11.234s
+user	0m6.729s
+sys	0m0.693s

@@ -1,0 +1,40 @@
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+system=AL-SI tdb=none cells modified=2
+executed in 3.5 s
+--- cell 1 [stream]
+data from /tmp/arroyave/src/orchid-calphad__orchid-data
+
+--- cell 3 [stream]
+13 Cu-Zr values
+
+--- cell 3 [execute_result]
+evidence_class          experimental  model
+property                                   
+INVARIANT_TEMPERATURE              4      5
+TRANSITION_TEMPERATURE             1      3
+--- cell 5 [stream]
+0 accepted multi-reader experimental values; 0 formation enthalpies
+
+--- cell 5 [execute_result]
+Empty DataFrame
+Columns: [phases, value, unit, sigma_printed, sigma_effective, temperature_K, method, paper_citation, page]
+Index: []
+--- cell 7 [execute_result]
+<IPython.core.display.Image object>
+--- cell 8 [execute_result]
+Empty DataFrame
+Columns: [count, mean, 50%, std]
+Index: []
+--- cell 10 [stream]
+0 datasets exported to /tmp/arroyave/work/qs-AL-SI/export/none
+
+--- cell 10 [execute_result]
+Series([], Name: datasets, dtype: int64)
+--- cell 11 [stream]
+ESPEI load_datasets: 0 datasets loaded
+
+
+real	0m3.655s
+user	0m2.991s
+sys	0m0.473s
+exit=0

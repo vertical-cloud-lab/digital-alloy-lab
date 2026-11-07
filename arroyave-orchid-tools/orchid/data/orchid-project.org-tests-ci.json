@@ -1,0 +1,15 @@
+[
+ {
+  "file": "test_report_links.py",
+  "runner": "pytest",
+  "exit": 0,
+  "seconds": 0.9,
+  "pytest_summary": "3 passed in 0.05s",
+  "script_PASS_lines": 0,
+  "script_FAIL_lines": 0,
+  "first_error_lines": [],
+  "last_stdout": [
+   "3 passed in 0.05s"
+  ]
+ }
+]

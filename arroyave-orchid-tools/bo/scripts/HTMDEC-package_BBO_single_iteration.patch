@@ -1,0 +1,16 @@
+39c39,43
+< iteration_current = 2
+---
+> import os
+> iteration_current = int(os.environ.get('ITER', '1'))
+> opt_folder = 'Test Optimization Iteration/testBOloop_specificmetadata'  # patch: undefined for ITER>1
+> if iteration_current != 1:  # patch: data_input is used before the script's own load block for ITER>1
+>     data_input = import_excel(f'{opt_folder}/inputSpace_from{phase_space_size}_size{batch_start_size}_iter{iteration_current}.xlsx')
+55,57c59,61
+< print(f'Starting hypervolume: {data_input["hypervolume"].max()}')
+< print(f'Outputs max:\n{data_input[outputs].max()}')
+< print(f'Outputs min:\n{data_input[outputs].min()}')
+---
+> if iteration_current == 1: print(f'Starting hypervolume: {data_input["hypervolume"].max()}')  # patch: data_input not loaded yet for ITER>1
+> if iteration_current == 1: print(f'Outputs max:\n{data_input[outputs].max()}')  # patch: data_input not loaded yet for ITER>1
+> if iteration_current == 1: print(f'Outputs min:\n{data_input[outputs].min()}')  # patch: data_input not loaded yet for ITER>1

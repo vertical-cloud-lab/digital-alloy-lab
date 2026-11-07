@@ -1,0 +1,13 @@
+Thu Nov  5 03:54:12 UTC 2026
+  ok  cuzr-phaseforgeplus/gate.json: identical (sha256 6e52b0c1c9bc)
+  ok  cuzr-phaseforgeplus/fig_cuzr_overlay.pdf: identical (sha256 f2a66cda8e30)
+  ok  cuzr-phaseforgeplus/fig_cuzr_panels.pdf: identical (sha256 cbd20055cf48)
+FAIL cuzr-phaseforgeplus/fig_cuzr_overlay.png: differs from figures/fig_cuzr_overlay.png
+FAIL cuzr-phaseforgeplus/fig_cuzr_panels.png: differs from figures/fig_cuzr_panels.png
+cuzr-phaseforgeplus: quick path 383 s
+FAILED: cuzr-phaseforgeplus
+
+real	6m23.489s
+user	4m36.310s
+sys	0m0.523s
+exit=1

@@ -1,0 +1,465 @@
+./foolproof.sh /tmp/arroyave/atat/bin/   "g++"
+I will now perform various checks to see if you have the appropriate software
+installed. To override these checks, type
+make force
+Testing compiler features...
+  friend : patched
+  doth : patched
+  str2s : patched
+  template : patched
+  uT : ok
+  static : patched
+Tests successfully passed.
+make -C src clean
+make[1]: Entering directory '/tmp/arroyave/atat/src'
+rm -f *.o *.cc *.c *.h *.exe
+rm -f maps mmaps emc2 phb checkcell corrdump kmesh genstr gensqs mcsqs nntouch fixcell csfit cv cellcvrt lsfit fitsvsl svsl felec pdef fitfc nnshell memc2 gce gencs triph strpath infdet apb mindist simplexize mkaxes cvmclus surfbond 3d2gnu icamag
+make[1]: Leaving directory '/tmp/arroyave/atat/src'
+make -C src          "CXX=g++"
+make[1]: Entering directory '/tmp/arroyave/atat/src'
+./patchlang < anyfft.hh > anyfft.h
+./patchlang < drawpd.hh > drawpd.h
+./patchlang < gstate.hh > gstate.h
+./patchlang < lstsqr.hh > lstsqr.h
+./patchlang < multipoly.hh > multipoly.h
+./patchlang < stringo.hh > stringo.h
+./patchlang < array.hh > array.h
+./patchlang < equil.hh > equil.h
+./patchlang < integer.hh > integer.h
+./patchlang < machdep.hh > machdep.h
+./patchlang < parse.hh > parse.h
+./patchlang < teci.hh > teci.h
+./patchlang < arraylist.hh > arraylist.h
+./patchlang < fftn.hh > fftn.h
+./patchlang < keci.hh > keci.h
+./patchlang < kmeci.hh > kmeci.h
+./patchlang < mclib.hh > mclib.h
+./patchlang < phonlib.hh > phonlib.h
+./patchlang < vectmac.hh > vectmac.h
+./patchlang < calccorr.hh > calccorr.h
+./patchlang < findsym.hh > findsym.h
+./patchlang < lattype.hh > lattype.h
+./patchlang < misc.hh > misc.h
+./patchlang < plugin.hh > plugin.h
+./patchlang < version.hh > version.h
+./patchlang < calcmf.hh > calcmf.h
+./patchlang < fixagg.hh > fixagg.h
+./patchlang < linalg.hh > linalg.h
+./patchlang < mmclib.hh > mmclib.h
+./patchlang < predrs.hh > predrs.h
+./patchlang < xtalutil.hh > xtalutil.h
+./patchlang < chull.hh > chull.h
+./patchlang < fxvector.hh > fxvector.h
+./patchlang < linklist.hh > linklist.h
+./patchlang < mrefine.hh > mrefine.h
+./patchlang < refine.hh > refine.h
+./patchlang < clus_str.hh > clus_str.h
+./patchlang < getvalue.hh > getvalue.h
+./patchlang < linsolve.hh > linsolve.h
+./patchlang < mteci.hh > mteci.h
+./patchlang < ridge.hh > ridge.h
+./patchlang < kspacecs.c++ > kspacecs.cc
+./patchlang < tensor.hh > tensor.h
+./patchlang < gceutil.hh > gceutil.h
+./patchlang < tensorsym.hh > tensorsym.h
+./patchlang < binstream.hh > binstream.h
+./patchlang < mpiinterf.hh > mpiinterf.h
+./patchlang < normal.hh > normal.h
+./patchlang < apb.hh > apb.h
+./patchlang < opti.hh > opti.h
+./patchlang < strinterf.hh > strinterf.h
+./patchlang < meshutil.hh > meshutil.h
+./patchlang < meshcalc.hh > meshcalc.h
+./patchlang < myglut.hh > myglut.h
+./patchlang < headers.c++ > headers.cc
+./patchlang < stringo.c++ > stringo.cc
+./patchlang < parse.c++ > parse.cc
+./patchlang < xtalutil.c++ > xtalutil.cc
+./patchlang < integer.c++ > integer.cc
+./patchlang < findsym.c++ > findsym.cc
+./patchlang < lattype.c++ > lattype.cc
+./patchlang < calccorr.c++ > calccorr.cc
+./patchlang < refine.c++ > refine.cc
+./patchlang < clus_str.c++ > clus_str.cc
+./patchlang < linalg.c++ > linalg.cc
+./patchlang < lstsqr.c++ > lstsqr.cc
+./patchlang < gstate.c++ > gstate.cc
+./patchlang < linsolve.c++ > linsolve.cc
+./patchlang < getvalue.c++ > getvalue.cc
+./makehelp.bash < mapshelp.hlp > mapshelp.cc
+./patchlang < predrs.c++ > predrs.cc
+./patchlang < predcs.c++ > predcs.cc
+./patchlang < tlambda.c++ > tlambda.cc
+./patchlang < ridge.c++ > ridge.cc
+./patchlang < maps.c++ > maps.cc
+./patchlang < mrefine.c++ > mrefine.cc
+./makehelp.bash < mmapshelp.hlp > mmapshelp.cc
+./patchlang < chull.c++ > chull.cc
+./patchlang < mpiinterf.c++ > mpiinterf.cc
+./patchlang < predes.c++ > predes.cc
+./patchlang < mrefine_bayesian.c++ > mrefine_bayesian.cc
+./patchlang < mmaps.c++ > mmaps.cc
+./patchlang < teci.c++ > teci.cc
+./patchlang < drawpd.c++ > drawpd.cc
+./patchlang < mclib.c++ > mclib.cc
+./patchlang < keci.c++ > keci.cc
+./makehelp.bash < emc2help.hlp > emc2help.cc
+./patchlang < anyfft.c++ > anyfft.cc
+./patchlang < fftn.c++ > fftn.cc
+g++  -O3    -c -o kspacecs.o kspacecs.cc
+./patchlang < emc2.c++ > emc2.cc
+./makehelp.bash < phbhelp.hlp > phbhelp.cc
+./patchlang < phb.c++ > phb.cc
+./patchlang < checkcell.c++ > checkcell.cc
+./makehelp.bash < corrdumphelp.hlp > corrdumphelp.cc
+./patchlang < corrdump.c++ > corrdump.cc
+./patchlang < kmesh.c++ > kmesh.cc
+./patchlang < genstr.c++ > genstr.cc
+./makehelp.bash < gensqshelp.hlp > gensqshelp.cc
+./patchlang < gensqs.c++ > gensqs.cc
+./makehelp.bash < mcsqshelp.hlp > mcsqshelp.cc
+./patchlang < mcsqs.c++ > mcsqs.cc
+./patchlang < nntouch.c++ > nntouch.cc
+./patchlang < fixcell.c++ > fixcell.cc
+./makehelp.bash < predcshelp.hlp > predcshelp.cc
+./patchlang < csfit.c++ > csfit.cc
+./makehelp.bash < cvhelp.hlp > cvhelp.cc
+./patchlang < cv.c++ > cv.cc
+./patchlang < cellcvrt.c++ > cellcvrt.cc
+./patchlang < lsfit.c++ > lsfit.cc
+./patchlang < phonlib.c++ > phonlib.cc
+./makehelp.bash < fitsvslhelp.hlp > fitsvslhelp.cc
+./patchlang < multipoly.c++ > multipoly.cc
+./patchlang < fitsvsl.c++ > fitsvsl.cc
+./makehelp.bash < svslhelp.hlp > svslhelp.cc
+./patchlang < morsepot.c++ > morsepot.cc
+./patchlang < morsepotc3.c++ > morsepotc3.cc
+./patchlang < svsl.c++ > svsl.cc
+./makehelp.bash < felechelp.hlp > felechelp.cc
+./patchlang < felec.c++ > felec.cc
+./patchlang < pdef.c++ > pdef.cc
+./makehelp.bash < fitfchelp.hlp > fitfchelp.cc
+./patchlang < fitfc.c++ > fitfc.cc
+./patchlang < nnshell.c++ > nnshell.cc
+./patchlang < mteci.c++ > mteci.cc
+./patchlang < mmclib.c++ > mmclib.cc
+./patchlang < equil.c++ > equil.cc
+./patchlang < calcmf.c++ > calcmf.cc
+./makehelp.bash < memc2help.hlp > memc2help.cc
+./patchlang < kmeci.c++ > kmeci.cc
+./patchlang < kspacees.c++ > kspacees.cc
+./patchlang < memc2.c++ > memc2.cc
+./makehelp.bash < gcehelp.hlp > gcehelp.cc
+./patchlang < gceutil.c++ > gceutil.cc
+./patchlang < tensorsym.c++ > tensorsym.cc
+./patchlang < gce.c++ > gce.cc
+./patchlang < gencs.c++ > gencs.cc
+./patchlang < triph.c++ > triph.cc
+./patchlang < normal.c++ > normal.cc
+./patchlang < strpath.c++ > strpath.cc
+./patchlang < opti.c++ > opti.cc
+./patchlang < strinterf.c++ > strinterf.cc
+./makehelp.bash < infdethelp.hlp > infdethelp.cc
+./patchlang < infdet.c++ > infdet.cc
+./makehelp.bash < apbhelp.hlp > apbhelp.cc
+./patchlang < apb.c++ > apb.cc
+./makehelp.bash < mindisthelp.hlp > mindisthelp.cc
+./patchlang < mindist.c++ > mindist.cc
+./patchlang < meshutil.c++ > meshutil.cc
+./patchlang < meshcalc.c++ > meshcalc.cc
+./patchlang < simplexize.c++ > simplexize.cc
+./patchlang < mkaxes.c++ > mkaxes.cc
+./makehelp.bash < cvmclushelp.hlp > cvmclushelp.cc
+./patchlang < cvmclus.c++ > cvmclus.cc
+./patchlang < surfbond.c++ > surfbond.cc
+./patchlang < 3d2gnu.c++ > 3d2gnu.cc
+./makehelp.bash < icamaghelp.hlp > icamaghelp.cc
+./patchlang < icamag.c++ > icamag.cc
+g++  -O3    -c -o headers.o headers.cc
+g++  -O3    -c -o stringo.o stringo.cc
+g++  -O3    -c -o parse.o parse.cc
+g++  -O3    -c -o xtalutil.o xtalutil.cc
+g++  -O3    -c -o integer.o integer.cc
+g++  -O3    -c -o findsym.o findsym.cc
+g++  -O3    -c -o lattype.o lattype.cc
+g++  -O3    -c -o calccorr.o calccorr.cc
+g++  -O3    -c -o refine.o refine.cc
+g++  -O3    -c -o clus_str.o clus_str.cc
+g++  -O3    -c -o linalg.o linalg.cc
+g++  -O3    -c -o lstsqr.o lstsqr.cc
+g++  -O3    -c -o gstate.o gstate.cc
+g++  -O3    -c -o linsolve.o linsolve.cc
+g++  -O3    -c -o getvalue.o getvalue.cc
+g++  -O3    -c -o mapshelp.o mapshelp.cc
+g++  -O3    -c -o predrs.o predrs.cc
+g++  -O3    -c -o predcs.o predcs.cc
+g++  -O3    -c -o tlambda.o tlambda.cc
+g++  -O3    -c -o ridge.o ridge.cc
+g++  -O3    -c -o maps.o maps.cc
+maps.cc: In function ‘void write_structure_file(const StructureInfo&, const Structure&, const Array<Array<int> >&, const Array<AutoString>&, const Matrix3d<double>&)’:
+maps.cc:32:10: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   32 |     chdir("..");
+      |     ~~~~~^~~~~~
+maps.cc: In function ‘int update_all_structures(StructureBank<StructureInfo>*, const Structure&, const Array<Array<int> >&, const Array<AutoString>&)’:
+maps.cc:156:9: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  156 |   system("ls */str.out 2> /dev/null | sed 's+/str.out++g' > strlist.out");
+      |   ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+maps.cc:184:16: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  184 |           chdir("..");
+      |           ~~~~~^~~~~~
+maps.cc:225:12: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  225 |       chdir("..");
+      |       ~~~~~^~~~~~
+g++  -O3    -c -o mrefine.o mrefine.cc
+g++  -O3    -c -o mmapshelp.o mmapshelp.cc
+g++  -O3    -c -o chull.o chull.cc
+g++  -O3    -c -o mpiinterf.o mpiinterf.cc
+g++  -O3    -c -o predes.o predes.cc
+g++  -O3    -c -o mrefine_bayesian.o mrefine_bayesian.cc
+g++  -O3    -c -o mmaps.o mmaps.cc
+mrefine_bayesian.cc: In member function ‘virtual void bayesian_ClusterExpansion::find_best_cluster_choice(CEFitInfo*)’:
+mrefine_bayesian.cc:355:14: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  355 |         chdir(pfitinfo->pstr(i)->label);
+      |         ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+mrefine_bayesian.cc:360:14: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  360 |         chdir("..");
+      |         ~~~~~^~~~~~
+mmaps.cc: In function ‘void write_structure_file(const StructureInfo&, const Structure&, const Array<Array<int> >&, const Array<AutoString>&, const Matrix3d<double>&)’:
+mmaps.cc:32:10: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   32 |     chdir("..");
+      |     ~~~~~^~~~~~
+mmaps.cc: In function ‘void write_structure_file(const StructureInfo&, const Structure&, const Array<Array<int> >&, const Array<AutoString>&, const Matrix3d<double>&, Real)’:
+mmaps.cc:47:10: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   47 |     chdir("..");
+      |     ~~~~~^~~~~~
+mmaps.cc: In function ‘int update_all_structures(StructureBank<StructureInfo>*, const Structure&, const Array<Array<int> >&, const Array<AutoString>&, const char*, int)’:
+mmaps.cc:282:11: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  282 |     system("ls */str.out 2> /dev/null | sed 's+/str.out++g' > strlist.out");
+      |     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mmaps.cc:312:16: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  312 |           chdir("..");
+      |           ~~~~~^~~~~~
+mmaps.cc:328:14: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  328 |         chdir("..");
+      |         ~~~~~^~~~~~
+g++  -O3    -c -o teci.o teci.cc
+g++  -O3    -c -o drawpd.o drawpd.cc
+g++  -O3    -c -o mclib.o mclib.cc
+g++  -O3    -c -o keci.o keci.cc
+g++  -O3    -c -o emc2help.o emc2help.cc
+g++  -O3    -c -o anyfft.o anyfft.cc
+g++  -O3    -c -o fftn.o fftn.cc
+g++  -O3    -c -o emc2.o emc2.cc
+g++  -O3    -c -o phbhelp.o phbhelp.cc
+g++  -O3    -c -o phb.o phb.cc
+phb.cc: In function ‘int main(int, char**)’:
+phb.cc:112:11: warning: ignoring return value of ‘char* getcwd(char*, size_t)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  112 |     getcwd(cur_dir,MAX_LINE_LEN);
+      |     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+g++  -O3    -c -o checkcell.o checkcell.cc
+g++  -O3    -c -o corrdumphelp.o corrdumphelp.cc
+g++  -O3    -c -o corrdump.o corrdump.cc
+g++  -O3    -c -o kmesh.o kmesh.cc
+g++  -O3    -c -o genstr.o genstr.cc
+g++  -O3    -c -o gensqshelp.o gensqshelp.cc
+g++  -O3    -c -o gensqs.o gensqs.cc
+g++  -O3    -c -o mcsqshelp.o mcsqshelp.cc
+g++  -O3    -c -o mcsqs.o mcsqs.cc
+mcsqs.cc: In function ‘int main(int, char**)’:
+mcsqs.cc:210:11: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  210 |     system("chmod +x ./findbestsqs ; sh -c ./findbestsqs");
+      |     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+mcsqs.cc:224:11: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  224 |     system(cmd.str().c_str());
+      |     ~~~~~~^~~~~~~~~~~~~~~~~~~
+g++  -O3    -c -o nntouch.o nntouch.cc
+g++  -O3    -c -o fixcell.o fixcell.cc
+g++  -O3    -c -o predcshelp.o predcshelp.cc
+g++  -O3    -c -o csfit.o csfit.cc
+g++  -O3    -c -o cvhelp.o cvhelp.cc
+g++  -O3    -c -o cv.o cv.cc
+csfit.cc: In function ‘int main(int, char**)’:
+csfit.cc:103:10: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  103 |     chdir("..");
+      |     ~~~~~^~~~~~
+csfit.cc:111:14: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  111 |         chdir(puredir[elem]);
+      |         ~~~~~^~~~~~~~~~~~~~~
+csfit.cc:137:18: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  137 |             chdir("..");
+      |             ~~~~~^~~~~~
+csfit.cc:140:14: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  140 |         chdir("..");
+      |         ~~~~~^~~~~~
+csfit.cc:154:14: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  154 |         chdir(puredir[elem]);
+      |         ~~~~~^~~~~~~~~~~~~~~
+csfit.cc:170:18: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  170 |             chdir("..");
+      |             ~~~~~^~~~~~
+csfit.cc:173:14: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  173 |         chdir("..");
+      |         ~~~~~^~~~~~
+csfit.cc:189:14: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  189 |         chdir(puredir[elem]);
+      |         ~~~~~^~~~~~~~~~~~~~~
+csfit.cc:195:18: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  195 |             chdir(cur_dir.str().c_str());
+      |             ~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+csfit.cc:201:18: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  201 |             chdir("..");
+      |             ~~~~~^~~~~~
+csfit.cc:206:14: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  206 |         chdir("..");
+      |         ~~~~~^~~~~~
+cv.cc: In function ‘int main(int, char**)’:
+cv.cc:302:9: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  302 |   system("grep -v '^[   ]*$' corr.in | wc -l > size.out");
+      |   ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cv.cc:303:9: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  303 |   system("grep -v '^[   ]*$' corr.in | head -1 | wc -w >> size.out");
+      |   ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+g++  -O3    -c -o cellcvrt.o cellcvrt.cc
+g++  -O3    -c -o lsfit.o lsfit.cc
+lsfit.cc: In function ‘int main(int, char**)’:
+lsfit.cc:58:11: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   58 |     system(cmd.str().c_str());
+      |     ~~~~~~^~~~~~~~~~~~~~~~~~~
+g++  -O3    -c -o phonlib.o phonlib.cc
+g++  -O3    -c -o fitsvslhelp.o fitsvslhelp.cc
+g++  -O3    -c -o multipoly.o multipoly.cc
+g++  -O3    -c -o fitsvsl.o fitsvsl.cc
+fitsvsl.cc: In function ‘int main(int, char**)’:
+fitsvsl.cc:681:16: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  681 |           chdir("..");
+      |           ~~~~~^~~~~~
+fitsvsl.cc:684:16: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  684 |           chdir("..");
+      |           ~~~~~^~~~~~
+fitsvsl.cc:687:12: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  687 |       chdir(thecwd);
+      |       ~~~~~^~~~~~~~
+fitsvsl.cc:696:11: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  696 |     system("ls */force.out */*/force.out */*/*/force.out 2> /dev/null | sed 's+/force.out++g' > pertlist.out");
+      |     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+fitsvsl.cc:771:12: warning: ignoring return value of ‘int chdir(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  771 |       chdir(thecwd);
+      |       ~~~~~^~~~~~~~
+g++  -O3    -c -o svslhelp.o svslhelp.cc
+g++  -O3    -c -o morsepot.o morsepot.cc
+g++  -O3    -c -o morsepotc3.o morsepotc3.cc
+g++  -O3    -c -o svsl.o svsl.cc
+g++  -O3    -c -o felechelp.o felechelp.cc
+g++  -O3    -c -o felec.o felec.cc
+g++  -O3    -c -o pdef.o pdef.cc
+g++  -O3    -c -o fitfchelp.o fitfchelp.cc
+g++  -O3    -c -o fitfc.o fitfc.cc
+g++  -O3    -c -o nnshell.o nnshell.cc
+fitfc.cc: In function ‘int main(int, char**)’:
+fitfc.cc:772:11: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  772 |     system("ls vol_*/str_relax.out 2> /dev/null | sed 's+/str_relax.out++g' > vollist.out");
+      |     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+fitfc.cc:886:11: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  886 |     system("ls vol_*/str_relax.out 2> /dev/null | sed 's+/str_relax.out++g' > vollist.out");
+      |     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+fitfc.cc:928:15: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  928 |         system("ls p*/force.out 2> /dev/null | sed 's+/force.out++g' > pertlist.out");
+      |         ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+g++  -O3    -c -o mteci.o mteci.cc
+g++  -O3    -c -o mmclib.o mmclib.cc
+g++  -O3    -c -o equil.o equil.cc
+g++  -O3    -c -o calcmf.o calcmf.cc
+g++  -O3    -c -o memc2help.o memc2help.cc
+g++  -O3    -c -o kmeci.o kmeci.cc
+g++  -O3    -c -o kspacees.o kspacees.cc
+g++  -O3    -c -o memc2.o memc2.cc
+g++  -O3    -c -o gcehelp.o gcehelp.cc
+g++  -O3    -c -o gceutil.o gceutil.cc
+g++  -O3    -c -o tensorsym.o tensorsym.cc
+g++  -O3    -c -o gce.o gce.cc
+g++  -O3    -c -o gencs.o gencs.cc
+g++  -O3    -c -o triph.o triph.cc
+g++  -O3    -c -o normal.o normal.cc
+g++  -O3    -c -o strpath.o strpath.cc
+g++  -O3    -c -o opti.o opti.cc
+g++  -O3    -c -o strinterf.o strinterf.cc
+g++  -O3    -c -o infdethelp.o infdethelp.cc
+g++  -O3    -c -o infdet.o infdet.cc
+infdet.cc: In member function ‘virtual void MotionEpicycle::set_arg(const Array<double>&)’:
+infdet.cc:39:11: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+   39 |     system("cp str.out str_current.out");
+      |     ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+g++  -O3    -c -o apbhelp.o apbhelp.cc
+g++  -O3    -c -o apb.o apb.cc
+g++  -O3    -c -o mindisthelp.o mindisthelp.cc
+g++  -O3    -c -o mindist.o mindist.cc
+apb.cc: In function ‘int main(int, char**)’:
+apb.cc:145:11: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  145 |     system(memc2_command);
+      |     ~~~~~~^~~~~~~~~~~~~~~
+apb.cc: In function ‘Real get_energy(const char*, int&, const int&, const char*)’:
+apb.cc:256:9: warning: ignoring return value of ‘int system(const char*)’ declared with attribute ‘warn_unused_result’ [-Wunused-result]
+  256 |   system(memc2_command);
+      |   ~~~~~~^~~~~~~~~~~~~~~
+g++  -O3    -c -o meshutil.o meshutil.cc
+g++  -O3    -c -o meshcalc.o meshcalc.cc
+g++  -O3    -c -o simplexize.o simplexize.cc
+g++  -O3    -c -o mkaxes.o mkaxes.cc
+g++  -O3    -c -o cvmclushelp.o cvmclushelp.cc
+g++  -O3    -c -o cvmclus.o cvmclus.cc
+g++  -O3    -c -o surfbond.o surfbond.cc
+g++  -O3    -c -o 3d2gnu.o 3d2gnu.cc
+g++  -O3    -c -o icamaghelp.o icamaghelp.cc
+g++  -O3    -c -o icamag.o icamag.cc
+g++   maps.o headers.o stringo.o parse.o xtalutil.o integer.o findsym.o lattype.o calccorr.o refine.o clus_str.o linalg.o lstsqr.o gstate.o linsolve.o getvalue.o mapshelp.o predrs.o predcs.o tlambda.o ridge.o  -lm -o maps
+g++   mmaps.o headers.o stringo.o parse.o xtalutil.o integer.o findsym.o lattype.o calccorr.o mrefine.o clus_str.o linalg.o lstsqr.o linsolve.o getvalue.o mmapshelp.o chull.o mpiinterf.o predes.o mrefine_bayesian.o  -lm -o mmaps
+g++   emc2.o headers.o teci.o stringo.o parse.o xtalutil.o integer.o findsym.o clus_str.o calccorr.o getvalue.o lstsqr.o linalg.o linsolve.o drawpd.o mclib.o keci.o emc2help.o anyfft.o fftn.o kspacecs.o  -lm -o emc2
+g++   phb.o headers.o teci.o stringo.o parse.o xtalutil.o integer.o findsym.o clus_str.o calccorr.o getvalue.o lstsqr.o linalg.o linsolve.o drawpd.o mclib.o keci.o phbhelp.o anyfft.o fftn.o kspacecs.o  -lm -o phb
+g++   checkcell.o headers.o parse.o xtalutil.o integer.o stringo.o getvalue.o  -lm -o checkcell
+g++   corrdump.o headers.o stringo.o parse.o xtalutil.o integer.o findsym.o calccorr.o clus_str.o getvalue.o corrdumphelp.o linalg.o linsolve.o lstsqr.o  -lm -o corrdump
+g++   kmesh.o headers.o findsym.o integer.o xtalutil.o getvalue.o stringo.o  -lm -o kmesh
+g++   genstr.o headers.o stringo.o parse.o xtalutil.o integer.o findsym.o clus_str.o getvalue.o lattype.o mpiinterf.o  -lm -o genstr
+g++   gensqs.o headers.o stringo.o parse.o xtalutil.o integer.o findsym.o clus_str.o getvalue.o lattype.o calccorr.o gensqshelp.o linalg.o linsolve.o lstsqr.o  -lm -o gensqs
+g++   mcsqs.o headers.o stringo.o parse.o xtalutil.o integer.o findsym.o clus_str.o getvalue.o lattype.o calccorr.o mcsqshelp.o linalg.o linsolve.o lstsqr.o  -lm -o mcsqs
+g++   nntouch.o headers.o stringo.o parse.o xtalutil.o integer.o getvalue.o  -lm -o nntouch
+g++   fixcell.o headers.o lattype.o parse.o integer.o xtalutil.o stringo.o getvalue.o  -lm -o fixcell
+g++   csfit.o headers.o xtalutil.o parse.o getvalue.o lstsqr.o stringo.o integer.o linalg.o linsolve.o predcshelp.o  -lm -o csfit
+g++   cv.o headers.o linalg.o lstsqr.o linsolve.o integer.o getvalue.o cvhelp.o stringo.o  -lm -o cv
+g++   cellcvrt.o headers.o stringo.o parse.o xtalutil.o integer.o getvalue.o findsym.o lattype.o  -lm -o cellcvrt
+g++   lsfit.o headers.o lstsqr.o linsolve.o getvalue.o linalg.o integer.o ridge.o stringo.o  -lm -o lsfit
+g++   fitsvsl.o headers.o xtalutil.o linalg.o integer.o lstsqr.o getvalue.o findsym.o linsolve.o parse.o stringo.o phonlib.o lattype.o fitsvslhelp.o multipoly.o calccorr.o clus_str.o  -lm -o fitsvsl
+g++   svsl.o headers.o xtalutil.o linalg.o integer.o lstsqr.o getvalue.o findsym.o linsolve.o parse.o stringo.o phonlib.o svslhelp.o calccorr.o clus_str.o multipoly.o morsepot.o morsepotc3.o  -lm -o svsl
+g++   felec.o headers.o getvalue.o integer.o stringo.o felechelp.o parse.o xtalutil.o  -lm -o felec
+g++   pdef.o headers.o xtalutil.o linalg.o integer.o lstsqr.o getvalue.o findsym.o linsolve.o parse.o stringo.o lattype.o  -lm -o pdef
+g++   fitfc.o headers.o xtalutil.o linalg.o integer.o lstsqr.o getvalue.o findsym.o linsolve.o parse.o stringo.o phonlib.o lattype.o fitfchelp.o multipoly.o  -lm -o fitfc
+g++   nnshell.o headers.o xtalutil.o parse.o integer.o stringo.o getvalue.o  -lm -o nnshell
+g++   memc2.o headers.o mteci.o stringo.o parse.o xtalutil.o integer.o findsym.o clus_str.o calccorr.o getvalue.o lstsqr.o linalg.o linsolve.o mmclib.o equil.o calcmf.o memc2help.o multipoly.o chull.o anyfft.o fftn.o kmeci.o kspacees.o  -lm -o memc2
+g++   gce.o headers.o stringo.o parse.o xtalutil.o integer.o findsym.o calccorr.o clus_str.o getvalue.o gcehelp.o linalg.o linsolve.o lstsqr.o gceutil.o tensorsym.o phonlib.o multipoly.o  -lm -o gce
+g++   gencs.o headers.o stringo.o parse.o xtalutil.o integer.o findsym.o getvalue.o linalg.o linsolve.o lstsqr.o tensorsym.o phonlib.o multipoly.o  -lm -o gencs
+g++   triph.o headers.o stringo.o integer.o getvalue.o  -lm -o triph
+g++   strpath.o headers.o normal.o xtalutil.o integer.o parse.o stringo.o getvalue.o  -lm -o strpath
+g++   infdet.o headers.o opti.o strinterf.o integer.o linalg.o linsolve.o parse.o stringo.o xtalutil.o getvalue.o infdethelp.o  -lm -o infdet
+g++   apb.o headers.o xtalutil.o integer.o parse.o stringo.o getvalue.o apbhelp.o  -lm -o apb
+g++   mindist.o headers.o parse.o getvalue.o xtalutil.o integer.o mindisthelp.o  -lm -o mindist
+g++   simplexize.o headers.o stringo.o integer.o getvalue.o linalg.o linsolve.o lstsqr.o meshutil.o meshcalc.o mpiinterf.o  -lm -o simplexize
+g++   mkaxes.o headers.o stringo.o integer.o getvalue.o meshutil.o meshcalc.o linalg.o linsolve.o lstsqr.o  -lm -o mkaxes
+g++   cvmclus.o headers.o cvmclushelp.o stringo.o parse.o xtalutil.o integer.o findsym.o calccorr.o clus_str.o getvalue.o linalg.o linsolve.o lstsqr.o  -lm -o cvmclus
+g++   surfbond.o headers.o stringo.o parse.o xtalutil.o integer.o getvalue.o chull.o linalg.o linsolve.o lstsqr.o meshutil.o  -lm -o surfbond
+g++   3d2gnu.o headers.o stringo.o getvalue.o linalg.o linsolve.o meshutil.o  -lm -o 3d2gnu
+g++   icamag.o headers.o icamaghelp.o stringo.o parse.o xtalutil.o integer.o findsym.o clus_str.o getvalue.o  -lm -o icamag
+rm csfit.o cv.o 3d2gnu.o icamag.o pdef.o surfbond.o fixcell.o strpath.o genstr.o mindist.o simplexize.o nnshell.o gensqs.o cellcvrt.o emc2.o kmesh.o felec.o checkcell.o memc2.o mcsqs.o cvmclus.o infdet.o lsfit.o mmaps.o mkaxes.o fitfc.o fitsvsl.o svsl.o corrdump.o gencs.o apb.o triph.o nntouch.o gce.o phb.o maps.o
+make[1]: Leaving directory '/tmp/arroyave/atat/src'
+echo set atatdir="/tmp/arroyave/atat" > /tmp/arroyave/home/.atat.rc
+make -C src          BINDIR=/tmp/arroyave/atat/bin/ install
+make[1]: Entering directory '/tmp/arroyave/atat/src'
+../safecp maps mmaps emc2 phb checkcell corrdump kmesh genstr gensqs mcsqs nntouch fixcell csfit cv cellcvrt lsfit fitsvsl svsl felec pdef fitfc nnshell memc2 gce gencs triph strpath infdet apb mindist simplexize mkaxes cvmclus surfbond 3d2gnu icamag getclus mapsrep mmapsrep str2xyz makelat clusterexpand mkteci clusterpredict checkrelax calcbulk mcdroplast str2cif wycked getproto sqs2tdb symbrklib ocplotpd /tmp/arroyave/atat/bin/
+make[1]: Leaving directory '/tmp/arroyave/atat/src'
+make -C glue/jobctrl BINDIR=/tmp/arroyave/atat/bin/ install
+make[1]: Entering directory '/tmp/arroyave/atat/glue/jobctrl'
+../../safecp getvalue getlines nltoblank blanktonl foreachfile calc sspp chl minload node pollmach fixeol lookup /tmp/arroyave/atat/bin/
+make[1]: Leaving directory '/tmp/arroyave/atat/glue/jobctrl'
+make -C glue/vasp    BINDIR=/tmp/arroyave/atat/bin/ install
+make[1]: Entering directory '/tmp/arroyave/atat/glue/vasp'
+../../safecp ezvasp runstruct_vasp /tmp/arroyave/atat/bin/
+../../safecp cleanvasp extract_vasp checkerr_vasp robustrelax_vasp str2poscar /tmp/arroyave/atat/bin/
+make[1]: Leaving directory '/tmp/arroyave/atat/glue/vasp'

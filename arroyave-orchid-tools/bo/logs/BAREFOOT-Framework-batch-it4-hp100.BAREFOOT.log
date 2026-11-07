@@ -1,0 +1,67 @@
+2026-11-05 03:48:18,210 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:18,210 - BAREFOOT - INFO - #                                                       #
+2026-11-05 03:48:18,210 - BAREFOOT - INFO - #        Start BAREFOOT Framework Initialization        #
+2026-11-05 03:48:18,210 - BAREFOOT - INFO - #                                                       #
+2026-11-05 03:48:18,210 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:18,210 - BAREFOOT - INFO - *********************************************************
+2026-11-05 03:48:18,210 - BAREFOOT - INFO - * Calculation Name: BatchOnly   
+2026-11-05 03:48:18,210 - BAREFOOT - INFO - *********************************************************
+2026-11-05 03:48:19,837 - BAREFOOT - INFO - Initialization Completed
+2026-11-05 03:48:19,840 - BAREFOOT - INFO - Reification Object Initialized. Ready for Calculations
+2026-11-05 03:48:19,840 - BAREFOOT - INFO - Start Batch Only Framework Calculation
+2026-11-05 03:48:19,840 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:19,840 - BAREFOOT - INFO - #                Start Iteration : 0000                 #
+2026-11-05 03:48:19,840 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:19,841 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 100 Parameter Sets
+2026-11-05 03:48:21,406 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 03:48:21,413 - BAREFOOT - INFO - Start Truth Model Evaluations | 10 Sets
+2026-11-05 03:48:23,089 - BAREFOOT - INFO - Truth Model Evaluations Completed
+2026-11-05 03:48:23,096 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 03:48:23,096 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 03:48:23,096 - BAREFOOT - INFO - Iteration 0 Completed Successfully
+2026-11-05 03:48:23,096 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:23,096 - BAREFOOT - INFO - #                Start Iteration : 0001                 #
+2026-11-05 03:48:23,096 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:23,098 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 100 Parameter Sets
+2026-11-05 03:48:24,709 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 03:48:24,711 - BAREFOOT - INFO - Start Truth Model Evaluations | 10 Sets
+2026-11-05 03:48:26,619 - BAREFOOT - INFO - Truth Model Evaluations Completed
+2026-11-05 03:48:26,632 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 03:48:26,632 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 03:48:26,632 - BAREFOOT - INFO - Iteration 1 Completed Successfully
+2026-11-05 03:48:26,632 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:26,632 - BAREFOOT - INFO - #                Start Iteration : 0002                 #
+2026-11-05 03:48:26,632 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:26,635 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 100 Parameter Sets
+2026-11-05 03:48:27,953 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 03:48:27,958 - BAREFOOT - INFO - Start Truth Model Evaluations | 10 Sets
+2026-11-05 03:48:29,694 - BAREFOOT - INFO - Truth Model Evaluations Completed
+2026-11-05 03:48:29,700 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 03:48:29,701 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 03:48:29,701 - BAREFOOT - INFO - Iteration 2 Completed Successfully
+2026-11-05 03:48:29,701 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:29,701 - BAREFOOT - INFO - #                Start Iteration : 0003                 #
+2026-11-05 03:48:29,701 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:29,702 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 100 Parameter Sets
+2026-11-05 03:48:31,218 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 03:48:31,222 - BAREFOOT - INFO - Start Truth Model Evaluations | 10 Sets
+2026-11-05 03:48:33,710 - BAREFOOT - INFO - Truth Model Evaluations Completed
+2026-11-05 03:48:33,719 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 03:48:33,719 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 03:48:33,719 - BAREFOOT - INFO - Iteration 3 Completed Successfully
+2026-11-05 03:48:33,719 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:33,719 - BAREFOOT - INFO - #                Start Iteration : 0004                 #
+2026-11-05 03:48:33,719 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:33,721 - BAREFOOT - INFO - Start Acquisition Function Evaluations for 100 Parameter Sets
+2026-11-05 03:48:35,748 - BAREFOOT - INFO - Acquisition Function Evaluations Completed
+2026-11-05 03:48:35,750 - BAREFOOT - INFO - Start Truth Model Evaluations | 10 Sets
+2026-11-05 03:48:37,567 - BAREFOOT - INFO - Truth Model Evaluations Completed
+2026-11-05 03:48:37,571 - BAREFOOT - INFO - Dataframes Pickled and Dumped to Results Directory
+2026-11-05 03:48:37,571 - BAREFOOT - INFO - Calculation State Save Skipped
+2026-11-05 03:48:37,571 - BAREFOOT - INFO - Iteration 4 Completed Successfully
+2026-11-05 03:48:37,571 - BAREFOOT - INFO - #########################################################
+2026-11-05 03:48:37,571 - BAREFOOT - INFO - #                                                       #
+2026-11-05 03:48:37,571 - BAREFOOT - INFO - #       Iteration or Budget Limit Met or Exceeded       #
+2026-11-05 03:48:37,571 - BAREFOOT - INFO - #            BAREFOOT Calculation Completed             #
+2026-11-05 03:48:37,571 - BAREFOOT - INFO - #                                                       #
+2026-11-05 03:48:37,571 - BAREFOOT - INFO - #########################################################

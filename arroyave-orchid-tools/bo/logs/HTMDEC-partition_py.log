@@ -1,0 +1,120 @@
+/tmp/arroyave/work/HTMDEC/htmdec_code_01_generate_partition.py:506: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  column_name, first_value = column, df.iloc[row_index][0]
+/tmp/arroyave/work/HTMDEC/htmdec_code_01_generate_partition.py:620: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  sublist = [col for col in range(len(row)) if row[col] == 1]
+Global modules imported.
+Time elapsed for create_composition_matrix: 0.526 seconds
+
+ fraction  n=3  n=4   n=5    n=6    n=7     n=8      n=9     n=10      n=11
+        2    3    6    10     15     21      28       36       45        55
+        3    7   16    30     50     77     112      156      210       275
+        4   12   31    65    120    203     322      486      705       990
+        5   18   52   121    246    455     784     1278     1992      2992
+        6   25   80   205    456    917    1708     2994     4995      7997
+        7   33  116   325    786   1709    3424     6426    11430     19437
+        8   42  161   490   1281   2996    6427    12861    24300     43747
+        9   52  216   710   1996   4998   11432    24301    48610     92367
+       10   63  282   996   2997   8001   19440    43749    92368    184745
+       11   75  360  1360   4362  12369   31816    75573   167950    352705
+       12   88  451  1815   6182  18557   50380   125961   293920    646635
+       13  102  556  2375   8562  27125   77512   203481   497410   1144055
+       14  117  676  3055  11622  38753  116272   319761   817180   1961245
+       15  133  812  3871  15498  54257  170536   490305  1307494   3268749
+       16  150  965  4840  20343  74606  245149   735462  2042965   5311724
+       17  168 1136  5980  26328 100940  346096  1081566  3124540   8436274
+       18  187 1326  7310  33643 134589  480692  1562266  4686815  13123099
+       19  207 1536  8850  42498 177093  657792  2220066  6906890  20029999
+       20  228 1767 10621  53124 230223  888022  3108096 10014995  30045004
+       21  250 2020 12645  65774 296003 1184032  4292136 14307140  44352154
+       22  273 2296 14945  80724 376733 1560772  5852916 20160065  64512229
+       23  297 2596 17545  98274 475013 2035792  7888716 28048790  92561029
+       24  322 2921 20470 118749 593768 2629567 10518291 38567090 131128129
+       25  348 3272 23746 142500 736274 3365848 13884147 52451246 183579385
+       26  375 3650 27400 169905 906185 4272040 18156195 70607450 254186845
+T(n = 7, d = 20) = 230223 compositions
+Time elapsed for composition_matrix_query: 0.000 seconds
+Time elapsed for generate_bar_graph: 0.069 seconds
+Time elapsed for generate_bar_graph_with_highlights: 0.034 seconds
+Time elapsed for partitioned_answer: 0.180 seconds
+
+Start of list
+       element1  element2  element3  element4  element5  element6
+34859      0.10      0.15      0.35       0.1       0.1       0.2
+34860      0.05      0.20      0.35       0.1       0.1       0.2
+34863      0.15      0.05      0.40       0.1       0.1       0.2
+34850      0.25      0.05      0.30       0.1       0.1       0.2
+34868      0.10      0.05      0.45       0.1       0.1       0.2
+34869      0.05      0.10      0.45       0.1       0.1       0.2
+34857      0.20      0.05      0.35       0.1       0.1       0.2
+34858      0.15      0.10      0.35       0.1       0.1       0.2
+34864      0.10      0.10      0.40       0.1       0.1       0.2
+34865      0.05      0.15      0.40       0.1       0.1       0.2
+34817      0.20      0.30      0.10       0.1       0.1       0.2
+34818      0.15      0.35      0.10       0.1       0.1       0.2
+34819      0.10      0.40      0.10       0.1       0.1       0.2
+34820      0.05      0.45      0.10       0.1       0.1       0.2
+34823      0.40      0.05      0.15       0.1       0.1       0.2
+
+End of list
+       element1  element2  element3  element4  element5  element6
+26961      0.00      0.00      0.85       0.0       0.0      0.15
+222        0.00      0.15      0.85       0.0       0.0      0.00
+223        0.10      0.00      0.90       0.0       0.0      0.00
+162        0.00      0.55      0.45       0.0       0.0      0.00
+163        0.50      0.00      0.50       0.0       0.0      0.00
+123        0.00      0.70      0.30       0.0       0.0      0.00
+124        0.65      0.00      0.35       0.0       0.0      0.00
+151        0.55      0.00      0.45       0.0       0.0      0.00
+184        0.40      0.00      0.60       0.0       0.0      0.00
+137        0.00      0.65      0.35       0.0       0.0      0.00
+138        0.60      0.00      0.40       0.0       0.0      0.00
+173        0.00      0.50      0.50       0.0       0.0      0.00
+174        0.45      0.00      0.55       0.0       0.0      0.00
+183        0.00      0.45      0.55       0.0       0.0      0.00
+218        0.00      0.20      0.80       0.0       0.0      0.00
+Value 50000 not found in matrix
+Value 53124 found in column "n=6", with corresponding d value: 20
+Time elapsed for systems: 0.000 seconds
+Time elapsed for sort_dataframe_by_systems: 0.350 seconds
+
+Start of list
+    element1  element2  element3  element4  element5  element6
+0       0.10      0.15      0.35       0.1       0.1       0.2
+1       0.05      0.20      0.35       0.1       0.1       0.2
+2       0.15      0.05      0.40       0.1       0.1       0.2
+3       0.25      0.05      0.30       0.1       0.1       0.2
+4       0.10      0.05      0.45       0.1       0.1       0.2
+5       0.05      0.10      0.45       0.1       0.1       0.2
+6       0.20      0.05      0.35       0.1       0.1       0.2
+7       0.15      0.10      0.35       0.1       0.1       0.2
+8       0.10      0.10      0.40       0.1       0.1       0.2
+9       0.05      0.15      0.40       0.1       0.1       0.2
+10      0.20      0.30      0.10       0.1       0.1       0.2
+11      0.15      0.35      0.10       0.1       0.1       0.2
+12      0.10      0.40      0.10       0.1       0.1       0.2
+13      0.05      0.45      0.10       0.1       0.1       0.2
+14      0.40      0.05      0.15       0.1       0.1       0.2
+
+End of list
+       element1  element2  element3  element4  element5  element6
+53109       0.0       0.0       0.0      0.15      0.85       0.0
+53110       0.0       0.0       0.0      0.10      0.90       0.0
+53111       0.0       0.0       0.0      0.55      0.45       0.0
+53112       0.0       0.0       0.0      0.60      0.40       0.0
+53113       0.0       0.0       0.0      0.50      0.50       0.0
+53114       0.0       0.0       0.0      0.35      0.65       0.0
+53115       0.0       0.0       0.0      0.40      0.60       0.0
+53116       0.0       0.0       0.0      0.45      0.55       0.0
+53117       0.0       0.0       0.0      0.75      0.25       0.0
+53118       0.0       0.0       0.0      0.70      0.30       0.0
+53119       0.0       0.0       0.0      0.65      0.35       0.0
+53120       0.0       0.0       0.0      0.90      0.10       0.0
+53121       0.0       0.0       0.0      0.95      0.05       0.0
+53122       0.0       0.0       0.0      0.80      0.20       0.0
+53123       0.0       0.0       0.0      0.85      0.15       0.0
+Time elapsed for export_dataframe_to_csv: 0.000 seconds
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/HTMDEC/htmdec_code_01_generate_partition.py", line 721, in <module>
+    df2 = df[(df['Al'] <= 0.10)]
+          ^^
+NameError: name 'df' is not defined

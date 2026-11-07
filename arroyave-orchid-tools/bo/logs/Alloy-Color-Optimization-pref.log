@@ -1,0 +1,25 @@
+/tmp/arroyave/venvs/Alloy-Color-Optimization/lib/python3.12/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+[Iter 1] Fitting PairwiseGP (train size=3)... done.
+[Iter 1] evaluated idx 252 | utility=0.6937 | best utility=0.8503
+[Iter 2] Fitting PairwiseGP (train size=4)... done.
+[Iter 2] evaluated idx 626 | utility=0.6250 | best utility=0.8503
+done.
+[Iter 3] evaluated idx 913 | utility=0.6981 | best utility=0.8503
+done.
+[Iter 4] evaluated idx 923 | utility=0.6918 | best utility=0.8503
+[Iter 5] Fitting PairwiseGP (train size=7)... done.
+[Iter 5] evaluated idx 6 | utility=0.9845 | best utility=0.9845
+[Iter 6] Fitting PairwiseGP (train size=8)... done.
+[Iter 6] evaluated idx 14 | utility=0.9829 | best utility=0.9845
+[Iter 7] Fitting PairwiseGP (train size=9)... done.
+[Iter 7] evaluated idx 10 | utility=0.9968 | best utility=0.9968
+[Iter 8] Fitting PairwiseGP (train size=10)... done.
+[Iter 8] evaluated idx 113 | utility=0.9276 | best utility=0.9968
+[Iter 9] Fitting PairwiseGP (train size=11)... done.
+[Iter 9] evaluated idx 55 | utility=0.9789 | best utility=0.9968
+[Iter 10] Fitting PairwiseGP (train size=12)... done.
+[Iter 10] evaluated idx 23 | utility=0.9889 | best utility=0.9968
+
+Best alloy found:
+  Composition (E1..E5): [0.7077112967910533, 0.10143953090619733, 0.04310448479134678, 0.10017622665450261, 0.047568460856900134]
+  Gold-likeness score: 0.9968

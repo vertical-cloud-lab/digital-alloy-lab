@@ -1,0 +1,34 @@
+[NbConvertApp] Converting notebook main_shim.ipynb to notebook
+[NbConvertApp] ERROR | Notebook JSON is invalid: Additional properties are not allowed ('id' was unexpected)
+
+Failed validating 'additionalProperties' in code_cell:
+
+On instance['cells'][0]:
+{'cell_type': 'code',
+ 'execution_count': None,
+ 'id': 'compat-shim',
+ 'metadata': {},
+ 'outputs': ['...0 outputs...'],
+ 'source': '# --- compatibility shim added by the test harness (NOT part of '
+           '...'}
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+[NbConvertApp] ERROR | Notebook JSON is invalid: Additional properties are not allowed ('id' was unexpected)
+
+Failed validating 'additionalProperties' in code_cell:
+
+On instance['cells'][0]:
+{'cell_type': 'code',
+ 'execution_count': 1,
+ 'id': 'compat-shim',
+ 'metadata': {'execution': {'iopub.execute_input': '2026-11-05T03:45:52.885421Z',
+                            'iopub.status.busy': '2026-11-05T03:45:52.885253Z',
+                            'iopub.status.idle': '2026-11-05T03:45:53.243723Z',
+                            'shell.execute_reply': '2026-11-05T03:45:53.242470Z'}},
+ 'outputs': ['...0 outputs...'],
+ 'source': '# --- compatibility shim added by the test harness (NOT part of '
+           '...'}
+[NbConvertApp] Writing 11584 bytes to executed_shim.ipynb
+
+real	0m4.858s
+user	0m3.841s
+sys	0m0.307s

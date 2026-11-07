@@ -1,0 +1,45 @@
+### [mcp] pytest WITHOUT local data (CI mode)
+....s.......s....s...sss.ss.........ssssssssssssssss                     [100%]
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_bibliography.py:89: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_openapi.py:70: local data not available
+SKIPPED [1] tests/test_phases.py:79: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_report.py:43: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_review_summary.py:14: local ORCHID data not found (set ORCHID_TEST_DATA_DIR)
+SKIPPED [1] tests/test_review_summary.py:40: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [2] tests/test_server.py:39: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:45: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:61: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:74: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:91: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:102: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:122: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:128: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:147: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:162: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:180: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:191: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:205: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:213: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:217: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:234: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+SKIPPED [1] tests/test_tools.py:238: local ORCHID data not found (set ORCHID_TEST_DATA_DIR / ORCHID_TEST_SITE_DATA_DIR)
+28 passed, 24 skipped in 0.90s
+elapsed 1.52 s
+rc=0
+### [mcp] pytest WITH local data
+....................................................                     [100%]
+============================= slowest 10 durations =============================
+1.58s call     tests/test_review_summary.py::test_release_review_and_identity_survive_summary
+1.48s call     tests/test_server.py::test_stdio_smoke[False]
+1.37s call     tests/test_server.py::test_stdio_smoke[True]
+0.65s call     tests/test_datasource.py::test_cache_write_retries_then_gives_up_quietly
+0.12s call     tests/test_openapi.py::test_openapi_parses_and_refs_resolve
+0.08s call     tests/test_phases.py::test_phase_tools_real_data
+0.08s call     tests/test_bibliography.py::test_bibliography_real_data
+0.07s call     tests/test_tools.py::test_results_are_json
+0.05s call     tests/test_tools.py::test_compare_to_dft
+0.05s call     tests/test_review_summary.py::test_review_visible_in_default_tool_response
+52 passed in 5.85s
+elapsed 6.22 s
+rc=0

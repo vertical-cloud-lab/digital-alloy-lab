@@ -1,0 +1,32 @@
+{
+  "ready": true,
+  "errors": [],
+  "review_required": [],
+  "acknowledged": [],
+  "target_sha256": "bb08b378110909d0482ce0c97063c73f9fb595a747719c6a866c7067e156c591",
+  "target_provenance": null,
+  "phase_identity_assertions": {},
+  "selection_sha256": "3c89db8b8ac7b40f88832fea2a4f28d4962fbc4d95f369d2fdb98d6195ee713b",
+  "datasets_checked": 2,
+  "inputs": [
+    {
+      "path": "invariants/AL-MG/AlMg-93Zuo.zpf-00.json",
+      "bundle_sha256": "652651aa56fd577bfb46923897298dea47262566b2e6360a5f888dbd8491cc96",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-MG/AlMg-93Zuo.zpf-00.json",
+      "fit_sha256": "652651aa56fd577bfb46923897298dea47262566b2e6360a5f888dbd8491cc96"
+    },
+    {
+      "path": "invariants/AL-MG/AlMg-93Zuo.zpf-01.json",
+      "bundle_sha256": "3ae68ede07ca945ff805a3d9a717791fa5742582fd1fa3a7472792f83c471ce9",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-MG/AlMg-93Zuo.zpf-01.json",
+      "fit_sha256": "3ae68ede07ca945ff805a3d9a717791fa5742582fd1fa3a7472792f83c471ce9"
+    }
+  ],
+  "weight_overrides": [],
+  "limitations": [
+    "Preflight checks input compatibility, not model accuracy or residual convergence.",
+    "ZPF uses driving-force tolerance; temperature/composition budgets are not automatically propagated.",
+    "Shared-source covariance is not estimated."
+  ],
+  "release_modified": false
+}

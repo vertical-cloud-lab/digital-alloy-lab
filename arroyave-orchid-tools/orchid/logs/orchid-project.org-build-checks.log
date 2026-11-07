@@ -1,0 +1,8 @@
+static_pages | exit=0 | 74.0s | OK: 24347 files current (18295 HTML pages) 
+site_numbers | exit=1 | 1.4s | stale: phases/index.html FAIL: 1 problem(s) 
+parquet | exit=0 | 103.3s | parquet/ is up to date (7 tables) 
+zenodo_plan | exit=1 | 6.3s | Limit check: every record < 50 GB; upload one zip per record (Zenodo also caps a record at 100 files). FAIL: 1 problem(s) 
+zenodo_scan | exit=0 | 170.4s | SCAN OK (no restricted file type or path, no secret pattern) Not checked here: verbatim quotes are capped by a PI decision (see the runbook); licences per file are in LICENSES.md / NOTICE.md. 
+zenodo_manifest | exit=0 | 7.0s | examples repository not found at /tmp/arroyave/work/site_siblings/orchid-examples: skipped zenodo manifests current (9 data records + examples) 
+zenodo_metadata | exit=1 | 4.0s | stale Zenodo metadata: zenodo/orchid-data.metadata.json, zenodo/literature.metadata.json, zenodo/phase-diagrams.metadata.json, zenodo/hulls.metadata.json, zenodo/dft-benchmark.metadata.json, zenodo/phase-registry.metadata.json, zenodo/espei.metadata.json, zenodo/bibliography.metadata.json, zenodo/orchid-examples.metadata.json 
+zenodo_card | exit=0 | 0.1s | dataset card current (sizes match parquet/MANIFEST.json; hf/README.md identical) 

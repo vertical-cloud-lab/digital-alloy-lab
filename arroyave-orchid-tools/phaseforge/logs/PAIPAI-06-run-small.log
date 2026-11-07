@@ -1,0 +1,163 @@
+$ cd PAIPAI_run && PYTHONPATH=scripts/PAIPAI-shim timeout 420 prefix/bin/paipai --input small_struc.in --model GRACE-2L-OMAT --device cpu --fast 1 --slow 1 --steps 3 --temp 0.001 --pool-cap 8
+[INFO] PREFIX   = /tmp/arroyave/work/PAIPAI/prefix
+[INFO] BINDIR   = /tmp/arroyave/work/PAIPAI/prefix/bin
+[INFO] ROOT_DIR = /tmp/arroyave/work/PAIPAI_run
+[INFO] INPUT_STRUC = small_struc.in
+[INFO] NUM_FAST = 1, NUM_SLOW = 1
+[INFO] MODEL = GRACE-2L-OMAT, DEVICE = cpu
+[INFO] MC_STEPS = 3, MC_TEMP = 0.001
+[INFO] POOL_CAP = 8
+[INFO] MASTER = /tmp/arroyave/work/PAIPAI/prefix/bin/mc_paipai
+[INFO] PYTHON = /tmp/arroyave/venvs/paipai/bin/python
+[INFO] FAST_WORKER = /tmp/arroyave/work/PAIPAI/prefix/bin/fast_worker.py
+[INFO] SLOW_WORKER = /tmp/arroyave/work/PAIPAI/prefix/bin/slow_worker.py
+[INFO] Launching 1 fast workers...
+  -> fast_worker slot 1 (log: /tmp/arroyave/work/PAIPAI_run/fast_1.log)
+[INFO] Launching 1 slow workers...
+  -> slow_worker slow-01 (log: /tmp/arroyave/work/PAIPAI_run/slow_slow-01.log)
+[INFO] Running C++ master ...
+       /tmp/arroyave/work/PAIPAI/prefix/bin/mc_paipai small_struc.in --workers 1 --steps 3 --temp 0.001 
+       (MC progress will be written to mc.log)
+ELEMENT: Nb
+ELEMENT: Ta
+ELEMENT: Ti
+ELEMENT: Hf
+INTERSTITIAL ELEMENT: B
+INTERSTITIAL ELEMENT: O
+Number of B atoms: 1
+Number of O atoms: 1
+Number of Interstitial site: 24
+Number of metallic atoms: 16
+DirectFractional coords used
+Metallic structure read successfully
+Direct
+Atomic coordinates shuffled
+OUTPUT TO SAVE
+ELEMENT: Nb
+ELEMENT: Ta
+ELEMENT: Ti
+ELEMENT: Hf
+INTERSTITIAL ELEMENT: B
+INTERSTITIAL ELEMENT: O
+Number of B atoms: 1
+Number of O atoms: 1
+Number of Interstitial site: 24
+Number of metallic atoms: 16
+CartesianMetallic structure read successfully
+Cartesian
+Atomic coordinates retained (No shuffle)
+OUTPUT TO POSCAR
+OUTPUT TO SAVE
+ELEMENT: Nb
+ELEMENT: Ta
+ELEMENT: Ti
+ELEMENT: Hf
+INTERSTITIAL ELEMENT: B
+INTERSTITIAL ELEMENT: O
+Number of B atoms: 1
+Number of O atoms: 1
+Number of Interstitial site: 24
+Number of metallic atoms: 16
+CartesianMetallic structure read successfully
+Cartesian
+Atomic coordinates retained (No shuffle)
+OUTPUT TO POSCAR
+OUTPUT TO SAVE
+ELEMENT: Nb
+ELEMENT: Ta
+ELEMENT: Ti
+ELEMENT: Hf
+INTERSTITIAL ELEMENT: B
+INTERSTITIAL ELEMENT: O
+Number of B atoms: 1
+Number of O atoms: 1
+Number of Interstitial site: 24
+Number of metallic atoms: 16
+CartesianMetallic structure read successfully
+Cartesian
+Atomic coordinates retained (No shuffle)
+OUTPUT TO POSCAR
+OUTPUT TO SAVE
+ELEMENT: Nb
+ELEMENT: Ta
+ELEMENT: Ti
+ELEMENT: Hf
+INTERSTITIAL ELEMENT: B
+INTERSTITIAL ELEMENT: O
+Number of B atoms: 1
+Number of O atoms: 1
+Number of Interstitial site: 24
+Number of metallic atoms: 16
+CartesianMetallic structure read successfully
+Cartesian
+Atomic coordinates retained (No shuffle)
+OUTPUT TO POSCAR
+OUTPUT TO SAVE
+ELEMENT: Nb
+ELEMENT: Ta
+ELEMENT: Ti
+ELEMENT: Hf
+INTERSTITIAL ELEMENT: B
+INTERSTITIAL ELEMENT: O
+Number of B atoms: 1
+Number of O atoms: 1
+Number of Interstitial site: 24
+Number of metallic atoms: 16
+CartesianMetallic structure read successfully
+Cartesian
+Atomic coordinates retained (No shuffle)
+OUTPUT TO POSCAR
+OUTPUT TO SAVE
+ELEMENT: Nb
+ELEMENT: Ta
+ELEMENT: Ti
+ELEMENT: Hf
+INTERSTITIAL ELEMENT: B
+INTERSTITIAL ELEMENT: O
+Number of B atoms: 1
+Number of O atoms: 1
+Number of Interstitial site: 24
+Number of metallic atoms: 16
+CartesianMetallic structure read successfully
+Cartesian
+Atomic coordinates retained (No shuffle)
+OUTPUT TO POSCAR
+OUTPUT TO SAVE
+ELEMENT: Nb
+ELEMENT: Ta
+ELEMENT: Ti
+ELEMENT: Hf
+INTERSTITIAL ELEMENT: B
+INTERSTITIAL ELEMENT: O
+Number of B atoms: 1
+Number of O atoms: 1
+Number of Interstitial site: 24
+Number of metallic atoms: 16
+CartesianMetallic structure read successfully
+Cartesian
+Atomic coordinates retained (No shuffle)
+OUTPUT TO POSCAR
+OUTPUT TO SAVE
+ELEMENT: Nb
+ELEMENT: Ta
+ELEMENT: Ti
+ELEMENT: Hf
+INTERSTITIAL ELEMENT: B
+INTERSTITIAL ELEMENT: O
+Number of B atoms: 1
+Number of O atoms: 1
+Number of Interstitial site: 24
+Number of metallic atoms: 16
+CartesianMetallic structure read successfully
+Cartesian
+Atomic coordinates retained (No shuffle)
+OUTPUT TO POSCAR
+OUTPUT TO SAVE
+[MC] accepted task 1793850377006991104_1_544ba3de, archived to "./mcprocess/000001"
+ELEMENT: Nb
+ELEMENT: Ta
+ELEMENT: Ti
+ELEMENT: Hf
+INTERSTITIAL ELEMENT: B
+INTERSTITIATerminated
+exit=141 wall=65s
