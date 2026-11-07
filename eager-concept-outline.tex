@@ -1,0 +1,100 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage[font=small,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=false]{caption}
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+\setlength{\columnsep}{10pt}
+
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue}
+
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0pt}{1.0ex plus 0.3ex}{0.3ex}{\normalfont\bfseries}}
+\makeatother
+
+\setlength{\parskip}{0.15em}
+\setlength{\parindent}{0em}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+{\bfseries EAGER Concept Outline --- A Vertical Cloud Laboratory as a Hardware Backbone for an Asynchronous, Multi-Material FDM Desktop 3D-Print Farm}
+\end{center}
+
+{\small \textbf{PI:} Sterling Baird (Brigham Young University, Mechanical Engineering / Materials). \textbf{Unit:} ENG/CMMI Advanced Manufacturing. \textbf{Type:} EAGER, $\sim$\$300K, 2~yr. \textbf{Keywords:} self-driving lab, vertical lift module, fused deposition modeling, print farm, generative design, robotic integration.}
+
+\section*{Problem}
+Self-driving laboratories for manufacturing research keep hitting the same wall: physically moving samples, build plates, and consumables quickly and reliably among many instruments running in parallel. Mobile manipulators are flexible but slow and unreliable in cluttered rooms. Linear-rail and SCARA robots are fast but lock the layout in place and are hard to extend. A 2024 community survey of autonomous laboratories (Hung~2024) and the NIST self-driving lab roadmap (Trautt~2024, NIST SP~1320) both find that integration overhead, not algorithms, is the main bottleneck. The community needs a denser, more reliable, and easier-to-maintain physical backbone that lets a single robot serve many parallel workstations.
+
+\section*{Idea}
+\begin{wrapfigure}{r}{0.25\linewidth}
+\centering
+\vspace{-0.5\baselineskip}
+\includegraphics[width=\linewidth]{figures/vlm_isometric.png}
+\caption{Industrial vertical lift module (VLM) repurposed as a self-driving lab backbone: trays slide out to a single fixed pick face, where one collaborative arm reaches every workstation.}
+\label{fig:vlm}
+\vspace{0.25\baselineskip}
+\includegraphics[width=\linewidth]{figures/vlm-comparison.png}
+\caption{Integration paradigms for self-driving labs compared: mobile manipulators (flexible but slow in clutter), linear-rail/SCARA cells (fast but layout-locked), and the proposed VLM-served arm (dense, vertical, single fixed pick face).}
+\label{fig:compare}
+\end{wrapfigure}
+A \textbf{Vertical Cloud Laboratory (VCL)} repurposes an industrial \textbf{vertical lift module (VLM)} --- a warehouse-style elevator whose trays carry power and data --- as the integration backbone for a self-driving lab. A single \textbf{UR5e collaborative robot arm} ($\sim$\$35K) sits in front of the VLM and reaches any tray on demand (Figure~\ref{fig:vlm}). To stress test the backbone, the EAGER will load the trays with a \textbf{print farm of 50 Bambu Lab A1 Mini multi-material desktop 3D printers} ($\sim$\$15K total). Side-by-side, those 50 printers would take $\sim$100 linear feet of bench --- the footprint problem the VLM is meant to solve --- so the build directly tests whether a vertical, robot-served farm can produce, retrieve, and characterize parts asynchronously at a useful rate.
+
+The PI's prior feasibility study at U.~Toronto's Acceleration Consortium (Baird~2025) showed that one VLM provides $\sim$$3\times$ the automation-friendly working surface of equivalent floor space (273~ft$^2$ in 92~ft$^2$), retrieves any tray in $\le$60~s, and keeps an optical microscope in focus at $40\times$ during belt-driven motion. The proposed VCL --- one VLM, one arm, 50 printers --- is the first scientific deployment of an electrified-tray VLM as an instrument backbone, and is sized to be replicable at any university for under \$300K; the same architecture scales to multi-VLM, multi-arm cells with higher-cost characterization stations as later capital allows.
+
+\noindent\emph{Hypothesis:} a VLM with electrified trays, served by a single collaborative arm, can asynchronously orchestrate a desktop print farm and a small characterization suite as the backbone of a manufacturing self-driving lab, with higher reliability and lower integration overhead than mobile-robot or rigid-rail approaches.
+
+\section*{Why EAGER}
+The work is genuinely \emph{untested}: no scientific deployment has used an electrified-tray VLM as an instrument backbone, and no published autonomous lab pairs a single collaborative arm with a 50-station asynchronous print farm. The thermal, vibration, and electromagnetic-interference (EMI) coupling among the VLM, the UR5e, and continuously running desktop printers cannot be settled by simulation alone. The work is \emph{transformative} if it succeeds: a sub-\$300K, replicable backbone would lower the barrier to autonomous manufacturing labs by an order of magnitude. And the central question --- can warehouse-class material-handling hardware serve as a science-grade integrator --- sits between Advanced Manufacturing, robotics, and digital-design programs, which makes it awkward for any standard solicitation but a natural fit for EAGER.
+
+\section*{Approach}
+\begin{wrapfigure}{l}{0.4\linewidth}
+\centering
+\vspace{-0.5\baselineskip}
+\includegraphics[width=\linewidth]{figures/vlm_front_footprint.png}
+\caption{Representative tray plan for the VCL: $\sim$273~ft$^2$ of tray surface (about 100 linear feet of bench) folded into a 92~ft$^2$ floor footprint, leaving room next to the VLM for the UR5e arm and a characterization tray.}
+\label{fig:tray}
+\end{wrapfigure}
+\textbf{Year~1} commissions the hardware backbone (Figure~\ref{fig:tray}). We procure and install the VLM and UR5e, then load the trays with the 50 Bambu Lab A1 Mini printers (multi-material AMS Lite), filament spools, build-plate magazines, and a small characterization tray (digital calipers, optical inspection camera, scale). The PI and an integration buyout lead systems integration: tray fixturing, build-plate hand-off poses, AprilTag fiducials (printed visual markers the robot uses for pose estimation), safety interlocks, and a unified scheduler that talks to the printers' Bambu API and the UR5e simultaneously. Two part-time undergraduate research assistants handle daily maintenance on a rotating schedule that itself stress tests how the system tolerates asynchronous human and robot activity.
+
+\textbf{Year~2} measures the backbone under realistic loads. One half-time MS student leads the campaigns: print throughput across the farm vs.\ a side-by-side baseline; print quality on a standard test artifact; UR5e/VLM motion effects on adjacent in-progress prints (tray-mounted MEMS accelerometer); queue and retrieval bottlenecks; and the practical gain of asynchronous over synchronous batch operation. As a generative-design demonstration, we couple the farm to a topology-optimization pipeline that prints candidate lattices and brackets in parallel and retires designs from inspection feedback --- a workflow impractical with one or two printers.
+
+\textbf{Year~1 go/no-go gates} (instrument in parentheses): (i)~UR5e build-plate pick/place repeatability $\le\pm$1~mm across all 50 trays (laser tracker, fiducial on each tray); (ii)~$<$50~$\mu$m peak vibration at an in-progress print bed during a worst-case adjacent retrieval (tray-mounted MEMS accelerometer at 1~kHz); (iii)~$\ge$200 fully autonomous print$\rightarrow$retrieve$\rightarrow$inspect cycles with no human between job dispatch and data export; (iv)~$\ge$24~h of continuous powered cross-tray operation with no operator intervention.
+
+\textbf{Risk and mitigation.} If electrified-tray power proves unreliable, we fall back to umbilical power that retracts during retrieval. If a tray-pick is out of UR5e reach, we operate that tray manually with operator hand-off. If scheduler latency dominates, we drop to a one-printer-per-tray static schedule that still tests the core hypothesis. The print farm itself --- the most replaceable component in the build --- is the dependent variable, so any single printer failure is absorbed by the asynchronous schedule rather than blocking the experiment.
+
+\section*{Future direction (out of scope)}
+A natural follow up is to swap a tray or two of FDM printers for desktop laser powder-bed fusion (e.g.\ Mastrex MX-100, $\sim$\$39K) and rerun the same orchestration on metal additive manufacturing with autonomous post-print characterization. This EAGER deliberately stops short of that step.
+
+\section*{Use of funds (2~yr, $\sim$\$300K)}
+\begin{wraptable}{r}{0.32\linewidth}
+\vspace{-\intextsep}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{0.9}
+\captionsetup{font=scriptsize,skip=1pt,belowskip=0pt}
+\begin{tabular}{@{}lr@{}}
+\hline
+\textbf{Category} & \textbf{Cost} \\
+\hline
+Equipment (no F\&A) & \$155K \\
+M\&S (MTDC) & \$28K \\
+Personnel (MTDC) & \$45K \\
+ODC (MTDC) & \$9K \\
+F\&A (51.5\% MTDC) & \$42K \\
+\hline
+\textbf{Total} & $\approx$\$279K \\
+\hline
+\end{tabular}
+\caption{Two-yr budget; F\&A 51.5\% MTDC.}
+\label{tab:budget}
+\vspace{-1.5\baselineskip}
+\end{wraptable}
+Equipment (no F\&A) covers the VLM (\$120K) and UR5e (\$35K). Materials \& supplies cover 50$\times$ Bambu A1 Mini printers (\$15K), AMS/filament/build plates (\$8K), and the characterization tray (\$5K). Personnel funds one half-time MS student (\$25K), two part-time undergraduate research assistants (\$10K), and an integration buyout (\$10K). Other direct costs cover cloud/software (\$5K) and travel (\$4K). F\&A is computed at BYU's federally negotiated rate of 51.5\% on MTDC. The total fits comfortably under the \$300K EAGER ceiling (Table~\ref{tab:budget}), leaving headroom for contingency at full-proposal stage.
+
+\end{document}
