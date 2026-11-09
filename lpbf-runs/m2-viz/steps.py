@@ -122,7 +122,8 @@ def via(Ms, u, c_local, lifts=None):
 
 # piece-local (insert coordinates) -> puck-local: the section face x = TARGET_X goes to the puck face z = 0,
 # the 25 mm long side along the puck's x, the material up into the puck
-MP = np.array([[0, 1, 0, -12.5], [0, 0, -1, -3.5], [-1, 0, 0, M.TARGET_X], [0, 0, 0, 1]], float)
+MP = np.array([[0, 1, 0, -12.5], [0, 0, -1, -3.5], [-1, 0, 0, M.TARGET_X - 0.2], [0, 0, 0, 1]], float)
+# (the face stands 0.2 mm proud of the puck so the two coplanar faces don't z-fight)
 CUBE_C = (12.5, 12.5, -12.5)
 SLAB_C = (12.5, 12.5, -3.5)
 ROW1_C = (6.0, 12.5, -3.5)
@@ -177,7 +178,7 @@ STAGE = (M.SEM_C[0], M.SEM_C[1], M.SEM_STAGE_Z)
 UP = (0, 0, 1)
 CAM = {
     "m2_wide": [(-1300, -2950, 760), (180, 0, 60), UP],
-    "plate": [(-170, -430, 255), (0, -15, -10), UP],
+    "plate": [(-170, -475, 270), (0, -15, -10), UP],
     "inserts": [(-95, -250, 150), (0, -5, 0), UP],
     "top": [(-25, -165, 255), (0, -5, 0), UP],
     "deck": [(-330, -940, 560), (-90, 0, -40), UP],
