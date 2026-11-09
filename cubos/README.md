@@ -5,8 +5,10 @@ These are the CubOS config files for the P20 pipette runs on the CubXL, brought 
 byte-for-byte copy of the file at the same path on byu-vcl's `claude/issue-169-20261009-2151`
 branch ([byu-vcl#269](https://github.com/vertical-cloud-lab/byu-vcl/pull/269)), at
 [`4d5446c`](https://github.com/vertical-cloud-lab/byu-vcl/tree/4d5446c11e82716532fb4f7fc3bd8640f0639239/cubos/configs).
-They are the same files the runs below used: each run saved a copy of its configs next to its
-results, and those copies match these.
+They are the files the runs below used. Each run saved a copy of its configs next to its results,
+and those copies match these, with two exceptions noted below: a header comment added to
+`pipette_test_stir.yaml` after its run, and the stir-module trial's deck file, of which the run
+kept no copy.
 
 A CubOS run takes three files: a **gantry** file (the machine and its instruments), a **deck** file
 (the labware and where it sits) and a **protocol** (the steps).
@@ -38,7 +40,9 @@ Both protocols run on that deck and gantry file.
 | [`configs/deck/stir_module_trial.yaml`](configs/deck/stir_module_trial.yaml) | Ben's deck for that trial: vial_1 on the compact stir module at (126, 45) with its rim at z 66 (raised on a spacer and 3 washers), vial_2 at (136.668, 89). It uses the same gantry file | |
 
 `pipette_test_stir.yaml` gained a "ran on hardware" note in its header after the run. Apart from
-that comment, it is the file that ran.
+that comment, it is the file that ran. The trial's deck file has the same name as its protocol, and
+the run's saved configs hold the gantry file and the protocol but no copy of the deck file. The
+deck file hasn't changed in byu-vcl since it was added, before the run's commit (`d28c733`).
 
 ## SHA-256
 
