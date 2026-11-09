@@ -1,0 +1,71 @@
+{
+ "total_s": 239.4,
+ "fps": 30,
+ "chapters": [
+  {
+   "chapter": "title",
+   "start_s": 0.0,
+   "frames": 180
+  },
+  {
+   "chapter": "1  what was ordered: stock, electrodes, wire, the sulfide kit",
+   "start_s": 6.0,
+   "frames": 537
+  },
+  {
+   "chapter": "1  what was ordered: small parts",
+   "start_s": 23.9,
+   "frames": 612
+  },
+  {
+   "chapter": "2  not on the order yet",
+   "start_s": 44.3,
+   "frames": 376
+  },
+  {
+   "chapter": "3  printing everything on the H2D",
+   "start_s": 56.8,
+   "frames": 510
+  },
+  {
+   "chapter": "4  cutting the stock",
+   "start_s": 73.8,
+   "frames": 450
+  },
+  {
+   "chapter": "5  a well lid",
+   "start_s": 88.8,
+   "frames": 465
+  },
+  {
+   "chapter": "6  the electrode cap",
+   "start_s": 104.3,
+   "frames": 780
+  },
+  {
+   "chapter": "7  the coupon tray, coupons and lids",
+   "start_s": 130.3,
+   "frames": 840
+  },
+  {
+   "chapter": "8  the bench cell (calibration against a 1 cm\u00b2 window)",
+   "start_s": 158.3,
+   "frames": 480
+  },
+  {
+   "chapter": "9  checking a sulfide stock: CHEMets K-9510",
+   "start_s": 174.3,
+   "frames": 600
+  },
+  {
+   "chapter": "10  on the CubXL",
+   "start_s": 194.3,
+   "frames": 931
+  },
+  {
+   "chapter": "11  what the model caught",
+   "start_s": 225.4,
+   "frames": 420
+  }
+ ]
+}

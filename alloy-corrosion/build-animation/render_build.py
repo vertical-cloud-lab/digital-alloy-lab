@@ -223,9 +223,9 @@ class Shot:
             kw = dict(smooth_shading=True, specular=0.25, specular_power=18)
             kw.update(o.kw)
             mesh = o.mesh
-            if not kw["smooth_shading"] and "Normals" in mesh.point_data:
-                mesh = mesh.copy()  # flat shading with a point-normal array renders black in this VTK
-                mesh.point_data.remove("Normals")
+            if not kw["smooth_shading"] and mesh.point_data.keys():
+                mesh = mesh.copy()  # flat shading with any point array (normals, original ids) renders black here
+                mesh.clear_data()
             o.actor = pl.add_mesh(mesh, color=o.color, opacity=o.opacity, name=k, **kw)
         pl.camera.view_angle = 30.0
 
