@@ -9,7 +9,7 @@ of single tracks to check the Thermo-Calc AM Module.
 
 1. **One pilot run first.** Carl and Josh print four inserts holding 72 single tracks: a 4 × 4 power-speed grid,
    repeated on each insert, plus two control tracks per insert. Carl times every step from job prep to SEM.
-2. **Many parameter sets in one build looks feasible on the M2** and seems to be the intended workflow:
+2. **Running many parameter sets in one build looks feasible on the M2** and seems to be the intended workflow:
    the Concept Laser build processor assigns parameters per part. What still needs checking on BYU's install is how
    to make each track come out as exactly one scan vector. A dry run in the software settles it (see
    [§2](#2-can-the-m2-run-many-parameter-sets-in-one-build)).
@@ -49,7 +49,7 @@ the predictions *before* the cross-sections are measured.
   processor. The build processor "automatically transfers the build strategy for each part" to the WRX machine
   software and has "customizable slice parameters per part." The M2 is on its compatibility list
   ([Materialise](https://materialise.com/en/industrial/software/build-processor/concept-laser)). So a job with 72
-  tracks, each its own part with its own parameter set, is what the software is built for, not a hack.
+  tracks, each its own part carrying one of 17 parameter sets, is what the software is built for, not a hack.
 - Concept Laser sold the machine software in tiers. The lighter **CL WRX Control** tier exposes **laser power, scan speed, hatch
   ("trace") spacing, spot size, and contour offset**, which is everything a single-track sweep needs. Editing every
   parameter needs a separate, time-limited **CL WRX Parameter** licence and Concept Laser training. Sources are
@@ -110,9 +110,9 @@ and put in fresh ones.
 - **Use the same surface finish on every insert,** for example ground and then lightly bead-blasted, and record it.
   Absorptivity and powder spreading both depend on it.
 - **Mark each insert** with an ID and an orientation notch on the side. Mixing up the track-to-parameter map after
-  sectioning is the most common way single-track studies lose data.
-- **Ask Nathan C.'s group** for the plate, its drawings, any spare inserts, and old M2 job files. The repo notes
-  Dr. Nathan Crane's students were the last people to run the M2.
+  sectioning is an easy way to lose a whole run.
+- **Ask Nathan C.** for the plate, its drawings and any spare inserts. For old M2 job files and the machine's quirks,
+  the repo notes that Dr. Nathan Crane's students were the last people to run the M2.
 
 ### Refreshing the inserts (pick one with Josh before the shop work)
 
@@ -204,7 +204,8 @@ Log real times in [`m2-run-timing-log.csv`](m2-run-timing-log.csv), which uses t
 | C6 | Measure width, depth, height, area; classify regime | Carl | 3–4 h | 2 h (less once automated) |
 | C7 | Upload measurements and track map; compare with predictions | Carl + Xavier | 2 h | 1 h |
 
-Rough totals: the **machine day (B1–B8) is 4 to 7 hours** for two people. **Post-processing (C1–C7) is about 2 to
+Rough totals: the **machine day (B1–B8) is 4 to 8 hours** for two people on the first run, and about 4 hours once
+routine. **Post-processing (C1–C7) is about 2 to
 3 person-days.** Because C for run *n* overlaps A and B for run *n+1*, **one run a week** looks sustainable. Two a week
 needs a second person on metallography and more SEM time.
 
@@ -219,7 +220,7 @@ This is provisional, and every date after the pilot gets re-planned from the tim
 | --- | --- | --- |
 | **Nov 9** | Kickoff with Josh (and Nathan C. if possible): confirm machine status, software and licences, powder grade on hand, and that the insert plate exists. Carl completes M2 and powder safety training. Xavier sets up the AM Module for the stainless grade. Book SEM time for the week of Nov 30. | Machine is running and the plate is located |
 | **Nov 16** | Make or check 8 inserts (4 plus 4 spares). Build the job file and dry-run it in the software (one vector per track; export the map). Check laser power. Commit the AM Module predictions for the pilot grid. | Dry run passes |
-| **Nov 23** (Thanksgiving Thu 11/26) | **Pilot print on Mon or Tue** if prep is done; otherwise the first slot the next week. Section insert A right away. | 72 tracks printed and mapped |
+| **Nov 23** (Thanksgiving Thu 11/26) | **Pilot print on Mon 11/23 or Tue 11/24** if prep is done; otherwise the first slot the next week. Section insert A right away. | 72 tracks printed and mapped |
 | **Nov 30** | Metallography on inserts A–D. SEM session. | Cross-sections are measurable |
 | **Dec 7** | Measurements; compare with the predictions. **Pilot write-up**: timing log, problems found, campaign size. Go/no-go with Sterling by Fri Dec 11. | Go/no-go |
 | Dec 14 – early Jan | Finals and holidays, light work: make the campaign's insert batch, run AM Module predictions for the campaign grid, automate the melt-pool measurement. | — |
