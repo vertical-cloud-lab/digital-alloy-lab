@@ -6,7 +6,9 @@ Context: BYU ME, room CB 154. The printer would sit next to an AMAZEMET rePOWDER
 
 Evidence tags: **[V]** vendor claim, **[P]** peer-reviewed (including reviewed SFF proceedings), **[R]** press, reseller or aggregator, **[I]** my inference or arithmetic. Bracketed IDs such as [AO2] point to the source list at the end. No vendors were contacted.
 
-Limitation: the web-search budget for this session ran out near the end. Some items could not be checked: papers using a Sisma or ORLAS machine for Al, Han's Laser models, the EOS M 100 gas spec, and whether plate heating exists on the XM200G. Treat those as open questions.
+**[T]** marks gaps filled in on 2026-11-09 from [digital-alloy-lab issue #133](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/133), not from this survey's web research. [T1] is the BYU team's notes from a 2026-07-30 meeting with Xact Metal, so it records what Xact told us and is not published. [T2] is BYU's earlier parameter-openness research. The sha256 for this file in `MANIFEST.md` is for the version before these additions.
+
+Limitation: the web-search budget for this session ran out near the end. Some items could not be checked: papers using a Sisma or ORLAS machine for Al, Han's Laser models, the EOS M 100 gas spec, and whether plate heating exists on the XM200G (since answered: 100 °C on the regular plate [T1]). Treat the others as open questions.
 
 ---
 
@@ -17,12 +19,13 @@ Limitation: the web-search budget for this session ran out near the end. Some it
   - Aconity MIDI with the Ø55 mm platform plus powder feeder: about 20 cm³ [AC7]
   - Sisma MYSINT100 with a Ø34 mm cylinder [SI1]
   - TruPrint 1000 with the Ø50 mm reduction [TR1]
+  - Xact Metal XMini module, a Ø50 mm plate 65 mm deep [T1]
   - One Click Metal Lab module, 78×53 mm [OC2]
   - Sharebot MetalONE: 800 g minimum load [SB1]
   - Renishaw RBV-style kits [SW1]
 - **No peer-reviewed Al density data on the new desktop class.** I found none for the AO A30, FastForm, SnowPod, Scrap 1 or similar machines. Dense AlSi10Mg is well documented at about 200 W on research machines ([PH2][PH3]), so the physics allows it. Atmosphere (O₂), powder quality and parameter windows are the real risks. Require an acceptance print with your own rePOWDER powder.
 - **API / closed loop:** Aconity is the only vendor with a documented Python API for changing per-part parameters in real time [AC5]. Sharebot exposes G-code laser paths and a parameter-search mode [SB1]. Most others offer only "open parameters" in a GUI slicer. That is enough for batch-sequential BO (one parameter matrix per build) but not for in-layer control.
-- **Plate heating:** This matters for crack-prone Al-Mn-Cr-Zr and Sc/Zr alloys and is missing on most cheap machines. The A30 has none [AO1]. The One Click Metal Lab module goes to 200 °C [OC2], the Prima Print 150 family to 300 °C [PR1], and Aconity to 800-1200 °C ([AC3][AC6]).
+- **Plate heating:** This matters for crack-prone Al-Mn-Cr-Zr and Sc/Zr alloys and is missing on most cheap machines. The A30 has none [AO1]. The Xact XM200G heats its regular plate to 100 °C [T1]. The One Click Metal Lab module goes to 200 °C [OC2], the Prima Print 150 family to 300 °C [PR1], and Aconity to 800-1200 °C ([AC3][AC6]).
 - **Ranked shortlist** (details in section 3):
   1. **Xact Metal XM200G** (400 W, Reactive/argon, XMini module), all-in about $170-250k
   2. **AO Metal A30-300**, all-in about $90-130k, *conditional* on an acceptance test and origin documentation
@@ -37,13 +40,13 @@ Limitation: the web-search budget for this session ran out near the end. Some it
 |---|---|---|---|---|---|---|---|---|---|
 | **AO Metal A30** (-200/-300) | $59k (200 W) / $64k (300 W) [AO2 V, 10/2026] | Ø30×60 mm; the whole machine is small-build. **Al: 25 g** (10 mm test parts), **49 g** (20 mm parts), **156 g** (full dispenser) [AO2 V] | 200 or 300 W fiber, 1064 nm; 75 µm spot (55 µm opt.); ≤12 m/s; 15-100 µm layers [AO2 V] | Ar, "<2 L/min"; filter + gas loop [AO1 V]. **No O₂ spec published** | **None** (250/900 °C only on A50/A100) [AO1 V] | Power, speed, pattern, hatch, layer, contour/infill set zone-by-zone in AO Build Slicer [AO1 V]. API not stated; monitoring not specified | "Aluminium"/AlSi10Mg in 9 "proven" alloys [AO2 V]; no density data or papers found. No Al restriction; explosion-proof wet vac required for reactive metals [AO2 V] | 120 V 1-ph 60 Hz, ≤2.5 kW, "dedicated 50 A circuit"; 1000×620×1100 mm; **≈100 kg** [AO2 V] | "Designed and manufactured in the U.S.A.", Additive Plus, Gardena CA [AO2 V]. Provenance questions raised by press [AO4 R] (see notes) |
 | **One Click Metal MPRINT** (+Lab module) / MPRINTpro | MPRINT ≈€89k; "$149k in the US" as printed. MPRINTpro €120k / $149k. MPUREpro sieve $39k [OC5 R, 11/2025] | 150×150×150 (195 ext.). **Lab module 78×53×90 mm** (MPRINT only) [OC1][OC2 V]. Charge not published; [I] ~0.3 kg for a 20 mm-tall Lab build | MPRINT 200 W fiber, 70 µm, 22 m/s jump, 20-80 µm. Pro 500 W, 80 µm, 20-120 µm [OC1 V] | N₂ or Ar. Replaceable gas filter (MPRINT); self-cleaning permanent filter on Pro [OC1 V][OC5 R]. O₂ not published | **≤200 °C** (Heating and Lab modules) [OC2 V] | "Open parameters" (reseller) [OC9 R]. Vendor sells parameter sets; "third-party powder or modified parameters cannot be guaranteed" [OC3 V]. No API found | AlSi10Mg and Elementum **6061-RAM2** offered [OC3][OC4 V]; OCM AlSi10Mg ≈€70/kg [OC5 R]. No papers found | MPRINT 230 V, 9.5 A; Pro 220-240 V, 13.5 A; 1.1×1.9×0.8 m; 440/500 kg [OC1 V] | Germany (Tamm). TRUMPF spin-off 2019, INDEX Group majority 2021 [OC7 R]. US via reseller (MasterGraphics, now m5d) [OC8 R] |
-| **Xact Metal XM200G** / XM200C | XM200C **$65k** [AO4 R, 4/2025]. XM200G **from $90k MSRP** [XM3 R]. Options quote-only | XM200C 127³ mm; XM200G 150³ mm (Z ext. to 290 mm). **"XMini Material Development Module"** option, size not published [XM4 R]. [I] standard bed needs ~1.5 kg for a 20 mm build | XM200C 100 W Yb (200 W kit), >20 µm, gantry scanner ≤650 mm/s [XM1 V]. XM200G 1-2× 100/200/**400 W**, **50 or 100 µm** [XM2 V] | "Non-Reactive or **Reactive**" configuration [XM4 R]; reactive means argon for Al/Ti, per launch press [XM3][XM6 R]. O₂ shown on HMI, value not published | Not documented (verify) | "Open platform… develop their own printing parameters and use their own powder" [XM1 V]. 2 cameras (XM200C) [XM8 R]. No API found | XM200C: AlSi10Mg "with optional kit". XM200G lists AlSi10Mg [XM1][XM2 V]. **XM200G AlSi10Mg study** (390 W, 60 µm; 355 MPa UTS) [XM5 P] | 100-120 **or** 200-240 VAC 1-ph, 1.5 kW (2 kW peak); "not all configurations on 120 V". XM200G 650×780×1930 mm, ~380 kg [XM2 V] | **USA** (State College, PA). Resellers GoEngineer, Cimquest |
+| **Xact Metal XM200G** / XM200C | XM200C **$65k** [AO4 R, 4/2025]. XM200G **from $90k MSRP** [XM3 R]. Options quote-only | XM200C 127³ mm; XM200G 150³ mm (Z ext. to 290 mm). **"XMini Material Development Module"** option [XM4 R]: **Ø50 mm plate, 65 mm deep** [T1]; [I] ~0.15 kg for a 20 mm XMini build. [I] standard bed needs ~1.5 kg for a 20 mm build | XM200C 100 W Yb (200 W kit), >20 µm, gantry scanner ≤650 mm/s [XM1 V]. XM200G 1-2× 100/200/**400 W**, **50 or 100 µm** [XM2 V] | "Non-Reactive or **Reactive**" configuration [XM4 R]; reactive means argon for Al/Ti, per launch press [XM3][XM6 R]. O₂ shown on HMI, value not published | **100 °C** on the regular plate [T1]; XMini plate heating unknown | "Open platform… develop their own printing parameters and use their own powder" [XM1 V]. 2 cameras (XM200C) [XM8 R]. Layer images and a log file [T1]. No public API; Xact offered to sell programmatic access, with an export-control caveat [T1] | XM200C: AlSi10Mg "with optional kit". XM200G lists AlSi10Mg [XM1][XM2 V]. **XM200G AlSi10Mg study** (390 W, 60 µm; 355 MPa UTS) [XM5 P] | 100-120 **or** 200-240 VAC 1-ph, 1.5 kW (2 kW peak); "not all configurations on 120 V". XM200G 650×780×1930 mm, ~380 kg [XM2 V] | **USA** (State College, PA). Resellers GoEngineer, Cimquest |
 | **Sisma MYSINT100** | Quote only (none found) | Ø100×100 mm. **Removable cylinders Ø34 / Ø63.5 / Ø100 mm** [SI1 V]. [I] Ø34 mm needs ~0.1 kg for a 20 mm build | 200 W (opt. 2×200 W), 55 µm (opt. 30 µm), ~1070 nm, 7 m/s, 10-50 µm [SI1 V][SI2 R] | N₂/Ar [SI1 V]. O₂ not published | Not stated | Not stated | **Glove box "required for titanium and aluminium"** [SI1 V]. No Al papers checked | 230 V 50/60 Hz; 1445×730×1680 mm; 650 kg [SI1 V] | Italy. Platform the TruPrint 1000 was derived from [SI3 R]. No US support found |
 | **TruPrint 1000 → ATLIX xBUILD 1000** (+ Green Edition) | New "from $170k" [TR6 R]. Used 2019 units €95-100k [TR7 R] | Ø100×100 mm. **Optional Ø50×100 mm reduction "when using high-priced materials"**; interchangeable cylinders + glovebox [TR1 V]. [I] ~0.15 kg for a 20 mm Ø50 build | 200 W fiber (opt. 2×200 W), 80 µm (opt. motorized 55/80 µm), 2 m/s, 20-60 µm [TR1 V]. **Green Ed.:** TruDisk 1020, 515 nm, 1×500 W, **200 µm** beam, Ø97×100 mm [TR2 V] | N₂/Ar. **O₂ ≤3000 ppm standard; ≤100 ppm option** [TR1 V] | Not listed for the 1000 (2000/3000 list ≤200 °C) [TR2 V] | "Parameter availability upon request"; built-in powder-bed camera with image analysis [TR1 V]. No API found | **Aluminum "available with specific option"** [TR1 V]. Röchling lists its TruPrint 1000 for AlSi10Mg [TR8 R]. Green Ed. marketed for Cu and precious metals [TR2 V] | 230 V / 7 A; 780×2050×1160 mm; 900 kg incl. powder; fits a standard door [TR1 V] | ATLIX (Schio IT / Ditzingen DE), carved out of TRUMPF 2025, PE-owned. Renamed xBUILD 2026-09-01, "technically unchanged" [TR3-TR5 R] |
 | **Aconity MINI** (MIDI for reference) | "Price on demand" [AC3 R]; no public figure | MINI Ø140 × 190-200 mm [AC2][AC3]. **MIDI: Ø55 mm reduced platform + powder feeder, builds from ~20 cm³** [AC7 V-user]. Ask whether the MINI takes the same kit | Single-mode 400 W or 1000 W; 80 µm F-theta or 80-500 µm 3D scanning; layers ≥10 µm [AC1 R] | Ar; optional vacuum chamber <1 mbar [AC3 R]. O₂ not published | MINI opt. **≤800 °C** [AC3]. MIDI induction **≤1200 °C** [AC6][AC7] | Full parameter autonomy [AC3]. **Aconity API: real-time per-part parameter changes from Python** [AC5]. Coaxial pyrometer, high-speed CMOS [AC1] | NUS lists Aluminium for its MINI [AC4]; Utah says Al printable on MIDI [AC6] | 2050×1500×2295 mm, **1155 kg** [AC2]. Electrical not found ([I] likely 3-phase) | Germany. AconityUS at UTEP, El Paso [AC8] |
 | **Coherent / OR Laser ORLAS CREATOR** | ~€77k at 2016 launch [OR5 R]. **Listed discontinued** [OR3 R] | Ø100×110 mm [OR1 R] | 250 W Yb, 1070 nm, ≥40 µm [OR1][OR2] | Ar/N₂ [OR2] | n/a | n/a | One used listing claims Al (unverified) | 717×858×1794 mm; 470 kg [OR2] | Germany. Coherent removed its product page (~2021) [OR4 R] |
 | **Farsoon FS121M** | On request [FA1 R] | 120×120×100 mm [FA1] | 200 W (reseller) or 300/500 W (datasheet) fiber; several spot sizes [FA2][FA3 R] | Not obtained | Not obtained | "Unlock machine parameters and powder choice" [FA2] | **No Al on FS121M list** (316L, 17-4PH, MS1, HX, Cu, CuSn10, CoCr) [FA3 R] | Not obtained | **China** (Changsha). Farsoon Americas, Round Rock TX [FA2]. West-Coast distributor is Additive Plus [AO7 R] |
-| **EOS M 100** | No list price; aggregator $200-280k (low confidence) [EO3 R] | Ø100×95 mm incl. plate [EO1] | 200 W Yb, 40 µm [EO1] | Not confirmed; compressed air 4,000 hPa, 50 L/min [EO1] | n/a | EOSPRINT ([I] parameter editing is license-dependent; verify) | **No Al material** for M 100 in sources (CoCr SP2, 316L, Ti64) [EO2 R] | 200-240 V, ≤1.7 kW; 800×950×2250 mm; 580 kg [EO1] | Germany. EOS North America |
+| **EOS M 100** | No list price; aggregator $200-280k (low confidence) [EO3 R] | Ø100×95 mm incl. plate [EO1] | 200 W Yb, 40 µm [EO1] | Not confirmed; compressed air 4,000 hPa, 50 L/min [EO1] | n/a | EOSPRINT ([I] parameter editing is license-dependent; verify). BYU's July research found M 100 editing sold per material as legacy ParameterEditor packages, with the M 100 outside current EOS Build plans [T2] | **No Al material** for M 100 in sources (CoCr SP2, 316L, Ti64) [EO2 R] | 200-240 V, ≤1.7 kW; 800×950×2250 mm; 580 kg [EO1] | Germany. EOS North America |
 | **3D Systems DMP Flex 100** | Not found (academic bundles exist) [DM3] | 100×100×90 mm incl. plate [DM1] | **100 W** fiber, 1070 nm [DM1] | Not obtained | n/a | Closed LaserForm workflow ([I]) | No Al in LaserForm list found [DM1] | Not obtained | USA |
 | **DMG MORI LASERTEC 12 SLM** | Aggregator $300-650k (low confidence) [LT2 R] | 125×125×200 mm. **rePLUG** powder module (<2 h material change); **rePLUG RESEARCH** for material/parameter development [LT1 V] | 200 W std, 400 W opt.; 35 µm focus; ≥20 µm layers [LT1 V] | Argon, "minimum consumption" [LT1 V] | Not stated | "Adjust all machine settings and process parameters", any powder supplier [LT1 V] | Al not listed [LT1] | Not obtained | Germany/Japan. DMG MORI USA |
 | **Prima Additive Print Sharp 150** | Quote only | Ø150×160 mm; no reduction kit found [PR1 R] | 300 W single-mode Yb, 1070 nm, air-cooled [PR1 R] | O₂ monitoring <100 ppm (family page) [PR1 R] | **≤300 °C** (family page) [PR1 R] | Positioned for R&D | Aluminium in material list [PR1 R] | Not obtained | Italy |
@@ -82,7 +85,16 @@ Limitation: the web-search budget for this session ran out near the end. Some it
 - **Published Al use:** A reviewed SFF-2024 paper (Univ. of Southern Denmark and Taiyo Nippon Sanso) printed coarse (>100 µm) non-explosible AlSi10Mg on an XM200G at 390 W and 60 µm layers. The best set reached 355 MPa UTS, 220 MPa YS and 4.4 % elongation [XM5]. The same paper measured the explosibility of standard AlSi10Mg and pure Al powders, which is why the Reactive package matters [XM5].
 - **XM200S:** the 2018 sibling, not evaluated separately; the XM200G is the current platform.
 - **Company health:** reports record orders in 2026 [XM9].
-- **Unknowns:** XMini dimensions and minimum charge, plate heating, O₂ ppm and logging, and the build-file format or API.
+- **What Xact told BYU on 2026-07-30 [T1]** (vendor statements, not published):
+  - **XMini:** a build plate 50 mm in diameter and 65 mm deep, engineered for a powder change in about 15 minutes. [I] By the same arithmetic as the TruPrint Ø50 mm row, a 20 mm-tall build needs about 0.15 kg.
+  - **Plate heating:** the bed heats to 100 °C on the regular build plate. Whether the XMini plate is heated was asked but not answered.
+  - **Powder change on the regular bed:** 1-2 hours with experience.
+  - **Monitoring:** an image of every layer and a log file. Xact offered to add more data capture on request.
+  - **Programmatic access:** Xact will sell full programmatic access to the machine, but said export rules (it cited ITAR) restrict this if international users work on it. The export-control follow-up is in issue #133.
+  - **Recoater:** soft silicone rubber.
+  - **Optics:** two spot sizes, with no beam shaping or dynamic aperture, which matches [XM2].
+  - **Lead time:** 12 weeks standard; Xact once shipped a machine in 6 weeks.
+- **Unknowns:** XMini minimum charge and whether its plate is heated, O₂ ppm and whether O₂ is in the log, and the build-file format or API documentation.
 
 **Sisma MYSINT100.**
 - **Small-build option:** Three removable build cylinders (Ø34 / Ø63.5 / Ø100 mm) [SI1]. The Ø34 mm cylinder is among the smallest powder charges on an industrial machine.
@@ -150,7 +162,7 @@ The drawbacks are no confirmed Al results, no preheat spec, no US support and an
 
 **Small-batch kits across vendors.**
 - **Renishaw AM400 RBV:** 80×80 mm plate, ≤55 mm tall, no heated plate. Swansea used it with 3DLAB ultrasonic-atomized powder (D50 49 µm) and reached 99.25-99.79 % density in 316L [SW1, P]. This is direct evidence that ultrasonic powder at this PSD prints densely on a reduced platform.
-- Also see TruPrint Ø50 mm [TR1], MYSINT Ø34 mm [SI1], OCM Lab [OC2], Xact XMini [XM4], DMG rePLUG RESEARCH [LT1] and Aconity Ø55 mm + feeder [AC7].
+- Also see TruPrint Ø50 mm [TR1], MYSINT Ø34 mm [SI1], OCM Lab [OC2], Xact XMini (Ø50 mm, 65 mm deep [T1]) [XM4], DMG rePLUG RESEARCH [LT1] and Aconity Ø55 mm + feeder [AC7].
 
 ---
 
@@ -163,7 +175,7 @@ Ranking weights [I]:
 4. Price
 5. US support and procurement risk
 
-BO in practice is batch-sequential: each build carries a matrix of parameter sets, you measure density/cracking/microstructure, then BO picks the next matrix. Per-part parameters plus a scriptable build-file format are enough for that. True in-layer closed loop needs an API (Aconity), which none of the top 3 documents.
+BO in practice is batch-sequential: each build carries a matrix of parameter sets, you measure density/cracking/microstructure, then BO picks the next matrix. Per-part parameters plus a scriptable build-file format are enough for that. True in-layer closed loop needs an API (Aconity), which none of the top 3 documents. (Xact offered to sell programmatic access, with an export-control caveat [T1].)
 
 Cost assumptions (all [I], not quotes):
 - USD, purchase-tax exempt, €1 ≈ $1.15
@@ -181,7 +193,7 @@ Cost assumptions (all [I], not quotes):
 - documented AlSi10Mg printing on this exact platform [XM5]
 - the XMini module targets exactly this use
 
-**Risks:** XMini minimum charge and dimensions are unpublished; no documented preheat or API.
+**Risks:** XMini minimum charge is unpublished (Xact gave us the size: Ø50 mm, 65 mm deep [T1]); preheat only to 100 °C on the regular plate [T1]; no documented API (Xact offered to sell programmatic access, with an export-control caveat [T1]).
 
 | Item | Low | High |
 |---|---|---|
@@ -445,3 +457,7 @@ Cost assumptions (all [I], not quotes):
 - [PH12] Bauer et al., SFF 2016: https://utw10945.utweb.utexas.edu/sites/default/files/2016/029-Bauer.pdf
 - [PH14] TUHH dissertation, coarse PSD: https://tore.tuhh.de/bitstreams/0535e5fa-1fba-4f44-9d65-b1471e1ff2cc/download
 - [PH16] ORNL, AlSi10Mg energy window: https://impact.ornl.gov/en/publications/understanding-the-laser-powder-bed-fusion-of-alsi10mg-alloy/
+
+**Filled in from digital-alloy-lab issue #133 (added 2026-11-09)**
+- [T1] BYU notes from a 2026-07-30 meeting with Xact Metal: https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/133#issuecomment-6353368469
+- [T2] BYU parameter-openness research, 2026-07-08 (summarized in #133): https://github.com/vertical-cloud-lab/byu-vcl/blob/8ed038f/lpbf-parameter-openness.md
