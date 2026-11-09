@@ -1,0 +1,25 @@
+{
+ "stream": {
+  "video_id": "FYp3AgZ9UDU",
+  "format": "160 (DASH, 256x144)",
+  "fragments": [
+   5350,
+   7400
+  ],
+  "offset_0_lab_time": "15:59:46",
+  "overlay_reads": "125 of 137 crops, all implying the same start"
+ },
+ "alignment": {
+  "v1": {
+   "stream_offset_s": 476.0,
+   "r": 0.764,
+   "runner_up_r": 0.177,
+   "halves_offset_s": [
+    476.0,
+    476.0
+   ],
+   "start": "16:07:42",
+   "end": "17:03:14"
+  }
+ }
+}
