@@ -17,7 +17,7 @@ Nothing here records whether the secret was replaced in between or the fault was
 | [`queries.py`](queries.py) | The ten questions, with the shared context, "already established" and output blocks |
 | [`edison_corrosion_cu.py`](edison_corrosion_cu.py) | Submit, wait, fetch and status, laid out like PR #117's `edison_cu_ded.py` |
 | [`_task_ids.json`](_task_ids.json) | Task IDs, submit and fetch times |
-| [`batch1/`](batch1/) | One file per question: the question, then Edison's answer with its reference list |
+| [`batch1/`](batch1/), [`batch2/`](batch2/) | One file per question: the question, then Edison's answer with its reference list |
 | [`raw/`](raw/) | The full verbose trajectory of each task, gzipped JSON |
 | [`check_numbers.py`](check_numbers.py) → [`check_numbers.json`](check_numbers.json) | Arithmetic checks on Edison's numbers, and the numbers this README adds |
 
@@ -277,9 +277,44 @@ Most of this needs no new hardware beyond the aluminum plan's. The exceptions:
 - **The ZRA test** needs either a potentiostat with a ZRA mode or a second channel.
 - **The jet head** is new hardware.
 
+## Batch 2: graphite or platinum for the counter?
+
+Asked 2026-11-09 on [#180](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/180#issuecomment-6753398822).
+Sterling wondered whether a McMaster graphite rod could replace the $221 platinum wire (B21) on Ben's
+order. One LITERATURE_HIGH task, [`c2-01`](batch2/c2-01-graphite-counter-in-well.md), given the cell
+as it is designed now, with the electrodes in the removable cap. Submitted 22:44 UTC, fetched 23:06.
+
+**Verdict: keep the Pt coil in the cap; use graphite only in the bench cell.**
+
+- **In the cap, a commodity graphite rod is "not recommended".** There are four reasons:
+  - McMaster states no purity. Synthetic graphite carries about 55 ppm Fe, 3 ppm Ni and 1 ppm Cu
+    (Ambrosi 2012, [10.1073/pnas.1205388109](https://doi.org/10.1073/pnas.1205388109)), all on the
+    ICP-MS list.
+  - The rod is porous. It soaks up seawater and copper that a DI dip between wells won't remove.
+  - When the counter is anodic in chloride, graphite pits, cracks and sheds (Zhu 2019,
+    [10.1007/s12678-019-00541-6](https://doi.org/10.1007/s12678-019-00541-6)).
+  - It reduces oxygen slowly, so the counter runs more negative. That eats into the compliance
+    of a Pico-class potentiostat.
+- **The Pt-free option to try is a 3 mm glassy-carbon rod.** It is dense and low in ash, and it is
+  the counter in flow cells coupled to ICP-MS (Jenewein 2021,
+  [10.1021/acsmeasuresciau.1c00016](https://doi.org/10.1021/acsmeasuresciau.1c00016); Ooi 2021,
+  [10.2320/matertrans.C-M2021820](https://doi.org/10.2320/matertrans.C-M2021820)). It needs a new
+  cap: a 3 mm rod beside the 2 mm reference doesn't fit the 8 mm bore with the reference on the axis.
+- **In the 250 mL bench cell, the 10 × 100 mm hobby rod (B22) is acceptable.** Leach it in hot
+  dilute HNO₃ first and run a blank. The volume dilutes whatever it releases about 1,700 times.
+- **New for the protocol: copper plating on the counter.** During the anodic hold the counter is
+  a cathode, so dissolved copper can plate onto it, Pt or graphite. That makes the well's ICP-MS
+  copper read low. Edison found no measurement of how much. It suggests comparing a Pt and a
+  graphite counter on the same coupon in the bench cell, and analysing the well liquid after the
+  cap's dip sequence for carry-over.
+
+**Correction to Edison:** it suggests buying 0.1 m of wire and winding three turns. Each coil
+already uses 10 cm, so 0.2 m makes the two coils the plan needs, one per alloy family. 0.1 m makes
+one, for $33 less ($188 against $221, [Advent](https://www.advent-rm.com/en-gb/products/pure-metals/platinum/form/wire/line/pt5434)).
+
 ## To run
 
-Batch 1 has run. To re-run it or add a batch, from the repo root (needs `pip install edison-client`):
+Batches 1 and 2 have run. To re-run one or add a batch, from the repo root (needs `pip install edison-client`):
 
 ```bash
 python alloy-corrosion/copper-ded-edison/edison_corrosion_cu.py submit 1

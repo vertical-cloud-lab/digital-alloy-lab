@@ -90,8 +90,13 @@ From [`copper/cad/README.md`](copper/cad/README.md#printing-and-assembly), with 
 substitutions:
 
 1. **Open the reference bore** to 2.05 mm by hand, with a #46 drill (2.06 mm, B47) in a pin vise.
-2. **Open the bottom 2.2 mm of the two 1.0 mm pin holes** to 1.3 mm, for the CPG-37's 1.25 mm
-   barrel (B06).
+2. **Open the two 1.0 mm pin holes from below for the CPG-37 pins** (B06): a Ø2.1 counterbore
+   1.57 mm deep for the flange and barrel, then Ø1.6 × 1.1 mm for the tail. Leave the 1.0 mm hole
+   above it for the wire. *Corrected 2026-11-09:* this step used to say "open the bottom 2.2 mm to 1.3 mm".
+   The [datasheet](https://www.sameskydevices.com/product/resource/cpg-37-th-tr.pdf) pin has a
+   Ø2.00 flange and a Ø1.50 tail and stands 2.20 mm free. Mounted the old way it would bottom out
+   and hold the cap 1 mm off the lid ([`build-animation/parts-check.md`](build-animation/parts-check.md)).
+   Solder the wire-wrap to the tail before pressing the pin in.
 3. **Press two steel slugs** into the pockets in the skirt's underside, with a drop of
    cyanoacrylate: 3 mm drill rod (B10) cut to 2 mm, or any 3 mm steel pin. The lid's magnets
    pull on them to hold the cap down.
@@ -129,7 +134,10 @@ carriage.
 
 1. **Melt in the M3 heat-set inserts** (B13), two per station, at y ±14.
 2. **Fit the P75-B1 spring pins** (B07): one working-electrode pin up through each pocket floor,
-   and two per station under the lid's brass pins. That is 12 in all.
+   and two per station under the lid's brass pins. That is 12 in all. *Found 2026-11-09:* they
+   are 16 mm long, not the CAD's 11 mm. With the tip 1 mm above the pocket floor, a WE pin's tail
+   ends 1 mm below the tray's underside, so give the tray 2 mm feet
+   ([`build-animation/parts-check.md`](build-animation/parts-check.md)).
 3. **Wire the pins** in the 4 × 3 mm channels underneath with 26 AWG silicone wire (B16): the
    four working-electrode pins on one wire, the four reference pads on another, the four counter
    pads on a third. The cap is only ever on one station, so three wires serve all four. They leave

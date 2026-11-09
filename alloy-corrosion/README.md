@@ -29,6 +29,7 @@ commits. Nothing in it has been bought, built or tested.
 | [`bom/a1-mini/`](bom/a1-mini/README.md) | **Every printed part on A1 mini plates, in PLA**: four sliced plates plus an optional fifth, with the magnet pauses set and checked (2026-11-06) |
 | [`bom/h2d/`](bom/h2d/README.md) | **Everything still to print on one H2D plate, in PLA**: the parts above less the vial caps, tip rack, vial holder and stirrer prints the lab already has; 28 pieces, 11.4 h, sliced, both magnet pauses checked (2026-11-06) |
 | [`build-guide.md`](build-guide.md) | **How to build it, in order**: print, assemble, bench-test, set up the deck, first checks. It collects the latest decisions from `bom/`, `copper/cad/` and `cubxl-setup.md` |
+| [`build-animation/`](build-animation/README.md) | **The whole setup built from the parts up, as a video** (2026-11-09): every line of Ben's order list drawn at its vendor's size, the H2D print, the lid, cap, tray and bench cell assembled, the sulfide test, the deck. It caught five misfits; `parts-check.md` lists every part against what it has to fit |
 | [`stirrers/`](stirrers/README.md) | **With four stir modules on the deck** (byu-vcl#269): the order list for everything to buy now (no potentiostat, no tips), the build guide, and the deck with both tip racks side by side, checked (2026-11-06) |
 
 ## In short

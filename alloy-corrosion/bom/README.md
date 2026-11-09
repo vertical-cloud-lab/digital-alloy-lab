@@ -119,8 +119,11 @@ same rules. The cup block pauses at z 44.6 for its six magnets, same pole up as 
 One table per group. **For** says which plan needs the row; *option*, *optional* and *fallback* rows
 are not in the totals unless chosen. Two parts substitute for what the CAD draws:
 - **The cap's spring pins.** B06 replaces the drawn P75 pins. Those are about 1 N each, more than
-  twice the cap's 0.4 N limit. Its barrel is 1.25 mm, so open the bottom 2.2 mm of the cap's two pin holes
-  to 1.3 mm. Set the pin 0.2 mm recessed, so it sits at mid-stroke when the cap is seated.
+  twice the cap's 0.4 N limit. *Corrected 2026-11-09 from the datasheet:* the CPG-37 has a Ø2.00 flange
+  and a Ø1.50 tail, and stands 2.20 mm free. From below, cut a Ø2.1 counterbore 1.57 mm deep, then
+  Ø1.6 × 1.1 mm for the tail; it then sits at mid-stroke (1.50 mm, 30 gf) when the cap is seated.
+  The earlier "open to 1.3 mm, flange 0.2 mm recessed" would bottom the pin out
+  ([`../build-animation/parts-check.md`](../build-animation/parts-check.md)).
 - **The lid's brass eyelets** are 6 mm pins cut from B12 rod. No 1.6 mm rivet long enough for a 6 mm
   lid turned up.
 
