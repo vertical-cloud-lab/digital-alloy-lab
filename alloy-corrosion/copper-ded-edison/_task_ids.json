@@ -78,5 +78,11 @@
     "submitted": "2026-10-18T01:20:09Z",
     "status": "success",
     "fetched": "2026-10-18T01:39:53Z"
+  },
+  "c2-01-graphite-counter-in-well": {
+    "batch": 2,
+    "task_id": "9231fd09-a662-48a4-bfb6-49c67411241f",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-11-09T22:44:27Z"
   }
 }

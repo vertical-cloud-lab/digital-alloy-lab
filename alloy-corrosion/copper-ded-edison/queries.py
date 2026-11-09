@@ -278,3 +278,99 @@ electrolyte, current density and detection limit (nm or mC/cm2).
 """),
     },
 }
+
+# Batch 2 (2026-11-09, PR #180): can a graphite rod replace the Pt-wire counter?
+# Sterling asked on the PR, against the $221 Pt wire on Ben's order list. The
+# context is the cell as built today (copper/cad/, copper/protocol.md), which
+# has moved on from batch 1's CONTEXT: the electrodes ride in a removable cap.
+CONTEXT2 = """\
+CONTEXT (do not summarize this back): Brigham Young University's Vertical
+Cloud Lab (EXCLUDE publications by Sterling G. Baird) is building automated
+small-area corrosion tests on a Cartesian gantry robot (the "CubXL") for
+copper alloys for naval use: wrought Cu-Ni 90-10 (C70600) and 70-30 (C71500),
+cast nickel-aluminum bronze (C95800), and the same alloys deposited by
+blown-powder laser directed energy deposition. The cell as designed today:
+- Polished flat specimen. A 3D-printed lid presses an AS568-006 FKM O-ring
+  (2.90 mm ID) onto it as a face seal, so 0.10-0.13 cm2 of metal is wetted.
+  Above the O-ring an 8 mm bore holds about 150 uL of ASTM D1141 substitute
+  ocean water (without heavy metals), dosed in a series with 0-10 mg/L
+  sulfide. The well is open to air through a 0.12 mm clearance.
+- The reference and counter ride in a removable printed cap that the robot
+  sets on the well: a 2.0 mm OD leak-free Ag/AgCl reference on the axis, tip
+  3.0 mm above the metal, and, as the counter, five turns of 0.25 mm Pt wire
+  on a 2.6 mm radius, 2.4-4.0 mm above the metal (about 0.65 cm2 of Pt, five
+  times the working area). One cap serves every well: between wells it is
+  dipped in DI water, then in fresh seawater.
+- Sequence on each spot, about one hour: OCP 20 min; EIS at OCP, 10 mV rms,
+  100 kHz to 10 mHz; LPR -10 to +10 mV about OCP at 0.167 mV/s; rest 5 min;
+  potentiostatic hold at Ecorr + 50 mV for 10 min (0.2-2.8 mC anodic); OCP 5
+  min. Cyclic polarization (ASTM G61 style, starting 50 mV below OCP and
+  reversed at a current threshold, about 3.4 mC) runs only on selected spots,
+  last.
+- After each spot the well's liquid and one 150 uL DI rinse go into a 0.5 mL
+  PP tube with 20 uL of 1 M trace-metal HNO3, for ICP-MS of Cu, Ni, Fe, Mn
+  and Al: element-resolved dissolution, at roughly 0.5-15 mg/L of Cu in the
+  tube.
+- Potentiostat: a Gamry-class bench instrument now; a low-cost EmStat Pico
+  class instrument with EIS later.
+"""
+
+BATCHES[2] = {
+    "c2-01-graphite-counter-in-well": {
+        "job": "LITERATURE_HIGH",
+        "query": CONTEXT2 + """
+QUESTION: Can a graphite rod replace the 0.25 mm Pt-wire coil as the counter
+electrode in this cell, and if so, which grade, size and pre-treatment, and
+with what restrictions? The candidates are an off-the-shelf graphite rod from
+McMaster-Carr (extruded or molded, about 1.6-3.2 mm diameter, purity not
+stated) in the cap, and, for a separate 250 mL bench calibration cell, a
+10 x 100 mm "high purity" rod from a hobby chemical supplier (purity not
+stated). Cover:
+(a) Electrochemistry: the counter area and geometry a three-electrode
+small-volume cell needs for LPR, potentiostatic holds and EIS down to 10 mHz;
+whether a graphite counter's slow oxygen reduction (it runs more negative than
+Pt when cathodic) or its large double-layer capacitance strains the
+potentiostat's compliance or distorts the impedance spectrum, and how close to
+a 2 mm reference it may sit.
+(b) Chemistry in 150 uL: which reactions the counter carries when it is a
+cathode (during the anodic hold: oxygen reduction, hydrogen evolution, and
+re-deposition of dissolved copper, CuCl2- or Cu2+, onto the counter) and when
+it is an anode (during the cathodic half of LPR and of cyclic polarization:
+chlorine or hypochlorite, oxygen evolution, graphite oxidation, Pt
+dissolution), and how each differs between graphite and Pt. Which of them
+remove copper from the liquid before ICP-MS, alkalinize or acidify the well,
+or attack or plate the specimen? Give numbers where published, for example
+the fraction of dissolved copper re-deposited on the counter in small cells.
+(c) Contamination and carry-over: graphite porosity and electrolyte uptake;
+carry-over of Cu and Ni from one well to the next after DI and seawater dips;
+release of Fe, Ni, Cu, V, Al, Mn and other impurities from extruded,
+isostatic and spectroscopic grades into seawater or dilute HNO3; shedding of
+particles, especially when the graphite is anodic in chloride; pre-treatment
+(acid leaching, soaking, sealing) and the ash content needed for trace-metal
+work.
+(d) Precedent: droplet-cell, O-ring-cell, scanning-flow-cell or capillary
+corrosion studies that used graphite or glassy-carbon counter electrodes,
+especially with downstream ICP-MS, ICP-OES or AESEC; what ASTM G3, G5, G59,
+G61 and G106 say about counter-electrode material; reported Pt-counter
+dissolution or re-deposition artifacts.
+(e) Cheaper alternatives to 0.2 m of 0.25 mm Pt wire for this cap: 0.1 m of Pt
+wire, glassy-carbon rod, platinized or Pt-clad titanium or niobium wire,
+titanium or MMO mesh, gold, Hastelloy C-276, 316L, and the risks of each in
+chloride with sulfide.
+(f) A ranked recommendation for this cell: counter material, minimum area,
+geometry inside an 8 mm bore that also holds the 2 mm reference, and
+pre-treatment; and the bench experiment (the same specimen with a graphite
+and with a Pt counter) that would show whether graphite changes Ecorr, Rp,
+the EIS spectrum or the ICP-MS result.
+
+OUTPUT FORMAT: For each relevant item give the full citation with DOI, the
+cell (area, electrolyte volume, counter material and area), the electrolyte,
+and the key numbers. Tag each item: [CITE] worth citing; [NUMBERS] gives a
+quantitative benchmark; [CUBXL] changes how this cell should be built or run
+(say how); [GAP] the literature does not answer it. If the literature does
+not answer part of the question, say so plainly instead of padding with
+loosely related work. End with a one-paragraph verdict: graphite rod, Pt wire,
+or something else, for the cap and for the bench cell.
+""",
+    },
+}
