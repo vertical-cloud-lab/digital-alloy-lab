@@ -1,0 +1,47 @@
+{
+ "name": "m2_4_sem",
+ "fps": 15,
+ "n_frames": 540,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "C2 · grind to the target plane",
+   "caption": "Then grind down to the target plane: the mid-length of the row's nine tracks, where the section is taken.",
+   "start_frame": 0,
+   "end_frame": 90
+  },
+  {
+   "label": "C3 · hot-mount",
+   "caption": "Hot-mount face down in conductive compound, so the SEM does not charge. A slab about 8 × 22 mm fits a 1.25 in puck: eight pucks per run, two per insert.",
+   "start_frame": 91,
+   "end_frame": 201
+  },
+  {
+   "label": "C3 · eight pucks",
+   "caption": "Eight pucks per run, two per insert, each showing one row of nine tracks cut at mid-length.",
+   "start_frame": 202,
+   "end_frame": 254
+  },
+  {
+   "label": "C4 · grind and polish",
+   "caption": "Grind with 320, then 800 grit; polish with 3 µm diamond, then 0.05 µm alumina (MIT's sequence).",
+   "start_frame": 255,
+   "end_frame": 353
+  },
+  {
+   "label": "C4 · etch",
+   "caption": "Etch right after polishing, because 316 passivates fast: dilute aqua regia for 30–45 s in a fume hood, or 10 % oxalic acid electrolytically. Check the etch and the track order under the optical microscope.",
+   "start_frame": 354,
+   "end_frame": 437
+  },
+  {
+   "label": "C5 · SEM",
+   "caption": "SEM: secondary-electron images of every track at two fixed magnifications, plus EDS spots on a few keyhole tracks to check for Mn and Cr lost to evaporation.",
+   "start_frame": 438,
+   "end_frame": 539
+  }
+ ]
+}

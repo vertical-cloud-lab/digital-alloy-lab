@@ -1,0 +1,35 @@
+{
+ "name": "m2_1_setup",
+ "fps": 15,
+ "n_frames": 402,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "B2 · inserts into the plate",
+   "caption": "Four fresh 316L inserts (25 mm cubes, ID-marked, with an orientation notch) go into the pockets of Nathan C.'s plate. The big plate is never lasered, so it needs no resurfacing between runs, and nothing is welded on, so no wire EDM.",
+   "start_frame": 0,
+   "end_frame": 111
+  },
+  {
+   "label": "B2 · flushness",
+   "caption": "Dial-indicate each insert against the plate and record the offset: it becomes that insert's layer-thickness input to the model. Flushness is the critical tolerance (about 10 µm, 10–20 % of a layer).",
+   "start_frame": 112,
+   "end_frame": 224
+  },
+  {
+   "label": "A1 · job file",
+   "caption": "Job file: each track is its own part carrying one of 17 parameter sets (the 4 × 4 power–speed grid and the control), in a random order on each insert. The dry run must show one scan vector per track. The AM Module predictions for all 17 sets are committed before printing (A2).",
+   "start_frame": 225,
+   "end_frame": 329
+  },
+  {
+   "label": "B3 · powder",
+   "caption": "Load and sieve 316L powder into the dose chamber; record the lot, its certificate and the particle size distribution.",
+   "start_frame": 330,
+   "end_frame": 401
+  }
+ ]
+}

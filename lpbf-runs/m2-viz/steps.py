@@ -1,17 +1,19 @@
-"""The M2 single-track pilot (../m2-single-track-schedule.md) as three 3-D animations, one per stage of the run sheet,
-in the style of atomizer-training/viz3d and sieving/viz3d (CadQuery parts in PyVista, scene.py's captions and labels).
+"""The M2 single-track pilot (../m2-single-track-schedule.md) as five 3-D animations that follow the run sheet, in the
+style of atomizer-training/viz3d and sieving/viz3d (CadQuery parts in PyVista, scene.py's captions and labels).
 
-* ``m2_1_print``: B2 inserts into the plate and flushness, A1 job file (one vector per track), B3 powder, B4 close
-  and inert, B5 recoat one layer and expose the 72 tracks
-* ``m2_2_cut``: B6-B7 cool, depowder, photograph, remove; C1 top-view images; C2 bandsaw (slab off, split per row)
+* ``m2_1_setup``: B2 inserts into the plate and flushness; A1 the job file (one vector per track); B3 powder
+* ``m2_2_print``: B4 close up and inert; B5 recoat one layer and expose the 72 tracks
+* ``m2_3_cut``: B6-B7 cool, depowder, photograph, remove; C1 top-view images; C2 bandsaw (slab off, split per row)
   and final face on the precision saw
-* ``m2_3_sem``: C2 grind to the plane; C3 hot-mount; C4 grind, polish, etch; C5 SEM; C6 measure; C7 compare
+* ``m2_4_sem``: C2 grind to the plane; C3 hot-mount; C4 grind, polish, etch; C5 SEM
+* ``m2_5_results``: C5 the SEM images; C6 measure; C7 compare with the AM Module (on the monitor; illustrations)
 
-The animation follows insert A, as the plan does ("section insert A first, all the way through SEM").
+The animations follow insert A, as the plan does ("section insert A first, all the way through SEM"). Five short
+GIFs rather than one long one keep each under GitHub's ~5 MB.
 
-    xvfb-run -a -s "-screen 0 1920x1080x24" python steps.py print cut sem    # out/<name>.gif, _still.png, .json, mp4/
+    xvfb-run -a -s "-screen 0 1920x1080x24" python steps.py setup print cut sem results   # out/<name>.gif etc.
     PREVIEW=1 xvfb-run -a -s "-screen 0 1920x1080x24" python steps.py cut    # last frame of each sub-step -> /tmp
-    python steps.py full                                                     # out/mp4/m2_full.mp4 (the three joined)
+    python steps.py full                                                     # out/mp4/m2_full.mp4 (all five)
 """
 from __future__ import annotations
 
@@ -38,9 +40,10 @@ BLUE_RAMP = ["#86b6ef", "#6da7ec", "#5598e7", "#3987e5", "#2a78d6", "#256abf", "
              "#0d366b"]                       # the static figure's P/v colours (sequential blue, light = low P/v)
 CONTROL_C = (0.32, 0.32, 0.31)
 HOT = (1.0, 0.86, 0.45)
-TRACK_C = (0.96, 0.88, 0.68)                  # a fresh track: bright, lightly heat-tinted
+TRACK_C = (1.0, 0.94, 0.78)                   # a fresh track: bright, lightly heat-tinted
+POWDER_LAYER = (0.40, 0.41, 0.43)             # the spread layer, a little darker than the dose so tracks stand out
 TRACK_W_SCALE = 2.5                           # tracks drawn 2.5x the illustrative width so they show
-TRACK_AMB = 0.55
+TRACK_AMB = 0.8
 LASER_C = (1.0, 0.22, 0.10)
 GAS_C = (0.35, 0.62, 0.92)
 OPEN_DEG = -100.0
@@ -178,9 +181,10 @@ CAM = {
     "inserts": [(-95, -250, 150), (0, -5, 0), UP],
     "top": [(-25, -165, 255), (0, -5, 0), UP],
     "deck": [(-330, -940, 560), (-90, 0, -40), UP],
+    "deck_in": [(-250, -285, 300), (-60, 30, -20), UP],
     "door": [(-520, -1650, 470), (-20, -200, 110), UP],
     "a_close": [(-53, -96, 30), (-45, -51, 0), UP],
-    "inserts_high": [(-48, -200, 150), (0, -4, 0), UP],
+    "inserts_high": [(-36, -168, 128), (0, -4, 0), UP],
     "bench": [(1500, -1450, 600), (1550, 0, -100), UP],
     "tray": [(1300, -470, 230), (1430, -40, -70), UP],
     "saw": [(1625, -175, 70), (1702, -20, -12), UP],
@@ -227,9 +231,10 @@ class World:
         sc.parent["g_A"] = "platform"
         sc.gmat["g_A"] = at_plate("A")
         # powder: the spread layer over the build area, and the heap in front of the blade
-        sc.add("powder_layer", pv.Box((-130, 130, -128, 128, -1.0, 0.03)), M.POWDER, "powder_layer",
-               specular=0.0, ambient=0.25, shown=False)
-        sc.add("powder_heap", pv.Box((4, 11, -140, 140, 0, 4.5)), M.POWDER, "recoater", specular=0.0, shown=False)
+        sc.add("powder_layer", pv.Box((-130, 130, -128, 128, -1.0, 0.03)), POWDER_LAYER, "powder_layer",
+               specular=0.0, ambient=0.3, smooth_shading=False, shown=False)
+        sc.add("powder_heap", pv.Box((4, 11, -140, 140, 0, 4.5)), M.POWDER, "recoater", specular=0.0,
+               smooth_shading=False, shown=False)
         # tracks and their job-file vectors
         for i, t in enumerate(self.tm):
             k = t["insert"]
@@ -426,9 +431,10 @@ def a_tracks(w: World, rows=(1, 2), kind="trk"):
     return [f"{kind}_{i}" for i, t in enumerate(w.tm) if t["insert"] == "A" and t["row"] in rows]
 
 
-# ================================================================================================ print
-def chapter_print():
-    sc = Scene("m2_1_print", f"{TITLE}: 1/3 print")
+# ================================================================================================ set up
+def chapter_setup():
+    """B2, A1, B3: inserts into the plate, flushness, the job file's vectors, powder into the dose chamber."""
+    sc = Scene("m2_1_setup", f"{TITLE}: 1/5 set up")
     w = World(sc)
     sc.cam = CAM["m2_wide"]
     for k in "ABCD":
@@ -487,7 +493,7 @@ def chapter_print():
             "Job file: each track is its own part carrying one of 17 parameter sets (the 4 × 4 power–speed grid and "
             "the control), in a random order on each insert. The dry run must show one scan vector per track. "
             "The AM Module predictions for all 17 sets are committed before printing (A2).",
-            5.0, job, hold=2.0, cam_to=CAM["top"],
+            5.0, job, hold=2.0, cam_to=CAM["top"], still=True,
             labels=[("darker = higher P/v (J/mm)", (-45 + 5.5 - 12.5, -45 + 4.5 - 12.5, 3), (0.06, 0.30)),
                     ("grey = control (machine's standard set)", (60, 40, 3), (0.95, 0.20))])
 
@@ -502,6 +508,15 @@ def chapter_print():
             4.0, powder, hold=0.8, cam_to=CAM["deck"],
             labels=[("dose chamber", (-305, -60, 0), (0.06, 0.30)), ("build plate", (60, -100, 0), (0.95, 0.60)),
                     ("overflow", (225, 60, 0), (0.95, 0.30))])
+    return sc.save()
+
+
+def chapter_print():
+    """B4-B5: close up and inert, recoat one layer, expose the 72 tracks. Starts where m2_1_setup ends."""
+    sc = Scene("m2_2_print", f"{TITLE}: 2/5 print")
+    w = World(sc)
+    sc.gmat["dose_powder"] = S((1, 1, 1.0), pivot=(0, 0, -300))
+    sc.cam = CAM["deck"]
 
     def inert(u):
         sc.gmat["door"] = R((0, 0, 1), OPEN_DEG * (1 - window(u, 0.0, 0.45)), pivot=M.DOOR_HINGE)
@@ -532,7 +547,7 @@ def chapter_print():
     sc.step("B5 · recoat one layer",
             "One layer: the build platform drops one layer thickness and the recoater spreads powder over the plate "
             "and the inserts; the excess falls into the overflow.",
-            4.5, recoat, hold=0.6, cam_to=CAM["deck"], live=True)
+            4.5, recoat, hold=0.6, cam_to=CAM["deck_in"], live=True)
 
     order = sorted(range(len(w.tm)), key=lambda i: w.tm[i]["order"])
     slow = order[:4]
@@ -630,7 +645,7 @@ def printed(w: World):
 
 # ================================================================================================= cut
 def chapter_cut():
-    sc = Scene("m2_2_cut", f"{TITLE}: 2/3 unload and cut")
+    sc = Scene("m2_3_cut", f"{TITLE}: 3/5 unload and cut")
     w = World(sc)
     printed(w)
     sc.cam = CAM["door"]
@@ -776,7 +791,7 @@ def chapter_cut():
 
 # ================================================================================================== sem
 def chapter_sem():
-    sc = Scene("m2_3_sem", f"{TITLE}: 3/3 mount, SEM, compare")
+    sc = Scene("m2_4_sem", f"{TITLE}: 4/5 mount, polish, SEM")
     w = World(sc)
     printed(w)
     for k in "ABCD":
@@ -939,9 +954,40 @@ def chapter_sem():
     sc.step("C5 · SEM",
             "SEM: secondary-electron images of every track at two fixed magnifications, plus EDS spots on a few "
             "keyhole tracks to check for Mn and Cr lost to evaporation.",
-            6.0, sem, hold=0.5, cam_to=CAM["sem"], live=False,
+            6.0, sem, hold=0.8, cam_to=CAM["sem"], still=True,
             labels=[("electron column", (M.SEM_C[0] + 58, 0, 420), (0.95, 0.22)),
                     ("puck on the stage", (M.SEM_C[0], -10, STAGE[2] + M.PUCK_H), (0.06, 0.62))])
+
+    return sc.save()
+
+
+# ============================================================================================== results
+def chapter_results():
+    """The monitor: SEM images, measurement, comparison with the AM Module (C5-C7). Starts where m2_4_sem ends."""
+    sc = Scene("m2_5_results", f"{TITLE}: 5/5 measure and compare")
+    w = World(sc)
+    printed(w)
+    for k in "ABCD":
+        del sc.parent[f"g_{k}"]
+    for i, k in enumerate("BCD"):
+        sc.gmat[f"g_{k}"] = in_tray(i + 1)
+    w.a_pieces("piece")
+    for n in a_tracks(w, rows=(1, 2)):
+        sc.alpha[n] = 0.0
+    for n in a_tracks(w, rows=(1,), kind="trksec"):
+        sc.alpha[n] = 1.0
+    sc.color["A_piece"] = (0.62, 0.60, 0.58)
+    sc.parent["g_A"] = "puck"
+    sc.gmat["g_A"] = MP.copy()
+    sc.gmat["puck"] = face_up(STAGE)
+    sc.alpha["puck"] = 1.0
+    for i in range(1, 8):
+        sc.show([f"puck_{i}", f"puckface_{i}"], 1.0)
+    sc.show(["sem_chamber", "sem_door", "sem_door_handle"], 0.25)
+    sx, sy = M.SEM_C
+    sc.alpha["sem_beam"] = 1.0
+    sc.set_mesh("sem_beam", pv.Line((sx, sy, 110), (sx, sy, STAGE[2] + M.PUCK_H)).tube(radius=0.8))
+    sc.cam = CAM["sem"]
 
     def to_screen(u):
         sc.alpha["sem_beam"] = 0.0
@@ -973,7 +1019,7 @@ def chapter_sem():
 
 
 def join():
-    parts = [OUT / "mp4" / f"{n}.mp4" for n in ("m2_1_print", "m2_2_cut", "m2_3_sem")]
+    parts = [OUT / "mp4" / f"{n}.mp4" for n in ("m2_1_setup", "m2_2_print", "m2_3_cut", "m2_4_sem", "m2_5_results")]
     lst = OUT / "mp4" / "concat.txt"
     lst.write_text("".join(f"file '{p.name}'\n" for p in parts))
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy",
@@ -983,6 +1029,7 @@ def join():
 
 
 if __name__ == "__main__":
-    which = sys.argv[1:] or ["print", "cut", "sem"]
+    which = sys.argv[1:] or ["setup", "print", "cut", "sem", "results"]
     for name in which:
-        {"print": chapter_print, "cut": chapter_cut, "sem": chapter_sem, "full": join}[name]()
+        {"setup": chapter_setup, "print": chapter_print, "cut": chapter_cut, "sem": chapter_sem,
+         "results": chapter_results, "full": join}[name]()

@@ -1,0 +1,29 @@
+{
+ "name": "m2_5_results",
+ "fps": 15,
+ "n_frames": 234,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "C5 · SEM images",
+   "caption": "Each track's cross-section, imaged at the same magnification. (The shapes here are illustrations drawn from P/v, not data.)",
+   "start_frame": 0,
+   "end_frame": 92
+  },
+  {
+   "label": "C6 · measure",
+   "caption": "Measure each track's width, depth below the substrate surface, height above it and fused area, and classify the regime.",
+   "start_frame": 93,
+   "end_frame": 159
+  },
+  {
+   "label": "C7 · compare with the AM Module",
+   "caption": "Compare with the AM Module predictions committed before printing: calibrate on part of the tracks, validate on the held-out rest. The pilot's timing log then sizes the campaign.",
+   "start_frame": 160,
+   "end_frame": 233
+  }
+ ]
+}

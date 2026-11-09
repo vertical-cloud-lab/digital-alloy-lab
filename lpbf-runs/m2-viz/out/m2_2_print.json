@@ -1,0 +1,35 @@
+{
+ "name": "m2_2_print",
+ "fps": 15,
+ "n_frames": 421,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "B4 · close up and inert",
+   "caption": "Close the door and purge to the O₂ setpoint. The gas flows across the plate from the inlet to the outlet; the direction drawn here is assumed, so note the real one.",
+   "start_frame": 0,
+   "end_frame": 97
+  },
+  {
+   "label": "B5 · recoat one layer",
+   "caption": "One layer: the build platform drops one layer thickness and the recoater spreads powder over the plate and the inserts; the excess falls into the overflow.",
+   "start_frame": 98,
+   "end_frame": 174
+  },
+  {
+   "label": "B5 · expose (slowed down)",
+   "caption": "The laser draws each track once, every track in the same direction, starting on the gas-outlet side so spatter lands on finished tracks rather than on fresh powder.",
+   "start_frame": 175,
+   "end_frame": 281
+  },
+  {
+   "label": "B5 · 72 tracks",
+   "caption": "72 tracks: one full replicate (16 power–speed sets and 2 controls) on each insert, in random positions, so the four inserts are four replicates and position effects can be measured. The exposure takes seconds; the whole step is under 15 minutes.",
+   "start_frame": 282,
+   "end_frame": 420
+  }
+ ]
+}
