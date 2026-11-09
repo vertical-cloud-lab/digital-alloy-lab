@@ -83,6 +83,8 @@
     "batch": 2,
     "task_id": "9231fd09-a662-48a4-bfb6-49c67411241f",
     "job": "LITERATURE_HIGH",
-    "submitted": "2026-11-09T22:44:27Z"
+    "submitted": "2026-11-09T22:44:27Z",
+    "status": "success",
+    "fetched": "2026-11-09T23:06:34Z"
   }
 }
