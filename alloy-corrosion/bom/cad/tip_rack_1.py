@@ -1,31 +1,34 @@
-"""Ben's tip rack 1 (the 20 uL rack on the CubXL deck now) as a printable STEP, and where its key
-pockets put the PandaDeck's slot grid in CubOS coordinates. CadQuery 2.8.
+"""Ben's tip rack 1 (the 20 uL rack on the CubXL deck now): his Onshape version as a printable STEP,
+checked against a CadQuery rebuild, and where its key pockets put the PandaDeck's slot grid in CubOS
+coordinates. CadQuery 2.8.
 
 Ben asked on #180 (2026-11-10) for the Onshape document "20uL tip rack" (vcl-shared > CubXL) as a
 printable STEP, and to use where its key pills sit to judge where the rest of the deck sits.
 
-**The Onshape document could not be opened from the runner.** The link goes to Onshape's sign-in
-page, its API answers 403, and the runner has no Onshape login or API keys. So this file rebuilds the
-rack that rack 1 was most likely made from:
+1. The first run couldn't open the document, so it rebuilt the rack that rack 1 was most likely made
+   from (`rack(window=False)`):
+   - Cubware's 2 x 15 tip rack for 300 uL tips (Ursa-Laboratories/Cubware,
+     cubxl_plus/labware/tip_rack_holder/TipRack.stl at 352aa95). Its envelope, hole grid and key
+     pockets were measured from the mesh (`measure()`, numbers in STOCK below). Ben's deck files call
+     rack 1 `panda_2x15_tip_rack`, this rack's model name.
+   - re-bored for 20 uL tips to Ben's profile on byu-vcl#151 (2026-08-01): a 5.0 -> 4.6 mm taper over
+     16 mm, then a 3.1 mm exit bore (byu-vcl branch claude/issue-151-20260801-0017, f25e2ed). That
+     re-bore changed nothing below the tip plate, so the key pockets are Cubware's.
+2. Ben imported that STEP into the document and cut a window through both side walls (WINDOW_Y, WINDOW_Z).
+3. A later run signed in to the lab's Onshape account and exported his version through Onshape's own
+   Export dialog (ONSHAPE below). That export is now tip_rack_1_20ul.step and .stl. This file no longer
+   writes them. It checks them, and compares them with the rebuild (`rack()`, which includes the window).
 
-- Cubware's 2 x 15 tip rack for 300 uL tips (Ursa-Laboratories/Cubware,
-  cubxl_plus/labware/tip_rack_holder/TipRack.stl at 352aa95). Its envelope, hole grid and key
-  pockets were measured from the mesh (`measure()`, numbers in STOCK below). Ben's deck files call
-  rack 1 `panda_2x15_tip_rack`, this rack's model name.
-- re-bored for 20 uL tips to Ben's profile on byu-vcl#151 (2026-08-01): a 5.0 -> 4.6 mm taper over
-  16 mm, then a 3.1 mm exit bore (byu-vcl branch claude/issue-151-20260801-0017, f25e2ed). That
-  re-bore changed nothing below the tip plate, so the key pockets are Cubware's.
-
-The solid is drawn here from those dimensions; no mesh is copied. It leaves out the stock part's
-end gussets. Cubware has no licence file.
+The rebuild is drawn here from dimensions; no mesh is copied. It leaves out the stock part's end
+gussets. Cubware has no licence file.
 
 The deck frame is CubOS's (origin front-left, +X right, +Y back, +Z up, mm). Rack 1's A1 and A2 are
 Ben's taught positions, unchanged from 2026-10-02 to the 2026-11-05 stir-module deck
 (byu-vcl cubos/configs/deck/stir_module_trial.yaml at 88fc07a).
 
-    python tip_rack_1.py                      # STEP/STL, tip_rack_1.json, tip-rack-1.png
+    python tip_rack_1.py                        # check the STEP/STL against the rebuild; tip_rack_1.json, tip-rack-1.png
     python tip_rack_1.py --measure TipRack.stl  # re-measure Cubware's mesh (needs trimesh, shapely, networkx)
-    python tip_rack_1.py --compare TipRack20uL.stl  # and compare with byu-vcl's 20 uL mesh (also manifold3d)
+    python tip_rack_1.py --compare TipRack20uL.stl  # compare the unedited rebuild with byu-vcl's 20 uL mesh (also trimesh, manifold3d)
 """
 
 from __future__ import annotations
@@ -76,6 +79,28 @@ POCKET_CORNER_DEG = -90.0                         # a corner toward -Y, as the s
 BORE_TOP_D, BORE_TAPER_END_D, TAPER_L = 5.0, 4.6, 16.0
 EXIT_D, EXIT_L = 3.1, 2.0
 
+# Ben's edit in Onshape (2026-11-10): Sketch 1 on a side face, a 60 x 35 mm rectangle with its bottom edge
+# centred on the top edge of the base; then Extrude 1, remove, blind 100 mm, symmetric. That is a window
+# through both side walls, centred along the rack, from the top of the base (z 5) to z 40. It leaves the
+# base (key pockets) and the tip plate (z 48-66, the bores) as they were.
+WINDOW_Y = (L / 2 - 30.0, L / 2 + 30.0)       # 39 ... 99
+WINDOW_Z = (BASE_T, BASE_T + 35.0)            # 5 ... 40
+
+# Where tip_rack_1_20ul.step and .stl come from (read through the signed-in session's REST API, 2026-11-10).
+ONSHAPE = {
+    "document": "20uL tip rack (Vertical Cloud Lab > vcl-shared > CubXL)",
+    "part_studio": "https://cad.onshape.com/documents/0818b5cae93b2fd622f05bc2/w/a7ab93440bf47ddde78ffed5/e/d9b11682e85631e606b725e1",
+    "part_studio_name": "tip_rack_1_20ul", "part": "Part 1", "workspace": "Main",
+    "microversion": "c3d37a4ba9d836cbbbf1fb28",
+    "features": ["Import 1: tip_rack_1_20ul.step (this file's rebuild, as committed in 2f25692), inserted 02:49 UTC",
+                 "Sketch 1, 02:52 UTC: a 60 x 35 mm rectangle on a side face",
+                 "Extrude 1, 02:52 UTC: remove, blind 100 mm, symmetric"],
+    "exported": "2026-11-10 05:17 UTC, through Onshape's Export dialog (right-click Part 1 > Export), "
+                "signed in as the lab's shared account",
+    "step_options": "STEP, AP242, custom units millimetre, Y-axis-up unchecked (Z up), download",
+    "stl_options": "STL, binary, millimetre, resolution Fine, Y-axis-up unchecked (Z up), download",
+}
+
 # ------------------------------------------------------------------ rack 1 on the deck (taught)
 A1 = (291.332, 89.0)
 A2 = (282.832, 89.0)
@@ -101,8 +126,9 @@ def bore():
     return s
 
 
-def rack():
-    """Print orientation: base on the bed, bores up. 21 x 138 x 66 mm."""
+def rack(window=True):
+    """Print orientation: base on the bed, bores up. 21 x 138 x 66 mm. With window=True (Ben's version) the
+    side-wall window is cut as well; window=False is the rebuild as it was before his edit."""
     body = cq.Workplane("XY").box(W, L, H, centered=False).val()
     cavity = cq.Solid.makeBox(W - 2 * WALL_T, L + 2.0, H - PLATE_T - BASE_T,
                               cq.Vector(WALL_T, -1.0, BASE_T))
@@ -110,7 +136,42 @@ def rack():
     body = body.cut(cq.Compound.makeCompound([bore().translate(cq.Vector(x, y, 0)) for x, y in hole_xy().values()]))
     for x, y in POCKETS_RACK:
         body = body.cut(keys.pocket_cutter(x, y, POCKET_CORNER_DEG, 0.0))
+    if window:
+        body = body.cut(cq.Solid.makeBox(W + 2.0, WINDOW_Y[1] - WINDOW_Y[0], WINDOW_Z[1] - WINDOW_Z[0],
+                                         cq.Vector(-1.0, WINDOW_Y[0], WINDOW_Z[0])))
     return body.clean()
+
+
+def difference(a, b):
+    """a minus b: its volume, and each piece's volume and bounding box (mm, mm^3)."""
+    d = a.cut(b)
+    pieces = []
+    for s in d.Solids():
+        if s.Volume() > 1e-3:
+            bb = s.BoundingBox()
+            pieces.append({"volume_mm3": round(s.Volume(), 3),
+                           "min_xyz": [round(v, 3) for v in (bb.xmin, bb.ymin, bb.zmin)],
+                           "max_xyz": [round(v, 3) for v in (bb.xmax, bb.ymax, bb.zmax)]})
+    return {"volume_mm3": round(abs(d.Volume()), 3), "pieces": sorted(pieces, key=lambda p: -p["volume_mm3"])}
+
+
+def stl_info(path):
+    """A binary STL's triangle count, bounds and volume, and whether every edge is shared by exactly two
+    triangles (closed and manifold). numpy only."""
+    import numpy as np
+    data = Path(path).read_bytes()
+    n = int.from_bytes(data[80:84], "little")
+    assert len(data) == 84 + 50 * n, "not a binary STL"
+    rec = np.frombuffer(data, dtype=np.dtype([("n", "<f4", 3), ("v", "<f4", (3, 3)), ("a", "<u2")]), count=n, offset=84)
+    v = rec["v"].astype(float)
+    vol = float(np.einsum("ij,ij->i", v[:, 0], np.cross(v[:, 1], v[:, 2])).sum() / 6.0)
+    _, idx = np.unique(v.reshape(-1, 3), axis=0, return_inverse=True)
+    tri = idx.reshape(-1).reshape(-1, 3)
+    edges = np.sort(np.concatenate([tri[:, [0, 1]], tri[:, [1, 2]], tri[:, [2, 0]]]), axis=1)
+    _, counts = np.unique(edges, axis=0, return_counts=True)
+    pts = v.reshape(-1, 3)
+    return {"triangles": n, "bounds_mm": [pts.min(0).round(3).tolist(), pts.max(0).round(3).tolist()],
+            "volume_mm3": round(vol, 1), "every_edge_shared_by_two_triangles": bool((counts == 2).all())}
 
 
 def to_deck(x, y, a1=A1):
@@ -282,7 +343,9 @@ def plot(shape_info, pk, grid, out_png):
     from matplotlib.patches import FancyBboxPatch, Polygon as MPoly, Rectangle
 
     x0, y0 = grid
-    fig, (a, b) = plt.subplots(1, 2, figsize=(11.5, 6.6), gridspec_kw={"width_ratios": [1, 2.1]})
+    fig = plt.figure(figsize=(12.5, 7.4))
+    gs = fig.add_gridspec(2, 2, width_ratios=[1.3, 2.1], height_ratios=[2.4, 1])
+    a, s, b = fig.add_subplot(gs[0, 0]), fig.add_subplot(gs[1, 0]), fig.add_subplot(gs[:, 1])
 
     def tri(ax, cx, cy, r, **kw):
         pts = [(cx + r * math.cos(math.radians(POCKET_CORNER_DEG + 120 * k)),
@@ -308,9 +371,33 @@ def plot(shape_info, pk, grid, out_png):
     a.set_ylim(-11, L + 9)
     a.set_aspect("equal")
     a.axis("off")
-    a.set_title("A  Rack 1, rebuilt: 30 bores, and the two\nkey pockets underneath (red, dashed)", fontsize=8.5, loc="left")
+    a.set_title("A  Rack 1 from above (Ben's Onshape version): 30 bores,\nand the two key pockets underneath (red, dashed)",
+                fontsize=8.5, loc="left")
 
-    # B: the deck around rack 1, slot grid from its pockets (solid) and the earlier estimate (grey)
+    # A2: from the left (-X), front at the left: Ben's window through both side walls
+    s.add_patch(Rectangle((0, 0), L, H, fc="#e8edf2", ec="#334", lw=1.0))
+    s.add_patch(Rectangle((WINDOW_Y[0], WINDOW_Z[0]), WINDOW_Y[1] - WINDOW_Y[0], WINDOW_Z[1] - WINDOW_Z[0],
+                          fc="white", ec="#b9770e", lw=1.3))
+    for zz in (BASE_T, H - PLATE_T):                       # the cavity's floor and roof, behind the wall
+        s.plot([0, L], [zz, zz], color="#556", lw=0.6, ls="--")
+    for i in range(len(ROWS)):                             # the bores, in the plate
+        yy = ROW_Y0 + PITCH * i
+        s.plot([yy, yy], [H - TAPER_L - EXIT_L, H], color="#889", lw=0.5, ls="--")
+    for px, py in POCKETS_RACK:                            # the key pockets, in the base
+        pb = keys.rounded_triangle(keys.POCKET_R, 0.0, keys.POCKET_DEPTH, px, py, POCKET_CORNER_DEG).BoundingBox()
+        s.add_patch(Rectangle((pb.ymin, 0), pb.ymax - pb.ymin, keys.POCKET_DEPTH, fc="none", ec="#c0392b", lw=0.9, ls="--"))
+    s.text((WINDOW_Y[0] + WINDOW_Y[1]) / 2, (WINDOW_Z[0] + WINDOW_Z[1]) / 2,
+           "window 60 x 35 mm,\nthrough both walls\n(Ben, 2026-11-10)", ha="center", va="center", fontsize=6.5, color="#b9770e")
+    s.text(L + 2, H - PLATE_T / 2, "tip plate,\nz 48-66", fontsize=6.3, va="center")
+    s.text(L + 2, BASE_T / 2 + 1, "base, z 0-5;\npockets\n(red)", fontsize=6.3, va="center")
+    s.text(0, -6, "front (-Y)", fontsize=6.5)
+    s.set_xlim(-4, L + 26)
+    s.set_ylim(-9, H + 4)
+    s.set_aspect("equal")
+    s.axis("off")
+    s.set_title("B  From the left: the only change from the rebuild is the window", fontsize=8.5, loc="left")
+
+    # C: the deck around rack 1, slot grid from its pockets (solid) and the earlier estimate (grey)
     xmin, xmax, ymin, ymax = 160, 400, 20, 270
     for n in range(-1, 18):
         for m_ in range(-1, 8):
@@ -335,7 +422,7 @@ def plot(shape_info, pk, grid, out_png):
     b.text(r0[0] + W / 2, r0[1] + L + 4, "rack 1", fontsize=7, color="#1f4e79", ha="center", bbox=box)
     b.text(r0[0] - keys.PITCH_X + W / 2 - 4, r0[1] + L + 4, "rack 2: a second print,\none slot column left,\nA1 (266.332, 89)",
            fontsize=6.5, color="#3c763d", ha="right", bbox=box)
-    b.set_title("B  Rack 1 on the deck: its key pockets (red) fix the slot grid\n"
+    b.set_title("C  Rack 1 on the deck: its key pockets (red) fix the slot grid\n"
                 f"solid: slots from rack 1, X = {x0:.2f} + 25n, Y = {y0:.2f} + 45m.  "
                 f"Dotted: the earlier estimate, {keys.GRID_X0:.1f} + 25n, {keys.GRID_Y0:.0f} + 45m",
                 fontsize=8, loc="left")
@@ -353,33 +440,48 @@ def plot(shape_info, pk, grid, out_png):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--measure", help="Cubware's TipRack.stl, to re-measure STOCK")
-    ap.add_argument("--compare", help="byu-vcl's TipRack20uL.stl (f25e2ed), to compare with the rebuild")
+    ap.add_argument("--compare", help="byu-vcl's TipRack20uL.stl (f25e2ed), to compare with the rebuild before Ben's window")
     args = ap.parse_args()
     if args.measure:
         print(json.dumps(measure(args.measure), indent=1))
         return
 
-    shape = rack()
+    import hashlib
+    import tempfile
+
     name = "tip_rack_1_20ul"
-    cq.exporters.export(cq.Workplane().add(shape), str(HERE / f"{name}.step"))
-    cq.exporters.export(cq.Workplane().add(shape), str(HERE / f"{name}.stl"), tolerance=0.01, angularTolerance=0.1)
+    shape = cq.importers.importStep(str(HERE / f"{name}.step")).val()   # Ben's Onshape version
     chk = checks(shape)
+    rebuilt, unedited = rack(), rack(window=False)
+    files = {f: hashlib.sha256((HERE / f).read_bytes()).hexdigest() for f in (f"{name}.step", f"{name}.stl")}
 
     pk, x0, y0, y0s = grid_from_rack()
     dx, dy = x0 - keys.GRID_X0, y0s - keys.GRID_Y0
     holes = hole_xy()
     out = {
-        "what": "Ben's tip rack 1, rebuilt from Cubware's TipRack and Ben's 20 uL bore (the Onshape document "
-                "could not be opened from the runner); and the slot grid its key pockets imply",
+        "what": "Ben's tip rack 1: his Onshape version (Cubware's TipRack, rebuilt with Ben's 20 uL bore, plus his "
+                "side-wall window), checked against this file's rebuild; and the slot grid its key pockets imply",
+        "onshape_export": {**ONSHAPE, "sha256": files},
+        "rack": {"files": [f"{name}.step", f"{name}.stl"],
+                 "frame": "deck orientation, origin front-left-bottom; print as is (base on the bed)",
+                 "checks": chk, "stl": stl_info(HERE / f"{name}.stl"),
+                 "bens_edit": {"window_y_mm": list(WINDOW_Y), "window_z_mm": list(WINDOW_Z),
+                               "through": "both side walls (x 0-2 and 19-21)",
+                               "unedited_rebuild_minus_export": difference(unedited, shape),
+                               "export_minus_unedited_rebuild": difference(shape, unedited)},
+                 "vs_rebuild_with_window": {"rebuild_minus_export": difference(rebuilt, shape),
+                                            "export_minus_rebuild": difference(shape, rebuilt)}},
         "stock_rack_measured": STOCK,
-        "rebuilt": {"file": f"{name}.step", "frame": "deck orientation, origin front-left-bottom; print as is (base on the bed)",
+        "rebuilt": {"what": "rack(): the rebuild, with Ben's window", "frame": "as the rack",
                     "envelope_mm": [W, L, H], "plate_wall_base_mm": [PLATE_T, WALL_T, BASE_T],
                     "bore": {"top_d": BORE_TOP_D, "taper_end_d": BORE_TAPER_END_D, "taper_l": TAPER_L,
                              "exit_d": EXIT_D, "exit_l": EXIT_L},
+                    "window": {"y": list(WINDOW_Y), "z": list(WINDOW_Z)},
                     "A1": list(holes["A1"]), "A2": list(holes["A2"]), "O1": list(holes["O1"]),
                     "pockets": [[round(x, 3), round(y, 3)] for x, y in POCKETS_RACK],
                     "pocket_shape": "deck_keys.py's (R1.1 rounded triangle, 2.1 deep), a corner toward -Y",
-                    "left_out": "the stock part's end gussets", "checks": chk},
+                    "left_out": "the stock part's end gussets",
+                    "volume_mm3": round(rebuilt.Volume(), 1), "unedited_volume_mm3": round(unedited.Volume(), 1)},
         "on_the_deck": {
             "taught": {"A1": list(A1), "A2": list(A2), "pickup_z": PICKUP_Z,
                        "source": "byu-vcl cubos/configs/deck/stir_module_trial.yaml at 88fc07a (unchanged since 2026-10-02)"},
@@ -397,17 +499,23 @@ def main():
             "deck_check": deck_check(x0, y0),
         },
     }
-    if args.compare:
-        out["rebuilt"]["vs_byu_vcl_TipRack20uL"] = compare(args.compare, HERE / f"{name}.stl")
-        out["rebuilt"]["vs_byu_vcl_TipRack20uL"]["theirs"] = ("byu-vcl hardware/cubxl/ursa_tip_rack_20ul/TipRack20uL.stl "
-                                                              "at f25e2ed (branch claude/issue-151-20260801-0017)")
+    key = "unedited_rebuild_vs_byu_vcl_TipRack20uL"
+    if args.compare:   # the rebuild before Ben's window, against the mesh it was rebuilt from
+        with tempfile.TemporaryDirectory() as tmp:
+            ours_stl = Path(tmp) / "unedited.stl"
+            cq.exporters.export(cq.Workplane().add(unedited), str(ours_stl), tolerance=0.01, angularTolerance=0.1)
+            out["rebuilt"][key] = compare(args.compare, ours_stl)
+        out["rebuilt"][key]["theirs"] = ("byu-vcl hardware/cubxl/ursa_tip_rack_20ul/TipRack20uL.stl "
+                                         "at f25e2ed (branch claude/issue-151-20260801-0017)")
     elif (HERE / "tip_rack_1.json").exists():   # keep the last comparison
-        prev = json.loads((HERE / "tip_rack_1.json").read_text())["rebuilt"].get("vs_byu_vcl_TipRack20uL")
+        prev = json.loads((HERE / "tip_rack_1.json").read_text())["rebuilt"]
+        prev = prev.get(key) or prev.get("vs_byu_vcl_TipRack20uL")
         if prev:
-            out["rebuilt"]["vs_byu_vcl_TipRack20uL"] = prev
+            out["rebuilt"][key] = prev
     (HERE / "tip_rack_1.json").write_text(json.dumps(out, indent=1) + "\n")
     plot(chk, pk, (x0, y0), HERE / "tip-rack-1.png")
     print(json.dumps({k: out["on_the_deck"][k] for k in ("rack_outline", "pockets", "slot_grid", "vs_earlier_estimate")}, indent=1)[:2500])
+    print(json.dumps({k: out["rack"][k] for k in ("stl", "bens_edit", "vs_rebuild_with_window")}, indent=1))
     print(json.dumps(chk, indent=1))
 
 

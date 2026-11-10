@@ -1,5 +1,155 @@
 {
- "what": "Ben's tip rack 1, rebuilt from Cubware's TipRack and Ben's 20 uL bore (the Onshape document could not be opened from the runner); and the slot grid its key pockets imply",
+ "what": "Ben's tip rack 1: his Onshape version (Cubware's TipRack, rebuilt with Ben's 20 uL bore, plus his side-wall window), checked against this file's rebuild; and the slot grid its key pockets imply",
+ "onshape_export": {
+  "document": "20uL tip rack (Vertical Cloud Lab > vcl-shared > CubXL)",
+  "part_studio": "https://cad.onshape.com/documents/0818b5cae93b2fd622f05bc2/w/a7ab93440bf47ddde78ffed5/e/d9b11682e85631e606b725e1",
+  "part_studio_name": "tip_rack_1_20ul",
+  "part": "Part 1",
+  "workspace": "Main",
+  "microversion": "c3d37a4ba9d836cbbbf1fb28",
+  "features": [
+   "Import 1: tip_rack_1_20ul.step (this file's rebuild, as committed in 2f25692), inserted 02:49 UTC",
+   "Sketch 1, 02:52 UTC: a 60 x 35 mm rectangle on a side face",
+   "Extrude 1, 02:52 UTC: remove, blind 100 mm, symmetric"
+  ],
+  "exported": "2026-11-10 05:17 UTC, through Onshape's Export dialog (right-click Part 1 > Export), signed in as the lab's shared account",
+  "step_options": "STEP, AP242, custom units millimetre, Y-axis-up unchecked (Z up), download",
+  "stl_options": "STL, binary, millimetre, resolution Fine, Y-axis-up unchecked (Z up), download",
+  "sha256": {
+   "tip_rack_1_20ul.step": "eb5f8d84001dbe9a04c2b57c2919499ef264a572be877ecff8dc13070a42de97",
+   "tip_rack_1_20ul.stl": "bf42bfb1af99343ff953f747b6bc9606622b4ad1e7da7f1f55dc800725098f4a"
+  }
+ },
+ "rack": {
+  "files": [
+   "tip_rack_1_20ul.step",
+   "tip_rack_1_20ul.stl"
+  ],
+  "frame": "deck orientation, origin front-left-bottom; print as is (base on the bed)",
+  "checks": {
+   "bbox_mm": [
+    21.0,
+    138.0,
+    66.0
+   ],
+   "volume_mm3": 72703.4,
+   "solids": 1,
+   "valid": true,
+   "bore_probes": {
+    "mouth, z 65.9": {
+     "bores_open_at_d": 4.98,
+     "open": 30,
+     "walled_by_d": 5.03,
+     "walled": 30
+    },
+    "mid taper, z 58": {
+     "bores_open_at_d": 4.78,
+     "open": 30,
+     "walled_by_d": 4.83,
+     "walled": 30
+    },
+    "taper end, z 50.05": {
+     "bores_open_at_d": 4.58,
+     "open": 30,
+     "walled_by_d": 4.63,
+     "walled": 30
+    },
+    "exit bore, z 49": {
+     "bores_open_at_d": 3.08,
+     "open": 30,
+     "walled_by_d": 3.13,
+     "walled": 30
+    }
+   },
+   "pockets": [
+    {
+     "x": 10.872,
+     "y": 13.133,
+     "empty_mm3": 0.0,
+     "pocket_mm3": 71.41
+    },
+    {
+     "x": 10.872,
+     "y": 103.133,
+     "empty_mm3": 0.0,
+     "pocket_mm3": 71.41
+    }
+   ]
+  },
+  "stl": {
+   "triangles": 36176,
+   "bounds_mm": [
+    [
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     21.0,
+     138.0,
+     66.0
+    ]
+   ],
+   "volume_mm3": 72706.3,
+   "every_edge_shared_by_two_triangles": true
+  },
+  "bens_edit": {
+   "window_y_mm": [
+    39.0,
+    99.0
+   ],
+   "window_z_mm": [
+    5.0,
+    40.0
+   ],
+   "through": "both side walls (x 0-2 and 19-21)",
+   "unedited_rebuild_minus_export": {
+    "volume_mm3": 8400.0,
+    "pieces": [
+     {
+      "volume_mm3": 4200.0,
+      "min_xyz": [
+       0.0,
+       39.0,
+       5.0
+      ],
+      "max_xyz": [
+       2.0,
+       99.0,
+       40.0
+      ]
+     },
+     {
+      "volume_mm3": 4200.0,
+      "min_xyz": [
+       19.0,
+       39.0,
+       5.0
+      ],
+      "max_xyz": [
+       21.0,
+       99.0,
+       40.0
+      ]
+     }
+    ]
+   },
+   "export_minus_unedited_rebuild": {
+    "volume_mm3": 0.0,
+    "pieces": []
+   }
+  },
+  "vs_rebuild_with_window": {
+   "rebuild_minus_export": {
+    "volume_mm3": 0.0,
+    "pieces": []
+   },
+   "export_minus_rebuild": {
+    "volume_mm3": 0.0,
+    "pieces": []
+   }
+  }
+ },
  "stock_rack_measured": {
   "source": "Ursa-Laboratories/Cubware cubxl_plus/labware/tip_rack_holder/TipRack.stl at 352aa95",
   "envelope_xyz_mm": [
@@ -45,8 +195,8 @@
   "stock_bore": "6.98 -> 6.42 mm over 16 mm, then 4.32 mm (300 uL)"
  },
  "rebuilt": {
-  "file": "tip_rack_1_20ul.step",
-  "frame": "deck orientation, origin front-left-bottom; print as is (base on the bed)",
+  "what": "rack(): the rebuild, with Ben's window",
+  "frame": "as the rack",
   "envelope_mm": [
    21.0,
    138.0,
@@ -63,6 +213,16 @@
    "taper_l": 16.0,
    "exit_d": 3.1,
    "exit_l": 2.0
+  },
+  "window": {
+   "y": [
+    39.0,
+    99.0
+   ],
+   "z": [
+    5.0,
+    40.0
+   ]
   },
   "A1": [
    14.75,
@@ -88,57 +248,9 @@
   ],
   "pocket_shape": "deck_keys.py's (R1.1 rounded triangle, 2.1 deep), a corner toward -Y",
   "left_out": "the stock part's end gussets",
-  "checks": {
-   "bbox_mm": [
-    21.0,
-    138.0,
-    66.0
-   ],
-   "volume_mm3": 81103.4,
-   "solids": 1,
-   "valid": true,
-   "bore_probes": {
-    "mouth, z 65.9": {
-     "bores_open_at_d": 4.98,
-     "open": 30,
-     "walled_by_d": 5.03,
-     "walled": 30
-    },
-    "mid taper, z 58": {
-     "bores_open_at_d": 4.78,
-     "open": 30,
-     "walled_by_d": 4.83,
-     "walled": 30
-    },
-    "taper end, z 50.05": {
-     "bores_open_at_d": 4.58,
-     "open": 30,
-     "walled_by_d": 4.63,
-     "walled": 30
-    },
-    "exit bore, z 49": {
-     "bores_open_at_d": 3.08,
-     "open": 30,
-     "walled_by_d": 3.13,
-     "walled": 30
-    }
-   },
-   "pockets": [
-    {
-     "x": 10.872,
-     "y": 13.133,
-     "empty_mm3": 0.0,
-     "pocket_mm3": 71.41
-    },
-    {
-     "x": 10.872,
-     "y": 103.133,
-     "empty_mm3": 0.0,
-     "pocket_mm3": 71.41
-    }
-   ]
-  },
-  "vs_byu_vcl_TipRack20uL": {
+  "volume_mm3": 72703.4,
+  "unedited_volume_mm3": 81103.4,
+  "unedited_rebuild_vs_byu_vcl_TipRack20uL": {
    "theirs": "byu-vcl hardware/cubxl/ursa_tip_rack_20ul/TipRack20uL.stl at f25e2ed (branch claude/issue-151-20260801-0017)",
    "theirs_watertight": true,
    "theirs_volume_mm3": 81114.4,
