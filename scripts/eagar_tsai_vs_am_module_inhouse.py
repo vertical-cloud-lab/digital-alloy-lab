@@ -110,14 +110,17 @@ COLOURS = {
 }
 MARKER_COLOURS = [(22, 41, 132), (141, 33, 76)]
 
-# Properties for eagar-tsai. AlSi10Mg: the Edison values Xavier's sweep uses (#235). The blend
-# has no measured values; it gets the same thermal properties and two isotherms (eutectic and
-# liquidus) because which one the AM module puts at the pool edge matters for a 24 % Si alloy.
+# Properties for eagar-tsai. AlSi10Mg: the Edison values Xavier's sweep uses (#235); MatCalc mc_al
+# gives 868.6 K liquidus / 842.7 K solidus for the composition sent to Thermo-Calc
+# (arroyave-orchid-tools/pycalphad-al-cu/data/am_module_alloys_mc_al.csv). The blend has no
+# measured properties, so it gets the same thermal properties and two isotherms from mc_al: the
+# Al-Si eutectic (850 K) and the liquidus (1019 K, primary Si). Which one the AM module puts at the
+# pool edge matters for a 24 % Si alloy.
 MATERIALS = {
-    "alsi10mg": [dict(name="AlSi10Mg, T_liq 867 K", T_iso=867.0, k=110.0, rho=2650.0, cp=1040.0)],
+    "alsi10mg": [dict(name="AlSi10Mg, liquidus 867 K", T_iso=867.0, k=110.0, rho=2650.0, cp=1040.0)],
     "byu-blend": [
         dict(name="blend, eutectic 850 K", T_iso=850.0, k=110.0, rho=2650.0, cp=1040.0),
-        dict(name="blend, liquidus ~1028 K", T_iso=1028.0, k=110.0, rho=2650.0, cp=1040.0),
+        dict(name="blend, liquidus 1019 K", T_iso=1019.0, k=110.0, rho=2650.0, cp=1040.0),
     ],
 }
 T_BOIL_AL_K = 2743.0
@@ -231,50 +234,54 @@ def digitize(cfg: dict, png: pathlib.Path) -> tuple[pd.DataFrame, pd.DataFrame, 
 
 
 # --------------------------------------------------------------------------------------------
-# eagar-tsai response profiles (per watt of absorbed power)
+# eagar-tsai response profiles (temperature rise per watt of absorbed power)
 # --------------------------------------------------------------------------------------------
+PROFILE_STEP_M = 1e-6
+PROFILE_DEPTH_M = 700e-6
+
+
 def _profiles_one(args):
     v_mm_s, beam_d_m, k, rho, cp, hatch_m = args
     from eagar_tsai._core import _INTEGRAND  # compiled LowLevelCallable when built from source
 
     v = v_mm_s * 1e-3
     alpha = k / (rho * cp)
-    sig = math.sqrt(2.0) * beam_d_m / 2.0  # eagar-tsai's internal sigma
+    sig = math.sqrt(2.0) * beam_d_m / 2.0  # eagar-tsai's internal sigma (BeamParameters.sigma)
     p = alpha / (v * sig)
-    s1 = 1.0 / (math.pi * (k / alpha) * math.sqrt(math.pi * alpha * v * sig**3))  # K per W absorbed
+    s1 = 1.0 / (math.pi * (k / alpha) * math.sqrt(math.pi * alpha * v * sig**3))  # K per absorbed W
     zs = math.sqrt(alpha * sig / v)
 
-    def I(x, y, z):
+    def integral(x, y, z):
         return quad(_INTEGRAND, 0.0, np.inf, args=(x / sig, y / sig, z / zs, p))[0]
 
-    xs_coarse = np.concatenate([np.linspace(-2 * sig, 2 * sig, 17), np.geomspace(2.2 * sig, 3e-3, 40)])
+    xs_coarse = np.concatenate([np.linspace(-3 * sig, 2 * sig, 21), np.geomspace(2.2 * sig, 4e-3, 45)])
 
-    def maxx(y, z):
-        vals = np.array([I(x, y, z) for x in xs_coarse])
+    def max_over_x(y, z):
+        vals = np.array([integral(x, y, z) for x in xs_coarse])
         i = int(vals.argmax())
-        lo = xs_coarse[max(i - 1, 0)]
-        hi = xs_coarse[min(i + 1, xs_coarse.size - 1)]
-        if hi <= lo:
-            return float(vals[i]), float(xs_coarse[i])
-        r = minimize_scalar(lambda x: -I(x, y, z), bounds=(lo, hi), method="bounded",
-                            options=dict(xatol=1e-8))
-        best = max(vals[i], -r.fun)
-        return float(best), float(r.x if -r.fun >= vals[i] else xs_coarse[i])
+        lo, hi = xs_coarse[max(i - 1, 0)], xs_coarse[min(i + 1, xs_coarse.size - 1)]
+        r = minimize_scalar(lambda x: -integral(x, y, z), bounds=(lo, hi), method="bounded",
+                            options=dict(xatol=1e-9))
+        return float(max(vals[i], -r.fun))
 
-    step = 1e-6
-    depths = np.arange(0.0, 400e-6 + step / 2, step)
-    widths = np.arange(0.0, 400e-6 + step / 2, step)
-    F_z = np.array([maxx(0.0, -z)[0] for z in depths]) * s1
-    F_y = np.array([maxx(y, 0.0)[0] for y in widths]) * s1
-    F_h = np.array([maxx(hatch_m / 2.0, -z)[0] for z in depths]) * s1
-    xline = np.arange(-3 * sig, 3e-3, step)
-    F_x = np.array([I(x, 0.0, 0.0) for x in xline]) * s1
-    return dict(v_mm_s=v_mm_s, depths=depths, widths=widths, F_z=F_z, F_y=F_y, F_h=F_h,
-                xline=xline, F_x=F_x)
+    coords = np.arange(0.0, PROFILE_DEPTH_M + PROFILE_STEP_M / 2, PROFILE_STEP_M)
+    F_z = np.array([max_over_x(0.0, -z) for z in coords]) * s1  # centre line, vs depth
+    F_y = np.array([max_over_x(y, 0.0) for y in coords]) * s1  # surface, vs half-width
+    F_h = np.array([max_over_x(hatch_m / 2.0, -z) for z in coords]) * s1  # at y = h/2, vs depth
+    xline = np.arange(-10 * sig, 4e-3, PROFILE_STEP_M)
+    F_x = np.array([integral(x, 0.0, 0.0) for x in xline]) * s1  # surface centre line, vs x
+    return dict(v_mm_s=v_mm_s, coords=coords, F_z=F_z, F_y=F_y, F_h=F_h, xline=xline, F_x=F_x)
+
+
+def build_profiles(cfg, mat, speeds, workers=4):
+    args = [(v, cfg["beam_radius_um"] * 1e-6, mat["k"], mat["rho"], mat["cp"], cfg["hatch_um"] * 1e-6)
+            for v in speeds]
+    with ProcessPoolExecutor(workers) as ex:
+        return {r["v_mm_s"]: r for r in ex.map(_profiles_one, args)}
 
 
 def _crossing(coord, F, level):
-    """Largest coordinate where the decreasing profile F still reaches level (linear interp)."""
+    """Largest coordinate at which the decreasing profile F still reaches level (linear interp)."""
     above = np.where(F >= level)[0]
     if above.size == 0:
         return 0.0
@@ -286,33 +293,47 @@ def _crossing(coord, F, level):
 
 
 def geometry(prof, Q, dT_iso):
-    """W, D, L, Dh in um and the peak temperature rise in K for absorbed power Q (W)."""
+    """W, D, L, Dh (um) and peak temperature rise (K) for absorbed power Q (W)."""
     level = dT_iso / Q
-    D = _crossing(prof["depths"], prof["F_z"], level) * 1e6
-    half_w = _crossing(prof["widths"], prof["F_y"], level) * 1e6
-    Dh = _crossing(prof["depths"], prof["F_h"], level) * 1e6 if prof["F_h"][0] >= level else 0.0
+    c = prof["coords"]
+    D = _crossing(c, prof["F_z"], level) * 1e6
+    W = 2.0 * _crossing(c, prof["F_y"], level) * 1e6
+    Dh = _crossing(c, prof["F_h"], level) * 1e6
     melt = np.where(prof["F_x"] >= level)[0]
     L = float((prof["xline"][melt.max()] - prof["xline"][melt.min()]) * 1e6) if melt.size else 0.0
-    dT_peak = Q * float(prof["F_y"][0])
-    return dict(W_um=2 * half_w, D_um=D, L_um=L, Dh_um=Dh, dT_peak_K=dT_peak)
+    return dict(W_um=W, D_um=D, L_um=L, Dh_um=Dh, dT_peak_K=Q * float(prof["F_y"][0]))
 
 
-def build_profiles(cfg, mat, speeds, workers=4):
-    args = [(v, cfg["beam_radius_um"] * 1e-6, mat["k"], mat["rho"], mat["cp"], cfg["hatch_um"] * 1e-6)
-            for v in speeds]
-    with ProcessPoolExecutor(workers) as ex:
-        res = list(ex.map(_profiles_one, args))
-    return {r["v_mm_s"]: r for r in res}
+def q_crit(prof, dT_iso, fn, lo=0.5, hi=1500.0):
+    """Smallest absorbed power Q (W) at which fn(geometry) turns True (bisection; fn monotone in Q)."""
+    if not fn(geometry(prof, hi, dT_iso)):
+        return float("nan")
+    if fn(geometry(prof, lo, dT_iso)):
+        return lo
+    for _ in range(45):
+        mid = 0.5 * (lo + hi)
+        if fn(geometry(prof, mid, dT_iso)):
+            hi = mid
+        else:
+            lo = mid
+    return 0.5 * (lo + hi)
 
 
-def classify_am_criteria(g, cfg):
+# --------------------------------------------------------------------------------------------
+# Classification
+# --------------------------------------------------------------------------------------------
+def class_am_criteria(g, cfg):
+    """The AM module's two lack-of-fusion tests applied to eagar-tsai's pool (Dh <= D, so lof implies lof_hatch)."""
     t = cfg["layer_um"]
-    lof = g["D_um"] <= t
-    lofh = g["Dh_um"] <= t
-    return "lof" if lof else ("lof_hatch" if lofh else "none")
+    if g["D_um"] <= t:
+        return "lof"
+    if g["Dh_um"] <= t:
+        return "lof_hatch"
+    return "none"
 
 
-def classify_et_default(g, cfg, wdr=2.5):
+def class_et_default(g, cfg, wdr=2.5):
+    """eagar-tsai's own classifier (eagar_tsai._api._classify_defect, Sheikh et al. 2024)."""
     t, h = cfg["layer_um"], cfg["hatch_um"]
     W, D, L = g["W_um"], g["D_um"], g["L_um"]
     if D <= 0 or W <= 0:
@@ -326,107 +347,276 @@ def classify_et_default(g, cfg, wdr=2.5):
     return "defect_free"
 
 
-def q_crit(prof, dT_iso, fn, lo=1.0, hi=600.0):
-    """Smallest absorbed power Q (W) at which fn(geometry) becomes True (bisection; fn monotone)."""
-    if not fn(geometry(prof, hi, dT_iso)):
-        return float("nan")
-    if fn(geometry(prof, lo, dT_iso)):
-        return lo
-    for _ in range(40):
-        mid = 0.5 * (lo + hi)
-        if fn(geometry(prof, mid, dT_iso)):
-            hi = mid
-        else:
-            lo = mid
-    return 0.5 * (lo + hi)
+AM_TO_ET = {"keyhole": "keyhole", "lof": "lack_of_fusion", "lof_hatch": "lack_of_fusion", "none": "defect_free"}
+
+
+def inferred_absorptivity(mp, beam_radius_um):
+    """A from the peak of the plotted heat-source intensity, q0 = 2 A P / (pi R^2), R the 1/e^2 radius.
+
+    The plotted intensity runs from q0 to q0/e^2 (30574/4138 = 45286/6129 = 7.39), i.e. out to r = R,
+    which is what a Gaussian 2AP/(pi R^2) exp(-2 r^2/R^2) drawn over the beam radius gives.
+    """
+    R_mm = beam_radius_um * 1e-3
+    return mp["q_peak_W_mm2"] * math.pi * R_mm**2 / (2.0 * mp["P"])
 
 
 # --------------------------------------------------------------------------------------------
 # Main comparison
 # --------------------------------------------------------------------------------------------
-def inferred_absorptivity(mp, beam_radius_um):
-    """A from the peak of the plotted heat-source intensity, q0 = 2 A P / (pi R^2) (1/e^2 radius R)."""
-    R_mm = beam_radius_um * 1e-3
-    return mp["q_peak_W_mm2"] * math.pi * R_mm**2 / (2.0 * mp["P"])
-
-
-def run(args):
-    out = pathlib.Path(args.out)
+def compare(png_dir: pathlib.Path, out: pathlib.Path, workers: int) -> dict:
     out.mkdir(parents=True, exist_ok=True)
-    png_dir = pathlib.Path(args.png_dir)
-    summary = {}
-    t_start = time.time()
+    res = {}
     for key, cfg in MAPS.items():
         pts, bnd, meta = digitize(cfg, png_dir / cfg["png"])
         pts.to_csv(out / f"{key}-am-module-grid-points.csv", index=False)
         bnd.to_csv(out / f"{key}-am-module-boundaries.csv", index=False, float_format="%.2f")
         mp = MELT_POOLS[key]
         A_inf = inferred_absorptivity(mp, cfg["beam_radius_um"])
-        dT_pre = cfg["preheat_C"] + 273.15 - T0_ET
-        fine_speeds = sorted(set(np.arange(cfg["speeds"][0], cfg["speeds"][-1] + 1, 100).tolist())
-                             | set(cfg["speeds"]) | {mp["v_mm_s"]})
-        S = dict(digitize=meta, A_inferred=A_inf, materials={})
+        T_pre = cfg["preheat_C"] + 273.15
+        speeds = sorted(set(range(cfg["speeds"][0], cfg["speeds"][-1] + 1, 100)) | {int(mp["v_mm_s"])})
+        R = dict(cfg=cfg, pts=pts, bnd=bnd, meta=meta, A_inf=A_inf, variants={})
         for mat in MATERIALS[key]:
             t0 = time.time()
-            profs = build_profiles(cfg, mat, fine_speeds, workers=args.workers)
-            dT_iso = mat["T_iso"] - (cfg["preheat_C"] + 273.15)  # rise above the preheated plate
-            tag = mat["name"]
-            # grid points, at the inferred absorptivity and over a sweep
-            recs = []
-            for A in [A_inf] + list(np.round(np.arange(0.10, 0.701, 0.05), 2)):
-                for _, r in pts.iterrows():
-                    g = geometry(profs[r.speed_mm_s], A * r.power_W, dT_iso)
-                    recs.append(dict(material=tag, A=round(A, 4), power_W=r.power_W, speed_mm_s=r.speed_mm_s,
-                                     am_class=r.am_class, marker=r.marker, **{k: round(v, 2) for k, v in g.items()},
-                                     T_peak_K=round(g["dT_peak_K"] + cfg["preheat_C"] + 273.15, 1),
-                                     et_am_criteria=classify_am_criteria(g, cfg),
-                                     et_default=classify_et_default(g, cfg)))
-            grid = pd.DataFrame(recs)
-            slug = tag.split(",")[1].strip().split()[0] if key == "byu-blend" else "liq"
-            grid.to_csv(out / f"{key}-eagar-tsai-grid-{slug}.csv", index=False)
-            # boundary absorptivities: A_eff(v) = Q_crit(v) / P_AM(v)
+            profs = build_profiles(cfg, mat, speeds, workers)
+            dT_iso = mat["T_iso"] - T_pre  # pool edge, as a rise above the preheated plate
             t, h = cfg["layer_um"], cfg["hatch_um"]
+
+            def at(A, P, v):
+                g = geometry(profs[v], A * P, dT_iso)
+                g["T_peak_K"] = g["dT_peak_K"] + T_pre
+                return g
+
+            # grid points over an absorptivity sweep
+            recs = []
+            A_list = [round(A_inf, 4)] + [round(a, 2) for a in np.arange(0.05, 0.951, 0.01)]
+            for A in A_list:
+                for r in pts.itertuples():
+                    g = at(A, r.power_W, r.speed_mm_s)
+                    recs.append(dict(A=A, power_W=r.power_W, speed_mm_s=r.speed_mm_s, am_class=r.am_class,
+                                     marker=r.marker, W_um=g["W_um"], D_um=g["D_um"], L_um=g["L_um"],
+                                     Dh_um=g["Dh_um"], T_peak_K=g["T_peak_K"],
+                                     et_am_criteria=class_am_criteria(g, cfg),
+                                     et_default=class_et_default(g, cfg),
+                                     et_boiling=g["T_peak_K"] >= T_BOIL_AL_K))
+            grid = pd.DataFrame(recs)
+            # boundary absorptivity A_eff(v) = Q_crit(v) / P_AM(v)
             crit = {
                 "lof": lambda g: g["D_um"] > t,
                 "lof_hatch": lambda g: g["Dh_um"] > t,
-                "et_keyhole_wd2.5": lambda g: g["D_um"] > 0 and g["W_um"] / g["D_um"] <= 2.5,
-                "boiling": lambda g: g["dT_peak_K"] + cfg["preheat_C"] + 273.15 >= T_BOIL_AL_K,
+                "keyhole_wd2.5": lambda g: g["D_um"] > 0 and g["W_um"] / g["D_um"] <= 2.5,
+                "boiling": lambda g: g["dT_peak_K"] + T_pre >= T_BOIL_AL_K,
             }
             arows = []
-            for v in fine_speeds:
-                prof = profs[v]
-                b = bnd.iloc[(bnd.speed_mm_s - v).abs().argsort()[:3]].mean()
-                row = dict(material=tag, speed_mm_s=v, P_am_keyhole_W=b.P_keyhole_W,
-                           P_am_lof_hatch_W=b.P_lof_hatch_W, P_am_lof_W=b.P_lof_W)
+            for v in speeds:
+                b = bnd.iloc[(bnd.speed_mm_s - v).abs().argsort()[:3]].mean(numeric_only=True)
+                row = dict(speed_mm_s=v, P_am_keyhole_W=b.P_keyhole_W, P_am_lof_hatch_W=b.P_lof_hatch_W,
+                           P_am_lof_W=b.P_lof_W)
                 for name, fn in crit.items():
-                    row[f"Q_{name}_W"] = q_crit(prof, dT_iso, fn)
+                    row[f"Q_{name}_W"] = q_crit(profs[v], dT_iso, fn)
                 row["A_eff_lof"] = row["Q_lof_W"] / b.P_lof_W
                 row["A_eff_lof_hatch"] = row["Q_lof_hatch_W"] / b.P_lof_hatch_W
-                row["A_eff_keyhole_wd2.5"] = row["Q_et_keyhole_wd2.5_W"] / b.P_keyhole_W
+                row["A_eff_keyhole_wd2.5"] = row["Q_keyhole_wd2.5_W"] / b.P_keyhole_W
                 row["A_eff_keyhole_boiling"] = row["Q_boiling_W"] / b.P_keyhole_W
                 arows.append(row)
             aeff = pd.DataFrame(arows)
-            aeff.to_csv(out / f"{key}-eagar-tsai-boundary-absorptivity-{slug}.csv", index=False,
-                        float_format="%.4f")
-            # melt-pool point
-            g = geometry(profs[mp["v_mm_s"]], A_inf * mp["P"], dT_iso)
-            S["materials"][tag] = dict(
-                seconds=round(time.time() - t0, 1),
-                meltpool_at_A_inferred={k: round(v, 1) for k, v in g.items()},
-                T_peak_K_at_A_inferred=round(g["dT_peak_K"] + cfg["preheat_C"] + 273.15, 1),
-                profiles={str(v): None for v in []},
+            # melt-pool point, and the absorptivity that would match each AM dimension
+            g_mp = at(A_inf, mp["P"], int(mp["v_mm_s"]))
+            match = {}
+            for dim, am_val in (("D_um", mp.get("D_um")), ("L_um", mp.get("L_um")),
+                                ("W_um", 2 * mp["y_extent_um"] if "y_extent_um" in mp else None),
+                                ("T_peak_K", mp["T_peak_K"])):
+                if am_val is None:
+                    continue
+                if dim == "T_peak_K":
+                    fn = (lambda val: (lambda g: g["dT_peak_K"] + T_pre >= val))(am_val)
+                else:
+                    fn = (lambda d, val: (lambda g: g[d] >= val))(dim, am_val)
+                Q = q_crit(profs[int(mp["v_mm_s"])], dT_iso, fn)
+                match[dim] = dict(am=am_val, A_match=Q / mp["P"])
+            R["variants"][mat["name"]] = dict(mat=mat, grid=grid, aeff=aeff, meltpool=g_mp, match=match,
+                                              seconds=round(time.time() - t0, 1), slug=mat.get("slug"))
+            print(f"{key} / {mat['name']}: {time.time() - t0:.0f} s", flush=True)
+        res[key] = R
+    return res
+
+
+def agreement(grid_A: pd.DataFrame) -> dict:
+    """Agreement counts at one absorptivity, over the grid points visible on the AM map."""
+    vis = grid_A[grid_A.am_class != "hidden"]
+    nk = vis[vis.am_class != "keyhole"]
+    lofs = nk.et_am_criteria == nk.am_class
+    am_kh = vis.am_class == "keyhole"
+    return dict(
+        visible=int(len(vis)),
+        lof_classes_match=int(lofs.sum()), lof_classes_n=int(len(nk)),
+        am_keyhole=int(am_kh.sum()),
+        et_wd25_keyhole=int((vis.et_default == "keyhole").sum()),
+        et_wd25_keyhole_and_am_keyhole=int(((vis.et_default == "keyhole") & am_kh).sum()),
+        et_boiling=int(vis.et_boiling.sum()),
+        et_boiling_and_am_keyhole=int((vis.et_boiling & am_kh).sum()),
+        et_default_match=int((vis.et_default == vis.am_class.map(AM_TO_ET)).sum()),
+        et_default_counts=vis.et_default.value_counts().to_dict(),
+        am_counts=vis.am_class.value_counts().to_dict(),
+    )
+
+
+def write_outputs(res: dict, out: pathlib.Path) -> dict:
+    summary = {}
+    for key, R in res.items():
+        S = dict(A_inferred=round(R["A_inf"], 4), legend_box_px=R["meta"]["legend_box_px"], variants={})
+        for name, V in R["variants"].items():
+            slug = "liquidus" if "liquidus" in name or key == "alsi10mg" else "eutectic"
+            if key == "alsi10mg":
+                slug = "liquidus-867K"
+            elif "eutectic" in name:
+                slug = "eutectic-850K"
+            else:
+                slug = "liquidus-1019K"
+            V["slug"] = slug
+            g = V["grid"]
+            # CSVs: grid points at the inferred A and every 0.05; boundary absorptivities
+            keep = g[(g.A == round(R["A_inf"], 4)) | (np.isclose((g.A * 100) % 5, 0) & (g.A >= 0.1))]
+            keep.round(2).to_csv(out / f"{key}-eagar-tsai-grid-{slug}.csv", index=False)
+            V["aeff"].to_csv(out / f"{key}-eagar-tsai-boundary-absorptivity-{slug}.csv", index=False,
+                             float_format="%.4f")
+            # agreement vs A
+            curve = []
+            for A, gA in g.groupby("A"):
+                a = agreement(gA)
+                curve.append(dict(A=A, lof_classes_match=a["lof_classes_match"], lof_classes_n=a["lof_classes_n"],
+                                  et_default_match=a["et_default_match"], visible=a["visible"],
+                                  et_wd25_keyhole_and_am_keyhole=a["et_wd25_keyhole_and_am_keyhole"],
+                                  et_wd25_keyhole=a["et_wd25_keyhole"], am_keyhole=a["am_keyhole"]))
+            curve = pd.DataFrame(curve).sort_values("A")
+            curve.to_csv(out / f"{key}-agreement-vs-absorptivity-{slug}.csv", index=False)
+            best = curve.loc[curve.lof_classes_match.idxmax()]
+            ae = V["aeff"]
+            S["variants"][name] = dict(
+                slug=slug,
+                at_A_inferred=agreement(g[g.A == round(R["A_inf"], 4)]),
+                best_A_lof_classes=float(best.A), best_lof_classes_match=int(best.lof_classes_match),
+                A_eff={c: dict(median=round(float(ae[c].median()), 3), min=round(float(ae[c].min()), 3),
+                               max=round(float(ae[c].max()), 3), n=int(ae[c].notna().sum()))
+                       for c in ["A_eff_lof", "A_eff_lof_hatch", "A_eff_keyhole_wd2.5", "A_eff_keyhole_boiling"]},
+                meltpool_at_A_inferred={k: round(v, 1) for k, v in V["meltpool"].items()},
+                match={k: {kk: round(vv, 3) for kk, vv in d.items()} for k, d in V["match"].items()},
+                seconds=V["seconds"],
             )
-            S["materials"][tag]["profiles_store"] = None
-            summary.setdefault(key, S)
-            # keep the profiles for plotting
-            S["materials"][tag]["_profs"] = profs
-            S["materials"][tag]["_grid"] = grid
-            S["materials"][tag]["_aeff"] = aeff
-            S["materials"][tag]["_dT_iso"] = dT_iso
-        S["_pts"], S["_bnd"] = pts, bnd
         summary[key] = S
-    summary["_seconds"] = round(time.time() - t_start, 1)
+    (out / "summary.json").write_text(json.dumps(summary, indent=2))
     return summary
+
+
+INK, INK2, GRID = "#0b0b0b", "#52514e", "#e4e3df"
+SERIES = {"lof": "#2a78d6", "lof_hatch": "#eb6834", "keyhole_wd2.5": "#1baf7a", "keyhole_boiling": "#eda100"}
+LABELS = {"lof": "LOF: D = t", "lof_hatch": "LOF hatch: Dh = t", "keyhole_wd2.5": "keyhole: W/D = 2.5",
+          "keyhole_boiling": "peak T = Al boiling (2743 K)"}
+SHORT = {"lof": "D = t", "lof_hatch": "Dh = t", "keyhole_wd2.5": "W/D = 2.5", "keyhole_boiling": "boiling"}
+DASH = {"lof": "-", "lof_hatch": (0, (6, 2)), "keyhole_wd2.5": (0, (1.5, 1.5)), "keyhole_boiling": (0, (6, 2, 1.5, 2))}
+
+
+def _spread(ys, gap):
+    """Nudge label positions apart so no two are closer than gap (keeps order)."""
+    order = sorted(range(len(ys)), key=lambda i: ys[i])
+    out = list(ys)
+    for a, b in zip(order, order[1:]):
+        if out[b] - out[a] < gap:
+            out[b] = out[a] + gap
+    return out
+
+
+def plot_maps(res: dict, out: pathlib.Path, png_dir: pathlib.Path, blend_variant: str):
+    import matplotlib.patheffects as pe
+
+    fig, axes = plt.subplots(1, 2, figsize=(13, 6.4), dpi=130)
+    for ax, (key, R) in zip(axes, res.items()):
+        cfg = R["cfg"]
+        im = np.asarray(Image.open(png_dir / cfg["png"]).convert("RGB"))
+        x_lo, x_hi, y_lo, y_hi = cfg["frame"]
+        crop = im[y_lo: y_hi + 1, x_lo: x_hi + 1]
+        v_lo, P_hi = _px_to_data(cfg, x_lo, y_lo)
+        v_hi, P_lo = _px_to_data(cfg, x_hi, y_hi)
+        ax.imshow(crop, extent=[v_lo, v_hi, P_lo, P_hi], aspect="auto", alpha=0.8, zorder=0)
+        name = next(n for n in R["variants"] if key == "alsi10mg" or blend_variant in n)
+        V = R["variants"][name]
+        ae = V["aeff"]
+        A = R["A_inf"]
+        ends = []
+        for c, qcol in (("lof", "Q_lof_W"), ("lof_hatch", "Q_lof_hatch_W"),
+                        ("keyhole_wd2.5", "Q_keyhole_wd2.5_W"), ("keyhole_boiling", "Q_boiling_W")):
+            P = ae[qcol] / A
+            ok = (P >= P_lo) & (P <= P_hi)
+            ax.plot(ae.speed_mm_s[ok], P[ok], color=SERIES[c], lw=2.0, ls=DASH[c], zorder=4, label=LABELS[c],
+                    path_effects=[pe.Stroke(linewidth=4.2, foreground="white"), pe.Normal()])
+            if ok.any():
+                ends.append([c, float(ae.speed_mm_s[ok].iloc[-1]), float(P[ok].iloc[-1])])
+        if ends:
+            ys = _spread([e[2] for e in ends], gap=0.035 * (P_hi - P_lo))
+            for (c, xe, _), yl in zip(ends, ys):
+                ax.annotate(SHORT[c], (xe, yl), xytext=(-4, 0), textcoords="offset points", ha="right",
+                            va="center", fontsize=7.5, color=INK, zorder=6,
+                            bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="none", alpha=0.85))
+        ax.set_xlim(v_lo, v_hi)
+        ax.set_ylim(P_lo, P_hi)
+        ax.set_xlabel("Scan speed (mm/s)", color=INK)
+        ax.set_ylabel("Laser power (W)", color=INK)
+        ttl = cfg["label"] + f"\neagar-tsai at A = {A:.2f}, beam R = {cfg['beam_radius_um']:.0f} µm, " \
+              f"t = {cfg['layer_um']:.0f} µm, h = {cfg['hatch_um']:.0f} µm, preheat {cfg['preheat_C']:.0f} °C"
+        if key != "alsi10mg":
+            ttl += f",\npool edge at the mc_al {blend_variant} ({V['mat']['T_iso']:.0f} K)"
+        ax.set_title(ttl, fontsize=8.5, color=INK, loc="left")
+        ax.tick_params(colors=INK2, labelsize=8)
+        for sp in ax.spines.values():
+            sp.set_color(INK2)
+    h, l = axes[0].get_legend_handles_labels()
+    fig.legend(h, l, loc="lower center", ncol=4, frameon=False, fontsize=8.5,
+               title="Lines: eagar-tsai boundaries.  Fills and markers: the Thermo-Calc AM module's own map.",
+               title_fontsize=8.5)
+    fig.tight_layout(rect=(0, 0.08, 1, 1))
+    fig.savefig(out / "am-module-maps-with-eagar-tsai-boundaries.png")
+    plt.close(fig)
+
+
+def plot_aeff(res: dict, out: pathlib.Path):
+    panels = []
+    for key, R in res.items():
+        for name, V in R["variants"].items():
+            panels.append((key, R, name, V))
+    fig, axes = plt.subplots(1, len(panels), figsize=(5.0 * len(panels), 4.6), dpi=130, sharey=True)
+    for ax, (key, R, name, V) in zip(axes, panels):
+        ae = V["aeff"]
+        ends = []
+        for c, col in (("lof", "A_eff_lof"), ("lof_hatch", "A_eff_lof_hatch"),
+                       ("keyhole_wd2.5", "A_eff_keyhole_wd2.5"), ("keyhole_boiling", "A_eff_keyhole_boiling")):
+            y = ae[col]
+            ok = y.notna()
+            if ok.sum() == 0:
+                continue
+            ax.plot(ae.speed_mm_s[ok], y[ok], color=SERIES[c], lw=2, ls=DASH[c], marker="o", ms=3, label=LABELS[c])
+            ends.append([c, float(ae.speed_mm_s[ok].iloc[-1]), float(y[ok].iloc[-1])])
+        ys = _spread([e[2] for e in ends], gap=0.04)
+        for (c, xe, _), yl in zip(ends, ys):
+            ax.annotate(SHORT[c], (xe, yl), xytext=(5, 0), textcoords="offset points", fontsize=7, color=INK2,
+                        va="center")
+        ax.axhline(R["A_inf"], color=INK2, lw=1, ls=(0, (4, 3)), zorder=1,
+                   label="A the AM module applied in its melt-pool render")
+        ax.set_title(f"{R['cfg']['label'].split(' (')[0]}, pool edge {name.split(', ', 1)[1]}\n"
+                     f"A in the AM module's melt-pool render = {R['A_inf']:.2f}",
+                     fontsize=9, loc="left", color=INK)
+        ax.set_xlabel("Scan speed (mm/s)", color=INK)
+        ax.grid(color=GRID, lw=0.6)
+        ax.tick_params(colors=INK2, labelsize=8)
+        for sp in ("top", "right"):
+            ax.spines[sp].set_visible(False)
+    axes[0].set_ylabel("Absorptivity eagar-tsai needs to put\nthe boundary where the AM module has it", color=INK)
+    axes[0].set_ylim(0, 0.8)
+    for ax in axes:
+        ax.set_xlim(right=ax.get_xlim()[1] + 0.12 * (ax.get_xlim()[1] - ax.get_xlim()[0]))
+    h, l = axes[0].get_legend_handles_labels()
+    fig.legend(h, l, loc="lower center", ncol=5, frameon=False, fontsize=8)
+    fig.tight_layout(rect=(0, 0.07, 1, 1))
+    fig.savefig(out / "eagar-tsai-absorptivity-to-match-am-module.png")
+    plt.close(fig)
 
 
 def validate(args):
@@ -435,21 +625,22 @@ def validate(args):
 
     cfg = MAPS["alsi10mg"]
     mat = MATERIALS["alsi10mg"][0]
-    pts = [(250.0, 900.0, 0.31), (150.0, 1500.0, 0.31), (350.0, 500.0, 0.31), (120.0, 2100.0, 0.5)]
-    profs = build_profiles(cfg, mat, sorted({p[1] for p in pts}), workers=args.workers)
+    pts = [(250.0, 900.0, 0.31), (150.0, 1500.0, 0.31), (350.0, 500.0, 0.31), (120.0, 2100.0, 0.5),
+           (375.0, 400.0, 0.38)]
+    profs = build_profiles(cfg, mat, sorted({int(p[1]) for p in pts}), workers=args.workers)
     rows = []
     for P, v, A in pts:
-        g = geometry(profs[v], A * P, mat["T_iso"] - T0_ET)  # no preheat here: compare like for like
+        g = geometry(profs[int(v)], A * P, mat["T_iso"] - T0_ET)  # no preheat: like for like
         r = compute_single_point(
             BeamParameters(beam_diameter=cfg["beam_radius_um"] * 1e-6, power=P, velocity=v * 1e-3, absorptivity=A),
             MaterialProperties(liquidus_temperature=mat["T_iso"], thermal_conductivity=mat["k"],
                                density=mat["rho"], specific_heat=mat["cp"]),
             SimulationDomain(spatial_resolution_um=1.0), full_field=False)
-        rows.append(dict(P=P, v=v, A=A,
-                         W_profile=round(g["W_um"], 1), W_et=round(r.width * 1e6, 1),
-                         D_profile=round(g["D_um"], 1), D_et=round(r.depth * 1e6, 1),
-                         L_profile=round(g["L_um"], 1), L_et=round(r.length * 1e6, 1),
-                         Tpk_profile=round(g["dT_peak_K"] + T0_ET, 1), Tpk_et=round(r.peak_temperature, 1)))
+        rows.append(dict(P_W=P, v_mm_s=v, A=A,
+                         W_profile=round(g["W_um"], 1), W_eagar_tsai=round(r.width * 1e6, 1),
+                         D_profile=round(g["D_um"], 1), D_eagar_tsai=round(r.depth * 1e6, 1),
+                         L_profile=round(g["L_um"], 1), L_eagar_tsai=round(r.length * 1e6, 1),
+                         Tpeak_profile=round(g["dT_peak_K"] + T0_ET, 1), Tpeak_eagar_tsai=round(r.peak_temperature, 1)))
     df = pd.DataFrame(rows)
     print(df.to_string(index=False))
     out = pathlib.Path(args.out)
@@ -463,17 +654,24 @@ def main():
     ap.add_argument("--png-dir", default="arroyave-orchid-tools/eagar-tsai/am-module-inhouse")
     ap.add_argument("--out", default="arroyave-orchid-tools/eagar-tsai/am-module-inhouse")
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--blend-variant", default="eutectic", choices=["eutectic", "liquidus"],
+                    help="which pool-edge isotherm the blend panel of the map figure uses")
     args = ap.parse_args()
+    png_dir, out = pathlib.Path(args.png_dir), pathlib.Path(args.out)
     if args.cmd == "digitize":
         for key, cfg in MAPS.items():
-            pts, bnd, meta = digitize(cfg, pathlib.Path(args.png_dir) / cfg["png"])
+            pts, bnd, meta = digitize(cfg, png_dir / cfg["png"])
             print(key, meta)
             print(pts.pivot(index="power_W", columns="speed_mm_s", values="am_class").iloc[::-1].to_string())
             print(pts.pivot(index="power_W", columns="speed_mm_s", values="marker").iloc[::-1].to_string())
     elif args.cmd == "validate":
         validate(args)
     else:
-        import plot_am_inhouse  # noqa: F401  (plots live in a sibling module)
+        res = compare(png_dir, out, args.workers)
+        summary = write_outputs(res, out)
+        plot_maps(res, out, png_dir, args.blend_variant)
+        plot_aeff(res, out)
+        print(json.dumps(summary, indent=1))
 
 
 if __name__ == "__main__":
