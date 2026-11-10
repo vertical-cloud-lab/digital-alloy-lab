@@ -1,0 +1,35 @@
+{
+ "name": "m2_1_setup",
+ "fps": 15,
+ "n_frames": 413,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "B2 · panels into the plate",
+   "caption": "Nathan C.'s plate: about 10 in square, with four removable panels. Four fresh 316L panels (about 88 mm square, ID-marked on the side) go into its pockets and are screwed down. The plate itself is never lasered, so it needs no resurfacing between runs, and nothing is welded on, so no wire EDM.",
+   "start_frame": 0,
+   "end_frame": 122
+  },
+  {
+   "label": "B2 · flushness",
+   "caption": "Dial-indicate each panel against the plate across the pocket gap and record the offset: it becomes that panel's layer-thickness input to the model. Flushness is the critical tolerance (about 10 µm, 10–20 % of a layer).",
+   "start_frame": 123,
+   "end_frame": 235
+  },
+  {
+   "label": "A1 · job file",
+   "caption": "Job file: each track is its own part carrying its own power–speed setting (on each panel, one 16-point block of the Sobol design plus 2 controls), in a random order in one row across the panel. The dry run must show one scan vector per track. The AM Module predictions for all 65 settings are committed before printing (A2).",
+   "start_frame": 236,
+   "end_frame": 340
+  },
+  {
+   "label": "B3 · powder",
+   "caption": "Load and sieve 316L powder into the dose chamber; record the lot, its certificate and the particle size distribution.",
+   "start_frame": 341,
+   "end_frame": 412
+  }
+ ]
+}

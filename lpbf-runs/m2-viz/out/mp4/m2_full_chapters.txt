@@ -1,0 +1,6 @@
+0:00 Set up: panels into the plate, flushness, job file, powder (B2, A1, B3)
+0:27 Print: inert, recoat one layer, expose 72 tracks (B4, B5)
+0:55 Unload: depowder, unscrew the panels, top-view images (B6, B7, C1)
+1:11 Cut: a strip holding every section, two pieces, the fine wet saw (C2)
+1:43 Mount, polish, etch, SEM (C2 to C5)
+2:19 Measure and compare with the AM Module (C5 to C7)
