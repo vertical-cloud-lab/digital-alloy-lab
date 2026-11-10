@@ -122,6 +122,11 @@ Bench test 1 in the build guide measures the real pull. The alternatives are:
 
 ## Where the slot grid is
 
+**Updated 2026-11-10: rack 1's key pockets now set the grid, at X = 12.45 + 25n, Y = 43.13 + 45m**
+([`tip-rack-1.md`](tip-rack-1.md)). That is 1.87 mm in front of the estimate below. The parts are still
+drawn on the estimate. Each lands 1.87 mm forward of its drawn position, and nothing needs reprinting.
+The rest of this section is the original estimate.
+
 The PandaDeck's slots are on a 25 mm (X) × 45 mm (Y) grid ([Cubware `PandaDeck.step`](https://github.com/Ursa-Laboratories/Cubware/blob/352aa95/cubxl_plus/deck/polycarbonate_deck/PandaDeck.step)).
 Nobody has measured where that grid sits in the CubOS frame of Ben's 2026-10-02 calibration. Three
 keyed things he taught place it:
@@ -146,6 +151,9 @@ jog the pipette over two slot centres and set `GRID_X0` and `GRID_Y0` in
   with 2 × 15 holes at 8.5 mm, and it already has two key pockets. The build guide asked whether the
   file for rack 1 exists: this is probably it. A second copy would be a keyed rack 2 that fits like
   rack 1, so print it instead of P11. Check rack 1's underside for two triangular pockets 90 mm apart.
+  **2026-11-10:** Ben's rack 1 is the Onshape document "20uL tip rack". It is Cubware's rack with
+  Ben's 20 µL bores from byu-vcl#151, rebuilt as [`cad/tip_rack_1_20ul.step`](cad/tip_rack_1_20ul.step)
+  ([`tip-rack-1.md`](tip-rack-1.md)).
 - **If the 9-vial holder has its keys in, it can't sit at the plan's x 318.** The nearest slot
   columns are x 312.5 and 337.5.
   - At 312.5 it would overlap tip rack 1 by about 1.3 mm.

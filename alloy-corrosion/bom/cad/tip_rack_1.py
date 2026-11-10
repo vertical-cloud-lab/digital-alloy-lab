@@ -135,6 +135,66 @@ def keyed_parts(dx, dy):
     return out
 
 
+def deck_check(x0, y0):
+    """The stirrer deck (../../stirrers/deck_stir.py, the current plan) with every keyed part on the slot grid
+    rack 1's pockets set, and both tip racks drawn at their real outline (21 x 138, from 14 mm in front of
+    row A). Rack 1 and the 9-position holder stay where Ben taught them; rack 2 is a second print of rack 1,
+    keyed one slot column left. Reruns the rigid-head check and the 24 staged well fills."""
+    import importlib.util
+    import sys
+
+    stir_path = HERE.parents[1] / "stirrers" / "deck_stir.py"
+    spec = importlib.util.spec_from_file_location("deck_stir_rack1", stir_path)
+    st = importlib.util.module_from_spec(spec)
+    sys.modules["deck_stir_rack1"] = st
+    spec.loader.exec_module(st)
+    base, cu = st.base, st.cu
+    dx, dy = x0 - keys.GRID_X0, (y0 - keys.PITCH_Y if y0 > keys.PITCH_Y / 2 else y0) - keys.GRID_Y0
+    planned = {"stations": [[x, base.STATION_Y] for x in base.STATION_X], "cups": {k: list(v) for k, v in cu.CUPS.items()},
+               "tubes_x": list(base.TUBE_X), "tubes_y": list(base.TUBE_Y), "tip_waste": list(cu.TIP_WASTE["c"]),
+               "stirred_vials": {k: list(v) for k, v in st.stirred().items()}, "tip_rack_2": dict(st.TIP_RACK_2)}
+
+    st.TIP_RACK_2 = {"a1": (A1[0] - keys.PITCH_X, A1[1]), "a2": (A2[0] - keys.PITCH_X, A2[1]), "pickup_z": PICKUP_Z}
+    st.apply_layout()
+    sh = lambda p: (p[0] + dx, p[1] + dy)  # noqa: E731
+    r = base.TRAY["rect"]
+    base.TRAY = {**base.TRAY, "rect": (r[0] + dx, r[1] + dy, r[2] + dx, r[3] + dy)}
+    base.STATION_X = [x + dx for x in base.STATION_X]
+    base.STATION_Y = base.STATION_Y + dy
+    base.CUPS = {k: sh(v) for k, v in base.CUPS.items()}
+    r = base.TUBE_RACK["rect"]
+    base.TUBE_RACK = {**base.TUBE_RACK, "rect": (r[0] + dx, r[1] + dy, r[2] + dx, r[3] + dy)}
+    base.TUBE_X = [x + dx for x in base.TUBE_X]
+    base.TUBE_Y = [y + dy for y in base.TUBE_Y]
+    base.TIP_WASTE = {**base.TIP_WASTE, "c": sh(base.TIP_WASTE["c"])}
+    # stir modules: vial midway between two slot columns, on a slot row
+    st.STIR_X = x0 + 2.5 * keys.PITCH_X
+    st.STIR_Y = [(y0 % keys.PITCH_Y) + keys.PITCH_Y * k for k in range(4)]
+    st.WELLS = {f"S{i}": (x, base.STATION_Y) for i, x in enumerate(base.STATION_X[:3], start=1)}
+    st.TUBE = (base.TUBE_X[0], base.TUBE_Y[0])
+    st.TIP_WASTE = base.TIP_WASTE["c"]
+    base.rack_rect = lambda rk: (rk["a1"][0] - COL_X["1"], rk["a1"][1] - ROW_Y0, rk["a1"][0] - COL_X["1"] + W, rk["a1"][1] - ROW_Y0 + L)
+
+    summary = base.check()
+    moves, _ = st.move_check()
+    r2 = lambda p: [round(p[0], 2), round(p[1], 2)]  # noqa: E731
+    return {
+        "shift_of_keyed_parts_mm": [round(dx, 3), round(dy, 3)],
+        "planned": planned,
+        "lands_at": {"stations": [r2((x, base.STATION_Y)) for x in base.STATION_X], "cups": {k: r2(v) for k, v in base.CUPS.items()},
+                     "tubes_x": [round(x, 2) for x in base.TUBE_X], "tubes_y": [round(y, 2) for y in base.TUBE_Y],
+                     "tip_waste": r2(base.TIP_WASTE["c"]), "stirred_vials": {k: r2(v) for k, v in st.stirred().items()},
+                     "tip_rack_2": {"a1": r2(st.TIP_RACK_2["a1"]), "a2": r2(st.TIP_RACK_2["a2"])},
+                     "tip_rack_outlines": {"rack 1": [round(v, 2) for v in base.rack_rect(base.TIP_RACK_1)],
+                                           "rack 2": [round(v, 2) for v in base.rack_rect(st.TIP_RACK_2)]}},
+        "not_moved": "tip rack 1 and the 9-position holder (taught); the potentiostat box (off the deck)",
+        "rigid_head": {k: summary[k] for k in ("events_checked", "events_with_problems", "tightest_pass_mm")},
+        "rigid_head_problems": [(e["event"], e["problems"]) for e in summary["events"] if e["problems"]],
+        "staged_fills": {k: moves["staged"][k] for k in ("fills", "fills_passing", "worst_tip", "worst_carried_cap")},
+        "unstaged_fills": {k: moves["unstaged"][k] for k in ("fills", "fills_passing")},
+    }
+
+
 def checks(shape):
     from OCP.Bnd import Bnd_Box
     from OCP.BRepBndLib import BRepBndLib
@@ -334,6 +394,7 @@ def main():
                                          "outline": [round(v, 3) for v in (to_deck(0, 0)[0] - 25, to_deck(0, 0)[1],
                                                                            to_deck(W, L)[0] - 25, to_deck(W, L)[1])]},
             "keyed_parts": keyed_parts(dx, dy),
+            "deck_check": deck_check(x0, y0),
         },
     }
     if args.compare:

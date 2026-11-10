@@ -388,6 +388,217 @@
      ]
     ]
    }
+  },
+  "deck_check": {
+   "shift_of_keyed_parts_mm": [
+    -0.046,
+    -1.867
+   ],
+   "planned": {
+    "stations": [
+     [
+      185.0,
+      240.0
+     ],
+     [
+      210.0,
+      240.0
+     ],
+     [
+      235.0,
+      240.0
+     ],
+     [
+      260.0,
+      240.0
+     ]
+    ],
+    "cups": {
+     "rinse 2 (ASW)": [
+      30.0,
+      245.0
+     ],
+     "rinse 1 (DI)": [
+      60.0,
+      245.0
+     ],
+     "park cup": [
+      90.0,
+      245.0
+     ]
+    },
+    "tubes_x": [
+     176.0,
+     188.0,
+     200.0,
+     212.0,
+     224.0,
+     236.0,
+     248.0,
+     260.0
+    ],
+    "tubes_y": [
+     36.0,
+     54.0
+    ],
+    "tip_waste": [
+     385.0,
+     150.0
+    ],
+    "stirred_vials": {
+     "A": [
+      76.0,
+      45.0
+     ],
+     "B": [
+      76.0,
+      90.0
+     ],
+     "C": [
+      76.0,
+      135.0
+     ],
+     "D": [
+      76.0,
+      180.0
+     ]
+    },
+    "tip_rack_2": {
+     "a1": [
+      266.332,
+      89.0
+     ],
+     "a2": [
+      257.832,
+      89.0
+     ],
+     "pickup_z": 59.0
+    }
+   },
+   "lands_at": {
+    "stations": [
+     [
+      184.95,
+      238.13
+     ],
+     [
+      209.95,
+      238.13
+     ],
+     [
+      234.95,
+      238.13
+     ],
+     [
+      259.95,
+      238.13
+     ]
+    ],
+    "cups": {
+     "rinse 2 (ASW)": [
+      29.95,
+      243.13
+     ],
+     "rinse 1 (DI)": [
+      59.95,
+      243.13
+     ],
+     "park cup": [
+      89.95,
+      243.13
+     ]
+    },
+    "tubes_x": [
+     175.95,
+     187.95,
+     199.95,
+     211.95,
+     223.95,
+     235.95,
+     247.95,
+     259.95
+    ],
+    "tubes_y": [
+     34.13,
+     52.13
+    ],
+    "tip_waste": [
+     384.95,
+     148.13
+    ],
+    "stirred_vials": {
+     "A": [
+      74.95,
+      43.13
+     ],
+     "B": [
+      74.95,
+      88.13
+     ],
+     "C": [
+      74.95,
+      133.13
+     ],
+     "D": [
+      74.95,
+      178.13
+     ]
+    },
+    "tip_rack_2": {
+     "a1": [
+      266.33,
+      89.0
+     ],
+     "a2": [
+      257.83,
+      89.0
+     ]
+    },
+    "tip_rack_outlines": {
+     "rack 1": [
+      276.58,
+      75.0,
+      297.58,
+      213.0
+     ],
+     "rack 2": [
+      251.58,
+      75.0,
+      272.58,
+      213.0
+     ]
+    }
+   },
+   "not_moved": "tip rack 1 and the 9-position holder (taught); the potentiostat box (off the deck)",
+   "rigid_head": {
+    "events_checked": 124,
+    "events_with_problems": 0,
+    "tightest_pass_mm": {
+     "pipette_bare over park cup": 16.0,
+     "capper over tube rack": 22.0,
+     "pipette_bare over vial holder": 25.0,
+     "capper over vial holder": 44.0
+    }
+   },
+   "rigid_head_problems": [],
+   "staged_fills": {
+    "fills": 24,
+    "fills_passing": 24,
+    "worst_tip": {
+     "closest_mm": 32.1,
+     "move": "pick up tip",
+     "capped_vial": "A"
+    },
+    "worst_carried_cap": {
+     "closest_mm": 34.0,
+     "move": "dispense S1 #1",
+     "capped_vial": "A"
+    }
+   },
+   "unstaged_fills": {
+    "fills": 24,
+    "fills_passing": 3
+   }
   }
  }
 }

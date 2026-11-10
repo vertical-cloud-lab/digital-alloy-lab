@@ -67,10 +67,10 @@ parts come to about 0.48 kg.
 2. **Print the fit strips (P12) before the racks**, on the printer and filament the racks will
    use. Pick the hole that holds a real tip, or a real tube, by its collar without play. Set
    `TIP["hole_d"]` or `TUBE["hole_d"]` in [`bom/cad/cad_build_parts.py`](bom/cad/cad_build_parts.py),
-   rerun it, then print the racks. If the file for Ben's tip rack 1 exists, print a second copy of
-   it instead of P11: it already fits. It is very likely Cubware's
-   [`TipRack.stl`](https://github.com/Ursa-Laboratories/Cubware/tree/352aa95/cubxl_plus/labware/tip_rack_holder),
-   which already has key pockets ([`bom/deck-keys.md`](bom/deck-keys.md#two-things-this-turned-up-about-bens-own-items)).
+   rerun it, then print the racks. For tip rack 2, print a second rack 1,
+   [`bom/cad/tip_rack_1_20ul.step`](bom/cad/tip_rack_1_20ul.step), instead of P11. It is rebuilt from
+   what rack 1 was made from (Cubware's rack with Ben's 20 µL bores), so it fits like rack 1 and is
+   already keyed. Check it against Ben's Onshape document first ([`bom/tip-rack-1.md`](bom/tip-rack-1.md)).
 3. **Print the rest.** STEP and STL links for each part are in
    [`bom/README.md` §1](bom/README.md#1-what-to-print).
 
@@ -187,6 +187,10 @@ replaces an estimate:
 **First, on Ben's current deck,** remove the two vials at x 137: the capper rides over that column
 while the pipette works at the tray. Tip rack 1 stays where it is.
 
+**Every keyed part lands about 1.9 mm in front of the coordinates below** (2026-11-10). Rack 1's key
+pockets put the slot rows at y 43.13 + 45m, not 45m. The table keeps the planned numbers. The
+corrected ones are in [`bom/tip-rack-1.md`](bom/tip-rack-1.md#where-the-rest-of-the-deck-sits).
+
 | Item | Where (x, y) | Copper | Aluminium |
 | --- | --- | --- | --- |
 | Coupon tray (P06) | x 170–275, y 220–260; S1–S4 at x 185 / 210 / 235 / 260, y 240 | S1–S3 pieces; S4 the PTFE blank | four pieces |
@@ -194,7 +198,7 @@ while the pipette works at the tray. Tip rack 1 stays where it is.
 | Cup block (P08) | cups at (30, 245), (60, 245), (90, 245) | rinse 2 (ASW), rinse 1 (DI), park | rinse (60) and park (90) |
 | Tube rack (P10) | x 170–266, y 28–62; tubes at x 176 + 12k, y 36 and 54 | one tube per well, plus the stock blanks | one tube per spot |
 | Tip rack 1 | Ben's, unmoved: A1 (291.3, 89) | | |
-| Tip rack 2 (P11, or a second Cubware rack) | A1 (266.75, 89), A2 (258.25, 89): one slot column left of rack 1, as on the stirrer deck | | |
+| Tip rack 2 (a second rack 1, [`tip_rack_1_20ul.step`](bom/cad/tip_rack_1_20ul.step); or P11) | A1 (266.332, 89), A2 (257.832, 89): keyed one slot column left of rack 1, as on the stirrer deck | | |
 | Tip waste (P09) | | (385, 150) | (335, 60): its key needs a slot, so not (335, 40) |
 | Potentiostat | x 0–80, y 290–330, outside the working volume | | |
 
