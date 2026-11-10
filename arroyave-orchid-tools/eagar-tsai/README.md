@@ -110,13 +110,13 @@ speed, the absorptivity eagar-tsai would need to put each boundary where the AM 
 | A needed along Dh = t, median (range) | 0.32 (0.30–0.36) | 0.33 (0.28–0.40) | 0.44 (0.36–0.53) |
 | A needed along D = t | 0.20 (0.20–0.20) | 0.26 (0.26–0.29) | 0.34 (0.34–0.38) |
 | eagar-tsai's W/D = 2.5 line, as a share of the AM module's keyhole power | 26–30 % | 32–40 % | 41–54 % |
-| eagar-tsai's peak = 2743 K line, same | 30–47 % | 30–48 % | 30–48 % |
+| eagar-tsai's peak = 2743 K line, as a share of the same | 30–47 % | 30–48 % | 30–48 % |
 | eagar-tsai's default classifier (W/D ≤ 2.5 keyhole): same class as the AM map | **18 of 58**: 55 called keyhole | 12 of 27: 20 keyhole | 13 of 27: 17 keyhole |
 
 | Melt-pool render | AM module | eagar-tsai at the AM module's A | A eagar-tsai would need to match the AM module |
 |---|---|---|---|
 | AlSi10Mg, 250 W, 900 mm/s | peak 3044 K. No length scale in the render; the AM map has this point in the defect-free window | W 221, D 106, L 317 µm; peak **6405 K**; W/D 2.09, so eagar-tsai's default calls it keyhole | peak: 0.135 |
-| Blend, 375 W, 400 mm/s | D **349 µm**, L **1470 µm**, half-width 231 µm (W ≈ 462 µm); peak 2846 °C (3119 K) | edge at liquidus: W 322, D 157, L 397 µm. Edge at eutectic: W 384, D 188, L 501 µm. Peak 10,995 K | D: 1.35 / 1.03, L: 1.69 / 1.29 (both impossible); W: 0.67 / 0.52; peak: 0.10 |
+| Blend, 375 W, 400 mm/s | D **349 µm**, L **1470 µm**, half-width 231 µm (W ≈ 462 µm); peak 2846 °C (3119 K) | edge at liquidus: W 322, D 157, L 397 µm. Edge at eutectic: W 384, D 188, L 501 µm. Peak 10,995 K | edge at liquidus / eutectic: D 1.35 / 1.03 and L 1.69 / 1.29 (all above 1, so impossible); W 0.67 / 0.52; peak 0.10 |
 
 The 231 µm is the y-axis of a render that shows the half-domain cut through the keyhole, so I read it as the
 half-width. The AM render's D/W is then 0.76.
