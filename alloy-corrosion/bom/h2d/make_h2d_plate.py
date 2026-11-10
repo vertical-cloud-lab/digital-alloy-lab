@@ -83,8 +83,9 @@ ITEMS = [
     # row 1, y 20-55: lids; the 008 and 010 calibration lids at the right end
     ("lid_006", 73, 37.5, 0), ("lid_006", 107, 37.5, 0), ("lid_006", 141, 37.5, 0),
     ("lid_006", 175, 37.5, 0), ("lid_006", 209, 37.5, 0), ("lid_008", 243, 37.5, 0), ("lid_010", 277, 37.5, 0),
-    # row 2, y 65-109: cup block, tube rack, tip waste cup
-    ("cup_block", 95, 79, 0), ("tube_rack", 199, 82, 0), ("tip_waste", 279, 87, 0),
+    # row 2, y 65-109: cup block (43 mm deep since its base reached forward for the deck keys), tube rack,
+    # tip waste cup
+    ("cup_block", 95, 87, 0), ("tube_rack", 199, 82, 0), ("tip_waste", 279, 87, 0),
     # row 3, y 119-159: coupon tray, the two electrode caps, the three carriers
     ("tray", 101.5, 139, 0), ("cap", 178, 139, 0), ("cap", 216, 139, 0),
     ("carrier", 244, 139, 0), ("carrier", 258, 139, 0), ("carrier", 272, 139, 0),
@@ -94,6 +95,12 @@ ITEMS = [
     ("shim_1", 71.2, 259.2, 0), ("shim_1", 97.6, 259.2, 0), ("shim_1", 124, 259.2, 0), ("shim_1", 150.4, 259.2, 0),
     ("shim_3", 71.2, 285.6, 0), ("shim_3", 97.6, 285.6, 0), ("shim_3", 124, 285.6, 0), ("shim_3", 150.4, 285.6, 0),
     ("strip_tube", 213, 272.4, 0),
+    # right of the bench cell and the strip, x 259-314, y 172-258: the deck keys (2026-11-09). Seven to fit
+    # (tray 2, cup block 2, tube rack 2, tip waste 1) and a spare, all 0.05 mm, plus one 0.10 and one 0.15
+    # for the fit test.
+    ("deck_key", 264, 185, 0), ("deck_key", 279, 185, 0), ("deck_key", 294, 185, 0), ("deck_key", 309, 185, 0),
+    ("deck_key", 264, 215, 0), ("deck_key", 279, 215, 0), ("deck_key", 294, 215, 0), ("deck_key", 309, 215, 0),
+    ("deck_key_010", 264, 245, 0), ("deck_key_015", 279, 245, 0),
 ]
 
 # Pauses: (height of the pocket tops, parts whose pockets close there, what to insert).
@@ -103,6 +110,13 @@ PAUSES = [
 ]
 
 PLATE_NAME = "Corrosion setup, all parts"  # plate name in Bambu Studio (no colons: it drops those)
+
+# Deck-key pockets (2026-11-09): from ../cad/deck_keys.json, written by ../cad/deck_keys.py. Part key here ->
+# its name there. Each pocket is 2.1 mm deep in the part's underside, at the slot centre listed there (D frame).
+KEYED = {"tray": "coupon_tray", "cup_block": "cup_block_3", "tube_rack": "tube_rack_2x8", "tip_waste": "tip_waste_cup",
+         "tip_rack": "tip_rack_2x15"}
+POCKET_DEPTH = 2.1
+ITEMS_PLACED: list = []  # the placed items, set by main() for the G-code checks
 
 
 def placed():
@@ -399,6 +413,59 @@ def summarise(info: str, gcode: str, proj: dict, pockets):
     lo, hi = REACH[out["nozzle"]]
     assert lo <= ext[0] and ext[2] <= hi and 0 <= ext[1] and ext[3] <= BED_Y, ext
     out["magnet_pockets"] = a1.pocket_check(gcode, pockets)
+    out["key_pockets"] = key_pocket_check(gcode, ITEMS_PLACED)
+    return out
+
+
+def key_pockets_on_plate(items):
+    """(part name, x, y, z range of the pocket in print orientation) for every deck-key pocket on the plate."""
+    table = json.loads((HERE.parent / "cad" / "deck_keys.json").read_text())["parts"]
+    out = []
+    for it in items:
+        if it["key"] not in KEYED:
+            continue
+        _, _, src, orient, _, _ = PARTS[it["key"]]
+        raw = a1.trimesh.load(a1.AC / src, force="mesh")
+        if orient is not None:
+            raw.apply_transform(orient)
+        lo, hi = raw.bounds
+        for pk in table[KEYED[it["key"]]]["pockets"]:
+            pt = np.array([pk["x"], pk["y"], pk["underside_z"], 1.0])
+            if orient is not None:
+                pt = orient @ pt
+            x = pt[0] - (lo[0] + hi[0]) / 2 + it["x"]
+            y = pt[1] - (lo[1] + hi[1]) / 2 + it["y"]
+            z_open = pt[2] - lo[2]  # the pocket's mouth, in print z
+            zs = (z_open, z_open + POCKET_DEPTH) if orient is None else (z_open - POCKET_DEPTH, z_open)
+            out.append((it["name"], x, y, zs))
+    return out
+
+
+def key_pocket_check(gcode: str, items):
+    """Each deck-key pocket in the sliced G-code: open in a layer at mid-depth (nothing printed within 2.3 mm of
+    its centre; the pocket's flats are 2.65 mm from it), and roofed over in the first whole layer past its floor."""
+    layers = {}
+    for z, _, x0, y0, x1, y1 in a1.extrusions(gcode):
+        layers.setdefault(z, []).append((x0, y0, x1, y1))
+    zs_all = sorted(layers)
+
+    def nearest(zl, px, py):
+        seg = np.asarray(layers[zl])
+        a, b = seg[:, :2], seg[:, 2:]
+        ab = b - a
+        t = np.clip(((px - a[:, 0]) * ab[:, 0] + (py - a[:, 1]) * ab[:, 1]) / np.maximum((ab ** 2).sum(1), 1e-12), 0, 1)
+        return float(np.min(np.hypot(a[:, 0] + t * ab[:, 0] - px, a[:, 1] + t * ab[:, 1] - py)))
+
+    out = []
+    for name, px, py, (z0, z1) in key_pockets_on_plate(items):
+        mid = min(zs_all, key=lambda z: abs(z - (z0 + z1) / 2))
+        # the roof: for a pocket opening downward (on the bed), the first layer whose bottom is above z1;
+        # for one opening upward (a part printed upside down), the last layer whose top is below z0
+        roof = min(z for z in zs_all if z - 0.2 >= z1 - 1e-6) if z0 < 0.5 else max(z for z in zs_all if z <= z0 + 1e-6)
+        open_mm, roof_mm = nearest(mid, px, py), nearest(roof, px, py)
+        assert open_mm > 2.3 and roof_mm < 0.5, f"{name}: key pocket at ({px:.1f}, {py:.1f}) open {open_mm:.2f}, roof {roof_mm:.2f}"
+        out.append({"part": name, "pocket_xy": [round(px, 2), round(py, 2)], "pocket_print_z": [round(z0, 2), round(z1, 2)],
+                    f"nearest_extrusion_mm_at_z_{mid}": round(open_mm, 2), f"nearest_extrusion_mm_at_z_{roof}": round(roof_mm, 2)})
     return out
 
 
@@ -408,7 +475,10 @@ def main():
     args = ap.parse_args()
 
     items = placed()
+    global ITEMS_PLACED
+    ITEMS_PLACED = items
     res = check(items)
+    res["key_pockets_on_plate"] = len(key_pockets_on_plate(items))
     work = Path(tempfile.mkdtemp(prefix="h2dplate-"))
     if args.bambu:
         presets, model_id = flatten_presets(args.bambu, work)

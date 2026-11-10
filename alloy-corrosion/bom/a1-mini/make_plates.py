@@ -87,6 +87,14 @@ PARTS = {
                    "counterbored face down"),
     "cell_cover": ("P17", "Bench cell cover", "bom/cad/bench_cell_cover.stl", FLIP, None,
                    "turned over: flat top on the bed, lip up"),
+    # Deck keys (2026-11-09, ../cad/deck_keys.py): the stir module's key, solid so the nub prints like the
+    # four-wall keys of byu-vcl's 2026-10-22 fit test. Dimples on the pill's top: one per 0.05 mm of press.
+    "deck_key": ("P19", "Deck key, 0.05 mm press", "bom/cad/deck_key.stl", None, "100%",
+                 "pill on the bed, nub up; one dimple"),
+    "deck_key_010": ("P19", "Deck key, 0.10 mm press (fit test)", "bom/cad/deck_key_fit_0.10.stl", None, "100%",
+                     "pill on the bed, nub up; two dimples"),
+    "deck_key_015": ("P19", "Deck key, 0.15 mm press (fit test)", "bom/cad/deck_key_fit_0.15.stl", None, "100%",
+                     "pill on the bed, nub up; three dimples"),
 }
 
 # The holder is 297.4 mm long, more than the bed's 254.6 mm diagonal. Cut it through the web

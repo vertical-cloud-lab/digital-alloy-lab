@@ -63,19 +63,19 @@
    "why": "the lab has the stir modules"
   }
  ],
- "pieces": 28,
- "min_gap_mm": 6.0,
+ "pieces": 38,
+ "min_gap_mm": 5.2,
  "closest_pair": [
-  "P07_shim_1_1",
-  "P07_shim_1_2"
+  "P19_deck_key_010_1",
+  "P19_deck_key_015_1"
  ],
  "layout_extent_mm": [
   49.0,
   20.0,
-  301.0,
+  313.9,
   295.8
  ],
- "footprint_area_cm2": 325.6,
+ "footprint_area_cm2": 361.7,
  "pauses": [
   {
    "pocket_top_z": 5.6,
@@ -98,13 +98,14 @@
    "insert": "six 4 x 2 mm magnets in the cup block, same pole up as the lids"
   }
  ],
+ "key_pockets_on_plate": 7,
  "slice": {
   "slicer_version": "02.09.01.70",
-  "time_s": 40913,
-  "time_h": 11.36,
-  "filament_g": 325.66,
+  "time_s": 44283,
+  "time_h": 12.3,
+  "filament_g": 362.49,
   "pause_count": 2,
-  "filament_m": 107.45,
+  "filament_m": 119.61,
   "bed_type": "Textured PEI Plate",
   "bed_temp_C": 55,
   "nozzle_temp_C": 220,
@@ -113,21 +114,21 @@
   "pauses": [
    {
     "before_layer_z": 5.8,
-    "progress_pct": 32,
-    "elapsed_h": 3.71,
-    "remaining_h": 7.65
+    "progress_pct": 34,
+    "elapsed_h": 4.22,
+    "remaining_h": 8.08
    },
    {
     "before_layer_z": 44.8,
-    "progress_pct": 83,
-    "elapsed_h": 9.46,
-    "remaining_h": 1.9
+    "progress_pct": 84,
+    "elapsed_h": 10.42,
+    "remaining_h": 1.88
    }
   ],
   "extrusion_xy_extent_mm": [
    49.2,
    20.2,
-   300.8,
+   313.7,
    295.6
   ],
   "magnet_pockets": [
@@ -261,16 +262,16 @@
     "part": "P08_cup_block_1",
     "pocket_xy": [
      59.85,
-     70.08
+     85.58
     ],
     "nearest_extrusion_mm_at_z_44.6": 2.26,
-    "nearest_extrusion_mm_at_z_44.8": 0.18
+    "nearest_extrusion_mm_at_z_44.8": 0.17
    },
    {
     "part": "P08_cup_block_1",
     "pocket_xy": [
      70.15,
-     87.92
+     103.42
     ],
     "nearest_extrusion_mm_at_z_44.6": 2.26,
     "nearest_extrusion_mm_at_z_44.8": 0.19
@@ -279,16 +280,16 @@
     "part": "P08_cup_block_1",
     "pocket_xy": [
      89.85,
-     70.08
+     85.58
     ],
     "nearest_extrusion_mm_at_z_44.6": 2.26,
-    "nearest_extrusion_mm_at_z_44.8": 0.18
+    "nearest_extrusion_mm_at_z_44.8": 0.17
    },
    {
     "part": "P08_cup_block_1",
     "pocket_xy": [
      100.15,
-     87.92
+     103.42
     ],
     "nearest_extrusion_mm_at_z_44.6": 2.26,
     "nearest_extrusion_mm_at_z_44.8": 0.19
@@ -297,30 +298,123 @@
     "part": "P08_cup_block_1",
     "pocket_xy": [
      119.85,
-     70.08
+     85.58
     ],
     "nearest_extrusion_mm_at_z_44.6": 2.26,
-    "nearest_extrusion_mm_at_z_44.8": 0.18
+    "nearest_extrusion_mm_at_z_44.8": 0.17
    },
    {
     "part": "P08_cup_block_1",
     "pocket_xy": [
      130.15,
-     87.92
+     103.42
     ],
     "nearest_extrusion_mm_at_z_44.6": 2.26,
     "nearest_extrusion_mm_at_z_44.8": 0.19
    }
   ],
+  "key_pockets": [
+   {
+    "part": "P08_cup_block_1",
+    "pocket_xy": [
+     72.5,
+     74.5
+    ],
+    "pocket_print_z": [
+     0.0,
+     2.1
+    ],
+    "nearest_extrusion_mm_at_z_1.0": 2.85,
+    "nearest_extrusion_mm_at_z_2.4": 0.0
+   },
+   {
+    "part": "P08_cup_block_1",
+    "pocket_xy": [
+     122.5,
+     74.5
+    ],
+    "pocket_print_z": [
+     0.0,
+     2.1
+    ],
+    "nearest_extrusion_mm_at_z_1.0": 2.85,
+    "nearest_extrusion_mm_at_z_2.4": 0.0
+   },
+   {
+    "part": "P10_tube_rack_1",
+    "pocket_xy": [
+     168.5,
+     82.0
+    ],
+    "pocket_print_z": [
+     27.9,
+     30.0
+    ],
+    "nearest_extrusion_mm_at_z_29.0": 2.85,
+    "nearest_extrusion_mm_at_z_27.8": 0.17
+   },
+   {
+    "part": "P10_tube_rack_1",
+    "pocket_xy": [
+     218.5,
+     82.0
+    ],
+    "pocket_print_z": [
+     27.9,
+     30.0
+    ],
+    "nearest_extrusion_mm_at_z_29.0": 2.85,
+    "nearest_extrusion_mm_at_z_27.8": 0.18
+   },
+   {
+    "part": "P09_tip_waste_1",
+    "pocket_xy": [
+     281.48,
+     72.0
+    ],
+    "pocket_print_z": [
+     0.0,
+     2.1
+    ],
+    "nearest_extrusion_mm_at_z_1.0": 2.85,
+    "nearest_extrusion_mm_at_z_2.4": 0.04
+   },
+   {
+    "part": "P06_tray_1",
+    "pocket_xy": [
+     66.5,
+     124.0
+    ],
+    "pocket_print_z": [
+     0.0,
+     2.1
+    ],
+    "nearest_extrusion_mm_at_z_1.0": 2.85,
+    "nearest_extrusion_mm_at_z_2.4": 0.19
+   },
+   {
+    "part": "P06_tray_1",
+    "pocket_xy": [
+     141.5,
+     124.0
+    ],
+    "pocket_print_z": [
+     0.0,
+     2.1
+    ],
+    "nearest_extrusion_mm_at_z_1.0": 2.85,
+    "nearest_extrusion_mm_at_z_2.4": 0.06
+   }
+  ],
   "other_nozzle_check": {
    "nozzle": "left",
-   "time_h": 11.35,
-   "filament_g": 325.65,
+   "time_h": 12.31,
+   "filament_g": 362.49,
    "pause_count": 2,
    "extrusion_xy_extent_mm": [
     49.2,
     20.2,
-    300.8,
+    313.7,
     295.6
    ],
    "pockets_ok": true
@@ -357,7 +451,7 @@
    "qty": 1,
    "infill": "100%",
    "on_the_bed": "base down; six magnets at the pause",
-   "volume_cm3": 70.48
+   "volume_cm3": 74.95
   },
   {
    "bom": "P10",
@@ -365,7 +459,7 @@
    "qty": 1,
    "infill": "15% (profile)",
    "on_the_bed": "upside down: the hole plate on the bed, like the fit strip",
-   "volume_cm3": 18.99
+   "volume_cm3": 21.55
   },
   {
    "bom": "P09",
@@ -373,7 +467,7 @@
    "qty": 1,
    "infill": "15% (profile)",
    "on_the_bed": "",
-   "volume_cm3": 10.84
+   "volume_cm3": 11.33
   },
   {
    "bom": "P06",
@@ -381,7 +475,7 @@
    "qty": 1,
    "infill": "15% (profile)",
    "on_the_bed": "pockets up",
-   "volume_cm3": 68.34
+   "volume_cm3": 76.42
   },
   {
    "bom": "P01",
@@ -446,6 +540,30 @@
    "infill": "15% (profile)",
    "on_the_bed": "",
    "volume_cm3": 2.22
+  },
+  {
+   "bom": "P19",
+   "part": "Deck key, 0.05 mm press",
+   "qty": 8,
+   "infill": "100%",
+   "on_the_bed": "pill on the bed, nub up; one dimple",
+   "volume_cm3": 18.34
+  },
+  {
+   "bom": "P19",
+   "part": "Deck key, 0.10 mm press (fit test)",
+   "qty": 1,
+   "infill": "100%",
+   "on_the_bed": "pill on the bed, nub up; two dimples",
+   "volume_cm3": 2.29
+  },
+  {
+   "bom": "P19",
+   "part": "Deck key, 0.15 mm press (fit test)",
+   "qty": 1,
+   "infill": "100%",
+   "on_the_bed": "pill on the bed, nub up; three dimples",
+   "volume_cm3": 2.3
   }
  ],
  "placements": [
@@ -544,12 +662,12 @@
    "name": "P08_cup_block_1",
    "centre_xy": [
     95,
-    79
+    87
    ],
    "rot_z": 0,
    "footprint_mm": [
     92.0,
-    28.0
+    43.0
    ],
    "height_mm": 49.0
   },
@@ -590,7 +708,7 @@
     105.0,
     40.0
    ],
-   "height_mm": 19.5
+   "height_mm": 21.5
   },
   {
    "name": "P01_cap_1",
@@ -812,6 +930,136 @@
     14.0
    ],
    "height_mm": 3.0
+  },
+  {
+   "name": "P19_deck_key_1",
+   "centre_xy": [
+    264,
+    185
+   ],
+   "rot_z": 0,
+   "footprint_mm": [
+    9.8,
+    24.8
+   ],
+   "height_mm": 12.0
+  },
+  {
+   "name": "P19_deck_key_2",
+   "centre_xy": [
+    279,
+    185
+   ],
+   "rot_z": 0,
+   "footprint_mm": [
+    9.8,
+    24.8
+   ],
+   "height_mm": 12.0
+  },
+  {
+   "name": "P19_deck_key_3",
+   "centre_xy": [
+    294,
+    185
+   ],
+   "rot_z": 0,
+   "footprint_mm": [
+    9.8,
+    24.8
+   ],
+   "height_mm": 12.0
+  },
+  {
+   "name": "P19_deck_key_4",
+   "centre_xy": [
+    309,
+    185
+   ],
+   "rot_z": 0,
+   "footprint_mm": [
+    9.8,
+    24.8
+   ],
+   "height_mm": 12.0
+  },
+  {
+   "name": "P19_deck_key_5",
+   "centre_xy": [
+    264,
+    215
+   ],
+   "rot_z": 0,
+   "footprint_mm": [
+    9.8,
+    24.8
+   ],
+   "height_mm": 12.0
+  },
+  {
+   "name": "P19_deck_key_6",
+   "centre_xy": [
+    279,
+    215
+   ],
+   "rot_z": 0,
+   "footprint_mm": [
+    9.8,
+    24.8
+   ],
+   "height_mm": 12.0
+  },
+  {
+   "name": "P19_deck_key_7",
+   "centre_xy": [
+    294,
+    215
+   ],
+   "rot_z": 0,
+   "footprint_mm": [
+    9.8,
+    24.8
+   ],
+   "height_mm": 12.0
+  },
+  {
+   "name": "P19_deck_key_8",
+   "centre_xy": [
+    309,
+    215
+   ],
+   "rot_z": 0,
+   "footprint_mm": [
+    9.8,
+    24.8
+   ],
+   "height_mm": 12.0
+  },
+  {
+   "name": "P19_deck_key_010_1",
+   "centre_xy": [
+    264,
+    245
+   ],
+   "rot_z": 0,
+   "footprint_mm": [
+    9.8,
+    24.8
+   ],
+   "height_mm": 12.0
+  },
+  {
+   "name": "P19_deck_key_015_1",
+   "centre_xy": [
+    279,
+    245
+   ],
+   "rot_z": 0,
+   "footprint_mm": [
+    9.8,
+    24.8
+   ],
+   "height_mm": 12.0
   }
  ]
 }
