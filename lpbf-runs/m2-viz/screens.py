@@ -174,7 +174,7 @@ def parity(path: Path):
     ax.text(lim[1] * 0.97, lim[1] * 0.80, "±20 %", color=MUTED, fontsize=17, ha="right")
     fig.text(0.04, 0.94, "C7: AM Module vs. measured (parity)", color=INK, fontsize=30, weight="bold",
              va="center")
-    lines = ["1. Commit predictions for all 17 sets", "    before the print (A2).",
+    lines = ["1. Commit predictions for all 65", "    settings before the print (A2).",
              "2. Calibrate absorptivity and beam size", "    on part of the tracks.",
              "3. Validate on the held-out rest.", "4. Same for width and regime:",
              "    measured vs. predicted", "    printability map.",

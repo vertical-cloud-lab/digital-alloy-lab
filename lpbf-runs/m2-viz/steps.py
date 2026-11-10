@@ -507,9 +507,9 @@ def chapter_setup():
     ctl_xyz = (M.INSERT_C["D"][0] - 12.5 + (ctl["start"][0] + ctl["end"][0]) / 2,
                M.INSERT_C["D"][1] - 12.5 + ctl["start"][1], 3)
     sc.step("A1 · job file",
-            "Job file: each track is its own part carrying one of 17 parameter sets (the 4 × 4 power–speed grid and "
-            "the control), in a random order in a 25 mm block at the centre of each panel. The dry run must show one "
-            "scan vector per track. The AM Module predictions for all 17 sets are committed before printing (A2).",
+            "Job file: each track is its own part carrying its own power–speed setting (on each panel, one 16-point "
+            "block of the Sobol design plus 2 controls), in a random order. The dry run must show one scan vector "
+            "per track. The AM Module predictions for all 65 settings are committed before printing (A2).",
             5.0, job, hold=2.0, cam_to=CAM["top"], still=True,
             labels=[("darker = higher P/v (J/mm)", (A_XY[0] + 5.5 - 12.5, A_XY[1] + 4.5 - 12.5, 3), (0.06, 0.30)),
                     ("grey = control (machine's standard set)", ctl_xyz, (0.95, 0.20))])
