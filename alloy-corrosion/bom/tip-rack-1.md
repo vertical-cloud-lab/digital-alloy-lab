@@ -5,17 +5,34 @@ tip rack on the CubXL now, the Onshape document "20uL tip rack" (vcl-shared > Cu
 as a printable STEP, and for the deck to be placed from where its key pills sit. **Nothing has been
 printed or moved.**
 
+**Later the same day, Ben edited this STEP in Onshape, in the "20uL tip rack" document.** His edits
+aren't in this repo yet, because the runner still can't open the document (below). Until they are:
+- print rack 2 from his document, not from `cad/tip_rack_1_20ul.step`;
+- the grid and deck positions below come from the unedited STEP. If his edits moved the key pockets or
+  the rows, they get redone.
+
 ![Rack 1 rebuilt, and the slot grid its pockets set](cad/tip-rack-1.png)
 
-## The Onshape document couldn't be opened from the runner
+## The Onshape document can't be opened from the runner
 
-The link redirects to Onshape's sign-in page, and Onshape's API answers 403. The document is private to
-the lab's account, and the runner has no Onshape login or API keys. Either of these would let a run
-use the document itself:
-- **Export it:** in Onshape, right-click the Part Studio tab → *Export* → STEP. Then zip it and attach
-  it to a comment, or commit it to this branch.
+This was tried twice on 2026-11-10. This repo's Claude workflow passes no Onshape login or API key, so:
+- the document's link redirects to Onshape's sign-in page, and Onshape's API answers 403 for it;
+- a search for it by name answers 401, since Onshape only searches for a signed-in user.
+
+byu-vcl's workflow has a key pair (`ONSHAPE_ACCESS_KEY`, `ONSHAPE_SECRET_KEY`); this repo's has none.
+
+**Sharing the document isn't enough on its own.** Without a key, Onshape gives out only a shared
+document's feature list and pictures. Every geometry and export endpoint tried (STEP, STL, Parasolid,
+tessellation, bounding box, mass properties) answers 401. That was checked on Onshape's public sample
+document, and byu-vcl's `hardware/dummy-pipette-p20/fetch_onshape.py` found the same.
+
+Either of these gets the document to a run:
+- **Export it:** in Onshape, right-click the Part Studio tab → *Export* → STEP. Then either zip it and
+  attach it to a comment (GitHub won't attach a bare `.step`), or upload it to this branch on GitHub
+  (*Add file* → *Upload files*).
 - **API keys:** an Onshape API key pair stored as repo secrets, and passed to the job in `claude.yml`.
-  The runner can't edit workflows, so an admin would have to add them.
+  The key's account also has to be able to see the vcl-shared CubXL folder. The runner can't edit
+  workflows, so an admin would have to add them.
 
 ## What `cad/tip_rack_1_20ul.step` is
 
@@ -94,9 +111,9 @@ reprinting or re-slicing. Only the coordinates in the CubOS deck file change. On
 - **The stirred vials move 1.05 mm in X, not 0.05.** Their planned x 76 came from the stirrer Ben taught
   at x 126, not from the grid. Keyed, a stirrer's vial sits midway between two slot columns, at
   x 74.95 + 25n.
-- **Print rack 2 from this STEP rather than P11.** Keyed one slot column left of rack 1, its A1 lands at
-  exactly rack 1's minus 25 mm. P11's pockets are 1.0 mm behind its row A, so it would land with A1 at
-  (266.70, 87.13).
+- **Print rack 2 as a second rack 1 rather than P11** (from Ben's edited document for now; see the top).
+  Keyed one slot column left of rack 1, its A1 lands at exactly rack 1's minus 25 mm. P11's pockets are
+  1.0 mm behind its row A, so it would land with A1 at (266.70, 87.13).
 - **Teach every position once the parts are in,** as before. These numbers say where to start jogging.
 
 **The deck check, rerun with this placement** (`deck_check()` in `tip_rack_1.py`):

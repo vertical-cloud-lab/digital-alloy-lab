@@ -67,10 +67,11 @@ parts come to about 0.48 kg.
 2. **Print the fit strips (P12) before the racks**, on the printer and filament the racks will
    use. Pick the hole that holds a real tip, or a real tube, by its collar without play. Set
    `TIP["hole_d"]` or `TUBE["hole_d"]` in [`bom/cad/cad_build_parts.py`](bom/cad/cad_build_parts.py),
-   rerun it, then print the racks. For tip rack 2, print a second rack 1,
-   [`bom/cad/tip_rack_1_20ul.step`](bom/cad/tip_rack_1_20ul.step), instead of P11. It is rebuilt from
-   what rack 1 was made from (Cubware's rack with Ben's 20 µL bores), so it fits like rack 1 and is
-   already keyed. Check it against Ben's Onshape document first ([`bom/tip-rack-1.md`](bom/tip-rack-1.md)).
+   rerun it, then print the racks. For tip rack 2, print a second rack 1 instead of P11. It fits like
+   rack 1 and is already keyed. For now, print it from Ben's Onshape document "20uL tip rack", which
+   has his 2026-11-10 edits. [`bom/cad/tip_rack_1_20ul.step`](bom/cad/tip_rack_1_20ul.step) is the
+   version before those edits; it gets replaced once his export is in the repo
+   ([`bom/tip-rack-1.md`](bom/tip-rack-1.md)).
 3. **Print the rest.** STEP and STL links for each part are in
    [`bom/README.md` §1](bom/README.md#1-what-to-print).
 
