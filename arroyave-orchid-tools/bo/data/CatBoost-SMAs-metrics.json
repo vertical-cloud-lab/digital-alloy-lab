@@ -1,0 +1,5 @@
+{"repo": "ArroyaveLab/CatBoost-SMAs", "env": "py3.10, catboost 1.0.6, pandas 1.5.3, numpy 1.23.5, scikit-learn 1.2.2, CBFV 1.1.0",
+ "n_featurized_rows": 1689, "split": "train_test_split(test_size=0.2, random_state=42)", "targets": ["SME_Ms","SME_Mf","SME_As","SME_Af"],
+ "train": {"RMSE_K": 19.662, "MAE_K": 13.951, "R2": 0.9657},
+ "test": {"RMSE_K": 24.693, "MAE_K": 17.028, "R2": 0.9363},
+ "wall_time_s": 411, "cpus": "taskset -c 0,1 on a shared 4 vCPU box"}

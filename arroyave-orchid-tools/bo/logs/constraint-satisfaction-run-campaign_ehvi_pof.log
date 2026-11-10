@@ -1,0 +1,51 @@
+[main] Launching 2 seeds with 2 workers...
+Running campaign seed=2
+[Fixed ranges] scope= ALL  | values= [1.0, 0.9942884670370269, 0.9999887335752332, 0.9971877287306181]
+[Seed 2, Iter 000] idx=0 | MEASURED objectives | Pareto?=Yes | acq=0.000e+00 | HV_fixed(before)=1.423e+00 | pool=40551 | 0.18s
+[Seed 2, Iter 001] idx=40345 | PHASE-ONLY (non-BCC) | Pareto?=No | acq=3.071e+18 | HV_fixed(before)=1.767e+00 | pool=40550 | 0.69s
+[Seed 2, Iter 002] idx=12983 | MEASURED objectives | Pareto?=Yes | acq=3.091e+18 | HV_fixed(before)=1.767e+00 | pool=40549 | 1.19s
+[Seed 2, Iter 003] idx=19365 | MEASURED objectives | Pareto?=Yes | acq=1.934e+00 | HV_fixed(before)=2.142e+00 | pool=40548 | 2.74s
+[Seed 2, Iter 004] idx=33055 | MEASURED objectives | Pareto?=Yes | acq=5.788e-01 | HV_fixed(before)=2.219e+00 | pool=40547 | 0.65s
+[Seed 2, Iter 005] idx=19444 | MEASURED objectives | Pareto?=Yes | acq=1.571e+00 | HV_fixed(before)=2.496e+00 | pool=40546 | 1.13s
+[Seed 2, Iter 006] idx=37362 | MEASURED objectives | Pareto?=Yes | acq=4.012e-01 | HV_fixed(before)=2.603e+00 | pool=40545 | 1.14s
+[Seed 2, Iter 007] idx=19306 | MEASURED objectives | Pareto?=Yes | acq=4.580e-01 | HV_fixed(before)=2.604e+00 | pool=40544 | 1.04s
+[Seed 2, Iter 008] idx=19339 | MEASURED objectives | Pareto?=Yes | acq=4.856e-01 | HV_fixed(before)=2.668e+00 | pool=40543 | 0.79s
+[Seed 2, Iter 009] idx=19118 | MEASURED objectives | Pareto?=Yes | acq=8.431e-01 | HV_fixed(before)=2.909e+00 | pool=40542 | 0.83s
+[Seed 2, Iter 010] idx=19408 | MEASURED objectives | Pareto?=Yes | acq=2.406e+00 | HV_fixed(before)=2.933e+00 | pool=40541 | 0.68s
+[Seed 2, Iter 011] idx=19370 | MEASURED objectives | Pareto?=Yes | acq=1.077e+00 | HV_fixed(before)=2.990e+00 | pool=40540 | 0.95s
+[Seed 2, Iter 012] idx=19357 | MEASURED objectives | Pareto?=Yes | acq=7.906e-01 | HV_fixed(before)=3.099e+00 | pool=40539 | 0.85s
+[Seed 2, Iter 013] idx=18463 | MEASURED objectives | Pareto?=Yes | acq=8.160e-01 | HV_fixed(before)=3.139e+00 | pool=40538 | 0.84s
+[Seed 2, Iter 014] idx=18564 | MEASURED objectives | Pareto?=Yes | acq=4.422e-01 | HV_fixed(before)=3.504e+00 | pool=40537 | 0.86s
+[Seed 2, Iter 015] idx=37753 | PHASE-ONLY (non-BCC) | Pareto?=No | acq=9.819e-01 | HV_fixed(before)=3.557e+00 | pool=40536 | 0.88s
+[Seed 2, Iter 016] idx=18326 | MEASURED objectives | Pareto?=Yes | acq=5.602e-01 | HV_fixed(before)=3.557e+00 | pool=40535 | 1.21s
+[Seed 2, Iter 017] idx=19397 | MEASURED objectives | Pareto?=Yes | acq=3.151e-01 | HV_fixed(before)=3.558e+00 | pool=40534 | 1.40s
+[Seed 2, Iter 018] idx=19371 | MEASURED objectives | Pareto?=Yes | acq=3.121e-01 | HV_fixed(before)=3.564e+00 | pool=40533 | 1.43s
+[Seed 2, Iter 019] idx=19396 | MEASURED objectives | Pareto?=Yes | acq=2.694e-01 | HV_fixed(before)=3.567e+00 | pool=40532 | 1.70s
+Total wall time: 21.18s
+Running campaign seed=1
+[Fixed ranges] scope= ALL  | values= [1.0, 0.9942884670370269, 0.9999887335752332, 0.9971877287306181]
+[Seed 1, Iter 000] idx=0 | MEASURED objectives | Pareto?=Yes | acq=0.000e+00 | HV_fixed(before)=1.849e+00 | pool=40551 | 0.26s
+[Seed 1, Iter 001] idx=16688 | MEASURED objectives | Pareto?=Yes | acq=2.975e+19 | HV_fixed(before)=2.170e+00 | pool=40550 | 1.00s
+[Seed 1, Iter 002] idx=29005 | MEASURED objectives | Pareto?=Yes | acq=1.290e+00 | HV_fixed(before)=2.363e+00 | pool=40549 | 2.01s
+[Seed 1, Iter 003] idx=39311 | MEASURED objectives | Pareto?=Yes | acq=3.778e-01 | HV_fixed(before)=2.500e+00 | pool=40548 | 1.20s
+[Seed 1, Iter 004] idx=12366 | MEASURED objectives | Pareto?=Yes | acq=2.076e+00 | HV_fixed(before)=2.819e+00 | pool=40547 | 1.83s
+[Seed 1, Iter 005] idx=37380 | MEASURED objectives | Pareto?=Yes | acq=8.055e-01 | HV_fixed(before)=2.974e+00 | pool=40546 | 1.02s
+[Seed 1, Iter 006] idx=19395 | MEASURED objectives | Pareto?=Yes | acq=1.046e+00 | HV_fixed(before)=3.054e+00 | pool=40545 | 1.33s
+[Seed 1, Iter 007] idx=37734 | PHASE-ONLY (non-BCC) | Pareto?=No | acq=5.716e-01 | HV_fixed(before)=3.282e+00 | pool=40544 | 1.27s
+[Seed 1, Iter 008] idx=19384 | MEASURED objectives | Pareto?=Yes | acq=5.414e-01 | HV_fixed(before)=3.282e+00 | pool=40543 | 1.13s
+[Seed 1, Iter 009] idx=26754 | MEASURED objectives | Pareto?=Yes | acq=4.342e-01 | HV_fixed(before)=3.318e+00 | pool=40542 | 1.06s
+[Seed 1, Iter 010] idx=19396 | MEASURED objectives | Pareto?=Yes | acq=2.632e-01 | HV_fixed(before)=3.477e+00 | pool=40541 | 1.36s
+[Seed 1, Iter 011] idx=19118 | MEASURED objectives | Pareto?=Yes | acq=5.956e-01 | HV_fixed(before)=3.484e+00 | pool=40540 | 1.38s
+[Seed 1, Iter 012] idx=19408 | MEASURED objectives | Pareto?=Yes | acq=4.143e-01 | HV_fixed(before)=3.493e+00 | pool=40539 | 1.66s
+[Seed 1, Iter 013] idx=18642 | MEASURED objectives | Pareto?=Yes | acq=3.122e-01 | HV_fixed(before)=3.531e+00 | pool=40538 | 0.82s
+[Seed 1, Iter 014] idx=19407 | MEASURED objectives | Pareto?=Yes | acq=2.034e-01 | HV_fixed(before)=3.537e+00 | pool=40537 | 0.81s
+[Seed 1, Iter 015] idx=19397 | MEASURED objectives | Pareto?=Yes | acq=2.016e-01 | HV_fixed(before)=3.541e+00 | pool=40536 | 1.61s
+[Seed 1, Iter 016] idx=26406 | MEASURED objectives | Pareto?=Yes | acq=1.249e-01 | HV_fixed(before)=3.559e+00 | pool=40535 | 1.96s
+[Seed 1, Iter 017] idx=19371 | MEASURED objectives | Pareto?=Yes | acq=1.177e-01 | HV_fixed(before)=3.569e+00 | pool=40534 | 1.71s
+[Seed 1, Iter 018] idx=19325 | MEASURED objectives | Pareto?=Yes | acq=9.270e-02 | HV_fixed(before)=3.575e+00 | pool=40533 | 1.36s
+[Seed 1, Iter 019] idx=4877 | PHASE-ONLY (non-BCC) | Pareto?=No | acq=1.847e-01 | HV_fixed(before)=3.589e+00 | pool=40532 | 1.96s
+Total wall time: 26.74s
+[main] seed 2 finished.
+[main] seed 1 finished.
+[main] Completed 2 seeds.
+[main] All seeds done.

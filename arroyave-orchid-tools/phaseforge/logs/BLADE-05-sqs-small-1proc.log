@@ -1,0 +1,89 @@
+$ python scripts/BLADE-run_sqs_small.py /tmp/arroyave/work/BLADE_run 10   (ATAT 3.52 on PATH)
+./findbestsqs: 3: [: 34: unexpected operator
+cp: cannot stat '34': No such file or directory
+cp: cannot stat '34': No such file or directory
+cat: bestcorr.out: No such file or directory
+./findbestsqs: 3: [: 34: unexpected operator
+cp: cannot stat '34': No such file or directory
+cp: cannot stat '34': No such file or directory
+cat: bestcorr.out: No such file or directory
+./findbestsqs: 3: [: 34: unexpected operator
+cp: cannot stat '34': No such file or directory
+cp: cannot stat '34': No such file or directory
+cat: bestcorr.out: No such file or directory
+./findbestsqs: 3: [: 34: unexpected operator
+cp: cannot stat '34': No such file or directory
+cp: cannot stat '34': No such file or directory
+cat: bestcorr.out: No such file or directory
+Compositions: [['Cr', 'Hf']]
+System sizes: {2}
+1 1 1 90 90 120
+1 0 0
+0 1 0
+0 0 1
+1 1 1 90 90 120
+1 0 0
+0 1 0
+0 0 1
+0.000000 0.000000 0.000000 a
+0.333333 0.666667 0.500000 B
+0.666667 0.333333 0.500000 B
+File created at: /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/rndstr.skel
+File created at: /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsgen.in
+sqsdb_lev=0_a=1.0,0.0
+sqsdb_lev=1_a=0.5,0.5
+sqsdb_lev=2_a=0.75,0.25
+sqsdb_lev=5_a=0.875,0.125
+sqsdb_lev=5_a=0.625,0.375
+Directories setup
+
+Neighbor shells:
+  1NN = 1.000000
+  2NN = 1.322876
+  3NN = 1.732053
+  4NN = 2.000000
+  5NN = 2.179453
+  6NN = 2.449492
+  7NN = 2.645752
+  8NN = 3.000003
+  9NN = 3.464105
+Derived cutoffs: 2.17945 (pairs), 2.00000 (triplets), 1.73205 (quadruplets)
+Skipping pure-species directory: /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=0_a=1.0,0.0
+Running corrdump in [0.75, 0.25]
+Running mcsqs with 24 atoms in [0.75, 0.25]
+Starting mcsqs -ip=1 in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=2_a=0.75,0.25
+sqsdb_lev=2_a=0.75,0.25: id=1 time=5.0s objective=-46.134581
+Wrote stopsqs at /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=2_a=0.75,0.25/stopsqs after 10.0s
+mcsqs -ip=1 ignored stopsqs; terminating
+mcsqs -ip=1 finished (exit code -15) in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=2_a=0.75,0.25
+Running mcsqs -best in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=2_a=0.75,0.25
+Running corrdump in [0.625, 0.375]
+Running mcsqs with 24 atoms in [0.625, 0.375]
+Starting mcsqs -ip=1 in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=5_a=0.625,0.375
+sqsdb_lev=5_a=0.625,0.375: id=1 time=5.0s objective=-46.139459
+Wrote stopsqs at /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=5_a=0.625,0.375/stopsqs after 10.0s
+mcsqs -ip=1 finished (OK) in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=5_a=0.625,0.375
+Running mcsqs -best in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=5_a=0.625,0.375
+Running corrdump in [0.875, 0.125]
+Running mcsqs with 24 atoms in [0.875, 0.125]
+Starting mcsqs -ip=1 in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=5_a=0.875,0.125
+sqsdb_lev=5_a=0.875,0.125: id=1 time=5.0s objective=-46.161645
+Wrote stopsqs at /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=5_a=0.875,0.125/stopsqs after 10.0s
+mcsqs -ip=1 ignored stopsqs; terminating
+mcsqs -ip=1 finished (exit code -15) in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=5_a=0.875,0.125
+Running mcsqs -best in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=5_a=0.875,0.125
+Running corrdump in [0.5, 0.5]
+Running mcsqs with 24 atoms in [0.5, 0.5]
+Starting mcsqs -ip=1 in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=1_a=0.5,0.5
+sqsdb_lev=1_a=0.5,0.5: id=1 time=5.0s objective=-85.860277
+Wrote stopsqs at /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=1_a=0.5,0.5/stopsqs after 10.0s
+mcsqs -ip=1 ignored stopsqs; terminating
+mcsqs -ip=1 finished (exit code -15) in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=1_a=0.5,0.5
+Running mcsqs -best in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=1_a=0.5,0.5
+No bestcorr.out found in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=0_a=1.0,0.0
+No bestcorr.out found in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=2_a=0.75,0.25
+No bestcorr.out found in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=5_a=0.625,0.375
+No bestcorr.out found in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=5_a=0.875,0.125
+No bestcorr.out found in /tmp/arroyave/work/BLADE_run/BLADE/SQS/HEDB1_2/sqsdb_lev=1_a=0.5,0.5
+BladeSQS.sqs_gen wall time: 120.6 s
+exit=0 wall=121s

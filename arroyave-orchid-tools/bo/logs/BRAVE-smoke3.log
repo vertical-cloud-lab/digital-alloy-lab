@@ -1,0 +1,24 @@
+=== prior_eval.py with patched priors.py  (03:34:22)
+Processing Input Data:   0%|          | 0/180 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 180/180 [00:00<00:00, 20855.66it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/180 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 180/180 [00:00<00:00, 8667.11it/s]
+	Creating Pandas Objects...
+rc=0 wall=85s
+  180 YS_prior.csv
+  180 EUTS_prior.csv
+  180 UTStoYS_prior.csv
+  540 total
+=== main.py  (03:35:47)
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 11476.08it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 8101.30it/s]
+	Creating Pandas Objects...
+Processing Input Data:   0%|          | 0/56 [00:00<?, ?it/s]Processing Input Data: 100%|██████████| 56/56 [00:00<00:00, 11521.12it/s]
+	Featurizing Compositions...
+Assigning Features...:   0%|          | 0/56 [00:00<?, ?it/s]Assigning Features...: 100%|██████████| 56/56 [00:00<00:00, 8746.59it/s]
+	Creating Pandas Objects...
+rc=124 wall=400s
+ls: cannot access 'x_query.csv': No such file or directory
+ls: cannot access 'all_candidates.csv': No such file or directory
+ls: cannot access 'all_improvements.csv': No such file or directory
+ls: cannot access 'x_query_indices.csv': No such file or directory

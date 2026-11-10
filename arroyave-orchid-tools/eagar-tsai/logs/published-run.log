@@ -1,0 +1,31 @@
+grid 21 x 20, 2.0 um, 4 workers: 136 s
+eagar-tsai default keyhole (W/D <= 2.5): flags 157 of 420 points; 79 of 80 measured-keyhole points, 78 outside it, 1 missed
+eagar-tsai D/W > 0.75 (study's rule): flags 0 of 420 points; 0 of 80 measured-keyhole points, 0 outside it, 80 missed
+lack of fusion scored only below 1.13 m/s (231 points):
+  eagar-tsai default LOF (LOF1 or LOF2): flags 108 points; 16 of 16 measured-LOF points, 92 outside it, 0 missed
+  eagar-tsai depth <= 60 um (LOF1 only): flags 108 points; 16 of 16 measured-LOF points, 92 outside it, 0 missed
+largest eagar-tsai D/W on the grid: 0.48
+eagar-tsai default classes: {'lack_of_fusion': 254, 'keyhole': 157, 'defect_free': 9}
+measured classes: {'not_scored_pe_gt_2': 189, 'stable': 135, 'keyhole': 80, 'lack_of_fusion': 16}
+on the measured LOF line (E_l = 88 J/m +/-15%, v <= 1 m/s, 8 points): eagar-tsai depth 0-18 um, width 0-80 um (layer h = 60 um)
+P = 328 W, v = 0.335 m/s (the study's keyhole cross-sections): eagar-tsai W = 236 um, D = 108 um, D/W = 0.46, peak T = 4164 K
+ power_w  velocity_m_s  T_iso_k  width_um  depth_um  length_um    peak_T_k
+   200.0           1.0   820.00     136.0      50.0 162.965020 2341.433728
+   200.0           1.0   836.15     134.0      49.0 159.965664 2341.433728
+   200.0           1.0   850.00     132.0      48.0 156.966308 2341.433728
+   200.0           1.0   870.15     130.0      46.0 151.967381 2341.433728
+   200.0           1.0   880.00     128.0      45.0 149.967810 2341.433728
+   300.0           1.0   820.00     170.0      71.0 226.951286 3363.150591
+   300.0           1.0   836.15     166.0      69.0 220.952574 3363.150591
+   300.0           1.0   850.00     164.0      68.0 216.953432 3363.150591
+   300.0           1.0   870.15     162.0      66.0 210.954720 3363.150591
+   300.0           1.0   880.00     160.0      65.0 206.955578 3363.150591
+   370.0           1.3   820.00     174.0      74.0 262.943561 3883.842495
+   370.0           1.3   836.15     170.0      73.0 256.944848 3883.842495
+   370.0           1.3   850.00     168.0      71.0 250.946136 3883.842495
+   370.0           1.3   870.15     166.0      69.0 243.947638 3883.842495
+   370.0           1.3   880.00     164.0      69.0 239.948496 3883.842495
+
+real	3m17.019s
+user	4m2.547s
+sys	0m0.439s

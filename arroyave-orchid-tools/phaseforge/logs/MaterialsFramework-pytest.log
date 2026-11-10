@@ -1,0 +1,129 @@
+.....sss....ss.....sssss..........ssss....ss......s.ss.........ss....... [ 17%]
+..............ssss......ss....sss......sss..............s............... [ 34%]
+.....................................................sss................ [ 51%]
+........................................................................ [ 68%]
+....ss...............s.................................................. [ 85%]
+...........................................................              [100%]
+=============================== warnings summary ===============================
+tests/analysis/test_formation_energy.py::test_elemental_references_flags_guessed_fallback
+  /tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/materialsframework/transformations/formation_energy.py:61: UserWarning: No tabulated experimental ground state for Mn; using a guessed high-symmetry candidate as the elemental reference instead.
+    (element, self._reference_candidates(element), round(num)) for element, num in structure.composition.get_el_amt_dict().items()
+
+tests/test_base_calculator.py::test_relax_applies_fix_symmetry_constraint_when_enabled
+  /tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/materialsframework/utils.py:115: UserWarning: Only FixAtoms and FixCartesian is supported by Pymatgen. Other constraints will not be set.
+    return AseAtomsAdaptor().get_structure(structure)
+
+tests/tools/test_md.py: 27 warnings
+  /tmp/arroyave/venvs/paipai/lib/python3.12/site-packages/ase/atoms.py:1123: UserWarning: Periodic boundary conditions are ignored when calculating the inertial tensor.
+    warnings.warn('Periodic boundary conditions are ignored '
+
+tests/transformations/test_formation_energy.py::test_elements_requiring_an_atomic_basis_fall_back_to_guessed_candidates[Mn]
+  /tmp/arroyave/work/MaterialsFramework/tests/transformations/test_formation_energy.py:99: UserWarning: No tabulated experimental ground state for Mn; using a guessed high-symmetry candidate as the elemental reference instead.
+    candidates = t._reference_candidates(element)
+
+tests/transformations/test_formation_energy.py::test_elements_requiring_an_atomic_basis_fall_back_to_guessed_candidates[P]
+  /tmp/arroyave/work/MaterialsFramework/tests/transformations/test_formation_energy.py:99: UserWarning: No tabulated experimental ground state for P; using a guessed high-symmetry candidate as the elemental reference instead.
+    candidates = t._reference_candidates(element)
+
+tests/transformations/test_formation_energy.py::test_elements_requiring_an_atomic_basis_fall_back_to_guessed_candidates[S]
+  /tmp/arroyave/work/MaterialsFramework/tests/transformations/test_formation_energy.py:99: UserWarning: No tabulated experimental ground state for S; using a guessed high-symmetry candidate as the elemental reference instead.
+    candidates = t._reference_candidates(element)
+
+tests/transformations/test_formation_energy.py::test_elements_requiring_an_atomic_basis_fall_back_to_guessed_candidates[Ga]
+  /tmp/arroyave/work/MaterialsFramework/tests/transformations/test_formation_energy.py:99: UserWarning: No tabulated experimental ground state for Ga; using a guessed high-symmetry candidate as the elemental reference instead.
+    candidates = t._reference_candidates(element)
+
+tests/transformations/test_formation_energy.py::test_elements_requiring_an_atomic_basis_fall_back_to_guessed_candidates[B]
+  /tmp/arroyave/work/MaterialsFramework/tests/transformations/test_formation_energy.py:99: UserWarning: No tabulated experimental ground state for B; using a guessed high-symmetry candidate as the elemental reference instead.
+    candidates = t._reference_candidates(element)
+
+tests/transformations/test_formation_energy.py::test_untabulated_elements_fall_back_to_guessed_candidates[Pm]
+  /tmp/arroyave/work/MaterialsFramework/tests/transformations/test_formation_energy.py:107: UserWarning: No tabulated experimental ground state for Pm; using a guessed high-symmetry candidate as the elemental reference instead.
+    candidates = t._reference_candidates(element)
+
+tests/transformations/test_formation_energy.py::test_untabulated_elements_fall_back_to_guessed_candidates[Am]
+  /tmp/arroyave/work/MaterialsFramework/tests/transformations/test_formation_energy.py:107: UserWarning: No tabulated experimental ground state for Am; using a guessed high-symmetry candidate as the elemental reference instead.
+    candidates = t._reference_candidates(element)
+
+tests/transformations/test_formation_energy.py::test_untabulated_elements_fall_back_to_guessed_candidates[Cf]
+  /tmp/arroyave/work/MaterialsFramework/tests/transformations/test_formation_energy.py:107: UserWarning: No tabulated experimental ground state for Cf; using a guessed high-symmetry candidate as the elemental reference instead.
+    candidates = t._reference_candidates(element)
+
+tests/transformations/test_formation_energy.py::test_runtime_error_from_bulk_falls_back_to_guessed_candidates
+  /tmp/arroyave/work/MaterialsFramework/tests/transformations/test_formation_energy.py:114: UserWarning: No tabulated experimental ground state for Pa; using a guessed high-symmetry candidate as the elemental reference instead.
+    candidates = t._reference_candidates("Pa")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] tests/analysis/test_annni.py:7: could not import 'sqsgenerator': No module named 'sqsgenerator'
+SKIPPED [1] tests/analysis/test_phono3py.py:7: could not import 'phono3py': No module named 'phono3py'
+SKIPPED [1] tests/analysis/test_phonopy.py:7: could not import 'phonopy': No module named 'phonopy'
+SKIPPED [1] tests/calculators/test_alignn.py:8: could not import 'alignn': No module named 'alignn'
+SKIPPED [1] tests/calculators/test_allegro.py:14: could not import 'allegro': No module named 'allegro'
+SKIPPED [1] tests/calculators/test_alphanet.py:15: could not import 'alphanet': No module named 'alphanet'
+SKIPPED [1] tests/calculators/test_chgnet.py:8: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/calculators/test_deepmd.py:14: could not import 'deepmd': No module named 'deepmd'
+SKIPPED [1] tests/calculators/test_eqnorm.py:8: could not import 'eqnorm': No module named 'eqnorm'
+SKIPPED [1] tests/calculators/test_equflash.py:14: could not import 'GGNN': No module named 'GGNN'
+SKIPPED [1] tests/calculators/test_eqv2.py:14: could not import 'fairchem.core': No module named 'fairchem'
+SKIPPED [1] tests/calculators/test_esen.py:14: could not import 'fairchem.core': No module named 'fairchem'
+SKIPPED [1] tests/calculators/test_gptff.py:14: could not import 'gptff': No module named 'gptff'
+SKIPPED [1] tests/calculators/test_hienet.py:14: could not import 'hienet': No module named 'hienet'
+SKIPPED [1] tests/calculators/test_m3gnet.py:8: could not import 'matgl': No module named 'matgl'
+SKIPPED [1] tests/calculators/test_mace.py:8: could not import 'mace': No module named 'mace'
+SKIPPED [1] tests/calculators/test_matris.py:8: could not import 'matris': No module named 'matris'
+SKIPPED [1] tests/calculators/test_mattersim.py:8: could not import 'mattersim': No module named 'mattersim'
+SKIPPED [1] tests/calculators/test_megnet.py:11: could not import 'matgl': No module named 'matgl'
+SKIPPED [1] tests/calculators/test_nequip.py:14: could not import 'nequip': No module named 'nequip'
+SKIPPED [1] tests/calculators/test_nequix.py:8: could not import 'nequix': No module named 'nequix'
+SKIPPED [1] tests/calculators/test_newtonnet.py:8: could not import 'newtonnet': No module named 'newtonnet'
+SKIPPED [1] tests/calculators/test_orb.py:8: could not import 'orb_models': No module named 'orb_models'
+SKIPPED [1] tests/calculators/test_petmad.py:8: could not import 'upet': No module named 'upet'
+SKIPPED [1] tests/calculators/test_sevennet.py:8: could not import 'sevenn': No module named 'sevenn'
+SKIPPED [1] tests/calculators/test_tace.py:8: could not import 'tace': No module named 'tace'
+SKIPPED [1] tests/calculators/test_uma.py:14: could not import 'fairchem.core': No module named 'fairchem'
+SKIPPED [1] tests/tools/test_sqsgen.py:8: could not import 'sqsgenerator': No module named 'sqsgenerator'
+SKIPPED [1] tests/transformations/test_annni.py:8: could not import 'sqsgenerator': No module named 'sqsgenerator'
+SKIPPED [1] tests/transformations/test_phono3py.py:8: could not import 'phono3py': No module named 'phono3py'
+SKIPPED [1] tests/transformations/test_phonopy.py:8: could not import 'phonopy': No module named 'phonopy'
+SKIPPED [1] tests/analysis/test_bain.py:68: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_bain.py:75: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_bain.py:82: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_cte.py:44: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_cte.py:57: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_cubic_elastic_constants.py:59: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_cubic_elastic_constants.py:67: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_cubic_elastic_constants.py:85: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_cubic_elastic_constants.py:91: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_cubic_elastic_constants.py:97: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_elastic_constants.py:80: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_elastic_constants.py:87: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_elastic_constants.py:103: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_elastic_constants.py:109: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_eos.py:57: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_eos.py:64: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_formation_energy.py:79: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_formation_energy.py:96: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_formation_energy.py:103: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_h_solubility.py:36: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_h_solubility.py:53: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_sbe.py:153: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_sbe.py:160: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_sbe.py:168: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_sbe.py:176: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_surface.py:94: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_surface.py:102: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_usfe.py:50: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_usfe.py:66: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/analysis/test_usfe.py:74: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/calculators/test_posegnn.py:34: PosEGNN model not found at
+SKIPPED [1] tests/calculators/test_posegnn.py:42: PosEGNN model not found at
+SKIPPED [1] tests/calculators/test_posegnn.py:50: PosEGNN model not found at
+SKIPPED [1] tests/calculators/test_vasp.py:43: VASP not configured (set ASE_VASP_COMMAND, VASP_COMMAND, or VASP_SCRIPT; or install vasp/vasp_std).
+SKIPPED [1] tests/tools/test_bond_lattice_parameter.py:120: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/tools/test_bond_lattice_parameter.py:131: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/tools/test_bond_lattice_parameter.py:139: could not import 'chgnet': No module named 'chgnet'
+SKIPPED [1] tests/tools/test_sqs2tdb.py:31: sqs2tdb binary not found
+SKIPPED [1] tests/tools/test_sqs2tdb.py:45: sqs2tdb binary not found
+SKIPPED [1] tests/tools/test_stability_map.py:137: could not import 'sqsgenerator': No module named 'sqsgenerator'
+379 passed, 71 skipped, 38 warnings in 10.54s

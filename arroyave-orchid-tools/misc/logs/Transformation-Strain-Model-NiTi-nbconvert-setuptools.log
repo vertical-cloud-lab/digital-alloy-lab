@@ -1,0 +1,152 @@
+[NbConvertApp] Converting notebook main.ipynb to notebook
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+Traceback (most recent call last):
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/bin/jupyter-nbconvert", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/jupyter_core/application.py", line 284, in launch_instance
+    super().launch_instance(argv=argv, **kwargs)
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/traitlets/config/application.py", line 1080, in launch_instance
+    app.start()
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 420, in start
+    self.convert_notebooks()
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 597, in convert_notebooks
+    self.convert_single_notebook(notebook_filename)
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 563, in convert_single_notebook
+    output, resources = self.export_single_notebook(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/nbconvertapp.py", line 487, in export_single_notebook
+    output, resources = self.exporter.from_filename(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 201, in from_filename
+    return self.from_file(f, resources=resources, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 220, in from_file
+    return self.from_notebook_node(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/exporters/notebook.py", line 36, in from_notebook_node
+    nb_copy, resources = super().from_notebook_node(nb, resources, **kw)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 154, in from_notebook_node
+    nb_copy, resources = self._preprocess(nb_copy, resources)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/exporters/exporter.py", line 353, in _preprocess
+    nbc, resc = preprocessor(nbc, resc)
+                ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/preprocessors/base.py", line 48, in __call__
+    return self.preprocess(nb, resources)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py", line 103, in preprocess
+    self.preprocess_cell(cell, resources, index)
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbconvert/preprocessors/execute.py", line 124, in preprocess_cell
+    cell = self.execute_cell(cell, index, store_history=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+data = {"Cu": [8], "Hf": [27], "Ni": [41.9], "Ti": [23.1]}
+
+data_handler = DataHandler(data)
+df = data_handler.generate_dataframe()
+
+feature_generator = FeatureGenerator(df)
+
+comp_df = feature_generator.generate_composition_formula()
+features_df = feature_generator.generate_features()
+
+lambda2_model = Lambda2Model(features_df)
+
+prediction_df = lambda2_model.predict_transformation_and_lambda2()
+prediction_df
+
+------------------
+
+----- stderr -----
+/tmp/arroyave/work/NiTi-TS/helper.py:615: SyntaxWarning: invalid escape sequence '\d'
+  .replace("\d+", "", regex=True)
+------------------
+
+[31m---------------------------------------------------------------------------[39m
+[31mTypeError[39m                                 Traceback (most recent call last)
+[36mCell[39m[36m [39m[32mIn[7][39m[32m, line 9[39m
+[32m      5[39m 
+[32m      6[39m feature_generator = FeatureGenerator(df)
+[32m      7[39m 
+[32m      8[39m comp_df = feature_generator.generate_composition_formula()
+[32m----> [39m[32m9[39m features_df = feature_generator.generate_features()
+[32m     10[39m 
+[32m     11[39m lambda2_model = Lambda2Model(features_df)
+[32m     12[39m 
+
+[36mFile [39m[32m/tmp/arroyave/work/NiTi-TS/helper.py:629[39m, in [36mFeatureGenerator.generate_features[39m[34m(self)[39m
+[32m    624[39m [38;5;28;01mwith[39;00m contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(
+[32m    625[39m     io.StringIO()
+[32m    626[39m ):
+[32m    627[39m     logging.getLogger().setLevel(logging.CRITICAL)
+[32m--> [39m[32m629[39m     X_jarvis, _, _, _ = [30;43mcomposition[39;49m[30;43m.[39;49m[30;43mgenerate_features[39;49m[30;43m([39;49m
+[32m    630[39m [30;43m        [39;49m[30;43mself[39;49m[30;43m.[39;49m[30;43mdf[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43melem_prop[39;49m[30;43m=[39;49m[30;43m"[39;49m[30;43mjarvis[39;49m[30;43m"[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43msum_feat[39;49m[30;43m=[39;49m[30;43;01mFalse[39;49;00m
+[32m    631[39m [30;43m    [39;49m[30;43m)[39;49m
+[32m    632[39m     [38;5;66;03m# X_magpie, _, _, _ = composition.generate_features([39;00m
+[32m    633[39m     [38;5;66;03m#     self.df, elem_prop="magpie", sum_feat=True[39;00m
+[32m    634[39m     [38;5;66;03m# )[39;00m
+[32m   (...)[39m[32m    642[39m     [38;5;66;03m#     self.df, elem_prop="onehot", sum_feat=True[39;00m
+[32m    643[39m     [38;5;66;03m# )[39;00m
+[32m    644[39m [38;5;28mself[39m.df = pd.concat(
+[32m    645[39m     [
+[32m    646[39m         [38;5;28mself[39m.ext_df,
+[32m   (...)[39m[32m    657[39m     axis=[32m1[39m,
+[32m    658[39m )
+
+[36mFile [39m[32m/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/CBFV/composition.py:327[39m, in [36mgenerate_features[39m[34m(df, elem_prop, drop_duplicates, extend_features, sum_feat, mini)[39m
+[32m    325[39m median_values = X[cols].median()
+[32m    326[39m [38;5;66;03m# fill the missing values in each column with the column's median value[39;00m
+[32m--> [39m[32m327[39m [30;43mX[39;49m[30;43m[[39;49m[30;43mcols[39;49m[30;43m][39;49m = X[cols].fillna(median_values)
+[32m    329[39m [38;5;66;03m# Only return the avg/sum of element properties.[39;00m
+[32m    331[39m [38;5;28;01mif[39;00m mini:
+
+[36mFile [39m[32m/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/pandas/core/frame.py:4649[39m, in [36mDataFrame.__setitem__[39m[34m(self, key, value)[39m
+[32m   4645[39m             self._setitem_frame(key, value)
+[32m   4646[39m         [38;5;28;01melif[39;00m isinstance(key, (Series, np.ndarray, list, Index)):
+[32m   4647[39m             self._setitem_array(key, value)
+[32m   4648[39m         [38;5;28;01melif[39;00m isinstance(value, DataFrame):
+[32m-> [39m[32m4649[39m             self._set_item_frame_value(key, value)
+[32m   4650[39m         elif (
+[32m   4651[39m             is_list_like(value)
+[32m   4652[39m             [38;5;28;01mand[39;00m [38;5;28;01mnot[39;00m self.columns.is_unique
+
+[36mFile [39m[32m/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/pandas/core/frame.py:4782[39m, in [36mDataFrame._set_item_frame_value[39m[34m(self, key, value)[39m
+[32m   4778[39m     [38;5;28;01mdef[39;00m _set_item_frame_value(self, key, value: DataFrame) -> [38;5;28;01mNone[39;00m:
+[32m   4779[39m         self._ensure_valid_index(value)
+[32m   4780[39m 
+[32m   4781[39m         [38;5;66;03m# align columns[39;00m
+[32m-> [39m[32m4782[39m         [38;5;28;01mif[39;00m key [38;5;28;01min[39;00m self.columns:
+[32m   4783[39m             loc = self.columns.get_loc(key)
+[32m   4784[39m             cols = self.columns[loc]
+[32m   4785[39m             len_cols = [32m1[39m [38;5;28;01mif[39;00m is_scalar(cols) [38;5;28;01mor[39;00m isinstance(cols, tuple) [38;5;28;01melse[39;00m len(cols)
+
+[36mFile [39m[32m/tmp/arroyave/venvs/Transformation-Strain-Model-NiTi/lib/python3.12/site-packages/pandas/core/indexes/base.py:5657[39m, in [36mIndex.__contains__[39m[34m(self, key)[39m
+[32m   5622[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m__contains__[39m([38;5;28mself[39m, key: Any) -> [38;5;28mbool[39m:
+[32m   5623[39m [38;5;250m    [39m[33;03m"""[39;00m
+[32m   5624[39m [33;03m    Return a boolean indicating whether the provided key is in the index.[39;00m
+[32m   5625[39m 
+[32m   (...)[39m[32m   5655[39m [33;03m    False[39;00m
+[32m   5656[39m [33;03m    """[39;00m
+[32m-> [39m[32m5657[39m     [30;43mhash[39;49m[30;43m([39;49m[30;43mkey[39;49m[30;43m)[39;49m
+[32m   5658[39m     [38;5;28;01mtry[39;00m:
+[32m   5659[39m         [38;5;28;01mreturn[39;00m key [38;5;129;01min[39;00m [38;5;28mself[39m._engine
+
+[31mTypeError[39m: unhashable type: 'StringArray'
+
+
+real	0m23.521s
+user	0m15.371s
+sys	0m0.563s

@@ -1,0 +1,2 @@
+11:tests/test_plot.py .....Fatal Python error: Segmentation fault
+26:  File "/tmp/arroyave/work/eagar-tsai/tests/test_plot.py", line 69 in test_plot_3d_returns_figure

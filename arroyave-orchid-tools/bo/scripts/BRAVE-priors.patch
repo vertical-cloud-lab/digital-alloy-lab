@@ -1,0 +1,24 @@
+16c16
+< df = df[(df["YS (MPa)"].notna()) & (df["YS (MPa)"] != 0)]
+---
+> df = df[(df["Yield Strength (MPa)"].notna()) & (df["Yield Strength (MPa)"] != 0)].reset_index(drop=True)
+24c24
+< y_train = df["YS (MPa)"]
+---
+> y_train = df["Yield Strength (MPa)"]
+37c37
+< df = df[(df["UTS / YS"].notna()) & (df["UTS / YS"] != 0)]
+---
+> df = df[(df["UTS/YS"].notna()) & (df["UTS/YS"] != 0)].reset_index(drop=True)
+44c44
+< y_train = df["UTS / YS"]
+---
+> y_train = df["UTS/YS"]
+56c56
+< df = df[(df["EL (%)"].notna()) & (df["EL (%)"] != 0)]
+---
+> df = df[(df["Elong_T (%)"].notna()) & (df["Elong_T (%)"] != 0)].reset_index(drop=True)
+63c63
+< y_train = df["EL (%)"]
+---
+> y_train = df["Elong_T (%)"]

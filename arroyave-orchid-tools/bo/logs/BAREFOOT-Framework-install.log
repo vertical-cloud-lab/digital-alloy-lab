@@ -1,0 +1,92 @@
+Using CPython 3.10.22
+Creating virtual environment at: /tmp/arroyave/venvs/barefoot
+Activate with: source /tmp/arroyave/venvs/barefoot/bin/activate
+Using Python 3.10.22 environment at: /tmp/arroyave/venvs/barefoot
+Resolved 41 packages in 278ms
+Downloading imageio-ffmpeg (64.8MiB)
+Downloading pandas (12.2MiB)
+Downloading ray (75.5MiB)
+Downloading scikit-learn (9.2MiB)
+ Downloaded scikit-learn
+ Downloaded pandas
+Downloading scikit-learn-extra (1.9MiB)
+ Downloaded scikit-learn-extra
+ Downloaded imageio-ffmpeg
+ Downloaded ray
+Prepared 9 packages in 1.54s
+Installed 41 packages in 199ms
+ + attrs==26.1.0
+ + certifi==2026.10.23
+ + charset-normalizer==3.5.2
+ + click==8.5.0
+ + cloudpickle==3.1.2
+ + contourpy==1.3.2
+ + cycler==0.12.1
+ + filelock==4.1.0
+ + fonttools==4.65.0
+ + george==0.4.4
+ + idna==3.20
+ + imageio==2.38.0
+ + imageio-ffmpeg==0.8.1
+ + joblib==1.6.0
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2025.9.1
+ + kiwisolver==1.5.1
+ + matplotlib==3.10.9
+ + msgpack==1.2.4
+ + numpy==1.26.4
+ + packaging==26.3
+ + pandas==2.3.3
+ + pillow==12.3.0
+ + protobuf==7.36.2
+ + pydoe==0.3.8
+ + pyparsing==3.3.3
+ + python-dateutil==3.0.0
+ + pytz==2026.6
+ + pyyaml==6.0.3
+ + ray==2.60.0
+ + referencing==0.37.0
+ + requests==2.34.2
+ + rpds-py==0.30.0
+ + scikit-learn==1.7.2
+ + scikit-learn-extra==0.3.0
+ + scipy==1.15.3
+ + six==1.17.0
+ + threadpoolctl==3.7.0
+ + typing-extensions==4.16.0
+ + tzdata==2026.6
+ + urllib3==2.8.0
+Using Python 3.10.22 environment at: /tmp/arroyave/venvs/barefoot
+Resolved 2 packages in 164ms
+Downloading scipy (34.8MiB)
+ Downloaded scipy
+Prepared 1 package in 884ms
+Uninstalled 1 package in 41ms
+Installed 1 package in 43ms
+ - scipy==1.15.3
+ + scipy==1.11.4
+Using Python 3.10.22 environment at: /tmp/arroyave/venvs/barefoot
+Resolved 2 packages in 110ms
+Downloading scipy (32.1MiB)
+Downloading numpy (17.4MiB)
+ Downloaded numpy
+ Downloaded scipy
+Prepared 2 packages in 601ms
+Uninstalled 2 packages in 67ms
+Installed 2 packages in 64ms
+ - numpy==1.26.4
+ + numpy==1.25.2
+ - scipy==1.11.4
+ + scipy==1.9.3
+Using Python 3.10.22 environment at: /tmp/arroyave/venvs/barefoot
+Resolved 2 packages in 13ms
+Uninstalled 1 package in 33ms
+Installed 1 package in 45ms
+ - scipy==1.9.3
+ + scipy==1.11.4
+Using Python 3.10.22 environment at: /tmp/arroyave/venvs/barefoot
+Resolved 1 package in 15ms
+Uninstalled 1 package in 58ms
+Installed 1 package in 52ms
+ - numpy==1.25.2
+ + numpy==1.23.5

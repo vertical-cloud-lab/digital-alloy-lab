@@ -1,0 +1,335 @@
+{
+  "n_train": 4096,
+  "n_holdout": 2048,
+  "failed_rows_train": 0,
+  "regimes_train": {
+    "above_boiling": 0.2678,
+    "conduction": 0.4792,
+    "no_melt": 0.2529
+  },
+  "defects_train": {
+    "balling": 0.0012,
+    "defect_free": 0.2063,
+    "keyhole": 0.2087,
+    "lack_of_fusion": 0.5837
+  },
+  "defect_free_and_below_boiling_train": 0.1702,
+  "failed_rows_holdout": 0,
+  "regimes_holdout": {
+    "above_boiling": 0.2856,
+    "conduction": 0.4541,
+    "no_melt": 0.2603
+  },
+  "defects_holdout": {
+    "defect_free": 0.1997,
+    "keyhole": 0.2148,
+    "lack_of_fusion": 0.5854
+  },
+  "defect_free_and_below_boiling_holdout": 0.1538,
+  "peak_factor_vs_eagar_tsai_grid": {
+    "max_rel_diff": 0.00159,
+    "median_rel_diff": 2e-05
+  },
+  "melt_threshold_misclassified": 0,
+  "surrogate_train_rows": 3017,
+  "holdout_extrapolated_rows": 25,
+  "holdout_error": {
+    "melt_width_um": {
+      "mean": -0.242,
+      "median_abs": 0.728,
+      "p95_abs": 2.92,
+      "p99_abs": 4.145,
+      "max_abs": 7.956
+    },
+    "melt_depth_um": {
+      "mean": -0.184,
+      "median_abs": 0.387,
+      "p95_abs": 1.612,
+      "p99_abs": 2.44,
+      "max_abs": 3.926
+    },
+    "melt_length_um": {
+      "mean": -0.117,
+      "median_abs": 0.503,
+      "p95_abs": 2.383,
+      "p99_abs": 3.926,
+      "max_abs": 7.72
+    },
+    "peak_temperature": {
+      "mean": 0.322,
+      "median_abs": 0.014,
+      "p95_abs": 1.363,
+      "p99_abs": 6.456,
+      "max_abs": 31.108
+    }
+  },
+  "holdout_regime_agreement": 1.0,
+  "holdout_defect_agreement": 0.9912,
+  "similarity": [
+    {
+      "variant": "scale_0.5",
+      "max_abs_diff_melt_width_um": 2.0,
+      "max_abs_diff_melt_depth_um": 1.0,
+      "max_abs_diff_melt_length_um": 2.843,
+      "max_rel_diff_peak_T": 0.00097
+    },
+    {
+      "variant": "scale_2",
+      "max_abs_diff_melt_width_um": 1.0,
+      "max_abs_diff_melt_depth_um": 0.5,
+      "max_abs_diff_melt_length_um": 1.131,
+      "max_rel_diff_peak_T": 0.00039
+    },
+    {
+      "variant": "A*0.8,P/0.8",
+      "max_abs_diff_melt_width_um": 0.0,
+      "max_abs_diff_melt_depth_um": 0.0,
+      "max_abs_diff_melt_length_um": 0.0,
+      "max_rel_diff_peak_T": 0.0
+    }
+  ],
+  "sobol_surrogate": {
+    "melt_width_um": {
+      "beam_diameter_m": {
+        "S1": 0.0105,
+        "S1_ci": [
+          0.0048,
+          0.0162
+        ],
+        "ST": 0.088,
+        "ST_ci": [
+          0.085,
+          0.0907
+        ]
+      },
+      "power_w": {
+        "S1": 0.2984,
+        "S1_ci": [
+          0.2839,
+          0.3133
+        ],
+        "ST": 0.4204,
+        "ST_ci": [
+          0.407,
+          0.4315
+        ]
+      },
+      "velocity_m_s": {
+        "S1": 0.1365,
+        "S1_ci": [
+          0.1257,
+          0.146
+        ],
+        "ST": 0.1981,
+        "ST_ci": [
+          0.1929,
+          0.2044
+        ]
+      },
+      "absorptivity": {
+        "S1": 0.3907,
+        "S1_ci": [
+          0.3743,
+          0.4047
+        ],
+        "ST": 0.5242,
+        "ST_ci": [
+          0.5084,
+          0.5401
+        ]
+      }
+    },
+    "melt_depth_um": {
+      "beam_diameter_m": {
+        "S1": 0.0864,
+        "S1_ci": [
+          0.0793,
+          0.0932
+        ],
+        "ST": 0.1068,
+        "ST_ci": [
+          0.1035,
+          0.1104
+        ]
+      },
+      "power_w": {
+        "S1": 0.2471,
+        "S1_ci": [
+          0.2338,
+          0.2581
+        ],
+        "ST": 0.3652,
+        "ST_ci": [
+          0.3516,
+          0.3778
+        ]
+      },
+      "velocity_m_s": {
+        "S1": 0.1762,
+        "S1_ci": [
+          0.1643,
+          0.191
+        ],
+        "ST": 0.2807,
+        "ST_ci": [
+          0.273,
+          0.2892
+        ]
+      },
+      "absorptivity": {
+        "S1": 0.3114,
+        "S1_ci": [
+          0.2982,
+          0.3254
+        ],
+        "ST": 0.4431,
+        "ST_ci": [
+          0.4279,
+          0.4575
+        ]
+      }
+    },
+    "melt_length_um": {
+      "beam_diameter_m": {
+        "S1": 0.0239,
+        "S1_ci": [
+          0.0191,
+          0.028
+        ],
+        "ST": 0.0559,
+        "ST_ci": [
+          0.0534,
+          0.0576
+        ]
+      },
+      "power_w": {
+        "S1": 0.3622,
+        "S1_ci": [
+          0.3456,
+          0.3762
+        ],
+        "ST": 0.4732,
+        "ST_ci": [
+          0.4603,
+          0.485
+        ]
+      },
+      "velocity_m_s": {
+        "S1": 0.0359,
+        "S1_ci": [
+          0.0308,
+          0.0403
+        ],
+        "ST": 0.0569,
+        "ST_ci": [
+          0.0548,
+          0.0591
+        ]
+      },
+      "absorptivity": {
+        "S1": 0.4548,
+        "S1_ci": [
+          0.439,
+          0.47
+        ],
+        "ST": 0.5692,
+        "ST_ci": [
+          0.5561,
+          0.5818
+        ]
+      }
+    },
+    "peak_temperature": {
+      "beam_diameter_m": {
+        "S1": 0.4598,
+        "S1_ci": [
+          0.4343,
+          0.4868
+        ],
+        "ST": 0.6994,
+        "ST_ci": [
+          0.6585,
+          0.7277
+        ]
+      },
+      "power_w": {
+        "S1": 0.1149,
+        "S1_ci": [
+          0.1043,
+          0.1249
+        ],
+        "ST": 0.2611,
+        "ST_ci": [
+          0.246,
+          0.2765
+        ]
+      },
+      "velocity_m_s": {
+        "S1": 0.0109,
+        "S1_ci": [
+          0.0081,
+          0.0136
+        ],
+        "ST": 0.02,
+        "ST_ci": [
+          0.0191,
+          0.021
+        ]
+      },
+      "absorptivity": {
+        "S1": 0.1408,
+        "S1_ci": [
+          0.1314,
+          0.1546
+        ],
+        "ST": 0.3124,
+        "ST_ci": [
+          0.2935,
+          0.3306
+        ]
+      }
+    }
+  },
+  "sobol_S1_given_data_train": {
+    "melt_width_um": {
+      "beam_diameter_m": 0.0104,
+      "power_w": 0.2963,
+      "velocity_m_s": 0.1343,
+      "absorptivity": 0.387
+    },
+    "melt_depth_um": {
+      "beam_diameter_m": 0.0845,
+      "power_w": 0.2478,
+      "velocity_m_s": 0.1773,
+      "absorptivity": 0.3107
+    },
+    "melt_length_um": {
+      "beam_diameter_m": 0.024,
+      "power_w": 0.3617,
+      "velocity_m_s": 0.0349,
+      "absorptivity": 0.4527
+    },
+    "peak_temperature": {
+      "beam_diameter_m": 0.4593,
+      "power_w": 0.1138,
+      "velocity_m_s": 0.0112,
+      "absorptivity": 0.1414
+    }
+  },
+  "surrogate_2^20": {
+    "rows": 1048576,
+    "extrapolated_rows": 12772,
+    "regimes": {
+      "above_boiling": 0.2683,
+      "conduction": 0.4822,
+      "no_melt": 0.2495
+    },
+    "defects": {
+      "balling": 0.0008,
+      "defect_free": 0.2095,
+      "keyhole": 0.2061,
+      "lack_of_fusion": 0.5836
+    },
+    "defect_free_and_below_boiling": 0.1695
+  }
+}

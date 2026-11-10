@@ -1,0 +1,10 @@
+$ (README verbatim) mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=$HOME
+CMake Warning:
+  No source or binary directory provided.  Both will be assumed to be the
+  same as the current working directory, but note that this warning will
+  become a fatal error in future CMake releases.
+
+
+CMake Error: The source directory "/tmp/arroyave/work/PAIPAI/build_readme" does not appear to contain CMakeLists.txt.
+Specify --help for usage, or press the help button on the CMake GUI.
+exit=1

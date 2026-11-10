@@ -1,0 +1,9 @@
+2026-11-05 04:13:12,691	WARNING authentication_token_setup.py:85 -- Token authentication is enabled for this Ray cluster. Set RAY_AUTH_MODE=disabled to opt out. For more information, see https://docs.ray.io/en/latest/ray-security/token-auth.html
+2026-11-05 04:13:14,369	INFO worker.py:2038 -- Started a local Ray instance.
+/tmp/arroyave/work/barefoot/barefoot.py:349: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  self.evaluatedPoints = pd.concat([self.evaluatedPoints,temp])
+/tmp/arroyave/work/barefoot/barefoot.py:372: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  self.iterationData = pd.concat([self.iterationData,temp])
+run_optimization wall 15.6 s
+maxTM 2.8768385016539195
+BAREFOOT finished without logged failure

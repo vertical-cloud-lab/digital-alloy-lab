@@ -1,0 +1,243 @@
+Iteration 1/2
+Current training data: 
+X: [[0.25 0.25]
+ [0.25 0.75]
+ [0.75 0.25]
+ [0.75 0.75]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133]
+GP kernel after fitting: 0.999**2 * RBF(length_scale=[0.0838, 0.0731]) + WhiteKernel(noise_level=0.001)
+Partition 0/9,
+  Start target boxes: 1, to analyze: 1, Best global box index: 0.
+  Computed EI upper bounds for 1 target boxes.
+    Sampling points for boxes 0 to 0...
+  Analyzed 1 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 1.
+    Sampling points for boxes 0 to 0...
+  Sampled best points for 1 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 1, Analyzed: 1, Active: 1, Target: 1,
+  Max EI_hi: 0.792594, Max EI Analyzed: 0.031672, Max EI Active: 0.031672,
+  Max Width: [1. 1.].
+Partition 1/9,
+  Start target boxes: 5, to analyze: 5, Best global box index: 0.
+  Computed EI upper bounds for 5 target boxes.
+    Sampling points for boxes 0 to 4...
+  Analyzed 5 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 5.
+    Sampling points for boxes 0 to 4...
+  Sampled best points for 5 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 5, Analyzed: 5, Active: 5, Target: 5,
+  Max EI_hi: 0.398741, Max EI Analyzed: 0.070884, Max EI Active: 0.070884,
+  Max Width: [1.         0.33333333].
+Partition 2/9,
+  Start target boxes: 25, to analyze: 25, Best global box index: 0.
+  Computed EI upper bounds for 25 target boxes.
+    Sampling points for boxes 0 to 4...
+  Analyzed 5 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 15.
+    Sampling points for boxes 0 to 14...
+  Sampled best points for 15 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 25, Analyzed: 5, Active: 15, Target: 15,
+  Max EI_hi: 0.398741, Max EI Analyzed: 0.070884, Max EI Active: 0.082687,
+  Max Width: [0.33333333 0.33333333].
+Partition 3/9,
+  Start target boxes: 75, to analyze: 75, Best global box index: 15.
+  Computed EI upper bounds for 75 target boxes.
+    Sampling points for boxes 0 to 5...
+  Analyzed 6 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 28.
+    Sampling points for boxes 0 to 27...
+  Sampled best points for 28 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 85, Analyzed: 6, Active: 28, Target: 25,
+  Max EI_hi: 0.398734, Max EI Analyzed: 0.118344, Max EI Active: 0.121725,
+  Max Width: [0.33333333 0.33333333].
+Partition 4/9,
+  Start target boxes: 125, to analyze: 125, Best global box index: 7.
+  Computed EI upper bounds for 125 target boxes.
+    Sampling points for boxes 0 to 6...
+  Analyzed 7 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 46.
+    Sampling points for boxes 0 to 45...
+  Sampled best points for 46 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 185, Analyzed: 7, Active: 46, Target: 46,
+  Max EI_hi: 0.389241, Max EI Analyzed: 0.121725, Max EI Active: 0.121725,
+  Max Width: [0.11111111 0.11111111].
+Partition 5/9,
+  Start target boxes: 230, to analyze: 230, Best global box index: 16.
+  Computed EI upper bounds for 230 target boxes.
+    Sampling points for boxes 0 to 5...
+  Analyzed 6 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 99.
+    Sampling points for boxes 0 to 98...
+  Sampled best points for 99 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 369, Analyzed: 6, Active: 99, Target: 99,
+  Max EI_hi: 0.352142, Max EI Analyzed: 0.123999, Max EI Active: 0.123999,
+  Max Width: [0.11111111 0.11111111].
+Partition 6/9,
+  Start target boxes: 495, to analyze: 495, Best global box index: 31.
+  Computed EI upper bounds for 495 target boxes.
+    Sampling points for boxes 0 to 5...
+  Analyzed 6 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 279.
+    Sampling points for boxes 0 to 278...
+  Sampled best points for 279 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 765, Analyzed: 6, Active: 279, Target: 279,
+  Max EI_hi: 0.305341, Max EI Analyzed: 0.124008, Max EI Active: 0.124011,
+  Max Width: [0.03703704 0.03703704].
+Partition 7/9,
+  Start target boxes: 1395, to analyze: 1395, Best global box index: 91.
+  Computed EI upper bounds for 1395 target boxes.
+    Sampling points for boxes 0 to 5...
+  Analyzed 6 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 731.
+    Sampling points for boxes 0 to 730...
+  Sampled best points for 731 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 1881, Analyzed: 6, Active: 731, Target: 730,
+  Max EI_hi: 0.286404, Max EI Analyzed: 0.123994, Max EI Active: 0.124011,
+  Max Width: [0.03703704 0.03703704].
+Partition 8/9,
+  Start target boxes: 3650, to analyze: 3650, Best global box index: 611.
+  Computed EI upper bounds for 3650 target boxes.
+    Sampling points for boxes 0 to 6...
+  Analyzed 7 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 1890.
+    Sampling points for boxes 0 to 1889...
+  Sampled best points for 1890 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 4801, Analyzed: 7, Active: 1890, Target: 1890,
+  Max EI_hi: 0.206812, Max EI Analyzed: 0.124011, Max EI Active: 0.124011,
+  Max Width: [0.01234568 0.01234568].
+Partition 9/9,
+  Start target boxes: 9450, to analyze: 9450, Best global box index: 1278.
+  Computed EI upper bounds for 9450 target boxes.
+    Sampling points for boxes 0 to 6...
+  Analyzed 7 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 5808.
+    Sampling points for boxes 0 to 5807...
+  Sampled best points for 5808 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 12361, Analyzed: 7, Active: 5808, Target: 5808,
+  Max EI_hi: 0.187231, Max EI Analyzed: 0.124011, Max EI Active: 0.124011,
+  Max Width: [0.01234568 0.00411523].
+Evaluated new point: [0.77829218 0.20456104] -> [-0.90142995]
+Iteration 2/2
+Current training data: 
+X: [[0.25       0.25      ]
+ [0.25       0.75      ]
+ [0.75       0.25      ]
+ [0.75       0.75      ]
+ [0.77829218 0.20456104]], 
+y: [ 1.98827116  0.23742853 -0.86399004  1.29866133 -0.90142995]
+GP kernel after fitting: 0.913**2 * RBF(length_scale=[0.186, 0.234]) + WhiteKernel(noise_level=3.28e-09)
+Partition 0/9,
+  Start target boxes: 1, to analyze: 1, Best global box index: 0.
+  Computed EI upper bounds for 1 target boxes.
+    Sampling points for boxes 0 to 0...
+  Analyzed 1 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 1.
+    Sampling points for boxes 0 to 0...
+  Sampled best points for 1 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 1, Analyzed: 1, Active: 1, Target: 1,
+  Max EI_hi: 0.748192, Max EI Analyzed: 0.002217, Max EI Active: 0.002217,
+  Max Width: [1. 1.].
+Partition 1/9,
+  Start target boxes: 5, to analyze: 5, Best global box index: 0.
+  Computed EI upper bounds for 5 target boxes.
+    Sampling points for boxes 0 to 4...
+  Analyzed 5 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 5.
+    Sampling points for boxes 0 to 4...
+  Sampled best points for 5 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 5, Analyzed: 5, Active: 5, Target: 5,
+  Max EI_hi: 0.531664, Max EI Analyzed: 0.079957, Max EI Active: 0.079957,
+  Max Width: [1.         0.33333333].
+Partition 2/9,
+  Start target boxes: 25, to analyze: 25, Best global box index: 0.
+  Computed EI upper bounds for 25 target boxes.
+    Sampling points for boxes 0 to 4...
+  Analyzed 5 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 23.
+    Sampling points for boxes 0 to 22...
+  Sampled best points for 23 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 25, Analyzed: 5, Active: 23, Target: 23,
+  Max EI_hi: 0.468851, Max EI Analyzed: 0.108239, Max EI Active: 0.108239,
+  Max Width: [0.33333333 0.33333333].
+Partition 3/9,
+  Start target boxes: 115, to analyze: 115, Best global box index: 1.
+  Computed EI upper bounds for 115 target boxes.
+    Sampling points for boxes 0 to 4...
+  Analyzed 5 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 77.
+    Sampling points for boxes 0 to 76...
+  Sampled best points for 77 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 117, Analyzed: 5, Active: 77, Target: 77,
+  Max EI_hi: 0.422589, Max EI Analyzed: 0.108239, Max EI Active: 0.108952,
+  Max Width: [0.33333333 0.33333333].
+Partition 4/9,
+  Start target boxes: 385, to analyze: 385, Best global box index: 11.
+  Computed EI upper bounds for 385 target boxes.
+    Sampling points for boxes 0 to 5...
+  Analyzed 6 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 196.
+    Sampling points for boxes 0 to 195...
+  Sampled best points for 196 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 425, Analyzed: 6, Active: 196, Target: 193,
+  Max EI_hi: 0.337200, Max EI Analyzed: 0.111164, Max EI Active: 0.112441,
+  Max Width: [0.11111111 0.11111111].
+Partition 5/9,
+  Start target boxes: 965, to analyze: 965, Best global box index: 15.
+  Computed EI upper bounds for 965 target boxes.
+    Sampling points for boxes 0 to 5...
+  Analyzed 6 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 373.
+    Sampling points for boxes 0 to 372...
+  Sampled best points for 373 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 1197, Analyzed: 6, Active: 373, Target: 370,
+  Max EI_hi: 0.328597, Max EI Analyzed: 0.113601, Max EI Active: 0.114342,
+  Max Width: [0.11111111 0.11111111].
+Partition 6/9,
+  Start target boxes: 1850, to analyze: 1850, Best global box index: 1.
+  Computed EI upper bounds for 1850 target boxes.
+    Sampling points for boxes 0 to 5...
+  Analyzed 6 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 980.
+    Sampling points for boxes 0 to 979...
+  Sampled best points for 980 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 2677, Analyzed: 6, Active: 980, Target: 980,
+  Max EI_hi: 0.298433, Max EI Analyzed: 0.113990, Max EI Active: 0.113990,
+  Max Width: [0.03703704 0.03703704].
+Partition 7/9,
+  Start target boxes: 4900, to analyze: 4900, Best global box index: 5.
+  Computed EI upper bounds for 4900 target boxes.
+    Sampling points for boxes 0 to 5...
+  Analyzed 6 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 1787.
+    Sampling points for boxes 0 to 1786...
+  Sampled best points for 1787 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 6597, Analyzed: 6, Active: 1787, Target: 1787,
+  Max EI_hi: 0.285562, Max EI Analyzed: 0.114470, Max EI Active: 0.114470,
+  Max Width: [0.03703704 0.01234568].
+Partition 8/9,
+  Start target boxes: 8935, to analyze: 8935, Best global box index: 26.
+  Computed EI upper bounds for 8935 target boxes.
+    Sampling points for boxes 0 to 6...
+  Analyzed 7 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 2742.
+    Sampling points for boxes 0 to 2741...
+  Sampled best points for 2742 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 13745, Analyzed: 7, Active: 2742, Target: 2739,
+  Max EI_hi: 0.229667, Max EI Analyzed: 0.114499, Max EI Active: 0.114518,
+  Max Width: [0.01234568 0.01234568].
+Partition 9/9,
+  Start target boxes: 13695, to analyze: 13695, Best global box index: 145.
+  Computed EI upper bounds for 13695 target boxes.
+    Sampling points for boxes 0 to 5...
+  Analyzed 6 boxes with EI within 0.001 of max EI_hi.
+  Active boxes with EI_hi > max EI_analyze + epsilon_ei: 3746.
+    Sampling points for boxes 0 to 3745...
+  Sampled best points for 3746 active boxes with EI_hi > max EI_analyze + epsilon_ei.
+  Boxes: 24701, Analyzed: 6, Active: 3746, Target: 3746,
+  Max EI_hi: 0.213183, Max EI Analyzed: 0.114521, Max EI Active: 0.114521,
+  Max Width: [0.01234568 0.00411523].
+Evaluated new point: [0.68261317 0.09722222] -> [0.72229776]
+best_x=[0.77829218 0.20456104]
+best_y=-0.9014299480938948
+backend=BackendInfo(requested='auto', selected='numpy', cupynumeric_available=False)
+log_saved=/tmp/arroyave/work/tamubo/examples/exactbo/logs/cpu_exactbo_it2_p10.json

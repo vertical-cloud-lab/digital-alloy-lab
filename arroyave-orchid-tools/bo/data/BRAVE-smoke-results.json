@@ -1,0 +1,56 @@
+{
+ "note": "smoke test on stand-in inputs (Year-2 rows of HTMDEC_Y2_db.xlsx as tested alloys, 180 random candidate compositions); not a reproduction of the campaign",
+ "N_GP": 2,
+ "Batch_size": 2,
+ "x_query_order": [
+  "Al",
+  "V",
+  "Cr",
+  "Mn",
+  "Fe",
+  "Co",
+  "Ni",
+  "Cu"
+ ],
+ "x_query": [
+  [
+   0.05,
+   0.05,
+   0.0,
+   0.1,
+   0.05,
+   0.2,
+   0.05,
+   0.5
+  ],
+  [
+   0.0,
+   0.35,
+   0.4,
+   0.05,
+   0.0,
+   0.05,
+   0.1,
+   0.05
+  ]
+ ],
+ "max_weighted_EHVI_per_GP_sample": [
+  188.7898186922971,
+  202.0540293993473
+ ],
+ "catboost_prior_YS_MPa_on_candidates": {
+  "min": 257.1696025082624,
+  "median": 379.0027063215043,
+  "max": 601.8386433070092
+ },
+ "catboost_prior_elongation_frac": {
+  "min": 0.1977646605776206,
+  "median": 0.32218284510722084,
+  "max": 0.4414044061615073
+ },
+ "catboost_prior_UTS_over_YS": {
+  "min": 1.4204431559188642,
+  "median": 1.9291833359258015,
+  "max": 2.9099088189979985
+ }
+}

@@ -1,0 +1,250 @@
+{
+  "alsi10mg": {
+    "A_inferred": 0.3074,
+    "legend_box_px": [
+      398,
+      733,
+      29,
+      140
+    ],
+    "variants": {
+      "AlSi10Mg, liquidus 867 K": {
+        "slug": "liquidus-867K",
+        "at_A_inferred": {
+          "visible": 58,
+          "lof_classes_match": 37,
+          "lof_classes_n": 43,
+          "am_keyhole": 15,
+          "et_wd25_keyhole": 55,
+          "et_wd25_keyhole_and_am_keyhole": 15,
+          "et_boiling": 53,
+          "et_boiling_and_am_keyhole": 15,
+          "et_default_match": 18,
+          "et_default_counts": {
+            "keyhole": 55,
+            "lack_of_fusion": 3
+          },
+          "am_counts": {
+            "none": 31,
+            "keyhole": 15,
+            "lof_hatch": 9,
+            "lof": 3
+          }
+        },
+        "best_A_lof_classes": 0.32,
+        "best_lof_classes_match": 39,
+        "A_eff": {
+          "A_eff_lof": {
+            "median": 0.201,
+            "min": 0.2,
+            "max": 0.202,
+            "n": 6
+          },
+          "A_eff_lof_hatch": {
+            "median": 0.324,
+            "min": 0.304,
+            "max": 0.363,
+            "n": 14
+          },
+          "A_eff_keyhole_wd2.5": {
+            "median": 0.086,
+            "min": 0.081,
+            "max": 0.091,
+            "n": 6
+          },
+          "A_eff_keyhole_boiling": {
+            "median": 0.111,
+            "min": 0.093,
+            "max": 0.143,
+            "n": 9
+          }
+        },
+        "meltpool_at_A_inferred": {
+          "W_um": 221.1,
+          "D_um": 105.9,
+          "L_um": 317.0,
+          "Dh_um": 85.6,
+          "dT_peak_K": 5981.8,
+          "T_peak_K": 6405.0
+        },
+        "match": {
+          "T_peak_K": {
+            "am": 3044.0,
+            "A_match": 0.135
+          }
+        },
+        "seconds": 6.7
+      }
+    }
+  },
+  "byu-blend": {
+    "A_inferred": 0.3841,
+    "legend_box_px": [
+      400,
+      734,
+      30,
+      136
+    ],
+    "variants": {
+      "blend, eutectic 850 K": {
+        "slug": "eutectic-850K",
+        "at_A_inferred": {
+          "visible": 27,
+          "lof_classes_match": 17,
+          "lof_classes_n": 22,
+          "am_keyhole": 5,
+          "et_wd25_keyhole": 20,
+          "et_wd25_keyhole_and_am_keyhole": 5,
+          "et_boiling": 21,
+          "et_boiling_and_am_keyhole": 5,
+          "et_default_match": 12,
+          "et_default_counts": {
+            "keyhole": 20,
+            "lack_of_fusion": 6,
+            "defect_free": 1
+          },
+          "am_counts": {
+            "none": 13,
+            "lof_hatch": 5,
+            "keyhole": 5,
+            "lof": 4
+          }
+        },
+        "best_A_lof_classes": 0.32,
+        "best_lof_classes_match": 21,
+        "A_eff": {
+          "A_eff_lof": {
+            "median": 0.258,
+            "min": 0.256,
+            "max": 0.292,
+            "n": 15
+          },
+          "A_eff_lof_hatch": {
+            "median": 0.334,
+            "min": 0.276,
+            "max": 0.402,
+            "n": 18
+          },
+          "A_eff_keyhole_wd2.5": {
+            "median": 0.135,
+            "min": 0.121,
+            "max": 0.155,
+            "n": 8
+          },
+          "A_eff_keyhole_boiling": {
+            "median": 0.139,
+            "min": 0.113,
+            "max": 0.182,
+            "n": 9
+          }
+        },
+        "meltpool_at_A_inferred": {
+          "W_um": 383.6,
+          "D_um": 188.4,
+          "L_um": 501.0,
+          "Dh_um": 181.8,
+          "dT_peak_K": 10692.1,
+          "T_peak_K": 10995.3
+        },
+        "match": {
+          "D_um": {
+            "am": 349.0,
+            "A_match": 1.031
+          },
+          "L_um": {
+            "am": 1470.0,
+            "A_match": 1.288
+          },
+          "W_um": {
+            "am": 462.0,
+            "A_match": 0.515
+          },
+          "T_peak_K": {
+            "am": 3119.15,
+            "A_match": 0.101
+          }
+        },
+        "seconds": 7.1
+      },
+      "blend, liquidus 1019 K": {
+        "slug": "liquidus-1019K",
+        "at_A_inferred": {
+          "visible": 27,
+          "lof_classes_match": 20,
+          "lof_classes_n": 22,
+          "am_keyhole": 5,
+          "et_wd25_keyhole": 17,
+          "et_wd25_keyhole_and_am_keyhole": 5,
+          "et_boiling": 21,
+          "et_boiling_and_am_keyhole": 5,
+          "et_default_match": 13,
+          "et_default_counts": {
+            "keyhole": 17,
+            "lack_of_fusion": 10
+          },
+          "am_counts": {
+            "none": 13,
+            "lof_hatch": 5,
+            "keyhole": 5,
+            "lof": 4
+          }
+        },
+        "best_A_lof_classes": 0.41,
+        "best_lof_classes_match": 21,
+        "A_eff": {
+          "A_eff_lof": {
+            "median": 0.338,
+            "min": 0.335,
+            "max": 0.383,
+            "n": 15
+          },
+          "A_eff_lof_hatch": {
+            "median": 0.438,
+            "min": 0.361,
+            "max": 0.526,
+            "n": 18
+          },
+          "A_eff_keyhole_wd2.5": {
+            "median": 0.178,
+            "min": 0.159,
+            "max": 0.209,
+            "n": 9
+          },
+          "A_eff_keyhole_boiling": {
+            "median": 0.139,
+            "min": 0.113,
+            "max": 0.182,
+            "n": 9
+          }
+        },
+        "meltpool_at_A_inferred": {
+          "W_um": 321.6,
+          "D_um": 156.6,
+          "L_um": 397.0,
+          "Dh_um": 148.8,
+          "dT_peak_K": 10692.1,
+          "T_peak_K": 10995.3
+        },
+        "match": {
+          "D_um": {
+            "am": 349.0,
+            "A_match": 1.35
+          },
+          "L_um": {
+            "am": 1470.0,
+            "A_match": 1.686
+          },
+          "W_um": {
+            "am": 462.0,
+            "A_match": 0.674
+          },
+          "T_peak_K": {
+            "am": 3119.15,
+            "A_match": 0.101
+          }
+        },
+        "seconds": 7.0
+      }
+    }
+  }
+}

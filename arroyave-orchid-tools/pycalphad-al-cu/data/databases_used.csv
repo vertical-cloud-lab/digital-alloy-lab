@@ -1,0 +1,25 @@
+database,file,sha256,note
+MatCalc mc_al v2.032 (pycalphad/binder re-encoding),mc_al_v2.032.pycalphad.tdb,54624a7b064106333d541d2a5e81d972d8a83a549f6ecee8ead2aa66900d6d20,ODbL 1.0/DbCL 1.0; GP_MAT order-disorder link removed at load time
+SGTE binary collection (Hallstedt 2025),AlZr-98Sau-LB.tdb,9766b9f4a7d3417128b1362a4f576098844da2f0bd1ff24e3a378313aed1484f,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),AlZr-86Sau.tdb,31b2d1ad4273b15cc9f1761c13d595d0e327bcd20d93005c77ab781bbb2c2d3f,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),AlZr-01Wan.tdb,4b09f4b519f6d63968ee503b8e6207577e1d003895d9a321f3f727f6341ee565,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),AlZr-10Hir.tdb,4806bb3f89606d7f3fa574035392e63b783efe226d8bbafc5f1aa4668d5f802d,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),AlZr-15Fis.tdb,24ba1ed7e58494bd89232a0f0a4d07afa20cadf492303da7d0763a8b5a559f79,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),AlZr-18Khv.tdb,c638fa151494d0c0b87160913084f1a9b8dd9b85f1a933eab78e37d639999033,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),AlZr-18Tam.tdb,8010f4209dbbc4750a02f444380120e87924b56ec12a70bc5739071655a86a5a,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),AlZr-20Lon.tdb,64333150958f0d77da466da8ce08c4f7bfd4b8501d44620f4be0b2e38f965da5,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+MatCalc mc_ni v2.036,mc_ni_v2036.tdb,84ba813156e1f7d8bde495d74420319afec03572b981f6b56103807f305313ab,ODbL 1.0/DbCL 1.0; downloaded from matcalc.at; syntax-converted at load time by the ONR YIP clean_tdb_text (no numbers changed)
+SGTE binary collection (Hallstedt 2025),CuNi-92Mey-LB.tdb,7e52adda858e302168ae26b5abfe17f4726ccbfaaff0880abcad5b38e3f559e1,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),CuNi-07Tur.tdb,10031ba89321cab1e44115d6fa90ffa375b8daa4c4ee8d4c0bf0b9f027b1c488,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),CuNi-87Jan.tdb,c378a4dea0f2dadf130df3dbfd46ff643d92c32242bb19a0a743b2d29d1f2d59,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),CuNi-89Sri.tdb,39b018ea8c7d3c13c313c0275c736b6516c8bfc5c0d2efaf0cf5b4a3963fc3f7,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),AlSi-97Feu-LB.tdb,c8b80517b049587863b37bde0719234e14e5e960e24c9f00e67f27fece0ea415,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),AlSi-14Lia.tdb,256542a28352f7562c47a15d334016301e88d508dc1cb7ba80d35b97dc3618a9,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),AlCu-21Kro.tdb,bd06016e51db2bef626a65b9f3a00b660e9b1c8a7c8c10e4d0ad8867809c62e4,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),AlCu-98Sau-LB.tdb,bed1eea6f6cf10b8c9b80e3c1bc04f3c129893a8205650098d464a12e718d0c9,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),CrCu-17Liu.tdb,795ca2b88d6ba3916ac73e5931fae1cc4720209def8ea95347f84559229c9840,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),CrCu-95Zen-LB.tdb,bc9cd744f47d1be2218a73811649875c74b811adcbc6a748065e12b0380986f3,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),CuZr-22Zho.tdb,7239bcd57a75ba472018f47d3a9166fc4997234325d38eee333d01c2143d7331,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),CuZr-94Zen-LB.tdb,4cce85fd056a6fced1c8270faca7a1d811d2f8227b305f70e0a221925bd07f69,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),CuSn-24Oik.tdb,2342771d678230e90a0e72c2e484fa26b7bb9a8586aa7f71288cb8df977e839d,CC BY 4.0; doi:10.1016/j.calphad.2025.102833
+SGTE binary collection (Hallstedt 2025),CuSn-96Shi-LB.tdb,fd6df74d5a11207143ac3f5363c6efa6ba0636a4b33d6468694a3d3b0118154f,CC BY 4.0; doi:10.1016/j.calphad.2025.102833

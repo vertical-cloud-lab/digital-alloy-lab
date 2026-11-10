@@ -1,0 +1,19 @@
+Thu Nov  5 04:00:35 UTC 2026
+  ok  cuzr-espei-mcmc/gate_sgte_start.json: identical (sha256 c8f91edac29e)
+  ok  cuzr-espei-mcmc/fig_espei_negative.pdf: identical (sha256 6e243d754f57)
+FAIL cuzr-espei-mcmc/fig_espei_negative.png: differs from figures/fig_espei_negative.png
+cuzr-espei-mcmc: quick path 20 s
+  ok  oneshot-benchmark/fig_cuzr_oneshot.pdf: identical (sha256 45c0b2ca9c11)
+FAIL oneshot-benchmark/grace_grid_score.json: differs from figures/grace_grid_score.json
+FAIL oneshot-benchmark/fig_cuzr_oneshot.png: differs from figures/fig_cuzr_oneshot.png
+oneshot-benchmark: quick path 139 s
+  ok  mlip-formation-enthalpy/summary.json: identical (sha256 93ed5f0602e1)
+FAIL mlip-formation-enthalpy/mlip_benchmark.png: differs from figures/mlip_benchmark.png
+FAIL mlip-formation-enthalpy/mlip_benchmark.pdf: differs from figures/mlip_benchmark.pdf
+mlip-formation-enthalpy: quick path 21 s
+FAILED: cuzr-espei-mcmc, mlip-formation-enthalpy, oneshot-benchmark
+
+real	2m59.702s
+user	2m52.939s
+sys	0m1.408s
+exit=1

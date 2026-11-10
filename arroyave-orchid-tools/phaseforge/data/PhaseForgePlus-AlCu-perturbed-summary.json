@@ -1,0 +1,48 @@
+{
+ "phases": [
+  "AL2CU_C16",
+  "BCC_A2",
+  "FCC_A1",
+  "LIQUID"
+ ],
+ "sgte_vv": {
+  "VV0000": -67.094,
+  "VV0001": 8.555,
+  "VV0002": -47.406,
+  "VV0003": 6.75
+ },
+ "start_vv": {
+  "VV0000": -57.094,
+  "VV0001": 8.555,
+  "VV0002": -42.406,
+  "VV0003": 6.75
+ },
+ "perturb": [
+  "VV0000=+10",
+  "VV0002=+5"
+ ],
+ "constructor_s": 0.17,
+ "symbols": [
+  "VV0000",
+  "VV0001",
+  "VV0002",
+  "VV0003"
+ ],
+ "zpf_datasets": 1,
+ "scipy_message": "Desired error not necessarily achieved due to precision loss.",
+ "scipy_nit": 8,
+ "scipy_success": false,
+ "optimizer_status": "finished",
+ "optimizer_s": 53.0,
+ "n_evals": 141,
+ "objective_x0": 94.89680461354922,
+ "objective_best": 93.92036466194352,
+ "best_vv": {
+  "VV0000": -61.63838268582709,
+  "VV0001": 4.711753988147549,
+  "VV0002": -43.85401021835313,
+  "VV0003": 5.324826816135727
+ },
+ "start_tdb": "PhaseForgePlus-AlCu-perturbed-start.tdb",
+ "tuned_tdb": "PhaseForgePlus-AlCu-perturbed-tuned.tdb"
+}

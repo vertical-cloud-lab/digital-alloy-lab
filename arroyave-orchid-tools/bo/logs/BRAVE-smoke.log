@@ -1,0 +1,46 @@
+=== make inputs (N_GP=10, 120 feasible + 60 infeasible candidates)  (03:30:50)
+tested (67, 8) space (180, 8) prob all_space (20000, 8)
+=== prior_eval.py as shipped  (03:31:13)
+    from helper import FeatureGenerator
+  File "/tmp/arroyave/work/BRAVE/code/bbo_python/helper.py", line 8, in <module>
+    from CBFV import composition
+  File "/tmp/arroyave/venvs/BRAVE/lib/python3.11/site-packages/CBFV/composition.py", line 7, in <module>
+    import pkg_resources
+ModuleNotFoundError: No module named 'pkg_resources'
+rc=1
+=== patch priors.py column names to match data/HTMDEC_Y2_db.xlsx  (03:31:14)
+    from helper import FeatureGenerator
+  File "/tmp/arroyave/work/BRAVE/code/bbo_python/helper.py", line 8, in <module>
+    from CBFV import composition
+  File "/tmp/arroyave/venvs/BRAVE/lib/python3.11/site-packages/CBFV/composition.py", line 7, in <module>
+    import pkg_resources
+ModuleNotFoundError: No module named 'pkg_resources'
+rc=1 wall=0s
+=== YS_pb (Peierls-Nabarro-type prior) on x_test  (03:31:15)
+  File "/tmp/arroyave/work/BRAVE/code/bbo_python/HT_FCC_YS.py", line 33, in read_data
+    with open(filename,'r') as in_file:
+         ^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'table.dat'
+=== main.py: N_GP 1000->10, Batch_size 16->4, joblib n_jobs cpu_count->2  (03:31:17)
+39:Batch_size=4 # use more than 1 for batch BO
+40:N_GP=10; # if batch BO
+288:    n_jobs=2
+    from priors import YS_prior, EUTS_prior, UTStoYS_prior
+  File "/tmp/arroyave/work/BRAVE/code/bbo_python/priors.py", line 6, in <module>
+    from helper import FeatureGenerator
+  File "/tmp/arroyave/work/BRAVE/code/bbo_python/helper.py", line 8, in <module>
+    from CBFV import composition
+  File "/tmp/arroyave/venvs/BRAVE/lib/python3.11/site-packages/CBFV/composition.py", line 7, in <module>
+    import pkg_resources
+ModuleNotFoundError: No module named 'pkg_resources'
+rc=1 wall=2s
+ls: cannot access 'x_query.csv': No such file or directory
+ls: cannot access 'all_candidates.csv': No such file or directory
+ls: cannot access 'all_improvements.csv': No such file or directory
+=== Probability_calculations/main.py on a 20,000-point stand-in all_space.csv  (03:31:19)
+Traceback (most recent call last):
+  File "/tmp/arroyave/work/BRAVE/code/Probability_calculations/main.py", line 67, in <module>
+    pd.DataFrame(np.array(p).reshape(1490129,1)).to_csv("p.csv", header=None, index=None)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: cannot reshape array of size 20000 into shape (1490129,1)
+rc=1 wall=21s

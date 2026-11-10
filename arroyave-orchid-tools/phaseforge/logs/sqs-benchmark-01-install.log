@@ -1,0 +1,25 @@
+$ uv venv --python 3.12 /tmp/arroyave/venvs/sqs-benchmark
+Activate with: source /tmp/arroyave/venvs/sqs-benchmark/bin/activate
+$ uv pip install -e /tmp/arroyave/work/sqs-benchmark
+ + setuptools==84.2.1
+ + setuptools-scm==10.3.4
+ + spglib==2.8.0
+ + sqs-benchmark==0.1.0 (from file:///tmp/arroyave/work/sqs-benchmark)
+ + symengine==0.13.0
+ + sympy==1.14.0
+ + tabulate==0.10.0
+ + tinydb==4.9.0
+ + tqdm==4.70.1
+ + typing-extensions==4.16.0
+ + tzdata==2026.6
+ + uncertainties==3.2.3
+ + urllib3==2.8.0
+ + vcs-versioning==2.6.0
+ + xarray==2026.9.0
+exit=0
+$ uv pip install -r pyproject.toml  (deps only) + -e BLADE (9d3859c)
+Installed 3 packages in 92ms
+ + ase==3.29.0
+ + blade==0.2.0 (from file:///tmp/arroyave/work/BLADE)
+ + imageio==2.38.1
+exit=0 wall=4s

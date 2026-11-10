@@ -1,0 +1,12 @@
+cell 3: 🔁 Trial 1/2 — Composite Kernel
+cell 3: 🔁 Trial 1/2 — RBF Kernel
+cell 3: 🔁 Trial 2/2 — Composite Kernel
+cell 3: 🔁 Trial 2/2 — RBF Kernel
+cell 15: 🔁 Trial 1/2 — Composite Kernel
+cell 15: 🔁 Trial 1/2 — RBF Kernel
+cell 15: 🔁 Trial 2/2 — Composite Kernel
+cell 15: 🔁 Trial 2/2 — RBF Kernel
+cell 19: FileNotFoundError: [Errno 2] No such file or directory: 'Printability_Data.csv'
+      2999 f = self.handles.handle |     957 # Convert BytesIO or file objects passed with an encoding | FileNotFoundError: [Errno 2] No such file or directory: 'Printability_Data.csv'
+cell 20: NameError: name 'mean_hv_composite' is not defined
+   NameError                                 Traceback (most recent call last) |      19     linewidth=1.5, | NameError: name 'mean_hv_composite' is not defined

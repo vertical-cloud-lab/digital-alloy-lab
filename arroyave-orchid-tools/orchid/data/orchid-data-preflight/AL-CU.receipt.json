@@ -1,0 +1,61 @@
+{
+  "ready": false,
+  "errors": [
+    {
+      "code": "target_phases_missing",
+      "path": "invariants/AL-CU/AlCu-02Mie.zpf-00.json",
+      "phases": [
+        "AL4CU9_GAMMA"
+      ]
+    }
+  ],
+  "review_required": [
+    {
+      "code": "unverified_phase_identity",
+      "paths": [
+        "invariants/AL-CU/AlCu-02Mie.zpf-00.json"
+      ],
+      "phase": "AL4CU9_GAMMA",
+      "acknowledgement": null
+    }
+  ],
+  "acknowledged": [],
+  "target_sha256": "bd06016e51db2bef626a65b9f3a00b660e9b1c8a7c8c10e4d0ad8867809c62e4",
+  "target_provenance": null,
+  "phase_identity_assertions": {},
+  "selection_sha256": "4ec5c0a397f087c059edfb4f8e97bf24ddd4bb2f4527772c7d142c21523280dc",
+  "datasets_checked": 4,
+  "inputs": [
+    {
+      "path": "experimental/AL-CU/AlCu-21Kro.zpf-00.json",
+      "bundle_sha256": "d78b0f6e295c1379fda79883cdfb25652371a56ed8c69f5b41a97cc02cc87790",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/experimental/AL-CU/AlCu-21Kro.zpf-00.json",
+      "fit_sha256": "d78b0f6e295c1379fda79883cdfb25652371a56ed8c69f5b41a97cc02cc87790"
+    },
+    {
+      "path": "invariants/AL-CU/AlCu-02Mie.zpf-00.json",
+      "bundle_sha256": "d54d1caaeafe67984741f0bed1df383a678e4353e75989363cda0e7d2de1a103",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-CU/AlCu-02Mie.zpf-00.json",
+      "fit_sha256": "d54d1caaeafe67984741f0bed1df383a678e4353e75989363cda0e7d2de1a103"
+    },
+    {
+      "path": "invariants/AL-CU/AlCu-21Kro.zpf-00.json",
+      "bundle_sha256": "15578395104d1e4c930fb062801b71d56c07778b88d7b697a79fa3b6d47abfe3",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-CU/AlCu-21Kro.zpf-00.json",
+      "fit_sha256": "15578395104d1e4c930fb062801b71d56c07778b88d7b697a79fa3b6d47abfe3"
+    },
+    {
+      "path": "invariants/AL-CU/AlCu-21Kro.zpf-01.json",
+      "bundle_sha256": "c67eba916213d770c7d8ea020023938cc52b36c0488ba968bd55f623322c9c1e",
+      "fit_file": "/tmp/arroyave/src/orchid-calphad__orchid-data/espei/invariants/AL-CU/AlCu-21Kro.zpf-01.json",
+      "fit_sha256": "c67eba916213d770c7d8ea020023938cc52b36c0488ba968bd55f623322c9c1e"
+    }
+  ],
+  "weight_overrides": [],
+  "limitations": [
+    "Preflight checks input compatibility, not model accuracy or residual convergence.",
+    "ZPF uses driving-force tolerance; temperature/composition budgets are not automatically propagated.",
+    "Shared-source covariance is not estimated."
+  ],
+  "release_modified": false
+}

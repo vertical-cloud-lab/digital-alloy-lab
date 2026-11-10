@@ -1,0 +1,7 @@
+$ python espei/check_weights.py --bundle espei   (cwd = orchid-data checkout, read-only)
+{
+  "datasets_checked": 8589,
+  "weighted_values_checked": 6256,
+  "errors": []
+}
+exit=0 elapsed=6.432485620s

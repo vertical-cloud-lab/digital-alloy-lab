@@ -1,0 +1,4 @@
+  File "/tmp/arroyave/work/HTMDEC/bbo_python/graph_result.py", line 93
+    plt.text(0.02, 0.00, f'Batches of {data_input[(data_input['Iteration'] == 1)].shape[0]}', transform=ax.transAxes, fontfamily='Calibri', fontsize = 28, ha='left', va='bottom')
+                                                               ^^^^^^^^^
+SyntaxError: f-string: unmatched '['

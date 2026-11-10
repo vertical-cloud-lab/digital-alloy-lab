@@ -1,0 +1,63 @@
+/tmp/arroyave/venvs/hall-petch/bin/python scripts/figures/make_framework_overview.py
+Wrote /tmp/arroyave/work/hall-petch/build/figures/fig00_framework_overview.png
+/tmp/arroyave/venvs/hall-petch/bin/python scripts/figures/make_batch_colored_figures.py
+Wrote fig01_hall_petch.png
+Wrote fig09_tabor_relation.png
+Wrote fig_external_ab.png
+/tmp/arroyave/venvs/hall-petch/bin/python scripts/figures/_make_hv_ys_rank_fig.py
+  B-campaign (n=34): rho = +0.953
+  C-campaign (n=59): rho = +0.086
+n = 93; global rho = 0.456
+  BBA: rho = +0.944 (n=17)
+  BBB: rho = +0.900 (n=9)
+  BBC: rho = +0.952 (n=8)
+  CBA: rho = +0.921 (n=23)
+  CBB: rho = +0.704 (n=15)
+  CBC: rho = +0.773 (n=21)
+Saved /tmp/arroyave/work/hall-petch/build/figures/fig_hv_ys_rank.png
+/tmp/arroyave/venvs/hall-petch/bin/python scripts/figures/make_property_figures.py
+Loaded 93 alloys
+Saved: build/figures/fig_property_pairwise.png
+Saved: build/figures/fig_property_histograms.png
+/tmp/arroyave/venvs/hall-petch/bin/python scripts/figures/make_provenance_figure.py
+Loaded 93 alloys (6 batches)
+Saved: /tmp/arroyave/work/hall-petch/build/figures/fig_provenance.png
+/tmp/arroyave/venvs/hall-petch/bin/python scripts/figures/replot_fair_comparison_heatmap.py
+Wrote /tmp/arroyave/work/hall-petch/analysis_plots/fair_comparison_LOBO_heatmap.png
+  copied -> /tmp/arroyave/work/hall-petch/build/figures
+/tmp/arroyave/venvs/hall-petch/bin/python scripts/figures/make_restyled_figures.py
+Wrote /tmp/arroyave/work/hall-petch/analysis_plots/fig02_correlation_matrix.png
+Wrote /tmp/arroyave/work/hall-petch/analysis_plots/fig_sss_parity.png
+Wrote /tmp/arroyave/work/hall-petch/analysis_plots/fig_scaling_deltabic.png
+Wrote /tmp/arroyave/work/hall-petch/analysis_plots/fig_scaling_fits.png
+Wrote /tmp/arroyave/work/hall-petch/analysis_plots/fig_bayesian_bma.png
+Wrote /tmp/arroyave/work/hall-petch/analysis_plots/fig_comp_hp_models_ab.png
+Wrote /tmp/arroyave/work/hall-petch/analysis_plots/fig_misfit_scatter.png
+Wrote /tmp/arroyave/work/hall-petch/analysis_plots/fig_premodel_hulls_heatmap.png
+Wrote /tmp/arroyave/work/hall-petch/analysis_plots/fig08_pysr_pareto.png
+
+All restyled figures written.
+/tmp/arroyave/venvs/hall-petch/bin/python scripts/figure_sync.py status
+  (no Overleaf folder at /home/runner/Dropbox/apps/Overleaf/Revisiting_Hall_Petch/figures; comparing with the last sync only)
+  DIFFERS   fair_comparison_LOBO_heatmap.png: the canonical figure is kept unless promoted
+  DIFFERS   fig00_framework_overview.png: the canonical figure is kept unless promoted
+  DIFFERS   fig01_hall_petch.png: the canonical figure is kept unless promoted
+  DIFFERS   fig02_correlation_matrix.png: the canonical figure is kept unless promoted
+  DIFFERS   fig08_pysr_pareto.png: the canonical figure is kept unless promoted
+  DIFFERS   fig09_tabor_relation.png: the canonical figure is kept unless promoted
+  DIFFERS   fig_bayesian_bma.png: the canonical figure is kept unless promoted
+  DIFFERS   fig_comp_hp_models_ab.png: the canonical figure is kept unless promoted
+  DIFFERS   fig_external_ab.png: the canonical figure is kept unless promoted
+  DIFFERS   fig_hv_ys_rank.png: the canonical figure is kept unless promoted
+  DIFFERS   fig_misfit_scatter.png: the canonical figure is kept unless promoted
+  DIFFERS   fig_premodel_hulls_heatmap.png: the canonical figure is kept unless promoted
+  DIFFERS   fig_property_histograms.png: the canonical figure is kept unless promoted
+  NEW       fig_property_pairwise.png: not a paper figure
+  DIFFERS   fig_provenance.png: the canonical figure is kept unless promoted
+  DIFFERS   fig_scaling_deltabic.png: the canonical figure is kept unless promoted
+  DIFFERS   fig_scaling_fits.png: the canonical figure is kept unless promoted
+  DIFFERS   fig_sss_parity.png: the canonical figure is kept unless promoted
+
+real	0m23.264s
+user	0m18.071s
+sys	0m1.458s

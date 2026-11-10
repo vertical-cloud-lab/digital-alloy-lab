@@ -1,0 +1,2738 @@
+{
+ "server": "sdk",
+ "get_formation_enthalpy": {
+  "Al2Cu": {
+   "formula": "Al2Cu",
+   "composition": {
+    "AL": 0.6667,
+    "CU": 0.3333
+   },
+   "system": "AL-CU",
+   "unit": "kJ/mol-atom",
+   "fields": "summary",
+   "literature": [],
+   "literature_other_units": [],
+   "dft": {
+    "mp": {
+     "source": "Materials Project",
+     "available": true,
+     "evidence_class": "dft",
+     "reference": {
+      "kind": "dft_elemental_ground_state_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "release": null,
+     "provenance": {
+      "above_hull_window_eV": 0.05,
+      "builder_version": 1,
+      "collinear_tol": 1e-12,
+      "correction_model": "MP2020 (applied upstream by the Materials Project; none added)",
+      "degenerate_tol": 1e-06,
+      "entry_pool": "all_nondeprecated",
+      "is_stable_source": "upstream_flag",
+      "observed_at": "2026-09-01T20:54:47Z",
+      "snapshot_scope_elements": [],
+      "snapshot_scope_kind": "full",
+      "snapshot_sha256": "b6deba8ecf1b67211b3d89cd33a5f98a1939d4bcd92db561818195e55187492a",
+      "source_release": "2026.04.13",
+      "stability_tol": 0.0001,
+      "thermo_type": "GGA_GGA+U",
+      "upstream_energy_corrections": "MP2020 compatibility corrections (anion and GGA/GGA+U mixing corrections), applied by the Materials Project to its GGA_GGA+U thermo energies"
+     },
+     "x_element": "CU",
+     "x": 0.3333,
+     "entries": [
+      {
+       "collinear": false,
+       "degenerate": [],
+       "energy": -0.17806622999999946,
+       "energy_per_atom": -4.041519006666666,
+       "entries_at_x": 3,
+       "formula": "Al2Cu",
+       "nsites": 3,
+       "phase": "mp-aaacechq",
+       "phase_kind": "structure",
+       "spacegroup_number": 225,
+       "spacegroup_symbol": "Fm-3m",
+       "theoretical": true,
+       "x": 0.3333333333333333,
+       "on_hull": true,
+       "energy_above_hull_eV": 0.0,
+       "formation_energy_eV_per_atom": -0.17806622999999946,
+       "formation_energy_kJ_per_mol_atom": -17.181
+      },
+      {
+       "energy": -0.16553469833333287,
+       "energy_above_hull_mp": 0.012531531666666318,
+       "energy_above_hull_recomputed": 0.012531531666666595,
+       "formula": "Al2Cu",
+       "phase": "mp-aaaaabmk",
+       "spacegroup_symbol": "I4/mcm",
+       "theoretical": false,
+       "x": 0.3333333333333333,
+       "on_hull": false,
+       "energy_above_hull_eV": 0.012531531666666595,
+       "formation_energy_eV_per_atom": -0.16553469833333287,
+       "formation_energy_kJ_per_mol_atom": -15.972
+      }
+     ],
+     "lowest_kJ_per_mol_atom": -17.181,
+     "window_note": "entries above the hull are kept only within the layer's above_hull_window_eV",
+     "data_url": "https://data.orchid-project.org/hulls/dft-mp/AL/AL-CU.json"
+    },
+    "oqmd": {
+     "source": "OQMD",
+     "available": true,
+     "evidence_class": "dft",
+     "reference": {
+      "kind": "dft_fitted_elemental_reference_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "release": null,
+     "provenance": {
+      "above_hull_window_eV": 0.05,
+      "builder_version": 1,
+      "collinear_tol": 1e-12,
+      "correction_model": "OQMD fit-partial ('standard' fit, applied upstream by OQMD; none added)",
+      "degenerate_tol": 1e-06,
+      "entry_pool": "all_nondeprecated",
+      "is_stable_source": "derived",
+      "observed_at": "2026-09-05T17:02:03Z",
+      "snapshot_scope_elements": [],
+      "snapshot_scope_kind": "full",
+      "snapshot_sha256": "2a9393262c52ec35600424236c352a4cdb3291c8b25c1c6588f5e62abe8e0d8d",
+      "source_release": "qmdb_v1_8_022026",
+      "stability_tol": 0.0001,
+      "thermo_type": "standard",
+      "upstream_energy_corrections": "OQMD 'standard' fit (fit-partial of Kirklin et al. 2015): elemental reference energies of a subset of elements fitted to experimental formation enthalpies, applied by OQMD"
+     },
+     "x_element": "CU",
+     "x": 0.3333,
+     "entries": [
+      {
+       "collinear": false,
+       "degenerate": [],
+       "energy": -0.174995133333333,
+       "energy_per_atom": -3.91080790666667,
+       "entries_at_x": 14,
+       "formula": "Al2 Cu1",
+       "nsites": 3,
+       "phase": "oqmd-695020",
+       "phase_kind": "structure",
+       "spacegroup_number": 225,
+       "spacegroup_symbol": "Fm-3m",
+       "theoretical": true,
+       "x": 0.3333333333333333,
+       "on_hull": true,
+       "energy_above_hull_eV": 0.0,
+       "formation_energy_eV_per_atom": -0.174995133333333,
+       "formation_energy_kJ_per_mol_atom": -16.884
+      },
+      {
+       "energy": -0.15628721,
+       "energy_above_hull_mp": 0.018707923333332988,
+       "energy_above_hull_recomputed": 0.018707923333332988,
+       "formula": "Al2 Cu1",
+       "phase": "oqmd-18664",
+       "spacegroup_symbol": "Fmmm",
+       "theoretical": false,
+       "x": 0.3333333333333333,
+       "on_hull": false,
+       "energy_above_hull_eV": 0.018707923333332988,
+       "formation_energy_eV_per_atom": -0.15628721,
+       "formation_energy_kJ_per_mol_atom": -15.079
+      }
+     ],
+     "lowest_kJ_per_mol_atom": -16.884,
+     "window_note": "entries above the hull are kept only within the layer's above_hull_window_eV",
+     "data_url": "https://data.orchid-project.org/hulls/dft-oqmd/AL/AL-CU.json"
+    }
+   },
+   "summary": {
+    "dft_mp_lowest": -17.181,
+    "dft_oqmd_lowest": -16.884
+   },
+   "summary_rule": "Statistics per evidence class over values in kJ/mol-atom (records with basis-unstated kJ/mol are listed in literature_other_units and excluded), excluding flags unsigned_in_print and magnitude_suspect. DFT: lowest-energy entry at the composition per source; MP and OQMD use different references and a... [509 chars]",
+   "literature_match_rule": "record property HM_FORM in the compound's system file (and, by default, in files of higher-order systems containing it; the record's `system` says where it was reported), with one formula parsed from its phase label(s) (or a single printed mole-fraction phase composition) equal to the requested comp... [316 chars]",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_sources`), the TDB assessment (`model_citation` / `model_doi`) for... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_conversion) and sigma_effective = max(sqrt(max(printed, readi... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts anything.",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al3Zr": {
+   "formula": "Al3Zr",
+   "composition": {
+    "AL": 0.75,
+    "ZR": 0.25
+   },
+   "system": "AL-ZR",
+   "unit": "kJ/mol-atom",
+   "fields": "summary",
+   "literature": [
+    {
+     "id": "ORC-MALFDLVR2A",
+     "property": "HM_FORM",
+     "value": -40.75,
+     "unit": "kJ/mol-atom",
+     "T_K": 298.15,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "experimental",
+     "accepted": true,
+     "espei_ready": true,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s11669-015-0398-y",
+     "page": 4,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s11669-015-0398-y",
+     "fold_lso": 1,
+     "fold_lpo": 2,
+     "review_state": "extracted",
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-MALFDLVR2A%20%28AL-ZR%29&record_id=ORC-MALFDLVR2A&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown=-40.75%20kJ%2Fmol-atom",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "kJ/mol-atom",
+        "sigma_printed": null,
+        "sigma_reading": 0.005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 3.5,
+         "class": "unknown",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 3.5
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 2, row 1"
+    },
+    {
+     "id": "ORC-6XHHBQTLFH.cd6016",
+     "property": "HM_FORM",
+     "value": -48.4,
+     "unit": "kJ/mol-atom",
+     "T_K": 298.15,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "experimental",
+     "accepted": true,
+     "espei_ready": true,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s11669-015-0398-y",
+     "page": 4,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s11669-015-0398-y",
+     "fold_lso": 1,
+     "fold_lpo": 2,
+     "review_state": "extracted",
+     "merged_ids": [
+      "ORC-6XHHBQTLFH.d67b1e"
+     ],
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-6XHHBQTLFH.cd6016%20%28AL-ZR%29&record_id=ORC-6XHHBQTLFH.cd6016&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown=-48.4%20kJ%2Fmol-atom",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "kJ/mol-atom",
+        "sigma_printed": 1.3,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 3.5,
+         "class": "unknown",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 3.5
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 2, row 2"
+    },
+    {
+     "id": "ORC-UB5CYH435K",
+     "property": "HM_FORM",
+     "value": -44.3,
+     "unit": "kJ/mol-atom",
+     "T_K": 298.15,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s11669-015-0398-y",
+     "page": 4,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s11669-015-0398-y",
+     "fold_lso": 1,
+     "fold_lpo": 2,
+     "review_state": "extracted",
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-UB5CYH435K%20%28AL-ZR%29&record_id=ORC-UB5CYH435K&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown=-44.3%20kJ%2Fmol-atom",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "kJ/mol-atom",
+        "sigma_printed": null,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 3.9,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 3.9
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 2, row 3"
+    },
+    {
+     "id": "ORC-A6PBYPD7XK",
+     "property": "HM_FORM",
+     "value": -40.63,
+     "unit": "kJ/mol-atom",
+     "T_K": 298.15,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s11669-015-0398-y",
+     "page": 4,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s11669-015-0398-y",
+     "fold_lso": 1,
+     "fold_lpo": 2,
+     "review_state": "extracted",
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-A6PBYPD7XK%20%28AL-ZR%29&record_id=ORC-A6PBYPD7XK&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown=-40.63%20kJ%2Fmol-atom",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "kJ/mol-atom",
+        "sigma_printed": null,
+        "sigma_reading": 0.005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 3.9,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 3.9
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 2, row 4"
+    },
+    {
+     "id": "ORC-7B2XPF6LGK",
+     "property": "HM_FORM",
+     "value": -48.5,
+     "unit": "kJ/mol-atom",
+     "T_K": 298.15,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s11669-015-0398-y",
+     "page": 4,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s11669-015-0398-y",
+     "fold_lso": 1,
+     "fold_lpo": 2,
+     "review_state": "extracted",
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-7B2XPF6LGK%20%28AL-ZR%29&record_id=ORC-7B2XPF6LGK&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown=-48.5%20kJ%2Fmol-atom",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "kJ/mol-atom",
+        "sigma_printed": null,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 3.9,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 3.9
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 2, row 5"
+    },
+    {
+     "id": "ORC-L7TZCWZXVC",
+     "property": "HM_FORM",
+     "value": -40.6,
+     "unit": "kJ/mol-atom",
+     "T_K": 298.15,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s11669-015-0398-y",
+     "page": 4,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s11669-015-0398-y",
+     "fold_lso": 1,
+     "fold_lpo": 2,
+     "review_state": "extracted",
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-L7TZCWZXVC%20%28AL-ZR%29&record_id=ORC-L7TZCWZXVC&system=AL-ZR&source=doi%3A10.1007%2Fs11669-015-0398-y%2C%20p.%204&value_shown=-40.6%20kJ%2Fmol-atom",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "kJ/mol-atom",
+        "sigma_printed": null,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": 3.9,
+         "class": "model_calculated",
+         "basis": "calibrated"
+        },
+        "sigma_effective": 3.9
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 2, row 6"
+    },
+    "... 31 more items trimmed (of 37)"
+   ],
+   "literature_other_units": [
+    {
+     "id": "ORC-FE57UO2DHM.7b5537",
+     "property": "HM_FORM",
+     "value": -43.012,
+     "unit": "unknown",
+     "T_K": null,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s10973-017-6635-3",
+     "page": 9,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s10973-017-6635-3",
+     "fold_lso": 1,
+     "fold_lpo": 1,
+     "review_state": "extracted",
+     "specification_gaps": [
+      "state:T_K",
+      "temperature not stated",
+      "unit read by one reader only"
+     ],
+     "state_fully_specified": false,
+     "merged_ids": [
+      "ORC-FE57UO2DHM.f31c03"
+     ],
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-FE57UO2DHM.7b5537%20%28AL-ZR%29&record_id=ORC-FE57UO2DHM.7b5537&system=AL-ZR&source=doi%3A10.1007%2Fs10973-017-6635-3%2C%20p.%209&value_shown=-43.012%20unknown",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "unknown",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": null,
+         "class": "model_calculated",
+         "basis": "calibrated",
+         "reason": "unit 'unknown' not convertible to kJ/mol-atom"
+        },
+        "sigma_effective": null,
+        "sigma_effective_reason": "unit 'unknown' not convertible to kJ/mol-atom"
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 3, row 17"
+    },
+    {
+     "id": "ORC-DMSRRXYPJM.2529e2",
+     "property": "HM_FORM",
+     "value": -39.973,
+     "unit": "unknown",
+     "T_K": null,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "model",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s10973-017-6635-3",
+     "page": 9,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s10973-017-6635-3",
+     "fold_lso": 1,
+     "fold_lpo": 1,
+     "review_state": "extracted",
+     "specification_gaps": [
+      "state:T_K",
+      "temperature not stated",
+      "unit read by one reader only"
+     ],
+     "state_fully_specified": false,
+     "merged_ids": [
+      "ORC-DMSRRXYPJM.f428d6"
+     ],
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-DMSRRXYPJM.2529e2%20%28AL-ZR%29&record_id=ORC-DMSRRXYPJM.2529e2&system=AL-ZR&source=doi%3A10.1007%2Fs10973-017-6635-3%2C%20p.%209&value_shown=-39.973%20unknown",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "unknown",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": null,
+         "class": "model_calculated",
+         "basis": "calibrated",
+         "reason": "unit 'unknown' not convertible to kJ/mol-atom"
+        },
+        "sigma_effective": null,
+        "sigma_effective_reason": "unit 'unknown' not convertible to kJ/mol-atom"
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 3, row 18"
+    },
+    {
+     "id": "ORC-2MGH4MBQQ3.1c898a",
+     "property": "HM_FORM",
+     "value": -35.308,
+     "unit": "unknown",
+     "T_K": null,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "dft",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s10973-017-6635-3",
+     "page": 9,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s10973-017-6635-3",
+     "fold_lso": 1,
+     "fold_lpo": 1,
+     "review_state": "extracted",
+     "specification_gaps": [
+      "state:T_K",
+      "state:computation_context",
+      "temperature not stated",
+      "unit read by one reader only"
+     ],
+     "state_fully_specified": false,
+     "merged_ids": [
+      "ORC-2MGH4MBQQ3.9ebd64"
+     ],
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-2MGH4MBQQ3.1c898a%20%28AL-ZR%29&record_id=ORC-2MGH4MBQQ3.1c898a&system=AL-ZR&source=doi%3A10.1007%2Fs10973-017-6635-3%2C%20p.%209&value_shown=-35.308%20unknown",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "unknown",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": null,
+         "class": "dft",
+         "basis": "calibrated",
+         "reason": "unit 'unknown' not convertible to kJ/mol-atom"
+        },
+        "sigma_effective": null,
+        "sigma_effective_reason": "unit 'unknown' not convertible to kJ/mol-atom"
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 3, row 19"
+    },
+    {
+     "id": "ORC-MBBDH3Q6WV.6f4918",
+     "property": "HM_FORM",
+     "value": -36.02,
+     "unit": "unknown",
+     "T_K": null,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "dft",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s10973-017-6635-3",
+     "page": 9,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s10973-017-6635-3",
+     "fold_lso": 1,
+     "fold_lpo": 1,
+     "review_state": "extracted",
+     "specification_gaps": [
+      "state:T_K",
+      "state:computation_context",
+      "temperature not stated",
+      "unit read by one reader only"
+     ],
+     "state_fully_specified": false,
+     "merged_ids": [
+      "ORC-MBBDH3Q6WV.eb4f3f"
+     ],
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-MBBDH3Q6WV.6f4918%20%28AL-ZR%29&record_id=ORC-MBBDH3Q6WV.6f4918&system=AL-ZR&source=doi%3A10.1007%2Fs10973-017-6635-3%2C%20p.%209&value_shown=-36.02%20unknown",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "unknown",
+        "sigma_printed": null,
+        "sigma_reading": 0.005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": null,
+         "class": "dft",
+         "basis": "calibrated",
+         "reason": "unit 'unknown' not convertible to kJ/mol-atom"
+        },
+        "sigma_effective": null,
+        "sigma_effective_reason": "unit 'unknown' not convertible to kJ/mol-atom"
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 3, row 20"
+    },
+    {
+     "id": "ORC-ZWTKMR55JB.9a64b5",
+     "property": "HM_FORM",
+     "value": -37.599,
+     "unit": "unknown",
+     "T_K": null,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "dft",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s10973-017-6635-3",
+     "page": 9,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s10973-017-6635-3",
+     "fold_lso": 1,
+     "fold_lpo": 1,
+     "review_state": "extracted",
+     "specification_gaps": [
+      "state:T_K",
+      "state:computation_context",
+      "temperature not stated",
+      "unit read by one reader only"
+     ],
+     "state_fully_specified": false,
+     "merged_ids": [
+      "ORC-ZWTKMR55JB.fb9971"
+     ],
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-ZWTKMR55JB.9a64b5%20%28AL-ZR%29&record_id=ORC-ZWTKMR55JB.9a64b5&system=AL-ZR&source=doi%3A10.1007%2Fs10973-017-6635-3%2C%20p.%209&value_shown=-37.599%20unknown",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "unknown",
+        "sigma_printed": null,
+        "sigma_reading": 0.0005,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": null,
+         "class": "dft",
+         "basis": "calibrated",
+         "reason": "unit 'unknown' not convertible to kJ/mol-atom"
+        },
+        "sigma_effective": null,
+        "sigma_effective_reason": "unit 'unknown' not convertible to kJ/mol-atom"
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 3, row 21"
+    },
+    {
+     "id": "ORC-2WZKFCT5RT.1d97f7",
+     "property": "HM_FORM",
+     "value": -48.0,
+     "unit": "unknown",
+     "T_K": 298.15,
+     "phases": [
+      "Al3Zr (AL3ZR_D023)"
+     ],
+     "evidence_class": "experimental",
+     "accepted": true,
+     "espei_ready": false,
+     "espei_certified": false,
+     "calphad_check": "not_available",
+     "citation": "[citation text omitted in this copy; see the doi field]",
+     "doi": "10.1007/s10973-017-6635-3",
+     "page": 9,
+     "quote": null,
+     "chemical_system": "AL-ZR",
+     "paper_id": "doi:10.1007/s10973-017-6635-3",
+     "fold_lso": 1,
+     "fold_lpo": 1,
+     "review_state": "extracted",
+     "specification_gaps": [
+      "unit read by one reader only"
+     ],
+     "state_fully_specified": false,
+     "merged_ids": [
+      "ORC-2WZKFCT5RT.29cd82"
+     ],
+     "report_issue_url": "https://github.com/orchid-calphad/orchid-data/issues/new?template=report-value-error.yml&title=%5Bvalue%5D%20ORC-2WZKFCT5RT.1d97f7%20%28AL-ZR%29&record_id=ORC-2WZKFCT5RT.1d97f7&system=AL-ZR&source=doi%3A10.1007%2Fs10973-017-6635-3%2C%20p.%209&value_shown=-48%20unknown",
+     "uncertainty_budget": {
+      "quantities": {
+       "value": {
+        "unit": "unknown",
+        "sigma_printed": 4.0,
+        "sigma_reading": 0.05,
+        "sigma_composition": null,
+        "sigma_scatter": null,
+        "sigma_conversion": null,
+        "sigma_method": {
+         "value": null,
+         "class": "unknown",
+         "basis": "calibrated",
+         "reason": "unit 'unknown' not convertible to kJ/mol-atom"
+        },
+        "sigma_effective": 4.0
+       }
+      },
+      "sigma_rule": "max(sqrt(max(printed, reading, method)^2 + composition^2 + conversion^2), scatter)",
+      "calibration": "orchid-uncertainty-calibration 2026-10-24 (audit round 2) sha256 6a2b5a92b0ec"
+     },
+     "table": "table 3, row 22"
+    },
+    "... 21 more items trimmed (of 27)"
+   ],
+   "dft": {
+    "mp": {
+     "source": "Materials Project",
+     "available": true,
+     "evidence_class": "dft",
+     "reference": {
+      "kind": "dft_elemental_ground_state_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "release": null,
+     "provenance": {
+      "above_hull_window_eV": 0.05,
+      "builder_version": 1,
+      "collinear_tol": 1e-12,
+      "correction_model": "MP2020 (applied upstream by the Materials Project; none added)",
+      "degenerate_tol": 1e-06,
+      "entry_pool": "all_nondeprecated",
+      "is_stable_source": "upstream_flag",
+      "observed_at": "2026-09-01T20:54:47Z",
+      "snapshot_scope_elements": [],
+      "snapshot_scope_kind": "full",
+      "snapshot_sha256": "b6deba8ecf1b67211b3d89cd33a5f98a1939d4bcd92db561818195e55187492a",
+      "source_release": "2026.04.13",
+      "stability_tol": 0.0001,
+      "thermo_type": "GGA_GGA+U",
+      "upstream_energy_corrections": "MP2020 compatibility corrections (anion and GGA/GGA+U mixing corrections), applied by the Materials Project to its GGA_GGA+U thermo energies"
+     },
+     "x_element": "ZR",
+     "x": 0.25,
+     "entries": [
+      {
+       "collinear": false,
+       "degenerate": [],
+       "energy": -0.4872566799999998,
+       "energy_per_atom": -5.43336371,
+       "entries_at_x": 3,
+       "formula": "ZrAl3",
+       "nsites": 8,
+       "phase": "mp-aaaaaapf",
+       "phase_kind": "structure",
+       "spacegroup_number": 139,
+       "spacegroup_symbol": "I4/mmm",
+       "theoretical": false,
+       "x": 0.25,
+       "on_hull": true,
+       "energy_above_hull_eV": 0.0,
+       "formation_energy_eV_per_atom": -0.4872566799999998,
+       "formation_energy_kJ_per_mol_atom": -47.013
+      },
+      {
+       "energy": -0.4643413574999995,
+       "energy_above_hull_mp": 0.02291532250000028,
+       "energy_above_hull_recomputed": 0.02291532250000028,
+       "formula": "ZrAl3",
+       "phase": "mp-aaabgkwl",
+       "spacegroup_symbol": "Pm-3m",
+       "theoretical": false,
+       "x": 0.25,
+       "on_hull": false,
+       "energy_above_hull_eV": 0.02291532250000028,
+       "formation_energy_eV_per_atom": -0.4643413574999995,
+       "formation_energy_kJ_per_mol_atom": -44.802
+      },
+      {
+       "energy": -0.46230908499999934,
+       "energy_above_hull_mp": 0.024947595000000433,
+       "energy_above_hull_recomputed": 0.024947595000000433,
+       "formula": "ZrAl3",
+       "phase": "mp-aaacipxl",
+       "spacegroup_symbol": "I4/mmm",
+       "theoretical": true,
+       "x": 0.25,
+       "on_hull": false,
+       "energy_above_hull_eV": 0.024947595000000433,
+       "formation_energy_eV_per_atom": -0.46230908499999934,
+       "formation_energy_kJ_per_mol_atom": -44.606
+      }
+     ],
+     "lowest_kJ_per_mol_atom": -47.013,
+     "window_note": "entries above the hull are kept only within the layer's above_hull_window_eV",
+     "data_url": "https://data.orchid-project.org/hulls/dft-mp/AL/AL-ZR.json"
+    },
+    "oqmd": {
+     "source": "OQMD",
+     "available": true,
+     "evidence_class": "dft",
+     "reference": {
+      "kind": "dft_fitted_elemental_reference_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "release": null,
+     "provenance": {
+      "above_hull_window_eV": 0.05,
+      "builder_version": 1,
+      "collinear_tol": 1e-12,
+      "correction_model": "OQMD fit-partial ('standard' fit, applied upstream by OQMD; none added)",
+      "degenerate_tol": 1e-06,
+      "entry_pool": "all_nondeprecated",
+      "is_stable_source": "derived",
+      "observed_at": "2026-09-05T17:02:03Z",
+      "snapshot_scope_elements": [],
+      "snapshot_scope_kind": "full",
+      "snapshot_sha256": "2a9393262c52ec35600424236c352a4cdb3291c8b25c1c6588f5e62abe8e0d8d",
+      "source_release": "qmdb_v1_8_022026",
+      "stability_tol": 0.0001,
+      "thermo_type": "standard",
+      "upstream_energy_corrections": "OQMD 'standard' fit (fit-partial of Kirklin et al. 2015): elemental reference energies of a subset of elements fitted to experimental formation enthalpies, applied by OQMD"
+     },
+     "x_element": "ZR",
+     "x": 0.25,
+     "entries": [
+      {
+       "collinear": false,
+       "degenerate": [],
+       "energy": -0.48795685375,
+       "energy_per_atom": -5.43405453625,
+       "entries_at_x": 8,
+       "formula": "Al3 Zr1",
+       "nsites": 8,
+       "phase": "oqmd-18198",
+       "phase_kind": "structure",
+       "spacegroup_number": 139,
+       "spacegroup_symbol": "I4/mmm",
+       "theoretical": false,
+       "x": 0.25,
+       "on_hull": true,
+       "energy_above_hull_eV": 0.0,
+       "formation_energy_eV_per_atom": -0.48795685375,
+       "formation_energy_kJ_per_mol_atom": -47.081
+      },
+      {
+       "energy": -0.462413847500001,
+       "energy_above_hull_mp": 0.025543006249999,
+       "energy_above_hull_recomputed": 0.025543006249999,
+       "formula": "Al3 Zr1",
+       "phase": "oqmd-303289",
+       "spacegroup_symbol": "I4/mmm",
+       "theoretical": true,
+       "x": 0.25,
+       "on_hull": false,
+       "energy_above_hull_eV": 0.025543006249999,
+       "formation_energy_eV_per_atom": -0.462413847500001,
+       "formation_energy_kJ_per_mol_atom": -44.616
+      },
+      {
+       "energy": -0.4605782375,
+       "energy_above_hull_mp": 0.027378616249999987,
+       "energy_above_hull_recomputed": 0.027378616249999987,
+       "formula": "Al3 Zr1",
+       "phase": "oqmd-27979",
+       "spacegroup_symbol": "Pm-3m",
+       "theoretical": false,
+       "x": 0.25,
+       "on_hull": false,
+       "energy_above_hull_eV": 0.027378616249999987,
+       "formation_energy_eV_per_atom": -0.4605782375,
+       "formation_energy_kJ_per_mol_atom": -44.439
+      }
+     ],
+     "lowest_kJ_per_mol_atom": -47.081,
+     "window_note": "entries above the hull are kept only within the layer's above_hull_window_eV",
+     "data_url": "https://data.orchid-project.org/hulls/dft-oqmd/AL/AL-ZR.json"
+    }
+   },
+   "summary": {
+    "literature_experimental": {
+     "n": 9,
+     "mean": -46.7,
+     "median": -48.4,
+     "min": -51.6,
+     "max": -40.75,
+     "stdev": 3.8948
+    },
+    "literature_model": {
+     "n": 24,
+     "mean": -44.5466,
+     "median": -45.5455,
+     "min": -52.87,
+     "max": -37.8,
+     "stdev": 3.9934
+    },
+    "literature_dft": {
+     "n": 4,
+     "mean": -45.5623,
+     "median": -46.775,
+     "min": -49.106,
+     "max": -39.593,
+     "stdev": 4.1284
+    },
+    "dft_mp_lowest": -47.013,
+    "dft_oqmd_lowest": -47.081
+   },
+   "summary_rule": "Statistics per evidence class over values in kJ/mol-atom (records with basis-unstated kJ/mol are listed in literature_other_units and excluded), excluding flags unsigned_in_print and magnitude_suspect. DFT: lowest-energy entry at the composition per source; MP and OQMD use different references and a... [509 chars]",
+   "literature_match_rule": "record property HM_FORM in the compound's system file (and, by default, in files of higher-order systems containing it; the record's `system` says where it was reported), with one formula parsed from its phase label(s) (or a single printed mole-fraction phase composition) equal to the requested comp... [316 chars]",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_sources`), the TDB assessment (`model_citation` / `model_doi`) for... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_conversion) and sigma_effective = max(sqrt(max(printed, readi... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts anything.",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  },
+  "Al3Mg2": {
+   "formula": "Al3Mg2",
+   "composition": {
+    "AL": 0.6,
+    "MG": 0.4
+   },
+   "system": "AL-MG",
+   "unit": "kJ/mol-atom",
+   "fields": "summary",
+   "literature": [],
+   "literature_other_units": [],
+   "dft": {
+    "mp": {
+     "source": "Materials Project",
+     "available": true,
+     "evidence_class": "dft",
+     "reference": {
+      "kind": "dft_elemental_ground_state_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "release": null,
+     "provenance": {
+      "above_hull_window_eV": 0.05,
+      "builder_version": 1,
+      "collinear_tol": 1e-12,
+      "correction_model": "MP2020 (applied upstream by the Materials Project; none added)",
+      "degenerate_tol": 1e-06,
+      "entry_pool": "all_nondeprecated",
+      "is_stable_source": "upstream_flag",
+      "observed_at": "2026-09-01T20:54:47Z",
+      "snapshot_scope_elements": [],
+      "snapshot_scope_kind": "full",
+      "snapshot_sha256": "b6deba8ecf1b67211b3d89cd33a5f98a1939d4bcd92db561818195e55187492a",
+      "source_release": "2026.04.13",
+      "stability_tol": 0.0001,
+      "thermo_type": "GGA_GGA+U",
+      "upstream_energy_corrections": "MP2020 compatibility corrections (anion and GGA/GGA+U mixing corrections), applied by the Materials Project to its GGA_GGA+U thermo energies"
+     },
+     "x_element": "MG",
+     "x": 0.4,
+     "entries": [],
+     "lowest_kJ_per_mol_atom": null,
+     "window_note": "entries above the hull are kept only within the layer's above_hull_window_eV",
+     "data_url": "https://data.orchid-project.org/hulls/dft-mp/AL/AL-MG.json"
+    },
+    "oqmd": {
+     "source": "OQMD",
+     "available": true,
+     "evidence_class": "dft",
+     "reference": {
+      "kind": "dft_fitted_elemental_reference_0K",
+      "per": "atom",
+      "temperature_K": 0.0,
+      "units": "eV/atom"
+     },
+     "release": null,
+     "provenance": {
+      "above_hull_window_eV": 0.05,
+      "builder_version": 1,
+      "collinear_tol": 1e-12,
+      "correction_model": "OQMD fit-partial ('standard' fit, applied upstream by OQMD; none added)",
+      "degenerate_tol": 1e-06,
+      "entry_pool": "all_nondeprecated",
+      "is_stable_source": "derived",
+      "observed_at": "2026-09-05T17:02:03Z",
+      "snapshot_scope_elements": [],
+      "snapshot_scope_kind": "full",
+      "snapshot_sha256": "2a9393262c52ec35600424236c352a4cdb3291c8b25c1c6588f5e62abe8e0d8d",
+      "source_release": "qmdb_v1_8_022026",
+      "stability_tol": 0.0001,
+      "thermo_type": "standard",
+      "upstream_energy_corrections": "OQMD 'standard' fit (fit-partial of Kirklin et al. 2015): elemental reference energies of a subset of elements fitted to experimental formation enthalpies, applied by OQMD"
+     },
+     "x_element": "MG",
+     "x": 0.4,
+     "entries": [],
+     "lowest_kJ_per_mol_atom": null,
+     "window_note": "entries above the hull are kept only within the layer's above_hull_window_eV",
+     "data_url": "https://data.orchid-project.org/hulls/dft-oqmd/AL/AL-MG.json"
+    }
+   },
+   "summary": {},
+   "summary_rule": "Statistics per evidence class over values in kJ/mol-atom (records with basis-unstated kJ/mol are listed in literature_other_units and excluded), excluding flags unsigned_in_print and magnitude_suspect. DFT: lowest-energy entry at the composition per source; MP and OQMD use different references and a... [509 chars]",
+   "literature_match_rule": "record property HM_FORM in the compound's system file (and, by default, in files of higher-order systems containing it; the record's `system` says where it was reported), with one formula parsed from its phase label(s) (or a single printed mole-fraction phase composition) equal to the requested comp... [316 chars]",
+   "orchid": {
+    "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+    "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+    "licence": {
+     "derived_data": "CC BY 4.0",
+     "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+     "source_papers": "not redistributed"
+    },
+    "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+    "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_sources`), the TDB assessment (`model_citation` / `model_doi`) for... [431 chars]",
+    "notes": [
+     "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+     "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+     "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_conversion) and sigma_effective = max(sqrt(max(printed, readi... [475 chars]",
+     "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user submits the form. The server never posts anything.",
+     "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+    ]
+   }
+  }
+ },
+ "list_tdb_files_all_first": {
+  "query": {
+   "elements": [],
+   "exact": false,
+   "tier": null
+  },
+  "fields": "summary",
+  "total": 2912,
+  "offset": 0,
+  "truncated": true,
+  "files": [
+   {
+    "name": "MatCalc mc_ni_L (carbides, Mendeley)",
+    "elements": "Ni-superalloy + M6C/M23C6",
+    "category": "Ni-based superalloy",
+    "tier": "manual",
+    "license": "Conflicting metadata: ODbL/DbCL description; GPL-3.0 platform label",
+    "license_status": "conflicting",
+    "source_url": "https://data.mendeley.com/datasets/mnwnpfdw4n/1",
+    "orchid_download_url": null,
+    "sha256": null
+   }
+  ],
+  "tiers": {
+   "bundled": "redistributable; served by ORCHID",
+   "fetched": "public upstream download, not redistributed here",
+   "manual": "restricted / landing page only"
+  },
+  "orchid": {
+   "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+   "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+   "licence": {
+    "derived_data": "CC BY 4.0",
+    "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+    "source_papers": "not redistributed"
+   },
+   "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+   "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cites from earlier work, also `cited_source... [431 chars]",
+   "notes": [
+    "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+    "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+    "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, sigma_composition, sigma_scatter, sigma_c... [475 chars]",
+    "... 2 more items trimmed (of 5)"
+   ]
+  }
+ },
+ "search_systems_Al": {
+  "query": {
+   "elements": [
+    "AL"
+   ],
+   "text": null,
+   "exact": false
+  },
+  "fields": "summary",
+  "total": 156,
+  "offset": 0,
+  "returned": 156,
+  "truncated": false,
+  "systems": [
+   {
+    "system": "AL",
+    "literature_accepted": 45,
+    "by_evidence_class": {
+     "dft": 9,
+     "experimental": 16,
+     "model": 13,
+     "unspecified": 16
+    },
+    "calculated_phase_diagrams": 0,
+    "assessments": []
+   },
+   {
+    "system": "AL-ZR",
+    "literature_accepted": 658,
+    "by_evidence_class": {
+     "dft": 82,
+     "experimental": 251,
+     "model": 389,
+     "unspecified": 21
+    },
+    "calculated_phase_diagrams": 8,
+    "assessments": [
+     "AlZr-01Wan.tdb",
+     "AlZr-10Hir.tdb",
+     "AlZr-15Fis.tdb",
+     "AlZr-18Khv.tdb",
+     "AlZr-18Tam.tdb",
+     "AlZr-20Lon.tdb",
+     "AlZr-86Sau.tdb",
+     "AlZr-98Sau-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-TI",
+    "literature_accepted": 365,
+    "by_evidence_class": {
+     "dft": 20,
+     "experimental": 189,
+     "model": 146,
+     "unspecified": 23
+    },
+    "calculated_phase_diagrams": 5,
+    "assessments": [
+     "AlTi-00Ohn.tdb",
+     "AlTi-08Wit.tdb",
+     "AlTi-24Lia.tdb",
+     "AlTi-92Kat.tdb",
+     "AlTi-98Sau-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-CR",
+    "literature_accepted": 289,
+    "by_evidence_class": {
+     "dft": 21,
+     "experimental": 166,
+     "model": 139,
+     "unspecified": 2
+    },
+    "calculated_phase_diagrams": 11,
+    "assessments": [
+     "AlCr-07Tok.tdb",
+     "AlCr-08Lia.tdb",
+     "AlCr-13Hu.tdb",
+     "AlCr-15Wit.tdb",
+     "AlCr-17Cui-incomplete.tdb",
+     "AlCr-17Wan-mod.tdb",
+     "AlCr-17Wan.tdb",
+     "AlCr-86Sau.tdb",
+     "AlCr-87Sau.tdb",
+     "AlCr-98Mur.tdb",
+     "AlCr-98Sau-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-FE",
+    "literature_accepted": 253,
+    "by_evidence_class": {
+     "dft": 21,
+     "experimental": 114,
+     "model": 122,
+     "unspecified": 13
+    },
+    "calculated_phase_diagrams": 11,
+    "assessments": [
+     "AlFe-07Zha.tdb",
+     "AlFe-09Jac.tdb",
+     "AlFe-09Sun-no-option-F.tdb",
+     "AlFe-09Sun.tdb",
+     "AlFe-15Mie.tdb",
+     "AlFe-17Zhe.tdb",
+     "AlFe-18Zie.tdb",
+     "AlFe-19Ran.tdb",
+     "AlFe-21Mur.tdb",
+     "AlFe-23Ila.tdb",
+     "AlFe-93Sei-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-CA",
+    "literature_accepted": 253,
+    "by_evidence_class": {
+     "dft": 80,
+     "experimental": 76,
+     "model": 83,
+     "unspecified": 26
+    },
+    "calculated_phase_diagrams": 7,
+    "assessments": [
+     "AlCa-01Kev-LB.tdb",
+     "AlCa-02Ozt-assoc.tdb",
+     "AlCa-02Ozt.tdb",
+     "AlCa-05Isl.tdb",
+     "AlCa-05Ozt.tdb",
+     "AlCa-23Hal.tdb",
+     "AlCa-94Ang.tdb"
+    ]
+   },
+   {
+    "system": "AL-TA",
+    "literature_accepted": 225,
+    "by_evidence_class": {
+     "dft": 1,
+     "experimental": 149,
+     "model": 60,
+     "unspecified": 28
+    },
+    "calculated_phase_diagrams": 4,
+    "assessments": [
+     "AlTa-10Wit.tdb",
+     "AlTa-90Kat.tdb",
+     "AlTa-96Du-LB.tdb",
+     "AlTa-98Sau.tdb"
+    ]
+   },
+   {
+    "system": "AL-MO",
+    "literature_accepted": 203,
+    "by_evidence_class": {
+     "experimental": 101,
+     "model": 72,
+     "unspecified": 65
+    },
+    "calculated_phase_diagrams": 6,
+    "assessments": [
+     "AlMo-09Du.tdb",
+     "AlMo-10Cup.tdb",
+     "AlMo-16Pen.tdb",
+     "AlMo-97Cos.tdb",
+     "AlMo-97Sau.tdb",
+     "AlMo-98Sau-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-NI",
+    "literature_accepted": 191,
+    "by_evidence_class": {
+     "dft": 20,
+     "experimental": 86,
+     "model": 102,
+     "unspecified": 7
+    },
+    "calculated_phase_diagrams": 13,
+    "assessments": [
+     "AlNi-01Dup-4sl-old.tdb",
+     "AlNi-01Dup-4sl.tdb",
+     "AlNi-01Dup-LB.tdb",
+     "AlNi-01Dup-orig.tdb",
+     "AlNi-03Sun.tdb",
+     "AlNi-04Oht.tdb",
+     "AlNi-05Mie.tdb",
+     "AlNi-11Che.tdb",
+     "AlNi-14Zhu.tdb",
+     "AlNi-22Yan.tdb",
+     "AlNi-88Ans.tdb",
+     "AlNi-97Ans.tdb",
+     "AlNi-98Hua.tdb"
+    ]
+   },
+   {
+    "system": "AL-Y",
+    "literature_accepted": 152,
+    "by_evidence_class": {
+     "experimental": 52,
+     "model": 97,
+     "unspecified": 13
+    },
+    "calculated_phase_diagrams": 6,
+    "assessments": [
+     "AlY-06AlS.tdb",
+     "AlY-06Liu.tdb",
+     "AlY-15Hua.tdb",
+     "AlY-18Hu.tdb",
+     "AlY-95Gro-LB.tdb",
+     "AlY-98Luk.tdb"
+    ]
+   },
+   {
+    "system": "AL-MG",
+    "literature_accepted": 147,
+    "by_evidence_class": {
+     "dft": 92,
+     "experimental": 10,
+     "model": 46
+    },
+    "calculated_phase_diagrams": 10,
+    "assessments": [
+     "AlMg-05Zho.tdb",
+     "AlMg-12Tan.tdb",
+     "AlMg-13Tok.tdb",
+     "AlMg-20Shi.tdb",
+     "AlMg-23Hal.tdb",
+     "AlMg-86Lud.tdb",
+     "AlMg-90Sau.tdb",
+     "AlMg-93Zuo.tdb",
+     "AlMg-98Lia-LB.tdb",
+     "AlMg-98Zak.tdb"
+    ]
+   },
+   {
+    "system": "AL-BI",
+    "literature_accepted": 145,
+    "by_evidence_class": {
+     "experimental": 143,
+     "model": 2,
+     "unspecified": 2
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "AlBi-06Kim.tdb",
+     "AlBi-09Mir.tdb",
+     "AlBi-84McA-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-BA",
+    "literature_accepted": 130,
+    "by_evidence_class": {
+     "dft": 16,
+     "experimental": 67,
+     "model": 52,
+     "unspecified": 6
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "AlBa-16Bao.tdb",
+     "AlBa-17Azz.tdb",
+     "AlBa-19Ben.tdb"
+    ]
+   },
+   {
+    "system": "AL-CO",
+    "literature_accepted": 123,
+    "by_evidence_class": {
+     "dft": 44,
+     "experimental": 66,
+     "model": 13,
+     "unspecified": 27
+    },
+    "calculated_phase_diagrams": 13,
+    "assessments": [
+     "AlCo-13Ste.tdb",
+     "AlCo-15Liu.tdb",
+     "AlCo-16Liu-old.tdb",
+     "AlCo-16Liu.tdb",
+     "AlCo-17Wan.tdb",
+     "AlCo-18Wan.tdb",
+     "AlCo-18Wan2.tdb",
+     "AlCo-19Ost.tdb",
+     "AlCo-20Noo.tdb",
+     "AlCo-22Wan.tdb",
+     "AlCo-95Dup.tdb",
+     "AlCo-98Dup-LB.tdb",
+     "AlCo-98Dup-orig.tdb"
+    ]
+   },
+   {
+    "system": "AL-AU",
+    "literature_accepted": 118,
+    "by_evidence_class": {
+     "experimental": 42,
+     "model": 30,
+     "unspecified": 55
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "AlAu-04Li.tdb",
+     "AlAu-04Liu.tdb",
+     "AlAu-87Mur-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-IR",
+    "literature_accepted": 116,
+    "by_evidence_class": {
+     "dft": 32,
+     "experimental": 45,
+     "model": 37,
+     "unspecified": 4
+    },
+    "calculated_phase_diagrams": 4,
+    "assessments": [
+     "AlIr-06Jia.tdb",
+     "AlIr-07Abe.tdb",
+     "AlIr-08Abe.tdb",
+     "AlIr-08Zha.tdb"
+    ]
+   },
+   {
+    "system": "AL-SR",
+    "literature_accepted": 112,
+    "by_evidence_class": {
+     "dft": 43,
+     "experimental": 57,
+     "model": 29
+    },
+    "calculated_phase_diagrams": 4,
+    "assessments": [
+     "AlSr-03Wan-LB.tdb",
+     "AlSr-04Zho-RK.tdb",
+     "AlSr-04Zho-ass.tdb",
+     "AlSr-14Lia.tdb"
+    ]
+   },
+   {
+    "system": "AL-CU",
+    "literature_accepted": 107,
+    "by_evidence_class": {
+     "experimental": 52,
+     "model": 58,
+     "unspecified": 4
+    },
+    "calculated_phase_diagrams": 5,
+    "assessments": [
+     "AlCu-02Mie.tdb",
+     "AlCu-04Wit.tdb",
+     "AlCu-15Lia.tdb",
+     "AlCu-21Kro.tdb",
+     "AlCu-98Sau-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-SC",
+    "literature_accepted": 103,
+    "by_evidence_class": {
+     "experimental": 55,
+     "model": 40,
+     "unspecified": 28
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "AlSc-10Bo.tdb",
+     "AlSc-98Mur.tdb",
+     "AlSc-99Cac-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-MN",
+    "literature_accepted": 101,
+    "by_evidence_class": {
+     "experimental": 47,
+     "model": 75
+    },
+    "calculated_phase_diagrams": 6,
+    "assessments": [
+     "AlMn-07Du.tdb",
+     "AlMn-17Cui.tdb",
+     "AlMn-19Mie.tdb",
+     "AlMn-92Jan.tdb",
+     "AlMn-98Jan.tdb",
+     "AlMn-99Liu-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-LI",
+    "literature_accepted": 95,
+    "by_evidence_class": {
+     "dft": 25,
+     "experimental": 17,
+     "model": 49,
+     "unspecified": 9
+    },
+    "calculated_phase_diagrams": 7,
+    "assessments": [
+     "AlLi-07Hal-condensed.tdb",
+     "AlLi-11Guo.tdb",
+     "AlLi-20Lon.tdb",
+     "AlLi-23Cui-reg2.tdb",
+     "AlLi-23Cui-reg3.tdb",
+     "AlLi-24Liu.tdb",
+     "AlLi-89Sau-LB.tdb"
+    ]
+   },
+   {
+    "system": "AG-AL",
+    "literature_accepted": 94,
+    "by_evidence_class": {
+     "experimental": 73,
+     "model": 16,
+     "unspecified": 6
+    },
+    "calculated_phase_diagrams": 5,
+    "assessments": [
+     "AgAl-04Wit.tdb",
+     "AgAl-20Ter.tdb",
+     "AgAl-80Spe.tdb",
+     "AgAl-87Spe.tdb",
+     "AgAl-95Lim-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-NB",
+    "literature_accepted": 86,
+    "by_evidence_class": {
+     "dft": 1,
+     "experimental": 42,
+     "model": 54,
+     "unspecified": 5
+    },
+    "calculated_phase_diagrams": 6,
+    "assessments": [
+     "AlNb-08Zhu.tdb",
+     "AlNb-09Wit.tdb",
+     "AlNb-15He.tdb",
+     "AlNb-23Fio.tdb",
+     "AlNb-97Ser-LB.tdb",
+     "AlNb-98Sau.tdb"
+    ]
+   },
+   {
+    "system": "AL-SM",
+    "literature_accepted": 81,
+    "by_evidence_class": {
+     "experimental": 43,
+     "model": 30,
+     "unspecified": 24
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "AlSm-08Jia.tdb",
+     "AlSm-08Zho.tdb",
+     "AlSm-98Sac.tdb"
+    ]
+   },
+   {
+    "system": "AL-CD",
+    "literature_accepted": 72,
+    "by_evidence_class": {
+     "experimental": 67,
+     "model": 3,
+     "unspecified": 4
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "AlCd-82McA.tdb"
+    ]
+   },
+   {
+    "system": "AL-LA",
+    "literature_accepted": 63,
+    "by_evidence_class": {
+     "experimental": 34,
+     "model": 43
+    },
+    "calculated_phase_diagrams": 4,
+    "assessments": [
+     "AlLa-00Yin.tdb",
+     "AlLa-01Cac.tdb",
+     "AlLa-06Zho.tdb",
+     "AlLa-18Lia.tdb"
+    ]
+   },
+   {
+    "system": "AL-P",
+    "literature_accepted": 58,
+    "by_evidence_class": {
+     "experimental": 16,
+     "model": 40,
+     "unspecified": 2
+    },
+    "calculated_phase_diagrams": 5,
+    "assessments": [
+     "AlP-01Luk-LB.tdb",
+     "AlP-09Tu.tdb",
+     "AlP-13Lia.tdb",
+     "AlP-15Mie.tdb",
+     "AlP-94Ans.tdb"
+    ]
+   },
+   {
+    "system": "AL-U",
+    "literature_accepted": 57,
+    "by_evidence_class": {
+     "dft": 25,
+     "experimental": 15,
+     "model": 17
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "AlU-08Wan.tdb",
+     "AlU-10Sed.tdb",
+     "AlU-10Zha.tdb"
+    ]
+   },
+   {
+    "system": "AL-HF",
+    "literature_accepted": 55,
+    "by_evidence_class": {
+     "experimental": 19,
+     "model": 36
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "AlHf-02Wan.tdb"
+    ]
+   },
+   {
+    "system": "AL-C",
+    "literature_accepted": 54,
+    "by_evidence_class": {
+     "dft": 3,
+     "experimental": 40,
+     "model": 33
+    },
+    "calculated_phase_diagrams": 6,
+    "assessments": [
+     "AlC-04Oht.tdb",
+     "AlC-19Def.tdb",
+     "AlC-21He-3g.tdb",
+     "AlC-91Har.tdb",
+     "AlC-94Qiu.tdb",
+     "AlC-95Gro-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-SB",
+    "literature_accepted": 49,
+    "by_evidence_class": {
+     "experimental": 2,
+     "model": 51,
+     "unspecified": 1
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "AlSb-05Bal.tdb",
+     "AlSb-22Zha.tdb",
+     "AlSb-90Cou-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-HG",
+    "literature_accepted": 48,
+    "by_evidence_class": {
+     "experimental": 51
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "AlHg-85McA.tdb"
+    ]
+   },
+   {
+    "system": "AL-ZN",
+    "literature_accepted": 47,
+    "by_evidence_class": {
+     "experimental": 21,
+     "model": 38
+    },
+    "calculated_phase_diagrams": 5,
+    "assessments": [
+     "AlZn-00Mat.tdb",
+     "AlZn-20Din-3g.tdb",
+     "AlZn-86Mey.tdb",
+     "AlZn-93Che.tdb",
+     "AlZn-93Mey-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-PT",
+    "literature_accepted": 44,
+    "by_evidence_class": {
+     "experimental": 27,
+     "model": 50
+    },
+    "calculated_phase_diagrams": 2,
+    "assessments": [
+     "AlPt-00Wu.tdb",
+     "AlPt-16Liu.tdb"
+    ]
+   },
+   {
+    "system": "AL-GD",
+    "literature_accepted": 43,
+    "by_evidence_class": {
+     "model": 24,
+     "unspecified": 19
+    },
+    "calculated_phase_diagrams": 2,
+    "assessments": [
+     "AlGd-03Cac-LB.tdb",
+     "AlGd-14Bo.tdb"
+    ]
+   },
+   {
+    "system": "AL-V",
+    "literature_accepted": 42,
+    "by_evidence_class": {
+     "dft": 21,
+     "experimental": 2,
+     "model": 20
+    },
+    "calculated_phase_diagrams": 8,
+    "assessments": [
+     "AlV-04Gon.tdb",
+     "AlV-15Lin-mod.tdb",
+     "AlV-15Lin.tdb",
+     "AlV-17Kro.tdb",
+     "AlV-18Ber.tdb",
+     "AlV-23Wan.tdb",
+     "AlV-24Li.tdb",
+     "AlV-98Sau-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-PU",
+    "literature_accepted": 38,
+    "by_evidence_class": {
+     "dft": 38
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "AlPu-04Tur.tdb",
+     "AlPu-10Sed.tdb",
+     "AlPu-16Per.tdb"
+    ]
+   },
+   {
+    "system": "AL-B",
+    "literature_accepted": 36,
+    "by_evidence_class": {
+     "experimental": 12,
+     "model": 36
+    },
+    "calculated_phase_diagrams": 5,
+    "assessments": [
+     "AlB-01Luk-LB.tdb",
+     "AlB-04Mir.tdb",
+     "AlB-15Wan.tdb",
+     "AlB-98Luk.tdb",
+     "AlB-99Cam.tdb"
+    ]
+   },
+   {
+    "system": "AL-RE",
+    "literature_accepted": 35,
+    "by_evidence_class": {
+     "experimental": 28,
+     "model": 21
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "AlRe-18Guo.tdb",
+     "AlRe-20Tam.tdb",
+     "AlRe-98Hua.tdb"
+    ]
+   },
+   {
+    "system": "AL-W",
+    "literature_accepted": 34,
+    "by_evidence_class": {
+     "dft": 8,
+     "experimental": 5,
+     "model": 21
+    },
+    "calculated_phase_diagrams": 2,
+    "assessments": [
+     "AlW-17Wan.tdb",
+     "AlW-98Sau-LB.tdb"
+    ]
+   },
+   "... 116 more items trimmed (of 156)"
+  ],
+  "orchid": {
+   "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+   "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+   "licence": {
+    "derived_data": "CC BY 4.0",
+    "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+    "source_papers": "not redistributed"
+   },
+   "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+   "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cit... [431 chars]",
+   "notes": [
+    "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+    "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+    "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, s... [475 chars]",
+    "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user sub... [247 chars]",
+    "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+   ]
+  }
+ },
+ "search_systems_Cu": {
+  "query": {
+   "elements": [
+    "CU"
+   ],
+   "text": null,
+   "exact": false
+  },
+  "fields": "summary",
+  "total": 111,
+  "offset": 0,
+  "returned": 111,
+  "truncated": false,
+  "systems": [
+   {
+    "system": "CU",
+    "literature_accepted": 49,
+    "by_evidence_class": {
+     "dft": 2,
+     "experimental": 43,
+     "unspecified": 4
+    },
+    "calculated_phase_diagrams": 0,
+    "assessments": []
+   },
+   {
+    "system": "CU-ZR",
+    "literature_accepted": 674,
+    "by_evidence_class": {
+     "dft": 15,
+     "experimental": 347,
+     "model": 320,
+     "unspecified": 1
+    },
+    "calculated_phase_diagrams": 11,
+    "assessments": [
+     "CuZr-06Abe.tdb",
+     "CuZr-06He.tdb",
+     "CuZr-06Wan.tdb",
+     "CuZr-08Tur.tdb",
+     "CuZr-10Zho.tdb",
+     "CuZr-11Gie.tdb",
+     "CuZr-16Hsi.tdb",
+     "CuZr-17Liu.tdb",
+     "CuZr-22Zho.tdb",
+     "CuZr-85Sau.tdb",
+     "CuZr-94Zen-LB.tdb"
+    ]
+   },
+   {
+    "system": "CU-O",
+    "literature_accepted": 355,
+    "by_evidence_class": {
+     "experimental": 291,
+     "model": 86
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "CuO-14Mag.tdb",
+     "CuO-92Bou.tdb",
+     "CuO-94Hal.tdb"
+    ]
+   },
+   {
+    "system": "CU-ZN",
+    "literature_accepted": 242,
+    "by_evidence_class": {
+     "experimental": 188,
+     "model": 56
+    },
+    "calculated_phase_diagrams": 6,
+    "assessments": [
+     "CuZn-03Dav.tdb",
+     "CuZn-05Jia.tdb",
+     "CuZn-08Gie.tdb",
+     "CuZn-11Wan.tdb",
+     "CuZn-15Lia.tdb",
+     "CuZn-93Kow-LB.tdb"
+    ]
+   },
+   {
+    "system": "CU-TE",
+    "literature_accepted": 215,
+    "by_evidence_class": {
+     "experimental": 142,
+     "model": 80,
+     "unspecified": 7
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "CuTe-21Hua.tdb",
+     "CuTe-22Yu.tdb",
+     "CuTe-23Hut.tdb"
+    ]
+   },
+   {
+    "system": "CU-HF",
+    "literature_accepted": 156,
+    "by_evidence_class": {
+     "dft": 17,
+     "experimental": 64,
+     "model": 59,
+     "unspecified": 25
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "CuHf-06Lia.tdb",
+     "CuHf-08Tur.tdb",
+     "CuHf-13Zho.tdb"
+    ]
+   },
+   {
+    "system": "CU-SI",
+    "literature_accepted": 146,
+    "by_evidence_class": {
+     "experimental": 76,
+     "model": 69,
+     "unspecified": 10
+    },
+    "calculated_phase_diagrams": 9,
+    "assessments": [
+     "CuSi-00Yan.tdb",
+     "CuSi-08Shi.tdb",
+     "CuSi-13Gie.tdb",
+     "CuSi-16Hal.tdb",
+     "CuSi-19Sol.tdb",
+     "CuSi-24Kro.tdb",
+     "CuSi-98Jac.tdb",
+     "CuSi-99Fri-LB.tdb",
+     "CuSi-99Fri-alt.tdb"
+    ]
+   },
+   {
+    "system": "CU-IN",
+    "literature_accepted": 132,
+    "by_evidence_class": {
+     "experimental": 70,
+     "model": 46,
+     "unspecified": 21
+    },
+    "calculated_phase_diagrams": 5,
+    "assessments": [
+     "CuIn-02Her.tdb",
+     "CuIn-02Liu-LB.tdb",
+     "CuIn-02Liu-orig.tdb",
+     "CuIn-24Cha.tdb",
+     "CuIn-93Kao.tdb"
+    ]
+   },
+   {
+    "system": "CU-DY",
+    "literature_accepted": 109,
+    "by_evidence_class": {
+     "dft": 18,
+     "experimental": 71,
+     "model": 26
+    },
+    "calculated_phase_diagrams": 2,
+    "assessments": [
+     "CuDy-09Pal.tdb",
+     "CuDy-09Zha.tdb"
+    ]
+   },
+   {
+    "system": "CU-TI",
+    "literature_accepted": 107,
+    "by_evidence_class": {
+     "experimental": 67,
+     "model": 45
+    },
+    "calculated_phase_diagrams": 6,
+    "assessments": [
+     "CuTi-02Can.tdb",
+     "CuTi-08Tur.tdb",
+     "CuTi-11Wan.tdb",
+     "CuTi-23Yan.tdb",
+     "CuTi-85Sau.tdb",
+     "CuTi-96Har-LB.tdb"
+    ]
+   },
+   {
+    "system": "AL-CU",
+    "literature_accepted": 107,
+    "by_evidence_class": {
+     "experimental": 52,
+     "model": 58,
+     "unspecified": 4
+    },
+    "calculated_phase_diagrams": 5,
+    "assessments": [
+     "AlCu-02Mie.tdb",
+     "AlCu-04Wit.tdb",
+     "AlCu-15Lia.tdb",
+     "AlCu-21Kro.tdb",
+     "AlCu-98Sau-LB.tdb"
+    ]
+   },
+   {
+    "system": "CU-TL",
+    "literature_accepted": 103,
+    "by_evidence_class": {
+     "experimental": 96,
+     "model": 10
+    },
+    "calculated_phase_diagrams": 2,
+    "assessments": [
+     "CuTl-04Che-LB.tdb",
+     "CuTl-89Che.tdb"
+    ]
+   },
+   {
+    "system": "CU-FE",
+    "literature_accepted": 99,
+    "by_evidence_class": {
+     "experimental": 71,
+     "model": 30,
+     "unspecified": 9
+    },
+    "calculated_phase_diagrams": 6,
+    "assessments": [
+     "CuFe-03Tur.tdb",
+     "CuFe-15Ste.tdb",
+     "CuFe-87Jan.tdb",
+     "CuFe-93Ans-LB.tdb",
+     "CuFe-93Swa.tdb",
+     "CuFe-95Che.tdb"
+    ]
+   },
+   {
+    "system": "CU-SN",
+    "literature_accepted": 97,
+    "by_evidence_class": {
+     "experimental": 54,
+     "model": 60
+    },
+    "calculated_phase_diagrams": 9,
+    "assessments": [
+     "CuSn-02Mie.tdb",
+     "CuSn-04Liu.tdb",
+     "CuSn-11Wan.tdb",
+     "CuSn-12Gie.tdb",
+     "CuSn-13Li.tdb",
+     "CuSn-14Don.tdb",
+     "CuSn-24Oik.tdb",
+     "CuSn-96Shi-LB.tdb",
+     "CuSn-96Shi-SGSOL.tdb"
+    ]
+   },
+   {
+    "system": "CU-GA",
+    "literature_accepted": 89,
+    "by_evidence_class": {
+     "experimental": 60,
+     "model": 35
+    },
+    "calculated_phase_diagrams": 2,
+    "assessments": [
+     "CuGa-08Li.tdb",
+     "CuGa-15Jen.tdb"
+    ]
+   },
+   {
+    "system": "CO-CU",
+    "literature_accepted": 75,
+    "by_evidence_class": {
+     "experimental": 63,
+     "model": 13
+    },
+    "calculated_phase_diagrams": 4,
+    "assessments": [
+     "CoCu-00Kub-LB.tdb",
+     "CoCu-06Pal.tdb",
+     "CoCu-80Has.tdb",
+     "CoCu-97Oht.tdb"
+    ]
+   },
+   {
+    "system": "CU-LI",
+    "literature_accepted": 75,
+    "by_evidence_class": {
+     "experimental": 73,
+     "model": 5
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "CuLi-09Gas.tdb",
+     "CuLi-16Li.tdb",
+     "CuLi-98Sau-LB.tdb"
+    ]
+   },
+   {
+    "system": "CU-Y",
+    "literature_accepted": 71,
+    "by_evidence_class": {
+     "experimental": 52,
+     "model": 21
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "CuY-94Fri-LB.tdb"
+    ]
+   },
+   {
+    "system": "CU-SB",
+    "literature_accepted": 55,
+    "by_evidence_class": {
+     "experimental": 34,
+     "model": 23
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "CuSb-00Liu-LB.tdb",
+     "CuSb-09Gie.tdb",
+     "CuSb-23Liu.tdb"
+    ]
+   },
+   {
+    "system": "CE-CU",
+    "literature_accepted": 51,
+    "by_evidence_class": {
+     "experimental": 18,
+     "model": 31,
+     "unspecified": 3
+    },
+    "calculated_phase_diagrams": 2,
+    "assessments": [
+     "CeCu-09Bo.tdb",
+     "CeCu-96Zhu.tdb"
+    ]
+   },
+   {
+    "system": "CU-ND",
+    "literature_accepted": 49,
+    "by_evidence_class": {
+     "dft": 4,
+     "experimental": 18,
+     "model": 23,
+     "unspecified": 7
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "CuNd-11Wan.tdb",
+     "CuNd-96Du.tdb",
+     "CuNd-96Zhu.tdb"
+    ]
+   },
+   {
+    "system": "CU-PB",
+    "literature_accepted": 46,
+    "by_evidence_class": {
+     "experimental": 28,
+     "model": 15,
+     "unspecified": 3
+    },
+    "calculated_phase_diagrams": 4,
+    "assessments": [
+     "CuPb-00Wan.tdb",
+     "CuPb-01Ond.tdb",
+     "CuPb-13Vaa.tdb",
+     "CuPb-86Hay-LB.tdb"
+    ]
+   },
+   {
+    "system": "CU-GD",
+    "literature_accepted": 46,
+    "by_evidence_class": {
+     "dft": 1,
+     "experimental": 14,
+     "model": 13,
+     "unspecified": 18
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "CuGd-09Zha.tdb"
+    ]
+   },
+   {
+    "system": "CU-LA",
+    "literature_accepted": 40,
+    "by_evidence_class": {
+     "experimental": 18,
+     "model": 11,
+     "unspecified": 12
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "CuLa-12An.tdb",
+     "CuLa-89Qi.tdb",
+     "CuLa-99Du.tdb"
+    ]
+   },
+   {
+    "system": "CU-MG",
+    "literature_accepted": 36,
+    "by_evidence_class": {
+     "experimental": 21,
+     "model": 20
+    },
+    "calculated_phase_diagrams": 6,
+    "assessments": [
+     "CuMg-07Zho.tdb",
+     "CuMg-16Hal.tdb",
+     "CuMg-91Cou-alt.tdb",
+     "CuMg-91Cou.tdb",
+     "CuMg-93Zuo.tdb",
+     "CuMg-98Lia-LB.tdb"
+    ]
+   },
+   {
+    "system": "CU-IR",
+    "literature_accepted": 33,
+    "by_evidence_class": {
+     "experimental": 8,
+     "model": 18,
+     "unspecified": 10
+    },
+    "calculated_phase_diagrams": 2,
+    "assessments": [
+     "CuIr-04Kor-LB.tdb",
+     "CuIr-87Cha.tdb"
+    ]
+   },
+   {
+    "system": "CU-NI",
+    "literature_accepted": 31,
+    "by_evidence_class": {
+     "experimental": 34,
+     "model": 4
+    },
+    "calculated_phase_diagrams": 4,
+    "assessments": [
+     "CuNi-07Tur.tdb",
+     "CuNi-87Jan.tdb",
+     "CuNi-89Sri.tdb",
+     "CuNi-92Mey-LB.tdb"
+    ]
+   },
+   {
+    "system": "BE-CU",
+    "literature_accepted": 31,
+    "by_evidence_class": {
+     "experimental": 19,
+     "model": 11,
+     "unspecified": 6
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "BeCu-18Liu.tdb"
+    ]
+   },
+   {
+    "system": "CU-ER",
+    "literature_accepted": 29,
+    "by_evidence_class": {
+     "dft": 3,
+     "experimental": 19,
+     "model": 8,
+     "unspecified": 5
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "CuEr-08Zha.tdb"
+    ]
+   },
+   {
+    "system": "CU-PR",
+    "literature_accepted": 29,
+    "by_evidence_class": {
+     "model": 22,
+     "unspecified": 7
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "CuPr-96Zhu.tdb"
+    ]
+   },
+   {
+    "system": "CU-MN",
+    "literature_accepted": 27,
+    "by_evidence_class": {
+     "experimental": 25,
+     "model": 19
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "CuMn-03Mie-LB.tdb",
+     "CuMn-07Wan.tdb",
+     "CuMn-08He.tdb"
+    ]
+   },
+   {
+    "system": "CU-SM",
+    "literature_accepted": 26,
+    "by_evidence_class": {
+     "model": 20,
+     "unspecified": 6
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "CuSm-96Zhu.tdb"
+    ]
+   },
+   {
+    "system": "CU-S",
+    "literature_accepted": 23,
+    "by_evidence_class": {
+     "experimental": 22,
+     "model": 13
+    },
+    "calculated_phase_diagrams": 3,
+    "assessments": [
+     "CuS-07Lee.tdb",
+     "CuS-92Sun-LB.tdb",
+     "CuS-92Sun-newS.tdb"
+    ]
+   },
+   {
+    "system": "CU-HO",
+    "literature_accepted": 23,
+    "by_evidence_class": {
+     "experimental": 12,
+     "model": 11
+    },
+    "calculated_phase_diagrams": 2,
+    "assessments": [
+     "CuHo-09Wan-newHo.tdb",
+     "CuHo-09Wan.tdb"
+    ]
+   },
+   {
+    "system": "CU-TM",
+    "literature_accepted": 21,
+    "by_evidence_class": {
+     "experimental": 11,
+     "model": 10
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "CuTm-09Wan.tdb"
+    ]
+   },
+   {
+    "system": "CU-SC",
+    "literature_accepted": 20,
+    "by_evidence_class": {
+     "experimental": 13,
+     "model": 7
+    },
+    "calculated_phase_diagrams": 2,
+    "assessments": [
+     "CuSc-08GTT.tdb",
+     "CuSc-10Bo.tdb"
+    ]
+   },
+   {
+    "system": "CU-PT",
+    "literature_accepted": 20,
+    "by_evidence_class": {
+     "dft": 7,
+     "experimental": 2,
+     "model": 11
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "CuPt-06Abe.tdb"
+    ]
+   },
+   {
+    "system": "CU-GE",
+    "literature_accepted": 19,
+    "by_evidence_class": {
+     "experimental": 11,
+     "model": 10
+    },
+    "calculated_phase_diagrams": 2,
+    "assessments": [
+     "CuGe-10Wan.tdb",
+     "CuGe-Rand.tdb"
+    ]
+   },
+   {
+    "system": "CU-TH",
+    "literature_accepted": 18,
+    "by_evidence_class": {
+     "experimental": 9,
+     "model": 9
+    },
+    "calculated_phase_diagrams": 1,
+    "assessments": [
+     "CuTh-08Wan.tdb"
+    ]
+   },
+   {
+    "system": "CR-CU",
+    "literature_accepted": 17,
+    "by_evidence_class": {
+     "experimental": 14,
+     "model": 12
+    },
+    "calculated_phase_diagrams": 6,
+    "assessments": [
+     "CrCu-00Jac.tdb",
+     "CrCu-06Tur.tdb",
+     "CrCu-17Liu.tdb",
+     "CrCu-87Sau.tdb",
+     "CrCu-90Ham.tdb",
+     "CrCu-95Zen-LB.tdb"
+    ]
+   },
+   "... 71 more items trimmed (of 111)"
+  ],
+  "orchid": {
+   "dataset": "ORCHID (Open Repository for CALPHAD Hypotheses, Intelligence, and Discovery)",
+   "release": "orchid-literature 2026-10-23 (record store db-v2.1: invariant/general v2.1.19r, text+context fixup-20261022)",
+   "licence": {
+    "derived_data": "CC BY 4.0",
+    "quotes": "short excerpts kept so that each value can be verified; publishers' copyright, not relicensed (LICENSES.md)",
+    "source_papers": "not redistributed"
+   },
+   "data_source": "/tmp/arroyave/src/orchid-calphad__orchid-data",
+   "how_to_cite": "Cite the ORCHID data release you used (see CITATION.cff / the Zenodo DOI of the release) AND the original source of every value: the paper in `source.citation` / `source.doi` (for values the paper cit... [431 chars]",
+   "notes": [
+    "Evidence classes (experimental | model | dft | unspecified) are never mixed or averaged.",
+    "uncertainty.basis 'stated_default' / 'reading_resolution' is an ORCHID placeholder, not a measurement.",
+    "Every value carries uncertainty_budget: components kept separate (sigma_printed, sigma_reading, sigma_method = method-class floor calibrated from ORCHID duplicate measurements or a documented prior, s... [475 chars]",
+    "report_issue_url: a pre-filled GitHub issue ('Report an error in a value') for this value, carrying only its id, system, DOI, page and value. Give it to the user when a value looks wrong; the user sub... [247 chars]",
+    "Quotes are short excerpts kept so that each value can be verified; they remain under the publishers' copyright and are not relicensed; source papers are not redistributed."
+   ]
+  }
+ },
+ "error_probe": "Error executing tool get_phase_diagram: assessment 'no-such-assessment' not found for AL-CU; available: ['AlCu-02Mie.tdb', 'AlCu-04Wit.tdb', 'AlCu-15Lia.tdb', 'AlCu-21Kro.tdb', 'AlCu-98Sau-LB.tdb']",
+ "tools_list": [
+  {
+   "name": "search_systems",
+   "required": null,
+   "params": [
+    "elements",
+    "exact",
+    "fields",
+    "limit",
+    "offset",
+    "text"
+   ]
+  },
+  {
+   "name": "get_system_data",
+   "required": [
+    "system"
+   ],
+   "params": [
+    "accepted_only",
+    "compact",
+    "evidence_class",
+    "fields",
+    "limit",
+    "offset",
+    "property",
+    "property_group",
+    "system"
+   ]
+  },
+  {
+   "name": "get_invariant_reactions",
+   "required": [
+    "system"
+   ],
+   "params": [
+    "accepted_only",
+    "assessment",
+    "fields",
+    "limit",
+    "offset",
+    "source",
+    "system"
+   ]
+  },
+  {
+   "name": "get_formation_enthalpy",
+   "required": [
+    "formula"
+   ],
+   "params": [
+    "accepted_only",
+    "fields",
+    "formula",
+    "include_higher_order_systems"
+   ]
+  },
+  {
+   "name": "get_phase_diagram",
+   "required": [
+    "system"
+   ],
+   "params": [
+    "T",
+    "assessment",
+    "fields",
+    "system",
+    "x"
+   ]
+  },
+  {
+   "name": "list_tdb_files",
+   "required": null,
+   "params": [
+    "elements",
+    "exact",
+    "fields",
+    "limit",
+    "offset",
+    "tier"
+   ]
+  },
+  {
+   "name": "get_tdb",
+   "required": [
+    "file"
+   ],
+   "params": [
+    "file",
+    "include_content"
+   ]
+  },
+  {
+   "name": "get_paper",
+   "required": [
+    "doi"
+   ],
+   "params": [
+    "doi",
+    "fields"
+   ]
+  },
+  {
+   "name": "search_papers",
+   "required": null,
+   "params": [
+    "elements",
+    "evidence_class",
+    "limit",
+    "offset",
+    "property",
+    "role",
+    "system",
+    "text",
+    "year_from",
+    "year_to"
+   ]
+  },
+  {
+   "name": "get_paper_relations",
+   "required": [
+    "doi"
+   ],
+   "params": [
+    "direction",
+    "doi",
+    "limit",
+    "offset",
+    "relation"
+   ]
+  },
+  {
+   "name": "get_assessment_evidence",
+   "required": [
+    "system"
+   ],
+   "params": [
+    "max_data_papers",
+    "system"
+   ]
+  },
+  {
+   "name": "compare_to_dft",
+   "required": [
+    "system"
+   ],
+   "params": [
+    "default_subset_only",
+    "fields",
+    "system"
+   ]
+  },
+  {
+   "name": "get_phase",
+   "required": [
+    "system",
+    "phase"
+   ],
+   "params": [
+    "fields",
+    "phase",
+    "system"
+   ]
+  },
+  {
+   "name": "search_phases",
+   "required": null,
+   "params": [
+    "elements",
+    "limit",
+    "name",
+    "offset",
+    "prototype",
+    "status",
+    "tier"
+   ]
+  },
+  {
+   "name": "get_structure_type",
+   "required": [
+    "query"
+   ],
+   "params": [
+    "query"
+   ]
+  }
+ ],
+ "initialize": {
+  "capabilities": {
+   "prompts": {
+    "listChanged": false
+   },
+   "resources": {
+    "listChanged": false,
+    "subscribe": false
+   },
+   "tools": {
+    "listChanged": false
+   }
+  },
+  "instructions": "ORCHID: CALPHAD thermodynamic data with provenance. Literature values (experimental | model | dft | unspecified, never mixed), calculated binary phase diagrams tied to TDB files by SHA-256, Materials Project and OQMD formation energies, the TDB catalog, the phase registry (every name of each binary phase, its TDB models, stability and crystal structure when certain), and the bibliography (every pa... [643 chars]",
+  "protocolVersion": "2025-06-18",
+  "serverInfo": {
+   "name": "orchid",
+   "version": "0.1.0"
+  }
+ }
+}

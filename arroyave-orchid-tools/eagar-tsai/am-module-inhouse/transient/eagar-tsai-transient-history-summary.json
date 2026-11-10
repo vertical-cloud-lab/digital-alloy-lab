@@ -1,0 +1,52 @@
+{
+  "alsi10mg": {
+    "track_mm": 1.2,
+    "beam_on_us": 1333.3,
+    "sigma_over_v_us": 31.43,
+    "L_90pct_after_us": 411.1,
+    "L_95pct_after_us": 544.4,
+    "L_95pct_track_mm": 0.49,
+    "L_99pct_after_us": 822.2,
+    "W_90pct_after_us": 211.1,
+    "W_95pct_after_us": 300.0,
+    "W_95pct_track_mm": 0.27,
+    "W_99pct_after_us": 533.3,
+    "D_90pct_after_us": 233.3,
+    "D_95pct_after_us": 333.3,
+    "D_95pct_track_mm": 0.3,
+    "D_99pct_after_us": 566.7,
+    "frozen_at_liquidus_us_after_off": 108.3,
+    "frozen_at_solidus_us_after_off": 116.7,
+    "peak_below_boiling_us_after_off": 8.3,
+    "peak_K_at_first_sample": [
+      1.0,
+      2286.0
+    ],
+    "any_pool_touching_window_edge": false
+  },
+  "byu-blend": {
+    "track_mm": 2.0,
+    "beam_on_us": 5000.0,
+    "sigma_over_v_us": 79.55,
+    "L_90pct_after_us": 1166.7,
+    "L_95pct_after_us": 1666.7,
+    "L_95pct_track_mm": 0.667,
+    "L_99pct_after_us": 2833.3,
+    "W_90pct_after_us": 708.3,
+    "W_95pct_after_us": 1083.3,
+    "W_95pct_track_mm": 0.433,
+    "W_99pct_after_us": 2125.0,
+    "D_90pct_after_us": 750.0,
+    "D_95pct_after_us": 1125.0,
+    "D_95pct_track_mm": 0.45,
+    "D_99pct_after_us": 2166.7,
+    "frozen_at_liquidus_us_after_off": 220.0,
+    "frozen_at_eutectic_us_after_off": 330.0,
+    "peak_below_boiling_us_after_off": 30.0,
+    "peak_K_at_first_sample": [
+      1.0,
+      3097.0
+    ],
+    "any_pool_touching_window_edge": false
+  }
+}
