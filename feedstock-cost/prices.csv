@@ -1,0 +1,61 @@
+element,alloy,form,vendor,product,purity,diameter_mm,length_m,pack_kg,price_usd,source,date
+Cu,C11000,round bar,McMaster-Carr,110 Cu rod 1 in x 6 ft (8966K36),99.9,25.4,1.8288,,356.13,https://www.mcmaster.com/products/multipurpose-copper-rods/,2026-11-10
+Cu,C11000,round bar,McMaster-Carr,110 Cu rod 1.5 in x 6 ft (8966K17),99.9,38.1,1.8288,,636.19,https://www.mcmaster.com/products/multipurpose-copper-rods/,2026-11-10
+Cu,C11000,round bar,McMaster-Carr,110 Cu rod 2 in x 6 ft (8966K31),99.9,50.8,1.8288,,1082.42,https://www.mcmaster.com/products/multipurpose-copper-rods/,2026-11-10
+Cu,C11000,round bar,McMaster-Carr,110 Cu rod 1 in x 1 ft (8966K36),99.9,25.4,0.3048,,74.79,https://www.mcmaster.com/products/multipurpose-copper-rods/,2026-11-10
+Cu,C11000,round bar,McMaster-Carr,110 Cu short rod 1.5 in x 4 in (9103K9),99.9,38.1,0.1016,,91.77,https://www.mcmaster.com/products/multipurpose-copper-rods/,2026-11-10
+Al,6061,round bar,McMaster-Carr,6061-T6511 rod 1 in x 6 ft (8974K13),alloy,25.4,1.8288,,54.24,https://www.mcmaster.com/products/multipurpose-aluminum-rods/,2026-11-10
+Al,6061,round bar,McMaster-Carr,6061-T6511 rod 1.5 in x 6 ft (8974K18),alloy,38.1,1.8288,,118.24,https://www.mcmaster.com/products/multipurpose-aluminum-rods/,2026-11-10
+Al,6061,round bar,McMaster-Carr,6061-T6511 rod 2 in x 6 ft (8974K71),alloy,50.8,1.8288,,200.25,https://www.mcmaster.com/products/multipurpose-aluminum-rods/,2026-11-10
+Al,6061,round bar,McMaster-Carr,6061-T6511 rod 1 in x 1 ft (8974K13),alloy,25.4,0.3048,,11.93,https://www.mcmaster.com/products/multipurpose-aluminum-rods/,2026-11-10
+Cu,C95400,round bar,McMaster-Carr,954 aluminium bronze rod 1 in x 72 in (8958K63),alloy,25.4,1.8288,,298.72,https://www.mcmaster.com/products/aluminum-bronze-rods/,2026-11-10
+Cu,C95400,round bar,McMaster-Carr,954 aluminium bronze rod 1.5 in x 72 in (8958K65),alloy,38.1,1.8288,,570.05,https://www.mcmaster.com/products/aluminum-bronze-rods/,2026-11-10
+Cu,C95500,round bar,McMaster-Carr,955 nickel aluminium bronze rod 1 in x 6 ft (3588N11),alloy,25.4,1.8288,,333.62,https://www.mcmaster.com/products/aluminum-bronze-rods/,2026-11-10
+Cu,C95500,round bar,McMaster-Carr,955 nickel aluminium bronze rod 1.5 in x 6 ft (3588N12),alloy,38.1,1.8288,,722.12,https://www.mcmaster.com/products/aluminum-bronze-rods/,2026-11-10
+Al,ER1100,welding wire,McMaster-Carr,"ER1100 MIG wire 0.035 in, 1 lb spool (7678A304)",99.0,,,0.4536,15.68,https://www.mcmaster.com/products/welding-wire/welding-process~mig/mig-welding-wire-for-aluminum~~/,2026-11-10
+Al,ER4043,welding wire,McMaster-Carr,"ER4043 (Al-5Si) MIG wire 0.035 in, 1 lb (7678A194)",alloy,,,0.4536,19.29,https://www.mcmaster.com/products/welding-wire/welding-process~mig/mig-welding-wire-for-aluminum~~/,2026-11-10
+Al,ER4043,welding wire,McMaster-Carr,"ER4043 (Al-5Si) MIG wire 0.035 in, 16 lb (7678A312)",alloy,,,7.2575,208.51,https://www.mcmaster.com/products/welding-wire/welding-process~mig/mig-welding-wire-for-aluminum~~/,2026-11-10
+Al,ER4047,welding wire,McMaster-Carr,"ER4047 (Al-12Si) MIG wire 0.035 in, 16 lb (7678A321)",alloy,,,7.2575,283.98,https://www.mcmaster.com/products/welding-wire/welding-process~mig/mig-welding-wire-for-aluminum~~/,2026-11-10
+Cu,ERCu,welding wire,McMaster-Carr,"ERCu MIG wire 0.035 in, 1 lb (7678A101)",98+,,,0.4536,33.14,https://www.mcmaster.com/products/welding-wire/welding-process~mig/mig-welding-wire-for-copper-brass-and-bronze~~/,2026-11-10
+Cu,ERCu,welding wire,McMaster-Carr,"ERCu MIG wire 0.035 in, 10 lb (7678A759)",98+,,,4.5359,254.95,https://www.mcmaster.com/products/welding-wire/welding-process~mig/mig-welding-wire-for-copper-brass-and-bronze~~/,2026-11-10
+Cu,ERCuNiAl,welding wire,McMaster-Carr,"ERCuNiAl (NAB) MIG wire 0.045 in, 1 lb (7678A754)",alloy,,,0.4536,60.63,https://www.mcmaster.com/products/welding-wire/welding-process~mig/mig-welding-wire-for-copper-brass-and-bronze~~/,2026-11-10
+Cu,ERCuNiAl,welding wire,McMaster-Carr,"ERCuNiAl (NAB) MIG wire 0.045 in, 10 lb (7678A756)",alloy,,,4.5359,466.36,https://www.mcmaster.com/products/welding-wire/welding-process~mig/mig-welding-wire-for-copper-brass-and-bronze~~/,2026-11-10
+Cu,ERCuAl-A3,welding wire,McMaster-Carr,"ERCuAl-A3 (Al bronze) MIG wire 0.045 in, 10 lb (7678A752)",alloy,,,4.5359,347.92,https://www.mcmaster.com/products/welding-wire/welding-process~mig/mig-welding-wire-for-copper-brass-and-bronze~~/,2026-11-10
+Cu,ERCuSi-A,welding wire,McMaster-Carr,"ERCuSi-A (Si bronze) MIG wire 0.035 in, 33 lb (7678A825)",alloy,,,14.9685,601.84,https://www.mcmaster.com/products/welding-wire/welding-process~mig/mig-welding-wire-for-joining-copper-to-steel~~/,2026-11-10
+Al,,shot,Thermo Fisher (Alfa),"Al shot, irregular, 15 mm and down (000632.A3)",99.9,,,2,122.00,https://www.thermofisher.com/order/catalog/product/000632.A3,2026-11-10
+Al,,shot,Thermo Fisher (Alfa),"Al shot, 4-8 mm, Puratronic (010573.A1)",99.999,,,1,1119.65,https://www.thermofisher.com/order/catalog/product/010573.A1,2026-11-10
+Al,,wire,Thermo Fisher (Alfa),"Al wire 1.0 mm annealed, 250 m (011064.H7)",99+,1.0,250,,301.00,https://www.thermofisher.com/order/catalog/product/011064.H7,2026-11-10
+Al,,wire,Thermo Fisher (Alfa),"Al wire 1.5 mm, Puratronic, 5 m (010765.G5)",99.999,1.5,5,,155.00,https://www.thermofisher.com/order/catalog/product/010765.G5,2026-11-10
+Al,,round bar,Thermo Fisher (Alfa),"Al rod 6.35 mm, 1 m (044850.G1)",99.95,6.35,1,,74.40,https://www.thermofisher.com/order/catalog/product/044850.G1,2026-11-10
+Al,,round bar,Thermo Fisher (Alfa),"Al rod 22 mm, Puratronic, 25 cm (010778.BU)",99.999,22,0.25,,775.00,https://www.thermofisher.com/order/catalog/product/010778.BU,2026-11-10
+Cu,,shot,Thermo Fisher (Alfa),Cu shot 1-10 mm (010159.A3),99.9,,,2,194.00,https://www.thermofisher.com/order/catalog/product/010159.A3,2026-11-10
+Cu,,shot,Thermo Fisher (Alfa),Cu shot 0.8-2 mm (044213.A3),99.5,,,2,192.65,https://www.thermofisher.com/order/catalog/product/044213.A3,2026-11-10
+Cu,,shot,Thermo Fisher (Alfa),"Cu shot 3-6 mm, Puratronic (010953.A1)",99.999,,,1,1895.65,https://www.thermofisher.com/order/catalog/product/010953.A1,2026-11-10
+Cu,,powder,Thermo Fisher (Alfa),Cu powder -150 mesh (010160.A3),99.5,,,2,570.00,https://www.thermofisher.com/order/catalog/product/010160.A3,2026-11-10
+Cu,,powder,Thermo Fisher (Alfa),"Cu powder, spherical, -100+325 mesh (042623.A3)",99.9,,,2,465.00,https://www.thermofisher.com/order/catalog/product/042623.A3,2026-11-10
+Cu,,wire,Thermo Fisher (Alfa),"Cu wire 1.5 mm, 100 m (044549.H4)",99.9,1.5,100,,286.65,https://www.thermofisher.com/order/catalog/product/044549.H4,2026-11-10
+Cu,,round bar,Thermo Fisher (Alfa),"Cu rod 25.4 mm, Puratronic, 50 mm (044695.DJ)",99.995,25.4,0.05,,304.00,https://www.thermofisher.com/order/catalog/product/044695.DJ,2026-11-10
+Ni,,shot,Thermo Fisher (Alfa),Ni shot 3-25 mm (010251.A7),99.95,,,5,1175.00,https://www.thermofisher.com/order/catalog/product/010251.A7,2026-11-10
+Ni,,wire,Thermo Fisher (Alfa),"Ni wire 0.5 mm annealed, 100 m (043132.H4)",99.98,0.5,100,,576.65,https://www.thermofisher.com/order/catalog/product/043132.H4,2026-11-10
+Ni,,round bar,Thermo Fisher (Alfa),"Ni rod 12.7 mm annealed, 150 cm (011453.BZ)",99.5,12.7,1.5,,636.00,https://www.thermofisher.com/order/catalog/product/011453.BZ,2026-11-10
+Cr,,pieces,Thermo Fisher (Alfa),"Cr pieces, irregular (010150.36)",99,,,0.5,207.00,https://www.thermofisher.com/order/catalog/product/010150.36,2026-11-10
+Cr,,powder,Thermo Fisher (Alfa),Cr powder -325 mesh (010148.A3),99,,,2,841.00,https://www.thermofisher.com/order/catalog/product/010148.A3,2026-11-10
+Mn,,pieces,Thermo Fisher (Alfa),"Mn pieces, irregular (010236.A7)",99.9,,,5,311.00,https://www.thermofisher.com/order/catalog/product/010236.A7,2026-11-10
+Mn,,powder,Thermo Fisher (Acros),Mn powder -40 mesh (317442500),99+,,,0.25,54.70,https://www.thermofisher.com/order/catalog/product/317442500,2026-11-10
+Mn,,powder,Thermo Fisher (Alfa),Mn powder -325 mesh (036315.22),99.95,,,0.1,286.00,https://www.thermofisher.com/order/catalog/product/036315.22,2026-11-10
+Si,,powder,Thermo Fisher (Alfa),"Si powder, crystalline, -325 mesh (012681.36)",99.5,,,0.5,580.00,https://www.thermofisher.com/order/catalog/product/012681.36,2026-11-10
+Sn,,shot,Thermo Fisher (Alfa),Sn shot 3 mm (036641.22),99.99,,,0.1,233.00,https://www.thermofisher.com/order/catalog/product/036641.22,2026-11-10
+Sn,,powder,Thermo Fisher (Alfa),Sn powder -325 mesh (010379.A3),n/a,,,2,403.00,https://www.thermofisher.com/order/catalog/product/010379.A3,2026-11-10
+Sn,,wire,Thermo Fisher (Alfa),"Sn wire 3.2 mm, 5 m (010790.G5)",99.95,3.2,5,,329.00,https://www.thermofisher.com/order/catalog/product/010790.G5,2026-11-10
+Sn,,round bar,Thermo Fisher (Alfa),"Sn rod 12.7 mm, 100 cm (014148.BY)",99.9,12.7,1,,286.00,https://www.thermofisher.com/order/catalog/product/014148.BY,2026-11-10
+Zn,,shot,Thermo Fisher (Alfa),Zn shot 10 mm x 2 mm (010440.A3),99.99,,,2,190.00,https://www.thermofisher.com/order/catalog/product/010440.A3,2026-11-10
+Zn,,wire,Thermo Fisher (Alfa),"Zn wire 1.0 mm, 25 m (042705.G9)",99.95,1.0,25,,413.00,https://www.thermofisher.com/order/catalog/product/042705.G9,2026-11-10
+Zn,,round bar,Thermo Fisher (Alfa),"Zn rod 12.7 mm, 90 cm (000422.RM)",99.9,12.7,0.9,,159.65,https://www.thermofisher.com/order/catalog/product/000422.RM,2026-11-10
+Fe,,wire,Thermo Fisher (Alfa),"Fe wire 1.0 mm, 250 cm (040497.CB)",99.99,1.0,2.5,,472.00,https://www.thermofisher.com/order/catalog/product/040497.CB,2026-11-10
+Fe,,round bar,Thermo Fisher (Alfa),"Fe rod 7.62 mm, 190 mm (044918.DQ)",99.95,7.62,0.19,,169.00,https://www.thermofisher.com/order/catalog/product/044918.DQ,2026-11-10
+Ti,,wire,Thermo Fisher (Alfa),"Ti wire 2.0 mm, 25 x 91 cm (010397.KM)",99.7,2.0,22.75,,738.65,https://www.thermofisher.com/order/catalog/product/010397.KM,2026-11-10
+Ti,,round bar,Thermo Fisher (Alfa),"Ti rod 12.7 mm annealed, 250 cm (010394.CB)",99.5,12.7,2.5,,820.00,https://www.thermofisher.com/order/catalog/product/010394.CB,2026-11-10
+Cu,,wire,Thermo Fisher (Alfa),"Cu wire 1.0 mm annealed, 500 m (010782.H9)",99.9,1.0,500,,614.00,https://www.thermofisher.com/order/catalog/product/010782.H9,2026-11-10
+Fe,,pieces,Thermo Fisher (Alfa),"Fe pieces, irregular, 25 mm and down (010213.A7)",99.97,,,5,315.00,https://www.thermofisher.com/order/catalog/product/010213.A7,2026-11-10
+Si,,pieces,Thermo Fisher (Alfa),"Si lump, 10 cm and down (010335.A7)",98.4,,,5,314.00,https://www.thermofisher.com/order/catalog/product/010335.A7,2026-11-10
+Ce,,pieces,Thermo Fisher (Alfa),Ce ingot (000065.30),99.8 REO,,,0.25,623.00,https://www.thermofisher.com/order/catalog/product/000065.30,2026-11-10
