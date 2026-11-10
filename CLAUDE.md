@@ -199,6 +199,46 @@ GH_TOKEN=$GH_READ_PAT_STAGING gh api "repos/sgbaird/agent-staging/contents/<path
 - Never echo the token or save it in a remote or a commit. If it is unset or returns
   401/403/404, say so and stop; don't rebuild the content some other way.
 
+## Contributing to CubOS (`vertical-cloud-lab/CubOS` → `Ursa-Laboratories/CubOS`)
+
+[`vertical-cloud-lab/CubOS`](https://github.com/vertical-cloud-lab/CubOS) is the lab's public
+fork of [`Ursa-Laboratories/CubOS`](https://github.com/Ursa-Laboratories/CubOS), the software
+the CubXL runs. Ursa invited a PR for the stir module
+([byu-vcl issue 133](https://github.com/vertical-cloud-lab/byu-vcl/issues/133#issuecomment-6695975301)).
+`CUBOS_FORK_PAT` (job env in `.github/workflows/claude.yml`) is a fine-grained PAT with
+Contents: read/write on the fork and nothing else.
+
+**The token can push to the fork but cannot open the PR on Ursa.** GitHub doesn't let a
+fine-grained PAT contribute to a public repo whose org the token's user isn't a member of. So the
+last step is a link that a person clicks, and the PR opens under their name.
+
+1. **Sync the fork, then branch from upstream `main`.** Work in `/tmp`, never in this checkout:
+   ```
+   GH_TOKEN=$CUBOS_FORK_PAT gh api -X POST repos/vertical-cloud-lab/CubOS/merge-upstream -f branch=main
+   git clone https://github.com/vertical-cloud-lab/CubOS.git /tmp/CubOS && cd /tmp/CubOS
+   git checkout -b claude/dal-<issue>-<slug>
+   ```
+2. **Follow CubOS's own rules.** Read its `CONTRIBUTING.md`, `AGENTS.md` and `CLAUDE.md`, and
+   run its tests before pushing. The CubXL runs CubOS `496819c` plus the patches in byu-vcl's
+   [`cubos/patches/`](https://github.com/vertical-cloud-lab/byu-vcl/tree/main/cubos/patches).
+   Port a change onto current upstream `main`; don't send a patch against `496819c`.
+3. **Push the branch to the fork:**
+   `git push https://x-access-token:$CUBOS_FORK_PAT@github.com/vertical-cloud-lab/CubOS.git claude/dal-<issue>-<slug>`.
+   Never push to the fork's `main` or force-push a branch someone has opened a PR from. The
+   token has no Workflows permission, so leave `.github/workflows/` alone.
+4. **Hand over the PR link** in your comment, with the title and body ready to paste:
+   `https://github.com/Ursa-Laboratories/CubOS/compare/main...vertical-cloud-lab:CubOS:<branch>?expand=1`.
+   Say who should click it: by default the person who pinged you.
+
+- **Only push to the fork when the person pinging you asks for a CubOS change or PR**, never as
+  a side effect of other work.
+- **Ursa is outside the lab, and its repo is public.** The rules in "This repository is public"
+  apply to the code, commit messages and PR text. Also leave out links that won't resolve for
+  Ursa (ME orders, private repos), and keep lab-specific configs (deck files, the CubXL's
+  gantry YAML) out unless the change needs them.
+- Never echo the token or save it in a remote or a commit. If it is unset or returns 401/403,
+  say so and stop. It expires 2027-11-10.
+
 ## The atomizer camera Pis (`rpi-5-3ray`, `rpi-5-6ktj`, `rpi-zero2w-ex3f`) over Tailscale
 
 Three Raspberry Pis are on the lab tailnet, and their variables are named for what each one
