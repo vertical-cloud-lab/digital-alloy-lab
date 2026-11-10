@@ -1,0 +1,82 @@
+{
+  "c1-01-ded-ni-free-al-bronze-properties": {
+    "batch": 1,
+    "task_id": "34cf5e9f-a63d-46e8-a1be-60668306aa11",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-11-10T15:58:06Z",
+    "status": "success",
+    "fetched": "2026-11-10T16:28:14Z"
+  },
+  "c1-02-ni-free-al-bronze-seawater-as-deposited": {
+    "batch": 1,
+    "task_id": "550d1439-cfe8-45d1-bf82-26b43c3247e7",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-11-10T15:58:07Z",
+    "status": "success",
+    "fetched": "2026-11-10T16:28:15Z"
+  },
+  "c1-03-insstek-dmt-copper-work": {
+    "batch": 1,
+    "task_id": "e77a7eff-6e0b-4ef5-bb8d-a75d2fd982d3",
+    "job": "LITERATURE",
+    "submitted": "2026-11-10T15:58:08Z",
+    "status": "success",
+    "fetched": "2026-11-10T16:28:17Z"
+  },
+  "c1-04-c95300-marine-use-and-specs": {
+    "batch": 1,
+    "task_id": "df874150-a8b8-4f2d-962f-0d4f3d3ca74a",
+    "job": "LITERATURE",
+    "submitted": "2026-11-10T15:58:08Z",
+    "status": "success",
+    "fetched": "2026-11-10T16:28:18Z"
+  },
+  "c1-05-ir-laser-power-al-bronze": {
+    "batch": 1,
+    "task_id": "4a05f7ea-3c3a-46c7-aaf3-bf343fd75094",
+    "job": "LITERATURE",
+    "submitted": "2026-11-10T15:58:09Z",
+    "status": "success",
+    "fetched": "2026-11-10T16:30:22Z"
+  },
+  "c1-06-commercial-al-bronze-ded-powders": {
+    "batch": 1,
+    "task_id": "d4473701-b5dd-4df0-94f6-97f83073b539",
+    "job": "LITERATURE",
+    "submitted": "2026-11-10T15:58:11Z",
+    "status": "success",
+    "fetched": "2026-11-10T16:28:20Z"
+  },
+  "c1-07-precedent-dmt-c95300": {
+    "batch": 1,
+    "task_id": "b1de059d-b5b7-400b-9310-67c0833ed342",
+    "job": "PRECEDENT",
+    "submitted": "2026-11-10T15:58:12Z",
+    "status": "success",
+    "fetched": "2026-11-10T16:28:22Z"
+  },
+  "c1-08-ded-propeller-repair-practice": {
+    "batch": 1,
+    "task_id": "40b1dc95-95d1-44dc-ba29-a7f666556368",
+    "job": "LITERATURE",
+    "submitted": "2026-11-10T15:58:13Z",
+    "status": "success",
+    "fetched": "2026-11-10T16:28:23Z"
+  },
+  "c2-01-beta-prime-attack-timescale": {
+    "batch": 2,
+    "task_id": "fc6a3970-392a-45cb-b3f4-4db2b4664974",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-11-10T16:31:13Z",
+    "status": "success",
+    "fetched": "2026-11-10T17:02:10Z"
+  },
+  "c2-02-nickel-and-beta-prime-retention": {
+    "batch": 2,
+    "task_id": "6334bbd3-596a-423c-84d0-58baf16486b0",
+    "job": "LITERATURE",
+    "submitted": "2026-11-10T16:31:14Z",
+    "status": "success",
+    "fetched": "2026-11-10T17:02:12Z"
+  }
+}

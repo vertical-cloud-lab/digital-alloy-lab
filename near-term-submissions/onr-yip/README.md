@@ -757,6 +757,25 @@ The run plan, with its 1,300 °C setpoint, is in PR #220
   caption should call it a commercial alloy rather than a candidate, and
   keep its length: the MiKTeX build has about one line to spare on page 21.
 
+**InssTek's C95300 listing (2026-11-10).** InssTek's material database lists
+nickel-free aluminum bronze UNS C95300 (Al 9-11, Fe 0.8-1.5) as a qualified
+DED material, at 628 MPa (XY) and 598 MPa (Z), with an 83.8 µm powder
+average. Ten Edison queries and the checks are in
+[`edison-trajectories/insstek-al-bronze-2026-11/`](../../edison-trajectories/insstek-al-bronze-2026-11/README.md).
+- **Useful for Utah:** the same kind of powder has been deposited on an
+  InssTek MX-1000 at 500 W average (750 W peak), and InssTek shows an
+  aluminum bronze bar made on an MX-Lab. Its parameter set is a starting
+  point for the 630 bronze powder.
+- **Not a candidate:** no nickel and up to 11% Al put it outside Table 1
+  (Fig. 7b already shows it outside the box). No class propeller grade is
+  nickel-free; aluminum bronze is a repair filler, with a stress relief.
+- **A known-risk control for H5:** no corrosion test of a laser-deposited
+  nickel-free aluminum bronze has been published, and a short NaCl test
+  ranked a laser-melted, β′-rich bronze surface better (Guo et al. 2026).
+- **Wording:** the submitted Facilities PDF says "aluminum bronze (UNS
+  C95300)", which is right. `attachments/field10-facilities-cu-ded.tex`
+  still says "nickel-aluminum bronze"; fix it before reusing the text.
+
 **Placeholders specific to this version** (red TODOs in the PDF):
 
 1. **DED facilities.** The InssTek MX-Lab at the University of Utah (Prof.
