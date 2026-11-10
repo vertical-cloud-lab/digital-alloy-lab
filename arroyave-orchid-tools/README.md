@@ -37,6 +37,11 @@ or example run.
      - **Keyhole-mode pools are out of reach.** The AM module's 375 W / 400 mm/s pool is 349 µm deep and 1.47 mm long;
        eagar-tsai reaches neither at any absorptivity up to 1.
      - So eagar-tsai can stand in for the AM module on the lack-of-fusion side of a map, but not for keyholing.
+     - **Time-dependent melt-pool renders.** eagar-tsai's integral over past heat input, cut off at the time the beam has
+       been on, gives the start-up and cool-down of a track. Drawn like the AM module's 3D renders, at the same settings
+       and colour scales, its pool is a smooth half-ellipsoid with no keyhole or flow. It reaches steady width and depth
+       within 0.3–0.45 mm of track and freezes 0.12–0.33 ms after the beam switches off
+       ([renders and animations](eagar-tsai/README.md#time-dependent-melt-pools-drawn-like-the-am-modules-renders)).
    - eagar-tsai was also checked against what a printability map is meant to predict: measured AlSi10Mg single tracks
      ([arXiv:2507.23422](https://arxiv.org/abs/2507.23422)), using that study's calibrated absorptivity.
    - With its default criteria, only 9 of 420 points come out defect-free. It flags keyholing at 78 points where the

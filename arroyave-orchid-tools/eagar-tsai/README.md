@@ -167,6 +167,112 @@ python scripts/eagar_tsai_vs_am_module_inhouse.py all --png-dir arroyave-orchid-
     --out arroyave-orchid-tools/eagar-tsai/am-module-inhouse
 ```
 
+### Time-dependent melt pools, drawn like the AM module's renders
+
+The AM module's two melt-pool renders (copied into [`am-module-inhouse/`](am-module-inhouse/)) are 3D snapshots of one
+track. Each shows half the domain, cut along the track centre line and coloured by temperature, with:
+- the heat-source intensity drawn as a Gaussian above the beam;
+- Marangoni velocity arrows;
+- the pool outline as contour lines.
+
+[`scripts/eagar_tsai_transient_meltpool.py`](../../scripts/eagar_tsai_transient_meltpool.py) draws eagar-tsai's pool
+the same way, at the same settings and on the same colour scales, and makes it time-dependent.
+
+**How eagar-tsai becomes time-dependent.** eagar-tsai only returns the steady state. But its temperature is an
+integral over how long ago each bit of heat was deposited: its integrand's variable is that time, in units of σ/v.
+- Integrating from 0 to ∞, as the package does, assumes the beam has always been on.
+- Integrating only over the time the beam has actually been on gives the field at any moment of a single track: the
+  start-up after the beam switches on at X = 0, and the cool-down after it switches off at the end of the track.
+- The script uses eagar-tsai's own compiled integrand and scaling and changes nothing else. It is still a Gaussian
+  source on a semi-infinite plate with constant properties, and no latent heat, fluid flow or evaporation.
+- **Check:** run long enough, the transient converges to eagar-tsai's own steady state. After 50 σ/v (1.6 ms for
+  AlSi10Mg, 4.0 ms for the blend) it is within 0.05 µm and 2 µm, and after 100 σ/v within 0.01 µm. That steady
+  state matches `compute_single_point` on a 1 µm grid to within 1.6 µm in W, D and L and 0.6 K in peak temperature
+  ([check](am-module-inhouse/transient/transient-check-vs-compute_single_point.csv)).
+
+**Settings**, as in the comparison above:
+- A is read off each AM render's heat-source colour bar: 0.307 for AlSi10Mg and 0.384 for the blend.
+- eagar-tsai's `beam_diameter` is set to the AM module's 1/e² radius (40 and 45 µm).
+- The build plate (150 °C and 30 °C) is used as T0.
+- The colour scales are the AM module's own, over the same ranges. Its temperature bar is an even
+  blue-cyan-green-yellow-red rainbow, sampled off the render; its heat-source bar is matplotlib's `plasma`. Like the
+  AM module's, the blend's temperature is in °C.
+
+![AM-module melt-pool renders next to eagar-tsai's, same settings and colour scales](am-module-inhouse/transient/am-module-vs-eagar-tsai-meltpools.png)
+
+**One track, start to finish.** The beam switches on at X = 0, runs along the track, and switches off at the end;
+then the pool freezes. The cool-down is shown in slow motion: 8 µs (AlSi10Mg) and 21 µs (blend) per frame, against
+25 µs and 93 µs while the beam is on.
+
+| AlSi10Mg, 250 W, 900 mm/s, 1.2 mm track | Blend, 375 W, 400 mm/s, 2.0 mm track |
+|---|---|
+| ![eagar-tsai single track, AlSi10Mg](am-module-inhouse/transient/eagar-tsai-meltpool-alsi10mg-transient.gif) | ![eagar-tsai single track, blend](am-module-inhouse/transient/eagar-tsai-meltpool-byu-blend-transient.gif) |
+
+![eagar-tsai pool size and peak temperature vs time along one track](am-module-inhouse/transient/eagar-tsai-transient-history.png)
+
+| eagar-tsai, one track ([csv](am-module-inhouse/transient/eagar-tsai-transient-history.csv), [summary](am-module-inhouse/transient/eagar-tsai-transient-history-summary.json)) | AlSi10Mg | Blend (pool edge at the liquidus) |
+|---|---|---|
+| Steady pool: L / W / D | 318 / 221 / 106 µm | 399 / 322 / 157 µm |
+| Surface passes Al's boiling point (2743 K) | 1.4–2.0 µs after switch-on | within 1 µs |
+| W and D reach 95 % of steady | after 0.30–0.33 ms (0.27–0.30 mm of track) | after 1.1 ms (0.43–0.45 mm) |
+| L reaches 95 % / 99 % of steady | after 0.54 / 0.82 ms (0.49 / 0.74 mm) | after 1.7 / 2.8 ms (0.67 / 1.13 mm) |
+| Peak falls below boiling after switch-off | 4–8 µs | 20–30 µs |
+| Whole pool below the liquidus after switch-off | 108 µs | 220 µs |
+| Whole pool below the solidus (blend: the eutectic) | 117 µs | 330 µs |
+
+Cool-down times are to the nearest sample (4 µs for AlSi10Mg, 10 µs for the blend).
+
+**What the pictures show**
+1. **eagar-tsai can make the same kind of picture, and a time-dependent one, in seconds.**
+   - The two steady renders take 2 s; the 156 frames of the two animations take 33 s on 4 vCPUs; the time history
+     (374 time steps on 2 µm grids) takes 110 s.
+   - Its start-up and cool-down follow from the same model, with no extra inputs.
+2. **The shapes differ the way the printability maps already suggested.**
+   - The AM module's cut shows a narrow, deep V of near-boiling liquid under the beam (red), where its keyhole model
+     carries heat down, feeding a long, shallow tail. Marangoni flow sweeps that tail back, with velocity arrows up
+     to 3.2–3.3 m/s.
+   - The V doesn't by itself make a keyhole defect: the AM map puts AlSi10Mg's 250 W / 900 mm/s in its defect-free
+     window. The blend's 375 W / 400 mm/s pool is keyhole-shaped (D/W 0.76).
+   - eagar-tsai's pool is a smooth half-ellipsoid, because it models conduction only.
+   - Where the AM render gives a scale (the blend), its pool is 3.7× longer and 2.2× deeper than eagar-tsai's but
+     only 1.4× wider: half-width 231 µm against 161 µm. The magenta dashes in the blend render draw the AM module's
+     pool at the same scale.
+3. **Peak temperature.** eagar-tsai's surface passes Al's boiling point within about 2 µs of switch-on, and its
+   peak settles at 6,405 K (AlSi10Mg) and 10,995 K (blend). The AM module's peaks are 3,044 K and 3,119 K, near
+   boiling, since it models evaporation. On the AM module's colour scales, everything eagar-tsai puts above those
+   peaks is drawn red.
+4. **Start-up and freezing are quick.** eagar-tsai's pool reaches its steady width and depth within 0.3 mm
+   (AlSi10Mg) and 0.45 mm (blend) of track, and its steady length within 0.5–0.7 mm.
+   - So the steady-state numbers behind the maps above hold over most of any track longer than about 1 mm. On scan
+     vectors shorter than about 0.3 mm (AlSi10Mg) or 0.45 mm (blend), the pool never reaches 95 % of its steady width
+     and depth.
+   - Once the beam switches off, the last pool is fully solid within 0.12 ms (AlSi10Mg) and 0.33 ms (blend).
+5. **What the eagar-tsai renders can't show:**
+   - velocity arrows, because there is no fluid flow;
+   - the keyhole, because there is no vapour cavity or recoil pressure;
+   - a temperature cap at boiling;
+   - latent heat, the powder layer, and temperature-dependent properties.
+
+   So the pictures show where heat conduction alone would put the pool. Most of the visible difference from the AM
+   module's renders is the keyhole and the flow.
+
+**Caveats.**
+- The settings carry over every caveat of the comparison above: A comes from one render per alloy, and the blend
+  uses AlSi10Mg's thermal properties.
+- The AM render doesn't say how long its track had run, or whether it came from the AM module's steady-state or
+  transient mode. I drew eagar-tsai's steady state for the side-by-side; its pool is within 1 % of that size after
+  0.8 ms (AlSi10Mg) and 2.8 ms (blend).
+- If the renders did come from the transient mode, the AM module's pool size against time, or its animation frames,
+  would compare directly with the history plot above. That would be worth asking Thermo-Calc's account manager for,
+  along with the CSV export.
+
+```bash
+# the two AM-module renders are in am-module-inhouse/ (copied from consolidation-2); about 2.5 min on 4 vCPUs
+pip install --no-binary eagar-tsai eagar-tsai pandas matplotlib pillow scipy
+python scripts/eagar_tsai_transient_meltpool.py all --out arroyave-orchid-tools/eagar-tsai/am-module-inhouse/transient \
+    --am-png-dir arroyave-orchid-tools/eagar-tsai/am-module-inhouse
+```
+
 ## Comparing with measured AlSi10Mg single tracks
 
 Thermo-Calc's own AM-module worked examples on help.thermocalc.com need a login, so I couldn't take numbers from
@@ -263,4 +369,10 @@ python scripts/eagar_tsai_vs_am_module.py published --out arroyave-orchid-tools/
 | `am-module-inhouse/*-agreement-vs-absorptivity-*.csv` | grid-point agreement counts at A = 0.05–0.95 every 0.01 |
 | `am-module-inhouse/summary.json` | the numbers quoted above |
 | `am-module-inhouse/profile-shortcut-vs-compute_single_point.csv` | the check of the profile shortcut against eagar-tsai itself |
-| `am-module-inhouse/*.png` | the two AM-module maps (copied from `consolidation-2`) and the two figures above |
+| `am-module-inhouse/*.png` | the two AM-module maps and two melt-pool renders (copied from `consolidation-2`), and the two map figures above |
+| `am-module-inhouse/transient/am-module-vs-eagar-tsai-meltpools.png` | the AM module's melt-pool renders next to eagar-tsai's |
+| `am-module-inhouse/transient/eagar-tsai-meltpool-*-steady.png` | eagar-tsai's steady pool drawn like the AM renders, with its W/2, D and L |
+| `am-module-inhouse/transient/eagar-tsai-meltpool-*-transient.gif` | one track from switch-on to a frozen pool |
+| `am-module-inhouse/transient/eagar-tsai-transient-history.*` | L, W, D (both isotherms) and peak T at 374 times along one track; the plot; the start-up and freezing times |
+| `am-module-inhouse/transient/transient-check-vs-compute_single_point.csv` | the transient's convergence to eagar-tsai's own steady state |
+| `am-module-inhouse/transient/transient-render-summary.json` | A, q0 and the steady pool at each render's settings |
