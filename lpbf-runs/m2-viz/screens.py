@@ -98,22 +98,28 @@ def draw_track(ax, t, rng, fov=700.0, aspect=1.3, top=0.25, annotate=False):
 
 
 def pick_row_tracks():
-    """Insert A, row 1 (the row the animation sections): one track per regime where the map has one."""
-    row = [t for t in L.track_map() if t["insert"] == "A" and t["row"] == 1 and t["E"] is not None]
+    """Panel A, piece 1 (the nine tracks the animation sections): one track per regime where it has one, topped up
+    with its highest-P/v tracks so there are always three."""
+    row = [t for t in L.track_map() if t["insert"] == "A" and t["group"] == 1 and t["E"] is not None]
     want = ("conduction", "transition", "keyhole")
     out = []
     for r in want:
         c = [t for t in row if L.regime(t["E"]) == r]
         if c:
             out.append(sorted(c, key=lambda t: t["E"])[len(c) // 2])
-    return out[:3]
+    for t in sorted(row, key=lambda t: -t["E"]):
+        if len(out) >= 3:
+            break
+        if t not in out:
+            out.append(t)
+    return sorted(out[:3], key=lambda t: t["E"])
 
 
 def sem_tiles(path: Path):
     rng = np.random.default_rng(7)
     fig = plt.figure(figsize=SIZE_IN, dpi=100, facecolor="#101114")
     tracks = pick_row_tracks()
-    fig.text(0.03, 0.94, "C5: SEM of insert A, row 1 (3 of its 9 tracks)", color="white", fontsize=30,
+    fig.text(0.03, 0.94, "C5: SEM of panel A, piece 1 (3 of its 9 tracks)", color="white", fontsize=30,
              weight="bold", va="center")
     for i, t in enumerate(tracks):
         ax = fig.add_axes([0.03 + i * 0.32, 0.14, 0.30, 0.70])
@@ -133,7 +139,7 @@ def measure(path: Path):
     w, d, h, reg = draw_track(ax, t, rng, fov=1000.0, aspect=0.74 * 10 / (0.60 * 16), top=0.2, annotate=True)
     fig.text(0.03, 0.94, "C6: measure every track, classify its regime", color="white", fontsize=30,
              weight="bold", va="center")
-    rows = [("track", "insert A, row 1"), ("P, v", f"{t['P']} W, {t['v']} mm/s"), ("P/v", f"{t['E']:.2f} J/mm"),
+    rows = [("track", "panel A, piece 1"), ("P, v", f"{t['P']} W, {t['v']} mm/s"), ("P/v", f"{t['E']:.2f} J/mm"),
             ("width", f"{w:.0f} µm"), ("depth", f"{d:.0f} µm"), ("height", f"{h:.0f} µm"),
             ("fused area", f"{(np.pi / 4 * w * (d + h)) / 1e3:.0f} x 10³ µm²"), ("regime", reg)]
     for i, (k, v) in enumerate(rows):

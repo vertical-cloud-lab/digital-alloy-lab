@@ -8,8 +8,8 @@
  ],
  "substeps": [
   {
-   "label": "B6–B7 · cool, depowder, unload",
-   "caption": "Cool and de-inert, depowder gently, photograph the plate in place, then lift the four panels out. The plate only needs the powder blown out of the pocket gaps before the next run.",
+   "label": "B6–B7 · cool, depowder, unscrew",
+   "caption": "Cool and de-inert, depowder gently, photograph the plate in place, then take out each panel's four screws and lift the panels out. The plate only needs the powder blown out of the pocket gaps and screw holes before the next run.",
    "start_frame": 0,
    "end_frame": 116
   },

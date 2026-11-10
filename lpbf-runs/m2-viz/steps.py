@@ -3,8 +3,9 @@ style of atomizer-training/viz3d and sieving/viz3d (CadQuery parts in PyVista, s
 
 * ``m2_1_setup``: B2 panels into Nathan C.'s plate and flushness; A1 the job file (one vector per track); B3 powder
 * ``m2_2_print``: B4 close up and inert; B5 recoat one layer and expose the 72 tracks
-* ``m2_3_unload``: B6-B7 cool, depowder, photograph, remove; C1 top-view images
-* ``m2_4_cut``: C2 bandsaw (track block out of the panel, slab off, split per row) and final face on the precision saw
+* ``m2_3_unload``: B6-B7 cool, depowder, photograph, unscrew and remove the panels; C1 top-view images
+* ``m2_4_cut``: C2 bandsaw (a 10 mm strip holding the target plane out of the panel, then two pieces of nine tracks)
+  and the fine wet saw (through piece 1, 0.5 mm from the plane)
 * ``m2_5_sem``: C2 grind to the plane; C3 hot-mount; C4 grind, polish, etch; C5 SEM
 * ``m2_6_results``: C5 the SEM images; C6 measure; C7 compare with the AM Module (on the monitor; illustrations)
 
@@ -47,6 +48,7 @@ POWDER_LAYER = (0.40, 0.41, 0.43)             # the spread layer, a little darke
 TRACK_W_SCALE = 2.5                           # tracks drawn 2.5x the illustrative width so they show
 TRACK_AMB = 0.8
 LASER_C = (1.0, 0.22, 0.10)
+PLANE_C = (0.86, 0.16, 0.14)                  # the target plane: every track's mid-length
 GAS_C = (0.35, 0.62, 0.92)
 OPEN_DEG = -100.0
 
@@ -114,6 +116,16 @@ def blend(M0, M1, u, c_local, lift=0.0):
     return T(p) @ quat_mat(slerp(quat(M0), quat(M1), u)) @ T(-np.asarray(c_local, float))
 
 
+def cam_via(cams, u):
+    """Camera through a list of [position, focus, up] waypoints, equal time and smoothstep easing per leg."""
+    n = len(cams) - 1
+    k = min(int(u * n), n - 1)
+    f = u * n - k
+    f = f * f * (3 - 2 * f)
+    a, b = cams[k], cams[k + 1]
+    return [tuple(np.array(a[j], float) + (np.array(b[j], float) - np.array(a[j], float)) * f) for j in range(3)]
+
+
 def via(Ms, u, c_local, lifts=None):
     """Through a list of poses, equal time per leg."""
     n = len(Ms) - 1
@@ -122,15 +134,22 @@ def via(Ms, u, c_local, lifts=None):
     return blend(Ms[k], Ms[k + 1], u * n - k, c_local, lifts[k])
 
 
-# piece-local (block coordinates) -> puck-local: the section face x = TARGET_X goes to the puck face z = 0,
-# the 25 mm long side along the puck's x, the material up into the puck
-MP = np.array([[0, 1, 0, -12.5], [0, 0, -1, -3.5], [-1, 0, 0, M.TARGET_X - 0.2], [0, 0, 0, 1]], float)
+# piece-local (block coordinates) -> puck-local: the section face x = TARGET_X goes to the puck face z = 0, piece 1's
+# 22.5 mm side along the puck's x, the material up into the puck
+PIECE_YC = sum(M.PIECE_Y) / 2
+MP = np.array([[0, 1, 0, -PIECE_YC], [0, 0, -1, -M.PANEL_T / 2], [-1, 0, 0, M.TARGET_X - 0.2], [0, 0, 0, 1]], float)
 # (the face stands 0.2 mm proud of the puck so the two coplanar faces don't z-fight)
-CUBE_C = (12.5, 12.5, -M.PANEL_T / 2)          # the panel's centre, and the track block's (block coordinates)
-SLAB_C = (12.5, 12.5, -3.5)
-ROW1_C = (6.0, 12.5, -3.5)
+CUBE_C = (L.CENTRE, L.CENTRE, -M.PANEL_T / 2)  # the panel's centre (block coordinates)
+STRIP_C = (sum(M.STRIP_X) / 2, L.CENTRE, -M.PANEL_T / 2)
+PIECE_C = (sum(M.STRIP_X) / 2, PIECE_YC, -M.PANEL_T / 2)
 PUCK_C = (0.0, 0.0, M.PUCK_H / 2)
 A_XY = M.INSERT_C["A"]
+PANEL_HALF = L.PANEL / 2
+XA = M.STRIP_X[1] + M.KERF / 2          # the first bandsaw cut's kerf centre, 3.5 mm past the target plane
+XB = M.STRIP_X[0] - M.KERF / 2          # the second, 7.5 mm before it
+FENCE_A = M.SAW_X - (XA - M.PANEL_LO)   # the fence's face against the panel's left edge, for each cut
+FENCE_B = M.SAW_X - (XB - M.PANEL_LO)
+CROSS_C = [(a + b) / 2 for a, b in M.CROSS_Y]
 
 
 def at_plate(k, dz=0.0):
@@ -155,19 +174,20 @@ def flat(anchor, y, rot=0.0):
             @ T((-anchor[0], -anchor[1], 0)))
 
 
-def saw1(y):
-    """Block on its side, track face toward +x; the plane 7.45 mm below the tracks in the blade plane."""
-    return T((M.SAW_X + 7.45 - M.PANEL_T / 2, y + 12.5, -7.5)) @ R((0, 1, 0), 90) @ T(-np.array(CUBE_C))
+def saw_flat(xcut, y):
+    """Panel A flat on the bandsaw table, tracks up, its x = xcut in the blade plane and its centre at world y."""
+    return flat((xcut, L.CENTRE), y)
 
 
-def saw2(y):
-    """Slab flat, tracks up; the plane between the rows (x = 12.5) in the blade plane."""
-    return T((M.SAW_X, y + 12.5, M.SAW_TABLE_Z + 3.5)) @ T(-np.array(SLAB_C))
+def saw_cross(ycut, y):
+    """The strip turned a quarter turn (its y along world x, the tracks pointing at the operator), y = ycut in the
+    blade plane, its centre line at world y."""
+    return flat((STRIP_C[0], ycut), y, -90.0)
 
 
 def psaw(dz=0.0):
-    """Row-1 slab in the precision saw's chuck; x = 8.75 (the kerf's middle) in the disc plane."""
-    return T((M.PSAW_X - 2.75, 0.0, M.PSAW_SAMPLE_Z + 3.5 - dz)) @ T(-np.array(ROW1_C))
+    """Piece 1 in the precision saw's chuck: the fine cut's kerf centre in the disc plane, lowered by dz."""
+    return T((M.PSAW_X - M.FINAL_CUT_X - M.FINE_KERF / 2, -PIECE_YC, M.PSAW_SAMPLE_Z + M.PANEL_T - dz))
 
 
 def face_down(p, h=0.0):
@@ -194,14 +214,17 @@ CAM = {
     "deck": [(-330, -940, 560), (-90, 0, -40), UP],
     "deck_in": [(-250, -285, 300), (-60, 30, -20), UP],
     "door": [(-520, -1650, 470), (-20, -200, 110), UP],
-    "a_close": [(A_XY[0] - 8, A_XY[1] - 51, 30), (A_XY[0], A_XY[1] - 6, 0), UP],
+    "a_close": [(A_XY[0] - 10, A_XY[1] - 66, 34), (A_XY[0], A_XY[1] - 17, 0), UP],
     "inserts_high": [(-40, -186, 142), (0, -4, 0), UP],
     "bench": [(1500, -1450, 600), (1550, 0, -100), UP],
     "tray": [(1290, -560, 290), (1440, -40, -70), UP],
     "saw_panel": [(1585, -290, 160), (1702, -15, -15), UP],
     "saw_block": [(1615, -215, 105), (1704, -12, -14), UP],
     "saw": [(1625, -175, 70), (1702, -20, -12), UP],
-    "psaw": [(1950, -190, 130), (2048, 0, 45), UP],
+    "saw_strip": [(1590, -265, 150), (1712, 0, -12), UP],
+    "saw_x": [(1648, -165, 98), (1712, -2, -10), UP],
+    "saws": [(1860, -470, 360), (1880, 0, -30), UP],
+    "psaw": [(2186, -152, 186), (2050, 0, 16), UP],
     "pol": [(2655, -215, 130), (2785, -5, 12), UP],
     "press": [(2235, -310, 330), (2380, -40, 120), UP],
     "row": [(2380, -620, 220), (2440, -230, -80), UP],
@@ -243,6 +266,18 @@ class World:
             sc.add(f"A_{piece}", mesh, M.INSERT_STEEL, "g_A", shown=(piece == "panel"))
         sc.parent["g_A"] = "platform"
         sc.gmat["g_A"] = at_plate("A")
+        # each panel's four cap screws (group s_<k>, riding on the platform)
+        for k in "ABCD":
+            for j, (x, y) in enumerate(M.screw_xy()):
+                sc.add(f"scr_{k}_{j}", self.ms["screw"].translate((x, y, 0), inplace=False), M.DARK, f"s_{k}",
+                       shown=False)
+            sc.parent[f"s_{k}"] = "platform"
+            sc.gmat[f"s_{k}"] = at_plate(k)
+        # the target plane on panel A (every track's mid-length), across the strip and on piece 1 only
+        for n, (y0, y1) in (("target_plane", (M.CROSS_Y[0][1], M.CROSS_Y[2][0])), ("target_plane_p1", M.PIECE_Y)):
+            sc.add(n, pv.Box((M.TARGET_X - 0.08, M.TARGET_X + 0.08, y0, y1, -M.PANEL_T - 0.4, 1.2)), PLANE_C, "g_A",
+                   opacity=0.5, ambient=0.6, specular=0.0, shown=False)
+        sc.gmat["fence"] = T((FENCE_A, 0, 0))
         # powder: the spread layer over the build area, and the heap in front of the blade
         sc.add("powder_layer", pv.Box((-130, 130, -128, 128, -1.0, 0.03)), POWDER_LAYER, "powder_layer",
                specular=0.0, ambient=0.3, smooth_shading=False, shown=False)
@@ -256,14 +291,18 @@ class World:
             (x0, y), (x1, _) = t["start"], t["end"]
             vec = pv.Line((x0, y, 3.0), (x1, y, 3.0)).tube(radius=0.28, n_sides=10)
             sc.add(f"vec_{i}", vec, pv_color(t["E"]), g, shown=False, ambient=0.6, specular=0.0)
-        # insert A's row-1 tracks cut at the final face (8.5) and at the section plane (7), and the offcut's ends
+        # panel A's tracks after the bandsaw (cut 3 mm past the target plane); piece 1's after the fine saw (0.5 mm
+        # past it), on the sliver, and at the target plane after grinding
         for i, t in enumerate(self.tm):
-            if t["insert"] == "A" and t["row"] == 1:
+            if t["insert"] != "A":
+                continue
+            sc.add(f"trkstrip_{i}", self.track_mesh(t, x1=M.STRIP_X[1]), TRACK_C, "g_A", shown=False, specular=0.6)
+            if t["group"] == 1:
                 sc.add(f"trkcut_{i}", self.track_mesh(t, x1=M.FINAL_CUT_X), TRACK_C, "g_A", shown=False,
                        specular=0.6)
                 sc.add(f"trksec_{i}", self.track_mesh(t, x1=M.TARGET_X), TRACK_C, "g_A", shown=False, specular=0.6)
-                sc.add(f"trkoff_{i}", self.track_mesh(t, x0=M.FINAL_CUT_X + 0.5), TRACK_C, "g_A", shown=False,
-                       specular=0.6)
+                sc.add(f"trkoff_{i}", self.track_mesh(t, x0=M.FINAL_CUT_X + M.FINE_KERF, x1=M.STRIP_X[1]), TRACK_C,
+                       "g_A", shown=False, specular=0.6)
         # laser, melt glow, spatter, chips
         sc.add("beam", pv.Line((0, 0, 520), (0, 0, 0)).tube(radius=0.6), LASER_C, "fx", opacity=0.8, ambient=1.0,
                diffuse=0.0, specular=0.0, shown=False)
@@ -307,7 +346,8 @@ class World:
             sc.add(f"puck_{i}", pv.Cylinder(center=(x, y, z + M.PUCK_H / 2), direction=(0, 0, 1),
                                             radius=M.PUCK_R, height=M.PUCK_H, resolution=60), M.BAKELITE,
                    "static", shown=False, specular=0.25)
-            sc.add(f"puckface_{i}", pv.Box((x - 12.5, x + 12.5, y - 3.5, y + 3.5, z + M.PUCK_H, z + M.PUCK_H + 0.05)),
+            hw, ht = (M.PIECE_Y[1] - M.PIECE_Y[0]) / 2, M.PANEL_T / 2
+            sc.add(f"puckface_{i}", pv.Box((x - hw, x + hw, y - ht, y + ht, z + M.PUCK_H, z + M.PUCK_H + 0.05)),
                    M.INSERT_STEEL, "static", shown=False)
         sc.add("granules", pv.PolyData(np.zeros((1, 3))), (0.10, 0.10, 0.11), "fx", style="points", point_size=4,
                render_points_as_spheres=True, shown=False)
@@ -440,8 +480,19 @@ class World:
             self.sc.alpha[f"A_{p}"] = 1.0 if p in show else 0.0
 
 
-def a_tracks(w: World, rows=(1, 2), kind="trk"):
-    return [f"{kind}_{i}" for i, t in enumerate(w.tm) if t["insert"] == "A" and t["row"] in rows]
+def a_tracks(w: World, groups=(1, 2), kind="trk"):
+    """Panel A's track actors of one kind; group 1 is the nine tracks that end up in piece 1."""
+    return [f"{kind}_{i}" for i, t in enumerate(w.tm) if t["insert"] == "A" and t["group"] in groups]
+
+
+def screws(w: World, a: float):
+    for k in "ABCD":
+        w.sc.show([f"scr_{k}_{j}" for j in range(4)], a)
+
+
+def a_world(t, x, z=0.0):
+    """World position of a point on panel A's track t, at block-coordinate x, while A sits in the plate."""
+    return tuple((at_plate("A") @ np.r_[x, t["start"][1], z, 1.0])[:3])
 
 
 # ================================================================================================ set up
@@ -456,14 +507,17 @@ def chapter_setup():
 
     def drop_in(u):
         for j, k in enumerate("ABCD"):
-            v = window(u, 0.12 + 0.18 * j, 0.42 + 0.18 * j)
+            v = window(u, 0.08 + 0.15 * j, 0.33 + 0.15 * j)
             sc.gmat[f"g_{k}"] = at_plate(k, 140 * (1 - v))
             sc.alpha[f"ins_{k}" if k != "A" else "A_panel"] = min(1.0, v * 4)
+            s_in = window(u, 0.74 + 0.05 * j, 0.86 + 0.05 * j)       # then four screws each
+            sc.gmat[f"s_{k}"] = at_plate(k, 25 * (1 - s_in))
+            sc.show([f"scr_{k}_{jj}" for jj in range(4)], s_in)
 
     sc.step("B2 · panels into the plate",
             "Nathan C.'s plate: about 10 in square, with four removable panels. Four fresh 316L panels (about 88 mm "
-            "square, ID-marked on the side) go into its pockets. The plate itself is never lasered, so it needs no "
-            "resurfacing between runs, and nothing is welded on, so no wire EDM.",
+            "square, ID-marked on the side) go into its pockets and are screwed down. The plate itself is never "
+            "lasered, so it needs no resurfacing between runs, and nothing is welded on, so no wire EDM.",
             6.0, drop_in, hold=1.2, cam_to=CAM["plate"],
             labels=[("panel A (ID and notch on its side)", (A_XY[0] - 20, A_XY[1] - 20, 0), (0.06, 0.30)),
                     ("plate, about 10 in square:\nnever lasered", (110, -60, 0), (0.95, 0.68))])
@@ -504,14 +558,17 @@ def chapter_setup():
             sc.alpha[vecs[i]] = window(u, 0.15 + 0.6 * i / len(w.tm), 0.25 + 0.6 * i / len(w.tm))
 
     ctl = next(t for t in w.tm if t["insert"] == "D" and t["E"] is None)
+    first = next(t for t in w.tm if t["insert"] == "A" and t["k"] == 0)
+    first_xyz = a_world(first, first["start"][0] + 1.5, 3.0)
     ctl_xyz = (M.INSERT_C["D"][0] - 12.5 + (ctl["start"][0] + ctl["end"][0]) / 2,
                M.INSERT_C["D"][1] - 12.5 + ctl["start"][1], 3)
     sc.step("A1 · job file",
             "Job file: each track is its own part carrying its own power–speed setting (on each panel, one 16-point "
-            "block of the Sobol design plus 2 controls), in a random order. The dry run must show one scan vector "
-            "per track. The AM Module predictions for all 65 settings are committed before printing (A2).",
+            "block of the Sobol design plus 2 controls), in a random order in one row across the panel. The dry run "
+            "must show one scan vector per track. The AM Module predictions for all 65 settings are committed before "
+            "printing (A2).",
             5.0, job, hold=2.0, cam_to=CAM["top"], still=True,
-            labels=[("darker = higher P/v (J/mm)", (A_XY[0] + 5.5 - 12.5, A_XY[1] + 4.5 - 12.5, 3), (0.06, 0.30)),
+            labels=[("darker = higher P/v (J/mm)", first_xyz, (0.06, 0.30)),
                     ("grey = control (machine's standard set)", ctl_xyz, (0.95, 0.20))])
 
     def powder(u):
@@ -532,6 +589,7 @@ def chapter_print():
     """B4-B5: close up and inert, recoat one layer, expose the 72 tracks. Starts where m2_1_setup ends."""
     sc = Scene("m2_2_print", f"{TITLE}: 2/6 print")
     w = World(sc)
+    screws(w, 1.0)
     sc.gmat["dose_powder"] = S((1, 1, 1.0), pivot=(0, 0, -300))
     sc.cam = CAM["deck"]
 
@@ -622,7 +680,7 @@ def chapter_print():
             "so spatter lands on finished tracks rather than on fresh powder.",
             6.5, expose_slow, hold=0.6, cam_to=CAM["a_close"], live=True,
             labels=[("powder layer over panel A", (A_XY[0] + 10, A_XY[1] + 13, 0.03), (0.95, 0.25)),
-                    ("scan direction →", (A_XY[0] + 3 - 12.5, A_XY[1] + 4.5 - 12.5, 0), (0.06, 0.62))])
+                    ("scan direction →", a_world(w.tm[order[0]], w.tm[order[0]]["start"][0]), (0.06, 0.62))])
 
     def expose_rest(u):
         w.gas_flow(0.0)
@@ -640,9 +698,9 @@ def chapter_print():
         draw(rest, window(sc.u, 0.0, 0.92), 0.7, 1.0)
 
     sc.step("B5 · 72 tracks",
-            "72 tracks: on each panel, one 16-point block of a Sobol sequence that covers the whole power–speed "
-            "window, plus 2 controls, in random positions; the controls measure position effects. The exposure "
-            "takes seconds; the whole step is under 15 minutes.",
+            "72 tracks in one row across each panel: one 16-point block of a Sobol sequence that covers the whole "
+            "power–speed window, plus 2 controls, in random positions; the controls measure position effects. The "
+            "exposure takes seconds; the whole step is under 15 minutes.",
             7.5, expose_rest, hold=1.8, cam_to=CAM["inserts_high"], live=True, still=True,
             labels=[(k, (M.INSERT_C[k][0], M.INSERT_C[k][1] + (-12.5 if k in "AB" else 12.5), 0),
                      (0.06 if k in "AC" else 0.95, 0.62 if k in "AB" else 0.22)) for k in "ABCD"])
@@ -652,6 +710,7 @@ def chapter_print():
 # ------------------------------------------------------------------------------- shared state after printing
 def printed(w: World):
     sc = w.sc
+    screws(w, 1.0)
     sc.gmat["door"] = np.eye(4)
     sc.gmat["dose_powder"] = S((1, 1, 0.98), pivot=(0, 0, -300))
     sc.alpha["powder_layer"] = 1.0
@@ -676,14 +735,19 @@ def chapter_unload():
         sc.gauges = [("O₂", "rising: de-inert" if v < 1 else "air"), ("plate", "cool")]
         sc.gmat["door"] = R((0, 0, 1), OPEN_DEG * window(u, 0.2, 0.45), pivot=M.DOOR_HINGE)
         sc.alpha["powder_layer"] = 1.0 - window(u, 0.45, 0.62)
-        w.flash = max(0.0, 1 - abs(u - 0.68) * 25)
-        lift = window(u, 0.74, 1.0)
+        w.flash = max(0.0, 1 - abs(u - 0.66) * 25)
+        out = window(u, 0.69, 0.8)                                     # four screws out of each panel
+        for k in "ABCD":
+            sc.gmat[f"s_{k}"] = at_plate(k, 30 * out)
+        screws(w, 1.0 - out)
+        lift = window(u, 0.8, 1.0)
         for k in "ABCD":
             sc.gmat[f"g_{k}"] = at_plate(k, 45 * lift)
 
-    sc.step("B6–B7 · cool, depowder, unload",
-            "Cool and de-inert, depowder gently, photograph the plate in place, then lift the four panels out. The "
-            "plate only needs the powder blown out of the pocket gaps before the next run.",
+    sc.step("B6–B7 · cool, depowder, unscrew",
+            "Cool and de-inert, depowder gently, photograph the plate in place, then take out each panel's four "
+            "screws and lift the panels out. The plate only needs the powder blown out of the pocket gaps and screw "
+            "holes before the next run.",
             6.0, unload, hold=0.8, cam_to=CAM["plate"],
             labels=[("pocket gaps: blow the powder out", (A_XY[0] - 45, A_XY[1] + 10, 0), (0.06, 0.30))])
 
@@ -721,11 +785,12 @@ def lin(u, t0, t1):
 
 # ================================================================================================= cut
 def chapter_cut():
-    """C2: the bandsaw cuts panel A's track block out, takes the slab off and splits it per row; the precision saw
-    makes the final face. Starts where m2_3_unload ends."""
+    """C2: the bandsaw takes a 10 mm strip holding the target plane out of panel A and cuts it into two pieces of nine
+    tracks; the fine wet saw cuts through piece 1, 0.5 mm from the plane. Starts where m2_3_unload ends."""
     sc = Scene("m2_4_cut", f"{TITLE}: 4/6 cut")
     w = World(sc)
     printed(w)
+    screws(w, 0.0)
     sc.gmat["door"] = R((0, 0, 1), OPEN_DEG, pivot=M.DOOR_HINGE)
     sc.alpha["powder_layer"] = 0.0
     for n, x, ph in w.gas:
@@ -737,184 +802,161 @@ def chapter_cut():
         sc.gmat[f"g_{k}"] = in_tray(i + 1)
     sc.cam = CAM["tray"]
 
-    K = M.KERF
-    # each pass: the block-coordinate point in the blade plane, the turn on the table, the piece kept, the offcut,
-    # the offcut's way out (block coordinates) and the feed's start and end (world y of the anchor)
-    passes = [((-K / 2, 12.5), 0.0, "p1", "off_a", (-1, 0), -62.0, 62.0),
-              ((25 + K / 2, 12.5), 0.0, "p2", "off_b", (1, 0), -62.0, 62.0),
-              ((12.5, -K / 2), 90.0, "p3", "off_c", (0, -1), -30.0, 30.0),
-              ((12.5, 25 + K / 2), 90.0, "cube", "off_d", (0, 1), -30.0, 30.0)]
-    def feed(pas, t, u):
-        """Panel A fed through the blade at a steady rate, t in [0, 1]."""
-        anchor, rot, keep, off, way, y0, y1 = pas
-        y = y0 + (y1 - y0) * t
-        sc.gmat["g_A"] = flat(anchor, y, rot)
-        half = L.PANEL / 2 if rot == 0 else 12.5
-        if abs(y) < half + 7 and t < 1.0:
-            w.particles(np.array([M.SAW_X, -7.0, M.SAW_TABLE_Z + M.PANEL_T * (0.5 + 0.4 * math.sin(u * 60))]), n=5,
-                        kind="chips")
-        else:
-            w.particles(None, kind="chips")
+    a_start = on_copy()
+    F0, F1 = -78.0, 74.0              # panel centre (world y) before and after a pass through the blade
+    table_top = M.SAW_TABLE_Z + M.PANEL_T
 
-    def separate(pas, f):
-        """The offcut slides out of the way and fades; f in [0, 1]."""
-        anchor, rot, keep, off, way, y0, y1 = pas
-        w.a_pieces(keep, off)
-        sc.group_of[f"A_{off}"] = f"a_{off}"
-        sc.gmat[f"a_{off}"] = flat(anchor, y1, rot) @ T((12 * f * way[0], 12 * f * way[1], 0))
-        sc.alpha[f"A_{off}"] = 1.0 - window(f, 0.55, 1.0)
+    def chips(on, z=M.SAW_TABLE_Z + 0.6 * M.PANEL_T):
+        w.particles(np.array([M.SAW_X, -7.0, z]) if on else None, n=6, kind="chips")
 
-    def block_out_1(u):
-        u = sc.u
-        a, b = passes[0], passes[1]
-        if u < 0.18:
-            sc.gmat["g_A"] = via([on_copy(), T((0, 0, 120)) @ flat(a[0], a[5]), flat(a[0], a[5])], window(u, 0, 0.18),
-                                 CUBE_C)
-            return
-        if u < 0.50:
-            feed(a, lin(u, 0.20, 0.50), u)
-            return
-        separate(a, lin(u, 0.50, 0.62))
-        if u < 0.68:
-            w.particles(None, kind="chips")
-            sc.gmat["g_A"] = via([flat(a[0], a[6]), flat(a[0], a[5]), flat(b[0], b[5])], window(u, 0.55, 0.68), CUBE_C)
-            return
-        feed(b, lin(u, 0.68, 0.95), u)
-        if u >= 0.95:
-            separate(b, lin(u, 0.95, 1.0))
-
-    sc.step("C2 · bandsaw: track block out (1/2)",
-            "Rough cuts on the bandsaw (bi-metal blade, coolant for stainless). Panel A lies flat, tracks up, and two "
-            "cuts along the tracks' rows take off the sides, leaving a strip with the 25 mm track block in the middle.",
-            8.0, block_out_1, hold=0.4, cam_to=CAM["saw_panel"],
-            labels=[("bandsaw blade", (M.SAW_X, 0, 45), (0.95, 0.25))])
-
-    def block_out_2(u):
-        u = sc.u
-        b, c, d = passes[1], passes[2], passes[3]
-        sc.alpha["A_off_b"] = 0.0
-        if u < 0.20:
-            w.particles(None, kind="chips")
-            sc.gmat["g_A"] = via([flat(b[0], b[6]), flat(b[0], -62.0), flat(c[0], -62.0, c[1]), flat(c[0], c[5], c[1])],
-                                 window(u, 0.0, 0.20), CUBE_C)
-            return
-        if u < 0.45:
-            feed(c, lin(u, 0.22, 0.45), u)
-            return
-        separate(c, lin(u, 0.45, 0.57))
-        if u < 0.65:
-            w.particles(None, kind="chips")
-            sc.gmat["g_A"] = via([flat(c[0], c[6], c[1]), flat(c[0], c[5], c[1]), flat(d[0], d[5], d[1])],
-                                 window(u, 0.50, 0.65), CUBE_C)
-            return
-        feed(d, lin(u, 0.65, 0.88), u)
-        if u >= 0.88:
-            separate(d, lin(u, 0.88, 1.0))
-
-    blk = flat(passes[3][0], passes[3][6], passes[3][1])
-    sc.step("C2 · bandsaw: track block out (2/2)",
-            "Then the strip turns and two cross-cuts free the block. The panel's ID went with the offcuts, so "
-            "scribe it again on the block. Every bandsaw cut stays clear of the tracks; the section plane is far "
-            "from these faces.",
-            8.0, block_out_2, hold=0.8, cam_to=CAM["saw_block"],
-            labels=[("25 mm track block (18 tracks)", tuple((blk @ np.r_[12.5, 12.5, 0.0, 1.0])[:3]), (0.06, 0.30))])
-    for off in ("off_a", "off_b", "off_c", "off_d"):
-        sc.alpha[f"A_{off}"] = 0.0
-    a_start = blk
-    a_back = flat(passes[3][0], -45.0, passes[3][1])
-
-    def cut1(u):
-        v = window(u, 0.0, 0.3)
-        y = -100 + 125 * window(u, 0.35, 0.8)
+    def cut_a(u):
+        sc.alpha["target_plane"] = window(u, 0.05, 0.25)
         if u < 0.3:
-            sc.gmat["g_A"] = via([a_start, a_back, T((0, 0, 60)) @ saw1(-100), saw1(-100)], v, CUBE_C, [0, 40, 0])
-        else:
-            sc.gmat["g_A"] = saw1(y)
-        cutting = 0.35 < u < 0.8 and -32 < y < 7
-        if cutting:
-            w.particles(np.array([M.SAW_X, -7.0, -7.0 + 12.0 * math.sin(u * 40)]), n=6, kind="chips")
-        else:
-            w.particles(None, kind="chips")
-        if u >= 0.8:
-            sep = window(u, 0.8, 1.0)
-            w.a_pieces("slab", "body")
-            sc.group_of["A_body"] = "a_body"
-            sc.gmat["a_body"] = T((-6 * sep, 0, 0)) @ saw1(25)
-            sc.gmat["g_A"] = T((6 * sep, 0, 0)) @ saw1(25)
-
-    sc.step("C2 · bandsaw: slab off",
-            "Next the block goes on its side and the top 7 mm slab, which holds the tracks, comes off. The rest of "
-            "the block is scrap, like the rest of the panel (option A).",
-            6.0, cut1, hold=0.6, cam_to=CAM["saw"],
-            labels=[("blade", (M.SAW_X, 0, 40), (0.95, 0.25)), ("tracks face this way", (M.SAW_X + 7.5, 10, -8),
-                                                                (0.95, 0.65))])
-    slab_end = T((6, 0, 0)) @ saw1(25)
-
-    def cut2(u):
-        sc.alpha["A_body"] = 1.0 - window(u, 0.0, 0.25)
-        w.particles(None, kind="chips")
-        if u < 0.35:
-            sc.gmat["g_A"] = via([slab_end, T((0, 0, 70)) @ saw2(-100), saw2(-100)], window(u, 0.0, 0.35),
-                                 SLAB_C, [40, 0])
+            sc.gmat["g_A"] = via([a_start, T((0, 0, 120)) @ saw_flat(XA, F0), saw_flat(XA, F0)], window(u, 0.0, 0.3),
+                                 CUBE_C, [60, 0])
             return
-        y = -100 + 130 * window(u, 0.38, 0.8)
-        sc.gmat["g_A"] = saw2(y)
-        if 0.38 < u < 0.8 and -32 < y < 7:
-            w.particles(np.array([M.SAW_X, -7.0, M.SAW_TABLE_Z + 4]), n=6, kind="chips")
-        if u >= 0.8:
-            sep = window(u, 0.8, 1.0)
-            w.a_pieces("row1", "row2")
-            sc.group_of["A_row2"] = "a_row2"
-            for n in a_tracks(w, rows=(2,)):
-                sc.group_of[n] = "a_row2"
-            sc.gmat["a_row2"] = T((5 * sep, 0, 0)) @ saw2(30)
-            sc.gmat["g_A"] = T((-5 * sep, 0, 0)) @ saw2(30)
+        y = F0 + (F1 - F0) * window(u, 0.32, 0.85)
+        sc.gmat["g_A"] = saw_flat(XA, y)
+        chips(0.32 < u < 0.85 and abs(y) < PANEL_HALF + 7)
+        if u >= 0.85:
+            w.a_pieces("strip_side", "scrap_hi")
+            for n in a_tracks(w):
+                sc.alpha[n] = 0.0
+            for n in a_tracks(w, kind="trkstrip"):
+                sc.alpha[n] = 1.0
+            sc.group_of["A_scrap_hi"] = "a_hi"
+            sc.gmat["a_hi"] = T((12 * window(u, 0.86, 1.0), 0, 0)) @ saw_flat(XA, F1)
 
-    sc.step("C2 · bandsaw: one slab per row",
-            "Then the slab lies flat and is split between the two rows: one slab per row of nine tracks. A bandsaw "
-            "face is rough and deformed, so every bandsaw cut stays at least 1–2 mm from the target plane.",
-            5.5, cut2, hold=0.6, cam_to=CAM["saw"],
-            labels=[("row 1", (M.SAW_X - 6, 30 + 18, M.SAW_TABLE_Z + 7), (0.06, 0.30)),
-                    ("row 2", (M.SAW_X + 6, 30 + 18, M.SAW_TABLE_Z + 7), (0.95, 0.30))])
-    row1_end = T((-5, 0, 0)) @ saw2(30)
-    row2_end = T((5, 0, 0)) @ saw2(30)
-    row2_tray = in_tray(0) @ T((0, 0, -25 + 7))
+    sc.step("C2 · bandsaw: across the panel",
+            "Bandsaw (bi-metal blade, coolant for stainless). The panel lies flat against the fence, tracks up. The "
+            "first cut goes across it 3 mm past the target plane (red), the line where every track is at mid-length. "
+            "A bandsaw face is rough, so no bandsaw cut comes closer.",
+            6.5, cut_a, hold=0.6, cam_to=CAM["saw_strip"],
+            labels=[("target plane: every track's mid-length", (M.SAW_X - XA + M.TARGET_X, F1 + 12, table_top + 1.2),
+                     (0.06, 0.24)),
+                    ("fence", (FENCE_A - 6, F1 - 30, M.SAW_TABLE_Z + 16), (0.06, 0.62)),
+                    ("blade", (M.SAW_X, -2, 50), (0.95, 0.22))])
+
+    def cut_b(u):
+        sc.alpha["A_scrap_hi"] = 1.0 - window(u, 0.05, 0.3)
+        sc.gmat["a_hi"] = T((12 + 60 * window(u, 0.0, 0.3), 0, 0)) @ saw_flat(XA, F1)
+        if u < 0.3:
+            v = window(u, 0.0, 0.3)
+            sc.gmat["g_A"] = blend(saw_flat(XA, F1), saw_flat(XB, F0), v, CUBE_C, 30)
+            sc.gmat["fence"] = T((FENCE_A + (FENCE_B - FENCE_A) * v, 0, 0))
+            chips(False)
+            return
+        y = F0 + (F1 - F0) * window(u, 0.32, 0.85)
+        sc.gmat["g_A"] = saw_flat(XB, y)
+        chips(0.32 < u < 0.85 and abs(y) < PANEL_HALF + 7)
+        if u >= 0.85:
+            w.a_pieces("strip", "scrap_lo")
+            sc.group_of["A_scrap_lo"] = "a_lo"
+            sc.gmat["a_lo"] = T((-12 * window(u, 0.86, 1.0), 0, 0)) @ saw_flat(XB, F1)
+
+    sc.step("C2 · bandsaw: a strip holding every section",
+            "The second cut goes 7 mm on the other side of the plane. That frees a strip about 10 mm wide that holds "
+            "every track's mid-length, which is all we section. The rest of the panel is scrap.",
+            6.0, cut_b, hold=0.8, cam_to=CAM["saw_strip"],
+            labels=[("strip: 3 mm and 7 mm either side of the plane", (M.SAW_X + 5.5, F1 + 20, table_top),
+                     (0.95, 0.24)),
+                    ("scrap", (M.SAW_X - 40, F1 - 10, table_top), (0.06, 0.62))])
+
+    # the strip, turned a quarter turn, is cut three times: the two blank ends, then between the two groups of nine
+    strip_end = saw_flat(XB, F1)
+    passes = [0, 2, 1]                                  # indices into CROSS_C
+    G0, G1 = -32.0, 26.0                                # strip centre line (world y) before and after a pass
+    P2_C = (STRIP_C[0], (M.CROSS_Y[1][1] + M.CROSS_Y[2][0]) / 2, -M.PANEL_T / 2)
+
+    def at_pass(j, y):
+        return saw_cross(CROSS_C[passes[j]], y)
+
+    def cross(u):
+        sc.alpha["A_scrap_lo"] = 1.0 - window(u, 0.0, 0.2)
+        sc.gmat["a_lo"] = T((-12 - 60 * window(u, 0.0, 0.2), 0, 0)) @ saw_flat(XB, F1)
+        sc.gmat["fence"] = T((FENCE_B - 70 * window(u, 0.0, 0.2), 0, 0))     # crosscuts use the mitre gauge
+        if u < 0.2:
+            sc.gmat["g_A"] = blend(strip_end, at_pass(0, G0), window(u, 0.0, 0.2), STRIP_C, 40)
+            chips(False)
+            return
+        j = min(2, int((u - 0.2) / 0.26))
+        v = (u - 0.2 - 0.26 * j) / 0.26
+        prev = at_pass(j - 1, G1) if j > 0 else at_pass(0, G0)
+        if v < 0.25:
+            sc.gmat["g_A"] = blend(prev, at_pass(j, G0), window(v, 0.0, 0.25), STRIP_C, 25 if j else 0)
+            chips(False)
+        else:
+            y = G0 + (G1 - G0) * window(v, 0.28, 0.8)
+            sc.gmat["g_A"] = at_pass(j, y)
+            chips(0.28 < v < 0.8 and abs(y) < 12, table_top - 3)
+        if j >= 1 or v >= 0.8:                          # end 1 is off (on the -x side of the blade)
+            if sc.group_of.get("A_end1") != "a_e1":
+                w.a_pieces("end1", "piece1", "piece2", "end2")
+                sc.group_of["A_end1"] = "a_e1"
+            sep = window(u, 0.408, 0.46)
+            sc.gmat["a_e1"] = T((-25 * sep, 20 * sep, 0)) @ at_pass(0, G1)
+            sc.alpha["A_end1"] = 1.0 - window(u, 0.5, 0.62)
+        if j >= 2 or (j == 1 and v >= 0.8):             # end 2 is off (+x side)
+            sc.group_of["A_end2"] = "a_e2"
+            sep = window(u, 0.668, 0.72)
+            sc.gmat["a_e2"] = T((25 * sep, 20 * sep, 0)) @ at_pass(1, G1)
+            sc.alpha["A_end2"] = 1.0 - window(u, 0.76, 0.88)
+        if j == 2 and v >= 0.8:                         # the split: piece 2 (+x side) comes away with its tracks
+            sc.group_of["A_piece2"] = "a_p2"
+            for n in a_tracks(w, (2,), "trkstrip"):
+                sc.group_of[n] = "a_p2"
+            sc.gmat["a_p2"] = T((10 * window(u, 0.928, 0.98), 0, 0)) @ at_pass(2, G1)
+            sc.alpha["target_plane"] = 0.0
+            sc.alpha["target_plane_p1"] = 1.0
+
+    sc.step("C2 · bandsaw: two pieces of nine",
+            "Then the strip is cut into two pieces of nine tracks, about 22 mm long, one per mount, and its blank ends "
+            "come off. (If the panels are thicker than about 12 mm, the strip is first cut down to about 10 mm.)",
+            7.5, cross, hold=0.8, cam_to=CAM["saw_x"],
+            labels=[("piece 1: tracks 1–9", (M.SAW_X - 11, G1, table_top), (0.06, 0.30)),
+                    ("piece 2: tracks 10–18", (M.SAW_X + 21, G1, table_top), (0.95, 0.30))])
+
+    p1_end = at_pass(2, G1)
+    p2_end = T((10, 0, 0)) @ at_pass(2, G1)
+    p2_tray = in_tray(0) @ T((L.CENTRE - P2_C[0], L.CENTRE - P2_C[1], 0))
+    sliver_c = ((M.FINAL_CUT_X + M.FINE_KERF + M.STRIP_X[1]) / 2, PIECE_YC, -M.PANEL_T / 2)
 
     def final(u):
-        sc.gmat["a_row2"] = blend(row2_end, row2_tray, window(u, 0.0, 0.3), SLAB_C, 80)
+        sc.gmat["a_p2"] = blend(p2_end, p2_tray, window(u, 0.0, 0.3), P2_C, 80)
+        sc.cam = cam_via([CAM["saw_x"], CAM["saws"], CAM["psaw"]], window(u, 0.0, 0.34))   # over the bench
         if u < 0.3:
-            sc.gmat["g_A"] = via([row1_end, T((0, 0, 140)) @ psaw(), psaw()], window(u, 0.0, 0.3), ROW1_C, [80, 0])
+            sc.gmat["g_A"] = via([p1_end, T((0, 0, 140)) @ psaw(), psaw()], window(u, 0.0, 0.3), PIECE_C, [80, 0])
             sc.gmat["psaw_arm"] = np.eye(4)
+            chips(False)
             return
-        dz = 24.0 * window(u, 0.32, 0.72) * (1 - window(u, 0.82, 1.0))
+        dz = M.PSAW_DROP * window(u, 0.32, 0.7) * (1 - window(u, 0.9, 1.0))
         sc.gmat["psaw_disc"] = R((1, 0, 0), -2200 * u, pivot=M.PSAW_C)
         sc.gmat["psaw_arm"] = T((0, 0, -dz))
         sc.gmat["g_A"] = psaw(dz)
-        if 0.45 < u < 0.72:
-            w.particles(np.array([M.PSAW_X, -12.0, M.PSAW_SAMPLE_Z - dz + 1]), n=3, kind="chips")
-        else:
-            w.particles(None, kind="chips")
-        if u >= 0.72:
+        w.particles(np.array([M.PSAW_X, -14.0, M.PSAW_SAMPLE_Z - dz + 1]) if 0.4 < u < 0.7 else None, n=3,
+                    kind="chips")
+        if u >= 0.7:
             w.a_pieces("piece_cut", "offcut")
-            for n in a_tracks(w, rows=(1,)):
+            for n in a_tracks(w, (1,), "trkstrip"):
                 sc.alpha[n] = 0.0
-            for n in a_tracks(w, rows=(1,), kind="trkcut") + a_tracks(w, rows=(1,), kind="trkoff"):
+            for n in a_tracks(w, (1,), "trkcut") + a_tracks(w, (1,), "trkoff"):
                 sc.alpha[n] = 1.0
             sc.group_of["A_offcut"] = "a_off"
-            for n in a_tracks(w, rows=(1,), kind="trkoff"):
+            for n in a_tracks(w, (1,), "trkoff"):
                 sc.group_of[n] = "a_off"
-            fall = window(u, 0.74, 0.92)
-            sc.gmat["a_off"] = T((1.5, 0, -62 * fall)) @ psaw(24.0)
-            sc.alpha["A_offcut"] = 1.0 - window(u, 0.9, 1.0)
-            for n in a_tracks(w, rows=(1,), kind="trkoff"):
-                sc.alpha[n] = 1.0 - window(u, 0.9, 1.0)
+            f = window(u, 0.72, 0.88)
+            tip = R((0, 1, 0), 90 * f, pivot=sliver_c)          # it tips away from the disc as it drops
+            sc.gmat["a_off"] = T((20 * f, 0, -69 * f * f)) @ psaw(M.PSAW_DROP) @ tip
 
-    sc.step("C2 · final face on the precision saw",
-            "Final face on an abrasive cut-off saw or a low-speed precision saw with coolant (MIT used an IsoMet "
-            "4000 at 4000 rpm, 6 mm/min), 1.5 mm past the tracks' mid-length. Row 2 waits its turn.",
-            6.5, final, hold=1.0, cam_to=CAM["psaw"], still=True,
-            labels=[("precision saw blade", (M.PSAW_X, -55, 10), (0.06, 0.62)),
-                    ("row-1 slab in the chuck", (M.PSAW_X - 4, -10, 75), (0.06, 0.25))])
+    sc.step("C2 · fine wet saw: through the piece",
+            "Fine wet saw (abrasive cut-off or low-speed precision saw, with coolant). It cuts all the way through the "
+            "piece, 0.5 mm from the target plane, and a sliver 1.5–2 mm thick drops off. The new face is flat and "
+            "barely deformed, so grinding removes only the last 0.5 mm.",
+            7.5, final, hold=1.2, still=True,
+            labels=[("target plane (mid-length)", (M.PSAW_X - 0.75, -6, M.PSAW_SAMPLE_Z + M.PANEL_T + 1.2),
+                     (0.06, 0.24)),
+                    ("cut 0.5 mm from the plane", (M.PSAW_X, -11.25, M.PSAW_SAMPLE_Z + 4), (0.06, 0.62)),
+                    ("sliver drops off", (M.PSAW_X + 21, -6, -33), (0.95, 0.70))])
     return sc.save()
 
 
@@ -927,12 +969,14 @@ def chapter_sem():
         del sc.parent[f"g_{k}"]
     for i, k in enumerate("BCD"):
         sc.gmat[f"g_{k}"] = in_tray(i + 1)
-    # insert A as its row-1 piece, cut 1.5 mm past the section plane, in the precision saw's chuck
+    # panel A as piece 1, cut 0.5 mm past the target plane, in the precision saw's chuck
+    screws(w, 0.0)
     w.a_pieces("piece_cut")
-    for n in a_tracks(w, rows=(1, 2)):
+    for n in a_tracks(w):
         sc.alpha[n] = 0.0
-    for n in a_tracks(w, rows=(1,), kind="trkcut"):
+    for n in a_tracks(w, (1,), "trkcut"):
         sc.alpha[n] = 1.0
+    sc.alpha["target_plane_p1"] = 1.0
     sc.gmat["g_A"] = psaw(0)
     sc.cam = CAM["psaw"]
     start = psaw(0)
@@ -940,22 +984,23 @@ def chapter_sem():
 
     def grind(u):
         if u < 0.4:
-            M_end = face_down(POL_SPOT, 1.5) @ pad_pose
-            sc.gmat["g_A"] = via([start, T((0, 0, 120)) @ M_end, M_end], window(u, 0.0, 0.4), ROW1_C, [150, 0])
+            M_end = face_down(POL_SPOT, 0.7) @ pad_pose
+            sc.gmat["g_A"] = via([start, T((0, 0, 120)) @ M_end, M_end], window(u, 0.0, 0.4), PIECE_C, [150, 0])
             return
         sc.gmat["pol_platen"] = R((0, 0, 1), -900 * (u - 0.4), pivot=(M.POL_C[0], M.POL_C[1], 0))
-        h = 1.5 * (1 - window(u, 0.45, 0.9))
+        h = 0.7 * (1 - window(u, 0.45, 0.9))
         sc.gmat["g_A"] = face_down(POL_SPOT, h) @ pad_pose
+        sc.alpha["target_plane_p1"] = 1.0 - window(u, 0.8, 0.9)
         if u >= 0.9:
             w.a_pieces("piece")
-            for n in a_tracks(w, rows=(1,), kind="trkcut"):
+            for n in a_tracks(w, (1,), "trkcut"):
                 sc.alpha[n] = 0.0
-            for n in a_tracks(w, rows=(1,), kind="trksec"):
+            for n in a_tracks(w, (1,), "trksec"):
                 sc.alpha[n] = 1.0
 
     sc.step("C2 · grind to the target plane",
-            "Then grind down to the target plane: the mid-length of the row's nine tracks, where the section is "
-            "taken.",
+            "Then grind the last 0.5 mm down to the target plane: the mid-length of the piece's nine tracks, where "
+            "the section is taken.",
             4.5, grind, hold=0.5, cam_to=CAM["pol"])
 
     # the piece rides on the puck from here on
@@ -1002,16 +1047,17 @@ def chapter_sem():
             sc.alpha[f"puckface_{i}"] = a
 
     sc.step("C3 · hot-mount",
-            "Hot-mount face down in conductive compound, so the SEM does not charge. A slab about 8 × 22 mm fits a "
-            "1.25 in puck: eight pucks per run, two per panel.",
+            "Hot-mount face down in conductive compound, so the SEM does not charge. A piece about 22 × 13 mm in "
+            "section fits a 1.25 in puck: eight pucks per run, two per panel.",
             7.0, mount, hold=0.4, cam_to=CAM["press"],
             labels=[("mounting press: mould, ram, cap", (M.PRESS_C[0] - 26, 0, M.PRESS_TOP + 30), (0.06, 0.25))])
 
     sc.step("C3 · eight pucks",
-            "Eight pucks per run, two per panel, each showing one row of nine tracks cut at mid-length.",
+            "Eight pucks per run, two per panel, each showing nine tracks cut at mid-length.",
             2.5, None, hold=1.0, cam_to=CAM["row"],
-            labels=[("panel A, row 1", (ROW_SPOTS[0][0], ROW_SPOTS[0][1], M.BENCH_Z + M.PUCK_H), (0.06, 0.30)),
-                    ("A row 2, then B to D", (ROW_SPOTS[4][0], ROW_SPOTS[4][1], M.BENCH_Z + M.PUCK_H), (0.95, 0.30))])
+            labels=[("panel A, tracks 1–9", (ROW_SPOTS[0][0], ROW_SPOTS[0][1], M.BENCH_Z + M.PUCK_H), (0.06, 0.30)),
+                    ("A tracks 10–18, then B to D", (ROW_SPOTS[4][0], ROW_SPOTS[4][1], M.BENCH_Z + M.PUCK_H),
+                     (0.95, 0.30))])
 
     pads = [("320 grit", (0.36, 0.34, 0.31)), ("800 grit", (0.55, 0.53, 0.50)), ("3 µm diamond", (0.93, 0.93, 0.91)),
             ("0.05 µm alumina", (0.80, 0.87, 0.97))]
@@ -1056,7 +1102,7 @@ def chapter_sem():
             "Etch right after polishing, because 316 passivates fast: dilute aqua regia for 30–45 s in a fume hood, "
             "or 10 % oxalic acid electrolytically. Check the etch and the track order under the optical microscope.",
             5.0, etch, hold=0.6, cam_to=CAM["etch"],
-            labels=[("section face: row 1 at mid-length", (ETCH_SPOT[0], ETCH_SPOT[1], ETCH_SPOT[2] + M.PUCK_H),
+            labels=[("section face: nine tracks at mid-length", (ETCH_SPOT[0], ETCH_SPOT[1], ETCH_SPOT[2] + M.PUCK_H),
                      (0.95, 0.30))])
 
     stage_pose = face_up(STAGE)
@@ -1100,10 +1146,11 @@ def chapter_results():
         del sc.parent[f"g_{k}"]
     for i, k in enumerate("BCD"):
         sc.gmat[f"g_{k}"] = in_tray(i + 1)
+    screws(w, 0.0)
     w.a_pieces("piece")
-    for n in a_tracks(w, rows=(1, 2)):
+    for n in a_tracks(w):
         sc.alpha[n] = 0.0
-    for n in a_tracks(w, rows=(1,), kind="trksec"):
+    for n in a_tracks(w, (1,), "trksec"):
         sc.alpha[n] = 1.0
     sc.color["A_piece"] = (0.62, 0.60, 0.58)
     sc.parent["g_A"] = "puck"
@@ -1149,8 +1196,8 @@ def chapter_results():
 
 CHAPTERS = [("m2_1_setup", "Set up: panels into the plate, flushness, job file, powder (B2, A1, B3)"),
             ("m2_2_print", "Print: inert, recoat one layer, expose 72 tracks (B4, B5)"),
-            ("m2_3_unload", "Unload: depowder, lift the panels out, top-view images (B6, B7, C1)"),
-            ("m2_4_cut", "Cut: track block out of the panel, slab, rows, final face (C2)"),
+            ("m2_3_unload", "Unload: depowder, unscrew the panels, top-view images (B6, B7, C1)"),
+            ("m2_4_cut", "Cut: a strip holding every section, two pieces, the fine wet saw (C2)"),
             ("m2_5_sem", "Mount, polish, etch, SEM (C2 to C5)"),
             ("m2_6_results", "Measure and compare with the AM Module (C5 to C7)")]
 

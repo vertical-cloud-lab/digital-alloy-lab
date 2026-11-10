@@ -9,7 +9,7 @@
  "substeps": [
   {
    "label": "B2 · panels into the plate",
-   "caption": "Nathan C.'s plate: about 10 in square, with four removable panels. Four fresh 316L panels (about 85 mm square, ID-marked on the side) go into its pockets. The plate itself is never lasered, so it needs no resurfacing between runs, and nothing is welded on, so no wire EDM.",
+   "caption": "Nathan C.'s plate: about 10 in square, with four removable panels. Four fresh 316L panels (about 88 mm square, ID-marked on the side) go into its pockets and are screwed down. The plate itself is never lasered, so it needs no resurfacing between runs, and nothing is welded on, so no wire EDM.",
    "start_frame": 0,
    "end_frame": 122
   },
@@ -21,7 +21,7 @@
   },
   {
    "label": "A1 · job file",
-   "caption": "Job file: each track is its own part carrying one of 17 parameter sets (the 4 × 4 power–speed grid and the control), in a random order in a 25 mm block at the centre of each panel. The dry run must show one scan vector per track. The AM Module predictions for all 17 sets are committed before printing (A2).",
+   "caption": "Job file: each track is its own part carrying one of 17 parameter sets (the 4 × 4 power–speed grid and the control), in a random order in one row across the middle of each panel. The dry run must show one scan vector per track. The AM Module predictions for all 17 sets are committed before printing (A2).",
    "start_frame": 236,
    "end_frame": 340
   },

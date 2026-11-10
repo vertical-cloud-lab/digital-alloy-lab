@@ -3,12 +3,14 @@
 Millimetres, z up, the M2's build plane at z = 0. The build plate follows Nathan C.'s photo of it (PR #243; sizes in
 layout.py): about 10 in square, with four removable square panels in pockets and a hole near each corner. Its
 thickness (about 1 in) is read off the same photo; the panels' thickness (1/2 in) and what their four holes are for
-(counterbored screws are drawn) are assumptions. Nothing else is measured on BYU's machine or tools: the M2 is a box
+(counterbored cap screws are drawn) are assumptions. Nothing else is measured on BYU's machine or tools: the M2 is a box
 with a process chamber, dose / build / overflow wells, a recoater, a scanner window and a gas inlet and outlet, laid out
 like a Concept Laser machine; the bench tools are generic shapes. What comes from the plan
-(../m2-single-track-schedule.md): two rows of nine 8 mm tracks per insert at 2 mm pitch (a 25 mm block at each panel's
-centre), the cut sequence (block out of the panel, top slab off, split per row, final face 1-2 mm from mid-length,
-grind to it), 1.25 in hot-mount pucks, the grit and polish sequence, and SEM.
+(../m2-single-track-schedule.md): one row of 18 tracks across each panel, 8 mm long at 2 mm pitch in two groups of
+nine, with every mid-length on one line (the target plane); the cut sequence (the bandsaw takes out a 10 mm strip that
+holds the target plane, 3 mm to one side of it and 7 mm to the other, and cuts it into two pieces of nine tracks; the
+fine wet saw cuts through each piece 0.5 mm from the plane; grind to it), 1.25 in hot-mount pucks, the grit and polish
+sequence, and SEM.
 
 ``meshes()`` tessellates everything into PyVista and caches it in ``.cache/`` keyed on this file's hash.
 """
@@ -61,6 +63,7 @@ PSAW_X = 2050.0                        # precision saw disc plane
 PSAW_C = (PSAW_X, 0.0, -18.0)          # disc centre
 PSAW_R = 63.5                          # 5 in blade
 PSAW_SAMPLE_Z = 60.0                   # bottom of the sample in the chuck, before the cut
+PSAW_DROP = 31.0                       # how far the arm lowers the piece: through the whole piece
 PRESS_C = (2380.0, 0.0)
 PRESS_TOP = 120.0
 POL_C = (2720.0, 0.0)
@@ -72,11 +75,16 @@ MON_W, MON_H, MON_Z0 = 560.0, 350.0, 30.0
 
 PUCK_R = 31.75 / 2                     # 1.25 in
 PUCK_H = 18.0
-SLAB_T = 7.0                           # top slab thickness taken off on the bandsaw
-SPLIT_X = 12.5                         # between the rows
-FINAL_CUT_X = 8.5                      # 1.5 mm past row 1's mid-length (x = 7)
-TARGET_X = 7.0                         # row 1 mid-length: the section plane
-KERF = 0.9
+# the cuts, in block coordinates (see pieces()); the target plane is x = L.X_MID, every track's mid-length
+TARGET_X = L.X_MID
+KERF = 1.0                             # bandsaw kerf
+STRIP_X = (TARGET_X - 7.0, TARGET_X + 3.0)    # the strip the bandsaw takes out: 7 mm and 3 mm from the plane
+_Y = L.TRACK_Y
+_SPLIT = (_Y[L.GROUP_N - 1] + _Y[L.GROUP_N]) / 2
+CROSS_Y = ((_Y[0] - 3.0, _Y[0] - 2.0), (_SPLIT - 0.5, _SPLIT + 0.5), (_Y[-1] + 2.0, _Y[-1] + 3.0))   # kerfs: end, split, end
+PIECE_Y = (CROSS_Y[0][1], CROSS_Y[1][0])      # piece 1: the first nine tracks
+FINAL_CUT_X = TARGET_X + 0.5           # the fine wet saw's cut: 0.5 mm from the plane, through the whole piece
+FINE_KERF = 0.5
 
 # colours
 STEEL = (0.74, 0.75, 0.77)
@@ -199,6 +207,18 @@ def panel_shape(letter: str) -> cq.Workplane:
     return b.cut(txt)
 
 
+def screw_shape() -> cq.Workplane:
+    """A cap screw seated in one of the panel's counterbores (its axis at the origin, the head just below z = 0)."""
+    head = cyl_z(0, 0, -PANEL_CB_D, -0.5, PANEL_CB_R - 0.45).cut(cyl_z(0, 0, -2.5, 0, 1.6))
+    return head.union(cyl_z(0, 0, -PANEL_T - 4, -PANEL_CB_D, PANEL_HOLE_R - 0.3))
+
+
+def screw_xy() -> list[tuple[float, float]]:
+    """The four screws' positions in block coordinates."""
+    c = L.BLOCK / 2
+    return [(c + sx * L.PANEL_HOLE, c + sy * L.PANEL_HOLE) for sx in (-1, 1) for sy in (-1, 1)]
+
+
 # --------------------------------------------------------------------------------------------- the bench
 def tray_slots():
     """Centres of the tray's four recesses, in the plate's order: A, B at the front, C, D behind."""
@@ -238,22 +258,25 @@ def bench_parts() -> dict:
     p["saw_arm"] = (bx(s - 40, s + 40, -40, 200, 270, 330), (0.25, 0.45, 0.35), "static", 1.0)
     p["saw_guide"] = (bx(s - 12, s + 12, -14, 30, 70, 270), DARK, "static", 1.0)
     p["saw_blade"] = (bx(s - 0.45, s + 0.45, -7, 7, SAW_TABLE_Z - 15, 70), (0.42, 0.44, 0.48), "static", 1.0)
+    # rip fence: its working face is at x = 0 in its group, which the animation slides along x
+    p["saw_fence"] = (bx(-12, 0, -100, 100, SAW_TABLE_Z, SAW_TABLE_Z + 16), (0.30, 0.31, 0.33), "fence", 1.0)
     p["saw_coolant"] = (cyl_y(-20, 60, s + 30, 90, 3).union(cyl_z(s + 30, -20, 40, 90, 3)), (0.2, 0.5, 0.8),
                         "static", 1.0)
     # precision saw: base, trough, disc (spins about x), sample arm
     ps = PSAW_X
     p["psaw_base"] = (bx(ps - 110, ps + 110, -120, 170, BENCH_Z, -40), (0.86, 0.86, 0.84), "static", 1.0)
     trough = bx(ps - 40, ps + 40, -80, 80, -40, -10).cut(bx(ps - 34, ps + 34, -74, 74, -36, -9))
-    p["psaw_trough"] = (trough, (0.80, 0.80, 0.80), "static", 0.6)
+    p["psaw_trough"] = (trough, (0.80, 0.80, 0.80), "static", 0.45)
     disc = cyl_x(ps - 0.25, ps + 0.25, PSAW_C[1], PSAW_C[2], PSAW_R)
     p["psaw_disc"] = (disc, (0.55, 0.42, 0.25), "psaw_disc", 1.0)
     hub = cyl_x(ps - 4, ps + 4, PSAW_C[1], PSAW_C[2], 18).union(bx(ps - 4.5, ps + 4.5, -2, 2, PSAW_C[2], PSAW_C[2] + 30))
     p["psaw_hub"] = (hub, STEEL, "psaw_disc", 1.0)
     p["psaw_post"] = (bx(ps + 70, ps + 100, 120, 160, -40, 110), DARK, "static", 1.0)
     p["psaw_arm"] = (bx(ps - 12, ps + 100, -10, 150, 86, 100), DARK, "psaw_arm", 1.0)
-    jaws = bx(ps - 8, ps - 2, -16.5, -12.6, PSAW_SAMPLE_Z + 1, 86).union(bx(ps - 8, ps - 2, 12.6, 16.5,
-                                                                         PSAW_SAMPLE_Z + 1, 86))
-    p["psaw_chuck"] = (jaws.union(bx(ps - 9, ps - 1, -17, 17, 78, 86)), STEEL, "psaw_arm", 1.0)
+    hw = (PIECE_Y[1] - PIECE_Y[0]) / 2          # the jaws close on piece 1's ends
+    jaws = bx(ps - 8, ps - 2, -hw - 3.8, -hw - 0.05, PSAW_SAMPLE_Z + 1, 86).union(
+        bx(ps - 8, ps - 2, hw + 0.05, hw + 3.8, PSAW_SAMPLE_Z + 1, 86))
+    p["psaw_chuck"] = (jaws.union(bx(ps - 9, ps - 1, -hw - 4.3, hw + 4.3, 78, 86)), STEEL, "psaw_arm", 1.0)
     # hot-mount press: body, mould ring, cap, ram
     px, py = PRESS_C
     p["press_body"] = (cyl_z(px, py, BENCH_Z, PRESS_TOP, 70), (0.25, 0.40, 0.62), "static", 1.0)
@@ -300,38 +323,32 @@ def bench_parts() -> dict:
 
 # ------------------------------------------------------------------------------- the sample's pieces
 def pieces() -> dict:
-    """Panel A and the pieces it is cut into, in block coordinates (the track block's top face [0,25]^2 at z = 0).
+    """Panel A and the pieces it is cut into, in block coordinates (the panel's centre at (12.5, 12.5), z = 0 on top).
 
-    panel -> (bandsaw, four cuts: a, b along y; c, d along x) the 25 mm track block + four offcuts
-    -> (bandsaw) top slab + body -> (bandsaw) row slabs 1, 2 -> (precision saw) row-1 piece + offcut
-    -> (grind) the section piece, whose face x = TARGET_X is row 1's mid-length."""
-    a = L.BLOCK
+    panel -> (bandsaw, across, 3 mm past the target plane) strip_side + scrap_hi -> (bandsaw, 7 mm before it)
+    strip + scrap_lo -> (bandsaw, three short cuts) end1, piece1, piece2, end2 -> (fine wet saw on piece 1, 0.5 mm
+    from the plane, through the whole piece) piece_cut + offcut (the sliver) -> (grind) piece, whose face
+    x = TARGET_X is the tracks' mid-length."""
     lo, hi = PANEL_LO - 1, PANEL_HI + 1
     zl, zh = -PANEL_T - 1, 1
-    out = {}
+    x0, x1 = STRIP_X
     panel = panel_shape("A")
-    out["panel"] = panel
-    out["p1"] = panel.intersect(bx(0, hi, lo, hi, zl, zh))
-    out["off_a"] = panel.intersect(bx(lo, -KERF, lo, hi, zl, zh))
-    out["p2"] = out["p1"].intersect(bx(-1, a, lo, hi, zl, zh))
-    out["off_b"] = out["p1"].intersect(bx(a + KERF, hi, lo, hi, zl, zh))
-    out["p3"] = out["p2"].intersect(bx(-1, a + 1, 0, hi, zl, zh))
-    out["off_c"] = out["p2"].intersect(bx(-1, a + 1, lo, -KERF, zl, zh))
-    out["off_d"] = out["p3"].intersect(bx(-1, a + 1, a + KERF, hi, zl, zh))
-    # the block, with its ID scribed again on the front of what becomes the slab (the panel's ID went with off_c)
-    cube = out["p3"].intersect(bx(-1, a + 1, -1, a, zl, zh))
-    txt = cq.Workplane("XZ", origin=(4.0, 0, -SLAB_T / 2)).text("A", 4.5, -0.4, combine=False, halign="center",
-                                                                      valign="center")
-    cube = cube.cut(txt)
-    out["cube"] = cube
-    out["body"] = cube.intersect(bx(-1, a + 1, -1, a + 1, zl, -SLAB_T - KERF))
-    slab = cube.intersect(bx(-1, a + 1, -1, a + 1, -SLAB_T, 1))
-    out["slab"] = slab
-    out["row1"] = slab.intersect(bx(-1, SPLIT_X - KERF / 2, -1, a + 1, -SLAB_T - 1, 1))
-    out["row2"] = slab.intersect(bx(SPLIT_X + KERF / 2, a + 1, -1, a + 1, -SLAB_T - 1, 1))
-    out["piece_cut"] = slab.intersect(bx(-1, FINAL_CUT_X, -1, a + 1, -SLAB_T - 1, 1))
-    out["offcut"] = slab.intersect(bx(FINAL_CUT_X + 0.5, SPLIT_X - KERF / 2, -1, a + 1, -SLAB_T - 1, 1))
-    out["piece"] = slab.intersect(bx(-1, TARGET_X, -1, a + 1, -SLAB_T - 1, 1))
+
+    def box(xa, xb, ya=lo, yb=hi):
+        return panel.intersect(bx(xa, xb, ya, yb, zl, zh))
+
+    out = {"panel": panel}
+    out["strip_side"] = box(lo, x1)                       # after the first bandsaw cut
+    out["scrap_hi"] = box(x1 + KERF, hi)
+    out["scrap_lo"] = box(lo, x0 - KERF)
+    out["strip"] = box(x0, x1)
+    out["end1"] = box(x0, x1, lo, CROSS_Y[0][0])
+    out["piece1"] = box(x0, x1, *PIECE_Y)
+    out["piece2"] = box(x0, x1, CROSS_Y[1][1], CROSS_Y[2][0])
+    out["end2"] = box(x0, x1, CROSS_Y[2][1], hi)
+    out["piece_cut"] = box(x0, FINAL_CUT_X, *PIECE_Y)
+    out["offcut"] = box(FINAL_CUT_X + FINE_KERF, x1, *PIECE_Y)
+    out["piece"] = box(x0, TARGET_X, *PIECE_Y)
     return out
 
 
@@ -366,6 +383,7 @@ def meshes() -> dict:
         out["parts"][name] = dict(mesh=to_mesh(shape, tol), color=color, group=group, opacity=op)
     for k in L.INSERTS:
         out["inserts"][k] = to_mesh(panel_shape(k), 0.08)
+    out["screw"] = to_mesh(screw_shape(), 0.05)
     for k, shape in pieces().items():
         out["pieces"][k] = to_mesh(shape, 0.05)
     path.write_bytes(pickle.dumps(out))

@@ -26,7 +26,7 @@ import numpy as np  # noqa: E402
 from matplotlib.cm import ScalarMappable  # noqa: E402
 from matplotlib.colors import LinearSegmentedColormap, LogNorm  # noqa: E402
 from matplotlib.lines import Line2D  # noqa: E402
-from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Patch, Polygon, Rectangle  # noqa: E402
+from matplotlib.patches import Circle, FancyArrowPatch, FancyBboxPatch, Patch, Rectangle  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "out"
@@ -127,56 +127,71 @@ def panel_grid(ax):
 
 
 def panel_tracks(bx, tmap):
-    # plate positions as in the animation: A, B at the outlet side (low y), C, D at the inlet side
-    origins = {"A": (0.0, 0.0), "B": (32.0, 0.0), "C": (0.0, 32.0), "D": (32.0, 32.0)}
+    # the panels at their places in the plate (100 mm pitch): A, B at the outlet side (low y), C, D at the inlet side.
+    # Coordinates: each panel's lower-left corner at its origin, so a block-coordinate point (x, y) is at
+    # origin + (x, y) - PANEL_LO.
+    P, lo = L.PANEL, L.CENTRE - L.PANEL / 2
+    pitch = L.POCKET_PITCH
+    origins = {"A": (0.0, 0.0), "B": (pitch, 0.0), "C": (0.0, pitch), "D": (pitch, pitch)}
+    xm = L.X_MID - lo                                       # the target plane, panel coordinates
+    ys = [y - lo for y in L.TRACK_Y]
+    split = (ys[L.GROUP_N - 1] + ys[L.GROUP_N]) / 2
     for ins, (x0, y0) in origins.items():
-        bx.add_patch(Rectangle((x0, y0), L.BLOCK, L.BLOCK, fc=STEEL, ec=AXIS, lw=1.0, zorder=1))
-        # orientation notch on the left side
-        bx.add_patch(Polygon([(x0 - 0.05, y0 + 11.2), (x0 + 1.3, y0 + 12.5), (x0 - 0.05, y0 + 13.8)], closed=True,
-                             fc=SURFACE, ec=AXIS, lw=1.0, zorder=2))
-        bx.text(x0, y0 + 25.7, f"Panel {ins}", ha="left", va="bottom", fontsize=9.5, fontweight="bold", color=INK)
-        for (xa, xb) in L.ROW_X:                    # section planes at each row's mid-length
-            xc = (xa + xb) / 2
-            bx.plot([x0 + xc, x0 + xc], [y0 + 1.6, y0 + 23.4], color=INK, lw=1.1, ls=(0, (3.2, 2.2)), zorder=5)
-        xs = (L.ROW_X[0][1] + L.ROW_X[1][0]) / 2     # bandsaw split between the rows
-        bx.plot([x0 + xs, x0 + xs], [y0 - 0.9, y0 + 24.3], color=MUTED, lw=1.4, ls=(0, (0.9, 1.9)), zorder=5,
-                dash_capstyle="round")
+        bx.add_patch(FancyBboxPatch((x0, y0), P, P, boxstyle="round,pad=0,rounding_size=6", fc=STEEL, ec=AXIS,
+                                    lw=1.0, zorder=1))
+        for sx in (-1, 1):
+            for sy in (-1, 1):
+                bx.add_patch(Circle((x0 + P / 2 + sx * L.PANEL_HOLE, y0 + P / 2 + sy * L.PANEL_HOLE), 2.75,
+                                    fc=SURFACE, ec=AXIS, lw=0.8, zorder=2))
+        bx.text(x0, y0 + P + 1.5, f"Panel {ins}", ha="left", va="bottom", fontsize=9.5, fontweight="bold", color=INK)
+        # the strip the bandsaw takes out (3 mm and 7 mm either side of the plane), the target plane, the split
+        for xs in (xm - 7.0, xm + 3.0):
+            bx.plot([x0 + xs, x0 + xs], [y0 + ys[0] - 5, y0 + ys[-1] + 5], color=MUTED, lw=1.2,
+                    ls=(0, (0.9, 1.9)), zorder=5, dash_capstyle="round")
+        bx.plot([x0 + xm - 7.0, x0 + xm + 3.0], [y0 + split, y0 + split], color=MUTED, lw=1.2, ls=(0, (0.9, 1.9)),
+                zorder=5, dash_capstyle="round")
+        bx.plot([x0 + xm, x0 + xm], [y0 + ys[0] - 3.5, y0 + ys[-1] + 3.5], color="#c0392b", lw=1.2,
+                ls=(0, (3.2, 2.2)), zorder=5)
     for t in tmap:
         x0, y0 = origins[t["insert"]]
         (xa, y), (xb, _) = t["start"], t["end"]
+        xa, xb, y = xa - lo, xb - lo, y - lo
         c = CMAP(NORM(t["E"])) if t["E"] is not None else CONTROL
-        bx.add_patch(FancyBboxPatch((x0 + xa, y0 + y - 0.5), xb - xa, 1.0, boxstyle="round,pad=0,rounding_size=0.35",
+        bx.add_patch(FancyBboxPatch((x0 + xa, y0 + y - 0.55), xb - xa, 1.1, boxstyle="round,pad=0,rounding_size=0.4",
                                     fc=c, ec="none", zorder=3))
         if t["E"] is None:
-            cx = x0 + (xa - 1.45 if t["row"] == 1 else xb + 1.45)
-            bx.text(cx, y0 + y, "C", ha="center", va="center", fontsize=6.6, fontweight="bold", color=INK, zorder=4)
+            bx.text(x0 + xa - 2.4, y0 + y, "C", ha="center", va="center", fontsize=6.0, fontweight="bold", color=INK,
+                    zorder=4)
+    top = pitch + P
     # scan direction, once
-    bx.add_patch(FancyArrowPatch((3.0, 63.0), (11.0, 63.0), arrowstyle="-|>", mutation_scale=11, color=INK2, lw=1.3))
-    bx.text(12.3, 63.0, "scan direction: the same on every track", ha="left", va="center", fontsize=8.2, color=INK2)
+    bx.add_patch(FancyArrowPatch((0.0, top + 13.0), (14.0, top + 13.0), arrowstyle="-|>", mutation_scale=11,
+                                 color=INK2, lw=1.3))
+    bx.text(16.5, top + 13.0, "scan direction: the same on every track", ha="left", va="center", fontsize=8.2,
+            color=INK2)
     # gas flow (assumed) and exposure order
-    gx = 62.5
-    bx.add_patch(FancyArrowPatch((gx, 55.5), (gx, 1.5), arrowstyle="-|>", mutation_scale=13, color=MUTED, lw=1.6))
-    bx.text(gx, 57.0, "gas inlet\n(assumed)", ha="center", va="bottom", fontsize=7.8, color=INK2, linespacing=1.1)
+    gx = top + 9.0
+    bx.add_patch(FancyArrowPatch((gx, top - 4), (gx, 4), arrowstyle="-|>", mutation_scale=13, color=MUTED, lw=1.6))
+    bx.text(gx, top - 1, "gas inlet\n(assumed)", ha="center", va="bottom", fontsize=7.8, color=INK2, linespacing=1.1)
     bx.text(gx, 0.0, "gas outlet", ha="center", va="top", fontsize=7.8, color=INK2)
-    bx.text(gx + 1.6, 28.5, "gas flow", ha="left", va="center", fontsize=7.8, color=INK2, rotation=-90)
-    ex = -5.0
-    bx.add_patch(FancyArrowPatch((ex, 1.5), (ex, 55.5), arrowstyle="-|>", mutation_scale=13, color=INK2, lw=1.6))
-    bx.text(ex - 1.4, 28.5, "exposure order: A, B, then C, D; each from low y up", ha="right", va="center",
+    bx.text(gx + 3.0, top / 2, "gas flow", ha="left", va="center", fontsize=7.8, color=INK2, rotation=-90)
+    ex = -9.0
+    bx.add_patch(FancyArrowPatch((ex, 4), (ex, top - 4), arrowstyle="-|>", mutation_scale=13, color=INK2, lw=1.6))
+    bx.text(ex - 2.5, top / 2, "exposure order: A, B, then C, D; each from low y up", ha="right", va="center",
             fontsize=7.8, color=INK2, rotation=90)
-    bx.set_xlim(-11, 70)
-    bx.set_ylim(-4.5, 66.5)
+    bx.set_xlim(-20, top + 24)
+    bx.set_ylim(-8, top + 20)
     bx.set_aspect("equal")
     bx.axis("off")
     handles = [
         Patch(fc=CMAP(NORM(0.3)), ec="none", label="Sobol track, coloured by P/v as in (a)"),
         Patch(fc=CONTROL, ec="none", label="C = control track (standard set)"),
-        Line2D([], [], color=INK, lw=1.1, ls=(0, (3.2, 2.2)), label="section plane at each row's mid-length"),
-        Line2D([], [], color=MUTED, lw=1.4, ls=(0, (0.9, 1.9)), label="bandsaw split between the two rows"),
+        Line2D([], [], color="#c0392b", lw=1.2, ls=(0, (3.2, 2.2)), label="target plane: every track's mid-length"),
+        Line2D([], [], color=MUTED, lw=1.2, ls=(0, (0.9, 1.9)), label="bandsaw: the strip, and the split into two pieces"),
     ]
     bx.legend(handles=handles, loc="upper left", bbox_to_anchor=(0.0, 0.0), ncol=2, fontsize=8.0,
               handlelength=2.4, columnspacing=1.6, labelcolor=INK2, borderaxespad=0.2)
-    bx.text(0.0, -0.1, "The 25 mm track block at each panel's centre, as in the animation (layout.py): 8 mm tracks at 2 mm\n"
-                       "pitch in two rows. The plan (§4) now has one row of 18 tracks, 10 mm long. Tracks drawn 1 mm wide.",
+    bx.text(0.0, -0.1, f"To scale: 88 mm panels on a 100 mm pitch, {L.TRACK_LEN:g} mm tracks at 2 mm pitch in two groups "
+                       "of nine 10 mm apart.\nTracks are drawn 1.1 mm wide. Panel sizes are scaled from Nathan C.'s photo.",
             transform=bx.transAxes, ha="left", va="top", fontsize=7.6, color=MUTED, linespacing=1.3)
 
 
@@ -201,14 +216,15 @@ def pilot_design():
     fig.text(gs[0, 0].get_position(fig).x0, ty, "(a) 64 Sobol settings + 1 control set (65 per run)", ha="left",
              va="top", fontsize=10.5, fontweight="bold", color=INK)
     bx0 = gs[0, 3].get_position(fig).x0
-    fig.text(bx0, ty, "(b) 72 tracks on 4 panels: one Sobol block per panel", ha="left", va="top", fontsize=10.5,
+    fig.text(bx0, ty, "(b) 72 tracks on 4 panels: one Sobol block in one row across each", ha="left", va="top",
+             fontsize=10.5,
              fontweight="bold", color=INK)
     fig.text(bx0, ty - 0.033, "Example randomization (seed 100); the real map comes from the job file (A1).\n"
                               "Gas-flow direction assumed; tracks are exposed from the outlet side toward the inlet.",
              ha="left", va="top", fontsize=8.2, color=INK2, linespacing=1.35)
     fig.text(0.055, 0.975, "M2 single-track pilot (issue #100): power-speed settings and track layout", ha="left",
              va="top", fontsize=12.5, fontweight="bold", color=INK)
-    fig.text(0.055, 0.937, "316L inserts in Nathan C.'s four-insert plate; one powder layer; one run = 72 tracks "
+    fig.text(0.055, 0.937, "316L panels in Nathan C.'s four-insert plate; one powder layer; one run = 72 tracks "
                            "(4 panels x [16 Sobol + 2 control]).", ha="left", va="top", fontsize=9, color=INK2)
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / "m2-pilot-design.png"
@@ -410,7 +426,7 @@ def main():
     for ph in "ABC":
         print(f"{ph}: first run {fmt_h(*t[ph]['first'])}, routine {fmt_h(*t[ph]['routine'])}")
     assert t["B"]["first"] == (3.75, 7.75) and t["B"]["routine"] == (3.5, 4.75)
-    assert t["C"]["first"] == (18, 24) and t["C"]["routine"] == (12.5, 14.5)
+    assert t["C"]["first"] == (19, 26) and t["C"]["routine"] == (13.5, 15.5)
     for p in (pilot_design(), schedule()):
         print("wrote", p.relative_to(HERE))
 

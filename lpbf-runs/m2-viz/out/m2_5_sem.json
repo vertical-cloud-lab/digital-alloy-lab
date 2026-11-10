@@ -9,19 +9,19 @@
  "substeps": [
   {
    "label": "C2 · grind to the target plane",
-   "caption": "Then grind down to the target plane: the mid-length of the row's nine tracks, where the section is taken.",
+   "caption": "Then grind the last 0.5 mm down to the target plane: the mid-length of the piece's nine tracks, where the section is taken.",
    "start_frame": 0,
    "end_frame": 90
   },
   {
    "label": "C3 · hot-mount",
-   "caption": "Hot-mount face down in conductive compound, so the SEM does not charge. A slab about 8 × 22 mm fits a 1.25 in puck: eight pucks per run, two per panel.",
+   "caption": "Hot-mount face down in conductive compound, so the SEM does not charge. A piece about 22 × 13 mm in section fits a 1.25 in puck: eight pucks per run, two per panel.",
    "start_frame": 91,
    "end_frame": 201
   },
   {
    "label": "C3 · eight pucks",
-   "caption": "Eight pucks per run, two per panel, each showing one row of nine tracks cut at mid-length.",
+   "caption": "Eight pucks per run, two per panel, each showing nine tracks cut at mid-length.",
    "start_frame": 202,
    "end_frame": 254
   },

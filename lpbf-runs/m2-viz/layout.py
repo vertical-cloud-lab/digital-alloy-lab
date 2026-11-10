@@ -8,13 +8,14 @@ The plate (PLATE ... PLATE_HOLE_IN) is measured from Nathan C.'s photo of it (PR
 these as +-5 %. Four square panels sit in four pockets in a 2 x 2 grid around the plate's centre, each with four
 holes near its corners; the plate has a hole near each corner.
 
-Block coordinates (mm): each panel carries one 25 mm track block at its centre, whose top face is the square
-[0, 25] x [0, 25] at z = 0 (so the panel's top face is [-31.5, 56.5] x [-31.5, 56.5]). Tracks run along +x (the scan
-direction, the same on every track): row 1 from x = 3 to 11, row 2 from x = 14 to 22 (8 mm long, rows 3 mm apart).
-Track centres are at y = 4.5 + 2k, k = 0..8 (2 mm pitch). The block is sized for the 1.25 in mounts (one row's
-section is about 22 mm wide), and the bandsaw cuts it out of the panel before sectioning. The gas is assumed to
-flow along -y (inlet at high y, outlet at y = 0), so tracks are exposed from low y to high y: from the outlet side
-toward the inlet.
+Block coordinates (mm), kept from the earlier 25 mm track block: the panel's centre is at (12.5, 12.5) and its top
+face is [-31.5, 56.5] x [-31.5, 56.5] at z = 0. Each panel carries one row of 18 tracks across its middle (§4 of the
+plan). Tracks run along +x (the scan direction, the same on every track), 8 mm long from x = 8.5 to 16.5, so every
+track's mid-length lies on the line x = X_MID = 12.5: the target plane, which one strip of the panel holds (§3). The
+tracks sit at 2 mm pitch in two groups of nine, y = -8.5 ... 7.5 and 17.5 ... 33.5; each group becomes one mount
+piece (about 22 mm wide, for the 1.25 in mounts), and the 10 mm gap between them leaves room for the bandsaw cut that
+splits them. The gas is assumed to flow along -y (inlet at high y, outlet at low y), so tracks are exposed from low y
+to high y: from the outlet side toward the inlet.
 """
 from __future__ import annotations
 
@@ -39,10 +40,16 @@ PANEL = 88.0                       # the removable panels, about 3.5 in (the pho
                                    # about 2.5 mm wide, includes the edge breaks; the plan reads 88 mm in 90 mm)
 PANEL_HOLE = 34.5                  # four holes per panel, at +-34.5 mm from its centre
 
-BLOCK = 25.0                       # the track block at each panel's centre (top face [0, 25]^2)
+BLOCK = 25.0                       # block coordinates: the panel's centre is at (BLOCK / 2, BLOCK / 2)
+CENTRE = BLOCK / 2
 TRACK_LEN = 8.0
-ROW_X = ((3.0, 11.0), (14.0, 22.0))
-TRACK_Y = tuple(4.5 + 2.0 * k for k in range(9))
+PITCH = 2.0
+GROUP_N = 9                        # tracks per mount piece
+GROUP_GAP = 10.0                   # between the two groups' facing tracks: room for the bandsaw cut
+X_MID = CENTRE                     # the target plane: every track's mid-length
+ROW_X = ((X_MID - TRACK_LEN / 2, X_MID + TRACK_LEN / 2),)
+_SPAN = 2 * (GROUP_N - 1) * PITCH + GROUP_GAP
+TRACK_Y = tuple(CENTRE - _SPAN / 2 + PITCH * k + (GROUP_GAP - PITCH) * (k >= GROUP_N) for k in range(2 * GROUP_N))
 INSERTS = ("A", "B", "C", "D")
 SEED = 100                         # issue #100; example randomization only
 
@@ -60,23 +67,23 @@ def grid_sets() -> list[dict]:
 
 
 def track_map(seed: int = SEED) -> list[dict]:
-    """72 tracks: each insert carries its own 16-point Sobol block and 2 controls, in its own random order.
+    """72 tracks: each panel carries its own 16-point Sobol block and 2 controls, in its own random order.
 
-    Returns one dict per track with insert, row (1 or 2), k (0..8 along y), the block-coordinate start and end points,
+    Returns one dict per track with insert (the panel), row (always 1: one row per panel), k (0..17 along y), group
+    (1 for the first nine, 2 for the rest: the mount piece it ends up in), the block-coordinate start and end points,
     the parameter set (P, v, E; None for controls) and its exposure order on the plate (0..71)."""
     rng = np.random.default_rng(seed)
     all_sets = pilot_sets()
     out = []
     order = 0
+    x0, x1 = ROW_X[0]
     for ins in INSERTS:
         sets = [s for s in all_sets if s["panel"] == ins] + [dict(id=CONTROL, P=None, v=None, E=None)] * 2
         perm = rng.permutation(len(sets))
-        slots = [(row, k) for k in range(9) for row in (1, 2)]       # exposure order: low y first, row 1 then 2
-        for (row, k), j in zip(slots, perm):
-            x0, x1 = ROW_X[row - 1]
+        for k, j in enumerate(perm):                                 # exposure order: low y first
             s = sets[j]
-            out.append(dict(insert=ins, row=row, k=k, start=(x0, TRACK_Y[k]), end=(x1, TRACK_Y[k]),
-                            set=s["id"], P=s["P"], v=s["v"], E=s["E"], order=order))
+            out.append(dict(insert=ins, row=1, k=k, group=1 + (k >= GROUP_N), start=(x0, TRACK_Y[k]),
+                            end=(x1, TRACK_Y[k]), set=s["id"], P=s["P"], v=s["v"], E=s["E"], order=order))
             order += 1
     return out
 
