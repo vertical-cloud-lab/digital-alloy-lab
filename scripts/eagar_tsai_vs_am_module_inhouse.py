@@ -165,6 +165,8 @@ def digitize(cfg: dict, png: pathlib.Path) -> tuple[pd.DataFrame, pd.DataFrame, 
     x_lo, x_hi, y_lo, y_hi = cfg["frame"]
     lg = _legend_box(im, cfg["frame"])
     masks = {k: _near(im, c) for k, c in COLOURS.items()}
+    for m in masks.values():  # the legend's colour swatches are not regions
+        m[max(lg[2] - 3, 0): lg[3] + 4, max(lg[0] - 3, 0): lg[1] + 4] = False
     marker = np.zeros(im.shape[:2], bool)
     for c in MARKER_COLOURS:
         marker |= _near(im, c, 90)

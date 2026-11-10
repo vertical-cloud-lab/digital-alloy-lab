@@ -73,7 +73,7 @@
             "A_match": 0.135
           }
         },
-        "seconds": 6.8
+        "seconds": 6.7
       }
     }
   },
@@ -164,7 +164,7 @@
             "A_match": 0.101
           }
         },
-        "seconds": 7.2
+        "seconds": 7.1
       },
       "blend, liquidus 1019 K": {
         "slug": "liquidus-1019K",
@@ -243,7 +243,7 @@
             "A_match": 0.101
           }
         },
-        "seconds": 7.3
+        "seconds": 7.0
       }
     }
   }
