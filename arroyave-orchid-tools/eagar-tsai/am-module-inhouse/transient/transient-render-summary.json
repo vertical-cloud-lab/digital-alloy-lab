@@ -1,0 +1,24 @@
+{
+  "alsi10mg": {
+    "A": 0.3074,
+    "q0_W_mm2": 30574,
+    "peak_K": 6405.0,
+    "L_um": 318.5,
+    "W_um": 221.1,
+    "D_um": 106.0,
+    "x_front_um": 69.4,
+    "x_back_um": -249.1,
+    "touches_window_edge": false
+  },
+  "byu-blend": {
+    "A": 0.3841,
+    "q0_W_mm2": 45286,
+    "peak_K": 10995.3,
+    "L_um": 398.6,
+    "W_um": 321.6,
+    "D_um": 156.6,
+    "x_front_um": 107.9,
+    "x_back_um": -290.7,
+    "touches_window_edge": false
+  }
+}
