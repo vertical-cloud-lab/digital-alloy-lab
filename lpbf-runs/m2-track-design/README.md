@@ -17,13 +17,13 @@ grid). It has two sources:
 
 | Choice | Recommendation | Main reason |
 | --- | --- | --- |
-| Track length | **10 mm** (8 mm is the minimum for one section) | The modelled start and end zones are short (below), but keyhole start-up, the galvo, the laser's on/off timing and the end crater are not modelled. 10 mm leaves 2 mm to discard at each end, a mid-length plane with ±1 mm of slack, and room for a second plane 2 mm further on |
-| Discard at each end | **2 mm** | At least 6× the longest conduction start zone (0.37 mm) and 12× the end zone (0.17 mm); covers a 0.3 ms galvo ramp and about 1 ms of keyhole start-up even at 2 m/s |
-| Section plane | **Mid-length**, located from the visible track ends on the top view; on panel A in the pilot, a **second plane 2 mm further along** | One plane per track is enough if the along-track scatter is small; the second plane on panel A measures that scatter |
-| Spacing | **2 mm centre to centre** (pilot); 1.5 mm in the campaign if the pilot's top views show narrow denuded bands | Heat from a neighbour is negligible at 1 mm or more; denuded powder and spatter set the spacing. 1.5 mm would put 12 tracks in a 1.25" mount instead of 9 |
-| Scan direction | **The same on every track**, against or across the gas flow, never with it | See the literature section |
-| Exposure order | **From the gas outlet side toward the inlet**, with parameter sets in randomized positions | Spatter blown downstream lands on finished tracks, and position effects are not confounded with parameters |
-| Galvo | **Ask whether skywriting is on**; check the first 2 mm of a few tracks in the pilot | Without it, Eagar–Tsai puts the first 0.3 mm up to 1.9× deeper at 2 m/s |
+| Track length | **12 mm** (10 mm at the least) | Modelled start and end zones are short (below), but keyhole start-up, the galvo, the laser's on/off timing and the end crater are not modelled, and they scale with speed. 12 mm leaves 3 mm to discard at each end and 6 mm of steady track around the target plane: ±1 mm of slack in finding the plane and room for a second plane 1.5 mm further on. It still fits four rows on one panel at 15 mm row pitch (option B) |
+| Discard at each end | **3 mm** | 8× the longest conduction start zone Eagar–Tsai gives (0.37 mm) and 18× its end zone (0.17 mm). At 2 m/s, 3 mm is 1.5 ms: enough for a 1 ms keyhole start-up or galvo ramp. Common practice is 10–15 mm tracks sectioned in their middle third |
+| Section plane | **Mid-length** (6 mm), found from the track ends visible on the top view; on panel A in the pilot, a **second plane 1.5 mm further on** | One plane per track is enough if the along-track scatter is small; the second plane on panel A measures it. The top views (C1) give width along the whole steady zone of every track for free |
+| Spacing | **2 mm centre to centre** (pilot); 1.5 mm in the campaign if the pilot's top views show narrow denuded bands | Heat from a neighbour is negligible at 1 mm or more; denuded powder and spatter set the spacing. 2 mm is more than 6× the widest pool Eagar–Tsai gives in the window (0.26 mm). 1.5 mm would put 12 tracks in a 1.25" mount instead of 9 |
+| Scan direction | **The same on every track**, into or across the gas flow, never with it | With the flow, the plume and spatter are blown ahead of the beam onto the track still to be drawn |
+| Exposure order | **Strictly from the gas outlet side toward the inlet**, with parameter sets in randomized positions; no interleaving | Spatter blown downstream lands on finished tracks. Interleaving (odd positions, then even) is sometimes suggested for heat, but heat doesn't matter here and interleaving would put upstream spatter on positions not yet drawn |
+| Galvo | **Ask whether skywriting is on**; check the first 3 mm of a few tracks in the pilot (top view, or a longitudinal section of a spare track) | Without it, Eagar–Tsai puts the first 0.3 mm up to 1.9× deeper at 2 m/s for a 0.3 ms ramp |
 | Settings | **64 scrambled-Sobol points in four 16-point blocks, one block per panel**, plus 2 controls per panel; **batch BO** in the campaign, one M2 run per batch, with one more Sobol block per run held out for validation | See [Sampling](#sampling-sobol-blocks-then-batch-bo) |
 
 ## What Eagar–Tsai says (and doesn't)
@@ -73,9 +73,21 @@ In Eagar–Tsai a preheat of ΔT is the same as lowering the liquidus by ΔT, wh
 10 K ([`out/preheat_sensitivity.csv`](out/preheat_sensitivity.csv)). So a neighbour 2 mm away changes the depth by
 under 0.3% even at the hottest setting, and 1 mm would still be under about 1%. Heat does not set the spacing.
 
-## What the literature adds (Edison)
+## What the literature adds (Edison), and how far to trust it
 
-_Pending: the transients, spacing and sampling reports are still running._
+**All four first-round reports are ungrounded.** They ran during an outage of Edison's literature search, and each
+says it retrieved no papers ("no contexts were retrieved, so this answer is not grounded in evidence") and that its
+DOIs and numbers come from the model's own knowledge. They don't even agree with each other: the four reports give
+four different DOIs for Yadroitsev et al. 2010. So the numbers below are a second opinion to test against, not
+sources. The transients and spacing queries were resubmitted
+(`_task_ids_retry.json`); see the end of this section for whether the retries were grounded.
+
+| Report | What it says | How it changes the design |
+| --- | --- | --- |
+| [Transients and length](../../edison-trajectories/m2-single-track-design/track-transients-and-length.md) | Conduction pools settle within 1–3 pool lengths. A keyhole forms in 50–200 µs, but its depth takes 0.3–1 ms to settle. Galvo acceleration takes 0.1–1 ms, and uncompensated mark/laser delays are 50–500 µs, so at 1–3 m/s the ends can carry the wrong energy per length over 0.1–3 mm unless skywriting is on. Keyholes collapse within 50–200 µs of laser-off and leave end-of-vector pores (Martin et al. 2019); the end crater spans 0.5–1 pool length. Practice: 5–20 mm tracks, 10 mm most common, sectioned "in the middle"; discard distances are rarely stated. Width and depth vary 5–15% along stable tracks and 20–30% near instability. It recommends 10–15 mm, ≥3 mm discard (5 mm for keyholes at high speed) and 3 sections per calibration track | Its conduction figure agrees with Eagar–Tsai (about 2–4 pool depths, 0.1–0.4 mm). Its keyhole and galvo times are why the discard went from 2 to 3 mm and the length from 10 to 12 mm. Three sections per track would triple polishing and SEM, so the pilot measures the section-to-section scatter on panel A first |
+| [Spacing and order](../../edison-trajectories/m2-single-track-design/track-spacing-and-order.md) | At 1 atm the vapour jet entrains gas and pulls powder into the track (Matthews et al. 2016). The denuded band is 2–5× the track width in total, 0.1–0.4 mm beyond each edge for 0.1–0.2 mm tracks, and 0.5–1 mm in total for keyholes. Spatter lands mostly 2–5 mm away, and some goes more than 10 mm downstream. Expose from outlet to inlet and scan into or across the flow. Spacing ≥1.5 mm, 2–2.5 mm for keyhole settings, and ≥3× the pool width. Heat is negligible beyond 1.5–2 mm. A spread layer is 50–65% dense | Supports 2 mm. Its heat estimate matches Eagar–Tsai's (≤7 K at 2 mm). It also suggests interleaving the exposure for heat, which this design doesn't do: Eagar–Tsai shows heat doesn't matter, and interleaving would break the outlet-to-inlet order |
+| [Sampling](../../edison-trajectories/m2-single-track-design/sampling-sobol-vs-batch-bo.md) | Start with 64 Owen-scrambled Sobol points in (P, log v), a power of two for balance. Then run batch active learning with one build per batch, using a heteroscedastic multi-output GP plus a regime classifier. The acquisition mixes integrated-variance reduction (about 50%), boundary entropy (30%) and model-discrepancy checks (20%). Hold out 20–25% of settings for validation, split by setting, not by section. Repeat a few settings across builds and panels. It rates the evidence for 64-point Sobol over a maximin LHS as weak, and for space-filling plus batch BO as moderate to strong | Matches the design below. Its point about cross-build repeats is why the controls stay the same set in every run |
+| [316L inputs](../../edison-trajectories/m2-single-track-design/ss316l-eagar-tsai-inputs-and-single-track-data.md) | Liquidus 1697 K, k 21.5 W/m/K, ρ 7500 kg/m³, c 640 J/kg/K (α 4.5 × 10⁻⁶ m²/s), boiling 3090–3134 K. Absorptivity 0.35 in conduction and 0.6–0.8 in keyhole mode. Its single-track data points are marked as approximate digitizations | α lies inside the 3.5–7.0 × 10⁻⁶ bracket used above, so the transient and heat conclusions stand. Its data points are too uncertain to calibrate Eagar–Tsai against; use the original papers or MeltpoolNet for that |
 
 ## Sampling: Sobol blocks, then batch BO
 

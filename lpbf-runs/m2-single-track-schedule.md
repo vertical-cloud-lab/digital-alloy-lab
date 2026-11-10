@@ -9,7 +9,8 @@ of single tracks to check the Thermo-Calc AM Module.
 
 1. **One pilot run first.** Carl and Josh print 72 single tracks on the plate's four removable panels: 64
    power-speed settings from a scrambled Sobol sequence, one 16-point block per panel that covers the whole window,
-   plus two control tracks per panel. Tracks are 10 mm long at 2 mm pitch and sectioned at mid-length. Carl times
+   plus two control tracks per panel. Tracks are 12 mm long at 2 mm pitch, with 3 mm at each end discarded, and
+   sectioned at mid-length. Carl times
    every step from job prep to SEM. The campaign then picks each run's settings by batch Bayesian optimization
    ([`m2-track-design/`](m2-track-design/README.md) has the reasoning, the Eagar–Tsai checks and the Edison reports).
 2. **Running many parameter sets in one build looks feasible on the M2** and seems to be the intended workflow:
@@ -214,29 +215,34 @@ The goal is to get one run all the way from job file to measured cross-sections,
 pilot doubles as a machine health check.
 
 **Layout (scaled from the photo; adjust once the panels are measured).** Each panel carries **one row of 18
-parallel tracks across its middle**, **10 mm long at 2 mm pitch**, in two groups of nine with a 10 mm gap between the
+parallel tracks across its middle**, **12 mm long at 2 mm pitch**, in two groups of nine with a 10 mm gap between the
 groups. Every track's mid-length lies on one line, the target plane, so one strip of the panel holds all 18 sections
 ([§3](#cutting-without-wire-edm)) and each group of nine becomes one mount. The row is about 42 mm wide, well clear
-of the panel's edges and screws. Four panels give **72 tracks per run**. A panel has room for four such rows 16 mm
+of the panel's edges and screws. Four panels give **72 tracks per run**. A panel has room for four such rows 15 mm
 apart, which is how option B puts a whole run on one panel.
 
 Why these numbers (details, Eagar–Tsai runs and Edison reports in [`m2-track-design/`](m2-track-design/README.md)):
 
-- **Length: discard the first and last 2 mm of every track.** In Eagar–Tsai for 316L, a conduction-mode pool is
+- **Length: discard the first and last 3 mm of every track.** In Eagar–Tsai for 316L, a conduction-mode pool is
   within 1% of its steady-state depth at most 0.37 mm after the start and up to 0.17 mm before the end, over
-  100–375 W and 0.25–2 m/s. That model leaves out keyhole start-up, the galvo's speed ramp if skywriting is off
-  (which it puts at up to 1.9× the steady depth over the first 0.3 mm at 2 m/s), the laser's on/off timing and
-  the end crater, so the discard is set well beyond it. A 10 mm track then keeps 6 mm of steady track around the
-  target plane: room for ±1 mm of error in finding the plane and for a second plane. 8 mm is the minimum for one
-  plane.
+  100–375 W and 0.25–2 m/s. That model leaves out keyhole start-up (0.3–1 ms to a steady depth), the galvo's
+  speed ramp if skywriting is off (Eagar–Tsai puts a 0.3 ms ramp at up to 1.9× the steady depth over the first
+  0.3 mm at 2 m/s), the laser's on/off timing, and the end crater and end-of-vector pores. These scale with time,
+  so at 2 m/s 1 ms is 2 mm; 3 mm covers them. A 12 mm track then keeps 6 mm of steady track around the target
+  plane: room for ±1 mm of error in finding the plane and for a second plane 1.5 mm further on. 10 mm is the
+  least for one plane.
 - **Pitch: powder sets it, not heat.** Eagar–Tsai puts at most 7 K on a neighbour 2 mm away (375 W, 0.25 m/s),
   which changes its depth by under 0.3%. But each track strips powder from a band beside it (denudation) and
   throws spatter. 2 mm keeps neighbouring bands apart even for the widest tracks. If the pilot's top views (C1)
   show bands narrower than about 0.5 mm per side, the campaign can go to 1.5 mm and put 12 tracks in a mount
   instead of 9.
-- **Section plane: mid-length,** found from the track ends visible on the top view. On panel A in the pilot,
-  after imaging, grind about 1.5 mm further and image a second plane. The difference between the two planes is the
-  along-track scatter, which the model comparison needs as its noise level.
+- **Section plane: mid-length** (6 mm in), found from the track ends visible on the top view. On panel A in the
+  pilot, after imaging, grind about 1.5 mm further and image a second plane. The difference between the two planes
+  is the along-track scatter, which the model comparison needs as its noise level. The top views (C1) also give
+  each track's width along its whole steady stretch.
+- **Order and direction:** scan every track the same way, into or across the gas flow, never with it, and expose
+  strictly from the outlet side toward the inlet. Don't interleave the order to spread heat; heat doesn't matter
+  at 2 mm, and interleaving would put upstream spatter on positions not yet drawn.
 
 **Parameters.** Use **64 power-speed settings from a scrambled Sobol sequence**, not a grid, plus **2 control
 tracks per panel** at the machine's standard stainless parameter set. The window is the old grid's box for a 400 W
@@ -262,8 +268,9 @@ lower the powers. [`m2-track-design/design.py`](m2-track-design/design.py) gener
   bare-substrate job as a second row on one panel. The panels have room for it, so all four powder blocks stay.
   Bare-plate tracks remove the powder-layer uncertainty and are the cleanest data for calibrating absorptivity.
   [NIST's AM Bench](https://www.nist.gov/ambench) used bare-plate laser tracks for model validation in the same way.
-- **Scan in the same direction on every track** and note how it sits relative to the gas flow. Expose from the
-  downstream (gas outlet) side toward the inlet, so spatter lands on finished tracks rather than on fresh powder.
+- **Scan in the same direction on every track** and note how it sits relative to the gas flow (into or across it,
+  not with it). Expose from the downstream (gas outlet) side toward the inlet, so spatter lands on finished tracks
+  rather than on fresh powder.
 - **Commit the AM Module predictions for all 65 parameter sets** (64 Sobol settings plus the control) **before**
   the print.
 
