@@ -214,6 +214,7 @@ for 6 h, so the CubXL Pi relayed. Nothing was installed or written on it.
 | AlSi10Mg keyhole region P > 220 W, v < 0.8 m/s, classed by D/W > 0.75 from cross-sections, nearly independent of powder size | Solyaev et al. 2025, arXiv | confirmed |
 | The AM module solves conduction, fluid flow and evaporation; gets laser absorptivity from a Lorentz–Drude model of electrical resistivity and wavelength; takes properties from the Scheil calculator; shows a keyhole in steady state | thermocalc.com AM-module page | confirmed; help.thermocalc.com still needs a login |
 | The LLNL keyhole dataset is 316L (CL 20ES) single tracks on a Concept Laser M2 | OSTI 1878448 report | confirmed |
+| Calorimetric absorptivity jumps across the conduction–keyhole threshold and saturates near 0.7 in keyhole mode (Ti-6Al-4V, IN625, 316L; no Al); melt-pool depth d/a = K·β·L*_th with one prefactor (0.6) once the measured absorptivity is used, assuming the thermal diffusion length is below the beam radius (L*_th < 0.9) | Ye et al. 2019, *Adv. Eng. Mater.*, accepted manuscript on [OSTI](https://www.osti.gov/biblio/1569671) | confirmed. For our Al at 0.4 m/s, L*_th ≈ 1.5, outside that assumption, so I didn't use the law |
 | lpbf_map's King test matches its README's formula | lpbf_map 2.0.1 source (`defects/keyhole_king.py`) | **no**: the code uses a speed-independent power threshold, πk r0 (T_m − T0)(T_b/T_m)/A, which is 78 W at our blend settings ([log](logs/lpbf_map-crosscheck.log)). Its Al6061 entry also has k = 331.84 W/m/K, about twice solid Al6061's |
 
 Google Scholar served a reCAPTCHA on the first request through this route, and ScienceDirect served one on the
@@ -221,7 +222,42 @@ first article. I didn't try to get past either.
 
 ## Edison searches
 
-EDISON_SECTION_PLACEHOLDER
+I submitted four LITERATURE_HIGH queries at 05:16 UTC
+([`scripts/edison_keyhole_alternatives.py`](../../scripts/edison_keyhole_alternatives.py)):
+- open models of keyhole onset and depth;
+- how the AM module models the keyhole;
+- open measurements for a benchmark;
+- Al–Si keyhole data.
+
+**All four came back ungrounded.** Each report says no papers were retrieved because Edison's literature search
+returned nothing during the run, so the answers were written from the model's own knowledge. They are committed as
+fetched in
+[`../../edison-trajectories/keyhole-open-alternatives/`](../../edison-trajectories/keyhole-open-alternatives/):
+the reports, their artifacts as markdown, and the full trajectories. I used none of their claims without checking
+them.
+
+- **DOIs** ([table](../../edison-trajectories/keyhole-open-alternatives/doi-check-round1.csv), checked against
+  Crossref). Of 30 distinct DOIs:
+  - 11 resolve to the paper cited;
+  - 12 resolve to unrelated papers. King et al. 2014 is given as a quantum Monte Carlo paper, and the "Ye et al. 2019,
+    *Phys. Rev. Applied*" keyhole scaling law that the Thermo-Calc report ranks first resolves to a photonic-circuit
+    paper;
+  - 7 don't exist.
+- **Claims that the sources contradict:**
+  - King's keyhole threshold "≈ 6". That is King's theory; the measured value is 30 ± 4.
+  - Ke "does not predict dimensions". Gan et al.'s Eq. 2 is a keyhole-depth law.
+  - Cunningham's onset "~10⁶ W/cm²". The paper says about 0.4 MW/cm².
+  - Lethe "LGPL-2.1, lethe-cfd/lethe". It is Apache-2.0 at chaos-polymtl/lethe.
+  - Gan et al.'s spots "25–250 µm". Their r0 is 44–70 µm.
+- **What held up is the ranking:**
+  - a keyhole-number screen for maps;
+  - laserbeamFoam as the open CFD starting point;
+  - AdditiveFOAM is not a keyhole solver;
+  - conduction-model W/D and T_max ≥ T_b tests only as heuristics.
+
+  The sources above support all four.
+
+ROUND2_PLACEHOLDER
 
 ## Caveats
 
