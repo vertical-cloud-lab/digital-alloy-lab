@@ -27,7 +27,7 @@
   },
   {
    "label": "B5 · 72 tracks",
-   "caption": "72 tracks: one full replicate (16 power–speed sets and 2 controls) in one row across each panel, in random positions, so the four panels are four replicates and position effects can be measured. The exposure takes seconds; the whole step is under 15 minutes.",
+   "caption": "72 tracks in one row across each panel: one 16-point block of a Sobol sequence that covers the whole power–speed window, plus 2 controls, in random positions; the controls measure position effects. The exposure takes seconds; the whole step is under 15 minutes.",
    "start_frame": 282,
    "end_frame": 420
   }

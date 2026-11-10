@@ -10,7 +10,7 @@ holes near its corners; the plate has a hole near each corner.
 
 Block coordinates (mm), kept from the earlier 25 mm track block: the panel's centre is at (12.5, 12.5) and its top
 face is [-31.5, 56.5] x [-31.5, 56.5] at z = 0. Each panel carries one row of 18 tracks across its middle (§4 of the
-plan). Tracks run along +x (the scan direction, the same on every track), 8 mm long from x = 8.5 to 16.5, so every
+plan). Tracks run along +x (the scan direction, the same on every track), 12 mm long from x = 6.5 to 18.5, so every
 track's mid-length lies on the line x = X_MID = 12.5: the target plane, which one strip of the panel holds (§3). The
 tracks sit at 2 mm pitch in two groups of nine, y = -8.5 ... 7.5 and 17.5 ... 33.5; each group becomes one mount
 piece (about 22 mm wide, for the 1.25 in mounts), and the 10 mm gap between them leaves room for the bandsaw cut that
@@ -42,7 +42,7 @@ PANEL_HOLE = 34.5                  # four holes per panel, at +-34.5 mm from its
 
 BLOCK = 25.0                       # block coordinates: the panel's centre is at (BLOCK / 2, BLOCK / 2)
 CENTRE = BLOCK / 2
-TRACK_LEN = 8.0
+TRACK_LEN = 12.0                   # plan §4: 3 mm at each end is discarded as start and end transients
 PITCH = 2.0
 GROUP_N = 9                        # tracks per mount piece
 GROUP_GAP = 10.0                   # between the two groups' facing tracks: room for the bandsaw cut

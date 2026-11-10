@@ -297,6 +297,8 @@ class World:
             if t["insert"] != "A":
                 continue
             sc.add(f"trkstrip_{i}", self.track_mesh(t, x1=M.STRIP_X[1]), TRACK_C, "g_A", shown=False, specular=0.6)
+            sc.add(f"trkhi_{i}", self.track_mesh(t, x0=M.STRIP_X[1] + M.KERF), TRACK_C, "g_A", shown=False,
+                   specular=0.6)                                    # the tracks' ends, on the first offcut
             if t["group"] == 1:
                 sc.add(f"trkcut_{i}", self.track_mesh(t, x1=M.FINAL_CUT_X), TRACK_C, "g_A", shown=False,
                        specular=0.6)
@@ -825,6 +827,9 @@ def chapter_cut():
             for n in a_tracks(w, kind="trkstrip"):
                 sc.alpha[n] = 1.0
             sc.group_of["A_scrap_hi"] = "a_hi"
+            for n in a_tracks(w, kind="trkhi"):
+                sc.group_of[n] = "a_hi"
+                sc.alpha[n] = 1.0
             sc.gmat["a_hi"] = T((12 * window(u, 0.86, 1.0), 0, 0)) @ saw_flat(XA, F1)
 
     sc.step("C2 · bandsaw: across the panel",
@@ -839,6 +844,8 @@ def chapter_cut():
 
     def cut_b(u):
         sc.alpha["A_scrap_hi"] = 1.0 - window(u, 0.05, 0.3)
+        for n in a_tracks(w, kind="trkhi"):
+            sc.alpha[n] = 1.0 - window(u, 0.05, 0.3)
         sc.gmat["a_hi"] = T((12 + 60 * window(u, 0.0, 0.3), 0, 0)) @ saw_flat(XA, F1)
         if u < 0.3:
             v = window(u, 0.0, 0.3)
