@@ -6,8 +6,9 @@ BYU AA1100+Si+AlSi10Mg blend at 375 W / 400 mm/s. Each is a half-domain cut thro
 centre line, coloured by temperature, with the heat-source intensity drawn as a Gaussian above
 the beam, the Marangoni velocity field as arrows, and the pool outline as contour lines.
 
-ArroyaveLab/eagar-tsai only returns the quasi-steady field, and only on the surface (z = 0) and
-centre-line (y = 0) planes, which are exactly the two faces those renders show. Its temperature
+ArroyaveLab/eagar-tsai only returns the quasi-steady field. Its ``compute_single_point`` evaluates it on
+the surface (z = 0) and centre-line (y = 0) planes, which are exactly the two faces those renders show
+(``compute_temperature_volume`` fills the whole 3D volume, also at steady state). Its temperature
 is an integral over the time since each bit of heat was deposited,
 
     T - T0 = S * integral_0^inf f(t; x, y, z, p) dt,   t = v * (elapsed time) / sigma,
@@ -347,7 +348,7 @@ def summarize_history(df: pd.DataFrame, steady: dict) -> dict:
                 r[f"{s_}_{int(frac * 100)}pct_after_us"] = round(float(on.tau_us.iloc[k]), 1) if y[k] >= frac * steady[key][s_] else None
                 if frac == 0.95:
                     r[f"{s_}_95pct_track_mm"] = round(float(on.beam_x_mm.iloc[k]), 3)
-        for T_iso, label, _ in c["isotherms"]:
+        for _T_iso, label, _ls in c["isotherms"]:
             t_ = label.split()[0]
             z = off[off[f"L_um_{t_}"] == 0]
             r[f"frozen_at_{t_}_us_after_off"] = round(float(z.tau_us.iloc[0] - m.tau_off * 1e6), 1) if len(z) else None
@@ -491,7 +492,7 @@ def draw_scene(ax, m: Model, X, Y, Zd, T_top, T_side, beam_X, *, show_beam=True,
             segs.append(np.column_stack([line[:, 0], np.zeros(len(line)), line[:, 1]]))
             styles.append(ls)
     for ls in ("-", "--"):
-        s = [seg for seg, st in zip(segs, styles) if st == ls]
+        s = [seg for seg, st in zip(segs, styles, strict=True) if st == ls]
         if s:
             lc = Line3DCollection(s, colors="white", linewidths=1.1 if ls == "-" else 0.9,
                                   linestyles="solid" if ls == "-" else (0, (3, 2)))
@@ -522,8 +523,8 @@ def draw_scene(ax, m: Model, X, Y, Zd, T_top, T_side, beam_X, *, show_beam=True,
         ax.add_collection3d(bell)
 
     def ruler(p0, p1, text, colour, ls="-", off=(0, 0, 0), ha="center"):
-        ax.plot(*zip(p0, p1), color=colour, lw=1.4, ls=ls, zorder=4)
-        mid = [(a + b) / 2 + o for a, b, o in zip(p0, p1, off)]
+        ax.plot(*zip(p0, p1, strict=True), color=colour, lw=1.4, ls=ls, zorder=4)
+        mid = [(a + b) / 2 + o for a, b, o in zip(p0, p1, off, strict=True)]
         ax.text(*mid, text, color=colour, fontsize=label_size, ha=ha, va="center", zorder=5, fontstyle="italic")
 
     if rulers:  # eagar-tsai's own pool, from its tail corner, like the AM module's axis rulers
