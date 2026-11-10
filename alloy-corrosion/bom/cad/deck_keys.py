@@ -151,6 +151,45 @@ def check_part(name, shape):
     return out
 
 
+def hold_down():
+    """Keys locate a part; only its weight holds it down. When the capper lifts the electrode cap off a lid or
+    a cup, the two hold-down magnets pull up on that part and the cap's two spring pins push down on it
+    (../../copper/cad/cad_check.json). Estimate whether the tray or the cup block tips up at the station the
+    cap leaves, about the far edge of its footprint. Printed masses: PLA 1.24 g/cm3; 100 % parts solid, the
+    rest a 0.8 mm shell plus 15 % infill. Loads: estimates from the BOM, listed below."""
+    import trimesh
+    chk = json.loads((HERE.parents[1] / "copper" / "cad" / "cad_check.json").read_text())["recommended_clearance_cap"]["hold_down"]
+    mag_lo, mag_hi = chk["two_magnets_N"]
+    pins = 0.59                                    # 2 x CPG-37 at 30 gf (B06), mid-stroke
+    up = (round(mag_lo - pins, 2), round(mag_hi - pins, 2))
+    rho, shell, g = 1.24, 0.08, 9.81e-3            # g/cm3, cm, N per g
+
+    def printed(stl, solid):
+        m = trimesh.load(HERE.parents[1] / stl, force="mesh")
+        v, a = m.volume / 1000, m.area / 100
+        return rho * (v if solid else a * shell + 0.15 * (v - a * shell)), m.bounds
+    tray_g, tb = printed("copper/cad/coupon_tray.stl", False)
+    lid_g, _ = printed("bom/cad/well_lid_v2_006.stl", True)
+    cup_g, cb = printed("bom/cad/cup_block_3.stl", True)
+    coupon_g = 3.91 * 0.6 * 8.94                   # 1 in bar slice with 20 mm flats (391 mm2) x 6 mm, Cu-Ni
+    tray_load = {"tray (15 % infill)": tray_g, "4 lids, 100 %, with magnets and pins": 4 * (lid_g + 0.5),
+                 "3 Cu-Ni coupons, 6 mm": 3 * coupon_g, "PTFE blank": 3.8, "8 M3 x 8 screws and 8 inserts": 9.6,
+                 "12 P75 pins and the wires": 3.2}
+    cup_load = {"cup block (100 %)": cup_g, "six magnets": 1.1, "two rinse cups filled": 3.9}
+    out = {"cap_pull_up_N": up, "assumptions": {"pins_push_down_N": pins, "pla_g_cm3": rho, "shell_mm": 10 * shell}}
+    for name, load, bounds, xs in (("coupon_tray", tray_load, tb, (185.0, 210.0)), ("cup_block_3", cup_load, cb, (90.0, 60.0))):
+        w = sum(load.values()) * g
+        x0, x1 = bounds[0][0], bounds[1][0]
+        xc = (x0 + x1) / 2
+        rec = {"loads_g": {k: round(v, 1) for k, v in load.items()}, "weight_N": round(w, 2)}
+        for x in xs:  # pulled at x, tipping about the far edge
+            far = x1 if x < xc else x0
+            rec[f"tips_at_x_{x:g}_above_N"] = round(w * abs(far - xc) / abs(far - x), 2)
+        rec["holds_without_help"] = all(v > up[1] for k, v in rec.items() if k.startswith("tips_"))
+        out[name] = rec
+    return out
+
+
 def key_sizes(press):
     s = math.sqrt(3) * TRI_R
     r = POCKET_R + press
@@ -190,11 +229,13 @@ def main():
                 "triangle_circumradius_mm": TRI_R, "print": "pill on the bed, nub up, as the STLs are", "files": keys},
         "pocket": pocket, "checks": {"min_wall_mm": MIN_WALL, "min_ceiling_mm": MIN_CEILING}, "parts": parts,
         "keys_needed": {n: len(v) for n, v in POCKETS.items()},
+        "hold_down": hold_down(),
     }
     (HERE / "deck_keys.json").write_text(json.dumps(out, indent=1) + "\n")
     for n, v in parts.items():
         print(n, [(p["x"], p["y"], p["wall_and_ceiling_solid_pct"], p["underside_on_deck_pct"]) for p in v["pockets"]])
     print(json.dumps(keys, indent=1))
+    print(json.dumps(out["hold_down"], indent=1))
 
 
 if __name__ == "__main__":

@@ -75,7 +75,7 @@ only from a search snippet, are flagged in the CSV's `link_check` column.
 | Copper adds | $1,123 | calibration O-rings and bench cell, seawater, sulfide and its test kit, trace-metal acid, polishing film, two reference bars. Not counted: the C95800 bar (quote) and the PTFE rod (McMaster's price couldn't be read) |
 | Copper, optional | $788 | c1-05's 1 µm diamond and colloidal-silica polish ($269), and metal-free 15 mL tubes if the ICP lab won't dilute into its own ($519) |
 
-There are 18 printed parts: about 0.48 kg of PETG even at 100 % infill, so one 1 kg spool.
+There are 19 printed parts, counting the deck keys (P19, 2026-11-09): about 0.5 kg of PETG even at 100 % infill, so one 1 kg spool.
 
 ## 1. What to print
 
@@ -86,6 +86,11 @@ the magnet pauses set (2026-11-06).
 **To print it all at once on the H2D in PLA,** use [`h2d/`](h2d/README.md): one sliced plate with
 every part below except P11, P13, P14 and the tip fit strip, which the lab already has or doesn't
 need (2026-11-06).
+
+**Deck keys (2026-11-09):** every part that sits on the deck (P06, P08–P11) has press-fit key pockets
+underneath, and P19 is the key that drops into a PandaDeck slot. [`deck-keys.md`](deck-keys.md) has
+where each one goes and what moved to make room. The tray is now 2 mm taller, with the coupon face at
+deck z 22.
 
 PETG for anything that touches liquid, at 100 % infill or with four walls around every wetted bore;
 0.12–0.16 mm layers. Print orientation, magnet pauses and post-processing for the cell parts are in
@@ -99,12 +104,12 @@ same rules. The cup block pauses at z 44.6 for its six magnets, same pole up as 
 | P03 | Well lid v2 for AS568-006 (main wells) | [STEP](cad/well_lid_v2_006.step) · [STL](cad/well_lid_v2_006.stl) | 5 | both | PETG 100% infill. USE THIS NOT copper/cad/well_lid (0.2 mm ceiling, see README), bottom face on the bed, pause at z 5.6 for the two magnets, four stations plus a spare |
 | P04 | Well lid v2 for AS568-008 (calibration well; 0.157 cm2) | [STEP](cad/well_lid_v2_008.step) · [STL](cad/well_lid_v2_008.stl) | 1 | Cu | PETG 100% infill. copper calibration only (copper/protocol.md section 5) |
 | P05 | Well lid v2 for AS568-010 (calibration well; 0.289 cm2) | [STEP](cad/well_lid_v2_010.step) · [STL](cad/well_lid_v2_010.stl) | 1 | Cu | PETG 100% infill. copper calibration only |
-| P06 | Coupon tray: 4 stations; WE and pad spring pins; M3 inserts; bus channels | [STEP](../copper/cad/coupon_tray.step) · [STL](../copper/cad/coupon_tray.stl) | 1 | both | PETG. 105 x 40 x 19.5 mm at deck x 170-275, y 220-260, pocket faces must be flat (they set the coupon face height z 20) |
-| P07 | Shims 1 mm and 3 mm (under thinner pieces) | [1 mm STEP](../copper/cad/shim_1mm.step) · [3 mm STEP](../copper/cad/shim_3mm.step) | 4 + 4 | both | PETG. keeps every coupon face at deck z 20 |
-| P08 | Cup block: rinse 2 (ASW); rinse 1 (DI); park cup; each with the lid's 16 mm boss | [STEP](cad/cup_block_3.step) · [STL](cad/cup_block_3.stl) | 1 | both | PETG (4 walls around the bores). cups at deck (30/60/90, 245), seat z 45 as in the deck check, pause at z 44.6 for six magnets (same pole up), the aluminium plan uses the 60 and 90 … |
-| P09 | Tip waste cup (30 mm; top z 50) | [STEP](cad/tip_waste_cup.step) · [STL](cad/tip_waste_cup.stl) | 1 | both | PETG or PLA. copper deck (385, 150), aluminium deck (335, 40) |
-| P10 | Tube rack 2 x 8 for open 0.5 mL tubes | [STEP](cad/tube_rack_2x8.step) · [STL](cad/tube_rack_2x8.stl) | 1 | both | PETG or PLA. deck x 170-266, y 20-54, tubes at x 176 + 12k, y 28 / 46, set hole_d from the fit strip (P12) first |
-| P11 | Second 2 x 15 tip rack (138 x 20 mm) | [STEP](cad/tip_rack_2x15.step) · [STL](cad/tip_rack_2x15.stl) | 1 | both | PETG or PLA. or print another of Ben's rack 1 if its file exists (preferred: same fit), A1 (108, 89), A2 (99.5, 89) |
+| P06 | Coupon tray: 4 stations; WE and pad spring pins; M3 inserts; bus channels | [STEP](../copper/cad/coupon_tray.step) · [STL](../copper/cad/coupon_tray.stl) | 1 | both | PETG. 105 x 40 x 21.5 mm at deck x 170-275, y 220-260, pocket faces must be flat (they set the coupon face height z 22), two deck-key pockets under the front edge (2026-11-09: 2 mm taller for the 16 mm P75 pins) |
+| P07 | Shims 1 mm and 3 mm (under thinner pieces) | [1 mm STEP](../copper/cad/shim_1mm.step) · [3 mm STEP](../copper/cad/shim_3mm.step) | 4 + 4 | both | PETG. keeps every coupon face at deck z 22 |
+| P08 | Cup block: rinse 2 (ASW); rinse 1 (DI); park cup; each with the lid's 16 mm boss | [STEP](cad/cup_block_3.step) · [STL](cad/cup_block_3.stl) | 1 | both | PETG (4 walls around the bores). cups at deck (30/60/90, 245), seat z 45 as in the deck check, pause at z 44.6 for six magnets (same pole up), the aluminium plan uses the 60 and 90 positions; base reaches forward to y 216 for its two deck keys |
+| P09 | Tip waste cup (30 mm; top z 50) | [STEP](cad/tip_waste_cup.step) · [STL](cad/tip_waste_cup.stl) | 1 | both | PETG or PLA. copper deck (385, 150), aluminium deck (335, 60), one deck key |
+| P10 | Tube rack 2 x 8 for open 0.5 mL tubes | [STEP](cad/tube_rack_2x8.step) · [STL](cad/tube_rack_2x8.stl) | 1 | both | PETG or PLA. deck x 170-266, y 28-62, tubes at x 176 + 12k, y 36 / 54 (8 mm back since 2026-11-09, for its deck keys), set hole_d from the fit strip (P12) first |
+| P11 | Second 2 x 15 tip rack (138 x 20 mm) | [STEP](cad/tip_rack_2x15.step) · [STL](cad/tip_rack_2x15.stl) | 1 | both | PETG or PLA. or print another of Ben's rack 1 (preferred: same fit; very likely Cubware's TipRack.stl, already keyed), A1 (266.75, 89), A2 (258.25, 89), two deck keys |
 | P12 | Fit-test strips for the tube rack and tip rack holes | [tube STEP](cad/fit_strip_tube.step) · [tip STEP](cad/fit_strip_tip.step) | 1 + 1 | both | PETG or PLA. print on the printer and filament the racks will use |
 | P13 | Magnetic vial cap 16 mm (PANDA-BEAR) | [STEP](https://github.com/vertical-cloud-lab/byu-vcl/blob/f1b4666/modules/electromagnetic-capper/cad/VialCap16mm.step) | 8 | both | PLA + Sylgard 184 fill. 4 stocks for aluminium, 6 for copper (acid, ASW, two sulfide, DI, spare), PDMS fill and steel disc as modules/electromagnetic-capper/BOM.md |
 | P14 | 9-position 20 mL vial holder (PANDA-BEAR) | [STEP](https://github.com/vertical-cloud-lab/byu-vcl/blob/f1b4666/modules/electromagnetic-capper/cad/9VialHolder20mL_TightFit.step) | 1 | Cu | PLA. only if the deck has no full 9-position holder yet, the copper deck uses all of it at x 318 |
@@ -112,6 +117,7 @@ same rules. The cup block pauses at z 44.6 for its six magnets, same pole up as 
 | P16 | Bench cell clamp plate: coupon pocket; WE spring pin; 4 x M3 x 8 in 5 mm counterbores | [STEP](cad/bench_cell_clamp.step) · [STL](cad/bench_cell_clamp.stl) | 1 | Cu | PETG.  |
 | P17 | Bench cell loose cover: holes for a 10 mm graphite counter and a 6 mm reference; a spare; a vent | [STEP](cad/bench_cell_cover.step) · [STL](cad/bench_cell_cover.stl) | 1 | Cu | PETG or PLA.  |
 | P18 | Electrode cap with the AS568-016 radial seal (fallback only) | [STEP](../copper/cad/electrode_cap_oring.step) · [STL](../copper/cad/electrode_cap_oring.stl) | 0 | both | PETG 100% infill. print only if the clearance cap loses too much water on the bench (copper/cad/README.md finding 1) |
+| P19 | Deck key: a 9.8 x 24.8 x 10 mm pill for a PandaDeck slot, with a nub that presses 0.05 mm into a part's pocket | [STEP](cad/deck_key.step) · [STL](cad/deck_key.stl); fit test [0.10](cad/deck_key_fit_0.10.stl), [0.15](cad/deck_key_fit_0.15.stl) | 9 | both | PETG or PLA, solid. pill down, nub up; 2 each for P06, P08, P10, P11 and 1 for P09; the stir module's key ([deck-keys.md](deck-keys.md)) |
 
 
 ## 2. What to buy

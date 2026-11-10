@@ -1,5 +1,14 @@
 # Printing the corrosion setup on the A1 mini, in PLA
 
+> **Out of date for the deck parts since 2026-11-09.** The deck parts now have deck-key pockets
+> ([`../deck-keys.md`](../deck-keys.md)), and the tray is 2 mm taller. These plates were sliced before
+> that, so print the tray (plate 2) and the cup block, tube rack, tip waste and tip rack (plate 3) from
+> the [H2D plate](../h2d/README.md), or re-slice here:
+> - `make_plates.py` already knows the keys (`deck_key`, P19);
+> - the cup block's base is now 43 mm deep, so plate 3's layout needs a new spot for it.
+>
+> The lids, caps, carriers, shims, strips and bench cell haven't changed.
+
 On [#180](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/180) (2026-11-06) Ben asked
 for every printed part of this setup on the A1 mini's build plate, in PLA, split into batches if
 they don't all fit. They don't fit on one plate:

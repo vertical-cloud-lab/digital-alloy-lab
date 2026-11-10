@@ -21,6 +21,11 @@ and order from [`stirrers/BOM.md`](stirrers/BOM.md). That deck moves tip rack 2 
 the stirred stocks in a column at x ≈ 76, and keeps only DI water and acid in the 9-position holder.
 It changes §4's table, and adds a staging move to every protocol.
 
+**Deck keys** (2026-11-09): every printed deck part now has press-fit key pockets underneath, and
+keys that drop into the PandaDeck's slots, as on the stir modules. Making room for them made the tray
+2 mm taller (coupon face at z 22) and moved the tube rack's rows 8 mm back. See
+[`bom/deck-keys.md`](bom/deck-keys.md), and §4 below.
+
 **Which deck.** On 22 October Sterling put copper corrosion first for the CubXL
 ([byu-vcl#298](https://github.com/vertical-cloud-lab/byu-vcl/issues/298#issuecomment-6352253304)),
 so §4 lays out the copper deck. The aluminium deck uses the same printed parts. It differs only
@@ -37,6 +42,9 @@ in the stocks, the cups in use, station S4 and the tip waste.
 | Reference tip 1.5 mm above the metal | 3.0 mm, up in the bore | 22 % more oxygen at the spot and a more even current, for about 2 mV more iR at a 1 mA/cm² reversal |
 | Brass eyelets | 6 mm pins cut from 1/16 in brass rod (B12) | No 1.6 mm eyelet or rivet long enough for a 6 mm lid turned up |
 | Area from the O-ring's ID, 0.0661 cm² | Each spot's wetted area, measured from its attack ring | The squeezed ring wets 0.101–0.126 cm² |
+| Tray 19.5 mm tall, coupon face at deck z 20; then "give it 2 mm feet" | Tray 21.5 mm tall, coupon face at z 22, flat underside (2026-11-09) | The P75 pins are 16 mm long, so their tails ended 1 mm below the old tray. Feet would have lifted its key pockets off the keys |
+| Tape the parts down; pins or pill mounts later | Deck keys in every deck part, plus thin tape under the tray and the cup block | The keys put a part back in the same place. They don't hold it down, and the electrode cap's magnets pull on those two ([`bom/deck-keys.md`](bom/deck-keys.md)) |
+| Tube rack at y 20–54, tubes at y 28 and 46 | y 28–62, tubes at y 36 and 54 | The slot row at y 45 ran under the back row's tube tips |
 
 ## 1. Print
 
@@ -46,7 +54,8 @@ with PLA (2026-11-06).
 
 **On the H2D in PLA, all at once:** [`bom/h2d/`](bom/h2d/README.md) has every part the lab doesn't
 already have (no vial caps, tip rack, vial holder or stirrer prints) on one sliced plate: 28 pieces,
-11.4 h, with both magnet pauses set. Check the fits after it prints (2026-11-06).
+11.4 h, with both magnet pauses set. Check the fits after it prints (2026-11-06). Since 2026-11-09 the
+plate has the keyed parts and ten deck keys: 38 pieces, 12.3 h, 362 g.
 
 For every part ([`copper/cad/README.md`](copper/cad/README.md#printing-and-assembly)): PETG for
 anything that touches liquid, 0.12–0.16 mm layers, 100 % infill for the lids and the cap (four
@@ -59,7 +68,9 @@ parts come to about 0.48 kg.
    use. Pick the hole that holds a real tip, or a real tube, by its collar without play. Set
    `TIP["hole_d"]` or `TUBE["hole_d"]` in [`bom/cad/cad_build_parts.py`](bom/cad/cad_build_parts.py),
    rerun it, then print the racks. If the file for Ben's tip rack 1 exists, print a second copy of
-   it instead of P11: it already fits.
+   it instead of P11: it already fits. It is very likely Cubware's
+   [`TipRack.stl`](https://github.com/Ursa-Laboratories/Cubware/tree/352aa95/cubxl_plus/labware/tip_rack_holder),
+   which already has key pockets ([`bom/deck-keys.md`](bom/deck-keys.md#two-things-this-turned-up-about-bens-own-items)).
 3. **Print the rest.** STEP and STL links for each part are in
    [`bom/README.md` §1](bom/README.md#1-what-to-print).
 
@@ -68,7 +79,7 @@ parts come to about 0.48 kg.
 | P01 | Electrode cap | 2 | skirt down | — |
 | P02 | Electrode carrier | 3 | flange down | — |
 | P03 | Well lid v2, AS568-006 | 5 | bottom face down; no seam on the boss, which guides the cap | at z 5.6: two 4 × 2 mm magnets, same pole up |
-| P06 | Coupon tray | 1 | the pocket floors must come out flat: they set the coupon face at deck z 20 | — |
+| P06 | Coupon tray | 1 | the pocket floors must come out flat: they set the coupon face at deck z 22 | — |
 | P07 | Shims, 1 and 3 mm | 4 + 4 | | — |
 | P08 | Cup block: rinse 2, rinse 1, park | 1 | four walls around the bores | at z 44.6: six magnets, same pole up as the lids |
 | P09 | Tip waste cup | 1 | | — |
@@ -77,6 +88,7 @@ parts come to about 0.48 kg.
 | P14 | 9-position 20 mL holder (PANDA-BEAR's file) | 1 | only if the deck has no full holder yet | — |
 | P04, P05 | Well lids v2, AS568-008 and -010 | 1 each | as P03 | as P03 |
 | P15–P17 | Bench cell body, clamp and cover | 1 each | body floor down; leak-test it with DI water overnight | — |
+| P19 | Deck keys, 0.05 mm press (plus one 0.10 and one 0.15 to test the fit) | 7 (9 with P11) | pill down, nub up, solid | — |
 
 P04 and P05 are the copper calibration's larger wells, run on the CubXL. P15–P17 are the 1 cm²
 bench cell they are compared with
@@ -134,21 +146,23 @@ carriage.
 
 1. **Melt in the M3 heat-set inserts** (B13), two per station, at y ±14.
 2. **Fit the P75-B1 spring pins** (B07): one working-electrode pin up through each pocket floor,
-   and two per station under the lid's brass pins. That is 12 in all. *Found 2026-11-09:* they
-   are 16 mm long, not the CAD's 11 mm. With the tip 1 mm above the pocket floor, a WE pin's tail
-   ends 1 mm below the tray's underside, so give the tray 2 mm feet
-   ([`build-animation/parts-check.md`](build-animation/parts-check.md)).
-3. **Wire the pins** in the 4 × 3 mm channels underneath with 26 AWG silicone wire (B16): the
+   and two per station under the lid's brass pins. That is 12 in all. They are 16 mm long
+   ([`build-animation/parts-check.md`](build-animation/parts-check.md)), so the tray was made 2 mm
+   taller on 2026-11-09. A WE pin's tail now ends 1 mm above the deck, inside its bus channel.
+3. **Press the two deck keys (P19) into the pockets under the front edge,** triangle to triangle
+   ([`bom/deck-keys.md`](bom/deck-keys.md#fitting-them)). The tray's pockets are turned 180° from the
+   other parts', so its keys go in the other way round.
+4. **Wire the pins** in the 4 × 3 mm channels underneath with 26 AWG silicone wire (B16): the
    four working-electrode pins on one wire, the four reference pads on another, the four counter
    pads on a third. The cap is only ever on one station, so three wires serve all four. They leave
    at the tray's back edge, at x 222.5, where the JST-XH 4-pin plug goes (B18).
-4. **Run the shielded cable** (Belden 9534, 3 ft, B17) from the plug to the potentiostat: WE, RE,
+5. **Run the shielded cable** (Belden 9534, 3 ft, B17) from the plug to the potentiostat: WE, RE,
    CE and a spare. Connect the shield at the potentiostat's ground only.
 
 ### Loading a station
 
 Put the piece face up in its pocket, with shims (P07) under a thin piece so its face sits at deck
-z 20. Seat an AS568-006 O-ring (B01) in the lid's counterbore, put the lid on, and fit two
+z 22. Seat an AS568-006 O-ring (B01) in the lid's counterbore, put the lid on, and fit two
 M3 × 8 screws (B14), finger-tight with a hex key (about 30 mN·m). On the copper deck S4 holds a
 PTFE disc instead, a 6 mm slice of 3/4 in rod (B46), for the night's blanks.
 
@@ -178,29 +192,34 @@ while the pipette works at the tray. Tip rack 1 stays where it is.
 | Coupon tray (P06) | x 170–275, y 220–260; S1–S4 at x 185 / 210 / 235 / 260, y 240 | S1–S3 pieces; S4 the PTFE blank | four pieces |
 | 9-position 20 mL holder | x 318; vials at y 35 + 33k | y 35 spare (FeSO₄, non-sulfide nights only); 68 1 M trace-metal HNO₃; 101 ASW; 134 ASW + 10 mg/L S; 167 ASW + 0.1 mg/L S; 200 DI water; **233 and 266 empty** | 101 0.6 M, 134 0.06 M and 167 0.006 M NaCl; 200 DI water |
 | Cup block (P08) | cups at (30, 245), (60, 245), (90, 245) | rinse 2 (ASW), rinse 1 (DI), park | rinse (60) and park (90) |
-| Tube rack (P10) | x 170–266, y 20–54; tubes at x 176 + 12k, y 28 and 46 | one tube per well, plus the stock blanks | one tube per spot |
+| Tube rack (P10) | x 170–266, y 28–62; tubes at x 176 + 12k, y 36 and 54 | one tube per well, plus the stock blanks | one tube per spot |
 | Tip rack 1 | Ben's, unmoved: A1 (291.3, 89) | | |
-| Tip rack 2 (P11) | A1 (108, 89), A2 (99.5, 89) | | |
-| Tip waste (P09) | | (385, 150) | (335, 40) |
+| Tip rack 2 (P11, or a second Cubware rack) | A1 (266.75, 89), A2 (258.25, 89): one slot column left of rack 1, as on the stirrer deck | | |
+| Tip waste (P09) | | (385, 150) | (335, 60): its key needs a slot, so not (335, 40) |
 | Potentiostat | x 0–80, y 290–330, outside the working volume | | |
 
 The copper vials at y 233 and 266 stay empty because they sit under the bare pipette while the
 capper sets the cap on S4.
 
-1. **Tape the parts down** with double-sided tape: they have flat bottoms. Add pins or PANDA-BEAR
-   "pill" mounts once the slot mapping is pinned.
-2. **Pin the slot mapping:** jog the pipette over two PandaDeck slot centres. Then rerun
+1. **Key the parts in.** Press the deck keys (P19) into each part's pockets and drop the part's keys
+   into their slots ([`bom/deck-keys.md`](bom/deck-keys.md)). **Also tape the tray and the cup block
+   down** with thin double-sided tape (0.15 mm or less, clear of the pockets). The keys only locate a
+   part, and lifting the electrode cap pulls up 1.0–1.7 N on those two, more than tips them.
+2. **Teach every position, and pin the slot mapping:** jog the pipette over two PandaDeck slot
+   centres, and set `GRID_X0` and `GRID_Y0` in [`bom/cad/deck_keys.py`](bom/cad/deck_keys.py) if
+   they differ from X = 12.5 + 25n, Y = 45m. Then rerun
    [`copper/deck_cu.py`](copper/deck_cu.py) (or [`plot_deck_layout.py`](plot_deck_layout.py) for
    aluminium) with the real numbers. In their own geometry their tool-shadow checks pass 118 and
-   99 tool-down events with no collision.
+   99 tool-down events with no collision (rerun 2026-11-09 with the taller tray and the moved tube
+   rack).
 3. **Jog the decap height** to the top of the cap's disc, within about ±0.15 mm. That is tighter
    than vial caps need, because the lid's magnets hold the electrode cap down.
 4. **Open every tube's lid fully,** so it hangs over the rack's edge: front row forward, back row
    back. A lid standing at 90° reaches z 50, above the 43 mm the capper rides at over the rack
    during tip pickup.
 
-Heights to expect: coupon face z 20, lid top 26, boss top 30. With the cap seated its flange is at
-z 38 and the top of its disc, the magnet contact, at 42.
+Heights to expect: coupon face z 22, lid top 28, boss top 32. With the cap seated its flange is at
+z 40 and the top of its disc, the magnet contact, at 44. (All 2 mm higher than before 2026-11-09.)
 
 ## 5. Software and the first electrical checks
 

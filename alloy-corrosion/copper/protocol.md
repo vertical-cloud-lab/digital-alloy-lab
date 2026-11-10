@@ -59,7 +59,7 @@ changes.
 
 | Part | What | Why |
 | --- | --- | --- |
-| Tray | Stations S1–S3 at x 185 / 210 / 235, y 240 hold the pieces; S4 at x 260 holds a PTFE blank disk with the same lid. Coupon face at z 20, lid top at z 26 | S4 is the fixture and carry-over blank (§6) |
+| Tray | Stations S1–S3 at x 185 / 210 / 235, y 240 hold the pieces; S4 at x 260 holds a PTFE blank disk with the same lid. Coupon face at z 22, lid top at z 28 (2 mm higher since 2026-11-09: the tray grew for the 16 mm pins) | S4 is the fixture and carry-over blank (§6) |
 | Well | FKM O-ring AS568-006, ID 2.90 mm, cross-section 1.78 mm, squeezed 21 % in a 7.30 × 1.40 mm counterbore: **0.0661 cm² nominal, 0.101–0.126 cm² wetted**. An 8 mm bore above it holds 150 µL | The squeezed ring touches the metal only from r ≈ 1.8–2.0 mm, so the liquid wets 1.5–1.9 times the ID's area, including a thin crevice under the ring ([`cad/README.md`](cad/README.md)). Measure the real area from the attack ring after every test, and report current densities on that area. In [`sim_well_hf.py`](sim_well_hf.md) the crevice carries about 35 % of the anodic current at open circuit on Cu–Ni and 45 % on NAB |
 | Calibration wells only | AS568-008 (ID 4.47 mm, 0.157 cm², 10 mm bore) and -010 (ID 6.07 mm, 0.289 cm², 12 mm bore), each in its own lid, same FKM compound as the -006 | Three sizes against a bulk cell (§5) |
 | Cap seal | No O-ring. The cap's skirt slides over a Ø16 mm boss around each well with 0.12 mm radial clearance; two 4 × 2 mm magnets in the lid pull on two steel slugs in the skirt and hold it down at an estimated 1.6–2.3 N ([`cad/`](cad/README.md)) | This is the humidified lid c1-01 asks for: the headspace sits near 89 % RH, and water escapes through the gap at 1.6 µL/h, 1.1 % of the well in a 63 min spot (6.1 µL/h with no cap). The surface stays in contact with room air, so it stays air-saturated. A radial AS568-016 seal was the first design. Its pull-off force (2.3–85 N with tolerances and friction) is too close to what the electromagnet can pull on a 1 mm disc (about 23 N), so it is kept only as a fallback (`electrode_cap_oring`, which needs its 0.3 mm vent) |
@@ -90,7 +90,7 @@ Deck positions used below (all proposals, to be re-jogged):
 | --- | --- | --- |
 | Ben's 9-position 20 mL holder ([`9VialHolder20mL_TightFit.step`](https://github.com/vertical-cloud-lab/byu-vcl/blob/9e37bb1/modules/electromagnetic-capper/cad/9VialHolder20mL_TightFit.step), 33.0 mm pitch) | x 318, y 35 + 33k | y 35: spare (FeSO₄ conditioning, non-sulfide nights only). y 68: 1 M trace-metal HNO₃. y 101: ASW. y 134: ASW + 10 mg/L S. y 167: ASW + 0.1 mg/L S. y 200: DI water. **y 233 and 266 stay empty**: y 233 sits under the bare pipette while the capper sets the cap on S4 |
 | Rinse cups and park cup (4 mL vials) | (30, 245), (60, 245), (90, 245) | rinse 2: ASW; rinse 1: DI water; park: the reference's storage solution |
-| Tube rack, 2 × 8 open 0.5 mL tubes | x 176 + 12k, y 28 / 46 | one tube per well, plus the stock blanks |
+| Tube rack, 2 × 8 open 0.5 mL tubes | x 176 + 12k, y 36 / 54 (8 mm back since 2026-11-09, for the deck keys) | one tube per well, plus the stock blanks |
 | Tip racks | rack 1 Ben's, A1 (291.332, 89); rack 2 A1 (108, 89) | at least 17 tips a night |
 | Tip waste | (385, 150) | moved, because the full holder now covers (335, 40) |
 

@@ -2,9 +2,16 @@
 
 On [#180](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/180) (2026-11-06) Ben asked
 whether all the parts would print at once on the H2D. He left out what the lab already has: the vial
-caps, a tip rack, the stir modules and a vial rack. **Everything else fits on one H2D plate:** 28
+caps, a tip rack, the stir modules and a vial rack. **Everything else fits on one H2D plate:** 38
 pieces, laid out, checked and sliced by [`make_h2d_plate.py`](make_h2d_plate.py). **Nothing has been
 printed yet.** Times and grams are Bambu Studio's estimates.
+
+**Re-sliced 2026-11-09 with deck keys** ([`../deck-keys.md`](../deck-keys.md)), for Ben on #180:
+- the tray, cup block, tube rack and tip waste cup now have key pockets underneath;
+- the tray is 2 mm taller;
+- ten keys are on the plate: seven to fit, a spare, and one each of 0.10 and 0.15 mm to test the fit.
+
+It was 28 pieces, 11.4 h and 326 g.
 
 ![The plate, seen from above](plate.png)
 
@@ -12,15 +19,15 @@ printed yet.** Times and grams are Bambu Studio's estimates.
 | --- | --- |
 | **Print this** | [`h2d-corrosion-all.gcode.3mf`](h2d-corrosion-all.gcode.3mf), already sliced |
 | **To change something** | the Bambu Studio project [`h2d-corrosion-all.3mf`](h2d-corrosion-all.3mf) |
-| Pieces | 28 |
-| Time | **11.4 h** |
-| PLA | **326 g** (107 m) |
-| Pause 1 | before the z 5.8 layer, **3.7 h in**: 14 magnets, two in each of the 7 lids |
-| Pause 2 | before the z 44.8 layer, **9.5 h in**, with 1.9 h left: 6 magnets in the cup block |
+| Pieces | 38 |
+| Time | **12.3 h** |
+| PLA | **362 g** (120 m) |
+| Pause 1 | before the z 5.8 layer, **4.2 h in**: 14 magnets, two in each of the 7 lids |
+| Pause 2 | before the z 44.8 layer, **10.4 h in**, with 1.9 h left: 6 magnets in the cup block |
 | Nozzle | sliced for the right nozzle; the left one also works (checked) |
 
-**Start it in the morning.** The second pause comes 9.5 h in. Started at 7:30, the print reaches pause
-1 at about 11:15 and pause 2 at about 17:00, and ends at about 19:00. The printer waits at each pause
+**Start it in the morning.** The second pause comes 10.4 h in. Started at 7:00, the print reaches pause
+1 at about 11:15 and pause 2 at about 17:25, and ends at about 19:20. The printer waits at each pause
 until someone presses *Resume*.
 
 ## What's on the plate
@@ -41,6 +48,8 @@ until someone presses *Resume*.
 | P15 | Bench cell body | 1 | 100 % |
 | P16 | Bench cell clamp plate | 1 | 15 % |
 | P17 | Bench cell cover | 1 | 15 % |
+| P19 | Deck key, 0.05 mm press: 7 to fit and a spare | 8 | 100 % |
+| P19 | Deck keys, 0.10 and 0.15 mm press, to test the fit | 1 + 1 | 100 % |
 
 These are the BOM's quantities ([`../README.md` §1](../README.md#1-what-to-print)), and the same
 parts, orientations and infill as the A1 mini plates.
@@ -49,7 +58,7 @@ parts, orientations and infill as the A1 mini plates.
 
 | BOM | Part | Why |
 | --- | --- | --- |
-| P11 | Tip rack 2 × 15 | the lab has a tip rack |
+| P11 | Tip rack 2 × 15 (now keyed) | the lab has a tip rack. For a second one, Cubware's `TipRack.stl` is very likely Ben's rack 1 and is already keyed ([`../deck-keys.md`](../deck-keys.md#two-things-this-turned-up-about-bens-own-items)) |
 | P12 (tip) | Fit strip for the tip rack's holes | it only sizes P11's holes |
 | P13 | Magnetic vial caps (8) | the lab has vial caps |
 | P14 | 9-position vial holder | the lab has a vial rack |
@@ -60,7 +69,7 @@ parts, orientations and infill as the A1 mini plates.
 
 - The H2D's bed is 350 × 320 mm. Each nozzle reaches 325 mm of the width: the left nozzle x 0–325,
   the right one x 25–350.
-- The parts' footprints add up to 326 cm², about a third of the 300 × 320 mm that both nozzles reach.
+- The parts' footprints add up to 362 cm², under 40 % of the 300 × 320 mm that both nozzles reach.
 - Every part sits at least 5 mm inside the area both nozzles reach, so the plate prints from either
   nozzle. Every part is also clear of the H2D's nozzle-wrap detection zone at the back
   (x 145–256, y 310–320).
@@ -77,7 +86,7 @@ behind them, in front of the taller bench cell body, for the second pause.
 2. When it asks which spool to use, pick a PLA on the **right nozzle's** side.
 3. **If your PLA is on the left side,** open the project [`h2d-corrosion-all.3mf`](h2d-corrosion-all.3mf)
    instead, set the filament to the left nozzle, and slice again. I sliced it that way too, as a
-   check: 11.35 h, the same 326 g, both pauses in place, and every extrusion inside the left
+   check: 12.3 h, the same 362 g, both pauses in place, and every extrusion inside the left
    nozzle's reach.
 
 It was sliced in Bambu Studio 02.09.01.70 with:
@@ -123,7 +132,14 @@ fits afterwards, and reprint only a part that fails.
 5. **The lid's counterbore ceiling,** where the O-ring seals, is a short bridge. If it came out rough,
    face it flat ([`../../build-guide.md` §2](../../build-guide.md#the-well-lids-p03p05)).
 
-To check the fits before committing 11 hours, delete everything in the project except one P03 lid,
+6. **The deck keys.** Press a 0.05 mm key (one dimple) into one of the tray's pockets. It should go in
+   with thumb pressure and stay in when the tray is lifted.
+   - If it is loose, try the 0.10 (two dimples) and the 0.15 (three dimples).
+   - Then reprint all the keys at the size that fits: set `KEY_PRESS` in
+     [`../cad/deck_keys.py`](../cad/deck_keys.py) and rerun it. A set of keys takes about 20 minutes.
+   - The 0.05 mm size was picked in PETG on the A1 mini, not in PLA on the H2D.
+
+To check the fits before committing 12 hours, delete everything in the project except one P03 lid,
 one cap, one carrier and the tube strip, and print just those first.
 
 The rest of the post-processing and assembly is in
@@ -143,7 +159,10 @@ explains each.
   body.
 - **0.20 mm layers,** so that the lid's counterbore, its neck and both pause heights fall on layer
   boundaries.
-- **The tube rack prints upside down,** with the hole plate on the bed, like the fit strip.
+- **The tube rack prints upside down,** with the hole plate on the bed, like the fit strip. Its key
+  pockets are then open at the top of the print. The other parts' pockets are on the bed, under a
+  bridged roof; the sliced G-code shows each one open at mid-depth and roofed above.
+- **The deck keys print solid,** pill down and nub up, like the four-wall keys of byu-vcl's fit test.
 - **Scarf seams on the lids and caps,** because the cap slides on the boss. Feel the boss after
   printing, and sand off any bump.
 

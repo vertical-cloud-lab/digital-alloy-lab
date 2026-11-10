@@ -220,5 +220,41 @@
   "tube_rack_2x8": 2,
   "tip_waste_cup": 1,
   "tip_rack_2x15": 2
+ },
+ "hold_down": {
+  "cap_pull_up_N": [
+   1.03,
+   1.72
+  ],
+  "assumptions": {
+   "pins_push_down_N": 0.59,
+   "pla_g_cm3": 1.24,
+   "shell_mm": 0.8
+  },
+  "coupon_tray": {
+   "loads_g": {
+    "tray (15 % infill)": 30.9,
+    "4 lids, 100 %, with magnets and pins": 26.9,
+    "3 Cu-Ni coupons, 6 mm": 62.9,
+    "PTFE blank": 3.8,
+    "8 M3 x 8 screws and 8 inserts": 9.6,
+    "12 P75 pins and the wires": 3.2
+   },
+   "weight_N": 1.35,
+   "tips_at_x_185_above_N": 0.79,
+   "tips_at_x_210_above_N": 1.09,
+   "holds_without_help": false
+  },
+  "cup_block_3": {
+   "loads_g": {
+    "cup block (100 %)": 92.9,
+    "six magnets": 1.1,
+    "two rinse cups filled": 3.9
+   },
+   "weight_N": 0.96,
+   "tips_at_x_90_above_N": 0.58,
+   "tips_at_x_60_above_N": 0.96,
+   "holds_without_help": false
+  }
  }
 }

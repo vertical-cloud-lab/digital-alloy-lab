@@ -102,13 +102,14 @@ hole edge, not a curved face, then sets the area. An FEA of the squeeze would na
 | `ag_agcl_ref` | leak-free Ag/AgCl | Ø2.0, tip 3.0 mm above the metal, top 13.6 mm above the skirt underside: **16.6 mm long overall**. Most catalogue leak-free references are longer, so this is a custom length; ask the vendor when quoting (`../bom-delta.csv`) |
 | `pt_coil` | Pt, 0.25 mm | Five turns at r 2.625, 2.4–4.0 mm above the metal, as in `sim_well.py` |
 | `cap_pogo_pins` | spring pins | Ø1.02 barrel, 1.0 mm stroke out when free; ≤ 0.5 N each at the seated stroke |
-| `coupon_tray` | PETG | 105 × 40 × 19.5 mm, deck x 170–275, y 220–260. Four 20.6 mm square pockets, floor at deck z 14.0, corner reliefs, pry slots. A WE spring pin up through each floor. Ø4.0 × 6 holes for M3 heat-set inserts at y ±14. Pad spring pins at (±10, 15). Bus channels 4 × 3 mm in the underside, out at the back edge at x 222.5 |
+| `coupon_tray` | PETG | 105 × 40 × 21.5 mm, deck x 170–275, y 220–260 (2 mm taller since 2026-11-09, for the 16 mm P75 pins). Four 20.6 mm square pockets, floor at deck z 16.0, corner reliefs, pry slots. A WE spring pin up through each floor. Ø4.0 × 6 holes for M3 heat-set inserts at y ±14. Pad spring pins at (±10, 15). Bus channels 4 × 3 mm in the underside, 5 mm deep under each pad pin, out at the back edge at x 222.5. Two deck-key pockets under the front edge, at (187.5, 225) and (262.5, 225) ([`../../bom/deck-keys.md`](../../bom/deck-keys.md)) |
 | `ptfe_blank` | PTFE | Ø20 × 6 disc for S4 |
-| `shim_1mm`, `shim_3mm` | PETG | Under thinner pieces, so the face stays at deck z 20 |
+| `shim_1mm`, `shim_3mm` | PETG | Under thinner pieces, so the face stays at deck z 22 |
 
 **Heights, for placing the parts** (all in [`cad_parts.json`](cad_parts.json)): coupon face deck
-z 20; lid top 26; boss top 30; cap seated: skirt underside 26, flange 38, disc top (magnet contact)
-42. Carried, the cap's lowest points are the carrier legs at 35.8 mm below the carriage, the coil
+z 22; lid top 28; boss top 32; cap seated: skirt underside 28, flange 40, disc top (magnet contact)
+44. All are 2 mm higher than before 2026-11-09, when the tray grew for the 16 mm pins. The renders
+and the animation still show the old tray. Carried, the cap's lowest points are the carrier legs at 35.8 mm below the carriage, the coil
 at 35.7 and the reference tip at 35.0, with the magnet face 16 below the carriage.
 `../deck_cu.py` uses 35.0, so the copper deck check should add 0.8 mm. Its margin is 14.5 mm.
 

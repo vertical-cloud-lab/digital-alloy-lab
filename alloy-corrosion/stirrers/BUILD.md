@@ -147,7 +147,7 @@ says. Tip rack 1 stays where it is. Then, from the back of the deck to the front
 | **Tip rack 1** (Ben's) | unmoved: A1 (291.332, 89), A2 (282.832, 89) | |
 | **Tip rack 2** (P11) | **A1 (266.332, 89), A2 (257.832, 89)**: one slot column (25 mm) left of rack 1, 5 mm gap | was planned at x 99.5–108 |
 | 9-position holder | x 318: **DI water at y 35, 1 M HNO₃ at y 68**; the rest empty | from y 101 back, drawing from it would put the capper on tip rack 2 |
-| Tube rack (P10) | x 170–266, y 20–54 | open each lid fully, hanging over the edge |
+| Tube rack (P10) | x 170–266, y 28–62 (8 mm back since 2026-11-09, for its deck keys) | open each lid fully, hanging over the edge |
 | Tip waste (P09) | (385, 150) | |
 
 **What goes in the stirred vials** (20 mL VOA vials with magnetic caps, a 15 × 6 mm bar and the
@@ -169,8 +169,10 @@ the draw height on a filled vial so the tip is well under the surface and well a
 path the head or its cables sweep, to the hub at the Uno. A's goes forward from y 23. B, C and D's
 go left from x 51.5.
 
-**Tape the flat-bottomed corrosion parts down** until the slot mapping is pinned, as
-[`../build-guide.md` §4](../build-guide.md#4-on-the-deck) says. The stirrers' keys locate them.
+**Key the corrosion parts in** (since 2026-11-09 they have the stirrers' deck keys:
+[`../bom/deck-keys.md`](../bom/deck-keys.md)), and tape the tray and the cup block down as well with thin
+tape, as [`../build-guide.md` §4](../build-guide.md#4-on-the-deck) says. Keys only locate a part, and the
+electrode cap's magnets pull up on those two.
 
 ## 7. Teach and check
 
