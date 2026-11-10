@@ -7,9 +7,11 @@ of single tracks to check the Thermo-Calc AM Module.
 
 **Plan in brief**
 
-1. **One pilot run first.** Carl and Josh print 72 single tracks on the plate's four removable panels: a 4 × 4
-   power-speed grid, repeated on each panel, plus two control tracks per panel. Carl times every step from job prep
-   to SEM.
+1. **One pilot run first.** Carl and Josh print 72 single tracks on the plate's four removable panels: 64
+   power-speed settings from a scrambled Sobol sequence, one 16-point block per panel that covers the whole window,
+   plus two control tracks per panel. Tracks are 10 mm long at 2 mm pitch and sectioned at mid-length. Carl times
+   every step from job prep to SEM. The campaign then picks each run's settings by batch Bayesian optimization
+   ([`m2-track-design/`](m2-track-design/README.md) has the reasoning, the Eagar–Tsai checks and the Edison reports).
 2. **Running many parameter sets in one build looks feasible on the M2** and seems to be the intended workflow:
    the Concept Laser build processor assigns parameters per part. What still needs checking on BYU's install is how
    to make each track come out as exactly one scan vector. A dry run in the software settles it (see
@@ -59,7 +61,10 @@ the predictions *before* the cross-sections are measured.
   processor. The build processor "automatically transfers the build strategy for each part" to the WRX machine
   software and has "customizable slice parameters per part." The M2 is on its compatibility list
   ([Materialise](https://materialise.com/en/industrial/software/build-processor/concept-laser)). So a job with 72
-  tracks, each its own part carrying one of 17 parameter sets, is what the software is built for, not a hack.
+  tracks, each its own part carrying one of 65 parameter sets (64 Sobol settings plus the control), is what the
+  software is built for, not a hack. With Sobol settings almost every track has its own set, so it matters how sets
+  are entered: if they can be imported from a file or copied and edited quickly, 65 is fine; if each takes a few
+  minutes in the GUI, budget that in A1.
 - Concept Laser sold the machine software in tiers. The lighter **CL WRX Control** tier exposes **laser power, scan speed, hatch
   ("trace") spacing, spot size, and contour offset**, which is everything a single-track sweep needs. Editing every
   parameter needs a separate, time-limited **CL WRX Parameter** licence and Concept Laser training. Sources are
@@ -87,8 +92,11 @@ the predictions *before* the cross-sections are measured.
 
 - Is the build processor licensed on a BYU PC, and which WRX version is the machine on?
 - Can we copy a parameter set and change power and speed at our licence tier?
-- Is there a limit on parameter sets per job? If so, split the run into several short jobs, run back to back
-  without breaking the inert atmosphere.
+- Is there a limit on parameter sets per job, and can sets be imported from a file? With Sobol settings a run
+  needs about 65. If there is a limit, split the run into several short jobs, run back to back without breaking
+  the inert atmosphere.
+- Is skywriting (or an equivalent mark/laser-on delay tuning) on? Without it the beam speeds up and slows down
+  with the laser on, and Eagar–Tsai puts the first 0.3 mm of a 2 m/s track up to 1.9× deeper.
 - Can a job expose a layer without recoating? That would allow bare-substrate tracks (see §4).
 - When was laser power last calibrated? The repo notes the M2 had been down for about two years with "a history of
   frequent problems" ([`alloy-workflow-review.md`](../alloy-workflow-review.md)).
@@ -150,7 +158,7 @@ choice is how many panels a run uses up.
 
 | Option | How | Panels used | Notes |
 | --- | --- | --- | --- |
-| **A. One replicate per panel** (the pilot) | Each of the four panels carries one row of 18 tracks (16 grid + 2 controls) | 4 per run, about 28 for the pilot and six campaign runs | Every run checks whether position on the plate matters, but this uses the most panels and shop time |
+| **A. One Sobol block per panel** (the pilot) | Each of the four panels carries one row of 18 tracks (16 Sobol settings + 2 controls) | 4 per run, about 28 for the pilot and six campaign runs | Every run checks whether position on the plate matters, but this uses the most panels and shop time |
 | **B. A whole run on one or two panels** (the campaign, if the pilot allows) | One panel holds all 72 tracks in four rows ([§4](#4-pilot-run-carl-and-josh)); the other panels stay in as blanks | 1–2 per run, about 10–16 including the pilot's four | A quarter to half the shop time of A. Plate position is then checked only in the pilot, so choose B only if the pilot shows no position effect |
 | **C. No insert plate** (fallback) | Print on a normal plate and cut the region out, or put tracks on printed pedestals that can be cut off | Whole-plate resurfacing each run (mill or surface grinder) | Pedestals add hours of build time, and the plate gets thinner every time |
 
@@ -206,38 +214,58 @@ The goal is to get one run all the way from job file to measured cross-sections,
 pilot doubles as a machine health check.
 
 **Layout (scaled from the photo; adjust once the panels are measured).** Each panel carries **one row of 18
-parallel tracks across its middle**, 8 mm long at 2 mm pitch, in two groups of nine with a 10 mm gap between the
+parallel tracks across its middle**, **10 mm long at 2 mm pitch**, in two groups of nine with a 10 mm gap between the
 groups. Every track's mid-length lies on one line, the target plane, so one strip of the panel holds all 18 sections
 ([§3](#cutting-without-wire-edm)) and each group of nine becomes one mount. The row is about 42 mm wide, well clear
 of the panel's edges and screws. Four panels give **72 tracks per run**. A panel has room for four such rows 16 mm
 apart, which is how option B puts a whole run on one panel.
 
-**Parameters.** Use a **4 × 4 grid of power and speed** that straddles the predicted keyhole and lack-of-fusion/balling
-boundaries, plus **2 control tracks per panel** at the machine's standard stainless parameter set. Xavier can pick the
-grid from the AM Module printability map. As a starting point, for a 400 W M2:
+Why these numbers (details, Eagar–Tsai runs and Edison reports in [`m2-track-design/`](m2-track-design/README.md)):
 
-| | 250 mm/s | 500 mm/s | 1000 mm/s | 2000 mm/s |
-| --- | --- | --- | --- | --- |
-| **100 W** | ✓ | ✓ | ✓ | ✓ |
-| **200 W** | ✓ | ✓ | ✓ | ✓ |
-| **300 W** | ✓ | ✓ | ✓ | ✓ |
-| **375 W** | ✓ | ✓ | ✓ | ✓ |
+- **Length: discard the first and last 2 mm of every track.** In Eagar–Tsai for 316L, a conduction-mode pool is
+  within 1% of its steady-state depth at most 0.37 mm after the start and up to 0.17 mm before the end, over
+  100–375 W and 0.25–2 m/s. That model leaves out keyhole start-up, the galvo's speed ramp if skywriting is off
+  (which it puts at up to 1.9× the steady depth over the first 0.3 mm at 2 m/s), the laser's on/off timing and
+  the end crater, so the discard is set well beyond it. A 10 mm track then keeps 6 mm of steady track around the
+  target plane: room for ±1 mm of error in finding the plane and for a second plane. 8 mm is the minimum for one
+  plane.
+- **Pitch: powder sets it, not heat.** Eagar–Tsai puts at most 7 K on a neighbour 2 mm away (375 W, 0.25 m/s),
+  which changes its depth by under 0.3%. But each track strips powder from a band beside it (denudation) and
+  throws spatter. 2 mm keeps neighbouring bands apart even for the widest tracks. If the pilot's top views (C1)
+  show bands narrower than about 0.5 mm per side, the campaign can go to 1.5 mm and put 12 tracks in a mount
+  instead of 9.
+- **Section plane: mid-length,** found from the track ends visible on the top view. On panel A in the pilot,
+  after imaging, grind about 1.5 mm further and image a second plane. The difference between the two planes is the
+  along-track scatter, which the model comparison needs as its noise level.
 
-That spans P/v from 0.05 to 1.5 J/mm, from likely balling up to deep keyholes. On a 200 W machine, scale it down.
+**Parameters.** Use **64 power-speed settings from a scrambled Sobol sequence**, not a grid, plus **2 control
+tracks per panel** at the machine's standard stainless parameter set. The window is the old grid's box for a 400 W
+M2, **100–375 W and 250–2000 mm/s**, with speed on a log scale: P/v from 0.05 to 1.5 J/mm, from likely balling up
+to deep keyholes. Xavier should check the window against the AM Module printability map first; on a 200 W machine,
+lower the powers. [`m2-track-design/design.py`](m2-track-design/design.py) generates the settings
+([list](m2-track-design/out/pilot_sobol_sets.csv), [figure](m2-track-design/out/m2-sobol-vs-grid.png)).
 
-- **Each panel carries one complete replicate** (16 grid tracks and 2 controls) in **randomized positions**. Four
-  panels give four replicates, and differences between panel positions on the plate become measurable instead of
-  confounded with the parameters. The controls on all four panels give a run-to-run and position check that later
-  feeds the transfer question in the abstract. If the pilot shows no systematic difference between panels, the
-  campaign can put a whole run on one or two panels (option B in [§3](#refreshing-the-panels-pick-one-with-josh-before-the-shop-work)).
+- **Each panel carries one 16-point block** of the sequence (points 0–15 on panel A, 16–31 on B, and so on) and 2
+  controls, in **randomized positions**. Each block on its own covers the whole window evenly, so panel A, which
+  is sectioned first, already gives a usable map. All four blocks together give 64 distinct powers and speeds,
+  where the grid had 4 of each. The controls on all four panels measure track-to-track noise and any difference
+  between panel positions on the plate, which later feeds the transfer question in the abstract. If the pilot
+  shows no systematic difference between panels, the campaign can put a whole run on one or two panels (option B
+  in [§3](#refreshing-the-panels-pick-one-with-josh-before-the-shop-work)).
+- **The campaign uses batch Bayesian optimization, one run per batch.** Each run is 48 settings chosen by batch BO,
+  the next 16-point Sobol block, and the 8 controls. BO fits a Gaussian process to the AM Module's error (measured
+  minus predicted width and depth) and picks the settings that most reduce its uncertainty, weighted toward the
+  regime boundaries. The Sobol block in each run is an unbiased hold-out for validating the model, which the
+  BO-chosen points are not. If the campaign shrinks to one or two runs, skip BO and keep drawing Sobol blocks.
 - **Powder layer:** use one layer at the standard parameter set's layer thickness.
 - **Optional add-on, if a job can expose without recoating:** before the powder layer goes down, run a short
-  bare-substrate job as a second row on one panel. The panels have room for it, so all four powder replicates stay.
+  bare-substrate job as a second row on one panel. The panels have room for it, so all four powder blocks stay.
   Bare-plate tracks remove the powder-layer uncertainty and are the cleanest data for calibrating absorptivity.
   [NIST's AM Bench](https://www.nist.gov/ambench) used bare-plate laser tracks for model validation in the same way.
 - **Scan in the same direction on every track** and note how it sits relative to the gas flow. Expose from the
   downstream (gas outlet) side toward the inlet, so spatter lands on finished tracks rather than on fresh powder.
-- **Commit the AM Module predictions for all 17 parameter sets** (16 grid plus control) **before** the print.
+- **Commit the AM Module predictions for all 65 parameter sets** (64 Sobol settings plus the control) **before**
+  the print.
 
 **Processing order.** Section **panel A first, all the way through SEM**, to catch problems early: track mapping,
 etch, SEM charging. Then do B to D. The timing log then shows both a first-time pass and a repeat pass.
@@ -286,12 +314,12 @@ This is provisional, and every date after the pilot gets re-planned from the tim
 | Week of | What | Gate |
 | --- | --- | --- |
 | **Nov 9** | Kickoff with Josh (and Nathan C. if possible): confirm machine status, software and licences, powder grade on hand, and that the insert plate exists. Carl completes M2 and powder safety training. Xavier sets up the AM Module for the stainless grade. Book SEM time for the week of Nov 30. | Machine is running and the plate is located |
-| **Nov 16** | Make or check 8 panels (4 plus 4 spares; 1–2 days of shop time). Build the job file and dry-run it in the software (one vector per track; export the map). Check laser power. Commit the AM Module predictions for the pilot grid. | Dry run passes |
+| **Nov 16** | Make or check 8 panels (4 plus 4 spares; 1–2 days of shop time). Build the job file and dry-run it in the software (one vector per track; export the map). Check laser power. Commit the AM Module predictions for the pilot's 65 settings. | Dry run passes |
 | **Nov 23** (Thanksgiving Thu 11/26) | **Pilot print on Mon 11/23 or Tue 11/24** if prep is done; otherwise the first slot the next week. Section panel A right away. | 72 tracks printed and mapped |
 | **Nov 30** | Metallography on panels A–D. SEM session. | Cross-sections are measurable |
 | **Dec 7** | Measurements; compare with the predictions. **Pilot write-up**: timing log, problems found, campaign size. Go/no-go with Sterling by Fri Dec 11. | Go/no-go |
-| Dec 14 – early Jan | Finals and holidays, light work: make the campaign's panels, run AM Module predictions for the campaign grid, automate the melt-pool measurement. | — |
-| **Jan 11 – Feb 19** | **Campaign, about 1 run a week.** Runs 1–2 fill out the power-speed grid (and a second condition: bare substrate or a second layer thickness). Runs 3–5 refine the regime boundaries and spots where model and data disagree, chosen by Bayesian optimization or active learning with the AM Module as prior; each run is one batch. Run 6 is a buffer or repeats. | Weekly check-in |
+| Dec 14 – early Jan | Finals and holidays, light work: make the campaign's panels, set up the batch-BO loop and run AM Module predictions over the window, automate the melt-pool measurement. | — |
+| **Jan 11 – Feb 19** | **Campaign, about 1 run a week.** Each run is one batch-BO round: 48 settings where the AM Module's error is most uncertain (regime boundaries first), 16 from the next Sobol block as a hold-out, and 8 controls. Runs 1–2 can add a second condition (bare substrate or a second layer thickness). Run 6 is a buffer or repeats. | Weekly check-in |
 | **Feb 22 – Mar 5** | Calibrate on part of the tracks and validate on the held-out rest; parity plots; measured-vs-predicted printability map; talk figures. | — |
 | **Mar 14–18** | TMS 2027, Orlando | — |
 
@@ -306,7 +334,7 @@ After the pilot, compute:
 
 | Scope | What it covers | Tracks | Runs at 72 per run |
 | --- | --- | --- | --- |
-| **Minimum (TMS-ready)** | One layer thickness; about 6 × 6 power-speed grid × 3–4 replicates; AM Module calibration and validation | ~110–150 plus controls | **pilot + 2–3** |
+| **Minimum (TMS-ready)** | One layer thickness; 2–3 Sobol blocks of 64 plus BO points, with 8 controls per run; AM Module calibration and validation | ~110–150 plus controls | **pilot + 2–3** |
 | **Standard** | Adds a second condition (bare substrate or a second layer thickness) and 2 runs of boundary refinement | ~300–400 | **pilot + 5–6** |
 | **Extended** | Adds spot size or focus offset (if the M2 can adjust it), then small density cubes on the same panels | ~500+ | **pilot + 7–9** |
 
