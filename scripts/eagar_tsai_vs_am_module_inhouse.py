@@ -476,7 +476,8 @@ def write_outputs(res: dict, out: pathlib.Path) -> dict:
             g = V["grid"]
             # CSVs: grid points at the inferred A and every 0.05; boundary absorptivities
             keep = g[(g.A == round(R["A_inf"], 4)) | (np.isclose((g.A * 100) % 5, 0) & (g.A >= 0.1))]
-            keep.round(2).to_csv(out / f"{key}-eagar-tsai-grid-{slug}.csv", index=False)
+            keep.round({c: 2 for c in ("W_um", "D_um", "L_um", "Dh_um", "T_peak_K")}).to_csv(
+                out / f"{key}-eagar-tsai-grid-{slug}.csv", index=False)
             V["aeff"].to_csv(out / f"{key}-eagar-tsai-boundary-absorptivity-{slug}.csv", index=False,
                              float_format="%.4f")
             # agreement vs A

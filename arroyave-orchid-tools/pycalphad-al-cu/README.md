@@ -1,9 +1,20 @@
 # pycalphad with open databases vs Thermo-Calc and experiment: Al and Cu alloys (issue #235)
 
-Our own Thermo-Calc results for the Genesis Mission proposal are in the private repo, so the Thermo-Calc column below
-holds numbers **published in the literature**: TCAL/TCAl, TCCU, or the AM module. A blank Thermo-Calc cell means the
-literature search found no number for that quantity; nothing was estimated or read off a plot. To compare against our
-private results, run the script and add the private numbers as another column.
+The Thermo-Calc column below holds numbers **published in the literature**: TCAL/TCAl, TCCU, or the AM module. Our
+in-house Thermo-Calc results are the AM-module maps that Thermo-Calc ran for us (compared with eagar-tsai in
+[`../eagar-tsai/`](../eagar-tsai/README.md#comparing-with-our-in-house-thermo-calc-am-module-results)). No in-house
+Thermo-Calc equilibrium or Scheil numbers exist in the repo or its branches yet; the BYU desktop test plan
+(`thermocalc-desktop-initial-tests.md`, branch `copilot/can-calphad-thermocalc-run-high-throughput`) has the TC-Python
+scripts but no results. A blank Thermo-Calc cell means the literature search found no number for that quantity;
+nothing was estimated or read off a plot. When in-house numbers exist, run the script and add them as another column.
+
+For the two alloys in the AM-module runs, [`scripts/am_module_alloys_mc_al.py`](scripts/am_module_alloys_mc_al.py)
+gives the mc_al liquidus and solidus ([csv](data/am_module_alloys_mc_al.csv)):
+
+| Alloy (wt %) | Liquidus | Solidus | Primary phase |
+|---|---|---|---|
+| AlSi10Mg as sent to Thermo-Calc (Al 89.675, Si 10.0, Mg 0.325) | 868.6 K (595.4 °C) | 842.7 K (569.5 °C) | (Al) |
+| BYU AA1100 + Si + AlSi10Mg blend (Al 75.56, Si 24.30, Mg 0.14) | 1019.3 K (746.2 °C) | 846.7 K (573.6 °C) | Si; (Al) joins at 850.2 K |
 
 ## Methods
 - **Software:** pycalphad 0.11.2, scheil 0.3.0, Python 3.12.3, numpy 2.5.4, pandas 3.1.1, matplotlib 3.11.2. Pressure
@@ -111,7 +122,7 @@ have a reference value. Temperatures are in °C.
   - TCAL7 values exist for a 0.8 Mn AlSi10MnMg die-casting alloy (doi:10.1007/s40962-023-01018-5): (Al) start at
     about 590 °C and eutectic at about 570–574 °C. It is a different alloy, so it isn't used.
   - **No published Thermo-Calc liquidus or solidus was found for standard AlSi10Mg, for nickel-aluminium bronze or
-    Cu–Ni, or for the Al–Zr liquidus.** That is exactly where our private Thermo-Calc results would add the most.
+    Cu–Ni, or for the Al–Zr liquidus.** That is exactly where our own Thermo-Calc runs would add the most.
 - **Experimental and handbook values.** ORCHID's values are machine-extracted, and the Al–Si and Al-rich Al–Cu
   eutectic records are not accepted ones. Handbook values cover a specification range. A 0.28 wt% Al–Zr solubility
   quoted in the literature couldn't be traced to a source, so it isn't used.

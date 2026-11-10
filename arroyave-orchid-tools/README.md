@@ -25,8 +25,19 @@ or example run.
 
 1. **eagar-tsai and the Thermo-Calc AM module**, in [`eagar-tsai/`](eagar-tsai/).
    - 101 of 102 tests pass; the 3D plot test needs OpenGL.
-   - Thermo-Calc's AM-module examples are behind a login, and our own results are private. So eagar-tsai was checked
-     against what an AM-module printability map is meant to predict: measured AlSi10Mg single tracks
+   - **Against our in-house AM-module maps** (Thermo-Calc's runs for us, stock AlSi10Mg and the BYU blend, on the
+     `consolidation-2` branch), with the same beam, layer, hatch and preheat, and the absorptivity read off the AM
+     module's own melt-pool renders (0.31 and 0.38):
+     - **Lack of fusion: good agreement.** The AM module's own D/t and Dh/t tests, applied to eagar-tsai's pools,
+       give the same class at 37 of 43 AlSi10Mg points. eagar-tsai's hatch-overlap line sits within 20 W of the AM
+       module's from 800 to 2100 mm/s. The blend fits best with the pool edge at the liquidus: 20 of 22 points.
+     - **Keyholing: no agreement.** The AM module calls keyholes at 2–4× the power at which eagar-tsai's pools reach
+       W/D = 2.5 or Al's boiling point. eagar-tsai's default classifier calls 55 of 58 AlSi10Mg points keyhole,
+       including all 31 the AM module calls defect-free.
+     - **Keyhole-mode pools are out of reach.** The AM module's 375 W / 400 mm/s pool is 349 µm deep and 1.47 mm long;
+       eagar-tsai reaches neither at any absorptivity up to 1.
+     - So eagar-tsai can stand in for the AM module on the lack-of-fusion side of a map, but not for keyholing.
+   - eagar-tsai was also checked against what a printability map is meant to predict: measured AlSi10Mg single tracks
      ([arXiv:2507.23422](https://arxiv.org/abs/2507.23422)), using that study's calibrated absorptivity.
    - With its default criteria, only 9 of 420 points come out defect-free. It flags keyholing at 78 points where the
      measured tracks weren't keyholes, and its pools never get deeper than D/W = 0.48, against the 0.75 the study
@@ -34,7 +45,9 @@ or example run.
    - A Si-enriched AlSi10Mg moves its pool by about 2 µm.
    - It is usable for Al only after refitting its thresholds to our own cross-sections, much as the AM module's own
      AlSi10Mg example needed its absorptivity scaled by 1.8.
-   - `scripts/eagar_tsai_vs_am_module.py private` runs it on our AM-module export. The Linux-wheel and unit problems
+   - `scripts/eagar_tsai_vs_am_module_inhouse.py` reruns the AM-module comparison in 23 s, and
+     `scripts/eagar_tsai_vs_am_module.py private` takes an AM-module CSV export if Thermo-Calc can send one. The
+     Linux-wheel and unit problems
      from Xavier's sweep are in
      [`../edison-trajectories/eagar-tsai-alsi10mg-inputs/sobol-check/`](../edison-trajectories/eagar-tsai-alsi10mg-inputs/sobol-check/).
 2. **pycalphad with open databases compared with published Thermo-Calc numbers**, in [`pycalphad-al-cu/`](pycalphad-al-cu/).
@@ -50,7 +63,8 @@ or example run.
        which agree with TCAL7 and experiment (660.6–660.9 vs 660.85 °C).
      - The open Cu database misses the C63000 bronze liquidus by +70 K.
    - **Published Thermo-Calc numbers are scarce:** none were found for the AlSi10Mg liquidus/solidus, nickel-aluminium
-     bronze, or Cu–Ni. That is exactly where our private Thermo-Calc results add the most.
+     bronze, or Cu–Ni. That is exactly where our own Thermo-Calc runs would add the most. There are no in-house
+     Thermo-Calc equilibrium or Scheil numbers in the repo yet; the in-house results are the AM-module maps above.
 3. **ORCHID**, in [`orchid/`](orchid/).
    - Every repo installs and its shipped tests pass. Every headline number re-run reproduced; for example, the SGTE
      Cu–Zr one-shot recall came out at 0.722/0.728 against the README's 0.72/0.73.
@@ -115,7 +129,7 @@ Outcome codes:
 | [orchid-data](https://github.com/orchid-calphad/orchid-data) | ORCHID v2026.10 data (CC BY 4.0) | PASS | all shipped checks and 20 tests pass. DATASET_CARD counts are stale (72,359 vs 66,551 accepted). Al/Cu coverage in `orchid/data/al-cu-coverage.csv` | [orchid](orchid/README.md) |
 | [orchid-bench](https://github.com/orchid-calphad/orchid-bench) | benchmark for extracting thermodynamic data from documents | PARTIAL | scorer, oracle and results reproduce exactly. The OCR route needs Tesseract; the AI/raster/Camelot routes need a private pipeline. No dependency file | [orchid](orchid/README.md) |
 | [orchid-project.org](https://github.com/orchid-calphad/orchid-project.org) | website, build tools, open TDB bundle | PASS (tests) / PARTIAL (builds) | 46/46 test files pass with sibling checkouts. Several generated files are stale, and 5 builders need unpublished inputs | [orchid](orchid/README.md) |
-| [eagar-tsai](https://github.com/ArroyaveLab/eagar-tsai) | Eagar–Tsai melt-pool model and printability maps | PASS | 101/102 tests (the 3D plot test needs OpenGL). Against measured AlSi10Mg tracks, its default criteria leave 9 of 420 points defect-free | [eagar-tsai](eagar-tsai/README.md) |
+| [eagar-tsai](https://github.com/ArroyaveLab/eagar-tsai) | Eagar–Tsai melt-pool model and printability maps | PASS | 101/102 tests (the 3D plot test needs OpenGL). Against our in-house AM-module maps: lack-of-fusion classes agree at 37 of 43 AlSi10Mg points, but its W/D ≤ 2.5 test calls 55 of 58 points keyhole where the AM module calls 15. Against measured AlSi10Mg tracks, its default criteria leave 9 of 420 points defect-free | [eagar-tsai](eagar-tsai/README.md) |
 | [PhaseForge](https://github.com/ArroyaveLab/PhaseForge) | MLIP → SQS → CALPHAD TDB (with ATAT) | PARTIAL | `sqscal` writes an empty TDB but exits 0. Its steps run by hand give a Cu–Ni TDB with GRACE: L0 +8.72 kJ/mol (ΔH 27 % above SGTE), gap top 520 K vs SGTE 600 K. Not reproducible in a fresh Al–Cu directory. `make install` needs the LAMMPS submodule | [phaseforge](phaseforge/README.md) |
 | [PhaseForgePlus](https://github.com/ArroyaveLab/PhaseForgePlus) | gradient tuning of CALPHAD models against ZPF data | PARTIAL | `uv sync --frozen` works; README `pip install` fails (PyPI ESPEI). 18/18 tests, optimizer tests disabled. Pt–W −logL 6628 → 2005 in 560 s. MLIP regularizer silently empty | [phaseforge](phaseforge/README.md) |
 | [MaterialsFramework](https://github.com/ArroyaveLab/MaterialsFramework) | MLIP framework (GRACE, MACE, CHGNet, ORB, …) | PASS | 379 passed, 71 skipped. GRACE-2L-OMAT Al 4.038 Å / 78.5 GPa, Cu 3.611 Å / 144.5 GPa | [phaseforge](phaseforge/README.md) |
