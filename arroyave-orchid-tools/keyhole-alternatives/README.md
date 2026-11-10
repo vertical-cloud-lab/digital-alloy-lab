@@ -185,6 +185,8 @@ absorptivity, and both are calibration problems.
 | King et al. 2014 ([OSTI manuscript](https://www.osti.gov/biblio/1502044)) | 316L keyhole threshold ΔH/h_s = 30 ± 4 at two beam sizes, with melt-pool depths | DOE public access |
 | Solyaev et al. 2025 ([arXiv](https://arxiv.org/abs/2507.23422)) | AlSi10Mg single-track classes (keyhole, stable, lack of fusion) for six powders | arXiv |
 | Cunningham et al. 2019 ([Science](https://doi.org/10.1126/science.aav4687)) | Ti-6Al-4V keyhole drilling and moving-beam depths; ~0.4 MW/cm² onset | subscription; BYU has access |
+| [MeltpoolNet](https://github.com/BaratiLab/MeltpoolNet) ([Akbari et al. 2022](https://doi.org/10.1016/j.addma.2022.102817)) | Literature-compiled melt-pool data: 1,796 rows of P, v, beam, properties and pool depth, width and length, each with a shape label (317 keyhole); plus 1,249 rows for classification. Mostly 316L and Ti-6Al-4V; 29 AlSi10Mg rows | CSV on GitHub with no licence file, so cite it and ask before redistributing |
+| [AM-Bench 2018, AMB2018-02](https://www.nist.gov/ambench/amb2018-02-description) ([doi:10.18434/M32050](https://doi.org/10.18434/M32050)) | IN625 bare-plate single tracks, three power–speed settings with replicates: in-situ melt-pool length and cooling rate, and cross-sections | NIST public data. Conduction mode, so it checks pool length rather than keyholing |
 | The AM module's two maps and renders (#238) | one more "model" to score, not ground truth | in-house |
 
 **What to build:**
@@ -259,7 +261,17 @@ them.
 
   The sources above support all four.
 
-ROUND2_PLACEHOLDER
+**Round 2 was ungrounded too.** I resubmitted the same four queries at 05:48 UTC; they finished at 06:12. Edison's
+retrieval returned nothing for the whole session, and one report notes that even control queries ("the", "cancer")
+came back empty.
+- **DOIs** ([table](../../edison-trajectories/keyhole-open-alternatives/doi-check-round2.csv)). Of 28:
+  - 11 resolve to the cited paper or dataset;
+  - 13 resolve to unrelated papers;
+  - 4 don't exist.
+- **Two leads checked out** and are now in the [benchmark table](#an-orchid-style-benchmark-for-keyhole-models):
+  MeltpoolNet's literature-compiled melt-pool data and NIST's AM-Bench 2018 single tracks.
+- **To retry** once Edison's search is back: `python scripts/edison_keyhole_alternatives.py submit --round 3`, then
+  `wait --round 3`.
 
 ## Caveats
 
