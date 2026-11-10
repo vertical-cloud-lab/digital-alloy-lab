@@ -320,6 +320,11 @@
   }
  },
  "gan2021_xray_depths": {
+  "refit_e_star_vs_Ke": {
+   "slope": 0.397,
+   "intercept": -0.403,
+   "n": 87
+  },
   "Ti64": {
    "n": 71,
    "P_W": [

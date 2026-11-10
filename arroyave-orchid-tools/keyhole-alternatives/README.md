@@ -12,14 +12,14 @@ looked in three ways:
 
 | What we need | Best open option | How well it does here | Cost per point |
 |---|---|---|---|
-| **Keyhole boundary on a printability map** | **The keyhole number** Ke = ηP / ((T_l − T0) π ρ c_p √(α v r0³)) of [Gan et al. 2021](https://doi.org/10.1038/s41467-021-22704-0), or the equivalent normalized enthalpy of [King et al. 2014](https://doi.org/10.1016/j.jmatprotec.2014.06.005). Use one threshold, calibrated on our own single tracks. | The AM module's keyhole boundary lies along a near-constant Ke on both maps (Ke stays within −3 % and +10 % of its median from 0.3 to 1.3 m/s). So the boundary's *shape* is reproduced, and only its level needs fitting. One fitted threshold per map gets 58 of 58 and 26 of 27 grid points; eagar-tsai's W/D test gets 18 and 15. | microseconds |
-| **Keyhole depth** | **Gan et al.'s depth law** e / r0 = 0.4 (Ke − 1.4) | On Gan et al.'s published X-ray keyhole depths (Ti-6Al-4V, Al6061, SS316) it is within 6–13 % (median). At the AM module's keyhole-mode render it gives a 322 µm keyhole under a 349 µm pool. eagar-tsai can't reach that depth at any absorptivity. | microseconds |
+| **Keyhole boundary on a printability map** | **The keyhole number** Ke = ηP / ((T_l − T0) π ρ c_p √(α v r0³)) of [Gan et al. 2021](https://doi.org/10.1038/s41467-021-22704-0), or the normalized enthalpy of [King et al. 2014](https://doi.org/10.1016/j.jmatprotec.2014.06.005), which differs only in its constants and temperature scale. Use one threshold, calibrated on our own single tracks. | The AM module's keyhole boundary lies along a near-constant Ke on both maps (Ke stays within −3 % and +10 % of its median from 0.3 to 1.3 m/s). So the boundary's *shape* is reproduced, and only its level needs fitting. One fitted threshold per map gets 58 of 58 and 26 of 27 grid points; eagar-tsai's W/D test gets 18 and 15. | microseconds |
+| **Keyhole depth** | **Gan et al.'s depth law** e / r0 = 0.4 (Ke − 1.4) | On Gan et al.'s published X-ray keyhole depths (Ti-6Al-4V, Al6061, SS316) it is within 6–13 % (median). At the AM module's keyhole-mode render it gives a 322 µm keyhole under a 349 µm pool. eagar-tsai can't reach that pool depth at any absorptivity (#238). | microseconds |
 | **Keyhole-mode pool width and length, keyhole porosity** | **An open thermal-fluid code that resolves the keyhole**: [laserbeamFoam](https://github.com/laserbeamfoam/LaserbeamFoam) first (OpenFOAM, Fresnel ray tracing, recoil pressure, GPL-3.0, active); [meltPoolFoam](https://github.com/meltPoolFoam/meltPoolFoam), [MeltPoolDG](https://github.com/MeltPoolDG/MeltPoolDG) and [Lethe](https://github.com/chaos-polymtl/lethe) as alternatives | Not run here. No cheap open model gives keyhole-mode length or width. The AM module's 1.47 mm length is 3–5× what any conduction solution gives, because its flow carries heat backwards. | CPU-hours to days per track, so use it to calibrate, not for maps |
 | **The approach** | **An ORCHID-style open benchmark.** Curate the measured keyhole data (X-ray depths, onset and porosity thresholds, our own tracks) with uncertainties, and score every cheap model against it, including the AM module. [`scripts/keyhole_open_models.py`](../../scripts/keyhole_open_models.py) is a first scorer. | See [below](#an-orchid-style-benchmark-for-keyhole-models) | |
 
 **Don't use:**
 - eagar-tsai's W/D ≤ 2.5 test (#238);
-- the Gladush–Smurov depth in [`lpbf_map`](https://github.com/ilidio-costa/lpbf_map). It comes out 3–4× too shallow against X-ray keyhole depths ([below](#2-keyhole-depth)), and lpbf_map's "King" test ignores scan speed;
+- the Gladush–Smurov depth in [`lpbf_map`](https://github.com/ilidio-costa/lpbf_map). It comes out 3–4.5× too shallow against X-ray keyhole depths ([below](#2-keyhole-depth)), and lpbf_map's "King" test ignores scan speed;
 - a power-density threshold on its own. Cunningham et al.'s 0.4 MW/cm² is for a stationary beam, and every point on both of our maps is above it.
 
 **The catch is the absorptivity, not the model.** Ke is linear in ηP, so every threshold above trades off one-for-one
@@ -30,7 +30,7 @@ for in #238, together with our own single-track cross-sections.
 
 ## Tests
 
-[`scripts/keyhole_open_models.py`](../../scripts/keyhole_open_models.py) runs everything below in about 10 s. It
+[`scripts/keyhole_open_models.py`](../../scripts/keyhole_open_models.py) runs everything below in about 2 s. It
 reads #238's digitized AM-module boundaries and grid classes, and downloads Gan et al.'s Supplementary Data 1
 (CC BY 4.0) into a cache, checking its sha256. Settings are #238's:
 - AlSi10Mg: A = 0.31, beam 1/e² radius 40 µm, T_l 867 K, 150 °C plate;
@@ -103,7 +103,7 @@ Each row comes with the absorptivity Gan et al. used.
   - Their Al6061 absorptivities don't follow that equation with any physical flat-surface value. Inverting it on
     their own rows gives 0.007 for Al6061, against 0.24–0.30 for the Ti-6Al-4V and SS316 rows. So for Al, the
     absorptivity has to come from elsewhere: calorimetry, the AM module, or a fit to our own tracks.
-- **The Gladush–Smurov depth is 3–4× too shallow on every material.** lpbf_map reports it only when it is deeper
+- **The Gladush–Smurov depth is 3–4.5× too shallow on every material.** lpbf_map reports it only when it is deeper
   than eagar-tsai's conduction depth. At both AM-module render points, the conduction depth is the deeper one.
   - At the AM module's blend render it gives 89 µm, against the AM module's 349 µm pool.
   - I checked that my implementation matches lpbf_map's own function to 0.01 µm
@@ -146,7 +146,9 @@ conduction fit; 1/e² radius 56.6 µm; room-temperature plate assumed):
 - The measured class is pool shape (D/W), not keyhole presence. At low speed the pool widens, so its D/W stays low
   even at high Ke.
 - **Two things follow.**
-  - Against measured Al tracks, the AM module's thresholds (Ke 9–16 at its own A) and King's 316L value look late.
+  - Against the measured Al tracks, the AM module's levels (Ke 9–16 at its own A) and King's 316L value look late.
+    Even at the AM module's A of 0.31–0.38, the measured corner would sit at Ke ≈ 6–7. The beams and absorptivities
+    differ, so this is a pointer, not a verdict.
   - Our own calibration should use X-ray-free measurements we can make: keyhole porosity and D/W in cross-sections
     of single tracks on our machine.
 
@@ -164,7 +166,7 @@ Checked on GitHub on 2026-11-10 (licence, last push, and the physics in each REA
 | [AdditiveFOAM](https://github.com/ORNL/AdditiveFOAM) | ORNL licence; pushed 2026-11-06 | heat and mass transfer in a fixed domain, no free surface | none | Not a keyhole model |
 | [3DThesis](https://github.com/ORNL-MDF/3DThesis) | BSD-3-Clause | semi-analytic conduction, like eagar-tsai | none | Not a keyhole model |
 
-None of these ships an AlSi10Mg keyhole case. Each needs temperature-dependent Al–Si properties, which the
+None of the cases I found is for an Al alloy. Each needs temperature-dependent Al–Si properties, which the
 pycalphad/MatCalc `mc_al` work in [`../pycalphad-al-cu/`](../pycalphad-al-cu/) could supply. The AM module gets
 them from its Scheil calculator.
 
@@ -275,11 +277,11 @@ ROUND2_PLACEHOLDER
 
 | File | What it is |
 |---|---|
-| [`../../scripts/keyhole_open_models.py`](../../scripts/keyhole_open_models.py) | all the tests above (`python scripts/keyhole_open_models.py all --out arroyave-orchid-tools/keyhole-alternatives`, ~10 s) |
+| [`../../scripts/keyhole_open_models.py`](../../scripts/keyhole_open_models.py) | all the tests above (`python scripts/keyhole_open_models.py all --out arroyave-orchid-tools/keyhole-alternatives`, ~2 s) |
 | `summary.json` | every number quoted above |
 | `am-module-keyhole-boundary-normalized.csv` | each digitized AM-module boundary point with Ke, King ΔH/h_s, the boiling-normalized Ke, and the Gan and Gladush–Smurov depths |
 | `gan2021-xray-keyhole-depths-vs-open-models.csv` | the 87 X-ray keyhole depths of Gan et al. 2021 (CC BY 4.0), with Ke and both models' predictions |
 | `am-module-maps-with-open-keyhole-criteria.png`, `open-keyhole-depth-models-vs-xray.png` | the two figures |
 | `logs/lpbf_map-crosscheck.{py,log}` | lpbf_map 2.0.1 (commit `32a5089`) run on the same inputs, with the job's secrets stripped from its environment |
-| [`../../edison-trajectories/keyhole-open-alternatives/`](../../edison-trajectories/keyhole-open-alternatives/) | the four Edison reports and their full trajectories |
-| [`../../scripts/edison_keyhole_alternatives.py`](../../scripts/edison_keyhole_alternatives.py) | the Edison queries (`submit`, `wait`, `fetch`) |
+| [`../../edison-trajectories/keyhole-open-alternatives/`](../../edison-trajectories/keyhole-open-alternatives/) | the Edison reports (round 1 ungrounded, and round 2), their artifacts as markdown, the full trajectories in `raw/`, and the round-1 DOI check |
+| [`../../scripts/edison_keyhole_alternatives.py`](../../scripts/edison_keyhole_alternatives.py) | the Edison queries (`submit`, `wait`, `fetch`; `--round 2` for the resubmission) |

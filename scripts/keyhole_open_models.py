@@ -318,7 +318,10 @@ def gan_check(cache: pathlib.Path, out: pathlib.Path) -> dict:
         })
     t = pd.DataFrame(res)
     t.to_csv(out / "gan2021-xray-keyhole-depths-vs-open-models.csv", index=False, float_format="%.5g")
-    s = {}
+    # Refit e/r0 = a Ke + b on the rows above Ke = 1.4, to check our Ke against the paper's Eq. 2 (0.4 Ke - 0.56).
+    sel = t[t["Ke"] > KE_OFFSET]
+    slope, icpt = np.polyfit(sel["Ke"], sel["keyhole_depth_measured_um"] / sel["r0_um"], 1)
+    s = {"refit_e_star_vs_Ke": {"slope": round(float(slope), 3), "intercept": round(float(icpt), 3), "n": int(len(sel))}}
     for mat, gg in t.groupby("material", sort=False):
         s[mat] = {"n": int(len(gg)), "P_W": [float(gg.P_W.min()), float(gg.P_W.max())],
                   "v_m_s": [float(gg.v_m_s.min()), float(gg.v_m_s.max())],
