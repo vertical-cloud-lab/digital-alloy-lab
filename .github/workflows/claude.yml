@@ -75,6 +75,10 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       EDISON_PLATFORM_API_KEY: ${{ secrets.EDISON_PLATFORM_API_KEY }}
       GH_READ_PAT_STAGING: ${{ secrets.GH_READ_PAT_STAGING }}
+      # The lab's shared Onshape account (member privileges, no 2FA), for signing
+      # in through the browser. See the Onshape section of CLAUDE.md.
+      ONSHAPE_USERNAME: ${{ secrets.ONSHAPE_USERNAME }}
+      ONSHAPE_PASSWORD: ${{ secrets.ONSHAPE_PASSWORD }}
       # Fine-grained PAT, Contents read/write on vertical-cloud-lab/CubOS only, for
       # pushing branches to the lab's fork of Ursa-Laboratories/CubOS (see CLAUDE.md).
       CUBOS_FORK_PAT: ${{ secrets.CUBOS_FORK_PAT }}
