@@ -16,6 +16,10 @@ Usage (run from the repo root; needs EDISON_PLATFORM_API_KEY):
     python scripts/edison_keyhole_alternatives.py wait     # blocks until all finish, then fetches
     python scripts/edison_keyhole_alternatives.py fetch    # fetch whatever has finished
 
+Add ``--round N`` to resubmit the same queries as a separate round (``_task_ids_round<N>.json``, files
+suffixed ``-round<N>``). Round 1 on 2026-11-10 came back ungrounded: Edison's literature search returned
+nothing during those runs, so the answers were written from the model's own knowledge.
+
 ``wait`` keeps its sleep inside Python, so in GitHub Actions it can run as a single foreground
 call (see CLAUDE.md).
 """
@@ -234,7 +238,8 @@ def fetch_one(c: EdisonClient, key: str, meta: dict) -> str:
     dump = task.model_dump(mode="json")
     # The retrieved paper text carries corresponding-author emails; this repo is public.
     raw = EMAIL_RE.sub("[email redacted]", json.dumps(dump, indent=2, default=str))
-    (RAW_DIR / f"{key}-task-verbose.json").write_text(raw + "\n")
+    suffix = QUERIES.get(key, {}).get("raw_suffix", "")
+    (RAW_DIR / f"{key}{suffix}-task-verbose.json").write_text(raw + "\n")
 
     # Pull the answer out of the environment frame (PaperQA layout), with fallbacks.
     frame = dump.get("environment_frame") or {}
@@ -296,7 +301,20 @@ def wait(poll_s: int = 120, max_s: int = 3300) -> None:
         print(f"still pending after {max_s}s: {sorted(pending)}", flush=True)
 
 
+def _set_round(n: int) -> None:
+    global TASK_FILE
+    TASK_FILE = OUT_DIR / f"_task_ids_round{n}.json"
+    for q in QUERIES.values():
+        stem, ext = q["outfile"].rsplit(".", 1)
+        q["outfile"] = f"{stem}-round{n}.{ext}"
+        q["raw_suffix"] = f"-round{n}"
+
+
 if __name__ == "__main__":
+    if "--round" in sys.argv:
+        i = sys.argv.index("--round")
+        _set_round(int(sys.argv[i + 1]))
+        del sys.argv[i : i + 2]
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
     if cmd == "submit":
         submit()
