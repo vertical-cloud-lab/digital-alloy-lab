@@ -68,9 +68,8 @@ parts come to about 0.48 kg.
    use. Pick the hole that holds a real tip, or a real tube, by its collar without play. Set
    `TIP["hole_d"]` or `TUBE["hole_d"]` in [`bom/cad/cad_build_parts.py`](bom/cad/cad_build_parts.py),
    rerun it, then print the racks. For tip rack 2, print a second rack 1 instead of P11. It fits like
-   rack 1 and is already keyed. For now, print it from Ben's Onshape document "20uL tip rack", which
-   has his 2026-11-10 edits. [`bom/cad/tip_rack_1_20ul.step`](bom/cad/tip_rack_1_20ul.step) is the
-   version before those edits; it gets replaced once his export is in the repo
+   rack 1 and is already keyed. Print it from [`bom/cad/tip_rack_1_20ul.step`](bom/cad/tip_rack_1_20ul.step),
+   Ben's version from his Onshape document "20uL tip rack", with a 60 × 35 mm window in each side wall
    ([`bom/tip-rack-1.md`](bom/tip-rack-1.md)).
 3. **Print the rest.** STEP and STL links for each part are in
    [`bom/README.md` §1](bom/README.md#1-what-to-print).

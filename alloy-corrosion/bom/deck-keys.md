@@ -151,9 +151,9 @@ jog the pipette over two slot centres and set `GRID_X0` and `GRID_Y0` in
   with 2 × 15 holes at 8.5 mm, and it already has two key pockets. The build guide asked whether the
   file for rack 1 exists: this is probably it. A second copy would be a keyed rack 2 that fits like
   rack 1, so print it instead of P11. Check rack 1's underside for two triangular pockets 90 mm apart.
-  **2026-11-10:** Ben's rack 1 is the Onshape document "20uL tip rack". It is Cubware's rack with
-  Ben's 20 µL bores from byu-vcl#151, rebuilt as [`cad/tip_rack_1_20ul.step`](cad/tip_rack_1_20ul.step)
-  ([`tip-rack-1.md`](tip-rack-1.md)).
+  **2026-11-10:** Ben's rack 1 is the Onshape document "20uL tip rack": Cubware's rack with Ben's
+  20 µL bores from byu-vcl#151. His current version, which adds a window in each side wall, is
+  [`cad/tip_rack_1_20ul.step`](cad/tip_rack_1_20ul.step) ([`tip-rack-1.md`](tip-rack-1.md)).
 - **If the 9-vial holder has its keys in, it can't sit at the plan's x 318.** The nearest slot
   columns are x 312.5 and 337.5.
   - At 312.5 it would overlap tip rack 1 by about 1.3 mm.
