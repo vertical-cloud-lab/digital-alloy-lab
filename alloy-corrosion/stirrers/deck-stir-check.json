@@ -97,7 +97,7 @@
   "tightest_pass_mm": {
    "pipette_bare over park cup": 16.0,
    "capper over tube rack": 22.0,
-   "pipette_bare over vial holder": 23.0,
+   "pipette_bare over vial holder": 25.0,
    "capper over vial holder": 44.0
   },
   "travel_clearance_mm": {

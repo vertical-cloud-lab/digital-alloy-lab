@@ -1,14 +1,14 @@
 {
  "units": "mm",
  "frames": {
-  "W": "W: well frame, origin on the well axis at the coupon face; deck = W + (station_x, 240, 20)",
+  "W": "W: well frame, origin on the well axis at the coupon face; deck = W + (station_x, 240, 22)",
   "C": "C: cap frame, origin at the centre of the skirt underside; seated on a lid, C = W + (0, 0, 6.0); carried, C = carriage + (0, 0, -(16 + 16))",
   "D": "D: CubOS deck frame (Ben's 2026-10-02 calibration), use as is"
  },
  "section_versions": "*_section.stl: the 90 degree wedge facing -y removed (polar angles 225..315 deg about the part's own well axis), kept -45..225 deg; boolean cuts, so the cut faces are closed. tray_station_section is about S1's axis.",
  "placement": {
-  "W_to_deck": "deck = W + (station_x, 240.0, 20.0); stations_x = [185.0, 210.0, 235.0, 260.0]",
-  "C_seated_to_deck": "deck = C + (station_x, 240.0, 26.0)",
+  "W_to_deck": "deck = W + (station_x, 240.0, 22.0); stations_x = [185.0, 210.0, 235.0, 260.0]",
+  "C_seated_to_deck": "deck = C + (station_x, 240.0, 28.0)",
   "C_carried": "C origin = carriage reference - 32.0 (magnet face 16 below the carriage, cap top 16 above C origin)",
   "lowest_point_carried_C": -3.8,
   "reference_tip_C": -3.0,
@@ -27,10 +27,10 @@
   "magnet_contact_plane_C": 16.0,
   "cap_outer_d": 25.0,
   "cap_flange_d": 28.0,
-  "tray_top_D": 19.5,
-  "pocket_floor_D": 14.0,
-  "lid_top_D": 26.0,
-  "cap_top_seated_D": 42.0
+  "tray_top_D": 21.5,
+  "pocket_floor_D": 16.0,
+  "lid_top_D": 28.0,
+  "cap_top_seated_D": 44.0
  },
  "face_oring_section_rz": [
   [
@@ -416,8 +416,8 @@
    275.0,
    260.0
   ],
-  "tray_top": 19.5,
-  "face_z": 20.0,
+  "tray_top": 21.5,
+  "face_z": 22.0,
   "stations_x": [
    185.0,
    210.0,
@@ -426,7 +426,7 @@
   ],
   "station_y": 240.0,
   "pocket": 20.6,
-  "pocket_floor": 14.0,
+  "pocket_floor": 16.0,
   "insert_d": 4.0,
   "insert_h": 6.0,
   "we_pin_hole": 1.4,
@@ -437,6 +437,8 @@
    255.0
   ],
   "exit_x": 222.5,
+  "pin_len": 16.0,
+  "pad_relief_h": 5.0,
   "coupon": [
    20.0,
    20.0,
@@ -577,7 +579,7 @@
   },
   "coupon_tray": {
    "frame": "D",
-   "what": "printed PETG tray, 105 x 40 x 19.5 mm, four stations",
+   "what": "printed tray, 105 x 40 x 21.5 mm, four stations, two deck-key pockets underneath",
    "step": "coupon_tray.step",
    "stl": "coupon_tray.stl"
   },

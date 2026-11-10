@@ -50,11 +50,14 @@ RADIUS = {"capper": 10.0, "capper+cap": 11.0, "pipette": 6.0, "pipette_bare": 6.
 
 # Deck items. Rect: (x0, y0, x1, y1). Circle: (cx, cy, r). "top" is the highest
 # point in deck z that a tool can hit.
-TRAY = {"rect": (170.0, 220.0, 275.0, 260.0), "top": 26.0, "face_z": 20.0}
+# The tray grew 2 mm on 2026-11-09 (coupon face 20 -> 22) for the 16 mm P75 pins, and every deck part got
+# deck-key pockets at slot centres (bom/cad/deck_keys.py); the tube rack moved 8 mm back and the aluminium
+# tip waste 20 mm back to make room for them.
+TRAY = {"rect": (170.0, 220.0, 275.0, 260.0), "top": 28.0, "face_z": 22.0}
 STATION_X = [185.0, 210.0, 235.0, 260.0]
 STATION_Y = 240.0
 WELL_DY = 4.5  # two 3 mm wells per station, 9 mm apart, for pieces >= 15 mm
-CAP_ON_STATION_TOP = 42.0  # tray lid 26 + electrode cap body 16
+CAP_ON_STATION_TOP = TRAY["top"] + 16.0  # tray lid 28 + electrode cap body 16
 
 TIP_RACK_1 = {"a1": (291.332, 89.0), "a2": (282.832, 89.0), "pickup_z": 59.0}  # Ben's, unchanged
 TIP_RACK_2 = {"a1": (108.0, 89.0), "a2": (99.5, 89.0), "pickup_z": 59.0}  # proposed
@@ -84,11 +87,11 @@ VIAL_R, VIAL_RIM, VIAL_CAP_TOP = 14.0, 56.0, 71.0
 CUPS = {"rinse cup": (60.0, 245.0), "park cup": (90.0, 245.0)}  # the cap sits on these
 CUP_R, CUP_RIM = 7.5, 45.0
 
-TUBE_RACK = {"rect": (170.0, 20.0, 266.0, 54.0), "top": 32.0}  # 2 x 8 open 0.5 mL PP tubes
+TUBE_RACK = {"rect": (170.0, 28.0, 266.0, 62.0), "top": 32.0}  # 2 x 8 open 0.5 mL PP tubes
 TUBE_X = [176.0 + 12.0 * k for k in range(8)]
-TUBE_Y = [28.0, 46.0]
+TUBE_Y = [36.0, 54.0]
 
-TIP_WASTE = {"c": (335.0, 40.0), "r": 15.0, "top": 50.0}
+TIP_WASTE = {"c": (335.0, 60.0), "r": 15.0, "top": 50.0}  # its key pocket at (337.5, 45); was (335, 40)
 PSTAT_BOX = {"rect": (0.0, 290.0, 80.0, 330.0), "top": 40.0}  # behind the working volume
 
 
@@ -282,7 +285,7 @@ def draw_side(ax):
     ax.axhline(0, color=INK2, lw=1.2)
     x0, _, x1, _ = TRAY["rect"]
     ax.add_patch(Rectangle((x0, 0), x1 - x0, TRAY["top"], fc="#fde3d8", ec=ORANGE, lw=1))
-    ax.text((x0 + x1) / 2, 2, "tray: coupon face at 20, lid top 26", ha="center", fontsize=6.5, color=INK2)
+    ax.text((x0 + x1) / 2, 2, f"tray: coupon face at {TRAY['face_z']:g}, lid top {TRAY['top']:g}", ha="center", fontsize=6.5, color=INK2)
     for sx in STATION_X:
         ax.add_patch(Rectangle((sx - 1.5, TRAY["face_z"]), 3, 6, fc="#cfe6f9", ec="none"))
     for rack, lab in ((TIP_RACK_1, "tips 1: 66"), (TIP_RACK_2, "tips 2")):
@@ -297,7 +300,7 @@ def draw_side(ax):
     ax.text(75, CUP_RIM + 2, "cups 45", ha="center", fontsize=6.5, color=INK2)
 
     sx = STATION_X[1]
-    for cz, lab, alpha in ((TRAVEL_Z, "travel: carriage at 122", 0.4), (TRAY["face_z"] + 1.5 + HANG["capper+cap"], "setting the cap: carriage at 58", 1.0)):
+    for cz, lab, alpha in ((TRAVEL_Z, "travel: carriage at 122", 0.4), (TRAY["face_z"] + 1.5 + HANG["capper+cap"], f"setting the cap: carriage at {TRAY['face_z'] + 1.5 + HANG['capper+cap']:g}", 1.0)):
         ax.add_patch(Rectangle((sx - 50, cz), 115, 6, fc="#d6f1e6", ec=AQUA, lw=1, alpha=alpha))
         ax.text(sx - 48, cz + 8, lab, fontsize=6.5, color=AQUA if alpha == 1 else MUTED)
         # capper body + electrode cap
@@ -308,7 +311,7 @@ def draw_side(ax):
         ax.plot([sx + 55, sx + 55], [cz, cz - 1], color=AQUA, lw=4, alpha=alpha, solid_capstyle="butt")
         ax.plot([sx - 40, sx - 40], [cz, cz - 12], color=AQUA, lw=4, alpha=alpha, solid_capstyle="butt")
         if alpha == 1:
-            ax.text(sx + 58, cz + 10, "pipette nozzle,\nno tip, at 58", ha="left", va="bottom", fontsize=6.5, color=INK2)
+            ax.text(sx + 58, cz + 10, f"pipette nozzle,\nno tip, at {cz:g}", ha="left", va="bottom", fontsize=6.5, color=INK2)
             ax.text(sx - 40, cz - 15, "camera", ha="center", va="top", fontsize=6.5, color=INK2)
             ax.text(sx + 13, cz - 24, "electrode cap:\nsteel disc, 16 mm body,\nelectrodes 4.5 below", fontsize=6.5, color=INK2, va="top")
     ax.annotate("", xy=(345, TRAVEL_Z - HANG["capper+cap"]), xytext=(345, VIAL_CAP_TOP), arrowprops=dict(arrowstyle="<->", color=MUTED, lw=0.8))

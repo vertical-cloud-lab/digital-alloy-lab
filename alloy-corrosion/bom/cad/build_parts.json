@@ -50,7 +50,7 @@
    "step": "well_lid_v2_006.step",
    "stl": "well_lid_v2_006.stl",
    "what": "well lid v2 for AS568-006",
-   "place": "W frame: on the coupon face; deck = W + (station x, 240, 20)",
+   "place": "W frame: on the coupon face; deck = W + (station x, 240, 22)",
    "bbox_mm": [
     24.0,
     35.0,
@@ -74,7 +74,7 @@
    "step": "well_lid_v2_008.step",
    "stl": "well_lid_v2_008.stl",
    "what": "well lid v2 for AS568-008",
-   "place": "W frame: on the coupon face; deck = W + (station x, 240, 20)",
+   "place": "W frame: on the coupon face; deck = W + (station x, 240, 22)",
    "bbox_mm": [
     24.0,
     35.0,
@@ -98,7 +98,7 @@
    "step": "well_lid_v2_010.step",
    "stl": "well_lid_v2_010.stl",
    "what": "well lid v2 for AS568-010",
-   "place": "W frame: on the coupon face; deck = W + (station x, 240, 20)",
+   "place": "W frame: on the coupon face; deck = W + (station x, 240, 22)",
    "bbox_mm": [
     24.0,
     35.0,
@@ -125,10 +125,10 @@
    "place": "D frame, as is",
    "bbox_mm": [
     92.0,
-    28.0,
+    43.0,
     49.03
    ],
-   "volume_cm3": 70.64,
+   "volume_cm3": 75.11,
    "positions_xy": [
     [
      30.0,
@@ -152,19 +152,37 @@
    "boss_top_z": 49.0,
    "reservoir": "8.0 mm bore from z 8.0",
    "fill_ul_to_2mm_below_boss_top": 1960,
-   "electrodes_lowest_z_seated": 41.2
+   "electrodes_lowest_z_seated": 41.2,
+   "base": "x 14-106, y 216-259, 3.2 thick",
+   "deck_key_pockets": [
+    [
+     37.5,
+     225.0
+    ],
+    [
+     87.5,
+     225.0
+    ]
+   ]
   },
   "tip_waste_cup": {
    "step": "tip_waste_cup.step",
    "stl": "tip_waste_cup.stl",
-   "what": "tip waste, 30 mm, top z 50",
-   "place": "D frame at the copper deck's (385, 150); the aluminium deck's is (335, 40)",
+   "what": "tip waste, 30 mm, top z 50, one deck-key pocket",
+   "place": "D frame at the copper deck's (385, 150); its key pocket is at (387.5, 135). The aluminium deck's (335, 40) has no slot centre under the cup: move it to a slot, e.g. (337.5, 135)",
    "bbox_mm": [
     44.04,
     44.06,
     50.07
    ],
-   "volume_cm3": 10.86
+   "volume_cm3": 11.36,
+   "deck_key_pockets": [
+    [
+     387.5,
+     135.0
+    ]
+   ],
+   "flange_t": 3.2
   },
   "tube_rack_2x8": {
    "step": "tube_rack_2x8.step",
@@ -176,76 +194,93 @@
     34.0,
     30.02
    ],
-   "volume_cm3": 18.98,
+   "volume_cm3": 21.55,
    "tube_xy": [
     [
      176.0,
-     28.0
+     36.0
     ],
     [
      188.0,
-     28.0
+     36.0
     ],
     [
      200.0,
-     28.0
+     36.0
     ],
     [
      212.0,
-     28.0
+     36.0
     ],
     [
      224.0,
-     28.0
+     36.0
     ],
     [
      236.0,
-     28.0
+     36.0
     ],
     [
      248.0,
-     28.0
+     36.0
     ],
     [
      260.0,
-     28.0
+     36.0
     ],
     [
      176.0,
-     46.0
+     54.0
     ],
     [
      188.0,
-     46.0
+     54.0
     ],
     [
      200.0,
-     46.0
+     54.0
     ],
     [
      212.0,
-     46.0
+     54.0
     ],
     [
      224.0,
-     46.0
+     54.0
     ],
     [
      236.0,
-     46.0
+     54.0
     ],
     [
      248.0,
-     46.0
+     54.0
     ],
     [
      260.0,
-     46.0
+     54.0
     ]
+   ],
+   "rect": [
+    170.0,
+    28.0,
+    266.0,
+    62.0
    ],
    "plate_top_z": 30.0,
    "hole_d": 8.2,
-   "labels": true
+   "base_t": 3.0,
+   "labels": true,
+   "deck_key_pockets": [
+    [
+     187.5,
+     45.0
+    ],
+    [
+     237.5,
+     45.0
+    ]
+   ]
   },
   "tip_rack_2x15": {
    "step": "tip_rack_2x15.step",
@@ -255,25 +290,36 @@
    "bbox_mm": [
     20.0,
     138.0,
-    64.7
+    64.71
    ],
-   "volume_cm3": 48.81,
+   "volume_cm3": 51.24,
    "rect": [
-    93.75,
+    252.5,
     79.5,
-    113.75,
+    272.5,
     217.5
    ],
    "a1": [
-    108.0,
+    266.75,
     89.0
    ],
    "a2": [
-    99.5,
+    258.25,
     89.0
    ],
    "plate_top_z": 64.7,
-   "hole_d": 5.0
+   "hole_d": 5.0,
+   "base_t": 3.2,
+   "deck_key_pockets": [
+    [
+     262.5,
+     90.0
+    ],
+    [
+     262.5,
+     180.0
+    ]
+   ]
   },
   "fit_strip_tube": {
    "step": "fit_strip_tube.step",

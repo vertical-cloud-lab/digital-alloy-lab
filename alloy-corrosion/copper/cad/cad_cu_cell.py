@@ -7,7 +7,8 @@ removed: polar angles 225..315 deg about the well axis cut away, -45..225 kept),
 assembly.step, cad_parts.json (frames and placement) and cad_preview.png.
 
 Frames (mm, z up, x and y parallel to the CubOS deck):
-- W, the well frame: origin on the well axis at the coupon face. Deck = W + (station x, 240, 20).
+- W, the well frame: origin on the well axis at the coupon face. Deck = W + (station x, 240, 22)
+  (20 before 2026-11-09, when the tray grew 2 mm for the 16 mm pins and got deck-key pockets).
 - C, the cap frame: origin at the centre of the skirt underside. Seated on a lid, C = W + (0, 0, 6).
 - D, the deck frame (CubOS, Ben's 2026-10-02 calibration): the full tray only.
 
@@ -20,6 +21,7 @@ is the radial-seal version first proposed (AS568-016 in the skirt). cad_check.py
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import math
 from pathlib import Path
@@ -28,6 +30,9 @@ import cadquery as cq
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE
+_kspec = importlib.util.spec_from_file_location("deck_keys", HERE.parents[1] / "bom" / "cad" / "deck_keys.py")
+keys = importlib.util.module_from_spec(_kspec)
+_kspec.loader.exec_module(keys)
 
 # ------------------------------------------------------------------ parameters (mm)
 P = dict(
@@ -56,11 +61,16 @@ P = dict(
     # O-ring variant
     rad_oring_id=15.60, rad_oring_cs=1.78,     # AS568-016
     gland_depth=1.55, groove_w=2.40, groove_z=(0.9, 3.3), vent_d=0.3, vent_r=5.0,
-    # tray, in D
-    tray_rect=(170.0, 220.0, 275.0, 260.0), tray_top=19.5, face_z=20.0,
+    # tray, in D. 2 mm taller since 2026-11-09 (was top 19.5, face 20, pocket floor 14): the P75-B1 pins are
+    # 16 mm long, so with its tip 1 mm above the pocket floor a WE pin's tail used to end 1 mm below the
+    # underside. Now it ends 1 mm above the deck, inside the bus channel, and the flat underside carries the
+    # deck-key pockets (../../bom/cad/deck_keys.py).
+    tray_rect=(170.0, 220.0, 275.0, 260.0), tray_top=21.5, face_z=22.0,
     stations_x=(185.0, 210.0, 235.0, 260.0), station_y=240.0,
-    pocket=20.6, pocket_floor=14.0, insert_d=4.0, insert_h=6.0,
+    pocket=20.6, pocket_floor=16.0, insert_d=4.0, insert_h=6.0,
     we_pin_hole=1.4, bus_w=4.0, bus_h=3.0, bus_y=(240.0, 255.0), exit_x=222.5,
+    pin_len=16.0,        # P75-B1 (Adafruit 2430), free length; the tray's WE and pad pins
+    pad_relief_h=5.0,    # the bus channel deepened under each pad pin, so its tail ends 1.5 mm up its hole, as before
     coupon=(20.0, 20.0, 6.0),
 )
 CUT_KEEP = (-45.0, 225.0)  # polar angles kept in the section versions
@@ -312,21 +322,23 @@ def coupon_tray():
         for sgn in (-1, 1):
             xp = sx + sgn * p["eyelet_x"]
             tray = tray.cut(boxs(xp - 1.5, p["bus_y"][1], -1, xp + 1.5, sy + p["eyelet_y"] + 1.5, p["bus_h"]))
+            tray = tray.cut(boxs(xp - 1.5, sy + p["eyelet_y"] - 2.0, -1, xp + 1.5, sy + p["eyelet_y"] + 1.5, p["pad_relief_h"]))
     for yb in p["bus_y"]:
         tray = tray.cut(boxs(p["stations_x"][0] - p["eyelet_x"] - 2, yb - p["bus_w"] / 2, -1,
                              p["stations_x"][-1] + p["eyelet_x"] + 2, yb + p["bus_w"] / 2, p["bus_h"]))
     tray = tray.cut(boxs(p["exit_x"] - p["bus_w"] / 2, p["bus_y"][0], -1, p["exit_x"] + p["bus_w"] / 2, y1 + 1, p["bus_h"]))
-    return tray.clean()
+    return keys.cut_pockets(tray, "coupon_tray")  # two deck-key pockets under the front edge, at slot centres
 
 
 def tray_pins():
-    """D frame: the WE spring pins (one per pocket) and the pad spring pins (two per station)."""
+    """D frame: the WE spring pins (one per pocket) and the pad spring pins (two per station), at the P75-B1's
+    16 mm. A WE pin's tail ends at D z 1 (tip 1 mm above the pocket floor), a pad pin's at 6.5."""
     p = P
     pins = []
     for sx in p["stations_x"]:
         sy = p["station_y"]
         for x, y, top in [(sx, sy, p["pocket_floor"] + 1.0)] + [(sx + s * p["eyelet_x"], sy + p["eyelet_y"], p["tray_top"] + 1.0) for s in (-1, 1)]:
-            pins.append(union(cyl(p["pin_barrel_d"], top - 11.0, top - 1.0, x, y), cyl(p["pin_plunger_d"], top - 1.01, top, x, y)))
+            pins.append(union(cyl(p["pin_barrel_d"], top - p["pin_len"], top - 1.0, x, y), cyl(p["pin_plunger_d"], top - 1.01, top, x, y)))
     return union(*pins)
 
 
@@ -376,7 +388,7 @@ def main():
     tpins = tray_pins()
     cpn, blank = coupon(), ptfe_blank()
 
-    W = "W: well frame, origin on the well axis at the coupon face; deck = W + (station_x, 240, 20)"
+    W = f"W: well frame, origin on the well axis at the coupon face; deck = W + (station_x, 240, {p['face_z']:g})"
     Cs = "C: cap frame, origin at the centre of the skirt underside; seated on a lid, C = W + (0, 0, 6.0); carried, C = carriage + (0, 0, -(16 + 16))"
     D = "D: CubOS deck frame (Ben's 2026-10-02 calibration), use as is"
     table = [
@@ -406,7 +418,7 @@ def main():
         parts[f"shim_{t:.0f}mm"] = {"frame": "W (place at W z -6 for the pocket floor)", "what": f"{t:.0f} mm shim under a thinner piece", **files}
     # tray: the full tray in D, one station block (S1) in W, and the tray minus that block in D
     files = export("coupon_tray", tray, tol=0.05, ang=0.3, section_about=None)
-    parts["coupon_tray"] = {"frame": "D", "what": "printed PETG tray, 105 x 40 x 19.5 mm, four stations", **files}
+    parts["coupon_tray"] = {"frame": "D", "what": f"printed tray, 105 x 40 x {p['tray_top']:g} mm, four stations, two deck-key pockets underneath", **files}
     files = export("tray_spring_pins", tpins, tol=0.01, section_about=None)
     parts["tray_spring_pins"] = {"frame": "D", "what": "WE pins under each pocket and pad pins under each lid's eyelets", **files}
     sx1 = p["stations_x"][0]
@@ -450,8 +462,8 @@ def main():
         "section_versions": "*_section.stl: the 90 degree wedge facing -y removed (polar angles 225..315 deg about the part's own well axis), "
                             "kept -45..225 deg; boolean cuts, so the cut faces are closed. tray_station_section is about S1's axis.",
         "placement": {
-            "W_to_deck": "deck = W + (station_x, 240.0, 20.0); stations_x = " + str(list(p["stations_x"])),
-            "C_seated_to_deck": "deck = C + (station_x, 240.0, 26.0)",
+            "W_to_deck": f"deck = W + (station_x, 240.0, {p['face_z']}); stations_x = " + str(list(p["stations_x"])),
+            "C_seated_to_deck": f"deck = C + (station_x, 240.0, {p['face_z'] + p['lid_top']})",
             "C_carried": "C origin = carriage reference - 32.0 (magnet face 16 below the carriage, cap top 16 above C origin)",
             "lowest_point_carried_C": min(-p["pin_protrude"] - 0.4, p["leg_bottom_w"] - p["lid_top"]),  # the carrier legs
             "reference_tip_C": -(p["lid_top"] - p["ref_tip_w"]),

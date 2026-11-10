@@ -5,7 +5,7 @@
   "capper over vial ASW + 10 mg/L S": 8.0,
   "pipette_bare over park cup": 16.0,
   "capper over tube rack": 22.0,
-  "pipette_bare over vial holder": 23.0,
+  "pipette_bare over vial holder": 25.0,
   "pipette_bare over tip waste": 37.0,
   "capper over vial holder": 44.0
  },
@@ -25,7 +25,7 @@
    "event": "pipette in S1 well y235.5",
    "tool": "pipette",
    "other": "capper",
-   "carriage_z": 56.0,
+   "carriage_z": 58.0,
    "gantry_xy": [
     130.0,
     224.5
@@ -36,7 +36,7 @@
    "event": "pipette in S1 well y244.5",
    "tool": "pipette",
    "other": "capper",
-   "carriage_z": 56.0,
+   "carriage_z": 58.0,
    "gantry_xy": [
     130.0,
     233.5
@@ -47,7 +47,7 @@
    "event": "capper sets electrode cap on S1",
    "tool": "capper+cap",
    "other": "pipette_bare",
-   "carriage_z": 58.0,
+   "carriage_z": 60.0,
    "gantry_xy": [
     185.0,
     240.0
@@ -58,7 +58,7 @@
    "event": "pipette in S2 well y235.5",
    "tool": "pipette",
    "other": "capper",
-   "carriage_z": 56.0,
+   "carriage_z": 58.0,
    "gantry_xy": [
     155.0,
     224.5
@@ -69,7 +69,7 @@
    "event": "pipette in S2 well y244.5",
    "tool": "pipette",
    "other": "capper",
-   "carriage_z": 56.0,
+   "carriage_z": 58.0,
    "gantry_xy": [
     155.0,
     233.5
@@ -80,7 +80,7 @@
    "event": "capper sets electrode cap on S2",
    "tool": "capper+cap",
    "other": "pipette_bare",
-   "carriage_z": 58.0,
+   "carriage_z": 60.0,
    "gantry_xy": [
     210.0,
     240.0
@@ -91,7 +91,7 @@
    "event": "pipette in S3 well y235.5",
    "tool": "pipette",
    "other": "capper",
-   "carriage_z": 56.0,
+   "carriage_z": 58.0,
    "gantry_xy": [
     180.0,
     224.5
@@ -102,7 +102,7 @@
    "event": "pipette in S3 well y244.5",
    "tool": "pipette",
    "other": "capper",
-   "carriage_z": 56.0,
+   "carriage_z": 58.0,
    "gantry_xy": [
     180.0,
     233.5
@@ -113,7 +113,7 @@
    "event": "capper sets electrode cap on S3",
    "tool": "capper+cap",
    "other": "pipette_bare",
-   "carriage_z": 58.0,
+   "carriage_z": 60.0,
    "gantry_xy": [
     235.0,
     240.0
@@ -124,7 +124,7 @@
    "event": "pipette in S4 well y235.5",
    "tool": "pipette",
    "other": "capper",
-   "carriage_z": 56.0,
+   "carriage_z": 58.0,
    "gantry_xy": [
     205.0,
     224.5
@@ -135,7 +135,7 @@
    "event": "pipette in S4 well y244.5",
    "tool": "pipette",
    "other": "capper",
-   "carriage_z": 56.0,
+   "carriage_z": 58.0,
    "gantry_xy": [
     205.0,
     233.5
@@ -146,7 +146,7 @@
    "event": "capper sets electrode cap on S4",
    "tool": "capper+cap",
    "other": "pipette_bare",
-   "carriage_z": 58.0,
+   "carriage_z": 60.0,
    "gantry_xy": [
     260.0,
     240.0
@@ -297,178 +297,178 @@
    "problems": []
   },
   {
-   "event": "pipette fills tube (176,28)",
+   "event": "pipette fills tube (176,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     121.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (176,46)",
+   "event": "pipette fills tube (176,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     121.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (188,28)",
+   "event": "pipette fills tube (188,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     133.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (188,46)",
+   "event": "pipette fills tube (188,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     133.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (200,28)",
+   "event": "pipette fills tube (200,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     145.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (200,46)",
+   "event": "pipette fills tube (200,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     145.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (212,28)",
+   "event": "pipette fills tube (212,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     157.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (212,46)",
+   "event": "pipette fills tube (212,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     157.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (224,28)",
+   "event": "pipette fills tube (224,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     169.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (224,46)",
+   "event": "pipette fills tube (224,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     169.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (236,28)",
+   "event": "pipette fills tube (236,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     181.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (236,46)",
+   "event": "pipette fills tube (236,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     181.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (248,28)",
+   "event": "pipette fills tube (248,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     193.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (248,46)",
+   "event": "pipette fills tube (248,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     193.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (260,28)",
+   "event": "pipette fills tube (260,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     205.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "pipette fills tube (260,46)",
+   "event": "pipette fills tube (260,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 75.0,
    "gantry_xy": [
     205.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
@@ -1144,178 +1144,178 @@
    "problems": []
   },
   {
-   "event": "acid tip over tube (176,28)",
+   "event": "acid tip over tube (176,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     121.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (176,46)",
+   "event": "acid tip over tube (176,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     121.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (188,28)",
+   "event": "acid tip over tube (188,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     133.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (188,46)",
+   "event": "acid tip over tube (188,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     133.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (200,28)",
+   "event": "acid tip over tube (200,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     145.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (200,46)",
+   "event": "acid tip over tube (200,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     145.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (212,28)",
+   "event": "acid tip over tube (212,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     157.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (212,46)",
+   "event": "acid tip over tube (212,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     157.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (224,28)",
+   "event": "acid tip over tube (224,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     169.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (224,46)",
+   "event": "acid tip over tube (224,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     169.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (236,28)",
+   "event": "acid tip over tube (236,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     181.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (236,46)",
+   "event": "acid tip over tube (236,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     181.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (248,28)",
+   "event": "acid tip over tube (248,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     193.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (248,46)",
+   "event": "acid tip over tube (248,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     193.0,
-    35.0
+    43.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (260,28)",
+   "event": "acid tip over tube (260,36)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     205.0,
-    17.0
+    25.0
    ],
    "problems": []
   },
   {
-   "event": "acid tip over tube (260,46)",
+   "event": "acid tip over tube (260,54)",
    "tool": "pipette",
    "other": "capper",
    "carriage_z": 72.0,
    "gantry_xy": [
     205.0,
-    35.0
+    43.0
    ],
    "problems": []
   }

@@ -13,6 +13,13 @@ Parts:
 - tip_waste_cup, tube_rack_2x8, tip_rack_2x15.
 - bench_cell_body / _clamp / _cover: the 0.92 cm2 bulk cell for the copper calibration.
 
+Deck keys (2026-11-09, Ben on #180). Every part here that sits on the deck (the cup block, the tip waste
+cup, the tube rack and the tip rack) has deck-key pockets in its underside at PandaDeck slot centres,
+from deck_keys.py, which also draws the keys and checks the pockets. Making room for them moved three
+things: the cup block's base reaches forward to y 216 (it sat between two slot rows), the tube rack's
+rows moved 8 mm back to y 36 and 54 (row 45 ran under the back row's tube tips), and the tip rack sits
+on a slot column at x 262.5, next to Ben's rack 1 as in ../../stirrers/deck_stir.py.
+
 Why a v2 lid. In ../../copper/cad/well_lid the O-ring's squeeze reaction (10-51 N, 23.6 N
 nominal) bears on a 0.2 mm printed ledge between the counterbore (z 0-1.40) and the 8 mm bore
 (from z 1.60). Treated as an annular plate clamped at r 3.8 and free at the 1.45 mm throat, that
@@ -51,12 +58,18 @@ STEP_D, STEP_TOP = 4.0, 2.0                                    # v2: the neck un
 
 # Deck positions, CubOS frame of Ben's 2026-10-02 calibration (../../plot_deck_layout.py, ../../copper/deck_cu.py)
 CUP_X, CUP_Y, CUP_SEAT_Z = (30.0, 60.0, 90.0), 245.0, 45.0
-TUBE_X, TUBE_Y, TUBE_RECT = [176.0 + 12.0 * k for k in range(8)], (28.0, 46.0), (170.0, 20.0, 266.0, 54.0)
-RACK2_A1, RACK2_A2, PITCH, ROWS = (108.0, 89.0), (99.5, 89.0), 8.5, 15
+# 2026-11-09, for the deck keys: tube rows 8 mm back (were y 28 and 46, rack y 20-54), so the slot row at y 45
+# runs between them; tip rack 2 on the slot column at x 262.5, one column left of Ben's rack 1 (was A1 (108, 89)).
+TUBE_X, TUBE_Y, TUBE_RECT = [176.0 + 12.0 * k for k in range(8)], (36.0, 54.0), (170.0, 28.0, 266.0, 62.0)
+RACK2_A1, RACK2_A2, PITCH, ROWS = (266.75, 89.0), (258.25, 89.0), 8.5, 15
+CUP_BASE_Y0, CUP_BASE_T = 216.0, 3.2  # the cup block's base reaches forward over the y 225 slot row (was y 231, 3.0 thick)
+TUBE_BASE_T, TIP_BASE_T, WASTE_FLANGE_T = 3.0, 3.2, 3.2  # thick enough for a 2.1 mm pocket (were 2.0, 2.0, 2.5)
+keys = cell.keys  # deck_keys.py, loaded by cad_cu_cell.py
 
 # Tube and tip fits. Measured values replace these; print the fit strips first.
 # Eppendorf Safe-Lock 0.5 mL (technical data sheet): 7.8 mm OD under a 2 mm rim of about 9.6 mm, 30 mm rim top to tip.
-# Plate top 30 puts the rims at 32, the tube-rack top the deck checks use; the tips clear the base by 0 to 1 mm.
+# Plate top 30 puts the rims at 32, the tube-rack top the deck checks use. The tips end at z 2, 1 mm above the
+# floor of a 3 mm recess under each tube in the 3 mm base.
 TUBE = dict(body_d=7.8, hole_d=8.2, below_rim=28.0, plate_top=30.0)  # 0.5 mL PP tube hanging by its rim
 # Opentrons 20 uL tip: 39.2 mm long, 3.27 mm ID at the top (labware definition); its OD and collar are not published.
 TIP = dict(hole_d=5.0, plate_top=64.7)  # the collar rests on the plate; tip tops at about Ben's 66
@@ -93,7 +106,7 @@ def cup_block():
     """D frame. Three towers on one base; each top is the well lid's seat plane, boss and magnet pockets."""
     p = P
     floor = 8.0
-    body = union(boxs(CUP_X[0] - 16, CUP_Y - 14, 0, CUP_X[-1] + 16, CUP_Y + 14, 3.0),
+    body = union(boxs(CUP_X[0] - 16, CUP_BASE_Y0, 0, CUP_X[-1] + 16, CUP_Y + 14, CUP_BASE_T),
                  *[cyl(26.0, 0, CUP_SEAT_Z, x, CUP_Y) for x in CUP_X],
                  *[boss_at(x, CUP_Y, CUP_SEAT_Z) for x in CUP_X])
     for x in CUP_X:
@@ -107,14 +120,16 @@ def cup_block():
     meta = {"positions_xy": [[x, CUP_Y] for x in CUP_X], "roles": ["rinse 2 (ASW)", "rinse 1 (DI)", "park (reference storage)"],
             "seat_z": CUP_SEAT_Z, "boss_top_z": CUP_SEAT_Z + p["boss_h"], "reservoir": f"{p['bore_d']} mm bore from z {floor}",
             "fill_ul_to_2mm_below_boss_top": round(math.pi / 4 * p["bore_d"] ** 2 * (fill_top - floor)),
-            "electrodes_lowest_z_seated": round(cap_floor, 2)}
-    return body.clean(), meta
+            "electrodes_lowest_z_seated": round(cap_floor, 2),
+            "base": f"x {CUP_X[0] - 16:g}-{CUP_X[-1] + 16:g}, y {CUP_BASE_Y0:g}-{CUP_Y + 14:g}, {CUP_BASE_T} thick",
+            "deck_key_pockets": [list(k[:2]) for k in keys.POCKETS["cup_block_3"]]}
+    return keys.cut_pockets(body.clean(), "cup_block_3"), meta
 
 
 def tip_waste_cup(cx=385.0, cy=150.0):
     """D frame, at the copper deck's tip-waste position (the aluminium deck's is (335, 40))."""
-    cup = union(cyl(30.0, 0, 50.0, cx, cy), cyl(44.0, 0, 2.5, cx, cy))
-    return cup.cut(cyl(30.0 - 2 * 1.6, 3.0, 60.0, cx, cy)).clean()
+    cup = union(cyl(30.0, 0, 50.0, cx, cy), cyl(44.0, 0, WASTE_FLANGE_T, cx, cy))
+    return keys.cut_pockets(cup.cut(cyl(30.0 - 2 * 1.6, 3.0, 60.0, cx, cy)).clean(), "tip_waste_cup")
 
 
 def tube_rack():
@@ -123,42 +138,45 @@ def tube_rack():
     x0, y0, x1, y1 = TUBE_RECT
     t = TUBE
     top0 = t["plate_top"] - 2.5
-    body = union(boxs(x0, y0, 0, x1, y1, 2.0), boxs(x0, y0, top0, x1, y1, t["plate_top"]),
+    body = union(boxs(x0, y0, 0, x1, y1, TUBE_BASE_T), boxs(x0, y0, top0, x1, y1, t["plate_top"]),
                  boxs(x0, y0, 0, x0 + 3, y1, t["plate_top"]), boxs(x1 - 3, y0, 0, x1, y1, t["plate_top"]),
                  boxs(217.0, y0 + 2, 0, 219.0, y1 - 2, t["plate_top"]))
     for x in TUBE_X:
         for y in TUBE_Y:
             body = body.cut(cyl(t["hole_d"], top0 - 1, t["plate_top"] + 1, x, y))
-            body = body.cut(cyl(t["body_d"] - 3.0, 1.0, 3.0, x, y))  # clears the tube's tip if it bottoms out
+            body = body.cut(cyl(t["body_d"] - 3.0, 1.0, TUBE_BASE_T + 1.0, x, y))  # clears the tube's tip (at z 2)
     try:  # tube numbers, engraved 0.4 mm, between the rows
         for k, x in enumerate(TUBE_X):
-            for n, y in ((k + 1, 34.2), (k + 9, 39.8)):
+            for n, y in ((k + 1, (TUBE_Y[0] + TUBE_Y[1]) / 2 - 2.8), (k + 9, (TUBE_Y[0] + TUBE_Y[1]) / 2 + 2.8)):
                 txt = cq.Workplane("XY").workplane(offset=t["plate_top"] - 0.4).center(x, y).text(str(n), 3.2, 0.5, kind="bold").val()
                 body = body.cut(txt)
         labels = True
     except Exception:  # no font on this machine: plain plate
         labels = False
-    return body.clean(), {"tube_xy": [[x, y] for y in TUBE_Y for x in TUBE_X], "plate_top_z": t["plate_top"],
-                          "hole_d": t["hole_d"], "labels": labels}
+    return keys.cut_pockets(body.clean(), "tube_rack_2x8"), {
+        "tube_xy": [[x, y] for y in TUBE_Y for x in TUBE_X], "rect": list(TUBE_RECT), "plate_top_z": t["plate_top"],
+        "hole_d": t["hole_d"], "base_t": TUBE_BASE_T, "labels": labels,
+        "deck_key_pockets": [list(k[:2]) for k in keys.POCKETS["tube_rack_2x8"]]}
 
 
 def tip_rack():
-    """D frame. The second 2 x 15 rack at A1 (108, 89), A2 (99.5, 89), rows +y at 8.5 mm: 138 x 20 mm,
-    as panda_2x15_tip_rack in Ben's deck file."""
+    """D frame. The second 2 x 15 rack at A1 (266.75, 89), A2 (258.25, 89), rows +y at 8.5 mm: 138 x 20 mm,
+    as panda_2x15_tip_rack in Ben's deck file, on the slot column one left of Ben's rack 1."""
     xs = (RACK2_A2[0], RACK2_A1[0])
     cx = sum(xs) / 2
     ya = RACK2_A1[1]
     y0, y1 = ya - (138.0 - (ROWS - 1) * PITCH) / 2, ya + (ROWS - 1) * PITCH + (138.0 - (ROWS - 1) * PITCH) / 2
     x0, x1 = cx - 10.0, cx + 10.0
     top = TIP["plate_top"]
-    body = union(boxs(x0, y0, 0, x1, y1, 2.0), boxs(x0, y0, top - 3.0, x1, y1, top),
+    body = union(boxs(x0, y0, 0, x1, y1, TIP_BASE_T), boxs(x0, y0, top - 3.0, x1, y1, top),
                  boxs(x0, y0, 0, x0 + 2.0, y1, top), boxs(x1 - 2.0, y0, 0, x1, y1, top),
                  boxs(x0, y0, 0, x1, y0 + 2.0, top), boxs(x0, y1 - 2.0, 0, x1, y1, top))
     for r in range(ROWS):
         for x in xs:
             body = body.cut(cyl(TIP["hole_d"], top - 4.0, top + 1.0, x, ya + r * PITCH))
-    return body.clean(), {"rect": [x0, y0, x1, y1], "a1": list(RACK2_A1), "a2": list(RACK2_A2), "plate_top_z": top,
-                          "hole_d": TIP["hole_d"]}
+    return keys.cut_pockets(body.clean(), "tip_rack_2x15"), {
+        "rect": [x0, y0, x1, y1], "a1": list(RACK2_A1), "a2": list(RACK2_A2), "plate_top_z": top, "hole_d": TIP["hole_d"],
+        "base_t": TIP_BASE_T, "deck_key_pockets": [list(k[:2]) for k in keys.POCKETS["tip_rack_2x15"]]}
 
 
 def fit_strip(kind):
@@ -259,11 +277,14 @@ def main():
     for dash in ("006", "008", "010"):
         lid, m = well_lid_v2(dash)
         parts[f"well_lid_v2_{dash}"] = export(f"well_lid_v2_{dash}", lid, f"well lid v2 for AS568-{dash}",
-                                              "W frame: on the coupon face; deck = W + (station x, 240, 20)", 0.02, m)
+                                              f"W frame: on the coupon face; deck = W + (station x, 240, {P['face_z']:g})", 0.02, m)
     body, m = cup_block()
     parts["cup_block_3"] = export("cup_block_3", body, "rinse 2, rinse 1 and park cups with the lid's boss", "D frame, as is", 0.03, m)
-    parts["tip_waste_cup"] = export("tip_waste_cup", tip_waste_cup(), "tip waste, 30 mm, top z 50",
-                                    "D frame at the copper deck's (385, 150); the aluminium deck's is (335, 40)")
+    parts["tip_waste_cup"] = export("tip_waste_cup", tip_waste_cup(), "tip waste, 30 mm, top z 50, one deck-key pocket",
+                                    "D frame at the copper deck's (385, 150); its key pocket is at (387.5, 135). The aluminium "
+                                    "deck's (335, 40) has no slot centre under the cup: move it to a slot, e.g. (337.5, 135)",
+                                    extra={"deck_key_pockets": [list(k[:2]) for k in keys.POCKETS["tip_waste_cup"]],
+                                           "flange_t": WASTE_FLANGE_T})
     body, m = tube_rack()
     parts["tube_rack_2x8"] = export("tube_rack_2x8", body, "2 x 8 rack for open 0.5 mL tubes", "D frame, as is", 0.03, m)
     body, m = tip_rack()
