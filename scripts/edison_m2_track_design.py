@@ -16,6 +16,12 @@ Usage (run from the repo root; needs EDISON_PLATFORM_API_KEY):
     python scripts/edison_m2_track_design.py submit   # writes _task_ids.json
     python scripts/edison_m2_track_design.py wait     # blocks until all finish, then fetches
     python scripts/edison_m2_track_design.py fetch    # fetch whatever has finished
+    python scripts/edison_m2_track_design.py retry transients interaction   # resubmit some -> _task_ids_retry.json
+    python scripts/edison_m2_track_design.py wait-retry | fetch-retry
+
+The first round (05:07 UTC on 2026-11-10) ran during an outage of Edison's literature search: the ss316l and doe
+reports say no papers were retrieved, so they are the model's own answer, not a cited one. ``retry`` resubmits
+chosen queries unchanged; their reports get a ``-retry`` suffix.
 
 ``wait`` keeps its sleep inside Python, so in GitHub Actions it can run as a single foreground call
 (see CLAUDE.md). Pattern copied from scripts/edison_eagar_tsai_alsi10mg.py (PR #238).
@@ -231,8 +237,26 @@ def client() -> EdisonClient:
     return EdisonClient(api_key=key)
 
 
-def load_ids() -> dict:
-    return json.loads(TASK_FILE.read_text())
+RETRY_FILE = OUT_DIR / "_task_ids_retry.json"
+
+
+def load_ids(path: pathlib.Path = TASK_FILE) -> dict:
+    return json.loads(path.read_text())
+
+
+def retry(keys: list[str]) -> None:
+    if RETRY_FILE.exists():
+        sys.exit(f"{RETRY_FILE} already exists; refusing to resubmit")
+    c = client()
+    record = {"job": JobNames.LITERATURE_HIGH.value,
+              "submitted_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "tasks": {}}
+    for key in keys:
+        q = QUERIES[key]
+        task_id = c.create_task(TaskRequest(name=JobNames.LITERATURE_HIGH, query=q["query"]))
+        record["tasks"][key] = {"task_id": str(task_id), "title": q["title"] + " (retry)",
+                                "outfile": q["outfile"].replace(".md", "-retry.md")}
+        print(f"submitted {key} (retry): {task_id}", flush=True)
+        RETRY_FILE.write_text(json.dumps(record, indent=2) + "\n")
 
 
 def submit() -> None:
@@ -267,7 +291,8 @@ def fetch_one(c: EdisonClient, key: str, meta: dict) -> str:
     dump = task.model_dump(mode="json")
     # The retrieved paper text carries corresponding-author emails; this repo is public.
     raw = EMAIL_RE.sub("[email redacted]", json.dumps(dump, indent=2, default=str))
-    (RAW_DIR / f"{key}-task-verbose.json").write_text(raw + "\n")
+    suffix = "-retry" if meta["outfile"].endswith("-retry.md") else ""
+    (RAW_DIR / f"{key}{suffix}-task-verbose.json").write_text(raw + "\n")
 
     frame = dump.get("environment_frame") or {}
     answer = (
@@ -299,9 +324,9 @@ def fetch_one(c: EdisonClient, key: str, meta: dict) -> str:
     return status
 
 
-def fetch() -> dict[str, str]:
+def fetch(path: pathlib.Path = TASK_FILE) -> dict[str, str]:
     c = client()
-    ids = load_ids()
+    ids = load_ids(path)
     out = {}
     for key, meta in ids["tasks"].items():
         out[key] = fetch_one(c, key, meta)
@@ -309,9 +334,9 @@ def fetch() -> dict[str, str]:
     return out
 
 
-def wait(poll_s: int = 120, max_s: int = 3300) -> None:
+def wait(poll_s: int = 120, max_s: int = 3300, path: pathlib.Path = TASK_FILE) -> None:
     c = client()
-    ids = load_ids()
+    ids = load_ids(path)
     start = time.time()
     pending = set(ids["tasks"])
     while pending and time.time() - start < max_s:
@@ -336,5 +361,11 @@ if __name__ == "__main__":
         fetch()
     elif cmd == "wait":
         wait(max_s=int(sys.argv[2]) if len(sys.argv) > 2 else 3300)
+    elif cmd == "retry":
+        retry(sys.argv[2:])
+    elif cmd == "fetch-retry":
+        fetch(RETRY_FILE)
+    elif cmd == "wait-retry":
+        wait(max_s=int(sys.argv[2]) if len(sys.argv) > 2 else 3300, path=RETRY_FILE)
     else:
         sys.exit(__doc__)
