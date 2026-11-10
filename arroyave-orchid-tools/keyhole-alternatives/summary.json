@@ -1,0 +1,478 @@
+{
+ "constants": {
+  "KE_KEYHOLE": 6.0,
+  "KE_WKDK": 8.543,
+  "KING_THRESHOLD": 30.0,
+  "T_BOIL_AL_K": 2743.0
+ },
+ "am_module": {
+  "alsi10mg": {
+   "label": "AlSi10Mg, 150 \u00b0C plate",
+   "A": 0.3074,
+   "r0_um": 40.0,
+   "T_l": 867.0,
+   "T0": 423.15,
+   "boundary_speed_m_s": [
+    0.306,
+    1.194
+   ],
+   "boundary_power_W": [
+    188.6,
+    341.6
+   ],
+   "boundary_exponent_P_vs_v": 0.457,
+   "Ke_along_boundary": {
+    "median": 15.591,
+    "min": 15.473,
+    "max": 17.059,
+    "n": 297
+   },
+   "king_along_boundary": {
+    "median": 40.015,
+    "min": 39.71,
+    "max": 43.782,
+    "n": 297
+   },
+   "boiling_number_along_boundary": {
+    "median": 2.983,
+    "min": 2.96,
+    "max": 3.264,
+    "n": 297
+   },
+   "gan_keyhole_depth_on_boundary_um": {
+    "median": 227.062,
+    "min": 225.161,
+    "max": 250.547,
+    "n": 297
+   },
+   "criteria": {
+    "gan_ke6": {
+     "label": "Gan Ke > 6 (keyhole mode)",
+     "threshold": 6.0,
+     "boundary_power_over_am": {
+      "median": 0.385,
+      "min": 0.352,
+      "max": 0.388,
+      "n": 297
+     },
+     "rms_power_error_W": 167.3,
+     "grid_points": 58,
+     "am_keyhole": 15,
+     "predicted_keyhole": 47,
+     "agree": 26,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 32
+    },
+    "gan_wkdk": {
+     "label": "Gan depth law + Wk/Dk \u2264 0.7 (Ke > 8.54)",
+     "threshold": 8.543,
+     "boundary_power_over_am": {
+      "median": 0.548,
+      "min": 0.501,
+      "max": 0.552,
+      "n": 297
+     },
+     "rms_power_error_W": 123.3,
+     "grid_points": 58,
+     "am_keyhole": 15,
+     "predicted_keyhole": 38,
+     "agree": 35,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 23
+    },
+    "king30": {
+     "label": "King \u0394H/h_s > 30 (316L, measured)",
+     "threshold": 30.0,
+     "boundary_power_over_am": {
+      "median": 0.75,
+      "min": 0.685,
+      "max": 0.755,
+      "n": 297
+     },
+     "rms_power_error_W": 68.9,
+     "grid_points": 58,
+     "am_keyhole": 15,
+     "predicted_keyhole": 24,
+     "agree": 49,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 9
+    },
+    "gs_2r0": {
+     "label": "Gladush\u2013Smurov depth > 2 r0 (lpbf_map)",
+     "threshold": 2.0,
+     "boundary_power_over_am": {
+      "median": 2.173,
+      "min": 1.805,
+      "max": 2.378,
+      "n": 297
+     },
+     "rms_power_error_W": 326.6,
+     "grid_points": 58,
+     "am_keyhole": 15,
+     "predicted_keyhole": 2,
+     "agree": 45,
+     "missed_am_keyhole": 13,
+     "extra_keyhole": 0
+    },
+    "gan_calibrated": {
+     "label": "Ke > 15.6 (fit to this map)",
+     "threshold": 15.591,
+     "boundary_power_over_am": {
+      "median": 1.0,
+      "min": 0.914,
+      "max": 1.008,
+      "n": 297
+     },
+     "rms_power_error_W": 4.4,
+     "grid_points": 58,
+     "am_keyhole": 15,
+     "predicted_keyhole": 15,
+     "agree": 58,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 0
+    },
+    "eagar_tsai_wd2.5": {
+     "label": "eagar-tsai W/D \u2264 2.5 (#238)",
+     "grid_points": 58,
+     "am_keyhole": 15,
+     "predicted_keyhole": 55,
+     "agree": 18,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 40
+    },
+    "eagar_tsai_boiling": {
+     "label": "eagar-tsai peak T \u2265 T_b (#238)",
+     "grid_points": 58,
+     "am_keyhole": 15,
+     "predicted_keyhole": 53,
+     "agree": 20,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 38
+    }
+   },
+   "render": {
+    "P_W": 250.0,
+    "v_m_s": 0.9,
+    "Ke": 13.19,
+    "king_dH_hs": 33.8,
+    "gan_keyhole_depth_um": 188.6,
+    "gs_depth_um": 30.2
+   }
+  },
+  "blend": {
+   "label": "BYU blend (Al-24Si), 30 \u00b0C plate",
+   "A": 0.3841,
+   "r0_um": 45.0,
+   "T_l": 1019.3,
+   "T0": 303.15,
+   "boundary_speed_m_s": [
+    0.407,
+    1.267
+   ],
+   "boundary_power_W": [
+    179.2,
+    345.4
+   ],
+   "boundary_exponent_P_vs_v": 0.588,
+   "Ke_along_boundary": {
+    "median": 9.209,
+    "min": 8.935,
+    "max": 9.967,
+    "n": 259
+   },
+   "king_along_boundary": {
+    "median": 32.436,
+    "min": 31.473,
+    "max": 35.106,
+    "n": 259
+   },
+   "boiling_number_along_boundary": {
+    "median": 2.703,
+    "min": 2.623,
+    "max": 2.925,
+    "n": 259
+   },
+   "gan_keyhole_depth_on_boundary_um": {
+    "median": 140.559,
+    "min": 135.637,
+    "max": 154.203,
+    "n": 259
+   },
+   "criteria": {
+    "gan_ke6": {
+     "label": "Gan Ke > 6 (keyhole mode)",
+     "threshold": 6.0,
+     "boundary_power_over_am": {
+      "median": 0.652,
+      "min": 0.602,
+      "max": 0.671,
+      "n": 259
+     },
+     "rms_power_error_W": 95.7,
+     "grid_points": 27,
+     "am_keyhole": 5,
+     "predicted_keyhole": 10,
+     "agree": 22,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 5
+    },
+    "gan_wkdk": {
+     "label": "Gan depth law + Wk/Dk \u2264 0.7 (Ke > 8.54)",
+     "threshold": 8.543,
+     "boundary_power_over_am": {
+      "median": 0.928,
+      "min": 0.857,
+      "max": 0.956,
+      "n": 259
+     },
+     "rms_power_error_W": 25.2,
+     "grid_points": 27,
+     "am_keyhole": 5,
+     "predicted_keyhole": 6,
+     "agree": 26,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 1
+    },
+    "king30": {
+     "label": "King \u0394H/h_s > 30 (316L, measured)",
+     "threshold": 30.0,
+     "boundary_power_over_am": {
+      "median": 0.925,
+      "min": 0.855,
+      "max": 0.953,
+      "n": 259
+     },
+     "rms_power_error_W": 25.8,
+     "grid_points": 27,
+     "am_keyhole": 5,
+     "predicted_keyhole": 6,
+     "agree": 26,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 1
+    },
+    "gs_2r0": {
+     "label": "Gladush\u2013Smurov depth > 2 r0 (lpbf_map)",
+     "threshold": 2.0,
+     "boundary_power_over_am": {
+      "median": 2.372,
+      "min": 2.135,
+      "max": 2.43,
+      "n": 259
+     },
+     "rms_power_error_W": 362.9,
+     "grid_points": 27,
+     "am_keyhole": 5,
+     "predicted_keyhole": 0,
+     "agree": 22,
+     "missed_am_keyhole": 5,
+     "extra_keyhole": 0
+    },
+    "gan_calibrated": {
+     "label": "Ke > 9.2 (fit to this map)",
+     "threshold": 9.209,
+     "boundary_power_over_am": {
+      "median": 1.0,
+      "min": 0.924,
+      "max": 1.031,
+      "n": 259
+     },
+     "rms_power_error_W": 9.9,
+     "grid_points": 27,
+     "am_keyhole": 5,
+     "predicted_keyhole": 6,
+     "agree": 26,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 1
+    },
+    "eagar_tsai_wd2.5": {
+     "label": "eagar-tsai W/D \u2264 2.5 (#238)",
+     "grid_points": 27,
+     "am_keyhole": 5,
+     "predicted_keyhole": 17,
+     "agree": 15,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 12
+    },
+    "eagar_tsai_boiling": {
+     "label": "eagar-tsai peak T \u2265 T_b (#238)",
+     "grid_points": 27,
+     "am_keyhole": 5,
+     "predicted_keyhole": 21,
+     "agree": 11,
+     "missed_am_keyhole": 0,
+     "extra_keyhole": 16
+    }
+   },
+   "render": {
+    "P_W": 375.0,
+    "v_m_s": 0.4,
+    "Ke": 19.26,
+    "king_dH_hs": 67.8,
+    "gan_keyhole_depth_um": 321.5,
+    "gs_depth_um": 88.8,
+    "Ke_edge_at_eutectic_850K": 25.22,
+    "gan_keyhole_depth_edge_at_eutectic_um": 428.8,
+    "pool_depth_um": 349.0,
+    "pool_length_um": 1470.0,
+    "pool_halfwidth_um": 231.0,
+    "A_for_gan_keyhole_depth_eq_am_pool_depth": 0.415
+   }
+  }
+ },
+ "gan2021_xray_depths": {
+  "refit_e_star_vs_Ke": {
+   "slope": 0.397,
+   "intercept": -0.403,
+   "n": 87
+  },
+  "Ti64": {
+   "n": 71,
+   "P_W": [
+    103.198,
+    521.802
+   ],
+   "v_m_s": [
+    0.4,
+    1.2
+   ],
+   "measured_um": [
+    15,
+    445
+   ],
+   "gan_law_um": {
+    "MAE_um": 15.0,
+    "median_err_um": -6.7,
+    "max_abs_err_um": 41.5,
+    "median_rel_err_pct": 11.1,
+    "ratio_pred_over_meas_median": 0.93
+   },
+   "gladush_smurov_um": {
+    "MAE_um": 104.4,
+    "median_err_um": -81.0,
+    "max_abs_err_um": 321.7,
+    "median_rel_err_pct": 68.3,
+    "ratio_pred_over_meas_median": 0.32
+   }
+  },
+  "Al6061": {
+   "n": 9,
+   "P_W": [
+    416.0,
+    520.0
+   ],
+   "v_m_s": [
+    0.35,
+    0.9
+   ],
+   "measured_um": [
+    70,
+    530
+   ],
+   "gan_law_um": {
+    "MAE_um": 20.6,
+    "median_err_um": 20.3,
+    "max_abs_err_um": 46.9,
+    "median_rel_err_pct": 12.6,
+    "ratio_pred_over_meas_median": 1.12
+   },
+   "gladush_smurov_um": {
+    "MAE_um": 163.1,
+    "median_err_um": -145.1,
+    "max_abs_err_um": 410.3,
+    "median_rel_err_pct": 74.7,
+    "ratio_pred_over_meas_median": 0.25
+   }
+  },
+  "SS316": {
+   "n": 7,
+   "P_W": [
+    208.0,
+    520.0
+   ],
+   "v_m_s": [
+    0.3,
+    0.6
+   ],
+   "measured_um": [
+    94,
+    492
+   ],
+   "gan_law_um": {
+    "MAE_um": 23.9,
+    "median_err_um": -24.7,
+    "max_abs_err_um": 38.6,
+    "median_rel_err_pct": 5.6,
+    "ratio_pred_over_meas_median": 0.94
+   },
+   "gladush_smurov_um": {
+    "MAE_um": 210.2,
+    "median_err_um": -208.2,
+    "max_abs_err_um": 355.5,
+    "median_rel_err_pct": 78.0,
+    "ratio_pred_over_meas_median": 0.22
+   }
+  }
+ },
+ "solyaev2025_alsi10mg": {
+  "corner_P_W": 220.0,
+  "corner_v_m_s": 0.8,
+  "Ke_at_corner": 4.06,
+  "king_at_corner": 13.4,
+  "gan_keyhole_depth_at_corner_um": 60.3,
+  "criteria": {
+   "gan_ke6": {
+    "label": "Gan Ke > 6 (keyhole mode)",
+    "boundary_power_at_0.8_m_s_W": 324.7,
+    "boundary_power_at_0.335_m_s_W": 210.1,
+    "scored_points": 231,
+    "measured_keyhole": 80,
+    "predicted_keyhole": 87,
+    "agree": 196,
+    "missed": 14,
+    "extra": 21
+   },
+   "gan_wkdk": {
+    "label": "Gan depth law + Wk/Dk \u2264 0.7 (Ke > 8.54)",
+    "boundary_power_at_0.8_m_s_W": 462.3,
+    "boundary_power_at_0.335_m_s_W": 299.2,
+    "scored_points": 231,
+    "measured_keyhole": 80,
+    "predicted_keyhole": 38,
+    "agree": 181,
+    "missed": 46,
+    "extra": 4
+   },
+   "king30": {
+    "label": "King \u0394H/h_s > 30 (316L, measured)",
+    "boundary_power_at_0.8_m_s_W": 492.7,
+    "boundary_power_at_0.335_m_s_W": 318.8,
+    "scored_points": 231,
+    "measured_keyhole": 80,
+    "predicted_keyhole": 32,
+    "agree": 177,
+    "missed": 51,
+    "extra": 3
+   },
+   "gs_2r0": {
+    "label": "Gladush\u2013Smurov depth > 2 r0 (lpbf_map)",
+    "boundary_power_at_0.8_m_s_W": 1541.9,
+    "boundary_power_at_0.335_m_s_W": 860.2,
+    "scored_points": 231,
+    "measured_keyhole": 80,
+    "predicted_keyhole": 0,
+    "agree": 151,
+    "missed": 80,
+    "extra": 0
+   },
+   "eagar_tsai_wd2.5": {
+    "label": "eagar-tsai W/D \u2264 2.5 (#238)",
+    "scored_points": 231,
+    "measured_keyhole": 80,
+    "predicted_keyhole": 116,
+    "agree": 193,
+    "missed": 1,
+    "extra": 37
+   }
+  }
+ }
+}
