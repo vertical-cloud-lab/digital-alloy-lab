@@ -220,17 +220,18 @@ def pilot_design():
 STEPS = [
     ("A1", "Job file, slice, vector preview, track map", "A", (4, 8), "4–8 h", (0.5, 1), "0.5–1 h"),
     ("A2", "AM Module predictions (before printing)", "A", (8, 16), "1–2 days of setup", (1, 1), "~1 h"),
-    ("A3", "Inserts: machine, grind, mark, measure", "A", (8, 8), "~1 day for a batch of 8", (2, 3), "2–3 h per 4"),
+    ("A3", "Panels: cut, machine, drill, grind flush", "A", (8, 16), "1–2 days for a batch of 8", (1, 4),
+     "1–2 h per panel, 1–2 a run"),
     ("B1", "Machine check: gas, filter, laser power", "B", (0.5, 1), "0.5–1 h", (0.25, 0.5), "15–30 min"),
-    ("B2", "Install plate + inserts, check flushness", "B", (0.5, 1), "0.5–1 h", (0.5, 0.5), "30 min"),
+    ("B2", "Install plate + panels, check flushness", "B", (0.5, 1), "0.5–1 h", (0.5, 0.5), "30 min"),
     ("B3", "Load and sieve powder", "B", (0.5, 1), "0.5–1 h", (0.5, 0.5), "30 min"),
     ("B4", "Close up, inert to O₂ setpoint", "B", (0.5, 1), "0.5–1 h", (0.5, 1), "0.5–1 h"),
     ("B5", "Recoat one layer, expose all tracks", "B", (0, 0.25), "< 15 min", (0, 0.25), "< 15 min"),
     ("B6", "Cool and de-inert", "B", (0.25, 0.5), "15–30 min", (0.25, 0.5), "15–30 min"),
-    ("B7", "Depowder, photograph, remove inserts", "B", (0.5, 1), "0.5–1 h", (0.5, 0.5), "30 min"),
+    ("B7", "Depowder, photograph, unscrew panels", "B", (0.5, 1), "0.5–1 h", (0.5, 0.5), "30 min"),
     ("B8", "Clean machine, powder, waste", "B", (1, 2), "1–2 h", (1, 1), "1 h"),
-    ("C1", "Top-view images of each insert", "C", (1, 1), "1 h", (0.5, 0.5), "30 min"),
-    ("C2", "Bandsaw + final cut (8 slabs)", "C", (2, 3), "2–3 h", (1, 2), "1–2 h"),
+    ("C1", "Top-view images of each panel", "C", (1, 1), "1 h", (0.5, 0.5), "30 min"),
+    ("C2", "Bandsaw strip, pieces; fine saw (8)", "C", (3, 5), "3–5 h", (2, 3), "2–3 h"),
     ("C3", "Hot-mount 8 pucks", "C", (2, 3), "2–3 h", (2, 2), "2 h"),
     ("C4", "Grind, polish, etch", "C", (4, 6), "4–6 h", (3, 4), "3–4 h"),
     ("C5", "SEM: 72 tracks x 2 mags (+ EDS)", "C", (4, 5), "4–5 h", (3, 3), "3 h"),
@@ -297,9 +298,9 @@ def d(y, m, dd):
 def panel_gantt(g):
     rows = [
         ("Kickoff, safety training, AM Module set-up", (2026, 11, 9), (2026, 11, 13), PHASE["A"]),
-        ("Inserts, job file + dry run, laser check, predictions", (2026, 11, 16), (2026, 11, 20), PHASE["A"]),
-        ("Pilot print (Mon 11/23 or Tue 11/24); section insert A", (2026, 11, 23), (2026, 11, 24), PHASE["B"]),
-        ("Metallography on inserts A–D; SEM session", (2026, 11, 30), (2026, 12, 4), PHASE["C"]),
+        ("Panels, job file + dry run, laser check, predictions", (2026, 11, 16), (2026, 11, 20), PHASE["A"]),
+        ("Pilot print (Mon 11/23 or Tue 11/24); section panel A", (2026, 11, 23), (2026, 11, 24), PHASE["B"]),
+        ("Metallography on panels A–D; SEM session", (2026, 11, 30), (2026, 12, 4), PHASE["C"]),
         ("Measure, compare with predictions, pilot write-up", (2026, 12, 7), (2026, 12, 11), PHASE["C"]),
         ("Finals and holidays: light work", (2026, 12, 14), (2027, 1, 8), "light"),
         ("Campaign: about 1 run a week", (2027, 1, 11), (2027, 2, 19), "campaign"),
@@ -320,7 +321,7 @@ def panel_gantt(g):
         if c == "light":
             g.add_patch(Rectangle((left, y - h / 2), width, h, fc=NEUTRAL_FILL, ec=AXIS, lw=0.8, hatch="////",
                                   zorder=2))
-            g.text(left + width + 0.8, y, "campaign inserts, campaign predictions, automate the measurement",
+            g.text(left + width + 0.8, y, "campaign panels, campaign predictions, automate the measurement",
                    ha="left", va="center", fontsize=7.6, color=INK2)
         elif c == "campaign":
             g.add_patch(Rectangle((left, y - h / 2), width, h, fc=NEUTRAL_FILL, ec=AXIS, lw=0.8, zorder=2))
