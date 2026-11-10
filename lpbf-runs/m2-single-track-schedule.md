@@ -186,6 +186,18 @@ and the cutting only has to get that strip out and into pieces that fit a mount.
 7. **Check under the optical microscope** that the etch is good and the track order matches the map. **Then SEM**:
    secondary-electron images of every track at two fixed magnifications. Ronnie's
    [Caliber](https://github.com/vertical-cloud-lab/caliber) can supply SEM and EDS acquisition settings.
+   - **What fits in BYU's Apreo C** ([spec page](https://microscopy.byu.edu/apreo-sem),
+     [startup SOP](https://microscopy.byu.edu/apreo-sem-startup-sop)): up to 500 g in any stage position, or 2 kg
+     flat (0° tilt); 122 mm across with full travel and rotation (larger with limited travel); 85 mm tall, holder
+     included, to the 10 mm working distance. Every sample in one load must be within 1–2 mm of the same height, and
+     the usual holder takes 12.7 mm pin stubs. So the mount and the polisher limit the piece size, not the SEM. A
+     whole panel would fit flat (about 0.6–1.6 kg if 10–25 mm thick), but it couldn't be tilted and would show only
+     the tops of the tracks.
+   - **Load the pucks themselves,** with heights matched, on a holder for 1.25" mounts: one run's eight pucks fit in
+     the 122 mm circle. Keep any load that will be tilted to 70° for EBSD under 500 g, holder included. Without a
+     mount holder, break each polished piece out of its puck onto a 25 mm pin stub, as in the lab's
+     [stub-mounting video](https://youtu.be/kcyESipwU8Y?t=776). The widest field of view is 3.0 mm at the 10 mm
+     working distance, so each track gets its own frames.
 
 ## 4. Pilot run (Carl and Josh)
 
@@ -310,13 +322,14 @@ bottleneck is metallography and SEM.
 - [ ] Insert plate: where it is, drawings, panel size and thickness, pocket depth, screw size, how panels are set flush (shims?), how many spare panels, and whether we may cut up Nathan C.'s panels; choose refresh option A or B for the campaign.
 - [ ] Shop access for making panels (mill, drill, and a surface grinder with a vise or vacuum chuck, since 316L won't hold on a magnetic chuck) and for saws (a bandsaw that takes an 88 mm panel, an abrasive cut-off or precision saw).
 - [ ] Metallography: hot-mount press, polisher, fume hood for aqua regia or an electrolytic oxalic setup.
-- [ ] SEM: who is trained, how far ahead to book, conductive mounts.
+- [ ] SEM: who is trained, how far ahead to book, conductive mounts, and whether the EMF has a holder for several 1.25" mounts or we should buy one ([§3](#cutting-without-wire-edm)).
 - [ ] Where raw images live. Commit only measurements and representative images; the repo is public.
 
 ## Sources
 
 - Materialise, [Concept Laser / Colibrium Additive L-PBF Build Processor](https://materialise.com/en/industrial/software/build-processor/concept-laser): per-part slice parameters, per-part build strategy sent to WRX, M2 compatibility.
 - [Metal AM (2016)](https://www.metal-am.com/?p=61603), [New Equipment Digest](https://newequipment.com/home/product/55101922/68671-software-tool-permits-open-processing-of-all-parameter-settings), [Design World](https://www.designworldonline.com/control-additive-builds-concept-laser-parameter-editor/): CL WRX software tiers and the CL WRX Parameter licence.
+- BYU Electron Microscopy Facility, [Apreo C specifications](https://microscopy.byu.edu/apreo-sem) and [startup SOP](https://microscopy.byu.edu/apreo-sem-startup-sop): the stage limits, the 1–2 mm equal-height rule, and the 3.0 mm widest field at 10 mm working distance.
 - R. Weissbach, R. W. Penny, A. J. Hart, *A rapid experimental workflow for studying melt track scaling in laser powder bed fusion using high-precision metal template substrates*, [arXiv:2409.14548](https://arxiv.org/abs/2409.14548) (published in *Progress in Additive Manufacturing*): template inserts, the flatness tolerance, and the full sectioning and etching recipe.
 - C. Kamath et al., *Density of additively-manufactured, 316L SS parts using laser powder-bed fusion at powers up to 400 W*, [OSTI 1116929](https://www.osti.gov/biblio/1116929): single tracks and density pillars on a 400 W M2 with a 54 µm D4σ spot.
 - ORNL, [316L/316H coupon characterization framework](https://info.ornl.gov/sites/publications/Files/Pub199801.pdf): a framework for more than 700 coupons from a Concept Laser M2 and a Renishaw AM400.
