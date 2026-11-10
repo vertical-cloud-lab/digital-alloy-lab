@@ -1,11 +1,14 @@
 """Schematic CadQuery model for the M2 single-track process animation (steps.py).
 
-Millimetres, z up, the M2's build plane at z = 0. Nothing here is measured on BYU's machine or tools: the M2 is a box
+Millimetres, z up, the M2's build plane at z = 0. The build plate follows Nathan C.'s photo of it (PR #243; sizes in
+layout.py): about 10 in square, with four removable square panels in pockets and a hole near each corner. Its
+thickness (about 1 in) is read off the same photo; the panels' thickness (1/2 in) and what their four holes are for
+(counterbored screws are drawn) are assumptions. Nothing else is measured on BYU's machine or tools: the M2 is a box
 with a process chamber, dose / build / overflow wells, a recoater, a scanner window and a gas inlet and outlet, laid out
-like a Concept Laser machine; the bench tools are generic shapes. What does come from the plan
-(../m2-single-track-schedule.md): the four 25 mm inserts in pockets of a 250 mm plate, two rows of nine 8 mm tracks per
-insert at 2 mm pitch, the cut sequence (top slab off, split per row, final face 1-2 mm from mid-length, grind to it),
-1.25 in hot-mount pucks, the grit and polish sequence, and SEM.
+like a Concept Laser machine; the bench tools are generic shapes. What comes from the plan
+(../m2-single-track-schedule.md): two rows of nine 8 mm tracks per insert at 2 mm pitch (a 25 mm block at each panel's
+centre), the cut sequence (block out of the panel, top slab off, split per row, final face 1-2 mm from mid-length,
+grind to it), 1.25 in hot-mount pucks, the grit and polish sequence, and SEM.
 
 ``meshes()`` tessellates everything into PyVista and caches it in ``.cache/`` keyed on this file's hash.
 """
@@ -33,8 +36,16 @@ DOSE = dict(x=(-435.0, -175.0), y=(-130.0, 130.0))
 BUILD = dict(x=(-130.0, 130.0), y=(-130.0, 130.0))
 OVER = dict(x=(185.0, 265.0), y=(-130.0, 130.0))
 WELL_Z = -430.0
-PLATE_T = 30.0
-INSERT_C = {"A": (-45.0, -45.0), "B": (45.0, -45.0), "C": (-45.0, 45.0), "D": (45.0, 45.0)}   # outlet side is -y
+PLATE_T = 25.4                         # about 1 in, read off the photo
+PLATE_R = 16.0                         # corner radius, from the photo
+PLATE_HOLE_R = 5.5
+POCKET_R = 8.0
+PANEL_T = 12.7                         # assumed (1/2 in): the pockets are drawn blind, as deep as a panel
+PANEL_R = 6.0
+PANEL_HOLE_R, PANEL_CB_R, PANEL_CB_D = 2.75, 4.75, 5.5     # through hole, counterbore radius and depth (assumed)
+_h = L.POCKET_PITCH / 2
+INSERT_C = {"A": (-_h, -_h), "B": (_h, -_h), "C": (-_h, _h), "D": (_h, _h)}   # panel centres; outlet side is -y
+PANEL_LO, PANEL_HI = L.BLOCK / 2 - L.PANEL / 2, L.BLOCK / 2 + L.PANEL / 2     # the panel in block coordinates
 RECOATER_PARK = -472.0
 RECOATER_END = 292.0
 SCANNER = np.array([0.0, 0.0, 520.0])
@@ -42,7 +53,7 @@ DOOR_HINGE = np.array([-492.0, -436.0, 0.0])
 
 BENCH_Z = -100.0                       # bench top
 BENCH = dict(x=(1300.0, 3850.0), y=(-380.0, 380.0))
-TRAY_C = (1420.0, -170.0)
+TRAY_C = (1420.0, -175.0)               # 2 x 2 tray for the four panels
 COPY_C = (1420.0, 140.0)               # copy stand for the top-view images
 SAW_X = 1700.0                         # bandsaw blade plane (x = SAW_X)
 SAW_TABLE_Z = -20.0
@@ -132,11 +143,14 @@ def m2_parts() -> dict:
     # build platform (moves) and its piston rod; plate rides on it
     p["platform"] = (bx(-127, 127, -127, 127, -75, -PLATE_T), PAINT_DARK, "platform", 1.0)
     p["platform_rod"] = (cyl_z(0, 0, WELL_Z, -75, 32), STEEL, "platform", 1.0)
-    plate = bx(-125, 125, -125, 125, -PLATE_T, 0)
+    p["plate"] = (plate_shape(), (0.62, 0.64, 0.67), "platform", 1.0)
+    # pocket floors a shade darker, so an empty pocket and the gap round a panel read as recessed (as in the photo)
+    q = L.POCKET / 2
+    floors = None
     for cx, cy in INSERT_C.values():
-        plate = plate.cut(bx(cx - 12.65, cx + 12.65, cy - 12.65, cy + 12.65, -L.INSERT, 1))
-    plate = plate.edges("|Z").fillet(6)
-    p["plate"] = (plate, (0.62, 0.64, 0.67), "platform", 1.0)
+        f = bx(cx - q, cx + q, cy - q, cy + q, -PANEL_T, -PANEL_T + 0.2).edges("|Z").fillet(POCKET_R)
+        floors = f if floors is None else floors.union(f)
+    p["pocket_floors"] = (floors, (0.36, 0.37, 0.39), "platform", 1.0)
     # dose: piston, and the powder column above it (scaled in z by the animation)
     p["dose_piston"] = (bx(-433, -177, -128, 128, -330, -300), PAINT_DARK, "m2", 1.0)
     p["dose_powder"] = (bx(-433, -177, -128, 128, -300, 0), POWDER, "dose_powder", 1.0)
@@ -154,18 +168,44 @@ def m2_parts() -> dict:
     return p
 
 
-def insert_shape(letter: str) -> cq.Workplane:
-    """A 25 mm 316L cube in insert-local coordinates (top face [0,25]^2 at z = 0), with its ID engraved on the
-    front (-y) face and an orientation notch (chamfer) on the front-left vertical edge."""
-    a = L.INSERT
-    b = bx(0, a, 0, a, -a, 0)
-    b = b.edges("|Z").edges("<X").edges("<Y").chamfer(3.0)
-    txt = cq.Workplane("XZ", origin=(a / 2 + 2, 0, -a / 2 - 2)).text(letter, 9, -0.6, combine=False, halign="center",
-                                                                    valign="center")
+def plate_shape() -> cq.Workplane:
+    """Nathan C.'s plate (top at z = 0): rounded corners, a through hole near each corner, four blind pockets."""
+    a = L.PLATE / 2
+    plate = bx(-a, a, -a, a, -PLATE_T, 0).edges("|Z").fillet(PLATE_R)
+    c = a - L.PLATE_HOLE_IN
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            plate = plate.cut(cyl_z(sx * c, sy * c, -PLATE_T - 1, 1, PLATE_HOLE_R))
+    q = L.POCKET / 2
+    for cx, cy in INSERT_C.values():
+        plate = plate.cut(bx(cx - q, cx + q, cy - q, cy + q, -PANEL_T, 1).edges("|Z").fillet(POCKET_R))
+    return plate
+
+
+def panel_shape(letter: str) -> cq.Workplane:
+    """One removable 316L panel in block coordinates (the track block's top face [0,25]^2 at z = 0, at the panel's
+    centre): rounded corners, four counterbored holes, the ID engraved on the front (-y) side and an orientation notch
+    on that side near its left end."""
+    lo, hi = PANEL_LO, PANEL_HI
+    b = bx(lo, hi, lo, hi, -PANEL_T, 0).edges("|Z").fillet(PANEL_R)
+    c = L.BLOCK / 2
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            hx, hy = c + sx * L.PANEL_HOLE, c + sy * L.PANEL_HOLE
+            b = b.cut(cyl_z(hx, hy, -PANEL_T - 1, 1, PANEL_HOLE_R)).cut(cyl_z(hx, hy, -PANEL_CB_D, 1, PANEL_CB_R))
+    b = b.cut(bx(lo + 14, lo + 16, lo - 1, lo + 1.2, -PANEL_T - 1, 1))
+    txt = cq.Workplane("XZ", origin=(c, lo, -PANEL_T / 2)).text(letter, 8, -0.6, combine=False, halign="center",
+                                                                 valign="center")
     return b.cut(txt)
 
 
 # --------------------------------------------------------------------------------------------- the bench
+def tray_slots():
+    """Centres of the tray's four recesses, in the plate's order: A, B at the front, C, D behind."""
+    tx, ty = TRAY_C
+    return [(tx - 47, ty - 47), (tx + 47, ty - 47), (tx - 47, ty + 47), (tx + 47, ty + 47)]
+
+
 def bench_parts() -> dict:
     p = {}
     x0, x1 = BENCH["x"]
@@ -176,12 +216,11 @@ def bench_parts() -> dict:
         for ly in (y0 + 30, y1 - 70):
             p[f"bench_leg_{lx:.0f}_{ly:.0f}"] = (bx(lx, lx + 40, ly, ly + 40, FLOOR_Z, BENCH_Z - 40), PAINT_DARK,
                                                  "static", 1.0)
-    # tray for the four inserts
+    # tray for the four panels, 2 x 2
     tx, ty = TRAY_C
-    tray = bx(tx - 70, tx + 70, ty - 45, ty + 45, BENCH_Z, BENCH_Z + 10)
-    for i in range(4):
-        cx = tx - 48 + i * 32
-        tray = tray.cut(bx(cx - 13, cx + 13, ty - 13, ty + 13, BENCH_Z + 6, BENCH_Z + 11))
+    tray = bx(tx - 100, tx + 100, ty - 100, ty + 100, BENCH_Z, BENCH_Z + 10)
+    for cx, cy in tray_slots():
+        tray = tray.cut(bx(cx - 44, cx + 44, cy - 44, cy + 44, BENCH_Z + 6, BENCH_Z + 11))
     p["tray"] = (tray, (0.30, 0.42, 0.58), "static", 1.0)
     # copy stand + camera for the top-view images
     cx, cy = COPY_C
@@ -261,15 +300,31 @@ def bench_parts() -> dict:
 
 # ------------------------------------------------------------------------------- the sample's pieces
 def pieces() -> dict:
-    """Insert A and the pieces it is cut into, in insert-local coordinates (top face [0,25]^2 at z = 0).
+    """Panel A and the pieces it is cut into, in block coordinates (the track block's top face [0,25]^2 at z = 0).
 
-    cube -> (bandsaw 1) top slab + body -> (bandsaw 2) row slabs 1, 2 -> (precision saw) row-1 piece + offcut
+    panel -> (bandsaw, four cuts: a, b along y; c, d along x) the 25 mm track block + four offcuts
+    -> (bandsaw) top slab + body -> (bandsaw) row slabs 1, 2 -> (precision saw) row-1 piece + offcut
     -> (grind) the section piece, whose face x = TARGET_X is row 1's mid-length."""
-    a = L.INSERT
+    a = L.BLOCK
+    lo, hi = PANEL_LO - 1, PANEL_HI + 1
+    zl, zh = -PANEL_T - 1, 1
     out = {}
-    cube = insert_shape("A")
+    panel = panel_shape("A")
+    out["panel"] = panel
+    out["p1"] = panel.intersect(bx(0, hi, lo, hi, zl, zh))
+    out["off_a"] = panel.intersect(bx(lo, -KERF, lo, hi, zl, zh))
+    out["p2"] = out["p1"].intersect(bx(-1, a, lo, hi, zl, zh))
+    out["off_b"] = out["p1"].intersect(bx(a + KERF, hi, lo, hi, zl, zh))
+    out["p3"] = out["p2"].intersect(bx(-1, a + 1, 0, hi, zl, zh))
+    out["off_c"] = out["p2"].intersect(bx(-1, a + 1, lo, -KERF, zl, zh))
+    out["off_d"] = out["p3"].intersect(bx(-1, a + 1, a + KERF, hi, zl, zh))
+    # the block, with its ID scribed again on the front of what becomes the slab (the panel's ID went with off_c)
+    cube = out["p3"].intersect(bx(-1, a + 1, -1, a, zl, zh))
+    txt = cq.Workplane("XZ", origin=(4.0, 0, -SLAB_T / 2)).text("A", 4.5, -0.4, combine=False, halign="center",
+                                                                      valign="center")
+    cube = cube.cut(txt)
     out["cube"] = cube
-    out["body"] = cube.intersect(bx(-1, a + 1, -1, a + 1, -a - 1, -SLAB_T - KERF))
+    out["body"] = cube.intersect(bx(-1, a + 1, -1, a + 1, zl, -SLAB_T - KERF))
     slab = cube.intersect(bx(-1, a + 1, -1, a + 1, -SLAB_T, 1))
     out["slab"] = slab
     out["row1"] = slab.intersect(bx(-1, SPLIT_X - KERF / 2, -1, a + 1, -SLAB_T - 1, 1))
@@ -300,7 +355,7 @@ def _hash() -> str:
 
 
 def meshes() -> dict:
-    """{name: dict(mesh, color, group, opacity)} for every fixed part, plus insert and piece meshes."""
+    """{name: dict(mesh, color, group, opacity)} for every fixed part, plus the panels' and panel A's pieces."""
     CACHE.mkdir(exist_ok=True)
     path = CACHE / f"meshes_{_hash()}.pkl"
     if path.exists():
@@ -310,7 +365,7 @@ def meshes() -> dict:
         tol = 2.0 if name in ("cabinet", "floor", "bench") else 0.6
         out["parts"][name] = dict(mesh=to_mesh(shape, tol), color=color, group=group, opacity=op)
     for k in L.INSERTS:
-        out["inserts"][k] = to_mesh(insert_shape(k), 0.05)
+        out["inserts"][k] = to_mesh(panel_shape(k), 0.08)
     for k, shape in pieces().items():
         out["pieces"][k] = to_mesh(shape, 0.05)
     path.write_bytes(pickle.dumps(out))

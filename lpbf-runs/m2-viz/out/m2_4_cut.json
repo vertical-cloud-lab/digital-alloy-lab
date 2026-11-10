@@ -1,0 +1,41 @@
+{
+ "name": "m2_4_cut",
+ "fps": 15,
+ "n_frames": 576,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "C2 · bandsaw: track block out (1/2)",
+   "caption": "Rough cuts on the bandsaw (bi-metal blade, coolant for stainless). Panel A lies flat, tracks up, and two cuts along the tracks' rows take off the sides, leaving a strip with the 25 mm track block in the middle.",
+   "start_frame": 0,
+   "end_frame": 140
+  },
+  {
+   "label": "C2 · bandsaw: track block out (2/2)",
+   "caption": "Then the strip turns and two cross-cuts free the block. The panel's ID went with the offcuts, so scribe it again on the block. Every bandsaw cut stays clear of the tracks; the section plane is far from these faces.",
+   "start_frame": 141,
+   "end_frame": 272
+  },
+  {
+   "label": "C2 · bandsaw: slab off",
+   "caption": "Next the block goes on its side and the top 7 mm slab, which holds the tracks, comes off. The rest of the block is scrap, like the rest of the panel (option A).",
+   "start_frame": 273,
+   "end_frame": 371
+  },
+  {
+   "label": "C2 · bandsaw: one slab per row",
+   "caption": "Then the slab lies flat and is split between the two rows: one slab per row of nine tracks. A bandsaw face is rough and deformed, so every bandsaw cut stays at least 1–2 mm from the target plane.",
+   "start_frame": 372,
+   "end_frame": 462
+  },
+  {
+   "label": "C2 · final face on the precision saw",
+   "caption": "Final face on an abrasive cut-off saw or a low-speed precision saw with coolant (MIT used an IsoMet 4000 at 4000 rpm, 6 mm/min), 1.5 mm past the tracks' mid-length. Row 2 waits its turn.",
+   "start_frame": 463,
+   "end_frame": 575
+  }
+ ]
+}

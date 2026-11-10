@@ -1,0 +1,23 @@
+{
+ "name": "m2_3_unload",
+ "fps": 15,
+ "n_frames": 233,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "B6–B7 · cool, depowder, unload",
+   "caption": "Cool and de-inert, depowder gently, photograph the plate in place, then lift the four panels out. The plate only needs the powder blown out of the pocket gaps before the next run.",
+   "start_frame": 0,
+   "end_frame": 116
+  },
+  {
+   "label": "C1 · top-view images",
+   "caption": "Each panel gets top-view images (are the tracks continuous, which ones balled up?). Panel A goes first, all the way through SEM, to catch problems early: track mapping, etch, SEM charging.",
+   "start_frame": 117,
+   "end_frame": 232
+  }
+ ]
+}
