@@ -640,9 +640,9 @@ def chapter_print():
         draw(rest, window(sc.u, 0.0, 0.92), 0.7, 1.0)
 
     sc.step("B5 · 72 tracks",
-            "72 tracks: one full replicate (16 power–speed sets and 2 controls) on each panel, in random positions, "
-            "so the four panels are four replicates and position effects can be measured. The exposure takes "
-            "seconds; the whole step is under 15 minutes.",
+            "72 tracks: on each panel, one 16-point block of a Sobol sequence that covers the whole power–speed "
+            "window, plus 2 controls, in random positions; the controls measure position effects. The exposure "
+            "takes seconds; the whole step is under 15 minutes.",
             7.5, expose_rest, hold=1.8, cam_to=CAM["inserts_high"], live=True, still=True,
             labels=[(k, (M.INSERT_C[k][0], M.INSERT_C[k][1] + (-12.5 if k in "AB" else 12.5), 0),
                      (0.06 if k in "AC" else 0.95, 0.62 if k in "AB" else 0.22)) for k in "ABCD"])

@@ -28,7 +28,7 @@ of single tracks to check the Thermo-Calc AM Module.
 
 All durations below are **my estimates**, not measurements. Replace them with the pilot's numbers.
 
-**Visuals** ([`m2-viz/`](m2-viz/README.md)): the [pilot design](m2-viz/out/m2-pilot-design.png) (P–v grid and track
+**Visuals** ([`m2-viz/`](m2-viz/README.md)): the [pilot design](m2-viz/out/m2-pilot-design.png) (P–v settings and track
 map), the [run sheet and schedule](m2-viz/out/m2-schedule.png), and a 3-D animation of the whole process in six
 parts, drawn with Nathan C.'s plate: [set up](m2-viz/out/m2_1_setup.gif), [print](m2-viz/out/m2_2_print.gif),
 [unload](m2-viz/out/m2_3_unload.gif), [cut](m2-viz/out/m2_4_cut.gif), [mount, polish, SEM](m2-viz/out/m2_5_sem.gif),

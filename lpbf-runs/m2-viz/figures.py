@@ -2,7 +2,8 @@
 
     python figures.py      # -> out/m2-pilot-design.png, out/m2-schedule.png
 
-Every number comes from ../m2-single-track-schedule.md: the 4 x 4 power-speed grid and the insert layout (section 4),
+Every number comes from ../m2-single-track-schedule.md: the 64 Sobol power-speed settings (layout.pilot_sets(), from
+../m2-track-design/design.py) and the insert layout (section 4),
 the run sheet (section 5) and the schedule (section 6). The track map in the first figure is an example randomization;
 the real one comes from the job file (step A1). Durations are the plan's estimates, not measurements.
 
@@ -52,7 +53,7 @@ NORM = LogNorm(vmin=0.05, vmax=1.5)
 
 SPEEDS = list(L.SPEEDS_MM_S)             # mm/s
 POWERS = list(L.POWERS_W)                # W, for a 400 W M2
-GRID_SETS = [(g["P"], g["v"]) for g in L.grid_sets()]
+PILOT_SETS = L.pilot_sets()             # 64 Sobol settings, 16 per panel
 ISO_E = [0.05, 0.1, 0.2, 0.4, 0.8, 1.5]  # J/mm
 
 
@@ -100,9 +101,10 @@ def panel_grid(ax):
             x = vmax * 0.965
             ax.text(x, E * x, f"{E:g} J/mm", ha="right", va="bottom", fontsize=7.6, color=MUTED, zorder=2,
                     bbox=dict(boxstyle="square,pad=0.15", fc=SURFACE, ec="none"))
-    P = np.array([p for p, _ in GRID_SETS], float)
-    V = np.array([s for _, s in GRID_SETS], float)
-    ax.scatter(V, P, s=250, c=P / V, cmap=CMAP, norm=NORM, edgecolors=SURFACE, linewidths=1.8, zorder=4)
+    P = np.array([s["P"] for s in PILOT_SETS], float)
+    V = np.array([s["v"] for s in PILOT_SETS], float)
+    ax.add_patch(Rectangle((250, 100), 2000 - 250, 375 - 100, fill=False, ec=INK2, lw=1.0, ls=(0, (4, 2)), zorder=3))
+    ax.scatter(V, P, s=70, c=P / V, cmap=CMAP, norm=NORM, edgecolors=SURFACE, linewidths=1.3, zorder=4)
     ax.text(2000, 66, "likely balling /\nlack of fusion", ha="center", va="center", fontsize=8, color=INK2, zorder=5,
             linespacing=1.15, bbox=dict(boxstyle="square,pad=0.15", fc=SURFACE, ec="none"))
     ax.text(250, 352, "deep\nkeyholes", ha="center", va="top", fontsize=8, color=INK2, zorder=5, linespacing=1.15,
@@ -118,9 +120,9 @@ def panel_grid(ax):
     ax.set_ylabel("laser power P (W)")
     ax.grid(True, axis="both", zorder=0)
     ax.set_axisbelow(True)
-    ax.text(0.0, -0.15, "+ control: the machine's standard stainless set, 2 tracks per insert (values from Josh)",
+    ax.text(0.0, -0.15, "+ control: the machine's standard stainless set, 2 tracks per panel (values from Josh)",
             transform=ax.transAxes, ha="left", va="top", fontsize=8.3, color=INK2)
-    ax.text(0.0, -0.205, "Grid for a 400 W M2 (scale down on a 200 W machine); P/v spans 0.05 to 1.5 J/mm.",
+    ax.text(0.0, -0.205, "Scrambled Sobol in (P, log v) over the dashed box, for a 400 W M2; one 16-point block per panel.",
             transform=ax.transAxes, ha="left", va="top", fontsize=8.3, color=MUTED)
 
 
@@ -128,11 +130,11 @@ def panel_tracks(bx, tmap):
     # plate positions as in the animation: A, B at the outlet side (low y), C, D at the inlet side
     origins = {"A": (0.0, 0.0), "B": (32.0, 0.0), "C": (0.0, 32.0), "D": (32.0, 32.0)}
     for ins, (x0, y0) in origins.items():
-        bx.add_patch(Rectangle((x0, y0), L.INSERT, L.INSERT, fc=STEEL, ec=AXIS, lw=1.0, zorder=1))
+        bx.add_patch(Rectangle((x0, y0), L.BLOCK, L.BLOCK, fc=STEEL, ec=AXIS, lw=1.0, zorder=1))
         # orientation notch on the left side
         bx.add_patch(Polygon([(x0 - 0.05, y0 + 11.2), (x0 + 1.3, y0 + 12.5), (x0 - 0.05, y0 + 13.8)], closed=True,
                              fc=SURFACE, ec=AXIS, lw=1.0, zorder=2))
-        bx.text(x0, y0 + 25.7, f"Insert {ins}", ha="left", va="bottom", fontsize=9.5, fontweight="bold", color=INK)
+        bx.text(x0, y0 + 25.7, f"Panel {ins}", ha="left", va="bottom", fontsize=9.5, fontweight="bold", color=INK)
         for (xa, xb) in L.ROW_X:                    # section planes at each row's mid-length
             xc = (xa + xb) / 2
             bx.plot([x0 + xc, x0 + xc], [y0 + 1.6, y0 + 23.4], color=INK, lw=1.1, ls=(0, (3.2, 2.2)), zorder=5)
@@ -166,15 +168,15 @@ def panel_tracks(bx, tmap):
     bx.set_aspect("equal")
     bx.axis("off")
     handles = [
-        Patch(fc=CMAP(NORM(0.3)), ec="none", label="grid track, coloured by P/v as in (a)"),
+        Patch(fc=CMAP(NORM(0.3)), ec="none", label="Sobol track, coloured by P/v as in (a)"),
         Patch(fc=CONTROL, ec="none", label="C = control track (standard set)"),
         Line2D([], [], color=INK, lw=1.1, ls=(0, (3.2, 2.2)), label="section plane at each row's mid-length"),
         Line2D([], [], color=MUTED, lw=1.4, ls=(0, (0.9, 1.9)), label="bandsaw split between the two rows"),
     ]
     bx.legend(handles=handles, loc="upper left", bbox_to_anchor=(0.0, 0.0), ncol=2, fontsize=8.0,
               handlelength=2.4, columnspacing=1.6, labelcolor=INK2, borderaxespad=0.2)
-    bx.text(0.0, -0.1, "To scale: 25 mm insert tops, 8 mm tracks at 2 mm pitch, rows 3 mm apart, 3 mm margins.\n"
-                       "Not to scale: the gaps between inserts; tracks are drawn 1 mm wide.",
+    bx.text(0.0, -0.1, "The 25 mm track block at each panel's centre, as in the animation (layout.py): 8 mm tracks at 2 mm\n"
+                       "pitch in two rows. The plan (§4) now has one row of 18 tracks, 10 mm long. Tracks drawn 1 mm wide.",
             transform=bx.transAxes, ha="left", va="top", fontsize=7.6, color=MUTED, linespacing=1.3)
 
 
@@ -196,18 +198,18 @@ def pilot_design():
     cb.set_label("line energy P/v (J/mm)", color=INK2)
     panel_tracks(bx, L.track_map())
     ty = 0.875
-    fig.text(gs[0, 0].get_position(fig).x0, ty, "(a) 16 grid sets + 1 control set (17 per run)", ha="left",
+    fig.text(gs[0, 0].get_position(fig).x0, ty, "(a) 64 Sobol settings + 1 control set (65 per run)", ha="left",
              va="top", fontsize=10.5, fontweight="bold", color=INK)
     bx0 = gs[0, 3].get_position(fig).x0
-    fig.text(bx0, ty, "(b) 72 tracks on 4 inserts: one replicate per insert", ha="left", va="top", fontsize=10.5,
+    fig.text(bx0, ty, "(b) 72 tracks on 4 panels: one Sobol block per panel", ha="left", va="top", fontsize=10.5,
              fontweight="bold", color=INK)
     fig.text(bx0, ty - 0.033, "Example randomization (seed 100); the real map comes from the job file (A1).\n"
                               "Gas-flow direction assumed; tracks are exposed from the outlet side toward the inlet.",
              ha="left", va="top", fontsize=8.2, color=INK2, linespacing=1.35)
-    fig.text(0.055, 0.975, "M2 single-track pilot (issue #100): parameter grid and track layout", ha="left",
+    fig.text(0.055, 0.975, "M2 single-track pilot (issue #100): power-speed settings and track layout", ha="left",
              va="top", fontsize=12.5, fontweight="bold", color=INK)
     fig.text(0.055, 0.937, "316L inserts in Nathan C.'s four-insert plate; one powder layer; one run = 72 tracks "
-                           "(4 inserts x [16 grid + 2 control]).", ha="left", va="top", fontsize=9, color=INK2)
+                           "(4 panels x [16 Sobol + 2 control]).", ha="left", va="top", fontsize=9, color=INK2)
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / "m2-pilot-design.png"
     fig.savefig(path, dpi=200)

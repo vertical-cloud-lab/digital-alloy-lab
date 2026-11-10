@@ -18,11 +18,17 @@ toward the inlet.
 """
 from __future__ import annotations
 
+import csv
+from pathlib import Path
+
 import numpy as np
 
-POWERS_W = (100, 200, 300, 375)
-SPEEDS_MM_S = (250, 500, 1000, 2000)
+POWERS_W = (100, 200, 300, 375)    # axis ticks only: the window is 100-375 W ...
+SPEEDS_MM_S = (250, 500, 1000, 2000)  # ... and 250-2000 mm/s (log scale)
 CONTROL = "C"                      # the machine's standard stainless set (values from the kickoff)
+# The pilot's 64 power-speed settings: a scrambled Sobol sequence, one 16-point block per panel (A = points 0-15,
+# B = 16-31, ...). Written by ../m2-track-design/design.py; read from its CSV so this module needs no scipy.
+SOBOL_CSV = Path(__file__).resolve().parent.parent / "m2-track-design" / "out" / "pilot_sobol_sets.csv"
 
 # Nathan C.'s plate, from his photo (outside "about 10 in", his estimate; the rest scaled from it)
 PLATE = 254.0                      # outside, square
@@ -41,21 +47,29 @@ INSERTS = ("A", "B", "C", "D")
 SEED = 100                         # issue #100; example randomization only
 
 
+def pilot_sets() -> list[dict]:
+    """The 64 Sobol power-speed sets (P in W, v in mm/s), each with its panel and line energy P/v in J/mm."""
+    with open(SOBOL_CSV) as fh:
+        return [dict(id=r["id"], panel=r["panel"], P=float(r["P"]), v=float(r["v"]), E=float(r["P"]) / float(r["v"]))
+                for r in csv.DictReader(fh)]
+
+
 def grid_sets() -> list[dict]:
-    """The 16 power-speed sets, with their line energy P/v in J/mm."""
-    return [dict(id=f"P{p}-v{v}", P=p, v=v, E=p / v) for p in POWERS_W for v in SPEEDS_MM_S]
+    """All of the pilot's power-speed sets (kept under its old name for screens.py): the 64 Sobol settings."""
+    return pilot_sets()
 
 
 def track_map(seed: int = SEED) -> list[dict]:
-    """72 tracks: each insert carries the 16 grid sets and 2 controls in its own random order.
+    """72 tracks: each insert carries its own 16-point Sobol block and 2 controls, in its own random order.
 
     Returns one dict per track with insert, row (1 or 2), k (0..8 along y), the block-coordinate start and end points,
     the parameter set (P, v, E; None for controls) and its exposure order on the plate (0..71)."""
     rng = np.random.default_rng(seed)
-    sets = grid_sets() + [dict(id=CONTROL, P=None, v=None, E=None)] * 2
+    all_sets = pilot_sets()
     out = []
     order = 0
     for ins in INSERTS:
+        sets = [s for s in all_sets if s["panel"] == ins] + [dict(id=CONTROL, P=None, v=None, E=None)] * 2
         perm = rng.permutation(len(sets))
         slots = [(row, k) for k in range(9) for row in (1, 2)]       # exposure order: low y first, row 1 then 2
         for (row, k), j in zip(slots, perm):
@@ -85,6 +99,6 @@ if __name__ == "__main__":
     for ins in INSERTS:
         ts = [t for t in tm if t["insert"] == ins]
         print(ins, len(ts), sum(t["set"] == CONTROL for t in ts), sorted({t["set"] for t in ts}) == sorted(
-            {s["id"] for s in grid_sets()} | {CONTROL}))
+            {s["id"] for s in pilot_sets() if s["panel"] == ins} | {CONTROL}))
     Es = [s["E"] for s in grid_sets()]
     print("P/v range", min(Es), max(Es))
