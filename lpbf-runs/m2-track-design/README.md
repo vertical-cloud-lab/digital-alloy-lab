@@ -9,9 +9,10 @@ grid). It has two sources:
 - **Eagar–Tsai runs for 316L** ([`eagar_tsai_316l.py`](eagar_tsai_316l.py)), which test the physical assumptions
   behind the design. These use [ArroyaveLab `eagar-tsai`](https://github.com/ArroyaveLab/eagar-tsai) 0.6.0, the
   package PR #238 checked, plus the same integral evaluated over the finite time the laser is on.
-- **Four Edison literature reports** ([`edison-trajectories/m2-single-track-design/`](../../edison-trajectories/m2-single-track-design/),
+- **Six Edison literature reports** (four queries, two of them run twice; [`edison-trajectories/m2-single-track-design/`](../../edison-trajectories/m2-single-track-design/),
   prompts in [`scripts/edison_m2_track_design.py`](../../scripts/edison_m2_track_design.py)) on start and end
-  transients, interactions between neighbouring tracks, sampling, and 316L inputs.
+  transients, interactions between neighbouring tracks, sampling, and 316L inputs. Edison's literature search was
+  down for both rounds, so all six are the model's own answers, without retrieved papers (see below).
 
 ## Recommendations
 
@@ -20,7 +21,7 @@ grid). It has two sources:
 | Track length | **12 mm** (10 mm at the least) | Modelled start and end zones are short (below), but keyhole start-up, the galvo, the laser's on/off timing and the end crater are not modelled, and they scale with speed. 12 mm leaves 3 mm to discard at each end and 6 mm of steady track around the target plane: ±1 mm of slack in finding the plane and room for a second plane 1.5 mm further on. It still fits four rows on one panel at 15 mm row pitch (option B) |
 | Discard at each end | **3 mm** | 8× the longest conduction start zone Eagar–Tsai gives (0.37 mm) and 18× its end zone (0.17 mm). At 2 m/s, 3 mm is 1.5 ms: enough for a 1 ms keyhole start-up or galvo ramp. Common practice is 10–15 mm tracks sectioned in their middle third |
 | Section plane | **Mid-length** (6 mm), found from the track ends visible on the top view; on panel A in the pilot, a **second plane 1.5 mm further on** | One plane per track is enough if the along-track scatter is small; the second plane on panel A measures it. The top views (C1) give width along the whole steady zone of every track for free |
-| Spacing | **2 mm centre to centre** (pilot); 1.5 mm in the campaign if the pilot's top views show narrow denuded bands | Heat from a neighbour is negligible at 1 mm or more; denuded powder and spatter set the spacing. 2 mm is nearly 8× the widest pool Eagar–Tsai gives in the window (0.26 mm). 1.5 mm would put 12 tracks in a 1.25" mount instead of 9 |
+| Spacing | **2 mm centre to centre** in the pilot. Measure the denuded bands in its top views: go to 2.5 mm if the widest come within about 0.3 mm of each other, or 1.5 mm if they are narrow | Heat from a neighbour is negligible at 1 mm or more; denuded powder and spatter set the spacing. 2 mm is nearly 8× the widest pool Eagar–Tsai gives in the window (0.26 mm). 2.5 mm still fits 9 tracks in a 1.25" mount; 1.5 mm fits 12 |
 | Scan direction | **The same on every track**, into or across the gas flow, never with it | With the flow, the plume and spatter are blown ahead of the beam onto the track still to be drawn |
 | Exposure order | **Strictly from the gas outlet side toward the inlet**, with parameter sets in randomized positions; no interleaving | Spatter blown downstream lands on finished tracks. Interleaving (odd positions, then even) is sometimes suggested for heat, but heat doesn't matter here and interleaving would put upstream spatter on positions not yet drawn |
 | Galvo | **Ask whether skywriting is on**; check the first 3 mm of a few tracks in the pilot (top view, or a longitudinal section of a spare track) | Without it, Eagar–Tsai puts the first 0.3 mm up to 1.9× deeper at 2 m/s for a 0.3 ms ramp |
@@ -75,12 +76,13 @@ under 0.3% even at the hottest setting, and 1 mm would still be under about 1%. 
 
 ## What the literature adds (Edison), and how far to trust it
 
-**All four first-round reports are ungrounded.** They ran during an outage of Edison's literature search, and each
-says it retrieved no papers ("no contexts were retrieved, so this answer is not grounded in evidence") and that its
-DOIs and numbers come from the model's own knowledge. They don't even agree with each other: the four reports give
-four different DOIs for Yadroitsev et al. 2010. So the numbers below are a second opinion to test against, not
-sources. The transients and spacing queries were resubmitted
-(`_task_ids_retry.json`); see the end of this section for whether the retries were grounded.
+**All six reports are ungrounded.** The four first-round reports ran during an outage of Edison's literature
+search, and each says it retrieved no papers ("no contexts were retrieved, so this answer is not grounded in
+evidence") and that its DOIs and numbers come from the model's own knowledge. I resubmitted the transients and
+spacing queries at 05:31 UTC (`_task_ids_retry.json`, reports with a `-retry` suffix). The outage was still on, so
+those two are ungrounded as well. The reports don't even agree with each other: the first four give four different
+DOIs for Yadroitsev et al. 2010, and the two spacing runs differ about fivefold on how wide the denuded band is. So
+the numbers below are a second opinion to test against, not sources. Where they matter, the pilot measures them.
 
 | Report | What it says | How it changes the design |
 | --- | --- | --- |
@@ -88,6 +90,8 @@ sources. The transients and spacing queries were resubmitted
 | [Spacing and order](../../edison-trajectories/m2-single-track-design/track-spacing-and-order.md) | At 1 atm the vapour jet entrains gas and pulls powder into the track (Matthews et al. 2016). The denuded band is 2–5× the track width in total, 0.1–0.4 mm beyond each edge for 0.1–0.2 mm tracks, and 0.5–1 mm in total for keyholes. Spatter lands mostly 2–5 mm away, and some goes more than 10 mm downstream. Expose from outlet to inlet and scan into or across the flow. Spacing ≥1.5 mm, 2–2.5 mm for keyhole settings, and ≥3× the pool width. Heat is negligible beyond 1.5–2 mm. A spread layer is 50–65% dense | Supports 2 mm. Its heat estimate matches Eagar–Tsai's (≤7 K at 2 mm). It also suggests interleaving the exposure for heat, which this design doesn't do: Eagar–Tsai shows heat doesn't matter, and interleaving would break the outlet-to-inlet order |
 | [Sampling](../../edison-trajectories/m2-single-track-design/sampling-sobol-vs-batch-bo.md) | Start with 64 Owen-scrambled Sobol points in (P, log v), a power of two for balance. Then run batch active learning with one build per batch, using a heteroscedastic multi-output GP plus a regime classifier. The acquisition mixes integrated-variance reduction (about 50%), boundary entropy (30%) and model-discrepancy checks (20%). Hold out 20–25% of settings for validation, split by setting, not by section. Repeat a few settings across builds and panels. It rates the evidence for 64-point Sobol over a maximin LHS as weak, and for space-filling plus batch BO as moderate to strong | Matches the design below. Its point about cross-build repeats is why the controls stay the same set in every run |
 | [316L inputs](../../edison-trajectories/m2-single-track-design/ss316l-eagar-tsai-inputs-and-single-track-data.md) | Liquidus 1697 K, k 21.5 W/m/K, ρ 7500 kg/m³, c 640 J/kg/K (α 4.5 × 10⁻⁶ m²/s), boiling 3090–3134 K. Absorptivity 0.35 in conduction and 0.6–0.8 in keyhole mode. Its single-track data points are marked as approximate digitizations | α lies inside the 3.5–7.0 × 10⁻⁶ bracket used above, so the transient and heat conclusions stand. Its data points are too uncertain to calibrate Eagar–Tsai against; use the original papers or MeltpoolNet for that |
+| [Transients, retry](../../edison-trajectories/m2-single-track-design/track-transients-and-length-retry.md) | Conduction settles in 2–5 pool lengths (0.3–1 mm). A keyhole takes 100–500 µs to reach its depth, so 0.5–2 mm. Without skywriting, galvo acceleration affects 50–500 µm at 1 m/s at 2–5× the energy per length. The end crater is 0.2–0.5 mm in conduction and 1–2 mm in keyhole mode. For the whole 50–400 W, 0.1–3 m/s window it recommends **12 mm tracks with 3 mm discarded at each end** (15 mm if there is room), the main plane at mid-length, and checking one track at 25/50/75% of its length | The same 12 mm / 3 mm this design landed on. Its conduction distances are longer than Eagar–Tsai's (≤ 0.37 mm); the discard covers both |
+| [Spacing, retry](../../edison-trajectories/m2-single-track-design/track-spacing-and-order-retry.md) | Denuded band **0.5–2 mm per side** at 1 atm, against 0.1–0.4 mm in the first round. Pitch 3 mm by default and 4–5 mm for slow, high-power settings; 2 mm only after imaging shows undisturbed powder at the next track. Scan against the flow (outlet to inlet). Interlace the order, or wait 5–10 s between neighbours | The two ungrounded runs disagree about 5× on the band width, so the pilot measures it: if the widest bands in its top views come within about 0.3 mm of the neighbouring band at 2 mm pitch, go to **2.5 mm**, which still fits 9 tracks in a 1.25" mount. Its interlacing and waiting are for heat, and Eagar–Tsai says heat at 2 mm is ≤ 7 K and arrives about 0.2 s later, so neither is needed |
 
 ## From the Thermo-Calc AM Module's side
 

@@ -233,9 +233,10 @@ Why these numbers (details, Eagar–Tsai runs and Edison reports in [`m2-track-d
   least for one plane.
 - **Pitch: powder sets it, not heat.** Eagar–Tsai puts at most 7 K on a neighbour 2 mm away (375 W, 0.25 m/s),
   which changes its depth by under 0.3%. But each track strips powder from a band beside it (denudation) and
-  throws spatter. 2 mm keeps neighbouring bands apart even for the widest tracks. If the pilot's top views (C1)
-  show bands narrower than about 0.5 mm per side, the campaign can go to 1.5 mm and put 12 tracks in a mount
-  instead of 9.
+  throws spatter. How wide that band is at 1 atm is the main unknown (the Edison reports disagree about fivefold),
+  so the pilot measures it in its top views (C1). If the widest bands come within about 0.3 mm of each other at
+  2 mm, the campaign goes to 2.5 mm, which still fits 9 tracks in a 1.25" mount. If they are narrower than about
+  0.5 mm per side, it can go to 1.5 mm and fit 12.
 - **Section plane: mid-length** (6 mm in), found from the track ends visible on the top view. On panel A in the
   pilot, after imaging, grind about 1.5 mm further and image a second plane. The difference between the two planes
   is the along-track scatter, which the model comparison needs as its noise level. The top views (C1) also give
