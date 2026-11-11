@@ -1,0 +1,23 @@
+{
+  "submitted_utc": "2026-10-28T20:35:29Z",
+  "uploads": {
+    "context.md": "data_entry:a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+    "nab_k7m2q9_particles.csv": "data_entry:b96e9aa7-1b06-4858-ab59-06301447c2a0",
+    "nab_k7m2q9_summary.md": "data_entry:d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+    "fields.csv": "data_entry:ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a"
+  },
+  "tasks": {
+    "q1_fines_in_lpbf_al": {
+      "task_id": "70c4d713-bf40-45b4-9927-3d35eed42a4b",
+      "job": "LITERATURE_HIGH"
+    },
+    "q2_lower_cut_methods": {
+      "task_id": "3560c19f-10ab-43ea-962b-48254d3c697e",
+      "job": "LITERATURE_HIGH"
+    },
+    "q3_psd_analysis": {
+      "task_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+      "job": "ANALYSIS"
+    }
+  }
+}
