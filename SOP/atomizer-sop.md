@@ -38,7 +38,8 @@ HMI buttons are in **bold**. Pressures are as the HMI shows them, relative to th
    about 100–160 psi, a copper run 300–350 psi.
 7. Open the chilled-water lines about 20°. Without them the atomizer runs only until heat builds
    up, then shuts itself down.
-8. Open the compressed-air valve (the ultrasonics will not run without air).
+8. Open the compressed-air valve, about 4 bar at the machine (the ultrasonics will not run
+   without air).
 9. Turn on the atomizer with the big red switch. Log in to the HMI, open the program, and wait about
    10 s for the furnace to connect.
 
@@ -60,8 +61,8 @@ Pick the booster to suit the plate:
 4. With the connectors, hand-twist the transducer (very expensive, don't drop it) onto the outer
    end, then the long lower sonotrode onto the chamber-facing end of the booster.
 5. Torque in the soft-jaw vise with a second wrench counter-holding: transducer to booster
-   **65 N·m**, booster to lower sonotrode **60 N·m**. Righty-tighty for all three joints; the
-   wrench clicks at the set torque.
+   **65 N·m**, booster to lower sonotrode **60 N·m**. Righty-tighty for all three joints; check the
+   arrow on the wrench. It clicks at the set torque.
 6. Bolt the protective cover over the transducer. Plug in and lock the cable, connect the air line,
    and hang the cable on its holder.
 7. Run a frequency scan: one peak, between 39,500 and 40,500 Hz (table above). If not, take apart,
@@ -107,7 +108,8 @@ crucible is reached through the chamber door.
 
 ## Atomizer Trial
 
-Material and ultrasonic system prepared and loaded.
+Material and ultrasonic system prepared and loaded. In Program Setup, check: Melting Pressure just
+below the chamber's 150 mbar, Graining Pressure 0.19 bar, Turbo 1.5 bar.
 
 ### Cold purge
 
@@ -118,7 +120,8 @@ Material and ultrasonic system prepared and loaded.
 4. Press **Gas Wash**.
 5. When it finishes, press **Melting Pressure**.
 6. Turn off **Pressure Control**.
-7. Turn on **Vacuum Pump** and **Vacuum Valve**; wait for about −850 mbar.
+7. Turn on **Vacuum Pump** and **Vacuum Valve**; wait for about −850 mbar (until it stops
+   falling).
 8. Press **Protective Gas** to bring in argon until −100 mbar, then turn it off.
 9. Press **Vacuum Pump** and **Vacuum Valve** again; wait for about −850 mbar.
 10. Press **Pressure Control**; wait for 150 mbar.
@@ -147,17 +150,19 @@ Material and ultrasonic system prepared and loaded.
 
 22. Set 840 °C (copper: see [Copper Alloys](#copper-alloys-nab-630-bronze)).
 23. When the rods start to sink, drop to 800 °C.
-24. Once it is all molten, hold 2 minutes to mix. No longer: it only oxidizes.
+24. Once it is all molten, hold 2 minutes to mix. No longer: it only oxidizes. Don't change the
+    furnace pressures once the metal is liquid.
 
 ### Atomize
 
-25. Turn on **Transducer Cooling**.
+25. Turn on **Transducer Cooling** (without it the scan stops with "no air pressure").
 26. Press **Ultrasonic Scan**: one peak, just above 40 kHz (about 39.6 kHz with the 1.5:1 booster).
 27. Set the amplitude: 90, read on the HMI's number. Note it.
 28. Press **Ultrasonic Start**. The vibration must be on before any melt comes out.
 29. Press **Graining Pressure** (0.19 bar) and **Sealing Rod**. It begins to atomize.
 30. Watch the plate the whole pour. Check that it is catching the stream; this is a trim, since the
-    position was set before closing. Use **Turbo Pump** as needed to:
+    position was set before closing. Use **Turbo Pump** (1.5 bar while held; short pushes) as
+    needed to:
     1. push more flow onto the plate to start atomizing (on carbon fibre, hold it from the start
        until the plate is plainly atomizing);
     2. correct the stream's direction;
@@ -170,8 +175,8 @@ Material and ultrasonic system prepared and loaded.
 33. When the crucible is empty, give a last **Turbo Pump** to clear the nozzle, then quickly press
     **Sealing Rod**, **Melting Pressure**, **Generator Stop** and **Ultrasonic Start** (turns the
     ultrasonics off).
-34. Turn off **Transducer Cooling**. Set the temperature to 250 °C: Generator Stop already stopped
-    the heating, and this is prep for the next run.
+34. Turn off **Transducer Cooling** once the vibration has stopped. Set the temperature to 250 °C:
+    Generator Stop already stopped the heating, and this is prep for the next run.
 35. Write the run log now ([Run Log](#run-log)). The machine keeps none.
 
 ## Cooldown and Shut Down
@@ -179,10 +184,10 @@ Material and ultrasonic system prepared and loaded.
 1. Wait until about 400 °C; then the graphite is safe in air (above 500 °C it degrades fast).
 2. Turn off **Melting Pressure**.
 3. Respirator on. Turn off **Pressure Control**, then press **Vent Valve**. Open the chamber, and
-   the furnace for faster cooling.
+   the furnace for faster cooling. Don't touch the graphite nut under the furnace.
 4. Note the argon cylinder pressure and close the cylinder valve. A cylinder left open leaks empty.
 5. At about 100 °C, turn off the heat exchanger and close the chilled water, then the compressed
-   air, then turn off the atomizer.
+   air, then turn off the atomizer (the HMI won't exit the program above 80 °C).
 6. Close the furnace lid against dust.
 
 ## Powder Collection and Cleaning
@@ -192,7 +197,7 @@ Respirator, gloves and lab coat.
 1. Lay the laminated paper under the chamber opening to catch powder.
 2. Brush powder off the plate, cone, view port and catch bowl into the collection cup with the
    anti-static brushes. Let the dust settle.
-3. Remove the collection cup, pour the powder into a jar, and clean the cup.
+3. Close the cup's valve and remove the cup. Pour the powder into a jar and clean the cup.
 4. Label the jar with a new 6-character code and add a row to the Excel sheet.
 5. Collect, bag and label the splashes from the splash plate. Weigh the powder, splashes, catch-bowl
    metal and crucible leftovers separately. Un-atomized metal is feedstock, not waste.
@@ -250,7 +255,7 @@ Post one entry per run in [#159](https://github.com/vertical-cloud-lab/digital-a
 | Symptom | Do |
 | --- | --- |
 | Vacuum stops near −850 mbar | Normal: at our altitude the gauge bottoms out near −0.85 bar. |
-| "Pressure crucible" warning | Normal so far. It means a small chamber-to-furnace leak through the graphite seals; if it persists, swap the sealing rod or crucible. |
+| "Pressure crucible" warning | Normal so far: the altitude, plus a small, harmless leak from the chamber through the graphite seals. If the furnace can't reach −0.85 bar or the lid hisses, check the sealing rod, the seals and the latch. |
 | Chamber won't pump down (Oct 20) | Usually the collection cup's flange or valve: wipe with IPA, re-clamp. |
 | Low-flow warning | Heat exchanger on; chilled-water valves open. |
 | "Water too cold" | Close the chilled-water valve a little. |
@@ -259,7 +264,7 @@ Post one entry per run in [#159](https://github.com/vertical-cloud-lab/digital-a
 | Melt pours but nothing atomizes; HMI reads 0 Hz, 0 W (Oct 6) | **Ultrasonic Start** wasn't pressed. Vibration on before the sealing rod. |
 | Stream lands on the upper sonotrode (Oct 6) | Pull the stack back. Next time check the landing with the door open. |
 | Steady drips onto a carbon-fibre plate, no powder (Oct 8) | The 1.5:1 booster with carbon fibre doesn't work: use a Mo plate, or the 1:1.5 booster. |
-| Melt shoots past the plate (Oct 2) | Lower the graining pressure; move the plate closer and higher. |
+| Melt shoots out too fast or past the plate (Oct 2) | Lower the graining pressure; move the plate closer and higher. |
 | Thin stream gathers on the plate | The plate is too cold: **Turbo Pump** to push more on. |
 | Copper won't start atomizing (Oct 28) | Turbo from the start; new plate and nozzle; aim at the tip; full 2-minute hold. |
 | Stream bends | Oxide at the nozzle: steer with the plate; purge better next time. |
@@ -274,7 +279,8 @@ Post one entry per run in [#159](https://github.com/vertical-cloud-lab/digital-a
 ## Maintenance
 
 1. Daily: coolant level, a look for cooling leaks, a look over the furnace, cabinet and seals.
-2. Weekly: pump oil, ISO-KF clamps tight, the control cabinet.
+2. Weekly: pump oil, ISO-KF clamps tight, the control cabinet. Every few weeks: drain the
+   vacuum pump's oil-mist canister.
 3. Every 20 h of running: safety filter, flapper-valve seals, vacuum-pump filter.
 4. Monthly: dust, loose screws, the chamber mechanism.
 5. Every 2 months or so: the HEPA filter, into a metal tray with sand (fine dust can self-ignite).
