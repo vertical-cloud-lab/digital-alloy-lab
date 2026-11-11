@@ -137,10 +137,10 @@ are not in the totals unless chosen. Two parts substitute for what the CAD draws
 
 | ID | Item | Qty | Buy | Price, USD | For | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| B01 | FKM O-ring AS568-006 (2.90 ID x 1.78); FDA brown Viton 75 | 100 | [The O-Ring Store FDABV75006](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38308) ([alt](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_72_77&products_id=3342)) | 9.00 | both | the main wells, $10 order minimum for the store, 3164 in stock |
-| B02 | FKM O-ring AS568-008 (4.47 ID); FDA brown Viton 75 | 100 | [The O-Ring Store FDABV75008](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38310) | 10.00 | Cu | calibration wells (lid P04), only 261 in stock |
-| B03 | FKM O-ring AS568-010 (6.07 ID); FDA brown Viton 75 | 100 | [The O-Ring Store FDABV75010](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38312) | 13.00 | Cu | calibration wells (lid P05) |
-| B04 | FKM O-ring AS568-013 (10.82 ID); FDA brown Viton 75 | 100 | [The O-Ring Store FDABV75013](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38315) ([alt](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_86_91&products_id=4016)) | 20.00 | Cu | bench cell face seal (P15): same rubber as the wells, CV75013 (min 2, $1.10 each) if 100 is too many |
+| B01 | FKM O-ring AS568-006 (2.90 ID x 1.78); FDA brown Viton 75 | 100 | [The O-Ring Store FDABV75006](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38308) ([alt](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_72_77&products_id=3342)) | 9.00 | both | the main wells, $10 order minimum for the store, 3164 in stock. **Substitute, checked 2026-11-11:** [Filters4You -006](https://www.filters4you.net/o-rings/as568-006), their own-brand "Viton (FKM) 75A", $5.99 per 10 or $8.99 per 25, ordered by e-mail request. Same size and hardness; compound and colour not stated. Buy B01–B04 from one source ([below](#o-rings-from-filters4you)) |
+| B02 | FKM O-ring AS568-008 (4.47 ID); FDA brown Viton 75 | 100 | [The O-Ring Store FDABV75008](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38310) | 10.00 | Cu | calibration wells (lid P04), only 261 in stock. Substitute: [Filters4You -008](https://www.filters4you.net/o-rings/as568-008), $5.99 per 10 (see B01) |
+| B03 | FKM O-ring AS568-010 (6.07 ID); FDA brown Viton 75 | 100 | [The O-Ring Store FDABV75010](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38312) | 13.00 | Cu | calibration wells (lid P05). Substitute: [Filters4You -010](https://www.filters4you.net/o-rings/as568-010), $5.99 per 10 (see B01) |
+| B04 | FKM O-ring AS568-013 (10.82 ID); FDA brown Viton 75 | 100 | [The O-Ring Store FDABV75013](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38315) ([alt](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_86_91&products_id=4016)) | 20.00 | Cu | bench cell face seal (P15): same rubber as the wells, CV75013 (min 2, $1.10 each) if 100 is too many. Substitute: [Filters4You -013](https://www.filters4you.net/o-rings/as568-013), $5.99 per 10 (see B01) |
 | B05 | FKM O-ring AS568-016; Viton Extreme 75 | 2 | [The O-Ring Store CV75016](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_86_91&products_id=4019) | 2.72 (fallback) | both | only for the O-ring cap (P18) |
 | B06 | Low-force spring pin for the electrode cap: 30 gf at mid-stroke; 0.9 mm stroke; 1.25 mm barrel | 10 | [Digi-Key CPG-37-TH-TR (Same Sky)](https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/CPG-37-TH-TR/25666017) ([alt](https://www.sameskydevices.com/product/interconnect/connectors/pogo-pins/cpg-37-th-tr)) | 8.21 | both | the cap needs <= 0.4 N per pin (copper/cad/README.md), P75 pins are about 1 N. Barrel 1.25 mm: open the bottom 2.2 mm of the cap's two 1.0 mm pin holes to 1.3 mm and set … |
 | B07 | Pogo pins P75-B1; 1.0 mm body; 10-pack | 2 | [Adafruit 2430](https://www.adafruit.com/product/2430) | 9.90 | both | tray: one WE pin per pocket and two pad pins per station (12), one in the bench cell clamp, spring force not stated (about 1 N for P75s): fine here, not on the cap, back … |
@@ -155,6 +155,33 @@ are not in the totals unless chosen. Two parts substitute for what the CAD draws
 | B16 | Silicone hookup wire 26 AWG; 25 ft | 1 | [Adafruit 2517](https://www.adafruit.com/product/2517) | 4.95 | both | the tray's bus channels |
 | B17 | Shielded cable 4 x 24 AWG with foil and drain (Belden 9534); per foot | 3 | [ShowMeCables Belden 9534](https://www.showmecables.com/belden-9534-4-conductors-24-awg-shielded-pvc-computer-cable-for-eia-rs-232) | 14.19 | both | tray to potentiostat: WE, RE, CE plus a spare, shield to the potentiostat ground only |
 | B18 | JST-XH compatible 4-pin plug and socket pair | 2 | [Adafruit 4874](https://www.adafruit.com/product/4874) | 1.90 | both | a keyed disconnect at the tray's back edge |
+
+#### O-rings from Filters4You
+
+*Checked 2026-11-11, for a question on [PR 180](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/180).*
+Filters4You sells all four sizes in their own-brand "Viton (FKM) 75A", in packs of 10 ($5.99),
+25 and 100. These can replace B01–B04.
+
+- **What matches:** the AS568 sizes and the 75 Shore A hardness. The 21 % squeeze in the 1.40 mm
+  counterbore, the clamp load (`copper/cad/cad_check.py` already covers 70–80 A) and the
+  0.101–0.126 cm² wetted area all follow from those, so nothing in the design changes.
+- **What differs:** The O-Ring Store's rings are a named compound: brown FKM 75 to ASTM D2000
+  M6HK810, FDA 21 CFR 177.2600 and 3-A Class I. Filters4You's page gives no compound, colour,
+  standard or maker. The FDA grade only limits which ingredients the rubber may contain. Neither
+  vendor says how much metal a ring gives off into seawater. The fixture blank
+  ([`../copper/protocol.md` §6](../copper/protocol.md#6-icp-ms-the-sample-and-its-blanks))
+  measures that every night, whichever ring is used.
+- **Buy all four sizes from one source.** The -008 and -010 calibration wells and the -013 bench
+  cell must use the same rubber as the -006 wells (protocol §2, and B04).
+- **How many:** a 10-pack is enough of the -008, -010 and -013. For the -006 it depends on
+  whether a ring is reused. The protocol doesn't say yet. If each spot gets a fresh ring, a night
+  of 8 wells uses 8, so buy the 25-pack ($8.99).
+- **Ordering:** the page has no cart. *Order this O-ring* opens an e-mail to their sales address,
+  and they reply with price and availability. Shipping isn't shown. In the request's note, ask
+  for the colour, the compound or its ASTM D2000 line, and whether all four sizes are the same
+  compound.
+- **On arrival,** measure the cross-section of three -006 rings with calipers. AS568 allows
+  1.70–1.85 mm (0.070 ± 0.003 in), the range `cad_check.py` used.
 
 ### Electrodes
 

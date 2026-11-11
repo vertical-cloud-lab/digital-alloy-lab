@@ -94,6 +94,11 @@ Notes on the order:
 
 - **Start the long ones first:** the B19 quote (custom length; what to ask for is in
   [`../bom/README.md`](../bom/README.md#electrodes)), the B45 quote, and B41, which ships as hazmat.
+- **B01–B04 can come from Filters4You instead** (checked 2026-11-11): their own-brand "Viton
+  (FKM) 75A" in the same four sizes, $5.99 per 10-pack, against $52 for 100 of each here. Same
+  size and hardness, but the compound isn't stated, so buy all four sizes from them, and the 25-pack
+  ($8.99) of the -006 if each spot gets a fresh ring. They take orders by e-mail request, not a
+  cart. Details in [`../bom/README.md`](../bom/README.md#o-rings-from-filters4you).
 - **B17's length assumes the EZstat-Pro sits beside the deck's back edge.** Measure from the tray's
   back edge (x 222, y 260) to where the EZstat sits, and order that length. It is sold by the foot.
 - **ST1:** stirrer B takes ME order 13518's second fan, so two are needed, for C and D, and the
