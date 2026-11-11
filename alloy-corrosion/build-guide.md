@@ -45,6 +45,7 @@ in the stocks, the cups in use, station S4 and the tip waste.
 | Tray 19.5 mm tall, coupon face at deck z 20; then "give it 2 mm feet" | Tray 21.5 mm tall, coupon face at z 22, flat underside (2026-11-09) | The P75 pins are 16 mm long, so their tails ended 1 mm below the old tray. Feet would have lifted its key pockets off the keys |
 | Tape the parts down; pins or pill mounts later | Deck keys in every deck part, plus thin tape under the tray and the cup block | The keys put a part back in the same place. They don't hold it down, and the electrode cap's magnets pull on those two ([`bom/deck-keys.md`](bom/deck-keys.md)) |
 | Tube rack at y 20–54, tubes at y 28 and 46 | y 28–62, tubes at y 36 and 54 | The slot row at y 45 ran under the back row's tube tips |
+| A 16.6 mm reference with a contact on top, soldered to the wire-wrap at the cap's axis | A 15.5 mm barrel with a bare silver-wire lead, joined to the −x pin's wire-wrap at the mouth of that pin's hole (2026-11-10) | The vendor makes one this short only with a silver-wire connector, without the strain relief and pin, which add 20 mm. The shorter barrel leaves about 1.8 mm of straight wire before the bend into the groove, not 0.7 mm |
 
 ## 1. Print
 
@@ -115,13 +116,27 @@ substitutions:
 4. **Wind the counter:** five turns of 0.25 mm Pt wire (B21) on a 5.0 mm mandrel. Tie the coil to
    the carrier's three legs and take its lead up through the carrier's 0.6 mm hole. Press the
    carrier into the cap.
-5. **Fit the reference:** push the leak-free 2 mm Ag/AgCl (B19) in until it stands 3.0 mm below
-   the skirt, which puts its tip 3.0 mm above the metal. Seal its top with a dab of neutral-cure
-   RTV silicone (H05).
+5. **Fit the reference:** push the leak-free 2 mm Ag/AgCl (B19) in from the top, tip first, until
+   it stands 3.0 mm below the skirt, which puts its tip 3.0 mm above the metal. Its bare silver
+   wire stands up out of the bore. Bend it 90° where it reaches the groove's floor, about 2 mm
+   above the barrel, and lay it along the −x groove to the −x pin's hole. Seal the barrel's top
+   and the bend with a dab of neutral-cure RTV silicone (H05), no higher than the recess floor.
 6. **Fit the two spring pins** (B06) at x ±11 mm, each set 0.2 mm recessed so it sits at
-   mid-stroke when the cap is seated. Solder the reference's lead to one pin and the coil's lead
-   to the other, routed in the 0.6 mm grooves in the recess floor (30 AWG wire-wrap wire, B15).
+   mid-stroke when the cap is seated. Each pin's 30 AWG wire-wrap (B15) comes up its hole to the
+   recess floor.
+   - **−x, the reference:** join the wire-wrap to the silver wire at the hole's 1.6 mm mouth,
+     about 13 mm along the silver wire from the barrel, and tuck the joint into the mouth. Solder
+     it only if the vendor says the electrode takes the heat at that distance; otherwise use
+     silver-filled conductive epoxy. The reference input draws almost no current, so the joint's
+     resistance doesn't matter.
+   - **+x, the counter:** run the wire-wrap along the +x groove to the coil's lead and solder them.
+   - **Keep both bare leads down in their grooves,** under the disc's adhesive. If both touched
+     the steel disc, it would short the reference to the counter.
+
    The reference's pin lands on the lid's −x pad and the coil's pin on the +x pad.
+   *Changed 2026-11-10:* these two steps used to solder the wire-wrap to a contact on the
+   reference's top. The vendor makes a reference this short only with a bare silver-wire lead
+   and no pin ([BOM B19](bom/README.md#electrodes)).
 7. **Glue the steel disc on last** (1 in × 1 mm, self-adhesive, B09). It is what the
    electromagnet lifts.
 8. **Mark an index on the cap.** The lid's magnets hold it at 0° or at 180°, and 180° swaps the
@@ -259,7 +274,8 @@ z 40 and the top of its disc, the magnet contact, at 44. (All 2 mm higher than b
   1 mV/s, and reversal at a current threshold. All three can be written against its simulation
   driver now ([README §5](README.md#5-which-potentiostat-what-corrosion-needs-input-for-231)).
 - **Reference electrodes:** Dr. Porter's lab has none to lend. The leak-free 2 mm reference (B19)
-  needs a quote for its 16.6 mm length; B20 is the master it is checked against.
+  is being quoted as a 15.5 mm barrel with a bare silver-wire lead (BOM B19); B20 is the master
+  it is checked against.
 
 ## Still open
 

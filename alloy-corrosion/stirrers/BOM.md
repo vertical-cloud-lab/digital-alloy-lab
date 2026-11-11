@@ -43,7 +43,7 @@ drill rod (B10) and PTFE rod (B46), whose McMaster prices couldn't be read.
 | **PACE Technologies** | | | | **265.00** |
 | B29 | Diamond lapping film, 0.1 µm, 12 in PSA, 3 per pack (copper's own, per the polishing SOP) | 1 | [PDAA-01P12](https://shop.metallographic.com/products/pdaa-01p12) | 265.00 |
 | **Innovative Instruments** | | | | **261.00** |
-| B19 | Leak-free Ag/AgCl reference, 2.0 mm OD, custom length (16.6 mm overall) | 1 | [LF-2, custom length](https://www.2in.com/products/reference/reference.html) | 261.00 (budget; **ask for a quote**) |
+| B19 | Leak-free Ag/AgCl reference, 2.0 mm OD, custom: 15.5 mm barrel with a bare silver-wire lead (16.6 mm at most) | 1 | [LF-2, custom length](https://www.2in.com/products/reference/reference.html) | 261.00 (budget; **ask for a quote**) |
 | **Advent Research Materials** | | | | **216.00** |
 | B21 | Platinum wire, 0.25 mm, 99.95 %, 0.2 m | 1 | [PT543404](https://www.advent-rm.com/en-gb/products/pure-metals/platinum/form/wire/line/pt5434) | 216.00 |
 | **Ossila** | | | | **165.00** |
@@ -92,8 +92,8 @@ drill rod (B10) and PTFE rod (B46), whose McMaster prices couldn't be read.
 
 Notes on the order:
 
-- **Start the long ones first:** the B19 quote (custom length; ask for a side lead under the steel
-  disc), the B45 quote, and B41, which ships as hazmat.
+- **Start the long ones first:** the B19 quote (custom length; what to ask for is in
+  [`../bom/README.md`](../bom/README.md#electrodes)), the B45 quote, and B41, which ships as hazmat.
 - **B17's length assumes the EZstat-Pro sits beside the deck's back edge.** Measure from the tray's
   back edge (x 222, y 260) to where the EZstat sits, and order that length. It is sold by the foot.
 - **ST1:** stirrer B takes ME order 13518's second fan, so two are needed, for C and D, and the
