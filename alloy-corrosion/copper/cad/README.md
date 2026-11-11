@@ -20,6 +20,7 @@ folder are unchanged, so the simulations and the animation still match them.
 | File | What it is |
 | --- | --- |
 | [`cad_cu_cell.py`](cad_cu_cell.py) | Parametric CadQuery 2.8 model of every part. Writes the STEP and STL files, `assembly.step` and [`cad_parts.json`](cad_parts.json) |
+| [`ref_bent90.py`](ref_bent90.py) → [`ref_bent90.json`](ref_bent90.json) | A bent reference in the cap: the cap with a slot for it (`electrode_cap_bent90`), the electrode (`ag_agcl_ref_bent90`), the checks and `ref-bent90.png` ([below](#a-bent-reference-the-vendors-lf-2-bent90-checked-2026-11-11)) |
 | [`cad_check.py`](cad_check.py) → [`cad_check.json`](cad_check.json) | O-ring loads, friction, magnet pull, vapour loss, press-on pressure, masses, clearances |
 | [`plot_cad_preview.py`](plot_cad_preview.py), [`plot_cad_section.py`](plot_cad_section.py) | The two figures above |
 | `*.step`, `*.stl` | One per part. `*_section.stl` is the same part with the 90° wedge facing −y cut away, for section views |
@@ -153,6 +154,43 @@ reference tip sits 3.0 mm above the metal. The cap weighs 13.5 g: 8.5 g of PETG 
   on last.
 - **Load a station:** piece face up in the pocket (shims under thin pieces), O-ring in the lid's
   counterbore, lid on, two M3 screws.
+
+## A bent reference (the vendor's LF-2-Bent90), checked 2026-11-11
+
+The vendor sent a photo of their LF-2-Bent90: the 2 mm leak-free reference bent 90°, with the
+usual strain relief and gold pin ([PR 180](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/180)).
+Read off the ruler in the photo, its tip leg is **about 17 mm** (16.9–17.2) to the outside of the
+other leg. The other leg is about 34 mm, then about 15.5 × 5.7 mm of strain relief and 7 mm of
+1 mm pin. [`ref_bent90.py`](ref_bent90.py) draws it in the cap, with the leg pointing to −x, the
+reference pin's side. It writes [`ref_bent90.json`](ref_bent90.json) and the figure below.
+
+![The photographed electrode and a custom one in the seated cap](ref-bent90.png)
+
+- **As photographed, it doesn't fit.** The tip leg is fine, but the other leg has to leave
+  through the cap's side. Its pin ends 55.5 mm from the axis, 41.5 mm past the flange, 0.2–6 mm
+  under the magnet face. The pin then needs a cable that the head drags between wells, cups and
+  the park cup, or a jumper back into the cap.
+- **A custom one fits, and is easier to fit than the straight 15.5 mm barrel.** Keep the
+  photographed tip leg: **17.0 ± 0.5 mm** from the tip to the top of the other leg. Cut the other
+  leg to **6 mm** from the outside of the tip leg, with no strain relief or pin, and a bare silver
+  wire out of its end.
+  - The leg lies in a **2.2 mm slot under the steel disc**, which replaces the 0.6 mm reference
+    groove: [`electrode_cap_bent90.step`](electrode_cap_bent90.step) / `.stl`. The slot's floor
+    is 2.87 mm below the recess floor.
+  - **The leg seats on the slot's floor, and that sets the tip at 3.0 mm above the metal.** A
+    tip leg at the ± 0.5 mm limits puts the tip at 3.5 or 2.5 mm. Anything up to 17.87 mm fits
+    under the disc with the tip at 3.0.
+  - The leg's top is 0.87 mm under the recess floor, 1.0 mm under the disc.
+  - The silver wire runs straight 5.2 mm along the deepened groove to the mouth of the −x
+    pin's hole. Nothing has to bend at the barrel's seal, which the straight barrel needs.
+  - [`ag_agcl_ref_bent90.step`](ag_agcl_ref_bent90.step) is the electrode as drawn, seated, with
+    0.5 mm wire (the real diameter is still to ask).
+  - **Checks:** no overlap between the electrode or wire and the cap, carrier, coil, disc or lid
+    (0.000 mm³ each). The slot leaves 1.23 mm of wall to the coil's lead hole and 4.2 mm to the
+    −x pin's hole. The electrode clears the coil by 1.5 mm. The slot takes 3.1 % of the disc's
+    glue area.
+- **Not changed:** `electrode_cap.step`, the plates, the BOM and the build guide still assume
+  the straight 15.5 mm barrel. Switch them once the vendor confirms a bent one.
 
 ## Still needs a bench test
 
