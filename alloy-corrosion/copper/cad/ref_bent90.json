@@ -1,0 +1,138 @@
+{
+ "photo_measured": {
+  "label_in_photo": "LF-2-Bent90",
+  "scale_px_per_mm": {
+   "x_135_to_318": 17.54,
+   "x_318_to_490": 17.3
+  },
+  "tip_leg_mm": {
+   "value": 17.2,
+   "range": [
+    16.9,
+    17.2
+   ],
+   "how": "outer face of the long leg (x 135.4 at the tip leg's centreline) to the tip (x 431-438), integrated over the local ruler scale"
+  },
+  "barrel_od_mm": {
+   "value": 1.95,
+   "how": "the tip leg is 34 px tall at 17.4 px/mm; the vendor's 2.0 mm"
+  },
+  "bend": "tight: the inside corner is nearly sharp, the outside radius about 2 mm",
+  "long_leg_mm": {
+   "value": 34.0,
+   "range": [
+    32.6,
+    34.1
+   ],
+   "how": "top of the tip leg (y 578) to the strain relief (y 1174), 3.5 deg tilt; the ruler gives no scale along y, so 17.5 px/mm is assumed, and the pin's width hints at up to 5 % more"
+  },
+  "strain_relief_mm": {
+   "length": 15.5,
+   "width": 5.7,
+   "rows": [
+    1174,
+    1445
+   ]
+  },
+  "pin_mm": {
+   "length": 7.0,
+   "diameter": 1.0,
+   "rows": [
+    1445,
+    1569
+   ]
+  },
+  "relief_plus_pin_mm": 22.5,
+  "vendor_says_relief_plus_pin_mm": 20.0
+ },
+ "custom": {
+  "ask_for": {
+   "tip_leg_mm": 17.0,
+   "tip_leg_tol_mm": 0.5,
+   "other_leg_mm": 6.0,
+   "measured_to": "the outside of the other leg",
+   "lead": "bare silver wire, at least 40 mm, straight out of the other leg's end",
+   "no": "strain relief or pin"
+  },
+  "seated_C_mm": {
+   "z_centreline": 13.0,
+   "z_top": 14.0,
+   "z_bottom": 12.0,
+   "x_leg_end": -5.0,
+   "x_far_end": -5.0
+  },
+  "tip_above_metal_mm": 3.0,
+  "tip_above_metal_if_tip_leg_is_mm": {
+   "16.5": 3.5,
+   "17.5": 2.5
+  },
+  "leg_top_below_recess_floor_mm": 0.87,
+  "leg_top_below_disc_mm": 1.0,
+  "longest_tip_leg_that_fits_with_tip_at_3mm": 17.87,
+  "wire_from_leg_end_to_pin_hole_mouth_mm": 5.2,
+  "slot": {
+   "width": 2.2,
+   "floor_C_z": 12.0,
+   "x": [
+    -6.0,
+    1.1
+   ],
+   "depth_below_recess_floor": 2.87
+  },
+  "walls_mm": {
+   "slot_to_coil_lead_hole": 1.225,
+   "slot_to_minus_x_pin_hole": 4.2,
+   "slot_to_carrier_socket_top": 4.7
+  },
+  "clearances_mm": {
+   "reference_to_coil": 1.5,
+   "reference_to_disc": 1.0,
+   "wire_to_disc": 1.75,
+   "reference_to_carrier": 0.025
+  },
+  "interference_mm3": {
+   "reference_vs_cap": 0.0,
+   "reference_vs_carrier": 0.0,
+   "reference_vs_disc": 0.0,
+   "reference_vs_coil": 0.0,
+   "reference_vs_lid": 0.0,
+   "wire_vs_cap": 0.0,
+   "wire_vs_disc": 0.0,
+   "carrier_vs_cap": 0.0,
+   "coil_vs_cap": 0.0
+  },
+  "cap_volume_removed_mm3": 43.65,
+  "disc_glue_area_lost_pct": 3.1
+ },
+ "as_photographed": {
+  "drawn": {
+   "tip_leg": 17.0,
+   "leg": 34.0,
+   "relief": [
+    15.5,
+    5.7
+   ],
+   "pin": [
+    7.0,
+    1.0
+   ]
+  },
+  "far_end_from_cap_axis_mm": 55.5,
+  "beyond_flange_mm": 41.5,
+  "leg_and_relief_band_C_z": [
+   10.15,
+   15.85
+  ],
+  "below_magnet_face_mm": {
+   "leg": 2.0,
+   "relief_top": 0.15
+  },
+  "leg_vs_unmodified_cap_mm3": 37.5674,
+  "why_not": [
+   "the leg, strain relief and pin stick out of the cap's side: the gold pin ends this far from the axis",
+   "the pin needs a socket and a lead: either a cable the head drags between wells, cups and the park cup, or a jumper back into the cap",
+   "it runs 0.2-6 mm under the magnet face, the height of the capper's IR break beam, whose housings cad_check.json puts 3 mm outside the flange, so it could only point between them"
+  ]
+ },
+ "frame": "C: cap frame, origin at the centre of the skirt underside, z up; seated on a lid, C = W + (0, 0, 6); the metal is at C z -6"
+}

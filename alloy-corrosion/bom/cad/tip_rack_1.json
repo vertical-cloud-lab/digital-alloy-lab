@@ -1,0 +1,716 @@
+{
+ "what": "Ben's tip rack 1: his Onshape version (Cubware's TipRack, rebuilt with Ben's 20 uL bore, plus his side-wall window), checked against this file's rebuild; and the slot grid its key pockets imply",
+ "onshape_export": {
+  "document": "20uL tip rack (Vertical Cloud Lab > vcl-shared > CubXL)",
+  "part_studio": "https://cad.onshape.com/documents/0818b5cae93b2fd622f05bc2/w/a7ab93440bf47ddde78ffed5/e/d9b11682e85631e606b725e1",
+  "part_studio_name": "tip_rack_1_20ul",
+  "part": "Part 1",
+  "workspace": "Main",
+  "microversion": "c3d37a4ba9d836cbbbf1fb28",
+  "features": [
+   "Import 1: tip_rack_1_20ul.step (this file's rebuild, as committed in 2f25692), inserted 02:49 UTC",
+   "Sketch 1, 02:52 UTC: a 60 x 35 mm rectangle on a side face",
+   "Extrude 1, 02:52 UTC: remove, blind 100 mm, symmetric"
+  ],
+  "exported": "2026-11-10 05:17 UTC, through Onshape's Export dialog (right-click Part 1 > Export), signed in as the lab's shared account",
+  "step_options": "STEP, AP242, custom units millimetre, Y-axis-up unchecked (Z up), download",
+  "stl_options": "STL, binary, millimetre, resolution Fine, Y-axis-up unchecked (Z up), download",
+  "sha256": {
+   "tip_rack_1_20ul.step": "eb5f8d84001dbe9a04c2b57c2919499ef264a572be877ecff8dc13070a42de97",
+   "tip_rack_1_20ul.stl": "bf42bfb1af99343ff953f747b6bc9606622b4ad1e7da7f1f55dc800725098f4a"
+  }
+ },
+ "rack": {
+  "files": [
+   "tip_rack_1_20ul.step",
+   "tip_rack_1_20ul.stl"
+  ],
+  "frame": "deck orientation, origin front-left-bottom; print as is (base on the bed)",
+  "checks": {
+   "bbox_mm": [
+    21.0,
+    138.0,
+    66.0
+   ],
+   "volume_mm3": 72703.4,
+   "solids": 1,
+   "valid": true,
+   "bore_probes": {
+    "mouth, z 65.9": {
+     "bores_open_at_d": 4.98,
+     "open": 30,
+     "walled_by_d": 5.03,
+     "walled": 30
+    },
+    "mid taper, z 58": {
+     "bores_open_at_d": 4.78,
+     "open": 30,
+     "walled_by_d": 4.83,
+     "walled": 30
+    },
+    "taper end, z 50.05": {
+     "bores_open_at_d": 4.58,
+     "open": 30,
+     "walled_by_d": 4.63,
+     "walled": 30
+    },
+    "exit bore, z 49": {
+     "bores_open_at_d": 3.08,
+     "open": 30,
+     "walled_by_d": 3.13,
+     "walled": 30
+    }
+   },
+   "pockets": [
+    {
+     "x": 10.872,
+     "y": 13.133,
+     "empty_mm3": 0.0,
+     "pocket_mm3": 71.41
+    },
+    {
+     "x": 10.872,
+     "y": 103.133,
+     "empty_mm3": 0.0,
+     "pocket_mm3": 71.41
+    }
+   ]
+  },
+  "stl": {
+   "triangles": 36176,
+   "bounds_mm": [
+    [
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     21.0,
+     138.0,
+     66.0
+    ]
+   ],
+   "volume_mm3": 72706.3,
+   "every_edge_shared_by_two_triangles": true
+  },
+  "bens_edit": {
+   "window_y_mm": [
+    39.0,
+    99.0
+   ],
+   "window_z_mm": [
+    5.0,
+    40.0
+   ],
+   "through": "both side walls (x 0-2 and 19-21)",
+   "unedited_rebuild_minus_export": {
+    "volume_mm3": 8400.0,
+    "pieces": [
+     {
+      "volume_mm3": 4200.0,
+      "min_xyz": [
+       0.0,
+       39.0,
+       5.0
+      ],
+      "max_xyz": [
+       2.0,
+       99.0,
+       40.0
+      ]
+     },
+     {
+      "volume_mm3": 4200.0,
+      "min_xyz": [
+       19.0,
+       39.0,
+       5.0
+      ],
+      "max_xyz": [
+       21.0,
+       99.0,
+       40.0
+      ]
+     }
+    ]
+   },
+   "export_minus_unedited_rebuild": {
+    "volume_mm3": 0.0,
+    "pieces": []
+   }
+  },
+  "vs_rebuild_with_window": {
+   "rebuild_minus_export": {
+    "volume_mm3": 0.0,
+    "pieces": []
+   },
+   "export_minus_rebuild": {
+    "volume_mm3": 0.0,
+    "pieces": []
+   }
+  }
+ },
+ "stock_rack_measured": {
+  "source": "Ursa-Laboratories/Cubware cubxl_plus/labware/tip_rack_holder/TipRack.stl at 352aa95",
+  "envelope_xyz_mm": [
+   21.0,
+   66.0,
+   138.0
+  ],
+  "hole_x": [
+   6.25,
+   14.75
+  ],
+  "hole_z": [
+   -5.0,
+   -13.5,
+   -22.0,
+   -30.5,
+   -39.0,
+   -47.5,
+   -56.0,
+   -64.5,
+   -73.0,
+   -81.5,
+   -90.0,
+   -98.5,
+   -107.0,
+   -115.5,
+   -124.0
+  ],
+  "pocket_x": 10.128,
+  "pocket_z": [
+   -34.867,
+   -124.867
+  ],
+  "pocket_corner": "toward -z (the row-A end)",
+  "pocket_span_mm": [
+   7.43,
+   6.73
+  ],
+  "pocket_depth_mm": 2.05,
+  "top_plate_mm": 18.0,
+  "side_wall_mm": 2.0,
+  "base_mm": 5.0,
+  "stock_bore": "6.98 -> 6.42 mm over 16 mm, then 4.32 mm (300 uL)"
+ },
+ "rebuilt": {
+  "what": "rack(): the rebuild, with Ben's window",
+  "frame": "as the rack",
+  "envelope_mm": [
+   21.0,
+   138.0,
+   66.0
+  ],
+  "plate_wall_base_mm": [
+   18.0,
+   2.0,
+   5.0
+  ],
+  "bore": {
+   "top_d": 5.0,
+   "taper_end_d": 4.6,
+   "taper_l": 16.0,
+   "exit_d": 3.1,
+   "exit_l": 2.0
+  },
+  "window": {
+   "y": [
+    39.0,
+    99.0
+   ],
+   "z": [
+    5.0,
+    40.0
+   ]
+  },
+  "A1": [
+   14.75,
+   14.0
+  ],
+  "A2": [
+   6.25,
+   14.0
+  ],
+  "O1": [
+   14.75,
+   133.0
+  ],
+  "pockets": [
+   [
+    10.872,
+    13.133
+   ],
+   [
+    10.872,
+    103.133
+   ]
+  ],
+  "pocket_shape": "deck_keys.py's (R1.1 rounded triangle, 2.1 deep), a corner toward -Y",
+  "left_out": "the stock part's end gussets",
+  "volume_mm3": 72703.4,
+  "unedited_volume_mm3": 81103.4,
+  "unedited_rebuild_vs_byu_vcl_TipRack20uL": {
+   "theirs": "byu-vcl hardware/cubxl/ursa_tip_rack_20ul/TipRack20uL.stl at f25e2ed (branch claude/issue-151-20260801-0017)",
+   "theirs_watertight": true,
+   "theirs_volume_mm3": 81114.4,
+   "ours_volume_mm3": 81117.3,
+   "in_theirs_not_ours_mm3": 14.25,
+   "in_ours_not_theirs_mm3": 17.1,
+   "largest_pieces_in_theirs_not_ours (volume, min xyz, max xyz in their frame)": [
+    [
+     7.12,
+     [
+      6.34,
+      -66.0,
+      -39.07
+     ],
+     [
+      13.91,
+      -63.9,
+      -32.22
+     ]
+    ],
+    [
+     7.12,
+     [
+      6.34,
+      -66.0,
+      -129.07
+     ],
+     [
+      13.91,
+      -63.9,
+      -122.22
+     ]
+    ]
+   ]
+  }
+ },
+ "on_the_deck": {
+  "taught": {
+   "A1": [
+    291.332,
+    89.0
+   ],
+   "A2": [
+    282.832,
+    89.0
+   ],
+   "pickup_z": 59.0,
+   "source": "byu-vcl cubos/configs/deck/stir_module_trial.yaml at 88fc07a (unchanged since 2026-10-02)"
+  },
+  "rack_outline": [
+   276.582,
+   75.0,
+   297.582,
+   213.0
+  ],
+  "pockets": [
+   [
+    287.454,
+    88.133
+   ],
+   [
+    287.454,
+    178.133
+   ]
+  ],
+  "slot_grid": {
+   "x0_mod_25": 12.454,
+   "y0_mod_45": 43.133,
+   "y0_signed": -1.867,
+   "slot_columns_x": [
+    12.45,
+    37.45,
+    62.45,
+    87.45,
+    112.45,
+    137.45,
+    162.45,
+    187.45,
+    212.45,
+    237.45,
+    262.45,
+    287.45,
+    312.45,
+    337.45,
+    362.45,
+    387.45,
+    412.45
+   ],
+   "slot_rows_y": [
+    43.13,
+    88.13,
+    133.13,
+    178.13,
+    223.13,
+    268.13,
+    313.13
+   ]
+  },
+  "vs_earlier_estimate": {
+   "earlier": [
+    12.5,
+    0.0
+   ],
+   "shift_mm": [
+    -0.046,
+    -1.867
+   ],
+   "other_evidence": [
+    {
+     "what": "Ben's 2026-10-02 deck: vial_1 of the Cubware 9-vial holder at (136.668, 45)",
+     "why": "Cubware's 9VialHolder.step has a key pocket directly under its first vial (and one 225 mm along)",
+     "slot_x_mod_25": 11.67,
+     "slot_y_mod_45": 0.0
+    },
+    {
+     "what": "Ben's tip rack 1 (panda_2x15_tip_rack, Cubware TipRack.stl): A1 (291.332, 89), A2 (282.832, 89)",
+     "why": "TipRack.stl has two pockets 90 mm apart, 3.86 mm from the A1 column toward A2 and 0.86 mm past the A1 row; tip pick-up needs about 1 mm, so this is the most precisely taught of the three",
+     "slot_x_mod_25": 12.45,
+     "slot_y_mod_45": 43.14
+    },
+    {
+     "what": "Ben's 2026-11-05 stir-module trial: the stirred vial at (126, 45)",
+     "why": "the compact stirrer's two keys are 12.5 mm either side of its vial, on the vial's row",
+     "slot_x_mod_25": 13.5,
+     "slot_y_mod_45": 0.0
+    }
+   ]
+  },
+  "rack_2_as_a_second_print": {
+   "one_column_left": {
+    "A1": [
+     266.332,
+     89.0
+    ],
+    "A2": [
+     257.832,
+     89.0
+    ]
+   },
+   "outline": [
+    251.582,
+    75.0,
+    272.582,
+    213.0
+   ]
+  },
+  "keyed_parts": {
+   "coupon_tray": {
+    "planned_pockets": [
+     [
+      187.5,
+      225.0
+     ],
+     [
+      262.5,
+      225.0
+     ]
+    ],
+    "pockets_land_at": [
+     [
+      187.45,
+      223.13
+     ],
+     [
+      262.45,
+      223.13
+     ]
+    ]
+   },
+   "cup_block_3": {
+    "planned_pockets": [
+     [
+      37.5,
+      225.0
+     ],
+     [
+      87.5,
+      225.0
+     ]
+    ],
+    "pockets_land_at": [
+     [
+      37.45,
+      223.13
+     ],
+     [
+      87.45,
+      223.13
+     ]
+    ]
+   },
+   "tube_rack_2x8": {
+    "planned_pockets": [
+     [
+      187.5,
+      45.0
+     ],
+     [
+      237.5,
+      45.0
+     ]
+    ],
+    "pockets_land_at": [
+     [
+      187.45,
+      43.13
+     ],
+     [
+      237.45,
+      43.13
+     ]
+    ]
+   },
+   "tip_waste_cup": {
+    "planned_pockets": [
+     [
+      387.5,
+      135.0
+     ]
+    ],
+    "pockets_land_at": [
+     [
+      387.45,
+      133.13
+     ]
+    ]
+   },
+   "tip_rack_2x15": {
+    "planned_pockets": [
+     [
+      262.5,
+      90.0
+     ],
+     [
+      262.5,
+      180.0
+     ]
+    ],
+    "pockets_land_at": [
+     [
+      262.45,
+      88.13
+     ],
+     [
+      262.45,
+      178.13
+     ]
+    ]
+   }
+  },
+  "deck_check": {
+   "shift_of_keyed_parts_mm": [
+    -0.046,
+    -1.867
+   ],
+   "planned": {
+    "stations": [
+     [
+      185.0,
+      240.0
+     ],
+     [
+      210.0,
+      240.0
+     ],
+     [
+      235.0,
+      240.0
+     ],
+     [
+      260.0,
+      240.0
+     ]
+    ],
+    "cups": {
+     "rinse 2 (ASW)": [
+      30.0,
+      245.0
+     ],
+     "rinse 1 (DI)": [
+      60.0,
+      245.0
+     ],
+     "park cup": [
+      90.0,
+      245.0
+     ]
+    },
+    "tubes_x": [
+     176.0,
+     188.0,
+     200.0,
+     212.0,
+     224.0,
+     236.0,
+     248.0,
+     260.0
+    ],
+    "tubes_y": [
+     36.0,
+     54.0
+    ],
+    "tip_waste": [
+     385.0,
+     150.0
+    ],
+    "stirred_vials": {
+     "A": [
+      76.0,
+      45.0
+     ],
+     "B": [
+      76.0,
+      90.0
+     ],
+     "C": [
+      76.0,
+      135.0
+     ],
+     "D": [
+      76.0,
+      180.0
+     ]
+    },
+    "tip_rack_2": {
+     "a1": [
+      266.332,
+      89.0
+     ],
+     "a2": [
+      257.832,
+      89.0
+     ],
+     "pickup_z": 59.0
+    }
+   },
+   "lands_at": {
+    "stations": [
+     [
+      184.95,
+      238.13
+     ],
+     [
+      209.95,
+      238.13
+     ],
+     [
+      234.95,
+      238.13
+     ],
+     [
+      259.95,
+      238.13
+     ]
+    ],
+    "cups": {
+     "rinse 2 (ASW)": [
+      29.95,
+      243.13
+     ],
+     "rinse 1 (DI)": [
+      59.95,
+      243.13
+     ],
+     "park cup": [
+      89.95,
+      243.13
+     ]
+    },
+    "tubes_x": [
+     175.95,
+     187.95,
+     199.95,
+     211.95,
+     223.95,
+     235.95,
+     247.95,
+     259.95
+    ],
+    "tubes_y": [
+     34.13,
+     52.13
+    ],
+    "tip_waste": [
+     384.95,
+     148.13
+    ],
+    "stirred_vials": {
+     "A": [
+      74.95,
+      43.13
+     ],
+     "B": [
+      74.95,
+      88.13
+     ],
+     "C": [
+      74.95,
+      133.13
+     ],
+     "D": [
+      74.95,
+      178.13
+     ]
+    },
+    "tip_rack_2": {
+     "a1": [
+      266.33,
+      89.0
+     ],
+     "a2": [
+      257.83,
+      89.0
+     ]
+    },
+    "tip_rack_outlines": {
+     "rack 1": [
+      276.58,
+      75.0,
+      297.58,
+      213.0
+     ],
+     "rack 2": [
+      251.58,
+      75.0,
+      272.58,
+      213.0
+     ]
+    }
+   },
+   "not_moved": "tip rack 1 and the 9-position holder (taught); the potentiostat box (off the deck)",
+   "rigid_head": {
+    "events_checked": 124,
+    "events_with_problems": 0,
+    "tightest_pass_mm": {
+     "pipette_bare over park cup": 16.0,
+     "capper over tube rack": 22.0,
+     "pipette_bare over vial holder": 25.0,
+     "capper over vial holder": 44.0
+    }
+   },
+   "rigid_head_problems": [],
+   "staged_fills": {
+    "fills": 24,
+    "fills_passing": 24,
+    "worst_tip": {
+     "closest_mm": 32.1,
+     "move": "pick up tip",
+     "capped_vial": "A"
+    },
+    "worst_carried_cap": {
+     "closest_mm": 34.0,
+     "move": "dispense S1 #1",
+     "capped_vial": "A"
+    }
+   },
+   "unstaged_fills": {
+    "fills": 24,
+    "fills_passing": 3
+   }
+  }
+ }
+}
