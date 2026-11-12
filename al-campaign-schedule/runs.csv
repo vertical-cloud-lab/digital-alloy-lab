@@ -1,0 +1,41 @@
+date,weekday,week,family,code,block,block_meaning,purpose
+2026-11-16,Mon,W1,Cu,Cu1,Cu,Copper runs for the ONR work (not part of the Al paper),630 bronze; then the full clean (~1 h) and switch to the Al set-up
+2026-11-17,Tue,W1,Al,A1,A,"Baseline repeats: 6063, 250 g, fixed settings (repeatability bar)",first run counted toward the repeatability bar
+2026-11-18,Wed,W1,Al,A2,A,"Baseline repeats: 6063, 250 g, fixed settings (repeatability bar)",repeat
+2026-11-19,Thu,W1,Al,A3,A,"Baseline repeats: 6063, 250 g, fixed settings (repeatability bar)",repeat
+2026-11-23,Mon,W2,Al,A4,A,"Baseline repeats: 6063, 250 g, fixed settings (repeatability bar)",repeat
+2026-11-24,Tue,W2,Al,A5,A,"Baseline repeats: 6063, 250 g, fixed settings (repeatability bar)",n = 5: check the bar
+2026-11-30,Mon,W3,Al,D1,D,Benchmarks made in-house: AlSi10Mg-type and Scalmalloy-type,AlSi10Mg-type from 4047 + Mg (the 'beat this' alloy)
+2026-12-01,Tue,W3,Al,B30,B,Dosing check: 4047 powder in 6063 cups (known Si),30 wt% 4047 powder in thin cups (Si about 3.9 wt%)
+2026-12-02,Wed,W3,Al,D2,D,Benchmarks made in-house: AlSi10Mg-type and Scalmalloy-type,Scalmalloy-type Al-Mg-Sc-Zr (the mineral-burden reference)
+2026-12-03,Thu,W3,Al,B15,B,Dosing check: 4047 powder in 6063 cups (known Si),15 wt% 4047 powder (Si about 2.1 wt%)
+2026-12-07,Mon,W4,Al,S1,S,Seed compositions picked from the CALPHAD screen,seed 1
+2026-12-08,Tue,W4,Al,S2,S,Seed compositions picked from the CALPHAD screen,seed 2
+2026-12-09,Wed,W4,Al,S3,S,Seed compositions picked from the CALPHAD screen,seed 3
+2026-12-10,Thu,W4,Al,S4,S,Seed compositions picked from the CALPHAD screen,seed 4
+2026-12-14,Mon,W5,Al,X1,X,"Flex slot: redo a failed run, or A6-A8, or one more candidate",flex
+2026-12-15,Tue,W5,Al,X2,X,"Flex slot: redo a failed run, or A6-A8, or one more candidate",flex
+2026-12-16,Wed,W5,Al,X3,X,"Flex slot: redo a failed run, or A6-A8, or one more candidate",flex (move to Dec 21-22 or drop if finals get in the way)
+2026-12-18,Fri,W5,Cu,Cu2,Cu,Copper runs for the ONR work (not part of the Al paper),copper; clean over the break
+2027-01-05,Tue,W8,Al,R1-1,R,Optimizer rounds: batch chosen each Friday,"round 1 (batch chosen Dec 18, charges made Jan 4)"
+2027-01-06,Wed,W8,Al,R1-2,R,Optimizer rounds: batch chosen each Friday,round 1
+2027-01-07,Thu,W8,Al,R1-3,R,Optimizer rounds: batch chosen each Friday,round 1
+2027-01-11,Mon,W9,Al,X4,X,"Flex slot: redo a failed run, or A6-A8, or one more candidate",flex
+2027-01-12,Tue,W9,Al,R2-1,R,Optimizer rounds: batch chosen each Friday,round 2 (chosen Fri Jan 8)
+2027-01-13,Wed,W9,Al,R2-2,R,Optimizer rounds: batch chosen each Friday,round 2
+2027-01-14,Thu,W9,Al,R2-3,R,Optimizer rounds: batch chosen each Friday,round 2
+2027-01-15,Fri,W9,Cu,Cu3,Cu,Copper runs for the ONR work (not part of the Al paper),copper
+2027-01-19,Tue,W10,Al,R3-1,R,Optimizer rounds: batch chosen each Friday,round 3 (chosen Fri Jan 15)
+2027-01-20,Wed,W10,Al,R3-2,R,Optimizer rounds: batch chosen each Friday,round 3
+2027-01-21,Thu,W10,Al,R3-3,R,Optimizer rounds: batch chosen each Friday,round 3
+2027-01-25,Mon,W11,Al,F1-a,F,"Finalists: extra powder for tensile repeats, DED and outside checks",finalist 1
+2027-01-26,Tue,W11,Al,F1-b,F,"Finalists: extra powder for tensile repeats, DED and outside checks",finalist 1
+2027-01-27,Wed,W11,Al,F2-a,F,"Finalists: extra powder for tensile repeats, DED and outside checks",finalist 2
+2027-01-28,Thu,W11,Al,F2-b,F,"Finalists: extra powder for tensile repeats, DED and outside checks",finalist 2
+2027-02-01,Mon,W12,Al,R4-1,R,Optimizer rounds: batch chosen each Friday,round 4 (chosen Fri Jan 29; powder data only)
+2027-02-02,Tue,W12,Al,R4-2,R,Optimizer rounds: batch chosen each Friday,round 4
+2027-02-03,Wed,W12,Al,R4-3,R,Optimizer rounds: batch chosen each Friday,round 4
+2027-02-04,Thu,W12,Al,X5,X,"Flex slot: redo a failed run, or A6-A8, or one more candidate",flex
+2027-02-08,Mon,W13,Al,D1-r,D,Benchmarks made in-house: AlSi10Mg-type and Scalmalloy-type,"AlSi10Mg-type repeat, for the benchmark's own run-to-run spread"
+2027-02-09,Tue,W13,Al,X6,X,"Flex slot: redo a failed run, or A6-A8, or one more candidate",flex
+2027-02-19,Fri,W14,Cu,Cu4,Cu,Copper runs for the ONR work (not part of the Al paper),copper

@@ -1,0 +1,55 @@
+stream,task,start,end,tag,suggested_lead,notes
+Atomizer and powder,"Settings, SOP (#253), consumables count, G0",2026-11-12,2026-11-20,,"Gage, Ronnie",fixed settings and the five SOP questions settled before A1
+Atomizer and powder,Al runs (36),2026-11-17,2027-02-09,36 run days (runs.csv),"Gage, Ronnie + a 3rd operator",one marker per run day
+Atomizer and powder,Cu runs (4),2026-11-16,2027-02-19,4 run days (runs.csv),Gage,"Fridays at block boundaries, each followed by the full clean"
+Atomizer and powder,"Cups and plugs in bulk, then weekly charge kits",2026-11-13,2026-12-04,,"Paul, doser team",or sawn bar + master-alloy pieces where possible (#250)
+Atomizer and powder,"Cups and plugs in bulk, then weekly charge kits",2026-12-07,2027-02-05,,"Paul, doser team",or sawn bar + master-alloy pieces where possible (#250)
+Atomizer and powder,"Sieve, weigh, seal 5 g for O (within 48 h)",2026-11-17,2027-02-10,,powder team,two splits per run at 250/63/45 um
+Atomizer and powder,Weekly SEM/EDS session (all of the week's powders),2026-11-19,2027-02-12,,Ronnie + 1-2 more trained users,"PSD >=1000 particles, shape >=400, EDS top/mid/bottom"
+Printing (LPBF and DED),Book Utah MIDI and U of U DED (Carl's visit),2026-11-13,2026-11-25,,"Carl, Sterling",reduced-build kit? powder per build? groove plates? dates
+Printing (LPBF and DED),"LPBF sessions, Utah MIDI (P1-P5)",2026-12-02,2026-12-03,P1,"Ronnie, Carl",see README for what each session prints
+Printing (LPBF and DED),"LPBF sessions, Utah MIDI (P1-P5)",2026-12-16,2026-12-17,P2,"Ronnie, Carl",see README for what each session prints
+Printing (LPBF and DED),"LPBF sessions, Utah MIDI (P1-P5)",2027-01-12,2027-01-13,P3,"Ronnie, Carl",see README for what each session prints
+Printing (LPBF and DED),"LPBF sessions, Utah MIDI (P1-P5)",2027-01-20,2027-01-21,P4,"Ronnie, Carl",see README for what each session prints
+Printing (LPBF and DED),"LPBF sessions, Utah MIDI (P1-P5)",2027-02-02,2027-02-03,P5,"Ronnie, Carl",see README for what each session prints
+Printing (LPBF and DED),"DED sessions, U of U (coarse 63-150 um powder)",2026-12-15,2026-12-15,DED1,Carl,uses the fraction LPBF can't
+Printing (LPBF and DED),"DED sessions, U of U (coarse 63-150 um powder)",2027-01-14,2027-01-14,DED2,Carl,uses the fraction LPBF can't
+Printing (LPBF and DED),"DED sessions, U of U (coarse 63-150 um powder)",2027-02-04,2027-02-04,DED3,Carl,uses the fraction LPBF can't
+Printing (LPBF and DED),"Part removal, heat treatment, specimen prep",2026-12-04,2026-12-11,,printing team,about a week after each session
+Printing (LPBF and DED),"Part removal, heat treatment, specimen prep",2026-12-17,2026-12-23,,printing team,about a week after each session
+Printing (LPBF and DED),"Part removal, heat treatment, specimen prep",2027-01-13,2027-01-19,,printing team,about a week after each session
+Printing (LPBF and DED),"Part removal, heat treatment, specimen prep",2027-01-21,2027-01-27,,printing team,about a week after each session
+Printing (LPBF and DED),"Part removal, heat treatment, specimen prep",2027-02-03,2027-02-09,,printing team,about a week after each session
+Metallography and testing,Archimedes density set-up (#144),2026-11-16,2026-12-04,,Seth or volunteer,needed for P1 cubes
+Metallography and testing,Polishing batches (powder and print sections),2026-11-30,2027-02-11,,polishing team,one batch a week on the PX500
+Metallography and testing,Hardness and density on every print,2026-12-07,2027-02-12,,testing team,the fast strength screen the optimizer uses
+Metallography and testing,"Tensile: dry run, baseline, seeds, finalists",2026-12-02,2026-12-04,dry run,testing team,>=3 specimens per alloy for the finalists
+Metallography and testing,"Tensile: dry run, baseline, seeds, finalists",2026-12-14,2026-12-16,AlSi10Mg,testing team,>=3 specimens per alloy for the finalists
+Metallography and testing,"Tensile: dry run, baseline, seeds, finalists",2027-01-19,2027-01-22,seeds,testing team,>=3 specimens per alloy for the finalists
+Metallography and testing,"Tensile: dry run, baseline, seeds, finalists",2027-02-09,2027-02-12,finalists,testing team,>=3 specimens per alloy for the finalists
+Metallography and testing,"Corrosion: electrodes, method check, baselines, finalists",2026-11-16,2026-11-20,order,"Ben, Jarrett",EZstat-Pro on the CubXL; 3.5 wt% NaCl
+Metallography and testing,"Corrosion: electrodes, method check, baselines, finalists",2026-12-07,2026-12-18,method,"Ben, Jarrett",EZstat-Pro on the CubXL; 3.5 wt% NaCl
+Metallography and testing,"Corrosion: electrodes, method check, baselines, finalists",2027-01-11,2027-01-15,baselines,"Ben, Jarrett",EZstat-Pro on the CubXL; 3.5 wt% NaCl
+Metallography and testing,"Corrosion: electrodes, method check, baselines, finalists",2027-01-25,2027-02-12,campaign,"Ben, Jarrett",EZstat-Pro on the CubXL; 3.5 wt% NaCl
+Simulation and optimizer,Freeze design space and mineral-burden metric,2026-11-12,2026-11-20,,"Xavier, Sterling","elements on hand, bounds, Al >= 80 wt%, liquidus limit"
+Simulation and optimizer,"CALPHAD screen, then pick seeds S1-S4",2026-11-16,2026-12-04,,Xavier,pycalphad now; Thermo-Calc if licensed
+Simulation and optimizer,Pre-register the AI benchmark,2026-11-30,2026-12-04,,"Xavier, Sterling",committed before the first optimizer round
+Simulation and optimizer,Printability maps before each print session,2026-11-23,2027-02-01,,Xavier,Eagar-Tsai (#238) or AM Module
+Simulation and optimizer,Optimizer: batch chosen every Friday,2026-12-14,2027-01-29,,Xavier,"R1 Dec 18, R2 Jan 8, R3 Jan 15, F Jan 22, R4 Jan 29"
+Simulation and optimizer,"Benchmark replay (>=20 seeds), Thermo-Calc re-check",2027-02-01,2027-02-17,,Xavier,acceleration factor with bootstrap CIs
+Independent validation,"Line up outside chemistry, tensile, 2nd print",2026-12-14,2027-01-08,,"Sterling, Gage",accounts and POs ready before samples exist
+Independent validation,"O and ICP batch 1 (A, B, D, S powders)",2027-01-08,2027-01-29,,Gage,sealed 5 g splits
+Independent validation,"Finalists out, results back",2027-01-29,2027-02-19,,Sterling,"anything late goes to the SI as pending, or is cut"
+Writing,"Journal, authors, section owners, figure scripts",2026-11-13,2026-11-25,,Sterling,Adv. Mater. collection article (#120)
+Writing,Methods (from the SOPs) and introduction,2026-11-30,2027-01-04,,section owners,finals and break weeks are writing weeks
+Writing,"Results figures, refreshed weekly",2026-12-07,2027-02-12,,everyone,scripts re-run every Friday
+Writing,Full draft (version A or B),2027-01-29,2027-02-15,,Sterling + leads,version decided Jan 29
+Writing,"Co-author review, revise, submit",2027-02-16,2027-02-25,,all authors,submit Thu Feb 25; deadline Sun Feb 28
+Gates,G0,2026-11-20,2026-11-20,gate,,"Ready to run: settings fixed, consumables ordered, design space frozen, Utah and DED booked"
+Gates,G1,2026-12-04,2026-12-04,gate,,Repeatability bar checked on A1-A5; seeds S1-S4 picked; benchmark pre-registered; P1 printed
+Gates,G2,2027-01-15,2027-01-15,gate,,One full loop shown (CALPHAD -> atomize -> print -> test -> optimizer); >=2 in-house powders print >=99% dense
+Gates,G3,2027-01-22,2027-01-22,gate,,"Finalists F1, F2 picked; outside checks booked"
+Gates,G4,2027-01-29,2027-01-29,gate,,Paper version A (new alloy) or B (feedstock + replay) decided
+Gates,Freeze,2027-02-12,2027-02-12,gate,,Experimental data frozen
+Gates,Outside,2027-02-19,2027-02-19,gate,,Cut-off for outside results
+Gates,Submit,2027-02-25,2027-02-25,gate,,Target submission (deadline Sun Feb 28)
