@@ -1,7 +1,7 @@
 <!--
 Edison Scientific LITERATURE_HIGH (job-futurehouse-paperqa3-high)
 Task ID: c690cb5a-afe5-4b91-87eb-7a59884a1a71
-Submitted: 2026-11-12T16:41:09Z; fetched: 2026-11-12T17:04:48Z; status: success; has_successful_answer: True
+Submitted: 2026-11-12T16:41:09Z; fetched: 2026-11-12T17:13:29Z; status: success; has_successful_answer: True
 Retrieved with edison-client 0.18.0 (EDISON_PLATFORM_API_KEY) from GitHub Actions for issue #254. The full trajectory is in the .trajectory.json file beside this one.
 -->
 

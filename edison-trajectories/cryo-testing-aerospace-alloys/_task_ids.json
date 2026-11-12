@@ -4,7 +4,8 @@
     "job": "LITERATURE_HIGH",
     "job_name": "job-futurehouse-paperqa3-high",
     "submitted_utc": "2026-11-12T16:41:08Z",
-    "status": "in progress"
+    "status": "success",
+    "fetched_utc": "2026-11-12T17:13:27Z"
   },
   "02-aluminum-cryogenic-behavior": {
     "task_id": "c690cb5a-afe5-4b91-87eb-7a59884a1a71",
@@ -12,7 +13,7 @@
     "job_name": "job-futurehouse-paperqa3-high",
     "submitted_utc": "2026-11-12T16:41:09Z",
     "status": "success",
-    "fetched_utc": "2026-11-12T17:04:49Z"
+    "fetched_utc": "2026-11-12T17:13:29Z"
   },
   "03-precedent-lpbf-al-at-20K-4K": {
     "task_id": "3ccea3dc-454b-4b67-818a-50d167d91589",
@@ -20,7 +21,7 @@
     "job_name": "job-futurehouse-paperqa3-precedent",
     "submitted_utc": "2026-11-12T16:41:11Z",
     "status": "success",
-    "fetched_utc": "2026-11-12T17:04:50Z"
+    "fetched_utc": "2026-11-12T17:13:30Z"
   },
   "04-precedent-high-throughput-cryo-testing": {
     "task_id": "44cb0c12-3873-4e7e-9a98-4172d8d50516",
@@ -28,7 +29,7 @@
     "job_name": "job-futurehouse-paperqa3-precedent",
     "submitted_utc": "2026-11-12T16:41:12Z",
     "status": "success",
-    "fetched_utc": "2026-11-12T17:04:51Z"
+    "fetched_utc": "2026-11-12T17:13:31Z"
   },
   "05-equipment-and-facilities": {
     "task_id": "5bd53d09-b488-4318-a51d-2f7c2bb6069d",
@@ -36,13 +37,14 @@
     "job_name": "job-futurehouse-paperqa3",
     "submitted_utc": "2026-11-12T16:41:13Z",
     "status": "success",
-    "fetched_utc": "2026-11-12T17:04:52Z"
+    "fetched_utc": "2026-11-12T17:13:33Z"
   },
   "06-industry-documented-usage": {
     "task_id": "948ef097-73ce-4328-acd5-07bf874cb16e",
     "job": "LITERATURE",
     "job_name": "job-futurehouse-paperqa3",
     "submitted_utc": "2026-11-12T16:41:14Z",
-    "status": "in progress"
+    "status": "success",
+    "fetched_utc": "2026-11-12T17:13:35Z"
   }
 }

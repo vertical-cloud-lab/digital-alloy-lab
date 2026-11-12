@@ -18,12 +18,19 @@ which source each fact came from and where I corrected Edison.
   sized from properties measured at those temperatures. Liquid-hydrogen aircraft tanks, cryogenic
   space instruments and superconducting-magnet structures add 20 K and 4 K requirements.
 - **Room-temperature tests can't predict the cold result. The Shuttle's tank is the textbook case.**
-  Lots of the Al-Li alloy 2195 plate for the Space Shuttle super-lightweight tank were rejected. NASA
-  MSFC then devised a two-step aging treatment to raise *cryogenic* fracture toughness, after which
-  five previously rejected lots passed simulated-service testing, each tougher cold than warm
-  ([NASA/TM-2002-211547](https://ntrs.nasa.gov/citations/20020030745)). The cryogenic-to-ambient
-  toughness ratio depends on where T1 (Al₂CuLi) precipitates form, which is set by processing. So the
-  ratio has to be measured; it can't be assumed.
+  - **The rule:** 2195 plate lots for the Space Shuttle super-lightweight tank were accepted only if
+    their fracture toughness at 77 K was at least their toughness at room temperature. That is, the
+    cryogenic-to-ambient fracture-toughness ratio (FTR) had to exceed 1.
+  - **The failure and the fix:** one lot came in at FTR 0.85 (25.4 vs 30.0 ksi√in). NASA MSFC devised
+    a two-step aging treatment that raised it to 1.11, and five previously rejected lots then passed
+    simulated-service testing ([NASA/TM-2002-211547](https://ntrs.nasa.gov/citations/20020030745);
+    numbers via Edison 06).
+  - **Why it varies:** the ratio depends on where T1 (Al₂CuLi) precipitates form, which processing
+    sets. So it has to be measured; it can't be assumed.
+  - **A second case:** in 2010, before STS-133, cracks were found in five Al-2090 stringers on the
+    External Tank. The alloy's short-transverse capability was lower than expected, and the stresses,
+    including deflections from loading cold LOX, were higher
+    ([AIAA 2020-0246](https://doi.org/10.2514/6.2020-0246), via Edison 01).
 - **Aluminum is the default cryogenic tank metal for a reason, but the reason has exceptions.** Al is
   FCC, so it has no ductile-to-brittle transition, and most alloys get stronger *and* more ductile
   when cold. For example, 2195-T8 goes from a UTS of 614 MPa at 298 K to 859 MPa at 20 K, and its
@@ -99,8 +106,10 @@ which source each fact came from and where I corrected Edison.
    hydrogen exposure together; cold helium gas at 20 K is only a thermal stand-in. At NASA MSFC, LH₂
    immersion and cold-helium fatigue-crack-growth results agreed for Inconel 718, but LH₂ testing was
    expensive enough that a planned near-threshold test was dropped (NASA/TM-2005-213948, from Edison's
-   equipment answer). Aluminum alloys are generally regarded as compatible with hydrogen, which is
-   part of why they are used for LH₂ tanks.
+   equipment answer). Aluminum alloys are generally regarded as having low sensitivity to hydrogen
+   embrittlement in LH₂ service, partly because hydrogen barely diffuses at 20 K. Even so, the IMO's
+   interim guidelines for marine LH₂ (MSC.1/Circ.1622) ask for J_Ic or CTOD fracture tests at 20 K,
+   including welds and heat-affected zones (Edison 01).
 
 ### 1.3 Standards
 
@@ -127,6 +136,13 @@ for two reasons:
 - 7075 is not monotonic. K_Ic of 7075-T6 falls between room temperature and 77 K, and one study
   found work-to-fracture peaking near 30 K and falling toward 4 K (both via Edison 02).
 
+Other alloy families show the same thing:
+
+- **304L:** going from 77 K to 20 K adds 24 % to yield and 12 % to UTS but cuts J_Ic by about 21 %.
+- **Ti-5Al-2.5Sn ELI:** K_Ic falls from 77 K to 20 K (Edison 01).
+
+Liquid helium also costs about 40 to 50 times as much as liquid nitrogen per litre. NPL quotes
+£20–25/L against about £0.50/L, and a test cryostat can use 25 to 30 L of helium in one cooldown.
 So 77 K is a good screening temperature, but qualifying a part for LH₂ service needs 20 K data.
 
 ## 2. Aluminum specifically
@@ -175,6 +191,22 @@ supported:
   NASA has also developed 2195-T8 gores for SLS domes ([NTRS 20160008018](https://ntrs.nasa.gov/citations/20160008018)).
 - **Weld zones in 2219-T87:** see §1.2 point 3. That is the cleanest open dataset on weld zones at
   room temperature, 77 K and 20 K.
+- **2219-T87 for an LH₂ aircraft tank (NASA/CR-145140, 1977, via Edison 06).** The parent metal and
+  TIG welds were tested at room temperature and in an LH₂ cryostat at 20 K:
+
+  | | YS / UTS at RT (MPa) | YS / UTS at 20 K (MPa) | K_c, plane stress (MPa√m) |
+  |---|---|---|---|
+  | Parent metal | 385 / 460 | 506 / 684 | 50 → 69 |
+  | Weld | 135 / 262 | 249 / 458 | 33 → 45 |
+
+  These are plane-stress values, not K_Ic.
+- **Thick 2219-T87 plate for SLS.** A 2023 NESC assessment ran full-thickness short-transverse tensile
+  tests at 20 °C, −196 °C and −253 °C. It traced through-thickness weakness to clustered Al₂Cu
+  particles ([NTRS 20230006220](https://ntrs.nasa.gov/citations/20230006220);
+  [NTRS 20230018439](https://ntrs.nasa.gov/citations/20230018439)).
+- **Friction-stir welds of 2195-T8.** Lockheed Martin's 1999 study tested them at −423 °F (20 K):
+  weld strength was about 1.6 times its room-temperature value and approached parent-metal strength
+  (via Edison 02 and 06).
 
 ### 2.3 Additively manufactured aluminum
 
@@ -276,8 +308,19 @@ advertises a liquid-helium cryostat.
   NASA Langley wants thick Al-Li plate (2195, 2050) for cryotanks ([NTRS 20200010741](https://ntrs.nasa.gov/citations/20200010741)).
 - **Falcon 9.** The tanks are friction-stir-welded Al-Li: 2198 sheet and 2195 plate, according to a
   2008 Alcan/SpaceX AeroMat paper ([abstract](https://asm.confex.com/asm/aero08/techprogram/paper_19826.htm)).
+  Falcon 9 burns LOX and kerosene, so its tanks see LOX temperatures, not 20 K.
   Light Metal Age names Airware 2195-T8 for barrels and domes
   ([2019](https://www.lightmetalage.com/news/industry-news/aerospace/how-light-metals-help-spacex-land-falcon-9-rockets-with-astonishing-accuracy/)).
+- **Other launchers (via Edison 06).** Ariane 5 used 2219. Ariane 6 tanks use 2195 cylinders and
+  domes with 2219 rings, friction-stir welded; the design ranges are 20 K to room temperature for LH₂
+  and 90 K for LOX (MT Aerospace, DLRK 2017). Japan's H-IIB tanks were developed from H-IIA hardware
+  with FSW, and a subscale welded tank was pressure-tested to more than 1.5 times flight stress.
+  Chinese tanks went from 5A06 to 2A14 and 2219; the CZ-5 LH₂ tank is 2219
+  ([Qiu et al. 2021](https://doi.org/10.3390/met11071101)). For none of these did Edison find a
+  published coupon test matrix at 77 K or 20 K. Those stay proprietary.
+- **STS-133 stringer cracks (2010).** Al-2090 intertank stringers cracked: short-transverse properties
+  were overestimated, and cryogenic deflection loads were underestimated. NASA repaired them and added
+  radius blocks ([AIAA 2020-0246](https://doi.org/10.2514/6.2020-0246)).
 - **Composite vs. aluminum LH₂ tanks.** The X-33 composite LH₂ tank failed by microcracking, and the
   program switched to aluminum ([Spaceflight Now, 2000](https://spaceflightnow.com/news/n0009/29x33/)).
   NASA's later composite tanks were cycled with LH₂ at Marshall against an Al-Li baseline
@@ -305,6 +348,8 @@ A short list, one or two per category. The rest are in the tables above.
 | Pi browser: AM Al at 15 K | [Naeem et al. 2025, *Commun. Mater.*](https://doi.org/10.1038/s43246-025-00793-4) | HIPed LPBF Al10SiMg: UTS 395 MPa and 25 % uniform elongation at 15 K, with the mechanism from neutron diffraction |
 | Edison: Al-Li toughness | [Rao & Ritchie 1989](https://doi.org/10.1007/BF02653929) | Cryogenic toughness can rise (2090, 8091) or fall (2091-T8X, 7075) |
 | Documented use | [NASA/TM-2002-211547](https://ntrs.nasa.gov/citations/20020030745) | Shuttle 2195 lots rejected and then recovered on cryogenic fracture toughness |
+| Documented anomaly | [AIAA 2020-0246](https://doi.org/10.2514/6.2020-0246) | STS-133 Al-2090 stringer cracks: overestimated short-transverse properties met underestimated cryogenic loads |
+| 20 K data, parent and weld | NASA/CR-145140 (1977, via Edison 06) | 2219-T87 parent and TIG weld tensile and K_c at room temperature and in LH₂ at 20 K, for an aircraft tank |
 | Industry article | [Light Metal Age / Constellium 2019](https://www.lightmetalage.com/news/industry-news/aerospace/article-the-evolution-of-constellium-al-li-alloys-for-space-launch-and-crew-module-applications/) | The 10–30 % cryogenic toughness-gain requirement, and the 7xxx warning |
 | AM in service | [NTRS 20260004465](https://ntrs.nasa.gov/citations/20260004465) | NASA picked Scalmalloy LPBF for cryogenic hardware without published cryogenic mechanical data |
 | Equipment vendor | [MTS cryogenic testing](https://www.mts.com/en/articles/materials/cryogenic) | The off-the-shelf LHe/LN₂ cryostat on a standard frame |
@@ -353,12 +398,12 @@ addresses from the retrieved paper text redacted.
 
 | # | Question | Job | Task ID | Answer |
 |---|---|---|---|---|
-| 01 | Why cryogenic testing matters for aerospace alloys | `LITERATURE_HIGH` | `5060ace2-75c9-4e0d-ab83-1a87573d6dc4` | pending; fetch with `python scripts/edison_cryo_testing.py fetch` |
+| 01 | Why cryogenic testing matters for aerospace alloys | `LITERATURE_HIGH` | `5060ace2-75c9-4e0d-ab83-1a87573d6dc4` | [01-why-cryogenic-testing-matters.md](edison-trajectories/cryo-testing-aerospace-alloys/01-why-cryogenic-testing-matters.md) |
 | 02 | Aluminum alloys at cryogenic temperature (wrought, Al-Li, welds, AM, gaps) | `LITERATURE_HIGH` | `c690cb5a-afe5-4b91-87eb-7a59884a1a71` | [02-aluminum-cryogenic-behavior.md](edison-trajectories/cryo-testing-aerospace-alloys/02-aluminum-cryogenic-behavior.md) |
 | 03 | Has LPBF aluminum been tested at 20 K or 4 K? | `PRECEDENT` | `3ccea3dc-454b-4b67-818a-50d167d91589` | [03-precedent-lpbf-al-at-20K-4K.md](edison-trajectories/cryo-testing-aerospace-alloys/03-precedent-lpbf-al-at-20K-4K.md) |
 | 04 | Has anyone tested several specimens per cooldown? | `PRECEDENT` | `44cb0c12-3873-4e7e-9a98-4172d8d50516` | [04-precedent-high-throughput-cryo-testing.md](edison-trajectories/cryo-testing-aerospace-alloys/04-precedent-high-throughput-cryo-testing.md) |
 | 05 | Equipment and facilities for 77 K, 20 K and 4 K testing | `LITERATURE` | `5bd53d09-b488-4318-a51d-2f7c2bb6069d` | [05-equipment-and-facilities.md](edison-trajectories/cryo-testing-aerospace-alloys/05-equipment-and-facilities.md) |
-| 06 | Documented use by launch-vehicle and aircraft programs | `LITERATURE` | `948ef097-73ce-4328-acd5-07bf874cb16e` | pending; fetch with `python scripts/edison_cryo_testing.py fetch` |
+| 06 | Documented use by launch-vehicle and aircraft programs | `LITERATURE` | `948ef097-73ce-4328-acd5-07bf874cb16e` | [06-industry-documented-usage.md](edison-trajectories/cryo-testing-aerospace-alloys/06-industry-documented-usage.md) |
 
 **Headed browser through the Pi.**
 - **Setup:** Xvfb display `:99` with headed Chrome 157. Its traffic went through an SSH SOCKS tunnel
@@ -389,5 +434,7 @@ the quoted claims.
 - Edison 03's precedent search missed Naeem 2025 (15 K). The browser search found it.
 - Edison 02 says friction stir welding "was developed at NASA Marshall". TWI invented it in 1991;
   MSFC and Lockheed Martin adapted it for the External Tank.
-- Edison 02 says Adams' 20 K AlSi10Mg strength is a "near-doubling" of room-temperature strength. The
-  room-temperature baseline wasn't checked, so that claim is left out here.
+- Edison 01 and 02 say Adams' 20 K AlSi10Mg strength is roughly double room-temperature strength,
+  based on a thesis reference of 250 ± 11 MPa. That is low for as-built LPBF AlSi10Mg (typically
+  350–450 MPa), so the reference was probably a stress-relieved condition. I didn't check it, so the
+  ratio isn't quoted elsewhere here.
