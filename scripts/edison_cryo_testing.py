@@ -18,6 +18,7 @@ from __future__ import annotations
 import json
 import os
 import pathlib
+import re
 import sys
 import time
 
@@ -26,6 +27,7 @@ from edison_client import EdisonClient, JobNames
 OUT = pathlib.Path(__file__).resolve().parent.parent / "edison-trajectories" / "cryo-testing-aerospace-alloys"
 IDS = OUT / "_task_ids.json"
 DONE = {"success", "fail", "failed", "cancelled", "error"}
+EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 
 CONTEXT = (
     "Context: the BYU Vertical Cloud Lab designs aluminum alloys for laser powder bed fusion "
@@ -211,7 +213,9 @@ def fetch() -> None:
             print(f"{key}: {status}, not fetched")
             continue
         raw = verbose.model_dump(mode="json")
-        (OUT / f"{key}.trajectory.json").write_text(json.dumps(raw, indent=1, default=str) + "\n")
+        # The retrieved paper text carries authors' e-mail addresses; this repo is public.
+        traj = EMAIL.sub("[email redacted]", json.dumps(raw, indent=1, default=str))
+        (OUT / f"{key}.trajectory.json").write_text(traj + "\n")
         resp = c.get_task(task_id=task_id)
         answer = getattr(resp, "formatted_answer", None) or getattr(resp, "answer", None) or ""
         has_ok = getattr(resp, "has_successful_answer", None)
@@ -227,7 +231,7 @@ def fetch() -> None:
             "-->\n\n"
             f"**Question ({rec['job']}):** {QUERIES[key]['query']}\n\n---\n\n"
         )
-        (OUT / f"{key}.md").write_text(header + str(answer) + "\n")
+        (OUT / f"{key}.md").write_text(header + EMAIL.sub("[email redacted]", str(answer)) + "\n")
         rec["fetched_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         print(f"{key}: {status}, {len(str(answer))} chars saved")
     IDS.write_text(json.dumps(ids, indent=2) + "\n")
