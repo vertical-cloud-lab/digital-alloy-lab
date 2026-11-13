@@ -11,6 +11,7 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 | [`vendor-lookups.csv`](vendor-lookups.csv) | every price and dimension fetched from vendor sites through the lab Pi on 2026-11-13, with URL and time |
 | [`budgets.py`](budgets.py) | sizing arithmetic for powder per build, purge cycles, cross-flow and gantry turnaround |
 | [`edison/`](edison/) | Edison `LITERATURE_HIGH` query on custom LPBF design and its results |
+| [`cad/`](cad/) | manifest of vendor CAD and drawings fetched through the lab Pi, plus the scripts that fetch pages and CAD |
 
 ## 1. Short answers
 
@@ -348,7 +349,11 @@ The low end needs a PRC laser and a marking-class galvo, neither confirmed for 5
 - full control of scan, gas and recoat;
 - an API for the autonomous loop.
 
-**Geometry.** Dimensions for the fetched parts are in `vendor-lookups.csv`, for example the f-theta housing, thread, working distance and flange focal length. The Thorlabs and McMaster product pages offer STEP models. Pulling them into an Onshape layout of the top plate and chamber is the next step.
+**Geometry.** Dimensions for the fetched parts are in `vendor-lookups.csv`, for example the f-theta housing, thread, working distance and flange focal length. CAD came down through the same lab-Pi browser session, which proves the route. [`cad/cad-manifest.csv`](cad/cad-manifest.csv) lists the files with sizes and sha256s:
+- McMaster-Carr native models (SolidWorks parts, which Onshape imports) for the 4566N101 and 6624K69 ball screws and the 78595A5 argon regulator;
+- Thorlabs dimensioned drawings (PDF) for the FTH254-1064 and FTH160-1064 f-theta lenses, the GBE02-C beam expander, the WG41050-C window, the PDA36A2 photodiode and the GVS012 galvo.
+
+The files themselves are not committed: they are the vendors' copyrighted content and this repo is public. Re-fetch them with [`cad/fetch_cad.py`](cad/fetch_cad.py) through the Pi tunnel, then drop them into the lab's Onshape layout of the top plate and chamber. That layout is the next step.
 
 ## 7. Open questions for the lab
 
