@@ -125,7 +125,7 @@ below the chamber's 150 mbar, Graining Pressure 0.19 bar, Turbo 1.5 bar.
 8. Press **Protective Gas** to bring in argon until −100 mbar, then turn it off.
 9. Press **Vacuum Pump** and **Vacuum Valve** again; wait for about −850 mbar.
 10. Press **Pressure Control**; wait for 150 mbar.
-11. Turn on the large red switch on the heat exchanger. Open the chilled-water valves about 30°.
+11. Turn on the **large red switch** on the heat exchanger. Open the chilled-water valves about 30°.
     Wait until the low-flow warning goes away.
 12. Hearing protection on.
 
