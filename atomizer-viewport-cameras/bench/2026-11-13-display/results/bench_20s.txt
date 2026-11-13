@@ -1,0 +1,19 @@
+idle: 0.76 0.86 0.47 1/328 8847 temp=43.9'C throttled=0x0
+show_only              system CPU   9.2% of 4 cores | test processes   38.1% of one core | 43.9'C | throttled=0x0
+    show_a.log          20.76 M-V: 0.000 fd= 0 aq= 0KB vq= 13KB sq= 0B 
+src_1080p_only         system CPU   9.1% of 4 cores | test processes   34.9% of one core | 43.9'C | throttled=0x0
+    enc_s.log          frame= 600 fps= 31 q=-0.0 Lsize= 1822500KiB time=00:00:20.00 bitrate=746496.0kbits/s speed=1.02x 
+enc1_ultrafast         system CPU  20.3% of 4 cores | test processes   84.4% of one core | 44.4'C | throttled=0x0
+    enc_u1.log         frame= 600 fps= 31 q=35.0 Lsize=N/A time=00:00:20.00 bitrate=N/A speed=1.02x 
+enc2_ultrafast         system CPU  59.7% of 4 cores | test processes  238.4% of one core | 48.8'C | throttled=0x0
+    enc_u1.log         frame= 600 fps= 31 q=35.0 Lsize=N/A time=00:00:20.00 bitrate=N/A speed=1.02x 
+    enc_u2.log         frame= 600 fps= 31 q=35.0 Lsize=N/A time=00:00:20.00 bitrate=N/A speed=1.02x 
+enc2_veryfast          system CPU  89.0% of 4 cores | test processes  354.5% of one core | 52.1'C | throttled=0x0
+    enc_v1.log         frame= 572 fps= 28 q=31.0 size=N/A time=00:00:19.06 bitrate=N/A speed=0.929x 
+    enc_v2.log         frame= 575 fps= 28 q=31.0 size=N/A time=00:00:19.16 bitrate=N/A speed=0.933x 
+enc2_ultrafast_show    system CPU  66.6% of 4 cores | test processes  259.0% of one core | 52.7'C | throttled=0x0
+    enc_u1.log         frame= 600 fps= 31 q=35.0 Lsize=N/A time=00:00:20.00 bitrate=N/A speed=1.02x 
+    enc_u2.log         frame= 600 fps= 31 q=35.0 Lsize=N/A time=00:00:20.00 bitrate=N/A speed=1.02x 
+    show_a.log          19.02 M-V: -0.033 fd= 1 aq= 0KB vq= 13KB sq= 0B 
+               total        used        free      shared  buff/cache   available
+Mem:             990         408         371          14         287         582
