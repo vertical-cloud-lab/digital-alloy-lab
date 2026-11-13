@@ -49,9 +49,6 @@ def run_script(script_name: str) -> tuple[str, float, str | None]:
         print(f"\n{'='*60}")
         print(f"STARTING: {script_name}")
         print(f"{'='*60}")
-        # Add scripts dir to path and import
-        if str(SCRIPTS_DIR) not in sys.path:
-            sys.path.insert(0, str(SCRIPTS_DIR))
         mod = importlib.import_module(script_name)
         mod.main()
         elapsed = time.time() - start
@@ -71,6 +68,11 @@ def main():
                         help="Max concurrent Edison tasks (default: 6)")
     parser.add_argument("--scripts", nargs="*", help="Specific scripts to run (default: all)")
     args = parser.parse_args()
+
+    # Add scripts dir to sys.path once in the main thread before spawning workers
+    # (sys.path mutation inside worker threads is racy).
+    if str(SCRIPTS_DIR) not in sys.path:
+        sys.path.insert(0, str(SCRIPTS_DIR))
 
     scripts = args.scripts if args.scripts else DRAFT_SCRIPTS
 

@@ -1,0 +1,5 @@
+# Large videos - reference from byu-vcl#16 YouTube playlist:
+# https://youtube.com/playlist?list=PLEjs0bMmanQE-N8omGixGh5bbu6MZ4Nxy
+# Compiled video (SOP #28): https://youtu.be/WTrs3JU2HF0
+*.mov
+*.mp4

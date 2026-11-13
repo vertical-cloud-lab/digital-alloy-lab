@@ -30,7 +30,7 @@ The script outputs a structured report with severity levels:
 
 ## What It Checks
 
-1. **Numerical claims** — budget totals ($750K = BYU $650K + partner subawards
+1. **Numerical claims** — budget totals ($750K = BYU $600K + partner subawards
    ), personnel (2 MS + 10 UG), composition targets (100–200),
    sub-system count (22,803 = Σ C(15,k) for k=2..8), KPI thresholds, TRL levels
 2. **Terminology** — FLAIME = "Fast Learning AI for Mineral Efficiency",
