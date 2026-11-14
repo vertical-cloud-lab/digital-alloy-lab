@@ -1,0 +1,2 @@
+sample_id,atomizer_run,form,lab,method,date_sent,date_sealed,element,wt_pct,u_wt_pct,detection_limit_wt_pct,notes
+EXAMPLE-ICP-01,A1,powder 20-63 um,BYU EAL,ICP-OES,2026-11-20,,Mg,,,,example row: delete

@@ -1,0 +1,2 @@
+coupon_id,alloy,build_id,condition,aging_T_C,aging_t_h,HV,HV_sd,n_indents,load_kgf,IACS_pct,IACS_T_C,meter_compensation_on,notes
+EXAMPLE-H01,AlSi10Mg,P1,as-built,,0,,,10,0.5,,,yes,example row: delete

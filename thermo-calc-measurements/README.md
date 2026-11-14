@@ -25,6 +25,7 @@ Then it ranks the ten measurements worth the most to #255.
 | [`matrix.csv`](matrix.csv), [`ranking.csv`](ranking.csv) | the matrix and ranking as data, written by [`tables.py`](tables.py), which also refreshes the tables below |
 | [`sops/`](sops/) | one-page SOP drafts for the top measurements |
 | [`analysis/`](analysis/) | analysis scripts, with tests on synthetic data ([`test_analysis.py`](analysis/test_analysis.py)) |
+| [`templates/`](templates/) | CSV headers for logging each measurement against its run ID (one example row each, to delete); `phase_boundaries.csv` is what `espei_export.py` reads |
 | [`edison/`](edison/) | three Edison `LITERATURE_HIGH` searches: query, answer, references, artifacts, full trajectory |
 | [`verify_dois.py`](verify_dois.py), [`doi-check.csv`](doi-check.csv) | every DOI in this folder checked against Crossref/DataCite |
 
@@ -354,7 +355,7 @@ mass balance (SOP 05).
     - the open Cu database misses the C63000 liquidus by +70 K.
 - **fs(T), path, eutectic fraction (S2):** `dsc_solidification.py`. It does the baseline (linear or sigmoidal),
   the Tian lag correction, the partial areas and the comparison with a Scheil curve.
-  - In the synthetic test, fs(T) matched the true Scheil curve to within 0.05 K up to fs = 0.8 once the lag was corrected.
+  - In the synthetic test, fs(T) matched the true Scheil curve to within 0.15 K up to fs = 0.8 once the lag was corrected.
     Without the correction the liquidus read 1.5 K high.
   - The DSC smears the eutectic plateau, so at fs = 0.9 the error is 6.5 K. Use the eutectic area fraction on the DSC bead (Fiji) instead.
 - **Microsegregation (S3):**
