@@ -1,0 +1,115 @@
+Reboot test of the 800 x 480 boot setup on the atomizer HMI Pi, 14 November 2026
+Run over SSH from a CI runner (PR 258). Times are UTC. Nobody was looking at the panel.
+
+== timeline
+19:21:35  before: up 2 days 20 h, so the running kernel predates the cmdline.txt change
+19:22:50  sudo systemctl reboot (exit 0)
+19:23:01  SSH not answering
+19:23:04  kernel started (uptime -s)
+19:23:12  labwc started (8.0 s after the kernel)
+19:23:14  kanshi started (10.5 s) and applied the 800 x 480 profile
+19:23:31  SSH answering again, new boot ID
+19:23:37  probe.sh (below)
+19:24:22  frame captured from the output with grim: 05_desktop_after_reboot.jpg, 800 x 480
+
+== probe.sh BEFORE the reboot (19:21). Desktop already at 800 x 480 (kanshi, set live), console still 1024 x 768
+== board
+Raspberry Pi 5 Model B Rev 1.1
+RAM 990 MB
+== os
+Debian GNU/Linux 13 (trixie), kernel 6.18.50+rpt-rpi-2712
+== desktop
+graphical.target
+labwc running
+== hdmi connectors
+card1-HDMI-A-1: disconnected, EDID 0 bytes, modes: 
+card1-HDMI-A-2: connected, EDID 0 bytes, modes: 1024x768 640x480 800x600 848x480 
+== active mode (KMS)
+Connector 0 (35) HDMI-A-1 (disconnected)
+Connector 1 (44) HDMI-A-2 (connected)
+Crtc 3 (106) 800x480@59.48 29.500 800/24/72/96/- 480/3/7/10/+ 59 (59.48) U 
+== active mode (Wayland)
+HDMI-A-2 "(null) (null) (HDMI-A-2)"
+    800x480 px, 60.000000 Hz (current)
+== console framebuffer
+fb0 1024x768
+== cameras
+No cameras available!
+== usb
+no USB devices (so no USB touch controller)
+== input
+pwr_button
+vc4-hdmi-0
+vc4-hdmi-0 HDMI Jack
+vc4-hdmi-1
+vc4-hdmi-1 HDMI Jack
+== boot config (display lines)
+20:display_auto_detect=1
+26:dtoverlay=vc4-kms-v3d
+27:max_framebuffers=2
+31:disable_fw_kms_setup=1
+49:dtoverlay=dwc2,dr_mode=host
+52:dtoverlay=nospi10
+no video= on the kernel command line
+== temperature
+temp=38.9'C
+throttled=0x0
+
+== probe.sh AFTER the reboot (19:23:37)
+== board
+Raspberry Pi 5 Model B Rev 1.1
+RAM 990 MB
+== os
+Debian GNU/Linux 13 (trixie), kernel 6.18.50+rpt-rpi-2712
+== desktop
+graphical.target
+labwc running
+== hdmi connectors
+card1-HDMI-A-1: disconnected, EDID 0 bytes, modes: 
+card1-HDMI-A-2: connected, EDID 0 bytes, modes: 1024x768 640x480 800x480 800x600 848x480 
+== active mode (KMS)
+Connector 0 (35) HDMI-A-1 (disconnected)
+Connector 1 (44) HDMI-A-2 (connected)
+Crtc 3 (106) 800x480@59.48 29.500 800/24/72/96/- 480/3/7/10/+ 59 (59.48) U 
+== active mode (Wayland)
+HDMI-A-2 "(null) (null) (HDMI-A-2)"
+    800x480 px, 60.000000 Hz (current)
+== console framebuffer
+fb0 800x480
+== cameras
+No cameras available!
+== usb
+no USB devices (so no USB touch controller)
+== input
+pwr_button
+vc4-hdmi-0
+vc4-hdmi-0 HDMI Jack
+vc4-hdmi-1
+vc4-hdmi-1 HDMI Jack
+== boot config (display lines)
+20:display_auto_detect=1
+26:dtoverlay=vc4-kms-v3d
+27:max_framebuffers=2
+31:disable_fw_kms_setup=1
+49:dtoverlay=dwc2,dr_mode=host
+52:dtoverlay=nospi10
+video=HDMI-A-2:800x480M@60
+== temperature
+temp=39.5'C
+throttled=0x0
+
+== kernel log, this boot (seconds after the kernel started)
+[    2.604171] Console: switching to colour frame buffer device 100x30
+[    2.604296] vc4-drm axi:gpu: [drm] fb0: vc4drmfb frame buffer device
+100 x 30 characters of the 8 x 16 console font = 800 x 480. At 1024 x 768 it would read 128x48.
+
+== desktop start-up (seconds after the kernel started, from /proc/<pid>/stat)
+labwc 8.0, kanshi 10.5, wf-panel-pi 10.6, pcmanfm-pi 10.6
+
+== kanshi, from the desktop session log (~/.xsession-errors)
+applying profile '<anonymous at line 4, col 9>'
+applying profile output 'HDMI-A-2' on connected head 'HDMI-A-2'
+applying the custom mode HDMI-A-2
+configuration for profile '<anonymous at line 4, col 9>' applied
+(The log's other lines are labwc config deprecation warnings and a polkit agent warning, none about the display.
+labwc logs only errors by default, so the mode it started in, in the 2.5 s before kanshi ran, isn't recorded.)

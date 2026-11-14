@@ -1,0 +1,39 @@
+== board
+Raspberry Pi 5 Model B Rev 1.1
+RAM 990 MB
+== os
+Debian GNU/Linux 13 (trixie), kernel 6.18.50+rpt-rpi-2712
+== desktop
+graphical.target
+labwc running
+== hdmi connectors
+card1-HDMI-A-1: disconnected, EDID 0 bytes, modes: 
+card1-HDMI-A-2: connected, EDID 0 bytes, modes: 1024x768 640x480 800x600 848x480 
+== active mode (KMS)
+Connector 0 (35) HDMI-A-1 (disconnected)
+Connector 1 (44) HDMI-A-2 (connected)
+Crtc 3 (106) 800x480@59.48 29.500 800/24/72/96/- 480/3/7/10/+ 59 (59.48) U 
+== active mode (Wayland)
+HDMI-A-2 "(null) (null) (HDMI-A-2)"
+    800x480 px, 60.000000 Hz (current)
+== cameras
+No cameras available!
+== usb
+no USB devices (so no USB touch controller)
+== input
+pwr_button
+vc4-hdmi-0
+vc4-hdmi-0 HDMI Jack
+vc4-hdmi-1
+vc4-hdmi-1 HDMI Jack
+== boot config (display lines)
+20:display_auto_detect=1
+26:dtoverlay=vc4-kms-v3d
+27:max_framebuffers=2
+31:disable_fw_kms_setup=1
+49:dtoverlay=dwc2,dr_mode=host
+52:dtoverlay=nospi10
+no video= on the kernel command line
+== temperature
+temp=45.5'C
+throttled=0x0
