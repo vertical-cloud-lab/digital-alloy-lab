@@ -42,7 +42,8 @@ Then it ranks the ten measurements worth the most to #255.
   9. potentiodynamic corrosion;
   10. SEM/EBSD of tracks and pads.
 
-  Seven of the ten can start before the winter break, using powders we already have and the Utah P1 build (Dec 2–3).
+  Eight of the ten can start in the next month, using powders we already have and the Utah P1 build (Dec 2–3).
+  Eddy current waits on a meter, and corrosion on the reference electrodes (#221).
 - **Quick wins for the next month** ([§1.2](#12-quick-wins-for-the-next-month)):
   - send the baseline powders out for ICP-OES and O/N/H;
   - DSC by mail-in at the University of Utah's Materials Characterization Lab;
@@ -349,7 +350,7 @@ mass balance (SOP 05).
   - An Al-319 study found the first DSC heating closer to equilibrium and the Scheil curve closer to strongly
     segregated material ([Zhang et al. 2017](https://doi.org/10.1007/s11661-017-4235-2), via Edison q1).
   - **Gaps #238 couldn't fill:**
-    - no published Thermo-Calc liquidus or solidus exists for AlSi10Mg or NAB;
+    - #238 found no published Thermo-Calc liquidus or solidus for AlSi10Mg or NAB;
     - the open Cu database misses the C63000 liquidus by +70 K.
 - **fs(T), path, eutectic fraction (S2):** `dsc_solidification.py`. It does the baseline (linear or sigmoidal),
   the Tian lag correction, the partial areas and the comparison with a Scheil curve.
@@ -360,8 +361,9 @@ mass balance (SOP 05).
   - EDS/WDS point grids on DSC beads or castings, sorted by composition and plotted against Scheil.
   - In LPBF cells the partition coefficient moves toward 1 (solute trapping). Measuring that needs STEM-EDS or APT, so only for finalists.
 - **Shrinkage (S4):** needs the liquid density from levitation. Low priority for LPBF.
-- **Hot tearing (S5):** the most useful index for #255, because hot cracking is what rules out most high-strength Al
-  alloys for LPBF ([Martin et al. 2017](https://doi.org/10.1038/nature23894)).
+- **Hot tearing (S5):** the most useful index for #255. Large columnar grains and periodic cracks are why
+  7075 and 6061 couldn't be printed until nucleant nanoparticles were added ([Martin et al. 2017](https://doi.org/10.1038/nature23894),
+  checked in the abstract).
   - Measure crack density on pads and cubes (SOP 03).
   - Compute Kou's index, max |dT/d(fs^½)| near fs → 1 ([Kou 2015](https://doi.org/10.1016/j.actamat.2015.01.034)),
     and the Clyne–Davies CSC, (T₀.₉₀ − T₀.₉₉)/(T₀.₄₀ − T₀.₉₀), from both the *measured* and the Scheil fs(T).
@@ -411,8 +413,8 @@ mass balance (SOP 05).
   needs a calibrated two-colour pyrometer; skip it.
 - **Marangoni velocity (A2):**
   - Only in-situ X-ray imaging with tracer particles measures it (APS 32-ID by proposal; its status after the APS Upgrade is unconfirmed).
-  - Ultrahigh-speed X-ray imaging there is also how the keyhole threshold was measured
-    ([Cunningham et al. 2019](https://doi.org/10.1126/science.aav4687)).
+  - Ultrahigh-speed synchrotron X-ray imaging is how the conduction-to-keyhole threshold was measured,
+    in a Ti alloy ([Cunningham et al. 2019](https://doi.org/10.1126/science.aav4687), checked in the abstract).
 - **G, R, thermal history (A3):**
   - Cell spacing λ = A·Ṫ⁻ⁿ gives the cooling rate, but A and n must be fitted for each alloy, not
     borrowed from cast Al–Si (Edison q2 §3).
@@ -651,7 +653,7 @@ here. They are labelled "via Edison" where the full paper wasn't read.
     one DOI that contains parentheses.
   - The DOIs cited in this README and the SOPs resolve to the papers named.
 - **Claims.**
-  - **Trapp et al. 2017 and Cunningham et al. 2019:** checked against their abstracts.
+  - **Trapp et al. 2017, Cunningham et al. 2019 and Martin et al. 2017:** checked against their abstracts (Semantic Scholar, PubMed).
   - **Claims marked "via Edison":** checked against Edison's excerpts of the paper, not the full text. They give the paper's
     result as Edison retrieved it, and should be read as such.
   - **Facility instruments:** read on official pages (marked † where only a search extract was available).

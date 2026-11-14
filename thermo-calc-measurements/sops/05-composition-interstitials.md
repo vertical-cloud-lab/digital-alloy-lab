@@ -24,6 +24,7 @@ Draft. It's a send-out procedure; the schedule in #256 already plans an "O/ICP b
   sample in the run record (#159) with its chain of custody.
 - **Duplicates:** send a blind duplicate of every tenth sample.
 - **Ask the lab for:**
+  - the ICP-AES/OES method for Al alloys they follow (Edison q2 names ASTM E3061);
   - method detection limits;
   - the digestion used (Si-bearing Al alloys need HF or a fusion digestion to keep Si in solution; ask how they handle Si,
     the open question in #255);

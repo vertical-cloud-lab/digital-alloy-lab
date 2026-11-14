@@ -17,8 +17,8 @@ Draft for review; nothing here has been run on our instrument yet.
 ## Equipment and set-up
 - A heat-flux DSC or DTA that reaches 750 °C for Al and 1150 °C for Cu alloys, with a high-purity Ar purge
   (≥ 99.999 %, about 50 mL/min). Pump down and backfill first if the cell allows it.
-- **Alumina crucibles with lids. Never use platinum with aluminium**: molten Al alloys with Pt.
-  Use alumina for the Cu alloys too.
+- **Alumina crucibles with lids. Never use platinum pans or crucibles with aluminium:** molten Al attacks
+  platinum, ruining the pan and possibly the sensor. Use alumina for the Cu alloys too.
 - **Calibrate** temperature and enthalpy with pure-metal standards that bracket the range:
   - In (156.6 °C), Zn (419.5 °C) and Al (660.3 °C) for Al alloys;
   - Ag (961.8 °C) and Au (1064.2 °C) for Cu alloys.
