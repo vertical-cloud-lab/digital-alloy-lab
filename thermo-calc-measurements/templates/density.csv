@@ -1,0 +1,2 @@
+cube_id,alloy,build_id,P_W,v_mm_s,hatch_um,layer_um,m_air_g,m_wet_g,T_water_C,rho_ref_g_cm3,rho_ref_source,image_porosity,crack_density_mm_per_mm2,pore_type,notes
+EXAMPLE-C01,AlSi10Mg,P1,350,1300,130,30,,,,2.668,He pycnometer (powder),,,,example row: delete

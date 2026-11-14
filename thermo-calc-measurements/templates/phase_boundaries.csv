@@ -1,0 +1,2 @@
+system,sample_id,T_K,u_T_K,kind,known_phase,other_phases,x_json,method,link
+AL-MN-ZR,EXAMPLE-S1,935.2,1.5,liquidus,LIQUID,AL3ZR_D023,"{""MN"": 0.0055, ""ZR"": 0.0040}","DSC heating 5/10/20 K/min, extrapolated to 0",example row: delete

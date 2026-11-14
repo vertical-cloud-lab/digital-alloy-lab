@@ -1,0 +1,2 @@
+track_id,plate_id,alloy,layer,P_W,v_mm_s,width_um,depth_um,height_um,area_um2,section_plane_mm,image_file,machine,build_date,notes
+EXAMPLE-T01,P1-A,AlSi10Mg,bare plate,200,800,,,,,6.0,tracks/P1-A_T01.tif,Aconity MIDI (Utah),2026-12-02,example row: delete

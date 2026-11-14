@@ -1,0 +1,6 @@
+__pycache__/
+.pytest_cache/
+*_summary.json
+*_fs.csv
+*_fs.png
+*_tracks.csv
