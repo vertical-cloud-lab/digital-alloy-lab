@@ -301,6 +301,15 @@ recent `sudo` (Raspberry Pi OS caches it globally for 15 minutes) lets sudo skip
 and the password is then read by whatever runs next, for example as a shell command whose
 "command not found" error echoes it back.
 
+**Changes made on the Pis:**
+- HMI Pi, 2026-11-14 ([PR 258](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/258)),
+  for the 5 in 800 × 480 HDMI panel, which has no EDID: `video=HDMI-A-2:800x480M@60` appended to
+  the one line of `/boot/firmware/cmdline.txt` (original kept as `cmdline.txt.bak-2026-11-14`) for
+  the console, and a kanshi profile, `output HDMI-A-2 mode --custom 800x480@60Hz`, in
+  `~/.config/kanshi/config` for the desktop. A reboot confirmed both. Saving a layout in Raspberry
+  Pi's Screen Configuration tool overwrites the kanshi file. Undo steps are in
+  `atomizer-viewport-cameras/bench/2026-11-13-display/README.md`.
+
 ## Onshape: signing in through the browser (`ONSHAPE_USERNAME` / `ONSHAPE_PASSWORD`)
 
 `ONSHAPE_USERNAME` and `ONSHAPE_PASSWORD` (job env in `.github/workflows/claude.yml`) are the
