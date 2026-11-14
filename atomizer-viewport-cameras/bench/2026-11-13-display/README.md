@@ -14,7 +14,7 @@ at the panel during the test, and no camera faces it.
 | Port | HDMI-A-2, the Pi's HDMI1 port (the one further from the USB-C power socket) |
 | EDID | **None: 0 bytes.** The panel doesn't tell the Pi its resolution |
 | Mode as found | 1024 × 768 at 60 Hz, the kernel's fallback when there is no EDID: a 4:3 picture on a 5:3, 800 × 480 panel |
-| 800 × 480 | Works from the Pi's side, set at run time. The output matches the test card pixel for pixel |
+| 800 × 480 | Works from the Pi's side, set at run time. The output matches the test card pixel for pixel. Set on 14 November to come up at every boot; [not yet tested by a reboot](#making-800--480-stick-applied-14-november-not-yet-rebooted) |
 | Touch | Not connected: no USB device on the Pi, so the panel's USB touch (on its micro-USB) isn't plugged into the Pi. Nothing to switch off |
 | Two feeds side by side, 30 fps | 0 frames dropped in 20 s, 38 % of one core |
 | Two 1080p30 H.264 encodes plus that display | Both keep up; 1 display frame dropped in 19 s; 67 % of the 4 cores; 52.7 °C, no throttling |
@@ -86,28 +86,67 @@ What this says, and what it doesn't:
 
 ## What was changed on the Pi
 
-- **The 800 × 480 mode, for the current desktop session only.** A reboot or log-out goes back to 1024 × 768. To go
-  back now: `wlr-randr --output HDMI-A-2 --mode 1024x768` (with the same two variables as above).
-- Nothing was installed, and no config file was changed. The test files were in `/tmp` (a tmpfs) and were deleted.
+- **13 November: the 800 × 480 mode, for the current desktop session only,** set with `wlr-randr`. Nothing was
+  installed and no config file was changed. The test files were in `/tmp` (a tmpfs) and were deleted.
+- **14 November: two config files, so that 800 × 480 comes up at every boot.** See the next section. Nothing was
+  installed, and the helper script copied to `/tmp` was deleted.
 
-## Making 800 × 480 stick (not done, untested)
+## Making 800 × 480 stick (applied 14 November, not yet rebooted)
 
-Either of these, then reboot:
-- **Kernel command line,** which also fixes the text console: add `video=HDMI-A-2:800x480M@60` to the single line in
-  `/boot/firmware/cmdline.txt`. `M` means CVT timing. If the panel moves to the other port (HDMI0, next to the USB-C
-  socket), it's `HDMI-A-1`.
-- **Desktop only:** `~/.config/kanshi/config` exists and is empty. Put this in it:
+Applied over SSH on 14 November 2026, after Sterling's go-ahead in
+[PR 258](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/258). It takes two changes, because the console
+and the desktop each pick their own mode:
+
+- **Kernel command line, for the text console.** `video=HDMI-A-2:800x480M@60` was added to the end of the single line
+  in `/boot/firmware/cmdline.txt`, which went from 176 to 203 bytes, still one line. `M` means CVT timing. The
+  original is kept next to it as `/boot/firmware/cmdline.txt.bak-2026-11-14`. If the panel moves to the other port
+  (HDMI0, next to the USB-C socket), change the entry to `HDMI-A-1`.
+- **A kanshi profile, for the desktop.** `~/.config/kanshi/config`, which was empty, now reads:
   ```
   profile {
-    output HDMI-A-2 mode --custom 800x480@60Hz
+  	output HDMI-A-2 mode --custom 800x480@60Hz
   }
   ```
+  (plus three comment lines saying why). labwc starts kanshi from `/etc/xdg/labwc/autostart` at every login, and the
+  desktop logs in automatically.
+
+**Why it takes both.** The `video=` entry adds an 800 × 480 mode to the kernel's list for HDMI-A-2, and the console
+uses it. But the kernel marks that mode only as user-defined, not as preferred
+([`drm_probe_helper.c`](https://github.com/raspberrypi/linux/blob/rpi-6.18.y/drivers/gpu/drm/drm_probe_helper.c#L146-L183)).
+With no EDID, no mode is preferred, so labwc (wlroots 0.20, including Raspberry Pi's patches) starts in the first one,
+the largest: 1024 × 768. kanshi then switches it. The console's and the desktop's 800 × 480 timings differ slightly.
+The kernel's CVT gives 800 × 480 a 10-line vertical sync, and wlroots gives it a 7-line one (they disagree on whether
+800 × 480 counts as 15:9). The pixel clock (29.5 MHz) and totals (992 × 500) are the same. The desktop uses the
+wlroots timing, the same one the test card was shown at on 13 November.
+
+**Tested live: the kanshi profile.** With the desktop switched to 1024 × 768, sending kanshi `SIGHUP` (which makes it
+reread its config) put it back to 800 × 480 at 29.5 MHz, 800/24/72/96 and 480/3/7/10, the same as before.
+
+**Not tested: a reboot.** The Claude session that made the changes couldn't reboot the Pi: its permission check
+blocked the `systemctl reboot` sent over SSH. So neither change has been through a boot yet. The next boot is the
+test, for example when the Pi is powered off to plug the camera in, or when the 4 GB Pi takes over: both changes are
+on the SD card, so they go with it. After that boot,
+[`probe.sh`](probe.sh) should show:
+- `video=HDMI-A-2:800x480M@60` on the kernel command line, and `800x480` in HDMI-A-2's mode list
+- `800x480@59.48 29.500` as the KMS mode, and `800x480 px` as the current Wayland mode
+- `fb0 800x480` as the console framebuffer. Before the change it was `fb0 1024x768`
+
+(`probe.sh` gained the framebuffer line on 14 November, so `results/probe.txt` from the day before doesn't have it.)
+
+**To undo:**
+- Console: `sudo cp /boot/firmware/cmdline.txt.bak-2026-11-14 /boot/firmware/cmdline.txt`, then reboot.
+- Desktop: empty the profile with `: > ~/.config/kanshi/config` and log in again. To go back straight away, run
+  `wlr-randr --output HDMI-A-2 --mode 1024x768` (with the same two variables as above).
+
+Raspberry Pi's Screen Configuration tool writes `~/.config/kanshi/config` when you save a layout in it, keeping the
+previous file as `config.bak`. So setting the screen there replaces this profile.
 
 ## Next, once a camera is connected
 
-The Pi has to be powered off to plug the camera's ribbon in, so that's a good time to make the mode stick.
+The Pi has to be powered off to plug the camera's ribbon in, so that boot is also the first test of the 800 × 480
+settings above.
 1. Run [`probe.sh`](probe.sh) again: board, mode, EDID, cameras, USB and input devices. It changes nothing and prints
-   no host names or addresses.
+   no host names or addresses. Check the display lines against the list above.
 2. Look at the test card on the panel, or point a camera at it.
 3. Show the camera on the panel with picamera2's preview while it encodes a 1080p30 stream, and replace the synthetic
    numbers above with real ones.

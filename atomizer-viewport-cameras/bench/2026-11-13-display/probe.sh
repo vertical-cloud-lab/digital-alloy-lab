@@ -12,6 +12,7 @@ for c in /sys/class/drm/card*-HDMI-A-*; do
 done
 echo "== active mode (KMS)"; kmsprint 2>/dev/null | grep -E "^Connector|Crtc" | sed 's/^ *//'
 echo "== active mode (Wayland)"; wlr-randr 2>/dev/null | grep -E "^[A-Z]|current"
+echo "== console framebuffer"; echo "fb0 $(tr ',' 'x' 2>/dev/null < /sys/class/graphics/fb0/virtual_size)"
 echo "== cameras"; rpicam-hello --list-cameras 2>&1 | grep -vE "^\[" | head -8
 echo "== usb";     lsusb | grep -v "root hub" || echo "no USB devices (so no USB touch controller)"
 echo "== input";   grep -E "^N:" /proc/bus/input/devices | cut -d'"' -f2
