@@ -194,13 +194,13 @@ Codes:
 | T5 | Thermal expansion, lattice parameter vs T | High-temperature XRD; push-rod dilatometry (ASTM E228) | X'Pert Pro + Anton Paar HTK 1200 stage (BYU Chemistry); Anter dilatometer (Utah MCL) | BYU; UT | [$] | 4-8 h | M | H | powder (HT-XRD), 50 mm bars (dilatometer) | CTE, lattice parameter(T), density(T) |
 | T6 | Lattice parameters (cubic) | XRD with Nelson-Riley extrapolation or Rietveld (xrd_lattice.py) | X'Pert Pro (BYU Chemistry) | BYU | [$] | 1 h | H | H | powder, polished coupons | lattice parameter; solute in solution |
 | T7 | Liquid viscosity and surface tension | Oscillating drop (EML/ESL), sessile drop, maximum bubble pressure, oscillating-cup viscometry; Al oxide skin is the main error | specialist levitation labs | svc/academic | [$$$$] | weeks | L | L | a few grams of alloy | liquid viscosity, surface tension (AM-module Marangoni inputs) |
-| T8 | Thermal diffusivity and conductivity | Laser flash (ASTM E1461) + DSC cp + density, k = alpha*rho*cp; eddy-current conductivity with a fitted Smith-Palmer relation for the rest | commercial LFA service for 3-4 calibration alloys; eddy-current meter (buy) | svc; lab | [$$] LFA; $$ meter | LFA 1 day; eddy current 2 min | L (LFA) / H (EC) | M / H | 10-12.7 mm discs ~2 mm thick (LFA); 10 mm coupons (EC) | thermal conductivity and diffusivity (AM-module inputs) |
-| T9 | Electrical resistivity and conductivity | Eddy current, %IACS (ASTM E1004); four-point probe; four-wire bars in a furnace for rho(T) | handheld eddy-current meter (buy); four-point probe (BYU IML, Utah Nanofab) | lab; BYU | $$ | 2 min | H | H | coupons >=10 mm, polished sections | electrical resistivity model; solute in solution; aging |
+| T8 | Thermal diffusivity and conductivity | Laser flash (ASTM E1461) + DSC cp + density, k = alpha*rho*cp; eddy-current conductivity with a fitted Smith-Palmer relation for the rest | LFA send-out (NETZSCH lab, TPRL) for 3-4 calibration alloys; eddy-current meter (buy) | svc; lab | [$$] LFA; $$ meter | LFA 1 day; eddy current 2 min | L (LFA) / H (EC) | M / H | 10-12.7 mm discs ~2 mm thick (LFA); 10 mm coupons (EC) | thermal conductivity and diffusivity (AM-module inputs) |
+| T9 | Electrical resistivity and conductivity | Eddy current, %IACS (ASTM E1004); four-point probe; four-wire bars in a furnace for rho(T) | Foerster SIGMATEST 2.070 or Fischer SIGMASCOPE SMP350 ($, buy); four-point probe (BYU IML, Utah Nanofab) | lab; BYU | $$ | 2 min | H | H | coupons >=10 mm, polished sections | electrical resistivity model; solute in solution; aging |
 | T10 | Interfacial energy | Not measured directly: fit to coarsening rate (LSW, kinetics.py) or to TC-PRISMA PSD evolution | via K1 or S1 data | - | - | - | - | - | aged coupons | interfacial energy (TC-PRISMA input) |
 | | **Mechanical** | | | | | | | | | |
-| M1 | Young's, shear and bulk moduli | Impulse excitation (ASTM E1876) on printed bars; ultrasonic pulse-echo velocities; nanoindentation (Oliver-Pharr) | IET instrument (buy or service); Hysitron TI Premier (Utah Nanofab) | lab/svc; UT | $$ / [$] | 10 min (IET) | H | H | bars ~40x8x2 mm, coupons | E, G, K (polycrystal averages of Thermo-Calc's Cij) |
+| M1 | Young's, shear and bulk moduli | Impulse excitation (ASTM E1876) on printed bars; ultrasonic pulse-echo velocities; nanoindentation (Oliver-Pharr) | GrindoSonic MK7 or IMCE RFDA ($$); Hysitron TI Premier (Utah Nanofab) | lab/svc; UT | $$ / [$] | 10 min (IET) | H | H | bars ~40x8x2 mm, coupons | E, G, K (polycrystal averages of Thermo-Calc's Cij) |
 | M2 | Single-crystal elastic constants C11, C12, C44 | Resonant ultrasound on single crystals: not practical. Compare Voigt-Reuss-Hill averages of predicted Cij with M1 | - | - | - | - | L | L | - | Cij (only through averages) |
-| M3 | Hardness and yield strength | Vickers (ASTM E384) incl. aging series (SOP 04); sub-size tensile (ASTM E8); shear punch / small punch; indentation plastometry | Vickers testers and Instron 5969 (Utah MCL); 20 kip frame (#256); Plastometrex PLX-Benchtop (svc) | UT; lab; svc | [$] | 10 min (HV); 1 h (tensile) | H (HV) | H (HV auto-stage) | cubes, sections, bars | General Model Library yield strength; TC-PRISMA peak/over-aged strength |
+| M3 | Hardness and yield strength | Vickers (ASTM E384) incl. aging series (SOP 04); sub-size tensile (ASTM E8); shear punch / small punch; indentation plastometry | Vickers testers and Instron 5969 (Utah MCL); 20 kip frame (#256); Plastometrex PLX-Benchtop ($$$) | UT; lab; svc | [$] | 10 min (HV); 1 h (tensile) | H (HV) | H (HV auto-stage) | cubes, sections, bars | General Model Library yield strength; TC-PRISMA peak/over-aged strength |
 | | **Solidification** | | | | | | | | | |
 | S1 | Liquidus, solidus, incipient melting, freezing range | DSC/DTA, 3 heating rates, extrapolated to zero rate (SOP 01) | TA SDT 650 (Utah MCL; mail-in) | UT | [$] | 2-2.5 h per run | M | H | powder (10-25 mg), printed chips | equilibrium and Scheil liquidus/solidus; ORCHID gaps (AlSi10Mg, NAB, Cu-Ni) |
 | S2 | Fraction solid curve, solidification path, fraction eutectic | DSC partial areas with lag correction (dsc_solidification.py); eutectic area fraction on DSC beads; phase sequence by SEM/EDS | SDT 650 + BYU EMF | UT; BYU | [$] | with S1 | M | H | powder, DSC beads | Scheil fs(T), solidification path, eutectic fraction |
@@ -223,21 +223,21 @@ Codes:
 | A3 | Thermal gradient G, solidification rate R, thermal history | Cell/dendrite spacing -> cooling rate; R = v cos(theta) from pool shape; thermocouples in the plate; IR camera | BYU EMF (cell spacing); thermocouples (lab) | BYU; lab | [$] | 1-2 h | M | M | tracks, pads | G, R and cooling rate; thermal history |
 | A4 | Composition change by evaporation | ICP-OES of powder vs printed part (SOP 05); EDS across tracks | Thermo iCAP 7400 (BYU EAL / Geological Sciences) | BYU; svc | [$-$$] | 1 day turnaround | M | M | powder + printed chips | evaporation mode (Mg, Zn, Li loss) |
 | A5 | Printability maps (keyholing, lack of fusion, balling) | Tracks (regime, balling) + cubes (density, pore type, cracks), SOP 02 and 03 | as A1 + density kit | lab; UT | [$] | per build | M | M | tracks, cubes | printability map; #249 keyhole criteria |
-| A6 | Laser absorptivity | Calorimetric (thin disc + thermocouples, Trapp et al. 2017-type); integrating-sphere reflectance at 1070 nm; inverse from A1 | home-built calorimeter on the desktop LPBF; spectrophotometer with sphere | lab | $ | 1 h | M | M | discs, powder layers | absorptivity used by the heat source |
+| A6 | Laser absorptivity | Calorimetric (thin disc + thermocouples, Trapp et al. 2017-type); integrating-sphere reflectance at 1070 nm; inverse from A1 | home-built calorimeter on the desktop LPBF; LAMBDA 1050+ or Cary 7000 with sphere ($$$) | lab | $ | 1 h | M | M | discs, powder layers | absorptivity used by the heat source |
 | | **Model libraries** | | | | | | | | | |
 | L1 | Ordered-phase solvus (Al3(Sc,Zr) L1_2 analogue of the Ni library) | DSC dissolution; resistivity after anneals; XRD | as P4/P5 | UT; lab | [$] | - | M | M | aged coupons | L1_2 solvus |
 | L2 | Alloy colour (noble metals) | Spectrophotometer, CIELAB on polished Cu alloys | benchtop spectrophotometer | lab/svc | $ | 5 min | H | H | polished coupons | optical properties (Cu family only) |
 | L3 | Steel, Ni-APB, Ti libraries | Not relevant to Al and Cu alloys | - | - | - | - | - | - | - | - |
 | | **Process Metallurgy** | | | | | | | | | |
-| PM1 | Inclusions, oxide content | O/N/H by inert gas fusion; SEM of powder cross-sections for oxide films | LECO TCH 600 (Utah powder metallurgy lab, access not stated); commercial labs | UT; svc | [$-$$] | days turnaround | M | L | sealed powder | inclusion/oxide content (slag and steel outputs not relevant) |
+| PM1 | Inclusions, oxide content | O/N/H by inert gas fusion; SEM of powder cross-sections for oxide films | LECO TCH 600 (Utah powder metallurgy lab, access not stated); NSL, Luvak, LTI (svc) | UT; svc | [$-$$] | days turnaround | M | L | sealed powder | inclusion/oxide content (slag and steel outputs not relevant) |
 | | **Beyond Thermo-Calc** | | | | | | | | | |
 | B1 | Stress-strain curve, work hardening, ductility | Sub-size tensile (ASTM E8); indentation plastometry for small coupons | Instron 5969 (Utah MCL); 20 kip frame (#256); Plastometrex (svc) | UT; lab; svc | [$$] | 1 h | L | M | printed bars | (validates strength models; needed for the paper) |
-| B2 | Fatigue, creep, cryogenic tensile (#254) | ASTM-type fatigue and creep; tensile at 77 K | commercial labs | svc | [$$$-$$$$] | weeks | L | L | finalist bars | (finalists only; not before Feb 28) |
+| B2 | Fatigue, creep, cryogenic tensile (#254) | ASTM-type fatigue and creep; tensile at 77 K | Westmoreland, IMR, Element (svc) | svc | [$$$-$$$$] | weeks | L | L | finalist bars | (finalists only; not before Feb 28) |
 | B3 | Porosity and keyhole porosity | Archimedes + sections (SOP 03); X-ray CT | Zeiss Xradia 620 Versa (Utah Nanofab) | lab; UT | [$-$$] | 10 min / 2-4 h CT | H / L | M | cubes | (printability) |
 | B4 | Residual stress | Bridge-curvature specimens (cheap); XRD sin^2(psi); neutron diffraction; contour method | in-house bridge test; VULCAN at SNS (mail-in proposal); NIST BT-8; commercial contour | lab; NL; svc | $ / proposal | 1 h (bridge) | M | L | bridge specimens, coupons | (distortion, cracking) |
 | B5 | Corrosion rate | Potentiodynamic polarization and Tafel/EIS; immersion mass loss; salt fog | EZstat-Pro (lab); Gamry (Utah Nanofab) | lab; UT | $ (have) | 1-2 h | M | H | polished coupons | (paper requirement; Pourbaix check P8) |
 | B6 | Powder PSD, shape, flowability, apparent and tap density | SEM image analysis (ISO 13322-1, #225); laser diffraction; Hall/Carney funnels; tap density | BYU EMF; Beckman Coulter LS230 (Utah MCL); SALD 2300 (Utah PM lab); funnels (buy) | BYU; UT; lab | $ | 30 min | H | M | sieved powder | (printability; already in #256's weekly plan) |
-| B7 | Spatter and vapour plume | High-speed imaging with laser illumination; schlieren | rented high-speed camera | svc | $$ rental | per build | L | L | tracks | (evaporation, keyholing) |
+| B7 | Spatter and vapour plume | High-speed imaging with laser illumination; schlieren | Photron FASTCAM Nova S or Phantom TMX (rent) + Cavitar CAVILUX | svc | $$ rental | per build | L | L | tracks | (evaporation, keyholing) |
 <!-- MATRIX:END -->
 
 ## 3. Notes for each quantity
@@ -608,6 +608,45 @@ CI runners, so a few could only be read through search-engine extracts; they're 
 | Residual stress (neutrons) | – | – | SNS VULCAN (mail-in), NIST BT-8; HFIR HB-2B off until ~Feb 2027 |
 | In-situ melt-pool X-ray | – | – | APS 32-ID † (post-upgrade status unconfirmed); CHESS FAST (users have brought print chambers) |
 
+### 5.1 If we buy, or send out
+
+Price tiers come from public sources: vendor or retailer list prices, and US federal purchase records on
+USAspending.gov, which can include accessories or reseller margin. They are not quotes, and nobody was asked for one.
+Models were checked on vendor pages in November 2026, and several older names are now superseded
+(STA 449 F3 → STA 509 Jupiter; LFA 467 → LFA 717; Duramin-40 → DuraVista-40; Xeuss 3.0 → Xeuss Pro).
+
+| For | Example models | Tier and basis |
+|---|---|---|
+| **Eddy-current conductivity** (the one purchase on the shortlist) | Foerster [SIGMATEST 2.070](https://foerstergroup.com/en/usa/products/sigmatest-2070); Fischer [SIGMASCOPE SMP350](https://www.helmut-fischer.com/products/tactile-measuring-devices/sigmascope-smp350) | **$**: about $7.6k retail ([1](https://www.bergeng.com/product/SIGMATEST-2.070.html), [2](https://www.gardco.com/product/fischer-smp350-sigmascope-w-fs40-probe/01t5I0000023q4wQAA)); probes need flat areas wider than 5–14 mm |
+| Four-point probe (thin samples) | [Ossila Four-Point Probe](https://www.ossila.com/products/four-point-probe-system) | **$**: $3,150 list |
+| Archimedes | Mettler Toledo or Ohaus density kits for an analytical balance | **$**: about $1.2–1.6k retail |
+| Impulse-excitation modulus | [GrindoSonic MK7](https://www.foerstergroup.com/en/grindosonic-mk7); IMCE RFDA Professional | **$$**: $33k retail ([MK7](https://penntoolco.com/grindosonic-mk7)) |
+| He pycnometer | Micromeritics AccuPyc II 1345; Anton Paar Ultrapyc 5000 | **$$**: $16–22k federal purchases |
+| DSC/STA to 1500–1600 °C, with autosampler | TA [Discovery SDT 650](https://www.tainstruments.com/pdf/brochure/BROCH-DSDT-ENsm.pdf); NETZSCH [STA 509 Jupiter](https://analyzing-testing.netzsch.com/en/products/simultaneous-thermogravimetry-differential-scanning-calorimetry-sta-tg-dsc/sta-509-jupiter-supreme); Mettler Toledo TGA/DSC 3+ (34-position robot) | **$$$**: $86k ([SDT 650](https://www.usaspending.gov/award/CONT_AWD_N0017323P1815_9700_-NONE-_-NONE-)) to $200k (STA 449 F3) |
+| Automated micro-Vickers | Struers DuraVista-40; ZwickRoell DuraScan G5; Buehler Wilson VH3300 | **$$$**: $66–95k federal purchases |
+| Benchtop XRD | Rigaku MiniFlex; Bruker D6 PHASER; Malvern Panalytical Aeris | **$$$**: about $99k ([MiniFlex](https://www.usaspending.gov/award/CONT_AWD_12405B24P0336_12H2_-NONE-_-NONE-)) |
+| Laser flash | NETZSCH [LFA 717 HyperFlash](https://analyzing-testing.netzsch.com/en/products/thermal-diffusivity-and-conductivity/lfa-717-hyperflash); TA DLF 1600 | **$$$**: $173k ([LFA 717](https://www.usaspending.gov/award/CONT_AWD_80NSSC27P0024_8000_-NONE-_-NONE-)); send out instead |
+| Indentation plastometry | Plastometrex PLX-Benchtop (ASTM E3499-25; needs ≥ 0.25–1 mm thickness and Ra < 0.5 µm) | **$$$**: $128k ([purchase](https://www.usaspending.gov/award/CONT_AWD_80NSSC25PB546_8000_-NONE-_-NONE-)) |
+| O/N/H analyzer | LECO ON836/ONH836; ELTRA ELEMENTRAC ONH-p 2; Bruker G8 GALILEO | **$$$**: $55–96k; send out instead |
+| ICP-OES | Agilent 5900; Thermo iCAP PRO X; PerkinElmer Avio | **$$$**: $101–121k; BYU has two |
+| Handheld XRF / spark OES | Thermo Niton XL5 Plus, Evident Vanta (handheld, $$, ~$46–47k); SPECTRO SPECTROMAXx, Hitachi FOUNDRY-MASTER (spark, $$$, $52–65k) | quick checks on coupons, after validating against ICP-OES |
+| Integrating-sphere absorptivity at 1070 nm | PerkinElmer LAMBDA 1050+ with 150 mm sphere; Agilent Cary 7000 UMS | **$$$**: $117–146k |
+| High-speed imaging | Photron FASTCAM Nova S; Phantom TMX 7510; Cavitar CAVILUX illumination | **$$$**: $75k (Nova S20), $250k (TMX 7510); CAVILUX $34–49k; rent |
+| Nanoindentation | KLA iMicro; Bruker Hysitron TI 990 | **$$$–$$$$**: $249–419k; use Utah Nanofab |
+| Lab SAXS, atom probe, CT | Xenocs Xeuss Pro; CAMECA LEAP 6000 XR; Zeiss Xradia | **$$$$** (LEAP 6000 XR about $2.06M in a [university record](https://buildingbama.ua.edu/wp-content/uploads/2022/09/Reno-for-Materials-Characterization-Service-Support-of-Academic-Programs-Stage-I-and-II.pdf), p. 8); use facilities |
+
+**Commercial services** (US; accreditation as each lab states it; cost tiers are estimates unless a public price list exists):
+
+| Measurement | Labs | Note |
+|---|---|---|
+| Laser flash, dilatometry, DSC | [NETZSCH contract testing](https://analyzing-testing.netzsch.com/en-US/services/contract-testing) (Burlington, MA); [TPRL](https://www.tprl.com/) (West Lafayette, IN); [Orton](https://www.ortonceramic.com/testing) | NETZSCH's ISO/IEC 17025 scope covers metals for flash (E1461) and dilatometry (E228), but not for DSC |
+| ICP, O/N/H, GDMS | [NSL Analytical](https://www.nslanalytical.com/testing-services/powder-characterization-services); [Luvak](https://luvak.com/); [Eurofins EAG](https://www.eag.com/techniques/mass-spec/glow-discharge-mass-spectrometry-gdms/); [Laboratory Testing Inc.](https://labtesting.com/services/additive-manufacturing-testing/metal-powder-characterization/) | NSL, Luvak and LTI list ISO/IEC 17025 and Nadcap |
+| Powder (PSD, pycnometry, tap density, FT4) | [Micromeritics Particle Testing Authority](https://micromeritics.com/particle-testing/price-list/?lab=us); Laboratory Testing Inc.; Particle Technology Labs | the only published per-sample prices found: laser diffraction $385, pycnometry $185, bulk/tap $250, full FT4 set $1,595 |
+| Tensile, fatigue (finalists) | [Westmoreland](https://wmtr.com/additive_manufacturing_testing.html); [IMR Test Labs](https://imrtest.com/markets/additive-manufacturing-materials-testing/); [Element](https://www.element.com/materials-testing-services/mechanical-testing-services) | ISO/IEC 17025 and Nadcap |
+| Residual stress | [Hill Engineering](https://hill-engineering.com/residual-stress-measurement/contour-method/) (contour); [Proto](https://www.protoxrd.com/measurement-services) and [Lambda](https://www.lambdatechs.com/Residual-Stress/) (XRD) | Lambda's posted A2LA certificate expires 30 Nov 2026 |
+| CT | [North Star Imaging](https://4nsi.com/scanning-service/3d-x-ray-industrial-scanning-services/); [Jesse Garant](https://jgarantmc.com/); [Industrial Inspection & Analysis](https://industrial-ia.com/iia-laboratory-services/ct-scanning/) | – |
+| APT, TEM | [Eurofins EAG](https://www.eag.com/techniques/imaging/atom-probe-tomography-apt/) | the only US commercial APT lab, by its own account; CAMECA refers work to LEAP owners |
+
 **Who to contact, by role** (contact pages only):
 - **BYU:**
   - EMF director ([services](https://microscopy.byu.edu/services));
@@ -631,7 +670,6 @@ CI runners, so a few could only be read through search-engine extracts; they're 
 - **Thermo-Calc's account manager:** for the AM Module grid as CSV, which #238 and #249 already asked for, and its electrical
   resistivity and thermal conductivity outputs for the measured compositions.
 
-Commercial instrument tiers and contract labs are being added (see the PR thread).
 
 ## 6. Edison literature searches
 
@@ -663,12 +701,12 @@ here. They are labelled "via Edison" where the full paper wasn't read.
   - **The window for Kou's index** in Kou's paper itself: no abstract was available, and this run's web-search budget
     ran out. The script takes the window as an argument.
   - **Clyne and Davies' original 1981 paper** (no DOI): the CSC definition is as Edison's three sources give it.
-  - **Prices:** all are tier estimates.
+  - **Prices:** tiers only; §5.1 links each one's public source, and the matrix tiers are estimates.
 
 ## 8. Not done, and open questions
 
 - **No measurements, bookings or purchases.** No vendor or facility was contacted.
-- **Commercial price tiers and contract labs** are still being collected. Until then the cost column is my estimate.
+- **Cost tiers in the matrix** are estimates. §5.1 gives sourced tiers for the instruments and services, from public list prices and purchase records, not quotes.
 - **BYU departmental instruments** (ME, Physics, Chemical Engineering) that aren't on facility pages may exist. A short
   e-mail round would settle the DSC, microhardness and eddy-current questions.
 - **The SOPs are first drafts.** Every duration in them is an estimate to be replaced by timed runs.
