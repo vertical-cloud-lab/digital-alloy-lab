@@ -19,7 +19,7 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
   - [DTU OpenAM-PBF](https://github.com/DTU-OpenAM/OpenAM-PBF): CERN-OHL-P v2, 300 W at 1080 nm, Ø250 × 150 mm, a safety PLC with door interlocks, and closed-loop cross-flow.
   - [TUM iwb reAM250](https://www.mec.ed.tum.de/en/iwb/research-and-industry/projects/additive-manufacturing/iwb-ream-250-powder-bed-fusion-machine-for-research-purposes): open hardware and software, an nLIGHT AFX-1000, a RAYLASE galvo and a 250 mm cube.
 
-  Both are full-size. We should borrow their safety and control designs, not their powder system.
+  Both are full-size. We should borrow their safety and control designs, not their powder system. Edison found the closest precedent for our use: Heriot-Watt's open-architecture rig ([Bidare et al. 2017](https://doi.org/10.1016/j.addma.2017.06.007)). It has a ~30 × 30 × 10 mm bed, a 400 W single-mode laser and a Raylase head with a 163 mm f-theta, plus a compliant silicone-cord spreader. It reached > 99 % density on very little powder, and slow spreading, not lasing, dominated build time. DTU also published an open-source Teensy-based LPBF controller ([Andersen et al. 2022](https://doi.org/10.26153/tsw/44600)).
 - **Commercial small machines cost $59k–130k**: AO Metal A30 (Ø30 × 60 mm, from $59k in 2025), A50 ($89k), Xact Metal XM200C ($65k), 2OneLab 2CREATE ($120k) and One Click Metal MPRINT ($129.9k). Several vendors offer Ø30–55 mm reduced build volumes for exactly our problem (§2.2).
 - **A modified CNC router or a CubXL-like gantry should not move the beam.** Al LPBF scans at 0.7–2.3 m/s in hatch vectors a few mm to 10 mm long. A 1 g gantry needs 50 mm just to reach 1 m/s, so a 10 mm vector spends about 95 % of its time turning around. The CubXL itself is a GRBL ball-screw CNC frame (Genmitsu PROVerXL 4030 geometry) that runs at 50–83 mm/s. Xact Metal launched its XM200 line on a mirror gantry in 2018, and its current XM200S and XM200G datasheets list galvos.
 - **Use a fixed galvo scanner and f-theta lens above a small sealed chamber.** Linear servo axes then only spread powder and lower the piston, where smoothness matters and speed doesn't. A CubXL-style gantry is useful *outside* the chamber, to fill hopper cartridges and move plates (§3.1).
@@ -27,11 +27,11 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
   - a Ø50 mm build plate, with a Ø25 mm insert;
   - a ~100 cm³ dose-from-above hopper cartridge and no supply piston: a 15 mm build uses ~71 g;
   - a servo ball-screw recoater with swappable blades;
-  - a recirculating cross-flow at ≥ 1 m/s;
+  - a recirculating cross-flow of ~2 m/s at the plate (≥ 1 m/s minimum);
   - 2–3 vacuum–argon purge cycles to < 100 ppm O₂;
   - a hardwired dual-channel interlock chain;
   - everything scriptable from Python.
-- **BOM: 38 lines, about $20k on the cheapest listed options to about $93k on the premium ones.** The spread is mostly the laser, scan head and scan controller, which need quotes. Prices for Thorlabs, McMaster-Carr, DigiKey, Cloudray and Teknic were pulled live through the lab Pi (BYU network) on 2026-11-13.
+- **BOM: 39 lines, about $21k on the cheapest listed options to about $96k on the premium ones.** The spread is mostly the laser, scan head and scan controller, which need quotes. Prices for Thorlabs, McMaster-Carr, DigiKey, Cloudray and Teknic were pulled live through the lab Pi (BYU network) on 2026-11-13.
 
 ## 2. What already exists
 
@@ -43,7 +43,10 @@ Sources tagged † come from search summaries and have not been opened. Check th
 |---|---|---|---|---|---|---|
 | [DTU OpenAM-PBF](https://github.com/DTU-OpenAM/OpenAM-PBF) (CERN-OHL-P v2) | 300 W, 1080 nm | not stated in README | "multi-material powder system" | closed-loop cross-flow | Ø250 × 150 mm | v1 documented, "v2 is to be the actual release"; controller redesign under way; 1,500+ print hours ([RPJ 2024](https://doi.org/10.1108/RPJ-12-2023-0422)†). E-stop opens a safety contactor that also cuts the laser trigger and motor drivers. |
 | [TUM iwb reAM250](https://www.mec.ed.tum.de/en/iwb/research-and-industry/projects/additive-manufacturing/iwb-ream-250-powder-bed-fusion-machine-for-research-purposes)† | nLIGHT AFX-1000 | RAYLASE galvo, dynamic zoom | "adaptable recoater for new recoating and sensing strategies" | cyclone separator | 250 mm cube | Autodesk Machine Control Framework driving the RAYLASE API ([Wenzler et al., Procedia CIRP 2024](https://doi.org/10.1016/j.procir.2024.08.121)†) |
-| [NIST AMMT](https://www.nist.gov/laboratories/tools-instruments/additive-manufacturing-metrology-testbed-ammt)† | – | custom scan control; power and speed updated at 100 kHz | – | – | – | Government testbed, "about the size of a small car"; its value is full software control |
+| **Heriot-Watt open-architecture PBF** ([Bidare et al. 2017](https://doi.org/10.1016/j.addma.2017.06.007), via Edison) | 400 W CW single-mode SPI, 1070 nm (run at 50 W, 50 µm spot) | Raylase MS-II-14 galvo + 163 mm f-theta | 3 mm **silicone cord** after tungsten-carbide knife and cylindrical spreaders jammed; ~10 mm/s, 50 µm gap | detachable Perspex chamber; purge then bed-level cross-flow; exhaust through a water bath | **~30 × 30 × 10 mm** | > 99 % density, little powder; slow spreading dominated build time. The closest precedent for this design |
+| MIT (Hart group) bespoke testbed ([Penny et al. 2025](https://doi.org/10.1038/s44334-025-00039-8), via Edison) | 500 W SPI redPOWER qube, 1.075 µm; 19.5 mm collimated beam | **Thorlabs QS20XY** galvo | servo-actuated compliant blade; piston feed | enclosure; gas knife on 2 s before to 2 s after fusion; CaF₂ window | – | NI cRIO-9039 on a 10 µs timebase; MWIR camera through a shared optical path; front access to the plate without disturbing lid optics |
+| DTU unified controller ([Andersen et al. 2022](https://doi.org/10.26153/tsw/44600), via Edison) | 250 W SPI; 0–10 V power (10-bit), PWM to 100 kHz | Sunny Galvo SG S9320D, 20 mm, XY2-100 | motor interfaces for recoat and multi-material | PID gas-flow (VFD pump), O₂ and flow sensing | – | Open-source Teensy 3.6 firmware with DMA and timer interrupts for deterministic scanner–laser sync; runs three DTU LPBF/SLS machines |
+| [NIST AMMT](https://www.nist.gov/laboratories/tools-instruments/additive-manufacturing-metrology-testbed-ammt)† | – | custom scan control; XY2-100 at 100 kHz; SiC mirrors | – | evacuate and backfill, Ar | 100 × 100 mm | Government testbed, "about the size of a small car". Scattered/back-reflected power heated a folding mirror to ~275 °C and its silver coating failed: use baffles, cooling and robust mirror substrates (Grantham 2016, via Edison) |
 | [Open Additive PANDA](https://www.fabbaloo.com/news/open-additives-panda-metal-3d-printing-system)† | 500 or 1000 W IPG | configurable | – | – | 152 × 152 × 241 mm and up | Commercial open architecture, from $219,900 ([aniwaa](https://www.aniwaa.com/product/3d-printers/openadditive-panda/)†) |
 | [Hobbyist DIY SLM, 2026](https://hackaday.com/2026/01/03/printing-in-metal-with-diy-slm)† | 500 W fiber | galvo outside the chamber, through a window in the lid | servo-driven blade | argon, small chamber to save gas | – | Laser and galvo were most of the cost. A plastic blade was damaged by hot metal; a stainless blade gave repeatable layers. |
 | [Sheffield diode point melting](https://eprints.whiterose.ac.uk/id/eprint/235887)† | 8 × 450 nm diodes, ~35 W total | **diode head on an x-y gantry** | – | – | – | Works, but slowly. Cooling is 750–1400 °C/s against 10⁵–10⁶ °C/s in LPBF, so alloys screened this way would not see LPBF thermal histories. |
@@ -158,6 +161,7 @@ It is an open frame with no inert enclosure and is roughly 10–30× too slow fo
   - Ask every vendor for M² and fiber core size. "Single-module" on Raycus and similar listings describes packaging, not beam mode.
   - US options are IPG (YLR-500, water-cooled 3U rack, about 40 kg) and nLIGHT (CFL-500). PRC options (Raycus RFL-C500, MAX MFSC-500) are much cheaper. Check the funding source's foreign-sourcing rules before choosing one (see [`foreign-connections/`](../foreign-connections/)).
   - A 500 W CW unit probably needs a chiller.
+  - AlSi10Mg powder absorbs only ~5–10 % at 1070 nm, so ≥ 300 W is the practical floor. **Specify back-reflection protection** (an isolator, or a laser rated for it), and baffle and cool the scan optics. On NIST's AMMT, scattered and back-reflected light overheated a mirror until its coating failed (via [Edison](edison/answer.md#4-beam-delivery-galvanometer-scanner-vs-gantry)).
 - **Spot size.** d ≈ 4M²λf/(πD), with M² = 1.1 and λ = 1.07 µm:
 
   | f | D = 5 mm | D = 7 mm | D = 10 mm |
@@ -196,8 +200,13 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
 - **Build piston.** The bore is Ø50 mm with a Ø25 mm insert, the stroke about 40 mm, with a felt/PTFE seal. Layers run 20–60 µm with ≤ 2 µm repeatability.
 - **Recoater.**
   - It rides on a servo ball screw on a linear guide at a steady 20–100 mm/s. Start slow for fine, cohesive Al powders.
-  - The blade cartridge is quick-swap: soft (silicone/rubber, which rides over curled parts), carbon-fiber brush, or hard (HSS/ceramic; the DIY build found steel repeatable).
-  - A counter-rotating roller module is phase 2, for powders that won't spread with a blade.
+  - The blade cartridge is quick-swap:
+    - compliant: a silicone cord or rubber, which rides over curled parts. Heriot-Watt's rigid tungsten-carbide knife jammed and its 3 mm silicone cord worked;
+    - a wide-nose blade. A rounded leading edge packs better than a sharp edge (Salehi 2023);
+    - a carbon-fiber brush;
+    - hard: HSS or ceramic. The DIY build found steel repeatable.
+  - A roller module is phase 2. In one comparison, a **non-rotating roller** packed layers at 45 % against 30 % for a straight blade, though rollers can jam at very thin layers (Sehhat 2021). Counter-rotation at high rates destabilised the bed while forward rotation helped (Jabri 2024). Sources via [Edison](edison/answer.md#2-powder-spreading-recoater-design-speed-layer-thickness-and-spreadability).
+  - Start at 10–50 mm/s and work up toward ~100 mm/s. Fine Al (below the ~20 µm cohesion threshold) flows worse, so the 15–20 µm tail of our 15–63 µm powders is the risk.
   - The gap and dose factor are recipe parameters.
 - **Measuring spreadability.**
   - A layer camera (Raspberry Pi HQ camera with an oblique LED bar) images every layer, before and after lasing.
@@ -206,13 +215,14 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
 
 ### 3.4 High-purity inert gas
 
+- **Targets for Al.** The literature purges Al builds below 0.1 % (1000 ppm) and runs them at a few hundred ppm. Even 0.1–0.2 % O₂ forms oxide films that cause balling and lack of fusion, and < 500 ppm still oxidises Al. For Al-Mg-Sc/Zr, < 200 ppm is prudent (Bosio 2021; Revanur 2024; via [Edison](edison/answer.md#3-inert-gas-environment-for-aluminium-alloys)). So: a **hard interlock at 1000 ppm**, operation below 100–200 ppm, and moisture removal too. Laser-split water gives hydrogen porosity in Al, so dry the powder (vacuum oven) and fit a dew-point sensor (BOM G9).
 - **Vacuum-purge, don't just flow-purge.**
   - A ~6 L chamber pumped to ≤ 1 mbar and backfilled with Ar 5.0 reaches the ideal < 100 ppm in 2 cycles (`budgets.py`). Plan 3 to cover outgassing from the powder and walls.
   - The McMaster single-stage pump (9901K64, $765.49) only pulls 26 inHg (~130 mbar), which needs 4 cycles. Hence the dry scroll or two-stage line in the BOM.
   - Flow-purging the same chamber ideally takes ~7.6 volume changes (46 L). In practice it takes much longer, because the porous powder in the hopper and bed holds air that only a vacuum pulls out quickly.
   - The chamber must take a full 1 atm differential: walls, window, door and seals are designed for it.
 - **Recirculate the cross-flow; don't vent it.**
-  - A 70 × 8 mm laminar nozzle at 2 m/s moves ~67 L/min. A minimum average of **≥ 1 m/s at the plate** is recommended, and low velocity correlates with porosity ([Kjer et al. 2023](https://mdpi.com/2504-4494/7/4/143)).
+  - A 70 × 8 mm laminar nozzle at 2 m/s moves ~67 L/min. Design for **~2 m/s at the plate**. Below about 2 m/s, spatter rises vertically, the plume is poorly cleared and melt-pool penetration drops sharply (Reijonen et al. 2020, via [Edison](edison/answer.md#3-inert-gas-environment-for-aluminium-alloys)). A minimum average of ≥ 1 m/s is recommended, and low velocity correlates with porosity ([Kjer et al. 2023](https://mdpi.com/2504-4494/7/4/143)). In an EOS M 290, flow is ~3.5 m/s near the inlet and ~2 m/s at mid-plate, and is non-uniform.
   - Too fast picks up powder, so tune velocity per powder and plate height.
   - The loop is a sealed blower, then a cyclone or settling stage, then a HEPA cartridge, and back.
 - **Hold ≤ 100 ppm (aim for ~10 ppm) with closed-loop make-up.** A trace O₂ analyzer (Ntron Microx with ranges down to 0–10 ppm, $1,694–2,091; or the SST OXY-FLEX zirconia sensor, $1,271.07, once its low range is confirmed) samples near the bed. Readings depend on sensor position, and the best reading is near the bed ([Metal AM](https://www.metal-am.com/linde-and-eos-leverage-addvance-o2-precision-technology-for-aluminium-study/)).
@@ -232,7 +242,8 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
 - **Scan and laser controller.** It outputs XY2-100 to the head and drives the laser gate, analog power and PWM, with programmable laser on/off delays and skywriting. Options:
   - SCANLAB RTC6 (quote), the professional route with a vendor SDK;
   - a JCZ card (DLC2-M4-2D, EZCAD3, $1,785 at Cloudray). It is Windows-only, so it is harder to automate;
-  - open source: [OPAL](https://github.com/opengalvo/OPAL) (GPL-2.0, Teensy 4.0 + SN75174N, G-code to XY2-100), LinuxCNC `xy2mod` on Mesa FPGA cards, or [Tuet/XY2_100](https://github.com/Tuet/XY2_100). OPAL warns it "might crash at any time leaving your galvo and laser in an unknown state", which is fine only because the safety chain does not depend on it.
+  - open source, with an LPBF track record: **DTU's unified controller** (Teensy 3.6; XY2-100 via DMA; 0–10 V laser power; PWM to 100 kHz; PID gas flow; O₂, photodiode and 4–20 mA inputs), which runs three DTU machines ([Andersen et al. 2022](https://doi.org/10.26153/tsw/44600));
+  - other open source: [OPAL](https://github.com/opengalvo/OPAL) (GPL-2.0, Teensy 4.0 + SN75174N, G-code to XY2-100), LinuxCNC `xy2mod` on Mesa FPGA cards, or [Tuet/XY2_100](https://github.com/Tuet/XY2_100). OPAL warns it "might crash at any time leaving your galvo and laser in an unknown state", which is fine only because the safety chain does not depend on it.
 - **Motion.** Step/dir from a Teknic ClearCore, or Klipper on the supervisor, to 2–3 ClearPath servos.
 - **Process I/O.** The O₂ analyzer (4–20 mA), a chamber pressure transducer, 24 V solenoid valves for purge, vent and make-up, the blower drive, plate heaters (MAX31856 thermocouple interface, $17.50), the hopper load cell and the layer camera.
 - **Power.** A Mean Well SDR-480-24 24 V DIN-rail supply ($151.10).
@@ -266,6 +277,7 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
   - Unoxidised aluminium plus water gives hydrogen, so a wet separator is not automatically safe for Al.
 - **Explosibility.** Al alloys need 13–23 mJ minimum ignition energy, against 4 mJ for pure Al, with Pmax ~5–7 bar. Ground and bond everything, and use conductive gloves and tools.
 - **Handling.** Sieve, load and unload in an inert glovebox (McMaster 4083N14, $4,305.48). The machine's small, cartridge-based powder path keeps open handling to a minimum.
+- **Nanoparticles.** LPBF condensate is respirable. Personal exposure is highest when someone opens and cleans the chamber, because they lean into it. Faulty filtration spreads contamination to offices on clothes and tools (Walter 2019, via [Edison](edison/answer.md#6-safety)). So: wear a respirator for chamber opening, use a HEPA vacuum and keep a dedicated area.
 - **Fire.** Keep a Class D sodium-chloride extinguisher (McMaster 6435T23, 30 lb, $920.22) at the machine. The willful OSHA citation after the 2013 Powderpart fire, in which a worker was badly burned, was for having no Class D extinguisher ([OSHA](https://www.dol.gov/newsroom/releases/osha/osha20140520-2)).
 
 #### Gas
@@ -289,6 +301,26 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
 1. **Chamber and gas loop, no laser.** Machine the chamber and prove 2–3 cycles to < 100 ppm with powder loaded. Measure the hold-up and the make-up gas use, and tune the cross-flow velocity, using smoke or particles.
 2. **Laser, optics and safety.** LSO review, then interlock commissioning with the beam into the dump, then single tracks on plates, then density cubes.
 3. **Monitoring and automation.** Photodiode (Thorlabs PDA36A2, $400.01) and layer-image scoring, recipe API, cartridge docking, and CubOS gantry hand-off.
+
+## 5a. What the Edison literature review adds
+
+Edison `LITERATURE_HIGH`, task `cccde784…`, ~50k characters, is in [`edison/answer.md`](edison/answer.md), with its references and the full trajectory. It mostly confirms the concept. Its ranked recommendations for a sub-$60k Al screening machine:
+1. a ~50 × 50 mm bed with hopper or small-piston feed;
+2. a compliant or wide-nose blade at 50–150 mm/s, with 30–50 µm layers;
+3. a 300–500 W single-mode 1070 nm laser with back-reflection isolation;
+4. an XY2-100 galvo with a 163–254 mm f-theta;
+5. a vacuum-purge-backfill chamber, recirculating argon at ≥ 2 m/s, a < 500 ppm operating target with a 1000 ppm hard interlock, and zirconia O₂ plus dew-point sensing;
+6. an open-source embedded controller (DTU);
+7. a coaxial photodiode;
+8. a Class 1 enclosure with NFPA 484 controls.
+
+Changes made because of it:
+- cross-flow raised to ~2 m/s;
+- roller and wide-nose blade options added, and counter-rotation flagged;
+- back-reflection protection, the DTU controller and a dew-point sensor added;
+- Heriot-Watt's 30 mm rig cited as the main precedent.
+
+Its price claims are unsourced, so they are not used: a 500 W SPI redPOWER at ~$15–25k, an SG S9320D at ~$3–5k, and an NI cRIO at ~$5–10k against ~$100 for a Teensy.
 
 ## 6. Bill of materials (core electronics and unit operations)
 
@@ -328,6 +360,7 @@ Ranges are "cheapest listed option" to "premium option" for that line.
 | G6 | Inert gas | O2 analyzer | Ntron Microx (Instrumart $1,694-2,091) | 1 | 1,271–2,091 | fetched (DigiKey) + agent-sourced (Instrumart) |
 | G7 | Inert gas | Valves / fittings / gauges | McMaster / Kurt J. Lesker | 1 | 500–1,500 | estimate |
 | G8 | Inert gas | Chamber seals | McMaster 1165N11 (per ft) | 10 | 2 | fetched (McMaster) |
+| G9 | Inert gas | Dew-point / moisture sensor | Inline dew-point transmitter (quote) | 1 | 1,000–2,500 | estimate |
 | S1 | Safety | Safety relay | Omron G9SE-201 (DigiKey 'SAFETY UNIT 2+1 O/P') | 1 | 275 | fetched (DigiKey) |
 | S2 | Safety | Guard-locking door interlock | Omron D4JL-4NFA-C5-NPT | 1 | 803 | fetched (DigiKey) |
 | S3 | Safety | E-stop | IDEC XA1E-BV3U02-R | 2 | 77 | fetched (DigiKey) |
@@ -341,7 +374,7 @@ Ranges are "cheapest listed option" to "premium option" for that line.
 | T1 | Test & commissioning | Laser power sensor | Ophir/Coherent 500-1000 W head (quote) | 1 | 1,691–4,000 | fetched (Thorlabs) + estimate |
 | T2 | Test & commissioning | Melt-pool photodiode | Thorlabs PDA36A2 | 1 | 400 | fetched (Thorlabs) |
 
-**Total: $20,374 – $93,176.** The low figure takes the cheapest listed option on every line; the high figure takes the premium option.
+**Total: $21,374 – $95,676.** The low figure takes the cheapest listed option on every line; the high figure takes the premium option.
 
 The low end needs a PRC laser and a marking-class galvo, neither confirmed for 500 W CW. Treat it as a floor, not a plan. A realistic first build is a US single-mode laser, a power-rated scan head and an open or SDK controller. That probably lands at $45–70k once quotes are in, which is close to an AO Metal A30/A50 or Xact XM200C. So the case for building rests on what we gain, not on price:
 - Ø25–50 mm builds from ~20–70 g of powder;
