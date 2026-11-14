@@ -1,0 +1,93 @@
+1. (grantham2016opticaldesignand pages 2-4): Steven Grantham, Brandon Lane, Jorge Neira, Sergey Mekhontsev, Mihaela Vlasea, and Leonard Hanssen. Optical design and initial results from nist's ammt/temps facility. SPIE Proceedings, 9738:97380S, May 2016. URL: https://doi.org/10.1117/12.2214246, doi:10.1117/12.2214246. This article has 20 citations.
+
+2. (lane2020processmonitoringdataset pages 4-6): Brandon Lane and Ho Yeung. Process monitoring dataset from the additive manufacturing metrology testbed (ammt): overhang part x4. Journal of Research of the National Institute of Standards and Technology, Sep 2020. URL: https://doi.org/10.6028/jres.125.027, doi:10.6028/jres.125.027. This article has 84 citations and is from a peer-reviewed journal.
+
+3. (grantham2016opticaldesignand pages 8-9): Steven Grantham, Brandon Lane, Jorge Neira, Sergey Mekhontsev, Mihaela Vlasea, and Leonard Hanssen. Optical design and initial results from nist's ammt/temps facility. SPIE Proceedings, 9738:97380S, May 2016. URL: https://doi.org/10.1117/12.2214246, doi:10.1117/12.2214246. This article has 20 citations.
+
+4. (lane2020processmonitoringdataset pages 6-8): Brandon Lane and Ho Yeung. Process monitoring dataset from the additive manufacturing metrology testbed (ammt): overhang part x4. Journal of Research of the National Institute of Standards and Technology, Sep 2020. URL: https://doi.org/10.6028/jres.125.027, doi:10.6028/jres.125.027. This article has 84 citations and is from a peer-reviewed journal.
+
+5. (lane2020processmonitoringdataset pages 1-4): Brandon Lane and Ho Yeung. Process monitoring dataset from the additive manufacturing metrology testbed (ammt): overhang part x4. Journal of Research of the National Institute of Standards and Technology, Sep 2020. URL: https://doi.org/10.6028/jres.125.027, doi:10.6028/jres.125.027. This article has 84 citations and is from a peer-reviewed journal.
+
+6. (bidare2017anopenarchitecturemetal pages 3-5): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+7. (bidare2017anopenarchitecturemetal pages 5-7): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+8. (bidare2017anopenarchitecturemetal pages 7-9): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+9. (bidare2017anopenarchitecturemetal pages 2-3): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+10. (bidare2017anopenarchitecturemetal pages 1-2): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+11. (andersen2022aunifiedsystem pages 3-7): S.A. Andersen, K.Æ. Meinert, M.B. Kjer, V.K. Nadimpalli, and D.B. Pedersen. A unified system controller for open-source powder bed fusion systems. Unknown, Jan 2022. URL: https://doi.org/10.26153/tsw/44600, doi:10.26153/tsw/44600. This article has 8 citations.
+
+12. (aagaard2023legacylaserpowder pages 3-3): S Aagaard, MB Kjer, and DB Pedersen. Legacy laser powder bed fusion systems and obsolescence: upgrading control systems. Unknown journal, 2023.
+
+13. (andersen2022aunifiedsystem pages 12-13): S.A. Andersen, K.Æ. Meinert, M.B. Kjer, V.K. Nadimpalli, and D.B. Pedersen. A unified system controller for open-source powder bed fusion systems. Unknown, Jan 2022. URL: https://doi.org/10.26153/tsw/44600, doi:10.26153/tsw/44600. This article has 8 citations.
+
+14. (andersen2022aunifiedsystem pages 7-12): S.A. Andersen, K.Æ. Meinert, M.B. Kjer, V.K. Nadimpalli, and D.B. Pedersen. A unified system controller for open-source powder bed fusion systems. Unknown, Jan 2022. URL: https://doi.org/10.26153/tsw/44600, doi:10.26153/tsw/44600. This article has 8 citations.
+
+15. (aagaard2023legacylaserpowder pages 2-3): S Aagaard, MB Kjer, and DB Pedersen. Legacy laser powder bed fusion systems and obsolescence: upgrading control systems. Unknown journal, 2023.
+
+16. (penny2025highfidelityopticalmonitoring pages 3-4): Ryan W. Penny, Zachery Kutschke, and A. John Hart. High-fidelity optical monitoring of laser powder bed fusion via aperture division multiplexing. npj Advanced Manufacturing, Jul 2025. URL: https://doi.org/10.1038/s44334-025-00039-8, doi:10.1038/s44334-025-00039-8. This article has 10 citations.
+
+17. (penny2025highfidelityopticalmonitoring pages 4-6): Ryan W. Penny, Zachery Kutschke, and A. John Hart. High-fidelity optical monitoring of laser powder bed fusion via aperture division multiplexing. npj Advanced Manufacturing, Jul 2025. URL: https://doi.org/10.1038/s44334-025-00039-8, doi:10.1038/s44334-025-00039-8. This article has 10 citations.
+
+18. (maddison2022insitumonitoringand pages 61-66): G Maddison. In-situ monitoring and control during laser powder bed fusion of nickel superalloys. Unknown journal, 2022.
+
+19. (aydin2025theuseof pages 106-110): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+20. (aydin2025theuseof pages 114-120): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+21. (sehhat2021powderspreadingin pages 12-14): M. Hossein Sehhat and Ali Mahdianikhotbesara. Powder spreading in laser-powder bed fusion process. Granular Matter, Sep 2021. URL: https://doi.org/10.1007/s10035-021-01162-x, doi:10.1007/s10035-021-01162-x. This article has 78 citations and is from a peer-reviewed journal.
+
+22. (sehhat2021powderspreadingin pages 14-16): M. Hossein Sehhat and Ali Mahdianikhotbesara. Powder spreading in laser-powder bed fusion process. Granular Matter, Sep 2021. URL: https://doi.org/10.1007/s10035-021-01162-x, doi:10.1007/s10035-021-01162-x. This article has 78 citations and is from a peer-reviewed journal.
+
+23. (jabri2024powderspreadingeffects pages 3-4): Fatima-Ezzahrae Jabri, Aissa Ouballouch, Larbi Lasri, and Rachid El Alaiji. Powder spreading effects on laser powder bed fused parts quality. Incertitudes et fiabilité des systèmes multiphysiques, 8:22-27, Jan 2024. URL: https://doi.org/10.21494/iste.op.2024.1228, doi:10.21494/iste.op.2024.1228. This article has 0 citations.
+
+24. (salehi2023optimisingspreadlayerquality pages 12-13): Hamid Salehi, John Cummins, Enrico Gallino, Vivek Garg, Tong Deng, Ali Hassanpour, and Mike Bradley. Optimising spread-layer quality in powder additive manufacturing: assessing packing fraction and segregation tendency. Processes, 11:2276, Jul 2023. URL: https://doi.org/10.3390/pr11082276, doi:10.3390/pr11082276. This article has 19 citations.
+
+25. (astarita2026powderspreadingand pages 5-7): A. Astarita. Powder spreading and layer deposition in metal powder bed fusion. ArXiv, Jun 2026. URL: https://doi.org/10.48550/arxiv.2606.22989, doi:10.48550/arxiv.2606.22989. This article has 0 citations.
+
+26. (astarita2026powderspreadingand pages 3-5): A. Astarita. Powder spreading and layer deposition in metal powder bed fusion. ArXiv, Jun 2026. URL: https://doi.org/10.48550/arxiv.2606.22989, doi:10.48550/arxiv.2606.22989. This article has 0 citations.
+
+27. (jabri2024powderspreadingeffects pages 1-3): Fatima-Ezzahrae Jabri, Aissa Ouballouch, Larbi Lasri, and Rachid El Alaiji. Powder spreading effects on laser powder bed fused parts quality. Incertitudes et fiabilité des systèmes multiphysiques, 8:22-27, Jan 2024. URL: https://doi.org/10.21494/iste.op.2024.1228, doi:10.21494/iste.op.2024.1228. This article has 0 citations.
+
+28. (whiting2023powderspreadingtestbed pages 15-18): Justin Whiting, Eric Whitenton, Aniruddha Das, Vipin Tondare, Jason Fox, Michael McGlauflin, Alkan Donmez, and Shawn P Moylan. Powder spreading testbed for studying the powder spreading process in powder bed fusion machines. ArXiv, Nov 2023. URL: https://doi.org/10.6028/nist.ams.100-56, doi:10.6028/nist.ams.100-56. This article has 4 citations.
+
+29. (bosio2021laserpowderbed pages 47-49): F Bosio. Laser powder bed fusion of alsi10mg+ 4cu and alsi10mg alloys. Unknown journal, 2021.
+
+30. (aydin2025theuseof pages 151-156): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+31. (bosio2021laserpowderbed pages 53-56): F Bosio. Laser powder bed fusion of alsi10mg+ 4cu and alsi10mg alloys. Unknown journal, 2021.
+
+32. (revanur2024novelscanstrategies pages 18-22): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+33. (revanur2024novelscanstrategies pages 38-41): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+34. (reijonen2020ontheeffect pages 5-6): Joni Reijonen, Alejandro Revuelta, Tuomas Riipinen, Kimmo Ruusuvuori, and Pasi Puukko. On the effect of shielding gas flow on porosity and melt pool geometry in laser powder bed fusion additive manufacturing. Additive Manufacturing, 32:101030, Mar 2020. URL: https://doi.org/10.1016/j.addma.2019.101030, doi:10.1016/j.addma.2019.101030. This article has 285 citations and is from a highest quality peer-reviewed journal.
+
+35. (weaver2021inertgasflow pages 12-15): Jordan S Weaver, Alec Schlenoff, David C Deisenroth, and Shawn P Moylan. Inert gas flow speed measurements in laser powder bed fusion additive manufacturing. ArXiv, Oct 2021. URL: https://doi.org/10.6028/nist.ams.100-43, doi:10.6028/nist.ams.100-43. This article has 36 citations.
+
+36. (reijonen2020ontheeffect pages 3-4): Joni Reijonen, Alejandro Revuelta, Tuomas Riipinen, Kimmo Ruusuvuori, and Pasi Puukko. On the effect of shielding gas flow on porosity and melt pool geometry in laser powder bed fusion additive manufacturing. Additive Manufacturing, 32:101030, Mar 2020. URL: https://doi.org/10.1016/j.addma.2019.101030, doi:10.1016/j.addma.2019.101030. This article has 285 citations and is from a highest quality peer-reviewed journal.
+
+37. (weaver2021inertgasflow pages 9-12): Jordan S Weaver, Alec Schlenoff, David C Deisenroth, and Shawn P Moylan. Inert gas flow speed measurements in laser powder bed fusion additive manufacturing. ArXiv, Oct 2021. URL: https://doi.org/10.6028/nist.ams.100-43, doi:10.6028/nist.ams.100-43. This article has 36 citations.
+
+38. (revanur2024novelscanstrategies pages 51-53): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+39. (revanur2024novelscanstrategies pages 53-56): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+40. (bosio2021laserpowderbed pages 36-40): F Bosio. Laser powder bed fusion of alsi10mg+ 4cu and alsi10mg alloys. Unknown journal, 2021.
+
+41. (aydin2025theuseof pages 82-86): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+42. (forhad2023developingcontrolsystem pages 32-39): MS Forhad. Developing control system for manufacturing processes. Unknown journal, 2023.
+
+43. (mathias2024metalpowderas pages 19-20): Laura E. T. Mathias, Vitor E. Pinotti, Bruna F. Batistão, Nicolas Rojas-Arias, Gustavo Figueira, Angelo F. Andreoli, and Piter Gargarella. Metal powder as feedstock for laser-based additive manufacturing: from production to powder modification. Journal of Materials Research, 39:19-47, Dec 2023. URL: https://doi.org/10.1557/s43578-023-01271-8, doi:10.1557/s43578-023-01271-8. This article has 86 citations and is from a peer-reviewed journal.
+
+44. (abenante2020designandfabrication pages 18-20): E Abenante, G Hadden, N Johansen, and L Nicoletti. Design and fabrication of a powder cleaning apparatus for additively manufactured complex parts. Unknown journal, 2020.
+
+45. (mathias2024metalpowderas pages 19-19): Laura E. T. Mathias, Vitor E. Pinotti, Bruna F. Batistão, Nicolas Rojas-Arias, Gustavo Figueira, Angelo F. Andreoli, and Piter Gargarella. Metal powder as feedstock for laser-based additive manufacturing: from production to powder modification. Journal of Materials Research, 39:19-47, Dec 2023. URL: https://doi.org/10.1557/s43578-023-01271-8, doi:10.1557/s43578-023-01271-8. This article has 86 citations and is from a peer-reviewed journal.
+
+46. (waltera2019safetyduringhandling pages 3-6): J Waltera, T Griemsmanna, M Hustedta, and C Hoffa. Safety during handling of metal powders in the course of additive manufacturing: risk assessment along the entire process chain. Unknown journal, 2019.
+
+47. (waltera2019safetyduringhandling pages 6-9): J Waltera, T Griemsmanna, M Hustedta, and C Hoffa. Safety during handling of metal powders in the course of additive manufacturing: risk assessment along the entire process chain. Unknown journal, 2019.
