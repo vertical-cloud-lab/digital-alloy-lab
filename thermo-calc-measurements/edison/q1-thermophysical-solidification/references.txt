@@ -1,0 +1,95 @@
+1. (zhang2017differentialscanningcalorimetry pages 2-3): Duyao Zhang, Helen V. Atkinson, Hongbiao Dong, and Qiang Zhu. Differential scanning calorimetry (dsc) and thermodynamic prediction of liquid fraction vs temperature for two high-performance alloys for semi-solid processing (al-si-cu-mg (319s) and al-cu-ag (201)). Metallurgical and Materials Transactions A, 48:4701-4712, Jul 2017. URL: https://doi.org/10.1007/s11661-017-4235-2, doi:10.1007/s11661-017-4235-2. This article has 24 citations.
+
+2. (djurdjevic2025quantifyinglatentheat pages 4-7): Mile Djurdjevic, Vladimir Jovanovic, and Srecko Stopic. Quantifying latent heat in alsi5cu alloys (with 1, 2, and 4% of cu by mass) via dsc, thermal analysis, and commercial software. Metals, 15:1045, Sep 2025. URL: https://doi.org/10.3390/met15091045, doi:10.3390/met15091045. This article has 4 citations.
+
+3. (gottardi2015solidfractiondetermination pages 1-2): G Gottardi, A Pola, and GM La Vecchia. Solid fraction determination via dsc analysis. Unknown journal, 2015.
+
+4. (zhang2017differentialscanningcalorimetry pages 1-2): Duyao Zhang, Helen V. Atkinson, Hongbiao Dong, and Qiang Zhu. Differential scanning calorimetry (dsc) and thermodynamic prediction of liquid fraction vs temperature for two high-performance alloys for semi-solid processing (al-si-cu-mg (319s) and al-cu-ag (201)). Metallurgical and Materials Transactions A, 48:4701-4712, Jul 2017. URL: https://doi.org/10.1007/s11661-017-4235-2, doi:10.1007/s11661-017-4235-2. This article has 24 citations.
+
+5. (zhang2017differentialscanningcalorimetry pages 8-11): Duyao Zhang, Helen V. Atkinson, Hongbiao Dong, and Qiang Zhu. Differential scanning calorimetry (dsc) and thermodynamic prediction of liquid fraction vs temperature for two high-performance alloys for semi-solid processing (al-si-cu-mg (319s) and al-cu-ag (201)). Metallurgical and Materials Transactions A, 48:4701-4712, Jul 2017. URL: https://doi.org/10.1007/s11661-017-4235-2, doi:10.1007/s11661-017-4235-2. This article has 24 citations.
+
+6. (djurdjevic2025quantifyinglatentheat pages 8-10): Mile Djurdjevic, Vladimir Jovanovic, and Srecko Stopic. Quantifying latent heat in alsi5cu alloys (with 1, 2, and 4% of cu by mass) via dsc, thermal analysis, and commercial software. Metals, 15:1045, Sep 2025. URL: https://doi.org/10.3390/met15091045, doi:10.3390/met15091045. This article has 4 citations.
+
+7. (djurdjevic2025quantifyinglatentheat pages 10-11): Mile Djurdjevic, Vladimir Jovanovic, and Srecko Stopic. Quantifying latent heat in alsi5cu alloys (with 1, 2, and 4% of cu by mass) via dsc, thermal analysis, and commercial software. Metals, 15:1045, Sep 2025. URL: https://doi.org/10.3390/met15091045, doi:10.3390/met15091045. This article has 4 citations.
+
+8. (djurdjevic2025quantifyinglatentheat pages 7-8): Mile Djurdjevic, Vladimir Jovanovic, and Srecko Stopic. Quantifying latent heat in alsi5cu alloys (with 1, 2, and 4% of cu by mass) via dsc, thermal analysis, and commercial software. Metals, 15:1045, Sep 2025. URL: https://doi.org/10.3390/met15091045, doi:10.3390/met15091045. This article has 4 citations.
+
+9. (kou2021predictingsusceptibilityto pages 8-10): Sindo Kou. Predicting susceptibility to solidification cracking and liquation cracking by calphad. Metals, 11:1442, Sep 2021. URL: https://doi.org/10.3390/met11091442, doi:10.3390/met11091442. This article has 58 citations.
+
+10. (hyer2021effectsofalloy pages 1-2): Holden Hyer, Le Zhou, Abhishek Mehta, and Yongho Sohn. Effects of alloy composition and solid-state diffusion kinetics on powder bed fusion cracking susceptibility. Journal of Phase Equilibria and Diffusion, 42:5-13, Nov 2020. URL: https://doi.org/10.1007/s11669-020-00844-y, doi:10.1007/s11669-020-00844-y. This article has 47 citations and is from a peer-reviewed journal.
+
+11. (wu2025advancesincrack pages 9-12): Huabo Wu, Jialiao Zhou, Lan Huang, Zi Wang, Liming Tan, Jin Lv, and Feng Liu. Advances in crack formation mechanisms, evaluation models, and compositional strategies for additively manufactured nickel-based superalloys. Computer Modeling in Engineering &amp; Sciences, 143:2675-2709, Jan 2025. URL: https://doi.org/10.32604/cmes.2025.064854, doi:10.32604/cmes.2025.064854. This article has 20 citations.
+
+12. (oriola2024onthehot pages 32-36): A Oriola. On the hot cracking susceptibility of refractory high entropy alloys (rheas) during solidification: toward a crack susceptibility index for additive manufacturing. Unknown journal, 2024.
+
+13. (djurdjevic2026improvingcastingsimulation pages 10-12): Mile B. Djurdjevic and Srecko Manasijevic. Improving casting simulation accuracy through thermal analysis of aluminum alloys. Crystals, 16:159, Feb 2026. URL: https://doi.org/10.3390/cryst16030159, doi:10.3390/cryst16030159. This article has 4 citations.
+
+14. (wu2025advancesincrack pages 12-14): Huabo Wu, Jialiao Zhou, Lan Huang, Zi Wang, Liming Tan, Jin Lv, and Feng Liu. Advances in crack formation mechanisms, evaluation models, and compositional strategies for additively manufactured nickel-based superalloys. Computer Modeling in Engineering &amp; Sciences, 143:2675-2709, Jan 2025. URL: https://doi.org/10.32604/cmes.2025.064854, doi:10.32604/cmes.2025.064854. This article has 20 citations.
+
+15. (jordan2026acomprehensivehot pages 44-49): AM Jordan. A comprehensive hot cracking model development coupling calphad with machine learning. Unknown journal, 2026.
+
+16. (barakathulla2026conductivityofcast pages 4-5): Amjath Barakathulla, Abdallah Elsayed, Mark Easton, Trevor Abbott, John Grandfield, and Hua Qian Ang. Conductivity of cast aluminium alloys: a review. International Journal of Metalcasting, Mar 2026. URL: https://doi.org/10.1007/s40962-026-01931-5, doi:10.1007/s40962-026-01931-5. This article has 2 citations and is from a peer-reviewed journal.
+
+17. (akwaboa2023thermophysicalpropertiesof pages 2-4): Stephen Akwaboa, Congyuan Zeng, Nigel Amoafo-Yeboah, Samuel Ibekwe, and Patrick Mensah. Thermophysical properties of laser powder bed fused ti-6al-4v and alsi10mg alloys made with varying laser parameters. Materials, 16:4920, Jul 2023. URL: https://doi.org/10.3390/ma16144920, doi:10.3390/ma16144920. This article has 11 citations.
+
+18. (barakathulla2026conductivityofcast pages 2-4): Amjath Barakathulla, Abdallah Elsayed, Mark Easton, Trevor Abbott, John Grandfield, and Hua Qian Ang. Conductivity of cast aluminium alloys: a review. International Journal of Metalcasting, Mar 2026. URL: https://doi.org/10.1007/s40962-026-01931-5, doi:10.1007/s40962-026-01931-5. This article has 2 citations and is from a peer-reviewed journal.
+
+19. (akwaboa2023thermophysicalpropertiesof pages 7-9): Stephen Akwaboa, Congyuan Zeng, Nigel Amoafo-Yeboah, Samuel Ibekwe, and Patrick Mensah. Thermophysical properties of laser powder bed fused ti-6al-4v and alsi10mg alloys made with varying laser parameters. Materials, 16:4920, Jul 2023. URL: https://doi.org/10.3390/ma16144920, doi:10.3390/ma16144920. This article has 11 citations.
+
+20. (liu2017microstructureevolutionduring pages 139-143): Chenglu Liu. Microstructure evolution during homogenization and its effect on the high temperature deformation behaviour in aa6082 based alloys. ArXiv, Jan 2017. URL: https://doi.org/10.14288/1.0360654, doi:10.14288/1.0360654. This article has 19 citations.
+
+21. (akwaboa2023thermophysicalpropertiesof pages 6-7): Stephen Akwaboa, Congyuan Zeng, Nigel Amoafo-Yeboah, Samuel Ibekwe, and Patrick Mensah. Thermophysical properties of laser powder bed fused ti-6al-4v and alsi10mg alloys made with varying laser parameters. Materials, 16:4920, Jul 2023. URL: https://doi.org/10.3390/ma16144920, doi:10.3390/ma16144920. This article has 11 citations.
+
+22. (liu2017microstructureevolutionduring pages 183-188): Chenglu Liu. Microstructure evolution during homogenization and its effect on the high temperature deformation behaviour in aa6082 based alloys. ArXiv, Jan 2017. URL: https://doi.org/10.14288/1.0360654, doi:10.14288/1.0360654. This article has 19 citations.
+
+23. (liu2017microstructureevolutionduring pages 143-151): Chenglu Liu. Microstructure evolution during homogenization and its effect on the high temperature deformation behaviour in aa6082 based alloys. ArXiv, Jan 2017. URL: https://doi.org/10.14288/1.0360654, doi:10.14288/1.0360654. This article has 19 citations.
+
+24. (fukaya2026experimentalmeasurementsof pages 4-5): H Fukaya, M Kubo, S Yano, S Suzuki, and K Ioroi. Experimental measurements of partition coefficients in fe-36mass% ni alloy. Unknown journal, 2026.
+
+25. (farnin2021solidificationpathand pages 18-23): CJ Farnin. Solidification path and weldability analysis of an experimental trip steel via novel characterization of variable solute partition coefficients. Unknown journal, 2021.
+
+26. (farnin2021solidificationpathand pages 14-18): CJ Farnin. Solidification path and weldability analysis of an experimental trip steel via novel characterization of variable solute partition coefficients. Unknown journal, 2021.
+
+27. (fukaya2026experimentalmeasurementsof pages 5-7): H Fukaya, M Kubo, S Yano, S Suzuki, and K Ioroi. Experimental measurements of partition coefficients in fe-36mass% ni alloy. Unknown journal, 2026.
+
+28. (fukaya2026experimentalmeasurementsof pages 1-2): H Fukaya, M Kubo, S Yano, S Suzuki, and K Ioroi. Experimental measurements of partition coefficients in fe-36mass% ni alloy. Unknown journal, 2026.
+
+29. (bajaj2020precipitationduringintrinsic pages 114-116): P. Bajaj, B. Svendsen, and D. Raabe. Precipitation during intrinsic heat treatment in laser additive manufacturing. ArXiv, pages 2020, Oct 2020. URL: https://doi.org/10.18154/rwth-2020-10461, doi:10.18154/rwth-2020-10461. This article has 3 citations.
+
+30. (bajaj2020precipitationduringintrinsic pages 111-114): P. Bajaj, B. Svendsen, and D. Raabe. Precipitation during intrinsic heat treatment in laser additive manufacturing. ArXiv, pages 2020, Oct 2020. URL: https://doi.org/10.18154/rwth-2020-10461, doi:10.18154/rwth-2020-10461. This article has 3 citations.
+
+31. (bajaj2020precipitationduringintrinsic pages 26-29): P. Bajaj, B. Svendsen, and D. Raabe. Precipitation during intrinsic heat treatment in laser additive manufacturing. ArXiv, pages 2020, Oct 2020. URL: https://doi.org/10.18154/rwth-2020-10461, doi:10.18154/rwth-2020-10461. This article has 3 citations.
+
+32. (zhong2019…ofdiffusion pages 80-87): W Zhong. … of diffusion coefficients of nine elements in magnesium and establishment of a comprehensive mobility database for lightweight magnesium alloys. Unknown journal, 2019.
+
+33. (christianson2020experimentalmeasurementof pages 1-2): David W. Christianson, Lilong Zhu, and Michele V. Manuel. Experimental measurement of diffusion coefficients and assessment of diffusion mobilities in hcp mg–li–al alloys. Calphad-computer Coupling of Phase Diagrams and Thermochemistry, 71:101999, Dec 2020. URL: https://doi.org/10.1016/j.calphad.2020.101999, doi:10.1016/j.calphad.2020.101999. This article has 11 citations.
+
+34. (zhong2019…ofdiffusion pages 23-28): W Zhong. … of diffusion coefficients of nine elements in magnesium and establishment of a comprehensive mobility database for lightweight magnesium alloys. Unknown journal, 2019.
+
+35. (wang2016computationalstudyof pages 1-4): Jingya Wang, Na Li, Chuanyun Wang, Juan Ignacio Beltran, Javier LLorca, and Yuwen Cui. Computational study of atomic mobility in hcp mg–al–zn ternary alloys. Calphad, 54:134-143, Sep 2016. URL: https://doi.org/10.1016/j.calphad.2016.07.003, doi:10.1016/j.calphad.2016.07.003. This article has 19 citations.
+
+36. (wang2016computationalstudyof pages 18-22): Jingya Wang, Na Li, Chuanyun Wang, Juan Ignacio Beltran, Javier LLorca, and Yuwen Cui. Computational study of atomic mobility in hcp mg–al–zn ternary alloys. Calphad, 54:134-143, Sep 2016. URL: https://doi.org/10.1016/j.calphad.2016.07.003, doi:10.1016/j.calphad.2016.07.003. This article has 19 citations.
+
+37. (yang2024measurementofdiffusion pages 12-13): Yang Yang, Lilong Zhu, and Michele V. Manuel. Measurement of diffusion coefficients and assessment of atomic mobilities in hcp mg-ag-sn alloys. Journal of Phase Equilibria and Diffusion, 45:583-595, Jun 2024. URL: https://doi.org/10.1007/s11669-024-01114-x, doi:10.1007/s11669-024-01114-x. This article has 3 citations and is from a peer-reviewed journal.
+
+38. (christianson2020experimentalmeasurementof pages 7-8): David W. Christianson, Lilong Zhu, and Michele V. Manuel. Experimental measurement of diffusion coefficients and assessment of diffusion mobilities in hcp mg–li–al alloys. Calphad-computer Coupling of Phase Diagrams and Thermochemistry, 71:101999, Dec 2020. URL: https://doi.org/10.1016/j.calphad.2020.101999, doi:10.1016/j.calphad.2020.101999. This article has 11 citations.
+
+39. (clyne2024profilometrybasedindentationplastometry pages 19-23): Bill Clyne. Profilometry-based indentation plastometry at high temperature. JournalArticle, Aug 2024. URL: https://doi.org/10.17863/cam.111087, doi:10.17863/cam.111087. This article has 0 citations.
+
+40. (tammpere2024profilometry‐basedindentationplastometry pages 13-14): Hannes Tammpere, Phil McKeown, James Miller, Chizhou Fang, Emily Curtis, Marcus Gaiser‐Porter, Max Burley, James Campbell, Maria Artiles, Yuanbo Tang, Satoshi Utada, Roger Reed, and Trevor Clyne. Profilometry‐based indentation plastometry at high temperature. Advanced Engineering Materials, Aug 2024. URL: https://doi.org/10.1002/adem.202301073, doi:10.1002/adem.202301073. This article has 12 citations and is from a peer-reviewed journal.
+
+41. (mohammed2025boronnitridenanotubes pages 10-12): Sohail M. A. K. Mohammed, Ambreen Nisar, Denny John, Abhijith K. Sukumaran, Yifei Fu, Tanaji Paul, Alexander F. Hernandez, Sudipta Seal, and Arvind Agarwal. Boron nitride nanotubes induced strengthening in aluminum 7075 composite via cryomilling and spark plasma sintering. Advanced Composites and Hybrid Materials, Jan 2025. URL: https://doi.org/10.1007/s42114-024-01173-1, doi:10.1007/s42114-024-01173-1. This article has 14 citations and is from a peer-reviewed journal.
+
+42. (seimiya2026surfacetensionof pages 1-3): Yusaku Seimiya, Haruto Yoneyama, and Shumpei Ozawa. Surface tension of molten al–si alloys measured by electromagnetic levitation: comparison with ideal- and subregular-solution calculations. International Journal of Thermophysics, Oct 2026. URL: https://doi.org/10.1007/s10765-026-03847-y, doi:10.1007/s10765-026-03847-y. This article has 0 citations and is from a peer-reviewed journal.
+
+43. (seimiya2026surfacetensionofa pages 6-9): Yusaku SEIMIYA, Haruto YONEYAMA, and Shumpei OZAWA. Surface tension of molten al–si alloys measured by electromagnetic levitation and evaluated using the butler equation. Unknown journal, Aug 2026. URL: https://doi.org/10.21203/rs.3.rs-10699497/v1, doi:10.21203/rs.3.rs-10699497/v1.
+
+44. (reiplinger2024densityandsurface pages 4-6): B. Reiplinger, Y. Seimiya, J. Brillo, and S. Ozawa. Density and surface tension of liquid al, v and their binary alloys measured by electromagnetic levitation. Journal of Materials Science, 59:13183-13199, Jul 2024. URL: https://doi.org/10.1007/s10853-024-09951-4, doi:10.1007/s10853-024-09951-4. This article has 11 citations and is from a peer-reviewed journal.
+
+45. (beckers2021…oftemperaturedependent pages 4-8): M Beckers, M Engelhardt, and S Schneider. … of temperature-dependent viscosity and surface tension of liquid al69. 1cu12. 8ag18. 1 eutectic alloy under microgravity conditions using the oscillating-drop-method. Unknown journal, 2021.
+
+46. (beckers2021…oftemperaturedependent pages 1-4): M Beckers, M Engelhardt, and S Schneider. … of temperature-dependent viscosity and surface tension of liquid al69. 1cu12. 8ag18. 1 eutectic alloy under microgravity conditions using the oscillating-drop-method. Unknown journal, 2021.
+
+47. (seimiya2026surfacetensionofa pages 1-6): Yusaku SEIMIYA, Haruto YONEYAMA, and Shumpei OZAWA. Surface tension of molten al–si alloys measured by electromagnetic levitation and evaluated using the butler equation. Unknown journal, Aug 2026. URL: https://doi.org/10.21203/rs.3.rs-10699497/v1, doi:10.21203/rs.3.rs-10699497/v1.
+
+48. (beckers2021…oftemperaturedependent pages 13-16): M Beckers, M Engelhardt, and S Schneider. … of temperature-dependent viscosity and surface tension of liquid al69. 1cu12. 8ag18. 1 eutectic alloy under microgravity conditions using the oscillating-drop-method. Unknown journal, 2021.
