@@ -12,7 +12,8 @@ you would build, with the latest decision in each place:
 - [`copper/protocol.md`](copper/protocol.md) §2 (18 Oct): the copper deck.
 - [`cubxl-setup.md`](cubxl-setup.md) (17 Oct): the first deck, head and wiring plan.
 
-**Nothing here has been printed, bought or tested.** Every position is a proposal in the CubOS
+**Nothing here has been printed or tested yet.** Parts were ordered in November; record what
+arrives, prints, fits and fails in [`build-log.md`](build-log.md). Every position is a proposal in the CubOS
 deck frame of Ben's 2026-10-02 calibration (mm; origin front-left-bottom, +y away from the
 operator, +z up), to be re-jogged.
 
