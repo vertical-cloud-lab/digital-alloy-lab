@@ -26,7 +26,7 @@ import numpy as np
 
 POWERS_W = (100, 200, 300, 375)    # axis ticks only: the window is 100-375 W ...
 SPEEDS_MM_S = (250, 500, 1000, 2000)  # ... and 250-2000 mm/s (log scale)
-CONTROL = "C"                      # the machine's standard stainless set (values from the kickoff)
+CONTROL = "C"                      # the 316L set's hatch: 370 W, 1350 mm/s, 130 um (Carl's photos)
 # The pilot's 64 power-speed settings: a scrambled Sobol sequence, one 16-point block per panel (A = points 0-15,
 # B = 16-31, ...). Written by ../m2-track-design/design.py; read from its CSV so this module needs no scipy.
 SOBOL_CSV = Path(__file__).resolve().parent.parent / "m2-track-design" / "out" / "pilot_sobol_sets.csv"

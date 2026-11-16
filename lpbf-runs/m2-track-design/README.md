@@ -25,7 +25,48 @@ grid). It has two sources:
 | Scan direction | **The same on every track**, into or across the gas flow, never with it | With the flow, the plume and spatter are blown ahead of the beam onto the track still to be drawn |
 | Exposure order | **Strictly from the gas outlet side toward the inlet**, with parameter sets in randomized positions; no interleaving | Spatter blown downstream lands on finished tracks. Interleaving (odd positions, then even) is sometimes suggested for heat, but heat doesn't matter here and interleaving would put upstream spatter on positions not yet drawn |
 | Galvo | **Ask whether skywriting is on**; check the first 3 mm of a few tracks in the pilot (top view, or a longitudinal section of a spare track) | Without it, Eagar–Tsai puts the first 0.3 mm up to 1.9× deeper at 2 m/s for a 0.3 ms ramp |
+| Spot | **130 µm on every line**, the spot the M2's 316L hatch uses; controls at that hatch (370 W, 1350 mm/s) | At 130 µm the window spans keyhole number 1.4–9: too shallow to bond, transition, stable keyhole. At 50 µm, 62 of 64 settings are keyholes and 33 fluctuate or form pores. See [Spot size](#spot-size-130-µm-from-carls-photos-of-the-m2) |
 | Settings | **64 scrambled-Sobol points in four 16-point blocks, one block per panel**, plus 2 controls per panel; **batch BO** in the campaign, one M2 run per batch, with one more Sobol block per run held out for validation | See [Sampling](#sampling-sobol-blocks-then-batch-bo) |
+
+## Spot size: 130 µm (from Carl's photos of the M2)
+
+Carl's photos of BYU's M2 (PR #243, 2026-11-10) show CL WRX Control 2.4 setting the spot for each exposure type, and
+the 316L set using 50, 70 and 130 µm. Its hatch runs 370 W, 1350 mm/s, 130 µm, so the pilot had to pick a spot.
+[`line_sheet.py`](line_sheet.py) scores all 64 settings at both ends with Gan et al.'s keyhole number,
+Ke = ηP / ((T_l − T_0) π ρ c_p √(α v r0³)) with r0 the spot radius
+([Nat. Commun. 12, 2379, 2021](https://doi.org/10.1038/s41467-021-22704-0)). Their X-ray data put conduction below
+Ke 1.4 and keyhole above 6; the keyhole is stable below about 16, and above about 30 it is chaotic, with pores
+and spatter. The script also runs steady-state Eagar–Tsai at both spots, using the same package and inputs as above.
+
+![The 64 settings at 50 and 130 µm](out/m2-spot-choice.png)
+
+| 64 Sobol settings | 50 µm (the focus) | 130 µm (the 316L hatch's) |
+| --- | --- | --- |
+| Keyhole number | 5.8–38 | 1.4–9.1 |
+| Conduction or transition / stable keyhole / Ke above 16 | 2 / 29 / 33 | 51 / 13 / 0 |
+| Eagar–Tsai depth, width (µm) | 26–117, 64–238 | 16–113, 96–246 |
+| Eagar–Tsai depth under 30 µm (may not bond through the layer) | 2 | 8 |
+| The 316L hatch (370 W, 1350 mm/s) | Ke 19.6 | Ke 4.7 |
+
+- **So 130 µm.** At 130 µm the window holds both boundaries a printability map has to place: tracks too shallow to
+  bond at low power and high speed, and keyhole onset at high power and low speed. The machine's own hatch sits
+  between them, and the controls sit inside the design. At 50 µm the window has no conduction tracks to calibrate
+  absorptivity on, and half of it is fluctuating or porous keyholes, whose sections scatter.
+- **Spot error matters less at 130 µm.** Ke goes as r0^−1.5, so 10 µm of error in the spot moves it about ±12% at
+  130 µm, against −24% to +40% at 50 µm. Absorptivity calibration would absorb that error either way, so ask whether
+  the spot has been measured.
+- **Track length and pitch still hold.** The widest Eagar–Tsai pool at 130 µm is 246 µm, so 2 mm pitch is 8× it.
+  I didn't rerun the start and end transients at 130 µm, but its deepest pool over the 64 settings is 113 µm
+  against 117 µm at 50 µm, and the conduction start zone was 2.3–3.7 pool depths (at most about 0.4 mm), well
+  inside the 3 mm discard.
+- **What Ke leaves out:** it uses one absorptivity (0.4 here). In a deep keyhole absorptivity rises, so Ke is low
+  there, and it says nothing about powder. Treat the bands as a guide; the AM Module printability map decides.
+- **The sheets:** [`out/pilot_line_sheet.csv`](out/pilot_line_sheet.csv) has the 72 lines in exposure order, each
+  with its panel, its position counted from the gas-outlet side (the same randomization, seed 100, as the
+  pilot-design figure and the animation), its mount piece, set, power, speed and spot, and P/v, Ke, regime and
+  Eagar–Tsai width and depth. [`out/pilot_line_sheet_48.csv`](out/pilot_line_sheet_48.csv) is the 48-line fallback:
+  12 lines per panel, each panel one 8-point Sobol net (points 0–7, 8–15, 16–23, 24–31) plus two of points 32–39,
+  and 2 controls. [`out/spot_regimes.csv`](out/spot_regimes.csv) has every setting at both spots.
 
 ## What Eagar–Tsai says (and doesn't)
 
@@ -167,6 +208,7 @@ rounds, each of up to 64 new tracks: a large-batch, few-round setting.
 | --- | --- |
 | [`eagar_tsai_316l.py`](eagar_tsai_316l.py) | All the Eagar–Tsai runs (about 10 min on 4 cores): `python eagar_tsai_316l.py [grid] [finite] [neighbour]` |
 | [`design.py`](design.py) | The pilot's Sobol blocks; `python design.py` |
+| [`line_sheet.py`](line_sheet.py) | The sheets to enter in the machine software (72 and 48 lines), Ke and Eagar–Tsai at 50 and 130 µm, and the spot figure (about 2 min): `python line_sheet.py`, or `python line_sheet.py figure` to redraw |
 | [`figures.py`](figures.py) | The two figures above; `python figures.py` |
 | `out/` | CSVs, the along-track profiles (`finite_track_profiles.json`) and the figures |
 

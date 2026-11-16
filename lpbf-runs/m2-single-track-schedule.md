@@ -9,7 +9,8 @@ of single tracks to check the Thermo-Calc AM Module.
 
 1. **One pilot run first.** Carl and Josh print 72 single tracks on the plate's four removable panels: 64
    power-speed settings from a scrambled Sobol sequence, one 16-point block per panel that covers the whole window,
-   plus two control tracks per panel. Tracks are 12 mm long at 2 mm pitch, with 3 mm at each end discarded, and
+   plus two control tracks per panel at the 316L hatch (370 W, 1350 mm/s), all with the hatch's 130 µm spot
+   ([line sheet](m2-track-design/out/pilot_line_sheet.csv)). Tracks are 12 mm long at 2 mm pitch, with 3 mm at each end discarded, and
    sectioned at mid-length. Carl times
    every step from job prep to SEM. The campaign then picks each run's settings by batch Bayesian optimization
    ([`m2-track-design/`](m2-track-design/README.md) has the reasoning, the Eagar–Tsai checks and the Edison reports).
@@ -80,6 +81,22 @@ the predictions *before* the cross-sections are measured.
   protocol that says how each single track was set up in the software, which is why the next list is something to try,
   not settled practice.
 
+**What BYU's machine shows (Carl's photos of the 316L set, 2026-11-10,
+[PR #243](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/243)):**
+
+- The software is **CL WRX Control 2.4**. Each part carries a parameter set, and each set has eight exposure types
+  (general, upside/downside contour, upside/downside surface area, adv. surface area and its contour, adv. lattice
+  support). Each exposure type has its own **power, speed, spot size and contour offset**, plus trace spacing for the
+  hatches.
+- **There are two lasers** (parts are assigned to LS1 or LS2), and they are 400 W class: the 316L hatch runs 370 W.
+- **The spot is set per exposure type.** The 316L set uses 50, 70 and 130 µm, so this M2 has the variable-focus
+  option (50–500 µm on the M2 cusing's spec sheet). Its hatch ("Adv. surface area") is **370 W, 1350 mm/s, 130 µm,
+  0.09 mm trace spacing**. Upskin is 200 W, 980 mm/s, 130 µm; downskin is 280 W, 1300 mm/s, 130 µm. The contours
+  run 100–120 W at 130–220 mm/s with 50–70 µm, and lattice supports run 270 W, 1200 mm/s, 50 µm.
+- **An exposure element's timing:** beam-on delay 0.2 ms, beam-off delay 0.21 ms, corner delay 0.05 ms, jump delays
+  0.5–1 ms. There is no skywriting field, so assume the galvo ramps with the laser on. The 3 mm discard covers that.
+- Carl can print **48 or 72 lines**. §4 uses 72, and a 48-line fallback is ready.
+
 **How to get one scan vector per track (try these in order during the dry run):**
 
 1. Make each track a thin part, for example 10 mm × 0.05 mm × one layer, whose slice yields a single vector. Expose
@@ -101,9 +118,10 @@ the predictions *before* the cross-sections are measured.
 - Can a job expose a layer without recoating? That would allow bare-substrate tracks (see §4).
 - When was laser power last calibrated? The repo notes the M2 had been down for about two years with "a history of
   frequent problems" ([`alloy-workflow-review.md`](../alloy-workflow-review.md)).
-- What spot size, laser rating (200 W or 400 W) and gas does it run? Published M2 configurations range from
-  200 W with a 90 µm spot ([Empa](https://www.empa.ch/web/coating-competence-center/concept-laser-m2)) to 400 W with
-  a 54 µm spot (LLNL).
+- Which gas does it run, and what layer thickness does the 316L set use (its "General" tab)? The photos answer
+  the laser (two, 400 W class) and the spot (set per exposure type).
+- Was the 130 µm spot ever measured (a beam profiler or caustic at service), and is "spot size" the 1/e²
+  diameter? The AM Module takes the D4σ (1/e²) diameter, and absorptivity calibration absorbs any error in it.
 
 **Measure power at the plane before the pilot if at all possible.** For the model comparison, the delivered power
 and spot size are the two nuisance parameters that matter most. If they're off, absorptivity calibration silently
@@ -246,12 +264,30 @@ Why these numbers (details, Eagar–Tsai runs and Edison reports in [`m2-track-d
   at 2 mm, and interleaving would put upstream spatter on positions not yet drawn.
 
 **Parameters.** Use **64 power-speed settings from a scrambled Sobol sequence**, not a grid, plus **2 control
-tracks per panel** at the machine's standard stainless parameter set. The window is the old grid's box for a 400 W
-M2, **100–375 W and 250–2000 mm/s**, with speed on a log scale: P/v from 0.05 to 1.5 J/mm, from likely balling up
-to deep keyholes. Xavier should check the window against the AM Module printability map first; on a 200 W machine,
-lower the powers. [`m2-track-design/design.py`](m2-track-design/design.py) generates the settings
-([list](m2-track-design/out/pilot_sobol_sets.csv), [figure](m2-track-design/out/m2-sobol-vs-grid.png)).
+tracks per panel** at the 316L set's hatch, **370 W and 1350 mm/s**. Every line uses the **130 µm spot**. The
+window is the old grid's box for a 400 W M2, **100–375 W and 250–2000 mm/s**, with speed on a log scale (P/v from
+0.05 to 1.5 J/mm). At 130 µm that spans Gan et al.'s keyhole number Ke 1.4–9: from tracks too shallow to bond
+through the layer, through transition, to stable keyholes, with the hatch (Ke 4.7) in the middle. Xavier should
+check the window against the AM Module printability map first.
+[`m2-track-design/design.py`](m2-track-design/design.py) generates the settings
+([list](m2-track-design/out/pilot_sobol_sets.csv), [figure](m2-track-design/out/m2-sobol-vs-grid.png)), and
+[`line_sheet.py`](m2-track-design/line_sheet.py) turns them into **the sheet to enter in the machine software, one
+row per line in exposure order**: [72 lines](m2-track-design/out/pilot_line_sheet.csv), or
+[48 lines](m2-track-design/out/pilot_line_sheet_48.csv) as a fallback.
 
+- **Spot: 130 µm on every line, not 50 µm** ([figure](m2-track-design/out/m2-spot-choice.png)). At 50 µm the same
+  window is almost all keyhole: 62 of the 64 settings are above Ke 6 and 33 are above 16, where Gan et al.'s X-ray
+  data show the keyhole fluctuating, with pores and spatter above about 30. That gives noisy, porous sections and
+  no conduction tracks to calibrate absorptivity on. At 130 µm the window holds both boundaries the printability
+  map has to get right (too shallow to bond, and keyhole onset), and the lines use the beam the M2 uses for 316L
+  parts. Ke scales with the spot radius to the power −1.5, so a 10 µm error in the spot moves Ke by about ±12% at
+  130 µm, against −24% to +40% at 50 µm. The 50 µm spot is a campaign option (§7).
+- **One laser for every line (LS1),** so laser-to-laser differences don't mix with panel effects.
+- **In each line's parameter set, change only the exposure type that draws the line** (whichever one the dry run
+  shows gives one 12 mm vector, for example the lattice-support exposure for a support line): set its power, speed
+  and spot from the sheet and its contour offset to 0, and check in the vector preview that no other exposure type
+  draws anything on the line. Leave the delays as the 316L set has them, the same for every line, and write them in
+  the run log.
 - **Each panel carries one 16-point block** of the sequence (points 0–15 on panel A, 16–31 on B, and so on) and 2
   controls, in **randomized positions**. Each block on its own covers the whole window evenly, so panel A, which
   is sectioned first, already gives a usable map. All four blocks together give 64 distinct powers and speeds,
@@ -272,8 +308,8 @@ lower the powers. [`m2-track-design/design.py`](m2-track-design/design.py) gener
 - **Scan in the same direction on every track** and note how it sits relative to the gas flow (into or across it,
   not with it). Expose from the downstream (gas outlet) side toward the inlet, so spatter lands on finished tracks
   rather than on fresh powder.
-- **Commit the AM Module predictions for all 65 parameter sets** (64 Sobol settings plus the control) **before**
-  the print.
+- **Commit the AM Module predictions for all 65 parameter sets** (64 Sobol settings plus the control, at the
+  130 µm spot) **before** the print.
 
 **Processing order.** Section **panel A first, all the way through SEM**, to catch problems early: track mapping,
 etch, SEM charging. Then do B to D. The timing log then shows both a first-time pass and a repeat pass.
@@ -344,7 +380,7 @@ After the pilot, compute:
 | --- | --- | --- | --- |
 | **Minimum (TMS-ready)** | One layer thickness; 2–3 Sobol blocks of 64 plus BO points, with 8 controls per run; AM Module calibration and validation | ~110–150 plus controls | **pilot + 2–3** |
 | **Standard** | Adds a second condition (bare substrate or a second layer thickness) and 2 runs of boundary refinement | ~300–400 | **pilot + 5–6** |
-| **Extended** | Adds spot size or focus offset (if the M2 can adjust it), then small density cubes on the same panels | ~500+ | **pilot + 7–9** |
+| **Extended** | Adds the 50 µm spot or a focus offset (the M2 sets the spot per exposure type), then small density cubes on the same panels | ~500+ | **pilot + 7–9** |
 
 The original issue's "couple dozen runs" was for the whole ladder on the Aconity: tracks, cubes, artifacts, and
 tensile bars. Single tracks alone should need far fewer runs, since adding tracks costs almost no machine time; the
@@ -352,9 +388,9 @@ bottleneck is metallography and SEM.
 
 ## 8. Kickoff checklist (Josh, and Nathan C. if possible)
 
-- [ ] Machine status, last service, and laser power calibration date. Laser rating (200 or 400 W), spot size, single or dual laser.
+- [ ] Machine status, last service, laser power calibration date, and whether the spot sizes were ever measured. Carl's photos answer the rest: two 400 W-class lasers, CL WRX Control 2.4, and a spot set per exposure type ([§2](#2-can-the-m2-run-many-parameter-sets-in-one-build)).
 - [ ] Inert gas (N₂ or Ar), O₂ setpoint, typical inerting time, plate heating, and which way the gas flows across the plate (the tracks are exposed from the outlet side, [§4](#4-pilot-run-carl-and-josh)).
-- [ ] Software: Magics and build processor licence and version, WRX version, parameter-editing tier, limit on parameter sets per job, whether a job can expose without recoating.
+- [ ] Software: Magics and build processor licence and version, limit on parameter sets per job (65 for 72 lines, 41 for 48), whether sets can be copied or imported rather than typed, whether a job can expose without recoating, and the 316L set's layer thickness.
 - [ ] Powder: grade (316L? 17-4PH?), how much is on hand, lot and certificate, sieving, the minimum fill for the dose chamber.
 - [ ] Insert plate: where it is, drawings, panel size and thickness, pocket depth, screw size, how panels are set flush (shims?), how many spare panels, and whether we may cut up Nathan C.'s panels; choose refresh option A or B for the campaign.
 - [ ] Shop access for making panels (mill, drill, and a surface grinder with a vise or vacuum chuck, since 316L won't hold on a magnetic chuck) and for saws (a bandsaw that takes an 88 mm panel, an abrasive cut-off or precision saw).
@@ -370,5 +406,7 @@ bottleneck is metallography and SEM.
 - R. Weissbach, R. W. Penny, A. J. Hart, *A rapid experimental workflow for studying melt track scaling in laser powder bed fusion using high-precision metal template substrates*, [arXiv:2409.14548](https://arxiv.org/abs/2409.14548) (published in *Progress in Additive Manufacturing*): template inserts, the flatness tolerance, and the full sectioning and etching recipe.
 - C. Kamath et al., *Density of additively-manufactured, 316L SS parts using laser powder-bed fusion at powers up to 400 W*, [OSTI 1116929](https://www.osti.gov/biblio/1116929): single tracks and density pillars on a 400 W M2 with a 54 µm D4σ spot.
 - ORNL, [316L/316H coupon characterization framework](https://info.ornl.gov/sites/publications/Files/Pub199801.pdf): a framework for more than 700 coupons from a Concept Laser M2 and a Renishaw AM400.
+- Z. Gan et al., *Universal scaling laws of keyhole stability and porosity in 3D printing of metals*, Nat. Commun. 12, 2379 (2021), [doi:10.1038/s41467-021-22704-0](https://doi.org/10.1038/s41467-021-22704-0): the keyhole number Ke and its regime limits (conduction below 1.4, keyhole above 6, a stable keyhole below about 16, pores and spatter above about 30), used to choose the spot.
+- University of Southampton, [Concept Laser M2 cusing](https://www.southampton.ac.uk/autonomous-systems/about/conceptlaser-m2.page): 2 × 200 W or optional 2 × 400 W, 50 µm focus with an optional variable focus of 50–500 µm, 7 m/s scanning (4.5 m/s with variable focus), 20–80 µm layers.
 - M2 configurations: [Treatstock](https://www.treatstock.co.uk/machines/item/248-m2-cusing?ln=en-GB) (250 × 250 × 280 mm, 200 W standard, 400 W option); [Empa](https://www.empa.ch/web/coating-competence-center/concept-laser-m2) (200 W, 90 µm spot).
 - In this repo: [`thermocalc_am_module.md`](../edison-trajectories/thermocalc_am_module.md), [`edison-literature-high-report.md`](../edison-trajectories/tms-2027-lpbf-parameter-abstract-review/edison-literature-high-report.md) (single-track-first workflows such as Pfaff et al. 2020 and Bergmueller et al. 2023), and [`tms-2027-lpbf-process-parameter-optimization-abstract.md`](../tms-2027-lpbf-process-parameter-optimization-abstract.md).
