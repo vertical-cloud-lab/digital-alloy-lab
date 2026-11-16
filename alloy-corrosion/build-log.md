@@ -140,7 +140,8 @@ not rerun for the v2 lid's neck.
 
 ### 2026-11-16: which grade of tube (B36)
 
-From [Ben's question](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6931538613):
+From [Ben's question](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6931531023)
+([the reply](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6931538613)):
 Fisher's 500-packs of the 0.5 mL Safe-Lock tube are $147.84 in Eppendorf Quality, $188 in Forensic
 DNA Grade and $193 in PCR clean. **Buy Eppendorf Quality, colorless (05-402-18).**
 - **The dearer grades don't help ICP-MS.** In
