@@ -282,7 +282,8 @@ still a question for Dr. Porter.
 
 ## What to report back
 
-On #180 for the deck and the corrosion cell, on byu-vcl#269 for the stirrers:
+On [#264](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264), the build PR, for the deck and the
+corrosion cell (and in [`../build-log.md`](../build-log.md)), on byu-vcl#269 for the stirrers:
 
 - the taught stirred-vial positions and rims, tip rack 2's A1 and A2, and the slot mapping;
 - whether each stirrer started from rest three times in a row on its spacer, and after a decap and

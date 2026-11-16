@@ -2,7 +2,8 @@
 
 Started 2026-11-16 for Ben's request on
 [#180](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/180#issuecomment-6929931012):
-a PR of its own for building the copper corrosion setup on the CubXL and fixing what goes wrong.
+a PR of its own, [#264](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264), for building the
+copper corrosion setup on the CubXL and fixing what goes wrong.
 The plan is in [`build-guide.md`](build-guide.md) and the parts are in
 [`bom/README.md`](bom/README.md). This file records what actually happens: what arrived, what
 printed, what fit, every bench measurement, and each problem with its fix.
