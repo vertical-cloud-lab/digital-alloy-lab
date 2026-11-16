@@ -22,12 +22,17 @@ HERE = Path(__file__).resolve().parent
 BOM = HERE.parent / "bom" / "bom.csv"
 
 # Corrosion rows to order now, and why some aren't.
-ORDER = ["B01", "B02", "B03", "B04", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B14", "B15", "B16",
+ORDER = ["B01", "B02", "B03", "B04", "B06", "B07", "B08", "B10", "B11", "B12", "B14", "B15", "B16",
          "B17", "B19", "B20", "B21", "B22", "B26", "B29", "B36", "B38", "B39", "B40", "B41", "B43", "B44",
-         "B45", "B46", "B47"]
+         "B45", "B46"]
 COVERED = {  # the stirrer order (ME 13518) already brought the same part
     "B13": "same insert as the stirrer BOM's item 11 (100 from ME order 13518): the cell takes 12, three more stirrers 12",
     "B18": "JST-XH 4-pin pairs come with the stirrer BOM's item 9 (10 pairs, ME order 13518): the tray takes 2, three more stirrers 3",
+}
+ON_HAND = {  # the lab already has these (Ben on #264, 2026-11-16)
+    "B09": "steel discs: the capper's own; the electrode cap's 25.4 x 0.5 mm recess is the vial cap's",
+    "B47": "#46 drill: BYU's Prototyping lab",
+    "B48": "7 mm or 1/4 in end mill for facing the lid's counterbore ceiling: BYU's Prototyping lab",
 }
 CHECK_STOCK = {"B34": "filament: about 0.42 kg of PLA for the corrosion plates (bom/a1-mini) and 0.1 kg of PETG for the stirrer parts"}
 LEFT_OUT = {
@@ -35,7 +40,7 @@ LEFT_OUT = {
     "B27": "potentiostat", "B28": "potentiostat adapter", "B35": "tips: enough on hand for a few tests",
     "B05": "fallback O-ring cap only", "B30": "optional polish", "B31": "optional polish", "B32": "optional polish",
     "B33": "optional polish", "B37": "aluminium only: add it if the aluminium shakedown runs too",
-    "B42": "only if the ICP lab won't dilute into its own tubes", "B48": "optional: only if the lid's bridged ceiling is rough",
+    "B42": "only if the ICP lab won't dilute into its own tubes",
 }
 
 # Stirrer rows: four compact stirrers need these beyond ME order 13518 (byu-vcl#269 README,
@@ -86,7 +91,7 @@ def main():
         by_vendor[r["vendor"]] += r["price_usd"]
     quotes = [f'{r["id"]} {r["item"][:50]}' for r in out if r["price_usd"] is None]
     totals = {
-        "price_seen": "2026-10-19 (stirrer item 13: 2026-10-29); before shipping and tax",
+        "price_seen": "2026-10-19 (stirrer item 13: 2026-10-29; B39 and B41: 2026-11-16, from Ben); before shipping and tax",
         "rows": len(out),
         "priced_rows": len(priced),
         "unpriced_or_quote": quotes,
@@ -98,6 +103,7 @@ def main():
         "by_vendor_usd": {k: round(v, 2) for k, v in sorted(by_vendor.items(), key=lambda kv: -kv[1])},
         "optional_stirrer_usd": round(sum(s["qty"] * s["unit"] for s in STIR_OPTIONAL), 2),
         "covered_by_stirrer_order": COVERED,
+        "on_hand": ON_HAND,
         "check_stock": CHECK_STOCK,
         "left_out": LEFT_OUT,
     }

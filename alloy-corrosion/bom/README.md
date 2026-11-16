@@ -60,19 +60,21 @@ row per line, for sorting and ordering. **Nothing in it has been printed, bought
 ## What it costs
 
 Sums of [`bom.csv`](bom.csv) by [`bom_totals.py`](bom_totals.py) → [`totals.json`](totals.json).
-Prices were seen on 2026-10-19 and exclude shipping and tax. Rows marked *estimate*, or priced
-only from a search snippet, are flagged in the CSV's `link_check` column.
+Prices were seen on 2026-10-19, except B39 and B41, which Ben priced on 2026-11-16. All exclude
+shipping and tax. Rows priced only from a search snippet are flagged in the CSV's `link_check`
+column. **The lab already has five rows** (Ben, 2026-11-16), so they're listed but not counted:
+the steel discs (B09), inserts (B13), JST pairs (B18), #46 drill (B47) and end mill (B48).
 
 | To start | Cost | What it covers |
 | --- | --- | --- |
-| **Aluminium shakedown, with a borrowed potentiostat** | **$372** | cell and deck hardware, wire, filament and tubes ($288), plus NaCl ($84) |
+| **Aluminium shakedown, with a borrowed potentiostat** | **$332** | cell and deck hardware, wire, filament and tubes ($248), plus NaCl ($84) |
 | 20 µL tips, if Ben's stock has run out | $530 | Opentrons' smallest pack is 9,600 tips |
 | Electrodes, both alloys | $642 | leak-free reference (a $261 budget until quoted), master reference, 0.2 m of Pt wire |
 | Potentiostat, option 1: EmStat Pico module | $593 | module, shielded box, dummy cell; $608 with a USB-serial adapter |
 | Potentiostat, option 2: EmStat Pico dev kit | $1,921 | two channels, cable and dummy cell included; the copper plan's choice |
 | Potentiostat, option 3: MYSTAT build | $228 | parts only; student time; no EIS |
-| **Aluminium, running, with option 1** | **$1,607** | the shakedown row, the electrodes and option 1; not the tips |
-| Copper adds | $1,123 | calibration O-rings and bench cell, seawater, sulfide and its test kit, trace-metal acid, polishing film, two reference bars. Not counted: the C95800 bar (quote) and the PTFE rod (McMaster's price couldn't be read) |
+| **Aluminium, running, with option 1** | **$1,567** | the shakedown row, the electrodes and option 1; not the tips |
+| Copper adds | $1,068 | calibration O-rings and bench cell, seawater, sulfide and its test kit, trace-metal acid, polishing film, two reference bars. Not counted: the C95800 bar (quote) and the PTFE rod (McMaster's price couldn't be read) |
 | Copper, optional | $788 | c1-05's 1 µm diamond and colloidal-silica polish ($269), and metal-free 15 mL tubes if the ICP lab won't dilute into its own ($519) |
 
 There are 19 printed parts, counting the deck keys (P19, 2026-11-09): about 0.5 kg of PETG even at 100 % infill, so one 1 kg spool.
@@ -123,7 +125,9 @@ same rules. The cup block pauses at z 44.6 for its six magnets, same pole up as 
 ## 2. What to buy
 
 One table per group. **For** says which plan needs the row; *option*, *optional* and *fallback* rows
-are not in the totals unless chosen. Two parts substitute for what the CAD draws:
+are not in the totals unless chosen. Rows marked **on hand** are already in the lab (Ben,
+2026-11-16) and aren't in the totals either; their links stay, for reordering. Two parts substitute
+for what the CAD draws:
 - **The cap's spring pins.** B06 replaces the drawn P75 pins. Those are about 1 N each, more than
   twice the cap's 0.4 N limit. *Corrected 2026-11-09 from the datasheet:* the CPG-37 has a Ø2.00 flange
   and a Ø1.50 tail, and stands 2.20 mm free. From below, cut a Ø2.1 counterbore 1.57 mm deep, then
@@ -145,16 +149,16 @@ are not in the totals unless chosen. Two parts substitute for what the CAD draws
 | B06 | Low-force spring pin for the electrode cap: 30 gf at mid-stroke; 0.9 mm stroke; 1.25 mm barrel | 10 | [Digi-Key CPG-37-TH-TR (Same Sky)](https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/CPG-37-TH-TR/25666017) ([alt](https://www.sameskydevices.com/product/interconnect/connectors/pogo-pins/cpg-37-th-tr)) | 8.21 | both | the cap needs <= 0.4 N per pin (copper/cad/README.md), P75 pins are about 1 N. From below, a Ø2.1 counterbore 1.57 mm deep, then Ø1.6 × 1.1 mm for the tail (corrected 2026-11-09; see above), 2 per cap |
 | B07 | Pogo pins P75-B1; 1.0 mm body; 10-pack | 2 | [Adafruit 2430](https://www.adafruit.com/product/2430) | 9.90 | both | tray: one WE pin per pocket and two pad pins per station (12), one in the bench cell clamp, spring force not stated (about 1 N for P75s): fine here, not on the cap, back … |
 | B08 | NdFeB disc magnets 4 x 2 mm N52; 250-pack | 1 | [totalElement D4X2MMN52-250PK](https://totalelement.com/products/4mm-x-2mm-neodymium-rare-earth-permanent-disc-magnets-n52-250-pack) ([alt](https://www.supermagnete.de/eng/disc-magnets-neodymium/disc-magnet-4mm-2mm_S-04-02-N)) | 24.99 | both | two per lid and two per cup: 20, N52 is about 15% stronger than the N45 cad_check assumed: the cap still lifts with a wide margin, supermagnete does not ship outside … |
-| B09 | Steel discs 1 in x 1 mm with 3M adhesive; 50-pack | 1 | [totalElement SP13M-50PK](https://totalelement.com/products/1-inch-steel-disc-with-3m-adhesive-blank-metal-strike-plates-50-pack) ([alt](https://totalelement.com/products/1-inch-steel-disc-blank-metal-strike-plates-250-pack)) | 27.79 | both | the electrode cap's magnet target (1.0 mm: 22.8 N of pull at contact) and the vial caps' discs, plain 250-pack is $37.99 |
+| B09 | Steel discs 1 in x 1 mm with 3M adhesive; 50-pack | 1 | [totalElement SP13M-50PK](https://totalelement.com/products/1-inch-steel-disc-with-3m-adhesive-blank-metal-strike-plates-50-pack) ([alt](https://totalelement.com/products/1-inch-steel-disc-blank-metal-strike-plates-250-pack)) | 27.79 (**on hand**) | both | the electrode cap's magnet target (1.0 mm: 22.8 N of pull at contact). **On hand (Ben, 2026-11-16): the capper's discs.** The cap's Ø25.4 × 0.5 mm recess is the one in PANDA-BEAR's `VialCap16mm.step`, so a disc that fits a vial cap fits the electrode cap, with no print change. Measure one's thickness: the pull numbers assume 1.0 mm. A 0.5 mm disc gives about 5.7 N, still 2.3 times the 2.44 N the cap needs, out to a 0.18 mm gap |
 | B10 | Drill rod 3 mm O1 tool steel; 3 ft | 1 | [McMaster-Carr 88625K62](https://www.mcmaster.com/88625K62/) | not read (to buy or lab stock) | both | cut into 2 mm slugs: two per electrode cap (hold-down targets), any 3 mm steel pin works |
 | B11 | Copper foil tape 3M 1181; 1/4 in x 18 yd; conductive adhesive | 1 | [Digi-Key 3M1181A-ND (1181 X 1/4")](https://www.digikey.com/en/products/detail/3m/1181-X-1-4/30708) | 33.93 | both | the reference and counter pads on each lid (lid_pads in copper/cad) |
 | B12 | Brass rod 1/16 in (1.59 mm) x 12 in; 3-pack | 1 | [Ace Hardware K&S 8162](https://www.acehardware.com/departments/hardware/metal-sheets-and-rods/brass-rods/5172754) | 1.99 | both | replaces the drawn 1.6 mm eyelets: cut 6 mm pins and press them through the lid's 1.6 mm holes, solder the pad tail to the top, no 6 mm long 1.6 mm rivet was found |
-| B13 | Heat-set inserts M3 x 5.7 (for a 4.0 mm hole); 100 | 1 | [3DJake ruthex RX-M3x5.7](https://www.3djake.com/ruthex/threaded-insert-m3-100-pieces) ([alt](https://www.amazon.com/dp/B08BCRZZS3)) | 8.43 | both | 2 per station in the tray and 4 in the bench cell, ships from Austria: check US shipping, same part on Amazon B08BCRZZS3 |
+| B13 | Heat-set inserts M3 x 5.7 (for a 4.0 mm hole); 100 | 1 | [3DJake ruthex RX-M3x5.7](https://www.3djake.com/ruthex/threaded-insert-m3-100-pieces) ([alt](https://www.amazon.com/dp/B08BCRZZS3)) | 8.43 (**on hand**) | both | 2 per station in the tray and 4 in the bench cell. **On hand (Ben, 2026-11-16):** the stir modules' insert, the same ruthex RX-M3x5.7 (Amazon B08BCRZZS3; 100 in ME order 13518) for the same Ø4.0 mm hole, so no print change |
 | B14 | Socket head cap screws M3 x 8; 18-8 stainless; 100 | 1 | [McMaster-Carr 91292A112](https://www.mcmaster.com/91292A112/) | 5.45 | both | 2 per lid, 4 for the bench cell (the clamp's 5 mm counterbores make M3 x 8 right for both) |
 | B15 | Wire-wrap wire 30 AWG; 200 m | 1 | [Adafruit 1446](https://www.adafruit.com/product/1446) | 7.50 | both | inside the cap: reference and coil leads to the pin tails, Adafruit does not say Kynar |
 | B16 | Silicone hookup wire 26 AWG; 25 ft | 1 | [Adafruit 2517](https://www.adafruit.com/product/2517) | 4.95 | both | the tray's bus channels |
 | B17 | Shielded cable 4 x 24 AWG with foil and drain (Belden 9534); per foot | 3 | [ShowMeCables Belden 9534](https://www.showmecables.com/belden-9534-4-conductors-24-awg-shielded-pvc-computer-cable-for-eia-rs-232) | 14.19 | both | tray to potentiostat: WE, RE, CE plus a spare, shield to the potentiostat ground only |
-| B18 | JST-XH compatible 4-pin plug and socket pair | 2 | [Adafruit 4874](https://www.adafruit.com/product/4874) | 1.90 | both | a keyed disconnect at the tray's back edge |
+| B18 | JST-XH compatible 4-pin plug and socket pair | 2 | [Adafruit 4874](https://www.adafruit.com/product/4874) | 1.90 (**on hand**) | both | a keyed disconnect at the tray's back edge. On hand: two of the 10 pairs in ME order 13518 (the stirrer BOM's item 9) |
 
 #### O-rings from Filters4You
 
@@ -223,7 +227,7 @@ Filters4You sells all four sizes in their own-brand "Viton (FKM) 75A", in packs 
 | --- | --- | --- | --- | --- | --- | --- |
 | B34 | PETG filament 1.75 mm; 1 kg (Bambu PETG HF) | 1 | [Bambu Lab US store PETG HF](https://us.store.bambulab.com/products/petg-hf) ([alt](https://www.prusa3d.com/product/prusament-petg-jet-black-1kg/)) | 18.99 | both | the printed parts come to about 0.48 kg even at 100% infill, $15.99 as a refill, many spool colours sold out on 2026-10-19 |
 | B35 | Opentrons OT-2 20 uL tips; refills (9,600 tips: the smallest pack) | 1 | [Opentrons 999-00011](https://opentrons.com/products/opentrons-20-l-tips-160-racks-800-refills) | 530.00 (check stock first) | both | Ben's pipette tests already use these: count what is left first, a night uses about 17-50, loaded by hand into the printed 2 x 15 racks, racked 999-00007 is $850 |
-| B36 | 0.5 mL PP tubes with Safe-Lock caps; 500 (Eppendorf 022363611) | 1 | [Fisher Scientific 05-402-18](https://www.fishersci.com/shop/products/snap-cap-microcentrifuge-safe-lock-tubes/p-194501) | 108.90 | both | one per spot, 7.8 mm under a 2 mm rim (the rack fits these), no trace-metal-certified 0.5 mL tube exists: acid-rinse and run blanks, PCR clean grade 022363719 is the … |
+| B36 | 0.5 mL PP tubes with Safe-Lock caps; 500 (Eppendorf 022363611) | 1 | [Fisher Scientific 05-402-18](https://www.fishersci.com/shop/products/snap-cap-microcentrifuge-safe-lock-tubes/p-194501) | 108.90 | both | one per spot, 7.8 mm under a 2 mm rim (the rack fits these), no trace-metal-certified 0.5 mL tube exists: acid-rinse and run blanks, PCR clean grade 022363719 is the cleanest. **Buy the 500.** BYU Chem Stores sells 100 for $43.86 (Ben, 2026-11-16), but a night takes about 9: six wells, the two S4 blanks and a stock blank. 100 last about 11 nights, and the R1–R3 well-against-bench calibration alone is about 12 nights (108 tubes) |
 | B42 | Metal-free 15 mL PP tubes; 500 (VWR 89049-170) | 1 | [Government Scientific Source 89049-170](https://www.govsci.com/product-detail/VWR--Scientific/89049-170/CS/) ([alt](https://www.vwr.com/us/en/product/4648943/vwr-sterile-metal-free-centrifuge-tubes-pp)) | 519.00 (only if needed) | Cu | only if the ICP lab does not dilute into its own tubes: ask first |
 
 ### Electrolytes and their checks
@@ -232,9 +236,9 @@ Filters4You sells all four sizes in their own-brand "Viton (FKM) 75A", in packs 
 | --- | --- | --- | --- | --- | --- | --- |
 | B37 | Sodium chloride; ACS; 500 g | 1 | [Fisher Scientific S271-500](https://www.fishersci.com/shop/products/sodium-chloride-crystalline-certified-acs-fisher-chemical-6/S271500) ([alt](https://www.sigmaaldrich.com/US/en/product/sigald/s9888)) | 83.65 | Al | 0.6 / 0.06 / 0.006 M stocks, list $116.90, Chem Stores may be cheaper |
 | B38 | ASTM D1141 substitute ocean water WITHOUT heavy metals; 4 L (Ricca 8363-1) | 1 | [Government Scientific Source 8363-1](https://www.govsci.com/product-detail/Ricca--Chemical/8363-1/EA) ([alt](https://www.calpaclab.com/synthetic-seawater-4-liter/rcc-r8363000-4a)) | 135.00 | Cu | D1141's heavy-metal stock adds copper, CP Lab Safety has the same Ricca 4 L at $140.84, Lake Products 1 gal is $99 |
-| B39 | Sodium sulfide nonahydrate; ACS >= 98%; 100 g | 1 | [Sigma-Aldrich 208043-100G](https://www.sigmaaldrich.com/US/en/product/sigald/208043) | 60.00 (estimate) | Cu | the sulfide master stock: fume hood, its own SOP entry before the deck (copper/protocol.md) |
+| B39 | Sodium sulfide nonahydrate; ACS >= 98%; 100 g | 1 | [Sigma-Aldrich 208043-100G](https://www.sigmaaldrich.com/US/en/product/sigald/208043) | 78.10 | Cu | the sulfide master stock: fume hood, its own SOP entry before the deck (copper/protocol.md). Price seen by Ben on 2026-11-16. BYU Chem Stores has 500 g for $102.82. **100 g is plenty:** a 20 mL deck stock at 10 mg/L S takes 1.5 mg, and an opened bottle takes up water and oxidises. Take Chem Stores' only if Sigma's shipping pushes it past $102.82 |
 | B40 | CHEMets sulfide kit K-9510 (methylene blue; 0-1 and 1-10 mg/L; 30 tests) | 1 | [AquaPhoenix Scientific K-9510](https://catalog.aquaphoenixsci.com/products/testing-supplies/test-kits/k-9510-sulfide-total-soluble) | 92.43 | Cu | refill R-9510 is $39.55, Ward's lists the kit at $141.13 |
-| B41 | Nitric acid; TraceMetal grade; 500 mL | 1 | [Government Scientific Source A509P500](https://www.govsci.com/product-detail/Fisher--Scientific/A509P500/EA/) ([alt](https://www.fishersci.com/shop/products/nitric-acid-tracemetal-grade-fisher-chemical-3/A509P500)) | 193.00 | Cu | 1 M acid into every tube at collection, hazmat shipping, Fisher list $238 |
+| B41 | Nitric acid; TraceMetal grade; 500 mL | 1 | **BYU Chem Stores** ([the grade: Fisher A509P500](https://www.fishersci.com/shop/products/nitric-acid-tracemetal-grade-fisher-chemical-3/A509P500)) ([alt](https://www.govsci.com/product-detail/Fisher--Scientific/A509P500/EA/)) | 119.66 | Cu | 1 M acid into every tube at collection. Chem Stores' price (Ben, 2026-11-16), with no hazmat shipping. Government Scientific Source is $193, Fisher's list $238 |
 
 ### Copper reference alloys
 
@@ -249,8 +253,8 @@ Filters4You sells all four sizes in their own-brand "Viton (FKM) 75A", in packs 
 
 | ID | Item | Qty | Buy | Price, USD | For | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| B47 | Drill #46 (2.06 mm), HSS jobber | 1 | [Zoro Chicago-Latrobe 45716](https://www.zoro.com/chicago-latrobe-135-degree-heavy-duty-jobber-length-drill-chicago-latrobe-150asp-steam-oxide-hss-rhsrhc-no-46-45716/i/G1828906/) | 1.99 | both | opens the cap's reference bore to 2.05 mm by hand in a pin vise, no 2.05 mm reamer is sold in the US |
-| B48 | 7 mm flat-bottom drill or 7 mm 2-flute flat end mill | 1 | [Protool (UK) OSG 3332700](https://www.protool-ltd.co.uk/products/3332700) | not read (optional) | both | faces the lid's 7.3 mm counterbore ceiling flat if the bridged layer is rough, any 7 mm flat end mill in a drill press does it |
+| B47 | Drill #46 (2.06 mm), HSS jobber | 1 | [Zoro Chicago-Latrobe 45716](https://www.zoro.com/chicago-latrobe-135-degree-heavy-duty-jobber-length-drill-chicago-latrobe-150asp-steam-oxide-hss-rhsrhc-no-46-45716/i/G1828906/) | 1.99 (**on hand**) | both | opens the cap's reference bore to 2.05 mm by hand in a pin vise, no 2.05 mm reamer is sold in the US. **BYU's Prototyping lab has one** (Ben, 2026-11-16) |
+| B48 | 7 mm flat-bottom drill or 7 mm 2-flute flat end mill | 1 | [Protool (UK) OSG 3332700](https://www.protool-ltd.co.uk/products/3332700) | not read (**on hand**) | both | faces the lid's 7.3 mm counterbore ceiling flat if the bridged layer is rough. **BYU's Prototyping lab has end mills** (Ben, 2026-11-16). Use 7 mm or 1/4 in: a smaller one misses part of the O-ring's band when the ring sits 0.27 mm off centre. Take off 0.05 mm at most: each 0.1 mm off the ceiling cuts the ring's squeeze from 21 % to about 16 % |
 
 ## 3. Already on hand, borrowed or shared
 
@@ -259,7 +263,7 @@ Filters4You sells all four sizes in their own-brand "Viton (FKM) 75A", in packs 
 | H01 | [Electromagnetic capper: PAW-V2 mount; 5 V 50 N electromagnet; IR break-beam; Arduino](https://github.com/vertical-cloud-lab/byu-vcl/blob/f1b4666/modules/electromagnetic-capper/BOM.md) | on the head | built, the electrode cap is picked up exactly like a vial cap |
 | H02 | P20 single-channel pipette with its TMC2209 driver; head camera | on the head |  |
 | H03 | [20 mL VOA vials with septa caps (Fisher 12-100-112; 72)](https://www.fishersci.com/shop/products/clear-voa-glass-vials-0-125in-septa/12-100-112) | on hand | the stocks, about $221 a case if more are needed (unverified) |
-| H04 | [Sylgard 184 (vial-cap fill) and steel discs for the vial caps](https://github.com/vertical-cloud-lab/byu-vcl/blob/f1b4666/modules/electromagnetic-capper/BOM.md) | on hand (capper module) |  |
+| H04 | [Sylgard 184 (vial-cap fill) and steel discs for the vial caps](https://github.com/vertical-cloud-lab/byu-vcl/blob/f1b4666/modules/electromagnetic-capper/BOM.md) | on hand (capper module) | the same 1 in discs go on the electrode cap (B09): its recess is the vial cap's |
 | H05 | [Cyanoacrylate; neutral-cure RTV silicone; solder; 3M 468MP](https://www.testequity.com/product/388CH155-19-155) | lab stock | RTV seals the reference's top in the cap, if none: GC Electronics 19-155 (neutral cure, 3 oz, about $6-9) |
 | H06 | DI water; vacuum jar or desiccator for ageing pieces | on hand |  |
 | H07 | [Polishing consumables for aluminium (SOP #258: SiC papers to 1200; alumina; 0.1 um diamond film)](https://github.com/vertical-cloud-lab/byu-vcl/blob/157ab1e/SOP/sem-eds-polishing-sop.md) | on hand |  |

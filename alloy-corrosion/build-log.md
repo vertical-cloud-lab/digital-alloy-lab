@@ -39,13 +39,20 @@ came to $157 on 2026-11-13, not the $23.96 its pages list.
 | B19 | Leak-free Ag/AgCl reference | The vendor's quote. Ben expects it under $300. Pick the straight 15.5 mm barrel with a bare silver wire (what the BOM and build guide describe), or the custom bent LF-2-Bent90, which needs [`electrode_cap_bent90.stl`](copper/cad/electrode_cap_bent90.stl) instead of the electrode cap on the H2D plate ([`copper/cad/README.md`](copper/cad/README.md)) |
 | B45 | C95800 bar | A quote, with the mill cert |
 | B43, B44 | C71500 and C70600 bars | Ben's question: does the lab already have Cu–Ni stock? |
-| B38, B39, B41 | Substitute ocean water, sodium sulfide, trace-metal nitric acid | Ben's question: can Chem Stores supply smaller amounts? B39 and B40 aren't needed until the sulfide nights; the first experiment is in plain seawater |
-| B36 | 0.5 mL Safe-Lock tubes | Ben's question: from Chem Stores? Try a tube in the tube fit strip if it's another brand |
+| B41 | Trace-metal nitric acid, 500 mL | **From BYU Chem Stores**, $119.66 (Ben, 2026-11-16), against $193 shipped as hazmat |
+| B39 | Sodium sulfide nonahydrate | **Sigma's 100 g, $78.10.** Chem Stores' 500 g is $102.82, and 100 g is plenty. Not needed until the sulfide nights: the first experiment is in plain seawater |
+| B36 | 0.5 mL Safe-Lock tubes | **The 500 ($108.90).** Chem Stores' 100 ($43.86) last about 11 nights at 9 a night, and the R1–R3 calibration alone takes about 12. If a tube isn't Eppendorf's, try it in the tube fit strip |
+| B38 | Substitute ocean water | Not quoted by Chem Stores yet; $135 for 4 L from Government Scientific Source |
 | B29 | 0.1 µm diamond lapping film ($265) | Ben's question: does the Prototyping lab have some? |
-| B47 | #46 drill (2.06 mm) | **Not on the list.** It opens the cap's reference bore to 2.05 mm. Find one in the shop, or order it ($1.99) |
-| B09 | Steel discs, 1 in × 1 mm, adhesive | **Not on the list.** The build video counts them as on hand, but the capper's discs are cut to the 16 mm vial caps. The electrode cap's recess takes a full 1 in disc: check, or order B09 ($27.79) |
-| B13, B18 | M3 heat-set inserts, JST-XH pairs | On hand from ME order 13518 (the stirrer order) |
 | B34 | Filament | Check stock: the H2D plate takes 362 g of PLA |
+
+**On hand, so not ordered** (Ben, [2026-11-16](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6930927185)):
+
+| BOM | Item | Where from |
+| --- | --- | --- |
+| B09 | Steel discs, 1 in | The capper's. The electrode cap's Ø25.4 × 0.5 mm recess is the one in PANDA-BEAR's `VialCap16mm.step`, so they fit. Measure the thickness (below) |
+| B13, B18 | M3 heat-set inserts, JST-XH pairs | ME order 13518 (the stirrer order): the same ruthex M3 × 5.7 insert, for the same Ø4.0 mm holes |
+| B47, B48 | #46 drill (2.06 mm), end mill for facing | BYU's Prototyping lab |
 
 ### Printing
 
@@ -81,6 +88,8 @@ Fill in the **Measured** column and log the entry. Each one replaces an estimate
 | O-ring in the lid's counterbore | loose (OD 6.46 mm in Ø7.30): set it on the coupon first | |
 | Brass rod (B12) in the lid's pin holes | 1.588 mm in 1.6 mm holes | |
 | -006 O-ring cross-section, three rings | 1.70–1.85 mm | |
+| A steel disc (B09, the capper's) in the cap's Ø25.4 × 0.5 recess; its thickness | drops in, as on a vial cap; 1.0 mm assumed (a 0.5 mm disc still lifts the cap, with a margin of 2.3) | |
+| Facing the counterbore ceiling with the end mill (B48), only if it's rough | 0.05 mm off at most | |
 
 ### Bench tests ([`build-guide.md` §3](build-guide.md#3-bench-tests-before-the-cap-goes-on-the-deck))
 
@@ -127,6 +136,34 @@ Still open in the design: one well per lid (no offset lid drawn), and the copper
 not rerun for the v2 lid's neck.
 
 ## Log
+
+### 2026-11-16: what the lab has, and Chem Stores' prices
+
+From [Ben's comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6930927185).
+**No print file changes.**
+- **On hand:**
+  - **B09:** the capper's steel discs. PANDA-BEAR's `VialCap16mm.step` has a Ø25.4 × 0.5 mm recess on top,
+    and the electrode cap's recess copies it, so a disc that fits a vial cap fits the electrode
+    cap. *Correction:* the entry below said the capper's discs were cut smaller, for the vial caps.
+    They aren't. The cap's pull numbers assume a 1.0 mm disc, so measure one. At 0.5 mm the
+    electromagnet still pulls about 5.7 N, 2.3 times the 2.44 N the cap needs out to a 0.18 mm gap
+    (`cad_check.py`'s model).
+  - **B13 and B18:** the inserts and JST pairs from ME order 13518.
+  - **B47 and B48:** the #46 drill and an end mill, at BYU's Prototyping lab. Use a 7 mm or 1/4 in
+    end mill, and take 0.05 mm at most off the counterbore's ceiling. Each 0.1 mm cuts the
+    O-ring's squeeze from 21 % to about 16 %.
+- **Chem Stores' prices:**
+  - **B41:** the nitric acid comes from Chem Stores, at $119.66 against $193.
+  - **B39:** Sigma's 100 g ($78.10) rather than Chem Stores' 500 g ($102.82), unless shipping
+    closes the gap.
+  - **B36:** the 500 ($108.90) rather than Chem Stores' 100 ($43.86). A night takes about 9 tubes,
+    so the R1–R3 calibration alone uses about 108.
+- **Totals:** the stirrer order list comes to $1,987.77, down from $2,072.79. The BOM's "copper
+  adds" is now $1,068 and the aluminium shakedown $332.
+- **Files:** `bom/bom.csv`, `bom/README.md`, `bom/bom_totals.py` → `totals.json`,
+  `stirrers/BOM.md`, `stirrers/order_list.py` → `order-list.csv` and `order-totals.json`, and
+  `build-guide.md`. Python couldn't run in that session, so the two JSON files and the order list
+  were edited by hand and the sums checked with awk. Rerun both scripts to confirm.
 
 ### 2026-11-16: the build PR opened
 

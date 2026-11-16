@@ -1,7 +1,8 @@
 """Sum bom.csv into the totals the README quotes. Writes totals.json.
 
 Rows with no price (quotes, McMaster pages the runner could not read) are listed, not guessed.
-The three potentiostat options are summed separately, since only one is bought.
+The three potentiostat options are summed separately, since only one is bought. Rows whose status
+starts with "on hand" (the lab has the part; 2026-11-16) are listed, not counted.
 
     python bom_totals.py
 """
@@ -20,13 +21,17 @@ def main():
     rows = list(csv.DictReader((HERE / "bom.csv").open()))
     buy = [r for r in rows if r["kind"] == "buy"]
     price = lambda r: float(r["ext_price_usd"]) if r["ext_price_usd"] else None
+    on_hand = lambda r: r["status"].startswith("on hand")
     out = {"printed_parts": sum(1 for r in rows if r["kind"] == "print"),
-           "buy_rows": len(buy), "unpriced": [f"{r['id']} {r['item'][:50]}" for r in buy if price(r) is None]}
+           "buy_rows": len(buy),
+           "unpriced": [f"{r['id']} {r['item'][:50]}" for r in buy if price(r) is None and not on_hand(r)],
+           "on_hand_not_counted": [f"{r['id']} {r['item'][:50]}" for r in buy if on_hand(r)]}
 
     def total(sel):
         return round(sum(price(r) or 0 for r in buy if sel(r)), 2)
 
-    core = lambda r: r["id"] not in OPTION and r["status"] not in ("optional", "fallback", "only if needed")
+    core = lambda r: (r["id"] not in OPTION and r["status"] not in ("optional", "fallback", "only if needed")
+                      and not on_hand(r))
     out["core"] = {
         "both_hardware_and_consumables_excl_tips": total(lambda r: core(r) and r["for"] == "both" and r["group"] not in ("electrodes",) and r["id"] != "B35"),
         "tips_if_none_on_hand": total(lambda r: r["id"] == "B35"),

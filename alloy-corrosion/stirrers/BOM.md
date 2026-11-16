@@ -16,27 +16,27 @@ Porter's EZstat-Pro is set up) and the 20 µL tips (enough for a few tests).
   at checkout. Several vendors block scripts, so their prices came from search snippets (the
   `link_check` column of `../bom/bom.csv` says which).
 
-**Nothing in this list has been ordered.**
+**Most of it was ordered on 9 and 11 November** (ME orders 13669 and 13688).
+[`../build-log.md`](../build-log.md#orders) has which rows, and what's still to get.
 
 ## Total
 
 | | Cost |
 | --- | --- |
-| Corrosion setup: cell, deck, electrodes, chemicals, reference alloys, polishing film, tubes | **$2,025.53** |
+| Corrosion setup: cell, deck, electrodes, chemicals, reference alloys, polishing film, tubes | **$1,940.51** |
 | Four stir modules, beyond what ME order 13518 brought | **$47.26** ($40.27 if the 100 nF kit, ST4, is already ordered) |
-| **To order now** | **$2,072.79**, plus three rows with no price yet (below) |
+| **The whole list** | **$1,987.77**, plus three rows with no price yet (below) |
 
-Of that, $261 is a placeholder for the leak-free reference (B19) until it's quoted, and $60 for
-the sodium sulfide (B39) is an estimate. Still to price: the C95800 bar (B45, quote only), and the
-drill rod (B10) and PTFE rod (B46), whose McMaster prices couldn't be read.
+Of that, $261 is a placeholder for the leak-free reference (B19) until it's quoted. The sodium
+sulfide (B39) and nitric acid (B41) are at the prices Ben got on 16 November. Still to price: the
+C95800 bar (B45, quote only), and the drill rod (B10) and PTFE rod (B46), whose McMaster prices
+couldn't be read. **Not on the list, because the lab has them** (Ben, 2026-11-16): the steel discs
+(B09), the #46 drill (B47) and an end mill (B48), as well as the inserts (B13) and JST pairs (B18).
 
 ## 1. Order, by vendor
 
 | ID | Item | Qty | Part number and link | Price, USD |
 | --- | --- | --- | --- | --- |
-| **Government Scientific Source** | | | | **328.00** |
-| B38 | ASTM D1141 substitute ocean water **without** heavy metals, 4 L (Ricca 8363-1) | 1 | [8363-1](https://www.govsci.com/product-detail/Ricca--Chemical/8363-1/EA) | 135.00 |
-| B41 | Nitric acid, TraceMetal grade, 500 mL | 1 | [A509P500](https://www.govsci.com/product-detail/Fisher--Scientific/A509P500/EA/) | 193.00 (hazmat shipping) |
 | **OnlineMetals** | | | | **326.50** |
 | B43 | C71500 (70/30 Cu–Ni) round bar, 1 in × 12 in | 1 | [mp-00059842](https://www.onlinemetals.com/en/buy/copper/1-inch-od-copper-nickel-round-bar-715/pid/mp-00059842) | 121.34 |
 | B44 | C70600 (90/10 Cu–Ni) round bar, 1 in | 1 | [mp-00068387](https://www.onlinemetals.com/en/buy/copper-nickel-round-bar) | 205.16 |
@@ -48,15 +48,16 @@ drill rod (B10) and PTFE rod (B46), whose McMaster prices couldn't be read.
 | B21 | Platinum wire, 0.25 mm, 99.95 %, 0.2 m | 1 | [PT543404](https://www.advent-rm.com/en-gb/products/pure-metals/platinum/form/wire/line/pt5434) | 216.00 |
 | **Ossila** | | | | **165.00** |
 | B20 | Master reference, fritted Ag/AgCl, 6 mm glass body | 1 | [C2015B1](https://www.ossila.com/products/ag-agcl-reference-electrode) | 165.00 |
+| **Government Scientific Source** | | | | **135.00** |
+| B38 | ASTM D1141 substitute ocean water **without** heavy metals, 4 L (Ricca 8363-1) | 1 | [8363-1](https://www.govsci.com/product-detail/Ricca--Chemical/8363-1/EA) | 135.00 |
+| **BYU Chem Stores** | | | | **119.66** |
+| B41 | Nitric acid, TraceMetal grade, 500 mL | 1 | Chem Stores ([the grade: Fisher A509P500](https://www.fishersci.com/shop/products/nitric-acid-tracemetal-grade-fisher-chemical-3/A509P500)) | 119.66 (Ben, 2026-11-16) |
 | **Fisher Scientific** | | | | **108.90** |
-| B36 | 0.5 mL PP tubes with Safe-Lock caps, 500 (Eppendorf 022363611) | 1 | [05-402-18](https://www.fishersci.com/shop/products/snap-cap-microcentrifuge-safe-lock-tubes/p-194501) | 108.90 |
+| B36 | 0.5 mL PP tubes with Safe-Lock caps, **500** (Eppendorf 022363611) | 1 | [05-402-18](https://www.fishersci.com/shop/products/snap-cap-microcentrifuge-safe-lock-tubes/p-194501) | 108.90 |
 | **AquaPhoenix Scientific** | | | | **92.43** |
 | B40 | CHEMets sulfide kit K-9510 (methylene blue, 0–1 and 1–10 mg/L, 30 tests) | 1 | [K-9510](https://catalog.aquaphoenixsci.com/products/testing-supplies/test-kits/k-9510-sulfide-total-soluble) | 92.43 |
-| **Sigma-Aldrich** | | | | **60.00** |
-| B39 | Sodium sulfide nonahydrate, ACS ≥ 98 %, 100 g | 1 | [208043-100G](https://www.sigmaaldrich.com/US/en/product/sigald/208043) | 60.00 (estimate) |
-| **totalElement** | | | | **52.78** |
-| B08 | NdFeB disc magnets, 4 × 2 mm, N52, 250 | 1 | [D4X2MMN52-250PK](https://totalelement.com/products/4mm-x-2mm-neodymium-rare-earth-permanent-disc-magnets-n52-250-pack) | 24.99 |
-| B09 | Steel discs, 1 in × 1 mm, with 3M adhesive, 50 | 1 | [SP13M-50PK](https://totalelement.com/products/1-inch-steel-disc-with-3m-adhesive-blank-metal-strike-plates-50-pack) | 27.79 |
+| **Sigma-Aldrich** | | | | **78.10** |
+| B39 | Sodium sulfide nonahydrate, ACS ≥ 98 %, 100 g | 1 | [208043-100G](https://www.sigmaaldrich.com/US/en/product/sigald/208043) | 78.10 (Ben, 2026-11-16) |
 | **The O-Ring Store** | | | | **52.00** |
 | B01 | FKM O-ring AS568-006 (2.90 ID × 1.78), FDA brown Viton 75, 100 | 1 | [FDABV75006](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38308) | 9.00 |
 | B02 | FKM O-ring AS568-008 (4.47 ID), 100 | 1 | [FDABV75008](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38310) | 10.00 |
@@ -71,6 +72,8 @@ drill rod (B10) and PTFE rod (B46), whose McMaster prices couldn't be read.
 | B06 | Low-force spring pin for the electrode cap (Same Sky CPG-37-TH-TR) | 10 | [CPG-37-TH-TR](https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/CPG-37-TH-TR/25666017) | 8.21 |
 | B11 | Copper foil tape 3M 1181, 1/4 in × 18 yd, conductive adhesive | 1 | [3M1181A-ND](https://www.digikey.com/en/products/detail/3m/1181-X-1-4/30708) | 33.93 |
 | B26 | Dummy cell: 10 kΩ 0.1 % resistor and 1 µF film capacitor | 1 + 1 | [MFP-25BRD52-10K](https://www.digikey.com/en/products/detail/yageo/MFP-25BRD52-10K/2058797), [ECQ-E1105KF](https://www.digikey.com/en/products/detail/panasonic-industry/ECQ-E1105KF/56380) | 1.81 |
+| **totalElement** | | | | **24.99** |
+| B08 | NdFeB disc magnets, 4 × 2 mm, N52, 250 | 1 | [D4X2MMN52-250PK](https://totalelement.com/products/4mm-x-2mm-neodymium-rare-earth-permanent-disc-magnets-n52-250-pack) | 24.99 |
 | **Adafruit** | | | | **22.35** |
 | B07 | Pogo pins P75-B1, 10-pack | 2 | [2430](https://www.adafruit.com/product/2430) | 9.90 |
 | B15 | Wire-wrap wire, 30 AWG, 200 m | 1 | [1446](https://www.adafruit.com/product/1446) | 7.50 |
@@ -85,15 +88,27 @@ drill rod (B10) and PTFE rod (B46), whose McMaster prices couldn't be read.
 | B46 | PTFE rod, 3/4 in, 1 ft (the S4 blank) | 1 | [8546K15](https://www.mcmaster.com/8546K15/) | not read |
 | **Ace Hardware** | | | | **1.99** |
 | B12 | Brass rod, 1/16 in × 12 in, 3-pack | 1 | [K&S 8162](https://www.acehardware.com/departments/hardware/metal-sheets-and-rods/brass-rods/5172754) | 1.99 |
-| **Zoro** | | | | **1.99** |
-| B47 | Drill #46 (2.06 mm), HSS jobber | 1 | [Chicago-Latrobe 45716](https://www.zoro.com/chicago-latrobe-135-degree-heavy-duty-jobber-length-drill-chicago-latrobe-150asp-steam-oxide-hss-rhsrhc-no-46-45716/i/G1828906/) | 1.99 |
 | **Atlas Bronze** | | | | quote |
 | B45 | C95800 nickel-aluminium bronze, continuous-cast bar about 1 in (ASTM B505); ask for the mill cert | 1 | [C95800](https://www.atlasbronze.com/C95800-Product-Sheet-s/473874.htm) | **quote** |
 
 Notes on the order:
 
 - **Start the long ones first:** the B19 quote (custom length; what to ask for is in
-  [`../bom/README.md`](../bom/README.md#electrodes)), the B45 quote, and B41, which ships as hazmat.
+  [`../bom/README.md`](../bom/README.md#electrodes)) and the B45 quote.
+- **BYU Chem Stores' prices (Ben, 2026-11-16):**
+  - **Nitric acid (B41): buy it there.** $119.66 for 500 mL of TraceMetal grade, against $193,
+    and no hazmat shipping.
+  - **Sodium sulfide (B39): Sigma's 100 g ($78.10), not Chem Stores' 500 g ($102.82).** A 20 mL
+    deck stock at 10 mg/L S takes 1.5 mg of the salt, so 100 g is plenty. An opened bottle takes up
+    water and oxidises, so most of a 500 g bottle would go bad before it was used. Take Chem Stores'
+    only if Sigma's shipping pushes it past $102.82.
+  - **Tubes (B36): the 500, not Chem Stores' 100 for $43.86.** A night takes about 9 tubes: six
+    wells, the fixture and carry-over blanks on S4, and a stock blank
+    ([`../copper/protocol.md` §4 and §6](../copper/protocol.md#6-icp-ms-the-sample-and-its-blanks)).
+    100 last about 11 nights. The first experiment, R1–R3 wells against the bench cell, is about
+    12 nights (108 tubes). Two 100-packs ($87.72) would get through it; the 500 costs $21 more and
+    covers about 55 nights. If Chem Stores' tube isn't Eppendorf's, try one in the tube
+    fit strip before printing the rack.
 - **B01–B04 stay with The O-Ring Store's 100-packs.** Filters4You's own-brand FKM 75A was checked
   as a substitute on 2026-11-11, but on 2026-11-13 their full quote for the four sizes came to $157,
   not the $23.96 their pages list
@@ -139,7 +154,10 @@ second set of compact prints (from 2026-10-30) is unassembled.
 - 20 µL tips, for a few tests;
 - the capper, the P20, the head camera and the Uno on the head;
 - 20 mL VOA vials (six on the deck now: four stirred stocks, DI water and acid);
-- Sylgard 184 and steel discs for the magnetic vial caps;
+- Sylgard 184, and the steel discs for the magnetic vial caps. The same discs go on the electrode
+  cap (B09): its Ø25.4 × 0.5 mm recess is the one in PANDA-BEAR's vial cap;
+- at BYU's Prototyping lab, the #46 drill (B47) and an end mill (B48) for facing the lids'
+  counterbores;
 - cyanoacrylate, neutral-cure RTV, hot glue, heat shrink, solder;
 - male–male jumper wires (capper BOM item 10) for the hub's leads into the Uno headers;
 - DI water and a desiccator.
@@ -176,5 +194,5 @@ compact set (five parts, 28 cm³) took 27 g and 72 min on the A1 mini.
 | B30–B33 | Optional 1 µm diamond and colloidal-silica polish for copper |
 | B37 | Aluminium only |
 | B42 | Only if the ICP lab won't dilute into its own tubes. Ask first |
-| B48 | Only if the lid's bridged counterbore ceiling comes out rough |
+| B09, B47, B48 | On hand (Ben, 2026-11-16): the capper's steel discs, and the Prototyping lab's #46 drill and end mill (section 2) |
 | An XIAO RP2040 per stirrer | Each stirrer would get its own USB, and could stir during a CubOS run. Not needed with the Uno; see the [build guide](BUILD.md#5-the-four-stirrer-firmware) |
