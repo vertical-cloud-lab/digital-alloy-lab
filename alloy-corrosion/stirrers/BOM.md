@@ -23,12 +23,12 @@ Porter's EZstat-Pro is set up) and the 20 µL tips (enough for a few tests).
 
 | | Cost |
 | --- | --- |
-| Corrosion setup: cell, deck, electrodes, chemicals, reference alloys, polishing film, tubes | **$1,940.51** |
+| Corrosion setup: cell, deck, electrodes, chemicals, reference alloys, polishing film, tubes | **$1,979.45** |
 | Four stir modules, beyond what ME order 13518 brought | **$47.26** ($40.27 if the 100 nF kit, ST4, is already ordered) |
-| **The whole list** | **$1,987.77**, plus three rows with no price yet (below) |
+| **The whole list** | **$2,026.71**, plus three rows with no price yet (below) |
 
-Of that, $261 is a placeholder for the leak-free reference (B19) until it's quoted. The sodium
-sulfide (B39) and nitric acid (B41) are at the prices Ben got on 16 November. Still to price: the
+Of that, $261 is a placeholder for the leak-free reference (B19) until it's quoted. The tubes
+(B36), sodium sulfide (B39) and nitric acid (B41) are at the prices Ben got on 16 November. Still to price: the
 C95800 bar (B45, quote only), and the drill rod (B10) and PTFE rod (B46), whose McMaster prices
 couldn't be read. **Not on the list, because the lab has them** (Ben, 2026-11-16): the steel discs
 (B09), the #46 drill (B47) and an end mill (B48), as well as the inserts (B13) and JST pairs (B18).
@@ -48,12 +48,12 @@ couldn't be read. **Not on the list, because the lab has them** (Ben, 2026-11-16
 | B21 | Platinum wire, 0.25 mm, 99.95 %, 0.2 m | 1 | [PT543404](https://www.advent-rm.com/en-gb/products/pure-metals/platinum/form/wire/line/pt5434) | 216.00 |
 | **Ossila** | | | | **165.00** |
 | B20 | Master reference, fritted Ag/AgCl, 6 mm glass body | 1 | [C2015B1](https://www.ossila.com/products/ag-agcl-reference-electrode) | 165.00 |
+| **Fisher Scientific** | | | | **147.84** |
+| B36 | 0.5 mL PP tubes with Safe-Lock caps, **Eppendorf Quality, colorless, 500** (Eppendorf 022363611) | 1 | [05-402-18](https://www.fishersci.com/shop/products/snap-cap-microcentrifuge-safe-lock-tubes/p-194501) | 147.84 (Ben, 2026-11-16) |
 | **Government Scientific Source** | | | | **135.00** |
 | B38 | ASTM D1141 substitute ocean water **without** heavy metals, 4 L (Ricca 8363-1) | 1 | [8363-1](https://www.govsci.com/product-detail/Ricca--Chemical/8363-1/EA) | 135.00 |
 | **BYU Chem Stores** | | | | **119.66** |
 | B41 | Nitric acid, TraceMetal grade, 500 mL | 1 | Chem Stores ([the grade: Fisher A509P500](https://www.fishersci.com/shop/products/nitric-acid-tracemetal-grade-fisher-chemical-3/A509P500)) | 119.66 (Ben, 2026-11-16) |
-| **Fisher Scientific** | | | | **108.90** |
-| B36 | 0.5 mL PP tubes with Safe-Lock caps, **500** (Eppendorf 022363611) | 1 | [05-402-18](https://www.fishersci.com/shop/products/snap-cap-microcentrifuge-safe-lock-tubes/p-194501) | 108.90 |
 | **AquaPhoenix Scientific** | | | | **92.43** |
 | B40 | CHEMets sulfide kit K-9510 (methylene blue, 0–1 and 1–10 mg/L, 30 tests) | 1 | [K-9510](https://catalog.aquaphoenixsci.com/products/testing-supplies/test-kits/k-9510-sulfide-total-soluble) | 92.43 |
 | **Sigma-Aldrich** | | | | **78.10** |
@@ -102,13 +102,20 @@ Notes on the order:
     deck stock at 10 mg/L S takes 1.5 mg of the salt, so 100 g is plenty. An opened bottle takes up
     water and oxidises, so most of a 500 g bottle would go bad before it was used. Take Chem Stores'
     only if Sigma's shipping pushes it past $102.82.
-  - **Tubes (B36): the 500, not Chem Stores' 100 for $43.86.** A night takes about 9 tubes: six
+  - **Tubes (B36): Fisher's 500 in the plain Eppendorf Quality grade, colorless (05-402-18,
+    $147.84 on 2026-11-16), not Chem Stores' 100 for $43.86.** A night takes about 9 tubes: six
     wells, the fixture and carry-over blanks on S4, and a stock blank
     ([`../copper/protocol.md` §4 and §6](../copper/protocol.md#6-icp-ms-the-sample-and-its-blanks)).
     100 last about 11 nights. The first experiment, R1–R3 wells against the bench cell, is about
-    12 nights (108 tubes). Two 100-packs ($87.72) would get through it; the 500 costs $21 more and
-    covers about 55 nights. If Chem Stores' tube isn't Eppendorf's, try one in the tube
-    fit strip before printing the rack.
+    12 nights (108 tubes). Two 100-packs ($87.72) would get through it. The 500 costs $60 more,
+    but at $0.30 a tube against $0.44 it is the cheaper buy once the work needs more than 300
+    tubes (about 33 nights), and it covers about 55. If Chem Stores' tube isn't Eppendorf's, try
+    one in the tube fit strip before printing the rack.
+    - **The grade.** PCR clean ($193) and Forensic DNA Grade ($188) add lot certificates for DNA,
+      DNase, RNase and PCR inhibitors, none for metals. Eppendorf's typical trace-metal values for
+      this tube put its copper under an eighth of what the ICP-MS can see in one of our tubes
+      ([`../bom/README.md`](../bom/README.md), row B36). Avoid colored tubes: blue and green
+      plastics are usually tinted with copper phthalocyanine.
 - **B01–B04 stay with The O-Ring Store's 100-packs.** Filters4You's own-brand FKM 75A was checked
   as a substitute on 2026-11-11, but on 2026-11-13 their full quote for the four sizes came to $157,
   not the $23.96 their pages list

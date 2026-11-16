@@ -60,20 +60,20 @@ row per line, for sorting and ordering. **Nothing in it has been printed, bought
 ## What it costs
 
 Sums of [`bom.csv`](bom.csv) by [`bom_totals.py`](bom_totals.py) → [`totals.json`](totals.json).
-Prices were seen on 2026-10-19, except B39 and B41, which Ben priced on 2026-11-16. All exclude
+Prices were seen on 2026-10-19, except B36, B39 and B41, which Ben priced on 2026-11-16. All exclude
 shipping and tax. Rows priced only from a search snippet are flagged in the CSV's `link_check`
 column. **The lab already has five rows** (Ben, 2026-11-16), so they're listed but not counted:
 the steel discs (B09), inserts (B13), JST pairs (B18), #46 drill (B47) and end mill (B48).
 
 | To start | Cost | What it covers |
 | --- | --- | --- |
-| **Aluminium shakedown, with a borrowed potentiostat** | **$332** | cell and deck hardware, wire, filament and tubes ($248), plus NaCl ($84) |
+| **Aluminium shakedown, with a borrowed potentiostat** | **$371** | cell and deck hardware, wire, filament and tubes ($287), plus NaCl ($84) |
 | 20 µL tips, if Ben's stock has run out | $530 | Opentrons' smallest pack is 9,600 tips |
 | Electrodes, both alloys | $642 | leak-free reference (a $261 budget until quoted), master reference, 0.2 m of Pt wire |
 | Potentiostat, option 1: EmStat Pico module | $593 | module, shielded box, dummy cell; $608 with a USB-serial adapter |
 | Potentiostat, option 2: EmStat Pico dev kit | $1,921 | two channels, cable and dummy cell included; the copper plan's choice |
 | Potentiostat, option 3: MYSTAT build | $228 | parts only; student time; no EIS |
-| **Aluminium, running, with option 1** | **$1,567** | the shakedown row, the electrodes and option 1; not the tips |
+| **Aluminium, running, with option 1** | **$1,606** | the shakedown row, the electrodes and option 1; not the tips |
 | Copper adds | $1,068 | calibration O-rings and bench cell, seawater, sulfide and its test kit, trace-metal acid, polishing film, two reference bars. Not counted: the C95800 bar (quote) and the PTFE rod (McMaster's price couldn't be read) |
 | Copper, optional | $788 | c1-05's 1 µm diamond and colloidal-silica polish ($269), and metal-free 15 mL tubes if the ICP lab won't dilute into its own ($519) |
 
@@ -227,7 +227,7 @@ Filters4You sells all four sizes in their own-brand "Viton (FKM) 75A", in packs 
 | --- | --- | --- | --- | --- | --- | --- |
 | B34 | PETG filament 1.75 mm; 1 kg (Bambu PETG HF) | 1 | [Bambu Lab US store PETG HF](https://us.store.bambulab.com/products/petg-hf) ([alt](https://www.prusa3d.com/product/prusament-petg-jet-black-1kg/)) | 18.99 | both | the printed parts come to about 0.48 kg even at 100% infill, $15.99 as a refill, many spool colours sold out on 2026-10-19 |
 | B35 | Opentrons OT-2 20 uL tips; refills (9,600 tips: the smallest pack) | 1 | [Opentrons 999-00011](https://opentrons.com/products/opentrons-20-l-tips-160-racks-800-refills) | 530.00 (check stock first) | both | Ben's pipette tests already use these: count what is left first, a night uses about 17-50, loaded by hand into the printed 2 x 15 racks, racked 999-00007 is $850 |
-| B36 | 0.5 mL PP tubes with Safe-Lock caps; 500 (Eppendorf 022363611) | 1 | [Fisher Scientific 05-402-18](https://www.fishersci.com/shop/products/snap-cap-microcentrifuge-safe-lock-tubes/p-194501) | 108.90 | both | one per spot, 7.8 mm under a 2 mm rim (the rack fits these), no trace-metal-certified 0.5 mL tube exists: acid-rinse and run blanks, PCR clean grade 022363719 is the cleanest. **Buy the 500.** BYU Chem Stores sells 100 for $43.86 (Ben, 2026-11-16), but a night takes about 9: six wells, the two S4 blanks and a stock blank. 100 last about 11 nights, and the R1–R3 well-against-bench calibration alone is about 12 nights (108 tubes) |
+| B36 | 0.5 mL PP tubes with Safe-Lock caps; Eppendorf Quality; colorless; 500 (Eppendorf 022363611) | 1 | [Fisher Scientific 05-402-18](https://www.fishersci.com/shop/products/snap-cap-microcentrifuge-safe-lock-tubes/p-194501) | 147.84 (Ben, 2026-11-16) | both | one per spot, 7.8 mm under a 2 mm rim (the rack fits these). **Eppendorf Quality is enough for ICP-MS** (Ben asked, 2026-11-16). Eppendorf's typical values for this tube, filled with concentrated HNO₃ for 1 h, are Cu below 0.1 µg/L and Ni and Mn below 0.05 µg/L ([certificate 0012602500-04](https://cdn.shopify.com/s/files/1/2245/7875/files/Eppendorf_Consumables_Certificate-Quality-Conformity-Eppendorf-Tubes-Trace-metal.pdf), 2020): under 0.05 ng of Cu a tube, against 290–580 ng from a spot. PCR clean ($193) and Forensic DNA Grade ($188) add lot certificates for DNA, DNase, RNase and PCR inhibitors, not for metals ([Eppendorf's purity grades](https://usascientific.com/cms/files/Epp_Purity.pdf)). Not a colored tube: blue and green plastics are usually tinted with copper phthalocyanine. **Buy the 500**, at $0.30 a tube. BYU Chem Stores sells 100 for $43.86 ($0.44 a tube; Ben, 2026-11-16), but a night takes about 9: six wells, the two S4 blanks and a stock blank. 100 last about 11 nights, and the R1–R3 well-against-bench calibration alone is about 12 nights (108 tubes) |
 | B42 | Metal-free 15 mL PP tubes; 500 (VWR 89049-170) | 1 | [Government Scientific Source 89049-170](https://www.govsci.com/product-detail/VWR--Scientific/89049-170/CS/) ([alt](https://www.vwr.com/us/en/product/4648943/vwr-sterile-metal-free-centrifuge-tubes-pp)) | 519.00 (only if needed) | Cu | only if the ICP lab does not dilute into its own tubes: ask first |
 
 ### Electrolytes and their checks
@@ -288,7 +288,9 @@ Filters4You sells all four sizes in their own-brand "Viton (FKM) 75A", in packs 
   - supermagnete doesn't ship outside Europe.
   - The EmStat Pico dev kit is now $1,921, not about $1,800.
   - Sigma 267201 is 0.5 mm Pt wire; the 0.25 mm wire is Sigma 349402.
-  - No 0.5 mL tube with a trace-metal certificate turned up.
+  - No 0.5 mL tube with a trace-metal certificate turned up. *Later (2026-11-16):* Eppendorf
+    publishes typical trace-metal values for its Safe-Lock tubes, not lot by lot, and they are far
+    below what a spot releases (B36).
   - C95800 is sold only by quote. Don't substitute C63000 or C95400.
 - **CAD.** [`cad/cad_build_parts.py`](cad/cad_build_parts.py) builds every new part from the copper cell's own
   parameters, so the boss, bore and magnet layout match. I checked by intersecting each seated

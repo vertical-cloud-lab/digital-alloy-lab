@@ -14,7 +14,7 @@
   "B48 7 mm flat-bottom drill or 7 mm 2-flute flat end mi"
  ],
  "core": {
-  "both_hardware_and_consumables_excl_tips": 248.0,
+  "both_hardware_and_consumables_excl_tips": 286.94,
   "tips_if_none_on_hand": 530.0,
   "electrodes_both": 642.0,
   "aluminium_only": 83.65,
@@ -28,7 +28,7 @@
   "3_mystat_parts_and_dummy_cell": 227.81
  },
  "aluminium_start": {
-  "phase_A_shakedown_borrowed_potentiostat": 331.65,
-  "plus_electrodes_and_option_1": 1567.1
+  "phase_A_shakedown_borrowed_potentiostat": 370.59,
+  "plus_electrodes_and_option_1": 1606.04
  }
 }

@@ -304,6 +304,14 @@ calibration is the first experiment and a result in its own right.
   HNO₃, then an ultrapure-water rinse). Weigh each tube empty and again after collection, on a
   0.1 mg balance, so the recovered volume and the dilution are known. O-ring compounds carry
   metal-oxide fillers, and the fixture blank measures what they add.
+  - **The plain grade will do (2026-11-16).** Eppendorf's typical values for its 0.5 mL Safe-Lock
+    tube (B36), filled with concentrated HNO₃ for 1 h, are below 0.1 µg/L of Cu and 0.05 µg/L of Ni
+    and Mn ([certificate 0012602500-04](https://cdn.shopify.com/s/files/1/2245/7875/files/Eppendorf_Consumables_Certificate-Quality-Conformity-Eppendorf-Tubes-Trace-metal.pdf)).
+    That is under 0.05 ng of Cu a tube, an eighth of the 0.42 ng the ICP-MS can see in one
+    (0.13 µg/L in 3.2 mL). The dearer grades certify DNA, DNase, RNase and PCR inhibitors, not metals.
+  - **So the pre-leach may not be needed.** Decide from two tube blanks on the first night: tubes
+    straight from the bag, with 300 µL of DI water and step 12's acid, open in the rack all night
+    ([`../build-log.md`, Measurements to make](../build-log.md#measurements-to-make)).
 - **Analysis: ICP-MS with a collision cell, after a 10× dilution** in dilute HNO₃ ([c1-03]). The
   tube holds about 16 g/L of salts, and the dilution takes it to 1.6 g/L. ⁴⁰Ar²³Na⁺ sits on ⁶³Cu,
   so use the collision cell or read ⁶⁵Cu ([c1-03]). ICP-OES would need about 2 mL, which means

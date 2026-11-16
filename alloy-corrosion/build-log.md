@@ -41,7 +41,7 @@ came to $157 on 2026-11-13, not the $23.96 its pages list.
 | B43, B44 | C71500 and C70600 bars | Ben's question: does the lab already have Cu–Ni stock? |
 | B41 | Trace-metal nitric acid, 500 mL | **From BYU Chem Stores**, $119.66 (Ben, 2026-11-16), against $193 shipped as hazmat |
 | B39 | Sodium sulfide nonahydrate | **Sigma's 100 g, $78.10.** Chem Stores' 500 g is $102.82, and 100 g is plenty. Not needed until the sulfide nights: the first experiment is in plain seawater |
-| B36 | 0.5 mL Safe-Lock tubes | **The 500 ($108.90).** Chem Stores' 100 ($43.86) last about 11 nights at 9 a night, and the R1–R3 calibration alone takes about 12. If a tube isn't Eppendorf's, try it in the tube fit strip |
+| B36 | 0.5 mL Safe-Lock tubes | **Fisher's 500, Eppendorf Quality, colorless (05-402-18), $147.84** (Ben, 2026-11-16). The PCR clean ($193) and Forensic DNA Grade ($188) bags certify DNA, not metals (log, below). Chem Stores' 100 ($43.86) last about 11 nights at 9 a night, and the R1–R3 calibration alone takes about 12. If a tube isn't Eppendorf's, try it in the tube fit strip |
 | B38 | Substitute ocean water | Not quoted by Chem Stores yet; $135 for 4 L from Government Scientific Source |
 | B29 | 0.1 µm diamond lapping film ($265) | Ben's question: does the Prototyping lab have some? |
 | B34 | Filament | Check stock: the H2D plate takes 362 g of PLA |
@@ -111,6 +111,7 @@ Fill in the **Measured** column and log the entry. Each one replaces an estimate
 | Upward pull on the tray and cup block when the cap lifts | 1.0–1.7 N; tape them down | |
 | Dummy cell (10 kΩ, 1 µF) at the end of the bus, steppers energised | noise low enough to trust nanoamps | |
 | EZstat-Pro checks C1–C6 | [byu-vcl PR #291 runbook §7](https://github.com/vertical-cloud-lab/byu-vcl/blob/9280485/potentiostat/ezstat-pro/README.md#7-corrosion-checks-for-the-alloy-work) | |
+| Two tube blanks on the first night: B36 tubes straight from the bag, not acid-leached, each with 300 µL of DI water and step 12's 20 µL of 1 M acid, open in the rack all night | Cu, Ni, Fe and Mn below the ICP-MS limit (Eppendorf's values give under 0.05 ng of Cu a tube). If so, skip the pre-leach in [`copper/protocol.md` §6](copper/protocol.md#6-icp-ms-the-sample-and-its-blanks) | |
 
 ## Problems found before building
 
@@ -136,6 +137,37 @@ Still open in the design: one well per lid (no offset lid drawn), and the copper
 not rerun for the v2 lid's neck.
 
 ## Log
+
+### 2026-11-16: which grade of tube (B36)
+
+From [Ben's question](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6931538613):
+Fisher's 500-packs of the 0.5 mL Safe-Lock tube are $147.84 in Eppendorf Quality, $188 in Forensic
+DNA Grade and $193 in PCR clean. **Buy Eppendorf Quality, colorless (05-402-18).**
+- **The dearer grades don't help ICP-MS.** In
+  [Eppendorf's purity-grade guide](https://usascientific.com/cms/files/Epp_Purity.pdf), PCR clean and
+  Forensic DNA Grade lots are certified free of human DNA, DNase, RNase and PCR inhibitors. No grade
+  is tested for metals.
+- **Eppendorf's metal numbers.** Its
+  [certificate 0012602500-04](https://cdn.shopify.com/s/files/1/2245/7875/files/Eppendorf_Consumables_Certificate-Quality-Conformity-Eppendorf-Tubes-Trace-metal.pdf)
+  (2020, a distributor's copy) gives typical values, not lot by lot. Safe-Lock tubes were filled with
+  concentrated nitric acid for 1 h. For the 0.5 mL tube: Cu below 0.1 µg/L; Ni, Mn, Cr and Pb below
+  0.05 µg/L; Zn below 1 µg/L; Al 3 µg/L. A full tube would then hold under 0.05 ng of Cu.
+  - The ICP-MS needs about 0.42 ng of Cu in one of our tubes to see it: 0.13 µg/L in 3.2 mL after the
+    10× dilution.
+  - A fresh spot puts 290–580 ng of Cu in its tube ([`copper/protocol.md` §6](copper/protocol.md#6-icp-ms-the-sample-and-its-blanks)).
+  - Al is the one metal it found, up to 1.5 ng a tube. That matters only for Al on NAB, and the
+    fixture blank measures it.
+- **Colorless, not colored.** Blue and green plastics are usually tinted with copper phthalocyanine.
+- **The price.** $147.84, not the $108.90 the BOM had from a 2026-10-19 search snippet (Fisher's
+  site blocks the runner). Still the 500: $0.30 a tube, against $0.44 for Chem Stores' 100.
+- **The pre-leach** in protocol §6 may not be needed. Run the two tube blanks (Measurements, on the
+  deck) and decide from them. The protocol now says so.
+- **Totals.** Still to get: $1,333.10 plus the C95800 quote, up from $1,294.16. The stirrer order
+  list is $2,026.71, up from $1,987.77. In the BOM, the aluminium shakedown is $371 and option 1
+  running $1,606. "Copper adds" stays $1,068, since B36 counts under both alloys.
+- **Files:** `bom/bom.csv`, `bom/README.md`, `bom/totals.json`, `stirrers/BOM.md`,
+  `stirrers/order_list.py`, `order-list.csv` and `order-totals.json`, and `copper/protocol.md` §6.
+  Python still couldn't run, so the outputs were edited by hand and the sums checked with awk.
 
 ### 2026-11-16: what the lab has, and Chem Stores' prices
 
