@@ -95,7 +95,7 @@ The idea is that "if it can cut metal, it can sinter it for sure", and that lase
   - Monport launched a 200 W split MOPA engraver with autofocus, the GT200W, in February 2026 ([press release](https://www.steel-technology.com/index.php/pressreleases/monport-highlights-gt200w-mopa-fiber-laser-engraver); price on request).
   - So the galvo answer holds: the galvo scans the melt, and a motorized Z (the autofocus axis) can follow the powder surface on a fixed tray (§1b.2). If the engraver chosen is a gantry type carrying a fiber head instead, §3.1's turnaround problem returns. Its gantry could still drag the recoater blade, but it should not hatch Al.
   - The engraver in the conversation (22:16) wasn't identified, so neither of these is a pick.
-  - **Check the height.** The low-profile layout ([`low-profile.md`](low-profile.md)) keeps the process module 564 mm tall for a VLM tray, with an f = 160 mm lens and the galvo 233 mm above the powder. A split MOPA head with a short lens can sit on that layout's optics bridge. A stock engraver's column and base may not fit under the 695 mm bay height, so check before buying.
+- **Check the height.** The low-profile layout ([`low-profile.md`](low-profile.md)) keeps the process module 564 mm tall for a VLM tray, with an f = 160 mm lens and the galvo 233 mm above the powder. A split MOPA head with a short lens can sit on that layout's optics bridge. A stock engraver's column and base may not fit under the 695 mm bay height, so check before buying.
 - **It replaces six BOM lines:** L1 laser, L2 chiller (the 200 W MOPA is air-cooled), L3 collimator, L5 galvo, L6 f-theta and C1 scan controller. Those lines total $4,265–54,012 today.
   - With the $9,500 engraver in their place, the BOM is **about $34.8k** on the cheapest options elsewhere, or $58.7k on the premium ones. The realistic component build in §6 is $55–75k.
   - The shutter (L4), the chamber window (L7) and the whole safety chain stay.
@@ -409,7 +409,7 @@ The project has two aims (2026-11-17, §1b): stay current on generative design o
 - the cost to finish stays below the commercial units it competes with.
 
 **If no-go,** buy a commercial desktop unit, probably after the semester (§2.2: AO Metal A30 from $59k, Xact XM200C at $65k, A50 from $89k).
-- Ask each vendor about build-plate heating first. The conversation found that desktop units pretty much lack it, and our searches found none listed for the A30 or the XM200C.
+- Ask each vendor about build-plate heating first. In the conversation Sterling's read was that desktop units pretty much lack it, and our searches found none listed for the A30 or the XM200C.
 - The spreadability rig, the heated plate, the glovebox and cartridges, and the O₂ instruments are still useful next to a bought machine. The engraver and its argon box stay useful for single-track screening of new alloys.
 
 2. **Chamber and gas loop around the engraver head.** Machine the chamber and prove 2–3 cycles to < 100 ppm with powder loaded. Measure the hold-up and the make-up gas use, and tune the cross-flow velocity, using smoke or particles.
