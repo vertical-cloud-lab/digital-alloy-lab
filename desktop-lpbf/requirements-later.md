@@ -8,7 +8,7 @@ sgbaird raised these on [PR #266](https://github.com/vertical-cloud-lab/digital-
 - automation-friendliness, such as cleaning the chamber and removing the build plate;
 - much later, multi-laser printing with independently drivable lasers, as in Adam Clare's work.
 
-None of these are in the CAD model yet. Another run on this PR is re-laying the machine out to be lower and wider, so this note sets out what the base design has to reserve for each item. That way, adding one later doesn't mean a new chamber, lid or frame. The numbers come from [`requirements_budgets.py`](requirements_budgets.py). The literature comes from three Edison tasks run for this note (§6).
+None of these are in the CAD models yet: neither [`cad/lpbf_model.py`](cad/lpbf_model.py) nor the low-profile [`cad/lpbf_low.py`](cad/lpbf_low.py) that another run added to this PR while this note was being written. So this note sets out what the base design has to reserve for each item. That way, adding one later doesn't mean a new chamber, lid or frame. The numbers come from [`requirements_budgets.py`](requirements_budgets.py). The literature comes from three Edison tasks run for this note (§6).
 
 | Requirement | When | What the base design reserves now |
 |---|---|---|
@@ -75,9 +75,9 @@ The concept has a Ø50 mm plate with a Ø25 mm insert. The models have a single 
 **What the literature says** ([Edison](edison/plate-hopper-automation/answer.md), §2 and ranks 2, 4, 5, 13, 20):
 
 - **Small modular machines already exist.**
-  - Schanz et al. (2022) built a 240 × 200 × 300 mm lab LPBF with a **Ø40 mm plate and up to four powders**. A 16-cube parameter study needed only ~0.8 cm³ of powder, a reservoir swap took < 3 min, and a recoat ~5 s.
+  - Schanz et al. (2022) built a 240 × 200 × 300 mm lab LPBF with a **Ø40 mm plate and up to four powders**. A 0.5 mm-tall parameter study of 16 cubes needed only ~0.8 cm³ of powder, a reservoir swap took < 3 min, and a recoat ~5 s.
   - Sisma's MYSINT100 plate carries twelve Ø12 mm removable inserts, located by precision pockets and Ø1.5 mm pins and screwed from below (Zanini 2024).
-- **Containment clearances.** Edison recommends ~0.05–0.15 mm radial running clearance cold, and no more than 0.10–0.20 mm once hot. The model's 0.4 mm is too loose for 15–63 µm powder unless the seal closes it. Swap the plate, sleeve and upper seal together as one module, which is what a build module is.
+- **Containment clearances.** Edison recommends ~0.05–0.15 mm radial running clearance cold, and no more than 0.10–0.20 mm once hot. Both models' 0.4 mm is too loose for 15–63 µm powder unless the seal closes it. Swap the plate, sleeve and upper seal together as one module, which is what a build module is.
 - **Registration.** Use a three-point kinematic or zero-point coupling with one axial clamp, and never magnets alone above ~200 °C. Edison suggests ≤ 10 µm Z repeatability, ≤ 25 µm XY, ≤ 0.02° tilt and ≤ 20 µm flatness. It labels these as targets to validate, not literature values.
 - **Results transfer only partly.** A small plate changes thermal mass, lateral heat loss, layer time and part spacing, and AlSi10Mg's in-situ ageing follows those. Treat small-plate results as screening evidence. Confirm winners with matched coupons on a production machine, matching layer time, scan strategy, gas-flow direction and thermal history.
 
@@ -107,7 +107,7 @@ What each size needs (`requirements_budgets.py`, 30 µm layers, 1.8 dose factor,
 
 - **Size the floor opening and flange for the largest module.** Ø75 is the sensible ceiling for alloy screening. Ø100 already needs ~0.3 kg of powder for 15 mm, which is the batch size we built small to avoid.
 - **Size the recoat stroke, blade, dose line and camera view for the largest module.** The cross-flow nozzle can be a per-size insert, or one nozzle sized for the largest. The blower has to deliver the larger flow either way.
-- **The scan field is not a constraint.** The FTH254-1064's 156.7 mm field covers Ø100.
+- **The scan field is not a constraint.** The low layout's FTH160-1064 (110.6 mm field) just covers Ø100, and the FTH254-1064 (156.7 mm) covers it easily.
 - **Plate datums.** Each plate locates on its piston head by dowels and a face, or kinematically, so a swap doesn't need re-levelling. After each swap, a touch-off or the layer camera confirms the plate height.
 
 ## 3. Swappable hopper sizes
@@ -201,7 +201,7 @@ Its separate `LITERATURE` search on Clare's own papers ([`edison/clare-multi-las
 - **[Sanchez, Hyde, Ashcroft, Ravi and Clare 2021](https://doi.org/10.1016/j.addma.2021.101948)**, *Additive Manufacturing* 41, 101948. On a Renishaw RenAM 500Q (four 500 W lasers, run at 212.5 W), 10 mm stripes of the *same* IN718 part were assigned to different lasers. Vertical multi-laser specimens crept to within 1 % of wrought 718 and beat single-laser ones, and build time more than halved.
 - **[Bogo, Clare and Liao-McPherson 2026](https://doi.org/10.1109/CCTA62090.2026.11684174)**, IEEE CCTA 2026, a simulation from UBC. A leading melt beam and a trailing reheat beam (25–100 W each, 0–250 µm behind, 0.25–1 m/s) were tuned by iterative learning control to hit a target cooling rate. It reached −2.34 × 10⁶ K/s against a −2.50 × 10⁶ K/s target, where one beam gives −2.96 × 10⁶ K/s, and it converged in ~20–40 trials. There is no hardware yet.
 
-The second paper is the closest to "independently drivable" in the closed-loop sense this lab cares about: two beams whose powers and spacing are set per vector to steer the cooling rate, tuned by a learning loop. **Doing that in hardware sets a hard requirement.** A beam 0–250 µm behind another at 0.25–1 m/s trails it by ~0.1–1 ms. So two separate scan heads must be registered to well under the 50 µm beam radius and share a clock that is good to well under 0.1 ms. Combining both beams ahead of one scan head gets that registration for free. But the offset is then fixed relative to the mirror axes, so the second beam trails only along one scan direction unless the offset can be rotated. Clare's other hits (Hirsch 2018 rework with SRAS inspection lasers, Guan 2015/2016 OCT, fractal scan paths) use one melting beam.
+The second paper is the closest to "independently drivable" in a closed-loop sense: two beams whose powers and spacing are set per vector to steer the cooling rate, tuned by a learning loop. **Doing that in hardware sets a hard requirement.** A beam 0–250 µm behind another at 0.25–1 m/s trails it by up to ~1 ms (0.15 ms in the paper's tuned case). Holding that spacing to ~10 µm at 1 m/s means registering two separate scan heads to ~10 µm, a fifth of the beam radius, and timing them to ~10 µs on a shared clock. Combining both beams ahead of one scan head gets that registration for free. But the offset is then fixed relative to the mirror axes, so the second beam trails only along one scan direction unless the offset can be rotated. Clare's other hits (Hirsch 2018 rework with SRAS inspection lasers, Guan 2015/2016 OCT, fractal scan paths) use one melting beam.
 
 **What exists.** There are two families:
 
