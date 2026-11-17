@@ -33,6 +33,10 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 - **Commercial small machines cost $59k–130k**: AO Metal A30 (Ø30 × 60 mm, from $59k in 2025), A50 ($89k), Xact Metal XM200C ($65k), 2OneLab 2CREATE ($120k) and One Click Metal MPRINT ($129.9k). Several vendors offer Ø30–55 mm reduced build volumes for exactly our problem (§2.2).
 - **A modified CNC router or a CubXL-like gantry should not move the beam.** Al LPBF scans at 0.7–2.3 m/s in hatch vectors a few mm to 10 mm long. A 1 g gantry needs 50 mm just to reach 1 m/s, so a 10 mm vector spends about 95 % of its time turning around. The CubXL itself is a GRBL ball-screw CNC frame (Genmitsu PROVerXL 4030 geometry) that runs at 50–83 mm/s. Xact Metal launched its XM200 line on a mirror gantry in 2018, and its current XM200S and XM200G datasheets list galvos.
 - **Use a fixed galvo scanner and f-theta lens above a small sealed chamber.** Linear servo axes then only spread powder and lower the piston, where smoothness matters and speed doesn't. A CubXL-style gantry is useful *outside* the chamber, to fill hopper cartridges and move plates (§3.1).
+- **Base machine (2026-11-17, §1b): modify a laser engraver that takes a MOPA fiber laser module, and buy a commercial unit if that stalls.**
+  - The MOPA engravers we found already put a galvo above the bed, so the laser, scan head and controller come as one machine. Powder spreading, a heated walled aluminium plate in place of the slats, and the inert chamber are what we add.
+  - With a $9,500 200 W engraver, the BOM falls to about $35k, against $55–75k for the realistic component build (§6). The open risk is whether a pulsed 200 W source melts our Al powders, so single tracks come first.
+  - A go/no-go point partway through the semester decides between finishing the build and buying a commercial desktop unit (§5).
 - **Concept in one line:** a ~6 L vacuum-purgeable chamber under a fixed galvo, with these parts:
   - a Ø53 mm build plate, with a Ø25 mm insert (the concept said Ø50 mm; McMaster's nearest tube has a 53.8 mm bore, §6a);
   - a ~100 cm³ dose-from-above hopper cartridge and no supply piston: a 15 mm build uses ~80 g;
@@ -66,6 +70,67 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 - **Run it.** `python desktop-lpbf/cad/lpbf_model.py` writes [`cad/out/desktop-lpbf.step`](cad/out/desktop-lpbf.step) (add `--glb` for a GLB). The STEP opens in Onshape, SolidWorks or FreeCAD. `xvfb-run -a python desktop-lpbf/cad/render.py` redraws the stills and GIFs. Every position comes from the parameter block `P`: chamber size, bore, dose and park positions, lens working distance and the rest.
 - **Vendor parts are drawn from their listed dimensions,** not from the vendors' CAD files, so the model can be public.
 - **Not modelled yet:** wiring, NPT fittings, the Pirani gauge, the cartridge antechamber, fasteners other than the lid screws, and anything toleranced. This is a layout, not a released design.
+
+## 1b. Design points from a 2026-11-17 conversation with a student
+
+On 2026-11-17 Sterling talked with a student in the lab about designing and building this machine with generative CAD.
+A redacted excerpt, with a summary of the design points, is in
+[`notes/2026-11-17-student-chat.md`](notes/2026-11-17-student-chat.md) (times below are mm:ss into it). Four points change the plan:
+
+| Design point | What changes | Where |
+|---|---|---|
+| **Start from a laser engraver that takes a MOPA fiber laser module** (21:58–24:06) | The laser, galvo, lens and scan controller come as one bought machine. Powder spreading, the heated plate and the inert chamber are what we add | §1b.1, §6 |
+| **A heated build plate for aluminium:** a heating element in a walled aluminium plate, in place of the engraver's slats (22:30–23:42) | Preheat is now a requirement, not open question 3. On an engraver the plate can be a fixed tray, which removes the build piston and its seals | §1b.2, [`requirements-later.md`](requirements-later.md) §1 |
+| **Mostly off-the-shelf parts, and no in-house laser** (07:05, 21:19, 22:30) | Buy the parts and make the assembly. Choosing the laser is one of the main decisions | §1b.3 |
+| **Two aims and a go/no-go point** partway through the semester, with buying a commercial desktop unit as the fallback (15:05–16:11, 20:21–21:49) | Order the engraver first, so that by the go/no-go point there are melted tracks to judge as well as the schedule | §5 |
+
+The other points support the plan as it stands: keeping oxygen out is one of the hardest parts (§3.4); turnkey powder-dosing systems ($100k–300k) don't suit alloy powders, and the lab built its own doser with generative CAD (§3.3); and the student would start on assembly and making parts, with the materials-science work once the equipment is "more or less fixed".
+
+### 1b.1 The base machine: a laser engraver with a MOPA fiber module
+
+The idea is that "if it can cut metal, it can sinter it for sure", and that laser engravers are "about as adjacent as you can get": the engraver already has the motion system, so spreading is the main LPBF-specific addition (21:58–24:06).
+
+- **The MOPA engravers we looked at already have the architecture of §3.1.** Both steer the beam with a galvo and an f-theta lens on a Z column, rather than moving a fiber head on an XY gantry.
+  - A listed 200 W machine is [$9,500](https://jpt-laser.com/200w-fiber-laser/): a JPT YDFLP-200-M7 source (2–500 ns pulses, 1–4,000 kHz, M² < 1.6), a Sino-Galvo SG7110 head (10 mm aperture), lenses for 70 × 70 to 300 × 300 mm fields, EZCAD 2/3 or LightBurn, and air cooling.
+  - Monport launched a 200 W split MOPA engraver with autofocus, the GT200W, in February 2026 ([press release](https://www.steel-technology.com/index.php/pressreleases/monport-highlights-gt200w-mopa-fiber-laser-engraver); price on request).
+  - So the galvo answer holds: the galvo scans the melt, and a motorized Z (the autofocus axis) can follow the powder surface on a fixed tray (§1b.2). If the engraver chosen is a gantry type carrying a fiber head instead, §3.1's turnaround problem returns. Its gantry could still drag the recoater blade, but it should not hatch Al.
+  - The engraver in the conversation (22:16) wasn't identified, so neither of these is a pick.
+  - **Check the height.** The low-profile layout ([`low-profile.md`](low-profile.md)) keeps the process module 564 mm tall for a VLM tray, with an f = 160 mm lens and the galvo 233 mm above the powder. A split MOPA head with a short lens can sit on that layout's optics bridge. A stock engraver's column and base may not fit under the 695 mm bay height, so check before buying.
+- **It replaces six BOM lines:** L1 laser, L2 chiller (the 200 W MOPA is air-cooled), L3 collimator, L5 galvo, L6 f-theta and C1 scan controller. Those lines total $4,265–54,012 today.
+  - With the $9,500 engraver in their place, the BOM is **about $34.8k** on the cheapest options elsewhere, or $58.7k on the premium ones. The realistic component build in §6 is $55–75k.
+  - The shutter (L4), the chamber window (L7) and the whole safety chain stay.
+- **It falls short of §3.2's laser spec in four ways, so check these before buying:**
+  1. **Power and pulse format.** It is 200 W average, pulsed, with M² < 1.6. The concept specifies 300–500 W CW and single-mode (M² ≤ 1.1).
+     - 200 W is enough for dense AlSi10Mg with a conventional LPBF laser: on a Concept Laser M1 with a 200 W fiber laser and a ~150 µm beam, Kempen et al. reached 99 % density at 200 W, 1,200–1,400 mm/s and 105 µm hatch ([SFF 2011](https://utw10945.utweb.utexas.edu/Manuscripts/2011/2011-37-Kempen.pdf)).
+     - At 1–4 MHz the pulses are 0.25–1 µs apart, against the ~100 µs an ~80 µm melt pool takes to respond, so a MOPA should heat close to CW. But a quick search found no LPBF results from a MOPA source, so single tracks on Al plates are the first test (§5).
+     - M² < 1.6 still gives a spot of about 80 µm at f = 254 mm with a 7 mm beam (§3.2's formula), which is in the commercial range.
+  2. **Scan head.** A 10 mm marking head. Its vendor ships it on 200 W pulsed sources, but §3.2's caution about CW ratings and back-reflection from Al still applies.
+  3. **Controller.** The student warned that commercial machines' boards are often locked down, so the electronics may have to be replaced (08:04).
+     - Galvo engravers commonly run a BJJCZ (EZCAD) board. The open-source [galvoplotter](https://pypi.org/project/galvoplotter/) library from the MeerK40t project drives EZCAD2-type (LMC) boards from Python over USB, so a supported board can be scripted from the supervisor (§3.6).
+     - Check the exact board before buying. If it isn't supported, swap in one of §3.6's controllers.
+  4. **Sourcing.** The listings we found use JPT sources, which are made in the PRC, so open question 1 now gates this route too.
+- **Safety doesn't get easier.** Once we open up and modify an engraver, its own laser classification no longer covers the machine. Treat it as the home-built Class 4 machine of §3.7: register it with the LSO before first light, and keep the guard, shutter and hardwired interlocks.
+
+### 1b.2 A heated build plate: a walled aluminium plate
+
+Sterling noted that pretty much no desktop system has a heated plate, which matters for aluminium, and that research-grade systems with heated plates and the right laser powers cost close to $400,000. The student's answer was a heating element inside an aluminium plate with walls, which "should give a pretty even spread" (aluminium spreads heat more evenly and more quickly than steel), set on the engraver bed in place of its slats (22:30–23:42).
+
+- **Preheat is now a requirement.** [`requirements-later.md`](requirements-later.md) §1 sizes it: build 200 °C now (~70 W of heater for a 15 min ramp on Ø50 mm) and reserve 500 °C.
+- **On an engraver the plate can stay put.** The walls hold the powder, and each layer is set by raising the recoater blade and the focus instead of lowering a piston.
+  - That removes the piston and its bore seal. It removes the rod's exit through the floor, one of the two weak seals in §6a. It also removes the hot sliding seal that `requirements-later.md` has to move below a thermal break, and the heater's wiring no longer moves.
+  - On the low-profile layout it also removes the Z stage hung below the chamber floor (a 40 mm stroke plus the lift arm).
+  - The cost:
+    - the wall height caps the build. 15–20 mm covers the 15 mm screening builds of §3.3;
+    - the blade needs its own µm-level lift, held parallel to the plate. The M3 stage's screw and guide could lift the recoater instead of lowering a piston;
+    - the powder surface rises by the build height during a build, so the cross-flow nozzle and the camera have to allow for it.
+  - The walled tray is also a natural form for the swappable build modules of `requirements-later.md` §2.
+- **Aluminium suits the 200 °C tier,** and it is the right substrate for Al builds anyway (6061 or AlSi10Mg plates). At the reserved 500 °C tier, 6061 is within ~80 °C of its solidus (582 °C), so that tier needs a steel heater block under a replaceable aluminium plate.
+
+### 1b.3 Mostly off-the-shelf parts, and no in-house laser
+
+- **Buy the parts; the assembly is the custom part** (07:05). The lab won't make its own laser, so choosing it is one of the main decisions (21:19, 22:30). The main parts left to make are the chamber, the walled heated plate, the dosing block and the blade holders.
+- **Reuse spreaders where we can** (21:19): the blade cartridges (M5) should take stock blades.
+- **Check agents' material choices.** Every model the student tried first recommended a PEI build plate for printing Ultem, which is itself a PEI. The student suggested giving the model options to choose between (17:30–19:36). So agent-made material picks for this machine should come from a list of candidates, each with a source, and be checked against what the lab's other systems use.
 
 ## 2. What already exists
 
@@ -195,7 +260,7 @@ It is an open frame with no inert enclosure and is roughly 10–30× too slow fo
   - Ask every vendor for M² and fiber core size. "Single-module" on Raycus and similar listings describes packaging, not beam mode.
   - US options are IPG (YLR-500, water-cooled 3U rack, about 40 kg) and nLIGHT (CFL-500). PRC options (Raycus RFL-C500, MAX MFSC-500) are much cheaper. Check the funding source's foreign-sourcing rules before choosing one (see [`foreign-connections/`](../foreign-connections/)).
   - A 500 W CW unit probably needs a chiller.
-  - AlSi10Mg powder absorbs only ~5–10 % at 1070 nm, so ≥ 300 W is the practical floor. **Specify back-reflection protection** (an isolator, or a laser rated for it), and baffle and cool the scan optics. On NIST's AMMT, scattered and back-reflected light overheated a mirror until its coating failed (via [Edison](edison/answer.md#4-beam-delivery-galvanometer-scanner-vs-gantry)).
+  - AlSi10Mg powder absorbs only ~5–10 % at 1070 nm, so 300 W or more gives headroom. 200 W is the floor that has worked: Kempen et al. reached 99 % density with it, and it is what the engraver route (§1b.1) would have. **Specify back-reflection protection** (an isolator, or a laser rated for it), and baffle and cool the scan optics. On NIST's AMMT, scattered and back-reflected light overheated a mirror until its coating failed (via [Edison](edison/answer.md#4-beam-delivery-galvanometer-scanner-vs-gantry)).
 - **Spot size.** d ≈ 4M²λf/(πD), with M² = 1.1 and λ = 1.07 µm:
 
   | f | D = 5 mm | D = 7 mm | D = 10 mm |
@@ -239,7 +304,7 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
     - a wide-nose blade. A rounded leading edge packs better than a sharp edge (Salehi 2023);
     - a carbon-fiber brush;
     - hard: HSS or ceramic. The DIY build found steel repeatable.
-  - A roller module is phase 2. In one comparison, a **non-rotating roller** packed layers at 45 % against 30 % for a straight blade, though rollers can jam at very thin layers (Sehhat 2021). Counter-rotation at high rates destabilised the bed while forward rotation helped (Jabri 2024). Sources via [Edison](edison/answer.md#2-powder-spreading-recoater-design-speed-layer-thickness-and-spreadability).
+  - A roller module comes later. In one comparison, a **non-rotating roller** packed layers at 45 % against 30 % for a straight blade, though rollers can jam at very thin layers (Sehhat 2021). Counter-rotation at high rates destabilised the bed while forward rotation helped (Jabri 2024). Sources via [Edison](edison/answer.md#2-powder-spreading-recoater-design-speed-layer-thickness-and-spreadability).
   - Start at 10–50 mm/s and work up toward ~100 mm/s. Fine Al (below the ~20 µm cohesion threshold) flows worse, so the 15–20 µm tail of our 15–63 µm powders is the risk.
   - The gap and dose factor are recipe parameters.
 - **Measuring spreadability.**
@@ -328,13 +393,30 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
 | Smooth, suitable motion | constant-velocity spreading; µm-level Z | galvo for the beam; servo + ball screw + preloaded guides for powder axes; no belts in the chamber |
 | Small hopper | ≤ ~150 g per alloy per build | Ø53 mm plate (Ø25 mm insert), dose-from-above ~100 cm³ cartridge, no supply piston, recoverable overflow: ~80 g per 15 mm build |
 | High-purity inert gas | < 100 ppm O₂, ideally ~10 ppm | ~6 L vacuum-rated chamber, 2–3 vacuum–Ar 5.0 cycles, sealed recirculating cross-flow, trace analyzer near the bed, slight overpressure, O₂ permissive on the laser |
+| Heated build plate (2026-11-17) | 200 °C for Al alloys; 500 °C reserved | cartridge heaters in a walled aluminium plate, a fixed tray on the engraver route (§1b.2); sizing and interlocks in [`requirements-later.md`](requirements-later.md) §1 |
 
 ## 5. Phased plan
 
-0. **Spreadability rig, no laser.** Recoater axis, Ø53 mm piston, hopper cartridge and layer camera, run in the glovebox with our own powders. This settles blade vs. brush vs. roller and the dose factor cheaply.
-1. **Chamber and gas loop, no laser.** Machine the chamber and prove 2–3 cycles to < 100 ppm with powder loaded. Measure the hold-up and the make-up gas use, and tune the cross-flow velocity, using smoke or particles.
-2. **Laser, optics and safety.** LSO review, then interlock commissioning with the beam into the dump, then single tracks on plates, then density cubes.
-3. **Monitoring and automation.** Photodiode (Thorlabs PDA36A2, $400.01) and layer-image scoring, recipe API, cartridge docking, and CubOS gantry hand-off.
+The project has two aims (2026-11-17, §1b): stay current on generative design of whole systems, not just generative CAD; and get the machine ordered, assembled, tested and in use as soon as possible. So the base engraver is ordered first and lases early, and a go/no-go point partway through the semester decides whether to finish the build or buy a commercial unit.
+
+0. **Spreadability rig and heated plate, no laser.** Recoater axis, the walled heated plate (or the Ø53 mm piston), hopper cartridge and layer camera, run in the glovebox with our own powders. This settles blade vs. brush vs. roller and the dose factor cheaply, at room temperature and at 200 °C.
+1. **Base engraver and first tracks.** Choose a MOPA engraver whose board galvoplotter supports, or plan to replace the board (§1b.1). Register it with the LSO and guard it as they require. Then lay single tracks and small pads on Al plates and our powders under argon, on the heated plate at room temperature and 200 °C. A small purged box with a window under the head is enough for this. It answers whether a pulsed 200 W source melts our Al powders.
+
+**Go/no-go, partway through the semester.** Suggested criteria, for Sterling to set:
+- the engraver is in hand, and single tracks in at least one Al alloy are continuous at a known power and speed (phase 1);
+- the rig lays full layers of our Al powder on the heated plate (phase 0);
+- a fresh estimate of phases 2–4 fits the rest of the semester, and is not heading toward the multi-year build this would have been a year ago (16:00–16:11, 21:19);
+- the cost to finish stays below the commercial units it competes with.
+
+**If no-go,** buy a commercial desktop unit, probably after the semester (§2.2: AO Metal A30 from $59k, Xact XM200C at $65k, A50 from $89k).
+- Ask each vendor about build-plate heating first. The conversation found that desktop units pretty much lack it, and our searches found none listed for the A30 or the XM200C.
+- The spreadability rig, the heated plate, the glovebox and cartridges, and the O₂ instruments are still useful next to a bought machine. The engraver and its argon box stay useful for single-track screening of new alloys.
+
+2. **Chamber and gas loop around the engraver head.** Machine the chamber and prove 2–3 cycles to < 100 ppm with powder loaded. Measure the hold-up and the make-up gas use, and tune the cross-flow velocity, using smoke or particles.
+3. **Full builds with the safety chain.** Interlock commissioning with the beam into the dump, then density cubes.
+4. **Monitoring and automation.** Photodiode (Thorlabs PDA36A2, $400.01) and layer-image scoring, recipe API, cartridge docking, and CubOS gantry hand-off.
+
+The student would start on assembly and making parts. The materials-science work starts once the equipment is "more or less fixed" (29:01–29:55).
 
 ## 5a. What the Edison literature review adds
 
@@ -418,6 +500,8 @@ The low end needs a PRC laser and a marking-class galvo, neither confirmed for 5
 - full control of scan, gas and recoat;
 - an API for the autonomous loop.
 
+**The engraver route (§1b.1)** buys L1, L2, L3, L5, L6 and C1 ($4,265–54,012 above) as one MOPA engraver. With the $9,500 200 W listing in their place, the total is about **$34.8k–58.7k**. On the realistic build's basis (cheapest options on the other lines), that is $20k–40k less, at 200 W pulsed instead of 300–500 W CW. `bom.csv` keeps the component route until an engraver is chosen.
+
 **Geometry.** The layout now lives in the CadQuery model (§1a), whose McMaster parts are listed in §6a. The vendor CAD fetched on 2026-11-13 is listed in [`cad/cad-manifest.csv`](cad/cad-manifest.csv) with sizes and sha256s:
 - McMaster-Carr native models (SolidWorks parts) for the 4566N101 and 6624K69 ball screws and the 78595A5 argon regulator;
 - Thorlabs dimensioned drawings (PDF) for the FTH254-1064 and FTH160-1064 f-theta lenses, the GBE02-C beam expander, the WG41050-C window, the PDA36A2 photodiode and the GVS012 galvo.
@@ -476,8 +560,10 @@ What checking real parts changed:
 
 ## 7. Open questions for the lab
 
-1. **Funding and sourcing.** Is a PRC fiber laser acceptable on the intended funds? If not, request IPG and nLIGHT quotes for a 500 W single-mode unit, and a SCANLAB basiCube 20 + RTC6 quote.
+1. **Funding and sourcing.** Is a PRC fiber laser acceptable on the intended funds? If not, request IPG and nLIGHT quotes for a 500 W single-mode unit, and a SCANLAB basiCube 20 + RTC6 quote. This now gates the engraver route too, since the MOPA engravers we found use JPT sources (§1b.1).
 2. **Build plate size.** Is Ø53 mm (with a Ø25 mm insert) right for the test coupons we need (density cubes, small tensile bars per the [test-structure notes](../edison-trajectories/am-scaleup-test-structures.md))?
-3. **Plate preheat.** Is 200 °C plate preheat wanted for the Al alloys? It changes the chamber's thermal design.
+3. **Plate preheat.** Answered on 2026-11-17: yes for Al (§1b.2; sizing in [`requirements-later.md`](requirements-later.md) §1). Still open: a fixed walled tray, which suits an engraver, or a heater riding on the piston?
 4. **Safety reviews.** Who are the LSO and EHS contacts for the laser registration and the NFPA 484 dust hazard analysis?
-5. **CubXL scope.** Should the CubXL be in scope for cartridge filling in phase 3, or should powder dispensing stay with the AutoTrickler line?
+5. **CubXL scope.** Should the CubXL be in scope for cartridge filling in phase 4, or should powder dispensing stay with the AutoTrickler line?
+6. **Which engraver?** The conversation's engraver (22:16) wasn't identified. Is it a galvo MOPA engraver near 200 W whose board galvoplotter supports? Or a split MOPA head on our own frame? Ask the vendor whether the source can run CW or quasi-CW, and for its M² and beam diameter.
+7. **The go/no-go point.** Which week of the semester, and are §5's criteria the right ones?
