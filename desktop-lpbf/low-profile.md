@@ -209,8 +209,8 @@ The table is [`analysis/out/fea/fea.md`](analysis/out/fea/fea.md). The load case
 
 | Case | Load | Peak σ_vM | Deflection | Criterion | Result |
 |---|---|---|---|---|---|
-| 1 Chamber body + bolted lid, 6061-T6 | full vacuum | 8.9 MPa at a door-opening corner | 24 µm at the lid; door land 4 µm | SF ≥ 2 on yield, Goodman ≥ 2 | SF 31 on yield, 12 on a welded-HAZ allowable (110 MPa), Goodman 16: **pass** |
-| 1 Chamber body alone, lid off (worst case) | vacuum, lid and door loads on their lands | 42.5 MPa (99.5th percentile 21 MPa) | 223 µm; door land 209 µm | same | SF 6.5; 2.6 on HAZ; Goodman 3.5: **pass**, but bolt the lid before pumping |
+| 1 Chamber body + bolted lid, 6061-T6 | full vacuum | 9.1 MPa at a door-opening corner | 24 µm at the lid; door land 4 µm | SF ≥ 2 on yield, Goodman ≥ 2 | SF 30 on yield, 12 on a welded-HAZ allowable (110 MPa), Goodman 16: **pass** |
+| 1 Chamber body alone, lid off (worst case) | vacuum, lid and door loads on their lands | 42.9 MPa (99.5th percentile 21 MPa) | 223 µm; door land 209 µm | same | SF 6.4; 2.6 on HAZ; Goodman 3.4: **pass**, but bolt the lid before pumping |
 | 2 Lid, 16 mm 6061 | 1 atm plus the window, dosing and camera loads | 15 MPa | window seat sags 28 µm, tilts 8 µrad | SF ≥ 2; sag ≪ the ±3.7 mm Rayleigh range | SF 18: **pass** |
 | 3 Door, 15 mm 6061 | 1 atm inside the O-ring | 8 MPa | 6.5 µm | SF ≥ 2; latch load at +50 mbar | SF 35; 60 N per latch against a 3.6 kN rating: **pass** |
 | 4 Recoater block + arm + blade holder, first layout | 10 N up + 10 N drag; 50 N hit | 10 / 57 MPa | **blade 17 µm** | < 5 µm (1/6 of a 30 µm layer) | **fail** |
@@ -253,7 +253,7 @@ From `analysis/mass_budget.py`: **263 kg in total**, about half the 490–500 kg
 3. **The drop-down door slams (needs a damper).** It is self-closing up to 9.75°. Past that it free-falls and hits the open stop at 1.7 m/s at its edge (§4.2).
 4. **Chamber under vacuum.**
    - The highest stresses are at the corners of the door opening and around the window bore.
-   - With the lid bolted on, the peak is 8.9 MPa, a safety factor of 31 on 6061-T6. The worst case (lid off, chamber evacuated) is 42.5 MPa: a safety factor of 6.5, or 2.6 against a welded heat-affected zone.
+   - With the lid bolted on, the peak is 9.1 MPa, a safety factor of 30 on 6061-T6. The worst case (lid off, chamber evacuated) is 42.9 MPa: a safety factor of 6.4, or 2.6 against a welded heat-affected zone.
    - The door land moves 4 µm with the lid on, but 209 µm with the top open. So **the lid is bolted down before the first pump-down**. The door O-ring has 0.88 mm of squeeze, so even the open-top case uses only a quarter of it.
 5. **Cover slide, not window.**
    - The 8 mm fused-silica window has a safety factor of 44.
