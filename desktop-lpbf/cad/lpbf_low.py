@@ -62,6 +62,8 @@ P = dict(
     # door
     door_open_deg=95.0,
 )
+# the default (M50) module's plate and bore, for scripts that read one plate size (render_low's build-cycle GIF)
+P["plate_d"], P["bore_d"], P["plate_t"] = MP.MODULES["M50"]["plate_d"], MP.MODULES["M50"]["bore"], MP.PLATE_T
 P["ix"], P["iy"] = P["ch_x"] / 2, P["ch_y"] / 2
 P["cx"], P["cy"] = P["ix"] + P["wall"], P["iy"] + P["wall"]
 P["lid_z0"], P["lid_z1"] = P["ch_z"], P["ch_z"] + P["lid"]
@@ -136,7 +138,9 @@ STEPS = {
 }
 
 # Motion groups: kind, axis/hinge, range. analysis/ sweeps every group through its range.
-MODULE_PATH = [(0.0, 0.0, 0.0), (0.0, 0.0, -MP.MODULE_DROP), (0.0, -200.0, -MP.MODULE_DROP), (0.0, -200.0, -10.0), (0.0, -330.0, -10.0)]
+# drop out of the port, slide forward under the outlet plenum, rise under the door hinges, then over the guard sill
+MODULE_PATH = [(0.0, 0.0, 0.0), (0.0, 0.0, -MP.MODULE_DROP), (0.0, -170.0, -MP.MODULE_DROP), (0.0, -170.0, -22.0), (0.0, -190.0, -22.0),
+               (0.0, -190.0, -10.0), (0.0, -330.0, -10.0)]
 MOTION = {
     "recoater": dict(kind="tx", lo=0.0, hi=P["x_end"] - P["x_park"], note="blade from park to end of spread"),
     "piston": dict(kind="tz", lo=MP.Z_P_MIN, hi=MP.Z_P_MAX, note="build piston: stroke, bottom stop and +8 mm plate-exchange overtravel"),
@@ -377,7 +381,7 @@ def build(include_tray=True, module="M50", reservoir=None):
     jar = fuse([place(kf_stub(40, 90), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1)), cyl(KF[40][1] / 2, (ox, 0, zf - 22 - 16 - 92), "z", 2)])
     add("Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)", jar, C["ss"], 4, (0, 0, -260), mat="ss304", bom="M4", mcm="KF40_NIPPLE", section=True)
     add("Overflow clamp (KF-40)", place(kf_clamp(40), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1)), C["alu_dark"], 4, (0, 0, -260), mat="al6061", bom="G7", mcm="KF40_CLAMP", section=True)
-    add("Overflow-jar present sensor (inductive M8, PNP)", cyl(4.0, (ox + 28.0, 0, zf - 22 - 16 - 60), "x", 30.0), C["blue"], 4, (120, 0, 0), mat="misc", mass_kg=0.02, bom="A1")
+    add("Overflow-jar present sensor (inductive M12, PNP)", cyl(6.0, (ox + 28.0, 0, zf - 22 - 16 - 60), "x", 30.0), C["blue"], 4, (120, 0, 0), mat="misc", mass_kg=0.02, bom="A1")
 
     # ===================== 5. Chamber body =====================
     ch = rbox(-cx, cx, -cy, cy, -fl, lz0, 8)
@@ -427,7 +431,7 @@ def build(include_tray=True, module="M50", reservoir=None):
     fib = comp([fuse([cyl(1.5, (sx * ix, 0, 5.0), "x" if sx > 0 else "-x", P["wall"]), cyl(3.0, (sx * (ix + P["wall"]), 0, 5.0), "x" if sx > 0 else "-x", 22.0)]) for sx in (-1, 1)])
     add("Plate-height through-beam (fibre heads in the side walls, z +5 mm)", fib, C["blue"], 5, (0, 0, 0), mat="misc", mass_kg=0.03, bom="A1")
     th = math.radians(200.0)
-    add("Module-present sensor (inductive M8, under the floor, sees the module flange)", cyl(4.0, (52.5 * math.cos(th), 52.5 * math.sin(th), zf - 5.0), (math.cos(th), math.sin(th), 0), 30.0),
+    add("Module-present sensor (inductive M12, under the floor, sees the module flange)", cyl(6.0, (52.5 * math.cos(th), 52.5 * math.sin(th), zf - 6.5), (math.cos(th), math.sin(th), 0), 30.0),
         C["blue"], 5, (0, 0, -120), mat="misc", mass_kg=0.02, bom="A1")
 
     # ===================== 6. Recoater =====================
@@ -496,9 +500,9 @@ def build(include_tray=True, module="M50", reservoir=None):
     drw = box(-35.5, 35.5, -cy, 33.5, dz0 + 0.3, dz1 - 0.3).cut(cyl(25.6, (0, 0, dz0), "z", 7)).cut(cyl(23.0, (0, 0, dz0 - 1), "z", 8))
     drw = fuse([drw, rbox(-42, 42, -cy - 8, -cy, lz0 + 1, lz1 - 1, 3), box(-20, 20, -cy - 20, -cy - 8, dz0 + 1, dz1 - 1), box(-20, -14, -cy - 20, -cy - 8, lz0 + 1, lz1 - 1), box(14, 20, -cy - 20, -cy - 8, lz0 + 1, lz1 - 1)])
     add("Cover-slide drawer (6061, robot pull tab)", drw, C["anod"], 7, (0, -200, 0), group="drawer", mat="al6061", bom="A2", section=True)
-    add("Cover slide (Ø2 in. x 2 mm UV fused silica, consumable)", cyl(25.4, (0, 0, dz0 + 1.0), "z", 2.0), C["glass"], 7, (0, -200, 0), group="drawer", mat="fused_silica", bom="A2", opacity=0.5, section=True)
+    add("Cover slide (Ø2 in. x 3 mm fused silica, consumable)", cyl(25.4, (0, 0, dz0 + 1.0), "z", 3.0), C["glass"], 7, (0, -200, 0), group="drawer", mat="fused_silica", bom="A2", opacity=0.5, section=True)
     add("Drawer O-ring (FKM, seals on the lid's front face)", rbox(-38, 38, -cy - 1.6, -cy, lz0 + 3, lz1 - 3, 2, "|Y").cut(rbox(-36.2, 36.2, -cy - 2, -cy + 1, lz0 + 4.8, lz1 - 4.8, 1, "|Y")), C["black"], 7, (0, -200, 0), group="drawer", mat="fkm", bom="A2")
-    add("Drawer-closed sensor (inductive M8, on the lid's front face)", cyl(4.0, (46.0, -cy - 5.0, lz0 + 8.0), "x", 30.0), C["blue"], 7, (0, -200, 0), mat="misc", mass_kg=0.02, bom="A1")
+    add("Drawer-closed sensor (inductive M12, on the lid's front face)", cyl(6.0, (46.0, -cy - 7.0, lz0 + 8.0), "x", 30.0), C["blue"], 7, (0, -200, 0), mat="misc", mass_kg=0.02, bom="A1")
     add("Gas knife (cover-slide purge, 316L)", box(-32, 32, -42, -36, lz0 - 14, lz0 - 8), C["ss"], 7, (0, 0, 200), mat="ss316l", bom="L7", section=True)
     # chute ends 37 mm above the floor so the deeper (31 mm) blade holder passes under it
     chute = box(xd - 6, xd + 6, -P["dose_y"], P["dose_y"], 37, lz0).cut(box(xd - 4.5, xd + 4.5, -P["dose_y"] + 1.5, P["dose_y"] - 1.5, 36, lz0 + 1))
@@ -515,7 +519,7 @@ def build(include_tray=True, module="M50", reservoir=None):
     add("Dosing stepper (NEMA 17)", place(stepper_nema17(40), (xd, 74, rzc), (1, 0, 0), (0, -1, 0)), C["motor"], 7, (0, 160, 300), mat="misc", mass_kg=0.32, bom="M4", mcm="6627T91")
     add("Side reservoir port (KF-16, blanked; reserved for a >= 500 cm3 reservoir beside the chamber with an auger)",
         place(kf_stub(16, 18), (xd - 17 - 18, 35, rzc), (0, 1, 0), (-1, 0, 0)), C["ss"], 7, (-120, 0, 0), mat="ss304", bom="R1")
-    add("Reservoir-docked sensor (inductive M8, at the back of the dock)", cyl(4.0, (xd, 60.0, zd + 14.0), "y", 30.0), C["blue"], 7, (0, 160, 300), mat="misc", mass_kg=0.02, bom="A1")
+    add("Reservoir-docked sensor (inductive M12, at the back of the dock)", cyl(6.0, (xd, 60.0, zd + 14.0), "y", 30.0), C["blue"], 7, (0, 160, 300), mat="misc", mass_kg=0.02, bom="A1")
     ML.add_reservoir(sys.modules[__name__], add, reservoir, xd, zd, 7)
     add("Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)", box(xd + 17, xd + 30, -6, 6, lz1, zd), C["ss"], 7, (0, 0, 380), mat="steel", bom="M4", mcm="LOADCELL_SP")
     d = (V(0, 0, 0) - cam_p).normalized()

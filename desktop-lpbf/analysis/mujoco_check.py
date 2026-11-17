@@ -122,7 +122,8 @@ def build_mjcf(parts, groups):
             bodies.append(f'<body name="s{i}">' + "".join(geoms[i]) + "</body>")
     hy, hz = M.DOOR_HINGE
     jdef = {"recoater": 'type="slide" axis="1 0 0"', "piston": 'type="slide" axis="0 0 1"', "gdoor": 'type="slide" axis="1 0 0"',
-            "cartridge": 'type="slide" axis="0 1 0"', "door": f'type="hinge" axis="1 0 0" pos="0 {hy / 1000:.4f} {hz / 1000:.4f}"'}
+            "cartridge": 'type="slide" axis="0 1 0"', "door": f'type="hinge" axis="1 0 0" pos="0 {hy / 1000:.4f} {hz / 1000:.4f}"',
+            "drawer": 'type="slide" axis="0 1 0"', "zstage": 'type="slide" axis="0 0 1"'}
     acts = []
     for g in groups:
         m = M.MOTION[g]
@@ -194,8 +195,8 @@ def no_contacts(model):
 
 def dynamics(model, data, groups):
     """Drive each axis through a smooth move with contacts off; peak actuator effort (N or N·m)."""
-    moves = {"recoater": (0.0, 0.196, 2.0), "piston": (0.0, -0.040, 2.0), "gdoor": (0.0, 0.47, 2.0),
-             "cartridge": (0.0, -0.125, 2.0), "door": (0.0, math.radians(95), 3.0)}
+    moves = {"recoater": (0.0, (M.MOTION["recoater"]["hi"]) / 1000, 2.0), "piston": (0.0, -0.040, 2.0), "gdoor": (0.0, 0.47, 2.0),
+             "cartridge": (0.0, -0.125, 2.0), "door": (0.0, math.radians(95), 3.0), "drawer": (0.0, -0.120, 2.0), "zstage": (0.0, -0.045, 2.0)}
     out = {}
     for g in groups:
         a0, a1, T = moves[g]
@@ -310,7 +311,7 @@ def main():
     CACHE.mkdir(exist_ok=True)
     parts = M.build()
     M.build.__globals__["_LAST"] = parts
-    groups = list(M.MOTION)
+    groups = [g for g in M.MOTION if M.MOTION[g]["kind"] != "path"]   # the module's removal path is checked by interference.py
     xml, names = build_mjcf(parts, groups)
     (CACHE / "desktop_lpbf_low.xml").write_text(xml)
     model = mujoco.MjModel.from_xml_string(xml)

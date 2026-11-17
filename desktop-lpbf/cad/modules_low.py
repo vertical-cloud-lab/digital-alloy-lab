@@ -31,20 +31,21 @@ def polar(r, deg):
 
 
 def block_layout(key):
-    """(heaters, thermocouples, standoffs, standoff dia, thermal cutoff) positions as (r, deg) in the heater block."""
+    """(heaters, thermocouples, standoffs, standoff dia, thermal cutoff) positions as (r, deg) in the heater block.
+    Heater counts follow the thermal FEA: >= 1.5x the worst steady loss at 200 C (47 / 90 / 135 W) in 50 W cartridges."""
     m = MP.MODULES[key]
-    if key == "S25":
-        return dict(heaters=[(0.0, 0.0)], heater_top=-MP.PLATE_T - 5.0,
-                    tcs=[("control", 6.5, 30.0), ("edge", 9.5, 150.0), ("limit", 6.5, 270.0)],
-                    standoffs=[(8.5, a) for a in (90.0, 210.0, 330.0)], sd=6.0, tco=(10.0, 270.0))
     rb = m["block_d"] / 2
+    if key == "S25":
+        return dict(heaters=[(5.5, 0.0), (5.5, 180.0)], heater_top=-MP.PLATE_T - 5.0,
+                    tcs=[("control", 0.0, 0.0), ("edge", 10.0, 150.0), ("limit", 7.0, 270.0)],
+                    standoffs=[(9.4, 90.0), (9.4, 225.0), (9.4, 315.0)], sd=5.0, tco=(9.0, 45.0))
     if key == "M50":
-        return dict(heaters=[(m["bore"] / 4, a) for a in (0.0, 180.0)], heater_top=-MP.PLATE_T - 1.0,
-                    tcs=[("control", 0.0, 0.0), ("edge", 0.84 * rb, 30.0), ("limit", 7.0, 270.0)],
-                    standoffs=[(0.8 * rb, a) for a in (90.0, 210.0, 330.0)], sd=8.0, tco=(8.0, 90.0))
-    return dict(heaters=[(m["bore"] / 4, a) for a in (0.0, 90.0, 180.0, 270.0)], heater_top=-MP.PLATE_T - 1.0,
-                tcs=[("control", 0.0, 0.0), ("edge", 0.8 * rb, 225.0), ("limit", 10.0, 45.0)],
-                standoffs=[(0.8 * rb, a) for a in (45.0, 165.0, 285.0)], sd=8.0, tco=(10.0, 135.0))
+        return dict(heaters=[(m["bore"] / 4, a) for a in (0.0, 120.0, 240.0)], heater_top=-MP.PLATE_T - 1.0,
+                    tcs=[("control", 0.0, 0.0), ("edge", 0.84 * rb, 90.0), ("limit", 7.0, 300.0)],
+                    standoffs=[(0.8 * rb, a) for a in (60.0, 180.0, 300.0)], sd=8.0, tco=(8.0, 180.0))
+    return dict(heaters=[(m["bore"] / 4, a) for a in (0.0, 72.0, 144.0, 216.0, 288.0)], heater_top=-MP.PLATE_T - 1.0,
+                tcs=[("control", 0.0, 0.0), ("edge", 0.8 * rb, 108.0), ("limit", 10.0, 252.0)],
+                standoffs=[(0.8 * rb, a) for a in (36.0, 180.0, 324.0)], sd=8.0, tco=(10.0, 36.0))
 
 
 def zlevels():
@@ -97,7 +98,7 @@ def add_build_module(h, add, key, step=4):
         bom="B1", **mg)
     sc = []
     for s in (-1, 1):
-        sc += [h.cyl(6.0, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T - 8), "z", 8), h.cyl(3.0, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T), "z", MP.FLANGE_T + 10)]
+        sc += [h.cyl(5.0, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T - 6), "z", 6), h.cyl(3.0, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T), "z", MP.FLANGE_T + 10)]
     add("Captive M6 thumb screws (2, into helical inserts in the floor)", h.comp(sc), C["steel"], step, (0, -320, -60),
         mat="ss316l", bom="B2", **mg)
 
@@ -118,20 +119,20 @@ def add_build_module(h, add, key, step=4):
     for r, a in L["heaters"]:
         x, y = polar(r, a)
         blk = blk.cut(h.cyl(3.05, (x, y, zb0 - 1), "z", ht - zb0 + 1))
-        heaters.append(h.cyl(3.0, (x, y, ht - 20.0), "z", 20.0))
+        heaters.append(h.cyl(3.0, (x, y, ht - m["heater_l"]), "z", m["heater_l"]))
     for nm, r, a in L["tcs"]:
         x, y = polar(r, a)
         top = zb1 - 5.0 if r < BAYONET_R + 3.5 else zb1 - 1.5
-        blk = blk.cut(h.cyl(0.85, (x, y, zb0 - 1), "z", top - zb0 + 1))
-        tcs.append(h.cyl(0.79, (x, y, zk0 - 1.0), "z", top - zk0 + 1.0))
+        blk = blk.cut(h.cyl(0.6, (x, y, zb0 - 1), "z", top - zb0 + 1))
+        tcs.append(h.cyl(0.508, (x, y, zk0 - 1.0), "z", top - zk0 + 1.0))
     xt, yt = polar(*L["tco"])
     blk = blk.cut(h.cyl(2.1, (xt, yt, zb0 - 1), "z", 11.0))
     tcobj.append(h.cyl(2.0, (xt, yt, zb0), "z", 10.0))
     add(f"Heater block {lab} (6061-T6, bayonet socket)", blk, C["alu"], step, (0, 0, 250), mat="al6061", bom="H1",
         section=True, **pg)
-    add(f"Cartridge heaters {lab} ({m['heaters']} x {m['heater_w']:.0f} W, 24 V, Ø6 x 20)", h.comp(heaters), C["hot"], step,
+    add(f"Cartridge heaters {lab} ({m['heaters']} x {m['heater_w']:.0f} W, 24 V, Ø6 x {m['heater_l']:.0f})", h.comp(heaters), C["hot"], step,
         (0, 0, 220), mat="steel", bom="H1", section=True, **pg)
-    add(f"Type K thermocouples {lab} (control, edge, limit; 1/16 in. ungrounded)", h.comp(tcs), C["yellow"], step,
+    add(f"Type K thermocouples {lab} (control, edge, limit; 0.04 in. ungrounded, 316 sheath)", h.comp(tcs), C["yellow"], step,
         (0, 0, 220), mat="steel", bom="H1", section=True, **pg)
     add(f"Thermal cutoff {lab} (240 C, in series with the heaters)", h.comp(tcobj), C["red"], step, (0, 0, 220),
         mat="misc", mass_kg=0.002, bom="H2", section=True, **pg)
@@ -163,7 +164,7 @@ def add_build_module(h, add, key, step=4):
     head = head.cut(h.cyl(MP.ROD_OD / 2 + 0.02, (0, 0, zh0 - 1), "z", 9.0))            # rod socket
     for r, a in L["heaters"]:                                                             # lead pockets under the heaters
         x, y = polar(r, a)
-        head = head.cut(h.cyl(4.0, (x, y, zk0 - 7.0), "z", 7.1))
+        head = head.cut(h.cyl(4.0, (x, y, zk0 - 8.0), "z", 8.1))
     for nm, r, a in L["tcs"] + [("tco",) + tuple(L["tco"])]:
         x, y = polar(r, a)
         head = head.cut(h.cyl(1.6, (x, y, zk0 - 3.0), "z", 3.1))
@@ -179,7 +180,7 @@ def add_build_module(h, add, key, step=4):
     cap = h.fuse([cap, h.cyl(4.0, (-26.0, 0, zc + 9.5), "x", 16.0)]).cut(h.cyl(2.8, (-27.0, 0, zc + 9.5), "x", 30.0))
     add(f"Rod end {lab}: potted cable exit (Torr Seal) with a side outlet", cap, C["ss"], step, (0, 0, 120), mat="ss316l",
         bom="H2", section=True, **pg)
-    add(f"Striker disc {lab} (430 stainless, on the pot magnet)", h.cyl(14.0, (0, 0, zc), "z", 5.0), C["steel"], step,
+    add(f"Striker disc {lab} (416 stainless, on the pot magnet)", h.cyl(12.7, (0, 0, zc), "z", 5.0), C["steel"], step,
         (0, 0, 110), mat="steel", bom="B2", section=True, **pg)
 
 
@@ -202,9 +203,9 @@ def add_zstage(h, add, step=3):
     add("Z servo (ClearPath-SD, NEMA 23, folded)", h.place(h.servo_nema23(100.0, 18.0), (64.0, 80.0, az1), (1, 0, 0), (0, 0, 1)),
         C["motor"], step, (0, 200, 0), mat="misc", mass_kg=1.6, bom="M2")
     add("Z carriage", h.box(-21, 21, 56, ay0, a0, a0 + 40.0), C["steel"], step, (0, 160, 0), mat="steel", bom="M3", **zg)
-    arm = h.rbox(-30, 30, -22, 56, a0, zc, 6).cut(h.cyl(16.2, (0, 0, zc - 8.0), "z", 8.1))
+    arm = h.rbox(-30, 30, -22, 56, a0, zc, 6).cut(h.cyl(12.7, (0, 0, zc - 7.0), "z", 7.1))
     add("Z lift arm (6061, 12 mm, pot-magnet coupling)", arm, C["alu"], step, (0, -150, 0), mat="al6061", bom="M3", **zg)
-    add("Pot magnet (NdFeB in a steel cup, Ø32, holds the rod's striker)", h.cyl(16.0, (0, 0, zc - 8.0), "z", 8.0), C["steel"], step,
+    add("Pot magnet (NdFeB in a steel cup, Ø25 x 7, 44 lbf, holds the rod's striker)", h.cyl(12.5, (0, 0, zc - 7.0), "z", 7.0), C["steel"], step,
         (0, -150, 0), mat="steel", bom="B2", **zg)
 
 

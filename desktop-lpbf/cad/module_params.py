@@ -41,7 +41,7 @@ FLANGE_D = 100.0        # module flange disc under the floor
 FLANGE_T = 10.0
 TAB_X = 64.0            # two tabs to x = +/-64 carry the captive M6 thumb screws at x = +/-58
 SCREW_X = 58.0
-SPIGOT_ORING = "2-240"  # FKM, radial (piston-type) static seal on the spigot OD, in the floor port
+SPIGOT_ORING = "2-238"  # FKM, radial static seal in a groove on the spigot OD (groove dia 90.2, ID 88.5 mm: 2 % stretch)
 
 # ---- module sizes ----
 # bore: honed (H7, Ra <= 0.4 um) after the spigot-flange is welded to the 316L tube.
@@ -49,16 +49,21 @@ SPIGOT_ORING = "2-240"  # FKM, radial (piston-type) static seal on the spigot OD
 #   Tier A (<= 200 C) 0.10 mm; Tier B (500 C, reserved) 0.20 mm. Heater block clearance 0.30 mm.
 # heaters: 24 V DC cartridges (Tier A) in radial holes at mid-block, count x watts sized by analysis/thermal_module.py
 MODULES = {
-    "S25": dict(bore=25.4, wall=3.0, heaters=1, heater_w=40.0, heater_d=6.0, heater_l=20.0,
+    "S25": dict(bore=25.4, wall=3.0, heaters=2, heater_w=50.0, heater_d=6.0, heater_l=22.0,
                 reservoir="S", blade_len=45.0, label="Ø25 module"),
-    "M50": dict(bore=50.8, wall=3.0, heaters=2, heater_w=40.0, heater_d=6.0, heater_l=20.0,
+    "M50": dict(bore=50.8, wall=3.0, heaters=3, heater_w=50.0, heater_d=6.0, heater_l=22.0,
                 reservoir="M", blade_len=70.0, label="Ø50 module"),
-    "L75": dict(bore=76.2, wall=3.0, heaters=4, heater_w=40.0, heater_d=6.0, heater_l=20.0,
+    "L75": dict(bore=76.2, wall=3.0, heaters=5, heater_w=50.0, heater_d=6.0, heater_l=22.0,
                 reservoir="L", blade_len=95.0, label="Ø75 module"),
 }
 CLEAR = {"A": dict(plate=0.10, block=0.30, t_max=200.0), "B": dict(plate=0.20, block=0.35, t_max=500.0)}
+# Tier A cold radial plate clearance per size. The thermal FEA (analysis/out/thermal) found that with 0.10 mm the hot
+# Al plate closes the gap in the cooler stainless spigot at the start of a build: +5 um on M50 and -36 um (seized) on
+# L75. Plate growth minus bore growth at 200 C is ~0.05 / 0.10 / 0.14 mm radial, so these leave ~0.05 mm hot.
+PLATE_CLEAR_A = {"S25": 0.10, "M50": 0.15, "L75": 0.20}
 for k, m in MODULES.items():
-    m["plate_d"] = m["bore"] - 2 * CLEAR["A"]["plate"]
+    m["plate_clear"] = PLATE_CLEAR_A[k]
+    m["plate_d"] = m["bore"] - 2 * m["plate_clear"]
     m["block_d"] = m["bore"] - 2 * CLEAR["A"]["block"]
     m["tube_od"] = m["bore"] + 2 * m["wall"]
     m["spigot_wall"] = (PORT_D - m["bore"]) / 2
