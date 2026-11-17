@@ -214,9 +214,9 @@ The interference sweep runs this whole path (400 mm) for every module; it is cle
   8 motion groups: recoater, piston (−42 to +8 mm), chamber door, guard door, reservoir, drawer, Z-arm release and the whole module
   path. **0 interferences in every state and sweep, for all three variants.** Getting there found and fixed: the dose chute and the
   recoater drive (chamber made deeper), the arm and the longer blade, the holder and the chute, the stepper and the lid screws, the
-  rail and the new corner fillets, the reservoir lid, the module path against the outlet plenum and the overflow clamp, and the module's
-  handle against the guard sill.
-- **MuJoCo** ([`mujoco.md`](analysis/out/mujoco.md)): the new drawer and Z-arm joints sweep clear. The piston carries 0.34 kg and needs
+  rail and the new corner fillets, the reservoir lid, the module path against the outlet plenum and the overflow clamp, the module's
+  handle against the guard sill, and (after the FEA) the first dowel positions inside the port and a flange lug against the Z mount.
+- **MuJoCo** ([`mujoco.md`](analysis/out/mujoco.md)): the Z-arm sweep touches nothing, and the drawer's only contact is its own slot in the lid (convex pieces fill the slot). The piston carries 0.34 kg and needs
   4.2 N peak; the Z arm 3.7 N. MuJoCo moves each group on its own joint, so in the piston sweep the arm does not follow the rod and
   the contact it reports at −42 mm is not real; the exact check, which moves them together, is clear.
 - **Mass** ([`mass.md`](analysis/out/mass.md)): 264 kg on the tray (was 254), process module 81.5 kg, tips at 0.73 g.

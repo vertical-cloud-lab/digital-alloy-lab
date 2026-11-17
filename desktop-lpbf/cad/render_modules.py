@@ -81,7 +81,7 @@ def three_modules():
     sc = Scene(parts, (W, H))
     sc.set(section=True)
     f = (10.0, 0.0, -55.0)
-    sc.cam(R.orbit(f, 560, -10, 12), f)
+    sc.cam(R.orbit(f, 720, -8, 12), f)
     label(sc, [p for p, _ in labs], [t for _, t in labs])
     sc.title("Three build modules, one floor port: spigot, honed 316L cylinder, heated plate stack (cut at y = 0)", 12)
     Image.fromarray(sc.shot()).save(OUT / "three-modules.png")
