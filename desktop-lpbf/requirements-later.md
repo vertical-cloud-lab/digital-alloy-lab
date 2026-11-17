@@ -47,19 +47,19 @@ The concept has plate heaters on the I/O list (§3.6 of the [README](README.md))
 4. the piston head, which carries the bore seal. It is air- or water-cooled in the 500 °C version;
 5. the piston rod. A hollow rod, or a service loop through a floor feedthrough, carries heater power and the thermocouple out.
 
-**Sizing (`requirements_budgets.py`, Ø50 plate, argon at 2 m/s):**
+**Sizing (`requirements_budgets.py`, Ø50 plate, argon at 2 m/s, the low-profile layout's 2 in. honed tube):**
 
 | Set point | Steady loss | Heater for a 15 min ramp | Passive cool-down to 50 °C |
 |---|---|---|---|
-| 200 °C | ~25 W | ~50 W | ~45 min |
-| 500 °C | ~75 W | ~140 W | ~55 min |
+| 200 °C | ~50 W | ~70 W | ~35 min |
+| 500 °C | ~145 W | ~210 W | ~50 min |
 
-- **The biggest loss is the build cylinder, not the plate's top surface.** The cylinder wall next to the plate runs close to plate temperature. That heat goes down the model's 1.7 mm-wall tube into the chamber floor: ~13 W at 200 °C and ~34 W at 500 °C, about half the total, as an upper bound. So the seal between the cylinder and the floor has to sit away from the hot zone, and at 500 °C the floor flange needs cooling. Viton is rated to about 200 °C.
-- **Clearance.** The model's Ø53 Al plate grows 0.21 mm in diameter at 200 °C and 0.58 mm at 500 °C. Its 0.4 mm radial clearance in the Ø53.8 bore leaves room for that expansion, but it is too loose to contain powder (§2). Plates are swappable anyway, so each plate's cold clearance can be set for its set point.
+- **The biggest loss is the build cylinder, not the plate's top surface.** The cylinder wall next to the plate runs close to plate temperature. That heat goes down the tube into the chamber floor: ~38 W at 200 °C and ~103 W at 500 °C through the low layout's 4.75 mm wall, about 70 % of the total (an upper bound). A thin-wall tube, like the tall model's 1.7 mm one, cuts the total to ~24 W and ~77 W. So the seal between the cylinder and the floor has to sit away from the hot zone, and at 500 °C the floor flange needs cooling. Viton is rated to about 200 °C.
+- **Clearance.** A Ø50–53 Al plate grows ~0.2 mm in diameter at 200 °C and ~0.55 mm at 500 °C. Both models' 0.4 mm radial clearance leaves room for that expansion, but it is too loose to contain powder (§2). Plates are swappable anyway, so each plate's cold clearance can be set for its set point.
 - **Seals.** Don't put the sliding seal at the plate. PTFE's ~260 °C rating is a material limit, not a rating for a dynamic seal in powder, and the high-temperature builds in the literature keep seals and drives below ~70–100 °C (Edison rank 12). Put a graphite or labyrinth wiper next to the hot plate, and the real seal (PTFE, or aramid felt, never wool) on the cooled piston head below the standoffs. Do this at 200 °C too, so the 500 °C version changes parts, not layout.
 - **Two tiers.**
   - Tier A, to build: 200 °C, ~100 W of cartridge heaters, a hot-side wiper, and a PTFE or aramid seal on the cool side.
-  - Tier B, reserved: 500 °C (the level that made 6xxx crack-free), ~150–300 W for Ø50–Ø75, a water-cooled piston head, a cooled floor flange, and Z motion and heating interlocked on coolant flow.
+  - Tier B, reserved: 500 °C (the level that made 6xxx crack-free), ~150–400 W for Ø50–Ø75 depending on the tube wall, a water-cooled piston head, a cooled floor flange, and Z motion and heating interlocked on coolant flow.
 
   Both tiers use the same plate interface and the same feedthroughs.
 - **Interlocks.**
@@ -70,7 +70,7 @@ The concept has plate heaters on the I/O list (§3.6 of the [README](README.md))
 
 ## 2. Swappable build-plate sizes
 
-The concept has a Ø50 mm plate with a Ø25 mm insert. The model now has a Ø53 plate in one Ø53.8 mm bore.
+The concept has a Ø50 mm plate with a Ø25 mm insert. The models have a single bore: Ø50.8 mm in the low-profile layout and Ø53.8 mm in the tall model.
 
 **What the literature says** ([Edison](edison/plate-hopper-automation/answer.md), §2 and ranks 2, 4, 5, 13, 20):
 
@@ -194,7 +194,7 @@ The supervisor refuses the next step until the last one is confirmed, which is w
 
 ## 5. Multi-laser printing, much later
 
-**Whose work this is.** Edison's `LITERATURE_HIGH` search ([`edison/multi-laser/answer.md`](edison/multi-laser/answer.md)) found that the independently addressable multi-laser powder bed work comes mainly from the **University of Sheffield** (Kamran Mumtaz, Kristian Groom and their students), not from Adam Clare. It could not tie a multi-laser hardware paper to Clare; the Clare papers it did find are on spatter, in-situ monitoring and a powder-composition patent.
+**Whose work this is.** Edison's `LITERATURE_HIGH` search ([`edison/multi-laser/answer.md`](edison/multi-laser/answer.md)) found that the independently addressable multi-laser powder bed work comes mainly from the **University of Sheffield** (Kamran Mumtaz, Kristian Groom and their students), not from Adam Clare. That broad search could not tie a multi-laser paper to Clare; the Clare papers it did find are on spatter, in-situ monitoring and a powder-composition patent.
 
 Its separate `LITERATURE` search on Clare's own papers ([`edison/clare-multi-laser-papers/answer.md`](edison/clare-multi-laser-papers/answer.md)) found two that match "independently drivable lasers":
 
@@ -229,10 +229,21 @@ The second paper is the closest to "independently drivable" in the closed-loop s
   - Make it one ~Ø110 mm O-ring face. It takes a single Ø2 in. window plate now, and later a Ø100 mm window, or a plate with a primary window plus a Ø40–60 mm auxiliary port.
   - Coat for 1070 nm and 915 nm. A 450 nm source gets its own blue-rated window.
   - Fused silica under a full atmosphere (safety factor 4) needs ≥ 2.2 mm for Ø48 mm clear and ≥ 4.6 mm for Ø100 mm.
-- **Head positions (f = 254 mm, WD 301 mm, window 175 mm above the powder).**
-  - A head reaches the whole Ø50 plate only within ±53 mm of the plate centre. There the worst incidence angle is ≤ ~18° and the spot stretches by ≤ ~5 %.
-  - FTH254-1064 housings are Ø120 mm, so two sit ≥ 120 mm apart. They then share only a 37 mm band, 73 % of the plate width. Edison's "both scanners cover the whole plate" needs smaller lens housings, heads tilted toward the centre, a longer focal length, or pre-focusing heads with no f-theta.
-  - One head needs ~Ø24 mm of clear window at the lid. Two heads at ±45 mm need one ~Ø82 mm window, or two ~Ø30 mm windows on 52 mm centres.
+- **Where heads can go** (`requirements_budgets.py`). The low-profile layout (`cad/lpbf_low.py`) uses an FTH160-1064: f = 160 mm, 110.6 mm field, Ø90 mm housing, window ~148 mm above the powder. The tall model uses an FTH254-1064: f = 254 mm, 156.7 mm field, Ø120 mm housing, window ~189 mm up.
+
+  | | f = 160 mm (low layout) | f = 254 mm (tall model) |
+  |---|---|---|
+  | A head reaches the whole Ø50 plate within | ±30 mm of centre (worst incidence ~20°) | ±53 mm (~18°) |
+  | Two housings side by side | ≥ 90 mm apart; they share a 21 mm band, 41 % of the plate width | ≥ 120 mm apart; they share 37 mm, 73 % |
+  | Clear window for two heads side by side | one ~Ø92 mm, or two ~Ø20 mm on 73 mm centres | one ~Ø103 mm, or two ~Ø28 mm on 75 mm centres |
+  | One head alone | ~Ø14 mm | ~Ø22 mm |
+
+  So with straight-down f-theta heads, two lasers that can *each* reach the whole plate don't fit side by side, and with the short lens they share less than half of it. Edison's "both scanners cover the whole plate" needs one of these:
+  - heads tilted toward the centre, with focus correction;
+  - pre-focusing 3-axis heads with no f-theta;
+  - smaller optics.
+
+  Otherwise, accept a shared band and plan the work around it. That is one more reason to start with a heating beam or a diode head on a rail (ranks 1–2), which do not need a second full field.
 - **Optics plate.** Leave room and dowelled datums for a second scan head, plus a stiff rail with tip/tilt and XYZ adjustment for an auxiliary heating or diode head. Keep it clear of the main scan cone and the recoater.
 - **Controller.** Leave room for a second XY2-100 channel and 8 or more isolated TTL or analogue laser channels. All of them run on one hardware clock, with a blanking line that turns every source off at once.
 - **Safety.** Each source gets its own shutter, enable and emission indicator, all in the one hardwired chain from the README (§3.7). The guard and eyewear must also be rated for 450 nm if a blue source is added.
