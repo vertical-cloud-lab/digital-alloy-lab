@@ -394,8 +394,9 @@ def build(include_tray=True, module="M50", reservoir=None):
     ch = ch.cut(box(-MP.INLET_HALF, MP.INLET_HALF, iy - 1, cy + 1, 4, 12))     # cross-flow inlet slot (120 x 8, for the Ø75 module)
     ch = ch.cut(box(-MP.OUTLET_HALF, MP.OUTLET_HALF, MP.OUTLET_Y[0], MP.OUTLET_Y[1], -fl - 1, 1))   # outlet: floor slot near the door
     ch = ch.cut(cyl(P["port_d"] / 2, (0, 0, -fl - 1), "z", fl + 2))            # module port: every module's spigot fills it
-    for sx in (-1, 1):                                                          # helical inserts for the module's thumb screws
-        ch = ch.cut(cyl(3.0, (sx * MP.SCREW_X, 0, -fl - 1), "z", 13.0))
+    for sx in (-1, 1):                                                          # helical inserts for the module's thumb screws,
+        ch = ch.cut(cyl(3.0, (sx * MP.SCREW_X, 0, -fl - 1), "z", 13.0))          # and the locating dowel / diamond pin holes
+        ch = ch.cut(cyl(3.0, (0, sx * MP.DOWEL_Y, -fl - 1), "z", 11.0))
     ch = ch.cut(box(P["ovf_x0"], P["ovf_x1"], -52, 52, -fl - 1, 1))
     for sx in (-1, 1):                                                          # plate-at-exchange-height through-beam (fibre heads)
         ch = ch.cut(cyl(1.6, (sx * (ix - 1), 0, 5.0), "x" if sx > 0 else "-x", P["wall"] + 2))
@@ -406,7 +407,7 @@ def build(include_tray=True, module="M50", reservoir=None):
     ch = ch.cut(cyl(3.2, (ix - 1, -40, 18), "x", P["wall"] + 2))       # O2 sample
     gw, gd = P["gland_w"], P["gland_d"]                                # lid O-ring face gland in the top face
     ch = ch.cut(rbox(-ix - 3 - gw, ix + 3 + gw, -iy - 3 - gw, iy + 3 + gw, lz0 - gd, lz0 + 1, 6).cut(rbox(-ix - 3, ix + 3, -iy - 3, iy + 3, lz0 - gd - 1, lz0 + 2, 4)))
-    add("Process chamber body (6061-T6, ~5.0 L)", ch, C["alu"], 5, (0, 0, 260), mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
+    add("Process chamber body (6061-T6, ~6.4 L)", ch, C["alu"], 5, (0, 0, 260), mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
     # the cord as squeezed: 2.65 mm tall, ~3.7 mm wide, sitting in the 4.6 mm gland
     add("Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)", rbox(-ix - 3.3 - 3.7, ix + 3.3 + 3.7, -iy - 3.3 - 3.7, iy + 3.3 + 3.7, lz0 - gd, lz0, 5.6).cut(rbox(-ix - 3.3, ix + 3.3, -iy - 3.3, iy + 3.3, lz0 - gd - 1, lz0 + 1, 4.3)),
         C["black"], 5, (0, 0, 300), mat="fkm", bom="G8", mcm="ORING_CORD", section=True)

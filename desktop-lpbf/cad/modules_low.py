@@ -76,10 +76,13 @@ def add_build_module(h, add, key, step=4):
     spig = h.tube(pr - MP.SPIGOT_FIT, R, (0, 0, zf), "z", MP.FLOOR_T)
     spig = spig.cut(h.tube(pr, pr - 2.9, (0, 0, zf + 4.0), "z", 3.6))                 # O-ring groove
     fl = h.fuse([h.cyl(MP.FLANGE_D / 2, (0, 0, zf - MP.FLANGE_T), "z", MP.FLANGE_T),
-                 h.rbox(-MP.TAB_X, MP.TAB_X, -12, 12, zf - MP.FLANGE_T, zf, 6)])
+                 h.rbox(-MP.TAB_X, MP.TAB_X, -12, 12, zf - MP.FLANGE_T, zf, 6)] +
+                [h.cyl(5.5, (0, s * MP.DOWEL_Y, zf - MP.FLANGE_T), "z", MP.FLANGE_T) for s in (-1, 1)] +
+                [h.box(-6.0, 6.0, 0, s * MP.DOWEL_Y, zf - MP.FLANGE_T, zf) if s > 0 else h.box(-6.0, 6.0, s * MP.DOWEL_Y, 0, zf - MP.FLANGE_T, zf) for s in (-1, 1)])
     fl = fl.cut(h.cyl(R, (0, 0, zf - MP.FLANGE_T - 1), "z", MP.FLANGE_T + 2))
     for s in (-1, 1):
         fl = fl.cut(h.cyl(3.4, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T - 1), "z", MP.FLANGE_T + 2))
+        fl = fl.cut(h.cyl(3.0, (0, s * MP.DOWEL_Y, zf - MP.FLANGE_T - 1), "z", MP.FLANGE_T + 2))      # dowel holes
     tb = h.tube(R + W, R, (0, 0, z_stop), "z", (zf - MP.FLANGE_T) - z_stop)
     add(f"Build module {lab}: spigot, flange and honed 316L cylinder (Ø{m['bore']:.1f} bore, {W:.0f} mm wall)",
         h.fuse([spig, fl, tb]), C["ss"], step, (0, -320, -60), mat="ss316l", bom="B1", section=True, **mg)
@@ -99,12 +102,15 @@ def add_build_module(h, add, key, step=4):
     sc = []
     for s in (-1, 1):
         sc += [h.cyl(5.0, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T - 6), "z", 6), h.cyl(3.0, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T), "z", MP.FLANGE_T + 10)]
+    add("Locating dowel + diamond pin (Ø6, pressed into the floor's underside)", h.comp([h.cyl(3.0, (0, s * MP.DOWEL_Y, zf - MP.FLANGE_T), "z", MP.FLANGE_T + 10.0) for s in (-1, 1)]),
+        C["steel"], step, (0, 0, -40), mat="ss316l", bom="B2")
     add("Captive M6 thumb screws (2, into helical inserts in the floor)", h.comp(sc), C["steel"], step, (0, -320, -60),
         mat="ss316l", bom="B2", **mg)
 
     # ---------- plate and heater stack (moves with the piston, leaves with the module) ----------
     zb1, zb0, zk0, zh0, zc = z["zb1"], z["zb0"], z["zk0"], z["zh0"], z["zc"]
     plate = h.cyl(Rp, (0, 0, zb1), "z", MP.PLATE_T).cut(h.tube(Rp + 1, Rp - 1.5, (0, 0, -7.0), "z", 3.0))
+    plate = plate.cut(h.tube(Rp + 1, Rp - 1.2, (0, 0, -3.0), "z", 1.6))                      # wiper groove under the top edge
     lug = h.box(BAYONET_R - 0.5, BAYONET_R + 2.5, -3.0, 3.0, zb1 - 4.0, zb1 - 2.2)
     lugs = [lug.rotate(V(0, 0, 0), V(0, 0, 1), a) for a in (0.0, 120.0, 240.0)]
     add(f"Build plate {lab} (Ø{m['plate_d']:.1f} x {MP.PLATE_T:.0f}, 6061-T6; bayonet spigot, gripper groove)",
@@ -128,6 +134,8 @@ def add_build_module(h, add, key, step=4):
     xt, yt = polar(*L["tco"])
     blk = blk.cut(h.cyl(2.1, (xt, yt, zb0 - 1), "z", 11.0))
     tcobj.append(h.cyl(2.0, (xt, yt, zb0), "z", 10.0))
+    add(f"Plate rim wiper {lab} (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+        h.tube(R, Rp - 1.1, (0, 0, -2.9), "z", 1.4), C["white"], step, (0, 0, 300), mat="ptfe", bom="B2", section=True, **pg)
     add(f"Heater block {lab} (6061-T6, bayonet socket)", blk, C["alu"], step, (0, 0, 250), mat="al6061", bom="H1",
         section=True, **pg)
     add(f"Cartridge heaters {lab} ({m['heaters']} x {m['heater_w']:.0f} W, 24 V, Ø6 x {m['heater_l']:.0f})", h.comp(heaters), C["hot"], step,

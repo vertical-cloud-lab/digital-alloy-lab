@@ -4,7 +4,7 @@ Total on the tray: **263.8 kg**, against tray ratings of 490 kg (Kardex Shuttle 
 
 | Module | Mass (kg) | CoM height above tray (mm) | Shortest lever to a foot line (mm) | Tips at (g) |
 |---|---|---|---|---|
-| process | 81.5 | 253.5 | 184.9 | 0.73 |
+| process | 81.5 | 253.4 | 184.9 | 0.73 |
 | gas | 60.7 | 125.8 | 222.7 | 1.77 |
 | rack | 109.2 | 196.9 | 244.5 | 1.24 |
 | tray | 12.4 |  |  |  |
@@ -23,6 +23,7 @@ Total on the tray: **263.8 kg**, against tray ratings of 490 kg (Kardex Shuttle 
 | UV fused silica | 0.0 |
 | FKM (Viton) 75A | 0.0 |
 | Macor machinable glass-ceramic | 0.0 |
+| PTFE | 0.0 |
 | aramid felt | 0.0 |
 
 Heaviest parts:
@@ -39,7 +40,7 @@ Heaviest parts:
 | DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5 (3U) | rack | mixed (vendor unit; mass from datasheet or estimate) | 9.0 | catalogue/estimate |
 | Sealed side-channel blower (gas-tight, ~100 L/min) | gas | mixed (vendor unit; mass from datasheet or estimate) | 9.0 | catalogue/estimate |
 | Scan + laser controller PC (2U) | rack | mixed (vendor unit; mass from datasheet or estimate) | 8.0 | catalogue/estimate |
-| Process chamber body (6061-T6, ~5.0 L) | process | 6061-T6 aluminium | 7.39 | 6061-T6 aluminium x volume |
+| Process chamber body (6061-T6, ~5.0 L) | process | 6061-T6 aluminium | 7.388 | 6061-T6 aluminium x volume |
 | Guard frame (20 mm T-slot) | process | 6061-T6 aluminium | 6.036 | 6061-T6 aluminium x volume |
 | Tray dock (CombiTac-type, mates sideways) | tray | mixed (vendor unit; mass from datasheet or estimate) | 6.0 | catalogue/estimate |
 | Laser guard panels (1.5 mm aluminium) | process | 6061-T6 aluminium | 5.097 | 6061-T6 aluminium x volume |

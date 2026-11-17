@@ -5,7 +5,7 @@
    "com_mm": [
     -24.5,
     0.1,
-    58.5
+    58.4
    ],
    "foot": [
     -370.0,
@@ -13,7 +13,7 @@
     -265.0,
     215.0
    ],
-   "com_height_above_tray_mm": 253.5,
+   "com_height_above_tray_mm": 253.4,
    "min_lever_mm": 184.9,
    "tip_accel_g": 0.73
   },
@@ -78,6 +78,7 @@
   "UV fused silica": 0.0,
   "FKM (Viton) 75A": 0.0,
   "Macor machinable glass-ceramic": 0.0,
+  "PTFE": 0.0,
   "aramid felt": 0.0
  },
  "parts": [
@@ -205,12 +206,12 @@
    "part": "Process chamber body (6061-T6, ~5.0 L)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 7.39,
+   "mass_kg": 7.388,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    -2.0049402241497787,
-    12.043257730785417,
-    30.571233727497383
+    -2.005354545749319,
+    12.045746475533804,
+    30.580651042788652
    ]
   },
   {
@@ -397,12 +398,12 @@
    "part": "Build module M50: spigot, flange and honed 316L cylinder (\u00d850.8 bore, 3 mm wall)",
    "module": "process",
    "material": "316L stainless",
-   "mass_kg": 1.571,
+   "mass_kg": 1.579,
    "basis": "316L stainless x volume",
    "com": [
-    -2.7962108386892256e-14,
-    1.1612082921506312e-15,
-    -22.98457357259969
+    -3.453853702253818e-14,
+    3.5181365016885743e-16,
+    -23.02290281780137
    ]
   },
   {
@@ -1042,18 +1043,6 @@
    ]
   },
   {
-   "part": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.08,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -0.01483149427560271,
-    -0.009375238813007124,
-    -40.99153119600737
-   ]
-  },
-  {
    "part": "Reservoir M powder",
    "module": "process",
    "material": "AlSi10Mg powder (~50 % packing)",
@@ -1063,6 +1052,18 @@
     -89.99999999999999,
     -2.2039813219746248e-16,
     213.6176403109967
+   ]
+  },
+  {
+   "part": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.079,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    0.003705385188218441,
+    -0.012369252751507031,
+    -41.060033217341555
    ]
   },
   {
@@ -1081,12 +1082,12 @@
    "part": "Heater block M50 (6061-T6, bayonet socket)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 0.07,
+   "mass_kg": 0.069,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    -0.009986092531913562,
-    -0.04498028994962825,
-    -17.142126376714458
+    0.04119286246472367,
+    -0.009284456340317356,
+    -17.136784201861595
    ]
   },
   {
@@ -1162,18 +1163,6 @@
    ]
   },
   {
-   "part": "Build plate M50 (\u00d850.6 x 10, 6061-T6; bayonet spigot, gripper groove)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.054,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -1.6058253317644554e-15,
-    -2.4879938245533634e-17,
-    -5.177214450494375
-   ]
-  },
-  {
    "part": "Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)",
    "module": "process",
    "material": "bearing / alloy steel",
@@ -1183,6 +1172,18 @@
     -66.5,
     3.105518950000438e-17,
     158.0
+   ]
+  },
+  {
+   "part": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.053,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -1.1438121222561583e-15,
+    -1.473806835478787e-15,
+    -5.223171812075641
    ]
   },
   {
@@ -1570,6 +1571,18 @@
    ]
   },
   {
+   "part": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "module": "process",
+   "material": "bearing / alloy steel",
+   "mass_kg": 0.015,
+   "basis": "bearing / alloy steel x volume",
+   "com": [
+    -1.0965952841140204e-15,
+    1.949502727313814e-15,
+    -22.0
+   ]
+  },
+  {
    "part": "Hinge pins (\u00d85, 316)",
    "module": "process",
    "material": "316L stainless",
@@ -1642,18 +1655,6 @@
    ]
   },
   {
-   "part": "Cartridge heaters M50 (2 x 50 W, 24 V, \u00d86 x 22)",
-   "module": "process",
-   "material": "bearing / alloy steel",
-   "mass_kg": 0.01,
-   "basis": "bearing / alloy steel x volume",
-   "com": [
-    7.310635227426805e-16,
-    8.726825067941135e-16,
-    -22.0
-   ]
-  },
-  {
    "part": "NFC reader antenna (in the dock face, reads the reservoir's tag)",
    "module": "process",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
@@ -1666,15 +1667,27 @@
    ]
   },
   {
+   "part": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.009,
+   "basis": "316L stainless x volume",
+   "com": [
+    6.785183320455502e-16,
+    -1.2062548125254227e-14,
+    -20.0
+   ]
+  },
+  {
    "part": "Radiation shields M50 (2 x 0.3 mm polished 316)",
    "module": "process",
    "material": "316L stainless",
    "mass_kg": 0.007,
    "basis": "316L stainless x volume",
    "com": [
-    -0.052984125808879685,
-    -0.0102780491667042,
-    -28.00000000000001
+    -0.010398402940471143,
+    -0.044629417102895204,
+    -28.000000000000004
    ]
   },
   {
@@ -1696,8 +1709,8 @@
    "mass_kg": 0.003,
    "basis": "Macor machinable glass-ceramic x volume",
    "com": [
-    3.769546289141946e-16,
-    -2.921398374085008e-15,
+    5.65431943371292e-16,
+    -1.0366252295140354e-15,
     -28.0
    ]
   },
@@ -1708,9 +1721,21 @@
    "mass_kg": 0.002,
    "basis": "catalogue/estimate",
    "com": [
-    1.130863886742584e-16,
-    8.0,
+    -8.0,
+    9.487147630982566e-16,
     -19.0
+   ]
+  },
+  {
+   "part": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "module": "process",
+   "material": "PTFE",
+   "mass_kg": 0.001,
+   "basis": "PTFE x volume",
+   "com": [
+    -7.011127870985304e-14,
+    -1.8542387503531136e-15,
+    -2.2000000000000006
    ]
   },
   {
@@ -1756,9 +1781,9 @@
    "mass_kg": 0.0,
    "basis": "bearing / alloy steel x volume",
    "com": [
-    6.827382811963625,
-    1.7504869565217351,
-    -23.345652173913038
+    1.0956521739130445,
+    5.985857376054955,
+    -23.34565217391304
    ]
   }
  ]

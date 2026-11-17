@@ -1,15 +1,15 @@
 {
  "model": {
-  "bodies": 49,
-  "geoms": 1039,
-  "meshes": 1039
+  "bodies": 50,
+  "geoms": 1062,
+  "meshes": 1062
  },
  "sweep": {
   "recoater": [
    {
     "other": "Process chamber body (6061-T6, ~5.0 L)",
     "at": 0.0,
-    "depth_mm": 3.65,
+    "depth_mm": 3.84,
     "verdict": "designed joint (e.g. rod in its seal bore); exact check clear"
    },
    {
@@ -63,10 +63,10 @@
    "final_error": 0.0
   },
   "piston": {
-   "moving_mass_kg": 0.342,
+   "moving_mass_kg": 0.344,
    "move": "0 to -0.04 m in 2 s (quintic)",
-   "peak": 4.2,
-   "hold_at_end": 3.36,
+   "peak": 4.22,
+   "hold_at_end": 3.37,
    "unit": "N",
    "final_error": -1.7e-05
   },
@@ -126,7 +126,7 @@
    "com_mm": [
     -24.5,
     0.1,
-    58.5
+    58.4
    ]
   },
   "gas": {
@@ -312,7 +312,7 @@
      "min_feet_in_contact": 3
     },
     "process": {
-     "slide_mm": 0.085,
+     "slide_mm": 0.084,
      "tilt_deg": 0.001,
      "min_feet_in_contact": 2
     },
@@ -336,7 +336,7 @@
      "min_feet_in_contact": 0
     },
     "process": {
-     "slide_mm": 1.067,
+     "slide_mm": 1.503,
      "tilt_deg": 0.001,
      "min_feet_in_contact": 0
     },
@@ -348,5 +348,5 @@
    }
   }
  ],
- "runtime_s": 47.1
+ "runtime_s": 78.6
 }

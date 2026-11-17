@@ -36,42 +36,47 @@ the lab Pi on 2026-11-17; machining is not priced.
 
 | Layer | Thickness | Material and parts |
 |---|---|---|
-| Build plate | 10 mm | 6061-T6, or 5083-H321 where it is held at 200 °C (see [`low-profile.md`](low-profile.md) §3). A Ø12 bayonet spigot with three lugs underneath; a 3 × 1.5 mm gripper groove around the rim |
+| Build plate | 10 mm | 6061-T6, or 5083-H321 where it is held at 200 °C (see [`low-profile.md`](low-profile.md) §3). A Ø12 bayonet spigot with three lugs underneath; a 3 × 1.5 mm gripper groove around the rim; a carbon-filled PTFE split-ring wiper just under the top edge that keeps powder out of the hot gap; graphite foil between the plate and the block |
 | Heater block | 14 mm | 6061-T6 with the bayonet socket. **24 V, 50 W, Ø6 × 22 mm cartridges** (McMaster 3714N36, $30.14) in vertical holes from below: 2 / 3 / 5 in S25 / M50 / L75. **Three type K thermocouples**: control at the centre, edge, and an independent limit (McMaster 3871K606: ungrounded, 0.04 in. 316 sheath, 1,290 °F; $148.67). **Thermal cutoff** 240 °C in series with the heaters (Cantherm RT240, $1.06) |
 | Thermal break | 8 mm | three Macor standoffs Ø8 (Ø5 in S25) cut from McMaster 8489K75 rod ($68.59, rated 1,470 °F), and two 0.005 in. polished 316 shields (McMaster 2317K275) in the argon gap |
 | Piston head | 18 mm | 6061-T6 (Tier A) or 316L with a water channel (Tier B). Carries the bore seal (aramid felt + carbon-filled PTFE scraper) on the **cool** side, and pockets under the heaters for their leads |
 | Hollow rod | 77 mm | 5/8 in. × 0.065 in. 316 tube (McMaster 11119N35; welded, so polish it for the O-ring gland). Inert inside: the leads run down it to a potted cable exit (Torr Seal) at the rod end, beside a 416 stainless striker |
 
 **What the thermal FEA found** ([`thermal.md`](analysis/out/thermal/thermal.md): axisymmetric CalculiX, CAX8, 1 mm mesh, power within 0.6 % of a
-0.5 mm mesh, energy balance closed to 0.03 %):
-- **Where the heat goes.** 76–89 % of the heater power leaves through the plate's and block's radial gaps into the bore wall, and on
-  through the spigot into the chamber floor. The plate top takes 6–18 %, the break only 5–6 %. That confirms the lumped estimate's
-  conclusion, but the FEA losses are about twice as large (47 / 90 / 135 W against 24 / 49 / 76 W), because a 0.1 mm argon gap
-  conducts far better than the lumped model allowed.
-- **Finding 1: the first heater counts were too small.** With 1 × 40 W (S25) and 2 × 40 W (M50) the plate never reaches 200 °C
-  (it levels at 179 and 182 °C). The worst steady loss at 200 °C is 47 / 90 / 135 W, so each module now carries ≥ 1.5× that in
-  50 W cartridges: **2 / 3 / 5 × 50 W = 100 / 150 / 250 W**.
-- **Finding 2: a 0.10 mm cold clearance seizes.** At the start of a build the 200 °C plate sits inside the spigot, which stays near
-  45–55 °C. The Al plate grows far more than the stainless bore: hot clearance was +5 µm on Ø50 and **−36 µm on Ø75**. Plates are
-  now **0.10 / 0.15 / 0.20 mm radial clearance cold** (S25 / M50 / L75), which leaves about 0.05 mm when hot, inside the
-  0.05–0.15 mm containment range Edison gave. A larger gap also cuts the heater power (M50: 90 W at 0.10 mm, 68 W at 0.20 mm).
-- **Finding 3: an unlimited heat-up overshoots.** Driving the installed power until the plate reaches 200 °C takes the block to
-  325–364 °C, above the 240 °C cutoff and above some heaters' ratings. The control has to cap the block: a PID on the plate's
-  control thermocouple whose output is limited by a block-temperature ceiling of ~225 °C. Heat-up then takes longer than the
-  FEA's 2–5 min (not yet modelled with the cap).
-- **Seals and magnet are inside their limits:** bore seal ≤ 123 °C (aramid/PTFE: 204 °C), spigot O-ring ≤ 54 °C, rod-gland
-  O-rings ≤ 118 °C (FKM: 200 °C), coupling face ≤ 68 °C. The last is close to the 79 °C rating of the McMaster pot magnet
-  (5679K95), with only 10 W/m²K at the rod end in the model; **use a samarium-cobalt pot magnet** (not priced) or a G10 washer under
-  the striker.
-- **Cool-down to 50 °C for the door interlock:** 15 / 26 / 36 min from the end of a build, heaters off.
-- **Heat into the chamber:** up to 130 W (L75 at the start of a build), so a long build warms the chamber. With the floor edge at
-  60 °C the heater power drops by ~17 %.
-- **Tier B (500 °C, reserved):** M50 needs 243 W with a water-cooled 316L head and flange; the seals stay ≤ 162 °C. A 0.2 mm cold
-  clearance closes to −65 µm, so Tier B plates need ≥ 0.3 mm. High-temperature cartridges for it: McMaster 3618K422 (120 V,
-  1/4 × 1-1/2 in., 100 W, 1,400 °F, $95.22). Coolant flow interlock: AutomationDirect FSD75-AP-6H ($228).
+0.5 mm mesh, energy balance closed to 0.03 %). It was run three times, and each run changed the design:
 
-The FEA above was run on the first heater counts and 0.10 mm gaps (that run is what found findings 1 and 2).
-Re-run `python desktop-lpbf/analysis/thermal_module.py` for the final values in `module_params.py`.
+| Run | Design | What it found | Change |
+|---|---|---|---|
+| 1 | 1 / 2 / 4 × 40 W; 0.10 mm plate gap; bare Al plate–block face; 0.03 mm spigot fit | S25 and M50 never reach 200 °C (they level at 179 and 182 °C); the worst steady loss is 47 / 90 / 135 W. The hot plate closes its gap in the cooler spigot: +5 µm on M50, **−36 µm (seized) on L75** | 2 / 3 / 5 × 50 W cartridges; cold plate clearance 0.10 / 0.15 / 0.20 mm |
+| 2 | as built after run 1 | gaps now 51–96 µm hot; S25's block sits at its 240 °C cutoff (it pushes its heat through a small face); powder in the gaps would more than double the power; a 0.03 mm spigot fit closes to −23 µm hot | graphite foil under the plate (5000 W/m²K); a carbon-filled PTFE wiper on the plate rim; spigot fit 0.10 mm with two dowels locating the module on its flange |
+| 3 | final (`module_params.py` as committed) | the table below | – |
+
+Final run, 200 °C at the plate top centre, chamber at 25 °C:
+
+| Module | Heater power, build start / end | Installed | Block max | Plate centre − edge | Hot plate clearance | Heat-up at full power | Cool-down to 50 °C |
+|---|---|---|---|---|---|---|---|
+| S25 | 44 / 30 W | 2 × 50 = 100 W | 221 °C | 1.2–1.6 °C | 51–67 µm | 1 min (block reaches 242 °C) | 15 min |
+| M50 | 72 / 52 W | 3 × 50 = 150 W | 206 °C | 1.6–2.0 °C | 56–82 µm | 3 min (211 °C) | 28 min |
+| L75 | 97 / 71 W | 5 × 50 = 250 W | 204 °C | 1.9–2.3 °C | 64–96 µm | 4 min (209 °C) | 40 min |
+
+- **Where the heat goes.** 66–89 % of the heater power leaves through the plate's and block's radial gaps into the bore wall, and on
+  through the spigot into the chamber floor. Build start, with the plate inside the 316L spigot, is the worst case. The lumped
+  estimate in `requirements_budgets.py` agrees at the build end (49 W against 52 W for Ø50) and is low at the start, because it has
+  no plate-to-bore gap.
+- **Seals and magnet, clean argon gaps:** bore seal ≤ 121 °C (aramid/PTFE: 204 °C), rod-gland O-rings ≤ 117 °C (FKM: 200 °C),
+  spigot O-ring ≤ 56 °C (84 °C with a 60 °C chamber), coupling face ≤ 68 °C. The last is 11 °C under the 79 °C rating of the
+  McMaster pot magnet (5679K95), with only 10 W/m²K on the rod end in the model (the Z arm under it is a better sink than that).
+- **Powder in the gaps is the largest risk.** If powder fills the plate and block gaps, M50 needs 226 W at the build start (more than
+  the 150 W installed) and the coupling face reaches 84 °C. That is why the plate now carries a rim wiper. Use a samarium-cobalt pot
+  magnet, or a 3–5 mm G10 washer under the striker, for margin.
+- **The heat-up has to be capped.** Full power takes S25's block to 242 °C, at its cutoff, by the time the plate reaches 200 °C.
+  The supervisor's PID runs on the plate's control thermocouple with its output limited by a block ceiling of ~225 °C.
+- **Heat into the chamber:** 42–92 W at the build start, mostly through the floor, so a long build warms the chamber. With the floor
+  edge at 60 °C the heater power drops by ~17 %.
+- **Tier B (500 °C, reserved):** M50 needs 235 W with a water-cooled 316L head and flange; seals stay ≤ 159 °C. But the 6061 block
+  reaches 520 °C, too near its ~580 °C solidus, so **Tier B needs a steel or ceramic heater block**, and plates need ≥ 0.3 mm cold
+  clearance (0.20 mm runs at −61 µm). High-temperature cartridges: McMaster 3618K422 (120 V, 1/4 × 1-1/2 in., 100 W, 1,400 °F,
+  $95.22). Coolant flow interlock: AutomationDirect FSD75-AP-6H ($228).
 
 **Control and interlocks:**
 - 24 V heater supply Mean Well LRS-350-24 ($34.81), switched by a Crydom D1D12 DC solid-state relay ($85.22; 12 A, and L75 draws
@@ -89,15 +94,17 @@ Re-run `python desktop-lpbf/analysis/thermal_module.py` for the final values in 
 
 | Module | Bore (honed) | Plate, cold clearance | Cylinder blank (McMaster) | Heaters | Steady at 200 °C (FEA) | Powder, 15 mm build | Reservoir |
 |---|---|---|---|---|---|---|---|
-| S25 | 25.4 | Ø25.2, 0.10 mm | 89495K18, 1-1/4 × 0.188 in. 316, $66.07 / 6 in. | 2 × 50 W | 31–47 W | 18 g (12 cm³) | S, 38 cm³ |
-| M50 | 50.8 | Ø50.5, 0.15 mm | 11119N55, 2-1/4 × 1/4 in. 316, $144.98 / ft | 3 × 50 W | 59–90 W | 72 g (49 cm³) | M, 97 cm³ (L for > 29 mm) |
-| L75 | 76.2 | Ø75.8, 0.20 mm | 89495K4, 3-1/2 × 3/8 in. 316 (turn OD to 82.6), $188.68 / 6 in. | 5 × 50 W | 86–135 W | 163 g (111 cm³) | L, 233 cm³ |
+| S25 | 25.4 | Ø25.2, 0.10 mm | 89495K18, 1-1/4 × 0.188 in. 316, $66.07 / 6 in. | 2 × 50 W | 30–44 W | 18 g (12 cm³) | S, 38 cm³ |
+| M50 | 50.8 | Ø50.5, 0.15 mm | 11119N55, 2-1/4 × 1/4 in. 316, $144.98 / ft | 3 × 50 W | 52–72 W | 72 g (49 cm³) | M, 97 cm³ (L for > 29 mm) |
+| L75 | 76.2 | Ø75.8, 0.20 mm | 89495K4, 3-1/2 × 3/8 in. 316 (turn OD to 82.6), $188.68 / 6 in. | 5 × 50 W | 71–97 W | 163 g (111 cm³) | L, 233 cm³ |
 
 Powder at 30 µm layers, 1.8 dose factor, AlSi10Mg, as in `requirements_budgets.py`. Every blank is bored and honed to H7 with a 3 mm wall.
 
 **One port, one coupling:**
 - **Floor port Ø96.** Each module's spigot (turned from a 4 in. 316 bar, McMaster 9260K5, $266.77 for 5 in.) fills it flush with
-  the floor and seals with a radial FKM O-ring, **2-238** (groove Ø90.2; ID 88.5 mm, 2 % stretch). The O-ring row in
+  the floor, 0.10 mm radial clearance, and seals with a radial FKM O-ring, **2-238** (groove Ø90.2; ID 88.5 mm, 2 % stretch). A
+  Ø6 dowel and a diamond pin in the floor's underside locate the module through two lugs on its flange; the loose spigot fit keeps
+  a hot spigot from binding in the aluminium port. The O-ring row in
   `options-mcmaster.csv` is the 2-240 (9464K367), one size too large; swap it for 2-238 in the same FKM family.
 - **Flange and screws.** A Ø100 flange with two tabs (cut from 316 plate: the 4 in. bar is too small for it) pulls up against the
   floor's underside with two captive M6 knurled screws (McMaster 95966A705, 18-8) into stainless helical inserts (91732A782).
@@ -167,7 +174,7 @@ The interference sweep runs this whole path (400 mm) for every module; it is cle
 ![Plate, drawer and reservoir in sequence](cad/img/modules/automation.gif)
 
 **Taking the plate out (route 1 of requirements-later.md §4):**
-1. At the end of a build, the recoater sweeps loose powder into the overflow. Wait for the plate to cool below 50 °C (§1: 15–36 min).
+1. At the end of a build, the recoater sweeps loose powder into the overflow. Wait for the plate to cool below 50 °C (§1: 15–40 min).
 2. Vent to atmosphere; the guard lock releases only now. The guard door slides open and the chamber door drops down.
 3. The piston rises 8 mm above the floor (the axis now runs −42 to +8 mm). A heat-resistant through-beam across the bore at z = +5 mm
    confirms the plate is up: Omron E32-T61-S fibres (rated 350 °C, $547.09) and an E3NX-FA41 amplifier ($353.03).
@@ -201,7 +208,7 @@ The interference sweep runs this whole path (400 mm) for every module; it is cle
 
 ## 5. Checks
 
-- **Interference, exact B-rep** ([`interference.md`](analysis/out/interference.md), [`variants/`](analysis/out/variants/)): 141 parts per variant,
+- **Interference, exact B-rep** ([`interference.md`](analysis/out/interference.md), [`variants/`](analysis/out/variants/)): 143 parts per variant,
   M50/M, L75/L and S25/S. Five states (closed; recoater at the end with the piston at its bottom stop; plate exchange with the doors
   open and the plate up 8 mm; doors open with the reservoir and drawer out; module dropped with the arm released) and 25-step sweeps of
   8 motion groups: recoater, piston (−42 to +8 mm), chamber door, guard door, reservoir, drawer, Z-arm release and the whole module
@@ -233,14 +240,15 @@ About $8,400 in parts, before machining and before Tier B. [`bom.csv`](bom.csv) 
 
 ## 7. Open items
 
-- **Re-run the thermal FEA** on the final heater counts and clearances, and add the block-capped heat-up.
 - **Heaters.** McMaster's 24 V cartridge (3714N36) lists no temperature rating and has PTFE in its lead insulation; Slice
-  Engineering's 50 W lists 250 °C. With the block near 210–240 °C, prefer a 400 °C-rated cartridge (E3D lists one, priced in GBP), or
-  Tier B's 120 V cartridges.
+  Engineering's 50 W lists 250 °C. The blocks run at 204–221 °C, so prefer a 400 °C-rated cartridge (E3D lists one, priced in GBP)
+  or Tier B's 120 V cartridges.
+- **Heat-up with the block cap** is not modelled yet, nor the wiper's own heat path or a partly powder-filled gap.
 - **Thermocouples cost $149 each at McMaster.** Probes from a thermocouple vendor are likely cheaper; not fetched.
 - **Thermal cutoff and SSR:** the Cantherm RT240 lists only an AC rating; check its DC breaking rating at 24 V / 10 A.
-- **Pot magnet:** SmCo instead of NdFeB (§1).
-- **Recoater holder:** re-run the FEA's case 4 on the 18 × 31 holder.
+- **Pot magnet:** samarium-cobalt instead of NdFeB, or a G10 washer under the striker (§1).
+- **Recoater holder:** re-run case 4 of `analysis/fea/fea.py` on the 18 × 31 holder.
+- **Graphite foil and the 2-238 O-ring** are specified but not priced.
 - **Hardware door-lock channel** for "plate above 50 °C" (§1).
-- **Inert module swap** (route 2) is not possible through the floor; if it is needed, the chamber door would have to dock to the
+- **Inert module swap** (route 2) is not possible through the floor. If it is needed, the chamber door would have to dock to the
   glovebox (route 3).

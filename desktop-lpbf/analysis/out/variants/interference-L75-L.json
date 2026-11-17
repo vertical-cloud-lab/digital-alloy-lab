@@ -2,12 +2,12 @@
  "variant": "L75 module, L reservoir",
  "vol_tol_mm3": 0.5,
  "chord_mm": 0.05,
- "n_parts": 141,
+ "n_parts": 143,
  "states": [
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 691,
+   "pairs_checked": 714,
    "interferences": []
   },
   {
@@ -16,7 +16,7 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 675,
+   "pairs_checked": 692,
    "interferences": []
   },
   {
@@ -26,7 +26,7 @@
     "gdoor": 470.0,
     "piston": 8.0
    },
-   "pairs_checked": 683,
+   "pairs_checked": 707,
    "interferences": []
   },
   {
@@ -37,7 +37,7 @@
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 672,
+   "pairs_checked": 695,
    "interferences": []
   },
   {
@@ -47,7 +47,7 @@
     "module": 40.0,
     "gdoor": 470.0
    },
-   "pairs_checked": 671,
+   "pairs_checked": 685,
    "interferences": []
   }
  ],
@@ -143,6 +143,13 @@
   },
   {
    "group": "recoater",
+   "at": 60.08,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "gap_mm": 1.55
+  },
+  {
+   "group": "recoater",
    "at": 0.0,
    "moving": "Recoater ball nut (flange on the +x face)",
    "other": "Dose chute (316L)",
@@ -173,14 +180,14 @@
    "group": "recoater",
    "at": 0.0,
    "moving": "Recoater carriage (15 mm rail)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 3.0
   },
   {
    "group": "recoater",
    "at": 0.0,
    "moving": "Recoater carriage block (6061)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 3.0
   },
   {
@@ -201,14 +208,14 @@
    "group": "recoater",
    "at": 0.0,
    "moving": "Recoater ball nut (flange on the +x face)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 3.006
   },
   {
    "group": "recoater",
    "at": 94.42,
    "moving": "Blade holder (6061, 18 x 31, quick-swap)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 3.05
   },
   {
@@ -231,6 +238,13 @@
    "moving": "Recoater carriage (15 mm rail)",
    "other": "Argon line (1/4 in. 316L)",
    "gap_mm": 4.367
+  },
+  {
+   "group": "recoater",
+   "at": 68.67,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "gap_mm": 4.55
   },
   {
    "group": "recoater",
@@ -272,6 +286,13 @@
    "at": 60.08,
    "moving": "HSS recoater blade (1.5 mm, wide nose)",
    "other": "Heater block L75 (6061-T6, bayonet socket)",
+   "gap_mm": 10.05
+  },
+  {
+   "group": "recoater",
+   "at": 94.42,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
    "gap_mm": 10.05
   },
   {
@@ -318,6 +339,13 @@
   },
   {
    "group": "recoater",
+   "at": 103.0,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 13.05
+  },
+  {
+   "group": "recoater",
    "at": 0.0,
    "moving": "Recoater arm (6061, 40 x 14 web)",
    "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
@@ -327,7 +355,7 @@
    "group": "recoater",
    "at": 0.0,
    "moving": "Recoater arm (6061, 40 x 14 web)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 14.0
   },
   {
@@ -363,7 +391,7 @@
    "at": 85.83,
    "moving": "Recoater arm (6061, 40 x 14 web)",
    "other": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
-   "gap_mm": 14.881
+   "gap_mm": 14.905
   },
   {
    "group": "recoater",
@@ -591,7 +619,7 @@
   },
   {
    "group": "piston",
-   "at": -25.33,
+   "at": -8.67,
    "moving": "Build plate L75 (\u00d875.8 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
    "gap_mm": 0.2
@@ -654,6 +682,13 @@
   },
   {
    "group": "piston",
+   "at": -10.75,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Spigot O-ring (FKM 2-238, radial seal in the floor port)",
+   "gap_mm": 7.291
+  },
+  {
+   "group": "piston",
    "at": 3.83,
    "moving": "Type K thermocouples L75 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
@@ -696,6 +731,13 @@
   },
   {
    "group": "piston",
+   "at": -17.0,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
+   "gap_mm": 9.888
+  },
+  {
+   "group": "piston",
    "at": -42.0,
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "other": "Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
@@ -705,21 +747,21 @@
    "group": "piston",
    "at": -14.92,
    "moving": "Build plate L75 (\u00d875.8 x 10, 6061-T6; bayonet spigot, gripper groove)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 10.087
   },
   {
    "group": "piston",
    "at": -8.67,
    "moving": "Heater block L75 (6061-T6, bayonet socket)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 10.187
   },
   {
    "group": "piston",
    "at": 8.0,
    "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 10.944
   },
   {
@@ -733,7 +775,7 @@
    "group": "piston",
    "at": 8.0,
    "moving": "Radiation shields L75 (2 x 0.3 mm polished 316)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 11.186
   },
   {
@@ -759,17 +801,66 @@
   },
   {
    "group": "piston",
+   "at": -27.42,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 12.931
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 12.932
+  },
+  {
+   "group": "piston",
+   "at": -29.5,
+   "moving": "Build plate L75 (\u00d875.8 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 13.13
+  },
+  {
+   "group": "piston",
+   "at": -19.08,
+   "moving": "Heater block L75 (6061-T6, bayonet socket)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 13.23
+  },
+  {
+   "group": "piston",
+   "at": 3.83,
+   "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 13.23
+  },
+  {
+   "group": "piston",
    "at": 5.92,
    "moving": "Macor standoffs L75 (3 x \u00d88 x 8, thermal break)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 13.705
   },
   {
    "group": "piston",
    "at": 8.0,
    "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 14.206
+  },
+  {
+   "group": "piston",
+   "at": -2.42,
+   "moving": "Radiation shields L75 (2 x 0.3 mm polished 316)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 14.229
+  },
+  {
+   "group": "piston",
+   "at": -25.33,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Module-present sensor (inductive M12, under the floor, sees the module flange)",
+   "gap_mm": 14.4
   },
   {
    "group": "piston",
@@ -812,6 +903,13 @@
    "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Module-present sensor (inductive M12, under the floor, sees the module flange)",
    "gap_mm": 14.7
+  },
+  {
+   "group": "piston",
+   "at": -33.67,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 14.906
   },
   {
    "group": "piston",
@@ -887,7 +985,7 @@
    "group": "piston",
    "at": -6.58,
    "moving": "Type K thermocouples L75 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 17.217
   },
   {
@@ -927,6 +1025,13 @@
   },
   {
    "group": "piston",
+   "at": -17.0,
+   "moving": "Type K thermocouples L75 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 23.408
+  },
+  {
+   "group": "piston",
    "at": -42.0,
    "moving": "Z carriage",
    "other": "Base plate, process module (MIC-6, 15 mm)",
@@ -936,7 +1041,7 @@
    "group": "piston",
    "at": -8.67,
    "moving": "Cartridge heaters L75 (5 x 50 W, 24 V, \u00d86 x 22)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 25.895
   },
   {
@@ -966,6 +1071,13 @@
    "moving": "Hollow piston rod L75 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
    "other": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
    "gap_mm": 30.125
+  },
+  {
+   "group": "piston",
+   "at": -17.0,
+   "moving": "Cartridge heaters L75 (5 x 50 W, 24 V, \u00d86 x 22)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 30.365
   },
   {
    "group": "piston",
@@ -1013,8 +1125,15 @@
    "group": "piston",
    "at": -4.5,
    "moving": "Thermal cutoff L75 (240 C, in series with the heaters)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 35.945
+  },
+  {
+   "group": "piston",
+   "at": -4.5,
+   "moving": "Macor standoffs L75 (3 x \u00d88 x 8, thermal break)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 36.715
   },
   {
    "group": "piston",
@@ -1027,8 +1146,15 @@
    "group": "piston",
    "at": 8.0,
    "moving": "Hollow piston rod L75 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 42.391
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Hollow piston rod L75 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 43.251
   },
   {
    "group": "piston",
@@ -1036,6 +1162,13 @@
    "moving": "Thermal cutoff L75 (240 C, in series with the heaters)",
    "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
    "gap_mm": 43.258
+  },
+  {
+   "group": "piston",
+   "at": -14.92,
+   "moving": "Thermal cutoff L75 (240 C, in series with the heaters)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 43.799
   },
   {
    "group": "piston",
@@ -1064,6 +1197,13 @@
    "moving": "Build plate L75 (\u00d875.8 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
    "gap_mm": 57.075
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "gap_mm": 57.108
   },
   {
    "group": "piston",
@@ -1117,6 +1257,13 @@
   {
    "group": "piston",
    "at": -42.0,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 85.444
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
    "moving": "Cartridge heaters L75 (5 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 91.77
@@ -1165,6 +1312,13 @@
   },
   {
    "group": "piston",
+   "at": 5.92,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 101.9
+  },
+  {
+   "group": "piston",
    "at": 3.83,
    "moving": "Build plate L75 (\u00d875.8 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
@@ -1176,6 +1330,13 @@
    "moving": "Heater block L75 (6061-T6, bayonet socket)",
    "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
    "gap_mm": 102.348
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 103.412
   },
   {
    "group": "piston",
@@ -1383,6 +1544,13 @@
   {
    "group": "piston",
    "at": -42.0,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 175.521
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
    "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Optics bridge posts (60 x 60 x 5 square tube)",
    "gap_mm": 175.521
@@ -1414,6 +1582,13 @@
    "moving": "Radiation shields L75 (2 x 0.3 mm polished 316)",
    "other": "Optics bridge posts (60 x 60 x 5 square tube)",
    "gap_mm": 176.82
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 176.912
   },
   {
    "group": "piston",
@@ -1484,6 +1659,13 @@
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 182.504
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 183.481
   },
   {
    "group": "piston",
@@ -1790,21 +1972,21 @@
    "group": "door",
    "at": 0.0,
    "moving": "Door hinge leaves + knuckles (304 SS)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 15.0
   },
   {
    "group": "door",
    "at": 0.0,
    "moving": "Draw latches on the door (304 SS, 800 lb)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 15.0
   },
   {
    "group": "door",
    "at": 0.0,
    "moving": "Door handle",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 15.0
   },
   {
@@ -2301,7 +2483,7 @@
    "group": "drawer",
    "at": 0.0,
    "moving": "Cover-slide drawer (6061, robot pull tab)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 1.0
   },
   {
@@ -2329,7 +2511,7 @@
    "group": "drawer",
    "at": 0.0,
    "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 3.0
   },
   {
@@ -2364,7 +2546,7 @@
    "group": "drawer",
    "at": -120.0,
    "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 6.0
   },
   {
@@ -2824,10 +3006,24 @@
   },
   {
    "group": "module",
+   "at": 0.0,
+   "moving": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
+   "other": "Z mounting flange (bolted under the floor)",
+   "gap_mm": 0.5
+  },
+  {
+   "group": "module",
    "at": 33.33,
    "moving": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
    "other": "Overflow clamp (KF-40)",
    "gap_mm": 1.543
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
+   "other": "Z bracket + fold-back belt housing (2:1)",
+   "gap_mm": 2.5
   },
   {
    "group": "module",
@@ -2842,6 +3038,13 @@
    "moving": "Striker disc L75 (416 stainless, on the pot magnet)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 3.0
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Spigot O-ring (FKM 2-238, radial seal in the floor port)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 3.043
   },
   {
    "group": "module",
@@ -2870,6 +3073,13 @@
    "moving": "Striker disc L75 (416 stainless, on the pot magnet)",
    "other": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "gap_mm": 5.0
+  },
+  {
+   "group": "module",
+   "at": 83.33,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 5.5
   },
   {
    "group": "module",
@@ -2922,6 +3132,20 @@
   },
   {
    "group": "module",
+   "at": 0.0,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
+   "gap_mm": 9.888
+  },
+  {
+   "group": "module",
+   "at": 66.67,
+   "moving": "Build plate L75 (\u00d875.8 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 10.0
+  },
+  {
+   "group": "module",
    "at": 50.0,
    "moving": "Rod end L75: potted cable exit (Torr Seal) with a side outlet",
    "other": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
@@ -2937,22 +3161,15 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
-   "other": "Z mounting flange (bolted under the floor)",
-   "gap_mm": 10.061
-  },
-  {
-   "group": "module",
-   "at": 0.0,
    "moving": "Build plate L75 (\u00d875.8 x 10, 6061-T6; bayonet spigot, gripper groove)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 10.087
   },
   {
    "group": "module",
    "at": 0.0,
    "moving": "Heater block L75 (6061-T6, bayonet socket)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 10.187
   },
   {
@@ -2964,17 +3181,17 @@
   },
   {
    "group": "module",
+   "at": 133.33,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 11.5
+  },
+  {
+   "group": "module",
    "at": 16.67,
    "moving": "Spigot O-ring (FKM 2-238, radial seal in the floor port)",
    "other": "Z mounting flange (bolted under the floor)",
    "gap_mm": 12.015
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
-   "other": "Z bracket + fold-back belt housing (2:1)",
-   "gap_mm": 12.061
   },
   {
    "group": "module",
@@ -2987,8 +3204,22 @@
    "group": "module",
    "at": 0.0,
    "moving": "Radiation shields L75 (2 x 0.3 mm polished 316)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 12.946
+  },
+  {
+   "group": "module",
+   "at": 16.67,
+   "moving": "Heater block L75 (6061-T6, bayonet socket)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 13.23
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 13.381
   },
   {
    "group": "module",
@@ -3021,9 +3252,23 @@
   {
    "group": "module",
    "at": 0.0,
+   "moving": "Radiation shields L75 (2 x 0.3 mm polished 316)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 14.229
+  },
+  {
+   "group": "module",
+   "at": 0.0,
    "moving": "Macor standoffs L75 (3 x \u00d88 x 8, thermal break)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 14.277
+  },
+  {
+   "group": "module",
+   "at": 66.67,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Module-present sensor (inductive M12, under the floor, sees the module flange)",
+   "gap_mm": 14.428
   },
   {
    "group": "module",
@@ -3059,6 +3304,13 @@
    "moving": "Striker disc L75 (416 stainless, on the pot magnet)",
    "other": "Guard door rail (top + bottom)",
    "gap_mm": 15.0
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 15.311
   },
   {
    "group": "module",
@@ -3106,7 +3358,7 @@
    "group": "module",
    "at": 0.0,
    "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 15.741
   },
   {
@@ -3127,7 +3379,7 @@
    "group": "module",
    "at": 0.0,
    "moving": "Type K thermocouples L75 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 17.217
   },
   {
@@ -3191,7 +3443,14 @@
    "at": 250.0,
    "moving": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
    "other": "Chamber door (6061-T6, 15 mm, drops down)",
-   "gap_mm": 21.294
+   "gap_mm": 21.347
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Type K thermocouples L75 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 23.408
   },
   {
    "group": "module",
@@ -3203,8 +3462,15 @@
   {
    "group": "module",
    "at": 0.0,
+   "moving": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
+   "other": "Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
+   "gap_mm": 24.913
+  },
+  {
+   "group": "module",
+   "at": 0.0,
    "moving": "Cartridge heaters L75 (5 x 50 W, 24 V, \u00d86 x 22)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 25.895
   },
   {
@@ -3213,6 +3479,13 @@
    "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
    "gap_mm": 27.415
+  },
+  {
+   "group": "module",
+   "at": 50.0,
+   "moving": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
+   "other": "Z carriage",
+   "gap_mm": 27.652
   },
   {
    "group": "module",
@@ -3237,6 +3510,13 @@
   },
   {
    "group": "module",
+   "at": 0.0,
+   "moving": "Cartridge heaters L75 (5 x 50 W, 24 V, \u00d86 x 22)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 30.365
+  },
+  {
+   "group": "module",
    "at": 100.0,
    "moving": "Radiation shields L75 (2 x 0.3 mm polished 316)",
    "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
@@ -3247,7 +3527,7 @@
    "at": 233.33,
    "moving": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
    "other": "Door hinge knuckles on the chamber (304 SS)",
-   "gap_mm": 30.802
+   "gap_mm": 30.87
   },
   {
    "group": "module",
@@ -3275,7 +3555,7 @@
    "at": 233.33,
    "moving": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
    "other": "Hinge pins (\u00d85, 316)",
-   "gap_mm": 32.714
+   "gap_mm": 32.781
   },
   {
    "group": "module",
@@ -3316,7 +3596,7 @@
    "group": "module",
    "at": 0.0,
    "moving": "Thermal cutoff L75 (240 C, in series with the heaters)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 35.945
   },
   {
@@ -3325,6 +3605,13 @@
    "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
    "gap_mm": 36.379
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Macor standoffs L75 (3 x \u00d88 x 8, thermal break)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 36.715
   },
   {
    "group": "module",
@@ -3363,6 +3650,13 @@
   },
   {
    "group": "module",
+   "at": 233.33,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "gap_mm": 40.751
+  },
+  {
+   "group": "module",
    "at": 50.0,
    "moving": "Spigot O-ring (FKM 2-238, radial seal in the floor port)",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
@@ -3380,7 +3674,7 @@
    "at": 233.33,
    "moving": "Build module L75: spigot, flange and honed 316L cylinder (\u00d876.2 bore, 3 mm wall)",
    "other": "Door hinge leaves + knuckles (304 SS)",
-   "gap_mm": 41.234
+   "gap_mm": 41.303
   },
   {
    "group": "module",
@@ -3398,6 +3692,13 @@
   },
   {
    "group": "module",
+   "at": 233.33,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Hinge pins (\u00d85, 316)",
+   "gap_mm": 42.639
+  },
+  {
+   "group": "module",
    "at": 133.33,
    "moving": "Heater block L75 (6061-T6, bayonet socket)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
@@ -3409,6 +3710,20 @@
    "moving": "Heater block L75 (6061-T6, bayonet socket)",
    "other": "Door hinge knuckles on the chamber (304 SS)",
    "gap_mm": 43.573
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Thermal cutoff L75 (240 C, in series with the heaters)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 43.799
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Hollow piston rod L75 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 44.707
   },
   {
    "group": "module",
@@ -3462,6 +3777,13 @@
   {
    "group": "module",
    "at": 233.33,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Door hinge leaves + knuckles (304 SS)",
+   "gap_mm": 51.213
+  },
+  {
+   "group": "module",
+   "at": 233.33,
    "moving": "Heater block L75 (6061-T6, bayonet socket)",
    "other": "Door hinge leaves + knuckles (304 SS)",
    "gap_mm": 53.569
@@ -3472,6 +3794,13 @@
    "moving": "Cartridge heaters L75 (5 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 53.84
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 55.927
   },
   {
    "group": "module",
@@ -3514,6 +3843,13 @@
    "moving": "Thermal cutoff L75 (240 C, in series with the heaters)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 68.001
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "gap_mm": 71.25
   },
   {
    "group": "module",
@@ -3561,6 +3897,13 @@
    "group": "module",
    "at": 116.67,
    "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 81.9
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Chamber legs (6061, 30 x 30)",
    "gap_mm": 81.9
   },
@@ -3714,6 +4057,13 @@
   {
    "group": "module",
    "at": 0.0,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 102.023
+  },
+  {
+   "group": "module",
+   "at": 0.0,
    "moving": "Build plate L75 (\u00d875.8 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
    "gap_mm": 102.16
@@ -3745,6 +4095,13 @@
    "moving": "Striker disc L75 (416 stainless, on the pot magnet)",
    "other": "Chamber legs (6061, 30 x 30)",
    "gap_mm": 107.319
+  },
+  {
+   "group": "module",
+   "at": 200.0,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 107.838
   },
   {
    "group": "module",
@@ -3895,10 +4252,31 @@
   },
   {
    "group": "module",
+   "at": 316.67,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 139.1
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 141.9
+  },
+  {
+   "group": "module",
    "at": 166.67,
    "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Optics bridge posts (60 x 60 x 5 square tube)",
    "gap_mm": 141.9
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 141.91
   },
   {
    "group": "module",
@@ -4147,7 +4525,7 @@
    "why": "hose end clamped onto its KF-25 flange"
   },
   {
-   "a": "Process chamber body (6061-T6, ~5.0 L)",
+   "a": "Process chamber body (6061-T6, ~6.4 L)",
    "b": "Argon line (1/4 in. 316L)",
    "why": "tube fitting into the argon port"
   },
@@ -4177,5 +4555,5 @@
    "why": "hose runs in the duct"
   }
  ],
- "runtime_s": 127.3
+ "runtime_s": 105.5
 }

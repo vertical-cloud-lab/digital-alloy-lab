@@ -36,7 +36,11 @@ MODULE_DROP = 40.0      # module drops 40 mm: spigot out of the floor port and u
 # ---- floor port (one port takes every module) ----
 FLOOR_T = 20.0
 PORT_D = 96.0           # through-hole in the chamber floor; every module's spigot fills it, flush with the floor
-SPIGOT_FIT = 0.03       # radial clearance spigot / port (H7/g6 at 96 mm)
+SPIGOT_FIT = 0.10       # radial clearance spigot / port. The FEA found 0.03 mm (H7/g6) closing to -23 um hot with powder in
+                        # the plate gap; the O-ring seals, and two dowels in the floor locate the module on its flange
+DOWEL_Y = 54.0          # Ø6 dowel (y = +54) and diamond pin (y = -54) in the floor's underside, through two lugs on the flange
+PLATE_BLOCK_HC = 5000.0 # W/m2K, plate on the heater block through graphite foil (bare Al-Al face ~2000; the FEA found S25's block
+                        # at its 240 C cutoff with 2000)
 FLANGE_D = 100.0        # module flange disc under the floor
 FLANGE_T = 10.0
 TAB_X = 64.0            # two tabs to x = +/-64 carry the captive M6 thumb screws at x = +/-58
@@ -67,8 +71,9 @@ for k, m in MODULES.items():
     m["block_d"] = m["bore"] - 2 * CLEAR["A"]["block"]
     m["tube_od"] = m["bore"] + 2 * m["wall"]
     m["spigot_wall"] = (PORT_D - m["bore"]) / 2
-    m["standoff_r"] = 0.55 * m["bore"] / 2 if k != "S25" else 0.0     # S25: one central standoff
-    m["n_standoffs"] = 3 if k != "S25" else 1
+    m["standoff_r"] = 0.8 * m["block_d"] / 2 if k != "S25" else 9.4    # as modules_low.block_layout
+    m["standoff_d"] = 8.0 if k != "S25" else 5.0
+    m["n_standoffs"] = 3
 MACOR = dict(d=8.0, k=1.46, t_max=800.0)    # Macor standoffs Ø8 x BREAK_T
 RAD_SHIELDS = 2                              # 0.1 mm polished 316 shields in the argon gap
 

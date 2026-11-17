@@ -51,7 +51,7 @@ H_UNDER, EPS_UNDER = 5.0, 0.3    # natural convection + radiation on the module 
 H_ROD_END = 10.0                 # rod end with the NdFeB pot-magnet coupling
 H_TOP_D50 = 17.0                 # argon cross-flow 2 m/s over a 50 mm plate; h ~ D^-0.5
 EPS_POWDER, EPS_BARE = 0.5, 0.1
-H_PB, T_PB = 2000.0, 0.1         # plate-block preloaded Al-Al face, as a 0.1 mm layer (mm)
+H_PB, T_PB = getattr(MP, "PLATE_BLOCK_HC", 2000.0), 0.1   # plate-block face (graphite foil), as a 0.1 mm layer (mm)
 H_FF, T_FF = 1500.0, 0.1         # module flange pulled against the floor underside, as a 0.1 mm layer (mm)
 EPS_BREAK = 0.15                 # block underside, 2 polished 316 shields, head top: radiation across the break
 K_SEAL, K_FKM, K_POWDER = 0.10, 0.20, 0.20
@@ -150,7 +150,7 @@ def geometry(key, z_p, tier="A", gap_fill="ARGON", clear_plate=None):
     if m["standoff_r"] == 0:
         mc = (0.0, MP.MACOR["d"] / 2)
     else:
-        w = m["n_standoffs"] * math.pi * MP.MACOR["d"] ** 2 / 4 / (2 * math.pi * m["standoff_r"])
+        w = m["n_standoffs"] * math.pi * m.get("standoff_d", MP.MACOR["d"]) ** 2 / 4 / (2 * math.pi * m["standoff_r"])
         mc = (m["standoff_r"] - w / 2, m["standoff_r"] + w / 2)
     zs1 = zht - SEAL_BELOW_HEAD_TOP
     zo0, zo1 = ORING_Z - ORING_W / 2, ORING_Z + ORING_W / 2
@@ -892,11 +892,14 @@ def plot_transients(tr, path):
             if tt:
                 ax.plot([tt], [ref], marker="o", ms=6, mfc=SERIES[key], mec=SURFACE, mew=1.5, zorder=5)
                 ax.annotate(f"{key} {tt:.1f} min" if kind == "heat" else f"{key} {tt:.0f} min", (tt, ref),
-                            xytext=(6, (10 + 12 * n) if kind == "heat" else -12), textcoords="offset points", fontsize=7, color=INK)
+                            xytext=(6, (-14 - 11 * n) if kind == "heat" else -12), textcoords="offset points", fontsize=7, color=INK)
             else:
                 ax.annotate(f"{key}: levels at {y[-1]:.0f} °C", (t[-1], y[-1]), xytext=(-90, -12 - 11 * n),
                             textcoords="offset points", fontsize=7, color=INK)
-        ax.text(xmax, ref + (-9 if kind == "heat" else 3), reflab, fontsize=7, color=INK2, ha="right")
+        if kind == "heat":
+            ax.text(xmax, ref + 3, reflab, fontsize=7, color=INK2, ha="right")
+        else:
+            ax.text(0.5, ref + 3, reflab, fontsize=7, color=INK2, ha="left")
         ax.set_title(title, fontsize=8.5, color=INK, loc="left")
         ax.set_xlabel("time (min)", color=INK2, fontsize=8)
         ax.set_ylabel("plate top centre (°C)", color=INK2, fontsize=8)
@@ -970,6 +973,10 @@ def min_clear_um(r):
     return 1000 * c[t <= tt + 1e-9].min()
 
 
+def vs_limit(v, lim):
+    return "past" if v > lim + 0.5 else ("at" if v > lim - 1.5 else f"{lim - v:.0f} °C under")
+
+
 def heaters_sentence(SG, h):
     short = [k for k in SG if SG[k]["installed_W"] < SG[k]["suggested_W"] - 1e-6]
     never = [f"{k} levels at {h[k]['T_centre_end']:.0f} °C" for k in SG if h.get(k) and not h[k]["t_target_min"]]
@@ -1005,7 +1012,10 @@ def narrative(S, TR, SG, LU):
     orng25 = max(r["T_oring_max"] for r in hot if r["case"]["T_ch"] == 25)
     gland = max(r["T_gland_max"] for r in hot)
     mag = max(r["T_rod_end"] for r in hot)
-    spig = min(r["clear_spigot_hot_mm"] for r in S.values()) * 1000
+    wsp = min(S.values(), key=lambda r: r["clear_spigot_hot_mm"])
+    spig = wsp["clear_spigot_hot_mm"] * 1000
+    spig_case = {"powder_gaps": "with powder-filled gaps", "tierB": "in Tier B", "clearance": "with a tighter plate gap"}.get(
+        wsp["case"]["group"], f"{wsp['case']['key']}, chamber {wsp['case']['T_ch']:.0f} °C")
     tb0, tb1 = g("M50_start_tierB"), g("M50_end_tierB")
     need = {k: MP.CLEAR["A"]["plate"] - st[k]["clear_plate_hot_mm"] + 0.03 for k in st}
     hs = {k: TR.get(f"heatS_{k}") or TR.get(f"heat_{k}") for k in st}
@@ -1016,7 +1026,7 @@ def narrative(S, TR, SG, LU):
            f"{st['S25']['P_heater_W']:.0f} / {st['M50']['P_heater_W']:.0f} / {st['L75']['P_heater_W']:.0f} W (S25 / M50 / L75), against "
            f"{en['S25']['P_heater_W']:.0f} / {en['M50']['P_heater_W']:.0f} / {en['L75']['P_heater_W']:.0f} W at the build end. "
            f"{min(share(st[k]) for k in st):.0f}–{max(share(st[k]) for k in st):.0f} % of it crosses the radial plate and block gaps into the "
-           "bore. At the start that bore is the spigot, which the 0.03 mm fit and the flange tie to the floor, so most of the power ends up "
+           f"bore. At the start that bore is the spigot, which its {MP.SPIGOT_FIT:.2f} mm fit and the flange tie to the floor, so most of the power ends up "
            f"in the floor (M50: {m0['sinks_W']['floor']:.0f} of {m0['P_heater_W']:.0f} W; the floor at the port only reaches "
            f"{m0['T_floor_port']:.0f} °C). " + heaters_sentence(SG, h),
            f"2. **The plate gap closes when hot.** The 6061 plate grows ~{23.6e-6 * 180 * 25.3 * 1000:.0f} µm (M50) to "
@@ -1029,24 +1039,27 @@ def narrative(S, TR, SG, LU):
            f"{m0['P_heater_W']:.0f} / {c20['P_heater_W']:.0f} W. " + clearance_sentence(st, hs) +
            " Close the gap against powder with a hot-side wiper at the plate rim.",
            f"3. **Powder in the gaps is the largest risk.** Filled with powder (k 0.2 against argon's ~0.025), the gaps make M50 need "
-           f"{pg0['P_heater_W']:.0f} W at the start (block {pg0['T_block_max']:.0f} °C, past the {LIMITS['tco']:.0f} °C cutoff) and "
+           f"{pg0['P_heater_W']:.0f} W at the start (block {pg0['T_block_max']:.0f} °C, {vs_limit(pg0['T_block_max'], LIMITS['tco'])} the "
+           f"{LIMITS['tco']:.0f} °C cutoff) and "
            f"{pg1['P_heater_W']:.0f} W at the end, where the coupling face reaches {pg1['T_rod_end']:.0f} °C (magnet limit 80) and the rod "
            f"gland {pg1['T_gland_max']:.0f} °C. At z_p 0 the plate gap opens onto the powder plane, so the wiper in point 2 is required, not optional.",
-           f"4. **S25's heater block runs at its cutoff.** Most of its heat crosses the small Ø24.8 contact face (2000 W/m²K) to reach the "
+           f"4. **S25's heater block runs {vs_limit(st['S25']['T_block_max'], LIMITS['tco'])} its cutoff.** Most of its heat crosses the small Ø24.8 contact face ({H_PB:.0f} W/m²K) to reach the "
            f"plate rim, so the block runs {st['S25']['T_block_max'] - MP.T_SET_A:.0f} °C above the set point: {st['S25']['T_block_max']:.0f} °C "
-           f"at steady build start, against TCO_A = {LIMITS['tco']:.0f} °C, and {hs['S25']['T_block_at_target']:.0f} °C when the plate "
-           f"reaches 200 °C at {hs['S25']['spec']['P_w']:.0f} W. "
-           "Put graphite foil in the contact (aim for ≥ 5000 W/m²K) and ramp-limit the power. Also, S25's central cartridge and "
-           "its single central Macor standoff occupy the same spot; use a Macor sleeve round the cartridge, or three small standoffs.",
+           f"at steady build start, against TCO_A = {LIMITS['tco']:.0f} °C, and {h['S25']['T_block_at_target']:.0f} °C when the plate "
+           f"reaches 200 °C at full power ({h['S25']['spec']['P_w']:.0f} W installed). " +
+           ("The contact is modelled with graphite foil (5000 W/m²K); with a bare Al face (~2000 W/m²K) the block ran at its cutoff. " if H_PB >= 5000 else
+            "Put graphite foil in the contact (aim for ≥ 5000 W/m²K). ") +
+           "Ramp-limit the heat-up: cap the block at ~225 °C with its own thermocouple reading, so the cutoff never sees the overshoot.",
            f"5. **Seals and the magnet pass in Tier A with clean (argon) gaps.** Worst over the 200 °C cases: bore seal {seal:.0f} °C "
            f"(limit 204), spigot O-ring {orng:.0f} °C ({orng25:.0f} with a 25 °C chamber; prefer ≤ 150), rod-gland O-rings "
            f"{gland:.0f} °C (≤ 200), coupling face {mag:.0f} °C (≤ 80). Build end is the hot case for the seal, gland and magnet, because "
            f"the head then sits 2 mm above the bottom flange. The magnet has {80 - mag:.0f} °C of margin, and loses it if powder fills the gaps (point 3). "
            "A 3–5 mm G10 or PEEK washer under the striker, or an SH-grade (150 °C) magnet, restores it. The 10 W/m²K coupling face is "
            "conservative: the 6061 Z arm under it is a better sink.",
-           f"6. **The 0.03 mm spigot fit can bind.** The 316L spigot runs warmer than the 6061 port (it expands {ALPHA['SS'] * 1e6:.1f} against "
-           f"{ALPHA['AL'] * 1e6:.1f} µm/m·K), and the hot fit falls to {spig:.0f} µm (with powder-filled gaps). Loosen it to ~0.10 mm radial, let "
-           "the O-ring seal, and locate the module on the flange.",
+           f"6. **Spigot fit ({MP.SPIGOT_FIT:.2f} mm radial cold).** The 316L spigot runs warmer than the 6061 port (it expands {ALPHA['SS'] * 1e6:.1f} against "
+           f"{ALPHA['AL'] * 1e6:.1f} µm/m·K), and the hot fit falls to {spig:.0f} µm ({spig_case}). " +
+           ("A 0.03 mm (H7/g6) fit closed to −23 µm in the first run, so the fit is now loose, the O-ring seals and two dowels locate the module on its flange."
+            if MP.SPIGOT_FIT >= 0.1 else "Loosen it to ~0.10 mm radial, let the O-ring seal, and locate the module on the flange."),
            f"7. **Tier B (M50, 500 °C).** {tb0['P_heater_W']:.0f} W at the start ({tb0['sinks_W']['water_head'] + tb0['sinks_W']['water_flange']:.0f} W to water, "
            f"{tb0['sinks_W']['floor']:.0f} W to the floor) and {tb1['P_heater_W']:.0f} W at the end. Seals and O-rings ≤ "
            f"{max(tb0['T_seal_max'], tb1['T_seal_max'], tb0['T_oring_max'], tb1['T_oring_max'], tb0['T_gland_max'], tb1['T_gland_max']):.0f} °C "
@@ -1088,8 +1101,8 @@ def write_report(data):
          "meshes it with 8-node axisymmetric quads (CAX8) and solves it with ccx 2.21. For each steady case it finds, by a secant on "
          "heater power, the power that holds the **plate top centre at 200 °C**. Inputs: radial argon plate and 0.30 mm block "
          "gaps to the bore (cold radial plate clearance per size: " +
-         ", ".join(f"{k} {m['plate_clear']:.2f} mm" for k, m in MP.MODULES.items()) + "); plate–block contact 2000 W/m²K; 8 mm argon break with smeared Macor posts and radiation through 2 shields; "
-         "felt/PTFE bore seal on the head rim; 0.03 mm spigot fit plus an FKM O-ring; flange on the floor at 1500 W/m²K; floor edge "
+         ", ".join(f"{k} {m['plate_clear']:.2f} mm" for k, m in MP.MODULES.items()) + f"); plate–block contact {H_PB:.0f} W/m²K; 8 mm argon break with smeared Macor posts and radiation through 2 shields; "
+         f"felt/PTFE bore seal on the head rim; {MP.SPIGOT_FIT:.2f} mm spigot fit plus an FKM O-ring; flange on the floor at 1500 W/m²K; floor edge "
          "(r = 120 mm) at the chamber temperature. Plate top: forced argon h 17 W/m²K (× (50/D)^0.5) plus radiation. Under the floor: "
          "5 W/m²K plus ε 0.3 to 25 °C. Coupling face: 10 W/m²K. Inside the cylinder below the head: adiabatic.", "",
          "## Tier A, 200 °C plate, chamber 25 °C, powder on the plate (ε 0.5)", "",
@@ -1108,7 +1121,7 @@ def write_report(data):
     L += ["", "Heaters and transients (heat-up from 25 °C at full power with the plate at z_p 0; cool-down with the heaters off from the "
           "build-end steady state, to the 50 °C door interlock):", "",
           "| Module | Worst steady (W) | Installed now | ≥ 1.5 × worst, in whole heaters | Heat-up to 200 °C, installed | "
-          "Heat-up, suggested | Block when the plate reaches 200 °C (suggested) | Least plate clearance in that heat-up (µm) | "
+          "Heat-up, suggested | Block when the plate reaches 200 °C (installed) | Least plate clearance in that heat-up (µm) | "
           "Cool-down to 50 °C |", "|---|---|---|---|---|---|---|---|---|"]
     for key in ("S25", "M50", "L75"):
         if key not in SG:
@@ -1118,7 +1131,7 @@ def write_report(data):
         ht = (f"{h['t_target_min']:.0f} min" if h and h["t_target_min"] else
               (f"never (levels at {h['T_centre_end']:.0f} °C)" if h else "–"))
         hst = (f"{hs['t_target_min']:.0f} min" if hs and hs["t_target_min"] else ("–" if not hs else f"never ({hs['T_centre_end']:.0f} °C)"))
-        hx = hs or h
+        hx = h or hs
         L.append(f"| {key} | {sg['worst_steady_W']:.0f} | {m['heaters']} × {m['heater_w']:.0f} W = {sg['installed_W']:.0f} W | "
                  f"**{sg['n_suggested']} × {m['heater_w']:.0f} W = {sg['suggested_W']:.0f} W** | {ht} | {hst} | "
                  f"{f0(hx.get('T_block_at_target'))} °C | {min_clear_um(hx):.0f} | "
