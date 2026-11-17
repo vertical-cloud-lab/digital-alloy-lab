@@ -45,9 +45,12 @@ P = dict(
     # build cylinder: 2 in. honed tube, Ø50 plate, 40 mm stroke (plus a 0.05 mm blade gap at the start)
     bore_d=50.8, plate_d=50.0, plate_t=10.0, piston_t=25.0, stroke=40.0, cyl_od=60.3,
     # powder path along X
-    x_dose=-90.0, x_park=-112.0, x_end=90.0, ovf_x0=62.0, ovf_x1=82.0, dose_y=30.0, blade_gap=0.05,
+    x_dose=-90.0, x_park=-106.0, x_end=90.0, ovf_x0=62.0, ovf_x1=82.0, dose_y=30.0, blade_gap=0.05,
     # recoater drive on the back wall
-    rc_rail_z=82.0, rc_screw_y=56.0, rc_screw_z=44.0,
+    rc_rail_z=82.0, rc_screw_y=52.0, rc_screw_z=40.0,
+    # O-ring face glands (Parker ORD 5700, design chart 4-3): 3.53 mm FKM cord, depth 2.65 mm (25 % squeeze),
+    # width 4.6 mm (the "warm" width, 80 % gland fill) so the seal keeps >= 10 % void at a 200 C plate
+    oring_cs=3.53, gland_d=2.65, gland_w=4.6,
     # optics: f = 160 mm f-theta (Thorlabs FTH160-1064 envelope: WD 182.5, housing Ø90 x 50.2)
     lens_wd=182.5, lens_len=50.2, lens_d=90.0, galvo=115.0, galvo_h=110.0,
     # door
@@ -350,8 +353,8 @@ def build(include_tray=True):
     ax0, ax1, ay0, ay1 = -23.0, 23.0, 66.0, 94.0
     az0, az1 = -155.0, -50.0
     add("Z mounting flange (bolted under the floor)", box(-40, 100, 60, 100, zf - 10, zf), C["alu"], 3, (0, 120, 0), mat="al6061", bom="M3")
-    add("Z actuator body (KR-class U-rail, 2 mm lead)", box(ax0, ax1, ay0, ay1, az0, az1), C["steel"], 3, (0, 160, 0), mat="steel", bom="M3", mcm="ACT_Z")
-    add("Z fold-back belt housing (2:1)", box(ax0, 100, ay0 - 4, ay1, az1, zf - 10), C["anod"], 3, (0, 160, 0), mat="al6061", bom="M3")
+    add("Z actuator body (KR-class U-rail, 2 mm lead)", box(ax0, ax1, ay0, ay1, az0, az1), C["steel"], 3, (0, 160, 0), mat="steel", mass_kg=1.4, bom="M3", mcm="ACT_Z")
+    add("Z fold-back belt housing (2:1)", box(ax0, 100, ay0 - 4, ay1, az1, zf - 10).cut(cyl(19.2, (64.0, 80.0, az1 - 1), "z", 3.0)).cut(cyl(5.0, (64.0, 80.0, az1), "z", 25)), C["anod"], 3, (0, 160, 0), mat="al6061", bom="M3")
     zm = place(servo_nema23(100.0, 18.0), (64.0, 80.0, az1), (1, 0, 0), (0, 0, 1))
     add("Z servo (ClearPath-SD, NEMA 23, folded)", zm, C["motor"], 3, (0, 200, 0), mat="misc", mass_kg=1.6, bom="M2")
     z_arm_top = -35.0 - 60.0                               # rod 60 mm long under a 25 mm piston
@@ -371,12 +374,12 @@ def build(include_tray=True):
     pis = cyl(rb - 0.4, (0, 0, pz - P["plate_t"] - P["piston_t"]), "z", P["piston_t"]).cut(
         tube(rb, rb - 2.2, (0, 0, pz - P["plate_t"] - 18), "z", 6))
     add("Piston (6061, cartridge heater, felt seal groove)", pis, C["alu"], 4, (0, 0, 260), group="piston", mat="al6061", bom="M3", section=True)
-    add("Piston seal (felt / graphite-PTFE ring)", tube(rb, rb - 2.2, (0, 0, pz - P["plate_t"] - 18), "z", 6), C["white"], 4, (0, 0, 260), group="piston", mat="felt", bom="M3", mcm="SEAL_PISTON", section=True)
-    add("Piston rod (Ø12, hardened 440C)", cyl(6.0, (0, 0, z_arm_top - 15), "z", (pz - P["plate_t"] - P["piston_t"]) - (z_arm_top - 15)), C["ss"], 4, (0, 0, 260), group="piston", mat="steel", bom="M3", mcm="ROD", section=True)
+    add("Piston seal (aramid felt + carbon-filled PTFE scraper)", tube(rb, rb - 2.2, (0, 0, pz - P["plate_t"] - 18), "z", 6), C["white"], 4, (0, 0, 260), group="piston", mat="felt", bom="M3", mcm="SEAL_PISTON", section=True)
+    add("Piston rod (Ø12.7, 440C, FKM rod wiper)", cyl(6.0, (0, 0, z_arm_top - 15), "z", (pz - P["plate_t"] - P["piston_t"]) - (z_arm_top - 15)), C["ss"], 4, (0, 0, 260), group="piston", mat="steel", bom="M3", mcm="ROD", section=True)
     ox = (P["ovf_x0"] + P["ovf_x1"]) / 2
-    fun = box(ox - 22, ox + 22, -40, 40, zf - 22, zf).cut(box(P["ovf_x0"], P["ovf_x1"], -33, 33, zf - 23, zf + 1))
+    fun = box(ox - 22, ox + 22, -40, 40, zf - 22, zf).cut(box(P["ovf_x0"], P["ovf_x1"], -33, 33, zf - 11, zf + 1)).cut(cyl(19.0, (ox, 0, zf - 23), "z", 13))
     add("Overflow funnel block (316L)", fun, C["ss"], 4, (0, 0, -200), mat="ss316l", bom="M4", section=True)
-    add("Overflow port (KF-40)", place(kf_stub(40, 16), (ox, 0, zf - 22), (1, 0, 0), (0, 0, -1)), C["ss"], 4, (0, 0, -220), mat="ss304", bom="G7", mcm="KF40_WELD", section=True)
+    add("Overflow port (KF-40)", place(kf_stub(40, 16), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, -1)), C["ss"], 4, (0, 0, -220), mat="ss304", bom="G7", mcm="KF40_WELD", section=True)
     jar = fuse([place(kf_stub(40, 60), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1)), cyl(KF[40][1] / 2, (ox, 0, zf - 22 - 16 - 62), "z", 2)])
     add("Overflow jar (KF-40 half nipple + blank)", jar, C["ss"], 4, (0, 0, -260), mat="ss304", bom="M4", mcm="KF40_NIPPLE", section=True)
     add("Overflow clamp (KF-40)", place(kf_clamp(40), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1)), C["alu_dark"], 4, (0, 0, -260), mat="al6061", bom="G7", mcm="KF40_CLAMP", section=True)
@@ -395,35 +398,40 @@ def build(include_tray=True):
     ch = ch.cut(cyl(12.7, (ix - 1, 0, 70), "x", P["wall"] + 2))        # vacuum port (KF-25)
     ch = ch.cut(cyl(3.2, (100, iy - 1, 100), "y", P["wall"] + 2))      # argon in (back wall)
     ch = ch.cut(cyl(3.2, (ix - 1, -40, 18), "x", P["wall"] + 2))       # O2 sample
-    for gz in (lz0 - 2.8,):                                             # lid O-ring groove in the top face
-        ch = ch.cut(rbox(-ix - 7, ix + 7, -iy - 7, iy + 7, gz, lz0 + 1, 6).cut(rbox(-ix - 3, ix + 3, -iy - 3, iy + 3, gz - 1, lz0 + 2, 4)))
+    gw, gd = P["gland_w"], P["gland_d"]                                # lid O-ring face gland in the top face
+    ch = ch.cut(rbox(-ix - 3 - gw, ix + 3 + gw, -iy - 3 - gw, iy + 3 + gw, lz0 - gd, lz0 + 1, 6).cut(rbox(-ix - 3, ix + 3, -iy - 3, iy + 3, lz0 - gd - 1, lz0 + 2, 4)))
     add("Process chamber body (6061-T6, ~5.0 L)", ch, C["alu"], 5, (0, 0, 260), mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
-    add("Lid O-ring (FKM, 3.53 mm cord, 25 % squeeze)", rbox(-ix - 6.6, ix + 6.6, -iy - 6.6, iy + 6.6, lz0 - 2.8, lz0, 5.6).cut(rbox(-ix - 3.4, ix + 3.4, -iy - 3.4, iy + 3.4, lz0 - 3, lz0 + 1, 4.4)),
+    # the cord as squeezed: 2.65 mm tall, ~3.7 mm wide, sitting in the 4.6 mm gland
+    add("Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)", rbox(-ix - 3.3 - 3.7, ix + 3.3 + 3.7, -iy - 3.3 - 3.7, iy + 3.3 + 3.7, lz0 - gd, lz0, 5.6).cut(rbox(-ix - 3.3, ix + 3.3, -iy - 3.3, iy + 3.3, lz0 - gd - 1, lz0 + 1, 4.3)),
         C["black"], 5, (0, 0, 300), mat="fkm", bom="G8", mcm="ORING_CORD", section=True)
-    plen_in = rbox(-55, 55, cy, cy + 32, -8, 30, 4).cut(box(-50, 50, cy - 1, cy + 27, -3, 25))
+    plen_in = rbox(-55, 55, cy, cy + 32, -8, 30, 4).cut(box(-50, 50, cy - 1, cy + 27, -3, 25)).cut(cyl(12.7, (0, cy + 26, 11), "y", 8))
     add("Cross-flow inlet plenum + nozzle (316L)", plen_in, C["ss"], 5, (0, 180, 0), mat="ss316l", bom="G4", section=True)
     add("Inlet plenum port (KF-25)", place(kf_stub(25, 26), (0, cy + 32 + 20, 11), (1, 0, 0), (0, 1, 0)), C["ss"], 5, (0, 200, 0), mat="ss304", bom="G7", mcm="KF25_WELD")
-    plo = rbox(-55, 55, -84, -48, zf - 34, zf, 4).cut(box(-50, 50, -79, -53, zf - 29, zf + 1))
+    plo = rbox(-55, 55, -84, -48, zf - 40, zf, 4).cut(box(-50, 50, -79, -53, zf - 35, zf + 1)).cut(cyl(12.7, (49, -66, zf - 21), "x", 8))
     add("Cross-flow outlet plenum under the floor (316L)", plo, C["ss"], 5, (0, 0, -180), mat="ss316l", bom="G4", section=True)
-    add("Outlet plenum port (KF-25)", place(kf_stub(25, 26), (55 + 21, -66, zf - 17), (0, 1, 0), (1, 0, 0)), C["ss"], 5, (180, 0, -180), mat="ss304", bom="G7", mcm="KF25_WELD")
+    add("Outlet plenum port (KF-25)", place(kf_stub(25, 26), (55 + 21, -66, zf - 21), (0, 1, 0), (1, 0, 0)), C["ss"], 5, (180, 0, -180), mat="ss304", bom="G7", mcm="KF25_WELD")
     add("Vacuum port (KF-25)", place(kf_stub(25, 22), (cx + 18, 0, 70), (0, 1, 0), (1, 0, 0)), C["ss"], 5, (180, 0, 0), mat="ss304", bom="G7", mcm="KF25_WELD")
     add("Layer-light LED bar", box(ix - 6, ix - 1, -45, 45, 30, 38), C["white"], 5, (0, 0, 120), mat="misc", mass_kg=0.05, bom="M6")
 
     # ===================== 6. Recoater =====================
-    rr = place(guide_rail(260.0, 12.0, 8.0), (-130, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0))
-    add("Recoater guide rail (MGN12, 260 mm, SS)", rr, C["steel"], 6, (0, 0, 220), mat="steel", bom="M1", mcm="RAIL_RC")
+    rr = place(guide_rail(270.0, 15.0, 15.0), (-135, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0))
+    add("Recoater guide rail (15 mm, 270 mm)", rr, C["steel"], 6, (0, 0, 220), mat="steel", bom="M1", mcm="6709K33")
     xc = P["x_park"]
-    add("Recoater carriage (MGN12H)", place(guide_carriage(45.4, 27.0, 13.0, 3.0, 12.0, 8.0), (xc, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0)), C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M1", mcm="CARRIAGE_RC")
-    blk = fuse([box(xc - 22, xc + 22, 40, iy - 13, 30, 96)])
+    add("Recoater carriage (15 mm rail)", place(guide_carriage(57.0, 34.0, 28.0, 3.0, 15.0, 15.0), (xc, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0)), C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M1", mcm="6709K12")
+    yc = iy - 28.0                                              # carriage mounting face
+    blk = fuse([box(xc - 22, xc + 22, 33, yc, 25, P["rc_rail_z"] + 17), box(xc - 22, xc + 22, yc, iy - 3, 25, P["rc_rail_z"] - 18)])
     blk = blk.cut(cyl(12.0, (xc - 23, ry_, rz_), "x", 46))
     add("Recoater carriage block (6061)", blk, C["alu"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M1")
-    add("Recoater ball screw (M12, 10 mm lead, SS)", place(ball_screw(2 * cx + 10, 12.0, 8.0, 22.0), (-cx - 5, ry_, rz_), (1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), mat="steel", bom="M1", mcm="SCREW_RC")
-    add("Recoater ball nut", place(ball_nut(12.0, 24.0, 40.0, 40.0, 10.0, 15.0), (xc - 22 - 10, ry_, rz_), (1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M1", mcm="NUT_RC")
-    add("Recoater arm (6061)", box(xc - 6, xc + 6, 32, 40, 14, 30), C["alu"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M5")
-    add("Blade holder (6061, quick-swap)", rbox(xc - 7, xc + 7, -P["dose_y"] - 3, 40, 3.2 + P["blade_gap"], 14, 2, "|Y"), C["anod"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M5")
-    add("Silicone-cord blade (Ø3.2)", cyl(1.6, (xc + 5, -P["dose_y"] - 2, 1.6 + P["blade_gap"]), "y", 2 * P["dose_y"] + 4), C["silicone"], 6, (0, 0, 220), group="recoater", mat="silicone", bom="M5", mcm="CORD_SILICONE")
+    add("Recoater ball screw (M12, 10 mm lead)", place(ball_screw(2 * cx + 10, 12.0, 8.0, 22.0), (-cx - 5, ry_, rz_), (1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), mat="steel", bom="M1", mcm="4566N101")
+    add("Recoater ball nut (flange on the +x face)", place(ball_nut(12.0, 23.0, 43.0, 40.0, 10.0, None), (xc + 10.5, ry_, rz_), (-1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M1", mcm="4566N401")
+    add("Recoater arm (6061)", box(xc - 6, xc + 6, 33, 41, 14, 25), C["alu"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M5")
+    add("Blade holder (6061, quick-swap)", rbox(xc - 7, xc + 7, -P["dose_y"] - 3, 41, 3.0 + P["blade_gap"], 14, 2, "|Y"), C["anod"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M5")
+    # default blade: HSS, 1.5 mm, wide (rounded) nose; EOS's standard blade for AlSi10Mg. Compliant FKM or silicone
+    # cords and a carbon brush are the swap-in options (silicone only where Si pickup does not matter).
+    bl = box(xc + 7, xc + 8.5, -P["dose_y"] - 2, P["dose_y"] + 2, P["blade_gap"], 13.0)
+    add("HSS recoater blade (1.5 mm, wide nose)", bl, C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M5", mcm="9011K104")
     bh_l = fuse([cyl(25, (-cx - 20, ry_, rz_), "x", 20).cut(cyl(4.0, (-cx - 21, ry_, rz_), "x", 22))])
-    add("Recoater fixed bearing + rotary shaft seal housing", bh_l, C["anod"], 6, (-160, 0, 0), mat="al6061", bom="M1", mcm="SEAL_SHAFT")
+    add("Recoater fixed bearing + PTFE V-ring shaft seal housing", bh_l, C["anod"], 6, (-160, 0, 0), mat="al6061", bom="M1", mcm="9572K33")
     add("Recoater floating bearing housing", tube(20, 4.0, (cx, ry_, rz_), "x", 14), C["anod"], 6, (160, 0, 0), mat="al6061", bom="M1")
     add("Recoater motor standoff", tube(30, 26, (-cx - 60, ry_, rz_), "x", 40), C["alu_dark"], 6, (-200, 0, 0), mat="al6061", bom="M1")
     rmot = place(servo_nema23(100.0, 20.0), (-cx - 60, ry_, rz_), (0, 1, 0), (1, 0, 0))
@@ -437,7 +445,7 @@ def build(include_tray=True):
     lid = lid.cut(box(xd - 6, xd + 6, -P["dose_y"], P["dose_y"], lz0 - 1, lz1 + 1))
     cam_p = V(75, -45, lz1)
     lid = lid.cut(cyl(11, (75, -45, lz0 - 1), "z", P["lid"] + 2))
-    for (x, y) in [(100, 50), (110, -62)]:
+    for (x, y) in [(100, 50), (40, 70)]:
         lid = lid.cut(cyl(4, (x, y, lz0 - 1), "z", P["lid"] + 2))
     add("Chamber lid (6061-T6, 16 mm)", lid, C["alu"], 7, (0, 0, 300), mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
     bolts = []
@@ -463,25 +471,28 @@ def build(include_tray=True):
     add("Dose chute (316L)", chute, C["ss"], 7, (0, 0, 260), mat="ss316l", bom="M4", section=True)
     add("Dosing block (6061, fluted roller inside)", rbox(xd - 17, xd + 17, -55, 55, lz1, lz1 + 46, 3), C["alu"], 7, (0, 0, 300), mat="al6061", bom="M4", section=True)
     add("Dovetail rails for the cartridge", comp([box(xd - 19, xd - 15, -55, 55, lz1 + 46, lz1 + 52), box(xd + 15, xd + 19, -55, 55, lz1 + 46, lz1 + 52)]), C["ss"], 7, (0, 0, 320), mat="ss316l", bom="M4")
-    add("Roller shaft seal housing", cyl(15, (xd, 55, lz1 + 23), "y", 10), C["anod"], 7, (0, 0, 300), mat="al6061", bom="M4", mcm="SEAL_SHAFT")
-    add("Dosing stepper (NEMA 17)", place(stepper_nema17(40), (xd, 65 + 2, lz1 + 23), (1, 0, 0), (0, -1, 0)), C["motor"], 7, (0, 160, 300), mat="misc", mass_kg=0.28, bom="M4", mcm="STEPPER17")
+    add("Roller shaft seal housing", cyl(15, (xd, 55, lz1 + 30), "y", 10), C["anod"], 7, (0, 0, 300), mat="al6061", bom="M4", mcm="9572K33")
+    add("Dosing stepper (NEMA 17)", place(stepper_nema17(40), (xd, 65 + 2, lz1 + 30), (1, 0, 0), (0, -1, 0)), C["motor"], 7, (0, 160, 300), mat="misc", mass_kg=0.32, bom="M4", mcm="6627T91")
     hz0 = lz1 + 46
     hop = rbox(xd - 15, xd + 15, -42, 42, hz0, hz0 + 62, 3).cut(rbox(xd - 13, xd + 13, -40, 40, hz0 + 3, hz0 + 63, 2))
-    add("Hopper cartridge (~100 cm3, 316L, slides out to the front)", hop, C["ss"], 7, (0, 0, 380), group="cartridge", mat="ss316l", bom="M4", mcm="HOPPER")
-    add("Hopper powder", box(xd - 13, xd + 13, -40, 40, hz0 + 3, hz0 + 45), C["powder"], 7, (0, 0, 380), group="cartridge", mat="powder", bom="M4")
+    add("Hopper cartridge (~100 cm3, 304 SS, slides out to the front)", hop, C["ss"], 7, (0, 0, 380), group="cartridge", mat="ss304", bom="M4", mcm="HOPPER")
+    add("Hopper powder", rbox(xd - 13, xd + 13, -40, 40, hz0 + 3, hz0 + 45, 2), C["powder"], 7, (0, 0, 380), group="cartridge", mat="powder", bom="M4")
     cap = fuse([rbox(xd - 17, xd + 17, -44, 44, hz0 + 62, hz0 + 66, 3), box(xd - 4, xd + 4, -30, 30, hz0 + 66, hz0 + 76)])
     add("Hopper cap with robot handle", cap, C["anod"], 7, (0, 0, 420), group="cartridge", mat="al6061", bom="M4")
-    add("Load cell (under the dovetail)", box(xd - 17, xd + 17, 55, 70, lz1 + 30, lz1 + 46), C["ss"], 7, (0, 0, 380), mat="steel", bom="M4", mcm="LOADCELL")
+    add("Load cell (S-beam, 11 kg, weighs the dovetail carriage)", box(xd + 17, xd + 30, -6, 6, lz1, lz1 + 46), C["ss"], 7, (0, 0, 380), mat="steel", bom="M4", mcm="3487N257")
     d = (V(0, 0, 0) - cam_p).normalized()
     up = d * -1
-    boss = cq.Solid.makeCylinder(16, 40, cam_p, up).cut(cq.Solid.makeCylinder(11, 40, cam_p, up))
-    add("Camera viewport boss + Ø1 in. window", boss, C["anod"], 7, (0, 0, 300), mat="al6061", bom="M6")
-    cam_base = cam_p + up * 40
+    adp = cyl(22, (75, -45, lz1), "z", 12)
+    b0 = cam_p + V(0, 0, 12)
+    boss = fuse([adp, cq.Solid.makeCylinder(16, 26, b0, up)])
+    boss = boss.cut(cq.Solid.makeCylinder(11, 60, cam_p - up * 20, up))
+    add("Camera viewport adapter + boss (Ø1 in. window, 1070 nm blocking filter)", boss, C["anod"], 7, (0, 0, 300), mat="al6061", bom="M6")
+    cam_base = b0 + up * 26
     cam = comp([cq.Solid.makeCylinder(15, 38, cam_base, up),
                 place(box(-19, 19, -19, 19, 0, 8), (cam_base + up * 38).toTuple(), (0, 1, 0), up.toTuple())])
     add("Layer camera (Pi HQ + C-mount lens)", cam, C["black"], 7, (0, 0, 340), mat="misc", mass_kg=0.15, bom="M6")
     add("Pressure transducer", comp([cyl(4, (100, 50, lz1), "z", 12), cyl(11, (100, 50, lz1 + 12), "z", 52)]), C["ss"], 7, (0, 0, 300), mat="ss316l", bom="G7", mcm="TRANSDUCER")
-    add("Overpressure relief valve (+50 mbar)", comp([cyl(4, (110, -62, lz1), "z", 10), cyl(9, (110, -62, lz1 + 10), "z", 28)]), C["brass"], 7, (0, 0, 300), mat="ss316l", bom="G7", mcm="RELIEF")
+    add("Overpressure relief valve (316 SS, FKM seat, +34 mbar)", comp([cyl(4, (40, 70, lz1), "z", 10), cyl(9, (40, 70, lz1 + 10), "z", 28)]), C["ss"], 7, (0, 0, 300), mat="ss316l", bom="G7", mcm="RELIEF")
 
     # ===================== 8. Drop-down door =====================
     dy1 = -cy
@@ -490,30 +501,35 @@ def build(include_tray=True):
     door = door.cut(rbox(-118, 118, dy1 - 2.8, dy1 + 1, 0, 108, 6, "|Y").cut(rbox(-114, 114, dy1 - 3, dy1 + 2, 4, 104, 4, "|Y")))
     add("Chamber door (6061-T6, 15 mm, drops down)", door, C["alu"], 8, (0, -240, 0), group="door", mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
     add("Door O-ring (FKM)", rbox(-117.6, 117.6, dy1 - 2.8, dy1, 0.4, 107.6, 5.6, "|Y").cut(rbox(-114.4, 114.4, dy1 - 3, dy1 + 1, 3.6, 104.4, 4.4, "|Y")), C["black"], 8, (0, -200, 0), group="door", mat="fkm", bom="G8", mcm="ORING_CORD", section=True)
-    hy, hz = dy0 - 6.0, -12.0                              # hinge axis (parallel to X) below the door's front edge
+    hy, hz = dy0 - 6.0, -12.0                              # hinge axis (parallel to X) in front of the door's bottom edge
     DOOR_HINGE = (hy, hz)
-    hinges = []
-    for x in (-100.0, 80.0):
-        hinges += [box(x, x + 20, dy0 - 4, dy0, -6, 20), cyl(5, (x, hy, hz), "x", 20)]
-    add("Door hinge leaves + knuckles (SS)", comp(hinges), C["ss"], 8, (0, -240, 0), group="door", mat="ss316l", bom="G1", mcm="HINGE_DOOR", section=True)
-    hb = [box(x - 1, x + 21, dy0 - 1, dy1 + 0.0, zf - 0.0, -6.5) for x in (-100.0, 80.0)]
-    add("Door hinge blocks on the chamber (SS)", comp([b.cut(cyl(5.2, (x - 2, hy, hz), "x", 26)) for b, x in zip(hb, (-100.0, 80.0))]), C["ss"], 8, (0, -240, 0), mat="ss316l", bom="G1", mcm="HINGE_DOOR", section=True)
-    add("Hinge pins (Ø10)", comp([cyl(5, (x - 1, hy, hz), "x", 22) for x in (-100.0, 80.0)]), C["steel"], 8, (0, -240, 0), mat="steel", bom="G1", section=True)
-    lt = []
-    for x in (-cx + 2, cx - 20):
-        lt += [box(x, x + 18, dy1 - 0.0, dy1 + 0.0 + 14, 92, 112)]
-    add("Toggle-latch bases on the chamber (SS)", comp([box(x, x + 18, -cy - 0.0, -cy + 14, 116, 120) for x in (-cx + 2, cx - 20)]), C["ss"], 8, (0, -240, 0), mat="ss316l", bom="G1", mcm="LATCH", section=True)
+    hx = (-100.0, 80.0)
+    leaves = []
+    for x in hx:                                           # door leaf + middle knuckle, rotates with the door
+        leaves += [box(x, x + 20, dy0 - 3, dy0, hz + 5, 30), cyl(6, (x, hy, hz), "x", 20).cut(cyl(2.6, (x - 1, hy, hz), "x", 22))]
+    add("Door hinge leaves + knuckles (304 SS)", comp(leaves), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", bom="G1", mcm="1151A87", section=True)
+    blocks = []
+    for x in hx:                                           # outer knuckles bolted to the chamber's front face
+        for xa, xb in ((x - 12.0, x - 0.5), (x + 20.5, x + 32.0)):
+            blocks.append(fuse([box(xa, xb, hy, dy1, zf, hz), cyl(6, (xa, hy, hz), "x", xb - xa)]).cut(cyl(2.6, (xa - 1, hy, hz), "x", xb - xa + 2)))
+    add("Door hinge knuckles on the chamber (304 SS)", comp(blocks), C["ss"], 8, (0, -240, 0), mat="ss304", bom="G1", mcm="1151A87", section=True)
+    add("Hinge pins (Ø5, 316)", comp([cyl(2.5, (x - 12.0, hy, hz), "x", 44) for x in hx]), C["steel"], 8, (0, -240, 0), mat="ss316l", bom="G1", section=True)
+    keep = [box(s * 128.0, s * 150.0, -cy - 4, -cy, 90, 112) if s > 0 else box(-150.0, -128.0, -cy - 4, -cy, 90, 112) for s in (1, -1)]
+    add("Draw-latch keepers beside the door (304 SS)", comp(keep), C["ss"], 8, (0, -240, 0), mat="ss304", bom="G1", mcm="1807A61", section=True)
+    lat = [box(100.0, 124.0, dy0 - 12, dy0, 92, 110), box(-124.0, -100.0, dy0 - 12, dy0, 92, 110)]
+    add("Draw latches on the door (304 SS, 800 lb)", comp(lat), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", bom="G1", mcm="1807A61", section=True)
     add("Door handle", comp([cyl(5, (-30, dy0, 95), "-y", 26), cyl(5, (30, dy0, 95), "-y", 26), cyl(6, (-36, dy0 - 26, 95), "x", 72)]), C["anod"], 8, (0, -260, 0), group="door", mat="al6061", bom="G1", section=True)
 
     # ===================== 9. Optics =====================
     zb0_, zb1_ = P["z_bridge0"], P["z_bridge1"]
-    br = box(-345, 215, -125, 125, zb0_, zb1_)
+    br = box(-345, 225, -170, 170, zb0_, zb1_)
     br = br.cut(cyl(P["lens_d"] / 2 + 3, (0, 0, zb0_ - 1), "z", 17))
-    br = br.cut(box(xd - 26, xd + 26, -126, 52, zb0_ - 1, zb1_ + 1))       # slot: cartridge slides out to the front
+    br = br.cut(box(xd - 26, xd + 26, -171, 52, zb0_ - 1, zb1_ + 1))       # slot: cartridge slides out to the front
+    br = br.cut(cyl(40, (112, -66, zb0_ - 1), "z", 17))                     # clearance for the layer camera
     add("Optics bridge (6061, 15 mm)", br, C["alu"], 9, (0, 0, 260), mat="al6061", bom="F5")
     pst = []
-    for x in (-330.0, 175.0):
-        for y in (-120.0, 80.0):
+    for x in (-335.0, 180.0):
+        for y in (-165.0, 125.0):
             pst.append(box(x, x + 40, y, y + 40, zb1, zb0_).cut(box(x + 4, x + 36, y + 4, y + 36, zb1 - 1, zb0_ + 1)))
     add("Optics bridge posts (40 x 40 x 4 square tube)", comp(pst), C["alu_dark"], 9, (0, 0, 200), mat="al6061", bom="F5")
     zl0 = P["z_lens0"]
@@ -537,9 +553,9 @@ def build(include_tray=True):
     pump = fuse([rbox(560, 980, 40, 290, g0, g0 + 270, 10), cyl(16, (640, 165, g0 + 270), "z", 20), cyl(14, (980, 120, g0 + 60), "x", 25)])
     add("Dry scroll pump (≤ 0.3 mbar, 6 m3/h class)", pump, C["blue"], 10, (300, 0, 0), mat="misc", mass_kg=26.0, module="gas", bom="G2", mcm="PUMP")
     add("Pump inlet (KF-25)", place(kf_stub(25, 20), (640, 165, g0 + 290 + 20), (1, 0, 0), (0, 0, 1)), C["ss"], 10, (300, 0, 0), mat="ss304", module="gas", bom="G7", mcm="KF25_WELD")
-    filt = fuse([cyl(55, (470, -40, g0 + 20), "z", 250), cyl(58, (470, -40, g0 + 240), "z", 14), cyl(58, (470, -40, g0 + 20), "z", 14),
+    filt = fuse([cyl(55, (470, -40, g0 + 20), "z", 220), cyl(58, (470, -40, g0 + 240), "z", 14), cyl(58, (470, -40, g0 + 20), "z", 14),
                  box(440, 500, -70, -10, g0, g0 + 20)])
-    add("Sealed cyclone + HEPA housing (316L, valves off for passivation)", filt, C["ss"], 10, (0, -300, 0), mat="ss316l", module="gas", bom="G5", mcm="FILTER")
+    add("Sealed cyclone + HEPA housing (316L, valves off for passivation)", filt, C["ss"], 10, (0, -300, 0), mat="ss316l", mass_kg=4.0, module="gas", bom="G5", mcm="FILTER")
     add("Filter inlet (KF-25)", place(kf_stub(25, 20), (470, -40, g0 + 254 + 20), (1, 0, 0), (0, 0, 1)), C["ss"], 10, (0, -300, 0), mat="ss304", module="gas", bom="G7")
     add("Filter outlet (KF-25)", place(kf_stub(25, 20), (470 + 55 + 20, -40, g0 + 60), (0, 1, 0), (1, 0, 0)), C["ss"], 10, (0, -300, 0), mat="ss304", module="gas", bom="G7")
     bl = fuse([rbox(600, 800, -240, -60, g0, g0 + 200, 12), cyl(40, (700, -150, g0 + 200), "z", 30)])
@@ -548,23 +564,23 @@ def build(include_tray=True):
     add("Blower outlet (KF-25)", place(kf_stub(25, 20), (700, -150, g0 + 230 + 20), (1, 0, 0), (0, 0, 1)), C["ss"], 10, (0, -300, 0), mat="ss304", module="gas", bom="G7")
     o2 = rbox(830, 980, -240, -80, g0, g0 + 210, 6)
     add("Trace O2 analyzer + dew-point transmitter (panel box)", o2, C["white"], 10, (300, 0, 0), mat="misc", mass_kg=5.0, module="gas", bom="G6")
-    man = comp([box(430, 545, 150, 280, g0, g0 + 22)] + [fuse([cyl(13, (x, 215, g0 + 22), "z", 45), box(x - 10, x + 10, 205, 225, g0 + 67, g0 + 82)]) for x in (455, 487, 519)])
-    add("Argon solenoid manifold (purge / make-up / vent)", man, C["brass"], 10, (0, 300, 0), mat="brass", module="gas", bom="G7", mcm="SOLENOID")
-    add("Argon pressure regulator + flowmeter", comp([cyl(22, (500, 120, g0), "z", 60), cyl(14, (500, 120, g0 + 60), "z", 40)]), C["brass"], 10, (0, 300, 0), mat="brass", module="gas", bom="G3")
+    man = comp([box(420, 535, 150, 280, g0, g0 + 22)] + [fuse([cyl(13, (x, 215, g0 + 22), "z", 45), box(x - 10, x + 10, 205, 225, g0 + 67, g0 + 82)]) for x in (445, 477, 509)])
+    add("Argon solenoid manifold (purge / make-up / vent)", man, C["brass"], 10, (0, 300, 0), mat="brass", mass_kg=2.0, module="gas", bom="G7", mcm="8077K237")
+    add("Argon pressure regulator + flowmeter", comp([cyl(22, (500, 120, g0), "z", 60), cyl(14, (500, 120, g0 + 60), "z", 40)]), C["brass"], 10, (0, 300, 0), mat="brass", mass_kg=1.2, module="gas", bom="G3")
 
     # ===================== 11. Hoses =====================
     vv = comp([place(kf_clamp(25), (cx + 18, 0, 70), (0, 1, 0), (1, 0, 0)), box(cx + 20, cx + 66, -22, 22, 48, 92),
                cyl(14, (cx + 43, 0, 92), "z", 26), place(kf_stub(25, 15), (cx + 43, 0, 48), (1, 0, 0), (0, 0, -1))])
     add("Vacuum isolation valve (KF-25 angle, pneumatic)", vv, C["ss"], 11, (220, 0, 0), mat="ss304", bom="G7", mcm="VALVE_KF25")
     hoses = {
-        "Outlet plenum to filter": [(55 + 21 + 26, -66, zf - 17), (180, -66, -40), (300, -60, 20), (400, -40, 160), (470, -40, g0 + 294)],
+        "Outlet plenum to filter": [(55 + 21 + 26, -66, zf - 21), (180, -66, -40), (300, -60, 20), (400, -40, 160), (470, -40, g0 + 294)],
         "Filter to blower": [(470 + 55 + 40, -40, g0 + 60), (560, -100, g0 + 60), (580 - 20, -150, g0 + 60)],
         "Blower to inlet plenum": [(700, -150, g0 + 270), (650, 0, 150), (400, 180, 100), (150, 180, 40), (0, cy + 32 + 46, 11)],
         "Vacuum line to pump": [(cx + 43, 0, 33), (cx + 43, 0, -30), (300, 60, -40), (500, 165, 80), (640, 165, g0 + 330)],
     }
     add("Gas-loop + vacuum hoses (KF-25 SS bellows)", comp([polyline_pipe(h, 13) for h in hoses.values()]), C["hose"], 11, (0, 0, -160), mat="ss316l", mass_kg=3.0, bom="G7", mcm="HOSE_KF25")
-    add("Argon line (1/4 in. 316L)", polyline_pipe([(487, 215, g0 + 82), (487, 215, 140), (300, 160, 130), (100, cy + 40, 110), (100, cy + 0.0, 100)], 3.2), C["argon"], 11, (0, 200, 0), mat="ss316l", bom="G7", mcm="TUBE_SS")
-    add("O2 sample line (1/8 in. 316L)", polyline_pipe([(cx, -40, 18), (cx + 30, -40, 18), (300, -120, 0), (700, -250, 10), (830, -200, 60)], 2.0), C["ss"], 11, (0, -200, 0), mat="ss316l", bom="G6", mcm="TUBE_SS")
+    add("Argon line (1/4 in. 316L)", polyline_pipe([(477, 215, g0 + 82), (477, 215, 140), (300, 112, 130), (150, 108, 105), (100, 100, 100), (100, cy + 0.0, 100)], 3.2), C["argon"], 11, (0, 200, 0), mat="ss316l", bom="G7", mcm="TUBE_SS")
+    add("O2 sample line (1/8 in. 316L)", polyline_pipe([(cx, -40, 18), (cx + 30, -40, 18), (300, -150, 75), (600, -205, 85), (790, -205, 85), (900, -160, 70), (900, -160, 50)], 2.0), C["ss"], 11, (0, -200, 0), mat="ss316l", bom="G6", mcm="TUBE_SS")
 
     # ===================== 12. Laser guard =====================
     gx0, gx1, gy0, gy1 = -370.0, 290.0, -265.0, 215.0
@@ -589,15 +605,16 @@ def build(include_tray=True):
     add("OD 7+ viewing window (1070 nm, polycarbonate)", box(-300.0, 160.0, gy0 - pt - 5, gy0 - pt - 3, gz0 + 40, gz1 - 40), C["laser_glass"], 12, (0, -260, 0), group="gdoor", mat="pc", opacity=0.45, bom="S5", section=True)
     add("Guard door rail (top + bottom)", comp([box(-340.0, 680.0, gy0 - pt - 12, gy0 - pt - 7, gz1 - 8, gz1), box(-340.0, 680.0, gy0 - pt - 12, gy0 - pt - 7, gz0, gz0 + 8)]), C["steel"], 12, (0, -260, 0), mat="steel", bom="S9", section=True)
     add("Guard-locking door switch (Omron D4JL)", box(181.0, 200.0, gy0 - pt - 30, gy0 - pt - 13, gz1 - 120, gz1 - 30), C["yellow"], 12, (0, -280, 0), mat="misc", mass_kg=0.4, bom="S2", section=True)
-    pnl = rbox(205, 280, gy0 - pt - 30, gy0 - pt, gz0 + 120, gz0 + 330, 4)
-    add("Operator panel box", pnl, C["anod"], 12, (0, -200, 0), mat="al6061", bom="S4")
-    bxp = 242.0
-    ops = [("E-stop", comp([cyl(20, (bxp, gy0 - pt - 30, gz0 + 290), "-y", 8), cyl(17, (bxp, gy0 - pt - 38, gz0 + 290), "-y", 14)]), C["red"], "S3"),
-           ("Key switch", comp([cyl(13, (bxp, gy0 - pt - 30, gz0 + 240), "-y", 6), box(bxp - 4, bxp + 4, gy0 - pt - 44, gy0 - pt - 36, gz0 + 237, gz0 + 243)]), C["ss"], "S4"),
-           ("Emission indicator", cyl(11, (bxp, gy0 - pt - 30, gz0 + 195), "-y", 10), C["red"], "S4"),
-           ("Reset button", cyl(11, (bxp, gy0 - pt - 30, gz0 + 155), "-y", 10), C["blue"], "S4")]
+    oy = bases["rack"][2]                                  # rack front plane; the panel hangs on the right-hand post
+    pnl = rbox(-470.0, -420.0, oy - 32, oy, Z_TRAY + 140, Z_TRAY + 440, 4)
+    add("Operator panel box (on the rack's front post)", pnl, C["anod"], 12, (0, -200, 0), mat="al6061", bom="S4", module="rack")
+    bxp, gyp = -445.0, oy - 32
+    ops = [("E-stop", comp([cyl(20, (bxp, gyp, Z_TRAY + 400), "-y", 8), cyl(17, (bxp, gyp - 8, Z_TRAY + 400), "-y", 14)]), C["red"], "S3"),
+           ("Key switch", comp([cyl(13, (bxp, gyp, Z_TRAY + 345), "-y", 6), box(bxp - 4, bxp + 4, gyp - 14, gyp - 6, Z_TRAY + 342, Z_TRAY + 348)]), C["ss"], "S4"),
+           ("Emission indicator", cyl(11, (bxp, gyp, Z_TRAY + 295), "-y", 10), C["red"], "S4"),
+           ("Reset button", cyl(11, (bxp, gyp, Z_TRAY + 250), "-y", 10), C["blue"], "S4")]
     for nm, shp, col, b in ops:
-        add(nm, shp, col, 12, (0, -220, 0), mat="misc", mass_kg=0.1, bom=b)
+        add(nm, shp, col, 12, (0, -220, 0), mat="misc", mass_kg=0.1, bom=b, module="rack")
 
     # ===================== 13. Dock and umbilicals =====================
     if include_tray:
@@ -605,11 +622,11 @@ def build(include_tray=True):
         dock = fuse([box(dx0, dx0 + 100, dy0_, dy0_ + 80, Z_TRAY, Z_TRAY + 140), box(dx0 + 100, dx0 + 108, dy0_ + 5, dy0_ + 75, Z_TRAY + 20, Z_TRAY + 130)])
         add("Tray dock (CombiTac-type, mates sideways)", dock, C["yellow"], 13, (200, 0, 0), mat="misc", mass_kg=6.0, module="tray", bom="D1")
         duct = box(-980.0, dx0, 320.0, 380.0, Z_TRAY, Z_TRAY + 50)
-        add("Umbilical duct along the back edge", duct, C["anod"], 13, (0, 200, 0), mat="al6061", module="tray", bom="D1", opacity=0.6)
+        add("Umbilical duct along the back edge", duct, C["anod"], 13, (0, 200, 0), mat="al6061", mass_kg=4.0, module="tray", bom="D1", opacity=0.6)
         cw = [polyline_pipe([(dx0, 350, Z_TRAY + 70), (900, 350, Z_TRAY + 70), (-700, 350, Z_TRAY + 70), (-760, 300, Z_TRAY + 140)], 7),
               polyline_pipe([(dx0, 335, Z_TRAY + 95), (900, 335, Z_TRAY + 95), (-660, 335, Z_TRAY + 95), (-720, 300, Z_TRAY + 160)], 7)]
         add("Chilled-water supply + return to the laser", comp(cw), C["water"], 13, (0, 200, 0), mat="misc", mass_kg=1.5, module="tray", bom="D1")
-        add("Argon supply from the dock", polyline_pipe([(dx0, 365, Z_TRAY + 115), (700, 360, Z_TRAY + 115), (520, 280, g0 + 20), (500, 140, g0 + 20)], 4), C["argon"], 13, (0, 200, 0), mat="ss316l", module="tray", bom="D1")
+        add("Argon supply from the dock", polyline_pipe([(dx0, 365, Z_TRAY + 115), (700, 360, Z_TRAY + 115), (548, 300, Z_TRAY + 115), (548, 120, g0 + 30), (522, 120, g0 + 30)], 4), C["argon"], 13, (0, 200, 0), mat="ss316l", module="tray", bom="D1")
         add("Pump exhaust to the dock", polyline_pipe([(1005, 120, g0 + 60), (1060, 200, Z_TRAY + 60), (dx0, 395, Z_TRAY + 60)], 10), C["hose"], 13, (0, 200, 0), mat="misc", mass_kg=0.5, module="tray", bom="D1")
     return parts
 
@@ -630,7 +647,7 @@ def group_location(group, value):
         hy, hz = DOOR_HINGE
         # door drops toward -y: positive angle rotates the top edge forward (about +X by -angle)
         t1 = cq.Location(V(0, hy, hz))
-        r = cq.Location(V(0, 0, 0), V(1, 0, 0), -value)
+        r = cq.Location(V(0, 0, 0), V(1, 0, 0), value)
         t0 = cq.Location(V(0, -hy, -hz))
         return t1 * r * t0
     raise ValueError(group)

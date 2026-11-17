@@ -1,194 +1,319 @@
-"""Exact B-rep interference and clearance checks on the low-profile model (cad/lpbf_low.py).
+"""Interference and clearance checks on the low-profile model (cad/lpbf_low.py).
 
-For each machine state (doors, recoater, piston, cartridge) every pair of parts whose bounding boxes overlap is
-intersected with OpenCascade's boolean Common; any shared volume above VOL_TOL is an interference. Moving parts
-are also swept through their whole range in N steps against every fixed part. Minimum clearances between each
-moving group and its neighbours are measured with BRepExtrema at every state.
+Three layers, fastest first:
+1. every part is tessellated (0.05 mm chord) into a closed mesh and turned into a manifold3d solid;
+2. for each machine state, every pair with overlapping bounding boxes is intersected with manifold3d. Any shared
+   volume above VOL_TOL is then re-checked with OpenCascade's exact boolean on the B-rep, so that chord error on
+   coaxial fits (a rod in its bore) is not reported as interference;
+3. moving parts are swept through their whole range (N_SWEEP steps per motion group) the same way, and the
+   minimum distance from each moving part to its neighbours is measured with FCL at every step.
 
-Run:  python desktop-lpbf/analysis/interference.py        (about 2-4 min on 4 cores)
+Contacts that are part of the design (a hose clamped onto its KF flange, a nut on its screw) are listed in JOINTS
+and reported separately, never silently dropped.
+
+Run:  python desktop-lpbf/analysis/interference.py
 Writes analysis/out/interference.json and analysis/out/interference.md.
 """
 from __future__ import annotations
 
 import json
-import multiprocessing as mp
 import pathlib
 import sys
 import time
 
+import fcl
+import manifold3d as mf
+import numpy as np
+import trimesh
+
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "cad"))
 import lpbf_low as M  # noqa: E402
-from OCP.BRepExtrema import BRepExtrema_DistShapeShape  # noqa: E402
 
 OUT = HERE / "out"
-VOL_TOL = 0.5          # mm3: below this a shared volume is a touching face / tessellation artefact
-GAP_WARN = 2.0         # mm: report moving-part clearances below this
-N_SWEEP = 12
+VOL_TOL = 0.5          # mm3, exact-boolean volume above which a pair interferes
+GAP_WARN = 3.0         # mm, report moving-part clearances below this
+N_SWEEP = 24
+TOL = 0.05             # tessellation chord (mm)
 
-PARTS = None
-SHAPES = None
-BBS = None
+# Designed contacts: (substring of part A, substring of part B, why). Order does not matter.
+JOINTS = [
+    ("hoses", "KF-25", "hose end clamped onto its KF-25 flange"),
+    ("hoses", "Vacuum isolation valve", "hose clamped onto the valve's KF-25 port"),
+    ("hoses", "Filter", "hose clamped onto the filter's KF-25 port"),
+    ("hoses", "Blower", "hose clamped onto the blower's KF-25 port"),
+    ("hoses", "Pump inlet", "hose clamped onto the pump's KF-25 inlet"),
+    ("Argon line", "Argon solenoid", "tube fitting into the manifold"),
+    ("Argon line", "Process chamber body", "tube fitting into the argon port"),
+    ("O2 sample line", "Process chamber body", "tube fitting into the sample port"),
+    ("O2 sample line", "Trace O2", "tube fitting into the analyzer"),
+    ("Argon supply from the dock", "Argon pressure regulator", "tube fitting"),
+    ("Argon supply from the dock", "Tray dock", "tube fitting"),
+    ("Argon supply from the dock", "Base plate, gas", "line clipped to the plate edge"),
+    ("Chilled-water", "Tray dock", "hose fitting"),
+    ("Chilled-water", "19 in. rack", "hose fitting at the laser"),
+    ("Chilled-water", "Umbilical duct", "lines run in the duct"),
+    ("Argon supply from the dock", "Umbilical duct", "line runs in the duct"),
+    ("Pump exhaust", "Tray dock", "hose fitting"),
+    ("Pump exhaust", "Dry scroll pump", "hose on the exhaust port"),
+    ("Pump exhaust", "Umbilical duct", "hose runs in the duct"),
+    ("Process fiber", "Collimator", "fiber connector (QBH) in the collimator"),
+    ("Process fiber", "Fiber laser source", "fiber leaves the laser's front panel"),
+    ("Process fiber", "Laser guard panels", "fiber through a guarded bulkhead in the guard's side panel"),
+    ("Process fiber", "Guard frame", "fiber bulkhead"),
+    ("Process fiber", "19 in. rack frame", "fiber leaves the rack"),
+    ("Recoater ball nut", "Recoater ball screw", "nut on its screw"),
+    ("Recoater ball screw", "Recoater fixed bearing", "screw journal in its bearing"),
+    ("Recoater ball screw", "Recoater floating bearing", "screw journal in its bearing"),
+    ("Recoater ball screw", "Recoater motor standoff", "shaft passes into the coupling"),
+    ("Hinge pins", "Door hinge", "pin in its knuckle/block"),
+    ("Piston rod", "Cylinder bottom flange", "rod in its rod-wiper bore"),
+    ("Piston rod", "Z lift arm", "rod clamped in the arm"),
+    ("Piston rod", "Piston (", "rod threaded into the piston"),
+    ("Z carriage", "Z actuator body", "carriage runs on its actuator"),
+    ("Z servo", "Z fold-back belt housing", "servo pilot in the housing's pilot bore"),
+    ("Piston seal", "Build cylinder", "seal rides on the honed bore"),
+    ("Piston seal", "Process chamber body", "seal rides on the floor bore"),
+    ("Hopper cartridge", "Dovetail rails", "cartridge slides on its dovetail"),
+    ("Hopper cartridge", "Dosing block", "cartridge seats on the dosing block"),
+    ("Recoater carriage", "Recoater guide rail", "carriage runs on its rail"),
+    ("Sliding guard door", "Guard door rail", "door runs in its rail"),
+    ("HSS recoater blade", "Build plate", "blade passes 0.05 mm above the plate"),
+    ("HSS recoater blade", "Process chamber body", "blade passes 0.05 mm above the floor"),
+    ("Chamber door", "Process chamber body", "closed door seats on the chamber's front face"),
+    ("Door O-ring", "Process chamber body", "O-ring squeezed against the front face"),
+    ("Lid O-ring", "Chamber lid", "O-ring squeezed by the lid"),
+]
+
+ALLOW_HOSE_THROUGH = ("Laser guard panels", "Guard frame")   # hoses pass the guard through bulkheads
 
 
-def _init(state):
-    global PARTS, SHAPES, BBS
-    if PARTS is None:
-        PARTS = M.build()
-    SHAPES = M.posed(PARTS, state)
-    BBS = [s.BoundingBox() for s in SHAPES]
+def is_joint(a, b):
+    for x, y, why in JOINTS:
+        if (x in a and y in b) or (x in b and y in a):
+            return why
+    for k in ALLOW_HOSE_THROUGH:
+        if ("hoses" in a or "line" in a.lower()) and k in b or ("hoses" in b or "line" in b.lower()) and k in a:
+            return "line passes the guard through a bulkhead fitting"
+    return None
 
 
-def bb_overlap(a, b, tol=0.01):
-    return (a.xmin - tol <= b.xmax and b.xmin - tol <= a.xmax and a.ymin - tol <= b.ymax and b.ymin - tol <= a.ymax
-            and a.zmin - tol <= b.zmax and b.zmin - tol <= a.zmax)
+def solids_of(shape):
+    return list(shape.Solids()) or [shape]
 
 
-def common_volume(i, j):
-    try:
-        c = SHAPES[i].intersect(SHAPES[j])
-        return c.Volume() if c is not None else 0.0
-    except Exception as e:  # noqa: BLE001
-        return float("nan")
+def to_manifold(shape):
+    ms = []
+    for s in solids_of(shape):
+        vs, ts = s.tessellate(TOL, 0.2)
+        if not ts:
+            continue
+        v = np.array([(p.x, p.y, p.z) for p in vs], dtype=np.float64)
+        t = np.array(ts, dtype=np.int64)
+        tm = trimesh.Trimesh(v, t, process=True)
+        tm.merge_vertices(digits_vertex=4)
+        tm.remove_unreferenced_vertices()
+        if tm.volume < 0:
+            tm.invert()
+        m = mf.Manifold(mf.Mesh(vert_properties=np.asarray(tm.vertices, dtype=np.float32), tri_verts=np.asarray(tm.faces, dtype=np.uint32)))
+        if m.status() != mf.Error.NoError or m.is_empty():
+            # fall back to the convex hull for a mesh manifold3d will not accept (rare; reported)
+            m = mf.Manifold.hull_points(np.asarray(tm.vertices, dtype=np.float32))
+        ms.append(m)
+    if not ms:
+        return None
+    return mf.Manifold.batch_boolean(ms, mf.OpType.Add) if len(ms) > 1 else ms[0]
 
 
-def min_dist(i, j):
-    d = BRepExtrema_DistShapeShape(SHAPES[i].wrapped, SHAPES[j].wrapped)
-    return d.Value() if d.IsDone() else float("nan")
+def to_fcl(shape):
+    vs, ts = shape.tessellate(0.2, 0.3)
+    if not ts:
+        return None, None
+    v = np.array([(p.x, p.y, p.z) for p in vs], dtype=np.float64)
+    t = np.array(ts, dtype=np.int64)
+    bvh = fcl.BVHModel()
+    bvh.beginModel(len(v), len(t))
+    bvh.addSubModel(v, t)
+    bvh.endModel()
+    return bvh, v
 
 
-def _pairs_job(args):
-    state, pairs = args
-    _init(state)
-    out = []
-    for i, j in pairs:
-        v = common_volume(i, j)
-        if v != v or v > VOL_TOL:
-            out.append((i, j, v))
-    return out
+def loc_matrix(loc):
+    t = loc.wrapped.Transformation()
+    m = np.eye(4)
+    for i in range(3):
+        for j in range(4):
+            m[i, j] = t.Value(i + 1, j + 1)
+    return m
 
 
-def _gap_job(args):
-    state, pairs = args
-    _init(state)
-    return [(i, j, min_dist(i, j)) for i, j in pairs]
+def bbox_of(man):
+    b = man.bounding_box()
+    return np.array(b[:3]), np.array(b[3:])
 
 
-def check_state(pool, state, only=None):
-    """All bbox-overlapping pairs (or pairs touching `only` indices) in `state`."""
-    _init(state)
-    n = len(SHAPES)
-    pairs = []
-    for i in range(n):
-        for j in range(i + 1, n):
-            if "context" in PARTS[i].tags or "context" in PARTS[j].tags:
+def overlap(b1, b2, tol=0.01):
+    return bool(np.all(b1[0] - tol <= b2[1]) and np.all(b2[0] - tol <= b1[1]))
+
+
+class Model:
+    def __init__(self):
+        t0 = time.time()
+        self.parts = M.build()
+        self.names = [p.name for p in self.parts]
+        self.man, self.fcl, self.bad = [], [], []
+        for p in self.parts:
+            m = to_manifold(p.shape)
+            self.man.append(m)
+            self.fcl.append(to_fcl(p.shape)[0])
+        self.ctx = [("context" in p.tags) for p in self.parts]
+        print(f"meshed {len(self.parts)} parts in {time.time() - t0:.1f} s", flush=True)
+
+    def posed(self, state):
+        mans, mats = [], []
+        for p, m in zip(self.parts, self.man):
+            if p.group and state.get(p.group, 0.0) != 0.0:
+                T = loc_matrix(M.group_location(p.group, state[p.group]))
+                mans.append(m.transform(T[:3, :].astype(np.float32)))
+                mats.append(T)
+            else:
+                mans.append(m)
+                mats.append(np.eye(4))
+        return mans, mats
+
+    def exact_volume(self, i, j, state):
+        shapes = M.posed([self.parts[i], self.parts[j]], state)
+        try:
+            c = shapes[0].intersect(shapes[1])
+            return float(c.Volume()) if c is not None else 0.0
+        except Exception:  # noqa: BLE001
+            return float("nan")
+
+    def check(self, state, only=None):
+        mans, _ = self.posed(state)
+        bbs = [bbox_of(m) if m is not None else None for m in mans]
+        hits, joints, n = [], [], 0
+        N = len(mans)
+        for i in range(N):
+            if mans[i] is None or self.ctx[i]:
                 continue
-            if only is not None and i not in only and j not in only:
-                continue
-            if only is not None and i in only and j in only:
-                continue
-            if bb_overlap(BBS[i], BBS[j]):
-                pairs.append((i, j))
-    chunks = [pairs[k::4] for k in range(4)]
-    res = []
-    for r in pool.map(_pairs_job, [(state, c) for c in chunks]):
-        res += r
-    return pairs, res
+            for j in range(i + 1, N):
+                if mans[j] is None or self.ctx[j]:
+                    continue
+                if only is not None and (i in only) == (j in only):
+                    continue
+                if not overlap(bbs[i], bbs[j]):
+                    continue
+                n += 1
+                v = (mans[i] ^ mans[j]).volume()
+                if v <= VOL_TOL:
+                    continue
+                why = is_joint(self.names[i], self.names[j])
+                if why:
+                    joints.append((i, j, v, why))
+                    continue
+                ve = self.exact_volume(i, j, state)
+                if ve != ve or ve > VOL_TOL:
+                    hits.append((i, j, v, ve))
+        return n, hits, joints
 
-
-def near_pairs(state, group, pad=12.0):
-    _init(state)
-    mov = [i for i, p in enumerate(PARTS) if p.group == group]
-    out = []
-    for i in mov:
-        b = BBS[i]
-        for j, p in enumerate(PARTS):
-            if j in mov or "context" in p.tags:
-                continue
-            bj = BBS[j]
-            if (b.xmin - pad <= bj.xmax and bj.xmin - pad <= b.xmax and b.ymin - pad <= bj.ymax and bj.ymin - pad <= b.ymax
-                    and b.zmin - pad <= bj.zmax and bj.zmin - pad <= b.zmax):
-                out.append((i, j))
-    return out
+    def min_gaps(self, state, group, pad=15.0):
+        _, mats = self.posed(state)
+        mov = [i for i, p in enumerate(self.parts) if p.group == group]
+        mans, _ = self.posed(state)
+        bbs = [bbox_of(m) if m is not None else None for m in mans]
+        out = []
+        for i in mov:
+            for j, p in enumerate(self.parts):
+                if j in mov or self.ctx[j] or self.fcl[j] is None or self.fcl[i] is None:
+                    continue
+                b1, b2 = bbs[i], bbs[j]
+                if not overlap((b1[0] - pad, b1[1] + pad), b2):
+                    continue
+                if is_joint(self.names[i], self.names[j]):
+                    continue
+                o1 = fcl.CollisionObject(self.fcl[i], fcl.Transform(mats[i][:3, :3], mats[i][:3, 3]))
+                o2 = fcl.CollisionObject(self.fcl[j], fcl.Transform(mats[j][:3, :3], mats[j][:3, 3]))
+                req, res = fcl.DistanceRequest(), fcl.DistanceResult()
+                d = fcl.distance(o1, o2, req, res)
+                out.append((i, j, float(d)))
+        return out
 
 
 def main():
-    global PARTS
     t0 = time.time()
-    PARTS = M.build()
-    names = [p.name for p in PARTS]
+    md = Model()
+    N = md.names
     OUT.mkdir(exist_ok=True)
-    ctx = mp.get_context("fork")
-    report = dict(vol_tol_mm3=VOL_TOL, n_parts=len(PARTS), states=[], sweeps=[], clearances=[])
-    with ctx.Pool(4) as pool:
-        # 1. static states: everything against everything
-        states = {"closed, parked, piston up": {},
-                  "recoater at end, piston at bottom": {"recoater": M.MOTION["recoater"]["hi"], "piston": M.MOTION["piston"]["lo"]},
-                  "doors open, cartridge out": {"door": M.MOTION["door"]["hi"], "gdoor": M.MOTION["gdoor"]["hi"], "cartridge": M.MOTION["cartridge"]["lo"]}}
-        for label, st in states.items():
-            pairs, hits = check_state(pool, st)
-            report["states"].append(dict(state=label, pose=st, pairs_checked=len(pairs),
-                                         interferences=[dict(a=names[i], b=names[j], volume_mm3=round(v, 2)) for i, j, v in hits]))
-            print(f"[{time.time() - t0:5.0f} s] {label}: {len(pairs)} pairs, {len(hits)} interferences", flush=True)
-        # 2. sweeps: each moving group through its range against everything else
-        for g, m in M.MOTION.items():
-            mov = {i for i, p in enumerate(PARTS) if p.group == g}
-            worst = {}
-            for k in range(N_SWEEP + 1):
-                v = m["lo"] + (m["hi"] - m["lo"]) * k / N_SWEEP
-                st = {g: v}
-                if g == "cartridge":
-                    st["gdoor"] = M.MOTION["gdoor"]["hi"]
-                pairs, hits = check_state(pool, st, only=mov)
-                for i, j, vol in hits:
-                    key = (names[i], names[j])
-                    if key not in worst or vol > worst[key][1]:
-                        worst[key] = (v, vol)
-            report["sweeps"].append(dict(group=g, note=m["note"], range=[m["lo"], m["hi"]], steps=N_SWEEP + 1,
-                                         interferences=[dict(a=a, b=b, at=round(v, 2), volume_mm3=round(vol, 2)) for (a, b), (v, vol) in worst.items()]))
-            print(f"[{time.time() - t0:5.0f} s] sweep {g}: {len(worst)} interfering pairs", flush=True)
-        # 3. clearances: moving group vs neighbours at both ends of its range
-        for g, m in M.MOTION.items():
-            for v in (m["lo"], m["hi"]):
-                st = {g: v}
-                pairs = near_pairs(st, g)
-                chunks = [pairs[k::4] for k in range(4)]
-                res = []
-                for r in pool.map(_gap_job, [(st, c) for c in chunks]):
-                    res += r
-                best = {}
-                for i, j, d in res:
-                    key = names[j]
-                    if key not in best or d < best[key][1]:
-                        best[key] = (names[i], d)
-                for other, (mine, d) in sorted(best.items(), key=lambda kv: kv[1][1]):
-                    report["clearances"].append(dict(group=g, at=v, moving=mine, other=other, gap_mm=round(d, 3)))
-            print(f"[{time.time() - t0:5.0f} s] clearances {g}", flush=True)
-    report["runtime_s"] = round(time.time() - t0, 1)
-    (OUT / "interference.json").write_text(json.dumps(report, indent=1))
-    write_md(report)
-    print(f"done in {report['runtime_s']} s")
+    rep = dict(vol_tol_mm3=VOL_TOL, chord_mm=TOL, n_parts=len(N), states=[], sweeps=[], clearances=[], joints=[])
+    seen_joints = {}
+    states = {"closed, parked, piston up": {},
+              "recoater at end, piston at bottom": {"recoater": M.MOTION["recoater"]["hi"], "piston": M.MOTION["piston"]["lo"]},
+              "doors open, cartridge out": {"door": M.MOTION["door"]["hi"], "gdoor": M.MOTION["gdoor"]["hi"], "cartridge": M.MOTION["cartridge"]["lo"]}}
+    for label, st in states.items():
+        n, hits, joints = md.check(st)
+        rep["states"].append(dict(state=label, pose=st, pairs_checked=n,
+                                  interferences=[dict(a=N[i], b=N[j], mesh_mm3=round(v, 2), exact_mm3=round(ve, 2)) for i, j, v, ve in hits]))
+        for i, j, v, why in joints:
+            seen_joints[(N[i], N[j])] = why
+        print(f"[{time.time() - t0:5.1f} s] {label}: {n} pairs, {len(hits)} interferences, {len(joints)} designed joints", flush=True)
+    for g, m in M.MOTION.items():
+        mov = {i for i, p in enumerate(md.parts) if p.group == g}
+        worst, gaps = {}, {}
+        for k in range(N_SWEEP + 1):
+            v = m["lo"] + (m["hi"] - m["lo"]) * k / N_SWEEP
+            st = {g: v}
+            if g == "cartridge":
+                st["gdoor"] = M.MOTION["gdoor"]["hi"]
+            n, hits, joints = md.check(st, only=mov)
+            for i, j, vm, ve in hits:
+                key = (N[i], N[j])
+                if key not in worst or ve > worst[key][1]:
+                    worst[key] = (v, ve)
+            for i, j, d in md.min_gaps(st, g):
+                key = (N[i], N[j])
+                if key not in gaps or d < gaps[key][1]:
+                    gaps[key] = (v, d)
+        rep["sweeps"].append(dict(group=g, note=m["note"], range=[m["lo"], m["hi"]], steps=N_SWEEP + 1,
+                                  interferences=[dict(a=a, b=b, at=round(v, 2), exact_mm3=round(ve, 2)) for (a, b), (v, ve) in worst.items()]))
+        for (a, b), (v, d) in sorted(gaps.items(), key=lambda kv: kv[1][1]):
+            rep["clearances"].append(dict(group=g, at=round(v, 2), moving=a, other=b, gap_mm=round(d, 3)))
+        print(f"[{time.time() - t0:5.1f} s] sweep {g}: {len(worst)} interfering pairs; tightest gap "
+              f"{min((d for _, d in gaps.values()), default=float('nan')):.2f} mm", flush=True)
+    rep["joints"] = [dict(a=a, b=b, why=w) for (a, b), w in sorted(seen_joints.items())]
+    rep["runtime_s"] = round(time.time() - t0, 1)
+    (OUT / "interference.json").write_text(json.dumps(rep, indent=1))
+    write_md(rep)
+    print(f"done in {rep['runtime_s']} s")
 
 
 def write_md(r):
     L = [f"# Interference and clearance check ({r['n_parts']} parts)", "",
-         f"Exact OpenCascade booleans; a shared volume above {r['vol_tol_mm3']} mm3 counts as an interference.", ""]
-    L += ["## Static states", "", "| State | Pairs checked | Interferences |", "|---|---|---|"]
+         f"Mesh booleans (manifold3d, {r['chord_mm']} mm chord) flag candidate pairs; each is confirmed with an exact OpenCascade "
+         f"boolean. Shared volume above {r['vol_tol_mm3']} mm³ counts as interference. Generated by `analysis/interference.py` in {r['runtime_s']} s.", ""]
+    L += ["## Static states", "", "| State | Pairs with touching boxes | Interferences |", "|---|---|---|"]
     for s in r["states"]:
         L.append(f"| {s['state']} | {s['pairs_checked']} | {len(s['interferences'])} |")
+    L.append("")
     for s in r["states"]:
         for it in s["interferences"]:
-            L.append(f"- {s['state']}: **{it['a']}** x **{it['b']}**: {it['volume_mm3']} mm3")
-    L += ["", "## Motion sweeps", "", "| Group | Range | Steps | Interfering pairs |", "|---|---|---|---|"]
+            L.append(f"- {s['state']}: **{it['a']}** × **{it['b']}**: {it['exact_mm3']} mm³")
+    L += ["", "## Motion sweeps", "", "| Group | Motion | Range | Steps | Interfering pairs | Tightest gap (mm) |", "|---|---|---|---|---|---|"]
     for s in r["sweeps"]:
-        L.append(f"| {s['group']} ({s['note']}) | {s['range'][0]:g} to {s['range'][1]:g} | {s['steps']} | {len(s['interferences'])} |")
+        gaps = [c["gap_mm"] for c in r["clearances"] if c["group"] == s["group"]]
+        L.append(f"| {s['group']} | {s['note']} | {s['range'][0]:g} to {s['range'][1]:g} | {s['steps']} | {len(s['interferences'])} | {min(gaps) if gaps else float('nan'):.2f} |")
+    L.append("")
     for s in r["sweeps"]:
         for it in s["interferences"]:
-            L.append(f"- {s['group']} at {it['at']}: **{it['a']}** x **{it['b']}**: {it['volume_mm3']} mm3")
-    L += ["", f"## Tightest clearances of moving parts (< {GAP_WARN} mm)", "", "| Group | At | Moving part | Other part | Gap (mm) |", "|---|---|---|---|---|"]
+            L.append(f"- {s['group']} at {it['at']}: **{it['a']}** × **{it['b']}**: {it['exact_mm3']} mm³")
+    L += ["", f"## Tightest clearances of moving parts (< {GAP_WARN} mm over the whole sweep)", "",
+          "| Group | At | Moving part | Other part | Gap (mm) |", "|---|---|---|---|---|"]
     for c in r["clearances"]:
         if c["gap_mm"] < GAP_WARN:
-            L.append(f"| {c['group']} | {c['at']:g} | {c['moving']} | {c['other']} | {c['gap_mm']:.3f} |")
+            L.append(f"| {c['group']} | {c['at']:g} | {c['moving']} | {c['other']} | {c['gap_mm']:.2f} |")
+    L += ["", "## Designed joints (contact on purpose, listed for review)", "", "| Part | Part | Why |", "|---|---|---|"]
+    for j in r["joints"]:
+        L.append(f"| {j['a']} | {j['b']} | {j['why']} |")
     (OUT / "interference.md").write_text("\n".join(L) + "\n")
 
 

@@ -1,0 +1,1340 @@
+{
+ "vol_tol_mm3": 0.5,
+ "chord_mm": 0.05,
+ "n_parts": 118,
+ "states": [
+  {
+   "state": "closed, parked, piston up",
+   "pose": {},
+   "pairs_checked": 511,
+   "interferences": []
+  },
+  {
+   "state": "recoater at end, piston at bottom",
+   "pose": {
+    "recoater": 196.0,
+    "piston": -40.0
+   },
+   "pairs_checked": 516,
+   "interferences": []
+  },
+  {
+   "state": "doors open, cartridge out",
+   "pose": {
+    "door": 95.0,
+    "gdoor": 470.0,
+    "cartridge": -125.0
+   },
+   "pairs_checked": 499,
+   "interferences": []
+  }
+ ],
+ "sweeps": [
+  {
+   "group": "recoater",
+   "note": "blade from park to end of spread",
+   "range": [
+    0.0,
+    196.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "piston",
+   "note": "build piston over its stroke",
+   "range": [
+    -40.0,
+    0.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "door",
+   "note": "drop-down door about its bottom hinge",
+   "range": [
+    0.0,
+    95.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "gdoor",
+   "note": "laser-guard door slides right",
+   "range": [
+    0.0,
+    470.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "cartridge",
+   "note": "hopper cartridge slides out to the front",
+   "range": [
+    -125.0,
+    0.0
+   ],
+   "steps": 25,
+   "interferences": []
+  }
+ ],
+ "clearances": [
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 2.006
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 3.006
+  },
+  {
+   "group": "recoater",
+   "at": 32.67,
+   "moving": "Blade holder (6061, quick-swap)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 3.05
+  },
+  {
+   "group": "recoater",
+   "at": 81.67,
+   "moving": "Blade holder (6061, quick-swap)",
+   "other": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
+   "gap_mm": 3.05
+  },
+  {
+   "group": "recoater",
+   "at": 8.17,
+   "moving": "Recoater arm (6061)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 3.162
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Recoater ball screw (M12, 10 mm lead)",
+   "gap_mm": 5.993
+  },
+  {
+   "group": "recoater",
+   "at": 73.5,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Piston (6061, cartridge heater, felt seal groove)",
+   "gap_mm": 10.05
+  },
+  {
+   "group": "recoater",
+   "at": 8.17,
+   "moving": "Blade holder (6061, quick-swap)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 12.0
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Layer-light LED bar",
+   "gap_mm": 12.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater arm (6061)",
+   "other": "Recoater ball screw (M12, 10 mm lead)",
+   "gap_mm": 12.602
+  },
+  {
+   "group": "recoater",
+   "at": 8.17,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 13.0
+  },
+  {
+   "group": "recoater",
+   "at": 81.67,
+   "moving": "Blade holder (6061, quick-swap)",
+   "other": "Piston (6061, cartridge heater, felt seal groove)",
+   "gap_mm": 13.05
+  },
+  {
+   "group": "recoater",
+   "at": 16.33,
+   "moving": "Recoater arm (6061)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 14.0
+  },
+  {
+   "group": "recoater",
+   "at": 73.5,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Cover-slide holder + sacrificial slide",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Recoater guide rail (15 mm, 270 mm)",
+   "gap_mm": 15.629
+  },
+  {
+   "group": "recoater",
+   "at": 106.17,
+   "moving": "Recoater arm (6061)",
+   "other": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
+   "gap_mm": 16.128
+  },
+  {
+   "group": "recoater",
+   "at": 81.67,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Cover-slide holder + sacrificial slide",
+   "gap_mm": 19.622
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 40.478
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Blade holder (6061, quick-swap)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 42.645
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 70.567
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 78.573
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 78.634
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 81.187
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 86.215
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 86.424
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater arm (6061)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 91.648
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Blade holder (6061, quick-swap)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 118.089
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater arm (6061)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 118.794
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 123.658
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 143.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 143.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 143.006
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater arm (6061)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 174.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Blade holder (6061, quick-swap)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 174.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 183.0
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 192.444
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 195.144
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 200.232
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Blade holder (6061, quick-swap)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 210.189
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 214.902
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater arm (6061)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 217.789
+  },
+  {
+   "group": "piston",
+   "at": 0.0,
+   "moving": "Piston (6061, cartridge heater, felt seal groove)",
+   "other": "Build cylinder (2 in. honed 316L tube + top flange)",
+   "gap_mm": 0.4
+  },
+  {
+   "group": "piston",
+   "at": -26.67,
+   "moving": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
+   "other": "Build cylinder (2 in. honed 316L tube + top flange)",
+   "gap_mm": 0.4
+  },
+  {
+   "group": "piston",
+   "at": -11.67,
+   "moving": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 0.4
+  },
+  {
+   "group": "piston",
+   "at": -6.67,
+   "moving": "Piston (6061, cartridge heater, felt seal groove)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 0.4
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston (6061, cartridge heater, felt seal groove)",
+   "other": "Cylinder bottom flange + rod seal housing",
+   "gap_mm": 5.0
+  },
+  {
+   "group": "piston",
+   "at": 0.0,
+   "moving": "Z lift arm (6061, split clamp on the rod)",
+   "other": "Cylinder bottom flange + rod seal housing",
+   "gap_mm": 5.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z lift arm (6061, split clamp on the rod)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 6.655
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z carriage",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 10.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z lift arm (6061, split clamp on the rod)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 10.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z lift arm (6061, split clamp on the rod)",
+   "other": "Z actuator body (KR-class U-rail, 2 mm lead)",
+   "gap_mm": 10.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 10.0
+  },
+  {
+   "group": "piston",
+   "at": 0.0,
+   "moving": "Z carriage",
+   "other": "Z fold-back belt housing (2:1)",
+   "gap_mm": 10.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston seal (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Cylinder bottom flange + rod seal housing",
+   "gap_mm": 12.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston seal (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Overflow clamp (KF-40)",
+   "gap_mm": 12.143
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston (6061, cartridge heater, felt seal groove)",
+   "other": "Overflow clamp (KF-40)",
+   "gap_mm": 12.543
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
+   "other": "Overflow clamp (KF-40)",
+   "gap_mm": 12.701
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z carriage",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 14.425
+  },
+  {
+   "group": "piston",
+   "at": 0.0,
+   "moving": "Z lift arm (6061, split clamp on the rod)",
+   "other": "Build cylinder (2 in. honed 316L tube + top flange)",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
+   "other": "Build cylinder (2 in. honed 316L tube + top flange)",
+   "gap_mm": 19.376
+  },
+  {
+   "group": "piston",
+   "at": -25.0,
+   "moving": "Z lift arm (6061, split clamp on the rod)",
+   "other": "Overflow jar (KF-40 half nipple + blank)",
+   "gap_mm": 21.376
+  },
+  {
+   "group": "piston",
+   "at": 0.0,
+   "moving": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 24.504
+  },
+  {
+   "group": "piston",
+   "at": -20.0,
+   "moving": "Z carriage",
+   "other": "Build cylinder (2 in. honed 316L tube + top flange)",
+   "gap_mm": 25.859
+  },
+  {
+   "group": "piston",
+   "at": -18.33,
+   "moving": "Piston seal (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 89.591
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 89.99
+  },
+  {
+   "group": "piston",
+   "at": -30.0,
+   "moving": "Piston (6061, cartridge heater, felt seal groove)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 89.99
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z lift arm (6061, split clamp on the rod)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 90.137
+  },
+  {
+   "group": "piston",
+   "at": 0.0,
+   "moving": "Z lift arm (6061, split clamp on the rod)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 93.315
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z carriage",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 99.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston seal (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 106.609
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 107.009
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston (6061, cartridge heater, felt seal groove)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 107.009
+  },
+  {
+   "group": "piston",
+   "at": -5.0,
+   "moving": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 108.986
+  },
+  {
+   "group": "piston",
+   "at": 0.0,
+   "moving": "Z carriage",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 112.294
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 126.005
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z carriage",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 129.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z lift arm (6061, split clamp on the rod)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 139.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z carriage",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 149.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z lift arm (6061, split clamp on the rod)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 159.0
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z lift arm (6061, split clamp on the rod)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 167.098
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Z carriage",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 169.594
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston (6061, cartridge heater, felt seal groove)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 182.01
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston seal (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 184.258
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 189.002
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston seal (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 189.608
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 190.008
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston (6061, cartridge heater, felt seal groove)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 190.008
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 192.361
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston seal (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 193.747
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 194.147
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston (6061, cartridge heater, felt seal groove)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 194.147
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 209.002
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 213.146
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 0.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 0.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "gap_mm": 0.5
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "gap_mm": 2.485
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Draw-latch keepers beside the door (304 SS)",
+   "gap_mm": 4.0
+  },
+  {
+   "group": "door",
+   "at": 79.17,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Hinge pins (\u00d85, 316)",
+   "gap_mm": 5.985
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Chamber lid (6061-T6, 16 mm)",
+   "gap_mm": 6.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
+   "gap_mm": 9.603
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Draw-latch keepers beside the door (304 SS)",
+   "gap_mm": 10.4
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Draw-latch keepers beside the door (304 SS)",
+   "gap_mm": 11.705
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "gap_mm": 12.4
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Chamber lid (6061-T6, 16 mm)",
+   "gap_mm": 12.4
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
+   "gap_mm": 13.269
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door handle",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 15.323
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Cross-flow outlet plenum under the floor (316L)",
+   "gap_mm": 15.652
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Chamber lid (6061-T6, 16 mm)",
+   "gap_mm": 18.028
+  },
+  {
+   "group": "door",
+   "at": 15.83,
+   "moving": "Door O-ring (FKM)",
+   "other": "Hinge pins (\u00d85, 316)",
+   "gap_mm": 19.523
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Outlet plenum port (KF-25)",
+   "gap_mm": 23.012
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 30.018
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 35.38
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 35.443
+  },
+  {
+   "group": "door",
+   "at": 11.88,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 56.0
+  },
+  {
+   "group": "door",
+   "at": 3.96,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 56.0
+  },
+  {
+   "group": "door",
+   "at": 15.83,
+   "moving": "Door O-ring (FKM)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 62.4
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 63.607
+  },
+  {
+   "group": "door",
+   "at": 87.08,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 63.937
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 72.11
+  },
+  {
+   "group": "door",
+   "at": 23.75,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 80.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door handle",
+   "other": "Draw-latch keepers beside the door (304 SS)",
+   "gap_mm": 93.65
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Door handle",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 96.685
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 112.033
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 123.192
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 125.888
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 136.26
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 136.53
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door handle",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 142.812
+  },
+  {
+   "group": "door",
+   "at": 7.92,
+   "moving": "Door handle",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 144.0
+  },
+  {
+   "group": "door",
+   "at": 79.17,
+   "moving": "Door handle",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 148.967
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 156.445
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "Sliding guard door (aluminium)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 2.0
+  },
+  {
+   "group": "gdoor",
+   "at": 39.17,
+   "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "Sliding guard door (aluminium)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 3.5
+  },
+  {
+   "group": "gdoor",
+   "at": 117.5,
+   "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 4.5
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "Sliding guard door (aluminium)",
+   "other": "Guard-locking door switch (Omron D4JL)",
+   "gap_mm": 7.0
+  },
+  {
+   "group": "gdoor",
+   "at": 39.17,
+   "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
+   "other": "Guard-locking door switch (Omron D4JL)",
+   "gap_mm": 8.0
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "Sliding guard door (aluminium)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 10.595
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 32.062
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "Sliding guard door (aluminium)",
+   "other": "Process fiber (armoured, \u2265 100 mm bend radius)",
+   "gap_mm": 127.814
+  },
+  {
+   "group": "cartridge",
+   "at": -88.54,
+   "moving": "Hopper powder",
+   "other": "Dovetail rails for the cartridge",
+   "gap_mm": 2.0
+  },
+  {
+   "group": "cartridge",
+   "at": -41.67,
+   "moving": "Hopper cartridge (~100 cm3, 304 SS, slides out to the front)",
+   "other": "Load cell (S-beam, 11 kg, weighs the dovetail carriage)",
+   "gap_mm": 2.0
+  },
+  {
+   "group": "cartridge",
+   "at": -93.75,
+   "moving": "Hopper powder",
+   "other": "Dosing block (6061, fluted roller inside)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "cartridge",
+   "at": -41.67,
+   "moving": "Hopper powder",
+   "other": "Load cell (S-beam, 11 kg, weighs the dovetail carriage)",
+   "gap_mm": 5.0
+  },
+  {
+   "group": "cartridge",
+   "at": -26.04,
+   "moving": "Hopper cap with robot handle",
+   "other": "Enclosed beam tube",
+   "gap_mm": 5.717
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Hopper cartridge (~100 cm3, 304 SS, slides out to the front)",
+   "other": "Optics bridge (6061, 15 mm)",
+   "gap_mm": 10.0
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Hopper powder",
+   "other": "Optics bridge (6061, 15 mm)",
+   "gap_mm": 12.0
+  },
+  {
+   "group": "cartridge",
+   "at": -41.67,
+   "moving": "Hopper cap with robot handle",
+   "other": "2-axis galvo scan head (basiCube class)",
+   "gap_mm": 12.731
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Hopper cartridge (~100 cm3, 304 SS, slides out to the front)",
+   "other": "Roller shaft seal housing",
+   "gap_mm": 13.038
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Hopper cap with robot handle",
+   "other": "Optics bridge (6061, 15 mm)",
+   "gap_mm": 13.845
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Hopper powder",
+   "other": "Roller shaft seal housing",
+   "gap_mm": 15.524
+  },
+  {
+   "group": "cartridge",
+   "at": -36.46,
+   "moving": "Hopper cartridge (~100 cm3, 304 SS, slides out to the front)",
+   "other": "2-axis galvo scan head (basiCube class)",
+   "gap_mm": 16.907
+  },
+  {
+   "group": "cartridge",
+   "at": -83.33,
+   "moving": "Hopper powder",
+   "other": "2-axis galvo scan head (basiCube class)",
+   "gap_mm": 20.316
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Hopper cap with robot handle",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 109.7
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Hopper cartridge (~100 cm3, 304 SS, slides out to the front)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 123.7
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Hopper cap with robot handle",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 125.364
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Hopper cartridge (~100 cm3, 304 SS, slides out to the front)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 129.76
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Hopper powder",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 140.7
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Hopper powder",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 144.805
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Hopper cartridge (~100 cm3, 304 SS, slides out to the front)",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 190.0
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Hopper powder",
+   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "gap_mm": 192.0
+  }
+ ],
+ "joints": [
+  {
+   "a": "Argon line (1/4 in. 316L)",
+   "b": "Laser guard panels (1.5 mm aluminium)",
+   "why": "line passes the guard through a bulkhead fitting"
+  },
+  {
+   "a": "Argon pressure regulator + flowmeter",
+   "b": "Argon supply from the dock",
+   "why": "tube fitting"
+  },
+  {
+   "a": "Argon solenoid manifold (purge / make-up / vent)",
+   "b": "Argon line (1/4 in. 316L)",
+   "why": "tube fitting into the manifold"
+  },
+  {
+   "a": "Collimator (QBH, f = 30 mm, D ~ 3.2 mm) on V-mount",
+   "b": "Process fiber (armoured, \u2265 100 mm bend radius)",
+   "why": "fiber connector (QBH) in the collimator"
+  },
+  {
+   "a": "Dry scroll pump (\u2264 0.3 mbar, 6 m3/h class)",
+   "b": "Pump exhaust to the dock",
+   "why": "hose on the exhaust port"
+  },
+  {
+   "a": "Fiber laser source, 500 W single-mode (3U)",
+   "b": "Process fiber (armoured, \u2265 100 mm bend radius)",
+   "why": "fiber leaves the laser's front panel"
+  },
+  {
+   "a": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "b": "Guard frame (20 mm T-slot)",
+   "why": "line passes the guard through a bulkhead fitting"
+  },
+  {
+   "a": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "b": "Laser guard panels (1.5 mm aluminium)",
+   "why": "line passes the guard through a bulkhead fitting"
+  },
+  {
+   "a": "O2 sample line (1/8 in. 316L)",
+   "b": "Laser guard panels (1.5 mm aluminium)",
+   "why": "line passes the guard through a bulkhead fitting"
+  },
+  {
+   "a": "Process fiber (armoured, \u2265 100 mm bend radius)",
+   "b": "Laser guard panels (1.5 mm aluminium)",
+   "why": "fiber through a guarded bulkhead in the guard's side panel"
+  },
+  {
+   "a": "Pump inlet (KF-25)",
+   "b": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "why": "hose end clamped onto its KF-25 flange"
+  },
+  {
+   "a": "Trace O2 analyzer + dew-point transmitter (panel box)",
+   "b": "O2 sample line (1/8 in. 316L)",
+   "why": "tube fitting into the analyzer"
+  },
+  {
+   "a": "Tray dock (CombiTac-type, mates sideways)",
+   "b": "Pump exhaust to the dock",
+   "why": "hose fitting"
+  },
+  {
+   "a": "Umbilical duct along the back edge",
+   "b": "Pump exhaust to the dock",
+   "why": "hose runs in the duct"
+  },
+  {
+   "a": "Z lift arm (6061, split clamp on the rod)",
+   "b": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
+   "why": "rod clamped in the arm"
+  }
+ ],
+ "runtime_s": 31.2
+}
