@@ -306,7 +306,9 @@ cleanest data for calibrating absorptivity, so they stay planned for a later run
 2. Cut it in half between walls 4 and 5.
 3. Grind each piece to the centreline, so the face crosses four walls. That is two 1.25 in mounts a part and six a
    plate.
-4. Measure porosity in each wall's core, from 1 mm above the base to 1 mm below the top.
+4. Measure porosity in each wall's core, from 1 mm above the base to 1 mm below the top, and at least 0.2 mm in
+   from each face. The contours (100–120 W at 130–220 mm/s with a 50–70 µm spot) run in keyhole mode, at Ke
+   8–20 by my estimate, and can leave pores of their own.
 5. Etch for the last layer's melt pools.
 
 The run sheet's cutting times (C2) assume panels, so time this route in the log.
@@ -317,7 +319,9 @@ The run sheet's cutting times (C2) assume panels, so time this route in the log.
 - whether the upskin and downskin hatches can be set per part;
 - which way the recoater travels and the gas flows;
 - whether the plates run back to back;
-- the 316L set's scan strategy (islands, rotation), which the model needs.
+- the 316L set's scan strategy (islands, rotation), which the model needs, and whether the hatch can run along
+  each wall (12.7 mm vectors) instead of across it. Across the wall, a vector is only about 1 mm long, so it is
+  mostly start and end transients.
 
 **Layout (scaled from the photo; adjust once the panels are measured).** Each panel carries **one row of 18
 parallel tracks across its middle**, **12 mm long at 2 mm pitch**, in two groups of nine with a 10 mm gap between the
