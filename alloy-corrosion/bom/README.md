@@ -64,7 +64,8 @@ Prices were seen on 2026-10-19, except B36, B39 and B41, which Ben priced on 202
 shipping and tax. Rows priced only from a search snippet are flagged in the CSV's `link_check`
 column. **The lab already has seven rows** (Ben, 2026-11-16 and 17), so they're listed but not counted:
 the steel discs (B09), inserts (B13), JST pairs (B18), #46 drill (B47) and end mill (B48), and the
-two polishing pads (B31, B33), whose job the lab's Mark V MCR12 cloths do.
+two polishing pads (B31, B33), whose job the lab's Mark V MCR12 cloths do. The colloidal silica
+(B32) is optional now: copper's polish ends on the lab's 0.1 µm diamond (H12) instead.
 
 | To start | Cost | What it covers |
 | --- | --- | --- |
@@ -75,8 +76,8 @@ two polishing pads (B31, B33), whose job the lab's Mark V MCR12 cloths do.
 | Potentiostat, option 2: EmStat Pico dev kit | $1,921 | two channels, cable and dummy cell included; the copper plan's choice |
 | Potentiostat, option 3: MYSTAT build | $228 | parts only; student time; no EIS |
 | **Aluminium, running, with option 1** | **$1,606** | the shakedown row, the electrodes and option 1; not the tips |
-| Copper adds | $867 | calibration O-rings and bench cell, seawater, sulfide and its test kit, trace-metal acid, the 1 µm diamond and colloidal silica for the polish, two reference bars. Not counted: the C95800 bar (quote) and the PTFE rod (McMaster's price couldn't be read) |
-| Copper, optional | $784 | the 0.1 µm diamond film, only for a film arm ($265), and metal-free 15 mL tubes if the ICP lab won't dilute into its own ($519) |
+| Copper adds | $838 | calibration O-rings and bench cell, seawater, sulfide and its test kit, trace-metal acid, the 1 µm diamond for the polish, two reference bars. Not counted: the C95800 bar (quote) and the PTFE rod (McMaster's price couldn't be read) |
+| Copper, optional | $813 | the 0.1 µm diamond film, only for a film arm ($265), colloidal silica, only for a silica arm ($29), and metal-free 15 mL tubes if the ICP lab won't dilute into its own ($519) |
 
 There are 19 printed parts, counting the deck keys (P19, 2026-11-09): about 0.5 kg of PETG even at 100 % infill, so one 1 kg spool.
 
@@ -216,11 +217,11 @@ Filters4You sells all four sizes in their own-brand "Viton (FKM) 75A", in packs 
 
 | ID | Item | Qty | Buy | Price, USD | For | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| B29 | Diamond lapping film 0.1 um; 12 in PSA; 3/pack (the polishing SOP's final step) | 1 | [PACE Technologies PDAA-01P12](https://shop.metallographic.com/products/pdaa-01p12) | 265.00 (optional) | Cu | **Not needed for copper (2026-11-17):** its polish ends on colloidal silica (B32) on the lab's Mark V cloths ([`../copper/protocol.md` §1](../copper/protocol.md#1-specimen)). Buy it only for a 0.1 µm film arm. The SOP (#258) gives each film one alloy; aluminium's are on hand (H07) |
-| B30 | DIAMAT 1 um diamond suspension; water based; 250 mL | 1 | [PACE Technologies WMA-1001](https://shop.metallographic.com/products/wma-1001) | 35.00 | Cu | **Copper's 1 µm step,** on the lab's Mark V cloths (B31; Ben, 2026-11-17). It replaces the SOP's 1 µm alumina, whose residue is Al, which EDS and the NAB tubes measure. It also serves the diamond-only arm (protocol §5). Ask the polishing lab whether it has some first |
-| B31 | ATLANTIS polishing pad 12 in PSA; 5/pack (for the 1 um diamond) | 1 | [PACE Technologies ATL-3012](https://shop.metallographic.com/products/atl-3012) | 95.00 (**on hand**: Mark V cloths) | Cu | **Not needed (Ben, 2026-11-17).** The lab's [Mark V MCR12 micro rayon cloths](https://markvlab.com/polishing-cloths/product/1143-micro-rayon-white-cloth-12-psa-10-pkg) (12 in PSA, 10 a pack; Mark V: a "final polish white color low nap cloth used with Diamond or Alumina for soft materials") carry the 1 µm diamond and the colloidal silica. One cloth per alloy and abrasive, as in the SOP: copper's three alloys take 6. Cloths already used on aluminium stay with aluminium. Another 10 are $94 |
-| B32 | SIAMAT colloidal silica 0.06 um; 16 oz | 1 | [PACE Technologies SI-100A](https://shop.metallographic.com/products/si-100a) | 29.00 | Cu | **Copper's final polish,** on the lab's Mark V cloths (B31; Ben, 2026-11-17), in place of the SOP's 0.1 µm film (B29). c1-05 names 0.04–0.05 µm; 0.06 µm is PACE's nearest. The SOP's EBSD polish runs colloidal silica on the vibratory polisher, so ask the polishing lab whether it has some first |
-| B33 | NAPPAD polishing pad 12 in PSA; 10/pack (for the colloidal silica) | 1 | [PACE Technologies NP-7012](https://shop.metallographic.com/products/np-7012) | 110.00 (**on hand**: Mark V cloths) | Cu | **Not needed (Ben, 2026-11-17):** the colloidal silica goes on the lab's Mark V cloths (B31) |
+| B29 | Diamond lapping film 0.1 um; 12 in PSA; 3/pack (the polishing SOP's final step) | 1 | [PACE Technologies PDAA-01P12](https://shop.metallographic.com/products/pdaa-01p12) | 265.00 (optional) | Cu | **Not needed for copper (2026-11-17):** its polish ends on the lab's 0.1 µm diamond suspension (H12), on a Mark V cloth ([`../copper/protocol.md` §1](../copper/protocol.md#1-specimen)). Buy it only for a film arm. The SOP (#258) gives each film one alloy; aluminium's are on hand (H07) |
+| B30 | DIAMAT 1 um diamond suspension; water based; 250 mL | 1 | [PACE Technologies WMA-1001](https://shop.metallographic.com/products/wma-1001) | 35.00 | Cu | **Copper's 1 µm step,** on the lab's Mark V cloths (B31; Ben, 2026-11-17). **Still needed** (Ben, 2026-11-17): it replaces the SOP's 1 µm alumina, which the lab has but whose residue is Al, which EDS and the NAB tubes measure. The lab's 0.1 µm diamond (H12) is too fine to follow the SiC papers: the SOP already warns that the step from 1 µm to 0.1 µm may be too big. It also serves the diamond-only arm (protocol §5) |
+| B31 | ATLANTIS polishing pad 12 in PSA; 5/pack (for the 1 um diamond) | 1 | [PACE Technologies ATL-3012](https://shop.metallographic.com/products/atl-3012) | 95.00 (**on hand**: Mark V cloths) | Cu | **Not needed (Ben, 2026-11-17).** The lab's [Mark V MCR12 micro rayon cloths](https://markvlab.com/polishing-cloths/product/1143-micro-rayon-white-cloth-12-psa-10-pkg) (12 in PSA, 10 a pack; Mark V: a "final polish white color low nap cloth used with Diamond or Alumina for soft materials") carry the 1 µm diamond and the lab's 0.1 µm diamond (H12). One cloth per alloy and abrasive, as in the SOP: copper's three alloys take 6. Cloths already used on aluminium stay with aluminium. Another 10 are $94 |
+| B32 | SIAMAT colloidal silica 0.06 um; 16 oz | 1 | [PACE Technologies SI-100A](https://shop.metallographic.com/products/si-100a) | 29.00 (optional) | Cu | **Not needed (Ben, 2026-11-17).** Copper's polish ends on the lab's 0.1 µm diamond (H12) on a second Mark V cloth, as the SOP ends aluminium on 0.1 µm diamond film ([`../copper/protocol.md` §1](../copper/protocol.md#1-specimen)). Buy it only for a colloidal-silica arm, which was c1-05's baseline. c1-05 names 0.04–0.05 µm; 0.06 µm is PACE's nearest. The SOP's EBSD polish runs colloidal silica on the vibratory polisher, so ask the polishing lab first |
+| B33 | NAPPAD polishing pad 12 in PSA; 10/pack (for the colloidal silica) | 1 | [PACE Technologies NP-7012](https://shop.metallographic.com/products/np-7012) | 110.00 (**on hand**: Mark V cloths) | Cu | **Not needed (Ben, 2026-11-17):** the final polish goes on the lab's Mark V cloths (B31) |
 
 ### Consumables
 
@@ -267,11 +268,12 @@ Filters4You sells all four sizes in their own-brand "Viton (FKM) 75A", in packs 
 | H04 | [Sylgard 184 (vial-cap fill) and steel discs for the vial caps](https://github.com/vertical-cloud-lab/byu-vcl/blob/f1b4666/modules/electromagnetic-capper/BOM.md) | on hand (capper module) | the same 1 in discs go on the electrode cap (B09): its recess is the vial cap's |
 | H05 | [Cyanoacrylate; neutral-cure RTV silicone; solder; 3M 468MP](https://www.testequity.com/product/388CH155-19-155) | lab stock | RTV seals the reference's top in the cap, if none: GC Electronics 19-155 (neutral cure, 3 oz, about $6-9) |
 | H06 | DI water; vacuum jar or desiccator for ageing pieces | on hand |  |
-| H07 | [Polishing consumables for aluminium (SOP #258: SiC papers to 1200; alumina; 0.1 um diamond film)](https://github.com/vertical-cloud-lab/byu-vcl/blob/157ab1e/SOP/sem-eds-polishing-sop.md) | on hand |  |
+| H07 | [Polishing consumables for aluminium (SOP #258: SiC papers to 1200; alumina; 0.1 um diamond film)](https://github.com/vertical-cloud-lab/byu-vcl/blob/157ab1e/SOP/sem-eds-polishing-sop.md) | on hand | its 1 µm alumina is for aluminium only: no alumina on copper ([`../copper/protocol.md` §1](../copper/protocol.md#1-specimen)) |
 | H08 | A potentiostat and a leak-free reference for the shakedown (S0) | ask Porter's lab | 2026 shakedown, before the potentiostat buy (README section 9) |
 | H09 | [Atlas Scientific conductivity kit K 1.0 (checks each stock batch)](https://atlas-scientific.com/kits/conductivity-k-1-0-kit/) | shared with #213 | in stock 2026-10-19 |
 | H10 | pH probe | shared with #148 |  |
 | H11 | ICP-MS (copper; ICP-OES or MS for aluminium) of each tube | quote | no BYU rate found, ASU's METAL lab charges academic users $37 a sample plus $120 a session, ask the Agilent 8900 group (#128) |
+| H12 | 0.1 µm diamond suspension, the polishing lab's (Ben, 2026-11-17) | on hand | copper's final polish, on a second Mark V cloth after the 1 µm diamond (B30), in place of colloidal silica (B32). One cloth per alloy ([`../copper/protocol.md` §1](../copper/protocol.md#1-specimen)) |
 
 ## How this was checked, and what wasn't
 

@@ -43,18 +43,20 @@ came to $157 on 2026-11-13, not the $23.96 its pages list.
 | B39 | Sodium sulfide nonahydrate | **Sigma's 100 g, $78.10.** Chem Stores' 500 g is $102.82, and 100 g is plenty. Not needed until the sulfide nights: the first experiment is in plain seawater |
 | B36 | 0.5 mL Safe-Lock tubes | **Fisher's 500, Eppendorf Quality, colorless (05-402-18), $147.84** (Ben, 2026-11-16). The PCR clean ($193) and Forensic DNA Grade ($188) bags certify DNA, not metals (log, below). Chem Stores' 100 ($43.86) last about 11 nights at 9 a night, and the R1–R3 calibration alone takes about 12. If a tube isn't Eppendorf's, try it in the tube fit strip |
 | B38 | Substitute ocean water | Not quoted by Chem Stores yet; $135 for 4 L from Government Scientific Source |
-| B30, B32 | 1 µm diamond suspension ($35) and colloidal silica ($29), PACE | Copper's polish, on the lab's Mark V cloths (log, 2026-11-17). Ask the polishing lab first: the SOP's EBSD polish uses colloidal silica. The 0.1 µm film (B29, $265) is no longer needed |
+| B30 | 1 µm diamond suspension ($35), PACE | Copper's 1 µm step, on the lab's Mark V cloths. **Still needed** (log, 2026-11-17): the lab's 1 µm alumina leaves Al, and its 0.1 µm diamond is too fine to follow the SiC papers. The lab's 0.1 µm diamond is copper's last step now, so the colloidal silica (B32, $29) and the 0.1 µm film (B29, $265) are no longer needed |
 | B34 | Filament | Check stock: the H2D plate takes 362 g of PLA |
 
 **On hand, so not ordered** (Ben, [2026-11-16](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6930927185)
-and [2026-11-17](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6962338430)):
+and 2026-11-17: [the cloths](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6962338430)
+and [the liquids](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6963040371)):
 
 | BOM | Item | Where from |
 | --- | --- | --- |
 | B09 | Steel discs, 1 in | The capper's. The electrode cap's Ø25.4 × 0.5 mm recess is the one in PANDA-BEAR's `VialCap16mm.step`, so they fit. Measure the thickness (below) |
 | B13, B18 | M3 heat-set inserts, JST-XH pairs | ME order 13518 (the stirrer order): the same ruthex M3 × 5.7 insert, for the same Ø4.0 mm holes |
 | B47, B48 | #46 drill (2.06 mm), end mill for facing | BYU's Prototyping lab |
-| B31, B33 | Polishing pads for the 1 µm diamond and the colloidal silica | The lab's Mark V MCR12 micro rayon cloths, 12 in PSA, 10 a pack. Copper takes 6, one per alloy and abrasive (below) |
+| B31, B33 | Polishing pads for the 1 µm diamond and the final polish | The lab's Mark V MCR12 micro rayon cloths, 12 in PSA, 10 a pack. Copper takes 6, one per alloy and abrasive (below) |
+| H12, in place of B32 | 0.1 µm diamond suspension | The polishing lab. Copper's last step, on a second cloth. The lab's 1 µm alumina is the SOP's, for aluminium only |
 
 ### Printing
 
@@ -96,9 +98,10 @@ Fill in the **Measured** column and log the entry. Each one replaces an estimate
 
 | Check | Expect | Measured |
 | --- | --- | --- |
-| Unused Mark V MCR12 cloths in the pack | 6 for copper: C71500, C95800 and C70600, one for the diamond and one for the silica | |
+| The lab's 0.1 µm diamond | a suspension, not the SOP's 0.1 µm film; enough for a few mL a piece | |
+| Unused Mark V MCR12 cloths in the pack | 6 for copper: C71500, C95800 and C70600, one for the 1 µm and one for the 0.1 µm diamond | |
 | 1 µm diamond (B30) on a cloth, after the SiC papers | SiC scratches gone in about 2 min (PACE's copper procedure) | |
-| Colloidal silica (B32) on a second cloth, water for the last 20–30 s | no scratches or silica left under the microscope; on NAB, no pulled-out κ | |
+| Ultrasonic clean, then the 0.1 µm diamond on a second cloth, in 1 min runs | 1 µm scratches gone in a few minutes (SOP Step 7); on NAB, no pulled-out κ | |
 
 ### Bench tests ([`build-guide.md` §3](build-guide.md#3-bench-tests-before-the-cap-goes-on-the-deck))
 
@@ -146,6 +149,38 @@ Still open in the design: one well per lid (no offset lid drawn), and the copper
 not rerun for the v2 lid's neck.
 
 ## Log
+
+### 2026-11-17: the polishing liquids on hand (1 µm alumina, 0.1 µm diamond)
+
+From [Ben's question](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6963040371)
+([the reply](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6963046774)):
+the lab has 1 µm alumina and 0.1 µm diamond. Are B30 and B32 still needed? **B30 is, B32 isn't.**
+- **B30, the 1 µm diamond ($35): still to buy.** Neither liquid can do its step.
+  - The alumina is the SOP's Step 5 abrasive, for aluminium. On copper its residue is Al, which
+    EDS and the NAB tubes measure, and no blank catches grains pressed into the face. NIST's
+    microprobe lab avoids alumina for the same reason
+    ([Geller and Engle 2002](https://doi.org/10.6028/jres.107.051)).
+  - The 0.1 µm diamond is too fine to follow the SiC papers. The SOP already warns that even
+    1 µm to 0.1 µm may be too big a step.
+- **B32, the colloidal silica ($29): optional now.** Copper's polish ends on the lab's 0.1 µm
+  diamond instead, on a second Mark V cloth.
+  - That is the size NIST asks for on copper ("requiring 0.1 µm to finish"), and the SOP's own
+    last step for aluminium, so one finish serves EDS on both.
+  - c1-05's baseline ended on colloidal silica, but c1-05 found no study that compared finishes on
+    these alloys. Silica also takes off the last smeared layer chemically. Diamond leaves it
+    thinner but doesn't remove it. That is for the finish arms to test (protocol §5), with B32 if
+    a silica arm is wanted.
+- **If the 0.1 µm diamond is the SOP's film,** not a liquid, it still works. Give each copper alloy
+  an unused film, and run it as SOP Step 7 does. Aluminium's films stay with aluminium.
+- **Totals** (from the scripts: Python ran this time). Still to get: $1,103.10 plus the C95800
+  quote, down from $1,132.10. The stirrer order list is $1,796.71, down from $1,825.71. In the
+  BOM, "copper adds" is $838 (was $867) and "copper, optional" $813 (was $784).
+- **The scripts confirm the hand edits.** Before this change, `bom_totals.py` reproduced
+  `totals.json` exactly, and `order_list.py` reproduced `order-list.csv` apart from the line
+  endings of two rows.
+- **Files:** `copper/protocol.md` §1 and §5, `copper/test-matrix.csv` (F1), `bom/bom.csv` (B29–B33,
+  H07, and a new H12), `bom/README.md`, `bom/totals.json`, `stirrers/order_list.py`,
+  `order-list.csv`, `order-totals.json` and `stirrers/BOM.md`.
 
 ### 2026-11-17: the H2D print file, re-sliced for the left nozzle
 

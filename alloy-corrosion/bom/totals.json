@@ -20,8 +20,8 @@
   "tips_if_none_on_hand": 530.0,
   "electrodes_both": 642.0,
   "aluminium_only": 83.65,
-  "copper_only": 866.69,
-  "copper_optional": 784.0
+  "copper_only": 837.69,
+  "copper_optional": 813.0
  },
  "potentiostat_options": {
   "1_emstat_pico_module_with_box_and_dummy_cell": 593.45,
