@@ -67,15 +67,47 @@ JOINTS = [
     ("Recoater ball screw", "Recoater floating bearing", "screw journal in its bearing"),
     ("Recoater ball screw", "Recoater motor standoff", "shaft passes into the coupling"),
     ("Hinge pins", "Door hinge", "pin in its knuckle/block"),
-    ("Piston rod", "Cylinder bottom flange", "rod in its rod-wiper bore"),
-    ("Piston rod", "Z lift arm", "rod clamped in the arm"),
-    ("Piston rod", "Piston (", "rod threaded into the piston"),
+    ("Hollow piston rod", "bottom flange", "rod in its O-ring gland"),
+    ("Hollow piston rod", "Piston head", "rod pressed into the head's socket"),
+    ("Hollow piston rod", "Rod end", "rod potted into the end cap"),
+    ("Striker disc", "Rod end", "striker screwed to the end cap"),
+    ("Striker disc", "Pot magnet", "striker held on the magnet face (the coupling)"),
+    ("Pot magnet", "Z lift arm", "magnet set in the arm's pocket"),
     ("Z carriage", "Z actuator body", "carriage runs on its actuator"),
-    ("Z servo", "Z fold-back belt housing", "servo pilot in the housing's pilot bore"),
-    ("Piston seal", "Build cylinder", "seal rides on the honed bore"),
-    ("Piston seal", "Process chamber body", "seal rides on the floor bore"),
-    ("Hopper cartridge", "Dovetail rails", "cartridge slides on its dovetail"),
-    ("Hopper cartridge", "Dosing block", "cartridge seats on the dosing block"),
+    ("Z carriage", "Z lift arm", "arm bolted to the carriage"),
+    ("Z servo", "Z bracket", "servo pilot in the housing's pilot bore"),
+    ("Z bracket", "Z mounting flange", "bracket bolted to the flange"),
+    ("Z actuator body", "Z bracket", "actuator bolted under the bracket"),
+    ("Bore seal", "Build module", "seal rides on the honed bore"),
+    ("Bore seal", "Piston head", "seal in its groove"),
+    ("Build plate", "Heater block", "plate on the block's face, bayonet spigot in its socket"),
+    ("Cartridge heaters", "Heater block", "heaters in their holes"),
+    ("Type K thermocouples", "Heater block", "thermocouples in their holes"),
+    ("Thermal cutoff", "Heater block", "cutoff in its pocket"),
+    ("Macor standoffs", "Heater block", "standoff under the block"),
+    ("Macor standoffs", "Piston head", "standoff on the head"),
+    ("Spigot O-ring", "Process chamber body", "O-ring squeezed against the port wall"),
+    ("Spigot O-ring", "Build module", "O-ring in its groove"),
+    ("Build module", "Process chamber body", "spigot in the port, flange on the floor's underside"),
+    ("Captive M6 thumb screws", "Process chamber body", "screw in its floor insert"),
+    ("Captive M6 thumb screws", "Build module", "screw through the flange tab"),
+    ("bottom flange", "Build module", "bottom flange welded to the cylinder"),
+    ("handle", "bottom flange", "handle bolted to the bottom flange"),
+    ("Piston head", "bottom flange", "head on the bottom stop"),
+    ("Reservoir", "Dovetail rails", "reservoir slides on its dovetail"),
+    ("Reservoir", "Metering base", "reservoir seats on the dock face"),
+    ("NFC reader antenna", "Metering base", "antenna in its pocket"),
+    ("Side reservoir port", "Metering base", "port welded to the base"),
+    ("Cover-slide drawer", "Chamber lid", "drawer runs in the lid's slot"),
+    ("Drawer O-ring", "Chamber lid", "O-ring squeezed against the lid's front face"),
+    ("Drawer O-ring", "Cover-slide drawer", "O-ring in the front plate's groove"),
+    ("Cover slide (", "Cover-slide drawer", "slide in its pocket"),
+    ("Lift-out wall liners", "Process chamber body", "liners clipped to the walls"),
+    ("Plate-height through-beam", "Process chamber body", "fibre heads in the side walls"),
+    ("Module-present sensor", "Process chamber body", "sensor bracket under the floor"),
+    ("Overflow-jar present sensor", "Overflow jar", "sensor beside the jar"),
+    ("Drawer-closed sensor", "Chamber lid", "sensor bracket on the lid's front face"),
+    ("Reservoir-docked sensor", "Metering base", "sensor bracket on the dock"),
     ("Recoater carriage", "Recoater guide rail", "carriage runs on its rail"),
     ("Sliding guard door", "Guard door rail", "door runs in its rail"),
     ("HSS recoater blade", "Build plate", "blade passes 0.05 mm above the plate"),
@@ -157,9 +189,9 @@ def overlap(b1, b2, tol=0.01):
 
 
 class Model:
-    def __init__(self):
+    def __init__(self, module="M50", reservoir=None):
         t0 = time.time()
-        self.parts = M.build()
+        self.parts = M.build(module=module, reservoir=reservoir)
         self.names = [p.name for p in self.parts]
         self.man, self.fcl, self.bad = [], [], []
         for p in self.parts:
@@ -172,8 +204,9 @@ class Model:
     def posed(self, state):
         mans, mats = [], []
         for p, m in zip(self.parts, self.man):
-            if p.group and state.get(p.group, 0.0) != 0.0:
-                T = loc_matrix(M.group_location(p.group, state[p.group]))
+            loc = M.part_location(p, state)
+            if loc is not None and m is not None:
+                T = loc_matrix(loc)
                 mans.append(m.transform(T[:3, :].astype(np.float32)))
                 mats.append(T)
             else:
@@ -219,7 +252,7 @@ class Model:
 
     def min_gaps(self, state, group, pad=15.0):
         _, mats = self.posed(state)
-        mov = [i for i, p in enumerate(self.parts) if p.group == group]
+        mov = [i for i, p in enumerate(self.parts) if M.moves_with(p, group)]
         mans, _ = self.posed(state)
         bbs = [bbox_of(m) if m is not None else None for m in mans]
         out = []
@@ -241,15 +274,23 @@ class Model:
 
 
 def main():
+    # usage: interference.py [MODULE [RESERVOIR]]   (default M50 with its M reservoir -> out/interference.*;
+    # other variants -> out/variants/interference-<MODULE>-<RESERVOIR>.*)
+    module = sys.argv[1] if len(sys.argv) > 1 else "M50"
+    reservoir = sys.argv[2] if len(sys.argv) > 2 else None
     t0 = time.time()
-    md = Model()
+    md = Model(module, reservoir)
     N = md.names
     OUT.mkdir(exist_ok=True)
-    rep = dict(vol_tol_mm3=VOL_TOL, chord_mm=TOL, n_parts=len(N), states=[], sweeps=[], clearances=[], joints=[])
+    rep = dict(variant=f"{module} module, {reservoir or M.MP.MODULES[module]['reservoir']} reservoir", vol_tol_mm3=VOL_TOL, chord_mm=TOL, n_parts=len(N),
+               states=[], sweeps=[], clearances=[], joints=[])
     seen_joints = {}
     states = {"closed, parked, piston up": {},
-              "recoater at end, piston at bottom": {"recoater": M.MOTION["recoater"]["hi"], "piston": M.MOTION["piston"]["lo"]},
-              "doors open, cartridge out": {"door": M.MOTION["door"]["hi"], "gdoor": M.MOTION["gdoor"]["hi"], "cartridge": M.MOTION["cartridge"]["lo"]}}
+              "recoater at end, piston at bottom stop": {"recoater": M.MOTION["recoater"]["hi"], "piston": M.MOTION["piston"]["lo"]},
+              "plate exchange: doors open, plate up 8 mm": {"door": M.MOTION["door"]["hi"], "gdoor": M.MOTION["gdoor"]["hi"], "piston": M.MOTION["piston"]["hi"]},
+              "doors open, reservoir and drawer out": {"door": M.MOTION["door"]["hi"], "gdoor": M.MOTION["gdoor"]["hi"], "cartridge": M.MOTION["cartridge"]["lo"],
+                                                        "drawer": M.MOTION["drawer"]["lo"]},
+              "module swap: arm released, module dropped": {"zstage": M.MOTION["zstage"]["lo"], "module": M.MP.MODULE_DROP, "gdoor": M.MOTION["gdoor"]["hi"]}}
     for label, st in states.items():
         n, hits, joints = md.check(st)
         rep["states"].append(dict(state=label, pose=st, pairs_checked=n,
@@ -258,12 +299,13 @@ def main():
             seen_joints[(N[i], N[j])] = why
         print(f"[{time.time() - t0:5.1f} s] {label}: {n} pairs, {len(hits)} interferences, {len(joints)} designed joints", flush=True)
     for g, m in M.MOTION.items():
-        mov = {i for i, p in enumerate(md.parts) if p.group == g}
+        mov = {i for i, p in enumerate(md.parts) if M.moves_with(p, g)}
         worst, gaps = {}, {}
         for k in range(N_SWEEP + 1):
             v = m["lo"] + (m["hi"] - m["lo"]) * k / N_SWEEP
-            st = {g: v}
-            if g == "cartridge":
+            st = dict(m.get("base_state", {}))
+            st[g] = v
+            if g in ("cartridge", "drawer"):
                 st["gdoor"] = M.MOTION["gdoor"]["hi"]
             n, hits, joints = md.check(st, only=mov)
             for i, j, vm, ve in hits:
@@ -282,13 +324,16 @@ def main():
               f"{min((d for _, d in gaps.values()), default=float('nan')):.2f} mm", flush=True)
     rep["joints"] = [dict(a=a, b=b, why=w) for (a, b), w in sorted(seen_joints.items())]
     rep["runtime_s"] = round(time.time() - t0, 1)
-    (OUT / "interference.json").write_text(json.dumps(rep, indent=1))
-    write_md(rep)
+    out = OUT if (module, reservoir) in (("M50", None), ("M50", "M")) else OUT / "variants"
+    out.mkdir(exist_ok=True)
+    stem = "interference" if out == OUT else f"interference-{module}-{reservoir or M.MP.MODULES[module]['reservoir']}"
+    (out / f"{stem}.json").write_text(json.dumps(rep, indent=1))
+    write_md(rep, out / f"{stem}.md")
     print(f"done in {rep['runtime_s']} s")
 
 
-def write_md(r):
-    L = [f"# Interference and clearance check ({r['n_parts']} parts)", "",
+def write_md(r, path=None):
+    L = [f"# Interference and clearance check ({r['n_parts']} parts; {r.get('variant', '')})", "",
          f"Mesh booleans (manifold3d, {r['chord_mm']} mm chord) flag candidate pairs; each is confirmed with an exact OpenCascade "
          f"boolean. Shared volume above {r['vol_tol_mm3']} mm³ counts as interference. Generated by `analysis/interference.py` in {r['runtime_s']} s.", ""]
     L += ["## Static states", "", "| State | Pairs with touching boxes | Interferences |", "|---|---|---|"]
@@ -314,7 +359,7 @@ def write_md(r):
     L += ["", "## Designed joints (contact on purpose, listed for review)", "", "| Part | Part | Why |", "|---|---|---|"]
     for j in r["joints"]:
         L.append(f"| {j['a']} | {j['b']} | {j['why']} |")
-    (OUT / "interference.md").write_text("\n".join(L) + "\n")
+    (path or OUT / "interference.md").write_text("\n".join(L) + "\n")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,3908 @@
+{
+ "variant": "S25 module, S reservoir",
+ "vol_tol_mm3": 0.5,
+ "chord_mm": 0.05,
+ "n_parts": 141,
+ "states": [
+  {
+   "state": "closed, parked, piston up",
+   "pose": {},
+   "pairs_checked": 686,
+   "interferences": []
+  },
+  {
+   "state": "recoater at end, piston at bottom stop",
+   "pose": {
+    "recoater": 206.0,
+    "piston": -42.0
+   },
+   "pairs_checked": 671,
+   "interferences": []
+  },
+  {
+   "state": "plate exchange: doors open, plate up 8 mm",
+   "pose": {
+    "door": 95.0,
+    "gdoor": 470.0,
+    "piston": 8.0
+   },
+   "pairs_checked": 678,
+   "interferences": []
+  },
+  {
+   "state": "doors open, reservoir and drawer out",
+   "pose": {
+    "door": 95.0,
+    "gdoor": 470.0,
+    "cartridge": -125.0,
+    "drawer": -120.0
+   },
+   "pairs_checked": 670,
+   "interferences": []
+  },
+  {
+   "state": "module swap: arm released, module dropped",
+   "pose": {
+    "zstage": -45.0,
+    "module": 40.0,
+    "gdoor": 470.0
+   },
+   "pairs_checked": 666,
+   "interferences": []
+  }
+ ],
+ "sweeps": [
+  {
+   "group": "recoater",
+   "note": "blade from park to end of spread",
+   "range": [
+    0.0,
+    206.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "piston",
+   "note": "build piston: stroke, bottom stop and +8 mm plate-exchange overtravel",
+   "range": [
+    -42.0,
+    8.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "door",
+   "note": "drop-down door about its bottom hinge",
+   "range": [
+    0.0,
+    95.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "gdoor",
+   "note": "laser-guard door slides right",
+   "range": [
+    0.0,
+    470.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "cartridge",
+   "note": "reservoir slides out to the front",
+   "range": [
+    -125.0,
+    0.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "drawer",
+   "note": "cover-slide drawer pulls out of the lid's front edge",
+   "range": [
+    -120.0,
+    0.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "zstage",
+   "note": "Z arm drops away from the rod end (magnet breaks away), piston held by its collar",
+   "range": [
+    -45.0,
+    0.0
+   ],
+   "steps": 25,
+   "interferences": []
+  },
+  {
+   "group": "module",
+   "note": "build module drops 22 mm out of the floor port, slides forward under the chamber, lifts over the guard sill and out",
+   "range": [
+    0.0,
+    400.0
+   ],
+   "steps": 25,
+   "interferences": []
+  }
+ ],
+ "clearances": [
+  {
+   "group": "recoater",
+   "at": 51.5,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 0.05
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 2.006
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "gap_mm": 2.4
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "gap_mm": 2.4
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "gap_mm": 2.406
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "recoater",
+   "at": 8.58,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 3.006
+  },
+  {
+   "group": "recoater",
+   "at": 94.42,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 3.05
+  },
+  {
+   "group": "recoater",
+   "at": 51.5,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 3.05
+  },
+  {
+   "group": "recoater",
+   "at": 94.42,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "gap_mm": 3.05
+  },
+  {
+   "group": "recoater",
+   "at": 188.83,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Argon line (1/4 in. 316L)",
+   "gap_mm": 4.367
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Recoater ball screw (M12, 10 mm lead)",
+   "gap_mm": 5.993
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Recoater ball screw (M12, 10 mm lead)",
+   "gap_mm": 6.533
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Layer-light LED bar",
+   "gap_mm": 7.375
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Recoater ball screw (M12, 10 mm lead)",
+   "gap_mm": 9.815
+  },
+  {
+   "group": "recoater",
+   "at": 154.5,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 10.05
+  },
+  {
+   "group": "recoater",
+   "at": 85.83,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Heater block S25 (6061-T6, bayonet socket)",
+   "gap_mm": 10.05
+  },
+  {
+   "group": "recoater",
+   "at": 85.83,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "gap_mm": 11.568
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 12.369
+  },
+  {
+   "group": "recoater",
+   "at": 51.5,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "gap_mm": 12.75
+  },
+  {
+   "group": "recoater",
+   "at": 42.92,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 13.05
+  },
+  {
+   "group": "recoater",
+   "at": 94.42,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Heater block S25 (6061-T6, bayonet socket)",
+   "gap_mm": 13.05
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "gap_mm": 13.4
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 14.0
+  },
+  {
+   "group": "recoater",
+   "at": 94.42,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "gap_mm": 14.05
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Layer-light LED bar",
+   "gap_mm": 14.422
+  },
+  {
+   "group": "recoater",
+   "at": 94.42,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "gap_mm": 14.55
+  },
+  {
+   "group": "recoater",
+   "at": 85.83,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 14.881
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Recoater guide rail (15 mm, 270 mm)",
+   "gap_mm": 15.629
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Layer-light LED bar",
+   "gap_mm": 16.882
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "gap_mm": 24.4
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 25.0
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "gap_mm": 28.9
+  },
+  {
+   "group": "recoater",
+   "at": 197.42,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Argon line (1/4 in. 316L)",
+   "gap_mm": 29.028
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 29.5
+  },
+  {
+   "group": "recoater",
+   "at": 180.25,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Argon line (1/4 in. 316L)",
+   "gap_mm": 43.028
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 53.229
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 56.403
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 62.394
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 68.698
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 70.808
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 72.042
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 76.837
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 79.791
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 80.268
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 89.202
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 90.303
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 93.804
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 123.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 123.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 123.006
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 148.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 154.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 163.0
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 172.204
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 175.018
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater carriage block (6061)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 180.314
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 196.008
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 197.19
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 200.157
+  },
+  {
+   "group": "piston",
+   "at": -37.83,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 0.1
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 0.3
+  },
+  {
+   "group": "piston",
+   "at": -10.75,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 0.3
+  },
+  {
+   "group": "piston",
+   "at": -14.92,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 0.69
+  },
+  {
+   "group": "piston",
+   "at": -0.33,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 1.191
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 1.284
+  },
+  {
+   "group": "piston",
+   "at": -39.92,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 2.398
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Z carriage",
+   "other": "Z bracket + fold-back belt housing (2:1)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Module S25 bottom flange (316L, double FKM O-ring rod gland)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 4.757
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Module S25 bottom flange (316L, double FKM O-ring rod gland)",
+   "gap_mm": 6.2
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 6.655
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 9.688
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
+   "gap_mm": 10.0
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Module S25 bottom flange (316L, double FKM O-ring rod gland)",
+   "gap_mm": 12.0
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Module S25 handle (front, for a hand or a gripper)",
+   "gap_mm": 12.376
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 13.11
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Z carriage",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 14.425
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Module S25 handle (front, for a hand or a gripper)",
+   "gap_mm": 14.463
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Module S25 handle (front, for a hand or a gripper)",
+   "gap_mm": 14.502
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Module S25 bottom flange (316L, double FKM O-ring rod gland)",
+   "gap_mm": 15.805
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Module S25 handle (front, for a hand or a gripper)",
+   "gap_mm": 16.675
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Module S25 handle (front, for a hand or a gripper)",
+   "gap_mm": 17.569
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 19.0
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Z carriage",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 24.0
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 29.02
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 31.017
+  },
+  {
+   "group": "piston",
+   "at": -14.92,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "gap_mm": 32.759
+  },
+  {
+   "group": "piston",
+   "at": -4.5,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "gap_mm": 32.959
+  },
+  {
+   "group": "piston",
+   "at": -0.33,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "gap_mm": 33.349
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "gap_mm": 33.851
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "gap_mm": 33.988
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "gap_mm": 34.06
+  },
+  {
+   "group": "piston",
+   "at": -2.42,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "gap_mm": 35.057
+  },
+  {
+   "group": "piston",
+   "at": -19.08,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 35.356
+  },
+  {
+   "group": "piston",
+   "at": -8.67,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 35.556
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "gap_mm": 35.734
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 35.78
+  },
+  {
+   "group": "piston",
+   "at": -4.5,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 35.946
+  },
+  {
+   "group": "piston",
+   "at": 5.92,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 36.447
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 36.54
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 36.702
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 37.408
+  },
+  {
+   "group": "piston",
+   "at": -6.58,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 37.654
+  },
+  {
+   "group": "piston",
+   "at": 1.75,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 39.307
+  },
+  {
+   "group": "piston",
+   "at": -37.83,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 39.407
+  },
+  {
+   "group": "piston",
+   "at": -27.42,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 39.607
+  },
+  {
+   "group": "piston",
+   "at": -4.5,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 39.607
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Z carriage",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 40.305
+  },
+  {
+   "group": "piston",
+   "at": -10.75,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 40.607
+  },
+  {
+   "group": "piston",
+   "at": -12.83,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 41.819
+  },
+  {
+   "group": "piston",
+   "at": 1.75,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "gap_mm": 42.347
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 42.391
+  },
+  {
+   "group": "piston",
+   "at": -25.33,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 43.21
+  },
+  {
+   "group": "piston",
+   "at": 5.92,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 44.07
+  },
+  {
+   "group": "piston",
+   "at": -4.5,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 44.944
+  },
+  {
+   "group": "piston",
+   "at": -21.17,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 49.004
+  },
+  {
+   "group": "piston",
+   "at": -23.25,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "gap_mm": 50.858
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 76.426
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "gap_mm": 82.194
+  },
+  {
+   "group": "piston",
+   "at": -31.58,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 93.207
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 94.093
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 95.363
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 96.502
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 96.842
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 97.649
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Z carriage",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 99.408
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 100.437
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 100.641
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 100.776
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 101.254
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 104.53
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 105.756
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 105.852
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 107.783
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 117.801
+  },
+  {
+   "group": "piston",
+   "at": -31.58,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 125.511
+  },
+  {
+   "group": "piston",
+   "at": 3.83,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 127.4
+  },
+  {
+   "group": "piston",
+   "at": -37.83,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 127.511
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 127.719
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 128.81
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 128.91
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Z carriage",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 129.0
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 129.11
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 129.11
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 130.015
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 130.117
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 131.226
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 131.241
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 133.573
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 134.473
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 137.402
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 138.51
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 138.642
+  },
+  {
+   "group": "piston",
+   "at": -31.58,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 139.0
+  },
+  {
+   "group": "piston",
+   "at": -0.33,
+   "moving": "Z carriage",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 143.971
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Z carriage",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 149.0
+  },
+  {
+   "group": "piston",
+   "at": -31.58,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 159.0
+  },
+  {
+   "group": "piston",
+   "at": -31.58,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 163.0
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Z carriage",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 166.379
+  },
+  {
+   "group": "piston",
+   "at": -14.92,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 179.005
+  },
+  {
+   "group": "piston",
+   "at": -37.83,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 181.004
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 184.003
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 187.065
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 188.807
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 190.19
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 195.009
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 196.142
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 197.028
+  },
+  {
+   "group": "piston",
+   "at": -31.58,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 197.608
+  },
+  {
+   "group": "piston",
+   "at": -31.58,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 199.005
+  },
+  {
+   "group": "piston",
+   "at": -37.83,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 199.607
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 200.3
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 200.906
+  },
+  {
+   "group": "piston",
+   "at": -37.83,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 201.004
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 201.006
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 201.206
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 201.206
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 202.073
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 202.205
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 202.304
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 202.404
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 202.522
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 202.604
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 202.604
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 202.605
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 203.501
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 203.785
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 204.003
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 205.666
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 206.148
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 206.317
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 207.065
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 209.46
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 210.601
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 211.601
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 212.001
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 216.068
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 223.001
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Leveling mounts, process module",
+   "gap_mm": 245.969
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Z carriage",
+   "other": "Leveling mounts, process module",
+   "gap_mm": 247.062
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Leveling mounts, process module",
+   "gap_mm": 283.289
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Leveling mounts, process module",
+   "gap_mm": 285.68
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Leveling mounts, process module",
+   "gap_mm": 289.028
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "gap_mm": 0.5
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "gap_mm": 2.485
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Draw-latch keepers beside the door (304 SS)",
+   "gap_mm": 4.0
+  },
+  {
+   "group": "door",
+   "at": 7.92,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Cover-slide drawer (6061, robot pull tab)",
+   "gap_mm": 5.308
+  },
+  {
+   "group": "door",
+   "at": 79.17,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Hinge pins (\u00d85, 316)",
+   "gap_mm": 5.985
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "gap_mm": 6.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "gap_mm": 9.0
+  },
+  {
+   "group": "door",
+   "at": 3.96,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Drawer-closed sensor (inductive M8, on the lid's front face)",
+   "gap_mm": 9.39
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
+   "gap_mm": 9.603
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "OD 7+ viewing window (1070 nm, polycarbonate)",
+   "gap_mm": 10.149
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Draw-latch keepers beside the door (304 SS)",
+   "gap_mm": 10.4
+  },
+  {
+   "group": "door",
+   "at": 7.92,
+   "moving": "Door O-ring (FKM)",
+   "other": "Cover-slide drawer (6061, robot pull tab)",
+   "gap_mm": 11.647
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Draw-latch keepers beside the door (304 SS)",
+   "gap_mm": 11.705
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "gap_mm": 12.4
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "gap_mm": 12.4
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
+   "gap_mm": 13.269
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 14.866
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door handle",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 15.323
+  },
+  {
+   "group": "door",
+   "at": 3.96,
+   "moving": "Door O-ring (FKM)",
+   "other": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "gap_mm": 15.736
+  },
+  {
+   "group": "door",
+   "at": 7.92,
+   "moving": "Door O-ring (FKM)",
+   "other": "Drawer-closed sensor (inductive M8, on the lid's front face)",
+   "gap_mm": 18.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "gap_mm": 18.028
+  },
+  {
+   "group": "door",
+   "at": 15.83,
+   "moving": "Door O-ring (FKM)",
+   "other": "Hinge pins (\u00d85, 316)",
+   "gap_mm": 19.523
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Drawer-closed sensor (inductive M8, on the lid's front face)",
+   "gap_mm": 29.179
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Sliding guard door (aluminium)",
+   "gap_mm": 38.651
+  },
+  {
+   "group": "door",
+   "at": 87.08,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Sliding guard door (aluminium)",
+   "gap_mm": 38.756
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 56.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 56.0
+  },
+  {
+   "group": "door",
+   "at": 87.08,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 57.042
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 57.082
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Cover-slide drawer (6061, robot pull tab)",
+   "gap_mm": 59.836
+  },
+  {
+   "group": "door",
+   "at": 7.92,
+   "moving": "Door O-ring (FKM)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 62.4
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 64.648
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "gap_mm": 65.129
+  },
+  {
+   "group": "door",
+   "at": 47.5,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 71.823
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 75.976
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 80.0
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 82.215
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Door handle",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 93.086
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door handle",
+   "other": "Draw-latch keepers beside the door (304 SS)",
+   "gap_mm": 93.65
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 111.394
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 120.893
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 122.996
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Door O-ring (FKM)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 135.709
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 135.878
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door handle",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 144.0
+  },
+  {
+   "group": "door",
+   "at": 79.17,
+   "moving": "Door handle",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 145.139
+  },
+  {
+   "group": "door",
+   "at": 95.0,
+   "moving": "Door hinge leaves + knuckles (304 SS)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 145.736
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Draw latches on the door (304 SS, 800 lb)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 145.74
+  },
+  {
+   "group": "door",
+   "at": 0.0,
+   "moving": "Door handle",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 181.003
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "Sliding guard door (aluminium)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 2.0
+  },
+  {
+   "group": "gdoor",
+   "at": 39.17,
+   "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "Sliding guard door (aluminium)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 3.5
+  },
+  {
+   "group": "gdoor",
+   "at": 117.5,
+   "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 4.5
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "Sliding guard door (aluminium)",
+   "other": "Guard-locking door switch (Omron D4JL)",
+   "gap_mm": 7.0
+  },
+  {
+   "group": "gdoor",
+   "at": 39.17,
+   "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
+   "other": "Guard-locking door switch (Omron D4JL)",
+   "gap_mm": 8.0
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "Sliding guard door (aluminium)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 10.595
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 32.062
+  },
+  {
+   "group": "gdoor",
+   "at": 0.0,
+   "moving": "Sliding guard door (aluminium)",
+   "other": "Process fiber (armoured, \u2265 100 mm bend radius)",
+   "gap_mm": 127.814
+  },
+  {
+   "group": "cartridge",
+   "at": -46.88,
+   "moving": "Reservoir S (38 cm3, 304 SS wedge hopper, 45 mm outlet for the S25 module)",
+   "other": "NFC reader antenna (in the dock face, reads the reservoir's tag)",
+   "gap_mm": 1.0
+  },
+  {
+   "group": "cartridge",
+   "at": -26.04,
+   "moving": "Reservoir S (38 cm3, 304 SS wedge hopper, 45 mm outlet for the S25 module)",
+   "other": "Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)",
+   "gap_mm": 2.0
+  },
+  {
+   "group": "cartridge",
+   "at": -46.88,
+   "moving": "Reservoir S shutter (shown open, as docked; springs shut when the reservoir slides out)",
+   "other": "NFC reader antenna (in the dock face, reads the reservoir's tag)",
+   "gap_mm": 2.1
+  },
+  {
+   "group": "cartridge",
+   "at": -26.04,
+   "moving": "Reservoir S shutter (shown open, as docked; springs shut when the reservoir slides out)",
+   "other": "Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)",
+   "gap_mm": 4.342
+  },
+  {
+   "group": "cartridge",
+   "at": -26.04,
+   "moving": "Reservoir S lid with robot handle (grip plane z = 258 for every size)",
+   "other": "Enclosed beam tube",
+   "gap_mm": 5.717
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Reservoir S (38 cm3, 304 SS wedge hopper, 45 mm outlet for the S25 module)",
+   "other": "Side reservoir port (KF-16, blanked; reserved for a >= 500 cm3 reservoir beside the chamber with an auger)",
+   "gap_mm": 10.896
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Reservoir S shutter (shown open, as docked; springs shut when the reservoir slides out)",
+   "other": "Side reservoir port (KF-16, blanked; reserved for a >= 500 cm3 reservoir beside the chamber with an auger)",
+   "gap_mm": 12.625
+  },
+  {
+   "group": "cartridge",
+   "at": -26.04,
+   "moving": "Reservoir S lid with robot handle (grip plane z = 258 for every size)",
+   "other": "2-axis galvo scan head (basiCube class)",
+   "gap_mm": 13.772
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S (38 cm3, 304 SS wedge hopper, 45 mm outlet for the S25 module)",
+   "other": "Optics bridge (6061, 25 mm)",
+   "gap_mm": 13.8
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S lid with robot handle (grip plane z = 258 for every size)",
+   "other": "Optics bridge (6061, 25 mm)",
+   "gap_mm": 13.8
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S powder",
+   "other": "Optics bridge (6061, 25 mm)",
+   "gap_mm": 15.5
+  },
+  {
+   "group": "cartridge",
+   "at": -72.92,
+   "moving": "Reservoir S (38 cm3, 304 SS wedge hopper, 45 mm outlet for the S25 module)",
+   "other": "2-axis galvo scan head (basiCube class)",
+   "gap_mm": 22.275
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S lid with robot handle (grip plane z = 258 for every size)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 109.7
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S lid with robot handle (grip plane z = 258 for every size)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 127.067
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S (38 cm3, 304 SS wedge hopper, 45 mm outlet for the S25 module)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 147.7
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S powder",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 153.318
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S (38 cm3, 304 SS wedge hopper, 45 mm outlet for the S25 module)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 159.64
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S powder",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 165.166
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S (38 cm3, 304 SS wedge hopper, 45 mm outlet for the S25 module)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 180.0
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S lid with robot handle (grip plane z = 258 for every size)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 181.218
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S shutter (shown open, as docked; springs shut when the reservoir slides out)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 182.2
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S powder",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 182.5
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S shutter (shown open, as docked; springs shut when the reservoir slides out)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 185.4
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir S shutter (shown open, as docked; springs shut when the reservoir slides out)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 191.392
+  },
+  {
+   "group": "drawer",
+   "at": -60.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Field-stop aperture (\u00d836, passive beam limit)",
+   "gap_mm": 0.3
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 1.0
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "gap_mm": 1.0
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Lid screws (M5 SHCS, A4 stainless)",
+   "gap_mm": 2.029
+  },
+  {
+   "group": "drawer",
+   "at": -50.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Field-stop aperture (\u00d836, passive beam limit)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "drawer",
+   "at": -5.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Drawer-closed sensor (inductive M8, on the lid's front face)",
+   "gap_mm": 4.0
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "other": "Lid screws (M5 SHCS, A4 stainless)",
+   "gap_mm": 5.17
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
+   "gap_mm": 5.3
+  },
+  {
+   "group": "drawer",
+   "at": -80.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Window flange (6061)",
+   "gap_mm": 5.3
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 6.0
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
+   "gap_mm": 6.0
+  },
+  {
+   "group": "drawer",
+   "at": -15.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Chamber door (6061-T6, 15 mm, drops down)",
+   "gap_mm": 7.0
+  },
+  {
+   "group": "drawer",
+   "at": -75.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Window flange (6061)",
+   "gap_mm": 8.0
+  },
+  {
+   "group": "drawer",
+   "at": -5.0,
+   "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "other": "Drawer-closed sensor (inductive M8, on the lid's front face)",
+   "gap_mm": 8.0
+  },
+  {
+   "group": "drawer",
+   "at": -15.0,
+   "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "other": "Chamber door (6061-T6, 15 mm, drops down)",
+   "gap_mm": 9.0
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "other": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
+   "gap_mm": 9.487
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Chamber door (6061-T6, 15 mm, drops down)",
+   "gap_mm": 12.0
+  },
+  {
+   "group": "drawer",
+   "at": -75.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Gas knife (cover-slide purge, 316L)",
+   "gap_mm": 13.3
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Door O-ring (FKM)",
+   "gap_mm": 13.4
+  },
+  {
+   "group": "drawer",
+   "at": -65.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Gas knife (cover-slide purge, 316L)",
+   "gap_mm": 14.0
+  },
+  {
+   "group": "drawer",
+   "at": -55.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Window O-ring (FKM)",
+   "gap_mm": 15.3
+  },
+  {
+   "group": "drawer",
+   "at": -105.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Lid screws (M5 SHCS, A4 stainless)",
+   "gap_mm": 16.459
+  },
+  {
+   "group": "drawer",
+   "at": -55.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "\u00d82 in. fused-silica window, 8 mm, AR 1064",
+   "gap_mm": 17.3
+  },
+  {
+   "group": "drawer",
+   "at": -75.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Camera viewport adapter + boss (\u00d81 in. window, 1070 nm blocking filter)",
+   "gap_mm": 18.311
+  },
+  {
+   "group": "drawer",
+   "at": -20.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Draw latches on the door (304 SS, 800 lb)",
+   "gap_mm": 59.034
+  },
+  {
+   "group": "drawer",
+   "at": -25.0,
+   "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "other": "Draw latches on the door (304 SS, 800 lb)",
+   "gap_mm": 63.735
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "gap_mm": 80.93
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Draw-latch keepers beside the door (304 SS)",
+   "gap_mm": 86.47
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "other": "Draw-latch keepers beside the door (304 SS)",
+   "gap_mm": 90.916
+  },
+  {
+   "group": "drawer",
+   "at": -115.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Draw-latch keepers beside the door (304 SS)",
+   "gap_mm": 103.551
+  },
+  {
+   "group": "drawer",
+   "at": -70.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 138.0
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 140.951
+  },
+  {
+   "group": "drawer",
+   "at": -70.0,
+   "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 142.0
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 145.649
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 154.681
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 174.895
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 185.161
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 189.608
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 203.753
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 212.7
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 215.058
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Cover slide (\u00d82 in. x 2 mm UV fused silica, consumable)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 241.226
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "gap_mm": 2.197
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "gap_mm": 5.0
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "gap_mm": 5.502
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 6.655
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
+   "gap_mm": 10.0
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Z carriage",
+   "other": "Z bracket + fold-back belt housing (2:1)",
+   "gap_mm": 11.0
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "gap_mm": 14.0
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Z carriage",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 14.425
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "gap_mm": 16.251
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Z carriage",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 24.0
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 29.02
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Z carriage",
+   "other": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "gap_mm": 40.908
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 78.351
+  },
+  {
+   "group": "zstage",
+   "at": -31.88,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 93.207
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 95.704
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Z carriage",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 99.408
+  },
+  {
+   "group": "zstage",
+   "at": -31.88,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 125.511
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Z carriage",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 129.0
+  },
+  {
+   "group": "zstage",
+   "at": -31.88,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 139.0
+  },
+  {
+   "group": "zstage",
+   "at": 0.0,
+   "moving": "Z carriage",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 143.971
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Z carriage",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 149.0
+  },
+  {
+   "group": "zstage",
+   "at": -31.88,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 159.0
+  },
+  {
+   "group": "zstage",
+   "at": -31.88,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 163.0
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Z carriage",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 166.379
+  },
+  {
+   "group": "zstage",
+   "at": -31.88,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 179.005
+  },
+  {
+   "group": "zstage",
+   "at": -31.88,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 197.608
+  },
+  {
+   "group": "zstage",
+   "at": -31.88,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 199.005
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Leveling mounts, process module",
+   "gap_mm": 245.914
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Z carriage",
+   "other": "Leveling mounts, process module",
+   "gap_mm": 247.007
+  },
+  {
+   "group": "zstage",
+   "at": -45.0,
+   "moving": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "other": "Leveling mounts, process module",
+   "gap_mm": 283.199
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Module S25 handle (front, for a hand or a gripper)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 0.0
+  },
+  {
+   "group": "module",
+   "at": 33.33,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Overflow clamp (KF-40)",
+   "gap_mm": 1.543
+  },
+  {
+   "group": "module",
+   "at": 16.67,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Overflow clamp (KF-40)",
+   "gap_mm": 1.543
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Module-present sensor (inductive M8, under the floor, sees the module flange)",
+   "gap_mm": 2.202
+  },
+  {
+   "group": "module",
+   "at": 316.67,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 3.0
+  },
+  {
+   "group": "module",
+   "at": 83.33,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 4.0
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 4.0
+  },
+  {
+   "group": "module",
+   "at": 16.67,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Module-present sensor (inductive M8, under the floor, sees the module flange)",
+   "gap_mm": 4.515
+  },
+  {
+   "group": "module",
+   "at": 50.0,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "gap_mm": 5.0
+  },
+  {
+   "group": "module",
+   "at": 316.67,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 8.0
+  },
+  {
+   "group": "module",
+   "at": 33.33,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Overflow port (KF-40)",
+   "gap_mm": 8.534
+  },
+  {
+   "group": "module",
+   "at": 33.33,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)",
+   "gap_mm": 8.534
+  },
+  {
+   "group": "module",
+   "at": 16.67,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Overflow port (KF-40)",
+   "gap_mm": 8.534
+  },
+  {
+   "group": "module",
+   "at": 33.33,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)",
+   "gap_mm": 8.729
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 9.434
+  },
+  {
+   "group": "module",
+   "at": 50.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "gap_mm": 10.0
+  },
+  {
+   "group": "module",
+   "at": 50.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Pot magnet (NdFeB in a steel cup, \u00d832, holds the rod's striker)",
+   "gap_mm": 10.0
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Z mounting flange (bolted under the floor)",
+   "gap_mm": 10.061
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Module-present sensor (inductive M8, under the floor, sees the module flange)",
+   "gap_mm": 10.715
+  },
+  {
+   "group": "module",
+   "at": 16.67,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Z mounting flange (bolted under the floor)",
+   "gap_mm": 12.015
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Z bracket + fold-back belt housing (2:1)",
+   "gap_mm": 12.061
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Outlet plenum port (KF-25)",
+   "gap_mm": 13.188
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 13.432
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 14.0
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Overflow funnel block (316L)",
+   "gap_mm": 14.0
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Overflow funnel block (316L)",
+   "gap_mm": 14.0
+  },
+  {
+   "group": "module",
+   "at": 16.67,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Z bracket + fold-back belt housing (2:1)",
+   "gap_mm": 14.015
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 15.5
+  },
+  {
+   "group": "module",
+   "at": 83.33,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 16.7
+  },
+  {
+   "group": "module",
+   "at": 316.67,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 17.0
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 18.0
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 18.358
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 19.0
+  },
+  {
+   "group": "module",
+   "at": 33.33,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 19.691
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 20.0
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Outlet plenum port (KF-25)",
+   "gap_mm": 21.097
+  },
+  {
+   "group": "module",
+   "at": 250.0,
+   "moving": "Module S25 bottom flange (316L, double FKM O-ring rod gland)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 24.642
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 28.0
+  },
+  {
+   "group": "module",
+   "at": 33.33,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 28.776
+  },
+  {
+   "group": "module",
+   "at": 350.0,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 29.0
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 30.517
+  },
+  {
+   "group": "module",
+   "at": 33.33,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 31.017
+  },
+  {
+   "group": "module",
+   "at": 250.0,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 34.392
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 35.356
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 35.556
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 35.946
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 36.0
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 36.666
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 37.117
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 37.526
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 37.654
+  },
+  {
+   "group": "module",
+   "at": 50.0,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 38.801
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 39.865
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Module S25 bottom flange (316L, double FKM O-ring rod gland)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 40.0
+  },
+  {
+   "group": "module",
+   "at": 50.0,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 40.838
+  },
+  {
+   "group": "module",
+   "at": 300.0,
+   "moving": "Module S25 handle (front, for a hand or a gripper)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 42.0
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
+   "gap_mm": 42.2
+  },
+  {
+   "group": "module",
+   "at": 266.67,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "gap_mm": 44.076
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Process chamber body (6061-T6, ~5.0 L)",
+   "gap_mm": 44.944
+  },
+  {
+   "group": "module",
+   "at": 266.67,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "gap_mm": 45.859
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 50.0
+  },
+  {
+   "group": "module",
+   "at": 266.67,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Door hinge leaves + knuckles (304 SS)",
+   "gap_mm": 53.263
+  },
+  {
+   "group": "module",
+   "at": 266.67,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Door hinge leaves + knuckles (304 SS)",
+   "gap_mm": 54.771
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 56.0
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 56.0
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Module S25 bottom flange (316L, double FKM O-ring rod gland)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 56.497
+  },
+  {
+   "group": "module",
+   "at": 83.33,
+   "moving": "Module S25 handle (front, for a hand or a gripper)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 56.916
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 59.732
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 60.419
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 63.499
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 63.578
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 65.038
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 65.588
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 65.881
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 68.39
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 68.755
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 71.715
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 71.782
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 72.0
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 75.641
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 77.004
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 79.55
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 80.145
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 80.364
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 81.201
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 81.203
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 81.221
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 84.38
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 85.546
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 85.729
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 92.0
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 93.416
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 94.0
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 96.064
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 96.589
+  },
+  {
+   "group": "module",
+   "at": 66.67,
+   "moving": "Module S25 handle (front, for a hand or a gripper)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 98.0
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 98.2
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 98.222
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Module S25 bottom flange (316L, double FKM O-ring rod gland)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 98.3
+  },
+  {
+   "group": "module",
+   "at": 350.0,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 104.0
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 106.019
+  },
+  {
+   "group": "module",
+   "at": 350.0,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 107.0
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 107.3
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 107.4
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 107.6
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 107.6
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 108.6
+  },
+  {
+   "group": "module",
+   "at": 350.0,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 109.0
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 109.639
+  },
+  {
+   "group": "module",
+   "at": 350.0,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 110.0
+  },
+  {
+   "group": "module",
+   "at": 133.33,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 110.984
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 112.062
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 112.517
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 116.0
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Build module S25: spigot, flange and honed 316L cylinder (\u00d825.4 bore, 3 mm wall)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 116.0
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 116.0
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Captive M6 thumb screws (2, into helical inserts in the floor)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 116.012
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 117.0
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Chamber legs (6061, 30 x 30)",
+   "gap_mm": 118.0
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 118.0
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 118.0
+  },
+  {
+   "group": "module",
+   "at": 300.0,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 126.3
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 127.448
+  },
+  {
+   "group": "module",
+   "at": 350.0,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Guard door rail (top + bottom)",
+   "gap_mm": 128.0
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 128.312
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "gap_mm": 131.917
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 132.0
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Spigot O-ring (FKM 2-240, radial seal in the floor port)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 132.011
+  },
+  {
+   "group": "module",
+   "at": 116.67,
+   "moving": "Module S25 handle (front, for a hand or a gripper)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 158.0
+  },
+  {
+   "group": "module",
+   "at": 283.33,
+   "moving": "Module S25 handle (front, for a hand or a gripper)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 158.0
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Module S25 bottom flange (316L, double FKM O-ring rod gland)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 158.3
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Module S25 bottom flange (316L, double FKM O-ring rod gland)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 158.309
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 166.008
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 166.012
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 167.3
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 167.308
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 167.4
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Build plate S25 (\u00d825.2 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 167.408
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 167.6
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 167.6
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Heater block S25 (6061-T6, bayonet socket)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 167.608
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Piston head S25 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 167.608
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 168.6
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Radiation shields S25 (2 x 0.3 mm polished 316)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 168.608
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 169.0
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 169.008
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 169.639
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Macor standoffs S25 (3 x \u00d86 x 8, thermal break)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 169.642
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 172.062
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Hollow piston rod S25 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 172.071
+  },
+  {
+   "group": "module",
+   "at": 183.33,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 173.581
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Type K thermocouples S25 (control, edge, limit; 1/16 in. ungrounded)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 173.65
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 177.0
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Cartridge heaters S25 (1 x 40 W, 24 V, \u00d86 x 20)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 177.008
+  },
+  {
+   "group": "module",
+   "at": 166.67,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 178.0
+  },
+  {
+   "group": "module",
+   "at": 333.33,
+   "moving": "Thermal cutoff S25 (240 C, in series with the heaters)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 178.131
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Striker disc S25 (430 stainless, on the pot magnet)",
+   "other": "Leveling mounts, process module",
+   "gap_mm": 230.201
+  },
+  {
+   "group": "module",
+   "at": 233.33,
+   "moving": "Rod end S25: potted cable exit (Torr Seal) with a side outlet",
+   "other": "Leveling mounts, process module",
+   "gap_mm": 233.669
+  }
+ ],
+ "joints": [
+  {
+   "a": "Argon line (1/4 in. 316L)",
+   "b": "Laser guard panels (1.5 mm aluminium)",
+   "why": "line passes the guard through a bulkhead fitting"
+  },
+  {
+   "a": "Argon pressure regulator + flowmeter",
+   "b": "Argon supply from the dock",
+   "why": "tube fitting"
+  },
+  {
+   "a": "Argon solenoid manifold (purge / make-up / vent)",
+   "b": "Argon line (1/4 in. 316L)",
+   "why": "tube fitting into the manifold"
+  },
+  {
+   "a": "Collimator (QBH, f = 30 mm, D ~ 3.2 mm) on V-mount",
+   "b": "Process fiber (armoured, \u2265 100 mm bend radius)",
+   "why": "fiber connector (QBH) in the collimator"
+  },
+  {
+   "a": "Cover-slide drawer (6061, robot pull tab)",
+   "b": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "why": "O-ring in the front plate's groove"
+  },
+  {
+   "a": "Dry scroll pump (\u2264 0.3 mbar, 6 m3/h class)",
+   "b": "Pump exhaust to the dock",
+   "why": "hose on the exhaust port"
+  },
+  {
+   "a": "Fiber laser source, 500 W single-mode (3U)",
+   "b": "Process fiber (armoured, \u2265 100 mm bend radius)",
+   "why": "fiber leaves the laser's front panel"
+  },
+  {
+   "a": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "b": "Guard frame (20 mm T-slot)",
+   "why": "line passes the guard through a bulkhead fitting"
+  },
+  {
+   "a": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "b": "Laser guard panels (1.5 mm aluminium)",
+   "why": "line passes the guard through a bulkhead fitting"
+  },
+  {
+   "a": "O2 sample line (1/8 in. 316L)",
+   "b": "Laser guard panels (1.5 mm aluminium)",
+   "why": "line passes the guard through a bulkhead fitting"
+  },
+  {
+   "a": "Outlet plenum port (KF-25)",
+   "b": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "why": "hose end clamped onto its KF-25 flange"
+  },
+  {
+   "a": "Process chamber body (6061-T6, ~5.0 L)",
+   "b": "Argon line (1/4 in. 316L)",
+   "why": "tube fitting into the argon port"
+  },
+  {
+   "a": "Process fiber (armoured, \u2265 100 mm bend radius)",
+   "b": "Laser guard panels (1.5 mm aluminium)",
+   "why": "fiber through a guarded bulkhead in the guard's side panel"
+  },
+  {
+   "a": "Pump inlet (KF-25)",
+   "b": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "why": "hose end clamped onto its KF-25 flange"
+  },
+  {
+   "a": "Trace O2 analyzer + dew-point transmitter (panel box)",
+   "b": "O2 sample line (1/8 in. 316L)",
+   "why": "tube fitting into the analyzer"
+  },
+  {
+   "a": "Tray dock (CombiTac-type, mates sideways)",
+   "b": "Pump exhaust to the dock",
+   "why": "hose fitting"
+  },
+  {
+   "a": "Umbilical duct along the back edge",
+   "b": "Pump exhaust to the dock",
+   "why": "hose runs in the duct"
+  }
+ ],
+ "runtime_s": 118.7
+}
