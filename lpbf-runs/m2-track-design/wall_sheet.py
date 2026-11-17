@@ -20,8 +20,9 @@ Each wall is a small bulk build (many tracks, many layers), not a single track. 
 - The window is a band in (P, P/v): P from 150 to 370 W, and P/v from 0.09 to 0.55 J/mm, a third to twice the
   316L hatch's 0.274 J/mm. Speed is capped at 3000 mm/s. The upper cap keeps hot, swollen walls (a recoater
   risk) out of the first build. The lower cap still has standard contours around a porous core. The 316L hatch
-  must be dense at whatever layer the set uses, so the lack-of-fusion boundary lies below its P/v; 12-13 of each
-  square's 21 settings lie below it, down to a third of it, so the window crosses that boundary at 30 or 50 um.
+  must be dense at whatever layer the set uses, and the lowest settings (33 J/mm^3 at 30 um, 20 at 50 um) are lack
+  of fusion at either. 12-13 of each square's 21 settings have a lower P/v than the hatch, down to a third of it,
+  so the window crosses the lack-of-fusion boundary at 30 or 50 um.
 - Each square holds 21 settings from one scrambled Sobol sequence in (P, log P/v): points 0-20 on square 1,
   21-41 on square 2 and 42-62 on square 3, so squares 1-2 are a 42-point design and squares 1-3 a 63-point one.
   Each square also has 3 controls at the 316L hatch (370 W, 1350 mm/s), one per part. A square's 21 settings are
