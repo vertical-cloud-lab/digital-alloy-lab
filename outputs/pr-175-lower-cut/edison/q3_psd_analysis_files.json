@@ -1,0 +1,2090 @@
+{
+ "data": [
+  {
+   "id": 30177144,
+   "data_storage_id": "7947af87-e1d0-41e0-b846-c901821db688",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:39.377669Z",
+   "data_storage": {
+    "name": "60967197-7577-4f98-bfbd-2fd030b595a4.bib",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "9edc393eb941",
+    "parent_id": null,
+    "dataset_id": "57e0f244-cdf6-4da2-b7a2-f9b0c6c83f65",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "7947af87-e1d0-41e0-b846-c901821db688",
+    "path": "9edc393eb941",
+    "created_at": "2026-10-28T20:46:39.284054Z",
+    "modified_at": "2026-10-28T20:46:40.933106Z",
+    "tags": null,
+    "file_path": "/workspace/citations/local-nab-psd/60967197-7577-4f98-bfbd-2fd030b595a4.bib",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 350
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177141,
+   "data_storage_id": "69b18384-1c69-4a84-be58-af65b17a2708",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:37.636494Z",
+   "data_storage": {
+    "name": "60967197-7577-4f98-bfbd-2fd030b595a4.ipynb",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "283a4768d6db",
+    "parent_id": null,
+    "dataset_id": "5a363166-d3e4-4efb-a25d-28d9bf3c6fe4",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "69b18384-1c69-4a84-be58-af65b17a2708",
+    "path": "283a4768d6db",
+    "created_at": "2026-10-28T20:46:37.539982Z",
+    "modified_at": "2026-10-28T20:46:39.134084Z",
+    "tags": null,
+    "file_path": "/workspace/notebooks/60967197-7577-4f98-bfbd-2fd030b595a4.ipynb",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 1663209
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177137,
+   "data_storage_id": "da03eced-765c-4aa8-bba5-a06ebfb7910c",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:35.621820Z",
+   "data_storage": {
+    "name": "step013_msg000_img000.jpeg",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "36e3fa81a184",
+    "parent_id": null,
+    "dataset_id": "bcbc9a44-82c9-46a3-8355-3181ae1be5fc",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "da03eced-765c-4aa8-bba5-a06ebfb7910c",
+    "path": "36e3fa81a184",
+    "created_at": "2026-10-28T20:46:35.513015Z",
+    "modified_at": "2026-10-28T20:46:37.145742Z",
+    "tags": null,
+    "file_path": "/workspace/memory/step013_msg000_img000.jpeg",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 244106
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177133,
+   "data_storage_id": "0c206f6b-19ef-42d3-9a83-833f23fab31e",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:33.850085Z",
+   "data_storage": {
+    "name": "step013_msg000_img001.jpeg",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "a9efbead150e",
+    "parent_id": null,
+    "dataset_id": "4adabf45-6e41-4416-abec-8fbda117a352",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "0c206f6b-19ef-42d3-9a83-833f23fab31e",
+    "path": "a9efbead150e",
+    "created_at": "2026-10-28T20:46:33.751176Z",
+    "modified_at": "2026-10-28T20:46:35.284415Z",
+    "tags": null,
+    "file_path": "/workspace/memory/step013_msg000_img001.jpeg",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 106755
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177127,
+   "data_storage_id": "c78df6eb-be4e-4e92-b917-3cf56a4d627b",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:31.996251Z",
+   "data_storage": {
+    "name": "60967197-7577-4f98-bfbd-2fd030b595a4_memory_heron_c0_20261028T203537503255.jsonl",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "e18b92525fd8",
+    "parent_id": null,
+    "dataset_id": "7a6ab1d6-bf3e-4cd9-a6b7-07facbfc9e9a",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "c78df6eb-be4e-4e92-b917-3cf56a4d627b",
+    "path": "e18b92525fd8",
+    "created_at": "2026-10-28T20:46:31.896028Z",
+    "modified_at": "2026-10-28T20:46:33.601639Z",
+    "tags": null,
+    "file_path": "/workspace/memory/60967197-7577-4f98-bfbd-2fd030b595a4_memory_heron_c0_20261028T203537503255.jsonl",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 190630
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177123,
+   "data_storage_id": "950595a4-5402-4d9b-bfa5-89eb41d93b8b",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:30.186691Z",
+   "data_storage": {
+    "name": "step015_msg000_img001.jpeg",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "2db554983a9d",
+    "parent_id": null,
+    "dataset_id": "f938635b-2039-44e5-84a4-590040f3002c",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "950595a4-5402-4d9b-bfa5-89eb41d93b8b",
+    "path": "2db554983a9d",
+    "created_at": "2026-10-28T20:46:30.110034Z",
+    "modified_at": "2026-10-28T20:46:31.745449Z",
+    "tags": null,
+    "file_path": "/workspace/memory/step015_msg000_img001.jpeg",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 118273
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177120,
+   "data_storage_id": "ee28ce66-9c27-4bda-9359-1c7a13a1b88f",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:28.465075Z",
+   "data_storage": {
+    "name": "step015_msg000_img000.jpeg",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "84c25129e06e",
+    "parent_id": null,
+    "dataset_id": "8a82b163-181e-4928-bd64-8d1e4d0937a9",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "ee28ce66-9c27-4bda-9359-1c7a13a1b88f",
+    "path": "84c25129e06e",
+    "created_at": "2026-10-28T20:46:28.382787Z",
+    "modified_at": "2026-10-28T20:46:29.957571Z",
+    "tags": null,
+    "file_path": "/workspace/memory/step015_msg000_img000.jpeg",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 126175
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177118,
+   "data_storage_id": "539efbfb-b6ab-42a1-b1d5-d0efb773df48",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:28.081901Z",
+   "data_storage": {
+    "name": "tail_model_curves.csv",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "32bb60a1a307",
+    "parent_id": null,
+    "dataset_id": "b92a9de8-a03d-49a8-9d56-7845b0840dcc",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "539efbfb-b6ab-42a1-b1d5-d0efb773df48",
+    "path": "32bb60a1a307",
+    "created_at": "2026-10-28T20:46:28.040457Z",
+    "modified_at": "2026-10-28T20:46:28.202804Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/tail_model_curves.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 34686
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177115,
+   "data_storage_id": "d7edfe57-3d37-4324-ae9a-285e8ff147aa",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:26.180504Z",
+   "data_storage": {
+    "name": "analysis.py",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "eeacaf1781de",
+    "parent_id": null,
+    "dataset_id": "ffaa563c-9462-4769-b769-277537c6199a",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "d7edfe57-3d37-4324-ae9a-285e8ff147aa",
+    "path": "eeacaf1781de",
+    "created_at": "2026-10-28T20:46:26.090114Z",
+    "modified_at": "2026-10-28T20:46:27.864241Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/analysis.py",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 16772
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177112,
+   "data_storage_id": "f92efbcc-442b-47d7-8231-d93463275eac",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:24.340330Z",
+   "data_storage": {
+    "name": "cumulative_fine_zoom.png",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "3baee5c6286f",
+    "parent_id": null,
+    "dataset_id": "f2e4153f-b543-460d-a3b0-dd66d031fc86",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "f92efbcc-442b-47d7-8231-d93463275eac",
+    "path": "3baee5c6286f",
+    "created_at": "2026-10-28T20:46:24.250565Z",
+    "modified_at": "2026-10-28T20:46:25.901012Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/cumulative_fine_zoom.png",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 261179
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177110,
+   "data_storage_id": "69195f8e-b198-4cf1-bc95-87c248f49e03",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:23.982674Z",
+   "data_storage": {
+    "name": "detection_limit_scenarios.csv",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "2905e5dbf106",
+    "parent_id": null,
+    "dataset_id": "d27da6c3-62a2-4772-8d93-15311427c4ee",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "69195f8e-b198-4cf1-bc95-87c248f49e03",
+    "path": "2905e5dbf106",
+    "created_at": "2026-10-28T20:46:23.939971Z",
+    "modified_at": "2026-10-28T20:46:24.108442Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/detection_limit_scenarios.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 960
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177108,
+   "data_storage_id": "ea68d87d-1dca-4d2e-abd7-78de65c898fa",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:23.583644Z",
+   "data_storage": {
+    "name": "layer_particle_factors.csv",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "57a8f01daa5c",
+    "parent_id": null,
+    "dataset_id": "c04317c0-4fa4-442a-882d-b0db0542f52e",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "ea68d87d-1dca-4d2e-abd7-78de65c898fa",
+    "path": "57a8f01daa5c",
+    "created_at": "2026-10-28T20:46:23.563808Z",
+    "modified_at": "2026-10-28T20:46:23.699363Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/layer_particle_factors.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 371
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177106,
+   "data_storage_id": "fbaf95cb-e5e4-4e73-a66d-66e38d2519ff",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:23.301188Z",
+   "data_storage": {
+    "name": "fine_number_histogram.csv",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "b9a6c42ff040",
+    "parent_id": null,
+    "dataset_id": "3af1c96b-cc7d-47c3-9dd0-f0e99ab8bcd3",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "fbaf95cb-e5e4-4e73-a66d-66e38d2519ff",
+    "path": "b9a6c42ff040",
+    "created_at": "2026-10-28T20:46:23.245069Z",
+    "modified_at": "2026-10-28T20:46:23.407865Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/fine_number_histogram.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 2224
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177104,
+   "data_storage_id": "49414cee-b4f4-4c88-8d0c-49e8db399ac8",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:22.943206Z",
+   "data_storage": {
+    "name": "README.md",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "cebdacbc49eb",
+    "parent_id": null,
+    "dataset_id": "42d02d0d-5a01-45be-b2a3-1f5fbe886f4f",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "49414cee-b4f4-4c88-8d0c-49e8db399ac8",
+    "path": "cebdacbc49eb",
+    "created_at": "2026-10-28T20:46:22.919635Z",
+    "modified_at": "2026-10-28T20:46:23.092735Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/README.md",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 811
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177102,
+   "data_storage_id": "12ff0e2d-d3b7-478d-b8b2-4d0f2ab82af5",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:22.605410Z",
+   "data_storage": {
+    "name": "cdf_pointwise_intervals.csv",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "62eb75889bbf",
+    "parent_id": null,
+    "dataset_id": "df9abc2b-9a2f-4002-846e-b9771fab9605",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "12ff0e2d-d3b7-478d-b8b2-4d0f2ab82af5",
+    "path": "62eb75889bbf",
+    "created_at": "2026-10-28T20:46:22.556834Z",
+    "modified_at": "2026-10-28T20:46:22.721968Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/cdf_pointwise_intervals.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 152393
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177100,
+   "data_storage_id": "a36f44ec-7c23-46b3-92ed-56156a6b48f6",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:22.260413Z",
+   "data_storage": {
+    "name": "quantiles.csv",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "e1436d9fab91",
+    "parent_id": null,
+    "dataset_id": "ccfebb78-6389-47d1-b3f9-ac5c8ffbd90f",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "a36f44ec-7c23-46b3-92ed-56156a6b48f6",
+    "path": "e1436d9fab91",
+    "created_at": "2026-10-28T20:46:22.227528Z",
+    "modified_at": "2026-10-28T20:46:22.375027Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/quantiles.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 94
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177098,
+   "data_storage_id": "dc0df058-db9a-4379-a2fa-585787727a56",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:21.939047Z",
+   "data_storage": {
+    "name": "unseen_fines_stress_test.csv",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "e1ecbe512aa7",
+    "parent_id": null,
+    "dataset_id": "1b10f286-902b-4e0e-a822-1d32cc8b0c5d",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "dc0df058-db9a-4379-a2fa-585787727a56",
+    "path": "e1ecbe512aa7",
+    "created_at": "2026-10-28T20:46:21.911120Z",
+    "modified_at": "2026-10-28T20:46:22.073948Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/unseen_fines_stress_test.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 280
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177095,
+   "data_storage_id": "0253ed73-4b73-490e-9100-596b939aa145",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:20.141425Z",
+   "data_storage": {
+    "name": "references.bib",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "cf9a6563eaf0",
+    "parent_id": null,
+    "dataset_id": "7d2e2036-40fa-4976-adb9-4f5ace05652b",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "0253ed73-4b73-490e-9100-596b939aa145",
+    "path": "cf9a6563eaf0",
+    "created_at": "2026-10-28T20:46:20.040976Z",
+    "modified_at": "2026-10-28T20:46:21.748885Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/references.bib",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 350
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177092,
+   "data_storage_id": "687ea138-0354-4e79-960c-bfea403f162a",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:18.285971Z",
+   "data_storage": {
+    "name": "cumulative_fine_zoom.pdf",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "73de88bb1e13",
+    "parent_id": null,
+    "dataset_id": "1ad9f8f5-453a-4e7a-9882-31f4397de9b8",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "687ea138-0354-4e79-960c-bfea403f162a",
+    "path": "73de88bb1e13",
+    "created_at": "2026-10-28T20:46:18.201758Z",
+    "modified_at": "2026-10-28T20:46:19.853378Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/cumulative_fine_zoom.pdf",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 97376
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177090,
+   "data_storage_id": "f07c82cf-b7e1-402b-ae6a-8a376329daeb",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:17.879266Z",
+   "data_storage": {
+    "name": "empirical_distributions.csv",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "0f73e3200708",
+    "parent_id": null,
+    "dataset_id": "868bb8f3-0748-46e8-acc8-d32fd1aba6e5",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "f07c82cf-b7e1-402b-ae6a-8a376329daeb",
+    "path": "0f73e3200708",
+    "created_at": "2026-10-28T20:46:17.829161Z",
+    "modified_at": "2026-10-28T20:46:18.016581Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/empirical_distributions.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 373058
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177087,
+   "data_storage_id": "a22e9dca-5e41-44e5-a83e-b0725ab826a2",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:16.114900Z",
+   "data_storage": {
+    "name": "cumulative_distributions.png",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "73b8a21420f3",
+    "parent_id": null,
+    "dataset_id": "17c4e2c4-87f3-4c37-a5e7-2c55ad8b4334",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "a22e9dca-5e41-44e5-a83e-b0725ab826a2",
+    "path": "73b8a21420f3",
+    "created_at": "2026-10-28T20:46:16.034677Z",
+    "modified_at": "2026-10-28T20:46:17.657277Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/cumulative_distributions.png",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 527401
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177085,
+   "data_storage_id": "4960e06a-402f-418e-9c1b-97767b010338",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:15.616951Z",
+   "data_storage": {
+    "name": "fractions_and_intervals.csv",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "f204020b97c1",
+    "parent_id": null,
+    "dataset_id": "9f0e8706-4780-4445-a7b2-6d19706c413b",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "4960e06a-402f-418e-9c1b-97767b010338",
+    "path": "f204020b97c1",
+    "created_at": "2026-10-28T20:46:15.590996Z",
+    "modified_at": "2026-10-28T20:46:15.801658Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/fractions_and_intervals.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 17498
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177082,
+   "data_storage_id": "07ef4ec8-ee16-4c65-8339-7209a722683c",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:13.761301Z",
+   "data_storage": {
+    "name": "fine_number_histogram.png",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "f432b256fd8d",
+    "parent_id": null,
+    "dataset_id": "9a0c7b18-78b3-4e7a-bae3-6499a3cc862f",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "07ef4ec8-ee16-4c65-8339-7209a722683c",
+    "path": "f432b256fd8d",
+    "created_at": "2026-10-28T20:46:13.671362Z",
+    "modified_at": "2026-10-28T20:46:15.389844Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/fine_number_histogram.png",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 119841
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177079,
+   "data_storage_id": "903859dd-d0ee-46bd-b7eb-462200688403",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:11.870584Z",
+   "data_storage": {
+    "name": "analysis.ipynb",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "1d5460c74ccb",
+    "parent_id": null,
+    "dataset_id": "91b48a6f-7d5f-4e71-b00c-9653670bb8d2",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "903859dd-d0ee-46bd-b7eb-462200688403",
+    "path": "1d5460c74ccb",
+    "created_at": "2026-10-28T20:46:11.799296Z",
+    "modified_at": "2026-10-28T20:46:13.464248Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/analysis.ipynb",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 1561250
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177077,
+   "data_storage_id": "fe738c81-07c8-44a0-8a63-1db25a713112",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:11.504142Z",
+   "data_storage": {
+    "name": "report.md",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "76dccb888573",
+    "parent_id": null,
+    "dataset_id": "7936d385-9d2b-4a77-82ec-41b39ef7ebe7",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "fe738c81-07c8-44a0-8a63-1db25a713112",
+    "path": "76dccb888573",
+    "created_at": "2026-10-28T20:46:11.461936Z",
+    "modified_at": "2026-10-28T20:46:11.620950Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/report.md",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 24798
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177075,
+   "data_storage_id": "5906f33d-f2c4-4cb3-bc66-9ac52db8c296",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:11.154136Z",
+   "data_storage": {
+    "name": "field_diagnostics.csv",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "75ba0dc73c7a",
+    "parent_id": null,
+    "dataset_id": "cf947f46-5795-40f9-8caf-6eaeb0099241",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "5906f33d-f2c4-4cb3-bc66-9ac52db8c296",
+    "path": "75ba0dc73c7a",
+    "created_at": "2026-10-28T20:46:11.128950Z",
+    "modified_at": "2026-10-28T20:46:11.286525Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/field_diagnostics.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 1323
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177073,
+   "data_storage_id": "cde8d5a5-ad1f-4c28-9573-5772d42248e7",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:10.851658Z",
+   "data_storage": {
+    "name": "analysis_metadata.json",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "a62995ef6203",
+    "parent_id": null,
+    "dataset_id": "736901a0-95c6-4df2-9396-4c0e22f43d2a",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "cde8d5a5-ad1f-4c28-9573-5772d42248e7",
+    "path": "a62995ef6203",
+    "created_at": "2026-10-28T20:46:10.818100Z",
+    "modified_at": "2026-10-28T20:46:10.954598Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/analysis_metadata.json",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 1226
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177070,
+   "data_storage_id": "b9dda9ee-8375-42f1-90e7-8fd5a2d89fd3",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:09.250602Z",
+   "data_storage": {
+    "name": "detection_limit_models.pdf",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "126e9ac133bd",
+    "parent_id": null,
+    "dataset_id": "23278b86-f8f7-4ac1-96c6-b11fd44c44ea",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "b9dda9ee-8375-42f1-90e7-8fd5a2d89fd3",
+    "path": "126e9ac133bd",
+    "created_at": "2026-10-28T20:46:09.123128Z",
+    "modified_at": "2026-10-28T20:46:10.677683Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/detection_limit_models.pdf",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 19992
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177068,
+   "data_storage_id": "6ff9b154-1e1b-43b4-af51-a6318c26e86d",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:08.796768Z",
+   "data_storage": {
+    "name": "requirements.txt",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "9d60b14528fb",
+    "parent_id": null,
+    "dataset_id": "2d3d39f1-cfdf-4828-af03-9963e6393691",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "6ff9b154-1e1b-43b4-af51-a6318c26e86d",
+    "path": "9d60b14528fb",
+    "created_at": "2026-10-28T20:46:08.758823Z",
+    "modified_at": "2026-10-28T20:46:08.916714Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/requirements.txt",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 94
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177066,
+   "data_storage_id": "2dcc55df-6efb-464a-8fc7-feb29935c577",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:08.431217Z",
+   "data_storage": {
+    "name": "manifest.csv",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "31abdfbb2f55",
+    "parent_id": null,
+    "dataset_id": "c7590f9f-9c00-4333-9e18-df2497c64e13",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "2dcc55df-6efb-464a-8fc7-feb29935c577",
+    "path": "31abdfbb2f55",
+    "created_at": "2026-10-28T20:46:08.377452Z",
+    "modified_at": "2026-10-28T20:46:08.579927Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/manifest.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 2733
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177063,
+   "data_storage_id": "07b38829-ce60-4fc2-9e4f-f3512b9873d7",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:06.740023Z",
+   "data_storage": {
+    "name": "cumulative_distributions.pdf",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "8890d5cf965c",
+    "parent_id": null,
+    "dataset_id": "999edde0-3082-465f-9401-1666a65e5ae5",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "07b38829-ce60-4fc2-9e4f-f3512b9873d7",
+    "path": "8890d5cf965c",
+    "created_at": "2026-10-28T20:46:06.649923Z",
+    "modified_at": "2026-10-28T20:46:08.177176Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/cumulative_distributions.pdf",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 130851
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177060,
+   "data_storage_id": "b6738823-04db-419b-a2ce-b6dad21b1d6a",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:04.913955Z",
+   "data_storage": {
+    "name": "detection_limit_models.png",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "72b6ba236f53",
+    "parent_id": null,
+    "dataset_id": "92177576-9b2f-4bd4-ab37-6753650ae8c6",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "b6738823-04db-419b-a2ce-b6dad21b1d6a",
+    "path": "72b6ba236f53",
+    "created_at": "2026-10-28T20:46:04.809596Z",
+    "modified_at": "2026-10-28T20:46:06.506146Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/detection_limit_models.png",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 224592
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177057,
+   "data_storage_id": "6a48dc36-4411-43ba-86c2-4c839331c5c7",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:03.228973Z",
+   "data_storage": {
+    "name": "fine_number_histogram.pdf",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "157ce529db83",
+    "parent_id": null,
+    "dataset_id": "a4b02e7a-933f-444b-8f38-12923ef738db",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "6a48dc36-4411-43ba-86c2-4c839331c5c7",
+    "path": "157ce529db83",
+    "created_at": "2026-10-28T20:46:03.116288Z",
+    "modified_at": "2026-10-28T20:46:04.649375Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/fine_number_histogram.pdf",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 14188
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177054,
+   "data_storage_id": "d90da7e7-631b-4341-987e-9542d2dce8a1",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:46:01.198839Z",
+   "data_storage": {
+    "name": "sem_psd_analysis_bundle.zip",
+    "description": "",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "a0cb72377dd4",
+    "parent_id": null,
+    "dataset_id": "820914d0-0be7-4a15-8e1d-9d220957cf46",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "d90da7e7-631b-4341-987e-9542d2dce8a1",
+    "path": "a0cb72377dd4",
+    "created_at": "2026-10-28T20:46:01.101445Z",
+    "modified_at": "2026-10-28T20:46:02.941071Z",
+    "tags": null,
+    "file_path": "/workspace/sem_psd_analysis_bundle.zip",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "crow_name": "data analysis crow",
+     "job_data": [
+      {
+       "entry_id": "a77c947d-e39a-48ab-9cd7-23bfc1724cc3",
+       "filename": "context.md"
+      },
+      {
+       "entry_id": "d2e417d6-5502-4466-87b6-6c4da9e1a91d",
+       "filename": "nab_k7m2q9_summary.md"
+      },
+      {
+       "entry_id": "ac2c3dc4-3d02-4a0a-b464-c14c07d71f2a",
+       "filename": "fields.csv"
+      },
+      {
+       "entry_id": "b96e9aa7-1b06-4858-ab59-06301447c2a0",
+       "filename": "nab_k7m2q9_particles.csv"
+      }
+     ],
+     "size": 3340219
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177019,
+   "data_storage_id": "e800858f-c53d-44f8-ad91-dd55eabe97f7",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:44:26.805884Z",
+   "data_storage": {
+    "name": "Fine-end weighted number histogram",
+    "description": "Weighted number histogram below 30 \u00b5m for NAB and scaled Al-12Si scenario.",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "2eb3964afe0b",
+    "parent_id": null,
+    "dataset_id": "8e3dfe7a-e95c-4124-af43-e62371f9302b",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "e800858f-c53d-44f8-ad91-dd55eabe97f7",
+    "path": "2eb3964afe0b",
+    "created_at": "2026-10-28T20:44:26.703574Z",
+    "modified_at": "2026-10-28T20:44:28.220824Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/fine_number_histogram.png",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "size": 119841
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177016,
+   "data_storage_id": "9344bef0-2f03-4298-b1d9-633f01520139",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:44:24.840752Z",
+   "data_storage": {
+    "name": "Reproducible SEM PSD Python code",
+    "description": "Complete reproducible Python analysis for weighted PSD, bootstrap intervals, missing-fine scenarios and Al scaling.",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "de70ce09581d",
+    "parent_id": null,
+    "dataset_id": "31904b99-34ef-4ac2-be27-741f22b53af2",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "9344bef0-2f03-4298-b1d9-633f01520139",
+    "path": "de70ce09581d",
+    "created_at": "2026-10-28T20:44:24.741672Z",
+    "modified_at": "2026-10-28T20:44:26.479122Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/analysis.py",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "size": 16772
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177014,
+   "data_storage_id": "3fd8e713-88be-4c4b-9199-c5cc98d7a57a",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:44:24.418153Z",
+   "data_storage": {
+    "name": "SEM PSD fractions and 95% bootstrap intervals",
+    "description": "All empirical fractions, volume windows, conditional sieve losses and separate particle/field bootstrap intervals.",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "88d2bc544c73",
+    "parent_id": null,
+    "dataset_id": "408d3ab7-400d-4371-877a-1819a7f31f4d",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "3fd8e713-88be-4c4b-9199-c5cc98d7a57a",
+    "path": "88d2bc544c73",
+    "created_at": "2026-10-28T20:44:24.390257Z",
+    "modified_at": "2026-10-28T20:44:24.524990Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/fractions_and_intervals.csv",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "size": 17498
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177011,
+   "data_storage_id": "db4414d3-2447-48eb-85a1-fc219babb934",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:44:22.475360Z",
+   "data_storage": {
+    "name": "NAB and Al estimate \u2014 cumulative fine-end distributions",
+    "description": "Cumulative number and volume distributions of NAB and a Lang-scaled Al-12Si scenario, with field-bootstrap intervals.",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "fc80abc216e8",
+    "parent_id": null,
+    "dataset_id": "9b1c6c3d-4939-42ce-a350-5f08485fa131",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "db4414d3-2447-48eb-85a1-fc219babb934",
+    "path": "fc80abc216e8",
+    "created_at": "2026-10-28T20:44:22.381384Z",
+    "modified_at": "2026-10-28T20:44:24.127004Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/cumulative_fine_zoom.png",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "size": 261179
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177009,
+   "data_storage_id": "f37adf1e-0687-40b4-8179-fac8ad542fcf",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:44:22.035871Z",
+   "data_storage": {
+    "name": "SEM fine-end analysis report",
+    "description": "Complete report of NAB fine fractions, detection-limit scenarios, sieve yields and conditional Al-12Si size scaling.",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "db52c8e2161d",
+    "parent_id": null,
+    "dataset_id": "075f480b-4dab-470f-8005-d06a624ebc6b",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "f37adf1e-0687-40b4-8179-fac8ad542fcf",
+    "path": "db52c8e2161d",
+    "created_at": "2026-10-28T20:44:22.011281Z",
+    "modified_at": "2026-10-28T20:44:22.142059Z",
+    "tags": null,
+    "file_path": "/workspace/outputs/report.md",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "size": 24798
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  },
+  {
+   "id": 30177006,
+   "data_storage_id": "c78bb1aa-816e-4750-8241-0540bf5439ac",
+   "operation": "create",
+   "actor_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+   "actor_type": "trajectory",
+   "timestamp": "2026-10-28T20:44:19.916682Z",
+   "data_storage": {
+    "name": "SEM powder-size analysis \u2014 complete reproducibility bundle",
+    "description": "Complete SEM powder-size analysis: original inputs, executed notebook, Python code, numerical tables, bootstrap intervals, figures, report and bibliography.",
+    "is_collection": false,
+    "status": "active",
+    "content": null,
+    "embedding": null,
+    "label": "8d90511c8e09",
+    "parent_id": null,
+    "dataset_id": "adf5e5e2-2f23-4f7e-9e03-349352859240",
+    "project_id": null,
+    "share_status": "private",
+    "short_alias": null,
+    "id": "c78bb1aa-816e-4750-8241-0540bf5439ac",
+    "path": "8d90511c8e09",
+    "created_at": "2026-10-28T20:44:19.825034Z",
+    "modified_at": "2026-10-28T20:44:21.809421Z",
+    "tags": null,
+    "file_path": "/workspace/sem_psd_analysis_bundle.zip",
+    "metadata": {
+     "trajectory_id": "60967197-7577-4f98-bfbd-2fd030b595a4",
+     "size": 3340219
+    },
+    "trajectory_id": null,
+    "project_name": null,
+    "project_description": null,
+    "is_kosmos_project": null
+   }
+  }
+ ]
+}
