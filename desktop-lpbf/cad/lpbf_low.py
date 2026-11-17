@@ -61,7 +61,7 @@ P["cx"], P["cy"] = P["ix"] + P["wall"], P["iy"] + P["wall"]
 P["lid_z0"], P["lid_z1"] = P["ch_z"], P["ch_z"] + P["lid"]
 P["z_lens0"] = P["lens_wd"]                              # lens housing bottom
 P["z_bridge1"] = P["lens_wd"] + P["lens_len"]            # galvo mounting face = bridge top
-P["z_bridge0"] = P["z_bridge1"] - 15.0
+P["z_bridge0"] = P["z_bridge1"] - 25.0               # 25 mm: FEA put f1 at 79 Hz with 15 mm + 40 mm posts
 P["beam_z"] = P["z_bridge1"] + 45.0
 P["z_base1"] = Z_TRAY + 35.0                             # module base plates: 20 mm feet + 15 mm plate
 P["z_base0"] = Z_TRAY + 20.0
@@ -522,16 +522,16 @@ def build(include_tray=True):
 
     # ===================== 9. Optics =====================
     zb0_, zb1_ = P["z_bridge0"], P["z_bridge1"]
-    br = box(-345, 225, -170, 170, zb0_, zb1_)
-    br = br.cut(cyl(P["lens_d"] / 2 + 3, (0, 0, zb0_ - 1), "z", 17))
-    br = br.cut(box(xd - 26, xd + 26, -171, 52, zb0_ - 1, zb1_ + 1))       # slot: cartridge slides out to the front
-    br = br.cut(cyl(40, (112, -66, zb0_ - 1), "z", 17))                     # clearance for the layer camera
-    add("Optics bridge (6061, 15 mm)", br, C["alu"], 9, (0, 0, 260), mat="al6061", bom="F5")
+    br = box(-360, 245, -190, 180, zb0_, zb1_)
+    br = br.cut(cyl(P["lens_d"] / 2 + 3, (0, 0, zb0_ - 1), "z", 27))
+    br = br.cut(box(xd - 26, xd + 26, -191, 52, zb0_ - 1, zb1_ + 1))       # slot: cartridge slides out to the front
+    br = br.cut(cyl(40, (112, -66, zb0_ - 1), "z", 27))                     # clearance for the layer camera
+    add("Optics bridge (6061, 25 mm)", br, C["alu"], 9, (0, 0, 260), mat="al6061", bom="F5")
     pst = []
-    for x in (-335.0, 180.0):
-        for y in (-165.0, 125.0):
-            pst.append(box(x, x + 40, y, y + 40, zb1, zb0_).cut(box(x + 4, x + 36, y + 4, y + 36, zb1 - 1, zb0_ + 1)))
-    add("Optics bridge posts (40 x 40 x 4 square tube)", comp(pst), C["alu_dark"], 9, (0, 0, 200), mat="al6061", bom="F5")
+    for x in (-345.0, 180.0):
+        for y in (-185.0, 115.0):
+            pst.append(box(x, x + 60, y, y + 60, zb1, zb0_).cut(box(x + 5, x + 55, y + 5, y + 55, zb1 - 1, zb0_ + 1)))
+    add("Optics bridge posts (60 x 60 x 5 square tube)", comp(pst), C["alu_dark"], 9, (0, 0, 200), mat="al6061", bom="F5")
     zl0 = P["z_lens0"]
     lens = fuse([cyl(P["lens_d"] / 2, (0, 0, zl0), "z", P["lens_len"]), cyl(30, (0, 0, zl0 - 1.5), "z", 1.5)])
     add("f-theta lens, f = 160 mm (FTH160-1064 envelope)", lens, C["black"], 9, (0, 0, 300), mat="misc", mass_kg=0.6, bom="L6")
@@ -575,11 +575,11 @@ def build(include_tray=True):
     hoses = {
         "Outlet plenum to filter": [(55 + 21 + 26, -66, zf - 21), (180, -66, -40), (300, -60, 20), (400, -40, 160), (470, -40, g0 + 294)],
         "Filter to blower": [(470 + 55 + 40, -40, g0 + 60), (560, -100, g0 + 60), (580 - 20, -150, g0 + 60)],
-        "Blower to inlet plenum": [(700, -150, g0 + 270), (650, 0, 150), (400, 180, 100), (150, 180, 40), (0, cy + 32 + 46, 11)],
+        "Blower to inlet plenum": [(700, -150, g0 + 270), (650, 20, 150), (420, 195, 100), (250, 195, 60), (110, 180, 30), (0, cy + 32 + 46, 11)],
         "Vacuum line to pump": [(cx + 43, 0, 33), (cx + 43, 0, -30), (300, 60, -40), (500, 165, 80), (640, 165, g0 + 330)],
     }
     add("Gas-loop + vacuum hoses (KF-25 SS bellows)", comp([polyline_pipe(h, 13) for h in hoses.values()]), C["hose"], 11, (0, 0, -160), mat="ss316l", mass_kg=3.0, bom="G7", mcm="HOSE_KF25")
-    add("Argon line (1/4 in. 316L)", polyline_pipe([(477, 215, g0 + 82), (477, 215, 140), (300, 112, 130), (150, 108, 105), (100, 100, 100), (100, cy + 0.0, 100)], 3.2), C["argon"], 11, (0, 200, 0), mat="ss316l", bom="G7", mcm="TUBE_SS")
+    add("Argon line (1/4 in. 316L)", polyline_pipe([(477, 215, g0 + 82), (477, 215, 140), (300, 100, 130), (150, 100, 105), (100, 100, 100), (100, cy + 0.0, 100)], 3.2), C["argon"], 11, (0, 200, 0), mat="ss316l", bom="G7", mcm="TUBE_SS")
     add("O2 sample line (1/8 in. 316L)", polyline_pipe([(cx, -40, 18), (cx + 30, -40, 18), (300, -150, 75), (600, -205, 85), (790, -205, 85), (900, -160, 70), (900, -160, 50)], 2.0), C["ss"], 11, (0, -200, 0), mat="ss316l", bom="G6", mcm="TUBE_SS")
 
     # ===================== 12. Laser guard =====================

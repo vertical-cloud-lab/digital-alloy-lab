@@ -6,7 +6,7 @@
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 511,
+   "pairs_checked": 512,
    "interferences": []
   },
   {
@@ -15,7 +15,7 @@
     "recoater": 196.0,
     "piston": -40.0
    },
-   "pairs_checked": 516,
+   "pairs_checked": 517,
    "interferences": []
   },
   {
@@ -25,7 +25,7 @@
     "gdoor": 470.0,
     "cartridge": -125.0
    },
-   "pairs_checked": 499,
+   "pairs_checked": 500,
    "interferences": []
   }
  ],
@@ -247,8 +247,15 @@
    "group": "recoater",
    "at": 196.0,
    "moving": "Recoater ball nut (flange on the +x face)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 78.573
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 72.205
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 75.042
   },
   {
    "group": "recoater",
@@ -260,16 +267,9 @@
   {
    "group": "recoater",
    "at": 196.0,
-   "moving": "Recoater carriage (15 mm rail)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 81.187
-  },
-  {
-   "group": "recoater",
-   "at": 196.0,
    "moving": "Recoater carriage block (6061)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 86.215
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 80.455
   },
   {
    "group": "recoater",
@@ -289,22 +289,22 @@
    "group": "recoater",
    "at": 196.0,
    "moving": "Blade holder (6061, quick-swap)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 118.089
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 111.198
   },
   {
    "group": "recoater",
    "at": 196.0,
    "moving": "Recoater arm (6061)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 118.794
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 111.946
   },
   {
    "group": "recoater",
    "at": 196.0,
    "moving": "HSS recoater blade (1.5 mm, wide nose)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 123.658
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 116.324
   },
   {
    "group": "recoater",
@@ -619,7 +619,7 @@
    "at": 0.0,
    "moving": "Z carriage",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 112.294
+   "gap_mm": 112.309
   },
   {
    "group": "piston",
@@ -660,15 +660,15 @@
    "group": "piston",
    "at": -40.0,
    "moving": "Z lift arm (6061, split clamp on the rod)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 167.098
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 163.0
   },
   {
    "group": "piston",
    "at": -40.0,
    "moving": "Z carriage",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 169.594
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 166.379
   },
   {
    "group": "piston",
@@ -683,6 +683,27 @@
    "moving": "Piston seal (aramid felt + carbon-filled PTFE scraper)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 184.258
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston seal (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 188.213
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 188.613
+  },
+  {
+   "group": "piston",
+   "at": -40.0,
+   "moving": "Piston (6061, cartridge heater, felt seal groove)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 188.613
   },
   {
    "group": "piston",
@@ -722,23 +743,9 @@
   {
    "group": "piston",
    "at": -40.0,
-   "moving": "Piston seal (aramid felt + carbon-filled PTFE scraper)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 193.747
-  },
-  {
-   "group": "piston",
-   "at": -40.0,
-   "moving": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 194.147
-  },
-  {
-   "group": "piston",
-   "at": -40.0,
-   "moving": "Piston (6061, cartridge heater, felt seal groove)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 194.147
+   "moving": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 207.603
   },
   {
    "group": "piston",
@@ -746,27 +753,6 @@
    "moving": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 209.002
-  },
-  {
-   "group": "piston",
-   "at": -40.0,
-   "moving": "Piston rod (\u00d812.7, 440C, FKM rod wiper)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 213.146
-  },
-  {
-   "group": "door",
-   "at": 0.0,
-   "moving": "Chamber door (6061-T6, 15 mm, drops down)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
-   "gap_mm": 0.0
-  },
-  {
-   "group": "door",
-   "at": 0.0,
-   "moving": "Door O-ring (FKM)",
-   "other": "Process chamber body (6061-T6, ~5.0 L)",
-   "gap_mm": 0.0
   },
   {
    "group": "door",
@@ -926,21 +912,21 @@
    "group": "door",
    "at": 11.88,
    "moving": "Chamber door (6061-T6, 15 mm, drops down)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
    "gap_mm": 56.0
   },
   {
    "group": "door",
    "at": 3.96,
    "moving": "Draw latches on the door (304 SS, 800 lb)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
    "gap_mm": 56.0
   },
   {
    "group": "door",
    "at": 15.83,
    "moving": "Door O-ring (FKM)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
    "gap_mm": 62.4
   },
   {
@@ -968,7 +954,7 @@
    "group": "door",
    "at": 23.75,
    "moving": "Door hinge leaves + knuckles (304 SS)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
    "gap_mm": 80.0
   },
   {
@@ -1029,9 +1015,9 @@
   },
   {
    "group": "door",
-   "at": 7.92,
+   "at": 0.0,
    "moving": "Door handle",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
    "gap_mm": 144.0
   },
   {
@@ -1150,14 +1136,14 @@
    "group": "cartridge",
    "at": 0.0,
    "moving": "Hopper cartridge (~100 cm3, 304 SS, slides out to the front)",
-   "other": "Optics bridge (6061, 15 mm)",
+   "other": "Optics bridge (6061, 25 mm)",
    "gap_mm": 10.0
   },
   {
    "group": "cartridge",
    "at": 0.0,
    "moving": "Hopper powder",
-   "other": "Optics bridge (6061, 15 mm)",
+   "other": "Optics bridge (6061, 25 mm)",
    "gap_mm": 12.0
   },
   {
@@ -1178,7 +1164,7 @@
    "group": "cartridge",
    "at": 0.0,
    "moving": "Hopper cap with robot handle",
-   "other": "Optics bridge (6061, 15 mm)",
+   "other": "Optics bridge (6061, 25 mm)",
    "gap_mm": 13.845
   },
   {
@@ -1248,15 +1234,15 @@
    "group": "cartridge",
    "at": -125.0,
    "moving": "Hopper cartridge (~100 cm3, 304 SS, slides out to the front)",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 190.0
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 180.0
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Hopper powder",
-   "other": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "gap_mm": 192.0
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 182.0
   }
  ],
  "joints": [
@@ -1336,5 +1322,5 @@
    "why": "rod clamped in the arm"
   }
  ],
- "runtime_s": 31.2
+ "runtime_s": 36.6
 }

@@ -33,6 +33,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "cad"))
 sys.path.insert(0, str(HERE))
 import lpbf_low as M  # noqa: E402
+from interference import is_joint  # noqa: E402
 
 OUT = HERE / "out"
 CACHE = pathlib.Path("/tmp/mj")
@@ -128,11 +129,11 @@ def build_mjcf(parts, groups):
         lo, hi = (math.radians(m["lo"]), math.radians(m["hi"])) if g == "door" else (m["lo"] / 1000, m["hi"] / 1000)
         gg = "".join(x for i, p in enumerate(parts) if p.group == g for x in geoms.get(i, []))
         bodies.append(f'<body name="{g}"><joint name="j_{g}" {jdef[g]} range="{lo:.5f} {hi:.5f}" limited="true" damping="0.5" armature="0.001"/>{gg}</body>')
-        kp = 2.0e5 if g != "door" else 2.0e3
+        kp = 2.0e5 if g != "door" else 2.0e2
         acts.append(f'<position name="a_{g}" joint="j_{g}" kp="{kp}" kv="{2 * math.sqrt(kp) * 0.5:.1f}" ctrllimited="false"/>')
     xml = f"""<mujoco model="desktop_lpbf_low">
   <compiler angle="radian" boundmass="1e-4" boundinertia="1e-9"/>
-  <option timestep="0.0005" gravity="0 0 -9.81"><flag filterparent="disable"/></option>
+  <option timestep="0.0005" gravity="0 0 -9.81" integrator="implicitfast"><flag filterparent="disable"/></option>
   <asset>{''.join(assets)}</asset>
   <worldbody>{''.join(bodies)}</worldbody>
   <actuator>{''.join(acts)}</actuator>
@@ -172,15 +173,27 @@ def sweep(model, data, names, groups, exact):
                     worst[other] = (float(v), pen)
         rows = []
         for other, (v, pen) in sorted(worst.items(), key=lambda kv: -kv[1][1]):
-            verdict = "interferes (exact)" if (g, other) in exact else "clear in the exact B-rep check (decomposition artefact or designed sliding contact)"
+            if (g, other) in exact:
+                verdict = "interferes (exact)"
+            elif any(is_joint(p.name, other) for p in M.build.__globals__["_LAST"] if p.group == g):
+                verdict = "designed joint (e.g. rod in its seal bore); exact check clear"
+            else:
+                verdict = "convex-decomposition artefact; exact B-rep check clear"
             rows.append(dict(other=other, at=round(v * (180 / math.pi if g == "door" else 1000), 2), depth_mm=round(pen, 2), verdict=verdict))
         res[g] = rows
         print(f"  sweep {g}: {len(rows)} contacting parts", flush=True)
     return res
 
 
+def no_contacts(model):
+    saved = (model.geom_contype.copy(), model.geom_conaffinity.copy())
+    model.geom_contype[:] = 0
+    model.geom_conaffinity[:] = 0
+    return saved
+
+
 def dynamics(model, data, groups):
-    """Drive each axis through a smooth move; peak actuator effort (N or N·m)."""
+    """Drive each axis through a smooth move with contacts off; peak actuator effort (N or N·m)."""
     moves = {"recoater": (0.0, 0.196, 2.0), "piston": (0.0, -0.040, 2.0), "gdoor": (0.0, 0.47, 2.0),
              "cartridge": (0.0, -0.125, 2.0), "door": (0.0, math.radians(95), 3.0)}
     out = {}
@@ -202,7 +215,8 @@ def dynamics(model, data, groups):
             peak = max(peak, f)
         hold = abs(data.actuator_force[aid])
         unit = "N·m" if g == "door" else "N"
-        out[g] = dict(move=f"{a0:g} to {a1:g} {'rad' if g == 'door' else 'm'} in {T:g} s (quintic)", peak=round(peak, 2), hold_at_end=round(hold, 2), unit=unit,
+        body = model.body(g)
+        out[g] = dict(moving_mass_kg=round(float(model.body_subtreemass[body.id]), 3), move=f"{a0:g} to {a1:g} {'rad' if g == 'door' else 'm'} in {T:g} s (quintic)", peak=round(peak, 2), hold_at_end=round(hold, 2), unit=unit,
                       final_error=round(float(data.qpos[model.jnt_qposadr[jid]] - a1), 6))
     return out
 
@@ -213,8 +227,19 @@ def door_drop(model, data):
     jid = model.joint("j_door").id
     model.actuator_gainprm[model.actuator("a_door").id, 0] = 0.0
     model.actuator_biasprm[model.actuator("a_door").id, :3] = 0.0
-    data.qpos[model.jnt_qposadr[jid]] = math.radians(2.0)
+    # angle at which gravity stops holding the door shut (CoM passes over the hinge axis)
+    tip = None
+    for deg in np.arange(0.0, 60.0, 0.25):
+        mujoco.mj_resetData(model, data)
+        data.qpos[model.jnt_qposadr[jid]] = math.radians(deg)
+        mujoco.mj_forward(model, data)
+        if -data.qfrc_bias[model.jnt_dofadr[jid]] > 0:
+            tip = float(deg)
+            break
+    mujoco.mj_resetData(model, data)
+    data.qpos[model.jnt_qposadr[jid]] = math.radians((tip or 0.0) + 1.0)
     peak_w, peak_lim, t_hit = 0.0, 0.0, None
+    model.dof_damping[model.jnt_dofadr[jid]] = 0.0
     for k in range(int(2.0 / model.opt.timestep)):
         mujoco.mj_step(model, data)
         w = abs(data.qvel[model.jnt_dofadr[jid]])
@@ -223,13 +248,16 @@ def door_drop(model, data):
         if lim > peak_lim:
             peak_lim, t_hit = lim, k * model.opt.timestep
     body = model.body("door")
-    return dict(door_mass_kg=round(float(model.body_subtreemass[body.id]), 3), peak_speed_rad_s=round(peak_w, 2),
+    return dict(self_closing_until_deg=tip, door_mass_kg=round(float(model.body_subtreemass[body.id]), 3), peak_speed_rad_s=round(peak_w, 2),
                 tip_speed_m_s=round(peak_w * 0.125, 2), peak_stop_torque_Nm=round(peak_lim, 1), t_s=round(t_hit or 0, 3),
-                note="MuJoCo's soft joint limit (default solref) stands in for a hard stop; the torque scales with stop stiffness")
+                note="contacts off, hinge friction and damping zero (worst case); MuJoCo's soft joint limit stands in for a hard stop, so the stop torque depends on its stiffness")
 
 
-def transit(mass_rows, accel=((0, 0, 3.0), (2.0, 0, 0), (0, 2.0, 0), (1.5, 1.5, -3.0)), mu=0.5):
-    """Three modules as rigid boxes on four rubber feet on a moving tray. Accelerations in m/s2 (assumed, see md)."""
+def transit(mass_rows, accel=((0, 0, 3.0), (0, 0, -3.0), (2.0, 0, 0), (0, 2.0, 0), (2.0, 2.0, -3.0), (4.0, 0, 0), (0, 4.0, 0), (0, 6.0, 0)), mu=0.5):
+    """Three modules as rigid bodies on four rubber feet on the tray.
+
+    The tray is fixed and its acceleration a enters as an effective gravity g_eff = g - a (exact for a translating
+    tray): a for 0.3 s, then -a for 0.3 s (accelerate, brake), then 0.3 s still. Accelerations in m/s2 are assumed."""
     bodies = []
     for mod, r in mass_rows.items():
         (x0, x1, y0, y1), m, com = r["foot"], r["mass_kg"], r["com_mm"]
@@ -237,44 +265,42 @@ def transit(mass_rows, accel=((0, 0, 3.0), (2.0, 0, 0), (0, 2.0, 0), (1.5, 1.5, 
         cx, cy = (x0 + x1) / 2000, (y0 + y1) / 2000
         hz = max(com[2] - M.Z_TRAY, 30.0) / 1000.0
         feet = "".join(f'<geom type="sphere" size="0.01" pos="{sx * (hx - 0.03):.4f} {sy * (hy - 0.03):.4f} {-hz + 0.01:.4f}" friction="{mu} 0.005 0.0001" mass="0.05"/>' for sx in (-1, 1) for sy in (-1, 1))
-        bodies.append(f'<body name="{mod}" pos="{cx:.4f} {cy:.4f} {hz + 0.001:.4f}"><freejoint/><geom type="box" size="{hx:.4f} {hy:.4f} 0.005" pos="0 0 {-hz + 0.03:.4f}" mass="{m:.3f}" contype="0" conaffinity="0"/>'
-                      f'<inertial pos="{com[0] / 1000 - cx:.4f} {com[1] / 1000 - cy:.4f} 0" mass="{m:.3f}" diaginertia="{m * 0.02:.3f} {m * 0.02:.3f} {m * 0.02:.3f}"/>{feet}</body>')
+        Ixx, Iyy, Izz = m * ((2 * hy) ** 2 + (2 * hz) ** 2) / 12, m * ((2 * hx) ** 2 + (2 * hz) ** 2) / 12, m * ((2 * hx) ** 2 + (2 * hy) ** 2) / 12
+        bodies.append(f'<body name="{mod}" pos="{cx:.4f} {cy:.4f} {hz:.4f}"><freejoint/>'
+                      f'<inertial pos="{com[0] / 1000 - cx:.4f} {com[1] / 1000 - cy:.4f} 0" mass="{m:.3f}" diaginertia="{Ixx:.4f} {Iyy:.4f} {Izz:.4f}"/>{feet}</body>')
     xml = f"""<mujoco><option timestep="0.0005" gravity="0 0 -9.81"/>
-  <worldbody><body name="tray" mocap="true"><geom type="box" size="1.225 0.432 0.002" pos="0 0 -0.002" friction="{mu} 0.005 0.0001"/></body>{''.join(bodies)}</worldbody></mujoco>"""
+  <worldbody><geom name="tray" type="box" size="1.225 0.432 0.002" pos="0 0 -0.002" friction="{mu} 0.005 0.0001"/>{''.join(bodies)}</worldbody></mujoco>"""
     model = mujoco.MjModel.from_xml_string(xml)
     data = mujoco.MjData(model)
+    g = np.array([0, 0, -9.81])
     out = []
     for a in accel:
-        mujoco.mj_resetData(model, data)
-        for _ in range(1000):                           # settle
-            mujoco.mj_step(model, data)
-        start = {mod: data.body(mod).xpos.copy() - data.mocap_pos[0] for mod in mass_rows}
         a = np.array(a, float)
-        T, dt = 0.6, model.opt.timestep
-        pos, vel = np.zeros(3), np.zeros(3)
-        min_fn = {mod: 1e9 for mod in mass_rows}
-        for k in range(int(T / dt)):
+        mujoco.mj_resetData(model, data)
+        model.opt.gravity[:] = g
+        for _ in range(2000):
+            mujoco.mj_step(model, data)
+        start = {mod: (data.body(mod).xpos.copy(), data.body(mod).xmat.copy()) for mod in mass_rows}
+        min_feet = {mod: 4 for mod in mass_rows}
+        dt = model.opt.timestep
+        for k in range(int(0.9 / dt)):
             t = k * dt
-            acc = a if t < 0.3 else -a                  # accelerate then brake
-            vel += acc * dt
-            pos += vel * dt
-            data.mocap_pos[0] = pos
+            ph = (t % 0.3) / 0.3
+            acc = (a if t < 0.3 else (-a if t < 0.6 else 0 * a)) * math.sin(math.pi * ph) ** 2
+            model.opt.gravity[:] = g - acc
             mujoco.mj_step(model, data)
             for mod in mass_rows:
                 bid = model.body(mod).id
-                n_feet = 0
-                for ci in range(data.ncon):
-                    c = data.contact[ci]
-                    if model.geom_bodyid[c.geom1] == bid or model.geom_bodyid[c.geom2] == bid:
-                        n_feet += 1
-                if t > 0.01:
-                    min_fn[mod] = min(min_fn[mod], n_feet)
+                n = sum(1 for ci in range(data.ncon) if model.geom_bodyid[data.contact[ci].geom1] == bid or model.geom_bodyid[data.contact[ci].geom2] == bid)
+                min_feet[mod] = min(min_feet[mod], n)
         rows = {}
         for mod in mass_rows:
-            rel = data.body(mod).xpos - data.mocap_pos[0] - start[mod]
-            tilt = math.degrees(math.acos(max(-1.0, min(1.0, data.body(mod).xmat.reshape(3, 3)[2, 2]))))
-            rows[mod] = dict(slide_mm=round(float(np.linalg.norm(rel[:2]) * 1000), 3), tilt_deg=round(tilt, 3), min_feet_in_contact=int(min_fn[mod]))
-        out.append(dict(tray_accel_m_s2=a.tolist(), result=rows))
+            p0, R0 = start[mod]
+            d = data.body(mod).xpos - p0
+            tilt = math.degrees(math.acos(max(-1.0, min(1.0, float(data.body(mod).xmat.reshape(3, 3)[2, 2])))))
+            rows[mod] = dict(slide_mm=round(float(np.linalg.norm(d[:2]) * 1000), 3), tilt_deg=round(tilt, 3), min_feet_in_contact=int(min_feet[mod]))
+        out.append(dict(tray_accel_m_s2=[float(x) for x in a], result=rows))
+    model.opt.gravity[:] = g
     return out
 
 
@@ -283,6 +309,7 @@ def main():
     OUT.mkdir(exist_ok=True)
     CACHE.mkdir(exist_ok=True)
     parts = M.build()
+    M.build.__globals__["_LAST"] = parts
     groups = list(M.MOTION)
     xml, names = build_mjcf(parts, groups)
     (CACHE / "desktop_lpbf_low.xml").write_text(xml)
@@ -299,6 +326,7 @@ def main():
                 exact.add((s["group"], it["a"]))
     rep = dict(model=dict(bodies=model.nbody, geoms=model.ngeom, meshes=model.nmesh))
     rep["sweep"] = sweep(model, data, names, groups, exact)
+    no_contacts(model)
     rep["dynamics"] = dynamics(model, data, groups)
     print("  dynamics done", flush=True)
     rep["door_drop"] = door_drop(model, data)
@@ -322,14 +350,16 @@ def write_md(r):
         for x in rows:
             L.append(f"| {g} | {x['other']} | {x['at']} | {x['depth_mm']} | {x['verdict']} |")
     L += ["", "## 2. Actuator effort over a realistic move (gravity + inertia, stiff position servo)", "",
-          "| Axis | Move | Peak | Holding at end |", "|---|---|---|---|"]
+          "| Axis | Moving mass (kg) | Move | Peak | Holding at end |", "|---|---|---|---|---|"]
     for g, d in r["dynamics"].items():
-        L.append(f"| {g} | {d['move']} | {d['peak']} {d['unit']} | {d['hold_at_end']} {d['unit']} |")
+        L.append(f"| {g} | {d['moving_mass_kg']} | {d['move']} | {d['peak']} {d['unit']} | {d['hold_at_end']} {d['unit']} |")
     d = r["door_drop"]
     L += ["", "## 3. Door released at the closed position", "",
-          f"Door mass {d['door_mass_kg']} kg; peak angular speed {d['peak_speed_rad_s']} rad/s (free edge {d['tip_speed_m_s']} m/s); "
+          f"Gravity holds the unlatched door shut until it is pulled past {d['self_closing_until_deg']}° (its centre of mass is behind the hinge). Released just past that, the "
+          f"door ({d['door_mass_kg']} kg) reaches a peak angular speed {d['peak_speed_rad_s']} rad/s (free edge {d['tip_speed_m_s']} m/s); "
           f"peak stop torque {d['peak_stop_torque_Nm']} N·m at t = {d['t_s']} s. {d['note']}.", "",
           "## 4. VLM tray transit (assumed accelerations; no Kardex/Modula figure was available)", "",
+          "Each case: a smooth (sin²) 0.3 s acceleration pulse with the peak shown, a matching braking pulse, then 0.3 s still; rubber feet, friction 0.5.", "",
           "| Tray acceleration (m/s²) | Module | Slide (mm) | Tilt (°) | Min. feet in contact |", "|---|---|---|---|---|"]
     for t in r["transit"]:
         for mod, x in t["result"].items():

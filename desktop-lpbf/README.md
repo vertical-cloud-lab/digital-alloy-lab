@@ -3,6 +3,8 @@
 First pass for [issue #260](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/260), written 2026-11-13.
 Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or EHS yet.
 
+**Low-profile version (2026-11-17):** [`low-profile.md`](low-profile.md) re-lays the machine out as three modules side by side on a VLM tray, 564 mm tall, as byu-vcl PR 318's height limits ask. It also has exact interference sweeps, MuJoCo and CalculiX checks, a mass budget, and a materials selection matched to the lab's other systems.
+
 | File | What it is |
 |---|---|
 | [`README.md`](README.md) | this note: survey, gantry question, concept, safety, BOM, plan |
@@ -16,6 +18,9 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 | [`cad/render.py`](cad/render.py) | renders the stills and GIFs in [`cad/img/`](cad/img/) headless |
 | [`cad/out/`](cad/out/) | STEP export of the model (10 MB; opens in Onshape, SolidWorks, FreeCAD) |
 | [`cad/`](cad/) | also: manifest of vendor CAD and drawings fetched through the lab Pi, plus the scripts that fetch pages and CAD |
+| [`low-profile.md`](low-profile.md) | low-profile layout for a VLM tray: interference, MuJoCo and FEA results, mass budget, materials selection with sources |
+| [`cad/lpbf_low.py`](cad/lpbf_low.py), [`cad/render_low.py`](cad/render_low.py) | the low-profile model (118 parts, each with material and motion group) and its renders in [`cad/img/low/`](cad/img/low/) |
+| [`analysis/`](analysis/) | interference, MuJoCo, CalculiX and mass-budget scripts, with results in [`analysis/out/`](analysis/out/) |
 
 ## 1. Short answers
 
