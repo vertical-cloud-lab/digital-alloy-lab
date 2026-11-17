@@ -18,7 +18,7 @@ k_ar, mu_ar, rho_ar, pr_ar = 0.018, 2.3e-5, 1.6, 0.67   # argon near room temper
 v_flow = 2.0                         # m/s cross-flow over the plate
 k_macor, n_post, d_post, l_post = 1.46, 3, 0.008, 0.015  # Macor standoffs under the heater block
 rho_ss, c_ss, k_ss = 8000.0, 500.0, 16.0   # 316 build cylinder
-cyl_od, cyl_wall = 0.0603, 0.00475    # 2 in. NPS-OD tube, as in cad/lpbf_model.py
+cyl_od, cyl_wall = 0.05715, 0.001675  # 2.25 in. OD tube, Ø53.8 bore, as in cad/lpbf_model.py (2026-11-17)
 hot_len = 0.060                       # m of cylinder wall between the plate and the floor flange
 ramp_s = 15 * 60                      # heat-up time to design for
 open_below = 50.0                     # C, door interlock: no air on hot Al powder
@@ -34,7 +34,7 @@ def plate_budget(d, t_set):
     q_rad = eps_bed * SIGMA * a * (tk ** 4 - ta ** 4)
     q_conv = h * a * dt
     q_post = k_macor * n_post * math.pi * d_post ** 2 / 4 / l_post * dt
-    cyl_a = math.pi / 4 * (cyl_od ** 2 - (cyl_od - 2 * cyl_wall) ** 2) * (d / 0.05)  # wall scales with bore
+    cyl_a = math.pi / 4 * (cyl_od ** 2 - (cyl_od - 2 * cyl_wall) ** 2) * (d / 0.0538)  # wall scales with bore
     q_cyl = k_ss * cyl_a / hot_len * dt                            # wall runs hot near the plate
     q_loss = q_rad + q_conv + q_post + q_cyl
     e_heat = m * c_al * dt
@@ -54,8 +54,8 @@ for d_mm in (25, 50, 75):
         print(f"{'Ø%d' % d_mm:>6} {t_set:>4} C {m * 1000:>4.0f} g {qr:>4.0f}W {qc:>4.0f}W {qp:>4.0f}W {qy:>4.0f}W "
               f"{ql:>4.0f}W {ph:>5.0f} W {tc / 60:>9.0f} min")
 for t_set in (200, 500):
-    grow = 23e-6 * (t_set - T_AMB) * 50.0
-    print(f"Ø50 Al plate grows {grow:.2f} mm in diameter at {t_set} C (bore 50.8 mm, 0.4 mm radial clearance cold)")
+    grow = 23e-6 * (t_set - T_AMB) * 53.0
+    print(f"Ø53 Al plate grows {grow:.2f} mm in diameter at {t_set} C (model: Ø53.8 bore, 0.4 mm radial clearance cold)")
 
 # --- Swappable plate sizes: what each size needs from the powder, recoat and gas systems ------------
 layer_um, build_h, dose_factor = 30.0, 15.0, 1.8
