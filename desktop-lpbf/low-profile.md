@@ -13,6 +13,7 @@ Nothing here has been built, quoted or reviewed by BYU's LSO or EHS.
 |---|---|
 | [`cad/lpbf_low.py`](cad/lpbf_low.py) | parametric CadQuery model of the low layout (118 parts, each with its material and motion group) |
 | [`cad/render_low.py`](cad/render_low.py) | renders the stills and GIFs in [`cad/img/low/`](cad/img/low/) |
+| [`cad/out/desktop-lpbf-low.step`](cad/out/desktop-lpbf-low.step) | STEP export of the low model (7.8 MB; opens in Onshape, SolidWorks, FreeCAD) |
 | [`analysis/interference.py`](analysis/interference.py) | exact interference and clearance sweeps, written to [`analysis/out/interference.md`](analysis/out/interference.md) |
 | [`analysis/mujoco_check.py`](analysis/mujoco_check.py) | MuJoCo joint sweeps, actuator loads, door drop and tray transit, written to [`analysis/out/mujoco.md`](analysis/out/mujoco.md) |
 | [`analysis/fea/fea.py`](analysis/fea/fea.py) | CalculiX FEA of the chamber, lid, door, recoater, Z arm, optics bridge and window, written to [`analysis/out/fea/fea.md`](analysis/out/fea/fea.md) |
@@ -34,7 +35,7 @@ Nothing here has been built, quoted or reviewed by BYU's LSO or EHS.
 | Robot access | a UR10e on a MiR250 reaches about 800 mm into the tray from the front |
 
 The earlier single-frame model was about 1.2 m tall. The low layout is **564 mm tall** above the tray: 131 mm under
-Modula's bay S and 164 mm under Kardex's 727.5 mm. It is 2.0 m wide and 0.6 m deep on the tray, and weighs 254 kg (§4.4).
+Modula's bay S and 164 mm under Kardex's 727.5 mm. It is 2.0 m wide and 0.6 m deep on the tray, and weighs 263 kg (§4.4).
 
 ![Front elevation with the opening heights](cad/img/low/front-elevation.png)
 
@@ -46,9 +47,9 @@ The machine is three modules side by side, each on its own base plate and feet:
 
 | Module | Contents | Footprint (mm) | Height above tray | Mass |
 |---|---|---|---|---|
-| Left: laser and controls | a 10U 19 in. rack holding the UPS (2U), 500 W single-mode fiber laser (3U), scan/laser controller PC (2U) and DIN-rail drawer (safety relay, ClearCore, 24 V, Pi 5); the operator panel (E-stop, key, emission lamp, reset) hangs on the rack's front post | 560 × 600 | 470 | 109 kg |
-| Centre: process | the chamber, the Z stage hung from the chamber floor, recoater, lid with dosing, window and camera, optics bridge with the f-theta and galvo, and the Class 1 guard with a sliding door | 660 × 480 | 564 | 72 kg |
-| Right: gas and vacuum | scroll pump, sealed blower, cyclone + HEPA housing, O₂ and dew-point, argon manifold and regulator | 590 × 550 | 465 | 61 kg |
+| Left: laser and controls | a 10U 19 in. rack holding the UPS (2U), 500 W single-mode fiber laser (3U), scan/laser controller PC (2U) and DIN-rail drawer (safety relay, ClearCore, 24 V, Pi 5); the operator panel (E-stop, key, emission lamp, reset) hangs on the rack's front post | 560 × 600 | 481 (rack 470, fiber loop above) | 109 kg |
+| Centre: process | the chamber, the Z stage hung from the chamber floor, recoater, lid with dosing, window and camera, optics bridge with the f-theta and galvo, and the Class 1 guard with a sliding door | 660 × 480 | 564 | 81 kg |
+| Right: gas and vacuum | scroll pump, sealed blower, cyclone + HEPA housing, O₂ and dew-point, argon manifold and regulator | 590 × 550 | 345 | 61 kg |
 
 Utilities enter from the tray dock at the back-right corner and run along the back edge in a duct:
 - argon to the manifold;
@@ -80,7 +81,9 @@ Robot- and automation-facing features:
 
 ![Section through the chamber](cad/img/low/section.png)
 
-GIFs: [assembly](cad/img/low/assembly.gif) (13 steps), [motions](cad/img/low/motion.gif) (guard door, chamber door, cartridge, recoater, piston), [turntable](cad/img/low/turntable.gif).
+GIFs: [assembly](cad/img/low/assembly.gif) (13 steps), [motions](cad/img/low/motion.gif) (guard door, chamber door, cartridge, recoater, piston), [build cycle in section](cad/img/low/build-cycle.gif), [turntable](cad/img/low/turntable.gif).
+
+![Build cycle](cad/img/low/build-cycle.gif)
 
 ## 3. Materials
 
@@ -161,7 +164,7 @@ All are fixed. **The current model has 0 interferences in every state and along 
 ### 4.2 MuJoCo
 
 `analysis/mujoco_check.py` splits every moving part, and every fixed part near its path, into convex pieces with CoACD:
-934 geoms in 49 bodies. It loads them into MuJoCo 4.0.1 with a joint for each motion group.
+946 geoms in 49 bodies. It loads them into MuJoCo 4.0.1 with a joint for each motion group.
 
 1. **Joint sweeps with collision.**
    - The door, guard door and cartridge sweeps touch nothing.
@@ -172,7 +175,7 @@ All are fixed. **The current model has 0 interferences in every state and along 
 
    | Axis | Moving mass | Peak | Holding |
    |---|---|---|---|
-   | Recoater (196 mm in 2 s) | 0.722 kg | 0.31 N | 0.0 N |
+   | Recoater (196 mm in 2 s) | 0.774 kg | 0.33 N | 0.0 N |
    | Piston (40 mm in 2 s) | 0.612 kg | 7.78 N | 5.62 N |
    | Chamber door (95° in 3 s) | 1.396 kg | 0.91 N·m | 0.28 N·m |
    | Guard door (470 mm in 2 s) | 1.123 kg | 1.02 N | – |
@@ -188,26 +191,81 @@ All are fixed. **The current model has 0 interferences in every state and along 
    - The fix is a rotary damper or a small gas strut on one hinge, so that the robot or a person never has to catch it.
 4. **VLM transit.**
    - Setup: the three modules (masses and centres of mass from §4.4) stand on rubber feet (μ 0.5) on the tray, which takes smooth 0.3 s acceleration and braking pulses.
-   - Up to **2 m/s² horizontally and ±3 m/s² vertically, nothing slides (< 0.02 mm) or tilts.**
-   - Combining 2 m/s² in X and Y with −3 m/s² vertically unloads feet and slides the modules ~1.2 mm.
-   - At 4–6 m/s² horizontally (0.4–0.6 g), the process module starts to rock on two feet. A static calculation puts tip-over at 0.79 g.
+   - Up to **2 m/s² horizontally and ±3 m/s² vertically, nothing slides (worst 0.003 mm) or tilts.**
+   - Combining 2 m/s² in X and Y with −3 m/s² vertically unloads feet and slides the modules up to 1.3 mm.
+   - At 4–6 m/s² horizontally (0.4–0.6 g), the process module starts to rock on two feet. A static calculation puts tip-over at 0.75 g.
    - No Kardex or Modula acceleration figure was available (the lab's VLM vibration data repo is private), so these are assumed levels.
    - **Bolt or pin all three bases to the tray** regardless. That is standard for tray-mounted instruments, and it removes the question.
 
 ### 4.3 CalculiX FEA
 
-_Results pending; see [`analysis/out/fea/fea.md`](analysis/out/fea/fea.md)._
+`analysis/fea/fea.py` takes each body straight from `lpbf_low.build()` and does the following:
+- meshes it in gmsh as quadratic tetrahedra (C3D10);
+- tags the loaded and fixed faces geometrically;
+- runs CalculiX 2.21 (ccx);
+- reads the results back.
+
+The table is [`analysis/out/fea/fea.md`](analysis/out/fea/fea.md). The load cases:
+
+| Case | Load | Peak σ_vM | Deflection | Criterion | Result |
+|---|---|---|---|---|---|
+| 1 Chamber body + bolted lid, 6061-T6 | full vacuum | 8.9 MPa at a door-opening corner | 24 µm at the lid; door land 4 µm | SF ≥ 2 on yield, Goodman ≥ 2 | SF 31 on yield, 12 on a welded-HAZ allowable (110 MPa), Goodman 16: **pass** |
+| 1 Chamber body alone, lid off (worst case) | vacuum, lid and door loads on their lands | 42.5 MPa (99.5th percentile 21 MPa) | 223 µm; door land 209 µm | same | SF 6.5; 2.6 on HAZ; Goodman 3.5: **pass**, but bolt the lid before pumping |
+| 2 Lid, 16 mm 6061 | 1 atm plus the window, dosing and camera loads | 15 MPa | window seat sags 28 µm, tilts 8 µrad | SF ≥ 2; sag ≪ the ±3.7 mm Rayleigh range | SF 18: **pass** |
+| 3 Door, 15 mm 6061 | 1 atm inside the O-ring | 8 MPa | 6.5 µm | SF ≥ 2; latch load at +50 mbar | SF 35; 60 N per latch against a 3.6 kN rating: **pass** |
+| 4 Recoater block + arm + blade holder, first layout | 10 N up + 10 N drag; 50 N hit | 10 / 57 MPa | **blade 17 µm** | < 5 µm (1/6 of a 30 µm layer) | **fail** |
+| 4 Same, as built (40 × 14 web, 18 × 19 holder) | same | 2.4 / 14.5 MPa | blade 3.4 µm (2.5 µm across the plate) | same | **pass**; hit SF 19 |
+| 5 Z lift arm, 6061 | 50 N down + 10 N side at the rod | 11 MPa | rod 3 µm | plate tilt < 10 µm over Ø50 | 3.8 µm: **pass** |
+| 6 Optics bridge, first layout (15 mm plate, 40 × 40 × 4 posts) | gravity + 4.8 kg of optics; modal | 2 MPa | lens bore sag 13 µm; **f1 = 79 Hz** (galvo sways in X) | f1 > 100 Hz | **fail** |
+| 6 Same, as built (25 mm plate, 60 × 60 × 5 posts) | same | 1.1 MPa | sag 4.3 µm; f1–f4 = 133, 148, 235, 254 Hz | same | **pass** |
+| 7 Window, Ø50.8 × 8 fused silica | 1 atm, simply supported on Ø48 | 1.15 MPa principal (Roark 1.08) | 0.7 µm | SF ≥ 6 against 52.4 MPa | SF 45: **pass** (2.9 mm would do at SF 6) |
+
+![Chamber and lid at full vacuum](analysis/out/fea/c1b_chamber_lid_vm.png)
+
+Stresses everywhere are low. Every structural part is sized by stiffness, sealing or machining, not strength:
+- the 16 mm walls are set by the O-ring groove and M5 bolt line;
+- the blade holder by layer accuracy;
+- the bridge by its first mode.
+
+For aluminium that means a welded chamber is acceptable: even the lid-off case keeps an SF of 2.6 on a welded-HAZ allowable. That matters
+because the other model's BOM sizes the chamber as a welded box of 1/2 in. 6061 (`mcmaster-parts.csv`).
 
 ### 4.4 Mass and stability on the tray
 
-From `analysis/mass_budget.py`: **254 kg in total**, about half the 490–500 kg tray rating.
+From `analysis/mass_budget.py`: **263 kg in total**, about half the 490–500 kg tray rating.
 
 | Module | Mass (kg) | CoM above tray (mm) | Tips over at |
 |---|---|---|---|
-| Process | 72 | 239 | 0.79 g |
+| Process | 81 | 252 | 0.75 g |
 | Gas | 61 | 126 | 1.77 g |
 | Rack | 109 | 197 | 1.24 g |
 | Dock, duct, lines | 12 | – | – |
+
+### 4.5 Critical points, ranked
+
+1. **Recoater blade stiffness (fixed).**
+   - As first modelled (a 12 × 8 mm arm and 14 × 11 mm holder cantilevered from the carriage block), a 10 N spreading load deflected the blade by 17 µm. That is more than half a 30 µm layer.
+   - A 40 × 14 mm web and an 18 × 19 mm holder bring it to 3.4 µm, and a 50 N hit on a curled part stays far from yield.
+   - It is the one load path that sets layer accuracy, so it gets measured at commissioning: dial indicator, known load.
+2. **Optics-bridge resonance (fixed).**
+   - The 15 mm plate on 40 × 40 × 4 posts had its first mode at 79 Hz, against a 100 Hz target. In that mode the galvo sways in X, so floor and VLM vibration would move the beam.
+   - A 25 mm plate on 60 × 60 × 5 posts, as built, reaches 133 Hz with 4.3 µm of sag.
+3. **The drop-down door slams (needs a damper).** It is self-closing up to 9.75°. Past that it free-falls and hits the open stop at 1.7 m/s at its edge (§4.2).
+4. **Chamber under vacuum.**
+   - The highest stresses are at the corners of the door opening and around the window bore.
+   - With the lid bolted on, the peak is 8.9 MPa, a safety factor of 31 on 6061-T6. The worst case (lid off, chamber evacuated) is 42.5 MPa: a safety factor of 6.5, or 2.6 against a welded heat-affected zone.
+   - The door land moves 4 µm with the lid on, but 209 µm with the top open. So **the lid is bolted down before the first pump-down**. The door O-ring has 0.88 mm of squeeze, so even the open-top case uses only a quarter of it.
+5. **Cover slide, not window.**
+   - The 8 mm fused-silica window has a safety factor of 44.
+   - The thing that fails in service is the cover slide fogging: 0.5 % absorption gives a focus shift of tens of mm.
+   - Hence the gas knife, the pressure-equalized slide, and a recipe step that checks the melt-pool photodiode signal against the first layers.
+6. **Piston fit at 200 °C.**
+   - The radial clearance drops from 0.40 to 0.30 mm at temperature. That is fine.
+   - The sliding seal must stay away from the hot plate: see [`requirements-later.md`](requirements-later.md) §1.
+7. **Transit rocking at 0.4–0.6 g.** Bolt or pin the bases to the tray.
+8. **Guard viewing window.**
+   - A polycarbonate panel takes about 10 W/cm² for 100 s, and a stray specular reflection could exceed that.
+   - So the design gives the beam no line of sight out of the chamber: no chamber viewport, and the layer camera has a 1070 nm blocking filter.
 
 ## 5. What changed against the tall model and BOM
 
@@ -217,6 +275,9 @@ From `analysis/mass_budget.py`: **254 kg in total**, about half the 490–500 kg
   - the chamber door drops down on a bottom hinge (304 SS hinges, McMaster 1151A87-type), held by two draw latches (McMaster 1807A61);
   - the guard door slides;
   - the operator panel moves to the rack.
+- **Stiffened after the FEA:**
+  - the recoater arm is a 40 × 14 mm web and the blade holder 18 × 19 mm;
+  - the optics bridge is a 25 mm plate on 60 × 60 × 5 posts.
 - **Recoater hardware** follows `mcmaster-parts.csv`: 6709K33 rail and 6709K12 carriage, 4566N101 screw with 4566N401 nut, 9572K33 PTFE V-ring shaft seal.
 - **BOM swaps the materials check asks for:**
   - the seal cord 1165N11 (0.070 in., 90A Viton) becomes **McMaster 96515K127** (0.139 in., 75A Viton, $2.64/ft, checked through the lab Pi on 2026-11-17). The gland is sized for it, and 75A seals rough vacuum at a lower bolt load than 90A. The splicing jig is 9262N11 ($47.54);

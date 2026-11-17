@@ -1,7 +1,7 @@
 """Render the low-profile desktop LPBF (lpbf_low.py) to PNGs and GIFs.
 
 Run (headless):  xvfb-run -a -s "-screen 0 1920x1080x24" python desktop-lpbf/cad/render_low.py [what ...]
-  what: stills, assembly, motion, turntable (default: all)
+  what: stills, assembly, motion, turntable, cycle (default: all)
 Writes to desktop-lpbf/cad/img/low/.
 """
 from __future__ import annotations
@@ -265,9 +265,137 @@ def turntable_gif(parts, n=36):
     save_gif(frames, OUT / "turntable.gif", ms=100, hold_last=0)
 
 
+# --------------------------------------------------------------------------------------------
+# Build cycle in section: piston down, recoater back, dose, spread, lase. Layers exaggerated ~100x.
+LAY = 4.0
+R_PL = M.P["plate_d"] / 2
+COUPONS = [("box", (-16, -6), (10, 12)), ("cyl", (8, 0), 5.0), ("box", (-2, -18), (14, 3))]
+POWDER = dict(color=hex2rgb(M.C["powder"]), smooth_shading=False, specular=0.05, ambient=0.25, diffuse=0.8)
+
+
+def _clip(m):
+    c = m.clip(normal="-y", origin=(0, 0, 0), invert=True)
+    return c if c.n_points else None
+
+
+def bed_mesh(z0, z1, xmax=None):
+    if z1 - z0 < 1e-3:
+        return None
+    m = pv.Cylinder(center=(0, 0, (z0 + z1) / 2), direction=(0, 0, 1), radius=R_PL, height=z1 - z0, resolution=72).triangulate()
+    if xmax is not None:
+        if xmax <= -R_PL:
+            return None
+        if xmax < R_PL:
+            m = m.clip(normal="x", origin=(xmax, 0, 0), invert=True)
+    return _clip(m)
+
+
+def coupon_mesh(z0, z1):
+    ms = []
+    for kind, (x, y), d in COUPONS:
+        if z1 - z0 < 1e-3:
+            continue
+        if kind == "box":
+            ms.append(pv.Box((x, x + d[0], y, y + d[1], z0, z1)).triangulate())
+        else:
+            ms.append(pv.Cylinder(center=(x, y, (z0 + z1) / 2), direction=(0, 0, 1), radius=d, height=z1 - z0, resolution=48).triangulate())
+    if not ms:
+        return None
+    m = ms[0].merge(ms[1:]) if len(ms) > 1 else ms[0]
+    return _clip(m)
+
+
+def wedge(x_front, length, height, y0=-30.0, y1=30.0):
+    if height < 0.05 or length < 0.05:
+        return None
+    xa, xb = x_front, x_front + length
+    pts = np.array([[xa, y0, 0], [xb, y0, 0], [xa, y0, height], [xa, y1, 0], [xb, y1, 0], [xa, y1, height]], float)
+    faces = np.hstack([[3, 0, 1, 2], [3, 3, 5, 4], [4, 0, 3, 4, 1], [4, 0, 2, 5, 3], [4, 1, 4, 5, 2]])
+    return _clip(pv.PolyData(pts, faces).triangulate())
+
+
+def hatch_path(n_pts=36):
+    pts = []
+    for kind, (x, y), d in COUPONS:
+        if kind == "box":
+            w, h = d
+            rows = max(3, int(h / 2.5))
+            for r in range(rows):
+                yy = y + (r + 0.5) * h / rows
+                xs = (x, x + w) if r % 2 == 0 else (x + w, x)
+                pts += [(xs[0], yy), (xs[1], yy)]
+        else:
+            for r in range(5):
+                yy = y - d + (r + 0.5) * 2 * d / 5
+                hw = math.sqrt(max(d * d - (yy - y) ** 2, 0))
+                xs = (x - hw, x + hw) if r % 2 == 0 else (x + hw, x - hw)
+                pts += [(xs[0], yy), (xs[1], yy)]
+    seg = np.array(pts)
+    dist = np.r_[0, np.cumsum(np.linalg.norm(np.diff(seg, axis=0), axis=1))]
+    t = np.linspace(0, dist[-1], n_pts)
+    return np.c_[np.interp(t, dist, seg[:, 0]), np.interp(t, dist, seg[:, 1])]
+
+
+def cycle_gif(parts, layers=2):
+    sc = Scene(parts, (GW, GH))
+    f = (0.0, 20.0, 60.0)
+    xp, xe, xd = M.P["x_park"], M.P["x_end"], M.P["x_dose"]
+    blade_off = 10.5                                   # blade front face relative to the carriage centre
+    path = hatch_path(36)
+    frames = []
+    state = {"ovf": 2.0}
+
+    def draw(n, dz, xb, spread_x=None, pile=None, lase_i=None, caption=""):
+        sc.set(section=True, state={"recoater": xb - xp, "piston": -dz})
+        sc.cam(orbit(f, 1050, -20, 12), f)
+        zp = -dz
+        sc.put("bed", bed_mesh(zp, zp + n * LAY), **POWDER)
+        sc.put("layer", bed_mesh(zp + n * LAY, zp + (n + 1) * LAY, spread_x) if spread_x is not None else None, **POWDER)
+        sc.put("coupons", coupon_mesh(zp, zp + n * LAY), color=hex2rgb("#d9dde0"), smooth_shading=False, specular=0.4, ambient=0.25)
+        sc.put("hot", coupon_mesh(zp + n * LAY, zp + (n + 1) * LAY) if lase_i is not None else None, color=hex2rgb(M.C["hot"]), smooth_shading=False, ambient=0.6)
+        sc.put("pile", pile, **POWDER)
+        if lase_i is not None:
+            x, y = path[lase_i]
+            zt = zp + (n + 1) * LAY
+            sc.put("beam", pv.Line((0, 0, M.P["z_lens0"]), (x, y, zt)).tube(radius=0.9), color=hex2rgb(M.C["beam"]), ambient=1.0, diffuse=0.0, specular=0.0)
+            sc.put("spot", pv.Sphere(radius=2.6, center=(x, y, zt + 0.5)), color=(1.0, 0.95, 0.55), ambient=1.0, diffuse=0.0)
+        else:
+            sc.put("beam", None)
+            sc.put("spot", None)
+        sc.title(caption, 11)
+        frames.append(sc.shot())
+
+    n = 3
+    for layer in range(layers):
+        tag = f"Layer {n + 1} (layer thickness exaggerated ~100x)"
+        for k in range(6):
+            draw(n, n * LAY + LAY * ease((k + 1) / 6), xe, caption=f"{tag}: build piston steps down one layer")
+        dz = (n + 1) * LAY
+        for k in range(9):
+            draw(n, dz, xe + (xp - xe) * ease((k + 1) / 9), caption=f"{tag}: recoater returns over the lowered bed")
+        vol = math.pi * R_PL * R_PL * LAY * 1.6
+        for k in range(6):
+            draw(n, dz, xp, pile=wedge(xd - 6, 12, 9.0 * ease((k + 1) / 6)), caption=f"{tag}: the metering roller drops one dose in front of the blade")
+        for k in range(18):
+            xb = xp + (xe - xp) * ease((k + 1) / 18)
+            front = xb + blade_off
+            used = 0.0 if front < -R_PL else min(1.0, (min(front, R_PL) + R_PL) / (2 * R_PL))
+            left = max(vol * (1 - used / 1.6), 0)
+            ph = left / (0.5 * 14.0 * 60) if left > 0 else 0
+            if front > M.P["ovf_x0"]:
+                ph = max(ph * (1 - (front - M.P["ovf_x0"]) / 20), 0)
+            pile = wedge(front, 14.0, min(ph, 12.0)) if front < M.P["ovf_x1"] else None
+            draw(n, dz, xb, spread_x=front, pile=pile, caption=f"{tag}: HSS blade spreads the layer, excess into the overflow")
+        for i in range(len(path)):
+            draw(n, dz, xe, spread_x=R_PL + 1, lase_i=i, caption=f"{tag}: galvo scans the coupons through the window (f = 160 mm)")
+        n += 1
+        draw(n, dz, xe, caption=f"Layer {n} done; argon cross-flow (back to front) clears the plume")
+    save_gif(frames, OUT / "build-cycle.gif", ms=85, hold_last=10)
+
+
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
-    what = sys.argv[1:] or ["stills", "assembly", "motion", "turntable"]
+    what = sys.argv[1:] or ["stills", "assembly", "motion", "turntable", "cycle"]
     parts = M.build()
     t0 = time.time()
     if "stills" in what:
@@ -278,4 +406,6 @@ if __name__ == "__main__":
         motion_gif(parts)
     if "turntable" in what:
         turntable_gif(parts)
+    if "cycle" in what:
+        cycle_gif(parts)
     print(f"render time {time.time() - t0:.0f} s")
