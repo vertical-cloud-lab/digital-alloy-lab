@@ -60,14 +60,13 @@ and [2026-11-17](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/26
 
 | What | File | Status |
 | --- | --- | --- |
-| Every part the lab doesn't have, 38 pieces, 12.3 h, 362 g PLA, pauses at 4.2 h (14 magnets) and 10.4 h (6 magnets) | [`bom/h2d/h2d-corrosion-all.gcode.3mf`](bom/h2d/h2d-corrosion-all.gcode.3mf) | not printed |
+| Every part the lab doesn't have, 38 pieces, 12.3 h, 362 g PLA, left nozzle, pauses at 4.2 h (14 magnets) and 10.4 h (6 magnets) | [`bom/h2d/h2d-corrosion-all.gcode.3mf`](bom/h2d/h2d-corrosion-all.gcode.3mf) | not printed |
 | Tip rack 2, if the deck's second rack isn't a copy of rack 1 | [`bom/cad/tip_rack_1_20ul.step`](bom/cad/tip_rack_1_20ul.step) | not needed yet |
 
-The H2D plate was sliced for the right nozzle on 2026-11-09. Since then `CLAUDE.md` says a
-single-filament print goes on the left nozzle by default, and every nozzle a print uses must be
-0.2 or 0.4 mm. A `@claude-print` run reads the installed nozzles first. Slicing for the left
-nozzle was checked on 2026-11-09 (12.3 h, both pauses in place): set the filament to the left
-nozzle in the project, or `PRINT_WITH = 1` in [`make_h2d_plate.py`](bom/h2d/make_h2d_plate.py).
+The H2D plate was re-sliced for the left nozzle on 2026-11-17 (log, below). A single-filament
+print goes on the left nozzle by default, and every nozzle a print uses must be 0.2 or 0.4 mm.
+A `@claude-print` run reads the installed nozzles first. The file is sliced for a 0.4 mm
+standard nozzle.
 
 ## Measurements to make
 
@@ -147,6 +146,32 @@ Still open in the design: one well per lid (no offset lid drawn), and the copper
 not rerun for the v2 lid's neck.
 
 ## Log
+
+### 2026-11-17: the H2D print file, re-sliced for the left nozzle
+
+From [Ben's request](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-6962590447)
+to bring the H2D print file over to this PR.
+- **The files were already on this branch.** This PR is stacked on #180, so it has every file #180
+  has. GitHub's *Files changed* tab lists only what this PR changes. Re-slicing puts the plate's
+  files in this PR's diff.
+- **What changed:** the print now goes on the left nozzle, the default for a single-filament print.
+  The project's plate is set to the left nozzle as well. Under Bambu Studio's "Auto For Flush"
+  setting, it went back to the right nozzle whenever the project was sliced again.
+- **What didn't:**
+  - the parts, the layout and the settings;
+  - 12.3 h and 362.49 g (119.6 m);
+  - the pauses: before z 5.8, 4.2 h in, and before z 44.8, 10.4 h in with 1.9 h left.
+- **Checks:** Python was blocked, so an awk script made them. On the 9 November file it gives the same
+  numbers as `make_h2d_plate.py`. On the new file:
+  - every extrusion is inside x 49.2–313.7 and y 20.2–295.6 mm, within the left nozzle's reach
+    (x 0–325);
+  - the 20 magnet pockets are 2.26 mm from the nearest plastic before their pause, and 0.17–0.19 mm
+    after it;
+  - the 7 key pockets are open at mid-depth and roofed above, as before.
+- **Still no preview picture in the sliced file.** The slicer renders it with OpenGL, and that
+  failed both under a virtual X display and under a headless Wayland compositor.
+- **Files:** in `bom/h2d/`, `h2d-corrosion-all.gcode.3mf`, `h2d-corrosion-all.3mf`, `plate.json`,
+  `make_h2d_plate.py` (`PRINT_WITH = 1`, and the plate's own setting) and the README.
 
 ### 2026-11-17: the polishing cloths on hand (Mark V MCR12)
 
