@@ -115,12 +115,11 @@ class Scene:
         self.pl.add_text(text, position="upper_left", font_size=size, color="#1d2733", name="title", font="arial")
 
     def cam(self, pos, focal, up=(0, 0, 1), view_angle=30.0, parallel=False):
+        # toggle the projection on the VTK camera directly: PyVista's disable_parallel_projection() moves the camera
+        # to parallel_scale / sin(view_angle / 2) from the focal point
+        self.pl.camera.parallel_projection = bool(parallel)
         self.pl.camera_position = [pos, focal, up]
         self.pl.camera.view_angle = view_angle
-        if parallel:
-            self.pl.enable_parallel_projection()
-        else:
-            self.pl.disable_parallel_projection()
 
     def shot(self):
         self.pl.render()
@@ -219,8 +218,10 @@ def assembly_gif(parts, frames_per_step=8):
             sc.set(visible=lambda p, s=s: p.step <= s,
                    explode=lambda p, s=s, t=t: np.array(p.explode) * (1 - t) if p.step == s else np.zeros(3),
                    opacity=lambda p, s=s, t=t: p.opacity * (0.25 + 0.75 * t) if p.step == s else p.opacity)
+            sc.cam(orbit(f, 3600, 28, 22), f)
             sc.title(f"Step {s}/{n}: {M.STEPS[s]}", 11)
             frames.append(sc.shot())
+    sc.cam(orbit(f, 3600, 28, 22), f)
     sc.title("Low-profile desktop LPBF on a VLM tray: 564 mm tall, three modules side by side", 11)
     frames.append(sc.shot())
     save_gif(frames, OUT / "assembly.gif", ms=110, hold_last=18)
@@ -247,6 +248,7 @@ def motion_gif(parts):
         for k in range(12):
             state[g] = a + (b - a) * ease((k + 1) / 12)
             sc.set(state=dict(state), visible=lambda p: "Laser guard panels" not in p.name and "Guard frame" not in p.name)
+            sc.cam(orbit(f, 1500, 24, 16), f)
             sc.title(cap, 11)
             frames.append(sc.shot())
     save_gif(frames, OUT / "motion.gif", ms=80, hold_last=8)

@@ -1,11 +1,11 @@
 {
  "modules": {
   "process": {
-   "mass_kg": 71.9,
+   "mass_kg": 80.5,
    "com_mm": [
-    -20.5,
-    -2.7,
-    43.7
+    -24.4,
+    -2.8,
+    57.0
    ],
    "foot": [
     -370.0,
@@ -13,9 +13,9 @@
     -265.0,
     215.0
    ],
-   "com_height_above_tray_mm": 238.7,
-   "min_lever_mm": 187.7,
-   "tip_accel_g": 0.79
+   "com_height_above_tray_mm": 252.0,
+   "min_lever_mm": 187.8,
+   "tip_accel_g": 0.75
   },
   "gas": {
    "mass_kg": 60.7,
@@ -60,14 +60,14 @@
    ]
   }
  },
- "total_kg": 254.2,
+ "total_kg": 262.8,
  "tray_limits_kg": {
   "Kardex Shuttle XP 500, 2450 mm tray (strong tray)": 490.0,
   "Modula MC50D": 500.0
  },
  "by_material": {
   "mixed (vendor unit; mass from datasheet or estimate)": 139.9,
-  "6061-T6 aluminium": 45.8,
+  "6061-T6 aluminium": 54.5,
   "bearing / alloy steel": 26.3,
   "MIC-6 cast tooling plate": 25.5,
   "316L stainless": 10.6,
@@ -126,6 +126,18 @@
     -710.0,
     2.3130699850856257e-15,
     40.0
+   ]
+  },
+  {
+   "part": "Optics bridge (6061, 25 mm)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 13.433,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -61.81765248753358,
+    0.40601853241502334,
+    220.19999999999993
    ]
   },
   {
@@ -189,18 +201,6 @@
    ]
   },
   {
-   "part": "Optics bridge (6061, 15 mm)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 6.885,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -65.603466190325,
-    5.95823814095811,
-    225.2
-   ]
-  },
-  {
    "part": "Process chamber body (6061-T6, ~5.0 L)",
    "module": "process",
    "material": "6061-T6 aluminium",
@@ -261,6 +261,18 @@
    ]
   },
   {
+   "part": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 4.368,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -52.50000000000013,
+    -4.9999999999998135,
+    23.84999999999999
+   ]
+  },
+  {
    "part": "Sealed cyclone + HEPA housing (316L, valves off for passivation)",
    "module": "gas",
    "material": "316L stainless",
@@ -291,9 +303,9 @@
    "mass_kg": 3.0,
    "basis": "catalogue/estimate",
    "com": [
-    380.27116524473223,
-    37.95021355220388,
-    43.14740342654349
+    375.81337645937464,
+    47.28648738966135,
+    43.33563960939122
    ]
   },
   {
@@ -330,18 +342,6 @@
     -0.6053523647650997,
     1.276334892802327e-15,
     287.6068688669593
-   ]
-  },
-  {
-   "part": "Optics bridge posts (40 x 40 x 4 square tube)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 2.35,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -57.50000000000021,
-    -3.424685135967256e-14,
-    28.849999999999966
    ]
   },
   {
@@ -768,12 +768,12 @@
    "part": "Argon line (1/4 in. 316L)",
    "module": "process",
    "material": "316L stainless",
-   "mass_kg": 0.221,
+   "mass_kg": 0.222,
    "basis": "316L stainless x volume",
    "com": [
-    334.2142659345454,
-    156.30385697902992,
-    97.56625639260632
+    334.8316159002001,
+    151.6973564470411,
+    97.93078832747314
    ]
   },
   {
@@ -1062,6 +1062,18 @@
     -1.608339750033897e-15,
     2.2980007746133905e-16,
     -72.5
+   ]
+  },
+  {
+   "part": "Blade holder (6061, 18 x 19, quick-swap)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.067,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -106.00000000000001,
+    4.000000000000001,
+    12.525000000000002
    ]
   },
   {
@@ -1365,18 +1377,6 @@
    ]
   },
   {
-   "part": "Blade holder (6061, quick-swap)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.03,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -106.0,
-    4.0,
-    8.524999999999999
-   ]
-  },
-  {
    "part": "Roller shaft seal housing",
    "module": "process",
    "material": "6061-T6 aluminium",
@@ -1413,6 +1413,30 @@
    ]
   },
   {
+   "part": "Recoater arm (6061, 40 x 14 web)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.014,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -105.99999999999997,
+    40.680003380394425,
+    19.849719919675085
+   ]
+  },
+  {
+   "part": "HSS recoater blade (1.5 mm, wide nose)",
+   "module": "process",
+   "material": "bearing / alloy steel",
+   "mass_kg": 0.014,
+   "basis": "bearing / alloy steel x volume",
+   "com": [
+    -96.25000000000003,
+    3.298712793686631e-16,
+    9.025
+   ]
+  },
+  {
    "part": "Hinge pins (\u00d85, 316)",
    "module": "process",
    "material": "316L stainless",
@@ -1434,30 +1458,6 @@
     0.0,
     -92.39999999999968,
     53.99999999999991
-   ]
-  },
-  {
-   "part": "HSS recoater blade (1.5 mm, wide nose)",
-   "module": "process",
-   "material": "bearing / alloy steel",
-   "mass_kg": 0.01,
-   "basis": "bearing / alloy steel x volume",
-   "com": [
-    -98.25000000000001,
-    2.514790892329827e-16,
-    6.525000000000001
-   ]
-  },
-  {
-   "part": "Recoater arm (6061)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.003,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -106.0,
-    37.0,
-    19.5
    ]
   },
   {

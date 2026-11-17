@@ -6,7 +6,7 @@
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 512,
+   "pairs_checked": 513,
    "interferences": []
   },
   {
@@ -15,7 +15,7 @@
     "recoater": 196.0,
     "piston": -40.0
    },
-   "pairs_checked": 517,
+   "pairs_checked": 518,
    "interferences": []
   },
   {
@@ -25,7 +25,7 @@
     "gdoor": 470.0,
     "cartridge": -125.0
    },
-   "pairs_checked": 500,
+   "pairs_checked": 501,
    "interferences": []
   }
  ],
@@ -119,24 +119,31 @@
   },
   {
    "group": "recoater",
-   "at": 32.67,
-   "moving": "Blade holder (6061, quick-swap)",
+   "at": 81.67,
+   "moving": "Blade holder (6061, 18 x 19, quick-swap)",
    "other": "Process chamber body (6061-T6, ~5.0 L)",
    "gap_mm": 3.05
   },
   {
    "group": "recoater",
    "at": 81.67,
-   "moving": "Blade holder (6061, quick-swap)",
+   "moving": "Blade holder (6061, 18 x 19, quick-swap)",
    "other": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
    "gap_mm": 3.05
   },
   {
    "group": "recoater",
-   "at": 8.17,
-   "moving": "Recoater arm (6061)",
+   "at": 0.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
    "other": "Dose chute (316L)",
    "gap_mm": 3.162
+  },
+  {
+   "group": "recoater",
+   "at": 8.17,
+   "moving": "Blade holder (6061, 18 x 19, quick-swap)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 4.0
   },
   {
    "group": "recoater",
@@ -147,17 +154,24 @@
   },
   {
    "group": "recoater",
+   "at": 0.0,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
+   "other": "Dose chute (316L)",
+   "gap_mm": 8.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Recoater ball screw (M12, 10 mm lead)",
+   "gap_mm": 9.815
+  },
+  {
+   "group": "recoater",
    "at": 73.5,
    "moving": "HSS recoater blade (1.5 mm, wide nose)",
    "other": "Piston (6061, cartridge heater, felt seal groove)",
    "gap_mm": 10.05
-  },
-  {
-   "group": "recoater",
-   "at": 8.17,
-   "moving": "Blade holder (6061, quick-swap)",
-   "other": "Dose chute (316L)",
-   "gap_mm": 12.0
   },
   {
    "group": "recoater",
@@ -168,29 +182,15 @@
   },
   {
    "group": "recoater",
-   "at": 0.0,
-   "moving": "Recoater arm (6061)",
-   "other": "Recoater ball screw (M12, 10 mm lead)",
-   "gap_mm": 12.602
-  },
-  {
-   "group": "recoater",
-   "at": 8.17,
-   "moving": "HSS recoater blade (1.5 mm, wide nose)",
-   "other": "Dose chute (316L)",
-   "gap_mm": 13.0
-  },
-  {
-   "group": "recoater",
    "at": 81.67,
-   "moving": "Blade holder (6061, quick-swap)",
+   "moving": "Blade holder (6061, 18 x 19, quick-swap)",
    "other": "Piston (6061, cartridge heater, felt seal groove)",
    "gap_mm": 13.05
   },
   {
    "group": "recoater",
    "at": 16.33,
-   "moving": "Recoater arm (6061)",
+   "moving": "Recoater arm (6061, 40 x 14 web)",
    "other": "Process chamber body (6061-T6, ~5.0 L)",
    "gap_mm": 14.0
   },
@@ -204,14 +204,21 @@
   {
    "group": "recoater",
    "at": 0.0,
+   "moving": "Blade holder (6061, 18 x 19, quick-swap)",
+   "other": "Recoater ball screw (M12, 10 mm lead)",
+   "gap_mm": 15.095
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
    "moving": "Recoater ball nut (flange on the +x face)",
    "other": "Recoater guide rail (15 mm, 270 mm)",
    "gap_mm": 15.629
   },
   {
    "group": "recoater",
-   "at": 106.17,
-   "moving": "Recoater arm (6061)",
+   "at": 89.83,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
    "other": "Build plate (\u00d850 x 10, 6061 or matching alloy)",
    "gap_mm": 16.128
   },
@@ -227,14 +234,14 @@
    "at": 196.0,
    "moving": "HSS recoater blade (1.5 mm, wide nose)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 40.478
+   "gap_mm": 40.342
   },
   {
    "group": "recoater",
    "at": 196.0,
-   "moving": "Blade holder (6061, quick-swap)",
+   "moving": "Blade holder (6061, 18 x 19, quick-swap)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 42.645
+   "gap_mm": 42.369
   },
   {
    "group": "recoater",
@@ -267,6 +274,13 @@
   {
    "group": "recoater",
    "at": 196.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 78.806
+  },
+  {
+   "group": "recoater",
+   "at": 196.0,
    "moving": "Recoater carriage block (6061)",
    "other": "Optics bridge posts (60 x 60 x 5 square tube)",
    "gap_mm": 80.455
@@ -281,30 +295,23 @@
   {
    "group": "recoater",
    "at": 196.0,
-   "moving": "Recoater arm (6061)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 91.648
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "gap_mm": 97.591
   },
   {
    "group": "recoater",
    "at": 196.0,
-   "moving": "Blade holder (6061, quick-swap)",
+   "moving": "Blade holder (6061, 18 x 19, quick-swap)",
    "other": "Optics bridge posts (60 x 60 x 5 square tube)",
-   "gap_mm": 111.198
-  },
-  {
-   "group": "recoater",
-   "at": 196.0,
-   "moving": "Recoater arm (6061)",
-   "other": "Optics bridge posts (60 x 60 x 5 square tube)",
-   "gap_mm": 111.946
+   "gap_mm": 109.713
   },
   {
    "group": "recoater",
    "at": 196.0,
    "moving": "HSS recoater blade (1.5 mm, wide nose)",
    "other": "Optics bridge posts (60 x 60 x 5 square tube)",
-   "gap_mm": 116.324
+   "gap_mm": 114.932
   },
   {
    "group": "recoater",
@@ -330,14 +337,14 @@
   {
    "group": "recoater",
    "at": 0.0,
-   "moving": "Recoater arm (6061)",
+   "moving": "Recoater arm (6061, 40 x 14 web)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 174.0
+   "gap_mm": 168.0
   },
   {
    "group": "recoater",
    "at": 0.0,
-   "moving": "Blade holder (6061, quick-swap)",
+   "moving": "Blade holder (6061, 18 x 19, quick-swap)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 174.0
   },
@@ -372,9 +379,16 @@
   {
    "group": "recoater",
    "at": 0.0,
-   "moving": "Blade holder (6061, quick-swap)",
+   "moving": "Blade holder (6061, 18 x 19, quick-swap)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 210.189
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 213.588
   },
   {
    "group": "recoater",
@@ -382,13 +396,6 @@
    "moving": "HSS recoater blade (1.5 mm, wide nose)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 214.902
-  },
-  {
-   "group": "recoater",
-   "at": 0.0,
-   "moving": "Recoater arm (6061)",
-   "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 217.789
   },
   {
    "group": "piston",
@@ -1322,5 +1329,5 @@
    "why": "rod clamped in the arm"
   }
  ],
- "runtime_s": 36.6
+ "runtime_s": 43.9
 }

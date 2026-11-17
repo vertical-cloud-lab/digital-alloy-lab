@@ -424,11 +424,14 @@ def build(include_tray=True):
     add("Recoater carriage block (6061)", blk, C["alu"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M1")
     add("Recoater ball screw (M12, 10 mm lead)", place(ball_screw(2 * cx + 10, 12.0, 8.0, 22.0), (-cx - 5, ry_, rz_), (1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), mat="steel", bom="M1", mcm="4566N101")
     add("Recoater ball nut (flange on the +x face)", place(ball_nut(12.0, 23.0, 43.0, 40.0, 10.0, None), (xc + 10.5, ry_, rz_), (-1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M1", mcm="4566N401")
-    add("Recoater arm (6061)", box(xc - 6, xc + 6, 33, 41, 14, 25), C["alu"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M5")
-    add("Blade holder (6061, quick-swap)", rbox(xc - 7, xc + 7, -P["dose_y"] - 3, 41, 3.0 + P["blade_gap"], 14, 2, "|Y"), C["anod"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M5")
+    # stiffened after FEA (analysis/out/fea): a 12 x 8 arm and 14 x 11 holder let the blade deflect 17 um under a 10 N
+    # spreading load; a 40 x 14 web and an 18 x 19 holder bring it to 3.4 um (< 5 um, 1/6 of a 30 um layer)
+    holder = rbox(xc - 9, xc + 9, -P["dose_y"] - 3, 41, 3.0 + P["blade_gap"], 22, 2, "|Y")
+    add("Recoater arm (6061, 40 x 14 web)", box(xc - 20, xc + 20, 33, 47, 14, 25).cut(holder), C["alu"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M5")
+    add("Blade holder (6061, 18 x 19, quick-swap)", holder, C["anod"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M5")
     # default blade: HSS, 1.5 mm, wide (rounded) nose; EOS's standard blade for AlSi10Mg. Compliant FKM or silicone
     # cords and a carbon brush are the swap-in options (silicone only where Si pickup does not matter).
-    bl = box(xc + 7, xc + 8.5, -P["dose_y"] - 2, P["dose_y"] + 2, P["blade_gap"], 13.0)
+    bl = box(xc + 9, xc + 10.5, -P["dose_y"] - 2, P["dose_y"] + 2, P["blade_gap"], 18.0)
     add("HSS recoater blade (1.5 mm, wide nose)", bl, C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M5", mcm="9011K104")
     bh_l = fuse([cyl(25, (-cx - 20, ry_, rz_), "x", 20).cut(cyl(4.0, (-cx - 21, ry_, rz_), "x", 22))])
     add("Recoater fixed bearing + PTFE V-ring shaft seal housing", bh_l, C["anod"], 6, (-160, 0, 0), mat="al6061", bom="M1", mcm="9572K33")

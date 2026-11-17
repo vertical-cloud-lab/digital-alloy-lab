@@ -219,6 +219,7 @@ From `analysis/mass_budget.py`: **254 kg in total**, about half the 490–500 kg
   - the operator panel moves to the rack.
 - **Recoater hardware** follows `mcmaster-parts.csv`: 6709K33 rail and 6709K12 carriage, 4566N101 screw with 4566N401 nut, 9572K33 PTFE V-ring shaft seal.
 - **BOM swaps the materials check asks for:**
+  - the seal cord 1165N11 (0.070 in., 90A Viton) becomes **McMaster 96515K127** (0.139 in., 75A Viton, $2.64/ft, checked through the lab Pi on 2026-11-17). The gland is sized for it, and 75A seals rough vacuum at a lower bolt load than 90A. The splicing jig is 9262N11 ($47.54);
   - the piston wear ring 1465N1 (bronze-filled PTFE) becomes carbon-filled PTFE or PFA plus aramid felt;
   - the relief valve 4277T52 (nylon, Buna-N) becomes a 316 SS valve with an FKM seat;
   - the default blade is HSS (shim stock 9011K104 in the list is 18-8; use an HSS or tool-steel blank);
