@@ -249,12 +249,14 @@ From `analysis/mass_budget.py`: **263 kg in total**, about half the 490–500 kg
    - It is the one load path that sets layer accuracy, so it gets measured at commissioning: dial indicator, known load.
 2. **Optics-bridge resonance (fixed).**
    - The 15 mm plate on 40 × 40 × 4 posts had its first mode at 79 Hz, against a 100 Hz target. In that mode the galvo sways in X, so floor and VLM vibration would move the beam.
-   - A 25 mm plate on 60 × 60 × 5 posts, as built, reaches 133 Hz with 4.3 µm of sag.
+   - A 25 mm plate on 60 × 60 × 5 posts, as built, reaches 133 Hz with 4.3 µm of sag. The cartridge slot leaves the plate's two front corners as free tongues that carry the peak motion. A bolt-in key across the slot, removed only for a cartridge swap, would stiffen them further.
 3. **The drop-down door slams (needs a damper).** It is self-closing up to 9.75°. Past that it free-falls and hits the open stop at 1.7 m/s at its edge (§4.2).
 4. **Chamber under vacuum.**
    - The highest stresses are at the corners of the door opening and around the window bore.
    - With the lid bolted on, the peak is 9.1 MPa, a safety factor of 30 on 6061-T6. The worst case (lid off, chamber evacuated) is 42.9 MPa: a safety factor of 6.4, or 2.6 against a welded heat-affected zone.
    - The door land moves 4 µm with the lid on, but 209 µm with the top open. So **the lid is bolted down before the first pump-down**. The door O-ring has 0.88 mm of squeeze, so even the open-top case uses only a quarter of it.
+   - Above the door opening the front wall is only a 20 mm rail (z 100–120), which is why the open-top case moves so much. Either bolt the lid with every screw, or lower the top of the opening to z 90.
+   - The peaks sit on sharp CAD corners. **Specify R ≥ 3 mm at the door-opening corners and pocket floors** when the chamber is drawn for machining.
 5. **Cover slide, not window.**
    - The 8 mm fused-silica window has a safety factor of 44.
    - The thing that fails in service is the cover slide fogging: 0.5 % absorption gives a focus shift of tens of mm.
@@ -325,3 +327,19 @@ Opened by the materials search on 2026-11-17 unless marked. Lab sources are link
 42. NASA, zinc prohibition: https://nepp.nasa.gov/npsl/Prohibited/zinc_prohibition.htm
 43. Vaisala, tubing for dew-point sampling: https://docs.vaisala.com/r/M010091EN-G/en-US/GUID-D6FB51A8-7800-4861-9622-CA79D665799C
 46. Labconco, gas permeation in glove boxes: https://labconco.com/articles/glove-boxes-the-effects-of-gas-permeation-and-eq
+
+## 7. Re-running everything
+
+Python 3.12, using [`analysis/requirements.txt`](analysis/requirements.txt). The FEA also needs CalculiX (`apt install calculix-ccx`), and gmsh needs `libglu1-mesa`. Rendering needs a display (`xvfb-run`).
+
+```bash
+python -m venv /tmp/venv && /tmp/venv/bin/pip install -r desktop-lpbf/analysis/requirements.txt
+/tmp/venv/bin/python desktop-lpbf/cad/lpbf_low.py                      # STEP to cad/out/
+/tmp/venv/bin/python desktop-lpbf/analysis/interference.py             # ~40 s
+/tmp/venv/bin/python desktop-lpbf/analysis/mass_budget.py
+/tmp/venv/bin/python desktop-lpbf/analysis/mujoco_check.py             # ~3 min the first time (CoACD), cached in /tmp/mj
+OMP_NUM_THREADS=2 xvfb-run -n 117 -s "-screen 0 1920x1080x24" /tmp/venv/bin/python desktop-lpbf/analysis/fea/fea.py   # ~20 min; cases can be listed: 1 1b 2 ... 7
+xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/venv/bin/python desktop-lpbf/cad/render_low.py   # stills + GIFs, ~6 min
+```
+
+After any geometry change, run `interference.py` first. It is the fastest check, and it catches most mistakes: in this round, about 20.
