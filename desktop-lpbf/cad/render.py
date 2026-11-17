@@ -13,7 +13,7 @@ import time
 
 import numpy as np
 import pyvista as pv
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import lpbf_model as M  # noqa: E402
@@ -27,14 +27,34 @@ GW, GH = 760, 570          # GIF frames
 SECTION_KEYS = ("Process chamber body", "Chamber lid", "Lid O-ring", "Lid screws", "Window flange", "fused-silica window",
                 "Window retaining ring", "Field-stop", "Cover-slide", "Gas knife", "Dose chute", "Dosing block",
                 "Hopper", "Load cell", "Build cylinder", "Build plate", "Piston (", "Piston seal", "Overflow",
-                "Deck plate", "Cross-flow outlet", "Rod clamp", "Z lift arm")
+                "Deck plate", "Cross-flow outlet", "Rod clamp", "Z lift arm", "Blade holder", "Silicone-cord")
 # parts hidden in the section views
-SECTION_HIDE = ("Chamber door", "Door O-ring", "Door hinges", "Draw latches", "Door handle", "Laser guard", "Front guard",
-                "OD 7+", "Guard door", "Guard-locking", "T-slot frame", "Corner brackets", "Leveling", "Operator panel",
-                "E-stop", "Key switch", "Emission indicator", "Reset button", "Stack light", "Fiber laser", "Chiller",
-                "Process fiber", "Outlet plenum KF", "O2 sample", "Gas-loop hoses", "Trace O2", "Argon", "DIN", "24 V",
-                "Safety relay", "Motion controller", "Supervisor", "Scan + laser", "Terminal", "Galvo plate",
-                "Sealed filter", "Recirculation blower", "Vacuum hose", "Two-stage", "Vacuum isolation")
+SECTION_HIDE = ("Chamber door", "Door O-ring", "Door hinges", "Draw latches", "Door handle", "Laser guard", "Guard door",
+                "OD 7+", "Guard-locking", "T-slot frame", "Gusset", "Leveling", "Operator panel", "E-stop", "Key switch",
+                "Emission indicator", "Reset button", "Stack light", "Fiber laser", "Chiller", "Process fiber", "Outlet plenum KF",
+                "O2 sample", "Gas-loop hoses", "Trace O2", "Argon", "DIN", "24 V", "Safety relay", "Motion controller",
+                "Supervisor", "Scan + laser", "Terminal", "Controls enclosure", "Enclosure back", "Chamber dP", "Galvo plate",
+                "Recirculation HEPA", "Recirculation blower", "Pump line", "Pump-line filter", "Vacuum pump", "Pump isolation")
+
+
+_FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+
+
+def caption(img, text, sub=""):
+    """Put a dark header band with the caption above a rendered frame."""
+    im = Image.fromarray(img)
+    band = 44 if sub else 30
+    out = Image.new("RGB", (im.width, im.height + band), "#26323f")
+    out.paste(im, (0, band))
+    d = ImageDraw.Draw(out)
+    try:
+        f1, f2 = ImageFont.truetype(_FONT, 15), ImageFont.truetype(_FONT, 11)
+    except OSError:
+        f1 = f2 = ImageFont.load_default()
+    d.text((10, 6), text, fill="#ffffff", font=f1)
+    if sub:
+        d.text((10, 26), sub, fill="#b8c4d0", font=f2)
+    return np.asarray(out)
 
 
 def hex2rgb(h):
@@ -63,10 +83,13 @@ MAT = dict(smooth_shading=True, specular=0.35, specular_power=18, ambient=0.2, d
 
 
 class Scene:
-    def __init__(self, parts, size, edges=True):
+    def __init__(self, parts, size, edges=True, flat=False):
         self.parts = parts
         self.pl = pv.Plotter(off_screen=True, window_size=size, lighting="three lights")
-        self.pl.set_background("#f7f9fb", top="#dce5ee")
+        if flat:
+            self.pl.set_background("#eef2f6")
+        else:
+            self.pl.set_background("#f7f9fb", top="#dce5ee")
         self.actors = {}
         t0 = time.time()
         for p in parts:
@@ -122,8 +145,8 @@ class Scene:
         for k in list(self.dyn):
             self.pl.remove_actor(self.dyn.pop(k))
 
-    def title(self, text, size=13):
-        self.pl.add_text(text, position="upper_left", font_size=size, color="#1d2733", name="title", font="arial")
+    def title(self, text, sub=""):
+        self.caption = (text, sub)
 
     def cam(self, pos, focal, up=(0, 0, 1), view_angle=30.0):
         self.pl.camera_position = [pos, focal, up]
@@ -131,7 +154,9 @@ class Scene:
 
     def shot(self):
         self.pl.render()
-        return self.pl.screenshot(return_img=True)
+        img = self.pl.screenshot(return_img=True)
+        cap = getattr(self, "caption", None)
+        return caption(img, *cap) if cap else img
 
 
 def orbit(focal, dist, az_deg, el_deg):
@@ -183,8 +208,9 @@ def stills(parts):
 
 # --------------------------------------------------------------------------------------------
 def assembly_gif(parts, frames_per_step=9):
-    sc = Scene(parts, (GW, GH))
-    sc.cam(orbit(FOCAL, DIST, AZ, EL), FOCAL)
+    sc = Scene(parts, (GW, GH), flat=True)
+    f = (-30.0, 0.0, 10.0)
+    sc.cam(orbit(f, 2550, AZ, EL), f)
     frames = []
     n_steps = max(M.STEPS)
     for s in range(1, n_steps + 1):
@@ -200,15 +226,17 @@ def assembly_gif(parts, frames_per_step=9):
             def opa(p, s=s, t=t):
                 return p.opacity * (0.25 + 0.75 * t) if p.step == s else p.opacity
             sc.set(visible=vis, offsets=off, opacity=opa)
-            sc.title(f"Step {s}/{n_steps}: {M.STEPS[s]}", 12)
+            sc.title(f"Step {s}/{n_steps}: {M.STEPS[s]}", "Desktop LPBF concept, issue #260 (CadQuery model: desktop-lpbf/cad/lpbf_model.py)")
             frames.append(sc.shot())
-    sc.title("Desktop LPBF concept: ~6 L vacuum-purged chamber, fixed galvo, Ø50 mm plate", 12)
+    sc.title("Assembled: ~6 L vacuum-purged chamber, fixed galvo + f-theta, Ø53 mm plate, Class 1 guard",
+             "Desktop LPBF concept, issue #260 (CadQuery model: desktop-lpbf/cad/lpbf_model.py)")
     frames.append(sc.shot())
     save_gif(frames, OUT / "assembly.gif", ms=110, hold_last=18)
 
 
 def turntable_gif(parts, n=36):
-    sc = Scene(parts, (GW, GH))
+    sc = Scene(parts, (GW, GH), flat=True)
+    sc.title("Desktop LPBF concept with the laser guard removed", "CadQuery model: desktop-lpbf/cad/lpbf_model.py")
     sc.set(visible=lambda p: p.step not in (12, 13))
     f = (-40.0, 0.0, 20.0)
     frames = []
@@ -224,45 +252,57 @@ L = 4.0                     # shown layer thickness (mm); real layers are 0.02-0
 N0 = 4                      # layers already built when the GIF starts
 R = M.P["plate_d"] / 2
 COUPONS = [("box", (-16, -6, 0), (10, 12)), ("cyl", (8, 0, 0), 5.0), ("box", (-2, -18, 0), (14, 3))]
-POWDER = dict(color=M.hex2rgb(M.C["powder"]) if hasattr(M, "hex2rgb") else hex2rgb(M.C["powder"]), smooth_shading=False,
-              specular=0.05, ambient=0.25, diffuse=0.8)
+POWDER = dict(color=hex2rgb("#5d6268"), smooth_shading=False, specular=0.05, ambient=0.3, diffuse=0.8)
+
+
+def prism(poly_xy, z0, z1):
+    """Closed prism from a 2-D polygon (list of (x, y), counter-clockwise) between z0 and z1."""
+    if z1 - z0 < 1e-3 or len(poly_xy) < 3:
+        return None
+    pts = np.array([(x, y, z0) for x, y in poly_xy], float)
+    face = np.r_[len(pts), np.arange(len(pts))]
+    return pv.PolyData(pts, face).extrude((0, 0, z1 - z0), capping=True).triangulate()
+
+
+def half_disc(r, cx=0.0, xmax=None, n=48):
+    """Back half (y >= 0) of a disc of radius r centred on (cx, 0), optionally cut at x <= xmax."""
+    if xmax is not None and xmax <= cx - r:
+        return []
+    t0 = 0.0 if xmax is None or xmax >= cx + r else math.acos((xmax - cx) / r)
+    arc = [(cx + r * math.cos(a), r * math.sin(a)) for a in np.linspace(t0, math.pi, n)]
+    poly = arc + [(cx - r, 0.0)]
+    poly.append((cx + r if xmax is None or xmax >= cx + r else xmax, 0.0))
+    return poly
 
 
 def bed_mesh(z0, z1, xmax=None):
-    if z1 - z0 < 1e-3:
-        return None
-    m = pv.Cylinder(center=(0, 0, (z0 + z1) / 2), direction=(0, 0, 1), radius=R, height=z1 - z0, resolution=72).triangulate()
-    if xmax is not None:
-        if xmax <= -R:
-            return None
-        if xmax < R:
-            m = m.clip(normal="x", origin=(xmax, 0, 0), invert=True)
-    return clip_y(m)
+    return prism(half_disc(R, 0.0, xmax), z0, z1)
 
 
 def coupon_mesh(z0, z1):
     ms = []
     for kind, (x, y, _), d in COUPONS:
-        if z1 - z0 < 1e-3:
-            continue
         if kind == "box":
-            ms.append(pv.Box((x, x + d[0], y, y + d[1], z0, z1)).triangulate())
+            ya, yb = max(y, 0.0), y + d[1]
+            if yb > ya:
+                ms.append(prism([(x, ya), (x + d[0], ya), (x + d[0], yb), (x, yb)], z0, z1))
         else:
-            ms.append(pv.Cylinder(center=(x, y, (z0 + z1) / 2), direction=(0, 0, 1), radius=d, height=z1 - z0, resolution=48).triangulate())
+            ms.append(prism(half_disc(d, x), z0, z1))
+    ms = [m for m in ms if m is not None]
     if not ms:
         return None
     m = ms[0].merge(ms[1:]) if len(ms) > 1 else ms[0]
-    return clip_y(m)
+    return m.translate((0, -0.3, 0), inplace=False)
 
 
-def wedge(x_front, length, height, y0=-30.0, y1=30.0):
-    """Powder pile in front of the blade: triangular prism, steep face at x_front + length."""
+def wedge(x_front, length, height, y1=30.0):
+    """Powder pile in front of the blade (back half, y >= 0): triangular prism, toe at x_front + length."""
     if height < 0.05 or length < 0.05:
         return None
     xa, xb = x_front, x_front + length
-    pts = np.array([[xa, y0, 0], [xb, y0, 0], [xa, y0, height], [xa, y1, 0], [xb, y1, 0], [xa, y1, height]], float)
+    pts = np.array([[xa, 0, 0], [xb, 0, 0], [xa, 0, height], [xa, y1, 0], [xb, y1, 0], [xa, y1, height]], float)
     faces = np.hstack([[3, 0, 1, 2], [3, 3, 5, 4], [4, 0, 3, 4, 1], [4, 0, 2, 5, 3], [4, 1, 4, 5, 2]])
-    return clip_y(pv.PolyData(pts, faces).triangulate())
+    return pv.PolyData(pts, faces).triangulate()
 
 
 def hatch_path(n_pts=40):
@@ -290,9 +330,9 @@ def hatch_path(n_pts=40):
 
 
 def cycle_gif(parts, layers=2):
-    sc = Scene(parts, (GW, GH))
-    f = (-10.0, 30.0, 70.0)
-    sc.cam(orbit(f, 1180, -24, 13), f, view_angle=30)
+    sc = Scene(parts, (GW, GH), flat=True)
+    f = (-12.0, 10.0, 18.0)
+    sc.cam(orbit(f, 440, -16, 12), f, view_angle=30)
     xp, xe, xd = M.P["x_park"], M.P["x_end"], M.P["x_dose"]
     lens_z = M.P["lens_wd"]
     frames = []
@@ -314,23 +354,26 @@ def cycle_gif(parts, layers=2):
         else:
             sc.put("hot", None)
         sc.put("pile", pile, **POWDER)
-        ovf = pv.Cylinder(center=(70, 0, -20 - 16 - 70 + ovf_h / 2 + 2), direction=(0, 0, 1), radius=19, height=ovf_h, resolution=48).triangulate()
-        sc.put("ovf", clip_y(ovf), **POWDER)
+        zj = -20 - 16 - 70
+        sc.put("ovf", prism(half_disc(19.0, 70.0), zj, zj + ovf_h), **POWDER)
         if lase_i is not None:
             x, y = path[lase_i]
             zt = zp + (n + 1) * L
-            sc.put("beam", pv.Line((0, 0, lens_z), (x, y, zt)).tube(radius=0.9), color=hex2rgb(M.C["beam"]), ambient=1.0, diffuse=0.0, specular=0.0)
+            sc.put("beam", pv.Line((0, 0, lens_z), (x, y, zt)).tube(radius=1.3), color=hex2rgb(M.C["beam"]), ambient=1.0, diffuse=0.0, specular=0.0)
             sc.put("beam_in", pv.Line((-300, 0, M.P["beam_z"]), (0, 0, M.P["beam_z"])).tube(radius=1.2), color=hex2rgb(M.C["beam"]), ambient=1.0, diffuse=0.0)
             sc.put("spot", pv.Sphere(radius=2.6, center=(x, y, zt + 0.5)), color=(1.0, 0.95, 0.55), ambient=1.0, diffuse=0.0)
+            arrows = [pv.Arrow(start=(xa, 72, 8), direction=(0, -1, 0), scale=64, tip_length=0.18, tip_radius=0.06, shaft_radius=0.02)
+                      for xa in (-28, -10, 8, 26)]
+            sc.put("flow", arrows[0].merge(arrows[1:]), color=(0.35, 0.62, 0.95), opacity=0.75, ambient=0.5)
         else:
-            for k in ("beam", "beam_in", "spot"):
+            for k in ("beam", "beam_in", "spot", "flow"):
                 sc.put(k, None)
-        sc.title(caption, 12)
+        sc.title(caption, "Section at y = 0 through the chamber and build cylinder; layer thickness exaggerated ~100x")
         frames.append(sc.shot())
 
     n = N0
     for layer in range(layers):
-        tag = f"Layer {n + 1} (layer thickness exaggerated ~100x)"
+        tag = f"Layer {n + 1}"
         # piston down one layer, recoater still parked at the right after the last spread
         for k in range(6):
             draw(n, n * L + L * ease((k + 1) / 6), xe, caption=f"{tag}: build piston steps down one layer")
@@ -359,9 +402,9 @@ def cycle_gif(parts, layers=2):
             draw(n, dz, xb, spread_x=front, pile=pile, caption=f"{tag}: compliant blade spreads the layer, excess to overflow")
         # lase
         for i in range(len(path)):
-            draw(n, dz, xe, spread_x=R + 1, lase_i=i, caption=f"{tag}: galvo scans the coupons through the window")
+            draw(n, dz, xe, spread_x=R + 1, lase_i=i, caption=f"{tag}: galvo scans the coupons through the window; argon cross-flow (blue) sweeps the plume")
         n += 1
-        draw(n, dz, xe, spread_x=None, hot_top=False, caption=f"Layer {n} done; argon cross-flow clears the plume")
+        draw(n, dz, xe, spread_x=None, hot_top=False, caption=f"Layer {n} done")
     save_gif(frames, OUT / "build-cycle.gif", ms=85, hold_last=10)
 
 

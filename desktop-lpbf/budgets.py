@@ -6,7 +6,7 @@ Every input is a named assumption at the top; change them and re-run.
 import math
 
 # --- Build and powder -------------------------------------------------------
-plate_d_mm = 50.0          # round build plate (reduced-volume insert); 50 mm = Aconity MINI-class
+plate_d_mm = 53.0          # round build plate: 53 mm fits the 2-1/4 in. McMaster tube (53.8 mm bore); Aconity MINI-class
 layer_um = 30.0            # layer thickness
 build_h_mm = 15.0          # tall enough for density cubes + small tensile coupons
 dose_factor = 1.8          # powder dosed per layer / powder that lands on the plate (1.5-2 typical)

@@ -11,7 +11,11 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 | [`vendor-lookups.csv`](vendor-lookups.csv) | every price and dimension fetched from vendor sites through the lab Pi on 2026-11-13, with URL and time |
 | [`budgets.py`](budgets.py) | sizing arithmetic for powder per build, purge cycles, cross-flow and gantry turnaround |
 | [`edison/`](edison/) | Edison `LITERATURE_HIGH` query on custom LPBF design and its results |
-| [`cad/`](cad/) | manifest of vendor CAD and drawings fetched through the lab Pi, plus the scripts that fetch pages and CAD |
+| [`mcmaster-parts.csv`](mcmaster-parts.csv) | 69 McMaster-Carr part numbers checked live on 2026-11-17, with quantity, line total, BOM line, dimensions, URL and fetch time |
+| [`cad/lpbf_model.py`](cad/lpbf_model.py) | parametric CadQuery model of the machine: 120 parts in 13 assembly steps (§1a) |
+| [`cad/render.py`](cad/render.py) | renders the stills and GIFs in [`cad/img/`](cad/img/) headless |
+| [`cad/out/`](cad/out/) | STEP export of the model (10 MB; opens in Onshape, SolidWorks, FreeCAD) |
+| [`cad/`](cad/) | also: manifest of vendor CAD and drawings fetched through the lab Pi, plus the scripts that fetch pages and CAD |
 
 ## 1. Short answers
 
@@ -24,14 +28,38 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 - **A modified CNC router or a CubXL-like gantry should not move the beam.** Al LPBF scans at 0.7–2.3 m/s in hatch vectors a few mm to 10 mm long. A 1 g gantry needs 50 mm just to reach 1 m/s, so a 10 mm vector spends about 95 % of its time turning around. The CubXL itself is a GRBL ball-screw CNC frame (Genmitsu PROVerXL 4030 geometry) that runs at 50–83 mm/s. Xact Metal launched its XM200 line on a mirror gantry in 2018, and its current XM200S and XM200G datasheets list galvos.
 - **Use a fixed galvo scanner and f-theta lens above a small sealed chamber.** Linear servo axes then only spread powder and lower the piston, where smoothness matters and speed doesn't. A CubXL-style gantry is useful *outside* the chamber, to fill hopper cartridges and move plates (§3.1).
 - **Concept in one line:** a ~6 L vacuum-purgeable chamber under a fixed galvo, with these parts:
-  - a Ø50 mm build plate, with a Ø25 mm insert;
-  - a ~100 cm³ dose-from-above hopper cartridge and no supply piston: a 15 mm build uses ~71 g;
+  - a Ø53 mm build plate, with a Ø25 mm insert (the concept said Ø50 mm; McMaster's nearest tube has a 53.8 mm bore, §6a);
+  - a ~100 cm³ dose-from-above hopper cartridge and no supply piston: a 15 mm build uses ~80 g;
   - a servo ball-screw recoater with swappable blades;
   - a recirculating cross-flow of ~2 m/s at the plate (≥ 1 m/s minimum);
   - 2–3 vacuum–argon purge cycles to < 100 ppm O₂;
   - a hardwired dual-channel interlock chain;
   - everything scriptable from Python.
-- **BOM: 39 lines, about $21k on the cheapest listed options to about $96k on the premium ones.** The spread is mostly the laser, scan head and scan controller, which need quotes. Prices for Thorlabs, McMaster-Carr, DigiKey, Cloudray and Teknic were pulled live through the lab Pi (BYU network) on 2026-11-13.
+- **BOM: 40 lines, about $29.6k on the cheapest listed options to about $103k on the premium ones.** The spread is mostly the laser, scan head and scan controller, which need quotes. Prices for Thorlabs, McMaster-Carr, DigiKey, Cloudray and Teknic were pulled live through the lab Pi (BYU network) on 2026-11-13. On 2026-11-17, 69 McMaster part numbers for the frame, chamber, motion, gas and controls were checked the same way ($10.8k for one machine), which replaced most of the mechanical estimates and raised the low end by ~$8k.
+- **CAD model: [`cad/lpbf_model.py`](cad/lpbf_model.py)**, built from those parts, with assembly and build-cycle GIFs (§1a) and a STEP export.
+
+## 1a. The model
+
+![Assembly of the desktop LPBF model in 13 steps](cad/img/assembly.gif)
+
+*The CadQuery model assembled in 13 steps. Catalogue parts are sized from their McMaster-Carr product pages ([`mcmaster-parts.csv`](mcmaster-parts.csv)); the galvo head, laser, chiller, O₂ analyzer, blower and electronics are envelopes.*
+
+![Build cycle in section](cad/img/build-cycle.gif)
+
+*One layer in section: the piston steps down, the recoater returns, the hopper meters a dose, the silicone-cord blade spreads it into the overflow, and the galvo scans three coupons while the argon cross-flow (blue) sweeps the plate. Layers are drawn ~100× thicker than they are.*
+
+| | |
+|---|---|
+| ![Closed, with the laser guard](cad/img/overview.png) | ![Guard removed](cad/img/overview-open.png) |
+| ![Section through the chamber and build cylinder](cad/img/section.png) | ![Exploded](cad/img/exploded.png) |
+
+- **Layout.** A 30 mm T-slot cabinet, 660 × 410 × 1010 mm plus feet, with the laser source, chiller and vacuum pump beside it.
+  - The welded ~6.2 L chamber sits on a 1/2 in. deck plate. The Z axis hangs below it, and the controls enclosure and gas loop share the lower bay.
+  - The galvo and f-theta sit on their own 1/2 in. plate and rails, 301 mm (the lens working distance) above the powder plane. They never touch the chamber, which can flex under vacuum.
+  - The recoater rides a 15 mm guide on the back wall. Its servo sits outside the left wall and drives through a sealed feedthrough. The cross-flow runs from a slot in the back wall to one under the front door.
+- **Run it.** `python desktop-lpbf/cad/lpbf_model.py` writes [`cad/out/desktop-lpbf.step`](cad/out/desktop-lpbf.step) (add `--glb` for a GLB). The STEP opens in Onshape, SolidWorks or FreeCAD. `xvfb-run -a python desktop-lpbf/cad/render.py` redraws the stills and GIFs. Every position comes from the parameter block `P`: chamber size, bore, dose and park positions, lens working distance and the rest.
+- **Vendor parts are drawn from their listed dimensions,** not from the vendors' CAD files, so the model can be public.
+- **Not modelled yet:** wiring, NPT fittings, the Pirani gauge, the cartridge antechamber, fasteners other than the lid screws, and anything toleranced. This is a layout, not a released design.
 
 ## 2. What already exists
 
@@ -106,7 +134,7 @@ flowchart LR
   end
   FTH --> WIN["Fused-silica window + cover slide + gas knife"]
   subgraph CH["Sealed ~6 L process chamber (vacuum-rated)"]
-    WIN --> BED["Ø50 mm build plate on servo Z piston"]
+    WIN --> BED["Ø53 mm build plate on servo Z piston"]
     HOP["~100 cm³ dosing hopper cartridge"] --> REC["Servo ball-screw recoater, swappable blade"] --> BED
     BED --> OVF["Small sealed overflow"]
     XF["Cross-flow nozzle ≥ 1 m/s"] --> BED --> OUT["Outlet"]
@@ -133,7 +161,7 @@ flowchart LR
 | Distance to reach 1 m/s | ~0.25 mm at 2000 m/s² equivalent | 50 mm at 10 m/s² (1 g); 25 mm even at 20 m/s² (Bambu H2D class) |
 | One 10 mm hatch vector at 1 m/s | ~10 ms of laser-on time, sub-ms turnaround | ~210 ms, of which ~200 ms is turnaround; energy density changes along the line unless power follows velocity |
 | Inert-gas side | optics stay outside, behind one window; chamber stays small | moving optics, cables, bellows and lubricant inside the chamber, or a large moving window; more volume, particles and leaks |
-| Field distortion | f-theta distortion is trivial over Ø50 mm in a 156–175 mm field | none, which is the gantry's only real advantage |
+| Field distortion | f-theta distortion is trivial over Ø53 mm in a 156–175 mm field | none, which is the gantry's only real advantage |
 
 The verdict is a galvo. A gantry that moves the beam is a big custom engineering job: Kurtz Ersa's Flying Ray S
 calls moving that mass with PBF dynamics the hard part ([Metal AM](https://www.metal-am.com/?p=118720)†). It also changes
@@ -169,7 +197,7 @@ It is an open frame with no inert enclosure and is roughly 10–30× too slow fo
   | 160 mm | 48 µm | 34 µm | 24 µm |
   | 254 mm | **76 µm** | 54 µm | 38 µm |
 
-  **f = 254 mm with D ≈ 5 mm** gives the 70–100 µm spot of commercial machines without a beam expander. Its Rayleigh range is about ±3.9 mm, which is forgiving, and the 156–175 mm field keeps a Ø50 mm plate in the low-distortion centre.
+  **f = 254 mm with D ≈ 5 mm** gives the 70–100 µm spot of commercial machines without a beam expander. Its Rayleigh range is about ±3.9 mm, which is forgiving, and the 156–175 mm field keeps a Ø53 mm plate in the low-distortion centre.
 - **Scan head.** It needs mirrors rated for ≥ 500 W CW at 1070 nm.
   - The SCANLAB basiCube 20 (20 mm aperture) is rated 1000 W at 1064 nm at 100 % duty without water cooling, with XY2-100 (SL2-100 option) ([SCANLAB](https://www.scanlab.de/en/print-product/1061)).
   - The $279–899 Sino-Galvo-class marking heads (Cloudray RC1001, SG7110, SG7210) have no CW power rating we could find. Use one only on a low-power bench, or after the vendor confirms its mirror coatings.
@@ -189,7 +217,7 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
 
 | Plate | Powder per layer (dosed) | 15 mm build | Hopper volume |
 |---|---|---|---|
-| Ø50 mm | 0.14 g | **~71 g** | 48 cm³, so specify **~100 cm³ (~150 g)** with margin |
+| Ø53 mm | 0.16 g | **~80 g** | 54 cm³, so specify **~100 cm³ (~150 g)** with margin; the modelled cartridge holds ~126 cm³ |
 | Ø25 mm insert | ~0.04 g | ~18 g | – |
 
 - **No supply piston.** A powder supply piston has to be filled far above what it delivers. Instead, a sealed **hopper cartridge** of ~100 cm³ sits above the dose position.
@@ -197,7 +225,7 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
   - A **load cell under the cartridge** weighs each dose, which gives automatic powder accounting and a "short feed" alarm.
   - Cartridges are filled in the glovebox, or by the automated powder line. They dock through a small purgeable antechamber, so the process chamber never sees air.
 - **Small overflow.** It is sealed and recoverable, because every gram of a new alloy matters.
-- **Build piston.** The bore is Ø50 mm with a Ø25 mm insert, the stroke about 40 mm, with a felt/PTFE seal. Layers run 20–60 µm with ≤ 2 µm repeatability.
+- **Build piston.** The bore is 53.8 mm (a lapped 2-1/4 in. 304 tube) with a Ø53 mm plate and a Ø25 mm insert, the stroke about 60 mm, with a bronze-filled PTFE wear ring. Layers run 20–60 µm with ≤ 2 µm repeatability.
 - **Recoater.**
   - It rides on a servo ball screw on a linear guide at a steady 20–100 mm/s. Start slow for fine, cohesive Al powders.
   - The blade cartridge is quick-swap:
@@ -232,8 +260,8 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
 
 ### 3.5 Motion: smoothness and suitability
 
-- **Recoater.** It has to spread at a constant velocity without cogging or vibration. A ClearPath-SD integrated servo (from $265) drives a ball screw (McMaster 4566N101: M12, 10 mm lead, ±0.05 mm/300 mm, $188.22) on a preloaded linear guide, with S-curve moves. The axis is stiff, so it doesn't chatter when it hits a part.
-- **Build piston.** It needs a crossed-roller guide and a fine-lead screw (2 mm), driven by a servo or an encoder-closed stepper. All motion is in the same direction for every layer, to take up backlash.
+- **Recoater.** It has to spread at a constant velocity without cogging or vibration. A ClearPath-SD integrated servo (from $265) drives a ball screw (McMaster 4566N101: M12, 10 mm lead, ±0.05 mm/300 mm, $188.22, cut to ~330 mm, with the 4566N401 nut) on a 15 mm ball guide (6709K33 rail, 6709K12 carriage), with S-curve moves. The axis is stiff, so it doesn't chatter when it hits a part.
+- **Build piston.** A 15 mm ball guide (the same 6709K33/6709K12) and an M12 × 2 mm lead ball screw (6638K11), driven by a servo. All motion is in the same direction for every layer, to take up backlash, and on a vertical axis gravity does that too. A crossed-roller stage is the upgrade if the screw's ±0.21 mm/300 mm lead error shows up in layer thickness.
 - **No belts and no lubricant inside the chamber.** Use dry or vacuum grease, and bellows or covers over the screws. Motors sit outside on rotary feedthroughs, or are sealed, to protect the gas.
 
 ### 3.6 Controls and electronics
@@ -292,12 +320,12 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
 | Safety | Class 1 machine; NFPA 484-aware powder path | hardwired dual-channel interlocks + guard lock + key + shutter; metal guard + field-stop aperture; sealed, passivatable filter; glovebox; Class D; room O₂ monitor |
 | Ease of automation | every action scriptable; cartridges and plates handled by a robot | Python supervisor with REST API; scan controller with SDK or open firmware; docking hopper cartridges with a load cell; CubOS gantry outside |
 | Smooth, suitable motion | constant-velocity spreading; µm-level Z | galvo for the beam; servo + ball screw + preloaded guides for powder axes; no belts in the chamber |
-| Small hopper | ≤ ~150 g per alloy per build | Ø50 mm plate (Ø25 mm insert), dose-from-above ~100 cm³ cartridge, no supply piston, recoverable overflow: ~71 g per 15 mm build |
+| Small hopper | ≤ ~150 g per alloy per build | Ø53 mm plate (Ø25 mm insert), dose-from-above ~100 cm³ cartridge, no supply piston, recoverable overflow: ~80 g per 15 mm build |
 | High-purity inert gas | < 100 ppm O₂, ideally ~10 ppm | ~6 L vacuum-rated chamber, 2–3 vacuum–Ar 5.0 cycles, sealed recirculating cross-flow, trace analyzer near the bed, slight overpressure, O₂ permissive on the laser |
 
 ## 5. Phased plan
 
-0. **Spreadability rig, no laser.** Recoater axis, Ø50 mm piston, hopper cartridge and layer camera, run in the glovebox with our own powders. This settles blade vs. brush vs. roller and the dose factor cheaply.
+0. **Spreadability rig, no laser.** Recoater axis, Ø53 mm piston, hopper cartridge and layer camera, run in the glovebox with our own powders. This settles blade vs. brush vs. roller and the dose factor cheaply.
 1. **Chamber and gas loop, no laser.** Machine the chamber and prove 2–3 cycles to < 100 ppm with powder loaded. Measure the hold-up and the make-up gas use, and tune the cross-flow velocity, using smoke or particles.
 2. **Laser, optics and safety.** LSO review, then interlock commissioning with the beam into the dump, then single tracks on plates, then density cubes.
 3. **Monitoring and automation.** Photodiode (Thorlabs PDA36A2, $400.01) and layer-image scoring, recipe API, cartridge docking, and CubOS gantry hand-off.
@@ -329,6 +357,7 @@ Its price claims are unsourced, so they are not used: a 500 W SPI redPOWER at ~$
 - **"fetched"** prices were read live from vendor pages through the lab Pi on 2026-11-13. Each has its URL and time in [`vendor-lookups.csv`](vendor-lookups.csv).
 - **"agent-sourced"** prices come from the web survey, with the URL in `bom.csv`.
 - **"estimate"** values are placeholders until quotes come in.
+- **"fetched (McMaster 2026-11-17) + estimate"** lines are the subtotal of their rows in [`mcmaster-parts.csv`](mcmaster-parts.csv) plus the estimate named in the line's notes (custom machining, BK10/BF10 bearings, a Pirani gauge and so on).
 
 Ranges are "cheapest listed option" to "premium option" for that line.
 
@@ -346,52 +375,103 @@ Ranges are "cheapest listed option" to "premium option" for that line.
 | C3 | Controls | Motion controller | Teknic ClearCore or Klipper on the supervisor | 1 | 150–400 | estimate |
 | C4 | Controls | 24 V DC supply | Mean Well SDR-480-24 | 1 | 151 | fetched (DigiKey) |
 | C5 | Controls | Thermocouple interface | Adafruit 3263 (MAX31856) | 2 | 18 | fetched (DigiKey) |
-| M1 | Motion & powder | Recoater axis | McMaster 4566N101 ball screw (M12 x 10 mm lead x 500 mm) + guide rail | 1 | 188–600 | fetched (McMaster) + estimate |
+| C6 | Controls | Controls enclosure | McMaster 7812K14 10 x 12 x 6 in. NEMA 4 enclosure + 7812K54 panel + 8961K15 DIN rail + 69915K54 cord grips | 1 | 275 | fetched (McMaster 2026-11-17) |
+| M1 | Motion & powder | Recoater axis (less servo) | McMaster 4566N101 M12 x 10 mm lead screw (cut) + 4566N401 nut, 6709K33 rail + 6709K12 carriage, 6446K781 coupling, BK10/BF10 bearings (other vendor) | 1 | 881–2,481 | fetched (McMaster 2026-11-17) + estimate |
 | M2 | Motion & powder | Servo motors | Teknic ClearPath-SD | 2 | 265–486 | fetched (Teknic) |
-| M3 | Motion & powder | Build piston Z stage | Custom (screw + guide + bore) | 1 | 500–1,500 | estimate |
-| M4 | Motion & powder | Dose-from-above hopper + metering | Custom | 1 | 200–800 | estimate |
-| M5 | Motion & powder | Recoater blade cartridges | Custom holders + stock blade material | 1 | 100–500 | estimate |
+| M3 | Motion & powder | Build piston Z stage (less servo) | McMaster 6638K11 screw + nut, 6709K33 rail + 6709K12 carriage, 6446K781 coupling, 89895K623 tube, 1240K129 rod, 1490N11 wiper, 1465N1 wear ring; BK10/BF10 supports (other vendor) | 1 | 1,081–1,681 | fetched (McMaster 2026-11-17) + estimate |
+| M4 | Motion & powder | Dose-from-above hopper + metering | McMaster 8989K418 2 in. SS tube + 4518K43 KF-50 ferrules (cartridge docks on a KF-50 port), 6627T91 NEMA 17, 3487N257 S-beam load cell; custom dosing block with fluted roller | 1 | 814–1,214 | fetched (McMaster 2026-11-17) + estimate |
+| M5 | Motion & powder | Recoater blade cartridges | McMaster 1187N14 3 mm silicone cord (compliant) + 9011K104 0.031 in. 18-8 shim (hard); custom quick-swap holders | 1 | 127–527 | fetched (McMaster 2026-11-17) + estimate |
 | M6 | Motion & powder | Layer camera + lighting | Raspberry Pi HQ camera + lens + oblique LED bar | 1 | 100–300 | estimate |
-| G1 | Inert gas | Process chamber | Custom machined | 1 | 2,000–6,000 | estimate |
-| G2 | Inert gas | Vacuum pump | Dry scroll or 2-stage RV (quote) | 1 | 765–4,000 | fetched (McMaster) + estimate |
+| G1 | Inert gas | Process chamber | Welded 1/2 in. 6061 box (McMaster 89155K135 plate), 3/4 in. floor and lid, 1807A61 draw latches, 1151A87 lift-off hinges, M5/M6 SS screws | 1 | 2,464–6,464 | fetched (McMaster 2026-11-17) + estimate |
+| G2 | Inert gas | Vacuum pump | McMaster 4396K21 rotary-vane pump (1e-2 Torr, 3 cfm) + 3394N12 KF-25 inlet filter + 2 x 3497N23 KF-25 hose | 1 | 2,079–5,491 | fetched (McMaster 2026-11-17) + estimate |
 | G3 | Inert gas | Argon supply | McMaster 78595A5 flowmeter-regulator (0-70 scfh Ar) | 1 | 334 | fetched (McMaster) |
 | G4 | Inert gas | Recirculation blower | Sealed regenerative blower (quote) | 1 | 300–1,500 | estimate |
-| G5 | Inert gas | Filter train | Inline HEPA housing (quote) | 1 | 200–600 | estimate |
+| G5 | Inert gas | Filter train | McMaster 5169K72 vacuum-rated housing + 9179K14 HEPA element (0.3 um, 99.97 %), valved off under argon for passivation | 1 | 205–605 | fetched (McMaster 2026-11-17) + estimate |
 | G6 | Inert gas | O2 analyzer | Ntron Microx (Instrumart $1,694-2,091) | 1 | 1,271–2,091 | fetched (DigiKey) + agent-sourced (Instrumart) |
-| G7 | Inert gas | Valves / fittings / gauges | McMaster / Kurt J. Lesker | 1 | 500–1,500 | estimate |
+| G7 | Inert gas | Valves / fittings / gauges | McMaster: 3861N11 0-15 psia + 5539N26 0-10 inH2O transmitters, 2 x 8077K237 24 V NC solenoids, 4123K45 KF-25 ball valve, 4277T52 0.5 psi relief, 7833K76 needle valve, KF-25/40 aluminium weld ports, clamps and rings, 1/4 in. 316 tube and fittings, 3 x 3497N23 loop hoses | 1 | 3,281–3,781 | fetched (McMaster 2026-11-17) + estimate |
 | G8 | Inert gas | Chamber seals | McMaster 1165N11 (per ft) | 10 | 2 | fetched (McMaster) |
 | G9 | Inert gas | Dew-point / moisture sensor | Inline dew-point transmitter (quote) | 1 | 1,000–2,500 | estimate |
 | S1 | Safety | Safety relay | Omron G9SE-201 (DigiKey 'SAFETY UNIT 2+1 O/P') | 1 | 275 | fetched (DigiKey) |
 | S2 | Safety | Guard-locking door interlock | Omron D4JL-4NFA-C5-NPT | 1 | 803 | fetched (DigiKey) |
 | S3 | Safety | E-stop | IDEC XA1E-BV3U02-R | 2 | 77 | fetched (DigiKey) |
-| S4 | Safety | Key switch + emission indicator + manual reset | Panel-mount keyed selector + stack light | 1 | 100–300 | estimate |
+| S4 | Safety | Key switch + emission indicator + manual reset | McMaster 6749K3 key switch, 7545K316 + 7545K7 red emission light, 6749K201 illuminated reset, 1577T43 LED stack light | 1 | 367–467 | fetched (McMaster 2026-11-17) + estimate |
 | S5 | Safety | Laser-safe viewing window | Thorlabs LW1P1/M light green panel (385.8 x 304.8 mm) | 1 | 195–412 | fetched (Thorlabs) + agent-sourced |
 | S6 | Safety | Laser safety eyewear (service/alignment) | Thorlabs LG1 | 2 | 217 | fetched (Thorlabs) |
 | S7 | Safety | Room O2-deficiency monitor | McMaster 18995T81 (0-25% O2) | 1 | 459 | fetched (McMaster) |
 | S8 | Safety | Class D extinguisher | McMaster 6435T23 | 1 | 920 | fetched (McMaster) |
-| S9 | Safety | Outer enclosure | Aluminum extrusion + sheet | 1 | 800–2,000 | estimate |
+| S9 | Safety | Frame, deck and laser guard | McMaster 5537T97 rail (14 x 4 ft), 5537T536 gussets, 5278N47 nuts, 5537T983 feet, 5537T847 hinges, 5537T419 handle, 88895K51 sheet, 89155K135 plate | 1 | 2,009–2,309 | fetched (McMaster 2026-11-17) + estimate |
 | P1 | Powder handling | Glovebox | McMaster 4083N14 (humidity meter + 2 gas ports) | 1 | 1,694–4,305 | fetched (McMaster) |
 | T1 | Test & commissioning | Laser power sensor | Ophir/Coherent 500-1000 W head (quote) | 1 | 1,691–4,000 | fetched (Thorlabs) + estimate |
 | T2 | Test & commissioning | Melt-pool photodiode | Thorlabs PDA36A2 | 1 | 400 | fetched (Thorlabs) |
 
-**Total: $21,374 – $95,676.** The low figure takes the cheapest listed option on every line; the high figure takes the premium option.
+**Total: $29,604 – $103,172** The low figure takes the cheapest listed option on every line; the high figure takes the premium option.
 
-The low end needs a PRC laser and a marking-class galvo, neither confirmed for 500 W CW. Treat it as a floor, not a plan. A realistic first build is a US single-mode laser, a power-rated scan head and an open or SDK controller. That probably lands at $45–70k once quotes are in, which is close to an AO Metal A30/A50 or Xact XM200C. So the case for building rests on what we gain, not on price:
-- Ø25–50 mm builds from ~20–70 g of powder;
+The low end needs a PRC laser and a marking-class galvo, neither confirmed for 500 W CW. Treat it as a floor, not a plan. A realistic first build is a US single-mode laser, a power-rated scan head and an open or SDK controller. That probably lands at $55–75k once quotes are in: the low total with the laser, scan head and controller swapped for $32–48k of US and SCANLAB parts. That is close to an AO Metal A30/A50 or Xact XM200C. So the case for building rests on what we gain, not on price:
+- Ø25–53 mm builds from ~20–80 g of powder;
 - < 100 ppm O₂;
 - full control of scan, gas and recoat;
 - an API for the autonomous loop.
 
-**Geometry.** Dimensions for the fetched parts are in `vendor-lookups.csv`, for example the f-theta housing, thread, working distance and flange focal length. CAD came down through the same lab-Pi browser session, which proves the route. [`cad/cad-manifest.csv`](cad/cad-manifest.csv) lists the files with sizes and sha256s:
-- McMaster-Carr native models (SolidWorks parts, which Onshape imports) for the 4566N101 and 6624K69 ball screws and the 78595A5 argon regulator;
+**Geometry.** The layout now lives in the CadQuery model (§1a), whose McMaster parts are listed in §6a. The vendor CAD fetched on 2026-11-13 is listed in [`cad/cad-manifest.csv`](cad/cad-manifest.csv) with sizes and sha256s:
+- McMaster-Carr native models (SolidWorks parts) for the 4566N101 and 6624K69 ball screws and the 78595A5 argon regulator;
 - Thorlabs dimensioned drawings (PDF) for the FTH254-1064 and FTH160-1064 f-theta lenses, the GBE02-C beam expander, the WG41050-C window, the PDA36A2 photodiode and the GVS012 galvo.
 
-The files themselves are not committed: they are the vendors' copyrighted content and this repo is public. Re-fetch them with [`cad/fetch_cad.py`](cad/fetch_cad.py) through the Pi tunnel, then drop them into the lab's Onshape layout of the top plate and chamber. That layout is the next step.
+Those files are the vendors' copyrighted content and are not committed. Re-fetch them with [`cad/fetch_cad.py`](cad/fetch_cad.py) through the Pi tunnel to check fits against the model.
+
+## 6a. McMaster-Carr parts behind the model
+
+[`mcmaster-parts.csv`](mcmaster-parts.csv) has 69 rows. Each part number was read off its own McMaster product page through the lab Pi on 2026-11-17 between 20:34 and 20:56 UTC. The one exception is the Viton cord, carried over from 2026-11-13. Four rows are alternatives that were checked and not chosen (quantity 0). The other 65 come to **$10,800.91** for one machine:
+
+| BOM line | McMaster part numbers | Subtotal |
+|---|---|---|
+| G7 Valves, fittings, gauges | 3861N11, 5539N26, 8077K237 ×2, 4123K45, 4277T52, 7833K76, 5182K111, 89785K824, 4518K49, 5786N23, 5786N25, 4518K72/63/73/64, 3497N23 ×3 | $2,981.47 |
+| G2 Vacuum pump line | 4396K21, 3394N12, 3497N23 ×2 | $2,078.84 |
+| S9 Frame, deck and laser guard | 5537T97 ×14, 5537T536, 5278N47, 5537T983, 5537T847, 5537T419, 88895K51 ×9, 89155K135 ×4 | $2,009.03 |
+| M3 Build piston Z stage | 6638K11, 6709K33, 6709K12, 6446K781, 89895K623, 1490N11, 1240K129, 1465N1 | $930.87 |
+| M1 Recoater axis | 4566N101, 4566N401, 6709K33, 6709K12, 6446K781, 9572K33, 9572K63 | $830.85 |
+| M4 Hopper and dosing | 8989K418, 4518K43 ×2, 6627T91, 3487N257 | $614.20 |
+| G1 Process chamber | 89155K135 ×2, 1807A61 ×2, 1151A87 ×2, 91292A137, 91292A126 | $464.49 |
+| S4 Operator controls | 6749K3, 7545K316, 7545K7, 1577T43, 6749K201 | $367.15 |
+| C6 Controls enclosure | 7812K14, 7812K54, 8961K15, 69915K54 | $275.10 |
+| G5 Recirculation filter | 5169K72, 9179K14 ×2 | $205.30 |
+| M5 Recoater blades | 1187N14, 9011K104 | $27.11 |
+| G8 Chamber seals | 1165N11 | $16.50 |
+
+What checking real parts changed:
+
+- **The build bore is 53.8 mm, so the plate is Ø53 mm.**
+  - McMaster sells no honed tube near 2 in. ID. The nearest is 2-1/4 in. OD × 0.065 in. 304 tube (89895K623), with a 53.8 mm bore and no ID tolerance listed.
+  - The model laps that tube and rings a Ø53 mm piston with bronze-filled PTFE wear ring (1465N1). A 15 mm build now doses ~80 g, up from ~71 g.
+  - Boring the cylinder from solid would keep Ø50 mm.
+- **The M12 screw end supports come from another vendor.**
+  - McMaster's only supports that fit an M12 screw are inch parts: $796.24 fixed (60755K12) plus $555.77 floating (60755K219), per axis.
+  - The model uses BK10/BF10 blocks, which are commodity parts. Moving to M16 screws would fit McMaster's 6624K56 ($212.73) instead.
+- **The recoater screw is cut from a 500 mm length.**
+  - The M12 × 10 mm lead family (4566N101) comes only in 500 and 1,000 mm.
+  - Its nut (4566N401, $244.44) costs more than the screw.
+  - It is listed only to 150 °F, so it sits above the bed behind the carriage block. The 28 mm-tall 15 mm carriages pushed that block forward, so the blade arm now drops behind the dose chute.
+- **The shaft feedthrough and the rod exit are the weak seals.**
+  - McMaster has no lip seal for an 8–10 mm shaft. Its closest fit is a PTFE V-ring stack (9572K33 + 9572K63) in a machined gland, with no vacuum rating. A magnetic-fluid feedthrough from a vacuum vendor is the robust choice.
+  - The 1/2 in. rod wiper (1490N11) only scrapes powder off the rod. The rod still needs an O-ring gland or a bellows to hold gas.
+- **McMaster has no vacuum-rated 24 V solenoid valve.**
+  - The 24 V normally-closed valves (8077K237) do the argon side.
+  - Pump isolation is a manual KF-25 ball valve (4123K45), unless a powered KF angle valve is bought from a vacuum vendor.
+- **Pressure needs three sensors.**
+  - The 0–15 psia transmitter (3861N11) reads to ±15 mbar, so it cannot confirm ≤ 1 mbar. That takes a Pirani gauge, which McMaster doesn't sell.
+  - A 0–10 inH₂O differential transmitter (5539N26, ±0.2 mbar) holds the +5–20 mbar overpressure. Its 415 inH₂O limit is barely above full vacuum, so it is valved off during pump-down.
+- **The McMaster pump is good enough.**
+  - The 4396K21 rotary-vane pump reaches 1 × 10⁻² Torr (0.013 mbar) at 3 cfm for $587.53, so two vacuum–argon cycles reach < 100 ppm.
+  - Its intake is SAE flare, so it needs an adapter to KF-25. A KF-25 inline filter (3394N12, 8 µm) protects it.
+- **The argon blower is still a quote.**
+  - McMaster's 24 V blowers are open cooling blowers.
+  - Its smallest regenerative blower (9960K51) runs on AC, costs $823.20 and moves about 10× the flow needed. McMaster doesn't say whether it is gas-tight.
+- **Stainless KF-25 bellows hose costs $384.45 per 24 in. (3497N23).** Five of them are $1,922 of the $10.8k. Cheaper hose is probably fine on the +20 mbar loop.
+- **The chamber is 1/2 in. 6061 plate (89155K135), TIG-welded, with aluminium KF weld ferrules (5786N23, 5786N25).** One atmosphere deflects a 1/2 in. wall well under 0.1 mm.
 
 ## 7. Open questions for the lab
 
 1. **Funding and sourcing.** Is a PRC fiber laser acceptable on the intended funds? If not, request IPG and nLIGHT quotes for a 500 W single-mode unit, and a SCANLAB basiCube 20 + RTC6 quote.
-2. **Build plate size.** Is Ø50 mm (with a Ø25 mm insert) right for the test coupons we need (density cubes, small tensile bars per the [test-structure notes](../edison-trajectories/am-scaleup-test-structures.md))?
+2. **Build plate size.** Is Ø53 mm (with a Ø25 mm insert) right for the test coupons we need (density cubes, small tensile bars per the [test-structure notes](../edison-trajectories/am-scaleup-test-structures.md))?
 3. **Plate preheat.** Is 200 °C plate preheat wanted for the Al alloys? It changes the chamber's thermal design.
 4. **Safety reviews.** Who are the LSO and EHS contacts for the laser registration and the NFPA 484 dust hazard analysis?
 5. **CubXL scope.** Should the CubXL be in scope for cartridge filling in phase 3, or should powder dispensing stay with the AutoTrickler line?
