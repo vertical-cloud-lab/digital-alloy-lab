@@ -23,14 +23,16 @@ BOM = HERE.parent / "bom" / "bom.csv"
 
 # Corrosion rows to order now, and why some aren't.
 ORDER = ["B01", "B02", "B03", "B04", "B06", "B07", "B08", "B10", "B11", "B12", "B14", "B15", "B16",
-         "B17", "B19", "B20", "B21", "B22", "B26", "B29", "B36", "B38", "B39", "B40", "B41", "B43", "B44",
+         "B17", "B19", "B20", "B21", "B22", "B26", "B30", "B32", "B36", "B38", "B39", "B40", "B41", "B43", "B44",
          "B45", "B46"]
 COVERED = {  # the stirrer order (ME 13518) already brought the same part
     "B13": "same insert as the stirrer BOM's item 11 (100 from ME order 13518): the cell takes 12, three more stirrers 12",
     "B18": "JST-XH 4-pin pairs come with the stirrer BOM's item 9 (10 pairs, ME order 13518): the tray takes 2, three more stirrers 3",
 }
-ON_HAND = {  # the lab already has these (Ben on #264, 2026-11-16)
+ON_HAND = {  # the lab already has these (Ben on #264, 2026-11-16 and 2026-11-17)
     "B09": "steel discs: the capper's own; the electrode cap's 25.4 x 0.5 mm recess is the vial cap's",
+    "B31": "polishing pad for the 1 um diamond: the lab's Mark V MCR12 micro rayon cloths, 12 in PSA",
+    "B33": "polishing pad for the colloidal silica: the same Mark V MCR12 cloths (6 for copper's three alloys)",
     "B47": "#46 drill: BYU's Prototyping lab",
     "B48": "7 mm or 1/4 in end mill for facing the lid's counterbore ceiling: BYU's Prototyping lab",
 }
@@ -38,8 +40,9 @@ CHECK_STOCK = {"B34": "filament: about 0.42 kg of PLA for the corrosion plates (
 LEFT_OUT = {
     "B23": "potentiostat: the EZstat-Pro is set up", "B24": "potentiostat box", "B25": "potentiostat",
     "B27": "potentiostat", "B28": "potentiostat adapter", "B35": "tips: enough on hand for a few tests",
-    "B05": "fallback O-ring cap only", "B30": "optional polish", "B31": "optional polish", "B32": "optional polish",
-    "B33": "optional polish", "B37": "aluminium only: add it if the aluminium shakedown runs too",
+    "B05": "fallback O-ring cap only",
+    "B29": "0.1 um diamond film: optional; copper's polish ends on colloidal silica (copper/protocol.md section 1)",
+    "B37": "aluminium only: add it if the aluminium shakedown runs too",
     "B42": "only if the ICP lab won't dilute into its own tubes",
 }
 

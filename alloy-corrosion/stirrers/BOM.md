@@ -23,15 +23,17 @@ Porter's EZstat-Pro is set up) and the 20 µL tips (enough for a few tests).
 
 | | Cost |
 | --- | --- |
-| Corrosion setup: cell, deck, electrodes, chemicals, reference alloys, polishing film, tubes | **$1,979.45** |
+| Corrosion setup: cell, deck, electrodes, chemicals, reference alloys, polishing liquids, tubes | **$1,778.45** |
 | Four stir modules, beyond what ME order 13518 brought | **$47.26** ($40.27 if the 100 nF kit, ST4, is already ordered) |
-| **The whole list** | **$2,026.71**, plus three rows with no price yet (below) |
+| **The whole list** | **$1,825.71**, plus three rows with no price yet (below) |
 
 Of that, $261 is a placeholder for the leak-free reference (B19) until it's quoted. The tubes
 (B36), sodium sulfide (B39) and nitric acid (B41) are at the prices Ben got on 16 November. Still to price: the
 C95800 bar (B45, quote only), and the drill rod (B10) and PTFE rod (B46), whose McMaster prices
 couldn't be read. **Not on the list, because the lab has them** (Ben, 2026-11-16): the steel discs
 (B09), the #46 drill (B47) and an end mill (B48), as well as the inserts (B13) and JST pairs (B18).
+The polishing pads (B31, B33) are off too: the lab's Mark V MCR12 cloths do their job (Ben,
+2026-11-17).
 
 ## 1. Order, by vendor
 
@@ -40,8 +42,6 @@ couldn't be read. **Not on the list, because the lab has them** (Ben, 2026-11-16
 | **OnlineMetals** | | | | **326.50** |
 | B43 | C71500 (70/30 Cu–Ni) round bar, 1 in × 12 in | 1 | [mp-00059842](https://www.onlinemetals.com/en/buy/copper/1-inch-od-copper-nickel-round-bar-715/pid/mp-00059842) | 121.34 |
 | B44 | C70600 (90/10 Cu–Ni) round bar, 1 in | 1 | [mp-00068387](https://www.onlinemetals.com/en/buy/copper-nickel-round-bar) | 205.16 |
-| **PACE Technologies** | | | | **265.00** |
-| B29 | Diamond lapping film, 0.1 µm, 12 in PSA, 3 per pack (copper's own, per the polishing SOP) | 1 | [PDAA-01P12](https://shop.metallographic.com/products/pdaa-01p12) | 265.00 |
 | **Innovative Instruments** | | | | **261.00** |
 | B19 | Leak-free Ag/AgCl reference, 2.0 mm OD, custom: 15.5 mm barrel with a bare silver-wire lead (16.6 mm at most) | 1 | [LF-2, custom length](https://www.2in.com/products/reference/reference.html) | 261.00 (budget; **ask for a quote**) |
 | **Advent Research Materials** | | | | **216.00** |
@@ -58,6 +58,9 @@ couldn't be read. **Not on the list, because the lab has them** (Ben, 2026-11-16
 | B40 | CHEMets sulfide kit K-9510 (methylene blue, 0–1 and 1–10 mg/L, 30 tests) | 1 | [K-9510](https://catalog.aquaphoenixsci.com/products/testing-supplies/test-kits/k-9510-sulfide-total-soluble) | 92.43 |
 | **Sigma-Aldrich** | | | | **78.10** |
 | B39 | Sodium sulfide nonahydrate, ACS ≥ 98 %, 100 g | 1 | [208043-100G](https://www.sigmaaldrich.com/US/en/product/sigald/208043) | 78.10 (Ben, 2026-11-16) |
+| **PACE Technologies** | | | | **64.00** |
+| B30 | DIAMAT 1 µm diamond suspension, water based, 250 mL (copper's 1 µm step) | 1 | [WMA-1001](https://shop.metallographic.com/products/wma-1001) | 35.00 |
+| B32 | SIAMAT colloidal silica, 0.06 µm, 16 oz (copper's final polish) | 1 | [SI-100A](https://shop.metallographic.com/products/si-100a) | 29.00 |
 | **The O-Ring Store** | | | | **52.00** |
 | B01 | FKM O-ring AS568-006 (2.90 ID × 1.78), FDA brown Viton 75, 100 | 1 | [FDABV75006](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38308) | 9.00 |
 | B02 | FKM O-ring AS568-008 (4.47 ID), 100 | 1 | [FDABV75008](https://www.theoringstore.com/store/index.php?main_page=product_info&cPath=367_2040_2039&products_id=38310) | 10.00 |
@@ -116,6 +119,13 @@ Notes on the order:
       this tube put its copper under an eighth of what the ICP-MS can see in one of our tubes
       ([`../bom/README.md`](../bom/README.md), row B36). Avoid colored tubes: blue and green
       plastics are usually tinted with copper phthalocyanine.
+- **The polish (B30, B32), on the lab's Mark V MCR12 cloths (Ben, 2026-11-17).** Copper's 1 µm
+  step uses diamond, not the SOP's alumina, and its last step is colloidal silica, not the SOP's
+  0.1 µm film. Alumina leaves Al, and EDS and the NAB tubes measure Al. That is the protocol's own
+  baseline ([`../copper/protocol.md` §1](../copper/protocol.md#1-specimen)), so the film (B29,
+  $265) is left out, and PACE's two pads (B31, B33, $205) aren't needed. Ask the polishing lab
+  whether it already has 1 µm diamond or colloidal silica: the SOP's EBSD polish uses colloidal
+  silica. Copper takes 6 cloths, one per alloy and abrasive. Count the unused ones in the pack.
 - **B01–B04 stay with The O-Ring Store's 100-packs.** Filters4You's own-brand FKM 75A was checked
   as a substitute on 2026-11-11, but on 2026-11-13 their full quote for the four sizes came to $157,
   not the $23.96 their pages list
@@ -165,6 +175,7 @@ second set of compact prints (from 2026-10-30) is unassembled.
   cap (B09): its Ø25.4 × 0.5 mm recess is the one in PANDA-BEAR's vial cap;
 - at BYU's Prototyping lab, the #46 drill (B47) and an end mill (B48) for facing the lids'
   counterbores;
+- Mark V MCR12 micro rayon polishing cloths, 12 in PSA, 10 a pack, in place of the pads B31 and B33;
 - cyanoacrylate, neutral-cure RTV, hot glue, heat shrink, solder;
 - male–male jumper wires (capper BOM item 10) for the hub's leads into the Uno headers;
 - DI water and a desiccator.
@@ -198,7 +209,8 @@ compact set (five parts, 28 cm³) took 27 g and 72 min on the A1 mini.
 | B23–B25, B27, B28: potentiostat options | The EZstat-Pro is set up. **It has no EIS,** so step 5 of [`../copper/protocol.md` §4](../copper/protocol.md#4-sequence) is skipped and OCP runs for 30 min until a potentiostat with impedance arrives |
 | B35: 20 µL tips | Enough for a few tests. A night takes at least 17 |
 | B05, B18 (bought), B13 (bought) | B05 is only for the fallback O-ring cap. B13 and B18 come from ME order 13518 (section 2) |
-| B30–B33 | Optional 1 µm diamond and colloidal-silica polish for copper |
+| B29 | Optional: the 0.1 µm diamond film. Copper's polish ends on colloidal silica (B32) instead ([`../copper/protocol.md` §1](../copper/protocol.md#1-specimen)) |
+| B31, B33 | On hand (Ben, 2026-11-17): the lab's Mark V MCR12 cloths do these two pads' job (section 2) |
 | B37 | Aluminium only |
 | B42 | Only if the ICP lab won't dilute into its own tubes. Ask first |
 | B09, B47, B48 | On hand (Ben, 2026-11-16): the capper's steel discs, and the Prototyping lab's #46 drill and end mill (section 2) |

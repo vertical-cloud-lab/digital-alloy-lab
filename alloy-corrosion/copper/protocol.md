@@ -36,6 +36,18 @@ come from is in [`test-matrix.csv`](test-matrix.csv).
    (*choose*; [c1-05]'s baseline): SiC to P2400, then 1 µm diamond, then 0.04–0.05 µm colloidal
    silica. Edison found no measured effect of the finish on E_corr or R_p of C71500 or C95800, so the finish is a
    variable to test (§5), not a settled choice. Never change the finish and the alloy at once.
+   - **On copper this replaces the SOP's Steps 5 and 7** (2026-11-17). The 1 µm diamond (B30) goes
+     on one of the lab's Mark V MCR12 cloths, a low-nap rayon final cloth, in place of Step 5's
+     alumina. The colloidal silica (B32) goes on a second cloth, in place of Step 7's 0.1 µm film.
+     Each cloth gets one alloy and one abrasive, as the SOP's pads do: six for C71500, C95800 and C70600.
+   - **No alumina on a copper piece.** Its residue is Al, which EDS and the NAB tubes measure, and
+     grains pressed into the face reach no blank (S4's fixture blank is PTFE). Diamond leaves
+     carbon and silica leaves Si, neither measured on copper.
+   - **How** ([PACE's copper procedure](https://metallographic.com/guides/copper-and-copper-alloys-preparation)):
+     1 µm diamond for about 2 min, at 22–45 N and 100 rpm, until the SiC scratches are gone. Clean the
+     piece ultrasonically before the silica, as before the SOP's film: copper picks up grains from
+     the step before. Then colloidal silica for about 1 min. Run water onto the cloth for its last
+     20–30 s, and never let the silica dry on the face.
 3. **Clean** (*choose*): a short ethanol ultrasonic bath, an ultrapure-water rinse, and a dry
    nitrogen blow ([c1-05]). Check under the microscope for retained silica and, on NAB, for
    pulled-out κ particles.

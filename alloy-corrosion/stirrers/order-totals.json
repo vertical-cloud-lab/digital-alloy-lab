@@ -1,20 +1,19 @@
 {
  "price_seen": "2026-10-19 (stirrer item 13: 2026-10-29; B36, B39 and B41: 2026-11-16, from Ben); before shipping and tax",
- "rows": 33,
- "priced_rows": 30,
+ "rows": 34,
+ "priced_rows": 31,
  "unpriced_or_quote": [
   "B10 Drill rod 3 mm O1 tool steel; 3 ft",
   "B45 C95800 nickel-aluminium bronze; continuous-cast ba",
   "B46 PTFE rod 3/4 in; 1 ft (the S4 blank: cut 6 mm disc"
  ],
- "corrosion_usd": 1979.45,
+ "corrosion_usd": 1778.45,
  "of_which_B19_reference_placeholder_usd": 261.0,
  "stirrers_usd": 47.26,
  "stirrers_without_ST4_usd": 40.27,
- "total_usd": 2026.71,
+ "total_usd": 1825.71,
  "by_vendor_usd": {
   "OnlineMetals": 326.5,
-  "PACE Technologies": 265.0,
   "Innovative Instruments": 261.0,
   "Advent Research Materials": 216.0,
   "Ossila": 165.0,
@@ -23,6 +22,7 @@
   "BYU Chem Stores": 119.66,
   "AquaPhoenix Scientific": 92.43,
   "Sigma-Aldrich": 78.1,
+  "PACE Technologies": 64.0,
   "The O-Ring Store": 52.0,
   "Amazon": 47.26,
   "Digi-Key": 43.95,
@@ -40,6 +40,8 @@
  },
  "on_hand": {
   "B09": "steel discs: the capper's own; the electrode cap's 25.4 x 0.5 mm recess is the vial cap's",
+  "B31": "polishing pad for the 1 um diamond: the lab's Mark V MCR12 micro rayon cloths, 12 in PSA",
+  "B33": "polishing pad for the colloidal silica: the same Mark V MCR12 cloths (6 for copper's three alloys)",
   "B47": "#46 drill: BYU's Prototyping lab",
   "B48": "7 mm or 1/4 in end mill for facing the lid's counterbore ceiling: BYU's Prototyping lab"
  },
@@ -54,10 +56,7 @@
   "B28": "potentiostat adapter",
   "B35": "tips: enough on hand for a few tests",
   "B05": "fallback O-ring cap only",
-  "B30": "optional polish",
-  "B31": "optional polish",
-  "B32": "optional polish",
-  "B33": "optional polish",
+  "B29": "0.1 um diamond film: optional; copper's polish ends on colloidal silica (copper/protocol.md section 1)",
   "B37": "aluminium only: add it if the aluminium shakedown runs too",
   "B42": "only if the ICP lab won't dilute into its own tubes"
  }
