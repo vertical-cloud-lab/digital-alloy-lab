@@ -22,6 +22,8 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 | [`low-profile.md`](low-profile.md) | low-profile layout for a VLM tray: interference, MuJoCo and FEA results, mass budget, materials selection with sources |
 | [`cad/lpbf_low.py`](cad/lpbf_low.py), [`cad/render_low.py`](cad/render_low.py) | the low-profile model (118 parts, each with material and motion group) and its renders in [`cad/img/low/`](cad/img/low/) |
 | [`analysis/`](analysis/) | interference, MuJoCo, CalculiX and mass-budget scripts, with results in [`analysis/out/`](analysis/out/) |
+| [`modules.md`](modules.md) | the heated build plate, Ø25 / Ø50 / Ø75 build modules, S / M / L reservoirs and the automation features as built into the low-profile model ([`cad/modules_low.py`](cad/modules_low.py), [`cad/module_params.py`](cad/module_params.py)), with the thermal FEA, interference sweeps and renders in [`cad/img/modules/`](cad/img/modules/) |
+| [`options-mcmaster.csv`](options-mcmaster.csv), [`options-vendors.csv`](options-vendors.csv) | the 55 parts behind those features (McMaster-Carr, DigiKey, DwyerOmega, Accu-Glass, Lesker, Edmund, AutomationDirect and others), read live through the lab Pi on 2026-11-17 |
 
 ## 1. Short answers
 
@@ -466,8 +468,8 @@ Ranges are "cheapest listed option" to "premium option" for that line.
 | C6 | Controls | Controls enclosure | McMaster 7812K14 10 x 12 x 6 in. NEMA 4 enclosure + 7812K54 panel + 8961K15 DIN rail + 69915K54 cord grips | 1 | 275 | fetched (McMaster 2026-11-17) |
 | M1 | Motion & powder | Recoater axis (less servo) | McMaster 4566N101 M12 x 10 mm lead screw (cut) + 4566N401 nut, 6709K33 rail + 6709K12 carriage, 6446K781 coupling, BK10/BF10 bearings (other vendor) | 1 | 881–2,481 | fetched (McMaster 2026-11-17) + estimate |
 | M2 | Motion & powder | Servo motors | Teknic ClearPath-SD | 2 | 265–486 | fetched (Teknic) |
-| M3 | Motion & powder | Build piston Z stage (less servo) | McMaster 6638K11 screw + nut, 6709K33 rail + 6709K12 carriage, 6446K781 coupling, 89895K623 tube, 1240K129 rod, 1490N11 wiper, 1465N1 wear ring; BK10/BF10 supports (other vendor) | 1 | 1,081–1,681 | fetched (McMaster 2026-11-17) + estimate |
-| M4 | Motion & powder | Dose-from-above hopper + metering | McMaster 8989K418 2 in. SS tube + 4518K43 KF-50 ferrules (cartridge docks on a KF-50 port), 6627T91 NEMA 17, 3487N257 S-beam load cell; custom dosing block with fluted roller | 1 | 814–1,214 | fetched (McMaster 2026-11-17) + estimate |
+| M3 | Motion & powder | Build piston Z stage (less servo) | McMaster 6638K11 screw + nut, 6709K33 rail + 6709K12 carriage, 6446K781 coupling, 89895K623 tube, 1240K129 rod, 1490N11 wiper, 1465N1 wear ring; BK10/BF10 supports (other vendor) | 1 | 752–852 | fetched (McMaster 2026-11-17) + estimate |
+| M4 | Motion & powder | Dose-from-above hopper + metering | McMaster 8989K418 2 in. SS tube + 4518K43 KF-50 ferrules (cartridge docks on a KF-50 port), 6627T91 NEMA 17, 3487N257 S-beam load cell; custom dosing block with fluted roller | 1 | 282–682 | fetched (McMaster 2026-11-17) + estimate |
 | M5 | Motion & powder | Recoater blade cartridges | McMaster 1187N14 3 mm silicone cord (compliant) + 9011K104 0.031 in. 18-8 shim (hard); custom quick-swap holders | 1 | 127–527 | fetched (McMaster 2026-11-17) + estimate |
 | M6 | Motion & powder | Layer camera + lighting | Raspberry Pi HQ camera + lens + oblique LED bar | 1 | 100–300 | estimate |
 | G1 | Inert gas | Process chamber | Welded 1/2 in. 6061 box (McMaster 89155K135 plate), 3/4 in. floor and lid, 1807A61 draw latches, 1151A87 lift-off hinges, M5/M6 SS screws | 1 | 2,464–6,464 | fetched (McMaster 2026-11-17) + estimate |
@@ -491,8 +493,15 @@ Ranges are "cheapest listed option" to "premium option" for that line.
 | P1 | Powder handling | Glovebox | McMaster 4083N14 (humidity meter + 2 gas ports) | 1 | 1,694–4,305 | fetched (McMaster) |
 | T1 | Test & commissioning | Laser power sensor | Ophir/Coherent 500-1000 W head (quote) | 1 | 1,691–4,000 | fetched (Thorlabs) + estimate |
 | T2 | Test & commissioning | Melt-pool photodiode | Thorlabs PDA36A2 | 1 | 400 | fetched (Thorlabs) |
+| H1 | Heated plate | Heater stacks for the three build modules | McMaster 3714N36 x10, 3871K606 x9 + 3869K35/34 plugs, 8489K75 Macor, 2317K275 shim; Cantherm RT240 x6; Molex 1205020022/1205000300 M12 x3 | 1 | 2,241–4,100 | fetched (McMaster, DigiKey 2026-11-17) + estimate |
+| H2 | Heated plate | Heater power, switching and independent limit | Mean Well LRS-350-24; Crydom D1D12; DwyerOmega CN708 | 1 | 325–770 | fetched (TRC Electronics, DigiKey, DwyerOmega 2026-11-17) |
+| B1 | Build modules | Three build modules (Ø25 / Ø50 / Ø75): cylinders, spigot-flanges, pistons, plates, hollow rods | McMaster 89495K18, 11119N55, 89495K4 tube; 9260K5 4 in. 316 bar; 11119N35 rod; 316 plate for the flanges (not fetched) | 1 | 2,300–4,800 | fetched (McMaster 2026-11-17) + estimate |
+| B2 | Build modules | Module seals, clamping and Z coupling | McMaster 9464K982, 95966A705 + 91065A610, 91732A782, 5679K95, 89095K23, 6435K35; 2-238 FKM (same family as 9464K367, not fetched) | 1 | 163–300 | fetched (McMaster 2026-11-17) + estimate |
+| R1 | Hoppers | Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters | McMaster 8983K56 sheet, 8969T3 springs, 85015A47 plungers | 1 | 473–1,273 | fetched (McMaster 2026-11-17) + estimate |
+| A1 | Automation | Step-confirm sensors, reservoir ID and weighing | AutomationDirect PAM-AP-1H x4; Omron E32-T61-S + E3NX-FA41; NTAG213 on-metal x6 + Adafruit 364; Laumas ALLUE3 + SparkFun SEN-15242 | 1 | 1,132–1,600 | fetched (DigiKey, AutomationDirect, Adafruit, atlasRFIDstore 2026-11-17) |
+| A2 | Automation | Cleaning and consumables | McMaster 2317K278 sheet; Edmund 25-250 x6; McMaster 5572N116 (Class II Div 1/2, Groups E-G, NFPA 484; needs 35 scfm air) | 1 | 3,857–5,117 | fetched (McMaster, Edmund 2026-11-17) |
 
-**Total: $29,604 – $103,172** The low figure takes the cheapest listed option on every line; the high figure takes the premium option.
+**Total: $39,233 – $119,771** (with lines H1–A2 for the heated plate, build modules, reservoirs and automation, added 2026-11-17; see [`modules.md`](modules.md) §6) The low figure takes the cheapest listed option on every line; the high figure takes the premium option.
 
 The low end needs a PRC laser and a marking-class galvo, neither confirmed for 500 W CW. Treat it as a floor, not a plan. A realistic first build is a US single-mode laser, a power-rated scan head and an open or SDK controller. That probably lands at $55–75k once quotes are in: the low total with the laser, scan head and controller swapped for $32–48k of US and SCANLAB parts. That is close to an AO Metal A30/A50 or Xact XM200C. So the case for building rests on what we gain, not on price:
 - Ø25–53 mm builds from ~20–80 g of powder;
@@ -561,7 +570,7 @@ What checking real parts changed:
 ## 7. Open questions for the lab
 
 1. **Funding and sourcing.** Is a PRC fiber laser acceptable on the intended funds? If not, request IPG and nLIGHT quotes for a 500 W single-mode unit, and a SCANLAB basiCube 20 + RTC6 quote. This now gates the engraver route too, since the MOPA engravers we found use JPT sources (§1b.1).
-2. **Build plate size.** Is Ø53 mm (with a Ø25 mm insert) right for the test coupons we need (density cubes, small tensile bars per the [test-structure notes](../edison-trajectories/am-scaleup-test-structures.md))?
+2. **Build plate size.** The low-profile model now takes Ø25, Ø50 and Ø75 build modules in one floor port ([`modules.md`](modules.md) §2). Which of them do the test coupons need (density cubes, small tensile bars per the [test-structure notes](../edison-trajectories/am-scaleup-test-structures.md))?
 3. **Plate preheat.** Answered on 2026-11-17: yes for Al (§1b.2; sizing in [`requirements-later.md`](requirements-later.md) §1). Still open: a fixed walled tray, which suits an engraver, or a heater riding on the piston?
 4. **Safety reviews.** Who are the LSO and EHS contacts for the laser registration and the NFPA 484 dust hazard analysis?
 5. **CubXL scope.** Should the CubXL be in scope for cartridge filling in phase 4, or should powder dispensing stay with the AutoTrickler line?
