@@ -1,0 +1,86 @@
+{
+ "envelope_mm": {
+  "x": [
+   -1195.0,
+   1205.0
+  ],
+  "y": [
+   -425.0,
+   419.0
+  ],
+  "z": [
+   3.0,
+   718.0
+  ]
+ },
+ "height_over_tray_floor_mm": 715.0,
+ "kardex_max_product_height_mm": 727.5,
+ "antechamber_volume_l": 17.6,
+ "chamber_inside_mm": [
+  1352.0,
+  732.0,
+  667.0
+ ],
+ "chamber_volume_l": 660.0,
+ "port_centre_height_at_opening_mm": 1227.0,
+ "pallet_top_at_opening_mm": 1160.0,
+ "mass": {
+  "parts_kg": {
+   "skid": 14.8,
+   "chamber shell": 70.2,
+   "window frame": 1.4,
+   "window": 7.6,
+   "glove ports": 3.0,
+   "feedthroughs": 0.9,
+   "port cover L": 2.3,
+   "port hinge L": 0.0,
+   "port cover R": 2.3,
+   "port hinge R": 0.0,
+   "gantry rails": 4.5,
+   "gantry bridge": 9.0,
+   "z housing": 2.2,
+   "z stage 1": 0.6,
+   "z stage 2 and gripper": 1.1,
+   "weigh module": 6.0,
+   "weigh pan": 0.1,
+   "draft ring": 0.1,
+   "dome station": 3.1,
+   "dome post": 0.2,
+   "inner landing": 2.2,
+   "antechamber": 20.8,
+   "outer door guide": 3.9,
+   "lock rails": 0.2,
+   "lock valves": 0.8,
+   "lock legs": 1.0,
+   "outer landing": 2.7,
+   "inner door": 1.0,
+   "inner door guide": 0.3,
+   "outer door": 1.0,
+   "services cover": 11.2,
+   "HMI": 2.0,
+   "purifier columns": 48.0,
+   "blower": 14.0,
+   "analysers": 7.0,
+   "PLC and drives": 12.0,
+   "argon buffer": 9.0,
+   "dry pump": 24.0,
+   "pump inlet": 0.1,
+   "gas dock": 4.0,
+   "gas lines": 2.2
+  },
+  "allowance": "15 % on top for fasteners, cabling, tubing and seals",
+  "total_kg": 341.0
+ },
+ "bought_out": {
+  "purifier columns": "two columns, Cu catalyst + 13X sieve, about 12 kg of media each, with housings",
+  "blower": "recirculation blower, about 50 m3/h",
+  "analysers": "O2 (zirconia/electrochemical) and H2O (capacitive) analysers",
+  "PLC and drives": "PLC, safety relay, stepper drives, 24 V supply",
+  "argon buffer": "10 L buffer for antechamber refills, low pressure",
+  "dry pump": "dry scroll pump, 6 m3/h class",
+  "weigh module": "automation weigh module, 0.1 mg class",
+  "gantry bridge": "gantry axes with motors",
+  "HMI": "7 in HMI",
+  "gas dock": "dock with two dry-break couplings"
+ }
+}

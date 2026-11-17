@@ -1,0 +1,95 @@
+{
+ "name": "glovebox_design",
+ "fps": 15,
+ "n_frames": 607,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "1/10",
+   "caption": "The VLM's tray: 2450 x 864 mm, and Kardex lets 727.5 mm of goods through the opening. A stock glovebox is 1.8 to 2 m tall, so this one is drawn to the tray (red box: the envelope).",
+   "start_frame": 0,
+   "end_frame": 62
+  },
+  {
+   "label": "2/10",
+   "caption": "A low skid on anti-vibration pads, bolted to the tray: the VLM accelerates the tray, and the box is lifted on and off as one piece.",
+   "start_frame": 63,
+   "end_frame": 95
+  },
+  {
+   "label": "3/10",
+   "caption": "The chamber: 1352 x 732 x 667 mm inside (660 L), 2 mm 304 stainless. A full-width window and two 8 in glove ports, capped by hinged covers while the box runs on its own.",
+   "start_frame": 96,
+   "end_frame": 149
+  },
+  {
+   "label": "4/10",
+   "caption": "Inside, a ceiling-hung XYZ gantry with a two-finger gripper. Its z axis telescopes, so 300 mm of stroke fits under a 715 mm roof.",
+   "start_frame": 150,
+   "end_frame": 197
+  },
+  {
+   "label": "5/10",
+   "caption": "On the deck: a sample hotel, an automation weigh module under a draft ring, and a station that seals XRD air-sensitive holders with their domes.",
+   "start_frame": 198,
+   "end_frame": 248
+  },
+  {
+   "label": "6/10",
+   "caption": "The antechamber (17.6 L), with sliding gates at both ends and a pallet on rails through it. The pallet comes out to the side, onto a landing inside the tray's footprint. A dry pump sits underneath.",
+   "start_frame": 249,
+   "end_frame": 302
+  },
+  {
+   "label": "7/10",
+   "caption": "The services bay: a dual-column purifier and blower, O2 and H2O analysers, the PLC and an HMI with an e-stop. The box regenerates one column while it runs on the other.",
+   "start_frame": 303,
+   "end_frame": 350
+  },
+  {
+   "label": "8/10",
+   "caption": "A gas dock on the tray's back rim, beside its power socket: argon in and exhaust out, through dry-break couplings that would meet the slot and the opening as the power does (to ask Kardex).",
+   "start_frame": 351,
+   "end_frame": 398
+  },
+  {
+   "label": "9/10",
+   "caption": "715 mm tall, 12.5 mm under Kardex's limit; 2400 x 844 mm, inside the tray's rim. About 340 kg (model.py's estimate): a strong tray (490 kg), not a medium one (360 kg).",
+   "start_frame": 399,
+   "end_frame": 464
+  },
+  {
+   "label": "10/10",
+   "caption": "See-through: the gantry, the stations, the pallet in the lock and the purifier columns.",
+   "start_frame": 465,
+   "end_frame": 509
+  },
+  {
+   "label": "10/10",
+   "caption": "The pallet comes out to the side when the outer gate opens. Nothing crosses the tray's front edge.",
+   "start_frame": 510,
+   "end_frame": 523
+  },
+  {
+   "label": "10/10",
+   "caption": "The pallet comes out to the side when the outer gate opens. Nothing crosses the tray's front edge.",
+   "start_frame": 524,
+   "end_frame": 556
+  },
+  {
+   "label": "10/10",
+   "caption": "The pallet comes out to the side when the outer gate opens. Nothing crosses the tray's front edge.",
+   "start_frame": 557,
+   "end_frame": 579
+  },
+  {
+   "label": "10/10",
+   "caption": "The pallet comes out to the side when the outer gate opens. Nothing crosses the tray's front edge.",
+   "start_frame": 580,
+   "end_frame": 606
+  }
+ ]
+}
