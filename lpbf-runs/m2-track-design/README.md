@@ -209,6 +209,7 @@ rounds, each of up to 64 new tracks: a large-batch, few-round setting.
 | [`eagar_tsai_316l.py`](eagar_tsai_316l.py) | All the Eagar–Tsai runs (about 10 min on 4 cores): `python eagar_tsai_316l.py [grid] [finite] [neighbour]` |
 | [`design.py`](design.py) | The pilot's Sobol blocks; `python design.py` |
 | [`line_sheet.py`](line_sheet.py) | The sheets to enter in the machine software (72 and 48 lines), Ke and Eagar–Tsai at 50 and 130 µm, and the spot figure (about 2 min): `python line_sheet.py`, or `python line_sheet.py figure` to redraw |
+| [`wall_sheet.py`](wall_sheet.py) | Carl's stepped parts (8 walls a part, 3 parts a plate, 2–3 plates): one hatch power and speed per wall, with Ke, Eagar–Tsai and the overlap rule for lack of fusion at 30 and 50 µm layers. Writes `out/wall_sheet.csv` and `out/m2-wall-design.png` (about 2.5 min): `python wall_sheet.py`, or `python wall_sheet.py figure` to redraw. Plan [§4](../m2-single-track-schedule.md#walls-on-stepped-parts-what-carl-is-printing-now-2026-11-17) |
 | [`figures.py`](figures.py) | The two figures above; `python figures.py` |
 | `out/` | CSVs, the along-track profiles (`finite_track_profiles.json`) and the figures |
 

@@ -5,6 +5,13 @@ the [2026-08-13 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab
 if the atomizer-to-printer loop isn't ready, print commercial stainless steel on BYU's M2 and use cross-section SEM
 of single tracks to check the Thermo-Calc AM Module.
 
+**Update, 2026-11-17: Carl's first prints are walls, not single tracks.** Each part is a 1.75 × 0.5 in base with 8
+thin walls on it, and every wall gets its own hatch power and speed. With 3 parts a plate and 2–3 plates, that is
+24 walls a plate, 48 or 72 in all. [§4](#walls-on-stepped-parts-what-carl-is-printing-now-2026-11-17) has the
+settings and what the walls can and can't tell the AM Module. Use the
+[wall sheet](m2-track-design/out/wall_sheet.csv) to enter them. The single-track design below is kept for a later
+run.
+
 **Plan in brief**
 
 1. **One pilot run first.** Carl and Josh print 72 single tracks on the plate's four removable panels: 64
@@ -231,6 +238,86 @@ and the cutting only has to get that strip out and into pieces that fit a mount.
 
 The goal is to get one run all the way from job file to measured cross-sections, with **every step timed**. The
 pilot doubles as a machine health check.
+
+### Walls on stepped parts: what Carl is printing now (2026-11-17)
+
+**The part** (Carl's drawing in [PR #243](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/243)) has a
+base about 1.75 × 0.5 in and 8 thin walls on it. Each wall runs across the 0.5 in width and stands about 0.3 in
+(7.6 mm) tall. Scaled from the drawing, a wall is about 1.3 mm thick, on a 6.2 mm pitch. Every wall gets its own
+parameters. With 3 parts a plate and 2–3 plates, that is 24 walls a plate, 48 or 72 in all.
+
+**What walls measure.** A wall is many tracks and many layers, so it tests bulk printing rather than one melt pool:
+- how much porosity there is, and of which kind (lack of fusion, keyhole, gas);
+- the wall's thickness;
+- in an etched section, the depth of the last layer's melt pools, which nothing remelts.
+
+So the AM Module comparison moves from track width and depth to its **printability map** (lack of fusion, dense,
+keyhole) and the top-layer pool depth. For that comparison, the model needs a substrate temperature above room
+temperature, because a 1.3 mm wall heats up layer by layer, more so at high P/v. Single tracks are still the
+cleanest data for calibrating absorptivity, so they stay planned for a later run.
+
+**Parameters** ([sheet](m2-track-design/out/wall_sheet.csv), [figure](m2-track-design/out/m2-wall-design.png),
+[`wall_sheet.py`](m2-track-design/wall_sheet.py)):
+
+- **Change only the hatch power and speed.** Each wall's set is a copy of the 316L set with the hatch ("Adv.
+  surface area") at the sheet's power and speed. Set the upskin and downskin hatches to that same power and speed,
+  so the wall's whole core, top layers included, runs the test setting. Everything else stays as in the 316L set:
+  - the 130 µm spot, 0.09 mm trace spacing and layer thickness;
+  - the contours, delays and scan strategy.
+
+  The standard contours give every wall the same skin, which also holds the low-energy walls together.
+- **Window:** P 150–370 W and P/v 0.09–0.55 J/mm, which is a third to twice the hatch's 0.274 J/mm, with speed
+  capped at 3000 mm/s. At 0.09 mm trace spacing that is 33–204 J/mm³ with 30 µm layers, or 20–122 J/mm³ with
+  50 µm layers. The upper cap keeps out of the first plate any wall hot enough to swell above the powder, which a
+  thin wall in the recoater's path can't afford. The lower cap still gives a porous core inside standard contours.
+- **Design:** each plate takes 21 points of one scrambled Sobol sequence in (P, log P/v): points 0–20, 21–41 and
+  42–62. Each plate also gets 3 controls at the 316L hatch (370 W, 1350 mm/s), one per part. A plate's 21 settings
+  go to its parts in snake order of P/v, so every part spans the window. Within a part, the settings and the
+  control take random wall positions (seed 100 + plate). Plates 1–2 give 42 settings and plates 1–3 give 63, with
+  61 different powers and 60 different speeds. The controls measure part-to-part and plate-to-plate scatter.
+- **Sobol on every plate unless plate 1 is measured first.** Batch BO needs the previous plate's sections. If
+  plate 1 is sectioned before plate 2 is printed, plate 2's 21 settings can come from BO instead, chosen near the
+  boundaries the AM Module gets wrong.
+- **What Eagar–Tsai expects** (130 µm, absorptivity 0.4, with Tang et al.'s overlap rule for lack of fusion,
+  (h/W)² + (t/D)² ≤ 1, [Addit. Manuf. 2017](https://doi.org/10.1016/j.addma.2016.12.001)):
+  - **With 30 µm layers,** each plate has about 8 lack-of-fusion walls, 12 dense ones, and 0–1 in keyhole mode
+    (Ke ≥ 6).
+  - **With 50 µm layers,** 16–18 of the 21 come out as lack of fusion, and so does the 316L hatch itself, which
+    can't be right for a production set. So either the layer is 30 µm, or Eagar–Tsai's conduction-only depth is too
+    shallow at 50 µm.
+
+  These numbers are only a first guess. The AM Module's map replaces them.
+- **The keyhole side is thin at 130 µm.** No wall goes above Ke 6.3. If plate 1's hottest walls build
+  cleanly, a later plate can raise the P/v cap (to about 0.8 J/mm) or switch to the 50 µm spot to find where keyhole
+  porosity starts.
+
+**Job file and build:**
+
+- Make each wall its own part carrying its set, and give the base the unchanged 316L set. Put everything on LS1.
+- Orient the walls along the recoater's travel, so the blade pushes each wall along its length rather than across
+  its 1.3 mm thickness.
+- Mark every base with its part number and a notch or chamfer at the wall-1 end, so the wall-to-set map survives
+  removal. Write the plate number on each part as it comes off.
+- If the software lets you set the order, expose the parts from the gas-outlet side toward the inlet.
+
+**Sectioning:**
+
+1. Cut each part lengthwise about 1.5 mm off its centreline.
+2. Cut it in half between walls 4 and 5.
+3. Grind each piece to the centreline, so the face crosses four walls. That is two 1.25 in mounts a part and six a
+   plate.
+4. Measure porosity in each wall's core, from 1 mm above the base to 1 mm below the top.
+5. Etch for the last layer's melt pools.
+
+The run sheet's cutting times (C2) assume panels, so time this route in the log.
+
+**Still to confirm with Carl:**
+- the wall thickness and pitch, and whether 0.4 in is the overall height or the base alone;
+- the 316L set's layer thickness;
+- whether the upskin and downskin hatches can be set per part;
+- which way the recoater travels and the gas flows;
+- whether the plates run back to back;
+- the 316L set's scan strategy (islands, rotation), which the model needs.
 
 **Layout (scaled from the photo; adjust once the panels are measured).** Each panel carries **one row of 18
 parallel tracks across its middle**, **12 mm long at 2 mm pitch**, in two groups of nine with a 10 mm gap between the
