@@ -195,7 +195,8 @@ def stills(parts):
     sc.cam(orbit(FOCAL, DIST, 180 + 35, 18), FOCAL)
     Image.fromarray(sc.shot()).save(OUT / "overview-back.png")
     # exploded view
-    sc.set(visible=lambda p: p.step not in (12, 13), offsets=lambda p: tuple(0.9 * e for e in p.explode))
+    clutter = ("front column", "Operator", "E-stop", "Key switch", "Emission", "Reset", "Stack light")
+    sc.set(visible=lambda p: p.step not in (12, 13) and not has(p.name, clutter), offsets=lambda p: tuple(0.9 * e for e in p.explode))
     sc.cam(orbit(FOCAL, DIST * 1.25, AZ, EL), FOCAL)
     Image.fromarray(sc.shot()).save(OUT / "exploded.png")
     # chamber section
