@@ -11,6 +11,7 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 | [`vendor-lookups.csv`](vendor-lookups.csv) | every price and dimension fetched from vendor sites through the lab Pi on 2026-11-13, with URL and time |
 | [`budgets.py`](budgets.py) | sizing arithmetic for powder per build, purge cycles, cross-flow and gantry turnaround |
 | [`edison/`](edison/) | Edison `LITERATURE_HIGH` query on custom LPBF design and its results |
+| [`notes/2026-11-17-student-chat.md`](notes/2026-11-17-student-chat.md) | redacted excerpt of a 2026-11-17 conversation with a student in the lab about designing and building this machine with generative CAD, with a summary of the design points raised (folded in at §1b) |
 | [`mcmaster-parts.csv`](mcmaster-parts.csv) | 69 McMaster-Carr part numbers checked live on 2026-11-17, with quantity, line total, BOM line, dimensions, URL and fetch time |
 | [`cad/lpbf_model.py`](cad/lpbf_model.py) | parametric CadQuery model of the machine: 120 parts in 13 assembly steps (§1a) |
 | [`cad/render.py`](cad/render.py) | renders the stills and GIFs in [`cad/img/`](cad/img/) headless |
