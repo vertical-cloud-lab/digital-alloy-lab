@@ -12,10 +12,10 @@ None of these are in the CAD models yet: neither [`cad/lpbf_model.py`](cad/lpbf_
 
 | Requirement | When | What the base design reserves now |
 |---|---|---|
-| Heated build plate | build 200 °C into phase 1–2; reserve 500 °C | a heater stack in the piston (plate, heater block, ceramic standoffs, cooled piston head); heater and thermocouple feedthroughs; a sliding seal on the cool side of the thermal break; the door stays locked until the plate is below 50 °C |
-| Swappable build-plate sizes | phase 1 | build *modules* (cylinder, piston, heater and plate as one unit) on one floor flange and one Z coupling. The floor opening, recoat stroke, blade, gas nozzle and camera view are sized for the largest module |
-| Swappable hopper sizes | phase 1 | a fixed metering base on the lid with a standard flange; 25/100/250/500 cm³ reservoirs, each with its own shut-off; dose weighing on the metering base, not under the reservoir; large reservoirs sit beside the chamber, not on top |
-| Automation-friendliness | phase 3 | plates (or modules) located on datums and held by a clamp a robot can release; a radiused chamber with a lift-out liner, sloped floor and vacuum port; a cover-slide cassette; a sensor that confirms every step |
+| Heated build plate | build 200 °C in phases 0–1 (README §5, as renumbered on 2026-11-17); reserve 500 °C | a heater stack in the piston (plate, heater block, ceramic standoffs, cooled piston head); heater and thermocouple feedthroughs; a sliding seal on the cool side of the thermal break; the door stays locked until the plate is below 50 °C |
+| Swappable build-plate sizes | phase 2 | build *modules* (cylinder, piston, heater and plate as one unit) on one floor flange and one Z coupling. The floor opening, recoat stroke, blade, gas nozzle and camera view are sized for the largest module |
+| Swappable hopper sizes | phase 2 | a fixed metering base on the lid with a standard flange; 25/100/250/500 cm³ reservoirs, each with its own shut-off; dose weighing on the metering base, not under the reservoir; large reservoirs sit beside the chamber, not on top |
+| Automation-friendliness | phase 4 | plates (or modules) located on datums and held by a clamp a robot can release; a radiused chamber with a lift-out liner, sloped floor and vacuum port; a cover-slide cassette; a sensor that confirms every step |
 | Multi-laser, independently driven | much later | a lid optics port big enough for 2–3 heads; spare head stations on the optics plate; spare scanner, laser and safety channels; chiller and power headroom; the beam layout chosen against the gas flow |
 
 ## 1. Heated build plate
