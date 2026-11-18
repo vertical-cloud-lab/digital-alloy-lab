@@ -98,7 +98,7 @@ The idea is that "if it can cut metal, it can sinter it for sure", and that lase
   - So the galvo answer holds: the galvo scans the melt, and a motorized Z (the autofocus axis) can follow the powder surface on a fixed tray (§1b.2). If the engraver chosen is a gantry type carrying a fiber head instead, §3.1's turnaround problem returns. Its gantry could still drag the recoater blade, but it should not hatch Al.
   - The engraver in the conversation (22:16) wasn't identified, so neither of these is a pick.
 - **Check the height.** The low-profile layout ([`low-profile.md`](low-profile.md)) keeps the process module 564 mm tall for a VLM tray, with an f = 160 mm lens and the galvo 233 mm above the powder. A split MOPA head with a short lens can sit on that layout's optics bridge. A stock engraver's column and base may not fit under the 695 mm bay height, so check before buying.
-- **It replaces six BOM lines:** L1 laser, L2 chiller (the 200 W MOPA is air-cooled), L3 collimator, L5 galvo, L6 f-theta and C1 scan controller. Those lines total $4,265–54,012 today.
+- **It replaces six BOM lines:** L1 laser, L2 chiller (the 200 W MOPA is air-cooled), L3 collimator, L5 galvo, L6 f-theta and C1 scan controller. Those lines total $4,265–47,012 today.
   - With the $9,500 engraver in their place, the BOM is **about $34.8k** on the cheapest options elsewhere, or $58.7k on the premium ones. The realistic component build in §6 is $55–75k.
   - The shutter (L4), the chamber window (L7) and the whole safety chain stay.
 - **It falls short of §3.2's laser spec in four ways, so check these before buying:**
@@ -257,11 +257,11 @@ It is an open frame with no inert enclosure and is roughly 10–30× too slow fo
 
 ### 3.2 Laser and optics
 
-- **Laser.** Use a CW Yb fiber laser at 1070 nm, 300–500 W (run at 150–400 W), single-mode with M² ≤ 1.1. It needs analog power control, a TTL gate or modulation input (IPG YLR: 0–50 kHz), a hardware interlock input and a guide laser.
+- **Laser.** Use a CW Yb fiber laser at 1070 nm, 300–500 W (run at 150–400 W), single-mode with M² ≤ 1.1. It needs analog power control, a TTL gate or modulation input (IPG's YLR-500-U3-SM-AC: to 100 kHz, ≤ 12 µs on/off), a hardware interlock input and a guide laser.
   - Aluminium reflects strongly at 1 µm, so keep power headroom: commercial Al work on an EOS M 290 uses 370 W.
   - Ask every vendor for M² and fiber core size. "Single-module" on Raycus and similar listings describes packaging, not beam mode.
-  - US options are IPG (YLR-500, water-cooled 3U rack, about 40 kg) and nLIGHT (CFL-500). PRC options (Raycus RFL-C500, MAX MFSC-500) are much cheaper. Check the funding source's foreign-sourcing rules before choosing one (see [`foreign-connections/`](../foreign-connections/)).
-  - A 500 W CW unit probably needs a chiller.
+  - US options are IPG and nLIGHT (CFL-500). **IPG quoted its YLR-500-U3-SM-AC on 2026-11-18 at approximately $23k, with a 10–12 week lead time after the order that it says is unlikely to shorten** (forced-air 4U rack, 40 kg, M² ≤ 1.1, 5 m fiber; specs and open items in [`quotes/ipg-ylr-500-u3-sm-ac.md`](quotes/ipg-ylr-500-u3-sm-ac.md)). PRC options (Raycus RFL-C500, MAX MFSC-500) are much cheaper. Check the funding source's foreign-sourcing rules before choosing one (see [`foreign-connections/`](../foreign-connections/)).
+  - The quoted IPG unit is air-cooled at 500 W, so it needs no chiller. A water-cooled alternative would.
   - AlSi10Mg powder absorbs only ~5–10 % at 1070 nm, so 300 W or more gives headroom. 200 W is the floor that has worked: Kempen et al. reached 99 % density with it, and it is what the engraver route (§1b.1) would have. **Specify back-reflection protection** (an isolator, or a laser rated for it), and baffle and cool the scan optics. On NIST's AMMT, scattered and back-reflected light overheated a mirror until its coating failed (via [Edison](edison/answer.md#4-beam-delivery-galvanometer-scanner-vs-gantry)).
 - **Spot size.** d ≈ 4M²λf/(πD), with M² = 1.1 and λ = 1.07 µm:
 
@@ -416,6 +416,7 @@ The project has two aims (2026-11-17, §1b): stay current on generative design o
 
 2. **Chamber and gas loop around the engraver head.** Machine the chamber and prove 2–3 cycles to < 100 ppm with powder loaded. Measure the hold-up and the make-up gas use, and tune the cross-flow velocity, using smoke or particles.
 3. **Full builds with the safety chain.** Interlock commissioning with the beam into the dump, then density cubes.
+   - **Laser lead time.** The CW laser for the component route takes 10–12 weeks after IPG receives the order, plus BYU's PO processing (over $3,500). If the go/no-go point is likely to choose the CW build, order the laser before that point so it arrives in time for phase 3.
 4. **Monitoring and automation.** Photodiode (Thorlabs PDA36A2, $400.01) and layer-image scoring, recipe API, cartridge docking, and CubOS gantry hand-off.
 
 The student would start on assembly and making parts. The materials-science work starts once the equipment is "more or less fixed" (29:01–29:55).
@@ -453,9 +454,9 @@ Ranges are "cheapest listed option" to "premium option" for that line.
 
 | ID | Subsystem | Item | Candidate | Qty | Unit (USD) | Basis |
 |---|---|---|---|---|---|---|
-| L1 | Laser & optics | Fiber laser source | IPG YLR-500 (or nLIGHT CFL-500), US vendors | 1 | 3,300–30,000 | estimate (quotes needed) |
-| L2 | Laser & optics | Laser chiller | Vendor-recommended chiller | 1 | 0–3,000 | estimate |
-| L3 | Laser & optics | Collimator / beam expander | Collimator supplied with laser (QBH) | 1 | 0–512 | fetched (Thorlabs) |
+| L1 | Laser & optics | Fiber laser source | IPG YLR-500-U3-SM-AC (quoted 2026-11-18, approx. $23k, 10-12 weeks ARO; see quotes/ipg-ylr-500-u3-sm-ac.md) | 1 | 3,300–23,000 | quote (IPG, rounded) + estimate |
+| L2 | Laser & optics | Laser chiller | None for the quoted IPG unit (forced-air cooled); vendor-recommended chiller for a water-cooled alternative | 1 | 0–3,000 | estimate |
+| L3 | Laser & optics | Collimator / beam expander | IPG standard collimator, 5 mm beam (7.5 mm option), on the laser's QBH-compatible output | 1 | 0–512 | fetched (Thorlabs) |
 | L4 | Laser & optics | Safety shutter + beam dump | Industrial fiber-laser shutter (quote) | 1 | 508–2,000 | fetched + estimate |
 | L5 | Laser & optics | 2-axis galvo scan head | SCANLAB basiCube 20 (1000 W at 1064 nm without cooling) | 1 | 419–12,000 | fetched (Cloudray) + quote (SCANLAB) |
 | L6 | Laser & optics | F-theta lens | High-power fused-silica f-theta (quote) | 1 | 486–2,500 | fetched (Thorlabs) + agent-sourced (EKSMA) |
@@ -501,7 +502,7 @@ Ranges are "cheapest listed option" to "premium option" for that line.
 | A1 | Automation | Step-confirm sensors, reservoir ID and weighing | AutomationDirect PAM-AP-1H x4; Omron E32-T61-S + E3NX-FA41; NTAG213 on-metal x6 + Adafruit 364; Laumas ALLUE3 + SparkFun SEN-15242 | 1 | 1,132–1,600 | fetched (DigiKey, AutomationDirect, Adafruit, atlasRFIDstore 2026-11-17) |
 | A2 | Automation | Cleaning and consumables | McMaster 2317K278 sheet; Edmund 25-250 x6; McMaster 5572N116 (Class II Div 1/2, Groups E-G, NFPA 484; needs 35 scfm air) | 1 | 3,857–5,117 | fetched (McMaster, Edmund 2026-11-17) |
 
-**Total: $39,233 – $119,771** (with lines H1–A2 for the heated plate, build modules, reservoirs and automation, added 2026-11-17; see [`modules.md`](modules.md) §6) The low figure takes the cheapest listed option on every line; the high figure takes the premium option.
+**Total: $39,233 – $112,771** (with lines H1–A2 for the heated plate, build modules, reservoirs and automation, added 2026-11-17; see [`modules.md`](modules.md) §6) The low figure takes the cheapest listed option on every line; the high figure takes the premium option.
 
 The low end needs a PRC laser and a marking-class galvo, neither confirmed for 500 W CW. Treat it as a floor, not a plan. A realistic first build is a US single-mode laser, a power-rated scan head and an open or SDK controller. That probably lands at $55–75k once quotes are in: the low total with the laser, scan head and controller swapped for $32–48k of US and SCANLAB parts. That is close to an AO Metal A30/A50 or Xact XM200C. So the case for building rests on what we gain, not on price:
 - Ø25–53 mm builds from ~20–80 g of powder;
@@ -509,7 +510,7 @@ The low end needs a PRC laser and a marking-class galvo, neither confirmed for 5
 - full control of scan, gas and recoat;
 - an API for the autonomous loop.
 
-**The engraver route (§1b.1)** buys L1, L2, L3, L5, L6 and C1 ($4,265–54,012 above) as one MOPA engraver. With the $9,500 200 W listing in their place, the total is about **$34.8k–58.7k**. On the realistic build's basis (cheapest options on the other lines), that is $20k–40k less, at 200 W pulsed instead of 300–500 W CW. `bom.csv` keeps the component route until an engraver is chosen.
+**The engraver route (§1b.1)** buys L1, L2, L3, L5, L6 and C1 ($4,265–47,012 above) as one MOPA engraver. With the $9,500 200 W listing in their place, the total is about **$34.8k–58.7k**. On the realistic build's basis (cheapest options on the other lines), that is $20k–40k less, at 200 W pulsed instead of 300–500 W CW. `bom.csv` keeps the component route until an engraver is chosen.
 
 **Geometry.** The layout now lives in the CadQuery model (§1a), whose McMaster parts are listed in §6a. The vendor CAD fetched on 2026-11-13 is listed in [`cad/cad-manifest.csv`](cad/cad-manifest.csv) with sizes and sha256s:
 - McMaster-Carr native models (SolidWorks parts) for the 4566N101 and 6624K69 ball screws and the 78595A5 argon regulator;
@@ -569,7 +570,7 @@ What checking real parts changed:
 
 ## 7. Open questions for the lab
 
-1. **Funding and sourcing.** Is a PRC fiber laser acceptable on the intended funds? If not, request IPG and nLIGHT quotes for a 500 W single-mode unit, and a SCANLAB basiCube 20 + RTC6 quote. This now gates the engraver route too, since the MOPA engravers we found use JPT sources (§1b.1).
+1. **Funding and sourcing.** Is a PRC fiber laser acceptable on the intended funds? If not, IPG has quoted a 500 W single-mode unit (approximately $23k, 10–12 weeks; [`quotes/`](quotes/ipg-ylr-500-u3-sm-ac.md)); still request an nLIGHT quote for comparison, and a SCANLAB basiCube 20 + RTC6 quote. The lead time means this decision should come before the go/no-go point, not after it. This now gates the engraver route too, since the MOPA engravers we found use JPT sources (§1b.1).
 2. **Build plate size.** The low-profile model now takes Ø25, Ø50 and Ø75 build modules in one floor port ([`modules.md`](modules.md) §2). Which of them do the test coupons need (density cubes, small tensile bars per the [test-structure notes](../edison-trajectories/am-scaleup-test-structures.md))?
 3. **Plate preheat.** Answered on 2026-11-17: yes for Al (§1b.2; sizing in [`requirements-later.md`](requirements-later.md) §1). Still open: a fixed walled tray, which suits an engraver, or a heater riding on the piston?
 4. **Safety reviews.** Who are the LSO and EHS contacts for the laser registration and the NFPA 484 dust hazard analysis?
