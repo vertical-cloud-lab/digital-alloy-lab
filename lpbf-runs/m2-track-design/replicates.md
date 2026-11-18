@@ -14,6 +14,11 @@ settings to 28 or 21, and in the simulation below that never paid off unless wal
 2. **Re-grind 2-3 mounts about 0.3 mm deeper and image them again.** That separates the scatter of a single section
    (few pores in about 5 mm2 of wall core) from the scatter between walls, which is the number Sterling is after.
 
+
+Also worth asking before Friday: which recoater blade the M2 has. In Reijonen's thesis, 1-2 mm 316L walls
+were dense at every orientation, but across a hard blade (90 degrees) the walls could only be built for about
+15 layers. Square 4's walls run across the blade.
+
 ## Simulation (`replicates.py`)
 
 Each design is 84 walls. In each of 200 trials the true porosity map is drawn at random around Eagar-Tsai plus
@@ -50,12 +55,12 @@ BO. The docstring has the details.
 
 ## What the literature says about the scatter
 
-Read in the open full text at the links, except where marked.
+Read in the open full text at the links. I re-checked the thesis quotes and Table 8 myself; the others are as a literature-search subagent read them.
 
 | Finding | Source |
 | --- | --- |
 | 316L, 9 positions on one plate: porosity "remains low (<0.07%) at all locations when the gas flow speed is above 2.5 m/s"; for melt pools "intra-specimen variations are much higher than any differences between the locations" | Reijonen et al. 2020, [10.1016/j.addma.2019.101030](https://doi.org/10.1016/j.addma.2019.101030), read in Reijonen's [thesis](https://utupub.fi/bitstream/handle/10024/179475/Annales%20F%2050%20Reijonen%20DISS.pdf?sequence=1) |
-| 316L thin walls: 1.0 mm and thicker at most 0.027 % (CT) at 0, 45 and 90 degrees to the recoater over two builds; 0.7 mm walls 0.004 % at 0 vs 0.164 % at 90 | the same thesis, Table 8 |
+| 316L thin walls (CT): 1.0 mm and thicker at most 0.027 % at 0, 45 and 90 degrees to the recoating direction, with a soft or a hard blade; 0.7 mm walls 0.004 % at 0 vs 0.164 % at 90 (soft blade). "With the hard blade the walls of the 90° specimen could be only built for ~15 layers" | the same thesis, Table 8 and p. 78 |
 | 316L single tracks, one specimen: "intra-specimen variations of 10–23% for penetration"; in walls, porosity from a polished section has "much more scatter" than CT | Reijonen et al. 2024, [10.1016/j.addma.2024.104180](https://doi.org/10.1016/j.addma.2024.104180) |
 | Concept Laser M2, 316L, 130 um beam: keyhole depth along one track "about ±27%"; three repeat tracks at one setting: one large void, small voids, none | King et al. 2014, [10.1016/j.jmatprotec.2014.06.005](https://doi.org/10.1016/j.jmatprotec.2014.06.005) ([OSTI](https://www.osti.gov/servlets/purl/1502044)) |
 | Concept Laser M2, 316L density map: no repeats; "multiple pillars built using a fixed set of process parameters will likely have slightly different densities" | Kamath et al. 2014, [10.1007/s00170-014-5954-9](https://doi.org/10.1007/s00170-014-5954-9) |
