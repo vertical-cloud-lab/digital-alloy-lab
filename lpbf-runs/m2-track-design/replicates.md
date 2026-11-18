@@ -16,8 +16,8 @@ settings to 28 or 21, and in the simulation below that never paid off unless wal
 
 
 Also worth asking before Friday: which recoater blade the M2 has. In Reijonen's thesis, 1-2 mm 316L walls
-were dense at every orientation, but across a hard blade (90 degrees) the walls could only be built for about
-15 layers. Square 4's walls run across the blade.
+were dense at every orientation, but a specimen with 0.3-2 mm walls set across a hard blade (90 degrees) could only
+be built for about 15 layers, probably because of its thinnest walls. Square 4's walls run across the blade.
 
 ## Simulation (`replicates.py`)
 
