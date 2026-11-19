@@ -13,7 +13,7 @@ The numbers behind each claim are in [`estimates.md`](estimates.md) (generated b
 
 1. **The plate never made powder, so the melt left it as 1–3 mm shot that was still liquid when it
    reached the cone.** Fine powder (about 100 µm) freezes within a few centimetres of the plate and
-   lands cool. Drops of 1–3 mm need 2–9 s to freeze, and the fall takes about 0.4 s. So the shot
+   lands cool. Drops of 1–3 mm need seconds to freeze (2–9 s by my estimate, 0.5–5 s by Edison's), and the fall takes about 0.4 s. So the shot
    landed liquid, stuck together around the cone outlet, and piled up and slid into the collection cup,
    bringing most of the charge's ~0.7 MJ with it.
 2. **The seals and the glass were just what that pile touched.** Bronze at about 1000 °C puts the
