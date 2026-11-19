@@ -1,0 +1,52 @@
+{
+ "what": "concept only: a cap for the stock LF-2 with the steel disc on a platform beside the axis",
+ "frame": "C: cap frame, origin at the centre of the skirt underside, z up; seated, C = W + (0, 0, 6); metal at C z -6",
+ "stock_reference_drawn": {
+  "od": 2.0,
+  "overall": 63.0,
+  "relief_len": 15.5,
+  "relief_d": 5.7,
+  "pin_len": 7.0,
+  "pin_d": 1.0,
+  "barrel": 40.5,
+  "tip_C_z": -3.0,
+  "top_C_z": 60.0,
+  "source": "2in.com reference page: 2 mm OD, PEEK, 63 mm overall or custom, 1 mm gold pin; relief and pin from the LF-2-Bent90 photo"
+ },
+ "offset_cap_axis_to_magnet_axis_mm": 24.0,
+ "magnet_face_C_z": 16.0,
+ "mount_C_z": [
+  15.5,
+  58.5
+ ],
+ "reference_above_magnet_face_mm": 44.0,
+ "reference_above_mount_top_mm": 1.5,
+ "with_socket_above_mount_top_mm": 4.5,
+ "clearance_mm": {
+  "barrel_to_mount": 8.5,
+  "relief_to_mount": 6.65,
+  "pin_socket_to_mount": 8.2,
+  "cap_body_to_mount": 1.5
+ },
+ "interference_mm3": {
+  "cap_vs_mount": 0.0,
+  "reference_vs_cap": 0.0,
+  "reference_vs_carrier": 0.0,
+  "reference_vs_coil": 0.0,
+  "cap_vs_lid_seated": 0.0
+ },
+ "platform_underside_above_lid_top_mm": 8.4,
+ "platform_underside_above_boss_top_mm": 4.4,
+ "cap_footprint_mm": {
+  "along_offset": 52.0,
+  "across": 28.0,
+  "was": "28 round"
+ },
+ "mass_g": {
+  "cap_body_petg": 12.85,
+  "steel_disc": 3.95,
+  "was_cap_body_petg": 8.5
+ },
+ "lift_moment_on_magnet_Nmm": 58.6,
+ "lift_note": "the 2.44 N the magnet lifts now acts 24 mm off the magnet's axis: a 59 N mm peel moment on the disc. The P25/20 holds the disc over its 25 mm face; at a 0.09 mm gap at the far edge the pull is a third of contact, so measure the pick-off on the bench before anything else"
+}

@@ -1,5 +1,5 @@
 {
- "price_seen": "2026-10-19 (stirrer item 13: 2026-10-29; B36, B39 and B41: 2026-11-16, from Ben); before shipping and tax",
+ "price_seen": "2026-10-19 (stirrer item 13: 2026-10-29; B36, B39 and B41: 2026-11-16, from Ben; B19: quoted 2026-11-19); before shipping and tax",
  "rows": 33,
  "priced_rows": 30,
  "unpriced_or_quote": [
@@ -7,14 +7,15 @@
   "B45 C95800 nickel-aluminium bronze; continuous-cast ba",
   "B46 PTFE rod 3/4 in; 1 ft (the S4 blank: cut 6 mm disc"
  ],
- "corrosion_usd": 1749.45,
- "of_which_B19_reference_placeholder_usd": 261.0,
+ "corrosion_usd": 1723.45,
+ "of_which_B19_reference_quoted_usd": 235.0,
+ "B19_shipping_usd_not_counted": 15.0,
  "stirrers_usd": 47.26,
  "stirrers_without_ST4_usd": 40.27,
- "total_usd": 1796.71,
+ "total_usd": 1770.71,
  "by_vendor_usd": {
   "OnlineMetals": 326.5,
-  "Innovative Instruments": 261.0,
+  "Innovative Instruments": 235.0,
   "Advent Research Materials": 216.0,
   "Ossila": 165.0,
   "Fisher Scientific": 147.84,

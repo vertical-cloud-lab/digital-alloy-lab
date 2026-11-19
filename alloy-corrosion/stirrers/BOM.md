@@ -23,11 +23,12 @@ Porter's EZstat-Pro is set up) and the 20 µL tips (enough for a few tests).
 
 | | Cost |
 | --- | --- |
-| Corrosion setup: cell, deck, electrodes, chemicals, reference alloys, the 1 µm diamond, tubes | **$1,749.45** |
+| Corrosion setup: cell, deck, electrodes, chemicals, reference alloys, the 1 µm diamond, tubes | **$1,723.45** |
 | Four stir modules, beyond what ME order 13518 brought | **$47.26** ($40.27 if the 100 nF kit, ST4, is already ordered) |
-| **The whole list** | **$1,796.71**, plus three rows with no price yet (below) |
+| **The whole list** | **$1,770.71**, plus three rows with no price yet (below) |
 
-Of that, $261 is a placeholder for the leak-free reference (B19) until it's quoted. The tubes
+Of that, $235 is the leak-free reference (B19), as the vendor quoted it on 19 November, with no charge
+for the custom length; shipping adds $15. The tubes
 (B36), sodium sulfide (B39) and nitric acid (B41) are at the prices Ben got on 16 November. Still to price: the
 C95800 bar (B45, quote only), and the drill rod (B10) and PTFE rod (B46), whose McMaster prices
 couldn't be read. **Not on the list, because the lab has them** (Ben, 2026-11-16): the steel discs
@@ -43,8 +44,8 @@ The polishing pads (B31, B33) are off too: the lab's Mark V MCR12 cloths do thei
 | **OnlineMetals** | | | | **326.50** |
 | B43 | C71500 (70/30 Cu–Ni) round bar, 1 in × 12 in | 1 | [mp-00059842](https://www.onlinemetals.com/en/buy/copper/1-inch-od-copper-nickel-round-bar-715/pid/mp-00059842) | 121.34 |
 | B44 | C70600 (90/10 Cu–Ni) round bar, 1 in | 1 | [mp-00068387](https://www.onlinemetals.com/en/buy/copper-nickel-round-bar) | 205.16 |
-| **Innovative Instruments** | | | | **261.00** |
-| B19 | Leak-free Ag/AgCl reference, 2.0 mm OD, custom: 15.5 mm barrel with a bare silver-wire lead (16.6 mm at most) | 1 | [LF-2, custom length](https://www.2in.com/products/reference/reference.html) | 261.00 (budget; **ask for a quote**) |
+| **Innovative Instruments** | | | | **235.00** |
+| B19 | Leak-free Ag/AgCl reference, 2.0 mm OD, custom: 15.5 mm barrel with a bare silver-wire lead (16.6 mm at most) | 1 | [LF-2, custom length](https://www.2in.com/products/reference/reference.html) | 235.00 (quoted 2026-11-19; $15 shipping) |
 | **Advent Research Materials** | | | | **216.00** |
 | B21 | Platinum wire, 0.25 mm, 99.95 %, 0.2 m | 1 | [PT543404](https://www.advent-rm.com/en-gb/products/pure-metals/platinum/form/wire/line/pt5434) | 216.00 |
 | **Ossila** | | | | **165.00** |
@@ -96,7 +97,7 @@ The polishing pads (B31, B33) are off too: the lab's Mark V MCR12 cloths do thei
 
 Notes on the order:
 
-- **Start the long ones first:** the B19 quote (custom length; what to ask for is in
+- **Start the long ones first:** the B19 order (quoted 19 November; custom length, and what to ask for is in
   [`../bom/README.md`](../bom/README.md#electrodes)) and the B45 quote.
 - **BYU Chem Stores' prices (Ben, 2026-11-16):**
   - **Nitric acid (B41): buy it there.** $119.66 for 500 mL of TraceMetal grade, against $193,

@@ -18,7 +18,7 @@
  "core": {
   "both_hardware_and_consumables_excl_tips": 286.94,
   "tips_if_none_on_hand": 530.0,
-  "electrodes_both": 642.0,
+  "electrodes_both": 616.0,
   "aluminium_only": 83.65,
   "copper_only": 837.69,
   "copper_optional": 813.0
@@ -31,6 +31,6 @@
  },
  "aluminium_start": {
   "phase_A_shakedown_borrowed_potentiostat": 370.59,
-  "plus_electrodes_and_option_1": 1606.04
+  "plus_electrodes_and_option_1": 1580.04
  }
 }

@@ -14,7 +14,7 @@ what happened, why, the fix, and which file changed. Put photos in `build-photos
 file, and keep people's faces and any screen showing a login out of them, since this repo is
 public. Or comment on the PR with `@claude`, the result and a photo, and ask for it to be logged.
 
-## Where things stand on 2026-11-17
+## Where things stand on 2026-11-19
 
 **Nothing has been printed, assembled or tested yet.** Parts are on order.
 
@@ -36,7 +36,7 @@ came to $157 on 2026-11-13, not the $23.96 its pages list.
 
 | BOM | Item | What's needed |
 | --- | --- | --- |
-| B19 | Leak-free Ag/AgCl reference | The vendor's quote. Ben expects it under $300. Pick the straight 15.5 mm barrel with a bare silver wire (what the BOM and build guide describe), or the custom bent LF-2-Bent90, which needs [`electrode_cap_bent90.stl`](copper/cad/electrode_cap_bent90.stl) instead of the electrode cap on the H2D plate ([`copper/cad/README.md`](copper/cad/README.md)) |
+| B19 | Leak-free Ag/AgCl reference | **Quoted: $235 plus $15 shipping**, with no charge for the custom length (Ben, 2026-11-19). Order the straight 15.5 mm barrel with a bare silver wire (what the BOM and build guide describe), or the custom bent LF-2-Bent90, which needs [`electrode_cap_bent90.stl`](copper/cad/electrode_cap_bent90.stl) instead of the electrode cap on the H2D plate ([`copper/cad/README.md`](copper/cad/README.md)). A stock LF-2 costs the same and needs a new cap (log, 2026-11-19) |
 | B45 | C95800 bar | A quote, with the mill cert |
 | B43, B44 | C71500 and C70600 bars | Ben's question: does the lab already have Cu–Ni stock? |
 | B41 | Trace-metal nitric acid, 500 mL | **From BYU Chem Stores**, $119.66 (Ben, 2026-11-16), against $193 shipped as hazmat |
@@ -149,6 +149,31 @@ Still open in the design: one well per lid (no offset lid drawn), and the copper
 not rerun for the v2 lid's neck.
 
 ## Log
+
+### 2026-11-19: a stock reference instead of the custom one?
+
+From [Ben's question](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-7023569457) ([the reply](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-7023578178)): could the cap take a standard
+reference if the steel disc moved to a platform beside it, with the electrode standing out of the
+top? Would that save money? The vendor quoted the custom one at $235 plus $15 shipping, with no
+charge for the customization. **It would fit, but it saves nothing, so keep the current cap.**
+- **The concept** is in [`copper/cad/README.md`](copper/cad/README.md#a-stock-reference-with-the-disc-on-a-side-platform-concept-2026-11-19),
+  drawn by `copper/cad/ref_stock_concept.py` around the stock LF-2 (2.0 mm PEEK, 63 mm with a
+  1 mm gold pin) under the PAW-V2 mount's STEP file.
+  - With the cap 24 mm off the magnet's axis, the electrode clears the mount by 6.6 mm.
+  - The electrode stands 44 mm above the magnet face, and the cap grows to 28 × 52 mm.
+  - The lift is 24 mm off the magnet's axis.
+  - The gold pin needs a socket and a jumper.
+- **No saving.** A stock LF-2 costs the same as the custom one. The cheaper stock 2 mm references,
+  WPI's Dri-Refs ($158–219), are by WPI's manuals not meant for measurements longer than a few
+  minutes, and a spot holds the reference in seawater for about an hour.
+- **B19 is now $235** in the BOM, with $15 of shipping not counted, as for every other row.
+  - Still to get: $1,077.10 plus the C95800 quote (was $1,103.10).
+  - The stirrer order list: $1,770.71 (was $1,796.71).
+  - The BOM's "electrodes, both alloys": $616 (was $642).
+  - "Aluminium, running, with option 1": $1,580 (was $1,606).
+- **Files:** `copper/cad/ref_stock_concept.py`, `ref_stock_concept.json`, `ref-stock-concept.png`
+  and `README.md`. Also `bom/bom.csv` (B19), `bom/README.md`, `bom/totals.json`,
+  `stirrers/order_list.py`, `order-list.csv`, `order-totals.json` and `stirrers/BOM.md`.
 
 ### 2026-11-17: the polishing liquids on hand (1 µm alumina, 0.1 µm diamond)
 

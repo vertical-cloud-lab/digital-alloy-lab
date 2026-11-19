@@ -95,12 +95,13 @@ def main():
         by_vendor[r["vendor"]] += r["price_usd"]
     quotes = [f'{r["id"]} {r["item"][:50]}' for r in out if r["price_usd"] is None]
     totals = {
-        "price_seen": "2026-10-19 (stirrer item 13: 2026-10-29; B36, B39 and B41: 2026-11-16, from Ben); before shipping and tax",
+        "price_seen": "2026-10-19 (stirrer item 13: 2026-10-29; B36, B39 and B41: 2026-11-16, from Ben; B19: quoted 2026-11-19); before shipping and tax",
         "rows": len(out),
         "priced_rows": len(priced),
         "unpriced_or_quote": quotes,
         "corrosion_usd": round(sum(r["price_usd"] for r in priced if r["for"] == "corrosion"), 2),
-        "of_which_B19_reference_placeholder_usd": 261.0,
+        "of_which_B19_reference_quoted_usd": 235.0,
+        "B19_shipping_usd_not_counted": 15.0,
         "stirrers_usd": round(sum(r["price_usd"] for r in priced if r["for"] == "stirrers"), 2),
         "stirrers_without_ST4_usd": round(sum(r["price_usd"] for r in priced if r["for"] == "stirrers" and r["id"] != "ST4"), 2),
         "total_usd": round(sum(r["price_usd"] for r in priced), 2),
