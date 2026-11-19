@@ -82,10 +82,11 @@ CAM.update({
     "tray_hi": [(1385, -430, 120), (1420, -170, -92), UP],
     "bandsaw": [(1610, -235, 120), (1708, -10, 20), UP],
     "bandsaw_far": [(1630, -300, 170), (1720, -20, 10), UP],
-    "psaw_w": [(2150, -112, 78), (2050, 0, 42), UP],
-    "psaw_x": [(2140, -105, 70), (2050, 0, 36), UP],
+    "psaw_w": [(1990, -92, 50), (2050, -2, 30), UP],
+    "psaw_x": [(1992, -88, 46), (2046, 0, 28), UP],
     "piece": [(2082, 52, 2), (2125, 110, -36), UP],
     "row24": [(2380, -660, 240), (2430, -240, -80), UP],
+    "mon": [(M.MON_C[0], -880, 168), (M.MON_C[0], 40, 168), UP],   # lower than steps.py's: room for a caption warning
 })
 
 
@@ -425,7 +426,7 @@ def chapter_setup():
             warn="in Carl's photos the Part parameter window greys out power and speed. Make the 61 sets under "
                  "Parameter and assign one to each wall; check a few in the layer view before the print.",
             labels=[("square 1 (panel A)", sq[1], (0.06, 0.78)),
-                    ("square 4: turned 90°,\nrepeats 21 walls", sq[4], (0.95, 0.20)),
+                    ("square 4: turned 90°,\nrepeats 21 walls", sq[4], (0.95, 0.30)),
                     ("darker blue = higher P/v\ngrey = the control", sq[2], (0.95, 0.72))])
 
     def one(u):
@@ -712,7 +713,7 @@ def chapter_section():
             "it holds a second plane through every wall.",
             8.0, to_saw, hold=0.6, cam_to=None,
             warn="clamp the part by its base and feed slowly: the 1.27 mm walls can bend or chatter in the cut.",
-            labels=[("cut plane: 1.5 mm off the centreline", (M.PSAW_X, -10, 60), (0.95, 0.22))])
+            labels=[("cut plane: 1.5 mm off the centreline", (M.PSAW_X, -20, 36), (0.95, 0.30))])
 
     def cross(u):
         sc.alpha["pc_offcut"] = 1.0 - window(u, 0.0, 0.1)
@@ -969,7 +970,7 @@ def chapter_sem():
     sc.step("C6 · pool depth at the top",
             "The AM Module's steady-state pool is one of these arcs, if the hatch runs along the wall. If it runs "
             "across, the section shows only a flat fusion line, which gives the depth but not the width.",
-            3.0, to_screen("etched"), hold=3.4, cam_to=CAM["mon"], still=True,
+            3.0, to_screen("etched"), hold=3.4, cam_to=CAM["mon"], still=True, warn_at="caption",
             warn="if the hatch runs across the wall, the section gives depth but no width.")
     return sc.save()
 
@@ -993,14 +994,14 @@ def chapter_results():
     sc.step("C6 · segment and classify the pores",
             "Threshold every image the same way, keep the pores inside the core band, and sort them by shape: flat, "
             "irregular lack-of-fusion pores along the layers, round keyhole pores. Porosity is their area fraction.",
-            1.5, swap("seg", "etched"), hold=4.2,
+            1.5, swap("seg", "etched"), hold=4.2, warn_at="caption",
             warn="a dense wall's section holds only a few pores, so its porosity can differ by 50-100 % from one "
                  "section to the next. The pairs and the re-ground mounts measure that.")
     sc.step("C7 · on the map",
             "Each wall's porosity goes on the power–speed map, next to the AM Module's lack-of-fusion and keyhole "
             "boundaries, run in batch for all 61 settings and committed before the print. The 21 pairs show "
             "whether turning the part changed anything.",
-            1.5, swap("map", "seg"), hold=4.6,
+            1.5, swap("map", "seg"), hold=4.6, warn_at="caption",
             warn="a 1.27 mm wall heats up layer by layer. Run the AM Module with a substrate warmer than room "
                  "temperature as well, and compare both.")
     sc.step("C7 · per wall, and the next build",

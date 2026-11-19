@@ -43,6 +43,8 @@ CLEAN = bool(os.environ.get("VIZ3D_CLEAN"))     # no text at all; writes out/cle
 HD = bool(os.environ.get("VIZ3D_HD"))           # out/hd/ with the text and out/clean/ without (see the docstring)
 GIF_SIZE = (800, 450)
 FONT_DIR = Path("/usr/share/fonts/truetype/dejavu")
+WARN_HEAD = "\u26a0 Watch out: "
+WARN_INK = (176, 64, 16)
 PREVIEW = bool(os.environ.get("PREVIEW"))   # render only the last frame of each sub-step, to /tmp
 
 
@@ -174,6 +176,7 @@ class Scene:
         self.caption = ""
         self.label = ""
         self.warn = ""                            # a likely problem, shown in orange under the label
+        self.warn_at = "top"                      # or "caption", for frames a screen fills
         self.gauges: list[tuple[str, str]] = []
         self.labels: list[tuple[str, tuple, tuple, float]] = []   # (text, xyz, (fx, fy), alpha)
         self.n = 0                     # frames written to the MP4
@@ -268,6 +271,20 @@ class Scene:
         dx, dy, _ = ren.GetDisplayPoint()
         return dx / self.size[0], 1.0 - dy / self.size[1]
 
+    def _wrap_warn(self, d, f, fb, maxw):
+        """Wrap self.warn into lines no wider than maxw; the first line leaves room for the bold WARN_HEAD."""
+        lines, cur, first = [], "", True
+        for w_ in self.warn.split():
+            t = (cur + " " + w_).strip()
+            room = maxw - (d.textlength(WARN_HEAD, font=fb) if first else 0)
+            if d.textlength(t, font=f) > room and cur:
+                lines.append(cur)
+                cur, first = w_, False
+            else:
+                cur = t
+        lines.append(cur)
+        return lines
+
     def overlay(self, img: Image.Image, scale: float, anchors) -> Image.Image:
         if CLEAN:
             return img
@@ -289,33 +306,23 @@ class Scene:
                                 fill=(30, 60, 140, 235))
             d.text((W - w - pad - 10 * s, 12 * s), self.label, font=fl, fill=(255, 255, 255))
         # a likely problem: an orange box under the step label, wrapped to about 40 % of the frame
-        if self.warn:
-            fw = font(15 * s)
-            fwb = font(15 * s, bold=True)
-            head = "\u26a0 Watch out: "
-            maxw = 0.40 * W
-            words, lines, cur = self.warn.split(), [], head
-            for w_ in words:
-                t = (cur + " " + w_) if cur != head else cur + w_
-                if d.textlength(t, font=fw) > maxw and cur != head:
-                    lines.append(cur)
-                    cur = w_
-                else:
-                    cur = t
-            lines.append(cur)
+        if self.warn and self.warn_at == "top":
+            fw, fwb = font(15 * s), font(15 * s, bold=True)
+            lines = self._wrap_warn(d, fw, fwb, 0.40 * W)
             lh = 20 * s
-            bw = max(d.textlength(t, font=fw) for t in lines) + 2 * pad
+            widths = [d.textlength(WARN_HEAD, font=fwb) + d.textlength(t, font=fw) if i == 0 else
+                      d.textlength(t, font=fw) for i, t in enumerate(lines)]
+            bw = max(widths) + 2 * pad
             x1 = W - 10 * s
             y0 = 8 * s + 30 * s + 6 * s
             d.rounded_rectangle((x1 - bw, y0, x1, y0 + len(lines) * lh + 1.2 * pad), 6 * s,
                                 fill=(255, 240, 228, 238), outline=(214, 92, 36, 255), width=max(1, int(2 * s)))
             for i, t in enumerate(lines):
+                x, y = x1 - bw + pad, y0 + 0.6 * pad + i * lh
                 if i == 0:
-                    hw = d.textlength(head, font=fwb)
-                    d.text((x1 - bw + pad, y0 + 0.6 * pad), head, font=fwb, fill=(176, 64, 16))
-                    d.text((x1 - bw + pad + hw, y0 + 0.6 * pad), t[len(head):], font=fw, fill=(30, 20, 14))
-                else:
-                    d.text((x1 - bw + pad, y0 + 0.6 * pad + i * lh), t, font=fw, fill=(30, 20, 14))
+                    d.text((x, y), WARN_HEAD, font=fwb, fill=WARN_INK)
+                    x += d.textlength(WARN_HEAD, font=fwb)
+                d.text((x, y), t, font=fw, fill=(30, 20, 14))
         # gauges, under the title
         if self.gauges:
             fg = font(15 * s, mono=True)
@@ -365,12 +372,22 @@ class Scene:
                     else:
                         cur = t
                 lines.append(cur)
+            wl = []
+            if self.warn and self.warn_at == "caption":
+                wl = self._wrap_warn(d, fc, font(18 * s, bold=True), maxw)
             lh = 24 * s
-            h = len(lines) * lh + 2 * pad
+            h = (len(lines) + len(wl)) * lh + 2 * pad
             d.rectangle((0, H - h - 8 * s, W, H), fill=(255, 255, 255, 232))
             d.line([(0, H - h - 8 * s), (W, H - h - 8 * s)], fill=(30, 60, 140, 255), width=max(1, int(2 * s)))
             for i, t in enumerate(lines):
                 d.text((30 * s, H - h - 8 * s + pad + i * lh), t, font=fc, fill=(15, 15, 20))
+            for i, t in enumerate(wl):
+                x, y = 30 * s, H - h - 8 * s + pad + (len(lines) + i) * lh
+                if i == 0:
+                    fb = font(18 * s, bold=True)
+                    d.text((x, y), WARN_HEAD, font=fb, fill=WARN_INK)
+                    x += d.textlength(WARN_HEAD, font=fb)
+                d.text((x, y), t, font=fc, fill=WARN_INK)
         return img
 
     # ------------------------------------------------------------------------------- frames
@@ -409,12 +426,13 @@ class Scene:
         return hi
 
     def step(self, label, caption, seconds, update=None, hold=1.2, cam_to=None, labels=(), still=False,
-             view_angle_to=None, live=False, warn=""):
+             view_angle_to=None, live=False, warn="", warn_at="top"):
         """One sub-step: `seconds` of motion (update(u), u eased 0 -> 1, camera to `cam_to`), then `hold` s."""
         start = self.n
         self.label = label
         self.caption = " ".join(caption.split())
         self.warn = " ".join(warn.split())
+        self.warn_at = warn_at
         if self.n == 0 and not PREVIEW:
             # a clean establishing view first (no leader labels): it shows during the tutorial's crossfade
             self.labels = []
