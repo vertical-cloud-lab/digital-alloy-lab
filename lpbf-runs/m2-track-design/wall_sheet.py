@@ -59,14 +59,15 @@ sys.path.insert(0, str(HERE))
 from eagar_tsai_316l import steady_state_pkg  # noqa: E402
 from line_sheet import keyhole_number           # noqa: E402
 
-SEED = 100                       # issue #100
-SPOT_UM = 130.0                  # the 316L hatch's spot
-TRACE_MM = 0.09                  # the 316L hatch's trace spacing (Carl's photos)
+SEED = 243                       # PR #243; a fresh draw (2026-11-19), not the earlier sheets' seed-100 sequence
 LAYERS_UM = (30.0, 50.0)         # the 316L set's layer is not in the photos yet: both are shown
 P_RANGE = (150.0, 370.0)         # W; 370 W is the 316L hatch, the most the photos show
-EL_RANGE = (0.09, 0.55)          # J/mm, P/v; the 316L hatch is 0.274
+D_RANGE = (50.0, 200.0)          # um, spot, log-uniform; the 316L set uses 50, 70 and 130 (photos); variable focus 50-500
+H_RANGE = (0.06, 0.14)           # mm, trace (hatch) spacing; the 316L hatch is 0.09, its upskin 0.075
+EA_RANGE = (1.0, 6.1)            # J/mm^2, P/(v h), log-uniform; the 316L hatch is 3.05. Same caps as before at h = 0.09
 V_MAX = 3000.0                   # mm/s
-CONTROL = dict(set="C", P=370.0, v=1350.0)     # the 316L hatch ("Adv. surface area")
+CONTROL = dict(set="C", P=370.0, v=1350.0, d=130.0, h=0.09)    # the 316L hatch ("Adv. surface area")
+SPOT_UM, TRACE_MM = CONTROL["d"], CONTROL["h"]                 # the control's, for the figure's reference lines
 SQUARES, PARTS, WALLS = 4, 3, 7                # 4 squares (panels), 3 parts a square, 7 walls a part
 MAP_SQUARES = 3                                # squares 1-3 carry the settings, walls along the recoater's travel
 TURNED = 4                                     # square 4: turned 90 degrees, part k a copy of square k's part k
@@ -74,9 +75,6 @@ PER_SQUARE = PARTS * WALLS - 1                 # 20 Sobol settings + 1 control o
 N_SOBOL = MAP_SQUARES * PER_SQUARE             # 60
 ALONG, ACROSS = "along", "turned 90°"
 
-# The two WRX Control tabs that change, with the fields that stay as in the 316L set (Carl's photos, 2026-11-10)
-TABS = {"Adv. surface area": dict(trace_mm=0.09, spot_um=130, offset_mm=0.11),
-        "Upside surface area": dict(trace_mm=0.075, spot_um=130, offset_mm=0.14)}
 
 # The part (Carl, 2026-11-17): 0.05 in walls on a 1.75 x 0.5 in base; the pitch assumes flush end walls.
 IN = 25.4
@@ -95,20 +93,26 @@ def hatch_vectors() -> dict:
                 across=(round(length / TRACE_MM) + 1, round(width, 2)))
 
 
-def to_pv(u: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Unit square -> (P in W, v in mm/s): P linear in P_RANGE, P/v log-uniform between max(EL_lo, P/V_MAX) and
-    EL_hi, so no point needs more than V_MAX. Rounded to 1 W and 5 mm/s."""
+def to_settings(u: np.ndarray) -> tuple[np.ndarray, ...]:
+    """Unit cube -> (P W, v mm/s, spot um, trace spacing mm). P linear in P_RANGE; spot log-uniform in D_RANGE;
+    trace spacing linear in H_RANGE; areal energy E_A = P/(v h) log-uniform between max(EA_lo, P/(V_MAX h)) and
+    EA_hi, so no point needs more than V_MAX. Rounded to 1 W, 5 mm/s, 5 um and 0.005 mm."""
     P = np.round(P_RANGE[0] + u[:, 0] * (P_RANGE[1] - P_RANGE[0]))
-    lo = np.log(np.maximum(EL_RANGE[0], P / V_MAX))
-    el = np.exp(lo + u[:, 1] * (math.log(EL_RANGE[1]) - lo))
-    return P, np.round(P / el / 5.0) * 5.0
+    d = np.round(np.exp(math.log(D_RANGE[0]) + u[:, 1] * math.log(D_RANGE[1] / D_RANGE[0])) / 5.0) * 5.0
+    h = np.round((H_RANGE[0] + u[:, 2] * (H_RANGE[1] - H_RANGE[0])) / 0.005) * 0.005
+    lo = np.log(np.maximum(EA_RANGE[0], P / (V_MAX * h)))
+    ea = np.exp(lo + u[:, 3] * (math.log(EA_RANGE[1]) - lo))
+    return P, np.round(P / (ea * h) / 5.0) * 5.0, d, np.round(h, 3)
 
 
 def control_unit() -> np.ndarray:
-    """The control's place in the same unit square."""
-    lo = math.log(max(EL_RANGE[0], CONTROL["P"] / V_MAX))
-    return np.array([(CONTROL["P"] - P_RANGE[0]) / (P_RANGE[1] - P_RANGE[0]),
-                     (math.log(CONTROL["P"] / CONTROL["v"]) - lo) / (math.log(EL_RANGE[1]) - lo)])
+    """The control's place in the same unit cube."""
+    c = CONTROL
+    lo = math.log(max(EA_RANGE[0], c["P"] / (V_MAX * c["h"])))
+    return np.array([(c["P"] - P_RANGE[0]) / (P_RANGE[1] - P_RANGE[0]),
+                     math.log(c["d"] / D_RANGE[0]) / math.log(D_RANGE[1] / D_RANGE[0]),
+                     (c["h"] - H_RANGE[0]) / (H_RANGE[1] - H_RANGE[0]),
+                     (math.log(c["P"] / (c["v"] * c["h"])) - lo) / (math.log(EA_RANGE[1]) - lo)])
 
 
 def sobol(n: int, seed: int = SEED) -> np.ndarray:
@@ -116,7 +120,7 @@ def sobol(n: int, seed: int = SEED) -> np.ndarray:
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")      # n = 60 is not a power of 2; fine for a prefix of the sequence
-        return qmc.Sobol(d=2, scramble=True, seed=seed).random(n)
+        return qmc.Sobol(d=4, scramble=True, seed=seed).random(n)
 
 
 def pick_copied(u: np.ndarray) -> list[tuple[int, ...]]:
@@ -154,16 +158,17 @@ def pick_copied(u: np.ndarray) -> list[tuple[int, ...]]:
 def walls() -> list[dict]:
     """The 84 walls in square, part, wall order, with their settings (no model columns yet)."""
     u = sobol(N_SOBOL)
-    P, v = to_pv(u)
+    P, v, d, h = to_settings(u)
     picks = pick_copied(u)
+    ea = P / (v * h)
 
     def setting(i: int) -> dict:
-        return dict(set=f"W{i:03d}", sobol_index=i, P=float(P[i]), v=float(v[i]))
+        return dict(set=f"W{i:03d}", sobol_index=i, P=float(P[i]), v=float(v[i]), d=float(d[i]), h=float(h[i]))
 
     rows, copied = [], {}
     for s in range(MAP_SQUARES):
         rest = sorted((i for i in range(s * PER_SQUARE, (s + 1) * PER_SQUARE) if i not in picks[s]),
-                      key=lambda i: P[i] / v[i])
+                      key=lambda i: ea[i])
         others = [k for k in range(PARTS) if k != s]          # square s+1's part s+1 is the one copied
         parts = {k: [] for k in range(PARTS)}
         parts[s] = [setting(i) for i in picks[s]] + [dict(CONTROL, sobol_index="")]
@@ -171,7 +176,7 @@ def walls() -> list[dict]:
             parts[others[r % 2 if (r // 2) % 2 == 0 else 1 - r % 2]].append(setting(i))
         rng = np.random.default_rng(SEED + s)
         for k in range(PARTS):
-            sets = sorted(parts[k], key=lambda d: d["P"] / d["v"])
+            sets = sorted(parts[k], key=lambda r: r["P"] / (r["v"] * r["h"]))
             placed = [dict(square=s + 1, part=k + 1, wall=pos + 1, orientation=ALONG, copy_of="", **sets[j])
                       for pos, j in enumerate(rng.permutation(len(sets)))]
             rows += placed
@@ -183,31 +188,33 @@ def walls() -> list[dict]:
 
 
 def _et(args):
-    P, v = args
-    r = steady_state_pkg(P, v * 1e-3, spot_um=SPOT_UM)
+    P, v, d = args
+    r = steady_state_pkg(P, v * 1e-3, spot_um=d)
     return r["W"], r["D"]
 
 
-def et_values(keys: list[tuple[float, float]]) -> dict:
-    """Eagar-Tsai (W, D) in um for each (P, v). Points already in out/wall_sheet.csv or out/wall_regime_grid.csv
-    are reused (they are the same model at the same spot, rounded to 0.1 um), since Eagar-Tsai at 1 um takes many
-    minutes; the rest are computed. `python wall_sheet.py fresh` computes them all."""
+ET_CACHE = OUT / "wall_et_cache.csv"
+
+
+def et_values(keys: list[tuple[float, float, float]]) -> dict:
+    """Eagar-Tsai (W, D) in um for each (P, v, spot). Points already in out/wall_et_cache.csv are reused, since
+    Eagar-Tsai at 1 um takes many minutes; the rest are computed and added to it. `fresh` recomputes them all."""
     known: dict = {}
-    if "fresh" not in sys.argv[1:]:
-        for name, pk, vk in (("wall_sheet.csv", "power_W", "speed_mm_s"), ("wall_regime_grid.csv", "P_W", "v_mm_s")):
-            if (OUT / name).exists():
-                for r in csv.DictReader(open(OUT / name, encoding="utf-8")):
-                    known[(float(r[pk]), float(r[vk]))] = (float(r["ET_width_um"]), float(r["ET_depth_um"]))
+    if "fresh" not in sys.argv[1:] and ET_CACHE.exists():
+        for r in csv.DictReader(open(ET_CACHE, encoding="utf-8")):
+            known[(float(r["P_W"]), float(r["v_mm_s"]), float(r["spot_um"]))] = (float(r["W_um"]), float(r["D_um"]))
     missing = sorted(set(keys) - set(known))
     if missing:
         with ProcessPoolExecutor() as ex:
             known.update(zip(missing, ex.map(_et, missing)))
+        write(ET_CACHE, [dict(P_W=k[0], v_mm_s=k[1], spot_um=k[2], W_um=round(w, 1), D_um=round(dd, 1))
+                         for k, (w, dd) in sorted(known.items())])
     return {k: known[k] for k in keys}
 
 
-def lof_index(W_um: float, D_um: float, t_um: float) -> float:
+def lof_index(W_um: float, D_um: float, t_um: float, h_mm: float) -> float:
     """Tang et al. (2017): (h/W)^2 + (t/D)^2; above 1 means lack of fusion."""
-    return (TRACE_MM * 1e3 / W_um) ** 2 + (t_um / D_um) ** 2
+    return (h_mm * 1e3 / W_um) ** 2 + (t_um / D_um) ** 2
 
 
 def regime(lof: float, ke: float) -> str:
@@ -217,59 +224,54 @@ def regime(lof: float, ke: float) -> str:
 
 
 def set_name(r: dict) -> str:
-    return f"{r['set']}_{int(r['P'])}W_{int(r['v'])}"
+    """ID first: WRX Control's job tree cuts names off after about ten characters."""
+    return f"{r['set']}_{int(r['P'])}W_{int(r['v'])}_{int(r['d'])}um_h{round(r['h'] * 1000):03d}"
 
 
-def with_model(rows: list[dict]) -> list[dict]:
-    et = et_values(sorted({(r["P"], r["v"]) for r in rows}))
+def with_model(rows: list[dict], et: bool = True) -> list[dict]:
+    """Adds energy, Ke and (unless et is False) Eagar-Tsai width and depth and the overlap-rule regimes."""
+    W_D = et_values(sorted({(r["P"], r["v"], r["d"]) for r in rows})) if et else {}
     out = []
     for r in rows:
-        W, D = et[(r["P"], r["v"])]
-        ke = keyhole_number(r["P"], r["v"], SPOT_UM)
+        ke = keyhole_number(r["P"], r["v"], r["d"])
         el = r["P"] / r["v"]
-        lof = {t: lof_index(W, D, t) for t in LAYERS_UM}
-        out.append(dict(square=r["square"], part=r["part"], wall=r["wall"], orientation=r["orientation"],
-                        copy_of=r["copy_of"], set=r["set"], set_name=set_name(r),
-                        sobol_index=r["sobol_index"], power_W=int(r["P"]), speed_mm_s=int(r["v"]),
-                        spot_um=int(SPOT_UM), trace_spacing_mm=TRACE_MM, P_over_v_J_mm=round(el, 4),
-                        VED_30um_J_mm3=round(el / (TRACE_MM * 0.030), 1),
-                        VED_50um_J_mm3=round(el / (TRACE_MM * 0.050), 1), Ke=round(ke, 2),
-                        ET_width_um=round(W, 1), ET_depth_um=round(D, 1),
-                        LoF_index_30um=round(lof[30.0], 2), LoF_index_50um=round(lof[50.0], 2),
-                        regime_30um=regime(lof[30.0], ke), regime_50um=regime(lof[50.0], ke)))
+        row = dict(square=r["square"], part=r["part"], wall=r["wall"], orientation=r["orientation"],
+                   copy_of=r["copy_of"], set=r["set"], set_name=set_name(r), sobol_index=r["sobol_index"],
+                   power_W=int(r["P"]), speed_mm_s=int(r["v"]), spot_um=int(r["d"]), trace_spacing_mm=r["h"],
+                   P_over_v_J_mm=round(el, 4), E_area_J_mm2=round(el / r["h"], 2),
+                   VED_30um_J_mm3=round(el / (r["h"] * 0.030), 1), VED_50um_J_mm3=round(el / (r["h"] * 0.050), 1),
+                   Ke=round(ke, 2))
+        if et:
+            W, D = W_D[(r["P"], r["v"], r["d"])]
+            lof = {t: lof_index(W, D, t, r["h"]) for t in LAYERS_UM}
+            row.update(ET_width_um=round(W, 1), ET_depth_um=round(D, 1), LoF_index_30um=round(lof[30.0], 2),
+                       LoF_index_50um=round(lof[50.0], 2), regime_30um=regime(lof[30.0], ke),
+                       regime_50um=regime(lof[50.0], ke))
+        out.append(row)
     return out
 
 
+TABS = ("Adv. surface area", "Upside surface area")
+
+
 def sets_table(sheet: list[dict]) -> list[dict]:
-    """One row per parameter set to make, in WRX Control's own field names, and the walls that use it."""
+    """One row per parameter set to make, in WRX Control's own field names, and the walls that use it. Both tabs
+    (hatch and upskin) get the same four values; the offset to the original contour stays as in the 316L set."""
     by_set: dict[str, list[dict]] = {}
     for r in sheet:
         by_set.setdefault(r["set"], []).append(r)
     rows = []
     for s in sorted(by_set, key=lambda s: (s != "C", s)):
-        rs = by_set[s]
-        row = {"Set name": rs[0]["set_name"]}
-        for tab, keep in TABS.items():
-            row[f"{tab}: Power (W)"] = rs[0]["power_W"]
-            row[f"{tab}: Speed (mm/s)"] = rs[0]["speed_mm_s"]
-            row[f"{tab}: Trace spacing (mm)"] = keep["trace_mm"]
-            row[f"{tab}: Spot size (µm)"] = keep["spot_um"]
-            row[f"{tab}: Offset to original contour (mm)"] = keep["offset_mm"]
-        row["Walls (square.part.wall)"] = " ".join(f"{r['square']}.{r['part']}.{r['wall']}" for r in rs)
+        r0 = by_set[s][0]
+        row = {"Set name": r0["set_name"]}
+        for tab in TABS:
+            row[f"{tab}: Power (W)"] = r0["power_W"]
+            row[f"{tab}: Speed (mm/s)"] = r0["speed_mm_s"]
+            row[f"{tab}: Trace spacing (mm)"] = r0["trace_spacing_mm"]
+            row[f"{tab}: Spot size (µm)"] = r0["spot_um"]
+        row["Walls (square.part.wall)"] = " ".join(f"{r['square']}.{r['part']}.{r['wall']}" for r in by_set[s])
         rows.append(row)
     return rows
-
-
-def regime_grid() -> list[dict]:
-    """Eagar-Tsai on a coarse (P, v) grid for the figure's lack-of-fusion boundaries."""
-    Ps = np.linspace(130.0, 390.0, 9)
-    vs = np.geomspace(220.0, 3400.0, 11)
-    keys = [(float(p), float(round(v))) for p in Ps for v in vs]
-    et = et_values(keys)
-    res = [et[k] for k in keys]
-    return [dict(P_W=p, v_mm_s=v, ET_width_um=round(W, 1), ET_depth_um=round(D, 1),
-                 LoF_index_30um=round(lof_index(W, D, 30.0), 3), LoF_index_50um=round(lof_index(W, D, 50.0), 3))
-            for (p, v), (W, D) in zip(keys, res)]
 
 
 # --- figure ---------------------------------------------------------------------------------------------------------
@@ -279,89 +281,60 @@ TINT = {1: "#d5e4f7", 2: "#fbe0d5", 3: "#d2efe4"}
 ZONE = {"lof": "#ece9e2", "keyhole": "#dfe9f6"}
 
 
-def figure(sheet: list[dict], grid: list[dict], path: Path) -> None:
+def figure(sheet: list[dict], path: Path) -> None:
     import matplotlib
 
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
-    from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Patch, Polygon, Rectangle
-    from scipy.interpolate import griddata
+    from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Polygon, Rectangle
 
     plt.rcParams.update({"font.size": 9.5, "axes.edgecolor": INK2, "axes.labelcolor": INK, "xtick.color": INK2,
                          "ytick.color": INK2, "axes.titlesize": 10.5})
-    fig = plt.figure(figsize=(14.6, 7.4), constrained_layout=True)
+    fig = plt.figure(figsize=(15.2, 8.6), constrained_layout=True)
     fig.set_facecolor(SURFACE)
-    gs = fig.add_gridspec(1, 2, width_ratios=[1.0, 1.0])
-    ax = fig.add_subplot(gs[0, 0])
-    ax.set_facecolor(SURFACE)
-
-    # zones: Ke >= 6 (keyhole mode) and Eagar-Tsai + Tang lack of fusion at 30 um; dashed boundary at 50 um
-    v = np.geomspace(220, 3400, 240)
-    P = np.linspace(130, 390, 240)
-    VV, PP = np.meshgrid(v, P)
-    Ke = np.vectorize(lambda p_, v_: keyhole_number(p_, v_, SPOT_UM))(PP, VV)
-    pts = np.array([[math.log(float(g["v_mm_s"])), float(g["P_W"])] for g in grid])
-    lof30 = griddata(pts, [float(g["LoF_index_30um"]) for g in grid], (np.log(VV), PP), method="cubic")
-    lof50 = griddata(pts, [float(g["LoF_index_50um"]) for g in grid], (np.log(VV), PP), method="cubic")
-    ax.contourf(VV, PP, lof30, levels=[1.0, 1e3], colors=[ZONE["lof"]])
-    ax.contourf(VV, PP, Ke, levels=[6.0, 1e3], colors=[ZONE["keyhole"]])
-    ax.contour(VV, PP, lof30, levels=[1.0], colors=[INK2], linewidths=1.2)
-    ax.contour(VV, PP, lof50, levels=[1.0], colors=[INK2], linewidths=1.2, linestyles="--")
-    ax.contour(VV, PP, Ke, levels=[6.0], colors=["#2a78d6"], linewidths=1.0, alpha=0.6)
-    # window: P/v band, P range, v cap (the 316L hatch's P/v dotted)
-    for el in (EL_RANGE[0], 0.274, EL_RANGE[1]):
-        vv = np.geomspace(max(P_RANGE[0] / el, 220), min(P_RANGE[1] / el, V_MAX), 50)
-        ax.plot(vv, el * vv, color=MUTED, lw=0.9, ls=":" if el == 0.274 else "-")
-    ax.annotate(f"P/v {EL_RANGE[1]} J/mm", (P_RANGE[0] / EL_RANGE[1], P_RANGE[0]), xytext=(-4, -12),
-                textcoords="offset points", fontsize=7.8, color=INK2, ha="right", va="top")
-    ax.annotate(f"P/v {EL_RANGE[0]} J/mm", (P_RANGE[0] / EL_RANGE[0], P_RANGE[0]), xytext=(4, -12),
-                textcoords="offset points", fontsize=7.8, color=INK2, ha="left", va="top")
-    ax.text(V_MAX * 1.02, 330, f"{V_MAX:.0f}\nmm/s\ncap", fontsize=7.8, color=INK2, ha="left", va="center")
-    for p_ in P_RANGE:
-        ax.plot([max(p_ / EL_RANGE[1], 220), min(p_ / EL_RANGE[0], V_MAX)], [p_, p_], color=MUTED, lw=0.9)
-    ax.plot([V_MAX, V_MAX], [EL_RANGE[0] * V_MAX, P_RANGE[1]], color=MUTED, lw=0.9)
-
+    gs = fig.add_gridspec(2, 2, width_ratios=[0.9, 1.1])
     turned = {r["set"] for r in sheet if int(r["square"]) == TURNED}
-    for square in range(1, MAP_SQUARES + 1):
-        c, m = SQUARE_STYLE[square]
-        rs = [r for r in sheet if int(r["square"]) == square and r["set"] != "C"]
-        ax.scatter([float(r["speed_mm_s"]) for r in rs], [float(r["power_W"]) for r in rs], s=46 if m != "^" else 54,
-                   marker=m, c=c, edgecolors=SURFACE, linewidths=1.4, zorder=4)
-        rt = [r for r in rs if r["set"] in turned]
-        ax.scatter([float(r["speed_mm_s"]) for r in rt], [float(r["power_W"]) for r in rt], s=190, marker="o",
-                   facecolors="none", edgecolors=INK, linewidths=1.3, zorder=5)
-    ax.scatter([CONTROL["v"]], [CONTROL["P"]], s=230, marker="*", c=INK, edgecolors=SURFACE, linewidths=1.2, zorder=6)
-    ax.scatter([CONTROL["v"]], [CONTROL["P"]], s=420, marker="o", facecolors="none", edgecolors=INK, linewidths=1.3,
-               zorder=6)
-    ax.text(3330, 388, "lack of fusion\n(Eagar–Tsai + overlap rule)", fontsize=8.2, color=INK2, ha="right", va="top")
-    ax.text(228, 388, "keyhole mode (Ke ≥ 6)", fontsize=8.2, color="#1c5cab", ha="left", va="top")
-    ax.set_xscale("log")
-    ax.set_xticks([250, 500, 1000, 2000, 3000])
-    ax.set_xticklabels(["250", "500", "1000", "2000", "3000"])
-    ax.minorticks_off()
-    ax.set_xlim(220, 3400)
-    ax.set_ylim(130, 390)
-    ax.set_xlabel("Speed (mm/s, log scale), on Adv. surface area and Upside surface area")
-    ax.set_ylabel("Power (W), on the same two tabs")
-    for sp in ("top", "right"):
-        ax.spines[sp].set_visible(False)
-    n_each = {p: sum(1 for r in sheet if int(r["square"]) == p and r["set"] != "C") for p in range(1, MAP_SQUARES + 1)}
-    n_turned = len(turned - {"C"})
-    ax.set_title(f"(a) {sum(n_each.values())} Sobol settings in (P, log P/v) and the control on squares 1–3;\n"
-                 f"ringed: also on square 4, turned 90° ({n_turned} settings and the control)", loc="left", color=INK)
+    f = lambda r, k: float(r[k])  # noqa: E731
+    panels = [(fig.add_subplot(gs[0, 0]), "speed_mm_s", "power_W", "Speed (mm/s, log scale)", "Power (W)", True,
+               f"(a) Power and speed. {N_SOBOL} Sobol settings on squares 1–3, the control (★);\n"
+               "ringed: also on square 4, turned 90°"),
+              (fig.add_subplot(gs[1, 0]), "spot_um", "trace_spacing_mm", "Spot size (µm, log scale)",
+               "Trace spacing (mm)", True, "(b) Spot size and trace spacing, the same settings")]
+    for ax, xk, yk, xl, yl, logx, title in panels:
+        ax.set_facecolor(SURFACE)
+        for square in range(1, MAP_SQUARES + 1):
+            c, m = SQUARE_STYLE[square]
+            rs = [r for r in sheet if int(r["square"]) == square and r["set"] != "C"]
+            ax.scatter([f(r, xk) for r in rs], [f(r, yk) for r in rs], s=46 if m != "^" else 54, marker=m, c=c,
+                       edgecolors=SURFACE, linewidths=1.4, zorder=4)
+            rt = [r for r in rs if r["set"] in turned]
+            ax.scatter([f(r, xk) for r in rt], [f(r, yk) for r in rt], s=190, marker="o", facecolors="none",
+                       edgecolors=INK, linewidths=1.3, zorder=5)
+        c0 = next(r for r in sheet if r["set"] == "C")
+        ax.scatter([f(c0, xk)], [f(c0, yk)], s=230, marker="*", c=INK, edgecolors=SURFACE, linewidths=1.2, zorder=6)
+        if logx:
+            ax.set_xscale("log")
+        ax.minorticks_off()
+        ax.set_xlabel(xl)
+        ax.set_ylabel(yl)
+        ax.set_title(title, loc="left", color=INK)
+        for sp in ("top", "right"):
+            ax.spines[sp].set_visible(False)
+    ax0, ax1 = panels[0][0], panels[1][0]
+    ax0.set_xticks([250, 500, 1000, 2000, 3000])
+    ax0.set_xticklabels(["250", "500", "1000", "2000", "3000"])
+    ax1.set_xticks([50, 70, 100, 130, 200])
+    ax1.set_xticklabels(["50", "70", "100", "130", "200"])
     handles = [Line2D([], [], ls="none", marker=SQUARE_STYLE[p][1], ms=7.5, mfc=SQUARE_STYLE[p][0], mec=SURFACE,
-                      label=f"square {p} ({n_each[p]} settings)") for p in range(1, MAP_SQUARES + 1)]
+                      label=f"square {p}") for p in range(1, MAP_SQUARES + 1)]
     handles += [Line2D([], [], ls="none", marker="*", ms=13, mfc=INK, mec=SURFACE,
-                       label="control: 316L hatch, 370 W,\n1350 mm/s (its P/v dotted)"),
-                Line2D([], [], ls="none", marker="o", ms=12, mfc="none", mec=INK, label="also on square 4, turned"),
-                Patch(facecolor=ZONE["lof"], edgecolor="none", label="lack of fusion at 30 µm layers"),
-                Line2D([], [], color=INK2, ls="--", lw=1.2, label="its edge at 50 µm layers"),
-                Patch(facecolor=ZONE["keyhole"], edgecolor="none", label="keyhole mode, Ke ≥ 6")]
-    ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.1), ncol=3, frameon=False, fontsize=8.2)
+                       label="control: the 316L hatch (370 W, 1350 mm/s, 130 µm, 0.09 mm)"),
+                Line2D([], [], ls="none", marker="o", ms=12, mfc="none", mec=INK, label="also on square 4, turned")]
+    ax1.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.16), ncol=3, frameon=False, fontsize=8.2)
 
-    # (b) the four squares from above, with every wall's set (positions of the squares on the plate are placeholders)
-    bx = fig.add_subplot(gs[0, 1])
+    # (c) the four squares from above, with every wall's set (positions of the squares on the plate are placeholders)
+    bx = fig.add_subplot(gs[:, 1])
     bx.set_facecolor(SURFACE)
     bx.set_aspect("equal")
     bx.axis("off")
@@ -419,10 +392,10 @@ def figure(sheet: list[dict], grid: list[dict], path: Path) -> None:
             ha="left", va="top", fontsize=7.6, color=INK2, linespacing=1.25)
     bx.set_xlim(-2, 2 * S + GAP + 2)
     bx.set_ylim(-32, 2 * S + GAP + 2)
-    bx.set_title("(b) The four squares from above: every wall's set (not to scale between squares)", loc="left",
+    bx.set_title("(c) The four squares from above: every wall's set (not to scale between squares)", loc="left",
                  color=INK)
-    fig.suptitle("Carl's stepped parts on the M2: 7 walls a part, 3 parts a square, 4 squares; one hatch power and "
-                 "speed per wall, everything else at the 316L set", x=0.01, ha="left", fontsize=12, color=INK)
+    fig.suptitle("Carl's stepped parts on the M2: 7 walls a part, 3 parts a square, 4 squares; a fresh 4-D Sobol design "
+                 "in power, speed, spot size and trace spacing", x=0.01, ha="left", fontsize=12, color=INK)
     fig.savefig(path, dpi=150, facecolor=SURFACE, bbox_inches="tight")
     plt.close(fig)
 
@@ -437,38 +410,29 @@ def write(path: Path, rows: list[dict]) -> None:
 if __name__ == "__main__":
     OUT.mkdir(exist_ok=True)
     if sys.argv[1:] == ["figure"]:
-        figure(list(csv.DictReader(open(OUT / "wall_sheet.csv", encoding="utf-8"))),
-               list(csv.DictReader(open(OUT / "wall_regime_grid.csv", encoding="utf-8"))), OUT / "m2-wall-design.png")
+        figure(list(csv.DictReader(open(OUT / "wall_sheet.csv", encoding="utf-8"))), OUT / "m2-wall-design.png")
         sys.exit()
-    sheet = with_model(walls())
+    et = "noet" not in sys.argv[1:]
+    sheet = with_model(walls(), et=et)
     write(OUT / "wall_sheet.csv", sheet)
     write(OUT / "wall_sets.csv", sets_table(sheet))
-    grid = regime_grid()
-    write(OUT / "wall_regime_grid.csv", grid)
-    figure([{k: str(x) for k, x in r.items()} for r in sheet], [{k: str(x) for k, x in g.items()} for g in grid],
-           OUT / "m2-wall-design.png")
+    figure([{k: str(x) for k, x in r.items()} for r in sheet], OUT / "m2-wall-design.png")
 
     sets = {r["set"] for r in sheet}
     print(f"{len(sheet)} walls, {len(sets)} parameter sets ({len(sets) - 1} Sobol settings and the control)")
     for square in range(1, SQUARES + 1):
         rs = [r for r in sheet if r["square"] == square]
         sob = [r for r in rs if r["set"] != "C"]
-        print(f"square {square}: {len(sob)} settings, {len(rs) - len(sob)} controls; "
-              f"P {min(r['power_W'] for r in sob)}-{max(r['power_W'] for r in sob)} W, "
-              f"v {min(r['speed_mm_s'] for r in sob)}-{max(r['speed_mm_s'] for r in sob)} mm/s, "
-              f"P/v {min(r['P_over_v_J_mm'] for r in sob)}-{max(r['P_over_v_J_mm'] for r in sob)}; at 30 um",
-              {g: sum(r["regime_30um"] == g for r in sob) for g in ("lack of fusion", "dense", "keyhole mode")},
-              "at 50 um", {g: sum(r["regime_50um"] == g for r in sob) for g in ("lack of fusion", "dense", "keyhole mode")},
-              f"below the 316L hatch's P/v: {sum(r['P_over_v_J_mm'] < 0.274 for r in sob)}")
-        for k in range(1, PARTS + 1):
-            ps = [r for r in sob if r["part"] == k]
-            print(f"   part {k}: P/v {min(r['P_over_v_J_mm'] for r in ps)}-{max(r['P_over_v_J_mm'] for r in ps)}"
-                  f", P {min(r['power_W'] for r in ps)}-{max(r['power_W'] for r in ps)}")
-    c = next(r for r in sheet if r["set"] == "C")
-    print("control:", {k: c[k] for k in ("Ke", "ET_width_um", "ET_depth_um", "LoF_index_30um", "LoF_index_50um",
-                                         "regime_30um", "regime_50um", "VED_30um_J_mm3", "VED_50um_J_mm3")})
+        line = (f"square {square}: {len(sob)} settings, {len(rs) - len(sob)} controls; "
+                f"P {min(r['power_W'] for r in sob)}-{max(r['power_W'] for r in sob)} W, "
+                f"v {min(r['speed_mm_s'] for r in sob)}-{max(r['speed_mm_s'] for r in sob)} mm/s, "
+                f"spot {min(r['spot_um'] for r in sob)}-{max(r['spot_um'] for r in sob)} um, "
+                f"h {min(r['trace_spacing_mm'] for r in sob)}-{max(r['trace_spacing_mm'] for r in sob)} mm, "
+                f"Ke {min(r['Ke'] for r in sob)}-{max(r['Ke'] for r in sob)}")
+        if et:
+            line += " " + str({t: {g: sum(r[f"regime_{t}"] == g for r in sob)
+                                   for g in ("lack of fusion", "dense", "keyhole mode")} for t in ("30um", "50um")})
+        print(line)
     sob = [r for r in sheet if r["square"] <= MAP_SQUARES and r["set"] != "C"]
-    print("distinct powers", len({r["power_W"] for r in sob}), "distinct speeds", len({r["speed_mm_s"] for r in sob}),
-          "max speed", max(r["speed_mm_s"] for r in sob))
-    print(f"wall {WALL_MM:.2f} mm thick, pitch {PITCH_MM:.2f} mm; hatch vectors per layer (count, length mm):",
-          hatch_vectors())
+    for col in ("power_W", "speed_mm_s", "spot_um", "trace_spacing_mm"):
+        print(col, "distinct", len({r[col] for r in sob}))
