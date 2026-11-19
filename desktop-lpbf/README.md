@@ -24,6 +24,7 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 | [`analysis/`](analysis/) | interference, MuJoCo, CalculiX and mass-budget scripts, with results in [`analysis/out/`](analysis/out/) |
 | [`modules.md`](modules.md) | the heated build plate, Ø25 / Ø50 / Ø75 build modules, S / M / L reservoirs and the automation features as built into the low-profile model ([`cad/modules_low.py`](cad/modules_low.py), [`cad/module_params.py`](cad/module_params.py)), with the thermal FEA, interference sweeps and renders in [`cad/img/modules/`](cad/img/modules/) |
 | [`options-mcmaster.csv`](options-mcmaster.csv), [`options-vendors.csv`](options-vendors.csv) | the 55 parts behind those features (McMaster-Carr, DigiKey, DwyerOmega, Accu-Glass, Lesker, Edmund, AutomationDirect and others), read live through the lab Pi on 2026-11-17 |
+| [`sourcing/`](sourcing/) | used, surplus and reseller listings for the laser, scan head, controller, optics, O₂ analyzer, pump and whole machines, read through the lab Pi on 2026-11-19 ([`sourcing/README.md`](sourcing/README.md), [`sourcing/listings.csv`](sourcing/listings.csv)) |
 
 ## 1. Short answers
 
@@ -416,7 +417,7 @@ The project has two aims (2026-11-17, §1b): stay current on generative design o
 
 2. **Chamber and gas loop around the engraver head.** Machine the chamber and prove 2–3 cycles to < 100 ppm with powder loaded. Measure the hold-up and the make-up gas use, and tune the cross-flow velocity, using smoke or particles.
 3. **Full builds with the safety chain.** Interlock commissioning with the beam into the dump, then density cubes.
-   - **Laser lead time.** The CW laser for the component route takes 10–12 weeks after IPG receives the order, plus BYU's PO processing (over $3,500). If the go/no-go point is likely to choose the CW build, order the laser before that point so it arrives in time for phase 3.
+   - **Laser lead time.** The CW laser for the component route takes 10–12 weeks after IPG receives the order, plus BYU's PO processing (over $3,500). If the go/no-go point is likely to choose the CW build, order the laser before that point so it arrives in time for phase 3. Used single-mode IPG lasers of 200–500 W are listed in the US from $1,299.99, with free returns on some, so a used unit can start the CW phases while the new one is on order ([`sourcing/`](sourcing/README.md) §1).
 4. **Monitoring and automation.** Photodiode (Thorlabs PDA36A2, $400.01) and layer-image scoring, recipe API, cartridge docking, and CubOS gantry hand-off.
 
 The student would start on assembly and making parts. The materials-science work starts once the equipment is "more or less fixed" (29:01–29:55).
@@ -570,7 +571,7 @@ What checking real parts changed:
 
 ## 7. Open questions for the lab
 
-1. **Funding and sourcing.** Is a PRC fiber laser acceptable on the intended funds? If not, IPG has quoted a 500 W single-mode unit (approximately $23k, 10–12 weeks; [`quotes/`](quotes/ipg-ylr-500-u3-sm-ac.md)); still request an nLIGHT quote for comparison, and a SCANLAB basiCube 20 + RTC6 quote. The lead time means this decision should come before the go/no-go point, not after it. This now gates the engraver route too, since the MOPA engravers we found use JPT sources (§1b.1).
+1. **Funding and sourcing.** Is a PRC fiber laser acceptable on the intended funds? If not, IPG has quoted a 500 W single-mode unit (approximately $23k, 10–12 weeks; [`quotes/`](quotes/ipg-ylr-500-u3-sm-ac.md)); still request an nLIGHT quote for comparison, and a SCANLAB basiCube 20 + RTC6 quote. Used IPG single-mode lasers, SCANLAB heads and RTC cards cost a tenth of new on eBay ([`sourcing/`](sourcing/README.md)); whether a used unit is acceptable on the funds is part of this question. The lead time means this decision should come before the go/no-go point, not after it. This now gates the engraver route too, since the MOPA engravers we found use JPT sources (§1b.1).
 2. **Build plate size.** The low-profile model now takes Ø25, Ø50 and Ø75 build modules in one floor port ([`modules.md`](modules.md) §2). Which of them do the test coupons need (density cubes, small tensile bars per the [test-structure notes](../edison-trajectories/am-scaleup-test-structures.md))?
 3. **Plate preheat.** Answered on 2026-11-17: yes for Al (§1b.2; sizing in [`requirements-later.md`](requirements-later.md) §1). Still open: a fixed walled tray, which suits an engraver, or a heater riding on the piston?
 4. **Safety reviews.** Who are the LSO and EHS contacts for the laser registration and the NFPA 484 dust hazard analysis?
