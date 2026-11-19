@@ -3,7 +3,7 @@
     python wall_sheet.py          # -> out/wall_sheet.csv (42 walls) and out/wall_sets.csv (the 33 sets to make), with
                                   #    Eagar-Tsai columns (many minutes when the points are not cached)
     python wall_sheet.py noet     # the same without Eagar-Tsai (seconds); how the 2026-11-19 sheet was made
-    (the figure, out/m2-wall-design.png, still draws the earlier 4-square layout and is not redrawn)
+    python wall_sheet.py figure   # redraw out/m2-wall-design.png from the CSVs
     python wall_sheet.py fresh    # recompute every Eagar-Tsai point instead of reusing those already in out/
 
 The part (Carl's drawing in PR #243, 2026-11-17): a base about 1.75 x 0.5 in with thin walls standing on it, each
@@ -283,30 +283,31 @@ def figure(sheet: list[dict], path: Path) -> None:
 
     plt.rcParams.update({"font.size": 9.5, "axes.edgecolor": INK2, "axes.labelcolor": INK, "xtick.color": INK2,
                          "ytick.color": INK2, "axes.titlesize": 10.5})
-    fig = plt.figure(figsize=(15.2, 8.6), constrained_layout=True)
+    fig = plt.figure(figsize=(15.2, 8.2), constrained_layout=True)
     fig.set_facecolor(SURFACE)
-    gs = fig.add_gridspec(2, 2, width_ratios=[0.9, 1.1])
-    turned = {r["set"] for r in sheet if int(r["square"]) == TURNED}
+    gs = fig.add_gridspec(2, 2, width_ratios=[0.9, 1.15])
     f = lambda r, k: float(r[k])  # noqa: E731
-    panels = [(fig.add_subplot(gs[0, 0]), "speed_mm_s", "power_W", "Speed (mm/s, log scale)", "Power (W)", True,
-               f"(a) Power and speed. {N_SOBOL} Sobol settings on squares 1–3, the control (★);\n"
-               "ringed: also on square 4, turned 90°"),
+    first = {}                                   # one row per set for the scatter panels
+    for r in sheet:
+        first.setdefault(r["set"], r)
+    REP = "#7a5cc7"                              # repeats: printed on both squares
+    panels = [(fig.add_subplot(gs[0, 0]), "speed_mm_s", "power_W", "Speed (mm/s, log scale)", "Power (W)",
+               f"(a) Power and speed: {N_SOBOL} Sobol settings and the control (★)"),
               (fig.add_subplot(gs[1, 0]), "spot_um", "trace_spacing_mm", "Spot size (µm, log scale)",
-               "Trace spacing (mm)", True, "(b) Spot size and trace spacing, the same settings")]
-    for ax, xk, yk, xl, yl, logx, title in panels:
+               "Trace spacing (mm)", "(b) Spot size and trace spacing, the same settings")]
+    for ax, xk, yk, xl, yl, title in panels:
         ax.set_facecolor(SURFACE)
-        for square in range(1, MAP_SQUARES + 1):
+        for square in range(1, SQUARES + 1):
             c, m = SQUARE_STYLE[square]
-            rs = [r for r in sheet if int(r["square"]) == square and r["set"] != "C"]
-            ax.scatter([f(r, xk) for r in rs], [f(r, yk) for r in rs], s=46 if m != "^" else 54, marker=m, c=c,
-                       edgecolors=SURFACE, linewidths=1.4, zorder=4)
-            rt = [r for r in rs if r["set"] in turned]
-            ax.scatter([f(r, xk) for r in rt], [f(r, yk) for r in rt], s=190, marker="o", facecolors="none",
-                       edgecolors=INK, linewidths=1.3, zorder=5)
-        c0 = next(r for r in sheet if r["set"] == "C")
+            rs = [r for r in first.values() if r["repeat"] == "" and int(r["square"]) == square]
+            ax.scatter([f(r, xk) for r in rs], [f(r, yk) for r in rs], s=48, marker=m, c=c, edgecolors=SURFACE,
+                       linewidths=1.4, zorder=4)
+        rr = [r for r in first.values() if r["repeat"] == "yes"]
+        ax.scatter([f(r, xk) for r in rr], [f(r, yk) for r in rr], s=60, marker="D", c=REP, edgecolors=SURFACE,
+                   linewidths=1.4, zorder=4)
+        c0 = first["C"]
         ax.scatter([f(c0, xk)], [f(c0, yk)], s=230, marker="*", c=INK, edgecolors=SURFACE, linewidths=1.2, zorder=6)
-        if logx:
-            ax.set_xscale("log")
+        ax.set_xscale("log")
         ax.minorticks_off()
         ax.set_xlabel(xl)
         ax.set_ylabel(yl)
@@ -314,81 +315,71 @@ def figure(sheet: list[dict], path: Path) -> None:
         for sp in ("top", "right"):
             ax.spines[sp].set_visible(False)
     ax0, ax1 = panels[0][0], panels[1][0]
-    ax0.set_xticks([250, 500, 1000, 2000, 3000])
-    ax0.set_xticklabels(["250", "500", "1000", "2000", "3000"])
+    ax0.set_xticks([300, 500, 1000, 2000, 3000])
+    ax0.set_xticklabels(["300", "500", "1000", "2000", "3000"])
     ax1.set_xticks([50, 70, 100, 130, 200])
     ax1.set_xticklabels(["50", "70", "100", "130", "200"])
     handles = [Line2D([], [], ls="none", marker=SQUARE_STYLE[p][1], ms=7.5, mfc=SQUARE_STYLE[p][0], mec=SURFACE,
-                      label=f"square {p}") for p in range(1, MAP_SQUARES + 1)]
-    handles += [Line2D([], [], ls="none", marker="*", ms=13, mfc=INK, mec=SURFACE,
-                       label="control: the 316L hatch (370 W, 1350 mm/s, 130 µm, 0.09 mm)"),
-                Line2D([], [], ls="none", marker="o", ms=12, mfc="none", mec=INK, label="also on square 4, turned")]
-    ax1.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.16), ncol=3, frameon=False, fontsize=8.2)
+                      label=f"square {p} only") for p in range(1, SQUARES + 1)]
+    handles += [Line2D([], [], ls="none", marker="D", ms=7, mfc=REP, mec=SURFACE, label="on both squares (repeat)"),
+                Line2D([], [], ls="none", marker="*", ms=13, mfc=INK, mec=SURFACE,
+                       label="control: the 316L hatch (370 W, 1350 mm/s, 130 µm, 0.09 mm), both squares")]
+    ax1.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.5, -0.16), ncol=2, frameon=False, fontsize=8.2)
 
-    # (c) the four squares from above, with every wall's set (positions of the squares on the plate are placeholders)
+    # (c) the two squares from above, with every wall's set (the parts' places on each square are schematic)
     bx = fig.add_subplot(gs[:, 1])
     bx.set_facecolor(SURFACE)
     bx.set_aspect("equal")
     bx.axis("off")
-    S, GAP, SPACE = 88.0, 10.0, 24.0
-    origin = {1: (0.0, S + GAP), 2: (S + GAP, S + GAP), 3: (0.0, 0.0), 4: (S + GAP, 0.0)}
+    S, GAP, SPACE = 88.0, 12.0, 24.0
+    origin = {1: (0.0, 0.0), 2: (S + GAP, 0.0)}
     lab = {(int(r["square"]), int(r["part"]), int(r["wall"])): r for r in sheet}
+    box_own = dict(boxstyle="square,pad=0.12", fc="#ffffff", ec="none")
+    box_rep = dict(boxstyle="square,pad=0.12", fc="#e4dcf6", ec=REP, lw=0.6)
+    box_c = dict(boxstyle="square,pad=0.12", fc=INK, ec="none")
     for sq, (ox, oy) in origin.items():
         bx.add_patch(FancyBboxPatch((ox, oy), S, S, boxstyle="round,pad=0,rounding_size=5", fc="#efeee9", ec=MUTED,
                                     lw=0.9))
-        title = f"square {sq}" + (": turned 90°" if sq == TURNED else "")
-        bx.text(ox + 3, oy + S - 3, title, ha="left", va="top", fontsize=9, color=INK, fontweight="bold")
+        bx.text(ox + 3, oy + S - 3, f"square {sq}", ha="left", va="top", fontsize=9.5, color=INK, fontweight="bold")
         for k in range(PARTS):
-            copiedpart = sq == TURNED or k + 1 == sq
-            fill = TINT[k + 1] if copiedpart else "#d9d8d2"
-            box = dict(boxstyle="square,pad=0.12", fc=fill, ec="none")
-            if sq != TURNED:          # walls along the blade's travel (x): bases stand along y, wall 1 at the top
-                cx, cy = ox + S / 2 + (k - 1) * SPACE, oy + S / 2 - 3
-                top = cy + BASE_LEN_MM / 2
-                bx.add_patch(Rectangle((cx - WALL_LEN_MM / 2, cy - BASE_LEN_MM / 2), WALL_LEN_MM, BASE_LEN_MM,
-                                       fc=fill, ec=INK2, lw=0.7))
-                bx.add_patch(Polygon([(cx - 2.2, top + 3.2), (cx + 2.2, top + 3.2), (cx, top + 0.8)], closed=True,
-                                     fc=INK2, ec="none"))
-                bx.text(cx, cy - BASE_LEN_MM / 2 - 1.4, f"part {k + 1}", ha="center", va="top", fontsize=7.2,
-                        color=INK2)
-                for w in range(1, WALLS + 1):
-                    y = top - WALL_MM / 2 - (w - 1) * PITCH_MM
-                    r = lab[(sq, k + 1, w)]
-                    bx.add_patch(Rectangle((cx - WALL_LEN_MM / 2, y - WALL_MM / 2), WALL_LEN_MM, WALL_MM,
-                                           fc=INK if r["set"] == "C" else "#8f8e88", ec="none"))
-                    bx.text(cx, y, r["set"], ha="center", va="center", fontsize=5.6, color=INK, bbox=box)
-            else:                     # turned: bases lie along x, walls across the blade's travel, wall 1 at the left
-                cx, cy = ox + S / 2, oy + S / 2 - 6 + (1 - k) * SPACE
-                left = cx - BASE_LEN_MM / 2
-                bx.add_patch(Rectangle((left, cy - WALL_LEN_MM / 2), BASE_LEN_MM, WALL_LEN_MM, fc=fill, ec=INK2,
-                                       lw=0.7))
-                bx.add_patch(Polygon([(left - 3.2, cy - 2.2), (left - 3.2, cy + 2.2), (left - 0.8, cy)], closed=True,
-                                     fc=INK2, ec="none"))
-                bx.text(cx, cy + WALL_LEN_MM / 2 + 1.0, f"part {k + 1}: a copy of square {k + 1}'s part {k + 1}",
-                        ha="center", va="bottom", fontsize=7.0, color=INK2)
-                for w in range(1, WALLS + 1):
-                    x = left + WALL_MM / 2 + (w - 1) * PITCH_MM
-                    r = lab[(sq, k + 1, w)]
-                    bx.add_patch(Rectangle((x - WALL_MM / 2, cy - WALL_LEN_MM / 2), WALL_MM, WALL_LEN_MM,
-                                           fc=INK if r["set"] == "C" else "#8f8e88", ec="none"))
-                    bx.text(x, cy, r["set"], ha="center", va="center", fontsize=5.6, color=INK, rotation=90, bbox=box)
-    bx.add_patch(FancyArrowPatch((0.0, -9.0), (2 * S + GAP, -9.0), arrowstyle="-|>", mutation_scale=12, color=INK2,
+            cx, cy = ox + S / 2 + (k - 1) * SPACE, oy + S / 2 - 3
+            top = cy + BASE_LEN_MM / 2
+            bx.add_patch(Rectangle((cx - WALL_LEN_MM / 2, cy - BASE_LEN_MM / 2), WALL_LEN_MM, BASE_LEN_MM,
+                                   fc="#d9d8d2", ec=INK2, lw=0.7))
+            bx.add_patch(Polygon([(cx - 2.2, top + 3.2), (cx + 2.2, top + 3.2), (cx, top + 0.8)], closed=True,
+                                 fc=INK2, ec="none"))
+            bx.text(cx, cy - BASE_LEN_MM / 2 - 1.4, f"part {k + 1}", ha="center", va="top", fontsize=7.6, color=INK2)
+            for w in range(1, WALLS + 1):
+                y = top - WALL_MM / 2 - (w - 1) * PITCH_MM
+                r = lab[(sq, k + 1, w)]
+                ctrl = r["set"] == "C"
+                bx.add_patch(Rectangle((cx - WALL_LEN_MM / 2, y - WALL_MM / 2), WALL_LEN_MM, WALL_MM,
+                                       fc=INK if ctrl else "#8f8e88", ec="none"))
+                bx.text(cx - WALL_LEN_MM / 2 - 0.8, y, str(w), ha="right", va="center", fontsize=5.2, color=MUTED)
+                bx.text(cx, y, "C" if ctrl else r["set"], ha="center", va="center", fontsize=6.0,
+                        color=SURFACE if ctrl else INK,
+                        bbox=box_c if ctrl else box_rep if r["repeat"] == "yes" else box_own)
+    bx.add_patch(FancyArrowPatch((0.0, -6.0), (2 * S + GAP, -6.0), arrowstyle="-|>", mutation_scale=12, color=INK2,
                                  lw=1.1))
-    bx.text(S + GAP / 2, -11.0, "the blade's travel, in this drawing (check which way it runs on the M2)",
-            ha="center", va="top", fontsize=7.8, color=INK2)
-    bx.text(0.0, -17.5,
-            f"Walls 0.05 in ({WALL_MM:.2f} mm) thick at a {PITCH_MM:.2f} mm pitch; black walls are the control. "
-            "▲/▶ marks the wall-1 end.\nTinted parts are printed twice: square k's part k, and its copy on square 4, "
-            "part k, turned 90° with the walls in the same order.\nWhich panel is which square doesn't matter; "
-            "write it down. Sets: out/wall_sets.csv; walls: out/wall_sheet.csv.",
-            ha="left", va="top", fontsize=7.6, color=INK2, linespacing=1.25)
+    bx.text(S + GAP / 2, -8.0, "the blade's travel, in this drawing (check which way it runs on the M2): "
+            "walls run along it", ha="center", va="top", fontsize=7.8, color=INK2)
+    lh = [Rectangle((0, 0), 1, 1, fc="#ffffff", ec=MUTED, lw=0.6, label="setting on this square only"),
+          Rectangle((0, 0), 1, 1, fc="#e4dcf6", ec=REP, lw=0.6, label="repeat: same set on the other square"),
+          Rectangle((0, 0), 1, 1, fc=INK, ec="none", label="C: control (316L hatch)")]
+    bx.legend(handles=lh, loc="upper center", bbox_to_anchor=(0.5, 0.2), ncol=3, frameon=False, fontsize=8.0)
+    bx.text(0.0, -21.5,
+            f"Walls 0.05 in ({WALL_MM:.2f} mm) thick, {WALL_LEN_MM:.1f} mm long, at a {PITCH_MM:.2f} mm pitch on a "
+            "1.75 x 0.5 in base. ▼ marks the wall-1 end; small numbers are wall positions.\n"
+            "Where the parts sit on each square is schematic. Which panel is square 1, and which end is wall 1, "
+            "doesn't matter: write them down.\nSets: out/wall_sets.csv; walls: out/wall_sheet.csv.",
+            ha="left", va="top", fontsize=7.6, color=INK2, linespacing=1.3)
     bx.set_xlim(-2, 2 * S + GAP + 2)
-    bx.set_ylim(-32, 2 * S + GAP + 2)
-    bx.set_title("(c) The four squares from above: every wall's set (not to scale between squares)", loc="left",
-                 color=INK)
-    fig.suptitle("Carl's stepped parts on the M2: 7 walls a part, 3 parts a square, 4 squares; a fresh 4-D Sobol design "
-                 "in power, speed, spot size and trace spacing", x=0.01, ha="left", fontsize=12, color=INK)
-    fig.savefig(path, dpi=150, facecolor=SURFACE, bbox_inches="tight")
+    bx.set_ylim(-38, S + 2)
+    bx.set_title("(c) The two squares from above: every wall's set", loc="left", color=INK)
+    fig.suptitle(f"M2 wall build: 7 walls a part, 3 parts a square, 2 squares ({len(sheet)} walls); "
+                 f"{N_SOBOL} Sobol settings in power, speed, spot size and trace spacing, {N_REPEAT} on both squares",
+                 x=0.01, ha="left", fontsize=12, color=INK)
+    fig.savefig(path, dpi=170, facecolor=SURFACE, bbox_inches="tight")
     plt.close(fig)
 
 
@@ -408,6 +399,7 @@ if __name__ == "__main__":
     sheet = with_model(walls(), et=et)
     write(OUT / "wall_sheet.csv", sheet)
     write(OUT / "wall_sets.csv", sets_table(sheet))
+    figure([{k: str(x) for k, x in r.items()} for r in sheet], OUT / "m2-wall-design.png")
 
     sets = {r["set"] for r in sheet}
     print(f"{len(sheet)} walls, {len(sets)} parameter sets ({len(sets) - 1} Sobol settings and the control)")
