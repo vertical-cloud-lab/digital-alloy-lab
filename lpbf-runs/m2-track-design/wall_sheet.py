@@ -1,9 +1,9 @@
 """Wall-by-wall sheet for Carl's stepped parts on the M2 (issue #100, PR #243, 2026-11-17).
 
-    python wall_sheet.py          # -> out/wall_sheet.csv (84 walls), out/wall_sets.csv (the 61 sets to make),
-                                  #    out/wall_regime_grid.csv and out/m2-wall-design.png; seconds when the Eagar-Tsai
-                                  #    points are already in out/, many minutes when they are not
-    python wall_sheet.py figure   # redraw the figure from the CSVs, no Eagar-Tsai
+    python wall_sheet.py          # -> out/wall_sheet.csv (42 walls) and out/wall_sets.csv (the 33 sets to make), with
+                                  #    Eagar-Tsai columns (many minutes when the points are not cached)
+    python wall_sheet.py noet     # the same without Eagar-Tsai (seconds); how the 2026-11-19 sheet was made
+    (the figure, out/m2-wall-design.png, still draws the earlier 4-square layout and is not redrawn)
     python wall_sheet.py fresh    # recompute every Eagar-Tsai point instead of reusing those already in out/
 
 The part (Carl's drawing in PR #243, 2026-11-17): a base about 1.75 x 0.5 in with thin walls standing on it, each
@@ -11,26 +11,18 @@ wall running across the 0.5 in width, about 0.3 in tall and 0.05 in (1.27 mm) th
 a part (Carl, later the same day); with the end walls flush with the base's ends that is a 7.20 mm pitch. Every wall
 gets its own parameters.
 
-The build (Carl): 3 parts on each of the 4 squares (the removable panels in Nathan C.'s plate), all in one build, so
-84 walls. Carl offered three ways to use them: 84 settings in one orientation, 63 with one square turned to test the
-orientation, or 42 with every setting in both orientations. This sheet does a version of the middle one:
+The build (2026-11-19): 3 parts on each of 2 squares (the other two inserts went to another group), all in one
+build, so 42 walls, every one with its walls along the recoater's travel (no turned square).
 
-- Squares 1-3 carry the map, with the walls along the recoater's travel. Each holds 20 settings from one scrambled
-  Sobol sequence (points 0-19, 20-39 and 40-59, so W000-W059 keep the values of the earlier sheets) and one control
-  at the 316L hatch (370 W, 1350 mm/s). That is 60 settings and the control: 61 parameter sets to make.
-- Square 4 is turned 90 degrees, so its walls run across the recoater's travel. Its part k is a copy of square k's
-  part k, with the walls in the same order. So 18 settings and the control (3 times) are printed in both
-  orientations, as 21 pairs, and each pair has the same part and wall position in its square. The 6 settings in
-  each copied part are picked for spread: maximin distance in the Sobol unit square over all 18 and the control.
-- In each of squares 1-3 the other two parts take the remaining 14 settings, dealt in snake order of P/v, so every
-  part spans the window. Within each part the settings take random wall positions (seed 100 + square - 1).
-- Only the hatch power P and speed v change from wall to wall, on the two WRX Control tabs "Adv. surface area" (the
-  hatch) and "Upside surface area" (the upskin). Every other field on every tab stays as in the 316L set, so energy
-  per volume follows P/v alone. The trace spacings (0.09 and 0.075 mm), spot sizes (130 um) and offsets to the
-  original contour (0.11 and 0.14 mm) are the values in Carl's photos.
-- The window is a band in (P, P/v): P from 150 to 370 W, and P/v from 0.09 to 0.55 J/mm, a third to twice the 316L
-  hatch's 0.274 J/mm. Speed is capped at 3000 mm/s. 370 W is the most power the photos show. The upper P/v cap keeps
-  hot, swollen walls (a recoater risk, more so on the turned square) out of the first build.
+- 32 settings from one scrambled Sobol sequence (seed 243) in power P (150-370 W), spot size (50-200 um, log),
+  trace spacing h (0.06-0.14 mm) and speed v. v is log-uniform inside the window left by three caps: areal energy
+  P/(v h) of 1.0-6.1 J/mm^2, v <= 3000 mm/s, and Gan et al.'s keyhole number Ke <= KE_MAX.
+- 8 of the 32 (maximin in the unit cube) are printed on both squares, at different parts and wall positions, to
+  measure scatter between positions. The other 24 alternate between the squares in order of areal energy.
+- Each square: 12 own settings, the 8 repeats and one control at the 316L hatch (370 W, 1350 mm/s, 130 um,
+  0.09 mm), dealt over its 3 parts in snake order of areal energy, then put at random wall positions.
+- Power, speed, spot size and trace spacing change on the two WRX Control tabs "Adv. surface area" (the hatch) and
+  "Upside surface area" (the upskin); every other field on every tab stays as in the 316L set.
 - Inside a 1.27 mm wall the hatch, offset 0.11 mm from the outline, fills the middle 1.05 mm: about 13 vectors
   12.5 mm long per layer if it runs along the wall, or about 140 vectors 1.05 mm long if it runs across it.
 - For each setting the sheet gives VED at 30 and 50 um layers, Gan et al.'s keyhole number Ke (line_sheet.py),
@@ -68,11 +60,13 @@ EA_RANGE = (1.0, 6.1)            # J/mm^2, P/(v h), log-uniform; the 316L hatch 
 V_MAX = 3000.0                   # mm/s
 CONTROL = dict(set="C", P=370.0, v=1350.0, d=130.0, h=0.09)    # the 316L hatch ("Adv. surface area")
 SPOT_UM, TRACE_MM = CONTROL["d"], CONTROL["h"]                 # the control's, for the figure's reference lines
-SQUARES, PARTS, WALLS = 4, 3, 7                # 4 squares (panels), 3 parts a square, 7 walls a part
-MAP_SQUARES = 3                                # squares 1-3 carry the settings, walls along the recoater's travel
-TURNED = 4                                     # square 4: turned 90 degrees, part k a copy of square k's part k
-PER_SQUARE = PARTS * WALLS - 1                 # 20 Sobol settings + 1 control on each of squares 1-3
-N_SOBOL = MAP_SQUARES * PER_SQUARE             # 60
+KE_MAX = 15.0                    # Gan et al. keyhole number cap: top of "keyhole, stable"; the 316L contours run Ke 8-20
+SQUARES, PARTS, WALLS = 2, 3, 7                # 2 squares (the other two inserts went to another group, 2026-11-19)
+MAP_SQUARES = SQUARES                          # both squares carry settings, walls along the recoater's travel
+TURNED = 0                                     # no turned square in the 2-square build
+N_SOBOL = 32                                   # a power of 2, so the scrambled Sobol set is balanced
+N_REPEAT = 8                                   # settings printed on both squares (scatter between positions)
+PER_SQUARE = (N_SOBOL - N_REPEAT) // SQUARES   # 12 unique settings a square, + 8 repeats + 1 control = 21
 ALONG, ACROSS = "along", "turned 90°"
 
 
@@ -100,9 +94,12 @@ def to_settings(u: np.ndarray) -> tuple[np.ndarray, ...]:
     P = np.round(P_RANGE[0] + u[:, 0] * (P_RANGE[1] - P_RANGE[0]))
     d = np.round(np.exp(math.log(D_RANGE[0]) + u[:, 1] * math.log(D_RANGE[1] / D_RANGE[0])) / 5.0) * 5.0
     h = np.round((H_RANGE[0] + u[:, 2] * (H_RANGE[1] - H_RANGE[0])) / 0.005) * 0.005
-    lo = np.log(np.maximum(EA_RANGE[0], P / (V_MAX * h)))
-    ea = np.exp(lo + u[:, 3] * (math.log(EA_RANGE[1]) - lo))
-    return P, np.round(P / (ea * h) / 5.0) * 5.0, d, np.round(h, 3)
+    # speed window: E_A within EA_RANGE, v <= V_MAX, and Ke <= KE_MAX (Ke ~ 1/sqrt(v)); log-uniform inside it
+    v_ke = np.array([(keyhole_number(p, 1.0, dd) / KE_MAX) ** 2 for p, dd in zip(P, d)])
+    v_hi = np.minimum(V_MAX, P / (EA_RANGE[0] * h))
+    v_lo = np.minimum(np.maximum(P / (EA_RANGE[1] * h), v_ke), v_hi)
+    v = np.exp(np.log(v_hi) - u[:, 3] * (np.log(v_hi) - np.log(v_lo)))
+    return P, np.round(v / 5.0) * 5.0, d, np.round(h, 3)
 
 
 def control_unit() -> np.ndarray:
@@ -123,67 +120,63 @@ def sobol(n: int, seed: int = SEED) -> np.ndarray:
         return qmc.Sobol(d=4, scramble=True, seed=seed).random(n)
 
 
-def pick_copied(u: np.ndarray) -> list[tuple[int, ...]]:
-    """For each of squares 1-3, the WALLS - 1 settings of the part that is copied onto square 4: the largest
-    smallest distance in the unit square over all three picks and the control, ties broken by the ten closest
-    pairs. Found by exchanging one square's pick at a time until nothing changes."""
+def pick_repeats(u: np.ndarray) -> list[int]:
+    """The N_REPEAT settings printed on both squares: greedy maximin in the unit cube (the control counts as taken),
+    then one-at-a-time exchanges until nothing improves the smallest distance."""
     pts = np.vstack([u, control_unit()])
     D = np.linalg.norm(pts[:, None] - pts[None], axis=-1)
-    ctrl, k = len(u), WALLS - 1
-    blocks = [list(range(s * PER_SQUARE, (s + 1) * PER_SQUARE)) for s in range(MAP_SQUARES)]
+    ctrl = len(u)
+    pick = []
+    for _ in range(N_REPEAT):
+        cand = [i for i in range(len(u)) if i not in pick]
+        pick.append(max(cand, key=lambda i: D[i, pick + [ctrl]].min()))
 
-    def best_for(block: list[int], fixed: list[int]) -> tuple[int, ...]:
-        inner = np.array([D[a, b] for a, b in combinations(fixed, 2)])
-        best, best_key = None, None
-        for c in combinations(block, k):
-            d = np.concatenate([inner, D[np.ix_(c, fixed)].ravel(), [D[a, b] for a, b in combinations(c, 2)]])
-            key = (round(float(d.min()), 9), float(np.log(np.partition(d, 9)[:10]).sum()))
-            if best_key is None or key > best_key:
-                best, best_key = c, key
-        return best
-
-    picks = [best_for(b, [ctrl]) for b in blocks]
-    for _ in range(6):
-        changed = False
-        for j, b in enumerate(blocks):
-            fixed = [i for jj, c in enumerate(picks) if jj != j for i in c] + [ctrl]
-            new = best_for(b, fixed)
-            changed |= new != picks[j]
-            picks[j] = new
-        if not changed:
+    def score(sel):
+        idx = sel + [ctrl]
+        return min(D[a, b] for a, b in combinations(idx, 2))
+    for _ in range(10):
+        improved = False
+        for j in range(N_REPEAT):
+            for c in range(len(u)):
+                if c in pick:
+                    continue
+                trial = pick[:j] + [c] + pick[j + 1:]
+                if score(trial) > score(pick) + 1e-12:
+                    pick, improved = trial, True
+        if not improved:
             break
-    return picks
+    return sorted(pick)
 
 
 def walls() -> list[dict]:
-    """The 84 walls in square, part, wall order, with their settings (no model columns yet)."""
+    """The 42 walls in square, part, wall order. Each square: 12 unique settings, the 8 repeats and the control,
+    dealt over its 3 parts in snake order of areal energy (so each part spans the window), then put at random wall
+    positions (seed SEED + square), so a repeat sits at a different part and wall on each square."""
     u = sobol(N_SOBOL)
     P, v, d, h = to_settings(u)
-    picks = pick_copied(u)
     ea = P / (v * h)
+    rep = pick_repeats(u)
+    rest = sorted((i for i in range(N_SOBOL) if i not in rep), key=lambda i: ea[i])
+    own = {s: rest[s::SQUARES] for s in range(SQUARES)}            # alternate in E_A order: both squares span it
 
     def setting(i: int) -> dict:
-        return dict(set=f"W{i:03d}", sobol_index=i, P=float(P[i]), v=float(v[i]), d=float(d[i]), h=float(h[i]))
+        return dict(set=f"W{i:03d}", sobol_index=i, P=float(P[i]), v=float(v[i]), d=float(d[i]), h=float(h[i]),
+                    repeat="yes" if i in rep else "")
 
-    rows, copied = [], {}
-    for s in range(MAP_SQUARES):
-        rest = sorted((i for i in range(s * PER_SQUARE, (s + 1) * PER_SQUARE) if i not in picks[s]),
-                      key=lambda i: ea[i])
-        others = [k for k in range(PARTS) if k != s]          # square s+1's part s+1 is the one copied
-        parts = {k: [] for k in range(PARTS)}
-        parts[s] = [setting(i) for i in picks[s]] + [dict(CONTROL, sobol_index="")]
-        for r, i in enumerate(rest):                           # snake order over the other two: a b b a a b b ...
-            parts[others[r % 2 if (r // 2) % 2 == 0 else 1 - r % 2]].append(setting(i))
+    rows = []
+    for s in range(SQUARES):
+        sets = [setting(i) for i in own[s] + rep] + [dict(CONTROL, sobol_index="", repeat="control")]
+        sets.sort(key=lambda r: r["P"] / (r["v"] * r["h"]))
         rng = np.random.default_rng(SEED + s)
+        parts = {k: [] for k in range(PARTS)}
+        start_k = s % PARTS                                       # the control (and snake) start differently per square
+        for r_, row in enumerate(sets):
+            k = r_ % PARTS if (r_ // PARTS) % 2 == 0 else PARTS - 1 - r_ % PARTS
+            parts[(k + start_k) % PARTS].append(row)
         for k in range(PARTS):
-            sets = sorted(parts[k], key=lambda r: r["P"] / (r["v"] * r["h"]))
-            placed = [dict(square=s + 1, part=k + 1, wall=pos + 1, orientation=ALONG, copy_of="", **sets[j])
-                      for pos, j in enumerate(rng.permutation(len(sets)))]
-            rows += placed
-            if k == s:
-                copied[k] = placed
-    for k in range(PARTS):
-        rows += [dict(r, square=TURNED, orientation=ACROSS, copy_of=f"{k + 1}.{k + 1}") for r in copied[k]]
+            for pos, j in enumerate(rng.permutation(len(parts[k]))):
+                rows.append(dict(square=s + 1, part=k + 1, wall=pos + 1, orientation=ALONG, copy_of="",
+                                 **parts[k][j]))
     return sorted(rows, key=lambda r: (r["square"], r["part"], r["wall"]))
 
 
@@ -235,8 +228,7 @@ def with_model(rows: list[dict], et: bool = True) -> list[dict]:
     for r in rows:
         ke = keyhole_number(r["P"], r["v"], r["d"])
         el = r["P"] / r["v"]
-        row = dict(square=r["square"], part=r["part"], wall=r["wall"], orientation=r["orientation"],
-                   copy_of=r["copy_of"], set=r["set"], set_name=set_name(r), sobol_index=r["sobol_index"],
+        row = dict(square=r["square"], part=r["part"], wall=r["wall"], repeat=r["repeat"], set=r["set"], set_name=set_name(r), sobol_index=r["sobol_index"],
                    power_W=int(r["P"]), speed_mm_s=int(r["v"]), spot_um=int(r["d"]), trace_spacing_mm=r["h"],
                    P_over_v_J_mm=round(el, 4), E_area_J_mm2=round(el / r["h"], 2),
                    VED_30um_J_mm3=round(el / (r["h"] * 0.030), 1), VED_50um_J_mm3=round(el / (r["h"] * 0.050), 1),
@@ -416,7 +408,6 @@ if __name__ == "__main__":
     sheet = with_model(walls(), et=et)
     write(OUT / "wall_sheet.csv", sheet)
     write(OUT / "wall_sets.csv", sets_table(sheet))
-    figure([{k: str(x) for k, x in r.items()} for r in sheet], OUT / "m2-wall-design.png")
 
     sets = {r["set"] for r in sheet}
     print(f"{len(sheet)} walls, {len(sets)} parameter sets ({len(sets) - 1} Sobol settings and the control)")
