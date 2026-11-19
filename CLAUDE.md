@@ -260,8 +260,11 @@ python youtube/yt_service.py                                  # which channel, w
 python youtube/yt_service.py upload clip.mp4 --title "M2 walls, build 1"
 ```
 
-Uploads default to private (the API project is unaudited, so YouTube locks them private anyway);
-Sterling publishes from YouTube Studio. Never decode, print or commit either token.
+Uploads default to public; pass `--privacy unlisted` or `--privacy private` when asked. Since
+2026-11-02 YouTube no longer locks uploads from unaudited API projects to private
+([revision history](https://developers.google.com/youtube/v3/revision_history)), so the privacy set at upload
+sticks; changing it afterwards needs the full-control token below or YouTube Studio. Never
+decode, print or commit either token.
 
 **Full control (delete, edit, playlists, captions)** is `YOUTUBE_TOKEN_PICKLE_B64`, an
 environment secret of `youtube-admin`, read only by `.github/workflows/claude-youtube.yml`
