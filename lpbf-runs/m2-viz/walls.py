@@ -79,11 +79,11 @@ CAM.update({
     "sq1_top": [(P11[0] - 24, P11[1] - 21.6 - 30, 22), (P11[0], P11[1] - 21.6, -1), UP],
     "sq4": [(D_C[0] + 70, D_C[1] - 130, 95), (D_C[0], D_C[1], -4), UP],
     "deck_cut": [(-200, -500, 330), (0, 0, -40), UP],
-    "tray_hi": [(1330, -470, 250), (1440, -60, -80), UP],
+    "tray_hi": [(1385, -430, 120), (1420, -170, -92), UP],
     "bandsaw": [(1610, -235, 120), (1708, -10, 20), UP],
     "bandsaw_far": [(1630, -300, 170), (1720, -20, 10), UP],
-    "psaw_w": [(2160, -150, 160), (2050, 0, 40), UP],
-    "psaw_x": [(2140, -120, 120), (2050, 0, 30), UP],
+    "psaw_w": [(2150, -112, 78), (2050, 0, 42), UP],
+    "psaw_x": [(2140, -105, 70), (2050, 0, 36), UP],
     "piece": [(2082, 52, 2), (2125, 110, -36), UP],
     "row24": [(2380, -660, 240), (2430, -240, -80), UP],
 })
@@ -409,7 +409,9 @@ def chapter_setup():
     sc.step("B2 · four panels into the plate",
             "Four 316L panels (about 88 mm square) go into Nathan C.'s plate and are screwed down. Each panel is "
             "one square of the build: three parts on each, 12 parts in all.",
-            5.0, drop_in, hold=0.8, cam_to=CAM["plate"])
+            5.0, drop_in, hold=0.8, cam_to=CAM["plate"],
+            warn="a panel that sits proud of the plate meets the blade on the first layer. Dial-indicate all four "
+                 "flush before closing the door.")
 
     def job(u):
         w.ghosts(window(u, 0.05, 0.6))
@@ -420,6 +422,8 @@ def chapter_setup():
             "and spot stay. 61 sets in all: 60 Sobol settings and the 316L hatch (370 W, 1350 mm/s) as a control. "
             "The bases get the unchanged 316L set.",
             5.5, job, hold=2.2, cam_to=CAM["top_hi"], still=True,
+            warn="in Carl's photos the Part parameter window greys out power and speed. Make the 61 sets under "
+                 "Parameter and assign one to each wall; check a few in the layer view before the print.",
             labels=[("square 1 (panel A)", sq[1], (0.06, 0.78)),
                     ("square 4: turned 90°,\nrepeats 21 walls", sq[4], (0.95, 0.20)),
                     ("darker blue = higher P/v\ngrey = the control", sq[2], (0.95, 0.72))])
@@ -466,7 +470,9 @@ def chapter_print():
     sc.step("B4 · close up and inert",
             "Close the door and flood the chamber with shielding gas until the oxygen reading is under the machine's "
             "limit. Record the gas, the O₂ level and which way the gas flows across the plate.",
-            4.0, inert, hold=0.5, cam_to=CAM["deck_cut"], live=True)
+            4.0, inert, hold=0.5, cam_to=CAM["deck_cut"], live=True,
+            warn="the gas-flow direction isn't known yet. Note it: spatter blows downstream, and it decides which "
+                 "parts are exposed first.")
 
     n_sweeps = 5
     beds = {"h": 0.0}
@@ -549,7 +555,8 @@ def chapter_print():
             "One layer of wall 1.1.1, slowed down: the contour with the standard set, then the hatch, 0.09 mm apart, "
             "with this wall's power and speed. Whether the hatch runs along the wall (as drawn) or across it, and "
             "whether it turns each layer, decides what the etched section can show: check it in WRX's layer view.",
-            8.0, slow, hold=0.4, cam_to=CAM["sq1_top"])
+            8.0, slow, hold=0.4, cam_to=CAM["sq1_top"],
+            warn="if the hatch runs across the wall, each vector is only about 1 mm long, mostly start and stop.")
 
     hot = hot_walls()
 
@@ -572,6 +579,7 @@ def chapter_print():
             "likely on square 4, where the blade meets each wall's 12.7 mm face. If one does, stop exposing that "
             "wall rather than the build, and note the layer.",
             6.0, watch, hold=0.6, cam_to=CAM["sq4"],
+            warn="a hot wall that swells above the powder can catch the blade, likeliest on square 4.",
             labels=[("hottest walls (glowing)", lab_hot, (0.06, 0.30)),
                     ("square 4: walls across the blade", w.world_of(4, 1, (0, -WALL_L / 2, TOP), h=TOP),
                      (0.95, 0.25))])
@@ -651,6 +659,8 @@ def chapter_unload():
             "Stand the panel on its edge and bandsaw about 1 mm into the panel, under the bases, not through them: "
             "the base is only about 2.5 mm thick, and the walls' roots must stay whole. The panel is used up.",
             8.0, bandsaw, hold=0.8, cam_to=CAM["bandsaw_far"],
+            warn="the bases are only about 2.5 mm thick. Cut in the panel, not the base, so every wall's root "
+                 "stays whole.",
             labels=[("blade 1 mm into the panel", (M.SAW_X, 0, 40), (0.95, 0.25))])
     return sc.save()
 
@@ -701,6 +711,7 @@ def chapter_section():
             "walls, 1.5 mm off the centreline, on the side away from the notch's mark. Keep the offcut and label it: "
             "it holds a second plane through every wall.",
             8.0, to_saw, hold=0.6, cam_to=None,
+            warn="clamp the part by its base and feed slowly: the 1.27 mm walls can bend or chatter in the cut.",
             labels=[("cut plane: 1.5 mm off the centreline", (M.PSAW_X, -10, 60), (0.95, 0.22))])
 
     def cross(u):
@@ -801,6 +812,7 @@ def chapter_mount():
             "stand up in the mould. Use a compound with good edge retention: the last layer's pools are at the very "
             "top edge of each wall.",
             7.0, mount, hold=0.4, cam_to=CAM["press"],
+            warn="a rounded edge erases the last layer's pools, which sit at the very top of each wall.",
             labels=[("mounting press", (M.PRESS_C[0] - 26, 0, M.PRESS_TOP + 30), (0.06, 0.25))])
 
     def row(u):
@@ -834,7 +846,8 @@ def chapter_mount():
     sc.step("C4 · grind 1.5 mm to the centreline",
             "Grind away the 1.5 mm to the centreline on coarse paper. Measure the mount's height before and during, "
             "so you know when you're there; ±0.3 mm still cuts every wall near mid-length.",
-            5.5, grind, hold=0.5, cam_to=CAM["pol"])
+            5.5, grind, hold=0.5, cam_to=CAM["pol"],
+            warn="overshoot and the plane moves off mid-length. Measure the mount's height as you go.")
 
     pads = [("320 grit", (0.36, 0.34, 0.31)), ("800 grit", (0.55, 0.53, 0.50)), ("3 µm diamond", (0.93, 0.93, 0.91)),
             ("0.05 µm finish", (0.80, 0.87, 0.97))]
@@ -849,7 +862,9 @@ def chapter_mount():
     sc.step("C4 · polish",
             "Then 320 and 800 grit, 3 µm diamond, and a 0.05 µm final polish. 316L is soft and can smear pores "
             "shut: on a few walls, re-polish and re-image to check the porosity doesn't change.",
-            6.0, polish, hold=0.6)
+            6.0, polish, hold=0.6,
+            warn="316L smears and can close pores over. Re-grind 2-3 mounts 0.3 mm deeper and image them again: that "
+                 "measures how much one section scatters.")
     return sc.save()
 
 
@@ -898,6 +913,7 @@ def chapter_sem():
             "Backscattered electrons, about 100x, roughly six fields up each wall: about 500 fields for all 84 walls, "
             "so use the stage's automated tiling if the Apreo has it.",
             6.0, sem, hold=0.6, cam_to=CAM["sem"],
+            warn="image porosity before any etch: etch pits look like pores.",
             labels=[("puck on the stage", (M.SEM_C[0], -10, ST.STAGE[2] + M.PUCK_H), (0.06, 0.62))])
 
     def to_screen(key, prev=None):
@@ -937,6 +953,7 @@ def chapter_sem():
             "Then etch to bring out the melt-pool boundaries, straight after the final polish (316 passivates "
             "fast): for example 10 % oxalic acid electrolytically, or a short dip in a mixed-acid etch in the fume hood.",
             5.0, etch, hold=0.5,
+            warn="etch straight after the final polish, and lightly: over-etching pits the surface.",
             labels=[("section face: four walls", (ST.ETCH_SPOT[0], ST.ETCH_SPOT[1], ST.ETCH_SPOT[2] + M.PUCK_H),
                      (0.95, 0.30))])
 
@@ -952,7 +969,8 @@ def chapter_sem():
     sc.step("C6 · pool depth at the top",
             "The AM Module's steady-state pool is one of these arcs, if the hatch runs along the wall. If it runs "
             "across, the section shows only a flat fusion line, which gives the depth but not the width.",
-            3.0, to_screen("etched"), hold=3.4, cam_to=CAM["mon"], still=True)
+            3.0, to_screen("etched"), hold=3.4, cam_to=CAM["mon"], still=True,
+            warn="if the hatch runs across the wall, the section gives depth but no width.")
     return sc.save()
 
 
@@ -975,12 +993,16 @@ def chapter_results():
     sc.step("C6 · segment and classify the pores",
             "Threshold every image the same way, keep the pores inside the core band, and sort them by shape: flat, "
             "irregular lack-of-fusion pores along the layers, round keyhole pores. Porosity is their area fraction.",
-            1.5, swap("seg", "etched"), hold=4.2)
+            1.5, swap("seg", "etched"), hold=4.2,
+            warn="a dense wall's section holds only a few pores, so its porosity can differ by 50-100 % from one "
+                 "section to the next. The pairs and the re-ground mounts measure that.")
     sc.step("C7 · on the map",
             "Each wall's porosity goes on the power–speed map, next to the AM Module's lack-of-fusion and keyhole "
             "boundaries, run in batch for all 61 settings and committed before the print. The 21 pairs show "
             "whether turning the part changed anything.",
-            1.5, swap("map", "seg"), hold=4.6)
+            1.5, swap("map", "seg"), hold=4.6,
+            warn="a 1.27 mm wall heats up layer by layer. Run the AM Module with a substrate warmer than room "
+                 "temperature as well, and compare both.")
     sc.step("C7 · per wall, and the next build",
             "Each wall gives the model a row: setting, orientation, porosity by class, last-layer pool depth, wall "
             "thickness, and the build record. Batch BO then puts the next build's settings where the model is "

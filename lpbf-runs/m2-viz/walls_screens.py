@@ -92,6 +92,8 @@ def _wall(ax, rng, kind, title, sub, segment=False):
         elif segment:
             c = "#9a9994"
         (_lof_pore(ax, rng, x, y, s, c) if k == "lof" else _round_pore(ax, x, y, s, c))
+        if segment and in_core:                         # ring each counted pore so it reads at monitor scale
+            ax.add_patch(Ellipse((x, y), 0.17, 0.17, fill=False, ec=c, lw=2.4, zorder=4))
     ax.add_patch(Rectangle((CORE_IN, CORE_END), WALL_T - 2 * CORE_IN, WALL_H - 2 * CORE_END, fill=False,
                            ls=(0, (4, 3)), lw=2.2, ec="#2a78d6", zorder=4))
     ax.set_xlim(-0.35, WALL_T + 0.35)
@@ -157,49 +159,62 @@ def bse(path: Path, segment=False):
 def etched(path: Path):
     rng = np.random.default_rng(7)
     fig = _fig("Etched: the last layer's melt pools at the top of each wall")
-    titles = ["If the hatch runs along the wall", "If it runs across the wall"]
+    heads = ["If the hatch runs along the wall (vectors 12.7 mm long)", "If it runs across the wall (vectors about 1 mm)"]
+    subs = ["arcs side by side: the last track's pool is whole; each earlier one is cut by the next track",
+            "the plane runs along one track: a flat fusion line, which gives the depth but not the width"]
     for i in range(2):
-        ax = fig.add_axes([0.04 + i * 0.36, 0.13, 0.33, 0.70])
+        y_ax = 0.555 if i == 0 else 0.145
+        fig.text(0.04, y_ax + 0.315, heads[i], fontsize=22, color=INK, fontweight="bold", va="bottom")
+        ax = fig.add_axes([0.04, y_ax, 0.62, 0.30])
         top, w = 0.0, WALL_T
-        _bse_background(ax, rng, w, 0.32, y0=-0.32, grey=0.70)
-        ax.add_patch(Rectangle((-0.2, top), w + 0.4, 0.12, color=SURFACE, zorder=1))
+        _bse_background(ax, rng, w, 0.17, y0=-0.17, grey=0.70)
         d = 0.075
         if i == 0:
             xs = np.arange(0.11 + 0.045, w - 0.11, 0.09)
-            for x in xs:                                    # overlapping arcs: one per hatch line in the top layer
-                t = np.linspace(-1, 1, 60)
-                ax.plot(x + 0.065 * t, top - d * np.sqrt(1 - t ** 2), color="#3b3a37", lw=1.6, zorder=3)
-            for x in (0.05, w - 0.05):                       # contour pools at the faces: narrower and deeper
-                t = np.linspace(-1, 1, 60)
-                ax.plot(x + 0.04 * t, top - 0.13 * np.sqrt(1 - t ** 2), color="#3b3a37", lw=1.6, zorder=3)
-            xm = xs[len(xs) // 2]
+            t = np.linspace(-1, 1, 80)
+            for j, x in enumerate(xs):                      # each new track cuts the one before it
+                half = 0.065
+                xx = x + half * t
+                keep = xx >= (x - half) if j == len(xs) - 1 else xx <= xs[j + 1] - half * 0.55
+                ax.plot(xx[keep], (top - d * np.sqrt(1 - t ** 2))[keep], color="#3b3a37", lw=1.8, zorder=3)
+            for x in (0.05, w - 0.05):                      # contour pools at the faces: narrower and deeper
+                ax.plot(x + 0.04 * t, top - 0.13 * np.sqrt(1 - t ** 2), color="#3b3a37", lw=1.8, zorder=3)
+            xm = xs[-1]
             ax.annotate("", xy=(xm, top - d), xytext=(xm, top), zorder=5,
-                        arrowprops=dict(arrowstyle="<->", color="#2a78d6", lw=2.4))
-            ax.text(xm, top - d - 0.03, "depth", color="#2a78d6", fontsize=19, ha="center", va="top", zorder=5)
+                        arrowprops=dict(arrowstyle="<->", color="#2a78d6", lw=2.6))
+            ax.annotate("", xy=(xm - 0.065, top + 0.018), xytext=(xm + 0.065, top + 0.018), zorder=5,
+                        arrowprops=dict(arrowstyle="<->", color="#2a78d6", lw=2.6))
+            ax.text(xm - 0.02, top - d - 0.012, "last track: depth and width", color="#2a78d6", fontsize=18,
+                    ha="right", va="top", zorder=5,
+                    bbox=dict(boxstyle="round,pad=0.25", fc="#f4f4f2", ec="none", alpha=0.85))
+            ax.text(0.10, top - 0.135, "contour", color=INK2, fontsize=16, ha="left", va="center", zorder=5,
+                    bbox=dict(boxstyle="round,pad=0.2", fc="#f4f4f2", ec="none", alpha=0.85))
         else:
-            x = np.linspace(0.11, w - 0.11, 80)
-            ax.plot(x, top - d + 0.006 * np.sin(x * 60), color="#3b3a37", lw=1.6, zorder=3)
+            x = np.linspace(0.11, w - 0.11, 120)
+            ax.plot(x, top - d + 0.006 * np.sin(x * 60), color="#3b3a37", lw=1.8, zorder=3)
             ax.annotate("", xy=(w / 2, top - d), xytext=(w / 2, top), zorder=5,
-                        arrowprops=dict(arrowstyle="<->", color="#2a78d6", lw=2.4))
-            ax.text(w / 2, top - d - 0.03, "depth only", color="#2a78d6", fontsize=19, ha="center", va="top", zorder=5)
-        ax.set_xlim(-0.05, w + 0.05)
-        ax.set_ylim(-0.32, 0.06)
-        ax.set_aspect("equal")
+                        arrowprops=dict(arrowstyle="<->", color="#2a78d6", lw=2.6))
+            ax.text(w / 2 + 0.03, top - d * 0.55, "depth only", color="#2a78d6", fontsize=18, ha="left",
+                    va="center", zorder=5)
+        ax.set_xlim(-0.03, w + 0.03)
+        ax.set_ylim(-0.17, 0.04)
+        ax.set_aspect("auto")
         ax.axis("off")
-        ax.set_title(titles[i], fontsize=22, color=INK, fontweight="bold", pad=10)
-        sub = ("arcs: depth and width of each pool" if i == 0 else "a lengthwise cut through one track:")
-        sub2 = ("(the middle pools, away from the contours)" if i == 0 else "a flat fusion line, no width")
-        ax.text(w / 2, -0.34, sub, ha="center", va="top", fontsize=18, color=INK2)
-        ax.text(w / 2, -0.37, sub2, ha="center", va="top", fontsize=18, color=INK2)
-    ax = fig.add_axes([0.76, 0.13, 0.22, 0.70])
+        fig.text(0.04, y_ax - 0.012, subs[i], fontsize=16.5, color=INK2, va="top")
+    ax = fig.add_axes([0.70, 0.13, 0.28, 0.72])
     ax.axis("off")
-    for j, (t, c, fs, fw) in enumerate([("Check first in", INK, 21, "bold"), ("WRX's layer view", INK, 21, "bold"),
-                                        ("which way the", INK2, 19, None), ("hatch runs, and", INK2, 19, None),
-                                        ("whether it turns", INK2, 19, None), ("layer to layer", INK2, 19, None),
-                                        ("", INK, 10, None), ("The AM Module's", INK, 21, "bold"),
-                                        ("steady-state pool is", INK2, 19, None), ("the arc on the left", INK2, 19, None)]):
-        ax.text(0.0, 0.97 - 0.075 * j, t, color=c, fontsize=fs, fontweight=fw or "normal", va="top",
-                transform=ax.transAxes)
+    lines = [("Check first in", INK, 21, "bold"), ("WRX's layer view", INK, 21, "bold"),
+             ("which way the hatch runs,", INK2, 18, None), ("and whether it turns", INK2, 18, None),
+             ("from layer to layer", INK2, 18, None), ("", INK, 10, None),
+             ("The top layers", INK, 21, "bold"), ("are the upskin: the wall's", INK2, 18, None),
+             ("P and v if both tabs were", INK2, 18, None), ("set, at 0.075 mm spacing", INK2, 18, None),
+             ("", INK, 10, None),
+             ("The AM Module's", INK, 21, "bold"), ("steady-state pool is the", INK2, 18, None),
+             ("last track's arc (top)", INK2, 18, None)]
+    y = 0.97
+    for t_, c, fs, fw in lines:
+        ax.text(0.0, y, t_, color=c, fontsize=fs, fontweight=fw or "normal", va="top", transform=ax.transAxes)
+        y -= 0.022 if fs < 12 else 0.062
     _note(fig)
     fig.savefig(path, facecolor=SURFACE)
     plt.close(fig)

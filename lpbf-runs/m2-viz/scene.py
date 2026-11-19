@@ -173,6 +173,7 @@ class Scene:
         self.view_angle = 30.0
         self.caption = ""
         self.label = ""
+        self.warn = ""                            # a likely problem, shown in orange under the label
         self.gauges: list[tuple[str, str]] = []
         self.labels: list[tuple[str, tuple, tuple, float]] = []   # (text, xyz, (fx, fy), alpha)
         self.n = 0                     # frames written to the MP4
@@ -287,6 +288,34 @@ class Scene:
             d.rounded_rectangle((W - w - 2 * pad - 10 * s, 8 * s, W - 10 * s, 8 * s + 30 * s), 6 * s,
                                 fill=(30, 60, 140, 235))
             d.text((W - w - pad - 10 * s, 12 * s), self.label, font=fl, fill=(255, 255, 255))
+        # a likely problem: an orange box under the step label, wrapped to about 40 % of the frame
+        if self.warn:
+            fw = font(15 * s)
+            fwb = font(15 * s, bold=True)
+            head = "\u26a0 Watch out: "
+            maxw = 0.40 * W
+            words, lines, cur = self.warn.split(), [], head
+            for w_ in words:
+                t = (cur + " " + w_) if cur != head else cur + w_
+                if d.textlength(t, font=fw) > maxw and cur != head:
+                    lines.append(cur)
+                    cur = w_
+                else:
+                    cur = t
+            lines.append(cur)
+            lh = 20 * s
+            bw = max(d.textlength(t, font=fw) for t in lines) + 2 * pad
+            x1 = W - 10 * s
+            y0 = 8 * s + 30 * s + 6 * s
+            d.rounded_rectangle((x1 - bw, y0, x1, y0 + len(lines) * lh + 1.2 * pad), 6 * s,
+                                fill=(255, 240, 228, 238), outline=(214, 92, 36, 255), width=max(1, int(2 * s)))
+            for i, t in enumerate(lines):
+                if i == 0:
+                    hw = d.textlength(head, font=fwb)
+                    d.text((x1 - bw + pad, y0 + 0.6 * pad), head, font=fwb, fill=(176, 64, 16))
+                    d.text((x1 - bw + pad + hw, y0 + 0.6 * pad), t[len(head):], font=fw, fill=(30, 20, 14))
+                else:
+                    d.text((x1 - bw + pad, y0 + 0.6 * pad + i * lh), t, font=fw, fill=(30, 20, 14))
         # gauges, under the title
         if self.gauges:
             fg = font(15 * s, mono=True)
@@ -380,11 +409,12 @@ class Scene:
         return hi
 
     def step(self, label, caption, seconds, update=None, hold=1.2, cam_to=None, labels=(), still=False,
-             view_angle_to=None, live=False):
+             view_angle_to=None, live=False, warn=""):
         """One sub-step: `seconds` of motion (update(u), u eased 0 -> 1, camera to `cam_to`), then `hold` s."""
         start = self.n
         self.label = label
         self.caption = " ".join(caption.split())
+        self.warn = " ".join(warn.split())
         if self.n == 0 and not PREVIEW:
             # a clean establishing view first (no leader labels): it shows during the tutorial's crossfade
             self.labels = []
@@ -427,7 +457,8 @@ class Scene:
                     self.snap()
             else:
                 self.snap(max(1, int(round(hold * FPS))))
-        self.substeps.append(dict(label=label, caption=self.caption, start_frame=start, end_frame=self.n - 1))
+        self.substeps.append(dict(label=label, caption=self.caption, start_frame=start, end_frame=self.n - 1,
+                                  **({'watch_out': self.warn} if self.warn else {})))
 
     # --------------------------------------------------------------------------------- save
     def save(self):
