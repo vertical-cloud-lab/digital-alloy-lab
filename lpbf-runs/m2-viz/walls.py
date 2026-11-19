@@ -743,7 +743,7 @@ def chapter_section():
 
     sc.step("C2 · lengthwise, 1.5 mm off the centreline",
             "Part 1.1 in the precision saw, its length in the blade's plane: one cut through the base and all seven "
-            "walls, 1.5 mm off the centreline, on the side away from the notch's mark. Keep the offcut and label it: "
+            "walls, 1.5 mm off the centreline, on the side away from the wall-1 mark. Keep the offcut and label it: "
             "it holds a second plane through every wall.",
             8.0, to_saw, hold=0.6, cam_to=None,
             warn="clamp the part by its base and feed slowly: the 1.27 mm walls can bend or chatter in the cut.",

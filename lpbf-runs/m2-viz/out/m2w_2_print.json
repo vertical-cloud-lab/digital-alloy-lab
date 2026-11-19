@@ -1,0 +1,44 @@
+{
+ "name": "m2w_2_print",
+ "fps": 15,
+ "n_frames": 511,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "B4 · close up and inert",
+   "caption": "Close the door and flood the chamber with shielding gas until the oxygen reading is under the machine's limit. Record the gas, the O₂ level and which way the gas flows across the plate.",
+   "start_frame": 0,
+   "end_frame": 82,
+   "watch_out": "the gas-flow direction isn't known yet. Note it: spatter blows downstream, and it decides which parts are exposed first."
+  },
+  {
+   "label": "B5 · the bases: the 316L set",
+   "caption": "Recoat, expose, lower the platform, repeat. The bases go first, all with the 316L set, for 2.5 mm: about 85 layers at 30 µm, or 51 at 50 µm.",
+   "start_frame": 83,
+   "end_frame": 176
+  },
+  {
+   "label": "B5 · the walls: one setting each",
+   "caption": "Then the 42 walls, 7.6 mm more. Every layer the laser draws each wall's contour with the standard set and fills it with that wall's hatch. In all, roughly 340 layers at 30 µm (200 at 50 µm).",
+   "start_frame": 177,
+   "end_frame": 285
+  },
+  {
+   "label": "B5 · one wall layer, slowed down",
+   "caption": "One layer of wall 1.1.1, slowed down: the contour with the standard set, then the hatch, 0.13 mm apart, with this wall's power, speed and spot. Whether the hatch runs along the wall (as drawn) or across it, and whether it turns each layer, decides what the etched section can show: check it in WRX's layer view.",
+   "start_frame": 286,
+   "end_frame": 411,
+   "watch_out": "if the hatch runs across the wall, each vector is only about 1 mm long, mostly start and stop."
+  },
+  {
+   "label": "B5 · what to watch",
+   "caption": "Watch the first layers of the walls. A hot wall that swells above the powder can catch the blade. If one does, stop exposing that wall rather than the build, and note the layer.",
+   "start_frame": 412,
+   "end_frame": 510,
+   "watch_out": "the hottest walls (4.6-6.0 J/mm², glowing) and the 7 small-spot walls at Ke 10-15 are the likeliest to swell or spatter."
+  }
+ ]
+}

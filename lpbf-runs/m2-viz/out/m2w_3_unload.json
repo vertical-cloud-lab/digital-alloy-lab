@@ -1,0 +1,36 @@
+{
+ "name": "m2w_3_unload",
+ "fps": 15,
+ "n_frames": 409,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "B6 · cool, de-inert, depowder",
+   "caption": "Let it cool under gas, raise the platform, and vacuum the loose powder off (it goes back to the sieve).",
+   "start_frame": 0,
+   "end_frame": 98
+  },
+  {
+   "label": "B7 · panels out, photographed",
+   "caption": "Unscrew the panels and photograph squares 1 and 2 from above with their IDs, before anything is cut.",
+   "start_frame": 99,
+   "end_frame": 200
+  },
+  {
+   "label": "C1 · number every part",
+   "caption": "The six parts look alike. Before cutting, write square.part on each base with a paint pen (1.1 is square 1, part 1) and mark the wall-1 end. Write down which panel was square 1.",
+   "start_frame": 201,
+   "end_frame": 276
+  },
+  {
+   "label": "C1 · bandsaw the parts off",
+   "caption": "Stand the panel on its edge and bandsaw about 1 mm into the panel, under the bases, not through them: the base is only about 2.5 mm thick, and the walls' roots must stay whole. The panel is used up.",
+   "start_frame": 277,
+   "end_frame": 408,
+   "watch_out": "the bases are only about 2.5 mm thick. Cut in the panel, not the base, so every wall's root stays whole."
+  }
+ ]
+}

@@ -11,16 +11,20 @@ is drawn as an assumption and labelled as one.
 
 [`walls.py`](walls.py) animates the build in plan §4, ["Walls on stepped parts"](../m2-single-track-schedule.md#walls-on-stepped-parts-what-carl-is-printing-now-2026-11-17),
 from the job file to the comparison with the AM Module. It uses the same machine, bench and `Scene` framework as the
-single-track chapters below. The setup is 12 parts on the four panels, 7 walls 1.27 mm thick on each part, and 61
-parameter sets, with square 4 turned 90°. Every wall's colour and setting comes from
-[`wall_sheet.csv`](../m2-track-design/out/wall_sheet.csv). The animation follows part 1.1, one of the three parts
-printed both ways.
+single-track chapters below. It shows Sterling's final sheet for the 2026-11-20 build
+([PR #243 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/243#issuecomment-7021458367),
+e094d8e). That build is 2 squares (panels A and B here) with 3 parts each and 7 walls 1.27 mm thick on each part:
+42 walls, all along the recoater's travel. There are 33 sets, which are 32 Sobol settings in power, speed, spot and
+trace spacing plus the 316L hatch as a control, and 8 settings are printed on both squares. The other two panels went
+to another group and are drawn blank. Every wall's colour (energy per area, P/(v·h)), label and setting is read from
+[`wall_sheet.csv`](../m2-track-design/out/wall_sheet.csv), so a changed sheet only needs a re-render. The
+animation follows part 1.1.
 
 **Likely problems are marked on screen.** Each one appears in an orange "Watch out" box under the step label, and
 `out/m2w_*.json` lists them under `watch_out`.
 
-**1/7 set up (B2, A1, B3).** Panels into the plate. The job file holds 84 walls and 61 sets. Part 1.1 and its notch
-are shown, then the powder goes in.
+**1/7 set up (B2, A1, B3).** Panels into the plate. The job file holds 42 walls and 33 sets. Part 1.1 is shown with
+its first wall's four settings and a wall whose setting square 2 repeats, then the powder goes in.
 
 ![1/7 set up](out/m2w_1_setup.gif)
 
@@ -39,7 +43,7 @@ walls 4 and 5. The plane to grind to runs through every wall's mid-length.
 
 ![4/7 section](out/m2w_4_section.gif)
 
-**5/7 mount and polish (C3, C4).** Hot-mount each piece with its cut face down, 24 mounts in all. Grind 1.5 mm to
+**5/7 mount and polish (C3, C4).** Hot-mount each piece with its cut face down, 12 mounts in all. Grind 1.5 mm to
 the centreline, then polish.
 
 ![5/7 mount and polish](out/m2w_5_mount.gif)
@@ -49,8 +53,8 @@ melt pools at the top of each wall.
 
 ![6/7 SEM](out/m2w_6_sem.gif)
 
-**7/7 analyse and compare (C6, C7).** Segment and classify the pores, then put each wall on the power–speed map.
-The map shows the published 316L data and the CALPHAD-based keyhole threshold, where they exist (see below). The
+**7/7 analyse and compare (C6, C7).** Segment and classify the pores, then put each wall on the power–speed map
+(spot as marker size, King et al.'s keyhole criterion as colour, repeats ringed, published M2 316L densities in grey). The
 last screen lists what each wall hands the AM Module and batch BO.
 
 ![7/7 analyse and compare](out/m2w_7_results.gif)
@@ -62,9 +66,10 @@ description.
 | Shown | Source |
 | --- | --- |
 | Part: 1.75 x 0.5 in base, 7 walls 0.05 in thick and 0.3 in tall, across the base's width | Carl (PR #243, 2026-11-17). The base is drawn 0.1 in thick, reading his 0.4 in as the overall height |
-| 3 parts a square, 4 squares, square 4 turned 90° with copies of parts 1.1, 2.2 and 3.3; 61 sets | [`wall_sheet.py`](../m2-track-design/wall_sheet.py) |
-| Each wall's P/v colour; the map's 61 settings and their Eagar–Tsai + overlap first guess | [`wall_sheet.csv`](../m2-track-design/out/wall_sheet.csv) |
-| Contour with the standard set, then the wall's hatch at 0.09 mm; upskin at the wall's P and v | Plan §4, from Carl's WRX Control photos |
+| 3 parts a square, 2 squares, all walls along the blade; 33 sets, 8 settings on both squares | [`wall_sheet.py`](../m2-track-design/wall_sheet.py), Sterling's final table |
+| Each wall's colour (energy per area), labels, the hottest walls (≥ 4.5 J/mm²), the map's 33 settings and Ke | [`wall_sheet.csv`](../m2-track-design/out/wall_sheet.csv) |
+| Contour with the standard set, then the wall's hatch at its own trace spacing; upskin with the wall's four values | Plan §4, from Carl's WRX Control photos |
+| **Assumed:** which two panels are squares 1 and 2 (A and B here) | Write it down at the build |
 | Cuts: lengthwise 1.5 mm off the centreline, then between walls 4 and 5; grind to the centreline; 1.25 in conductive mounts | Plan §4 |
 | **Assumed:** where the parts sit on each panel, the hatch running along the wall in the slowed-down layer, the bench tools | Not known yet; the hatch direction is one of the open questions |
 | **Illustration only:** every pore, melt pool and porosity value on the monitor, and the BO panel | [`walls_screens.py`](walls_screens.py); each screen says so |

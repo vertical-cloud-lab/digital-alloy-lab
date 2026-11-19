@@ -228,8 +228,8 @@ def etched(path: Path):
     lines = [("Check first in", INK, 21, "bold"), ("WRX's layer view", INK, 21, "bold"),
              ("which way the hatch runs,", INK2, 18, None), ("and whether it turns", INK2, 18, None),
              ("from layer to layer", INK2, 18, None), ("", INK, 10, None),
-             ("The top layers", INK, 21, "bold"), ("are the upskin: the wall's", INK2, 18, None),
-             ("P and v if both tabs were", INK2, 18, None), ("set, at 0.075 mm spacing", INK2, 18, None),
+             ("The top layers", INK, 21, "bold"), ("are the upskin, set to the", INK2, 18, None),
+             ("wall's own four values:", INK2, 18, None), ("7-17 tracks in 1.05 mm", INK2, 18, None),
              ("", INK, 10, None),
              ("The AM Module's", INK, 21, "bold"), ("steady-state pool is the", INK2, 18, None),
              ("last track's arc (top)", INK2, 18, None)]
@@ -254,13 +254,43 @@ KEYHOLE = HERE.parent / "m2-track-design" / "out" / "calphad_316l_keyhole.csv"
 KE_C = {"transition": "#1baf7a", "keyhole": "#6250d6"}       # Gan et al.'s bands: 1.4-6 transition, 6-16 stable
 
 
+def _m2_published() -> list[tuple[float, float, float, str]]:
+    """(v, P, relative density %, source) for published 316L on Concept Laser M2 machines, from the literature check."""
+    out = []
+    for q in _optional_csv(LIT):
+        if "M2" not in q.get("machine", "") or not q.get("power_W") or not q.get("speed_mm_s"):
+            continue
+        m = q.get("measure", "")
+        try:
+            P, v, val = float(q["power_W"]), float(q["speed_mm_s"]), float(q["value"])
+        except ValueError:
+            continue
+        if m.startswith("relative_density"):
+            dens = val
+        elif m.startswith("porosity"):
+            dens = 100.0 - val
+        else:
+            continue
+        if 250 <= v <= 3200 and 130 <= P <= 395:
+            out.append((v, P, dens, q["source_doi"]))
+    return out
+
+
+KING_C = {"conduction": "#2a78d6", "transition": "#1baf7a", "keyhole": "#6250d6"}
+KING_LAB = {"conduction": "conduction (ΔH/h_s < 26)", "transition": "transition (26–30)",
+            "keyhole": "keyhole (ΔH/h_s ≥ 30)"}
+
+
 def pmap(path: Path):
-    """The 33 settings (real) on the power-speed plane: spot as marker size, Ke band as colour, repeats ringed."""
+    """The 33 settings (real) on the power-speed plane: spot as marker size, King et al.'s keyhole criterion as
+    colour (if calphad_316l.py has run), repeats ringed, published M2 316L densities as grey squares."""
     data = rows()
+    king = {q["set"].split("_")[0]: q for q in _optional_csv(KEYHOLE)}
     fig = _fig("What the 42 walls test: 32 settings + the control")
     ax = fig.add_axes([0.08, 0.15, 0.56, 0.70], facecolor=SURFACE)
     seen, done = {}, set()
     reps = {r["set"] for r in data if r.get("repeat") == "yes"}
+    n_key, spots_key = 0, []
     for r in data:
         if r["set"] in done:
             continue
@@ -270,25 +300,32 @@ def pmap(path: Path):
         if r["set"] == "C":
             ax.scatter([v], [P], s=520, marker="*", color=INK, edgecolor=SURFACE, lw=2, zorder=6)
             continue
-        band = "transition" if ke < 6.0 else "keyhole"
-        lab = {"transition": "transition (Ke 1.4–6)", "keyhole": "keyhole (Ke 6–15)"}[band]
-        ax.scatter([v], [P], s=size, marker="o", color=KE_C[band], alpha=0.85, edgecolor=SURFACE, lw=1.5, zorder=4,
+        if king:
+            q = king.get(r["set"])
+            dh = float(q["dH_hs_King_constants"]) if q else 3.73 * ke
+            band = "keyhole" if dh >= 30 else ("transition" if dh >= 26 else "conduction")
+        else:
+            band = "keyhole" if ke >= 6.0 else "transition"
+        if band == "keyhole":
+            n_key += 1
+            spots_key.append(d)
+        col = KING_C.get(band, KE_C.get(band, MUTED))
+        lab = KING_LAB[band] if king else {"transition": "transition (Ke 1.4–6)", "keyhole": "keyhole (Ke 6–15)"}[band]
+        ax.scatter([v], [P], s=size, marker="o", color=col, alpha=0.85, edgecolor=SURFACE, lw=1.5, zorder=4,
                    label=None if band in seen else lab)
         seen[band] = 1
         if r["set"] in reps:
             ax.scatter([v], [P], s=size * 1.9 + 160, marker="o", facecolor="none", edgecolor=INK2, lw=1.6, zorder=3)
-    # published 316L points (grey squares), if the literature check has written them
-    lit = [q for q in _optional_csv(LIT) if q.get("power_W") and q.get("speed_mm_s")]
-    pts = []
-    for q in lit:
-        try:
-            pts.append((float(q["speed_mm_s"]), float(q["power_W"])))
-        except ValueError:
-            continue
-    pts = [(v, P) for v, P in pts if 250 <= v <= 3200 and 130 <= P <= 395]
-    if pts:
-        ax.scatter([v for v, _ in pts], [P for _, P in pts], s=70, marker="s", color="#b9b8b2", edgecolor=INK2,
-                   lw=0.8, zorder=2, label="published 316L (other spots)")
+    pub = _m2_published()
+    if pub:
+        hi = [(v, P) for v, P, dd, _ in pub if dd >= 99.0]
+        lo = [(v, P) for v, P, dd, _ in pub if dd < 99.0]
+        if hi:
+            ax.scatter(*zip(*hi), s=46, marker="s", color="#c9c8c2", edgecolor="#8a8984", lw=0.8, zorder=2,
+                       label="published M2 316L, ≥ 99 %")
+        if lo:
+            ax.scatter(*zip(*lo), s=46, marker="s", facecolor=SURFACE, edgecolor="#8a8984", lw=1.0, zorder=2,
+                       label="published M2 316L, < 99 %")
     vv = np.linspace(300, 3000, 50)
     ax.plot(vv, 0.274 * vv, color=MUTED, lw=1.5, ls=(0, (5, 4)), zorder=1)
     ax.text(560, 141, "P/v of the 316L hatch", color=INK2, fontsize=15)
@@ -306,10 +343,11 @@ def pmap(path: Path):
         ax.spines[sp].set_color(MUTED)
     ax.grid(True, color="#e6e5e0", lw=1)
     ax.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
-    leg = ax.legend(loc="upper left", bbox_to_anchor=(1.03, 0.30), fontsize=16, frameon=True,
-                    title="colour: keyhole number", title_fontsize=15)
+    leg = ax.legend(loc="lower left", bbox_to_anchor=(1.03, -0.02), fontsize=15, frameon=True,
+                    title="King et al.'s criterion" if king else "colour: keyhole number", title_fontsize=15)
     for h in leg.legend_handles:
-        h.set_sizes([140])
+        if hasattr(h, "set_sizes"):
+            h.set_sizes([120])
     leg.get_frame().set_edgecolor("#d8d7d2")
     ax2 = fig.add_axes([0.67, 0.15, 0.31, 0.70])
     ax2.axis("off")
@@ -318,17 +356,18 @@ def pmap(path: Path):
            ("◯  on both squares (8 settings)", INK, 18, "bold"),
            ("●  marker size: spot, 50–200 µm", INK, 18, "bold"),
            ("     trace spacing 0.06–0.14 mm", INK2, 17, None),
-           ("", INK, 8, None),
-           ("Next on this map:", INK, 19, "bold"),
-           ("the AM Module's lack-of-fusion", INK2, 17, None),
-           ("and keyhole boundaries (batch", INK2, 17, None),
-           ("run, committed before the print),", INK2, 17, None),
-           ("then each wall's porosity", INK2, 17, None)]
+           ("", INK, 8, None)]
+    if king and spots_key:
+        txt += [(f"{n_key} of 32 at or over King's", INK, 18, "bold"),
+                (f"threshold, all at {min(spots_key):.0f}–{max(spots_key):.0f} µm spots", INK, 18, "bold"),
+                ("", INK, 8, None)]
+    txt += [("Next: the AM Module's boundaries,", INK2, 17, None),
+            ("then each wall's porosity", INK2, 17, None)]
     for j, (t, c, fs, fw) in enumerate(txt):
         ax2.text(0.0, 1.0 - 0.058 * j, t, color=c, fontsize=fs, fontweight=fw or "normal", va="top",
                  transform=ax2.transAxes)
-    _note(fig, "Settings from the wall sheet (real); 4 variables shown on the P-v plane. Ke: Gan et al. 2021, "
-               "absorptivity 0.4; not the AM Module")
+    _note(fig, "Real settings on the P-v plane. Colour: King et al. 2014 (σ = D4σ/4). Grey: published M2 316L. "
+               "Not the AM Module")
     fig.savefig(path, facecolor=SURFACE)
     plt.close(fig)
 

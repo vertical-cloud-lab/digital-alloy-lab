@@ -5,6 +5,27 @@ the [2026-08-13 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab
 if the atomizer-to-printer loop isn't ready, print commercial stainless steel on BYU's M2 and use cross-section SEM
 of single tracks to check the Thermo-Calc AM Module.
 
+**Update, 2026-11-19: Friday's build is 42 walls, each varying power, speed, spot and trace spacing.**
+[Sterling's final table](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/243#issuecomment-7021458367)
+replaces the 84-wall layout described in §4. The build is 2 squares × 3 parts × 7 walls, all along the recoater. It
+has 33 sets: 32 Sobol settings in power, speed, spot (50–190 µm) and trace spacing (0.06–0.14 mm), plus the 316L
+hatch as a control. 8 settings are printed on both squares. The [wall sheet](m2-track-design/out/wall_sheet.csv)
+and [list of sets](m2-track-design/out/wall_sets.csv) are current; where §4 still describes 84 walls, they win.
+Also new today:
+- [**Literature check**](m2-track-design/literature-check.md): 68 claims from the eight
+  [Edison reports](../edison-trajectories/m2-walls-literature/) checked against the papers, plus published 316L data
+  to compare against. The findings that bear on Friday:
+  - the layer is probably 50 µm (Bateman et al. ran our control as an M2's standard 316L set at 50 µm);
+  - spot size will set the pool shape more than anything else;
+  - a small spot with a wide hatch is where lack of fusion should show first;
+  - before the print, ask how WRX makes its 50–190 µm spots, and export the exposure order and layer time;
+  - when sectioning, log where each pore is, not only the area fraction.
+- [**pycalphad for 316L**](m2-track-design/calphad.md):
+  - solidification range, Scheil segregation and the primary phase across the 316L spec;
+  - King et al.'s keyhole criterion for the 33 sets: 11 of the 32 settings reach it, all at 50–80 µm spots.
+- [**A 3-D animation of the whole wall build**](m2-viz/README.md#the-wall-build-in-3-d-what-carl-is-printing-2026-11-20),
+  from the job file to the map, with the likely problems marked on screen.
+
 **Update, 2026-11-17: Carl's first prints are walls, not single tracks.** Each part is a 1.75 × 0.5 in base with 7
 walls 0.05 in thick on it, and every wall gets its own hatch power and speed. With 3 parts on each of the 4 squares,
 that is 84 walls in one build. Squares 1–3 carry 60 settings and a control at the 316L hatch. Square 4 is turned
