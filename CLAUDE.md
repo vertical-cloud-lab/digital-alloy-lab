@@ -266,6 +266,10 @@ Uploads default to public; pass `--privacy unlisted` or `--privacy private` when
 sticks; changing it afterwards needs the full-control token below or YouTube Studio. Never
 decode, print or commit either token.
 
+In a GitHub Actions run the helper appends `Requested in <link>` to the description: the
+exact comment, review or issue that started the run, read from `$GITHUB_EVENT_PATH`.
+`--no-source-link` (or `source_link=False`) skips it.
+
 **Full control (delete, edit, playlists, captions)** is `YOUTUBE_TOKEN_PICKLE_B64`, an
 environment secret of `youtube-admin`, read only by `.github/workflows/claude-youtube.yml`
 (`python youtube/yt_service.py --full`). Same three gates as byu-vcl: the job starts only for
