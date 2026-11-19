@@ -1,0 +1,10 @@
+{
+  "task_id": "11d5f460-eea2-48bf-8223-06d078686b63",
+  "status": "success",
+  "job_name": "job-futurehouse-paperqa3-precedent",
+  "created_at": "2026-11-19T00:11:51.310858Z",
+  "query": "Find reports, manuals, application notes or papers on metal powder atomizers (ultrasonic such as the\nAMAZEMET rePOWDER, gas, or centrifugal) and other inert-gas melting equipment in which hot metal,\ncoarse shot or molten runoff reached the powder collection container or its seals, so that elastomer\nseals or gaskets overheated, smoked or burned, glass collection vessels or view ports cracked from\nthermal shock, or the atmosphere's oxygen rose because a collector seal leaked. For each give the\nequipment, what happened, the cause found and the fix (for example seal material, heat shields,\ncooled flanges, metal collection pots, catch trays, interlocks or stop rules). Also report published\nguidance on choosing seals and glass for powder collectors under melts above 1000 C, on leak testing\n(rate of rise, helium) of atomizer chambers, and on how trace-oxygen sensors on such chambers should\nbe checked after a power failure.\n",
+  "has_successful_answer": true,
+  "total_cost": null,
+  "total_queries": null
+}

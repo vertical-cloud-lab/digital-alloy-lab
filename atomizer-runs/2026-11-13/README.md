@@ -27,7 +27,8 @@ The numbers behind each claim are in [`estimates.md`](estimates.md) (generated b
    been there before. A one-off gulp of air would have been purged to under 1 ppm by the third cycle.
    The leak can't be pinned on one joint from the evidence. The suspect is the cup's top joint: it was
    taken apart on Nov 11, never leak-checked, and it later smoked. A sensor fault that started with the
-   power cut is the other possibility.
+   power cut is the other possibility, and Edison ranks it first. A 5-minute rate-of-rise test and a
+   check of the sensor against cylinder argon will settle it.
 4. **The −830 mbar vacuum reading doesn't show a leak either way.** The gauge reads relative to the room,
    and the room's pressure on Nov 13 was 7–18 mbar lower than on the four earlier bronze run days
    (849 hPa against 856–867 hPa). The weather alone accounts for most of the shortfall from −850.
@@ -84,7 +85,7 @@ Polish time, so 15:32 MST. Video 2 is `0sDd-eE_uqE`. The clip in #269 starts at 
 | ~17:19 | Video 2, 8:19 | "There was smoke coming out of … that seal there … maybe I should have triple-checked that it was seated properly." |
 | ~17:20 | Video 2, 8:54 (HMI) | End: 162 mbar, 1139 °C, 254 ppm. |
 | Nov 13, after | Video 5 (`boWsO0rxHvU`) | Bagging shot and a fused mat of beads from the cone. A white curled strip comes out of the cup's top joint (7:25). The cup comes off. |
-| Nov 17 | Nov 17 parts 1–6 | Teardown. O-rings and centering ring cleaned. A brown burn ring on the bottom plate where the shot sat. |
+| Nov 17 | Nov 17 parts 1–6 | Teardown. O-rings and centering ring cleaned. A brown burn ring on the bottom plate where the shot sat. Part 6, 19:12: "the metal going in was so hot that it melted all of the seals and broke the glass … what's really a problem, I think, is this cup … we're getting another cup and it's gonna be a lot simpler." The new argon regulator goes on, and the borrowed one used since October is returned. |
 
 ![HMI during the pour: 143 mbar, 1300 °C, 352 ppm](frames/nov13-1716-hmi-during-pour.jpg)
 ![The glass cup glowing during the pour, with shot inside](frames/nov13-1716-cup-glowing-during-pour.jpg)
@@ -199,7 +200,8 @@ around the break. That puts the heat source on that part of the rim. For borosil
 allowable temperature step is about 150 K. Bronze touching it at 1000 °C gives about 900 K, so the
 rim would have cracked even with perfect clamping. A burned-away gasket, which leaves glass bearing
 on steel, or uneven tie-rod torque after the Nov 11 reassembly would have made it worse. The brown
-film is most likely condensed smoke from the seals.
+film is most likely condensed smoke from the seals. Edison suggests copper and aluminium oxide fume as
+well. EDS of a scraping would tell them apart.
 
 Fused quartz takes a step of about 840 K. **Ask AMAZEMET whether the glass is borosilicate or quartz.**
 
@@ -233,7 +235,7 @@ Fused quartz takes a step of about 840 K. **Ask AMAZEMET whether the glass is bo
 
 **Hardware (ask AMAZEMET first; it's their design):**
 
-8. **The newer collection container** that Sterling has asked them about (his message is on screen in the Nov 17 part-4 video). Ask for a quartz
+8. **The newer, simpler collection container** that Sterling has asked them about (his message is on screen in the Nov 17 part-4 video), and that the lab plans to get (part 6, 19:48). Ask for a quartz
    cylinder or an all-metal pot for copper alloys, and higher-temperature seals (FFKM, or
    graphite/metal) at the cone joint and the top of the glass.
 9. **A sacrificial liner** at the cup's entrance, such as a thin stainless sleeve, so that shot
@@ -259,7 +261,67 @@ Two tasks, submitted 00:11 UTC Nov 19:
 - a `PRECEDENT` search for collector and seal failures in atomizers.
 
 See [`edison-trajectories/atomizer-nab-nov13-cup-failure/`](../../edison-trajectories/atomizer-nab-nov13-cup-failure/).
-EDISON_SUMMARY_PLACEHOLDER
+Both tasks succeeded at 00:41 UTC.
+
+**Where it agrees:**
+- **The causal chain.** The plate failed to atomize, so 1–3 mm shot and runoff arrived near the
+  solidus and piled up at the cup's entrance. That overheated the seal and the clamped glass rim.
+  Runs that made powder, or that left a puck in the catch bowl, put almost no heat into the cup.
+- **The white crust is silicone.** Edison calls it "the diagnostic signature of silicone that has
+  thermally decomposed to amorphous silica". Silicone begins to decompose at about 415 °C in N₂ and
+  leaves about 30 wt% residue, which is about 70 at% O, 22 at% Si and 8 at% C
+  ([doi:10.1007/s10973-015-4829-0](https://doi.org/10.1007/s10973-015-4829-0),
+  [doi:10.3390/ma12010088](https://doi.org/10.3390/ma12010088)). FKM and EPDM char black.
+  Overheated FKM gives off HF ([doi:10.1016/j.polymdegradstab.2023.110271](https://doi.org/10.1016/j.polymdegradstab.2023.110271)).
+  Its handling advice:
+  - a P2/N95 respirator or better, and nitrile gloves;
+  - wet-wipe, don't sweep;
+  - quarantine the powder;
+  - if any seal could be FKM, decontaminate with bicarbonate.
+- **The heat.** About 0.6 MJ in the charge (this record's estimate is 0.7 MJ). Its allowable
+  temperature steps: borosilicate 120–170 K, soda-lime 60–80 K, fused quartz about 1000 K.
+- **The vacuum reading.** The 20 mbar gap "can easily" be day-to-day barometric change, so it isn't
+  evidence of a leak.
+- **Prevention, ranked by benefit for cost:**
+  1. the stop rule;
+  2. the O₂ go/no-go rule, with a sensor check against cylinder argon after any power cut;
+  3. a leak check after every disturbed joint;
+  4. a top-flange thermocouple alarm at about 150 °C;
+  5. a sacrificial sleeve;
+  6. a bigger catch bowl or deflector;
+  7. seals set back behind a shielded lip, or FFKM or metal C-rings ("FFKM … does not survive molten bronze");
+  8. fused quartz;
+  9. an all-metal pot;
+  10. a water-cooled flange.
+
+**Where it differs: oxygen.** Edison ranks a sensor artifact from the power cut first and a real leak
+as a possible contributor. Its reasons:
+- a zirconia cell needs to reheat, and a galvanic trace cell saturated by air can take hours to recover;
+- air could be trapped in the sensor line while the bleed valve is shut.
+
+It didn't have the HMI trace above. I still lean towards a real leak, for three reasons:
+- the reading dropped within 3 s when pumping started and then tracked the pressure;
+- it fell steadily for two hours at overpressure;
+- every purge reset it to about 1000 ppm, and a one-off dose of air should have cleared by the
+  third cycle.
+
+A galvanic cell recovering slowly from an air soak could also explain the slow fall, though.
+**The rate-of-rise test and the cylinder-argon check decide it.** Both explanations call for the
+same steps before the next run.
+
+**Precedent search.** Edison found no published case of hot shot burning a collector seal, cracking a
+glass collector or raising O₂ through one. Related cases:
+- a Savannah River Pd-alloy atomizer run in which a thermocouple fault ruined the crucible parts
+  ([doi:10.1007/s11668-020-00887-w](https://doi.org/10.1007/s11668-020-00887-w));
+- Howmet's Spraycast-X, which fitted special seals to stop leaks after evacuation and backfill;
+- a 2017 LLNL gas-atomizer specification
+  ([doi:10.2172/1411699](https://doi.org/10.2172/1411699)) that calls for stainless collection
+  hoppers with isolation valves, three redundant O₂ analyzers, and a leak rate below
+  1 × 10⁻⁶ atm·cm³/s.
+
+For the rate-of-rise test: a rise that stays linear means a leak, and one that levels off means
+outgassing. After a power cut, Edison suggests confirming the analyzer's self-test, its sample flow
+and a low-O₂ reference before trusting the reading again.
 
 ## Files
 
