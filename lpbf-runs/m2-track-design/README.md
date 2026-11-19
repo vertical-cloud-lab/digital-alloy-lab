@@ -213,6 +213,7 @@ rounds, each of up to 64 new tracks: a large-batch, few-round setting.
 | [`figures.py`](figures.py) | The two figures above; `python figures.py` |
 | [`calphad_316l.py`](calphad_316l.py) | pycalphad with MatCalc's open mc_fe database: equilibrium and Scheil solidification of 316L, segregation, the spec sweep against WRC-1992, h_s, and King et al.'s keyhole criterion for every set in `out/wall_sets.csv` (about 7 min the first time, then seconds): `python calphad_316l.py`. Findings in [`calphad.md`](calphad.md) |
 | [`literature-check.md`](literature-check.md) | The eight Edison reports on the wall build checked against the papers, with published 316L data in `out/literature_316l_data.csv` |
+| [`fins/`](fins/README.md) | One flange STL per set in `out/wall_sets.csv` (33), made from Gage's W011 file with the rectangle on top as wide as the set's spot, and what to check in WRX before printing them: `python fins/make_fins.py` |
 | `out/` | CSVs, the along-track profiles (`finite_track_profiles.json`) and the figures |
 
 Environment: Python 3.12 with numpy 2.5, scipy 1.18, matplotlib 3.11 and `eagar-tsai` 0.6.0 installed from its
