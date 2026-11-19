@@ -38,10 +38,11 @@ HERE = pathlib.Path(__file__).resolve().parent
 # --------------------------------------------------------------------------------------------
 TRAY = dict(outer=(2450.0, 864.0), inner=(2426.0, 840.0), rim=20.0, t=4.0)
 OPENINGS = {"Modula bay S": 695.0, "Kardex Shuttle XP 500 (published)": 727.5, "Kardex, 996 mm used-unit opening (estimate)": 856.5}
-# McMaster 5537T983 leveling mounts: 20.64 mm body + 31.75 mm M8 stem (52.39 overall). The stem threads up through the
-# 15 mm base plate and ends flush with its top, so the plate bottom sits 37.39 mm above the tray (was 20 mm on a drawn foot).
-FOOT = dict(body=20.64, stem=31.75, base_d=25.0)
-Z_TRAY = -160.0 - (FOOT["body"] + FOOT["stem"])          # -212.39; base-plate top stays at z = -160
+# McMaster 5537T983 leveling mounts, to the dimensions measured on McMaster's own model: Ø25 x 7.62 base, a swivel housing
+# tapering to Ø15.24 at 15.11, a 12 mm A/F hex from 16 to 20, and an M8 stem 32 long (52 overall). The stem threads up through
+# the 15 mm base plate and ends flush with its top, so the plate bottom sits 37 mm above the tray (was 20 mm on a drawn foot).
+FOOT = dict(body=20.0, stem=32.0, base_d=25.0)
+Z_TRAY = -160.0 - (FOOT["body"] + FOOT["stem"])          # -212.0; base-plate top stays at z = -160
 
 # --------------------------------------------------------------------------------------------
 # Parameters
@@ -347,8 +348,12 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         feet = []
         for x in (x0 + 30, x1 - 30):
             for y in (y0 + 30, y1 - 30):
-                feet += [fuse([cyl(FOOT["base_d"] / 2, (x, y, Z_TRAY), "z", 6.0), cyl(8.0, (x, y, Z_TRAY + 6.0), "z", FOOT["body"] - 6.0),
-                               cyl(4.0, (x, y, Z_TRAY + FOOT["body"]), "z", FOOT["stem"])])]
+                z0 = Z_TRAY
+                hexa = cq.Workplane("XY").polygon(6, 12.0 / math.cos(math.pi / 6)).extrude(4.0).val().translate(V(x, y, z0 + 16.0))
+                feet += [fuse([cyl(FOOT["base_d"] / 2, (x, y, z0), "z", 7.62),
+                               cq.Solid.makeCone(12.5, 8.05, 2.4, V(x, y, z0 + 7.62), V(0, 0, 1)),
+                               cyl(7.62, (x, y, z0 + 10.0), "z", 5.11), cyl(5.5, (x, y, z0 + 15.1), "z", 1.0), hexa,
+                               cyl(4.0, (x, y, z0 + FOOT["body"]), "z", FOOT["stem"])])]
         add(f"Leveling mounts, {mod} module (McMaster 5537T983: Ø25 base, M8 stem threaded up through the plate)", comp(feet), C["anod"], 1, (0, 0, -200),
             mat="steel", module=mod, bom="F3", mcm="5537T983")
 

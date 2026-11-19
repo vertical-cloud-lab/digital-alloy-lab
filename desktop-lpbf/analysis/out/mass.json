@@ -1,11 +1,11 @@
 {
  "modules": {
   "process": {
-   "mass_kg": 81.5,
+   "mass_kg": 82.3,
    "com_mm": [
-    -24.5,
-    0.1,
-    58.4
+    -24.6,
+    0.2,
+    58.3
    ],
    "foot": [
     -370.0,
@@ -13,16 +13,16 @@
     -265.0,
     215.0
    ],
-   "com_height_above_tray_mm": 253.4,
-   "min_lever_mm": 184.9,
-   "tip_accel_g": 0.73
+   "com_height_above_tray_mm": 270.3,
+   "min_lever_mm": 184.8,
+   "tip_accel_g": 0.68
   },
   "gas": {
-   "mass_kg": 60.7,
+   "mass_kg": 60.6,
    "com_mm": [
     718.9,
-    47.3,
-    -69.2
+    47.4,
+    -68.9
    ],
    "foot": [
     400.0,
@@ -30,16 +30,16 @@
     -250.0,
     300.0
    ],
-   "com_height_above_tray_mm": 125.8,
-   "min_lever_mm": 222.7,
-   "tip_accel_g": 1.77
+   "com_height_above_tray_mm": 143.1,
+   "min_lever_mm": 222.6,
+   "tip_accel_g": 1.56
   },
   "rack": {
    "mass_kg": 109.2,
    "com_mm": [
     -704.5,
     -11.1,
-    1.9
+    -15.0
    ],
    "foot": [
     -990.0,
@@ -47,7 +47,7 @@
     -300.0,
     300.0
    ],
-   "com_height_above_tray_mm": 196.9,
+   "com_height_above_tray_mm": 197.0,
    "min_lever_mm": 244.5,
    "tip_accel_g": 1.24
   },
@@ -56,23 +56,23 @@
    "com_mm": [
     657.8,
     352.5,
-    -136.8
+    -153.6
    ]
   }
  },
- "total_kg": 263.8,
+ "total_kg": 264.5,
  "tray_limits_kg": {
   "Kardex Shuttle XP 500, 2450 mm tray (strong tray)": 490.0,
   "Modula MC50D": 500.0
  },
  "by_material": {
   "mixed (vendor unit; mass from datasheet or estimate)": 140.0,
-  "6061-T6 aluminium": 56.1,
-  "bearing / alloy steel": 26.3,
-  "MIC-6 cast tooling plate": 23.6,
-  "316L stainless": 11.8,
+  "6061-T6 aluminium": 56.4,
+  "bearing / alloy steel": 26.0,
+  "MIC-6 cast tooling plate": 23.5,
+  "316L stainless": 12.4,
   "brass": 3.2,
-  "304 stainless": 2.1,
+  "304 stainless": 2.2,
   "laser-safety polycarbonate": 0.5,
   "AlSi10Mg powder (~50 % packing)": 0.1,
   "UV fused silica": 0.0,
@@ -89,9 +89,9 @@
    "mass_kg": 40.0,
    "basis": "catalogue/estimate",
    "com": [
-    -709.9999999999999,
-    -7.159913907984145,
-    -14.424999999999986
+    -710.0000000000001,
+    -7.15991390798416,
+    -31.425000000000004
    ]
   },
   {
@@ -113,9 +113,9 @@
    "mass_kg": 25.0,
    "basis": "catalogue/estimate",
    "com": [
-    -710.0000000000001,
+    -710.0000000000002,
     -7.159913907984126,
-    -125.55000000000005
+    -142.55
    ]
   },
   {
@@ -127,18 +127,18 @@
    "com": [
     -710.0,
     2.3130699850856257e-15,
-    40.0
+    22.999999999999993
    ]
   },
   {
    "part": "Optics bridge (6061, 25 mm)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 13.337,
+   "mass_kg": 13.319,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    -61.615682908953325,
-    0.6199966920868363,
+    -61.628327491390166,
+    0.6277923243151136,
     220.19999999999996
    ]
   },
@@ -146,24 +146,24 @@
    "part": "Base plate, gas module (MIC-6, 15 mm)",
    "module": "gas",
    "material": "MIC-6 cast tooling plate",
-   "mass_kg": 12.899,
+   "mass_kg": 12.891,
    "basis": "MIC-6 cast tooling plate x volume",
    "com": [
-    695.0,
+    695.0000000000001,
     24.999999999999996,
-    -167.5
+    -167.50000000000003
    ]
   },
   {
    "part": "Base plate, process module (MIC-6, 15 mm)",
    "module": "process",
    "material": "MIC-6 cast tooling plate",
-   "mass_kg": 10.702,
+   "mass_kg": 10.657,
    "basis": "MIC-6 cast tooling plate x volume",
    "com": [
-    -49.15733308997965,
-    -18.216908916656408,
-    -167.5
+    -49.280673021156446,
+    -18.269742195553274,
+    -167.49999999999977
    ]
   },
   {
@@ -173,9 +173,9 @@
    "mass_kg": 9.0,
    "basis": "catalogue/estimate",
    "com": [
-    -709.9999999999999,
-    -7.159913907984145,
-    207.82500000000013
+    -710.0000000000001,
+    -7.159913907984153,
+    190.8250000000002
    ]
   },
   {
@@ -197,21 +197,21 @@
    "mass_kg": 8.0,
    "basis": "catalogue/estimate",
    "com": [
-    -710.0000000000001,
-    -7.159913907984126,
-    96.70000000000007
+    -710.0000000000002,
+    -7.159913907984121,
+    79.70000000000007
    ]
   },
   {
-   "part": "Process chamber body (6061-T6, ~5.0 L)",
+   "part": "Process chamber body (6061-T6, ~6.4 L)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 7.388,
+   "mass_kg": 7.363,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    -2.005354545749319,
-    12.045746475533804,
-    30.580651042788652
+    -2.0194657793417,
+    12.029213065227065,
+    30.450365152705313
    ]
   },
   {
@@ -235,7 +235,7 @@
    "com": [
     1155.8151658767772,
     370.0,
-    -124.73933649289097
+    -141.739336492891
    ]
   },
   {
@@ -263,15 +263,15 @@
    ]
   },
   {
-   "part": "Optics bridge posts (60 x 60 x 5 square tube)",
+   "part": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 4.368,
+   "mass_kg": 4.896,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    -52.50000000000013,
-    -4.9999999999998135,
-    23.84999999999999
+    -52.50000000000027,
+    -4.999999999999925,
+    23.85000000000001
    ]
   },
   {
@@ -295,7 +295,7 @@
    "com": [
     61.50000000000001,
     350.0,
-    -170.0
+    -187.0
    ]
   },
   {
@@ -319,7 +319,7 @@
    "com": [
     -710.0000000000014,
     3.242382296809466e-13,
-    49.9999999999999
+    32.99999999999979
    ]
   },
   {
@@ -338,12 +338,12 @@
    "part": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 2.68,
+   "mass_kg": 2.657,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    1.1677092893588847,
-    2.5927130693621883,
-    128.00000000000003
+    1.2333684729819268,
+    2.6156342551461065,
+    127.99470208150866
    ]
   },
   {
@@ -371,6 +371,18 @@
    ]
   },
   {
+   "part": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 1.74,
+   "basis": "316L stainless x volume",
+   "com": [
+    -3.0352289995672135e-14,
+    -1.3858276709888274e-15,
+    -29.03423445803052
+   ]
+  },
+  {
    "part": "Z servo (ClearPath-SD, NEMA 23, folded)",
    "module": "process",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
@@ -395,27 +407,15 @@
    ]
   },
   {
-   "part": "Build module M50: spigot, flange and honed 316L cylinder (\u00d850.8 bore, 3 mm wall)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 1.579,
-   "basis": "316L stainless x volume",
-   "com": [
-    -3.453853702253818e-14,
-    3.5181365016885743e-16,
-    -23.02290281780137
-   ]
-  },
-  {
    "part": "Chilled-water supply + return to the laser",
    "module": "tray",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
    "mass_kg": 1.5,
    "basis": "catalogue/estimate",
    "com": [
-    104.68210137791084,
+    104.68210137791074,
     341.8879611628042,
-    -111.54246418532738
+    -128.54246418532725
    ]
   },
   {
@@ -431,18 +431,6 @@
    ]
   },
   {
-   "part": "Chamber legs (6061, 30 x 30)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 1.361,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    1.4782898009769506e-14,
-    -1.4782898009769506e-14,
-    -90.0
-   ]
-  },
-  {
    "part": "Operator panel box (on the rack's front post)",
    "module": "rack",
    "material": "6061-T6 aluminium",
@@ -451,7 +439,19 @@
    "com": [
     -444.99999999999994,
     -316.00000000000006,
-    95.00000000000003
+    77.99999999999999
+   ]
+  },
+  {
+   "part": "Chamber legs (6061, 30 x 30)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 1.22,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    2.3194597160544708e-14,
+    -2.6432176347537408e-14,
+    -89.11051010986802
    ]
   },
   {
@@ -587,6 +587,18 @@
    ]
   },
   {
+   "part": "Metering base (6061, fluted roller over a 100 mm dose line)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.509,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -90.00000000000004,
+    0.15281400414730634,
+    157.3621820744607
+   ]
+  },
+  {
    "part": "Collimator (QBH, f = 30 mm, D ~ 3.2 mm) on V-mount",
    "module": "process",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
@@ -605,21 +617,9 @@
    "mass_kg": 0.5,
    "basis": "catalogue/estimate",
    "com": [
-    1062.4263651315055,
-    236.98198081195048,
-    -129.63309003439028
-   ]
-  },
-  {
-   "part": "Metering base (6061, fluted roller over a 100 mm dose line)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.496,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -89.99999999999996,
-    0.1568934481111395,
-    157.8256739465431
+    1061.983098971137,
+    235.82882790775616,
+    -143.76326209548122
    ]
   },
   {
@@ -638,11 +638,11 @@
    "part": "Recoater guide rail (15 mm, 270 mm)",
    "module": "process",
    "material": "bearing / alloy steel",
-   "mass_kg": 0.467,
+   "mass_kg": 0.46,
    "basis": "bearing / alloy steel x volume",
    "com": [
-    -0.036597302893483175,
-    87.62622831682287,
+    -0.1656084057936198,
+    87.58329274112049,
     82.0
    ]
   },
@@ -650,12 +650,12 @@
    "part": "Argon supply from the dock",
    "module": "tray",
    "material": "316L stainless",
-   "mass_kg": 0.406,
+   "mass_kg": 0.404,
    "basis": "316L stainless x volume",
    "com": [
-    718.2985146383506,
-    299.43281355075226,
-    -90.11801190029063
+    719.0608249818744,
+    299.866914263786,
+    -103.62844651703892
    ]
   },
   {
@@ -671,39 +671,27 @@
    ]
   },
   {
-   "part": "Leveling mounts, process module",
+   "part": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; double FKM O-ring rod gland)",
    "module": "process",
-   "material": "bearing / alloy steel",
-   "mass_kg": 0.391,
-   "basis": "bearing / alloy steel x volume",
+   "material": "316L stainless",
+   "mass_kg": 0.38,
+   "basis": "316L stainless x volume",
    "com": [
-    -40.00000000000014,
-    -25.000000000000043,
-    -189.0645161290323
-   ]
-  },
-  {
-   "part": "Leveling mounts, gas module",
-   "module": "gas",
-   "material": "bearing / alloy steel",
-   "mass_kg": 0.391,
-   "basis": "bearing / alloy steel x volume",
-   "com": [
-    694.9999999999998,
-    24.99999999999994,
-    -189.06451612903228
+    -1.0085039174335257e-15,
+    0.14107443352235427,
+    -97.04560981747201
    ]
   },
   {
    "part": "Window flange (6061)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 0.353,
+   "mass_kg": 0.341,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    -6.410318074666791e-15,
-    -1.6871629681082558e-15,
-    146.89287131331832
+    9.782574671473745e-16,
+    -1.9799354629741524e-15,
+    146.77416408928838
    ]
   },
   {
@@ -743,18 +731,6 @@
    ]
   },
   {
-   "part": "Module M50 bottom flange (316L, double FKM O-ring rod gland)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.281,
-   "basis": "316L stainless x volume",
-   "com": [
-    1.3834286643354278e-15,
-    2.1624445519799186e-16,
-    -97.0
-   ]
-  },
-  {
    "part": "Recoater ball screw (M12, 10 mm lead)",
    "module": "process",
    "material": "bearing / alloy steel",
@@ -764,6 +740,30 @@
     0.0,
     72.0,
     40.0
+   ]
+  },
+  {
+   "part": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
+   "module": "process",
+   "material": "bearing / alloy steel",
+   "mass_kg": 0.241,
+   "basis": "bearing / alloy steel x volume",
+   "com": [
+    -40.00000000000013,
+    -25.000000000000078,
+    -198.8161946926699
+   ]
+  },
+  {
+   "part": "Leveling mounts, gas module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
+   "module": "gas",
+   "material": "bearing / alloy steel",
+   "mass_kg": 0.241,
+   "basis": "bearing / alloy steel x volume",
+   "com": [
+    694.9999999999998,
+    24.999999999999932,
+    -198.81619469266988
    ]
   },
   {
@@ -827,15 +827,27 @@
    ]
   },
   {
+   "part": "Z mounting flange (bolted under the floor)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.176,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    30.43081027995914,
+    83.68517710310677,
+    -24.958310289310234
+   ]
+  },
+  {
    "part": "Blade holder (6061, 18 x 31, quick-swap)",
    "module": "process",
    "material": "6061-T6 aluminium",
    "mass_kg": 0.17,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    -106.00000000000001,
-    4.000000000000002,
-    18.525
+    -106.00883405542524,
+    4.006730708895408,
+    18.532614114437933
    ]
   },
   {
@@ -872,18 +884,6 @@
     1.1599634246426864e-15,
     -63.858033311430574,
     128.00000000000003
-   ]
-  },
-  {
-   "part": "Z mounting flange (bolted under the floor)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.151,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    30.0,
-    80.0,
-    -24.999999999999996
    ]
   },
   {
@@ -947,6 +947,18 @@
    ]
   },
   {
+   "part": "Lid screws, M5 x 25 316 socket head (20 x McMaster 92290A252)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.102,
+   "basis": "catalogue/estimate",
+   "com": [
+    -3.1847217816723585e-10,
+    5.53840346161006e-10,
+    128.43119768741767
+   ]
+  },
+  {
    "part": "O2 sample line (1/8 in. 316L)",
    "module": "process",
    "material": "316L stainless",
@@ -967,7 +979,7 @@
    "com": [
     -444.99999999999994,
     -342.1421473916643,
-    205.0
+    187.99999999999994
    ]
   },
   {
@@ -979,7 +991,7 @@
    "com": [
     -445.0,
     -335.7530308333889,
-    150.0
+    133.0
    ]
   },
   {
@@ -991,7 +1003,7 @@
    "com": [
     -444.99999999999994,
     -337.0,
-    100.0
+    83.0
    ]
   },
   {
@@ -1003,19 +1015,19 @@
    "com": [
     -444.99999999999994,
     -337.0,
-    55.0
+    37.99999999999999
    ]
   },
   {
    "part": "Window retaining ring",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 0.086,
+   "mass_kg": 0.085,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    4.365493607234862e-15,
-    -1.5948393881050605e-15,
-    160.49999999999997
+    -1.0791148093199721e-15,
+    -1.4629610166619757e-15,
+    160.5
    ]
   },
   {
@@ -1055,15 +1067,15 @@
    ]
   },
   {
-   "part": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "part": "Optics-bridge screws, M6 x 35 316 (8 x McMaster 92290A334)",
    "module": "process",
-   "material": "6061-T6 aluminium",
+   "material": "316L stainless",
    "mass_kg": 0.079,
-   "basis": "6061-T6 aluminium x volume",
+   "basis": "catalogue/estimate",
    "com": [
-    0.003705385188218441,
-    -0.012369252751507031,
-    -41.060033217341555
+    -52.50000000002609,
+    -5.000000000000044,
+    220.94868457903405
    ]
   },
   {
@@ -1079,15 +1091,27 @@
    ]
   },
   {
+   "part": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.075,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    0.003926044599157956,
+    -0.013107881854563847,
+    -40.84973975610897
+   ]
+  },
+  {
    "part": "Heater block M50 (6061-T6, bayonet socket)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 0.069,
+   "mass_kg": 0.068,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    0.04119286246472367,
-    -0.009284456340317356,
-    -17.136784201861595
+    0.0414744075332083,
+    -0.009347913763273711,
+    -17.109002653213082
    ]
   },
   {
@@ -1136,6 +1160,30 @@
     40.0,
     69.99999999999999,
     158.7479406919275
+   ]
+  },
+  {
+   "part": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.061,
+   "basis": "catalogue/estimate",
+   "com": [
+    2.529869246205078e-10,
+    -7.303583761132972e-10,
+    -168.00066460292237
+   ]
+  },
+  {
+   "part": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.061,
+   "basis": "catalogue/estimate",
+   "com": [
+    -52.499999999034614,
+    -5.000000002028584,
+    -168.0006646029223
    ]
   },
   {
@@ -1331,18 +1379,6 @@
    ]
   },
   {
-   "part": "Lid screws (M5 SHCS, A4 stainless)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.04,
-   "basis": "316L stainless x volume",
-   "com": [
-    -3.154098186836902e-14,
-    -1.9023154689360062e-14,
-    138.34435797665364
-   ]
-  },
-  {
    "part": "\u00d82 in. fused-silica window, 8 mm, AR 1064",
    "module": "process",
    "material": "UV fused silica",
@@ -1403,6 +1439,18 @@
    ]
   },
   {
+   "part": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.031,
+   "basis": "catalogue/estimate",
+   "com": [
+    2.455455151494499e-10,
+    -7.22852287396871e-10,
+    -28.00066460292245
+   ]
+  },
+  {
    "part": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
    "module": "process",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
@@ -1430,12 +1478,12 @@
    "part": "Rod end M50: potted cable exit (Torr Seal) with a side outlet",
    "module": "process",
    "material": "316L stainless",
-   "mass_kg": 0.023,
+   "mass_kg": 0.022,
    "basis": "316L stainless x volume",
    "com": [
-    -2.1168877347905353,
-    1.21070604488939e-06,
-    -117.86545319902913
+    -2.2141521195326117,
+    1.2655879730243083e-06,
+    -117.81332467395406
    ]
   },
   {
@@ -1445,21 +1493,9 @@
    "mass_kg": 0.022,
    "basis": "bearing / alloy steel x volume",
    "com": [
-    -96.25,
-    -2.9688415143179674e-16,
-    9.024999999999999
-   ]
-  },
-  {
-   "part": "Striker disc M50 (416 stainless, on the pot magnet)",
-   "module": "process",
-   "material": "bearing / alloy steel",
-   "mass_kg": 0.02,
-   "basis": "bearing / alloy steel x volume",
-   "com": [
-    1.7949107508593307e-16,
-    2.7038383259851257e-16,
-    -124.5
+    -96.24999999999999,
+    -7.430947999427974e-17,
+    8.976132730205297
    ]
   },
   {
@@ -1535,6 +1571,18 @@
    ]
   },
   {
+   "part": "Striker disc M50 (416 stainless, on the pot magnet)",
+   "module": "process",
+   "material": "bearing / alloy steel",
+   "mass_kg": 0.018,
+   "basis": "bearing / alloy steel x volume",
+   "com": [
+    -1.1012013316197319e-16,
+    -3.0703480935747595e-16,
+    -124.45768267104245
+   ]
+  },
+  {
    "part": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
    "module": "process",
    "material": "FKM (Viton) 75A",
@@ -1559,18 +1607,6 @@
    ]
   },
   {
-   "part": "Captive M6 thumb screws (2, into helical inserts in the floor)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.017,
-   "basis": "316L stainless x volume",
-   "com": [
-    -1.162391001160862e-14,
-    -1.9036569037037472e-16,
-    -25.909090909090914
-   ]
-  },
-  {
    "part": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
    "module": "process",
    "material": "bearing / alloy steel",
@@ -1583,6 +1619,30 @@
    ]
   },
   {
+   "part": "Lid screw helical inserts, M5 x 7.5 18-8, in the chamber body (20 x McMaster 91732A261)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.015,
+   "basis": "catalogue/estimate",
+   "com": [
+    5.384727609923875e-14,
+    2.456781972027768e-14,
+    116.2499999999999
+   ]
+  },
+  {
+   "part": "Module M50 handle (6061, screwed under the gland plate; for a hand or a gripper)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.014,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    6.319851439533007e-16,
+    -57.457818979870225,
+    -103.11669405071359
+   ]
+  },
+  {
    "part": "Hinge pins (\u00d85, 316)",
    "module": "process",
    "material": "316L stainless",
@@ -1592,6 +1652,42 @@
     0.0,
     -131.99999999999997,
     -12.0
+   ]
+  },
+  {
+   "part": "Gland-plate screws M50, M4 x 16 316, into the welded collar (6 x McMaster 92290A154)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.014,
+   "basis": "catalogue/estimate",
+   "com": [
+    -3.9435443761790565e-11,
+    -1.9426353787966042e-10,
+    -98.00802151152959
+   ]
+  },
+  {
+   "part": "Window-flange screws, M4 x 16 316 (6 x McMaster 92290A154)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.014,
+   "basis": "catalogue/estimate",
+   "com": [
+    -4.9780286623389397e-11,
+    2.553026583287549e-10,
+    144.0080215115297
+   ]
+  },
+  {
+   "part": "Z-flange screws, M5 x 12 316, counterbored (4 x McMaster 92290A228)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.014,
+   "basis": "catalogue/estimate",
+   "com": [
+    16.9999999998306,
+    93.4999999999659,
+    -22.752443914380066
    ]
   },
   {
@@ -1631,6 +1727,18 @@
    ]
   },
   {
+   "part": "Recoater rail screws, M4 x 16 316 (5 x McMaster 92290A154)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.012,
+   "basis": "catalogue/estimate",
+   "com": [
+    4.999999999603278,
+    89.2919784884704,
+    81.9999999999996
+   ]
+  },
+  {
    "part": "Door O-ring (FKM)",
    "module": "process",
    "material": "FKM (Viton) 75A",
@@ -1643,15 +1751,15 @@
    ]
   },
   {
-   "part": "Module M50 handle (front, for a hand or a gripper)",
+   "part": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
    "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.01,
-   "basis": "6061-T6 aluminium x volume",
+   "material": "304 stainless",
+   "mass_kg": 0.011,
+   "basis": "catalogue/estimate",
    "com": [
-    -1.4938425708246107e-15,
-    -53.44901960784314,
-    -96.99999999999999
+    -4.8466106993409745e-11,
+    1.2339962399488623e-16,
+    -25.739978023491034
    ]
   },
   {
@@ -1667,27 +1775,75 @@
    ]
   },
   {
-   "part": "Locating dowel + diamond pin (\u00d86, pressed into the floor's underside)",
+   "part": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "module": "process",
    "material": "316L stainless",
    "mass_kg": 0.009,
-   "basis": "316L stainless x volume",
+   "basis": "catalogue/estimate",
    "com": [
-    6.785183320455502e-16,
-    -1.2062548125254227e-14,
-    -20.0
+    -4.4685950836740985e-15,
+    15.156097113707,
+    -19.32044519985148
    ]
   },
   {
-   "part": "Radiation shields M50 (2 x 0.3 mm polished 316)",
+   "part": "Metering-base screws, M4 x 16 316 (4 x McMaster 92290A154)",
    "module": "process",
    "material": "316L stainless",
-   "mass_kg": 0.007,
+   "mass_kg": 0.009,
+   "basis": "catalogue/estimate",
+   "com": [
+    -90.00000000001081,
+    1.3916702168966505e-09,
+    140.00802151152948
+   ]
+  },
+  {
+   "part": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.008,
    "basis": "316L stainless x volume",
    "com": [
-    -0.010398402940471143,
-    -0.044629417102895204,
-    -28.000000000000004
+    -0.009453426867236757,
+    -0.04057362780855558,
+    -28.000000000000007
+   ]
+  },
+  {
+   "part": "Window retaining-ring screws, M3 x 10 316 (6 x McMaster 92290A115)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.006,
+   "basis": "catalogue/estimate",
+   "com": [
+    8.092367958678394e-11,
+    -2.209897682839219e-11,
+    160.99771784955615
+   ]
+  },
+  {
+   "part": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.005,
+   "basis": "catalogue/estimate",
+   "com": [
+    -1.2162724813943964e-11,
+    -3.710273761247626e-16,
+    -35.082818187657544
+   ]
+  },
+  {
+   "part": "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.005,
+   "basis": "catalogue/estimate",
+   "com": [
+    1.3406399307598174e-13,
+    4.4687997691993915e-14,
+    -15.5
    ]
   },
   {
@@ -1703,15 +1859,39 @@
    ]
   },
   {
-   "part": "Macor standoffs M50 (3 x \u00d88 x 8, thermal break)",
+   "part": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "module": "process",
-   "material": "Macor machinable glass-ceramic",
-   "mass_kg": 0.003,
-   "basis": "Macor machinable glass-ceramic x volume",
+   "material": "316L stainless",
+   "mass_kg": 0.004,
+   "basis": "catalogue/estimate",
    "com": [
-    5.65431943371292e-16,
-    -1.0366252295140354e-15,
-    -28.0
+    -3.277529357875781e-11,
+    -33.39999999999978,
+    -104.60103991515058
+   ]
+  },
+  {
+   "part": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.003,
+   "basis": "catalogue/estimate",
+   "com": [
+    1.6757999134497723e-14,
+    4.2064325591499743e-17,
+    -14.000000000000004
+   ]
+  },
+  {
+   "part": "Z-flange helical inserts, M5 x 7.5 18-8, in the floor (4 x McMaster 91732A261)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.003,
+   "basis": "catalogue/estimate",
+   "com": [
+    17.00000000000003,
+    93.49999999999999,
+    -16.250000000000014
    ]
   },
   {
@@ -1724,6 +1904,102 @@
     -8.0,
     9.487147630982566e-16,
     -19.0
+   ]
+  },
+  {
+   "part": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
+   "module": "process",
+   "material": "Macor machinable glass-ceramic",
+   "mass_kg": 0.002,
+   "basis": "Macor machinable glass-ceramic x volume",
+   "com": [
+    3.8855693911620425e-15,
+    3.7301466155155605e-16,
+    -28.0
+   ]
+  },
+  {
+   "part": "Rod set screws M50, M4 cup point 316 (2 x McMaster 92029A152)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.002,
+   "basis": "catalogue/estimate",
+   "com": [
+    -2.6029949633740086e-11,
+    6.6078674041742e-16,
+    -46.50000000000001
+   ]
+  },
+  {
+   "part": "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.002,
+   "basis": "catalogue/estimate",
+   "com": [
+    -8.603075159786753e-12,
+    1.2851771567418225e-15,
+    -122.72521566848309
+   ]
+  },
+  {
+   "part": "Recoater rail helical inserts, M4 x 6 18-8, in the back wall (5 x McMaster 91732A656)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.002,
+   "basis": "catalogue/estimate",
+   "com": [
+    4.999999999999999,
+    98.00000000000004,
+    82.00000000000003
+   ]
+  },
+  {
+   "part": "Blade screws, M3 x 8 316 (heads 11-17 mm above the plate, over the powder heap) (2 x McMaster 92290A113)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.002,
+   "basis": "catalogue/estimate",
+   "com": [
+    -96.66650746031159,
+    1.6456576424743135e-10,
+    14.000000000000039
+   ]
+  },
+  {
+   "part": "Window-flange helical inserts, M4 x 4 18-8, in the lid (6 x McMaster 91732A649)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.002,
+   "basis": "catalogue/estimate",
+   "com": [
+    0.0,
+    1.4895195814092196e-15,
+    133.99999999999997
+   ]
+  },
+  {
+   "part": "Metering-base helical inserts, M4 x 6 18-8, in the lid (4 x McMaster 91732A656)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.002,
+   "basis": "catalogue/estimate",
+   "com": [
+    -90.00000000000004,
+    -2.085327413972909e-14,
+    133.00000000000006
+   ]
+  },
+  {
+   "part": "Module M50 gland-plate O-ring (FKM, 1.78 mm cord, face seal on the tube end and collar)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.001,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    2.1846945339294295e-14,
+    -7.516156165615499e-15,
+    -92.64999999999995
    ]
   },
   {
@@ -1775,6 +2051,18 @@
    ]
   },
   {
+   "part": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.001,
+   "basis": "catalogue/estimate",
+   "com": [
+    -3.1059575788665384e-15,
+    0.0,
+    -21.749999999999996
+   ]
+  },
+  {
    "part": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "module": "process",
    "material": "bearing / alloy steel",
@@ -1784,6 +2072,30 @@
     1.0956521739130445,
     5.985857376054955,
     -23.34565217391304
+   ]
+  },
+  {
+   "part": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.0,
+   "basis": "catalogue/estimate",
+   "com": [
+    -3.059696663264567e-14,
+    -4.889121647681557e-17,
+    -20.340000000000003
+   ]
+  },
+  {
+   "part": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.0,
+   "basis": "catalogue/estimate",
+   "com": [
+    8.934473531356427e-16,
+    7.445394609463689e-16,
+    -43.743590825990225
    ]
   }
  ]

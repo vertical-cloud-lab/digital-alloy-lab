@@ -1318,7 +1318,9 @@ def chapter_tray(st):
     dock = [i for i, p in enumerate(st.parts) if p.step == 13]
     fly(st, dock, nf(12), ex, lambda t: cam(t, 3600, az=18, el=30), cap, "Tray dock (power, Ethernet, argon, water, exhaust) and umbilicals")
     st.shown.update(i for i in range(len(st.parts)) if st.parts[i].step <= 13)
-    st.caption("The desktop LPBF on its VLM tray: 564 mm tall, three modules side by side", "From stock and parts to a finished machine")
+    bb = M.envelope(st.parts)
+    st.caption(f"The desktop LPBF on its VLM tray: {bb.zmax - M.Z_TRAY:.0f} mm tall, three modules side by side",
+               "From stock and parts to a finished machine")
     n = nf(36)
     for f in range(n):
         st.cam((110.0, 0.0, 40.0), 3700, 28 + 360 * f / n, 22)

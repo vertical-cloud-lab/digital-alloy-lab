@@ -37,16 +37,16 @@ McMaster offers two STEP models of each part: a full one, whose screws have true
 | [91065A610](https://www.mcmaster.com/91065A610/) | Retainer for M6 x 1 mm Thread Size Captive Panel Screws, 18-8 Stainless Steel | 6 | – | 9.29 | – | 9.27 | 9.29 | +0.24 % |
 | [92029A142](https://www.mcmaster.com/92029A142/) | 316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 6 mm Long | 2 | 62.51 | 62.51 | +0.0013 % | 49.47 | 49.28 | -0.38 % |
 | [92029A152](https://www.mcmaster.com/92029A152/) | 316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 16 mm Long | 4 | 188.17 | 188.18 | +0.0014 % | 149.48 | 148.60 | -0.59 % |
-| [92290A854](https://www.mcmaster.com/92290A854/) | 316 Stainless Steel Socket Head Screw, M2.5 x 0.45 mm Thread, 30 mm Long, Partially Threaded | 3 | 181.34 | 181.86 | +0.29 % | 148.87 | 164.27 | +10.35 % |
+| [92290A854](https://www.mcmaster.com/92290A854/) | 316 Stainless Steel Socket Head Screw, M2.5 x 0.45 mm Thread, 30 mm Long, Fully Threaded | 3 | 181.34 | 181.34 | +0.0016 % | 148.87 | 150.17 | +0.88 % |
 | [92290A113](https://www.mcmaster.com/92290A113/) | 316 Stainless Steel Socket Head Screw, M3 x 0.5 mm Thread, 8 mm Long, Fully Threaded | 2 | 117.26 | 117.26 | +0.0003 % | 106.30 | 106.26 | -0.03 % |
 | [92290A115](https://www.mcmaster.com/92290A115/) | 316 Stainless Steel Socket Head Screw, M3 x 0.5 mm Thread, 10 mm Long, Fully Threaded | 6 | 131.40 | 131.40 | +0.0010 % | 117.66 | 117.59 | -0.06 % |
-| [92290A124](https://www.mcmaster.com/92290A124/) | 316 Stainless Steel Socket Head Screw, M3 x 0.5 mm Thread, 25 mm Long, Partially Threaded | 6 | 236.39 | 237.43 | +0.44 % | 211.84 | 212.37 | +0.25 % |
+| [92290A124](https://www.mcmaster.com/92290A124/) | 316 Stainless Steel Socket Head Screw, M3 x 0.5 mm Thread, 25 mm Long, Partially Threaded | 6 | 236.39 | 236.39 | +0.0017 % | 211.84 | 211.42 | -0.20 % |
 | [92290A144](https://www.mcmaster.com/92290A144/) | 316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 10 mm Long, Fully Threaded | 6 | 259.15 | 259.15 | +0.0009 % | 234.04 | 234.06 | +0.0052 % |
 | [92290A154](https://www.mcmaster.com/92290A154/) | 316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 16 mm Long, Fully Threaded | 33 | 334.55 | 334.55 | +0.0006 % | 293.27 | 293.41 | +0.05 % |
 | [92290A228](https://www.mcmaster.com/92290A228/) | 316 Stainless Steel Socket Head Screw, M5 x 0.8 mm Thread, 12 mm Long, Fully Threaded | 4 | 474.91 | 474.91 | +0.0001 % | 431.73 | 430.81 | -0.21 % |
 | [92290A252](https://www.mcmaster.com/92290A252/) | 316 Stainless Steel Socket Head Screw, M5 x 0.8 mm Thread, 25 mm Long, Fully Threaded | 20 | 730.17 | 730.17 | +0.0001 % | 641.05 | 637.75 | -0.51 % |
 | [92290A330](https://www.mcmaster.com/92290A330/) | 316 Stainless Steel Socket Head Screw, M6 x 1 mm Thread, 25 mm Long, Fully Threaded | 20 | 1,095.05 | 1,095.05 | +0.0000 % | 959.67 | 956.41 | -0.34 % |
-| [92290A334](https://www.mcmaster.com/92290A334/) | 316 Stainless Steel Socket Head Screw, M6 x 1 mm Thread, 35 mm Long, Partially Threaded | 8 | 1,369.63 | 1,377.79 | +0.60 % | 1,239.54 | 1,244.78 | +0.42 % |
+| [92290A334](https://www.mcmaster.com/92290A334/) | 316 Stainless Steel Socket Head Screw, M6 x 1 mm Thread, 35 mm Long, Partially Threaded | 8 | 1,369.63 | 1,369.63 | +0.0002 % | 1,239.54 | 1,237.33 | -0.18 % |
 
 "Used" is the count for one machine with all three build modules ([`fasteners.csv`](fasteners.csv)). The full table, including parts checked but not used and the bounding-box comparison, is [`cad/out/fastener-check.md`](cad/out/fastener-check.md).
 
@@ -84,7 +84,7 @@ outside the chamber, and no Cu or Zn. The inserts are 18-8, the only stainless M
 | optics bridge to its posts | 8 × 92290A334 (316 Socket Head Screw) | 8 | Ø6.6 in the bridge; M6 tapped in the post's welded top cap |
 | optics posts to the base plate | 8 × 92290A330 (316 Socket Head Screw) | 8 | Ø6.6 in the base plate; M6 tapped in the post's welded bottom cap |
 
-S25 and L75 carry the same joints with their own sizes: S25's stack is 3 × M2.5 × 30 (92290A854) into M2.5 inserts (91732A767), with no disc spring, and its rod set screws are M4 × 6 (92029A142).
+S25 and L75 carry the same joints with their own sizes: S25's stack is 3 × M2.5 × 30 (92290A854) into M2.5 inserts (91732A767), with no disc spring, and its rod set screws are M4 × 6 (92029A142) on a 3/8 in. rod.
 
 - **Lid to chamber body:** Opened only for maintenance, and it must squeeze the lid O-ring evenly and hold it at vacuum, so screws are right here. Inserts because the lid comes off many times over the machine's life and 6061 threads wear; 1.2 mm of metal each side between the gland and the outer wall.
 - **Build module flange to the chamber floor:** Swapped by a person between campaigns. The dowel and diamond pin locate the module; the screws only hold it up (the loads are < 0.2 kN against ~6 kN of preload). See hot-swap.md for the robot-swap alternatives.
@@ -105,16 +105,24 @@ S25 and L75 carry the same joints with their own sizes: S25's stack is 3 × M2.5
    - **A disc spring under each M3 head holds the preload** while the stack heats and cools (M50, L75). There was no room for
      one in S25's Ø5 counterbore.
    - **M50's standoffs moved in from r = 20.1 to r = 18 mm** so the counterbores clear the bore-seal groove.
-   - **S25's rod is now 1/2 × 0.035 in. 316 tube** (was 5/8 in.). Its Ø24.8 head has no room for the counterbores beside a
-     5/8 in. rod socket.
+   - **S25 is the tight one.** Its Ø24.8 head has no room for the counterbores beside a 5/8 in. rod socket. So S25's rod is
+     now 3/8 × 0.035 in. 316 tube, its standoffs sit at r = 9.0 mm (was 9.4), and its bore-seal groove is 1.6 mm deep instead
+     of 3 mm, so the M2.5 screws pass inside it. The first interference sweep caught the screws cutting through the seal.
    - **The heat that the screws carry across the break** is worked out in [`hot-swap.md`](hot-swap.md) §4.
 
 **Smaller changes:**
 - **Recoater rail:** McMaster 6709K33's own hole pattern (M4, 60 mm pitch, the first hole 20 mm from the end), counterbored
   as for a 15 mm rail. It replaces a drawn 25 mm pitch.
-- **Leveling mounts:** drawn to McMaster 5537T983's listed size: Ø25 base, 20.64 mm body, M8 × 31.75 mm stem threaded up
-  through the 15 mm base plate. The drawn foot was 20 mm tall in all, so the base plates now sit 17.4 mm higher. **The
-  machine is 581.6 mm tall on the tray, up from 564.2 mm**: still 113 mm under Modula's 695 mm bay S.
+- **Leveling mounts:** drawn to the dimensions measured on McMaster's own 5537T983 model:
+  - Ø25 × 7.62 base;
+  - a swivel housing tapering to Ø15.24;
+  - a 12 mm hex from 16 to 20 mm;
+  - an M8 stem 32 mm long, threaded up through the 15 mm base plate.
+
+  McMaster has no simplified model of this part, and slicing its full model was too slow to finish here. Our copy is 7,669 mm³
+  against McMaster's 8,174 mm³ (−6 %), so the swivel housing isn't matched yet. The drawn foot was 20 mm tall in all, so the
+  base plates now sit 17 mm higher. **The machine is 581.2 mm tall on the tray, up from 564.2 mm**: still 114 mm under Modula's
+  695 mm bay S.
 - **Optics posts:** 10 mm 6061 end caps TIG-welded into the square tubes, to take the M6 screws.
 - **Metering base:** two screw tabs at its ends.
 - **Z mounting flange:** 8 mm deeper in y, so two of its four counterbored screws can be reached from below behind the bracket.

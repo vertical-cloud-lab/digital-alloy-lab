@@ -196,7 +196,7 @@ def add_joints(h, parts, add, module="M50"):
     zl = ML.zlevels()
     zb0_, zh0, zk0 = zl["zb0"], zl["zh0"], zl["zk0"]
     if key == "S25":
-        d, Ls, cbd, cbh, ins_pn = 2.5, 30, 5.0, 3.2, find("insert", 2.5, 3.8)
+        d, Ls, cbd, cbh, ins_pn = 2.5, 30, 4.6, 3.2, find("insert", 2.5, 3.8)
     else:
         d, Ls, cbd, cbh, ins_pn = 3.0, 25, 7.0, 6.5, find("insert", 3, 4.5)
     spn = find("shcs", d, Ls)

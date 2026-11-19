@@ -3,7 +3,7 @@
 First pass for [issue #260](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/260), written 2026-11-13.
 Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or EHS yet.
 
-**Low-profile version (2026-11-17):** [`low-profile.md`](low-profile.md) re-lays the machine out as three modules side by side on a VLM tray, 564 mm tall (581.6 mm since 2026-11-19, on real levelling mounts: [`fasteners.md`](fasteners.md)), as byu-vcl PR 318's height limits ask. It also has exact interference sweeps, MuJoCo and CalculiX checks, a mass budget, and a materials selection matched to the lab's other systems.
+**Low-profile version (2026-11-17):** [`low-profile.md`](low-profile.md) re-lays the machine out as three modules side by side on a VLM tray, 564 mm tall (581.2 mm since 2026-11-19, on real levelling mounts: [`fasteners.md`](fasteners.md)), as byu-vcl PR 318's height limits ask. It also has exact interference sweeps, MuJoCo and CalculiX checks, a mass budget, and a materials selection matched to the lab's other systems.
 
 | File | What it is |
 |---|---|

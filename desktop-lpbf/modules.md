@@ -130,7 +130,7 @@ Powder at 30 µm layers, 1.8 dose factor, AlSi10Mg, as in `requirements_budgets.
 - **Overflow** moved to x = 90–110 mm, a 104 mm slot over a KF-40 jar with a 90 mm half nipple (~120 cm³).
 - **Z stage.** It hangs lower: the heated stack plus the rod's travel (−42 to +8 mm) put the arm 181 mm below the powder plane at
   the bottom of a build. The process module's base plate gets a window for the arm, actuator and folded servo, and a slot to the
-  front edge for the module's rod end. **The machine is still 564 mm tall** (581.6 mm since the real levelling mounts went in, 2026-11-19: [`fasteners.md`](fasteners.md)).
+  front edge for the module's rod end. **The machine is still 564 mm tall** (581.2 mm since the real levelling mounts went in, 2026-11-19: [`fasteners.md`](fasteners.md)).
 
 **Swapping a module** (by hand, between campaigns, with the chamber at atmosphere):
 

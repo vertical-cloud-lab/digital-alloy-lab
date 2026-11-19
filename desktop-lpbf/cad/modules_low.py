@@ -38,7 +38,7 @@ def block_layout(key):
     if key == "S25":
         return dict(heaters=[(5.5, 0.0), (5.5, 180.0)], heater_top=-MP.PLATE_T - 5.0,
                     tcs=[("control", 0.0, 0.0), ("edge", 10.0, 150.0), ("limit", 7.0, 270.0)],
-                    standoffs=[(9.4, 90.0), (9.4, 225.0), (9.4, 315.0)], sd=5.0, tco=(9.0, 45.0))
+                    standoffs=[(9.0, 90.0), (9.0, 225.0), (9.0, 315.0)], sd=5.0, tco=(9.0, 45.0))   # r 9.0 (was 9.4): screws clear the seal groove
     if key == "M50":
         return dict(heaters=[(m["bore"] / 4, a) for a in (0.0, 120.0, 240.0)], heater_top=-MP.PLATE_T - 1.0,
                     tcs=[("control", 0.0, 0.0), ("edge", 0.84 * rb, 90.0), ("limit", 7.0, 300.0)],
@@ -174,7 +174,8 @@ def add_build_module(h, add, key, step=4):
         bom="H1", section=True, **pg)
     head = h.cyl(Rb, (0, 0, zh0), "z", MP.HEAD_T)
     zs0, zs1 = zh0 + 6.0, zh0 + 12.0                    # bore-seal groove
-    head = head.cut(h.tube(Rb + 1, Rb - 3.0, (0, 0, zs0), "z", zs1 - zs0))
+    sd_ = MP.SEAL_DEPTH.get(key, 3.0)
+    head = head.cut(h.tube(Rb + 1, Rb - sd_, (0, 0, zs0), "z", zs1 - zs0))
     head = head.cut(h.cyl(5.0, (0, 0, zh0 + 7.0), "z", MP.HEAD_T))                      # wire hole into the rod
     head = head.cut(h.cyl(rod_od / 2 + 0.02, (0, 0, zh0 - 1), "z", 9.0))               # rod socket (2 set screws, joints.py)
     for r, a in L["heaters"]:                                                             # lead pockets under the heaters
@@ -185,10 +186,10 @@ def add_build_module(h, add, key, step=4):
         head = head.cut(h.cyl(1.6, (x, y, zk0 - 3.0), "z", 3.1))
     add(f"Piston head {lab} (6061-T6, cool side of the break; Tier B: 316L with a water channel)", head, C["alu"], step,
         (0, 0, 170), mat="al6061", bom="B1", section=True, **pg)
-    add(f"Bore seal {lab} (aramid felt + carbon-filled PTFE scraper)", h.tube(R, Rb - 2.8, (0, 0, zs0 + 0.2), "z", zs1 - zs0 - 0.4),
+    add(f"Bore seal {lab} (aramid felt + carbon-filled PTFE scraper)", h.tube(R, Rb - sd_ + 0.2, (0, 0, zs0 + 0.2), "z", zs1 - zs0 - 0.4),
         C["white"], step, (0, 0, 170), mat="felt", bom="B1", mcm="SEAL_PISTON", section=True, **pg)
     zr0 = zc + MP.ROD_END_T
-    rod_lab = "1/2 in. x 0.035 in." if key == "S25" else "5/8 in. x 0.065 in."
+    rod_lab = "3/8 in. x 0.035 in." if key == "S25" else "5/8 in. x 0.065 in."
     add(f"Hollow piston rod {lab} ({rod_lab} 316, inert inside; leads run down it)",
         h.tube(rod_od / 2, rod_id / 2, (0, 0, zr0), "z", zh0 + 8.0 - zr0), C["ss"], step, (0, 0, 140), mat="ss316l",
         bom="B1", section=True, **pg)
