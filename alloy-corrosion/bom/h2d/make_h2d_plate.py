@@ -62,7 +62,9 @@ MACHINE_MODEL = "Bambu Lab H2D"  # its model_id goes into slice_info (the comman
 # nozzle found" unless told: one standard nozzle on each side.
 NOZZLES = ["--extruder-nozzle-count", "1,1", "--extruder-nozzle-volume-type", "Standard,Standard"]
 NOZZLE_SIDE = {1: "left", 2: "right"}  # filament_map values: the extruder that prints filament 1
-PRINT_WITH = 2  # the right nozzle, the H2D's main one (master_extruder_id); the left is checked too
+# The left nozzle: the lab's default for a single-filament print (re-sliced 2026-11-17; it was the right, the
+# H2D's main one, master_extruder_id). The other nozzle is checked too.
+PRINT_WITH = 1
 
 LID_KEYS = ("lid_006", "lid_008", "lid_010")
 
@@ -347,6 +349,13 @@ def bambu_plate(items, res, bambu: Path, presets, model_id: str, work: Path):
     ms, n = re.subn(r'<metadata key="plater_name" value="[^"]*"/>',
                     f'<metadata key="plater_name" value="{PLATE_NAME}"/>', ms)
     assert n == 1, "plate name not found in model_settings.config"
+    # The plate's own nozzle map overrides the project's. Left at "Auto For Flush", the project goes to the
+    # right nozzle whenever it is sliced again without --filament-map (checked 2026-11-17); the flags still
+    # override it, so the other-nozzle check below still works.
+    ms, n = re.subn(r'<metadata key="filament_map_mode" value="[^"]*"/>',
+                    '<metadata key="filament_map_mode" value="Manual"/>\n'
+                    f'    <metadata key="filament_maps" value="{PRINT_WITH}"/>', ms)
+    assert n == 1, "the plate's filament_map_mode not found in model_settings.config"
     layers = "".join(f'<layer top_z="{p["pause_before_layer_z"]}" type="1" extruder="1" color="" extra="" gcode="M400 U1"/>\n'
                      for p in res["pauses"])
     edits = {"Metadata/model_settings.config": ms.encode(),

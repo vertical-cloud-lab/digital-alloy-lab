@@ -13,6 +13,21 @@ printed yet.** Times and grams are Bambu Studio's estimates.
 
 It was 28 pieces, 11.4 h and 326 g.
 
+**Re-sliced 2026-11-17 for the left nozzle**, for Ben on
+[#264](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264):
+- A single-filament print now goes on the left nozzle by default, so both files now use the left
+  nozzle. The project's plate is set to the left nozzle too, so slicing it again keeps it there.
+- Nothing else changed: the same parts, layout and settings, the same 12.3 h and 362 g, and both
+  pauses at the same layers and times.
+- The G-code checks were rerun on the new file and match 9 November's:
+  - every extrusion is inside x 49.2–313.7 mm, within the left nozzle's reach (x 0–325);
+  - all 20 magnet pockets are 2.26 mm from the nearest plastic before their pause, and 0.17–0.19 mm
+    after it;
+  - all 7 key pockets are open at mid-depth and roofed above.
+
+  Python was blocked in that session, so an awk script made these checks. It gives the same numbers
+  as `make_h2d_plate.py` on the 9 November file. Rerun the script to confirm.
+
 ![The plate, seen from above](plate.png)
 
 | | |
@@ -24,7 +39,7 @@ It was 28 pieces, 11.4 h and 326 g.
 | PLA | **362 g** (120 m) |
 | Pause 1 | before the z 5.8 layer, **4.2 h in**: 14 magnets, two in each of the 7 lids |
 | Pause 2 | before the z 44.8 layer, **10.4 h in**, with 1.9 h left: 6 magnets in the cup block |
-| Nozzle | sliced for the right nozzle; the left one also works (checked) |
+| Nozzle | sliced for the **left** nozzle, 0.4 mm standard; the right one also works (checked) |
 
 **Start it in the morning.** The second pause comes 10.4 h in. Started at 7:00, the print reaches pause
 1 at about 11:15 and pause 2 at about 17:25, and ends at about 19:20. The printer waits at each pause
@@ -83,10 +98,11 @@ behind them, in front of the taller bench cell body, for the second pause.
 
 1. Open [`h2d-corrosion-all.gcode.3mf`](h2d-corrosion-all.gcode.3mf) in Bambu Studio and send it to
    the H2D.
-2. When it asks which spool to use, pick a PLA on the **right nozzle's** side.
-3. **If your PLA is on the left side,** open the project [`h2d-corrosion-all.3mf`](h2d-corrosion-all.3mf)
-   instead, set the filament to the left nozzle, and slice again. I sliced it that way too, as a
-   check: 12.3 h, the same 362 g, both pauses in place, and every extrusion inside the left
+2. Check that the left nozzle is a 0.4 mm standard one, which is what the file was sliced for. When it
+   asks which spool to use, pick a PLA on the **left nozzle's** side.
+3. **If your PLA is on the right side,** open the project [`h2d-corrosion-all.3mf`](h2d-corrosion-all.3mf)
+   instead, set the filament to the right nozzle, and slice again. The 9 November file was sliced
+   that way: 12.3 h, the same 362 g, both pauses in place, and every extrusion inside the right
    nozzle's reach.
 
 It was sliced in Bambu Studio 02.09.01.70 with:
@@ -176,7 +192,9 @@ the mesh and G-code checks from [`../a1-mini/make_plates.py`](../a1-mini/make_pl
 3. checks the bed numbers it uses against Bambu Studio's H2D profile;
 4. writes the project, with the infill and scarf seams set per part and both pauses in
    `Metadata/custom_gcode_per_layer.xml`;
-5. slices it for the right nozzle (the file to print), and again for the left nozzle as a check;
+5. slices it for the left nozzle (the file to print), and again for the right nozzle as a check. The
+   project's plate is set to the left nozzle as well. Left on Bambu Studio's "Auto For Flush", the
+   project would go to the right nozzle whenever it was sliced again;
 6. reads the G-code back: two pauses at the right layers, every extrusion inside the nozzle's reach,
    and each pocket open before its pause and covered after it.
 

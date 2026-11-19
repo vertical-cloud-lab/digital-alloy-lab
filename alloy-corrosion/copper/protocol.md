@@ -33,11 +33,39 @@ come from is in [`test-matrix.csv`](test-matrix.csv).
    (contains the build direction), the face's build height, and whether the well sits on a track
    centre or an overlap ([c1-05]).
 2. **Mount, grind and polish** with SOP steps 2–9, ending with a bare metal back. Final polish
-   (*choose*; [c1-05]'s baseline): SiC to P2400, then 1 µm diamond, then 0.04–0.05 µm colloidal
-   silica. Edison found no measured effect of the finish on E_corr or R_p of C71500 or C95800, so the finish is a
+   (*choose*): SiC to P2400, then 1 µm diamond, then 0.1 µm diamond. [c1-05]'s baseline ended on
+   0.04–0.05 µm colloidal silica instead (changed 2026-11-17, below). Edison found no measured effect of the finish on E_corr or R_p of C71500 or C95800, so the finish is a
    variable to test (§5), not a settled choice. Never change the finish and the alloy at once.
+   - **On copper this replaces the SOP's Steps 5 and 7** (2026-11-17). The 1 µm diamond (B30) goes
+     on one of the lab's Mark V MCR12 cloths, a low-nap rayon final cloth, in place of Step 5's
+     alumina. The lab's 0.1 µm diamond suspension (H12) goes on a second cloth, in place of Step 7's
+     film of the same size. Each cloth gets one alloy and one abrasive, as the SOP's pads do: six
+     for C71500, C95800 and C70600.
+   - **No alumina on a copper piece,** though the lab has the SOP's 1 µm alumina. Its residue is Al,
+     which EDS and the NAB tubes measure, and grains pressed into the face reach no blank (S4's
+     fixture blank is PTFE). Diamond leaves carbon, which copper's measurements don't include.
+     NIST's microprobe lab avoids alumina and silica polishes for the same reason: they "easily
+     embed themselves into the sample", and its samples contain Al
+     ([Geller and Engle 2002](https://doi.org/10.6028/jres.107.051)).
+   - **Why it ends on 0.1 µm diamond, not colloidal silica** (B32, now optional; Ben, 2026-11-17).
+     - The lab has it, and it is the size NIST asks for on copper: "Aluminum and copper: these
+       metals scratch easily, requiring 0.1 µm to finish" (same source).
+     - It is the SOP's own last step for aluminium, so the same finish serves EDS on both.
+     - [c1-05] found no study that compared finishes on these alloys. Its silica ending follows
+       metallographic practice, not a measured effect on corrosion.
+     - What it gives up: colloidal silica also polishes chemically, and takes off the last smeared
+       layer. Diamond leaves that layer thinner but doesn't remove it. On NAB the smeared layer
+       over the κ phases is a plausible confounder ([c1-05]). Whether it matters in a 1 h test is
+       the finish arms' question (§5). Buy B32 ($29) for a silica arm, or to go back to c1-05's
+       baseline.
+   - **How:** 1 µm diamond for about 2 min, at 22–45 N and 100 rpm, until the SiC scratches are gone
+     ([PACE's copper procedure](https://metallographic.com/guides/copper-and-copper-alloys-preparation)).
+     Then clean the piece ultrasonically, as the SOP does before its film (Step 6). Copper picks up
+     grains from the step before, and one 1 µm grain on the 0.1 µm cloth can scratch every piece
+     after it. Then the 0.1 µm diamond at about 100 rpm and light force, in 1 min runs, until the
+     1 µm scratches are gone under the microscope: SOP Step 7's checks, a few minutes in all.
 3. **Clean** (*choose*): a short ethanol ultrasonic bath, an ultrapure-water rinse, and a dry
-   nitrogen blow ([c1-05]). Check under the microscope for retained silica and, on NAB, for
+   nitrogen blow ([c1-05]). Check under the microscope for leftover scratches and, on NAB, for
    pulled-out κ particles.
 4. **Time it.** Record when polishing ended, when the piece was dry, and the first fill, with the
    room's temperature and RH. Test after a short fixed delay (*choose*, for example 1 h ± 10 min in
@@ -288,7 +316,8 @@ calibration is the first experiment and a result in its own right.
   R_p trend with O-ring size, the trend is the artifact and the bulk cell is the anchor.
   [`sim_well_hf.py`](sim_well_hf.md) gives the size to expect with copper's own chemistry. After 30 min the well's i_corr is 0.53, 0.61 and 0.31 of the bulk cell's for C70600, C71500 and C95800, E_corr reads +4.0, +7.9 and −28.1 mV from the bulk cell's, and R_p on the wetted area reads 1.22, 1.08 and 3.17 times the bulk cell's (0.67, 0.60 and 1.75 on the nominal area). The area matters more than the chemistry: report R_p on the wetted area, measured from the attack ring. The first-order [`sim_well.py`](sim_well.py), with oxygen supply as the only difference, had the well's i_corr at 0.93 down to 0.31 of the bulk cell's for bulk i_corr of 1 to 20 µA/cm². **In that model the O-ring sizes will not show the bias:** at 5 µA/cm² the -006, -008 and -010 wells give 0.71, 0.70 and 0.69, because the 4 mm column of liquid sets the oxygen supply, not the spot. A flat size trend does not clear the well. Only the bulk cell can.
 - **The finish and delay arms** of §1 run on the same reference coupons, after the size series:
-  a SiC-only arm and a diamond-only arm against the baseline, and timed air-ageing ([c1-05]).
+  a SiC-only arm and a 1 µm-diamond-only arm against the baseline, and timed air-ageing ([c1-05]).
+  A colloidal-silica arm, c1-05's own baseline, needs B32 (§1).
 - **Cost in deck time:** about 4 nights per alloy for 8 spots at each of the three sizes, plus 8
   bench runs.
 
@@ -304,6 +333,14 @@ calibration is the first experiment and a result in its own right.
   HNO₃, then an ultrapure-water rinse). Weigh each tube empty and again after collection, on a
   0.1 mg balance, so the recovered volume and the dilution are known. O-ring compounds carry
   metal-oxide fillers, and the fixture blank measures what they add.
+  - **The plain grade will do (2026-11-16).** Eppendorf's typical values for its 0.5 mL Safe-Lock
+    tube (B36), filled with concentrated HNO₃ for 1 h, are below 0.1 µg/L of Cu and 0.05 µg/L of Ni
+    and Mn ([certificate 0012602500-04](https://cdn.shopify.com/s/files/1/2245/7875/files/Eppendorf_Consumables_Certificate-Quality-Conformity-Eppendorf-Tubes-Trace-metal.pdf)).
+    That is under 0.05 ng of Cu a tube, an eighth of the 0.42 ng the ICP-MS can see in one
+    (0.13 µg/L in 3.2 mL). The dearer grades certify DNA, DNase, RNase and PCR inhibitors, not metals.
+  - **So the pre-leach may not be needed.** Decide from two tube blanks on the first night: tubes
+    straight from the bag, with 300 µL of DI water and step 12's acid, open in the rack all night
+    ([`../build-log.md`, Measurements to make](../build-log.md#measurements-to-make)).
 - **Analysis: ICP-MS with a collision cell, after a 10× dilution** in dilute HNO₃ ([c1-03]). The
   tube holds about 16 g/L of salts, and the dilution takes it to 1.6 g/L. ⁴⁰Ar²³Na⁺ sits on ⁶³Cu,
   so use the collision cell or read ⁶⁵Cu ([c1-03]). ICP-OES would need about 2 mL, which means

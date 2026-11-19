@@ -21,6 +21,7 @@ folder are unchanged, so the simulations and the animation still match them.
 | --- | --- |
 | [`cad_cu_cell.py`](cad_cu_cell.py) | Parametric CadQuery 2.8 model of every part. Writes the STEP and STL files, `assembly.step` and [`cad_parts.json`](cad_parts.json) |
 | [`ref_bent90.py`](ref_bent90.py) → [`ref_bent90.json`](ref_bent90.json) | A bent reference in the cap: the cap with a slot for it (`electrode_cap_bent90`), the electrode (`ag_agcl_ref_bent90`), the checks and `ref-bent90.png` ([below](#a-bent-reference-the-vendors-lf-2-bent90-checked-2026-11-11)) |
+| [`ref_stock_concept.py`](ref_stock_concept.py) → [`ref_stock_concept.json`](ref_stock_concept.json) | A concept: the cap for a stock LF-2, with the steel disc on a platform beside it, under the PAW-V2 mount; the checks and `ref-stock-concept.png` ([below](#a-stock-reference-with-the-disc-on-a-side-platform-concept-2026-11-19)) |
 | [`cad_check.py`](cad_check.py) → [`cad_check.json`](cad_check.json) | O-ring loads, friction, magnet pull, vapour loss, press-on pressure, masses, clearances |
 | [`plot_cad_preview.py`](plot_cad_preview.py), [`plot_cad_section.py`](plot_cad_section.py) | The two figures above |
 | `*.step`, `*.stl` | One per part. `*_section.stl` is the same part with the 90° wedge facing −y cut away, for section views |
@@ -191,6 +192,53 @@ reference pin's side. It writes [`ref_bent90.json`](ref_bent90.json) and the fig
     glue area.
 - **Not changed:** `electrode_cap.step`, the plates, the BOM and the build guide still assume
   the straight 15.5 mm barrel. Switch them once the vendor confirms a bent one.
+
+## A stock reference with the disc on a side platform (concept, 2026-11-19)
+
+Ben asked ([PR 264](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264#issuecomment-7023569457)) whether the cap could take a standard-length reference if the steel
+disc moved to a platform beside the cap, so the electrode could stand out of the top.
+[`ref_stock_concept.py`](ref_stock_concept.py) draws that cap around the vendor's stock LF-2 and
+puts it under the PAW-V2 mount from the mount's STEP file. It writes
+[`ref_stock_concept.json`](ref_stock_concept.json) and the figure below. It's a concept for the
+decision, not a part to print.
+
+![The concept cap carried by the capper, and cut through both axes with the magnet on its disc](ref-stock-concept.png)
+
+- **It clears the capper.** The cap's axis is 24 mm from the magnet's.
+  - The electrode stands beside the mount, 6.6 mm from it at the strain relief and 8.5 mm at the
+    barrel.
+  - The platform is a vial cap's top: Ø28 mm, with the same disc recess and the disc's top at the
+    same height as now. So every carried height stays the same, and the IR beam sees the
+    platform as it sees a vial cap.
+  - Where the cap body passes under the mount's open end, it is cut down to 1.5 mm below it.
+  - No part overlaps another (`interference_mm3`, all 0).
+- **What it costs in the design:**
+  - **Height.** The stock LF-2 is 63 mm long. With its tip 3.0 mm above the metal, it stands
+    44 mm above the magnet face. Its pin ends 1.5 mm above the top of the mount, or 4.5 mm with a
+    socket on it. Nothing on the head may sit over the cap within about 50 mm of the magnet face.
+    That needs checking on the real head, because the STEP file has only the mount.
+  - **Footprint.** The cap grows from Ø28 to 28 × 52 mm. The reference has to stand on a side of
+    the mount with nothing on it, which the animation puts at the front. The platform then points
+    back. At the stations it reaches deck y 278, 18 mm past the tray's back edge, 8.4 mm above the
+    lid. The cup block and the deck's back edge need checking, and every cap position needs
+    teaching again with the 24 mm offset.
+  - **An off-axis lift.** The 2.44 N the magnet lifts acts 24 mm from the magnet's axis, a 59 N·mm
+    moment that tries to peel the disc off. Measure the pick-off on the bench before anything else.
+  - **A jumper.** The gold pin needs a 1 mm socket and a lead back down to the cap's −x spring pin.
+    The custom electrode's silver wire solders straight to the pin.
+  - **Mass.** About 12.9 g of PETG instead of 8.5 g.
+  - **One gain.** The platform fixes the cap's orientation on the magnet, so the cap can't be set
+    down at 180° with RE and CE swapped.
+- **It saves no money.** The vendor quoted $235 plus $15 shipping for the custom electrode, with no
+  charge for the custom length (Ben, 2026-11-19). A stock LF-2 costs the same, and Warner sells the
+  same 2 × 65 mm electrode for $261. The cheaper stock 2 mm references are WPI's Dri-Refs ($158, or
+  $219 for the leak-free SDR2). WPI's manuals say they are "not intended for long-term measurements
+  beyond a few minutes", are meant for 100–200 mM KCl, and can be ruined by 15 min in air
+  ([Dri-Ref](https://cdn.shopify.com/s/files/1/0662/7993/1994/files/DriRef_IM.pdf),
+  [SDR2](https://cdn.shopify.com/s/files/1/0662/7993/1994/files/SDR2_IM.pdf)). A spot keeps the
+  reference in seawater for about an hour.
+- **So keep `electrode_cap` and order the custom 15.5 mm one.** Build this concept only if the
+  custom electrode can't be had, or to use a stock LF-2 as a spare.
 
 ## Still needs a bench test
 

@@ -12,7 +12,8 @@ you would build, with the latest decision in each place:
 - [`copper/protocol.md`](copper/protocol.md) §2 (18 Oct): the copper deck.
 - [`cubxl-setup.md`](cubxl-setup.md) (17 Oct): the first deck, head and wiring plan.
 
-**Nothing here has been printed, bought or tested.** Every position is a proposal in the CubOS
+**Nothing here has been printed or tested yet.** Parts were ordered in November; record what
+arrives, prints, fits and fails in [`build-log.md`](build-log.md). Every position is a proposal in the CubOS
 deck frame of Ben's 2026-10-02 calibration (mm; origin front-left-bottom, +y away from the
 operator, +z up), to be re-jogged.
 
@@ -102,7 +103,8 @@ bench cell they are compared with
 From [`copper/cad/README.md`](copper/cad/README.md#printing-and-assembly), with the BOM's
 substitutions:
 
-1. **Open the reference bore** to 2.05 mm by hand, with a #46 drill (2.06 mm, B47) in a pin vise.
+1. **Open the reference bore** to 2.05 mm by hand, with a #46 drill (2.06 mm, B47; BYU's
+   Prototyping lab has one) in a pin vise.
 2. **Open the two 1.0 mm pin holes from below for the CPG-37 pins** (B06): a Ø2.1 counterbore
    1.57 mm deep for the flange and barrel, then Ø1.6 × 1.1 mm for the tail. Leave the 1.0 mm hole
    above it for the wire. *Corrected 2026-11-09:* this step used to say "open the bottom 2.2 mm to 1.3 mm".
@@ -137,8 +139,10 @@ substitutions:
    *Changed 2026-11-10:* these two steps used to solder the wire-wrap to a contact on the
    reference's top. The vendor makes a reference this short only with a bare silver-wire lead
    and no pin ([BOM B19](bom/README.md#electrodes)).
-7. **Glue the steel disc on last** (1 in × 1 mm, self-adhesive, B09). It is what the
-   electromagnet lifts.
+7. **Glue the steel disc on last** (B09: one of the capper's 1 in discs, which fit the same
+   Ø25.4 × 0.5 mm recess as the vial caps). It is what the electromagnet lifts. Measure its
+   thickness first. The lift numbers assume 1.0 mm, and a 0.5 mm disc still lifts the cap with a
+   margin of 2.3. If the disc has no adhesive of its own, use 3M 468MP (H05).
 8. **Mark an index on the cap.** The lid's magnets hold it at 0° or at 180°, and 180° swaps the
    reference and counter pads, so set it by hand at the park cup. The OCP check at cap-on
    ([`copper/protocol.md` §4](copper/protocol.md#4-sequence), step 3) catches a cap set down
@@ -150,7 +154,12 @@ carriage.
 ### The well lids (P03–P05)
 
 1. **Check the counterbore's ceiling**, where the O-ring seals. If the bridged layer came out
-   rough, face it flat with a 7 mm flat-bottom drill or end mill (B48) in a drill press.
+   rough, face it flat with a 7 mm flat-bottom drill or end mill (B48; BYU's Prototyping lab
+   has them) in a drill press.
+   - **Use 7 mm or 1/4 in.** A smaller one misses part of the ring's band when the ring sits
+     0.27 mm off centre.
+   - **Take off 0.05 mm at most.** Each 0.1 mm off the ceiling cuts the ring's squeeze from 21 %
+     to about 16 %.
 2. **Pins for the pads:** cut 6 mm lengths of the 1/16 in brass rod (B12) and press them through
    the lid's two 1.6 mm holes at (±10, 15).
 3. **Pads:** lay copper-foil tape (3M 1181, B11) at r 10–12 mm, within ±30° of +x (the counter
@@ -283,8 +292,7 @@ z 40 and the top of its disc, the magnet contact, at 44. (All 2 mm higher than b
   need a first print.
 - One well per lid: no offset lid has been drawn.
 - The copper well simulation has not been rerun for the v2 lid's neck.
-- Prices still to get: a quote for the leak-free reference (B19) and the C95800 bar (B45), and
-  the drill rod (B10), PTFE rod (B46) and 7 mm drill (B48).
+- Quotes still to get: the leak-free reference (B19) and the C95800 bar (B45).
 - The four working-electrode pins share one wire, so only the well being measured may be wet.
   Filling wells ahead of time needs a 4-channel relay board, which is in the first plan's
   [`bom.csv`](bom.csv) as optional but not in [`bom/bom.csv`](bom/bom.csv).

@@ -101,7 +101,7 @@
  "key_pockets_on_plate": 7,
  "slice": {
   "slicer_version": "02.09.01.70",
-  "time_s": 44283,
+  "time_s": 44285,
   "time_h": 12.3,
   "filament_g": 362.49,
   "pause_count": 2,
@@ -110,7 +110,7 @@
   "bed_temp_C": 55,
   "nozzle_temp_C": 220,
   "filament_map_mode": "Manual",
-  "nozzle": "right",
+  "nozzle": "left",
   "pauses": [
    {
     "before_layer_z": 5.8,
@@ -407,8 +407,8 @@
    }
   ],
   "other_nozzle_check": {
-   "nozzle": "left",
-   "time_h": 12.31,
+   "nozzle": "right",
+   "time_h": 12.3,
    "filament_g": 362.49,
    "pause_count": 2,
    "extrusion_xy_extent_mm": [

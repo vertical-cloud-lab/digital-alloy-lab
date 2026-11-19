@@ -4,16 +4,24 @@
  "unpriced": [
   "B10 Drill rod 3 mm O1 tool steel; 3 ft",
   "B45 C95800 nickel-aluminium bronze; continuous-cast ba",
-  "B46 PTFE rod 3/4 in; 1 ft (the S4 blank: cut 6 mm disc",
+  "B46 PTFE rod 3/4 in; 1 ft (the S4 blank: cut 6 mm disc"
+ ],
+ "on_hand_not_counted": [
+  "B09 Steel discs 1 in x 1 mm with 3M adhesive; 50-pack",
+  "B13 Heat-set inserts M3 x 5.7 (for a 4.0 mm hole); 100",
+  "B18 JST-XH compatible 4-pin plug and socket pair",
+  "B31 ATLANTIS polishing pad 12 in PSA; 5/pack (for the ",
+  "B33 NAPPAD polishing pad 12 in PSA; 10/pack (for the c",
+  "B47 Drill #46 (2.06 mm), HSS jobber",
   "B48 7 mm flat-bottom drill or 7 mm 2-flute flat end mi"
  ],
  "core": {
-  "both_hardware_and_consumables_excl_tips": 288.11,
+  "both_hardware_and_consumables_excl_tips": 286.94,
   "tips_if_none_on_hand": 530.0,
-  "electrodes_both": 642.0,
+  "electrodes_both": 616.0,
   "aluminium_only": 83.65,
-  "copper_only": 1122.93,
-  "copper_optional": 788.0
+  "copper_only": 837.69,
+  "copper_optional": 813.0
  },
  "potentiostat_options": {
   "1_emstat_pico_module_with_box_and_dummy_cell": 593.45,
@@ -22,7 +30,7 @@
   "3_mystat_parts_and_dummy_cell": 227.81
  },
  "aluminium_start": {
-  "phase_A_shakedown_borrowed_potentiostat": 371.76,
-  "plus_electrodes_and_option_1": 1607.21
+  "phase_A_shakedown_borrowed_potentiostat": 370.59,
+  "plus_electrodes_and_option_1": 1580.04
  }
 }
