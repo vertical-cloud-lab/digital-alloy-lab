@@ -24,6 +24,8 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 | [`analysis/`](analysis/) | interference, MuJoCo, CalculiX and mass-budget scripts, with results in [`analysis/out/`](analysis/out/) |
 | [`modules.md`](modules.md) | the heated build plate, Ø25 / Ø50 / Ø75 build modules, S / M / L reservoirs and the automation features as built into the low-profile model ([`cad/modules_low.py`](cad/modules_low.py), [`cad/module_params.py`](cad/module_params.py)), with the thermal FEA, interference sweeps and renders in [`cad/img/modules/`](cad/img/modules/) |
 | [`options-mcmaster.csv`](options-mcmaster.csv), [`options-vendors.csv`](options-vendors.csv) | the 55 parts behind those features (McMaster-Carr, DigiKey, DwyerOmega, Accu-Glass, Lesker, Edmund, AutomationDirect and others), read live through the lab Pi on 2026-11-17 |
+| [`build-sequence.md`](build-sequence.md) | the animated build, from stock and bought parts through machining, sub-assembly and screwing together to the finished machine on its tray ([`cad/render_build.py`](cad/render_build.py); GIFs, a contact sheet and an MP4 in [`cad/img/sequence/`](cad/img/sequence/)) |
+| [`preheat-and-plates.md`](preheat-and-plates.md) | whether a lower-expansion build plate helps (FEA with nine plate materials, [`analysis/out/thermal/plate_materials.md`](analysis/out/thermal/plate_materials.md); stock in [`plate-materials.csv`](plate-materials.csv)), and when a 500 °C plate is worth building: by alloy, and what it does to spreading, gas purity and the machine ([`preheat_500.py`](preheat_500.py), Edison task in [`edison/preheat-500-plate-cte/`](edison/preheat-500-plate-cte/)) |
 
 ## 1. Short answers
 

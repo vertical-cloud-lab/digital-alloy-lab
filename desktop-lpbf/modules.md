@@ -77,6 +77,10 @@ Final run, 200 °C at the plate top centre, chamber at 25 °C:
   reaches 520 °C, too near its ~580 °C solidus, so **Tier B needs a steel or ceramic heater block**, and plates need ≥ 0.3 mm cold
   clearance (0.20 mm runs at −61 µm). High-temperature cartridges: McMaster 3618K422 (120 V, 1/4 × 1-1/2 in., 100 W, 1,400 °F,
   $95.22). Coolant flow interlock: AutomationDirect FSD75-AP-6H ($228).
+- **Update 2026-11-19 ([`preheat-and-plates.md`](preheat-and-plates.md)):** with 6061's mean expansion to 500 °C (not the
+  20–100 °C value used here), the M50 plate closes ≥ 281 µm and needs ≥ 0.31 mm cold; L75 needs ~0.45 mm. For Al powders at 500 °C
+  that means a graphite or ceramic-fibre hot seal over that gap, or an Al insert in a Ti-6Al-4V or 17-4 PH carrier ring. The same
+  note sets out which alloys and uses would justify Tier B at all. At 200 °C, today's clearances leave 49 / 52 / 58 µm hot.
 
 **Control and interlocks:**
 - 24 V heater supply Mean Well LRS-350-24 ($34.81), switched by a Crydom D1D12 DC solid-state relay ($85.22; 12 A, and L75 draws
@@ -250,5 +254,9 @@ About $8,400 in parts, before machining and before Tier B. [`bom.csv`](bom.csv) 
 - **Recoater holder:** re-run case 4 of `analysis/fea/fea.py` on the 18 × 31 holder.
 - **Graphite foil and the 2-238 O-ring** are specified but not priced.
 - **Hardware door-lock channel** for "plate above 50 °C" (§1).
+- **Fasteners and the bottom flange** (2026-11-19, [`build-sequence.md`](build-sequence.md)): the model draws only the lid
+  screws and the module's captive screws. The animated build marks the other bolted joints, welds the module's bottom flange to
+  the tube (the 3 mm wall is too thin to tap), and threads M3 screws into the Macor standoffs, which a drawing should replace
+  with through-bolts or Macor sleeves on steel shoulder screws.
 - **Inert module swap** (route 2) is not possible through the floor. If it is needed, the chamber door would have to dock to the
   glovebox (route 3).

@@ -18,6 +18,8 @@ the analytic annulus, film, radiation and body-flux cases in sanity()).
 Run:   python desktop-lpbf/analysis/thermal_module.py          all cases (~10 min on 4 cores)
        python desktop-lpbf/analysis/thermal_module.py quick    M50 cases 1, 2 and the cool-down only
        python desktop-lpbf/analysis/thermal_module.py sanity   the unit and convention checks only
+       python desktop-lpbf/analysis/thermal_module.py plates   plate-material sweep at build start -> plate_materials.md/.json
+                                                               (`plates report` rewrites the .md from the .json)
 Scratch (.inp/.dat/.frd) goes to /tmp/thermal-run/ (THERMAL_RUN overrides); results to analysis/out/thermal/.
 """
 from __future__ import annotations
@@ -115,8 +117,9 @@ def kfun(mat):
 
 
 # ---------------------------------------------------------------- geometry
-def geometry(key, z_p, tier="A", gap_fill="ARGON", clear_plate=None):
-    """Rectangles (region, r0, r1, z0, z1) in paint order (later wins) and the levels the post-processing needs."""
+def geometry(key, z_p, tier="A", gap_fill="ARGON", clear_plate=None, mat_over=None):
+    """Rectangles (region, r0, r1, z0, z1) in paint order (later wins) and the levels the post-processing needs.
+    mat_over: {region: MATS key} swaps region materials (the `plates` sweep); None leaves every case as it was."""
     m = MP.MODULES[key]
     c = dict(MP.CLEAR[tier])
     if tier == "A":
@@ -199,6 +202,8 @@ def geometry(key, z_p, tier="A", gap_fill="ARGON", clear_plate=None):
     mats["gap_p"] = mats["gap_b"] = gap_fill
     if tier == "B":
         mats["head"] = "SS316L"     # 316L head with a water channel (module_params docstring)
+    if mat_over:
+        mats.update(mat_over)
     g["mats"] = mats
     return g
 
@@ -548,7 +553,8 @@ def centre_node(mesh):
 def solve_steady(case):
     """Find the heater power that puts the plate top centre at case['T_set'] (secant on P), then post-process."""
     t0 = time.time()
-    g = geometry(case["key"], case["z_p"], case.get("tier", "A"), case.get("gap", "ARGON"), case.get("clear_plate"))
+    g = geometry(case["key"], case["z_p"], case.get("tier", "A"), case.get("gap", "ARGON"), case.get("clear_plate"),
+                 case.get("mat_over"))
     mesh = Mesh(g, case.get("h0", H0))
     nc, _ = centre_node(mesh)
     job = case["name"]
@@ -1215,9 +1221,331 @@ def _pool(fn, items):
     return out
 
 
+# ---------------------------------------------------------------- plate-material sweep (`plates` mode)
+# Does a lower-expansion plate keep the plate-to-bore gap open at build start? Same model and steady build-start case
+# as thermal.md, with only the plate region's material swapped (the heater block stays 6061, the bore 316L).
+# Property sources, all read 2026-11-19. Mean CTE tables are {end of the range (°C): mean CTE from room temperature
+# (um/m.K)}, linear between points and held flat past the last one; a held value under-states the closing, and the
+# report marks those rows "≥".
+PLATE_SRC = {
+    "kaiser6061": ("Kaiser Aluminum, Sheet Coil & Plate Alloy 6061, Rev. 05/06 (copy hosted by Protolabs)",
+                   "https://Protolabs.com/media/1021492/6061-t651-cnc.pdf"),
+    "asm6061": ("ASM Aerospace Specification Metals / MatWeb, Aluminum 6061-T6 (Wayback copy: asm.matweb.com refused "
+                "connections on 2026-11-19)",
+                "https://web.archive.org/web/20241217181844/https://asm.matweb.com/search/SpecificMaterial.asp?bassnum=MA6061T6"),
+    "alcoa4032": ("Alcoa, Deltalloy 4032-T86 Aluminum (Knowde product page)",
+                  "https://knowde.com/stores/alcoa-kama/products/deltalloy-4032-t86-aluminum"),
+    "mif4032": ("MakeItFrom, 4032-T6 aluminium (secondary database)",
+                "https://www.makeitfrom.com/material-properties/4032-4032-T6-AlSi12.5MgCuNi-Aluminum"),
+    "3ds_alsi": ("3D Systems, LaserForm AlSi10Mg (A) datasheet, 2022-10-28",
+                 "https://ko.3dsystems.com/sites/default/files/2022-10/3d-systems-laserform-alsi10mg%28a%29-datasheet-usen-2022-10-28-a-print.pdf"),
+    "timet64": ("TIMET, TIMETAL 6-4 datasheet", "https://www.timet.com/documents/datasheets/alpha-and-beta-alloys/timetal-6-4.pdf"),
+    "ad_ta6v": ("Aubert & Duval, TA6V datasheet", "https://www.aubertduval.com/wp-content/uploads/2024/12/TA6V_2_GB.pdf"),
+    "clf174": ("Cleveland-Cliffs, 17-4 PH Stainless Steel product data bulletin, 05/2021",
+               "https://d1io3yog0oux5.cloudfront.net/_7ce3a04c09e74bf31ff5f89fc888db25/clevelandcliffs/db/1190/10503/file/CLF_ProductData_17-4-PHSS_052021.pdf"),
+    "aw430": ("Austral Wright Metals, Stainless Steel Grade 430",
+              "https://www.australwright.com.au/technical-data/alloys/stainless-steel/stainless-steel-grade-430/"),
+    "clf430": ("Cleveland-Cliffs, Ferritic Stainless Steel Automotive Trim (Type 430), 02/2025",
+               "https://www.clevelandcliffs.com/_assets/_799e54d4b8d0adcdcf958072b7e97a72/clevelandcliffs/db/1190/11606/file/CLF_ProductData_Ferritic+Automotive+Trim_022025.pdf"),
+    "atlas410": ("Atlas Steels, Stainless Steel 410 Grade Data Sheet, revised 28/04/2021",
+                 "https://atlassteels.com.au/stainless-steel-410-grade-data-sheet-28-04-21"),
+    "clf316": ("Cleveland-Cliffs, 316/316L Stainless Steel product data bulletin, 05/2021",
+               "https://d1io3yog0oux5.cloudfront.net/_464c1f648dd1e0c96c45d68cdce1cf31/clevelandcliffs/db/1190/10513/file/CLF_ProductData_316-316LSS_052021.pdf"),
+    "htm_invar": ("High Temp Metals, Invar 36 technical data", "https://hightempmetals.com/techdata/hitempInvar36data.php"),
+}
+# k: W/m.K, a number or {T: k}; rho kg/m3 and c J/kg.K are written to the deck but do not enter a steady solve.
+PLATES = {
+    "6061": dict(label="6061-T6 (today)", short="6061", mat="AL6061", k=167.0, rho=2700.0, c=896.0, cte={100: 23.6, 300: 25.2},
+                 src=("kaiser6061", "asm6061"), limit="solidus 582 °C", powders="Al alloys"),
+    "4032": dict(label="4032-T6/T86", short="4032", mat="P_AL4032", k=138.0, rho=2680.0, c=900.0, cte={100: 19.4},
+                 src=("alcoa4032", "mif4032"), limit="solidus 530 °C; strength listed to 180 °C",
+                 powders="Al alloys (Al-Si family, as AlSi10Mg)"),
+    "AlSi10Mg": dict(label="AlSi10Mg, printed, stress-relieved", short="AlSi10Mg", mat="P_ALSI10MG", k=165.0, rho=2680.0, c=896.0,
+                     cte={100: 20.9}, src=("3ds_alsi",), limit="melting from 557 °C", powders="AlSi10Mg (same alloy)"),
+    "Ti64": dict(label="Ti-6Al-4V (Grade 5)", short="Ti-6Al-4V", mat="P_TI64", k={20: 6.6, 315: 10.6, 650: 17.5}, rho=4420.0, c=580.0,
+                 cte={100: 9.0, 200: 9.0, 425: 9.4, 650: 9.7}, src=("timet64", "ad_ta6v"),
+                 limit="properties held to ~350 °C", powders="Ti alloys"),
+    "174PH": dict(label="17-4 PH, H1150", short="17-4 PH", mat="P_SS174", k={149: 17.9, 260: 19.5, 460: 22.5, 482: 22.6}, rho=7820.0,
+                  c=460.0, cte={93: 11.9, 204: 12.4, 316: 12.8, 427: 13.0, 482: 13.1}, src=("clf174",),
+                  limit="good properties to 316 °C; above that it loses toughness (re-age 4 h at 621 °C)",
+                  powders="steels, Ni alloys"),
+    "430": dict(label="430 ferritic stainless", short="430", mat="P_SS430", k=26.1, rho=7700.0, c=460.0,
+                cte={100: 10.4, 315: 11.0, 540: 11.4}, src=("aw430", "clf430"),
+                limit="embrittles above ~340 °C (worst ~475 °C)", powders="steels, Ni alloys"),
+    "410": dict(label="410 stainless, annealed", short="410", mat="P_SS410", k={100: 24.9, 500: 28.7}, rho=7700.0,
+                c=460.0, cte={100: 9.9, 315: 11.4, 538: 11.6}, src=("atlas410",), limit="not for use at 400–580 °C",
+                powders="steels, Ni alloys (the thick-stock stand-in for 430)"),
+    "316L": dict(label="316L", short="316L", mat="P_SS316L", k={100: 16.2, 500: 21.4}, rho=8030.0, c=500.0,
+                 cte={100: 16.0, 315: 16.2, 538: 17.5, 649: 18.5}, src=("clf316",), limit="–",
+                 powders="316L and other steels, Ni alloys"),
+    "Invar36": dict(label="Invar 36 (a bound only)", short="Invar 36", mat="P_INVAR36", k=10.5, rho=8055.0, c=515.0,
+                    cte={93: 1.30, 149: 2.11, 260: 4.18, 371: 7.60}, src=("htm_invar",),
+                    limit="Curie point 279 °C: the CTE climbs above it", powders="– (bound)"),
+}
+BORE_CTE = {"SS316L": dict(cte={100: 16.0, 315: 16.2, 538: 17.5, 649: 18.5}, src=("clf316",)),
+            "AL6061": dict(cte={100: 23.6, 300: 25.2}, src=("kaiser6061", "asm6061"))}
+HOT_MIN = 0.025            # mm: hot radial clearance the "least cold clearance" leaves at steady build start
+TIER_B_PLATES = ("6061", "4032", "Ti64", "174PH", "430", "316L")
+
+
+def _pw(pts):
+    """f(T) linear through {T: value}, held flat outside the points."""
+    T, v = zip(*sorted(pts.items()))
+    return lambda t, T=T, v=v: float(np.interp(t, T, v))
+
+
+for _d in PLATES.values():
+    if _d["mat"] not in MATS:
+        MATS[_d["mat"]] = (_pw(_d["k"]) if isinstance(_d["k"], dict) else _d["k"], _d["rho"], _d["c"])
+
+
+def mean_cte(tab, T):
+    """Mean CTE (1/K) from room temperature to T, from a {T: um/m.K} table."""
+    return _pw(tab)(T) * 1e-6
+
+
+def plate_cases():
+    base = dict(z_p=0.0, pos="start", T_ch=25.0, eps=EPS_POWDER)
+    cs = []
+    for key in ("S25", "M50", "L75"):
+        for p, d in PLATES.items():
+            cs.append(dict(base, name=f"plate_{p}_{key}_A", key=key, T_set=MP.T_SET_A, mat_over={"plate": d["mat"]},
+                           plate=p, group="plates_A"))
+    for key in ("M50", "L75"):          # bore option: spigot, tube and flange in 6061 round the 6061 plate
+        cs.append(dict(base, name=f"plate_6061_{key}_A_albore", key=key, T_set=MP.T_SET_A, plate="6061", group="plates_bore",
+                       mat_over={"spigot": "AL6061", "tube": "AL6061", "mflange": "AL6061"}))
+    for p in TIER_B_PLATES:
+        cs.append(dict(base, name=f"plate_{p}_M50_B", key="M50", T_set=MP.CLEAR["B"]["t_max"], tier="B", T_init=200.0,
+                       mat_over={"plate": PLATES[p]["mat"]}, plate=p, group="plates_B"))
+    return cs
+
+
+def plate_row(r):
+    """Hot clearance with each material's own mean CTE at its FEA mean temperature."""
+    c = r["case"]
+    m, p = MP.MODULES[c["key"]], PLATES[c["plate"]]
+    Rb = m["bore"] / 2
+    c0 = MP.CLEAR["B"]["plate"] if c.get("tier") == "B" else m["plate_clear"]
+    Rp = Rb - c0
+    bore = c["mat_over"].get("spigot", "SS316L")
+    Tp, Tb = r["T_plate_mean"], r["T_bore_ring_mean"]
+    ap, ab = mean_cte(p["cte"], Tp), mean_cte(BORE_CTE[bore]["cte"], Tb)
+    gp, gb = Rp * ap * (Tp - 20), Rb * ab * (Tb - 20)
+    close = gp - gb
+    return dict(name=c["name"], plate=c["plate"], key=c["key"], tier=c.get("tier", "A"), bore=bore, group=c["group"],
+                T_set=c["T_set"], c_cold_um=1000 * c0, T_plate_mean=Tp, T_bore_ring_mean=Tb, alpha_plate=ap * 1e6,
+                alpha_bore=ab * 1e6, alpha_plate_held=bool(Tp > max(p["cte"]) + 1.0), k_plate_W_mK=kfun(p["mat"])(Tp),
+                plate_growth_um=1000 * gp, bore_growth_um=1000 * gb, closing_um=1000 * close,
+                hot_clear_um=1000 * (c0 - close), cold_min_um=1000 * (HOT_MIN + close), P_heater_W=r["P_heater_W"],
+                T_plate_edge=r["T_plate_edge"], dT_centre_edge=r["dT_centre_edge"], T_block_max=r["T_block_max"],
+                T_seal_max=r["T_seal_max"], T_oring_max=r["T_oring_max"], into_chamber_W=r["into_chamber_W"],
+                radial_gaps_W=r["exit_W"]["radial_gaps"], balance_err_pct=r["balance_err_pct"], iterations=r["iterations"])
+
+
+def plate_check(rows):
+    """6061 rows against thermal.json: the same temperatures and power, and the hand formula on thermal.json's
+    temperatures R_p a_p (T_p - 20) - R_b a_b (T_b - 20) with the mean CTEs above."""
+    tj = json.loads((OUT / "thermal.json").read_text())["steady"]
+    out = {}
+    for key in ("S25", "M50", "L75"):
+        b = tj.get(f"{key}_start_ch25_e0.5")
+        x = next((x for x in rows if x["plate"] == "6061" and x["key"] == key and x["group"] == "plates_A"), None)
+        if not (b and x):
+            continue
+        m = MP.MODULES[key]
+        Rb = m["bore"] / 2
+        Rp = Rb - m["plate_clear"]
+        Tp, Tb = b["T_plate_mean"], b["T_bore_ring_mean"]
+        hand = Rp * mean_cte(PLATES["6061"]["cte"], Tp) * (Tp - 20) - Rb * mean_cte(BORE_CTE["SS316L"]["cte"], Tb) * (Tb - 20)
+        out[key] = dict(T_plate_json=Tp, T_bore_json=Tb, dT_plate=x["T_plate_mean"] - Tp, dT_bore=x["T_bore_ring_mean"] - Tb,
+                        dP_W=x["P_heater_W"] - b["P_heater_W"], closing_hand_um=1000 * hand, closing_fea_um=x["closing_um"],
+                        hot_thermal_json_um=1000 * b["clear_plate_hot_mm"], hot_now_um=x["hot_clear_um"])
+        # every plate by hand: plate uniformly at the set point, bore at thermal.json's 6061 temperature
+        for y in rows:
+            if y["key"] == key and y["group"] == "plates_A":
+                h = Rp * mean_cte(PLATES[y["plate"]]["cte"], MP.T_SET_A) * (MP.T_SET_A - 20) \
+                    - Rb * mean_cte(BORE_CTE["SS316L"]["cte"], Tb) * (Tb - 20)
+                out.setdefault("hand_vs_fea_um", {})[y["name"]] = 1000 * h - y["closing_um"]
+    return out
+
+
+def write_plate_report(data):
+    """plate_materials.md from plate_materials.json (`plates report` regenerates it without solving)."""
+    P = {p: dict(d, cte={float(t): v for t, v in d["cte"].items()}) for p, d in data["plates"].items()}
+    R = data["rows"]
+    keys = ("S25", "M50", "L75")
+    srcs = list(data["sources"])
+    ref = lambda p: "".join(f"[{srcs.index(s) + 1}]" for s in P[p]["src"])  # noqa: E731
+    row = lambda p, key, grp: next((x for x in R if x["plate"] == p and x["key"] == key and x["group"] == grp), None)  # noqa: E731
+
+    def trio(p, f, fmt="{:.0f}", lo=""):
+        xs = [row(p, k, "plates_A") for k in keys]
+        held = any(x["alpha_plate_held"] for x in xs)
+        return (lo if held else "") + " / ".join(fmt.format(f(x)) for x in xs)
+
+    def span(vals):
+        a, b = min(vals), max(vals)
+        return f"{a:.0f}" if round(a) == round(b) else f"{a:.0f}–{b:.0f}"
+
+    a200 = {p: mean_cte(P[p]["cte"], MP.T_SET_A) * 1e6 for p in P}
+    held200 = {p: MP.T_SET_A > max(P[p]["cte"]) + 1 for p in P}
+    L = ["# Build plate materials: how far the plate-to-bore gap closes at build start (CalculiX, axisymmetric)", "",
+         "Asked on [PR #266](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/266): *\"A 0.10 mm plate clearance "
+         "seizes on Ø75 ... Cold clearances are now 0.10 / 0.15 / 0.20 mm, which leaves 51–96 µm hot. Is there a different "
+         "material with a lower thermal expansion coefficient that would make sense to use?\"*", "",
+         "`analysis/thermal_module.py plates` re-runs the steady build-start case of [`thermal.md`](thermal.md) once per "
+         "candidate plate: plate top at the powder plane (z_p 0), plate top centre held at 200 °C by the same secant on heater "
+         "power, chamber 25 °C, powder on the plate (ε 0.5), argon in the gaps, today's cold radial clearances (S25 / M50 / L75 "
+         "= 0.10 / 0.15 / 0.20 mm). Only the plate changes: its own conductivity in the FEA (temperature-dependent where the "
+         "datasheet gives it) and its own expansion in the clearance. The heater block stays 6061 and the bore 316L.", "",
+         "Closing = R_plate · ᾱ_plate · (T_plate − 20) − R_bore · ᾱ_bore · (T_bore − 20). T_plate and T_bore are the FEA's "
+         "area-mean temperatures of the plate and of the spigot ring beside it; ᾱ is each material's mean CTE from room "
+         "temperature to that temperature, interpolated in its datasheet's table (316L bore: 16.0 µm/m·K to 100 °C). Hot "
+         "clearance = cold clearance − closing. **Least cold clearance** = 25 µm + closing: the cold radial clearance that "
+         "still leaves 25 µm at steady build start. \"≥\" marks plates whose datasheet gives the CTE only to 100 °C; the "
+         "value there is held, which under-states the closing.", "",
+         "## Tier A: 200 °C plate, build start (the worst case)", "",
+         "| Plate | Mean CTE, 20 → 200 °C (µm/m·K) | Closing, S25 / M50 / L75 (µm) | Hot clearance at today's 100 / 150 / 200 µm "
+         "cold (µm) | Least cold clearance, S25 / M50 / L75 (µm) | Heater, S25 / M50 / L75 (W) | Plate centre − edge (°C) | "
+         "Block max, S25 / M50 / L75 (°C) |", "|---|---|---|---|---|---|---|---|"]
+    for p in P:
+        if not all(row(p, k, "plates_A") for k in keys):
+            continue
+        dts = [row(p, k, "plates_A")["dT_centre_edge"] for k in keys]
+        L.append(f"| {P[p]['label']} | {'≥ ' if held200[p] else ''}{a200[p]:.1f} | {trio(p, lambda x: x['closing_um'], lo='≥ ')} | "
+                 f"{trio(p, lambda x: x['hot_clear_um'], lo='≤ ')} | **{trio(p, lambda x: x['cold_min_um'], lo='≥ ')}** | "
+                 f"{trio(p, lambda x: x['P_heater_W'])} | {span(dts)} | {trio(p, lambda x: x['T_block_max'])} |")
+    ab = [row("6061", k, "plates_bore") for k in ("M50", "L75")]
+    a6 = [row("6061", k, "plates_A") for k in ("M50", "L75")]
+    if all(ab) and all(a6):
+        L += ["", f"**Bore option**, 6061 spigot, tube and flange round the 6061 plate (M50 / L75): aluminium carries the heat to "
+              f"the floor, so the bore ring runs at {ab[0]['T_bore_ring_mean']:.0f} / {ab[1]['T_bore_ring_mean']:.0f} °C instead of "
+              f"{a6[0]['T_bore_ring_mean']:.0f} / {a6[1]['T_bore_ring_mean']:.0f} °C and grows no more than the 316L one: closing "
+              f"{ab[0]['closing_um']:.0f} / {ab[1]['closing_um']:.0f} µm (316L bore: {a6[0]['closing_um']:.0f} / {a6[1]['closing_um']:.0f}), "
+              f"and the heater needs {ab[0]['P_heater_W']:.0f} / {ab[1]['P_heater_W']:.0f} W instead of "
+              f"{a6[0]['P_heater_W']:.0f} / {a6[1]['P_heater_W']:.0f} W."]
+    tb = [(p, row(p, "M50", "plates_B")) for p in P if row(p, "M50", "plates_B")]
+    if tb:
+        L += ["", "## Tier B reserve: M50 at 500 °C, 0.20 mm cold (316L head and flange band water-cooled, as in thermal.md)", "",
+              "| Plate | Mean CTE, 20 → 500 °C (µm/m·K) | Closing (µm) | Hot clearance at 200 µm cold (µm) | Least cold clearance (µm) | "
+              "Heater (W) | Plate centre − edge (°C) | Block max (°C) | At 500 °C |", "|---|---|---|---|---|---|---|---|---|"]
+        for p, x in tb:
+            h = x["alpha_plate_held"]
+            L.append(f"| {P[p]['label']} | {'≥ ' if h else ''}{x['alpha_plate']:.1f} | {'≥ ' if h else ''}{x['closing_um']:.0f} | "
+                     f"{'≤ ' if h else ''}{x['hot_clear_um']:.0f} | **{'≥ ' if h else ''}{x['cold_min_um']:.0f}** | {x['P_heater_W']:.0f} | "
+                     f"{x['dT_centre_edge']:.0f} | {x['T_block_max']:.0f} | {P[p]['limit']} |")
+    L += ["", "## The plates: properties used and what they suit", "",
+          "| Plate | k at 200 °C (W/m·K) | Mean CTE from room temperature (°C: µm/m·K) | Density (kg/m³) | Limit | Powders it suits | Sources |",
+          "|---|---|---|---|---|---|---|"]
+    for p, d in P.items():
+        k = d["k"]
+        k200 = _pw({float(t): v for t, v in k.items()})(MP.T_SET_A) if isinstance(k, dict) else k
+        L.append(f"| {d['label']} | {k200:.1f}{'' if isinstance(k, dict) else ' (one value)'} | "
+                 + ", ".join(f"{t:.0f}: {v:g}" for t, v in sorted(d["cte"].items())) +
+                 f" | {d['rho']:.0f} | {d['limit']} | {d['powders']} | {ref(p)} |")
+    # narrative
+    g = lambda p, k="L75": row(p, k, "plates_A")  # noqa: E731
+    c6 = data["check"]
+    lowk = [p for p in ("430", "174PH", "Ti64") if g(p)]
+    s25blk = {p: g(p, "S25")["T_block_max"] for p in ("430", "174PH", "316L", "Ti64", "Invar36") if g(p, "S25")}
+    b = dict(tb)
+    L += ["", "## What this means", "",
+          f"1. **Today's 6061 plate works at today's clearances.** With 6061's mean CTE to 200 °C "
+          f"({a200['6061']:.1f} µm/m·K, against the 20–100 °C value of 23.6 that thermal.md used; 316L bore 16.0 against 16.5) "
+          "the hot gap at build start is "
+          + " / ".join(f"{c6[k]['hot_now_um']:.0f}" for k in keys) + " µm (S25 / M50 / L75), "
+          + " / ".join(f"{c6[k]['hot_thermal_json_um'] - c6[k]['hot_now_um']:.0f}" for k in keys) +
+          " µm less than thermal.md reports, and still above 25 µm. That margin also covers the dip of up to 5 µm that "
+          "thermal.md found in a full-power heat-up, when the bore lags the plate.",
+          f"2. **For Al powders the plate has to stay aluminium, and Al alloys barely change the answer.** Al printed on steel, Ti "
+          "or Cu forms brittle Fe-Al, Ti-Al or Cu-Al intermetallics and bonds poorly. The piston alloy 4032 (12 % Si) closes "
+          f"≥ {g('4032')['closing_um']:.0f} µm on L75 against {g('6061')['closing_um']:.0f} µm for 6061 "
+          f"({100 * (1 - g('4032')['closing_um'] / g('6061')['closing_um']):.0f} % less), so L75 would need ≥ "
+          f"{g('4032')['cold_min_um'] / 1000:.2f} mm cold instead of {g('6061')['cold_min_um'] / 1000:.2f}; a printed, "
+          f"stress-relieved AlSi10Mg plate closes ≥ {g('AlSi10Mg')['closing_um']:.0f} µm. Both are lower bounds, because their "
+          "datasheets give the CTE only to 100 °C: if 4032's rises by 200 °C as much as 6061's does (+0.8 µm/m·K), add ~5 µm "
+          "on L75. Neither takes L75 back to 0.10 mm. The spray-formed hypereutectic Al-Si alloys (Osprey CE17, CE13) were "
+          "not run: their datasheets are behind a login, so no checked numbers.",
+          f"3. **Steel and titanium plates close 2–4 times less.** On L75: "
+          + ", ".join(f"{P[p]['short']} {g(p)['closing_um']:.0f} µm" for p in lowk) +
+          f" (316L {g('316L')['closing_um']:.0f} µm), against {g('6061')['closing_um']:.0f} µm for 6061. They suit the powders "
+          "they match (steels and Ni alloys on 430 or 17-4 PH, Ti alloys on Ti-6Al-4V), and those are printed on matching "
+          "plates anyway. The bore is fixed, so size each plate's diameter for its own material: L75 needs only "
+          + " / ".join(f"{g(p)['cold_min_um'] / 1000:.2f}" for p in lowk) + " mm cold for " + " / ".join(P[p]["short"] for p in lowk) +
+          ". Cut to 6061's 0.20 mm they would run " + span([g(p)['hot_clear_um'] for p in lowk]) +
+          " µm hot, which widens the path for powder and heat."
+          + (f" 410 behaves as 430 ({g('410')['closing_um']:.0f} µm on L75), and McMaster stocks it in thick sections, "
+             "which it does not for 430." if g("410") else ""),
+          f"4. **But low conductivity spreads the plate temperature.** With the centre held at 200 °C, the plate edge runs "
+          + ", ".join(f"{span([g(p, k)['dT_centre_edge'] for k in keys])} °C cooler with {P[p]['short']}" for p in lowk) +
+          f" (6061: {span([g('6061', k)['dT_centre_edge'] for k in keys])} °C), and the heater block runs hotter to push the heat "
+          "through the plate. On S25 the block reaches " + ", ".join(f"{v:.0f} °C ({P[p]['short']})" for p, v in s25blk.items()) +
+          f", against {g('6061', 'S25')['T_block_max']:.0f} °C with 6061, the 240 °C cutoff and the ~225 °C block ceiling of the "
+          "heat-up: S25 with a steel or Ti plate needs a higher cutoff and ceiling, or a thinner plate. Heater power stays "
+          f"within {max(abs(x['P_heater_W'] - g('6061', x['key'])['P_heater_W']) for x in R if x['group'] == 'plates_A'):.0f} W of 6061's.",
+          "5. **Invar 36 is a bound, not a candidate.** Its gap stays as cut (closing "
+          + f"{min(g('Invar36', k)['closing_um'] for k in keys):+.0f} to {max(g('Invar36', k)['closing_um'] for k in keys):+.0f}".replace("-", "−")
+          + " µm), but McMaster stocks it only up to 1 in. rod, and its CTE climbs past its 279 °C Curie point, so it is no use "
+          "for Tier B. The bore material is not a lever either (the bore option above).",
+          ]
+    if b:
+        tbr = lambda p: b.get(p)  # noqa: E731
+        L.append(f"6. **Tier B (500 °C) rules out aluminium plates.** 6061 closes ≥ {tbr('6061')['closing_um']:.0f} µm on M50 "
+                 f"(≥ {tbr('6061')['cold_min_um'] / 1000:.2f} mm cold needed; thermal.md's −61 µm used the 20–100 °C CTE) and 500 °C is "
+                 f"{582 - 500} K under its solidus; 4032 is 30 K under its. In the 0.20 mm Tier B bore, Ti-6Al-4V leaves "
+                 f"{tbr('Ti64')['hot_clear_um']:.0f} µm, 430 {tbr('430')['hot_clear_um']:.0f}, 17-4 PH {tbr('174PH')['hot_clear_um']:.0f} and "
+                 f"316L {tbr('316L')['hot_clear_um']:.0f}. 430 sits in its 475 °C embrittlement range and 17-4 PH loses toughness "
+                 "above 316 °C (restored by re-ageing 4 h at 621 °C), so Ti-6Al-4V is the cleanest Tier B plate, then 17-4 PH. Expect "
+                 f"{span([x['dT_centre_edge'] for _, x in tb if x['plate'] in ('Ti64', '174PH', '430', '316L')])} °C from centre to edge "
+                 "with these plates at 500 °C.")
+    # sources and checks
+    L += ["", "## Sources (read 2026-11-19)", ""]
+    L += [f"{i + 1}. [{s['title']}]({s['url']})" for i, s in enumerate(data["sources"].values())]
+    hv = c6.get("hand_vs_fea_um", {})
+    L += ["", "## Checks", "",
+          "- The 6061 rows reproduce thermal.json's build-start cases exactly (plate and bore-ring mean temperatures and heater "
+          "power to " + f"{max(max(abs(c6[k]['dT_plate']), abs(c6[k]['dT_bore'])) for k in keys):.2f} °C and "
+          f"{max(abs(c6[k]['dP_W']) for k in keys):.2f} W). The closed form on thermal.json's temperatures gives the same "
+          "closing: " + " / ".join(f"{c6[k]['closing_hand_um']:.1f}" for k in keys) + " µm by hand against "
+          + " / ".join(f"{c6[k]['closing_fea_um']:.1f}" for k in keys) + " µm (S25 / M50 / L75).",
+          f"- A hand estimate for every plate, with the plate uniformly at 200 °C and the bore at 6061's FEA temperature, is "
+          f"within {max(abs(v) for v in hv.values()):.1f} µm of the FEA closing: the plate's own ΔT and CTE set the answer, and "
+          f"the bore ring moves by ≤ {max(abs(x['T_bore_ring_mean'] - g('6061', x['key'])['T_bore_ring_mean']) for x in R if x['group'] == 'plates_A'):.1f} "
+          "°C between plates." if hv else "",
+          "- Mesh, energy balance and ccx conventions as in thermal.md (1 mm elements; 1D checks here: " +
+          ", ".join(f"{k} {v['err_pct']:+.2f} %" for k, v in data["sanity"].items()) + "). Every case converged in "
+          f"{min(x['iterations'] for x in R)}–{max(x['iterations'] for x in R)} secant steps; energy balance ≤ "
+          f"{max(abs(x['balance_err_pct']) for x in R):.2f} %.",
+          "- rho and c are written to the ccx deck but do not enter a steady solve; AlSi10Mg's c is 6061's, as a placeholder.",
+          "- Hot clearances are steady build start. The build end is looser (the bore warms to ~110 °C, thermal.md)."]
+    (OUT / "plate_materials.md").write_text("\n".join(x for x in L if x is not None) + "\n")
+
+
+def plates(argv):
+    t0 = time.time()
+    path = OUT / "plate_materials.json"
+    if "report" not in argv:
+        san = sanity()
+        print("sanity:", {k: round(v["err_pct"], 3) for k, v in san.items()})
+        raw = _pool(solve_steady, plate_cases())
+        bad = {k: v["error"] for k, v in raw.items() if "error" in v}
+        rows = sorted((plate_row(v) for v in raw.values() if "error" not in v),
+                      key=lambda x: (x["group"], list(PLATES).index(x["plate"]), x["key"]))
+        data = dict(sanity=san, hot_min_mm=HOT_MIN, sources={k: dict(title=t, url=u) for k, (t, u) in PLATE_SRC.items()},
+                    plates=PLATES, bore_cte=BORE_CTE, rows=rows, check=plate_check(rows), failed=bad,
+                    wall_s=round(time.time() - t0, 1))
+        path.write_text(json.dumps(data, indent=1, default=float))
+        print(f"wrote {path} in {time.time() - t0:.0f} s; failed: {list(bad) or 'none'}")
+    write_plate_report(json.loads(path.read_text()))
+    print(f"wrote {OUT / 'plate_materials.md'}")
+
+
 def main(argv):
     RUN.mkdir(parents=True, exist_ok=True)
     OUT.mkdir(parents=True, exist_ok=True)
+    if "plates" in argv:
+        plates(argv)
+        return
     quick = "quick" in argv
     t0 = time.time()
     if "report" not in argv:
