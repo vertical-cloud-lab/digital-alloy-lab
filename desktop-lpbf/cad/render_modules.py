@@ -88,22 +88,22 @@ def three_modules():
 
 
 def stack_exploded():
-    parts = collect(ML.add_build_module, "M50")
+    parts = M.build(module="M50")                     # with the joint table's real screws, inserts and springs (joints.py)
     keep = [p for p in parts if p.group == "piston"]
-    order = ["Build plate", "Heater block", "Cartridge heaters", "Type K", "Thermal cutoff", "Radiation shields", "Macor standoffs",
-             "Piston head", "Bore seal", "Hollow piston rod", "Rod end", "Striker"]
-    lift = {"Build plate": 150, "Heater block": 100, "Cartridge heaters": 60, "Type K": 60, "Thermal cutoff": 60, "Radiation shields": 30,
-            "Macor standoffs": 15, "Piston head": 0, "Bore seal": 0, "Hollow piston rod": -30, "Rod end": -60, "Striker": -75}
+    lift = {"Build plate": 150, "Heater block": 100, "Heater-block helical inserts": 100, "Cartridge heaters": 60, "Type K": 60,
+            "Thermal cutoff": 60, "Radiation shields": 30, "Macor standoff rings": 15, "Piston head": 0, "Bore seal": 0,
+            "Disc springs under the stack screws": -12, "Heater-stack screws": -40, "Rod set screws": 0, "Hollow piston rod": -30,
+            "Rod end": -60, "Striker disc": -75, "Striker screws": -95}
     out = []
     for p in keep:
         dz = next((v for k, v in lift.items() if p.name.startswith(k)), 0)
         out += shifted([p], 0, 0, dz, section=False)
     sc = Scene(out, (W, H))
     sc.set()
-    f = (0.0, 0.0, 20.0)
-    sc.cam(R.orbit(f, 640, -28, 16), f)
-    sc.title("M50 heated plate stack, exploded: plate (bayonet), heater block (2 x 40 W, 3 type K, 240 C cutoff),\n"
-             "2 shields, 3 Macor standoffs, piston head + bore seal, hollow rod, potted cable exit, 430 striker", 11)
+    f = (0.0, 0.0, -15.0)
+    sc.cam(R.orbit(f, 800, -28, 16), f)
+    sc.title("M50 heated plate stack, exploded: plate (bayonet), heater block (3 x 50 W, 3 type K, 240 C cutoff, 3 M3 inserts), Macor rings\n"
+             "with 2 shields, piston head + bore seal, 3 x M3 x 25 316 screws (92290A124) on 302 disc springs, rod (2 set screws), 416 striker (3 flat heads)", 11)
     Image.fromarray(sc.shot()).save(OUT / "heater-stack-exploded.png")
 
 

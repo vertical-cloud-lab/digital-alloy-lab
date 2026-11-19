@@ -136,7 +136,7 @@ S25 / M50 / L75. It is far more than the recoater needs: 10 N drag and a 50 N st
 | | S25 | M50 | L75 |
 |---|---|---|---|
 | **(i) bare bayonet, today**: pressure from the plate's weight; edge lift on a strike | 0.56 kPa; 0.26 mm | 0.31 kPa; 0.31 mm | 0.28 kPa; 0.34 mm |
-| **(ii) bayonet + 718 disc spring(s)** (97125K111): preload, twist torque, 6061 lug bending | 101 N, 0.28 N·m, 13 MPa | 216 N, 0.61 N·m, 28 MPa | 530 N (2 springs), 1.49 N·m, **68 MPa** |
+| **(ii) bayonet + 718 disc spring(s)** (97125K111): preload, twist torque, 6061 lug stress (hand; CalculiX) | 101 N, 0.28 N·m, 13 MPa | 216 N, 0.61 N·m, 28; 43 MPa | 530 N (2 springs), 1.49 N·m, 68; **107 MPa** |
 | **(iii) drawbar**, 6 × Ø4 Si₃N₄ balls in a conforming groove: ball contact p₀, release push, heat down a Ø4 316 drawbar | 1,009 MPa, 141 N, 0.26 W | 1,301 MPa, 280 N, 0.26 W | 1,754 MPa, 656 N, 0.26 W |
 | **(iv) 3 × M4 316 screws**: preload cold → hot (200 °C); screw stress vs its ~160 MPa at 200 °C | 1,383 → 2,633 N; 300 MPa | same | same |
 | **(v) SmCo pot magnets** on a 430 insert in the plate, through the foil gap, at 225 °C | 7 magnets | 14 | 33 |

@@ -15,6 +15,8 @@ Nothing here has been built. Prices are McMaster-Carr list prices read on McMast
 | [`cad/joints.py`](cad/joints.py) | the joint table: where each fastener goes, and the holes it needs cut into the parts it joins |
 | [`cad/fastener_bom.py`](cad/fastener_bom.py) → [`fasteners.csv`](fasteners.csv) | the fasteners for one machine with all three build modules, by part number, with packs and cost |
 
+![The M50 heater stack, exploded, with its real screws, inserts, disc springs, set screws and flat-head screws](cad/img/modules/heater-stack-exploded.png)
+
 ## How the copies were checked
 
 McMaster offers two STEP models of each part: a full one, whose screws have true helical threads, and a "simplified" one with a plain shank at the thread's major diameter. Both were downloaded through the lab Pi for every part below ([`cad/fastener-cad-manifest.csv`](cad/fastener-cad-manifest.csv)). Each part was then rebuilt twice, from McMaster's listed dimensions plus measurements of its model:
