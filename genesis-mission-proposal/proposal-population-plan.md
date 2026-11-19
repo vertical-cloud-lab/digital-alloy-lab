@@ -11,7 +11,7 @@
 
 | #   | Item                | Resolution                                                                                                                  |
 | --- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| 1   | **Personnel**       | PI + 2 MS + 10 UGs (PI-confirmed 2026-04-14)                                                                                |
+| 1   | **Personnel**       | PI + 2 MS + 12 UG positions/sem (pooled; per-person pay detail removed) — audited 2026-04-21                   |
 | 2   | **Partners**        | Valimet (funded partner) and AMAZEMET (funded partner) submit independent applications; Thermo-Calc AB is an unfunded collaborator  |
 | 3   | **Discovery yield** | ≥3% target confirmed                                                                                                        |
 | 4   | **Fig 3**           | Include **both** 4-panel composite AND tensile data — use 4 narrative figures (tight but feasible at ~1.5 pages of figures) |
@@ -236,6 +236,7 @@ Al-Mn-Cr-Zr has 0/4 constituent ternaries assessed in TCAl10 — all predictions
   **Full D3 Phase II vision (for writer reference, compress to ~30w in narrative):**
   FLAIME's modular BOFN + closed-loop architecture generalizes beyond Al alloys to other Genesis Mission priorities: (a) nuclear structural materials (Topic 1: radiation-tolerant steels, BOFN optimizing creep + corrosion + irradiation simultaneously); (b) quantum materials (Topic 2: superconducting compounds with multi-fidelity CALPHAD + experimental loops); (c) any multi-stage manufacturing workflow where pKGFN partial evaluations reduce cost. Ties to **CMS Pillar 5 (Enabling Activities)** — FLAIME as reusable AI infrastructure for the entire Genesis Mission ecosystem. Phase II could target AMMTO priority materials (316H, IN718) or pivot to nuclear/quantum domains.
 - Technology transfer sentence addressing AMMTO commercialization criterion
+- **Post-Phase-I dissemination (not budgeted):** Team will submit several presentations to SME's RAPID + TCT 2027 (largest North-American AM conference, ~April 2027) and has reserved a free academic exhibit booth for FLAIME software/tutorials/validated compositions; falls just outside Phase I PoP (ends 31~March~2027), so not charged to this award. (Added to tech-transfer paragraph in §2.)
 
 ### §3 — Proposed Research and Methods (~400 words, ~1.5 pages)
 - **Sources:** `calphad_alloy_design.md`, `bofn-edison-review1/2.md`, `am-scaleup-test-structures.md`, `alloy-workflow-review.md`, `high-throughput-calphad.md`, `preliminary-results-roadmap.md`, `bios/baird-CV.pdf`
@@ -316,7 +317,7 @@ Al-Mn-Cr-Zr has 0/4 constituent ternaries assessed in TCAl10 — all predictions
 
 **Activity 3: Training & Workforce Development** — ~5,000 person-hours of SDL training to ~700 individuals across ~62 organizations; built AC Dev Lab from scratch ($600K, 500 line items, 24 months); 200+ hours course content; supervised 12 staff + 8 students.
 
-**Activity 4: Standardization & Open Science** — POSE (Pathways to Open Source Ecosystems) PI for materials informatics toolchain; Acceleration Consortium community standards contributor (data schema, experiment specification formats); FAIR data practices: developed schema.org metadata templates for SDL datasets; GCMAC presenter (2024, 2025); NSF TIP Directorate Review Panelist (2026); international standards engagement through IEC/ISO materials data working groups.
+**Activity 4: Standardization & Open Science** — POSE (Pathways to Open Source Ecosystems) PI for materials informatics toolchain; Acceleration Consortium community standards contributor (data schema, experiment specification formats); FAIR data practices for SDL datasets; GCMAC presenter (2024, 2025); NSF TIP Directorate Review Panelist (2026); international standards engagement through IEC/ISO materials data working groups.
 
 **Activity 5: Open Data Impact & Domain Expertise** — MPTS-52 dataset heavily reused by crystal structure generative AI community; Matbench-genmetrics benchmarking framework (JOSS 2024); Fehrmann Materials GmbH contract ($34K, ML for Al alloys); Zenodo/Figshare deposits with documented reuse metrics.
 
@@ -336,10 +337,11 @@ Al-Mn-Cr-Zr has 0/4 constituent ternaries assessed in TCAl10 — all predictions
 ## Phase 4: Budget & Forms
 
 - Update illustrative budget table to $750K scenario from `budget-breakdown-phase1.md`
-- **Personnel (PI-confirmed):** PI + 2 MS + 10 UGs @ $30/hr
+- **Personnel (PI-confirmed 2026-04-21):** PI + 2 MS students + 4 UG-FT + 8 UG-PT (pooled; per-person pay detail removed). UG cohort sized by atomizer 3-concurrent-worker staffing rule (76 shift-hr/wk × 3 = 228 person-hr/wk baseline, with 4 FT + 8 PT = 320 person-hr/wk supply and part-time flex buffer for finals/illness).
 - **Funded Partners:** Valimet (gas atomization) and AMAZEMET (ultrasonic atomization equipment) submit independent applications. Thermo-Calc AB is an unfunded collaborator.
 - **Budget mechanism (PI-confirmed 2026-04-14):** Valimet and AMAZEMET are funded partners submitting independent applications.  Thermo-Calc AB is an unfunded collaborator (CALPHAD database access via existing BYU license).
 - Partner budgets: [per-partner amounts removed from the public copy]
+- **M&S sized for N=320 compositions (2026-04-21, ~53% of 608-comp Gantt capacity):** Materials & Supplies at $112,468 — Argon $42K (20 active atomization-weeks × 10 dewars × $200/fill + $2K contingency), characterization $23K (320 comps × 2 hr SEM+EBSD × $30/hr BYU Engineering rate + 25% ICP-MS subset), research-grade feedstock $20K (with ~30% contingency for Sc/Er master-alloy volatility), GA feedstock $6K (fixed at 6 Valimet runs, independent of N), crucibles $3K, sonotrode $2.5K, LPBF $4K, metallography $3K, tensile $3K, safety/PPE+contingency $5,968. Personnel: PI + 2 MS + 4 UG-FT + 8 UG-PT/sem at $241,350; Fringe $22,822; Travel $12K; ODC $7,400; MTDC $396,040; F&A @ 51.5% truncated = $203,960. Total BYU $600,000; project $750,000. Rationale in `edison-trajectories/budget-analysis/audit-precursors-and-characterization.md`.
 - **[D8] Biographical sketch — SciENcv format:** Use the SciENcv (Science Experts Network Curriculum Vitae) format as required/preferred by DOE. Source: `bios/baird-CV.pdf`. Key PI differentiators to highlight:
   - **[D1] SDL deployment at scale:** Track record of reusable software (Honegumi, ac-bo-hackathon, multiple open-source packages), tutorials, training programs. Standardization leadership: POSE (Pathways to Open Source Ecosystems), Acceleration Consortium standards, FAIR data practices, GCMAC.
   - **[D4] Human-in-the-loop SDL leader:** Frugal twin review paper (resource-efficient autonomous experimentation). Lead author on structural materials section of comprehensive SDL review paper.

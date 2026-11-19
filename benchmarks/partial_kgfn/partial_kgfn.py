@@ -224,10 +224,13 @@ class PartialKnowledgeGradientFN(MCAcquisitionFunction):
             x_i = X[i: i + 1]  # (1, q, d_k)
             fantasy_values = []
 
+            # Draw all fantasy observations at once using the Sobol sampler
+            # for lower-variance quasi-random samples
+            post_k = self.model.node_GPs[k].posterior(x_i.squeeze(1))
+            all_y_fantasies = self.sampler[0](post_k)  # (num_fantasies, 1, 1)
+
             for f in range(self.num_fantasies):
-                # Sample a fantasy observation at x_i for node k
-                post_k = self.model.node_GPs[k].posterior(x_i.squeeze(1))
-                y_fantasy = post_k.rsample()  # (1, 1)
+                y_fantasy = all_y_fantasies[f]  # (1, 1) — matches X_cond shape
 
                 # Condition node k on the fantasy observation
                 X_cond = [None] * self.model.n_nodes

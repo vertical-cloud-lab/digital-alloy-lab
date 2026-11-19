@@ -37,7 +37,7 @@ C = {
 }
 
 
-def draw_single_tracks(ax):
+def draw_single_tracks(ax, commentary=True):
     """Stage 1: Single tracks on substrate with melt pool cross-section."""
     ax.set_xlim(-0.5, 10.5)
     ax.set_ylim(-3, 5)
@@ -76,8 +76,9 @@ def draw_single_tracks(ax):
     ax.annotate('', xy=(2.6, 0), xytext=(2.6, -0.9), arrowprops=dict(arrowstyle='<->', color=C['dim'], lw=1))
     ax.text(2.3, -0.45, 'D', ha='right', fontsize=9, fontweight='bold', fontstyle='italic', color=C['dim'])
 
-    ax.text(5, -2.8, 'Bead width ~0.1–0.3 mm  |  Screen: balling, keyholing, LOF',
-            ha='center', fontsize=7.5, color='#666', fontstyle='italic')
+    if commentary:
+        ax.text(5, -2.8, 'Bead width ~0.1–0.3 mm  |  Screen: balling, keyholing, LOF',
+                ha='center', fontsize=7.5, color='#666', fontstyle='italic')
 
     # Sub-legend for melt pool color
     ax.add_patch(mpatches.Rectangle((8, 3.5), 0.4, 0.25, color=C['melt'], alpha=0.4, ec=C['melt'], lw=0.8))
@@ -86,7 +87,7 @@ def draw_single_tracks(ax):
     ax.axis('off')
 
 
-def draw_thin_walls(ax):
+def draw_thin_walls(ax, commentary=True):
     """Stage 2: Thin walls for crack screening."""
     ax.set_xlim(-1, 11)
     ax.set_ylim(-2.5, 8.5)
@@ -113,9 +114,10 @@ def draw_thin_walls(ax):
     cy = np.linspace(1.5, 4.5, 30)
     cx = 8.75 + 0.15 * np.sin(cy * 5)
     ax.plot(cx, cy, color=C['crack'], lw=2.5, zorder=5)
-    ax.annotate('Hot crack\n(2xxx/7xxx Al)', xy=(8.8, 3), xytext=(6.2, 7),
-                fontsize=8, color=C['crack'], fontweight='bold', ha='center',
-                arrowprops=dict(arrowstyle='->', color=C['crack'], lw=1.2))
+    if commentary:
+        ax.annotate('Hot crack\n(2xxx/7xxx Al)', xy=(8.8, 3), xytext=(6.2, 7),
+                    fontsize=8, color=C['crack'], fontweight='bold', ha='center',
+                    arrowprops=dict(arrowstyle='->', color=C['crack'], lw=1.2))
 
     # Dimensions
     ax.annotate('', xy=(0.5, 0), xytext=(0.5, 6),
@@ -125,12 +127,13 @@ def draw_thin_walls(ax):
                 arrowprops=dict(arrowstyle='<->', color=C['dim'], lw=0.8))
     ax.text(1.75, -0.7, '~0.5 mm', ha='center', fontsize=6.5, color=C['dim'])
 
-    ax.text(5, -2.2, 'Crack screening critical for high-strength Al  |  2–3 walls per orientation',
-            ha='center', fontsize=7.5, color='#666', fontstyle='italic')
+    if commentary:
+        ax.text(5, -2.2, 'Crack screening critical for high-strength Al  |  2–3 walls per orientation',
+                ha='center', fontsize=7.5, color='#666', fontstyle='italic')
     ax.axis('off')
 
 
-def draw_density_cubes(ax):
+def draw_density_cubes(ax, commentary=True):
     """Stage 3-4: Density cubes / DoE parameter matrix."""
     ax.set_xlim(-2.5, 11)
     ax.set_ylim(-2.5, 8.5)
@@ -175,18 +178,78 @@ def draw_density_cubes(ax):
                 arrowprops=dict(arrowstyle='<->', color=C['dim'], lw=0.8))
     ax.text(1.6, 0.1, '~10 mm', ha='center', fontsize=7, color=C['dim'])
 
-    ax.text(5, -2.0, 'Archimedes density ≥99.5%  |  DoE: Power × Speed × Hatch',
-            ha='center', fontsize=7.5, color='#666', fontstyle='italic')
+    if commentary:
+        ax.text(5, -2.0, 'Archimedes density ≥99.5%  |  DoE: Power × Speed × Hatch',
+                ha='center', fontsize=7.5, color='#666', fontstyle='italic')
     ax.axis('off')
 
 
-def draw_tensile_bars(ax):
-    """Stage 5: Tensile bars in 3 orientations with color differentiation."""
-    ax.set_xlim(-2, 11)
-    ax.set_ylim(-2.5, 8.5)
+def draw_tensile_bars(ax, commentary=True):
+    """Stage 5: Three tensile bars on a single LPBF build plate, shown
+    in isometric view with three distinct print orientations (XY flat,
+    XZ upright, 45° tilted) — emphasizing that all orientations are
+    printed in parallel on a single build plate, not stacked along Z."""
+    ax.set_xlim(-3.5, 14.0)
+    ax.set_ylim(-3.5, 8.5)
     ax.set_aspect('equal')
 
-    def dogbone(cx, cy, scale=1.0, angle=0, color='#4477AA', ec='#224466'):
+    # --- Isometric helpers (flat top-down plate -> 2D screen coords) ---
+    # Plate XY are mapped via a simple oblique projection; Z is straight up.
+    KX = np.array([1.0, 0.0])           # plate-X -> screen
+    KY = np.array([0.55, 0.32])         # plate-Y -> screen (oblique)
+    KZ = np.array([0.0, 1.0])           # build-Z -> screen
+
+    def iso(p):  # p = (x_plate, y_plate, z)
+        s = p[0] * KX + p[1] * KY + p[2] * KZ
+        return s
+
+    def poly(verts, **kw):
+        pts = np.array([iso(v) for v in verts])
+        ax.fill(pts[:, 0], pts[:, 1], **kw)
+
+    # --- Build plate (250×250 mm, drawn as 8×8 plate units) ---
+    PX0, PY0 = 0.0, 0.0
+    PSZ = 8.0
+    PT = 0.5  # plate thickness (visible side)
+
+    # Plate top (powder bed surface)
+    plate_top = [
+        (PX0,        PY0,        0),
+        (PX0 + PSZ,  PY0,        0),
+        (PX0 + PSZ,  PY0 + PSZ,  0),
+        (PX0,        PY0 + PSZ,  0),
+    ]
+    poly(plate_top, color='#ece9e1', ec='#9d9683', lw=1.0, zorder=2)
+
+    # Subtle powder texture (faint dots)
+    rng = np.random.default_rng(0)
+    for _ in range(180):
+        px = PX0 + rng.uniform(0.05, PSZ - 0.05)
+        py = PY0 + rng.uniform(0.05, PSZ - 0.05)
+        sx, sy = iso((px, py, 0))
+        ax.plot(sx, sy, marker='.', markersize=0.8,
+                color='#b8b09b', zorder=2.1)
+
+    # Plate front-side (thickness panel)
+    front = [
+        (PX0,        PY0, 0),
+        (PX0 + PSZ,  PY0, 0),
+        (PX0 + PSZ,  PY0, -PT),
+        (PX0,        PY0, -PT),
+    ]
+    poly(front, color='#cbc6b6', ec='#7a755f', lw=0.8, zorder=2)
+
+    # Plate right-side
+    rside = [
+        (PX0 + PSZ, PY0,        0),
+        (PX0 + PSZ, PY0 + PSZ,  0),
+        (PX0 + PSZ, PY0 + PSZ,  -PT),
+        (PX0 + PSZ, PY0,        -PT),
+    ]
+    poly(rside, color='#b6b09e', ec='#7a755f', lw=0.8, zorder=2)
+
+    # --- Dogbone footprint (top-down outline used for XY-flat bars) ---
+    def dogbone_outline(scale=1.0):
         gw, guw = 1.1 * scale, 0.45 * scale
         gl, sl, gul = 1.2 * scale, 0.6 * scale, 2.2 * scale
         tl = 2 * gl + 2 * sl + gul
@@ -194,52 +257,133 @@ def draw_tensile_bars(ax):
              tl, gl + 2 * sl + gul, gl + sl + gul, gl + sl, gl, 0]
         y = [-gw/2, -gw/2, -guw/2, -guw/2, -gw/2, -gw/2,
              gw/2, gw/2, guw/2, guw/2, gw/2, gw/2]
-        x = [xi - tl / 2 for xi in x]
-        pts = np.array([x, y])
-        rad = np.radians(angle)
-        rot = np.array([[np.cos(rad), -np.sin(rad)], [np.sin(rad), np.cos(rad)]])
-        pts = rot @ pts
-        pts[0] += cx; pts[1] += cy
-        ax.fill(pts[0], pts[1], color=color, ec=ec, lw=1.2, zorder=3)
+        return np.array([x, y]) - np.array([[tl/2], [0]])
 
-    # Three orientations with DISTINCT colors
-    dogbone(4.5, 7, scale=1.0, angle=0, color=OC['XY'], ec='#224466')
-    ax.text(8.5, 7, 'XY (flat)', fontsize=9, color=OC['XY'], fontweight='bold', va='center')
+    def place_xy(cx, cy, angle_deg=0, scale=0.5,
+                 color=OC['XY'], ec='#224466', z=4):
+        """XY-flat dogbone lying on plate; rotates in plate-XY."""
+        outline = dogbone_outline(scale=scale)
+        rad = np.radians(angle_deg)
+        rot = np.array([[np.cos(rad), -np.sin(rad)],
+                        [np.sin(rad), np.cos(rad)]])
+        outline = rot @ outline
+        verts = [(cx + ox, cy + oy, 0.05) for ox, oy in zip(outline[0], outline[1])]
+        poly(verts, color=color, ec=ec, lw=1.2, zorder=z)
 
-    dogbone(4.5, 4, scale=1.0, angle=90, color=OC['XZ'], ec='#AA3344')
-    ax.text(6.5, 4, 'XZ (upright)', fontsize=9, color=OC['XZ'], fontweight='bold', va='center')
+    def place_upright(cx, cy, color=OC['XZ'], ec='#AA3344', z=5):
+        """XZ-upright bar: standing on the plate, gauge axis along Z."""
+        bx, by, bz = 0.5, 0.8, 0
+        slab_top = [
+            (cx - bx/2, cy - by/2, 2.6),
+            (cx + bx/2, cy - by/2, 2.6),
+            (cx + bx/2, cy + by/2, 2.6),
+            (cx - bx/2, cy + by/2, 2.6),
+        ]
+        front_face = [
+            (cx - bx/2, cy - by/2, 0),
+            (cx + bx/2, cy - by/2, 0),
+            (cx + bx/2, cy - by/2, 2.6),
+            (cx - bx/2, cy - by/2, 2.6),
+        ]
+        right_face = [
+            (cx + bx/2, cy - by/2, 0),
+            (cx + bx/2, cy + by/2, 0),
+            (cx + bx/2, cy + by/2, 2.6),
+            (cx + bx/2, cy - by/2, 2.6),
+        ]
+        from matplotlib.colors import to_rgb
+        base = np.array(to_rgb(color))
+        def tint(f):
+            return tuple(np.clip(base * f + (1 - f), 0, 1))
+        poly(front_face, color=tint(0.65), ec=ec, lw=1.0, zorder=z)
+        poly(right_face, color=tint(0.80), ec=ec, lw=1.0, zorder=z)
+        poly(slab_top,   color=tint(0.95), ec=ec, lw=1.0, zorder=z)
+        # Dogbone silhouette painted onto front face (gauge axis vertical)
+        outline = dogbone_outline(scale=0.45)
+        outline = np.array([[0, -1], [1, 0]]) @ outline
+        sx0, sy0 = iso((cx, cy - by/2, 1.3))
+        pts = np.array([[sx0 + ox*0.7 for ox in outline[0]],
+                        [sy0 + oy*0.7 for oy in outline[1]]])
+        ax.fill(pts[0], pts[1], color=color, ec=ec, lw=0.6, zorder=z + 0.3)
 
-    dogbone(4.5, 1, scale=1.0, angle=45, color=OC['45'], ec='#998833')
-    ax.text(8, 2.5, '45°', fontsize=9, color=OC['45'], fontweight='bold', va='center')
+    def place_45(cx, cy, scale=0.55, color=OC['45'], ec='#998833', z=5):
+        """45° tilted bar (gauge axis 45° in plate-X / Z plane)."""
+        outline = dogbone_outline(scale=scale)
+        rad = np.radians(45)
+        rot = np.array([[np.cos(rad), -np.sin(rad)],
+                        [np.sin(rad), np.cos(rad)]])
+        outline = rot @ outline
+        from matplotlib.colors import to_rgb
+        base = np.array(to_rgb(color))
+        def tint(f):
+            return tuple(np.clip(base * f + (1 - f), 0, 1))
+        verts_front = []
+        verts_back = []
+        for ox, oy in zip(outline[0], outline[1]):
+            verts_front.append((cx + ox, cy - 0.14, 0.05 + max(0, oy + 0.7)))
+            verts_back.append((cx + ox,  cy + 0.14, 0.05 + max(0, oy + 0.7)))
+        poly(verts_back, color=tint(0.85), ec=ec, lw=0.8, zorder=z)
+        poly(verts_front, color=tint(0.65), ec=ec, lw=1.0, zorder=z + 0.2)
+        # Small support stub under low end
+        sx, sy = cx - scale * 1.4, cy
+        stub = [
+            (sx - 0.20, sy - 0.18, 0),
+            (sx + 0.20, sy - 0.18, 0),
+            (sx + 0.20, sy + 0.18, 0),
+            (sx - 0.20, sy + 0.18, 0),
+        ]
+        poly(stub, color='#888', ec='#444', lw=0.5, zorder=z - 0.1)
 
-    # Build direction arrow
-    ax.annotate('Build\ndir. (Z)', xy=(-0.5, 0.5), xytext=(-0.5, 7.5),
-                fontsize=9, ha='center', fontweight='bold', color=C['flow'],
-                arrowprops=dict(arrowstyle='->', color=C['flow'], lw=2.5))
+    # --- Place the three bars side-by-side on the plate (no overlap) ---
+    # Use distinct plate positions so screen-space iso projections do not collide.
+    place_xy(2.0, 1.5, angle_deg=0, scale=0.5, color=OC['XY'])  # front-left
+    place_upright(6.0, 1.5, color=OC['XZ'])                      # front-right
+    place_45(2.0, 5.5, scale=0.55, color=OC['45'])               # back-left
 
-    # XYZ coordinate triad
-    ox, oy = -1.5, -1.5
-    ax.annotate('', xy=(ox + 1.5, oy), xytext=(ox, oy),
-                arrowprops=dict(arrowstyle='->', color='#333', lw=1.5))
-    ax.text(ox + 1.7, oy, 'X', fontsize=8, fontweight='bold', va='center')
-    ax.annotate('', xy=(ox, oy + 1.5), xytext=(ox, oy),
-                arrowprops=dict(arrowstyle='->', color='#333', lw=1.5))
-    ax.text(ox, oy + 1.8, 'Y', fontsize=8, fontweight='bold', ha='center')
-    ax.annotate('', xy=(ox + 0.7, oy + 0.7), xytext=(ox, oy),
-                arrowprops=dict(arrowstyle='->', color='#333', lw=1.5))
-    ax.text(ox + 0.9, oy + 0.9, 'Z', fontsize=8, fontweight='bold')
+    # --- Build direction Z arrow (out of plate, upper-left corner) ---
+    az0 = iso((PX0 - 0.4, PY0 + PSZ + 0.3, 0))
+    az1 = iso((PX0 - 0.4, PY0 + PSZ + 0.3, 3.2))
+    ax.annotate('', xy=az1, xytext=az0,
+                arrowprops=dict(arrowstyle='-|>', color=C['flow'],
+                                lw=2.6, mutation_scale=18))
+    ax.text(az1[0] - 0.2, az1[1] + 0.1, 'Build\ndir. (Z)',
+            fontsize=9, ha='right', va='center',
+            fontweight='bold', color=C['flow'])
 
-    # Gauge length
-    ax.annotate('', xy=(1.2, 7.8), xytext=(7.8, 7.8),
-                arrowprops=dict(arrowstyle='<->', color=C['dim'], lw=0.8))
-    ax.text(4.5, 8.1, 'Gauge ~25 mm (sub-size E8)', fontsize=7, color=C['dim'])
+    # --- XYZ triad (front-right corner, in plate's local frame) ---
+    tx, ty = PX0 + PSZ + 0.4, PY0 - 0.5
+    for vec, lbl, col in [
+        ((1.2, 0, 0), 'X', '#333'),
+        ((0, 1.2, 0), 'Y', '#333'),
+        ((0, 0, 1.2), 'Z', '#333'),
+    ]:
+        a0 = iso((tx, ty, 0))
+        a1 = iso((tx + vec[0], ty + vec[1], vec[2]))
+        ax.annotate('', xy=a1, xytext=a0,
+                    arrowprops=dict(arrowstyle='->', color=col, lw=1.3))
+        ax.text(a1[0] + 0.08 * np.sign(a1[0] - a0[0] + 1e-3),
+                a1[1] + 0.10, lbl,
+                fontsize=8, fontweight='bold', color=col, ha='center')
 
-    ax.text(5, -2.2, 'YS, UTS, elongation by build orientation  |  ASTM E8/E8M\nGauge cross-section ~3 × 6 mm (sub-size)',
-            ha='center', fontsize=7.5, color='#666', fontstyle='italic')
+    # --- Right-margin labels ---
+    LABEL_X = 11.0
+    LABEL_FS = 12
+    ax.text(LABEL_X, 6.5, 'XY (flat)',     fontsize=LABEL_FS,
+            color=OC['XY'], fontweight='bold', va='center')
+    ax.text(LABEL_X, 4.5, '45°',            fontsize=LABEL_FS,
+            color=OC['45'], fontweight='bold', va='center')
+    ax.text(LABEL_X, 2.5, 'XZ (upright)',  fontsize=LABEL_FS,
+            color=OC['XZ'], fontweight='bold', va='center')
+
+    if commentary:
+        ax.text(5, -3.0,
+                'All three orientations on one build plate (parallel, not stacked)\n'
+                'YS, UTS, elongation by build orientation  |  ASTM E8/E8M sub-size',
+                ha='center', fontsize=7.5, color='#666', fontstyle='italic')
     ax.axis('off')
 
 
-def draw_geometric_artifact(ax):
+def draw_geometric_artifact(ax, commentary=True):
     """Stage 6: ISO/ASTM 52902 geometric benchmark artifact."""
     ax.set_xlim(-1.5, 11.5)
     ax.set_ylim(-2.5, 8.5)
@@ -279,8 +423,9 @@ def draw_geometric_artifact(ax):
                 arrowprops=dict(arrowstyle='<->', color=C['dim'], lw=0.8))
     ax.text(-0.5, 2.2, '~30\nmm', ha='center', fontsize=7, color=C['dim'])
 
-    ax.text(5, -1.8, 'CMM / 3D scan → RMSE <25 µm  |  Pins, holes, overhangs, Z-steps',
-            ha='center', fontsize=7.5, color='#666', fontstyle='italic')
+    if commentary:
+        ax.text(5, -1.8, 'CMM / 3D scan → RMSE <25 µm  |  Pins, holes, overhangs, Z-steps',
+                ha='center', fontsize=7.5, color='#666', fontstyle='italic')
     ax.axis('off')
 
 
