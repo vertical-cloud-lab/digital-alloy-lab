@@ -17,15 +17,15 @@ supplied Amerex hook. The hook seat goes at 35½ in, which puts the top of the e
 
 | | L1 column, east face (**recommended**) | L2 booth south wall, beside the curtain | L3 north CMU wall, east of the booth | Existing CO2 by door 154-1 |
 | --- | --- | --- | --- | --- |
-| Walk from the atomizer | 9.8 ft | 9.2 ft | 20.0 ft | 16.5 ft |
-| Extra distance on the way out, door 154-1 / main door | 0.7 ft / 3.0 ft | 0.0 ft / 1.3 ft | 26 ft / 22 ft | (it is at the door) |
+| Walk from the atomizer | 10.0 ft | 9.2 ft | 20.0 ft | 16.5 ft |
+| Extra distance on the way out, door 154-1 / main door | 0.8 ft / 3.2 ft | 0.0 ft / 1.3 ft | 26 ft / 22 ft | (it is at the door) |
 | What it's fixed to | the building's column (concrete, to be confirmed) | the booth's sheet-metal wall, which needs a backer across its frame | CMU | drywall |
 | Outside the powder area | yes | yes | yes | yes |
 | Visible from the strip curtain | yes, about 4 ft to the west | yes, right beside it | no, it's behind the booth | no |
 
 The walking distances are shortest paths on the reconstructed plan, keeping 9 in from walls and
 equipment (`render.py`, `out/distances.json`). The operator is taken to stand at the atomizer's
-chamber. NFPA 10 sec. 6.5.2 and OSHA 29 CFR 1910.157(d)(5) both allow at most 75 ft of travel to
+chamber. NFPA 10 (sec. 6.5) and OSHA 29 CFR 1910.157(d)(5) both allow at most 75 ft of travel to
 Class D agent. Every point in the room is within that, so the choice comes down to the reasons
 below.
 
@@ -41,7 +41,8 @@ Why L1:
   sheet-metal walls and the drywall partitions do not, without extra work. The B570 manual also
   asks for a hanger rated to five times the charged weight, about 250 lb.
 - **It's out of traffic.** It sits in the corner between the column and the booth wall, out of the
-  aisle, so carts and chairs won't knock it (NFPA 10 sec. 6.1.3.10).
+  aisle, so carts and chairs won't knock it. NFPA 10 asks for protection wherever an
+  extinguisher could be damaged.
 - **It's apart from the CO2.** The building's CO2 extinguisher must never go on a metal-powder
   fire. Keeping the Class D at its own spot, with its own CLASS D sign, makes grabbing the wrong
   one less likely. That's why the spot next to the CO2 (the "next to the door" default) isn't
@@ -88,7 +89,7 @@ UL and FM listed. **Don't swap it for a shop-made hanger.**
 
 | Qty | Item | Used for |
 | --- | --- | --- |
-| 1 | ¼ in × 1¾ in hex-washer-head concrete screw (Tapcon-type, blue), with its 3/16 in carbide bit | the hook's centre hole: the manual's "one ¼ in masonry anchor through the centre hole" for concrete or CMU |
+| 1 | ¼ in masonry anchor for the hook's centre hole. The manual names a ¼ in lead (lag-shield) expansion anchor with a ¼ in lag screw. A ¼ in × 1¾ in hex-washer-head concrete screw (Tapcon-type) is the common alternative; the animation shows that one | the manual's "one ¼ in masonry anchor through the centre hole" for concrete or CMU |
 | 4 | 3/16 in × 1¼ in hex-washer-head concrete screws, with a 5/32 in carbide bit | the hook's two diagonal holes (extra hold) and the flag bracket's wall leg |
 | 1 | 7 × 10 in rigid-plastic "FIRE EXTINGUISHER: CLASS D, combustible metals only" sign | flat on the column at 60 to 70 in |
 | 1 | 7 × 10 in double-sided CLASS D sign (projecting or flag type) | on the flag bracket, faces the room |

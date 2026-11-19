@@ -184,5 +184,11 @@
    6.23,
    13.23
   ]
+ },
+ "animation": {
+  "frames": 260,
+  "fps": 10,
+  "gif": "/tmp/cdx_out/install.gif",
+  "mp4": "/tmp/cdx_out/install.mp4"
  }
 }

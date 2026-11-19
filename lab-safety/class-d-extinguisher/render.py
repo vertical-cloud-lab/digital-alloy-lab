@@ -618,9 +618,9 @@ def animate(D, fps=10, size=(960, 540)):
     CAM_ROOM_A = [(26 * FT, -6 * FT, 26 * FT), (10 * FT, 18 * FT, 1 * FT), (0, 0, 1)]
     CAM_ROOM_B = [(15.5 * FT, -5 * FT, 20 * FT), (8.5 * FT, 21 * FT, 2 * FT), (0, 0, 1)]
     CAM_APPROACH = [(15.5 * FT, 13.0 * FT, 7.5 * FT), (7.0 * FT, 20.5 * FT, 3.0 * FT), (0, 0, 1)]
-    CAM_FACE = [(M.MOUNT_FACE_X + 5.5 * FT, M.MOUNT_Y - 2.4 * FT, 4.2 * FT), (M.MOUNT_FACE_X, M.MOUNT_Y, 3.0 * FT), (0, 0, 1)]
-    CAM_HANG = [(M.MOUNT_FACE_X + 6.5 * FT, M.MOUNT_Y - 4.0 * FT, 4.4 * FT), (M.MOUNT_FACE_X + 0.6 * FT, M.MOUNT_Y, 2.6 * FT), (0, 0, 1)]
-    CAM_SIGN = [(M.MOUNT_FACE_X + 7.5 * FT, M.MOUNT_Y - 6.0 * FT, 6.0 * FT), (M.MOUNT_FACE_X + 0.6 * FT, M.MOUNT_Y, 4.2 * FT), (0, 0, 1)]
+    CAM_FACE = [(M.MOUNT_FACE_X + 3.3 * FT, M.MOUNT_Y - 0.9 * FT, 3.4 * FT), (M.MOUNT_FACE_X, M.MOUNT_Y, 2.85 * FT), (0, 0, 1)]
+    CAM_HANG = [(M.MOUNT_FACE_X + 6.0 * FT, M.MOUNT_Y - 3.2 * FT, 4.2 * FT), (M.MOUNT_FACE_X + 0.4 * FT, M.MOUNT_Y - 0.6 * FT, 2.3 * FT), (0, 0, 1)]
+    CAM_SIGN = [(M.MOUNT_FACE_X + 7.0 * FT, M.MOUNT_Y - 5.5 * FT, 5.6 * FT), (M.MOUNT_FACE_X + 0.6 * FT, M.MOUNT_Y, 4.0 * FT), (0, 0, 1)]
     CAM_DOOR = [(12.4 * FT, 15.5 * FT, 5.4 * FT), (6.6 * FT, 20.6 * FT, 3.2 * FT), (0, 0, 1)]
 
     def cam(a, b, t):
@@ -629,22 +629,22 @@ def animate(D, fps=10, size=(960, 540)):
         pl.camera.view_angle = 40
 
     steps = [
-        ("1  Room 154 CB, rebuilt from the BYU floor plan (25.78 x 31.38 ft)",
-         "Inert-gas booth in the NW corner (orange: atomizer). Green cone: recommended spot L1, the column just outside the booth.", 30),
-        ("2  Walk from the atomizer out through the strip curtain: ~11 ft to L1",
-         "L1 sits on the way to door 154-1 and in sight of the main door. NFPA 10 allows up to 75 ft for Class D.", 30),
+        ("1  Room 154 CB, rebuilt from the BYU floor plan",
+         "Booth in the NW corner (orange: atomizer).\nGreen cone: recommended spot L1, the column just outside the booth.", 30),
+        ("2  From the atomizer out through the curtain: 10 ft to L1",
+         "On the way to door 154-1, in sight of the main door.\nNFPA 10 / OSHA allow up to 75 ft for Class D.", 30),
         ("3  Mark the column's east face: hook seat at 35.5 in",
-         "Top of the extinguisher then sits at 41 in (NFPA 10: at most 42 in for >40 lb), bottom at 6 in (at least 4 in).", 26),
-        ("4  Drill: hammer drill, 3/16 in bit (1/4 in screw), 5/32 in bits (3/16 in screws)",
-         "Holes 1/4 in deeper than the screw's embedment; blow the dust out. If the column turns out to be steel, stop: see README.", 34),
-        ("5  Screw on the Amerex wall hook (red, ships with the B570)",
-         "1/4 x 1-3/4 in concrete screw in the centre hole, 3/16 x 1-1/4 in in the two diagonal holes. Hook must hold 5x the weight.", 28),
-        ("6  Hang the B570 (~50 lb): lift with your legs, seat the collar in the hook",
-         "Label facing out, hose and soft-flow applicator on the south side. Pin and tamper seal intact.", 36),
-        ("7  Signs: CLASS D on the column, flag sign on the bent-plate bracket",
-         "Flat sign faces the booth door; flag sign faces the room. Wording: 'CLASS D - combustible metals only'.", 26),
-        ("8  Keep 36 x 36 in in front clear; monthly check, annual service",
-         "View from the strip curtain: the extinguisher is the first thing you see on the way out.", 30),
+         "Top then sits at 41 in (max 42 in for >40 lb),\nbottom at 6 in (min 4 in). Green ghost = final position.", 30),
+        ("4  Drill three holes with a hammer drill",
+         "3/16 in bit for the 1/4 in screw, 5/32 in for the 3/16 in ones.\nIf the column turns out to be steel: stop, use L2 (README).", 36),
+        ("5  Screw on the Amerex wall hook (ships with the B570)",
+         "1/4 x 1-3/4 in concrete screw in the centre hole,\n3/16 x 1-1/4 in in the two diagonal holes.", 30),
+        ("6  Hang the B570 (~50 lb): lift with your legs",
+         "Seat the collar in the hook, label out, applicator on the south side.\nPin and tamper seal intact, gauge in the green.", 40),
+        ("7  Signs: CLASS D on the column, flag sign on the bent bracket",
+         "Flat sign faces the curtain; flag sign faces the room.\n'CLASS D - combustible metals only'.", 30),
+        ("8  Keep 36 x 36 in in front clear",
+         "Monthly check on the tag, annual service by a contractor.\nView from the strip curtain on the way out.", 34),
     ]
     frames = []
     total = sum(s[2] for s in steps)
@@ -658,14 +658,15 @@ def animate(D, fps=10, size=(960, 540)):
     for g in ghost.values():
         vis(g, False)
     # extinguisher starts on the floor 3 ft in front of the column, turned
-    floor_T = T(dx=26 * IN, dy=-4 * IN, dz=-M.BOTTOM_Z, rz=0)
+    FLOOR_DX, FLOOR_DY = 16 * IN, -40 * IN
+    floor_T = T(dx=FLOOR_DX, dy=FLOOR_DY, dz=-M.BOTTOM_Z, rz=0)
     ext_pose(floor_T)
     acts["bracket"].user_matrix = world()
     for k in ("sign", "flag", "flagsign"):
         acts[k].user_matrix = world()
     for si, (ttl, sbt, n) in enumerate(steps):
-        pl.remove_actor(title); title = pl.add_text(ttl, position="upper_left", font_size=12, color="#111111")
-        pl.remove_actor(sub); sub = pl.add_text(sbt, position="lower_left", font_size=9, color="#333333")
+        pl.remove_actor(title); title = pl.add_text(ttl, position="upper_left", font_size=15, color="#111111")
+        pl.remove_actor(sub); sub = pl.add_text(sbt, position="lower_left", font_size=12, color="#222222")
         for f in range(n):
             t = f / max(n - 1, 1)
             pulse = 0.5 + 0.5 * math.sin(f_global * 0.6)
@@ -723,7 +724,7 @@ def animate(D, fps=10, size=(960, 540)):
                 # lift: rise to 1.2 in above the seat, swing in, drop onto the hook
                 if t < 0.45:
                     tt = ease(t / 0.45)
-                    Tl = T(dx=26 * IN * (1 - tt) + 0.0, dy=-4 * IN * (1 - tt), dz=-M.BOTTOM_Z * (1 - tt) + 1.2 * IN * tt)
+                    Tl = T(dx=FLOOR_DX * (1 - tt), dy=FLOOR_DY * (1 - tt), dz=-M.BOTTOM_Z * (1 - tt) + 1.2 * IN * tt)
                 elif t < 0.8:
                     Tl = T(dz=1.2 * IN)
                 else:
@@ -741,6 +742,7 @@ def animate(D, fps=10, size=(960, 540)):
                 vis(zone_act, True)
                 zone_act.prop.opacity = 0.25 + 0.25 * pulse
                 cam(CAM_SIGN, CAM_DOOR, t * 1.4)
+            pl.render()
             img = pl.screenshot(return_img=True)
             frames.append(img)
             f_global += 1
@@ -748,12 +750,17 @@ def animate(D, fps=10, size=(960, 540)):
     # MP4 (sharp) and GIF (for GitHub)
     import imageio_ffmpeg  # noqa: F401
     mp4 = os.path.join(OUT, "install.mp4")
-    with imageio.get_writer(mp4, fps=fps, codec="libx264", quality=8, macro_block_size=8, pixelformat="yuv420p") as w:
+    with imageio.get_writer(mp4, fps=fps, codec="libx264", quality=8, macro_block_size=4, pixelformat="yuv420p") as w:
         for fr in frames:
             w.append_data(fr)
     from PIL import Image
-    gif_frames = [Image.fromarray(fr).resize((size[0] * 2 // 3, size[1] * 2 // 3), Image.LANCZOS) for fr in frames]
-    pal = gif_frames[len(gif_frames) // 2].convert("P", palette=Image.ADAPTIVE, colors=128)
+    gif_frames = [Image.fromarray(fr).resize((size[0] * 3 // 4, size[1] * 3 // 4), Image.LANCZOS) for fr in frames]
+    # palette from frames sampled across every step, so the yellow, red and green all get entries
+    sample = gif_frames[:: max(1, len(gif_frames) // 16)]
+    montage = Image.new("RGB", (sample[0].width, sample[0].height * len(sample)))
+    for k, im in enumerate(sample):
+        montage.paste(im, (0, k * sample[0].height))
+    pal = montage.convert("P", palette=Image.ADAPTIVE, colors=192)
     q = [g.quantize(palette=pal, dither=Image.Dither.NONE) for g in gif_frames]
     gif = os.path.join(OUT, "install.gif")
     q[0].save(gif, save_all=True, append_images=q[1:], duration=int(1000 / fps), loop=0, optimize=True)
