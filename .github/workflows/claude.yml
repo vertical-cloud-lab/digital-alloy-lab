@@ -39,6 +39,8 @@ jobs:
     # https://github.com/ME-EN-372/me-en-372-machine-design-private/blob/main/docs/claude-yml-model-fallback.md.
     # This repo is public, so only the owner, org members and collaborators can start a session.
     # @claude-print runs go to claude-print.yml instead (approval-gated Bambu login).
+    # @claude-youtube also contains "@claude", so it is excluded here; it starts
+    # claude-youtube.yml instead.
     if: |
       github.event.sender.type != 'Bot' &&
       ((github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') &&
@@ -49,7 +51,8 @@ jobs:
         contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.review.author_association)) ||
        (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')) &&
         contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association))) &&
-      !contains(github.event.comment.body || github.event.review.body || format('{0} {1}', github.event.issue.title, github.event.issue.body), '@claude-print')
+      !contains(github.event.comment.body || github.event.review.body || format('{0} {1}', github.event.issue.title, github.event.issue.body), '@claude-print') &&
+      !contains(github.event.comment.body || github.event.review.body || format('{0} {1}', github.event.issue.title, github.event.issue.body), '@claude-youtube')
     runs-on: ubuntu-latest
     # Allow long waits (e.g., Edison polling) without hitting a job-level limit.
     # This budget now covers both attempts, so a fallback after a long first
@@ -108,6 +111,10 @@ jobs:
       POTENTIOSTAT_PC_ADDRESS: ${{ secrets.POTENTIOSTAT_PC_ADDRESS }}
       POTENTIOSTAT_PC_USERNAME: ${{ secrets.POTENTIOSTAT_PC_USERNAME }}
       POTENTIOSTAT_PC_PASSWORD: ${{ secrets.POTENTIOSTAT_PC_PASSWORD }}
+      # BYU Vertical Cloud Lab YouTube channel, upload + read ONLY (cannot delete
+      # or edit). Same token as byu-vcl's. Full control is in the youtube-admin
+      # environment, reachable only through @claude-youtube (claude-youtube.yml).
+      YOUTUBE_UPLOAD_TOKEN_PICKLE_B64: ${{ secrets.YOUTUBE_UPLOAD_TOKEN_PICKLE_B64 }}
       # Allow long-blocking foreground commands (e.g., Edison polling)
       BASH_DEFAULT_TIMEOUT_MS: "900000" # 15 min default per Bash call
       BASH_MAX_TIMEOUT_MS: "3600000" # 60 min ceiling per Bash call

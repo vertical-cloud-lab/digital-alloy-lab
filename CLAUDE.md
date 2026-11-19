@@ -248,6 +248,40 @@ last step is a link that a person clicks, and the PR opens under their name.
 - Never echo the token or save it in a remote or a commit. If it is unset or returns 401/403,
   say so and stop. It expires 2027-11-10.
 
+## YouTube uploads
+
+`YOUTUBE_UPLOAD_TOKEN_PICKLE_B64` (repo secret, job env in `claude.yml`) is a base64
+`token.pickle` for the **BYU Vertical Cloud Lab** channel, the same one byu-vcl uses. Its scopes
+are `youtube.upload` + `youtube.readonly` only: it can upload and list, but cannot delete or edit.
+Use it through `youtube/yt_service.py` (`pip install -r youtube/requirements.txt`):
+
+```bash
+python youtube/yt_service.py                                  # which channel, which scopes
+python youtube/yt_service.py upload clip.mp4 --title "M2 walls, build 1"
+```
+
+Uploads default to public; pass `--privacy unlisted` or `--privacy private` when asked. Since
+2026-11-02 YouTube no longer locks uploads from unaudited API projects to private
+([revision history](https://developers.google.com/youtube/v3/revision_history)), so the privacy set at upload
+sticks; changing it afterwards needs the full-control token below or YouTube Studio. Never
+decode, print or commit either token.
+
+**Full control (delete, edit, playlists, captions)** is `YOUTUBE_TOKEN_PICKLE_B64`, an
+environment secret of `youtube-admin`, read only by `.github/workflows/claude-youtube.yml`
+(`python youtube/yt_service.py --full`). Same three gates as byu-vcl: the job starts only for
+`@claude-youtube` posted by sgbaird; the environment requires sgbaird to approve each run
+(Actions → the waiting run → *Review deployments*); and it deploys only from `main`. `claude.yml`
+skips any text containing `@claude-youtube`, since that tag also contains `@claude`.
+
+Both tokens are minted from byu-vcl (it holds the OAuth client and
+`youtube/generate_youtube_token.py`, which hardcodes byu-vcl as its target). To write one here
+instead, from a byu-vcl checkout with `youtube/client_secret.json` in place, sign in as the lab
+account and pick **BYU Vertical Cloud Lab**:
+
+```bash
+python -c "import sys; sys.path.insert(0, 'youtube'); import generate_youtube_token as g; g.REPO = 'vertical-cloud-lab/digital-alloy-lab'; sys.argv = ['g', '--profile', 'full', '--to-github']; g.main()"
+```
+
 ## The atomizer camera Pis (`rpi-5-3ray`, `rpi-5-6ktj`, `rpi-zero2w-ex3f`) over Tailscale
 
 Three Raspberry Pis are on the lab tailnet, and their variables are named for what each one
