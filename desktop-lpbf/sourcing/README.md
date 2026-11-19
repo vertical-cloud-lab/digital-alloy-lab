@@ -40,7 +40,8 @@ Checked on 2026-11-19 between 19:57 and 20:10 UTC, through the lab's CubXL Pi (B
 | Surplus Record, CAE Online, Next Day Automation | used lasers and scan heads | 3 rows |
 | An online reseller shop for new IPG lasers | new and refurbished YLR prices | new only; every refurbished option shows no price |
 | Web search | IPG refurbished program, dealers of used SM lasers | no IPG program found |
-| Machinio, LabX | used lasers and machines | not reached: their search URLs returned 404 through the tunnel |
+| Machinio, LabX | used lasers and machines | not usable: their search pages loaded through the tunnel but showed no results in headless Chrome |
+| OMTech certified pre-owned | used fiber engravers, for the student's route | only 20–50 W fiber markers ($1,326–3,000), too weak to melt |
 
 **Method.** The three atomizer camera Pis were offline, so the tunnel went through the CubXL Pi (exit network: BYU, AS6510), as in the byu-vcl Onshape rig.
 - I used that rig's script to start headed Chrome on a virtual display on the runner, with a SOCKS tunnel through the Pi.
@@ -169,7 +170,10 @@ The lab still owes the same safety work as for a new laser: BYU Laser Safety Off
 - **eBay item pages could not be read,** because eBay rate-limited the session. Cooling, hours, fiber, accessories and interface come only from titles, or are not stated.
 - **No sold-price history:** eBay needs a sign-in for it, and I didn't create an account.
 - **No seller or IPG contact, no quotes, nothing bought.** BYU's rules for buying on eBay or from surplus dealers, such as card versus PO and used equipment on these funds, are for BYU purchasing to answer.
-- **Not searched:** Machinio and LabX (404 through the tunnel), MOPA engravers for the student's route (README §1b.1), and gloveboxes (eBay rewrote the query to "glove box insert").
+- **Not searched properly:**
+  - Machinio and LabX: no results rendered;
+  - MOPA engravers of 100–200 W for the student's route (README §1b.1): only OMTech's pre-owned page was checked;
+  - gloveboxes: eBay rewrote the query to "glove box insert".
 - **Prices change.** Listings come and go. Re-run [`scripts/batch.py`](scripts/batch.py) with the same queries to refresh them.
 
 ## Files
