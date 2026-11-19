@@ -38,6 +38,8 @@ from PIL import Image
 
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+import fasteners as FS  # noqa: E402
+import joints as J  # noqa: E402
 import lpbf_low as M  # noqa: E402
 import module_params as MP  # noqa: E402
 import render_low as R  # noqa: E402
@@ -110,13 +112,25 @@ def up(v, step):
 
 
 # ------------------------------------------------------------------ meshes drawn here
-def screw_template(d, L):
-    k = d
-    head = pv.Cylinder(center=(0, 0, k / 2), direction=(0, 0, 1), radius=0.75 * d, height=k, resolution=20)
-    shank = pv.Cylinder(center=(0, 0, -L / 2), direction=(0, 0, 1), radius=0.48 * d, height=L, resolution=12)
-    body = (head + shank).triangulate()
-    hexp = pv.Polygon(center=(0, 0, k + 0.03), radius=0.38 * d, normal=(0, 0, 1), n_sides=6).triangulate()
-    return body, hexp
+_FMESH = {}
+
+
+def fastener_mesh(pn):
+    """The McMaster part's light shape (fasteners.py), tessellated once: bearing plane at z = 0, head toward +z."""
+    if pn not in _FMESH:
+        _FMESH[pn] = R.tess(FS.shape(pn), 0.04, 0.3)
+    return _FMESH[pn]
+
+
+def reg(key, pn=None):
+    """(part number, [(point, axis head->tip)]) of a joint in joints.REGISTRY; pn picks one of its extra parts."""
+    r = J.REGISTRY[key]
+    if pn is None or pn == r["pn"]:
+        return r["pn"], r["items"]
+    for q, it in r["extra"]:
+        if q == pn:
+            return q, it
+    raise KeyError(f"{key}: {pn}")
 
 
 def end_mill(d, flute=None, holder_d=None):
@@ -244,23 +258,25 @@ class Stage:
 
 
 class Screws:
-    """A set of screws that drive in along their axes, spinning, one after another."""
+    """The real screws of one joint (joints.REGISTRY), driven in along their axes, spinning, one after another."""
 
-    def __init__(self, st, key, items, d, L, color="#a9b1b9", order=None):
-        body, hexp = screw_template(d, L)
-        self.st, self.d, self.L = st, d, L
+    def __init__(self, st, key, pn, items, color="#a9b1b9", order=None, offset=None):
+        body = fastener_mesh(pn)
+        self.st = st
+        self.L = float(FS.CATALOG[pn].get("L", 10.0))
+        off = np.zeros(3) if offset is None else np.asarray(offset, float)
         self.items = []
-        for j, (P, n) in enumerate(items):
+        for P, ax in items:
+            n = -np.asarray(ax, float) / np.linalg.norm(ax)        # from the tip toward the head: the way it backs out
             a = st.pl.add_mesh(body, color=hexc(color), **R.MAT)
-            h = st.pl.add_mesh(hexp, color=(0.08, 0.08, 0.09), ambient=0.4)
-            self.items.append((a, h, np.asarray(P, float), np.asarray(n, float) / np.linalg.norm(n)))
+            self.items.append((a, np.asarray(P, float) + off, n))
         self.order = order or list(range(len(self.items)))
         self.last = [np.eye(4)] * len(self.items)
-        st.extra[key] = [x for it in self.items for x in it[:2]]
+        st.extra[key] = [it[0] for it in self.items]
         self.set_all(0.0, visible=False)
 
     def set_one(self, j, u, visible=True):
-        a, h, P, n = self.items[j]
+        a, P, n = self.items[j]
         if u < 0.3:                      # approach along the axis, no spin
             off, spin = self.L + 40.0 * (1 - u / 0.3), 0.0
         else:
@@ -270,15 +286,13 @@ class Screws:
         m[:3, :3] = align(n) @ rot3((0, 0, 1), spin)
         m[:3, 3] = P + n * off
         self.last[j] = m
-        for x in (a, h):
-            x.user_matrix = m
-            x.SetVisibility(visible)
+        a.user_matrix = m
+        a.SetVisibility(visible)
 
     def shift(self, m):
         """Move every (seated) screw by m, e.g. with the sub-assembly they hold."""
-        for j, (a, h, P, n) in enumerate(self.items):
-            for x in (a, h):
-                x.user_matrix = m @ self.last[j]
+        for j, it in enumerate(self.items):
+            it[0].user_matrix = m @ self.last[j]
 
     def set_all(self, u, visible=True):
         for j in range(len(self.items)):
@@ -302,6 +316,15 @@ class Screws:
                 else:
                     self.set_one(j, min(u, 1.0))
             shoot()
+        return self
+
+
+def drive(st, key, shoot, pn=None, frames=5, overlap=0.5, order=None, offset=None, color="#a9b1b9", star=False):
+    """Drive the screws of joint `key` (or its part `pn`)."""
+    q, items = reg(key, pn)
+    if star:
+        order = star_order(np.array([np.asarray(P, float) for P, _ in items]))
+    return Screws(st, f"s-{key}-{q}", q, items, color=color, order=order, offset=offset).drive(nf(frames), overlap, shoot)
 
 
 def star_order(points):
@@ -327,8 +350,8 @@ def kind(p):
     n = p.name
     if "context" in p.tags:
         return "context"
-    if any(k in n for k in ("Lid screws", "Captive M6")):
-        return "skip"
+    if "fastener" in p.tags:
+        return "fastener"
     sheet_keys = ("inlet plenum +", "outlet plenum under", "liners", "Dose chute", "Gas knife", "Reservoir M (", "Reservoir M shutter",
                   "Radiation shields", "Laser guard panels", "Sliding guard door", "Rack side panels", "Umbilical duct",
                   "Operator panel box")
@@ -516,7 +539,7 @@ CATS = [
     ("gas", "Vacuum and gas: KF fittings, clamps, valves, hoses, pump, blower, filter, O2 / dew point, argon"),
     ("optics", "Laser and optics: 500 W fiber laser, galvo, f-theta lens, collimator, shutter, windows, fiber"),
     ("elec", "Electronics, heaters and sensors: UPS, PC, DIN drawer, cartridges, thermocouples, sensors, camera"),
-    ("seal", "Seals and fasteners: FKM O-rings and cord, felt and PTFE seals, screws"),
+    ("seal", "Seals and fasteners: FKM O-rings and cord, felt and PTFE seals, and the McMaster screws, inserts and pins, by part number"),
     ("frame", "Frames: 10U rack, T-slot guard frame, levelling mounts"),
 ]
 
@@ -543,12 +566,26 @@ def kit_cat(p, k):
     return "elec"
 
 
+def fastener_pile(p):
+    """The fasteners of one part laid out in a grid, standing up: what arrives in the bag."""
+    shp = FS.shape(p.mcm)
+    b = shp.BoundingBox()
+    n = len(p.shape.Solids())
+    sp = max(b.xlen, b.ylen) + 3.0
+    cols = max(1, math.ceil(math.sqrt(n)))
+    return M.comp([shp.translate(cq.Vector((k % cols) * sp, (k // cols) * sp, -b.zmin)) for k in range(n)])
+
+
 def kit_layout(st, z0=0.0):
     """Lay every part (or its stock / sheet blank / a coil for hoses) out on the floor, packed by category.
     Returns {part index: offset 4x4} for parts drawn as themselves, and the extra meshes it added."""
     items = {c: [] for c, _ in CATS}
     for i, p in enumerate(st.parts):
         k = kind(p)
+        if k == "fastener":
+            pile = fastener_pile(p)
+            items["seal"].append(dict(i=i, shape=pile, color="#a9b1b9", b=bbox(pile), what="pile"))
+            continue
         if k in ("context", "skip"):
             continue
         c = kit_cat(p, k)
@@ -707,6 +744,9 @@ def chamber_ops():
     gw, gd = P["gland_w"], P["gland_d"]
     s6 = s5.cut(rbox(-ix - 3 - gw, ix + 3 + gw, -iy - 3 - gw, iy + 3 + gw, lz0 - gd, lz0 + 1, 6).cut(
         rbox(-ix - 3, ix + 3, -iy - 3, iy + 3, lz0 - gd - 1, lz0 + 2, 4)))
+    body_cuts = J.CUTS.get("Process chamber body", [])
+    s7 = s6.cut(*[t for k, t in body_cuts if k == "lid"]) if body_cuts else s6
+    s8 = s7.cut(*[t for k, t in body_cuts if k != "lid"]) if body_cuts else s7
     return [
         (stock, s1, "-z", "mill", "Face and square the block to 312 x 222 x 140 mm, 8 mm corners"),
         (s1, s2, "-z", "mill", "Rough and finish the 280 x 190 x 120 mm pocket: 5 mm corners, 5 mm coves at the floor"),
@@ -714,6 +754,8 @@ def chamber_ops():
         (s3, s4, "+z", "mill", "Flip over: Ø96 module port, outlet and overflow slots, dowel and insert holes in the floor"),
         (s4, s5, "+x", None, "Side bores: recoater screw, KF-25 vacuum port, argon and O2 ports, through-beam fibres"),
         (s5, s6, "-z", "mill", "Lid O-ring face gland, 4.6 x 2.65 mm (Parker), on the top face"),
+        (s6, s7, "-z", None, "Drill and STI-tap the 20 lid-screw holes; install M5 x 7.5 helical inserts (McMaster 91732A261)"),
+        (s7, s8, "+z", None, "From below and the back: STI-tapped holes and helical inserts for the module, Z flange, legs and rail"),
     ]
 
 
@@ -763,18 +805,24 @@ def chapter_machining(st):
     big = 300.0
     spig = body.intersect(M.box(-big, big, -big, big, zf, 1.0))
     flange = body.intersect(M.box(-big, big, -big, big, zfb, zf))
-    tube = body.intersect(M.box(-big, big, -big, big, -400, zfb))
+    lower = body.intersect(M.box(-big, big, -big, big, -400, zfb))
+    r_tube = MP.MODULES["M50"]["bore"] / 2 + MP.MODULES["M50"]["wall"]
+    tube = lower.intersect(M.cyl(r_tube + 0.005, (0, 0, -400), "z", 400 + zfb + 1))
+    collar = lower.cut(M.cyl(r_tube + 0.005, (0, 0, -401), "z", 402 + zfb))
     tb = bbox(tube)
+    cb_ = bbox(collar)
+    col_stock = M.box(-cb_[1] - 3, cb_[1] + 3, -cb_[1] - 3, cb_[1] + 3, cb_[4], cb_[4] + 0.5 * INCH)       # 1/2 in. 316 plate
     spig_stock = M.cyl(2 * INCH, (0, 0, zf - 3.0), "z", MP.FLOOR_T + 6.0)                       # 4 in. 316 bar (9260K5)
     fl_stock = M.box(-70, 70, -62, 62, zfb, zfb + 0.5 * INCH)                                  # 1/2 in. 316 plate
     tube_stock = M.tube(2.25 * INCH / 2, 2.25 * INCH / 2 - 0.25 * INCH, (0, 0, tb[4] - 4.0), "z", tb[5] - tb[4] + 4.0)
-    sep = {"spig": np.array([0, 0, 140.0]), "flange": np.array([0, 0, 60.0]), "tube": np.array([0, 0, -40.0])}
+    sep = {"spig": np.array([0, 0, 140.0]), "flange": np.array([0, 0, 60.0]), "tube": np.array([0, 0, -40.0]), "collar": np.array([0, 0, -110.0])}
     focal = (0.0, 0.0, -10.0)
     cap0 = "2  Machining: the M50 build module's spigot, flange and cylinder (316L)"
     st.caption(cap0, "Stock: 4 in. 316 bar (McMaster 9260K5), 1/2 in. 316 plate, 2-1/4 x 1/4 in. 316 tube (11119N55)")
     st.add("m-spig", tess(spig_stock).translate(sep["spig"], inplace=False), SS_STOCK, edges=True)
     st.add("m-fl", tess(fl_stock).translate(sep["flange"], inplace=False), SS_STOCK, edges=True)
     st.add("m-tube", tess(tube_stock).translate(sep["tube"], inplace=False), SS_STOCK, edges=True)
+    st.add("m-col", tess(col_stock).translate(sep["collar"], inplace=False), SS_STOCK, edges=True)
     for f in range(nf(8)):
         st.cam(focal + np.array([0, 0, 40]), 820, -30, 22)
         st.shot()
@@ -797,17 +845,23 @@ def chapter_machining(st):
     machine_op(st, "m-tube", shifted(tube_stock, sep["tube"]), shifted(tube, sep["tube"]), "-z", "lathe", nf(12), SS_STOCK,
                cap0, "Lathe: bore the tube from 1.75 to ~50.5 mm and turn the OD to 56.8 mm (3 mm wall)", camf, spin=(0, 0))
     st.add("m-tube", tess(shifted(tube, sep["tube"])), "#a2abb3", edges=True)
+    st.remove("m-col")
+    machine_op(st, "m-col", shifted(col_stock, sep["collar"]), shifted(collar, sep["collar"]), "+x", "jet", nf(10), SS_STOCK,
+               cap0, "Waterjet the bottom collar ring; drill and tap its six M4 holes for the gland plate", camf)
+    st.add("m-col", tess(shifted(collar, sep["collar"])), "#a2abb3", edges=True)
     # stack
     for f in range(nf(8)):
         t = ease((f + 1) / nf(8))
         st.move("m-spig", T(-sep["spig"] * t))
         st.move("m-fl", T(-sep["flange"] * t))
         st.move("m-tube", T(-sep["tube"] * t))
-        st.caption(cap0, "Stack on a fixture: spigot, flange and tube on one mandrel so the bores line up")
+        st.move("m-col", T(-sep["collar"] * t))
+        st.caption(cap0, "Stack on a fixture: spigot, flange, tube and collar on one mandrel so the bores line up")
         camf(0.5)
         st.shot()
     # weld: two circumferential seams
-    seams = [(28.6, zfb - 0.2), (48.2, zf - 0.2)]     # tube OD under the flange; spigot OD on the flange
+    zst_ = M.ML.zlevels()["z_stop"] if hasattr(M, "ML") else -92.0
+    seams = [(28.6, zfb - 0.2), (48.2, zf - 0.2), (r_tube, zst_ + MP.COLLAR_T + 0.2)]   # tube under the flange; spigot; collar
     torch = [(pv.Cylinder(center=(0, 0, 45), direction=(0, 0, 1), radius=7, height=60), HOLDER_COL),
              (pv.Cone(center=(0, 0, 8), direction=(0, 0, -1), height=16, radius=7), "#c96f2a")]
     st.add_multi("torch", torch)
@@ -815,7 +869,7 @@ def chapter_machining(st):
     for f in range(nw):
         t = (f + 1) / nw
         for j, (r, z) in enumerate(seams):
-            phi = float(np.clip(t * 2 - j, 0, 1)) * 360.0
+            phi = float(np.clip(t * 3 - j, 0, 1)) * 360.0
             if phi > 0:
                 st.add(f"weld{j}", arc_tube(r, z, phi, 1.5), "#ff9a3c", glow=(phi < 360))
                 if phi < 360:
@@ -824,17 +878,17 @@ def chapter_machining(st):
                     m[:3, :3] = align((math.cos(a) * 0.6, math.sin(a) * 0.6, 0.8))
                     m[:3, 3] = (r * math.cos(a), r * math.sin(a), z)
                     st.move("torch", m)
-        st.caption(cap0, "TIG-weld the flange to the tube and the spigot to the flange (316L filler), then stress-relieve")
+        st.caption(cap0, "TIG-weld the flange and the bottom collar to the tube and the spigot to the flange (316L filler); stress-relieve; face the collar and tube end")
         camf(0.5 + 0.2 * t)
         st.shot()
     st.remove("torch")
-    for j in range(2):
+    for j in range(3):
         st.add(f"weld{j}", arc_tube(seams[j][0], seams[j][1], 360.0, 1.5), "#8f8a80")
     # hone
     hone = [(pv.Cylinder(center=(0, 0, 0), direction=(0, 0, 1), radius=24.8, height=30, resolution=24), "#6b5b45"),
             (pv.Cylinder(center=(0, 0, 120), direction=(0, 0, 1), radius=6, height=210), HOLDER_COL)]
     st.add_multi("hone", hone)
-    for a in st.extra.get("m-tube", []) + st.extra.get("m-spig", []) + st.extra.get("m-fl", []):
+    for a in st.extra.get("m-tube", []) + st.extra.get("m-spig", []) + st.extra.get("m-fl", []) + st.extra.get("m-col", []):
         a.prop.opacity = 0.45
     zb = bbox(body)
     nh = nf(16)
@@ -845,7 +899,7 @@ def chapter_machining(st):
         camf(0.7)
         st.shot()
     st.remove("hone")
-    for k in ("m-spig", "m-fl", "m-tube", "weld0", "weld1"):
+    for k in ("m-spig", "m-fl", "m-tube", "m-col", "weld0", "weld1", "weld2"):
         st.remove(k)
 
     # --- heater block, plate and piston head: turn then drill, side by side ---
@@ -987,37 +1041,38 @@ def chapter_module(st):
 
     F = st.find
     blk, cart, tc, tco = F("Heater block M50"), F("Cartridge heaters M50"), F("Type K thermocouples M50"), F("Thermal cutoff M50")
-    mac, shd, head, seal = F("Macor standoffs M50"), F("Radiation shields M50"), F("Piston head M50"), F("Bore seal M50")
+    mac, shd, head, seal = F("Macor standoff rings M50"), F("Radiation shields M50"), F("Piston head M50"), F("Bore seal M50")
+    bins, springs = F("Heater-block helical inserts M50"), F("Disc springs under the stack screws M50")
+    glo = F("Module M50 gland-plate O-ring")
     rod, rodend, strk = F("Hollow piston rod M50"), F("Rod end M50"), F("Striker disc M50")
     plate, wiper = F("Build plate M50"), F("Plate rim wiper M50")
     body, oring, bfl, handle = F("Build module M50"), F("Spigot O-ring"), F("Module M50 bottom flange"), F("Module M50 handle")
     lift = np.array([0, 0, 170.0])          # the piston stack is built above the cylinder, then lowered in
-    stack = blk + cart + tc + tco + mac + shd + head + seal + rod + plate + wiper
+    stack = blk + bins + cart + tc + tco + mac + shd + head + springs + seal + rod + plate + wiper
 
     def rise(dz):
         return lambda i, t: T(lift + np.array([0, 0, dz * (1 - t)]))
 
     fly(st, blk, nf(8), None, lambda t: cam(0.1 * t), cap, "Heater block (6061-T6) with its bayonet socket", xf=rise(45))
+    fly(st, bins, nf(6), None, lambda t: cam(0.1, el=-6), cap, "Three M3 helical inserts (McMaster 91732A647) into the block's underside", xf=rise(-40))
     fly(st, cart, nf(10), None, lambda t: cam(0.1 + 0.1 * t, el=6), cap,
         "3 x 50 W, 24 V cartridge heaters (McMaster 3714N36) slide up into their Ø6.1 bores", xf=rise(-90))
     fly(st, tc + tco, nf(10), None, lambda t: cam(0.2 + 0.1 * t, el=6), cap,
         "Type K thermocouples (control, edge, limit; McMaster 3871K606) and the 240 °C thermal cutoff", xf=rise(-100))
     fly(st, mac + shd, nf(10), None, lambda t: cam(0.3 + 0.1 * t, el=10), cap,
-        "Thermal break: three Macor standoffs (cut from 8489K75 rod) and two polished 316 radiation shields", xf=rise(-70))
+        "Thermal break: three Macor standoffs, each three rings cut from 8489K75 rod, with the two polished 316 shields between them", xf=rise(-70))
     fly(st, head, nf(10), None, lambda t: cam(0.4 + 0.1 * t, el=10), cap, "Piston head: the cool side of the break", xf=rise(-80))
-    mc = st.parts[mac[0]].shape
-    hb = bbox(st.parts[head[0]].shape)
-    items = [(np.array([c[0], c[1], hb[4]]) + lift, (0, 0, -1)) for c, _ in screw_items_from_solids(mc, "zmin", (0, 0, -1))]
-    sc = Screws(st, "s-stack", items, 3.0, 20.0)
-    st.caption(cap, "M3 screws up through the piston head into the standoffs and the block")
-    sc.drive(nf(7), 0.5, lambda: (cam(0.5, el=-10), st.shot()))
-
+    fly(st, springs, nf(6), None, lambda t: cam(0.45, el=-10), cap, "A disc spring in each slotted counterbore of the head", xf=rise(-40))
+    st.caption(cap, "M3 x 25 316 screws up through the head's radial slots, the Macor rings and shields, into the block's inserts")
+    sc = drive(st, "stack_M50", lambda: (cam(0.5, el=-10), st.shot()), frames=7, offset=lift)
     def seal_xf(i, t):
         s_ = 0.86 + 0.14 * t
         return T(lift + np.array([0, 0, -40 * (1 - t)])) @ np.diag([s_, s_, 1.0, 1.0])
     fly(st, seal, nf(8), None, lambda t: cam(0.55), cap, "Bore seal: aramid felt and a carbon-filled PTFE scraper, stretched into its groove", xf=seal_xf)
     fly(st, rod, nf(8), None, lambda t: cam(0.6, d=520, fz=95), cap, "Hollow 316 piston rod; the heater and thermocouple leads run down inside it",
         xf=rise(-120))
+    st.caption(cap, "Two M4 cup-point set screws (316) hold the rod in the head's socket")
+    sc_rod = drive(st, "rod_M50", lambda: (cam(0.62, d=420, el=4, fz=95), st.shot()), frames=6, offset=lift)
     fly(st, wiper, nf(6), None, lambda t: cam(0.65, d=520, fz=110), cap, "PTFE rim wiper snapped onto the plate", xf=rise(90))
 
     def plate_xf(i, t):
@@ -1027,16 +1082,13 @@ def chapter_module(st):
     fly(st, plate, nf(14), None, lambda t: cam(0.7 + 0.1 * t, d=400, el=30, fz=150), cap,
         "Build plate onto the bayonet (graphite foil between), turned 60° to lock", xf=plate_xf)
     fly(st, body, nf(10), (0, 0, -140), lambda t: cam(0.8, d=700, fz=40), cap,
-        "Welded and honed module body: spigot, flange and Ø50.8 cylinder")
-    fly(st, bfl + handle, nf(8), (0, 0, -80), lambda t: cam(0.8, d=700, el=4, fz=0), cap,
-        "Bottom flange with its double FKM rod gland (2-114) and the front handle")
-    nw = nf(10)
-    for f in range(nw):
-        phi = 360.0 * (f + 1) / nw
-        st.add("weld-bf", arc_tube(28.6, -92.0, phi, 1.4), "#ff9a3c" if phi < 360 else "#8f8a80", glow=phi < 360)
-        st.caption(cap, "TIG-welded to the tube (the piston goes in and out through the top, so the gland is serviced from there)")
-        cam(0.85, d=600, el=-8, fz=-40)
-        st.shot()
+        "Welded and honed module body: spigot, flange, Ø50.8 cylinder and the bottom collar")
+    fly(st, glo + bfl, nf(8), (0, 0, -80), lambda t: cam(0.8, d=700, el=4, fz=0), cap,
+        "Gland plate with its double FKM rod gland (2-114) and a 1.78 mm FKM face O-ring, up against the collar")
+    st.caption(cap, "Six M4 x 16 316 screws into the welded collar: the plate comes off to change the rod seals or clean out powder")
+    drive(st, "gland_M50", lambda: (cam(0.85, d=600, el=-30, fz=-60), st.shot()), frames=5, star=True)
+    fly(st, handle, nf(6), (0, -80, 0), lambda t: cam(0.85, d=600, el=-20, fz=-60), cap, "Front handle under the gland plate")
+    drive(st, "handle_M50", lambda: (cam(0.86, d=600, el=-30, fz=-60), st.shot()), frames=5)
 
     def oring_xf(i, t):
         s_ = 0.9 + 0.1 * t
@@ -1048,6 +1100,7 @@ def chapter_module(st):
         for i in stack:
             st.mat[i] = T(lift * (1 - t))
         sc.shift(T(-lift * t))
+        sc_rod.shift(T(-lift * t))
         st.caption(cap, "The heater stack goes into the bore from the top; the rod passes down through the gland")
         cam(0.9, d=650, fz=60 - 60 * t)
         st.shot()
@@ -1055,6 +1108,8 @@ def chapter_module(st):
         st.mat.pop(i, None)
     fly(st, rodend + strk, nf(10), (0, 0, -80), lambda t: cam(0.95, d=620, el=-12, fz=-80), cap,
         "Rod end: leads potted out of a side exit (Torr Seal); the 416 striker disc for the Z stage's pot magnet")
+    st.caption(cap, "Three M3 x 10 316 flat-head screws hold the striker, flush with the magnet face")
+    drive(st, "striker_M50", lambda: (cam(0.97, d=420, el=-30, fz=-120), st.shot()), frames=5)
     st.caption(cap, "Done: the module leaves and returns as one unit; S25 and L75 modules are built the same way")
     n = nf(16)
     for f in range(n):
@@ -1064,6 +1119,9 @@ def chapter_module(st):
     st.clear_extra("weld")
     st.shown.clear()
     st.mat.clear()
+    # from here on the module's screws are drawn as the model's own parts
+    st.hidden.difference_update(i for i, p in enumerate(st.parts) if "fastener" in p.tags and p.group in ("module", "piston")
+                                and "Captive" not in p.name)
 
 
 # ------------------------------------------------------------------ chapter 4: the process module
@@ -1081,15 +1139,17 @@ def chapter_process(st):
         return np.asarray(st.parts[i].explode, float)
 
     base, feet = F("Base plate, process"), F("Leveling mounts, process")
-    fly(st, feet + base, nf(10), (0, 0, 250), lambda t: cam(t, 1900, el=30), cap, "MIC-6 base plate (cut to size, Z window milled) on four levelling mounts")
-    bases = (-370.0, 290.0, -265.0, 215.0)
-    zb1 = M.P["z_base1"]
-    items = [((x, y, zb1), (0, 0, 1)) for x in (bases[0] + 30, bases[1] - 30) for y in (bases[2] + 30, bases[3] - 30)]
-    Screws(st, "s-feet", items, 8.0, 24.0, order=[0, 3, 1, 2]).drive(nf(6), 0.5, lambda: (cam(0.5, 2000, el=32), st.shot()))
+    fly(st, feet + base, nf(10), (0, 0, 250), lambda t: cam(t, 1900, el=30), cap,
+        "MIC-6 base plate on four levelling mounts (McMaster 5537T983); their M8 stems thread up into the plate")
     legs = F("Chamber legs")
-    fly(st, legs, nf(8), ex, lambda t: cam(0.6, 1800), cap, "Chamber legs (6061, 30 x 30), bolted from under the base plate")
-    ch = F("Process chamber body")
-    fly(st, ch, nf(12), ex, lambda t: cam(0.7, 1600), cap, "Chamber body onto the legs")
+    fly(st, legs, nf(8), ex, lambda t: cam(0.6, 1800), cap, "Chamber legs (6061, 30 x 30, each with a Ø11 bore up its middle)")
+    st.caption(cap, "Two M6 x 25 316 screws up through the base plate into each leg")
+    drive(st, "legs_base", lambda: (cam(0.6, 1500, el=-20), st.shot()), frames=4, overlap=0.6)
+    ch = F("Process chamber body") + F("Lid screw helical inserts", "Helical inserts for the module screws", "Recoater rail helical inserts",
+                                       "Z-flange helical inserts", "Leg helical inserts")
+    fly(st, ch, nf(12), ex, lambda t: cam(0.7, 1600), cap, "Chamber body, with its helical inserts, onto the legs")
+    st.caption(cap, "One M6 x 25 up each leg's bore into the floor, through the access holes in the base plate")
+    drive(st, "legs", lambda: (cam(0.75, 1300, el=-24), st.shot()), frames=5)
     under = F("outlet plenum", "Outlet plenum port", "Overflow funnel", "Overflow port", "Overflow jar", "Overflow clamp",
               "Overflow-jar present", "Module-present sensor", "Locating dowel")
     fly(st, under, nf(12), ex, lambda t: cam(t, 1300, az=-20, el=-14), cap,
@@ -1100,23 +1160,21 @@ def chapter_process(st):
     # recoater
     rail = F("Recoater guide rail")
     fly(st, rail, nf(8), ex, lambda t: cam(t, 900, az=-8, el=38), cap, "Recoater: 15 mm guide rail on the back wall (McMaster 6709K33)")
-    items = [((x, 80.0, M.P["rc_rail_z"]), (0, -1, 0)) for x in (-120, -80, -40, 0, 40, 80, 120)]
-    Screws(st, "s-rail", items, 4.0, 12.0).drive(nf(5), 0.6, lambda: (cam(0.6, 800, az=-8, el=34), st.shot()))
+    drive(st, "rail", lambda: (cam(0.6, 800, az=-8, el=34), st.shot()), frames=5, overlap=0.6)
     rec = F("Recoater carriage (", "Recoater ball screw", "Recoater ball nut", "Recoater carriage block", "Recoater fixed bearing",
             "Recoater floating bearing", "Recoater motor standoff", "Recoater servo", "Recoater motor bracket", "Recoater arm")
     fly(st, rec, nf(14), ex, lambda t: cam(t, 1000, az=-10, el=36), cap,
         "Carriage, M12 ball screw (4566N101) through the side-wall bores and its bearings, ball nut, ClearPath servo")
     hold = F("Blade holder", "HSS recoater blade")
     fly(st, hold, nf(8), ex, lambda t: cam(t, 800, az=-30, el=36), cap, "Quick-swap blade holder and the HSS blade")
-    items = [((-115.0, y, 20.0), (-1, 0, 0)) for y in (-35.0, 0.0, 35.0)]
-    Screws(st, "s-blade", items, 3.0, 10.0).drive(nf(5), 0.5, lambda: (cam(0.7, 700, az=-50, el=30), st.shot()))
+    st.caption(cap, "Blade: two M3 x 8 316 screws into the holder, heads 11-17 mm up, above the powder heap")
+    drive(st, "blade", lambda: (cam(0.7, 600, az=30, el=24, f=(-100, 0, 20)), st.shot()), frames=5)
     # Z stage under the floor
     zst = F("Z mounting flange", "Z actuator", "Z bracket", "Z servo", "Z carriage", "Z lift arm", "Pot magnet")
     fly(st, zst, nf(14), ex, lambda t: cam(t, 1200, az=-40, el=-12, f=(0, 40, -90)), cap,
         "Folded Z stage hung from the chamber floor: actuator, 2:1 belt fold, servo, lift arm with the pot magnet")
-    items = [((-33.0, 66.0, -30.0), (0, 0, -1)), ((90.0, 97.0, -30.0), (0, 0, -1)), ((-33.0, 94.0, -30.0), (0, 0, -1)),
-             ((30.0, 97.0, -30.0), (0, 0, -1))]
-    Screws(st, "s-z", items, 5.0, 14.0, order=[0, 3, 1, 2]).drive(nf(5), 0.5, lambda: (cam(0.6, 1000, az=-40, el=-16, f=(0, 40, -90)), st.shot()))
+    st.caption(cap, "Z flange: four counterbored M5 x 12 316 screws into the floor's inserts")
+    drive(st, "zmount", lambda: (cam(0.6, 1000, az=-40, el=-16, f=(0, 40, -90)), st.shot()), frames=5, order=[0, 3, 1, 2])
     # the build module comes in along its swap path (reverse), then the arm rises and the magnet takes the striker
     mod = [i for i, p in enumerate(st.parts) if p.group in ("module", "piston") and "Captive" not in p.name]
     st.shown.update(mod)
@@ -1134,8 +1192,7 @@ def chapter_process(st):
         st.shot()
     for i in mod:
         st.mat.pop(i, None)
-    items = [((s * MP.SCREW_X, 0.0, -MP.FLOOR_T - MP.FLANGE_T), (0, 0, -1)) for s in (-1, 1)]
-    Screws(st, "s-thumb", items, 6.0, 20.0, color="#c9ced3").drive(nf(7), 0.3, lambda: (cam(0.8, 900, az=-30, el=-18, f=(0, 0, -60)), st.shot()))
+    drive(st, "module_flange", lambda: (cam(0.8, 900, az=-30, el=-18, f=(0, 0, -60)), st.shot()), frames=7, overlap=0.3, color="#c9ced3")
     nz = nf(8)
     for f in range(nz):
         t = ease((f + 1) / nz)
@@ -1149,18 +1206,17 @@ def chapter_process(st):
     # gas knife and chute under the lid line, then the lid
     pre = F("Gas knife", "Dose chute", "Lid O-ring")
     fly(st, pre, nf(10), ex, lambda t: cam(t, 1200, az=-20, el=46), cap, "Gas knife and dose chute; the FKM cord pressed into the lid gland")
-    lid = F("Chamber lid (")
-    fly(st, lid, nf(10), ex, lambda t: cam(t, 1200, az=-20, el=46), cap, "Lid (6061-T6, 16 mm) onto the O-ring")
-    lid_items = [(np.array([c[0], c[1], M.P["lid_z1"]]), (0, 0, 1)) for c, _ in
-                 screw_items_from_solids(st.parts[F("Lid screws")[0]].shape, "zmin", (0, 0, 1))]
-    order = star_order(np.array([c for c, _ in lid_items]))
-    Screws(st, "s-lid", lid_items, 5.0, 16.0, order=order).drive(nf(5), 0.8,
-                                                                 lambda: (cam(0.5, 1000, az=-16, el=55), st.shot()))
-    win = F("Field-stop", "Window flange", "Window O-ring", "Ø2 in. fused-silica window", "Window retaining ring")
-    fly(st, win, nf(12), ex, lambda t: cam(t, 700, az=-20, el=48, f=(0, 0, 130)), cap,
-        "Window stack: field stop, flange, FKM O-ring, Ø2 in. fused-silica window, retaining ring")
-    items = [((44 * math.cos(math.radians(a)), 44 * math.sin(math.radians(a)), 163.0), (0, 0, 1)) for a in range(30, 360, 60)]
-    Screws(st, "s-win", items, 3.0, 12.0, order=[0, 3, 1, 4, 2, 5]).drive(nf(5), 0.5, lambda: (cam(0.5, 600, az=-20, el=50, f=(0, 0, 140)), st.shot()))
+    lid = F("Chamber lid (") + F("Window-flange helical inserts", "Metering-base helical inserts")
+    fly(st, lid, nf(10), ex, lambda t: cam(t, 1200, az=-20, el=46), cap, "Lid (6061-T6, 16 mm), with its helical inserts, onto the O-ring")
+    st.caption(cap, "Twenty M5 x 25 316 screws into M5 helical inserts, tightened in a star pattern")
+    drive(st, "lid", lambda: (cam(0.5, 1000, az=-16, el=55), st.shot()), frames=5, overlap=0.8, star=True)
+    win = F("Field-stop", "Window flange")
+    fly(st, win, nf(8), ex, lambda t: cam(t, 700, az=-20, el=48, f=(0, 0, 130)), cap, "Field stop and window flange")
+    st.caption(cap, "Six counterbored M4 x 16 316 screws into M4 x 4 inserts (the drawer slot is 5 mm under the lid top)")
+    drive(st, "window", lambda: (cam(0.5, 600, az=-20, el=50, f=(0, 0, 140)), st.shot()), frames=5, order=[0, 3, 1, 4, 2, 5])
+    win2 = F("Window O-ring", "Ø2 in. fused-silica window", "Window retaining ring")
+    fly(st, win2, nf(10), ex, lambda t: cam(t, 700, az=-20, el=48, f=(0, 0, 130)), cap, "FKM O-ring, Ø2 in. fused-silica window, retaining ring")
+    drive(st, "window_ring", lambda: (cam(0.6, 600, az=-20, el=50, f=(0, 0, 140)), st.shot()), frames=5, order=[0, 3, 1, 4, 2, 5])
     drw = F("Cover-slide drawer", "Cover slide (", "Drawer O-ring", "Drawer-closed sensor")
     fly(st, drw, nf(10), ex, lambda t: cam(t, 800, az=-30, el=30, f=(0, -60, 120)), cap,
         "Cover-slide drawer slides into the lid's front edge (fused-silica slide, FKM seal)")
@@ -1168,8 +1224,7 @@ def chapter_process(st):
              "Reservoir-docked sensor", "Load cell")
     fly(st, dose, nf(12), ex, lambda t: cam(t, 800, az=-40, el=40, f=(-90, 0, 170)), cap,
         "Dosing: metering base with its fluted roller and stepper, dovetail dock on a load cell, NFC reader")
-    items = [((x, y, 180.0), (0, 0, 1)) for x in (-99.0, -81.0) for y in (-55.0, 55.0)]
-    Screws(st, "s-dose", items, 4.0, 14.0, order=[0, 3, 1, 2]).drive(nf(5), 0.5, lambda: (cam(0.6, 700, az=-40, el=44, f=(-90, 0, 170)), st.shot()))
+    drive(st, "dose", lambda: (cam(0.6, 700, az=-40, el=44, f=(-90, 0, 170)), st.shot()), frames=5, order=[0, 3, 1, 2])
     res = [i for i, p in enumerate(st.parts) if p.group == "cartridge"]
     fly(st, res, nf(12), None, lambda t: cam(t, 800, az=-40, el=30, f=(-90, -40, 200)), cap,
         "Reservoir M (97 cm³) slides in on the dovetail; the dock's cam opens its shutter",
@@ -1195,23 +1250,15 @@ def chapter_process(st):
         st.shot()
     for i in door:
         st.mat.pop(i, None)
-    hl = st.parts[F("Door hinge leaves")[0]].shape
-    items = screw_items_from_solids(hl, "ymin", (0, -1, 0), sel=lambda b: (b[5] - b[4]) > 20)
-    items = [(c + np.array([dx, 0, 4.0]), n) for c, n in items for dx in (-6.0, 6.0)]
-    if items:
-        Screws(st, "s-hinge", items, 4.0, 10.0).drive(nf(5), 0.5, lambda: (cam(0.8, 800, az=-12, el=10, f=(0, -120, 20)), st.shot()))
+    # the hinge and latch screws follow McMaster 1151A87's and 1807A61's own hole patterns, which the model doesn't draw yet
     # optics bridge
     posts = F("Optics bridge posts")
-    fly(st, posts, nf(8), ex, lambda t: cam(t, 1700, az=-30, el=26, f=(-50, 0, 60)), cap, "Optics bridge posts (60 x 60 x 5 square tube) on the base plate")
+    fly(st, posts, nf(8), ex, lambda t: cam(t, 1700, az=-30, el=26, f=(-50, 0, 60)), cap,
+        "Optics bridge posts (60 x 60 x 5 square tube, end caps welded in) on the base plate")
+    drive(st, "bridge_base", lambda: (cam(0.5, 1600, az=-30, el=-16, f=(-50, 0, -100)), st.shot()), frames=4, overlap=0.6)
     bridge = F("Optics bridge (")
     fly(st, bridge, nf(10), ex, lambda t: cam(t, 1700, az=-30, el=30, f=(-50, 0, 120)), cap, "Optics bridge (6061, 25 mm): first mode 133 Hz in the FEA")
-    pb = st.parts[posts[0]].shape
-    items = []
-    for c, _ in screw_items_from_solids(pb, "zmax", (0, 0, 1)):
-        for dx in (-22, 22):
-            for dy in (-22, 22):
-                items.append((np.array([c[0] + dx, c[1] + dy, M.P["z_bridge1"]]), (0, 0, 1)))
-    Screws(st, "s-bridge", items, 6.0, 30.0).drive(nf(4), 0.6, lambda: (cam(0.5, 1500, az=-30, el=40, f=(-50, 0, 150)), st.shot()))
+    drive(st, "bridge", lambda: (cam(0.5, 1500, az=-30, el=40, f=(-50, 0, 150)), st.shot()), frames=4, overlap=0.6)
     galvo = F("2-axis galvo")
     fly(st, galvo, nf(10), ex, lambda t: cam(t, 1100, az=-25, el=30, f=(-60, 0, 230)), cap, "2-axis galvo scan head on the bridge")
     lens = F("f-theta lens")
@@ -1236,7 +1283,7 @@ def chapter_tray(st):
     F = st.find
     cap = "5  Assembly: rack and gas modules, hoses and the tray dock"
     if not st.shown:      # run on its own: the process module is already built
-        st.hidden.difference_update(F("Lid screws", "Captive M6"))
+        st.hidden.clear()
         st.shown.update(i for i, p in enumerate(st.parts) if p.step <= 9 or p.step == 12)
         st.shown.difference_update(F("Rack side panels", "19 in. rack", "UPS", "Fiber laser source", "Scan + laser", "DIN-rail",
                                      "Operator panel", "E-stop", "Key switch", "Emission", "Reset"))
@@ -1254,17 +1301,14 @@ def chapter_tray(st):
     units = F("UPS (", "Fiber laser source", "Scan + laser controller", "DIN-rail drawer")
     for i in units:
         fly(st, [i], nf(7), ex, lambda t: cam(0.3, 2000, az=-26, el=16, f=(-700, -100, 40)), cap,
-            "Rack: " + st.parts[i].name.split(" (")[0] + {"L1": " (quoted IPG YLR-500-U3-SM-AC is 4U and air-cooled; drawn 3U)"}.get(st.parts[i].bom, ""))
-        b = bbox(st.parts[i].shape)
-        items = [((x, -274.0, z), (0, -1, 0)) for x in (b[0] + 9, b[1] - 9) for z in (b[4] + 9, b[5] - 9)]
-        Screws(st, f"s-r{i}", items, 6.0, 12.0, order=[0, 3, 1, 2]).drive(nf(4), 0.6, lambda: (cam(0.3, 1900, az=-26, el=14, f=(-700, -150, 40)), st.shot()))
+            "Rack: " + st.parts[i].name.split(" (")[0] + {"L1": " (quoted IPG YLR-500-U3-SM-AC is 4U and air-cooled; drawn 3U)"}.get(st.parts[i].bom, "")
+            + "; cage-nut screws not drawn")
     rest = F("Rack side panels", "Operator panel", "E-stop", "Key switch", "Emission indicator", "Reset button")
     fly(st, [i for i in rest if i not in st.shown], nf(8), ex, lambda t: cam(t, 2200, az=-30, el=20, f=(-700, 0, 40)), cap,
         "Vented side panels; operator panel with E-stop, key switch, emission lamp and reset")
     gasb = F("Base plate, gas", "Leveling mounts, gas")
-    fly(st, gasb, nf(8), ex, lambda t: cam(t, 2400, az=24, el=28, f=(700, 0, 0)), cap, "Gas and vacuum module: MIC-6 base on levelling mounts")
-    items = [((x, y, M.P["z_base1"]), (0, 0, 1)) for x in (430.0, 960.0) for y in (-220.0, 270.0)]
-    Screws(st, "s-gfeet", items, 8.0, 24.0, order=[0, 3, 1, 2]).drive(nf(4), 0.5, lambda: (cam(0.4, 2300, az=24, el=30, f=(700, 0, 0)), st.shot()))
+    fly(st, gasb, nf(8), ex, lambda t: cam(t, 2400, az=24, el=28, f=(700, 0, 0)), cap,
+        "Gas and vacuum module: MIC-6 base on McMaster 5537T983 levelling mounts (units' own screws not drawn)")
     gas = [i for i, p in enumerate(st.parts) if p.step == 10 and i not in gasb]
     fly(st, gas, nf(16), ex, lambda t: cam(t, 2400, az=24, el=28, f=(700, 0, 0)), cap,
         "Dry scroll pump, sealed blower, cyclone + HEPA housing, O2 / dew-point box, argon manifold and regulator")
@@ -1325,7 +1369,8 @@ def main(argv):
     parts = M.build(module="M50")
     print(f"{len(parts)} parts in {time.time() - t0:.1f} s")
     st = Stage(parts)
-    st.hidden.update(st.find("Lid screws", "Captive M6"))
+    st.hidden.update(i for i, p in enumerate(parts) if "fastener" in p.tags
+                     and FS.CATALOG[p.mcm]["kind"] in ("shcs", "fhcs", "set", "captive"))
     sheets = []
     for k, (name, fn) in enumerate(CHAPTERS):
         if name not in want:

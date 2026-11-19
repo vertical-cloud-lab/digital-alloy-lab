@@ -25,8 +25,12 @@ STOP_BELOW = 2.0        # bottom stop 2 mm below the deepest build position
 OVERTRAVEL = 8.0        # z_p = +8: plate rim stands 8 mm proud of the floor so a gripper can take it
 Z_P_MIN = -(BUILD_STROKE + STOP_BELOW)                # -42
 Z_P_MAX = OVERTRAVEL                                  # +8
-BOT_FLANGE_T = 10.0     # module bottom flange (double FKM O-ring rod gland)
-ROD_OD, ROD_ID = 15.875, 12.7                         # 5/8 in. x 0.065 in. wall 316 tube
+BOT_FLANGE_T = 10.0     # module gland plate (double FKM O-ring rod gland), bolted under a collar welded to the tube end
+COLLAR_T = 8.0          # 316L collar ring TIG-welded round the tube's bottom end; the gland plate's 6 x M4 screws thread into it
+COLLAR_W = 12.0         # collar radial width beyond the tube OD (bolt circle at tube OD + 6.5 mm)
+ROD_OD, ROD_ID = 15.875, 12.7                         # 5/8 in. x 0.065 in. wall 316 tube (M50, L75)
+ROD_S25 = (12.7, 10.922)                              # 1/2 in. x 0.035 in. wall 316 tube for S25: its Ø24.8 piston head has no room
+                                                      # for the stack screws' counterbores beside a 5/8 in. rod socket
 ROD_END_T = 14.0        # rod-end hardware: 430 SS striker (5) + potted end cap with a side cable exit (9)
 ROD_L = (OVERTRAVEL - (-(BUILD_STROKE + STOP_BELOW))) + BOT_FLANGE_T + ROD_END_T + 3.0   # 77: piston-head bottom to the coupling face
 ARM_T = 12.0            # Z lift arm under the coupling face (pot magnet set flush in its top)
@@ -71,7 +75,7 @@ for k, m in MODULES.items():
     m["block_d"] = m["bore"] - 2 * CLEAR["A"]["block"]
     m["tube_od"] = m["bore"] + 2 * m["wall"]
     m["spigot_wall"] = (PORT_D - m["bore"]) / 2
-    m["standoff_r"] = 0.8 * m["block_d"] / 2 if k != "S25" else 9.4    # as modules_low.block_layout
+    m["standoff_r"] = {"S25": 9.4, "M50": 18.0}.get(k, 0.8 * m["block_d"] / 2)    # as modules_low.block_layout
     m["standoff_d"] = 8.0 if k != "S25" else 5.0
     m["n_standoffs"] = 3
 MACOR = dict(d=8.0, k=1.46, t_max=800.0)    # Macor standoffs Ø8 x BREAK_T

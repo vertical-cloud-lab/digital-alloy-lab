@@ -130,7 +130,7 @@ Powder at 30 µm layers, 1.8 dose factor, AlSi10Mg, as in `requirements_budgets.
 - **Overflow** moved to x = 90–110 mm, a 104 mm slot over a KF-40 jar with a 90 mm half nipple (~120 cm³).
 - **Z stage.** It hangs lower: the heated stack plus the rod's travel (−42 to +8 mm) put the arm 181 mm below the powder plane at
   the bottom of a build. The process module's base plate gets a window for the arm, actuator and folded servo, and a slot to the
-  front edge for the module's rod end. **The machine is still 564 mm tall.**
+  front edge for the module's rod end. **The machine is still 564 mm tall** (581.6 mm since the real levelling mounts went in, 2026-11-19: [`fasteners.md`](fasteners.md)).
 
 **Swapping a module** (by hand, between campaigns, with the chamber at atmosphere):
 
@@ -254,9 +254,9 @@ About $8,400 in parts, before machining and before Tier B. [`bom.csv`](bom.csv) 
 - **Recoater holder:** re-run case 4 of `analysis/fea/fea.py` on the 18 × 31 holder.
 - **Graphite foil and the 2-238 O-ring** are specified but not priced.
 - **Hardware door-lock channel** for "plate above 50 °C" (§1).
-- **Fasteners and the bottom flange** (2026-11-19, [`build-sequence.md`](build-sequence.md)): the model draws only the lid
-  screws and the module's captive screws. The animated build marks the other bolted joints, welds the module's bottom flange to
-  the tube (the 3 mm wall is too thin to tap), and threads M3 screws into the Macor standoffs, which a drawing should replace
-  with through-bolts or Macor sleeves on steel shoulder screws.
+- **Fasteners and the bottom flange** (2026-11-19, [`build-sequence.md`](build-sequence.md)): **done in [`fasteners.md`](fasteners.md).**
+  Every joint is now drawn with real McMaster parts and its holes; the bottom flange is a gland plate bolted to a welded collar; the Macor standoffs are clamped rings on one
+  screw each from a slotted counterbore in the piston head into an insert in the block. How the swapped parts should be held:
+  [`hot-swap.md`](hot-swap.md).
 - **Inert module swap** (route 2) is not possible through the floor. If it is needed, the chamber door would have to dock to the
   glovebox (route 3).

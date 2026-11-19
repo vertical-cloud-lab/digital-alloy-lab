@@ -42,7 +42,8 @@ def block_layout(key):
     if key == "M50":
         return dict(heaters=[(m["bore"] / 4, a) for a in (0.0, 120.0, 240.0)], heater_top=-MP.PLATE_T - 1.0,
                     tcs=[("control", 0.0, 0.0), ("edge", 0.84 * rb, 90.0), ("limit", 7.0, 300.0)],
-                    standoffs=[(0.8 * rb, a) for a in (60.0, 180.0, 300.0)], sd=8.0, tco=(8.0, 180.0))
+                    # r = 18 (was 0.8 rb = 20.1) so the stack screws' Ø7 counterbores clear the bore-seal groove
+                    standoffs=[(18.0, a) for a in (60.0, 180.0, 300.0)], sd=8.0, tco=(8.0, 180.0))
     return dict(heaters=[(m["bore"] / 4, a) for a in (0.0, 72.0, 144.0, 216.0, 288.0)], heater_top=-MP.PLATE_T - 1.0,
                 tcs=[("control", 0.0, 0.0), ("edge", 0.8 * rb, 108.0), ("limit", 10.0, 252.0)],
                 standoffs=[(0.8 * rb, a) for a in (36.0, 180.0, 324.0)], sd=8.0, tco=(10.0, 36.0))
@@ -68,6 +69,7 @@ def add_build_module(h, add, key, step=4):
     zf = -MP.FLOOR_T
     pr = MP.PORT_D / 2
     z_stop = z["z_stop"]
+    rod_od, rod_id = MP.ROD_S25 if key == "S25" else (MP.ROD_OD, MP.ROD_ID)
     mg = dict(group="module", module="process")
     pg = dict(group="piston", tags=("in_module",))
     lab = f"{key}"
@@ -84,28 +86,27 @@ def add_build_module(h, add, key, step=4):
         fl = fl.cut(h.cyl(3.4, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T - 1), "z", MP.FLANGE_T + 2))
         fl = fl.cut(h.cyl(3.0, (0, s * MP.DOWEL_Y, zf - MP.FLANGE_T - 1), "z", MP.FLANGE_T + 2))      # dowel holes
     tb = h.tube(R + W, R, (0, 0, z_stop), "z", (zf - MP.FLANGE_T) - z_stop)
-    add(f"Build module {lab}: spigot, flange and honed 316L cylinder (Ø{m['bore']:.1f} bore, {W:.0f} mm wall)",
-        h.fuse([spig, fl, tb]), C["ss"], step, (0, -320, -60), mat="ss316l", bom="B1", section=True, **mg)
+    rc = R + W + MP.COLLAR_W                                   # collar / gland plate radius
+    collar = h.tube(rc, R + W - 0.01, (0, 0, z_stop), "z", MP.COLLAR_T)
+    add(f"Build module {lab}: spigot, flange, honed 316L cylinder (Ø{m['bore']:.1f} bore, {W:.0f} mm wall) and bottom collar, one TIG-welded body",
+        h.fuse([spig, fl, tb, collar]), C["ss"], step, (0, -320, -60), mat="ss316l", bom="B1", section=True, **mg)
     add(f"Spigot O-ring (FKM {MP.SPIGOT_ORING}, radial seal in the floor port)",
         h.tube(pr, pr - 2.6, (0, 0, zf + 4.3), "z", 3.0), C["black"], step, (0, -320, -60), mat="fkm", bom="B2",
         section=True, **mg)
-    bfr = R + W + 6.0
-    bf = h.cyl(bfr, (0, 0, z_stop - MP.BOT_FLANGE_T), "z", MP.BOT_FLANGE_T).cut(
-        h.cyl(MP.ROD_OD / 2 + 0.05, (0, 0, z_stop - MP.BOT_FLANGE_T - 1), "z", MP.BOT_FLANGE_T + 2))
-    add(f"Module {lab} bottom flange (316L, double FKM O-ring rod gland)", bf, C["ss"], step, (0, -320, -60),
-        mat="ss316l", bom="B1", section=True, **mg)
-    zh = z_stop - MP.BOT_FLANGE_T / 2
-    hd = h.fuse([h.box(-22, -16, -bfr - 26, -bfr + 3, zh - 3, zh + 3), h.box(16, 22, -bfr - 26, -bfr + 3, zh - 3, zh + 3),
-                 h.box(-22, 22, -bfr - 32, -bfr - 26, zh - 3, zh + 3)])
-    add(f"Module {lab} handle (front, for a hand or a gripper)", hd, C["anod"], step, (0, -320, -60), mat="al6061",
+    # gland plate: bolted to the collar and the tube end (6 x M4, joints.py), sealed by a face O-ring, so the rod gland can be
+    # serviced and powder that gets past the bore seal can be cleaned out of the cylinder's bottom
+    bf = h.cyl(rc, (0, 0, z_stop - MP.BOT_FLANGE_T), "z", MP.BOT_FLANGE_T).cut(
+        h.cyl(rod_od / 2 + 0.05, (0, 0, z_stop - MP.BOT_FLANGE_T - 1), "z", MP.BOT_FLANGE_T + 2))
+    bf = bf.cut(h.tube(R + 3.6, R + 1.2, (0, 0, z_stop - 1.3), "z", 1.4))                 # face O-ring groove (1.78 mm cord)
+    add(f"Module {lab} bottom flange: gland plate (316L, bolted to the welded collar; double FKM O-ring rod gland)", bf, C["ss"], step,
+        (0, -320, -60), mat="ss316l", bom="B1", section=True, **mg)
+    add(f"Module {lab} gland-plate O-ring (FKM, 1.78 mm cord, face seal on the tube end and collar)",
+        h.tube(R + 3.5, R + 1.3, (0, 0, z_stop - 1.3), "z", 1.3), C["black"], step, (0, -320, -60), mat="fkm", bom="B2", section=True, **mg)
+    zt = z_stop - MP.BOT_FLANGE_T                                                         # gland plate's bottom face
+    hd = h.fuse([h.box(-24, -14, -rc - 26, -rc + 12, zt - 4, zt), h.box(14, 24, -rc - 26, -rc + 12, zt - 4, zt),
+                 h.box(-24, 24, -rc - 32, -rc - 26, zt - 4, zt + 4)])
+    add(f"Module {lab} handle (6061, screwed under the gland plate; for a hand or a gripper)", hd, C["anod"], step, (0, -320, -60), mat="al6061",
         bom="B1", **mg)
-    sc = []
-    for s in (-1, 1):
-        sc += [h.cyl(5.0, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T - 6), "z", 6), h.cyl(3.0, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T), "z", MP.FLANGE_T + 10)]
-    add("Locating dowel + diamond pin (Ø6, pressed into the floor's underside)", h.comp([h.cyl(3.0, (0, s * MP.DOWEL_Y, zf - MP.FLANGE_T), "z", MP.FLANGE_T + 10.0) for s in (-1, 1)]),
-        C["steel"], step, (0, 0, -40), mat="ss316l", bom="B2")
-    add("Captive M6 thumb screws (2, into helical inserts in the floor)", h.comp(sc), C["steel"], step, (0, -320, -60),
-        mat="ss316l", bom="B2", **mg)
 
     # ---------- plate and heater stack (moves with the piston, leaves with the module) ----------
     zb1, zb0, zk0, zh0, zc = z["zb1"], z["zb0"], z["zk0"], z["zh0"], z["zc"]
@@ -144,18 +145,24 @@ def add_build_module(h, add, key, step=4):
         (0, 0, 220), mat="steel", bom="H1", section=True, **pg)
     add(f"Thermal cutoff {lab} (240 C, in series with the heaters)", h.comp(tcobj), C["red"], step, (0, 0, 220),
         mat="misc", mass_kg=0.002, bom="H2", section=True, **pg)
+    # thermal break: each standoff is three Macor rings with the two polished 316 shields clamped between them, all on one
+    # stack screw (joints.py: M3, M2.5 on S25) that runs up from a slotted counterbore in the piston head into a helical
+    # insert in the heater block. Earlier drafts threaded M3 screws into the Macor itself, which is too weak for threads.
+    bore_d = 2.9 if key == "S25" else 3.4                 # screw clearance through the rings and shields
+    zsh = (zk0 + MP.BREAK_T / 3, zk0 + 2 * MP.BREAK_T / 3)  # shield mid-planes
     so = []
     for r, a in L["standoffs"]:
         x, y = polar(r, a)
-        so.append(h.cyl(L["sd"] / 2, (x, y, zk0), "z", MP.BREAK_T))
-    add(f"Macor standoffs {lab} (3 x Ø{L['sd']:.0f} x {MP.BREAK_T:.0f}, thermal break)", h.comp(so), C["white"], step, (0, 0, 200),
+        for z0, z1 in ((zk0, zsh[0] - 0.15), (zsh[0] + 0.15, zsh[1] - 0.15), (zsh[1] + 0.15, zk0 + MP.BREAK_T)):
+            so.append(h.cyl(L["sd"] / 2, (x, y, z0), "z", z1 - z0).cut(h.cyl(bore_d / 2, (x, y, z0 - 1), "z", z1 - z0 + 2)))
+    add(f"Macor standoff rings {lab} (3 standoffs x 3 rings, Ø{L['sd']:.0f}, cut from 8489K75 rod; thermal break)", h.comp(so), C["white"], step, (0, 0, 200),
         mat="macor", bom="H1", section=True, **pg)
     sh = []
-    for zz in (zk0 + MP.BREAK_T / 3, zk0 + 2 * MP.BREAK_T / 3):
+    for zz in zsh:
         d = h.cyl(Rb - 1.0, (0, 0, zz - 0.15), "z", 0.3)
         for r, a in L["standoffs"]:
             x, y = polar(r, a)
-            d = d.cut(h.cyl(L["sd"] / 2 + 0.4, (x, y, zz - 1), "z", 2))
+            d = d.cut(h.cyl(bore_d / 2, (x, y, zz - 1), "z", 2))
         for r, a in L["heaters"]:
             x, y = polar(r, a)
             d = d.cut(h.cyl(3.4, (x, y, zz - 1), "z", 2))
@@ -163,13 +170,13 @@ def add_build_module(h, add, key, step=4):
             x, y = polar(r, a)
             d = d.cut(h.cyl(1.2, (x, y, zz - 1), "z", 2))
         sh.append(d)
-    add(f"Radiation shields {lab} (2 x 0.3 mm polished 316)", h.comp(sh), C["ss"], step, (0, 0, 190), mat="ss316l",
+    add(f"Radiation shields {lab} (2 x 0.3 mm polished 316, clamped between the Macor rings)", h.comp(sh), C["ss"], step, (0, 0, 190), mat="ss316l",
         bom="H1", section=True, **pg)
     head = h.cyl(Rb, (0, 0, zh0), "z", MP.HEAD_T)
     zs0, zs1 = zh0 + 6.0, zh0 + 12.0                    # bore-seal groove
     head = head.cut(h.tube(Rb + 1, Rb - 3.0, (0, 0, zs0), "z", zs1 - zs0))
     head = head.cut(h.cyl(5.0, (0, 0, zh0 + 7.0), "z", MP.HEAD_T))                      # wire hole into the rod
-    head = head.cut(h.cyl(MP.ROD_OD / 2 + 0.02, (0, 0, zh0 - 1), "z", 9.0))            # rod socket
+    head = head.cut(h.cyl(rod_od / 2 + 0.02, (0, 0, zh0 - 1), "z", 9.0))               # rod socket (2 set screws, joints.py)
     for r, a in L["heaters"]:                                                             # lead pockets under the heaters
         x, y = polar(r, a)
         head = head.cut(h.cyl(4.0, (x, y, zk0 - 8.0), "z", 8.1))
@@ -181,10 +188,11 @@ def add_build_module(h, add, key, step=4):
     add(f"Bore seal {lab} (aramid felt + carbon-filled PTFE scraper)", h.tube(R, Rb - 2.8, (0, 0, zs0 + 0.2), "z", zs1 - zs0 - 0.4),
         C["white"], step, (0, 0, 170), mat="felt", bom="B1", mcm="SEAL_PISTON", section=True, **pg)
     zr0 = zc + MP.ROD_END_T
-    add(f"Hollow piston rod {lab} (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
-        h.tube(MP.ROD_OD / 2, MP.ROD_ID / 2, (0, 0, zr0), "z", zh0 + 8.0 - zr0), C["ss"], step, (0, 0, 140), mat="ss316l",
+    rod_lab = "1/2 in. x 0.035 in." if key == "S25" else "5/8 in. x 0.065 in."
+    add(f"Hollow piston rod {lab} ({rod_lab} 316, inert inside; leads run down it)",
+        h.tube(rod_od / 2, rod_id / 2, (0, 0, zr0), "z", zh0 + 8.0 - zr0), C["ss"], step, (0, 0, 140), mat="ss316l",
         bom="B1", section=True, **pg)
-    cap = h.cyl(11.0, (0, 0, zc + 5.0), "z", MP.ROD_END_T - 5.0).cut(h.cyl(MP.ROD_ID / 2, (0, 0, zc + 8.0), "z", MP.ROD_END_T))
+    cap = h.cyl(11.0, (0, 0, zc + 5.0), "z", MP.ROD_END_T - 5.0).cut(h.cyl(rod_id / 2, (0, 0, zc + 8.0), "z", MP.ROD_END_T))
     cap = h.fuse([cap, h.cyl(4.0, (-26.0, 0, zc + 9.5), "x", 16.0)]).cut(h.cyl(2.8, (-27.0, 0, zc + 9.5), "x", 30.0))
     add(f"Rod end {lab}: potted cable exit (Torr Seal) with a side outlet", cap, C["ss"], step, (0, 0, 120), mat="ss316l",
         bom="H2", section=True, **pg)
@@ -203,7 +211,8 @@ def add_zstage(h, add, step=3):
     car_lo, car_hi = min(MP.Z_P_MIN, MP.ZSTAGE_RELEASE) + a0, MP.Z_P_MAX + a0 + 40.0
     az0, az1 = car_lo - 3.0, car_hi + 3.0
     zg = dict(group="zstage")
-    add("Z mounting flange (bolted under the floor)", h.box(-40, 100, 60, 100, zf - 10, zf), C["alu"], step, (0, 120, 0), mat="al6061", bom="M3")
+    # 108 (was 100) deep in y so two of its four counterbored M5 screws (joints.py) sit behind the bracket, reachable from below
+    add("Z mounting flange (bolted under the floor)", h.box(-40, 100, 60, 108, zf - 10, zf), C["alu"], step, (0, 120, 0), mat="al6061", bom="M3")
     add("Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)", h.box(ax0, ax1, ay0, ay1, az0, az1), C["steel"], step,
         (0, 160, 0), mat="steel", mass_kg=1.4, bom="M3", mcm="ACT_Z")
     bh = h.box(ax0, 100, ay0 - 4, ay1, az1, zf - 10).cut(h.cyl(19.2, (64.0, 80.0, az1 - 1), "z", 3.0)).cut(h.cyl(5.0, (64.0, 80.0, az1), "z", 25))

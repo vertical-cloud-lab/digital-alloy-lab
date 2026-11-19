@@ -1,0 +1,1268 @@
+[
+ {
+  "pn": "92290A854",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M2.5 x 0.45 mm Thread, 30 mm Long, Fully Threaded",
+  "price_usd": 11.08,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/92290A854/",
+  "ours_light_mm3": 181.3440799202656,
+  "ours_detail_mm3": 150.17407208261608,
+  "ours_light_ext": [
+   4.5,
+   4.5,
+   32.5
+  ],
+  "ours_detail_ext": [
+   4.5,
+   4.5,
+   32.5
+  ],
+  "mcm_full_mm3": 148.86517899202724,
+  "mcm_simple_mm3": 181.34116358269392,
+  "mcm_simple_ext": [
+   4.5,
+   4.5,
+   32.5
+  ],
+  "mcm_full_ext": [
+   4.5,
+   4.5,
+   32.5
+  ],
+  "light_vs_simple_pct": 0.0016082049514150336,
+  "detail_vs_full_pct": 0.8792473158944304,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 1.2013925766609286
+ },
+ {
+  "pn": "92290A065",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M2.5 x 0.45 mm Thread, 16 mm Long, Fully Threaded",
+  "price_usd": 5.82,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/92290A065/",
+  "ours_light_mm3": 112.62174062395299,
+  "ours_detail_mm3": 96.1362356511424,
+  "ours_light_ext": [
+   4.5,
+   4.5,
+   18.5
+  ],
+  "ours_detail_ext": [
+   4.5,
+   4.5,
+   18.5
+  ],
+  "mcm_full_mm3": 96.04437528588988,
+  "mcm_simple_mm3": 112.61986513678187,
+  "mcm_simple_ext": [
+   4.5,
+   4.5,
+   18.5
+  ],
+  "mcm_full_ext": [
+   4.5,
+   4.5,
+   18.5
+  ],
+  "light_vs_simple_pct": 0.001665325356980008,
+  "detail_vs_full_pct": 0.09564366989641962,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 0.7690898852091392
+ },
+ {
+  "pn": "92290A113",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M3 x 0.5 mm Thread, 8 mm Long, Fully Threaded",
+  "price_usd": 14.3,
+  "sold_as": "pack of 50",
+  "url": "https://www.mcmaster.com/92290A113/",
+  "ours_light_mm3": 117.26327231324933,
+  "ours_detail_mm3": 106.26085777858876,
+  "ours_light_ext": [
+   5.5,
+   5.5,
+   11.0
+  ],
+  "ours_detail_ext": [
+   5.5,
+   5.5,
+   11.0
+  ],
+  "mcm_full_mm3": 106.29608716315224,
+  "mcm_simple_mm3": 117.26288514135243,
+  "mcm_simple_ext": [
+   5.5,
+   5.5,
+   11.0
+  ],
+  "mcm_full_ext": [
+   5.5,
+   5.5,
+   11.0
+  ],
+  "light_vs_simple_pct": 0.0003301742886822442,
+  "detail_vs_full_pct": -0.033142691799563584,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 0.8500868622287101
+ },
+ {
+  "pn": "92290A115",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M3 x 0.5 mm Thread, 10 mm Long, Fully Threaded",
+  "price_usd": 14.84,
+  "sold_as": "pack of 50",
+  "url": "https://www.mcmaster.com/92290A115/",
+  "ours_light_mm3": 131.40043925420198,
+  "ours_detail_mm3": 117.5857431781931,
+  "ours_light_ext": [
+   5.5,
+   5.5,
+   13.0
+  ],
+  "ours_detail_ext": [
+   5.5,
+   5.5,
+   13.0
+  ],
+  "mcm_full_mm3": 117.66168823241007,
+  "mcm_simple_mm3": 131.39918022264342,
+  "mcm_simple_ext": [
+   5.5,
+   5.5,
+   13.0
+  ],
+  "mcm_full_ext": [
+   5.5,
+   5.5,
+   13.0
+  ],
+  "light_vs_simple_pct": 0.0009581730695944294,
+  "detail_vs_full_pct": -0.0645452698816996,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 0.9406859454255448
+ },
+ {
+  "pn": "92290A122",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M3 x 0.5 mm Thread, 20 mm Long, Fully Threaded",
+  "price_usd": 17.0,
+  "sold_as": "pack of 50",
+  "url": "https://www.mcmaster.com/92290A122/",
+  "ours_light_mm3": 202.0862739589649,
+  "ours_detail_mm3": 174.2101701761241,
+  "ours_light_ext": [
+   5.5,
+   5.5,
+   23.0
+  ],
+  "ours_detail_ext": [
+   5.5,
+   5.5,
+   23.0
+  ],
+  "mcm_full_mm3": 176.4320152783349,
+  "mcm_simple_mm3": 202.08342828845602,
+  "mcm_simple_ext": [
+   5.5,
+   5.5,
+   23.0
+  ],
+  "mcm_full_ext": [
+   5.5,
+   5.5,
+   23.0
+  ],
+  "light_vs_simple_pct": 0.0014081661880894125,
+  "detail_vs_full_pct": -1.2593208203769874,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 1.393681361408993
+ },
+ {
+  "pn": "92290A124",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M3 x 0.5 mm Thread, 25 mm Long, Partially Threaded",
+  "price_usd": 19.97,
+  "sold_as": "pack of 50",
+  "url": "https://www.mcmaster.com/92290A124/",
+  "ours_light_mm3": 236.39123307142322,
+  "ours_detail_mm3": 211.41662216916149,
+  "ours_light_ext": [
+   5.5,
+   5.5,
+   28.0
+  ],
+  "ours_detail_ext": [
+   5.5,
+   5.5,
+   28.0
+  ],
+  "mcm_full_mm3": 211.8359938713059,
+  "mcm_simple_mm3": 236.3873175618194,
+  "mcm_simple_ext": [
+   5.5,
+   5.5,
+   28.0
+  ],
+  "mcm_full_ext": [
+   5.5,
+   5.5,
+   28.0
+  ],
+  "light_vs_simple_pct": 0.0016563958016869483,
+  "detail_vs_full_pct": -0.19796999295558473,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 1.6913329773532921
+ },
+ {
+  "pn": "92290A144",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 10 mm Long, Fully Threaded",
+  "price_usd": 17.81,
+  "sold_as": "pack of 50",
+  "url": "https://www.mcmaster.com/92290A144/",
+  "ours_light_mm3": 259.15228846781173,
+  "ours_detail_mm3": 234.05643488881603,
+  "ours_light_ext": [
+   7.0,
+   7.0,
+   14.0
+  ],
+  "ours_detail_ext": [
+   7.0,
+   7.0,
+   14.0
+  ],
+  "mcm_full_mm3": 234.04420927664341,
+  "mcm_simple_mm3": 259.14999825548404,
+  "mcm_simple_ext": [
+   7.0,
+   7.0,
+   14.0
+  ],
+  "mcm_full_ext": [
+   7.0,
+   7.0,
+   14.0
+  ],
+  "light_vs_simple_pct": 0.0008837400513642828,
+  "detail_vs_full_pct": 0.005223633693138302,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 1.8724514791105284
+ },
+ {
+  "pn": "92290A148",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 12 mm Long, Fully Threaded",
+  "price_usd": 18.62,
+  "sold_as": "pack of 50",
+  "url": "https://www.mcmaster.com/92290A148/",
+  "ours_light_mm3": 284.28502969619615,
+  "ours_detail_mm3": 253.8142312131165,
+  "ours_light_ext": [
+   7.0,
+   7.0,
+   16.0
+  ],
+  "ours_detail_ext": [
+   7.0,
+   7.0,
+   16.0
+  ],
+  "mcm_full_mm3": 254.43088893203955,
+  "mcm_simple_mm3": 284.2842573796635,
+  "mcm_simple_ext": [
+   7.0,
+   7.0,
+   16.0
+  ],
+  "mcm_full_ext": [
+   7.0,
+   7.0,
+   16.0
+  ],
+  "light_vs_simple_pct": 0.00027167052435258246,
+  "detail_vs_full_pct": -0.24236747413470103,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 2.030513849704932
+ },
+ {
+  "pn": "92290A154",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 16 mm Long, Fully Threaded",
+  "price_usd": 19.02,
+  "sold_as": "pack of 50",
+  "url": "https://www.mcmaster.com/92290A154/",
+  "ours_light_mm3": 334.55051215296515,
+  "ours_detail_mm3": 293.4062064827685,
+  "ours_light_ext": [
+   7.0,
+   7.0,
+   20.0
+  ],
+  "ours_detail_ext": [
+   7.0,
+   7.0,
+   20.0
+  ],
+  "mcm_full_mm3": 293.2723857288771,
+  "mcm_simple_mm3": 334.54866989844646,
+  "mcm_simple_ext": [
+   7.0,
+   7.0,
+   20.0
+  ],
+  "mcm_full_ext": [
+   7.0,
+   7.0,
+   20.0
+  ],
+  "light_vs_simple_pct": 0.0005506686125075514,
+  "detail_vs_full_pct": 0.04563019240927941,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 2.347249651862148
+ },
+ {
+  "pn": "92290A168",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 20 mm Long, Fully Threaded",
+  "price_usd": 10.4,
+  "sold_as": "pack of 25",
+  "url": "https://www.mcmaster.com/92290A168/",
+  "ours_light_mm3": 384.8159946097337,
+  "ours_detail_mm3": 333.5855597217679,
+  "ours_light_ext": [
+   7.0,
+   7.0,
+   24.0
+  ],
+  "ours_detail_ext": [
+   7.0,
+   7.0,
+   24.0
+  ],
+  "mcm_full_mm3": 334.76350819144625,
+  "mcm_simple_mm3": 384.8136388127509,
+  "mcm_simple_ext": [
+   7.0,
+   7.0,
+   24.0
+  ],
+  "mcm_full_ext": [
+   7.0,
+   7.0,
+   24.0
+  ],
+  "light_vs_simple_pct": 0.0006121916546543597,
+  "detail_vs_full_pct": -0.35187481336965754,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 2.6686844777741427
+ },
+ {
+  "pn": "92290A188",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 50 mm Long, Partially Threaded",
+  "price_usd": 7.49,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/92290A188/",
+  "ours_light_mm3": 761.4199506264285,
+  "ours_detail_mm3": 710.4218111950374,
+  "ours_light_ext": [
+   7.0,
+   7.0,
+   54.0
+  ],
+  "ours_detail_ext": [
+   7.0,
+   7.0,
+   54.0
+  ],
+  "mcm_full_mm3": 711.4818131961969,
+  "mcm_simple_mm3": 761.4149083345578,
+  "mcm_simple_ext": [
+   7.0,
+   7.0,
+   54.0
+  ],
+  "mcm_full_ext": [
+   7.0,
+   7.0,
+   54.0
+  ],
+  "light_vs_simple_pct": 0.0006622265752258113,
+  "detail_vs_full_pct": -0.148985115501066,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 5.6833744895603004
+ },
+ {
+  "pn": "92290A228",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M5 x 0.8 mm Thread, 12 mm Long, Fully Threaded",
+  "price_usd": 11.47,
+  "sold_as": "pack of 25",
+  "url": "https://www.mcmaster.com/92290A228/",
+  "ours_light_mm3": 474.9120957252361,
+  "ours_detail_mm3": 430.81100034402147,
+  "ours_light_ext": [
+   8.5,
+   8.5,
+   17.0
+  ],
+  "ours_detail_ext": [
+   8.5,
+   8.5,
+   17.0
+  ],
+  "mcm_full_mm3": 431.7346292427619,
+  "mcm_simple_mm3": 474.91160478131235,
+  "mcm_simple_ext": [
+   8.5,
+   8.5,
+   17.0
+  ],
+  "mcm_full_ext": [
+   8.5,
+   8.5,
+   17.0
+  ],
+  "light_vs_simple_pct": 0.00010337585327629334,
+  "detail_vs_full_pct": -0.21393440233423924,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 3.446488002752172
+ },
+ {
+  "pn": "92290A242",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M5 x 0.8 mm Thread, 20 mm Long, Fully Threaded",
+  "price_usd": 14.3,
+  "sold_as": "pack of 25",
+  "url": "https://www.mcmaster.com/92290A242/",
+  "ours_light_mm3": 631.9917284021757,
+  "ours_detail_mm3": 557.7869344904236,
+  "ours_light_ext": [
+   8.5,
+   8.5,
+   25.0
+  ],
+  "ours_detail_ext": [
+   8.5,
+   8.5,
+   25.0
+  ],
+  "mcm_full_mm3": 559.50108149493,
+  "mcm_simple_mm3": 631.9912794336285,
+  "mcm_simple_ext": [
+   8.5,
+   8.5,
+   25.0
+  ],
+  "mcm_full_ext": [
+   8.5,
+   8.5,
+   25.0
+  ],
+  "light_vs_simple_pct": 7.104030732476351e-05,
+  "detail_vs_full_pct": -0.30637063290857597,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 4.462295475923389
+ },
+ {
+  "pn": "92290A252",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M5 x 0.8 mm Thread, 25 mm Long, Fully Threaded",
+  "price_usd": 15.11,
+  "sold_as": "pack of 25",
+  "url": "https://www.mcmaster.com/92290A252/",
+  "ours_light_mm3": 730.1664988252624,
+  "ours_detail_mm3": 637.7490971924917,
+  "ours_light_ext": [
+   8.5,
+   8.5,
+   30.0
+  ],
+  "ours_detail_ext": [
+   8.5,
+   8.5,
+   30.0
+  ],
+  "mcm_full_mm3": 641.0474440723607,
+  "mcm_simple_mm3": 730.1659341069785,
+  "mcm_simple_ext": [
+   8.5,
+   8.5,
+   30.0
+  ],
+  "mcm_full_ext": [
+   8.5,
+   8.5,
+   30.0
+  ],
+  "light_vs_simple_pct": 7.734108884864175e-05,
+  "detail_vs_full_pct": -0.5145246128610504,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 5.101992777539934
+ },
+ {
+  "pn": "92290A321",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M6 x 1 mm Thread, 16 mm Long, Fully Threaded",
+  "price_usd": 15.3,
+  "sold_as": "pack of 25",
+  "url": "https://www.mcmaster.com/92290A321/",
+  "ours_light_mm3": 840.5793293014208,
+  "ours_detail_mm3": 752.5600130098964,
+  "ours_light_ext": [
+   10.0,
+   10.0,
+   22.0
+  ],
+  "ours_detail_ext": [
+   10.0,
+   10.0,
+   22.0
+  ],
+  "mcm_full_mm3": 753.2429898985688,
+  "mcm_simple_mm3": 840.5789712756837,
+  "mcm_simple_ext": [
+   10.0,
+   10.0,
+   22.0
+  ],
+  "mcm_full_ext": [
+   10.0,
+   10.0,
+   22.0
+  ],
+  "light_vs_simple_pct": 4.259275444051702e-05,
+  "detail_vs_full_pct": -0.0906715227133294,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 6.020480104079171
+ },
+ {
+  "pn": "92290A326",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M6 x 1 mm Thread, 20 mm Long, Fully Threaded",
+  "price_usd": 15.79,
+  "sold_as": "pack of 25",
+  "url": "https://www.mcmaster.com/92290A326/",
+  "ours_light_mm3": 953.6766648286587,
+  "ours_detail_mm3": 843.1590962025736,
+  "ours_light_ext": [
+   10.0,
+   10.0,
+   26.0
+  ],
+  "ours_detail_ext": [
+   10.0,
+   10.0,
+   26.0
+  ],
+  "mcm_full_mm3": 845.6685862656407,
+  "mcm_simple_mm3": 953.6762556739676,
+  "mcm_simple_ext": [
+   10.0,
+   10.0,
+   26.0
+  ],
+  "mcm_full_ext": [
+   10.0,
+   10.0,
+   26.0
+  ],
+  "light_vs_simple_pct": 4.2902891691132096e-05,
+  "detail_vs_full_pct": -0.29674627907708995,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 6.7452727696205885
+ },
+ {
+  "pn": "92290A330",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M6 x 1 mm Thread, 25 mm Long, Fully Threaded",
+  "price_usd": 17.54,
+  "sold_as": "pack of 25",
+  "url": "https://www.mcmaster.com/92290A330/",
+  "ours_light_mm3": 1095.048334237706,
+  "ours_detail_mm3": 956.4079501932964,
+  "ours_light_ext": [
+   10.0,
+   10.0,
+   31.0
+  ],
+  "ours_detail_ext": [
+   10.0,
+   10.0,
+   31.0
+  ],
+  "mcm_full_mm3": 959.673544070971,
+  "mcm_simple_mm3": 1095.0479676757495,
+  "mcm_simple_ext": [
+   10.0,
+   10.0,
+   31.0
+  ],
+  "mcm_full_ext": [
+   10.0,
+   10.0,
+   31.0
+  ],
+  "light_vs_simple_pct": 3.34745113771987e-05,
+  "detail_vs_full_pct": -0.34028174454219723,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 7.651263601546371
+ },
+ {
+  "pn": "92290A334",
+  "kind": "shcs",
+  "desc": "316 Stainless Steel Socket Head Screw, M6 x 1 mm Thread, 35 mm Long, Partially Threaded",
+  "price_usd": 9.75,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/92290A334/",
+  "ours_light_mm3": 1369.6307364528536,
+  "ours_detail_mm3": 1237.3286063534636,
+  "ours_light_ext": [
+   10.0,
+   10.0,
+   41.0
+  ],
+  "ours_detail_ext": [
+   10.0,
+   10.0,
+   41.0
+  ],
+  "mcm_full_mm3": 1239.5374204378925,
+  "mcm_simple_mm3": 1369.6286694879714,
+  "mcm_simple_ext": [
+   10.0,
+   10.0,
+   41.0
+  ],
+  "mcm_full_ext": [
+   10.0,
+   10.0,
+   41.0
+  ],
+  "light_vs_simple_pct": 0.0001509142534985895,
+  "detail_vs_full_pct": -0.17819664400681126,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 9.89862885082771
+ },
+ {
+  "pn": "93395A204",
+  "kind": "fhcs",
+  "desc": "316 Stainless Steel Hex Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread, 10 mm Long",
+  "price_usd": 15.65,
+  "sold_as": "pack of 100",
+  "url": "https://www.mcmaster.com/93395A204/",
+  "ours_light_mm3": 82.75852492486868,
+  "ours_detail_mm3": 71.32977575636578,
+  "ours_light_ext": [
+   6.0,
+   6.0,
+   10.0
+  ],
+  "ours_detail_ext": [
+   6.0,
+   6.0,
+   10.0
+  ],
+  "mcm_full_mm3": 71.88344298648946,
+  "mcm_simple_mm3": 82.75728137928623,
+  "mcm_simple_ext": [
+   6.0,
+   6.0,
+   10.0
+  ],
+  "mcm_full_ext": [
+   6.0,
+   6.0,
+   10.0
+  ],
+  "light_vs_simple_pct": 0.0015026418965542342,
+  "detail_vs_full_pct": -0.7702291475211354,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 0.5706382060509263
+ },
+ {
+  "pn": "93395A254",
+  "kind": "fhcs",
+  "desc": "316 Stainless Steel Hex Drive Flat Head Screw, 90 Degree Countersink, M4 x 0.7 mm Thread, 10 mm Long",
+  "price_usd": 19.97,
+  "sold_as": "pack of 100",
+  "url": "https://www.mcmaster.com/93395A254/",
+  "ours_light_mm3": 155.69280423659688,
+  "ours_detail_mm3": 136.38632902149595,
+  "ours_light_ext": [
+   8.0,
+   8.0,
+   10.0
+  ],
+  "ours_detail_ext": [
+   8.0,
+   8.0,
+   10.0
+  ],
+  "mcm_full_mm3": 137.10904371057342,
+  "mcm_simple_mm3": 155.69134846206936,
+  "mcm_simple_ext": [
+   8.0,
+   8.0,
+   10.0
+  ],
+  "mcm_full_ext": [
+   8.0,
+   8.0,
+   10.0
+  ],
+  "light_vs_simple_pct": 0.0009350388071710907,
+  "detail_vs_full_pct": -0.5271094229225741,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 1.0910906321719676
+ },
+ {
+  "pn": "92029A140",
+  "kind": "set",
+  "desc": "316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 4 mm Long",
+  "price_usd": 11.2,
+  "sold_as": "pack of 50",
+  "url": "https://www.mcmaster.com/92029A140/",
+  "ours_light_mm3": 37.38072266602821,
+  "ours_detail_mm3": 29.216890662065936,
+  "ours_light_ext": [
+   4.0,
+   4.0,
+   4.0
+  ],
+  "ours_detail_ext": [
+   4.0,
+   4.0,
+   4.0
+  ],
+  "mcm_full_mm3": 29.444701124786594,
+  "mcm_simple_mm3": 37.380247173326474,
+  "mcm_simple_ext": [
+   4.0,
+   4.0,
+   4.0
+  ],
+  "mcm_full_ext": [
+   4.0,
+   4.0,
+   4.0
+  ],
+  "light_vs_simple_pct": 0.0012720426901779373,
+  "detail_vs_full_pct": -0.7736891665335563,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 0.23373512529652749
+ },
+ {
+  "pn": "92029A142",
+  "kind": "set",
+  "desc": "316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 6 mm Long",
+  "price_usd": 12.38,
+  "sold_as": "pack of 50",
+  "url": "https://www.mcmaster.com/92029A142/",
+  "ours_light_mm3": 62.51346389407871,
+  "ours_detail_mm3": 49.278285220224554,
+  "ours_light_ext": [
+   4.0,
+   4.0,
+   6.0
+  ],
+  "ours_detail_ext": [
+   4.0,
+   4.0,
+   6.0
+  ],
+  "mcm_full_mm3": 49.46556592670289,
+  "mcm_simple_mm3": 62.51265314347868,
+  "mcm_simple_ext": [
+   4.0,
+   4.0,
+   6.0
+  ],
+  "mcm_full_ext": [
+   4.0,
+   4.0,
+   6.0
+  ],
+  "light_vs_simple_pct": 0.0012969383944888887,
+  "detail_vs_full_pct": -0.3786082357894014,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 0.39422628176179647
+ },
+ {
+  "pn": "92029A152",
+  "kind": "set",
+  "desc": "316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 16 mm Long",
+  "price_usd": 4.95,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/92029A152/",
+  "ours_light_mm3": 188.17717003433145,
+  "ours_detail_mm3": 148.59996983494443,
+  "ours_light_ext": [
+   4.0,
+   4.0,
+   16.0
+  ],
+  "ours_detail_ext": [
+   4.0,
+   4.0,
+   16.0
+  ],
+  "mcm_full_mm3": 149.4788651924546,
+  "mcm_simple_mm3": 188.1745297482194,
+  "mcm_simple_ext": [
+   4.0,
+   4.0,
+   16.0
+  ],
+  "mcm_full_ext": [
+   4.0,
+   4.0,
+   16.0
+  ],
+  "light_vs_simple_pct": 0.001403104934325067,
+  "detail_vs_full_pct": -0.5879729929569597,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 1.1887997586795556
+ },
+ {
+  "pn": "92029A155",
+  "kind": "set",
+  "desc": "316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 20 mm Long",
+  "price_usd": 6.18,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/92029A155/",
+  "ours_light_mm3": 238.4426524904324,
+  "ours_detail_mm3": 188.62268487836198,
+  "ours_light_ext": [
+   4.0,
+   4.0,
+   20.0
+  ],
+  "ours_detail_ext": [
+   4.0,
+   4.0,
+   20.0
+  ],
+  "mcm_full_mm3": 189.47844707416002,
+  "mcm_simple_mm3": 238.44180560809963,
+  "mcm_simple_ext": [
+   4.0,
+   4.0,
+   20.0
+  ],
+  "mcm_full_ext": [
+   4.0,
+   4.0,
+   20.0
+  ],
+  "light_vs_simple_pct": 0.0003551735949241314,
+  "detail_vs_full_pct": -0.45164091695510833,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 1.508981479026896
+ },
+ {
+  "pn": "93600A686",
+  "kind": "dowel",
+  "desc": "316 Stainless Steel Dowel Pin, 6 mm Diameter, 20 mm Long (ISO 2338 m6)",
+  "price_usd": 7.89,
+  "sold_as": "pack of 5",
+  "url": "https://www.mcmaster.com/93600A686/",
+  "ours_light_mm3": 558.4734768604562,
+  "ours_detail_mm3": 558.4734768604562,
+  "ours_light_ext": [
+   6.0,
+   6.0,
+   20.0
+  ],
+  "ours_detail_ext": [
+   6.0,
+   6.0,
+   20.0
+  ],
+  "mcm_full_mm3": 558.4734768604493,
+  "mcm_simple_mm3": null,
+  "mcm_full_ext": [
+   6.0,
+   6.0,
+   20.0
+  ],
+  "light_vs_simple_pct": null,
+  "detail_vs_full_pct": 1.241759436814125e-12,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 4.46778781488365
+ },
+ {
+  "pn": "91732A767",
+  "kind": "insert",
+  "desc": "18-8 Stainless Steel Helical Threaded Insert, Pronged, M2.5 x 0.45 mm Thread Size, 3.8 mm Installed Length",
+  "price_usd": 4.26,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/91732A767/",
+  "ours_light_mm3": 9.751075554743668,
+  "ours_detail_mm3": 16.403001465618438,
+  "ours_light_ext": [
+   3.085,
+   3.085,
+   3.8
+  ],
+  "ours_detail_ext": [
+   3.544,
+   3.7,
+   3.7
+  ],
+  "mcm_full_mm3": 17.050556744949432,
+  "mcm_simple_mm3": null,
+  "mcm_full_ext": [
+   3.7,
+   3.7,
+   3.744
+  ],
+  "light_vs_simple_pct": null,
+  "detail_vs_full_pct": -3.7978541640454506,
+  "detail_ext_maxdiff_mm": 0.15600000000000014,
+  "mass_g": 0.13122401172494752
+ },
+ {
+  "pn": "91732A647",
+  "kind": "insert",
+  "desc": "18-8 Stainless Steel Helical Threaded Insert, Pronged, M3 x 0.5 mm Thread Size, 4.5 mm Installed Length",
+  "price_usd": 3.85,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/91732A647/",
+  "ours_light_mm3": 15.251179230408734,
+  "ours_detail_mm3": 26.26764012315006,
+  "ours_light_ext": [
+   3.649,
+   3.649,
+   4.5
+  ],
+  "ours_detail_ext": [
+   3.938,
+   4.35,
+   4.35
+  ],
+  "mcm_full_mm3": 27.30082947146256,
+  "mcm_simple_mm3": null,
+  "mcm_full_ext": [
+   4.35,
+   4.35,
+   4.438
+  ],
+  "light_vs_simple_pct": null,
+  "detail_vs_full_pct": -3.7844613819975295,
+  "detail_ext_maxdiff_mm": 0.4119999999999995,
+  "mass_g": 0.2101411209852005
+ },
+ {
+  "pn": "91732A649",
+  "kind": "insert",
+  "desc": "18-8 Stainless Steel Helical Threaded Insert, Pronged, M4 x 0.7 mm Thread Size, 4 mm Installed Length",
+  "price_usd": 3.56,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/91732A649/",
+  "ours_light_mm3": 25.441500096305788,
+  "ours_detail_mm3": 34.5194467956654,
+  "ours_light_ext": [
+   4.0,
+   4.909,
+   4.909
+  ],
+  "ours_detail_ext": [
+   3.412,
+   5.6,
+   5.6
+  ],
+  "mcm_full_mm3": 35.64805676274789,
+  "mcm_simple_mm3": null,
+  "mcm_full_ext": [
+   3.912,
+   5.6,
+   5.6
+  ],
+  "light_vs_simple_pct": null,
+  "detail_vs_full_pct": -3.1659789328597667,
+  "detail_ext_maxdiff_mm": 0.5,
+  "mass_g": 0.27615557436532323
+ },
+ {
+  "pn": "91732A656",
+  "kind": "insert",
+  "desc": "18-8 Stainless Steel Helical Threaded Insert, Pronged, M4 x 0.7 mm Thread Size, 6 mm Installed Length",
+  "price_usd": 3.68,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/91732A656/",
+  "ours_light_mm3": 38.162250144458675,
+  "ours_detail_mm3": 53.99809551888736,
+  "ours_light_ext": [
+   4.909,
+   4.909,
+   6.0
+  ],
+  "ours_detail_ext": [
+   5.513,
+   5.6,
+   5.6
+  ],
+  "mcm_full_mm3": 56.16121781302113,
+  "mcm_simple_mm3": null,
+  "mcm_full_ext": [
+   5.6,
+   5.6,
+   5.912
+  ],
+  "light_vs_simple_pct": null,
+  "detail_vs_full_pct": -3.8516299652466675,
+  "detail_ext_maxdiff_mm": 0.3120000000000003,
+  "mass_g": 0.43198476415109893
+ },
+ {
+  "pn": "91732A261",
+  "kind": "insert",
+  "desc": "18-8 Stainless Steel Helical Threaded Insert, Pronged, M5 x 0.8 mm Thread Size, 7.5 mm Installed Length",
+  "price_usd": 3.82,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/91732A261/",
+  "ours_light_mm3": 67.5610554633635,
+  "ours_detail_mm3": 95.1499439260811,
+  "ours_light_ext": [
+   6.039,
+   6.039,
+   7.5
+  ],
+  "ours_detail_ext": [
+   6.8,
+   6.8,
+   7.1
+  ],
+  "mcm_full_mm3": 98.16000788132925,
+  "mcm_simple_mm3": null,
+  "mcm_full_ext": [
+   6.8,
+   6.8,
+   7.4
+  ],
+  "light_vs_simple_pct": null,
+  "detail_vs_full_pct": -3.066487075762239,
+  "detail_ext_maxdiff_mm": 0.3000000000000007,
+  "mass_g": 0.7611995514086488
+ },
+ {
+  "pn": "91732A262",
+  "kind": "insert",
+  "desc": "18-8 Stainless Steel Helical Threaded Insert, Pronged, M6 x 1 mm Thread Size, 9 mm Installed Length",
+  "price_usd": 6.71,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/91732A262/",
+  "ours_light_mm3": 122.11261395618999,
+  "ours_detail_mm3": 146.07854899136075,
+  "ours_light_ext": [
+   7.299,
+   7.299,
+   9.0
+  ],
+  "ours_detail_ext": [
+   7.875,
+   7.95,
+   7.95
+  ],
+  "mcm_full_mm3": 151.27367009818283,
+  "mcm_simple_mm3": null,
+  "mcm_full_ext": [
+   7.95,
+   7.95,
+   8.875
+  ],
+  "light_vs_simple_pct": null,
+  "detail_vs_full_pct": -3.4342533657378964,
+  "detail_ext_maxdiff_mm": 0.9249999999999998,
+  "mass_g": 1.1686283919308862
+ },
+ {
+  "pn": "91732A782",
+  "kind": "insert",
+  "desc": "18-8 Stainless Steel Helical Threaded Insert, Pronged, M6 x 1 mm Thread Size, 12 mm Installed Length",
+  "price_usd": 4.56,
+  "sold_as": "pack of 10",
+  "url": "https://www.mcmaster.com/91732A782/",
+  "ours_light_mm3": 162.81681860825333,
+  "ours_detail_mm3": 200.858004863121,
+  "ours_light_ext": [
+   7.299,
+   7.299,
+   12.0
+  ],
+  "ours_detail_ext": [
+   7.95,
+   7.95,
+   10.875
+  ],
+  "mcm_full_mm3": 206.54281596228782,
+  "mcm_simple_mm3": null,
+  "mcm_full_ext": [
+   7.95,
+   7.95,
+   11.875
+  ],
+  "light_vs_simple_pct": null,
+  "detail_vs_full_pct": -2.752364478367906,
+  "detail_ext_maxdiff_mm": 1.0,
+  "mass_g": 1.6068640389049682
+ },
+ {
+  "pn": "95966A705",
+  "kind": "captive",
+  "desc": "Socket Head Captive Panel Screw, M6 x 1 mm Thread, 20 mm Long (6 mm thread, 4.2 mm reduced shank)",
+  "price_usd": 10.64,
+  "sold_as": "each (1-24)",
+  "url": "https://www.mcmaster.com/95966A705/",
+  "ours_light_mm3": 711.3187659727135,
+  "ours_detail_mm3": 685.4588007585886,
+  "ours_light_ext": [
+   10.0,
+   10.0,
+   26.0
+  ],
+  "ours_detail_ext": [
+   10.0,
+   10.0,
+   26.0
+  ],
+  "mcm_full_mm3": 677.9405363919514,
+  "mcm_simple_mm3": 711.3170163116608,
+  "mcm_simple_ext": [
+   10.0,
+   10.0,
+   26.0
+  ],
+  "mcm_full_ext": [
+   9.993,
+   9.993,
+   26.0
+  ],
+  "light_vs_simple_pct": 0.0002459748624861561,
+  "detail_vs_full_pct": 1.1089858126274617,
+  "light_ext_ok": true,
+  "detail_ext_maxdiff_mm": 0.006999999999999673,
+  "mass_g": 5.4836704060687085
+ },
+ {
+  "pn": "91065A610",
+  "kind": "retainer",
+  "desc": "Retainer for M6 x 1 mm Thread Size Captive Panel Screws, 18-8 Stainless Steel",
+  "price_usd": 13.54,
+  "sold_as": "pack of 25",
+  "url": "https://www.mcmaster.com/91065A610/",
+  "ours_light_mm3": 9.289061158134299,
+  "ours_detail_mm3": 9.289061158134299,
+  "ours_light_ext": [
+   0.32,
+   8.0,
+   8.0
+  ],
+  "ours_detail_ext": [
+   0.32,
+   8.0,
+   8.0
+  ],
+  "mcm_full_mm3": 9.266660933761633,
+  "mcm_simple_mm3": null,
+  "mcm_full_ext": [
+   0.32,
+   8.0,
+   8.0
+  ],
+  "light_vs_simple_pct": null,
+  "detail_vs_full_pct": 0.24172918954068787,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 0.07431248926507439
+ },
+ {
+  "pn": "97125K111",
+  "kind": "disc",
+  "desc": "Extreme-Temperature Belleville Disc Spring, 718 Nickel, for 0.138\" Shaft, 0.142\" ID, 0.281\" OD, 0.021\" Thick",
+  "price_usd": 1.69,
+  "sold_as": "each",
+  "url": "https://www.mcmaster.com/97125K111/",
+  "ours_light_mm3": 15.211684335030442,
+  "ours_detail_mm3": 15.211684335030442,
+  "ours_light_ext": [
+   0.82,
+   7.113,
+   7.113
+  ],
+  "ours_detail_ext": [
+   0.82,
+   7.113,
+   7.113
+  ],
+  "mcm_full_mm3": 15.211726458133223,
+  "mcm_simple_mm3": null,
+  "mcm_full_ext": [
+   0.82,
+   7.113,
+   7.113
+  ],
+  "light_vs_simple_pct": null,
+  "detail_vs_full_pct": -0.0002769120447702068,
+  "detail_ext_maxdiff_mm": 0.0,
+  "mass_g": 0.12458369470389935
+ },
+ {
+  "pn": "9713K54",
+  "kind": "disc",
+  "desc": "Belleville Disc Spring, 302 Stainless Steel, for 1/8\" Shaft, 0.125\" ID, 0.25\" OD, 0.013\" Thick",
+  "price_usd": 11.81,
+  "sold_as": "pack of 12",
+  "url": "https://www.mcmaster.com/9713K54/",
+  "ours_light_mm3": 7.952821543053201,
+  "ours_detail_mm3": 7.952821543053201,
+  "ours_light_ext": [
+   0.506,
+   6.424,
+   6.424
+  ],
+  "ours_detail_ext": [
+   0.506,
+   6.424,
+   6.424
+  ],
+  "mcm_full_mm3": 8.041779354850679,
+  "mcm_simple_mm3": null,
+  "mcm_full_ext": [
+   0.508,
+   6.423,
+   6.423
+  ],
+  "light_vs_simple_pct": null,
+  "detail_vs_full_pct": -1.106195629998476,
+  "detail_ext_maxdiff_mm": 0.0020000000000000018,
+  "mass_g": 0.06298634662098136
+ }
+]

@@ -38,7 +38,10 @@ HERE = pathlib.Path(__file__).resolve().parent
 # --------------------------------------------------------------------------------------------
 TRAY = dict(outer=(2450.0, 864.0), inner=(2426.0, 840.0), rim=20.0, t=4.0)
 OPENINGS = {"Modula bay S": 695.0, "Kardex Shuttle XP 500 (published)": 727.5, "Kardex, 996 mm used-unit opening (estimate)": 856.5}
-Z_TRAY = -195.0
+# McMaster 5537T983 leveling mounts: 20.64 mm body + 31.75 mm M8 stem (52.39 overall). The stem threads up through the
+# 15 mm base plate and ends flush with its top, so the plate bottom sits 37.39 mm above the tray (was 20 mm on a drawn foot).
+FOOT = dict(body=20.64, stem=31.75, base_d=25.0)
+Z_TRAY = -160.0 - (FOOT["body"] + FOOT["stem"])          # -212.39; base-plate top stays at z = -160
 
 # --------------------------------------------------------------------------------------------
 # Parameters
@@ -71,8 +74,8 @@ P["z_lens0"] = P["lens_wd"]                              # lens housing bottom
 P["z_bridge1"] = P["lens_wd"] + P["lens_len"]            # galvo mounting face = bridge top
 P["z_bridge0"] = P["z_bridge1"] - 25.0               # 25 mm: FEA put f1 at 79 Hz with 15 mm + 40 mm posts
 P["beam_z"] = P["z_bridge1"] + 45.0
-P["z_base1"] = Z_TRAY + 35.0                             # module base plates: 20 mm feet + 15 mm plate
-P["z_base0"] = Z_TRAY + 20.0
+P["z_base1"] = Z_TRAY + FOOT["body"] + FOOT["stem"]     # module base plates (15 mm) on the leveling mounts
+P["z_base0"] = P["z_base1"] - 15.0
 
 # Materials: density (kg/m3) plus the properties the FEA uses. Sources are in analysis/README.md.
 MAT = {
@@ -224,11 +227,18 @@ def polyline_pipe(points, r, n=10):
     return comp(solids)
 
 
+RAIL_HOLES = dict(first=20.0, pitch=60.0, d=4.5, cb_d=7.5, cb_h=5.3)   # McMaster 6709K33: M4, 60 mm c-c, 20 mm from the end
+
+
+def rail_hole_x(L):
+    return [RAIL_HOLES["first"] + k * RAIL_HOLES["pitch"] for k in range(int((L - RAIL_HOLES["first"]) // RAIL_HOLES["pitch"]) + 1)]
+
+
 def guide_rail(L, w, h):
-    """Miniature profile rail along local +x 0..L, centred in y, base on z = 0."""
+    """15 mm profile rail along local +x 0..L, centred in y, base on z = 0, with its M4 counterbored holes."""
     r = cq.Workplane("XY").box(L, w, h, centered=(False, True, False)).edges("|X and >Z").chamfer(0.8).val()
-    for x in range(12, int(L), 25):
-        r = r.cut(cyl(1.75, (x, 0, h - 3), "z", 3.1)).cut(cyl(3.0, (x, 0, h - 3.5), "z", 3.6))
+    for x in rail_hole_x(L):
+        r = r.cut(cyl(RAIL_HOLES["d"] / 2, (x, 0, -1), "z", h + 2)).cut(cyl(RAIL_HOLES["cb_d"] / 2, (x, 0, h - RAIL_HOLES["cb_h"]), "z", RAIL_HOLES["cb_h"] + 1))
     return r
 
 
@@ -304,7 +314,7 @@ def tslot20(p0, axis, L):
 # --------------------------------------------------------------------------------------------
 # The machine
 # --------------------------------------------------------------------------------------------
-def build(include_tray=True, module="M50", reservoir=None):
+def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     """The machine with one build module (S25, M50 or L75) and one reservoir (S, M or L; default: the module's)."""
     global DOOR_HINGE
     parts: list[Part] = []
@@ -337,8 +347,10 @@ def build(include_tray=True, module="M50", reservoir=None):
         feet = []
         for x in (x0 + 30, x1 - 30):
             for y in (y0 + 30, y1 - 30):
-                feet += [cyl(8, (x, y, Z_TRAY + 8), "z", 12), cyl(20, (x, y, Z_TRAY), "z", 8)]
-        add(f"Leveling mounts, {mod} module", comp(feet), C["anod"], 1, (0, 0, -200), mat="steel", module=mod, bom="F3", mcm="FOOT")
+                feet += [fuse([cyl(FOOT["base_d"] / 2, (x, y, Z_TRAY), "z", 6.0), cyl(8.0, (x, y, Z_TRAY + 6.0), "z", FOOT["body"] - 6.0),
+                               cyl(4.0, (x, y, Z_TRAY + FOOT["body"]), "z", FOOT["stem"])])]
+        add(f"Leveling mounts, {mod} module (McMaster 5537T983: Ø25 base, M8 stem threaded up through the plate)", comp(feet), C["anod"], 1, (0, 0, -200),
+            mat="steel", module=mod, bom="F3", mcm="5537T983")
 
     # ===================== 2. Rack module =====================
     rx0, rx1, ry0, ry1 = bases["rack"]
@@ -477,18 +489,7 @@ def build(include_tray=True, module="M50", reservoir=None):
     dz0, dz1 = lz0 + 5.0, lz0 + 11.0                       # cover-slide drawer slot through the lid's front edge
     lid = lid.cut(box(-36, 36, -cy - 1, 35, dz0, dz1))
     add("Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)", lid, C["alu"], 7, (0, 0, 300), mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
-    bolts = []
-    bx_, by_ = ix + 11.5, iy + 11.5
-    for i in range(8):
-        x = -bx_ + i * (2 * bx_) / 7
-        for y in (-by_, by_):
-            if y < 0 and abs(x) < 40:                       # front row: move the two middle screws clear of the drawer slot
-                x = math.copysign(44.0, x)
-            bolts.append(shcs_head((x, y, lz1), "z"))
-    for y in (-by_ / 3, by_ / 3):
-        for x in (-bx_, bx_):
-            bolts.append(shcs_head((x, y, lz1), "z"))
-    add("Lid screws (M5 SHCS, A4 stainless)", comp(bolts), C["steel"], 7, (0, 0, 340), mat="ss316l", bom="G1", mcm="SHCS_M5")
+    # lid screws: joints.py (20 x M5 x 25, 316, into helical inserts in the body)
     wf = tube(50, 24, (0, 0, lz1), "z", 22).cut(cyl(25.5, (0, 0, lz1 + 12), "z", 11))
     add("Window flange (6061)", wf, C["anod"], 7, (0, 0, 360), mat="al6061", bom="L7", section=True)
     add("Ø2 in. fused-silica window, 8 mm, AR 1064", cyl(25.4, (0, 0, lz1 + 12), "z", 8), C["glass"], 7, (0, 0, 380), mat="fused_silica", bom="L7", opacity=0.45, section=True)
@@ -512,6 +513,7 @@ def build(include_tray=True, module="M50", reservoir=None):
     # reservoirs dock on top. Each reservoir's outlet slot (45 / 70 / 95 mm) sets the active dose length.
     zd = lz1 + 44.0                                         # dock face
     mb = rbox(xd - 17, xd + 17, -62, 62, lz1, zd, 3).cut(box(xd - 10, xd + 10, -28, -8, zd - 4, zd + 1))   # NFC antenna pocket
+    mb = fuse([mb, rbox(xd - 17, xd + 17, -72, -60, lz1, lz1 + 8, 3), rbox(xd - 17, xd + 17, 60, 72, lz1, lz1 + 8, 3)])   # screw tabs
     add("Metering base (6061, fluted roller over a 100 mm dose line)", mb, C["alu"], 7, (0, 0, 300), mat="al6061", bom="M4", section=True)
     add("NFC reader antenna (in the dock face, reads the reservoir's tag)", box(xd - 9.5, xd + 9.5, -27.5, -8.5, zd - 4, zd - 1), C["pcb"], 7, (0, 0, 300), mat="misc", mass_kg=0.01, bom="A1")
     add("Dovetail rails for the reservoirs", comp([box(xd - 19, xd - 15, -62, 62, zd, zd + 6), box(xd + 15, xd + 19, -62, 62, zd, zd + 6)]), C["ss"], 7, (0, 0, 320), mat="ss316l", bom="M4")
@@ -573,8 +575,9 @@ def build(include_tray=True, module="M50", reservoir=None):
     pst = []
     for x in (-345.0, 180.0):
         for y in (-185.0, 115.0):
-            pst.append(box(x, x + 60, y, y + 60, zb1, zb0_).cut(box(x + 5, x + 55, y + 5, y + 55, zb1 - 1, zb0_ + 1)))
-    add("Optics bridge posts (60 x 60 x 5 square tube)", comp(pst), C["alu_dark"], 9, (0, 0, 200), mat="al6061", bom="F5")
+            t_ = box(x, x + 60, y, y + 60, zb1, zb0_).cut(box(x + 5, x + 55, y + 5, y + 55, zb1 + 10, zb0_ - 10))
+            pst.append(t_)
+    add("Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)", comp(pst), C["alu_dark"], 9, (0, 0, 200), mat="al6061", bom="F5")
     zl0 = P["z_lens0"]
     lens = fuse([cyl(P["lens_d"] / 2, (0, 0, zl0), "z", P["lens_len"]), cyl(30, (0, 0, zl0 - 1.5), "z", 1.5)])
     add("f-theta lens, f = 160 mm (FTH160-1064 envelope)", lens, C["black"], 9, (0, 0, 300), mat="misc", mass_kg=0.6, bom="L6")
@@ -671,6 +674,11 @@ def build(include_tray=True, module="M50", reservoir=None):
         add("Chilled-water supply + return to the laser", comp(cw), C["water"], 13, (0, 200, 0), mat="misc", mass_kg=1.5, module="tray", bom="D1")
         add("Argon supply from the dock", polyline_pipe([(dx0, 365, Z_TRAY + 115), (700, 360, Z_TRAY + 115), (548, 300, Z_TRAY + 115), (548, 120, g0 + 30), (522, 120, g0 + 30)], 4), C["argon"], 13, (0, 200, 0), mat="ss316l", module="tray", bom="D1")
         add("Pump exhaust to the dock", polyline_pipe([(1005, 120, g0 + 60), (1060, 200, Z_TRAY + 60), (dx0, 395, Z_TRAY + 60)], 10), C["hose"], 13, (0, 200, 0), mat="misc", mass_kg=0.5, module="tray", bom="D1")
+
+    # ===================== Fasteners: real McMaster-Carr parts, their holes cut into the parts they join =====================
+    if fasteners:
+        import joints as J
+        J.add_joints(sys.modules[__name__], parts, add, module)
     return parts
 
 

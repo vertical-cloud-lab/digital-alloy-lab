@@ -34,15 +34,13 @@ Nothing here has been built. The sequence is one reasonable way to make and asse
   tube (11119N55) for the cylinder, 5/8 in. 316 tube (11119N35) for the rod, Macor rod (8489K75), 1 in. 416 rod (89095K23) for
   the striker. The chamber block is 13 × 9.5 × 6 in. Every other blank is the part's bounding box plus a 3 mm allowance,
   rounded up to a standard plate thickness or bar diameter. That is a stock *size*, not a cut list or a quote.
-- **Screws.** The model draws only the lid screws and the module's two captive screws, and the animation drives those at the
-  model's positions. The other screws (base plate to levelling mounts, rail, blade, Z flange, window ring, dosing base, door
-  hinges, optics bridge, rack units, heater stack) mark joints that are bolted. Their positions are plausible but they are not
-  a drawn hole pattern, so the CAD still needs fastener design before drawings.
-- **Two assembly choices made here are worth checking:**
-  - the module's bottom flange is welded to the tube, so the piston goes in and out through the top and the rod gland is
-    serviced from there. The model doesn't say how the flange is held, and its 3 mm tube wall is too thin to tap;
-  - the M3 screws through the piston head thread into the Macor standoffs. Macor threads are weak, so a through-bolt with a
-    nut in the heater block, or Macor sleeves on steel shoulder screws, is the better drawing.
+- **Screws (updated 2026-11-19, [`fasteners.md`](fasteners.md)).** Every screw the animation drives is now a real McMaster part
+  at the position the model's joint table ([`cad/joints.py`](cad/joints.py)) gives it, with its holes cut into the parts. The
+  levelling-mount, door-hinge, rack-unit and gas-module screws were only illustrative and are gone until those hole patterns
+  are drawn.
+- **The two assembly choices this note flagged are settled** ([`fasteners.md`](fasteners.md)): the module's bottom flange is
+  now a gland plate bolted to a collar welded round the tube end, and the Macor standoffs are clamped rings on a screw from the
+  piston head into a helical insert in the heater block; nothing threads into Macor.
 - **The rack laser** is drawn as the model's 3U box; the quoted IPG YLR-500-U3-SM-AC is a 4U, air-cooled unit
   ([quote note](quotes/ipg-ylr-500-u3-sm-ac.md)).
 - **Not shown:** wiring and connectors, tube fittings other than the KF hoses, the electronics inside the rack units,
