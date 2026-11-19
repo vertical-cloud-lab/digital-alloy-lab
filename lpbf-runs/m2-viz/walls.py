@@ -1,17 +1,23 @@
 """The M2 wall build (../m2-single-track-schedule.md §4, "Walls on stepped parts") as seven 3-D animations, from the
 job file to the comparison with the AM Module, in the style of steps.py (same machine, bench and Scene framework).
 
-* ``m2w_1_setup``: B2 panels into the plate; A1 the job file (12 parts, 84 walls, square 4 turned); B3 powder
+The build is the final sheet for 2026-11-20 (../m2-track-design/out/wall_sheet.csv, commit e094d8e): 2 squares x 3
+parts x 7 walls = 42 walls, all along the recoater's travel; 33 sets, 32 Sobol settings in power, speed, spot and
+trace spacing plus the 316L hatch as a control, 8 settings printed on both squares. The other two panels went to
+another group and are drawn blank. Everything about the walls (colours, labels, the hottest walls) is read from the
+sheet, so a new sheet only needs a re-render.
+
+* ``m2w_1_setup``: B2 panels into the plate; A1 the job file (6 parts, 42 walls, 33 sets); B3 powder
 * ``m2w_2_print``: B4 close and inert; B5 the bases, then the walls, layer by layer; one layer slowed down; what to
-  watch (the hottest walls, and square 4's walls across the blade)
+  watch (the hottest walls)
 * ``m2w_3_unload``: B6 cool and depowder; B7 panels out and photographed; C1 number the parts, bandsaw them off
 * ``m2w_4_section``: C2 part 1.1 on the precision saw, lengthwise 1.5 mm off its centreline, then between walls 4
   and 5; the section plane
-* ``m2w_5_mount``: C3 hot-mount, cut face down (24 mounts); C4 grind 1.5 mm to the centreline, polish
+* ``m2w_5_mount``: C3 hot-mount, cut face down (12 mounts); C4 grind 1.5 mm to the centreline, polish
 * ``m2w_6_sem``: C5 SEM unetched for porosity; C4 etch; C5 the last layer's melt pools
 * ``m2w_7_results``: C6 segment pores; C7 the map against the AM Module, what each wall records, the next build
 
-The animation follows part 1.1 (square 1, part 1), one of the three parts printed both ways. The part's size is from
+The animation follows part 1.1 (square 1, part 1). The part's size is from
 Carl's drawing and numbers (1.75 x 0.5 in base, 7 walls 0.05 in thick, 0.3 in tall; 0.4 in overall is read as the
 total height, so the base is 0.1 in). Positions on the panels, the machine and the bench are illustrative.
 
@@ -52,7 +58,8 @@ N_WALL = 7
 PITCH = (BASE_L - WALL_T) / (N_WALL - 1)       # 7.20 mm with the end walls flush with the base's ends
 WALL_X = [-BASE_L / 2 + WALL_T / 2 + i * PITCH for i in range(N_WALL)]
 PART_GAP = 20.0                                # part centres on a panel (illustrative)
-PANEL_OF = {1: "A", 2: "B", 3: "C", 4: "D"}    # square -> panel (any panel can be square 4; D here)
+PANEL_OF = {1: "A", 2: "B"}                    # square -> panel; C and D went to another group (drawn blank)
+SQUARES = tuple(PANEL_OF)
 CUT_Y = 1.5                                    # the lengthwise cut, this far off the centreline
 KERF = 0.6                                     # precision saw
 X45 = (WALL_X[3] + WALL_X[4]) / 2              # the cut between walls 4 and 5
@@ -67,7 +74,7 @@ LASER_C = ST.LASER_C
 POWDER_C = (0.45, 0.46, 0.48)
 UP = (0, 0, 1)
 A_C = np.array(M.INSERT_C["A"], float)
-D_C = np.array(M.INSERT_C["D"], float)
+B_C = np.array(M.INSERT_C["B"], float)
 P11 = (A_C[0] - PART_GAP, A_C[1])              # part 1.1's centre on the plate
 
 CAM = dict(ST.CAM)
@@ -77,7 +84,7 @@ CAM.update({
     "part11": [(P11[0] - 52, P11[1] - 70, 62), (P11[0], P11[1] - 2, 4), UP],
     "sq1": [(A_C[0] - 40, A_C[1] - 120, 95), (A_C[0], A_C[1], -2), UP],
     "sq1_top": [(P11[0] - 24, P11[1] - 21.6 - 30, 22), (P11[0], P11[1] - 21.6, -1), UP],
-    "sq4": [(D_C[0] + 70, D_C[1] - 130, 95), (D_C[0], D_C[1], -4), UP],
+    "sq12": [(-20, -235, 150), (0, -60, -4), UP],                      # squares 1 and 2 (panels A and B)
     "deck_cut": [(-200, -500, 330), (0, 0, -40), UP],
     "tray_hi": [(1385, -430, 120), (1420, -170, -92), UP],
     "bandsaw": [(1610, -235, 120), (1708, -10, 20), UP],
@@ -98,11 +105,26 @@ def rows() -> dict:
 SETS = rows()
 
 
+EA_LO, EA_HI = 1.0, 6.1                         # the design's range of energy per area P/(v h), J/mm^2
+HOT_EA = 4.5                                   # "hottest walls": the top of that range
+
+
+def ea(r) -> float:
+    return float(r["E_area_J_mm2"])
+
+
+def set_text(r, sep=", ") -> str:
+    """'W011: 348 W, 705 mm/s, 140 µm, 0.13 mm' (the four fields Carl types)."""
+    name = "control" if r["set"] == "C" else r["set"]
+    return (f"{name}: {float(r['power_W']):.0f} W{sep}{float(r['speed_mm_s']):.0f} mm/s{sep}"
+            f"{float(r['spot_um']):.0f} µm{sep}{float(r['trace_spacing_mm']):g} mm")
+
+
 def wall_color(r) -> tuple:
     if r["set"] == "C":
         return CONTROL_C
-    E = float(r["P_over_v_J_mm"])
-    f = (math.log(E) - math.log(0.09)) / (math.log(0.56) - math.log(0.09))
+    E = ea(r)
+    f = (math.log(E) - math.log(EA_LO)) / (math.log(EA_HI) - math.log(EA_LO))
     x = min(max(f, 0.0), 0.999) * (len(ST.BLUE_RAMP) - 1)
     i = min(int(x), len(ST.BLUE_RAMP) - 2)
     return mix(ST.hex_rgb(ST.BLUE_RAMP[i]), ST.hex_rgb(ST.BLUE_RAMP[i + 1]), x - i)
@@ -143,12 +165,9 @@ def base_box(h=TOP):
 
 
 def part_pose(s, p):
-    """Part s.p in its panel's centred coordinates. Squares 1-3: walls along x (the blade's travel), the base along
-    y; square 4 turned 90 degrees, walls along y."""
+    """Part s.p in its panel's centred coordinates: walls along x (the blade's travel), the base along y."""
     off = (p - 2) * PART_GAP
-    if s in (1, 2, 3):
-        return T((off, 0, 0)) @ R((0, 0, 1), 90)
-    return T((0, off, 0))
+    return T((off, 0, 0)) @ R((0, 0, 1), 90)
 
 
 def panel_world(k, dz=0.0):
@@ -216,8 +235,8 @@ class World:
                        f"s_{k}", shown=False)
             sc.parent[f"s_{k}"] = "platform"
             sc.gmat[f"s_{k}"] = panel_world(k)
-        # the twelve parts: base, seven walls, a notch at the wall-1 end; plus the job file's ghosts
-        for s in (1, 2, 3, 4):
+        # the six parts: base, seven walls, a mark at the wall-1 end; plus the job file's ghosts
+        for s in SQUARES:
             for p in (1, 2, 3):
                 g = f"part_{s}{p}"
                 sc.parent[g] = f"g_{PANEL_OF[s]}"
@@ -320,20 +339,20 @@ class World:
         return base
 
     def parts(self, a=1.0, which=None):
-        for s in (1, 2, 3, 4):
+        for s in SQUARES:
             for p in (1, 2, 3):
                 if which and (s, p) not in which:
                     continue
                 self.sc.show([f"b{s}{p}", f"n{s}{p}"] + [f"w{s}{p}{j}" for j in range(N_WALL)], a)
 
     def ghosts(self, a):
-        for s in (1, 2, 3, 4):
+        for s in SQUARES:
             for p in (1, 2, 3):
                 self.sc.show([f"gb{s}{p}"] + [f"gw{s}{p}{j}" for j in range(N_WALL)], a)
 
     def grow(self, h):
         sc = self.sc
-        for s in (1, 2, 3, 4):
+        for s in SQUARES:
             for p in (1, 2, 3):
                 sc.set_mesh(f"b{s}{p}", pv.Box(base_box(h)))
                 sc.alpha[f"b{s}{p}"] = 1.0 if h > 0.02 else 0.0
@@ -384,9 +403,17 @@ def built(w: World):
     sc.show(["bed", "bed_top"], 1.0)
 
 
-def hot_walls(thr=0.45):
-    return [(s, p, j) for (s, p, jj), r in SETS.items() for j in [jj - 1]
-            if r["set"] != "C" and float(r["P_over_v_J_mm"]) >= thr]
+def hot_walls(thr=HOT_EA):
+    return [(s, p, j) for (s, p, jj), r in SETS.items() for j in [jj - 1] if r["set"] != "C" and ea(r) >= thr]
+
+
+def repeat_twin(s, p, j):
+    """Where else wall s.p.(j+1)'s setting is printed (the 8 repeats are on both squares), or None."""
+    r = SETS[(s, p, j + 1)]
+    for key, q in SETS.items():
+        if q["set"] == r["set"] and key != (s, p, j + 1):
+            return key
+    return None
 
 
 # =================================================================================================== 1 set up
@@ -407,40 +434,46 @@ def chapter_setup():
             sc.gmat[f"s_{k}"] = panel_world(k, 25 * (1 - s_in))
             sc.show([f"scr_{k}_{jj}" for jj in range(4)], s_in)
 
-    sc.step("B2 · four panels into the plate",
-            "Four 316L panels (about 88 mm square) go into Nathan C.'s plate and are screwed down. Each panel is "
-            "one square of the build: three parts on each, 12 parts in all.",
+    sc.step("B2 · panels into the plate",
+            "The 316L panels (about 88 mm square) go into Nathan C.'s plate and are screwed down. This build uses two "
+            "of them, squares 1 and 2 (panels A and B here), with three parts each: 6 parts, 42 walls. The other two "
+            "panels went to another group and are drawn blank.",
             5.0, drop_in, hold=0.8, cam_to=CAM["plate"],
-            warn="a panel that sits proud of the plate meets the blade on the first layer. Dial-indicate all four "
+            warn="a panel that sits proud of the plate meets the blade on the first layer. Dial-indicate every panel "
                  "flush before closing the door.")
 
     def job(u):
         w.ghosts(window(u, 0.05, 0.6))
 
-    sq = {s: w.world_of(s, 2, (0, 0, TOP)) for s in (1, 2, 3, 4)}
-    sc.step("A1 · job file: 12 parts, 84 walls",
-            "Each wall is its own part with its own set: the hatch and upskin power and speed change, the contours "
-            "and spot stay. 61 sets in all: 60 Sobol settings and the 316L hatch (370 W, 1350 mm/s) as a control. "
-            "The bases get the unchanged 316L set.",
+    sq = {s: w.world_of(s, 2, (0, 0, TOP)) for s in SQUARES}
+    n_big = len({r["set"] for r in SETS.values() if float(r["spot_um"]) > 130})
+    sc.step("A1 · job file: 6 parts, 42 walls",
+            "Each wall is its own part with its own set: the hatch and upskin power, speed, spot and trace spacing "
+            "change, the contours stay. 33 sets: 32 Sobol settings and the 316L hatch (370 W, 1350 mm/s, 130 µm, "
+            "0.09 mm) as a control. 8 settings are printed on both squares. The bases get the unchanged 316L set.",
             5.5, job, hold=2.2, cam_to=CAM["top_hi"], still=True,
-            warn="in Carl's photos the Part parameter window greys out power and speed. Make the 61 sets under "
-                 "Parameter and assign one to each wall; check a few in the layer view before the print.",
+            warn=f"in Carl's photos the Part parameter window greys out power and speed; make the sets under "
+                 f"Parameter instead. {n_big} sets ask for a spot above 130 µm, more than his photos show: if WRX "
+                 f"won't take one, ask rather than round it.",
             labels=[("square 1 (panel A)", sq[1], (0.06, 0.78)),
-                    ("square 4: turned 90°,\nrepeats 21 walls", sq[4], (0.95, 0.30)),
-                    ("darker blue = higher P/v\ngrey = the control", sq[2], (0.95, 0.72))])
+                    ("square 2 (panel B)", sq[2], (0.95, 0.78)),
+                    ("darker blue = more energy per area\ngrey = the control", sq[2], (0.95, 0.45))])
 
     def one(u):
         pass
 
     p11 = lambda loc: w.world_of(1, 1, loc)  # noqa: E731
+    jr = next(j for j in range(N_WALL) if repeat_twin(1, 1, j))      # a wall whose setting square 2 repeats
+    tw = repeat_twin(1, 1, jr)
     sc.step("A1 · part 1.1",
-            "Part 1.1, one of the three parts copied onto square 4. Its walls run along the blade's travel; on square 4 "
-            "the copy's walls run across it. The base carries a notch at wall 1, so the wall-to-set map survives "
-            "removal.",
+            "Part 1.1. Its seven walls run along the blade's travel, like every wall in this build, each with its own "
+            "power, speed, spot and trace spacing. Mark the wall-1 end of every base, so the wall-to-set map "
+            "survives removal.",
             3.5, one, hold=2.4, cam_to=CAM["part11"],
-            labels=[("wall 1: W000, 351 W, 1765 mm/s", p11((WALL_X[0], -WALL_L / 2, TOP)), (0.06, 0.25)),
-                    ("wall 6: the control", p11((WALL_X[5], -WALL_L / 2, TOP)), (0.95, 0.20)),
-                    ("notch at the wall-1 end", p11((-BASE_L / 2, 0, BASE_H)), (0.06, 0.60)),
+            labels=[("wall 1, " + set_text(SETS[(1, 1, 1)]), p11((WALL_X[0], -WALL_L / 2, TOP)), (0.06, 0.25)),
+                    (f"wall {jr + 1}: {SETS[(1, 1, jr + 1)]['set']}, also\nprinted as wall {tw[0]}.{tw[1]}.{tw[2]}",
+                     p11((WALL_X[jr], -WALL_L / 2, TOP)), (0.95, 0.22)),
+                    ("the wall-1 end: mark it", p11((-BASE_L / 2, 0, BASE_H)), (0.06, 0.60)),
                     ("base: the 316L set", p11((BASE_L / 2 - 3, -BASE_W / 2, 1.2)), (0.95, 0.66))])
 
     def powder(u):
@@ -493,7 +526,7 @@ def chapter_print():
             sc.gmat["recoater"] = T((x, 0, 0))
             sc.alpha["powder_heap"] = 1.0 if ph < 0.5 else 0.0
             # the laser flicks between parts while the blade is parked at either end
-            s, p = 1 + int(u * 97) % 4, 1 + int(u * 211) % 3
+            s, p = SQUARES[int(u * 97) % len(SQUARES)], 1 + int(u * 211) % 3
             if walls:
                 j = int(u * 331) % N_WALL
                 loc = (WALL_X[j], -WALL_L / 2 + WALL_L * ((u * 23) % 1.0), TOP)
@@ -512,9 +545,8 @@ def chapter_print():
             6.0, build(0.0, BASE_H, False, None), hold=0.3, cam_to=CAM["plate_hi"])
 
     sc.step("B5 · the walls: one setting each",
-            "Then the 84 walls, 7.6 mm more. Every layer the laser draws each wall's contour with the standard set and "
-            "fills it with that wall's hatch. In all, roughly 340 layers at 30 µm (200 at 50 µm): an estimated 3–5 h "
-            "of machine time.",
+            "Then the 42 walls, 7.6 mm more. Every layer the laser draws each wall's contour with the standard set and "
+            "fills it with that wall's hatch. In all, roughly 340 layers at 30 µm (200 at 50 µm).",
             7.0, build(BASE_H, TOP, True, None), hold=0.3)
 
     # one wall layer, slowed down: contour, then the hatch, on part 1.1's wall 1
@@ -523,7 +555,8 @@ def chapter_print():
             (xw + WALL_T / 2 - 0.03, WALL_L / 2 - 0.03), (xw - WALL_T / 2 + 0.03, WALL_L / 2 - 0.03),
             (xw - WALL_T / 2 + 0.03, -WALL_L / 2 + 0.03)]
     hatch = []
-    xs = np.arange(xw - WALL_T / 2 + 0.11 + 0.045, xw + WALL_T / 2 - 0.11, 0.09)
+    h111 = float(SETS[(1, 1, 1)]["trace_spacing_mm"])
+    xs = np.arange(xw - WALL_T / 2 + 0.11 + h111 / 2, xw + WALL_T / 2 - 0.11, h111)
     for i, x in enumerate(xs):
         y0, y1 = (-WALL_L / 2 + 0.11, WALL_L / 2 - 0.11) if i % 2 == 0 else (WALL_L / 2 - 0.11, -WALL_L / 2 + 0.11)
         hatch += [(x, y0), (x, y1)]
@@ -549,13 +582,14 @@ def chapter_print():
         sc.set_mesh("trail", pv.Spline(np.array(pts), 60).tube(radius=0.11) if d > 0.2 else
                     pv.Line((0, 0, 0), (0, 0, 0.01)).tube(radius=0.05))
         sc.alpha["trail"] = 1.0 if 0.05 < sc.u < 0.98 else 0.0
-        sc.gauges = [("wall 1.1.1", "W000: 351 W, 1765 mm/s"),
-                     ("now", "contour: standard set" if d < cum[len(cont) - 1] else "hatch: this wall's P, v")]
+        sc.gauges = [("wall", "1.1.1, " + set_text(SETS[(1, 1, 1)])),
+                     ("now", "contour: standard set" if d < cum[len(cont) - 1] else "hatch: this wall's set")]
 
     sc.step("B5 · one wall layer, slowed down",
-            "One layer of wall 1.1.1, slowed down: the contour with the standard set, then the hatch, 0.09 mm apart, "
-            "with this wall's power and speed. Whether the hatch runs along the wall (as drawn) or across it, and "
-            "whether it turns each layer, decides what the etched section can show: check it in WRX's layer view.",
+            f"One layer of wall 1.1.1, slowed down: the contour with the standard set, then the hatch, {h111:g} mm "
+            "apart, with this wall's power, speed and spot. Whether the hatch runs along the wall (as drawn) or across "
+            "it, and whether it turns each layer, decides what the etched section can show: check it in WRX's layer "
+            "view.",
             8.0, slow, hold=0.4, cam_to=CAM["sq1_top"],
             warn="if the hatch runs across the wall, each vector is only about 1 mm long, mostly start and stop.")
 
@@ -571,19 +605,20 @@ def chapter_print():
         x = M.RECOATER_PARK + (M.RECOATER_END - M.RECOATER_PARK) * window(u, 0.25, 0.9)
         sc.gmat["recoater"] = T((x, 0, 0))
         sc.alpha["powder_heap"] = 1.0
-        sc.gauges = [("watch", f"{len(hot)} walls at P/v ≥ 0.45 J/mm"), ("square 4", "walls across the blade")]
+        sc.gauges = [("watch", f"{len(hot)} walls at ≥ {HOT_EA:g} J/mm²"),
+                     ("Ke", f"up to {max(float(r['Ke']) for r in SETS.values()):.0f}: the smallest spots")]
 
-    hw4 = [(s, p, j) for s, p, j in hot if s == 4]
-    lab_hot = w.world_of(*hw4[0][:2], (WALL_X[hw4[0][2]], 0, TOP), h=TOP) if hw4 else w.world_of(4, 2, (0, 0, TOP), h=TOP)
+    h0 = hot[0] if hot else (1, 2, 0)
+    lab_hot = w.world_of(h0[0], h0[1], (WALL_X[h0[2]], 0, TOP), h=TOP)
+    ea_hot = sorted(ea(SETS[(s, p, j + 1)]) for s, p, j in hot) or [HOT_EA]
+    k_small = [r for r in SETS.values() if float(r["Ke"]) >= 10]
     sc.step("B5 · what to watch",
-            "Watch the first layers of the walls. A hot wall that swells above the powder can catch the blade, most "
-            "likely on square 4, where the blade meets each wall's 12.7 mm face. If one does, stop exposing that "
-            "wall rather than the build, and note the layer.",
-            6.0, watch, hold=0.6, cam_to=CAM["sq4"],
-            warn="a hot wall that swells above the powder can catch the blade, likeliest on square 4.",
-            labels=[("hottest walls (glowing)", lab_hot, (0.06, 0.30)),
-                    ("square 4: walls across the blade", w.world_of(4, 1, (0, -WALL_L / 2, TOP), h=TOP),
-                     (0.95, 0.25))])
+            "Watch the first layers of the walls. A hot wall that swells above the powder can catch the blade. If one "
+            "does, stop exposing that wall rather than the build, and note the layer.",
+            6.0, watch, hold=0.6, cam_to=CAM["sq12"],
+            warn=f"the hottest walls ({ea_hot[0]:.1f}-{ea_hot[-1]:.1f} J/mm², glowing) and the {len(k_small)} "
+                 f"small-spot walls at Ke 10-15 are the likeliest to swell or spatter.",
+            labels=[("hottest walls (glowing)", lab_hot, (0.06, 0.30))])
     return sc.save()
 
 
@@ -620,7 +655,7 @@ def chapter_unload():
         w.flash = 1.0 - min(1.0, abs(u - 0.96) * 30) if u > 0.9 else 0.0
 
     sc.step("B7 · panels out, photographed",
-            "Unscrew the four panels and photograph each from above with its ID, before anything is cut.",
+            "Unscrew the panels and photograph squares 1 and 2 from above with their IDs, before anything is cut.",
             6.0, lift, hold=0.8)
 
     labs = []
@@ -630,11 +665,10 @@ def chapter_unload():
         labs.append(tuple((m @ np.r_[loc, 1.0])[:3]))
 
     sc.step("C1 · number every part",
-            "The twelve parts look alike. Before cutting, write square.part on each base with a paint pen (1.1 is "
-            "square 1, part 1) and check the notch is at wall 1. Write which panel was square 4 and which way it "
-            "turned.",
+            "The six parts look alike. Before cutting, write square.part on each base with a paint pen (1.1 is "
+            "square 1, part 1) and mark the wall-1 end. Write down which panel was square 1.",
             2.5, None, hold=2.5, cam_to=CAM["tray_hi"],
-            labels=[("1.1 (paired)", labs[0], (0.06, 0.25)), ("1.2", labs[1], (0.06, 0.55)),
+            labels=[("1.1", labs[0], (0.06, 0.25)), ("1.2", labs[1], (0.06, 0.55)),
                     ("1.3", labs[2], (0.95, 0.40))])
 
     rest = [T((M.SAW_X + 28 + 0 * j, -70.0 - 20 * j, M.SAW_TABLE_Z + 0.0)) @ R((0, 0, 1), 90) for j in range(3)]
@@ -822,9 +856,9 @@ def chapter_mount():
             sc.alpha[f"puck_{i}"] = a
             sc.alpha[f"puckface_{i}"] = a
 
-    sc.step("C3 · 24 mounts",
-            "Two mounts a part, 24 in all. Mount and section the six paired parts first (12 mounts): they give the "
-            "orientation answer and a first map. Engrave square.part.piece on the back of each mount.",
+    sc.step("C3 · 12 mounts",
+            "Two mounts a part, 12 in all. Engrave square.part.piece on the back of each mount. The parts holding the "
+            "repeated settings and the controls give the first look at scatter.",
             3.0, row, hold=1.2, cam_to=CAM["row24"],
             labels=[("1.1, walls 1–4", (ROW24[0][0], ROW24[0][1], M.BENCH_Z + M.PUCK_H), (0.06, 0.30)),
                     ("1.1, walls 5–7", (ROW24[1][0], ROW24[1][1], M.BENCH_Z + M.PUCK_H), (0.95, 0.30))])
@@ -911,7 +945,7 @@ def chapter_sem():
 
     sc.step("C5 · SEM, unetched: porosity first",
             "Into the SEM unetched: porosity is imaged before any etch, because etch pits look like pores. "
-            "Backscattered electrons, about 100x, roughly six fields up each wall: about 500 fields for all 84 walls, "
+            "Backscattered electrons, about 100x, roughly six fields up each wall: about 250 fields for all 42 walls, "
             "so use the stage's automated tiling if the Apreo has it.",
             6.0, sem, hold=0.6, cam_to=CAM["sem"],
             warn="image porosity before any etch: etch pits look like pores.",
@@ -999,13 +1033,13 @@ def chapter_results():
                  "section to the next. The pairs and the re-ground mounts measure that.")
     sc.step("C7 · on the map",
             "Each wall's porosity goes on the power–speed map, next to the AM Module's lack-of-fusion and keyhole "
-            "boundaries, run in batch for all 61 settings and committed before the print. The 21 pairs show "
-            "whether turning the part changed anything.",
+            "boundaries, run in batch for all 33 settings and committed before the print. The 8 settings on both "
+            "squares and the two controls show how far apart two walls at one setting come out.",
             1.5, swap("map", "seg"), hold=4.6, warn_at="caption",
             warn="a 1.27 mm wall heats up layer by layer. Run the AM Module with a substrate warmer than room "
                  "temperature as well, and compare both.")
     sc.step("C7 · per wall, and the next build",
-            "Each wall gives the model a row: setting, orientation, porosity by class, last-layer pool depth, wall "
+            "Each wall gives the model a row: its four settings, porosity by class, last-layer pool depth, wall "
             "thickness, and the build record. Batch BO then puts the next build's settings where the model is "
             "least sure.",
             1.5, swap("record", "map"), hold=4.6, still=True)
@@ -1013,11 +1047,11 @@ def chapter_results():
 
 
 # ========================================================================================================= join
-CHAPTERS = [("m2w_1_setup", "Set up: panels, job file (84 walls, 61 sets), powder (B2, A1, B3)"),
+CHAPTERS = [("m2w_1_setup", "Set up: panels, job file (42 walls, 33 sets), powder (B2, A1, B3)"),
             ("m2w_2_print", "Print: inert, bases then walls, one layer slowed down, what to watch (B4, B5)"),
             ("m2w_3_unload", "Unload: depowder, photograph, number the parts, bandsaw them off (B6, B7, C1)"),
             ("m2w_4_section", "Section: lengthwise off the centreline, then between walls 4 and 5 (C2)"),
-            ("m2w_5_mount", "Mount and polish: 24 mounts, grind to the centreline, polish (C3, C4)"),
+            ("m2w_5_mount", "Mount and polish: 12 mounts, grind to the centreline, polish (C3, C4)"),
             ("m2w_6_sem", "SEM: porosity unetched, etch, last-layer melt pools (C5, C4, C6)"),
             ("m2w_7_results", "Analyse: pores, the map vs the AM Module, the next build (C6, C7)")]
 

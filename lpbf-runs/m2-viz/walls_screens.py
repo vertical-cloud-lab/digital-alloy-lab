@@ -1,9 +1,11 @@
 """Monitor screens for the wall-build animation (walls.py): what the SEM sections of the walls show and how they are
 analysed. 1600 x 1000 px each (the monitor's 560 x 350 aspect).
 
-Only the map uses real numbers: the 61 settings from ../m2-track-design/out/wall_sheet.csv, with that sheet's
-Eagar-Tsai + overlap first guess of each wall's regime at 30 um layers. Every pore, melt pool and porosity value on
-these screens is drawn by hand to show what will be measured, and each screen says so.
+Real numbers: the 33 settings (power, speed, spot, trace spacing) and Gan et al.'s keyhole number Ke from
+../m2-track-design/out/wall_sheet.csv, and, where present, published 316L data
+(../m2-track-design/out/literature_316l_data.csv) and the CALPHAD-based keyhole criterion
+(../m2-track-design/out/calphad_316l_keyhole.csv). Every pore, melt pool and porosity value on these screens is drawn
+by hand to show what will be measured, and each screen says so.
 """
 from __future__ import annotations
 
@@ -34,6 +36,27 @@ CORE_IN, CORE_END = 0.2, 1.0                         # porosity band: >= 0.2 mm 
 def rows() -> list[dict]:
     with SHEET.open() as f:
         return list(csv.DictReader(f))
+
+
+def _f(r, k):
+    return float(r[k])
+
+
+def picks():
+    """Three walls for the BSE screens: the least energy per area (lack of fusion likely), the control, and the
+    highest keyhole number (keyhole pores likely). Labels from the sheet; the pores drawn on them are not data."""
+    data = [r for r in rows()]
+    lo = min((r for r in data if r["set"] != "C"), key=lambda r: _f(r, "E_area_J_mm2"))
+    hi = max((r for r in data if r["set"] != "C"), key=lambda r: _f(r, "Ke"))
+    ctl = next(r for r in data if r["set"] == "C")
+    out = []
+    for kind, r in (("lof", lo), ("ok", ctl), ("key", hi)):
+        name = "control" if r["set"] == "C" else r["set"]
+        top = (f"{name}: {_f(r, 'power_W'):.0f} W, {_f(r, 'speed_mm_s'):.0f} mm/s\n"
+               f"{_f(r, 'spot_um'):.0f} µm, {_f(r, 'trace_spacing_mm'):g} mm")
+        sub = f"{_f(r, 'E_area_J_mm2'):.1f} J/mm², Ke {_f(r, 'Ke'):.1f}"
+        out.append((kind, top, sub))
+    return out
 
 
 def _fig(title):
@@ -101,19 +124,18 @@ def _wall(ax, rng, kind, title, sub, segment=False):
     ax.set_aspect("equal")
     ax.axis("off")
     name, setting = title.split(": ")
-    ax.text(WALL_T / 2, WALL_H + 1.05, name, ha="center", va="bottom", fontsize=21, color=INK, fontweight="bold")
-    ax.text(WALL_T / 2, WALL_H + 0.45, setting, ha="center", va="bottom", fontsize=17, color=INK2)
+    ax.text(WALL_T / 2, WALL_H + 1.55, name, ha="center", va="bottom", fontsize=21, color=INK, fontweight="bold")
+    ax.text(WALL_T / 2, WALL_H + 0.35, setting, ha="center", va="bottom", fontsize=15, color=INK2,
+            linespacing=1.15)
     ax.text(WALL_T / 2, -1.0, sub, ha="center", va="top", fontsize=17, color=INK2)
 
 
 def bse(path: Path, segment=False):
     rng = np.random.default_rng(4)
     fig = _fig("BSE, unetched: porosity first" if not segment else "Segment pores in each wall's core band")
-    specs = [("lof", "W014: 196 W, 1460 mm/s", "P/v 0.13 J/mm"),
-             ("ok", "control: 370 W, 1350 mm/s", "P/v 0.27 J/mm"),
-             ("key", "W005: 239 W, 455 mm/s", "P/v 0.53 J/mm")]
+    specs = picks()
     for i, (kind, t, s) in enumerate(specs):
-        ax = fig.add_axes([0.04 + i * 0.205, 0.13, 0.19, 0.66])
+        ax = fig.add_axes([0.04 + i * 0.205, 0.11, 0.19, 0.61])
         _wall(ax, rng, kind, t, s, segment)
     ax = fig.add_axes([0.66, 0.10, 0.32, 0.76])
     ax.axis("off")
@@ -131,7 +153,7 @@ def bse(path: Path, segment=False):
                  ("etch pits look like pores", INK2, 19, None),
                  ("", INK, 10, None),
                  ("About 6 fields a wall at ~100x;", INK2, 19, None),
-                 ("504 fields for 84 walls", INK2, 19, None)]
+                 ("about 250 fields for 42 walls", INK2, 19, None)]
     else:
         lines = [("Classify by shape", INK, 22, "bold"),
                  ("irregular, flat, along layers:", INK2, 19, None),
@@ -220,67 +242,93 @@ def etched(path: Path):
     plt.close(fig)
 
 
+def _optional_csv(path: Path) -> list[dict]:
+    if not path.exists():
+        return []
+    with path.open() as f:
+        return list(csv.DictReader(f))
+
+
+LIT = HERE.parent / "m2-track-design" / "out" / "literature_316l_data.csv"
+KEYHOLE = HERE.parent / "m2-track-design" / "out" / "calphad_316l_keyhole.csv"
+KE_C = {"transition": "#1baf7a", "keyhole": "#6250d6"}       # Gan et al.'s bands: 1.4-6 transition, 6-16 stable
+
+
 def pmap(path: Path):
-    """The 61 settings (real), with the wall sheet's first guess of each regime (Eagar-Tsai + overlap, 30 um)."""
+    """The 33 settings (real) on the power-speed plane: spot as marker size, Ke band as colour, repeats ringed."""
     data = rows()
-    fig = _fig("What the 84 walls test: 60 settings + the control")
+    fig = _fig("What the 42 walls test: 32 settings + the control")
     ax = fig.add_axes([0.08, 0.15, 0.56, 0.70], facecolor=SURFACE)
-    seen = {}
-    style = {"lack of fusion": (LOF, "v"), "dense": (DENSE, "o"), "keyhole mode": (KEY, "D")}
-    pairs = {r["set"] for r in data if r["square"] == "4"}
+    seen, done = {}, set()
+    reps = {r["set"] for r in data if r.get("repeat") == "yes"}
     for r in data:
-        if r["square"] == "4":
+        if r["set"] in done:
             continue
-        reg = r["regime_30um"]
-        c, m = style.get(reg, (MUTED, "o"))
-        P, v = float(r["power_W"]), float(r["speed_mm_s"])
+        done.add(r["set"])
+        P, v, d, ke = _f(r, "power_W"), _f(r, "speed_mm_s"), _f(r, "spot_um"), _f(r, "Ke")
+        size = 60 + 340 * (d - 50.0) / 150.0           # marker area grows with the spot, 50-200 um
         if r["set"] == "C":
-            ax.scatter([v], [P], s=420, marker="*", color=INK, edgecolor=SURFACE, lw=2, zorder=6)
+            ax.scatter([v], [P], s=520, marker="*", color=INK, edgecolor=SURFACE, lw=2, zorder=6)
             continue
-        ax.scatter([v], [P], s=150, marker=m, color=c, edgecolor=SURFACE, lw=2, zorder=4,
-                   label=None if reg in seen else reg)
-        seen[reg] = 1
-        if r["set"] in pairs:
-            ax.scatter([v], [P], s=420, marker="o", facecolor="none", edgecolor=INK2, lw=1.6, zorder=3)
+        band = "transition" if ke < 6.0 else "keyhole"
+        lab = {"transition": "transition (Ke 1.4–6)", "keyhole": "keyhole (Ke 6–15)"}[band]
+        ax.scatter([v], [P], s=size, marker="o", color=KE_C[band], alpha=0.85, edgecolor=SURFACE, lw=1.5, zorder=4,
+                   label=None if band in seen else lab)
+        seen[band] = 1
+        if r["set"] in reps:
+            ax.scatter([v], [P], s=size * 1.9 + 160, marker="o", facecolor="none", edgecolor=INK2, lw=1.6, zorder=3)
+    # published 316L points (grey squares), if the literature check has written them
+    lit = [q for q in _optional_csv(LIT) if q.get("power_W") and q.get("speed_mm_s")]
+    pts = []
+    for q in lit:
+        try:
+            pts.append((float(q["speed_mm_s"]), float(q["power_W"])))
+        except ValueError:
+            continue
+    pts = [(v, P) for v, P in pts if 250 <= v <= 3200 and 130 <= P <= 395]
+    if pts:
+        ax.scatter([v for v, _ in pts], [P for _, P in pts], s=70, marker="s", color="#b9b8b2", edgecolor=INK2,
+                   lw=0.8, zorder=2, label="published 316L (other spots)")
     vv = np.linspace(300, 3000, 50)
-    for e, lab in ((0.274, "P/v of the 316L hatch"),):
-        ax.plot(vv, e * vv, color=MUTED, lw=1.5, ls=(0, (5, 4)), zorder=1)
-        ax.text(560, e * 560 - 26, lab, color=INK2, fontsize=16)
+    ax.plot(vv, 0.274 * vv, color=MUTED, lw=1.5, ls=(0, (5, 4)), zorder=1)
+    ax.text(560, 141, "P/v of the 316L hatch", color=INK2, fontsize=15)
     ax.set_xscale("log")
     ax.set_xticks([400, 700, 1000, 2000, 3000])
     ax.set_xticklabels(["400", "700", "1000", "2000", "3000"])
-    ax.set_xlim(300, 3200)
+    ax.set_xlim(280, 3200)
     ax.set_ylim(130, 395)
     ax.set_xlabel("Scan speed (mm/s)", fontsize=20, color=INK)
     ax.set_ylabel("Laser power (W)", fontsize=20, color=INK)
     ax.tick_params(labelsize=17, colors=INK2)
-    for s in ("top", "right"):
-        ax.spines[s].set_visible(False)
-    for s in ("left", "bottom"):
-        ax.spines[s].set_color(MUTED)
+    for sp in ("top", "right"):
+        ax.spines[sp].set_visible(False)
+    for sp in ("left", "bottom"):
+        ax.spines[sp].set_color(MUTED)
     ax.grid(True, color="#e6e5e0", lw=1)
     ax.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
-    leg = ax.legend(loc="upper left", bbox_to_anchor=(1.03, 0.36), fontsize=17, frameon=True,
-                    title="first guess (30 µm layers)", title_fontsize=16)
+    leg = ax.legend(loc="upper left", bbox_to_anchor=(1.03, 0.30), fontsize=16, frameon=True,
+                    title="colour: keyhole number", title_fontsize=15)
+    for h in leg.legend_handles:
+        h.set_sizes([140])
     leg.get_frame().set_edgecolor("#d8d7d2")
     ax2 = fig.add_axes([0.67, 0.15, 0.31, 0.70])
     ax2.axis("off")
-    txt = [("★  control: 370 W, 1350 mm/s", INK, 19, "bold"),
-           ("printed 6 times, 3 each way", INK2, 18, None),
-           ("◯  printed both ways (18)", INK, 19, "bold"),
-           ("on square 4, turned 90°", INK2, 18, None),
+    txt = [("★  control: 370 W, 1350 mm/s,", INK, 18, "bold"),
+           ("     130 µm, 0.09 mm; on both squares", INK2, 17, None),
+           ("◯  on both squares (8 settings)", INK, 18, "bold"),
+           ("●  marker size: spot, 50–200 µm", INK, 18, "bold"),
+           ("     trace spacing 0.06–0.14 mm", INK2, 17, None),
            ("", INK, 8, None),
-           ("Next on this map:", INK, 20, "bold"),
-           ("the AM Module's lack-of-fusion", INK2, 18, None),
-           ("and keyhole boundaries (batch", INK2, 18, None),
-           ("run, committed before the print),", INK2, 18, None),
-           ("then each wall's measured", INK2, 18, None),
-           ("porosity in the same place", INK2, 18, None),
-           ("", INK, 8, None)]
+           ("Next on this map:", INK, 19, "bold"),
+           ("the AM Module's lack-of-fusion", INK2, 17, None),
+           ("and keyhole boundaries (batch", INK2, 17, None),
+           ("run, committed before the print),", INK2, 17, None),
+           ("then each wall's porosity", INK2, 17, None)]
     for j, (t, c, fs, fw) in enumerate(txt):
-        ax2.text(0.0, 1.0 - 0.06 * j, t, color=c, fontsize=fs, fontweight=fw or "normal", va="top",
+        ax2.text(0.0, 1.0 - 0.058 * j, t, color=c, fontsize=fs, fontweight=fw or "normal", va="top",
                  transform=ax2.transAxes)
-    _note(fig, "Settings from the wall sheet (real). Regimes: its Eagar–Tsai + overlap first guess, not the AM Module")
+    _note(fig, "Settings from the wall sheet (real); 4 variables shown on the P-v plane. Ke: Gan et al. 2021, "
+               "absorptivity 0.4; not the AM Module")
     fig.savefig(path, facecolor=SURFACE)
     plt.close(fig)
 
@@ -291,11 +339,14 @@ def record(path: Path):
     ax = fig.add_axes([0.03, 0.12, 0.50, 0.74])
     ax.axis("off")
     cols = ["field", "example"]
-    data = [("wall", "1.1.4 (square.part.wall)"), ("set, P, v", "W005: 239 W, 455 mm/s"),
-            ("orientation", "along the blade"), ("porosity in the band", "0.4 %   (illustration)"),
-            ("pores by class", "LoF 2, keyhole 7"), ("last-layer pool depth", "75 µm   (illustration)"),
-            ("wall thickness", "1.31 mm"),
-            ("build record", "layer, powder lot, O₂, spot")]
+    r = next(q for q in rows() if (q["square"], q["part"], q["wall"]) == ("1", "1", "1"))
+    data = [("wall", "1.1.1 (square.part.wall)"),
+            ("set", f"{r['set']}: {_f(r, 'power_W'):.0f} W, {_f(r, 'speed_mm_s'):.0f} mm/s"),
+            ("spot, trace spacing", f"{_f(r, 'spot_um'):.0f} µm, {_f(r, 'trace_spacing_mm'):g} mm"),
+            ("porosity in the band", "0.4 %   (illustration)"),
+            ("pores by class", "LoF 2, keyhole 7   (illustration)"), ("last-layer pool depth", "75 µm   (illustration)"),
+            ("wall thickness", "1.31 mm   (illustration)"),
+            ("build record", "layer, powder lot, O₂, layer time")]
     y = 0.95
     ax.text(0.0, y, cols[0], fontsize=19, color=INK2, fontweight="bold", transform=ax.transAxes)
     ax.text(0.46, y, cols[1], fontsize=19, color=INK2, fontweight="bold", transform=ax.transAxes)
@@ -325,7 +376,7 @@ def record(path: Path):
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
     ax.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
-    ax.set_title("Batch BO: next settings where the model is unsure", fontsize=18, color=INK, pad=10)
+    ax.set_title("Batch BO: next settings where the model is unsure", fontsize=16, color=INK, pad=10)
     leg = ax.legend(loc="upper left", fontsize=15, frameon=True)
     leg.get_frame().set_edgecolor("#d8d7d2")
     _note(fig, "Illustration: the boundary, its band and the next settings are drawn, not computed")
