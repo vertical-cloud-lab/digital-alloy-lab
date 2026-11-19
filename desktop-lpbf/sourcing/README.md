@@ -46,7 +46,7 @@ Checked on 2026-11-19 between 19:57 and 20:10 UTC, through the lab's CubXL Pi (B
 - I used that rig's script to start headed Chrome on a virtual display on the runner, with a SOCKS tunnel through the Pi.
 - **eBay served its error page whenever Playwright drove the navigation.** It loaded normally when the URL was typed into Chrome's address bar with `xdotool`. So [`scripts/xnav.sh`](scripts/xnav.sh) types each search or item URL and scrolls with the mouse wheel. [`scripts/cdp_eval.py`](scripts/cdp_eval.py) then reads the result cards with a single `Runtime.evaluate` over the DevTools socket, without attaching Playwright.
 - [`scripts/batch.py`](scripts/batch.py) ran the searches in [`scripts/ebay-queries.txt`](scripts/ebay-queries.txt), about 15 s apart.
-- **After about 40 page loads eBay rate-limited the session.** It served its error page for the rest of the run, so the item pages ([`scripts/items.py`](scripts/items.py)) were not opened. Every eBay row is therefore read from its search-result card: title, price, condition, shipping, location, returns and seller feedback. Seller names are left out.
+- **After about 40 page loads eBay rate-limited the session.** It served its error page, and later item pages stripped of their details, for the rest of the run, so the item pages ([`scripts/items.py`](scripts/items.py)) could not be read. Every eBay row is therefore read from its search-result card: title, price, condition, shipping, location, returns and seller feedback. Seller names are left out.
 - Dealer and marketplace pages were read in headless Chrome through the same tunnel, with [`../cad/fetch_pages.py`](../cad/fetch_pages.py).
 
 ## 1. Laser (BOM line L1)
@@ -101,7 +101,7 @@ Against the BOM:
 - **L6** is $486–2,500.
 
 What to check:
-- **Interface.** The head and the card have to speak the same digital protocol (XY2-100 or SL2-100). Some intelliSCAN heads use SL2-100, as the $5,840 listing does. Confirm it on the head's label and the card's datasheet before buying either.
+- **Interface.** The head and the card have to speak the same digital protocol (XY2-100 or SL2-100). Some intelliSCAN heads use SL2-100, as the $5,840 listing does. Confirm it on the head's label and the card's datasheet before buying either. If a hurrySCAN (XY2-100) head won't run on the RTC card you find, line C1's XY2-100 options (the JCZ card or OPAL) will drive it.
 - **Power rating.** The heads need mirrors coated for 1064–1080 nm and rated for 300–500 W CW. The 1080 nm intelliSCAN and hurrySCAN 20 heads are fiber-laser variants, and the hurrySCAN 25 is listed to 1500 W. The 14 mm hurrySCAN at 250 W in `listings.csv` is too low.
 - **Lens rating.** The f = 254 mm lenses are marking lenses with no CW rating, the same caveat as line L6.
 - **Missing pieces.** Most heads need their own DC supply, which the listings don't include. The RTC cards need SCANLAB's driver and DLL: ask SCANLAB whether a second-hand card can register for them.
@@ -166,7 +166,7 @@ The lab still owes the same safety work as for a new laser: BYU Laser Safety Off
 
 ## Not done
 
-- **eBay item pages were not opened,** because eBay rate-limited the session. Cooling, hours, fiber, accessories and interface come only from titles, or are not stated.
+- **eBay item pages could not be read,** because eBay rate-limited the session. Cooling, hours, fiber, accessories and interface come only from titles, or are not stated.
 - **No sold-price history:** eBay needs a sign-in for it, and I didn't create an account.
 - **No seller or IPG contact, no quotes, nothing bought.** BYU's rules for buying on eBay or from surplus dealers, such as card versus PO and used equipment on these funds, are for BYU purchasing to answer.
 - **Not searched:** Machinio and LabX (404 through the tunnel), MOPA engravers for the student's route (README §1b.1), and gloveboxes (eBay rewrote the query to "glove box insert").
