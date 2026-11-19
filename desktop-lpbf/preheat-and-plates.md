@@ -29,8 +29,9 @@ low-expansion carrier ring (§1.3).
 
 **Why the plate, not the bore.** The gap closes because the plate sits at ~200 °C while the 316L spigot around it stays at
 52–59 °C at the start of a build (thermal FEA). The closing is R·(ᾱ_plate·ΔT_plate − ᾱ_bore·ΔT_bore), and ΔT_plate is about five
-times ΔT_bore, so the plate's expansion sets the answer. Changing the bore barely helps: a 6061 spigot and tube carry the heat to
-the floor so well that they run cooler (36–39 °C) and close the gap by the same amount, and the heater then needs 9–10 W more.
+times ΔT_bore, so the plate's expansion sets the answer. Changing the bore doesn't help: a 6061 spigot and tube carry the heat to
+the floor so well that they run cooler (36–39 °C) and close the gap slightly more (101 / 149 µm on M50 / L75, against 98 / 142),
+and the heater then needs 9–10 W more.
 
 ### 1.1 What the FEA gives (build start, the worst case)
 

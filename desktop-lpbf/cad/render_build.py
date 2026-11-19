@@ -20,7 +20,7 @@ module's captive screws, so the other screws mark where a joint is bolted, not a
 
 Run (headless):  xvfb-run -a -s "-screen 0 1920x1080x24" python desktop-lpbf/cad/render_build.py [chapter ...] [--quick]
   chapter: kit machining module process tray (default: all).  --quick: a few frames per step, for checking views.
-Writes desktop-lpbf/cad/img/build/<n>-<chapter>.gif and build.mp4.
+Writes desktop-lpbf/cad/img/sequence/<n>-<chapter>.gif and build.mp4.
 """
 from __future__ import annotations
 
@@ -43,7 +43,7 @@ import module_params as MP  # noqa: E402
 import render_low as R  # noqa: E402
 
 pv.OFF_SCREEN = True
-OUT = HERE / "img" / "build"
+OUT = HERE / "img" / "sequence"
 GW, GH = 880, 540
 QUICK = "--quick" in sys.argv
 INCH = 25.4
@@ -329,16 +329,16 @@ def kind(p):
         return "context"
     if any(k in n for k in ("Lid screws", "Captive M6")):
         return "skip"
-    sheet_keys = ("plenum", "liners", "Dose chute", "Gas knife", "Reservoir M (", "Reservoir M shutter", "Radiation shields",
-                  "Laser guard panels", "Sliding guard door", "Rack side panels", "Umbilical duct", "Operator panel box",
-                  "Overflow funnel")
+    sheet_keys = ("inlet plenum +", "outlet plenum under", "liners", "Dose chute", "Gas knife", "Reservoir M (", "Reservoir M shutter",
+                  "Radiation shields", "Laser guard panels", "Sliding guard door", "Rack side panels", "Umbilical duct",
+                  "Operator panel box")
     if any(k in n for k in sheet_keys):
         return "sheet"
     if p.mat in ("al6061", "mic6", "macor") and not p.mcm.startswith(("KF", "9572", "TSLOT", "SHEET")):
         return "stock"
-    if p.mat == "ss316l" and any(k in n for k in ("Build module", "bottom flange", "Rod end", "Hollow piston rod", "dowel")):
+    if p.mat == "ss316l" and any(k in n for k in ("Build module", "bottom flange", "Rod end", "Hollow piston rod", "Overflow funnel")):
         return "stock"
-    if "Striker" in n or "Hinge pins" in n:
+    if "Striker" in n:
         return "stock"
     return "bought"
 
@@ -362,6 +362,9 @@ def _blank(shape, name):
         pass
     p = _P()
     p.shape, p.name = shape, name
+    if any(k in name for k in ("square tube", "Hollow piston rod", "Enclosed beam tube")):
+        b = bbox(shape)      # bought as tube and cut to length: the blank is the tube, a little long
+        return shape.translate(cq.Vector(0, 0, 0)), "tube, cut to length"
     b = bbox(p.shape)
     dx, dy, dz = b[1] - b[0], b[3] - b[2], b[5] - b[4]
     c = ((b[0] + b[1]) / 2, (b[2] + b[3]) / 2)
@@ -531,7 +534,7 @@ def kit_cat(p, k):
     if any(x in n for x in ("laser source", "galvo", "f-theta", "Collimator", "shutter", "window", "Cover slide", "fiber",
                             "OD 7+", "Enclosed beam")):
         return "optics"
-    if any(x in n for x in ("rail", "carriage", "ball screw", "ball nut", "servo", "stepper", "Z actuator", "Pot magnet",
+    if "DIN-rail" not in n and any(x in n for x in ("rail", "carriage", "ball screw", "ball nut", "servo", "stepper", "Z actuator", "Pot magnet",
                             "Hinge", "hinge", "latch", "Draw-latch", "Z carriage", "blade")):
         return "motion"
     if any(x in n for x in ("KF", "Overflow jar", "pump", "blower", "HEPA", "O2", "Argon", "valve", "hoses", "line",
@@ -573,7 +576,7 @@ def kit_layout(st, z0=0.0):
     zones = []
     for c, title in CATS:
         its = sorted(items[c], key=lambda it: -(it["b"][3] - it["b"][2]))
-        Wz = 1250.0 if c in ("stock", "frame", "gas") else 950.0
+        Wz = {"stock": 2300.0, "sheet": 1700.0, "gas": 1300.0, "frame": 1300.0}.get(c, 900.0)
         x = y = 0.0
         row_h = 0.0
         for it in its:
@@ -591,7 +594,7 @@ def kit_layout(st, z0=0.0):
     X = Y = 0.0
     rowh = 0.0
     for z in zones:
-        if X > 0 and X + z["w"] > 4600.0:
+        if X > 0 and X + z["w"] > 5600.0:
             X, Y = 0.0, Y + rowh + 260.0
             rowh = 0.0
         z["at"] = (X, Y)
@@ -612,6 +615,7 @@ def kit_layout(st, z0=0.0):
             if it["what"] == "part":
                 offs[it["i"]] = T(d)
         labels.append(((zx, zy - 60.0, z0 + 5.0), z["title"].split(":")[0]))
+        z["centre"] = (zx + z["w"] / 2, zy + z["h"] / 2, z0)
     return zones, offs, labels, (total_w, total_h)
 
 
@@ -657,6 +661,20 @@ def chapter_kit(st):
                    "Grey blocks and bars are stock for the custom parts; everything else arrives finished")
         st.cam(focal, dist * (1 - 0.25 * ease(t)), 8 + 20 * ease(t), 62 - 18 * ease(t))
         st.shot()
+    # a closer look at each kind, one after another
+    prev = np.array(focal, float)
+    prev_d = dist * 0.75
+    for zi, z in enumerate(zones):
+        c = np.array(z["centre"], float)
+        dz = float(np.clip(1.25 * max(z["w"] / 0.873, z["h"] / 0.536), 900.0, 3200.0))
+        nz = nf(14)
+        for f in range(nz):
+            t = ease(min(1.0, (f + 1) / (0.45 * nz)))
+            zc = z if t > 0.6 or zi == 0 else zones[zi - 1]      # caption switches once the camera gets there
+            st.caption("1  What arrives: " + zc["title"].split(":")[0].lower(), zc["title"].split(": ", 1)[-1])
+            st.cam(prev + (c - prev) * t, prev_d + (dz - prev_d) * t, 18 + 6 * f / nz, 50)
+            st.shot()
+        prev, prev_d = c, dz
     for zi in range(len(zones)):
         st.pl.remove_actor(f"kitlab{zi}")
     st.clear_extra("kit-")
@@ -979,7 +997,7 @@ def chapter_module(st):
     def rise(dz):
         return lambda i, t: T(lift + np.array([0, 0, dz * (1 - t)]))
 
-    fly(st, blk, nf(8), None, lambda t: cam(0.1 * t), cap, "Heater block (6061-T6) with its bayonet socket", xf=rise(110))
+    fly(st, blk, nf(8), None, lambda t: cam(0.1 * t), cap, "Heater block (6061-T6) with its bayonet socket", xf=rise(45))
     fly(st, cart, nf(10), None, lambda t: cam(0.1 + 0.1 * t, el=6), cap,
         "3 x 50 W, 24 V cartridge heaters (McMaster 3714N36) slide up into their Ø6.1 bores", xf=rise(-90))
     fly(st, tc + tco, nf(10), None, lambda t: cam(0.2 + 0.1 * t, el=6), cap,
@@ -1136,7 +1154,7 @@ def chapter_process(st):
     lid_items = [(np.array([c[0], c[1], M.P["lid_z1"]]), (0, 0, 1)) for c, _ in
                  screw_items_from_solids(st.parts[F("Lid screws")[0]].shape, "zmin", (0, 0, 1))]
     order = star_order(np.array([c for c, _ in lid_items]))
-    Screws(st, "s-lid", lid_items, 5.0, 16.0, order=order).drive(nf(5), 0.6,
+    Screws(st, "s-lid", lid_items, 5.0, 16.0, order=order).drive(nf(5), 0.8,
                                                                  lambda: (cam(0.5, 1000, az=-16, el=55), st.shot()))
     win = F("Field-stop", "Window flange", "Window O-ring", "Ø2 in. fused-silica window", "Window retaining ring")
     fly(st, win, nf(12), ex, lambda t: cam(t, 700, az=-20, el=48, f=(0, 0, 130)), cap,
@@ -1264,6 +1282,37 @@ def chapter_tray(st):
     st.clear_extra("s-")
 
 
+# ------------------------------------------------------------------ output
+GIF_W = 720
+CACHE = pathlib.Path("/tmp/render-build-frames")      # per-chapter frames, so one chapter can be redone and the MP4 rebuilt
+
+
+def save_gif(frames, path, ms=110, colors=160, hold_last=10):
+    """Downscaled GIF (GIF_W wide) with one palette per file."""
+    h = round(frames[0].shape[0] * GIF_W / frames[0].shape[1])
+    ims = [Image.fromarray(f).resize((GIF_W, h), Image.LANCZOS) for f in frames]
+    ims += [ims[-1]] * hold_last
+    sample = Image.fromarray(np.concatenate([np.asarray(i)[::3, ::3] for i in ims[:: max(1, len(ims) // 16)]], axis=0))
+    pal = sample.quantize(colors=colors, method=Image.Quantize.MEDIANCUT)
+    q = [i.quantize(palette=pal, dither=Image.Dither.NONE) for i in ims]
+    q[0].save(path, save_all=True, append_images=q[1:], duration=ms, loop=0, optimize=False, disposal=1)
+    print(f"wrote {path.name}: {len(q)} frames, {path.stat().st_size / 1e6:.2f} MB")
+
+
+def contact_sheet(chapters, path, per=3):
+    """Key frames of every chapter in a grid (per frames per chapter, one row each)."""
+    rows = []
+    for name, fr in chapters:
+        idx = [round((k + 1) * (len(fr) - 1) / per) for k in range(per)]
+        rows.append([Image.fromarray(fr[i]).resize((440, 270), Image.LANCZOS) for i in idx])
+    sheet = Image.new("RGB", (440 * per, 270 * len(rows)), "white")
+    for r, row in enumerate(rows):
+        for c, im in enumerate(row):
+            sheet.paste(im, (440 * c, 270 * r))
+    sheet.save(path)
+    print("wrote", path.name)
+
+
 # ------------------------------------------------------------------ main
 CHAPTERS = [("kit", chapter_kit), ("machining", chapter_machining), ("module", chapter_module), ("process", chapter_process),
             ("tray", chapter_tray)]
@@ -1277,28 +1326,43 @@ def main(argv):
     print(f"{len(parts)} parts in {time.time() - t0:.1f} s")
     st = Stage(parts)
     st.hidden.update(st.find("Lid screws", "Captive M6"))
-    all_frames = []
+    sheets = []
     for k, (name, fn) in enumerate(CHAPTERS):
         if name not in want:
             continue
         t1 = time.time()
         st.frames = []
         fn(st)
-        path = OUT / f"{k + 1}-{name}{'-quick' if QUICK else ''}.gif"
-        R.save_gif(st.frames, path, ms=110, colors=200, hold_last=10)
+        nparts = max(1, math.ceil(len(st.frames) / 200))
+        per = math.ceil(len(st.frames) / nparts)
+        for j in range(nparts):
+            tag = "" if nparts == 1 else "-" + "abcdef"[j]
+            save_gif(st.frames[j * per:(j + 1) * per], OUT / f"{k + 1}-{name}{tag}{'-quick' if QUICK else ''}.gif")
+        sheets.append((name, st.frames))
         print(f"{name}: {len(st.frames)} frames in {time.time() - t1:.0f} s")
-        all_frames += st.frames + [st.frames[-1]] * 10
+        if not QUICK:
+            cdir = CACHE / f"{k + 1}-{name}"
+            shutil.rmtree(cdir, ignore_errors=True)
+            cdir.mkdir(parents=True)
+            for j, fr in enumerate(st.frames + [st.frames[-1]] * 10):
+                Image.fromarray(fr).save(cdir / f"{j:05d}.png")
         if QUICK:
             Image.fromarray(st.frames[len(st.frames) // 2]).save(OUT / f"{k + 1}-{name}-mid-quick.png")
-    if not QUICK and len(want) == len(CHAPTERS) and shutil.which("ffmpeg"):
-        tmp = pathlib.Path("/tmp/render-build-frames")
-        shutil.rmtree(tmp, ignore_errors=True)
-        tmp.mkdir()
-        for j, fr in enumerate(all_frames):
-            Image.fromarray(fr).save(tmp / f"{j:05d}.png")
-        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", "9", "-i", str(tmp / "%05d.png"), "-c:v", "libx264",
+    if sheets and not QUICK and len(want) == len(CHAPTERS):
+        contact_sheet(sheets, OUT / "build-sheet.png")
+    dirs = [CACHE / f"{k + 1}-{name}" for k, (name, _) in enumerate(CHAPTERS)]
+    if not QUICK and all(d.is_dir() for d in dirs) and shutil.which("ffmpeg"):
+        seq = CACHE / "all"
+        shutil.rmtree(seq, ignore_errors=True)
+        seq.mkdir()
+        n = 0
+        for d in dirs:
+            for f in sorted(d.glob("*.png")):
+                (seq / f"{n:05d}.png").symlink_to(f)
+                n += 1
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", "9", "-i", str(seq / "%05d.png"), "-c:v", "libx264",
                         "-pix_fmt", "yuv420p", "-crf", "24", "-movflags", "+faststart", str(OUT / "build.mp4")], check=True)
-        print(f"wrote build.mp4: {(OUT / 'build.mp4').stat().st_size / 1e6:.1f} MB, {len(all_frames)} frames")
+        print(f"wrote build.mp4: {(OUT / 'build.mp4').stat().st_size / 1e6:.1f} MB, {n} frames")
     print(f"total {time.time() - t0:.0f} s")
 
 
