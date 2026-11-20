@@ -1,0 +1,50 @@
+{
+ "ocl_chamber_z": {
+  "label": "chamber body, +Z, 1/2 in. x 6 in. OAL end mill, ER32 holder",
+  "cl_points": 20664,
+  "gcode_lines": 20664,
+  "check": {
+   "points": 17360,
+   "median_mm": 0.0,
+   "p95_abs_mm": 0.004,
+   "within_pitch_pct": 97.5
+  },
+  "waterline_loops": 6
+ },
+ "ocl_lid_z": {
+  "label": "lid, +Z, 1/4 in. end mill",
+  "cl_points": 34444,
+  "gcode_lines": 34444,
+  "check": {
+   "points": 30559,
+   "median_mm": -0.2,
+   "p95_abs_mm": 0.2,
+   "within_pitch_pct": 100.0
+  },
+  "waterline_loops": 6
+ },
+ "ocl_door_y": {
+  "label": "door, +Y (seal face), 1/4 in. end mill",
+  "cl_points": 34320,
+  "gcode_lines": 34320,
+  "check": {
+   "points": 31585,
+   "median_mm": 0.0,
+   "p95_abs_mm": 0.0,
+   "within_pitch_pct": 100.0
+  },
+  "waterline_loops": 0
+ },
+ "ocl_spigot_z": {
+  "label": "M50 module body, +Z, 1/4 in. end mill",
+  "cl_points": 18340,
+  "gcode_lines": 18340,
+  "check": {
+   "points": 8335,
+   "median_mm": -0.2,
+   "p95_abs_mm": 0.2,
+   "within_pitch_pct": 99.3
+  },
+  "waterline_loops": 2
+ }
+}
