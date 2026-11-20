@@ -1,0 +1,1881 @@
+{
+ "guard_door": {
+  "op": "guard_door",
+  "frames": 176,
+  "ik_all": false,
+  "unreachable_steps": [
+   "release and retreat",
+   "slide closed (reverse)",
+   "slide open 470 mm"
+  ],
+  "min_clear_mm": -98.1,
+  "min_clear_step": "release and retreat",
+  "min_clear_pair": [
+   "UR10e upper_arm_link",
+   "Base plate, process module (MIC-6, 15 mm)",
+   -98.1
+  ],
+  "exact_mm": -1000.0,
+  "seat_min_mm": null,
+  "collisions": [
+   {
+    "step": "approach",
+    "robot": "UR10e upper_arm_link",
+    "machine": "tray"
+   },
+   {
+    "step": "release and retreat",
+    "robot": "UR10e forearm_link",
+    "machine": "Laser guard panels (1.5 mm aluminium)"
+   },
+   {
+    "step": "release and retreat",
+    "robot": "UR10e forearm_link",
+    "machine": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)"
+   },
+   {
+    "step": "release and retreat",
+    "robot": "UR10e upper_arm_link",
+    "machine": "Base plate, process module (MIC-6, 15 mm)"
+   },
+   {
+    "step": "release and retreat",
+    "robot": "UR10e upper_arm_link",
+    "machine": "Guard frame (20 mm T-slot)"
+   },
+   {
+    "step": "release and retreat",
+    "robot": "UR10e upper_arm_link",
+    "machine": "tray"
+   },
+   {
+    "step": "slide closed (reverse)",
+    "robot": "UR10e forearm_link",
+    "machine": "19 in. rack frame (10U, 470 mm tall)"
+   },
+   {
+    "step": "slide closed (reverse)",
+    "robot": "UR10e forearm_link",
+    "machine": "Base plate, process module (MIC-6, 15 mm)"
+   }
+  ],
+  "reach_margin_min_mm": 704.7,
+  "limit_margin_min_deg": 9.8,
+  "reconfigurations": [
+   [
+    "slide open 470 mm",
+    5.07
+   ],
+   [
+    "slide open 470 mm",
+    0.07
+   ],
+   [
+    "slide open 470 mm",
+    0.08
+   ],
+   [
+    "slide open 470 mm",
+    0.56
+   ]
+  ],
+  "torque": {
+   "peak_Nm": [
+    34.5,
+    68.5,
+    48.9,
+    4.9,
+    8.8,
+    1.2
+   ],
+   "peak_ratio": 0.326,
+   "worst_joint": "elbow",
+   "duration_s": 37.3,
+   "forces": {
+    "slide open 470 mm": {
+     "needed_N": 30.0,
+     "arm_can_N": 225.0
+    },
+    "slide closed (reverse)": {
+     "needed_N": 30.0,
+     "arm_can_N": 217.0
+    }
+   }
+  },
+  "fingers": "stock",
+  "runtime_s": 318.7,
+  "steps": [
+   {
+    "step": "approach",
+    "frames": 39,
+    "ik_ok": true,
+    "min_clear_mm": -8.2,
+    "pair": [
+     "UR10e upper_arm_link",
+     "tray"
+    ],
+    "seat": false,
+    "reach_margin_mm": 704.7,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on the handle",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": 3.5,
+    "pair": [
+     "UR10e upper_arm_link",
+     "tray"
+    ],
+    "seat": false,
+    "reach_margin_mm": 704.7,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "slide open 470 mm",
+    "frames": 48,
+    "ik_ok": false,
+    "min_clear_mm": -89.9,
+    "pair": [
+     "UR10e upper_arm_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 704.7,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "release and retreat",
+    "frames": 39,
+    "ik_ok": false,
+    "min_clear_mm": -98.1,
+    "pair": [
+     "UR10e upper_arm_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 784.8,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "slide closed (reverse)",
+    "frames": 48,
+    "ik_ok": false,
+    "min_clear_mm": -89.9,
+    "pair": [
+     "UR10e upper_arm_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 704.7,
+    "deg_range": null,
+    "ok_deg": []
+   }
+  ]
+ },
+ "chamber_door_open": {
+  "op": "chamber_door_open",
+  "frames": 81,
+  "ik_all": false,
+  "unreachable_steps": [
+   "approach the handle"
+  ],
+  "min_clear_mm": -65.8,
+  "min_clear_step": "approach the handle",
+  "min_clear_pair": [
+   "UR10e forearm_link",
+   "tray",
+   -65.8
+  ],
+  "exact_mm": null,
+  "seat_min_mm": null,
+  "collisions": [
+   {
+    "step": "approach the handle",
+    "robot": "UR10e forearm_link",
+    "machine": "tray"
+   },
+   {
+    "step": "approach the handle",
+    "robot": "UR10e upper_arm_link",
+    "machine": "tray"
+   },
+   {
+    "step": "approach the handle",
+    "robot": "gripper right_follower",
+    "machine": "Cover-slide drawer (6061, robot pull tab)"
+   },
+   {
+    "step": "close on the handle",
+    "robot": "UR10e forearm_link",
+    "machine": "tray"
+   },
+   {
+    "step": "close on the handle",
+    "robot": "gripper right_follower",
+    "machine": "Cover-slide drawer (6061, robot pull tab)"
+   },
+   {
+    "step": "swing open on the handle",
+    "robot": "UR10e forearm_link",
+    "machine": "tray"
+   },
+   {
+    "step": "swing open on the handle",
+    "robot": "UR10e wrist_1_link",
+    "machine": "tray"
+   },
+   {
+    "step": "swing open on the handle",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Base plate, process module (MIC-6, 15 mm)"
+   }
+  ],
+  "reach_margin_min_mm": 605.2,
+  "limit_margin_min_deg": 34.8,
+  "reconfigurations": [
+   [
+    "approach the handle",
+    0.18
+   ],
+   [
+    "approach the handle",
+    0.17
+   ],
+   [
+    "approach the handle",
+    0.38
+   ],
+   [
+    "approach the handle",
+    0.01
+   ]
+  ],
+  "torque": {
+   "peak_Nm": [
+    17.5,
+    78.6,
+    39.2,
+    3.7,
+    1.7,
+    1.4
+   ],
+   "peak_ratio": 0.261,
+   "worst_joint": "elbow",
+   "duration_s": 7.7,
+   "forces": {
+    "swing open on the handle": {
+     "needed_N": 10.0,
+     "arm_can_N": 228.0
+    }
+   }
+  },
+  "fingers": "stock",
+  "runtime_s": 52.9,
+  "steps": [
+   {
+    "step": "approach the handle",
+    "frames": 41,
+    "ik_ok": false,
+    "min_clear_mm": -65.8,
+    "pair": [
+     "UR10e forearm_link",
+     "tray"
+    ],
+    "seat": false,
+    "reach_margin_mm": 739.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on the handle",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": -1.5,
+    "pair": [
+     "gripper right_follower",
+     "Cover-slide drawer (6061, robot pull tab)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 739.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "swing open on the handle",
+    "frames": 38,
+    "ik_ok": true,
+    "min_clear_mm": -60.5,
+    "pair": [
+     "UR10e wrist_1_link",
+     "tray"
+    ],
+    "seat": false,
+    "reach_margin_mm": 605.2,
+    "deg_range": [
+     2.5,
+     95.0
+    ],
+    "ok_deg": []
+   }
+  ]
+ },
+ "chamber_door_close": {
+  "op": "chamber_door_close",
+  "frames": 121,
+  "ik_all": false,
+  "unreachable_steps": [
+   "approach the handle (door open)"
+  ],
+  "min_clear_mm": -110.2,
+  "min_clear_step": "push closed on the outer face",
+  "min_clear_pair": [
+   "UR10e forearm_link",
+   "Base plate, process module (MIC-6, 15 mm)",
+   -110.2
+  ],
+  "exact_mm": -1000.0,
+  "seat_min_mm": null,
+  "collisions": [
+   {
+    "step": "lift closed on the handle",
+    "robot": "UR10e wrist_1_link",
+    "machine": "Guard frame (20 mm T-slot)"
+   },
+   {
+    "step": "lift closed on the handle",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Guard frame (20 mm T-slot)"
+   },
+   {
+    "step": "push closed on the outer face",
+    "robot": "UR10e forearm_link",
+    "machine": "Base plate, process module (MIC-6, 15 mm)"
+   },
+   {
+    "step": "push closed on the outer face",
+    "robot": "UR10e forearm_link",
+    "machine": "Guard door rail (top + bottom)"
+   },
+   {
+    "step": "push closed on the outer face",
+    "robot": "UR10e wrist_1_link",
+    "machine": "tray"
+   },
+   {
+    "step": "push closed on the outer face",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Base plate, process module (MIC-6, 15 mm)"
+   },
+   {
+    "step": "push closed on the outer face",
+    "robot": "UR10e wrist_2_link",
+    "machine": "tray"
+   }
+  ],
+  "reach_margin_min_mm": 341.8,
+  "limit_margin_min_deg": 21.2,
+  "reconfigurations": [
+   [
+    "approach the handle (door open)",
+    0.09
+   ],
+   [
+    "approach the handle (door open)",
+    0.01
+   ],
+   [
+    "approach the handle (door open)",
+    0.08
+   ],
+   [
+    "approach the handle (door open)",
+    0.16
+   ]
+  ],
+  "torque": {
+   "peak_Nm": [
+    9.6,
+    65.1,
+    52.6,
+    7.3,
+    1.3,
+    1.4
+   ],
+   "peak_ratio": 0.35,
+   "worst_joint": "elbow",
+   "duration_s": 19.5,
+   "forces": {
+    "lift closed on the handle": {
+     "needed_N": 12.0,
+     "arm_can_N": 158.0
+    },
+    "push closed on the outer face": {
+     "needed_N": 15.0,
+     "arm_can_N": 312.0
+    }
+   }
+  },
+  "fingers": "stock",
+  "runtime_s": 142.9,
+  "steps": [
+   {
+    "step": "approach the handle (door open)",
+    "frames": 42,
+    "ik_ok": false,
+    "min_clear_mm": 12.9,
+    "pair": [
+     "UR10e wrist_2_link",
+     "tray"
+    ],
+    "seat": false,
+    "reach_margin_mm": 900.8,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on the handle",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": 12.9,
+    "pair": [
+     "UR10e wrist_2_link",
+     "tray"
+    ],
+    "seat": false,
+    "reach_margin_mm": 904.9,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "lift closed on the handle",
+    "frames": 38,
+    "ik_ok": true,
+    "min_clear_mm": -48.2,
+    "pair": [
+     "UR10e wrist_1_link",
+     "Guard frame (20 mm T-slot)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 341.8,
+    "deg_range": [
+     92.5,
+     0.0
+    ],
+    "ok_deg": [
+     92.5,
+     90.0,
+     87.5,
+     85.0,
+     82.5,
+     80.0,
+     77.5,
+     75.0,
+     72.5,
+     70.0,
+     67.5,
+     65.0,
+     62.5,
+     60.0,
+     57.5,
+     55.0,
+     52.5,
+     50.0,
+     47.5,
+     45.0,
+     42.5,
+     40.0,
+     37.5,
+     35.0,
+     32.5,
+     30.0,
+     27.5
+    ]
+   },
+   {
+    "step": "push closed on the outer face",
+    "frames": 39,
+    "ik_ok": true,
+    "min_clear_mm": -110.2,
+    "pair": [
+     "UR10e forearm_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 568.2,
+    "deg_range": [
+     95.0,
+     0.0
+    ],
+    "ok_deg": [
+     22.5,
+     20.0,
+     17.5,
+     15.0,
+     12.5,
+     10.0,
+     7.5,
+     5.0,
+     2.5,
+     0.0
+    ]
+   }
+  ]
+ },
+ "plate_exchange": {
+  "op": "plate_exchange",
+  "frames": 237,
+  "ik_all": false,
+  "unreachable_steps": [
+   "approach over the sill",
+   "out through the door"
+  ],
+  "min_clear_mm": -77.0,
+  "min_clear_step": "out through the door",
+  "min_clear_pair": [
+   "UR10e wrist_2_link",
+   "Chamber door (6061-T6, 15 mm, drops down)",
+   -77.0
+  ],
+  "exact_mm": -1000.0,
+  "seat_min_mm": -71.6,
+  "collisions": [
+   {
+    "step": "approach over the sill",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach over the sill",
+    "robot": "UR10e wrist_3_link",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach over the sill",
+    "robot": "gripper base",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach over the sill",
+    "robot": "gripper left_pad (left_tip_drop)",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach over the sill",
+    "robot": "gripper right_pad (right_tip_drop)",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach over the sill",
+    "robot": "gripper right_pad (right_tip_drop)",
+    "machine": "Process chamber body (6061-T6, ~6.4 L)"
+   },
+   {
+    "step": "close on the groove",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Process chamber body (6061-T6, ~6.4 L)"
+   },
+   {
+    "step": "down inside the chamber",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   }
+  ],
+  "reach_margin_min_mm": 540.0,
+  "limit_margin_min_deg": 26.7,
+  "reconfigurations": [
+   [
+    "approach over the sill",
+    0.17
+   ],
+   [
+    "approach over the sill",
+    5.35
+   ]
+  ],
+  "torque": {
+   "peak_Nm": [
+    8.4,
+    58.3,
+    44.6,
+    2.6,
+    2.3,
+    1.1
+   ],
+   "peak_ratio": 0.298,
+   "worst_joint": "elbow",
+   "duration_s": 24.1,
+   "forces": {}
+  },
+  "fingers": "custom",
+  "runtime_s": 34.3,
+  "steps": [
+   {
+    "step": "approach over the sill",
+    "frames": 53,
+    "ik_ok": false,
+    "min_clear_mm": -70.7,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Chamber door (6061-T6, 15 mm, drops down)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 657.7,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "down inside the chamber",
+    "frames": 8,
+    "ik_ok": true,
+    "min_clear_mm": -69.6,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Chamber door (6061-T6, 15 mm, drops down)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 640.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "in to the plate",
+    "frames": 23,
+    "ik_ok": true,
+    "min_clear_mm": -63.0,
+    "pair": [
+     "UR10e wrist_3_link",
+     "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 563.0,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "skew to -30 deg (fingers open)",
+    "frames": 16,
+    "ik_ok": true,
+    "min_clear_mm": -71.6,
+    "pair": [
+     "UR10e wrist_3_link",
+     "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 546.9,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on the groove",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": -53.1,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Process chamber body (6061-T6, ~6.4 L)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 546.9,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "bayonet twist 60 deg",
+    "frames": 31,
+    "ik_ok": true,
+    "min_clear_mm": -71.6,
+    "pair": [
+     "UR10e wrist_3_link",
+     "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)"
+    ],
+    "seat": true,
+    "reach_margin_mm": 546.9,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "lift 16 mm off the block",
+    "frames": 17,
+    "ik_ok": true,
+    "min_clear_mm": -53.9,
+    "pair": [
+     "UR10e forearm_link",
+     "Chamber door (6061-T6, 15 mm, drops down)"
+    ],
+    "seat": true,
+    "reach_margin_mm": 540.0,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "turn back square",
+    "frames": 16,
+    "ik_ok": true,
+    "min_clear_mm": -56.0,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Process chamber body (6061-T6, ~6.4 L)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 540.0,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "out through the door",
+    "frames": 71,
+    "ik_ok": false,
+    "min_clear_mm": -77.0,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Chamber door (6061-T6, 15 mm, drops down)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 555.9,
+    "deg_range": null,
+    "ok_deg": []
+   }
+  ]
+ },
+ "drawer": {
+  "op": "drawer",
+  "frames": 105,
+  "ik_all": false,
+  "unreachable_steps": [
+   "approach the pull tab"
+  ],
+  "min_clear_mm": -3.8,
+  "min_clear_step": "close on the tab's posts",
+  "min_clear_pair": [
+   "gripper right_pad",
+   "Process chamber body (6061-T6, ~6.4 L)",
+   -3.8
+  ],
+  "exact_mm": -1000.0,
+  "seat_min_mm": null,
+  "collisions": [
+   {
+    "step": "approach the pull tab",
+    "robot": "gripper right_pad",
+    "machine": "Process chamber body (6061-T6, ~6.4 L)"
+   },
+   {
+    "step": "close on the tab's posts",
+    "robot": "gripper right_pad",
+    "machine": "Process chamber body (6061-T6, ~6.4 L)"
+   },
+   {
+    "step": "pull 120 mm",
+    "robot": "gripper right_pad",
+    "machine": "Process chamber body (6061-T6, ~6.4 L)"
+   },
+   {
+    "step": "push home (seat the O-ring)",
+    "robot": "gripper right_pad",
+    "machine": "Process chamber body (6061-T6, ~6.4 L)"
+   }
+  ],
+  "reach_margin_min_mm": 704.1,
+  "limit_margin_min_deg": 38.1,
+  "reconfigurations": [
+   [
+    "approach the pull tab",
+    0.65
+   ],
+   [
+    "approach the pull tab",
+    0.31
+   ]
+  ],
+  "torque": {
+   "peak_Nm": [
+    24.2,
+    153.3,
+    47.7,
+    32.4,
+    2.1,
+    1.3
+   ],
+   "peak_ratio": 0.578,
+   "worst_joint": "wrist 1",
+   "duration_s": 7.8,
+   "forces": {
+    "pull 120 mm": {
+     "needed_N": 20.0,
+     "arm_can_N": 553.0
+    },
+    "push home (seat the O-ring)": {
+     "needed_N": 350.0,
+     "arm_can_N": 552.0
+    }
+   }
+  },
+  "fingers": "stock",
+  "runtime_s": 30.7,
+  "steps": [
+   {
+    "step": "approach the pull tab",
+    "frames": 41,
+    "ik_ok": false,
+    "min_clear_mm": -1.1,
+    "pair": [
+     "gripper right_pad",
+     "Process chamber body (6061-T6, ~6.4 L)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 704.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on the tab's posts",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": -3.8,
+    "pair": [
+     "gripper right_pad",
+     "Process chamber body (6061-T6, ~6.4 L)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 704.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "pull 120 mm",
+    "frames": 31,
+    "ik_ok": true,
+    "min_clear_mm": -3.8,
+    "pair": [
+     "gripper right_pad",
+     "Process chamber body (6061-T6, ~6.4 L)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 704.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "push home (seat the O-ring)",
+    "frames": 31,
+    "ik_ok": true,
+    "min_clear_mm": -3.8,
+    "pair": [
+     "gripper right_pad",
+     "Process chamber body (6061-T6, ~6.4 L)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 704.1,
+    "deg_range": null,
+    "ok_deg": []
+   }
+  ]
+ },
+ "reservoir_stock": {
+  "op": "reservoir_stock",
+  "frames": 116,
+  "ik_all": false,
+  "unreachable_steps": [
+   "approach the handle",
+   "carry out of the optics-bridge slot"
+  ],
+  "min_clear_mm": -13.0,
+  "min_clear_step": "approach the handle",
+  "min_clear_pair": [
+   "gripper right_follower",
+   "2-axis galvo scan head (basiCube class)",
+   -13.0
+  ],
+  "exact_mm": 0.0,
+  "seat_min_mm": -10.2,
+  "collisions": [
+   {
+    "step": "approach the handle",
+    "robot": "UR10e wrist_3_link",
+    "machine": "Optics bridge (6061, 25 mm)"
+   },
+   {
+    "step": "approach the handle",
+    "robot": "gripper base",
+    "machine": "Optics bridge (6061, 25 mm)"
+   },
+   {
+    "step": "approach the handle",
+    "robot": "gripper right_follower",
+    "machine": "2-axis galvo scan head (basiCube class)"
+   },
+   {
+    "step": "close on the handle fin",
+    "robot": "UR10e wrist_3_link",
+    "machine": "Optics bridge (6061, 25 mm)"
+   },
+   {
+    "step": "close on the handle fin",
+    "robot": "gripper right_follower",
+    "machine": "2-axis galvo scan head (basiCube class)"
+   }
+  ],
+  "reach_margin_min_mm": 530.1,
+  "limit_margin_min_deg": 39.1,
+  "reconfigurations": [
+   [
+    "carry out of the optics-bridge slot",
+    0.02
+   ],
+   [
+    "carry out of the optics-bridge slot",
+    0.1
+   ],
+   [
+    "carry out of the optics-bridge slot",
+    0.13
+   ],
+   [
+    "carry out of the optics-bridge slot",
+    0.05
+   ]
+  ],
+  "torque": {
+   "peak_Nm": [
+    17.7,
+    54.7,
+    49.3,
+    7.9,
+    1.6,
+    0.0
+   ],
+   "peak_ratio": 0.329,
+   "worst_joint": "elbow",
+   "duration_s": 16.7,
+   "forces": {
+    "pull out over the detents and off the dock": {
+     "needed_N": 40.0,
+     "arm_can_N": 451.0
+    }
+   }
+  },
+  "fingers": "stock",
+  "runtime_s": 47.4,
+  "steps": [
+   {
+    "step": "approach the handle",
+    "frames": 45,
+    "ik_ok": false,
+    "min_clear_mm": -13.0,
+    "pair": [
+     "gripper right_follower",
+     "2-axis galvo scan head (basiCube class)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 530.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on the handle fin",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": -13.0,
+    "pair": [
+     "gripper right_follower",
+     "2-axis galvo scan head (basiCube class)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 530.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "pull out over the detents and off the dock",
+    "frames": 33,
+    "ik_ok": true,
+    "min_clear_mm": -10.2,
+    "pair": [
+     "UR10e wrist_3_link",
+     "Optics bridge (6061, 25 mm)"
+    ],
+    "seat": true,
+    "reach_margin_mm": 530.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "carry out of the optics-bridge slot",
+    "frames": 36,
+    "ik_ok": false,
+    "min_clear_mm": 40.0,
+    "pair": null,
+    "seat": false,
+    "reach_margin_mm": 599.5,
+    "deg_range": null,
+    "ok_deg": []
+   }
+  ]
+ },
+ "reservoir": {
+  "op": "reservoir",
+  "frames": 116,
+  "ik_all": true,
+  "unreachable_steps": [],
+  "min_clear_mm": -36.3,
+  "min_clear_step": "approach the handle",
+  "min_clear_pair": [
+   "UR10e wrist_2_link",
+   "Chamber door (6061-T6, 15 mm, drops down)",
+   -36.3
+  ],
+  "exact_mm": -1000.0,
+  "seat_min_mm": -36.3,
+  "collisions": [
+   {
+    "step": "approach the handle",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach the handle",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Draw latches on the door (304 SS, 800 lb)"
+   },
+   {
+    "step": "approach the handle",
+    "robot": "UR10e wrist_3_link",
+    "machine": "Optics bridge (6061, 25 mm)"
+   },
+   {
+    "step": "approach the handle",
+    "robot": "gripper base",
+    "machine": "Optics bridge (6061, 25 mm)"
+   },
+   {
+    "step": "approach the handle",
+    "robot": "gripper left_pad (left_tip_crank)",
+    "machine": "Optics bridge (6061, 25 mm)"
+   },
+   {
+    "step": "approach the handle",
+    "robot": "gripper right_coupler",
+    "machine": "2-axis galvo scan head (basiCube class)"
+   },
+   {
+    "step": "approach the handle",
+    "robot": "gripper right_driver",
+    "machine": "2-axis galvo scan head (basiCube class)"
+   },
+   {
+    "step": "approach the handle",
+    "robot": "gripper right_follower",
+    "machine": "2-axis galvo scan head (basiCube class)"
+   }
+  ],
+  "reach_margin_min_mm": 435.9,
+  "limit_margin_min_deg": 53.9,
+  "reconfigurations": [],
+  "torque": {
+   "peak_Nm": [
+    4.8,
+    73.4,
+    45.6,
+    6.7,
+    0.9,
+    0.0
+   ],
+   "peak_ratio": 0.304,
+   "worst_joint": "elbow",
+   "duration_s": 8.2,
+   "forces": {
+    "pull out over the detents and off the dock": {
+     "needed_N": 40.0,
+     "arm_can_N": 497.0
+    }
+   }
+  },
+  "fingers": "custom",
+  "runtime_s": 0.9,
+  "steps": [
+   {
+    "step": "approach the handle",
+    "frames": 45,
+    "ik_ok": true,
+    "min_clear_mm": -36.3,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Chamber door (6061-T6, 15 mm, drops down)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 435.9,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on the handle fin",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": -36.3,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Chamber door (6061-T6, 15 mm, drops down)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 435.9,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "pull out over the detents and off the dock",
+    "frames": 33,
+    "ik_ok": true,
+    "min_clear_mm": -36.3,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Chamber door (6061-T6, 15 mm, drops down)"
+    ],
+    "seat": true,
+    "reach_margin_mm": 435.9,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "carry out of the optics-bridge slot",
+    "frames": 36,
+    "ik_ok": true,
+    "min_clear_mm": -13.0,
+    "pair": [
+     "gripper right_coupler",
+     "2-axis galvo scan head (basiCube class)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 521.7,
+    "deg_range": null,
+    "ok_deg": []
+   }
+  ]
+ },
+ "overflow_jar": {
+  "op": "overflow_jar",
+  "frames": 116,
+  "ik_all": false,
+  "unreachable_steps": [
+   "approach the jar under the chamber",
+   "out to the front"
+  ],
+  "min_clear_mm": -86.9,
+  "min_clear_step": "out to the front",
+  "min_clear_pair": [
+   "UR10e upper_arm_link",
+   "Base plate, process module (MIC-6, 15 mm)",
+   -86.9
+  ],
+  "exact_mm": -1000.0,
+  "seat_min_mm": -62.0,
+  "collisions": [
+   {
+    "step": "approach the jar under the chamber",
+    "robot": "UR10e forearm_link",
+    "machine": "tray"
+   },
+   {
+    "step": "approach the jar under the chamber",
+    "robot": "UR10e upper_arm_link",
+    "machine": "Base plate, process module (MIC-6, 15 mm)"
+   },
+   {
+    "step": "approach the jar under the chamber",
+    "robot": "UR10e wrist_1_link",
+    "machine": "tray"
+   },
+   {
+    "step": "approach the jar under the chamber",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Base plate, process module (MIC-6, 15 mm)"
+   },
+   {
+    "step": "approach the jar under the chamber",
+    "robot": "gripper right_coupler",
+    "machine": "Sliding guard door (aluminium)"
+   },
+   {
+    "step": "approach the jar under the chamber",
+    "robot": "gripper right_follower",
+    "machine": "Sliding guard door (aluminium)"
+   },
+   {
+    "step": "close on the jar",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Base plate, process module (MIC-6, 15 mm)"
+   },
+   {
+    "step": "out to the front",
+    "robot": "UR10e forearm_link",
+    "machine": "Guard frame (20 mm T-slot)"
+   }
+  ],
+  "reach_margin_min_mm": 726.7,
+  "limit_margin_min_deg": 14.3,
+  "reconfigurations": [
+   [
+    "out to the front",
+    0.03
+   ],
+   [
+    "out to the front",
+    0.03
+   ],
+   [
+    "out to the front",
+    0.08
+   ],
+   [
+    "out to the front",
+    0.03
+   ]
+  ],
+  "torque": {
+   "peak_Nm": [
+    14.2,
+    81.0,
+    40.9,
+    3.6,
+    1.3,
+    0.0
+   ],
+   "peak_ratio": 0.272,
+   "worst_joint": "elbow",
+   "duration_s": 9.7,
+   "forces": {}
+  },
+  "fingers": "stock",
+  "runtime_s": 30.7,
+  "steps": [
+   {
+    "step": "approach the jar under the chamber",
+    "frames": 51,
+    "ik_ok": false,
+    "min_clear_mm": -84.0,
+    "pair": [
+     "UR10e upper_arm_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 726.7,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on the jar",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": -59.1,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 726.7,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "lower 6 mm off the KF-40 stub",
+    "frames": 7,
+    "ik_ok": true,
+    "min_clear_mm": -62.0,
+    "pair": [
+     "UR10e wrist_1_link",
+     "tray"
+    ],
+    "seat": true,
+    "reach_margin_mm": 726.7,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "out to the front",
+    "frames": 56,
+    "ik_ok": false,
+    "min_clear_mm": -86.9,
+    "pair": [
+     "UR10e upper_arm_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 728.8,
+    "deg_range": null,
+    "ok_deg": []
+   }
+  ]
+ },
+ "blade_cartridge": {
+  "op": "blade_cartridge",
+  "frames": 160,
+  "ik_all": false,
+  "unreachable_steps": [
+   "approach over the sill",
+   "out through the door"
+  ],
+  "min_clear_mm": -112.0,
+  "min_clear_step": "in to the holder",
+  "min_clear_pair": [
+   "UR10e forearm_link",
+   "Base plate, process module (MIC-6, 15 mm)",
+   -112.0
+  ],
+  "exact_mm": -1000.0,
+  "seat_min_mm": -112.0,
+  "collisions": [
+   {
+    "step": "approach over the sill",
+    "robot": "UR10e forearm_link",
+    "machine": "tray"
+   },
+   {
+    "step": "approach over the sill",
+    "robot": "UR10e upper_arm_link",
+    "machine": "tray"
+   },
+   {
+    "step": "approach over the sill",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach over the sill",
+    "robot": "UR10e wrist_3_link",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach over the sill",
+    "robot": "gripper base",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach over the sill",
+    "robot": "gripper left_pad (left_tip_drop)",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach over the sill",
+    "robot": "gripper right_pad (right_tip_drop)",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "close on holder + blade",
+    "robot": "UR10e forearm_link",
+    "machine": "Base plate, process module (MIC-6, 15 mm)"
+   }
+  ],
+  "reach_margin_min_mm": 593.6,
+  "limit_margin_min_deg": 26.7,
+  "reconfigurations": [
+   [
+    "approach over the sill",
+    0.18
+   ],
+   [
+    "approach over the sill",
+    0.18
+   ],
+   [
+    "out through the door",
+    0.19
+   ],
+   [
+    "out through the door",
+    0.19
+   ]
+  ],
+  "torque": {
+   "peak_Nm": [
+    15.8,
+    100.1,
+    40.8,
+    6.4,
+    1.6,
+    1.1
+   ],
+   "peak_ratio": 0.303,
+   "worst_joint": "shoulder",
+   "duration_s": 12.1,
+   "forces": {
+    "pull 10 mm out of the arm's pocket": {
+     "needed_N": 40.0,
+     "arm_can_N": 220.0
+    }
+   }
+  },
+  "fingers": "custom",
+  "runtime_s": 27.5,
+  "steps": [
+   {
+    "step": "approach over the sill",
+    "frames": 55,
+    "ik_ok": false,
+    "min_clear_mm": -70.6,
+    "pair": [
+     "UR10e upper_arm_link",
+     "tray"
+    ],
+    "seat": false,
+    "reach_margin_mm": 647.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "in to the holder",
+    "frames": 16,
+    "ik_ok": true,
+    "min_clear_mm": -112.0,
+    "pair": [
+     "UR10e forearm_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 593.6,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on holder + blade",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": -112.0,
+    "pair": [
+     "UR10e forearm_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 593.6,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "pull 10 mm out of the arm's pocket",
+    "frames": 11,
+    "ik_ok": true,
+    "min_clear_mm": -112.0,
+    "pair": [
+     "UR10e forearm_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": true,
+    "reach_margin_mm": 593.6,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "lift 12 mm over the sill",
+    "frames": 13,
+    "ik_ok": true,
+    "min_clear_mm": -111.7,
+    "pair": [
+     "UR10e forearm_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 596.8,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "out through the door",
+    "frames": 63,
+    "ik_ok": false,
+    "min_clear_mm": -111.7,
+    "pair": [
+     "UR10e forearm_link",
+     "Base plate, process module (MIC-6, 15 mm)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 596.8,
+    "deg_range": null,
+    "ok_deg": []
+   }
+  ]
+ },
+ "liner": {
+  "op": "liner",
+  "frames": 142,
+  "ik_all": false,
+  "unreachable_steps": [
+   "out through the door"
+  ],
+  "min_clear_mm": -80.0,
+  "min_clear_step": "out through the door",
+  "min_clear_pair": [
+   "UR10e wrist_2_link",
+   "Chamber door (6061-T6, 15 mm, drops down)",
+   -80.0
+  ],
+  "exact_mm": -1000.0,
+  "seat_min_mm": -80.0,
+  "collisions": [
+   {
+    "step": "approach the liner's tab",
+    "robot": "UR10e forearm_link",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach the liner's tab",
+    "robot": "UR10e wrist_1_link",
+    "machine": "Chamber door (6061-T6, 15 mm, drops down)"
+   },
+   {
+    "step": "approach the liner's tab",
+    "robot": "UR10e wrist_1_link",
+    "machine": "Door handle"
+   },
+   {
+    "step": "approach the liner's tab",
+    "robot": "UR10e wrist_1_link",
+    "machine": "Draw latches on the door (304 SS, 800 lb)"
+   },
+   {
+    "step": "approach the liner's tab",
+    "robot": "UR10e wrist_2_link",
+    "machine": "Sliding guard door (aluminium)"
+   },
+   {
+    "step": "approach the liner's tab",
+    "robot": "UR10e wrist_2_link",
+    "machine": "extra_gdoor_6"
+   },
+   {
+    "step": "approach the liner's tab",
+    "robot": "gripper base",
+    "machine": "Sliding guard door (aluminium)"
+   },
+   {
+    "step": "approach the liner's tab",
+    "robot": "gripper base",
+    "machine": "extra_gdoor_6"
+   }
+  ],
+  "reach_margin_min_mm": 564.0,
+  "limit_margin_min_deg": 34.5,
+  "reconfigurations": [],
+  "torque": {
+   "peak_Nm": [
+    16.5,
+    52.8,
+    42.0,
+    2.3,
+    1.5,
+    1.7
+   ],
+   "peak_ratio": 0.28,
+   "worst_joint": "elbow",
+   "duration_s": 11.0,
+   "forces": {}
+  },
+  "fingers": "custom",
+  "runtime_s": 32.3,
+  "steps": [
+   {
+    "step": "approach the liner's tab",
+    "frames": 60,
+    "ik_ok": true,
+    "min_clear_mm": -61.8,
+    "pair": [
+     "UR10e forearm_link",
+     "Chamber door (6061-T6, 15 mm, drops down)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 564.0,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on the tab",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": -61.8,
+    "pair": [
+     "UR10e forearm_link",
+     "Chamber door (6061-T6, 15 mm, drops down)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 564.0,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "off the clips, 40 mm in along the ball screw, tilt 15 deg",
+    "frames": 12,
+    "ik_ok": true,
+    "min_clear_mm": -80.0,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Chamber door (6061-T6, 15 mm, drops down)"
+    ],
+    "seat": true,
+    "reach_margin_mm": 564.0,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "out through the door",
+    "frames": 68,
+    "ik_ok": false,
+    "min_clear_mm": -80.0,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Chamber door (6061-T6, 15 mm, drops down)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 575.8,
+    "deg_range": null,
+    "ok_deg": []
+   }
+  ]
+ },
+ "module_swap": {
+  "op": "module_swap",
+  "frames": 160,
+  "ik_all": false,
+  "unreachable_steps": [
+   "approach the module handle",
+   "module path (0, -190, -10) -> (0, -330, -10)"
+  ],
+  "min_clear_mm": -60.0,
+  "min_clear_step": "approach the module handle",
+  "min_clear_pair": [
+   "UR10e wrist_1_link",
+   "tray",
+   -60.0
+  ],
+  "exact_mm": null,
+  "seat_min_mm": -60.0,
+  "collisions": [
+   {
+    "step": "approach the module handle",
+    "robot": "UR10e wrist_1_link",
+    "machine": "tray"
+   },
+   {
+    "step": "approach the module handle",
+    "robot": "UR10e wrist_2_link",
+    "machine": "tray"
+   },
+   {
+    "step": "close on the handle's side arms",
+    "robot": "UR10e wrist_1_link",
+    "machine": "tray"
+   },
+   {
+    "step": "module path (0, -170, -22) -> (0, -190, -22)",
+    "robot": "UR10e wrist_2_link",
+    "machine": "tray"
+   },
+   {
+    "step": "module path (0, -170, -40) -> (0, -170, -22)",
+    "robot": "UR10e wrist_2_link",
+    "machine": "tray"
+   },
+   {
+    "step": "module path (0, -170, -40) -> (0, -170, -22)",
+    "robot": "gripper right_spring_link",
+    "machine": "Guard frame (20 mm T-slot)"
+   },
+   {
+    "step": "module path (0, 0, -40) -> (0, -170, -40)",
+    "robot": "UR10e forearm_link",
+    "machine": "tray"
+   },
+   {
+    "step": "module path (0, 0, -40) -> (0, -170, -40)",
+    "robot": "UR10e wrist_1_link",
+    "machine": "tray"
+   }
+  ],
+  "reach_margin_min_mm": 776.1,
+  "limit_margin_min_deg": 13.9,
+  "reconfigurations": [
+   [
+    "approach the module handle",
+    0.71
+   ],
+   [
+    "approach the module handle",
+    5.76
+   ],
+   [
+    "module path (0, -190, -10) -> (0, -330, -10)",
+    5.8
+   ],
+   [
+    "module path (0, -190, -10) -> (0, -330, -10)",
+    0.32
+   ]
+  ],
+  "torque": {
+   "peak_Nm": [
+    11.8,
+    56.5,
+    58.6,
+    7.5,
+    3.6,
+    1.2
+   ],
+   "peak_ratio": 0.39,
+   "worst_joint": "elbow",
+   "duration_s": 27.8,
+   "forces": {
+    "module path (0, 0, 0) -> (0, 0, -40)": {
+     "needed_N": 0.0,
+     "arm_can_N": Infinity
+    },
+    "module path (0, 0, -40) -> (0, -170, -40)": {
+     "needed_N": 0.0,
+     "arm_can_N": Infinity
+    },
+    "module path (0, -170, -40) -> (0, -170, -22)": {
+     "needed_N": 0.0,
+     "arm_can_N": Infinity
+    },
+    "module path (0, -170, -22) -> (0, -190, -22)": {
+     "needed_N": 0.0,
+     "arm_can_N": Infinity
+    },
+    "module path (0, -190, -22) -> (0, -190, -10)": {
+     "needed_N": 0.0,
+     "arm_can_N": Infinity
+    },
+    "module path (0, -190, -10) -> (0, -330, -10)": {
+     "needed_N": 0.0,
+     "arm_can_N": Infinity
+    }
+   }
+  },
+  "fingers": "stock",
+  "runtime_s": 147.2,
+  "steps": [
+   {
+    "step": "approach the module handle",
+    "frames": 51,
+    "ik_ok": false,
+    "min_clear_mm": -60.0,
+    "pair": [
+     "UR10e wrist_1_link",
+     "tray"
+    ],
+    "seat": false,
+    "reach_margin_mm": 776.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "close on the handle's side arms",
+    "frames": 2,
+    "ik_ok": true,
+    "min_clear_mm": -60.0,
+    "pair": [
+     "UR10e wrist_1_link",
+     "tray"
+    ],
+    "seat": false,
+    "reach_margin_mm": 776.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "module path (0, 0, 0) -> (0, 0, -40)",
+    "frames": 11,
+    "ik_ok": true,
+    "min_clear_mm": -60.0,
+    "pair": [
+     "UR10e wrist_1_link",
+     "tray"
+    ],
+    "seat": true,
+    "reach_margin_mm": 776.1,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "module path (0, 0, -40) -> (0, -170, -40)",
+    "frames": 44,
+    "ik_ok": true,
+    "min_clear_mm": -48.0,
+    "pair": [
+     "UR10e wrist_2_link",
+     "Guard frame (20 mm T-slot)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 790.0,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "module path (0, -170, -40) -> (0, -170, -22)",
+    "frames": 6,
+    "ik_ok": true,
+    "min_clear_mm": -19.9,
+    "pair": [
+     "gripper right_spring_link",
+     "Guard frame (20 mm T-slot)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 947.5,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "module path (0, -170, -22) -> (0, -190, -22)",
+    "frames": 6,
+    "ik_ok": true,
+    "min_clear_mm": -17.0,
+    "pair": [
+     "UR10e wrist_2_link",
+     "tray"
+    ],
+    "seat": false,
+    "reach_margin_mm": 947.5,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "module path (0, -190, -22) -> (0, -190, -10)",
+    "frames": 4,
+    "ik_ok": true,
+    "min_clear_mm": 0.5,
+    "pair": [
+     "gripper right_spring_link",
+     "Guard frame (20 mm T-slot)"
+    ],
+    "seat": false,
+    "reach_margin_mm": 958.3,
+    "deg_range": null,
+    "ok_deg": []
+   },
+   {
+    "step": "module path (0, -190, -10) -> (0, -330, -10)",
+    "frames": 36,
+    "ik_ok": false,
+    "min_clear_mm": 3.0,
+    "pair": [
+     "UR10e wrist_2_link",
+     "tray"
+    ],
+    "seat": false,
+    "reach_margin_mm": 958.3,
+    "deg_range": null,
+    "ok_deg": []
+   }
+  ]
+ },
+ "_meta": {
+  "base_mm": [
+   0.0,
+   -682.0,
+   -562.0
+  ],
+  "menagerie_sha": "370c43965323c0944b433b202aac5058b5f907a9",
+  "cad": "/tmp/robot-work/cad",
+  "module_mass_kg": 2.48
+ }
+}
