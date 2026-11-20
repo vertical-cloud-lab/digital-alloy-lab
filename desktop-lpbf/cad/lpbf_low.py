@@ -29,6 +29,7 @@ import cadquery as cq
 
 import module_params as MP
 import modules_low as ML
+import vendor_parts as VP     # real bought parts drawn to published dimensions (real-parts.md)
 
 V = cq.Vector
 HERE = pathlib.Path(__file__).resolve().parent
@@ -76,7 +77,9 @@ P["lid_z0"], P["lid_z1"] = P["ch_z"], P["ch_z"] + P["lid"]
 P["z_lens0"] = P["lens_wd"]                              # lens housing bottom
 P["z_bridge1"] = P["lens_wd"] + P["lens_len"]            # galvo mounting face = bridge top
 P["z_bridge0"] = P["z_bridge1"] - 25.0               # 25 mm: FEA put f1 at 79 Hz with 15 mm + 40 mm posts
-P["beam_z"] = P["z_bridge1"] + 45.0
+P["galvo_riser"] = 10.0                              # basiCube 20 sits on a 10 mm plate so the beam tube clears the reservoir handles
+P["beam_z"] = P["z_bridge1"] + P["galvo_riser"] + VP.GALVO_IN[2]   # 272.7: real beam entry (was z_bridge1 + 45)
+P["beam_y"] = VP.GALVO_IN[1]                         # -25.25: the input axis is offset from the lens axis
 P["z_base1"] = Z_TRAY + FOOT["body"] + FOOT["stem"]     # module base plates (15 mm) on the leveling mounts
 P["z_base0"] = P["z_base1"] - 15.0
 
@@ -153,11 +156,11 @@ MOTION = {
     "recoater": dict(kind="tx", lo=0.0, hi=P["x_end"] - P["x_park"], note="blade from park to end of spread"),
     "piston": dict(kind="tz", lo=MP.Z_P_MIN, hi=MP.Z_P_MAX, note="build piston: stroke, bottom stop and +8 mm plate-exchange overtravel"),
     "door": dict(kind="rx", lo=0.0, hi=P["door_open_deg"], note="drop-down door about its bottom hinge"),
-    "gdoor": dict(kind="tx", lo=0.0, hi=470.0, note="laser-guard door slides right"),
+    "gdoor": dict(kind="tx", lo=0.0, hi=515.0, note="laser-guard door slides right (515 mm: clears the right door latch)"),
     "cartridge": dict(kind="ty", lo=-125.0, hi=0.0, note="reservoir slides out to the front"),
     "drawer": dict(kind="ty", lo=-120.0, hi=0.0, note="cover-slide drawer pulls out of the lid's front edge"),
     "zstage": dict(kind="tz", lo=MP.ZSTAGE_RELEASE, hi=0.0, note="Z arm drops away from the rod end (magnet breaks away), piston held by its collar"),
-    "module": dict(kind="path", path=MODULE_PATH, lo=0.0, hi=None, base_state={"zstage": MP.ZSTAGE_RELEASE, "gdoor": 470.0},
+    "module": dict(kind="path", path=MODULE_PATH, lo=0.0, hi=None, base_state={"zstage": MP.ZSTAGE_RELEASE, "gdoor": 515.0},
                    note="build module drops 22 mm out of the floor port, slides forward under the chamber, lifts over the guard sill and out"),
 }
 MOTION["module"]["hi"] = sum(math.dist(a, b) for a, b in zip(MODULE_PATH[:-1], MODULE_PATH[1:]))
@@ -424,7 +427,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         tr = box(-ox, ox, -oy, oy, Z_TRAY - TRAY["t"], Z_TRAY)
         rim = box(-ox, ox, -oy, oy, Z_TRAY, Z_TRAY + TRAY["rim"]).cut(box(-inx, inx, -iny, iny, Z_TRAY - 1, Z_TRAY + TRAY["rim"] + 1))
         add("VLM tray 2450 x 864 mm (context)", fuse([tr, rim]), C["tray"], 1, (0, 0, -200), mat="steel", mass_kg=0.0, module="tray", tags=("context",))
-    bases = {"rack": (-990.0, -430.0, -300.0, 300.0), "process": (-370.0, 290.0, -265.0, 215.0), "gas": (400.0, 990.0, -250.0, 300.0)}
+    bases = {"rack": (-990.0, -430.0, -300.0, 300.0), "process": (-420.0, 310.0, -265.0, 215.0), "gas": (400.0, 990.0, -250.0, 300.0)}
     for mod, (x0, x1, y0, y1) in bases.items():
         if mod == "rack":
             continue   # the rack stands on its own frame
@@ -446,7 +449,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
 
     # ===================== 2. Rack module =====================
     rx0, rx1, ry0, ry1 = bases["rack"]
-    rz0, rz1 = Z_TRAY, Z_TRAY + 470.0
+    rz0, rz1 = Z_TRAY, Z_TRAY + 515.0                       # 11U (was 10U, 470): the IPG YLR-500-U3 is 4U
     posts = []
     for x in (rx0, rx1 - 25):
         for y in (ry0, ry1 - 25):
@@ -454,16 +457,21 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     for z in (rz0 + 0, rz1 - 20):
         posts += [box(rx0, rx1, ry0, ry0 + 25, z, z + 20), box(rx0, rx1, ry1 - 25, ry1, z, z + 20),
                   box(rx0, rx0 + 25, ry0 + 25, ry1 - 25, z, z + 20), box(rx1 - 25, rx1, ry0 + 25, ry1 - 25, z, z + 20)]
-    add("19 in. rack frame (10U, 470 mm tall)", comp(posts), C["rack"], 2, (0, 0, 0), mat="steel", mass_kg=22.0, module="rack", bom="S9")
+    add("19 in. rack frame (11U, 515 mm tall)", comp(posts), C["rack"], 2, (0, 0, 0), mat="steel", mass_kg=22.0, module="rack", bom="S9")
     ux0, ux1 = (rx0 + rx1) / 2 - 241.3, (rx0 + rx1) / 2 + 241.3      # 19 in. front panel width
     u = 44.45
     zr = rz0 + 25.0
-    units = [("UPS (Eaton 5PX 1500 class, 2U)", 2, C["black"], 25.0, "C6"), ("Fiber laser source, 500 W single-mode (3U)", 3, C["white"], 40.0, "L1"),
+    units = [("UPS (Eaton 5PX1500RTG2, 2U)", 2, C["black"], 23.0, "C6"), ("Fiber laser source, 500 W single-mode, IPG YLR-500-U3-SM-AC (4U)", 4, C["white"], 40.0, "L1"),
              ("Scan + laser controller PC (2U)", 2, C["anod"], 8.0, "C1"), ("DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5 (3U)", 3, C["din"], 9.0, "C3")]
     for nm, nu, col, m, b in units:
         bx = box(ux0 + 18, ux1 - 18, ry0 + 30, ry1 - 40, zr + 1, zr + nu * u - 1)
         face = box(ux0, ux1, ry0 + 26, ry0 + 30, zr + 1, zr + nu * u - 1)
-        add(nm, comp([bx, face]), col, 2, (0, -400, 0), mat="misc", mass_kg=m, module="rack", bom=b)
+        shp = comp([bx, face])
+        if b == "L1":        # real chassis: 4U, 506 deep, handles 51 mm proud (vendor_parts.ipg_ylr500_u3)
+            shp = VP.ipg_ylr500_u3().translate(V((rx0 + rx1) / 2, ry0 + 30, zr + 0.5))
+        elif b == "C6":      # Eaton 5PX1500RTG2 (vendor_parts.eaton_5px1500rtg2)
+            shp = VP.eaton_5px1500rtg2().translate(V((rx0 + rx1) / 2, ry0 + 30, zr + 1))
+        add(nm, shp, col, 2, (0, -400, 0), mat="misc", mass_kg=m, module="rack", bom=b)
         zr += nu * u
     add("Rack side panels (vented)", comp([box(rx0 - 2, rx0, ry0, ry1, rz0 + 20, rz1), box(rx1, rx1 + 2, ry0, ry1, rz0 + 20, rz1)]), C["panel"], 2, (0, 0, 0), mat="al6061", module="rack", opacity=0.35, bom="S9")
 
@@ -475,6 +483,12 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
             legs.append(box(x, x + 30, y, y + 30, zb1, zf))
     add("Chamber legs (6061, 30 x 30)", comp(legs), C["alu_dark"], 3, (0, 0, -120), mat="al6061", bom="G1")
     ML.add_zstage(sys.modules[__name__], add, 3)
+    zz = ML.zlevels()
+    az1 = MP.Z_P_MAX + (zz["zc"] - MP.ARM_T) + 40.0 + 3.0
+    for p_ in parts:         # real Teknic CPM-SDSK-2311S in place of modules_low's generic NEMA 23 (same mount point)
+        if p_.name.startswith("Z servo (ClearPath-SD"):
+            p_.shape = place(VP.clearpath_sd_231x(18.0, connector="-y"), (64.0, 80.0, az1), (1, 0, 0), (0, 0, 1))
+            p_.mass_kg = 0.6
 
     # ===================== 4. Heated build module, overflow =====================
     ML.add_build_module(sys.modules[__name__], add, module, 4)
@@ -488,10 +502,11 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add(f"Overflow funnel O-ring (FKM 75A {pk[0]}, face seal under the floor)", ring_loop("z", (ox, 0, 0), hi_f, 2.0, (zf - 1.32, zf), 1.5), C["black"], 4, (0, 0, -200), mat="fkm", bom="M4")
     GLANDS["overflow_funnel"] = dict(kind="face", ring=pk[0], cs=1.78, depth=1.32, width=2.3, inner_perimeter=loop_perimeter(hi_f, 1.5), groove_mat="ss", T=50.0,
                                      closure="overflow funnel block (316L) under the floor")
-    add("Overflow port (KF-40)", place(kf_stub(40, 16), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, -1)), C["ss"], 4, (0, 0, -220), mat="ss304", bom="G7", mcm="KF40_WELD", section=True)
-    jar = fuse([place(kf_stub(40, 90), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1)), cyl(KF[40][1] / 2, (ox, 0, zf - 22 - 16 - 92), "z", 2)])
+    add("Overflow port (KF-40)", place(VP.kf_weld_stub(40, 16), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, -1)), C["ss"], 4, (0, 0, -220), mat="ss304", bom="G7", mcm="KF40_WELD", section=True)
+    jar = fuse([place(VP.kf_weld_stub(40, 90), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1)), cyl(VP.KF_REAL[40]["to"] / 2, (ox, 0, zf - 22 - 16 - 92), "z", 2)])
     add("Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)", jar, C["ss"], 4, (0, 0, -260), mat="ss304", bom="M4", mcm="KF40_NIPPLE", section=True)
-    add("Overflow clamp (KF-40)", place(kf_clamp(40), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1)), C["alu_dark"], 4, (0, 0, -260), mat="al6061", bom="G7", mcm="KF40_CLAMP", section=True)
+    add("Overflow clamp (KF-40)", place(VP.kf_wing_clamp(40), (ox, 0, zf - 22 - 16), (0, -1, 0), (0, 0, 1)),   # hinge to +y, wing to +x: clear of the module path
+        C["alu_dark"], 4, (0, 0, -260), mat="al6061", bom="G7", mcm="KF40_CLAMP", section=True)
     add("Overflow-jar present sensor (inductive M12, PNP)", cyl(6.0, (ox + 28.0, 0, zf - 22 - 16 - 60), "x", 30.0), C["blue"], 4, (120, 0, 0), mat="misc", mass_kg=0.02, bom="A1")
 
     # ===================== 5. Chamber body =====================
@@ -533,7 +548,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         C["black"], 5, (0, 180, 0), mat="fkm", bom="G8", section=True)
     GLANDS["inlet_plenum"] = dict(kind="face", ring=pk[0], cs=1.78, depth=F["depth"], width=F["width"], inner_perimeter=loop_perimeter(hi_in, ri_in),
                                   groove_mat="ss", T=45.0, closure="inlet plenum (316L) on the back wall (6061)")
-    add("Inlet plenum port (KF-25)", place(kf_stub(25, 26), (0, cy + 32 + 20, 11), (1, 0, 0), (0, 1, 0)), C["ss"], 5, (0, 200, 0), mat="ss304", bom="G7", mcm="KF25_WELD")
+    add("Inlet plenum port (KF-25)", place(VP.kf_weld_stub(25, 26), (0, cy + 32 + 20, 11), (1, 0, 0), (0, 1, 0)), C["ss"], 5, (0, 200, 0), mat="ss304", bom="G7", mcm="KF25_WELD")
     # flat (16 mm) under the module's path to the front, with a deeper boot at the right end for the KF-25 port
     y0o, y1o = MP.OUTLET_Y
     # 9 mm flanges along the slot carry an FKM face O-ring and 6 counterbored M4 screws up into the floor (joints.py)
@@ -548,10 +563,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         C["black"], 5, (0, 0, -180), mat="fkm", bom="G8", section=True)
     GLANDS["outlet_plenum"] = dict(kind="face", ring=pk[0], cs=1.78, depth=F["depth"], width=F["width"], inner_perimeter=loop_perimeter(hi_o, 1.5),
                                    groove_mat="ss", T=45.0, closure="outlet plenum (316L) under the floor (6061)")
-    add("Outlet plenum port (KF-25)", place(kf_stub(25, 26), (86, (y0o + y1o) / 2, zf - 45 - 26), (1, 0, 0), (0, 0, 1)), C["ss"], 5, (180, 0, -180), mat="ss304", bom="G7", mcm="KF25_WELD")
+    add("Outlet plenum port (KF-25)", place(VP.kf_weld_stub(25, 26), (86, (y0o + y1o) / 2, zf - 45 - 26), (1, 0, 0), (0, 0, 1)), C["ss"], 5, (180, 0, -180), mat="ss304", bom="G7", mcm="KF25_WELD")
     # 304 cannot be welded to the 6061 body: the KF-25 stub is welded into a 304 adapter plate that bolts on (4 x M5, joints.py)
     # over an FKM face O-ring (seals.md item 10)
-    add("Vacuum port (KF-25, stub welded into the adapter plate)", place(kf_stub(25, 10), (cx + 18, 0, 70), (0, 1, 0), (1, 0, 0)), C["ss"], 5, (180, 0, 0), mat="ss304", bom="G7", mcm="KF25_WELD")
+    add("Vacuum port (KF-25, stub welded into the adapter plate)", place(VP.kf_weld_stub(25, 10), (cx + 18, 0, 70), (0, 1, 0), (1, 0, 0)), C["ss"], 5, (180, 0, 0), mat="ss304", bom="G7", mcm="KF25_WELD")
     vap = box(cx, cx + 8, -28, 28, 42, 98).cut(cyl(11.1, (cx - 1, 0, 70), "x", 10)).cut(tube(16.8, 14.5, (cx - 0.01, 0, 70), "x", F["depth"] + 0.01))
     add("Vacuum port adapter plate (304, 8 mm, FKM face O-ring)", vap, C["ss"], 5, (180, 0, 0), mat="ss304", bom="G7", section=True)
     add("Vacuum port adapter O-ring (FKM 75A 2-024)", tube(16.6, 14.5, (cx, 0, 70), "x", F["depth"]), C["black"], 5, (180, 0, 0), mat="fkm", bom="G8")
@@ -576,10 +591,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         C["blue"], 5, (0, 0, -120), mat="misc", mass_kg=0.02, bom="A1")
 
     # ===================== 6. Recoater =====================
-    rr = place(guide_rail(270.0, 15.0, 15.0), (-135, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0))
+    rr = place(VP.mcm_6709K33(270.0), (-135, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0))
     add("Recoater guide rail (15 mm, 270 mm)", rr, C["steel"], 6, (0, 0, 220), mat="steel", bom="M1", mcm="6709K33")
     xc = P["x_park"]
-    add("Recoater carriage (15 mm rail)", place(guide_carriage(57.0, 34.0, 28.0, 3.0, 15.0, 15.0), (xc, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0)), C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M1", mcm="6709K12")
+    add("Recoater carriage (15 mm rail)", place(VP.mcm_6709K12(), (xc, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0)), C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M1", mcm="6709K12")
     yc = iy - 28.0                                              # carriage mounting face
     # the Ø75 blade is 104 mm long, so the holder cantilevers ~106 mm from the arm (66 mm before): 18 x 31 instead of
     # 18 x 19 keeps the tip deflection near the 3.4 um the FEA found for the short holder (L^3 / h^3)
@@ -591,7 +606,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # the screw now ends inside the left wall's bore, where a clamp coupling joins it to the feedthrough's vacuum-side shaft
     xs0 = -cx + FERRO["vac_shaft"] - FERRO["spacer"]
     add("Recoater ball screw (M12, 10 mm lead)", place(ball_screw(cx + 5 - xs0, 12.0, 8.0, 11.0), (xs0, ry_, rz_), (1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), mat="steel", bom="M1", mcm="4566N101")
-    add("Recoater ball nut (flange on the +x face)", place(ball_nut(12.0, 23.0, 43.0, 40.0, 10.0, None), (xc + 10.5, ry_, rz_), (-1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M1", mcm="4566N401")
+    add("Recoater ball nut (flange on the +x face)", place(VP.mcm_4566N401(), (xc + 10.5, ry_, rz_), (-1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M1", mcm="4566N401")
     # stiffened after FEA (analysis/out/fea): a 12 x 8 arm and 14 x 11 holder let the blade deflect 17 um under a 10 N
     # spreading load; a 40 x 14 web and an 18 x 19 holder bring it to 3.4 um (< 5 um, 1/6 of a 30 um layer)
     add("Recoater arm (6061, 40 x 14 web)", box(xc - 20, xc + 20, iy - 42, iy - 28, 14, 25).cut(holder).cut(bl), C["alu"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M5")
@@ -626,9 +641,9 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     x_m = x_f - FT["body_l"] - FT["air_shaft"]                         # end of the feedthrough's air-side shaft
     x_m0 = min(x_m - 25.0, -cx - 101.0)                                # servo mount face (was -cx - 60 before the feedthrough)
     add("Recoater motor standoff", tube(30, 26, (x_m0, ry_, rz_), "x", x_m - x_m0), C["alu_dark"], 6, (-200, 0, 0), mat="al6061", bom="M1")
-    rmot = place(servo_nema23(100.0, 20.0), (x_m0, ry_, rz_), (0, 1, 0), (1, 0, 0))
-    add("Recoater servo (ClearPath-SD, NEMA 23)", rmot, C["motor"], 6, (-260, 0, 0), mat="misc", mass_kg=1.6, bom="M2")
-    add("Recoater motor bracket", box(max(x_m0 - 90.0, -347.0), x_m0, ry_ - 30, ry_ + 30, zb1, rz_ - 28.6), C["alu_dark"], 6, (-260, 0, 0), mat="al6061", bom="M1")
+    rmot = place(VP.clearpath_sd_231x(20.57), (x_m0, ry_, rz_), (0, 1, 0), (1, 0, 0))   # Teknic CPM-SDSK-2311S
+    add("Recoater servo (ClearPath-SD, NEMA 23)", rmot, C["motor"], 6, (-260, 0, 0), mat="misc", mass_kg=0.6, bom="M2")
+    add("Recoater motor bracket", box(max(x_m0 - 90.0, -347.0), x_m0, ry_ - 30, ry_ + 30, zb1, rz_ - 29.6), C["alu_dark"], 6, (-260, 0, 0), mat="al6061", bom="M1")   # 59.1 mm motor
 
     # ===================== 7. Lid =====================
     lid = rbox(-cx, cx, -cy, cy, lz0, lz1, 8)
@@ -733,9 +748,9 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add(f"Roller feedthrough O-ring (FKM 75A {FS_['oring']}, under the housing's shoulder)", tube(7.0, 4.75, (xd, yb - 1.32, rzc), "y", 1.32), C["black"], 7, (0, 160, 300), mat="fkm", bom="M4")
     GLANDS["roller_feedthrough"] = dict(kind="face", ring=FS_["oring"], cs=1.78, depth=1.32, width=2.3, groove_id=9.5, groove_mat="al", T=45.0,
                                         closure="roller feedthrough in the metering base")
-    ys = yb + FS_["body_l"] + FS_["air_shaft"] + 14.0                    # stepper face: room for a 5 to 5 mm coupling
-    add("Roller drive coupling (5 mm to 5 mm)", tube(6.0, 2.5, (xd, yb + FS_["body_l"] + 1.0, rzc), "y", FS_["air_shaft"] + 11.0), C["steel"], 7, (0, 160, 300), mat="steel", bom="M4")
-    add("Dosing stepper (NEMA 17)", place(stepper_nema17(40), (xd, ys, rzc), (1, 0, 0), (0, -1, 0)), C["motor"], 7, (0, 160, 300), mat="misc", mass_kg=0.32, bom="M4", mcm="6627T91")
+    ys = yb + FS_["body_l"] + FS_["air_shaft"] + 26.0                    # stepper face: the 6627T91 shaft is 24 mm + 2 mm pilot                    # stepper face: room for a 5 to 5 mm coupling
+    add("Roller drive coupling (5 mm to 5 mm)", tube(6.0, 2.5, (xd, yb + FS_["body_l"] + 1.0, rzc), "y", FS_["air_shaft"] + 23.0), C["steel"], 7, (0, 160, 300), mat="steel", bom="M4")
+    add("Dosing stepper (NEMA 17)", place(VP.mcm_6627T91(), (xd, ys, rzc), (1, 0, 0), (0, -1, 0)), C["motor"], 7, (0, 160, 300), mat="misc", mass_kg=0.32, bom="M4", mcm="6627T91")
     add("Side reservoir port (KF-16 flange machined in the 6061 base, blanked; reserved for a >= 500 cm3 reservoir beside the chamber with an auger)",
         place(kf_stub(16, 18), (xd - 17 - 18, 35, rzc), (0, 1, 0), (-1, 0, 0)), C["ss"], 7, (-120, 0, 0), mat="ss304", bom="R1")
     add("Reservoir-docked sensor (inductive M12, at the back of the dock)", cyl(6.0, (xd, 60.0, zd + 14.0), "y", 30.0), C["blue"], 7, (0, 160, 300), mat="misc", mass_kg=0.02, bom="A1")
@@ -834,19 +849,22 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
             pst.append(t_)
     add("Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)", comp(pst), C["alu_dark"], 9, (0, 0, 200), mat="al6061", bom="F5")
     zl0 = P["z_lens0"]
-    lens = fuse([cyl(P["lens_d"] / 2, (0, 0, zl0), "z", P["lens_len"]), cyl(30, (0, 0, zl0 - 1.5), "z", 1.5)])
-    add("f-theta lens, f = 160 mm (FTH160-1064 envelope)", lens, C["black"], 9, (0, 0, 300), mat="misc", mass_kg=0.6, bom="L6")
+    lens = VP.thorlabs_fth160_1064().translate(V(0, 0, zl0))
+    add("f-theta lens, f = 160 mm (Thorlabs FTH160-1064)", lens, C["black"], 9, (0, 0, 300), mat="misc", mass_kg=0.8, bom="L6")
+    # the lens's M85x1 thread (z 191.7-204.5) ends 3.2 mm below the bridge: a 16 mm adapter ring takes it
+    add("f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge)", tube(55.0, 42.5, (0, 0, zl0 + 9.2), "z", zb0_ - zl0 - 9.2), C["anod"], 9, (0, 0, 280), mat="al6061", bom="L6")
     g = P["galvo"] / 2
-    galvo = fuse([rbox(-g, g, -g, g, zb1_, zb1_ + P["galvo_h"], 8), cyl(17, (-g - 15, 0, P["beam_z"]), "x", 15)])
-    add("2-axis galvo scan head (basiCube class)", galvo, C["anod"], 9, (0, 0, 340), mat="misc", mass_kg=2.5, bom="L5")
-    btube = tube(14, 11, (-140, 0, P["beam_z"]), "x", 140 - g - 15)
+    galvo = VP.scanlab_basicube20().translate(V(0, 0, zb1_ + P["galvo_riser"]))
+    add("2-axis galvo scan head (SCANLAB basiCube 20)", galvo, C["anod"], 9, (0, 0, 340), mat="misc", mass_kg=3.75, bom="L5")
+    add("Galvo riser plate (6061, 10 mm)", box(-57.15, 97.85, -71.75, 58.25, zb1_, zb1_ + P["galvo_riser"]), C["alu_dark"], 9, (0, 0, 330), mat="al6061", bom="L5")
+    yb_, bz_ = P["beam_y"], P["beam_z"]
+    btube = tube(10, 8, (-140, yb_, bz_), "x", 140 + VP.GALVO_IN[0])
     add("Enclosed beam tube", btube, C["anod"], 9, (0, 0, 340), mat="al6061", bom="L4")
-    sh = fuse([rbox(-200, -140, -32, 32, P["beam_z"] - 26, P["beam_z"] + 26, 4), box(-190, -150, -20, 20, zb1_, P["beam_z"] - 26)])
+    sh = fuse([rbox(-200, -140, yb_ - 32, yb_ + 32, bz_ - 26, bz_ + 26, 4), box(-190, -150, yb_ - 20, yb_ + 20, zb1_, bz_ - 26)])
     add("Safety shutter + beam dump", sh, C["yellow"], 9, (0, 0, 340), mat="misc", mass_kg=1.2, bom="L4")
-    coll = fuse([cyl(16, (-320, 0, P["beam_z"]), "x", 110), cyl(12, (-340, 0, P["beam_z"]), "x", 20),
-                 box(-300, -230, -20, 20, zb1_, P["beam_z"] - 16)])
-    add("Collimator (QBH, f = 30 mm, D ~ 3.2 mm) on V-mount", coll, C["ss"], 9, (0, 0, 340), mat="misc", mass_kg=0.5, bom="L3")
-    fiber = polyline_pipe([(-340, 0, P["beam_z"]), (-380, 0, P["beam_z"]), (-420, -40, 230), (-430, -150, 150), (-460, -220, 60), (-560, -260, 0), (-600, -280, -20)], 5)
+    coll = fuse([VP.ipg_collimator_d5().translate(V(-210, yb_, bz_)), box(-300, -230, yb_ - 20, yb_ + 20, zb1_, bz_ - 15)])   # IPG 5 mm collimator + V-mount
+    add("Collimator (IPG, 5 mm beam, 128 mm + 78 mm strain relief) on V-mount", coll, C["ss"], 9, (0, 0, 340), mat="misc", mass_kg=0.5, bom="L3")
+    fiber = polyline_pipe([(-416, yb_, bz_), (-421, -32, 262), (-422, -40, 230), (-430, -150, 150), (-460, -220, 60), (-560, -260, 0), (-600, -280, -20)], 5)
     add("Process fiber (armoured, ≥ 100 mm bend radius)", fiber, C["fiber"], 9, (0, 0, 300), mat="misc", mass_kg=0.6, bom="L1", module="rack")
 
     # ===================== 10. Gas & vacuum module =====================
@@ -870,21 +888,21 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add("Argon pressure regulator + flowmeter", comp([cyl(22, (500, 120, g0), "z", 60), cyl(14, (500, 120, g0 + 60), "z", 40)]), C["brass"], 10, (0, 300, 0), mat="brass", mass_kg=1.2, module="gas", bom="G3")
 
     # ===================== 11. Hoses =====================
-    vv = comp([place(kf_clamp(25), (cx + 18, 0, 70), (0, 1, 0), (1, 0, 0)), box(cx + 20, cx + 66, -22, 22, 48, 92),
-               cyl(14, (cx + 43, 0, 92), "z", 26), place(kf_stub(25, 15), (cx + 43, 0, 48), (1, 0, 0), (0, 0, -1))])
-    add("Vacuum isolation valve (KF-25 angle, pneumatic)", vv, C["ss"], 11, (220, 0, 0), mat="ss304", bom="G7", mcm="VALVE_KF25")
+    vv = comp([place(VP.kf_wing_clamp(25), (cx + 18, 0, 70), (0, 0, 1), (1, 0, 0)),   # ears up, hinge down: clear of the side draw latch
+               VP.mcm_4123K45("-x").translate(V(cx + 18, 0, 70))])   # McMaster 4123K45
+    add("Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)", vv, C["ss"], 11, (220, 0, 0), mat="ss304", bom="G7", mcm="VALVE_KF25")
     hoses = {
         "Outlet plenum to filter": [(86, -90, zf - 45 - 26), (86, -90, -105), (110, -122, -115), (170, -132, -100), (300, -60, 20), (400, -40, 160), (470, -40, g0 + 294)],
         "Filter to blower": [(470 + 55 + 40, -40, g0 + 60), (560, -100, g0 + 60), (580 - 20, -150, g0 + 60)],
         "Blower to inlet plenum": [(700, -150, g0 + 270), (650, 20, 150), (420, 205, 100), (250, 205, 60), (110, cy + 78, 30), (0, cy + 32 + 46, 11)],
-        "Vacuum line to pump": [(cx + 43, 0, 33), (cx + 43, 0, -30), (300, 60, -40), (500, 165, 80), (640, 165, g0 + 330)],
+        "Vacuum line to pump": [(cx + 18 + 124.2, 0, 70), (345, 0, 70), (400, 70, 60), (500, 165, 80), (640, 165, g0 + 330)],
     }
     add("Gas-loop + vacuum hoses (KF-25 SS bellows)", comp([polyline_pipe(h, 13) for h in hoses.values()]), C["hose"], 11, (0, 0, -160), mat="ss316l", mass_kg=3.0, bom="G7", mcm="HOSE_KF25")
     add("Argon line (1/4 in. 316L)", polyline_pipe([(477, 215, g0 + 82), (477, 215, 140), (300, 100, 130), (150, 100, 105), (100, 100, 100), (100, cy + 0.0, 100)], 3.2), C["argon"], 11, (0, 200, 0), mat="ss316l", bom="G7", mcm="TUBE_SS")
     add("O2 sample line (1/8 in. 316L)", polyline_pipe([(cx, -40, 18), (cx + 30, -40, 18), (300, -150, 75), (600, -205, 85), (790, -205, 85), (900, -160, 70), (900, -160, 50)], 2.0), C["ss"], 11, (0, -200, 0), mat="ss316l", bom="G6", mcm="TUBE_SS")
 
     # ===================== 12. Laser guard =====================
-    gx0, gx1, gy0, gy1 = -370.0, 290.0, -265.0, 215.0
+    gx0, gx1, gy0, gy1 = -420.0, 310.0, -265.0, 215.0     # was -370 / 290: real collimator (206 mm) and KF-25 ball valve (124 mm)
     gz0, gz1 = zb1, P["z_bridge1"] + P["galvo_h"] + 25.0
     fr = []
     for x in (gx0 + 10, gx1 - 10):
@@ -904,7 +922,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     gd = gd.cut(box(-300.0, 160.0, gy0 - 10, gy0, gz0 + 40, gz1 - 40))
     add("Sliding guard door (aluminium)", gd, C["panel"], 12, (0, -260, 0), group="gdoor", mat="al6061", opacity=0.35, bom="S9", mcm="SHEET", section=True)
     add("OD 7+ viewing window (1070 nm, polycarbonate)", box(-300.0, 160.0, gy0 - pt - 5, gy0 - pt - 3, gz0 + 40, gz1 - 40), C["laser_glass"], 12, (0, -260, 0), group="gdoor", mat="pc", opacity=0.45, bom="S5", section=True)
-    add("Guard door rail (top + bottom)", comp([box(-340.0, 680.0, gy0 - pt - 12, gy0 - pt - 7, gz1 - 8, gz1), box(-340.0, 680.0, gy0 - pt - 12, gy0 - pt - 7, gz0, gz0 + 8)]), C["steel"], 12, (0, -260, 0), mat="steel", bom="S9", section=True)
+    add("Guard door rail (top + bottom)", comp([box(-340.0, 720.0, gy0 - pt - 12, gy0 - pt - 7, gz1 - 8, gz1), box(-340.0, 720.0, gy0 - pt - 12, gy0 - pt - 7, gz0, gz0 + 8)]), C["steel"], 12, (0, -260, 0), mat="steel", bom="S9", section=True)
     add("Guard-locking door switch (Omron D4JL)", box(181.0, 200.0, gy0 - pt - 30, gy0 - pt - 13, gz1 - 120, gz1 - 30), C["yellow"], 12, (0, -280, 0), mat="misc", mass_kg=0.4, bom="S2", section=True)
     oy = bases["rack"][2]                                  # rack front plane; the panel hangs on the right-hand post
     pnl = rbox(-470.0, -420.0, oy - 32, oy, Z_TRAY + 140, Z_TRAY + 440, 4)

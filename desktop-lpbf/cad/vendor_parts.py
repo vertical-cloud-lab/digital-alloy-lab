@@ -1,7 +1,9 @@
 """Bought parts drawn to their published dimensions, as drop-in replacements for the envelopes in lpbf_low.py (issue #260).
 
-Each builder returns a cq.Shape in the SAME local frame as the generic helper or envelope it replaces, so the swap in
-lpbf_low.py is one line (SWAPS below lists the exact line for each, and the position changes the real part forces).
+Each builder returns a cq.Shape in the SAME local frame as the generic helper or envelope it replaces. 15 of them are
+now used by lpbf_low.py (integrated 2026-11-20, with the fit changes listed in real-parts.md); swaps() keeps the
+pre-integration swap test (old placements and names) for the record. Built but not yet in the model: mcm_4396K21 and
+mcm_5169K72 (their gas-loop hoses need re-routing) and mcm_3861N11 (the lid port is now SAE-4).
 Dimensions come from the vendor's drawing, listing or datasheet named in SOURCES; where the vendor publishes CAD we
 compare our shape with it by volume and sorted bounding-box extents, the way verify_fasteners.py does. Vendor CAD is
 never committed: it is fetched into /tmp (vendor-cad-manifest.csv records URL, size and sha256).
@@ -215,7 +217,8 @@ def kf_weld_stub(size, stub=None):
     Drop-in for lpbf_low.kf_stub(size, stub): flange face at local z = 0, tube toward -z, hollow.
     Profile from McMaster's CAD: full-OD rim, then the ISO 2861 15 deg back taper (slope 3.73) down to the tube."""
     k = KF_REAL[size]
-    L = k["flen"] if stub is None else max(stub, k["flen"])
+    d_taper = k["rim"] + (k["fo"] - k["to"]) / 2 / 3.73
+    L = k["flen"] if stub is None else max(stub, d_taper + 0.5)   # a shorter stub = the weld tube trimmed (flange and taper kept)
     ro, rt, rb, ri = k["fo"] / 2, k["to"] / 2, k["fb"] / 2, k["ti"] / 2
     d1 = k["rim"] + (ro - rt) / 3.73
     outer = [(ri, 0.0), (ro, 0.0), (ro, -k["rim"]), (rt, -d1), (rt, -L), (ri, -L)]
@@ -494,7 +497,7 @@ GENERIC = [
     ("NFC reader antenna", "env", "Adafruit 364 board: not drawn"),
     ("Load cell", "env", "Laumas ALLUE3: not drawn yet"),
     ("Layer camera", "env", "Raspberry Pi HQ camera + C-mount lens: not drawn yet"),
-    ("Pressure transducer", "done", "McMaster 3861N11"),
+    ("Pressure transducer", "env", "McMaster 3861N11 builder exists, not used: the lid port is now SAE-4 (needs a -4 SAE transmitter or adapter)"),
     ("Overpressure relief valve", "env", "McMaster 4277T52: page needs a set-pressure choice before CAD; not fetched"),
     ("Door hinge leaves", "env", "labelled 1151A87 but drawn as custom knuckles; 1151A87 is a 3 x 3 in. two-leaf hinge (CAD fetched)"),
     ("Door hinge knuckles on the chamber", "env", "as above"),
@@ -503,11 +506,11 @@ GENERIC = [
     ("f-theta lens", "done", "Thorlabs FTH160-1064"),
     ("2-axis galvo scan head", "done", "SCANLAB basiCube 20"),
     ("Safety shutter + beam dump", "env", "no product chosen (BOM L4: quote)"),
-    ("Collimator (QBH", "done", "IPG 5 mm collimator"),
+    ("Collimator (", "done", "IPG 5 mm collimator"),
     ("Process fiber", "env", "IPG delivery cable (Ø8.5 per IPG's QBH drawing; drawn Ø10)"),
-    ("Dry scroll pump", "done", "McMaster 4396K21 (BOM G2's choice; listing dimensions only)"),
+    ("Dry scroll pump", "env", "McMaster 4396K21 builder exists, not used yet: the vacuum hose must be re-routed to its flare intake"),
     ("Pump inlet (KF-25)", "env", "needs a flare-to-NPT adapter + 4518K49 (BOM G2)"),
-    ("Sealed cyclone + HEPA housing", "done", "McMaster 5169K72 (no cyclone chosen)"),
+    ("Sealed cyclone + HEPA housing", "env", "McMaster 5169K72 builder exists, not used yet: hoses must be re-routed to its 1/2 NPSC ports"),
     ("Filter inlet (KF-25)", "env", "5169K72 ports are 1/2 NPSC: adapters not chosen"),
     ("Filter outlet (KF-25)", "env", "as above"),
     ("Sealed side-channel blower", "env", "no gas-tight blower of this size found (KNF N 630.1.2 SP.9 E is 569 x 296 x 315, 45 kg)"),

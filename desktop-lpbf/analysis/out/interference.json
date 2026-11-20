@@ -2,12 +2,12 @@
  "variant": "M50 module, M reservoir",
  "vol_tol_mm3": 0.5,
  "chord_mm": 0.05,
- "n_parts": 207,
+ "n_parts": 209,
  "states": [
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 1338,
+   "pairs_checked": 1360,
    "interferences": []
   },
   {
@@ -16,28 +16,28 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 1296,
+   "pairs_checked": 1317,
    "interferences": []
   },
   {
    "state": "plate exchange: doors open, plate up 8 mm",
    "pose": {
     "door": 95.0,
-    "gdoor": 470.0,
+    "gdoor": 515.0,
     "piston": 8.0
    },
-   "pairs_checked": 1336,
+   "pairs_checked": 1358,
    "interferences": []
   },
   {
    "state": "doors open, reservoir and drawer out",
    "pose": {
     "door": 95.0,
-    "gdoor": 470.0,
+    "gdoor": 515.0,
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 1309,
+   "pairs_checked": 1331,
    "interferences": []
   },
   {
@@ -45,9 +45,9 @@
    "pose": {
     "zstage": -45.0,
     "module": 40.0,
-    "gdoor": 470.0
+    "gdoor": 515.0
    },
-   "pairs_checked": 1281,
+   "pairs_checked": 1303,
    "interferences": []
   }
  ],
@@ -84,10 +84,10 @@
   },
   {
    "group": "gdoor",
-   "note": "laser-guard door slides right",
+   "note": "laser-guard door slides right (515 mm: clears the right door latch)",
    "range": [
     0.0,
-    470.0
+    515.0
    ],
    "steps": 25,
    "interferences": []
@@ -153,21 +153,7 @@
    "at": 0.0,
    "moving": "Recoater carriage (15 mm rail)",
    "other": "Recoater rail screws, M4 x 16 316 (5 x McMaster 92290A154)",
-   "gap_mm": 1.8
-  },
-  {
-   "group": "recoater",
-   "at": 0.0,
-   "moving": "Recoater ball nut (flange on the +x face)",
-   "other": "Dose chute (316L)",
-   "gap_mm": 2.006
-  },
-  {
-   "group": "recoater",
-   "at": 0.0,
-   "moving": "Recoater carriage (15 mm rail)",
-   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
-   "gap_mm": 2.4
+   "gap_mm": 1.7
   },
   {
    "group": "recoater",
@@ -175,20 +161,6 @@
    "moving": "Recoater carriage block (6061)",
    "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
    "gap_mm": 2.4
-  },
-  {
-   "group": "recoater",
-   "at": 0.0,
-   "moving": "Recoater ball nut (flange on the +x face)",
-   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
-   "gap_mm": 2.406
-  },
-  {
-   "group": "recoater",
-   "at": 0.0,
-   "moving": "Recoater carriage (15 mm rail)",
-   "other": "Process chamber body (6061-T6, ~6.4 L)",
-   "gap_mm": 3.0
   },
   {
    "group": "recoater",
@@ -213,13 +185,6 @@
   },
   {
    "group": "recoater",
-   "at": 0.0,
-   "moving": "Recoater ball nut (flange on the +x face)",
-   "other": "Process chamber body (6061-T6, ~6.4 L)",
-   "gap_mm": 3.006
-  },
-  {
-   "group": "recoater",
    "at": 94.42,
    "moving": "Blade holder (6061, 18 x 31, quick-swap)",
    "other": "Process chamber body (6061-T6, ~6.4 L)",
@@ -241,10 +206,10 @@
   },
   {
    "group": "recoater",
-   "at": 188.83,
+   "at": 0.0,
    "moving": "Recoater carriage (15 mm rail)",
-   "other": "Argon line (1/4 in. 316L)",
-   "gap_mm": 4.367
+   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "gap_mm": 4.1
   },
   {
    "group": "recoater",
@@ -252,6 +217,20 @@
    "moving": "Blade holder (6061, 18 x 31, quick-swap)",
    "other": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "gap_mm": 4.55
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
+   "gap_mm": 4.7
+  },
+  {
+   "group": "recoater",
+   "at": 197.42,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Argon line (1/4 in. 316L)",
+   "gap_mm": 5.986
   },
   {
    "group": "recoater",
@@ -263,23 +242,37 @@
   {
    "group": "recoater",
    "at": 0.0,
-   "moving": "Recoater carriage (15 mm rail)",
-   "other": "Recoater rail helical inserts, M4 x 6 18-8, in the back wall (5 x McMaster 91732A656)",
-   "gap_mm": 6.306
-  },
-  {
-   "group": "recoater",
-   "at": 0.0,
    "moving": "Blade holder (6061, 18 x 31, quick-swap)",
    "other": "Recoater ball screw (M12, 10 mm lead)",
    "gap_mm": 6.533
   },
   {
    "group": "recoater",
-   "at": 206.0,
+   "at": 0.0,
    "moving": "Recoater ball nut (flange on the +x face)",
-   "other": "Layer-light LED bar",
-   "gap_mm": 7.375
+   "other": "Dose chute (316L)",
+   "gap_mm": 7.0
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Recoater rail helical inserts, M4 x 6 18-8, in the back wall (5 x McMaster 91732A656)",
+   "gap_mm": 7.118
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "gap_mm": 7.4
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Process chamber body (6061-T6, ~6.4 L)",
+   "gap_mm": 8.0
   },
   {
    "group": "recoater",
@@ -294,13 +287,6 @@
    "moving": "Recoater carriage block (6061)",
    "other": "Inlet-plenum screws, M4 x 16 316 (clear of the Z flange's screws) (9 x McMaster 92290A154)",
    "gap_mm": 9.0
-  },
-  {
-   "group": "recoater",
-   "at": 34.33,
-   "moving": "Recoater ball nut (flange on the +x face)",
-   "other": "Inlet-plenum screws, M4 x 16 316 (clear of the Z flange's screws) (9 x McMaster 92290A154)",
-   "gap_mm": 9.358
   },
   {
    "group": "recoater",
@@ -381,6 +367,13 @@
   },
   {
    "group": "recoater",
+   "at": 206.0,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Layer-light LED bar",
+   "gap_mm": 12.166
+  },
+  {
+   "group": "recoater",
    "at": 0.0,
    "moving": "Recoater arm (6061, 40 x 14 web)",
    "other": "Dose chute (316L)",
@@ -416,13 +409,6 @@
   },
   {
    "group": "recoater",
-   "at": 34.33,
-   "moving": "Recoater ball nut (flange on the +x face)",
-   "other": "Inlet-plenum helical inserts, M4 x 6 18-8, in the back wall (9 x McMaster 91732A656)",
-   "gap_mm": 13.198
-  },
-  {
-   "group": "recoater",
    "at": 0.0,
    "moving": "Recoater arm (6061, 40 x 14 web)",
    "other": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
@@ -440,6 +426,13 @@
    "at": 0.0,
    "moving": "Recoater arm (6061, 40 x 14 web)",
    "other": "Process chamber body (6061-T6, ~6.4 L)",
+   "gap_mm": 14.0
+  },
+  {
+   "group": "recoater",
+   "at": 34.33,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Inlet-plenum screws, M4 x 16 316 (clear of the Z flange's screws) (9 x McMaster 92290A154)",
    "gap_mm": 14.0
   },
   {
@@ -510,7 +503,7 @@
    "at": 0.0,
    "moving": "Recoater ball nut (flange on the +x face)",
    "other": "Recoater guide rail (15 mm, 270 mm)",
-   "gap_mm": 15.629
+   "gap_mm": 15.605
   },
   {
    "group": "recoater",
@@ -538,14 +531,14 @@
    "at": 0.0,
    "moving": "Recoater carriage (15 mm rail)",
    "other": "Lid screws, M5 x 25 316 socket head (20 x McMaster 92290A252)",
-   "gap_mm": 17.965
+   "gap_mm": 19.324
   },
   {
    "group": "recoater",
    "at": 0.0,
    "moving": "Recoater carriage (15 mm rail)",
    "other": "Lid screw helical inserts, M5 x 7.5 18-8, in the chamber body (20 x McMaster 91732A261)",
-   "gap_mm": 18.33
+   "gap_mm": 19.653
   },
   {
    "group": "recoater",
@@ -664,7 +657,7 @@
    "at": 180.25,
    "moving": "Recoater ball nut (flange on the +x face)",
    "other": "Argon line (1/4 in. 316L)",
-   "gap_mm": 43.028
+   "gap_mm": 43.015
   },
   {
    "group": "recoater",
@@ -699,14 +692,21 @@
    "at": 206.0,
    "moving": "Recoater ball nut (flange on the +x face)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 53.229
+   "gap_mm": 55.57
   },
   {
    "group": "recoater",
    "at": 206.0,
    "moving": "Recoater carriage (15 mm rail)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 56.403
+   "gap_mm": 57.515
+  },
+  {
+   "group": "recoater",
+   "at": 206.0,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)",
+   "gap_mm": 58.75
   },
   {
    "group": "recoater",
@@ -718,51 +718,30 @@
   {
    "group": "recoater",
    "at": 206.0,
-   "moving": "HSS recoater blade (1.5 mm, wide nose)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 68.698
-  },
-  {
-   "group": "recoater",
-   "at": 206.0,
-   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 70.808
-  },
-  {
-   "group": "recoater",
-   "at": 206.0,
-   "moving": "Blade screws, M3 x 8 316 (heads 11-17 mm above the plate, over the powder heap) (2 x McMaster 92290A113)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 71.033
-  },
-  {
-   "group": "recoater",
-   "at": 206.0,
-   "moving": "Recoater ball nut (flange on the +x face)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 72.042
-  },
-  {
-   "group": "recoater",
-   "at": 206.0,
    "moving": "Recoater arm (6061, 40 x 14 web)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
    "gap_mm": 76.837
   },
   {
    "group": "recoater",
-   "at": 206.0,
+   "at": 163.08,
    "moving": "Recoater carriage block (6061)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 79.791
+   "gap_mm": 82.837
   },
   {
    "group": "recoater",
-   "at": 206.0,
-   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "at": 180.25,
+   "moving": "HSS recoater blade (1.5 mm, wide nose)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 80.268
+   "gap_mm": 86.931
+  },
+  {
+   "group": "recoater",
+   "at": 154.5,
+   "moving": "Recoater ball nut (flange on the +x face)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 87.878
   },
   {
    "group": "recoater",
@@ -773,10 +752,17 @@
   },
   {
    "group": "recoater",
-   "at": 206.0,
+   "at": 188.83,
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 89.349
+  },
+  {
+   "group": "recoater",
+   "at": 197.42,
    "moving": "Recoater carriage (15 mm rail)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 90.303
+   "gap_mm": 91.995
   },
   {
    "group": "recoater",
@@ -794,10 +780,17 @@
   },
   {
    "group": "recoater",
-   "at": 0.0,
-   "moving": "Recoater carriage (15 mm rail)",
-   "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 123.0
+   "at": 180.25,
+   "moving": "Blade screws, M3 x 8 316 (heads 11-17 mm above the plate, over the powder heap) (2 x McMaster 92290A113)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 106.357
+  },
+  {
+   "group": "recoater",
+   "at": 163.08,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 107.828
   },
   {
    "group": "recoater",
@@ -809,9 +802,16 @@
   {
    "group": "recoater",
    "at": 0.0,
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 124.7
+  },
+  {
+   "group": "recoater",
+   "at": 0.0,
    "moving": "Recoater ball nut (flange on the +x face)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 123.006
+   "gap_mm": 128.0
   },
   {
    "group": "recoater",
@@ -836,31 +836,31 @@
   },
   {
    "group": "recoater",
+   "at": 0.0,
+   "moving": "Blade screws, M3 x 8 316 (heads 11-17 mm above the plate, over the powder heap) (2 x McMaster 92290A113)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 182.25
+  },
+  {
+   "group": "recoater",
    "at": 206.0,
    "moving": "Recoater ball nut (flange on the +x face)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 172.204
+   "gap_mm": 191.384
   },
   {
    "group": "recoater",
    "at": 206.0,
    "moving": "Recoater carriage (15 mm rail)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 175.018
+   "gap_mm": 192.909
   },
   {
    "group": "recoater",
-   "at": 206.0,
-   "moving": "Blade screws, M3 x 8 316 (heads 11-17 mm above the plate, over the powder heap) (2 x McMaster 92290A113)",
-   "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 176.5
-  },
-  {
-   "group": "recoater",
-   "at": 206.0,
+   "at": 0.0,
    "moving": "Recoater carriage block (6061)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 180.314
+   "gap_mm": 194.51
   },
   {
    "group": "recoater",
@@ -871,24 +871,24 @@
   },
   {
    "group": "recoater",
-   "at": 206.0,
-   "moving": "Recoater arm (6061, 40 x 14 web)",
-   "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 197.19
-  },
-  {
-   "group": "recoater",
-   "at": 0.0,
+   "at": 42.92,
    "moving": "HSS recoater blade (1.5 mm, wide nose)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 200.157
   },
   {
    "group": "recoater",
-   "at": 206.0,
+   "at": 0.0,
+   "moving": "Recoater arm (6061, 40 x 14 web)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 200.25
+  },
+  {
+   "group": "recoater",
+   "at": 42.92,
    "moving": "Blade screws, M3 x 8 316 (heads 11-17 mm above the plate, over the powder heap) (2 x McMaster 92290A113)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 217.788
+   "gap_mm": 222.954
   },
   {
    "group": "piston",
@@ -1033,6 +1033,13 @@
   {
    "group": "piston",
    "at": -42.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 5.786
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
    "moving": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
    "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "gap_mm": 5.994
@@ -1050,13 +1057,6 @@
    "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "gap_mm": 6.469
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 6.655
   },
   {
    "group": "piston",
@@ -1144,6 +1144,13 @@
   },
   {
    "group": "piston",
+   "at": -42.0,
+   "moving": "Z carriage",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 13.45
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
    "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
@@ -1155,13 +1162,6 @@
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "gap_mm": 14.131
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Z carriage",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 14.425
   },
   {
    "group": "piston",
@@ -1214,7 +1214,7 @@
   },
   {
    "group": "piston",
-   "at": -31.58,
+   "at": -42.0,
    "moving": "Hermetic connector M50 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",
    "other": "Base plate, process module (MIC-6, 15 mm)",
    "gap_mm": 16.5
@@ -1592,7 +1592,7 @@
   },
   {
    "group": "piston",
-   "at": -25.33,
+   "at": -42.0,
    "moving": "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
    "other": "Base plate, process module (MIC-6, 15 mm)",
    "gap_mm": 29.0
@@ -1858,6 +1858,20 @@
   },
   {
    "group": "piston",
+   "at": -42.0,
+   "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 40.208
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 41.903
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Process chamber body (6061-T6, ~6.4 L)",
@@ -1925,6 +1939,13 @@
    "moving": "Thermal cutoff M50 (240 C, in series with the heaters)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 49.59
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 50.268
   },
   {
    "group": "piston",
@@ -2904,7 +2925,7 @@
    "at": -42.0,
    "moving": "Rod set screws M50, M4 cup point 316 (2 x McMaster 92029A152)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 191.062
+   "gap_mm": 191.063
   },
   {
    "group": "piston",
@@ -3212,63 +3233,63 @@
    "at": -42.0,
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 253.565
+   "gap_mm": 271.086
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Z carriage",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 254.661
+   "gap_mm": 272.693
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 294.46
+   "gap_mm": 310.938
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Striker disc M50 (416 stainless, on the pot magnet)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 294.685
+   "gap_mm": 311.141
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 296.783
+   "gap_mm": 313.218
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 297.285
+   "gap_mm": 313.577
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 302.098
+   "gap_mm": 318.418
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Hermetic connector M50 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 308.57
+   "gap_mm": 325.19
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 316.06
+   "gap_mm": 332.948
   },
   {
    "group": "door",
@@ -3623,23 +3644,23 @@
   {
    "group": "door",
    "at": 95.0,
-   "moving": "Draw-latch strikes on the door's ears (1807A61 strike plates)",
-   "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 115.4
+   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 120.893
   },
   {
    "group": "door",
    "at": 95.0,
    "moving": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 117.267
+   "gap_mm": 122.996
   },
   {
    "group": "door",
    "at": 95.0,
-   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
-   "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 120.893
+   "moving": "Draw-latch strikes on the door's ears (1807A61 strike plates)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 131.167
   },
   {
    "group": "door",
@@ -3692,7 +3713,7 @@
   },
   {
    "group": "gdoor",
-   "at": 39.17,
+   "at": 21.46,
    "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 3.0
@@ -3706,7 +3727,7 @@
   },
   {
    "group": "gdoor",
-   "at": 117.5,
+   "at": 150.21,
    "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 4.5
@@ -3720,7 +3741,7 @@
   },
   {
    "group": "gdoor",
-   "at": 39.17,
+   "at": 21.46,
    "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
    "other": "Guard-locking door switch (Omron D4JL)",
    "gap_mm": 8.0
@@ -3738,13 +3759,6 @@
    "moving": "OD 7+ viewing window (1070 nm, polycarbonate)",
    "other": "Guard door rail (top + bottom)",
    "gap_mm": 32.062
-  },
-  {
-   "group": "gdoor",
-   "at": 0.0,
-   "moving": "Sliding guard door (aluminium)",
-   "other": "Process fiber (armoured, \u2265 100 mm bend radius)",
-   "gap_mm": 127.814
   },
   {
    "group": "cartridge",
@@ -3783,6 +3797,13 @@
   },
   {
    "group": "cartridge",
+   "at": -52.08,
+   "moving": "Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
+   "other": "Enclosed beam tube",
+   "gap_mm": 4.712
+  },
+  {
+   "group": "cartridge",
    "at": -78.12,
    "moving": "Reservoir M shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",
    "other": "NFC reader antenna (in the dock's side face, reads the tag on the reservoir plate's edge)",
@@ -3794,13 +3815,6 @@
    "moving": "Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 module; same 30 x 112 mm dock plate for every size)",
    "other": "Reservoir-docked sensor (inductive M12, at the back of the dock)",
    "gap_mm": 5.523
-  },
-  {
-   "group": "cartridge",
-   "at": -26.04,
-   "moving": "Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
-   "other": "Enclosed beam tube",
-   "gap_mm": 5.717
   },
   {
    "group": "cartridge",
@@ -3825,6 +3839,13 @@
   },
   {
    "group": "cartridge",
+   "at": -57.29,
+   "moving": "Reservoir M lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",
+   "other": "Enclosed beam tube",
+   "gap_mm": 9.712
+  },
+  {
+   "group": "cartridge",
    "at": 0.0,
    "moving": "Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 module; same 30 x 112 mm dock plate for every size)",
    "other": "Roller shaft: magnetic-fluid rotary feedthrough Ferrotec SSL-005-NN in the metering base (M8 x 1 nose; FKM face O-ring)",
@@ -3836,20 +3857,6 @@
    "moving": "Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 module; same 30 x 112 mm dock plate for every size)",
    "other": "Roller feedthrough O-ring (FKM 75A 2-012, under the housing's shoulder)",
    "gap_mm": 10.053
-  },
-  {
-   "group": "cartridge",
-   "at": -36.46,
-   "moving": "Reservoir M lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",
-   "other": "Enclosed beam tube",
-   "gap_mm": 10.717
-  },
-  {
-   "group": "cartridge",
-   "at": -36.46,
-   "moving": "Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
-   "other": "2-axis galvo scan head (basiCube class)",
-   "gap_mm": 11.218
   },
   {
    "group": "cartridge",
@@ -3874,20 +3881,6 @@
   },
   {
    "group": "cartridge",
-   "at": -20.83,
-   "moving": "Reservoir M lid O-ring (FKM 75A 2-030)",
-   "other": "2-axis galvo scan head (basiCube class)",
-   "gap_mm": 14.642
-  },
-  {
-   "group": "cartridge",
-   "at": -36.46,
-   "moving": "Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 module; same 30 x 112 mm dock plate for every size)",
-   "other": "2-axis galvo scan head (basiCube class)",
-   "gap_mm": 15.086
-  },
-  {
-   "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir M powder",
    "other": "Optics bridge (6061, 25 mm)",
@@ -3895,24 +3888,10 @@
   },
   {
    "group": "cartridge",
-   "at": -31.25,
-   "moving": "Reservoir M lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",
-   "other": "2-axis galvo scan head (basiCube class)",
-   "gap_mm": 16.796
-  },
-  {
-   "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
    "other": "Optics bridge (6061, 25 mm)",
    "gap_mm": 19.166
-  },
-  {
-   "group": "cartridge",
-   "at": -83.33,
-   "moving": "Reservoir M powder",
-   "other": "2-axis galvo scan head (basiCube class)",
-   "gap_mm": 20.134
   },
   {
    "group": "cartridge",
@@ -4493,14 +4472,7 @@
    "at": 0.0,
    "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 185.161
-  },
-  {
-   "group": "drawer",
-   "at": 0.0,
-   "moving": "Drawer latches: 2 x quarter-turn latch studs (envelope)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 187.834
+   "gap_mm": 185.699
   },
   {
    "group": "drawer",
@@ -4512,23 +4484,30 @@
   {
    "group": "drawer",
    "at": 0.0,
+   "moving": "Drawer latches: 2 x quarter-turn latch studs (envelope)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 205.149
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
    "moving": "Drawer O-ring (FKM 75A 2-033 in a half-dovetail groove, seals on the lid's front face)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 203.461
+   "gap_mm": 208.187
   },
   {
    "group": "drawer",
    "at": -120.0,
    "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 206.197
+   "gap_mm": 211.785
   },
   {
    "group": "drawer",
    "at": -120.0,
    "moving": "Drawer latches: 2 x quarter-turn latch studs (envelope)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 212.017
+   "gap_mm": 212.715
   },
   {
    "group": "drawer",
@@ -4588,6 +4567,13 @@
   },
   {
    "group": "zstage",
+   "at": -45.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 5.786
+  },
+  {
+   "group": "zstage",
    "at": 0.0,
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
    "other": "Hermetic connector M50 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",
@@ -4599,13 +4585,6 @@
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "other": "Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange)",
    "gap_mm": 6.61
-  },
-  {
-   "group": "zstage",
-   "at": -45.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 6.655
   },
   {
    "group": "zstage",
@@ -4633,7 +4612,7 @@
    "at": -45.0,
    "moving": "Z carriage",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 14.425
+   "gap_mm": 13.45
   },
   {
    "group": "zstage",
@@ -4808,21 +4787,21 @@
    "at": -45.0,
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 253.472
+   "gap_mm": 270.999
   },
   {
    "group": "zstage",
    "at": -45.0,
    "moving": "Z carriage",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 254.568
+   "gap_mm": 272.607
   },
   {
    "group": "zstage",
    "at": -45.0,
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 294.328
+   "gap_mm": 310.814
   },
   {
    "group": "module",
@@ -4861,6 +4840,13 @@
   },
   {
    "group": "module",
+   "at": 34.5,
+   "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "other": "Overflow clamp (KF-40)",
+   "gap_mm": 0.503
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
    "other": "Process chamber body (6061-T6, ~6.4 L)",
@@ -4875,10 +4861,10 @@
   },
   {
    "group": "module",
-   "at": 34.5,
-   "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "at": 17.25,
+   "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
    "other": "Overflow clamp (KF-40)",
-   "gap_mm": 1.543
+   "gap_mm": 1.518
   },
   {
    "group": "module",
@@ -4889,10 +4875,10 @@
   },
   {
    "group": "module",
-   "at": 17.25,
-   "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
+   "at": 34.5,
+   "moving": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
    "other": "Overflow clamp (KF-40)",
-   "gap_mm": 2.543
+   "gap_mm": 2.517
   },
   {
    "group": "module",
@@ -4914,13 +4900,6 @@
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 3.043
-  },
-  {
-   "group": "module",
-   "at": 34.5,
-   "moving": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
-   "other": "Overflow clamp (KF-40)",
-   "gap_mm": 3.543
   },
   {
    "group": "module",
@@ -5018,14 +4997,14 @@
    "at": 34.5,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Overflow port (KF-40)",
-   "gap_mm": 8.534
+   "gap_mm": 8.604
   },
   {
    "group": "module",
    "at": 34.5,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)",
-   "gap_mm": 8.534
+   "gap_mm": 8.604
   },
   {
    "group": "module",
@@ -5043,17 +5022,24 @@
   },
   {
    "group": "module",
-   "at": 17.25,
-   "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
-   "other": "Overflow port (KF-40)",
-   "gap_mm": 9.774
+   "at": 34.5,
+   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 9.733
   },
   {
    "group": "module",
    "at": 34.5,
+   "moving": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 9.814
+  },
+  {
+   "group": "module",
+   "at": 17.25,
    "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
-   "other": "Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)",
-   "gap_mm": 9.995
+   "other": "Overflow port (KF-40)",
+   "gap_mm": 9.95
   },
   {
    "group": "module",
@@ -5092,6 +5078,13 @@
   },
   {
    "group": "module",
+   "at": 34.5,
+   "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
+   "other": "Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)",
+   "gap_mm": 10.205
+  },
+  {
+   "group": "module",
    "at": 138.0,
    "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
    "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
@@ -5109,7 +5102,7 @@
    "at": 34.5,
    "moving": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
    "other": "Overflow port (KF-40)",
-   "gap_mm": 10.534
+   "gap_mm": 10.604
   },
   {
    "group": "module",
@@ -5123,7 +5116,7 @@
    "at": 34.5,
    "moving": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
    "other": "Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)",
-   "gap_mm": 10.953
+   "gap_mm": 11.02
   },
   {
    "group": "module",
@@ -5270,7 +5263,7 @@
    "at": 138.0,
    "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
    "other": "Outlet plenum port (KF-25)",
-   "gap_mm": 15.824
+   "gap_mm": 15.843
   },
   {
    "group": "module",
@@ -5326,7 +5319,14 @@
    "at": 138.0,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Outlet plenum port (KF-25)",
-   "gap_mm": 21.103
+   "gap_mm": 21.109
+  },
+  {
+   "group": "module",
+   "at": 51.75,
+   "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 21.347
   },
   {
    "group": "module",
@@ -5393,20 +5393,6 @@
   },
   {
    "group": "module",
-   "at": 17.25,
-   "moving": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 24.418
-  },
-  {
-   "group": "module",
-   "at": 17.25,
-   "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 24.418
-  },
-  {
-   "group": "module",
    "at": 0.0,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Z-flange helical inserts, M5 x 7.5 18-8, in the floor (4 x McMaster 91732A261)",
@@ -5467,6 +5453,13 @@
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Process chamber body (6061-T6, ~6.4 L)",
    "gap_mm": 26.356
+  },
+  {
+   "group": "module",
+   "at": 34.5,
+   "moving": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 26.435
   },
   {
    "group": "module",
@@ -5607,13 +5600,6 @@
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
    "gap_mm": 31.621
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 31.699
   },
   {
    "group": "module",
@@ -5813,6 +5799,13 @@
   },
   {
    "group": "module",
+   "at": 34.5,
+   "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 42.696
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Thermal cutoff M50 (240 C, in series with the heaters)",
    "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
@@ -5831,6 +5824,13 @@
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 45.016
+  },
+  {
+   "group": "module",
+   "at": 34.5,
+   "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 45.333
   },
   {
    "group": "module",
@@ -7538,70 +7538,70 @@
    "at": 189.75,
    "moving": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 228.337
+   "gap_mm": 246.812
   },
   {
    "group": "module",
    "at": 189.75,
    "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 230.164
+   "gap_mm": 248.894
   },
   {
    "group": "module",
    "at": 189.75,
    "moving": "Module M50 handle (6061, screwed under the gland plate; for a hand or a gripper)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 230.36
+   "gap_mm": 249.813
   },
   {
    "group": "module",
    "at": 189.75,
    "moving": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 236.037
+   "gap_mm": 255.206
   },
   {
    "group": "module",
    "at": 241.5,
    "moving": "Striker disc M50 (416 stainless, on the pot magnet)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 243.408
+   "gap_mm": 262.784
   },
   {
    "group": "module",
    "at": 241.5,
    "moving": "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 244.515
+   "gap_mm": 263.87
   },
   {
    "group": "module",
    "at": 241.5,
    "moving": "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 245.977
+   "gap_mm": 265.291
   },
   {
    "group": "module",
    "at": 207.0,
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 256.996
+   "gap_mm": 275.788
   },
   {
    "group": "module",
    "at": 241.5,
    "moving": "Hermetic connector M50 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 260.965
+   "gap_mm": 280.3
   },
   {
    "group": "module",
    "at": 241.5,
    "moving": "Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 270.672
+   "gap_mm": 290.096
   }
  ],
  "joints": [
@@ -7621,7 +7621,7 @@
    "why": "tube fitting into the manifold"
   },
   {
-   "a": "Collimator (QBH, f = 30 mm, D ~ 3.2 mm) on V-mount",
+   "a": "Collimator (IPG, 5 mm beam, 128 mm + 78 mm strain relief) on V-mount",
    "b": "Process fiber (armoured, \u2265 100 mm bend radius)",
    "why": "fiber connector (QBH) in the collimator"
   },
@@ -7631,7 +7631,7 @@
    "why": "hose on the exhaust port"
   },
   {
-   "a": "Fiber laser source, 500 W single-mode (3U)",
+   "a": "Fiber laser source, 500 W single-mode, IPG YLR-500-U3-SM-AC (4U)",
    "b": "Process fiber (armoured, \u2265 100 mm bend radius)",
    "why": "fiber leaves the laser's front panel"
   },
@@ -7689,7 +7689,12 @@
    "a": "Umbilical duct along the back edge",
    "b": "Pump exhaust to the dock",
    "why": "hose runs in the duct"
+  },
+  {
+   "a": "Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)",
+   "b": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "why": "hose end clamped onto its KF-25 flange"
   }
  ],
- "runtime_s": 159.8
+ "runtime_s": 141.7
 }

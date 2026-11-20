@@ -25,6 +25,70 @@ Re-run any of them with `python desktop-lpbf/cad/vendor_parts.py inventory|verif
 `verify` needs the vendor files back in `/tmp/parts-work`. On a busy runner, `swapcheck` took 17 min of wall clock
 (7 min of CPU).
 
+## Integrated into `lpbf_low.py` (2026-11-20)
+
+After the seal work was committed, the real parts below went into the model. `lpbf_low.py` now does
+`import vendor_parts as VP`.
+
+**Interference check:** `analysis/interference.py` finds 0 interferences in every static state and every motion sweep,
+for all three variants: M50/M, S25/S and L75/L (`analysis/out/interference.md`, `analysis/out/variants/`). The machine
+is still 581.2 mm above the tray.
+
+**Now real:**
+- recoater and Z servos (Teknic CPM-SDSK-2311S);
+- dosing stepper (6627T91);
+- recoater rail, carriage and ball nut (6709K33, 6709K12, 4566N401);
+- the three KF-25 ports (5786N23);
+- the KF-40 overflow port, clamp and jar (5786N25 profile on 1.5 in. tube, 4518K73);
+- f-theta lens (FTH160-1064), plus a new adapter ring;
+- galvo (basiCube 20);
+- IPG collimator;
+- vacuum isolation valve (4123K45 with a 4518K72 clamp);
+- laser (YLR-500-U3, 4U);
+- UPS (5PX1500RTG2).
+
+**Changes the real parts forced:**
+- **Rack:** 11U, 515 mm tall (was 10U, 470 mm), because the laser is 4U. That is under the 564 mm budget.
+- **Laser guard and process base plate, left side:** moved out from x = −370 to −420. The collimator with its strain
+  relief is 206 mm long and now ends 4 mm inside the panel. The fibre crosses the panel at the existing guarded bulkhead.
+- **Laser guard and process base plate, right side:** moved out from x = 290 to 310, for the 124 mm ball valve.
+  - The valve's lever points back over the chamber, at z 157–162.
+  - Its KF-25 clamp is turned with its ears up and hinge down, to clear the chamber's side draw latch.
+  - The pump hose now starts at the valve's outlet flange, x = 298.2.
+- **Galvo and beam line:**
+  - The basiCube 20 sits on a new 10 mm riser plate.
+  - The beam line moved to the real input: z = z_bridge1 + 40 = 272.7 (was 277.7) and y = −25.25 (was 0).
+  - The beam tube is now Ø20 (was Ø28), so it clears the reservoir handles (z 258) by 4.7 mm.
+  - The shutter and the collimator's V-mount moved with the beam.
+- **f-theta adapter ring:** new part, 6061, Ø110 × 16 mm, M85×1 internal thread, under the bridge from z 191.7 to 207.7.
+- **Recoater motor bracket:** top lowered by 1 mm, to `rz_ - 29.6`.
+- **Z servo:** connector block faces the front.
+- **Dosing stepper:** face moved 12 mm further out and the coupling made 12 mm longer, for the 6627T91's 24 mm shaft.
+- **KF stubs:** `kf_weld_stub` now trims the weld tube to the requested stub length, keeping the flange and taper. That
+  keeps the overflow fitting out of the funnel block and the vacuum stub inside its adapter plate.
+- **KF-40 overflow clamp:** turned so its hinge faces +y and its wing faces +x. Facing −x it hit the module on its swap
+  path.
+- **Sliding guard door:** now slides 515 mm (was 470) on a rail extended to x = 720, so it uncovers the right door latch
+  (operations.md).
+- **Masses:**
+  - servos 0.6 kg each (were 1.6);
+  - galvo 3.75 kg (was 2.5);
+  - lens 0.8 kg (was 0.6);
+  - UPS 23 kg (was 25).
+
+  `analysis/out/mass.*` has been re-run.
+
+**Not integrated yet:**
+- **Pump 4396K21 and HEPA housing 5169K72:** builders exist, but both need the gas-loop hoses re-routed to their real
+  ports. The pump has a flare intake tee; the housing has 1/2 NPSC side and bottom ports. The envelopes stay for now.
+- **Pressure transducer:** the BOM's 3861N11 has a 1/4 NPT male thread, but the lid port is now a 7/16-20 SAE-4 O-ring
+  boss. Choose a transmitter with a −4 SAE (7/16-20 UNF O-ring boss) port, or add an SAE-4 male × 1/4 NPT female
+  adapter, about 25 mm taller. The envelope stays.
+- **Everything else** listed under "What is still not real" below.
+
+The tables below are the swap test made before the integration. The positions in its "Change" column are the
+pre-integration ones; the list above is what the model now uses.
+
 ## How the parts were sourced
 
 - **McMaster-Carr:** product pages and "3-D STEP" downloads fetched through the lab Pi tunnel in headless Chrome, one
@@ -108,7 +172,8 @@ The laser's 40 kg already matches. The 4396K21's mass was not captured.
 ## What is still not real, and why
 
 The full list, ranked, is in `analysis/out/real-parts/inventory.md`. Of 63 bought-part entries in `build()`:
-- 20 now have real builders (18 builders; the servo and the KF-25 stub each cover several entries);
+- 17 are now real in the model;
+- 3 more have builders that are not used yet (pump, HEPA housing, transmitter);
 - the two leveling-mount entries were already real;
 - 41 are still generic.
 
