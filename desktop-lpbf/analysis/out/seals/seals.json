@@ -1,0 +1,853 @@
+{
+ "geometry": {
+  "lid_path": 978.21413444641,
+  "door_path": 668.7809724509605,
+  "drawer_path": 163.36932108931592,
+  "spigot_path": 292.4822760492097,
+  "gland_plate_path": 174.67255153959226,
+  "chamber_inside": [
+   280.0,
+   190.0,
+   120.0
+  ],
+  "door_opening": [
+   220.0,
+   92.0
+  ],
+  "door_seal_rect": [
+   232.0,
+   104.0
+  ],
+  "lid_seal_rect": [
+   290.6,
+   200.6
+  ],
+  "window_d": 50.8,
+  "v_chamber_L": 6.3839999999999995,
+  "v_filter_L": 2.2816997885533623,
+  "bore_d": 50.8,
+  "stroke": 40.0,
+  "res": {
+   "S": {
+    "ix": 26.0,
+    "iy": 46.0,
+    "iz": 36.0,
+    "slot": 45.0,
+    "for_module": "S25",
+    "wedge_h": 12.853332060679032,
+    "vol_cm3": 37.73472052687888
+   },
+   "M": {
+    "ix": 26.0,
+    "iy": 72.0,
+    "iz": 56.0,
+    "slot": 70.0,
+    "for_module": "M50",
+    "wedge_h": 12.853332060679032,
+    "vol_cm3": 96.50304082468
+   },
+   "L": {
+    "ix": 48.0,
+    "iy": 110.0,
+    "iz": 56.0,
+    "slot": 95.0,
+    "for_module": "L75",
+    "wedge_h": 28.562960134842292,
+    "vol_cm3": 232.84148770334693
+   }
+  },
+  "slot_w": 8.0,
+  "rod_od": 15.875,
+  "area_walls_cm2": 2192.0,
+  "n_parts": 169
+ },
+ "sources": {
+  "1": "Parker O-Ring Handbook ORD 5700: Design Chart 4-3 (face glands), Design Table 4-2 (static radial glands), \u00a73.11 vacuum sealing and Table 3-20 (finish), \u00a73.12.1 leak-rate approximation and Fig. 3-11 (Q), Table 3-24 (permeability), Figs. 2-4..2-6 (compression load). https://nfc.arizona.edu/sites/default/files/2022-02/parker_o-ring_handbook.pdf",
+  "2": "Lindley, P. B. (1967). Compression characteristics of laterally-unrestrained rubber O-rings. J. Inst. Rubber Ind. 1, 209-213 (F/L = d E (1.25 e^1.5 + 50 e^6)); as used in e.g. https://doi.org/10.1016/j.triboint.2019.106062",
+  "3": "Gent, A. N. (1958). On the relation between indentation hardness and Young's modulus. Trans. IRI 34, 46-57 (E [MPa] = 0.0981 (56 + 7.62336 S) / (0.137505 (254 - 2.54 S)))",
+  "4": "Marco Rubber, O-ring permeation (FKM: H2O 40e-8 std cc cm/cm2 s bar): https://www.marcorubber.com/o-ring-permeation.htm",
+  "5": "O'Hanlon, J. F. A User's Guide to Vacuum Technology, 3rd ed. (Wiley, 2003), Table 4.5 and App. C.5: outgassing of unbaked Al ~6e-9 and Viton A ~1e-6 Torr L/s/cm2 after 1 h; and Ch. 2-3 (viscous conductance, C = 135 d^4 p/L for air)",
+  "6": "Kozeny-Carman permeability k = d^2 e^3 / (180 (1-e)^2); Klinkenberg (1941) slip k_a = k (1 + b/p), b = 4 c lambda p / r with c ~ 1 (API Drilling and Production Practice, 200-213)",
+  "7": "Ergun minimum fluidization: U_mf = (rho_p - rho_g) g d^2 e^3 / (150 mu (1 - e)) for small particles (Kunii & Levenspiel, Fluidization Engineering, 2nd ed., Ch. 3)",
+  "8": "McMaster-Carr 4396K21 (3 cfm, 1e-2 Torr) and the parts in ../../mcmaster-parts.csv, read through the lab Pi 2026-11-17",
+  "9": "Airgas/Linde argon 5.0 (UHP) typical limits: O2 <= 1-2 ppm, H2O <= 1-3 ppm"
+ },
+ "inventory": [
+  {
+   "key": "lid",
+   "seal": "Lid O-ring, FKM 75A 3.53 mm cord in a face gland 2.65 x 4.6 in the body's top face",
+   "held_by": "20 x M5 316 into helical inserts (metal-to-metal)",
+   "status": "OK",
+   "note": "cord spliced into a ring: specify a vulcanized (hot) splice or a molded ring, never a glued joint, for vacuum"
+  },
+  {
+   "key": "door",
+   "seal": "Door O-ring, 3.53 mm cord, groove on the door face 2.8 deep x 4.0 wide as drawn",
+   "held_by": "2 draw latches (McMaster 1807A61) at the top corners + 2 fixed hinges at the bottom; atmosphere under vacuum",
+   "status": "FIX",
+   "note": "gland is not the 2.65 x 4.6 the notes specify; latches were sized for +50 mbar only, not for squeezing the cord (see clamp table)"
+  },
+  {
+   "key": "window",
+   "seal": "Window O-ring under the \u00d850.8 x 8 fused-silica window; retaining ring 2 mm above the window top",
+   "held_by": "nothing at +20 mbar: the window is 'unclamped' and floats up to 2 mm",
+   "status": "FIX",
+   "note": "+20 mbar lifts the window (3.2 N against its 0.35 N weight); needs an O-ring sandwich clamped to a metal stop"
+  },
+  {
+   "key": "window_flange",
+   "seal": "Window flange to lid: 6 x M4, no seal drawn",
+   "held_by": "6 x M4",
+   "status": "MISSING",
+   "note": "needs a face O-ring (or make the flange part of the lid)"
+  },
+  {
+   "key": "drawer",
+   "seal": "Cover-slide drawer front plate, ~1.78 mm cord on the lid's front face",
+   "held_by": "nothing (a detent)",
+   "status": "FIX",
+   "note": "at +20 mbar the drawer is pushed out; the cord needs ~0.3-0.5 kN to squeeze: a cam or toggle clamp"
+  },
+  {
+   "key": "metering_base",
+   "seal": "Metering base to lid over the 12 x 100 mm dose slot: 4 x M4, no seal drawn",
+   "held_by": "4 x M4",
+   "status": "MISSING",
+   "note": "needs a face O-ring round the slot"
+  },
+  {
+   "key": "reservoir",
+   "seal": "Reservoir on the dock face (dovetail, spring shutter); reservoir lid is a loose plate",
+   "held_by": "nothing",
+   "status": "FIX",
+   "note": "an open path from room air through the powder column and the roller clearance into the chamber (flow table below)"
+  },
+  {
+   "key": "roller_shaft",
+   "seal": "Metering-roller shaft: PTFE V-ring (McMaster 9572K33)",
+   "held_by": "-",
+   "status": "CHECK",
+   "note": "a V-ring is an excluder, not a vacuum seal; use a magnetic-fluid feedthrough or a magnetic coupling through a can"
+  },
+  {
+   "key": "recoater_left",
+   "seal": "Recoater screw through the left wall (\u00d818 hole): fixed bearing + PTFE V-ring",
+   "held_by": "-",
+   "status": "CHECK",
+   "note": "same as the roller shaft"
+  },
+  {
+   "key": "recoater_right",
+   "seal": "Recoater screw through the right wall (\u00d818 hole): floating bearing housing, open bore",
+   "held_by": "-",
+   "status": "MISSING",
+   "note": "the housing's \u00d88 bore is open to the room: make it a blind cap with a face O-ring"
+  },
+  {
+   "key": "vac_port",
+   "seal": "KF-25 vacuum port, KF-25 inlet/outlet plenum ports, KF-40 overflow, KF-16 blank",
+   "held_by": "KF clamps",
+   "status": "OK",
+   "note": "Al centering ring + FKM; the stubs are 304 and the body 6061: the stub-to-body joint needs its own O-ring"
+  },
+  {
+   "key": "plenums",
+   "seal": "Inlet plenum (back wall) and outlet plenum (under the floor), 316L on 6061",
+   "held_by": "M4/M5 (not drawn)",
+   "status": "MISSING",
+   "note": "joints.py lists them as 'each with an FKM O-ring', not drawn; dissimilar metals, so bolted + O-ring, never welded"
+  },
+  {
+   "key": "threaded_ports",
+   "seal": "Argon in (back wall), O2 sample (side wall), pressure transducer and relief valve (lid): 1/4 NPT parts",
+   "held_by": "pipe threads",
+   "status": "CHECK",
+   "note": "NPT into 6061 leaks at vacuum and galls; use SAE/ISO straight-thread O-ring-boss ports or KF/VCR adapters"
+  },
+  {
+   "key": "fibre_heads",
+   "seal": "Through-beam fibre heads in \u00d83.2 holes through both side walls (z = +5)",
+   "held_by": "-",
+   "status": "MISSING",
+   "note": "needs O-ring-sealed threaded heads or a window; they also sit in the condensate and spatter zone"
+  },
+  {
+   "key": "camera",
+   "seal": "Camera viewport adapter with a \u00d81 in. window over a \u00d822 hole in the lid",
+   "held_by": "screws (not drawn)",
+   "status": "MISSING",
+   "note": "two seals needed: adapter to lid, window to adapter"
+  },
+  {
+   "key": "spigot",
+   "seal": "Module spigot in the \u00d896 floor port: FKM 2-238 radial (male gland)",
+   "held_by": "radial; 2 captive M6",
+   "status": "CHECK",
+   "note": "groove as drawn (root \u00d890.2, 3.6 mm wide) is overfilled at worst tolerance (101 %) and light on squeeze (13-21 %); root \u00d890.5 x 4.8 wide gives 17-25 % and <= 81 %"
+  },
+  {
+   "key": "gland_plate",
+   "seal": "Gland plate on the welded collar: 1.78 mm cord face seal",
+   "held_by": "6 x M4",
+   "status": "CHECK",
+   "note": "groove 2.4 wide: fill > 90 % at worst tolerance; widen to 2.6"
+  },
+  {
+   "key": "rod",
+   "seal": "Hollow rod through the gland plate: 'double FKM 2-114 rod gland' (grooves not drawn)",
+   "held_by": "-",
+   "status": "MISSING",
+   "note": "draw two 2-114 grooves (\u00d820.0 groove, \u00d815.93 throat) and specify a seamless, polished rod; friction counts against the Z coupling"
+  },
+  {
+   "key": "rod_end",
+   "seal": "Rod end: heater and thermocouple leads potted in Torr Seal",
+   "held_by": "-",
+   "status": "FIX",
+   "note": "stranded leads wick gas along the strands through any potting; use a hermetic (glass-to-metal) feedthrough or solid pins"
+  },
+  {
+   "key": "gas_loop",
+   "seal": "Blower, cyclone + HEPA housing, valves, hoses (KF-25 bellows)",
+   "held_by": "KF clamps",
+   "status": "CHECK",
+   "note": "the HEPA housing in the BOM (McMaster 5169K72) is 1/2 NPSC threaded and its gas-tightness is not stated; the blower must be specified gas-tight"
+  },
+  {
+   "key": "o2_sample",
+   "seal": "O2 analyser sample loop",
+   "held_by": "fittings",
+   "status": "CHECK",
+   "note": "extractive analysers often have polymer tubing inside; return the sample to the loop, 316L lines, leak-check the analyser"
+  }
+ ],
+ "glands": {
+  "lid": {
+   "cs": 3.53,
+   "depth": 2.65,
+   "width": 4.6,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 24.929178470254957,
+   "squeeze_min": 21.236872812135363,
+   "squeeze_max": 28.414096916299552,
+   "fill_nom": 80.2852171803057,
+   "fill_max_cold": 87.57836164156399,
+   "fill_max_hot": 89.35590234643233,
+   "T_service": 70.0,
+   "kind": "face",
+   "parker": {
+    "depth": [
+     2.57,
+     2.72
+    ],
+    "w_gas": [
+     4.01,
+     4.17
+    ],
+    "w_liq": [
+     4.5,
+     4.75
+    ],
+    "sq": [
+     20,
+     30
+    ]
+   }
+  },
+  "door_as_drawn": {
+   "cs": 3.53,
+   "depth": 2.8,
+   "width": 4.0,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 20.67988668555241,
+   "squeeze_min": 16.861143523920664,
+   "squeeze_max": 24.28414096916299,
+   "fill_nom": 87.38185691320771,
+   "fill_max_cold": 95.37878188443746,
+   "fill_max_hot": 96.90347681878873,
+   "T_service": 60.0,
+   "kind": "face",
+   "parker": {
+    "depth": [
+     2.57,
+     2.72
+    ],
+    "w_gas": [
+     4.01,
+     4.17
+    ],
+    "w_liq": [
+     4.5,
+     4.75
+    ],
+    "sq": [
+     20,
+     30
+    ]
+   }
+  },
+  "door_spec": {
+   "cs": 3.53,
+   "depth": 2.65,
+   "width": 4.6,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 24.929178470254957,
+   "squeeze_min": 21.236872812135363,
+   "squeeze_max": 28.414096916299552,
+   "fill_nom": 80.2852171803057,
+   "fill_max_cold": 87.57836164156399,
+   "fill_max_hot": 88.97836153373564,
+   "T_service": 60.0,
+   "kind": "face",
+   "parker": {
+    "depth": [
+     2.57,
+     2.72
+    ],
+    "w_gas": [
+     4.01,
+     4.17
+    ],
+    "w_liq": [
+     4.5,
+     4.75
+    ],
+    "sq": [
+     20,
+     30
+    ]
+   }
+  },
+  "door_1p78_halfdovetail": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 25.842696629213478,
+   "squeeze_min": 19.60093896713614,
+   "squeeze_max": 31.573275862068968,
+   "fill_nom": 81.96493876510131,
+   "fill_max_cold": 94.68029143618803,
+   "fill_max_hot": 96.19382052393173,
+   "T_service": 60.0,
+   "kind": "face",
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   }
+  },
+  "window_1p78": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 25.842696629213478,
+   "squeeze_min": 19.60093896713614,
+   "squeeze_max": 31.573275862068968,
+   "fill_nom": 81.96493876510131,
+   "fill_max_cold": 94.68029143618803,
+   "fill_max_hot": 97.0097491806864,
+   "T_service": 80.0,
+   "kind": "face",
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   }
+  },
+  "drawer_1p78": {
+   "cs": 1.78,
+   "depth": 1.32,
+   "width": 2.3,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 25.842696629213478,
+   "squeeze_min": 19.60093896713614,
+   "squeeze_max": 31.573275862068968,
+   "fill_nom": 81.96493876510131,
+   "fill_max_cold": 94.68029143618803,
+   "fill_max_hot": 96.19382052393173,
+   "T_service": 60.0,
+   "kind": "face",
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   }
+  },
+  "spigot_as_drawn": {
+   "cs": 3.53,
+   "depth": 2.8999999999999986,
+   "width": 3.6,
+   "stretch_pct": 1.932421742569791,
+   "squeeze_nom": 17.158662568716913,
+   "squeeze_min": 13.201283581794499,
+   "squeeze_max": 20.8919561376133,
+   "fill_nom": 92.19156236775827,
+   "fill_max_cold": 100.75464960057894,
+   "fill_max_hot": 102.42278360170079,
+   "T_service": 60.0,
+   "kind": "radial",
+   "parker": null
+  },
+  "spigot_groove_90p5_w4p8": {
+   "cs": 3.53,
+   "depth": 2.75,
+   "width": 4.8,
+   "stretch_pct": 2.2714431009153637,
+   "squeeze_nom": 21.327910831494737,
+   "squeeze_min": 17.48984701564931,
+   "squeeze_max": 24.94833454130589,
+   "fill_nom": 72.70093083777347,
+   "fill_max_cold": 79.25731722005663,
+   "fill_max_hot": 80.56953284699398,
+   "T_service": 60.0,
+   "kind": "radial",
+   "parker": null
+  },
+  "gland_plate_as_drawn": {
+   "cs": 1.78,
+   "depth": 1.3,
+   "width": 2.4,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 26.96629213483146,
+   "squeeze_min": 20.774647887323937,
+   "squeeze_max": 32.650862068965516,
+   "fill_nom": 79.75819041373319,
+   "fill_max_cold": 92.10176435026631,
+   "fill_max_hot": 93.62663774603573,
+   "T_service": 60.0,
+   "kind": "face",
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   }
+  },
+  "gland_plate_2p6": {
+   "cs": 1.78,
+   "depth": 1.3,
+   "width": 2.6,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 26.96629213483146,
+   "squeeze_min": 20.774647887323937,
+   "squeeze_max": 32.650862068965516,
+   "fill_nom": 73.62294499729217,
+   "fill_max_cold": 84.87809655808854,
+   "fill_max_hot": 86.28337204046429,
+   "T_service": 60.0,
+   "kind": "face",
+   "parker": {
+    "depth": [
+     1.27,
+     1.37
+    ],
+    "w_gas": [
+     2.13,
+     2.26
+    ],
+    "w_liq": [
+     2.57,
+     2.72
+    ],
+    "sq": [
+     19,
+     32
+    ]
+   }
+  },
+  "rod_2_114": {
+   "cs": 2.62,
+   "depth": 2.057499999999999,
+   "width": 3.6,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 21.469465648854996,
+   "squeeze_min": 17.158018867924568,
+   "squeeze_max": 25.537833827893202,
+   "fill_nom": 72.78637981403331,
+   "fill_max_cold": 80.10244087781565,
+   "fill_max_hot": 83.21584589390461,
+   "T_service": 110.0,
+   "kind": "rod",
+   "parker": null
+  }
+ },
+ "clamps": {
+  "E_75A_MPa": 7.052854049401784,
+  "door_3p53_25": {
+   "cs": 3.53,
+   "path_mm": 668.7809724509605,
+   "squeeze": 25.0,
+   "N_per_mm": 4.194003078156231,
+   "total_N": 2804.8694570716457,
+   "parker_range_N": [
+    1499.0804487366918,
+    6441.361303165472
+   ]
+  },
+  "door_3p53_15": {
+   "cs": 3.53,
+   "path_mm": 668.7809724509605,
+   "squeeze": 15.0,
+   "N_per_mm": 1.8221297440434894,
+   "total_N": 1218.6057021532245,
+   "parker_range_N": null
+  },
+  "door_1p78_25": {
+   "cs": 1.78,
+   "path_mm": 668.7809724509605,
+   "squeeze": 25.0,
+   "N_per_mm": 2.1148230819031424,
+   "total_N": 1414.3534372769207,
+   "parker_range_N": [
+    890.0790164374106,
+    2459.4288612086348
+   ]
+  },
+  "door_1p78_15": {
+   "cs": 1.78,
+   "path_mm": 668.7809724509605,
+   "squeeze": 15.0,
+   "N_per_mm": 0.9188076329737709,
+   "total_N": 614.4810622755637,
+   "parker_range_N": null
+  },
+  "door_vacuum_force_N": 2444.7696,
+  "door_overpressure_20mbar_N": 48.256,
+  "lid_3p53_25": {
+   "cs": 3.53,
+   "path_mm": 978.21413444641,
+   "squeeze": 25.0,
+   "N_per_mm": 4.194003078156231,
+   "total_N": 4102.6330909641765,
+   "parker_range_N": [
+    2192.6785360718777,
+    9421.66558468385
+   ]
+  },
+  "lid_vacuum_force_N": 5906.6760269999995,
+  "lid_screws_preload_N": 47925.0,
+  "drawer_1p78_25": {
+   "cs": 1.78,
+   "path_mm": 163.36932108931592,
+   "squeeze": 25.0,
+   "N_per_mm": 2.1148230819031424,
+   "total_N": 345.4972111145311,
+   "parker_range_N": [
+    217.42784352598846,
+    600.7874623744419
+   ]
+  },
+  "drawer_out_force_20mbar_N": 2.3520000000000003,
+  "window_1p78_25": {
+   "cs": 1.78,
+   "path_mm": 138.92122714174064,
+   "squeeze": 25.0,
+   "N_per_mm": 2.1148230819031424,
+   "total_N": 293.79381772566245,
+   "parker_range_N": [
+    184.88993304256357,
+    510.8800781439257
+   ]
+  },
+  "window_lift_20mbar_N": 3.3238050274980004,
+  "window_weight_N": 0.3499443460442303,
+  "latch_rating_N": 3558.4000000000005
+ },
+ "permeation": {
+  "items": [
+   {
+    "seal": "lid",
+    "T_C": 50.0,
+    "O2_sccs": 9.614505772749397e-07,
+    "H2O_sccs": 1.5746128689773746e-06
+   },
+   {
+    "seal": "door",
+    "T_C": 45.0,
+    "O2_sccs": 5.30548050025384e-07,
+    "H2O_sccs": 8.689035161314644e-07
+   },
+   {
+    "seal": "window (sandwich, inner ring)",
+    "T_C": 60.0,
+    "O2_sccs": 2.091370028960269e-07,
+    "H2O_sccs": 3.4251351439489724e-07
+   },
+   {
+    "seal": "window flange to lid",
+    "T_C": 60.0,
+    "O2_sccs": 3.78357309626462e-07,
+    "H2O_sccs": 6.196535764719986e-07
+   },
+   {
+    "seal": "camera adapter + its window",
+    "T_C": 45.0,
+    "O2_sccs": 1.507955662725611e-07,
+    "H2O_sccs": 2.469649973173866e-07
+   },
+   {
+    "seal": "metering base to lid",
+    "T_C": 45.0,
+    "O2_sccs": 2.150387435268316e-07,
+    "H2O_sccs": 3.521790728398991e-07
+   },
+   {
+    "seal": "reservoir dock face (proposed)",
+    "T_C": 45.0,
+    "O2_sccs": 2.287986631275068e-07,
+    "H2O_sccs": 3.747143408936427e-07
+   },
+   {
+    "seal": "reservoir lid (proposed)",
+    "T_C": 45.0,
+    "O2_sccs": 2.527985228961264e-07,
+    "H2O_sccs": 4.140200409873814e-07
+   },
+   {
+    "seal": "drawer",
+    "T_C": 50.0,
+    "O2_sccs": 1.5685166934942986e-07,
+    "H2O_sccs": 2.5688336240664493e-07
+   },
+   {
+    "seal": "plenums (2)",
+    "T_C": 45.0,
+    "O2_sccs": 5.43996821422044e-07,
+    "H2O_sccs": 8.909292021247447e-07
+   },
+   {
+    "seal": "KF-25 (7) + KF-40 (2) + KF-16 (1) centering rings",
+    "T_C": 35,
+    "O2_sccs": 4.493511302556772e-07,
+    "H2O_sccs": 7.359234984241765e-07
+   },
+   {
+    "seal": "spigot 2-238",
+    "T_C": 56.0,
+    "O2_sccs": 4.4597972427450917e-07,
+    "H2O_sccs": 7.304019881458835e-07
+   },
+   {
+    "seal": "gland plate",
+    "T_C": 45.0,
+    "O2_sccs": 1.3928483804708893e-07,
+    "H2O_sccs": 2.2811333585549269e-07
+   },
+   {
+    "seal": "rod gland 2 x 2-114 (in tandem: the outer one carries the gradient)",
+    "T_C": 117.0,
+    "O2_sccs": 6.538505508630247e-07,
+    "H2O_sccs": 1.070841825998974e-06
+   }
+  ],
+  "total_O2_sccs": 5.3162391698576125e-06,
+  "total_H2O_sccs": 8.706655140969961e-06,
+  "Ea_He_kJ": 37.1421382251633,
+  "Ea_N2_kJ": 58.29112969138964
+ },
+ "other_leaks": [
+  {
+   "src": "2 rotary shafts through elastomer V-rings / lip seals (recoater screw, metering roller)",
+   "air_mbarLs": [
+    1e-05,
+    0.001
+   ],
+   "fix": "magnetic-fluid feedthrough (helium leak < 1e-10 mbar L/s class) or a magnetic coupling through a can (zero leak)"
+  },
+  {
+   "src": "rod gland, 2 x 2-114 reciprocating",
+   "air_mbarLs": [
+    1e-06,
+    0.0001
+   ],
+   "fix": "edge-welded bellows over the rod"
+  },
+  {
+   "src": "potted stranded leads at the rod end",
+   "air_mbarLs": [
+    1e-05,
+    0.01
+   ],
+   "fix": "glass-to-metal hermetic connector or KF feedthrough"
+  },
+  {
+   "src": "threaded NPT ports (5-8 joints)",
+   "air_mbarLs": [
+    1e-06,
+    0.001
+   ],
+   "fix": "O-ring boss / VCR / KF"
+  },
+  {
+   "src": "gas-tight side-channel blower, shaft seal",
+   "air_mbarLs": [
+    0.0001,
+    0.001
+   ],
+   "fix": "hermetic (canned / magnetic-drive) blower"
+  }
+ ],
+ "envelope_L": {
+  "chamber": 6.3839999999999995,
+  "plenums": 0.6,
+  "hoses": 1.4971652489763858,
+  "filter": 2.2816997885533623,
+  "blower": 0.5,
+  "total": 11.262865037529748
+ },
+ "budget": {
+  "V_L": 11.262865037529748,
+  "O2_permeation_ppm_per_h": 1.6663619112706478,
+  "H2O_permeation_ppm_per_h": 2.7290793431082037,
+  "area_al_cm2": 4605.28,
+  "area_fkm_cm2": 17.794827179169864,
+  "q_al_mbarLs": 3.6833029439999996e-05,
+  "q_fkm_mbarLs": 2.372050462983343e-05,
+  "H2O_outgassing_ppm_per_h_1h": 18.732153228223872,
+  "powder_H2O_mg": [
+   7.5,
+   45.0
+  ],
+  "powder_H2O_ppm_if_released": [
+   828.5094846485617,
+   4971.05690789137
+  ]
+ },
+ "makeup": {
+  "O2_in_sccm": 0.00031897435019145675,
+  "H2O_in_sccm": 0.004108100807782161,
+  "f_for_O2_10ppm_sccm": 35.44159446571742,
+  "f_for_H2O_minus40C_sccm": 32.60397466493779
+ },
+ "purge": {
+  "S_pump_Ls": 1.4158499999999998,
+  "S_eff_at_800mbar_Ls": 1.415665903743135,
+  "S_eff_at_10mbar_Ls": 1.4012697266261072,
+  "S_eff_at_1mbar_Ls": 1.2822350255492507,
+  "t_to_1mbar_s": 55.88097964797489,
+  "tau_at_atm_s": 7.955877871855092,
+  "cycles": [
+   {
+    "cycle": 1,
+    "O2_ppm_ideal": 207.81046396841066
+   },
+   {
+    "cycle": 2,
+    "O2_ppm_ideal": 1.2041564303735544
+   },
+   {
+    "cycle": 3,
+    "O2_ppm_ideal": 1.0002015364564398
+   },
+   {
+    "cycle": 4,
+    "O2_ppm_ideal": 1.000000198950105
+   }
+  ]
+ },
+ "powder_lift": {
+  "tau_s": 7.955877871855092,
+  "k_m2": 4.011111111111112e-12,
+  "beds": {
+   "reservoir L (56 mm of powder)": {
+    "h_mm": 56.0,
+    "dp_over_weight_at_atm": 0.5938798322443554,
+    "dp_over_weight_at_10mbar": 0.1941551815322676,
+    "dp_Pa": 435.54885589674836,
+    "weight_Pa": 733.3956000000001,
+    "tau_needed_s_for_0p3": 15.749451386312936
+   },
+   "build cylinder, end of build (40 mm)": {
+    "h_mm": 40.0,
+    "dp_over_weight_at_atm": 0.4241998801745394,
+    "dp_over_weight_at_10mbar": 0.13868227252304824,
+    "dp_Pa": 222.2188040289532,
+    "weight_Pa": 523.854,
+    "tau_needed_s_for_0p3": 11.249608133080667
+   },
+   "overflow jar (90 mm)": {
+    "h_mm": 90.0,
+    "dp_over_weight_at_atm": 0.9544497303927139,
+    "dp_over_weight_at_10mbar": 0.31203511317685856,
+    "dp_Pa": 1124.9826953965755,
+    "weight_Pa": 1178.6715,
+    "tau_needed_s_for_0p3": 25.3116182994315
+   },
+   "reservoir M (40 mm)": {
+    "h_mm": 40.0,
+    "dp_over_weight_at_atm": 0.4241998801745394,
+    "dp_over_weight_at_10mbar": 0.13868227252304824,
+    "dp_Pa": 222.2188040289532,
+    "weight_Pa": 523.854,
+    "tau_needed_s_for_0p3": 11.249608133080667
+   }
+  },
+  "u_mf_mm_s": 2.799864978666667
+ },
+ "reservoir_open_path": {
+  "argon_out_at_20mbar_sccm": 299.4962962962963,
+  "superficial_mm_s": 8.91358024691358,
+  "u_mf_mm_s": 2.799864978666667,
+  "air_in_at_vacuum_sccm": 9430.875690607736
+ },
+ "rate_of_rise": {
+  "V_L": 11.262865037529748,
+  "leak_budget_mbarLs": 0.0001,
+  "rise_mbar_per_min_leak": 0.000532724131915547,
+  "rise_mbar_per_min_outgassing": 0.00032258328871770516,
+  "note": "isolate at <= 1 mbar after >= 1 h pumping; read a Pirani or capacitance gauge for 10 min"
+ }
+}
