@@ -8,7 +8,7 @@ build". Two heat paths had not been checked before. Both change what to buy. Not
 |---|---|
 | [`analysis/thermal_laser.py`](analysis/thermal_laser.py) | CalculiX, axisymmetric: the module thermal model of [`thermal_module.py`](analysis/thermal_module.py) with the beam's time-averaged absorbed power added in the plate; 36 runs plus 18 with the module cooled → [`laser_heat.md`](analysis/out/thermal/laser_heat.md) |
 | [`analysis/tray/tray_budget.py`](analysis/tray/tray_budget.py) | the tray's electrical input and heat, phase by phase, against the VLM dock and the Shuttle's enclosure, using byu-vcl PR 318's method and numbers → [`tray_budget.md`](analysis/out/tray/tray_budget.md) |
-| [`edison/followup-laser-heat/`](edison/followup-laser-heat/) | Edison `LITERATURE_HIGH` second opinion on both questions |
+| [`edison/followup-laser-heat/`](edison/followup-laser-heat/) | Edison `LITERATURE_HIGH` second opinion on both questions (§3) |
 
 ## 1. The laser heats the build module more than its heaters do
 
@@ -105,7 +105,34 @@ draws ends up as heat inside the Shuttle unless chilled water or a duct carries 
   rated, inside PR 318's Vertiv GXT5LI-1500 (1.35 kW, online). The laser, pump, blower and heaters stay unbacked, as
   PR 318 does for heaters and pumps.
 
-## 3. Caveats
+## 3. What Edison's second opinion adds
+
+Edison `LITERATURE_HIGH`, task `410abc9e…` (submitted 14:33 UTC, fetched 15:05 UTC), ~45k characters, is in
+[`edison/followup-laser-heat/answer.md`](edison/followup-laser-heat/answer.md) with its references and the full
+trajectory. It agrees with both findings and adds numbers:
+
+- **Interlayer time is the strongest lever.** On a 100 °C platform, 316L cuboids reached ~545 °C at an 18 s interlayer
+  time, ~230 °C at 65 s and ~170 °C at 116 s ([Chaudry et al. 2022](https://doi.org/10.1007/s40964-022-00282-x)). So the
+  scan software's dwell (fix 3 above) is a real control, not a fallback; a ~28–30 s recoat dwell was enough to stop
+  cross-layer accumulation on an EOS machine ([Bugatti and Colosimo 2024](https://doi.org/10.1016/j.jmapro.2024.06.050)).
+- **Drift costs properties in the alloys we screen.** AlSi10Mg on a 200 °C platform is already over-aged after ~10 h
+  of building (100.5 ± 3 HV) and falls below 80 HV at 250 °C ([Bosio et al. 2021](https://doi.org/10.1007/s11837-020-04523-8));
+  200 °C AlSi10Mg is weaker than 35 °C material, with a coarser Si network
+  ([Macías et al. 2020](https://doi.org/10.1016/j.actamat.2020.10.001)); A357 regions that ran above ~230 °C lost up to
+  30 % of their properties ([Heugue et al. 2026](https://doi.org/10.3390/met16080854)). Edison's conclusion is that
+  holding the plate within about ±10 °C of the set point is a metallurgical requirement, not a nicety.
+- **Zn and Mg loss in 7075 doesn't depend on the plate temperature** (~1 wt% Zn and ~0.3 wt% Mg from 25 to 400 °C,
+  [Velikajne et al. 2026](https://doi.org/10.3390/ma19050970)): it is set in the melt pool.
+- **Magnet:** NdFeB's practical limit is 80–180 °C depending on grade; conventional SmCo is rated to ~300 °C, at about
+  30–40 % less holding force for the same size ([Liu 2019](https://doi.org/10.1088/1674-1056/28/1/017501)). Swap to SmCo.
+- **FKM:** 200 °C continuous, ~230 °C short excursions. The rod gland stays well inside that once the module is cooled.
+- **Air-cooled laser:** the quoted unit's 1.7 kW in, 0.5 kW out implies ~29 % wall-plug efficiency and ~1.2 kW of heat;
+  Edison found no published derating data for air-cooled LPBF-class lasers in enclosures, and calls forced exhaust
+  "effectively mandatory" or water cooling the alternative ([Ballato et al. 2024](https://doi.org/10.1088/1361-6463/ad1ddc)).
+- **What it couldn't find:** published details of how commercial machines take heat out of the build cylinder. The
+  literature only says the platform is the main heat sink.
+
+## 4. Caveats
 
 - The laser loads are time averages from scan rate, layout density and recoat time. The absorptance (0.45, 0.6 in
   keyhole) and the 8 s recoat cycle are assumptions; a slower recoat or a dwell lowers the average.
