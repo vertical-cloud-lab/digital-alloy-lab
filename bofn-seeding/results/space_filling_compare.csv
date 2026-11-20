@@ -1,0 +1,5 @@
+method,nearest_to_existing,nearest_new_pair,fill_distance,mean_nearest,mean_post_var
+sobol,0.7471,0.9105,1.5117,0.7305,0.7567
+sobol-exclusion,0.7888,1.0619,1.5079,0.7309,0.7587
+maximin,1.5573,1.8502,1.4432,0.8016,0.83
+imse,0.6334,0.9308,1.5265,0.6399,0.6689

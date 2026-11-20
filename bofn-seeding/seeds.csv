@@ -1,0 +1,6 @@
+code,strategy,status,source,notes,Mn,Cr,Zr,Mg,Si,Cu,Ti,Fe,Ni,Ce,Sc,Li,Er,Zn,Sn
+A1-A5,baseline,planned,#256 block A,"6063 bar, fixed settings; nominal mid-spec (Si 0.2-0.6, Mg 0.45-0.9). Replace with measured EDS/ICP",0,0,0,0.7,0.4,0,0,0,0,0,0,0,0,0,0
+D1,baseline,planned,#256 block D,"AlSi10Mg-type from 4047 + Mg: the alloy to beat",0,0,0,0.35,10.0,0,0,0,0,0,0,0,0,0,0
+D2,baseline,planned,#256 block D,"Scalmalloy-type Al-Mg-Sc-Zr: the mineral-burden reference. Needs Zr (not on the Nov 13 ESPI list)",0.5,0,0.3,4.5,0,0,0,0,0,0,0.7,0,0,0,0
+B30,dosing-check,planned,#256 block B,"30 wt% 4047 powder in 6063 cups (Si about 3.9 wt%)",0,0,0,0.5,3.9,0,0,0,0,0,0,0,0,0,0
+B15,dosing-check,planned,#256 block B,"15 wt% 4047 powder in 6063 cups (Si about 2.1 wt%)",0,0,0,0.6,2.1,0,0,0,0,0,0,0,0,0,0
