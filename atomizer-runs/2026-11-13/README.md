@@ -264,7 +264,7 @@ points to the sensor.
 | | Oct 28 (failed) | Nov 5 (failed) | Nov 10 (good) | **Nov 13** |
 |---|---|---|---|---|
 | Plate | 2nd use | new | new | **2nd use: flipped, scraped, a nick at one end** |
-| O₂ before the pour | 11 ppm | 22 | 20 | **1000 at 17:01, 352 in the pour (873–1000 all afternoon)** |
+| O₂ before the pour | 11 ppm | 22 | 20 | **1000 at 17:01, 352 in the pour (about 500–1000 all afternoon)** |
 | Hold at 1300 °C | ~15 s | 1 min | 2 min | **5 min** |
 | Graining | 0.23 → 0.19 bar | 0.19 | 0.19 | **0.18 → 0.19** |
 | What the plate did | let it run off | atomized in bursts, then the nozzle froze | atomized, unstable | **threw 1–3 mm shot the whole pour** |
