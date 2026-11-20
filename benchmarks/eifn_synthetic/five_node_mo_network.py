@@ -23,8 +23,8 @@ Node   Function (literature domain)      Inputs                     Outputs
 =====  ================================  =========================  ====================
 
 Every edge passes the parent's output through a fixed min-max map onto the
-child's literature domain for that input, using the exact (nodes 1 and 2) or a
-rigorous (nodes 3 and 4) range of the parent over the feasible inputs. So
+child's literature domain for that input, using the exact (node 1) or a
+rigorous (nodes 2 to 4) range of the parent over the feasible inputs. So
 every node's output lies in the domain of the node it feeds, and each node's
 function is only ever evaluated on its literature domain. The BoTorch
 implementations of Styblinski-Tang, DTLZ2 and Rastrigin raise if they get an
@@ -150,7 +150,8 @@ _ZDT4_ARGMAX_55 = 4.75602934755  # (and -4.756..., the term is even)
 _NODE1_LO = 10 * _ST_MIN_01 + 10 * _ST_MIN_55
 _NODE1_HI = 10 * _ST_MAX_01 + 10 * _ST_MAX_55
 #  node 2: each DTLZ2 output is (1 + g) * cos or sin, g = sum of 10 terms
-#  (z - 0.5)^2 <= 0.25, so each output is in [0, 3.5] (exact)
+#  (z - 0.5)^2 <= 0.25, so each output is in [0, 3.5] (a bound: 3.5 needs
+#  node 1 at an extreme and x1 = 0 at once, which the network can't reach)
 _NODE2_LO, _NODE2_HI = 0.0, 1.0 + 10 * 0.25
 #  node 3: Rastrigin over [0, 1]^10 x [-5, 5]^10 x [-5.12, 5.12]^2 (upper end is
 #  the box maximum, a rigorous bound)

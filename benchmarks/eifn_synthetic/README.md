@@ -25,8 +25,8 @@ flowchart LR
 | 5 | ZDT4, 2-D, 2 objectives | u1 in [0, 1], u2 in [-5, 5] | node 4 | the two objectives (minimized) |
 
 Each parent output goes through a fixed min–max map onto the child's literature domain for that
-input. The range it maps from is exact for nodes 1 and 2 and a rigorous bound for nodes 3 and 4: the
-sum of the per-coordinate maxima, because all four functions are sums of one-variable terms. So every
+input. The range it maps from is exact for node 1 and a rigorous bound for nodes 2 to 4, built from
+per-coordinate maxima, because all four functions are sums of one-variable terms. So every
 node's output lies in the domain of the node it feeds, and no function is evaluated outside its
 literature domain. BoTorch's `StyblinskiTang`, `DTLZ2` and `Rastrigin` raise on inputs outside their
 bounds, so this is checked on every evaluation, and the tests check it on 4,000+ points including the
@@ -81,6 +81,15 @@ reference point `(11, 11)`:
 
 Random inputs pile up on ZDT4's local fronts (`g ≈ 1.25, 2, 3.25, ...`), and only a thin
 level set of x2..x20 reaches `g = 1`.
+
+![Left: objectives of 2,000 random feasible inputs above the known front f2 = 1 - sqrt(f1), with the
+15 gen_pareto_set inputs on it. Right: random-search hypervolume regret falling from 11.8 at 21
+inputs to 0.20 at 20,000.](figures/five_node_mo_network.png)
+
+*Left: node 5's outputs for 2,000 Sobol inputs drawn in `feasible_bounds`. Points with f2 > 4.5 are
+cut off, which is 1,424 of them. The orange curve is the known front; the green points are 15
+inputs from `gen_pareto_set`, which sit on it. Right: the regret table above.
+`python benchmarks/eifn_synthetic/plot_five_node_mo_network.py` redraws the figure.*
 
 ## Usage
 
