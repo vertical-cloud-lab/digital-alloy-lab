@@ -6,34 +6,41 @@ copy the W011 flange file once for each set in
 make the rectangle on top as wide as that set's spot, merge the bodies, and name the file after the set. The aim
 is for the printer to lay a single track on top of each flange.
 
-![End views of three of the files](fins-preview.png)
+**2026-11-20: the flanges are now 2 mm tall.** Carl's correction on the same PR: the flange had been made too tall,
+and should be "2mm tall, 1.25 mm wide, and 12.6 mm deep with the line on top". Every file was rebuilt to that
+(822baf8). The first version, 1.27 × 12.7 × 5.08 mm flanges, is in e50d71d; don't print from it.
+
+![End and side views of the files](fins-preview.png)
 
 | File | What it is |
 | --- | --- |
 | `stl/<set name>.stl` | 33 binary STLs, one for each set in [`../out/wall_sets.csv`](../out/wall_sets.csv) (32 settings and the control). Walls that share a set use the same file |
-| [`flange-fins-stl.zip`](flange-fins-stl.zip) | All 33 in one zip |
-| [`fins.csv`](fins.csv) | For each file: spot, the rectangle's width and x range, height, length, volume, the walls that use it, and the sha256 |
-| `template/` | The file as Gage sent it (`W011_348W_705_140um_h130.stl`) |
+| [`flange-fins-2mm-stl.zip`](flange-fins-2mm-stl.zip) | All 33 in one zip, in a folder `flange-fins-2mm` |
+| [`fins.csv`](fins.csv) | For each file: spot, the line's width and x range, height and length, the flange's size, the overall height, volume, the walls that use it, and the sha256 |
+| `template/` | The file as Gage sent it (`W011_348W_705_140um_h130.stl`, the 5.08 mm flange). It sets the frame and the line's height |
 | [`make_fins.py`](make_fins.py) | Writes the STLs, `fins.csv` and the zip; standard library only: `python make_fins.py` |
-| [`check_fins.py`](check_fins.py) | Rebuilds each part as a boolean union of two boxes (manifold3d) and checks the STL matches it |
-| [`preview.py`](preview.py) | Draws `fins-preview.png` from the files' own end faces |
+| [`check_fins.py`](check_fins.py) | Rebuilds each part as a boolean union of two boxes (manifold3d) from Carl's sizes and checks the STL matches it |
+| [`preview.py`](preview.py) | Draws `fins-preview.png` from the files' own triangles |
 
 ## Geometry
 
-Every file is the template with only the rectangle's two long faces moved. Each one is a single closed body
-of 28 triangles, in mm, in the same position as the template. W011's file is byte-identical to the template.
+Each file is a single closed body of 28 triangles, in mm. Since the line runs the flange's whole length, the part
+is a prism: its end view (the flange with the line standing on it, an 8-sided outline) extruded 12.6 mm.
 
 | | Same in every file | Changes |
 | --- | --- | --- |
-| Flange | 1.27 × 12.7 × 5.08 mm (x −0.705 to 0.565, y −12.7 to 0, z −5.08 to 0) | |
-| Rectangle | 0.05 mm tall (z 0 to 0.05), 12.6 mm long (y −12.6 to 0), centred on the flange at x = −0.07 mm | width = the set's spot size, 0.050 to 0.190 mm |
+| Flange | 1.25 mm wide, 12.6 mm deep, 2.00 mm tall (x −0.695 to 0.555, y −12.6 to 0, z −2.0 to 0) | |
+| Line on top | 0.05 mm tall (z 0 to 0.05), 12.6 mm long, end to end (y −12.6 to 0), centred on the flange at x = −0.07 mm | width = the set's spot size, 0.050 to 0.190 mm |
+| Whole part | 1.25 × 12.6 × 2.05 mm | |
 
-Three things come from the template, not from the request's wording:
+The flange's three sizes are Carl's. The rest comes from Gage's template:
 
-- **Height 0.05 mm, not 0.5 mm.** The template's rectangle is 0.05 mm tall, the request said only the width
-  changes, and the aim is one pass. 0.05 mm is one layer at 50 µm; 0.5 mm would be about 10 layers.
-- **Length 12.6 mm.** As in the template, the rectangle is flush with the flange's y = 0 end and stops 0.1 mm short
-  of the other end.
+- **The frame.** The flange's top face is at z = 0, one end at y = 0, and the line is centred on x = −0.07 mm, as in
+  the template. Each part sits where the template did, but its bottom is now at z = −2.0 instead of −5.08.
+- **The line is 0.05 mm tall,** as in the template: one layer at 50 µm. The 2.00 mm flange is then 40 layers and
+  the line the 41st. At 30 µm layers the flange is 66.7 layers, and the 0.05 mm line could land on one layer or two.
+- **End to end.** Gage asked for the rectangle "running end to end on the top of the flange". In the template it was
+  12.6 mm on a 12.7 mm flange, flush with one end. On the 12.6 mm flange it is flush with both.
 - **33 files, not 28.** The table has 33 set names.
 
 ## Check in WRX before relying on it
@@ -50,7 +57,7 @@ tab will draw the rectangle instead. In Carl's photos of the 316L set (2026-11-1
 
 So in WRX's layer view, on one flange:
 
-1. Check that the rectangle appears on exactly one layer.
+1. Check that the rectangle appears on exactly one layer, the one just above the flange's 2.00 mm top.
 2. Count its vectors. A contour follows the outline, so on a strip it is usually a loop: two passes along the
    rectangle, one down each side, rather than one. Check the narrowest file too (W016, 50 µm), in case WRX
    drops it.

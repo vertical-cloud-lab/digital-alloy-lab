@@ -5,6 +5,12 @@ the [2026-08-13 comment](https://github.com/vertical-cloud-lab/digital-alloy-lab
 if the atomizer-to-printer loop isn't ready, print commercial stainless steel on BYU's M2 and use cross-section SEM
 of single tracks to check the Thermo-Calc AM Module.
 
+**Update, 2026-11-20: each wall (Gage's "flange") is 1.25 mm thick, 12.6 mm long and 2.00 mm tall,** with a
+0.05 mm line along its top, as wide as its set's spot, for a single track. That is Carl's
+[correction](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/243): the walls had been drawn too tall.
+The 33 STLs are in [`m2-track-design/fins/`](m2-track-design/fins/README.md). Where this plan, the wall sheet or
+the animation give a wall as 1.27 mm thick or 7.6 mm tall, these sizes win.
+
 **Update, 2026-11-19: Friday's build is 42 walls, each varying power, speed, spot and trace spacing.**
 [Sterling's final table](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/243#issuecomment-7021458367)
 replaces the 84-wall layout described in §4. The build is 2 squares × 3 parts × 7 walls, all along the recoater. It
