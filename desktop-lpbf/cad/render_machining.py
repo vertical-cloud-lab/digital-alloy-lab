@@ -32,30 +32,32 @@ STOCK_COL = "#cfd4d9"
 DONE_COL = "#b9c0c7"
 FIX_COL = "#6f777e"
 
-# The default plan: rots are applied to the part in model coordinates, in order, to bring the operation's face up.
-# "on": table (on parallels, toe clamps), flip (upside down on parallels), jet (waterjet slats), rotary (A axis along +x,
-# the part's mounting face on a fixture plate on the platter; index angles in degrees about +x).
+# The plan, from analysis/out/machining/setup_plan.json (the chamber study's setups F-S0..F-S3 and P-S0..P-S2). rots turn the part
+# (model coordinates) so the setup's face is up; "on": jet (waterjet slats), tabs (riser blocks, toe clamps on the blank's 1 in.
+# end tabs), plate (held down on a "dummy floor" fixture plate by its own floor screws from below), studs (fixture plate, two
+# pins and an M12 stud through the port), rotary (A axis along machine +x; the part's mounting face on the dummy-floor plate on
+# the platter; index angles about +x). Op keys: FR-xx / FP-xx (lpbf_low.CHAMBER_OPS), with a suffix + / - for the half at x > 0
+# or x < 0, and < / > for the half below or above the part's mid-height; J:<key> for the joints.CUTS holes of that joint.
 DEFAULT_PLAN = {
     "frame": [
-        dict(on="table", rots=[], ops=["FR-01"], title="Setup 1, VF-4: blank on parallels, toe clamps; face the top, mill the 312 x 222 profile",
-             tool=(25.4, 60.0)),
-        dict(on="jet", rots=[], ops=["FR-02"], title="Waterjet: the 274 x 184 core cut out in one piece (3 mm left on every inside face)", tool=None),
-        dict(on="table", rots=[], ops=["FR-03", "FR-06", "J:lid"], title="Setup 2, VF-4: top up, clamped on the walls; finish the opening to "
-             "mid-height, lid O-ring gland, lid-screw holes", tool=(19.05, 63.0)),
-        dict(on="flip", rots=[("x", 180)], ops=["FR-04", "FR-05", "J:floor", "J:floor_dowels"], title="Setup 3, VF-4: flipped; face to 123.9 mm, "
-             "finish the opening from below, the 8 x 3.9 rebate, floor-screw and dowel holes", tool=(19.05, 63.0)),
-        dict(on="rotary", rots=[("y", 90)], index=[(-90, ["FR-07", "J:rail"]), (90, ["FR-08", "FR-09", "J:plenum_in"]),
-                                                   (180, ["FR-10+", "FR-11", "FR-12", "FR-13+", "J:*+x"]), (0, ["FR-10-", "FR-13-", "J:*-x"])],
-             title="Setup 4, VF-4 + HRT210: the frame's bottom bolted to a fixture plate on the platter; index 90 deg per wall",
-             tool=(12.7, 50.0)),
+        dict(on="jet", rots=[], ops=["FR-02"], title="F-S0, waterjet: a Ø12 start hole, then the core cut out of the 15 x 9.5 x 5.5 in. blank in one piece"),
+        dict(on="tabs", rots=[("x", 180)], ops=["FR-01<", "FR-04", "FR-05", "J:floor"],
+             title="F-S1, VF-4, bottom up: riser blocks, toe clamps on the end tabs; face, lower half of the profile, opening, rebate, floor-screw holes"),
+        dict(on="plate", rots=[], ops=["FR-01>", "FR-03", "FR-06", "J:lid"],
+             title="F-S2, VF-4, top up: end tabs sawn off; the frame held down on a dummy-floor plate by its own 18 floor screws; "
+                   "face, profile, opening, lid gland and inserts"),
+        dict(on="rotary", rots=[("y", 90)], index=[(-90, ["FR-07"]), (0, ["FR-10-", "FR-13-"]), (90, ["FR-08", "FR-09", "J:plenum_in", "J:rail"]),
+                                                   (180, ["FR-10+", "FR-11", "FR-12", "FR-13+", "J:vac_port", "J:bearing_cap"])],
+             title="F-S3, VF-4 + HRT210: the dummy-floor plate on the platter, the frame's bottom on it; one clamping, four walls"),
     ],
     "floor": [
-        dict(on="table", rots=[], ops=["FP-01", "FP-02", "FP-03", "FP-04", "FP-05", "FP-06"], title="Floor plate, setup 1: profile, the 4 mm "
-             "pad, O-ring gland, Ø96 H7 port, outlet and overflow slots", tool=(12.7, 40.0)),
-        dict(on="flip", rots=[("x", 180)], ops=["FP-07", "J:*"], title="Floor plate, setup 2: flipped; screw notches, inserts and dowel holes "
-             "from below", tool=(6.35, 30.0)),
+        dict(on="tabs", rots=[], ops=["FP-01>", "FP-02", "FP-03", "FP-04", "FP-05", "FP-06"],
+             title="P-S1, VF-4, top up: 15 x 9.5 x 1 in. blank on parallels, toe clamps on the end tabs; face, the 4 mm pad, O-ring gland, Ø96 H7 port, slots"),
+        dict(on="studs", rots=[("x", 180)], ops=["FP-01<", "J:floor", "FP-07", "J:module_flange", "J:plenum_out", "J:funnel", "J:zmount", "J:legs"],
+             title="P-S2, VF-4, bottom up: two pins and an M12 stud through the port; face to 20 mm, profile, U-notches, every under-floor hole"),
     ],
 }
+MID_Z = {"frame": None, "floor": -10.0}      # frame: set from lpbf_low.FRAME at run time
 
 
 # ---------------------------------------------------------------------------------------------------- geometry helpers
@@ -112,23 +114,37 @@ def op_tools(RB, part, key):
         if k == "*" or k.startswith("*"):
             return None, cuts                        # resolved by the caller (needs to know what is already used)
         return [t for kk, t in cuts if kk == k], None
-    side = key[-1] if key[-1] in "+-" else None
-    oid = key[:-1] if side else key
+    suf = key[-1] if key[-1] in "+-<>" else None
+    oid = key[:-1] if suf else key
+    if part == "frame" and oid == "FR-02":          # the waterjet cuts through the whole blank, so the slug lifts out
+        FR, P = M.FRAME, M.P
+        co, ix, iy = FR["core_off"], P["ix"], P["iy"]
+        return [M.rbox(-ix + co, ix - co, -iy + co, iy - co, -200.0, 300.0, FR["r_in"] - co)], None
     for o, label, solid in M.CHAMBER_OPS[part]["ops"]:
         if o == oid:
-            return [split_x(solid, side) if side else solid], None
+            if suf in ("+", "-"):
+                return [split_x(solid, suf)], None
+            if suf in ("<", ">"):
+                zm = MID_Z[part] if MID_Z[part] is not None else (-M.FRAME["skirt"] + M.P["lid_z0"]) / 2
+                big = 2000.0
+                box = cq.Solid.makeBox(2 * big, 2 * big, big, cq.Vector(-big, -big, zm - big if suf == "<" else zm))
+                return [solid.intersect(box)], None
+            return [solid], None
     return [], None
 
 
 def op_label(RB, part, key):
     if key.startswith("J:"):
         return {"lid": "drill and STI-tap the 20 lid-screw holes for M5 helical inserts", "floor": "18 tapped M4 holes in the skirt for the floor screws",
-                "floor_dowels": "Ø6 dowel holes", "rail": "recoater-rail insert holes in the back wall",
-                "plenum_in": "inlet-plenum insert holes round the slot"}.get(key[2:], "drill, tap and insert the remaining holes")
-    oid = key.rstrip("+-")
+                "floor_dowels": "Ø6 dowel holes", "rail": "4 recoater-rail holes tapped through the back wall from outside (plugged later)",
+                "plenum_in": "7 inlet-plenum insert holes round the slot", "vac_port": "KF-25 adapter insert holes",
+                "bearing_cap": "bearing-cap insert holes", "module_flange": "module-screw inserts and dowel holes",
+                "plenum_out": "outlet-plenum insert holes", "funnel": "overflow-funnel insert holes", "zmount": "Z-flange insert holes",
+                "legs": "leg insert holes"}.get(key[2:], "drill, tap and insert the remaining holes")
+    oid = key.rstrip("+-<>")
     for o, label, solid in RB.M.CHAMBER_OPS[part]["ops"]:
         if o == oid:
-            return f"{o}: {label}" + (" (this wall)" if key[-1] in "+-" else "")
+            return f"{o}: {label}" + (" (this wall)" if key[-1] in "+-" else " (this side)" if key[-1] in "<>" else "")
     return key
 
 
@@ -148,6 +164,32 @@ def parallels_and_clamps(b, z0):
             pieces += [(step, "#3e454c"), (stud, "#9aa3ab")]
             pieces.append((bar, "#3a3f45"))
     return pieces, zt
+
+
+def holding(kind, b):
+    """[(mesh, colour)] of what holds the part (bbox b, machine frame, sitting 25.4 mm above the table):
+    tabs   four riser blocks under the corners and toe clamps on the blank's end tabs (x ends)
+    plate  a 1 in. 'dummy floor' fixture plate under the part (the part is pulled down by its own floor screws from below)
+    studs  a fixture plate under the part, and an M12 stud with a Ø104 clamp washer through the Ø96 port"""
+    x0, x1, y0, y1, z0, z1 = map(float, b)
+    out = []
+    if kind == "tabs":
+        for x in (x0 + 10, x1 - 50):
+            for y in (y0 + 10, y1 - 50):
+                out.append((pv.Box((x, x + 40, y, y + 40, 0.0, z0)), "#8e979f"))
+        for x in (x0 + 12, x1 - 12):
+            for y in (y0 + 0.3 * (y1 - y0), y0 + 0.7 * (y1 - y0)):
+                sx = -1 if x < (x0 + x1) / 2 else 1
+                out.append((pv.Box((min(x, x + sx * 90), max(x, x + sx * 90), y - 12, y + 12, z1, z1 + 16)), "#3a3f45"))
+                out.append((pv.Cylinder(center=(x + sx * 45, y, (z1 + 30) / 2), direction=(0, 0, 1), radius=6, height=z1 + 30), "#9aa3ab"))
+                out.append((pv.Box((min(x + sx * 70, x + sx * 100), max(x + sx * 70, x + sx * 100), y - 15, y + 15, 0.0, z1 + 6)), "#3e454c"))
+    elif kind in ("plate", "studs"):
+        out.append((pv.Box(((x0 + x1) / 2 - 165, (x0 + x1) / 2 + 165, (y0 + y1) / 2 - 120, (y0 + y1) / 2 + 120, 0.0, z0)), "#6f777e"))
+        if kind == "studs":
+            c = ((x0 + x1) / 2, (y0 + y1) / 2)
+            out.append((pv.Cylinder(center=(c[0], c[1], (z0 + z1) / 2 + 20), direction=(0, 0, 1), radius=6, height=z1 - z0 + 40), "#9aa3ab"))
+            out.append((pv.Cylinder(center=(c[0], c[1], z1 + 4), direction=(0, 0, 1), radius=52, height=8, resolution=48), "#3a3f45"))
+    return out
 
 
 def clamp_bars_on_top(b, ztop):
@@ -189,7 +231,7 @@ def chapter_chamber(st, RB):
     M = RB.M
     plan = load_plan()
     nf, ease, tess = RB.nf, RB.ease, RB.tess
-    cap = "2  Machining the chamber: a through-frame from 5 in. plate and a 20 mm floor plate (spindle always vertical)"
+    cap = "2  Machining the chamber: a through-frame from 5.5 in. plate and a 20 mm floor plate (spindle always vertical)"
     table_top = 0.0
     st.add_multi("vmc-table", V.table(table_top))
     results = {}
@@ -277,10 +319,7 @@ def _animate_op(st, RB, su, R, before, after, key, part, cap):
         st.add_multi("fx-jet", jet_bed(0.0, 0.0))
     else:
         st.show_extra("vmc-table", True)
-        pieces, zt = parallels_and_clamps(b, 0.0)
-        if key not in ("FR-01", "FP-01"):
-            pieces = pieces[:2] + clamp_bars_on_top(b, b[5])
-        st.add_multi("fx-clamps", pieces)
+        st.add_multi("fx-hold", holding(su["on"], b))
     c = (b[0::2] + b[1::2]) / 2
     tool = "jet" if su["on"] == "jet" else ("drill" if key.startswith("J:") else "mill")
 
