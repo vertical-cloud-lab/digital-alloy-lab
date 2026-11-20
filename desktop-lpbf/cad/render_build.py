@@ -43,6 +43,7 @@ import joints as J  # noqa: E402
 import lpbf_low as M  # noqa: E402
 import module_params as MP  # noqa: E402
 import render_low as R  # noqa: E402
+import render_scale as RS  # noqa: E402  (soda can, steel rule, person, dimension lines)
 
 pv.OFF_SCREEN = True
 OUT = HERE / "img" / "sequence"
@@ -424,6 +425,12 @@ def sheet_blank(p):
     return M.box(cx - w / 2, cx + w / 2, cy - h / 2, cy + h / 2, b[4], b[4] + 1.5)
 
 
+def union_bbox(shapes):
+    """(x0, x1, y0, y1, z0, z1) round several cq shapes."""
+    bs = np.array([bbox(sh) for sh in shapes])
+    return (bs[:, 0].min(), bs[:, 1].max(), bs[:, 2].min(), bs[:, 3].max(), bs[:, 4].min(), bs[:, 5].max())
+
+
 def tess(shape, tol=0.4):
     try:
         return R.tess(shape, tol, 0.4)
@@ -656,6 +663,21 @@ def kit_layout(st, z0=0.0):
     return zones, offs, labels, (total_w, total_h)
 
 
+def scale_refs_kit(st, zones, tw, th):
+    """A 1.75 m person at the front left of the layout, a soda can and a 300 mm rule beside the stock, and the chamber's
+    blank dimensioned (the first animation gave no sense of size)."""
+    z = zones[0]
+    zx, zy = z["centre"][0] - z["w"] / 2, z["centre"][1] - z["h"] / 2
+    pieces, labels = RS.steel_rule((zx, zy - 150.0, 0.0), (1, 0, 0))
+    RS.add_refs(st, "kit-scale", pieces + RS.soda_can((zx - 110.0, zy + 40.0, 0.0)), labels)
+    RS.add_refs(st, "kit-person", RS.person((-tw / 2 - 420.0, -th / 2 + 200.0, 0.0), facing=(0.3, -1.0, 0.0)))
+    for it in z["items"]:
+        if it["what"] == "stock" and st.parts[it["i"]].name.startswith("Process chamber body"):
+            b = np.asarray(it["b"], float) + np.repeat(np.asarray(it["off"], float), 2)
+            RS.add_dims(st, "kit-dims", RS.box_dims(b, pad=70.0))
+            break
+
+
 def chapter_kit(st):
     st.shown.clear()
     st.mat.clear()
@@ -677,6 +699,7 @@ def chapter_kit(st):
             st.show_extra(f"kit-{it['i']}", False)
     focal = (0.0, 0.0, 0.0)
     dist = 1.15 * max(tw / 0.873, th / 0.536)
+    scale_refs_kit(st, zones, tw, th)
     shown_extra = []
     for zi, z in enumerate(zones):
         for it in z["items"]:
@@ -714,6 +737,9 @@ def chapter_kit(st):
         prev, prev_d = c, dz
     for zi in range(len(zones)):
         st.pl.remove_actor(f"kitlab{zi}")
+    RS.remove_refs(st, "kit-scale")
+    RS.remove_refs(st, "kit-person")
+    RS.remove_dims(st, "kit-dims")
     st.clear_extra("kit-")
     st.shown.clear()
     st.mat.clear()
@@ -1111,10 +1137,15 @@ def chapter_module(st):
     st.caption(cap, "Three M3 x 10 316 flat-head screws hold the striker, flush with the magnet face")
     drive(st, "striker_M50", lambda: (cam(0.97, d=420, el=-30, fz=-120), st.shot()), frames=5)
     st.caption(cap, "Done: the module leaves and returns as one unit; S25 and L75 modules are built the same way")
+    mb = union_bbox([st.parts[i].shape for i in body + bfl + handle + plate + rod + rodend])
+    RS.add_refs(st, "mod-scale", RS.soda_can((mb[1] + 95.0, (mb[2] + mb[3]) / 2 + 40.0, mb[4])))
+    RS.add_dims(st, "mod-dims", RS.box_dims(mb, which="xz", pad=45.0))
     n = nf(16)
     for f in range(n):
-        st.cam((0.0, 0.0, -45.0), 640, -20 + 180 * f / n, 14)
+        st.cam((0.0, 0.0, -45.0), 700, -20 + 180 * f / n, 14)
         st.shot()
+    RS.remove_refs(st, "mod-scale")
+    RS.remove_dims(st, "mod-dims")
     st.clear_extra("s-")
     st.clear_extra("weld")
     st.shown.clear()
@@ -1321,10 +1352,23 @@ def chapter_tray(st):
     bb = M.envelope(st.parts)
     st.caption(f"The desktop LPBF on its VLM tray: {bb.zmax - M.Z_TRAY:.0f} mm tall, three modules side by side",
                "From stock and parts to a finished machine")
+    ox, oy = M.TRAY["outer"][0] / 2, M.TRAY["outer"][1] / 2
+    # the tray is presented in the VLM's opening with its floor 857 mm above the room floor (byu-vcl PR 318): the person
+    # stands on the room floor at the tray's right end, so the tray is at hip height
+    floor_z = M.Z_TRAY - 857.0
+    px = ox + 420.0
+    RS.add_refs(st, "tray-person", RS.person((px, -150.0, floor_z), facing=(-1.0, -0.15, 0.0))
+                + [(pv.Plane(center=(px, -150.0, floor_z), direction=(0, 0, 1), i_size=900, j_size=900), "#e3e7eb")],
+                [((px - 150.0, -500.0, floor_z + 30.0), "room floor, 857 mm below the tray")])
+    RS.add_dims(st, "tray-dims", [((-ox, -oy, M.Z_TRAY), (ox, -oy, M.Z_TRAY), (0, -260.0, 0), None),
+                                  ((ox, -oy, M.Z_TRAY), (ox, oy, M.Z_TRAY), (260.0, 0, 0), None),
+                                  ((-ox, -oy, M.Z_TRAY), (-ox, -oy, bb.zmax), (-200.0, -200.0, 0), None)], font_size=13)
     n = nf(36)
     for f in range(n):
-        st.cam((110.0, 0.0, 40.0), 3700, 28 + 360 * f / n, 22)
+        st.cam((300.0, 0.0, -150.0), 4700, 28 + 360 * f / n, 18)
         st.shot()
+    RS.remove_refs(st, "tray-person")
+    RS.remove_dims(st, "tray-dims")
     st.clear_extra("s-")
 
 
