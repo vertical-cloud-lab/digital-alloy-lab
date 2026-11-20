@@ -60,7 +60,7 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
   - a Ø53 mm build plate, with a Ø25 mm insert (the concept said Ø50 mm; McMaster's nearest tube has a 53.8 mm bore, §6a);
   - a ~100 cm³ dose-from-above hopper cartridge and no supply piston: a 15 mm build uses ~80 g;
   - a servo ball-screw recoater with swappable blades;
-  - a recirculating cross-flow of ~2 m/s at the plate (≥ 1 m/s minimum);
+  - a recirculating cross-flow of ≥ 2.5 m/s everywhere over the plate: 140–200 L/min through the 120 × 8 mm slot, with perforated slots and a wider outlet ([`gas-flow.md`](gas-flow.md); the earlier ~2 m/s target left the plate at 1.5 m/s in CFD);
   - 2–3 vacuum–argon purge cycles to < 100 ppm O₂;
   - a hardwired dual-channel interlock chain;
   - everything scriptable from Python.
@@ -324,7 +324,7 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
     - a carbon-fiber brush;
     - hard: HSS or ceramic. The DIY build found steel repeatable.
   - A roller module comes later. In one comparison, a **non-rotating roller** packed layers at 45 % against 30 % for a straight blade, though rollers can jam at very thin layers (Sehhat 2021). Counter-rotation at high rates destabilised the bed while forward rotation helped (Jabri 2024). Sources via [Edison](edison/answer.md#2-powder-spreading-recoater-design-speed-layer-thickness-and-spreadability).
-  - Start at 10–50 mm/s and work up toward ~100 mm/s. Fine Al (below the ~20 µm cohesion threshold) flows worse, so the 15–20 µm tail of our 15–63 µm powders is the risk.
+  - Start at 10–50 mm/s and work up toward ~100 mm/s. Fine Al (below the ~20 µm cohesion threshold) flows worse, so the 15–20 µm tail of our 15–63 µm powders is the risk. The 2026-11-20 DEM ([`powder-spreading.md`](powder-spreading.md)) favours 50 mm/s (25 mm/s for a new powder), a first-layer gap of ~2 × D90, and zeroing the blade gap with the plate at temperature.
   - The gap and dose factor are recipe parameters.
 - **Measuring spreadability.**
   - A layer camera (Raspberry Pi HQ camera with an oblique LED bar) images every layer, before and after lasing.

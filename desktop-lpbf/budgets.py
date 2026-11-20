@@ -32,7 +32,9 @@ chamber_l = 6.0            # e.g. ~200 x 150 x 200 mm process chamber, internal
 flow_purge_l = chamber_l * math.log(o2_air_ppm / 100)  # well-mixed flow purge to 100 ppm
 
 # --- Cross-flow -------------------------------------------------------------
-nozzle_w_mm, nozzle_h_mm, v_ms = 70.0, 8.0, 2.0
+nozzle_w_mm, nozzle_h_mm, v_ms = 120.0, 8.0, 3.0   # 120 x 8 mm bed slot (low-profile model); 2.5-3.5 m/s mean in the slot,
+                                                   # 140-200 L/min: what the 2026-11-20 CFD needed to hold >= 2.5 m/s over
+                                                   # the whole plate (gas-flow.md); 2.0 m/s left the plate at 1.5 m/s mean
 crossflow_lpm = nozzle_w_mm * nozzle_h_mm * 1e-6 * v_ms * 60_000
 
 # --- Gantry vs galvo: what it takes to scan one hatch vector at constant speed -----
