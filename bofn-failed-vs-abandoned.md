@@ -131,9 +131,11 @@ Why attributing the failure to a node matters:
    full-network row.
 2. **Failure rules are often about intermediates, not `x`.** "Powder with D90 above 63 µm
    doesn't recoat" depends on node 2's output, so a viability model on node 3's inputs
-   carries over to *any* composition that gives coarse powder. One classifier on `x` (what
-   `AddExecutionViability` fits) has to relearn the rule in each composition region, and it
-   can't tell which step failed.
+   carries over to *any* composition that gives coarse powder, including powder that didn't
+   come from this campaign. One classifier on `x` (what `AddExecutionViability` fits) has to
+   learn the rule region by region in `x`, and it can't tell which step failed. When every
+   attempt comes from a full run, though, both models see the same events, and the toy in §5
+   found no advantage for the node-level one.
 3. **Intermediates are physical.** pKGFN with the upstream restriction continues from an
    intermediate that already exists. That is a contextual / fixed-feature problem (Ax
    [#746](https://github.com/meta/Ax/issues/746), [#905](https://github.com/meta/Ax/issues/905)),
@@ -224,11 +226,24 @@ inventory = lots with lot_remaining > 0 and status COMPLETED
 **Viability nodes in the network.** Add `v_k` to the DAG as an extra sink with the same parents
 and active inputs as node *k*. The existing `GaussianProcessNetwork` samples it like any other
 node, conditioned on the sampled parent outputs. Then use EIFN with a constraint on those
-samples, e.g. BoTorch's `constraints=[lambda Z: 0.5 - Z[..., v_k]]`: an MC sample only
-counts as an improvement if every node on its path is viable. This is the node-level version of
-`AddExecutionViability`. Fitting a GP to 0/1 labels is crude (a classification GP is the
+samples, e.g. BoTorch's `constraints=[lambda Z: 0.8 - Z[..., v_k]]` (feasible when ≤ 0, using
+Ax's default bound of 0.8): an MC sample only counts as an improvement if every node on its
+path is viable. This is the node-level version of `AddExecutionViability`, and it is what
+`viability_node` does in §5. Fitting a GP to 0/1 labels is crude (a classification GP is the
 principled choice), but it is the same compromise Ax made, and it works with the existing
 network posterior.
+
+Two problems with the main-branch port of that posterior
+([`benchmarks/partial_kgfn/gp_network.py`](benchmarks/partial_kgfn/gp_network.py)) need fixing
+first:
+
+- **It breaks on BoTorch 0.18.** The root nodes pass base samples with a trailing output
+  dimension (L281-L284), and BoTorch 0.18's single-output `GPyTorchPosterior` no longer squeezes
+  it: `RuntimeError: shape '[16, 5, 5, 1]' is invalid`. Checked with BoTorch 0.18.1, which is
+  what `requirements.txt`'s `botorch>=0.11` now installs. Pass `base_samples[..., k]` instead.
+- **Its acquisition isn't deterministic.** Non-root nodes call `post_k.rsample(...)` (L299)
+  instead of using their base samples, so EIFN sees fresh noise on every call, which defeats
+  sample-average optimization. The fork's original code uses the base samples there.
 
 The repo's benchmarks so far use three other encodings (§7). Each fits a different case:
 
@@ -316,10 +331,12 @@ What the toy shows:
 1. **Learning from failures is what helps.** Both viability strategies end low in both settings
    (8 to 11 of 12 seeds within 0.02 of `f*`).
 2. **Keeping partial data without a failure model doesn't help.** `partial` has the worst
-   regret in both settings. The node 0 data from failed runs shows exactly where `y0` is high,
-   and node 1's GP, which only sees `y0 ≤ 0.7`, extrapolates that high `y0` is good. The pending
-   arms then flatten the joint EI. Ax ≥ 1.2.4's handling is the right data hygiene, but when a
-   failure is caused by the inputs it has to come with a failure model.
+   regret in both settings. I didn't isolate the cause. Its runs land in the failure region
+   about as often as `abandon`'s (46 % vs 47 % at `D = 2`), but they are the least focused
+   elsewhere: the median distance of `x_D+1` from its optimum is 0.058 and 0.035, against
+   0.009 to 0.043 for the others. That fits pending arms flattening the joint EI more once node
+   0's GP is sure those arms have high `y0`. Ax ≥ 1.2.4's handling is the right data hygiene,
+   but when a failure is caused by the inputs it has to come with a failure model.
 3. **`drop` is erratic and always fails most.** At `D = 2` it re-proposes the same failing spot
    (12.8 repeat failures out of 13.9). At `D = 6` its suggestions spread out enough to land just
    below the boundary, and it ends best, but at the price of the most failures (46 % of BO runs).
@@ -328,9 +345,10 @@ What the toy shows:
 4. **`abandon` fails least at `D = 6`** (7.8) but improves slowly. Pending arms stop exact
    repeats; they don't teach the model anything.
 5. **The node-level viability model did not beat the one on `x`.** It is ahead at `D = 2`
-   (within noise) and behind at `D = 6`, where it also fails more. In this toy every node 1
-   attempt comes from a full run, so both models see the same events, and at `D = 6` the node
-   model inherits node 0's uncertainty about `y0`. Its expected advantage is data the `x` model
+   (within noise) and behind at `D = 6`, where it also fails more: 59 % of its BO runs had
+   `y0 > 0.7`, against 48 % for `viability_x`. In this toy every node 1 attempt comes from a full
+   run, so both models see the same events, and at `D = 6` the node model inherits node 0's
+   uncertainty about `y0`. Its expected advantage is data the `x` model
    never sees: node 1 runs on purchased powder (fast_pKGFN's setting), on lots from other
    campaigns, or on pKGFN partial evaluations, plus knowing which step failed. This toy doesn't
    test any of that.
