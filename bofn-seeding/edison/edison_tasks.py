@@ -84,10 +84,14 @@ def fetch(name: str) -> None:
     data = task.model_dump(mode="json") if hasattr(task, "model_dump") else dict(task)
     (folder / "task_verbose.json").write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
     status = data.get("status")
-    try:
-        answer = data["environment_frame"]["state"]["state"]["response"]["answer"]
-    except (KeyError, TypeError):
-        answer = None
+    state = ((data.get("environment_frame") or {}).get("state") or {}).get("state") or {}
+    if isinstance(state.get("answer"), str):  # ANALYSIS jobs: a plain answer plus a notebook
+        (folder / "answer.md").write_text(state["answer"].rstrip() + "\n", encoding="utf-8")
+        if state.get("nb_state"):
+            (folder / "notebook.ipynb").write_text(json.dumps(state["nb_state"], indent=1) + "\n", encoding="utf-8")
+        print(name, "status:", status, "answer chars:", len(state["answer"]), "notebook:", bool(state.get("nb_state")))
+        return
+    answer = (state.get("response") or {}).get("answer")
     if not isinstance(answer, dict):
         print(name, "status:", status, "- no structured answer; saved task_verbose.json only")
         return

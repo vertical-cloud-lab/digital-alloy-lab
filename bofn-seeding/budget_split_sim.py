@@ -15,7 +15,15 @@ only asks how the split behaves under assumptions we can state:
 - Space-filling seeds are scrambled Sobol points. The remaining runs go to batches of 3
   picked by qLogEI over a 2048-point Sobol candidate set (the last batch may be smaller).
 
-Every split is run on the same problem instances (same seeds), so differences are paired.
+Every split runs on the same 30 problem instances, with the same numpy and torch seeds, so
+differences are paired. The two scenarios share those instances, so the combined comparison
+averages the two scenarios within each instance and takes the standard error over instances.
+"Beat the baseline" is measured against the same three known-family points in every split.
+Pool points are used once: a point picked in one batch can't be picked again later.
+
+Changes after Edison's review (q3, task 53ab490c): seeded torch, one fixed baseline reference,
+no repeats across batches, standard errors clustered by instance, GP fit failures counted, and
+the all-Sobol policy renamed to say it keeps the two baselines.
 
     python bofn-seeding/budget_split_sim.py --reps 30 --workers 4
 """
@@ -44,7 +52,7 @@ SPLITS = [
     ("2+0+4", 2, 0, 4),
     ("2+4+0", 2, 4, 0),
     ("3+3+6", 3, 3, 6),
-    ("all 25 Sobol (no BO)", 2, 0, 23),
+    ("2 + 23 Sobol, no optimizer", 2, 0, 23),
 ]
 SCENARIOS = ["agent right", "agent wrong"]
 
@@ -84,13 +92,15 @@ def run_one(job):
 
     warnings.filterwarnings("ignore")
     torch.set_num_threads(1)
+    torch.manual_seed(20000 + rep)
     name, n_base, n_agent, n_sf = split
     prob_rng = np.random.default_rng(1000 + rep)  # same problem for every split and scenario
     prob = make_problem(prob_rng)
     f = prob["f"]
     rng = np.random.default_rng(5000 + rep)
     weak = rng.uniform(0, 1, size=(1, D))  # 6063: random point, free
-    base = around(rng, prob, prob["c_known"], 3, 0.05)[:n_base]
+    base_all = around(rng, prob, prob["c_known"], 3, 0.05)  # the same 3 in every split
+    base = base_all[:n_base]
     centre = prob["c_opt"] if scenario == "agent right" else prob["c_known"]
     agent = around(rng, prob, centre, 4, 0.2)[:n_agent]
     sob = qmc.Sobol(D, scramble=True, seed=7000 + rep).random(32)[:n_sf]
@@ -99,6 +109,7 @@ def run_one(job):
     pool = torch.tensor(qmc.Sobol(D, scramble=True, seed=9000 + rep).random(2048), dtype=torch.double)
     noise_rng = np.random.default_rng(11000 + rep)
     Y = f(X) + noise_rng.normal(0, NOISE, len(X))
+    fit_failures = 0
     while len(X) - 1 < BUDGET:
         q = min(BATCH, BUDGET - (len(X) - 1))
         tx, ty = torch.tensor(X), torch.tensor(Y).unsqueeze(-1)
@@ -106,23 +117,25 @@ def run_one(job):
         try:
             fit_gpytorch_mll(ExactMarginalLogLikelihood(gp.likelihood, gp))
         except Exception:
-            pass
+            fit_failures += 1  # keep the unfitted GP, but count it
         acq = qLogExpectedImprovement(gp, best_f=ty.max(), sampler=SobolQMCNormalSampler(torch.Size([128])))
         cand, _ = optimize_acqf_discrete(acq, q=q, choices=pool, unique=True)
         Xn = cand.numpy()
+        used = (pool.unsqueeze(1) == cand.unsqueeze(0)).all(-1).any(-1)
+        pool = pool[~used]  # no repeats across batches
         X = np.vstack([X, Xn])
         Y = np.concatenate([Y, f(Xn) + noise_rng.normal(0, NOISE, len(Xn))])
         tags += ["bo"] * len(Xn)
     truth = f(X)[1:]  # the 25 design runs, noise-free
     grid = np.vstack([pool.numpy(), around(np.random.default_rng(rep), prob, prob["c_opt"], 4000, 0.03)])
     f_max = f(grid).max()
-    best_base = f(base).max() if n_base else f(around(np.random.default_rng(rep), prob, prob["c_known"], 3, 0.05)).max()
+    best_base = f(base_all).max()  # one fixed reference for every split
     curve = np.maximum.accumulate(truth)
     return dict(
         rep=rep, scenario=scenario, split=name,
         best=float(curve[-1]), regret=float(f_max - curve[-1]),
         best_at_12=float(curve[11]), beat_baseline=bool(curve[-1] > best_base + 0.05),
-        found_better_bump=bool(curve[-1] > 0.8),
+        found_better_bump=bool(curve[-1] > 0.8), fit_failures=fit_failures,
     )
 
 
@@ -140,21 +153,26 @@ def summarize(rows):
                 mean_best_at_12=np.mean([x["best_at_12"] for x in r]),
                 p_beat_baseline=np.mean([x["beat_baseline"] for x in r]),
                 p_better_bump=np.mean([x["found_better_bump"] for x in r]),
+                fit_failures=int(sum(x.get("fit_failures", 0) for x in r)),
             ))
     return out
 
 
 def paired(rows, ref="3+3+3 (proposed)"):
-    """Each split minus the proposed 3+3+3 on the same problem instance, per scenario."""
+    """Each split minus the proposed 3+3+3 on the same problem instance.
+
+    Per scenario, and for "both": the two scenarios share their instances, so their differences
+    are averaged within each instance first and the standard error is over instances.
+    """
+    best = {(x["scenario"], x["split"], x["rep"]): x["best"] for x in rows}
+    reps = sorted({x["rep"] for x in rows})
     out = []
     for sc in SCENARIOS + ["both"]:
-        keep = [x for x in rows if sc == "both" or x["scenario"] == sc]
-        base = {(x["scenario"], x["rep"]): x["best"] for x in keep if x["split"] == ref}
+        scs = SCENARIOS if sc == "both" else [sc]
         for name, *_ in SPLITS:
-            d = np.array([x["best"] - base[(x["scenario"], x["rep"])] for x in keep if x["split"] == name])
-            if len(d):
-                out.append(dict(scenario=sc, split=name, n=len(d), mean_diff=d.mean(),
-                                se_diff=d.std(ddof=1) / np.sqrt(len(d)) if len(d) > 1 else 0.0))
+            d = np.array([np.mean([best[(s, name, r)] - best[(s, ref, r)] for s in scs]) for r in reps])
+            out.append(dict(scenario=sc, split=name, n_instances=len(d), mean_diff=d.mean(),
+                            se_diff=d.std(ddof=1) / np.sqrt(len(d)) if len(d) > 1 else 0.0))
     return out
 
 

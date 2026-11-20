@@ -1,4 +1,3 @@
 code,strategy,method,subsystem,wt_pct,at_pct,nearest_existing,distance,Mn,Cr,Zr,Mg,Si,Cu,Ti,Fe,Ni,Ce,Sc,Li,Er,Zn,Sn
 SF1,space-filling,maximin,Al-Cr-Er-Zn,Al-3.00Cr-0.50Er-7.45Zn,Al-1.66Cr-0.09Er-3.28Zn,A1-A5,2.03,0.0,2.998,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.496,7.447,0.0
-SF2,space-filling,maximin,Al-Mn-Ti-Zn,Al-4.44Mn-0.50Ti-7.06Zn,Al-2.33Mn-0.30Ti-3.12Zn,A1-A5,1.957,4.438,0.0,0.0,0.0,0.0,0.0,0.498,0.0,0.0,0.0,0.0,0.0,0.0,7.055,0.0
-SF3,space-filling,maximin,Al-Mg-Er-Ti,Al-4.86Mg-0.48Ti-0.45Er,Al-5.40Mg-0.27Ti-0.07Er,A1-A5,1.782,0.0,0.0,0.0,4.86,0.0,0.0,0.479,0.0,0.0,0.0,0.0,0.0,0.451,0.0,0.0
+SF2,space-filling,maximin,Al-Mg-Er-Ti,Al-4.86Mg-0.48Ti-0.45Er,Al-5.40Mg-0.27Ti-0.07Er,A1-A5,1.782,0.0,0.0,0.0,4.86,0.0,0.0,0.479,0.0,0.0,0.0,0.0,0.0,0.451,0.0,0.0

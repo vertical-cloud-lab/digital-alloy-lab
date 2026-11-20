@@ -4,3 +4,5 @@ D1,baseline,planned,#256 block D,"AlSi10Mg-type from 4047 + Mg: the alloy to bea
 D2,baseline,planned,#256 block D,"Scalmalloy-type Al-Mg-Sc-Zr: the mineral-burden reference. Needs Zr (not on the Nov 13 ESPI list)",0.5,0,0.3,4.5,0,0,0,0,0,0,0.7,0,0,0,0
 B30,dosing-check,planned,#256 block B,"30 wt% 4047 powder in 6063 cups (Si about 3.9 wt%)",0,0,0,0.5,3.9,0,0,0,0,0,0,0,0,0,0
 B15,dosing-check,planned,#256 block B,"15 wt% 4047 powder in 6063 cups (Si about 2.1 wt%)",0,0,0,0.6,2.1,0,0,0,0,0,0,0,0,0,0
+S1,agent,proposed,#275 (Edison q2),"Al-4Mn-0.5Ti-0.5Zr, Mair et al. 2022 (10.1016/j.jallcom.2021.163156). Needs Zr. From a 6063 base it also carries ~0.6 Mg and ~0.35 Si",4.0,0,0.5,0,0,0,0.5,0,0,0,0,0,0,0,0
+S2,agent,proposed,#275 (Edison q2/q3),"Al-1.87Fe-1.02Mg-1.03Zr, the measured chemistry in Li et al. 2025 (10.1080/17452759.2025.2516663). Needs Fe and Zr; Fe and Zr are over the PR #72 caps",0,0,1.03,1.02,0,0,0,1.87,0,0,0,0,0,0,0
