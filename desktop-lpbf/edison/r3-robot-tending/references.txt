@@ -1,0 +1,69 @@
+1. (pereira2021advancesinmultiprocess pages 4-7): Juan Carlos Pereira, Ramón Moreno, Christian Tenbrock, Arnold Herget, Thomas Wittich, and Kelvin Hamilton. Advances in multi-process hybrid production cells for rapid individualised laser-based production. Applied Sciences, 11:1812, Feb 2021. URL: https://doi.org/10.3390/app11041812, doi:10.3390/app11041812. This article has 7 citations.
+
+2. (pereira2021advancesinmultiprocess pages 2-4): Juan Carlos Pereira, Ramón Moreno, Christian Tenbrock, Arnold Herget, Thomas Wittich, and Kelvin Hamilton. Advances in multi-process hybrid production cells for rapid individualised laser-based production. Applied Sciences, 11:1812, Feb 2021. URL: https://doi.org/10.3390/app11041812, doi:10.3390/app11041812. This article has 7 citations.
+
+3. (scamarcio2025reliableandrobust pages 3-6): Vincenzo Scamarcio, Jasper Tan, Francesco Stellacci, and Josie Hughes. Reliable and robust robotic handling of microplates via computer vision and touch feedback. Frontiers in Robotics and AI, Jan 2025. URL: https://doi.org/10.3389/frobt.2024.1462717, doi:10.3389/frobt.2024.1462717. This article has 12 citations and is from a peer-reviewed journal.
+
+4. (bonifazio2024automatedcncloadingunloading pages 13-18): SG Bonifazio. Automated cnc loading/unloading with robotic arms to improve line throughput. Unknown journal, 2024.
+
+5. (bakhshifarkoush2024investigatingtheeffects pages 42-47): H Bakhshifarkoush. Investigating the effects of hot isostatic pressing on additively manufactured parts. Unknown journal, 2024.
+
+6. (boivie2011developmentofa pages 8-10): K. Boivie, K. Sørby, V. Brøtan, and P. Ystgaard. Development of a hybrid manufacturing cell; integration of additive manufacturing with cnc machining. Aug 2011. URL: https://doi.org/10.26153/tsw/15284, doi:10.26153/tsw/15284. This article has 25 citations.
+
+7. (boivie2011developmentofa pages 10-11): K. Boivie, K. Sørby, V. Brøtan, and P. Ystgaard. Development of a hybrid manufacturing cell; integration of additive manufacturing with cnc machining. Aug 2011. URL: https://doi.org/10.26153/tsw/15284, doi:10.26153/tsw/15284. This article has 25 citations.
+
+8. (ferchow2021designandvalidation pages 1-2): Julian Ferchow, Dominik Kälin, Gokula Englberger, Marcel Schlüssel, Christoph Klahn, and Mirko Meboldt. Design and validation of integrated clamping interfaces for post-processing and robotic handling in additive manufacturing. The International Journal of Advanced Manufacturing Technology, 118:3761-3787, Oct 2021. URL: https://doi.org/10.1007/s00170-021-08065-4, doi:10.1007/s00170-021-08065-4. This article has 32 citations.
+
+9. (ferchow2022designandvalidation pages 13-15): Julian Ferchow, Marvin Bühler, Marcel Schlüssel, Livia Zumofen, Christoph Klahn, Urs Hofmann, Andreas Kirchheim, and Mirko Meboldt. Design and validation of a sheet metal clamping system for additive manufacturing and post-processing. The International Journal of Advanced Manufacturing Technology, 119:7947-7967, Jan 2022. URL: https://doi.org/10.1007/s00170-022-08773-5, doi:10.1007/s00170-022-08773-5. This article has 12 citations.
+
+10. (ferchow2021designandvalidation pages 14-16): Julian Ferchow, Dominik Kälin, Gokula Englberger, Marcel Schlüssel, Christoph Klahn, and Mirko Meboldt. Design and validation of integrated clamping interfaces for post-processing and robotic handling in additive manufacturing. The International Journal of Advanced Manufacturing Technology, 118:3761-3787, Oct 2021. URL: https://doi.org/10.1007/s00170-021-08065-4, doi:10.1007/s00170-021-08065-4. This article has 32 citations.
+
+11. (horstkotte2021developmentofhandling pages 1-2): Rainer Horstkotte, Florian Heinrich, Marcel Prümmer, Kristian Arntz, and Thomas Bergs. Development of handling system concepts for additive process chains with laser powder bed fusion (l-pbf). Procedia CIRP, 104:1173-1178, Jan 2021. URL: https://doi.org/10.1016/j.procir.2021.11.197, doi:10.1016/j.procir.2021.11.197. This article has 6 citations and is from a peer-reviewed journal.
+
+12. (gomes2023analysisanddevelopmenta pages 44-48): VHO Gomes. Analysis and development of powder-metal vacuum systems for post-processing in l-pbf. Unknown journal, 2023.
+
+13. (khorasani2020areviewof pages 4-5): AmirMahyar Khorasani, Ian Gibson, Jithin Kozhuthala Veetil, and Amir Hossein Ghasemi. A review of technological improvements in laser-based powder bed fusion of metal printers. The International Journal of Advanced Manufacturing Technology, 108:191-209, May 2020. URL: https://doi.org/10.1007/s00170-020-05361-3, doi:10.1007/s00170-020-05361-3. This article has 330 citations.
+
+14. (gomes2023analysisanddevelopment pages 70-74): VHO Gomes. Analysis and development of powder-metal vacuum systems for post-processing in l-pbf. Unknown journal, 2023.
+
+15. (gomes2023analysisanddevelopment pages 42-44): VHO Gomes. Analysis and development of powder-metal vacuum systems for post-processing in l-pbf. Unknown journal, 2023.
+
+16. (bian2023fimareaderacosteffective pages 10-11): Xu Bian, Wenzhao Chen, Donglai Ran, Zhimou Liang, and Xuesong Mei. Fima-reader: a cost-effective fiducial marker reader system for autonomous mobile robot docking in manufacturing environments. Applied Sciences, 13:13079, Dec 2023. URL: https://doi.org/10.3390/app132413079, doi:10.3390/app132413079. This article has 11 citations.
+
+17. (scamarcio2025reliableandrobust pages 8-9): Vincenzo Scamarcio, Jasper Tan, Francesco Stellacci, and Josie Hughes. Reliable and robust robotic handling of microplates via computer vision and touch feedback. Frontiers in Robotics and AI, Jan 2025. URL: https://doi.org/10.3389/frobt.2024.1462717, doi:10.3389/frobt.2024.1462717. This article has 12 citations and is from a peer-reviewed journal.
+
+18. (bostelman2015performancemeasurementof pages 137-140): Roger Bostelman, Tsai Hong, and Jeremy Marvel. Performance measurement of mobile manipulators. SPIE Proceedings, 9498:94980E, May 2015. URL: https://doi.org/10.1117/12.2177344, doi:10.1117/12.2177344. This article has 34 citations.
+
+19. (wang2019aroboticpeginhole pages 9-11): Sen Wang, Guodong Chen, Hui Xu, and Zheng Wang. A robotic peg-in-hole assembly strategy based on variable compliance center. IEEE Access, 7:167534-167546, Jan 2019. URL: https://doi.org/10.1109/access.2019.2954459, doi:10.1109/access.2019.2954459. This article has 82 citations and is from a peer-reviewed journal.
+
+20. (pylarinos2018tilebot.developmentof pages 210-218): P Pylarinos. Tilebot. development of a lightweight modular robotic system for on-site component installation and facade fabrication. Unknown journal, 2018.
+
+21. (roozbahani2026amodularperceptionbased pages 5-7): Daniel Roozbahani and Tuomas Syyrilä. A modular perception-based control framework for a fully autonomous robotic manufacturing workstation. Unknown journal, Nov 2026. URL: https://doi.org/10.20944/preprints202611.1546.v1, doi:10.20944/preprints202611.1546.v1.
+
+22. (hajzargarbashi2025collaborativeroboticfinishing pages 9-10): Seyedhossein Hajzargarbashi, Gabriel Côté, Jonathan Boisvert, Ramy Meziane, Chen Xu, Corentin Hubert, Sabrina Jocelyn, and Clément Gosselin. Collaborative robotic finishing platform for metal part processing towards industry 5.0. Advances in Transdisciplinary Engineering, Jun 2025. URL: https://doi.org/10.3233/atde250392, doi:10.3233/atde250392. This article has 1 citations.
+
+23. (tiansoon1997acompliantendeffector pages 2-4): Sim Tian-Soon, Marcelo H ANG Jr, and Lim Kah-Bin. A compliant end-effector coupling for vertical assembly: design and evaluation. Robotics and Computer-integrated Manufacturing, 13:21-30, Mar 1997. URL: https://doi.org/10.1016/s0736-5845(96)00032-4, doi:10.1016/s0736-5845(96)00032-4. This article has 20 citations and is from a highest quality peer-reviewed journal.
+
+24. (gadringer2022assessmentofforce pages 6-8): Stefan Gadringer, Hubert Gattringer, and Andreas Mueller. Assessment of force control for surface finishing – an experimental comparison between universal robots ur10e and ferrobotics active contact flange. Mechanical Sciences, 13:361-370, Apr 2022. URL: https://doi.org/10.5194/ms-13-361-2022, doi:10.5194/ms-13-361-2022. This article has 22 citations and is from a peer-reviewed journal.
+
+25. (gadringer2022assessmentofforce pages 2-4): Stefan Gadringer, Hubert Gattringer, and Andreas Mueller. Assessment of force control for surface finishing – an experimental comparison between universal robots ur10e and ferrobotics active contact flange. Mechanical Sciences, 13:361-370, Apr 2022. URL: https://doi.org/10.5194/ms-13-361-2022, doi:10.5194/ms-13-361-2022. This article has 22 citations and is from a peer-reviewed journal.
+
+26. (farcasUnknownyearmodularpneumaticvise pages 3-4): D FARCAȘ, PF Titus, TF Dennis, and O GOGOȘAN. Modular pneumatic vise designed for robotic lines. Unknown journal, Unknown year.
+
+27. (herbster2023modelingthecontact pages 1-2): Sebastian Herbster, Roland Behrens, and Norbert Elkmann. Modeling the contact force in constrained human–robot collisions. Machines, 11:955, Oct 2023. URL: https://doi.org/10.3390/machines11100955, doi:10.3390/machines11100955. This article has 18 citations.
+
+28. (arunachalam2025optimizationofthe pages 5-10): Saravanan Arunachalam. Optimization of the robot positioner performance in a cnc robot manufacturing cell. Unknown journal, Dec 2025. URL: https://doi.org/10.21203/rs.3.rs-8269445/v1, doi:10.21203/rs.3.rs-8269445/v1.
+
+29. (bonifazio2024automatedcncloadingunloading pages 18-26): SG Bonifazio. Automated cnc loading/unloading with robotic arms to improve line throughput. Unknown journal, 2024.
+
+30. (horstkotte2021developmentofhandling pages 3-4): Rainer Horstkotte, Florian Heinrich, Marcel Prümmer, Kristian Arntz, and Thomas Bergs. Development of handling system concepts for additive process chains with laser powder bed fusion (l-pbf). Procedia CIRP, 104:1173-1178, Jan 2021. URL: https://doi.org/10.1016/j.procir.2021.11.197, doi:10.1016/j.procir.2021.11.197. This article has 6 citations and is from a peer-reviewed journal.
+
+31. (horstkotte2021generationandevaluation pages 3-4): Rainer Horstkotte, Florian Heinrich, Marcel Prümmer, Kristian Arntz, and Thomas Bergs. Generation and evaluation of automation concepts of additive process chains with laser powder bed fusion (l-pbf). Procedia CIRP, 96:97-102, Jan 2021. URL: https://doi.org/10.1016/j.procir.2021.01.059, doi:10.1016/j.procir.2021.01.059. This article has 12 citations and is from a peer-reviewed journal.
+
+32. (shaarawy2026hybridtaskand pages 5-6): Abdelaziz Shaarawy, Cansu Erdogan, Rustam Stolkin, and Alireza Rastegarpanah. Hybrid task and motion planning with reactive collision handling for multi-robot disassembly of complex products: application to ev batteries. Frontiers in Robotics and AI, Jul 2026. URL: https://doi.org/10.3389/frobt.2026.1857847, doi:10.3389/frobt.2026.1857847. This article has 2 citations and is from a peer-reviewed journal.
+
+33. (behrens2022integratedtaskand pages 29-32): Integrated task and motion scheduling for flexible manufacturing This article has 0 citations.
+
+34. (roozbahani2026amodularperceptionbased pages 13-15): Daniel Roozbahani and Tuomas Syyrilä. A modular perception-based control framework for a fully autonomous robotic manufacturing workstation. Unknown journal, Nov 2026. URL: https://doi.org/10.20944/preprints202611.1546.v1, doi:10.20944/preprints202611.1546.v1.
+
+35. (othman2026investigationofnovel pages 46-52): U Othman. Investigation of novel sensing and human-robot collaboration for enhanced quality inspections. Unknown journal, 2026.
