@@ -58,6 +58,12 @@ SOURCES = {
        "Fluidization Engineering, 2nd ed., Ch. 3)",
     8: "McMaster-Carr 4396K21 (3 cfm, 1e-2 Torr) and the parts in ../../mcmaster-parts.csv, read through the lab Pi 2026-11-17",
     9: "Airgas/Linde argon 5.0 (UHP) typical limits: O2 <= 1-2 ppm, H2O <= 1-3 ppm",
+    10: "Sturm et al. (2004), Permeation of atmospheric gases through polymer O-rings used in flasks for air sampling, J. Geophys. Res. 109, "
+        "D04309, https://doi.org/10.1029/2003JD004073: Viton O2 1.0-1.1e-15 and H2O ~220e-15 m2/(s hPa) (= 1.05e-8 and 2.2e-6 std cc cm/(cm2 s bar)); via Edison",
+    11: "Lubkowitz et al. (2024): new AlSi10Mg powder 0.015 wt% moisture (Karl Fischer); Van Cauwenbergh et al. (2019): AlSi7Mg0.6 powder "
+        "45 +/- 11 ppm H, parts 13 +/- 4 ppm; via Edison, desktop-lpbf/edison/followup-sealing-o2/answer.md",
+    12: "Pauzon et al. (2021), control of residual oxygen in LPBF (TruPrint 1000): a zirconia lambda probe read +50 ppm where an electrochemical "
+        "cell read +700 ppm (H2 cross-sensitivity); leak-plus-outgassing drift ~1.7 ppm O2/min; via Edison",
 }
 
 # FKM 75A (Viton A type)
@@ -69,7 +75,8 @@ CTE_SS = 16.0e-6
 # He 12.7e-8 @ 25 C and 131e-8 @ 80 C. Temperature scaling: Arrhenius with Ea fitted to the He pair (the N2 pair gives a
 # steeper rise, so this is not conservative above ~50 C; we also show N2-pair scaling).
 F_O2_26 = 1.7e-8
-F_H2O_25 = 40e-8          # [4]
+F_H2O_25 = 40e-8          # [4] lower value
+F_H2O_STURM = 220e-8      # [10] measured on Viton O-rings (5.5x higher); used as the main value below
 F_N2_30 = 0.233e-8
 EA_HE = R_GAS * math.log(131 / 12.7) / (1 / 298.15 - 1 / 353.15)        # ~37 kJ/mol
 EA_N2 = R_GAS * math.log(0.975 / 0.233) / (1 / 303.15 - 1 / 323.15)     # ~58 kJ/mol
@@ -375,12 +382,12 @@ def main():
         if d_id is None:
             # KF: Al centering ring with an FKM ring, ID ~ 26 / 41 / 18 mm, squeeze set by the ring (~25 %)
             L_o2 = sum(m * parker_leak(f_perm(F_O2_26, 26, 35, EA_HE), d, p_o2, 0.25) for d, m in ((26.0, 7), (41.0, 2), (18.0, 1)))
-            L_h2o = sum(m * parker_leak(f_perm(F_H2O_25, 25, 35, EA_HE), d, p_h2o, 0.25) for d, m in ((26.0, 7), (41.0, 2), (18.0, 1)))
+            L_h2o = sum(m * parker_leak(f_perm(F_H2O_STURM, 25, 35, EA_HE), d, p_h2o, 0.25) for d, m in ((26.0, 7), (41.0, 2), (18.0, 1)))
             perm.append(dict(seal=name, T_C=35, O2_sccs=L_o2, H2O_sccs=L_h2o))
             continue
         T = T_of(name.split(" ")[0])
         Fo = f_perm(F_O2_26, 26, T, EA_HE)
-        Fw = f_perm(F_H2O_25, 25, T, EA_HE)
+        Fw = f_perm(F_H2O_STURM, 25, T, EA_HE)
         perm.append(dict(seal=name, T_C=T, O2_sccs=n * parker_leak(Fo, d_id, p_o2, sq), H2O_sccs=n * parker_leak(Fw, d_id, p_h2o, sq)))
     tot_o2 = sum(p["O2_sccs"] for p in perm)
     tot_h2o = sum(p["H2O_sccs"] for p in perm)
@@ -419,9 +426,9 @@ def main():
     # 1 mbar L/s at 23 C = 0.987 std cc/s ... (1 std cc = 1.013 mbar L)
     mbarLs_to_sccs = 1 / 1.01325
     h2o_out_ppm_h = sccs_to_ppm_h((q_al + q_fkm) * mbarLs_to_sccs)
-    # powder moisture: 150 g of Al powder holding 50-300 ppm by mass of water (an assumption to be replaced by Edison's data)
+    # powder moisture: new AlSi10Mg 150 ppm by mass (Lubkowitz 2024, Karl Fischer [11]); aged or humid-stored powder higher
     w_powder = 150.0
-    mg_h2o = [w_powder * x * 1e-6 * 1000 for x in (50, 300)]
+    mg_h2o = [w_powder * x * 1e-6 * 1000 for x in (150, 300)]
     scc_h2o = [m / 18.015 * 22414 / 1000 for m in mg_h2o]
     ppm_if_released = [s / (V * 1000) * 1e6 for s in scc_h2o]
     R["budget"] = dict(V_L=V, O2_permeation_ppm_per_h=o2_perm_ppm_h, H2O_permeation_ppm_per_h=h2o_perm_ppm_h,
@@ -546,7 +553,7 @@ def write_md(R):
           f"Permeation alone adds **{b['O2_permeation_ppm_per_h']:.2f} ppm O₂/h** and {b['H2O_permeation_ppm_per_h']:.2f} ppm H₂O/h with no make-up flow.",
           f"Outgassing of {b['area_al_cm2']:.0f} cm² of bare Al and {b['area_fkm_cm2']:.0f} cm² of exposed FKM after ~1 h: {fmt(b['q_al_mbarLs'])} + {fmt(b['q_fkm_mbarLs'])} mbar·L/s, "
           f"**{b['H2O_outgassing_ppm_per_h_1h']:.0f} ppm H₂O/h**, falling roughly as 1/t.",
-          f"150 g of powder holding 50–300 ppm water by mass carries {b['powder_H2O_mg'][0]:.0f}–{b['powder_H2O_mg'][1]:.0f} mg: "
+          f"150 g of powder holding 150 ppm (new, Karl Fischer [11]) to 300 ppm water by mass carries {b['powder_H2O_mg'][0]:.0f}–{b['powder_H2O_mg'][1]:.0f} mg: "
           f"**{b['powder_H2O_ppm_if_released'][0]:.0f}–{b['powder_H2O_ppm_if_released'][1]:.0f} ppmv** in the loop if a 200 °C plate drives it off.", ""]
     mk = R["makeup"]
     L += [f"Make-up argon to hold the targets at steady state: {mk['f_for_O2_10ppm_sccm']:.1f} sccm for 10 ppm O₂ against permeation; "

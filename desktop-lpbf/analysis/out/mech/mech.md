@@ -55,7 +55,16 @@ Affected: pot magnet (79 C rating) under the floor, camera and Pi HQ electronics
 | 500 | 0.050 % | 0.250 | 4.4 | 1.2 |
 | 500 | 0.500 % | 2.500 | 43.8 | 11.9 |
 
-Check: literature: -22 to -30 mm at 400 W with ~0.5 % absorption [6].
+Slide material at 400 W and 0.5 % absorption (Corning, Crystran and Schott data; dS/dT = dn/dT + (n − 1)(1 + ν)α):
+
+| Material | dS/dT (1/K) | k (W/m·K) | Focus shift (mm) |
+|---|---|---|---|
+| fused silica (Corning 7980) | 9.87e-06 | 1.38 | 36.1 |
+| sapphire (c-plane) | 1.82e-05 | 27.00 | 3.4 |
+| N-FK51A (Schott) | 1.26e-06 | 0.91 | 7.0 |
+| CaF2 | -3.87e-07 | 9.71 | 0.2 |
+
+Check: literature: -22 to -30 mm at 400 W with ~0.5 % absorption on fused silica; N-FK51A ~-1.3 mm in the same model [6].
 
 ## F. Thermal drift of the optics over the warm-up
 

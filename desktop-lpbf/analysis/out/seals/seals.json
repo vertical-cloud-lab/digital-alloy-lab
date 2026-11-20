@@ -70,7 +70,10 @@
   "6": "Kozeny-Carman permeability k = d^2 e^3 / (180 (1-e)^2); Klinkenberg (1941) slip k_a = k (1 + b/p), b = 4 c lambda p / r with c ~ 1 (API Drilling and Production Practice, 200-213)",
   "7": "Ergun minimum fluidization: U_mf = (rho_p - rho_g) g d^2 e^3 / (150 mu (1 - e)) for small particles (Kunii & Levenspiel, Fluidization Engineering, 2nd ed., Ch. 3)",
   "8": "McMaster-Carr 4396K21 (3 cfm, 1e-2 Torr) and the parts in ../../mcmaster-parts.csv, read through the lab Pi 2026-11-17",
-  "9": "Airgas/Linde argon 5.0 (UHP) typical limits: O2 <= 1-2 ppm, H2O <= 1-3 ppm"
+  "9": "Airgas/Linde argon 5.0 (UHP) typical limits: O2 <= 1-2 ppm, H2O <= 1-3 ppm",
+  "10": "Sturm et al. (2004), Permeation of atmospheric gases through polymer O-rings used in flasks for air sampling, J. Geophys. Res. 109, D04309, https://doi.org/10.1029/2003JD004073: Viton O2 1.0-1.1e-15 and H2O ~220e-15 m2/(s hPa) (= 1.05e-8 and 2.2e-6 std cc cm/(cm2 s bar)); via Edison",
+  "11": "Lubkowitz et al. (2024): new AlSi10Mg powder 0.015 wt% moisture (Karl Fischer); Van Cauwenbergh et al. (2019): AlSi7Mg0.6 powder 45 +/- 11 ppm H, parts 13 +/- 4 ppm; via Edison, desktop-lpbf/edison/followup-sealing-o2/answer.md",
+  "12": "Pauzon et al. (2021), control of residual oxygen in LPBF (TruPrint 1000): a zirconia lambda probe read +50 ppm where an electrochemical cell read +700 ppm (H2 cross-sensitivity); leak-plus-outgassing drift ~1.7 ppm O2/min; via Edison"
  },
  "inventory": [
   {
@@ -612,89 +615,89 @@
     "seal": "lid",
     "T_C": 50.0,
     "O2_sccs": 9.614505772749397e-07,
-    "H2O_sccs": 1.5746128689773746e-06
+    "H2O_sccs": 8.660370779375561e-06
    },
    {
     "seal": "door",
     "T_C": 45.0,
     "O2_sccs": 5.30548050025384e-07,
-    "H2O_sccs": 8.689035161314644e-07
+    "H2O_sccs": 4.7789693387230534e-06
    },
    {
     "seal": "window (sandwich, inner ring)",
     "T_C": 60.0,
     "O2_sccs": 2.091370028960269e-07,
-    "H2O_sccs": 3.4251351439489724e-07
+    "H2O_sccs": 1.8838243291719351e-06
    },
    {
     "seal": "window flange to lid",
     "T_C": 60.0,
     "O2_sccs": 3.78357309626462e-07,
-    "H2O_sccs": 6.196535764719986e-07
+    "H2O_sccs": 3.4080946705959927e-06
    },
    {
     "seal": "camera adapter + its window",
     "T_C": 45.0,
     "O2_sccs": 1.507955662725611e-07,
-    "H2O_sccs": 2.469649973173866e-07
+    "H2O_sccs": 1.358307485245626e-06
    },
    {
     "seal": "metering base to lid",
     "T_C": 45.0,
     "O2_sccs": 2.150387435268316e-07,
-    "H2O_sccs": 3.521790728398991e-07
+    "H2O_sccs": 1.936984900619445e-06
    },
    {
     "seal": "reservoir dock face (proposed)",
     "T_C": 45.0,
     "O2_sccs": 2.287986631275068e-07,
-    "H2O_sccs": 3.747143408936427e-07
+    "H2O_sccs": 2.0609288749150344e-06
    },
    {
     "seal": "reservoir lid (proposed)",
     "T_C": 45.0,
     "O2_sccs": 2.527985228961264e-07,
-    "H2O_sccs": 4.140200409873814e-07
+    "H2O_sccs": 2.277110225430597e-06
    },
    {
     "seal": "drawer",
     "T_C": 50.0,
     "O2_sccs": 1.5685166934942986e-07,
-    "H2O_sccs": 2.5688336240664493e-07
+    "H2O_sccs": 1.4128584932365474e-06
    },
    {
     "seal": "plenums (2)",
     "T_C": 45.0,
     "O2_sccs": 5.43996821422044e-07,
-    "H2O_sccs": 8.909292021247447e-07
+    "H2O_sccs": 4.9001106116860945e-06
    },
    {
     "seal": "KF-25 (7) + KF-40 (2) + KF-16 (1) centering rings",
     "T_C": 35,
     "O2_sccs": 4.493511302556772e-07,
-    "H2O_sccs": 7.359234984241765e-07
+    "H2O_sccs": 4.0475792413329724e-06
    },
    {
     "seal": "spigot 2-238",
     "T_C": 56.0,
     "O2_sccs": 4.4597972427450917e-07,
-    "H2O_sccs": 7.304019881458835e-07
+    "H2O_sccs": 4.017210934802359e-06
    },
    {
     "seal": "gland plate",
     "T_C": 45.0,
     "O2_sccs": 1.3928483804708893e-07,
-    "H2O_sccs": 2.2811333585549269e-07
+    "H2O_sccs": 1.2546233472052097e-06
    },
    {
     "seal": "rod gland 2 x 2-114 (in tandem: the outer one carries the gradient)",
     "T_C": 117.0,
     "O2_sccs": 6.538505508630247e-07,
-    "H2O_sccs": 1.070841825998974e-06
+    "H2O_sccs": 5.889630042994356e-06
    }
   ],
   "total_O2_sccs": 5.3162391698576125e-06,
-  "total_H2O_sccs": 8.706655140969961e-06,
+  "total_H2O_sccs": 4.7886603275334786e-05,
   "Ea_He_kJ": 37.1421382251633,
   "Ea_N2_kJ": 58.29112969138964
  },
@@ -751,26 +754,26 @@
  "budget": {
   "V_L": 11.262865037529748,
   "O2_permeation_ppm_per_h": 1.6663619112706478,
-  "H2O_permeation_ppm_per_h": 2.7290793431082037,
+  "H2O_permeation_ppm_per_h": 15.009936387095122,
   "area_al_cm2": 4605.28,
   "area_fkm_cm2": 17.794827179169864,
   "q_al_mbarLs": 3.6833029439999996e-05,
   "q_fkm_mbarLs": 2.372050462983343e-05,
   "H2O_outgassing_ppm_per_h_1h": 18.732153228223872,
   "powder_H2O_mg": [
-   7.5,
+   22.5,
    45.0
   ],
   "powder_H2O_ppm_if_released": [
-   828.5094846485617,
+   2485.528453945685,
    4971.05690789137
   ]
  },
  "makeup": {
   "O2_in_sccm": 0.00031897435019145675,
-  "H2O_in_sccm": 0.004108100807782161,
+  "H2O_in_sccm": 0.00645889769584405,
   "f_for_O2_10ppm_sccm": 35.44159446571742,
-  "f_for_H2O_minus40C_sccm": 32.60397466493779
+  "f_for_H2O_minus40C_sccm": 51.26109282415913
  },
  "purge": {
   "S_pump_Ls": 1.4158499999999998,

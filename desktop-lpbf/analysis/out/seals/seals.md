@@ -62,28 +62,28 @@ Arrhenius temperature scaling with E_a = 37 kJ/mol (Parker's He pair; the N₂ p
 
 | Seal | T (°C) | O₂ (sccs) | H₂O (sccs) |
 |---|---|---|---|
-| lid | 50 | 9.61e-07 | 1.57e-06 |
-| door | 45 | 5.31e-07 | 8.69e-07 |
-| window (sandwich, inner ring) | 60 | 2.09e-07 | 3.43e-07 |
-| window flange to lid | 60 | 3.78e-07 | 6.20e-07 |
-| camera adapter + its window | 45 | 1.51e-07 | 2.47e-07 |
-| metering base to lid | 45 | 2.15e-07 | 3.52e-07 |
-| reservoir dock face (proposed) | 45 | 2.29e-07 | 3.75e-07 |
-| reservoir lid (proposed) | 45 | 2.53e-07 | 4.14e-07 |
-| drawer | 50 | 1.57e-07 | 2.57e-07 |
-| plenums (2) | 45 | 5.44e-07 | 8.91e-07 |
-| KF-25 (7) + KF-40 (2) + KF-16 (1) centering rings | 35 | 4.49e-07 | 7.36e-07 |
-| spigot 2-238 | 56 | 4.46e-07 | 7.30e-07 |
-| gland plate | 45 | 1.39e-07 | 2.28e-07 |
-| rod gland 2 x 2-114 (in tandem: the outer one carries the gradient) | 117 | 6.54e-07 | 1.07e-06 |
-| **Total** | | **5.32e-06** | **8.71e-06** |
+| lid | 50 | 9.61e-07 | 8.66e-06 |
+| door | 45 | 5.31e-07 | 4.78e-06 |
+| window (sandwich, inner ring) | 60 | 2.09e-07 | 1.88e-06 |
+| window flange to lid | 60 | 3.78e-07 | 3.41e-06 |
+| camera adapter + its window | 45 | 1.51e-07 | 1.36e-06 |
+| metering base to lid | 45 | 2.15e-07 | 1.94e-06 |
+| reservoir dock face (proposed) | 45 | 2.29e-07 | 2.06e-06 |
+| reservoir lid (proposed) | 45 | 2.53e-07 | 2.28e-06 |
+| drawer | 50 | 1.57e-07 | 1.41e-06 |
+| plenums (2) | 45 | 5.44e-07 | 4.90e-06 |
+| KF-25 (7) + KF-40 (2) + KF-16 (1) centering rings | 35 | 4.49e-07 | 4.05e-06 |
+| spigot 2-238 | 56 | 4.46e-07 | 4.02e-06 |
+| gland plate | 45 | 1.39e-07 | 1.25e-06 |
+| rod gland 2 x 2-114 (in tandem: the outer one carries the gradient) | 117 | 6.54e-07 | 5.89e-06 |
+| **Total** | | **5.32e-06** | **4.79e-05** |
 
 Gas envelope 11.3 L (chamber 6.4, hoses 1.5, filter housing 2.3, plenums and blower 1.1).
-Permeation alone adds **1.67 ppm O₂/h** and 2.73 ppm H₂O/h with no make-up flow.
+Permeation alone adds **1.67 ppm O₂/h** and 15.01 ppm H₂O/h with no make-up flow.
 Outgassing of 4605 cm² of bare Al and 18 cm² of exposed FKM after ~1 h: 3.68e-05 + 2.37e-05 mbar·L/s, **19 ppm H₂O/h**, falling roughly as 1/t.
-150 g of powder holding 50–300 ppm water by mass carries 8–45 mg: **829–4971 ppmv** in the loop if a 200 °C plate drives it off.
+150 g of powder holding 150 ppm (new, Karl Fischer [11]) to 300 ppm water by mass carries 22–45 mg: **2486–4971 ppmv** in the loop if a 200 °C plate drives it off.
 
-Make-up argon to hold the targets at steady state: 35.4 sccm for 10 ppm O₂ against permeation; 33 sccm for a −40 °C dew point against wall and seal outgassing.
+Make-up argon to hold the targets at steady state: 35.4 sccm for 10 ppm O₂ against permeation; 51 sccm for a −40 °C dew point against wall and seal outgassing.
 
 Other leak sources (air at 1 atm, mbar·L/s; vendor-typical ranges):
 
@@ -132,3 +132,6 @@ Leak budget 1.00e-04 mbar·L/s in 11.3 L is a rise of 5.33e-04 mbar/min; outgass
 7. Ergun minimum fluidization: U_mf = (rho_p - rho_g) g d^2 e^3 / (150 mu (1 - e)) for small particles (Kunii & Levenspiel, Fluidization Engineering, 2nd ed., Ch. 3)
 8. McMaster-Carr 4396K21 (3 cfm, 1e-2 Torr) and the parts in ../../mcmaster-parts.csv, read through the lab Pi 2026-11-17
 9. Airgas/Linde argon 5.0 (UHP) typical limits: O2 <= 1-2 ppm, H2O <= 1-3 ppm
+10. Sturm et al. (2004), Permeation of atmospheric gases through polymer O-rings used in flasks for air sampling, J. Geophys. Res. 109, D04309, https://doi.org/10.1029/2003JD004073: Viton O2 1.0-1.1e-15 and H2O ~220e-15 m2/(s hPa) (= 1.05e-8 and 2.2e-6 std cc cm/(cm2 s bar)); via Edison
+11. Lubkowitz et al. (2024): new AlSi10Mg powder 0.015 wt% moisture (Karl Fischer); Van Cauwenbergh et al. (2019): AlSi7Mg0.6 powder 45 +/- 11 ppm H, parts 13 +/- 4 ppm; via Edison, desktop-lpbf/edison/followup-sealing-o2/answer.md
+12. Pauzon et al. (2021), control of residual oxygen in LPBF (TruPrint 1000): a zirconia lambda probe read +50 ppm where an electrochemical cell read +700 ppm (H2 cross-sensitivity); leak-plus-outgassing drift ~1.7 ppm O2/min; via Edison

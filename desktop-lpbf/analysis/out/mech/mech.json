@@ -440,7 +440,33 @@
     "x_Rayleigh": 11.850598816202949
    }
   ],
-  "check": "literature: -22 to -30 mm at 400 W with ~0.5 % absorption [6]"
+  "materials": [
+   {
+    "material": "fused silica (Corning 7980)",
+    "dSdT": 9.87144e-06,
+    "k": 1.38,
+    "shift_mm_400W_0p5pct": 36.06959651328401
+   },
+   {
+    "material": "sapphire (c-plane)",
+    "dSdT": 1.8181905e-05,
+    "k": 27.0,
+    "shift_mm_400W_0p5pct": 3.395591834273826
+   },
+   {
+    "material": "N-FK51A (Schott)",
+    "dSdT": 1.26384e-06,
+    "k": 0.91,
+    "shift_mm_400W_0p5pct": 7.003103817306215
+   },
+   {
+    "material": "CaF2",
+    "dSdT": -3.8707000000000136e-07,
+    "k": 9.71,
+    "shift_mm_400W_0p5pct": 0.20100651918142762
+   }
+  ],
+  "check": "literature: -22 to -30 mm at 400 W with ~0.5 % absorption on fused silica; N-FK51A ~-1.3 mm in the same model [6]"
  },
  "sources": {
   "1": "Parker O-Ring Handbook ORD 5700, \u00a75.11-5.14: F = fc Lr + fh Ar; Fig. 5-9 (fc vs compression and hardness), Fig. 5-10 (fh), break-out up to 3x running friction after a rest (\u00a75.14.1)",

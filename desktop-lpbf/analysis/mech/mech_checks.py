@@ -197,7 +197,18 @@ def section_E():
             Dth = Pabs * dndT / (2 * math.pi * k * w ** 2)
             dz = f ** 2 * Dth                       # thin added lens next to the focusing lens: dz ~ f^2 D
             rows.append(dict(P_W=P, absorption=a, P_abs_W=Pabs, D_per_m=Dth, focus_shift_mm=1000 * dz, x_Rayleigh=dz / zR))
-    return dict(w_on_slide_mm=1000 * w, rows=rows, check="literature: -22 to -30 mm at 400 W with ~0.5 % absorption [6]")
+    # slide material: optical-path thermo-optic coefficient dS/dT = dn/dT + (n - 1)(1 + nu) alpha, lens power ~ dS/dT / k
+    mats = {"fused silica (Corning 7980)": dict(k=1.38, dndT=9.6e-6, n=1.45, nu=0.16, a=0.52e-6),
+            "sapphire (c-plane)": dict(k=27.0, dndT=13.1e-6, n=1.755, nu=0.27, a=5.3e-6),
+            "N-FK51A (Schott)": dict(k=0.91, dndT=-6.6e-6, n=1.48, nu=0.29, a=12.7e-6),
+            "CaF2": dict(k=9.71, dndT=-10.6e-6, n=1.43, nu=0.26, a=18.85e-6)}
+    mrows = []
+    for name, m in mats.items():
+        dS = m["dndT"] + (m["n"] - 1) * (1 + m["nu"]) * m["a"]
+        Dth = 0.005 * 400 * abs(dS) / (2 * math.pi * m["k"] * w ** 2)
+        mrows.append(dict(material=name, dSdT=dS, k=m["k"], shift_mm_400W_0p5pct=1000 * f ** 2 * Dth))
+    return dict(w_on_slide_mm=1000 * w, rows=rows, materials=mrows,
+                check="literature: -22 to -30 mm at 400 W with ~0.5 % absorption on fused silica; N-FK51A ~-1.3 mm in the same model [6]")
 
 
 def section_F(D):
@@ -255,6 +266,10 @@ def main():
           "| Laser (W) | Absorption | Absorbed (W) | Focus shift (mm) | × Rayleigh range |", "|---|---|---|---|---|"]
     for r in E["rows"]:
         L.append(f"| {r['P_W']:.0f} | {100 * r['absorption']:.3f} % | {r['P_abs_W']:.3f} | {r['focus_shift_mm']:.1f} | {r['x_Rayleigh']:.1f} |")
+    L += ["", "Slide material at 400 W and 0.5 % absorption (Corning, Crystran and Schott data; dS/dT = dn/dT + (n − 1)(1 + ν)α):", "",
+          "| Material | dS/dT (1/K) | k (W/m·K) | Focus shift (mm) |", "|---|---|---|---|"]
+    for r in E["materials"]:
+        L.append(f"| {r['material']} | {r['dSdT']:.2e} | {r['k']:.2f} | {r['shift_mm_400W_0p5pct']:.1f} |")
     L += ["", f"Check: {E['check']}.", "",
           "## F. Thermal drift of the optics over the warm-up", "",
           f"Chamber +{Fd['chamber_rise_K']:.0f} K: bridge posts grow {Fd['bridge_post_growth_um']:.0f} µm; galvo offset drift ~{Fd['galvo_offset_drift_um']:.0f} µm at the plate. {Fd['note']}.", "",
