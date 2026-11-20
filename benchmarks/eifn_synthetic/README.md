@@ -91,6 +91,40 @@ cut off, which is 1,424 of them. The orange curve is the known front; the green 
 inputs from `gen_pareto_set`, which sit on it. Right: the regret table above.
 `python benchmarks/eifn_synthetic/plot_five_node_mo_network.py` redraws the figure.*
 
+### Brute-force check of the front
+
+[`brute_force_pareto_front.py`](brute_force_pareto_front.py) searches the 20 inputs directly, three
+ways, without using the argument above. Only then does it compare what it found with
+`f2 = 1 - sqrt(f1)`, through the gap `f2 - (1 - sqrt(f1))`. A negative gap would be an input that
+beats the analytic front. A best gap that stays above 0 over some range of `f1` would be a part of
+the curve the network can't reach.
+
+| Search | Inputs evaluated | Smallest gap | Best gap, worst part of `f1` | Hypervolume (max 120.6667) |
+|---|---|---|---|---|
+| Sobol sampling of `feasible_bounds` | 134,217,728 | +9.9e-14 | 5.0e-6 (best in each 0.001-wide bin of `f1`; median 4.5e-8) | 120.6659, from 21,727 non-dominated points |
+| L-BFGS-B on x2..x20 at 101 values of x1, 128 separate random starts each | 202,188 | 0 | 0 (every one of the 101 values of x1) | 120.661463, the same as the analytic front at those 101 values of `f1` |
+| NSGA-II (pymoo), 5 seeds, population 200, 500 generations | 5 × 100,000 | +1.4e-10 | 0.008 to 0.055 (worst point of each seed's 200-point front) | 120.537 to 120.658 |
+
+None of the 135 million inputs lands below `f2 = 1 - sqrt(f1)`, and all three searches reach it
+across the whole range of `f1`. L-BFGS-B hits it exactly, to the last bit, at all 101 values of x1.
+At each value, 11 to 28 of the 128 starts reach it, and the rest stop on ZDT4's local fronts.
+`brute_force_pareto_front.json` has all the numbers.
+
+The objectives depend on the inputs only through `x1` and node 4's mapped output `u2`, so the Pareto
+set is the whole level set `u2(x) = 0` of the feasible box. That is a 19-dimensional surface, not
+the 1-D segment of ZDT4 on its own. This is why as many as 0.25% of random inputs land within 0.01 of the
+front.
+
+![Left: the non-dominated set of 134 million random inputs lies on the analytic front f2 = 1 -
+sqrt(f1). Right: on a log scale, the best gap above the analytic front is at most 5e-6 for random
+sampling in every f1 bin, 0 for L-BFGS-B at all 101 values of x1, and 1e-10 to 0.01 for
+NSGA-II.](figures/brute_force_pareto_front.png)
+
+*Left: the non-dominated set of all 134 million Sobol inputs (blue), over the analytic front (black
+dashes). Gray: those of the first 4,000 inputs with f2 <= 1.6, for scale. Right: the gap above the analytic front for each
+search. Gaps of 0 are drawn at 1e-16. `python benchmarks/eifn_synthetic/brute_force_pareto_front.py`
+reruns the searches and redraws the figure in about 7 minutes on 4 cores. It needs `pymoo`.*
+
 ## Usage
 
 ```python
