@@ -1,0 +1,1776 @@
+{
+ "what": "pycalphad equilibrium and Scheil solidification of 316L, h_s for King et al.'s keyhole criterion, and dH/h_s for every wall set (calphad_316l.py; findings in calphad.md)",
+ "wall_sets": {
+  "file": "out/wall_sets.csv",
+  "sha256": "67ad71d0d609472797a5214f8a0215387d3a888da9ad962b22c9ac9303b601a1",
+  "n_sets": 33,
+  "spot_um_range": [
+   50.0,
+   190.0
+  ],
+  "trace_spacing_mm_range": [
+   0.06,
+   0.14
+  ]
+ },
+ "database": {
+  "name": "MatCalc open steel database mc_fe",
+  "version": "2.062 (file mc_fe_v2.062_8.11.2024.tdb, dated 2024-11-08)",
+  "url": "https://www.matcalc.at/images/stories/Download/Database/mc_fe_v2062.tdb",
+  "page": "https://www.matcalc.at/index.php/databases/open-databases",
+  "sha256": "aa02077eac3f602dd7479cbeafb09b450e282716752b3ae2b1fc3a57d9c64865",
+  "licence": "Open Database License (ODbL) 1.0, http://opendatacommons.org/licenses/odbl/1.0/; individual contents under the Database Contents License (DbCL) 1.0, http://opendatacommons.org/licenses/dbcl/1.0/",
+  "holder": "E. Povoden-Karadeniz and A. Jacob, TU Wien (copyright holder and editor: E. Povoden-Karadeniz)",
+  "assessed_range": "673-2000 K (stated in the file)",
+  "parsing_fixes": {
+   "reference list cut": 1,
+   "MatCalc-only commands dropped": 14,
+   "HMVA parameters dropped": 21,
+   "parameters for other elements dropped": 2938,
+   "phases impossible here dropped": 69,
+   "unterminated commands closed": 1,
+   "'(PHASE;' typos fixed": 0,
+   "'x.y.z' numbers fixed": 2,
+   "CONSTITUENT tails stripped": 0
+  },
+  "elements": [
+   "FE",
+   "CR",
+   "NI",
+   "MO",
+   "MN",
+   "SI",
+   "C",
+   "N"
+  ],
+  "phases_equilibrium": [
+   "LIQUID",
+   "FCC_A1",
+   "BCC_A2",
+   "HCP_A3",
+   "M23C6",
+   "M7C3",
+   "M6C",
+   "SIGMA",
+   "LAVES_PHASE",
+   "CHI_A12",
+   "MU_PHASE",
+   "CEMENTITE",
+   "PI_PHASE",
+   "R_PHASE",
+   "G_PHASE",
+   "MOC_ETA",
+   "KSI_CARBIDE",
+   "M3C2"
+  ],
+  "phases_scheil": [
+   "LIQUID",
+   "FCC_A1",
+   "BCC_A2",
+   "HCP_A3",
+   "M23C6",
+   "M7C3",
+   "M6C",
+   "SIGMA",
+   "LAVES_PHASE",
+   "CHI_A12",
+   "MU_PHASE"
+  ],
+  "left_out": "BCC_B2 (needs MatCalc's ATTACH_CONTRIBUTION order-disorder link), BCC_DISL, gas; P and S (not in the subset), O"
+ },
+ "software": {
+  "pycalphad": "0.12.0",
+  "numpy": "2.5.5"
+ },
+ "compositions_wt_pct": {
+  "nominal": {
+   "CR": 17.0,
+   "NI": 12.0,
+   "MO": 2.5,
+   "MN": 1.0,
+   "SI": 0.5,
+   "C": 0.02,
+   "N": 0.05
+  },
+  "high_ferrite": {
+   "CR": 18.0,
+   "NI": 10.0,
+   "MO": 3.0,
+   "MN": 0.1,
+   "SI": 1.0,
+   "C": 0.005,
+   "N": 0.01
+  },
+  "low_ferrite": {
+   "CR": 16.0,
+   "NI": 14.0,
+   "MO": 2.0,
+   "MN": 2.0,
+   "SI": 0.1,
+   "C": 0.03,
+   "N": 0.1
+  }
+ },
+ "composition_notes": {
+  "spec": "ASTM A240 (UNS S31603): C <= 0.030, Mn <= 2.00, Si <= 0.75, Cr 16.0-18.0, Ni 10.0-14.0, Mo 2.00-3.00, N <= 0.10 wt%; ASTM F3184 (316L for powder bed fusion) allows Si <= 1.00. P and S are left out (not in the database subset used).",
+  "nominal": "middle of the 316L ranges (Cr 17, Ni 12, Mo 2.5), Mn 1.0, Si 0.5, C 0.02, N 0.05",
+  "corners": "every element at the ferrite-promoting (high_ferrite) or austenite-promoting (low_ferrite) end of the spec; floors C 0.005, N 0.01, Mn 0.1 wt% where the spec has only a cap",
+  "powder_certificate": "none in the repo: lpbf-runs/m2-single-track-schedule.md lists the lot and certificate as still to record; rerun with the certificate's composition when it arrives"
+ },
+ "equilibrium": {
+  "nominal": {
+   "T_liq_K": 1699.49,
+   "T_sol_K": 1682.46,
+   "T_liq_C": 1426.3,
+   "T_sol_C": 1409.3,
+   "freezing_range_K": 17.0,
+   "primary_phase": "FCC_A1",
+   "max_BCC_during_solidification": 0.0118,
+   "BCC_just_below_solidus": 0.0106,
+   "phases_at_1000C": {
+    "FCC_A1": 1.0
+   },
+   "wrc1992": {
+    "Creq": 19.5,
+    "Nieq": 13.7,
+    "ratio": 1.4234,
+    "mode": "AF"
+   }
+  },
+  "high_ferrite": {
+   "T_liq_K": 1696.71,
+   "T_sol_K": 1682.44,
+   "T_liq_C": 1423.6,
+   "T_sol_C": 1409.3,
+   "freezing_range_K": 14.3,
+   "primary_phase": "FCC_A1",
+   "max_BCC_during_solidification": 0.15,
+   "BCC_just_below_solidus": 0.15,
+   "phases_at_1000C": {
+    "CHI_A12": 0.0022,
+    "FCC_A1": 0.9808,
+    "SIGMA": 0.017
+   },
+   "wrc1992": {
+    "Creq": 21.0,
+    "Nieq": 10.375,
+    "ratio": 2.0241,
+    "mode": "F"
+   }
+  },
+  "low_ferrite": {
+   "T_liq_K": 1700.16,
+   "T_sol_K": 1683.54,
+   "T_liq_C": 1427.0,
+   "T_sol_C": 1410.4,
+   "freezing_range_K": 16.6,
+   "primary_phase": "FCC_A1",
+   "max_BCC_during_solidification": 0.0,
+   "BCC_just_below_solidus": 0.0,
+   "phases_at_1000C": {
+    "FCC_A1": 1.0
+   },
+   "wrc1992": {
+    "Creq": 18.0,
+    "Nieq": 17.05,
+    "ratio": 1.0557,
+    "mode": "A"
+   }
+  }
+ },
+ "scheil": {
+  "nominal|classic": {
+   "model": "Scheil (classic)",
+   "phases_allowed": [
+    "LIQUID",
+    "FCC_A1",
+    "BCC_A2",
+    "HCP_A3",
+    "M23C6",
+    "M7C3",
+    "M6C",
+    "SIGMA",
+    "LAVES_PHASE",
+    "CHI_A12",
+    "MU_PHASE"
+   ],
+   "T_start_K": 1700.49,
+   "T_K_at_fs_0.5": 1690.7,
+   "T_K_at_fs_0.9": 1667.8,
+   "T_K_at_fs_0.95": 1653.8,
+   "T_K_at_fs_0.99": 1597.6,
+   "T_K_at_1pct_liquid": 1595.1,
+   "T_K_end": 1468.4,
+   "f_liquid_end": 9.43875047577647e-05,
+   "primary_phase": "FCC_A1",
+   "partition_k_first_solid": {
+    "CR": 0.886,
+    "NI": 1.06,
+    "MO": 0.673,
+    "MN": 0.88,
+    "SI": 0.973,
+    "C": 0.345,
+    "N": 0.513
+   },
+   "phase_fractions_at_1pct_liquid": {
+    "FCC_A1": 0.9123,
+    "BCC_A2": 0.0877
+   },
+   "phase_fractions_end": {
+    "FCC_A1": 0.9086,
+    "BCC_A2": 0.09006,
+    "M6C": 0.00034,
+    "M2X (HCP_A3)": 0.00021,
+    "M23C6": 0.00068,
+    "SIGMA": 0.0
+   },
+   "delta_ferrite_first_T_K": 1684.5,
+   "delta_ferrite_first_f_solid": 0.673,
+   "liquid_wt_pct": {
+    "fs_0.0": {
+     "CR": 17.0,
+     "NI": 12.0,
+     "MO": 2.5,
+     "MN": 1.0,
+     "SI": 0.5,
+     "C": 0.02,
+     "N": 0.05
+    },
+    "fs_0.5": {
+     "CR": 18.376,
+     "NI": 11.445,
+     "MO": 3.113,
+     "MN": 1.077,
+     "SI": 0.506,
+     "C": 0.0313,
+     "N": 0.0697
+    },
+    "fs_0.9": {
+     "CR": 21.476,
+     "NI": 10.63,
+     "MO": 4.486,
+     "MN": 1.249,
+     "SI": 0.611,
+     "C": 0.0965,
+     "N": 0.1686
+    },
+    "fs_0.95": {
+     "CR": 23.17,
+     "NI": 10.076,
+     "MO": 5.22,
+     "MN": 1.313,
+     "SI": 0.664,
+     "C": 0.1591,
+     "N": 0.2505
+    },
+    "fs_0.99": {
+     "CR": 29.563,
+     "NI": 7.413,
+     "MO": 8.008,
+     "MN": 1.386,
+     "SI": 0.684,
+     "C": 0.5192,
+     "N": 0.5981
+    }
+   },
+   "austenite_forming_wt_pct": {
+    "fs_0.0": {
+     "CR": 15.206,
+     "NI": 12.666,
+     "MO": 1.729,
+     "MN": 0.889,
+     "SI": 0.487,
+     "C": 0.0073,
+     "N": 0.0267
+    },
+    "fs_0.5": {
+     "CR": 16.193,
+     "NI": 12.389,
+     "MO": 2.109,
+     "MN": 0.968,
+     "SI": 0.502,
+     "C": 0.0107,
+     "N": 0.0356
+    },
+    "fs_0.9": {
+     "CR": 18.513,
+     "NI": 12.207,
+     "MO": 3.06,
+     "MN": 1.166,
+     "SI": 0.625,
+     "C": 0.0316,
+     "N": 0.0849
+    },
+    "fs_0.95": {
+     "CR": 19.607,
+     "NI": 12.006,
+     "MO": 3.537,
+     "MN": 1.247,
+     "SI": 0.693,
+     "C": 0.0509,
+     "N": 0.1261
+    },
+    "fs_0.99": {
+     "CR": 23.375,
+     "NI": 10.487,
+     "MO": 5.092,
+     "MN": 1.394,
+     "SI": 0.805,
+     "C": 0.1502,
+     "N": 0.3454
+    }
+   },
+   "cell_wall_over_core": {
+    "CR": 1.29,
+    "NI": 0.95,
+    "MO": 2.05,
+    "MN": 1.4,
+    "SI": 1.42
+   },
+   "nominal_wt_pct": {
+    "CR": 17.0,
+    "NI": 12.0,
+    "MO": 2.5,
+    "MN": 1.0,
+    "SI": 0.5,
+    "C": 0.02,
+    "N": 0.05
+   }
+  },
+  "nominal|fast_CN": {
+   "model": "Scheil, C and N as fast diffusers (lever rule)",
+   "phases_allowed": [
+    "LIQUID",
+    "FCC_A1",
+    "BCC_A2",
+    "HCP_A3",
+    "M23C6",
+    "M7C3",
+    "M6C",
+    "SIGMA",
+    "LAVES_PHASE",
+    "CHI_A12",
+    "MU_PHASE"
+   ],
+   "T_start_K": 1700.49,
+   "T_K_at_fs_0.5": 1690.8,
+   "T_K_at_fs_0.9": 1674.1,
+   "T_K_at_fs_0.95": 1667.8,
+   "T_K_at_fs_0.99": 1652.1,
+   "T_K_at_1pct_liquid": 1651.6,
+   "T_K_end": 1587.4,
+   "f_liquid_end": 1.0686278429150597e-05,
+   "primary_phase": "FCC_A1",
+   "partition_k_first_solid": {
+    "CR": 0.886,
+    "NI": 1.06,
+    "MO": 0.673,
+    "MN": 0.88,
+    "SI": 0.973,
+    "C": 0.345,
+    "N": 0.513
+   },
+   "phase_fractions_at_1pct_liquid": {
+    "FCC_A1": 0.8707,
+    "BCC_A2": 0.1293
+   },
+   "phase_fractions_end": {
+    "FCC_A1": 0.86826,
+    "BCC_A2": 0.13155,
+    "SIGMA": 0.00015,
+    "M6C": 3e-05
+   },
+   "delta_ferrite_first_T_K": 1685.5,
+   "delta_ferrite_first_f_solid": 0.664,
+   "liquid_wt_pct": {
+    "fs_0.0": {
+     "CR": 17.0,
+     "NI": 12.0,
+     "MO": 2.5,
+     "MN": 1.0,
+     "SI": 0.5,
+     "C": 0.02,
+     "N": 0.05
+    },
+    "fs_0.5": {
+     "CR": 18.375,
+     "NI": 11.446,
+     "MO": 3.113,
+     "MN": 1.077,
+     "SI": 0.506,
+     "C": 0.0301,
+     "N": 0.0669
+    },
+    "fs_0.9": {
+     "CR": 20.889,
+     "NI": 11.17,
+     "MO": 4.212,
+     "MN": 1.264,
+     "SI": 0.669,
+     "C": 0.0563,
+     "N": 0.1016
+    },
+    "fs_0.95": {
+     "CR": 21.819,
+     "NI": 11.198,
+     "MO": 4.615,
+     "MN": 1.35,
+     "SI": 0.792,
+     "C": 0.0649,
+     "N": 0.1113
+    },
+    "fs_0.99": {
+     "CR": 23.92,
+     "NI": 11.19,
+     "MO": 5.557,
+     "MN": 1.545,
+     "SI": 1.187,
+     "C": 0.08,
+     "N": 0.1297
+    }
+   },
+   "austenite_forming_wt_pct": {
+    "fs_0.0": {
+     "CR": 15.206,
+     "NI": 12.666,
+     "MO": 1.729,
+     "MN": 0.889,
+     "SI": 0.487,
+     "C": 0.0073,
+     "N": 0.0267
+    },
+    "fs_0.5": {
+     "CR": 16.199,
+     "NI": 12.388,
+     "MO": 2.11,
+     "MN": 0.968,
+     "SI": 0.502,
+     "C": 0.0103,
+     "N": 0.0342
+    },
+    "fs_0.9": {
+     "CR": 18.283,
+     "NI": 12.634,
+     "MO": 2.905,
+     "MN": 1.171,
+     "SI": 0.667,
+     "C": 0.0183,
+     "N": 0.0502
+    },
+    "fs_0.95": {
+     "CR": 19.057,
+     "NI": 12.859,
+     "MO": 3.208,
+     "MN": 1.258,
+     "SI": 0.78,
+     "C": 0.0204,
+     "N": 0.0537
+    },
+    "fs_0.99": {
+     "CR": 20.757,
+     "NI": 13.233,
+     "MO": 3.932,
+     "MN": 1.459,
+     "SI": 1.121,
+     "C": 0.0234,
+     "N": 0.0584
+    }
+   },
+   "cell_wall_over_core": {
+    "CR": 1.25,
+    "NI": 1.02,
+    "MO": 1.86,
+    "MN": 1.42,
+    "SI": 1.6
+   },
+   "nominal_wt_pct": {
+    "CR": 17.0,
+    "NI": 12.0,
+    "MO": 2.5,
+    "MN": 1.0,
+    "SI": 0.5,
+    "C": 0.02,
+    "N": 0.05
+   }
+  },
+  "high_ferrite|classic": {
+   "model": "Scheil (classic)",
+   "phases_allowed": [
+    "LIQUID",
+    "FCC_A1",
+    "BCC_A2",
+    "HCP_A3",
+    "M23C6",
+    "M7C3",
+    "M6C",
+    "SIGMA",
+    "LAVES_PHASE",
+    "CHI_A12",
+    "MU_PHASE"
+   ],
+   "T_start_K": 1697.71,
+   "T_K_at_fs_0.5": 1687.5,
+   "T_K_at_fs_0.9": 1668.1,
+   "T_K_at_fs_0.95": 1657.6,
+   "T_K_at_fs_0.99": 1622.1,
+   "T_K_at_1pct_liquid": 1621.0,
+   "T_K_end": 1511.6,
+   "f_liquid_end": 8.729032990162366e-05,
+   "primary_phase": "FCC_A1",
+   "partition_k_first_solid": {
+    "CR": 0.879,
+    "NI": 1.056,
+    "MO": 0.683,
+    "MN": 0.892,
+    "SI": 0.936,
+    "C": 0.356,
+    "N": 0.502
+   },
+   "phase_fractions_at_1pct_liquid": {
+    "FCC_A1": 0.835,
+    "BCC_A2": 0.1649,
+    "SIGMA": 0.0001
+   },
+   "phase_fractions_end": {
+    "FCC_A1": 0.83322,
+    "BCC_A2": 0.16334,
+    "SIGMA": 0.0029,
+    "M6C": 0.00028,
+    "M23C6": 0.00012,
+    "CHI_A12": 6e-05
+   },
+   "delta_ferrite_first_T_K": 1688.7,
+   "delta_ferrite_first_f_solid": 0.442,
+   "liquid_wt_pct": {
+    "fs_0.0": {
+     "CR": 18.0,
+     "NI": 10.0,
+     "MO": 3.0,
+     "MN": 0.1,
+     "SI": 1.0,
+     "C": 0.005,
+     "N": 0.01
+    },
+    "fs_0.5": {
+     "CR": 19.411,
+     "NI": 9.662,
+     "MO": 3.647,
+     "MN": 0.107,
+     "SI": 1.058,
+     "C": 0.0078,
+     "N": 0.0142
+    },
+    "fs_0.9": {
+     "CR": 21.875,
+     "NI": 9.743,
+     "MO": 4.885,
+     "MN": 0.124,
+     "SI": 1.432,
+     "C": 0.0245,
+     "N": 0.0366
+    },
+    "fs_0.95": {
+     "CR": 23.009,
+     "NI": 9.679,
+     "MO": 5.508,
+     "MN": 0.13,
+     "SI": 1.637,
+     "C": 0.0404,
+     "N": 0.0556
+    },
+    "fs_0.99": {
+     "CR": 26.119,
+     "NI": 9.206,
+     "MO": 7.274,
+     "MN": 0.141,
+     "SI": 2.2,
+     "C": 0.1325,
+     "N": 0.1512
+    }
+   },
+   "austenite_forming_wt_pct": {
+    "fs_0.0": {
+     "CR": 15.848,
+     "NI": 10.576,
+     "MO": 2.053,
+     "MN": 0.089,
+     "SI": 0.937,
+     "C": 0.0018,
+     "N": 0.005
+    },
+    "fs_0.5": {
+     "CR": 17.043,
+     "NI": 10.465,
+     "MO": 2.515,
+     "MN": 0.098,
+     "SI": 1.005,
+     "C": 0.0027,
+     "N": 0.0071
+    },
+    "fs_0.9": {
+     "CR": 19.139,
+     "NI": 10.98,
+     "MO": 3.442,
+     "MN": 0.116,
+     "SI": 1.333,
+     "C": 0.0081,
+     "N": 0.0171
+    },
+    "fs_0.95": {
+     "CR": 20.03,
+     "NI": 11.112,
+     "MO": 3.905,
+     "MN": 0.124,
+     "SI": 1.507,
+     "C": 0.0129,
+     "N": 0.0253
+    },
+    "fs_0.99": {
+     "CR": 22.134,
+     "NI": 11.183,
+     "MO": 5.136,
+     "MN": 0.139,
+     "SI": 1.991,
+     "C": 0.0386,
+     "N": 0.0641
+    }
+   },
+   "cell_wall_over_core": {
+    "CR": 1.26,
+    "NI": 1.05,
+    "MO": 1.9,
+    "MN": 1.39,
+    "SI": 1.61
+   },
+   "nominal_wt_pct": {
+    "CR": 18.0,
+    "NI": 10.0,
+    "MO": 3.0,
+    "MN": 0.1,
+    "SI": 1.0,
+    "C": 0.005,
+    "N": 0.01
+   }
+  },
+  "high_ferrite|fast_CN": {
+   "model": "Scheil, C and N as fast diffusers (lever rule)",
+   "phases_allowed": [
+    "LIQUID",
+    "FCC_A1",
+    "BCC_A2",
+    "HCP_A3",
+    "M23C6",
+    "M7C3",
+    "M6C",
+    "SIGMA",
+    "LAVES_PHASE",
+    "CHI_A12",
+    "MU_PHASE"
+   ],
+   "T_start_K": 1697.71,
+   "T_K_at_fs_0.5": 1687.6,
+   "T_K_at_fs_0.9": 1669.7,
+   "T_K_at_fs_0.95": 1661.2,
+   "T_K_at_fs_0.99": 1637.1,
+   "T_K_at_1pct_liquid": 1637.1,
+   "T_K_end": 1573.1,
+   "f_liquid_end": 5.975051444395696e-06,
+   "primary_phase": "FCC_A1",
+   "partition_k_first_solid": {
+    "CR": 0.879,
+    "NI": 1.056,
+    "MO": 0.683,
+    "MN": 0.892,
+    "SI": 0.936,
+    "C": 0.356,
+    "N": 0.502
+   },
+   "phase_fractions_at_1pct_liquid": {
+    "FCC_A1": 0.8269,
+    "BCC_A2": 0.1731
+   },
+   "phase_fractions_end": {
+    "FCC_A1": 0.82553,
+    "BCC_A2": 0.17169,
+    "SIGMA": 0.00263,
+    "CHI_A12": 0.00014,
+    "M6C": 0.0
+   },
+   "delta_ferrite_first_T_K": 1688.7,
+   "delta_ferrite_first_f_solid": 0.443,
+   "liquid_wt_pct": {
+    "fs_0.0": {
+     "CR": 18.0,
+     "NI": 10.0,
+     "MO": 3.0,
+     "MN": 0.1,
+     "SI": 1.0,
+     "C": 0.005,
+     "N": 0.01
+    },
+    "fs_0.5": {
+     "CR": 19.407,
+     "NI": 9.666,
+     "MO": 3.645,
+     "MN": 0.107,
+     "SI": 1.058,
+     "C": 0.0076,
+     "N": 0.0137
+    },
+    "fs_0.9": {
+     "CR": 21.724,
+     "NI": 9.855,
+     "MO": 4.818,
+     "MN": 0.124,
+     "SI": 1.449,
+     "C": 0.0141,
+     "N": 0.0215
+    },
+    "fs_0.95": {
+     "CR": 22.678,
+     "NI": 9.923,
+     "MO": 5.365,
+     "MN": 0.131,
+     "SI": 1.678,
+     "C": 0.016,
+     "N": 0.0236
+    },
+    "fs_0.99": {
+     "CR": 24.751,
+     "NI": 10.13,
+     "MO": 6.694,
+     "MN": 0.145,
+     "SI": 2.395,
+     "C": 0.0194,
+     "N": 0.0278
+    }
+   },
+   "austenite_forming_wt_pct": {
+    "fs_0.0": {
+     "CR": 15.848,
+     "NI": 10.576,
+     "MO": 2.053,
+     "MN": 0.089,
+     "SI": 0.937,
+     "C": 0.0018,
+     "N": 0.005
+    },
+    "fs_0.5": {
+     "CR": 17.042,
+     "NI": 10.469,
+     "MO": 2.514,
+     "MN": 0.098,
+     "SI": 1.005,
+     "C": 0.0026,
+     "N": 0.0068
+    },
+    "fs_0.9": {
+     "CR": 19.078,
+     "NI": 11.056,
+     "MO": 3.407,
+     "MN": 0.116,
+     "SI": 1.342,
+     "C": 0.0046,
+     "N": 0.01
+    },
+    "fs_0.95": {
+     "CR": 19.905,
+     "NI": 11.268,
+     "MO": 3.837,
+     "MN": 0.124,
+     "SI": 1.526,
+     "C": 0.0051,
+     "N": 0.0107
+    },
+    "fs_0.99": {
+     "CR": 21.67,
+     "NI": 11.698,
+     "MO": 4.912,
+     "MN": 0.14,
+     "SI": 2.067,
+     "C": 0.0058,
+     "N": 0.0116
+    }
+   },
+   "cell_wall_over_core": {
+    "CR": 1.26,
+    "NI": 1.07,
+    "MO": 1.87,
+    "MN": 1.39,
+    "SI": 1.63
+   },
+   "nominal_wt_pct": {
+    "CR": 18.0,
+    "NI": 10.0,
+    "MO": 3.0,
+    "MN": 0.1,
+    "SI": 1.0,
+    "C": 0.005,
+    "N": 0.01
+   }
+  },
+  "low_ferrite|classic": {
+   "model": "Scheil (classic)",
+   "phases_allowed": [
+    "LIQUID",
+    "FCC_A1",
+    "BCC_A2",
+    "HCP_A3",
+    "M23C6",
+    "M7C3",
+    "M6C",
+    "SIGMA",
+    "LAVES_PHASE",
+    "CHI_A12",
+    "MU_PHASE"
+   ],
+   "T_start_K": 1701.16,
+   "T_K_at_fs_0.5": 1692.1,
+   "T_K_at_fs_0.9": 1664.6,
+   "T_K_at_fs_0.95": 1648.4,
+   "T_K_at_fs_0.99": 1587.6,
+   "T_K_at_1pct_liquid": 1585.8,
+   "T_K_end": 1448.1,
+   "f_liquid_end": 2.0297732111540512e-05,
+   "primary_phase": "FCC_A1",
+   "partition_k_first_solid": {
+    "CR": 0.894,
+    "NI": 1.05,
+    "MO": 0.669,
+    "MN": 0.862,
+    "SI": 1.009,
+    "C": 0.337,
+    "N": 0.524
+   },
+   "phase_fractions_at_1pct_liquid": {
+    "FCC_A1": 0.9878,
+    "BCC_A2": 0.0122
+   },
+   "phase_fractions_end": {
+    "FCC_A1": 0.98398,
+    "BCC_A2": 0.01458,
+    "M2X (HCP_A3)": 0.00037,
+    "M23C6": 0.0009,
+    "M6C": 0.00012,
+    "M7C3": 2e-05
+   },
+   "delta_ferrite_first_T_K": 1662.2,
+   "delta_ferrite_first_f_solid": 0.91,
+   "liquid_wt_pct": {
+    "fs_0.0": {
+     "CR": 16.0,
+     "NI": 14.0,
+     "MO": 2.0,
+     "MN": 2.0,
+     "SI": 0.1,
+     "C": 0.03,
+     "N": 0.1
+    },
+    "fs_0.5": {
+     "CR": 17.233,
+     "NI": 13.455,
+     "MO": 2.495,
+     "MN": 2.183,
+     "SI": 0.099,
+     "C": 0.0472,
+     "N": 0.1382
+    },
+    "fs_0.9": {
+     "CR": 21.102,
+     "NI": 11.455,
+     "MO": 4.134,
+     "MN": 2.565,
+     "SI": 0.089,
+     "C": 0.1367,
+     "N": 0.292
+    },
+    "fs_0.95": {
+     "CR": 23.212,
+     "NI": 10.554,
+     "MO": 4.935,
+     "MN": 2.709,
+     "SI": 0.088,
+     "C": 0.2225,
+     "N": 0.4158
+    },
+    "fs_0.99": {
+     "CR": 30.723,
+     "NI": 7.131,
+     "MO": 7.942,
+     "MN": 2.92,
+     "SI": 0.071,
+     "C": 0.6895,
+     "N": 0.807
+    }
+   },
+   "austenite_forming_wt_pct": {
+    "fs_0.0": {
+     "CR": 14.285,
+     "NI": 14.688,
+     "MO": 1.337,
+     "MN": 1.722,
+     "SI": 0.101,
+     "C": 0.0101,
+     "N": 0.0523
+    },
+    "fs_0.5": {
+     "CR": 15.259,
+     "NI": 14.381,
+     "MO": 1.684,
+     "MN": 1.912,
+     "SI": 0.102,
+     "C": 0.0159,
+     "N": 0.0724
+    },
+    "fs_0.9": {
+     "CR": 18.04,
+     "NI": 13.095,
+     "MO": 2.824,
+     "MN": 2.359,
+     "SI": 0.099,
+     "C": 0.0455,
+     "N": 0.1574
+    },
+    "fs_0.95": {
+     "CR": 19.399,
+     "NI": 12.578,
+     "MO": 3.351,
+     "MN": 2.532,
+     "SI": 0.102,
+     "C": 0.0733,
+     "N": 0.2312
+    },
+    "fs_0.99": {
+     "CR": 24.727,
+     "NI": 10.039,
+     "MO": 5.126,
+     "MN": 2.86,
+     "SI": 0.091,
+     "C": 0.2167,
+     "N": 0.6281
+    }
+   },
+   "cell_wall_over_core": {
+    "CR": 1.36,
+    "NI": 0.86,
+    "MO": 2.51,
+    "MN": 1.47,
+    "SI": 1.01
+   },
+   "nominal_wt_pct": {
+    "CR": 16.0,
+    "NI": 14.0,
+    "MO": 2.0,
+    "MN": 2.0,
+    "SI": 0.1,
+    "C": 0.03,
+    "N": 0.1
+   }
+  },
+  "low_ferrite|fast_CN": {
+   "model": "Scheil, C and N as fast diffusers (lever rule)",
+   "phases_allowed": [
+    "LIQUID",
+    "FCC_A1",
+    "BCC_A2",
+    "HCP_A3",
+    "M23C6",
+    "M7C3",
+    "M6C",
+    "SIGMA",
+    "LAVES_PHASE",
+    "CHI_A12",
+    "MU_PHASE"
+   ],
+   "T_start_K": 1701.16,
+   "T_K_at_fs_0.5": 1692.3,
+   "T_K_at_fs_0.9": 1673.4,
+   "T_K_at_fs_0.95": 1668.5,
+   "T_K_at_fs_0.99": 1658.5,
+   "T_K_at_1pct_liquid": 1657.1,
+   "T_K_end": 1623.7,
+   "f_liquid_end": 9.243813073245288e-05,
+   "primary_phase": "FCC_A1",
+   "partition_k_first_solid": {
+    "CR": 0.894,
+    "NI": 1.05,
+    "MO": 0.669,
+    "MN": 0.862,
+    "SI": 1.009,
+    "C": 0.337,
+    "N": 0.524
+   },
+   "phase_fractions_at_1pct_liquid": {
+    "FCC_A1": 0.9206,
+    "BCC_A2": 0.0794
+   },
+   "phase_fractions_end": {
+    "FCC_A1": 0.91695,
+    "BCC_A2": 0.08296
+   },
+   "delta_ferrite_first_T_K": 1677.2,
+   "delta_ferrite_first_f_solid": 0.843,
+   "liquid_wt_pct": {
+    "fs_0.0": {
+     "CR": 16.0,
+     "NI": 14.0,
+     "MO": 2.0,
+     "MN": 2.0,
+     "SI": 0.1,
+     "C": 0.03,
+     "N": 0.1
+    },
+    "fs_0.5": {
+     "CR": 17.231,
+     "NI": 13.457,
+     "MO": 2.494,
+     "MN": 2.183,
+     "SI": 0.099,
+     "C": 0.0455,
+     "N": 0.1329
+    },
+    "fs_0.9": {
+     "CR": 20.272,
+     "NI": 12.345,
+     "MO": 3.702,
+     "MN": 2.595,
+     "SI": 0.108,
+     "C": 0.0831,
+     "N": 0.1901
+    },
+    "fs_0.95": {
+     "CR": 21.161,
+     "NI": 12.51,
+     "MO": 3.917,
+     "MN": 2.803,
+     "SI": 0.133,
+     "C": 0.0967,
+     "N": 0.2091
+    },
+    "fs_0.99": {
+     "CR": 23.077,
+     "NI": 12.858,
+     "MO": 4.294,
+     "MN": 3.331,
+     "SI": 0.228,
+     "C": 0.1229,
+     "N": 0.2463
+    }
+   },
+   "austenite_forming_wt_pct": {
+    "fs_0.0": {
+     "CR": 14.285,
+     "NI": 14.688,
+     "MO": 1.337,
+     "MN": 1.722,
+     "SI": 0.101,
+     "C": 0.0101,
+     "N": 0.0523
+    },
+    "fs_0.5": {
+     "CR": 15.27,
+     "NI": 14.381,
+     "MO": 1.685,
+     "MN": 1.912,
+     "SI": 0.102,
+     "C": 0.0153,
+     "N": 0.0696
+    },
+    "fs_0.9": {
+     "CR": 17.7,
+     "NI": 13.87,
+     "MO": 2.554,
+     "MN": 2.366,
+     "SI": 0.116,
+     "C": 0.027,
+     "N": 0.0994
+    },
+    "fs_0.95": {
+     "CR": 18.433,
+     "NI": 14.262,
+     "MO": 2.718,
+     "MN": 2.564,
+     "SI": 0.144,
+     "C": 0.0306,
+     "N": 0.1075
+    },
+    "fs_0.99": {
+     "CR": 19.974,
+     "NI": 15.092,
+     "MO": 3.016,
+     "MN": 3.06,
+     "SI": 0.242,
+     "C": 0.0363,
+     "N": 0.1204
+    }
+   },
+   "cell_wall_over_core": {
+    "CR": 1.29,
+    "NI": 0.97,
+    "MO": 2.03,
+    "MN": 1.49,
+    "SI": 1.43
+   },
+   "nominal_wt_pct": {
+    "CR": 16.0,
+    "NI": 14.0,
+    "MO": 2.0,
+    "MN": 2.0,
+    "SI": 0.1,
+    "C": 0.03,
+    "N": 0.1
+   }
+  }
+ },
+ "spec_sweep": {
+  "as_distributed": [
+   {
+    "t": 0.0,
+    "wt": {
+     "CR": 16.0,
+     "NI": 14.0,
+     "MO": 2.0,
+     "MN": 2.0,
+     "SI": 0.1,
+     "C": 0.03,
+     "N": 0.1
+    },
+    "wrc_ratio": 1.0557,
+    "wrc_mode": "A",
+    "T_liq_K": 1700.16,
+    "T_sol_K": 1683.54,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.0121,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1585.8
+   },
+   {
+    "t": 0.1,
+    "wt": {
+     "CR": 16.2,
+     "NI": 13.6,
+     "MO": 2.1,
+     "MN": 1.81,
+     "SI": 0.19,
+     "C": 0.0275,
+     "N": 0.091
+    },
+    "wrc_ratio": 1.117,
+    "wrc_mode": "A",
+    "T_liq_K": 1700.1,
+    "T_sol_K": 1683.41,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.0221,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1586.8
+   },
+   {
+    "t": 0.2,
+    "wt": {
+     "CR": 16.4,
+     "NI": 13.2,
+     "MO": 2.2,
+     "MN": 1.62,
+     "SI": 0.28,
+     "C": 0.025,
+     "N": 0.082
+    },
+    "wrc_ratio": 1.1836,
+    "wrc_mode": "A",
+    "T_liq_K": 1699.95,
+    "T_sol_K": 1683.2,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.0335,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1587.6
+   },
+   {
+    "t": 0.3,
+    "wt": {
+     "CR": 16.6,
+     "NI": 12.8,
+     "MO": 2.3,
+     "MN": 1.43,
+     "SI": 0.37,
+     "C": 0.0225,
+     "N": 0.073
+    },
+    "wrc_ratio": 1.256,
+    "wrc_mode": "AF",
+    "T_liq_K": 1699.73,
+    "T_sol_K": 1682.94,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.0459,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1588.4
+   },
+   {
+    "t": 0.4,
+    "wt": {
+     "CR": 16.8,
+     "NI": 12.4,
+     "MO": 2.4,
+     "MN": 1.24,
+     "SI": 0.46,
+     "C": 0.02,
+     "N": 0.064
+    },
+    "wrc_ratio": 1.3352,
+    "wrc_mode": "AF",
+    "T_liq_K": 1699.46,
+    "T_sol_K": 1682.55,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.0589,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1593.1
+   },
+   {
+    "t": 0.5,
+    "wt": {
+     "CR": 17.0,
+     "NI": 12.0,
+     "MO": 2.5,
+     "MN": 1.05,
+     "SI": 0.55,
+     "C": 0.0175,
+     "N": 0.055
+    },
+    "wrc_ratio": 1.4221,
+    "wrc_mode": "AF",
+    "T_liq_K": 1699.12,
+    "T_sol_K": 1682.1,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.0727,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1597.5
+   },
+   {
+    "t": 0.6,
+    "wt": {
+     "CR": 17.2,
+     "NI": 11.6,
+     "MO": 2.6,
+     "MN": 0.86,
+     "SI": 0.64,
+     "C": 0.015,
+     "N": 0.046
+    },
+    "wrc_ratio": 1.5178,
+    "wrc_mode": "FA",
+    "T_liq_K": 1698.76,
+    "T_sol_K": 1681.85,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.0876,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1599.1
+   },
+   {
+    "t": 0.7,
+    "wt": {
+     "CR": 17.4,
+     "NI": 11.2,
+     "MO": 2.7,
+     "MN": 0.67,
+     "SI": 0.73,
+     "C": 0.0125,
+     "N": 0.037
+    },
+    "wrc_ratio": 1.6239,
+    "wrc_mode": "FA",
+    "T_liq_K": 1698.3,
+    "T_sol_K": 1681.99,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.1037,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1603.2
+   },
+   {
+    "t": 0.8,
+    "wt": {
+     "CR": 17.6,
+     "NI": 10.8,
+     "MO": 2.8,
+     "MN": 0.48,
+     "SI": 0.82,
+     "C": 0.01,
+     "N": 0.028
+    },
+    "wrc_ratio": 1.7421,
+    "wrc_mode": "FA",
+    "T_liq_K": 1697.81,
+    "T_sol_K": 1682.13,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.1216,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1610.3
+   },
+   {
+    "t": 0.9,
+    "wt": {
+     "CR": 17.8,
+     "NI": 10.4,
+     "MO": 2.9,
+     "MN": 0.29,
+     "SI": 0.91,
+     "C": 0.0075,
+     "N": 0.019
+    },
+    "wrc_ratio": 1.8746,
+    "wrc_mode": "FA",
+    "T_liq_K": 1697.29,
+    "T_sol_K": 1682.28,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.1418,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1614.9
+   },
+   {
+    "t": 1.0,
+    "wt": {
+     "CR": 18.0,
+     "NI": 10.0,
+     "MO": 3.0,
+     "MN": 0.1,
+     "SI": 1.0,
+     "C": 0.005,
+     "N": 0.01
+    },
+    "wrc_ratio": 2.0241,
+    "wrc_mode": "F",
+    "T_liq_K": 1696.71,
+    "T_sol_K": 1682.44,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.1643,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1621.0
+   }
+  ],
+  "no_fcc_si_ternaries": [
+   {
+    "t": 0.0,
+    "wt": {
+     "CR": 16.0,
+     "NI": 14.0,
+     "MO": 2.0,
+     "MN": 2.0,
+     "SI": 0.1,
+     "C": 0.03,
+     "N": 0.1
+    },
+    "wrc_ratio": 1.0557,
+    "wrc_mode": "A",
+    "T_liq_K": 1698.18,
+    "T_sol_K": 1679.13,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.0125,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1555.1
+   },
+   {
+    "t": 0.1,
+    "wt": {
+     "CR": 16.2,
+     "NI": 13.6,
+     "MO": 2.1,
+     "MN": 1.81,
+     "SI": 0.19,
+     "C": 0.0275,
+     "N": 0.091
+    },
+    "wrc_ratio": 1.117,
+    "wrc_mode": "A",
+    "T_liq_K": 1696.29,
+    "T_sol_K": 1674.88,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.0262,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1530.2
+   },
+   {
+    "t": 0.2,
+    "wt": {
+     "CR": 16.4,
+     "NI": 13.2,
+     "MO": 2.2,
+     "MN": 1.62,
+     "SI": 0.28,
+     "C": 0.025,
+     "N": 0.082
+    },
+    "wrc_ratio": 1.1836,
+    "wrc_mode": "A",
+    "T_liq_K": 1694.27,
+    "T_sol_K": 1670.37,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.0468,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1510.2
+   },
+   {
+    "t": 0.3,
+    "wt": {
+     "CR": 16.6,
+     "NI": 12.8,
+     "MO": 2.3,
+     "MN": 1.43,
+     "SI": 0.37,
+     "C": 0.0225,
+     "N": 0.073
+    },
+    "wrc_ratio": 1.256,
+    "wrc_mode": "AF",
+    "T_liq_K": 1692.14,
+    "T_sol_K": 1665.64,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.0768,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1491.1
+   },
+   {
+    "t": 0.4,
+    "wt": {
+     "CR": 16.8,
+     "NI": 12.4,
+     "MO": 2.4,
+     "MN": 1.24,
+     "SI": 0.46,
+     "C": 0.02,
+     "N": 0.064
+    },
+    "wrc_ratio": 1.3352,
+    "wrc_mode": "AF",
+    "T_liq_K": 1689.91,
+    "T_sol_K": 1661.85,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.1197,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1475.8
+   },
+   {
+    "t": 0.5,
+    "wt": {
+     "CR": 17.0,
+     "NI": 12.0,
+     "MO": 2.5,
+     "MN": 1.05,
+     "SI": 0.55,
+     "C": 0.0175,
+     "N": 0.055
+    },
+    "wrc_ratio": 1.4221,
+    "wrc_mode": "AF",
+    "T_liq_K": 1687.56,
+    "T_sol_K": 1658.19,
+    "primary_phase": "FCC_A1",
+    "scheil3_ferrite_fraction": 0.1817,
+    "scheil3_mode": "AF",
+    "scheil3_T_K_at_1pct_liquid": 1462.5
+   },
+   {
+    "t": 0.6,
+    "wt": {
+     "CR": 17.2,
+     "NI": 11.6,
+     "MO": 2.6,
+     "MN": 0.86,
+     "SI": 0.64,
+     "C": 0.015,
+     "N": 0.046
+    },
+    "wrc_ratio": 1.5178,
+    "wrc_mode": "FA",
+    "T_liq_K": 1686.03,
+    "T_sol_K": 1654.7,
+    "primary_phase": "BCC_A2",
+    "scheil3_ferrite_fraction": 0.2708,
+    "scheil3_mode": "FA",
+    "scheil3_T_K_at_1pct_liquid": 1454.0
+   },
+   {
+    "t": 0.7,
+    "wt": {
+     "CR": 17.4,
+     "NI": 11.2,
+     "MO": 2.7,
+     "MN": 0.67,
+     "SI": 0.73,
+     "C": 0.0125,
+     "N": 0.037
+    },
+    "wrc_ratio": 1.6239,
+    "wrc_mode": "FA",
+    "T_liq_K": 1686.92,
+    "T_sol_K": 1651.37,
+    "primary_phase": "BCC_A2",
+    "scheil3_ferrite_fraction": 0.3608,
+    "scheil3_mode": "FA",
+    "scheil3_T_K_at_1pct_liquid": 1441.9
+   },
+   {
+    "t": 0.8,
+    "wt": {
+     "CR": 17.6,
+     "NI": 10.8,
+     "MO": 2.8,
+     "MN": 0.48,
+     "SI": 0.82,
+     "C": 0.01,
+     "N": 0.028
+    },
+    "wrc_ratio": 1.7421,
+    "wrc_mode": "FA",
+    "T_liq_K": 1687.89,
+    "T_sol_K": 1648.25,
+    "primary_phase": "BCC_A2",
+    "scheil3_ferrite_fraction": 0.4409,
+    "scheil3_mode": "FA",
+    "scheil3_T_K_at_1pct_liquid": 1434.8
+   },
+   {
+    "t": 0.9,
+    "wt": {
+     "CR": 17.8,
+     "NI": 10.4,
+     "MO": 2.9,
+     "MN": 0.29,
+     "SI": 0.91,
+     "C": 0.0075,
+     "N": 0.019
+    },
+    "wrc_ratio": 1.8746,
+    "wrc_mode": "FA",
+    "T_liq_K": 1688.9,
+    "T_sol_K": 1645.41,
+    "primary_phase": "BCC_A2",
+    "scheil3_ferrite_fraction": 0.5128,
+    "scheil3_mode": "FA",
+    "scheil3_T_K_at_1pct_liquid": 1423.8
+   },
+   {
+    "t": 1.0,
+    "wt": {
+     "CR": 18.0,
+     "NI": 10.0,
+     "MO": 3.0,
+     "MN": 0.1,
+     "SI": 1.0,
+     "C": 0.005,
+     "N": 0.01
+    },
+    "wrc_ratio": 2.0241,
+    "wrc_mode": "F",
+    "T_liq_K": 1690.0,
+    "T_sol_K": 1642.88,
+    "primary_phase": "BCC_A2",
+    "scheil3_ferrite_fraction": 0.577,
+    "scheil3_mode": "FA",
+    "scheil3_T_K_at_1pct_liquid": 1418.9
+   }
+  ]
+ },
+ "spec_sweep_note": "t = 0 is the low-ferrite corner, t = 1 the high-ferrite corner, linear in wt%. no_fcc_si_ternaries: the database without L(FCC_A1,CR,FE,SI:VA;0) and L(FCC_A1,FE,MO,SI:VA;0) (both 50000 - 80 T J/mol), a sensitivity check only",
+ "enthalpy": {
+  "note": "J/kg from 298.15 K, metastable austenite (FCC_A1 at the alloy composition) for the solid and the liquid at the alloy composition, nominal composition; per volume with rho = 7980 kg/m^3 (room temperature, as King et al.'s Table 3)",
+  "rho_kg_m3": 7980.0,
+  "T_sol_K": 1682.46,
+  "T_liq_K": 1699.49,
+  "to_solidus_sensible": 800381.4,
+  "to_liquidus_sensible": 812500.3,
+  "to_solidus_with_latent": 1006236.2,
+  "to_liquidus_with_latent": 1019280.8,
+  "latent_at_solidus": 205854.8,
+  "latent_at_liquidus": 206780.5,
+  "check_fcc_vs_equilibrium_at_solidus": -195.7,
+  "mean_cp_298_to_solidus": 578.2,
+  "per_volume_J_m3": {
+   "to_solidus_sensible": 6387000000.0,
+   "to_liquidus_sensible": 6484000000.0,
+   "to_solidus_with_latent": 8030000000.0,
+   "to_liquidus_with_latent": 8134000000.0
+  },
+  "corners": {
+   "high_ferrite": {
+    "to_solidus_sensible": 799923.1,
+    "to_liquidus_with_latent": 1011570.5,
+    "latent_at_liquidus": 201491.4
+   },
+   "low_ferrite": {
+    "to_solidus_sensible": 802412.2,
+    "to_liquidus_with_latent": 1026114.0,
+    "latent_at_liquidus": 211854.2
+   }
+  },
+  "King_table3_h_s": {
+   "J_kg": 1200000.0,
+   "J_m3": 9576000000.0,
+   "definition": "h_s = rho c T_m, the 'enthalpy at melting' (Sec. 2.1, PDF p. 7, and footnote 2), no latent heat; Table 3 (PDF p. 36) gives 1.2e6 J/kg, citing Rai et al. 2007"
+  },
+  "repo_rho_c_T_m": {
+   "J_m3": 8930309000.0,
+   "J_m3_from_298": 7385775000.0
+  }
+ },
+ "keyhole": {
+  "formula": "dH/h_s = A P / (h_s sqrt(pi D v sigma^3)), King et al. 2014 Eq. 2.6 (PDF p. 7)",
+  "sigma": "Gaussian standard deviation, I = I0 exp(-r^2/(2 sigma^2)) (footnotes 1 and 4, PDF pp. 6, 10), so sigma = D4sigma/4 with each set's spot as D4sigma; 32.5 um for the control's 130 um spot",
+  "check_against_paper": [
+   {
+    "P_W": 334.0,
+    "v_mm_s": 171.0,
+    "D4sigma_um": 130.0,
+    "quoted": 44.0,
+    "eq_2_6_sigma_D4s_over_4": 44.3,
+    "pi_outside_root_sigma_D4s_over_2": 8.8
+   },
+   {
+    "P_W": 265.0,
+    "v_mm_s": 1004.0,
+    "D4sigma_um": 52.0,
+    "quoted": 57.0,
+    "eq_2_6_sigma_D4s_over_4": 57.3,
+    "pi_outside_root_sigma_D4s_over_2": 11.4
+   }
+  ],
+  "King_constants": {
+   "A": 0.4,
+   "rho": 7980.0,
+   "h_s_J_kg": 1200000.0,
+   "D": 5.38e-06,
+   "h_s_J_m3": 9576000000.0
+  },
+  "CALPHAD_variant": {
+   "A": 0.4,
+   "D": 5.0163997684738564e-06,
+   "h_s_J_kg": 800381.4,
+   "h_s_J_m3": 6387000000.0,
+   "note": "A and D as eagar_tsai_316l.py; h_s = CALPHAD sensible enthalpy 298 K -> solidus (nominal) x 7980 kg/m^3"
+  },
+  "thresholds": {
+   "experimental": "30 +/- 4 (Sec. 5.6, PDF p. 19; conclusion 4, PDF p. 20); transition from ~26, clearly keyhole above ~34 (Sec. 5.3, PDF p. 15)",
+   "theoretical": "dH/h_s > pi T_b / T_m ~ 6 (Eq. 2.7, PDF p. 8), with T_b = 3273 K for steel (PDF p. 5)",
+   "theoretical_values": {
+    "T_b 3090 K, T_m = T_sol": 5.77,
+    "T_b 3090 K, T_m = T_liq": 5.71,
+    "T_b 3273 K, T_m = T_sol": 6.11,
+    "T_b 3273 K, T_m = T_liq": 6.05
+   },
+   "experimental_in_CALPHAD_hs_units": 46.6,
+   "Ke_equivalent_of_26_30_34": [
+    6.96,
+    8.04,
+    9.11
+   ],
+   "Ke_equivalent_of_theoretical": 1.62
+  },
+  "ratios": {
+   "dH_hs_over_Ke_King_constants": 3.733,
+   "dH_hs_over_Ke_CALPHAD_hs": 5.796
+  },
+  "range_King_constants": [
+   6.02,
+   53.48
+  ],
+  "range_if_sigma_is_radius": [
+   2.13,
+   18.91
+  ],
+  "regime_counts_King_constants": {
+   "conduction (<26)": 22,
+   "transition (26-34)": 5,
+   "keyhole (>=34)": 6
+  },
+  "n_at_or_above_30_King_constants": 11,
+  "Ke_range": [
+   1.61,
+   14.32
+  ],
+  "range_CALPHAD_hs": [
+   9.34,
+   83.03
+  ],
+  "control": {
+   "set": "C_370W_1350_130um_h090",
+   "P_W": 370.0,
+   "v_mm_s": 1350.0,
+   "spot_um": 130.0,
+   "trace_spacing_mm": 0.09,
+   "P_over_v_J_mm": 0.2741,
+   "n_walls": 2,
+   "sigma_um": 32.5,
+   "dH_hs_King_constants": 17.46,
+   "King_regime": "conduction (<26)",
+   "King_keyhole": false,
+   "dH_hs_CALPHAD_hs": 27.11,
+   "King_keyhole_CALPHAD_hs": false,
+   "dH_hs_if_sigma_is_radius": 6.17,
+   "Ke": 4.68,
+   "Ke_regime": "transition",
+   "Ke_sheet": 4.68,
+   "ET_width_um": "",
+   "ET_depth_um": "",
+   "ET_depth_over_half_width": ""
+  },
+  "keyhole_sets_King_constants": [
+   "W002_167W_930_60um_h105",
+   "W004_360W_1500_60um_h065",
+   "W006_217W_785_75um_h085",
+   "W008_270W_1530_65um_h080",
+   "W012_334W_1175_80um_h100",
+   "W014_243W_820_55um_h120",
+   "W016_303W_1845_50um_h115",
+   "W018_160W_305_80um_h135",
+   "W024_277W_650_75um_h080",
+   "W026_186W_895_55um_h100",
+   "W028_327W_2335_65um_h140"
+  ],
+  "transition_or_keyhole_King_constants": [
+   "W002_167W_930_60um_h105",
+   "W004_360W_1500_60um_h065",
+   "W006_217W_785_75um_h085",
+   "W008_270W_1530_65um_h080",
+   "W012_334W_1175_80um_h100",
+   "W014_243W_820_55um_h120",
+   "W016_303W_1845_50um_h115",
+   "W018_160W_305_80um_h135",
+   "W024_277W_650_75um_h080",
+   "W026_186W_895_55um_h100",
+   "W028_327W_2335_65um_h140"
+  ],
+  "keyhole_sets_CALPHAD_hs_at_30": [
+   "W000_296W_1785_90um_h125",
+   "W002_167W_930_60um_h105",
+   "W004_360W_1500_60um_h065",
+   "W006_217W_785_75um_h085",
+   "W008_270W_1530_65um_h080",
+   "W011_348W_705_140um_h130",
+   "W012_334W_1175_80um_h100",
+   "W014_243W_820_55um_h120",
+   "W016_303W_1845_50um_h115",
+   "W018_160W_305_80um_h135",
+   "W019_342W_1725_105um_h065",
+   "W020_353W_1995_90um_h095",
+   "W022_224W_2195_70um_h075",
+   "W024_277W_650_75um_h080",
+   "W026_186W_895_55um_h100",
+   "W028_327W_2335_65um_h140",
+   "W030_250W_985_100um_h120",
+   "W031_288W_675_120um_h090"
+  ],
+  "Ke_at_least_6": [
+   "W002_167W_930_60um_h105",
+   "W004_360W_1500_60um_h065",
+   "W006_217W_785_75um_h085",
+   "W008_270W_1530_65um_h080",
+   "W012_334W_1175_80um_h100",
+   "W014_243W_820_55um_h120",
+   "W016_303W_1845_50um_h115",
+   "W018_160W_305_80um_h135",
+   "W020_353W_1995_90um_h095",
+   "W024_277W_650_75um_h080",
+   "W026_186W_895_55um_h100",
+   "W028_327W_2335_65um_h140"
+  ],
+  "Ke_matches_sheet": true,
+  "ET_depth_over_half_width_max": null
+ }
+}

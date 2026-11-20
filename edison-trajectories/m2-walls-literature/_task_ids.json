@@ -1,0 +1,53 @@
+{
+  "submitted_utc": "2026-11-18T18:22:48Z",
+  "tasks": {
+    "window": {
+      "task_id": "5bdc248e-5da1-47cc-adf9-bbadb6a6d9ee",
+      "job": "job-futurehouse-paperqa3-high",
+      "title": "Expected porosity and melt-pool depth for 316L across P 150-370 W, v 335-2930 mm/s at a 100-130 um spot",
+      "outfile": "expected-316l-window.md"
+    },
+    "walls": {
+      "task_id": "f3826e61-2d60-416d-8f74-357112dc6381",
+      "job": "job-futurehouse-paperqa3-high",
+      "title": "Thin walls (about 1.3 mm) as LPBF parameter-screening specimens: what they show and what goes wrong",
+      "outfile": "thin-walls-as-screening-specimens.md"
+    },
+    "ammodule": {
+      "task_id": "29832530-a251-4371-b6c7-4c96b04a62bb",
+      "job": "job-futurehouse-paperqa3-high",
+      "title": "The Thermo-Calc AM Module: what it computes, how it has been validated, and what experiments refine it",
+      "outfile": "thermo-calc-am-module-validation.md"
+    },
+    "metallography": {
+      "task_id": "330fd9fb-f9a6-47bf-a9ff-b88edc359710",
+      "job": "job-futurehouse-paperqa3-high",
+      "title": "Sectioning, mounting, polishing, imaging and etching LPBF 316L thin walls for porosity and melt pools",
+      "outfile": "metallography-sem-porosity-316l.md"
+    },
+    "calibration": {
+      "task_id": "e7015973-46f0-49d4-9fc6-c1c533df3584",
+      "job": "job-futurehouse-paperqa3-high",
+      "title": "Calibrating melt-pool and printability models with experiments: designs, Bayesian calibration, spot size",
+      "outfile": "model-calibration-and-experiment-design.md"
+    },
+    "solidification": {
+      "task_id": "8357c8f2-d709-40d0-9d47-1ef8900a5ea6",
+      "job": "job-futurehouse-paperqa3-high",
+      "title": "316L solidification in LPBF: CALPHAD and Scheil predictions, cell spacing versus cooling rate, what SEM shows",
+      "outfile": "solidification-316l-calphad-and-sem.md"
+    },
+    "precedent_walls": {
+      "task_id": "b3b8c10f-38ac-4ebd-b51b-8d77e1ba28ad",
+      "job": "job-futurehouse-paperqa3-precedent",
+      "title": "Precedent: per-wall parameters on thin-wall or comb specimens compared with a CALPHAD printability map",
+      "outfile": "precedent-per-wall-parameters-vs-printability-map.md"
+    },
+    "precedent_tc": {
+      "task_id": "671eebc1-1795-409a-a84d-81b20627038b",
+      "job": "job-futurehouse-paperqa3-precedent",
+      "title": "Precedent: the Thermo-Calc AM Module validated against measured 316L melt pools or porosity",
+      "outfile": "precedent-thermo-calc-am-module-316l.md"
+    }
+  }
+}

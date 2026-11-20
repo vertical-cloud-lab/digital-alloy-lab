@@ -1,0 +1,16 @@
+{
+  "job": "job-futurehouse-paperqa3-high",
+  "submitted_utc": "2026-11-10T05:31:55Z",
+  "tasks": {
+    "transients": {
+      "task_id": "7c731133-fed6-492f-b8de-faa301bb480c",
+      "title": "Start and end transients of single LPBF tracks: track length and where to section (retry)",
+      "outfile": "track-transients-and-length-retry.md"
+    },
+    "interaction": {
+      "task_id": "9b411b0e-d449-40f0-af22-5ad7a7cb1f79",
+      "title": "Interactions between neighbouring single tracks on one powder layer: spacing and exposure order (retry)",
+      "outfile": "track-spacing-and-order-retry.md"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+ "name": "m2w_7_results",
+ "fps": 15,
+ "n_frames": 282,
+ "size": [
+  1280,
+  720
+ ],
+ "substeps": [
+  {
+   "label": "C6 · segment and classify the pores",
+   "caption": "Threshold every image the same way, keep the pores inside the core band, and sort them by shape: flat, irregular lack-of-fusion pores along the layers, round keyhole pores. Porosity is their area fraction.",
+   "start_frame": 0,
+   "end_frame": 99,
+   "watch_out": "a dense wall's section holds only a few pores, so its porosity can differ by 50-100 % from one section to the next. The pairs and the re-ground mounts measure that."
+  },
+  {
+   "label": "C7 · on the map",
+   "caption": "Each wall's porosity goes on the power–speed map, next to the AM Module's lack-of-fusion and keyhole boundaries, run in batch for all 33 settings and committed before the print. The 8 settings on both squares and the two controls show how far apart two walls at one setting come out.",
+   "start_frame": 100,
+   "end_frame": 190,
+   "watch_out": "a 1.27 mm wall heats up layer by layer. Run the AM Module with a substrate warmer than room temperature as well, and compare both."
+  },
+  {
+   "label": "C7 · per wall, and the next build",
+   "caption": "Each wall gives the model a row: its four settings, porosity by class, last-layer pool depth, wall thickness, and the build record. Batch BO then puts the next build's settings where the model is least sure.",
+   "start_frame": 191,
+   "end_frame": 281
+  }
+ ]
+}
