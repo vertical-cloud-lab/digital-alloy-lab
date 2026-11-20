@@ -194,3 +194,7 @@ wheels/
 
 # Per-proposal private files (cloned from <slug>-private repos)
 private/
+
+# 3D exports and solver logs (desktop LPBF)
+*.glb
+MUJOCO_LOG.TXT

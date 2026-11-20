@@ -1,0 +1,118 @@
+{
+ "process_chamber_body": {
+  "waste_cm3": 9424.4,
+  "setups": {
+   "+z": {
+    "removable_cm3": 8668.6,
+    "only_this_setup_cm3": 2216.89
+   },
+   "-z": {
+    "removable_cm3": 3440.1,
+    "only_this_setup_cm3": 6.91
+   },
+   "+x": {
+    "removable_cm3": 2243.9,
+    "only_this_setup_cm3": 9.44
+   },
+   "-x": {
+    "removable_cm3": 2101.7,
+    "only_this_setup_cm3": 0.82
+   },
+   "+y": {
+    "removable_cm3": 2112.0,
+    "only_this_setup_cm3": 11.77
+   },
+   "-y": {
+    "removable_cm3": 6035.1,
+    "only_this_setup_cm3": 319.8
+   }
+  }
+ },
+ "chamber_lid": {
+  "waste_cm3": 642.0,
+  "setups": {
+   "+z": {
+    "removable_cm3": 389.8,
+    "only_this_setup_cm3": 10.16
+   },
+   "-z": {
+    "removable_cm3": 388.8,
+    "only_this_setup_cm3": 9.1
+   },
+   "+x": {
+    "removable_cm3": 416.0,
+    "only_this_setup_cm3": 0.0
+   },
+   "-x": {
+    "removable_cm3": 416.0,
+    "only_this_setup_cm3": 0.0
+   },
+   "+y": {
+    "removable_cm3": 423.5,
+    "only_this_setup_cm3": 0.0
+   },
+   "-y": {
+    "removable_cm3": 467.6,
+    "only_this_setup_cm3": 34.33
+   }
+  }
+ },
+ "chamber_door": {
+  "waste_cm3": 249.2,
+  "setups": {
+   "+z": {
+    "removable_cm3": 207.3,
+    "only_this_setup_cm3": 0.0
+   },
+   "-z": {
+    "removable_cm3": 207.3,
+    "only_this_setup_cm3": 0.0
+   },
+   "+x": {
+    "removable_cm3": 196.4,
+    "only_this_setup_cm3": 0.0
+   },
+   "-x": {
+    "removable_cm3": 196.4,
+    "only_this_setup_cm3": 0.0
+   },
+   "+y": {
+    "removable_cm3": 154.0,
+    "only_this_setup_cm3": 7.48
+   },
+   "-y": {
+    "removable_cm3": 146.6,
+    "only_this_setup_cm3": 0.0
+   }
+  }
+ },
+ "build_module_m50_spigot": {
+  "waste_cm3": 1437.8,
+  "setups": {
+   "+z": {
+    "removable_cm3": 1055.2,
+    "only_this_setup_cm3": 0.09
+   },
+   "-z": {
+    "removable_cm3": 1247.7,
+    "only_this_setup_cm3": 0.62
+   },
+   "+x": {
+    "removable_cm3": 988.2,
+    "only_this_setup_cm3": 0.06
+   },
+   "-x": {
+    "removable_cm3": 988.2,
+    "only_this_setup_cm3": 0.06
+   },
+   "+y": {
+    "removable_cm3": 1013.7,
+    "only_this_setup_cm3": 0.06
+   },
+   "-y": {
+    "removable_cm3": 1015.1,
+    "only_this_setup_cm3": 0.07
+   }
+  }
+ }
+}

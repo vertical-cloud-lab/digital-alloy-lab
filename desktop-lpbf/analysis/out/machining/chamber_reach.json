@@ -1,0 +1,12 @@
+{
+ "long_5in_OAL": {
+  "residual_cm3": 15.3,
+  "wall_band_cm3": 12.34,
+  "wall_band_z_max": 114.5
+ },
+ "long_5in_plus_extension": {
+  "residual_cm3": 0.94,
+  "wall_band_cm3": 0.2,
+  "wall_band_z_max": 114.5
+ }
+}

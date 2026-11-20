@@ -1,0 +1,446 @@
+{
+ "7": {
+  "case": "7 laser window, \u00d850.8 x 8 mm UV fused silica",
+  "material": "UV fused silica",
+  "load": "0.1013 MPa, simply supported on \u00d848 (unclamped, O-ring)",
+  "nodes": 16150,
+  "elements": 9674,
+  "s1_max": 1.1519003675794832,
+  "s1_max_at": [
+   3.97343541202206,
+   -25.087283851116467,
+   0.0
+  ],
+  "roark_ss": 1.080631125,
+  "sf_fea": 45.49004538483603,
+  "sf_formula": 45.96869260081696,
+  "t_required_mm": {
+   "4": 2.359874495304313,
+   "6": 2.8902441852517717
+  },
+  "u_max_um": 0.7348484858365777,
+  "criterion": "SF >= 4-6 against the 52.4 MPa abraded modulus of rupture (Corning 7980)",
+  "pass": true
+ },
+ "5": {
+  "case": "5 Z lift arm",
+  "material": "6061-T6 aluminium",
+  "load": "50 N down + 10 N in x at the rod bore; carriage face (y = 56) fixed",
+  "nodes": 21808,
+  "elements": 13230,
+  "vm_max": 11.403536528189283,
+  "vm_max_at": [
+   -1.10218211923262e-15,
+   -6.0,
+   -110.0
+  ],
+  "u_rod_um": [
+   0.0789386233570754,
+   -0.010521671221698115,
+   -2.9634897641509412
+  ],
+  "u_max": 0.004616650256303264,
+  "tilt_urad": 75.59153418442557,
+  "plate_tilt_um_over_50mm": 3.779576709221278,
+  "sf_yield": 24.20301801267828,
+  "criterion": "plate tilt < 10 um across \u00d850 (arm only; the carriage, rail and actuator add their own compliance)",
+  "pass": true,
+  "png": "c5_zarm_vm.png"
+ },
+ "3": {
+  "case": "3 door, vacuum",
+  "material": "6061-T6 aluminium",
+  "load": "2445 N over the area inside the O-ring; y fixed on the land outside the groove",
+  "nodes": 38304,
+  "elements": 22021,
+  "vm_max": 7.990946608916208,
+  "vm_max_at": [
+   3.697153891383259,
+   -93.1,
+   108.0
+  ],
+  "u_max": 0.006484956843601324,
+  "sf_yield": 34.53908698276651,
+  "overpressure_50mbar_total_N": 120.63999999999999,
+  "overpressure_per_latch_N": 60.31999999999999,
+  "latch_rating_N": 3558.4000000000005,
+  "sf_latch": 58.992042440318315,
+  "criterion": "SF >= 2 on yield; at +50 mbar each of the 2 toggle latches (McMaster 1807A61, 800 lb) carries half the door load",
+  "pass": true,
+  "png": "c3_door_vm.png"
+ },
+ "2": {
+  "case": "2 lid, vacuum",
+  "material": "6061-T6 aluminium",
+  "load": "0.1013 MPa on the top face; window 250 N, dose slot and camera port carried round their flanges; z fixed on the outer sealing land, 4 bolt points pinned in-plane",
+  "nodes": 55632,
+  "elements": 32907,
+  "vm_max": 15.18898365941102,
+  "vm_max_at": [
+   -29.943419450885237,
+   -84.45595164277353,
+   120.0
+  ],
+  "vm_p995": 7.171940735684894,
+  "u_max": 0.027989151242987242,
+  "window_seat_uz": -0.0278203,
+  "window_seat_tilt_urad": 7.68275065854956,
+  "camera_port_uz": -0.0169776,
+  "sf_yield": 18.171064383823452,
+  "criterion": "window seat sag << Rayleigh range (\u00b13.7 mm) and seat tilt negligible; SF >= 2 on yield",
+  "pass": true,
+  "png": "c2_lid_vm.png"
+ },
+ "4": {
+  "case": "4 recoater carriage block + arm + blade holder",
+  "material": "6061-T6 aluminium",
+  "load": "spread: 10 N up + 10 N drag (-x) over the holder's bottom face; hit: 50 N (-x) on its front end; carriage face fixed in y,z, nut bore in x",
+  "variants": [
+   {
+    "variant": "first layout",
+    "nodes": 82257,
+    "elements": 52297,
+    "spread": {
+     "vm_max": 10.247585107052052,
+     "vm_max_at": [
+      -110.74569857102847,
+      33.0,
+      14.588451605609905
+     ],
+     "uz_max_um": 17.2022,
+     "ux_max_um": 13.8338,
+     "uz_range_over_plate_um": 12.719590000000002,
+     "uz_tip_um": 17.2022,
+     "uz_root_um": -0.823223,
+     "sf_yield": 26.933174705723193,
+     "png": "c4a_recoater_vm.png"
+    },
+    "hit": {
+     "vm_max": 57.44404706738549,
+     "vm_max_at": [
+      -111.5,
+      33.0,
+      14.0
+     ],
+     "uz_max_um": 0.358498,
+     "ux_max_um": 151.48600000000002,
+     "uz_range_over_plate_um": 0.22556299999999999,
+     "uz_tip_um": 0.141272,
+     "uz_root_um": -0.35481599999999996,
+     "sf_yield": 4.8046754031141745
+    },
+    "pass": false
+   },
+   {
+    "variant": "as built in lpbf_low.py",
+    "nodes": 125849,
+    "elements": 83120,
+    "spread": {
+     "vm_max": 2.418695779392481,
+     "vm_max_at": [
+      -113.87100753158816,
+      32.62273226560445,
+      21.794655260888366
+     ],
+     "uz_max_um": 3.41208,
+     "ux_max_um": 1.66218,
+     "uz_range_over_plate_um": 2.4658429999999996,
+     "uz_tip_um": 3.41208,
+     "uz_root_um": -0.0490625,
+     "sf_yield": 114.11108513585974,
+     "png": "c4b_recoater_vm.png"
+    },
+    "hit": {
+     "vm_max": 14.519010589456949,
+     "vm_max_at": [
+      -97.20534473911178,
+      32.622732265604846,
+      20.871007531588504
+     ],
+     "uz_max_um": 0.08578659999999999,
+     "ux_max_um": 18.439400000000003,
+     "uz_range_over_plate_um": 0.163561,
+     "uz_tip_um": 0.0324048,
+     "uz_root_um": 0.019000200000000002,
+     "sf_yield": 19.00955979744369
+    },
+    "pass": true
+   }
+  ],
+  "criterion": "blade deflection < 5 um under the spreading load (1/6 of a 30 um layer); no yield in the hit"
+ },
+ "6": {
+  "case": "6 optics bridge + posts",
+  "material": "6061-T6 aluminium",
+  "load": "gravity + galvo/lens 3.1 kg, shutter 1.2 kg, collimator 0.5 kg as rigid masses at their centres of mass; post feet fixed",
+  "variants": [
+   {
+    "variant": "first layout: 15 mm plate, 40x40x4 posts",
+    "nodes": 141403,
+    "elements": 74556,
+    "gravity": {
+     "lens_bore_sag_um": -13.37612435064935,
+     "u_max_um": 19.07048296096554,
+     "vm_max": 1.9729268217554345
+    },
+    "png": "c6a_bridge_mode1.png",
+    "modes": [
+     {
+      "f_hz": 78.50268,
+      "galvo_dir": [
+       1.0,
+       0.03,
+       0.04
+      ],
+      "max_at": [
+       -116.0,
+       -170.0,
+       233.0
+      ],
+      "galvo_rel": 0.9168954194556685,
+      "galvo_tilt_rel": 0.08790211342477636
+     },
+     {
+      "f_hz": 86.79143,
+      "galvo_dir": [
+       -0.03,
+       1.0,
+       0.01
+      ],
+      "max_at": [
+       -64.0,
+       -170.0,
+       233.0
+      ],
+      "galvo_rel": 0.9884354239881947,
+      "galvo_tilt_rel": 0.016604287038014243
+     },
+     {
+      "f_hz": 139.782,
+      "galvo_dir": [
+       0.05,
+       0.03,
+       1.0
+      ],
+      "max_at": [
+       -64.0,
+       -170.0,
+       233.0
+      ],
+      "galvo_rel": 0.6654357501990171,
+      "galvo_tilt_rel": 0.30970781114576884
+     },
+     {
+      "f_hz": 153.1851,
+      "galvo_dir": [
+       0.03,
+       -0.94,
+       0.35
+      ],
+      "max_at": [
+       225.0,
+       170.0,
+       233.0
+      ],
+      "galvo_rel": 0.20923910646053642,
+      "galvo_tilt_rel": 0.06519202943089626
+     },
+     {
+      "f_hz": 318.1628,
+      "galvo_dir": [
+       -0.21,
+       -0.08,
+       0.98
+      ],
+      "max_at": [
+       -116.0,
+       -170.0,
+       218.0
+      ],
+      "galvo_rel": 0.2680394961524373,
+      "galvo_tilt_rel": 0.4192431852078203
+     },
+     {
+      "f_hz": 394.0886,
+      "galvo_dir": [
+       0.09,
+       -0.56,
+       -0.82
+      ],
+      "max_at": [
+       -25.0,
+       170.0,
+       218.0
+      ],
+      "galvo_rel": 0.0960317971343733,
+      "galvo_tilt_rel": 0.5115083606893227
+     }
+    ],
+    "pass": false
+   },
+   {
+    "variant": "as built in lpbf_low.py",
+    "nodes": 214736,
+    "elements": 119582,
+    "gravity": {
+     "lens_bore_sag_um": -4.293170566448802,
+     "u_max_um": 6.128319670268188,
+     "vm_max": 1.0791838908992433
+    },
+    "png": "c6b_bridge_mode1.png",
+    "modes": [
+     {
+      "f_hz": 133.1281,
+      "galvo_dir": [
+       1.0,
+       0.03,
+       0.06
+      ],
+      "max_at": [
+       -116.0,
+       -190.0,
+       233.0
+      ],
+      "galvo_rel": 0.8836330427287176,
+      "galvo_tilt_rel": 0.08983663862094086
+     },
+     {
+      "f_hz": 148.1722,
+      "galvo_dir": [
+       0.04,
+       -1.0,
+       0.0
+      ],
+      "max_at": [
+       -64.0,
+       -190.0,
+       233.0
+      ],
+      "galvo_rel": 0.9748062638121279,
+      "galvo_tilt_rel": 0.018543959554560015
+     },
+     {
+      "f_hz": 235.2119,
+      "galvo_dir": [
+       -0.0,
+       -0.71,
+       -0.7
+      ],
+      "max_at": [
+       245.0,
+       -190.0,
+       233.0
+      ],
+      "galvo_rel": 0.25110735449085547,
+      "galvo_tilt_rel": 0.11129026384356708
+     },
+     {
+      "f_hz": 254.2875,
+      "galvo_dir": [
+       -0.08,
+       0.05,
+       -1.0
+      ],
+      "max_at": [
+       -64.0,
+       -190.0,
+       208.0
+      ],
+      "galvo_rel": 0.6746853612672615,
+      "galvo_tilt_rel": 0.285194846052024
+     },
+     {
+      "f_hz": 499.3882,
+      "galvo_dir": [
+       -0.36,
+       0.15,
+       0.92
+      ],
+      "max_at": [
+       -64.0,
+       -190.0,
+       208.0
+      ],
+      "galvo_rel": 0.18751301444045884,
+      "galvo_tilt_rel": 0.37474110387645415
+     },
+     {
+      "f_hz": 573.1093,
+      "galvo_dir": [
+       0.7,
+       -0.46,
+       -0.55
+      ],
+      "max_at": [
+       -116.0,
+       -190.0,
+       233.0
+      ],
+      "galvo_rel": 0.2128043794118753,
+      "galvo_tilt_rel": 0.39990732429565645
+     }
+    ],
+    "pass": true
+   }
+  ],
+  "criterion": "first mode > 100 Hz (60 Hz minimum) so building and VLM vibration don't excite the galvo"
+ },
+ "1": {
+  "case": "1 chamber body, full vacuum",
+  "material": "6061-T6 aluminium",
+  "load": "-0.1013 MPa on 1181 cm2 of wetted faces; lid 4729 N on the top land (0.446 MPa); door 2445 N on its land (0.260 MPa); 4 leg pads fixed",
+  "nodes": 131797,
+  "elements": 80089,
+  "vm_max": 42.89140349619257,
+  "vm_max_at": [
+   105.6,
+   -75.0,
+   100.0
+  ],
+  "vm_p995": 21.29880885929912,
+  "u_max": 0.22296696756128329,
+  "u_max_at": [
+   1.1368683772161603e-13,
+   -75.0,
+   120.0
+  ],
+  "door_land_uy_range": 0.208699881,
+  "door_land_u_max": 0.208826,
+  "lid_land_uz_range": 0.07888748999999999,
+  "sf_yield": 6.434855880258157,
+  "sf_haz": 2.564616474015932,
+  "sf_fatigue_goodman": 3.4315331240159503,
+  "sf_yield_p995": 12.958471143774673,
+  "criterion": "SF >= 2 on yield at the peak; seal faces move << 0.7 mm O-ring squeeze; Goodman SF >= 2 for vacuum cycles",
+  "pass": true,
+  "png": "c1_chamber_vm.png"
+ },
+ "1b": {
+  "case": "1b chamber body + lid bonded, full vacuum",
+  "material": "6061-T6 aluminium",
+  "load": "interior suction incl. the lid underside; door load on its land; window, dose-slot and camera-port covers carried round their flanges; 4 leg pads fixed",
+  "nodes": 166211,
+  "elements": 101013,
+  "vm_max": 9.141304918452015,
+  "vm_max_at": [
+   110.0,
+   -84.61516352716194,
+   97.53566298693514
+  ],
+  "vm_p995": 4.1090562828312045,
+  "u_max": 0.023729706126918725,
+  "u_max_at": [
+   0.028858498976108038,
+   -27.654444370169436,
+   128.14975972996638
+  ],
+  "door_land_uy_range": 0.004079355,
+  "window_seat_uz": -0.0235553,
+  "sf_yield": 30.192625939310396,
+  "sf_haz": 12.033292946826608,
+  "sf_fatigue_goodman": 16.100903880322843,
+  "criterion": "as case 1",
+  "pass": true,
+  "png": "c1b_chamber_lid_vm.png"
+ }
+}

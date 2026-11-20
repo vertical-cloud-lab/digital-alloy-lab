@@ -1,0 +1,47 @@
+1. (bidare2017anopenarchitecturemetal pages 2-3): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+2. (bidare2017anopenarchitecturemetal pages 3-5): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+3. (lane2020processmonitoringdataset pages 4-6): Brandon Lane and Ho Yeung. Process monitoring dataset from the additive manufacturing metrology testbed (ammt): overhang part x4. Journal of Research of the National Institute of Standards and Technology, Sep 2020. URL: https://doi.org/10.6028/jres.125.027, doi:10.6028/jres.125.027. This article has 85 citations and is from a peer-reviewed journal.
+
+4. (lane2020processmonitoringdataset pages 1-4): Brandon Lane and Ho Yeung. Process monitoring dataset from the additive manufacturing metrology testbed (ammt): overhang part x4. Journal of Research of the National Institute of Standards and Technology, Sep 2020. URL: https://doi.org/10.6028/jres.125.027, doi:10.6028/jres.125.027. This article has 85 citations and is from a peer-reviewed journal.
+
+5. (griggs2022atestbedfor pages 1-3): David A. Griggs, Jonathan S. Gibbs, Stuart P. Baker, Ryan W. Penny, Martin C. Feldmann, and A. John Hart. A testbed for investigation of laser powder bed fusion at elevated atmospheric pressure. Additive Manufacturing, 51:102581, Mar 2022. URL: https://doi.org/10.1016/j.addma.2021.102581, doi:10.1016/j.addma.2021.102581. This article has 10 citations and is from a highest quality peer-reviewed journal.
+
+6. (griggs2022atestbedfor pages 3-7): David A. Griggs, Jonathan S. Gibbs, Stuart P. Baker, Ryan W. Penny, Martin C. Feldmann, and A. John Hart. A testbed for investigation of laser powder bed fusion at elevated atmospheric pressure. Additive Manufacturing, 51:102581, Mar 2022. URL: https://doi.org/10.1016/j.addma.2021.102581, doi:10.1016/j.addma.2021.102581. This article has 10 citations and is from a highest quality peer-reviewed journal.
+
+7. (wen2021lasersurfacetreatment pages 17-22): Haifang Wen. Laser surface treatment and laser powder bed fusion additive manufacturing study using custom designed 3d printer and the application of machine learning in materials science. Unknown journal, 2021. URL: https://doi.org/10.31390/gradschool\_dissertations.5640, doi:10.31390/gradschool\_dissertations.5640.
+
+8. (kjer2023experimentalanalysisand pages 1-2): Magnus Bolt Kjer, Zhihao Pan, Venkata Karthik Nadimpalli, and David Bue Pedersen. Experimental analysis and spatial component impact of the inert cross flow in open-architecture laser powder bed fusion. Journal of Manufacturing and Materials Processing, 7:143, Aug 2023. URL: https://doi.org/10.3390/jmmp7040143, doi:10.3390/jmmp7040143. This article has 13 citations.
+
+9. (kjer2023experimentalanalysisand pages 2-4): Magnus Bolt Kjer, Zhihao Pan, Venkata Karthik Nadimpalli, and David Bue Pedersen. Experimental analysis and spatial component impact of the inert cross flow in open-architecture laser powder bed fusion. Journal of Manufacturing and Materials Processing, 7:143, Aug 2023. URL: https://doi.org/10.3390/jmmp7040143, doi:10.3390/jmmp7040143. This article has 13 citations.
+
+10. (polzer20205axisdrymilling pages 1-2): Ales Polzer, Vit Sebesta, and Tomas Trcka. 5-axis dry milling of bottom of pocket by ball and circle-segment end mills. MM Science Journal, 2020:3740-3744, Mar 2020. URL: https://doi.org/10.17973/mmsj.2020\_03\_2019153, doi:10.17973/mmsj.2020\_03\_2019153. This article has 9 citations.
+
+11. (silva2024acomparativestudy pages 1-2): Francisco J. G. Silva, Rui P. Martinho, Luís L. Magalhães, Filipe Fernandes, Rita C. M. Sales-Contini, Luís M. Durão, Rafaela C. B. Casais, and Vitor F. C. Sousa. A comparative study of different milling strategies on productivity, tool wear, surface roughness, and vibration. Journal of Manufacturing and Materials Processing, 8:115, May 2024. URL: https://doi.org/10.3390/jmmp8030115, doi:10.3390/jmmp8030115. This article has 53 citations.
+
+12. (chiggiato2020outgassingpropertiesof pages 12-15): Paolo Chiggiato. Outgassing properties of vacuum materials for particle accelerators. Preprint, Jan 2020. URL: https://doi.org/10.48550/arxiv.2006.07124, doi:10.48550/arxiv.2006.07124. This article has 53 citations.
+
+13. (chiggiato2020outgassingpropertiesof pages 4-6): Paolo Chiggiato. Outgassing properties of vacuum materials for particle accelerators. Preprint, Jan 2020. URL: https://doi.org/10.48550/arxiv.2006.07124, doi:10.48550/arxiv.2006.07124. This article has 53 citations.
+
+14. (fedchak2021outgassingratecomparison pages 23-27): James A. Fedchak, Julia K. Scherschligt, Sefer Avdiaj, Daniel S. Barker, Stephen P. Eckel, Ben Bowers, Scott O’Connell, and Perry Henderson. Outgassing rate comparison of seven geometrically similar vacuum chambers of different materials and heat treatments. Journal of Vacuum Science &amp; Technology B, Nanotechnology and Microelectronics: Materials, Processing, Measurement, and Phenomena, Feb 2021. URL: https://doi.org/10.1116/6.0000657, doi:10.1116/6.0000657. This article has 34 citations.
+
+15. (mattox1998preparationandcleaning pages 4-8): Donald M. Mattox. Preparation and cleaning of vacuum surfaces. ArXiv, pages 553-606, Jan 1998. URL: https://doi.org/10.1016/b978-012352065-4/50070-5, doi:10.1016/b978-012352065-4/50070-5. This article has 2 citations.
+
+16. (yangUnknownyearmanufacturingandvacuum pages 1-2): YC Yang, CL Chen, CC Chang, and CK Chan. Manufacturing and vacuum testing of an aluminum bending chamber for tps. Unknown journal, Unknown year.
+
+17. (hsiung2011progressofconstruction pages 1-2): GY Hsiung, CK Chan, and CH Chang. Progress of construction of the tps vacuum system. Unknown journal, 2011.
+
+18. (hsiung2011progressofconstruction pages 2-3): GY Hsiung, CK Chan, and CH Chang. Progress of construction of the tps vacuum system. Unknown journal, 2011.
+
+19. (hsiung2011progressofconstruction pages 2-2): GY Hsiung, CK Chan, and CH Chang. Progress of construction of the tps vacuum system. Unknown journal, 2011.
+
+20. (cai2026reviewofwelding pages 1-2): Hao-Yu Cai, Ren-Che Wang, Xing-Mei Feng, Hui-Li Cao, Tao Wang, Hua-Min Yu, and Mo-Lin Su. Review of welding technologies for electronic precision equipment: status, limitations, and prospects. Sep 2026. URL: https://doi.org/10.3390/ma19183976, doi:10.3390/ma19183976. This article has 0 citations.
+
+21. (cai2026reviewofwelding pages 2-4): Hao-Yu Cai, Ren-Che Wang, Xing-Mei Feng, Hui-Li Cao, Tao Wang, Hua-Min Yu, and Mo-Lin Su. Review of welding technologies for electronic precision equipment: status, limitations, and prospects. Sep 2026. URL: https://doi.org/10.3390/ma19183976, doi:10.3390/ma19183976. This article has 0 citations.
+
+22. (pawar2013fabricationofprecipitationhardened pages 35-40): SV Pawar. Fabrication of precipitation-hardened aluminum microchannel cooling plates for adsorption-based hydrogen storage systems. Unknown journal, 2013.
+
+23. (fedchak2021outgassingratecomparison pages 1-4): James A. Fedchak, Julia K. Scherschligt, Sefer Avdiaj, Daniel S. Barker, Stephen P. Eckel, Ben Bowers, Scott O’Connell, and Perry Henderson. Outgassing rate comparison of seven geometrically similar vacuum chambers of different materials and heat treatments. Journal of Vacuum Science &amp; Technology B, Nanotechnology and Microelectronics: Materials, Processing, Measurement, and Phenomena, Feb 2021. URL: https://doi.org/10.1116/6.0000657, doi:10.1116/6.0000657. This article has 34 citations.
+
+24. (sgobba2006materialsforhigh pages 12-15): Stefano Sgobba. Materials for high vacuum technology, an overview. ArXiv, Aug 2006. URL: https://doi.org/10.5170/cern-2007-003.117, doi:10.5170/cern-2007-003.117. This article has 46 citations.

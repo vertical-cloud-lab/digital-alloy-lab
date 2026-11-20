@@ -1,0 +1,1524 @@
+{
+ "module_M50_loads": {
+  "m": {
+   "body": 1.606104,
+   "gland": 0.281224,
+   "piston": 0.293657,
+   "total": 2.210985
+  },
+  "W": 21.689765,
+  "gland_run": 43.670298,
+  "gland_break": 87.340595,
+  "bore_seal": 10.0,
+  "port_oring": 132.042475,
+  "over": 14.080594,
+  "vac": 713.35808,
+  "magnet": 195.72168,
+  "cases": {
+   "LC1 build stroke at break-out (+20 mbar)": 133.110954,
+   "LC2 Z-magnet release, piston held by its collar": 217.411445,
+   "LC3 transit, +3 m/s2 down": 28.322721,
+   "LC4 full vacuum (seating, negative)": -691.668315
+  },
+  "P_sep": 217.411445,
+  "P_sep_no_magnet": 133.110954,
+  "shear": 4.42197
+ },
+ "module_L75_loads": {
+  "m": {
+   "body": 1.117404,
+   "gland": 0.541035,
+   "piston": 0.559952,
+   "total": 2.248391
+  },
+  "W": 22.056718,
+  "gland_run": 43.670298,
+  "gland_break": 87.340595,
+  "bore_seal": 15.0,
+  "port_oring": 132.042475,
+  "over": 14.080594,
+  "vac": 713.35808,
+  "magnet": 195.72168,
+  "cases": {
+   "LC1 build stroke at break-out (+20 mbar)": 138.477908,
+   "LC2 Z-magnet release, piston held by its collar": 217.778398,
+   "LC3 transit, +3 m/s2 down": 28.801892,
+   "LC4 full vacuum (seating, negative)": -691.301361
+  },
+  "P_sep": 217.778398,
+  "P_sep_no_magnet": 138.477908,
+  "shear": 4.496783
+ },
+ "module_captive_screws": {
+  "Fp": 2909.428956,
+  "Fp_thread": 4221.0,
+  "Fp_shank": 2909.428956,
+  "Fi": 2182.071717,
+  "kb": 166413.5533,
+  "km": 830830.045424,
+  "km_wil_steel": 1218403.024016,
+  "km_wil_al": 442160.946994,
+  "C": 0.166874,
+  "P": 108.889199,
+  "n0": 24.053223,
+  "np": 1.322322,
+  "T_dry": 3.927729,
+  "T_lube": 2.356637,
+  "tau_al": 47.976361,
+  "tau_ins": 58.363243,
+  "tau_root": 73.366742,
+  "tau_al_allow": 159.252,
+  "tau_ss_allow": 121.17,
+  "dF_th": 98.228946,
+  "D_sti": 7.299,
+  "lp": 13.0
+ },
+ "module_magnets": {
+  "McMaster 5679K95 NdFeB pot \u00d825 (permanent; no release) | 56.0 C | 0.0 mm": {
+   "F": 116.464784,
+   "gap_factor": 1.0,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 80
+  },
+  "McMaster 5679K95 NdFeB pot \u00d825 (permanent; no release) | 56.0 C | 0.05 mm": {
+   "F": 60.392228,
+   "gap_factor": 0.518545,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 80
+  },
+  "McMaster 5679K95 NdFeB pot \u00d825 (permanent; no release) | 56.0 C | 0.1 mm": {
+   "F": 31.316086,
+   "gap_factor": 0.268889,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 80
+  },
+  "McMaster 5679K95 NdFeB pot \u00d825 (permanent; no release) | 56.0 C | 0.2 mm": {
+   "F": 11.924644,
+   "gap_factor": 0.102388,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 80
+  },
+  "McMaster 5679K95 NdFeB pot \u00d825 (permanent; no release) | 84.0 C | 0.0 mm": {
+   "F": 108.428608,
+   "gap_factor": 1.0,
+   "temp_factor": 0.852298,
+   "over_temp": true,
+   "t_max": 80
+  },
+  "McMaster 5679K95 NdFeB pot \u00d825 (permanent; no release) | 84.0 C | 0.05 mm": {
+   "F": 56.22511,
+   "gap_factor": 0.518545,
+   "temp_factor": 0.852298,
+   "over_temp": true,
+   "t_max": 80
+  },
+  "McMaster 5679K95 NdFeB pot \u00d825 (permanent; no release) | 84.0 C | 0.1 mm": {
+   "F": 29.155248,
+   "gap_factor": 0.268889,
+   "temp_factor": 0.852298,
+   "over_temp": true,
+   "t_max": 80
+  },
+  "McMaster 5679K95 NdFeB pot \u00d825 (permanent; no release) | 84.0 C | 0.2 mm": {
+   "F": 11.101833,
+   "gap_factor": 0.102388,
+   "temp_factor": 0.852298,
+   "over_temp": true,
+   "t_max": 80
+  },
+  "Kendrion PEM2525A \u00d825 (power to release) | 56.0 C | 0.0 mm": {
+   "F": 83.307428,
+   "gap_factor": 1.0,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion PEM2525A \u00d825 (power to release) | 56.0 C | 0.05 mm": {
+   "F": 43.198648,
+   "gap_factor": 0.518545,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion PEM2525A \u00d825 (power to release) | 56.0 C | 0.1 mm": {
+   "F": 22.400442,
+   "gap_factor": 0.268889,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion PEM2525A \u00d825 (power to release) | 56.0 C | 0.2 mm": {
+   "F": 8.529715,
+   "gap_factor": 0.102388,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion PEM2525A \u00d825 (power to release) | 84.0 C | 0.0 mm": {
+   "F": 77.55914,
+   "gap_factor": 1.0,
+   "temp_factor": 0.852298,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion PEM2525A \u00d825 (power to release) | 84.0 C | 0.05 mm": {
+   "F": 40.217902,
+   "gap_factor": 0.518545,
+   "temp_factor": 0.852298,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion PEM2525A \u00d825 (power to release) | 84.0 C | 0.1 mm": {
+   "F": 20.854791,
+   "gap_factor": 0.268889,
+   "temp_factor": 0.852298,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion PEM2525A \u00d825 (power to release) | 84.0 C | 0.2 mm": {
+   "F": 7.941157,
+   "gap_factor": 0.102388,
+   "temp_factor": 0.852298,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion D55 \u00d855 (power to release) | 56.0 C | 0.0 mm": {
+   "F": 249.922284,
+   "gap_factor": 1.0,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion D55 \u00d855 (power to release) | 56.0 C | 0.05 mm": {
+   "F": 222.174834,
+   "gap_factor": 0.888976,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion D55 \u00d855 (power to release) | 56.0 C | 0.1 mm": {
+   "F": 197.508027,
+   "gap_factor": 0.790278,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion D55 \u00d855 (power to release) | 56.0 C | 0.2 mm": {
+   "F": 101.562788,
+   "gap_factor": 0.406377,
+   "temp_factor": 0.915466,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion D55 \u00d855 (power to release) | 84.0 C | 0.0 mm": {
+   "F": 232.67742,
+   "gap_factor": 1.0,
+   "temp_factor": 0.852298,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion D55 \u00d855 (power to release) | 84.0 C | 0.05 mm": {
+   "F": 206.84457,
+   "gap_factor": 0.888976,
+   "temp_factor": 0.852298,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion D55 \u00d855 (power to release) | 84.0 C | 0.1 mm": {
+   "F": 183.879794,
+   "gap_factor": 0.790278,
+   "temp_factor": 0.852298,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion D55 \u00d855 (power to release) | 84.0 C | 0.2 mm": {
+   "F": 94.554863,
+   "gap_factor": 0.406377,
+   "temp_factor": 0.852298,
+   "over_temp": false,
+   "t_max": 150
+  },
+  "Kendrion GTB040 \u00d840 (power to hold) | 56.0 C | 0.0 mm": {
+   "F": 304.320006,
+   "gap_factor": 1.0,
+   "temp_factor": 0.985652,
+   "over_temp": false,
+   "t_max": 550
+  },
+  "Kendrion GTB040 \u00d840 (power to hold) | 56.0 C | 0.05 mm": {
+   "F": 232.78121,
+   "gap_factor": 0.764922,
+   "temp_factor": 0.985652,
+   "over_temp": false,
+   "t_max": 550
+  },
+  "Kendrion GTB040 \u00d840 (power to hold) | 56.0 C | 0.1 mm": {
+   "F": 178.059578,
+   "gap_factor": 0.585106,
+   "temp_factor": 0.985652,
+   "over_temp": false,
+   "t_max": 550
+  },
+  "Kendrion GTB040 \u00d840 (power to hold) | 56.0 C | 0.2 mm": {
+   "F": 75.334632,
+   "gap_factor": 0.247551,
+   "temp_factor": 0.985652,
+   "over_temp": false,
+   "t_max": 550
+  },
+  "Kendrion GTB040 \u00d840 (power to hold) | 84.0 C | 0.0 mm": {
+   "F": 300.896586,
+   "gap_factor": 1.0,
+   "temp_factor": 0.974564,
+   "over_temp": false,
+   "t_max": 550
+  },
+  "Kendrion GTB040 \u00d840 (power to hold) | 84.0 C | 0.05 mm": {
+   "F": 230.162559,
+   "gap_factor": 0.764922,
+   "temp_factor": 0.974564,
+   "over_temp": false,
+   "t_max": 550
+  },
+  "Kendrion GTB040 \u00d840 (power to hold) | 84.0 C | 0.1 mm": {
+   "F": 176.056513,
+   "gap_factor": 0.585106,
+   "temp_factor": 0.974564,
+   "over_temp": false,
+   "t_max": 550
+  },
+  "Kendrion GTB040 \u00d840 (power to hold) | 84.0 C | 0.2 mm": {
+   "F": 74.487162,
+   "gap_factor": 0.247551,
+   "temp_factor": 0.974564,
+   "over_temp": false,
+   "t_max": 550
+  }
+ },
+ "module_kinematic": {
+  "3\u00d7 LC2 | D10 | si3n4/al6061": {
+   "N": 153.992582,
+   "Es": 62798.758279,
+   "a": 0.209504,
+   "p0": 1675.153128,
+   "p0_allow": 441.6,
+   "delta_um": 8.778426,
+   "kz_N_um": 78.939731,
+   "n_yield": 0.263618,
+   "particle": {
+    "20": {
+     "t_um": 1.121298,
+     "r_um": 34.483303,
+     "F_crush_N": 4.856361
+    },
+    "30": {
+     "t_um": 1.681947,
+     "r_um": 51.724954,
+     "F_crush_N": 10.926812
+    },
+    "63": {
+     "t_um": 3.532089,
+     "r_um": 108.622404,
+     "F_crush_N": 48.187239
+    }
+   }
+  },
+  "3\u00d7 LC2 | D10 | ss440c/ss316": {
+   "N": 153.992582,
+   "Es": 107261.313012,
+   "a": 0.175265,
+   "p0": 2393.586983,
+   "p0_allow": 272.0,
+   "delta_um": 6.143586,
+   "kz_N_um": 112.795129,
+   "n_yield": 0.113637,
+   "particle": {
+    "20": {
+     "t_um": 0.784741,
+     "r_um": 41.219831,
+     "F_crush_N": 6.93914
+    },
+    "30": {
+     "t_um": 1.177111,
+     "r_um": 61.829746,
+     "F_crush_N": 15.613065
+    },
+    "63": {
+     "t_um": 2.471934,
+     "r_um": 129.842467,
+     "F_crush_N": 68.853614
+    }
+   }
+  },
+  "3\u00d7 LC2 | D10 | si3n4/ph17_4_h900": {
+   "N": 153.992582,
+   "Es": 129521.142685,
+   "a": 0.164587,
+   "p0": 2714.235876,
+   "p0_allow": 1872.0,
+   "delta_um": 5.417808,
+   "kz_N_um": 127.905352,
+   "n_yield": 0.689697,
+   "particle": {
+    "20": {
+     "t_um": 0.692035,
+     "r_um": 43.894023,
+     "F_crush_N": 7.868718
+    },
+    "30": {
+     "t_um": 1.038052,
+     "r_um": 65.841035,
+     "F_crush_N": 17.704617
+    },
+    "63": {
+     "t_um": 2.17991,
+     "r_um": 138.266174,
+     "F_crush_N": 78.077359
+    }
+   }
+  },
+  "3\u00d7 LC2 | D10 | ss440c/ss440c": {
+   "N": 153.992582,
+   "Es": 108506.944444,
+   "a": 0.174592,
+   "p0": 2412.082536,
+   "p0_allow": 3040.0,
+   "delta_um": 6.096478,
+   "kz_N_um": 113.666712,
+   "n_yield": 1.260322,
+   "particle": {
+    "20": {
+     "t_um": 0.778724,
+     "r_um": 41.37878,
+     "F_crush_N": 6.992759
+    },
+    "30": {
+     "t_um": 1.168086,
+     "r_um": 62.06817,
+     "F_crush_N": 15.733709
+    },
+    "63": {
+     "t_um": 2.45298,
+     "r_um": 130.343157,
+     "F_crush_N": 69.385655
+    }
+   }
+  },
+  "3\u00d7 LC2 | D10 | si3n4/ss440c": {
+   "N": 153.992582,
+   "Es": 131602.4079,
+   "a": 0.163715,
+   "p0": 2743.23512,
+   "p0_allow": 3040.0,
+   "delta_um": 5.360535,
+   "kz_N_um": 129.271909,
+   "n_yield": 1.108181,
+   "particle": {
+    "20": {
+     "t_um": 0.684719,
+     "r_um": 44.127885,
+     "F_crush_N": 7.952789
+    },
+    "30": {
+     "t_um": 1.027079,
+     "r_um": 66.191828,
+     "F_crush_N": 17.893775
+    },
+    "63": {
+     "t_um": 2.156865,
+     "r_um": 139.002838,
+     "F_crush_N": 78.911548
+    }
+   }
+  },
+  "3\u00d7 LC2 | D16 | si3n4/al6061": {
+   "N": 153.992582,
+   "Es": 62798.758279,
+   "a": 0.245038,
+   "p0": 1224.544365,
+   "p0_allow": 441.6,
+   "delta_um": 7.505449,
+   "kz_N_um": 92.32847,
+   "n_yield": 0.360624,
+   "particle": {
+    "20": {
+     "t_um": 1.121298,
+     "r_um": 34.483303,
+     "F_crush_N": 4.856361
+    },
+    "30": {
+     "t_um": 1.681947,
+     "r_um": 51.724954,
+     "F_crush_N": 10.926812
+    },
+    "63": {
+     "t_um": 3.532089,
+     "r_um": 108.622404,
+     "F_crush_N": 48.187239
+    }
+   }
+  },
+  "3\u00d7 LC2 | D16 | ss440c/ss316": {
+   "N": 153.992582,
+   "Es": 107261.313012,
+   "a": 0.204992,
+   "p0": 1749.722699,
+   "p0_allow": 272.0,
+   "delta_um": 5.252692,
+   "kz_N_um": 131.925983,
+   "n_yield": 0.155453,
+   "particle": {
+    "20": {
+     "t_um": 0.784741,
+     "r_um": 41.219831,
+     "F_crush_N": 6.93914
+    },
+    "30": {
+     "t_um": 1.177111,
+     "r_um": 61.829746,
+     "F_crush_N": 15.613065
+    },
+    "63": {
+     "t_um": 2.471934,
+     "r_um": 129.842467,
+     "F_crush_N": 68.853614
+    }
+   }
+  },
+  "3\u00d7 LC2 | D16 | si3n4/ph17_4_h900": {
+   "N": 153.992582,
+   "Es": 129521.142685,
+   "a": 0.192503,
+   "p0": 1984.118462,
+   "p0_allow": 1872.0,
+   "delta_um": 4.632161,
+   "kz_N_um": 149.599008,
+   "n_yield": 0.943492,
+   "particle": {
+    "20": {
+     "t_um": 0.692035,
+     "r_um": 43.894023,
+     "F_crush_N": 7.868718
+    },
+    "30": {
+     "t_um": 1.038052,
+     "r_um": 65.841035,
+     "F_crush_N": 17.704617
+    },
+    "63": {
+     "t_um": 2.17991,
+     "r_um": 138.266174,
+     "F_crush_N": 78.077359
+    }
+   }
+  },
+  "3\u00d7 LC2 | D16 | ss440c/ss440c": {
+   "N": 153.992582,
+   "Es": 108506.944444,
+   "a": 0.204204,
+   "p0": 1763.243031,
+   "p0_allow": 3040.0,
+   "delta_um": 5.212415,
+   "kz_N_um": 132.945392,
+   "n_yield": 1.724096,
+   "particle": {
+    "20": {
+     "t_um": 0.778724,
+     "r_um": 41.37878,
+     "F_crush_N": 6.992759
+    },
+    "30": {
+     "t_um": 1.168086,
+     "r_um": 62.06817,
+     "F_crush_N": 15.733709
+    },
+    "63": {
+     "t_um": 2.45298,
+     "r_um": 130.343157,
+     "F_crush_N": 69.385655
+    }
+   }
+  },
+  "3\u00d7 LC2 | D16 | si3n4/ss440c": {
+   "N": 153.992582,
+   "Es": 131602.4079,
+   "a": 0.191482,
+   "p0": 2005.317038,
+   "p0_allow": 3040.0,
+   "delta_um": 4.583193,
+   "kz_N_um": 151.197343,
+   "n_yield": 1.51597,
+   "particle": {
+    "20": {
+     "t_um": 0.684719,
+     "r_um": 44.127885,
+     "F_crush_N": 7.952789
+    },
+    "30": {
+     "t_um": 1.027079,
+     "r_um": 66.191828,
+     "F_crush_N": 17.893775
+    },
+    "63": {
+     "t_um": 2.156865,
+     "r_um": 139.002838,
+     "F_crush_N": 78.911548
+    }
+   }
+  },
+  "3\u00d7 LC1 (Z magnet released first) | D10 | si3n4/al6061": {
+   "N": 97.918667,
+   "Es": 62798.758279,
+   "a": 0.180156,
+   "p0": 1440.488328,
+   "p0_allow": 441.6,
+   "delta_um": 6.491232,
+   "kz_N_um": 67.881413,
+   "n_yield": 0.306563,
+   "particle": {
+    "20": {
+     "t_um": 1.121298,
+     "r_um": 34.483303,
+     "F_crush_N": 4.856361
+    },
+    "30": {
+     "t_um": 1.681947,
+     "r_um": 51.724954,
+     "F_crush_N": 10.926812
+    },
+    "63": {
+     "t_um": 3.532089,
+     "r_um": 108.622404,
+     "F_crush_N": 48.187239
+    }
+   }
+  },
+  "3\u00d7 LC1 (Z magnet released first) | D10 | ss440c/ss316": {
+   "N": 97.918667,
+   "Es": 107261.313012,
+   "a": 0.150713,
+   "p0": 2058.279959,
+   "p0_allow": 272.0,
+   "delta_um": 4.542892,
+   "kz_N_um": 96.994158,
+   "n_yield": 0.132149,
+   "particle": {
+    "20": {
+     "t_um": 0.784741,
+     "r_um": 41.219831,
+     "F_crush_N": 6.93914
+    },
+    "30": {
+     "t_um": 1.177111,
+     "r_um": 61.829746,
+     "F_crush_N": 15.613065
+    },
+    "63": {
+     "t_um": 2.471934,
+     "r_um": 129.842467,
+     "F_crush_N": 68.853614
+    }
+   }
+  },
+  "3\u00d7 LC1 (Z magnet released first) | D10 | si3n4/ph17_4_h900": {
+   "N": 97.918667,
+   "Es": 129521.142685,
+   "a": 0.141531,
+   "p0": 2334.010565,
+   "p0_allow": 1872.0,
+   "delta_um": 4.006213,
+   "kz_N_um": 109.987657,
+   "n_yield": 0.802053,
+   "particle": {
+    "20": {
+     "t_um": 0.692035,
+     "r_um": 43.894023,
+     "F_crush_N": 7.868718
+    },
+    "30": {
+     "t_um": 1.038052,
+     "r_um": 65.841035,
+     "F_crush_N": 17.704617
+    },
+    "63": {
+     "t_um": 2.17991,
+     "r_um": 138.266174,
+     "F_crush_N": 78.077359
+    }
+   }
+  },
+  "3\u00d7 LC1 (Z magnet released first) | D10 | ss440c/ss440c": {
+   "N": 97.918667,
+   "Es": 108506.944444,
+   "a": 0.150134,
+   "p0": 2074.184552,
+   "p0_allow": 3040.0,
+   "delta_um": 4.508058,
+   "kz_N_um": 97.743644,
+   "n_yield": 1.465636,
+   "particle": {
+    "20": {
+     "t_um": 0.778724,
+     "r_um": 41.37878,
+     "F_crush_N": 6.992759
+    },
+    "30": {
+     "t_um": 1.168086,
+     "r_um": 62.06817,
+     "F_crush_N": 15.733709
+    },
+    "63": {
+     "t_um": 2.45298,
+     "r_um": 130.343157,
+     "F_crush_N": 69.385655
+    }
+   }
+  },
+  "3\u00d7 LC1 (Z magnet released first) | D10 | si3n4/ss440c": {
+   "N": 97.918667,
+   "Es": 131602.4079,
+   "a": 0.140781,
+   "p0": 2358.947433,
+   "p0_allow": 3040.0,
+   "delta_um": 3.963863,
+   "kz_N_um": 111.162779,
+   "n_yield": 1.28871,
+   "particle": {
+    "20": {
+     "t_um": 0.684719,
+     "r_um": 44.127885,
+     "F_crush_N": 7.952789
+    },
+    "30": {
+     "t_um": 1.027079,
+     "r_um": 66.191828,
+     "F_crush_N": 17.893775
+    },
+    "63": {
+     "t_um": 2.156865,
+     "r_um": 139.002838,
+     "F_crush_N": 78.911548
+    }
+   }
+  },
+  "3\u00d7 LC1 (Z magnet released first) | D16 | si3n4/al6061": {
+   "N": 97.918667,
+   "Es": 62798.758279,
+   "a": 0.210712,
+   "p0": 1053.003356,
+   "p0_allow": 441.6,
+   "delta_um": 5.549925,
+   "kz_N_um": 79.394583,
+   "n_yield": 0.419372,
+   "particle": {
+    "20": {
+     "t_um": 1.121298,
+     "r_um": 34.483303,
+     "F_crush_N": 4.856361
+    },
+    "30": {
+     "t_um": 1.681947,
+     "r_um": 51.724954,
+     "F_crush_N": 10.926812
+    },
+    "63": {
+     "t_um": 3.532089,
+     "r_um": 108.622404,
+     "F_crush_N": 48.187239
+    }
+   }
+  },
+  "3\u00d7 LC1 (Z magnet released first) | D16 | ss440c/ss316": {
+   "N": 97.918667,
+   "Es": 107261.313012,
+   "a": 0.176275,
+   "p0": 1504.611777,
+   "p0_allow": 272.0,
+   "delta_um": 3.884118,
+   "kz_N_um": 113.445055,
+   "n_yield": 0.180778,
+   "particle": {
+    "20": {
+     "t_um": 0.784741,
+     "r_um": 41.219831,
+     "F_crush_N": 6.93914
+    },
+    "30": {
+     "t_um": 1.177111,
+     "r_um": 61.829746,
+     "F_crush_N": 15.613065
+    },
+    "63": {
+     "t_um": 2.471934,
+     "r_um": 129.842467,
+     "F_crush_N": 68.853614
+    }
+   }
+  },
+  "3\u00d7 LC1 (Z magnet released first) | D16 | si3n4/ph17_4_h900": {
+   "N": 97.918667,
+   "Es": 129521.142685,
+   "a": 0.165536,
+   "p0": 1706.172074,
+   "p0_allow": 1872.0,
+   "delta_um": 3.425264,
+   "kz_N_um": 128.642344,
+   "n_yield": 1.097193,
+   "particle": {
+    "20": {
+     "t_um": 0.692035,
+     "r_um": 43.894023,
+     "F_crush_N": 7.868718
+    },
+    "30": {
+     "t_um": 1.038052,
+     "r_um": 65.841035,
+     "F_crush_N": 17.704617
+    },
+    "63": {
+     "t_um": 2.17991,
+     "r_um": 138.266174,
+     "F_crush_N": 78.077359
+    }
+   }
+  },
+  "3\u00d7 LC1 (Z magnet released first) | D16 | ss440c/ss440c": {
+   "N": 97.918667,
+   "Es": 108506.944444,
+   "a": 0.175598,
+   "p0": 1516.238105,
+   "p0_allow": 3040.0,
+   "delta_um": 3.854335,
+   "kz_N_um": 114.32166,
+   "n_yield": 2.004962,
+   "particle": {
+    "20": {
+     "t_um": 0.778724,
+     "r_um": 41.37878,
+     "F_crush_N": 6.992759
+    },
+    "30": {
+     "t_um": 1.168086,
+     "r_um": 62.06817,
+     "F_crush_N": 15.733709
+    },
+    "63": {
+     "t_um": 2.45298,
+     "r_um": 130.343157,
+     "F_crush_N": 69.385655
+    }
+   }
+  },
+  "3\u00d7 LC1 (Z magnet released first) | D16 | si3n4/ss440c": {
+   "N": 97.918667,
+   "Es": 131602.4079,
+   "a": 0.164659,
+   "p0": 1724.401034,
+   "p0_allow": 3040.0,
+   "delta_um": 3.389055,
+   "kz_N_um": 130.016775,
+   "n_yield": 1.762931,
+   "particle": {
+    "20": {
+     "t_um": 0.684719,
+     "r_um": 44.127885,
+     "F_crush_N": 7.952789
+    },
+    "30": {
+     "t_um": 1.027079,
+     "r_um": 66.191828,
+     "F_crush_N": 17.893775
+    },
+    "63": {
+     "t_um": 2.156865,
+     "r_um": 139.002838,
+     "F_crush_N": 78.911548
+    }
+   }
+  }
+ },
+ "plate": {
+  "S25": {
+   "F_req": 23.420573,
+   "A_face": 234.205732,
+   "W": 0.132106,
+   "F_tip_drag": 24.193548,
+   "F_tip_strike": 80.645161,
+   "bare_lift_mm": 0.25567,
+   "bare_pressure_kPa": 0.564061,
+   "bayonet_springs": {
+    "spring": "McMaster 97125K111 (718 Ni)",
+    "check_F_at_work": 452.655525,
+    "vendor_work_N": 422.5809,
+    "check_flat": 1149.449635,
+    "vendor_flat_N": 600.5097,
+    "target_N": 100.806452,
+    "n_parallel": 1,
+    "s_mm": 0.021772,
+    "sOM": -261.796853,
+    "sII": 191.930703,
+    "sIII": 306.08788,
+    "T_twist_Nm": 0.283739,
+    "tan_ramp": 0.079029,
+    "lug_bending_MPa": 12.963793,
+    "lug_allow_200": 103.0,
+    "lug_allow_225": 77.0
+   },
+   "drawbar": {
+    "F_clamp": 100.806452,
+    "N_ball": 23.760309,
+    "p0_groove": 1008.869156,
+    "p0_flat": 2681.585716,
+    "p0_allow_17_4": 1872.0,
+    "release_push_N": 140.967742,
+    "Q_316_W": 0.262927,
+    "Q_ti_W": 0.115997
+   },
+   "screws_M4": {
+    "Fi": 1382.85,
+    "total": 4148.55,
+    "T_dry": 1.65942,
+    "T_lube": 0.995652,
+    "dF_200": 1250.246693,
+    "F_hot": 2633.096693,
+    "s_screw_hot": 299.897118,
+    "Sp_200": 160.0,
+    "bearing_hot": 116.610881,
+    "Sy_al_200": 103.0,
+    "k_eff": 130437.839599
+   },
+   "magnet": {
+    "F_per_magnet": 16.333986,
+    "n_needed": 7,
+    "gap_factor": 0.190395,
+    "temp_factor": 0.880782
+   }
+  },
+  "M50": {
+   "F_req": 173.038923,
+   "A_face": 1730.389234,
+   "W": 0.530524,
+   "F_tip_drag": 11.952191,
+   "F_tip_strike": 39.840637,
+   "bare_lift_mm": 0.312773,
+   "bare_pressure_kPa": 0.306593,
+   "bayonet_springs": {
+    "spring": "McMaster 97125K111 (718 Ni)",
+    "check_F_at_work": 452.655525,
+    "vendor_work_N": 422.5809,
+    "check_flat": 1149.449635,
+    "vendor_flat_N": 600.5097,
+    "target_N": 216.298654,
+    "n_parallel": 1,
+    "s_mm": 0.048177,
+    "sOM": -579.297274,
+    "sII": 442.941879,
+    "sIII": 665.73857,
+    "T_twist_Nm": 0.608814,
+    "tan_ramp": 0.079029,
+    "lug_bending_MPa": 27.816185,
+    "lug_allow_200": 103.0,
+    "lug_allow_225": 77.0
+   },
+   "drawbar": {
+    "F_clamp": 216.298654,
+    "N_ball": 50.982082,
+    "p0_groove": 1301.237811,
+    "p0_flat": 3458.704934,
+    "p0_allow_17_4": 1872.0,
+    "release_push_N": 279.558385,
+    "Q_316_W": 0.262927,
+    "Q_ti_W": 0.115997
+   },
+   "screws_M4": {
+    "Fi": 1382.85,
+    "total": 4148.55,
+    "T_dry": 1.65942,
+    "T_lube": 0.995652,
+    "dF_200": 1250.246693,
+    "F_hot": 2633.096693,
+    "s_screw_hot": 299.897118,
+    "Sp_200": 160.0,
+    "bearing_hot": 116.610881,
+    "Sy_al_200": 103.0,
+    "k_eff": 130437.839599
+   },
+   "magnet": {
+    "F_per_magnet": 16.333986,
+    "n_needed": 14,
+    "gap_factor": 0.190395,
+    "temp_factor": 0.880782
+   }
+  },
+  "L75": {
+   "F_req": 423.998769,
+   "A_face": 4239.987693,
+   "W": 1.195256,
+   "F_tip_drag": 7.936508,
+   "F_tip_strike": 26.455026,
+   "bare_lift_mm": 0.3375,
+   "bare_pressure_kPa": 0.281901,
+   "bayonet_springs": {
+    "spring": "McMaster 97125K111 (718 Ni)",
+    "check_F_at_work": 452.655525,
+    "vendor_work_N": 422.5809,
+    "check_flat": 1149.449635,
+    "vendor_flat_N": 600.5097,
+    "target_N": 529.998462,
+    "n_parallel": 2,
+    "s_mm": 0.059811,
+    "sOM": -719.190497,
+    "sII": 559.885817,
+    "sIII": 820.18029,
+    "T_twist_Nm": 1.491781,
+    "tan_ramp": 0.079029,
+    "lug_bending_MPa": 68.158238,
+    "lug_allow_200": 103.0,
+    "lug_allow_225": 77.0
+   },
+   "drawbar": {
+    "F_clamp": 529.998462,
+    "N_ball": 124.921835,
+    "p0_groove": 1754.272027,
+    "p0_flat": 4662.875044,
+    "p0_allow_17_4": 1872.0,
+    "release_push_N": 655.998154,
+    "Q_316_W": 0.262927,
+    "Q_ti_W": 0.115997
+   },
+   "screws_M4": {
+    "Fi": 1382.85,
+    "total": 4148.55,
+    "T_dry": 1.65942,
+    "T_lube": 0.995652,
+    "dF_200": 1250.246693,
+    "F_hot": 2633.096693,
+    "s_screw_hot": 299.897118,
+    "Sp_200": 160.0,
+    "bearing_hot": 116.610881,
+    "Sy_al_200": 103.0,
+    "k_eff": 130437.839599
+   },
+   "magnet": {
+    "F_per_magnet": 16.333986,
+    "n_needed": 33,
+    "gap_factor": 0.190395,
+    "temp_factor": 0.880782
+   }
+  }
+ },
+ "stack": {
+  "S25": {
+   "r_so": 9.4,
+   "thread": "M2.5",
+   "D_so": 5.0,
+   "A_mac": 13.029756,
+   "T_blk": 221.0,
+   "T_head_start": 60.235235,
+   "T_head_end": 110.128404,
+   "bend": {
+    "('build start', 'a4_50')": {
+     "d_rad_um": 35.664055,
+     "sigma_b": 167.430605,
+     "F_lat": 15.678333,
+     "Sp_200": 160.0
+    },
+    "('build start', 'ti64')": {
+     "d_rad_um": 35.664055,
+     "sigma_b": 98.896834,
+     "F_lat": 9.260777,
+     "Sp_200": 650.0
+    },
+    "('build end', 'a4_50')": {
+     "d_rad_um": 24.595755,
+     "sigma_b": 115.4687,
+     "F_lat": 10.81258,
+     "Sp_200": 160.0
+    },
+    "('build end', 'ti64')": {
+     "d_rad_um": 24.595755,
+     "sigma_b": 68.20431,
+     "F_lat": 6.386705,
+     "Sp_200": 650.0
+    }
+   },
+   "F_slip_max": 29.965051,
+   "d_all_um": 20.448766,
+   "axial": {
+    "('build end, steady', 'a4_50')": {
+     "dl_um": 3.758553,
+     "dF_rigid": 87.008209,
+     "dF_spring_302": 1.841691,
+     "dF_spring_718": 15.785924,
+     "Fp": 711.9
+    },
+    "('build end, steady', 'ti64')": {
+     "dl_um": 24.744612,
+     "dF_rigid": 399.119942,
+     "dF_spring_302": 12.12486,
+     "dF_spring_718": 103.927369,
+     "Fp": 2813.7
+    },
+    "('heat-up, block hot, rest cold', 'a4_50')": {
+     "dl_um": 35.577,
+     "dF_rigid": 823.5858,
+     "dF_spring_302": 17.43273,
+     "dF_spring_718": 149.4234,
+     "Fp": 711.9
+    },
+    "('heat-up, block hot, rest cold', 'ti64')": {
+     "dl_um": 35.577,
+     "dF_rigid": 573.841706,
+     "dF_spring_302": 17.43273,
+     "dF_spring_718": 149.4234,
+     "Fp": 2813.7
+    }
+   },
+   "heat": {
+    "Q_fea": 1.793971,
+    "dT": 166.878916,
+    "Q_mac_bored": 1.190479,
+    "Q_316": 1.8614,
+    "Q_ti": 0.821206
+   },
+   "bearing_302": 3.755283,
+   "bearing_718": 40.106731
+  },
+  "M50": {
+   "r_so": 20.08,
+   "thread": "M3",
+   "D_so": 8.0,
+   "A_mac": 41.18628,
+   "T_blk": 206.0,
+   "T_head_start": 69.962774,
+   "T_head_end": 116.121236,
+   "bend": {
+    "('build start', 'a4_50')": {
+     "d_rad_um": 64.466409,
+     "sigma_b": 370.852376,
+     "F_lat": 63.893476,
+     "Sp_200": 160.0
+    },
+    "('build start', 'ti64')": {
+     "d_rad_um": 64.466409,
+     "sigma_b": 219.052699,
+     "F_lat": 37.740188,
+     "Sp_200": 650.0
+    },
+    "('build end', 'a4_50')": {
+     "d_rad_um": 42.592468,
+     "sigma_b": 245.019352,
+     "F_lat": 42.213935,
+     "Sp_200": 160.0
+    },
+    "('build end', 'ti64')": {
+     "d_rad_um": 42.592468,
+     "sigma_b": 144.726457,
+     "F_lat": 24.934656,
+     "Sp_200": 650.0
+    }
+   },
+   "F_slip_max": 55.132213,
+   "d_all_um": 16.687975,
+   "axial": {
+    "('build end, steady', 'a4_50')": {
+     "dl_um": 3.314945,
+     "dF_rigid": 123.269209,
+     "dF_spring_302": 1.624323,
+     "dF_spring_718": 13.92277,
+     "Fp": 1056.3
+    },
+    "('build end, steady', 'ti64')": {
+     "dl_um": 23.315177,
+     "dF_rigid": 589.325745,
+     "dF_spring_302": 11.424437,
+     "dF_spring_718": 97.923742,
+     "Fp": 4174.9
+    },
+    "('heat-up, block hot, rest cold', 'a4_50')": {
+     "dl_um": 32.922,
+     "dF_rigid": 1224.234109,
+     "dF_spring_302": 16.13178,
+     "dF_spring_718": 138.2724,
+     "Fp": 1056.3
+    },
+    "('heat-up, block hot, rest cold', 'ti64')": {
+     "dl_um": 32.922,
+     "dF_rigid": 832.152489,
+     "dF_spring_302": 16.13178,
+     "dF_spring_718": 138.2724,
+     "Fp": 4174.9
+    }
+   },
+   "heat": {
+    "Q_fea": 3.780074,
+    "dT": 137.355588,
+    "Q_mac_bored": 3.097298,
+    "Q_316": 2.273279,
+    "Q_ti": 1.002917
+   },
+   "bearing_302": 1.188027,
+   "bearing_718": 12.688228
+  },
+  "L75": {
+   "r_so": 30.24,
+   "thread": "M3",
+   "D_so": 8.0,
+   "A_mac": 41.18628,
+   "T_blk": 204.0,
+   "T_head_start": 65.82362,
+   "T_head_end": 112.524476,
+   "bend": {
+    "('build start', 'a4_50')": {
+     "d_rad_um": 98.611508,
+     "sigma_b": 567.277013,
+     "F_lat": 97.735116,
+     "Sp_200": 160.0
+    },
+    "('build start', 'ti64')": {
+     "d_rad_um": 98.611508,
+     "sigma_b": 335.075541,
+     "F_lat": 57.729551,
+     "Sp_200": 650.0
+    },
+    "('build end', 'a4_50')": {
+     "d_rad_um": 65.282788,
+     "sigma_b": 375.548717,
+     "F_lat": 64.7026,
+     "Sp_200": 160.0
+    },
+    "('build end', 'ti64')": {
+     "d_rad_um": 65.282788,
+     "sigma_b": 221.826703,
+     "F_lat": 38.218116,
+     "Sp_200": 650.0
+    }
+   },
+   "F_slip_max": 55.132213,
+   "d_all_um": 16.687975,
+   "axial": {
+    "('build end, steady', 'a4_50')": {
+     "dl_um": 3.312174,
+     "dF_rigid": 123.166147,
+     "dF_spring_302": 1.622965,
+     "dF_spring_718": 13.911129,
+     "Fp": 1056.3
+    },
+    "('build end, steady', 'ti64')": {
+     "dl_um": 22.980403,
+     "dF_rigid": 580.863841,
+     "dF_spring_302": 11.260397,
+     "dF_spring_718": 96.517692,
+     "Fp": 4174.9
+    },
+    "('heat-up, block hot, rest cold', 'a4_50')": {
+     "dl_um": 32.568,
+     "dF_rigid": 1211.070301,
+     "dF_spring_302": 15.95832,
+     "dF_spring_718": 136.7856,
+     "Fp": 1056.3
+    },
+    "('heat-up, block hot, rest cold', 'ti64')": {
+     "dl_um": 32.568,
+     "dF_rigid": 823.204612,
+     "dF_spring_302": 15.95832,
+     "dF_spring_718": 136.7856,
+     "Fp": 4174.9
+    }
+   },
+   "heat": {
+    "Q_fea": 3.73277,
+    "dT": 135.636702,
+    "Q_mac_bored": 3.058538,
+    "Q_316": 2.244831,
+    "Q_ti": 0.990367
+   },
+   "bearing_302": 1.188027,
+   "bearing_718": 12.688228
+  }
+ },
+ "reservoir_detent_N": 40.03398,
+ "sources": {
+  "shig": "Shigley's Mechanical Engineering Design, 10th ed. (Budynas & Nisbett, 2015), ch. 8",
+  "shig_t81": "Shigley Table 8-1 (tensile-stress area A_t, minor-diameter area A_r)",
+  "shig_817": "Shigley Eq. 8-17 (bolt stiffness k_b = A_d A_t E / (A_d l_t + A_t l_d))",
+  "shig_820": "Shigley Eq. 8-20 (frustum member stiffness, 30 deg cone)",
+  "shig_823": "Shigley Eq. 8-23 + Table 8-8 (Wileman member stiffness k_m = E d A exp(B d / l))",
+  "shig_824": "Shigley Eq. 8-24/8-25 (joint constant C = k_b / (k_b + k_m); F_b = C P + F_i)",
+  "shig_827": "Shigley Eq. 8-27 + Table 8-15 (T = K F_i d; K = 0.30 non-plated/dry, 0.18 lubricated)",
+  "shig_829": "Shigley Eq. 8-29 (load factor against separation n_0 = F_i / (P (1 - C)))",
+  "shig_831": "Shigley Eq. 8-31 (F_i = 0.75 F_p for reusable joints; F_p = A_t S_p)",
+  "shig_thread": "Shigley Sec. 8-2, Eq. 8-8 (thread root shear tau = 3 F / (pi d n_t p), nut: d = major dia)",
+  "shig_hertz": "Shigley Sec. 3-19 / Johnson, Contact Mechanics (1985) ch. 4: sphere on flat, a = (3 F R / 4 E*)^(1/3), p0 = 3 F / (2 pi a^2), delta = a^2 / R",
+  "johnson_yield": "Johnson (1985) Sec. 6.2: first yield in a Hertz point contact at p0 = 1.60 Y (nu = 0.3)",
+  "hamrock": "Hamrock & Brewe (1983), elliptical-contact approximations (Hamrock, Fundamentals of Fluid Film Lubrication, ch. 17)",
+  "roark": "Roark's Formulas for Stress and Strain, 8th ed., Table 8.1 (guided cantilever: M = 6 E I delta / L^2)",
+  "almen": "DIN EN 16984:2017 (Almen-Laszlo disc-spring equations, ex DIN 2092), no contact flats",
+  "parker": "Parker O-Ring Handbook ORD 5700, Sec. 5 (dynamic friction F = f_c L_p + f_h A_p); f_c read from its compression-friction chart, approximate",
+  "maxwell": "Maxwell pull F = B^2 A / (2 mu0) per pole face; magnetic circuit Phi = MMF / sum(R)",
+  "slocum": "Slocum, Kinematic couplings: a review, Int. J. Mach. Tools Manuf. 50 (2010) 310-327, doi:10.1016/j.ijmachtools.2009.10.006",
+  "asm6061": "ASM / Aluminum Association typical properties of 6061-T6 at temperature after 10,000 h exposure (also on MatWeb): YS 262 / 214 / 103 / 34 MPa at 100 / 149 / 204 / 260 C",
+  "corning": "Corning Macor datasheet: compressive strength 345 MPa, k 1.46 W/m K, alpha 9.3e-6 /K, E 66.9 GPa",
+  "smi": "Schnorr / SMI spring-material temperature limits: 1.4310 (301/302) to ~200-250 C, 17-7 PH to ~300 C, Inconel 718 / X-750 to ~600 C"
+ },
+ "vendor": {
+  "schunk_nse_am": {
+   "name": "SCHUNK NSE-AM mini 78-20",
+   "d_mm": 78,
+   "h_mm": 20,
+   "pull_in_N": 1500,
+   "repeat_um": 5,
+   "t_max_C": 200,
+   "note": "spring-locked, air (6 bar) to open; sealed; inert-gas rated; for SLM set-up",
+   "url": "https://www.magazine-industry-usa.com/news/21351-clamping-module-minimizes-set-up-times-in-3d-printing"
+  },
+  "schunk_nse_ht": {
+   "name": "SCHUNK NSE-HT mini 88-20",
+   "d_mm": 88,
+   "h_mm": 20,
+   "pull_in_N": 500,
+   "pull_in_turbo_N": 2500,
+   "repeat_um": 5,
+   "t_max_C": 200,
+   "mass_kg": 1.0,
+   "note": "spring assembly, air only to open; used on a DMG MORI LASERTEC 30 Dual SLM with a 200 C bed",
+   "url": "https://schunk.com/us/en/p/000000000001460874"
+  },
+  "schunk_nse_mini90": {
+   "name": "SCHUNK NSE mini 90 (manual NSE-M mini 90: $1,430)",
+   "d_mm": 90,
+   "h_mm": 20,
+   "pull_in_N": 500,
+   "pull_in_turbo_N": 1500,
+   "repeat_um": 5,
+   "mass_kg": 1.0,
+   "price_usd": 1430,
+   "url": "https://www.mrosupply.com/machining/6171221_435140_schunk/"
+  },
+  "stark_d085": {
+   "name": "STARK.easyclick D085",
+   "d_mm": 85,
+   "h_mm": 19,
+   "clamp_N": 5000,
+   "retention_N": 10000,
+   "lateral_N": 2500,
+   "repeat_um": 10,
+   "t_max_C": 150,
+   "mass_kg": 0.62,
+   "note": "FKM 'ET' version to 150 C (NBR to 80 C); 4-6 bar release; +/-0.4 mm capture",
+   "url": "https://www.carrlane.com/Portals/0/Media/e89c4c29-6e4d-4f1d-929f-f1624b55509c.pdf"
+  },
+  "zimmer_spn062": {
+   "name": "Zimmer SPN062",
+   "pull_in_N": 2000,
+   "repeat_um": 5,
+   "t_max_C": 70,
+   "mass_kg": 0.39,
+   "url": "https://www.zimmer-group.com/fileadmin/pim/MER/GD/PG/MER_GD_PG_SPN062E6SD-B__SEN__APD__V1.pdf"
+  },
+  "erowa_its50": {
+   "name": "EROWA ITS Chuck 50 RSA",
+   "pull_in_N": 2800,
+   "repeat_um": 2,
+   "url": "https://www.erowa.com/en/products/chuck-50-rsa/pd/008186"
+  },
+  "mcm_5679K95": {
+   "name": "McMaster 5679K95 NdFeB pot magnet, \u00d825 x 7",
+   "pull_N": 195.72168,
+   "t_max_C": 79,
+   "url": "https://www.mcmaster.com/5679K95/"
+  },
+  "kendrion_pem2525a": {
+   "name": "Kendrion PEM2525A fail-safe holding magnet, \u00d825 x 25",
+   "pull_N": 140,
+   "coil_class": "E (120 C)",
+   "duty": "15 % ED",
+   "url": "https://www.kendrion.com/fileadmin/user_upload/Product_Finder/Solenoid_Technology/Solenoids_DS_EW/Datasheets/Permanent-Haftmagnet-1266251-DB.PDF"
+  },
+  "kendrion_d55": {
+   "name": "Kendrion D55 permanent electro holding magnet, \u00d855",
+   "pull_N": 420,
+   "coil_class": "E (120 C)",
+   "duty": "25 % ED",
+   "url": "https://www.kendrion.com/en/productfinder/group/product/holding-magnets/01050002"
+  },
+  "kendrion_gtb040": {
+   "name": "Kendrion GTB040 plain electro holding magnet, \u00d840",
+   "pull_N": 475,
+   "coil_class": "B (130 C)",
+   "duty": "100 % ED, 5.1 W",
+   "note": "drops the part when power is off",
+   "url": "https://www.kendrion.com/en/productfinder/group/product/holding-magnets/gtb040100001"
+  },
+  "ms_gmh": {
+   "name": "Magnet-Schultz G MH plain holding magnets (force vs air gap, N)",
+   "gaps_mm": [
+    0.0,
+    0.1,
+    0.16,
+    0.25,
+    0.4,
+    1.0
+   ],
+   "d25": [
+    135,
+    36.3,
+    18.2,
+    9.8,
+    3.5,
+    0.9
+   ],
+   "d40": [
+    470,
+    275,
+    157,
+    80,
+    30,
+    6.2
+   ],
+   "d50": [
+    720,
+    569,
+    373,
+    216,
+    93,
+    18
+   ],
+   "url": "https://astat.pl/pliki/Komponenty_automatyki_przemyslowej/Elektromagnesy_mocujace/karta-katalogowa-GMH_GZZ.pdf"
+  },
+  "magswitch_ppe30": {
+   "name": "Magswitch PPe30 (switchable PM, 536 N)",
+   "gaps_mm": [
+    0.0,
+    0.2,
+    0.3,
+    0.5,
+    1.0
+   ],
+   "frac": [
+    1.0,
+    0.58,
+    0.53,
+    0.39,
+    0.25
+   ],
+   "shear_frac": 0.22,
+   "t_max_C": 80,
+   "url": "https://downloads.magswitch.com/products/81401683-PPe30-Spec-Sheet-1101911.pdf"
+  },
+  "eclipse_epm_chuck": {
+   "name": "Eclipse electro-permanent chuck (large poles)",
+   "gaps_mm": [
+    0.0,
+    0.2,
+    0.5,
+    0.7,
+    1.0
+   ],
+   "frac": [
+    1.0,
+    0.88,
+    0.62,
+    0.5,
+    0.41
+   ],
+   "url": "https://www.eclipsemagnetics.com/site/assets/files/2396/magnetic_workholding_brochure.pdf"
+  },
+  "goudsmit_430": {
+   "name": "430 stainless target: 60-75 % of low-carbon steel force (Goudsmit), 65 % (SCHUNK); 316 and Al: 0 %",
+   "frac": 0.65,
+   "url": "https://www.goudsmitmagnetics.com/uploads/pdf/en_GMSD_IM_HGE_4223.pdf"
+  },
+  "magnet_temps": {
+   "name": "Magnet grades: max operating temp (C) and reversible Br coefficient (%/K)",
+   "grades": {
+    "NdFeB N": [
+     80,
+     -0.12
+    ],
+    "NdFeB H": [
+     120,
+     -0.12
+    ],
+    "NdFeB SH": [
+     150,
+     -0.12
+    ],
+    "NdFeB UH": [
+     180,
+     -0.12
+    ],
+    "NdFeB EH": [
+     200,
+     -0.12
+    ],
+    "NdFeB AH": [
+     230,
+     -0.12
+    ],
+    "SmCo5": [
+     250,
+     -0.04
+    ],
+    "Sm2Co17": [
+     300,
+     -0.03
+    ],
+    "AlNiCo (cast)": [
+     550,
+     -0.02
+    ]
+   },
+   "url": "https://www.adamsmagnetic.com/wp-content/uploads/ADAMS-Materials-Chart-of-Properties-7-25.pdf"
+  },
+  "mcm_85015A47": {
+   "name": "McMaster 85015A47 ball-nose spring plunger M6, 2 lbf extended / 2.9 lbf compressed, \u00d83.5 ball",
+   "f_ext_N": 8.89644,
+   "f_comp_N": 12.899838,
+   "url": "https://www.mcmaster.com/85015A47/"
+  },
+  "mcm_95966A705": {
+   "name": "McMaster 95966A705 captive panel screw M6 x 20, 18-8, 6 mm thread, \u00d84.2 reduced shank, \u00d810 knurled head",
+   "url": "https://www.mcmaster.com/95966A705/"
+  },
+  "mcm_97125K111": {
+   "name": "McMaster 97125K111 718-nickel disc spring for 0.138 in. shaft: ID 0.142, OD 0.281, t 0.021, ht 0.033 in.; 95 lbf at 0.004 in. deflection, 135 lbf flat; to 1100 F",
+   "di": 3.6068,
+   "de": 7.1374,
+   "t": 0.5334,
+   "l0": 0.8382,
+   "work_N": 422.5809,
+   "s_work": 0.1016,
+   "flat_N": 600.5097,
+   "price_usd": 1.69,
+   "url": "https://www.mcmaster.com/97125K111/"
+  },
+  "mcm_9713K53": {
+   "name": "McMaster 9713K53 302-stainless disc spring for 1/8 in. shaft: ID 0.125, OD 0.25, t 0.009, ht 0.017 in.; 11 lbf at 0.004 in., 17 lbf flat",
+   "di": 3.175,
+   "de": 6.35,
+   "t": 0.2286,
+   "l0": 0.4318,
+   "work_N": 48.93042,
+   "s_work": 0.1016,
+   "flat_N": 75.61974,
+   "url": "https://www.mcmaster.com/9713K53/"
+  },
+  "carrlane_blp6": {
+   "name": "Carr Lane 6 mm ball-lock pin: pull-out ~230 lb, double shear 4,000 lb (2:1 SF stated)",
+   "pullout_N": 1023.0906,
+   "shear_N": 17792.88,
+   "url": "https://www.carrlane.com/engineering-resources/technical-information/ball-lock-pins-engineering-application/ball-lock-pin-strength-data"
+  },
+  "onrobot_sd": {
+   "name": "OnRobot Screwdriver: 0.15-5 N m, M1.6-M6, magnetic screws only",
+   "t_max_Nm": 5.0,
+   "url": "https://onrobot.com/storage/datasheets/screwdriver/datasheet_screwdriver_v1.7_en.pdf"
+  }
+ },
+ "rev": "1c7a977"
+}

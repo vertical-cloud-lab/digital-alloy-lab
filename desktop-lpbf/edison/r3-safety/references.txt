@@ -1,0 +1,67 @@
+1. (moylan2013lessonslearnedin pages 5-8): Shawn Moylan, John Slotwinski, April Cooke, Kevin Jurrens, and M. Alkan Donmez. Lessons learned in establishing the nist metal additive manufacturing laboratory. ArXiv, Jun 2013. URL: https://doi.org/10.1002/https://dx.doi.org/10.6028/nist.tn.1801, doi:10.1002/https://dx.doi.org/10.6028/nist.tn.1801. This article has 56 citations.
+
+2. (moylan2013lessonslearnedin pages 8-11): Shawn Moylan, John Slotwinski, April Cooke, Kevin Jurrens, and M. Alkan Donmez. Lessons learned in establishing the nist metal additive manufacturing laboratory. ArXiv, Jun 2013. URL: https://doi.org/10.1002/https://dx.doi.org/10.6028/nist.tn.1801, doi:10.1002/https://dx.doi.org/10.6028/nist.tn.1801. This article has 56 citations.
+
+3. (scotton2026industrialexperienceand pages 4-6): MS Scotton, M Scheid, and G Suter. Industrial experience and open issues in explosion protection for metal and light metal powders. Unknown journal, 2026.
+
+4. (scotton2026industrialexperienceand pages 2-4): MS Scotton, M Scheid, and G Suter. Industrial experience and open issues in explosion protection for metal and light metal powders. Unknown journal, 2026.
+
+5. (sun2023explosionriskof pages 4-7): Siheng Sun, Chonglin Xing, Jianxu Ding, Yan Cheng, Kai Liu, and Lei Pang. Explosion risk of metal powder used in additive manufacturing. Processes, 11:2943, Oct 2023. URL: https://doi.org/10.3390/pr11102943, doi:10.3390/pr11102943. This article has 6 citations.
+
+6. (petringUnknownyearsafetyandperformance pages 32-33): D Petring, S Ingram, N Calder, A Stewart, and J Gabzdyl. Safety and performance in the limelight. Unknown journal, Unknown year.
+
+7. (moylan2013lessonslearnedin pages 11-13): Shawn Moylan, John Slotwinski, April Cooke, Kevin Jurrens, and M. Alkan Donmez. Lessons learned in establishing the nist metal additive manufacturing laboratory. ArXiv, Jun 2013. URL: https://doi.org/10.1002/https://dx.doi.org/10.6028/nist.tn.1801, doi:10.1002/https://dx.doi.org/10.6028/nist.tn.1801. This article has 56 citations.
+
+8. (spelce*2016respiratoryprotectionfor pages 1-3): David Spelce*, Roy T. McKay, James S. Johnson, Timothy R Rehak, and Richard W. Metzler. Respiratory protection for oxygen deficient atmospheres. Journal of the International Society for Respiratory Protection, Dec 2016. URL: https://doi.org/10.66828/001c.166837, doi:10.66828/001c.166837. This article has 14 citations and is from a peer-reviewed journal.
+
+9. (sun2023explosionriskof pages 8-9): Siheng Sun, Chonglin Xing, Jianxu Ding, Yan Cheng, Kai Liu, and Lei Pang. Explosion risk of metal powder used in additive manufacturing. Processes, 11:2943, Oct 2023. URL: https://doi.org/10.3390/pr11102943, doi:10.3390/pr11102943. This article has 6 citations.
+
+10. (sun2023explosionriskof media 659aae62): Siheng Sun, Chonglin Xing, Jianxu Ding, Yan Cheng, Kai Liu, and Lei Pang. Explosion risk of metal powder used in additive manufacturing. Processes, 11:2943, Oct 2023. URL: https://doi.org/10.3390/pr11102943, doi:10.3390/pr11102943. This article has 6 citations.
+
+11. (robinson1980designofviewing pages 1-7): J. N. Robinson. Design of viewing windows for controlled-atmosphere chambers. ArXiv, Mar 1980. URL: https://doi.org/10.2172/5560951, doi:10.2172/5560951. This article has 1 citations.
+
+12. (robinson1980designofviewing pages 7-12): J. N. Robinson. Design of viewing windows for controlled-atmosphere chambers. ArXiv, Mar 1980. URL: https://doi.org/10.2172/5560951, doi:10.2172/5560951. This article has 1 citations.
+
+13. (belzile2025fromsafetystandards pages 2-3): Bruno Belzile, Tatiana Wanang-Siyapdjie, Sina Karimi, Rafael Gomes Braga, I. Iordanova, and David St-Onge. From safety standards to safe operation with mobile robotic systems deployment. ArXiv, Feb 2025. URL: https://doi.org/10.48550/arxiv.2502.20693, doi:10.48550/arxiv.2502.20693. This article has 10 citations.
+
+14. (duplak2025applicationofsafety pages 2-4): Ján Duplák, Filip Krajňák, Maryna Yeromina, and Marián Adamčík. Application of safety standards in the design of robotic workplaces. SAR Journal - Science and Research, pages 328, Dec 2025. URL: https://doi.org/10.18421/sar84-04, doi:10.18421/sar84-04. This article has 1 citations.
+
+15. (hamrikova2026anewintegrated pages 2-3): Kristyna Hamrikova, Daniel Hartmann, Ales Vysocky, Vendula Laciok, Radim Hercik, and Ales Bernatik. A new integrated hybrid technique for risk assessment in human-robot collaboration. Frontiers in Robotics and AI, Sep 2026. URL: https://doi.org/10.3389/frobt.2026.1916227, doi:10.3389/frobt.2026.1916227. This article has 0 citations and is from a peer-reviewed journal.
+
+16. (soltani2021safetyanalysisfor pages 3-6): Mohammad Dehghani Soltani, Elham Sarbazi, Nikolaos Bamiedakis, Priyanka de Souza, Hossein Kazemi, Jaafar M. H. Elmirghani, Ian H. White, Richard V. Penty, Harald Haas, and Majid Safari. Safety analysis for laser-based optical wireless communications: a tutorial. Proceedings of the IEEE, 110:1045-1072, Feb 2021. URL: https://doi.org/10.48550/arxiv.2102.08707, doi:10.48550/arxiv.2102.08707. This article has 74 citations and is from a highest quality peer-reviewed journal.
+
+17. (soltani2021safetyanalysisfor pages 51-53): Mohammad Dehghani Soltani, Elham Sarbazi, Nikolaos Bamiedakis, Priyanka de Souza, Hossein Kazemi, Jaafar M. H. Elmirghani, Ian H. White, Richard V. Penty, Harald Haas, and Majid Safari. Safety analysis for laser-based optical wireless communications: a tutorial. Proceedings of the IEEE, 110:1045-1072, Feb 2021. URL: https://doi.org/10.48550/arxiv.2102.08707, doi:10.48550/arxiv.2102.08707. This article has 74 citations and is from a highest quality peer-reviewed journal.
+
+18. (janssen2007lasersafetycorporate pages 5-8): BG Janssen. Laser safety: corporate responsibility, training and hazard analysis. Unknown journal, 2007.
+
+19. (janssen2007lasersafetycorporate pages 15-17): BG Janssen. Laser safety: corporate responsibility, training and hazard analysis. Unknown journal, 2007.
+
+20. (smith2015guidanceonthe pages 22-25): C Smith. Guidance on the safe use of lasers. Unknown journal, 2015.
+
+21. (smith2015guidanceonthe pages 36-40): C Smith. Guidance on the safe use of lasers. Unknown journal, 2015.
+
+22. (janssen2007lasersafetycorporate pages 3-5): BG Janssen. Laser safety: corporate responsibility, training and hazard analysis. Unknown journal, 2007.
+
+23. (soltani2021safetyanalysisfor pages 12-15): Mohammad Dehghani Soltani, Elham Sarbazi, Nikolaos Bamiedakis, Priyanka de Souza, Hossein Kazemi, Jaafar M. H. Elmirghani, Ian H. White, Richard V. Penty, Harald Haas, and Majid Safari. Safety analysis for laser-based optical wireless communications: a tutorial. Proceedings of the IEEE, 110:1045-1072, Feb 2021. URL: https://doi.org/10.48550/arxiv.2102.08707, doi:10.48550/arxiv.2102.08707. This article has 74 citations and is from a highest quality peer-reviewed journal.
+
+24. (smith2015guidanceonthe pages 40-44): C Smith. Guidance on the safe use of lasers. Unknown journal, 2015.
+
+25. (smith2015guidanceonthe pages 44-46): C Smith. Guidance on the safe use of lasers. Unknown journal, 2015.
+
+26. (chavan2026ventingtheblastnfpa pages 15-18): A Chavan. Venting the blast-nfpa 68 fundamentals, design guidance and limitations, and real-world challenges for modern process safety. Unknown journal, 2026.
+
+27. (killed2010alsolutionsinc. pages 4-6): T Killed. Al solutions, inc., new cumberland, wv metal dust explosion and fire. Unknown journal, 2010.
+
+28. (moylan2013lessonslearnedin pages 13-16): Shawn Moylan, John Slotwinski, April Cooke, Kevin Jurrens, and M. Alkan Donmez. Lessons learned in establishing the nist metal additive manufacturing laboratory. ArXiv, Jun 2013. URL: https://doi.org/10.1002/https://dx.doi.org/10.6028/nist.tn.1801, doi:10.1002/https://dx.doi.org/10.6028/nist.tn.1801. This article has 56 citations.
+
+29. (natesan2012sodiumcompatibilityof pages 20-22): Sodium compatibility of advanced materials. This article has 0 citations.
+
+30. (belzile2025fromsafetystandards pages 3-4): Bruno Belzile, Tatiana Wanang-Siyapdjie, Sina Karimi, Rafael Gomes Braga, I. Iordanova, and David St-Onge. From safety standards to safe operation with mobile robotic systems deployment. ArXiv, Feb 2025. URL: https://doi.org/10.48550/arxiv.2502.20693, doi:10.48550/arxiv.2502.20693. This article has 10 citations.
+
+31. (duplak2025applicationofsafety pages 4-6): Ján Duplák, Filip Krajňák, Maryna Yeromina, and Marián Adamčík. Application of safety standards in the design of robotic workplaces. SAR Journal - Science and Research, pages 328, Dec 2025. URL: https://doi.org/10.18421/sar84-04, doi:10.18421/sar84-04. This article has 1 citations.
+
+32. (taveau2018explosionhazardsof pages 1-5): J. Taveau, S. Hochgreb, S. Lemkowitz, and D. Roekaerts. Explosion hazards of aluminum finishing operations. Journal of Loss Prevention in The Process Industries, 51:84-93, Nov 2018. URL: https://doi.org/10.1016/j.jlp.2017.11.011, doi:10.1016/j.jlp.2017.11.011. This article has 85 citations and is from a peer-reviewed journal.
+
+33. (killed2010alsolutionsinc. pages 9-10): T Killed. Al solutions, inc., new cumberland, wv metal dust explosion and fire. Unknown journal, 2010.
+
+34. (killed2010alsolutionsinc. pages 14-16): T Killed. Al solutions, inc., new cumberland, wv metal dust explosion and fire. Unknown journal, 2010.

@@ -1,0 +1,87 @@
+1. (zhu2023microstructuralanalysisof pages 9-12): Suming Zhu, Indrajeet Katti, Dong Qiu, Joy H. Forsmark, and Mark A. Easton. Microstructural analysis of the influences of platform preheating and post-build heat treatment on mechanical properties of laser powder bed fusion manufactured alsi10mg alloy. Materials Science and Engineering: A, 882:145486, Aug 2023. URL: https://doi.org/10.1016/j.msea.2023.145486, doi:10.1016/j.msea.2023.145486. This article has 39 citations.
+
+2. (chambrin2022insituageing pages 1-2): Nicolas Chambrin, Olivier Dalverny, Jean-Marc Cloue, Olivier Brucelle, and Joel Alexis. In situ ageing with the platform preheating of alsi10mg alloy manufactured by laser powder-bed fusion process. Metals, 12:2148, Dec 2022. URL: https://doi.org/10.3390/met12122148, doi:10.3390/met12122148. This article has 14 citations.
+
+3. (casati2018effectsofplatform pages 1-3): Riccardo Casati, Milad Hamidi Nasab, Mauro Coduri, Valeria Tirelli, and Maurizio Vedani. Effects of platform pre-heating and thermal-treatment strategies on properties of alsi10mg alloy processed by selective laser melting. Metals, 8:954, Nov 2018. URL: https://doi.org/10.3390/met8110954, doi:10.3390/met8110954. This article has 211 citations.
+
+4. (riener2022processabilityofhighstrength pages 1-2): Kirstin Riener, Tino Pfalz, Florian Funcke, and Gerhard Leichtfried. Processability of high-strength aluminum 6182 series alloy via laser powder bed fusion (lpbf). The International Journal of Advanced Manufacturing Technology, 119:4963-4977, Jan 2022. URL: https://doi.org/10.1007/s00170-022-08673-8, doi:10.1007/s00170-022-08673-8. This article has 55 citations.
+
+5. (velikajne2026influenceofbase pages 1-2): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+6. (velikajne2026influenceofbase pages 6-8): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+7. (velikajne2026influenceofbase pages 8-11): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+8. (stopyra2020laserpowderbed pages 6-9): Wojciech Stopyra, Konrad Gruber, Irina Smolina, Tomasz Kurzynowski, and Bogumiła Kuźnicka. Laser powder bed fusion of aa7075 alloy: influence of process parameters on porosity and hot cracking. Additive manufacturing, 35:101270, Oct 2020. URL: https://doi.org/10.1016/j.addma.2020.101270, doi:10.1016/j.addma.2020.101270. This article has 355 citations and is from a highest quality peer-reviewed journal.
+
+9. (velikajne2026influenceofbase pages 2-4): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+10. (aydin2025theuseof pages 90-94): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+11. (ramulifho2022evaluationofa pages 1-3): Rabelani Duncan Ramulifho, Kapil Gupta, and Daniel Glaser. Evaluation of a high-temperature pre-heating system design for a large-scale additive manufacturing system. Micromachines, 13:1475, Sep 2022. URL: https://doi.org/10.3390/mi13091475, doi:10.3390/mi13091475. This article has 5 citations.
+
+12. (aydin2025theuseof pages 94-96): A Aydin. The use of dynamic laser assisted heating (dlah) for microstructural customisation of ti6al4v processed using diode point melting (dpm). Unknown journal, 2025.
+
+13. (maly2022effectofpreheating pages 12-13): Martin Malý, Klára Nopová, Lenka Klakurková, Ondřej Adam, Libor Pantělejev, and Daniel Koutný. Effect of preheating on the residual stress and material properties of inconel 939 processed by laser powder bed fusion. Materials, 15:6360, Sep 2022. URL: https://doi.org/10.3390/ma15186360, doi:10.3390/ma15186360. This article has 33 citations.
+
+14. (maly2022effectofpreheating pages 1-2): Martin Malý, Klára Nopová, Lenka Klakurková, Ondřej Adam, Libor Pantělejev, and Daniel Koutný. Effect of preheating on the residual stress and material properties of inconel 939 processed by laser powder bed fusion. Materials, 15:6360, Sep 2022. URL: https://doi.org/10.3390/ma15186360, doi:10.3390/ma15186360. This article has 33 citations.
+
+15. (caprio2020defectfreelaserpowder pages 11-14): Leonardo Caprio, Ali Gökhan Demir, Gianmarco Chiari, and Barbara Previtali. Defect-free laser powder bed fusion of ti–48al–2cr–2nb with a high temperature inductive preheating system. Journal of Physics: Photonics, 2:024001, Feb 2020. URL: https://doi.org/10.1088/2515-7647/ab7080, doi:10.1088/2515-7647/ab7080. This article has 83 citations.
+
+16. (caprio2018developmentofnovel pages 8-10): L. Caprio, G. Chiari, A.G. Demir, and B. Previtali. Development of novel high temperature laser powder bed fusion system for the processing of crack-susceptible alloys. Unknown, Jan 2018. URL: https://doi.org/10.26153/tsw/17221, doi:10.26153/tsw/17221. This article has 14 citations.
+
+17. (caprio2020defectfreelaserpowder pages 1-5): Leonardo Caprio, Ali Gökhan Demir, Gianmarco Chiari, and Barbara Previtali. Defect-free laser powder bed fusion of ti–48al–2cr–2nb with a high temperature inductive preheating system. Journal of Physics: Photonics, 2:024001, Feb 2020. URL: https://doi.org/10.1088/2515-7647/ab7080, doi:10.1088/2515-7647/ab7080. This article has 83 citations.
+
+18. (maly2022effectofpreheating pages 15-16): Martin Malý, Klára Nopová, Lenka Klakurková, Ondřej Adam, Libor Pantělejev, and Daniel Koutný. Effect of preheating on the residual stress and material properties of inconel 939 processed by laser powder bed fusion. Materials, 15:6360, Sep 2022. URL: https://doi.org/10.3390/ma15186360, doi:10.3390/ma15186360. This article has 33 citations.
+
+19. (field2020laserpowderbedfusiona pages 206-214): AC Field. Laser powderbed fusion (lpbf) of tungsten and tungsten alloys for nuclear fusion applications. Unknown journal, 2020.
+
+20. (field2020laserpowderbedfusion pages 206-214): AC Field. Laser powderbed fusion (lpbf) of tungsten and tungsten alloys for nuclear fusion applications. Unknown journal, 2020.
+
+21. (field2020laserpowderbedfusion pages 199-206): AC Field. Laser powderbed fusion (lpbf) of tungsten and tungsten alloys for nuclear fusion applications. Unknown journal, 2020.
+
+22. (wartbichler2022laserpowderbed pages 2-4): Reinhold Wartbichler, Tobias Maiwald-Immer, Fabian Pürstl, and Helmut Clemens. Laser powder bed fusion of intermetallic titanium aluminide alloys using a novel process chamber heating system: a study on feasibility and microstructural optimization for creep performance. Metals, 12:2087, Dec 2022. URL: https://doi.org/10.3390/met12122087, doi:10.3390/met12122087. This article has 8 citations.
+
+23. (field2020laserpowderbedfusiona pages 272-279): AC Field. Laser powderbed fusion (lpbf) of tungsten and tungsten alloys for nuclear fusion applications. Unknown journal, 2020.
+
+24. (field2020laserpowderbedfusiona pages 279-280): AC Field. Laser powderbed fusion (lpbf) of tungsten and tungsten alloys for nuclear fusion applications. Unknown journal, 2020.
+
+25. (caprio2020defectfreelaserpowder pages 5-7): Leonardo Caprio, Ali Gökhan Demir, Gianmarco Chiari, and Barbara Previtali. Defect-free laser powder bed fusion of ti–48al–2cr–2nb with a high temperature inductive preheating system. Journal of Physics: Photonics, 2:024001, Feb 2020. URL: https://doi.org/10.1088/2515-7647/ab7080, doi:10.1088/2515-7647/ab7080. This article has 83 citations.
+
+26. (ramulifho2022evaluationofa pages 3-5): Rabelani Duncan Ramulifho, Kapil Gupta, and Daniel Glaser. Evaluation of a high-temperature pre-heating system design for a large-scale additive manufacturing system. Micromachines, 13:1475, Sep 2022. URL: https://doi.org/10.3390/mi13091475, doi:10.3390/mi13091475. This article has 5 citations.
+
+27. (caprio2018developmentofnovel pages 3-5): L. Caprio, G. Chiari, A.G. Demir, and B. Previtali. Development of novel high temperature laser powder bed fusion system for the processing of crack-susceptible alloys. Unknown, Jan 2018. URL: https://doi.org/10.26153/tsw/17221, doi:10.26153/tsw/17221. This article has 14 citations.
+
+28. (caprio2020defectfreelaserpowder pages 7-11): Leonardo Caprio, Ali Gökhan Demir, Gianmarco Chiari, and Barbara Previtali. Defect-free laser powder bed fusion of ti–48al–2cr–2nb with a high temperature inductive preheating system. Journal of Physics: Photonics, 2:024001, Feb 2020. URL: https://doi.org/10.1088/2515-7647/ab7080, doi:10.1088/2515-7647/ab7080. This article has 83 citations.
+
+29. (caprio2018developmentofnovel pages 1-3): L. Caprio, G. Chiari, A.G. Demir, and B. Previtali. Development of novel high temperature laser powder bed fusion system for the processing of crack-susceptible alloys. Unknown, Jan 2018. URL: https://doi.org/10.26153/tsw/17221, doi:10.26153/tsw/17221. This article has 14 citations.
+
+30. (field2020laserpowderbedfusion pages 279-280): AC Field. Laser powderbed fusion (lpbf) of tungsten and tungsten alloys for nuclear fusion applications. Unknown journal, 2020.
+
+31. (zanini2024newmultifunctionbuilding pages 2-4): Filippo Zanini, Nicolò Bonato, and Simone Carmignato. New multi-function building plate for improving metal laser powder bed fusion by enhancing the alignment accuracy of in-process monitoring data, computed tomography measurements, and building volume geometry. The International Journal of Advanced Manufacturing Technology, 132:2369-2380, Apr 2024. URL: https://doi.org/10.1007/s00170-024-13514-x, doi:10.1007/s00170-024-13514-x. This article has 10 citations.
+
+32. (schanz2022individualprocessdevelopment pages 2-4): Jochen Schanz, Nabirul Islam, David Kolb, David K. Harrison, Anjali K. M. De Silva, Dagmar Goll, Gerhard Schneider, and Harald Riegel. Individual process development of single and multi-material laser melting in novel modular laser powder bed fusion system. Progress in Additive Manufacturing, 7:481-493, Apr 2022. URL: https://doi.org/10.1007/s40964-022-00276-9, doi:10.1007/s40964-022-00276-9. This article has 17 citations and is from a peer-reviewed journal.
+
+33. (perino2024design3dprinting pages 48-56): Johnathan Perino. Design, 3d printing, and characterization of porous orthopedic fixation devices. Text, Jan 2024. URL: https://doi.org/10.7282/t3-qfyp-zj36, doi:10.7282/t3-qfyp-zj36. This article has 0 citations and is from a peer-reviewed journal.
+
+34. (khorasani2020areviewof pages 5-7): AmirMahyar Khorasani, Ian Gibson, Jithin Kozhuthala Veetil, and Amir Hossein Ghasemi. A review of technological improvements in laser-based powder bed fusion of metal printers. The International Journal of Advanced Manufacturing Technology, 108:191-209, May 2020. URL: https://doi.org/10.1007/s00170-020-05361-3, doi:10.1007/s00170-020-05361-3. This article has 328 citations.
+
+35. (ferchow2022designandvalidation pages 3-5): Julian Ferchow, Marvin Bühler, Marcel Schlüssel, Livia Zumofen, Christoph Klahn, Urs Hofmann, Andreas Kirchheim, and Mirko Meboldt. Design and validation of a sheet metal clamping system for additive manufacturing and post-processing. The International Journal of Advanced Manufacturing Technology, 119:7947-7967, Jan 2022. URL: https://doi.org/10.1007/s00170-022-08773-5, doi:10.1007/s00170-022-08773-5. This article has 12 citations.
+
+36. (khorasani2020areviewof pages 4-5): AmirMahyar Khorasani, Ian Gibson, Jithin Kozhuthala Veetil, and Amir Hossein Ghasemi. A review of technological improvements in laser-based powder bed fusion of metal printers. The International Journal of Advanced Manufacturing Technology, 108:191-209, May 2020. URL: https://doi.org/10.1007/s00170-020-05361-3, doi:10.1007/s00170-020-05361-3. This article has 328 citations.
+
+37. (revanur2024novelscanstrategies pages 18-22): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+38. (hyer2025strategiesforfabricating pages 1-7): Holden Hyer, Josh Kendall, Denise Lopes, and Andrew Nelson. Strategies for fabricating molybdenum structures using laser powder bed fusion. Unknown journal, Mar 2025. URL: https://doi.org/10.2172/3377998, doi:10.2172/3377998.
+
+39. (schanz2022individualprocessdevelopment pages 1-2): Jochen Schanz, Nabirul Islam, David Kolb, David K. Harrison, Anjali K. M. De Silva, Dagmar Goll, Gerhard Schneider, and Harald Riegel. Individual process development of single and multi-material laser melting in novel modular laser powder bed fusion system. Progress in Additive Manufacturing, 7:481-493, Apr 2022. URL: https://doi.org/10.1007/s40964-022-00276-9, doi:10.1007/s40964-022-00276-9. This article has 17 citations and is from a peer-reviewed journal.
+
+40. (zhao2026alloydesignparadigms pages 12-13): Li Zhao, Tianshu Liu, Hyoung Seop Kim, Tarasankar Debroy, Tomasz Kurzynowski, Konrad Gruber, Xiaowei Hu, and Chaolin Tan. Alloy design paradigms in additive manufacturing: a new era of material innovation. International Journal of Extreme Manufacturing, 8(3):033003, Mar 2026. URL: https://doi.org/10.1088/2631-7990/ae45de, doi:10.1088/2631-7990/ae45de. This article has 10 citations.
+
+41. (collins2026additivemanufacturingenabled pages 1-2): Peter C. Collins and Thomas K. Ales. Additive manufacturing enabled autonomous laboratory for materials discovery and concurrent design of materials and shape. MRS Bulletin, 51:746-769, Jun 2026. URL: https://doi.org/10.1557/s43577-026-01078-y, doi:10.1557/s43577-026-01078-y. This article has 3 citations and is from a domain leading peer-reviewed journal.
+
+42. (collins2026additivemanufacturingenabled pages 18-20): Peter C. Collins and Thomas K. Ales. Additive manufacturing enabled autonomous laboratory for materials discovery and concurrent design of materials and shape. MRS Bulletin, 51:746-769, Jun 2026. URL: https://doi.org/10.1557/s43577-026-01078-y, doi:10.1557/s43577-026-01078-y. This article has 3 citations and is from a domain leading peer-reviewed journal.
+
+43. (nowak2026highthroughputmethodsin pages 15-16): Krzysztof M. Nowak and Robert E. Przekop. High-throughput methods in materials science (part i): a review of chemical and physical methods and automated sample logistics. Jul 2026. URL: https://doi.org/10.3390/ma19132853, doi:10.3390/ma19132853. This article has 0 citations.
+
+44. (collins2026additivemanufacturingenabled pages 6-8): Peter C. Collins and Thomas K. Ales. Additive manufacturing enabled autonomous laboratory for materials discovery and concurrent design of materials and shape. MRS Bulletin, 51:746-769, Jun 2026. URL: https://doi.org/10.1557/s43577-026-01078-y, doi:10.1557/s43577-026-01078-y. This article has 3 citations and is from a domain leading peer-reviewed journal.

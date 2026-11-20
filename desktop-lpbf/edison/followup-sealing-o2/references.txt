@@ -1,0 +1,73 @@
+1. (pauzon2019theprocessatmosphere pages 15-16): C Pauzon. The process atmosphere as a parameter in the laser-powder bed fusion process. Unknown journal, 2019.
+
+2. (pauzon2021tailoredprocessgases pages 26-29): CNG Pauzon. Tailored process gases for laser powder bed fusion. Unknown journal, 2021.
+
+3. (pauzon2021tailoredprocessgases pages 23-26): CNG Pauzon. Tailored process gases for laser powder bed fusion. Unknown journal, 2021.
+
+4. (pauzon2021controlofresidual pages 1-3): C. Pauzon, K. Dietrich, P. Forêt, S. Dubiez-Le Goff, E. Hryha, and G. Witt. Control of residual oxygen of the process atmosphere during laser-powder bed fusion processing of ti-6al-4v. Additive Manufacturing, 38:101765, Feb 2021. URL: https://doi.org/10.1016/j.addma.2020.101765, doi:10.1016/j.addma.2020.101765. This article has 64 citations and is from a highest quality peer-reviewed journal.
+
+5. (pauzon2021controlofresidual pages 3-6): C. Pauzon, K. Dietrich, P. Forêt, S. Dubiez-Le Goff, E. Hryha, and G. Witt. Control of residual oxygen of the process atmosphere during laser-powder bed fusion processing of ti-6al-4v. Additive Manufacturing, 38:101765, Feb 2021. URL: https://doi.org/10.1016/j.addma.2020.101765, doi:10.1016/j.addma.2020.101765. This article has 64 citations and is from a highest quality peer-reviewed journal.
+
+6. (das2019contributionofcellulosic pages 5-6): A. Das, J. A. Muñiz-Lerma, E. R. L. Espiritu, A. Nommeots-Nomm, K. Waters, and M. Brochu. Contribution of cellulosic fibre filter on atmosphere moisture content in laser powder bed fusion additive manufacturing. Scientific Reports, Sep 2019. URL: https://doi.org/10.1038/s41598-019-50238-5, doi:10.1038/s41598-019-50238-5. This article has 5 citations and is from a peer-reviewed journal.
+
+7. (das2019contributionofcellulosic pages 2-3): A. Das, J. A. Muñiz-Lerma, E. R. L. Espiritu, A. Nommeots-Nomm, K. Waters, and M. Brochu. Contribution of cellulosic fibre filter on atmosphere moisture content in laser powder bed fusion additive manufacturing. Scientific Reports, Sep 2019. URL: https://doi.org/10.1038/s41598-019-50238-5, doi:10.1038/s41598-019-50238-5. This article has 5 citations and is from a peer-reviewed journal.
+
+8. (lane2016designdevelopmentsand pages 3-6): B Lane, S Mekhontsev, S Grantham, and ML Vlasea. Design, developments, and results from the nist additive manufacturing metrology testbed (ammt). Unknown journal, 2016.
+
+9. (lane2016designdevelopmentsand pages 6-8): B Lane, S Mekhontsev, S Grantham, and ML Vlasea. Design, developments, and results from the nist additive manufacturing metrology testbed (ammt). Unknown journal, 2016.
+
+10. (karlssonUnknownyearfrommachineenclosure pages 24-29): E KARLSSON and A WIKSTRÖM. From machine enclosure to pressurised build chamber. Unknown journal, Unknown year.
+
+11. (pauzon2021controlofresidual pages 8-12): C. Pauzon, K. Dietrich, P. Forêt, S. Dubiez-Le Goff, E. Hryha, and G. Witt. Control of residual oxygen of the process atmosphere during laser-powder bed fusion processing of ti-6al-4v. Additive Manufacturing, 38:101765, Feb 2021. URL: https://doi.org/10.1016/j.addma.2020.101765, doi:10.1016/j.addma.2020.101765. This article has 64 citations and is from a highest quality peer-reviewed journal.
+
+12. (baroutaji2023theinfluenceof pages 11-12): Ahmad Baroutaji, Arun Arjunan, James Beal, John Robinson, and Julio Coroado. The influence of atmospheric oxygen content on the mechanical properties of selectively laser melted alsi10mg tpms-based lattice. Materials, 16:430, Jan 2023. URL: https://doi.org/10.3390/ma16010430, doi:10.3390/ma16010430. This article has 34 citations.
+
+13. (baroutaji2023theinfluenceof pages 1-2): Ahmad Baroutaji, Arun Arjunan, James Beal, John Robinson, and Julio Coroado. The influence of atmospheric oxygen content on the mechanical properties of selectively laser melted alsi10mg tpms-based lattice. Materials, 16:430, Jan 2023. URL: https://doi.org/10.3390/ma16010430, doi:10.3390/ma16010430. This article has 34 citations.
+
+14. (baroutaji2023theinfluenceof pages 8-11): Ahmad Baroutaji, Arun Arjunan, James Beal, John Robinson, and Julio Coroado. The influence of atmospheric oxygen content on the mechanical properties of selectively laser melted alsi10mg tpms-based lattice. Materials, 16:430, Jan 2023. URL: https://doi.org/10.3390/ma16010430, doi:10.3390/ma16010430. This article has 34 citations.
+
+15. (tang2017inclusionsporosityand pages 6-8): Ming Tang. Inclusions, porosity, and fatigue of alsi10mg parts produced by selective laser melting. ArXiv, Apr 2017. URL: https://doi.org/10.1184/r1/6720185.v1, doi:10.1184/r1/6720185.v1. This article has 112 citations.
+
+16. (tang2017inclusionsporosityand pages 1-6): Ming Tang. Inclusions, porosity, and fatigue of alsi10mg parts produced by selective laser melting. ArXiv, Apr 2017. URL: https://doi.org/10.1184/r1/6720185.v1, doi:10.1184/r1/6720185.v1. This article has 112 citations.
+
+17. (tang2017inclusionsporosityand pages 46-50): Ming Tang. Inclusions, porosity, and fatigue of alsi10mg parts produced by selective laser melting. ArXiv, Apr 2017. URL: https://doi.org/10.1184/r1/6720185.v1, doi:10.1184/r1/6720185.v1. This article has 112 citations.
+
+18. (tang2017inclusionsporosityand pages 42-46): Ming Tang. Inclusions, porosity, and fatigue of alsi10mg parts produced by selective laser melting. ArXiv, Apr 2017. URL: https://doi.org/10.1184/r1/6720185.v1, doi:10.1184/r1/6720185.v1. This article has 112 citations.
+
+19. (kramer2026investigationofthe pages 2-4): Steffen Kramer, Victor Lubkowitz, Michael Haas, Johannes Michel, Christoph Spurk, Alexander Olowinsky, Guilherme Abreu Faria, Michael Jarwitz, Thomas Graf, Volker Schulze, and Frederik Zanger. Investigation of the formation and reduction of hydrogen porosity during laser welding of additively manufactured alsi10mg parts. The International Journal of Advanced Manufacturing Technology, 142:6105-6123, Jan 2026. URL: https://doi.org/10.1007/s00170-025-17198-9, doi:10.1007/s00170-025-17198-9. This article has 10 citations.
+
+20. (cauwenbergh2019reducinghydrogenporesb pages 4-6): P Van Cauwenbergh. Reducing hydrogen pores and blisters by novel strategies and tailored heat treatments for laser powder bed fusion of alsi7mg0. 6. Unknown journal, 2019.
+
+21. (pauzon2019theprocessatmosphere pages 22-25): C Pauzon. The process atmosphere as a parameter in the laser-powder bed fusion process. Unknown journal, 2019.
+
+22. (sturm2004permeationofatmospheric pages 3-4): P. Sturm, M. Leuenberger, C. Sirignano, R. E. M. Neubert, H. A. J. Meijer, R. Langenfelds, W. A. Brand, and Y. Tohjima. Permeation of atmospheric gases through polymer o-rings used in flasks for air sampling. Journal of Geophysical Research, 109:309-318, Feb 2004. URL: https://doi.org/10.1029/2003jd004073, doi:10.1029/2003jd004073. This article has 125 citations.
+
+23. (sturm2004permeationofatmospheric pages 4-6): P. Sturm, M. Leuenberger, C. Sirignano, R. E. M. Neubert, H. A. J. Meijer, R. Langenfelds, W. A. Brand, and Y. Tohjima. Permeation of atmospheric gases through polymer o-rings used in flasks for air sampling. Journal of Geophysical Research, 109:309-318, Feb 2004. URL: https://doi.org/10.1029/2003jd004073, doi:10.1029/2003jd004073. This article has 125 citations.
+
+24. (das2020moisturesourcesin pages 25-66): A Das. Moisture sources in laser powder bed fusion additive manufacturing. Unknown journal, 2020.
+
+25. (halley2024mixedpotentialsensor pages 26-30): S Halley. Mixed potential sensor for natural gas leak detection design, manufacturing, and simulation. Unknown journal, 2024.
+
+26. (halley2022areviewof pages 1-8): Sleight Halley, Kannan Pasupathikovil Ramaiyan, Lok-kun Tsui, and Fernando Garzon. A review of zirconia oxygen, nox, and mixed potential gas sensors – history and current trends. Sensors and Actuators B: Chemical, 370:132363, Nov 2022. URL: https://doi.org/10.1016/j.snb.2022.132363, doi:10.1016/j.snb.2022.132363. This article has 81 citations and is from a peer-reviewed journal.
+
+27. (bulowski2024thinfilmsemiconductor pages 7-8): Wojciech Bulowski, Rafał Knura, Robert P. Socha, Maciej Basiura, Katarzyna Skibińska, and Marek Wojnicki. Thin film semiconductor metal oxide oxygen sensors: limitations, challenges, and future progress. Electronics, 13:3409, Aug 2024. URL: https://doi.org/10.3390/electronics13173409, doi:10.3390/electronics13173409. This article has 37 citations.
+
+28. (halley2022areviewof pages 8-12): Sleight Halley, Kannan Pasupathikovil Ramaiyan, Lok-kun Tsui, and Fernando Garzon. A review of zirconia oxygen, nox, and mixed potential gas sensors – history and current trends. Sensors and Actuators B: Chemical, 370:132363, Nov 2022. URL: https://doi.org/10.1016/j.snb.2022.132363, doi:10.1016/j.snb.2022.132363. This article has 81 citations and is from a peer-reviewed journal.
+
+29. (lubkowitz2024comparisonofinprocess pages 5-6): Victor Lubkowitz, Leonie Fayner, Steffen Kramer, Volker Schulze, and Frederik Zanger. Comparison of in-process laser drying with furnace and vacuum drying to reduce moisture of alsi10mg powder processed in laser powder bed fusion. Procedia CIRP, Oct 2024. URL: https://doi.org/10.1016/j.procir.2024.08.086, doi:10.1016/j.procir.2024.08.086. This article has 3 citations and is from a peer-reviewed journal.
+
+30. (cordova2017assessmentofmoisture pages 1-3): L Cordova, M Campos, and T Tinga. Assessment of moisture content and its influence on laser beam melting feedstock. Unknown journal, 2017.
+
+31. (cordova2017assessmentofmoisture pages 3-5): L Cordova, M Campos, and T Tinga. Assessment of moisture content and its influence on laser beam melting feedstock. Unknown journal, 2017.
+
+32. (lubkowitz2024comparisonofinprocess pages 1-2): Victor Lubkowitz, Leonie Fayner, Steffen Kramer, Volker Schulze, and Frederik Zanger. Comparison of in-process laser drying with furnace and vacuum drying to reduce moisture of alsi10mg powder processed in laser powder bed fusion. Procedia CIRP, Oct 2024. URL: https://doi.org/10.1016/j.procir.2024.08.086, doi:10.1016/j.procir.2024.08.086. This article has 3 citations and is from a peer-reviewed journal.
+
+33. (lubkowitz2024comparisonofinprocess pages 4-5): Victor Lubkowitz, Leonie Fayner, Steffen Kramer, Volker Schulze, and Frederik Zanger. Comparison of in-process laser drying with furnace and vacuum drying to reduce moisture of alsi10mg powder processed in laser powder bed fusion. Procedia CIRP, Oct 2024. URL: https://doi.org/10.1016/j.procir.2024.08.086, doi:10.1016/j.procir.2024.08.086. This article has 3 citations and is from a peer-reviewed journal.
+
+34. (das2019contributionofcellulosic pages 3-5): A. Das, J. A. Muñiz-Lerma, E. R. L. Espiritu, A. Nommeots-Nomm, K. Waters, and M. Brochu. Contribution of cellulosic fibre filter on atmosphere moisture content in laser powder bed fusion additive manufacturing. Scientific Reports, Sep 2019. URL: https://doi.org/10.1038/s41598-019-50238-5, doi:10.1038/s41598-019-50238-5. This article has 5 citations and is from a peer-reviewed journal.
+
+35. (das2019contributionofcellulosic pages 6-7): A. Das, J. A. Muñiz-Lerma, E. R. L. Espiritu, A. Nommeots-Nomm, K. Waters, and M. Brochu. Contribution of cellulosic fibre filter on atmosphere moisture content in laser powder bed fusion additive manufacturing. Scientific Reports, Sep 2019. URL: https://doi.org/10.1038/s41598-019-50238-5, doi:10.1038/s41598-019-50238-5. This article has 5 citations and is from a peer-reviewed journal.
+
+36. (das2020moisturesourcesina pages 66-116): A Das. Moisture sources in laser powder bed fusion additive manufacturing. Unknown journal, 2020.
+
+37. (das2019contributionofcellulosic pages 1-2): A. Das, J. A. Muñiz-Lerma, E. R. L. Espiritu, A. Nommeots-Nomm, K. Waters, and M. Brochu. Contribution of cellulosic fibre filter on atmosphere moisture content in laser powder bed fusion additive manufacturing. Scientific Reports, Sep 2019. URL: https://doi.org/10.1038/s41598-019-50238-5, doi:10.1038/s41598-019-50238-5. This article has 5 citations and is from a peer-reviewed journal.

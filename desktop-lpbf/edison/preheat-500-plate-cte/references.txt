@@ -1,0 +1,93 @@
+1. (li2024additivemanufacturingof pages 34-38): Ying-Jie Li. Additive manufacturing of 6061 and 7075 aluminium alloy with selective laser melting. Unknown journal, 2024. URL: https://doi.org/10.70675/5f083431z1407z40f1z83bfz19a675dc42f6, doi:10.70675/5f083431z1407z40f1z83bfz19a675dc42f6.
+
+2. (li2024additivemanufacturingof pages 31-34): Ying-Jie Li. Additive manufacturing of 6061 and 7075 aluminium alloy with selective laser melting. Unknown journal, 2024. URL: https://doi.org/10.70675/5f083431z1407z40f1z83bfz19a675dc42f6, doi:10.70675/5f083431z1407z40f1z83bfz19a675dc42f6.
+
+3. (bradfordvialva2021developmentofa pages 45-49): RL Bradford-Vialva. Development of a metal-metal powder formulations approach for direct metal laser melting of high-strength aluminum alloys. Unknown journal, 2021.
+
+4. (dixit2022laseradditivemanufacturing pages 16-18): Som Dixit and Shunyu Liu. Laser additive manufacturing of high-strength aluminum alloys: challenges and strategies. Journal of Manufacturing and Materials Processing, 6:156, Dec 2022. URL: https://doi.org/10.3390/jmmp6060156, doi:10.3390/jmmp6060156. This article has 100 citations.
+
+5. (rosito2023processabilityofa6061 pages 1-2): Michele Rosito, Matteo Vanzetti, Elisa Padovano, Flavia Gili, Roberta Sampieri, Federica Bondioli, and Claudio Francesco Badini. Processability of a6061 aluminum alloy using laser powder bed fusion by in situ synthesis of grain refiners. Metals, 13:1128, Jun 2023. URL: https://doi.org/10.3390/met13061128, doi:10.3390/met13061128. This article has 24 citations.
+
+6. (tumulu2025laserpowderbed pages 48-53): SK Tumulu. Laser powder bed fusion additive manufacturing (lpbf-am) of aluminum-copper alloys. Unknown journal, 2025.
+
+7. (schimback2024advancementsinmetal pages 1-2): D. Schimbäck, L. Kaserer, P. Mair, M.S. Mohebbi, P. Staron, V. Maier-Kiener, I. Letofsky-Papst, T. Kremmer, F. Palm, I. Montes, H.W. Höppel, G. Leichtfried, and S. Pogatscher. Advancements in metal additive manufacturing: in-situ heat treatment of aluminium alloys during the laser powder bed fusion process. Jul 2024. URL: https://doi.org/10.1016/j.msea.2024.146102, doi:10.1016/j.msea.2024.146102. This article has 31 citations.
+
+8. (wang2024areviewon pages 7-9): Xin Wang, Dongyun Zhang, Ang Li, Denghao Yi, and Tianci Li. A review on traditional processes and laser powder bed fusion of aluminum alloy microstructures, mechanical properties, costs, and applications. Materials, 17:2553, May 2024. URL: https://doi.org/10.3390/ma17112553, doi:10.3390/ma17112553. This article has 68 citations.
+
+9. (wu2021hotworktool pages 3-4): Liang Wu, Suvajeet Das, Witalij Gridin, Stefan Leuders, Moritz Kahlert, Malte Vollmer, and Thomas Niendorf. Hot work tool steel processed by laser powder bed fusion: a review on most relevant influencing factors. Advanced Engineering Materials, May 2021. URL: https://doi.org/10.1002/adem.202100049, doi:10.1002/adem.202100049. This article has 99 citations and is from a peer-reviewed journal.
+
+10. (platl2021defectsina pages 1-4): Jan Platl, Harald Leitner, Christoph Turk, Ali Gökhan Demir, Barbara Previtali, and Ronald Schnitzer. Defects in a laser powder bed fused tool steel. Advanced Engineering Materials, Oct 2020. URL: https://doi.org/10.1002/adem.202000833, doi:10.1002/adem.202000833. This article has 48 citations and is from a peer-reviewed journal.
+
+11. (rothfelder2023abriefhistory pages 13-14): Richard Rothfelder, Florian Nahr, Lova Chechik, Dominic Bartels, and Michael Schmidt. A brief history of the progress of laser powder bed fusion of metals in europe. Journal of Manufacturing Science and Engineering, Aug 2023. URL: https://doi.org/10.1115/1.4062788, doi:10.1115/1.4062788. This article has 17 citations.
+
+12. (wu2021hotworktool pages 25-25): Liang Wu, Suvajeet Das, Witalij Gridin, Stefan Leuders, Moritz Kahlert, Malte Vollmer, and Thomas Niendorf. Hot work tool steel processed by laser powder bed fusion: a review on most relevant influencing factors. Advanced Engineering Materials, May 2021. URL: https://doi.org/10.1002/adem.202100049, doi:10.1002/adem.202100049. This article has 99 citations and is from a peer-reviewed journal.
+
+13. (bergmueller2022crackfreeinsitu pages 1-2): Simon Bergmueller, Lukas Kaserer, Lorenz Fuchs, Jakob Braun, Nikolaus Weinberger, Ilse Letofsky-Papst, and Gerhard Leichtfried. Crack-free in situ heat-treated high-alloy tool steel processed via laser powder bed fusion: microstructure and mechanical properties. Heliyon, 8:e10171, Aug 2022. URL: https://doi.org/10.1016/j.heliyon.2022.e10171, doi:10.1016/j.heliyon.2022.e10171. This article has 15 citations.
+
+14. (rothfelder2023abriefhistory pages 12-13): Richard Rothfelder, Florian Nahr, Lova Chechik, Dominic Bartels, and Michael Schmidt. A brief history of the progress of laser powder bed fusion of metals in europe. Journal of Manufacturing Science and Engineering, Aug 2023. URL: https://doi.org/10.1115/1.4062788, doi:10.1115/1.4062788. This article has 17 citations.
+
+15. (abdelwahed2023crackingmechanismsand pages 1-2): Marawan Abdelwahed, José Ramón Blasco Puchades, Luis Portolés Griñán, Mario Martínez Ceniceros, Ludovica Rovatti, Rasheed Michael Ishola, and Maurizio Vedani. Cracking mechanisms and effect of extensive preheating in cm247lc and in713lc ni-base superalloy processed by laser powder bed fusion. Materials Today Communications, 37:107644, Dec 2023. URL: https://doi.org/10.1016/j.mtcomm.2023.107644, doi:10.1016/j.mtcomm.2023.107644. This article has 36 citations and is from a peer-reviewed journal.
+
+16. (mariana2025innovationsinin939 pages 16-19): Sgambaro De Lorenzi Mariana, Verner Soh, Delvin Wuu, Si Rong Ng, Desmond Lau, Siyuan Wei, Chee Koon Ng, Wenqi Guo, Pei Wang, Zhongji Sun, and Zhili Dong. Innovations in in939: from cast alloy to additive manufacturing. High-Temperature Materials, 2:10003-10003, Jan 2025. URL: https://doi.org/10.70322/htm.2025.10003, doi:10.70322/htm.2025.10003. This article has 12 citations.
+
+17. (calliariUnknownyearinfluenceofprocess pages 18-22): I Calliari. Influence of process parameters and build platform preheating on defect occurrence in l-pbf inconel 718. Unknown journal, Unknown year.
+
+18. (fassinatoUnknownyearinfluenceofprocess pages 35-40): E FASSINATO. Influence of process parameters and build platform preheating on defect occurrence in l-pbf inconel 718. Unknown journal, Unknown year.
+
+19. (ramulifho2022evaluationofa pages 1-3): Rabelani Duncan Ramulifho, Kapil Gupta, and Daniel Glaser. Evaluation of a high-temperature pre-heating system design for a large-scale additive manufacturing system. Micromachines, 13:1475, Sep 2022. URL: https://doi.org/10.3390/mi13091475, doi:10.3390/mi13091475. This article has 5 citations.
+
+20. (ramulifho2022evaluationofa pages 3-5): Rabelani Duncan Ramulifho, Kapil Gupta, and Daniel Glaser. Evaluation of a high-temperature pre-heating system design for a large-scale additive manufacturing system. Micromachines, 13:1475, Sep 2022. URL: https://doi.org/10.3390/mi13091475, doi:10.3390/mi13091475. This article has 5 citations.
+
+21. (fries2020laser‐basedadditivemanufacturing pages 1-2): Sofia Fries, Stephan Genilke, Markus Benjamin Wilms, Martin Seimann, Andreas Weisheit, Anke Kaletsch, Thomas Bergs, Johannes Henrich Schleifenbaum, and Christoph Broeckmann. Laser‐based additive manufacturing of wc–co with high‐temperature powder bed preheating †. steel research international, Jan 2020. URL: https://doi.org/10.1002/srin.201900511, doi:10.1002/srin.201900511. This article has 60 citations and is from a peer-reviewed journal.
+
+22. (fries2020laser‐basedadditivemanufacturing pages 3-3): Sofia Fries, Stephan Genilke, Markus Benjamin Wilms, Martin Seimann, Andreas Weisheit, Anke Kaletsch, Thomas Bergs, Johannes Henrich Schleifenbaum, and Christoph Broeckmann. Laser‐based additive manufacturing of wc–co with high‐temperature powder bed preheating †. steel research international, Jan 2020. URL: https://doi.org/10.1002/srin.201900511, doi:10.1002/srin.201900511. This article has 60 citations and is from a peer-reviewed journal.
+
+23. (saremi2026designingnickelaluminum pages 4-6): Marzieh Saremi, Ayda Shahriari, Parisa Moazzen, Tobias Maiwald-Immer, Alan Lloyd, and Mohsen Mohammadi. Designing nickel aluminum bronzes with enhanced properties via heated platform laser powder bed fusion. Virtual and Physical Prototyping, Jul 2026. URL: https://doi.org/10.1080/17452759.2026.2688627, doi:10.1080/17452759.2026.2688627. This article has 1 citations and is from a peer-reviewed journal.
+
+24. (rebesan2021characterizationofmolybdenum pages 70-75): P Rebesan. Characterization of molybdenum produced by laser powder bed fusion for the high-temperature ion sources of the infn spes facility. Unknown journal, 2021.
+
+25. (rothfelder2023abriefhistory pages 10-11): Richard Rothfelder, Florian Nahr, Lova Chechik, Dominic Bartels, and Michael Schmidt. A brief history of the progress of laser powder bed fusion of metals in europe. Journal of Manufacturing Science and Engineering, Aug 2023. URL: https://doi.org/10.1115/1.4062788, doi:10.1115/1.4062788. This article has 17 citations.
+
+26. (lucke2023influenceoflaser pages 2-5): Tim Gerrit Lücke, Luke Schüller, Andreas Vogelpoth, Thomas Laag, Jasmin Saewe, and Constantin Leon Häfner. Influence of laser power and scan speed on the formation of hot cracks during the processing of high-speed steel hs2-2-2 by laser powder bed fusion. BHM Berg- und Hüttenmännische Monatshefte, 168:239-246, May 2023. URL: https://doi.org/10.1007/s00501-023-01353-4, doi:10.1007/s00501-023-01353-4. This article has 5 citations and is from a peer-reviewed journal.
+
+27. (saremi2026designingnickelaluminum pages 3-4): Marzieh Saremi, Ayda Shahriari, Parisa Moazzen, Tobias Maiwald-Immer, Alan Lloyd, and Mohsen Mohammadi. Designing nickel aluminum bronzes with enhanced properties via heated platform laser powder bed fusion. Virtual and Physical Prototyping, Jul 2026. URL: https://doi.org/10.1080/17452759.2026.2688627, doi:10.1080/17452759.2026.2688627. This article has 1 citations and is from a peer-reviewed journal.
+
+28. (ramulifho2022evaluationofa pages 5-7): Rabelani Duncan Ramulifho, Kapil Gupta, and Daniel Glaser. Evaluation of a high-temperature pre-heating system design for a large-scale additive manufacturing system. Micromachines, 13:1475, Sep 2022. URL: https://doi.org/10.3390/mi13091475, doi:10.3390/mi13091475. This article has 5 citations.
+
+29. (rezaei2026powderdegradationand pages 7-9): Sina Rezaei, Sara Biamino, Federica Bondioli, Daniele Ugues, Paolo Fino, and Mariangela Lombardi. Powder degradation and recycling strategies for aluminum alloys in additive manufacturing: a comprehensive review. Jul 2026. URL: https://doi.org/10.3390/app16136822, doi:10.3390/app16136822. This article has 1 citations.
+
+30. (wang2024effectofparticle pages 7-9): H. Wang, N. Zhang, M. Wang, and F. Yang. Effect of particle size, lubricant, and heat temperature on the flowability of ni-based powders for additive manufacturing. Archives of Metallurgy and Materials, pages 1005-1014, Sep 2024. URL: https://doi.org/10.24425/amm.2024.150921, doi:10.24425/amm.2024.150921. This article has 2 citations and is from a peer-reviewed journal.
+
+31. (wang2024effectofparticle pages 6-7): H. Wang, N. Zhang, M. Wang, and F. Yang. Effect of particle size, lubricant, and heat temperature on the flowability of ni-based powders for additive manufacturing. Archives of Metallurgy and Materials, pages 1005-1014, Sep 2024. URL: https://doi.org/10.24425/amm.2024.150921, doi:10.24425/amm.2024.150921. This article has 2 citations and is from a peer-reviewed journal.
+
+32. (rezaei2026powderdegradationand pages 29-30): Sina Rezaei, Sara Biamino, Federica Bondioli, Daniele Ugues, Paolo Fino, and Mariangela Lombardi. Powder degradation and recycling strategies for aluminum alloys in additive manufacturing: a comprehensive review. Jul 2026. URL: https://doi.org/10.3390/app16136822, doi:10.3390/app16136822. This article has 1 citations.
+
+33. (rezaei2026powderdegradationand pages 41-42): Sina Rezaei, Sara Biamino, Federica Bondioli, Daniele Ugues, Paolo Fino, and Mariangela Lombardi. Powder degradation and recycling strategies for aluminum alloys in additive manufacturing: a comprehensive review. Jul 2026. URL: https://doi.org/10.3390/app16136822, doi:10.3390/app16136822. This article has 1 citations.
+
+34. (cordova2020measuringthespreadability pages 1-2): Laura Cordova, Ton Bor, Marc de Smit, Mónica Campos, and Tiedo Tinga. Measuring the spreadability of pre-treated and moisturized powders for laser powder bed fusion. Additive Manufacturing, 32:101082, Mar 2020. URL: https://doi.org/10.1016/j.addma.2020.101082, doi:10.1016/j.addma.2020.101082. This article has 178 citations and is from a highest quality peer-reviewed journal.
+
+35. (hussain2026metallurgicalaspectsof pages 11-12): Javid Hussain, Abdul Wahid Shah, Jabir Ali Siddique, and Shou-Jin Sun. Metallurgical aspects of additively manufactured aluminum alloys: a review. Metals and Materials International, Oct 2026. URL: https://doi.org/10.1007/s12540-026-02247-z, doi:10.1007/s12540-026-02247-z. This article has 0 citations and is from a peer-reviewed journal.
+
+36. (sargioti2025physicochemicalandtoxicological pages 2-4): Nikoletta Sargioti, Leonidas Karavias, Leonidas Gargalis, Anna Karatza, Elias P. Koumoulos, and Evangelia K. Karaxi. Physicochemical and toxicological properties of particles emitted from scalmalloy during the lpbf process. Toxics, 13:398, May 2025. URL: https://doi.org/10.3390/toxics13050398, doi:10.3390/toxics13050398. This article has 6 citations.
+
+37. (fields2024structuralandcompositional pages 58-63): B Fields. Structural and compositional control of steel and aluminum alloys via laser powder bed fusion processing. Unknown journal, 2024.
+
+38. (li2024additivemanufacturingof pages 38-42): Ying-Jie Li. Additive manufacturing of 6061 and 7075 aluminium alloy with selective laser melting. Unknown journal, 2024. URL: https://doi.org/10.70675/5f083431z1407z40f1z83bfz19a675dc42f6, doi:10.70675/5f083431z1407z40f1z83bfz19a675dc42f6.
+
+39. (qin2021influenceoflaser pages 10-12): Yu Qin, Jinge Liu, Yanzhe Chen, Peng Wen, Yufeng Zheng, Yun Tian, Maximilian Voshage, and Johannes Henrich Schleifenbaum. Influence of laser energy input and shielding gas flow on evaporation fume during laser powder bed fusion of zn metal. Materials, 14:2677, May 2021. URL: https://doi.org/10.3390/ma14102677, doi:10.3390/ma14102677. This article has 43 citations.
+
+40. (qin2021influenceoflaser pages 1-2): Yu Qin, Jinge Liu, Yanzhe Chen, Peng Wen, Yufeng Zheng, Yun Tian, Maximilian Voshage, and Johannes Henrich Schleifenbaum. Influence of laser energy input and shielding gas flow on evaporation fume during laser powder bed fusion of zn metal. Materials, 14:2677, May 2021. URL: https://doi.org/10.3390/ma14102677, doi:10.3390/ma14102677. This article has 43 citations.
+
+41. (dubey2024negativethermalexpansion pages 9-11): Devashish Dubey, Anooshe Sadat Mirhakimi, and Mohamed A. Elbestawi. Negative thermal expansion metamaterials: a review of design, fabrication, and applications. Journal of Manufacturing and Materials Processing, 8:40, Feb 2024. URL: https://doi.org/10.3390/jmmp8010040, doi:10.3390/jmmp8010040. This article has 85 citations.
+
+42. (ramulifho2022evaluationofa pages 19-20): Rabelani Duncan Ramulifho, Kapil Gupta, and Daniel Glaser. Evaluation of a high-temperature pre-heating system design for a large-scale additive manufacturing system. Micromachines, 13:1475, Sep 2022. URL: https://doi.org/10.3390/mi13091475, doi:10.3390/mi13091475. This article has 5 citations.
+
+43. (uba2025enhancingtheprintability pages 1-2): Chukwudalu Uchenna Uba, Huan Ding, Yehong Chen, Shengmin Guo, and Jonathan Richard Raush. Enhancing the printability of laser powder bed fusion-processed aluminum 7xxx series alloys using grain refinement and eutectic solidification strategies. Materials, 18(22):5089, Nov 2025. URL: https://doi.org/10.3390/ma18225089, doi:10.3390/ma18225089. This article has 7 citations.
+
+44. (tumulu2025laserpowderbed pages 45-48): SK Tumulu. Laser powder bed fusion additive manufacturing (lpbf-am) of aluminum-copper alloys. Unknown journal, 2025.
+
+45. (wu2021hotworktool pages 26-26): Liang Wu, Suvajeet Das, Witalij Gridin, Stefan Leuders, Moritz Kahlert, Malte Vollmer, and Thomas Niendorf. Hot work tool steel processed by laser powder bed fusion: a review on most relevant influencing factors. Advanced Engineering Materials, May 2021. URL: https://doi.org/10.1002/adem.202100049, doi:10.1002/adem.202100049. This article has 99 citations and is from a peer-reviewed journal.
+
+46. (rothfelder2023abriefhistory pages 30-31): Richard Rothfelder, Florian Nahr, Lova Chechik, Dominic Bartels, and Michael Schmidt. A brief history of the progress of laser powder bed fusion of metals in europe. Journal of Manufacturing Science and Engineering, Aug 2023. URL: https://doi.org/10.1115/1.4062788, doi:10.1115/1.4062788. This article has 17 citations.
+
+47. (qin2021influenceoflaser pages 7-10): Yu Qin, Jinge Liu, Yanzhe Chen, Peng Wen, Yufeng Zheng, Yun Tian, Maximilian Voshage, and Johannes Henrich Schleifenbaum. Influence of laser energy input and shielding gas flow on evaporation fume during laser powder bed fusion of zn metal. Materials, 14:2677, May 2021. URL: https://doi.org/10.3390/ma14102677, doi:10.3390/ma14102677. This article has 43 citations.

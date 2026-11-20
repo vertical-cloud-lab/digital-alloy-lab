@@ -1,0 +1,81 @@
+1. (revanur2024novelscanstrategies pages 51-53): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+2. (bonhoff2017experimentalandtheoretical pages 6-10): T Bonhoff, M Schniedenharn, and J Stollenwerk. Experimental and theoretical analysis of thermo-optical effects in protective window for selective laser melting. Unknown journal, 2017.
+
+3. (bonhoff2017experimentalandtheoretical pages 4-6): T Bonhoff, M Schniedenharn, and J Stollenwerk. Experimental and theoretical analysis of thermo-optical effects in protective window for selective laser melting. Unknown journal, 2017.
+
+4. (griggs2021atestbedfor pages 3-7): David A. Griggs, Jonathan S. Gibbs, Stuart P. Baker, Ryan W. Penny, Martin C. Feldmann, and A. John Hart. A testbed for investigation of selective laser melting at elevated atmospheric pressure. Jan 2021. URL: https://doi.org/10.48550/arxiv.2107.01744, doi:10.48550/arxiv.2107.01744. This article has 1 citations.
+
+5. (reijonen2020ontheeffect pages 5-6): Joni Reijonen, Alejandro Revuelta, Tuomas Riipinen, Kimmo Ruusuvuori, and Pasi Puukko. On the effect of shielding gas flow on porosity and melt pool geometry in laser powder bed fusion additive manufacturing. Additive Manufacturing, 32:101030, Mar 2020. URL: https://doi.org/10.1016/j.addma.2019.101030, doi:10.1016/j.addma.2019.101030. This article has 286 citations and is from a highest quality peer-reviewed journal.
+
+6. (reijonen2020ontheeffect pages 4-5): Joni Reijonen, Alejandro Revuelta, Tuomas Riipinen, Kimmo Ruusuvuori, and Pasi Puukko. On the effect of shielding gas flow on porosity and melt pool geometry in laser powder bed fusion additive manufacturing. Additive Manufacturing, 32:101030, Mar 2020. URL: https://doi.org/10.1016/j.addma.2019.101030, doi:10.1016/j.addma.2019.101030. This article has 286 citations and is from a highest quality peer-reviewed journal.
+
+7. (shen2020influenceofgas pages 1-2): Haopeng Shen, Paul Rometsch, Xinhua Wu, and Aijun Huang. Influence of gas flow speed on laser plume attenuation and powder bed particle pickup in laser powder bed fusion. JOM, 72:1039-1051, Jan 2020. URL: https://doi.org/10.1007/s11837-020-04020-y, doi:10.1007/s11837-020-04020-y. This article has 91 citations and is from a peer-reviewed journal.
+
+8. (reijonen2020ontheeffect pages 3-4): Joni Reijonen, Alejandro Revuelta, Tuomas Riipinen, Kimmo Ruusuvuori, and Pasi Puukko. On the effect of shielding gas flow on porosity and melt pool geometry in laser powder bed fusion additive manufacturing. Additive Manufacturing, 32:101030, Mar 2020. URL: https://doi.org/10.1016/j.addma.2019.101030, doi:10.1016/j.addma.2019.101030. This article has 286 citations and is from a highest quality peer-reviewed journal.
+
+9. (wu2025improvingshieldinggas pages 2-4): H. Hugo Estrada Medinilla, Christopher J. Elkins, Jorge Mireles, Andres Estrada, and Ryan B. Wicker. Improving shielding gas flow distribution to enhance quality and consistency in metal laser powder bed fusion processes. Journal of Manufacturing and Materials Processing, 10:3, Dec 2025. URL: https://doi.org/10.3390/jmmp10010003, doi:10.3390/jmmp10010003. This article has 0 citations.
+
+10. (sehhat2021powderspreadingin pages 6-8): M. Hossein Sehhat and Ali Mahdianikhotbesara. Powder spreading in laser-powder bed fusion process. Granular Matter, Sep 2021. URL: https://doi.org/10.1007/s10035-021-01162-x, doi:10.1007/s10035-021-01162-x. This article has 110 citations and is from a peer-reviewed journal.
+
+11. (whiting2023powderspreadingtestbed pages 15-18): Justin Whiting, Eric Whitenton, Aniruddha Das, Vipin Tondare, Jason Fox, Michael McGlauflin, Alkan Donmez, and Shawn P Moylan. Powder spreading testbed for studying the powder spreading process in powder bed fusion machines. ArXiv, Nov 2023. URL: https://doi.org/10.6028/nist.ams.100-56, doi:10.6028/nist.ams.100-56. This article has 4 citations.
+
+12. (oropeza2021amodulartestbed pages 8-10): D. Oropeza, R. Roberts, and A. J. Hart. A modular testbed for mechanized spreading of powder layers for additive manufacturing. The Review of scientific instruments, 92 1:015114, Jan 2021. URL: https://doi.org/10.1063/5.0031191, doi:10.1063/5.0031191. This article has 31 citations.
+
+13. (skacelik2026experimentalandcomputational pages 1-4): Radek Skácelík, Václav Vrzal, Miroslav Španiel, and Michal Bartošák. Experimental and computational study on the influence of recoater geometry, recoating speed, and layer thickness on recoater collision. Jun 2026. URL: https://doi.org/10.1007/s00170-026-18515-6, doi:10.1007/s00170-026-18515-6. This article has 0 citations.
+
+14. (skacelik2026experimentalandcomputational pages 21-26): Radek Skácelík, Václav Vrzal, Miroslav Španiel, and Michal Bartošák. Experimental and computational study on the influence of recoater geometry, recoating speed, and layer thickness on recoater collision. Jun 2026. URL: https://doi.org/10.1007/s00170-026-18515-6, doi:10.1007/s00170-026-18515-6. This article has 0 citations.
+
+15. (skacelik2026experimentalandcomputational pages 4-8): Radek Skácelík, Václav Vrzal, Miroslav Španiel, and Michal Bartošák. Experimental and computational study on the influence of recoater geometry, recoating speed, and layer thickness on recoater collision. Jun 2026. URL: https://doi.org/10.1007/s00170-026-18515-6, doi:10.1007/s00170-026-18515-6. This article has 0 citations.
+
+16. (astarita2026powderspreadingand pages 5-7): A. Astarita. Powder spreading and layer deposition in metal powder bed fusion. ArXiv, Jun 2026. URL: https://doi.org/10.48550/arxiv.2606.22989, doi:10.48550/arxiv.2606.22989. This article has 0 citations.
+
+17. (hou2024developmentofa pages 64-67): Development of a micro-feeder for cohesive pharmaceutical powders This article has 2 citations.
+
+18. (oropeza2021amodulartestbed pages 1-3): D. Oropeza, R. Roberts, and A. J. Hart. A modular testbed for mechanized spreading of powder layers for additive manufacturing. The Review of scientific instruments, 92 1:015114, Jan 2021. URL: https://doi.org/10.1063/5.0031191, doi:10.1063/5.0031191. This article has 31 citations.
+
+19. (oropeza2021amodulartestbed pages 3-5): D. Oropeza, R. Roberts, and A. J. Hart. A modular testbed for mechanized spreading of powder layers for additive manufacturing. The Review of scientific instruments, 92 1:015114, Jan 2021. URL: https://doi.org/10.1063/5.0031191, doi:10.1063/5.0031191. This article has 31 citations.
+
+20. (alchikhsulaiman2020powderspreadingand pages 149-152): B Alchikh-Sulaiman. Powder spreading and tribocharging for additive manufacturing powder bed fusion processes. Unknown journal, 2020.
+
+21. (ramirez2026influenceofpowder pages 109-116): P Galindo Ramirez. Influence of powder surface properties on polymer-metal interactions in binder-based additive manufacturing processes. Unknown journal, 2026.
+
+22. (alchikhsulaiman2020powderspreadingand pages 129-133): B Alchikh-Sulaiman. Powder spreading and tribocharging for additive manufacturing powder bed fusion processes. Unknown journal, 2020.
+
+23. (galindo2024amethodto pages 1-2): E. Galindo, E. R. L. Espiritu, C. Gutierrez, Ali N. Alagha, P. Hudon, and M. Brochu. A method to assess the quality of additive manufacturing metal powders using the triboelectric charging concept. Scientific Reports, Jul 2024. URL: https://doi.org/10.1038/s41598-024-67295-0, doi:10.1038/s41598-024-67295-0. This article has 9 citations and is from a peer-reviewed journal.
+
+24. (alchikhsulaiman2020powderspreadingand pages 43-48): B Alchikh-Sulaiman. Powder spreading and tribocharging for additive manufacturing powder bed fusion processes. Unknown journal, 2020.
+
+25. (revanur2024novelscanstrategies pages 22-25): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+26. (revanur2024novelscanstrategies pages 38-41): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+27. (revanur2024novelscanstrategies pages 56-59): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+28. (bonhoff2017experimentalandtheoretical pages 1-4): T Bonhoff, M Schniedenharn, and J Stollenwerk. Experimental and theoretical analysis of thermo-optical effects in protective window for selective laser melting. Unknown journal, 2017.
+
+29. (revanur2024novelscanstrategies pages 18-22): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+30. (abeyta2024anexperimentalapproach pages 26-31): A Abeyta. An experimental approach for characterizing gas flow in the build chamber of laser powder bed fusion systems utilizing particle image velocimetry. Unknown journal, 2024.
+
+31. (revanur2024novelscanstrategies pages 48-51): Ramkumar Revanur. Novel scan strategies for selective laser melting. Text, Jan 2024. URL: https://doi.org/10.17638/03176890, doi:10.17638/03176890. This article has 2 citations and is from a peer-reviewed journal.
+
+32. (sehhat2021powderspreadingin pages 14-16): M. Hossein Sehhat and Ali Mahdianikhotbesara. Powder spreading in laser-powder bed fusion process. Granular Matter, Sep 2021. URL: https://doi.org/10.1007/s10035-021-01162-x, doi:10.1007/s10035-021-01162-x. This article has 110 citations and is from a peer-reviewed journal.
+
+33. (whiting2023powderspreadingtestbed pages 18-21): Justin Whiting, Eric Whitenton, Aniruddha Das, Vipin Tondare, Jason Fox, Michael McGlauflin, Alkan Donmez, and Shawn P Moylan. Powder spreading testbed for studying the powder spreading process in powder bed fusion machines. ArXiv, Nov 2023. URL: https://doi.org/10.6028/nist.ams.100-56, doi:10.6028/nist.ams.100-56. This article has 4 citations.
+
+34. (velikajne2026influenceofbase pages 1-2): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+35. (riener2022processabilityofhighstrength pages 1-2): Kirstin Riener, Tino Pfalz, Florian Funcke, and Gerhard Leichtfried. Processability of high-strength aluminum 6182 series alloy via laser powder bed fusion (lpbf). The International Journal of Advanced Manufacturing Technology, 119:4963-4977, Jan 2022. URL: https://doi.org/10.1007/s00170-022-08673-8, doi:10.1007/s00170-022-08673-8. This article has 55 citations.
+
+36. (velikajne2026influenceofbase pages 8-11): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+37. (velikajne2026influenceofbase pages 6-8): Nejc Velikajne, Jožef Medved, Črtomir Donik, and Irena Paulin. Influence of base plate preheating on laser powder bed fusion–processed en aw-7075 aluminium alloy. Materials, 19:970, Mar 2026. URL: https://doi.org/10.3390/ma19050970, doi:10.3390/ma19050970. This article has 2 citations.
+
+38. (gibbons2024metalpowderfeedstock pages 3-5): Duncan W. Gibbons, Preyin Govender, and Andre F. van der Merwe. Metal powder feedstock evaluation and management for powder bed fusion: a review of literature, standards, and practical guidelines. Progress in Additive Manufacturing, 9:805-833, Jul 2023. URL: https://doi.org/10.1007/s40964-023-00484-x, doi:10.1007/s40964-023-00484-x. This article has 59 citations and is from a peer-reviewed journal.
+
+39. (wu2025improvingshieldinggas pages 7-9): H. Hugo Estrada Medinilla, Christopher J. Elkins, Jorge Mireles, Andres Estrada, and Ryan B. Wicker. Improving shielding gas flow distribution to enhance quality and consistency in metal laser powder bed fusion processes. Journal of Manufacturing and Materials Processing, 10:3, Dec 2025. URL: https://doi.org/10.3390/jmmp10010003, doi:10.3390/jmmp10010003. This article has 0 citations.
+
+40. (jatti2024investigatingtheeffect pages 3-4): Vijaykumar S. Jatti, A. Saiyathibrahim, R. Murali Krishnan, Ashwini V. Jatti, G. Suganya Priyadharshini, and Dhanesh G. Mohan. Investigating the effect of volumetric energy density on tensile characteristics of as‐built and heat‐treated alsi10mg alloy fabricated by laser powder bed fusion. Advanced Engineering Materials, Dec 2024. URL: https://doi.org/10.1002/adem.202401924, doi:10.1002/adem.202401924. This article has 21 citations and is from a peer-reviewed journal.
+
+41. (jacob2016measurementofpowder pages 3-4): Gregor Jacob, A. Donmez, J. Slotwinski, and S. Moylan. Measurement of powder bed density in powder bed fusion additive manufacturing processes. Measurement Science and Technology, 27:115601, Oct 2016. URL: https://doi.org/10.1088/0957-0233/27/11/115601, doi:10.1088/0957-0233/27/11/115601. This article has 125 citations and is from a domain leading peer-reviewed journal.

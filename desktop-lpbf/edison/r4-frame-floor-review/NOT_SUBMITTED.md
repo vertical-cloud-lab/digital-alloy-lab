@@ -1,0 +1,1 @@
+Not submitted: Edison returned HTTP 402 Payment Required at 22:28 UTC on 2026-11-20 for both LITERATURE_HIGH and LITERATURE (the account is out of credit). Submit it with `python desktop-lpbf/edison/run_edison.py submit r4-frame-floor-review LITERATURE_HIGH` once credit is restored.
