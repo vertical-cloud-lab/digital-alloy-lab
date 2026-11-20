@@ -139,6 +139,20 @@ Why attributing the failure to a node matters:
    values, generate candidates in planned values, store both. Noisy measured intermediates are
    the input-uncertainty problem of [#751](https://github.com/meta/Ax/issues/751).
 
+The atomizer has already produced most of these cases:
+
+| Run | What happened | Node-level reading |
+|---|---|---|
+| 630 bronze, Nov 5 ([#219](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/219#issuecomment-6670680314), [clog confirmed](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/219#issuecomment-6782571216)) | the induction generator shut itself off halfway; the melt cooled and clogged the nozzle | `FAILED` (equipment), but the powder made before the shutdown is real. Keep its PSD, but drop or flag the yield, which reflects the fault rather than the inputs |
+| 630 bronze, second run ([#219](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/219#issuecomment-6509252104)) | "mostly failed": the plate's tungsten coating had worn away | transient if it's plate wear; deterministic if the melt attacks the coating. Record it as `unknown` until the cause is known |
+| 630 bronze, Nov 13 ([#219](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/219#issuecomment-6869334131)) | O2 sensor failed (no reading); a seal burned and smoke got into the chamber | one output missing (`INCOMPLETE`, not a failure); the powder's quality is suspect |
+| Al, Oct 20 ([#159](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/159#issuecomment-6353393906)) | never got past setup: empty argon tank, leaking seal | `STALE` / retryable: no data, and nothing learned about the inputs |
+| Al, Oct 8 ([#159](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/159#issuecomment-6353393526)) | "dripping perfect, but it's not atomizing at all"; melt froze on the plate tip | possibly deterministic (superheat, plate temperature), so a candidate viability label |
+
+Simulations fail too. Some Eagar-Tsai corner cases return NaN and then succeed on retry with a
+larger domain ([PR #238](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/238)), which
+is a textbook `FAILED`.
+
 ## 3. What `partial_kgfn` does today
 
 - **Each node has its own data.** `GaussianProcessNetwork` takes a list of `train_X` and
@@ -209,6 +223,16 @@ counts as an improvement if every node on its path is viable. This is the node-l
 principled choice), but it is the same compromise Ax made, and it works with the existing
 network posterior.
 
+The repo's benchmarks so far use three other encodings (§7). Each fits a different case:
+
+- **Failure as a low value**, as in PR #122, where cracking scales density down. This is right
+  when the failed part can still be measured: it is a `COMPLETED` node with a bad output.
+- **An imputed penalty**, as in PR #206, where a stopped chain is recorded as `−λB`. This puts
+  a cliff of arbitrary height into a smooth GP, and the GP smears it over a lengthscale. It
+  should be used only where the imputed number is something the lab would actually measure.
+- **NaN**, as planned in PR #74. This is fine as a ledger value, as long as model building drops
+  it node by node, as above, and never passes it to a GP.
+
 **pKGFN with failures.** Multiply the value of evaluating node *k* at `z` by the probability
 that the evaluation succeeds (viability × (1 − transient failure rate for node *k*)), and charge
 the full cost either way. Including the information a failure label carries (a fantasy
@@ -270,4 +294,22 @@ failed evaluations, and repeated suggestions.
 
 ## 7. Related issues and PRs in this repo
 
-See the comment on [#274](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274).
+Nothing in the repo uses Ax yet: no `AxClient`, `TrialStatus`, or fail/abandon calls on `main`,
+#14, #122 or #206. A mock reviewer has already asked the question this note answers: "How do
+you handle missing nodes/failed builds/failed tests (censoring) in the DAG?"
+([`edison-topic3b-fit-assessment.md` L182](edison-trajectories/edison-topic3b-fit-assessment.md)).
+
+| # | What it is | Bearing on failed / abandoned / partial runs |
+|---|---|---|
+| [#91](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/91) | FLAIME as a DAG; multi-output test nodes; pKGFN speed | Missing outputs *by design*: each sample gets SEM/EDS, tensile *or* hardness, so "we will not have all the data points required for input into one GP". The pKGFN authors' setting needs every parent output before a child can run ([comment](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/91#issuecomment-6201156166)) |
+| [#121](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/121) / [PR #122](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/122) | aluminum LPBF benchmark port, KGFN, matched-seed bootstrap | Already keeps **inventory separate from training data** (powder `lots`, `builds` with a `tested` flag; `benchmarks/bofn-paper/bofn_alloy.py` L202-L302). Cracking is modelled as a *value* (density scaled down, L115-L124), not a gap. Builds pKGFN never tests are effectively abandoned |
+| [#205](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/205) / [PR #206](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/206) | copper/DED 8-stage benchmark | The only code with gates and lot retirement (a lot is retired after three density-gate misses). The screening baseline records a stopped chain with an *imputed* value (`−λB`, "recorded as a failure"; `benchmarks/bofn-cu-ded/policies.py` L220-L248). `pkgfn_audit` sends about 1 in 10 stopped candidates on anyway, to measure false rejections, which is the selection-bias cost of early stopping. Not run yet |
+| [#13](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/13) / [PR #14](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/14) | first BoTorch BOFN, pKGFN port, HPC sweeps | Per-node data and partial evaluations; a silent "error fallback" to random draws was removed after it masked pKGFN crashes. The keyhole, balling and lack-of-fusion constraints are only plotted. [`bofn-llm-bo-synthesis.md`](bofn-llm-bo-synthesis.md) L117-L121 says they are "composed via `ConstrainedMCObjective`", but no code does that |
+| [#73](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/73) / [PR #74](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/74) | design doc: particle packing and CrabNet as BOFN benchmarks | Chose particle packing partly for its native simulation failures, a ready-made P(fail) testbed; the planned `evaluate_node` returns NaN on failure |
+| [#265](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/265) | 5-node synthetic EIFN test | Where the failure modes of §5 would go |
+| [#104](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/104) | fantasizing a batch-independent multi-output GP breaks pKGFN | Has to be solved before multi-output nodes can have partial outputs |
+| [#120](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/120) | Advanced Materials article plan | Run class "R5: failed runs" feeds the atomization-window figure |
+| [#219](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/219), [#159](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/159) | copper and aluminum atomizer runs | The real failures in §2 |
+| [PR #66](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/66), [#223](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/223) / [PR #224](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/224), [PR #238](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/238) | SLURM port; recovered Edison tasks; Arroyave simulation methods | Compute-side partial runs (`"partial": true` checkpoints at walltime) and retryable simulation failures |
+| [#47](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/47) | contact the BoTorch team about a BOFN tutorial | A failure-aware BOFN example could be the tutorial's hook |
+| fork [#1](https://github.com/vertical-cloud-lab/partial_kgfn/issues/1), [PR #2](https://github.com/vertical-cloud-lab/partial_kgfn/pull/2), [#4](https://github.com/vertical-cloud-lab/partial_kgfn/issues/4) | reproduce the pKGFN paper in CI; fast_pKGFN posterior mean | PR #2 ran with `impose_assump=False`. Your [review there](https://github.com/vertical-cloud-lab/partial_kgfn/pull/2#discussion_r3244170803) caught a best-vs-cost curve above the true maximum, which came from taking the max of noisy observations. That is also why §3 recommends reporting regret at the recommended point |
