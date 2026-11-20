@@ -1,0 +1,48 @@
+{
+ "path_mm": 663.4159265358979,
+ "groove_floor_area_mm2": 2668.0,
+ "nodes": 61769,
+ "elements": 37021,
+ "cases": [
+  {
+   "cord": 3.53,
+   "label": "3.53 mm cord at 25 % (as drawn)",
+   "F_oring_N": 2782.368437989424,
+   "F_overpressure_N": 45.568,
+   "squeeze_mm": 0.8825,
+   "lost_max_um": 26.401,
+   "lost_at": [
+    2.1316282072803006e-14,
+    -113.8,
+    108.0
+   ],
+   "margin_to_15pct_um": 353.0,
+   "vm_max": 12.200744263260132,
+   "latch_reaction_N": null,
+   "ok": true,
+   "latch_load_each_N": 800.8315576607218,
+   "hinge_load_each_N": 613.1366613339902,
+   "png": "door_seal_3p53.png"
+  },
+  {
+   "cord": 1.78,
+   "label": "1.78 mm cord at 25 %",
+   "F_oring_N": 1403.0073143402765,
+   "F_overpressure_N": 45.568,
+   "squeeze_mm": 0.445,
+   "lost_max_um": 13.5815,
+   "lost_at": [
+    2.1316282072803006e-14,
+    -113.8,
+    108.0
+   ],
+   "margin_to_15pct_um": 178.0,
+   "vm_max": 6.272401893213636,
+   "latch_reaction_N": null,
+   "ok": true,
+   "latch_load_each_N": 410.2160182202553,
+   "hinge_load_each_N": 314.0716389498829,
+   "png": "door_seal_1p78.png"
+  }
+ ]
+}
