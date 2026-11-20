@@ -74,5 +74,30 @@ Scanned share of the plate area per layer at which the time-averaged absorbed po
 | M50 | 52% | 31% | 20% |
 | L75 | 46% | 24% | 15% |
 
+## The fix: take heat out of the module below the floor
+
+Same model, with the module's outside below the chamber floor (tube, flange, gland plate, rod) cooled harder: h = 5 W/m²K is the natural convection the model has now; 40 W/m²K is a small fan blowing on the module under the floor; 300 W/m²K at 30 °C stands for a water jacket on the tube. 'Laser off' is the heater power that holds 200 °C (it is also the absorbed laser power at which the heater switches off); 'dense' is the dense layout's laser power from the first table.
+
+| Cooling | Module, position | Heater at laser off (W) / installed (W) | Dense: laser (W) | Dense: heater (W) | Dense: plate (°C) | Dense: rod gland (°C) | Dense: magnet face (°C) | Dense: hot plate clearance (µm) | Laser off: hot plate clearance (µm) |
+|---|---|---|---|---|---|---|---|---|---|
+| natural convection (as drawn) | S25 start | 44 / 100 | 35 | 7 | 200 | 43 | 40 | 51 | 51 |
+| natural convection (as drawn) | S25 end | 30 / 100 | 35 | 0 (off) | 231 | 117 | 68 | 62 | 67 |
+| natural convection (as drawn) | M50 start | 72 / 150 | 81 | 0 (off) | 223 | 51 | 46 | 45 | 56 |
+| natural convection (as drawn) | M50 end | 52 / 150 | 81 | 0 (off) | 290 | 155 | 85 | 50 | 82 |
+| natural convection (as drawn) | L75 start | 97 / 250 | 111 | 0 (off) | 223 | 49 | 44 | 47 | 64 |
+| natural convection (as drawn) | L75 end | 71 / 250 | 111 | 0 (off) | 286 | 149 | 82 | 48 | 96 |
+| fan on the module under the floor | S25 start | 45 / 100 | 35 | 8 | 200 | 32 | 28 | 51 | 51 |
+| fan on the module under the floor | S25 end | 37 / 100 | 35 | 1 | 200 | 56 | 28 | 63 | 63 |
+| fan on the module under the floor | M50 start | 73 / 150 | 81 | 0 (off) | 220 | 36 | 29 | 45 | 55 |
+| fan on the module under the floor | M50 end | 65 / 150 | 81 | 0 (off) | 244 | 74 | 29 | 56 | 74 |
+| fan on the module under the floor | L75 start | 98 / 250 | 111 | 0 (off) | 220 | 34 | 29 | 47 | 63 |
+| fan on the module under the floor | L75 end | 88 / 250 | 111 | 0 (off) | 242 | 72 | 29 | 56 | 83 |
+| water jacket on the module (30 C water) | S25 start | 45 / 100 | 35 | 9 | 200 | 33 | 30 | 51 | 50 |
+| water jacket on the module (30 C water) | S25 end | 48 / 100 | 35 | 11 | 200 | 39 | 30 | 57 | 57 |
+| water jacket on the module (30 C water) | M50 start | 75 / 150 | 81 | 0 (off) | 216 | 35 | 30 | 45 | 54 |
+| water jacket on the module (30 C water) | M50 end | 80 / 150 | 81 | 0 (off) | 206 | 45 | 30 | 58 | 61 |
+| water jacket on the module (30 C water) | L75 start | 100 / 250 | 111 | 0 (off) | 218 | 34 | 30 | 48 | 61 |
+| water jacket on the module (30 C water) | L75 end | 107 / 250 | 111 | 0 (off) | 207 | 45 | 30 | 59 | 64 |
+
 A dash means the limit isn't reached inside the swept range (0-150 W). Heat balance closes to within 0.00 W in every run.
 

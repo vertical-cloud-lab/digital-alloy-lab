@@ -21,6 +21,7 @@ plate area, dense 70 %.
 
 Run:  OMP_NUM_THREADS=1 python desktop-lpbf/analysis/thermal_laser.py         (~11 min, one core)
       python desktop-lpbf/analysis/thermal_laser.py report                     (tables and plot from the .json)
+      OMP_NUM_THREADS=1 python desktop-lpbf/analysis/thermal_laser.py jacket  (the cooling fix, ~6 min; needs the .json)
       -> desktop-lpbf/analysis/out/thermal/laser_heat.{md,json,png}
 """
 from __future__ import annotations
@@ -241,6 +242,7 @@ def report(data):
         s0, s1 = data["summary"][f"{key}_start"], data["summary"][f"{key}_end"]
         L.append(f"| {key} | {max_fill(key, s0['heater_off_from_W']):.0%} | {max_fill(key, s1['heater_off_from_W']):.0%} | "
                  f"{max_fill(key, s1['heater_off_from_W'], ABS_KEYHOLE):.0%} |")
+    L += jacket_section(data)
     L += ["", "A dash means the limit isn't reached inside the swept range (0-150 W). Heat balance closes to within "
           f"{max(abs(r['balance_W']) for r in data['rows']):.2f} W in every run.", ""]
     (OUT / "laser_heat.md").write_text("\n".join(L) + "\n")
@@ -274,7 +276,64 @@ def plot(data):
     fig.savefig(OUT / "laser_heat.png", dpi=110)
 
 
+JACKETS = {"natural convection (as drawn)": (5.0, 25.0), "fan on the module under the floor": (40.0, 25.0),
+           "water jacket on the module (30 C water)": (300.0, 30.0)}
+
+
+def jacket():
+    """The fix: take heat out of the module's outside below the floor (tube, flange, gland plate, rod). For each
+    module and position: the heater power that holds 200 C with the laser off (= the absorbed laser power at which the
+    heater switches off), and what the module sees at the dense layout's laser power with the heater off."""
+    t0 = time.time()
+    h0, T0 = TM.H_UNDER, TM.T_ROOM
+    d = json.loads((OUT / "laser_heat.json").read_text())
+    res = []
+    for name, (h, Tj) in JACKETS.items():
+        TM.H_UNDER, TM.T_ROOM = h, Tj
+        for key in MP.MODULES:
+            q_dense = d["laser_loads"][key]["dense (70 % of the plate)"]["Q_W"]
+            for z_p in (0.0, -MP.BUILD_STROKE):
+                r0 = case_at(key, z_p, 0.0)
+                r1 = case_at(key, z_p, q_dense)
+                res.append(dict(jacket=name, h=h, T_coolant=Tj, key=key, pos=r0["pos"],
+                                heater_at_laser_off_W=r0["P_heater_W"],
+                                installed_W=MP.MODULES[key]["heaters"] * MP.MODULES[key]["heater_w"],
+                                laser_off=r0, dense=r1, Q_dense_W=q_dense))
+                print(f"{name[:22]:22s} {key} {r0['pos']:5s} heater@Q0={r0['P_heater_W']:6.1f} W | dense Q={q_dense:5.1f}:"
+                      f" heater={r1['P_heater_W']:5.1f} plate={r1['T_plate_centre']:6.1f} gland={r1['T_gland_max']:6.1f}"
+                      f" magnet={r1['T_rod_end']:6.1f} clear={r1['clear_plate_hot_mm'] * 1000:5.1f} um", flush=True)
+    TM.H_UNDER, TM.T_ROOM = h0, T0
+    d["jacket"] = dict(cases=res, seconds=round(time.time() - t0))
+    (OUT / "laser_heat.json").write_text(json.dumps(d, indent=1, default=float))
+    report(d)
+
+
+def jacket_section(d):
+    if "jacket" not in d:
+        return []
+    L = ["", "## The fix: take heat out of the module below the floor", "",
+         "Same model, with the module's outside below the chamber floor (tube, flange, gland plate, rod) cooled harder: "
+         "h = 5 W/m²K is the natural convection the model has now; 40 W/m²K is a small fan blowing on the module "
+         "under the floor; 300 W/m²K at 30 °C stands for a water jacket on the tube. 'Laser off' is the heater power "
+         "that holds 200 °C (it is also the absorbed laser power at which the heater switches off); 'dense' is the "
+         "dense layout's laser power from the first table.", "",
+         "| Cooling | Module, position | Heater at laser off (W) / installed (W) | Dense: laser (W) | Dense: heater (W) | "
+         "Dense: plate (°C) | Dense: rod gland (°C) | Dense: magnet face (°C) | Dense: hot plate clearance (µm) | "
+         "Laser off: hot plate clearance (µm) |", "|---|---|---|---|---|---|---|---|---|---|"]
+    for c in d["jacket"]["cases"]:
+        r1, r0 = c["dense"], c["laser_off"]
+        flag = " **over**" if c["heater_at_laser_off_W"] > c["installed_W"] else ""
+        L.append(f"| {c['jacket']} | {c['key']} {c['pos']} | {c['heater_at_laser_off_W']:.0f} / {c['installed_W']:.0f}{flag} | "
+                 f"{c['Q_dense_W']:.0f} | {r1['P_heater_W']:.0f}{' (off)' if r1['heater_off'] else ''} | "
+                 f"{r1['T_plate_centre']:.0f} | {r1['T_gland_max']:.0f} | {r1['T_rod_end']:.0f} | "
+                 f"{r1['clear_plate_hot_mm'] * 1000:.0f} | {r0['clear_plate_hot_mm'] * 1000:.0f} |")
+    return L
+
+
 if __name__ == "__main__":
+    if "jacket" in sys.argv[1:]:
+        jacket()
+        sys.exit(0)
     if "report" in sys.argv[1:]:                 # rewrite the .md and .png from the .json, no FEA
         d = json.loads((OUT / "laser_heat.json").read_text())
         d["summary"] = summarize(d["rows"])
