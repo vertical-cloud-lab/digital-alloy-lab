@@ -5,6 +5,8 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 
 **Low-profile version (2026-11-17):** [`low-profile.md`](low-profile.md) re-lays the machine out as three modules side by side on a VLM tray, 564 mm tall (581.2 mm since 2026-11-19, on real levelling mounts: [`fasteners.md`](fasteners.md)), as byu-vcl PR 318's height limits ask. It also has exact interference sweeps, MuJoCo and CalculiX checks, a mass budget, and a materials selection matched to the lab's other systems.
 
+**Follow-up checks (2026-11-20):** [`followup-checks.md`](followup-checks.md) collects the CalculiX, OpenFOAM, LIGGGHTS, MuJoCo, CAM and operation-by-operation checks, real parts, used and cheaper-source costs, and an optional tooling BOM. Two of its findings come before any purchase: the quoted laser is air-cooled and the machine would run inside the VLM ([`heat.md`](heat.md) §2), and the build module can't shed the laser's heat ([`heat.md`](heat.md) §1).
+
 | File | What it is |
 |---|---|
 | [`README.md`](README.md) | this note: survey, gantry question, concept, safety, BOM, plan |
@@ -28,6 +30,17 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 | [`fasteners.md`](fasteners.md) | every screw, insert, pin and disc spring in the model as a real McMaster-Carr part ([`cad/fasteners.py`](cad/fasteners.py)), each recreated in CadQuery and checked by volume against McMaster's own CAD ([`cad/out/fastener-check.md`](cad/out/fastener-check.md)); the joint table with its holes ([`cad/joints.py`](cad/joints.py)); the bolted gland plate and the Macor-ring heater stack that replace a welded flange and screws in Macor; [`fasteners.csv`](fasteners.csv) |
 | [`hot-swap.md`](hot-swap.md) | how the parts that are swapped should be held, screws or something else: what LPBF machines and automation use (sourced notes in [`notes/2026-11-19-hot-swap-research.md`](notes/2026-11-19-hot-swap-research.md)), Shigley / Hertz / disc-spring / magnet sizing of each option ([`analysis/out/hotswap/joint_calcs.md`](analysis/out/hotswap/joint_calcs.md)) and CalculiX checks ([`analysis/out/hotswap/fea_hotswap.md`](analysis/out/hotswap/fea_hotswap.md)) |
 | [`preheat-and-plates.md`](preheat-and-plates.md) | whether a lower-expansion build plate helps (FEA with nine plate materials, [`analysis/out/thermal/plate_materials.md`](analysis/out/thermal/plate_materials.md); stock in [`plate-materials.csv`](plate-materials.csv)), and when a 500 °C plate is worth building: by alloy, and what it does to spreading, gas purity and the machine ([`preheat_500.py`](preheat_500.py), Edison task in [`edison/preheat-500-plate-cte/`](edison/preheat-500-plate-cte/)) |
+| [`followup-checks.md`](followup-checks.md) | **start here for the 2026-11-20 follow-up checks:** what changes what we buy or draw, most urgent first; what was run; the design changes made and still to make |
+| [`heat.md`](heat.md) | the laser's heat in the build modules (CalculiX: the plate drifts past 200 °C in dense builds; a fan or water-cooled sleeve fixes it) and the machine's heat in the VLM (the air-cooled laser against its 35 °C rating), with an Edison second opinion in [`edison/followup-laser-heat/`](edison/followup-laser-heat/) |
+| [`seals.md`](seals.md) | every seal and penetration of the gas envelope checked (Parker glands, closure forces, permeation, pump-down, powder lift, rate-of-rise test) and the fixes, now drawn in the model with real parts ([`seal-parts.csv`](seal-parts.csv)) |
+| [`machining.md`](machining.md) | machining review with open-source CAM (OpenCAMLib toolpaths, voxel stock-removal simulation) and DFM rules over all 37 machined parts; what BYU's shops can make; the optional tooling BOM [`tooling-bom.csv`](tooling-bom.csv) and the machines needed [`machines.csv`](machines.csv) |
+| [`gas-flow.md`](gas-flow.md) | OpenFOAM CFD of the argon cross-flow over the plate, recirculation, bed shear, spatter and condensate, and the slot, outlet and flow-rate changes that reach 2.5 m/s |
+| [`powder-spreading.md`](powder-spreading.md) | powder spreading by theory and LIGGGHTS DEM: gap, speed, cohesion, segregation, blade force, the hot-plate gap, and recipe settings |
+| [`operations.md`](operations.md) | every hand operation (assembly, use, maintenance, swaps) simulated step by step, with real tool shapes on every screw |
+| [`robot-ops.md`](robot-ops.md) | every automated operation in MuJoCo with a UR10e and a Robotiq 2F-85 |
+| [`real-parts.md`](real-parts.md) | bought parts drawn to published dimensions ([`cad/vendor_parts.py`](cad/vendor_parts.py), [`vendor-parts.csv`](vendor-parts.csv)), checked against vendor CAD, and the fit problems they showed |
+| [`cost-scenarios.md`](cost-scenarios.md) | what the machine costs with used major parts and with cheaper same-spec catalogue parts, from live listings ([`cost/`](cost/)) |
+| [`notes/2026-11-20-pain-points.md`](notes/2026-11-20-pain-points.md) | 59 sourced pain points from similar and adjacent systems, each turned into a check or a change ([`pain-points.csv`](notes/pain-points.csv)) |
 
 ## 1. Short answers
 
