@@ -47,7 +47,7 @@ The machine is three modules side by side, each on its own base plate and feet:
 
 | Module | Contents | Footprint (mm) | Height above tray | Mass |
 |---|---|---|---|---|
-| Left: laser and controls | a 10U 19 in. rack holding the UPS (2U), 500 W single-mode fiber laser (3U), scan/laser controller PC (2U) and DIN-rail drawer (safety relay, ClearCore, 24 V, Pi 5); the operator panel (E-stop, key, emission lamp, reset) hangs on the rack's front post | 560 × 600 | 481 (rack 470, fiber loop above) | 109 kg |
+| Left: laser and controls | an 11U 19 in. rack (10U, 470 mm, until 2026-11-20; [`real-parts.md`](real-parts.md)) holding the UPS (2U), 500 W single-mode fiber laser (4U: the quoted IPG YLR-500-U3 is 176.5 mm tall), scan/laser controller PC (2U) and DIN-rail drawer (safety relay, ClearCore, 24 V, Pi 5); the operator panel (E-stop, key, emission lamp, reset) hangs on the rack's front post | 560 × 600 | rack 515 (was 470), fiber loop above | 109 kg |
 | Centre: process | the chamber, the Z stage hung from the chamber floor, recoater, lid with dosing, window and camera, optics bridge with the f-theta and galvo, and the Class 1 guard with a sliding door | 660 × 480 | 564 | 81 kg |
 | Right: gas and vacuum | scroll pump, sealed blower, cyclone + HEPA housing, O₂ and dew-point, argon manifold and regulator | 590 × 550 | 345 | 61 kg |
 

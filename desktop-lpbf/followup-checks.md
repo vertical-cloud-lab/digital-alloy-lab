@@ -47,11 +47,12 @@ its own sources, assumptions and re-run instructions.
    gas-module base plate needs a re-position or a waterjet outline.
 6. **Two jobs done every build fail as drawn** ([`operations.md`](operations.md)):
    - the overflow jar can't come out;
-   - the guard door doesn't clear the right door latch.
+   - the guard door doesn't clear the right door latch (now fixed in the model: it slides 515 mm).
 
    Window service means removing the scan head, the build module's potted rod end traps its seals, and 12 steps of
    the assembly order change.
-7. **Real parts don't all fit the envelopes they replace** ([`real-parts.md`](real-parts.md)):
+7. **Real parts didn't all fit the envelopes they replaced** ([`real-parts.md`](real-parts.md); fixed in the model,
+   §3):
    - the laser is 4U, so the rack becomes 11U;
    - the real KF-25 ball valve and the collimator poke through the guard;
    - the galvo's beam axis is 25 mm off;
@@ -105,9 +106,18 @@ its own sources, assumptions and re-run instructions.
 
 ## 3. Design changes: in the model now, and still to draw
 
-**In the model now** (sweeps clean for M50/M, S25/S and L75/L):
-- every seal fix listed in [`seals.md`](seals.md) §0;
-- the real-part swaps in [`real-parts.md`](real-parts.md), as far as they were integrated (see that note).
+**In the model now** (exact-boolean sweeps: 0 interferences in all 5 states and 8 motion sweeps for M50/M, S25/S and
+L75/L; the machine is still 581.2 mm above the tray):
+- every seal fix listed in [`seals.md`](seals.md) §0, with real O-rings, cord, latches, feedthroughs and fittings
+  ([`seal-parts.csv`](seal-parts.csv));
+- 17 of the 63 bought-part entries now drawn to published dimensions ([`real-parts.md`](real-parts.md)): the recoater
+  and Z servos, dosing stepper, recoater rail, carriage and ball nut, KF-25 ports, the KF-40 overflow jar and clamp,
+  f-theta lens, galvo, collimator, vacuum valve, the 4U laser and the UPS;
+- the fit changes those parts forced: an 11U rack (515 mm), the guard widened on both sides for the collimator and the
+  valve, the beam line moved to the galvo's real input on a 10 mm riser, a 16 mm lens adapter ring, the Z servo's
+  connector to the front;
+- the guard door now slides 515 mm, so it clears the right door latch ([`operations.md`](operations.md) U2.2; not
+  re-checked by the operations script).
 
 **Still to draw**, each with the note that sizes it:
 
@@ -124,9 +134,12 @@ its own sources, assumptions and re-run instructions.
 
 ## 4. Not done
 
-- **Nothing has been re-checked after the fixes listed in §3 as still to draw.** The hand-operation and robot checks
-  ran on the model as it stood at 13:54 UTC, before the seal changes. Their scripts take the CAD path as an argument,
+- **The hand-operation and robot checks ran on the model as it stood at 13:54 UTC**, before the seal changes and the
+  real-part swaps. The interference sweeps, mass budget and STEP are on the final model. Their scripts take the CAD path as an argument,
   so they can be re-run on the current model: `operations.md` and `robot-ops.md` give the commands.
+- Not yet real in the model: the pump and HEPA housing (builders exist; the gas-loop hoses need re-routing to their
+  real ports), the pressure transmitter (the lid port is now SAE-4, the BOM's transmitter is 1/4 NPT), the door
+  hardware, solenoids, regulator and small sensors.
 - No shop quotes, no blower curve, no measurements.
 - The DEM uses a softened contact stiffness, so its absolute packing figures are lower bounds.
 - The CFD variants ran on the coarse mesh only.
