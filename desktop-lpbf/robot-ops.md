@@ -1,8 +1,22 @@
 # Robot tending: a UR10e + Robotiq 2F-85 on a MiR250, simulated in MuJoCo
 
 Written 2026-11-20 for PR #266 (issue #260). Script: [`analysis/robot/robot_ops.py`](analysis/robot/robot_ops.py).
-Results: [`analysis/out/robot/robot_ops_B.json`](analysis/out/robot/robot_ops_B.json) (all operations, low base) and
-[`robot_ops_test.json`](analysis/out/robot/robot_ops_test.json) (drawer only, base level with the tray).
+Results:
+- [`analysis/out/robot/robot_ops_final.json`](analysis/out/robot/robot_ops_final.json): the **final model, commit 9e6464a**,
+  run directly from `desktop-lpbf/cad` at 15:53 UTC. Covers the guard door, chamber door open and close, plate exchange, drawer
+  and overflow jar.
+- [`robot_ops_B.json`](analysis/out/robot/robot_ops_B.json): the earlier copy of the model (13:54 UTC, before 9e6464a), every
+  operation. The reservoir, blade cartridge, liner and module-swap rows come from this run only; they were not re-run on the
+  final model.
+- [`robot_ops_test.json`](analysis/out/robot/robot_ops_test.json): the drawer only, base level with the tray (earlier model).
+
+| Plate exchange (stepped fingertips) | Chamber door closing (handle lift, then a push on the face) |
+|---|---|
+| ![Plate exchange](analysis/out/robot/plate_exchange.gif) | ![Chamber door close](analysis/out/robot/chamber_door_close.gif) |
+| ![Plate exchange, tightest frame](analysis/out/robot/plate_exchange_tightest.png) | ![Chamber door close, tightest frame](analysis/out/robot/chamber_door_close_tightest.png) |
+
+The GIFs and stills show placement B from the front left (azimuth +60°). The stills are the frame with the tightest clearance
+of each operation. In both, the arm comes up from the low base, and the wrist (plate) or forearm (door) passes through the front of the process module. That is the posture problem in item 4.
 
 ## Short answer
 
@@ -26,15 +40,16 @@ reach. What stops it is what it would grip:
    - both side liners are threaded on the recoater ball screw, and the back liner sits 2.4 mm behind the carriage block.
 4. **Where the robot stands matters as much as the machine.** With the base level with the tray top, 350 mm in front of the
    tray, the forearm rises 58 mm into the VLM's 695 mm lintel (Modula bay S). With the base 350 mm lower and 250 mm in front,
-   the wrist passes low and hits the open chamber door, the base plate and the tray in most operations.
+   the wrist and forearm pass low and hit the chamber body, the open door, the process base plate and the tray in most
+   operations.
    - The paths here are straight Cartesian moves, with one IK branch picked per operation. No path planner was run.
    - So these collisions say "this posture doesn't fit". They don't prove that no path exists.
 
 **Torque and force are not the limit.**
-- Peak joint torque stays ≤ 39 % of the UR10e's limits in every operation.
+- Peak joint torque stays ≤ 39 % of the UR10e's limits in every operation (≤ 35 % on the final model).
 - The one exception is the drawer's 350 N push, which takes the elbow to 99 % with the base level with the tray.
-- Every pull or push the steps need (30–40 N) is 4–15× below what the arm can apply at that pose. The heaviest payload is the
-  2.5 kg build module, against 12.5 kg.
+- Every pull or push the steps need (10–40 N) is 5–30× below what the arm can apply at that pose. The heaviest payload is the
+  build module, 2.5 kg in the earlier model and 2.67 kg in the final one, against 12.5 kg.
 
 ## Cell assumptions
 
@@ -49,7 +64,11 @@ reach. What stops it is what it would grip:
   - **A:** base level with the tray top, 350 mm in front of its edge, (0, −782, −212) mm. Drawer only.
   - **B:** base 350 mm below the tray top, 250 mm in front of its edge, (0, −682, −562) mm. Every operation.
   - The MiR250's deck height and the VLM's opening height above the floor were not looked up, so both placements are guesses.
-- **The machine** is the `lpbf_low.build()` model, copied to `/tmp/robot-work/cad` at 13:54 UTC, with the M50 module and reservoir M.
+- **The machine** is the `lpbf_low.build()` model with the M50 module and reservoir M: the final model (commit 9e6464a) for
+  `robot_ops_final.json`, and a copy taken at 13:54 UTC for `robot_ops_B.json`. Between the two:
+  - the guard door's travel went from 470 to 515 mm;
+  - the door got side draw latches and a 1.78 mm cord;
+  - the drawer got a half-dovetail seal groove.
   - Every part within 560 mm left and 1010 mm right of the plate is loaded as convex pieces: a hull when the part fills ≥ 90 % of its hull, CoACD otherwise.
   - Fasteners are hulls.
   - Parts that move in an operation are free bodies.
@@ -65,17 +84,17 @@ seals.md and hot-swap.md, not from the simulation.
 
 | Operation | Steps | IK | Tightest clearance (mm) and pair | Force needed / arm can apply (N) | Pass / fail and reason | Design fix |
 |---|---|---|---|---|---|---|
-| Guard door open / close | 5 | no (slide unreachable in this posture) | −90: upper arm vs process base plate (B); approach +3.5 | 30 / 217–225 | **Fail as drawn: no handle.** The door's only feature is a 4 mm edge, 2 mm from the fixed panel | Ø12 bar handle on 45 mm standoffs at x = −310 (modelled); robot standing nearer the door's middle |
-| Chamber door open | 3 (+ unlatch) | approach no; swing yes | −61: wrist 1 vs tray, through the swing | 10 / 228 | **Fail as drawn: draw latches.** Holding the handle, the gripper ends up under the door at 95° (handle at z −41 mm) and runs into the base plate and tray. The robot can't lower the door the whole way | Pneumatic over-centre clamps with a clamp-closed sensor (seals.md). A rotary damper or gas strut, so the robot only pulls past 10° and the damper lowers it. Without one the door free-falls to 1.7 m/s (mujoco.md) |
-| Chamber door close | 4 | approach no | Handle lift clear 92.5° → 27.5°; face push clear 22.5° → 0° | 12–15 / 158–312 | **Feasible in two grips:** lift on the handle to ~27°, then push the outer face closed. **Seating fails:** ~1.4 kN squeeze (1.78 mm cord) vs ~100 N force mode | Clamps pull it home (above) |
-| Plate exchange (out, then the reverse in) | 9 | no (over the sill and out) | −71 to −77: wrist 2/3 vs open door and plate wiper | 0.6 N·m twist (hot-swap.md) | **Fail with the stock gripper** (geometry, item 1). With stepped fingertips, IK solves inside the chamber; the arm's wrist then hits the open door shelf in this posture | Stepped, cranked fingertips with a lip for the groove. A drawbar instead of the 60° bayonet, so no twist (hot-swap.md). Raise the exchange height to ~+16 mm or lower the sill. Re-plan with the base level with the tray and the wrist above the shelf |
-| Cover-slide drawer | 4 | approach no (B); yes (A) | −3.8: pad vs chamber body (B, convex pieces, unconfirmed); −58: forearm vs lintel (A) | pull 20 / 553; **seat 350 / 552 (B), 353 (A)** | **Fail on force:** seating needs 350 N, which is 3.5× the force-mode range. The pull is fine | Half-dovetail cord plus a cam latch or a robot-pushed toggle (seals.md). A positive pull tab (an undercut), not two 6 mm posts. Finger notches or a vacuum cup to lift the Ø50.8 slide out of its 0.2 mm pocket |
-| Reservoir, stock fingers | 4 | no | −13: follower vs galvo; −10: wrist 3 vs optics bridge | 40 / 451 | **Fail:** the 85 mm housing is wider than the bridge's 56 mm slot, and the fin sits under the beam tube | Stepped fingertips (next row), or a handle reaching forward past the bridge (y < −200) |
-| Reservoir, stepped fingertips | 4 | **yes** | −36: wrist 2 vs chamber door (posture B); −13: coupler vs galvo while carrying it out | 40 / 497 | **Reachable.** Clear except posture B's wrist and the coupler over the galvo | Carry it out lower (z −15 mm) or slide it 20 mm further before lifting. Base level with the tray |
-| Overflow jar | 4 | no | −87: upper arm vs base plate; the jar path runs into the front-right leg | – | **Fail:** the jar sits under the chamber at x 72–128 mm. The leg (x 75–105), the outlet-plenum boot (x 72–100) and the outlet hose block the front, and the KF wing-nut clamp needs turning | Move the overflow to a front or side port the robot can reach. A lever KF clamp or a bayonet jar (hot-swap.md) |
-| Blade cartridge (holder + blade) | 6 | no (over the sill and out) | −112: forearm vs base plate (posture B) | 40 / 220 | **Fail as drawn: 2 × M3 screws.** With stepped tips the grip is reachable (recoater driven to x = 0) | Ball-lock pin or detent cartridge (hot-swap.md). Lift 12 mm to clear the sill |
-| Liner, right side | 4 | no (way out) | −80: wrist 2 vs open door | – | **Fail as drawn: captive.** Both side liners have Ø22 holes round the recoater ball screw (y 72, z 40), and the back liner is 2.4 mm behind the carriage block (z 25–99) | Slot the screw hole open to the back edge and shorten the liner 15 mm at the front, so it slides 22 mm off. Split the back liner at the carriage, and lift each piece with the carriage parked at the other end. Add a pull tab |
-| Build module swap | 8 | no (last 140 mm) | −20: gripper spring link vs guard's bottom T-slot; −60: wrist 1 vs tray | – (2.5 kg) | **Fail as drawn: 2 captive M6 thumb screws.** The path is mostly reachable. The housing clears the guard's bottom rail by only 0.5 mm on paper | Zero-point modules (STARK.easyclick or SCHUNK NSE, hot-swap.md). Raise the guard sill rail, or exit 20 mm higher |
+| Guard door open / close (final model, 515 mm) | 5 | no (slide unreachable in this posture) | −91: upper arm vs process base plate; close on the handle +3.5 | 30 / 225 | **Fail as drawn: no handle.** The door's only feature is a 4 mm edge, 2 mm from the fixed panel | Ø12 bar handle on 45 mm standoffs at x = −310 (modelled); robot standing nearer the door's middle |
+| Chamber door open (final model) | 3 (+ unlatch) | approach no; swing yes | Swing clear 2.5° → 30°, then −80: forearm vs base plate. Approach −3.9: pad vs the drawer's pull tab (convex pieces, unconfirmed) | 10 / 311 | **Fail as drawn: draw latches.** The robot can pull the door to 30° on the handle. Past that the arm runs into the base plate, and at 95° the handle ends up under the door (z −41 mm). So it lets go at 30°, and only a damper stops the door slamming | Pneumatic over-centre clamps with a clamp-closed sensor (seals.md). A rotary damper or gas strut, so the robot only pulls past 10° and the damper lowers it. Without one the door free-falls to 1.7 m/s (mujoco.md) |
+| Chamber door close (final model) | 4 | approach no | Handle lift clear 92.5° → 27.5°; face push clear 22.5° → 0° | 12–15 / 158–312 | **Feasible in two grips:** lift on the handle to ~27°, then push the outer face closed. **Seating fails:** ~1.4 kN squeeze (1.78 mm cord) vs ~100 N force mode | Clamps pull it home (above) |
+| Plate exchange (out, then the reverse in; final model) | 9 | no (over the sill and out) | −72 to −88: wrist 3 and gripper housing vs chamber body (earlier model: −71 to −77, wrist vs open door) | 0.6 N·m twist (hot-swap.md) | **Fail with the stock gripper** (geometry, item 1). With stepped fingertips, IK solves every step inside the chamber; in this posture the wrist then hits the chamber's front | Stepped, cranked fingertips with a lip for the groove. A drawbar instead of the 60° bayonet, so no twist (hot-swap.md). Raise the exchange height to ~+16 mm or lower the sill. Re-plan with the base level with the tray and the wrist above the shelf |
+| Cover-slide drawer (final model) | 4 | approach no (B); yes (A) | −2.1: pad vs chamber lid (convex pieces, unconfirmed; earlier model −3.8 vs chamber body); −58: forearm vs lintel (A, earlier model) | pull 20 / 553; **seat 350 / 552 (B), 353 (A)** | **Fail on force:** seating needs 350 N, 3.5× the force-mode range. The 350 N is seals.md's figure for the drawer's earlier seal; the half-dovetail groove now drawn was not re-sized here. The pull is fine | Half-dovetail cord plus a cam latch or a robot-pushed toggle (seals.md). A positive pull tab (an undercut), not two 6 mm posts. Finger notches or a vacuum cup to lift the Ø50.8 slide out of its 0.2 mm pocket |
+| Reservoir, stock fingers (earlier model) | 4 | no | −13: follower vs galvo; −10: wrist 3 vs optics bridge | 40 / 451 | **Fail:** the 85 mm housing is wider than the bridge's 56 mm slot, and the fin sits under the beam tube | Stepped fingertips (next row), or a handle reaching forward past the bridge (y < −200) |
+| Reservoir, stepped fingertips (earlier model) | 4 | **yes** | −36: wrist 2 vs chamber door (posture B); −13: coupler vs galvo while carrying it out | 40 / 497 | **Reachable.** Clear except posture B's wrist and the coupler over the galvo | Carry it out lower (z −15 mm) or slide it 20 mm further before lifting. Base level with the tray |
+| Overflow jar (final model) | 4 | no | −87: upper arm vs base plate; the jar path runs into the front-right leg | – | **Fail:** the jar sits under the chamber at x 72–128 mm. The leg (x 75–105), the outlet-plenum boot (x 72–100) and the outlet hose block the front, and the KF wing-nut clamp needs turning | Move the overflow to a front or side port the robot can reach. A lever KF clamp or a bayonet jar (hot-swap.md) |
+| Blade cartridge, holder + blade (earlier model) | 6 | no (over the sill and out) | −112: forearm vs base plate (posture B) | 40 / 220 | **Fail as drawn: 2 × M3 screws.** With stepped tips the grip is reachable (recoater driven to x = 0) | Ball-lock pin or detent cartridge (hot-swap.md). Lift 12 mm to clear the sill |
+| Liner, right side (earlier model) | 4 | no (way out) | −80: wrist 2 vs open door | – | **Fail as drawn: captive.** Both side liners have Ø22 holes round the recoater ball screw (y 72, z 40), and the back liner is 2.4 mm behind the carriage block (z 25–99) | Slot the screw hole open to the back edge and shorten the liner 15 mm at the front, so it slides 22 mm off. Split the back liner at the carriage, and lift each piece with the carriage parked at the other end. Add a pull tab |
+| Build module swap (earlier model) | 8 | no (last 140 mm) | −20: gripper spring link vs guard's bottom T-slot; −60: wrist 1 vs tray | – (2.5 kg) | **Fail as drawn: 2 captive M6 thumb screws.** The path is mostly reachable. The housing clears the guard's bottom rail by only 0.5 mm on paper | Zero-point modules (STARK.easyclick or SCHUNK NSE, hot-swap.md). Raise the guard sill rail, or exit 20 mm higher |
 
 Reach margin (UR10e arm length minus shoulder-to-wrist distance) is ≥ 342 mm in every step. The closest to the joint limits
 is 2π, never approached.
@@ -88,7 +107,11 @@ is 2π, never approached.
     planner in joint space), at placement A plus a lintel-aware elbow.
   - It should also run a short sweep of base height (−400 to 0 mm against the tray top) and standoff (150–400 mm).
 - **No exact clearances.** The FCL re-measure ran but returned −1 m for penetrating pairs. Every near-miss in the table is still from convex pieces.
-- **No GIFs or PNGs committed.** `--render` (EGL) did produce a plate-exchange and a reservoir GIF (0.7 MB each) and stills. But the camera azimuth in `main()` (−118° to −125°) looks at the back of the machine, so the robot is hidden, and they were deleted. Set the azimuth to about +60° and re-run with `--ops plate_exchange,reservoir --render` (~7 min).
+- **Not re-run on the final model:** the reservoir (stock and stepped fingertips), the blade cartridge, the liner and the
+  module swap. Their geometry in the swept region didn't change in 9e6464a as far as the change list says, but that wasn't
+  checked by a run.
+- **The final run used a smaller IK seed set** (96 instead of 240) and re-seeds at most once every 12 steps. That brought it
+  from 16 min to 5 min. It also changes which IK branch is picked, so some clearances moved by 10–15 mm against the earlier run.
 - **Not checked:**
   - MiR250 docking accuracy;
   - the UR10e's force-mode limits (only the joint-torque bound and the 100 N sensor range are used);
@@ -98,10 +121,12 @@ is 2π, never approached.
 ## Re-running
 
 ```bash
-cp -r desktop-lpbf/cad /tmp/robot-work/cad      # or pass --cad desktop-lpbf/cad
-OMP_NUM_THREADS=1 MUJOCO_GL=egl /tmp/capmem 4 /tmp/venv/bin/python -u desktop-lpbf/analysis/robot/robot_ops.py \
-    --cad /tmp/robot-work/cad --base 0,-682,-562 --tag _B          # ~16 min with the cache
+ROBOT_HULL_ONLY=1 OMP_NUM_THREADS=1 MUJOCO_GL=egl /tmp/capmem 4 /tmp/venv/bin/python -u desktop-lpbf/analysis/robot/robot_ops.py \
+    --cad desktop-lpbf/cad --base 0,-682,-562 \
+    --ops plate_exchange,drawer,overflow_jar,guard_door,chamber_door_open,chamber_door_close --render --tag _final   # ~5 min with the cache
 ```
+
+Drop `--ops` to run all eleven operations. `--render` writes GIFs and stills for the plate exchange and the chamber door closing.
 
 CoACD on the threaded fasteners took ~45 min the first time. Set `ROBOT_HULL_ONLY=1` to hull every part that isn't cached yet.
 The cache is `/tmp/robot-work/mj`.

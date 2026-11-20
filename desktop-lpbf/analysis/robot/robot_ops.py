@@ -488,9 +488,9 @@ class Cell:
         yaw = math.atan2(p_mm[1] - b[1], p_mm[0] - b[0])
         out = []
         for pan_off in (0.0, math.pi):
-            for sl in (-0.6, -1.2, -1.9, -2.5):
-                for el in (1.0, 1.8, 2.5, -1.0, -1.8):
-                    for w1 in (-1.57, 0.0, -3.0):
+            for sl in (-0.6, -1.4, -2.3):
+                for el in (1.2, 2.2, -1.2, -2.2):
+                    for w1 in (-1.57, 0.0):
                         for w2 in (1.57, -1.57):
                             out.append(np.array([yaw - math.pi / 2 + pan_off, sl, el, w1, w2, 0.0]))
         return out
@@ -604,7 +604,9 @@ def op_frames(name, M, P, parts):
     """Frames for each operation. Each frame: label, p (mm), R, gap (mm), site ('pad'|'tip'), bodies {name: T}, held,
     ignore (machine bodies the gripper may touch), force (N, world vector the robot applies), mass (kg held)."""
     hinge = M.DOOR_HINGE
-    G_OPEN = {"gdoor": T(p=(470.0, 0, 0))}
+    GT = float(M.MOTION["gdoor"]["hi"])          # guard-door travel (515 mm in the final model)
+    G_OPEN = {"gdoor": T(p=(GT, 0, 0))}
+    HD = P["door_handle"]                         # door handle bar centre (mm), read from the part
     D_OPEN = {"door": door_T(95.0, hinge)}
     frames = []
 
@@ -621,14 +623,14 @@ def op_frames(name, M, P, parts):
         st = dict(site="pad", held=(), ignore=("gdoor",), mass=0.0)
         add(line("approach", (hx, hy - 150, hz), (hx, hy, hz), R, gap=40.0), **st, bodies={})
         add(line("close on the handle", (hx, hy, hz), (hx, hy, hz), R, gap=lambda s: 40 - 28 * s), **st, bodies={})
-        add(line("slide open 470 mm", (hx, hy, hz), (hx + 470, hy, hz), R, gap=12.0, step=10.0,
-                 bodies=lambda s: {"gdoor": T(p=(470.0 * s, 0, 0))}, force=(30.0, 0, 0)), **st)
-        add(line("release and retreat", (hx + 470, hy, hz), (hx + 470, hy - 150, hz), R, gap=40.0), **st, bodies=G_OPEN)
-        add(line("slide closed (reverse)", (hx + 470, hy, hz), (hx, hy, hz), R, gap=12.0, step=10.0,
-                 bodies=lambda s: {"gdoor": T(p=(470.0 * (1 - s), 0, 0))}, force=(-30.0, 0, 0)), **st)
+        add(line(f"slide open {GT:.0f} mm", (hx, hy, hz), (hx + GT, hy, hz), R, gap=12.0, step=10.0,
+                 bodies=lambda s: {"gdoor": T(p=(GT * s, 0, 0))}, force=(30.0, 0, 0)), **st)
+        add(line("release and retreat", (hx + GT, hy, hz), (hx + GT, hy - 150, hz), R, gap=40.0), **st, bodies=G_OPEN)
+        add(line("slide closed (reverse)", (hx + GT, hy, hz), (hx, hy, hz), R, gap=12.0, step=10.0,
+                 bodies=lambda s: {"gdoor": T(p=(GT * (1 - s), 0, 0))}, force=(-30.0, 0, 0)), **st)
     elif name == "chamber_door_open":
         R0 = grip_R((0, 1, 0), (0, 0, 1))
-        h = np.array([0.0, -152.0, 95.0])
+        h = np.array(HD)
         st = dict(site="pad", held=(), ignore=("door",), mass=0.0)
         add(line("approach the handle", h + (0, -160, 0), h, R0, gap=40.0), **st, bodies=G_OPEN)
         add(line("close on the handle", h, h, R0, gap=lambda s: 40 - 28 * s), **st, bodies=G_OPEN)
@@ -640,7 +642,7 @@ def op_frames(name, M, P, parts):
                                bodies={**G_OPEN, "door": Td}, mass=0.0, deg=deg, force=tuple(Td[:3, :3] @ np.array([0, -10.0, 0]))))
     elif name == "chamber_door_close":
         Td = door_T(95.0, hinge)
-        h = np.array([0.0, -152.0, 95.0])
+        h = np.array(HD)
         R0 = grip_R((0, 1, 0), (0, 0, 1))
         hw = (Td @ np.append(h, 1))[:3]
         st = dict(site="pad", held=(), ignore=("door",), mass=0.0)
@@ -655,7 +657,7 @@ def op_frames(name, M, P, parts):
                                bodies={**G_OPEN, "door": Tk}, mass=0.0, deg=deg, force=tuple(Tk[:3, :3] @ np.array([0, 0, 12.0]))))
         # second strategy: push the door's outer face with closed fingertips (handle released)
         Rp = grip_R((0, 1, 0), (0, 0, 1))
-        pf = np.array([0.0, -126.0, 60.0])
+        pf = np.array([0.0, HD[1] + 26.0, 60.0])     # door outer face (handle posts are 26 mm long)
         for k in range(0, 39):
             deg = 95.0 - 2.5 * k
             Tk = door_T(deg, hinge)
@@ -811,6 +813,7 @@ def run_op(cell: Cell, name, frames, record=False):
     rows = []
     q = None
     traj = []
+    last_reseed = -100
     for k, f in enumerate(frames):
         cell.site = cell.site_tip if f.get("site") == "tip" else cell.site_pad
         cell.reset_bodies()
@@ -821,7 +824,8 @@ def run_op(cell: Cell, name, frames, record=False):
             q, ep, er = cell.ik_first(f["p"], f["R"])
         else:
             q1, ep, er = cell.ik(q, f["p"], f["R"])
-            if (ep > 0.5 or er > 0.3) or np.max(np.abs(q1 - q)) > 0.5:
+            if ((ep > 0.5 or er > 0.3) or np.max(np.abs(q1 - q)) > 0.5) and k - last_reseed > 12:
+                last_reseed = k
                 q2, ep2, er2 = cell.ik_first(f["p"], f["R"])
                 jump = float(np.max(np.abs(q2 - q)))
                 if ep2 < ep:
@@ -1049,6 +1053,10 @@ def main():
         if p.name.startswith("Module") and "handle" in p.name:
             b = p.shape.BoundingBox()
             P["module_handle_bb"] = (b.xmin, b.xmax, b.ymin, b.ymax, b.zmin, b.zmax)
+    for p in parts:
+        if p.name == "Door handle":
+            b = p.shape.BoundingBox()
+            P["door_handle"] = (0.0, b.ymin + 6.0, (b.zmin + b.zmax) / 2)
     P["module_mass"] = round(sum((p.mass_kg if p.mass_kg is not None else p.shape.Volume() * 1e-9 * M.MAT.get(p.mat, {}).get("rho", 1000))
                                 for p in parts if p.group in ("module", "piston")), 2)
     base = tuple(float(v) for v in ARGS.base.split(","))
@@ -1103,13 +1111,11 @@ def main():
         out_json.write_text(json.dumps(dict(prev, _meta=dict(base_mm=base, menagerie_sha=MENAGERIE_SHA, cad=str(ARGS.cad),
                                                                module_mass_kg=P["module_mass"])), indent=1, default=float))
         if ARGS.render and traj:
-            cams = {"plate_exchange": dict(lookat=(0.0, -0.2, 0.05), distance=1.25, azimuth=-118, elevation=-18),
-                    "reservoir": dict(lookat=(-0.09, -0.25, 0.2), distance=1.3, azimuth=-120, elevation=-15),
-                    "chamber_door_open": dict(lookat=(0.0, -0.3, 0.05), distance=1.5, azimuth=-110, elevation=-15)}
-            cam = cams.get(name, dict(lookat=(0.0, -0.3, 0.05), distance=1.6, azimuth=-120, elevation=-18))
-            gif = OUT / f"{name}.gif" if name in ("plate_exchange", "reservoir") else None
-            pngs = [(kmin, OUT / f"{name}_tightest.png")]
-            render_frames(cell, traj, gif, cam=cam, png=pngs)
+            cams = {"plate_exchange": dict(lookat=(0.0, -0.3, -0.05), distance=1.7, azimuth=60, elevation=-14),
+                    "chamber_door_close": dict(lookat=(0.0, -0.35, -0.05), distance=1.8, azimuth=60, elevation=-14)}
+            cam = cams.get(name, dict(lookat=(0.0, -0.3, 0.0), distance=1.8, azimuth=60, elevation=-15))
+            if name in ("plate_exchange", "chamber_door_close"):
+                render_frames(cell, traj, OUT / f"{name}.gif", cam=cam, png=[(kmin, OUT / f"{name}_tightest.png")], max_frames=45)
             print(f"  rendered {name}", flush=True)
     print(f"done in {time.time() - t0:.0f} s")
 
