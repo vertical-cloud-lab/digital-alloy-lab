@@ -1,0 +1,273 @@
+# BOFN with failed vs. abandoned experiments, in Ax's terms
+
+Issue [#274](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274). Related: the
+5-node synthetic EIFN test function ([#265](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/265))
+and the lab's fork of the pKGFN code,
+[`vertical-cloud-lab/partial_kgfn`](https://github.com/vertical-cloud-lab/partial_kgfn).
+
+Versions read for this note (2026-11-20): Ax `main` at
+[`41cdcef`](https://github.com/meta/Ax/tree/41cdcef7d6247571464ad333ae9266054009a31f)
+(2026-11-17), Ax 1.3.1 on PyPI (2026-06-09), and `partial_kgfn` `main` at
+[`a599601`](https://github.com/vertical-cloud-lab/partial_kgfn/tree/a5996011ddba608a08c240479c859bcb3b2a897f).
+Line links below point at those commits.
+
+## Summary
+
+- **Ax's definitions.** `FAILED` means a possibly transient error, so the arm may be suggested
+  again. `ABANDONED` means "don't run this again": either a person decided so, or the
+  parameterization makes the trial fail every time. By default the model fits on neither
+  status's data. Ax keeps abandoned arms as pending points, so it won't suggest them again;
+  failed arms can come back.
+- **A function network fails at a node, not as a whole trial.** The nodes upstream of the
+  failure still produced good data, and the failure says something about *that node's inputs*
+  (including measured intermediate outputs), not about the whole input vector `x`. Ax gives
+  each trial one status, so it can't record this. A BOFN campaign should give each node
+  evaluation its own status.
+- **Ax recently moved in this direction.** Since Ax 1.2.4, `Client.complete_trial` with
+  missing metrics marks the trial `COMPLETED` and still fits the partial data. Before that
+  (1.0.0 to 1.2.3) it marked the trial `FAILED`, which dropped the partial data and let the arm
+  be suggested again. Ax 1.3.0 added an opt-in transform, `AddExecutionViability`, that treats
+  `ABANDONED` trials as deterministic failures and learns P(viable | x). The function-network
+  version of that is one **viability node** per failure-prone node, fit on that node's inputs
+  (§4).
+- **`partial_kgfn` already keeps a separate training set for each node,** so a run that stops
+  partway still feeds the upstream GPs. It has no failure path, though. The full-evaluation
+  algorithms (EIFN, KGFN, TSFN) assume every node returns a value, and the upstream-restricted
+  pKGFN treats every parent output in the training data as physically available to continue
+  from (§3).
+
+## 1. What Ax does with each status
+
+From [`trial_status.py`](https://github.com/meta/Ax/blob/41cdcef7d6247571464ad333ae9266054009a31f/ax/core/trial_status.py#L14-L65):
+
+```
+CANDIDATE --> STAGED --> RUNNING --> COMPLETED
+          ------------->         --> FAILED (retryable)
+                                 --> EARLY_STOPPED (deemed unpromising)
+          -------------------------> ABANDONED (non-retryable)
+          -------------------------> STALE (retryable, never run)
+```
+
+| Status | Ax's meaning | Data fit by default? | Pending, so not suggested again? | Notes |
+|---|---|---|---|---|
+| `RUNNING` | deployed (the Client API marks trials `RUNNING` as soon as it generates them) | yes, whatever is attached | yes, for each metric without data | |
+| `COMPLETED` | finished | yes | yes for each metric that still has no data (Ax ≥ 1.2.4) | later data needs `Trial.update_trial_data()` |
+| `EARLY_STOPPED` | stopped as unpromising | yes | no | needs data; with none, Ax tells you to abandon instead ([L692-L722](https://github.com/meta/Ax/blob/41cdcef7d6247571464ad333ae9266054009a31f/ax/core/base_trial.py#L692-L722)) |
+| `FAILED` | "possibly transient or retryable error" | **no** | **no**, so the arm can be suggested again | attach any data *before* marking; Ax refuses to attach data afterwards ([L909-L916](https://github.com/meta/Ax/blob/41cdcef7d6247571464ad333ae9266054009a31f/ax/core/base_trial.py#L909-L916)) |
+| `ABANDONED` | "should not be rerun": a person's decision, or the arm "deterministically causes trial evaluation to fail" | **no**, unless `fit_abandoned=True` | **yes, for every metric, permanently** | a terminal trial can't be abandoned without `unsafe=True` ([Ax #2931](https://github.com/meta/Ax/issues/2931)) |
+| `STALE` | generated, never run | no | no | only reachable from `CANDIDATE` |
+
+Details behind the table:
+
+- **Which data the model fits on.** `DataLoaderConfig.statuses_to_fit` returns
+  `{RUNNING, COMPLETED, EARLY_STOPPED}`, or every status if `fit_abandoned=True`
+  ([`data_utils.py` L84-L91](https://github.com/meta/Ax/blob/41cdcef7d6247571464ad333ae9266054009a31f/ax/core/data_utils.py#L84-L91)).
+  Its docstring says "all statuses except ABANDONED", but the code also drops `FAILED`, and
+  [Ax PR #4958](https://github.com/meta/Ax/pull/4958) confirms that `FAILED` data is left out on
+  purpose: "we could not rely on the quality of the data collected from FAILED trials".
+- **Pending points are tracked per metric.** For experiments with fewer than 100 trials, an arm
+  is pending for metric *m* if its trial is a `CANDIDATE`, or if it is deployed, completed or
+  abandoned and has no data for *m*
+  ([`utils.py` L384-L398](https://github.com/meta/Ax/blob/41cdcef7d6247571464ad333ae9266054009a31f/ax/core/utils.py#L384-L398)).
+  `FAILED`, `EARLY_STOPPED` and `STALE` arms are never pending.
+- **Partial data since 1.2.4** ([Ax PR #4958](https://github.com/meta/Ax/pull/4958), "Separate
+  metric data availability from trial orchestration status"). Before 1.2.4, `complete_trial`
+  marked a trial `FAILED` if any optimization-config metric was missing, which "discarded
+  useful partial data from model fitting, allowed re-suggestion of already-evaluated arms".
+  Now the trial is always `COMPLETED`, a warning names the missing metrics, a
+  `MetricAvailability` (`NOT_OBSERVED` / `INCOMPLETE` / `COMPLETE`) is computed for each trial,
+  and the arm stays pending for the metrics it lacks
+  ([`client.py` L531-L573](https://github.com/meta/Ax/blob/41cdcef7d6247571464ad333ae9266054009a31f/ax/api/client.py#L531-L573)).
+  I checked the wheels: 1.2.3 still has the `FAILED` rule and 1.2.4 has the new one.
+- **Learning a failure region** ([Ax PR #4547](https://github.com/meta/Ax/pull/4547), in 1.3.0
+  and later, opt-in).
+  [`AddExecutionViability`](https://github.com/meta/Ax/blob/41cdcef7d6247571464ad333ae9266054009a31f/ax/adapter/transforms/add_execution_viability.py#L35-L72)
+  adds an `execution_viable` metric (0 for `ABANDONED` trials, 1 for the rest, with synthetic
+  rows for abandoned trials that have no data) and the outcome constraint
+  `execution_viable >= 0.8`. It switches on after 3 abandoned trials. This is the
+  "probabilistic classification model" an Ax maintainer described in
+  [#2931](https://github.com/meta/Ax/issues/2931#issuecomment-2432765144). Note that it treats
+  *every* `ABANDONED` trial as non-viable, including ones abandoned for logistics.
+- **How abandoning "helps avoid re-suggesting similar points"** (your open question in
+  [#2931](https://github.com/meta/Ax/issues/2931#issuecomment-3457166202)). Pending arms are
+  passed to the acquisition function as `X_pending`. BoTorch's MC acquisition functions append
+  `X_pending` to every candidate batch (`concatenate_pending_points`), so a candidate is scored
+  by what it adds *jointly* with the pending points. Near a pending point the two outcomes are
+  highly correlated and the candidate adds little. The effect is local, on the scale of the GP
+  lengthscale, and the model learns nothing about *why* the arm was abandoned; only
+  `AddExecutionViability` does that.
+
+## 2. Where a function network differs
+
+In BOFN ([Astudillo & Frazier, NeurIPS 2021](https://arxiv.org/abs/2110.06410)) each node *k*
+has its own GP from (`x_k`, parent outputs) to `y_k`. EIFN samples through the DAG, and pKGFN
+([Buathong et al., ICML 2024](https://proceedings.mlr.press/v235/buathong24a.html)) chooses one
+node evaluation at a time. A lab run of composition → atomization → powder → print → test is a
+path through that DAG, and when it fails, it fails at one node.
+
+Status for each node evaluation, using Ax's names:
+
+| What happened at node *k* | Ax analogue | Nodes before *k* | Node *k* | Nodes after *k* | Pending? | Intermediate (powder lot, coupon) |
+|---|---|---|---|---|---|---|
+| Measured, even if the value is bad (85 % dense, cracked but measurable) | `COMPLETED` | fit | fit | as run | no | as normal |
+| Equipment or operator fault unrelated to the inputs (clog from a dirty crucible, gas ran out, power cut) | `FAILED` | **fit** | nothing; retry is allowed | nothing | no | still usable unless consumed: retry node *k* from it |
+| Failure caused by node *k*'s inputs (melt won't atomize at that superheat, powder too coarse to spread, hot cracking) | `ABANDONED` (+ `AddExecutionViability`) | **fit** | **viability label 0 at node *k*'s inputs** (`x_k` plus *measured* parent outputs) | nothing | no; the viability model steers away from it | mark as dead-end |
+| Stopped on purpose after node *k*−1 (pKGFN chose another node, intermediate looked unpromising, budget) | `EARLY_STOPPED` | fit | nothing | nothing | no | **kept; pKGFN can resume from it later** |
+| Generated, then superseded before running | `STALE` | nothing | nothing | nothing | no | none |
+| Vetoed by policy (banned element, safety) | not a failure | n/a | n/a | n/a | n/a | make it a known constraint on the search space, not a training label |
+| Run, but not as planned (Ax [#3577](https://github.com/meta/Ax/issues/3577)) | Ax's workaround: abandon the planned arm, attach the executed one | fit on executed values | fit on executed values | as run | the planned arm | as measured |
+
+Why attributing the failure to a node matters:
+
+1. **Upstream data survives.** If node 3 fails, the atomization data from nodes 1 and 2 is still
+   good. Ax 1.0 to 1.2.3 threw it away, and so does any pipeline that writes NaN into a
+   full-network row.
+2. **Failure rules are often about intermediates, not `x`.** "Powder with D90 above 63 µm
+   doesn't recoat" depends on node 2's output, so a viability model on node 3's inputs
+   carries over to *any* composition that gives coarse powder. One classifier on `x` (what
+   `AddExecutionViability` fits) has to relearn the rule in each composition region, and it
+   can't tell which step failed.
+3. **Intermediates are physical.** pKGFN with the upstream restriction continues from an
+   intermediate that already exists. That is a contextual / fixed-feature problem (Ax
+   [#746](https://github.com/meta/Ax/issues/746), [#905](https://github.com/meta/Ax/issues/905)),
+   and whether a given lot still exists is an inventory question, not a modelling one. Ax has
+   no "resume" for an early-stopped trial. In pKGFN, resuming is just the next node evaluation.
+4. **"Planned vs executed" comes built in for intermediates.** BOFN conditions node *k*+1 on
+   the *measured* `y_k`, so the executed values are already what the model sees. The question
+   from [#3577](https://github.com/meta/Ax/issues/3577) remains only for root inputs
+   (composition as weighed vs. as measured, laser power set vs. logged): fit on executed
+   values, generate candidates in planned values, store both. Noisy measured intermediates are
+   the input-uncertainty problem of [#751](https://github.com/meta/Ax/issues/751).
+
+## 3. What `partial_kgfn` does today
+
+- **Each node has its own data.** `GaussianProcessNetwork` takes a list of `train_X` and
+  `train_Y` tensors, one per node, and fits each node's GP separately
+  ([`decoupled_gp_network.py` L35-L108](https://github.com/vertical-cloud-lab/partial_kgfn/blob/a5996011ddba608a08c240479c859bcb3b2a897f/partial_kgfn/models/decoupled_gp_network.py#L35-L108)).
+  `condition_on_observations` accepts `None` for nodes that weren't evaluated
+  ([L169-L222](https://github.com/vertical-cloud-lab/partial_kgfn/blob/a5996011ddba608a08c240479c859bcb3b2a897f/partial_kgfn/models/decoupled_gp_network.py#L169-L222)).
+  pKGFN appends data only to the node it evaluated
+  ([`run_one_trial.py` L494-L505](https://github.com/vertical-cloud-lab/partial_kgfn/blob/a5996011ddba608a08c240479c859bcb3b2a897f/partial_kgfn/run_one_trial.py#L494-L505)).
+  The data structure needed for partial runs is already there.
+- **Full-network algorithms can't handle a missing node.** EIFN, KGFN, TSFN and Random call
+  `problem.evaluate` for the whole network and append every node's output
+  ([L413](https://github.com/vertical-cloud-lab/partial_kgfn/blob/a5996011ddba608a08c240479c859bcb3b2a897f/partial_kgfn/run_one_trial.py#L413),
+  [L472-L480](https://github.com/vertical-cloud-lab/partial_kgfn/blob/a5996011ddba608a08c240479c859bcb3b2a897f/partial_kgfn/run_one_trial.py#L472-L480),
+  via [`construct_obs_set`](https://github.com/vertical-cloud-lab/partial_kgfn/blob/a5996011ddba608a08c240479c859bcb3b2a897f/partial_kgfn/utils/construct_obs_set.py#L17-L68)).
+  A failed node would have to be NaN, which breaks the GP fit. The fix is small: append node by
+  node, skip any node that has no measured output or whose parents weren't measured, and still
+  charge the cost.
+- **No failure path anywhere.** Test functions always return a value, nothing records a status,
+  and there is no viability model.
+- **The training data doubles as inventory.** With `impose_assump=True`, the candidates for a
+  downstream node are every combination of parent outputs in `model.train_Y`
+  ([`discrete_kgfn_optim.py` L57-L90, L219-L247](https://github.com/vertical-cloud-lab/partial_kgfn/blob/a5996011ddba608a08c240479c859bcb3b2a897f/partial_kgfn/optim/discrete_kgfn_optim.py#L219-L247)).
+  In the lab, a powder lot can be used up, contaminated, or consumed by a failed print. Keep
+  an inventory table separate from the training data and draw candidates from it.
+- **fast_pKGFN requires `impose_assump=False`**
+  ([L98-L99](https://github.com/vertical-cloud-lab/partial_kgfn/blob/a5996011ddba608a08c240479c859bcb3b2a897f/partial_kgfn/run_one_trial.py#L98-L99)),
+  i.e. it assumes intermediates can be bought in. For us that is real: when a composition won't
+  atomize, a purchased powder can still be used to learn about the print and test nodes.
+- **Best observed value is undefined under partial evaluation** (`-inf` for pKGFN on the
+  pharma problem,
+  [L288](https://github.com/vertical-cloud-lab/partial_kgfn/blob/a5996011ddba608a08c240479c859bcb3b2a897f/partial_kgfn/run_one_trial.py#L288)).
+  Report regret of the posterior-mean recommendation, as the paper does.
+
+## 4. Proposed handling for the lab's BOFN
+
+**Keep one ledger row per node evaluation**, not per arm:
+
+```
+run_id, node, status (COMPLETED | FAILED | ABANDONED | EARLY_STOPPED | STALE | RUNNING),
+failure_kind (transient | deterministic | unknown), reason,
+inputs_planned, inputs_executed, parent_lot_ids, outputs, cost, lot_id_out, lot_remaining
+```
+
+Rebuild the model from the ledger every iteration:
+
+```python
+for k in nodes:
+    ok = rows(node=k, status=COMPLETED, all parents COMPLETED)
+    gp[k] = fit(X=[executed x_k, measured parent outputs] of ok, Y=outputs of ok)
+
+    tried = rows(node=k, status in {COMPLETED, ABANDONED}, all parents COMPLETED)
+    if k is failure-prone:
+        viable[k] = fit(X=same inputs as gp[k] for tried, Y=1 if COMPLETED else 0)
+        # FAILED (transient) rows are left out: they say nothing about the inputs.
+        # "unknown" rows: count as 0 to be safe, or with a lower weight.
+
+pending  = rows(status=RUNNING)          # FAILED, EARLY_STOPPED, STALE are not pending
+inventory = lots with lot_remaining > 0 and status COMPLETED
+```
+
+**Viability nodes in the network.** Add `v_k` to the DAG as an extra sink with the same parents
+and active inputs as node *k*. The existing `GaussianProcessNetwork` samples it like any other
+node, conditioned on the sampled parent outputs. Then use EIFN with a constraint on those
+samples, e.g. BoTorch's `constraints=[lambda Z: 0.5 - Z[..., v_k]]`: an MC sample only
+counts as an improvement if every node on its path is viable. This is the node-level version of
+`AddExecutionViability`. Fitting a GP to 0/1 labels is crude (a classification GP is the
+principled choice), but it is the same compromise Ax made, and it works with the existing
+network posterior.
+
+**pKGFN with failures.** Multiply the value of evaluating node *k* at `z` by the probability
+that the evaluation succeeds (viability × (1 − transient failure rate for node *k*)), and charge
+the full cost either way. Including the information a failure label carries (a fantasy
+over success and failure) is an extension worth having in the methods paper
+([#121](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/121)).
+
+**If Ax is the ledger.** Use Ax ≥ 1.2.4. Keep a trial `RUNNING` while its run moves through
+the nodes, and `attach_data` each node's metrics as they come in; data on `RUNNING` trials is
+fit. When the run ends, at the last node or because it stopped at node *k*, call
+`complete_trial`. The trial is then `COMPLETED` with `INCOMPLETE` availability, the partial data
+is used, and the arm isn't suggested again. Record failures as tracking metrics
+(`node3_viable = 0`) and put the reason in the trial's run metadata. Don't use trial-level
+`FAILED` or `ABANDONED` for node-level failures: both drop the upstream data from the fit. Also
+don't abandon trials for logistical reasons while `AddExecutionViability` is on, since it learns
+those as non-viable. In the Client API, a trial that was never run is already `RUNNING`, so
+`STALE` needs `unsafe=True`; `FAILED` gives the same retryable, no-data behaviour.
+
+Ax's own models treat each metric as a separate output of `x`, not as a network, so BOFN
+generation has to run outside Ax. That is the pattern from
+[#3577](https://github.com/meta/Ax/issues/3577#issuecomment-3070067980): rebuild the client from
+the database and reattach every trial each iteration, with single-step generation strategies. It
+also covers mid-campaign changes ([#4295](https://github.com/meta/Ax/issues/4295)), which stay
+local in a network: a new parameter or a new node only changes the GPs of the nodes that use
+it, and old runs take the default value of the new step (e.g. "no heat treatment").
+
+## 5. A benchmark to settle it
+
+The 5-node chain from [#265](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/265)
+can get three failure modes:
+
+1. transient failures with probability *p* at each node, independent of the inputs;
+2. a deterministic failure region for node 3 that depends on node 2's *output*;
+3. a deterministic failure region for node 1 that depends on `x` alone.
+
+Then compare: **drop** (Ax ≤ 1.2.3, where `FAILED` loses the run), **abandon** (no data,
+pending forever), **partial** (Ax ≥ 1.2.4 / pKGFN: keep the upstream data), and
+**partial + viability nodes** (§4). Measure regret against cumulative cost, cost spent on
+failed evaluations, and repeated suggestions.
+
+## 6. Ax issues and PRs to read alongside this
+
+- [#2931](https://github.com/meta/Ax/issues/2931): abandoning a terminal trial; abandon vs. fail
+  for parameterization-caused failures; the classifier plan (now `AddExecutionViability`).
+- [#3577](https://github.com/meta/Ax/issues/3577): planned vs. executed parameters; abandon plus
+  attach as the workaround; storing candidates and experiments separately in BoFire.
+- [#4295](https://github.com/meta/Ax/issues/4295): changing the search space mid-campaign.
+- [#1568](https://github.com/meta/Ax/issues/1568): out-of-design trials causing repeated
+  suggestions, and abandoned out-of-design arms not being treated as pending.
+- From page 3 of your Ax issues: [#140](https://github.com/meta/Ax/issues/140#issuecomment-1172010989)
+  (hierarchical search spaces; your multi-step processing example with optional steps),
+  [#746](https://github.com/meta/Ax/issues/746) / [#905](https://github.com/meta/Ax/issues/905)
+  (fixed features, i.e. continuing from a given intermediate),
+  [#751](https://github.com/meta/Ax/issues/751) (input uncertainty, i.e. noisy measured
+  intermediates), [#1189](https://github.com/meta/Ax/issues/1189) (structured GPs, where a
+  maintainer noted these models are "hard to build a generic interface for" in Ax).
+- Ax PRs: [#4958](https://github.com/meta/Ax/pull/4958) (metric availability separate from
+  trial status) and [#4547](https://github.com/meta/Ax/pull/4547) (`AddExecutionViability`,
+  first called `AddFeasibility`).
+
+## 7. Related issues and PRs in this repo
+
+See the comment on [#274](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274).
