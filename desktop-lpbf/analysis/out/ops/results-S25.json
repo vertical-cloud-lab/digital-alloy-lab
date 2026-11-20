@@ -1,0 +1,307 @@
+{
+ "module": "S25",
+ "cad": "/tmp/ops-work/cad",
+ "ops": [
+  {
+   "id": "U1",
+   "kind": "use",
+   "name": "Fill reservoir S and put it on the dock",
+   "where": "glovebox or hood, then the tray at the access opening",
+   "interval": "each alloy / each build",
+   "air": true,
+   "minutes": 18,
+   "steps": [
+    {
+     "id": "U1.1",
+     "op": "U1",
+     "step": "Hand on the reservoir's lid handle (z = 258)",
+     "do": "reach",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "hand + forearm clear from the front"
+    },
+    {
+     "id": "U1.2",
+     "op": "U1",
+     "step": "Reservoir S slides out on its dovetail and out through the guard door",
+     "do": "remove",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "clearance": 1.1,
+     "detail": "free along (0, -125, 0) -> (0, -520, 0); tightest gap 1.1 mm to Metering base (6061, fluted roller over a 100 mm d"
+    },
+    {
+     "id": "U1.3",
+     "op": "U1",
+     "step": "Fill it in the glovebox (or under argon in a hood): ~80 g per 15 mm build; weigh, close, NFC tag",
+     "do": "note",
+     "minutes": 15,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "U1.4",
+     "op": "U1",
+     "step": "Slide it back on (the reverse path, checked above); the dock cam opens its shutter",
+     "do": "note",
+     "minutes": 1,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "U4",
+   "kind": "use",
+   "name": "Finish a build: cool down, raise the plate, take it out, empty the overflow, return powder",
+   "where": "tray at the access opening",
+   "interval": "each build",
+   "air": true,
+   "minutes": 88,
+   "steps": [
+    {
+     "id": "U4.1",
+     "op": "U4",
+     "step": "Cool the plate to < 50 C (door interlock, module_params.T_DOOR_OPEN): ~50 min for \u00d850 (preheat-and-plates.md)",
+     "do": "note",
+     "minutes": 50,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "U4.2",
+     "op": "U4",
+     "step": "Vent to air through the filter; passivation per the cleaning SOP (pain-points P35)",
+     "do": "note",
+     "minutes": 10,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "U4.3",
+     "op": "U4",
+     "step": "Hand through the chamber door to the plate (plate top at z = +8 mm; hand centre 37 mm above it)",
+     "do": "reach",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "hand + forearm clear from the front"
+    },
+    {
+     "id": "U4.4",
+     "op": "U4",
+     "step": "Plate: turned 60 deg off its bayonet, lifted 20 mm (spigot and lugs over the 8 mm door sill), out through the door",
+     "do": "remove",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "clearance": 2.0,
+     "detail": "free along (0, 0, 20) -> (0, -520, 20); tightest gap 2.0 mm to Heater block S25 (6061-T6, bayonet socket)"
+    },
+    {
+     "id": "U4.5",
+     "op": "U4",
+     "step": "Fingers on the overflow jar's KF-40 clamp under the floor",
+     "do": "reach",
+     "minutes": 1,
+     "note": "",
+     "status": "FAIL",
+     "detail": "blocked: from the front: hand: Chamber legs, hand: Cross-flow outlet plenum under the floor; from (0.6, -0.8, 0): hand: Chamber legs, forearm: Chamber legs; from the right: forearm: Sealed cyclone + HEPA housing, forearm: Filter outlet"
+    },
+    {
+     "id": "U4.6",
+     "op": "U4",
+     "step": "KF-40 clamp opened and taken off by hand",
+     "do": "remove",
+     "minutes": 1,
+     "note": "",
+     "status": "-",
+     "detail": "by hand; no path check"
+    },
+    {
+     "id": "U4.7",
+     "op": "U4",
+     "step": "Overflow jar: clamp off, drop 5 mm off the centring ring, out",
+     "do": "remove",
+     "minutes": 3,
+     "note": "",
+     "status": "FAIL",
+     "detail": "(0, 0, -5) -> (0, -520, -5) blocked by Cross-flow outlet plenum under the floor (316L, flat over th after 57.0 mm; also tried (0, 0, -5) -> (0, 0, 515): Overflow port (KF-40) at 11.0 mm; (0, 0, -5) -> (520, 0, -5): Overflow-jar present sensor (inductive M at 13.0 mm; (0, 0, -5) -> (-520, 0, -5): Z lift arm (6061, 12 mm, pot-magnet coup at 55.0 mm"
+    },
+    {
+     "id": "U4.8",
+     "op": "U4",
+     "step": "Sieve (63 um) and return powder in the glovebox; log mass",
+     "do": "note",
+     "minutes": 20,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "S1",
+   "kind": "swap",
+   "name": "Build plate swap",
+   "where": "tray at the access opening",
+   "interval": "each build",
+   "air": true,
+   "minutes": 4,
+   "steps": [
+    {
+     "id": "S1.1",
+     "op": "S1",
+     "step": "Old plate out (as U4)",
+     "do": "remove",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "clearance": 2.0,
+     "detail": "free along (0, 0, 20) -> (0, -520, 20); tightest gap 2.0 mm to Heater block S25 (6061-T6, bayonet socket)"
+    },
+    {
+     "id": "S1.2",
+     "op": "S1",
+     "step": "New plate in (reverse path); graphite foil; turned 60 deg to lock",
+     "do": "note",
+     "minutes": 2,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "S2",
+   "kind": "swap",
+   "name": "Build module swap (S25)",
+   "where": "tray at the access opening",
+   "interval": "between campaigns",
+   "air": true,
+   "minutes": 29,
+   "steps": [
+    {
+     "id": "S2.1",
+     "op": "S2",
+     "step": "Cool, vent; Z arm released (drops 45 mm away from the striker)",
+     "do": "note",
+     "minutes": 2,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "S2.2",
+     "op": "S2",
+     "step": "Two captive M6 screws, from under the chamber",
+     "do": "screws",
+     "minutes": 3,
+     "note": "",
+     "status": "PASS",
+     "detail": "2 screws; 2 reachable with: hex key 5 mm, long arm in; torque driver blocked by tool: VLM tray 2450 x 864 mm, hand: VLM tray 2450 x 864 mm",
+     "clearance": 4.67,
+     "per_screw": [
+      {
+       "screw": "Captive M6 panel screws on the module flange #1",
+       "withdraw_ok": true,
+       "tool": "hex key 5 mm, long arm in (ISO 2936 standard 85 x 33)",
+       "arc": 270.0,
+       "clearance": 6.22,
+       "clear_with": "tool: Build module S25",
+       "torque_ok": false,
+       "torque_blocked_by": [
+        "tool: VLM tray 2450 x 864 mm",
+        "tool: Base plate, process module",
+        "hand: VLM tray 2450 x 864 mm"
+       ]
+      },
+      {
+       "screw": "Captive M6 panel screws on the module flange #2",
+       "withdraw_ok": true,
+       "tool": "hex key 5 mm, long arm in (ISO 2936 standard 85 x 33)",
+       "arc": 90.0,
+       "clearance": 4.67,
+       "clear_with": "tool: Overflow clamp",
+       "torque_ok": false,
+       "torque_blocked_by": [
+        "tool: VLM tray 2450 x 864 mm",
+        "hand: VLM tray 2450 x 864 mm",
+        "hand: Base plate, process module"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "S2.3",
+     "op": "S2",
+     "step": "Hand on the module handle under the chamber",
+     "do": "reach",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "hand + forearm clear from the front"
+    },
+    {
+     "id": "S2.4",
+     "op": "S2",
+     "step": "Module out along its swap path (drop 40, forward 170, up 18, over the guard sill)",
+     "do": "module",
+     "minutes": 3,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.1,
+     "detail": "swap path clear; tightest gap 0.1 mm to Process chamber body (6061-T6, ~6.4 L)"
+    },
+    {
+     "id": "S2.5",
+     "op": "S2",
+     "step": "New module in (reverse path); captive screws at half torque (hot-swap.md); Z arm up; purge",
+     "do": "note",
+     "minutes": 20,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "S3",
+   "kind": "swap",
+   "name": "Reservoir swap (S)",
+   "where": "tray at the access opening",
+   "interval": "each alloy",
+   "air": true,
+   "minutes": 2,
+   "steps": [
+    {
+     "id": "S3.1",
+     "op": "S3",
+     "step": "Reservoir S out",
+     "do": "remove",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "clearance": 1.1,
+     "detail": "free along (0, -125, 0) -> (0, -520, 0); tightest gap 1.1 mm to Metering base (6061, fluted roller over a 100 mm d"
+    },
+    {
+     "id": "S3.2",
+     "op": "S3",
+     "step": "Other reservoir on (reverse path); NFC read; the load cell tares",
+     "do": "note",
+     "minutes": 1,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  }
+ ]
+}
