@@ -17,8 +17,12 @@ It also asks:
 - how "fantasy" data (synthetic, or from the literature) could stand in until real data exist;
 - whether 3 + 3 + 3 makes sense with 25 experiments left.
 
-Edison Scientific was the rubber duck: two `LITERATURE_HIGH` reviews and a critique of this
-draft. They're in [`edison/`](edison/).
+Edison Scientific was the rubber duck, in three rounds ([`edison/`](edison/)):
+
+1. q1, a `LITERATURE_HIGH` review of the 3 + 3 + 3 idea.
+2. q2, a `LITERATURE_HIGH` review of seed alloys, datasets and cheap models.
+3. q3, an `ANALYSIS` critique of this plan's first draft. It reran both scripts here. Its
+   corrections are folded in below.
 
 **Status:** this is a plan. Nothing here has been run on a real sample. The compositions are
 proposals. They still need the CALPHAD screen, the design-space freeze, and a check of what is
@@ -26,62 +30,80 @@ actually on the shelf.
 
 ## Short answers
 
-**On 3 + 3 + 3 with 25 left:** keep the three-way mix, but use about 6–7 seeds rather than 9. Give
-the runs this frees up to the optimizer.
+**On 3 + 3 + 3 with 25 left:** keep the three-way mix, but aim for about 6–7 seeds, not 9. Then
+move the calendar so that the optimizer actually gets the runs this frees up.
 
-- **Edison's verdict on 9 seeds is "slightly too many".** Nine seeds are 36 % of the 25 runs.
-  Bossek et al. (2020, [10.1145/3377930.3390155](https://doi.org/10.1145/3377930.3390155)) found
-  that an initial design of about 30 % of the budget did best on their benchmark suite. Edison
-  suggests 3 baselines, 2 agent picks, 2 space-filling points, 14 optimizer runs and 4 finalist
-  runs ([q1](edison/q1-seeding-strategy/artifact-00.md)).
-- **A toy simulation agrees on the direction** ([below](#how-many-seeds-a-toy-check)). Across 60
-  paired problem instances, 2 baselines + 3 agent + 1 space-filling beat 3 + 3 + 3 by
-  0.043 ± 0.014 in the best value found. It beat the best baseline 75 % of the time, against
-  55 % for 3 + 3 + 3. 3 + 3 + 3 did worst of all the optimizer splits when the agent picks only
-  pointed back at the known alloy family. That is the circularity risk Edison also flags.
+- **Edison judged 9 seeds "slightly too many"** ([q1](edison/q1-seeding-strategy/artifact-00.md)).
+  It suggests 3 baselines, 2 agent picks, 2 space-filling points, 14 optimizer runs and 4
+  finalist runs. Its main citation is Bossek et al. (2020,
+  [10.1145/3377930.3390155](https://doi.org/10.1145/3377930.3390155)). They found that small
+  initial designs generally did better, with strong dependence on the problem. q1 read their
+  best strategy as using about 30 % of the budget; q3 cautions that this is not a general
+  optimum.
+- **A toy simulation agrees on the direction** ([below](#how-many-seeds-a-toy-check)).
+  <!-- TOY-SHORT -->
 - **Don't add a third baseline run.** The 6063 runs (A1–A5) and commercial AlSi10Mg powder at P1
   are baselines that cost no design run. D1-r stays: it measures the benchmark's own spread
   ([#256](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/claude/issue-256-20261112-2149/al-campaign-schedule/README.md#the-36-al-runs)).
 
-**In the schedule's terms** ([table](#a-proposed-seed-set)):
+**The 25-run ledger.** In the #256 calendar, eight runs come before the optimizer's first batch on
+Dec 18: D1, D2, B30, B15 and S1–S4. Calling some of them something else frees nothing for the
+optimizer. To actually get to about seven seeds:
 
-- D1 and D2 are the baselines.
-- S1–S2 are agent picks, with different strengthening mechanisms.
-- S3–S4 are space-filling picks from [`seed_design.py`](seed_design.py), made after the CALPHAD
-  screen trims the candidate pool.
-- B30 stays a dosing check. B15 should check the element the agent picks depend on (Mn, or Zr)
-  rather than Si a second time.
-- If the flex slots X1–X3 (Dec 14–16) aren't needed to redo failed runs, use them as early
-  optimizer picks, not as more seeds.
+| Role | Runs | Count |
+|---|---|---|
+| Seeds | D1, D2 (baselines); B30, B15 (dosing checks); S1, S2 (agent picks); S3 (space-filling) | 7 |
+| Early optimizer pick ("R0") | S4. BOFN picks it at G1 (Dec 4), running on pseudo-data plus the A, B and D powder data. If that pipeline isn't ready by Dec 4, S4 becomes a second space-filling seed | 1 |
+| Optimizer rounds | R1–R4 | 12 |
+| Finalists | F1 ×2, F2 ×2 | 4 |
+| Benchmark repeat | D1-r | 1 |
+| **Total** | | **25** |
+
+The flex slots X1–X3 (Dec 14–16) sit outside the 25. If they aren't needed to redo failed runs,
+make them more R0 picks, chosen on Dec 11.
 
 **What matters more than the split:**
 
-1. **The optimizer picks R1 (Dec 18) and R2 (Jan 8) before any new composition has strength
-   data.** Seed tensile bars print at P3 (Jan 12–13). Until then, the strength nodes run on
-   priors. So the literature data and strength models that go into those priors decide the first
-   six optimizer runs ([pseudo-data](#literature-and-fantasy-data)).
-2. **Most of the literature's best Sc-free seeds need Zr, Fe, Ce or Cu.** None of these is on
-   the Nov 13 list in [#146](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/146#issuecomment-6842840090)
+1. **R1 (Dec 18) and R2 (Jan 8) are picked before any new composition has strength data.** Seed
+   tensile bars print at P3 (Jan 12–13) and are tested Jan 19–22. Until then, the strength nodes
+   run on priors: literature data and strength models
+   ([pseudo-data](#literature-and-fantasy-data)). If you can, pull one sentinel tensile test
+   forward, such as D1 bars at P2 (Dec 16–17). Otherwise, say plainly that the first two batches
+   are prior-driven for strength.
+2. **Most of the literature's best Sc-free seeds need Zr, Fe, Ce or Cu.** None of these is on the
+   [Nov 13 list in #146](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/146#issuecomment-6842840090)
    (Mn, Cr, Zn, Sn, Mg, Sc, Er, Ti from ESPI; Si, Fe, Ni and Cu were never ordered). The
-   Scalmalloy-type benchmark D2 needs Zr as well. Check whether Zr is coming. If not, order it as
-   an Al–Zr master alloy before the S runs (Dec 7–10).
-3. **The design box on [PR #72](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/72)
-   excludes several of the best-documented Sc-free LPBF alloys:** Al–10Ce (Ce cap 6 wt%), the
-   Al–Fe eutectics (Fe cap 0.5 wt%), and Addalloy-type Al–4.5Mg–1.5Zr (Zr cap 1 wt%). Its
-   Mg + Si ≤ 6 wt% joint cap even excludes AlSi10Mg. Settle these at the design-space freeze
-   (G0, today).
-4. **Settle the mineral-burden metric before picking seeds.** Of the 15 palette elements, only
-   Fe, Si and Cu are absent from the USGS 2022 critical minerals list. By a plain wt% count of
-   listed elements, Al–4Mn–0.5Ti–0.5Zr (5 wt%) is only a little leaner than Scalmalloy (about
-   6 wt%, counting Mg). It wins clearly only if the metric weights Sc's supply risk well above
-   Mn's. Fe- and
+   Scalmalloy-type benchmark D2 needs Zr as well. An order isn't enough. Confirm delivery, the
+   carrier composition (e.g. an Al–Zr master alloy), the dissolution time and temperature, and
+   the recovery, before the S runs (Dec 7–10).
+3. **A 6063 cup brings its own chemistry.** Every charge built in 6063 cups also carries about
+   0.5–0.7 Mg and 0.3–0.4 Si, and master alloys bring extra Al. So nominal compositions like
+   Al–3.2Mn–1.5Cr can't be made that way. Either switch to a high-purity Al base (#256's do-now
+   list raises this) or mass-balance every recipe against what is reachable (the byu-vcl
+   reachability script referenced in #146).
+4. **The design box on [PR #72](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/72)
+   excludes several of the best-documented Sc-free LPBF alloys.** S2 below breaks its Fe cap
+   (0.5 wt%) and its Zr cap (1 wt%). Al–10Ce breaks the Ce cap (6 wt%). Addalloy-type
+   Al–4.5Mg–1.5Zr breaks the Zr cap. Its Mg + Si ≤ 6 wt% joint cap even excludes AlSi10Mg. Settle
+   these at the design-space freeze (G0, today).
+5. **Freeze the success criteria and the mineral-burden metric before picking seeds.** For
+   success, decide:
+   - yield or ultimate strength;
+   - matched heat treatment and build orientation;
+   - minimum ductility and density;
+   - what counts as "beats" given the uncertainty.
+
+   For the metric, note that of the 15 palette elements only Fe, Si and Cu are absent from the
+   USGS 2022 critical minerals list. Al itself is on it, so say whether the metric counts Al.
+   By a plain wt% count of listed additions, Al–4Mn–0.5Ti–0.5Zr (5 wt%) is only a little leaner
+   than Scalmalloy (about 6 wt%, counting Mg). Sc-free is not the same as low burden. Fe- and
    Si-based strengthening is where "stronger and leaner" is easiest to show.
 
-**Space-filling:** use the integrated-variance pick (`imse`) around the points already chosen.
-Maximin pushes every point into an extreme corner. Sobol with an exclusion radius rarely
-excludes anything with this few existing points. In 7-D, three points cover little whatever the
-method, so space-fill in a reduced space: CALPHAD descriptors, which are what the downstream
-nodes see ([details](#space-filling-around-the-points-we-already-have)).
+**Space-filling:** pick space-filling seeds with `imse` (integrated variance), on a reachable,
+screened pool, optionally with a minimum distance. Maximin picked boundary-heavy alloys here. Sobol
+with an exclusion radius didn't exclude anything in its first picks. In 7-D, two or three points
+cover little whatever the method, so space-fill in a reduced space: CALPHAD descriptors, which are
+what the downstream nodes see ([details](#space-filling-around-the-points-already-chosen)).
 
 **"Fantasy" data:** call it pseudo-data, keep it in its own source, and never overwrite it in
 place. It isn't BoTorch's `fantasize`
@@ -90,7 +112,7 @@ place. It isn't BoTorch's `fantasize`
 
 **The pre-registered AI benchmark:** every policy has to start from the same seed set. If only
 the AI policy gets the agent picks, the "acceleration factor" measures a warm start, not the
-optimizer. Edison q1, pitfall P9. [Below](#making-the-seeds-count-for-the-paper).
+optimizer (Edison q1, pitfall P9). [Below](#making-the-seeds-count-for-the-paper).
 
 ## What the 25 experiments are
 
@@ -98,63 +120,64 @@ The [#256 schedule](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob
 has 36 Al atomizer runs. Five are the 6063 baseline repeats (A1–A5) and six are flex slots
 (X1–X6). That leaves 25 runs whose composition someone has to choose:
 
-| Block | Runs | When | Role |
+| Block | Runs | When | Role in #256 |
 |---|---|---|---|
 | D benchmarks | D1 (AlSi10Mg-type), D2 (Scalmalloy-type), D1-r (repeat) | Nov 30, Dec 2, Feb 8 | baseline seeds |
-| B dosing checks | B30 (Si ≈ 3.9 wt%), B15 (Si ≈ 2.1 wt%) | Dec 1, Dec 3 | known-composition seeds on the Al–Si line |
+| B dosing checks | B30 (Si ≈ 3.9 wt%), B15 (Si ≈ 2.1 wt%) | Dec 1, Dec 3 | known-composition checks on the Al–Si line |
 | S CALPHAD seeds | S1–S4 | Dec 7–10 | agent-chosen seeds |
 | R optimizer rounds | R1–R4, 3 each | Jan 5 – Feb 3 | optimizer |
 | F finalists | F1 ×2, F2 ×2 | Jan 25–28 | repeats of optimizer picks |
 
-The schedule already spends 8 runs on seeds before the optimizer's first batch: D1, D2, B30, B15
-and S1–S4. D1-r comes late. The flex slots X1–X3 (Dec 14–16) also come before the first batch is
-picked on Dec 18. Following Edison (q1, P10), the 6063 repeats and dosing checks count once for
-coverage, since each is one composition, but every run counts toward estimating noise.
-
-When strength data arrive matters more than any of this. P2 (Dec 16–17) prints only single tracks
-of the S runs. Their cubes and tensile bars come at P3 (Jan 12–13), with tensile tests Jan 19–22.
-So when R1 (Dec 18) and R2 (Jan 8) are picked, the only strength data are commercial AlSi10Mg from
-P1 and wrought 6063.
+Following Edison (q1, P10), count the 6063 repeats, the dosing checks and D1-r once each for
+coverage, since each is one composition. Count every run toward estimating noise.
 
 ## A proposed seed set
 
 | Slot | Strategy | Composition (wt%) | Why | Needs | In the PR #72 box? |
 |---|---|---|---|---|---|
 | A1–A5 | baseline (free) | 6063 bar | Run-to-run noise; the dilute end | on hand | yes |
-| P1 | baseline (free) | commercial AlSi10Mg powder | Print window, density, tensile and corrosion baselines with no atomizer run | on hand | — |
-| D1 | baseline | Al–10Si–0.35Mg | The alloy to beat. As-built YS ≈ 250–350 MPa ([q2](edison/q2-seed-alloys-and-data/artifact-00.md)) | 4047 + Mg | Mg + Si ≤ 6 says no; drop that cap |
+| P1 | baseline (free) | commercial AlSi10Mg powder | Print-window, density, tensile and corrosion baselines with no atomizer run. Not a substitute for D1, which goes through our own atomizer | on hand | — |
+| D1 | baseline | Al–10Si–0.35Mg | The alloy to beat. As-built YS ≈ 250–350 MPa ([q2](edison/q2-seed-alloys-and-data/artifact-00.md)) | 4047 + Mg | the Mg + Si ≤ 6 cap says no; drop that cap |
 | D2 | baseline | Al–4.5Mg–0.7Sc–0.3Zr(–0.5Mn) | The Sc reference. YS 256–278 MPa as-built, 456–469 MPa direct-aged ([10.3390/cryst15010025](https://doi.org/10.3390/cryst15010025)) | Sc on hand; **Zr** | yes |
 | B30 | dosing check | 30 % 4047 in 6063 cups, Si ≈ 3.9 | Does measured Si follow the charge? | on hand | yes |
-| B15 | dosing check, changed | Al + the Mn (or Zr) the S picks use, at a known level | Check that the element the agent picks depend on dissolves. Elemental Si only dissolved 29–44 % in 2–3.5 min at 738 °C ([#111](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/111)) | Mn on hand | yes |
-| S1 | agent | **Al–4Mn–0.5Ti–0.5Zr** (Mair-type) | Sc-free. Mn supersaturation plus L1₂ Al₃(Ti,Zr) nucleants. Reported YS 284, UTS 320 MPa, 16.9 % elongation as-built, crack-free with no preheat at 380 W and 1900 mm/s ([10.1016/j.jallcom.2021.163156](https://doi.org/10.1016/j.jallcom.2021.163156)). A different mechanism from D1 and D2 | Mn, Ti on hand; **Zr** | yes |
-| S2 | agent | **an Fe-based eutectic**, e.g. Al–(3–5)Fe–1Mg–(0.5–0.7)Zr. If Fe stays capped at 0.5 wt%: **Al–10Ce** if Ce is ordered | Fe is cheap and not on the critical list. Reported YS 376, UTS 406 MPa, 11 % elongation after 400 °C/4 h ([10.1080/17452759.2025.2516663](https://doi.org/10.1080/17452759.2025.2516663)). Al–10Ce is printable and stable but weaker (YS ≈ 222 MPa, [10.1016/j.addma.2022.102959](https://doi.org/10.1016/j.addma.2022.102959)) | **Fe**, **Zr** (or **Ce**) | no (Fe or Ce cap) |
-| S3, S4 | space-filling | from `seed_design.py --method imse` after the CALPHAD screen | Cover what D1, D2, S1 and S2 leave out. Today's picks from the on-hand elements are below | depends | yes |
-| X1–X3 | flex | redo failed runs; otherwise early optimizer picks | — | — | — |
+| B15 | dosing check | as planned (Si), or retargeted to Mn or Zr | Retarget only if that is the larger dosing uncertainty for S1 and S2 (q3). Elemental Si dissolved only 29–44 % in 2–3.5 min at 738 °C ([#111](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/111)), so solid additions can't be assumed to dissolve | Mn on hand | yes |
+| S1 | agent | **Al–4Mn–0.5Ti–0.5Zr** | Sc-free. Mn kept in supersaturated solid solution, plus L1₂ Al₃(Ti,Zr) nucleants. Reported YS 284, UTS 320 MPa, 16.9 % elongation as-built, crack-free with no preheat at 380 W and 1900 mm/s (Mair et al., [10.1016/j.jallcom.2021.163156](https://doi.org/10.1016/j.jallcom.2021.163156)). A mechanism probe, not a proven winner: 284 MPa overlaps AlSi10Mg's range and is below aged Scalmalloy. Its nucleation route overlaps D2's, so the Mn supersaturation is what's new | Mn, Ti on hand; **Zr** | yes |
+| S2 | agent | **Al–1.87Fe–1.02Mg–1.03Zr** | An Fe-based eutectic. Fe is cheap and not on the critical list. This is the measured chemistry of the printed alloy in Li et al. ([10.1080/17452759.2025.2516663](https://doi.org/10.1080/17452759.2025.2516663)): YS 376, UTS 406 MPa, 11 % elongation after 400 °C/4 h (as reported by Edison) | **Fe**, **Zr** | no (Fe 1.87 > 0.5; Zr 1.03 > 1.0) |
+| S3 | space-filling | from `seed_design.py --method imse` on the screened, reachable pool | Covers what D1, D2, S1 and S2 leave out. Today's examples from the on-hand elements are [below](#space-filling-around-the-points-already-chosen) | depends | yes |
+| S4 | R0 (optimizer) | picked by BOFN at G1 (Dec 4) | Its first pick, made on pseudo-data plus powder data. Falls back to a second space-filling seed | depends | — |
 
-The rest of Edison's shortlist ([q2 table](edison/q2-seed-alloys-and-data/artifact-00.md)), in case
-the feedstock or the freeze rules out S1 or S2:
+If the feedstock or the freeze rules out S1 or S2, the rest of Edison's shortlist
+([q2 table](edison/q2-seed-alloys-and-data/artifact-00.md)) offers these alternatives:
 
-- **Al–4Mn–1.3Mg–0.3Zr:** 99.6 % dense and crack-free. Hardness study only, no tensile data.
-- **Al–Fe–Cr quasicrystal alloy:** YS 395 MPa as-built, but only 4 % elongation.
+- **Al–4Mn–1.3Mg–0.3Zr:** inside the box. 99.6 % dense and crack-free, but a hardness study only,
+  with no tensile data.
+- **Low-Sc bridge, Al–4.5Mg–0.3Sc–0.4Zr:** YS ≈ 220 MPa as-built, ≈ 380 MPa direct-aged (indicative).
+  If matching aged Scalmalloy is the main route, this resolves the Sc trade-off better than D2 plus
+  zero-Sc picks (q3). It sits close to D2, though.
+- **Al–Fe–Cr quasicrystal alloy:** YS 395 MPa as-built, but only 4 % elongation. Needs Fe.
 - **Addalloy-type Al–4.5Mg–1.5Zr:** YS ≈ 315 MPa. Over the Zr cap, and Mg evaporates.
-- **Low-Sc Al–4.5Mg–0.3Sc–0.4Zr:** right on the #255 goal, but it sits next to D2. Leave the Sc
-  axis to the optimizer: D2 and the Sc-free picks bracket it.
-- **A20X-type Al–Cu–Ag–Mg–Ti–TiB₂:** needs Cu and Ag, and Ag isn't in the palette.
+- **Al–10Ce:** not a good fallback (q3). It breaks the Ce cap, carries 10 wt% of a listed element,
+  and is weaker at room temperature (YS ≈ 222 MPa).
+- **A20X-type:** needs Cu and Ag, and Ag isn't in the palette.
 
 **With only the elements on hand** (Mn, Cr, Mg, Ti, Er, Zn, plus Si from 4047), the agent picks
-fall back to Zr-free cousins such as Al–Mn–Cr or Al–Mn–Ti. They have weaker literature support,
-because Zr is what suppresses cracking in most of these alloys. That is the case for getting Zr
-in before Dec 7.
+fall back to Zr-free cousins such as Al–Mn–Cr or Al–Mn–Ti. These have weaker literature support,
+because Zr is what suppresses cracking in most of these alloys. That is the case for getting Zr in
+before Dec 7.
 
 ## Seeds for every node, not just compositions
 
-BOFN keeps one GP per node, and each needs its own starting data. Edison found BOFN and pKGFN
-papers that start from full-network evaluations (Astudillo and Frazier 2021; Buathong et al.
-2023). Node-level initial designs in each node's own input space have also been published
-(Kudva et al. 2026, MOBONS). The newer pKGFN formulation drops the rule that upstream nodes must
-be evaluated first, which allows downstream data from other sources (Buathong and Frazier 2025)
-([q1 §4](edison/q1-seeding-strategy/answer.md)). Most of that node-level data needs no atomizer
-run.
+BOFN keeps one GP per node, and each needs its own starting data. Edison found three relevant
+results ([q1 §4](edison/q1-seeding-strategy/answer.md)):
+
+- BOFN and pKGFN papers start from full-network evaluations (Astudillo and Frazier 2021; Buathong
+  et al. 2023).
+- Node-level initial designs, each in its node's own input space, have also been published
+  (Kudva et al. 2026, MOBONS).
+- The newer pKGFN formulation drops the rule that upstream nodes must be evaluated first. That lets
+  downstream data come from other sources (Buathong and Frazier 2025).
+
+Most of that node-level data needs no atomizer run:
 
 | Node | Inputs → outputs | Seeds that cost no atomizer run | Seeds from atomizer runs | When |
 |---|---|---|---|---|
@@ -165,7 +188,7 @@ run.
 | Powder characterization (SEM/EDS) | powder → size and shape, satellites, homogeneity | Commercial AlSi10Mg 15–45 µm; the analysis pipeline from [#225](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/225) | Every run, at the Thursday session | weekly |
 | Print parameters (tracks, cubes) | powder descriptors + power, speed, hatch, layer → melt-pool depth and width, mode, density, cracks | See the three sources below this table | In-house 6063 and D1 at P2; S-run tracks at P2 | P1 Dec 2–3, P2 Dec 16–17 |
 | Hardness (the fast strength screen) | printed material, heat treatment → HV | P1 AlSi10Mg cubes, wrought 6063, published HV for the benchmarks | D1 and the S runs, from P2 and P3 | from Dec 11 |
-| Tensile | printed material → yield strength, UTS, elongation | P1 AlSi10Mg bars. Literature values for the benchmarks and Sc-free alloys ([q2 table](edison/q2-seed-alloys-and-data/artifact-00.md)). Strengthening models ([q2](edison/q2-seed-alloys-and-data/artifact-02.md)), e.g. about 104 MPa from 3.7 wt% Mn kept in solid solution | Seeds from P3, then the finalists | Dec 14–16, Jan 19–22, Feb 9–12 |
+| Tensile | printed material → yield strength, UTS, elongation | P1 AlSi10Mg bars. Literature values ([q2 table](edison/q2-seed-alloys-and-data/artifact-00.md)). Strengthening models ([q2](edison/q2-seed-alloys-and-data/artifact-02.md)), e.g. about 104 MPa from 3.7 wt% Mn kept in solid solution | Seeds from P3, then the finalists | Dec 14–16, Jan 19–22, Feb 9–12 |
 | Corrosion | material → OCP, polarization | Wrought 6063 and printed AlSi10Mg, already in #256 | Finalists | when the electrodes arrive ([#221](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/221)) |
 
 The print-parameter node has three sources that need no new alloy:
@@ -186,17 +209,25 @@ Two consequences:
 - **Space-filling belongs in each node's own input space** (Edison q1, P6). A downstream GP sees
   CALPHAD descriptors and powder properties, not raw wt%. Once the CALPHAD screen exists, pick
   the space-filling seeds in descriptor space:
-  `seed_design.py --candidates screen.csv --features ...`.
+  `seed_design.py --candidates screen.csv --features ...`. The screen is a candidate pool. Only
+  real observations (with their noise) belong in the existing points, not screened candidates.
 
-## Space-filling around the points we already have
+**Write down a node-by-date data contract** before Dec 18: which node has what data, from which
+source, on each decision date. That is what the R0–R2 picks actually rest on.
+
+## Space-filling around the points already chosen
 
 [`seed_design.py`](seed_design.py) adds space-filling points around everything in
-[`seeds.csv`](seeds.csv): 6063, D1, D2, B30 and B15. Add the agent picks there.
+[`seeds.csv`](seeds.csv): 6063, D1, D2, B30, B15, and the proposed S1 and S2.
 
-**The space.** It is the box a GP with `Normalize` sees: each element's wt% divided by its upper
-bound. On top of that, each element one alloy has and the other doesn't adds 0.5 to the distance,
-so different element sets count as further apart. Edison flagged plain Euclidean distance for
-sparse compositions (q1, P5).
+**The distance.** Each element's wt% is divided by its upper bound. That is a modelling
+assumption: it puts the full Ti range (0.5 wt%) on a par with the full Si range (12 wt%), as a GP
+with `Normalize` over the box and equal length scales would. On top of that, every element that
+one alloy has and the other doesn't adds 0.25 to the squared distance (`--set-weight 0.5`), so
+different element sets count as further apart. Edison flagged plain Euclidean distance for sparse
+compositions (q1, P5). The set term switches on at any non-zero amount, so give measured
+compositions an intentional-addition threshold before they go into `seeds.csv`. Otherwise trace
+impurities switch every element on.
 
 **The candidates:**
 
@@ -205,8 +236,13 @@ sparse compositions (q1, P5).
   joint caps except Mg + Si.
 - Each candidate has one to three additions, drawn from the elements on hand
   ([#146](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/146)): Mn, Cr, Mg, Ti, Er
-  and Zn, plus Si through 4047.
-- Each has at least 3 wt% of additions in all. 6063 has about 1, D2 about 6 and AlSi10Mg about 10.
+  and Zn, plus Si through 4047. They are sampled face by face on the sparse simplex.
+- Each has at least 3 wt% of additions in all (`--min-total 3`). That keeps space-filling runs out
+  of the dilute corner, which the 6063 runs already cover. It is a judgment call, not a strength
+  screen: it also excludes lean precipitation-strengthened alloys. With `--min-total 0`, `imse`
+  picks dilute binaries (Al–0.29Ti, Al–2.45Mn).
+- About two thirds of the pool has three additions. "Average coverage" below therefore means
+  coverage of this pool, not of every plausible alloy.
 
 **The four methods:**
 
@@ -214,53 +250,56 @@ sparse compositions (q1, P5).
 |---|---|
 | `sobol` | First feasible points of a scrambled Sobol sequence, sampled face by face on the sparse simplex. Ignores the existing points |
 | `sobol-exclusion` | Walks the same sequence and skips points within a radius of an existing or picked point (the heuristic in #275) |
-| `maximin` | Greedy maximin (Kennard–Stone augmentation, Edison's recommendation): each pick is the candidate farthest from everything so far |
-| `imse` | Greedy integrated-variance reduction: each pick most lowers the average variance of a GP over the whole feasible pool. Before any outcome is measured, that variance depends only on where the points are and on an assumed length scale (0.5) |
+| `maximin` | Greedy maximin, i.e. Kennard–Stone augmentation (Edison q1's recommendation): each pick is the candidate farthest from everything so far |
+| `imse` | Greedy integrated-variance reduction: each pick most lowers the average variance of a GP over the pool. That variance depends only on where the points are and the kernel's hyperparameters (length scale 0.5), not on outcomes. It treats the planned points as noise-free observations, which is optimistic if a run fails. `--min-distance` adds a maximin-style floor |
 
-Three new points, averaged over 10 scrambles ([`results/space_filling_compare.csv`](results/space_filling_compare.csv)):
+Two new points around the seven existing ones, averaged over 10 scrambles
+([`results/space_filling_compare.csv`](results/space_filling_compare.csv)):
 
 | Method | Nearest existing point ↑ | Nearest pair of new points ↑ | Fill distance ↓ | Mean distance to nearest point ↓ | Mean GP variance ↓ |
 |---|---|---|---|---|---|
-| (existing points only) | | | 1.93 | 1.20 | 0.966 |
-| `sobol` | 1.14 | 1.21 | 1.81 | 1.03 | 0.928 |
-| `sobol-exclusion` | 1.14 | 1.21 | 1.81 | 1.03 | 0.928 |
-| `maximin` | 1.78 | 2.10 | 1.72 | 1.11 | 0.955 |
-| `imse` | 0.91 | 1.15 | 1.76 | **0.96** | **0.895** |
+| (existing points only) | | | 1.92 | 1.17 | 0.965 |
+| `sobol` | 1.11 | 1.52 | 1.83 | 1.06 | 0.939 |
+| `sobol-exclusion` | 1.11 | 1.52 | 1.83 | 1.06 | 0.939 |
+| `maximin` | 1.83 | 2.11 | **1.69** | 1.11 | 0.957 |
+| `imse` | 0.94 | 1.34 | 1.78 | **0.99** | **0.915** |
 
 The picks for seed 0 ([`results/`](results/)):
 
-| Method | SF1 (wt%) | SF2 (wt%) | SF3 (wt%) |
-|---|---|---|---|
-| `sobol`, `sobol-exclusion` | Al–2.72Cr–0.31Ti | Al–0.86Mn–2.12Cr–0.30Er | Al–4.57Mg–0.47Ti |
-| `maximin` | Al–3.00Cr–0.50Er–7.45Zn | Al–4.44Mn–0.50Ti–7.06Zn | Al–4.86Mg–0.48Ti–0.45Er |
-| `imse` | Al–3.22Mn–1.45Cr | Al–7.63Si–0.28Er | Al–3.41Si–4.91Zn |
+| Method | SF1 (wt%) | SF2 (wt%) |
+|---|---|---|
+| `sobol`, `sobol-exclusion` | Al–2.72Cr–0.31Ti | Al–0.86Mn–2.12Cr–0.30Er |
+| `maximin` | Al–3.00Cr–0.50Er–7.45Zn | Al–4.86Mg–0.48Ti–0.45Er |
+| `imse` | Al–3.22Mn–1.45Cr | Al–7.63Si–0.28Er |
+| `imse --min-distance 1.2` | Al–3.22Mn–1.45Cr | Al–6.55Zn |
 
 What this shows:
 
-- **Three points don't fill a 7-D space, whichever method picks them.** The best method lowers the
-  mean GP variance from 0.97 to 0.90. The worst-covered composition stays almost as far from any
-  experiment as before. In a reduced space, the same three runs cover much more: CALPHAD
-  descriptors, or one or two sub-system families.
-- **Maximin sends every point to a corner.** Al–3Cr–0.5Er–7.5Zn and Al–4.4Mn–0.5Ti–7.1Zn sit on
-  several caps at once. They are the hardest of these alloys to melt, dose and print. They also
-  cover the space worse on average than plain Sobol does. Maximin designs are known to hug the
-  boundary. Edison recommended maximin; this is where I disagree with it.
-- **Exclusion rarely bites with this few existing points.** With five points in 7-D, the first
-  Sobol points are already well away from all of them, so `sobol` and `sobol-exclusion` pick the
-  same alloys. Exclusion starts to matter once the existing set is large: literature points, or a
-  dense CALPHAD screen.
-- **`imse` covers best on average, and its picks are moderate alloys.** Al–3.2Mn–1.5Cr is a Zr-free
-  cousin of the Al–Mn–Cr–Zr focus system. Use `imse`, but check its picks against the CALPHAD
-  liquidus and cracking screen before dosing. Edison's objection to IMSE is that it needs a fitted
-  GP. In fact it needs only kernel hyperparameters, but the length scale is a real choice. Rerun
-  it with `--ell` set from the GP fitted to the A, B and D data once those exist.
-- **Only the Al–Mn–Cr pick is stable.** An Al–(3.2–3.7)Mn–(1.5–1.7)Cr pick appears at length
-  scales 0.25, 0.5 and 1.0. The other two picks change with the length scale and the set weight:
-  - at 0.25: Si-rich alloys (Al–8.3Si, Al–3.7Mg–6.5Si);
-  - at 1.0: Zn-bearing alloys (Al–1.9Mn–0.2Ti–3.4Zn, Al–1.6Cr–0.2Er–2.8Zn).
-
-  So the tables above are examples. The actual S3/S4 picks should come from running it on the
-  CALPHAD-screened pool.
+- **Two or three points don't fill a 7-D space, whichever method picks them.** The best method lowers
+  the mean GP variance from 0.97 to 0.92. In a reduced space the same runs cover much more:
+  CALPHAD descriptors, or one or two sub-system families.
+- **Each method wins the criterion it targets.** `imse` wins on average coverage (mean distance,
+  mean variance). `maximin` wins on worst-case coverage (fill distance) and on separation. Neither
+  result says which seeds lead to better optimization.
+- **In this pool and metric, maximin picked boundary-heavy alloys.** For example, Al–3Cr–0.5Er–7.5Zn
+  sits on three caps at once. Maximizing separation is expected to pull points to the boundary;
+  this is not a bug. My judgment, untested, is that such alloys are among the harder ones to melt,
+  dose and print. Prefer maximin when the kernel's length scales are unreliable, when rare families
+  and worst-case coverage matter, or after a credible manufacturability screen has removed unsafe
+  extremes (q3). A compromise is `imse --min-distance`.
+- **The exclusion radius didn't bite in the first picks.** The first Sobol points were already well
+  away from every existing point, so `sobol` and `sobol-exclusion` picked the same alloys. The pool
+  does hold candidates within the radius (130 of 11,136 for seed 0, as q3 also counted); the walk
+  just didn't reach them. With the set term, any two alloys with different element sets are at least 0.5 apart, so a
+  radius of 0.5 mainly tests alloys with the same element set.
+- **The Al–Mn–Cr pick is the most stable one.** Al–(3.2–3.7)Mn–(1.5–1.7)Cr appears at length
+  scales 0.25 and 0.5, with or without the minimum distance. The other pick moves with the
+  settings: Al–8.3Si at 0.25, Al–7.6Si–0.3Er at 0.5, Al–6.6Zn with the minimum distance. At 1.0,
+  both picks are Zn-bearing (Al–1.6Mn–0.2Er–3.3Zn, Al–1.6Cr–0.2Ti–2.9Zn). So the tables are
+  examples. The real S3 (and S4
+  if it falls back) should come from rerunning on the screened, reachable pool with the actual
+  seeds. q3's rerun found `imse` kept its average-coverage lead at length scales 0.25–1, and with
+  the set term or the 3 wt% floor removed.
 
 ## How many seeds: a toy check
 
@@ -271,54 +310,39 @@ What this shows:
   best). A better bump of height 1.0 somewhere else, and a decoy.
 - **The seeds.** The agent picks are drawn around the better bump ("agent right") or around the
   known family ("agent wrong"). One free weak point stands in for 6063.
-- **The optimizer.** The remaining runs go to batches of 3, picked by qLogEI.
-- **The runs.** 30 problem instances per scenario. Every split sees the same instances, so the
-  differences are paired.
+- **The optimizer.** The remaining runs go to batches of 3, picked by qLogEI from a discrete pool.
+- **The runs.** 30 problem instances, each run in both scenarios. Every split sees the same
+  instances and the same random seeds, so the differences are paired.
 
-| Split (baselines + agent + space-filling) | Seeds | Best of 25, agent right | Best of 25, agent wrong | Paired difference vs 3 + 3 + 3, both scenarios | P(beat best baseline by 0.05) |
-|---|---|---|---|---|---|
-| 3 + 3 + 3 (proposed) | 9 | 0.935 | 0.822 | — | 0.55 |
-| 2 + 2 + 2 | 6 | 0.960 | 0.864 | +0.034 ± 0.014 | 0.72 |
-| **2 + 3 + 1** | 6 | 0.962 | 0.880 | **+0.043 ± 0.014** | **0.75** |
-| 2 + 4 + 0 | 6 | **0.970** | 0.856 | +0.035 ± 0.017 | 0.70 |
-| 2 + 0 + 4 | 6 | 0.869 | **0.892** | +0.003 ± 0.028 | 0.60 |
-| 2 + 0 + 1 | 3 | 0.860 | 0.854 | −0.021 ± 0.020 | 0.57 |
-| 3 + 3 + 6 | 12 | 0.952 | 0.845 | +0.020 ± 0.014 | 0.65 |
-| 25 Sobol, no optimizer | 25 | 0.767 | 0.767 | −0.111 ± 0.030 | 0.43 |
-
-The global maximum is about 1.0. ± is one standard error. Full results are in
-[`results/budget_split/`](results/budget_split/).
-
-What it says, within its assumptions:
-
-- **About six seeds beat nine or twelve.** Three seeds (2 + 0 + 1) did a little worse than six,
-  and spending all 25 runs on Sobol did worst.
-- **Agent picks are worth a lot when they know something** (+0.10 when they're right) **and cost
-  little when they don't.** They hurt mainly when they crowd the known family. 3 + 3 + 3 spends
-  six of nine seeds there in the "wrong" case: three baselines and three agent picks.
-- **2 + 3 + 1 was the most robust split.** It came near the top in both scenarios. 2 + 4 + 0 bets
-  on the agent being right, and 2 + 0 + 4 bets on it being wrong.
+<!-- TOY-TABLE -->
 
 What the toy leaves out, and why the real answer may need more seeds:
 
-- In the toy the optimizer sees its result at once. In the campaign, strength comes back about
-  four to six weeks after a run.
+- In the toy the optimizer sees its result at once. In the campaign, strength comes back weeks
+  after a run.
 - Failed runs ([#274](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274)).
+- Feasibility.
 - The function-network structure.
 - A 15-element space.
+- The baselines all sit in one family, not two distinct ones (AlSi10Mg and Scalmalloy).
 
-So treat it as evidence on the direction, not on the exact number. It can be rerun on the 5-node
-synthetic network in [#265](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/265)
-once that exists.
+Two of its assumptions favour the claim that a mistaken agent costs little:
+
+- "Agent right" knows where the optimum is and which dimensions matter.
+- "Agent wrong" only revisits a good family. It never proposes poor or unprintable alloys.
+
+No IMSE or maximin seed policy was tested. So take it as evidence on the direction, not on the
+exact number. It can be rerun on the 5-node synthetic network in
+[#265](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/265) once that exists.
 
 ## Literature and "fantasy" data
 
-#275's "fantasy modelling" is synthetic or literature data that stands in until real data
-exist. BoTorch's `fantasize` is something else: it conditions a model on sampled outcomes at
-pending points, so that a batch doesn't pick the same point twice. The second meaning is what
-[#104](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/104) is about, and what
-pKGFN needs. To keep them apart, this folder calls the first kind **pseudo-data**. Edison calls
-running the whole loop on it a "synthetic digital-twin dry run" (q1, P7).
+#275's "fantasy modelling" is synthetic or literature data that stands in until real data exist.
+BoTorch's `fantasize` is something else: it conditions a model on sampled outcomes at pending
+points, so that a batch doesn't pick the same point twice. The second meaning is what
+[#104](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/104) is about, and what pKGFN
+needs. To keep them apart, this folder calls the first kind **pseudo-data**. Edison calls running
+the whole loop on it a "synthetic digital-twin dry run" (q1, P7).
 
 How to use pseudo-data without fooling the model (Edison q1 §5, P8):
 
@@ -329,11 +353,10 @@ How to use pseudo-data without fooling the model (Edison q1 §5, P8):
   - a multi-task or multi-fidelity GP with the source as the task;
   - a prior mean from a physics model, with the GP learning the residual;
   - an RGPE-style ensemble, whose weight on the literature falls as our own data arrive.
-- **Never overwrite a pseudo-data row with a real value.** Add the real row and let the source
-  term take care of the rest. That keeps the replay honest, and it shows how far the priors were
-  off.
-- **Use it first for the dry run.** Run the whole loop on pseudo-data before Dec 18, so R1 isn't
-  the first time the code sees a full network.
+- **Never overwrite a pseudo-data row with a real value.** Add the real row and let the source term
+  take care of the rest. That keeps the replay honest, and it shows how far the priors were off.
+- **Use it first for the dry run.** Run the whole loop from data ingestion to a batch on
+  pseudo-data before Dec 4, so that R0 and R1 aren't the first time the code sees a full network.
 
 What each node can start from:
 
@@ -345,8 +368,8 @@ What each node can start from:
 | Atomization | Lang's relation, ± 20–30 % |
 
 Taheri-Mousavi et al. (2024, [10.48550/arXiv.2406.17457](https://doi.org/10.48550/arXiv.2406.17457))
-is the closest precedent. They used CALPHAD-derived descriptors and about 40 training
-compositions with expected improvement to design an LPBF Al–Er–Zr–Ni alloy.
+is the closest precedent. They used CALPHAD-derived descriptors and about 40 training compositions
+with expected improvement to design an LPBF Al–Er–Zr–Ni alloy.
 
 **Databases from #7 and #8**, sorted by node:
 
@@ -372,54 +395,74 @@ check that DOI before using it.
 The schedule pre-registers an AI benchmark at G1 (Dec 4). Edison q1 (§6, P9) makes three points
 about it:
 
-- **Use one common seed set for every policy:** random, expert design of experiments, standard
-  BO and BOFN. That set is the baselines and the space-filling seeds.
-- **Count the agent picks on purpose.** Either put them in the common set, or charge them to the
-  AI policy's budget. Report the warm-start effect and the optimizer's effect separately.
+- **Use one common seed set for every policy:** random, expert design of experiments, standard BO
+  and BOFN. That set is the baselines and the space-filling seeds.
+- **Count the agent picks on purpose.** Either put them in the common set, or charge them to the AI
+  policy's budget. Report the warm-start effect and the optimizer's effect separately.
 - **Replay only on points that were actually measured.** Anything else needs a clearly labelled,
   cross-validated simulator, and causal acceleration claims should be avoided.
 
-With about 20 compositions, the acceleration factor will rest on that simulator. Space-filling
-seeds make the simulator less wrong away from the optimizer's path. That is one more reason to
-keep one or two of them.
+Also freeze the executable protocol at G1: objective, constraints, per-source noise or fidelity,
+how failures and pending points are handled, repeats, and common seeds and budgets. With about 20
+compositions, the acceleration factor will rest on that simulator. Space-filling seeds make it
+less wrong away from the optimizer's path, which is one more reason to keep one or two.
+
+## Before Dec 18, in order
+
+From Edison q3's list ([answer](edison/q3-plan-critique/answer.md)), adjusted to the schedule:
+
+1. **Freeze the success criteria and the mineral-burden metric** (G0, today). See short answer 5.
+2. **Fix the ledger and the recipes.** Adopt (or reject) the table above. Confirm Zr, and Fe if S2
+   stays. Mass-balance every recipe against the 6063 cups and the master-alloy carriers. Decide on
+   a low-Sc bridge seed.
+3. **Write the node-by-date data contract.** Pull one sentinel tensile test forward if you can.
+4. **Freeze the executable optimization protocol and dry-run it on pseudo-data** by G1 (Dec 4), so
+   it can pick S4.
+5. **Rerun `seed_design.py` on the final screened, reachable pool,** with the actual seeds, then pick
+   S3 (and S4 if it falls back).
 
 ## Pitfalls
 
-From Edison q1's table ([artifact-01](edison/q1-seeding-strategy/artifact-01.md)) and this work:
+From Edison q1's table ([artifact-01](edison/q1-seeding-strategy/artifact-01.md)), q3, and this
+work:
 
 | Pitfall | Do instead |
 |---|---|
-| Nine seeds leave only 12 optimizer runs | About 6–7 seeds |
+| Nine seeds before the first batch leave only 12 optimizer runs | About 7 seeds; S4 as an early optimizer pick |
+| Relabeling slots without moving them frees nothing | Change what is decided when (the ledger above) |
 | A 10d rule would need 140–150 runs in 15-D | Shrink the space before atomizing: at most 3–4 additions, CALPHAD descriptors as GP inputs, sparse kernels |
 | Agent picks cluster around Al–Si–Mg and Al–Mg–Sc–Zr | Two picks, with different mechanisms and element sets, chosen away from D1 and D2 |
+| A literature property attached to the wrong chemistry | Quote the measured chemistry from the paper (S2 was wrong in the first draft) |
 | Sobol in the full 15-element simplex is almost never feasible | Sample face by face on the sparse simplex (as `seed_design.py` does) |
-| Maximin picks extreme corners | `imse`, or maximin only after the CALPHAD screen trims the pool |
-| Euclidean distance ignores element identity | Add an element-set term (`--set-weight`) |
+| Nominal compositions that 6063 cups can't make | Mass-balance recipes, or use a high-purity base |
+| Maximin picks boundary-heavy alloys | `imse`, `imse --min-distance`, or maximin after a manufacturability screen |
+| Euclidean distance ignores element identity | Add an element-set term (`--set-weight`), with an intentional-addition threshold |
 | Composition-only space-filling leaves the downstream nodes cold | Seed each node from its own cheap sources; space-fill in descriptor and print-parameter space |
 | Pseudo-data pooled with real data biases the model | A source column, per-source noise, multi-task or multi-fidelity; never overwrite rows |
 | Seeds differ between the compared policies | One common seed set; report warm-start and optimizer effects separately |
-| The seeds need elements we don't have | Check Zr, Fe and Ce now; B15 checks the element the S picks depend on |
+| The seeds need elements we don't have | Check Zr, Fe and Ce now |
 | Failed runs dropped from the data | Record failures as outcomes ([#274](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/274)) |
 
 ## Files
 
 | File | What |
 |---|---|
-| [`seeds.csv`](seeds.csv) | Points already chosen: 6063, D1, D2, B30, B15. Add the agent picks here, and replace nominal compositions with measured ones as they come in |
+| [`seeds.csv`](seeds.csv) | Points already chosen (6063, D1, D2, B30, B15) and proposed (S1, S2). Replace nominal compositions with measured ones as they come in |
 | [`seed_design.py`](seed_design.py) | Space-filling picks around `seeds.csv`, in composition space or, after the CALPHAD screen, in descriptor space |
 | [`budget_split_sim.py`](budget_split_sim.py) | The toy simulation of seed and optimizer splits of 25 runs |
 | [`results/`](results/) | Outputs of both scripts |
-| [`edison/`](edison/) | The Edison queries, answers, artifacts and full trajectories, plus `edison_tasks.py`, which submits, waits for and fetches them |
+| [`edison/`](edison/) | The Edison queries, answers, artifacts, notebook and full trajectories, plus `edison_tasks.py`, which submits, waits for and fetches them |
 
 ```bash
 pip install numpy scipy
-python bofn-seeding/seed_design.py                       # 3 picks, imse
-python bofn-seeding/seed_design.py --compare             # all four methods
+python bofn-seeding/seed_design.py --n 2                 # imse around seeds.csv
+python bofn-seeding/seed_design.py --n 2 --compare       # all four methods
+python bofn-seeding/seed_design.py --n 2 --min-distance 1.2
 python bofn-seeding/seed_design.py --elements Mn Cr Mg Si Er Ti Zn Zr   # once Zr is on the shelf
 python bofn-seeding/seed_design.py --candidates screen.csv --features freezing_range kou_index l12_fraction
 
 pip install torch botorch
-python bofn-seeding/budget_split_sim.py --reps 30 --workers 4   # about 10 min on 4 cores
+python bofn-seeding/budget_split_sim.py --reps 30 --workers 4   # about 15 min on 4 cores
 ```
 
 ## Edison tasks
@@ -428,6 +471,9 @@ python bofn-seeding/budget_split_sim.py --reps 30 --workers 4   # about 10 min o
 |---|---|---|---|
 | q1: rubber-duck the 3 + 3 + 3 plan | `LITERATURE_HIGH` | `2d0326f1-fc13-4a90-bcd0-6f92d885d5c8` | [`edison/q1-seeding-strategy/`](edison/q1-seeding-strategy/) |
 | q2: seed alloys, datasets, cheap models | `LITERATURE_HIGH` | `33e883b7-532f-4792-b4b6-ee0f24ea776f` | [`edison/q2-seed-alloys-and-data/`](edison/q2-seed-alloys-and-data/) |
+| q3: critique of the first draft, with the scripts rerun | `ANALYSIS` | `53ab490c-74b7-4648-996a-f554d5087675` | [`edison/q3-plan-critique/`](edison/q3-plan-critique/) |
 
-Edison's numbers are as it reported them from the cited papers. I haven't checked them against
-the papers, so check a value against its source before it goes into a prior.
+Edison's numbers are as it reported them from the cited papers. I haven't checked them against the
+papers, so check a value against its source before it goes into a prior. q3 caught one wrong
+attribution in the first draft (S2), which shows how easily that can happen. q3's answer links a
+`review_evidence.zip` that stayed on Edison's side; its notebook is saved here instead.

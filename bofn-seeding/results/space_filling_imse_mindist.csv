@@ -1,0 +1,3 @@
+code,strategy,method,subsystem,wt_pct,at_pct,nearest_existing,distance,Mn,Cr,Zr,Mg,Si,Cu,Ti,Fe,Ni,Ce,Sc,Li,Er,Zn,Sn
+SF1,space-filling,imse,Al-Mn-Cr,Al-3.22Mn-1.45Cr,Al-1.62Mn-0.77Cr,A1-A5,1.291,3.218,1.446,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+SF2,space-filling,imse,Al-Zn,Al-6.55Zn,Al-2.81Zn,A1-A5,1.201,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,6.551,0.0

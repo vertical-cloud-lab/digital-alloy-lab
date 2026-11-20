@@ -187,10 +187,13 @@ def posterior_var(Xr, Xd, ell, jitter=1e-6):
     return np.clip(1.0 - (V * V).sum(0), 0.0, 1.0)
 
 
-def select_imse(Xc, Xe, n, ell, n_ref=1500, seed=0, jitter=1e-6, **_):
+def select_imse(Xc, Xe, n, ell, n_ref=1500, seed=0, jitter=1e-6, min_distance=0.0, **_):
     rng = np.random.default_rng(seed)
     Xr = Xc[rng.choice(len(Xc), size=min(n_ref, len(Xc)), replace=False)]
     Krc = _rbf(Xr, Xc, ell)  # (R, M), fixed across picks
+    # Optional maximin-style floor (Edison q3's compromise): no pick closer than min_distance
+    # to an existing or already-picked point.
+    dmin = np.sqrt(_sqdist(Xc, Xe).min(1)) if len(Xe) else np.full(len(Xc), np.inf)
     picked = []
     for _ in range(n):
         Xd = np.vstack([Xe] + [Xc[picked]]) if (len(Xe) or picked) else np.zeros((0, Xc.shape[1]))
@@ -206,7 +209,10 @@ def select_imse(Xc, Xe, n, ell, n_ref=1500, seed=0, jitter=1e-6, **_):
         # already pins down (var near the jitter) gain nothing; skip them rather than divide by ~0.
         gain = np.where(var_c > 10 * jitter, (cov * cov).mean(0) / np.maximum(var_c, 10 * jitter), -np.inf)
         gain[picked] = -np.inf
-        picked.append(int(np.argmax(gain)))
+        gain[dmin < min_distance] = -np.inf
+        i = int(np.argmax(gain))
+        picked.append(i)
+        dmin = np.minimum(dmin, np.sqrt(_sqdist(Xc, Xc[i : i + 1])[:, 0]))
     return picked
 
 
@@ -256,7 +262,8 @@ def run_composition(args):
     if args.compare:
         compare(Xc, Xe, Xr, args)
         return
-    picked = SELECT[args.method](Xc, Xe, args.n, radius=args.radius, ell=args.ell, seed=args.seed)
+    picked = SELECT[args.method](Xc, Xe, args.n, radius=args.radius, ell=args.ell, seed=args.seed,
+                                 min_distance=args.min_distance)
     Wn = Wc[picked]
     assert feasible(Wn, args.min_total).all()
     cov = coverage(Xe, Xc[picked], Xr, args.ell)
@@ -292,7 +299,8 @@ def compare(Xc, Xe, Xr, args):
         Wc, _ = candidate_pool(args.elements, args.k_min, args.k_max, args.per_subsystem, args.seed + 17 * s, args.min_total)
         Xc_s = features(Wc, args.set_weight)
         for m in METHODS:
-            picked = SELECT[m](Xc_s, Xe, args.n, radius=args.radius, ell=args.ell, seed=s)
+            picked = SELECT[m](Xc_s, Xe, args.n, radius=args.radius, ell=args.ell, seed=s,
+                               min_distance=args.min_distance)
             results[m].append(coverage(Xe, Xc_s[picked], Xr, args.ell))
     keys = list(results[METHODS[0]][0])
     print(f"\n{args.n} new points, mean over {args.repeats} scrambles (higher is better for the first two, lower for the rest)")
@@ -321,7 +329,8 @@ def run_features(args):
     is_existing = np.array([str(r.get("existing", "0")).strip() in {"1", "true", "True", "yes"} for r in rows])
     Xe, Xc = X[is_existing], X[~is_existing]
     cand_rows = [r for r, e in zip(rows, is_existing) if not e]
-    picked = SELECT[args.method](Xc, Xe, args.n, radius=args.radius, ell=args.ell, seed=args.seed)
+    picked = SELECT[args.method](Xc, Xe, args.n, radius=args.radius, ell=args.ell, seed=args.seed,
+                                 min_distance=args.min_distance)
     print(f"{len(Xc)} candidates, {len(Xe)} existing; {args.method} in ({', '.join(args.features)}) space:")
     for i in picked:
         d = np.sqrt(_sqdist(Xc[i : i + 1], Xe).min()) if len(Xe) else float("nan")
@@ -349,6 +358,8 @@ def main(argv=None):
     p.add_argument("--per-subsystem", type=int, default=256, help="Sobol points per sub-system (rounded up to 2^m)")
     p.add_argument("--existing", type=pathlib.Path, default=HERE / "seeds.csv")
     p.add_argument("--radius", type=float, default=0.5, help="exclusion radius for sobol-exclusion (normalized units)")
+    p.add_argument("--min-distance", type=float, default=0.0,
+                   help="imse only: skip candidates closer than this to an existing or picked point")
     p.add_argument("--ell", type=float, default=0.5, help="RBF length scale for imse and the coverage metric (normalized units)")
     p.add_argument("--set-weight", type=float, default=0.5,
                    help="weight on element-set differences in the distance (0 = plain range-scaled Euclidean)")
