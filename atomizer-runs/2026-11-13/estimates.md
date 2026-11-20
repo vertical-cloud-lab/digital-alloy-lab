@@ -40,9 +40,11 @@ e = sqrt(k rho c). Bronze at 1000 C (just solid) against parts at 25 C:
 | Borosilicate 3.3 glass | 899 C |
 | Silicone rubber seal | 956 C |
 | FKM (Viton) seal | 943 C |
+| EPDM seal | 944 C |
 
-Silicone seals are rated to about 200-230 C continuous and FKM to about 200-250 C, so a seal that a
-bead touches is overheated at once; it only survives if no hot metal reaches it.
+EPDM seals are rated to about 150 C continuous, silicone to about 200-230 C and FKM to about 200-250 C,
+so a seal that a bead touches is overheated at once; it only survives if no hot metal reaches it.
+AMAZEMET recalls the seal that burned as EPDM (WhatsApp, Nov 17), the lowest-rated of the three.
 
 ## 4. Thermal-shock margin of the glass
 
@@ -103,11 +105,33 @@ A one-off dose of air (such as the chamber drawing in air when the machine lost 
 - after 3 pump-down/backfill cycle(s) to 16 mbar absolute: 0.9 ppm
 
 Six extra purges should therefore have brought a one-off dose of air below 1 ppm. A reading that went
-back to 1000 ppm after every purge means either a source that refills during each pump-down (a leak
-open to the room) or a sensor fault.
+back to 1000 ppm after every purge means one of three things: a source that refills the chamber during
+each pump-down (a leak open to the room), a sensor fault, or a sensor that isn't being flushed. AMAZEMET
+says chamber gas only flows through the sensor above +50 mbar, so the sensor sits without flow during
+every pump-down, and it needs a small flow at overpressure to clear (WhatsApp, Nov 14 and Nov 18). With
+too little flow, the reading could stay near the top of the scale after every purge, whatever the
+chamber held. These numbers describe the chamber only if the sensor was seeing chamber gas.
 
 The pump-down filmed in video 3 (t = 12-36 s) gives a chamber time constant V/S of about **9 s**.
 Valve the pump off at full vacuum and watch the gauge (a rate-of-rise test). A leak that leaves 4 mbar of
 air at the bottom of a pump-down raises the pressure by about 4/9 = 0.46 mbar/s, roughly
 **28 mbar per minute**, while a tight chamber with ~0.1 mbar of air rises about 0.7 mbar/min plus outgassing.
 A 5-minute rate-of-rise test therefore separates the two cases by more than the gauge's resolution.
+
+## 7. Could the oxygen have added heat?
+
+Gage asked AMAZEMET whether a leak letting oxygen in could have added to the heat in the cup; the reply
+was "Can't confirm that the oxygen could matter here" (WhatsApp, Nov 17). The upper bound: let every O2
+molecule in the chamber gas react with the melt. During the melt and the pour the chamber is at
+overpressure, so a leak lets gas out rather than in, and the argon topping it up carries only a few ppm O2.
+The chamber's volume isn't recorded here, so take 50-300 L (assumed).
+
+| Chamber gas volume | O2 at 1000 ppm | Heat if it all oxidizes Al | Heat if it all oxidizes Cu | Share of the charge's heat |
+|---|---|---|---|---|
+| 50 L | 2.0 mmol | 2.2 kJ | 0.7 kJ | 0.3 % at most |
+| 100 L | 4.0 mmol | 4.5 kJ | 1.4 kJ | 0.6 % at most |
+| 300 L | 12.0 mmol | 13.4 kJ | 4.1 kJ | 1.9 % at most |
+
+Even at the top of the scale and with the largest volume, oxidation releases about 2 % of the 692 kJ
+the charge carries. The oxygen did not heat the cup. If it mattered, it did so indirectly: an Al2O3 skin
+on a melt with 10 % Al works against atomization, and more shot means more hot metal reaching the cup.

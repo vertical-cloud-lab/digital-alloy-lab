@@ -61,6 +61,7 @@ mats = {  # k W/m/K, rho kg/m3, c J/kg/K (handbook values, rounded)
     "Borosilicate 3.3 glass": (1.1, 2230, 750),
     "Silicone rubber seal": (0.2, 1200, 1300),
     "FKM (Viton) seal": (0.2, 1850, 1400),
+    "EPDM seal": (0.25, 1150, 1800),
 }
 e = {n: math.sqrt(k * r * c) for n, (k, r, c) in mats.items()}
 eb = e["NAB bronze (solid)"]
@@ -69,8 +70,9 @@ print("|---|---|")
 for n in list(mats)[1:]:
     tc = (eb * 1000 + e[n] * 25) / (eb + e[n])
     print(f"| {n} | {tc:.0f} C |")
-print("\nSilicone seals are rated to about 200-230 C continuous and FKM to about 200-250 C, so a seal that a")
-print("bead touches is overheated at once; it only survives if no hot metal reaches it.\n")
+print("\nEPDM seals are rated to about 150 C continuous, silicone to about 200-230 C and FKM to about 200-250 C,")
+print("so a seal that a bead touches is overheated at once; it only survives if no hot metal reaches it.")
+print("AMAZEMET recalls the seal that burned as EPDM (WhatsApp, Nov 17), the lowest-rated of the three.\n")
 
 # ---------------------------------------------------------------- 4. thermal shock of the glass
 print("## 4. Thermal-shock margin of the glass\n")
@@ -120,8 +122,12 @@ print("A one-off dose of air (such as the chamber drawing in air when the machin
 for n in range(1, 4):
     print(f"- after {n} pump-down/backfill cycle(s) to {p_low:.0f} mbar absolute: {209000*(p_low/p_fill)**n:.1f} ppm")
 print("\nSix extra purges should therefore have brought a one-off dose of air below 1 ppm. A reading that went")
-print("back to 1000 ppm after every purge means either a source that refills during each pump-down (a leak")
-print("open to the room) or a sensor fault.\n")
+print("back to 1000 ppm after every purge means one of three things: a source that refills the chamber during")
+print("each pump-down (a leak open to the room), a sensor fault, or a sensor that isn't being flushed. AMAZEMET")
+print("says chamber gas only flows through the sensor above +50 mbar, so the sensor sits without flow during")
+print("every pump-down, and it needs a small flow at overpressure to clear (WhatsApp, Nov 14 and Nov 18). With")
+print("too little flow, the reading could stay near the top of the scale after every purge, whatever the")
+print("chamber held. These numbers describe the chamber only if the sensor was seeing chamber gas.\n")
 # pump-down curve read off video 3 (nRPmLzQUUBY), room ~850 mbar
 pts = [(12, -270), (15, -441), (18, -544), (21, -625), (24, -682), (27, -726), (30, -760), (33, -783), (36, -801)]
 p0 = 849.2
@@ -136,3 +142,26 @@ print(f"air at the bottom of a pump-down raises the pressure by about 4/{tau:.0f
 print(f"**{4/tau*60:.0f} mbar per minute**, while a tight chamber with ~0.1 mbar of air rises about "
       f"{0.1/tau*60:.1f} mbar/min plus outgassing.")
 print("A 5-minute rate-of-rise test therefore separates the two cases by more than the gauge's resolution.")
+
+# ---------------------------------------------------------------- 7. heat from the oxygen in the chamber
+print("\n## 7. Could the oxygen have added heat?\n")
+print("Gage asked AMAZEMET whether a leak letting oxygen in could have added to the heat in the cup; the reply")
+print("was \"Can't confirm that the oxygen could matter here\" (WhatsApp, Nov 17). The upper bound: let every O2")
+print("molecule in the chamber gas react with the melt. During the melt and the pour the chamber is at")
+print("overpressure, so a leak lets gas out rather than in, and the argon topping it up carries only a few ppm O2.")
+print("The chamber's volume isn't recorded here, so take 50-300 L (assumed).\n")
+R, T_gas_k = 8.314, 300.0
+p_pa = p_fill * 100.0                       # about 999 mbar absolute, from section 6
+x_o2 = 1000e-6                              # the top of the sensor's scale
+dH = {"4/3 Al + O2 -> 2/3 Al2O3": 1675.7 / 1.5, "4 Cu + O2 -> 2 Cu2O": 2 * 168.6}  # kJ per mol O2 (handbook)
+q_charge = m * h_per_g / 1e3                # kJ, section 1
+print("| Chamber gas volume | O2 at 1000 ppm | Heat if it all oxidizes Al | Heat if it all oxidizes Cu | Share of the charge's heat |")
+print("|---|---|---|---|---|")
+for v_l in (50, 100, 300):
+    n_o2 = x_o2 * p_pa * v_l / 1000 / (R * T_gas_k)
+    q_al = n_o2 * dH["4/3 Al + O2 -> 2/3 Al2O3"]
+    q_cu = n_o2 * dH["4 Cu + O2 -> 2 Cu2O"]
+    print(f"| {v_l} L | {n_o2*1e3:.1f} mmol | {q_al:.1f} kJ | {q_cu:.1f} kJ | {q_al/q_charge*100:.1f} % at most |")
+print(f"\nEven at the top of the scale and with the largest volume, oxidation releases about 2 % of the {q_charge:.0f} kJ")
+print("the charge carries. The oxygen did not heat the cup. If it mattered, it did so indirectly: an Al2O3 skin")
+print("on a melt with 10 % Al works against atomization, and more shot means more hot metal reaching the cup.")
