@@ -4,7 +4,8 @@
 #275 suggests taking Sobol points but throwing out the ones that land too close to existing
 experiments. This script does that, plus two more model-based variants, in the space a GP
 with a ``Normalize`` input transform over the design box would see (each element's wt%
-divided by its upper bound):
+divided by its upper bound), plus ``--set-weight`` (default 0.5) for every element that one
+alloy has and the other doesn't, so different element sets count as further apart:
 
 - ``sobol``: the first n feasible points of a scrambled Sobol sequence. Ignores the existing
   points; this is the plain baseline.
@@ -132,6 +133,16 @@ def read_existing(path):
     return W, rows
 
 
+def features(W, set_weight):
+    """Normalized wt% plus set_weight x (element switched on): a mixed distance.
+
+    Squared distance = range-scaled Euclidean + set_weight^2 x (number of elements in one alloy
+    but not the other), so alloys with different element sets count as further apart (#275,
+    Edison q1, pitfall P5).
+    """
+    return np.hstack([W / UB, set_weight * (W > 0)])
+
+
 # --------------------------------------------------------------------------- selection
 def _sqdist(A, B):
     return np.maximum((A * A).sum(1)[:, None] + (B * B).sum(1)[None, :] - 2 * A @ B.T, 0.0)
@@ -231,10 +242,10 @@ def label(w):
 def run_composition(args):
     We, rows = read_existing(args.existing)
     Wc, subs = candidate_pool(args.elements, args.k_min, args.k_max, args.per_subsystem, args.seed, args.min_total)
-    Xc, Xe = Wc / UB, We / UB
+    Xc, Xe = features(Wc, args.set_weight), features(We, args.set_weight)
     rng = np.random.default_rng(args.seed + 1)
     Wr, _ = candidate_pool(args.elements, args.k_min, args.k_max, 256, args.seed + 1000, args.min_total)
-    Xr = Wr / UB
+    Xr = features(Wr, args.set_weight)
     Xr = Xr[rng.choice(len(Xr), size=min(3000, len(Xr)), replace=False)]
     print(f"design space: Al + {args.k_min}-{args.k_max} of {', '.join(args.elements)}, "
           f"total additions {args.min_total:g}-{100 - AL_MIN_WT:g} wt%; "
@@ -259,7 +270,7 @@ def run_composition(args):
             "nearest_existing": rows[k]["code"] if len(Xe) else "", "distance": round(float(d[k]), 3),
             **{e: round(float(Wc[i, IDX[e]]), 3) for e in PALETTE},
         })
-    print(f"\n{args.method}: {args.n} picks (normalized distance; each element scaled by its upper bound)")
+    print(f"\n{args.method}: {args.n} picks (distance: wt% scaled by each upper bound, plus {args.set_weight:g} per element in one alloy but not the other)")
     for r in out:
         print(f"  {r['code']}: {r['wt_pct']:<36} wt%   nearest existing {r['nearest_existing']} at {r['distance']}")
     print("  coverage: " + ", ".join(f"{k} {v:.3f}" for k, v in cov.items()))
@@ -277,7 +288,7 @@ def compare(Xc, Xe, Xr, args):
     results = {m: [] for m in METHODS}
     for s in range(args.repeats):
         Wc, _ = candidate_pool(args.elements, args.k_min, args.k_max, args.per_subsystem, args.seed + 17 * s, args.min_total)
-        Xc_s = Wc / UB
+        Xc_s = features(Wc, args.set_weight)
         for m in METHODS:
             picked = SELECT[m](Xc_s, Xe, args.n, radius=args.radius, ell=args.ell, seed=s)
             results[m].append(coverage(Xe, Xc_s[picked], Xr, args.ell))
@@ -337,6 +348,8 @@ def main(argv=None):
     p.add_argument("--existing", type=pathlib.Path, default=HERE / "seeds.csv")
     p.add_argument("--radius", type=float, default=0.5, help="exclusion radius for sobol-exclusion (normalized units)")
     p.add_argument("--ell", type=float, default=0.5, help="RBF length scale for imse and the coverage metric (normalized units)")
+    p.add_argument("--set-weight", type=float, default=0.5,
+                   help="weight on element-set differences in the distance (0 = plain range-scaled Euclidean)")
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--compare", action="store_true", help="compare all methods instead of picking")
     p.add_argument("--repeats", type=int, default=10, help="scrambles to average over with --compare")

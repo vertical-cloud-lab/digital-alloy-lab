@@ -144,22 +144,50 @@ def summarize(rows):
     return out
 
 
+def paired(rows, ref="3+3+3 (proposed)"):
+    """Each split minus the proposed 3+3+3 on the same problem instance, per scenario."""
+    out = []
+    for sc in SCENARIOS + ["both"]:
+        keep = [x for x in rows if sc == "both" or x["scenario"] == sc]
+        base = {(x["scenario"], x["rep"]): x["best"] for x in keep if x["split"] == ref}
+        for name, *_ in SPLITS:
+            d = np.array([x["best"] - base[(x["scenario"], x["rep"])] for x in keep if x["split"] == name])
+            if len(d):
+                out.append(dict(scenario=sc, split=name, n=len(d), mean_diff=d.mean(),
+                                se_diff=d.std(ddof=1) / np.sqrt(len(d)) if len(d) > 1 else 0.0))
+    return out
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--reps", type=int, default=30)
     p.add_argument("--workers", type=int, default=4)
     p.add_argument("--out", type=pathlib.Path, default=HERE / "results" / "budget_split")
+    p.add_argument("--summarize-only", action="store_true", help="re-summarize an existing runs.json")
     a = p.parse_args()
+    if a.summarize_only:
+        rows = json.loads((a.out / "runs.json").read_text())
+        write_summaries(rows, a.out)
+        return
     jobs = [(r, sc, s) for r in range(a.reps) for sc in SCENARIOS for s in SPLITS]
     with ProcessPoolExecutor(a.workers) as ex:
         rows = list(ex.map(run_one, jobs, chunksize=4))
     a.out.mkdir(parents=True, exist_ok=True)
     (a.out / "runs.json").write_text(json.dumps(rows, indent=0) + "\n")
+    write_summaries(rows, a.out)
+
+
+def write_summaries(rows, out):
     summary = summarize(rows)
-    with open(a.out / "summary.csv", "w", newline="") as fh:
+    with open(out / "summary.csv", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(summary[0]))
         w.writeheader()
         w.writerows({k: (round(v, 4) if isinstance(v, float) else v) for k, v in s.items()} for s in summary)
+    diffs = paired(rows)
+    with open(out / "paired_vs_333.csv", "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(diffs[0]))
+        w.writeheader()
+        w.writerows({k: (round(v, 4) if isinstance(v, float) else v) for k, v in d.items()} for d in diffs)
     for sc in SCENARIOS:
         print(f"\n{sc}: mean best of 25 (+/- 1 se), best after 12, P(beat best baseline by 0.05), P(found the better bump)")
         for s in summary:

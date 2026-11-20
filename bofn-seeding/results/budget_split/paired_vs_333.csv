@@ -1,0 +1,25 @@
+scenario,split,n,mean_diff,se_diff
+agent right,3+3+3 (proposed),30,0.0,0.0
+agent right,2+2+2,30,0.0251,0.0158
+agent right,2+3+1,30,0.0277,0.0158
+agent right,2+0+1,30,-0.074,0.0287
+agent right,2+0+4,30,-0.0654,0.0413
+agent right,2+4+0,30,0.0359,0.0176
+agent right,3+3+6,30,0.0171,0.0159
+agent right,all 25 Sobol (no BO),30,-0.1673,0.0431
+agent wrong,3+3+3 (proposed),30,0.0,0.0
+agent wrong,2+2+2,30,0.0424,0.0234
+agent wrong,2+3+1,30,0.0579,0.0241
+agent wrong,2+0+1,30,0.032,0.0234
+agent wrong,2+0+4,30,0.0705,0.0343
+agent wrong,2+4+0,30,0.0346,0.029
+agent wrong,3+3+6,30,0.0234,0.0238
+agent wrong,all 25 Sobol (no BO),30,-0.0544,0.0395
+both,3+3+3 (proposed),60,0.0,0.0
+both,2+2+2,60,0.0338,0.014
+both,2+3+1,60,0.0428,0.0144
+both,2+0+1,60,-0.021,0.0196
+both,2+0+4,60,0.0025,0.0281
+both,2+4+0,60,0.0353,0.0168
+both,3+3+6,60,0.0203,0.0142
+both,all 25 Sobol (no BO),60,-0.1108,0.0299
