@@ -340,7 +340,7 @@ def write_md(rows, module, path, dt):
     path.write_text("\n".join(L) + "\n")
 
 
-PRIORITY = ["U4.7", "M5.1", "M4.4", "M7.2", "M3.2", "M4.3", "A2.39", "M8.2", "A2.3", "M9.1", "A2.50", "A2.24", "A2.19"]
+PRIORITY = ["U4.7", "M5.1", "M4.4", "M7.2", "M3.2", "M4.3", "M8.2", "M9.1", "U2.2", "S2.4", "A2.3"]
 
 
 def draw(sc, renders, module, limit=12):
