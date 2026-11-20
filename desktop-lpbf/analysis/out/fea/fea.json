@@ -386,61 +386,193 @@
   "criterion": "first mode > 100 Hz (60 Hz minimum) so building and VLM vibration don't excite the galvo"
  },
  "1": {
-  "case": "1 chamber body, full vacuum",
+  "case": "1 chamber: frame + floor plate (bonded across the floor joint), open top, full vacuum",
   "material": "6061-T6 aluminium",
-  "load": "-0.1013 MPa on 1181 cm2 of wetted faces; lid 4729 N on the top land (0.446 MPa); door 2445 N on its land (0.260 MPa); 4 leg pads fixed",
-  "nodes": 131797,
-  "elements": 80089,
-  "vm_max": 42.89140349619257,
+  "load": "-0.1013 MPa on 1416 cm2 of wetted faces; lid 5907 N on the top land; door 2445 N on its land; module 733 N, outlet plenum 185 N and funnel 257 N up on the floor plate round their openings; 4 leg pads under the floor plate fixed",
+  "nodes": 139613,
+  "elements": 81589,
+  "vm_max": 54.41508186820452,
   "vm_max_at": [
-   105.6,
-   -75.0,
-   100.0
+   -106.74999999999999,
+   -95.0,
+   99.12916512459886
   ],
-  "vm_p995": 21.29880885929912,
-  "u_max": 0.22296696756128329,
+  "vm_p995": 22.30110700952492,
+  "u_max": 0.20845740789331582,
   "u_max_at": [
-   1.1368683772161603e-13,
-   -75.0,
+   4.263256414560601e-13,
+   -95.0,
    120.0
   ],
-  "door_land_uy_range": 0.208699881,
-  "door_land_u_max": 0.208826,
-  "lid_land_uz_range": 0.07888748999999999,
-  "sf_yield": 6.434855880258157,
-  "sf_haz": 2.564616474015932,
-  "sf_fatigue_goodman": 3.4315331240159503,
-  "sf_yield_p995": 12.958471143774673,
-  "criterion": "SF >= 2 on yield at the peak; seal faces move << 0.7 mm O-ring squeeze; Goodman SF >= 2 for vacuum cycles",
+  "door_land_uy_range": 0.194129,
+  "door_land_u_max": 0.191972,
+  "lid_land_uz_range": 0.08379267,
+  "floor_joint_sz": {
+   "n": 450,
+   "mean": -0.8610857529111111,
+   "min": -13.9971,
+   "max": 0.336651
+  },
+  "sf_yield": 5.0721232151866085,
+  "sf_haz": 2.021498382864228,
+  "sf_fatigue_goodman": 2.70482496358642,
+  "sf_yield_p995": 12.376067245546105,
+  "criterion": "SF >= 2 on yield at the peak; seal faces move << the O-rings' squeeze; Goodman SF >= 2 for vacuum cycles",
   "pass": true,
   "png": "c1_chamber_vm.png"
  },
  "1b": {
-  "case": "1b chamber body + lid bonded, full vacuum",
+  "case": "1b chamber: frame + floor plate + lid bonded, full vacuum and +20 mbar",
   "material": "6061-T6 aluminium",
-  "load": "interior suction incl. the lid underside; door load on its land; window, dose-slot and camera-port covers carried round their flanges; 4 leg pads fixed",
-  "nodes": 166211,
-  "elements": 101013,
-  "vm_max": 9.141304918452015,
+  "load": "vacuum: suction inside incl. the lid underside, door on its land, window/dose/camera covers round their flanges, module/plenum/funnel loads under the floor; +20 mbar: the same loads reversed and scaled by 0.002/0.101325 (linear); 4 leg pads fixed",
+  "nodes": 284108,
+  "elements": 164906,
+  "vm_max": 27.975783462001083,
   "vm_max_at": [
-   110.0,
-   -84.61516352716194,
-   97.53566298693514
+   60.0,
+   95.0,
+   8.0
   ],
-  "vm_p995": 4.1090562828312045,
-  "u_max": 0.023729706126918725,
+  "vm_p995": 9.630375445810355,
+  "u_max": 0.06269101976219665,
   "u_max_at": [
-   0.028858498976108038,
-   -27.654444370169436,
-   128.14975972996638
+   1.793000237060511,
+   -4.561370388153904,
+   -2.0
   ],
-  "door_land_uy_range": 0.004079355,
-  "window_seat_uz": -0.0235553,
-  "sf_yield": 30.192625939310396,
-  "sf_haz": 12.033292946826608,
-  "sf_fatigue_goodman": 16.100903880322843,
+  "door_land_uy_range": 0.00427241,
+  "window_seat_uz": -0.048765,
+  "floor_joint_sz": {
+   "n": 417,
+   "mean": -0.8162247175779377,
+   "min": -8.8448,
+   "max": 0.202487
+  },
+  "sf_yield": 9.86567544658347,
+  "sf_haz": 3.9319720982760207,
+  "sf_fatigue_goodman": 5.2610956198111225,
+  "plus20mbar": {
+   "vm_max": 0.5521889837577422,
+   "vm_max_at": [
+    60.0,
+    95.0,
+    8.0
+   ],
+   "vm_p995": 0.19009166308325176,
+   "u_max": 0.0012374260536283093,
+   "u_max_at": [
+    1.793000237060511,
+    -4.561370388153904,
+    -2.0
+   ],
+   "door_land_uy_range": 8.433099999999999e-05,
+   "window_seat_uz": 0.000962543,
+   "floor_joint_sz": {
+    "n": 417,
+    "mean": 0.01611099013357314,
+    "min": -0.00399675,
+    "max": 0.174581
+   },
+   "sf_yield": 499.82887764578703,
+   "sf_haz": 199.2071613805673,
+   "sf_fatigue_goodman": 266.54510713182026
+  },
   "criterion": "as case 1",
   "pass": true,
   "png": "c1b_chamber_lid_vm.png"
+ },
+ "1f": {
+  "case": "1f floor-plate bolted joint (Shigley) and floor O-ring gland (Parker)",
+  "screws": "18 x McMaster 92290A154 (M4 x 16, 316), tapped 6061",
+  "proof_MPa": 210.0,
+  "tensile_MPa": 482.63299,
+  "preload_N": 1382.85,
+  "torque_Nm": 1.10628,
+  "nut_factor": 0.2,
+  "grip_mm": 8.1,
+  "kb_N_per_mm": 167776.23762376237,
+  "km_N_per_mm": 304157.8859076404,
+  "C": 0.3555077483448777,
+  "oring_N_per_mm": {
+   "nominal": 4.17235544544956,
+   "max_tolerance": 5.368682548808374,
+   "parker_80A": 9.631496062992127
+  },
+  "oring_force_N": {
+   "nominal": 3950.0021006368984,
+   "max_tolerance": 5082.574488847464,
+   "parker_80A": 9118.213962951502
+  },
+  "seal_area_mm2": 56666.28490494964,
+  "cases": {
+   "nominal O-ring, +20 mbar": {
+    "load_total_N": 4063.3346704467976,
+    "load_per_screw_N": 225.7408150248221,
+    "n_load": 5.743738509607806,
+    "n_sep": 9.5048941522036,
+    "screw_force_N": 1463.102608859012
+   },
+   "O-ring at max squeeze, +50 mbar (relief valve +34)": {
+    "load_total_N": 5365.905913372212,
+    "load_per_screw_N": 298.105884076234,
+    "n_load": 4.349448574174226,
+    "n_sep": 7.197585379074253,
+    "screw_force_N": 1488.828951616301
+   },
+   "Parker 80A bar, +50 mbar": {
+    "load_total_N": 9401.54538747625,
+    "load_per_screw_N": 522.3080770820138,
+    "n_load": 2.4824356913874204,
+    "n_sep": 4.1080018609518705,
+    "screw_force_N": 1568.5345684257695
+   },
+   "Parker 80A bar, +0.5 bar regulator fault": {
+    "load_total_N": 11951.528208198984,
+    "load_per_screw_N": 663.973789344388,
+    "n_load": 1.9527822231184615,
+    "n_sep": 3.2315169470194407,
+    "screw_force_N": 1618.8978268098394
+   },
+   "nominal O-ring, full vacuum": {
+    "load_total_N": -1791.709217357124,
+    "load_per_screw_N": -99.53940096428467,
+    "n_load": null,
+    "n_sep": null,
+    "screw_force_N": 1347.462971691589
+   }
+  },
+  "thread_engagement_mm": 7.9,
+  "thread_strip_N": 7904.817629657811,
+  "screw_proof_N": 1843.8,
+  "screw_break_N": 4237.5176522,
+  "preload_total_N": 24891.3,
+  "land_area_mm2": 2982.130065303097,
+  "land_pressure_preload_MPa": 8.346819037039587,
+  "head_bearing_MPa": 61.24171493693981,
+  "gland": {
+   "cs": 3.53,
+   "depth": 2.65,
+   "width": 4.6,
+   "squeeze_nom": 24.929178470254957,
+   "squeeze_min": 21.236872812135363,
+   "squeeze_max": 28.414096916299552,
+   "fill_nom": 80.2852171803057,
+   "fill_max_cold": 87.57836164156399,
+   "parker_range": {
+    "depth": [
+     2.57,
+     2.72
+    ],
+    "width_face": [
+     4.5,
+     4.75
+    ]
+   },
+   "path_mm": 946.7079572390784,
+   "splice": "vulcanized cord, made to length: no stretch"
+  },
+  "dowels": "2 x McMaster 93600A686 (\u00d86 x 20, m6), pressed into the plate, slip fit in the frame",
+  "criterion": "separation factor n_sep >= 2 and load factor n_load >= 1.5 in every case; thread strip > screw break",
+  "pass": true
  }
 }

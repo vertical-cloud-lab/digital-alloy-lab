@@ -410,12 +410,13 @@ FRAME = dict(
     bolt_t=12.0,                # floor screws on the skirt's centre line, 12 mm outside the inner faces
     notch=8.0,                  # screw heads sit in 8 mm deep U-notches in the plate's underside, open to its edge
     door_r=6.5, slot_r=3.9,     # door-opening corners (1/2 in. end mill); round ends of the 8 mm inlet and outlet slots
-    blank_in=(12.5, 9.0, 5.5),  # saw-cut frame blank, 5-1/2 in. 6061-T651 plate (in.): 5 in. plate is +/-0.130 in. thick (OnlineMetals),
-                                # so it can come in under the 123.9 mm frame; McMaster's thickest rolled plate is 4 in.
-    floor_blank_in=(12.5, 9.0, 1.0),
+    blank_in=(15.0, 9.5, 5.5),  # saw-cut frame blank, 5-1/2 in. 6061-T651 plate (in.): 1 in. end tabs (x) for setup 1's toe clamps, sawn off
+                                # after it; 5 in. plate is +/-0.130 in.
+                                # thick (OnlineMetals), so it can come in under the 123.9 mm frame; McMaster's thickest rolled plate is 4 in.
+    floor_blank_in=(15.0, 9.5, 1.0),   # from a 1 in. 12 x 24 in. plate (McMaster 89155K165); end tabs as the frame's
     core_off=3.0,               # waterjet / bandsaw line, 3 mm inside the finished opening
 )
-CHAMBER_OPS: dict = {}          # "frame" / "floor": dict(blank=solid, ops=[(op id, label, solid removed)]) in machining order
+CHAMBER_OPS: dict = {}          # "frame" / "floor": dict(blank=solid, ops=[(op id, label, solid removed)] in machining order, part=shape before joints.py)
 
 
 # --------------------------------------------------------------------------------------------
@@ -562,13 +563,14 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     lid_gland = rbox(-ix - 3 - gw, ix + 3 + gw, -iy - 3 - gw, iy + 3 + gw, lz0 - gd, lz0 + 1, 6).cut(rbox(-ix - 3, ix + 3, -iy - 3, iy + 3, lz0 - gd - 1, lz0 + 2, 4))
     dz0, dz1 = 8.0, 100.0                                        # door opening: sill 8 mm above the floor
     beam = []
-    for sx in (-1, 1):                                           # plate-at-exchange-height through-beam (fibre heads): M6 x 0.75 through, 2-010 face groove
-        ax_ = "x" if sx > 0 else "-x"
-        beam += [cyl(3.0, (sx * (ix - 1), 0, 5.0), ax_, P["wall"] + 2),
-                 cyl(5.4, (sx * (cx - 1.32), 0, 5.0), ax_, 1.4).cut(cyl(3.1, (sx * (cx - 1.4), 0, 5.0), ax_, 1.6))]
+    for sx in (-1, 1):                                           # plate-at-exchange-height through-beam (fibre heads): M6 x 0.75 through,
+        ax_ = "x" if sx > 0 else "-x"                          # and a Ø10.8 x 1.32 O-ring counterbore round it (the 2-010 sits on the thread's
+        beam += [cyl(3.0, (sx * (ix - 1), 0, 5.0), ax_, P["wall"] + 2),     # crest, as in an SAE / ISO 6149 port: the old groove's inner
+                 cyl(5.4, (sx * (cx - 1.32), 0, 5.0), ax_, 1.4)]          # wall was 0.1 mm thick round the M6 thread)
     fops = [
-        ("FR-01", "square the blank: outer profile 312 x 222 with R8 corners; face top and bottom to 123.9 mm", fr_blank.cut(outer)),
-        ("FR-02", "core out as one 274 x 184 slug: waterjet, or a contour bandsaw from a Ø12 start hole (3 mm left on every inside face)",
+        ("FR-01", "face top and bottom to 123.9 mm; outer profile 312 x 222 with R8 corners (half from each side)", fr_blank.cut(outer)),
+        ("FR-02", "core out as one 274 x 184 slug (3 mm left on every inside face): waterjet from a Ø12 start hole, or trepanned from both sides "
+                  "with the 3/4 in. end mill, or a contour bandsaw",
          rbox(-ix + co, ix - co, -iy + co, iy - co, zf0 - 1, lz0 + 1, FR["r_in"] - co)),
         ("FR-03", "finish the opening from the top, 280 x 190 with R10 corners, down to mid-height (3/4 in. end mill, 63 mm stick-out)",
          rbox(-ix, ix, -iy, iy, zm - 0.5, lz0 + 1, FR["r_in"])),
@@ -581,10 +583,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         ("FR-10", "recoater screw bores Ø18 through both side walls", fuse([cyl(9, (-cx - 1, ry_, rz_), "x", P["wall"] + 2), cyl(9, (ix - 1, ry_, rz_), "x", P["wall"] + 2)])),
         ("FR-11", "vacuum port bore Ø25.4 through the right wall (KF-25 adapter plate)", cyl(12.7, (ix - 1, 0, 70), "x", P["wall"] + 2)),
         ("FR-12", "O2 sample: SAE-4 port in the right wall", sae_tool((cx, -40, 18), "-x", P["wall"])),
-        ("FR-13", "through-beam: M6 x 0.75 tapped through each side wall, 2-010 face groove outside", fuse(beam)),
+        ("FR-13", "through-beam: M6 x 0.75 tapped through each side wall, Ø10.8 x 1.32 O-ring counterbore outside", fuse(beam)),
     ]
     ch = outer.cut(opening).cut(*[t for _, _, t in fops[4:]])
-    CHAMBER_OPS["frame"] = dict(blank=fr_blank, ops=fops)
+    CHAMBER_OPS["frame"] = dict(blank=fr_blank, ops=fops, part=ch)          # part: before joints.py adds the fastener holes
     add("Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)", ch, C["alu"], 5, (0, 0, 260),
         mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
     # floor plate: 20 mm (z -20..0) from 1 in. plate. A 4 mm pad (inside the frame's skirt) carries the floor O-ring; the edge band
@@ -608,7 +610,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         ("FP-07", "module thumb-screw pre-holes and the dowel / diamond-pin holes, from below", fuse(pre)),
     ]
     flp = fp_outer.cut(*[t for _, _, t in pops[1:]])
-    CHAMBER_OPS["floor"] = dict(blank=fp_blank, ops=pops)
+    CHAMBER_OPS["floor"] = dict(blank=fp_blank, ops=pops, part=flp)
     add("Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)", flp, C["alu"], 5, (0, 0, 150),
         mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
     # the cord as squeezed (2.65 tall, ~3.7 wide) against the groove's inner wall, as the lid's

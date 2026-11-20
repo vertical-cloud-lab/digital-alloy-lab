@@ -1,0 +1,4390 @@
+{
+ "units": "mm, minutes; model frame of cad/lpbf_low.py (origin at the floor's top centre, +y to the back)",
+ "generated_utc": "2026-11-20T23:36Z",
+ "how_to_animate": "Start from CHAMBER_OPS[part]['blank']; in each setup turn the part by rotation_model_to_machine (rows are machine x, y, z in model coordinates; for the 4th-axis setup use index[A]), and for each op cut, in order, the solids it lists: 'FR-xx'/'FP-xx' are lpbf_low.CHAMBER_OPS[...]['ops'] entries, 'J:<key>' the tools in joints.CUTS['Process chamber body' / 'Chamber floor plate'] with that key. The spindle stays vertical (machine +z). FR-01 / FP-01 is the outside trim and both faces, shared between the two flat setups (bottom face and lower half of the profile first, then the rest).",
+ "machines": {
+  "mill": {
+   "model": "Haas VF-4",
+   "travels_mm": [
+    1270,
+    508,
+    635
+   ],
+   "nose_to_table_mm": [
+    107,
+    742
+   ],
+   "table_mm": [
+    1321,
+    495
+   ],
+   "t_slots": "5 x 16 mm at 80 mm",
+   "spindle": "CT40/BT40, 8100 rpm, 22.4 kW, 122 N m at 2000 rpm",
+   "atc": "20 pockets, tool max \u00d889 mm / 5.4 kg, tool-to-tool 4.2 s",
+   "source": "https://www.haascnc.com/machines/vertical-mills/vf-series/models/medium/vf-4.html (fetched 2026-11-20 22:27 UTC)",
+   "byu": "ME Prototyping Lab (EB 117) per machining.md's 14:00 UTC fetch; not re-confirmed on the live page at 22:44 UTC"
+  },
+  "rotary": {
+   "model": "Haas HRT210 rotary table (4th axis, A)",
+   "platter_d_mm": 210,
+   "centre_height_mm": 152.4,
+   "max_kg_with_tailstock": 77.1,
+   "max_kg_unsupported": 38.6,
+   "t_slots": "6 at 60 deg",
+   "brake_Nm": 271,
+   "backlash_arcsec": 30,
+   "source": "https://www.haascnc.com/machines/rotaries-indexers/rotary-tables/models/hrt210.html (fetched 2026-11-20 22:31 UTC)",
+   "byu": "no BYU page names a rotary model; Physics' Haas VF-2SS 'provides new capabilities like a 4th axis' (https://physics.byu.edu/department/news/2020-08-new-mill-becomes-part-of-the-p-a-family, 22:31 UTC), and the BYU machinist who reviewed the design says the shop has 4-axis machines"
+  }
+ },
+ "feeds": {
+  "endmill_6061": {
+   "sfm": [
+    1600,
+    2400
+   ],
+   "fz_in": {
+    "1/2": {
+     "slot": [
+      0.0035,
+      0.0047
+     ],
+     "heavy": [
+      0.0047,
+      0.0063
+     ],
+     "light": [
+      0.0058,
+      0.0079
+     ],
+     "finish": [
+      0.0035,
+      0.0047
+     ]
+    },
+    "3/4": {
+     "slot": [
+      0.0053,
+      0.0071
+     ],
+     "heavy": [
+      0.007,
+      0.0095
+     ],
+     "light": [
+      0.0088,
+      0.0119
+     ],
+     "finish": [
+      0.0053,
+      0.0071
+     ]
+    }
+   },
+   "doc": "regular LOC: heavy roughing ADOC <= 1.5 D, RDOC 30-50 %; light roughing ADOC = LOC, RDOC 15-25 %; longer than regular LOC: light roughing ADOC <= 2 D, RDOC 10-15 %; finishing RDOC 3-5 %",
+   "source": "Helical aluminium parameters (HAL-C-3 / H35AL-3 / H40ALV-3 / HAL-3), https://cdn.shopify.com/s/files/1/0612/0733/files/Helical_Aluminum_Parameters.pdf (22:32 UTC)"
+  },
+  "hem": {
+   "note": "Helical HEM: RDOC 7-30 % D, ADOC up to 2 D; 1/2 in. 3-flute in 6061 at 18,000 rpm, 500 ipm, 40 % x 2 D = 100 in3/min",
+   "source": "Helical Machining Guidebook (2016) pp. 25, 30-31, https://mae.ufl.edu/designlab/Advanced%20Manufacturing/Helical_Machining_Guidebook.pdf (22:32 UTC)"
+  },
+  "long_reach": {
+   "note": "Haas: 'Reduce cut depth and feed by 50% for long-flute or long-reach tools'; Helical: finishing deeper than 3 x D 'may require a 50% feed rate reduction', and use necked tools beyond 2-3 x D",
+   "source": "Haas HM42-3FL chart (22:41 UTC); Helical guidebook pp. 7, 10, 11"
+  },
+  "facemill": {
+   "sfm": [
+    2296,
+    4920
+   ],
+   "fz_in": [
+    0.0039,
+    0.0196
+   ],
+   "source": "Haas HPAL2 insert chart, wrought aluminium (22:41 UTC)"
+  },
+  "drill": {
+   "sfm": 659,
+   "ipr": [
+    0.0079,
+    0.0102
+   ],
+   "source": "Haas HCD TSC carbide drills, wrought aluminium (22:41 UTC)"
+  },
+  "tap": {
+   "sfm": [
+    33,
+    65
+   ],
+   "source": "Haas metric aluminium taps 10-15 m/min; Haas ALU tap chart 50-65 SFM (22:41 UTC)"
+  },
+  "deflection": {
+   "note": "end mill as a solid rod of 0.7-0.8 x D in delta = F L^3 / (3 E I), I = pi D_e^4 / 64",
+   "source": "Mitsubishi Materials technical course, https://www.mmc-carbide.com/permanent/courses/70/cutting-edge-classification.html (22:33 UTC)"
+  },
+  "waterjet": {
+   "note": "WARDJet: 4 in. aluminium at 0.72 ipm (Q5) to 4.2 ipm (Q1); speed ~ 1/thickness^1.15 gives 0.50-2.9 ipm at 5.5 in. (scaled)",
+   "source": "https://www.wardjet.com/nozzle-and-orifice/ (22:39 UTC); UF EML2322L waterjet notes (22:35 UTC)"
+  },
+  "setup": {
+   "note": "median setup 68-90 min (last good part to first good part), Modern Machine Shop Top Shops survey; manual tool setting up to 6 min per tool against 30 s with a probe (Renishaw)",
+   "source": "https://mmsonline.com/articles/best-practices-of-top-us-shops (22:43 UTC); Renishaw tool-setting brief (22:42 UTC)"
+  }
+ },
+ "tools": {
+  "T1": {
+   "type": "indexable face mill, 2-1/2 in., 4 inserts (HPAL2-type)",
+   "d": 63.5,
+   "flutes": 4,
+   "stick_out": null,
+   "holder": "CT40 shell-mill arbor"
+  },
+  "T2": {
+   "type": "3-flute carbide end mill, 3/4 in., 1-1/2 in. LOC, 4 in. OAL",
+   "d": 19.05,
+   "flutes": 3,
+   "stick_out": 63.0,
+   "holder": "CT40 ER32 or side-lock, \u00d850 nose"
+  },
+  "T3": {
+   "type": "3-flute carbide end mill, 1/2 in., 1 in. LOC, 3 in. OAL",
+   "d": 12.7,
+   "flutes": 3,
+   "stick_out": 38.0,
+   "holder": "CT40 ER32"
+  },
+  "T4": {
+   "type": "2-flute carbide end mill, 4 mm (O-ring grooves: R4 / R6 gland corners)",
+   "d": 4.0,
+   "flutes": 2,
+   "stick_out": 16.0,
+   "holder": "CT40 ER20"
+  },
+  "T5": {
+   "type": "3-flute carbide end mill, 1/4 in.",
+   "d": 6.35,
+   "flutes": 3,
+   "stick_out": 25.0,
+   "holder": "CT40 ER20"
+  },
+  "T6": {
+   "type": "carbide spot drill, 90 deg, 1/2 in.",
+   "d": 12.7,
+   "flutes": 2,
+   "stick_out": 30.0,
+   "holder": "CT40 ER32"
+  },
+  "T7": {
+   "type": "carbide drill 3.3 mm (M4 tap drill)",
+   "d": 3.3,
+   "flutes": 2,
+   "stick_out": 30.0,
+   "holder": "CT40 ER20"
+  },
+  "T8": {
+   "type": "carbide drill 4.22 mm, No. 19 (M4 STI)",
+   "d": 4.22,
+   "flutes": 2,
+   "stick_out": 30.0,
+   "holder": "CT40 ER20"
+  },
+  "T9": {
+   "type": "carbide drill 5.3 mm (M5 STI)",
+   "d": 5.3,
+   "flutes": 2,
+   "stick_out": 35.0,
+   "holder": "CT40 ER20"
+  },
+  "T10": {
+   "type": "spiral-point tap M4 x 0.7 (rigid tapping)",
+   "d": 4.0,
+   "flutes": 3,
+   "stick_out": 30.0,
+   "holder": "CT40 ER20 tap collet"
+  },
+  "T11": {
+   "type": "STI bottoming tap M4 x 0.7",
+   "d": 4.91,
+   "flutes": 3,
+   "stick_out": 30.0,
+   "holder": "CT40 ER20 tap collet"
+  },
+  "T12": {
+   "type": "STI bottoming tap M5 x 0.8",
+   "d": 6.04,
+   "flutes": 3,
+   "stick_out": 35.0,
+   "holder": "CT40 ER20 tap collet"
+  },
+  "T13": {
+   "type": "carbide drill 5.8 mm + 6 mm H7 reamer (dowels)",
+   "d": 6.0,
+   "flutes": 2,
+   "stick_out": 40.0,
+   "holder": "CT40 ER20"
+  },
+  "T14": {
+   "type": "SAE J1926 -4 port tool (spot face, O-ring cone, thread relief) + 7/16-20 UNF tap",
+   "d": 12.9,
+   "flutes": 2,
+   "stick_out": 40.0,
+   "holder": "CT40 ER32"
+  },
+  "T15": {
+   "type": "carbide drill 5.2 mm + M6 x 0.75 tap (fibre heads)",
+   "d": 6.0,
+   "flutes": 2,
+   "stick_out": 30.0,
+   "holder": "CT40 ER20"
+  },
+  "T16": {
+   "type": "2-flute carbide end mill, 1/16 in. (2-010 face groove, 2.3 wide)",
+   "d": 1.5875,
+   "flutes": 2,
+   "stick_out": 6.0,
+   "holder": "CT40 ER11"
+  }
+ },
+ "efficiency_note": "roughing rates x 0.6 for a first part (leads, air, ramps)",
+ "frame": {
+  "part": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+  "material": "6061-T651",
+  "blank": {
+   "size_in": [
+    15.0,
+    9.5,
+    5.5
+   ],
+   "size_mm": [
+    381.0,
+    241.3,
+    139.7
+   ],
+   "mass_kg": 34.7,
+   "source": "5-1/2 in. 6061-T651 plate cut to size (Metals Depot lists 5, 5-1/2 and 6 in. plate; McMaster's rolled plate stops at 4 in.)",
+   "why_5_5": "5 in. plate is +/-0.130 in. (+/-3.3 mm) thick per OnlineMetals' table, so it can arrive thinner than the 123.9 mm frame",
+   "end_tabs": "1 in. at each x end for F-S1's toe clamps, sawn off before F-S2"
+  },
+  "core": {
+   "volume_cm3": 6241.33,
+   "mass_kg": 16.9,
+   "route": "waterjet (default) / trepan on the mill / contour bandsaw",
+   "waterjet_min": [
+    12,
+    71
+   ]
+  },
+  "model_volumes_cm3": {
+   "blank_cm3": 12843.4,
+   "part_cm3": 1582.5,
+   "op_cm3": {
+    "FR-01": 4268.36,
+    "FR-02": 6241.33,
+    "FR-03": 171.13,
+    "FR-04": 168.39,
+    "FR-05": 29.58,
+    "FR-06": 11.93,
+    "FR-07": 323.26,
+    "FR-08": 15.15,
+    "FR-09": 1.2,
+    "FR-10": 8.14,
+    "FR-11": 8.11,
+    "FR-12": 1.2,
+    "FR-13": 1.07
+   },
+   "joint_holes": {
+    "lid": 40,
+    "floor": 18,
+    "floor_dowels": 2,
+    "rail": 4,
+    "plenum_in": 14,
+    "vac_port": 8,
+    "bearing_cap": 8
+   },
+   "labels": {
+    "FR-01": "face top and bottom to 123.9 mm; outer profile 312 x 222 with R8 corners (half from each side)",
+    "FR-02": "core out as one 274 x 184 slug (3 mm left on every inside face): waterjet from a \u00d812 start hole, or trepanned from both sides with the 3/4 in. end mill, or a contour bandsaw",
+    "FR-03": "finish the opening from the top, 280 x 190 with R10 corners, down to mid-height (3/4 in. end mill, 63 mm stick-out)",
+    "FR-04": "finish the opening from the bottom up to mid-height (same tool)",
+    "FR-05": "rebate 8 x 3.9 round the bottom of the opening, for the floor plate's pad",
+    "FR-06": "lid O-ring face gland in the top face (4.6 x 2.65, 1/8 in. end mill)",
+    "FR-07": "door opening 220 x 92 through the front wall, R6.5 corners",
+    "FR-08": "cross-flow inlet slot 120 x 8 through the back wall, round ends",
+    "FR-09": "argon inlet: SAE-4 O-ring-boss port in the back wall",
+    "FR-10": "recoater screw bores \u00d818 through both side walls",
+    "FR-11": "vacuum port bore \u00d825.4 through the right wall (KF-25 adapter plate)",
+    "FR-12": "O2 sample: SAE-4 port in the right wall",
+    "FR-13": "through-beam: M6 x 0.75 tapped through each side wall, \u00d810.8 x 1.32 O-ring counterbore outside"
+   },
+   "name": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)"
+  },
+  "setups": [
+   {
+    "id": "F-S0",
+    "name": "saw the blank; core out as one slug",
+    "machine": "horizontal bandsaw; abrasive waterjet (ME Prototyping Lab EB 117 or MFGEN 101 CTB list one)",
+    "fixture": "blank flat on the waterjet slats, weighted; a \u00d812 start hole drilled first (drill press)",
+    "face_up": "+z",
+    "rotation_model_to_machine": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ],
+    "ops": [
+     {
+      "id": "F-S0-1",
+      "feature": "saw-cut blank 15 x 9.5 x 5.5 in. from 5-1/2 in. 6061-T651 plate (Metals Depot lists it cut to size)",
+      "cuts": [],
+      "tool": {
+       "id": "T6",
+       "type": "carbide spot drill, 90 deg, 1/2 in.",
+       "d_mm": 12.7,
+       "stick_out_mm": 30.0,
+       "holder": "CT40 ER32"
+      },
+      "strategy": "bandsaw; supplier can cut to size",
+      "minutes": 15.0
+     },
+     {
+      "id": "F-S0-2",
+      "feature": "core out as one 274 x 184 slug (6.24 L, 17 kg of reusable 6061), 3 mm inside the finished opening",
+      "cuts": [
+       "FR-02"
+      ],
+      "tool": {
+       "id": "T6",
+       "type": "carbide spot drill, 90 deg, 1/2 in.",
+       "d_mm": 12.7,
+       "stick_out_mm": 30.0,
+       "holder": "CT40 ER32"
+      },
+      "strategy": "waterjet: 35.6 in. of cut at 0.50-2.9 ipm (WARDJet 4 in. data scaled to 5.5 in.) = 12-71 min. If the shop's waterjet can't take 5.5 in. (OMAX: machines 'optimized' for 1/4-3 in.): trepan on the mill instead, a 3/4 in. slot round the core from each side in F-S1 and F-S2 (+~40 min), or a contour bandsaw with the blade threaded through the start hole and welded",
+      "minutes": 41.7,
+      "machine_note": "off the mill"
+     }
+    ]
+   },
+   {
+    "id": "F-S1",
+    "name": "bottom up: datum face, rebate, lower halves, floor-screw and dowel holes",
+    "machine": "VF-4, 3-axis",
+    "fixture": "blank on four 1-1/2 in. riser blocks on the table, 4 toe clamps on the 1 in. end tabs (x); the opening and the outer faces are clear of the clamps; probe the blank for x, y, z zero",
+    "face_up": "-z",
+    "rotation_model_to_machine": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      -1,
+      0
+     ],
+     [
+      0,
+      0,
+      -1
+     ]
+    ],
+    "ops": [
+     {
+      "id": "F-S1-1",
+      "feature": "face the bottom (the skirt face, z -3.9)",
+      "cuts": [
+       "FR-01"
+      ],
+      "tool": {
+       "id": "T1",
+       "type": "indexable face mill, 2-1/2 in., 4 inserts (HPAL2-type)",
+       "d_mm": 63.5,
+       "stick_out_mm": null,
+       "holder": "CT40 shell-mill arbor"
+      },
+      "strategy": "face mill, 4584 rpm, 1863 mm/min, 3 passes",
+      "minutes": 6.4,
+      "note": "FR-01 is shared: bottom face here, top face in F-S2, outer profile half and half"
+     },
+     {
+      "id": "F-S1-2",
+      "feature": "outer profile 312 x 222 R8, from the bottom up to mid-height (z 58.5)",
+      "cuts": [
+       "FR-01"
+      ],
+      "tool": {
+       "id": "T2",
+       "type": "3-flute carbide end mill, 3/4 in., 1-1/2 in. LOC, 4 in. OAL",
+       "d_mm": 19.05,
+       "stick_out_mm": 63.0,
+       "holder": "CT40 ER32 or side-lock, \u00d850 nose"
+      },
+      "strategy": "HEM, RDOC 1.9 mm, ADOC 38 mm, 8100 rpm, 3259 mm/min; finish 0.25 mm",
+      "minutes": 16.1
+     },
+     {
+      "id": "F-S1-3",
+      "feature": "opening finished from the bottom to mid-height: 280 x 190, R10 corners",
+      "cuts": [
+       "FR-04"
+      ],
+      "tool": {
+       "id": "T2",
+       "type": "3-flute carbide end mill, 3/4 in., 1-1/2 in. LOC, 4 in. OAL",
+       "d_mm": 19.05,
+       "stick_out_mm": 63.0,
+       "holder": "CT40 ER32 or side-lock, \u00d850 nose"
+      },
+      "strategy": "HEM off the 3 mm waterjet stock, then two finishing springs; 63 mm stick-out (3.3:1)",
+      "minutes": 2.1
+     },
+     {
+      "id": "F-S1-4",
+      "feature": "rebate 8 x 3.9 round the bottom of the opening",
+      "cuts": [
+       "FR-05"
+      ],
+      "tool": {
+       "id": "T2",
+       "type": "3-flute carbide end mill, 3/4 in., 1-1/2 in. LOC, 4 in. OAL",
+       "d_mm": 19.05,
+       "stick_out_mm": 63.0,
+       "holder": "CT40 ER32 or side-lock, \u00d850 nose"
+      },
+      "strategy": "one level, two passes",
+      "minutes": 2.2
+     },
+     {
+      "id": "F-S1-5",
+      "feature": "18 floor-screw holes M4 x 0.7 (\u00d83.3 x 11, rigid tap 9) and 2 dowel holes \u00d86 H7 x 10.4",
+      "cuts": [
+       "J:floor",
+       "J:floor_dowels"
+      ],
+      "tool": {
+       "id": "T7",
+       "type": "carbide drill 3.3 mm (M4 tap drill)",
+       "d_mm": 3.3,
+       "stick_out_mm": 30.0,
+       "holder": "CT40 ER20"
+      },
+      "strategy": "spot T6, drill T7, tap T10, dowels T13",
+      "minutes": 5.6
+     }
+    ]
+   },
+   {
+    "id": "F-S2",
+    "name": "top up: top face, upper halves, lid gland, lid inserts",
+    "machine": "VF-4, 3-axis",
+    "fixture": "saw the end tabs off first. 'Dummy floor' fixture plate (1 in. MIC-6, 330 x 240, its own 18 \u00d84.5 holes and 2 \u00d86 pins matching the frame's) on the table; the frame sits on its skirt face on the plate and is pulled down by the 18 M4 screws from below: nothing on top or outside is in the way",
+    "face_up": "+z",
+    "rotation_model_to_machine": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ],
+    "ops": [
+     {
+      "id": "F-S2-1",
+      "feature": "face the top to height (123.9 mm overall)",
+      "cuts": [
+       "FR-01"
+      ],
+      "tool": {
+       "id": "T1",
+       "type": "indexable face mill, 2-1/2 in., 4 inserts (HPAL2-type)",
+       "d_mm": 63.5,
+       "stick_out_mm": null,
+       "holder": "CT40 shell-mill arbor"
+      },
+      "strategy": "face mill",
+      "minutes": 6.4
+     },
+     {
+      "id": "F-S2-2",
+      "feature": "outer profile from the top down to mid-height (overlap 1 mm with F-S1-2)",
+      "cuts": [
+       "FR-01"
+      ],
+      "tool": {
+       "id": "T2",
+       "type": "3-flute carbide end mill, 3/4 in., 1-1/2 in. LOC, 4 in. OAL",
+       "d_mm": 19.05,
+       "stick_out_mm": 63.0,
+       "holder": "CT40 ER32 or side-lock, \u00d850 nose"
+      },
+      "strategy": "HEM + finish",
+      "minutes": 16.1
+     },
+     {
+      "id": "F-S2-3",
+      "feature": "opening finished from the top down to mid-height",
+      "cuts": [
+       "FR-03"
+      ],
+      "tool": {
+       "id": "T2",
+       "type": "3-flute carbide end mill, 3/4 in., 1-1/2 in. LOC, 4 in. OAL",
+       "d_mm": 19.05,
+       "stick_out_mm": 63.0,
+       "holder": "CT40 ER32 or side-lock, \u00d850 nose"
+      },
+      "strategy": "HEM + finish; the witness line at mid-height is blended by the finishing springs (< 0.02 mm step with one tool and a probed z)",
+      "minutes": 2.1
+     },
+     {
+      "id": "F-S2-4",
+      "feature": "lid O-ring face gland (4.6 x 2.65, R4/R6 corners)",
+      "cuts": [
+       "FR-06"
+      ],
+      "tool": {
+       "id": "T4",
+       "type": "2-flute carbide end mill, 4 mm (O-ring grooves: R4 / R6 gland corners)",
+       "d_mm": 4.0,
+       "stick_out_mm": 16.0,
+       "holder": "CT40 ER20"
+      },
+      "strategy": "2 depth steps x 2 side passes; Ra <= 0.8 um floor",
+      "minutes": 8.1
+     },
+     {
+      "id": "F-S2-5",
+      "feature": "20 lid-screw insert holes M5 STI (\u00d85.3 x 10.5, STI tap 7.5)",
+      "cuts": [
+       "J:lid"
+      ],
+      "tool": {
+       "id": "T9",
+       "type": "carbide drill 5.3 mm (M5 STI)",
+       "d_mm": 5.3,
+       "stick_out_mm": 35.0,
+       "holder": "CT40 ER20"
+      },
+      "strategy": "spot T6, drill T9, STI tap T12",
+      "minutes": 5.3
+     }
+    ]
+   },
+   {
+    "id": "F-S3",
+    "name": "the four walls on the 4th axis (one clamping, four index angles)",
+    "machine": "VF-4 with an HRT210-class rotary (A axis along machine X)",
+    "fixture": "the same dummy-floor plate bolted to the HRT210 platter, the frame on it with its bottom against the plate (2 pins + 18 M4 screws), so the frame's z axis is the A axis. The frame swings 188.3 mm about it, more than the HRT210's 152.4 mm centre height: put the rotary on a 2-1/2 in. (63.5 mm) riser so A sits 215.9 mm above the table (27 mm clear). No tailstock: the open top overhangs ~150 mm, 4.3 kg + the plate, inside the 38.6 kg unsupported rating",
+    "face_up": "A-indexed",
+    "alternatives": "A along the frame's x instead (it swings only 127 mm, so no riser), held by its side walls between a platter plate and the tailstock: one clamping for top, bottom, front and back, but the two side walls then need their own setups, and the big sealing faces are cut on the rotary rather than flat on the table. Same three setups; this plan keeps the faces that matter most on the table.",
+    "a_axis": {
+     "axis_in_model": "+z (frame bottom on the platter side)",
+     "centre_above_table_mm": 215.9,
+     "riser_mm": 63.5,
+     "swing_radius_mm": 188.3,
+     "index": {
+      "0": {
+       "face_up": "front (-y)",
+       "rotation_model_to_machine": [
+        [
+         0.0,
+         0.0,
+         1.0
+        ],
+        [
+         -1.0,
+         0.0,
+         0.0
+        ],
+        [
+         0.0,
+         -1.0,
+         0.0
+        ]
+       ]
+      },
+      "90": {
+       "face_up": "left (-x)",
+       "rotation_model_to_machine": [
+        [
+         0.0,
+         0.0,
+         1.0
+        ],
+        [
+         -0.0,
+         1.0,
+         0.0
+        ],
+        [
+         -1.0,
+         -0.0,
+         0.0
+        ]
+       ]
+      },
+      "180": {
+       "face_up": "back (+y)",
+       "rotation_model_to_machine": [
+        [
+         0.0,
+         0.0,
+         1.0
+        ],
+        [
+         1.0,
+         0.0,
+         0.0
+        ],
+        [
+         -0.0,
+         1.0,
+         0.0
+        ]
+       ]
+      },
+      "270": {
+       "face_up": "right (+x)",
+       "rotation_model_to_machine": [
+        [
+         0.0,
+         0.0,
+         1.0
+        ],
+        [
+         0.0,
+         -1.0,
+         0.0
+        ],
+        [
+         1.0,
+         0.0,
+         0.0
+        ]
+       ]
+      }
+     }
+    },
+    "ops": [
+     {
+      "id": "F-S3-1",
+      "feature": "front: door opening 220 x 92, R6.5 corners, through the 16 mm wall",
+      "cuts": [
+       "FR-07"
+      ],
+      "tool": {
+       "id": "T3",
+       "type": "3-flute carbide end mill, 1/2 in., 1 in. LOC, 3 in. OAL",
+       "d_mm": 12.7,
+       "stick_out_mm": 38.0,
+       "holder": "CT40 ER32"
+      },
+      "strategy": "HEM pocket through, then finish; the door's sealing land round it is the as-faced front face",
+      "minutes": 10.8,
+      "A_deg": 0
+     },
+     {
+      "id": "F-S3-2",
+      "feature": "left: recoater bore \u00d818, through-beam M6 x 0.75 + 2-010 face groove",
+      "cuts": [
+       "FR-10",
+       "FR-13"
+      ],
+      "tool": {
+       "id": "T3",
+       "type": "3-flute carbide end mill, 1/2 in., 1 in. LOC, 3 in. OAL",
+       "d_mm": 12.7,
+       "stick_out_mm": 38.0,
+       "holder": "CT40 ER32"
+      },
+      "strategy": "helical interpolate \u00d818; drill T15 + tap; groove T16",
+      "minutes": 6.0,
+      "A_deg": 90
+     },
+     {
+      "id": "F-S3-3",
+      "feature": "back: inlet slot 120 x 8, argon SAE-4 port, 7 inlet-plenum insert holes M4 STI, 4 rail holes M4 tapped THROUGH + plug spot faces",
+      "cuts": [
+       "FR-08",
+       "FR-09",
+       "J:plenum_in",
+       "J:rail"
+      ],
+      "tool": {
+       "id": "T5",
+       "type": "3-flute carbide end mill, 1/4 in.",
+       "d_mm": 6.35,
+       "stick_out_mm": 25.0,
+       "holder": "CT40 ER20"
+      },
+      "strategy": "slot with the 1/4 in. end mill (two passes); port tool T14; inserts T8 + T11; rail holes T7 + T10 through the wall from outside",
+      "minutes": 11.2,
+      "A_deg": 180
+     },
+     {
+      "id": "F-S3-4",
+      "feature": "right: KF-25 bore \u00d825.4, 4 vacuum-adapter M5 STI, 4 bearing-cap M4 STI, O2 SAE-4 port, recoater bore \u00d818, through-beam",
+      "cuts": [
+       "FR-10",
+       "FR-11",
+       "FR-12",
+       "FR-13",
+       "J:vac_port",
+       "J:bearing_cap"
+      ],
+      "tool": {
+       "id": "T3",
+       "type": "3-flute carbide end mill, 1/2 in., 1 in. LOC, 3 in. OAL",
+       "d_mm": 12.7,
+       "stick_out_mm": 38.0,
+       "holder": "CT40 ER32"
+      },
+      "strategy": "helical interpolate the bores; T14 for the SAE port; inserts T8/T9 + T11/T12",
+      "minutes": 13.2,
+      "A_deg": 270
+     }
+    ]
+   }
+  ],
+  "run_minutes_on_mill": 112,
+  "part_handling": "the frame weighs 4.3 kg finished; the blank 39 kg"
+ },
+ "floor": {
+  "part": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+  "material": "6061-T651",
+  "blank": {
+   "size_in": [
+    15.0,
+    9.5,
+    1.0
+   ],
+   "size_mm": [
+    381.0,
+    241.3,
+    25.4
+   ],
+   "source": "1 in. 6061-T651 oversized plate 12 x 24 in., McMaster 89155K165, $267.02 (fetched 22:33-22:37 UTC)"
+  },
+  "model_volumes_cm3": {
+   "blank_cm3": 2335.2,
+   "part_cm3": 1115.2,
+   "op_cm3": {
+    "FP-01": 950.98,
+    "FP-02": 35.02,
+    "FP-03": 11.54,
+    "FP-04": 144.76,
+    "FP-05": 19.58,
+    "FP-06": 41.33,
+    "FP-07": 1.24
+   },
+   "joint_holes": {
+    "floor": 54,
+    "floor_dowels": 2,
+    "module_flange": 4,
+    "plenum_out": 12,
+    "funnel": 8,
+    "zmount": 8,
+    "legs": 8
+   },
+   "labels": {
+    "FP-01": "square the blank: profile 312 x 222 with R8 corners; face both sides to 20 mm",
+    "FP-02": "step the edge band down 4 mm, leaving the 4 mm pad that fits inside the frame's skirt",
+    "FP-03": "floor O-ring face gland in the pad's top face (4.6 x 2.65, 1.5 mm outside the walls)",
+    "FP-04": "module port \u00d896 H7 (every module's spigot)",
+    "FP-05": "cross-flow outlet slot 124 x 8 near the door, round ends",
+    "FP-06": "overflow slot 20 x 104, R4 corners",
+    "FP-07": "module thumb-screw pre-holes and the dowel / diamond-pin holes, from below"
+   },
+   "name": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)"
+  },
+  "setups": [
+   {
+    "id": "P-S0",
+    "name": "saw the blank",
+    "machine": "bandsaw",
+    "fixture": "-",
+    "face_up": "+z",
+    "rotation_model_to_machine": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ],
+    "ops": [
+     {
+      "id": "P-S0-1",
+      "feature": "saw 15 x 9.5 in. from 1 in. 6061-T651 (McMaster 89155K165, 12 x 24 in., $267.02)",
+      "cuts": [],
+      "tool": {
+       "id": "T6",
+       "type": "carbide spot drill, 90 deg, 1/2 in.",
+       "d_mm": 12.7,
+       "stick_out_mm": 30.0,
+       "holder": "CT40 ER32"
+      },
+      "strategy": "",
+      "minutes": 10.0
+     }
+    ]
+   },
+   {
+    "id": "P-S1",
+    "name": "top up: datum face, pad step, gland, port, slots, dowel and clearance holes",
+    "machine": "VF-4, 3-axis",
+    "fixture": "blank on parallels (kept clear of the port and the slots), 4 toe clamps on the 1 in. end tabs",
+    "face_up": "+z",
+    "rotation_model_to_machine": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ],
+    "ops": [
+     {
+      "id": "P-S1-1",
+      "feature": "face the top (the pad face, z 0)",
+      "cuts": [
+       "FP-01"
+      ],
+      "tool": {
+       "id": "T1",
+       "type": "indexable face mill, 2-1/2 in., 4 inserts (HPAL2-type)",
+       "d_mm": 63.5,
+       "stick_out_mm": null,
+       "holder": "CT40 shell-mill arbor"
+      },
+      "strategy": "face mill",
+      "minutes": 2.8
+     },
+     {
+      "id": "P-S1-2",
+      "feature": "step the edge band down 4 mm, leaving the 4 mm pad (295.5 x 205.5, R17.75)",
+      "cuts": [
+       "FP-02"
+      ],
+      "tool": {
+       "id": "T2",
+       "type": "3-flute carbide end mill, 3/4 in., 1-1/2 in. LOC, 4 in. OAL",
+       "d_mm": 19.05,
+       "stick_out_mm": 63.0,
+       "holder": "CT40 ER32 or side-lock, \u00d850 nose"
+      },
+      "strategy": "HEM, one level; the band's outer edge is cut with the profile in P-S2",
+      "minutes": 3.2
+     },
+     {
+      "id": "P-S1-3",
+      "feature": "floor O-ring face gland (4.6 x 2.65, 1.5 mm outside the walls)",
+      "cuts": [
+       "FP-03"
+      ],
+      "tool": {
+       "id": "T4",
+       "type": "2-flute carbide end mill, 4 mm (O-ring grooves: R4 / R6 gland corners)",
+       "d_mm": 4.0,
+       "stick_out_mm": 16.0,
+       "holder": "CT40 ER20"
+      },
+      "strategy": "as the lid gland; Ra <= 0.8 um",
+      "minutes": 7.7
+     },
+     {
+      "id": "P-S1-4",
+      "feature": "module port \u00d896 H7 through",
+      "cuts": [
+       "FP-04"
+      ],
+      "tool": {
+       "id": "T2",
+       "type": "3-flute carbide end mill, 3/4 in., 1-1/2 in. LOC, 4 in. OAL",
+       "d_mm": 19.05,
+       "stick_out_mm": 63.0,
+       "holder": "CT40 ER32 or side-lock, \u00d850 nose"
+      },
+      "strategy": "helical interpolation, finish to H7 with a probed bore check (or bore with a boring head)",
+      "minutes": 5.0
+     },
+     {
+      "id": "P-S1-5",
+      "feature": "outlet slot 124 x 8 and overflow slot 20 x 104 through",
+      "cuts": [
+       "FP-05",
+       "FP-06"
+      ],
+      "tool": {
+       "id": "T5",
+       "type": "3-flute carbide end mill, 1/4 in.",
+       "d_mm": 6.35,
+       "stick_out_mm": 25.0,
+       "holder": "CT40 ER20"
+      },
+      "strategy": "1/4 in. end mill, trochoidal slotting",
+      "minutes": 5.3
+     },
+     {
+      "id": "P-S1-6",
+      "feature": "2 dowel holes \u00d86 H7 x 10.5 in the band; 18 clearance holes \u00d84.5 through the band",
+      "cuts": [
+       "J:floor_dowels",
+       "J:floor"
+      ],
+      "tool": {
+       "id": "T13",
+       "type": "carbide drill 5.8 mm + 6 mm H7 reamer (dowels)",
+       "d_mm": 6.0,
+       "stick_out_mm": 40.0,
+       "holder": "CT40 ER20"
+      },
+      "strategy": "",
+      "minutes": 3.8
+     }
+    ]
+   },
+   {
+    "id": "P-S2",
+    "name": "bottom up: face to thickness, outer profile, U-notches, blind holes for every under-floor mount",
+    "machine": "VF-4, 3-axis",
+    "fixture": "saw the end tabs off. Fixture plate with 2 \u00d86 pins in the floor plate's dowel holes and a central M12 stud through the \u00d896 port with a \u00d8104 clamp washer; the outer profile and the whole underside are free",
+    "face_up": "-z",
+    "rotation_model_to_machine": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      -1,
+      0
+     ],
+     [
+      0,
+      0,
+      -1
+     ]
+    ],
+    "ops": [
+     {
+      "id": "P-S2-1",
+      "feature": "face the bottom to 20.0 mm",
+      "cuts": [
+       "FP-01"
+      ],
+      "tool": {
+       "id": "T1",
+       "type": "indexable face mill, 2-1/2 in., 4 inserts (HPAL2-type)",
+       "d_mm": 63.5,
+       "stick_out_mm": null,
+       "holder": "CT40 shell-mill arbor"
+      },
+      "strategy": "face mill",
+      "minutes": 2.8
+     },
+     {
+      "id": "P-S2-2",
+      "feature": "outer profile 312 x 222 R8, full 20 mm (the 9 mm margins go to chips)",
+      "cuts": [
+       "FP-01"
+      ],
+      "tool": {
+       "id": "T2",
+       "type": "3-flute carbide end mill, 3/4 in., 1-1/2 in. LOC, 4 in. OAL",
+       "d_mm": 19.05,
+       "stick_out_mm": 63.0,
+       "holder": "CT40 ER32 or side-lock, \u00d850 nose"
+      },
+      "strategy": "HEM, one level 20 mm",
+      "minutes": 7.0
+     },
+     {
+      "id": "P-S2-3",
+      "feature": "18 U-notches 8 wide x 8 deep at the edge",
+      "cuts": [
+       "J:floor"
+      ],
+      "tool": {
+       "id": "T3",
+       "type": "3-flute carbide end mill, 1/2 in., 1 in. LOC, 3 in. OAL",
+       "d_mm": 12.7,
+       "stick_out_mm": 38.0,
+       "holder": "CT40 ER32"
+      },
+      "strategy": "1/2 in. end mill plunge + out to the edge",
+      "minutes": 7.2
+     },
+     {
+      "id": "P-S2-4",
+      "feature": "module-screw M6 STI and dowel / diamond-pin holes; outlet-plenum, funnel and Z-flange inserts (M4/M5 STI); leg inserts (M6 STI)",
+      "cuts": [
+       "FP-07",
+       "J:module_flange",
+       "J:plenum_out",
+       "J:funnel",
+       "J:zmount",
+       "J:legs"
+      ],
+      "tool": {
+       "id": "T8",
+       "type": "carbide drill 4.22 mm, No. 19 (M4 STI)",
+       "d_mm": 4.22,
+       "stick_out_mm": 30.0,
+       "holder": "CT40 ER20"
+      },
+      "strategy": "spot T6; STI drills T8/T9/6.3 mm; STI taps",
+      "minutes": 5.9
+     }
+    ]
+   }
+  ],
+  "run_minutes_on_mill": 51
+ },
+ "parts": {
+  "base_plate_process_module_mic_6_15_mm": {
+   "name": "Base plate, process module (MIC-6, 15 mm)",
+   "mat": "mic6",
+   "mass_kg": 11.99,
+   "bbox_mm": [
+    730.0,
+    480.0,
+    15.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.75 in. plate, 486 x 736 mm",
+   "pitch": 1.5,
+   "three_axis": [
+    "-y",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.15,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 239.9
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 363.8
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 435.7
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 239.9,
+   "fits_hrt210": false,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-y, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 2
+  },
+  "base_plate_gas_module_mic_6_15_mm": {
+   "name": "Base plate, gas module (MIC-6, 15 mm)",
+   "mat": "mic6",
+   "mass_kg": 12.89,
+   "bbox_mm": [
+    590.0,
+    550.0,
+    15.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.75 in. plate, 556 x 596 mm",
+   "pitch": 1.5,
+   "three_axis": [
+    "+x",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.02,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 273.8
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 294.3
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 401.9
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 273.8,
+   "fits_hrt210": false,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+x, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 2
+  },
+  "chamber_legs_6061_30_x_30": {
+   "name": "Chamber legs (6061, 30 x 30)",
+   "mat": "al6061",
+   "mass_kg": 1.22,
+   "bbox_mm": [
+    300.0,
+    210.0,
+    140.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1.25 in. plate, 36 x 146 mm",
+   "pitch": 0.6,
+   "three_axis": [
+    "-z",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.04,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 125.9
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 165.3
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z"
+     ],
+     "swing_mm": 183.0
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 125.9,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-z, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "z_mounting_flange_bolted_under_the_floor": {
+   "name": "Z mounting flange (bolted under the floor)",
+   "mat": "al6061",
+   "mass_kg": 0.18,
+   "bbox_mm": [
+    140.0,
+    48.0,
+    10.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.5 in. plate, 54 x 146 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+x",
+    "-z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.34,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 24.3
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 70.0
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z"
+     ],
+     "swing_mm": 73.7
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 24.3,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+x, -z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "z_bracket_fold_back_belt_housing_2_1": {
+   "name": "Z bracket + fold-back belt housing (2:1)",
+   "mat": "al6061",
+   "mass_kg": 0.75,
+   "bbox_mm": [
+    123.0,
+    32.0,
+    72.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1.5 in. plate, 78 x 129 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "-z",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.04,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 39.1
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 71.0
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z"
+     ],
+     "swing_mm": 63.3
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 39.1,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-z, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "z_lift_arm_6061_12_mm_pot_magnet_coupling": {
+   "name": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "mat": "al6061",
+   "mass_kg": 0.14,
+   "bbox_mm": [
+    60.0,
+    78.0,
+    12.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.625 in. plate, 66 x 84 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+y",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.11,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 39.2
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 30.4
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 46.8
+    }
+   },
+   "best_axis": "y",
+   "n4": 1,
+   "swing_mm": 30.4,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+y, +z); 4th axis along y: 1 (one clamping for +z, -z, +x, -x)",
+   "n4_used": 1
+  },
+  "build_module_m50_spigot_flange_honed_316l_cylinder_50_8_bore": {
+   "name": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "mat": "ss316l",
+   "mass_kg": 1.74,
+   "bbox_mm": [
+    128.0,
+    119.0,
+    92.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "weldment: \u00d84 in. bar (spigot) + 3/4 in. plate (flange) + 2-1/2 in. tube (cylinder) + collar ring",
+   "pitch": 0.4,
+   "three_axis": [
+    "+z",
+    "-y",
+    "+y",
+    "-z"
+   ],
+   "n3": 4,
+   "unreachable_pct": 0.6,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 66.1
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 68.8
+    },
+    "z": {
+     "setups": 3,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z",
+      "+z"
+     ],
+     "swing_mm": 64.2
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 66.1,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "spigot's radial O-ring groove and the bore: turned after welding; honing outsourced",
+   "summary": "3-axis: 4 setups (+z, -y, +y, -z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "module_m50_bottom_flange_gland_plate_316l_bolted_to_the_weld": {
+   "name": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "mat": "ss316l",
+   "mass_kg": 0.53,
+   "bbox_mm": [
+    80.8,
+    80.8,
+    14.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d83.375 in. bar x 20 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+x",
+    "-z",
+    "+z"
+   ],
+   "n3": 3,
+   "unreachable_pct": 10.42,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 40.8
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 40.8
+    },
+    "z": {
+     "setups": 3,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z",
+      "+z"
+     ],
+     "swing_mm": 40.4
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 40.8,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "rod-gland grooves: internal grooving tool on the lathe",
+   "summary": "3-axis: 3 setups (+x, -z, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "module_m50_handle_6061_screwed_under_the_gland_plate_for_a_h": {
+   "name": "Module M50 handle (6061, screwed under the gland plate; for a hand or a gripper)",
+   "mat": "al6061",
+   "mass_kg": 0.01,
+   "bbox_mm": [
+    48.0,
+    44.0,
+    8.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.375 in. plate, 50 x 54 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "+y",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.89,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 22.2
+    },
+    "y": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [
+      "+y"
+     ],
+     "swing_mm": 24.2
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 32.4
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 22.2,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+y, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "build_plate_m50_50_5_x_10_6061_t6_bayonet_spigot_gripper_gro": {
+   "name": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+   "mat": "al6061",
+   "mass_kg": 0.05,
+   "bbox_mm": [
+    50.5,
+    50.5,
+    14.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d82.125 in. bar x 20 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "+y",
+    "-z",
+    "-y",
+    "+x",
+    "-x"
+   ],
+   "n3": 5,
+   "unreachable_pct": 20.39,
+   "four_axis": {
+    "x": {
+     "setups": 3,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+x",
+      "-x"
+     ],
+     "swing_mm": 26.0
+    },
+    "y": {
+     "setups": 3,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [
+      "+y",
+      "-y"
+     ],
+     "swing_mm": 26.0
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z"
+     ],
+     "swing_mm": 25.2
+    }
+   },
+   "best_axis": "z",
+   "n4": 2,
+   "swing_mm": 25.2,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "bayonet lugs and the gripper groove are undercuts: turn and groove on the lathe",
+   "summary": "3-axis: 5 setups (+y, -z, -y, +x, -x); 4th axis along z: 2 (one clamping for +x, -x, +y, -y + -z)",
+   "n4_used": 2
+  },
+  "heater_block_m50_6061_t6_bayonet_socket": {
+   "name": "Heater block M50 (6061-T6, bayonet socket)",
+   "mat": "al6061",
+   "mass_kg": 0.07,
+   "bbox_mm": [
+    50.2,
+    50.2,
+    14.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d82.125 in. bar x 20 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "-x",
+    "-z",
+    "+z"
+   ],
+   "n3": 3,
+   "unreachable_pct": 7.78,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 26.0
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 26.0
+    },
+    "z": {
+     "setups": 3,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z",
+      "+z"
+     ],
+     "swing_mm": 25.1
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 26.0,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "bayonet socket undercut: internal grooving tool on the lathe + three milled entry slots",
+   "summary": "3-axis: 3 setups (-x, -z, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "macor_standoff_rings_m50_3_standoffs_x_3_rings_8_cut_from_84": {
+   "name": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
+   "mat": "macor",
+   "mass_kg": 0.0,
+   "bbox_mm": [
+    35.0,
+    39.2,
+    8.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d80.5 in. bar x 9 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "+z",
+    "-z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 37.04,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 19.9
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 17.8
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 24.6
+    }
+   },
+   "best_axis": "y",
+   "n4": 1,
+   "swing_mm": 17.8,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+z, -z); 4th axis along y: 1 (one clamping for +z, -z, +x, -x)",
+   "n4_used": 1
+  },
+  "piston_head_m50_6061_t6_cool_side_of_the_break_tier_b_316l_w": {
+   "name": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "mat": "al6061",
+   "mass_kg": 0.07,
+   "bbox_mm": [
+    50.2,
+    50.2,
+    18.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d82.125 in. bar x 24 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "-y",
+    "-z",
+    "+z",
+    "+y",
+    "-x",
+    "+x"
+   ],
+   "n3": 6,
+   "unreachable_pct": 8.77,
+   "four_axis": {
+    "x": {
+     "setups": 3,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-x",
+      "+x"
+     ],
+     "swing_mm": 26.6
+    },
+    "y": {
+     "setups": 3,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [
+      "+y",
+      "-y"
+     ],
+     "swing_mm": 26.6
+    },
+    "z": {
+     "setups": 3,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z",
+      "+z"
+     ],
+     "swing_mm": 25.1
+    }
+   },
+   "best_axis": "z",
+   "n4": 3,
+   "swing_mm": 25.1,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "seal grooves are radial: turned",
+   "summary": "3-axis: 6 setups (-y, -z, +z, +y, -x, +x); 4th axis along z: 3 (one clamping for +x, -x, +y, -y + -z, +z)",
+   "n4_used": 3
+  },
+  "hollow_piston_rod_m50_5_8_in_x_0_065_in_seamless_316_polishe": {
+   "name": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+   "mat": "ss316l",
+   "mass_kg": 0.04,
+   "bbox_mm": [
+    15.9,
+    15.9,
+    75.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "tube, cut to length",
+   "pitch": 0.4,
+   "three_axis": [
+    "+z",
+    "-z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 38.3
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 38.3
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 7.9
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 38.3,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+z, -z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "rod_end_m50_end_cap_with_a_side_boss_for_the_hermetic_connec": {
+   "name": "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
+   "mat": "ss316l",
+   "mass_kg": 0.04,
+   "bbox_mm": [
+    27.0,
+    22.0,
+    19.5
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d81.25 in. bar x 26 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "+z",
+    "-x",
+    "-z"
+   ],
+   "n3": 3,
+   "unreachable_pct": 10.83,
+   "four_axis": {
+    "x": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-x"
+     ],
+     "swing_mm": 14.5
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 16.5
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 16.3
+    }
+   },
+   "best_axis": "y",
+   "n4": 1,
+   "swing_mm": 16.5,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 3 setups (+z, -x, -z); 4th axis along y: 1 (one clamping for +z, -z, +x, -x)",
+   "n4_used": 1
+  },
+  "striker_disc_m50_416_stainless_on_the_pot_magnet": {
+   "name": "Striker disc M50 (416 stainless, on the pot magnet)",
+   "mat": "steel",
+   "mass_kg": 0.02,
+   "bbox_mm": [
+    25.4,
+    25.4,
+    5.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d81.125 in. bar x 11 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "+x",
+    "-z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 3.86,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 12.9
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 12.9
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z"
+     ],
+     "swing_mm": 12.7
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 12.9,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+x, -z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "overflow_funnel_block_316l_bolted_fkm_face_o_ring": {
+   "name": "Overflow funnel block (316L, bolted, FKM face O-ring)",
+   "mat": "ss316l",
+   "mass_kg": 0.59,
+   "bbox_mm": [
+    44.0,
+    118.0,
+    22.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1 in. plate, 50 x 124 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "-z",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 6.11,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 59.8
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 24.3
+    },
+    "z": {
+     "setups": 3,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z",
+      "-z"
+     ],
+     "swing_mm": 62.7
+    }
+   },
+   "best_axis": "y",
+   "n4": 1,
+   "swing_mm": 24.3,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-z, +z); 4th axis along y: 1 (one clamping for +z, -z, +x, -x)",
+   "n4_used": 1
+  },
+  "process_chamber_body_6061_t6_through_frame_from_5_5_in_plate": {
+   "name": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "mat": "al6061",
+   "mass_kg": 4.27,
+   "bbox_mm": [
+    312.0,
+    222.0,
+    123.9
+   ],
+   "machine": "3-axis VMC",
+   "stock": "13 x 9.5 x 5.5 in. blank (5-1/2 in. plate); the 274 x 184 core out as one slug first",
+   "pitch": 0.6,
+   "three_axis": [
+    "+z",
+    "-z",
+    "-y",
+    "+x",
+    "+y"
+   ],
+   "n3": 5,
+   "unreachable_pct": 0.36,
+   "four_axis": {
+    "x": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+x"
+     ],
+     "swing_mm": 126.8
+    },
+    "y": {
+     "setups": 3,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [
+      "-y",
+      "+y"
+     ],
+     "swing_mm": 167.6
+    },
+    "z": {
+     "setups": 3,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z",
+      "+z"
+     ],
+     "swing_mm": 188.3
+    }
+   },
+   "best_axis": "x",
+   "n4": 2,
+   "swing_mm": 126.8,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 5 setups (+z, -z, -y, +x, +y); 4th axis along x: 2 (one clamping for +z, -z, +y, -y + +x)",
+   "n4_used": 2
+  },
+  "chamber_floor_plate_6061_t6_20_mm_bolted_under_the_frame_flo": {
+   "name": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "mat": "al6061",
+   "mass_kg": 3.01,
+   "bbox_mm": [
+    312.0,
+    222.0,
+    20.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1 in. plate, 228 x 318 mm",
+   "pitch": 0.6,
+   "three_axis": [
+    "+x",
+    "+z",
+    "-z"
+   ],
+   "n3": 3,
+   "unreachable_pct": 0.29,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 111.3
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 156.2
+    },
+    "z": {
+     "setups": 3,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z",
+      "-z"
+     ],
+     "swing_mm": 188.3
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 111.3,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 3 setups (+x, +z, -z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "recoater_carriage_block_6061": {
+   "name": "Recoater carriage block (6061)",
+   "mat": "al6061",
+   "mass_kg": 0.18,
+   "bbox_mm": [
+    44.0,
+    39.0,
+    74.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1.75 in. plate, 50 x 80 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+x",
+    "-y"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.44,
+   "four_axis": {
+    "x": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+x"
+     ],
+     "swing_mm": 41.6
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 42.8
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 29.1
+    }
+   },
+   "best_axis": "z",
+   "n4": 1,
+   "swing_mm": 29.1,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+x, -y); 4th axis along z: 1 (one clamping for +x, -x, +y, -y)",
+   "n4_used": 1
+  },
+  "recoater_arm_6061_40_x_14_web": {
+   "name": "Recoater arm (6061, 40 x 14 web)",
+   "mat": "al6061",
+   "mass_kg": 0.01,
+   "bbox_mm": [
+    40.0,
+    14.0,
+    11.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.5 in. plate, 20 x 46 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "-y",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 8.7
+    },
+    "y": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [
+      "-y"
+     ],
+     "swing_mm": 20.6
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 21.0
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 8.7,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-y, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "blade_holder_6061_18_x_31_quick_swap": {
+   "name": "Blade holder (6061, 18 x 31, quick-swap)",
+   "mat": "al6061",
+   "mass_kg": 0.17,
+   "bbox_mm": [
+    18.0,
+    114.0,
+    31.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1 in. plate, 37 x 120 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+y",
+    "+x"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+x"
+     ],
+     "swing_mm": 58.8
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 17.1
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 57.5
+    }
+   },
+   "best_axis": "y",
+   "n4": 1,
+   "swing_mm": 17.1,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+y, +x); 4th axis along y: 1 (one clamping for +z, -z, +x, -x)",
+   "n4_used": 1
+  },
+  "recoater_feedthrough_spacer_ring_6061_9_mm_fkm_face_o_rings_": {
+   "name": "Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rings both sides)",
+   "mat": "al6061",
+   "mass_kg": 0.04,
+   "bbox_mm": [
+    9.0,
+    52.0,
+    52.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.5 in. plate, 58 x 58 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "+z",
+    "+x"
+   ],
+   "n3": 2,
+   "unreachable_pct": 13.72,
+   "four_axis": {
+    "x": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+x"
+     ],
+     "swing_mm": 26.0
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 26.2
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 26.2
+    }
+   },
+   "best_axis": "y",
+   "n4": 1,
+   "swing_mm": 26.2,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+z, +x); 4th axis along y: 1 (one clamping for +z, -z, +x, -x)",
+   "n4_used": 1
+  },
+  "recoater_floating_bearing_housing_blind_cap_fkm_face_o_ring": {
+   "name": "Recoater floating bearing housing (blind cap, FKM face O-ring)",
+   "mat": "al6061",
+   "mass_kg": 0.04,
+   "bbox_mm": [
+    14.0,
+    40.0,
+    40.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d81.75 in. bar x 46 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "-x",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 11.78,
+   "four_axis": {
+    "x": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-x"
+     ],
+     "swing_mm": 20.0
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 21.0
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 21.0
+    }
+   },
+   "best_axis": "y",
+   "n4": 1,
+   "swing_mm": 21.0,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-x, +z); 4th axis along y: 1 (one clamping for +z, -z, +x, -x)",
+   "n4_used": 1
+  },
+  "recoater_motor_standoff": {
+   "name": "Recoater motor standoff",
+   "mat": "al6061",
+   "mass_kg": 0.05,
+   "bbox_mm": [
+    25.0,
+    60.0,
+    60.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d82.5 in. bar x 66 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+x",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+x"
+     ],
+     "swing_mm": 30.0
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 32.2
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 32.2
+    }
+   },
+   "best_axis": "y",
+   "n4": 1,
+   "swing_mm": 32.2,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+x, +z); 4th axis along y: 1 (one clamping for +z, -z, +x, -x)",
+   "n4_used": 1
+  },
+  "recoater_motor_bracket": {
+   "name": "Recoater motor bracket",
+   "mat": "al6061",
+   "mass_kg": 2.48,
+   "bbox_mm": [
+    90.0,
+    60.0,
+    170.4
+   ],
+   "machine": "3-axis VMC",
+   "stock": "2.5 in. plate, 96 x 176 mm",
+   "pitch": 0.6,
+   "three_axis": [
+    "+z",
+    "-z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 90.2
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 96.2
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 53.9
+    }
+   },
+   "best_axis": "z",
+   "n4": 1,
+   "swing_mm": 53.9,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+z, -z); 4th axis along z: 1 (one clamping for +x, -x, +y, -y)",
+   "n4_used": 1
+  },
+  "chamber_lid_6061_t6_16_mm_cover_slide_drawer_slot": {
+   "name": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "mat": "al6061",
+   "mass_kg": 2.65,
+   "bbox_mm": [
+    312.0,
+    222.0,
+    16.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.75 in. plate, 228 x 318 mm",
+   "pitch": 0.6,
+   "three_axis": [
+    "-y",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.51,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 111.2
+    },
+    "y": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [
+      "-y"
+     ],
+     "swing_mm": 156.1
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 188.3
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 111.2,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "the cover-slide drawer slot is enclosed (machining.md): open it from the underside (then a 1/4 in. keyseat cutter for the ledges) or sinker EDM; still drawn enclosed in lpbf_low section 7",
+   "summary": "3-axis: 2 setups (-y, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "window_flange_6061_two_fkm_o_ring_grooves": {
+   "name": "Window flange (6061, two FKM O-ring grooves)",
+   "mat": "al6061",
+   "mass_kg": 0.35,
+   "bbox_mm": [
+    100.0,
+    100.0,
+    22.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d84.25 in. bar x 28 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+z",
+    "-z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 7.86,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 51.0
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 51.0
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 50.0
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 51.0,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+z, -z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "window_retaining_ring_spigot_bottoms_metal_to_metal_squeeze_": {
+   "name": "Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry)",
+   "mat": "al6061",
+   "mass_kg": 0.09,
+   "bbox_mm": [
+    100.0,
+    100.0,
+    6.2
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d84.25 in. bar x 12 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+x",
+    "-z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.82,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 49.9
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 49.9
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z"
+     ],
+     "swing_mm": 50.0
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 49.9,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+x, -z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "field_stop_aperture_36_passive_beam_limit": {
+   "name": "Field-stop aperture (\u00d836, passive beam limit)",
+   "mat": "al6061",
+   "mass_kg": 0.02,
+   "bbox_mm": [
+    55.8,
+    55.8,
+    5.0
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d82.375 in. bar x 11 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "-x",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 27.9
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 27.9
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 27.9
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 27.9,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-x, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "cover_slide_drawer_6061_robot_pull_tab_half_dovetail_seal_gr": {
+   "name": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
+   "mat": "al6061",
+   "mass_kg": 0.18,
+   "bbox_mm": [
+    128.0,
+    164.5,
+    18.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1 in. plate, 134 x 170 mm",
+   "pitch": 0.6,
+   "three_axis": [
+    "+x",
+    "+z",
+    "-y",
+    "-z"
+   ],
+   "n3": 4,
+   "unreachable_pct": 2.04,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 82.1
+    },
+    "y": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [
+      "-y"
+     ],
+     "swing_mm": 64.3
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 93.7
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 82.1,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "half-dovetail O-ring groove on the front plate: dovetail cutter",
+   "summary": "3-axis: 4 setups (+x, +z, -y, -z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "metering_base_6061_fluted_roller_over_a_100_mm_dose_line_two": {
+   "name": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+   "mat": "al6061",
+   "mass_kg": 0.47,
+   "bbox_mm": [
+    34.0,
+    144.0,
+    44.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1.5 in. plate, 50 x 150 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+z",
+    "-x",
+    "+y"
+   ],
+   "n3": 3,
+   "unreachable_pct": 8.0,
+   "four_axis": {
+    "x": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-x"
+     ],
+     "swing_mm": 75.0
+    },
+    "y": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [
+      "+y"
+     ],
+     "swing_mm": 27.5
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 73.3
+    }
+   },
+   "best_axis": "y",
+   "n4": 2,
+   "swing_mm": 27.5,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 3 setups (+z, -x, +y); 4th axis along y: 2 (one clamping for +z, -z, +x, -x + +y)",
+   "n4_used": 2
+  },
+  "reservoir_m_lid_with_robot_handle_grip_plane_z_258_for_every": {
+   "name": "Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
+   "mat": "al6061",
+   "mass_kg": 0.03,
+   "bbox_mm": [
+    28.4,
+    74.4,
+    12.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.625 in. plate, 34 x 80 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "-y",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 9.23,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 37.5
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 15.2
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 39.6
+    }
+   },
+   "best_axis": "y",
+   "n4": 1,
+   "swing_mm": 15.2,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-y, +z); 4th axis along y: 1 (one clamping for +z, -z, +x, -x)",
+   "n4_used": 1
+  },
+  "camera_viewport_adapter_boss_6061_1_in_window_1070_nm_blocki": {
+   "name": "Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings)",
+   "mat": "al6061",
+   "mass_kg": 0.08,
+   "bbox_mm": [
+    58.3,
+    52.1,
+    42.8
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1.75 in. plate, 58 x 64 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "-x",
+    "+x",
+    "-z",
+    "+z",
+    "-y"
+   ],
+   "n3": 5,
+   "unreachable_pct": 20.62,
+   "four_axis": {
+    "x": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+x"
+     ],
+     "swing_mm": 33.5
+    },
+    "y": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [
+      "-y"
+     ],
+     "swing_mm": 36.0
+    },
+    "z": {
+     "setups": 3,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-z",
+      "+z"
+     ],
+     "swing_mm": 31.5
+    }
+   },
+   "best_axis": "x",
+   "n4": 2,
+   "swing_mm": 33.5,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "bore and boss on a compound angle (the line of sight from (75, -45) to the plate centre): two rotations, so a 4th axis alone can't square it up; a sine plate + 4th axis, a 5-axis, or make the boss a turned part on a single-tilt seat",
+   "summary": "3-axis: 5 setups (-x, +x, -z, +z, -y); 4th axis along x: 2 (one clamping for +z, -z, +y, -y + +x)",
+   "n4_used": 2
+  },
+  "camera_window_retaining_ring_bottoms_metal_to_metal_on_the_b": {
+   "name": "Camera window retaining ring (bottoms metal-to-metal on the boss)",
+   "mat": "al6061",
+   "mass_kg": 0.0,
+   "bbox_mm": [
+    30.6,
+    32.5,
+    20.4
+   ],
+   "machine": "CNC lathe + VMC",
+   "stock": "\u00d81.5 in. bar x 26 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "-z",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 16.5
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 16.5
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 16.6
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 16.5,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-z, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "chamber_door_6061_t6_15_mm_drops_down_half_dovetail_seal_gro": {
+   "name": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
+   "mat": "al6061",
+   "mass_kg": 1.29,
+   "bbox_mm": [
+    312.0,
+    15.0,
+    120.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.75 in. plate, 126 x 318 mm",
+   "pitch": 0.6,
+   "three_axis": [
+    "+x",
+    "-x"
+   ],
+   "n3": 2,
+   "unreachable_pct": 4.02,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 60.4
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 156.9
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 156.1
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 60.4,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "half-dovetail O-ring groove: a dovetail cutter (special tool) or a plain groove with a moulded seal",
+   "summary": "3-axis: 2 setups (+x, -x); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "door_handle": {
+   "name": "Door handle",
+   "mat": "al6061",
+   "mass_kg": 0.03,
+   "bbox_mm": [
+    72.0,
+    32.0,
+    12.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.625 in. plate, 18 x 78 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+y",
+    "+x"
+   ],
+   "n3": 2,
+   "unreachable_pct": 11.84,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 16.5
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 36.3
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 39.1
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 16.5,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+y, +x); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "optics_bridge_6061_25_mm": {
+   "name": "Optics bridge (6061, 25 mm)",
+   "mat": "al6061",
+   "mass_kg": 13.32,
+   "bbox_mm": [
+    605.0,
+    370.0,
+    25.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1.25 in. plate, 376 x 611 mm",
+   "pitch": 1.5,
+   "three_axis": [
+    "-y",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.13,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 184.1
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 302.0
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 353.3
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 184.1,
+   "fits_hrt210": false,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-y, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 2
+  },
+  "optics_bridge_posts_60_x_60_x_5_square_6061_tube_10_mm_end_c": {
+   "name": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "mat": "al6061",
+   "mass_kg": 4.9,
+   "bbox_mm": [
+    585.0,
+    360.0,
+    367.7
+   ],
+   "machine": "3-axis VMC",
+   "stock": "tube, cut to length",
+   "pitch": 1.5,
+   "three_axis": [
+    "+z",
+    "-z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 42.57,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 256.8
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 345.0
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 343.1
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 256.8,
+   "fits_hrt210": false,
+   "mass_ok": true,
+   "special": "closed inside of the welded tube (expected)",
+   "summary": "3-axis: 2 setups (+z, -z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 2
+  },
+  "f_theta_adapter_ring_6061_m85x1_internal_thread_bolted_under": {
+   "name": "f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge)",
+   "mat": "al6061",
+   "mass_kg": 0.17,
+   "bbox_mm": [
+    110.0,
+    110.0,
+    16.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.75 in. plate, 116 x 116 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+z",
+    "-z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 55.4
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 55.4
+    },
+    "z": {
+     "setups": 2,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+z"
+     ],
+     "swing_mm": 55.0
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 55.4,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+z, -z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "galvo_riser_plate_6061_10_mm": {
+   "name": "Galvo riser plate (6061, 10 mm)",
+   "mat": "al6061",
+   "mass_kg": 0.54,
+   "bbox_mm": [
+    155.0,
+    130.0,
+    10.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.5 in. plate, 136 x 161 mm",
+   "pitch": 0.6,
+   "three_axis": [
+    "+x",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 64.7
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 77.3
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 100.6
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 64.7,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+x, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "enclosed_beam_tube": {
+   "name": "Enclosed beam tube",
+   "mat": "al6061",
+   "mass_kg": 0.03,
+   "bbox_mm": [
+    82.8,
+    20.0,
+    20.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1 in. plate, 26 x 89 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+x",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "+x"
+     ],
+     "swing_mm": 10.0
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 42.4
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 42.4
+    }
+   },
+   "best_axis": "y",
+   "n4": 1,
+   "swing_mm": 42.4,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+x, +z); 4th axis along y: 1 (one clamping for +z, -z, +x, -x)",
+   "n4_used": 1
+  },
+  "guard_door_handle_for_the_robot_12_x_130_bar_on_two_10_stand": {
+   "name": "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061)",
+   "mat": "al6061",
+   "mass_kg": 0.06,
+   "bbox_mm": [
+    12.0,
+    52.0,
+    130.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.625 in. plate, 18 x 136 mm",
+   "pitch": 0.4,
+   "three_axis": [
+    "+y",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 1.8,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 69.7
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 65.1
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 26.2
+    }
+   },
+   "best_axis": "z",
+   "n4": 1,
+   "swing_mm": 26.2,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+y, +z); 4th axis along z: 1 (one clamping for +x, -x, +y, -y)",
+   "n4_used": 1
+  },
+  "door_damper_bracket_6061_4_mm_flanged_onto_the_chamber_s_lef": {
+   "name": "Door damper bracket (6061, 4 mm, flanged onto the chamber's left side face)",
+   "mat": "al6061",
+   "mass_kg": 0.02,
+   "bbox_mm": [
+    44.0,
+    28.5,
+    36.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "1.25 in. plate, 42 x 50 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "-z",
+    "-x"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 22.8
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 28.2
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 26.0
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 22.8,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-z, -x); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "door_damper_shaft_and_drive_disc_6_d_shaft_keyed_into_a_6061": {
+   "name": "Door damper shaft and drive disc (\u00d86 D-shaft keyed into a 6061 disc screwed to the door's left edge)",
+   "mat": "al6061",
+   "mass_kg": 0.0,
+   "bbox_mm": [
+    33.9,
+    16.0,
+    16.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.75 in. plate, 22 x 40 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "-x",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 2,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [
+      "-x"
+     ],
+     "swing_mm": 8.0
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 18.7
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 18.7
+    }
+   },
+   "best_axis": "y",
+   "n4": 1,
+   "swing_mm": 18.7,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (-x, +z); 4th axis along y: 1 (one clamping for +z, -z, +x, -x)",
+   "n4_used": 1
+  },
+  "door_lift_lug_for_the_robot_6061_20_x_18_x_4_mm_on_the_door_": {
+   "name": "Door lift lug for the robot (6061, 20 x 18 x 4 mm on the door's top edge, left end)",
+   "mat": "al6061",
+   "mass_kg": 0.0,
+   "bbox_mm": [
+    20.0,
+    4.0,
+    18.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.25 in. plate, 24 x 26 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "+x",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 9.1
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 13.3
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 10.1
+    }
+   },
+   "best_axis": "x",
+   "n4": 1,
+   "swing_mm": 9.1,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+x, +z); 4th axis along x: 1 (one clamping for +z, -z, +y, -y)",
+   "n4_used": 1
+  },
+  "blade_cartridge_grip_fin_6061_4_mm_on_the_holder_s_front_end": {
+   "name": "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+   "mat": "al6061",
+   "mass_kg": 0.0,
+   "bbox_mm": [
+    4.0,
+    10.0,
+    16.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.25 in. plate, 16 x 22 mm",
+   "pitch": 0.25,
+   "three_axis": [
+    "+z",
+    "-z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 9.3
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 8.1
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 5.2
+    }
+   },
+   "best_axis": "z",
+   "n4": 1,
+   "swing_mm": 5.2,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+z, -z); 4th axis along z: 1 (one clamping for +x, -x, +y, -y)",
+   "n4_used": 1
+  },
+  "apriltag_plates_2_x_tag36h11_56_mm_on_the_guard_s_front_left": {
+   "name": "AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-registration)",
+   "mat": "al6061",
+   "mass_kg": 0.03,
+   "bbox_mm": [
+    56.0,
+    2.0,
+    316.0
+   ],
+   "machine": "3-axis VMC",
+   "stock": "0.25 in. plate, 62 x 62 mm",
+   "pitch": 0.6,
+   "three_axis": [
+    "+x",
+    "+z"
+   ],
+   "n3": 2,
+   "unreachable_pct": 0.0,
+   "four_axis": {
+    "x": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 157.5
+    },
+    "y": {
+     "setups": 1,
+     "rotary_faces": [
+      "+z",
+      "-z",
+      "+x",
+      "-x"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 159.9
+    },
+    "z": {
+     "setups": 1,
+     "rotary_faces": [
+      "+x",
+      "-x",
+      "+y",
+      "-y"
+     ],
+     "extra_3axis": [],
+     "swing_mm": 27.7
+    }
+   },
+   "best_axis": "z",
+   "n4": 1,
+   "swing_mm": 27.7,
+   "fits_hrt210": true,
+   "mass_ok": true,
+   "special": "",
+   "summary": "3-axis: 2 setups (+x, +z); 4th axis along z: 1 (one clamping for +x, -x, +y, -y)",
+   "n4_used": 1
+  }
+ },
+ "totals": {
+  "parts": 48,
+  "setups_3axis": 118,
+  "setups_with_4th_axis": 58,
+  "parts_where_the_rotary_saves_setups": {
+   "chamber_legs_6061_30_x_30": [
+    2,
+    1
+   ],
+   "z_mounting_flange_bolted_under_the_floor": [
+    2,
+    1
+   ],
+   "z_bracket_fold_back_belt_housing_2_1": [
+    2,
+    1
+   ],
+   "z_lift_arm_6061_12_mm_pot_magnet_coupling": [
+    2,
+    1
+   ],
+   "build_module_m50_spigot_flange_honed_316l_cylinder_50_8_bore": [
+    4,
+    1
+   ],
+   "module_m50_bottom_flange_gland_plate_316l_bolted_to_the_weld": [
+    3,
+    1
+   ],
+   "module_m50_handle_6061_screwed_under_the_gland_plate_for_a_h": [
+    2,
+    1
+   ],
+   "build_plate_m50_50_5_x_10_6061_t6_bayonet_spigot_gripper_gro": [
+    5,
+    2
+   ],
+   "heater_block_m50_6061_t6_bayonet_socket": [
+    3,
+    1
+   ],
+   "macor_standoff_rings_m50_3_standoffs_x_3_rings_8_cut_from_84": [
+    2,
+    1
+   ],
+   "piston_head_m50_6061_t6_cool_side_of_the_break_tier_b_316l_w": [
+    6,
+    3
+   ],
+   "hollow_piston_rod_m50_5_8_in_x_0_065_in_seamless_316_polishe": [
+    2,
+    1
+   ],
+   "rod_end_m50_end_cap_with_a_side_boss_for_the_hermetic_connec": [
+    3,
+    1
+   ],
+   "striker_disc_m50_416_stainless_on_the_pot_magnet": [
+    2,
+    1
+   ],
+   "overflow_funnel_block_316l_bolted_fkm_face_o_ring": [
+    2,
+    1
+   ],
+   "process_chamber_body_6061_t6_through_frame_from_5_5_in_plate": [
+    5,
+    2
+   ],
+   "chamber_floor_plate_6061_t6_20_mm_bolted_under_the_frame_flo": [
+    3,
+    1
+   ],
+   "recoater_carriage_block_6061": [
+    2,
+    1
+   ],
+   "recoater_arm_6061_40_x_14_web": [
+    2,
+    1
+   ],
+   "blade_holder_6061_18_x_31_quick_swap": [
+    2,
+    1
+   ],
+   "recoater_feedthrough_spacer_ring_6061_9_mm_fkm_face_o_rings_": [
+    2,
+    1
+   ],
+   "recoater_floating_bearing_housing_blind_cap_fkm_face_o_ring": [
+    2,
+    1
+   ],
+   "recoater_motor_standoff": [
+    2,
+    1
+   ],
+   "recoater_motor_bracket": [
+    2,
+    1
+   ],
+   "chamber_lid_6061_t6_16_mm_cover_slide_drawer_slot": [
+    2,
+    1
+   ],
+   "window_flange_6061_two_fkm_o_ring_grooves": [
+    2,
+    1
+   ],
+   "window_retaining_ring_spigot_bottoms_metal_to_metal_squeeze_": [
+    2,
+    1
+   ],
+   "field_stop_aperture_36_passive_beam_limit": [
+    2,
+    1
+   ],
+   "cover_slide_drawer_6061_robot_pull_tab_half_dovetail_seal_gr": [
+    4,
+    1
+   ],
+   "metering_base_6061_fluted_roller_over_a_100_mm_dose_line_two": [
+    3,
+    2
+   ],
+   "reservoir_m_lid_with_robot_handle_grip_plane_z_258_for_every": [
+    2,
+    1
+   ],
+   "camera_viewport_adapter_boss_6061_1_in_window_1070_nm_blocki": [
+    5,
+    2
+   ],
+   "camera_window_retaining_ring_bottoms_metal_to_metal_on_the_b": [
+    2,
+    1
+   ],
+   "chamber_door_6061_t6_15_mm_drops_down_half_dovetail_seal_gro": [
+    2,
+    1
+   ],
+   "door_handle": [
+    2,
+    1
+   ],
+   "f_theta_adapter_ring_6061_m85x1_internal_thread_bolted_under": [
+    2,
+    1
+   ],
+   "galvo_riser_plate_6061_10_mm": [
+    2,
+    1
+   ],
+   "enclosed_beam_tube": [
+    2,
+    1
+   ],
+   "guard_door_handle_for_the_robot_12_x_130_bar_on_two_10_stand": [
+    2,
+    1
+   ],
+   "door_damper_bracket_6061_4_mm_flanged_onto_the_chamber_s_lef": [
+    2,
+    1
+   ],
+   "door_damper_shaft_and_drive_disc_6_d_shaft_keyed_into_a_6061": [
+    2,
+    1
+   ],
+   "door_lift_lug_for_the_robot_6061_20_x_18_x_4_mm_on_the_door_": [
+    2,
+    1
+   ],
+   "blade_cartridge_grip_fin_6061_4_mm_on_the_holder_s_front_end": [
+    2,
+    1
+   ],
+   "apriltag_plates_2_x_tag36h11_56_mm_on_the_guard_s_front_left": [
+    2,
+    1
+   ]
+  },
+  "parts_needing_special_tool_or_5axis": [
+   "build_module_m50_spigot_flange_honed_316l_cylinder_50_8_bore",
+   "module_m50_bottom_flange_gland_plate_316l_bolted_to_the_weld",
+   "build_plate_m50_50_5_x_10_6061_t6_bayonet_spigot_gripper_gro",
+   "heater_block_m50_6061_t6_bayonet_socket",
+   "piston_head_m50_6061_t6_cool_side_of_the_break_tier_b_316l_w",
+   "chamber_lid_6061_t6_16_mm_cover_slide_drawer_slot",
+   "cover_slide_drawer_6061_robot_pull_tab_half_dovetail_seal_gr",
+   "camera_viewport_adapter_boss_6061_1_in_window_1070_nm_blocki",
+   "chamber_door_6061_t6_15_mm_drops_down_half_dovetail_seal_gro",
+   "optics_bridge_posts_60_x_60_x_5_square_6061_tube_10_mm_end_c"
+  ],
+  "note": "per part, the 4th-axis count is used only where it is lower; a part held on a rotary still needs its fixture made"
+ }
+}

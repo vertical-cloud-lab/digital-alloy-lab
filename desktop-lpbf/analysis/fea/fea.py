@@ -5,7 +5,9 @@ gmsh (quadratic tetrahedra, C3D10), loaded and constrained by faces picked geome
 read back from the .frd. Units: mm, N, MPa, tonne (density 2.7e-9 t/mm3 for 6061).
 
 Cases
-  1 chamber body at full vacuum (interior suction + lid and door loads on their sealing lands)
+  1 chamber (frame + floor plate, bonded on the O-ring lands) at full vacuum (interior suction + lid and door loads on their lands,
+    module / plenum / funnel loads under the floor); 1b the same with the lid, at full vacuum and at +20 mbar
+  1f floor-plate bolted joint (Shigley: preload, joint constant, separation) and the floor O-ring gland (Parker)
   2 lid at vacuum (top-face pressure + covered openings carried round their flanges), on its sealing land
   3 drop-down door at vacuum, on its O-ring land; latch load at +50 mbar (analytic)
   4 recoater carriage block + arm + blade holder: spreading load and a 50 N hit
@@ -49,7 +51,7 @@ FATIGUE = AL["fat"]       # 96.5 MPa at 5e8 cycles (R = -1)
 # --------------------------------------------------------------------------------------------
 # meshing
 # --------------------------------------------------------------------------------------------
-def mesh_shape(shape, name, hmax, hmin=None, curv=12):
+def mesh_shape(shape, name, hmax, hmin=None, curv=12, alg=10):
     RUN.mkdir(parents=True, exist_ok=True)
     path = RUN / f"{name}.brep"
     shape.exportBrep(str(path))
@@ -68,9 +70,16 @@ def mesh_shape(shape, name, hmax, hmin=None, curv=12):
     gmsh.option.setNumber("Mesh.MeshSizeFromCurvature", curv)
     gmsh.option.setNumber("Mesh.ElementOrder", 2)
     gmsh.option.setNumber("Mesh.SecondOrderLinear", 1)      # straight-sided C3D10: no inverted curved elements
-    gmsh.option.setNumber("Mesh.Algorithm3D", 10)
+    gmsh.option.setNumber("Mesh.Algorithm3D", alg)          # 10 HXT; 4 frontal for bodies HXT gives up on
     gmsh.option.setNumber("General.NumThreads", int(os.environ.get("OMP_NUM_THREADS", "2")))
-    gmsh.model.mesh.generate(3)
+    try:
+        gmsh.model.mesh.generate(3)
+    except Exception as e:  # noqa: BLE001  (HXT gives up on some fused bodies, e.g. the chamber frame + floor plate)
+        print(f"  HXT 3D mesher failed ({e}); retrying with gmsh's frontal mesher")
+        gmsh.model.mesh.clear()
+        gmsh.option.setNumber("Mesh.Algorithm3D", 4)
+        gmsh.model.mesh.generate(3)
+        gmsh.model.mesh.setOrder(2)
     ntags, xyz, _ = gmsh.model.mesh.getNodes()
     xyz = xyz.reshape(-1, 3)
     tets = []
@@ -355,108 +364,216 @@ def part(parts, prefix):
     raise KeyError(prefix)
 
 
-def case1(parts, R):
-    ix, iy, cx, cy, fl, lz0 = P["ix"], P["iy"], P["cx"], P["cy"], P["floor"], P["lid_z0"]
-    m = mesh_shape(part(parts, "Process chamber body").shape, "c1_chamber", hmax=9.0, hmin=1.5)
+def chamber_loads(m, with_lid, scale=1.0):
+    """Face sets and *DLOAD lines for the chamber (frame + floor plate, optionally + lid) at full vacuum, times `scale`
+    (scale = -0.002 / P_ATM gives +20 mbar: every load is a pressure, so the linear model just reverses and shrinks).
+    Vacuum: suction on the wetted faces; the lid (open-top case) and the door carried on their lands; the build module, the outlet
+    plenum and the overflow funnel close the port and the two slots from below, so their vacuum loads push up on the floor plate's
+    underside round each opening (the module's flange round the port; the flanges round the slots)."""
+    ix, iy, cx, cy, fl, lz0, lz1 = P["ix"], P["iy"], P["cx"], P["cy"], P["floor"], P["lid_z0"], P["lid_z1"]
     e = E_TOL
     inner = surfaces(m, lambda x0, y0, z0, x1, y1, z1: x0 > -ix - e and x1 < ix + e and y0 > -iy - e and y1 < iy + e and z0 > -e and z1 < lz0 + e)
-    top = surfaces(m, planar("z", lz0))
     front = surfaces(m, planar("y", -cy))
     bottom = surfaces(m, planar("z", -fl))
     f_in = faces_on(m, inner)
-    f_top = faces_on(m, top)
     f_door = faces_on(m, front, lambda c: (np.abs(c[:, 0]) <= 124) & (c[:, 2] >= -6) & (c[:, 2] <= 114))
-    off = 3 + P.get("gland_w", 4.0) / 2
-    a_lid = 2 * (ix + off) * 2 * (iy + off)             # inside the lid O-ring centre line
-    a_door = 232.0 * 104.0                               # inside the door O-ring centre line
-    p_top = P_ATM * a_lid / f_top["area"].sum()
-    p_door = P_ATM * a_door / f_door["area"].sum()
-    legs = []
-    for x in (-cx + 6, cx - 36):
-        for y in (-cy + 6, cy - 36):
-            legs.append((x, x + 30, y, y + 30))
+    a_door = 232.0 * 104.0
+    r_c = lambda c, x, y: np.hypot(c[:, 0] - x, c[:, 1] - y)
+    f_port = faces_on(m, bottom, lambda c: (r_c(c, 0, 0) >= P["port_d"] / 2) & (r_c(c, 0, 0) <= P["port_d"] / 2 + 14))
+    y0o, y1o = M.MP.OUTLET_Y
+    f_out = faces_on(m, bottom, lambda c: (c[:, 0] >= -75) & (c[:, 0] <= 84) & (c[:, 1] >= y0o - 11) & (c[:, 1] <= y1o + 11)
+                     & ~((np.abs(c[:, 0]) <= M.MP.OUTLET_HALF) & (c[:, 1] >= y0o) & (c[:, 1] <= y1o)))
+    f_ovf = faces_on(m, bottom, lambda c: (np.abs(c[:, 0] - 100) <= 22) & (np.abs(c[:, 1]) <= 59) & ~((c[:, 0] >= P["ovf_x0"]) & (c[:, 0] <= P["ovf_x1"]) & (np.abs(c[:, 1]) <= 52)))
+    F = dict(port=P_ATM * math.pi / 4 * P["port_d"] ** 2, outlet=P_ATM * 140.4 * 13.0, overflow=P_ATM * 23.0 * 110.1, door=P_ATM * a_door)
+    loads = ("*DLOAD\n" + dload_lines(f_in, -P_ATM * scale) + dload_lines(f_door, scale * F["door"] / f_door["area"].sum())
+             + dload_lines(f_port, scale * F["port"] / f_port["area"].sum()) + dload_lines(f_out, scale * F["outlet"] / f_out["area"].sum())
+             + dload_lines(f_ovf, scale * F["overflow"] / f_ovf["area"].sum()))
+    extra = dict(f_in=f_in, f_door=f_door)
+    if with_lid:
+        top = surfaces(m, planar("z", lz1))
+        xd = P["x_dose"]
+        f_win = faces_on(m, top, lambda c: (r_c(c, 0, 0) >= 28) & (r_c(c, 0, 0) <= 50))
+        f_dose = faces_on(m, top, lambda c: (np.abs(c[:, 0] - xd) <= 17) & (np.abs(c[:, 1]) <= 55) & ~((np.abs(c[:, 0] - xd) <= 6) & (np.abs(c[:, 1]) <= P["dose_y"])))
+        f_cam = faces_on(m, top, lambda c: (r_c(c, 75, -45) >= 11) & (r_c(c, 75, -45) <= 16))
+        loads += (dload_lines(f_win, scale * P_ATM * math.pi * 28 ** 2 / f_win["area"].sum())
+                  + dload_lines(f_dose, scale * P_ATM * 12 * 2 * P["dose_y"] / f_dose["area"].sum())
+                  + dload_lines(f_cam, scale * P_ATM * math.pi * 11 ** 2 / f_cam["area"].sum()))
+        extra["top"] = top
+    else:
+        top = surfaces(m, planar("z", lz0))
+        f_top = faces_on(m, top)
+        off = 3 + P.get("gland_w", 4.0) / 2
+        F["lid"] = P_ATM * 2 * (ix + off) * 2 * (iy + off)
+        loads += dload_lines(f_top, scale * F["lid"] / f_top["area"].sum())
+        extra["f_top"] = f_top
+    legs = [(x, x + 30, y, y + 30) for x in (-cx + 6, cx - 36) for y in (-cy + 6, cy - 36)]
     pads = nodes_on(m, bottom, lambda q: np.any([(q[:, 0] >= a) & (q[:, 0] <= b) & (q[:, 1] >= c) & (q[:, 1] <= d) for a, b, c, d in legs], axis=0))
+    return loads, pads, F, extra
+
+
+def chamber_body(parts, with_lid):
+    """Frame + floor plate (+ lid) as one body, bonded across the floor joint. The joint's 0.1 mm skirt gap, 0.25 mm pad clearance
+    and the O-ring groove are filled (a 4 mm slab over the footprint): gmsh can't mesh the thin slots, and the joint stays closed
+    under every load here (case 1f checks it with Shigley). So the joint is modelled stiffer than the real 3 mm of lands; the
+    frame's and floor plate's stresses away from it are what this case is for."""
+    cx, cy = P["cx"], P["cy"]
+    slab = M.rbox(-cx, cx, -cy, cy, -M.FRAME["pad"], 0.0, 8)
+    # the frame and floor plate before joints.py's fastener holes (lpbf_low.CHAMBER_OPS[...]["part"]): with every M4/M5 hole the fused body
+    # is 3.6 times the old case 1's mesh and OCC flags the slivers where the floor screws' holes meet; the holes don't change the global stress
+    b = M.CHAMBER_OPS["frame"]["part"].fuse(slab).fuse(M.CHAMBER_OPS["floor"]["part"])
+    if with_lid:
+        b = b.fuse(part(parts, "Chamber lid").shape)
+    return b.clean()
+
+
+def joint_sigma_z(m, S, lands_z=0.0):
+    """Normal stress across the floor joint (|z| < 1.5 mm, under the walls inside the skirt) in the bonded model: mean and extremes
+    (MPa, + = tension, i.e. the joint would want to open there)."""
+    q = m["xyz"]
+    ix, iy, FR = P["ix"], P["iy"], M.FRAME
+    t_out = FR["rebate"] - FR["pad_clear"]
+    dx = np.maximum(np.abs(q[:, 0]) - ix, np.abs(q[:, 1]) - iy)        # distance outside the inner wall line (approx. off the corners)
+    on = (np.abs(q[:, 2] - lands_z) < 1.5) & (dx > 0.05) & (dx < t_out - 0.05)
+    s = S[on, 2]
+    return dict(n=int(on.sum()), mean=float(s.mean()) if len(s) else None, min=float(s.min()) if len(s) else None, max=float(s.max()) if len(s) else None)
+
+
+def case1(parts, R):
+    """Frame + floor plate at full vacuum, open top (the lid's load on the top land): the case that used to be the monolithic body."""
+    m = mesh_shape(chamber_body(parts, False), "c1_chamber", hmax=9.0, hmin=1.5)
+    loads, pads, F, ex = chamber_loads(m, False)
     job = "c1_chamber"
     write_model(job, m, AL, nset("PADS", pads))
-    loads = "*DLOAD\n" + dload_lines(f_in, -P_ATM) + dload_lines(f_top, p_top) + dload_lines(f_door, p_door)
     append(job, static_step("PADS,1,3\n", loads, solver="ITERATIVE CHOLESKY"))
     run_ccx(job)
     U, S, vm = static_results(m, job)
     i = int(np.argmax(vm))
-    door_nodes = m["idx"][np.unique(f_door["tri"].ravel())]
-    top_nodes = m["idx"][np.unique(f_top["tri"].ravel())]
-    vmax = float(vm[i])
-    p995 = float(np.percentile(vm, 99.5))
+    door_nodes = m["idx"][np.unique(ex["f_door"]["tri"].ravel())]
+    top_nodes = m["idx"][np.unique(ex["f_top"]["tri"].ravel())]
+    vmax, p995 = float(vm[i]), float(np.percentile(vm, 99.5))
     sa = sm = vmax / 2
-    sf_fat = 1.0 / (sa / FATIGUE + sm / AL["su"])
-    r = dict(case="1 chamber body, full vacuum", material=AL["label"],
-             load=f"-{P_ATM:.4f} MPa on {f_in['area'].sum() / 100:.0f} cm2 of wetted faces; lid {P_ATM * a_lid:.0f} N on the top land ({p_top:.3f} MPa); door {P_ATM * a_door:.0f} N on its land ({p_door:.3f} MPa); 4 leg pads fixed",
-             nodes=len(m["ntags"]), elements=len(m["tets"]),
-             vm_max=vmax, vm_max_at=m["xyz"][i].tolist(), vm_p995=p995, u_max=float(np.linalg.norm(U, axis=1).max()),
-             u_max_at=m["xyz"][int(np.argmax(np.linalg.norm(U, axis=1)))].tolist(),
+    r = dict(case="1 chamber: frame + floor plate (bonded across the floor joint), open top, full vacuum", material=AL["label"],
+             load=(f"-{P_ATM:.4f} MPa on {ex['f_in']['area'].sum() / 100:.0f} cm2 of wetted faces; lid {F['lid']:.0f} N on the top land; door {F['door']:.0f} N "
+                   f"on its land; module {F['port']:.0f} N, outlet plenum {F['outlet']:.0f} N and funnel {F['overflow']:.0f} N up on the floor plate round their openings; "
+                   "4 leg pads under the floor plate fixed"),
+             nodes=len(m["ntags"]), elements=len(m["tets"]), vm_max=vmax, vm_max_at=m["xyz"][i].tolist(), vm_p995=p995,
+             u_max=float(np.linalg.norm(U, axis=1).max()), u_max_at=m["xyz"][int(np.argmax(np.linalg.norm(U, axis=1)))].tolist(),
              door_land_uy_range=float(np.ptp(U[door_nodes, 1])), door_land_u_max=float(np.abs(U[door_nodes]).max()),
-             lid_land_uz_range=float(np.ptp(U[top_nodes, 2])),
-             sf_yield=AL["sy"] / vmax, sf_haz=HAZ_ALLOW / vmax, sf_fatigue_goodman=sf_fat,
-             sf_yield_p995=AL["sy"] / p995)
-    r["criterion"] = "SF >= 2 on yield at the peak; seal faces move << 0.7 mm O-ring squeeze; Goodman SF >= 2 for vacuum cycles"
+             lid_land_uz_range=float(np.ptp(U[top_nodes, 2])), floor_joint_sz=joint_sigma_z(m, S),
+             sf_yield=AL["sy"] / vmax, sf_haz=HAZ_ALLOW / vmax, sf_fatigue_goodman=1.0 / (sa / FATIGUE + sm / AL["su"]), sf_yield_p995=AL["sy"] / p995)
+    r["criterion"] = "SF >= 2 on yield at the peak; seal faces move << the O-rings' squeeze; Goodman SF >= 2 for vacuum cycles"
     r["pass"] = r["sf_yield"] >= 2 and r["sf_fatigue_goodman"] >= 2
     r["png"] = "c1_chamber_vm.png"
-    render(m, U, vm, OUT / r["png"], f"Case 1: chamber body at full vacuum, 6061-T6\nmax von Mises {vmax:.1f} MPa at {loc_text(m['xyz'][i])}",
+    render(m, U, vm, OUT / r["png"], f"Case 1: frame + floor plate at full vacuum, 6061-T6\nmax von Mises {vmax:.1f} MPa at {loc_text(m['xyz'][i])}",
            (-1.0, -1.6, 1.1), mark=m["xyz"][i], clim=(0, max(p995 * 1.2, 1e-3)))
     R["1"] = r
-    print(f"  case 1: vm max {vmax:.1f} MPa at {loc_text(m['xyz'][i])}, p99.5 {p995:.1f}, u max {r['u_max'] * 1000:.1f} um")
+    print(f"  case 1: vm max {vmax:.1f} MPa at {loc_text(m['xyz'][i])}, p99.5 {p995:.1f}, u max {r['u_max'] * 1000:.1f} um; joint sz {r['floor_joint_sz']}")
 
 
 def case1b(parts, R):
-    """Chamber body and lid as one bonded body (26 M5 screws + vacuum clamp the lid on): the lid ties the top of the door frame."""
-    ix, iy, cx, cy, fl, lz0, lz1 = P["ix"], P["iy"], P["cx"], P["cy"], P["floor"], P["lid_z0"], P["lid_z1"]
-    xd = P["x_dose"]
-    body = part(parts, "Process chamber body").shape.fuse(part(parts, "Chamber lid").shape).clean()
-    m = mesh_shape(body, "c1b_chamber_lid", hmax=9.0, hmin=1.5)
-    e = E_TOL
-    inner = surfaces(m, lambda x0, y0, z0, x1, y1, z1: x0 > -ix - e and x1 < ix + e and y0 > -iy - e and y1 < iy + e and z0 > -e and z1 < lz0 + e)
-    top = surfaces(m, planar("z", lz1))
-    front = surfaces(m, planar("y", -cy))
-    bottom = surfaces(m, planar("z", -fl))
-    f_in = faces_on(m, inner)
-    r_c = lambda c, x, y: np.hypot(c[:, 0] - x, c[:, 1] - y)
-    f_win = faces_on(m, top, lambda c: (r_c(c, 0, 0) >= 28) & (r_c(c, 0, 0) <= 50))
-    f_dose = faces_on(m, top, lambda c: (np.abs(c[:, 0] - xd) <= 17) & (np.abs(c[:, 1]) <= 55) & ~((np.abs(c[:, 0] - xd) <= 6) & (np.abs(c[:, 1]) <= P["dose_y"])))
-    f_cam = faces_on(m, top, lambda c: (r_c(c, 75, -45) >= 11) & (r_c(c, 75, -45) <= 16))
-    f_door = faces_on(m, front, lambda c: (np.abs(c[:, 0]) <= 124) & (c[:, 2] >= -6) & (c[:, 2] <= 114))
-    a_door = 232.0 * 104.0
-    p_door = P_ATM * a_door / f_door["area"].sum()
-    legs = [(x, x + 30, y, y + 30) for x in (-cx + 6, cx - 36) for y in (-cy + 6, cy - 36)]
-    pads = nodes_on(m, bottom, lambda q: np.any([(q[:, 0] >= a) & (q[:, 0] <= b) & (q[:, 1] >= c) & (q[:, 1] <= d) for a, b, c, d in legs], axis=0))
-    job = "c1b_chamber_lid"
-    write_model(job, m, AL, nset("PADS", pads))
-    loads = ("*DLOAD\n" + dload_lines(f_in, -P_ATM) + dload_lines(f_door, p_door)
-             + dload_lines(f_win, P_ATM * math.pi * 28 ** 2 / f_win["area"].sum())
-             + dload_lines(f_dose, P_ATM * 12 * 2 * P["dose_y"] / f_dose["area"].sum())
-             + dload_lines(f_cam, P_ATM * math.pi * 11 ** 2 / f_cam["area"].sum()))
-    append(job, static_step("PADS,1,3\n", loads, solver="ITERATIVE CHOLESKY"))
-    run_ccx(job)
-    U, S, vm = static_results(m, job)
-    i = int(np.argmax(vm))
-    door_nodes = m["idx"][np.unique(f_door["tri"].ravel())]
-    seat = m["idx"][nodes_on(m, top, lambda q: (np.hypot(q[:, 0], q[:, 1]) >= 28) & (np.hypot(q[:, 0], q[:, 1]) <= 50))]
-    vmax = float(vm[i])
-    p995 = float(np.percentile(vm, 99.5))
-    sa = sm = vmax / 2
-    r = dict(case="1b chamber body + lid bonded, full vacuum", material=AL["label"],
-             load="interior suction incl. the lid underside; door load on its land; window, dose-slot and camera-port covers carried round their flanges; 4 leg pads fixed",
-             nodes=len(m["ntags"]), elements=len(m["tets"]),
-             vm_max=vmax, vm_max_at=m["xyz"][i].tolist(), vm_p995=p995, u_max=float(np.linalg.norm(U, axis=1).max()),
-             u_max_at=m["xyz"][int(np.argmax(np.linalg.norm(U, axis=1)))].tolist(),
-             door_land_uy_range=float(np.ptp(U[door_nodes, 1])), window_seat_uz=float(U[seat, 2].min()),
-             sf_yield=AL["sy"] / vmax, sf_haz=HAZ_ALLOW / vmax, sf_fatigue_goodman=1.0 / (sa / FATIGUE + sm / AL["su"]))
+    """Frame + floor plate + lid as one body at full vacuum, and the same mesh at +20 mbar (argon at its working pressure)."""
+    m = mesh_shape(chamber_body(parts, True), "c1b_chamber_lid", hmax=9.0, hmin=1.5)
+    out = {}
+    for tag, scale in (("vacuum", 1.0), ("plus20mbar", -0.002 / P_ATM)):
+        loads, pads, F, ex = chamber_loads(m, True, scale)
+        job = f"c1b_chamber_lid_{tag}"
+        write_model(job, m, AL, nset("PADS", pads))
+        append(job, static_step("PADS,1,3\n", loads, solver="ITERATIVE CHOLESKY"))
+        run_ccx(job)
+        U, S, vm = static_results(m, job)
+        i = int(np.argmax(vm))
+        door_nodes = m["idx"][np.unique(ex["f_door"]["tri"].ravel())]
+        seat = m["idx"][nodes_on(m, ex["top"], lambda q: (np.hypot(q[:, 0], q[:, 1]) >= 28) & (np.hypot(q[:, 0], q[:, 1]) <= 50))]
+        vmax, p995 = float(vm[i]), float(np.percentile(vm, 99.5))
+        sa = sm = vmax / 2
+        out[tag] = dict(vm_max=vmax, vm_max_at=m["xyz"][i].tolist(), vm_p995=p995, u_max=float(np.linalg.norm(U, axis=1).max()),
+                        u_max_at=m["xyz"][int(np.argmax(np.linalg.norm(U, axis=1)))].tolist(), door_land_uy_range=float(np.ptp(U[door_nodes, 1])),
+                        window_seat_uz=float(U[seat, 2].min()) if tag == "vacuum" else float(U[seat, 2].max()), floor_joint_sz=joint_sigma_z(m, S),
+                        sf_yield=AL["sy"] / vmax, sf_haz=HAZ_ALLOW / vmax, sf_fatigue_goodman=1.0 / (sa / FATIGUE + sm / AL["su"]))
+        if tag == "vacuum":
+            r_png = "c1b_chamber_lid_vm.png"
+            render(m, U, vm, OUT / r_png, f"Case 1b: frame + floor plate + lid at full vacuum, 6061-T6\nmax von Mises {vmax:.1f} MPa at {loc_text(m['xyz'][i])}; "
+                   f"door frame moves {out[tag]['door_land_uy_range'] * 1000:.0f} um", (-1.0, -1.6, 1.1), mark=m["xyz"][i], clim=(0, max(p995 * 1.2, 1e-3)))
+        print(f"  case 1b {tag}: vm max {vmax:.2f} MPa at {loc_text(m['xyz'][i])}, p99.5 {p995:.2f}, u max {out[tag]['u_max'] * 1000:.2f} um; joint sz {out[tag]['floor_joint_sz']}")
+    v = out["vacuum"]
+    r = dict(case="1b chamber: frame + floor plate + lid bonded, full vacuum and +20 mbar", material=AL["label"],
+             load="vacuum: suction inside incl. the lid underside, door on its land, window/dose/camera covers round their flanges, module/plenum/funnel loads under the floor; "
+                  "+20 mbar: the same loads reversed and scaled by 0.002/0.101325 (linear); 4 leg pads fixed",
+             nodes=len(m["ntags"]), elements=len(m["tets"]), **v, plus20mbar=out["plus20mbar"])
     r["criterion"] = "as case 1"
     r["pass"] = r["sf_yield"] >= 2 and r["sf_fatigue_goodman"] >= 2
     r["png"] = "c1b_chamber_lid_vm.png"
-    render(m, U, vm, OUT / r["png"], f"Case 1b: chamber + lid bonded at full vacuum, 6061-T6\nmax von Mises {vmax:.1f} MPa at {loc_text(m['xyz'][i])}; door frame moves {r['door_land_uy_range'] * 1000:.0f} um",
-           (-1.0, -1.6, 1.1), mark=m["xyz"][i], clim=(0, max(p995 * 1.2, 1e-3)))
     R["1b"] = r
-    print(f"  case 1b: vm max {vmax:.1f} MPa at {loc_text(m['xyz'][i])}, p99.5 {p995:.1f}, u max {r['u_max'] * 1000:.1f} um at {loc_text(r['u_max_at'])}, door land {r['door_land_uy_range'] * 1000:.0f} um")
+
+
+def case1f(parts, R):
+    """Floor-plate bolted joint, Shigley (Budynas & Nisbett, Shigley's MED 10th ed., ch. 8): preload, joint constant, load and
+    separation factors for 18 x M4 x 16 316 screws in tapped 6061, under the floor O-ring's squeeze force, +20 / +50 mbar and a
+    +0.5 bar regulator fault. Also the floor gland per Parker ORD 5700 (same checks seals.py makes)."""
+    FR = M.FRAME
+    from fasteners import CATALOG                                         # noqa: E402  (cad/ is on sys.path)
+    import joints as J
+    n = len(J.REGISTRY["floor"]["items"])
+    pn = J.REGISTRY["floor"]["pn"]
+    c = CATALOG[pn]
+    d, Ls = c["d"], c["L"]
+    At = 8.78                                                             # M4 x 0.7 tensile stress area, mm2 (ISO 898-1)
+    Sp = 210.0                                                            # 316 (McMaster 92290A: 70 ksi tensile); proof taken as A4-50 Rp0.2, conservative
+    Su = 70.0 * 6.894757
+    Fi = 0.75 * At * Sp                                                   # Shigley 8-31, reusable joint
+    K_t = 0.20
+    T = K_t * Fi * d / 1000.0                                             # N m, Shigley 8-27
+    E_s, E_al = 193e3, AL["E"]
+    l_clamp = (-FR["pad"] - (-P["floor"] + FR["notch"])) + (FR["pad"] - FR["skirt"])   # band under the head (8) + the 0.1 gap
+    lp = l_clamp + d / 2                                                  # tapped-hole joint: effective grip h + d/2 (Shigley Table 8-7)
+    kb = At * E_s / lp                                                    # fully threaded screw in the grip
+    km = 0.5774 * math.pi * E_al * d / (2 * math.log(5 * (0.5774 * l_clamp + 0.5 * d) / (0.5774 * l_clamp + 2.5 * d)))   # Shigley 8-22, 30 deg frustum
+    C = kb / (kb + km)
+    # floor O-ring: Lindley / Gent as seals.py, and Parker's 70A-80A bars at 25 % (Figs 2-4..2-6) for the stiff end
+    shore = 75.0
+    E75 = 0.0981 * (56 + 7.62336 * shore) / (0.137505 * (254 - 2.54 * shore))
+    cs, depth, width = 3.53, P["gland_d"], P["gland_w"]
+    sq = (cs - depth) / cs
+    q_nom = cs * E75 * (1.25 * sq ** 1.5 + 50 * sq ** 6)
+    sq_max = ((cs + 0.102) - (depth - 0.05)) / (cs + 0.102)
+    q_max = cs * E75 * (1.25 * sq_max ** 1.5 + 50 * sq_max ** 6)
+    q_parker80 = 55.0 * 4.448 / 25.4
+    t_mid = FR["gland_t"] + width / 2
+    half = (P["ix"] + t_mid, P["iy"] + t_mid)
+    r_mid = FR["r_in"] + t_mid
+    path = 4 * (half[0] + half[1]) - (8 - 2 * math.pi) * r_mid
+    A_seal = 4 * half[0] * half[1] - (4 - math.pi) * r_mid ** 2           # inside the cord's centre line
+    F_or = dict(nominal=q_nom * path, max_tolerance=q_max * path, parker_80A=q_parker80 * path)
+    cases = {
+        "nominal O-ring, +20 mbar": F_or["nominal"] + 2e-3 * A_seal,
+        "O-ring at max squeeze, +50 mbar (relief valve +34)": F_or["max_tolerance"] + 5e-3 * A_seal,
+        "Parker 80A bar, +50 mbar": F_or["parker_80A"] + 5e-3 * A_seal,
+        "Parker 80A bar, +0.5 bar regulator fault": F_or["parker_80A"] + 0.05 * A_seal,
+        "nominal O-ring, full vacuum": F_or["nominal"] - P_ATM * A_seal,
+    }
+    rows = {}
+    for k, Ftot in cases.items():
+        Pb = Ftot / n
+        rows[k] = dict(load_total_N=Ftot, load_per_screw_N=Pb,
+                       n_load=(Sp * At - Fi) / (C * Pb) if Pb > 0 else None, n_sep=Fi / (Pb * (1 - C)) if Pb > 0 else None,
+                       screw_force_N=Fi + C * Pb)
+    Le = Ls - l_clamp
+    A_strip = math.pi * d * Le * 0.5                                      # internal-thread shear area, conservative half of pi d Le
+    F_strip = A_strip * 0.577 * AL["sy"]
+    land = (FR["gland_t"] + (FR["rebate"] - FR["pad_clear"] - FR["gland_t"] - width)) * path
+    gl = dict(cs=cs, depth=depth, width=width, squeeze_nom=100 * sq, squeeze_min=100 * ((cs - 0.102) - (depth + 0.05)) / (cs - 0.102), squeeze_max=100 * sq_max,
+              fill_nom=100 * math.pi / 4 * cs ** 2 / (depth * width), fill_max_cold=100 * math.pi / 4 * (cs + 0.102) ** 2 / ((depth - 0.05) * (width - 0.05)),
+              parker_range=dict(depth=(2.57, 2.72), width_face=(4.50, 4.75)), path_mm=path, splice="vulcanized cord, made to length: no stretch")
+    r = dict(case="1f floor-plate bolted joint (Shigley) and floor O-ring gland (Parker)", screws=f"{n} x McMaster {pn} (M{d:g} x {Ls:g}, 316), tapped 6061",
+             proof_MPa=Sp, tensile_MPa=Su, preload_N=Fi, torque_Nm=T, nut_factor=K_t, grip_mm=l_clamp, kb_N_per_mm=kb, km_N_per_mm=km, C=C,
+             oring_N_per_mm=dict(nominal=q_nom, max_tolerance=q_max, parker_80A=q_parker80), oring_force_N=F_or, seal_area_mm2=A_seal, cases=rows,
+             thread_engagement_mm=Le, thread_strip_N=F_strip, screw_proof_N=Sp * At, screw_break_N=Su * At,
+             preload_total_N=n * Fi, land_area_mm2=land, land_pressure_preload_MPa=n * Fi / land, head_bearing_MPa=Fi / (math.pi / 4 * (7.0 ** 2 - 4.5 ** 2)),
+             gland=gl, dowels="2 x McMaster 93600A686 (Ø6 x 20, m6), pressed into the plate, slip fit in the frame")
+    r["criterion"] = "separation factor n_sep >= 2 and load factor n_load >= 1.5 in every case; thread strip > screw break"
+    r["pass"] = all((v["n_sep"] is None or v["n_sep"] >= 2) and (v["n_load"] is None or v["n_load"] >= 1.5) for v in rows.values()) and F_strip > Su * At
+    R["1f"] = r
+    print(f"  case 1f: Fi {Fi:.0f} N ({T:.2f} N m), C {C:.3f}; " + "; ".join(f"{k}: n_sep {v['n_sep']:.1f}" for k, v in rows.items() if v["n_sep"]))
 
 
 def case2(parts, R):
@@ -769,14 +886,19 @@ def write_md(R):
          "| Case | Material | Load | Max σ_vM (MPa), where | Max displacement | Criterion | Result |", "|---|---|---|---|---|---|---|"]
     if "1" in R:
         r = R["1"]
-        L.append(f"| 1 Chamber body alone (open top), full vacuum, {BUILT} | {r['material']} | 1 atm net + lid {P_ATM * 2 * (P['ix'] + 3 + P.get('gland_w', 4.0) / 2) * 2 * (P['iy'] + 3 + P.get('gland_w', 4.0) / 2) / 1000:.1f} kN + door {P_ATM * 232 * 104 / 1000:.1f} kN | "
-                 f"{r['vm_max']:.1f} at {loc_text(r['vm_max_at'])}; 99.5 %: {r['vm_p995']:.1f} | {r['u_max'] * 1000:.1f} µm; door land Δy {r['door_land_uy_range'] * 1000:.1f} µm, lid land Δz {r['lid_land_uz_range'] * 1000:.1f} µm | "
+        jz = r.get("floor_joint_sz") or {}
+        L.append(f"| 1 Chamber: frame + floor plate (bonded across the floor joint), open top, full vacuum, {BUILT} | {r['material']} | 1 atm net + lid {P_ATM * 2 * (P['ix'] + 3 + P.get('gland_w', 4.0) / 2) * 2 * (P['iy'] + 3 + P.get('gland_w', 4.0) / 2) / 1000:.1f} kN + door {P_ATM * 232 * 104 / 1000:.1f} kN + module/plenum/funnel 1.2 kN under the floor | "
+                 f"{r['vm_max']:.1f} at {loc_text(r['vm_max_at'])}; 99.5 %: {r['vm_p995']:.1f} | {r['u_max'] * 1000:.1f} µm; door land Δy {r['door_land_uy_range'] * 1000:.1f} µm, lid land Δz {r['lid_land_uz_range'] * 1000:.1f} µm; floor-joint σz {jz.get('min', 0):.2f}..{jz.get('max', 0):.2f} MPa | "
                  f"SF ≥ 2 yield, Goodman ≥ 2 | SF {r['sf_yield']:.1f} yield, {r['sf_haz']:.1f} vs welded HAZ (110 MPa), Goodman {r['sf_fatigue_goodman']:.1f}: {'pass' if r['pass'] else 'FAIL'} |")
     if "1b" in R:
         r = R["1b"]
-        L.append(f"| 1b Chamber body + lid bonded, full vacuum, {BUILT} | {r['material']} | as 1, lid included | {r['vm_max']:.1f} at {loc_text(r['vm_max_at'])}; 99.5 %: {r['vm_p995']:.1f} | "
+        p2 = r.get("plus20mbar", {})
+        L.append(f"| 1b Chamber: frame + floor plate + lid bonded, full vacuum, {BUILT} | {r['material']} | as 1, lid included | {r['vm_max']:.1f} at {loc_text(r['vm_max_at'])}; 99.5 %: {r['vm_p995']:.1f} | "
                  f"{r['u_max'] * 1000:.1f} µm at {loc_text(r['u_max_at'])}; door land Δy {r['door_land_uy_range'] * 1000:.1f} µm; window seat {abs(r['window_seat_uz']) * 1000:.1f} µm | "
                  f"SF ≥ 2 yield, Goodman ≥ 2 | SF {r['sf_yield']:.1f} yield, {r['sf_haz']:.1f} vs HAZ, Goodman {r['sf_fatigue_goodman']:.1f}: {'pass' if r['pass'] else 'FAIL'} |")
+        if p2:
+            L.append(f"| 1b′ Same body at +20 mbar (argon working pressure) | {r['material']} | the vacuum loads reversed × 0.002/0.1013 | {p2['vm_max']:.2f} at {loc_text(p2['vm_max_at'])} | "
+                     f"{p2['u_max'] * 1000:.2f} µm; door land Δy {p2['door_land_uy_range'] * 1000:.2f} µm | SF ≥ 2 | SF {p2['sf_yield']:.0f}: pass |")
     if "2" in R:
         r = R["2"]
         L.append(f"| 2 Lid, vacuum, {BUILT} | {r['material']} | 1 atm on top + window/dose/camera loads | {r['vm_max']:.1f} at {loc_text(r['vm_max_at'])} | "
@@ -806,6 +928,23 @@ def write_md(R):
         r = R["7"]
         L.append(f"| 7 Window Ø50.8 × 8 | {r['material']} | 1 atm, simply supported Ø48 | max principal {r['s1_max']:.2f} (Roark {r['roark_ss']:.2f}) | {r['u_max_um']:.2f} µm | "
                  f"SF ≥ 6 vs 52.4 MPa | SF {r['sf_fea']:.0f} (formula {r['sf_formula']:.0f}); 2.4 mm would do at SF 4, 2.9 mm at SF 6: pass |")
+    if "1f" in R:
+        r = R["1f"]
+        g = r["gland"]
+        L += ["", f"## 1f Floor-plate bolted joint (Shigley) and floor gland (Parker), {BUILT}", "",
+              f"{r['screws']}; proof {r['proof_MPa']:.0f} MPa (A4-50 basis, conservative), preload {r['preload_N']:.0f} N each at {r['torque_Nm']:.2f} N·m (K = {r['nut_factor']}); "
+              f"grip {r['grip_mm']:.1f} mm, k_b {r['kb_N_per_mm'] / 1000:.0f} kN/mm, k_m {r['km_N_per_mm'] / 1000:.0f} kN/mm (30° frustum), C = {r['C']:.3f}. "
+              f"Thread engagement {r['thread_engagement_mm']:.1f} mm: strip {r['thread_strip_N'] / 1000:.1f} kN > screw break {r['screw_break_N'] / 1000:.1f} kN. "
+              f"Total preload {r['preload_total_N'] / 1000:.1f} kN on {r['land_area_mm2'] / 100:.0f} cm² of lands = {r['land_pressure_preload_MPa']:.1f} MPa; head bearing {r['head_bearing_MPa']:.0f} MPa.", "",
+              "| Case | Load on the joint (N) | Per screw (N) | Load factor n_L | Separation factor n_0 |", "|---|---|---|---|---|"]
+        for k, v in r["cases"].items():
+            nl = f"{v['n_load']:.1f}" if v["n_load"] else "– (joint pressed shut)"
+            n0 = f"{v['n_sep']:.1f}" if v["n_sep"] else "– (joint pressed shut)"
+            L.append(f"| {k} | {v['load_total_N']:.0f} | {v['load_per_screw_N']:.0f} | {nl} | {n0} |")
+        L += ["", f"Floor gland: {g['cs']} mm FKM 75A cord, groove {g['depth']} deep × {g['width']} wide (Parker face gland {g['parker_range']['depth'][0]}–{g['parker_range']['depth'][1]} × "
+              f"{g['parker_range']['width_face'][0]}–{g['parker_range']['width_face'][1]}); squeeze {g['squeeze_nom']:.1f} % ({g['squeeze_min']:.1f}–{g['squeeze_max']:.1f} % at ±0.05 mm and cord tolerance); "
+              f"fill {g['fill_nom']:.0f} % (max {g['fill_max_cold']:.0f} % cold); path {g['path_mm']:.0f} mm; {g['splice']}. O-ring force {r['oring_force_N']['nominal'] / 1000:.1f} kN nominal, "
+              f"{r['oring_force_N']['max_tolerance'] / 1000:.1f} kN at max squeeze, {r['oring_force_N']['parker_80A'] / 1000:.1f} kN on Parker's 80A bar. {'pass' if r['pass'] else 'FAIL'}."]
     if "6" in R:
         L += ["", "Mode shapes (case 6): direction of the galvo's centre of mass in each mode, and where the largest motion is."]
         for v in R["6"]["variants"]:
@@ -818,7 +957,7 @@ def write_md(R):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     RUN.mkdir(parents=True, exist_ok=True)
-    which = sys.argv[1:] or ["7", "5", "4", "3", "2", "6", "1", "1b"]
+    which = sys.argv[1:] or ["7", "5", "4", "3", "2", "6", "1", "1b", "1f"]
     parts = M.build()
     jf = OUT / "fea.json"
     R = json.loads(jf.read_text()) if jf.exists() else {}

@@ -192,6 +192,7 @@ def add_joints(h, parts, add, module="M50"):
     cut_parts(parts, "Process chamber body", [hole(p, n, (-sk - zn) - 0.01, Ls + 1.5, 4.0) for p, n in items])
     add_fasteners(h, add, "floor", "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt",
                   pn4f, items, 5, "G1", explode=(0, 0, -150))
+    _KEY[0] = "floor_dowels"                                  # so joints.CUTS files the dowel holes under their own key
     dw = find("dowel", 6, 20)
     zt = -sk + 9.9                                            # dowel top, 9.9 mm up in the frame; 10 mm pressed into the plate
     ditems = [((sx * 148.2, sx * 103.2, zt), mZ) for sx in (-1.0, 1.0)]
@@ -385,7 +386,7 @@ def add_joints(h, parts, add, module="M50"):
     _KEY[0] = "plenum_in"
     yb_ = cy + 6.0
     # 7 screws (was 9): the frame ends at z -3.9, so the four below the old floor line moved to the sides, outside the O-ring loop
-    items = [((x, yb_, z), (0.0, -1.0, 0.0)) for x, z in ((-71.0, 3.0), (71.0, 3.0), (-71.0, 22.0), (71.0, 22.0), (-40.0, 34.0), (40.0, 34.0), (0.0, 34.0))]
+    items = [((x, yb_, z), (0.0, -1.0, 0.0)) for x, z in ((-71.0, 4.5), (71.0, 4.5), (-71.0, 22.0), (71.0, 22.0), (-40.0, 34.0), (40.0, 34.0), (0.0, 34.0))]
     cut_parts(parts, "Cross-flow inlet plenum", [hole(p, n, -0.01, 6.01, CLEAR[4]) for p, n in items])
     cut_parts(parts, "Process chamber body", [hole(p, n, 6.0, 12.0, insert_od(ins4)) for p, n in items] + [hole(p, n, 11.99, 17.5, 4.0) for p, n in items])
     add_fasteners(h, add, "plenum_in", "Inlet-plenum screws, M4 x 16 316 (clear of the Z flange's screws)", pn4, items, 5, "G4", explode=(0, 180, 0))

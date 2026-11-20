@@ -193,12 +193,16 @@ def components(res, lo, pitch, min_mm3=1.0, top=12):
     return rows
 
 
-def simulate(tris, pitch, stock_box, tools, dirs=DIRS):
+def simulate(tris, pitch, stock_box, tools, dirs=DIRS, core=None):
+    """core: an [x0, x1, y0, y1] column taken out of the stock before milling (the frame's waterjet / bandsaw slug)."""
     lo, shape = grid_for(tris, pitch, 4.0, stock_box)
     t0 = time.time()
     vox, odd = voxelize(tris, pitch, lo, shape)
     t_vox = time.time() - t0
-    st = stock_mask(lo, shape, pitch, stock_box) | vox
+    st = stock_mask(lo, shape, pitch, stock_box)
+    if core is not None:
+        st &= ~stock_mask(lo, shape, pitch, list(core) + [-1e9, 1e9])
+    st |= vox
     rem_all = np.zeros_like(vox)
     for name, (D, L, H, _) in tools.items():
         for d in dirs:
@@ -280,22 +284,25 @@ def main():
     result = json.loads(jpath.read_text()) if jpath.exists() else {}
     std = {k: v for k, v in TOOLS.items() if v[3] == "std"}
     if a.only in ("all", "detailed"):
-        det = [  # (slug prefix, pitch, stock box or None)
-            ("process_chamber_body", 0.5, [-165.1, 165.1, -120.65, 120.65, -26.2, 126.2]),   # 13 x 9.5 x 6 in. block
+        det = [  # (slug prefix, pitch, stock box or None[, core column removed before milling])
+            # through-frame: 13 x 9.5 x 5.5 in. blank (lpbf_low.FRAME), the 274 x 184 core cut out as a slug first (FR-02)
+            ("process_chamber_body", 0.5, [-165.1, 165.1, -120.65, 120.65, -11.8, 127.9], [-137.0, 137.0, -92.0, 92.0]),
+            ("chamber_floor_plate", 0.4, [-165.1, 165.1, -120.65, 120.65, -22.7, 2.7]),          # 13 x 9.5 x 1 in. blank
             ("chamber_lid", 0.4, None),
             ("chamber_door", 0.4, None),
             ("build_module_m50_spigot", 0.4, None),
         ]
-        for pre, pitch, sbox in det:
+        for pre, pitch, sbox, *core in det:
+            core = core[0] if core else None
             slug = next(s for s in P if s.startswith(pre))
             p = P[slug]
             tris = read_stl(str(pathlib.Path(a.parts) / f"{slug}.stl"))
             b = p["bbox"]
             sbox = sbox or [b[0] - 3, b[1] + 3, b[2] - 3, b[3] + 3, b[4] - 3, b[5] + 3]
-            out = dict(name=p["name"], pitch=pitch, stock_box=sbox)
+            out = dict(name=p["name"], pitch=pitch, stock_box=sbox, core=core)
             for label, tools in (("std", std), ("std+long", TOOLS)):
                 t0 = time.time()
-                sim = simulate(tris, pitch, sbox, tools)
+                sim = simulate(tris, pitch, sbox, tools, core=core)
                 v = pitch ** 3
                 comp = components(sim["res"], sim["lo"], pitch, min_mm3=2.0)
                 out[label] = dict(residual_mm3=round(float(sim["res"].sum() * v), 1), part_mm3=round(float(sim["vox"].sum() * v), 1),

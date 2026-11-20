@@ -1,10 +1,222 @@
 # Machining review: can BYU's shops make the machined parts? (issue #260, PR #266)
 
-This is a review of the 37 machined parts in `cad/lpbf_low.py` (M50 module) by open-source CAM and scripted
-design-for-machining (DFM) rules. It covers what BYU's shops list, what a 3-axis mill and a lathe can and cannot
-reach, and the tools to buy. Nothing here has been quoted by a shop or checked by a machinist.
+This is a review of the machined parts in `cad/lpbf_low.py` (M50 module) by open-source CAM and scripted
+design-for-machining (DFM) rules. It covers what BYU's shops list, what a 3-axis mill, a 4th axis and a lathe can and
+cannot reach, and the tools to buy. Nothing here has been quoted by a shop. A BYU machinist reviewed the build animation;
+the first section answers him.
 
-## Short answer
+## Update: the chamber as a through-frame, the 4th axis, and honest hours (2026-11-20, evening)
+
+### The answer to the machinist
+
+He is right on both counts.
+
+- **The deep pocket was the worst part.** It needed 6 in. OAL end mills and a 3/8 in. tool at 13:1 for the R5 corners,
+  and it turned 78 % of a 33 kg block into chips.
+  - It is now a through-frame cut from 5-1/2 in. plate, with a 20 mm floor plate bolted under it on a second face O-ring
+    ([`chamber-construction.md`](chamber-construction.md) is the decision record).
+  - The core comes out as one 17 kg slug (waterjet or bandsaw), and the walls are finished from both sides at 63 mm
+    stick-out. Nothing on the frame or the floor plate needs a tool longer than a standard 3/4 x 4 in. end mill (3.3:1).
+- **Nothing in the machine needs 5-axis.** The earlier review used six fixed tool directions, which are 3-axis setups,
+  never simultaneous 5-axis. On a mill with a 4th axis the frame takes three setups (bottom, top, then the four walls in one
+  clamping on the rotary), down from six.
+  - Across all 48 machined parts, the rotary takes the setup count from 118 to 60 where a part swings inside an
+    HRT210. Most of that drop is two-setup plates, where a flip in the vise is just as quick, so setup time only falls
+    from 99 h to 85 h.
+  - Four details still need a special tool or a compound angle (below), and each has a fix.
+- **"A few hundred hours of toolpathing and machining" is about right.** Counted honestly, the 48 parts are about 264 h
+  with 3-axis setups (250 h with a 4th axis).
+  - Only 28 h of that is the machine cutting. The rest is CAM (116 h), setups (99 h) and deburring and inspection.
+  - The earlier "63 h of machine and setup time plus 30-40 h of CAM" for 37 parts left out most of the setup and
+    programming time.
+  - The levers that bring the total down to about 150 h are [listed below](#hours-for-the-whole-machine). The chamber
+    redesign is one of them, but not the biggest.
+
+### What changed and what was re-run
+
+- **Model.** Section 5 of `cad/lpbf_low.py` (`FRAME`, `CHAMBER_OPS`) and `cad/joints.py`:
+  - frame and floor plate;
+  - floor O-ring;
+  - 18 M4 floor screws and 2 dowels;
+  - rail holes tapped through the back wall from outside, with sealed plugs;
+  - a 260 mm rail;
+  - the inlet plenum raised onto the frame;
+  - R10 inside corners, an R6.5 door opening and round-ended slots;
+  - the through-beam's 2-010 groove made a counterbore. Its inner wall had been 0.1 mm thick round the M6 thread, and that
+    sliver also broke the FEA mesh.
+- **Checks on the new model.** Interference (0 for M50, S25 and L75, all states and sweeps), CalculiX (cases 1, 1b, 1f: yield
+  SF 5.1 open-top and 9.9 with the lid) and the
+  Shigley floor-joint check: see [`chamber-construction.md`](chamber-construction.md).
+- **Voxel stock removal** ([`cam_sim.py`](analysis/machining/cam_sim.py); the frame's stock is the blank minus the
+  waterjet slug):
+
+  | Part | Residual, standard tools | Residual, + long tools |
+  |---|---|---|
+  | frame | 1.05 cm³ | 0.56 cm³ |
+  | floor plate | 0.09 cm³ | 0.09 cm³ |
+  | old block | 29.1 cm³ | 3.4 cm³ |
+
+  What's left on the frame is voxel slivers in the R10 corners (the 3/4 in. tool's R9.5 fits) and Ø3-4 holes the voxels
+  can't resolve.
+
+  | Frame, standard tools | Floor plate, standard tools |
+  |---|---|
+  | ![](analysis/out/machining/cam_process_chamber_body_std.png) | ![](analysis/out/machining/cam_chamber_floor_plate_std.png) |
+- **Per setup** ([`per_setup.json`](analysis/out/machining/per_setup.json)): the frame needs all six directions, and the
+  front alone has 319 cm³ only it can reach (the door opening).
+- **Real CAM:** FreeCAD 1.0.2's CAM workbench, run headless ([`freecad_cam.py`](analysis/machining/freecad_cam.py),
+  [`freecad_cam.json`](analysis/out/machining/freecad_cam.json)).
+  - It programmed the frame (two flat setups plus the door opening) and the floor plate (two setups) with Adaptive,
+    Profile, Pocket, Helix and Drilling, and posted LinuxCNC G-code.
+  - Cutting time from the G-code: frame 60.0 min, floor plate 57.9 min. Its O-ring grooves used a slow 1/8 in. tool and
+    account for 38 and 35 min of that; a 4 mm end mill does each in about 8 min.
+  - Taps, reamers and tool changes are not timed.
+  - Its 1.0 Adaptive op only sees the stock as a box, so the frame's opening was cut with Profile passes. Its Drilling and
+    Helix ops needed work-arounds headless; both are documented in the script.
+  - CAMotics would not install on the runner (no package for this OS; the 2019 .deb needs libraries the runner lacks), so
+    the G-code has not been simulated.
+  - Use it as a head start and a check. The shop will still program and prove out in its own CAM.
+- **Setup plan:** [`setup_plan.json`](analysis/out/machining/setup_plan.json) ([`setup_plan.py`](analysis/machining/setup_plan.py)).
+  For the frame and the floor plate it gives:
+  - the blank and the core removal;
+  - every setup's machine, fixture, which face is up (as a rotation from the model frame) and the A-axis index angles;
+  - per operation: the feature, the tool (type, diameter, stick-out), the cuts it makes as references to the model
+    (`FR-xx`, `FP-xx`, `J:<key>`), and a time from vendor feeds;
+  - and, for every other part, the 3-axis and 4th-axis setup counts.
+- **Time on the mill at vendor feeds** (Helical's 1600-2400 SFM and chip loads for 3-flute carbide in 6061, Haas drill and
+  tap charts, 60 % efficiency): frame 112 min, floor plate 51 min, plus 12-71 min on the waterjet.
+
+### The frame, setup by setup
+
+| Setup | Machine and fixture | Face up | Work |
+|---|---|---|---|
+| F-S0 | bandsaw; waterjet (a Ø12 start hole first) | top | saw the 15 x 9.5 x 5.5 in. blank; core out as one 274 x 184 slug |
+| F-S1 | VF-4, 3-axis; blank on risers, toe clamps on 1 in. end tabs | bottom | face; outside and opening up to mid-height; rebate; 18 M4 holes; 2 dowel holes |
+| F-S2 | VF-4, 3-axis; end tabs sawn off; a "dummy floor" plate that pins and screws the frame down through its own floor-screw holes | top | face; outside and opening down to mid-height; lid gland; 20 lid inserts |
+| F-S3 | VF-4 + HRT210-class rotary on a 2-1/2 in. riser; the same dummy-floor plate on the platter, A along the frame's z | A = 0 front, 90 left, 180 back, 270 right | door opening; Ø18 bores and through-beams; inlet slot, argon port, plenum inserts, rail holes; KF-25 bore, vacuum and bearing-cap inserts, O₂ port |
+
+- **Swing.** About its z axis the frame swings 188 mm, more than the HRT210's 152.4 mm centre height. Hence the riser,
+  which puts A at 215.9 mm. The rotary carries 4.3 kg plus the plate, well inside its 38.6 kg unsupported rating.
+- **The other way to hold it.** Putting A along the frame's x needs no riser (127 mm swing), but the side walls then need
+  their own setups and the sealing faces are cut on the rotary. It still comes to three setups.
+- **The rail holes** were the one feature still on an inside face: they had to be drilled and tapped through the door
+  opening, 206 mm from the front face. They are now tapped through the back wall from outside, in the F-S3 back index,
+  with an M4 plug screw on a bonded seal washer at each outer end. That is 4 small seals, worth about 0.02 ppm O₂/h.
+
+### 4th axis and 5-axis, part by part
+
+[`setup_plan.json`](analysis/out/machining/setup_plan.json) has every part's reachable directions, its 3-axis setups and
+the best rotary axis with its swing.
+
+- **Where the rotary saves setups** (3-axis → with a 4th axis):
+  - the frame 6 → 3;
+  - the piston head 6 → 3;
+  - the build plate 5 → 2;
+  - the camera viewport adapter 5 → 2;
+  - the M50 module body 4 → 1;
+  - the cover-slide drawer 4 → 1;
+  - the gland plate, heater block and rod end 3 → 1;
+  - the metering base 3 → 2.
+  - The other parts are mostly plates with two setups (top, bottom). A rotary would do both in one clamping, but a
+    flip in the vise takes as long, so the hours model gives the rotary no credit there.
+- **Too big for an HRT210:** the base plates (swing 240-274 mm) and the optics bridge (184 mm) stay on the table.
+- **Needs a special tool or a compound angle (5-axis or a fixture), with a fix for each:**
+
+  | Part | Feature | Fix |
+  |---|---|---|
+  | camera viewport adapter | boss and bore on the line of sight from (75, −45) to the plate centre: two angles, so a single rotary can't square it up | a sine plate on the 4th axis, or turn the boss as its own part on a seat with one tilt |
+  | chamber lid | the cover-slide drawer slot is enclosed (still drawn so) | mill it open from the underside, then a 1/4 in. keyseat cutter for the drawer's ledges, or sinker EDM |
+  | chamber door, cover-slide drawer | half-dovetail O-ring grooves | a dovetail cutter, or plain grooves with moulded seals |
+  | build plate, heater block, piston head, gland plate, module body | bayonet lugs, internal and radial grooves, the bore | lathe work (grooving tools) and outsourced honing, as before |
+
+- **BYU's kit** (pages fetched 22:31-22:46 UTC):
+  - Physics' Haas VF-2SS "provides new capabilities like a 4th axis" (rotary model not published).
+  - The Physical Facilities shop lists a "multi-axis CNC mill" with no model.
+  - No BYU page names a rotary table model, a trunnion, a 5-axis machine or a right-angle head.
+  - The ME Prototyping Lab's "DM1 and VF4 CNC mills" was not on the live page at 22:44 UTC.
+
+  The plan assumes a VF-4-class mill with an HRT210-class rotary, which matches the machinist's "one of our 4 axis
+  machines". Check the rotary's centre height before planning F-S3.
+
+### Hours for the whole machine
+
+The method and per-part rows are in [`hours.py`](analysis/machining/hours.py) and
+[`hours.csv`](analysis/out/machining/hours.csv).
+
+- **CAM hours are an estimate:** 0.5 h + 0.6 h per setup + 0.015 h per hole, +1 h for lathe-and-mill parts, and +8 h for the
+  block's deep pocket. A search found no published rule of thumb.
+- **Setups:** 0.75 h for vise parts and 1.25 h for parts over 300 mm. Modern Machine Shop's survey median is 68-90 min.
+- **Run** uses the conservative removal rates of the review below.
+- **Deburr and inspect:** 0.25 h a part, 1 h for a part with a sealing face.
+
+| | CAM | Setups | Run | Deburr + inspect | Total |
+|---|---|---|---|---|---|
+| Chamber body before (block, 6 setups) | 12.8 h | 7.5 h | 15.5 h (3.5-5 h at vendor feeds) | 1 h | 36.8 h |
+| Chamber body now (frame 3 setups with a 4th axis + floor plate 2 + waterjet) | 8.2 h | 7.5 h | 7.1 h (3.5 h at vendor feeds) | 2 h | 24.8 h |
+| All 48 machined parts, 3-axis | 116 h | 99 h (118 setups) | 28 h | 21 h | **264 h** |
+| All 48 machined parts, with a 4th axis where it helps | 116 h | 85 h (60 setups) | 28 h | 21 h | **250 h** |
+
+**What drives the few hundred hours:** 48 parts each need a program, a fixture, setups and a first-article check. Cutting
+is about a tenth of it. These levers bring the total down; the hours are estimates from the per-part rows:
+
+1. **Buy instead of make, about 30-40 h.**
+   - The window flange and retaining ring become a stock fused-silica viewport.
+   - The f-theta adapter ring, field stop, beam tube and camera window ring become Thorlabs SM-series lens tubes and
+     adapters.
+   - The recoater motor standoff and bracket become a stock NEMA 23 bracket.
+   - The door and guard-door handles become catalogue pulls.
+   - The Macor rings and the striker become stock washers and discs.
+
+   Those 12 parts take about 52 h to make here; buying them leaves about 1 h each to adapt.
+2. **Waterjet the 2D plate parts, about 15-20 h.** That covers the two base plates, the optics bridge, the galvo riser, the
+   Z flange, the legs, the damper bracket, the arm and the small lugs. Each profile becomes a DXF, and the mill only drills.
+3. **Standardise:** one tool library and one insert family, a CAM template per part type, and the same holes everywhere.
+   That cuts about 30 % of the remaining CAM time, roughly 20-25 h.
+4. **Use the 4th axis where it saves a setup: about 14 h.**
+5. **Order plate at the finished thickness, about 6-8 h:**
+   - lid and door 5/8 in.;
+   - base plates 5/8 in. MIC-6;
+   - optics bridge 1 in.
+
+   Only the sealing faces then need skimming.
+6. **The chamber redesign, about 12 h** (37 → 25 h), plus no long tools, no 13:1 corners, and the core back as stock.
+7. **Merge small parts, about 5 h:** the window ring into its flange, and the recoater arm with the blade holder.
+
+Together, roughly 100-115 h of savings: from about 250-265 h to about 150 h. Ten of the 48 parts were added to the model
+this week (robot-tending and adapter parts); without them the totals are about 40 h lower.
+
+### Tooling after the redesign
+
+[`tooling-bom.csv`](tooling-bom.csv):
+
+- **Dropped to quantity 0, as not needed:**
+  - the 6 in. OAL 3/4 in. end mill (X1, $307.93);
+  - the long 1/2 in. (A6, $96.63);
+  - the 5 in. OAL 3/4 and 1 in. options (A7, A8);
+  - the ball and corner-radius mills for the coves (A11, A12, X2);
+  - the extension holder (X3).
+- **Added:**
+  - a second standard 3/4 in. end mill (A5, roughing and finishing);
+  - a 4 mm gland end mill (A14, optional);
+  - the "dummy floor" fixture plate (L7, 1 in. MIC-6, McMaster 86825K914, $437.71);
+  - a 2-1/2 in. riser for the rotary (L8);
+  - the rotary itself (L9, the shop's).
+- **Buy for this job: $3,695.03** (was $3,661.88). Optional: $3,905.60 (was $4,950.78).
+- [`machines.csv`](machines.csv) has a 4th-axis row, and the waterjet and saw rows are updated for the 5-1/2 in. frame
+  blank.
+
+### Still open from the review below
+
+- the lid's drawer slot (still enclosed);
+- the lid inserts' 1.18 mm webs (the lid gland and inserts were left as they were);
+- the door and drawer dovetail grooves;
+- the thin webs in the heater block, piston head, striker and carriage block;
+- honing, outsourced.
+
+## Short answer (the 37-part review, before the frame redesign)
+
+The review below is of the model before the chamber became a frame and a floor plate. Where it disagrees with the section
+above, the section above is current.
 
 - **Most of it can be made at BYU.** Every machined part fits BYU's Haas mills in one setup, except the
   590 × 550 mm gas-module base plate, which needs one re-position or a waterjet outline. The largest milled part is
@@ -92,7 +304,7 @@ Limits:
 - coaxial holes in opposite walls are merged into one long "hole" by `dfm.py` (Ø18 and Ø3.2 through both side walls
   of the chamber).
 
-| OpenCAMLib toolpaths (blue raster, orange waterlines) | Residual stock, chamber body, standard vs long tools |
+| OpenCAMLib toolpaths on the old block (blue raster, orange waterlines) | Residual stock of the chamber body, standard vs long tools: these two images were re-run on the through-frame (about 1 cm³ left); the block's 29.1 / 3.4 cm³ versions are in the git history |
 |---|---|
 | ![](analysis/out/machining/toolpath_chamber_z.png) | ![](analysis/out/machining/cam_process_chamber_body_std.png) ![](analysis/out/machining/cam_process_chamber_body_std_long.png) |
 

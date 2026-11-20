@@ -319,7 +319,10 @@ def main():
         if "posts" in p["slug"] or "hollow_piston_rod" in p["slug"]:
             stock, sv = "tube, cut to length", None
         elif "process_chamber_body" in p["slug"]:
-            stock, sv = "13 x 9.5 x 6 in. block (6 in. plate, saw-cut)", 13 * 9.5 * 6 * INCH ** 3
+            # through-frame (lpbf_low.FRAME): 13 x 9.5 x 5.5 in. blank; the 274 x 184 (R7) core leaves as one slug (waterjet or
+            # bandsaw, FR-02), not as chips, so the stock the mill sees is the blank minus the slug
+            slug_v = (274.0 * 184.0 - (4 - math.pi) * 7.0 ** 2) * 5.5 * INCH
+            stock, sv = "13 x 9.5 x 5.5 in. blank (5-1/2 in. plate); the 274 x 184 core out as one slug first", 13.0 * 9.5 * 5.5 * INCH ** 3 - slug_v
         elif is_round:
             D = next_size(max(b[1] - b[0], b[3] - b[2]) + 3.0, ROUND_IN)
             L = (b[5] - b[4]) + 6.0
