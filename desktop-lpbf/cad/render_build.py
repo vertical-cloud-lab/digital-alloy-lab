@@ -1106,9 +1106,19 @@ def chapter_process(st):
     fly(st, legs, nf(8), ex, lambda t: cam(0.6, 1800), cap, "Chamber legs (6061, 30 x 30, each with a Ø11 bore up its middle)")
     st.caption(cap, "Two M6 x 25 316 screws up through the base plate into each leg")
     drive(st, "legs_base", lambda: (cam(0.6, 1500, el=-20), st.shot()), frames=4, overlap=0.6)
-    ch = F("Process chamber body") + F("Lid screw helical inserts", "Helical inserts for the module screws", "Recoater rail helical inserts",
-                                       "Z-flange helical inserts", "Leg helical inserts")
-    fly(st, ch, nf(12), ex, lambda t: cam(0.7, 1600), cap, "Chamber body, with its helical inserts, onto the legs")
+    # the chamber is a through-frame on a bolted floor plate (chamber-construction.md): floor plate first, then its O-ring cord,
+    # then the frame over the plate's pad onto the dowels, then the 18 floor screws from below
+    flr = F("Chamber floor plate") + F("Helical inserts for the module screws", "Z-flange helical inserts", "Leg helical inserts",
+                                      "Outlet-plenum helical inserts", "Overflow-funnel helical inserts", "Floor-plate dowels")
+    fly(st, flr, nf(10), ex, lambda t: cam(0.7, 1600), cap,
+        "Floor plate (20 mm 6061) with its helical inserts and two pressed Ø6 dowels, onto the legs")
+    st.caption(cap, "One M6 x 25 up each leg's bore into the floor plate, through the access holes in the base plate")
+    drive(st, "legs", lambda: (cam(0.75, 1300, el=-24), st.shot()), frames=5)
+    ring = F("Floor O-ring")
+    fly(st, ring, nf(8), ex, lambda t: cam(0.7, 1000, el=50), cap,
+        "Floor O-ring: 3.53 mm FKM cord with a vulcanized splice, pressed into the pad's 4.6 x 2.65 mm face gland")
+    ch = F("Process chamber body") + F("Lid screw helical inserts")
+    fly(st, ch, nf(12), ex, lambda t: cam(0.7, 1600), cap, "Through-frame lowered over the floor plate's 4 mm pad onto the two dowels")
     # scale: the chamber's outside dimensioned while it is on screen, and a soda can on the base plate from here on
     cb = union_bbox([st.parts[i].shape for i in F("Process chamber body", "Chamber floor plate")])
     RS.add_dims(st, "proc-dims", RS.box_dims(cb, pad=70.0))
@@ -1118,8 +1128,8 @@ def chapter_process(st):
     for f in range(nf(8)):
         cam(0.7 + 0.04 * f, 1300, el=26)
         st.shot()
-    st.caption(cap, "One M6 x 25 up each leg's bore into the floor, through the access holes in the base plate")
-    drive(st, "legs", lambda: (cam(0.75, 1300, el=-24), st.shot()), frames=5)
+    st.caption(cap, "18 M4 x 16 316 screws up through U-notches in the floor plate into the frame's skirt (~1.1 N m), metal to metal")
+    drive(st, "floor", lambda: (cam(0.75, 1300, el=-24), st.shot()), frames=3, overlap=0.75)
     RS.remove_dims(st, "proc-dims")
     under = F("outlet plenum", "Outlet plenum port", "Overflow funnel", "Overflow port", "Overflow jar", "Overflow clamp",
               "Overflow-jar present", "Module-present sensor", "Locating dowel")
