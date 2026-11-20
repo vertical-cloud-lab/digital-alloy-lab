@@ -1,0 +1,778 @@
+"""A UR12e (the UR10e renamed, byu-vcl notes/ur12e.md) with a Robotiq 2F-85 and a RealSense D405 on a MiR250, parked at
+the Kardex opening as byu-vcl PR 318 lays it out, around the low-profile desktop LPBF (cad/lpbf_low.py) on its tray.
+
+Aligned with byu-vcl PR 318 (round 14, commit 11d4410):
+  * the arm, its kinematics, its gripper and wrist camera are PR 318's own `ur_arm.py` (vendored here unchanged except the
+    cache folder): Universal Robots' and Robotiq's ROS 2 descriptions at pinned commits, closed-form IK;
+  * the MiR250 is 800 x 580 x 300 mm with a 480 mm cabinet and a 20 mm mounting plate, so the arm's base is 800 mm above
+    the floor (props.py); it parks with the arm's base 240 mm in front of the VLM's front face (animate.py: AMR_XY,
+    ARM_LOCAL) and drives along the opening to line up with each job;
+  * the VLM is a Kardex Shuttle XP 500 with 2450 x 864 mm trays: access table at 833 mm, presented tray floor at 857 mm,
+    the 996 mm opening with the header's underside at 1829 mm (vlm.py), a 25 mm front skin, the tray presented 100 mm
+    behind the front face;
+  * collisions are checked on meshes with FCL (the arm against itself, and the arm, gripper, tools and what it holds
+    against everything else, the MiR and the VLM included), never on convex hulls;
+  * joint moves try every IK branch, nearest first, then the straight joint line, then RRT-Connect in joint space
+    (edges checked every 1.5 deg, shortcut), with no detour lifting the arm more than 150 mm over the move's ends;
+  * the audit is PR 318's round-11 rule: the gripper, its tools and a held part may touch the part being handled and
+    that part's fixture around a grasp or release only up to 1.5 mm deep (sampled translational penetration depth, the
+    part shrunk 0.3 mm first so drawn zero-clearance fits read as touching), and everything that moves (doors, drawer,
+    reservoir, plate, module, the tool itself) is checked against everything else every frame ("movers").
+
+Frames: this module works in the machine frame of cad/lpbf_low.py (mm, z up; plate centre at x = y = 0, the chamber floor's
+top at z = 0, the tray's top at z = -212). PR 318's world maps to it by a shift: machine = world + (0, +1030, -1069).
+"""
+from __future__ import annotations
+
+import functools
+import json
+import math
+import os
+import pathlib
+import sys
+import time
+
+import numpy as np
+import fcl
+
+HERE = pathlib.Path(__file__).resolve().parent
+CAD = HERE.parents[1] / "cad"
+for p in (str(HERE), str(CAD)):
+    if p not in sys.path:
+        sys.path.insert(0, p)
+import ur_arm  # noqa: E402  (byu-vcl PR 318's, vendored)
+
+MODEL = "ur10e"                       # = UR12e: same kinematics, 12.5 kg, 1300 mm (byu-vcl notes/ur12e.md)
+UR12E = dict(payload_kg=12.5, reach_mm=1300.0, tau_lim=(330.0, 330.0, 150.0, 56.0, 56.0, 56.0),
+             tcp_force_N=(50.0, 250.0), ft_range_N=100.0,
+             src="UR12e (UR10e renamed): universal-robots.com/products/ur12e-cb5; joint torque limits as the menagerie "
+                 "UR10e; PFL force limit settable 50-250 N in the UR safety configuration; F/T sensor range +-100 N")
+
+# ------------------------------------------------------------------------------------------------ PR 318's layout
+WORLD_TO_MACHINE = np.array([0.0, 1030.0, -1069.0])
+FLOOR_Z = -1069.0
+TRAY_TOP_Z = 857.0 - 1069.0                          # -212, the model's Z_TRAY
+VLM = dict(front_y=-1562.0 + 1030.0,                 # -532: outer face of the front skin
+           skin=25.0,
+           table_z=833.0 - 1069.0,                   # -236: the access table (TH1)
+           header_z0=1829.0 - 1069.0,                # 760: underside of the header, 996 mm opening
+           header_z1=1924.0 - 1069.0,
+           std_header_z0=833.0 + 867.0 - 1069.0,     # 631: the standard opening's header (Kardex renders)
+           roof_z=1910.0 - 1069.0,                   # 841: the bay roof
+           open_half=1250.0, post=115.0,
+           tray_front_y=-432.0, tray_back_y=432.0)
+MIR = dict(L=800.0, W=580.0, H=300.0, cab_h=480.0, plate=20.0)
+AMR_TOP = MIR["H"] + MIR["cab_h"] + MIR["plate"] + FLOOR_Z          # -269: arm base height in the machine frame
+ARM_Y = (-1562.0 - 50.0 - 30.0 - MIR["W"] / 2 + 130.0) + 1030.0      # -772: arm base, 240 mm in front of the face
+MIR_Y = ARM_Y - 130.0                                                 # -902: MiR centre (the arm sits 130 mm forward)
+
+STEP_RAD = math.radians(1.5)
+DEPTH_MM = 1.5
+TOUCH_MM = 0.3
+LADDER = (DEPTH_MM, 3.0, 6.0, 12.0, 25.0, 50.0)
+DEEP = 999.0
+_DIRS = np.array([d for d in __import__("itertools").product((-1, 0, 1), repeat=3) if any(d)], float)
+_DIRS /= np.linalg.norm(_DIRS, axis=1)[:, None]
+ARM_LINKS = ("base", "shoulder", "upper_arm", "forearm", "wrist1", "wrist2", "wrist3")
+ADJACENT = {("base", "shoulder"), ("shoulder", "upper_arm"), ("upper_arm", "forearm"), ("forearm", "wrist1"),
+            ("wrist1", "wrist2"), ("wrist2", "wrist3"), ("wrist3", "gripper")}
+MAX_TRIS = int(os.environ.get("CELL_MAX_TRIS", "6000"))
+
+
+# ------------------------------------------------------------------------------------------------ small helpers
+def Tm(R=None, p=(0.0, 0.0, 0.0)) -> np.ndarray:
+    M = np.eye(4)
+    if R is not None:
+        M[:3, :3] = R
+    M[:3, 3] = p
+    return M
+
+
+def inv(M: np.ndarray) -> np.ndarray:
+    Mi = np.eye(4)
+    Mi[:3, :3] = M[:3, :3].T
+    Mi[:3, 3] = -M[:3, :3].T @ M[:3, 3]
+    return Mi
+
+
+def frame(z, x) -> np.ndarray:
+    """Rotation whose z axis is `z` (the tool's approach) and whose x axis is `x` made square to it (the direction the
+    2F-85's fingers close along)."""
+    z = np.asarray(z, float) / np.linalg.norm(z)
+    x = np.asarray(x, float) - np.dot(x, z) * z
+    x /= np.linalg.norm(x)
+    return np.column_stack([x, np.cross(z, x), z])
+
+
+def rot(axis, deg) -> np.ndarray:
+    a = np.asarray(axis, float) / np.linalg.norm(axis)
+    t = math.radians(deg)
+    K = np.array([[0, -a[2], a[1]], [a[2], 0, -a[0]], [-a[1], a[0], 0]])
+    return np.eye(3) + math.sin(t) * K + (1 - math.cos(t)) * K @ K
+
+
+def slerp(R0, R1, s):
+    from scipy.spatial.transform import Rotation, Slerp
+    r = Rotation.from_matrix(np.stack([R0, R1]))
+    return Slerp([0.0, 1.0], r)([s]).as_matrix()[0]
+
+
+def box_mesh(x0, x1, y0, y1, z0, z1):
+    v = np.array([[x, y, z] for x in (x0, x1) for y in (y0, y1) for z in (z0, z1)], float)
+    f = np.array([[0, 1, 3], [0, 3, 2], [4, 6, 7], [4, 7, 5], [0, 4, 5], [0, 5, 1], [2, 3, 7], [2, 7, 6],
+                  [0, 2, 6], [0, 6, 4], [1, 5, 7], [1, 7, 3]], np.int32)
+    return v, f
+
+
+def merge(meshes):
+    vs, fs, n = [], [], 0
+    for v, f in meshes:
+        vs.append(np.asarray(v, float))
+        fs.append(np.asarray(f, np.int32) + n)
+        n += len(v)
+    return np.vstack(vs), np.vstack(fs)
+
+
+def tess(shape, tol=0.4, ang=0.4):
+    vs, fs = shape.tessellate(tol, ang)
+    v = np.array([(p.x, p.y, p.z) for p in vs], float)
+    f = np.array(fs, np.int32).reshape(-1, 3)
+    return v, f
+
+
+def loc_matrix(loc) -> np.ndarray:
+    """4x4 of a cadquery Location."""
+    if loc is None:
+        return np.eye(4)
+    t = loc.wrapped.Transformation()
+    return np.array([[t.Value(i, j) for j in range(1, 5)] for i in range(1, 4)] + [[0, 0, 0, 1]], float)
+
+
+def pv_to_vf(mesh):
+    m = mesh.triangulate().clean()
+    f = np.asarray(m.faces).reshape(-1, 4)[:, 1:]
+    return np.asarray(m.points, float), f.astype(np.int32)
+
+
+def decimate(v, f, max_tris=MAX_TRIS):
+    if len(f) <= max_tris:
+        return v, f
+    import pyvista as pv
+    m = pv.PolyData(v, np.c_[np.full(len(f), 3), f].ravel())
+    m = m.decimate(1.0 - max_tris / len(f))
+    return pv_to_vf(m)
+
+
+# ------------------------------------------------------------------------------------------------ bodies
+class Body:
+    """A rigid mesh for FCL: vertices in its own frame, placed by a 4x4."""
+
+    def __init__(self, name: str, v, f, kind: str, group: str = "", color="#b9c0c7", mat=None):
+        self.name, self.kind, self.group, self.color = name, kind, group, color
+        self.v = np.ascontiguousarray(v, float)
+        self.f = np.ascontiguousarray(f, np.int32)
+        g = fcl.BVHModel()
+        g.beginModel(len(self.v), len(self.f))
+        g.addSubModel(self.v, self.f)
+        g.endModel()
+        self.geom = g
+        self.obj = fcl.CollisionObject(g, fcl.Transform())
+        self.M = np.eye(4)
+        self.lo, self.hi = self.v.min(0), self.v.max(0)
+        self._ero = None
+        self.mat = mat
+
+    def place(self, M):
+        self.M = np.asarray(M, float)
+        self.obj.setTransform(fcl.Transform(self.M[:3, :3], self.M[:3, 3]))
+
+    def box(self):
+        c = np.array([[x, y, z] for x in (self.lo[0], self.hi[0]) for y in (self.lo[1], self.hi[1])
+                      for z in (self.lo[2], self.hi[2])])
+        w = c @ self.M[:3, :3].T + self.M[:3, 3]
+        return w.min(0), w.max(0)
+
+    def eroded(self):
+        """The mesh shrunk TOUCH_MM along its vertex normals (byu-vcl collide._eroded): zero-clearance fits read as touching."""
+        if self._ero is None:
+            import trimesh
+            m = trimesh.Trimesh(self.v, self.f, process=True)
+            try:
+                trimesh.repair.fix_normals(m)
+            except Exception:  # noqa: BLE001
+                pass
+            vol = m.volume if m.is_volume else 1.0
+            sgn = 1.0 if vol >= 0 else -1.0
+            v2 = np.asarray(m.vertices) - sgn * TOUCH_MM * np.asarray(m.vertex_normals)
+            g = fcl.BVHModel()
+            g.beginModel(len(v2), len(m.faces))
+            g.addSubModel(np.ascontiguousarray(v2, float), np.ascontiguousarray(m.faces, np.int32))
+            g.endModel()
+            self._ero = fcl.CollisionObject(g, fcl.Transform())
+        self._ero.setTransform(fcl.Transform(self.M[:3, :3], self.M[:3, 3]))
+        return self._ero
+
+
+def hit(a, b) -> bool:
+    return fcl.collide(a, b, fcl.CollisionRequest(), fcl.CollisionResult()) > 0
+
+
+def depth(x: Body, y: Body, upto=None) -> float:
+    """byu-vcl collide.depth(): the sampled translational penetration depth of x into y, rounded up to LADDER
+    (0 = no contact, TOUCH_MM = only touching, DEEP = nothing up to 50 mm frees it)."""
+    if not hit(x.obj, y.obj):
+        return 0.0
+    xo = x.obj
+    try:
+        e = x.eroded()
+        if not hit(e, y.obj):
+            return TOUCH_MM
+        xo = e
+    except Exception:  # noqa: BLE001
+        pass
+    lx, hx = x.box()
+    ly, hy = y.box()
+    c = (lx + hx - ly - hy) * 0.5
+    n = float(np.linalg.norm(c))
+    order = np.argsort(-(_DIRS @ (c / n))) if n > 1e-9 else np.arange(len(_DIRS))
+    R, p = x.M[:3, :3].copy(), x.M[:3, 3].copy()
+    try:
+        for k, t in enumerate(LADDER):
+            for i in order:
+                xo.setTransform(fcl.Transform(R, p + t * _DIRS[i]))
+                if not hit(xo, y.obj):
+                    return float(t)
+            if upto is not None and t >= upto:
+                return float(LADDER[k + 1]) if k + 1 < len(LADDER) else DEEP
+        return DEEP
+    finally:
+        xo.setTransform(fcl.Transform(R, p))
+
+
+class Group:
+    """A set of bodies. Broad phase by world-frame bounding boxes (numpy), narrow phase by FCL on the meshes.
+    (python-fcl's managers hand their callbacks new wrapper objects, so a body can't be told from its callback.)"""
+
+    def __init__(self, bodies=()):
+        self.bodies: dict[str, Body] = {}
+        for b in bodies:
+            self.add(b)
+
+    def add(self, b: Body):
+        self.bodies[b.name] = b
+
+    def remove(self, name):
+        self.bodies.pop(name, None)
+
+    def boxes(self):
+        names = list(self.bodies)
+        lo = np.empty((len(names), 3))
+        hi = np.empty((len(names), 3))
+        for i, n in enumerate(names):
+            lo[i], hi[i] = self.bodies[n].box()
+        return names, lo, hi
+
+
+def group_hits(A: Group, B: Group, first=False, margin=0.0):
+    """Pairs (a, b) of bodies of A and B whose meshes intersect."""
+    na, la, ha = A.boxes()
+    nb, lb, hb = B.boxes()
+    ov = np.all((la[:, None, :] - margin <= hb[None, :, :]) & (lb[None, :, :] <= ha[:, None, :] + margin), axis=2)
+    out = []
+    for i, j in zip(*np.nonzero(ov)):
+        a, b = A.bodies[na[i]], B.bodies[nb[j]]
+        if hit(a.obj, b.obj):
+            out.append((a, b))
+            if first:
+                return out
+    return out
+
+
+def group_distance(A: Group, B: Group, margin=60.0):
+    """(distance, a, b): the closest pair of bodies within `margin` of each other (inf if none); <= 0 if touching."""
+    na, la, ha = A.boxes()
+    nb, lb, hb = B.boxes()
+    ov = np.all((la[:, None, :] - margin <= hb[None, :, :]) & (lb[None, :, :] <= ha[:, None, :] + margin), axis=2)
+    best = (math.inf, None, None)
+    for i, j in zip(*np.nonzero(ov)):
+        a, b = A.bodies[na[i]], B.bodies[nb[j]]
+        if hit(a.obj, b.obj):
+            return (0.0, a, b)
+        d = fcl.distance(a.obj, b.obj, fcl.DistanceRequest(), fcl.DistanceResult())
+        if d < best[0]:
+            best = (d, a, b)
+    return best
+
+
+# ------------------------------------------------------------------------------------------------ the arm
+@functools.lru_cache(maxsize=None)
+def _arm_geometry():
+    links = {}
+    for k, lst in ur_arm.arm_meshes(MODEL).items():
+        links[k] = decimate(*merge([pv_to_vf(m) for m, _, _ in lst]))
+    grip = {}
+    for k, lst in ur_arm.gripper_meshes().items():
+        grip[k] = decimate(*merge([pv_to_vf(m) for m, _, _ in lst]), max_tris=4000)
+    return links, grip
+
+
+class Arm:
+    """One UR12e + 2F-85 (+ D405) on a MiR250 whose arm base is at `base` (machine frame). Finger caps (tools that slip
+    over the 2F-85's fingertips) and a held part ride along."""
+
+    def __init__(self, name="ur", base=(0.0, ARM_Y, AMR_TOP), yaw_deg=0.0, caps=None):
+        self.name = name
+        self.base = Tm(rot((0, 0, 1), yaw_deg), base)
+        links, grip = _arm_geometry()
+        self.links = {k: Body(f"{name}/{k}", *links[k], kind="arm", group=k, color="#9aa6b2") for k in ARM_LINKS}
+        self.grip = {k: Body(f"{name}/gr/{k}", *grip[k], kind="gripper", group="gripper", color="#2b2f33")
+                     for k in grip}
+        self.caps = {}            # fingertip name -> Body in that fingertip's frame
+        self.cap_spec = None
+        if caps:
+            self.set_caps(caps)
+        self.held = None          # (Body, offset from TCP)
+        self.q = np.radians([-90.0, -100.0, 120.0, -110.0, -90.0, 0.0])
+        self.close = 0.0
+        self.robot = Group(list(self.links.values()) + list(self.grip.values()))
+        self._acm = None
+
+    # ---- tools
+    def set_caps(self, spec):
+        """spec: dict(name, meshes={"left_finger_tip": (v, f), "right_finger_tip": (v, f)}, grasp_z=..., inner_x=...,
+        color=...). The grasp point is the midpoint of the two caps' inner faces at z = grasp_z in the fingertip frames."""
+        for b in self.caps.values():
+            self.robot.remove(b.name) if hasattr(self, "robot") else None
+        self.caps = {}
+        self.cap_spec = spec
+        if spec is None:
+            return
+        for tip, (v, f) in spec["meshes"].items():
+            b = Body(f"{self.name}/cap/{tip}", v, f, kind="tool", group="gripper", color=spec.get("color", "#d9b23a"))
+            self.caps[tip] = b
+            if hasattr(self, "robot"):
+                self.robot.add(b)
+
+    def tcp_mm(self, close=None) -> float:
+        c = self.close if close is None else close
+        if not self.cap_spec:
+            return ur_arm.tcp_mm(c)
+        G = ur_arm.gripper_fk(c)
+        zg, xi = self.cap_spec["grasp_z"], self.cap_spec["inner_x"]
+        pl = (G["left_finger_tip"] @ np.array([-xi, 0, zg, 1.0]))[:3]
+        pr = (G["right_finger_tip"] @ np.array([xi, 0, zg, 1.0]))[:3]
+        return float((pl[2] + pr[2]) / 2)
+
+    def gap_mm(self, close=None) -> float:
+        """Distance between the gripping faces (stock pads, or the caps' inner faces)."""
+        c = self.close if close is None else close
+        G = ur_arm.gripper_fk(c)
+        if not self.cap_spec:
+            xi, zg = 25.26, 31.9
+        else:
+            xi, zg = self.cap_spec["inner_x"], self.cap_spec["grasp_z"]
+        pl = (G["left_finger_tip"] @ np.array([-xi, 0, zg, 1.0]))[:3]
+        pr = (G["right_finger_tip"] @ np.array([xi, 0, zg, 1.0]))[:3]
+        return float(np.linalg.norm(pl - pr))
+
+    def close_for_gap(self, gap) -> float:
+        lo, hi = 0.0, 1.0
+        for _ in range(40):
+            mid = (lo + hi) / 2
+            if self.gap_mm(mid) > gap:
+                lo = mid
+            else:
+                hi = mid
+        return (lo + hi) / 2
+
+    # ---- kinematics
+    def fk(self, q=None):
+        return ur_arm.fk(MODEL, self.q if q is None else q)
+
+    def tcp(self, q=None, close=None) -> np.ndarray:
+        F = self.fk(q)
+        return self.base @ F["tool0"] @ Tm(p=(0, 0, self.tcp_mm(close)))
+
+    def place(self, q=None, close=None):
+        if q is not None:
+            self.q = np.asarray(q, float)
+        if close is not None:
+            self.close = float(close)
+        F = self.fk()
+        for k, b in self.links.items():
+            b.place(self.base @ F[k])
+        G = ur_arm.gripper_fk(self.close)
+        Wt = self.base @ F["tool0"]
+        for k, b in self.grip.items():
+            b.place(Wt @ G[k])
+        for tip, b in self.caps.items():
+            b.place(Wt @ G[tip])
+        if self.held is not None:
+            hb, off = self.held
+            hb.place(Wt @ Tm(p=(0, 0, self.tcp_mm())) @ off)
+        return F
+
+    def ik_all(self, T_tcp_world, seed=None):
+        """Every IK branch for a TCP pose (machine frame), nearest the seed first (byu-vcl collide.ik_all)."""
+        seed = self.q if seed is None else np.asarray(seed, float)
+        off = np.eye(4)
+        off[2, 3] = -self.tcp_mm()
+        T06 = inv(self.base) @ np.asarray(T_tcp_world, float) @ off
+        out = []
+        for s in ur_arm._ik_analytic(MODEL, T06, q6_free=float(seed[5])):
+            q = ur_arm._polish(MODEL, ur_arm._wrap_near(s, seed), T06)
+            e = ur_arm._pose_err(ur_arm.fk(MODEL, q)["tool0"], T06)
+            if np.linalg.norm(e[:3]) < 1e-3 and np.linalg.norm(e[3:]) < 1e-6:
+                q = ur_arm._wrap_near(q, seed)
+                if np.all(np.abs(q) <= ur_arm._LIMIT + 1e-9) and all(np.abs(q - o).max() > 1e-4 for o in out):
+                    out.append(q)
+        out.sort(key=lambda q: float(np.sum((q - seed) ** 2)))
+        return out
+
+    def reach_margin(self, q=None) -> float:
+        F = self.fk(q)
+        d = np.linalg.norm(F["wrist1"][:3, 3] - F["shoulder"][:3, 3]) if "shoulder" in F else 0.0
+        return float(612.7 + 571.55 - d)
+
+    # ---- self-collision pairs (MoveIt's "always touching" pairs left out, as byu-vcl does)
+    def self_pairs(self):
+        if self._acm is None:
+            cache = pathlib.Path("/tmp/cell_acm.json")
+            if cache.exists():
+                always = {tuple(p) for p in json.loads(cache.read_text())}
+            else:
+                rng = np.random.default_rng(7)
+                names = list(ARM_LINKS) + ["gripper"]
+                counts = {}
+                n = 300
+                q0, c0 = self.q.copy(), self.close
+                for _ in range(n):
+                    self.place(rng.uniform(-math.pi, math.pi, 6), float(rng.uniform(0, 1)))
+                    grp = {k: [self.links[k]] for k in ARM_LINKS}
+                    grp["gripper"] = list(self.grip.values())
+                    for i, a in enumerate(names):
+                        for b in names[i + 1:]:
+                            if any(hit(x.obj, y.obj) for x in grp[a] for y in grp[b]):
+                                counts[(a, b)] = counts.get((a, b), 0) + 1
+                self.place(q0, c0)
+                always = {p for p, c in counts.items() if c > 0.9 * n}
+                cache.write_text(json.dumps(sorted(always)))
+            names = list(ARM_LINKS) + ["gripper"]
+            skip = ADJACENT | always
+            self._acm = [(a, b) for i, a in enumerate(names) for b in names[i + 1:]
+                         if (a, b) not in skip and (b, a) not in skip]
+        return self._acm
+
+    def self_hits(self):
+        out = []
+        grp = {k: [self.links[k]] for k in ARM_LINKS}
+        grp["gripper"] = list(self.grip.values()) + list(self.caps.values()) + ([self.held[0]] if self.held else [])
+        for a, b in self.self_pairs():
+            for x in grp[a]:
+                for y in grp[b]:
+                    if hit(x.obj, y.obj):
+                        out.append((x.name, y.name))
+        return out
+
+    def bodies(self):
+        yield from self.links.values()
+        yield from self.grip.values()
+        yield from self.caps.values()
+        if self.held is not None:
+            yield self.held[0]
+
+
+# ------------------------------------------------------------------------------------------------ the scene
+def vlm_and_mir_bodies(arm_x=0.0, mir_y=MIR_Y, header="996"):
+    """The parts of the VLM round the opening and the MiR250 + cabinet under the arm (byu-vcl vlm.py, props.mir250)."""
+    out = []
+    fy, sk = VLM["front_y"], VLM["skin"]
+    hz0 = VLM["header_z0"] if header == "996" else VLM["std_header_z0"]
+    oh, po = VLM["open_half"], VLM["post"]
+    out.append(("VLM front skin under the opening", box_mesh(-oh - po, oh + po, fy, fy + sk, FLOOR_Z, VLM["table_z"])))
+    out.append(("VLM access table", box_mesh(-oh, oh, fy + sk, VLM["tray_front_y"] - 2.0, VLM["table_z"] - 20.0,
+                                              VLM["table_z"])))
+    out.append(("VLM header", box_mesh(-oh - po, oh + po, fy, VLM["tray_front_y"] - 2.0, hz0, VLM["header_z1"])))
+    for s in (-1, 1):
+        out.append((f"VLM side post {'+x' if s > 0 else '-x'}",
+                    box_mesh(min(s * oh, s * (oh + po)), max(s * oh, s * (oh + po)), fy, VLM["tray_front_y"],
+                             VLM["table_z"], hz0)))
+    L, W, H, C = MIR["L"], MIR["W"], MIR["H"], MIR["cab_h"]
+    x0, y0, z0 = arm_x, mir_y, FLOOR_Z
+    out.append(("MiR250 body", box_mesh(x0 - L / 2, x0 + L / 2, y0 - W / 2, y0 + W / 2, z0 + 30, z0 + H)))
+    out.append(("MiR250 cabinet (UR control box)", box_mesh(x0 - L / 2 + 40, x0 + L / 2 - 40, y0 - W / 2 + 30,
+                                                             y0 + W / 2 - 30, z0 + H, z0 + H + C)))
+    out.append(("MiR250 mounting plate", box_mesh(x0 - 170, x0 + 170, y0 - W / 2 + 30, y0 + W / 2 - 30, z0 + H + C,
+                                                   z0 + H + C + MIR["plate"])))
+    return out
+
+
+class Scene:
+    """The machine (posed for a motion state), the VLM, the MiR, the robot(s) and tools; collision queries and the audit."""
+
+    def __init__(self, parts, region=None, tol=0.4, header="996", arm_x=0.0, mir_y=MIR_Y, extra=(), skip=()):
+        import lpbf_low as M
+        self.M = M
+        self.parts = parts
+        self.state = {}
+        self.world = Group()
+        self.machine = {}          # name -> (Body, Part)
+        t0 = time.time()
+        for p in parts:
+            if "context" in p.tags and not p.name.startswith("VLM tray"):
+                continue
+            if any(s in p.name for s in skip):
+                continue
+            bb = p.shape.BoundingBox()
+            if region is not None:
+                (x0, x1), (y0, y1), (z0, z1) = region
+                if bb.xmax < x0 or bb.xmin > x1 or bb.ymax < y0 or bb.ymin > y1 or bb.zmax < z0 or bb.zmin > z1:
+                    continue
+            v, f = tess(p.shape, tol)
+            if len(f) == 0:
+                continue
+            b = Body(p.name, v, f, kind="machine", group=p.group, color=p.color, mat=p.mat)
+            self.world.add(b)
+            self.machine[p.name] = (b, p)
+        self.static_names = set()
+        self.arm_x = arm_x
+        for name, (v, f) in vlm_and_mir_bodies(arm_x, mir_y, header):
+            b = Body(name, v, f, kind="cell", color="#6f777e" if name.startswith("VLM") else "#3b4148")
+            self.world.add(b)
+        for name, (v, f), color in extra:
+            self.world.add(Body(name, v, f, kind="fixture", color=color))
+        self.tess_s = time.time() - t0
+        self.set_state({})
+
+    def move_mir(self, arm_x):
+        """Drive the MiR along the opening so the arm's base is at x = arm_x (the arm's own base is set by the caller)."""
+        dx = arm_x - self.arm_x
+        for name in ("MiR250 body", "MiR250 cabinet (UR control box)", "MiR250 mounting plate"):
+            b = self.world.bodies[name]
+            b.place(Tm(p=(b.M[0, 3] + dx, b.M[1, 3], b.M[2, 3])))
+        self.arm_x = arm_x
+
+    def set_state(self, state):
+        self.state = dict(state)
+        for name, (b, p) in self.machine.items():
+            if p.group or "in_module" in p.tags:
+                b.place(loc_matrix(self.M.part_location(p, self.state)))
+        return self
+
+    def moved_since(self, prev_state):
+        """Names of machine bodies whose pose differs between prev_state and the current state."""
+        out = []
+        for name, (b, p) in self.machine.items():
+            if not (p.group or "in_module" in p.tags):
+                continue
+            Ma = loc_matrix(self.M.part_location(p, prev_state))
+            if not np.allclose(Ma, b.M, atol=1e-6):
+                out.append(name)
+        return out
+
+
+# ------------------------------------------------------------------------------------------------ checker + planner
+class Checker:
+    """What the arm (links, gripper, caps, held part) touches at a joint pose, under the audit's rules."""
+
+    def __init__(self, scene: Scene, arm: Arm):
+        self.sc, self.arm = scene, arm
+
+    def collisions(self, q, close=None, allow=frozenset(), first=False, depth_limit=DEPTH_MM):
+        """[(robot body, world body, depth)] at q. Pairs in `allow` (robot-side name prefix or 'held', world body name)
+        count only if deeper than depth_limit."""
+        a = self.arm
+        a.place(q, close)
+        out = []
+        robot = a.robot
+        if a.held is not None and a.held[0].name not in robot.bodies:
+            robot.add(a.held[0])
+        for x, y in group_hits(robot, self.sc.world):
+            key = ("held" if (a.held is not None and x is a.held[0]) else
+                   ("tool" if x.kind in ("gripper", "tool") else "arm"), y.name)
+            if key in allow or (key[0] == "tool" and ("tool", "*") in allow and y.kind == "fixture"):
+                d = depth(x, y, upto=depth_limit)
+                if d <= depth_limit:
+                    continue
+                out.append((x.name, y.name, d))
+            else:
+                out.append((x.name, y.name, None))
+            if first:
+                return out
+        for xn, yn in a.self_hits():
+            out.append((xn, yn, "self"))
+            if first:
+                return out
+        return out
+
+    def free(self, q, close=None, allow=frozenset()):
+        return not self.collisions(q, close, allow, first=True)
+
+    def top(self, q):
+        F = self.arm.fk(q)
+        return max(float((self.arm.base @ F[k])[2, 3]) for k in ("forearm", "wrist1", "wrist2", "wrist3"))
+
+    def segment_free(self, qa, qb, close, allow, zmax=None):
+        n = max(1, int(math.ceil(np.abs(qb - qa).max() / STEP_RAD)))
+        for i in range(1, n + 1):
+            q = qa + (qb - qa) * (i / n)
+            if zmax is not None and self.top(q) > zmax:
+                return False
+            if not self.free(q, close, allow):
+                return False
+        return True
+
+    def plan(self, q0, q1, close, allow=frozenset(), seed=0, iters=3000, step=0.3):
+        """byu-vcl collide.plan_joint_move: the straight joint line if clear, otherwise RRT-Connect, shortcut."""
+        q0, q1 = np.asarray(q0, float), np.asarray(q1, float)
+        b0 = self.collisions(q0, close, allow)
+        b1 = self.collisions(q1, close, allow)
+        if b0 or b1:
+            return None, dict(reason="end pose in collision", start=b0[:3], goal=b1[:3])
+        if self.segment_free(q0, q1, close, allow):
+            return [q0, q1], dict(planned=False)
+        zmax = max(self.top(q0), self.top(q1)) + 150.0
+        rng = np.random.default_rng(seed)
+        lim = ur_arm._LIMIT
+        lo = np.maximum(np.minimum(q0, q1) - math.pi, -lim)
+        hi = np.minimum(np.maximum(q0, q1) + math.pi, lim)
+
+        def ok(q):
+            return self.top(q) <= zmax and self.free(q, close, allow)
+
+        def extend(tree, parent, q_to):
+            d = np.linalg.norm(np.asarray(tree) - q_to, axis=1)
+            i = int(np.argmin(d))
+            qn = tree[i]
+            v = q_to - qn
+            L = float(np.linalg.norm(v))
+            q_new = q_to if L <= step else qn + v * (step / L)
+            if not ok(q_new) or not self.segment_free(qn, q_new, close, allow, zmax):
+                return None
+            tree.append(q_new)
+            parent.append(i)
+            return len(tree) - 1
+
+        def connect(tree, parent, q_to):
+            last = None
+            while True:
+                k = extend(tree, parent, q_to)
+                if k is None:
+                    return last, False
+                last = k
+                if np.linalg.norm(tree[k] - q_to) < 1e-9:
+                    return k, True
+
+        A, pa, B, pb = [q0], [-1], [q1], [-1]
+        swapped = False
+        for it in range(iters):
+            q_rand = q1 if rng.random() < 0.1 else rng.uniform(lo, hi)
+            k = extend(A, pa, q_rand)
+            if k is not None:
+                j, okc = connect(B, pb, A[k])
+                if okc:
+                    def trace(tree, parent, idx):
+                        out = []
+                        while idx >= 0:
+                            out.append(tree[idx])
+                            idx = parent[idx]
+                        return out
+                    path = trace(A, pa, k)[::-1] + trace(B, pb, j)[1:]
+                    if swapped:
+                        path = path[::-1]
+                    path = self.shortcut(path, close, allow, rng, zmax)
+                    return path, dict(planned=True, iterations=it + 1, nodes=len(A) + len(B), waypoints=len(path))
+            A, pa, B, pb = B, pb, A, pa
+            swapped = not swapped
+        return None, dict(reason=f"no path in {iters} iterations")
+
+    def shortcut(self, path, close, allow, rng, zmax, rounds=100):
+        path = [np.asarray(p, float) for p in path]
+        for _ in range(rounds):
+            if len(path) <= 2:
+                break
+            i, j = sorted(rng.choice(len(path), 2, replace=False))
+            if j - i < 2:
+                continue
+            if self.segment_free(path[i], path[j], close, allow, zmax):
+                path = path[:i + 1] + path[j:]
+        k = 1
+        while k < len(path) - 1:
+            if self.segment_free(path[k - 1], path[k + 1], close, allow, zmax):
+                path.pop(k)
+            else:
+                k += 1
+        return path
+
+
+def densify(path, step=STEP_RAD):
+    out = [np.asarray(path[0], float)]
+    for a, b in zip(path[:-1], path[1:]):
+        n = max(1, int(math.ceil(np.abs(b - a).max() / step)))
+        for i in range(1, n + 1):
+            out.append(a + (b - a) * (i / n))
+    return out
+
+
+# ------------------------------------------------------------------------------------------------ statics
+# UR10e/UR12e link masses (kg) and centres of mass in the DH link frames (m), Universal Robots' published DH and
+# dynamics table ("DH parameters for calculations of kinematics and dynamics", UR10e column).
+UR10E_DYN = dict(m=[7.369, 13.051, 3.989, 2.1, 1.98, 0.615],
+                 com=[(0.021, 0.000, 0.027), (0.38, 0.000, 0.158), (0.24, 0.000, 0.068), (0.000, 0.007, 0.018),
+                      (0.000, 0.007, 0.018), (0.0, 0.0, -0.026)])
+
+
+def jacobian(arm: Arm, q, p_world):
+    """Geometric Jacobian (6 x 6, mm and rad) of a point fixed to the flange, by finite differences."""
+    q = np.asarray(q, float)
+    T0 = arm.base @ arm.fk(q)["tool0"]
+    p_local = inv(T0) @ np.r_[p_world, 1.0]
+    J = np.zeros((6, 6))
+    for i in range(6):
+        dq = np.zeros(6)
+        dq[i] = 1e-6
+        T1 = arm.base @ arm.fk(q + dq)["tool0"]
+        J[:3, i] = ((T1 @ p_local)[:3] - (T0 @ p_local)[:3]) / 1e-6
+        dR = T1[:3, :3] @ T0[:3, :3].T
+        J[3:, i] = np.array([dR[2, 1] - dR[1, 2], dR[0, 2] - dR[2, 0], dR[1, 0] - dR[0, 1]]) / 2 / 1e-6
+    return J
+
+
+def static_torques(arm: Arm, q, F_world=(0, 0, 0), p_world=None, payload_kg=0.0, tool_kg=1.3):
+    """Joint torques (N m) to hold pose q against gravity (arm links from UR's table, the 2F-85 + coupling + camera and
+    caps as tool_kg at the flange, the payload at the TCP) and to apply the force F_world (N) at p_world (mm)."""
+    q = np.asarray(q, float)
+    g = np.array([0, 0, -9.81])
+    tau = np.zeros(6)
+    F = arm.fk(q)
+    names = ["shoulder", "upper_arm", "forearm", "wrist1", "wrist2", "wrist3"]
+    for i, (m, c) in enumerate(zip(UR10E_DYN["m"], UR10E_DYN["com"])):
+        # DH link frame i+1 ~ ur_arm's frame names; the URDF frames differ by fixed rotations, so place the COM by the
+        # link's own origin plus the DH offset expressed in the base frame (adequate for torque budgets)
+        Tl = arm.base @ F[names[i]]
+        p = (Tl @ np.r_[np.array(c) * 1000.0, 1.0])[:3]
+        J = jacobian(arm, q, p)
+        tau += J[:3].T @ (m * g) / 1000.0
+    tcp = arm.tcp(q)[:3, 3]
+    flange = (arm.base @ F["tool0"])[:3, 3]
+    tau += jacobian(arm, q, flange)[:3].T @ (tool_kg * g) / 1000.0
+    tau += jacobian(arm, q, tcp)[:3].T @ (payload_kg * g) / 1000.0
+    if p_world is None:
+        p_world = tcp
+    tau += jacobian(arm, q, np.asarray(p_world, float))[:3].T @ np.asarray(F_world, float) / 1000.0
+    return -tau          # the motors' torque that balances the loads
+
+
+def max_force(arm: Arm, q, direction, p_world=None, payload_kg=0.0, tool_kg=1.3, frac=1.0):
+    """Largest force (N) the arm can push along `direction` at p_world before a joint reaches frac x its torque limit."""
+    d = np.asarray(direction, float) / np.linalg.norm(direction)
+    lim = np.array(UR12E["tau_lim"]) * frac
+    t0 = static_torques(arm, q, payload_kg=payload_kg, tool_kg=tool_kg)
+    t1 = static_torques(arm, q, F_world=d, p_world=p_world, payload_kg=payload_kg, tool_kg=tool_kg) - t0
+    best = math.inf
+    for i in range(6):
+        if abs(t1[i]) < 1e-9:
+            continue
+        room = (lim[i] - t0[i]) / t1[i] if t1[i] > 0 else (-lim[i] - t0[i]) / t1[i]
+        best = min(best, room)
+    return float(best)
