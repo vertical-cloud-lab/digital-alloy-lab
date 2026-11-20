@@ -1021,7 +1021,7 @@
     "verdict": "one arm, 2F-85"
    }
   ],
-  "dfm_json_mtime_utc": "2026-11-20T23:11Z"
+  "dfm_json_mtime_utc": "2026-11-20T23:30Z"
  },
  "P1_vf4_single_arm": {
   "name": "P1 VF-4: chamber frame blank (version B) from the deck into the vise and out",
@@ -2561,5 +2561,6 @@
    }
   }
  },
- "run_s": 123.1
+ "run_s": 123.1,
+ "payload_refreshed_utc": "2026-11-20T23:58Z"
 }

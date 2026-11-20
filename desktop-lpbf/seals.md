@@ -97,7 +97,7 @@ Notes:
 - **The two rotary shafts** (recoater screw, metering roller) run in PTFE V-rings. A V-ring is a dirt excluder, not a vacuum seal. Use magnetic-fluid feedthroughs, or a magnetic coupling through a sealed can.
 - **NPT threads into 6061** (argon inlet, O₂ sample, transducer, relief valve) leak at vacuum and gall. Use O-ring-boss (SAE J1926 / ISO 1179) ports, VCR or KF.
 
-**What is fine:** the lid (20 × M5 give ≥ 48 kN against the 4.1 kN the O-ring needs), the KF joints, the FKM choice, the body machined from solid (no welds to leak), and the permeation budget (§5).
+**What is fine:** the lid (20 × M5 give ≥ 48 kN against the 4.1 kN the O-ring needs), the KF joints, the FKM choice, the body with no welds to leak (a frame cut from solid plate with a bolted floor plate on a second face O-ring since 2026-11-20: [`chamber-construction.md`](chamber-construction.md)), and the permeation budget (§5).
 
 ## 2. Every seal and penetration
 

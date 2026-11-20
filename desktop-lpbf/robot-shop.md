@@ -30,6 +30,7 @@ the check, not a BYU room.
   - **Version B (the through-frame now in the model):** the 13 × 9.5 × 5.5 in. plate weighs 30.0 kg as delivered, so a
     person loads it with a lifter. Its 274 × 184 mm core is cut out as one slug; the slug weighs 19.0 kg (two arms, or
     the person). What is left is the 11.0 kg blank, which one arm loads into the vise
+  - **Correction after the chamber study finished (00:05 UTC):** its final setup plan ([`setup_plan.json`](analysis/out/machining/setup_plan.json)) cuts the frame from a 15 × 9.5 × 5.5 in. blank, with 1 in. end tabs for setup F-S1's toe clamps: 34.7 kg as delivered and 15.7 kg once the core is out. That is more than one arm's 11.2 kg, so two arms (as in P6) or a person put it on the risers for F-S1. The tabs are sawn off before F-S2, which leaves the 11.0 kg-class part P1 was planned with (P1 used the 13 in. blank).
     ([P1](#p1-vf-4-one-arm-loads-the-frame-blank-version-b)).
     - An OnRobot 2FG14 is rated for 14 kg but weighs 1.5 kg itself. On a UR12e that leaves
       12.5 − 1.5 − ~0.4 kg (camera and coupling) = ~10.6 kg, so the blank is at the limit.

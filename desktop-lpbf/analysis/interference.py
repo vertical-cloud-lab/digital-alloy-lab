@@ -119,6 +119,15 @@ JOINTS = [
     ("Chamber door", "Process chamber body", "closed door seats on the chamber's front face"),
     ("Door O-ring", "Process chamber body", "O-ring squeezed against the front face"),
     ("Lid O-ring", "Chamber lid", "O-ring squeezed by the lid"),
+    # the chamber is a through-frame on a bolted floor plate (chamber-construction.md): the floor plate's designed contacts
+    ("Spigot O-ring", "Chamber floor plate", "O-ring squeezed against the port wall"),
+    ("Build module", "Chamber floor plate", "spigot in the port, flange on the floor plate's underside"),
+    ("Captive M6 thumb screws", "Chamber floor plate", "screw in its floor insert"),
+    ("Locating dowel", "Chamber floor plate", "dowel pressed into the floor plate"),
+    ("Module-present sensor", "Chamber floor plate", "sensor bracket under the floor plate"),
+    ("HSS recoater blade", "Chamber floor plate", "blade passes 0.05 mm above the floor"),
+    ("Floor O-ring", "Chamber floor plate", "O-ring in the pad's face gland"),
+    ("Floor O-ring", "Process chamber body", "O-ring squeezed by the frame's rebate"),
 ]
 
 ALLOW_HOSE_THROUGH = ("Laser guard panels", "Guard frame")   # hoses pass the guard through bulkheads

@@ -409,8 +409,8 @@ def swaps(M):
         "48 mm body (not 40) and the 5 mm x 24 shaft now drawn; the shaft runs into the roller seal housing (designed)")
     add(["Recoater carriage (15 mm rail)"], M.place(mcm_6709K12(), (xc, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0)),
         "place(VP.mcm_6709K12(), (xc, iy, P['rc_rail_z']), (1, 0, 0), (0, -1, 0))", "same 28 x 34 section; 62.1 long with the grease nipple (was 57)")
-    add(["Recoater guide rail (15 mm, 270 mm)"], M.place(mcm_6709K33(270.0), (-135, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0)),
-        "rr = place(VP.mcm_6709K33(270.0), (-135, iy, P['rc_rail_z']), (1, 0, 0), (0, -1, 0))", "same envelope; raceway grooves drawn (assumed)")
+    add(["Recoater guide rail (15 mm, 260 mm)"], M.place(mcm_6709K33(260.0), (-130, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0)),
+        "rr = place(VP.mcm_6709K33(260.0), (-130, iy, P['rc_rail_z']), (1, 0, 0), (0, -1, 0))", "same envelope; raceway grooves drawn (assumed)")
     add(["Recoater ball nut (flange on the +x face)"], M.place(mcm_4566N401(), (xc + 10.5, ry_, rz_), (-1, 0, 0), (0, 0, 1)),
         "place(VP.mcm_4566N401(), (xc + 10.5, ry_, rz_), (-1, 0, 0), (0, 0, 1))", "flange has flats 30 mm across (faces +/-y)")
     zl0 = P["z_lens0"]
@@ -597,7 +597,7 @@ def verify(keys=None):
             "mcm_4123K45": lambda: mcm_4123K45("-x"), "mcm_3861N11": mcm_3861N11, "mcm_5169K72": mcm_5169K72,
             "clearpath_sd_231x": clearpath_sd_231x, "mcm_4396K21": mcm_4396K21, "thorlabs_fth160_1064": thorlabs_fth160_1064,
             "scanlab_basicube20": scanlab_basicube20, "ipg_collimator_d5": ipg_collimator_d5, "ipg_ylr500_u3": ipg_ylr500_u3,
-            "eaton_5px1500rtg2": eaton_5px1500rtg2, "mcm_6709K33": lambda: mcm_6709K33(270.0)}
+            "eaton_5px1500rtg2": eaton_5px1500rtg2, "mcm_6709K33": lambda: mcm_6709K33(260.0)}
     OUT.mkdir(parents=True, exist_ok=True)
     f = OUT / "verify.json"                       # merge into earlier results, keyed by builder
     res = [r for r in (json.loads(f.read_text()) if f.exists() else []) if not keys or r["key"] not in keys]

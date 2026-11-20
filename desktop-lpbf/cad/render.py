@@ -24,7 +24,7 @@ W, H = 1200, 900           # stills
 GW, GH = 760, 570          # GIF frames
 
 # parts cut at y = 0 in the section views (keep y > 0)
-SECTION_KEYS = ("Process chamber body", "Chamber lid", "Lid O-ring", "Lid screws", "Window flange", "fused-silica window",
+SECTION_KEYS = ("Process chamber body", "Chamber floor plate", "Floor O-ring", "Chamber lid", "Lid O-ring", "Lid screws", "Window flange", "fused-silica window",
                 "Window retaining ring", "Field-stop", "Cover-slide", "Gas knife", "Dose chute", "Dosing block",
                 "Hopper", "Load cell", "Build cylinder", "Build plate", "Piston (", "Piston seal", "Overflow",
                 "Deck plate", "Cross-flow outlet", "Rod clamp", "Z lift arm", "Blade holder", "Silicone-cord")
