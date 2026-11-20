@@ -40,8 +40,11 @@ move the calendar so that the optimizer actually gets the runs this frees up.
   initial designs generally did better, with strong dependence on the problem. q1 read their
   best strategy as using about 30 % of the budget; q3 cautions that this is not a general
   optimum.
-- **A toy simulation agrees on the direction** ([below](#how-many-seeds-a-toy-check)).
-  <!-- TOY-SHORT -->
+- **A toy simulation agrees on the direction** ([below](#how-many-seeds-a-toy-check)). This is
+  the version with q3's fixes. 2 baselines + 3 agent + 1 space-filling beat 3 + 3 + 3 by
+  0.036 ± 0.018 in the best value found (30 paired instances, both scenarios averaged). It beat
+  the best baseline 72 % of the time, against 58 % for 3 + 3 + 3. Twelve seeds did no better
+  than nine.
 - **Don't add a third baseline run.** The 6063 runs (A1–A5) and commercial AlSi10Mg powder at P1
   are baselines that cost no design run. D1-r stays: it measures the benchmark's own spread
   ([#256](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/claude/issue-256-20261112-2149/al-campaign-schedule/README.md#the-36-al-runs)).
@@ -314,7 +317,39 @@ What this shows:
 - **The runs.** 30 problem instances, each run in both scenarios. Every split sees the same
   instances and the same random seeds, so the differences are paired.
 
-<!-- TOY-TABLE -->
+| Split (baselines + agent + space-filling) | Seeds | Best of 25, agent right | Best of 25, agent wrong | Paired difference vs 3 + 3 + 3 (both scenarios) | P(beat best baseline by 0.05) |
+|---|---|---|---|---|---|
+| 3 + 3 + 3 (proposed) | 9 | 0.937 | 0.841 | — | 0.58 |
+| 2 + 2 + 2 | 6 | 0.958 | 0.879 | +0.030 ± 0.017 | 0.67 |
+| **2 + 3 + 1** | 6 | **0.981** | 0.869 | **+0.036 ± 0.018** | **0.72** |
+| 2 + 4 + 0 | 6 | 0.970 | 0.875 | +0.033 ± 0.022 | 0.68 |
+| 2 + 0 + 4 | 6 | 0.883 | **0.883** | −0.007 ± 0.036 | 0.53 |
+| 2 + 0 + 1 | 3 | 0.875 | 0.875 | −0.015 ± 0.030 | 0.53 |
+| 3 + 3 + 6 | 12 | 0.951 | 0.840 | +0.006 ± 0.017 | 0.65 |
+| 2 + 23 Sobol, no optimizer | 25 | 0.767 | 0.767 | −0.122 ± 0.040 | 0.43 |
+
+Notes on the table:
+
+- The global maximum is about 1.0.
+- ± is one standard error over the 30 instances, with each instance's difference averaged over
+  the two scenarios first.
+- Splits without agent picks give the same result in both scenarios, as they should.
+- No GP fit failed.
+- Full results are in [`results/budget_split/`](results/budget_split/).
+- q3's rerun of the first version of the script gave +0.048 ± 0.016 for 2 + 3 + 1.
+
+What it says, within its assumptions:
+
+- **About six seeds did better than nine.** 2 + 2 + 2, 2 + 3 + 1 and 2 + 4 + 0 each beat 3 + 3 + 3
+  by 0.03–0.04, about two standard errors. Twelve seeds were no better than nine. Three seeds
+  without agent picks were about the same as nine.
+- **Agent picks pay off when they know something,** by +0.11 when they're right (2 + 3 + 1 at
+  0.981 against 2 + 0 + 1 at 0.875). When they're wrong, the toy says they cost little. But see the
+  assumptions below, which favour that.
+- **3 + 3 + 3 and 3 + 3 + 6 did worst of the optimizer splits when the agent pointed back at the
+  known family** (0.84, against 0.87–0.88). Six of their seeds crowd that family.
+- **2 + 3 + 1 had the best average and the best chance of beating the baseline.** The differences
+  among the six-seed splits are within noise, though.
 
 What the toy leaves out, and why the real answer may need more seeds:
 
@@ -462,7 +497,7 @@ python bofn-seeding/seed_design.py --elements Mn Cr Mg Si Er Ti Zn Zr   # once Z
 python bofn-seeding/seed_design.py --candidates screen.csv --features freezing_range kou_index l12_fraction
 
 pip install torch botorch
-python bofn-seeding/budget_split_sim.py --reps 30 --workers 4   # about 15 min on 4 cores
+python bofn-seeding/budget_split_sim.py --reps 30 --workers 4   # about 8 min on 4 cores
 ```
 
 ## Edison tasks
