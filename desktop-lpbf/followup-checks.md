@@ -59,7 +59,21 @@ its own sources, assumptions and re-run instructions.
 8. **Powder spreading:** zero the blade gap at temperature, because the 200 °C plate stack grows ~112 µm. Start
    layers at ~2 × D90 (about 120 µm), spread at 50 mm/s, and sieve the overflow, which comes out coarse
    ([`powder-spreading.md`](powder-spreading.md), LIGGGHTS DEM).
-9. **Robot operations:** see §2 ([`robot-ops.md`](robot-ops.md)).
+9. **A robot can't do any of the automated jobs end to end yet** ([`robot-ops.md`](robot-ops.md), MuJoCo,
+   UR10e + Robotiq 2F-85). The arm's strength and reach are never the limit: peak joint torque is at most 39 %, and the
+   reach margin is ≥ 342 mm. What it would grip is the limit:
+   - the stock 2F-85 reaches only ~60 mm past its housing, so in-chamber work needs stepped, cranked fingertips;
+   - the plate's grip groove is level with the door sill, so the gripper needs a two-step approach, or the plate has
+     to rise ~16 mm instead of 8 mm for exchange;
+   - the guard door has no handle;
+   - the chamber door needs ~1.4 kN to seat and the drawer 350 N, against a cobot's ~100 N force mode, so both need
+     clamps that pull them home;
+   - the blade (2 × M3) and the module (2 × M6 thumb screws) need tool-free holds, as [`hot-swap.md`](hot-swap.md)
+     already recommends;
+   - the liners are captive on the ball screw.
+
+   The paths are straight-line moves without a collision-aware planner, so the arm collisions it found are postures,
+   not proof that a job is impossible.
 10. **Cost** ([`cost-scenarios.md`](cost-scenarios.md)):
 
     | Scenario | Low | High |
@@ -82,7 +96,7 @@ its own sources, assumptions and re-run instructions.
 | Gas flow | OpenFOAM v2406, k-ω SST, 173k and 427k cells, Lagrangian spatter and condensate | [`gas-flow.md`](gas-flow.md) | §1 item 3 |
 | Powder spreading | theory (Hamaker, Bond number, gap/D90), LIGGGHTS DEM, 11 runs | [`powder-spreading.md`](powder-spreading.md) | §1 item 8 |
 | Hand operations | 21 operations, 154 steps, exact booleans, real tool shapes on 93 screws | [`operations.md`](operations.md) | §1 item 6 |
-| Robot operations | MuJoCo, UR10e + Robotiq 2F-85 | [`robot-ops.md`](robot-ops.md) | §1 item 9 |
+| Robot operations | MuJoCo 4.0.1, menagerie UR10e + Robotiq 2F-85, IK, convex-piece clearances, joint torques with payload and push forces, 11 operations | [`robot-ops.md`](robot-ops.md) | §1 item 9 |
 | Real parts | 18 bought parts drawn to published dimensions, 11 checked against vendor CAD | [`real-parts.md`](real-parts.md) | §1 item 7 |
 | Cost | live listings and catalogue prices through the lab Pi | [`cost-scenarios.md`](cost-scenarios.md) | §1 item 10 |
 | Second opinions | Edison `LITERATURE_HIGH` ×5 | [`edison/followup-*/`](edison/) | design review, sealing and O₂, powder spreading, lab-built LPBF lessons, laser heat |
@@ -105,6 +119,7 @@ its own sources, assumptions and re-run instructions.
 | Drawer slot opened from the lid's underside; rail inserts within \|x\| ≤ 100 mm; pocket corners R ≥ 9.6 mm; thicker webs at the lid inserts, heater block and piston head; full-depth insert holes | machining | [`machining.md`](machining.md) |
 | A removal path for the overflow jar; window screws on a bolt circle outside the lens; the chute and gas knife hung from the walls; slotted liner holes and a two-piece back liner; a connector or split gland plate at the rod end | hand operations | [`operations.md`](operations.md) |
 | 2.62 mm cord or plain grooves on the door and drawer; a drawer latch; KF-16 rod-end feedthrough | seals | [`seals.md`](seals.md) |
+| A handle on the guard door; pneumatic clamps that pull the chamber door and drawer home; stepped fingertips; plate exchange height ~+16 mm, or a two-step approach; tool-free blade and module holds | robot tending | [`robot-ops.md`](robot-ops.md), [`hot-swap.md`](hot-swap.md) |
 | A hot touch-off or plate-height sensor to zero the gap at temperature; a strain gauge on the blade holder for jam detection | powder spreading | [`powder-spreading.md`](powder-spreading.md) |
 
 ## 4. Not done
