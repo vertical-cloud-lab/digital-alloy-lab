@@ -1,0 +1,285 @@
+[
+ {
+  "key": "clearpath_sd_231x",
+  "pn": "CPM-SDSK-2311S-RLN (2310S same frame)",
+  "ours_mm3": 341716.5,
+  "ours_ext": [
+   59.1,
+   81.85,
+   105.38
+  ],
+  "vendor_mm3": 201861.0,
+  "vendor_ext": [
+   59.69,
+   81.98,
+   105.7
+  ],
+  "dvol_pct": 69.3,
+  "dext_max_mm": 0.59
+ },
+ {
+  "key": "eaton_5px1500rtg2",
+  "pn": "5PX1500RTG2",
+  "ours_mm3": 16991384.9,
+  "ours_ext": [
+   86.36,
+   450.04,
+   482.6
+  ],
+  "vendor_mm3": null,
+  "vendor_ext": null
+ },
+ {
+  "key": "ipg_collimator_d5",
+  "pn": "standard collimator, 5 mm beam (YLR-500-U3-SM-AC option)",
+  "ours_mm3": 102082.9,
+  "ours_ext": [
+   30.0,
+   30.0,
+   206.0
+  ],
+  "vendor_mm3": null,
+  "vendor_ext": null
+ },
+ {
+  "key": "ipg_ylr500_u3",
+  "pn": "YLR-500-U3-SM-AC",
+  "ours_mm3": 41842930.0,
+  "ours_ext": [
+   176.5,
+   482.3,
+   557.2
+  ],
+  "vendor_mm3": null,
+  "vendor_ext": null
+ },
+ {
+  "key": "mcm_3861N11",
+  "pn": "3861N11",
+  "ours_mm3": 23974.3,
+  "ours_ext": [
+   23.8,
+   27.0,
+   86.3
+  ],
+  "vendor_mm3": 32609.2,
+  "vendor_ext": [
+   36.91,
+   66.7,
+   172.83
+  ],
+  "vendor_note": "without the coiled lead: 19505 mm3, extents [27.0, 36.2, 172.83]",
+  "dvol_pct": -26.5,
+  "dext_max_mm": 86.53
+ },
+ {
+  "key": "mcm_4123K45",
+  "pn": "4123K45",
+  "ours_mm3": 211143.1,
+  "ours_ext": [
+   59.82,
+   121.6,
+   200.28
+  ],
+  "vendor_mm3": 216275.0,
+  "vendor_ext": [
+   60.45,
+   121.92,
+   200.28
+  ],
+  "dvol_pct": -2.4,
+  "dext_max_mm": 0.63
+ },
+ {
+  "key": "mcm_4396K21",
+  "pn": "4396K21",
+  "ours_mm3": 8016526.5,
+  "ours_ext": [
+   142.9,
+   304.8,
+   368.3
+  ],
+  "vendor_mm3": null,
+  "vendor_ext": null
+ },
+ {
+  "key": "mcm_4518K72",
+  "pn": "4518K72",
+  "ours_mm3": 19303.6,
+  "ours_ext": [
+   17.0,
+   63.69,
+   77.15
+  ],
+  "vendor_mm3": 19417.9,
+  "vendor_ext": [
+   17.0,
+   63.7,
+   77.17
+  ],
+  "dvol_pct": -0.6,
+  "dext_max_mm": 0.02
+ },
+ {
+  "key": "mcm_4518K73",
+  "pn": "4518K73",
+  "ours_mm3": 30031.1,
+  "ours_ext": [
+   17.0,
+   71.59,
+   93.47
+  ],
+  "vendor_mm3": 30816.7,
+  "vendor_ext": [
+   17.0,
+   71.6,
+   93.47
+  ],
+  "dvol_pct": -2.5,
+  "dext_max_mm": 0.01
+ },
+ {
+  "key": "mcm_4566N401",
+  "pn": "4566N401",
+  "ours_mm3": 18767.9,
+  "ours_ext": [
+   30.0,
+   40.0,
+   43.0
+  ],
+  "vendor_mm3": 18643.1,
+  "vendor_ext": [
+   30.0,
+   40.0,
+   43.0
+  ],
+  "dvol_pct": 0.7,
+  "dext_max_mm": 0.0
+ },
+ {
+  "key": "mcm_5169K72",
+  "pn": "5169K72 (+ 9179K14 HEPA element)",
+  "ours_mm3": 653910.2,
+  "ours_ext": [
+   92.1,
+   105.0,
+   121.2
+  ],
+  "vendor_mm3": 500841.6,
+  "vendor_ext": [
+   97.86,
+   104.9,
+   121.28
+  ],
+  "dvol_pct": 30.6,
+  "dext_max_mm": 5.76
+ },
+ {
+  "key": "mcm_5786N23",
+  "pn": "5786N23",
+  "ours_mm3": 4056.5,
+  "ours_ext": [
+   12.7,
+   39.88,
+   39.88
+  ],
+  "vendor_mm3": 4060.9,
+  "vendor_ext": [
+   12.7,
+   39.88,
+   39.88
+  ],
+  "dvol_pct": -0.1,
+  "dext_max_mm": 0.0
+ },
+ {
+  "key": "mcm_5786N25",
+  "pn": "5786N25",
+  "ours_mm3": 8349.7,
+  "ours_ext": [
+   19.05,
+   54.86,
+   54.86
+  ],
+  "vendor_mm3": 8414.2,
+  "vendor_ext": [
+   19.05,
+   54.86,
+   54.86
+  ],
+  "dvol_pct": -0.8,
+  "dext_max_mm": 0.0
+ },
+ {
+  "key": "mcm_6627T91",
+  "pn": "6627T91",
+  "ours_mm3": 85923.3,
+  "ours_ext": [
+   42.3,
+   43.11,
+   74.0
+  ],
+  "vendor_mm3": 81512.8,
+  "vendor_ext": [
+   42.4,
+   43.16,
+   74.04
+  ],
+  "dvol_pct": 5.4,
+  "dext_max_mm": 0.1
+ },
+ {
+  "key": "mcm_6709K12",
+  "pn": "6709K12",
+  "ours_mm3": 33924.1,
+  "ours_ext": [
+   23.3,
+   34.0,
+   62.1
+  ],
+  "vendor_mm3": 30695.9,
+  "vendor_ext": [
+   23.3,
+   34.0,
+   62.1
+  ],
+  "dvol_pct": 10.5,
+  "dext_max_mm": 0.0
+ },
+ {
+  "key": "mcm_6709K33",
+  "pn": "6709K33",
+  "ours_mm3": 54292.2,
+  "ours_ext": [
+   15.0,
+   15.0,
+   270.0
+  ],
+  "vendor_mm3": null,
+  "vendor_ext": null
+ },
+ {
+  "key": "scanlab_basicube20",
+  "pn": "basiCube 20",
+  "ours_mm3": 2447618.4,
+  "ours_ext": [
+   122.0,
+   130.0,
+   155.0
+  ],
+  "vendor_mm3": null,
+  "vendor_ext": null
+ },
+ {
+  "key": "thorlabs_fth160_1064",
+  "pn": "FTH160-1064",
+  "ours_mm3": 215832.9,
+  "ours_ext": [
+   50.2,
+   90.0,
+   90.0
+  ],
+  "vendor_mm3": null,
+  "vendor_ext": null
+ }
+]

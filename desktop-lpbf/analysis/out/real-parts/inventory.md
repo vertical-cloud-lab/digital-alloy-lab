@@ -1,0 +1,72 @@
+# Bought parts drawn as envelopes or generic shapes in `lpbf_low.build()`
+
+Written by `cad/vendor_parts.py inventory`. Tier A: within 100 mm of the chamber or moving; B: rest of the process
+module (optics bridge, guard); C: gas module; D: rack and tray. Ranked by tier, then by bounding-box volume.
+Status: **done** = a real-part builder is in `vendor_parts.py`; env = still an envelope or generic shape; checked =
+already drawn to the vendor's CAD.
+
+| Rank | Tier | Part | Status | Real part / why not | BOM | Size (mm) | Box (L) | To chamber (mm) |
+|---|---|---|---|---|---|---|---|---|
+| 1 | A | Guard frame (20 mm T-slot) | env | simplified 20 mm profile; BOM S9 lists 30 mm 5537T97 | S9 | 660 x 480 x 528 | 167.175 | 0 |
+| 2 | A | Gas-loop + vacuum hoses (KF-25 SS bellows) | env | McMaster 3497N23 is a 24 in. hose; routed lengths not matched | G7 | 715 x 390 x 310 | 86.389 | 0 |
+| 3 | A | 2-axis galvo scan head (basiCube class) | **done** | SCANLAB basiCube 20 | L5 | 130 x 115 x 110 | 1.645 | 97 |
+| 4 | A | f-theta lens, f = 160 mm (FTH160-1064 envelope) | **done** | Thorlabs FTH160-1064 | L6 | 90 x 90 x 52 | 0.419 | 45 |
+| 5 | A | Recoater servo (ClearPath-SD, NEMA 23) | **done** | Teknic CPM-SDSK-2311S-RLN | M2 | 122 x 57 x 57 | 0.397 | 79 |
+| 6 | A | Z servo (ClearPath-SD, NEMA 23, folded) | **done** | Teknic CPM-SDSK-2311S-RLN | M2 | 57 x 57 x 120 | 0.391 | 62 |
+| 7 | A | Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank) | env | KF-40 half nipple: no part number in the BOM | M4 | 55 x 55 x 92 | 0.278 | 38 |
+| 8 | A | Safety shutter + beam dump | env | no product chosen (BOM L4: quote) | L4 | 60 x 64 x 71 | 0.273 | 97 |
+| 9 | A | Vacuum isolation valve (KF-25 angle, pneumatic) | **done** | McMaster 4123K45 (straight ball valve, not an angle valve) | G7 | 54 x 67 x 75 | 0.271 | 12 |
+| 10 | A | Layer camera (Pi HQ + C-mount lens) | env | Raspberry Pi HQ camera + C-mount lens: not drawn yet | M6 | 54 x 45 x 61 | 0.148 | 28 |
+| 11 | A | Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class) | env | 'KR-class' actuator: not in the BOM (M3 lists 6638K11 + 6709K33 + 6709K12) | M3 | 46 x 28 x 99 | 0.128 | 82 |
+| 12 | A | Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge) | env | labelled 1151A87 but drawn as custom knuckles; 1151A87 is a 3 x 3 in. two-leaf hinge (CAD fetched) | G1 | 200 x 12 x 48 | 0.115 | 15 |
+| 13 | A | Door hinge knuckles on the chamber (304 SS) | env | as above | G1 | 224 x 27 x 14 | 0.085 | 0 |
+| 14 | A | Dosing stepper (NEMA 17) | **done** | McMaster 6627T91 | M4 | 42 x 42 x 42 | 0.075 | 11 |
+| 15 | A | Recoater ball nut (flange on the +x face) | **done** | McMaster 4566N401 | M1 | 43 x 40 x 40 | 0.069 | 0 |
+| 16 | A | Overflow clamp (KF-40) | **done** | McMaster 4518K73 | G7 | 82 x 69 x 12 | 0.068 | 32 |
+| 17 | A | Recoater guide rail (15 mm, 270 mm) | **done** | McMaster 6709K33 (no CAD offered for the cut length: drawn to the listing) | M1 | 270 x 15 x 15 | 0.061 | 0 |
+| 18 | A | Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm) | env | Omron E32-T61-S: not drawn yet | A1 | 356 x 13 x 13 | 0.06 | 0 |
+| 19 | A | Overflow port (KF-40) | **done** | McMaster 5786N25 | G7 | 55 x 55 x 16 | 0.048 | 22 |
+| 20 | A | Recoater carriage (15 mm rail) | **done** | McMaster 6709K12 | M1 | 57 x 25 x 34 | 0.048 | 0 |
+| 21 | A | Recoater ball screw (M12, 10 mm lead) | env | McMaster 4566N101: kept as a Ø12 rod (CAD fetched; helical thread not redrawn) | M1 | 311 x 12 x 12 | 0.045 | 0 |
+| 22 | A | Inlet plenum port (KF-25) | **done** | McMaster 5786N23 | G7 | 40 x 26 x 40 | 0.042 | 26 |
+| 23 | A | Outlet plenum port (KF-25) | **done** | McMaster 5786N23 | G7 | 40 x 40 x 26 | 0.042 | 71 |
+| 24 | A | Pressure transducer (7/16-20 SAE-4 O-ring-boss port) | **done** | McMaster 3861N11 | G7 | 22 x 22 x 73 | 0.035 | 0 |
+| 25 | A | Z carriage | env | part of the KR-class actuator envelope | M3 | 42 x 10 x 40 | 0.017 | 93 |
+| 26 | A | Vacuum port (KF-25, stub welded into the adapter plate) | **done** | McMaster 5786N23 | G7 | 10 x 40 x 40 | 0.016 | 8 |
+| 27 | A | Side reservoir port (KF-16 flange machined in the 6061 base, blanked; reserved for a >= 500 cm3 reservoir beside the chamber with an auger) | env | KF-16 blank: no part number | R1 | 18 x 30 x 30 | 0.016 | 13 |
+| 28 | A | Overpressure relief valve (316 SS, FKM seat, +34 mbar; SAE-4 O-ring-boss port) | env | McMaster 4277T52: page needs a set-pressure choice before CAD; not fetched | G7 | 18 x 18 x 47 | 0.015 | 0 |
+| 29 | A | Module-present sensor (inductive M12, under the floor, sees the module flange) | env | AutomationDirect PAM-AP-1H: not drawn yet | A1 | 32 x 22 x 12 | 0.008 | 0 |
+| 30 | A | Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory) | env | Laumas ALLUE3: not drawn yet | M4 | 13 x 12 x 44 | 0.007 | 0 |
+| 31 | A | Pot magnet (NdFeB in a steel cup, Ø25 x 7, 44 lbf, holds the rod's striker) | env | McMaster 5679K95: CAD fetched; 7 mm cup drawn, 9 mm of extra parts in McMaster's model not resolved | B2 | 25 x 25 x 7 | 0.004 | 121 |
+| 32 | A | Overflow-jar present sensor (inductive M12, PNP) | env | AutomationDirect PAM-AP-1H (M12 x 45): not drawn yet | A1 | 30 x 12 x 12 | 0.004 | 92 |
+| 33 | A | Layer-light LED bar | env | no part number | M6 | 5 x 90 x 8 | 0.004 | 0 |
+| 34 | A | Drawer-closed sensor (inductive M12, on the lid's front face, sees the plate's end) | env | AutomationDirect PAM-AP-1H: not drawn yet | A1 | 30 x 12 x 12 | 0.004 | 1 |
+| 35 | A | Reservoir-docked sensor (inductive M12, at the back of the dock) | env | AutomationDirect PAM-AP-1H: not drawn yet | A1 | 12 x 30 x 12 | 0.004 | 52 |
+| 36 | A | NFC reader antenna (in the dock's side face, reads the tag on the reservoir plate's edge) | env | Adafruit 364 board: not drawn | A1 | 2 x 19 x 18 | 0.001 | 22 |
+| 37 | B | Leveling mounts, process module (McMaster 5537T983: Ø25 base, M8 stem threaded up through the plate) | checked | McMaster 5537T983: drawn to McMaster's CAD dimensions (volume checked here) | F3 | 625 x 445 x 52 | 14.463 | 140 |
+| 38 | B | Collimator (QBH, f = 30 mm, D ~ 3.2 mm) on V-mount | **done** | IPG 5 mm collimator | L3 | 130 x 40 x 61 | 0.317 | 111 |
+| 39 | B | Guard-locking door switch (Omron D4JL) | env | Omron D4JL-4NFA-C5-NPT: not drawn yet | S2 | 19 x 17 x 90 | 0.029 | 204 |
+| 40 | C | Dry scroll pump (≤ 0.3 mbar, 6 m3/h class) | **done** | McMaster 4396K21 (BOM G2's choice; listing dimensions only) | G2 | 445 x 250 x 290 | 32.263 | 404 |
+| 41 | C | Leveling mounts, gas module (McMaster 5537T983: Ø25 base, M8 stem threaded up through the plate) | checked | McMaster 5537T983: drawn to McMaster's CAD dimensions (volume checked here) | F3 | 555 x 515 x 52 | 14.863 | 297 |
+| 42 | C | Sealed side-channel blower (gas-tight, ~100 L/min) | env | no gas-tight blower of this size found (KNF N 630.1.2 SP.9 E is 569 x 296 x 315, 45 kg) | G4 | 200 x 180 x 230 | 8.28 | 444 |
+| 43 | C | Trace O2 analyzer + dew-point transmitter (panel box) | env | Ntron Microx (panel 96 x 96 x 90) + Vaisala DMT143 (Ø28 x 91.6): not drawn yet | G6 | 150 x 160 x 210 | 5.04 | 674 |
+| 44 | C | Sealed cyclone + HEPA housing (316L, valves off for passivation) | **done** | McMaster 5169K72 (no cyclone chosen) | G5 | 116 x 116 x 254 | 3.418 | 256 |
+| 45 | C | Argon solenoid manifold (purge / make-up / vent) | env | McMaster 8077K237 x 2 (CAD fetched) on a custom block: not drawn yet | G7 | 115 x 130 x 82 | 1.226 | 273 |
+| 46 | C | Argon pressure regulator + flowmeter | env | McMaster 78595A5 (CAD fetched, 91 MB): not drawn yet | G3 | 44 x 44 x 100 | 0.194 | 324 |
+| 47 | C | Pump inlet (KF-25) | env | needs a flare-to-NPT adapter + 4518K49 (BOM G2) | G7 | 40 x 40 x 20 | 0.032 | 465 |
+| 48 | C | Filter inlet (KF-25) | env | 5169K72 ports are 1/2 NPSC: adapters not chosen | G7 | 40 x 40 x 20 | 0.032 | 294 |
+| 49 | C | Filter outlet (KF-25) | env | as above | G7 | 20 x 40 x 40 | 0.032 | 374 |
+| 50 | C | Blower inlet (KF-25) | env | follows the blower | G7 | 20 x 40 x 40 | 0.032 | 429 |
+| 51 | C | Blower outlet (KF-25) | env | follows the blower | G7 | 40 x 40 x 20 | 0.032 | 524 |
+| 52 | D | 19 in. rack frame (10U, 470 mm tall) | env | no rack chosen; S9 lists 30 mm T-slot for the old cabinet | S9 | 560 x 600 x 470 | 157.92 | 274 |
+| 53 | D | Rack side panels (vented) | env | sheet, no part number | S9 | 564 x 600 x 450 | 152.28 | 272 |
+| 54 | D | Fiber laser source, 500 W single-mode (3U) | **done** | IPG YLR-500-U3-SM-AC (4U) | L1 | 483 x 534 x 131 | 33.85 | 313 |
+| 55 | D | DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5 (3U) | env | contents chosen (C3, C4, S1) but no drawer/enclosure: BOM C6 is a McMaster 7812K14 wall box | C3 | 483 x 534 x 131 | 33.85 | 313 |
+| 56 | D | Process fiber (armoured, ≥ 100 mm bend radius) | env | IPG delivery cable (Ø8.5 per IPG's QBH drawing; drawn Ø10) | L1 | 264 x 292 x 311 | 23.988 | 183 |
+| 57 | D | UPS (Eaton 5PX 1500 class, 2U) | **done** | Eaton 5PX1500RTG2 | C6 | 483 x 534 x 87 | 22.395 | 323 |
+| 58 | D | Scan + laser controller PC (2U) | env | no PC chosen (BOM C1 is a SCANLAB RTC6 card, quote) | C1 | 483 x 534 x 87 | 22.395 | 313 |
+| 59 | D | Tray dock (CombiTac-type, mates sideways) | env | CombiTac-type: no part number | D1 | 108 x 80 x 140 | 1.21 | 973 |
+| 60 | D | E-stop | env | IDEC XA1E-BV3U02-R: not drawn | S3 | 40 x 22 x 40 | 0.035 | 350 |
+| 61 | D | Key switch | env | McMaster 6749K3: not drawn | S4 | 26 x 14 x 26 | 0.009 | 354 |
+| 62 | D | Emission indicator | env | McMaster 7545K316 + 7545K7: not drawn | S4 | 22 x 10 x 22 | 0.005 | 355 |
+| 63 | D | Reset button | env | McMaster 6749K201: not drawn | S4 | 22 x 10 x 22 | 0.005 | 355 |
