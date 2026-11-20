@@ -389,9 +389,18 @@ class Arm:
     def fk(self, q=None):
         return ur_arm.fk(MODEL, self.q if q is None else q)
 
+    def grasp_y(self) -> float:
+        """Offset (mm) of the grasp point along tool0's y axis: 0 for the stock pads and straight caps; the drop of cranked
+        caps (eoat.py's plate fingers), whose blades step sideways from the pads to reach under a sill."""
+        return float(self.cap_spec.get("grasp_y", 0.0)) if self.cap_spec else 0.0
+
+    def tcp_off(self, close=None) -> np.ndarray:
+        """tool0 -> TCP (the grasp point), 4x4."""
+        return Tm(p=(0.0, self.grasp_y(), self.tcp_mm(close)))
+
     def tcp(self, q=None, close=None) -> np.ndarray:
         F = self.fk(q)
-        return self.base @ F["tool0"] @ Tm(p=(0, 0, self.tcp_mm(close)))
+        return self.base @ F["tool0"] @ self.tcp_off(close)
 
     def place(self, q=None, close=None):
         if q is not None:
@@ -409,14 +418,13 @@ class Arm:
             b.place(Wt @ G[tip])
         if self.held is not None:
             hb, off = self.held
-            hb.place(Wt @ Tm(p=(0, 0, self.tcp_mm())) @ off)
+            hb.place(Wt @ self.tcp_off() @ off)
         return F
 
     def ik_all(self, T_tcp_world, seed=None):
         """Every IK branch for a TCP pose (machine frame), nearest the seed first (byu-vcl collide.ik_all)."""
         seed = self.q if seed is None else np.asarray(seed, float)
-        off = np.eye(4)
-        off[2, 3] = -self.tcp_mm()
+        off = inv(self.tcp_off())
         T06 = inv(self.base) @ np.asarray(T_tcp_world, float) @ off
         out = []
         for s in ur_arm._ik_analytic(MODEL, T06, q6_free=float(seed[5])):
@@ -483,7 +491,7 @@ class Arm:
 
 
 # ------------------------------------------------------------------------------------------------ the scene
-def vlm_and_mir_bodies(arm_x=0.0, mir_y=MIR_Y, header="996"):
+def vlm_and_mir_bodies(arm_x=0.0, mir_y=MIR_Y, header="996", deck=False):
     """The parts of the VLM round the opening and the MiR250 + cabinet under the arm (byu-vcl vlm.py, props.mir250)."""
     out = []
     fy, sk = VLM["front_y"], VLM["skin"]
@@ -504,13 +512,48 @@ def vlm_and_mir_bodies(arm_x=0.0, mir_y=MIR_Y, header="996"):
                                                              y0 + W / 2 - 30, z0 + H, z0 + H + C)))
     out.append(("MiR250 mounting plate", box_mesh(x0 - 170, x0 + 170, y0 - W / 2 + 30, y0 + W / 2 - 30, z0 + H + C,
                                                    z0 + H + C + MIR["plate"])))
+    if deck:
+        out += mir_deck_bodies(x0, y0)
+    return out
+
+
+# PR 318 round 9: a 131 kg steel ballast plate, 760 x 550 x 40 mm, on the MiR250's deck under the cabinet (alloy_atomize.BALLAST)
+BALLAST = dict(L=760.0, W=550.0, T=40.0, kg=7.85e-6 * 760.0 * 550.0 * 40.0)
+
+
+def mir_deck_bodies(x0, y0):
+    """The MiR250's own fixtures (MiR-local layout, our design): the ballast plate at the cabinet's foot; on the cabinet top,
+    beside the arm's mounting plate, the fork stand that holds the plate-finger caps (eoat.PLATE_FINGERS; the arm slides its
+    fingertips into them and the forks strip them off, as byu-vcl PR 318's specimen fingers) and the cradle the vacuum wand
+    rests in (its hose runs down to the ATEX vacuum beside the VLM). Names start with "MiR250" so move_mir() carries them."""
+    H, C = MIR["H"], MIR["cab_h"]
+    z0 = FLOOR_Z
+    top = z0 + H + C
+    L, W, T = BALLAST["L"], BALLAST["W"], BALLAST["T"]
+    out = [("MiR250 ballast plate (131 kg steel)", box_mesh(x0 - L / 2, x0 + L / 2, y0 - W / 2, y0 + W / 2, z0 + H, z0 + H + T))]
+    # cap stand: two forks 60 mm apart in x on a 70 mm post, right of the arm's plate; the caps hang in the forks, open side up
+    sx = x0 + 250.0
+    stand = [box_mesh(sx - 50, sx + 50, y0 - 40, y0 + 40, top, top + 12),          # foot
+             box_mesh(sx - 8, sx + 8, y0 - 8, y0 + 8, top + 12, top + 82)]         # post
+    for dx in (-30.0, 30.0):                                                       # forks: two prongs each, 16 mm apart in y
+        for dy in (-12.0, 8.0):
+            stand.append(box_mesh(sx + dx - 3, sx + dx + 3, y0 + dy, y0 + dy + 4, top + 82, top + 112))
+        stand.append(box_mesh(sx + dx - 9, sx + dx + 9, y0 - 12, y0 + 12, top + 76, top + 82))
+    out.append(("MiR250 cap stand (forks for the plate fingers)", merge(stand)))
+    # wand cradle: two V-blocks along y on the cabinet's left part, 300 mm apart
+    wx = x0 - 260.0
+    cr = []
+    for yy in (y0 - 150.0, y0 + 150.0):
+        cr += [box_mesh(wx - 35, wx - 25, yy - 15, yy + 15, top, top + 60), box_mesh(wx + 25, wx + 35, yy - 15, yy + 15, top, top + 60),
+               box_mesh(wx - 35, wx + 35, yy - 15, yy + 15, top, top + 20)]
+    out.append(("MiR250 wand cradle", merge(cr)))
     return out
 
 
 class Scene:
     """The machine (posed for a motion state), the VLM, the MiR, the robot(s) and tools; collision queries and the audit."""
 
-    def __init__(self, parts, region=None, tol=0.4, header="996", arm_x=0.0, mir_y=MIR_Y, extra=(), skip=()):
+    def __init__(self, parts, region=None, tol=0.4, header="996", arm_x=0.0, mir_y=MIR_Y, extra=(), skip=(), deck=False):
         import lpbf_low as M
         self.M = M
         self.parts = parts
@@ -536,7 +579,7 @@ class Scene:
             self.machine[p.name] = (b, p)
         self.static_names = set()
         self.arm_x = arm_x
-        for name, (v, f) in vlm_and_mir_bodies(arm_x, mir_y, header):
+        for name, (v, f) in vlm_and_mir_bodies(arm_x, mir_y, header, deck=deck):
             b = Body(name, v, f, kind="cell", color="#6f777e" if name.startswith("VLM") else "#3b4148")
             self.world.add(b)
         for name, (v, f), color in extra:
@@ -547,16 +590,22 @@ class Scene:
     def move_mir(self, arm_x):
         """Drive the MiR along the opening so the arm's base is at x = arm_x (the arm's own base is set by the caller)."""
         dx = arm_x - self.arm_x
-        for name in ("MiR250 body", "MiR250 cabinet (UR control box)", "MiR250 mounting plate"):
+        for name in [n for n in self.world.bodies if n.startswith("MiR250")]:
             b = self.world.bodies[name]
             b.place(Tm(p=(b.M[0, 3] + dx, b.M[1, 3], b.M[2, 3])))
         self.arm_x = arm_x
 
-    def set_state(self, state):
+    def set_state(self, state, overrides=None):
+        """Pose the machine for a motion state {group: value}. overrides {part name: 4x4} put a part somewhere else
+        (applied on top of its group's pose): a plate lifted off its block, a jar carried off its flange."""
         self.state = dict(state)
+        ov = overrides or {}
+        prev = getattr(self, "overrides", {})
         for name, (b, p) in self.machine.items():
-            if p.group or "in_module" in p.tags:
-                b.place(loc_matrix(self.M.part_location(p, self.state)))
+            if p.group or "in_module" in p.tags or name in ov or name in prev:
+                Mg = loc_matrix(self.M.part_location(p, self.state))
+                b.place(ov[name] @ Mg if name in ov else Mg)
+        self.overrides = dict(ov)
         return self
 
     def moved_since(self, prev_state):
@@ -590,6 +639,10 @@ class Checker:
         for x, y in group_hits(robot, self.sc.world):
             key = ("held" if (a.held is not None and x is a.held[0]) else
                    ("tool" if x.kind in ("gripper", "tool") else "arm"), y.name)
+            if key[0] != "arm" and ("soft", y.name) in allow:
+                continue              # a seal the handled part slides over or squeezes (byu-vcl collide: sc.soft)
+            if x.group == "base" and y.name.startswith("MiR250"):
+                continue              # the arm's base and the plate it is bolted to (byu-vcl collide: always allowed)
             if key in allow or (key[0] == "tool" and ("tool", "*") in allow and y.kind == "fixture"):
                 d = depth(x, y, upto=depth_limit)
                 if d <= depth_limit:
@@ -738,28 +791,41 @@ def jacobian(arm: Arm, q, p_world):
     return J
 
 
-def static_torques(arm: Arm, q, F_world=(0, 0, 0), p_world=None, payload_kg=0.0, tool_kg=1.3):
-    """Joint torques (N m) to hold pose q against gravity (arm links from UR's table, the 2F-85 + coupling + camera and
-    caps as tool_kg at the flange, the payload at the TCP) and to apply the force F_world (N) at p_world (mm)."""
-    q = np.asarray(q, float)
-    g = np.array([0, 0, -9.81])
-    tau = np.zeros(6)
+def link_coms(arm: Arm, q):
+    """World centres of mass (mm) of the six moving links, placed geometrically as byu-vcl PR 318's stability() does: the
+    shoulder at its joint, the upper arm and forearm at the middle of their tubes (the upper arm's tube offset 158 mm along its
+    joint axis, UR's dynamics table), the three wrist links at their joints."""
     F = arm.fk(q)
+    W = {k: arm.base @ F[k] for k in ("shoulder", "upper_arm", "forearm", "wrist1", "wrist2", "wrist3", "tool0")}
+    o = {k: W[k][:3, 3] for k in W}
+    z_ua = W["upper_arm"][:3, 2]
+    return [o["shoulder"], (o["upper_arm"] + o["forearm"]) / 2 + 158.0 * z_ua, (o["forearm"] + o["wrist1"]) / 2,
+            o["wrist1"], o["wrist2"], o["wrist3"]], W
+
+
+def static_torques(arm: Arm, q, F_world=(0, 0, 0), p_world=None, payload_kg=0.0, tool_kg=1.3):
+    """Joint torques (N m) the motors need to hold pose q against gravity (the links' masses from UR's UR10e/UR12e table at
+    link_coms(), the 2F-85 + coupling + camera and caps as tool_kg at the flange, the payload at the TCP) and against a force
+    F_world (N, acting on the robot) at p_world (mm, default the TCP). Joint j turns about the z axis of its child frame, so
+    tau_j = z_j . sum over everything outboard of j of (r - o_j) x F. (Fixed 2026-11-20: the earlier version moved every link's
+    centre of mass with the flange, which loaded the wrists with the whole arm's weight.)"""
+    q = np.asarray(q, float)
+    g = np.array([0.0, 0.0, -9.81])
+    coms, W = link_coms(arm, q)
     names = ["shoulder", "upper_arm", "forearm", "wrist1", "wrist2", "wrist3"]
-    for i, (m, c) in enumerate(zip(UR10E_DYN["m"], UR10E_DYN["com"])):
-        # DH link frame i+1 ~ ur_arm's frame names; the URDF frames differ by fixed rotations, so place the COM by the
-        # link's own origin plus the DH offset expressed in the base frame (adequate for torque budgets)
-        Tl = arm.base @ F[names[i]]
-        p = (Tl @ np.r_[np.array(c) * 1000.0, 1.0])[:3]
-        J = jacobian(arm, q, p)
-        tau += J[:3].T @ (m * g) / 1000.0
     tcp = arm.tcp(q)[:3, 3]
-    flange = (arm.base @ F["tool0"])[:3, 3]
-    tau += jacobian(arm, q, flange)[:3].T @ (tool_kg * g) / 1000.0
-    tau += jacobian(arm, q, tcp)[:3].T @ (payload_kg * g) / 1000.0
+    loads = [(i, coms[i], UR10E_DYN["m"][i] * g) for i in range(6)]          # (first joint it does NOT hang outboard of, point, force)
+    loads.append((6, W["tool0"][:3, 3], tool_kg * g))
+    loads.append((6, tcp, payload_kg * g))
     if p_world is None:
         p_world = tcp
-    tau += jacobian(arm, q, np.asarray(p_world, float))[:3].T @ np.asarray(F_world, float) / 1000.0
+    loads.append((6, np.asarray(p_world, float), np.asarray(F_world, float)))
+    tau = np.zeros(6)
+    for j in range(6):
+        oj, zj = W[names[j]][:3, 3], W[names[j]][:3, 2]
+        for i, r, Fv in loads:
+            if i >= j:
+                tau[j] += float(zj @ np.cross((np.asarray(r) - oj) / 1000.0, Fv))
     return -tau          # the motors' torque that balances the loads
 
 
