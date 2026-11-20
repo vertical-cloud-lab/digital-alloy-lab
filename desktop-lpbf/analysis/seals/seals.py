@@ -31,6 +31,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT / "cad"))
 OUT = ROOT / "analysis" / "out" / "seals"
+import module_params as MP  # noqa: E402  (pure Python: AS568 sizes, gland parameters)
 
 IN = 25.4
 PSI = 6894.76            # Pa per psi
@@ -141,10 +142,40 @@ def model_geometry():
     g = {}
     # lid O-ring: drawn 2.65 tall x 3.7 wide (squeezed section); door: 2.8 x 3.2; spigot: 2.6 x 3.0; drawer 1.6 x 1.8
     g["lid_path"] = ring_path(find("Lid O-ring"), 2.65 * 3.7)
-    g["door_path"] = ring_path(find("Door O-ring"), 2.8 * 3.2)
-    g["drawer_path"] = ring_path(find("Drawer O-ring"), 1.6 * 1.8)
+    # every other gland the model draws is registered in lpbf_low.GLANDS by build(); centre-line length of a loop = its inner
+    # wall's perimeter + pi x groove width (offsetting a closed convex curve by w/2 adds pi w)
+    GL = {k: dict(v) for k, v in L.GLANDS.items()}
+    # the module- and reservoir-specific glands of the other two variants, from the same parameters the model uses
+    for key in ("S25", "L75"):
+        rg, gs, gg = MP.ROD_GLAND[key], MP.GLAND_PLATE_SEAL[key], MP.GLAND_PLATE_GROOVE
+        rod_d = (MP.ROD_S25 if key == "S25" else (MP.ROD_OD, MP.ROD_ID))[0]
+        GL[f"gland_plate_{key}"] = dict(kind="face", ring=gs["ring"], cs=1.78, depth=gg["depth"], width=gg["width"], groove_id=gs["groove_id"],
+                                        groove_mat="ss", T=60.0, closure=f"gland plate on the welded collar ({key})")
+        GL[f"rod_{key}"] = dict(kind="rod", ring=rg["ring"], cs=MP.AS568[rg["ring"]][1], depth=(rg["groove_d"] - rod_d) / 2, width=rg["width"],
+                                groove_d=rg["groove_d"], rod_d=rod_d, groove_mat="ss", T=110.0, n=2, closure=f"hollow rod through the gland plate ({key})")
+    for rk in ("S", "L"):
+        r = MP.RESERVOIRS[rk]
+        hi, pk = L.fit_loop((r["ix"] / 2 - 5.0 + 1.5, r["iy"] / 2 - 12.0 + 1.5), 3.5, 2.5, 1.0)
+        GL[f"reservoir_lid_{rk}"] = dict(kind="face", ring=pk[0], cs=1.78, depth=1.32, width=2.3, inner_perimeter=L.loop_perimeter(hi, 3.5),
+                                         groove_mat="al", T=45.0, closure=f"reservoir {rk} lid on its top frame")
+    for k, v in GL.items():
+        if v.get("ring") in MP.AS568:
+            v["ring_id"] = MP.AS568[v["ring"]][0]
+        if "inner_perimeter" in v:
+            v["path"] = v["inner_perimeter"] + math.pi * v["width"]
+        elif "groove_id" in v:
+            v["path"] = math.pi * (v["groove_id"] + v["width"])
+        elif v["kind"] == "radial":
+            v["path"] = math.pi * (v["groove_d"] + v["depth"])
+        elif v["kind"] == "rod":
+            v["path"] = math.pi * (v["rod_d"] + v["depth"]) * v.get("n", 1)
+        elif v["kind"] == "sae":
+            v["path"] = math.pi * (MP.AS568["3-904"][0] + 1.83) * v.get("n", 1)
+    g["glands_model"] = GL
+    g["door_path"] = GL["door"]["path"]
+    g["drawer_path"] = GL["drawer"]["path"]
     g["spigot_path"] = math.pi * (MP.PORT_D - 2.9)
-    g["gland_plate_path"] = ring_path(find("Module M50 gland-plate O-ring"), 1.3 * 2.2)
+    g["gland_plate_path"] = GL["gland_plate_M50"]["path"]
     ch = find("Process chamber body")
     bb = ch.shape.BoundingBox()
     P = L.P
@@ -189,6 +220,25 @@ def gland(cs, depth, width, T_service=23.0, groove_mat="al", stretch=0.0, kind="
     return dict(cs=cs, depth=depth, width=width, stretch_pct=100 * stretch, squeeze_nom=100 * sq_nom, squeeze_min=100 * sq_min,
                 squeeze_max=100 * sq_max, fill_nom=100 * fill_nom, fill_max_cold=100 * fill_max, fill_max_hot=100 * fill_hot,
                 T_service=T_service, kind=kind)
+
+
+def gland_dovetail(cs, depth, width_bottom, deg, T_service=23.0, groove_mat="al"):
+    """gland() for a half-dovetail: the outer wall is undercut by `deg`, so the groove is width_bottom wide at its bottom and
+    width_bottom - depth tan(deg) at the face. Fill uses the trapezoid's area; squeeze as for a plain face gland."""
+    tol = CS_TOL[min(CS_TOL, key=lambda k: abs(k - cs))]
+    g = gland(cs, depth, width_bottom, T_service, groove_mat)
+    w_face = width_bottom - depth * math.tan(math.radians(deg))
+    area = lambda d, w_b, w_f: d * (w_b + w_f) / 2
+    a_nom = area(depth, width_bottom, w_face)
+    a_min = area(depth - MACH_TOL, width_bottom - MACH_TOL, w_face - MACH_TOL)
+    dT = T_service - 23.0
+    a_g = CTE_AL if groove_mat == "al" else CTE_SS
+    g["fill_nom"] = 100 * math.pi / 4 * cs ** 2 / a_nom
+    g["fill_max_cold"] = 100 * math.pi / 4 * (cs + tol) ** 2 / a_min
+    g["fill_max_hot"] = g["fill_max_cold"] * (1 + 3 * CTE_FKM * dT) / (1 + 2 * a_g * dT)
+    g["width_face"] = w_face
+    g["retains"] = w_face < cs - tol
+    return g
 
 
 def parker_face_rule(cs):
@@ -257,53 +307,57 @@ def main():
 
     # ---------------- seal inventory: every closure and penetration of the gas envelope ----------------
     # status: OK, CHECK (works, but a number to fix), FIX (will not seal or not hold as drawn), MISSING (no seal drawn)
+    # in_model: what cad/lpbf_low.py now draws (2026-11-20); part numbers from ../../seal-parts.csv
     inv = [
         dict(key="lid", seal="Lid O-ring, FKM 75A 3.53 mm cord in a face gland 2.65 x 4.6 in the body's top face",
-             held_by="20 x M5 316 into helical inserts (metal-to-metal)", status="OK",
+             held_by="20 x M5 316 into helical inserts (metal-to-metal)", status="OK", in_model="as before",
              note="cord spliced into a ring: specify a vulcanized (hot) splice or a molded ring, never a glued joint, for vacuum"),
-        dict(key="door", seal="Door O-ring, 3.53 mm cord, groove on the door face 2.8 deep x 4.0 wide as drawn",
-             held_by="2 draw latches (McMaster 1807A61) at the top corners + 2 fixed hinges at the bottom; atmosphere under vacuum",
-             status="FIX", note="gland is not the 2.65 x 4.6 the notes specify; latches were sized for +50 mbar only, not for squeezing the cord (see clamp table)"),
-        dict(key="window", seal="Window O-ring under the Ø50.8 x 8 fused-silica window; retaining ring 2 mm above the window top",
-             held_by="nothing at +20 mbar: the window is 'unclamped' and floats up to 2 mm", status="FIX",
-             note="+20 mbar lifts the window (3.2 N against its 0.35 N weight); needs an O-ring sandwich clamped to a metal stop"),
-        dict(key="window_flange", seal="Window flange to lid: 6 x M4, no seal drawn", held_by="6 x M4", status="MISSING",
-             note="needs a face O-ring (or make the flange part of the lid)"),
-        dict(key="drawer", seal="Cover-slide drawer front plate, ~1.78 mm cord on the lid's front face", held_by="nothing (a detent)",
-             status="FIX", note="at +20 mbar the drawer is pushed out; the cord needs ~0.3-0.5 kN to squeeze: a cam or toggle clamp"),
-        dict(key="metering_base", seal="Metering base to lid over the 12 x 100 mm dose slot: 4 x M4, no seal drawn", held_by="4 x M4",
-             status="MISSING", note="needs a face O-ring round the slot"),
-        dict(key="reservoir", seal="Reservoir on the dock face (dovetail, spring shutter); reservoir lid is a loose plate",
-             held_by="nothing", status="FIX",
-             note="an open path from room air through the powder column and the roller clearance into the chamber (flow table below)"),
-        dict(key="roller_shaft", seal="Metering-roller shaft: PTFE V-ring (McMaster 9572K33)", held_by="-", status="CHECK",
-             note="a V-ring is an excluder, not a vacuum seal; use a magnetic-fluid feedthrough or a magnetic coupling through a can"),
-        dict(key="recoater_left", seal="Recoater screw through the left wall (Ø18 hole): fixed bearing + PTFE V-ring", held_by="-", status="CHECK",
-             note="same as the roller shaft"),
-        dict(key="recoater_right", seal="Recoater screw through the right wall (Ø18 hole): floating bearing housing, open bore", held_by="-",
-             status="MISSING", note="the housing's Ø8 bore is open to the room: make it a blind cap with a face O-ring"),
-        dict(key="vac_port", seal="KF-25 vacuum port, KF-25 inlet/outlet plenum ports, KF-40 overflow, KF-16 blank", held_by="KF clamps",
-             status="OK", note="Al centering ring + FKM; the stubs are 304 and the body 6061: the stub-to-body joint needs its own O-ring"),
-        dict(key="plenums", seal="Inlet plenum (back wall) and outlet plenum (under the floor), 316L on 6061", held_by="M4/M5 (not drawn)",
-             status="MISSING", note="joints.py lists them as 'each with an FKM O-ring', not drawn; dissimilar metals, so bolted + O-ring, never welded"),
-        dict(key="threaded_ports", seal="Argon in (back wall), O2 sample (side wall), pressure transducer and relief valve (lid): 1/4 NPT parts",
-             held_by="pipe threads", status="CHECK",
-             note="NPT into 6061 leaks at vacuum and galls; use SAE/ISO straight-thread O-ring-boss ports or KF/VCR adapters"),
-        dict(key="fibre_heads", seal="Through-beam fibre heads in Ø3.2 holes through both side walls (z = +5)", held_by="-",
-             status="MISSING", note="needs O-ring-sealed threaded heads or a window; they also sit in the condensate and spatter zone"),
-        dict(key="camera", seal="Camera viewport adapter with a Ø1 in. window over a Ø22 hole in the lid", held_by="screws (not drawn)",
-             status="MISSING", note="two seals needed: adapter to lid, window to adapter"),
-        dict(key="spigot", seal="Module spigot in the Ø96 floor port: FKM 2-238 radial (male gland)", held_by="radial; 2 captive M6",
-             status="CHECK", note="groove as drawn (root Ø90.2, 3.6 mm wide) is overfilled at worst tolerance (101 %) and light on squeeze (13-21 %); root Ø90.5 x 4.8 wide gives 17-25 % and <= 81 %"),
-        dict(key="gland_plate", seal="Gland plate on the welded collar: 1.78 mm cord face seal", held_by="6 x M4", status="CHECK",
-             note="groove 2.4 wide: fill > 90 % at worst tolerance; widen to 2.6"),
-        dict(key="rod", seal="Hollow rod through the gland plate: 'double FKM 2-114 rod gland' (grooves not drawn)", held_by="-",
-             status="MISSING", note="draw two 2-114 grooves (Ø20.0 groove, Ø15.93 throat) and specify a seamless, polished rod; friction counts against the Z coupling"),
-        dict(key="rod_end", seal="Rod end: heater and thermocouple leads potted in Torr Seal", held_by="-", status="FIX",
-             note="stranded leads wick gas along the strands through any potting; use a hermetic (glass-to-metal) feedthrough or solid pins"),
-        dict(key="gas_loop", seal="Blower, cyclone + HEPA housing, valves, hoses (KF-25 bellows)", held_by="KF clamps", status="CHECK",
+        dict(key="door", seal="Door: 1.78 mm FKM 75A cord (McMaster 96515K123) in a half-dovetail groove, depth 1.32, 2.3 wide at the bottom, 24 deg undercut",
+             held_by="2 x McMaster 1807A61 draw latches (800 lb) on the chamber's side faces pulling strikes on two door ears; floating (slotted) hinge holes",
+             status="CHECK", in_model="groove, cord, ears, strikes, latch bodies, slotted hinge knuckles",
+             note="set each latch to >= the preload in the clamp table; the half-dovetail is overfilled at worst tolerance (gland table); robot: same faces take a pneumatic latch/hold-down clamp (not drawn)"),
+        dict(key="window", seal="Window: O-ring sandwich, 2-031 FKM under the Ø50.8 x 8 window, 1 mm FKM flat ring over it",
+             held_by="retaining ring whose spigot bottoms metal-to-metal on the flange (6 x M3)", status="OK", in_model="seat groove, both rings, stepped retaining ring",
+             note="squeeze set by geometry; the flat ring takes the window's thickness tolerance (FKM sheet not yet sourced)"),
+        dict(key="window_flange", seal="Window flange to lid: 2-036 FKM face O-ring", held_by="6 x M4 into helical inserts", status="OK", in_model="groove + ring",
+             note=""),
+        dict(key="drawer", seal="Cover-slide drawer: 2-033 FKM ring in a half-dovetail groove on the front plate", held_by="2 quarter-turn latches (envelope; stud in the plate, receptacle in the lid)",
+             status="CHECK", in_model="groove, ring, latch studs and receptacles (envelope)",
+             note="no catalogue quarter-turn latch found that gives >= 0.4 kN in the 20 mm plate (McMaster 5210N21: 0.53 kN, needs a Ø22 hole; Southco E3 compact 450 N, Ø29 head)"),
+        dict(key="metering_base", seal="Metering base to lid: 2-040 FKM face O-ring round the 12 x 100 dose slot", held_by="4 x M4", status="OK", in_model="groove + ring", note=""),
+        dict(key="reservoir", seal="Reservoir: 2-040 FKM face O-ring in the dock face round a 12 x 100 opening; one 30 x 112 mm base plate for S/M/L; O-ring-sealed lid on a welded top frame",
+             held_by="dovetail-rail lips with a 2 deg ramp (robot push ~0.1 kN) + spring-plunger detent; lid on 2 x M3", status="CHECK",
+             in_model="dock groove + ring, lips, single plate, top frame, lid groove + ring (2-023 / 2-030 / 2-042), shutter slot closed at both ends",
+             note="the ramps and the detent are not drawn; the shutter's drive through its closed slot (e.g. magnetic) is not designed"),
+        dict(key="roller_shaft", seal="Metering-roller shaft: Ferrotec SSL-005-NN magnetic-fluid feedthrough, M8 x 1 nose, 2-012 FKM shoulder O-ring", held_by="its nut", status="OK",
+             in_model="feedthrough envelope, coupling, stepper moved back", note="price not published; split of the 65.5 mm length assumed"),
+        dict(key="recoater_left", seal="Recoater screw, left wall: Ferrotec SFL-006-NN magnetic-fluid feedthrough on a 9 mm spacer ring (2 x 2-024)", held_by="its flange screws",
+             status="OK", in_model="feedthrough, spacer, 2 rings, clamp coupling in the wall bore, motor moved out", note="price not published; bearing load rating to be checked against the screw's axial load"),
+        dict(key="recoater_right", seal="Recoater screw, right wall: blind bearing cap with a 2-020 FKM face O-ring", held_by="4 x M4", status="OK", in_model="cap, groove, ring, screws", note=""),
+        dict(key="vac_port", seal="KF-25 vacuum port: stub welded into a 304 adapter plate, 2-024 FKM face O-ring on the 6061 wall", held_by="4 x M5", status="OK",
+             in_model="plate, groove, ring, screws", note="other KF stubs are welded to 316L parts (plenums, funnel) or machined in 6061 (side reservoir port)"),
+        dict(key="plenums", seal="Inlet (back wall) and outlet (under the floor) plenums, 316L on 6061: 2-044 FKM face O-rings", held_by="9 x M4 and 6 x M4 (counterbored)",
+             status="OK", in_model="bolting flanges, grooves, rings, screws", note="never welded (dissimilar metals)"),
+        dict(key="funnel", seal="Overflow funnel block (316L) under the floor: 2-042 FKM face O-ring", held_by="4 x M4 (counterbored)", status="OK", in_model="groove, ring, screws", note=""),
+        dict(key="threaded_ports", seal="Argon in, O2 sample, pressure transducer, relief valve: SAE J1926 -4 (7/16-20) O-ring-boss ports, AS568-904 FKM",
+             held_by="straight thread", status="OK", in_model="ports (thread, 12 deg O-ring chamfer, Ø4 drilling); stems of the transducer and valve",
+             note="fittings McMaster 5182K862; transducer and relief valve must be ordered with SAE-4 male ends (not confirmed)"),
+        dict(key="fibre_heads", seal="Through-beam fibre heads: M6 threaded heads into tapped holes, 2-010 FKM face O-rings", held_by="thread", status="CHECK",
+             in_model="tapped holes, grooves, rings, heads", note="a fibre head with an M6 body and a sealing flange is not yet chosen"),
+        dict(key="camera", seal="Camera: adapter to lid 2-022, Ø1 in. window on 2-017 + 1 mm FKM flat ring under a screwed retaining ring", held_by="screws (not drawn)",
+             status="OK", in_model="both grooves, rings, window, retaining ring; boss moved onto the line of sight", note="the old Ø22 bore broke through the boss wall: fixed"),
+        dict(key="spigot", seal="Module spigot in the Ø96 floor port: FKM 2-238 radial, groove root Ø90.5 x 4.8", held_by="radial; 2 captive M6",
+             status="OK", in_model="groove and ring", note=""),
+        dict(key="gland_plate", seal="Gland plate on the welded collar: face groove 2.6 wide; 2-024 / 2-034 / 2-041 for S25 / M50 / L75", held_by="6 x M4 x 20",
+             status="OK", in_model="groove, ring; plate 14 mm (was 10)", note=""),
+        dict(key="rod", seal="Hollow rod through the gland plate: two Parker rod glands, groove Ø20.0, throat Ø15.93 (2-114; S25: 2-110, Ø13.64)", held_by="-",
+             status="CHECK", in_model="two grooves, two rings; rod labelled seamless and polished", note="friction counts against the Z coupling (mech.md); measure break-out"),
+        dict(key="rod_end", seal="Rod end: hermetic receptacle on a side boss, 2-014 FKM face O-ring", held_by="panel nut", status="CHECK",
+             in_model="boss, groove, ring, connector envelope (LEMO 1B HGG.1B.310); rod end 24 mm tall (was 14)",
+             note="the LEMO part's published 2 A / 1e-7 mbar L/s misses the spec; KF-16 feedthroughs that meet it (Accu-Glass 9C-K16, MPF A0408-2-QF) need a KF-16 port on the rod end"),
+        dict(key="gas_loop", seal="Blower, cyclone + HEPA housing, valves, hoses (KF-25 bellows)", held_by="KF clamps", status="CHECK", in_model="unchanged",
              note="the HEPA housing in the BOM (McMaster 5169K72) is 1/2 NPSC threaded and its gas-tightness is not stated; the blower must be specified gas-tight"),
-        dict(key="o2_sample", seal="O2 analyser sample loop", held_by="fittings", status="CHECK",
+        dict(key="o2_sample", seal="O2 analyser sample loop", held_by="fittings", status="CHECK", in_model="unchanged",
              note="extractive analysers often have polymer tubing inside; return the sample to the loop, 316L lines, leak-check the analyser"),
     ]
     R["inventory"] = inv
@@ -311,22 +365,47 @@ def main():
     # ---------------- gland checks ----------------
     glands = {}
     glands["lid"] = gland(3.53, 2.65, 4.6, T_service=70.0, groove_mat="al")
-    glands["door_as_drawn"] = gland(3.53, 2.8, 4.0, T_service=60.0, groove_mat="al")
-    glands["door_spec"] = gland(3.53, 2.65, 4.6, T_service=60.0, groove_mat="al")
-    glands["door_1p78_halfdovetail"] = gland(1.78, 1.32, 2.30, T_service=60.0, groove_mat="al")
-    glands["window_1p78"] = gland(1.78, 1.32, 2.30, T_service=80.0, groove_mat="al")
-    glands["drawer_1p78"] = gland(1.78, 1.32, 2.30, T_service=60.0, groove_mat="al")
-    # spigot 2-238 (ID 88.49 mm) on a Ø90.2 groove root in a Ø96 port; stretch 1.9 %
-    st_238 = (90.2 - 88.49) / 88.49
-    glands["spigot_as_drawn"] = gland(3.53, (96.0 - 90.2) / 2, 3.6, T_service=60.0, groove_mat="ss", stretch=st_238, kind="radial")
-    st_238b = (90.5 - 88.49) / 88.49
-    glands["spigot_groove_90p5_w4p8"] = gland(3.53, (96.0 - 90.5) / 2, 4.8, T_service=60.0, groove_mat="ss", stretch=st_238b, kind="radial")
-    glands["gland_plate_as_drawn"] = gland(1.78, 1.3, 2.4, T_service=60.0, groove_mat="ss")
-    glands["gland_plate_2p6"] = gland(1.78, 1.3, 2.6, T_service=60.0, groove_mat="ss")
-    # 2-114 rod gland (female): Parker Table 4-2 groove Ø0.787 in on a 0.625 in rod -> depth 2.06 mm
-    glands["rod_2_114"] = gland(2.62, (19.99 - 15.875) / 2, 3.6, T_service=110.0, groove_mat="ss", kind="rod")
+    glands["lid"].update(ring="3.53 mm cord", closure="chamber lid (20 x M5)", path=g["lid_path"])
+    for k, v in g["glands_model"].items():
+        if v["kind"] == "sae":
+            continue                        # SAE J1926 port O-rings: the port's own standard gland
+        ring_id = v.get("ring_id")
+        if v["kind"] == "face":
+            if ring_id and "inner_perimeter" in v:
+                st = v["inner_perimeter"] / (math.pi * ring_id) - 1.0
+            elif ring_id and "groove_id" in v:
+                st = v["groove_id"] / ring_id - 1.0
+            else:
+                st = 0.0                    # spliced cord, cut to length
+            if v.get("dovetail"):
+                c = gland_dovetail(v["cs"], v["depth"], v["width"], MP.DOVETAIL_DEG, T_service=v["T"], groove_mat=v["groove_mat"])
+                c["stretch_pct"] = 100 * st
+            else:
+                c = gland(v["cs"], v["depth"], v["width"], T_service=v["T"], groove_mat=v["groove_mat"], stretch=max(st, 0.0), kind="face")
+        elif v["kind"] == "radial":
+            st = v["groove_d"] / ring_id - 1.0
+            c = gland(v["cs"], v["depth"], v["width"], T_service=v["T"], groove_mat=v["groove_mat"], stretch=st, kind="radial")
+        else:                               # rod gland: the ring's ID is stretched onto the rod
+            st = v["rod_d"] / ring_id - 1.0
+            c = gland(v["cs"], v["depth"], v["width"], T_service=v["T"], groove_mat=v["groove_mat"], stretch=st, kind="rod")
+        c.update(ring=v["ring"], closure=v["closure"], path=v.get("path"), stretch_signed_pct=100 * st, dovetail=bool(v.get("dovetail")))
+        glands[k] = c
     for k, v in glands.items():
-        v["parker"] = parker_face_rule(v["cs"]) if v["kind"] == "face" else None
+        v["parker"] = parker_face_rule(v["cs"]) if v["kind"] == "face" and v["cs"] in (1.78, 2.62, 3.53) else None
+        bad = []
+        if v["squeeze_min"] < 15:
+            bad.append("squeeze < 15 % at tolerance")
+        if v["squeeze_max"] > 32:
+            bad.append("squeeze > 32 % at tolerance")
+        if v["fill_max_hot"] > 100:
+            bad.append("overfilled at worst tolerance, warm")
+        elif v["fill_max_hot"] > 90:
+            bad.append("fill > 90 % at worst tolerance, warm")
+        if v["stretch_pct"] > 5:
+            bad.append("stretch > 5 %")
+        if v.get("dovetail") and not v.get("retains", True):
+            bad.append("face opening does not retain the cord")
+        v["verdict"] = "OK" if not bad else "; ".join(bad)
     R["glands"] = glands
 
     # ---------------- clamp forces ----------------
@@ -357,29 +436,44 @@ def main():
     clamps["window_1p78_25"] = seal_force(1.78, w_path, 0.25)
     clamps["window_lift_20mbar_N"] = 2000.0 * math.pi / 4 * (46e-3) ** 2
     clamps["window_weight_N"] = 2200 * math.pi / 4 * (50.8e-3) ** 2 * 8e-3 * 9.81
-    clamps["latch_rating_N"] = 800 * 4.448
+    clamps["latch_rating_N"] = 800 * 4.448          # McMaster 1807A61, 800 lb capacity
+    # door as now drawn: 1.78 mm cord; each of the 2 latches must give this preload at +20 mbar to hold 25 % (15 %) squeeze
+    clamps["door_latch_preload_25_N"] = (clamps["door_1p78_25"]["total_N"] + clamps["door_overpressure_20mbar_N"]) / 2
+    clamps["door_latch_preload_15_N"] = (clamps["door_1p78_15"]["total_N"] + clamps["door_overpressure_20mbar_N"]) / 2
+    GM = g["glands_model"]
+    clamps["dock_1p78_25"] = seal_force(1.78, GM["reservoir_dock"]["path"], 0.25)
+    # wedge dock: 2 deg ramps under the rail lips; mu 0.15 (lubricated 316 on 304 or a PTFE-filled wear strip, assumed)
+    mu, a = 0.15, math.radians(2.0)
+    phi = math.atan(mu)
+    f_dock = clamps["dock_1p78_25"]["total_N"]
+    clamps["dock_push_N"] = f_dock * math.tan(a + phi)
+    clamps["dock_pull_out_N"] = f_dock * math.tan(phi - a)
+    clamps["dock_self_locking"] = a < phi
+    clamps["reservoir_lid_L_1p78_25"] = seal_force(1.78, GM["reservoir_lid_L"]["path"], 0.25)
+    clamps["reservoir_lid_screws_N"] = 2 * 0.75 * 5.03 * 450 * 0.5       # 2 x M3 A4-70 at 75 % of proof, halved for torque scatter
+    clamps["drawer_latch_preload_25_N"] = (clamps["drawer_1p78_25"]["total_N"] + clamps["drawer_out_force_20mbar_N"]) / 2
+    for k in ("window_1p78_25",):
+        clamps[k] = seal_force(1.78, GM["window_lower"]["path"], 0.25)
     R["clamps"] = clamps
 
     # ---------------- permeation and leak budget ----------------
     T_seal = {"lid": 50.0, "door": 45.0, "window": 60.0, "drawer": 50.0, "spigot": 56.0, "gland_plate": 60.0, "kf": 35.0, "rod": 117.0}
     # (name, O-ring ID mm equivalent, cross-section, squeeze, count, T)
-    oring_set = [
-        ("lid", g["lid_path"] / math.pi - 3.53, 3.53, 0.25, 1),
-        ("door", g["door_path"] / math.pi - 1.78, 1.78, 0.25, 1),
-        ("window (sandwich, inner ring)", 46.0 - 1.78, 1.78, 0.25, 1),
-        ("window flange to lid", 80.0, 1.78, 0.25, 1),
-        ("camera adapter + its window", 2 * 30.0, 1.78, 0.25, 1),
-        ("metering base to lid", 2 * (100 + 12) / math.pi * 1.2, 1.78, 0.25, 1),
-        ("reservoir dock face (proposed)", 2 * (95 + 48) / math.pi, 1.78, 0.25, 1),
-        ("reservoir lid (proposed)", 2 * (110 + 48) / math.pi, 1.78, 0.25, 1),
-        ("drawer", g["drawer_path"] / math.pi - 1.78, 1.78, 0.25, 1),
-        ("plenums (2)", 2 * (130 + 40) / math.pi, 1.78, 0.25, 2),
-        ("KF-25 (7) + KF-40 (2) + KF-16 (1) centering rings", None, None, None, 0),
-        ("spigot 2-238", 88.49, 3.53, 0.20, 1),
-        ("gland plate", 2 * 28.6 - 1.78, 1.78, 0.25, 1),
-        ("rod gland 2 x 2-114 (in tandem: the outer one carries the gradient)", 15.54, 2.62, 0.20, 1),
-    ]
-    T_of = lambda name: next((v for k, v in T_seal.items() if name.startswith(k)), 45.0)
+    # (name, O-ring ID mm equivalent, cross-section, squeeze, count) from the glands the model draws; T from T_seal or the gland's T
+    oring_set = [("lid", g["lid_path"] / math.pi - 3.53, 3.53, 0.25, 1)]
+    for k, v in g["glands_model"].items():
+        if v["kind"] == "sae":
+            oring_set.append(("SAE-4 port O-rings (4 x 3-904)", MP.AS568["3-904"][0], 1.83, 0.25, 4))
+            continue
+        if k.endswith(("_S25", "_L75", "_S", "_L")):
+            continue                        # one module and one reservoir in the machine at a time (M50, M)
+        n = v.get("n", 1)
+        d_id = v["path"] / n / math.pi - v["cs"]
+        if v["kind"] == "rod":
+            n = 1                           # in tandem: the outer ring carries the gradient
+        oring_set.append((f"{k} ({v['ring']})", d_id, v["cs"], 0.25 if v["kind"] == "face" else 0.20, n))
+    oring_set.append(("KF-25 (7) + KF-40 (2) + KF-16 (1) centering rings", None, None, None, 0))
+    T_of = lambda name: next((v for k, v in T_seal.items() if name.startswith(k)), next((v["T"] for k, v in g["glands_model"].items() if name.startswith(k)), 45.0))
     perm = []
     p_o2 = 0.2095 * 1.013            # bar, O2 partial pressure difference (inside ~0)
     p_h2o = 0.5 * 0.0281            # bar, 50 % RH at 23 C
@@ -531,17 +625,31 @@ def write_md(R):
     g = R["geometry"]
     L = ["# Seals, leaks and purge: results (from `analysis/seals/seals.py`)", "",
          "Model: `cad/lpbf_low.build('M50', 'M')`. All forces in N, leaks in std cc/s (sccs) unless noted. Sources are listed at the end.", ""]
-    L += ["## Seal inventory", "", "| Seal / penetration | Held by | Status | Note |", "|---|---|---|---|"]
+    L += ["## Seal inventory (what the model now draws)", "", "| Seal / penetration | Held by | In the model | Status | Note |", "|---|---|---|---|---|"]
     for s in R["inventory"]:
-        L.append(f"| {s['seal']} | {s['held_by']} | **{s['status']}** | {s['note']} |")
-    L += ["", "## Gland checks (Parker ORD 5700, AS568 tolerance, ±0.05 mm machining)", "",
-          "| Gland | CS | depth × width | stretch | squeeze nom (min–max) % | fill nom / worst cold / worst warm % | Parker face rule |",
-          "|---|---|---|---|---|---|---|"]
+        L.append(f"| {s['seal']} | {s['held_by']} | {s.get('in_model', '')} | **{s['status']}** | {s['note']} |")
+    pns = {}
+    try:
+        import csv
+        for r in csv.DictReader(open(ROOT / "seal-parts.csv")):
+            if r["size"].startswith("AS568-"):
+                pns["2-" + r["size"].split("-")[1].split(" ")[0]] = r["part_number"]
+                if r["size"].startswith("AS568-904"):
+                    pns["3-904"] = r["part_number"]
+    except FileNotFoundError:
+        pass
+    L += ["", "## Gland checks: every gland the model draws (Parker ORD 5700, AS568 tolerance, ±0.05 mm machining, FKM swell with temperature)", "",
+          "Stretch is the ring's ID onto the groove's inner wall (face), the groove root (radial) or the rod. Half-dovetail fill uses the "
+          "trapezoid's area. Verdict flags squeeze outside 15-32 %, fill above 90 % at worst tolerance when warm, or stretch above 5 %.", "",
+          "| Gland | Closure | Ring (McMaster) | CS | depth × width | stretch | squeeze nom (min–max) % | fill nom / worst cold / worst warm % | Verdict |",
+          "|---|---|---|---|---|---|---|---|---|"]
     for k, v in R["glands"].items():
-        pr = v["parker"]
-        rule = f"depth {pr['depth'][0]}–{pr['depth'][1]}, width {pr['w_gas'][0]}–{pr['w_gas'][1]} (gas) / {pr['w_liq'][0]}–{pr['w_liq'][1]} (liquid)" if pr else v["kind"]
-        L.append(f"| {k} | {v['cs']} | {v['depth']:.2f} × {v['width']:.2f} | {v['stretch_pct']:.1f} % | {v['squeeze_nom']:.0f} ({v['squeeze_min']:.0f}–{v['squeeze_max']:.0f}) | "
-                 f"{v['fill_nom']:.0f} / {v['fill_max_cold']:.0f} / {v['fill_max_hot']:.0f} at {v['T_service']:.0f} °C | {rule} |")
+        ring = v.get("ring", "")
+        pn = pns.get(ring, "") if ring else ""
+        w = f"{v['width']:.2f}" + (f" (face {v['width_face']:.2f})" if v.get("dovetail") else "")
+        L.append(f"| {k} | {v.get('closure', '')} | {ring}{' (' + pn + ')' if pn else ''} | {v['cs']} | {v['depth']:.2f} × {w} | {v.get('stretch_signed_pct', v['stretch_pct']):.1f} % | "
+                 f"{v['squeeze_nom']:.0f} ({v['squeeze_min']:.0f}–{v['squeeze_max']:.0f}) | {v['fill_nom']:.0f} / {v['fill_max_cold']:.0f} / {v['fill_max_hot']:.0f} at {v['T_service']:.0f} °C | "
+                 f"{'**' + v['verdict'] + '**' if v['verdict'] != 'OK' else 'OK'} |")
     c = R["clamps"]
     L += ["", f"## Closure forces (FKM 75A: E = {c['E_75A_MPa']:.2f} MPa from Gent; Lindley load per length)", "",
           "| Closure | Seal | Squeeze force | Parker Fig. 2-x range at 25 % | Available |", "|---|---|---|---|---|"]
@@ -551,12 +659,15 @@ def write_md(R):
                  f"{fmt(pr[0], 0)}–{fmt(pr[1], 0)} N |" if pr else f"| {name} | {s['cs']} mm, {s['path_mm']:.0f} mm long, {s['squeeze']:.0f} % | {s['total_N']:.0f} N ({s['N_per_mm']:.2f} N/mm) | – |")
         L[-1] += f" {avail} |"
     row("Lid", c["lid_3p53_25"], f"20 × M5: ≥ {c['lid_screws_preload_N'] / 1000:.0f} kN; vacuum {c['lid_vacuum_force_N']:.0f} N")
-    row("Door, as drawn (3.53 mm)", c["door_3p53_25"], f"vacuum {c['door_vacuum_force_N']:.0f} N; 2 latches rated {c['latch_rating_N']:.0f} N each")
-    row("Door, 3.53 mm at 15 %", c["door_3p53_15"], f"+20 mbar pushes out {c['door_overpressure_20mbar_N']:.0f} N")
-    row("Door, 1.78 mm at 25 %", c["door_1p78_25"], f"vacuum {c['door_vacuum_force_N']:.0f} N")
-    row("Door, 1.78 mm at 15 %", c["door_1p78_15"], "latch preload needed at +20 mbar")
-    row("Drawer", c["drawer_1p78_25"], f"+20 mbar pushes out {c['drawer_out_force_20mbar_N']:.1f} N; nothing clamps it")
-    row("Window (sandwich)", c["window_1p78_25"], f"+20 mbar lifts {c['window_lift_20mbar_N']:.1f} N vs weight {c['window_weight_N']:.2f} N")
+    row("Door, before (3.53 mm cord)", c["door_3p53_25"], f"vacuum {c['door_vacuum_force_N']:.0f} N")
+    row("Door, now (1.78 mm cord) at 25 %", c["door_1p78_25"], f"vacuum {c['door_vacuum_force_N']:.0f} N seats it; at +20 mbar each 1807A61 needs **{c['door_latch_preload_25_N']:.0f} N** "
+        f"of preload (rated {c['latch_rating_N']:.0f} N)")
+    row("Door, now, at 15 %", c["door_1p78_15"], f"each latch needs {c['door_latch_preload_15_N']:.0f} N at +20 mbar")
+    row("Drawer (2-033 in a half-dovetail)", c["drawer_1p78_25"], f"each of 2 quarter-turn latches needs {c['drawer_latch_preload_25_N']:.0f} N; the drawn envelope has no rating yet")
+    row("Reservoir on the dock (2-040)", c["dock_1p78_25"], f"2 deg ramps, mu 0.15: push home {c['dock_push_N']:.0f} N, pull out {c['dock_pull_out_N']:.0f} N, "
+        f"{'self-locking' if c['dock_self_locking'] else 'NOT self-locking'}")
+    row("Reservoir L lid (2-042)", c["reservoir_lid_L_1p78_25"], f"2 × M3 into the top frame: ≥ {c['reservoir_lid_screws_N'] / 1000:.1f} kN")
+    row("Window (2-031 under the window)", c["window_1p78_25"], f"+20 mbar lifts {c['window_lift_20mbar_N']:.1f} N vs weight {c['window_weight_N']:.2f} N; the retaining ring bottoms on metal")
     p = R["permeation"]
     L += ["", "## Permeation (Parker §3.12.1) into the argon loop", "",
           f"Arrhenius temperature scaling with E_a = {p['Ea_He_kJ']:.0f} kJ/mol (Parker's He pair; the N₂ pair gives {p['Ea_N2_kJ']:.0f}).", "",
@@ -595,7 +706,7 @@ def write_md(R):
     L += ["", f"**Soft pump:** the overflow jar needs τ ≥ {sp['tau_needed_s']:.0f} s, i.e. ≤ {sp['S_soft_Ls']:.2f} L/s ({sp['q_std_L_min']:.0f} std L/min) "
           f"until ~100 mbar: a metering valve of Cv ≥ {sp['Cv']:.2f} beside the main valve. Pump-down then takes ~{sp['t_total_to_1mbar_s'] / 60:.1f} min to 1 mbar. {sp['note']}.", ""]
     ro = R["reservoir_open_path"]
-    L += ["", f"Reservoir as drawn (open to the room through the powder column): at +20 mbar, **{ro['argon_out_at_20mbar_sccm']:.0f} sccm of argon leaves through the powder** "
+    L += ["", f"Reservoir before the dock seal and lid seal were drawn (open to the room through the powder column): at +20 mbar, **{ro['argon_out_at_20mbar_sccm']:.0f} sccm of argon leaves through the powder** "
           f"at {ro['superficial_mm_s']:.1f} mm/s superficial velocity, against a minimum fluidization velocity of {ro['u_mf_mm_s']:.1f} mm/s. Pumping down, "
           f"room air comes in at ~{ro['air_in_at_vacuum_sccm']:.0f} sccm.", ""]
     rr = R["rate_of_rise"]

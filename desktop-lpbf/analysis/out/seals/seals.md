@@ -2,59 +2,80 @@
 
 Model: `cad/lpbf_low.build('M50', 'M')`. All forces in N, leaks in std cc/s (sccs) unless noted. Sources are listed at the end.
 
-## Seal inventory
+## Seal inventory (what the model now draws)
 
-| Seal / penetration | Held by | Status | Note |
-|---|---|---|---|
-| Lid O-ring, FKM 75A 3.53 mm cord in a face gland 2.65 x 4.6 in the body's top face | 20 x M5 316 into helical inserts (metal-to-metal) | **OK** | cord spliced into a ring: specify a vulcanized (hot) splice or a molded ring, never a glued joint, for vacuum |
-| Door O-ring, 3.53 mm cord, groove on the door face 2.8 deep x 4.0 wide as drawn | 2 draw latches (McMaster 1807A61) at the top corners + 2 fixed hinges at the bottom; atmosphere under vacuum | **FIX** | gland is not the 2.65 x 4.6 the notes specify; latches were sized for +50 mbar only, not for squeezing the cord (see clamp table) |
-| Window O-ring under the Ø50.8 x 8 fused-silica window; retaining ring 2 mm above the window top | nothing at +20 mbar: the window is 'unclamped' and floats up to 2 mm | **FIX** | +20 mbar lifts the window (3.2 N against its 0.35 N weight); needs an O-ring sandwich clamped to a metal stop |
-| Window flange to lid: 6 x M4, no seal drawn | 6 x M4 | **MISSING** | needs a face O-ring (or make the flange part of the lid) |
-| Cover-slide drawer front plate, ~1.78 mm cord on the lid's front face | nothing (a detent) | **FIX** | at +20 mbar the drawer is pushed out; the cord needs ~0.3-0.5 kN to squeeze: a cam or toggle clamp |
-| Metering base to lid over the 12 x 100 mm dose slot: 4 x M4, no seal drawn | 4 x M4 | **MISSING** | needs a face O-ring round the slot |
-| Reservoir on the dock face (dovetail, spring shutter); reservoir lid is a loose plate | nothing | **FIX** | an open path from room air through the powder column and the roller clearance into the chamber (flow table below) |
-| Metering-roller shaft: PTFE V-ring (McMaster 9572K33) | - | **CHECK** | a V-ring is an excluder, not a vacuum seal; use a magnetic-fluid feedthrough or a magnetic coupling through a can |
-| Recoater screw through the left wall (Ø18 hole): fixed bearing + PTFE V-ring | - | **CHECK** | same as the roller shaft |
-| Recoater screw through the right wall (Ø18 hole): floating bearing housing, open bore | - | **MISSING** | the housing's Ø8 bore is open to the room: make it a blind cap with a face O-ring |
-| KF-25 vacuum port, KF-25 inlet/outlet plenum ports, KF-40 overflow, KF-16 blank | KF clamps | **OK** | Al centering ring + FKM; the stubs are 304 and the body 6061: the stub-to-body joint needs its own O-ring |
-| Inlet plenum (back wall) and outlet plenum (under the floor), 316L on 6061 | M4/M5 (not drawn) | **MISSING** | joints.py lists them as 'each with an FKM O-ring', not drawn; dissimilar metals, so bolted + O-ring, never welded |
-| Argon in (back wall), O2 sample (side wall), pressure transducer and relief valve (lid): 1/4 NPT parts | pipe threads | **CHECK** | NPT into 6061 leaks at vacuum and galls; use SAE/ISO straight-thread O-ring-boss ports or KF/VCR adapters |
-| Through-beam fibre heads in Ø3.2 holes through both side walls (z = +5) | - | **MISSING** | needs O-ring-sealed threaded heads or a window; they also sit in the condensate and spatter zone |
-| Camera viewport adapter with a Ø1 in. window over a Ø22 hole in the lid | screws (not drawn) | **MISSING** | two seals needed: adapter to lid, window to adapter |
-| Module spigot in the Ø96 floor port: FKM 2-238 radial (male gland) | radial; 2 captive M6 | **CHECK** | groove as drawn (root Ø90.2, 3.6 mm wide) is overfilled at worst tolerance (101 %) and light on squeeze (13-21 %); root Ø90.5 x 4.8 wide gives 17-25 % and <= 81 % |
-| Gland plate on the welded collar: 1.78 mm cord face seal | 6 x M4 | **CHECK** | groove 2.4 wide: fill > 90 % at worst tolerance; widen to 2.6 |
-| Hollow rod through the gland plate: 'double FKM 2-114 rod gland' (grooves not drawn) | - | **MISSING** | draw two 2-114 grooves (Ø20.0 groove, Ø15.93 throat) and specify a seamless, polished rod; friction counts against the Z coupling |
-| Rod end: heater and thermocouple leads potted in Torr Seal | - | **FIX** | stranded leads wick gas along the strands through any potting; use a hermetic (glass-to-metal) feedthrough or solid pins |
-| Blower, cyclone + HEPA housing, valves, hoses (KF-25 bellows) | KF clamps | **CHECK** | the HEPA housing in the BOM (McMaster 5169K72) is 1/2 NPSC threaded and its gas-tightness is not stated; the blower must be specified gas-tight |
-| O2 analyser sample loop | fittings | **CHECK** | extractive analysers often have polymer tubing inside; return the sample to the loop, 316L lines, leak-check the analyser |
+| Seal / penetration | Held by | In the model | Status | Note |
+|---|---|---|---|---|
+| Lid O-ring, FKM 75A 3.53 mm cord in a face gland 2.65 x 4.6 in the body's top face | 20 x M5 316 into helical inserts (metal-to-metal) | as before | **OK** | cord spliced into a ring: specify a vulcanized (hot) splice or a molded ring, never a glued joint, for vacuum |
+| Door: 1.78 mm FKM 75A cord (McMaster 96515K123) in a half-dovetail groove, depth 1.32, 2.3 wide at the bottom, 24 deg undercut | 2 x McMaster 1807A61 draw latches (800 lb) on the chamber's side faces pulling strikes on two door ears; floating (slotted) hinge holes | groove, cord, ears, strikes, latch bodies, slotted hinge knuckles | **CHECK** | set each latch to >= the preload in the clamp table; the half-dovetail is overfilled at worst tolerance (gland table); robot: same faces take a pneumatic latch/hold-down clamp (not drawn) |
+| Window: O-ring sandwich, 2-031 FKM under the Ø50.8 x 8 window, 1 mm FKM flat ring over it | retaining ring whose spigot bottoms metal-to-metal on the flange (6 x M3) | seat groove, both rings, stepped retaining ring | **OK** | squeeze set by geometry; the flat ring takes the window's thickness tolerance (FKM sheet not yet sourced) |
+| Window flange to lid: 2-036 FKM face O-ring | 6 x M4 into helical inserts | groove + ring | **OK** |  |
+| Cover-slide drawer: 2-033 FKM ring in a half-dovetail groove on the front plate | 2 quarter-turn latches (envelope; stud in the plate, receptacle in the lid) | groove, ring, latch studs and receptacles (envelope) | **CHECK** | no catalogue quarter-turn latch found that gives >= 0.4 kN in the 20 mm plate (McMaster 5210N21: 0.53 kN, needs a Ø22 hole; Southco E3 compact 450 N, Ø29 head) |
+| Metering base to lid: 2-040 FKM face O-ring round the 12 x 100 dose slot | 4 x M4 | groove + ring | **OK** |  |
+| Reservoir: 2-040 FKM face O-ring in the dock face round a 12 x 100 opening; one 30 x 112 mm base plate for S/M/L; O-ring-sealed lid on a welded top frame | dovetail-rail lips with a 2 deg ramp (robot push ~0.1 kN) + spring-plunger detent; lid on 2 x M3 | dock groove + ring, lips, single plate, top frame, lid groove + ring (2-023 / 2-030 / 2-042), shutter slot closed at both ends | **CHECK** | the ramps and the detent are not drawn; the shutter's drive through its closed slot (e.g. magnetic) is not designed |
+| Metering-roller shaft: Ferrotec SSL-005-NN magnetic-fluid feedthrough, M8 x 1 nose, 2-012 FKM shoulder O-ring | its nut | feedthrough envelope, coupling, stepper moved back | **OK** | price not published; split of the 65.5 mm length assumed |
+| Recoater screw, left wall: Ferrotec SFL-006-NN magnetic-fluid feedthrough on a 9 mm spacer ring (2 x 2-024) | its flange screws | feedthrough, spacer, 2 rings, clamp coupling in the wall bore, motor moved out | **OK** | price not published; bearing load rating to be checked against the screw's axial load |
+| Recoater screw, right wall: blind bearing cap with a 2-020 FKM face O-ring | 4 x M4 | cap, groove, ring, screws | **OK** |  |
+| KF-25 vacuum port: stub welded into a 304 adapter plate, 2-024 FKM face O-ring on the 6061 wall | 4 x M5 | plate, groove, ring, screws | **OK** | other KF stubs are welded to 316L parts (plenums, funnel) or machined in 6061 (side reservoir port) |
+| Inlet (back wall) and outlet (under the floor) plenums, 316L on 6061: 2-044 FKM face O-rings | 9 x M4 and 6 x M4 (counterbored) | bolting flanges, grooves, rings, screws | **OK** | never welded (dissimilar metals) |
+| Overflow funnel block (316L) under the floor: 2-042 FKM face O-ring | 4 x M4 (counterbored) | groove, ring, screws | **OK** |  |
+| Argon in, O2 sample, pressure transducer, relief valve: SAE J1926 -4 (7/16-20) O-ring-boss ports, AS568-904 FKM | straight thread | ports (thread, 12 deg O-ring chamfer, Ø4 drilling); stems of the transducer and valve | **OK** | fittings McMaster 5182K862; transducer and relief valve must be ordered with SAE-4 male ends (not confirmed) |
+| Through-beam fibre heads: M6 threaded heads into tapped holes, 2-010 FKM face O-rings | thread | tapped holes, grooves, rings, heads | **CHECK** | a fibre head with an M6 body and a sealing flange is not yet chosen |
+| Camera: adapter to lid 2-022, Ø1 in. window on 2-017 + 1 mm FKM flat ring under a screwed retaining ring | screws (not drawn) | both grooves, rings, window, retaining ring; boss moved onto the line of sight | **OK** | the old Ø22 bore broke through the boss wall: fixed |
+| Module spigot in the Ø96 floor port: FKM 2-238 radial, groove root Ø90.5 x 4.8 | radial; 2 captive M6 | groove and ring | **OK** |  |
+| Gland plate on the welded collar: face groove 2.6 wide; 2-024 / 2-034 / 2-041 for S25 / M50 / L75 | 6 x M4 x 20 | groove, ring; plate 14 mm (was 10) | **OK** |  |
+| Hollow rod through the gland plate: two Parker rod glands, groove Ø20.0, throat Ø15.93 (2-114; S25: 2-110, Ø13.64) | - | two grooves, two rings; rod labelled seamless and polished | **CHECK** | friction counts against the Z coupling (mech.md); measure break-out |
+| Rod end: hermetic receptacle on a side boss, 2-014 FKM face O-ring | panel nut | boss, groove, ring, connector envelope (LEMO 1B HGG.1B.310); rod end 24 mm tall (was 14) | **CHECK** | the LEMO part's published 2 A / 1e-7 mbar L/s misses the spec; KF-16 feedthroughs that meet it (Accu-Glass 9C-K16, MPF A0408-2-QF) need a KF-16 port on the rod end |
+| Blower, cyclone + HEPA housing, valves, hoses (KF-25 bellows) | KF clamps | unchanged | **CHECK** | the HEPA housing in the BOM (McMaster 5169K72) is 1/2 NPSC threaded and its gas-tightness is not stated; the blower must be specified gas-tight |
+| O2 analyser sample loop | fittings | unchanged | **CHECK** | extractive analysers often have polymer tubing inside; return the sample to the loop, 316L lines, leak-check the analyser |
 
-## Gland checks (Parker ORD 5700, AS568 tolerance, ±0.05 mm machining)
+## Gland checks: every gland the model draws (Parker ORD 5700, AS568 tolerance, ±0.05 mm machining, FKM swell with temperature)
 
-| Gland | CS | depth × width | stretch | squeeze nom (min–max) % | fill nom / worst cold / worst warm % | Parker face rule |
-|---|---|---|---|---|---|---|
-| lid | 3.53 | 2.65 × 4.60 | 0.0 % | 25 (21–28) | 80 / 88 / 89 at 70 °C | depth 2.57–2.72, width 4.01–4.17 (gas) / 4.5–4.75 (liquid) |
-| door_as_drawn | 3.53 | 2.80 × 4.00 | 0.0 % | 21 (17–24) | 87 / 95 / 97 at 60 °C | depth 2.57–2.72, width 4.01–4.17 (gas) / 4.5–4.75 (liquid) |
-| door_spec | 3.53 | 2.65 × 4.60 | 0.0 % | 25 (21–28) | 80 / 88 / 89 at 60 °C | depth 2.57–2.72, width 4.01–4.17 (gas) / 4.5–4.75 (liquid) |
-| door_1p78_halfdovetail | 1.78 | 1.32 × 2.30 | 0.0 % | 26 (20–32) | 82 / 95 / 96 at 60 °C | depth 1.27–1.37, width 2.13–2.26 (gas) / 2.57–2.72 (liquid) |
-| window_1p78 | 1.78 | 1.32 × 2.30 | 0.0 % | 26 (20–32) | 82 / 95 / 97 at 80 °C | depth 1.27–1.37, width 2.13–2.26 (gas) / 2.57–2.72 (liquid) |
-| drawer_1p78 | 1.78 | 1.32 × 2.30 | 0.0 % | 26 (20–32) | 82 / 95 / 96 at 60 °C | depth 1.27–1.37, width 2.13–2.26 (gas) / 2.57–2.72 (liquid) |
-| spigot_as_drawn | 3.53 | 2.90 × 3.60 | 1.9 % | 17 (13–21) | 92 / 101 / 102 at 60 °C | radial |
-| spigot_groove_90p5_w4p8 | 3.53 | 2.75 × 4.80 | 2.3 % | 21 (17–25) | 73 / 79 / 81 at 60 °C | radial |
-| gland_plate_as_drawn | 1.78 | 1.30 × 2.40 | 0.0 % | 27 (21–33) | 80 / 92 / 94 at 60 °C | depth 1.27–1.37, width 2.13–2.26 (gas) / 2.57–2.72 (liquid) |
-| gland_plate_2p6 | 1.78 | 1.30 × 2.60 | 0.0 % | 27 (21–33) | 74 / 85 / 86 at 60 °C | depth 1.27–1.37, width 2.13–2.26 (gas) / 2.57–2.72 (liquid) |
-| rod_2_114 | 2.62 | 2.06 × 3.60 | 0.0 % | 21 (17–26) | 73 / 80 / 83 at 110 °C | rod |
+Stretch is the ring's ID onto the groove's inner wall (face), the groove root (radial) or the rod. Half-dovetail fill uses the trapezoid's area. Verdict flags squeeze outside 15-32 %, fill above 90 % at worst tolerance when warm, or stretch above 5 %.
+
+| Gland | Closure | Ring (McMaster) | CS | depth × width | stretch | squeeze nom (min–max) % | fill nom / worst cold / worst warm % | Verdict |
+|---|---|---|---|---|---|---|---|---|
+| lid | chamber lid (20 x M5) | 3.53 mm cord | 3.53 | 2.65 × 4.60 | 0.0 % | 25 (21–28) | 80 / 88 / 89 at 70 °C | OK |
+| spigot | module spigot in the floor port | 2-238 (9464K365) | 3.53 | 2.75 × 4.80 | 2.3 % | 21 (17–25) | 73 / 79 / 81 at 60 °C | OK |
+| gland_plate_M50 | gland plate on the welded collar (M50) | 2-034 (9464K791) | 1.78 | 1.30 × 2.60 | 1.5 % | 26 (20–32) | 73 / 84 / 85 at 60 °C | **squeeze > 32 % at tolerance** |
+| rod_M50 | hollow rod through the gland plate (M50) | 2-114 (9464K982) | 2.62 | 2.06 × 3.60 | 2.2 % | 21 (16–25) | 71 / 78 / 82 at 110 °C | OK |
+| hermetic_M50 | hermetic connector on the rod end (M50) | 2-014 (not confirmed) | 1.78 | 1.32 × 2.30 | 1.4 % | 25 (19–31) | 81 / 94 / 94 at 40 °C | **fill > 90 % at worst tolerance, warm** |
+| overflow_funnel | overflow funnel block (316L) under the floor | 2-042 (9464K849) | 1.78 | 1.32 × 2.30 | 2.0 % | 25 (19–31) | 81 / 93 / 94 at 50 °C | **fill > 90 % at worst tolerance, warm** |
+| inlet_plenum | inlet plenum (316L) on the back wall (6061) | 2-044 (9464K865) | 1.78 | 1.32 × 2.30 | 2.0 % | 25 (19–31) | 81 / 93 / 94 at 45 °C | **fill > 90 % at worst tolerance, warm** |
+| outlet_plenum | outlet plenum (316L) under the floor (6061) | 2-044 (9464K865) | 1.78 | 1.32 × 2.30 | 2.0 % | 25 (19–31) | 81 / 93 / 94 at 45 °C | **fill > 90 % at worst tolerance, warm** |
+| vacuum_port | KF-25 vacuum-port adapter plate on the right wall | 2-024 (9464K753) | 1.78 | 1.32 × 2.30 | 2.5 % | 25 (19–31) | 80 / 93 / 93 at 40 °C | **fill > 90 % at worst tolerance, warm** |
+| fibre_heads | threaded fibre heads in the side walls | 2-010 (9464K372) | 1.78 | 1.32 × 2.30 | 2.1 % | 25 (19–31) | 80 / 93 / 94 at 45 °C | **fill > 90 % at worst tolerance, warm** |
+| recoater_feedthrough | recoater feedthrough flange on the left wall | 2-024 (9464K753) | 1.78 | 1.32 × 2.30 | 2.5 % | 25 (19–31) | 80 / 93 / 93 at 40 °C | **fill > 90 % at worst tolerance, warm** |
+| recoater_cap | blind bearing cap on the right wall | 2-019 (9464K478) | 1.78 | 1.32 × 2.30 | 2.2 % | 25 (19–31) | 80 / 93 / 94 at 40 °C | **fill > 90 % at worst tolerance, warm** |
+| window_lower | window on its seat | 2-031 (9464K775) | 1.78 | 1.32 × 2.30 | 1.7 % | 25 (19–31) | 81 / 93 / 96 at 80 °C | **fill > 90 % at worst tolerance, warm** |
+| window_flange | window flange on the lid | 2-036 (9464K793) | 1.78 | 1.32 × 2.30 | 2.6 % | 25 (19–31) | 80 / 93 / 94 at 60 °C | **fill > 90 % at worst tolerance, warm** |
+| drawer | cover-slide drawer on the lid's front face | 2-033 (9464K788) | 1.78 | 1.32 × 2.30 (face 1.71) | 2.0 % | 26 (20–32) | 94 / 109 / 111 at 60 °C | **overfilled at worst tolerance, warm; face opening does not retain the cord** |
+| metering_base | metering base on the lid (4 x M4) | 2-040 (9464K825) | 1.78 | 1.32 × 2.30 | 2.0 % | 25 (19–31) | 81 / 93 / 94 at 45 °C | **fill > 90 % at worst tolerance, warm** |
+| reservoir_dock | reservoir base plate on the dock face (wedge rails + detent) | 2-040 (9464K825) | 1.78 | 1.32 × 2.30 | 2.0 % | 25 (19–31) | 81 / 93 / 94 at 45 °C | **fill > 90 % at worst tolerance, warm** |
+| roller_feedthrough | roller feedthrough in the metering base | 2-012 (not confirmed) | 1.78 | 1.32 × 2.30 | 2.7 % | 25 (19–31) | 80 / 93 / 93 at 45 °C | **fill > 90 % at worst tolerance, warm** |
+| reservoir_lid_M | reservoir M lid on its top frame | 2-030 (9464K774) | 1.78 | 1.32 × 2.30 | 2.0 % | 25 (19–31) | 81 / 93 / 94 at 45 °C | **fill > 90 % at worst tolerance, warm** |
+| camera_adapter | camera adapter on the lid | 2-022 (9464K492) | 1.78 | 1.32 × 2.30 | 2.7 % | 25 (19–31) | 80 / 93 / 93 at 45 °C | **fill > 90 % at worst tolerance, warm** |
+| camera_window | camera window on the boss | 2-017 (9464K457) | 1.78 | 1.32 × 2.30 | 2.5 % | 25 (19–31) | 80 / 93 / 94 at 45 °C | **fill > 90 % at worst tolerance, warm** |
+| door | chamber door | cord | 1.78 | 1.32 × 2.30 (face 1.71) | 0.0 % | 26 (20–32) | 94 / 109 / 111 at 60 °C | **overfilled at worst tolerance, warm; face opening does not retain the cord** |
+| gland_plate_S25 | gland plate on the welded collar (S25) | 2-024 (9464K753) | 1.78 | 1.30 × 2.60 | 1.5 % | 26 (20–32) | 73 / 84 / 85 at 60 °C | **squeeze > 32 % at tolerance** |
+| rod_S25 | hollow rod through the gland plate (S25) | 2-110 (9464K977) | 2.62 | 2.06 × 3.60 | 3.6 % | 20 (16–24) | 71 / 78 / 81 at 110 °C | OK |
+| gland_plate_L75 | gland plate on the welded collar (L75) | 2-041 (9464K836) | 1.78 | 1.30 × 2.60 | 3.3 % | 26 (20–32) | 72 / 83 / 84 at 60 °C | OK |
+| rod_L75 | hollow rod through the gland plate (L75) | 2-114 (9464K982) | 2.62 | 2.06 × 3.60 | 2.2 % | 21 (16–25) | 71 / 78 / 82 at 110 °C | OK |
+| reservoir_lid_S | reservoir S lid on its top frame | 2-022 (9464K492) | 1.78 | 1.32 × 2.30 | 2.0 % | 25 (19–31) | 81 / 93 / 94 at 45 °C | **fill > 90 % at worst tolerance, warm** |
+| reservoir_lid_L | reservoir L lid on its top frame | 2-042 (9464K849) | 1.78 | 1.32 × 2.30 | 2.0 % | 25 (19–31) | 81 / 93 / 94 at 45 °C | **fill > 90 % at worst tolerance, warm** |
 
 ## Closure forces (FKM 75A: E = 7.05 MPa from Gent; Lindley load per length)
 
 | Closure | Seal | Squeeze force | Parker Fig. 2-x range at 25 % | Available |
 |---|---|---|---|---|
 | Lid | 3.53 mm, 978 mm long, 25 % | 4103 N (4.19 N/mm) | 2.19e+03–9.42e+03 N | 20 × M5: ≥ 48 kN; vacuum 5907 N |
-| Door, as drawn (3.53 mm) | 3.53 mm, 669 mm long, 25 % | 2805 N (4.19 N/mm) | 1.50e+03–6.44e+03 N | vacuum 2445 N; 2 latches rated 3558 N each |
-| Door, 3.53 mm at 15 % | 3.53 mm, 669 mm long, 15 % | 1219 N (1.82 N/mm) | – | +20 mbar pushes out 48 N |
-| Door, 1.78 mm at 25 % | 1.78 mm, 669 mm long, 25 % | 1414 N (2.11 N/mm) | 890–2.46e+03 N | vacuum 2445 N |
-| Door, 1.78 mm at 15 % | 1.78 mm, 669 mm long, 15 % | 614 N (0.92 N/mm) | – | latch preload needed at +20 mbar |
-| Drawer | 1.78 mm, 163 mm long, 25 % | 345 N (2.11 N/mm) | 217–601 N | +20 mbar pushes out 2.4 N; nothing clamps it |
-| Window (sandwich) | 1.78 mm, 139 mm long, 25 % | 294 N (2.11 N/mm) | 185–511 N | +20 mbar lifts 3.3 N vs weight 0.35 N |
+| Door, before (3.53 mm cord) | 3.53 mm, 662 mm long, 25 % | 2778 N (4.19 N/mm) | 1.48e+03–6.38e+03 N | vacuum 2445 N |
+| Door, now (1.78 mm cord) at 25 % | 1.78 mm, 662 mm long, 25 % | 1401 N (2.11 N/mm) | 882–2.44e+03 N | vacuum 2445 N seats it; at +20 mbar each 1807A61 needs **725 N** of preload (rated 3558 N) |
+| Door, now, at 15 % | 1.78 mm, 662 mm long, 15 % | 609 N (0.92 N/mm) | – | each latch needs 328 N at +20 mbar |
+| Drawer (2-033 in a half-dovetail) | 1.78 mm, 169 mm long, 25 % | 358 N (2.11 N/mm) | 225–622 N | each of 2 quarter-turn latches needs 180 N; the drawn envelope has no rating yet |
+| Reservoir on the dock (2-040) | 1.78 mm, 240 mm long, 25 % | 508 N (2.11 N/mm) | 320–884 N | 2 deg ramps, mu 0.15: push home 94 N, pull out 58 N, self-locking |
+| Reservoir L lid (2-042) | 1.78 mm, 271 mm long, 25 % | 573 N (2.11 N/mm) | 360–996 N | 2 × M3 into the top frame: ≥ 1.7 kN |
+| Window (2-031 under the window) | 1.78 mm, 148 mm long, 25 % | 314 N (2.11 N/mm) | 197–545 N | +20 mbar lifts 3.3 N vs weight 0.35 N; the retaining ring bottoms on metal |
 
 ## Permeation (Parker §3.12.1) into the argon loop
 
@@ -63,27 +84,37 @@ Arrhenius temperature scaling with E_a = 37 kJ/mol (Parker's He pair; the N₂ p
 | Seal | T (°C) | O₂ (sccs) | H₂O (sccs) |
 |---|---|---|---|
 | lid | 50 | 9.61e-07 | 8.66e-06 |
-| door | 45 | 5.31e-07 | 4.78e-06 |
-| window (sandwich, inner ring) | 60 | 2.09e-07 | 1.88e-06 |
-| window flange to lid | 60 | 3.78e-07 | 3.41e-06 |
-| camera adapter + its window | 45 | 1.51e-07 | 1.36e-06 |
-| metering base to lid | 45 | 2.15e-07 | 1.94e-06 |
-| reservoir dock face (proposed) | 45 | 2.29e-07 | 2.06e-06 |
-| reservoir lid (proposed) | 45 | 2.53e-07 | 2.28e-06 |
-| drawer | 50 | 1.57e-07 | 1.41e-06 |
-| plenums (2) | 45 | 5.44e-07 | 4.90e-06 |
+| spigot (2-238) | 56 | 4.52e-07 | 4.07e-06 |
+| gland_plate_M50 (2-034) | 60 | 2.62e-07 | 2.36e-06 |
+| rod_M50 (2-114) | 117 | 6.44e-07 | 5.81e-06 |
+| hermetic_M50 (2-014) | 40 | 2.64e-08 | 2.37e-07 |
+| overflow_funnel (2-042) | 50 | 2.64e-07 | 2.38e-06 |
+| inlet_plenum (2-044) | 45 | 2.45e-07 | 2.20e-06 |
+| outlet_plenum (2-044) | 45 | 2.45e-07 | 2.20e-06 |
+| vacuum_port (2-024) | 40 | 5.93e-08 | 5.34e-07 |
+| fibre_heads (2-010) | 45 | 1.24e-08 | 1.12e-07 |
+| recoater_feedthrough (2-024) | 40 | 5.93e-08 | 5.34e-07 |
+| recoater_cap (2-019) | 40 | 4.28e-08 | 3.86e-07 |
+| window_lower (2-031) | 60 | 2.15e-07 | 1.93e-06 |
+| window_flange (2-036) | 60 | 2.94e-07 | 2.65e-06 |
+| drawer (2-033) | 50 | 1.63e-07 | 1.46e-06 |
+| metering_base (2-040) | 45 | 1.88e-07 | 1.69e-06 |
+| reservoir_dock (2-040) | 45 | 1.88e-07 | 1.69e-06 |
+| roller_feedthrough (2-012) | 45 | 2.52e-08 | 2.27e-07 |
+| reservoir_lid_M (2-030) | 45 | 1.06e-07 | 9.59e-07 |
+| camera_adapter (2-022) | 45 | 6.61e-08 | 5.96e-07 |
+| camera_window (2-017) | 45 | 4.55e-08 | 4.10e-07 |
+| SAE-4 port O-rings (4 x 3-904) | 45 | 8.97e-08 | 8.08e-07 |
+| door (cord) | 45 | 5.26e-07 | 4.73e-06 |
 | KF-25 (7) + KF-40 (2) + KF-16 (1) centering rings | 35 | 4.49e-07 | 4.05e-06 |
-| spigot 2-238 | 56 | 4.46e-07 | 4.02e-06 |
-| gland plate | 45 | 1.39e-07 | 1.25e-06 |
-| rod gland 2 x 2-114 (in tandem: the outer one carries the gradient) | 117 | 6.54e-07 | 5.89e-06 |
-| **Total** | | **5.32e-06** | **4.79e-05** |
+| **Total** | | **5.63e-06** | **5.07e-05** |
 
 Gas envelope 11.3 L (chamber 6.4, hoses 1.5, filter housing 2.3, plenums and blower 1.1).
-Permeation alone adds **1.67 ppm O₂/h** and 15.01 ppm H₂O/h with no make-up flow.
+Permeation alone adds **1.76 ppm O₂/h** and 15.89 ppm H₂O/h with no make-up flow.
 Outgassing of 4605 cm² of bare Al and 18 cm² of exposed FKM after ~1 h: 3.68e-05 + 2.37e-05 mbar·L/s, **19 ppm H₂O/h**, falling roughly as 1/t.
 150 g of powder holding 150 ppm (new, Karl Fischer [11]) to 300 ppm water by mass carries 22–45 mg: **2486–4971 ppmv** in the loop if a 200 °C plate drives it off.
 
-Make-up argon to hold the targets at steady state: 35.4 sccm for 10 ppm O₂ against permeation; 51 sccm for a −40 °C dew point against wall and seal outgassing.
+Make-up argon to hold the targets at steady state: 37.5 sccm for 10 ppm O₂ against permeation; 53 sccm for a −40 °C dew point against wall and seal outgassing.
 
 Other leak sources (air at 1 atm, mbar·L/s; vendor-typical ranges):
 
@@ -118,11 +149,11 @@ Pump 4396K21: 1.42 L/s displacement; through two KF-25 bellows S_eff = 1.42 L/s 
 **Soft pump:** the overflow jar needs τ ≥ 25 s, i.e. ≤ 0.44 L/s (27 std L/min) until ~100 mbar: a metering valve of Cv ≥ 0.14 beside the main valve. Pump-down then takes ~1.6 min to 1 mbar. metering valve with Cv >= this in parallel with the KF-25 valve; open the main valve below ~100 mbar. Back-fill through the same limit (the flowmeter-regulator 78595A5 set <= 25 L/min) and a sintered diffuser.
 
 
-Reservoir as drawn (open to the room through the powder column): at +20 mbar, **299 sccm of argon leaves through the powder** at 8.9 mm/s superficial velocity, against a minimum fluidization velocity of 2.8 mm/s. Pumping down, room air comes in at ~9431 sccm.
+Reservoir before the dock seal and lid seal were drawn (open to the room through the powder column): at +20 mbar, **299 sccm of argon leaves through the powder** at 8.9 mm/s superficial velocity, against a minimum fluidization velocity of 2.8 mm/s. Pumping down, room air comes in at ~9431 sccm.
 
 ## Rate-of-rise acceptance test
 
-Leak budget 1.00e-04 mbar·L/s in 11.3 L is a rise of 5.33e-04 mbar/min; outgassing after ~1 h adds 3.23e-04 mbar/min. isolate at <= 1 mbar after >= 1 h pumping; read a Pirani or capacitance gauge for 10 min.
+Leak budget 1.00e-04 mbar·L/s in 11.3 L is a rise of 5.33e-04 mbar/min; outgassing after ~1 h adds 3.22e-04 mbar/min. isolate at <= 1 mbar after >= 1 h pumping; read a Pirani or capacitance gauge for 10 min.
 
 ## Sources
 

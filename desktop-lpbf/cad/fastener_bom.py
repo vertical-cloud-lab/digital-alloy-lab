@@ -20,7 +20,8 @@ import fasteners as FS  # noqa: E402
 import joints as J  # noqa: E402
 import lpbf_low as M  # noqa: E402
 
-MODULE_KEYS = ("module_flange", "stack_", "gland_", "handle_", "rod_", "striker_")   # joints that come with each module
+MODULE_KEYS = ("module_flange", "stack_", "gland_", "handle_", "rod_", "striker_", "res_lid")   # joints that come with each module
+                                                                                                # (and its reservoir: the lid screws)
 
 
 def pack_qty(sold_as):

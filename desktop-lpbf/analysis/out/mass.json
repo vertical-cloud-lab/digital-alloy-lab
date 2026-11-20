@@ -1,11 +1,11 @@
 {
  "modules": {
   "process": {
-   "mass_kg": 82.3,
+   "mass_kg": 84.2,
    "com_mm": [
-    -24.6,
+    -25.5,
     0.2,
-    58.3
+    57.3
    ],
    "foot": [
     -370.0,
@@ -13,9 +13,9 @@
     -265.0,
     215.0
    ],
-   "com_height_above_tray_mm": 270.3,
+   "com_height_above_tray_mm": 269.3,
    "min_lever_mm": 184.8,
-   "tip_accel_g": 0.68
+   "tip_accel_g": 0.69
   },
   "gas": {
    "mass_kg": 60.6,
@@ -60,22 +60,22 @@
    ]
   }
  },
- "total_kg": 264.5,
+ "total_kg": 266.4,
  "tray_limits_kg": {
   "Kardex Shuttle XP 500, 2450 mm tray (strong tray)": 490.0,
   "Modula MC50D": 500.0
  },
  "by_material": {
-  "mixed (vendor unit; mass from datasheet or estimate)": 140.0,
-  "6061-T6 aluminium": 56.4,
+  "mixed (vendor unit; mass from datasheet or estimate)": 140.6,
+  "6061-T6 aluminium": 56.3,
   "bearing / alloy steel": 26.0,
   "MIC-6 cast tooling plate": 23.5,
-  "316L stainless": 12.4,
+  "316L stainless": 13.2,
   "brass": 3.2,
-  "304 stainless": 2.2,
+  "304 stainless": 2.9,
   "laser-safety polycarbonate": 0.5,
   "AlSi10Mg powder (~50 % packing)": 0.1,
-  "UV fused silica": 0.0,
+  "UV fused silica": 0.1,
   "FKM (Viton) 75A": 0.0,
   "Macor machinable glass-ceramic": 0.0,
   "PTFE": 0.0,
@@ -206,12 +206,12 @@
    "part": "Process chamber body (6061-T6, ~6.4 L)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 7.363,
+   "mass_kg": 7.345,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    -2.0194657793417,
-    12.029213065227065,
-    30.450365152705313
+    -2.2055629618193526,
+    11.991485137996253,
+    30.4597472003293
    ]
   },
   {
@@ -323,27 +323,15 @@
    ]
   },
   {
-   "part": "Recoater motor bracket",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 2.777,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -266.0,
-    72.0,
-    -74.3
-   ]
-  },
-  {
    "part": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 2.657,
+   "mass_kg": 2.651,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    1.2333684729819268,
-    2.6156342551461065,
-    127.99470208150866
+    1.1802102877850273,
+    2.737039389906295,
+    127.98984590830568
    ]
   },
   {
@@ -356,6 +344,18 @@
     -0.6053523647650997,
     1.276334892802327e-15,
     287.6068688669593
+   ]
+  },
+  {
+   "part": "Recoater motor bracket",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 2.499,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -302.0,
+    72.0,
+    -74.3
    ]
   },
   {
@@ -374,12 +374,12 @@
    "part": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "module": "process",
    "material": "316L stainless",
-   "mass_kg": 1.74,
+   "mass_kg": 1.734,
    "basis": "316L stainless x volume",
    "com": [
-    -3.0352289995672135e-14,
-    -1.3858276709888274e-15,
-    -29.03423445803052
+    -2.490359607026216e-14,
+    -1.7095061752403207e-15,
+    -29.090801647956443
    ]
   },
   {
@@ -391,7 +391,7 @@
    "com": [
     64.0,
     80.0,
-    -137.4781546432872
+    -151.4781546432872
    ]
   },
   {
@@ -401,7 +401,7 @@
    "mass_kg": 1.6,
    "basis": "catalogue/estimate",
    "com": [
-    -265.44758189115544,
+    -306.44758189115544,
     72.0,
     40.0
    ]
@@ -427,7 +427,19 @@
    "com": [
     1.515542541551801e-16,
     80.0,
-    -137.50000000000003
+    -151.5
+   ]
+  },
+  {
+   "part": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 1.293,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    1.507941645581787e-15,
+    -118.52491210464045,
+    53.99999999999994
    ]
   },
   {
@@ -479,18 +491,6 @@
    ]
   },
   {
-   "part": "Chamber door (6061-T6, 15 mm, drops down)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 1.184,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    5.393185935578261e-15,
-    -118.60404142343687,
-    54.00000000000001
-   ]
-  },
-  {
    "part": "Vacuum isolation valve (KF-25 angle, pneumatic)",
    "module": "process",
    "material": "304 stainless",
@@ -500,6 +500,30 @@
     196.42938719624556,
     0.2849572782126151,
     73.71930640709388
+   ]
+  },
+  {
+   "part": "Z bracket + fold-back belt housing (2:1)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.755,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    38.142940968825535,
+    77.98139433170248,
+    -65.59071297322866
+   ]
+  },
+  {
+   "part": "Cross-flow inlet plenum + nozzle (316L, bolted flange)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.681,
+   "basis": "316L stainless x volume",
+   "com": [
+    -8.893131591547417e-16,
+    126.08633672757078,
+    11.025748901099341
    ]
   },
   {
@@ -527,18 +551,6 @@
    ]
   },
   {
-   "part": "Z bracket + fold-back belt housing (2:1)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.606,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    38.055251113096865,
-    77.976824979785,
-    -58.612284413547265
-   ]
-  },
-  {
    "part": "f-theta lens, f = 160 mm (FTH160-1064 envelope)",
    "module": "process",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
@@ -563,39 +575,51 @@
    ]
   },
   {
-   "part": "Overflow funnel block (316L)",
+   "part": "Overflow funnel block (316L, bolted, FKM face O-ring)",
    "module": "process",
    "material": "316L stainless",
-   "mass_kg": 0.55,
+   "mass_kg": 0.592,
    "basis": "316L stainless x volume",
    "com": [
     99.99999999999999,
-    -9.250380182013826e-16,
-    -31.835027724691052
+    -2.751692861766615e-15,
+    -31.80144924029288
    ]
   },
   {
-   "part": "Cross-flow inlet plenum + nozzle (316L)",
+   "part": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "module": "process",
    "material": "316L stainless",
-   "mass_kg": 0.514,
+   "mass_kg": 0.528,
    "basis": "316L stainless x volume",
    "com": [
-    1.9727492954187917e-15,
-    129.99507954494433,
-    10.999999999999995
+    -1.3430488552644595e-16,
+    0.10164368106905673,
+    -99.04918277264734
    ]
   },
   {
-   "part": "Metering base (6061, fluted roller over a 100 mm dose line)",
+   "part": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
    "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.509,
-   "basis": "6061-T6 aluminium x volume",
+   "material": "316L stainless",
+   "mass_kg": 0.527,
+   "basis": "316L stainless x volume",
    "com": [
-    -90.00000000000004,
-    0.15281400414730634,
-    157.3621820744607
+    20.162283171911238,
+    -90.47932581066031,
+    -31.676542089876882
+   ]
+  },
+  {
+   "part": "Draw latches on the chamber's side faces (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.5,
+   "basis": "catalogue/estimate",
+   "com": [
+    2.0622183967996387e-15,
+    -70.0,
+    53.99999999999999
    ]
   },
   {
@@ -635,6 +659,18 @@
    ]
   },
   {
+   "part": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.471,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -89.89872017142703,
+    -0.1818805961788616,
+    156.22875892897952
+   ]
+  },
+  {
    "part": "Recoater guide rail (15 mm, 270 mm)",
    "module": "process",
    "material": "bearing / alloy steel",
@@ -644,6 +680,18 @@
     -0.1656084057936198,
     87.58329274112049,
     82.0
+   ]
+  },
+  {
+   "part": "Recoater fixed bearing: magnetic-fluid rotary feedthrough Ferrotec SFL-006-NN on the left wall (Ferrotec SFL-006-NN; FKM face O-ring)",
+   "module": "process",
+   "material": "mixed (vendor unit; mass from datasheet or estimate)",
+   "mass_kg": 0.45,
+   "basis": "catalogue/estimate",
+   "com": [
+    -186.03522710238346,
+    72.00000000000001,
+    40.00000000000001
    ]
   },
   {
@@ -671,27 +719,15 @@
    ]
   },
   {
-   "part": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; double FKM O-ring rod gland)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.38,
-   "basis": "316L stainless x volume",
-   "com": [
-    -1.0085039174335257e-15,
-    0.14107443352235427,
-    -97.04560981747201
-   ]
-  },
-  {
-   "part": "Window flange (6061)",
+   "part": "Window flange (6061, two FKM O-ring grooves)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 0.341,
+   "mass_kg": 0.351,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    9.782574671473745e-16,
-    -1.9799354629741524e-15,
-    146.77416408928838
+    -3.6966723430749385e-15,
+    -2.7593729191372717e-15,
+    146.62511831483386
    ]
   },
   {
@@ -702,20 +738,8 @@
    "basis": "catalogue/estimate",
    "com": [
     -90.0,
-    93.77624167537766,
+    140.77624167537766,
     164.0
-   ]
-  },
-  {
-   "part": "Cross-flow outlet plenum under the floor (316L, flat over the module path)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.314,
-   "basis": "316L stainless x volume",
-   "com": [
-    37.761837059439806,
-    -90.99798734002388,
-    -34.14389473922645
    ]
   },
   {
@@ -734,10 +758,10 @@
    "part": "Recoater ball screw (M12, 10 mm lead)",
    "module": "process",
    "material": "bearing / alloy steel",
-   "mass_kg": 0.264,
+   "mass_kg": 0.265,
    "basis": "bearing / alloy steel x volume",
    "com": [
-    0.0,
+    5.499999999999972,
     72.0,
     40.0
    ]
@@ -764,6 +788,18 @@
     694.9999999999998,
     24.999999999999932,
     -198.81619469266988
+   ]
+  },
+  {
+   "part": "Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 module; same 30 x 112 mm dock plate for every size)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.235,
+   "basis": "304 stainless x volume",
+   "com": [
+    -90.0,
+    1.1594517166568615e-15,
+    212.393418392712
    ]
   },
   {
@@ -815,6 +851,18 @@
    ]
   },
   {
+   "part": "Pressure transducer (7/16-20 SAE-4 O-ring-boss port)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.184,
+   "basis": "316L stainless x volume",
+   "com": [
+    99.99999999999999,
+    49.99999999999999,
+    169.1408123973598
+   ]
+  },
+  {
    "part": "Recoater carriage block (6061)",
    "module": "process",
    "material": "6061-T6 aluminium",
@@ -836,6 +884,18 @@
     30.43081027995914,
     83.68517710310677,
     -24.958310289310234
+   ]
+  },
+  {
+   "part": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.175,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    2.676790850770046e-15,
+    -70.19211130911697,
+    127.71839637950258
    ]
   },
   {
@@ -863,27 +923,15 @@
    ]
   },
   {
-   "part": "Pressure transducer",
+   "part": "Vacuum port adapter plate (304, 8 mm, FKM face O-ring)",
    "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.163,
-   "basis": "316L stainless x volume",
+   "material": "304 stainless",
+   "mass_kg": 0.167,
+   "basis": "304 stainless x volume",
    "com": [
-    100.0,
-    50.00000000000001,
-    173.05243676742754
-   ]
-  },
-  {
-   "part": "Cover-slide drawer (6061, robot pull tab)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.154,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    1.1599634246426864e-15,
-    -63.858033311430574,
-    128.00000000000003
+    160.0476342567765,
+    9.261480832392858e-16,
+    69.99999999999997
    ]
   },
   {
@@ -893,21 +941,9 @@
    "mass_kg": 0.15,
    "basis": "catalogue/estimate",
    "com": [
-    99.0806018427717,
-    -59.44836110566302,
-    191.66615800822598
-   ]
-  },
-  {
-   "part": "Reservoir M (97 cm3, 304 SS wedge hopper, 70 mm outlet for the M50 module)",
-   "module": "process",
-   "material": "304 stainless",
-   "mass_kg": 0.144,
-   "basis": "304 stainless x volume",
-   "com": [
-    -89.99999999999994,
-    -1.2170113360079448e-14,
-    204.44370882492072
+    107.0897382610576,
+    -64.25384295663456,
+    194.18939204671784
    ]
   },
   {
@@ -919,7 +955,7 @@
    "com": [
     -5.462133621383628e-16,
     18.154204300797847,
-    -133.16973592658792
+    -147.1697359265879
    ]
   },
   {
@@ -931,19 +967,7 @@
    "com": [
     6.272760089132134e-17,
     60.99999999999999,
-    -118.99999999999999
-   ]
-  },
-  {
-   "part": "Recoater fixed bearing + PTFE V-ring shaft seal housing",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.103,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -166.0,
-    72.0,
-    39.99999999999999
+    -133.0
    ]
   },
   {
@@ -1019,15 +1043,15 @@
    ]
   },
   {
-   "part": "Window retaining ring",
+   "part": "Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 0.085,
+   "mass_kg": 0.086,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    -1.0791148093199721e-15,
-    -1.4629610166619757e-15,
-    160.5
+    -8.519124696714528e-16,
+    -2.5162499008439954e-15,
+    160.4382494666373
    ]
   },
   {
@@ -1043,18 +1067,6 @@
    ]
   },
   {
-   "part": "Draw latches on the door (304 SS, 800 lb)",
-   "module": "process",
-   "material": "304 stainless",
-   "mass_kg": 0.083,
-   "basis": "304 stainless x volume",
-   "com": [
-    5.614164825758816e-15,
-    -132.0,
-    101.0
-   ]
-  },
-  {
    "part": "Reservoir M powder",
    "module": "process",
    "material": "AlSi10Mg powder (~50 % packing)",
@@ -1064,6 +1076,18 @@
     -89.99999999999999,
     -2.2039813219746248e-16,
     213.6176403109967
+   ]
+  },
+  {
+   "part": "Overpressure relief valve (316 SS, FKM seat, +34 mbar; SAE-4 O-ring-boss port)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.079,
+   "basis": "316L stainless x volume",
+   "com": [
+    40.00000000000001,
+    70.0,
+    153.8006146601988
    ]
   },
   {
@@ -1079,15 +1103,15 @@
    ]
   },
   {
-   "part": "Recoater motor standoff",
+   "part": "Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings)",
    "module": "process",
    "material": "6061-T6 aluminium",
-   "mass_kg": 0.076,
+   "mass_kg": 0.078,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    -196.00000000000009,
-    72.00000000000006,
-    39.999999999999986
+    78.77154063662464,
+    -47.262924417582234,
+    148.95739579106228
    ]
   },
   {
@@ -1127,39 +1151,15 @@
    ]
   },
   {
-   "part": "Camera viewport adapter + boss (\u00d81 in. window, 1070 nm blocking filter)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.065,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    75.36415483029634,
-    -45.21849289693318,
-    151.32609467759036
-   ]
-  },
-  {
-   "part": "Door hinge leaves + knuckles (304 SS)",
+   "part": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
    "module": "process",
    "material": "304 stainless",
-   "mass_kg": 0.065,
+   "mass_kg": 0.063,
    "basis": "304 stainless x volume",
    "com": [
-    -7.62170809173729e-15,
-    -129.53771279008555,
-    0.8586109851089029
-   ]
-  },
-  {
-   "part": "Overpressure relief valve (316 SS, FKM seat, +34 mbar)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.061,
-   "basis": "316L stainless x volume",
-   "com": [
-    40.0,
-    69.99999999999999,
-    158.7479406919275
+    8.9043627015317e-15,
+    -129.45956886287263,
+    1.266695938332338
    ]
   },
   {
@@ -1187,6 +1187,30 @@
    ]
   },
   {
+   "part": "Roller shaft: magnetic-fluid rotary feedthrough Ferrotec SSL-005-NN in the metering base (M8 x 1 nose; FKM face O-ring)",
+   "module": "process",
+   "material": "mixed (vendor unit; mass from datasheet or estimate)",
+   "mass_kg": 0.06,
+   "basis": "catalogue/estimate",
+   "com": [
+    -89.99999999999999,
+    77.98494614748765,
+    163.99999999999994
+   ]
+  },
+  {
+   "part": "Draw-latch strikes on the door's ears (1807A61 strike plates)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.06,
+   "basis": "catalogue/estimate",
+   "com": [
+    0.0,
+    -118.99999999999997,
+    53.99999999999997
+   ]
+  },
+  {
    "part": "Inlet plenum port (KF-25)",
    "module": "process",
    "material": "304 stainless",
@@ -1211,6 +1235,18 @@
    ]
   },
   {
+   "part": "Dovetail rails for the reservoirs (lips pull the plate onto the dock O-ring)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.055,
+   "basis": "316L stainless x volume",
+   "com": [
+    -89.99999999999999,
+    -1.0478049559595945e-15,
+    183.28571428571433
+   ]
+  },
+  {
    "part": "Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)",
    "module": "process",
    "material": "bearing / alloy steel",
@@ -1232,18 +1268,6 @@
     -1.1438121222561583e-15,
     -1.473806835478787e-15,
     -5.223171812075641
-   ]
-  },
-  {
-   "part": "Vacuum port (KF-25)",
-   "module": "process",
-   "material": "304 stainless",
-   "mass_kg": 0.052,
-   "basis": "304 stainless x volume",
-   "com": [
-    167.99395879739453,
-    1.6057552856088308e-15,
-    70.0
    ]
   },
   {
@@ -1319,27 +1343,27 @@
    ]
   },
   {
-   "part": "Dovetail rails for the reservoirs",
+   "part": "Recoater motor standoff",
    "module": "process",
-   "material": "316L stainless",
+   "material": "6061-T6 aluminium",
    "mass_kg": 0.048,
-   "basis": "316L stainless x volume",
+   "basis": "6061-T6 aluminium x volume",
    "com": [
-    -90.00000000000001,
-    -2.444878230572388e-15,
-    182.99999999999994
+    -244.50000000000003,
+    72.0,
+    40.00000000000002
    ]
   },
   {
-   "part": "Recoater floating bearing housing",
+   "part": "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
    "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.046,
-   "basis": "6061-T6 aluminium x volume",
+   "material": "316L stainless",
+   "mass_kg": 0.044,
+   "basis": "316L stainless x volume",
    "com": [
-    163.00000000000003,
-    72.0,
-    40.0
+    -1.3692833938188127,
+    -1.1229073478650304e-06,
+    -126.84370719905276
    ]
   },
   {
@@ -1355,6 +1379,42 @@
    ]
   },
   {
+   "part": "Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rings both sides)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.044,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -160.5,
+    71.99999999999999,
+    39.99999999999999
+   ]
+  },
+  {
+   "part": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.043,
+   "basis": "316L stainless x volume",
+   "com": [
+    1.531657174066629e-15,
+    -9.701098023487461e-16,
+    -79.50000000000003
+   ]
+  },
+  {
+   "part": "Recoater floating bearing housing (blind cap, FKM face O-ring)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.043,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    163.15033011450763,
+    71.99999999999999,
+    39.99999999999999
+   ]
+  },
+  {
    "part": "Enclosed beam tube",
    "module": "process",
    "material": "6061-T6 aluminium",
@@ -1367,15 +1427,15 @@
    ]
   },
   {
-   "part": "Hollow piston rod M50 (5/8 in. x 0.065 in. 316, inert inside; leads run down it)",
+   "part": "Vacuum port (KF-25, stub welded into the adapter plate)",
    "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.04,
-   "basis": "316L stainless x volume",
+   "material": "304 stainless",
+   "mass_kg": 0.041,
+   "basis": "304 stainless x volume",
    "com": [
-    2.876351500594607e-15,
-    -3.9113200311522157e-16,
-    -77.5
+    170.81932347448966,
+    9.179160028621324e-16,
+    70.0
    ]
   },
   {
@@ -1403,7 +1463,19 @@
    ]
   },
   {
-   "part": "Side reservoir port (KF-16, blanked; reserved for a >= 500 cm3 reservoir beside the chamber with an auger)",
+   "part": "Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.032,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -89.99999999999999,
+    -3.006564538238475e-16,
+    250.00060145283092
+   ]
+  },
+  {
+   "part": "Side reservoir port (KF-16 flange machined in the 6061 base, blanked; reserved for a >= 500 cm3 reservoir beside the chamber with an auger)",
    "module": "process",
    "material": "304 stainless",
    "mass_kg": 0.031,
@@ -1412,30 +1484,6 @@
     -120.05070883315157,
     35.0,
     164.0
-   ]
-  },
-  {
-   "part": "Reservoir M lid with robot handle (grip plane z = 258 for every size)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.031,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -90.00000000000001,
-    2.1012566099931355e-16,
-    246.41613649508383
-   ]
-  },
-  {
-   "part": "Draw-latch keepers beside the door (304 SS)",
-   "module": "process",
-   "material": "304 stainless",
-   "mass_kg": 0.031,
-   "basis": "304 stainless x volume",
-   "com": [
-    0.0,
-    -113.0,
-    101.0
    ]
   },
   {
@@ -1451,15 +1499,15 @@
    ]
   },
   {
-   "part": "Plate-height through-beam (fibre heads in the side walls, z +5 mm)",
+   "part": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
    "module": "process",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
    "mass_kg": 0.03,
    "basis": "catalogue/estimate",
    "com": [
-    4.94873769241199e-15,
-    -3.4332198590987e-16,
-    4.999999999999999
+    -4.471804890387274e-14,
+    -1.6881585248982339e-15,
+    5.000000000000001
    ]
   },
   {
@@ -1471,19 +1519,7 @@
    "com": [
     -2.117494162330342e-15,
     3.7304508069083273e-16,
-    -130.5
-   ]
-  },
-  {
-   "part": "Rod end M50: potted cable exit (Torr Seal) with a side outlet",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.022,
-   "basis": "316L stainless x volume",
-   "com": [
-    -2.2141521195326117,
-    1.2655879730243083e-06,
-    -117.81332467395406
+    -144.5
    ]
   },
   {
@@ -1496,6 +1532,42 @@
     -96.24999999999999,
     -7.430947999427974e-17,
     8.976132730205297
+   ]
+  },
+  {
+   "part": "Reservoir M shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.021,
+   "basis": "304 stainless x volume",
+   "com": [
+    -89.99999999999999,
+    2.9172823176599805e-15,
+    181.7
+   ]
+  },
+  {
+   "part": "Inlet-plenum screws, M4 x 16 316 (clear of the Z flange's screws) (9 x McMaster 92290A154)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.021,
+   "basis": "catalogue/estimate",
+   "com": [
+    -1.2432070939979718e-10,
+    113.00802151152973,
+    8.44444444431542
+   ]
+  },
+  {
+   "part": "Hermetic connector M50 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.02,
+   "basis": "catalogue/estimate",
+   "com": [
+    -16.401362434365595,
+    -2.1541535508955987e-17,
+    -126.00000000000003
    ]
   },
   {
@@ -1523,13 +1595,25 @@
    ]
   },
   {
-   "part": "Drawer-closed sensor (inductive M12, on the lid's front face)",
+   "part": "Drawer latches: 2 x quarter-turn latch studs (envelope)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.02,
+   "basis": "catalogue/estimate",
+   "com": [
+    -8.875217890698e-15,
+    -115.13321167883213,
+    128.0
+   ]
+  },
+  {
+   "part": "Drawer-closed sensor (inductive M12, on the lid's front face, sees the plate's end)",
    "module": "process",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
    "mass_kg": 0.02,
    "basis": "catalogue/estimate",
    "com": [
-    61.00000000000001,
+    81.0,
     -118.00000000000001,
     128.0
    ]
@@ -1559,27 +1643,15 @@
    ]
   },
   {
-   "part": "Roller shaft seal housing",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.019,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -89.99999999999999,
-    67.0,
-    164.0
-   ]
-  },
-  {
    "part": "Striker disc M50 (416 stainless, on the pot magnet)",
    "module": "process",
    "material": "bearing / alloy steel",
    "mass_kg": 0.018,
    "basis": "bearing / alloy steel x volume",
    "com": [
-    -1.1012013316197319e-16,
-    -3.0703480935747595e-16,
-    -124.45768267104245
+    1.9677133870785894e-17,
+    -4.795658578868751e-16,
+    -138.45768267104262
    ]
   },
   {
@@ -1607,6 +1679,30 @@
    ]
   },
   {
+   "part": "Vacuum-port adapter screws, M5 x 20 316 (4 x McMaster 92290A242)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.018,
+   "basis": "catalogue/estimate",
+   "com": [
+    158.73502400450604,
+    -2.6460789156281538e-11,
+    70.0000000000359
+   ]
+  },
+  {
+   "part": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.016,
+   "basis": "catalogue/estimate",
+   "com": [
+    -3.4622663949627595e-11,
+    -1.688067751462084e-10,
+    -100.19074124171823
+   ]
+  },
+  {
    "part": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
    "module": "process",
    "material": "bearing / alloy steel",
@@ -1616,6 +1712,18 @@
     -1.0965952841140204e-15,
     1.949502727313814e-15,
     -22.0
+   ]
+  },
+  {
+   "part": "Roller drive coupling (5 mm to 5 mm)",
+   "module": "process",
+   "material": "bearing / alloy steel",
+   "mass_kg": 0.015,
+   "basis": "bearing / alloy steel x volume",
+   "com": [
+    -90.0,
+    108.49999999999999,
+    164.0
    ]
   },
   {
@@ -1639,7 +1747,7 @@
    "com": [
     6.319851439533007e-16,
     -57.457818979870225,
-    -103.11669405071359
+    -107.11669405071359
    ]
   },
   {
@@ -1652,18 +1760,6 @@
     0.0,
     -131.99999999999997,
     -12.0
-   ]
-  },
-  {
-   "part": "Gland-plate screws M50, M4 x 16 316, into the welded collar (6 x McMaster 92290A154)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.014,
-   "basis": "catalogue/estimate",
-   "com": [
-    -3.9435443761790565e-11,
-    -1.9426353787966042e-10,
-    -98.00802151152959
    ]
   },
   {
@@ -1691,6 +1787,18 @@
    ]
   },
   {
+   "part": "Recoater shaft coupling (clamp type, 6 to 8 mm, in the wall bore)",
+   "module": "process",
+   "material": "bearing / alloy steel",
+   "mass_kg": 0.013,
+   "basis": "bearing / alloy steel x volume",
+   "com": [
+    -150.33561643835617,
+    72.0,
+    40.00000000000001
+   ]
+  },
+  {
    "part": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
    "module": "process",
    "material": "UV fused silica",
@@ -1700,18 +1808,6 @@
     1.495758959049442e-15,
     9.820392714051175e-16,
     127.49999999999999
-   ]
-  },
-  {
-   "part": "Reservoir M shutter (shown open, as docked; springs shut when the reservoir slides out)",
-   "module": "process",
-   "material": "304 stainless",
-   "mass_kg": 0.013,
-   "basis": "304 stainless x volume",
-   "com": [
-    -89.99999999999999,
-    2.7599021240795103e-15,
-    181.69999999999996
    ]
   },
   {
@@ -1739,15 +1835,15 @@
    ]
   },
   {
-   "part": "Door O-ring (FKM)",
+   "part": "Outlet-plenum screws, M4 x 12 316, counterbored (6 x McMaster 92290A148)",
    "module": "process",
-   "material": "FKM (Viton) 75A",
-   "mass_kg": 0.011,
-   "basis": "FKM (Viton) 75A x volume",
+   "material": "316L stainless",
+   "mass_kg": 0.012,
+   "basis": "catalogue/estimate",
    "com": [
-    0.0,
-    -112.39999999999975,
-    53.99999999999991
+    -1.6666666667698113,
+    -90.00000000004515,
+    -23.760687085284488
    ]
   },
   {
@@ -1763,15 +1859,39 @@
    ]
   },
   {
-   "part": "NFC reader antenna (in the dock face, reads the reservoir's tag)",
+   "part": "Bearing-cap screws, M4 x 20 316 (4 x McMaster 92290A168)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.011,
+   "basis": "catalogue/estimate",
+   "com": [
+    164.19074124171829,
+    71.99999999998798,
+    40.00000000003518
+   ]
+  },
+  {
+   "part": "Drawer latch receptacles in the lid (2 x quarter-turn latch)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.01,
+   "basis": "catalogue/estimate",
+   "com": [
+    -1.5011171000316372e-14,
+    -105.0,
+    127.99999999999999
+   ]
+  },
+  {
+   "part": "NFC reader antenna (in the dock's side face, reads the tag on the reservoir plate's edge)",
    "module": "process",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
    "mass_kg": 0.01,
    "basis": "catalogue/estimate",
    "com": [
-    -90.0,
+    -105.25,
     -18.0,
-    177.5
+    167.5
    ]
   },
   {
@@ -1811,6 +1931,30 @@
    ]
   },
   {
+   "part": "Overflow-funnel screws, M4 x 12 316, counterbored (4 x McMaster 92290A148)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.008,
+   "basis": "catalogue/estimate",
+   "com": [
+    99.99999999997452,
+    -6.01400574378795e-10,
+    -23.76068708528451
+   ]
+  },
+  {
+   "part": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.006,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    4.300703067532584e-15,
+    -1.315621335766397e-14,
+    -14.0
+   ]
+  },
+  {
    "part": "Window retaining-ring screws, M3 x 10 316 (6 x McMaster 92290A115)",
    "module": "process",
    "material": "316L stainless",
@@ -1820,6 +1964,18 @@
     8.092367958678394e-11,
     -2.209897682839219e-11,
     160.99771784955615
+   ]
+  },
+  {
+   "part": "Camera window retaining ring (bottoms metal-to-metal on the boss)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.005,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    94.37296618722905,
+    -56.62377971233742,
+    171.12964535284195
    ]
   },
   {
@@ -1847,18 +2003,6 @@
    ]
   },
   {
-   "part": "Spigot O-ring (FKM 2-238, radial seal in the floor port)",
-   "module": "process",
-   "material": "FKM (Viton) 75A",
-   "mass_kg": 0.004,
-   "basis": "FKM (Viton) 75A x volume",
-   "com": [
-    -1.2716242464441933e-14,
-    -1.4764054517726926e-14,
-    -14.199999999999998
-   ]
-  },
-  {
    "part": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "module": "process",
    "material": "316L stainless",
@@ -1867,7 +2011,31 @@
    "com": [
     -3.277529357875781e-11,
     -33.39999999999978,
-    -104.60103991515058
+    -108.60103991515055
+   ]
+  },
+  {
+   "part": "Inlet-plenum helical inserts, M4 x 6 18-8, in the back wall (9 x McMaster 91732A656)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.004,
+   "basis": "catalogue/estimate",
+   "com": [
+    -8.942289431446317e-15,
+    107.99999999999996,
+    8.444444444444443
+   ]
+  },
+  {
+   "part": "Camera window (\u00d81 in. x 3 mm fused silica, 1070 nm blocking coating)",
+   "module": "process",
+   "material": "UV fused silica",
+   "mass_kg": 0.003,
+   "basis": "UV fused silica x volume",
+   "com": [
+    92.633604487901,
+    -55.58016269274061,
+    167.97560280472717
    ]
   },
   {
@@ -1880,6 +2048,30 @@
     1.6757999134497723e-14,
     4.2064325591499743e-17,
     -14.000000000000004
+   ]
+  },
+  {
+   "part": "Outlet-plenum helical inserts, M4 x 6 18-8, in the floor (6 x McMaster 91732A656)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.003,
+   "basis": "catalogue/estimate",
+   "com": [
+    -1.666666666666688,
+    -90.00000000000001,
+    -16.999999999999996
+   ]
+  },
+  {
+   "part": "Vacuum-port adapter helical inserts, M5 x 7.5 18-8, in the right wall (4 x McMaster 91732A261)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.003,
+   "basis": "catalogue/estimate",
+   "com": [
+    152.25000000000003,
+    -1.6827273781012111e-15,
+    69.99999999999999
    ]
   },
   {
@@ -1919,6 +2111,42 @@
    ]
   },
   {
+   "part": "Inlet plenum O-ring (FKM 75A 2-044, face seal on the back wall)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.002,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    0.0,
+    111.65999999999984,
+    10.999999999999984
+   ]
+  },
+  {
+   "part": "Outlet plenum O-ring (FKM 75A 2-044, face seal under the floor)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.002,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    4.499999999999997,
+    -89.99999999999999,
+    -20.66000000000001
+   ]
+  },
+  {
+   "part": "Door O-ring (FKM 75A 1.78 mm cord, vulcanized splice, in a half-dovetail groove)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.002,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    -8.344232348127059e-15,
+    -111.66,
+    54.00000000000001
+   ]
+  },
+  {
    "part": "Rod set screws M50, M4 cup point 316 (2 x McMaster 92029A152)",
    "module": "process",
    "material": "316L stainless",
@@ -1937,9 +2165,9 @@
    "mass_kg": 0.002,
    "basis": "catalogue/estimate",
    "com": [
-    -8.603075159786753e-12,
-    1.2851771567418225e-15,
-    -122.72521566848309
+    -8.601032470415846e-12,
+    3.470067757938952e-16,
+    -136.72521566848303
    ]
   },
   {
@@ -1991,15 +2219,63 @@
    ]
   },
   {
-   "part": "Module M50 gland-plate O-ring (FKM, 1.78 mm cord, face seal on the tube end and collar)",
+   "part": "Overflow-funnel helical inserts, M4 x 6 18-8, in the floor (4 x McMaster 91732A656)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.002,
+   "basis": "catalogue/estimate",
+   "com": [
+    100.0,
+    -5.958078325636885e-15,
+    -17.000000000000007
+   ]
+  },
+  {
+   "part": "Bearing-cap helical inserts, M4 x 6 18-8, in the right wall (4 x McMaster 91732A656)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.002,
+   "basis": "catalogue/estimate",
+   "com": [
+    152.99999999999991,
+    72.00000000000006,
+    39.99999999999998
+   ]
+  },
+  {
+   "part": "Reservoir M lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.002,
+   "basis": "catalogue/estimate",
+   "com": [
+    -90.00000000000612,
+    -5.433388548957486e-11,
+    248.83349253968848
+   ]
+  },
+  {
+   "part": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "module": "process",
    "material": "FKM (Viton) 75A",
    "mass_kg": 0.001,
    "basis": "FKM (Viton) 75A x volume",
    "com": [
-    2.1846945339294295e-14,
-    -7.516156165615499e-15,
-    -92.64999999999995
+    3.7506909136250747e-14,
+    -5.8235463660352155e-15,
+    -92.64999999999996
+   ]
+  },
+  {
+   "part": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.001,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    -4.5734005518812215e-15,
+    -7.286420066510813e-16,
+    -98.99999999999999
    ]
   },
   {
@@ -2027,27 +2303,123 @@
    ]
   },
   {
-   "part": "Window O-ring (FKM)",
+   "part": "Overflow funnel O-ring (FKM 75A 2-042, face seal under the floor)",
    "module": "process",
    "material": "FKM (Viton) 75A",
    "mass_kg": 0.001,
    "basis": "FKM (Viton) 75A x volume",
    "com": [
-    -2.799571608850211e-14,
-    -4.307220703228852e-15,
-    146.99999999999994
+    99.99999999999994,
+    -4.106685694935473e-15,
+    -20.65999999999997
    ]
   },
   {
-   "part": "Drawer O-ring (FKM, seals on the lid's front face)",
+   "part": "Vacuum port adapter O-ring (FKM 75A 2-024)",
    "module": "process",
    "material": "FKM (Viton) 75A",
    "mass_kg": 0.001,
    "basis": "FKM (Viton) 75A x volume",
    "com": [
-    -2.8995355677240363e-15,
-    -111.80000000000008,
-    128.00000000000006
+    156.66000000000003,
+    1.137806977447616e-15,
+    69.99999999999997
+   ]
+  },
+  {
+   "part": "Recoater feedthrough O-rings (2 x FKM 75A 2-024, spacer to wall and to flange)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.001,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    -160.50000000000006,
+    72.0,
+    39.999999999999986
+   ]
+  },
+  {
+   "part": "Window O-ring, lower (FKM 75A 2-031, under the window)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.001,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    -2.688879694522656e-14,
+    -3.4402232404909728e-15,
+    147.33999999999983
+   ]
+  },
+  {
+   "part": "Window clamp ring, upper (FKM 75A sheet, 1.0 mm, squeezed to 0.75)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.001,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    1.5728415891672722e-14,
+    -1.246999748177695e-15,
+    156.37499999999994
+   ]
+  },
+  {
+   "part": "Window-flange O-ring (FKM 75A 2-036, face seal on the lid)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.001,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    3.448412843125849e-15,
+    -5.529797856242463e-15,
+    136.66000000000022
+   ]
+  },
+  {
+   "part": "Drawer O-ring (FKM 75A 2-033 in a half-dovetail groove, seals on the lid's front face)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.001,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    1.3733947570235885e-15,
+    -111.65999999999993,
+    127.99999999999993
+   ]
+  },
+  {
+   "part": "Metering-base O-ring on the lid (FKM 75A 2-040, round the dose slot)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.001,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    -90.00000000000001,
+    -2.1869616341686562e-15,
+    136.66000000000003
+   ]
+  },
+  {
+   "part": "Metering-base dock-face O-ring (FKM 75A 2-040, seals the reservoir's base plate)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.001,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    -90.00000000000006,
+    3.569066364592717e-15,
+    179.3400000000001
+   ]
+  },
+  {
+   "part": "Reservoir M lid O-ring (FKM 75A 2-030)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.001,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    -90.0,
+    4.692574289498081e-15,
+    246.66000000000008
    ]
   },
   {
@@ -2072,6 +2444,90 @@
     1.0956521739130445,
     5.985857376054955,
     -23.34565217391304
+   ]
+  },
+  {
+   "part": "Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.0,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    -15.340000000000003,
+    2.522058025965524e-16,
+    -125.99999999999999
+   ]
+  },
+  {
+   "part": "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.0,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    -2.462592223524459e-13,
+    -6.853797785239453e-15,
+    5.000000000000063
+   ]
+  },
+  {
+   "part": "Recoater bearing-cap O-ring (FKM 75A 2-019)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.0,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    156.65999999999997,
+    71.99999999999997,
+    40.00000000000002
+   ]
+  },
+  {
+   "part": "Roller feedthrough O-ring (FKM 75A 2-012, under the housing's shoulder)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.0,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    -90.0,
+    61.34000000000002,
+    163.99999999999997
+   ]
+  },
+  {
+   "part": "Camera adapter O-ring (FKM 75A 2-022, face seal on the lid)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.0,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    74.99999999999996,
+    -45.0,
+    136.66000000000003
+   ]
+  },
+  {
+   "part": "Camera window O-ring (FKM 75A 2-017, under the window)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.0,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    91.63173214908807,
+    -54.97903928945283,
+    166.15887429701306
+   ]
+  },
+  {
+   "part": "Camera window flat ring (FKM 75A sheet, 1.0 mm, squeezed to 0.75)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.0,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    93.50328533756499,
+    -56.10197120253902,
+    169.5526240787846
    ]
   },
   {

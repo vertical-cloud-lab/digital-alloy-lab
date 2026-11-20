@@ -6,7 +6,8 @@ takes ~2.8 kN (analysis/seals/seals.py, Lindley), more than the 2.4 kN the atmos
 vacuum, and at +20 mbar during a build only the two latches and the two hinges hold the door against it.
 
 So here the door is held where it really is held (two draw latches at its top corners, two hinges at its bottom
-edge), the O-ring reaction is applied to the groove floor and +20 mbar to the face inside the seal, and the door's
+edge; since 2026-11-20 the latches pull strikes on two ears at the seal's centroid height), the O-ring reaction is applied
+to the groove floor and +20 mbar to the face inside the seal, and the door's
 outward deflection along the groove floor is read as squeeze lost. Two cords: 3.53 mm (as drawn) and 1.78 mm.
 
 Run:  OMP_NUM_THREADS=2 python desktop-lpbf/analysis/seals/door_seal_fea.py  ->  analysis/out/seals/door_seal_fea.{json,md,png}
@@ -43,15 +44,18 @@ def main():
     front = F.surfaces(m, F.planar("y", dy0))
     f_groove = F.faces_on(m, groove_floor)
     f_inside = F.faces_on(m, back, lambda c: (np.abs(c[:, 0]) <= 114) & (c[:, 2] >= 4) & (c[:, 2] <= 104))
-    latch = F.nodes_on(m, front, lambda q: (np.abs(q[:, 0]) >= 100) & (np.abs(q[:, 0]) <= 124) & (q[:, 2] >= 92) & (q[:, 2] <= 110))
+    # the strikes sit on two ears at the door's sides, at the seal's centroid height (lpbf_low: zl_c = 54); the hinge holes are slotted,
+    # so the hinges float in y until a pin reaches the end of its +/-0.6 mm slot (held in y here: the conservative case)
+    latch = F.nodes_on(m, front, lambda q: (np.abs(q[:, 0]) >= 128) & (np.abs(q[:, 0]) <= 156) & (q[:, 2] >= 40) & (q[:, 2] <= 68))
     hinge = F.nodes_on(m, front, lambda q: (np.abs(q[:, 0]) >= 80) & (np.abs(q[:, 0]) <= 100) & (q[:, 2] <= 30))
     if min(len(f_groove["el"]), len(latch), len(hinge)) == 0:
         raise RuntimeError("selection empty")
     a_groove = f_groove["area"].sum()
-    path = 2 * (232.0 + 104.0) - (8 - 2 * np.pi) * 5.0                 # centre line, as seals.py
+    gl = F.M.GLANDS["door"]
+    path = gl["inner_perimeter"] + np.pi * gl["width"]                  # centre line of the drawn groove, as seals.py
     gn = m["idx"][np.unique(f_groove["tri"].ravel())]
     xyz_g = m["xyz"][gn]
-    px = F.nearest(m, (0.0, dy0, 101.0), latch)
+    px = F.nearest(m, (140.0, dy0, 54.0), latch)
     R = dict(path_mm=path, groove_floor_area_mm2=a_groove, nodes=len(m["ntags"]), elements=len(m["tets"]), cases=[])
     cases = ((3.53, "3.53 mm cord at 25 % (first drawn gland)"), (1.78, "1.78 mm cord at 25 %")) if gd > 2 else ((1.78, "1.78 mm cord at 25 % (gland 1.32 x 2.3)"),)
     R["groove_depth_mm"] = gd
@@ -75,7 +79,7 @@ def main():
                  margin_to_15pct_um=1000 * (squeeze_mm - min15), vm_max=float(vm.max()),
                  latch_reaction_N=None, ok=bool(lost < squeeze_mm - min15))
         # reactions: total load is carried by latches + hinges; split by moment about the hinge line (z = -12)
-        z_l, z_or = 101.0, 52.0
+        z_l, z_or = 54.0, 54.0
         r["latch_load_each_N"] = (F_or + r["F_overpressure_N"]) * (z_or + 12) / (z_l + 12) / 2
         r["hinge_load_each_N"] = (F_or + r["F_overpressure_N"]) / 2 - r["latch_load_each_N"]
         R["cases"].append(r)
@@ -89,7 +93,7 @@ def main():
     L = ["# Door as a seal carrier: CalculiX, held at its latches and hinges", "",
          f"Door: 6061-T6, 15 mm, from `cad/lpbf_low.py`. C3D10 mesh, {R['nodes']} nodes. Seal centre line {path:.0f} mm; "
          "O-ring reaction (Lindley, FKM 75A, 25 % squeeze) as a uniform pressure on the groove floor, +20 mbar on the face inside the seal; "
-         "latch pads (top corners) held in y, hinge leaves (bottom) held in y and z.", "",
+         "latch pads (the ears' front faces at mid-height) held in y, hinge leaves (bottom) held in y and z.", "",
          "| Cord | O-ring reaction | Each latch | Each hinge | Squeeze lost, worst point | Margin to 15 % squeeze | Result |", "|---|---|---|---|---|---|---|"]
     for r in R["cases"]:
         L.append(f"| {r['label']} | {r['F_oring_N']:.0f} N | {r['latch_load_each_N']:.0f} N | {r['hinge_load_each_N']:.0f} N | {r['lost_max_um']:.0f} µm at x {r['lost_at'][0]:.0f}, z {r['lost_at'][2]:.0f} | "

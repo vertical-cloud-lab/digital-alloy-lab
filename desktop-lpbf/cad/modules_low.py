@@ -23,6 +23,12 @@ import module_params as MP
 
 V = cq.Vector
 BAYONET_R = 6.0          # plate spigot radius; three lugs reach BAYONET_R + 2.5
+# hermetic glass-to-metal receptacle on the rod end (seals.md item 7). Envelope placeholders, replaced by the vendor's drawing below.
+# Envelope: LEMO 1B hermetic receptacle (HGG.1B.310.CLLPV: M12 x 1 panel thread, Ø16 nut) on a Ø19 boss face with an O-ring. That
+# part's published rating (2 A per contact, 1e-7 mbar L/s) misses the spec; see seal-parts.csv for the KF-16 parts that meet it.
+HERMETIC = dict(label="hermetic receptacle, LEMO 1B envelope (HGG.1B.310)", pn="", mass_kg=0.02, thread_d=12.0, body_in=12.0, flange_d=19.0,
+                flange_t=2.5, shell_d=12.0, shell_l=10.0, boss_r=9.5, boss_x=16.0, axis_above_striker=10.0,
+                oring="2-014", oring_groove_id=12.6, oring_groove_od=17.2)
 
 
 def polar(r, deg):
@@ -76,7 +82,8 @@ def add_build_module(h, add, key, step=4):
 
     # ---------- fixed module body ----------
     spig = h.tube(pr - MP.SPIGOT_FIT, R, (0, 0, zf), "z", MP.FLOOR_T)
-    spig = spig.cut(h.tube(pr, pr - 2.9, (0, 0, zf + 4.0), "z", 3.6))                 # O-ring groove
+    sg = MP.SPIGOT_GROOVE
+    spig = spig.cut(h.tube(pr + 1.0, sg["root_d"] / 2, (0, 0, zf + sg["z0"]), "z", sg["width"]))     # O-ring groove (root Ø90.5 x 4.8)
     fl = h.fuse([h.cyl(MP.FLANGE_D / 2, (0, 0, zf - MP.FLANGE_T), "z", MP.FLANGE_T),
                  h.rbox(-MP.TAB_X, MP.TAB_X, -12, 12, zf - MP.FLANGE_T, zf, 6)] +
                 [h.cyl(5.5, (0, s * MP.DOWEL_Y, zf - MP.FLANGE_T), "z", MP.FLANGE_T) for s in (-1, 1)] +
@@ -90,18 +97,37 @@ def add_build_module(h, add, key, step=4):
     collar = h.tube(rc, R + W - 0.01, (0, 0, z_stop), "z", MP.COLLAR_T)
     add(f"Build module {lab}: spigot, flange, honed 316L cylinder (Ø{m['bore']:.1f} bore, {W:.0f} mm wall) and bottom collar, one TIG-welded body",
         h.fuse([spig, fl, tb, collar]), C["ss"], step, (0, -320, -60), mat="ss316l", bom="B1", section=True, **mg)
-    add(f"Spigot O-ring (FKM {MP.SPIGOT_ORING}, radial seal in the floor port)",
-        h.tube(pr, pr - 2.6, (0, 0, zf + 4.3), "z", 3.0), C["black"], step, (0, -320, -60), mat="fkm", bom="B2",
+    # drawn as squeezed: from the groove root to the port wall, 4.2 of the groove's 4.8 mm
+    add(f"Spigot O-ring (FKM 75A {MP.SPIGOT_ORING}, radial seal in the floor port; groove root Ø{sg['root_d']:.1f} x {sg['width']:.1f})",
+        h.tube(pr, sg["root_d"] / 2, (0, 0, zf + sg["z0"] + 0.3), "z", sg["width"] - 0.6), C["black"], step, (0, -320, -60), mat="fkm", bom="B2",
         section=True, **mg)
+    h.GLANDS["spigot"] = dict(kind="radial", ring=MP.SPIGOT_ORING, cs=3.53, depth=(MP.PORT_D - sg["root_d"]) / 2, width=sg["width"],
+                              groove_d=sg["root_d"], groove_mat="ss", T=60.0, closure="module spigot in the floor port")
     # gland plate: bolted to the collar and the tube end (6 x M4, joints.py), sealed by a face O-ring, so the rod gland can be
     # serviced and powder that gets past the bore seal can be cleaned out of the cylinder's bottom
+    rg = MP.ROD_GLAND[key]
+    gs, gg = MP.GLAND_PLATE_SEAL[key], MP.GLAND_PLATE_GROOVE
     bf = h.cyl(rc, (0, 0, z_stop - MP.BOT_FLANGE_T), "z", MP.BOT_FLANGE_T).cut(
-        h.cyl(rod_od / 2 + 0.05, (0, 0, z_stop - MP.BOT_FLANGE_T - 1), "z", MP.BOT_FLANGE_T + 2))
-    bf = bf.cut(h.tube(R + 3.6, R + 1.2, (0, 0, z_stop - 1.3), "z", 1.4))                 # face O-ring groove (1.78 mm cord)
-    add(f"Module {lab} bottom flange: gland plate (316L, bolted to the welded collar; double FKM O-ring rod gland)", bf, C["ss"], step,
+        h.cyl(rg["throat_d"] / 2, (0, 0, z_stop - MP.BOT_FLANGE_T - 1), "z", MP.BOT_FLANGE_T + 2))
+    gi = gs["groove_id"] / 2
+    bf = bf.cut(h.tube(gi + gg["width"], gi, (0, 0, z_stop - gg["depth"]), "z", gg["depth"] + 0.1))   # face O-ring groove, 2.6 wide
+    # two Parker dynamic rod glands (groove Ø20.0 for the 5/8 in. rod, 3.6 wide), 2.3 mm lands, the lower one the primary seal
+    land = (MP.BOT_FLANGE_T - 2 * rg["width"]) / 3
+    zr_g = [z_stop - MP.BOT_FLANGE_T + land, z_stop - MP.BOT_FLANGE_T + 2 * land + rg["width"]]
+    for zg in zr_g:
+        bf = bf.cut(h.tube(rg["groove_d"] / 2, rg["throat_d"] / 2 - 0.01, (0, 0, zg), "z", rg["width"]))
+    add(f"Module {lab} bottom flange: gland plate (316L, bolted to the welded collar; two FKM {rg['ring']} rod glands)", bf, C["ss"], step,
         (0, -320, -60), mat="ss316l", bom="B1", section=True, **mg)
-    add(f"Module {lab} gland-plate O-ring (FKM, 1.78 mm cord, face seal on the tube end and collar)",
-        h.tube(R + 3.5, R + 1.3, (0, 0, z_stop - 1.3), "z", 1.3), C["black"], step, (0, -320, -60), mat="fkm", bom="B2", section=True, **mg)
+    add(f"Module {lab} gland-plate O-ring (FKM 75A {gs['ring']}, face seal on the tube end and collar)",
+        h.tube(gi + gg["width"] - 0.2, gi, (0, 0, z_stop - gg["depth"]), "z", gg["depth"]), C["black"], step, (0, -320, -60), mat="fkm", bom="B2", section=True, **mg)
+    rcs = MP.AS568[rg["ring"]][1]
+    add(f"Rod O-rings {lab} in the bottom flange (2 x FKM 75A {rg['ring']}, dynamic rod glands)",
+        h.comp([h.tube(rg["groove_d"] / 2, rod_od / 2, (0, 0, zg + (rg["width"] - rcs) / 2), "z", rcs) for zg in zr_g]), C["black"], step, (0, -320, -60),
+        mat="fkm", bom="B2", section=True, **mg)
+    h.GLANDS[f"gland_plate_{key}"] = dict(kind="face", ring=gs["ring"], cs=1.78, depth=gg["depth"], width=gg["width"], groove_id=gs["groove_id"],
+                                          groove_mat="ss", T=60.0, closure=f"gland plate on the welded collar ({key})")
+    h.GLANDS[f"rod_{key}"] = dict(kind="rod", ring=rg["ring"], cs=rcs, depth=(rg["groove_d"] - rod_od) / 2, width=rg["width"], groove_d=rg["groove_d"],
+                                  rod_d=rod_od, groove_mat="ss", T=110.0, n=2, closure=f"hollow rod through the gland plate ({key})")
     zt = z_stop - MP.BOT_FLANGE_T                                                         # gland plate's bottom face
     hd = h.fuse([h.box(-24, -14, -rc - 26, -rc + 12, zt - 4, zt), h.box(14, 24, -rc - 26, -rc + 12, zt - 4, zt),
                  h.box(-24, 24, -rc - 32, -rc - 26, zt - 4, zt + 4)])
@@ -190,13 +216,29 @@ def add_build_module(h, add, key, step=4):
         C["white"], step, (0, 0, 170), mat="felt", bom="B1", mcm="SEAL_PISTON", section=True, **pg)
     zr0 = zc + MP.ROD_END_T
     rod_lab = "3/8 in. x 0.035 in." if key == "S25" else "5/8 in. x 0.065 in."
-    add(f"Hollow piston rod {lab} ({rod_lab} 316, inert inside; leads run down it)",
+    add(f"Hollow piston rod {lab} ({rod_lab} seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
         h.tube(rod_od / 2, rod_id / 2, (0, 0, zr0), "z", zh0 + 8.0 - zr0), C["ss"], step, (0, 0, 140), mat="ss316l",
         bom="B1", section=True, **pg)
+    # rod end cap: the rod is TIG-welded into it; a hermetic glass-to-metal receptacle screws into its side boss on an FKM face
+    # O-ring, so the gas boundary at the rod end is metal, glass and one static O-ring (was potted stranded leads)
+    HC = HERMETIC
+    zx = zc + 5.0 + HC["axis_above_striker"]
     cap = h.cyl(11.0, (0, 0, zc + 5.0), "z", MP.ROD_END_T - 5.0).cut(h.cyl(rod_id / 2, (0, 0, zc + 8.0), "z", MP.ROD_END_T))
-    cap = h.fuse([cap, h.cyl(4.0, (-26.0, 0, zc + 9.5), "x", 16.0)]).cut(h.cyl(2.8, (-27.0, 0, zc + 9.5), "x", 30.0))
-    add(f"Rod end {lab}: potted cable exit (Torr Seal) with a side outlet", cap, C["ss"], step, (0, 0, 120), mat="ss316l",
+    cap = h.fuse([cap, h.cyl(HC["boss_r"], (-HC["boss_x"], 0, zx), "x", HC["boss_x"] - 6.0)])
+    cap = cap.cut(h.cyl(HC["thread_d"] / 2, (-HC["boss_x"] - 1, 0, zx), "x", HC["boss_x"] - 2.0))            # panel thread / bore
+    cap = cap.cut(h.tube(HC["oring_groove_od"] / 2, HC["oring_groove_id"] / 2, (-HC["boss_x"] - 0.01, 0, zx), "x", 1.35))   # face O-ring groove
+    add(f"Rod end {lab}: end cap with a side boss for the hermetic connector (316L, rod welded in)", cap, C["ss"], step, (0, 0, 120), mat="ss316l",
         bom="H2", section=True, **pg)
+    conn = h.fuse([h.cyl(HC["thread_d"] / 2 - 0.02, (-HC["boss_x"], 0, zx), "x", HC["body_in"]),
+                   h.cyl(HC["flange_d"] / 2, (-HC["boss_x"] - HC["flange_t"], 0, zx), "x", HC["flange_t"]),
+                   h.cyl(HC["shell_d"] / 2, (-HC["boss_x"] - HC["flange_t"] - HC["shell_l"], 0, zx), "x", HC["shell_l"])])
+    add(f"Hermetic connector {lab} on the rod end ({HC['label']})", conn, C["ss"], step, (-60, 0, 120), mat="ss316l", mass_kg=HC["mass_kg"],
+        bom="H2", mcm=HC["pn"], section=True, **pg)
+    add(f"Hermetic-connector O-ring {lab} (FKM 75A {HC['oring']}, face seal under the flange)",
+        h.tube(HC["oring_groove_od"] / 2 - 0.2, HC["oring_groove_id"] / 2, (-HC["boss_x"], 0, zx), "x", 1.32), C["black"], step, (-60, 0, 120),
+        mat="fkm", bom="H2", section=True, **pg)
+    h.GLANDS[f"hermetic_{key}"] = dict(kind="face", ring=HC["oring"], cs=1.78, depth=1.32, width=(HC["oring_groove_od"] - HC["oring_groove_id"]) / 2,
+                                       groove_id=HC["oring_groove_id"], groove_mat="ss", T=40.0, closure=f"hermetic connector on the rod end ({key})")
     add(f"Striker disc {lab} (416 stainless, on the pot magnet)", h.cyl(12.7, (0, 0, zc), "z", 5.0), C["steel"], step,
         (0, 0, 110), mat="steel", bom="B2", section=True, **pg)
 
@@ -244,25 +286,54 @@ def reservoir_shape(h, key, xd, z0):
 
 
 def add_reservoir(h, add, key, xd, z_dock, step=7):
-    """Reservoir docked on the metering base (slides out to the front on the dovetail, 'cartridge' group)."""
+    """Reservoir docked on the metering base (slides out to the front on the dovetail, 'cartridge' group).
+
+    Sealing (seals.md item 1): every reservoir has the same 30 x 112.4 mm base plate, so one dock takes S, M and L. The
+    plate's underside seals on an FKM face O-ring in the dock face round the 12 x 100 mm dose opening; the dovetail rails'
+    lips carry a 2 deg ramp over the last 15 mm of travel that pulls the plate 0.5 mm down onto that O-ring as the robot (or
+    a hand) pushes it home, and a ball-nose spring plunger holds it there (the model draws the docked pose). The top is a
+    welded 304 frame with an O-ring-sealed lid on two M3 screws, and the shutter runs in a slot closed at both ends, so a
+    docked reservoir is a sealed part of the gas envelope and is purged with it."""
     C = h.C
     r = MP.RESERVOIRS[key]
     body, zi = reservoir_shape(h, key, xd, z_dock)
     cg = dict(group="cartridge")
-    L2 = r["iy"] / 2 + 1.2
+    L2 = MP.RES_BASE_HALF_Y
     base = h.box(xd - 15, xd + 15, -L2, L2, z_dock, z_dock + MP.GATE_T).cut(h.box(xd - MP.SLOT_W / 2, xd + MP.SLOT_W / 2, -r["slot"] / 2, r["slot"] / 2, z_dock - 1, z_dock + MP.GATE_T + 1))
-    base = base.cut(h.box(xd - 13, xd + 13, -L2 - 1, L2 + 1, z_dock + 1.0, z_dock + 2.4))       # gate slot
-    add(f"Reservoir {key} ({r['vol_cm3']:.0f} cm3, 304 SS wedge hopper, {r['slot']:.0f} mm outlet for the {r['for_module']} module)",
-        h.fuse([body, base]), C["ss"], step, (0, 0, 380), mat="ss304", bom="R1", mcm="HOPPER", **cg)
-    gate = h.box(xd - 12.8, xd + 12.8, -L2 + 0.5, L2 - 0.5, z_dock + 1.1, z_dock + 2.3).cut(
+    base = base.cut(h.box(xd - 13, xd + 13, -L2 + 3.0, L2 - 3.0, z_dock + 1.0, z_dock + 2.4))       # shutter slot, closed at both ends
+    # top frame (304, 6 mm, welded on the hopper walls): overhangs the inside by 5 mm (sides) and 12 mm (ends) to carry the lid seal
+    zt = zi + r["iz"]
+    ox, oy = r["ix"] / 2 + 1.2, r["iy"] / 2 + 1.2
+    fx, fy = r["ix"] / 2 - 5.0, r["iy"] / 2 - 12.0
+    frame = h.box(xd - ox, xd + ox, -oy, oy, zt, zt + 6.0).cut(h.rbox(xd - fx, xd + fx, -fy, fy, zt - 1, zt + 7.0, 2.0))
+    add(f"Reservoir {key} ({r['vol_cm3']:.0f} cm3, 304 SS wedge hopper, {r['slot']:.0f} mm outlet for the {r['for_module']} module; same 30 x 112 mm dock plate for every size)",
+        h.fuse([body, base, frame]), C["ss"], step, (0, 0, 380), mat="ss304", bom="R1", mcm="HOPPER", **cg)
+    gate = h.box(xd - 12.8, xd + 12.8, -L2 + 3.5, L2 - 3.5, z_dock + 1.1, z_dock + 2.3).cut(
         h.box(xd - MP.SLOT_W / 2, xd + MP.SLOT_W / 2, -r["slot"] / 2, r["slot"] / 2, z_dock, z_dock + 3))
-    add(f"Reservoir {key} shutter (shown open, as docked; springs shut when the reservoir slides out)", gate, C["steel"], step,
+    add(f"Reservoir {key} shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)", gate, C["steel"], step,
         (0, 0, 360), mat="ss304", bom="R1", **cg)
     fill = r["vol_cm3"] * 0.8
     pw = h.box(xd - r["ix"] / 2 + 0.5, xd + r["ix"] / 2 - 0.5, -r["iy"] / 2 + 0.5, r["iy"] / 2 - 0.5, zi + r["wedge_h"], zi + r["wedge_h"] + max(4.0, (fill * 1000 / (r["ix"] * r["iy"])) - r["wedge_h"] * 0.6))
     add(f"Reservoir {key} powder", pw, C["powder"], step, (0, 0, 380), mat="powder", bom="R1", **cg)
-    top = zi + r["iz"] + 3.0
+    # lid: 4 mm 6061 on the frame, FKM 1.78 mm face O-ring in its underside (Parker 1.32 x 2.3), two M3 screws (joints.py) into blind
+    # tapped holes in the frame outside the seal
+    top = zt + 6.0 + 4.0
     hz1 = 258.0
-    hd = h.fuse([h.box(xd - 4, xd + 4, -30, 30, hz1 - 10, hz1), h.box(xd - 4, xd + 4, -6, 6, top - 0.5, hz1 - 9.9)])
-    add(f"Reservoir {key} lid with robot handle (grip plane z = 258 for every size)", h.fuse([hd, h.box(xd - r["ix"] / 2 - 1.2, xd + r["ix"] / 2 + 1.2, -L2, L2, top - 3.0, top)]),
+    (gi_x, gi_y) = h.fit_loop((fx + 1.5, fy + 1.5), 3.5, 2.5, 1.0)[0]
+    w = MP.FACE_1P78["width"]
+    groove = h.rbox(xd - gi_x - w, xd + gi_x + w, -gi_y - w, gi_y + w, zt + 6.0 - 0.01, zt + 6.0 + 1.32, 3.5 + w).cut(
+        h.rbox(xd - gi_x, xd + gi_x, -gi_y, gi_y, zt + 5.0, zt + 8.0, 3.5))
+    hd = h.box(xd - 4, xd + 4, -30, 30, hz1 - 10, hz1)
+    if top - 0.5 < hz1 - 10.0:
+        hd = h.fuse([hd, h.box(xd - 4, xd + 4, -6, 6, top - 0.5, hz1 - 9.9)])
+    lid = h.fuse([hd, h.box(xd - ox, xd + ox, -oy, oy, zt + 6.0, top)]).cut(groove)
+    add(f"Reservoir {key} lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)", lid,
         C["anod"], step, (0, 0, 420), mat="al6061", bom="R1", **cg)
+    ring = h.rbox(xd - gi_x - w + 0.2, xd + gi_x + w - 0.2, -gi_y - w + 0.2, gi_y + w - 0.2, zt + 6.0, zt + 6.0 + 1.32, 3.5 + w - 0.2).cut(
+        h.rbox(xd - gi_x, xd + gi_x, -gi_y, gi_y, zt + 5.0, zt + 8.0, 3.5))
+    per = 2 * (2 * gi_x + 2 * gi_y) - (8 - 2 * math.pi) * 3.5
+    pk = MP.pick_ring(per)
+    add(f"Reservoir {key} lid O-ring (FKM 75A {pk[0]})", ring, C["black"], step, (0, 0, 420), mat="fkm", bom="R1", **cg)
+    h.GLANDS[f"reservoir_lid_{key}"] = dict(kind="face", ring=pk[0], cs=1.78, depth=1.32, width=w, inner_perimeter=per, groove_mat="al", T=45.0,
+                                            closure=f"reservoir {key} lid on its top frame")
+    return dict(lid_screws=[(xd, s * (r["iy"] / 2 - 2.5), top) for s in (-1, 1)], frame_top=zt + 6.0)

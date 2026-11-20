@@ -25,14 +25,16 @@ STOP_BELOW = 2.0        # bottom stop 2 mm below the deepest build position
 OVERTRAVEL = 8.0        # z_p = +8: plate rim stands 8 mm proud of the floor so a gripper can take it
 Z_P_MIN = -(BUILD_STROKE + STOP_BELOW)                # -42
 Z_P_MAX = OVERTRAVEL                                  # +8
-BOT_FLANGE_T = 10.0     # module gland plate (double FKM O-ring rod gland), bolted under a collar welded to the tube end
+BOT_FLANGE_T = 14.0     # module gland plate, bolted under a collar welded to the tube end. 14 mm (was 10) so it holds two
+                        # Parker dynamic rod glands (3.6 mm wide each) with 2.3 mm lands (seals.md, item 6)
 COLLAR_T = 8.0          # 316L collar ring TIG-welded round the tube's bottom end; the gland plate's 6 x M4 screws thread into it
 COLLAR_W = 12.0         # collar radial width beyond the tube OD (bolt circle at tube OD + 6.5 mm)
 ROD_OD, ROD_ID = 15.875, 12.7                         # 5/8 in. x 0.065 in. wall 316 tube (M50, L75)
 ROD_S25 = (9.525, 7.747)                              # 3/8 in. x 0.035 in. wall 316 tube for S25: its Ø24.8 piston head has no room
                                                       # for the stack screws' counterbores beside a 5/8 in. rod socket
 SEAL_DEPTH = {"S25": 1.6}                             # radial depth of the bore-seal groove (3.0 elsewhere): S25's stack screws pass inside it
-ROD_END_T = 14.0        # rod-end hardware: 430 SS striker (5) + potted end cap with a side cable exit (9)
+ROD_END_T = 24.0        # rod-end hardware: 430 SS striker (5) + end cap (19) carrying a hermetic glass-to-metal connector on its
+                        # side (was 14 with a potted cable exit: stranded leads wick gas along the strands, seals.md item 7)
 ROD_L = (OVERTRAVEL - (-(BUILD_STROKE + STOP_BELOW))) + BOT_FLANGE_T + ROD_END_T + 3.0   # 77: piston-head bottom to the coupling face
 ARM_T = 12.0            # Z lift arm under the coupling face (pot magnet set flush in its top)
 ZSTAGE_RELEASE = -45.0  # arm drops 45 mm below the rod end (magnet breaks away) before a module swap
@@ -50,7 +52,9 @@ FLANGE_D = 100.0        # module flange disc under the floor
 FLANGE_T = 10.0
 TAB_X = 64.0            # two tabs to x = +/-64 carry the captive M6 thumb screws at x = +/-58
 SCREW_X = 58.0
-SPIGOT_ORING = "2-238"  # FKM, radial static seal in a groove on the spigot OD (groove dia 90.2, ID 88.5 mm: 2 % stretch)
+SPIGOT_ORING = "2-238"  # FKM 75A, radial static seal in a groove on the spigot OD
+SPIGOT_GROOVE = dict(root_d=90.5, width=4.8, z0=3.6)   # root Ø90.5 x 4.8 wide (was 90.2 x 3.6: 101 % fill at worst tolerance),
+                        # from zf + 3.6: 17-25 % squeeze, <= 81 % fill (analysis/seals/seals.py)
 
 # ---- module sizes ----
 # bore: honed (H7, Ra <= 0.4 um) after the spigot-flange is welded to the 316L tube.
@@ -113,3 +117,46 @@ T_DOOR_OPEN = 50.0      # guard and chamber door stay locked until the plate is 
 T_LIMIT_A = 240.0       # independent limit controller trips (latching) above this
 TCO_A = 240.0           # thermal cutoff in series with the heaters, in the heater block
 HEATER_V = 24.0
+
+
+# ---- seals: AS568 FKM 75A O-rings (Parker ORD 5700 glands; see seals.md and analysis/seals/seals.py) ----
+# AS568 dash number -> (ID, cross-section) in mm, from the AS568 inch sizes.
+_AS568_IN = {"2-006": (0.114, 0.070), "2-007": (0.145, 0.070), "2-008": (0.176, 0.070), "2-009": (0.208, 0.070), "2-010": (0.239, 0.070),
+             "2-011": (0.301, 0.070), "2-012": (0.364, 0.070), "2-013": (0.426, 0.070), "2-014": (0.489, 0.070), "2-015": (0.551, 0.070),
+             "2-016": (0.614, 0.070), "2-017": (0.676, 0.070), "2-018": (0.739, 0.070), "2-019": (0.801, 0.070), "2-020": (0.864, 0.070),
+             "2-021": (0.926, 0.070), "2-022": (0.989, 0.070), "2-023": (1.051, 0.070), "2-024": (1.114, 0.070), "2-025": (1.176, 0.070),
+             "2-026": (1.239, 0.070), "2-027": (1.301, 0.070), "2-028": (1.364, 0.070), "2-029": (1.489, 0.070), "2-030": (1.614, 0.070),
+             "2-031": (1.739, 0.070), "2-032": (1.864, 0.070), "2-033": (1.989, 0.070), "2-034": (2.114, 0.070), "2-035": (2.239, 0.070),
+             "2-036": (2.364, 0.070), "2-037": (2.489, 0.070), "2-038": (2.614, 0.070), "2-039": (2.739, 0.070), "2-040": (2.864, 0.070),
+             "2-041": (2.989, 0.070), "2-042": (3.239, 0.070), "2-043": (3.489, 0.070), "2-044": (3.739, 0.070), "2-045": (3.989, 0.070),
+             "2-046": (4.239, 0.070), "2-047": (4.489, 0.070), "2-048": (4.739, 0.070), "2-049": (4.989, 0.070), "2-050": (5.239, 0.070),
+             "2-110": (0.362, 0.103), "2-114": (0.612, 0.103), "2-238": (3.484, 0.139), "3-904": (0.351, 0.072)}
+AS568 = {k: (round(a * 25.4, 2), round(b * 25.4, 2)) for k, (a, b) in _AS568_IN.items()}
+FACE_1P78 = dict(cs=1.78, depth=1.32, width=2.3)        # Parker face gland for 1.78 mm cord, gas/vacuum column (also the half-dovetail)
+DOVETAIL_DEG = 24.0                                      # half-dovetail: outer wall undercut 24 deg (Parker 66 deg wall)
+
+
+def pick_ring(inner_perimeter_mm, cs=1.78, target=0.02, max_stretch=0.05):
+    """AS568 ring for a face groove whose inner wall has this perimeter: the ring is stretched onto the inner wall (external
+    pressure at vacuum pushes it inward), aiming at ~2 % and never above 5 % stretch. Returns (dash, ID, stretch)."""
+    best = None
+    for k, (d, c) in AS568.items():
+        if abs(c - cs) > 0.05 or not k.startswith("2-0"):
+            continue
+        st = inner_perimeter_mm / (math.pi * d) - 1.0
+        if 0.0 <= st <= max_stretch and (best is None or abs(st - target) < abs(best[2] - target)):
+            best = (k, d, st)
+    return best
+
+
+import math  # noqa: E402  (pick_ring uses it; module_params stays pure Python)
+
+# gland plate face seal on the welded collar: groove 2.6 wide (was 2.4: 94 % fill), 1.3 deep; inner diameter set so a standard
+# AS568 ring sits on the inner wall with 1.5-3.3 % stretch
+GLAND_PLATE_SEAL = {"S25": dict(ring="2-024", groove_id=28.72), "M50": dict(ring="2-034", groove_id=54.5), "L75": dict(ring="2-041", groove_id=78.4)}
+GLAND_PLATE_GROOVE = dict(width=2.6, depth=1.3)
+# rod gland: two Parker dynamic (reciprocating) rod glands in the gland plate; seamless polished 316 rod
+ROD_GLAND = {"M50": dict(ring="2-114", groove_d=20.0, throat_d=15.93, width=3.6), "L75": dict(ring="2-114", groove_d=20.0, throat_d=15.93, width=3.6),
+             "S25": dict(ring="2-110", groove_d=13.64, throat_d=9.58, width=3.6)}
+RES_BASE_HALF_Y = 56.2   # one docking-plate footprint for every reservoir (the L reservoir's): 30 x 112.4 mm
+DOCK_OPENING = (12.0, 100.0)   # dose opening in the dock face (x, y): takes every reservoir's slot (45 / 70 / 95 x 8)

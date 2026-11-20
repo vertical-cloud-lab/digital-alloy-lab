@@ -61,6 +61,8 @@ P = dict(
     # O-ring face glands (Parker ORD 5700, design chart 4-3): 3.53 mm FKM cord, depth 2.65 mm (25 % squeeze),
     # width 4.6 mm (the "warm" width, 80 % gland fill) so the seal keeps >= 10 % void at a 200 C plate
     oring_cs=3.53, gland_d=2.65, gland_w=4.6,
+    # door: 1.78 mm cord in a half-dovetail groove 1.32 deep (seals.md); analysis/seals/door_seal_fea.py reads the depth from here
+    door_gland_d=1.32,
     # optics: f = 160 mm f-theta (Thorlabs FTH160-1064 envelope: WD 182.5, housing Ø90 x 50.2)
     lens_wd=182.5, lens_len=50.2, lens_d=90.0, galvo=115.0, galvo_h=110.0,
     # door
@@ -143,8 +145,10 @@ STEPS = {
 
 # Motion groups: kind, axis/hinge, range. analysis/ sweeps every group through its range.
 # drop out of the port, slide forward under the outlet plenum, rise under the door hinges, then over the guard sill
-MODULE_PATH = [(0.0, 0.0, 0.0), (0.0, 0.0, -MP.MODULE_DROP), (0.0, -170.0, -MP.MODULE_DROP), (0.0, -170.0, -22.0), (0.0, -190.0, -22.0),
-               (0.0, -190.0, -10.0), (0.0, -330.0, -10.0)]
+# (since the seals were drawn the gland plate and the rod end are 14 mm deeper: the module rises at y -158 (was -170) so the L75
+# handle stays clear of the guard's bottom front rail, and the last rise is to +4 (was -10) so the rod end clears the guard sill)
+MODULE_PATH = [(0.0, 0.0, 0.0), (0.0, 0.0, -MP.MODULE_DROP), (0.0, -158.0, -MP.MODULE_DROP), (0.0, -158.0, -22.0), (0.0, -190.0, -22.0),
+               (0.0, -190.0, 4.0), (0.0, -330.0, 4.0)]
 MOTION = {
     "recoater": dict(kind="tx", lo=0.0, hi=P["x_end"] - P["x_park"], note="blade from park to end of spread"),
     "piston": dict(kind="tz", lo=MP.Z_P_MIN, hi=MP.Z_P_MAX, note="build piston: stroke, bottom stop and +8 mm plate-exchange overtravel"),
@@ -158,6 +162,26 @@ MOTION = {
 }
 MOTION["module"]["hi"] = sum(math.dist(a, b) for a, b in zip(MODULE_PATH[:-1], MODULE_PATH[1:]))
 DOOR_HINGE = None   # (y, z) of the door hinge axis (parallel to X); set in build()
+_RES = None         # the docked reservoir's screw positions (joints.py)
+GLANDS: dict = {}   # every O-ring gland drawn by build(): analysis/seals/seals.py checks each one (Parker squeeze, fill, stretch)
+
+# Real parts drawn to their published dimensions (seal-parts.csv has the part numbers, prices and sources).
+# Door: McMaster 1807A61 adjustable-grip draw latch, 304 SS, 800 lb: 5-1/4 in. long including the strike at the longest latching
+# distance, 1-3/4 in. wide, 1-1/4 in. projection, latching distance 1-3/8 to 2-1/2 in.
+LATCH_1807A61 = dict(L=133.35, W=44.45, H=31.75, body_L=80.0, rating_N=800 * 4.448)
+# drawer: quarter-turn cam latch (stud in the drawer plate, receptacle in the lid); envelope from the vendor drawing
+QTURN = dict(head_d=14.0, head_t=3.5, stud_d=6.0, rec_d=9.0, rec_l=12.0, label="quarter-turn latch", pn="", rating_N=0.0)
+# magnetic-fluid rotary feedthrough envelope (vendor drawing): flange, housing, shafts; for the recoater screw and the roller
+# Ferrotec SFL-006-NN (flange mount): 6 mm shaft, Ø28 housing, 82 mm overall with a 15 mm vacuum-side shaft, Ø52 flange with
+# 6 x Ø4.5 on a 40 mm circle. It sits on a 9 mm 6061 spacer ring (FKM face O-rings both sides) so its vacuum-side shaft ends in
+# the wall's bore, where the clamp coupling joins it to the ball screw. Split of the 82 mm between flange, housing and air shaft
+# assumed (6 / 46 / 15) from the overall length.
+FERRO = dict(flange_d=52.0, flange_t=6.0, body_d=28.0, body_l=46.0, shaft_d=6.0, air_shaft=15.0, vac_shaft=15.0, spacer=9.0,
+             label="magnetic-fluid rotary feedthrough Ferrotec SFL-006-NN", pn="Ferrotec SFL-006-NN", oring="2-024")
+# Ferrotec SSL-005-NN (nut mount): 5 mm shaft, Ø16 housing, M8 x 1 nose, 65.5 mm overall with a 12.5 mm vacuum-side shaft
+# (nose 8 / housing 35 / air shaft 10 assumed); screws into an M8 x 1 hole in the metering base over a 2-012 FKM face O-ring.
+FERRO_S = dict(body_d=16.0, body_l=35.0, nose_d=8.0, nose_l=8.0, shaft_d=5.0, air_shaft=10.0, vac_shaft=12.5,
+               label="magnetic-fluid rotary feedthrough Ferrotec SSL-005-NN", pn="Ferrotec SSL-005-NN", oring="2-012")
 
 
 # --------------------------------------------------------------------------------------------
@@ -299,6 +323,59 @@ def shcs_head(p, axis="z", d=8.5, k=5.0):
     return cyl(d / 2, p, axis, k).cut(cyl(2.0, p, axis, k + 0.01).translate(_AX[axis] * (k - 2.5)))
 
 
+def ring_loop(axis, c, half_in, width, depth_range, r_in):
+    """Rounded-rectangle annulus (a face gland or the O-ring in it). axis: the face normal 'x', 'y' or 'z'; c: centre (3-tuple);
+    half_in: half-sizes of the inner wall along the two in-plane axes (in x, y, z order skipping `axis`); depth_range: (a0, a1)
+    along `axis`; r_in: inner corner radius."""
+    a0, a1 = depth_range
+    ax = {"x": 0, "y": 1, "z": 2}[axis]
+    other = [k for k in range(3) if k != ax]
+    def rr(h0, h1, r):
+        lo, hi = [0.0] * 3, [0.0] * 3
+        lo[ax], hi[ax] = a0, a1
+        for k, hh in zip(other, (h0, h1)):
+            lo[k], hi[k] = c[k] - hh, c[k] + hh
+        return rbox(lo[0], hi[0], lo[1], hi[1], lo[2], hi[2], r, "|" + "XYZ"[ax])
+    return rr(half_in[0] + width, half_in[1] + width, r_in + width).cut(rr(half_in[0], half_in[1], r_in))
+
+
+def loop_perimeter(half_in, r_in):
+    """Perimeter of a rounded rectangle with these half-sizes and corner radius (the groove's inner wall)."""
+    return 4 * (half_in[0] + half_in[1]) - (8 - 2 * math.pi) * r_in
+
+
+def fit_loop(hi, r_in, grow_max=3.0, shrink_max=1.0):
+    """Lengthen (or shorten) a loop's longer side so that a standard AS568 1.78 mm ring sits on the groove's inner wall at ~2 %
+    stretch. Returns (half-sizes, (dash, ID, stretch))."""
+    base = loop_perimeter(hi, r_in)
+    k = 0 if hi[0] >= hi[1] else 1
+    best = None
+    for dash, (d, c) in MP.AS568.items():
+        if not dash.startswith("2-0") or abs(c - 1.78) > 0.05:
+            continue
+        delta = (1.02 * math.pi * d - base) / 4.0
+        if -shrink_max <= delta <= grow_max and (best is None or abs(delta) < abs(best[1])):
+            best = (dash, delta)
+    if best is None:
+        return tuple(hi), MP.pick_ring(base)
+    h2 = list(hi)
+    h2[k] += best[1]
+    return tuple(h2), MP.pick_ring(loop_perimeter(h2, r_in))
+
+
+def dovetail_loop(origin, normal, xdir, w_in, h_in, r_in, width=2.3, depth=1.32, deg=24.0):
+    """Half-dovetail groove cut into a face: origin on the face, normal pointing out of the face. The inner wall is
+    straight; the outer wall is undercut by `deg` so the groove is `width` wide at its bottom and narrower at the face, which
+    keeps the cord in the groove when the closure opens (Parker ORD 5700, half-dovetail glands)."""
+    n = V(*normal).normalized()
+    pl = cq.Plane(origin=V(*origin) - n * depth, xDir=V(*xdir), normal=n)
+    outer = (cq.Workplane(pl).sketch().rect(w_in + 2 * width, h_in + 2 * width).vertices().fillet(r_in + width).finalize()
+             .extrude(depth + 0.01, taper=deg).val())
+    pl2 = cq.Plane(origin=V(*origin) - n * (depth + 0.02), xDir=V(*xdir), normal=n)
+    inner = cq.Workplane(pl2).sketch().rect(w_in, h_in).vertices().fillet(r_in).finalize().extrude(depth + 0.1).val()
+    return outer.cut(inner)
+
+
 def tslot20(p0, axis, L):
     """20 mm T-slot (simplified: square with four slot grooves)."""
     s = cq.Workplane("XY").rect(20, 20).extrude(L)
@@ -317,8 +394,18 @@ def tslot20(p0, axis, L):
 # --------------------------------------------------------------------------------------------
 def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     """The machine with one build module (S25, M50 or L75) and one reservoir (S, M or L; default: the module's)."""
-    global DOOR_HINGE
+    global DOOR_HINGE, _RES
+    GLANDS.clear()
     parts: list[Part] = []
+    F = MP.FACE_1P78
+    sae4 = dict(thread_d=11.11, depth=11.5, csk_d=12.9, csk_depth=1.6, drill_d=4.0)   # SAE J1926-1 / MS16142 size -4 port (7/16-20 UNF)
+
+    def sae_port(shape, p0, axis, wall):
+        """SAE J1926 straight-thread O-ring-boss port (-4): thread drawn at its major diameter, 12 deg O-ring chamfer, then a Ø4 drilling."""
+        d = _AX[axis]
+        shape = shape.cut(cyl(sae4["thread_d"] / 2, p0, axis, sae4["depth"]))
+        shape = shape.cut(cq.Solid.makeCone(sae4["csk_d"] / 2, sae4["thread_d"] / 2, sae4["csk_depth"], V(*p0) - d * 0.01, d))
+        return shape.cut(cyl(sae4["drill_d"] / 2, tuple(V(*p0) + d * (sae4["depth"] - 0.1)), axis, wall - sae4["depth"] + 1.2))
 
     def add(name, shape, color, step, explode=(0, 0, 0), **kw):
         parts.append(Part(name, shape, color, step, tuple(float(e) for e in explode), **kw))
@@ -392,8 +479,15 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # ===================== 4. Heated build module, overflow =====================
     ML.add_build_module(sys.modules[__name__], add, module, 4)
     ox = (P["ovf_x0"] + P["ovf_x1"]) / 2
-    fun = box(ox - 22, ox + 22, -54, 54, zf - 22, zf).cut(box(P["ovf_x0"], P["ovf_x1"], -52, 52, zf - 11, zf + 1)).cut(cyl(19.0, (ox, 0, zf - 23), "z", 13))
-    add("Overflow funnel block (316L)", fun, C["ss"], 4, (0, 0, -200), mat="ss316l", bom="M4", section=True)
+    # 316L under the 6061 floor: bolted (4 x M4, joints.py) over an FKM face O-ring round the overflow slot, never welded
+    fun = box(ox - 22, ox + 22, -59, 59, zf - 22, zf).cut(box(P["ovf_x0"], P["ovf_x1"], -52, 52, zf - 11, zf + 1)).cut(cyl(19.0, (ox, 0, zf - 23), "z", 13))
+    hi_f = fit_loop(((P["ovf_x1"] - P["ovf_x0"]) / 2 + 1.5, 53.5), 1.5, 2.5, 0.0)[0]
+    fun = fun.cut(ring_loop("z", (ox, 0, 0), hi_f, 2.3, (zf - 1.32, zf + 0.01), 1.5))
+    add("Overflow funnel block (316L, bolted, FKM face O-ring)", fun, C["ss"], 4, (0, 0, -200), mat="ss316l", bom="M4", section=True)
+    pk = MP.pick_ring(loop_perimeter(hi_f, 1.5))
+    add(f"Overflow funnel O-ring (FKM 75A {pk[0]}, face seal under the floor)", ring_loop("z", (ox, 0, 0), hi_f, 2.0, (zf - 1.32, zf), 1.5), C["black"], 4, (0, 0, -200), mat="fkm", bom="M4")
+    GLANDS["overflow_funnel"] = dict(kind="face", ring=pk[0], cs=1.78, depth=1.32, width=2.3, inner_perimeter=loop_perimeter(hi_f, 1.5), groove_mat="ss", T=50.0,
+                                     closure="overflow funnel block (316L) under the floor")
     add("Overflow port (KF-40)", place(kf_stub(40, 16), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, -1)), C["ss"], 4, (0, 0, -220), mat="ss304", bom="G7", mcm="KF40_WELD", section=True)
     jar = fuse([place(kf_stub(40, 90), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1)), cyl(KF[40][1] / 2, (ox, 0, zf - 22 - 16 - 92), "z", 2)])
     add("Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)", jar, C["ss"], 4, (0, 0, -260), mat="ss304", bom="M4", mcm="KF40_NIPPLE", section=True)
@@ -415,30 +509,54 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         ch = ch.cut(cyl(3.0, (sx * MP.SCREW_X, 0, -fl - 1), "z", 13.0))          # and the locating dowel / diamond pin holes
         ch = ch.cut(cyl(3.0, (0, sx * MP.DOWEL_Y, -fl - 1), "z", 11.0))
     ch = ch.cut(box(P["ovf_x0"], P["ovf_x1"], -52, 52, -fl - 1, 1))
-    for sx in (-1, 1):                                                          # plate-at-exchange-height through-beam (fibre heads)
-        ch = ch.cut(cyl(1.6, (sx * (ix - 1), 0, 5.0), "x" if sx > 0 else "-x", P["wall"] + 2))
+    for sx in (-1, 1):                                                          # plate-at-exchange-height through-beam (fibre heads):
+        ch = ch.cut(cyl(3.0, (sx * (ix - 1), 0, 5.0), "x" if sx > 0 else "-x", P["wall"] + 2))     # M6 x 0.75 tapped through the wall
+        ch = ch.cut(cyl(5.4, (sx * (cx - 1.32), 0, 5.0), "x" if sx > 0 else "-x", 1.4).cut(cyl(3.1, (sx * (cx - 1.4), 0, 5.0), "x" if sx > 0 else "-x", 1.6)))   # 2-010 face groove
     ry_, rz_ = P["rc_screw_y"], P["rc_screw_z"]
     ch = ch.cut(cyl(9, (-cx - 1, ry_, rz_), "x", P["wall"] + 2)).cut(cyl(9, (ix - 1, ry_, rz_), "x", P["wall"] + 2))
     ch = ch.cut(cyl(12.7, (ix - 1, 0, 70), "x", P["wall"] + 2))        # vacuum port (KF-25)
-    ch = ch.cut(cyl(3.2, (100, iy - 1, 100), "y", P["wall"] + 2))      # argon in (back wall)
-    ch = ch.cut(cyl(3.2, (ix - 1, -40, 18), "x", P["wall"] + 2))       # O2 sample
+    ch = sae_port(ch, (100, cy, 100), "-y", P["wall"])                  # argon in (back wall): SAE-4 O-ring-boss port, not NPT into 6061
+    ch = sae_port(ch, (cx, -40, 18), "-x", P["wall"])                   # O2 sample (right wall): SAE-4 port
     gw, gd = P["gland_w"], P["gland_d"]                                # lid O-ring face gland in the top face
     ch = ch.cut(rbox(-ix - 3 - gw, ix + 3 + gw, -iy - 3 - gw, iy + 3 + gw, lz0 - gd, lz0 + 1, 6).cut(rbox(-ix - 3, ix + 3, -iy - 3, iy + 3, lz0 - gd - 1, lz0 + 2, 4)))
     add("Process chamber body (6061-T6, ~6.4 L)", ch, C["alu"], 5, (0, 0, 260), mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
     # the cord as squeezed: 2.65 mm tall, ~3.7 mm wide, sitting in the 4.6 mm gland
     add("Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)", rbox(-ix - 3.3 - 3.7, ix + 3.3 + 3.7, -iy - 3.3 - 3.7, iy + 3.3 + 3.7, lz0 - gd, lz0, 5.6).cut(rbox(-ix - 3.3, ix + 3.3, -iy - 3.3, iy + 3.3, lz0 - gd - 1, lz0 + 1, 4.3)),
         C["black"], 5, (0, 0, 300), mat="fkm", bom="G8", mcm="ORING_CORD", section=True)
-    plen_in = rbox(-65, 65, cy, cy + 32, -8, 30, 4).cut(box(-60, 60, cy - 1, cy + 27, -3, 25)).cut(cyl(12.7, (0, cy + 26, 11), "y", 8))
-    add("Cross-flow inlet plenum + nozzle (316L)", plen_in, C["ss"], 5, (0, 180, 0), mat="ss316l", bom="G4", section=True)
+    # 316L on 6061 cannot be welded: a 6 mm bolting flange, 8 x M4 (joints.py) and an FKM face O-ring round the opening
+    plen_in = fuse([rbox(-65, 65, cy, cy + 32, -8, 30, 4), rbox(-75, 75, cy, cy + 6, -18, 40, 4, "|Y")]).cut(box(-60, 60, cy - 1, cy + 27, -3, 25)).cut(cyl(12.7, (0, cy + 26, 11), "y", 8))
+    hi_in, ri_in = fit_loop((61.5, 15.5), 1.5)[0], 1.5                 # groove inner wall: >= 1.5 mm outside the plenum's opening (x +/-60, z -3..25)
+    plen_in = plen_in.cut(ring_loop("y", (0, 0, 11), hi_in, F["width"], (cy - 0.01, cy + F["depth"]), ri_in))
+    add("Cross-flow inlet plenum + nozzle (316L, bolted flange)", plen_in, C["ss"], 5, (0, 180, 0), mat="ss316l", bom="G4", section=True)
+    pk = MP.pick_ring(loop_perimeter(hi_in, ri_in))
+    add(f"Inlet plenum O-ring (FKM 75A {pk[0]}, face seal on the back wall)", ring_loop("y", (0, 0, 11), hi_in, F["width"] - 0.3, (cy, cy + F["depth"]), ri_in),
+        C["black"], 5, (0, 180, 0), mat="fkm", bom="G8", section=True)
+    GLANDS["inlet_plenum"] = dict(kind="face", ring=pk[0], cs=1.78, depth=F["depth"], width=F["width"], inner_perimeter=loop_perimeter(hi_in, ri_in),
+                                  groove_mat="ss", T=45.0, closure="inlet plenum (316L) on the back wall (6061)")
     add("Inlet plenum port (KF-25)", place(kf_stub(25, 26), (0, cy + 32 + 20, 11), (1, 0, 0), (0, 1, 0)), C["ss"], 5, (0, 200, 0), mat="ss304", bom="G7", mcm="KF25_WELD")
     # flat (16 mm) under the module's path to the front, with a deeper boot at the right end for the KF-25 port
     y0o, y1o = MP.OUTLET_Y
-    plo = fuse([rbox(-67, 76, y0o - 5, y1o + 5, zf - 16, zf, 3), rbox(72, 100, y0o - 12, y1o + 8, zf - 45, zf, 4)])
+    # 9 mm flanges along the slot carry an FKM face O-ring and 6 counterbored M4 screws up into the floor (joints.py)
+    plo = fuse([rbox(-75, 84, y0o - 11, y1o + 11, zf - 16, zf, 3), rbox(72, 100, y0o - 12, y1o + 8, zf - 45, zf, 4)])
     plo = plo.cut(fuse([box(-63, 72, y0o - 1, y1o + 1, zf - 13, zf + 1), box(76, 96, y0o - 8, y1o + 4, zf - 41, zf - 3), box(60, 80, y0o - 1, y1o + 1, zf - 13, zf - 3)]))
     plo = plo.cut(cyl(12.7, (86, (y0o + y1o) / 2, zf - 46), "z", 6))
-    add("Cross-flow outlet plenum under the floor (316L, flat over the module path)", plo, C["ss"], 5, (0, 0, -180), mat="ss316l", bom="G4", section=True)
+    hi_o, c_o = fit_loop((69.0, 6.5), 1.5, 2.0, 0.5)[0], (4.5, (y0o + y1o) / 2, 0.0)   # groove inner wall >= 1.5 mm outside the opening (x -63..72, y -95..-85)
+    plo = plo.cut(ring_loop("z", c_o, hi_o, F["width"], (zf - F["depth"], zf + 0.01), 1.5))
+    add("Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)", plo, C["ss"], 5, (0, 0, -180), mat="ss316l", bom="G4", section=True)
+    pk = MP.pick_ring(loop_perimeter(hi_o, 1.5))
+    add(f"Outlet plenum O-ring (FKM 75A {pk[0]}, face seal under the floor)", ring_loop("z", c_o, hi_o, F["width"] - 0.3, (zf - F["depth"], zf), 1.5),
+        C["black"], 5, (0, 0, -180), mat="fkm", bom="G8", section=True)
+    GLANDS["outlet_plenum"] = dict(kind="face", ring=pk[0], cs=1.78, depth=F["depth"], width=F["width"], inner_perimeter=loop_perimeter(hi_o, 1.5),
+                                   groove_mat="ss", T=45.0, closure="outlet plenum (316L) under the floor (6061)")
     add("Outlet plenum port (KF-25)", place(kf_stub(25, 26), (86, (y0o + y1o) / 2, zf - 45 - 26), (1, 0, 0), (0, 0, 1)), C["ss"], 5, (180, 0, -180), mat="ss304", bom="G7", mcm="KF25_WELD")
-    add("Vacuum port (KF-25)", place(kf_stub(25, 22), (cx + 18, 0, 70), (0, 1, 0), (1, 0, 0)), C["ss"], 5, (180, 0, 0), mat="ss304", bom="G7", mcm="KF25_WELD")
+    # 304 cannot be welded to the 6061 body: the KF-25 stub is welded into a 304 adapter plate that bolts on (4 x M5, joints.py)
+    # over an FKM face O-ring (seals.md item 10)
+    add("Vacuum port (KF-25, stub welded into the adapter plate)", place(kf_stub(25, 10), (cx + 18, 0, 70), (0, 1, 0), (1, 0, 0)), C["ss"], 5, (180, 0, 0), mat="ss304", bom="G7", mcm="KF25_WELD")
+    vap = box(cx, cx + 8, -28, 28, 42, 98).cut(cyl(11.1, (cx - 1, 0, 70), "x", 10)).cut(tube(16.8, 14.5, (cx - 0.01, 0, 70), "x", F["depth"] + 0.01))
+    add("Vacuum port adapter plate (304, 8 mm, FKM face O-ring)", vap, C["ss"], 5, (180, 0, 0), mat="ss304", bom="G7", section=True)
+    add("Vacuum port adapter O-ring (FKM 75A 2-024)", tube(16.6, 14.5, (cx, 0, 70), "x", F["depth"]), C["black"], 5, (180, 0, 0), mat="fkm", bom="G8")
+    GLANDS["vacuum_port"] = dict(kind="face", ring="2-024", cs=1.78, depth=F["depth"], width=2.3, groove_id=29.0, groove_mat="ss", T=40.0,
+                                 closure="KF-25 vacuum-port adapter plate on the right wall")
     add("Layer-light LED bar", box(ix - 6, ix - 1, -45, 45, 30, 38), C["white"], 5, (0, 0, 120), mat="misc", mass_kg=0.05, bom="M6")
     # lift-out wall liners: 0.5 mm 316L held by spring clips; they take the condensate and lift out through the door
     ry_, rz_ = P["rc_screw_y"], P["rc_screw_z"]
@@ -446,8 +564,13 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     ll = box(-ix + 0.1, -ix + 0.6, -iy + 8, iy - 8, 16, 110).cut(cyl(11, (-ix - 1, ry_, rz_), "x", 3))
     lr = box(ix - 0.6, ix - 0.1, -iy + 8, iy - 8, 16, 110).cut(cyl(11, (ix - 2, ry_, rz_), "x", 3)).cut(cyl(14, (ix - 2, 0, 70), "x", 3)).cut(cyl(4.5, (ix - 2, -40, 18), "x", 3))
     add("Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)", comp([lb, ll, lr]), C["ss"], 5, (0, 0, 160), mat="ss316l", bom="A2", section=True, opacity=0.8)
-    fib = comp([fuse([cyl(1.5, (sx * ix, 0, 5.0), "x" if sx > 0 else "-x", P["wall"]), cyl(3.0, (sx * (ix + P["wall"]), 0, 5.0), "x" if sx > 0 else "-x", 22.0)]) for sx in (-1, 1)])
-    add("Plate-height through-beam (fibre heads in the side walls, z +5 mm)", fib, C["blue"], 5, (0, 0, 0), mat="misc", mass_kg=0.03, bom="A1")
+    # threaded M6 fibre heads screwed into the walls from outside, each sealed by a 2-010 FKM face O-ring under its flange
+    fib = comp([fuse([cyl(2.98, (sx * (ix + 1.0), 0, 5.0), "x" if sx > 0 else "-x", P["wall"] - 1.0), cyl(6.5, (sx * cx, 0, 5.0), "x" if sx > 0 else "-x", 2.5),
+                      cyl(3.0, (sx * (cx + 2.5), 0, 5.0), "x" if sx > 0 else "-x", 19.5)]) for sx in (-1, 1)])
+    add("Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)", fib, C["blue"], 5, (0, 0, 0), mat="misc", mass_kg=0.03, bom="A1")
+    add("Fibre-head O-rings (2 x FKM 75A 2-010, face seals)", comp([tube(5.3, 3.1, ((cx - 1.32) if sx > 0 else -cx, 0, 5.0), "x", 1.32) for sx in (-1, 1)]), C["black"], 5, (0, 0, 0), mat="fkm", bom="A1")
+    GLANDS["fibre_heads"] = dict(kind="face", ring="2-010", cs=1.78, depth=1.32, width=2.3, groove_id=6.2, groove_mat="al", T=45.0, n=2,
+                                 closure="threaded fibre heads in the side walls")
     th = math.radians(200.0)
     add("Module-present sensor (inductive M12, under the floor, sees the module flange)", cyl(6.0, (52.5 * math.cos(th), 52.5 * math.sin(th), zf - 6.5), (math.cos(th), math.sin(th), 0), 30.0),
         C["blue"], 5, (0, 0, -120), mat="misc", mass_kg=0.02, bom="A1")
@@ -465,7 +588,9 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     blk = fuse([box(xc - 22, xc + 22, iy - 42, yc, 25, P["rc_rail_z"] + 17), box(xc - 22, xc + 22, yc, iy - 3, 25, P["rc_rail_z"] - 18)])
     blk = blk.cut(cyl(12.0, (xc - 23, ry_, rz_), "x", 46)).cut(holder)
     add("Recoater carriage block (6061)", blk, C["alu"], 6, (0, 0, 220), group="recoater", mat="al6061", bom="M1")
-    add("Recoater ball screw (M12, 10 mm lead)", place(ball_screw(2 * cx + 10, 12.0, 8.0, 22.0), (-cx - 5, ry_, rz_), (1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), mat="steel", bom="M1", mcm="4566N101")
+    # the screw now ends inside the left wall's bore, where a clamp coupling joins it to the feedthrough's vacuum-side shaft
+    xs0 = -cx + FERRO["vac_shaft"] - FERRO["spacer"]
+    add("Recoater ball screw (M12, 10 mm lead)", place(ball_screw(cx + 5 - xs0, 12.0, 8.0, 11.0), (xs0, ry_, rz_), (1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), mat="steel", bom="M1", mcm="4566N101")
     add("Recoater ball nut (flange on the +x face)", place(ball_nut(12.0, 23.0, 43.0, 40.0, 10.0, None), (xc + 10.5, ry_, rz_), (-1, 0, 0), (0, 0, 1)), C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M1", mcm="4566N401")
     # stiffened after FEA (analysis/out/fea): a 12 x 8 arm and 14 x 11 holder let the blade deflect 17 um under a 10 N
     # spreading load; a 40 x 14 web and an 18 x 19 holder bring it to 3.4 um (< 5 um, 1/6 of a 30 um layer)
@@ -474,13 +599,36 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # default blade: HSS, 1.5 mm, wide (rounded) nose; EOS's standard blade for AlSi10Mg. Compliant FKM or silicone
     # cords and a carbon brush are the swap-in options (silicone only where Si pickup does not matter).
     add("HSS recoater blade (1.5 mm, wide nose)", bl, C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M5", mcm="9011K104")
-    bh_l = fuse([cyl(25, (-cx - 20, ry_, rz_), "x", 20).cut(cyl(4.0, (-cx - 21, ry_, rz_), "x", 22))])
-    add("Recoater fixed bearing + PTFE V-ring shaft seal housing", bh_l, C["anod"], 6, (-160, 0, 0), mat="al6061", bom="M1", mcm="9572K33")
-    add("Recoater floating bearing housing", tube(20, 4.0, (cx, ry_, rz_), "x", 14), C["anod"], 6, (160, 0, 0), mat="al6061", bom="M1")
-    add("Recoater motor standoff", tube(30, 26, (-cx - 60, ry_, rz_), "x", 40), C["alu_dark"], 6, (-200, 0, 0), mat="al6061", bom="M1")
-    rmot = place(servo_nema23(100.0, 20.0), (-cx - 60, ry_, rz_), (0, 1, 0), (1, 0, 0))
+    # left: a magnetic-fluid rotary feedthrough (its own bearings take the screw's axial load) flange-mounted on the wall over an FKM
+    # face O-ring, instead of a bearing + PTFE V-ring (a V-ring is a dirt excluder, not a vacuum seal: seals.md item 8)
+    FT = FERRO
+    x_sp = -cx - FT["spacer"]
+    x_f = x_sp - FT["flange_t"]
+    ft = fuse([cyl(FT["flange_d"] / 2, (x_f, ry_, rz_), "x", FT["flange_t"]), cyl(FT["body_d"] / 2, (x_f - FT["body_l"], ry_, rz_), "x", FT["body_l"]),
+               cyl(FT["shaft_d"] / 2, (x_f - FT["body_l"] - FT["air_shaft"], ry_, rz_), "x", FT["air_shaft"]),
+               cyl(FT["shaft_d"] / 2, (x_sp, ry_, rz_), "x", FT["vac_shaft"])])
+    sp = tube(FT["flange_d"] / 2, 9.0, (x_sp, ry_, rz_), "x", FT["spacer"]).cut(tube(14.5 + 2.3, 14.5, (-cx - 1.35, ry_, rz_), "x", 1.36))
+    sp = sp.cut(tube(14.5 + 2.3, 14.5, (x_sp - 0.01, ry_, rz_), "x", 1.36))
+    add("Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rings both sides)", sp, C["anod"], 6, (-160, 0, 0), mat="al6061", bom="M1")
+    add(f"Recoater fixed bearing: {FT['label']} on the left wall ({FT['pn'] or 'envelope'}; FKM face O-ring)", ft, C["anod"], 6, (-160, 0, 0), mat="misc", mass_kg=0.45, bom="M1", mcm=FT["pn"])
+    add(f"Recoater feedthrough O-rings (2 x FKM 75A {FT['oring']}, spacer to wall and to flange)", comp([tube(16.6, 14.5, (-cx - 1.32, ry_, rz_), "x", 1.32),
+        tube(16.6, 14.5, (x_sp, ry_, rz_), "x", 1.32)]), C["black"], 6, (-160, 0, 0), mat="fkm", bom="M1")
+    GLANDS["recoater_feedthrough"] = dict(kind="face", ring=FT["oring"], cs=1.78, depth=1.32, width=2.3, groove_id=29.0, groove_mat="ss", T=40.0,
+                                          closure="recoater feedthrough flange on the left wall")
+    add("Recoater shaft coupling (clamp type, 6 to 8 mm, in the wall bore)", fuse([tube(7.0, FT["shaft_d"] / 2, (xs0 - 7.0, ry_, rz_), "x", 7.0), tube(7.0, 4.0, (xs0, ry_, rz_), "x", 7.0)]),
+        C["steel"], 6, (-160, 0, 0), mat="steel", bom="M1")
+    # right: the screw's free end runs in a blind bearing cap bolted to the wall over an FKM face O-ring (no rotary seal)
+    bcap = cyl(20, (cx, ry_, rz_), "x", 14).cut(cyl(4.0, (cx - 1, ry_, rz_), "x", 11)).cut(tube(12.7, 10.4, (cx - 0.01, ry_, rz_), "x", 1.33))
+    add("Recoater floating bearing housing (blind cap, FKM face O-ring)", bcap, C["anod"], 6, (160, 0, 0), mat="al6061", bom="M1")
+    add("Recoater bearing-cap O-ring (FKM 75A 2-019)", tube(12.5, 10.4, (cx, ry_, rz_), "x", 1.32), C["black"], 6, (160, 0, 0), mat="fkm", bom="M1")
+    GLANDS["recoater_cap"] = dict(kind="face", ring="2-019", cs=1.78, depth=1.32, width=2.3, groove_id=20.8, groove_mat="al", T=40.0,
+                                  closure="blind bearing cap on the right wall")
+    x_m = x_f - FT["body_l"] - FT["air_shaft"]                         # end of the feedthrough's air-side shaft
+    x_m0 = min(x_m - 25.0, -cx - 101.0)                                # servo mount face (was -cx - 60 before the feedthrough)
+    add("Recoater motor standoff", tube(30, 26, (x_m0, ry_, rz_), "x", x_m - x_m0), C["alu_dark"], 6, (-200, 0, 0), mat="al6061", bom="M1")
+    rmot = place(servo_nema23(100.0, 20.0), (x_m0, ry_, rz_), (0, 1, 0), (1, 0, 0))
     add("Recoater servo (ClearPath-SD, NEMA 23)", rmot, C["motor"], 6, (-260, 0, 0), mat="misc", mass_kg=1.6, bom="M2")
-    add("Recoater motor bracket", box(-cx - 160, -cx - 60, ry_ - 30, ry_ + 30, zb1, rz_ - 28.6), C["alu_dark"], 6, (-260, 0, 0), mat="al6061", bom="M1")
+    add("Recoater motor bracket", box(max(x_m0 - 90.0, -347.0), x_m0, ry_ - 30, ry_ + 30, zb1, rz_ - 28.6), C["alu_dark"], 6, (-260, 0, 0), mat="al6061", bom="M1")
 
     # ===================== 7. Lid =====================
     lid = rbox(-cx, cx, -cy, cy, lz0, lz1, 8)
@@ -489,27 +637,58 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     lid = lid.cut(box(xd - 6, xd + 6, -P["dose_y"], P["dose_y"], lz0 - 1, lz1 + 1))
     cam_p = V(75, -45, lz1)
     lid = lid.cut(cyl(11, (75, -45, lz0 - 1), "z", P["lid"] + 2))
-    for (x, y) in [(100, 50), (40, 70)]:
-        lid = lid.cut(cyl(4, (x, y, lz0 - 1), "z", P["lid"] + 2))
+    for (x, y) in [(100, 50), (40, 70)]:                     # pressure transducer, relief valve: SAE-4 O-ring-boss ports
+        lid = sae_port(lid, (x, y, lz1), "-z", P["lid"])
     dz0, dz1 = lz0 + 5.0, lz0 + 11.0                       # cover-slide drawer slot through the lid's front edge
     lid = lid.cut(box(-36, 36, -cy - 1, 35, dz0, dz1))
+    QT = QTURN
+    x_qt = 51.0                                            # drawer latch receptacles: between the lid screws at x 42 and 60
+    for sx in (-1, 1):
+        lid = lid.cut(cyl(QT["rec_d"] / 2, (sx * x_qt, -cy - 0.01, lz0 + 8.0), "y", QT["rec_l"] + 0.01))
     add("Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)", lid, C["alu"], 7, (0, 0, 300), mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
     # lid screws: joints.py (20 x M5 x 25, 316, into helical inserts in the body)
-    wf = tube(50, 24, (0, 0, lz1), "z", 22).cut(cyl(25.5, (0, 0, lz1 + 12), "z", 11))
-    add("Window flange (6061)", wf, C["anod"], 7, (0, 0, 360), mat="al6061", bom="L7", section=True)
-    add("Ø2 in. fused-silica window, 8 mm, AR 1064", cyl(25.4, (0, 0, lz1 + 12), "z", 8), C["glass"], 7, (0, 0, 380), mat="fused_silica", bom="L7", opacity=0.45, section=True)
-    add("Window O-ring (FKM)", tube(24.0, 21.5, (0, 0, lz1 + 10), "z", 2), C["black"], 7, (0, 0, 370), mat="fkm", bom="G8", section=True)
-    rrb = fuse([tube(50, 22, (0, 0, lz1 + 22), "z", 5)])
-    add("Window retaining ring", rrb, C["anod"], 7, (0, 0, 400), mat="al6061", bom="L7", section=True)
+    # window (seals.md item 3): an O-ring sandwich. The window sits on a 2-031 FKM O-ring in a groove in the seat; a 1 mm FKM flat
+    # ring on top; the retaining ring's spigot presses that ring to 0.75 mm when the ring bottoms metal-to-metal on the flange, so
+    # the squeeze is set by the geometry, not the screw torque. A 2-036 FKM face O-ring seals the flange to the lid.
+    zs = lz1 + 12.0                                        # window seat
+    wf = tube(50, 21, (0, 0, lz1), "z", 22).cut(cyl(25.6, (0, 0, zs), "z", 11))
+    wf = wf.cut(tube(22.45 + F["width"], 22.45, (0, 0, zs - F["depth"]), "z", F["depth"] + 0.01))          # lower window O-ring groove (2-031)
+    wf = wf.cut(tube(30.8 + F["width"], 30.8, (0, 0, lz1 - 0.01), "z", F["depth"] + 0.01))                 # flange-to-lid face groove (2-036)
+    add("Window flange (6061, two FKM O-ring grooves)", wf, C["anod"], 7, (0, 0, 360), mat="al6061", bom="L7", section=True)
+    add("Ø2 in. fused-silica window, 8 mm, AR 1064", cyl(25.4, (0, 0, zs), "z", 8), C["glass"], 7, (0, 0, 380), mat="fused_silica", bom="L7", opacity=0.45, section=True)
+    add("Window O-ring, lower (FKM 75A 2-031, under the window)", tube(22.45 + F["width"] - 0.3, 22.45, (0, 0, zs - F["depth"]), "z", F["depth"]), C["black"], 7, (0, 0, 370), mat="fkm", bom="G8", section=True)
+    add("Window clamp ring, upper (FKM 75A sheet, 1.0 mm, squeezed to 0.75)", tube(25.3, 22.2, (0, 0, zs + 8.0), "z", 0.75), C["black"], 7, (0, 0, 390), mat="fkm", bom="G8", section=True)
+    add("Window-flange O-ring (FKM 75A 2-036, face seal on the lid)", tube(30.8 + F["width"] - 0.3, 30.8, (0, 0, lz1), "z", F["depth"]), C["black"], 7, (0, 0, 350), mat="fkm", bom="G8", section=True)
+    GLANDS["window_lower"] = dict(kind="face", ring="2-031", cs=1.78, depth=F["depth"], width=F["width"], groove_id=44.9, groove_mat="al", T=80.0, closure="window on its seat")
+    GLANDS["window_flange"] = dict(kind="face", ring="2-036", cs=1.78, depth=F["depth"], width=F["width"], groove_id=61.6, groove_mat="al", T=60.0, closure="window flange on the lid")
+    rrb = fuse([tube(50, 22, (0, 0, lz1 + 22), "z", 5), tube(25.4, 22, (0, 0, zs + 8.75), "z", lz1 + 22 - zs - 8.75)])
+    add("Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry)", rrb, C["anod"], 7, (0, 0, 400), mat="al6061", bom="L7", section=True)
     add("Field-stop aperture (Ø36, passive beam limit)", tube(27.9, 18, (0, 0, dz1), "z", lz1 - dz1), C["black"], 7, (0, 0, 300), mat="al6061", bom="L7", section=True)
     # cover-slide drawer: pulls out of the lid's front edge (a person or the robot through the guard door) without
     # lifting the lid; an FKM O-ring on its front plate seals it against the lid. Only opened at atmosphere.
     drw = box(-35.5, 35.5, -cy, 33.5, dz0 + 0.3, dz1 - 0.3).cut(cyl(25.6, (0, 0, dz0), "z", 7)).cut(cyl(23.0, (0, 0, dz0 - 1), "z", 8))
-    drw = fuse([drw, rbox(-42, 42, -cy - 8, -cy, lz0 + 1, lz1 - 1, 3), box(-20, 20, -cy - 20, -cy - 8, dz0 + 1, dz1 - 1), box(-20, -14, -cy - 20, -cy - 8, lz0 + 1, lz1 - 1), box(14, 20, -cy - 20, -cy - 8, lz0 + 1, lz1 - 1)])
-    add("Cover-slide drawer (6061, robot pull tab)", drw, C["anod"], 7, (0, -200, 0), group="drawer", mat="al6061", bom="A2", section=True)
+    # front plate widened to x +/-64 for two quarter-turn latches; 1.78 mm FKM ring in a half-dovetail groove round the slot (item 4)
+    fp = rbox(-64, 64, -cy - 8, -cy, lz0 - 2, lz1, 3)                   # top at the lid's top: clears the front lid screws' heads
+    hd_r = 1.5
+    hd_w, hd_h = [2 * v for v in fit_loop((37.0, 4.5), hd_r, 1.5, 0.5)[0]]   # groove inner wall: >= 1 mm outside the slot (72 x 6, z 125..131)
+    fp = fp.cut(dovetail_loop((0, -cy, (dz0 + dz1) / 2), (0, 1, 0), (1, 0, 0), hd_w, hd_h, hd_r, F["width"], F["depth"], MP.DOVETAIL_DEG))
+    for sx in (-1, 1):
+        fp = fp.cut(cyl(QT["stud_d"] / 2 + 0.25, (sx * x_qt, -cy - 8.01, lz0 + 8.0), "y", 8.02))
+    drw = fuse([drw, fp, box(-20, 20, -cy - 20, -cy - 8, dz0 + 1, dz1 - 1), box(-20, -14, -cy - 20, -cy - 8, lz0 + 1, lz1 - 1), box(14, 20, -cy - 20, -cy - 8, lz0 + 1, lz1 - 1)])
+    add("Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)", drw, C["anod"], 7, (0, -200, 0), group="drawer", mat="al6061", bom="A2", section=True)
     add("Cover slide (Ø2 in. x 3 mm fused silica, consumable)", cyl(25.4, (0, 0, dz0 + 1.0), "z", 3.0), C["glass"], 7, (0, -200, 0), group="drawer", mat="fused_silica", bom="A2", opacity=0.5, section=True)
-    add("Drawer O-ring (FKM, seals on the lid's front face)", rbox(-38, 38, -cy - 1.6, -cy, lz0 + 3, lz1 - 3, 2, "|Y").cut(rbox(-36.2, 36.2, -cy - 2, -cy + 1, lz0 + 4.8, lz1 - 4.8, 1, "|Y")), C["black"], 7, (0, -200, 0), group="drawer", mat="fkm", bom="A2")
-    add("Drawer-closed sensor (inductive M12, on the lid's front face)", cyl(6.0, (46.0, -cy - 7.0, lz0 + 8.0), "x", 30.0), C["blue"], 7, (0, -200, 0), mat="misc", mass_kg=0.02, bom="A1")
+    per = loop_perimeter((hd_w / 2, hd_h / 2), hd_r)
+    pk = MP.pick_ring(per)
+    add(f"Drawer O-ring (FKM 75A {pk[0]} in a half-dovetail groove, seals on the lid's front face)",
+        ring_loop("y", (0, 0, (dz0 + dz1) / 2), (hd_w / 2 + 0.1, hd_h / 2 + 0.1), 1.5, (-cy - F["depth"], -cy), hd_r + 0.1), C["black"], 7, (0, -200, 0), group="drawer", mat="fkm", bom="A2")
+    GLANDS["drawer"] = dict(kind="face", ring=pk[0], cs=1.78, depth=F["depth"], width=F["width"], inner_perimeter=per, groove_mat="al", T=60.0, dovetail=True,
+                            closure="cover-slide drawer on the lid's front face")
+    qs = [fuse([cyl(QT["head_d"] / 2, (sx * x_qt, -cy - 8.0 - QT["head_t"], lz0 + 8.0), "y", QT["head_t"]),
+                cyl(QT["stud_d"] / 2, (sx * x_qt, -cy - 8.0, lz0 + 8.0), "y", 8.0 + QT["rec_l"] - 1.0)]) for sx in (-1, 1)]
+    add(f"Drawer latches: 2 x {QT['label']} studs ({QT['pn'] or 'envelope'})", comp(qs), C["ss"], 7, (0, -200, 0), group="drawer", mat="ss304", mass_kg=0.02, bom="A2", mcm=QT["pn"])
+    add(f"Drawer latch receptacles in the lid (2 x {QT['label']})", comp([tube(QT["rec_d"] / 2, QT["stud_d"] / 2, (sx * x_qt, -cy, lz0 + 8.0), "y", QT["rec_l"]) for sx in (-1, 1)]),
+        C["ss"], 7, (0, -200, 0), mat="ss304", mass_kg=0.01, bom="A2")
+    add("Drawer-closed sensor (inductive M12, on the lid's front face, sees the plate's end)", cyl(6.0, (66.0, -cy - 7.0, lz0 + 8.0), "x", 30.0), C["blue"], 7, (0, -200, 0), mat="misc", mass_kg=0.02, bom="A1")
     add("Gas knife (cover-slide purge, 316L)", box(-32, 32, -42, -36, lz0 - 14, lz0 - 8), C["ss"], 7, (0, 0, 200), mat="ss316l", bom="L7", section=True)
     # chute ends 37 mm above the floor so the deeper (31 mm) blade holder passes under it
     chute = box(xd - 6, xd + 6, -P["dose_y"], P["dose_y"], 37, lz0).cut(box(xd - 4.5, xd + 4.5, -P["dose_y"] + 1.5, P["dose_y"] - 1.5, 36, lz0 + 1))
@@ -517,57 +696,128 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # metering base (fixed): fluted roller along Y over the full Ø75 dose line, its own shaft seal and stepper; the
     # reservoirs dock on top. Each reservoir's outlet slot (45 / 70 / 95 mm) sets the active dose length.
     zd = lz1 + 44.0                                         # dock face
-    mb = rbox(xd - 17, xd + 17, -62, 62, lz1, zd, 3).cut(box(xd - 10, xd + 10, -28, -8, zd - 4, zd + 1))   # NFC antenna pocket
+    dox, doy = MP.DOCK_OPENING
+    mb = rbox(xd - 17, xd + 17, -62, 62, lz1, zd, 3).cut(box(xd - dox / 2, xd + dox / 2, -doy / 2, doy / 2, zd - 10, zd + 1))   # dose opening into the roller
+    mb = mb.cut(box(xd - 17.01, xd - 14, -28, -8, zd - 22, zd - 3))                     # NFC antenna pocket in the -x side face (outside the seals)
+    rzc = lz1 + 28.0
+    mb = mb.cut(cyl(4.0, (xd, 62.0 - FERRO_S["nose_l"], rzc), "y", FERRO_S["nose_l"] + 0.5)).cut(cyl(3.0, (xd, 62.0 - 25.0, rzc), "y", 25.0 - FERRO_S["nose_l"] + 0.1))
+    mb = mb.cut(tube(4.75 + 2.3, 4.75, (xd, 62.0 - 1.35, rzc), "y", 1.36))           # 2-012 face groove for the roller feedthrough
     mb = fuse([mb, rbox(xd - 17, xd + 17, -72, -60, lz1, lz1 + 8, 3), rbox(xd - 17, xd + 17, 60, 72, lz1, lz1 + 8, 3)])   # screw tabs
-    add("Metering base (6061, fluted roller over a 100 mm dose line)", mb, C["alu"], 7, (0, 0, 300), mat="al6061", bom="M4", section=True)
-    add("NFC reader antenna (in the dock face, reads the reservoir's tag)", box(xd - 9.5, xd + 9.5, -27.5, -8.5, zd - 4, zd - 1), C["pcb"], 7, (0, 0, 300), mat="misc", mass_kg=0.01, bom="A1")
-    add("Dovetail rails for the reservoirs", comp([box(xd - 19, xd - 15, -62, 62, zd, zd + 6), box(xd + 15, xd + 19, -62, 62, zd, zd + 6)]), C["ss"], 7, (0, 0, 320), mat="ss316l", bom="M4")
+    # face O-rings: under the base round the lid's 12 x 100 dose slot, and in the dock face round the dose opening (reservoir seal)
+    hi_m = fit_loop((dox / 2 + 1.5, doy / 2 + 1.5), 1.5, 2.0, 0.5)[0]
+    mb = mb.cut(ring_loop("z", (xd, 0, 0), hi_m, F["width"], (lz1 - 0.01, lz1 + F["depth"]), 1.5))
+    mb = mb.cut(ring_loop("z", (xd, 0, 0), hi_m, F["width"], (zd - F["depth"], zd + 0.01), 1.5))
+    add("Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)", mb, C["alu"], 7, (0, 0, 300), mat="al6061", bom="M4", section=True)
+    per = loop_perimeter(hi_m, 1.5)
+    pk = MP.pick_ring(per)
+    add(f"Metering-base O-ring on the lid (FKM 75A {pk[0]}, round the dose slot)", ring_loop("z", (xd, 0, 0), hi_m, F["width"] - 0.3, (lz1, lz1 + F["depth"]), 1.5),
+        C["black"], 7, (0, 0, 300), mat="fkm", bom="M4")
+    add(f"Metering-base dock-face O-ring (FKM 75A {pk[0]}, seals the reservoir's base plate)", ring_loop("z", (xd, 0, 0), hi_m, F["width"] - 0.3, (zd - F["depth"], zd), 1.5),
+        C["black"], 7, (0, 0, 300), mat="fkm", bom="M4")
+    GLANDS["metering_base"] = dict(kind="face", ring=pk[0], cs=1.78, depth=F["depth"], width=F["width"], inner_perimeter=per, groove_mat="al", T=45.0,
+                                   closure="metering base on the lid (4 x M4)")
+    GLANDS["reservoir_dock"] = dict(kind="face", ring=pk[0], cs=1.78, depth=F["depth"], width=F["width"], inner_perimeter=per, groove_mat="al", T=45.0,
+                                    closure="reservoir base plate on the dock face (wedge rails + detent)")
+    add("NFC reader antenna (in the dock's side face, reads the tag on the reservoir plate's edge)", box(xd - 16.5, xd - 14.0, -27.5, -8.5, zd - 21.5, zd - 3.5), C["pcb"], 7, (0, 0, 300), mat="misc", mass_kg=0.01, bom="A1")
+    # rails with 2 mm lips over the plate's edges; the lips' undersides carry the 2 deg docking ramps (not drawn: 0.5 mm over 15 mm)
+    add("Dovetail rails for the reservoirs (lips pull the plate onto the dock O-ring)",
+        comp([fuse([box(xd - 19, xd - 15, -62, 62, zd, zd + 6), box(xd - 19, xd - 13, -62, 62, zd + MP.GATE_T, zd + 6)]),
+              fuse([box(xd + 15, xd + 19, -62, 62, zd, zd + 6), box(xd + 13, xd + 19, -62, 62, zd + MP.GATE_T, zd + 6)])]), C["ss"], 7, (0, 0, 320), mat="ss316l", bom="M4")
     rzc = lz1 + 28.0                                        # roller axis; the stepper clears the lid screws
-    add("Roller shaft seal housing", cyl(15, (xd, 62, rzc), "y", 10), C["anod"], 7, (0, 0, 300), mat="al6061", bom="M4", mcm="9572K33")
-    add("Dosing stepper (NEMA 17)", place(stepper_nema17(40), (xd, 74, rzc), (1, 0, 0), (0, -1, 0)), C["motor"], 7, (0, 160, 300), mat="misc", mass_kg=0.32, bom="M4", mcm="6627T91")
-    add("Side reservoir port (KF-16, blanked; reserved for a >= 500 cm3 reservoir beside the chamber with an auger)",
+    FS_ = FERRO_S
+    yb = 62.0                                                           # metering base back face
+    rft = fuse([cyl(FS_["nose_d"] / 2 - 0.02, (xd, yb - FS_["nose_l"], rzc), "y", FS_["nose_l"]), cyl(FS_["body_d"] / 2, (xd, yb, rzc), "y", FS_["body_l"]),
+                cyl(FS_["shaft_d"] / 2, (xd, yb + FS_["body_l"], rzc), "y", FS_["air_shaft"]),
+                cyl(FS_["shaft_d"] / 2, (xd, yb - FS_["nose_l"] - FS_["vac_shaft"], rzc), "y", FS_["vac_shaft"])])
+    add(f"Roller shaft: {FS_['label']} in the metering base (M8 x 1 nose; FKM face O-ring)", rft, C["anod"], 7, (0, 160, 300), mat="misc", mass_kg=0.06, bom="M4", mcm=FS_["pn"])
+    add(f"Roller feedthrough O-ring (FKM 75A {FS_['oring']}, under the housing's shoulder)", tube(7.0, 4.75, (xd, yb - 1.32, rzc), "y", 1.32), C["black"], 7, (0, 160, 300), mat="fkm", bom="M4")
+    GLANDS["roller_feedthrough"] = dict(kind="face", ring=FS_["oring"], cs=1.78, depth=1.32, width=2.3, groove_id=9.5, groove_mat="al", T=45.0,
+                                        closure="roller feedthrough in the metering base")
+    ys = yb + FS_["body_l"] + FS_["air_shaft"] + 14.0                    # stepper face: room for a 5 to 5 mm coupling
+    add("Roller drive coupling (5 mm to 5 mm)", tube(6.0, 2.5, (xd, yb + FS_["body_l"] + 1.0, rzc), "y", FS_["air_shaft"] + 11.0), C["steel"], 7, (0, 160, 300), mat="steel", bom="M4")
+    add("Dosing stepper (NEMA 17)", place(stepper_nema17(40), (xd, ys, rzc), (1, 0, 0), (0, -1, 0)), C["motor"], 7, (0, 160, 300), mat="misc", mass_kg=0.32, bom="M4", mcm="6627T91")
+    add("Side reservoir port (KF-16 flange machined in the 6061 base, blanked; reserved for a >= 500 cm3 reservoir beside the chamber with an auger)",
         place(kf_stub(16, 18), (xd - 17 - 18, 35, rzc), (0, 1, 0), (-1, 0, 0)), C["ss"], 7, (-120, 0, 0), mat="ss304", bom="R1")
     add("Reservoir-docked sensor (inductive M12, at the back of the dock)", cyl(6.0, (xd, 60.0, zd + 14.0), "y", 30.0), C["blue"], 7, (0, 160, 300), mat="misc", mass_kg=0.02, bom="A1")
-    ML.add_reservoir(sys.modules[__name__], add, reservoir, xd, zd, 7)
+    _RES = dict(ML.add_reservoir(sys.modules[__name__], add, reservoir, xd, zd, 7), key=reservoir)
     add("Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)", box(xd + 17, xd + 30, -6, 6, lz1, zd), C["ss"], 7, (0, 0, 380), mat="steel", bom="M4", mcm="LOADCELL_SP")
     d = (V(0, 0, 0) - cam_p).normalized()
     up = d * -1
-    adp = cyl(22, (75, -45, lz1), "z", 12)
-    b0 = cam_p + V(0, 0, 12)
-    boss = fuse([adp, cq.Solid.makeCylinder(16, 26, b0, up)])
-    boss = boss.cut(cq.Solid.makeCylinder(11, 60, cam_p - up * 20, up))
-    add("Camera viewport adapter + boss (Ø1 in. window, 1070 nm blocking filter)", boss, C["anod"], 7, (0, 0, 300), mat="al6061", bom="M6")
-    cam_base = b0 + up * 26
+    # camera viewport (item 10): a 2-022 FKM face O-ring under the adapter (4 x M3, joints.py); at the top of the boss a Ø1 in.
+    # window on a 2-017 FKM O-ring, held by a screwed retaining ring that bottoms on the boss over a 1 mm FKM flat ring
+    # the boss now runs on the line of sight through the lid hole (it was 6.5 mm off it, so the old Ø22 bore broke through its wall)
+    adp = cyl(25, (75, -45, lz1), "z", 12).cut(tube(12.9 + F["width"], 12.9, (75, -45, lz1 - 0.01), "z", F["depth"] + 0.01))
+    t_b0 = 12.0 / up.z                                     # where the line of sight leaves the adapter's top face
+    bl_ = 26.0
+    t_top = t_b0 + bl_
+    tb = t_b0 - 3.9                                        # the boss starts inside the adapter, clear of the lid
+    boss = fuse([adp, cq.Solid.makeCylinder(16, t_top - tb, cam_p + up * tb, up), cq.Solid.makeCylinder(16.5, 6.0, cam_p + up * (t_top - 6.0), up)])
+    boss = boss.cut(cq.Solid.makeCylinder(11, 20 + t_top - 8.0, cam_p - up * 20, up))           # Ø22 bore
+    boss = boss.cut(cq.Solid.makeCylinder(7.5, 10, cam_p + up * (t_top - 8.5), up))             # Ø15 aperture under the window
+    w_top = cam_p + up * t_top
+    zw0 = w_top - up * 3.75                                                                      # window seat (3 mm window + 0.75 squeezed ring)
+    boss = boss.cut(cq.Solid.makeCylinder(12.8, 3.76, zw0, up))
+    boss = boss.cut(cq.Solid.makeCylinder(8.8 + 2.3, 1.33, zw0 - up * 1.32, up).cut(cq.Solid.makeCylinder(8.8, 1.4, zw0 - up * 1.35, up)))   # 2-017 groove
+    add("Camera viewport adapter + boss (6061; Ø1 in. window, 1070 nm blocking filter; FKM face O-rings)", boss, C["anod"], 7, (0, 0, 300), mat="al6061", bom="M6")
+    add("Camera adapter O-ring (FKM 75A 2-022, face seal on the lid)", tube(12.9 + F["width"] - 0.3, 12.9, (75, -45, lz1), "z", F["depth"]), C["black"], 7, (0, 0, 300), mat="fkm", bom="M6")
+    add("Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating)", cq.Solid.makeCylinder(12.7, 3.0, zw0, up), C["glass"], 7, (0, 0, 330), mat="fused_silica", bom="M6", opacity=0.5)
+    add("Camera window O-ring (FKM 75A 2-017, under the window)", cq.Solid.makeCylinder(8.8 + 2.0, 1.32, zw0 - up * 1.32, up).cut(cq.Solid.makeCylinder(8.8, 1.4, zw0 - up * 1.35, up)),
+        C["black"], 7, (0, 0, 330), mat="fkm", bom="M6")
+    add("Camera window flat ring (FKM 75A sheet, 1.0 mm, squeezed to 0.75)", cq.Solid.makeCylinder(12.6, 0.75, zw0 + up * 3.0, up).cut(cq.Solid.makeCylinder(9.0, 1.0, zw0 + up * 2.9, up)),
+        C["black"], 7, (0, 0, 330), mat="fkm", bom="M6")
+    rr_c = cq.Solid.makeCylinder(16.5, 3.0, w_top, up).cut(cq.Solid.makeCylinder(9.0, 3.2, w_top - up * 0.1, up))
+    add("Camera window retaining ring (bottoms metal-to-metal on the boss)", rr_c, C["anod"], 7, (0, 0, 335), mat="al6061", bom="M6")
+    GLANDS["camera_adapter"] = dict(kind="face", ring="2-022", cs=1.78, depth=F["depth"], width=F["width"], groove_id=25.8, groove_mat="al", T=45.0, closure="camera adapter on the lid")
+    GLANDS["camera_window"] = dict(kind="face", ring="2-017", cs=1.78, depth=F["depth"], width=F["width"], groove_id=17.6, groove_mat="al", T=45.0, closure="camera window on the boss")
+    cam_base = w_top + up * 3.0
     cam = comp([cq.Solid.makeCylinder(15, 38, cam_base, up),
                 place(box(-19, 19, -19, 19, 0, 8), (cam_base + up * 38).toTuple(), (0, 1, 0), up.toTuple())])
     add("Layer camera (Pi HQ + C-mount lens)", cam, C["black"], 7, (0, 0, 340), mat="misc", mass_kg=0.15, bom="M6")
-    add("Pressure transducer", comp([cyl(4, (100, 50, lz1), "z", 12), cyl(11, (100, 50, lz1 + 12), "z", 52)]), C["ss"], 7, (0, 0, 300), mat="ss316l", bom="G7", mcm="TRANSDUCER")
-    add("Overpressure relief valve (316 SS, FKM seat, +34 mbar)", comp([cyl(4, (40, 70, lz1), "z", 10), cyl(9, (40, 70, lz1 + 10), "z", 28)]), C["ss"], 7, (0, 0, 300), mat="ss316l", bom="G7", mcm="RELIEF")
+    # both screw into SAE-4 (7/16-20) O-ring-boss ports in the lid, each sealed by an AS568-904 FKM O-ring in the port's chamfer
+    add("Pressure transducer (7/16-20 SAE-4 O-ring-boss port)", comp([cyl(5.5, (100, 50, lz1 - 9.0), "z", 9.0), cyl(7.9, (100, 50, lz1), "z", 12), cyl(11, (100, 50, lz1 + 12), "z", 52)]), C["ss"], 7, (0, 0, 300), mat="ss316l", bom="G7", mcm="TRANSDUCER")
+    add("Overpressure relief valve (316 SS, FKM seat, +34 mbar; SAE-4 O-ring-boss port)", comp([cyl(5.5, (40, 70, lz1 - 9.0), "z", 9.0), cyl(7.9, (40, 70, lz1), "z", 10), cyl(9, (40, 70, lz1 + 10), "z", 28)]), C["ss"], 7, (0, 0, 300), mat="ss316l", bom="G7", mcm="RELIEF")
+    GLANDS["sae4_ports"] = dict(kind="sae", ring="3-904", cs=1.83, n=4, closure="SAE-4 O-ring-boss ports: argon in, O2 sample, transducer, relief valve")
 
     # ===================== 8. Drop-down door =====================
     dy1 = -cy
     dy0 = dy1 - 15.0
-    door = rbox(-124, 124, dy0, dy1, -6, 114, 6, "|Y")
-    door = door.cut(rbox(-118, 118, dy1 - 2.8, dy1 + 1, 0, 108, 6, "|Y").cut(rbox(-114, 114, dy1 - 3, dy1 + 2, 4, 104, 4, "|Y")))
-    add("Chamber door (6061-T6, 15 mm, drops down)", door, C["alu"], 8, (0, -240, 0), group="door", mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
-    add("Door O-ring (FKM)", rbox(-117.6, 117.6, dy1 - 2.8, dy1, 0.4, 107.6, 5.6, "|Y").cut(rbox(-114.4, 114.4, dy1 - 3, dy1 + 1, 3.6, 104.4, 4.4, "|Y")), C["black"], 8, (0, -200, 0), group="door", mat="fkm", bom="G8", mcm="ORING_CORD", section=True)
+    # door seal (item 2): 1.78 mm FKM 75A cord (spliced ring) in a half-dovetail groove, Parker depth 1.32, width 2.3; the
+    # groove's centre line is the old 232 x 104 rectangle. Two ears at the top corners carry the draw latches' strikes.
+    LT = LATCH_1807A61
+    zl_c = 54.0                                            # latch centre line at the seal's centroid height: with floating hinges the
+                                                           # latches alone set the squeeze, so they pull the door flat (seals.md)
+    door = fuse([rbox(-124, 124, dy0, dy1, -6, 114, 6, "|Y")] + [box(sx * 124.0 if sx > 0 else -cx, cx if sx > 0 else -124.0, dy0, dy1, zl_c - 18.0, zl_c + 18.0) for sx in (-1, 1)])
+    dw_in, dh_in, dr_in = 232.0 - 2.3, 104.0 - 2.3, 4.4
+    door = door.cut(dovetail_loop((0, dy1, 54.0), (0, 1, 0), (1, 0, 0), dw_in, dh_in, dr_in, F["width"], F["depth"], MP.DOVETAIL_DEG))
+    add("Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)", door, C["alu"], 8, (0, -240, 0), group="door", mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
+    add("Door O-ring (FKM 75A 1.78 mm cord, vulcanized splice, in a half-dovetail groove)",
+        ring_loop("y", (0, 0, 54.0), (dw_in / 2 + 0.1, dh_in / 2 + 0.1), 1.5, (dy1 - F["depth"], dy1), dr_in + 0.1), C["black"], 8, (0, -200, 0), group="door", mat="fkm", bom="G8", mcm="ORING_CORD", section=True)
+    GLANDS["door"] = dict(kind="face", ring="cord", cs=1.78, depth=F["depth"], width=F["width"], inner_perimeter=loop_perimeter((dw_in / 2, dh_in / 2), dr_in),
+                          groove_mat="al", T=60.0, dovetail=True, closure="chamber door")
     hy, hz = dy0 - 6.0, -12.0                              # hinge axis (parallel to X) in front of the door's bottom edge
     DOOR_HINGE = (hy, hz)
     hx = (-100.0, 80.0)
     leaves = []
-    for x in hx:                                           # door leaf + middle knuckle, rotates with the door
-        leaves += [box(x, x + 20, dy0 - 3, dy0, hz + 5, 30), cyl(6, (x, hy, hz), "x", 20).cut(cyl(2.6, (x - 1, hy, hz), "x", 22))]
-    add("Door hinge leaves + knuckles (304 SS)", comp(leaves), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", bom="G1", mcm="1151A87", section=True)
+    for x in hx:                                           # door leaf + middle knuckle, rotates with the door; the pin hole is a
+        # slot +/-0.6 mm across the door (y) so the door floats onto its seal and the latches, not the hinge, set the squeeze
+        kslot = fuse([cyl(2.6, (x - 1, hy - 0.6, hz), "x", 22), cyl(2.6, (x - 1, hy + 0.6, hz), "x", 22), box(x - 1, x + 21, hy - 0.6, hy + 0.6, hz - 2.6, hz + 2.6)])
+        leaves += [box(x, x + 20, dy0 - 3, dy0, hz + 5, 30), cyl(6, (x, hy, hz), "x", 20).cut(kslot)]
+    add("Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)", comp(leaves), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", bom="G1", mcm="1151A87", section=True)
     blocks = []
     for x in hx:                                           # outer knuckles bolted to the chamber's front face
         for xa, xb in ((x - 12.0, x - 0.5), (x + 20.5, x + 32.0)):
             blocks.append(fuse([box(xa, xb, hy, dy1, zf, hz), cyl(6, (xa, hy, hz), "x", xb - xa)]).cut(cyl(2.6, (xa - 1, hy, hz), "x", xb - xa + 2)))
     add("Door hinge knuckles on the chamber (304 SS)", comp(blocks), C["ss"], 8, (0, -240, 0), mat="ss304", bom="G1", mcm="1151A87", section=True)
     add("Hinge pins (Ø5, 316)", comp([cyl(2.5, (x - 12.0, hy, hz), "x", 44) for x in hx]), C["steel"], 8, (0, -240, 0), mat="ss316l", bom="G1", section=True)
-    keep = [box(s * 128.0, s * 150.0, -cy - 4, -cy, 90, 112) if s > 0 else box(-150.0, -128.0, -cy - 4, -cy, 90, 112) for s in (1, -1)]
-    add("Draw-latch keepers beside the door (304 SS)", comp(keep), C["ss"], 8, (0, -240, 0), mat="ss304", bom="G1", mcm="1807A61", section=True)
-    lat = [box(100.0, 124.0, dy0 - 12, dy0, 92, 110), box(-124.0, -100.0, dy0 - 12, dy0, 92, 110)]
-    add("Draw latches on the door (304 SS, 800 lb)", comp(lat), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", bom="G1", mcm="1807A61", section=True)
+    # draw latches (McMaster 1807A61, 800 lb, adjustable grip) on the chamber's side faces at mid-height, pulling strikes on the door's ears straight
+    # back (+y): set each to >= 0.4 kN of preload (seals.md). For the robot cell a pneumatic latch clamp takes the same face and strike.
+    lb_ = LT["body_L"]
+    lat = [box(cx, cx + LT["H"], dy1 + 1.0, dy1 + 1.0 + lb_, zl_c - LT["W"] / 2, zl_c + LT["W"] / 2) if sx > 0 else
+           box(-cx - LT["H"], -cx, dy1 + 1.0, dy1 + 1.0 + lb_, zl_c - LT["W"] / 2, zl_c + LT["W"] / 2) for sx in (1, -1)]
+    add(f"Draw latches on the chamber's side faces (2 x McMaster 1807A61, 304 SS, {LT['rating_N'] / 1000:.1f} kN rated, preload set >= 0.4 kN)", comp(lat), C["ss"], 8, (0, -240, 0),
+        mat="ss304", mass_kg=2 * 0.25, bom="G1", mcm="1807A61", section=True)
+    strike = [box(cx, cx + 3.0, dy0, dy1 - 1.0, zl_c - 14.0, zl_c + 14.0) if sx > 0 else box(-cx - 3.0, -cx, dy0, dy1 - 1.0, zl_c - 14.0, zl_c + 14.0) for sx in (1, -1)]
+    add("Draw-latch strikes on the door's ears (1807A61 strike plates)", comp(strike), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", mass_kg=2 * 0.03, bom="G1", mcm="1807A61", section=True)
     add("Door handle", comp([cyl(5, (-30, dy0, 95), "-y", 26), cyl(5, (30, dy0, 95), "-y", 26), cyl(6, (-36, dy0 - 26, 95), "x", 72)]), C["anod"], 8, (0, -260, 0), group="door", mat="al6061", bom="G1", section=True)
 
     # ===================== 9. Optics =====================
