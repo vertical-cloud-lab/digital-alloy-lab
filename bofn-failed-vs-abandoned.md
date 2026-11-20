@@ -35,6 +35,13 @@ Line links below point at those commits.
   algorithms (EIFN, KGFN, TSFN) assume every node returns a value, and the upstream-restricted
   pKGFN treats every parent output in the training data as physically available to continue
   from (§3).
+- **A toy run (§5) says the failure model matters more than the partial data.** On a 2-node
+  network whose optimum sits on a failure boundary, both viability strategies (on `x`, and on
+  node 1's inputs) end near the optimum in 8 to 11 of 12 seeds. Keeping node 0's data from
+  failed runs without a failure model (Ax ≥ 1.2.4's default) did worst. The node-level viability
+  model did not beat the one on `x` there, because in that toy both see the same failures. Its
+  case rests on data the `x` model never sees, such as purchased powder or other campaigns, and
+  the toy doesn't test that.
 
 ## 1. What Ax does with each status
 
@@ -258,19 +265,91 @@ also covers mid-campaign changes ([#4295](https://github.com/meta/Ax/issues/4295
 local in a network: a new parameter or a new node only changes the GPs of the nodes that use
 it, and old runs take the default value of the new step (e.g. "no heat treatment").
 
-## 5. A benchmark to settle it
+## 5. A toy run, and the benchmark to settle it
 
-The 5-node chain from [#265](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/265)
-can get three failure modes:
+[`benchmarks/bofn_failures_demo.py`](benchmarks/bofn_failures_demo.py) runs a two-node network:
+`y0 = f0(x_1..x_D)`, then `y1 = y0 · g(x_D+1)`. Node 1 fails deterministically when
+`y0 > 0.7` (powder too coarse to spread), and each node evaluation also fails with probability
+0.15 for reasons unrelated to its inputs. Because `y1` rises with `y0`, the best feasible runs
+sit on the failure boundary (`f* = 0.7`), so an optimizer that learns nothing from a failure
+keeps getting pulled into the failure region. Every strategy uses the same GP network and the
+same MC expected improvement through the network, evaluated jointly with any pending points
+(BoTorch's mechanism) on 1,280 candidates per run. They differ only in what they do with a
+failed run:
+
+- **drop**: Ax 1.0 to 1.2.3. `complete_trial` marks the trial `FAILED`, the run is discarded,
+  and the arm can come back.
+- **abandon**: every failure is `ABANDONED`. The run is discarded and the arm is pending for
+  good.
+- **partial**: Ax ≥ 1.2.4. The trial is `COMPLETED` with incomplete metrics, node 0's data is
+  fit, and the arm is pending.
+- **viability_x**: Ax ≥ 1.3 used as intended. Transient failures are `FAILED`, deterministic
+  ones are `ABANDONED`, and `AddExecutionViability` fits a 0/1 GP over `x`, with
+  `P(viable) ≥ 0.8` once 3 runs have been abandoned.
+- **viability_node**: §4's proposal. Node 0's data is kept, and node 1 gets a 0/1 viability GP
+  over its own inputs (`x_D+1`, measured `y0`), with the same bound and trigger and nothing
+  pending.
+
+Settings: 12 seeds, 30 BO runs after a Sobol design, with `D = 2` (failure region 24 % of
+node 0's inputs) and `D = 6` (23 %). It takes about 4 and 7 minutes on 4 CPU cores
+([results](benchmarks/bofn_failures_results.json),
+[results, D = 6](benchmarks/bofn_failures_results_dim6.json),
+[figure script](benchmarks/bofn_failures_visualize.py)).
+
+![Simple regret against BO run for the five strategies](benchmarks/figures/bofn_failures_regret.png)
+
+| D | strategy | final regret, mean ± SE | median | seeds within 0.02 | deterministic failures in 30 BO runs | repeat failures (within 0.1 of an earlier one) |
+|---|---|---|---|---|---|---|
+| 2 | drop | 0.036 ± 0.008 | 0.042 | 4/12 | 13.9 ± 1.4 | 12.8 |
+| 2 | abandon | 0.042 ± 0.010 | 0.028 | 4/12 | 10.3 ± 1.1 | 5.4 |
+| 2 | partial | 0.097 ± 0.034 | 0.074 | 2/12 | 10.2 ± 0.8 | 3.4 |
+| 2 | viability_x | 0.012 ± 0.003 | 0.009 | 11/12 | 10.0 ± 0.7 | 5.8 |
+| 2 | viability_node | **0.008 ± 0.003** | 0.004 | 10/12 | 9.2 ± 0.7 | 4.2 |
+| 6 | drop | **0.008 ± 0.002** | 0.004 | 12/12 | 13.9 ± 0.7 | 7.1 |
+| 6 | abandon | 0.026 ± 0.004 | 0.022 | 5/12 | 7.8 ± 0.8 | 0.5 |
+| 6 | partial | 0.061 ± 0.015 | 0.051 | 3/12 | 9.9 ± 0.8 | 0.1 |
+| 6 | viability_x | 0.011 ± 0.003 | 0.007 | 9/12 | 10.1 ± 0.7 | 1.7 |
+| 6 | viability_node | 0.017 ± 0.003 | 0.014 | 8/12 | 12.5 ± 0.7 | 1.0 |
+
+What the toy shows:
+
+1. **Learning from failures is what helps.** Both viability strategies end low in both settings
+   (8 to 11 of 12 seeds within 0.02 of `f*`).
+2. **Keeping partial data without a failure model doesn't help.** `partial` has the worst
+   regret in both settings. The node 0 data from failed runs shows exactly where `y0` is high,
+   and node 1's GP, which only sees `y0 ≤ 0.7`, extrapolates that high `y0` is good. The pending
+   arms then flatten the joint EI. Ax ≥ 1.2.4's handling is the right data hygiene, but when a
+   failure is caused by the inputs it has to come with a failure model.
+3. **`drop` is erratic and always fails most.** At `D = 2` it re-proposes the same failing spot
+   (12.8 repeat failures out of 13.9). At `D = 6` its suggestions spread out enough to land just
+   below the boundary, and it ends best, but at the price of the most failures (46 % of BO runs).
+   That is the Ax ≤ 1.2.3 behaviour, and the stuck re-suggestion of Ax
+   [#1568](https://github.com/meta/Ax/issues/1568).
+4. **`abandon` fails least at `D = 6`** (7.8) but improves slowly. Pending arms stop exact
+   repeats; they don't teach the model anything.
+5. **The node-level viability model did not beat the one on `x`.** It is ahead at `D = 2`
+   (within noise) and behind at `D = 6`, where it also fails more. In this toy every node 1
+   attempt comes from a full run, so both models see the same events, and at `D = 6` the node
+   model inherits node 0's uncertainty about `y0`. Its expected advantage is data the `x` model
+   never sees: node 1 runs on purchased powder (fast_pKGFN's setting), on lots from other
+   campaigns, or on pKGFN partial evaluations, plus knowing which step failed. This toy doesn't
+   test any of that.
+
+Caveats: this is one failure mode at one node, with failures labelled transient or
+deterministic correctly, noiseless outputs, a GP regression on 0/1 labels (as Ax does), a
+discrete candidate search, and 12 seeds. Read it as a demonstration of the mechanisms, not as a
+ranking.
+
+**The benchmark that would settle it** puts three failure modes on the 5-node chain from
+[#265](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/265):
 
 1. transient failures with probability *p* at each node, independent of the inputs;
 2. a deterministic failure region for node 3 that depends on node 2's *output*;
 3. a deterministic failure region for node 1 that depends on `x` alone.
 
-Then compare: **drop** (Ax ≤ 1.2.3, where `FAILED` loses the run), **abandon** (no data,
-pending forever), **partial** (Ax ≥ 1.2.4 / pKGFN: keep the upstream data), and
-**partial + viability nodes** (§4). Measure regret against cumulative cost, cost spent on
-failed evaluations, and repeated suggestions.
+It would add the case the toy leaves out: node 3 sometimes run on intermediates that don't come
+from `x` (purchased powder). It would also label some failures `unknown`, and measure regret
+against cumulative cost, cost spent on failed evaluations, and repeated suggestions.
 
 ## 6. Ax issues and PRs to read alongside this
 
