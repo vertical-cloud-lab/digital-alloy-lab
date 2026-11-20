@@ -115,6 +115,9 @@ Pump 4396K21: 1.42 L/s displacement; through two KF-25 bellows S_eff = 1.42 L/s 
 | overflow jar (90 mm) | 90 | 0.95 | 0.31 | 25 |
 | reservoir M (40 mm) | 40 | 0.42 | 0.14 | 11 |
 
+**Soft pump:** the overflow jar needs τ ≥ 25 s, i.e. ≤ 0.44 L/s (27 std L/min) until ~100 mbar: a metering valve of Cv ≥ 0.14 beside the main valve. Pump-down then takes ~1.6 min to 1 mbar. metering valve with Cv >= this in parallel with the KF-25 valve; open the main valve below ~100 mbar. Back-fill through the same limit (the flowmeter-regulator 78595A5 set <= 25 L/min) and a sintered diffuser.
+
+
 Reservoir as drawn (open to the room through the powder column): at +20 mbar, **299 sccm of argon leaves through the powder** at 8.9 mm/s superficial velocity, against a minimum fluidization velocity of 2.8 mm/s. Pumping down, room air comes in at ~9431 sccm.
 
 ## Rate-of-rise acceptance test

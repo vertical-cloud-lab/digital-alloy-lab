@@ -840,6 +840,15 @@
   },
   "u_mf_mm_s": 2.799864978666667
  },
+ "soft_pump": {
+  "tau_needed_s": 25.3116182994315,
+  "S_soft_Ls": 0.4449681922464322,
+  "q_std_L_min": 26.69809153478593,
+  "Cv": 0.13781575568560098,
+  "t_to_100mbar_s": 58.609085539642564,
+  "t_total_to_1mbar_s": 96.06328327495265,
+  "note": "metering valve with Cv >= this in parallel with the KF-25 valve; open the main valve below ~100 mbar. Back-fill through the same limit (the flowmeter-regulator 78595A5 set <= 25 L/min) and a sintered diffuser"
+ },
  "reservoir_open_path": {
   "argon_out_at_20mbar_sccm": 299.4962962962963,
   "superficial_mm_s": 8.91358024691358,

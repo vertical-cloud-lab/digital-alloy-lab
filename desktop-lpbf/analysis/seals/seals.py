@@ -237,6 +237,11 @@ def tau_min_for(h_bed, ratio_allowed=0.3, p_pa=ATM):
     return r1 / ratio_allowed
 
 
+def pu_t_rest(V, s_eff, p0=100.0, p1=1.0):
+    ps = np.logspace(math.log10(p0), math.log10(p1), 200)
+    return sum(V * (a - b) / (s_eff(math.sqrt(a * b)) * math.sqrt(a * b)) for a, b in zip(ps[:-1], ps[1:]))
+
+
 def u_mf(d=POWDER["d50"], eps=0.5, mu=POWDER["mu_ar"], rho_g=1.7):
     return (POWDER["rho_true"] - rho_g) * 9.81 * d ** 2 * eps ** 3 / (150 * mu * (1 - eps))
 
@@ -477,6 +482,18 @@ def main():
         lift[name] = dict(h_mm=1000 * h, dp_over_weight_at_atm=r_atm, dp_over_weight_at_10mbar=r_10, dp_Pa=dp, weight_Pa=w,
                           tau_needed_s_for_0p3=tau_min_for(h, 0.3))
     R["powder_lift"] = dict(tau_s=tau_hi, k_m2=k_kozeny(), beds=lift, u_mf_mm_s=1000 * u_mf())
+    # soft pump: the slowest bed (overflow jar, 90 mm) needs tau >= tau_needed; a metering valve in parallel with the main valve
+    # limits the flow until ~100 mbar. Choked air flow through a valve of flow coefficient Cv (Swagelok gas sizing):
+    # q [std L/min] = 6950 Cv P1 [bar] * 0.471 * sqrt(1 / (Gg T1)), Gg = 1, T1 = 293 K
+    tau_need = max(v["tau_needed_s_for_0p3"] for v in lift.values())
+    s_soft = V / tau_need                                   # L/s at ~1 atm
+    q_soft = s_soft * 60.0                                  # std L/min at 1 atm
+    cv = q_soft / (6950 * 1.013 * 0.471 * math.sqrt(1 / 293.0))
+    t_soft = tau_need * math.log(1013 / 100.0)
+    R["soft_pump"] = dict(tau_needed_s=tau_need, S_soft_Ls=s_soft, q_std_L_min=q_soft, Cv=cv, t_to_100mbar_s=t_soft,
+                          t_total_to_1mbar_s=t_soft + pu_t_rest(V, s_eff),
+                          note="metering valve with Cv >= this in parallel with the KF-25 valve; open the main valve below ~100 mbar. "
+                               "Back-fill through the same limit (the flowmeter-regulator 78595A5 set <= 25 L/min) and a sintered diffuser")
 
     # reservoir open path as drawn: Darcy flow through the powder column (M reservoir: slot 8 x 70, 40 mm of powder)
     A_slot = g["slot_w"] * 70.0 * 1e-6
@@ -574,6 +591,9 @@ def write_md(R):
           "| Bed | depth (mm) | Δp / bed weight at 1 atm | at 10 mbar | τ = V/S needed for ≤ 0.3 (s) |", "|---|---|---|---|---|"]
     for n, v in pl["beds"].items():
         L.append(f"| {n} | {v['h_mm']:.0f} | {v['dp_over_weight_at_atm']:.2f} | {v['dp_over_weight_at_10mbar']:.2f} | {v['tau_needed_s_for_0p3']:.0f} |")
+    sp = R["soft_pump"]
+    L += ["", f"**Soft pump:** the overflow jar needs τ ≥ {sp['tau_needed_s']:.0f} s, i.e. ≤ {sp['S_soft_Ls']:.2f} L/s ({sp['q_std_L_min']:.0f} std L/min) "
+          f"until ~100 mbar: a metering valve of Cv ≥ {sp['Cv']:.2f} beside the main valve. Pump-down then takes ~{sp['t_total_to_1mbar_s'] / 60:.1f} min to 1 mbar. {sp['note']}.", ""]
     ro = R["reservoir_open_path"]
     L += ["", f"Reservoir as drawn (open to the room through the powder column): at +20 mbar, **{ro['argon_out_at_20mbar_sccm']:.0f} sccm of argon leaves through the powder** "
           f"at {ro['superficial_mm_s']:.1f} mm/s superficial velocity, against a minimum fluidization velocity of {ro['u_mf_mm_s']:.1f} mm/s. Pumping down, "

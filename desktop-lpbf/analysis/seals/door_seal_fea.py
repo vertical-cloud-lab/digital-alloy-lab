@@ -37,7 +37,8 @@ def main():
     dy1, dy0 = -cy, -cy - 15.0
     door = F.part(parts, "Chamber door").shape
     m = F.mesh_shape(door, "door_seal", hmax=4.0, hmin=1.0)
-    groove_floor = F.surfaces(m, F.planar("y", dy1 - 2.8))
+    gd = P.get("door_gland_d", 2.8)                 # 2.8 as first drawn; 1.32 for the 1.78 mm cord (seals.md)
+    groove_floor = F.surfaces(m, F.planar("y", dy1 - gd))
     back = F.surfaces(m, F.planar("y", dy1))
     front = F.surfaces(m, F.planar("y", dy0))
     f_groove = F.faces_on(m, groove_floor)
@@ -52,7 +53,9 @@ def main():
     xyz_g = m["xyz"][gn]
     px = F.nearest(m, (0.0, dy0, 101.0), latch)
     R = dict(path_mm=path, groove_floor_area_mm2=a_groove, nodes=len(m["ntags"]), elements=len(m["tets"]), cases=[])
-    for cs, label in ((3.53, "3.53 mm cord at 25 % (as drawn)"), (1.78, "1.78 mm cord at 25 %")):
+    cases = ((3.53, "3.53 mm cord at 25 % (first drawn gland)"), (1.78, "1.78 mm cord at 25 %")) if gd > 2 else ((1.78, "1.78 mm cord at 25 % (gland 1.32 x 2.3)"),)
+    R["groove_depth_mm"] = gd
+    for cs, label in cases:
         F_or = SE.lindley(cs, 0.25) * path
         p_or = F_or / a_groove
         job = f"door_seal_{str(cs).replace('.', 'p')}"
