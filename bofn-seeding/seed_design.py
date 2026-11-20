@@ -190,19 +190,21 @@ def posterior_var(Xr, Xd, ell, jitter=1e-6):
 def select_imse(Xc, Xe, n, ell, n_ref=1500, seed=0, jitter=1e-6, **_):
     rng = np.random.default_rng(seed)
     Xr = Xc[rng.choice(len(Xc), size=min(n_ref, len(Xc)), replace=False)]
+    Krc = _rbf(Xr, Xc, ell)  # (R, M), fixed across picks
     picked = []
     for _ in range(n):
         Xd = np.vstack([Xe] + [Xc[picked]]) if (len(Xe) or picked) else np.zeros((0, Xc.shape[1]))
-        Krc = _rbf(Xr, Xc, ell)
         if len(Xd):
             L = np.linalg.cholesky(_rbf(Xd, Xd, ell) + jitter * np.eye(len(Xd)))
             A = np.linalg.solve(L, _rbf(Xd, Xc, ell))  # (d, M)
             B = np.linalg.solve(L, _rbf(Xd, Xr, ell))  # (d, R)
             cov = Krc - B.T @ A
-            var_c = np.clip(1.0 - (A * A).sum(0), 1e-12, None)
+            var_c = 1.0 - (A * A).sum(0)
         else:
             cov, var_c = Krc, np.ones(len(Xc))
-        gain = (cov * cov).mean(0) / var_c
+        # Variance reduction at r from adding c is cov(r, c)^2 / var(c). Candidates the design
+        # already pins down (var near the jitter) gain nothing; skip them rather than divide by ~0.
+        gain = np.where(var_c > 10 * jitter, (cov * cov).mean(0) / np.maximum(var_c, 10 * jitter), -np.inf)
         gain[picked] = -np.inf
         picked.append(int(np.argmax(gain)))
     return picked

@@ -254,6 +254,13 @@ What this shows:
   liquidus and cracking screen before dosing. Edison's objection to IMSE is that it needs a fitted
   GP. In fact it needs only kernel hyperparameters, but the length scale is a real choice. Rerun
   it with `--ell` set from the GP fitted to the A, B and D data once those exist.
+- **Only the Al–Mn–Cr pick is stable.** An Al–(3.2–3.7)Mn–(1.5–1.7)Cr pick appears at length
+  scales 0.25, 0.5 and 1.0. The other two picks change with the length scale and the set weight:
+  - at 0.25: Si-rich alloys (Al–8.3Si, Al–3.7Mg–6.5Si);
+  - at 1.0: Zn-bearing alloys (Al–1.9Mn–0.2Ti–3.4Zn, Al–1.6Cr–0.2Er–2.8Zn).
+
+  So the tables above are examples. The actual S3/S4 picks should come from running it on the
+  CALPHAD-screened pool.
 
 ## How many seeds: a toy check
 
