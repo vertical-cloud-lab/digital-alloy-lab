@@ -243,7 +243,8 @@ class MultivariateNormalNetwork(TorchPosterior):
                     X_k = self.X[..., self.active_input_indices[k]] if self.active_input_indices else self.X
                     # Expand X_k to match sample_shape
                     if sample_shape:
-                        expand_shape = list(sample_shape) + [1] * X_k.ndim
+                        # -1 keeps X_k's own sizes (BOFN used .repeat with 1s)
+                        expand_shape = list(sample_shape) + [-1] * X_k.ndim
                         X_k = X_k.unsqueeze(0).expand(*expand_shape)
                     X_k = torch.cat([X_k, parent_samples], -1)
                     post_k = self.node_GPs[k].posterior(X_k)
