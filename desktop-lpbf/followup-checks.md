@@ -45,12 +45,16 @@ its own sources, assumptions and re-run instructions.
 
    Everything else can be made at BYU (Haas VF-4, and the Physical Facilities shop's lathe, TIG and wire EDM); the
    gas-module base plate needs a re-position or a waterjet outline.
-6. **Two jobs done every build fail as drawn** ([`operations.md`](operations.md)):
-   - the overflow jar can't come out;
-   - the guard door doesn't clear the right door latch (now fixed in the model: it slides 515 mm).
+6. **Jobs done every build that still fail** ([`operations.md`](operations.md), re-checked on the final model,
+   9e6464a):
+   - the overflow jar can't come out, on S25, M50 and L75;
+   - the right draw latch, new with the real latches, sits behind the front-right optics post where no hand reaches;
+   - the beam tube, now on the galvo's real axis, blocks the hand from the reservoir handle (the reservoir itself
+     still slides out with 0.85 mm to spare).
 
-   Window service means removing the scan head, the build module's potted rod end traps its seals, and 12 steps of
-   the assembly order change.
+   The guard door now clears the right latch, and the L75 module swap passes. Still failing: window service means
+   removing the scan head, the gland plate and its rod O-rings are trapped on the welded rod end, the liners are
+   captive, and the assembly order changes in 12 places.
 7. **Real parts didn't all fit the envelopes they replaced** ([`real-parts.md`](real-parts.md); fixed in the model,
    §3):
    - the laser is 4U, so the rack becomes 11U;
@@ -116,8 +120,7 @@ L75/L; the machine is still 581.2 mm above the tray):
 - the fit changes those parts forced: an 11U rack (515 mm), the guard widened on both sides for the collimator and the
   valve, the beam line moved to the galvo's real input on a 10 mm riser, a 16 mm lens adapter ring, the Z servo's
   connector to the front;
-- the guard door now slides 515 mm, so it clears the right door latch ([`operations.md`](operations.md) U2.2; not
-  re-checked by the operations script).
+- the guard door now slides 515 mm, so it clears the door opening (re-checked: passes; [`operations.md`](operations.md)).
 
 **Still to draw**, each with the note that sizes it:
 
@@ -127,15 +130,17 @@ L75/L; the machine is still 581.2 mm above the tray):
 | Water-cooled laser and chiller, or a ducted exhaust | VLM heat | [`heat.md`](heat.md) |
 | Perforated inlet and outlet slots, 35 mm outlet channel with KF-40, ~20 mm floor slot or a lip, a purge out of the slide recess instead of the gas knife | gas flow | [`gas-flow.md`](gas-flow.md) |
 | Drawer slot opened from the lid's underside; rail inserts within \|x\| ≤ 100 mm; pocket corners R ≥ 9.6 mm; thicker webs at the lid inserts, heater block and piston head; full-depth insert holes | machining | [`machining.md`](machining.md) |
-| A removal path for the overflow jar; window screws on a bolt circle outside the lens; the chute and gas knife hung from the walls; slotted liner holes and a two-piece back liner; a connector or split gland plate at the rod end | hand operations | [`operations.md`](operations.md) |
+| A removal path for the overflow jar; the right draw latch on the front face or the optics post moved outboard; a reservoir handle reachable past the beam tube; window screws on a bolt circle outside the lens; the chute and gas knife hung from the walls; slotted liner holes and a two-piece back liner; a split gland plate at the rod end; the lens and its adapter ring fitted to the bridge on the bench | hand operations | [`operations.md`](operations.md) |
 | 2.62 mm cord or plain grooves on the door and drawer; a drawer latch; KF-16 rod-end feedthrough | seals | [`seals.md`](seals.md) |
 | A handle on the guard door; pneumatic clamps that pull the chamber door and drawer home; stepped fingertips; plate exchange height ~+16 mm, or a two-step approach; tool-free blade and module holds | robot tending | [`robot-ops.md`](robot-ops.md), [`hot-swap.md`](hot-swap.md) |
 | A hot touch-off or plate-height sensor to zero the gap at temperature; a strain gauge on the blade holder for jam detection | powder spreading | [`powder-spreading.md`](powder-spreading.md) |
 
 ## 4. Not done
 
-- **The hand-operation and robot checks ran on the model as it stood at 13:54 UTC**, before the seal changes and the
-  real-part swaps. The interference sweeps, mass budget and STEP are on the final model. Their scripts take the CAD path as an argument,
+- **Re-checks on the final model are partial.** The hand-operation check was re-run on the final model (all of M50;
+  the swap and overflow jobs on S25 and L75). The robot check was re-run for six of its eleven operations; the
+  reservoir, blade, liner and module-swap rows are from the 13:54 UTC model. The interference sweeps, mass budget and
+  STEP are on the final model. Their scripts take the CAD path as an argument,
   so they can be re-run on the current model: `operations.md` and `robot-ops.md` give the commands.
 - Not yet real in the model: the pump and HEPA housing (builders exist; the gas-loop hoses need re-routing to their
   real ports), the pressure transmitter (the lid port is now SAE-4, the BOM's transmitter is 1/4 NPT), the door
