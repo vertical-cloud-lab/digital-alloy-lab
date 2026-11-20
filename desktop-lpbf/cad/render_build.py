@@ -1179,8 +1179,18 @@ def chapter_process(st):
     ch = F("Process chamber body") + F("Lid screw helical inserts", "Helical inserts for the module screws", "Recoater rail helical inserts",
                                        "Z-flange helical inserts", "Leg helical inserts")
     fly(st, ch, nf(12), ex, lambda t: cam(0.7, 1600), cap, "Chamber body, with its helical inserts, onto the legs")
+    # scale: the chamber's outside dimensioned while it is on screen, and a soda can on the base plate from here on
+    cb = union_bbox([st.parts[i].shape for i in F("Process chamber body", "Chamber floor plate")])
+    RS.add_dims(st, "proc-dims", RS.box_dims(cb, pad=70.0))
+    bp = union_bbox([st.parts[i].shape for i in base])
+    RS.add_refs(st, "proc-can", RS.soda_can((bp[0] + 55.0, bp[2] + 55.0, bp[5])))
+    st.caption(cap, f"The chamber is {cb[1] - cb[0]:.0f} x {cb[3] - cb[2]:.0f} x {cb[5] - cb[4]:.0f} mm outside (a soda can stands on the base plate)")
+    for f in range(nf(8)):
+        cam(0.7 + 0.04 * f, 1300, el=26)
+        st.shot()
     st.caption(cap, "One M6 x 25 up each leg's bore into the floor, through the access holes in the base plate")
     drive(st, "legs", lambda: (cam(0.75, 1300, el=-24), st.shot()), frames=5)
+    RS.remove_dims(st, "proc-dims")
     under = F("outlet plenum", "Outlet plenum port", "Overflow funnel", "Overflow port", "Overflow jar", "Overflow clamp",
               "Overflow-jar present", "Module-present sensor", "Locating dowel")
     fly(st, under, nf(12), ex, lambda t: cam(t, 1300, az=-20, el=-14), cap,
@@ -1307,6 +1317,7 @@ def chapter_process(st):
               "E-stop", "Key switch", "Emission indicator", "Reset button")
     fly(st, guard, nf(14), ex, lambda t: cam(t, 2200, az=-26, el=24, f=(0, 0, 80)), cap,
         "Class 1 laser guard: T-slot frame, 1.5 mm aluminium panels, sliding door with an OD 7+ window, guard lock")
+    RS.remove_refs(st, "proc-can")
 
 
 # ------------------------------------------------------------------ chapter 5: rack, gas, dock; finale
