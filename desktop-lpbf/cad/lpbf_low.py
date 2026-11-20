@@ -393,6 +393,32 @@ def tslot20(p0, axis, L):
 
 
 # --------------------------------------------------------------------------------------------
+# Chamber body (chamber-construction.md): a through-frame cut from 5-1/2 in. 6061-T651 plate and a bolted 20 mm floor plate, in
+# place of the block with a 120 mm deep pocket. The core comes out as one slug (waterjet or bandsaw), the walls are finished
+# from the top and from the bottom with a 3/4 in. end mill at 63 mm stick-out (3.3:1), and nothing needs a long or special
+# tool. The walls hang 3.9 mm below the floor-joint plane (z = 0) as a skirt round a 4 mm pad on the floor plate, so every
+# seal on an outer face (inlet plenum, through-beam heads, door) lands on the frame and none crosses the joint. The floor
+# O-ring sits in the pad's top face 1.5 mm outside the walls' inner faces, so the only crevice at the floor is that 1.5 mm
+# hairline, clamped metal to metal.
+# --------------------------------------------------------------------------------------------
+FRAME = dict(
+    r_in=10.0,                  # inner vertical corners: 3/4 in. end mill (R9.5), 63 mm stick-out, half the height from each side
+    skirt=3.9,                  # frame bottom at z = -3.9, 0.1 mm above the floor plate's edge band: the screws clamp the O-ring face
+    rebate=8.0,                 # the skirt starts 8 mm outside the inner faces (rebate 8 x 3.9, milled from the bottom)
+    pad=4.0, pad_clear=0.25,    # floor plate: 4 mm pad inside the skirt, 0.25 mm clear per side
+    gland_t=1.5,                # floor O-ring groove's inner wall 1.5 mm outside the inner faces (3.53 mm cord, 2.65 x 4.6 like the lid)
+    bolt_t=12.0,                # floor screws on the skirt's centre line, 12 mm outside the inner faces
+    notch=8.0,                  # screw heads sit in 8 mm deep U-notches in the plate's underside, open to its edge
+    door_r=6.5, slot_r=3.9,     # door-opening corners (1/2 in. end mill); round ends of the 8 mm inlet and outlet slots
+    blank_in=(12.5, 9.0, 5.5),  # saw-cut frame blank, 5-1/2 in. 6061-T651 plate (in.): 5 in. plate is +/-0.130 in. thick (OnlineMetals),
+                                # so it can come in under the 123.9 mm frame; McMaster's thickest rolled plate is 4 in.
+    floor_blank_in=(12.5, 9.0, 1.0),
+    core_off=3.0,               # waterjet / bandsaw line, 3 mm inside the finished opening
+)
+CHAMBER_OPS: dict = {}          # "frame" / "floor": dict(blank=solid, ops=[(op id, label, solid removed)]) in machining order
+
+
+# --------------------------------------------------------------------------------------------
 # The machine
 # --------------------------------------------------------------------------------------------
 def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
@@ -493,8 +519,9 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # ===================== 4. Heated build module, overflow =====================
     ML.add_build_module(sys.modules[__name__], add, module, 4)
     ox = (P["ovf_x0"] + P["ovf_x1"]) / 2
-    # 316L under the 6061 floor: bolted (4 x M4, joints.py) over an FKM face O-ring round the overflow slot, never welded
-    fun = box(ox - 22, ox + 22, -59, 59, zf - 22, zf).cut(box(P["ovf_x0"], P["ovf_x1"], -52, 52, zf - 11, zf + 1)).cut(cyl(19.0, (ox, 0, zf - 23), "z", 13))
+    # 316L under the 6061 floor plate: bolted (4 x M4, joints.py) over an FKM face O-ring round the overflow slot, never welded.
+    # Its pocket has the floor slot's R4 corners (machining.md: no sharp internal corners; a 1/4 in. end mill cuts both).
+    fun = box(ox - 22, ox + 22, -59, 59, zf - 22, zf).cut(rbox(P["ovf_x0"], P["ovf_x1"], -52, 52, zf - 11, zf + 1, 4.0)).cut(cyl(19.0, (ox, 0, zf - 23), "z", 13))
     hi_f = fit_loop(((P["ovf_x1"] - P["ovf_x0"]) / 2 + 1.5, 53.5), 1.5, 2.5, 0.0)[0]
     fun = fun.cut(ring_loop("z", (ox, 0, 0), hi_f, 2.3, (zf - 1.32, zf + 0.01), 1.5))
     add("Overflow funnel block (316L, bolted, FKM face O-ring)", fun, C["ss"], 4, (0, 0, -200), mat="ss316l", bom="M4", section=True)
@@ -509,42 +536,100 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         C["alu_dark"], 4, (0, 0, -260), mat="al6061", bom="G7", mcm="KF40_CLAMP", section=True)
     add("Overflow-jar present sensor (inductive M12, PNP)", cyl(6.0, (ox + 28.0, 0, zf - 22 - 16 - 60), "x", 30.0), C["blue"], 4, (120, 0, 0), mat="misc", mass_kg=0.02, bom="A1")
 
-    # ===================== 5. Chamber body =====================
-    ch = rbox(-cx, cx, -cy, cy, -fl, lz0, 8)
-    # inside corners: 5 mm on the vertical edges and a 5 mm cove where the walls meet the floor (powder doesn't pack
-    # into a cove, and a vacuum nozzle or swab reaches it); the blade path (|y| <= 52) stays flat
-    pocket = cq.Workplane("XY").box(2 * ix, 2 * iy, lz0 + 1, centered=False).edges("|Z").fillet(5.0).edges("<Z").fillet(5.0).val()
-    ch = ch.cut(pocket.translate(V(-ix, -iy, 0)))
-    dz0, dz1 = 8.0, 100.0                                   # door opening: sill 8 mm above the floor
-    ch = ch.cut(box(-110, 110, -cy - 1, -iy + 1, dz0, dz1))
-    ch = ch.cut(box(-MP.INLET_HALF, MP.INLET_HALF, iy - 1, cy + 1, 4, 12))     # cross-flow inlet slot (120 x 8, for the Ø75 module)
-    ch = ch.cut(box(-MP.OUTLET_HALF, MP.OUTLET_HALF, MP.OUTLET_Y[0], MP.OUTLET_Y[1], -fl - 1, 1))   # outlet: floor slot near the door
-    ch = ch.cut(cyl(P["port_d"] / 2, (0, 0, -fl - 1), "z", fl + 2))            # module port: every module's spigot fills it
-    for sx in (-1, 1):                                                          # helical inserts for the module's thumb screws,
-        ch = ch.cut(cyl(3.0, (sx * MP.SCREW_X, 0, -fl - 1), "z", 13.0))          # and the locating dowel / diamond pin holes
-        ch = ch.cut(cyl(3.0, (0, sx * MP.DOWEL_Y, -fl - 1), "z", 11.0))
-    ch = ch.cut(box(P["ovf_x0"], P["ovf_x1"], -52, 52, -fl - 1, 1))
-    for sx in (-1, 1):                                                          # plate-at-exchange-height through-beam (fibre heads):
-        ch = ch.cut(cyl(3.0, (sx * (ix - 1), 0, 5.0), "x" if sx > 0 else "-x", P["wall"] + 2))     # M6 x 0.75 tapped through the wall
-        ch = ch.cut(cyl(5.4, (sx * (cx - 1.32), 0, 5.0), "x" if sx > 0 else "-x", 1.4).cut(cyl(3.1, (sx * (cx - 1.4), 0, 5.0), "x" if sx > 0 else "-x", 1.6)))   # 2-010 face groove
+    # ===================== 5. Chamber body: through-frame + bolted floor plate (FRAME, chamber-construction.md) =====================
+    # Each part is its saw-cut blank minus an ordered list of cuts, one per machining operation, which CHAMBER_OPS keeps so that
+    # analysis/out/machining/setup_plan.json and the build animation can name them; joints.py then adds the fastener holes.
+    FR = FRAME
+    CHAMBER_OPS.clear()
+    sk, rb, pc, gt = FR["skirt"], FR["rebate"], FR["pad_clear"], FR["gland_t"]
+    gw, gd = P["gland_w"], P["gland_d"]
     ry_, rz_ = P["rc_screw_y"], P["rc_screw_z"]
-    ch = ch.cut(cyl(9, (-cx - 1, ry_, rz_), "x", P["wall"] + 2)).cut(cyl(9, (ix - 1, ry_, rz_), "x", P["wall"] + 2))
-    ch = ch.cut(cyl(12.7, (ix - 1, 0, 70), "x", P["wall"] + 2))        # vacuum port (KF-25)
-    ch = sae_port(ch, (100, cy, 100), "-y", P["wall"])                  # argon in (back wall): SAE-4 O-ring-boss port, not NPT into 6061
-    ch = sae_port(ch, (cx, -40, 18), "-x", P["wall"])                   # O2 sample (right wall): SAE-4 port
-    gw, gd = P["gland_w"], P["gland_d"]                                # lid O-ring face gland in the top face
-    ch = ch.cut(rbox(-ix - 3 - gw, ix + 3 + gw, -iy - 3 - gw, iy + 3 + gw, lz0 - gd, lz0 + 1, 6).cut(rbox(-ix - 3, ix + 3, -iy - 3, iy + 3, lz0 - gd - 1, lz0 + 2, 4)))
-    add("Process chamber body (6061-T6, ~6.4 L)", ch, C["alu"], 5, (0, 0, 260), mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
+    zf0 = -sk                                                    # frame bottom (the skirt)
+
+    def sae_tool(p0, axis, wall):
+        """The cut sae_port() makes, as one solid: SAE J1926 -4 thread at its major diameter, 12 deg O-ring cone, Ø4 drilling."""
+        d = _AX[axis]
+        return fuse([cyl(sae4["thread_d"] / 2, p0, axis, sae4["depth"]), cq.Solid.makeCone(sae4["csk_d"] / 2, sae4["thread_d"] / 2, sae4["csk_depth"], V(*p0) - d * 0.01, d),
+                     cyl(sae4["drill_d"] / 2, tuple(V(*p0) + d * (sae4["depth"] - 0.1)), axis, wall - sae4["depth"] + 1.2)])
+
+    bx_, by_, bz_ = [v * 25.4 for v in FR["blank_in"]]
+    zc_ = (zf0 + lz0) / 2
+    fr_blank = box(-bx_ / 2, bx_ / 2, -by_ / 2, by_ / 2, zc_ - bz_ / 2, zc_ + bz_ / 2)
+    outer = rbox(-cx, cx, -cy, cy, zf0, lz0, 8)
+    co, zm = FR["core_off"], zc_                                 # the top and bottom finishing passes meet at mid-height
+    opening = rbox(-ix, ix, -iy, iy, zf0 - 1, lz0 + 1, FR["r_in"])
+    rebate = rbox(-ix - rb, ix + rb, -iy - rb, iy + rb, zf0 - 1, 0.0, FR["r_in"] + rb)
+    lid_gland = rbox(-ix - 3 - gw, ix + 3 + gw, -iy - 3 - gw, iy + 3 + gw, lz0 - gd, lz0 + 1, 6).cut(rbox(-ix - 3, ix + 3, -iy - 3, iy + 3, lz0 - gd - 1, lz0 + 2, 4))
+    dz0, dz1 = 8.0, 100.0                                        # door opening: sill 8 mm above the floor
+    beam = []
+    for sx in (-1, 1):                                           # plate-at-exchange-height through-beam (fibre heads): M6 x 0.75 through, 2-010 face groove
+        ax_ = "x" if sx > 0 else "-x"
+        beam += [cyl(3.0, (sx * (ix - 1), 0, 5.0), ax_, P["wall"] + 2),
+                 cyl(5.4, (sx * (cx - 1.32), 0, 5.0), ax_, 1.4).cut(cyl(3.1, (sx * (cx - 1.4), 0, 5.0), ax_, 1.6))]
+    fops = [
+        ("FR-01", "square the blank: outer profile 312 x 222 with R8 corners; face top and bottom to 123.9 mm", fr_blank.cut(outer)),
+        ("FR-02", "core out as one 274 x 184 slug: waterjet, or a contour bandsaw from a Ø12 start hole (3 mm left on every inside face)",
+         rbox(-ix + co, ix - co, -iy + co, iy - co, zf0 - 1, lz0 + 1, FR["r_in"] - co)),
+        ("FR-03", "finish the opening from the top, 280 x 190 with R10 corners, down to mid-height (3/4 in. end mill, 63 mm stick-out)",
+         rbox(-ix, ix, -iy, iy, zm - 0.5, lz0 + 1, FR["r_in"])),
+        ("FR-04", "finish the opening from the bottom up to mid-height (same tool)", rbox(-ix, ix, -iy, iy, zf0 - 1, zm + 0.5, FR["r_in"])),
+        ("FR-05", "rebate 8 x 3.9 round the bottom of the opening, for the floor plate's pad", rebate),
+        ("FR-06", "lid O-ring face gland in the top face (4.6 x 2.65, 1/8 in. end mill)", lid_gland),
+        ("FR-07", "door opening 220 x 92 through the front wall, R6.5 corners", rbox(-110, 110, -cy - 1, -iy + 1, dz0, dz1, FR["door_r"], "|Y")),
+        ("FR-08", "cross-flow inlet slot 120 x 8 through the back wall, round ends", rbox(-MP.INLET_HALF, MP.INLET_HALF, iy - 1, cy + 1, 4, 12, FR["slot_r"], "|Y")),
+        ("FR-09", "argon inlet: SAE-4 O-ring-boss port in the back wall", sae_tool((100, cy, 100), "-y", P["wall"])),
+        ("FR-10", "recoater screw bores Ø18 through both side walls", fuse([cyl(9, (-cx - 1, ry_, rz_), "x", P["wall"] + 2), cyl(9, (ix - 1, ry_, rz_), "x", P["wall"] + 2)])),
+        ("FR-11", "vacuum port bore Ø25.4 through the right wall (KF-25 adapter plate)", cyl(12.7, (ix - 1, 0, 70), "x", P["wall"] + 2)),
+        ("FR-12", "O2 sample: SAE-4 port in the right wall", sae_tool((cx, -40, 18), "-x", P["wall"])),
+        ("FR-13", "through-beam: M6 x 0.75 tapped through each side wall, 2-010 face groove outside", fuse(beam)),
+    ]
+    ch = outer.cut(opening).cut(*[t for _, _, t in fops[4:]])
+    CHAMBER_OPS["frame"] = dict(blank=fr_blank, ops=fops)
+    add("Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)", ch, C["alu"], 5, (0, 0, 260),
+        mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
+    # floor plate: 20 mm (z -20..0) from 1 in. plate. A 4 mm pad (inside the frame's skirt) carries the floor O-ring; the edge band
+    # under the skirt is 4 mm lower and takes the 18 screws in U-notches (joints.py). Every under-floor mount bolts to this plate.
+    pbx, pby, pbz = [v * 25.4 for v in FR["floor_blank_in"]]
+    fp_blank = box(-pbx / 2, pbx / 2, -pby / 2, pby / 2, -fl / 2 - pbz / 2, -fl / 2 + pbz / 2)
+    fp_outer = rbox(-cx, cx, -cy, cy, -fl, 0.0, 8)
+    pad_h = (ix + rb - pc, iy + rb - pc)
+    band = rbox(-cx - 1, cx + 1, -cy - 1, cy + 1, -FR["pad"], 1.0, 9).cut(rbox(-pad_h[0], pad_h[0], -pad_h[1], pad_h[1], -FR["pad"] - 1, 2.0, FR["r_in"] + rb - pc))
+    fl_gland = ring_loop("z", (0, 0, 0), (ix + gt, iy + gt), gw, (-gd, 0.01), FR["r_in"] + gt)
+    pre = []
+    for sx in (-1, 1):                                           # module thumb-screw insert pre-holes, dowel / diamond pin holes
+        pre += [cyl(3.0, (sx * MP.SCREW_X, 0, -fl - 1), "z", 13.0), cyl(3.0, (0, sx * MP.DOWEL_Y, -fl - 1), "z", 11.0)]
+    pops = [
+        ("FP-01", "square the blank: profile 312 x 222 with R8 corners; face both sides to 20 mm", fp_blank.cut(fp_outer)),
+        ("FP-02", "step the edge band down 4 mm, leaving the 4 mm pad that fits inside the frame's skirt", band),
+        ("FP-03", "floor O-ring face gland in the pad's top face (4.6 x 2.65, 1.5 mm outside the walls)", fl_gland),
+        ("FP-04", "module port Ø96 H7 (every module's spigot)", cyl(P["port_d"] / 2, (0, 0, -fl - 1), "z", fl + 2)),
+        ("FP-05", "cross-flow outlet slot 124 x 8 near the door, round ends", rbox(-MP.OUTLET_HALF, MP.OUTLET_HALF, MP.OUTLET_Y[0], MP.OUTLET_Y[1], -fl - 1, 1, FR["slot_r"])),
+        ("FP-06", "overflow slot 20 x 104, R4 corners", rbox(P["ovf_x0"], P["ovf_x1"], -52, 52, -fl - 1, 1, 4.0)),
+        ("FP-07", "module thumb-screw pre-holes and the dowel / diamond-pin holes, from below", fuse(pre)),
+    ]
+    flp = fp_outer.cut(*[t for _, _, t in pops[1:]])
+    CHAMBER_OPS["floor"] = dict(blank=fp_blank, ops=pops)
+    add("Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)", flp, C["alu"], 5, (0, 0, 150),
+        mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
+    # the cord as squeezed (2.65 tall, ~3.7 wide) against the groove's inner wall, as the lid's
+    add("Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; face seal in the floor plate's pad)",
+        ring_loop("z", (0, 0, 0), (ix + gt + 0.3, iy + gt + 0.3), 3.7, (-gd, 0.0), FR["r_in"] + gt + 0.3), C["black"], 5, (0, 0, 200), mat="fkm", bom="G8",
+        mcm="ORING_CORD", section=True)
+    GLANDS["floor"] = dict(kind="face", ring="cord", cs=3.53, depth=gd, width=gw, inner_perimeter=loop_perimeter((ix + gt, iy + gt), FR["r_in"] + gt), groove_mat="al",
+                           T=60.0, closure="chamber floor plate on the frame (18 x M4)")
     # the cord as squeezed: 2.65 mm tall, ~3.7 mm wide, sitting in the 4.6 mm gland
     add("Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)", rbox(-ix - 3.3 - 3.7, ix + 3.3 + 3.7, -iy - 3.3 - 3.7, iy + 3.3 + 3.7, lz0 - gd, lz0, 5.6).cut(rbox(-ix - 3.3, ix + 3.3, -iy - 3.3, iy + 3.3, lz0 - gd - 1, lz0 + 1, 4.3)),
         C["black"], 5, (0, 0, 300), mat="fkm", bom="G8", mcm="ORING_CORD", section=True)
-    # 316L on 6061 cannot be welded: a 6 mm bolting flange, 8 x M4 (joints.py) and an FKM face O-ring round the opening
-    plen_in = fuse([rbox(-65, 65, cy, cy + 32, -8, 30, 4), rbox(-75, 75, cy, cy + 6, -18, 40, 4, "|Y")]).cut(box(-60, 60, cy - 1, cy + 27, -3, 25)).cut(cyl(12.7, (0, cy + 26, 11), "y", 8))
-    hi_in, ri_in = fit_loop((61.5, 15.5), 1.5)[0], 1.5                 # groove inner wall: >= 1.5 mm outside the plenum's opening (x +/-60, z -3..25)
-    plen_in = plen_in.cut(ring_loop("y", (0, 0, 11), hi_in, F["width"], (cy - 0.01, cy + F["depth"]), ri_in))
+    # 316L on 6061 cannot be welded: a 6 mm bolting flange, 7 x M4 (joints.py) and an FKM face O-ring round the opening. The frame
+    # ends at z = -3.9, so the plenum does too: its cavity floor is at z +1.5 (was -3) and the groove at z >= -2.3, all on the frame;
+    # the four screws that were below the floor line moved to the sides (x +/-71).
+    zpi = (1.5 + 25.0) / 2                                             # cavity z 1.5..25, centre 13.25
+    plen_in = fuse([rbox(-65, 65, cy, cy + 32, zf0, 30, 4), rbox(-78, 78, cy, cy + 6, zf0, 40, 4, "|Y")]).cut(box(-60, 60, cy - 1, cy + 27, 1.5, 25)).cut(cyl(12.7, (0, cy + 26, 11), "y", 8))
+    hi_in, ri_in = fit_loop((61.5, 25.0 - zpi + 1.5), 1.5)[0], 1.5     # groove inner wall: >= 1.5 mm outside the plenum's opening (x +/-60, z 1.5..25)
+    plen_in = plen_in.cut(ring_loop("y", (0, 0, zpi), hi_in, F["width"], (cy - 0.01, cy + F["depth"]), ri_in))
     add("Cross-flow inlet plenum + nozzle (316L, bolted flange)", plen_in, C["ss"], 5, (0, 180, 0), mat="ss316l", bom="G4", section=True)
     pk = MP.pick_ring(loop_perimeter(hi_in, ri_in))
-    add(f"Inlet plenum O-ring (FKM 75A {pk[0]}, face seal on the back wall)", ring_loop("y", (0, 0, 11), hi_in, F["width"] - 0.3, (cy, cy + F["depth"]), ri_in),
+    add(f"Inlet plenum O-ring (FKM 75A {pk[0]}, face seal on the back wall)", ring_loop("y", (0, 0, zpi), hi_in, F["width"] - 0.3, (cy, cy + F["depth"]), ri_in),
         C["black"], 5, (0, 180, 0), mat="fkm", bom="G8", section=True)
     GLANDS["inlet_plenum"] = dict(kind="face", ring=pk[0], cs=1.78, depth=F["depth"], width=F["width"], inner_perimeter=loop_perimeter(hi_in, ri_in),
                                   groove_mat="ss", T=45.0, closure="inlet plenum (316L) on the back wall (6061)")
@@ -573,11 +658,12 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     GLANDS["vacuum_port"] = dict(kind="face", ring="2-024", cs=1.78, depth=F["depth"], width=2.3, groove_id=29.0, groove_mat="ss", T=40.0,
                                  closure="KF-25 vacuum-port adapter plate on the right wall")
     add("Layer-light LED bar", box(ix - 6, ix - 1, -45, 45, 30, 38), C["white"], 5, (0, 0, 120), mat="misc", mass_kg=0.05, bom="M6")
-    # lift-out wall liners: 0.5 mm 316L held by spring clips; they take the condensate and lift out through the door
+    # lift-out wall liners: 0.5 mm 316L held by spring clips; they take the condensate and lift out through the door. They stop
+    # 9.5 mm short of each inside corner, clear of the frame's R10 corners (they stopped 8 mm short of the old R5 corners).
     ry_, rz_ = P["rc_screw_y"], P["rc_screw_z"]
-    lb = box(-ix + 8, ix - 8, iy - 0.6, iy - 0.1, 16, 72)
-    ll = box(-ix + 0.1, -ix + 0.6, -iy + 8, iy - 8, 16, 110).cut(cyl(11, (-ix - 1, ry_, rz_), "x", 3))
-    lr = box(ix - 0.6, ix - 0.1, -iy + 8, iy - 8, 16, 110).cut(cyl(11, (ix - 2, ry_, rz_), "x", 3)).cut(cyl(14, (ix - 2, 0, 70), "x", 3)).cut(cyl(4.5, (ix - 2, -40, 18), "x", 3))
+    lb = box(-ix + 9.5, ix - 9.5, iy - 0.6, iy - 0.1, 16, 72)
+    ll = box(-ix + 0.1, -ix + 0.6, -iy + 9.5, iy - 9.5, 16, 110).cut(cyl(11, (-ix - 1, ry_, rz_), "x", 3))
+    lr = box(ix - 0.6, ix - 0.1, -iy + 9.5, iy - 9.5, 16, 110).cut(cyl(11, (ix - 2, ry_, rz_), "x", 3)).cut(cyl(14, (ix - 2, 0, 70), "x", 3)).cut(cyl(4.5, (ix - 2, -40, 18), "x", 3))
     add("Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)", comp([lb, ll, lr]), C["ss"], 5, (0, 0, 160), mat="ss316l", bom="A2", section=True, opacity=0.8)
     # threaded M6 fibre heads screwed into the walls from outside, each sealed by a 2-010 FKM face O-ring under its flange
     fib = comp([fuse([cyl(2.98, (sx * (ix + 1.0), 0, 5.0), "x" if sx > 0 else "-x", P["wall"] - 1.0), cyl(6.5, (sx * cx, 0, 5.0), "x" if sx > 0 else "-x", 2.5),
@@ -591,8 +677,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         C["blue"], 5, (0, 0, -120), mat="misc", mass_kg=0.02, bom="A1")
 
     # ===================== 6. Recoater =====================
-    rr = place(VP.mcm_6709K33(270.0), (-135, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0))
-    add("Recoater guide rail (15 mm, 270 mm)", rr, C["steel"], 6, (0, 0, 220), mat="steel", bom="M1", mcm="6709K33")
+    # 260 mm (was 270): its ends stop at x +/-130, where the frame's R10 back corners begin; the carriage block stays on it over the full
+    # stroke (x_park -106: block -125.4, end seal -134.3; x_end 100: +128.3). Cut to length by McMaster; 4 holes at x -110/-50/10/70.
+    rr = place(VP.mcm_6709K33(260.0), (-130, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0))
+    add("Recoater guide rail (15 mm, 260 mm)", rr, C["steel"], 6, (0, 0, 220), mat="steel", bom="M1", mcm="6709K33")
     xc = P["x_park"]
     add("Recoater carriage (15 mm rail)", place(VP.mcm_6709K12(), (xc, iy, P["rc_rail_z"]), (1, 0, 0), (0, -1, 0)), C["steel"], 6, (0, 0, 220), group="recoater", mat="steel", bom="M1", mcm="6709K12")
     yc = iy - 28.0                                              # carriage mounting face
@@ -952,6 +1040,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     if fasteners:
         import joints as J
         J.add_joints(sys.modules[__name__], parts, add, module)
+    __import__("automation").add_features(add, sys.modules[__name__], module)   # robot-tending features (cad/automation.py, robot-ops.md)
     return parts
 
 

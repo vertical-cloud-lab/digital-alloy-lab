@@ -44,6 +44,7 @@ import lpbf_low as M  # noqa: E402
 import module_params as MP  # noqa: E402
 import render_low as R  # noqa: E402
 import render_scale as RS  # noqa: E402  (soda can, steel rule, person, dimension lines)
+import render_machining as RMACH  # noqa: E402  (chapter 2's chamber: frame + floor plate on a VF-4 with a 4th axis)
 
 pv.OFF_SCREEN = True
 OUT = HERE / "img" / "sequence"
@@ -746,83 +747,12 @@ def chapter_kit(st):
 
 
 # ------------------------------------------------------------------ chapter 2: machining
-def chamber_ops():
-    P = M.P
-    ix, iy, cx, cy, fl, lz0 = P["ix"], P["iy"], P["cx"], P["cy"], P["floor"], P["lid_z0"]
-    box, cyl, rbox = M.box, M.cyl, M.rbox
-    stock = box(-165.1, 165.1, -120.65, 120.65, -fl - 6.2, lz0 + 6.2)        # 13 x 9.5 x 6 in. 6061-T6 block
-    s1 = rbox(-cx, cx, -cy, cy, -fl, lz0, 8)
-    pocket = cq.Workplane("XY").box(2 * ix, 2 * iy, lz0 + 1, centered=False).edges("|Z").fillet(5.0).edges("<Z").fillet(5.0).val()
-    s2 = s1.cut(pocket.translate(cq.Vector(-ix, -iy, 0)))
-    s3 = s2.cut(box(-110, 110, -cy - 1, -iy + 1, 8.0, 100.0)).cut(box(-MP.INLET_HALF, MP.INLET_HALF, iy - 1, cy + 1, 4, 12))
-    f = s3.cut(box(-MP.OUTLET_HALF, MP.OUTLET_HALF, MP.OUTLET_Y[0], MP.OUTLET_Y[1], -fl - 1, 1))
-    f = f.cut(cyl(P["port_d"] / 2, (0, 0, -fl - 1), "z", fl + 2))
-    for sx in (-1, 1):
-        f = f.cut(cyl(3.0, (sx * MP.SCREW_X, 0, -fl - 1), "z", 13.0)).cut(cyl(3.0, (0, sx * MP.DOWEL_Y, -fl - 1), "z", 11.0))
-    s4 = f.cut(box(P["ovf_x0"], P["ovf_x1"], -52, 52, -fl - 1, 1))
-    g = s4
-    for sx in (-1, 1):
-        g = g.cut(cyl(1.6, (sx * (ix - 1), 0, 5.0), "x" if sx > 0 else "-x", P["wall"] + 2))
-    ry_, rz_ = P["rc_screw_y"], P["rc_screw_z"]
-    g = g.cut(cyl(9, (-cx - 1, ry_, rz_), "x", P["wall"] + 2)).cut(cyl(9, (ix - 1, ry_, rz_), "x", P["wall"] + 2))
-    g = g.cut(cyl(12.7, (ix - 1, 0, 70), "x", P["wall"] + 2)).cut(cyl(3.2, (100, iy - 1, 100), "y", P["wall"] + 2))
-    s5 = g.cut(cyl(3.2, (ix - 1, -40, 18), "x", P["wall"] + 2))
-    gw, gd = P["gland_w"], P["gland_d"]
-    s6 = s5.cut(rbox(-ix - 3 - gw, ix + 3 + gw, -iy - 3 - gw, iy + 3 + gw, lz0 - gd, lz0 + 1, 6).cut(
-        rbox(-ix - 3, ix + 3, -iy - 3, iy + 3, lz0 - gd - 1, lz0 + 2, 4)))
-    body_cuts = J.CUTS.get("Process chamber body", [])
-    s7 = s6.cut(*[t for k, t in body_cuts if k == "lid"]) if body_cuts else s6
-    s8 = s7.cut(*[t for k, t in body_cuts if k != "lid"]) if body_cuts else s7
-    return [
-        (stock, s1, "-z", "mill", "Face and square the block to 312 x 222 x 140 mm, 8 mm corners"),
-        (s1, s2, "-z", "mill", "Rough and finish the 280 x 190 x 120 mm pocket: 5 mm corners, 5 mm coves at the floor"),
-        (s2, s3, "+y", "mill", "Flip to the front: 220 x 92 mm door opening; from the back, the 120 x 8 mm cross-flow inlet slot"),
-        (s3, s4, "+z", "mill", "Flip over: Ø96 module port, outlet and overflow slots, dowel and insert holes in the floor"),
-        (s4, s5, "+x", None, "Side bores: recoater screw, KF-25 vacuum port, argon and O2 ports, through-beam fibres"),
-        (s5, s6, "-z", "mill", "Lid O-ring face gland, 4.6 x 2.65 mm (Parker), on the top face"),
-        (s6, s7, "-z", None, "Drill and STI-tap the 20 lid-screw holes; install M5 x 7.5 helical inserts (McMaster 91732A261)"),
-        (s7, s8, "+z", None, "From below and the back: STI-tapped holes and helical inserts for the module, Z flange, legs and rail"),
-    ]
-
-
 def chapter_machining(st):
     st.shown.clear()
     st.mat.clear()
-    table = pv.Box((-420, 420, -260, 260, -60, -26))
-    # --- the chamber body, op by op ---
-    ops = chamber_ops()
-    final = st.parts[st.find("Process chamber body")[0]].shape
-    try:
-        dv = abs(ops[-1][1].Volume() - final.Volume()) / final.Volume()
-        print(f"chamber ops reproduce the model's body to {100 * dv:.3f} % in volume")
-    except Exception:
-        pass
-    st.add("table", table, "#59626b")
-    stock_mesh = tess(ops[0][0])
-    st.add("chamber", stock_mesh, STOCK_COL, edges=True)
-    focal = (0.0, 0.0, 60.0)
-    st.caption("2  Machining: the process chamber body from one block of 6061-T6",
-               "Stock: 13 x 9.5 x 6 in. 6061-T6 block (or a welded 5/8 in. plate box, finish-machined)")
-    for f in range(nf(10)):
-        st.cam(focal, 1150, -30 + f, 26)
-        st.shot()
-    cams = {"-z": (-28, 30), "+y": (-12, 8), "+z": (-30, -32), "+x": (62, 12)}
-    az0 = -18
-    for k, (before, after, axis, tool, cap) in enumerate(ops):
-        az, el = cams[axis]
-        def cam(t, az=az, el=el):
-            st.cam(focal, 1050, az + 10 * t, el)
-        st.show_extra("table", axis != "+z")       # seen from below for the floor op
-        machine_op(st, "chamber", before, after, axis, tool, nf(14), STOCK_COL,
-                   "2  Machining: the process chamber body from one block of 6061-T6", f"Op {k + 1}/{len(ops)}: {cap}", cam)
-        st.show_extra("table", True)
-    st.caption("2  Machining: the process chamber body from one block of 6061-T6",
-               "Bead-blast, no anodize inside (anodized Al outgasses 41-68x more water); 6.4 L inside")
-    for f in range(nf(12)):
-        st.cam(focal, 1050, az0 + 3 * f, 22)
-        st.shot()
-    st.remove("chamber")
-    st.remove("table")
+    # --- the chamber: through-frame and floor plate, setup by setup on a VF-4 with an HRT210 (render_machining.py) ---
+    res = RMACH.chapter_chamber(st, sys.modules[__name__])
+    print("chamber ops vs model:", {k: f"{100 * v:.3f} %" for k, v in res.items()})
 
     # --- the build module body: spigot from bar, flange from plate, cylinder from tube; TIG-weld; hone ---
     body = st.parts[st.find("Build module M50")[0]].shape

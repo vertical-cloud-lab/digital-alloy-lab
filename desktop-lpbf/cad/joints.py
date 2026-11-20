@@ -164,13 +164,53 @@ def add_joints(h, parts, add, module="M50"):
                           "screws are right here. Inserts because the lid comes off many times over the machine's life and "
                           "6061 threads wear; 1.2 mm of metal each side between the gland and the outer wall.")
 
+    # ---------------- 1b. floor plate to frame: 18 x M4 x 16 up into tapped holes in the frame's skirt; 2 dowels ----------------
+    # chamber-construction.md: screws on the skirt's centre line (12 mm outside the inner faces, outboard of the floor O-ring), heads in
+    # 8 mm deep U-notches in the plate's underside so they clear the under-floor mounts (outlet plenum, Z flange) and stay reachable.
+    # Kept clear of: the door sill (front: tapped holes end at z +5.5, sill at +8), the inlet slot (back, |x| < 64), the inlet-plenum
+    # inserts (x +/-71), the Z-flange inserts (x -33/40/94), the through-beam (y 0), the legs (corners) and the door-hinge blocks.
+    _KEY[0] = "floor"
+    FR = h.FRAME
+    sk, bt, nd = FR["skirt"], FR["bolt_t"], FR["notch"]
+    xb, yb = ix + bt, iy + bt
+    pts = ([(x, -yb, (0.0, -1.0)) for x in (-116.0, -66.0, -22.0, 22.0, 66.0, 116.0)] + [(x, yb, (0.0, 1.0)) for x in (-110.0, -82.0, 82.0, 110.0)]
+           + [(sx * xb, y, (sx, 0.0)) for sx in (-1.0, 1.0) for y in (-62.0, -20.0, 20.0, 62.0)])
+    zn = zf + nd                                              # -12: the head bears on the notch's roof
+    pn4f = find("shcs", 4, 16)
+    Ls = float(FS.CATALOG[pn4f]["L"])
+    items = [((x, y, zn), Z) for x, y, _ in pts]
+    notches = []
+    for x, y, (ox_, oy_) in pts:
+        notches.append(hole((x, y, zn), Z, -nd - 1.0, 0.0, 8.0))
+        if ox_:
+            x0_ = x if ox_ > 0 else x - 10.0
+            notches.append(cq.Solid.makeBox(10.0, 8.0, nd + 1.0, V(x0_, y - 4.0, zf - 1.0)))
+        else:
+            y0_ = y if oy_ > 0 else y - 10.0
+            notches.append(cq.Solid.makeBox(8.0, 10.0, nd + 1.0, V(x - 4.0, y0_, zf - 1.0)))
+    cut_parts(parts, "Chamber floor plate", notches + [hole(p, n, -0.01, (-FR["pad"] - zn) + 0.01, CLEAR[4]) for p, n in items])
+    cut_parts(parts, "Process chamber body", [hole(p, n, (-sk - zn) - 0.01, Ls + 1.5, 4.0) for p, n in items])
+    add_fasteners(h, add, "floor", "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt",
+                  pn4f, items, 5, "G1", explode=(0, 0, -150))
+    dw = find("dowel", 6, 20)
+    zt = -sk + 9.9                                            # dowel top, 9.9 mm up in the frame; 10 mm pressed into the plate
+    ditems = [((sx * 148.2, sx * 103.2, zt), mZ) for sx in (-1.0, 1.0)]
+    cut_parts(parts, "Process chamber body", [hole(p, n, -0.5, 9.9 + 0.01, 6.0) for p, n in ditems])
+    cut_parts(parts, "Chamber floor plate", [hole(p, n, 9.9 + 0.1 - 0.01, 20.5, 6.0) for p, n in ditems])
+    add_fasteners(h, add, "floor_dowels", "Floor-plate dowels, Ø6 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners",
+                  dw, ditems, 5, "G1", explode=(0, 0, -150))
+    JOINT_NOTES["floor"] = ("Opened only for major maintenance, so plain tapped M4 threads in the 6061 frame (an insert would leave 1 mm webs in the "
+                            "8 mm skirt). 18 screws at ~1.1 N m (Shigley, chamber-construction.md: separation factor >= 4 with the stiffest O-ring "
+                            "and +50 mbar); the screws pull the pad's top face onto the frame metal to metal, so the O-ring squeeze is the groove "
+                            "depth and the 1.5 mm crevice at the floor's edge stays closed. Two dowels make it go back in the same place.")
+
     # ---------------- 2. build module flange: 2 captive M6 screws, inserts, a dowel and a diamond pin ----------------
     _KEY[0] = "module_flange"
     cap, ret, ins6 = "95966A705", "91065A610", find("insert", 6, 12)
     zfl = zf - MP.FLANGE_T
     items = [((s * MP.SCREW_X, 0.0, zfl), Z) for s in (-1, 1)]
     cut_parts(parts, f"Build module {module}", [hole((s * MP.SCREW_X, 0, zf), Z, -1.0, 0.0, 8.6) for s in (-1, 1)])   # retainer recess
-    cut_parts(parts, "Process chamber body", [hole(p, n, MP.FLANGE_T - 0.01, MP.FLANGE_T + 12.0, insert_od(ins6)) for p, n in items] +
+    cut_parts(parts, "Chamber floor plate", [hole(p, n, MP.FLANGE_T - 0.01, MP.FLANGE_T + 12.0, insert_od(ins6)) for p, n in items] +
               [hole(p, n, MP.FLANGE_T + 12.0 - 0.01, MP.FLANGE_T + 13.5, 6.0) for p, n in items])
     add_fasteners(h, add, "module_flange", "Captive M6 panel screws on the module flange (knurled, 18-8)", cap, items, 4, "B2",
                   group="module", explode=(0, -320, -60))
@@ -288,17 +328,26 @@ def add_joints(h, parts, add, module="M50"):
     add_fasteners(h, add, f"striker_{key}", f"Striker screws {key}, M3 x 10 316 flat head (flush on the magnet face)", fh, items, 4, "B2",
                   explode=(0, 0, 110), section=True, **tg)
 
-    # ---------------- 6. recoater rail: 5 x M4 x 16 into M4 x 6 inserts in the back wall ----------------
+    # ---------------- 6. recoater rail: 4 x M4 x 16 from inside into M4 holes tapped THROUGH the back wall from outside ----------------
+    # A hole in the back wall's inside face could only be drilled through the door opening, 206 mm from the front face (a long drill
+    # and tap: what the machinist objected to). Tapped through from outside instead (standard drill and tap, in the same back-face
+    # setup as the inlet slot); the rail screws go in from inside, and each hole's outer end is closed by an M4 x 10 plug screw on a
+    # bonded seal washer: 4 small extra face seals (chamber-construction.md). Rarely taken apart, so plain 6061 threads, no inserts.
     _KEY[0] = "rail"
-    xs = [-135.0 + x for x in h.rail_hole_x(270.0)]
+    xs = [-130.0 + x for x in h.rail_hole_x(260.0) if x <= 255.0]       # 260 mm rail (lpbf_low: clears the frame's R10 corners): x -110, -50, 10, 70
+    zr_ = P["rc_rail_z"]
     yb = iy - (15.0 - h.RAIL_HOLES["cb_h"])
-    items = [((x, yb, P["rc_rail_z"]), (0.0, 1.0, 0.0)) for x in xs]
+    items = [((x, yb, zr_), (0.0, 1.0, 0.0)) for x in xs]
     ins4 = find("insert", 4, 6)
-    cut_parts(parts, "Process chamber body", [hole(p, n, iy - yb - 0.01, iy - yb + 6.0, insert_od(ins4)) for p, n in items] +
-              [hole(p, n, iy - yb + 5.99, iy - yb + 7.5, 4.0) for p, n in items])
-    add_fasteners(h, add, "rail", "Recoater rail screws, M4 x 16 316", pn4, items, 6, "M1", explode=(0, 0, 220))
-    add_fasteners(h, add, "rail", "Recoater rail helical inserts, M4 x 6 18-8, in the back wall", ins4,
-                  [((x, iy, P["rc_rail_z"]), (0.0, 1.0, 0.0)) for x in xs], 5, "M1", explode=(0, 0, 260))
+    cut_parts(parts, "Process chamber body", [hole((x, iy, zr_), (0.0, 1.0, 0.0), -0.01, P["wall"] + 0.01, 4.0) for x in xs])
+    add_fasteners(h, add, "rail", "Recoater rail screws, M4 x 16 316, into M4 holes tapped through the back wall", pn4, items, 6, "M1", explode=(0, 0, 220))
+    tw_ = 1.5                                                  # bonded washer: 316 ring with an FKM lip, 1.5 thick
+    add_fasteners(h, add, "rail_plugs", "Rail-hole plug screws, M4 x 10 316, on bonded seal washers (outer face of the back wall)", find("shcs", 4, 10),
+                  [((x, cy + tw_, zr_), (0.0, -1.0, 0.0)) for x in xs], 5, "M1", explode=(0, 200, 0))
+    add("Rail-hole bonded seal washers (4 x M4, 316 ring + FKM lip, Dowty type; seal the through-tapped rail holes)",
+        h.comp([h.tube(4.75, 2.15, (x, cy, zr_), "y", tw_) for x in xs]), C["black"], 5, (0, 190, 0), mat="fkm", bom="M1", tags=("rail_plugs",))
+    JOINT_NOTES["rail"] = ("Rail screws from inside into M4 holes tapped through the back wall from outside; M4 x 10 plug screws on bonded seal washers "
+                           "close the holes' outer ends (the screw tips are 1.2 mm apart). No tool reaches the inside face of the back wall.")
 
     # ---------------- 7. recoater blade: 2 x M3 x 8 through the blade into the holder, heads above the powder heap ----------------
     xc = P["x_park"]
@@ -335,8 +384,8 @@ def add_joints(h, parts, add, module="M50"):
     # ---------------- 9b. seals: screws that set the face O-rings' squeeze metal-to-metal (seals.md item 10) ----------------
     _KEY[0] = "plenum_in"
     yb_ = cy + 6.0
-    items = [((x, yb_, z), (0.0, -1.0, 0.0)) for x, z in ((-69.0, 11.0), (69.0, 11.0), (-55.0, -12.0), (-20.0, -12.0), (20.0, -12.0), (55.0, -12.0),
-                                                        (-40.0, 34.0), (40.0, 34.0), (0.0, 34.0))]
+    # 7 screws (was 9): the frame ends at z -3.9, so the four below the old floor line moved to the sides, outside the O-ring loop
+    items = [((x, yb_, z), (0.0, -1.0, 0.0)) for x, z in ((-71.0, 3.0), (71.0, 3.0), (-71.0, 22.0), (71.0, 22.0), (-40.0, 34.0), (40.0, 34.0), (0.0, 34.0))]
     cut_parts(parts, "Cross-flow inlet plenum", [hole(p, n, -0.01, 6.01, CLEAR[4]) for p, n in items])
     cut_parts(parts, "Process chamber body", [hole(p, n, 6.0, 12.0, insert_od(ins4)) for p, n in items] + [hole(p, n, 11.99, 17.5, 4.0) for p, n in items])
     add_fasteners(h, add, "plenum_in", "Inlet-plenum screws, M4 x 16 316 (clear of the Z flange's screws)", pn4, items, 5, "G4", explode=(0, 180, 0))
@@ -348,16 +397,16 @@ def add_joints(h, parts, add, module="M50"):
     pn412 = find("shcs", 4, 12)
     items = [((x, y, zf - 6.0), Z) for x in (-50.0, 0.0, 45.0) for y in (y0o - 7.0, y1o + 7.0)]
     cut_parts(parts, "Cross-flow outlet plenum", [hole(p, n, -10.01, 0.0, CBORE[4][0]) for p, n in items] + [hole(p, n, -0.01, 6.01, CLEAR[4]) for p, n in items])
-    cut_parts(parts, "Process chamber body", [hole(p, n, 6.0, 12.0, insert_od(ins4)) for p, n in items] + [hole(p, n, 11.99, 13.5, 4.0) for p, n in items])
+    cut_parts(parts, "Chamber floor plate", [hole(p, n, 6.0, 12.0, insert_od(ins4)) for p, n in items] + [hole(p, n, 11.99, 13.5, 4.0) for p, n in items])
     add_fasteners(h, add, "plenum_out", "Outlet-plenum screws, M4 x 12 316, counterbored", pn412, items, 5, "G4", explode=(0, 0, -180))
     add_fasteners(h, add, "plenum_out", "Outlet-plenum helical inserts, M4 x 6 18-8, in the floor", ins4, [((p[0], p[1], zf), Z) for p, n in items], 5, "G4", explode=(0, 0, -40))
-    JOINT_NOTES["plenum_out"] = "316L plenum under the 6061 floor: bolted over an FKM face O-ring; counterbored so the heads stay clear of the module's path."
+    JOINT_NOTES["plenum_out"] = "316L plenum under the 6061 floor plate: bolted over an FKM face O-ring; counterbored so the heads stay clear of the module's path."
 
     _KEY[0] = "funnel"
     ox = (P["ovf_x0"] + P["ovf_x1"]) / 2
     items = [((x, y, zf - 6.0), Z) for x in (ox - 17.0, ox + 17.0) for y in (-40.0, 40.0)]
     cut_parts(parts, "Overflow funnel block", [hole(p, n, -16.01, 0.0, CBORE[4][0]) for p, n in items] + [hole(p, n, -0.01, 6.01, CLEAR[4]) for p, n in items])
-    cut_parts(parts, "Process chamber body", [hole(p, n, 6.0, 12.0, insert_od(ins4)) for p, n in items] + [hole(p, n, 11.99, 13.5, 4.0) for p, n in items])
+    cut_parts(parts, "Chamber floor plate", [hole(p, n, 6.0, 12.0, insert_od(ins4)) for p, n in items] + [hole(p, n, 11.99, 13.5, 4.0) for p, n in items])
     add_fasteners(h, add, "funnel", "Overflow-funnel screws, M4 x 12 316, counterbored", pn412, items, 4, "M4", explode=(0, 0, -200))
     add_fasteners(h, add, "funnel", "Overflow-funnel helical inserts, M4 x 6 18-8, in the floor", ins4, [((p[0], p[1], zf), Z) for p, n in items], 4, "M4", explode=(0, 0, -40))
 
@@ -395,7 +444,7 @@ def add_joints(h, parts, add, module="M50"):
     items = [((x, y, zf - 4.5), Z) for x, y in ((-33.0, 70.0), (-33.0, 100.0), (40.0, 102.0), (94.0, 102.0))]
     pn512 = find("shcs", 5, 12)
     cut_parts(parts, "Z mounting flange", [hole(p, n, -5.51, 0.0, CBORE[5][0]) for p, n in items] + [hole(p, n, -0.01, 4.51, CLEAR[5]) for p, n in items])
-    cut_parts(parts, "Process chamber body", [hole(p, n, 4.5, 12.0, insert_od(ins)) for p, n in items] + [hole(p, n, 11.99, 13.5, 5.0) for p, n in items])
+    cut_parts(parts, "Chamber floor plate", [hole(p, n, 4.5, 12.0, insert_od(ins)) for p, n in items] + [hole(p, n, 11.99, 13.5, 5.0) for p, n in items])
     add_fasteners(h, add, "zmount", "Z-flange screws, M5 x 12 316, counterbored", pn512, items, 3, "M3", explode=(0, 120, 0))
     add_fasteners(h, add, "zmount", "Z-flange helical inserts, M5 x 7.5 18-8, in the floor", ins, [((p[0], p[1], zf), Z) for p, n in items], 3, "M3",
                   explode=(0, 0, -40))
@@ -419,7 +468,7 @@ def add_joints(h, parts, add, module="M50"):
                 leg_taps.append(hole(q, Z, 14.99, 27.0, 6.0))
     cut_parts(parts, "Chamber legs", cb_tools + leg_taps)
     cut_parts(parts, "Base plate, process", base_tools)
-    cut_parts(parts, "Process chamber body", [hole(p, n, 15.0, 24.0, insert_od(ins69)) for p, n in tops] + [hole(p, n, 23.99, 26.0, 6.0) for p, n in tops])
+    cut_parts(parts, "Chamber floor plate", [hole(p, n, 15.0, 24.0, insert_od(ins69)) for p, n in tops] + [hole(p, n, 23.99, 26.0, 6.0) for p, n in tops])
     add_fasteners(h, add, "legs", "Leg-to-floor screws, M6 x 25 316, up each leg's Ø11 bore", pn625, tops, 3, "G1", explode=(0, 0, -120))
     add_fasteners(h, add, "legs", "Leg helical inserts, M6 x 9 18-8, in the floor", ins69, top_ins, 3, "G1", explode=(0, 0, -40))
     add_fasteners(h, add, "legs_base", "Base-plate-to-leg screws, M6 x 25 316", pn625, bots, 3, "G1", explode=(0, 0, -150))
