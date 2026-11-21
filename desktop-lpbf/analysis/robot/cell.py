@@ -198,15 +198,24 @@ class Body:
             import trimesh
             m = trimesh.Trimesh(self.v, self.f, process=True)
             try:
-                trimesh.repair.fix_normals(m)
-            except Exception:  # noqa: BLE001
-                pass
-            vol = m.volume if m.is_volume else 1.0
-            sgn = 1.0 if vol >= 0 else -1.0
-            v2 = np.asarray(m.vertices) - sgn * TOUCH_MM * np.asarray(m.vertex_normals)
+                pieces = m.split(only_watertight=False)          # each connected piece by the sign of its own volume (byu-vcl
+            except Exception:  # noqa: BLE001                    # collide._eroded): a held composite of several parts shrinks right
+                pieces = [m]
+            vs, fs, n = [], [], 0
+            for pc in (pieces if len(pieces) else [m]):
+                try:
+                    trimesh.repair.fix_normals(pc)
+                except Exception:  # noqa: BLE001
+                    pass
+                vol = pc.volume if pc.is_volume else 1.0
+                sgn = 1.0 if vol >= 0 else -1.0
+                vs.append(np.asarray(pc.vertices) - sgn * TOUCH_MM * np.asarray(pc.vertex_normals))
+                fs.append(np.asarray(pc.faces) + n)
+                n += len(pc.vertices)
+            v2, f2 = np.vstack(vs), np.vstack(fs)
             g = fcl.BVHModel()
-            g.beginModel(len(v2), len(m.faces))
-            g.addSubModel(np.ascontiguousarray(v2, float), np.ascontiguousarray(m.faces, np.int32))
+            g.beginModel(len(v2), len(f2))
+            g.addSubModel(np.ascontiguousarray(v2, float), np.ascontiguousarray(f2, np.int32))
             g.endModel()
             self._ero = fcl.CollisionObject(g, fcl.Transform())
         self._ero.setTransform(fcl.Transform(self.M[:3, :3], self.M[:3, 3]))
@@ -540,12 +549,13 @@ def mir_deck_bodies(x0, y0):
             stand.append(box_mesh(sx + dx - 3, sx + dx + 3, y0 + dy, y0 + dy + 4, top + 82, top + 112))
         stand.append(box_mesh(sx + dx - 9, sx + dx + 9, y0 - 12, y0 + 12, top + 76, top + 82))
     out.append(("MiR250 cap stand (forks for the plate fingers)", merge(stand)))
-    # wand cradle: two V-blocks along y on the cabinet's left part, 300 mm apart
+    # wand cradle: two U-blocks on the cabinet's left part, under the wand's tube behind its collar and ahead of it (eoat.WAND: the
+    # wand points at the VLM, its axis 39 mm over the cabinet top)
     wx = x0 - 260.0
     cr = []
-    for yy in (y0 - 150.0, y0 + 150.0):
-        cr += [box_mesh(wx - 35, wx - 25, yy - 15, yy + 15, top, top + 60), box_mesh(wx + 25, wx + 35, yy - 15, yy + 15, top, top + 60),
-               box_mesh(wx - 35, wx + 35, yy - 15, yy + 15, top, top + 20)]
+    for yy in (y0 - 62.0, y0 + 125.0):          # the wand's axis 75 mm over the cabinet top, so its bent crevice tool clears the front edge
+        cr += [box_mesh(wx - 35, wx - 25, yy - 15, yy + 15, top, top + 96), box_mesh(wx + 25, wx + 35, yy - 15, yy + 15, top, top + 96),
+               box_mesh(wx - 35, wx + 35, yy - 15, yy + 15, top, top + 56)]
     out.append(("MiR250 wand cradle", merge(cr)))
     return out
 
@@ -634,6 +644,9 @@ class Checker:
         a.place(q, close)
         out = []
         robot = a.robot
+        own = {b.name for b in a.links.values()} | {b.name for b in a.grip.values()} | {b.name for b in a.caps.values()}
+        for nm in [n for n in robot.bodies if n not in own and (a.held is None or n != a.held[0].name)]:
+            robot.remove(nm)          # a part held earlier and since let go must not ride along at its old pose
         if a.held is not None and a.held[0].name not in robot.bodies:
             robot.add(a.held[0])
         for x, y in group_hits(robot, self.sc.world):

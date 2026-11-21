@@ -1,0 +1,268 @@
+{
+ "note": "byu-vcl PR 318-style attempt at closing the chamber door with the robot (lift lug on the door's left top corner, grasped at 95 deg from the front and lifted along the door's arc to 8 deg); run 2026-11-20 23:30 UTC on the model of that time; every MiR position and grasp tilt tried failed, so the door got an actuator (cad/automation.py)",
+ "variants_tried": [
+  {
+   "variant": {
+    "arm_x": -450.0,
+    "tilt": -45.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": null
+  },
+  {
+   "variant": {
+    "arm_x": -300.0,
+    "tilt": -45.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": null
+  },
+  {
+   "variant": {
+    "arm_x": 0.0,
+    "tilt": -45.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": null
+  },
+  {
+   "variant": {
+    "arm_x": 300.0,
+    "tilt": -45.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": null
+  },
+  {
+   "variant": {
+    "arm_x": -450.0,
+    "tilt": -30.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": 133
+  },
+  {
+   "variant": {
+    "arm_x": -300.0,
+    "tilt": -30.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": null
+  },
+  {
+   "variant": {
+    "arm_x": 0.0,
+    "tilt": -30.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": 133
+  },
+  {
+   "variant": {
+    "arm_x": 300.0,
+    "tilt": -30.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": 133
+  },
+  {
+   "variant": {
+    "arm_x": -450.0,
+    "tilt": -60.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": null
+  },
+  {
+   "variant": {
+    "arm_x": -300.0,
+    "tilt": -60.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": null
+  },
+  {
+   "variant": {
+    "arm_x": 0.0,
+    "tilt": -60.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": null
+  },
+  {
+   "variant": {
+    "arm_x": 300.0,
+    "tilt": -60.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": null
+  },
+  {
+   "variant": {
+    "arm_x": -450.0,
+    "tilt": 20.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": 177
+  },
+  {
+   "variant": {
+    "arm_x": -300.0,
+    "tilt": 20.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": null
+  },
+  {
+   "variant": {
+    "arm_x": 0.0,
+    "tilt": 20.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": 176
+  },
+  {
+   "variant": {
+    "arm_x": 300.0,
+    "tilt": 20.0
+   },
+   "ok": false,
+   "failed_step": null,
+   "bad_frames": 177
+  }
+ ],
+ "best": {
+  "variant": {
+   "arm_x": -450.0,
+   "tilt": -30.0
+  },
+  "failed_step": null,
+  "frames": 322,
+  "audit": {
+   "frames_in_collision": 133,
+   "first_bad": [
+    {
+     "frame": 189,
+     "label": "close on the lug (15 mm)",
+     "arm": [
+      [
+       "ur/gr/left_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ],
+      [
+       "ur/gr/right_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ]
+     ],
+     "movers": []
+    },
+    {
+     "frame": 190,
+     "label": "lift the door on its lug",
+     "arm": [
+      [
+       "ur/gr/left_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ],
+      [
+       "ur/gr/right_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ]
+     ],
+     "movers": []
+    },
+    {
+     "frame": 191,
+     "label": "lift the door on its lug",
+     "arm": [
+      [
+       "ur/gr/left_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ],
+      [
+       "ur/gr/right_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ]
+     ],
+     "movers": []
+    },
+    {
+     "frame": 192,
+     "label": "lift the door on its lug",
+     "arm": [
+      [
+       "ur/gr/left_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ],
+      [
+       "ur/gr/right_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ]
+     ],
+     "movers": []
+    },
+    {
+     "frame": 193,
+     "label": "lift the door on its lug",
+     "arm": [
+      [
+       "ur/gr/left_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ],
+      [
+       "ur/gr/right_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ]
+     ],
+     "movers": []
+    },
+    {
+     "frame": 194,
+     "label": "lift the door on its lug",
+     "arm": [
+      [
+       "ur/gr/left_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ],
+      [
+       "ur/gr/right_finger_tip",
+       "Door lift lug for the robot (6061, 26 x 18 x 15 mm, the door plate carried on past its left top corner)",
+       3.0
+      ]
+     ],
+     "movers": []
+    }
+   ],
+   "min_clearance_pair": [
+    "ur/wrist1",
+    "Guard frame (20 mm T-slot)"
+   ]
+  }
+ }
+}

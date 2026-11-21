@@ -1,0 +1,154 @@
+[
+ {
+  "case": "guard door slide",
+  "arm_x": 450.0,
+  "force_N": [
+   30.0,
+   0,
+   0
+  ],
+  "payload_kg": 0.0,
+  "branches": 8,
+  "tips_at_N": 741,
+  "tips_about": "-x",
+  "slides_at_N": 882,
+  "factor": 24.72,
+  "cog_margin_mm": 203.0,
+  "mass_kg": 299.8,
+  "peak_torque_pct": 27.8,
+  "arm_force_capacity_N": 217.0
+ },
+ {
+  "case": "chamber door pull to 20 deg",
+  "arm_x": -450.0,
+  "force_N": [
+   0,
+   -15.0,
+   0
+  ],
+  "payload_kg": 0.0,
+  "branches": 8,
+  "tips_at_N": 476,
+  "tips_about": "+y",
+  "slides_at_N": 882,
+  "factor": 31.7,
+  "cog_margin_mm": 187.0,
+  "mass_kg": 299.8,
+  "peak_torque_pct": 27.8,
+  "arm_force_capacity_N": 407.0
+ },
+ {
+  "case": "drawer pull",
+  "arm_x": 0.0,
+  "force_N": [
+   0,
+   -20.0,
+   0
+  ],
+  "payload_kg": 0.0,
+  "branches": 8,
+  "tips_at_N": 467,
+  "tips_about": "+y",
+  "slides_at_N": 882,
+  "factor": 23.33,
+  "cog_margin_mm": 190.0,
+  "mass_kg": 299.8,
+  "peak_torque_pct": 21.3,
+  "arm_force_capacity_N": 622.0
+ },
+ {
+  "case": "reservoir pull off the dock",
+  "arm_x": -390.0,
+  "force_N": [
+   0,
+   -40.0,
+   0
+  ],
+  "payload_kg": 0.37,
+  "branches": 8,
+  "tips_at_N": 401,
+  "tips_about": "+y",
+  "slides_at_N": 884,
+  "factor": 10.04,
+  "cog_margin_mm": 180.0,
+  "mass_kg": 300.3,
+  "peak_torque_pct": 32.7,
+  "arm_force_capacity_N": 339.0
+ },
+ {
+  "case": "blade cartridge pull",
+  "arm_x": 0.0,
+  "force_N": [
+   0,
+   -40.0,
+   0
+  ],
+  "payload_kg": 0.15,
+  "branches": 8,
+  "tips_at_N": 495,
+  "tips_about": "+y",
+  "slides_at_N": 883,
+  "factor": 12.36,
+  "cog_margin_mm": 183.0,
+  "mass_kg": 300.1,
+  "peak_torque_pct": 25.1,
+  "arm_force_capacity_N": 354.0
+ },
+ {
+  "case": "module out of its port (O-ring 132 N less 26 N weight)",
+  "arm_x": 0.0,
+  "force_N": [
+   0,
+   0,
+   -106.0
+  ],
+  "payload_kg": 2.7,
+  "branches": 8,
+  "tips_at_N": 730,
+  "tips_about": "-y",
+  "slides_at_N": null,
+  "factor": 6.88,
+  "cog_margin_mm": 184.0,
+  "mass_kg": 302.5,
+  "peak_torque_pct": 29.7,
+  "arm_force_capacity_N": 167.0
+ },
+ {
+  "case": "module into its port (132 N plus 26 N)",
+  "arm_x": 0.0,
+  "force_N": [
+   0,
+   0,
+   158.0
+  ],
+  "payload_kg": 2.7,
+  "branches": 8,
+  "tips_at_N": 819,
+  "tips_about": "+y",
+  "slides_at_N": null,
+  "factor": 5.18,
+  "cog_margin_mm": 174.0,
+  "mass_kg": 302.5,
+  "peak_torque_pct": 63.9,
+  "arm_force_capacity_N": 537.0
+ },
+ {
+  "case": "module carried at the guard's front (no force)",
+  "arm_x": 0.0,
+  "force_N": [
+   0,
+   0,
+   0
+  ],
+  "payload_kg": 2.7,
+  "branches": 8,
+  "tips_at_N": null,
+  "tips_about": null,
+  "slides_at_N": null,
+  "factor": 1.91,
+  "cog_margin_mm": 191.0,
+  "mass_kg": 302.5,
+  "peak_torque_pct": 28.1,
+  "arm_force_capacity_N": 407.0
+ }
+]

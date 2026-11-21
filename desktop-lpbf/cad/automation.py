@@ -9,8 +9,10 @@ the liners' screw slots, the overflow path) are not drawn here: robot-ops.md lis
 
 Drawn here (every part tagged "automation"):
   1. a bar handle on the sliding laser-guard door (it had none);
-  2. a rotary damper on the chamber door's hinge axis, keyed to a disc on the door, so the door lowers itself slowly once the
-     robot has pulled it past its balance point (11.6 deg) instead of free-falling to its stop;
+  2. a drive on the chamber door's hinge axis, keyed to a disc on the door: a small pneumatic rotary actuator that opens the door
+     to 95 deg and closes it, at a speed its flow controls set (the robot can pull the door open, but no arm path lifts it shut
+     from 95 deg past the guard's frame: analysis/robot/ops.py). A one-way damper in the same place is the passive alternative,
+     if a person closes the door;
   3. a compact air cylinder under each draw latch that throws the latch's lever, so the over-centre draw latches (3.56 kN
      rated, set to >= 0.4 kN) close and open without a hand; the robot only lifts the door to its balance point;
   4. wing heads on the cover-slide drawer's two quarter-turn latch studs, so the gripper's fingers drive the wings and the
@@ -46,18 +48,19 @@ def add_features(add, M, module):
 
     # ---------------------------------------------------------------- 2. door damper
     hy, hz = M.DOOR_HINGE
-    # McMaster 6597K124 one-way rotary damper (2.0 +/- 0.4 N m, 47 x 47 x 42 mm; the door's gravity torque peaks at ~1.1 N m)
-    # outboard of the chamber's left side face, coaxial with the hinge; a Ø6 shaft runs in from it to a disc screwed to the door's
+    # a rotary actuator (or the McMaster 6597K124 one-way damper, 2.0 +/- 0.4 N m, 47 x 47 x 42 mm; the door's gravity torque peaks
+    # at 0.94 N m) outboard of the chamber's left side face, coaxial with the hinge; a Ø6 shaft runs in from it to a disc screwed to the door's
     # left edge (shaft and disc turn with the door about their own axis, so they sweep nothing). Its bracket is a 4 mm plate behind it,
     # flanged onto the chamber's left side face, below the left latch actuator (z <= 4)
     dmp = box(-200.0, -158.0, hy - 23.5, hy + 23.5, hz - 23.5, hz + 23.5)
-    add("Door damper: one-way rotary damper on the hinge axis (McMaster 6597K124, 2.0 N m, 47 x 47 x 42 mm)", dmp, C["black"], 8, (-120, -240, 0),
-        mat="misc", mass_kg=0.12, bom="RA2", mcm="6597K124", tags=tag)
+    add("Door drive: pneumatic rotary actuator on the hinge axis, SMC CRQ2 size 20 class (~1.8 N m at 0.5 MPa, stroke set to 95 deg, "
+        "meter-out flow controls; envelope 47 x 47 x 42 mm). Passive alternative: McMaster 6597K124 one-way damper, same envelope",
+        dmp, C["black"], 8, (-120, -240, 0), mat="misc", mass_kg=0.3, bom="RA2", tags=tag)
     bracket = fuse([box(-200.0, -156.0, hy + 23.5, hy + 27.5, -32.0, 4.0), box(-160.0, -156.0, hy + 27.5, -80.0, -18.0, 4.0)])
-    add("Door damper bracket (6061, 4 mm, flanged onto the chamber's left side face)", bracket, C["alu_dark"], 8, (-120, -240, 0), mat="al6061",
+    add("Door drive bracket (6061, 4 mm, flanged onto the chamber's left side face)", bracket, C["alu_dark"], 8, (-120, -240, 0), mat="al6061",
         bom="RA2", tags=tag)
     disc = fuse([cyl(8.0, (-128.0, hy, hz), "x", 3.9), cyl(3.0, (-158.0, hy, hz), "x", 30.0)])
-    add("Door damper shaft and drive disc (Ø6 D-shaft keyed into a 6061 disc screwed to the door's left edge)", disc, C["alu"], 8, (0, -240, 0),
+    add("Door drive shaft and disc (Ø6 D-shaft keyed into a 6061 disc screwed to the door's left edge)", disc, C["alu"], 8, (0, -240, 0),
         group="door", mat="al6061", bom="RA2", tags=tag)
 
     # ---------------------------------------------------------------- 3. latch actuators
@@ -83,10 +86,11 @@ def add_features(add, M, module):
             group="drawer", mat="ss304", mass_kg=0.005, bom="RA4", tags=tag)
 
     # ---------------------------------------------------------------- 5. blade-cartridge fin
-    # the holder spans x xc-9..xc+9 (xc = park -106), y -53..61, z 3..34: a 4 mm fin on its front end, z 18..34, reaching 10 mm
-    # forward; the fin's front face (y -63) stays 32 mm inside the chamber's front wall (y -95) at park
+    # the holder spans x xc-9..xc+9 (xc = park -106), y -53..61, z 3..34: a 4 mm fin on its front end, z 18..34, reaching 20 mm
+    # forward, so the lips grip it without the blades' tips reaching the holder; its front face (y -73) stays 22 mm inside the
+    # chamber's front wall (y -95)
     xc = P["x_park"]
-    fin = box(xc - 2.0, xc + 2.0, -P["dose_y"] - 3.0 - 10.0, -P["dose_y"] - 3.0, 18.0, 34.0)
+    fin = box(xc - 2.0, xc + 2.0, -P["dose_y"] - 3.0 - 20.0, -P["dose_y"] - 3.0, 18.0, 34.0)
     add("Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)", fin, C["anod"], 6, (0, 0, 220), group="recoater", mat="al6061",
         bom="RA5", tags=tag)
 
