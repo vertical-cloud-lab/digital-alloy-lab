@@ -159,8 +159,11 @@ def add_build_module(h, add, key, step=4):
         blk = blk.cut(h.cyl(0.6, (x, y, zb0 - 1), "z", top - zb0 + 1))
         tcs.append(h.cyl(0.508, (x, y, zk0 - 1.0), "z", top - zk0 + 1.0))
     xt, yt = polar(*L["tco"])
-    blk = blk.cut(h.cyl(2.1, (xt, yt, zb0 - 1), "z", 11.0))
-    tcobj.append(h.cyl(2.0, (xt, yt, zb0), "z", 10.0))
+    # 1 mm lower than first drawn: its top was level with the bayonet lugs' underside, and the robot's plate twist hit it
+    # (robot-ops.md). The pocket now stops 0.6 mm below the lug channel; the 10 mm body stands 1 mm proud of the block's
+    # underside, 1.5 mm above the upper radiation shield.
+    blk = blk.cut(h.cyl(2.1, (xt, yt, zb0 - 1), "z", 10.1))
+    tcobj.append(h.cyl(2.0, (xt, yt, zb0 - 1.0), "z", 10.0))
     add(f"Plate rim wiper {lab} (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
         h.tube(R, Rp - 1.1, (0, 0, -2.9), "z", 1.4), C["white"], step, (0, 0, 300), mat="ptfe", bom="B2", section=True, **pg)
     add(f"Heater block {lab} (6061-T6, bayonet socket)", blk, C["alu"], step, (0, 0, 250), mat="al6061", bom="H1",
