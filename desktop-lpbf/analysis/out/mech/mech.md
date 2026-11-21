@@ -25,8 +25,7 @@ Critical speed 14418 rpm vs 900 rpm at 150 mm/s (margin 13× at 80 %); buckling 
 
 Lid: the O-ring needs 205 N per screw and +20 mbar adds 6 N. Recommend 2500 N preload (2.5 N·m, K = 0.2); A4-70's 75 % of proof is 4792 N (4.8 N·m). Window ring: 6 × M3 at 0.04 N·m to a metal stop. 316 screws in 18-8 helical inserts gall; the lid and window screws sit outside the seal, so use anti-seize there, or silver-plated / Nitronic 60 screws.
 
-- Door, 3.53 mm cord: each latch 801 N (rating 3558 N, SF 4.4); each hinge 613 N, Ø5 pin in double shear 16 MPa; squeeze lost 26 µm
-- Door, 1.78 mm cord: each latch 410 N (rating 3558 N, SF 8.7); each hinge 314 N, Ø5 pin in double shear 8 MPa; squeeze lost 14 µm
+- Door, 1.78 mm cord: each latch 724 N (rating 3558 N, SF 4.9); each hinge 0 N, Ø5 pin in double shear 0 MPa; squeeze lost 34 µm
 
 ## D. Chamber warm-up over a 10 h build (lumped; natural convection + radiation + argon loop)
 

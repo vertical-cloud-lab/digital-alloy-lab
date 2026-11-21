@@ -1,6 +1,6 @@
 {
  "geometry": {
-  "lid_path": 978.21413444641,
+  "lid_path": 955.1902574037721,
   "glands_model": {
    "spigot": {
     "kind": "radial",
@@ -68,6 +68,18 @@
     "closure": "overflow funnel block (316L) under the floor",
     "ring_id": 82.27,
     "path": 270.8536672663054
+   },
+   "floor": {
+    "kind": "face",
+    "ring": "cord",
+    "cs": 3.53,
+    "depth": 2.65,
+    "width": 4.6,
+    "inner_perimeter": 932.2566310325652,
+    "groove_mat": "al",
+    "T": 60.0,
+    "closure": "chamber floor plate on the frame (18 x M4)",
+    "path": 946.7079572390783
    },
    "inlet_plenum": {
     "kind": "face",
@@ -429,7 +441,7 @@
   "slot_w": 8.0,
   "rod_od": 15.875,
   "area_walls_cm2": 2192.0,
-  "n_parts": 207
+  "n_parts": 224
  },
  "sources": {
   "1": "Parker O-Ring Handbook ORD 5700: Design Chart 4-3 (face glands), Design Table 4-2 (static radial glands), \u00a73.11 vacuum sealing and Table 3-20 (finish), \u00a73.12.1 leak-rate approximation and Fig. 3-11 (Q), Table 3-24 (permeability), Figs. 2-4..2-6 (compression load). https://nfc.arizona.edu/sites/default/files/2022-02/parker_o-ring_handbook.pdf",
@@ -639,7 +651,7 @@
    "kind": "face",
    "ring": "3.53 mm cord",
    "closure": "chamber lid (20 x M5)",
-   "path": 978.21413444641,
+   "path": 955.1902574037721,
    "parker": {
     "depth": [
      2.57,
@@ -815,6 +827,44 @@
     ]
    },
    "verdict": "fill > 90 % at worst tolerance, warm"
+  },
+  "floor": {
+   "cs": 3.53,
+   "depth": 2.65,
+   "width": 4.6,
+   "stretch_pct": 0.0,
+   "squeeze_nom": 24.929178470254957,
+   "squeeze_min": 21.236872812135363,
+   "squeeze_max": 28.414096916299552,
+   "fill_nom": 80.2852171803057,
+   "fill_max_cold": 87.57836164156399,
+   "fill_max_hot": 88.97836153373564,
+   "T_service": 60.0,
+   "kind": "face",
+   "ring": "cord",
+   "closure": "chamber floor plate on the frame (18 x M4)",
+   "path": 946.7079572390783,
+   "stretch_signed_pct": 0.0,
+   "dovetail": false,
+   "parker": {
+    "depth": [
+     2.57,
+     2.72
+    ],
+    "w_gas": [
+     4.01,
+     4.17
+    ],
+    "w_liq": [
+     4.5,
+     4.75
+    ],
+    "sq": [
+     20,
+     30
+    ]
+   },
+   "verdict": "OK"
   },
   "inlet_plenum": {
    "cs": 1.78,
@@ -1667,13 +1717,13 @@
   "door_overpressure_20mbar_N": 48.256,
   "lid_3p53_25": {
    "cs": 3.53,
-   "path_mm": 978.21413444641,
+   "path_mm": 955.1902574037721,
    "squeeze": 25.0,
    "N_per_mm": 4.194003078156231,
-   "total_N": 4102.6330909641765,
+   "total_N": 4006.0708797762627,
    "parker_range_N": [
-    2192.6785360718777,
-    9421.66558468385
+    2141.070243745249,
+    9199.911203592868
    ]
   },
   "lid_vacuum_force_N": 5906.6760269999995,
@@ -1739,8 +1789,8 @@
    {
     "seal": "lid",
     "T_C": 50.0,
-    "O2_sccs": 9.614505772749397e-07,
-    "H2O_sccs": 8.660370779375561e-06
+    "O2_sccs": 9.3856177219538e-07,
+    "H2O_sccs": 8.45419737496857e-06
    },
    {
     "seal": "spigot (2-238)",
@@ -1771,6 +1821,12 @@
     "T_C": 50.0,
     "O2_sccs": 2.637054474595628e-07,
     "H2O_sccs": 2.3753555362293734e-06
+   },
+   {
+    "seal": "floor (cord)",
+    "T_C": 60.0,
+    "O2_sccs": 1.4085131312969088e-06,
+    "H2O_sccs": 1.2687335421051254e-05
    },
    {
     "seal": "inlet_plenum (2-044)",
@@ -1881,8 +1937,8 @@
     "H2O_sccs": 4.0475792413329724e-06
    }
   ],
-  "total_O2_sccs": 5.627738968545361e-06,
-  "total_H2O_sccs": 5.069247163518632e-05,
+  "total_O2_sccs": 7.01336329476271e-06,
+  "total_H2O_sccs": 6.317363365183058e-05,
   "Ea_He_kJ": 37.1421382251633,
   "Ea_N2_kJ": 58.29112969138964
  },
@@ -1938,13 +1994,13 @@
  },
  "budget": {
   "V_L": 11.262865037529748,
-  "O2_permeation_ppm_per_h": 1.7640007464165168,
-  "H2O_permeation_ppm_per_h": 15.889428827805096,
+  "O2_permeation_ppm_per_h": 2.1983212362902798,
+  "H2O_permeation_ppm_per_h": 19.80161793902053,
   "area_al_cm2": 4605.28,
-  "area_fkm_cm2": 17.756971415193178,
+  "area_fkm_cm2": 17.5267326447668,
   "q_al_mbarLs": 3.6833029439999996e-05,
-  "q_fkm_mbarLs": 2.3670042896452505e-05,
-  "H2O_outgassing_ppm_per_h_1h": 18.716542959783332,
+  "q_fkm_mbarLs": 2.3363134615474143e-05,
+  "H2O_outgassing_ppm_per_h_1h": 18.621601301387845,
   "powder_H2O_mg": [
    22.5,
    45.0
@@ -1955,17 +2011,17 @@
   ]
  },
  "makeup": {
-  "O2_in_sccm": 0.00033766433811272163,
-  "H2O_in_sccm": 0.006624261685909996,
-  "f_for_O2_10ppm_sccm": 37.51825979030241,
-  "f_for_H2O_minus40C_sccm": 52.57350544373013
+  "O2_in_sccm": 0.0004208017976857626,
+  "H2O_in_sccm": 0.007354957711513929,
+  "f_for_O2_10ppm_sccm": 46.75575529841807,
+  "f_for_H2O_minus40C_sccm": 58.37268025011055
  },
  "purge": {
   "S_pump_Ls": 1.4158499999999998,
   "S_eff_at_800mbar_Ls": 1.415665903743135,
   "S_eff_at_10mbar_Ls": 1.4012697266261072,
   "S_eff_at_1mbar_Ls": 1.2822350255492507,
-  "t_to_1mbar_s": 55.880979647974875,
+  "t_to_1mbar_s": 55.88097964797489,
   "tau_at_atm_s": 7.955877871855092,
   "cycles": [
    {
@@ -2031,7 +2087,7 @@
   "q_std_L_min": 26.69809153478593,
   "Cv": 0.13781575568560098,
   "t_to_100mbar_s": 58.609085539642564,
-  "t_total_to_1mbar_s": 96.06328327495267,
+  "t_total_to_1mbar_s": 96.06328327495265,
   "note": "metering valve with Cv >= this in parallel with the KF-25 valve; open the main valve below ~100 mbar. Back-fill through the same limit (the flowmeter-regulator 78595A5 set <= 25 L/min) and a sintered diffuser"
  },
  "reservoir_open_path": {
@@ -2044,7 +2100,7 @@
   "V_L": 11.262865037529748,
   "leak_budget_mbarLs": 0.0001,
   "rise_mbar_per_min_leak": 0.000532724131915547,
-  "rise_mbar_per_min_outgassing": 0.00032231446688660206,
+  "rise_mbar_per_min_outgassing": 0.0003206794924109832,
   "note": "isolate at <= 1 mbar after >= 1 h pumping; read a Pirani or capacitance gauge for 10 min"
  }
 }

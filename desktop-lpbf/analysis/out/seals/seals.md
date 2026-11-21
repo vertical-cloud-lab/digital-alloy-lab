@@ -41,6 +41,7 @@ Stretch is the ring's ID onto the groove's inner wall (face), the groove root (r
 | rod_M50 | hollow rod through the gland plate (M50) | 2-114 (9464K982) | 2.62 | 2.06 × 3.60 | 2.2 % | 21 (16–25) | 71 / 78 / 82 at 110 °C | OK |
 | hermetic_M50 | hermetic connector on the rod end (M50) | 2-014 (not confirmed) | 1.78 | 1.32 × 2.30 | 1.4 % | 25 (19–31) | 81 / 94 / 94 at 40 °C | **fill > 90 % at worst tolerance, warm** |
 | overflow_funnel | overflow funnel block (316L) under the floor | 2-042 (9464K849) | 1.78 | 1.32 × 2.30 | 2.0 % | 25 (19–31) | 81 / 93 / 94 at 50 °C | **fill > 90 % at worst tolerance, warm** |
+| floor | chamber floor plate on the frame (18 x M4) | cord | 3.53 | 2.65 × 4.60 | 0.0 % | 25 (21–28) | 80 / 88 / 89 at 60 °C | OK |
 | inlet_plenum | inlet plenum (316L) on the back wall (6061) | 2-044 (9464K865) | 1.78 | 1.32 × 2.30 | 2.0 % | 25 (19–31) | 81 / 93 / 94 at 45 °C | **fill > 90 % at worst tolerance, warm** |
 | outlet_plenum | outlet plenum (316L) under the floor (6061) | 2-044 (9464K865) | 1.78 | 1.32 × 2.30 | 2.0 % | 25 (19–31) | 81 / 93 / 94 at 45 °C | **fill > 90 % at worst tolerance, warm** |
 | vacuum_port | KF-25 vacuum-port adapter plate on the right wall | 2-024 (9464K753) | 1.78 | 1.32 × 2.30 | 2.5 % | 25 (19–31) | 80 / 93 / 93 at 40 °C | **fill > 90 % at worst tolerance, warm** |
@@ -68,7 +69,7 @@ Stretch is the ring's ID onto the groove's inner wall (face), the groove root (r
 
 | Closure | Seal | Squeeze force | Parker Fig. 2-x range at 25 % | Available |
 |---|---|---|---|---|
-| Lid | 3.53 mm, 978 mm long, 25 % | 4103 N (4.19 N/mm) | 2.19e+03–9.42e+03 N | 20 × M5: ≥ 48 kN; vacuum 5907 N |
+| Lid | 3.53 mm, 955 mm long, 25 % | 4006 N (4.19 N/mm) | 2.14e+03–9.20e+03 N | 20 × M5: ≥ 48 kN; vacuum 5907 N |
 | Door, before (3.53 mm cord) | 3.53 mm, 662 mm long, 25 % | 2778 N (4.19 N/mm) | 1.48e+03–6.38e+03 N | vacuum 2445 N |
 | Door, now (1.78 mm cord) at 25 % | 1.78 mm, 662 mm long, 25 % | 1401 N (2.11 N/mm) | 882–2.44e+03 N | vacuum 2445 N seats it; at +20 mbar each 1807A61 needs **725 N** of preload (rated 3558 N) |
 | Door, now, at 15 % | 1.78 mm, 662 mm long, 15 % | 609 N (0.92 N/mm) | – | each latch needs 328 N at +20 mbar |
@@ -83,12 +84,13 @@ Arrhenius temperature scaling with E_a = 37 kJ/mol (Parker's He pair; the N₂ p
 
 | Seal | T (°C) | O₂ (sccs) | H₂O (sccs) |
 |---|---|---|---|
-| lid | 50 | 9.61e-07 | 8.66e-06 |
+| lid | 50 | 9.39e-07 | 8.45e-06 |
 | spigot (2-238) | 56 | 4.52e-07 | 4.07e-06 |
 | gland_plate_M50 (2-034) | 60 | 2.62e-07 | 2.36e-06 |
 | rod_M50 (2-114) | 117 | 6.44e-07 | 5.81e-06 |
 | hermetic_M50 (2-014) | 40 | 2.64e-08 | 2.37e-07 |
 | overflow_funnel (2-042) | 50 | 2.64e-07 | 2.38e-06 |
+| floor (cord) | 60 | 1.41e-06 | 1.27e-05 |
 | inlet_plenum (2-044) | 45 | 2.45e-07 | 2.20e-06 |
 | outlet_plenum (2-044) | 45 | 2.45e-07 | 2.20e-06 |
 | vacuum_port (2-024) | 40 | 5.93e-08 | 5.34e-07 |
@@ -107,14 +109,14 @@ Arrhenius temperature scaling with E_a = 37 kJ/mol (Parker's He pair; the N₂ p
 | SAE-4 port O-rings (4 x 3-904) | 45 | 8.97e-08 | 8.08e-07 |
 | door (cord) | 45 | 5.26e-07 | 4.73e-06 |
 | KF-25 (7) + KF-40 (2) + KF-16 (1) centering rings | 35 | 4.49e-07 | 4.05e-06 |
-| **Total** | | **5.63e-06** | **5.07e-05** |
+| **Total** | | **7.01e-06** | **6.32e-05** |
 
 Gas envelope 11.3 L (chamber 6.4, hoses 1.5, filter housing 2.3, plenums and blower 1.1).
-Permeation alone adds **1.76 ppm O₂/h** and 15.89 ppm H₂O/h with no make-up flow.
-Outgassing of 4605 cm² of bare Al and 18 cm² of exposed FKM after ~1 h: 3.68e-05 + 2.37e-05 mbar·L/s, **19 ppm H₂O/h**, falling roughly as 1/t.
+Permeation alone adds **2.20 ppm O₂/h** and 19.80 ppm H₂O/h with no make-up flow.
+Outgassing of 4605 cm² of bare Al and 18 cm² of exposed FKM after ~1 h: 3.68e-05 + 2.34e-05 mbar·L/s, **19 ppm H₂O/h**, falling roughly as 1/t.
 150 g of powder holding 150 ppm (new, Karl Fischer [11]) to 300 ppm water by mass carries 22–45 mg: **2486–4971 ppmv** in the loop if a 200 °C plate drives it off.
 
-Make-up argon to hold the targets at steady state: 37.5 sccm for 10 ppm O₂ against permeation; 53 sccm for a −40 °C dew point against wall and seal outgassing.
+Make-up argon to hold the targets at steady state: 46.8 sccm for 10 ppm O₂ against permeation; 58 sccm for a −40 °C dew point against wall and seal outgassing.
 
 Other leak sources (air at 1 atm, mbar·L/s; vendor-typical ranges):
 
@@ -153,7 +155,7 @@ Reservoir before the dock seal and lid seal were drawn (open to the room through
 
 ## Rate-of-rise acceptance test
 
-Leak budget 1.00e-04 mbar·L/s in 11.3 L is a rise of 5.33e-04 mbar/min; outgassing after ~1 h adds 3.22e-04 mbar/min. isolate at <= 1 mbar after >= 1 h pumping; read a Pirani or capacitance gauge for 10 min.
+Leak budget 1.00e-04 mbar·L/s in 11.3 L is a rise of 5.33e-04 mbar/min; outgassing after ~1 h adds 3.21e-04 mbar/min. isolate at <= 1 mbar after >= 1 h pumping; read a Pirani or capacitance gauge for 10 min.
 
 ## Sources
 

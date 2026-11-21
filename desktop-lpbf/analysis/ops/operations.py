@@ -91,7 +91,7 @@ STACK = ["Heater block", "Cartridge heaters", "Type K thermocouples", "Thermal c
 MODULE_BODY = ["Build module", "Spigot O-ring", "bottom flange: gland plate", "gland-plate O-ring", "handle (6061", "Gland-plate screws",
                "Handle screws", "Captive M6", "Captive-screw retainers"]
 LID_SET = ["Chamber lid", "Window flange", "fused-silica window", "Window O-ring", "Window retaining ring", "Field-stop", "Cover-slide drawer",
-           "Cover slide (", "Drawer O-ring", "Drawer latches", "Drawer latch receptacles", "Drawer-closed sensor", "Gas knife", "Dose chute",
+           "Cover slide (", "Drawer O-ring", "Drawer latches", "Drawer latch wing head", "Drawer latch receptacles", "Drawer-closed sensor", "Gas knife", "Dose chute",
            "Metering base", "Metering-base O-ring", "Metering-base dock-face", "NFC reader", "Dovetail rails", "Roller shaft:", "Roller feedthrough",
            "Roller drive coupling", "Dosing stepper", "Window clamp ring", "Window-flange O-ring", "Camera adapter O-ring", "Camera window", "Side reservoir port", "Reservoir-docked sensor", "Load cell", "Camera viewport",
            "Pressure transducer", "Overpressure relief", "Window-flange screws", "Window-flange helical", "Window retaining-ring screws",
@@ -194,7 +194,7 @@ def catalogue(module="M50"):
                                                                                   "Window retaining ring"], minutes=4),
         screws("Six M3 retaining-ring screws (clamp the fused silica evenly)", "window_ring", 4, torque=True),
         place("Cover-slide drawer into the lid's front edge", ["Cover-slide drawer", "Cover slide (", "Drawer O-ring", "Drawer latches",
-                                                                "Drawer latch receptacles"],
+                                                                "Drawer latch wing head", "Drawer latch receptacles"],
               path=[(0, 0, 0), (0, -200, 0)], minutes=1),
         place("Drawer-closed sensor", ["Drawer-closed sensor"], minutes=2),
         place("Metering base, dock rails, load cell, NFC, stepper, seal housing, side port, docked sensor",
@@ -277,7 +277,7 @@ def catalogue(module="M50"):
                     interval="inspect each build; replace on fouling (transmission or camera limit, pain-points P12)", state=OPEN, present="all", air=True, steps=[
         reach("Fingers on the drawer's pull tab (lid front edge)", (0.0, -CY - 40.0, 135.0), (FRONT,), skip=["Cover-slide drawer"], hand=PINCH_HAND),
         remove("Quarter-turn latches released; drawer out of the lid and out through the guard door", ["Cover-slide drawer", "Cover slide (", "Drawer O-ring",
-                                                                                                         "Drawer latches"],
+                                                                                                         "Drawer latches", "Drawer latch wing head"],
                [[(0, 0, 0), (0, -120, 0), (0, -520, 0)]], minutes=1),
         note("Lift the slide out of its pocket, clean (IPA, lens tissue) or replace; check the drawer O-ring", 5),
         note("Drawer back in (reverse path); purge before the next build", 1),

@@ -1333,7 +1333,7 @@
   },
   {
    "group": "piston",
-   "at": -17.0,
+   "at": -10.75,
    "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 9.888
@@ -1347,14 +1347,14 @@
   },
   {
    "group": "piston",
-   "at": -14.92,
+   "at": -6.58,
    "moving": "Build plate L75 (\u00d875.8 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 10.087
   },
   {
    "group": "piston",
-   "at": -8.67,
+   "at": -6.58,
    "moving": "Heater block L75 (6061-T6, bayonet socket)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 10.187
@@ -1369,13 +1369,6 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
-   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 10.944
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
    "moving": "Macor standoff rings L75 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "gap_mm": 10.959
@@ -1385,7 +1378,14 @@
    "at": 8.0,
    "moving": "Radiation shields L75 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 11.186
+   "gap_mm": 11.232
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "gap_mm": 11.792
   },
   {
    "group": "piston",
@@ -1473,7 +1473,7 @@
   },
   {
    "group": "piston",
-   "at": 5.92,
+   "at": 8.0,
    "moving": "Macor standoff rings L75 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 13.705
@@ -1484,13 +1484,6 @@
    "moving": "Rod set screws L75, M4 cup point 316 (2 x McMaster 92029A152)",
    "other": "Build module L75: spigot, flange, honed 316L cylinder (\u00d876.2 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "gap_mm": 14.058
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
-   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 14.206
   },
   {
    "group": "piston",
@@ -1540,6 +1533,13 @@
    "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Module-present sensor (inductive M12, under the floor, sees the module flange)",
    "gap_mm": 14.7
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "gap_mm": 14.851
   },
   {
    "group": "piston",
@@ -1613,7 +1613,7 @@
   },
   {
    "group": "piston",
-   "at": -0.33,
+   "at": 3.83,
    "moving": "Heater-block helical inserts L75, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 15.878
@@ -1641,7 +1641,7 @@
   },
   {
    "group": "piston",
-   "at": -0.33,
+   "at": 3.83,
    "moving": "Heater-stack screws L75, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 16.202
@@ -1718,7 +1718,7 @@
   },
   {
    "group": "piston",
-   "at": -6.58,
+   "at": -4.5,
    "moving": "Type K thermocouples L75 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 17.217
@@ -1921,7 +1921,7 @@
   },
   {
    "group": "piston",
-   "at": -8.67,
+   "at": 5.92,
    "moving": "Cartridge heaters L75 (5 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 25.895
@@ -2068,7 +2068,7 @@
   },
   {
    "group": "piston",
-   "at": -4.5,
+   "at": -2.42,
    "moving": "Thermal cutoff L75 (240 C, in series with the heaters)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 35.945
@@ -2145,17 +2145,17 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "Hollow piston rod L75 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
-   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 42.391
-  },
-  {
-   "group": "piston",
    "at": -42.0,
    "moving": "Macor standoff rings L75 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
    "gap_mm": 42.485
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Hollow piston rod L75 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "gap_mm": 43.24
   },
   {
    "group": "piston",
@@ -6135,7 +6135,7 @@
   },
   {
    "group": "module",
-   "at": 17.25,
+   "at": 0.0,
    "moving": "Build plate L75 (\u00d875.8 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 10.087
@@ -6283,13 +6283,6 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "Radiation shields L75 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
-   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 12.946
-  },
-  {
-   "group": "module",
-   "at": 0.0,
    "moving": "Heater block L75 (6061-T6, bayonet socket)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 13.23
@@ -6314,6 +6307,13 @@
    "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 13.612
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Radiation shields L75 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "gap_mm": 13.736
   },
   {
    "group": "module",
@@ -6363,13 +6363,6 @@
    "moving": "Radiation shields L75 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 14.229
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "Macor standoff rings L75 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
-   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 14.277
   },
   {
    "group": "module",
@@ -6443,6 +6436,13 @@
   },
   {
    "group": "module",
+   "at": 0.0,
+   "moving": "Macor standoff rings L75 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
+   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "gap_mm": 15.1
+  },
+  {
+   "group": "module",
    "at": 207.0,
    "moving": "Build module L75: spigot, flange, honed 316L cylinder (\u00d876.2 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Outlet plenum O-ring (FKM 75A 2-044, face seal under the floor)",
@@ -6478,13 +6478,6 @@
   },
   {
    "group": "module",
-   "at": 0.0,
-   "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
-   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 15.741
-  },
-  {
-   "group": "module",
    "at": 138.0,
    "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
    "other": "Outlet plenum port (KF-25)",
@@ -6495,14 +6488,7 @@
    "at": 0.0,
    "moving": "Heater-block helical inserts L75, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 15.878
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "Heater-stack screws L75, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
-   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 16.202
+   "gap_mm": 16.004
   },
   {
    "group": "module",
@@ -6510,6 +6496,20 @@
    "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
    "gap_mm": 16.255
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Heater-stack screws L75, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
+   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "gap_mm": 16.311
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "gap_mm": 16.342
   },
   {
    "group": "module",
@@ -9194,5 +9194,5 @@
    "why": "hose end clamped onto its KF-25 flange"
   }
  ],
- "runtime_s": 162.3
+ "runtime_s": 165.0
 }

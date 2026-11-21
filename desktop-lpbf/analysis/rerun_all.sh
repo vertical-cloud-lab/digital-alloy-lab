@@ -40,7 +40,7 @@ declare -A STEP=(
 )
 ORDER=(interference_M50 interference_S25 interference_L75 mass tray seals door_seal_fea mech joint_calcs hotswap_fea fea
        thermal_module thermal_laser mujoco ops_M50 ops_S25 ops_L75 cfd_coarse dem_baseline)
-CAP=(); declare -A CAPGB=([fea]=5 [hotswap_fea]=4 [thermal_module]=5 [door_seal_fea]=4 [mujoco]=4 [ops_M50]=4 [cfd_coarse]=4)
+CAP=(); declare -A CAPGB=([fea]=10 [hotswap_fea]=10 [thermal_module]=5 [door_seal_fea]=4 [mujoco]=4 [ops_M50]=4 [cfd_coarse]=4)
 
 want=("$@")
 [ ${#want[@]} -eq 0 ] && want=("${ORDER[@]}")

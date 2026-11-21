@@ -1,8 +1,8 @@
 {
  "path_mm": 662.4716784548467,
  "groove_floor_area_mm2": 1520.0700000000013,
- "nodes": 67324,
- "elements": 40712,
+ "nodes": 67236,
+ "elements": 40652,
  "cases": [
   {
    "cord": 1.78,
@@ -10,14 +10,14 @@
    "F_oring_N": 1401.0103967034265,
    "F_overpressure_N": 46.51773906328873,
    "squeeze_mm": 0.445,
-   "lost_max_um": 34.4171,
+   "lost_max_um": 34.3551,
    "lost_at": [
     2.557953848736365e-13,
     -112.32,
     107.15
    ],
    "margin_to_15pct_um": 178.0,
-   "vm_max": 18.117438899430212,
+   "vm_max": 17.3462114173989,
    "latch_reaction_N": null,
    "ok": true,
    "latch_load_each_N": 723.7640678833576,

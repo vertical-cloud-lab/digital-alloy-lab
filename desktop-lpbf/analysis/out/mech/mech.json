@@ -68,21 +68,13 @@
    "torque_Nm": 0.0441
   },
   "galling": "316 screws in 18-8 helical inserts gall; the lid and window screws sit outside the seal, so use anti-seize there, or silver-plated / Nitronic 60 screws",
-  "door_3p53": {
-   "latch_each_N": 800.8315576607218,
-   "latch_rating_N": 3558.4000000000005,
-   "latch_sf": 4.44338134025875,
-   "hinge_each_N": 613.1366613339902,
-   "hinge_pin_shear_MPa": 15.613396870746547,
-   "squeeze_lost_um": 26.401
-  },
   "door_1p78": {
-   "latch_each_N": 410.2160182202553,
+   "latch_each_N": 723.7640678833576,
    "latch_rating_N": 3558.4000000000005,
-   "latch_sf": 8.674454048475031,
-   "hinge_each_N": 314.0716389498829,
-   "hinge_pin_shear_MPa": 7.9977686118155065,
-   "squeeze_lost_um": 13.5815
+   "latch_sf": 4.916519288400865,
+   "hinge_each_N": 0.0,
+   "hinge_pin_shear_MPa": 0.0,
+   "squeeze_lost_um": 34.4171
   }
  },
  "D": {

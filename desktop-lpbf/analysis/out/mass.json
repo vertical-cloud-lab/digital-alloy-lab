@@ -1,11 +1,11 @@
 {
  "modules": {
   "process": {
-   "mass_kg": 87.1,
+   "mass_kg": 87.7,
    "com_mm": [
-    -23.0,
-    -3.2,
-    63.8
+    -23.8,
+    -4.3,
+    63.6
    ],
    "foot": [
     -370.0,
@@ -13,9 +13,9 @@
     -265.0,
     215.0
    ],
-   "com_height_above_tray_mm": 275.8,
-   "min_lever_mm": 188.2,
-   "tip_accel_g": 0.68
+   "com_height_above_tray_mm": 275.6,
+   "min_lever_mm": 189.3,
+   "tip_accel_g": 0.69
   },
   "gas": {
    "mass_kg": 60.6,
@@ -60,23 +60,23 @@
    ]
   }
  },
- "total_kg": 267.6,
+ "total_kg": 268.2,
  "tray_limits_kg": {
   "Kardex Shuttle XP 500, 2450 mm tray (strong tray)": 490.0,
   "Modula MC50D": 500.0
  },
  "by_material": {
-  "mixed (vendor unit; mass from datasheet or estimate)": 138.0,
-  "6061-T6 aluminium": 58.0,
-  "bearing / alloy steel": 26.0,
+  "mixed (vendor unit; mass from datasheet or estimate)": 138.5,
+  "6061-T6 aluminium": 58.1,
+  "bearing / alloy steel": 25.9,
   "MIC-6 cast tooling plate": 24.9,
-  "316L stainless": 13.2,
-  "304 stainless": 3.7,
+  "316L stainless": 13.1,
+  "304 stainless": 3.8,
   "brass": 3.2,
   "laser-safety polycarbonate": 0.5,
   "AlSi10Mg powder (~50 % packing)": 0.1,
+  "FKM (Viton) 75A": 0.1,
   "UV fused silica": 0.1,
-  "FKM (Viton) 75A": 0.0,
   "Macor machinable glass-ceramic": 0.0,
   "PTFE": 0.0,
   "aramid felt": 0.0
@@ -203,18 +203,6 @@
    ]
   },
   {
-   "part": "Process chamber body (6061-T6, ~6.4 L)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 7.345,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    -2.2055629618193526,
-    11.991485137996253,
-    30.4597472003293
-   ]
-  },
-  {
    "part": "Guard frame (20 mm T-slot)",
    "module": "process",
    "material": "6061-T6 aluminium",
@@ -275,6 +263,18 @@
    ]
   },
   {
+   "part": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 4.273,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -1.1069647062102692,
+    19.48517200729826,
+    60.01122279308451
+   ]
+  },
+  {
    "part": "Sealed cyclone + HEPA housing (316L, valves off for passivation)",
    "module": "gas",
    "material": "316L stainless",
@@ -320,6 +320,18 @@
     -710.0,
     -1.739952170371583e-13,
     55.5000000000004
+   ]
+  },
+  {
+   "part": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 3.01,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -3.768153934417931,
+    1.6752800762789917,
+    -10.272443286880502
    ]
   },
   {
@@ -503,18 +515,6 @@
    ]
   },
   {
-   "part": "Cross-flow inlet plenum + nozzle (316L, bolted flange)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.681,
-   "basis": "316L stainless x volume",
-   "com": [
-    -8.893131591547417e-16,
-    126.08633672757078,
-    11.025748901099341
-   ]
-  },
-  {
    "part": "Guard door rail (top + bottom)",
    "module": "process",
    "material": "bearing / alloy steel",
@@ -551,6 +551,18 @@
    ]
   },
   {
+   "part": "Cross-flow inlet plenum + nozzle (316L, bolted flange)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.6,
+   "basis": "316L stainless x volume",
+   "com": [
+    3.458059416922806e-15,
+    126.81444918055587,
+    15.57179830675721
+   ]
+  },
+  {
    "part": "Recoater servo (ClearPath-SD, NEMA 23)",
    "module": "process",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
@@ -578,12 +590,12 @@
    "part": "Overflow funnel block (316L, bolted, FKM face O-ring)",
    "module": "process",
    "material": "316L stainless",
-   "mass_kg": 0.592,
+   "mass_kg": 0.593,
    "basis": "316L stainless x volume",
    "com": [
-    99.99999999999999,
-    -2.751692861766615e-15,
-    -31.80144924029288
+    100.0,
+    -1.9614922803294458e-16,
+    -31.788616689764478
    ]
   },
   {
@@ -695,14 +707,14 @@
    ]
   },
   {
-   "part": "Recoater guide rail (15 mm, 270 mm)",
+   "part": "Recoater guide rail (15 mm, 260 mm)",
    "module": "process",
    "material": "bearing / alloy steel",
-   "mass_kg": 0.426,
+   "mass_kg": 0.413,
    "basis": "bearing / alloy steel x volume",
    "com": [
-    -0.17885574881765365,
-    87.68994545725869,
+    0.590775107558045,
+    87.67754349507288,
     82.0
    ]
   },
@@ -755,6 +767,18 @@
    ]
   },
   {
+   "part": "Door drive: pneumatic rotary actuator on the hinge axis, SMC CRQ2 size 20 class (~1.8 N m at 0.5 MPa, stroke set to 95 deg, meter-out flow controls; envelope 47 x 47 x 42 mm). Passive alternative: McMaster 6597K124 one-way damper, same envelope",
+   "module": "process",
+   "material": "mixed (vendor unit; mass from datasheet or estimate)",
+   "mass_kg": 0.3,
+   "basis": "catalogue/estimate",
+   "com": [
+    -179.0,
+    -132.0,
+    -12.0
+   ]
+  },
+  {
    "part": "Recoater carriage (15 mm rail)",
    "module": "process",
    "material": "bearing / alloy steel",
@@ -800,6 +824,18 @@
     694.9999999999998,
     24.999999999999932,
     -198.81619469266988
+   ]
+  },
+  {
+   "part": "Draw-latch actuators: 2 x \u00d820 compact air cylinders (SMC CJ2/CQ2 class, 157 N at 0.5 MPa) that throw the latch levers",
+   "module": "process",
+   "material": "mixed (vendor unit; mass from datasheet or estimate)",
+   "mass_kg": 0.24,
+   "basis": "catalogue/estimate",
+   "com": [
+    -1.0022870161855478e-14,
+    -70.25810379895769,
+    18.0
    ]
   },
   {
@@ -851,18 +887,6 @@
    ]
   },
   {
-   "part": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.184,
-   "basis": "316L stainless x volume",
-   "com": [
-    -2.0155976021124213,
-    29.22751076273112,
-    57.23604439178285
-   ]
-  },
-  {
    "part": "Pressure transducer (7/16-20 SAE-4 O-ring-boss port)",
    "module": "process",
    "material": "316L stainless",
@@ -884,6 +908,18 @@
     -106.0,
     68.93856736956813,
     57.971448705176044
+   ]
+  },
+  {
+   "part": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.181,
+   "basis": "316L stainless x volume",
+   "com": [
+    -2.048139661509201,
+    29.348672762110652,
+    57.21338795098928
    ]
   },
   {
@@ -1247,6 +1283,18 @@
    ]
   },
   {
+   "part": "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.057,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -312.0,
+    -310.71556886227546,
+    105.00000000000001
+   ]
+  },
+  {
    "part": "Dovetail rails for the reservoirs (lips pull the plate onto the dock O-ring)",
    "module": "process",
    "material": "316L stainless",
@@ -1439,6 +1487,18 @@
    ]
   },
   {
+   "part": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.042,
+   "basis": "catalogue/estimate",
+   "com": [
+    -7.86610167960443e-10,
+    -11.88888889117728,
+    -8.008021511529627
+   ]
+  },
+  {
    "part": "\u00d82 in. fused-silica window, 8 mm, AR 1064",
    "module": "process",
    "material": "UV fused silica",
@@ -1559,6 +1619,18 @@
    ]
   },
   {
+   "part": "Door drive bracket (6061, 4 mm, flanged onto the chamber's left side face)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.023,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -172.92227979274617,
+    -102.88212435233162,
+    -12.22279792746114
+   ]
+  },
+  {
    "part": "HSS recoater blade (1.5 mm, wide nose)",
    "module": "process",
    "material": "bearing / alloy steel",
@@ -1580,18 +1652,6 @@
     -89.99999999999999,
     2.9172823176599805e-15,
     181.7
-   ]
-  },
-  {
-   "part": "Inlet-plenum screws, M4 x 16 316 (clear of the Z flange's screws) (9 x McMaster 92290A154)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.021,
-   "basis": "catalogue/estimate",
-   "com": [
-    -1.2432070939979718e-10,
-    113.00802151152973,
-    8.44444444431542
    ]
   },
   {
@@ -1667,6 +1727,30 @@
    ]
   },
   {
+   "part": "Liner pull tabs (316L, 2 mm, 12 mm off each side liner, spot-welded)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.02,
+   "basis": "catalogue/estimate",
+   "com": [
+    -9.852859269206695e-14,
+    -58.0,
+    99.99999999999993
+   ]
+  },
+  {
+   "part": "AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-registration)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.02,
+   "basis": "catalogue/estimate",
+   "com": [
+    -400.00000000000006,
+    -267.49999999999994,
+    97.99999999999999
+   ]
+  },
+  {
    "part": "Field-stop aperture (\u00d836, passive beam limit)",
    "module": "process",
    "material": "6061-T6 aluminium",
@@ -1688,18 +1772,6 @@
     1.9677133870785894e-17,
     -4.795658578868751e-16,
     -138.45768267104262
-   ]
-  },
-  {
-   "part": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
-   "module": "process",
-   "material": "FKM (Viton) 75A",
-   "mass_kg": 0.018,
-   "basis": "FKM (Viton) 75A x volume",
-   "com": [
-    9.70998587896678e-14,
-    1.3500414194448722e-13,
-    118.67499999999977
    ]
   },
   {
@@ -1727,6 +1799,30 @@
    ]
   },
   {
+   "part": "Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; face seal in the floor plate's pad)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.017,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    0.0,
+    -2.1573332349506458e-14,
+    -1.3250000000000035
+   ]
+  },
+  {
+   "part": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.017,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    9.944035084588628e-14,
+    -1.6563417356231648e-13,
+    118.67500000000025
+   ]
+  },
+  {
    "part": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "module": "process",
    "material": "316L stainless",
@@ -1736,6 +1832,18 @@
     -3.4622663949627595e-11,
     -1.688067751462084e-10,
     -100.19074124171823
+   ]
+  },
+  {
+   "part": "Inlet-plenum screws, M4 x 16 316 (clear of the Z flange's screws) (7 x McMaster 92290A154)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.016,
+   "basis": "catalogue/estimate",
+   "com": [
+    -1.8733784569931207e-10,
+    113.00802151152972,
+    22.142857142809838
    ]
   },
   {
@@ -1847,18 +1955,6 @@
    ]
   },
   {
-   "part": "Recoater rail screws, M4 x 16 316 (5 x McMaster 92290A154)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.012,
-   "basis": "catalogue/estimate",
-   "com": [
-    4.999999999603278,
-    89.2919784884704,
-    81.9999999999996
-   ]
-  },
-  {
    "part": "Outlet-plenum screws, M4 x 12 316, counterbored (6 x McMaster 92290A148)",
    "module": "process",
    "material": "316L stainless",
@@ -1919,6 +2015,18 @@
    ]
   },
   {
+   "part": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.009,
+   "basis": "catalogue/estimate",
+   "com": [
+    -2.003100468565711e-13,
+    -1.082977082598535e-13,
+    -4.0
+   ]
+  },
+  {
    "part": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "module": "process",
    "material": "316L stainless",
@@ -1928,6 +2036,18 @@
     -4.4685950836740985e-15,
     15.156097113707,
     -19.32044519985148
+   ]
+  },
+  {
+   "part": "Recoater rail screws, M4 x 16 316, into M4 holes tapped through the back wall (4 x McMaster 92290A154)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.009,
+   "basis": "catalogue/estimate",
+   "com": [
+    -20.000000000250367,
+    89.29197848847036,
+    81.99999999999963
    ]
   },
   {
@@ -1964,6 +2084,18 @@
     99.99999999997452,
     -6.01400574378795e-10,
     -23.76068708528451
+   ]
+  },
+  {
+   "part": "Rail-hole plug screws, M4 x 10 316, on bonded seal washers (outer face of the back wall) (4 x McMaster 92290A144)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.007,
+   "basis": "catalogue/estimate",
+   "com": [
+    -20.00000000032243,
+    111.10103991515041,
+    82.00000000000037
    ]
   },
   {
@@ -2027,6 +2159,30 @@
    ]
   },
   {
+   "part": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.005,
+   "basis": "catalogue/estimate",
+   "com": [
+    -51.0,
+    -127.0,
+    128.0
+   ]
+  },
+  {
+   "part": "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.005,
+   "basis": "catalogue/estimate",
+   "com": [
+    51.0,
+    -127.0,
+    128.0
+   ]
+  },
+  {
    "part": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "module": "process",
    "material": "316L stainless",
@@ -2039,15 +2195,15 @@
    ]
   },
   {
-   "part": "Inlet-plenum helical inserts, M4 x 6 18-8, in the back wall (9 x McMaster 91732A656)",
+   "part": "Door drive shaft and disc (\u00d86 D-shaft keyed into a 6061 disc screwed to the door's left edge)",
    "module": "process",
-   "material": "304 stainless",
+   "material": "6061-T6 aluminium",
    "mass_kg": 0.004,
-   "basis": "catalogue/estimate",
+   "basis": "6061-T6 aluminium x volume",
    "com": [
-    -8.942289431446317e-15,
-    107.99999999999996,
-    8.444444444444443
+    -134.85773672055424,
+    -132.0,
+    -12.000000000000002
    ]
   },
   {
@@ -2072,6 +2228,18 @@
     1.6757999134497723e-14,
     4.2064325591499743e-17,
     -14.000000000000004
+   ]
+  },
+  {
+   "part": "Inlet-plenum helical inserts, M4 x 6 18-8, in the back wall (7 x McMaster 91732A656)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.003,
+   "basis": "catalogue/estimate",
+   "com": [
+    -7.0020719608210214e-15,
+    107.99999999999999,
+    22.14285714285715
    ]
   },
   {
@@ -2141,9 +2309,9 @@
    "mass_kg": 0.002,
    "basis": "FKM (Viton) 75A x volume",
    "com": [
-    0.0,
-    111.65999999999984,
-    10.999999999999984
+    -6.100243414673446e-15,
+    111.66000000000001,
+    13.24999999999999
    ]
   },
   {
@@ -2192,18 +2360,6 @@
     -8.601032470415846e-12,
     3.470067757938952e-16,
     -136.72521566848303
-   ]
-  },
-  {
-   "part": "Recoater rail helical inserts, M4 x 6 18-8, in the back wall (5 x McMaster 91732A656)",
-   "module": "process",
-   "material": "304 stainless",
-   "mass_kg": 0.002,
-   "basis": "catalogue/estimate",
-   "com": [
-    4.999999999999999,
-    98.00000000000004,
-    82.00000000000003
    ]
   },
   {
@@ -2276,6 +2432,18 @@
     -90.00000000000612,
     -5.433388548957486e-11,
     248.83349253968848
+   ]
+  },
+  {
+   "part": "Blade-cartridge grip fin (6061, 4 mm, on the holder's front end)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.002,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -106.0,
+    -58.0,
+    26.000000000000004
    ]
   },
   {
@@ -2456,6 +2624,18 @@
     -3.1059575788665384e-15,
     0.0,
     -21.749999999999996
+   ]
+  },
+  {
+   "part": "Rail-hole bonded seal washers (4 x M4, 316 ring + FKM lip, Dowty type; seal the through-tapped rail holes)",
+   "module": "process",
+   "material": "FKM (Viton) 75A",
+   "mass_kg": 0.001,
+   "basis": "FKM (Viton) 75A x volume",
+   "com": [
+    -20.000000000000014,
+    111.75,
+    81.99999999999994
    ]
   },
   {

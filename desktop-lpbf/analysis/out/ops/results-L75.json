@@ -257,7 +257,7 @@
      "note": "",
      "status": "PASS",
      "clearance": 0.1,
-     "detail": "swap path clear; tightest gap 0.1 mm to Process chamber body (6061-T6, ~6.4 L)"
+     "detail": "swap path clear; tightest gap 0.1 mm to Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)"
     },
     {
      "id": "S2.5",
