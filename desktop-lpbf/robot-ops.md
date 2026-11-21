@@ -1,5 +1,7 @@
 # Robot tending: every job planned and audited the byu-vcl PR 318 way
 
+> **Update 2026-11-21 02:00 UTC (coordinator):** the bayonet plate exchange now passes on M50, S25 and L75 ([`analysis/out/robot/ops_bayonet_fix.md`](analysis/out/robot/ops_bayonet_fix.md)), after the thermal cutoff was lowered 1 mm out of the lugs' path (`cad/modules_low.py`, patch request 3 below). So 10 of the 12 jobs pass; the build-module swap and the overflow jar still need the changes listed.
+
 Written 2026-11-20/21 (22:15–01:15 UTC) for [PR #266](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/266) (issue #260),
 in answer to Sterling: "For mujoco, in relation to the UR12e ... make sure you're aligning with what's described in byu-vcl PR 318.
 I'm also fine if we need a tool or attachment to make this work in terms of automation, but we need to make sure the workflow is

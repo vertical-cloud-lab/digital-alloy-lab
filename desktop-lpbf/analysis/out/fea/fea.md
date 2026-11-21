@@ -8,13 +8,13 @@ Peak stresses at sharp re-entrant edges of the CAD (pocket floors, box-cut slots
 | 1b Chamber: frame + floor plate + lid bonded, full vacuum, as built in lpbf_low.py | 6061-T6 aluminium | as 1, lid included | 28.0 at (60, 95, 8); 99.5 %: 9.6 | 62.7 µm at (2, -5, -2); door land Δy 4.3 µm; window seat 48.8 µm | SF ≥ 2 yield, Goodman ≥ 2 | SF 9.9 yield, 3.9 vs HAZ, Goodman 5.3: pass |
 | 1b′ Same body at +20 mbar (argon working pressure) | 6061-T6 aluminium | the vacuum loads reversed × 0.002/0.1013 | 0.55 at (60, 95, 8) | 1.24 µm; door land Δy 0.08 µm | SF ≥ 2 | SF 500: pass |
 | 2 Lid, vacuum, as built in lpbf_low.py | 6061-T6 aluminium | 1 atm on top + window/dose/camera loads | 15.2 at (-30, -84, 120) | 28.0 µm; window seat sag 27.8 µm, tilt 8 µrad; camera port 17.0 µm | SF ≥ 2; sag ≪ ±3.7 mm Rayleigh range | SF 18: pass |
-| 3 Door, vacuum, as built in lpbf_low.py | 6061-T6 aluminium | 1 atm inside the O-ring | 8.0 at (4, -93, 108) | 6.5 µm | SF ≥ 2; latches at +50 mbar | SF 35; latch load 60 N each vs 3.6 kN rating: pass |
+| 3 Door, vacuum, as built in lpbf_low.py | 6061-T6 aluminium | 1 atm inside the O-ring | 7.2 at (2, -112, 1) | 5.3 µm | SF ≥ 2; latches at +50 mbar | SF 38; latch load 60 N each vs 3.6 kN rating: pass |
 | 4 Recoater block + arm + blade holder (first layout) | 6061-T6 | 10 N up + 10 N drag; 50 N hit | spread 10.2; hit 57.4 at (-112, 33, 14) | blade |uz| 17.2 µm (tip 17.2), |ux| 13.8 µm; over the plate Δuz 12.7 µm; hit |uz| 0 µm | < 5 µm spreading, no yield in a hit | FAIL (hit SF 4.8) |
 | 4 Recoater block + arm + blade holder (as built in lpbf_low.py) | 6061-T6 | 10 N up + 10 N drag; 50 N hit | spread 2.4; hit 14.5 at (-97, 33, 21) | blade |uz| 3.4 µm (tip 3.4), |ux| 1.7 µm; over the plate Δuz 2.5 µm; hit |uz| 0 µm | < 5 µm spreading, no yield in a hit | pass (hit SF 19.0) |
-| 5 Z lift arm, as built in lpbf_low.py | 6061-T6 | 50 N down + 10 N side | 11.4 at (-0, -6, -110) | rod (0.1, -0.0, -3.0) µm | plate tilt < 10 µm over Ø50 | tilt 3.8 µm: pass |
+| 5 Z lift arm, as built in lpbf_low.py | 6061-T6 | 50 N down + 10 N side | 2.8 at (24, 55, -153) | rod (0.1, 0.5, -5.5) µm | plate tilt < 10 µm over Ø50 | tilt 7.0 µm: pass |
 | 6 Optics bridge + posts (first layout: 15 mm plate, 40x40x4 posts) | 6061-T6 | gravity + 4.8 kg of optics | 2.0 | lens bore sag 13.4 µm; f1–f6 = 79, 87, 140, 153, 318, 394 Hz | f1 > 100 Hz | FAIL |
 | 6 Optics bridge + posts (as built in lpbf_low.py) | 6061-T6 | gravity + 4.8 kg of optics | 1.1 | lens bore sag 4.3 µm; f1–f6 = 133, 148, 235, 254, 499, 573 Hz | f1 > 100 Hz | pass |
-| 7 Window Ø50.8 × 8 | UV fused silica | 1 atm, simply supported Ø48 | max principal 1.15 (Roark 1.08) | 0.73 µm | SF ≥ 6 vs 52.4 MPa | SF 45 (formula 46); 2.4 mm would do at SF 4, 2.9 mm at SF 6: pass |
+| 7 Window Ø50.8 × 8 | UV fused silica | 1 atm, simply supported Ø48 | max principal 1.18 (Roark 1.08) | 0.74 µm | SF ≥ 6 vs 52.4 MPa | SF 45 (formula 46); 2.4 mm would do at SF 4, 2.9 mm at SF 6: pass |
 
 ## 1f Floor-plate bolted joint (Shigley) and floor gland (Parker), as built in lpbf_low.py
 

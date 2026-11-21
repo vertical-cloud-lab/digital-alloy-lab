@@ -3,22 +3,22 @@
   "case": "7 laser window, \u00d850.8 x 8 mm UV fused silica",
   "material": "UV fused silica",
   "load": "0.1013 MPa, simply supported on \u00d848 (unclamped, O-ring)",
-  "nodes": 16150,
-  "elements": 9674,
-  "s1_max": 1.1519003675794832,
+  "nodes": 16253,
+  "elements": 9749,
+  "s1_max": 1.1762971245665215,
   "s1_max_at": [
-   3.97343541202206,
-   -25.087283851116467,
+   -8.784595419598569,
+   23.811687819841755,
    0.0
   ],
   "roark_ss": 1.080631125,
-  "sf_fea": 45.49004538483603,
+  "sf_fea": 44.54656812946812,
   "sf_formula": 45.96869260081696,
   "t_required_mm": {
    "4": 2.359874495304313,
    "6": 2.8902441852517717
   },
-  "u_max_um": 0.7348484858365777,
+  "u_max_um": 0.7357879338238368,
   "criterion": "SF >= 4-6 against the 52.4 MPa abraded modulus of rupture (Corning 7980)",
   "pass": true
  },
@@ -26,23 +26,23 @@
   "case": "5 Z lift arm",
   "material": "6061-T6 aluminium",
   "load": "50 N down + 10 N in x at the rod bore; carriage face (y = 56) fixed",
-  "nodes": 21808,
-  "elements": 13230,
-  "vm_max": 11.403536528189283,
+  "nodes": 16985,
+  "elements": 9969,
+  "vm_max": 2.8170537970975564,
   "vm_max_at": [
-   -1.10218211923262e-15,
-   -6.0,
-   -110.0
+   24.307307317745614,
+   54.928538874187495,
+   -153.0
   ],
   "u_rod_um": [
-   0.0789386233570754,
-   -0.010521671221698115,
-   -2.9634897641509412
+   0.09119192307692309,
+   0.5413434461538461,
+   -5.5290515384615375
   ],
-  "u_max": 0.004616650256303264,
-  "tilt_urad": 75.59153418442557,
-  "plate_tilt_um_over_50mm": 3.779576709221278,
-  "sf_yield": 24.20301801267828,
+  "u_max": 0.008455514511384685,
+  "tilt_urad": 140.527779176441,
+  "plate_tilt_um_over_50mm": 7.02638895882205,
+  "sf_yield": 97.97469976766722,
   "criterion": "plate tilt < 10 um across \u00d850 (arm only; the carriage, rail and actuator add their own compliance)",
   "pass": true,
   "png": "c5_zarm_vm.png"
@@ -51,16 +51,16 @@
   "case": "3 door, vacuum",
   "material": "6061-T6 aluminium",
   "load": "2445 N over the area inside the O-ring; y fixed on the land outside the groove",
-  "nodes": 38304,
-  "elements": 22021,
-  "vm_max": 7.990946608916208,
+  "nodes": 39920,
+  "elements": 23081,
+  "vm_max": 7.175530372646244,
   "vm_max_at": [
-   3.697153891383259,
-   -93.1,
-   108.0
+   2.473306490954466,
+   -112.32,
+   0.8500000000000014
   ],
-  "u_max": 0.006484956843601324,
-  "sf_yield": 34.53908698276651,
+  "u_max": 0.005270787672308672,
+  "sf_yield": 38.464055709684736,
   "overpressure_50mbar_total_N": 120.63999999999999,
   "overpressure_per_latch_N": 60.31999999999999,
   "latch_rating_N": 3558.4000000000005,

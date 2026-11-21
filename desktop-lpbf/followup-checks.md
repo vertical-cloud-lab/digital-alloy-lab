@@ -9,6 +9,118 @@ seal, use Shigley, heat transfer and CalculiX, and say what the machine costs us
 Nothing here has been built, quoted by a shop, or reviewed by BYU's Laser Safety Officer or EHS. Each note below has
 its own sources, assumptions and re-run instructions.
 
+## 0. Round 3 (2026-11-20 evening): the machinist's review, the robots, safety, and a full re-run
+
+Sterling asked for four things on 2026-11-20:
+- the UR12e aligned with byu-vcl PR 318, with whatever tools make each automated job work;
+- answers to a BYU machinist's three concerns: the chamber block, the 5-axis look, and assembly collisions;
+- two UR12e arms on MiR250s taking the build from boxes to a machine, and laser, gas and powder safety;
+- then a re-run of every check, with Edison as a rubber duck.
+
+Each line links its own note. Nothing here has been built, quoted by a shop or reviewed by BYU's LSO or EHS.
+
+### What changed
+
+1. **The chamber is now a through-frame plus a bolted floor plate** ([`chamber-construction.md`](chamber-construction.md)).
+   - **Material:** the frame is cut from 5-1/2 in. 6061-T651 plate. Its core comes out as one 17 kg slug of reusable
+     stock, and the walls are finished from both sides with a standard 3/4 in. end mill at 3.3:1, R10 corners. The
+     block needed a 3/8 in. tool at 13:1. The leftover stock with standard tools is 1.05 cm³, against 29.1 cm³.
+   - **Floor joint:** 3.53 mm FKM in a Parker gland at 24.9 % squeeze, 18 × M4 and 2 dowels. The Shigley separation
+     factor is 3.2 to 9.5, including a +0.5 bar regulator fault.
+   - **CalculiX:** yield SF 5.1 with the top open, 9.9 with the lid on, and 500 at +20 mbar.
+   - **Rail holes:** tapped through the back wall from outside, with plugs on bonded washers, so no tool has to reach the
+     inside face.
+2. **Nothing needs 5-axis** ([`machining.md`](machining.md), [`setup_plan.json`](analysis/out/machining/setup_plan.json)).
+   - With a 4th axis the 48 machined parts drop from 118 setups to 60. The frame goes from 6 to 3: bottom up, top up,
+     then all four walls in one clamping on an HRT210 on a 2-1/2 in. riser.
+   - **Still needing a special tool or a compound angle:** the lid's enclosed drawer slot (mill it open from the
+     underside), the camera-adapter boss and the dovetail grooves.
+3. **The machinist's "few hundred hours" is right.** Counted honestly, it is about 264 h for 48 parts (250 h with a 4th
+   axis).
+   - Only 28 h of that is cutting; CAM is 116 h and setups 99 h.
+   - Buying stock parts, waterjetting the flat parts and standardising tools could bring it to about 150 h.
+   - FreeCAD 1.0.2's CAM ran headless and wrote G-code: the frame cuts in 60 min and the floor plate in 58 min. CAMotics
+     would not install, so the G-code isn't simulated.
+4. **The video now shows scale and runs the mill the way the shop would** ([`build-sequence.md`](build-sequence.md)).
+   - **Scale:** a soda can, a 300 mm rule, dimension lines, and a 1.75 m person on the room floor beside the tray.
+   - **Mill:** the spindle is always vertical, and the part is clamped, flipped or indexed on the 4th axis. The animated
+     cuts match the model's frame and floor plate to 0.000 % by volume.
+5. **Two UR12e arms assembling the machine** ([`assembly.md`](assembly.md)): every part is swept along its insertion path,
+   both arms are planned with RRT-Connect, and every move gets PR 318's 1.5 mm audit.
+   - **Result after two iterations:** 63 of 79 checked steps pass, and 118 of 135 screws get a planned, collision-free
+     approach.
+   - **What it took:** a trunnion positioner for the turn-overs, an angle-head nutrunner for upward screws, a vacuum
+     gripper and nozzle, and a reordered sequence.
+   - **What still fails needs design changes:** a clamped rod-end cap instead of the weld, dowels pressed by the shop,
+     locating pins on three bolted parts, a lever KF-40 clamp, and door clamps.
+   - **Seals:** installed stretch is 1.4–2.7 %. Folding the two rod O-rings through the gland plate is the riskiest
+     step (~34 % bending strain).
+   - **Model fixes from it:** the lid gland's corners went from R4 to R13 (Parker's minimum is 10.6 mm), and the floor
+     port got a 20° lead-in.
+6. **Robot tending in PR 318's cell** ([`robot-ops.md`](robot-ops.md)): UR12e + 2F-85 + D405 on a MiR250 with the 131 kg
+   ballast, FCL on meshes, IK branches, RRT-Connect, the 1.5 mm audit and the movers check.
+   - **Result:** 10 of 12 jobs pass end to end on M50, counting the bayonet re-run below, and both plate exchanges also pass on S25 and L75.
+   - **Pushing the door shut fails** from every one of 16 arm placements, so the door gets a rotary actuator. Its latches
+     get air cylinders.
+   - **The bayonet plate exchange** hit the thermal cutoff, which sat in the lugs' path. The cutoff is now lowered 1 mm, and
+     the re-run passes on M50, S25 and L75.
+   - **Still failing:** the build module swap (no reach past the hinge knuckles, or for the last 140 mm of its path; the
+     fix is zero-point modules and a handle) and the overflow jar (its hose and the guard rail are in the way). The liners
+     weren't run.
+7. **A hypothetical robot shop** ([`robot-shop.md`](robot-shop.md)): payload limits it, not reach.
+   - 44 of 48 parts start from ≤ 5 kg of stock. The 34.7 kg frame blank needs a person with a vacuum lifter, and it is
+     still 15.7 kg after the core comes out, so two arms are needed.
+   - The planned VF-4, lathe, two-arm and box moves pass, and the MiR keeps a 39.6 kg tip-over margin with the ballast.
+   - **Time:** 137 person-hours by hand against 60–78 with the cell, not counting the months to set the cell up.
+8. **Safety** ([`safety.md`](safety.md)).
+   - **BYU's pages:** every one of BYU's 35 safety program pages needs a BYU login.
+   - **Top gaps:** a fixed O₂ monitor (room and Shuttle), a limit on the argon a supply fault can release, a safety
+     controller with enough inputs, and a filter-cake passivation and bag-out procedure.
+   - **Laser:** the NHZ through the f-theta is 114 m, so eyewear needs OD ≥ 5.4 at full power.
+   - **What's listed:** 33 parts and 14 design changes.
+9. **Bugs found and fixed:**
+   - the robot cell's torques: the wrists had been carrying the arm's own link weights, reading 228 % of a limit where
+     the right figure is 21–31 %;
+   - a held part kept riding in the arm's collision set after release;
+   - moves after a grip dragged the part 2 mm sideways;
+   - `thermal_laser.py` crashed on a NameError;
+   - the shop study used a 13 in. frame blank where the final plan cuts a 15 in. one.
+
+### The full re-run on the final model (2026-11-20 23:59 to 2026-11-21 02:15 UTC, [`analysis/rerun_all.sh`](analysis/rerun_all.sh))
+
+| Check | Script | Result on the final model | Against the committed result |
+|---|---|---|---|
+| Interference, exact booleans | `interference.py` | **0** for M50, S25 and L75: 224 parts, 5 states and 8 motion sweeps each | unchanged; the floor plate's 8 designed contacts were added to the allowlist |
+| Robot tending, bayonet plate | `robot/ops.py` | **passes** on M50, S25 and L75, with a 0.6–0.7 mm closest pass and 33 % peak torque | was failing: its lugs hit the thermal cutoff, now lowered 1 mm |
+| Mass | `mass_budget.py` | 268.2 kg on the tray; the process module is 87.7 kg and tips at 0.69 g | +0.6 kg (the tending features) |
+| Tray power and heat | `tray/tray_budget.py` | unchanged | identical |
+| Seals | `seals/seals.py` | every gland OK, including the new floor gland (25 % squeeze, 80 % fill); the lid cord path is 955 mm with R13 corners | permeation O₂ 1.76 → 2.20 ppm/h (+0.44 from the floor cord); make-up argon for 10 ppm 37.5 → 46.8 sccm |
+| Door as a seal carrier (CalculiX) | `seals/door_seal_fea.py` | 1.78 mm cord: O-ring 1401 N, 34 µm of squeeze lost, latch 724 N each | the same to 0.1 µm |
+| Mechanical checks | `mech/mech_checks.py` | door latches 724 N each, SF 4.9 against 3.56 kN; the hinges carry about 0 | the committed 410 N / 314 N split predated moving the latches to the seal's centroid height (the door FEA already had 724 N) |
+| Hot-swap joint sizing | `hotswap/joint_calcs.py` | the same conclusions | numbers within 2 %, from the refreshed temperatures |
+| Hot-swap FEA (CalculiX) | `hotswap/hotswap_fea.py` | M50 re-run: plate lugs 42.3 MPa, flange 126.4 MPa | within 1.5 %. The L75 half was cut off by the runner's memory (the 10 GB cap ran out). The parts it checks are unchanged this round except 9 mm³ of heater block, so its committed L75 numbers stand |
+| Structural FEA (CalculiX) | `fea/fea.py` | chamber frame + floor plate cases 1, 1b and 1f (the chamber study); door SF 38; Z lift arm tilt 7.0 µm; window SF 45 | **Z arm tilt is 7.0 µm, not 3.8 µm** (still under 10 µm): the old figure predated the seal round's changes. Cases 2, 4 and 6 (lid, recoater, bridge) hit the memory cap in meshing or rendering; their parts are unchanged this round (identical volumes), so their committed results stand |
+| Module thermal (CalculiX) | `thermal_module.py` | plate, block and seal temperatures within 1 °C | **the magnet face runs 6–8 °C cooler at build end (56–58 °C).** The rod grew from 77 to 91 mm two rounds ago and this hadn't been re-run |
+| Laser heat in the module | `thermal_laser.py` | the same conclusion: dense layouts drive the plate past 200 °C, and the fan or water sleeve fixes it | the magnet column is a few °C cooler (the same rod change). A NameError that stopped the script writing its JSON is fixed |
+| MuJoCo | `mujoco_check.py` | every contact is a designed joint or a convex-decomposition artefact (the exact check is clear). The unlatched door stays shut to 11°, then reaches 1.71 m/s at the edge with no damping. The tray in transit doesn't slide or tilt up to 2 m/s² | the same picture; the door now has a rotary actuator ([`robot-ops.md`](robot-ops.md)) |
+| Hand operations | `ops/run_ops.py` | M50 81 pass / 2 warn / 40 fail; S25 and L75 8 / 0 / 3 | was 78 / 1 / 40. The floor plate's steps pass. New warning: hex keys reach the 18 floor screws, but no torque screwdriver fits, so use a torque-limiting hex key |
+| CFD (OpenFOAM, coarse) | `cfd/` | identical to the committed coarse case: 122 metrics, 0.00 % ([`rerun_coarse_2026-11-21.json`](analysis/out/cfd/rerun_coarse_2026-11-21.json)) | the gas volume the CFD meshes didn't change; the R10 corners are below its rectilinear mesh |
+| DEM (LIGGGHTS) | `powder/dem_spread.py` | the baseline case reproduces every number exactly | its inputs (blade, powder) are unchanged |
+| Machining | `machining/` | the chamber study re-ran cam_sim, per_setup, dfm, setup_plan and FreeCAD CAM | §0.2–0.3 above |
+| Two-arm assembly | `assembly/run_assembly.py` | 63 of 79 steps pass; 118 of 135 screws get a planned approach | the first pass was 47 / 26 and 91 |
+| Robot shop | `shop/shop_checks.py` | payload table refreshed from the final part list | frame blank corrected to the 15 in. one |
+
+The memory cap matters on this 15 GB runner: two earlier runs on this branch died of OOM. Every step ran under
+`/tmp/capmem`, and `rerun_all.sh` re-runs any step by name.
+
+### Edison
+
+The four rubber-duck tasks the stopped run had submitted are fetched with their full trajectories: chamber construction,
+robotic O-ring assembly, robot tending, and safety (`edison/r3-*`).
+
+From 22:28 UTC Edison refused new tasks with HTTP 402 (out of credit), so no further rubber-duck passes ran. The next query
+is written and waiting in [`edison/r4-frame-floor-review/`](edison/r4-frame-floor-review/).
+
 ## 1. What changes what we buy or draw, most urgent first
 
 1. **Decide air- or water-cooled before ordering the laser** ([`heat.md`](heat.md) §2). The quoted IPG
