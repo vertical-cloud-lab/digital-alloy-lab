@@ -41,7 +41,7 @@ FIX_COL = "#6f777e"
 DEFAULT_PLAN = {
     "frame": [
         dict(on="jet", rots=[], ops=["FR-02"], title="F-S0, waterjet: a Ø12 start hole, then the core cut out of the 15 x 9.5 x 5.5 in. blank in one piece"),
-        dict(on="tabs", rots=[("x", 180)], ops=["FR-01<", "FR-04", "FR-05", "J:floor"],
+        dict(on="tabs", rots=[("x", 180)], ops=["FR-01<", "FR-04", "FR-05", "J:floor", "J:floor_dowels"],
              title="F-S1, VF-4, bottom up: riser blocks, toe clamps on the end tabs; face, lower half of the profile, opening, rebate, floor-screw holes"),
         dict(on="plate", rots=[], ops=["FR-01>", "FR-03", "FR-06", "J:lid"],
              title="F-S2, VF-4, top up: end tabs sawn off; the frame held down on a dummy-floor plate by its own 18 floor screws; "
@@ -51,7 +51,7 @@ DEFAULT_PLAN = {
              title="F-S3, VF-4 + HRT210: the dummy-floor plate on the platter, the frame's bottom on it; one clamping, four walls"),
     ],
     "floor": [
-        dict(on="tabs", rots=[], ops=["FP-01>", "FP-02", "FP-03", "FP-04", "FP-05", "FP-06"],
+        dict(on="tabs", rots=[], ops=["FP-01>", "FP-02", "FP-03", "FP-04", "FP-05", "FP-06", "J:floor_dowels"],
              title="P-S1, VF-4, top up: 15 x 9.5 x 1 in. blank on parallels, toe clamps on the end tabs; face, the 4 mm pad, O-ring gland, Ø96 H7 port, slots"),
         dict(on="studs", rots=[("x", 180)], ops=["FP-01<", "J:floor", "FP-07", "J:module_flange", "J:plenum_out", "J:funnel", "J:zmount", "J:legs"],
              title="P-S2, VF-4, bottom up: two pins and an M12 stud through the port; face to 20 mm, profile, U-notches, every under-floor hole"),
