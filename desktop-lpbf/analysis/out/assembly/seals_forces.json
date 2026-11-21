@@ -1,0 +1,518 @@
+{
+ "seals": {
+  "rows": [
+   {
+    "gland": "lid",
+    "ring": "3.53 mm cord (vulcanized splice)",
+    "n": 1,
+    "cs": 3.53,
+    "kind": "face",
+    "closure": "chamber lid (20 x M5)",
+    "inner_perimeter_mm": 959.0,
+    "centreline_mm": 973.5,
+    "moulded_alternative": "2-278",
+    "moulded_id": 304.39,
+    "moulded_installed_stretch_pct": 0.29,
+    "moulded_stretch_range_pct": [
+     -0.25,
+     0.83
+    ],
+    "corner_r_inner_mm": 4.3,
+    "corner_r_parker_min_mm": 10.6,
+    "corner_bend_strain_pct": 29.0,
+    "corner_bend_strain_at_3cs_pct": 14.0,
+    "method": "cord laid in by arm B at the midpoints, ends, quarter points (Adebola et al. 2024), rolled home by arm A's 3.2 mm PTFE wheel at 10-20 N; the splice at a straight run",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "spigot",
+    "ring": "2-238",
+    "n": 1,
+    "cs": 3.53,
+    "ring_id": 88.49,
+    "kind": "radial",
+    "closure": "module spigot in the floor port",
+    "dovetail": false,
+    "installed_stretch_pct": 2.3,
+    "install_stretch_pct": 9.3,
+    "squeeze_pct": 22.1,
+    "fc_lb_in": 2.07,
+    "running_N": 109.0,
+    "breakout_N": 328.0,
+    "method": "stretched over the acetal spigot mandrel (cone + 0.45 mm sleeve) and pushed off into the groove by the pusher",
+    "chamfer_needed": "floor port's lower edge: >= 3.5 mm at 15 deg or 2.5 mm at 20 deg (the ring enters the port from below); the spigot's top edge is covered by the mandrel's sleeve"
+   },
+   {
+    "gland": "gland_plate_M50",
+    "ring": "2-034",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 53.7,
+    "kind": "face",
+    "closure": "gland plate on the welded collar (M50)",
+    "dovetail": false,
+    "installed_stretch_pct": 1.5,
+    "install_stretch_pct": 3.4,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "rod_M50",
+    "ring": "2-114",
+    "n": 2,
+    "cs": 2.62,
+    "ring_id": 15.54,
+    "kind": "rod",
+    "closure": "hollow rod through the gland plate (M50)",
+    "dovetail": false,
+    "installed_stretch_pct": 2.2,
+    "ring_od_vs_groove_pct": -3.8,
+    "squeeze_pct": 21.3,
+    "fc_lb_in": 1.99,
+    "running_N": 35.0,
+    "breakout_N": 104.0,
+    "fold_strain_pct": 34.0,
+    "method": "folded into the slotted loader tube (kidney fold), pushed through the \u00d815.93 throat and released into the groove, the deeper groove first; then the rod enters on the PEEK bullet",
+    "chamfer_needed": "rod end: the bullet's 15 deg nose (>= 3.0 mm at 15 deg); the throat's edges rounded R0.2-0.4 and polished"
+   },
+   {
+    "gland": "hermetic_M50",
+    "ring": "2-014",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 12.42,
+    "kind": "face",
+    "closure": "hermetic connector on the rod end (M50)",
+    "dovetail": false,
+    "installed_stretch_pct": 1.4,
+    "install_stretch_pct": 9.5,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "overflow_funnel",
+    "ring": "2-042",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 82.27,
+    "kind": "face",
+    "closure": "overflow funnel block (316L) under the floor",
+    "dovetail": false,
+    "installed_stretch_pct": 2.0,
+    "install_stretch_pct": 3.2,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "floor",
+    "ring": "3.53 mm cord (vulcanized splice)",
+    "n": 1,
+    "cs": 3.53,
+    "ring_id": null,
+    "kind": "face",
+    "closure": "chamber floor plate on the frame (18 x M4)",
+    "dovetail": false,
+    "method": "floor plate face up on Fixture P: cord laid in by arm B, rolled home by arm A's 3.2 mm wheel; nothing above the plate yet, so the roller has the whole gland to itself",
+    "chamfer_needed": "none (axial face seal)",
+    "inner_perimeter_mm": 932.3,
+    "moulded_alternative": "2-277",
+    "moulded_id": 291.69,
+    "moulded_installed_stretch_pct": 1.73,
+    "moulded_stretch_range_pct": [
+     1.16,
+     2.31
+    ],
+    "corner_r_inner_mm": 11.5,
+    "corner_r_parker_min_mm": 10.6,
+    "corner_bend_strain_pct": 13.0
+   },
+   {
+    "gland": "inlet_plenum",
+    "ring": "2-044",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 94.97,
+    "kind": "face",
+    "closure": "inlet plenum (316L) on the back wall (6061)",
+    "dovetail": false,
+    "installed_stretch_pct": 2.0,
+    "install_stretch_pct": 3.1,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "outlet_plenum",
+    "ring": "2-044",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 94.97,
+    "kind": "face",
+    "closure": "outlet plenum (316L) under the floor (6061)",
+    "dovetail": false,
+    "installed_stretch_pct": 2.0,
+    "install_stretch_pct": 3.1,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "vacuum_port",
+    "ring": "2-024",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 28.3,
+    "kind": "face",
+    "closure": "KF-25 vacuum-port adapter plate on the right wall",
+    "dovetail": false,
+    "installed_stretch_pct": 2.5,
+    "install_stretch_pct": 6.0,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "fibre_heads",
+    "ring": "2-010",
+    "n": 2,
+    "cs": 1.78,
+    "ring_id": 6.07,
+    "kind": "face",
+    "closure": "threaded fibre heads in the side walls",
+    "dovetail": false,
+    "installed_stretch_pct": 2.1,
+    "install_stretch_pct": 18.6,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "recoater_feedthrough",
+    "ring": "2-024",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 28.3,
+    "kind": "face",
+    "closure": "recoater feedthrough flange on the left wall",
+    "dovetail": false,
+    "installed_stretch_pct": 2.5,
+    "install_stretch_pct": 6.0,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "recoater_cap",
+    "ring": "2-019",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 20.35,
+    "kind": "face",
+    "closure": "blind bearing cap on the right wall",
+    "dovetail": false,
+    "installed_stretch_pct": 2.2,
+    "install_stretch_pct": 7.1,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "window_lower",
+    "ring": "2-031",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 44.17,
+    "kind": "face",
+    "closure": "window on its seat",
+    "dovetail": false,
+    "installed_stretch_pct": 1.7,
+    "install_stretch_pct": 3.9,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "window_flange",
+    "ring": "2-036",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 60.05,
+    "kind": "face",
+    "closure": "window flange on the lid",
+    "dovetail": false,
+    "installed_stretch_pct": 2.6,
+    "install_stretch_pct": 4.2,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "drawer",
+    "ring": "2-033",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 50.52,
+    "kind": "face",
+    "closure": "cover-slide drawer on the lid's front face",
+    "dovetail": true,
+    "installed_stretch_pct": 2.0,
+    "install_stretch_pct": 4.0,
+    "method": "2F-85 pin caps open inside the ring (2-point internal grip), lay it on the groove, roller_n presses it under the dovetail lip",
+    "chamfer_needed": "none (axial face seal)",
+    "face_opening_mm": 1.71,
+    "lateral_squeeze_pct": [
+     3.8,
+     7.7
+    ],
+    "insert_N_per_mm": [
+     0.116,
+     0.353
+    ],
+    "roller_force_N": 5.0
+   },
+   {
+    "gland": "metering_base",
+    "ring": "2-040",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 72.75,
+    "kind": "face",
+    "closure": "metering base on the lid (4 x M4)",
+    "dovetail": false,
+    "installed_stretch_pct": 2.0,
+    "install_stretch_pct": 3.4,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "reservoir_dock",
+    "ring": "2-040",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 72.75,
+    "kind": "face",
+    "closure": "reservoir base plate on the dock face (wedge rails + detent)",
+    "dovetail": false,
+    "installed_stretch_pct": 2.0,
+    "install_stretch_pct": 3.4,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "roller_feedthrough",
+    "ring": "2-012",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 9.25,
+    "kind": "face",
+    "closure": "roller feedthrough in the metering base",
+    "dovetail": false,
+    "installed_stretch_pct": 2.7,
+    "install_stretch_pct": 13.5,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "reservoir_lid_M",
+    "ring": "2-030",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 41.0,
+    "kind": "face",
+    "closure": "reservoir M lid on its top frame",
+    "dovetail": false,
+    "installed_stretch_pct": 2.0,
+    "install_stretch_pct": 4.4,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "camera_adapter",
+    "ring": "2-022",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 25.12,
+    "kind": "face",
+    "closure": "camera adapter on the lid",
+    "dovetail": false,
+    "installed_stretch_pct": 2.7,
+    "install_stretch_pct": 6.7,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "camera_window",
+    "ring": "2-017",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": 17.17,
+    "kind": "face",
+    "closure": "camera window on the boss",
+    "dovetail": false,
+    "installed_stretch_pct": 2.5,
+    "install_stretch_pct": 8.3,
+    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
+    "chamfer_needed": "none (axial face seal)"
+   },
+   {
+    "gland": "sae4_ports",
+    "ring": "3-904",
+    "n": 4,
+    "cs": 1.83,
+    "ring_id": 8.92,
+    "kind": "sae",
+    "closure": "SAE-4 O-ring-boss ports: argon in, O2 sample, transducer, relief valve",
+    "dovetail": false,
+    "method": "comes fitted on the transducer and relief valve; turned in with the part",
+    "chamfer_needed": "SAE J1926 port's 12 deg chamfer (part of the port standard)"
+   },
+   {
+    "gland": "door",
+    "ring": "cord",
+    "n": 1,
+    "cs": 1.78,
+    "ring_id": null,
+    "kind": "face",
+    "closure": "chamber door",
+    "dovetail": true,
+    "method": "cord: vulcanized ring rolled into the half-dovetail (roller_n), arm B tensioning the free loop",
+    "chamfer_needed": "none (axial face seal)",
+    "face_opening_mm": 1.71,
+    "lateral_squeeze_pct": [
+     3.8,
+     7.7
+    ],
+    "insert_N_per_mm": [
+     0.116,
+     0.353
+    ],
+    "roller_force_N": 5.0
+   }
+  ],
+  "lubricant": {
+   "name": "Krytox LVP (PFPE grease)",
+   "vapour_pressure_torr_20C": 1e-13,
+   "fkm": "compatible (Chemours lists Viton A)",
+   "use": "a film wiped on with a lint-free swab; holds face rings in grooves that face down when closed"
+  },
+  "verification": [
+   "D405 RGB at 70-120 mm before each closure: ring present, unbroken, in the groove all round, no twist mark (about 0.1-0.15 mm per pixel at 100 mm, 87 deg x 58 deg); its depth (+-2 % at 50 cm, roughly +-1.4 % at 20 cm) is too coarse to see a 0.5-0.9 mm proud cord, so seating is checked by force",
+   "force signature in UR force mode (F/T +-100 N range, +-5.5 N accuracy): the roller's 10-20 N press stays flat round the groove (a dip is a gap, a spike an overlap); rod and spigot insertions follow a reference curve (double peak = pinched ring)",
+   "leak test after assembly: rate of rise from <= 1 mbar and O2 drift at +20 mbar argon (seals.md), plus a helium sniff of each new joint if the rate of rise fails"
+  ]
+ },
+ "forces": [
+  {
+   "step": "C02",
+   "what": "\u00d86 m6 dowel and diamond pin pressed 10 mm into the 6061 floor (H7)",
+   "need_N": 1644.0,
+   "basis": "Lame press fit, 0.008 mm diametral interference, mu 0.15: p = 58 MPa",
+   "robot": "NO: 16x the F/T range; a UR pushing this hard is past its force limit. Arbor press by a person, or a slip fit (g6) with retaining compound so the robot only inserts it"
+  },
+  {
+   "step": "C10",
+   "what": "spigot's 2-238 entering the \u00d896 floor port",
+   "need_N": 109.0,
+   "peak_N": 328.0,
+   "basis": "Parker 5.11.2: fc 2.07 lb/in at 22.1 % over pi x 96 mm; break-out 3x",
+   "robot": "robot starts it on the lead-in chamfer (<= 50 N in force mode), the two captive M6 screws pull it home"
+  },
+  {
+   "step": "M22",
+   "what": "hollow rod through the two 2-114 rod O-rings",
+   "need_N": 35.0,
+   "peak_N": 104.0,
+   "basis": "Parker 5.11.2: fc 1.99 lb/in at 21.3 % over pi x 15.875 mm, two rings",
+   "robot": "yes in force mode with a PFPE film (lubricated, about half); dry break-out is at the F/T range"
+  },
+  {
+   "step": "M23",
+   "what": "build plate into the honed bore (0.15 mm radial clearance) and onto the bayonet",
+   "need_N": 10.0,
+   "basis": "sliding fit; 10 N contact for a spiral search",
+   "robot": "yes: force-guided spiral search; positioning alone (AprilTag + D405, about +-0.4 mm) is coarser than the clearance"
+  },
+  {
+   "step": "F39",
+   "what": "drawer against its 2-033 (358 N to squeeze, seals.md)",
+   "need_N": 50.0,
+   "peak_N": 358.0,
+   "basis": "the two quarter-turn latches pull it the last 0.4 mm",
+   "robot": "robot pushes to first contact only"
+  },
+  {
+   "step": "F46",
+   "what": "reservoir onto the dock O-ring along its 2 deg ramps (seals.md)",
+   "need_N": 94.0,
+   "basis": "seals.md: 94 N push home, 58 N pull-out",
+   "robot": "yes, but at the F/T range's edge (100 N): set the push to 94 N +- 5.5 N"
+  },
+  {
+   "step": "F51",
+   "what": "door draw latches, 725 N preload each (seals.md)",
+   "need_N": 725.0,
+   "basis": "1807A61 over-centre latches",
+   "robot": "NO: a person closes them (or pneumatic clamps, seals.md (b))"
+  },
+  {
+   "step": "screws",
+   "what": "M3 / M4 / M5 / M6 A2-70 in A2 inserts, mu 0.14 (MoS2 paste)",
+   "need_N": null,
+   "torque_Nm": {
+    "M3": 1.1,
+    "M4": 2.2,
+    "M5": 4.2,
+    "M6": 7.4
+   },
+   "basis": "Pfeiffer Vacuum's A2-70 table (90 % of Rp0.2): M4 2.2, M5 4.2, M6 7.4 N m at mu 0.14; M3 from TR Fastenings",
+   "robot": "OnRobot Screwdriver 0.15-5 N m covers M3-M5; M6 needs the inline nutrunner (1.5-10 N m)"
+  },
+  {
+   "step": "M02/C01",
+   "what": "helical inserts (M3-M6)",
+   "need_N": null,
+   "torque_Nm": {
+    "insert": "0.45-3 (Bollhoff's powered tools)"
+   },
+   "basis": "Bollhoff HELICOIL power tools E-S 206 (0.45-0.95 N m), E-PSG (0.9-3 N m)",
+   "robot": "machine shop, with the tang broken off"
+  }
+ ],
+ "tipover": [
+  {
+   "case": "chamber assembly, two arms (15.5 kg / 2)",
+   "payload_kg": 7.75,
+   "push_N": 0.0,
+   "margin": 14.4
+  },
+  {
+   "case": "optics bridge, two arms (13.3 kg / 2)",
+   "payload_kg": 6.65,
+   "push_N": 0.0,
+   "margin": 14.8
+  },
+  {
+   "case": "chamber body on the vacuum gripper (7.3 kg + 0.8 kg)",
+   "payload_kg": 8.1,
+   "push_N": 0.0,
+   "margin": 18.9
+  },
+  {
+   "case": "12.5 kg at 1300 mm (rated payload at full reach)",
+   "payload_kg": 12.5,
+   "push_N": 0.0,
+   "margin": 5.8
+  },
+  {
+   "case": "reservoir push home 94 N, sideways at 1.25 m",
+   "payload_kg": 0.5,
+   "push_N": 94.0,
+   "margin": 6.7
+  },
+  {
+   "case": "dowel press 1.6 kN (if a robot tried)",
+   "payload_kg": 0.0,
+   "push_N": 1644.0,
+   "margin": 0.5
+  }
+ ],
+ "sources": {
+  "parker": "Parker O-Ring Handbook ORD 5700, https://nfc.arizona.edu/sites/default/files/2022-02/parker_o-ring_handbook.pdf, read 2026-11-20 22:18 UTC: Sec. 3.3 (stretch), 4.3 (non-circular grooves, corner radius >= 3x CS), 5.11 (friction, Fig. 5-9), Design Charts 4-3..4-5, Table 9-1",
+  "trelleborg": "Trelleborg O-ring catalogue Table 16 (lead-in chamfers), read 2026-11-20 22:41 UTC",
+  "pfeiffer": "Pfeiffer Vacuum knowledge base, A2-70 tightening torques, read 2026-11-20 22:35 UTC",
+  "krytox": "Chemours Krytox LVP data sheet, read 2026-11-20 22:36 UTC",
+  "adebola": "Adebola et al. (2024), Automating deformable gasket assembly, IEEE CASE, doi:10.48550/arxiv.2408.12593 (via Edison r3)"
+ }
+}

@@ -1,0 +1,50 @@
+[
+ [
+  "render_cell.png",
+  "The cell: two UR12e on MiR250s, the bench with the module nests and Fixture C, Fixture P, and Fixture B with the finished process module"
+ ],
+ [
+  "render_F05_mid.png",
+  "Chamber assembly (15.5 kg) turned over by both arms holding two legs"
+ ],
+ [
+  "render_M22_1.png",
+  "Heater stack into the bore: the rod on its bullet passes the two rod O-rings"
+ ],
+ [
+  "render_M20.png",
+  "Spigot O-ring: mandrel on the spigot, pusher stroke"
+ ],
+ [
+  "render_C10_1.png",
+  "Build module (upside down) into the floor port on Fixture C"
+ ],
+ [
+  "render_F05.png",
+  "Chamber set onto the base plate on Fixture B"
+ ],
+ [
+  "render_F29_A_0.png",
+  "Lid cord rolled into the body's gland (roller on arm A)"
+ ],
+ [
+  "turnover_F05.gif",
+  "Chamber turn-over by both arms (F05), every few frames of the checked path"
+ ],
+ [
+  "render_screw_F06.png",
+  "F06: base-plate-to-leg M6 driven up from under the plate (angle-head nutrunner)"
+ ],
+ [
+  "render_screw_C00d.png",
+  "C00d: floor-plate M4 driven up through a U-notch (angle-head nutrunner)"
+ ],
+ [
+  "render_screw_F31.png",
+  "F31: lid M5 (OnRobot Screwdriver, side-mounted)"
+ ],
+ [
+  "render_screw_F18h.png",
+  "F18: rail M4 driven from inside the chamber (angle-head nutrunner)"
+ ]
+]

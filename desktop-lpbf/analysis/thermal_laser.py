@@ -153,7 +153,7 @@ def main():
     summary = summarize(rows)
     data = dict(assumptions=dict(P_laser_W=P_LASER, v_scan_mm_s=V_SCAN, hatch_mm=HATCH, absorptance=ABS,
                                  absorptance_keyhole=ABS_KEYHOLE, t_jump_s=T_JUMP, t_recoat_s=T_RECOAT, fills=FILL,
-                                 T_chamber_C=25.0, limits=lim),
+                                 T_chamber_C=25.0, limits=TM.LIMITS),
                 laser_loads=loads, rows=rows, summary=summary, seconds=round(time.time() - t0))
     (OUT / "laser_heat.json").write_text(json.dumps(data, indent=1, default=float))
     report(data)

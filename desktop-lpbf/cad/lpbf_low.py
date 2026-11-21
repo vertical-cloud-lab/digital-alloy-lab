@@ -560,7 +560,8 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     co, zm = FR["core_off"], zc_                                 # the top and bottom finishing passes meet at mid-height
     opening = rbox(-ix, ix, -iy, iy, zf0 - 1, lz0 + 1, FR["r_in"])
     rebate = rbox(-ix - rb, ix + rb, -iy - rb, iy + rb, zf0 - 1, 0.0, FR["r_in"] + rb)
-    lid_gland = rbox(-ix - 3 - gw, ix + 3 + gw, -iy - 3 - gw, iy + 3 + gw, lz0 - gd, lz0 + 1, 6).cut(rbox(-ix - 3, ix + 3, -iy - 3, iy + 3, lz0 - gd - 1, lz0 + 2, 4))
+    # inner corners R13 (were R4): Parker's minimum bend for a 3.53 mm ring is 3 x CS = 10.6 mm (assembly.md: R4 put 29 % bend strain on the cord)
+    lid_gland = rbox(-ix - 3 - gw, ix + 3 + gw, -iy - 3 - gw, iy + 3 + gw, lz0 - gd, lz0 + 1, 13.0 + gw).cut(rbox(-ix - 3, ix + 3, -iy - 3, iy + 3, lz0 - gd - 1, lz0 + 2, 13.0))
     dz0, dz1 = 8.0, 100.0                                        # door opening: sill 8 mm above the floor
     beam = []
     for sx in (-1, 1):                                           # plate-at-exchange-height through-beam (fibre heads): M6 x 0.75 through,
@@ -604,7 +605,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         ("FP-01", "square the blank: profile 312 x 222 with R8 corners; face both sides to 20 mm", fp_blank.cut(fp_outer)),
         ("FP-02", "step the edge band down 4 mm, leaving the 4 mm pad that fits inside the frame's skirt", band),
         ("FP-03", "floor O-ring face gland in the pad's top face (4.6 x 2.65, 1.5 mm outside the walls)", fl_gland),
-        ("FP-04", "module port Ø96 H7 (every module's spigot)", cyl(P["port_d"] / 2, (0, 0, -fl - 1), "z", fl + 2)),
+        # + a 20 deg x 2.5 mm lead-in on the lower edge: the spigot O-ring enters the port from below (assembly.md; Parker: 15-20 deg)
+        ("FP-04", "module port Ø96 H7 (every module's spigot), 20 deg x 2.5 mm lead-in chamfer on its lower edge",
+         fuse([cyl(P["port_d"] / 2, (0, 0, -fl - 1), "z", fl + 2),
+               cq.Solid.makeCone(P["port_d"] / 2 + 2.5 * math.tan(math.radians(20.0)) + 0.36, P["port_d"] / 2, 2.5 + 1.0, V(0, 0, -fl - 1.0), V(0, 0, 1))])),
         ("FP-05", "cross-flow outlet slot 124 x 8 near the door, round ends", rbox(-MP.OUTLET_HALF, MP.OUTLET_HALF, MP.OUTLET_Y[0], MP.OUTLET_Y[1], -fl - 1, 1, FR["slot_r"])),
         ("FP-06", "overflow slot 20 x 104, R4 corners", rbox(P["ovf_x0"], P["ovf_x1"], -52, 52, -fl - 1, 1, 4.0)),
         ("FP-07", "module thumb-screw pre-holes and the dowel / diamond-pin holes, from below", fuse(pre)),
@@ -620,7 +624,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     GLANDS["floor"] = dict(kind="face", ring="cord", cs=3.53, depth=gd, width=gw, inner_perimeter=loop_perimeter((ix + gt, iy + gt), FR["r_in"] + gt), groove_mat="al",
                            T=60.0, closure="chamber floor plate on the frame (18 x M4)")
     # the cord as squeezed: 2.65 mm tall, ~3.7 mm wide, sitting in the 4.6 mm gland
-    add("Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)", rbox(-ix - 3.3 - 3.7, ix + 3.3 + 3.7, -iy - 3.3 - 3.7, iy + 3.3 + 3.7, lz0 - gd, lz0, 5.6).cut(rbox(-ix - 3.3, ix + 3.3, -iy - 3.3, iy + 3.3, lz0 - gd - 1, lz0 + 1, 4.3)),
+    add("Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)", rbox(-ix - 3.3 - 3.7, ix + 3.3 + 3.7, -iy - 3.3 - 3.7, iy + 3.3 + 3.7, lz0 - gd, lz0, 17.0).cut(rbox(-ix - 3.3, ix + 3.3, -iy - 3.3, iy + 3.3, lz0 - gd - 1, lz0 + 1, 13.3)),
         C["black"], 5, (0, 0, 300), mat="fkm", bom="G8", mcm="ORING_CORD", section=True)
     # 316L on 6061 cannot be welded: a 6 mm bolting flange, 7 x M4 (joints.py) and an FKM face O-ring round the opening. The frame
     # ends at z = -3.9, so the plenum does too: its cavity floor is at z +1.5 (was -3) and the groove at z >= -2.3, all on the frame;

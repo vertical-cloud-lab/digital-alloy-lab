@@ -16,53 +16,53 @@ AlSi10Mg at 350 W, 1300 mm/s, 0.13 mm hatch (169 mm²/s scanned), absorptance 0.
 
 | Module, position | Laser (W) | Heater (W) | Plate centre (°C) | Block max (°C, TCO 240) | Bore seal (°C) | Spigot O-ring (°C) | Rod-gland O-rings (°C, FKM 200, 150 preferred) | Magnet face (°C, NdFeB 80) | Hot plate clearance (µm) |
 |---|---|---|---|---|---|---|---|---|---|
-| S25 start | 0 | 44 | 200 | 221 | 60 | 39 | 45 | 41 | 51 |
-| S25 start | 30 | 12 | 200 | 200 | 58 | 38 | 43 | 40 | 51 |
-| S25 start | 60 | 0 (off) | 262 | 261 | 69 | 44 | 50 | 45 | 35 |
-| S25 start | 90 | 0 (off) | 354 | 353 | 88 | 53 | 61 | 54 | 10 |
-| S25 start | 120 | 0 (off) | 436 | 434 | 106 | 62 | 72 | 62 | -12 |
-| S25 start | 150 | 0 (off) | 511 | 508 | 123 | 71 | 82 | 70 | -31 |
-| S25 end | 0 | 30 | 200 | 216 | 111 | 32 | 107 | 64 | 67 |
-| S25 end | 30 | 0 (off) | 205 | 205 | 110 | 33 | 105 | 63 | 66 |
-| S25 end | 60 | 0 (off) | 356 | 355 | 186 | 40 | 175 | 94 | 40 |
-| S25 end | 90 | 0 (off) | 489 | 488 | 252 | 46 | 237 | 119 | 19 |
-| S25 end | 120 | 0 (off) | 608 | 606 | 311 | 53 | 290 | 140 | 1 |
-| S25 end | 150 | 0 (off) | 717 | 715 | 362 | 58 | 336 | 156 | -16 |
-| M50 start | 0 | 72 | 200 | 206 | 70 | 48 | 49 | 44 | 56 |
-| M50 start | 30 | 41 | 200 | 202 | 69 | 47 | 48 | 43 | 56 |
-| M50 start | 60 | 11 | 200 | 200 | 68 | 47 | 48 | 43 | 56 |
-| M50 start | 90 | 0 (off) | 241 | 240 | 79 | 53 | 54 | 48 | 35 |
-| M50 start | 120 | 0 (off) | 298 | 297 | 94 | 62 | 62 | 54 | 6 |
-| M50 start | 150 | 0 (off) | 350 | 350 | 109 | 71 | 70 | 61 | -21 |
-| M50 end | 0 | 52 | 200 | 205 | 116 | 38 | 112 | 66 | 82 |
-| M50 end | 30 | 21 | 200 | 200 | 115 | 38 | 110 | 65 | 82 |
-| M50 end | 60 | 0 (off) | 228 | 228 | 129 | 40 | 124 | 71 | 72 |
-| M50 end | 90 | 0 (off) | 316 | 315 | 175 | 47 | 168 | 90 | 41 |
-| M50 end | 120 | 0 (off) | 396 | 396 | 219 | 54 | 209 | 107 | 13 |
-| M50 end | 150 | 0 (off) | 471 | 470 | 259 | 61 | 246 | 122 | -12 |
-| L75 start | 0 | 97 | 200 | 204 | 66 | 56 | 46 | 42 | 64 |
-| L75 start | 30 | 67 | 200 | 202 | 65 | 56 | 46 | 42 | 64 |
-| L75 start | 60 | 36 | 200 | 200 | 65 | 56 | 46 | 42 | 64 |
-| L75 start | 90 | 6 | 200 | 200 | 65 | 56 | 46 | 41 | 64 |
-| L75 start | 120 | 0 (off) | 236 | 236 | 74 | 63 | 51 | 45 | 37 |
-| L75 start | 150 | 0 (off) | 278 | 278 | 85 | 72 | 56 | 50 | 6 |
-| L75 end | 0 | 71 | 200 | 203 | 112 | 42 | 108 | 64 | 96 |
-| L75 end | 30 | 41 | 200 | 201 | 112 | 42 | 107 | 63 | 96 |
-| L75 end | 60 | 11 | 200 | 200 | 111 | 42 | 107 | 63 | 95 |
-| L75 end | 90 | 0 (off) | 242 | 242 | 133 | 46 | 127 | 72 | 72 |
-| L75 end | 120 | 0 (off) | 305 | 305 | 166 | 53 | 159 | 86 | 37 |
-| L75 end | 150 | 0 (off) | 364 | 364 | 198 | 59 | 188 | 98 | 6 |
+| S25 start | 0 | 44 | 200 | 221 | 60 | 39 | 44 | 38 | 51 |
+| S25 start | 30 | 12 | 200 | 200 | 58 | 38 | 43 | 37 | 51 |
+| S25 start | 60 | 0 (off) | 262 | 261 | 69 | 44 | 49 | 42 | 35 |
+| S25 start | 90 | 0 (off) | 354 | 353 | 88 | 53 | 60 | 49 | 10 |
+| S25 start | 120 | 0 (off) | 436 | 434 | 106 | 62 | 70 | 56 | -12 |
+| S25 start | 150 | 0 (off) | 511 | 508 | 122 | 71 | 80 | 62 | -31 |
+| S25 end | 0 | 30 | 200 | 216 | 110 | 32 | 106 | 57 | 67 |
+| S25 end | 30 | 0 (off) | 204 | 204 | 108 | 33 | 103 | 56 | 66 |
+| S25 end | 60 | 0 (off) | 355 | 354 | 182 | 40 | 173 | 81 | 41 |
+| S25 end | 90 | 0 (off) | 487 | 486 | 248 | 46 | 233 | 102 | 19 |
+| S25 end | 120 | 0 (off) | 606 | 605 | 306 | 53 | 286 | 118 | 1 |
+| S25 end | 150 | 0 (off) | 715 | 713 | 356 | 58 | 332 | 132 | -16 |
+| M50 start | 0 | 72 | 200 | 206 | 70 | 48 | 48 | 40 | 56 |
+| M50 start | 30 | 41 | 200 | 202 | 69 | 47 | 48 | 40 | 56 |
+| M50 start | 60 | 11 | 200 | 200 | 68 | 47 | 47 | 40 | 56 |
+| M50 start | 90 | 0 (off) | 240 | 240 | 78 | 53 | 53 | 44 | 35 |
+| M50 start | 120 | 0 (off) | 298 | 297 | 94 | 62 | 61 | 49 | 6 |
+| M50 start | 150 | 0 (off) | 350 | 350 | 109 | 71 | 69 | 54 | -21 |
+| M50 end | 0 | 52 | 200 | 205 | 115 | 38 | 111 | 58 | 82 |
+| M50 end | 30 | 21 | 200 | 200 | 114 | 38 | 109 | 57 | 82 |
+| M50 end | 60 | 0 (off) | 228 | 227 | 127 | 40 | 122 | 62 | 72 |
+| M50 end | 90 | 0 (off) | 315 | 314 | 173 | 47 | 166 | 78 | 41 |
+| M50 end | 120 | 0 (off) | 395 | 394 | 216 | 54 | 206 | 91 | 13 |
+| M50 end | 150 | 0 (off) | 470 | 469 | 256 | 60 | 243 | 104 | -12 |
+| L75 start | 0 | 97 | 200 | 204 | 66 | 56 | 46 | 39 | 64 |
+| L75 start | 30 | 67 | 200 | 202 | 65 | 56 | 46 | 39 | 64 |
+| L75 start | 60 | 36 | 200 | 200 | 65 | 56 | 45 | 39 | 64 |
+| L75 start | 90 | 6 | 200 | 200 | 65 | 56 | 45 | 39 | 64 |
+| L75 start | 120 | 0 (off) | 236 | 236 | 74 | 63 | 50 | 42 | 37 |
+| L75 start | 150 | 0 (off) | 278 | 278 | 84 | 72 | 56 | 46 | 6 |
+| L75 end | 0 | 72 | 200 | 203 | 112 | 42 | 107 | 56 | 96 |
+| L75 end | 30 | 41 | 200 | 201 | 111 | 42 | 106 | 56 | 95 |
+| L75 end | 60 | 11 | 200 | 200 | 110 | 42 | 106 | 56 | 95 |
+| L75 end | 90 | 0 (off) | 242 | 242 | 132 | 46 | 126 | 63 | 72 |
+| L75 end | 120 | 0 (off) | 304 | 304 | 165 | 52 | 157 | 74 | 37 |
+| L75 end | 150 | 0 (off) | 363 | 363 | 196 | 59 | 186 | 84 | 6 |
 
 ## Laser power at which each limit is reached (W absorbed, time-averaged)
 
 | Module, position | Heater switches off | Magnet face 80 °C | Rod gland 150 °C | Rod gland 200 °C | Block TCO 240 °C | Plate clearance 25 µm | Plate clearance 0 (seizes) |
 |---|---|---|---|---|---|---|---|
 | S25 start | 42 W | – | – | – | 49 W | 72 W | 104 W |
-| S25 end | 30 W | 46 W | 49 W | 72 W | 37 W | 81 W | 122 W |
+| S25 end | 30 W | 59 W | 50 W | 74 W | 37 W | 82 W | 122 W |
 | M50 start | 70 W | – | – | – | 90 W | 100 W | 127 W |
-| M50 end | 51 W | 74 W | 78 W | 114 W | 64 W | 107 W | 136 W |
+| M50 end | 51 W | 95 W | 79 W | 116 W | 64 W | 107 W | 136 W |
 | L75 start | 96 W | – | – | – | 123 W | 132 W | – |
-| L75 end | 71 W | 107 W | 112 W | – | 88 W | 132 W | – |
+| L75 end | 71 W | 137 W | 113 W | – | 89 W | 132 W | – |
 
 ## Densest layout that keeps the plate at its set point
 
@@ -73,31 +73,6 @@ Scanned share of the plate area per layer at which the time-averaged absorbed po
 | S25 | 92% | 57% | 38% |
 | M50 | 52% | 31% | 20% |
 | L75 | 46% | 24% | 15% |
-
-## The fix: take heat out of the module below the floor
-
-Same model, with the module's outside below the chamber floor (tube, flange, gland plate, rod) cooled harder: h = 5 W/m²K is the natural convection the model has now; 40 W/m²K is a small fan blowing on the module under the floor; 300 W/m²K at 30 °C stands for a water jacket on the tube. 'Laser off' is the heater power that holds 200 °C (it is also the absorbed laser power at which the heater switches off); 'dense' is the dense layout's laser power from the first table.
-
-| Cooling | Module, position | Heater at laser off (W) / installed (W) | Dense: laser (W) | Dense: heater (W) | Dense: plate (°C) | Dense: rod gland (°C) | Dense: magnet face (°C) | Dense: hot plate clearance (µm) | Laser off: hot plate clearance (µm) |
-|---|---|---|---|---|---|---|---|---|---|
-| natural convection (as drawn) | S25 start | 44 / 100 | 35 | 7 | 200 | 43 | 40 | 51 | 51 |
-| natural convection (as drawn) | S25 end | 30 / 100 | 35 | 0 (off) | 231 | 117 | 68 | 62 | 67 |
-| natural convection (as drawn) | M50 start | 72 / 150 | 81 | 0 (off) | 223 | 51 | 46 | 45 | 56 |
-| natural convection (as drawn) | M50 end | 52 / 150 | 81 | 0 (off) | 290 | 155 | 85 | 50 | 82 |
-| natural convection (as drawn) | L75 start | 97 / 250 | 111 | 0 (off) | 223 | 49 | 44 | 47 | 64 |
-| natural convection (as drawn) | L75 end | 71 / 250 | 111 | 0 (off) | 286 | 149 | 82 | 48 | 96 |
-| fan on the module under the floor | S25 start | 45 / 100 | 35 | 8 | 200 | 32 | 28 | 51 | 51 |
-| fan on the module under the floor | S25 end | 37 / 100 | 35 | 1 | 200 | 56 | 28 | 63 | 63 |
-| fan on the module under the floor | M50 start | 73 / 150 | 81 | 0 (off) | 220 | 36 | 29 | 45 | 55 |
-| fan on the module under the floor | M50 end | 65 / 150 | 81 | 0 (off) | 244 | 74 | 29 | 56 | 74 |
-| fan on the module under the floor | L75 start | 98 / 250 | 111 | 0 (off) | 220 | 34 | 29 | 47 | 63 |
-| fan on the module under the floor | L75 end | 88 / 250 | 111 | 0 (off) | 242 | 72 | 29 | 56 | 83 |
-| water jacket on the module (30 C water) | S25 start | 45 / 100 | 35 | 9 | 200 | 33 | 30 | 51 | 50 |
-| water jacket on the module (30 C water) | S25 end | 48 / 100 | 35 | 11 | 200 | 39 | 30 | 57 | 57 |
-| water jacket on the module (30 C water) | M50 start | 75 / 150 | 81 | 0 (off) | 216 | 35 | 30 | 45 | 54 |
-| water jacket on the module (30 C water) | M50 end | 80 / 150 | 81 | 0 (off) | 206 | 45 | 30 | 58 | 61 |
-| water jacket on the module (30 C water) | L75 start | 100 / 250 | 111 | 0 (off) | 218 | 34 | 30 | 48 | 61 |
-| water jacket on the module (30 C water) | L75 end | 107 / 250 | 111 | 0 (off) | 207 | 45 | 30 | 59 | 64 |
 
 A dash means the limit isn't reached inside the swept range (0-150 W). Heat balance closes to within 0.00 W in every run.
 
