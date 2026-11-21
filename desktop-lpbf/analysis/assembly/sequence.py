@@ -53,11 +53,11 @@ def steps(module="M50"):
     a(P("M04", "Thermocouples and the thermal cutoff", ["Type K thermocouples", "Thermal cutoff"], "stack", "stack_inv", [(0, 0, 0), (0, 0, -100)],
         note="leads routed by a person"))
     a(P("M05", "Macor rings and radiation shields over three guide pins", ["Macor standoff", "Radiation shields"], "stack", "stack_inv",
-        [(0, 0, 0), (0, 0, -70)], tool="gripper+caps", per_solid=True, drop_ok=True, drop_mm=36.0, order="zdesc",
+        [(0, 0, 0), (0, 0, -70)], tool="nozzle", per_solid=True, drop_ok=True, drop_mm=36.0, order="zdesc",
         note="3 temporary M3 guide pins in the inserts keep the 9 rings and 2 foils in line"))
     a(P("M06", "Piston head onto the break", ["Piston head"], "stack", "stack_inv", [(0, 0, 0), (0, 0, -80)]))
-    a(P("M07", "Disc springs into the head's slotted counterbores", ["Disc springs under"], "stack", "stack_inv", [(0, 0, 0), (0, 0, -40)],
-        tool="gripper+caps", drop_ok=True, drop_mm=24.0, note="a Ø6 vacuum nozzle is the surer way into the Ø7 counterbores"))
+    a(P("M07", "Disc springs into the head's slotted counterbores (small-part vacuum nozzle)", ["Disc springs under"], "stack", "stack_inv",
+        [(0, 0, 0), (0, 0, -40)], tool="nozzle", per_solid=False, drop_ok=True, drop_mm=6.0))
     a(S("M08", "Three M3 x 25 stack screws down through the head (torque-controlled: disc-spring preload)", f"stack_{m}", "stack", "stack_inv",
         torque_Nm=0.6))
     a(N("M09", "Bore seal (aramid felt + carbon-filled PTFE scraper) stretched into the head's groove", "person",
@@ -117,11 +117,12 @@ def steps(module="M50"):
            grasps={"A": dict(point=(-148.0, 0.0, 108.0), z=DN, x=(1.0, 0.0, 0.0)), "B": dict(point=(148.0, 0.0, 108.0), z=DN, x=(1.0, 0.0, 0.0))}))
     a(S("C00d", "Eighteen M4 x 16 floor-plate screws up through the U-notches into the frame's skirt, from under the plate's edge",
         "floor", "chamber", "chamber_up_P", torque_Nm=1.1))
-    a(dict(do="dual", id="C01", label="Chamber (frame + floor plate, about 11 kg) turned over by both arms onto Fixture C", keys=["@chamberset"],
-           grp="chamber", phase="chamber_inv", frm="chamber_up_P", flip=True, path=[(0, 0, 0), (0, 0, 120)], docks="PC", grip_gap=16.0, cg=(0.0, 0.0, 50.0),
-           grasps={"A": dict(point=(-148.0, -92.0, 108.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0)),
-                   "B": dict(point=(148.0, 92.0, 108.0), z=(0.0, -1.0, 0.0), x=(1.0, 0.0, 0.0))},
-           note="each arm takes a side wall's top edge at its front (A) or back (B) end, the tool along y, so the turn is a wrist roll"))
+    a(dict(do="dual", id="C01", label="Chamber (frame + floor plate, 7.4 kg) carried upright by both arms from Fixture P into the trunnion's jaws",
+           keys=["@chamberset"], grp="chamber", phase="chamber_up_T", frm="chamber_up_P", whole=True, path=[(0, 0, 0), (0, 0, 120)],
+           docks="PT", grip_gap=16.0, lift=150.0,
+           grasps={"A": dict(point=(-148.0, 60.0, 108.0), z=DN, x=(1.0, 0.0, 0.0)), "B": dict(point=(148.0, 60.0, 108.0), z=DN, x=(1.0, 0.0, 0.0))}))
+    a(dict(do="rotate", id="C01b", label="The trunnion turns the chamber upside down (180 deg about x), both arms parked", grp="chamber",
+           frm="chamber_up_T", to="chamber_inv"))
     a(P("C02", "Locating dowel and diamond pin into the floor", ["Locating dowel"], "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -60)],
         force="dowel"))
     a(dict(do="seal", id="C03", label="Outlet-plenum O-ring (2-044) into the plenum's flange groove, plenum on a nest, PFPE film",
@@ -139,12 +140,15 @@ def steps(module="M50"):
     a(P("C10", "Build module (upside down) down into the Ø96 floor port; dowel and diamond pin through its flange lugs", ["@module"],
         "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -150)], merge="body", moved=True, force="spigot",
         grasp=dict(point=(0.0, 0.0, -62.0), z=UP, x=(1.0, 0.0, 0.0))))
-    a(S("C11", "Two captive M6 screws pull the flange onto the floor (they also finish pushing the spigot seal home)", "module_flange",
-        "chamber", "chamber_inv", pn="95966A705", torque_Nm=4.0))
-    a(P("C12", "Z stage (flange, actuator, belt fold, servo, carriage, arm, magnet, pre-assembled) onto the floor",
-        ["Z mounting flange", "Z actuator", "Z bracket", "Z servo", "Z carriage", "Z lift arm", "Pot magnet"], "chamber", "chamber_inv",
-        [(0, 0, 0), (0, 0, -150)], grasp=dict(point=(0.0, 80.0, -170.0), z=UP, x=(1.0, 0.0, 0.0))))
+    a(S("C11", "Two captive M6 screws pull the flange onto the floor (they also finish pushing the spigot seal home); inline nutrunner on a "
+        "130 mm extension, so its body clears the module's gland plate", "module_flange", "chamber", "chamber_inv", pn="95966A705", torque_Nm=4.0,
+        driver="nutrunner", long_bit=130.0))
+    a(P("C12", "Z mounting flange alone onto the floor (the actuator goes on after its screws, which sit beside it)", ["Z mounting flange"],
+        "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -150)]))
     a(S("C13", "Four counterbored M5 x 12 Z-flange screws", "zmount", "chamber", "chamber_inv", torque_Nm=4.2))
+    a(P("C13b", "Z actuator, belt fold, servo, carriage, arm and magnet (pre-assembled) onto the flange",
+        ["Z actuator", "Z bracket", "Z servo", "Z carriage", "Z lift arm", "Pot magnet"], "chamber", "chamber_inv",
+        [(0, 0, 0), (0, 0, -150)], grasp=dict(point=(0.0, 80.0, -170.0), z=UP, x=(1.0, 0.0, 0.0)), note="its screws to the flange are not drawn"))
     a(P("C14", "Four legs onto the floor, one at a time", ["@legs"], "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -120)], per_solid=True))
     a(S("C15", "One M6 x 25 down each leg's Ø11 bore (160 mm bit extension)", "legs", "chamber", "chamber_inv", torque_Nm=7.4, long_bit=165.0))
     # =========================================================== chapter 4b: base plate and posts on Fixture B
@@ -154,14 +158,12 @@ def steps(module="M50"):
                    "B": dict(point=(260.0, 215.0, -167.5), z=(0.0, -1.0, 0.0), x=(0.0, 0.0, 1.0))}))
     a(N("F02", "Levelling mounts", "person", "They thread in when the finished process module goes onto the tray (chapter 5); "
         "until then Fixture B carries the plate on its ends."))
-    a(P("F03", "Optics posts onto the base plate, one at a time, held by arm B while arm A drives their base screws from below",
-        ["@posts"], "machine", "upright", [(0, 0, 0), (0, 0, 200)], actor="B", per_solid=True, hold_for="bridge_base"))
-    a(S("F04", "Two M6 x 25 up into each post's bottom cap, from under the plate", "bridge_base", "machine", "upright", torque_Nm=7.4))
     # =========================================================== the turn-over
-    a(dict(do="dual", id="F05", label="Chamber assembly (frame, floor plate, module, Z stage, legs; about 17 kg) turned over by both arms holding two "
-           "legs, and set onto the base plate", keys=["@chamberset"], grp="machine", phase="upright", frm="chamber_inv", flip=True, merge="chamber",
-           path=[(0, 0, 0), (0, 0, 120)],
-           docks="CB", grip_gap=30.0,
+    a(dict(do="rotate", id="F05", label="The trunnion turns the chamber assembly (module, Z stage, legs) back upright", grp="chamber",
+           frm="chamber_inv", to="chamber_up_T", sign=-1.0))
+    a(dict(do="dual", id="F05b", label="Chamber assembly (15.8 kg) carried upright by both arms, each holding a leg, from the trunnion onto the "
+           "base plate", keys=["@chamberset"], grp="machine", phase="upright", frm="chamber_up_T", whole=True, merge="chamber",
+           path=[(0, 0, 0), (0, 0, 120)], docks="TB", grip_gap=30.0, lift=320.0,
            grasps={"A": dict(point=(-135.0, -90.0, -95.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0)),
                    "B": dict(point=(135.0, 90.0, -95.0), z=(0.0, -1.0, 0.0), x=(1.0, 0.0, 0.0))}))
     a(S("F06", "Eight M6 x 25 base-plate-to-leg screws, from under the plate", "legs_base", "machine", "upright", torque_Nm=7.4))
@@ -171,8 +173,8 @@ def steps(module="M50"):
         "A hinged KF clamp needs its ring opened round the flange and a wing nut turned; nothing on the 2F-85 or the screwdriver does that. "
         "A robot-friendly alternative is a lever (over-centre) KF clamp."))
     a(P("F09", "Overflow-jar sensor", ["Overflow-jar present"], "machine", "upright", "explode", actor="B"))
+    a(P("F11", "LED bar (small-part vacuum nozzle on its top face)", ["Layer-light"], "machine", "upright", "explode", tool="nozzle"))
     a(P("F10", "Lift-out wall liners into the open chamber", ["Lift-out wall liners"], "machine", "upright", "explode", tool="vacuum"))
-    a(P("F11", "LED bar", ["Layer-light"], "machine", "upright", "explode"))
     a(N("F12", "Through-beam fibre heads with their 2-010 O-rings, threaded into the side walls from outside", "person",
         "Threading an M6 head with a fibre attached means winding the fibre with it; the ring itself is a pick-and-place."))
     a(dict(do="seal", id="F13", label="Inlet-plenum O-ring (2-044) into the plenum's flange groove, PFPE film", keys=["Inlet plenum O-ring"],
@@ -184,14 +186,13 @@ def steps(module="M50"):
     a(P("F16", "Vacuum-port adapter (KF-25 stub welded in) with its 2-024 O-ring onto the right wall", ["Vacuum port"], "machine", "upright",
         "explode", hold_for="vac_port"))
     a(S("F17", "Four M5 x 20 vacuum-port screws", "vac_port", "machine", "upright", torque_Nm=4.2))
-    a(P("F18", "Recoater guide rail onto the back wall", ["Recoater guide rail"], "machine", "upright", "explode", hold_for="rail"))
+    a(P("F18", "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assembled on the rail) onto the back wall",
+        ["Recoater guide rail", "Recoater carriage (", "Recoater carriage block", "Recoater ball nut", "Recoater arm"], "machine", "upright",
+        [(0, 0, 0), (0, 0, 220)], hold_for="rail", grasp=dict(point=(-106.0, 72.0, 92.0), z=DN, x=(1.0, 0.0, 0.0), width=44.0)))
     a(S("F19", "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall", "rail", "machine", "upright", actor="A",
         torque_Nm=2.2))
-    a(P("F20", "Carriage onto the rail from its end", ["Recoater carriage (", "Recoater carriage block"], "machine", "upright",
-        [(0, 0, 0), (30, 0, 0), (30, -150, 0), (30, -150, 200)]))
-    a(P("F21", "Ball screw through the side-wall bores and the ball nut (turned through the nut: 30 turns at 10 mm lead)",
-        ["Recoater ball screw", "Recoater ball nut", "Recoater arm"], "machine", "upright", [(0, 0, 0), (420, 0, 0)],
-        grasp=dict(point=(120.0, 72.0, 40.0), z=DN, x=(0.0, 1.0, 0.0))))
+    a(P("F21", "Ball screw in through the right wall's bore and turned through the ball nut (30 turns at 10 mm lead) into the left bore",
+        ["Recoater ball screw"], "machine", "upright", [(0, 0, 0), (420, 0, 0)]))
     a(P("F22", "Feedthrough spacer, its two 2-024 O-rings, the Ferrotec unit and the coupling on the left wall",
         ["Recoater feedthrough", "Recoater fixed bearing", "Recoater shaft coupling"], "machine", "upright", "explode",
         note="the feedthrough's own 6 x M4 are not drawn"))
@@ -200,7 +201,8 @@ def steps(module="M50"):
     a(S("F24", "Four M4 x 20 bearing-cap screws", "bearing_cap", "machine", "upright", torque_Nm=2.2))
     a(P("F25", "Motor standoff, bracket and recoater servo", ["Recoater motor standoff", "Recoater motor bracket", "Recoater servo"], "machine",
         "upright", "explode", per_part=True, note="their screws are not drawn"))
-    a(P("F26", "Blade holder and blade", ["Blade holder", "HSS recoater blade"], "machine", "upright", "explode"))
+    a(P("F26", "Blade holder and blade, in through the door opening and up under the recoater arm", ["Blade holder", "HSS recoater blade"],
+        "machine", "upright", [(0, 0, 0), (0, -260, 0)], grasp=dict(point=(-106.0, -45.0, 18.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=18.0)))
     a(S("F27", "Two M3 x 8 blade screws", "blade", "machine", "upright", torque_Nm=1.1))
     a(P("F28", "Gas knife and dose chute", ["Gas knife", "Dose chute"], "machine", "upright", "explode", per_part=True,
         note="how they hang from the walls is not drawn"))
@@ -212,15 +214,17 @@ def steps(module="M50"):
     a(S("F31", "Twenty M5 x 25 lid screws, star pattern", "lid", "machine", "upright", torque_Nm=4.2))
     a(dict(do="seal", id="F32", label="Window-flange O-ring (2-036) into the flange's lower groove, PFPE film", keys=["Window-flange O-ring"],
            grp="wflange", phase="upright", method="ring", ring="window_flange", tool="gripper+caps", actor="B", path=[(0, 0, 0), (0, 0, -60)]))
-    a(P("F33", "Field stop, then the window flange with its O-ring", ["Field-stop", "Window flange", "Window-flange O-ring"], "machine",
-        "upright", "explode", merge="wflange", per_part=True))
+    a(P("F33", "Field stop", ["Field-stop"], "machine", "upright", "explode"))
+    a(P("F33b", "Window flange with its O-ring (Ø100: the vacuum gripper)", ["Window flange", "Window-flange O-ring"], "machine", "upright",
+        "explode", merge="wflange", moved=True, tool="vacuum", grasp=dict(point=(0.0, 0.0, 158.0), z=DN, x=(1.0, 0.0, 0.0))))
     a(S("F34", "Six counterbored M4 x 16 window-flange screws (torque-controlled)", "window", "machine", "upright", torque_Nm=2.2))
     a(dict(do="seal", id="F35", label="Window O-ring (2-031) into the flange's seat groove", keys=["Window O-ring"], grp="machine",
            phase="upright", method="ring", ring="window_lower", tool="gripper+caps", actor="B", path=[(0, 0, 0), (0, 0, 60)]))
     a(P("F36", "Ø2 in. fused-silica window onto its O-ring", ["fused-silica window"], "machine", "upright", "explode",
         grasp=dict(point=(0.0, 0.0, 152.0), z=DN, x=(1.0, 0.0, 0.0))))
-    a(P("F37", "FKM flat ring and the retaining ring", ["Window clamp ring", "Window retaining ring"], "machine", "upright", "explode",
-        per_part=True))
+    a(P("F37", "FKM flat ring", ["Window clamp ring"], "machine", "upright", "explode"))
+    a(P("F37b", "Window retaining ring (Ø100: the vacuum gripper)", ["Window retaining ring"], "machine", "upright", "explode", tool="vacuum",
+        grasp=dict(point=(0.0, 0.0, 163.0), z=DN, x=(1.0, 0.0, 0.0))))
     a(S("F38", "Six M3 x 10 retaining-ring screws (torque-controlled: clamp the silica evenly)", "window_ring", "machine", "upright",
         torque_Nm=0.8))
     a(P("F39", "Cover-slide drawer (2-033 in its half-dovetail, put in on the bench) into the lid's front edge",
@@ -262,16 +266,22 @@ def steps(module="M50"):
         "machine", "upright", [(0, 0, 0), (0, -200, 0)], grasp=dict(point=(0.0, -150.0, 95.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0))))
     a(P("F52", "Hinge pins slid in along x", ["Hinge pins"], "machine", "upright", [(0, 0, 0), (-160, 0, 0)],
         grasp=dict(point=(100.0, -132.0, -12.0), z=(-1.0, 0.0, 0.0), x=(0.0, 0.0, 1.0))))
+    a(P("F03", "Optics posts (moved here: they blocked the side-wall parts and the right latch) onto the base plate, one at a time, held by arm B while arm A drives their base screws from below",
+        ["@posts"], "machine", "upright", [(0, 0, 0), (0, 0, 200)], actor="B", per_solid=True, hold_for="bridge_base"))
+    a(S("F04", "Two M6 x 25 up into each post's bottom cap, from under the plate", "bridge_base", "machine", "upright", torque_Nm=7.4))
     a(N("F53", "f-theta lens threaded into its adapter ring under the bridge (on the bench, bridge upside down)", "person",
         "The Ø90 lens is wider than the 2F-85's 85 mm stroke and threads M85 x 1; a strap wrench by hand (operations.md: lens and ring "
         "fitted to the bridge on the bench)."))
     a(dict(do="dual", id="F54", label="Optics bridge (13.3 kg, lens and ring under it) onto the four posts, one arm at each end",
            keys=["Optics bridge (", "f-theta lens", "f-theta adapter ring"], grp="machine", phase="upright", path=[(0, 0, 0), (0, 0, 260)],
+           grip_gap=25.5,
            grasps={"A": dict(point=(-330.0, -190.0, 220.2), z=(0.0, 1.0, 0.0), x=(0.0, 0.0, 1.0)),
                    "B": dict(point=(215.0, 180.0, 220.2), z=(0.0, -1.0, 0.0), x=(0.0, 0.0, 1.0))}))
     a(S("F55", "Eight M6 x 35 bridge screws down into the posts", "bridge", "machine", "upright", torque_Nm=7.4))
-    a(P("F56", "Galvo riser and the basiCube 20 scan head on the bridge", ["Galvo riser plate", "2-axis galvo"], "machine", "upright", "explode",
-        per_part=True, note="the scan head's screws are not drawn"))
+    a(P("F56", "Galvo riser plate (155 x 130: the vacuum gripper)", ["Galvo riser plate"], "machine", "upright", "explode", tool="vacuum",
+        grasp=dict(point=(20.35, -6.8, 242.7), z=DN, x=(1.0, 0.0, 0.0))))
+    a(P("F56b", "basiCube 20 scan head on the riser (3.75 kg: the vacuum gripper on its top)", ["2-axis galvo"], "machine", "upright", "explode",
+        tool="vacuum", grasp=dict(point=(20.35, -6.8, 364.7), z=DN, x=(1.0, 0.0, 0.0)), note="its screws are not drawn"))
     a(P("F57", "Beam tube, shutter and collimator", ["Enclosed beam tube", "Safety shutter", "Collimator"], "machine", "upright", "explode",
         per_part=True))
     a(N("F58", "Process fiber routed to the collimator", "person", "Armoured fiber, >= 100 mm bend radius: cable routing stays manual."))

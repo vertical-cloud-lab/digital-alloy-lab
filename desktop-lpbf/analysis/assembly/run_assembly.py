@@ -180,7 +180,7 @@ class Run:
             a.set_tool("gripper", caps=dict(name="ring caps", meshes=caps, grasp_z=31.9, inner_x=23.0, color="#d9b23a"))
         elif tool in ("screwdriver", "nutrunner", "nutrunner_angle"):
             a.set_tool(tool, extra_bit=float(long_bit or 0.0), tip_d=tip_d)
-        elif tool in ("vacuum", "roller", "roller_n"):
+        elif tool in ("vacuum", "nozzle", "roller", "roller_n"):
             a.set_tool(tool)
         else:
             a.set_tool("gripper")
@@ -271,7 +271,7 @@ def auto_grasp(run, idx, T, d_w, state, tool):
     s = V @ d
     smax = float(s.max())
     ext_d = float(smax - s.min())
-    inset = min(14.0, 0.5 * ext_d) if tool != "vacuum" else 0.0
+    inset = min(14.0, 0.5 * ext_d) if tool not in ("vacuum", "nozzle") else 0.0
     sl = V[s > smax - max(2 * inset, 3.0)]
     c = 0.5 * (sl.min(0) + sl.max(0))
     c = c - d * (np.dot(c, d) - (smax - inset))
@@ -367,7 +367,7 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
         width, inset = float(grasp.get("width", 40.0)), 0.0
     else:
         G, width, inset = auto_grasp(run, idx, T_obj, d_w, state, tool)
-    if tool == "gripper" and not internal and width > 84.0:
+    if tool.startswith("gripper") and not internal and width > 84.0:
         return dict(ok=False, why=f"part {width:.0f} mm across at the grasp: wider than the 2F-85's 85 mm stroke")
     body = run.held_body(idx, holdname, state, extra)
     # seat contacts (allowed up to 1.5 mm, PR 318) with the held part in place
@@ -407,6 +407,11 @@ def arm_place(run, st, idx, path, state, actor, tool, holdname, grasp=None, extr
                           drop_mm=round((len(offs) - fr["at"]) * DS, 0))
             else:
                 fr["hit"] = f"{fr['hit']}; pushed home instead, but {fr2['hit']}"
+        if (not fr["ok"] and tool == "nozzle" and st.get("drop_ok") and fr.get("at") and " hits " in (fr["hit"] or "")
+                and (len(offs) - fr["at"]) * DS <= float(st.get("drop_mm", 12.0))):
+            # the nozzle lets go above the seat and the part drops the rest of the way onto its guide pin
+            fr = dict(ok=True, qs=fr["qs"], hit=None, at=None, min_d=fr["min_d"], with_=fr["with_"],
+                      drop_mm=round((len(offs) - fr["at"]) * DS, 0))
         res = dict(dock=dk, follow=fr)
         if fr["ok"]:
             # plan from where the arm is to the start of the path, carrying the part
@@ -589,15 +594,19 @@ def driver_for(run, i, phase, torque):
     return "screwdriver", ""
 
 
-def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None):
+def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None, force_driver=None):
     """Screwdriver with the screw on its bit, from the hole's mouth to the seat. Returns a result dict."""
     sc, cl = run.sc, run.cl
     st_ = state or {}
     T = cl.T_phase(phase)
     F0, c = CK.screw_frame(sc, i, st_)
     tool, tool_why = driver_for(run, i, phase, torque)
+    if force_driver:
+        tool, tool_why = force_driver, "chosen for this joint"
     s_hex = float(c.get("s", 3.0))
     L = float(c.get("L", 10.0))
+    if c.get("kind") == "captive" or str(sc.objs[i].get("pn")) == "95966A705":
+        L = 10.0                       # a captive screw already sits in its flange: only its last turns into the insert are driven
     engage = 0.6 * s_hex
     body = run.held_body([i], f"screw:{sc.short(i)[:30]}", st_)
     body.place(T)
@@ -632,6 +641,8 @@ def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None):
                     n_plans += 1
                     a.place(run.q[actor])
                     chk = K.checker(cl, actor, [i])
+                    if chk.collisions(run.q[actor], 0.0, allow, first=True):
+                        run.q[actor] = a.park_q()          # the last retreat left the arm touching something: start from park
                     # 1) straight from where the arm is (the previous screw's retreat), else 2) a taught-style approach: from a
                     # pre-approach pose 60 mm back along the screw axis (and, for the angle head, slid 220 mm out along the
                     # tool body, from under the plate), a checked Cartesian move in, and a plan only to the pre-approach pose
@@ -696,17 +707,18 @@ def do_screws(run, st, row, near=None, actor=None):
     actor = actor or st.get("actor", "A")
     per = []
     for i in idx:
-        r = drive_screw(run, i, st["phase"], actor, st.get("long_bit"), torque=st.get("torque_Nm"))
+        r = drive_screw(run, i, st["phase"], actor, st.get("long_bit"), torque=st.get("torque_Nm"), force_driver=st.get("driver"))
         r["arm"] = actor
         if not r["ok"] and not st.get("holder_busy"):
             other = run.other(actor)
-            r2 = drive_screw(run, i, st["phase"], other, st.get("long_bit"), torque=st.get("torque_Nm"))
+            r2 = drive_screw(run, i, st["phase"], other, st.get("long_bit"), torque=st.get("torque_Nm"), force_driver=st.get("driver"))
             if r2["ok"]:
                 r2["arm"] = other
                 r2["tool_why"] = (r2.get("tool_why", "") + f"; arm {actor} could not ({r['why'][:60]})").strip("; ")
                 retreat(run, other, 30.0, names=r2.get("dest", ()))
-                go_park(run, other)
                 r = r2
+            run.arm(other).release()               # never leave a screw hanging on the other arm's bit
+            go_park(run, other)
         per.append((i, r))
         log(f"   {run.sc.short(i)[-12:]}: {'ok' if r['ok'] else ('drive clear, approach not planned' if r['drive_ok'] else r['why'][:80])}")
         retreat(run, actor, 30.0, names=r.get("dest", ()))
@@ -863,8 +875,8 @@ def do_flip(run, st, row):
 def do_dual(run, st, row):
     """Both arms carry one part (or the chamber assembly) along its path; with flip=True the part also turns over about y."""
     sc, cl = run.sc, run.cl
-    idx = run.resolve(st["keys"], moved=bool(st.get("flip")))
-    if st.get("flip"):
+    idx = run.resolve(st["keys"], moved=bool(st.get("flip") or st.get("whole")))
+    if st.get("flip") or st.get("whole"):
         idx = sorted(run.asm.get("chamber", set()))
     elif st.get("moved"):
         idx = [i for i in idx]
@@ -882,18 +894,23 @@ def do_dual(run, st, row):
             mass += float(sc.FS.mass_g(sc.objs[i]["pn"])) / 1000.0
     cl.take(idx)
     frames = carry_frames(cl, st)
+    jaws_open = None
+    if st.get("frm") == "chamber_up_T" and "Trunnion jaws" in cl.static:
+        jaws_open = cl.static.pop("Trunnion jaws")            # the positioner opens its jaws (pneumatic) before the arms lift
     gA = given_grasp(st["grasps"]["A"], np.eye(4))
     gB = given_grasp(st["grasps"]["B"], np.eye(4))
     # the part's seat (what it rests on or slides over at the end, e.g. dowels in a slip fit) may be touched up to 1.5 mm deep
     body.place(T1)
     dest = contacts_at_seat(run, body, exclude=idx)
-    if st.get("flip"):
+    if st.get("frm"):
         body.place(cl.T_phase(st["frm"]))
         dest |= contacts_at_seat(run, body, exclude=idx)
     seat_allow = [("held", n) for n in dest] + [("tool", n) for n in dest]
     best = None
     dock_sets = ([(st["docks"], st["docks"])] if st.get("docks") else
-                 [("CB", "CB")] if st.get("flip") else [("B", "B"), ("Bl", "Br"), ("Br", "Bl")])
+                 [("TB", "TB")] if st.get("flip") else [("Br", "Bl"), ("B", "B"), ("Bl", "Br"), ("B", "Bl"), ("Br", "B")])
+    cl.A.release()
+    cl.B.release()
     for dA, dB in dock_sets:
         run.dock("A", K.DOCKS[dA])
         run.dock("B", K.DOCKS[dB])
@@ -983,6 +1000,8 @@ def do_dual(run, st, row):
     run.dual_paths[st["id"]] = dict(frames=[f.tolist() for f in frames[: len(best.get("qsA", []))]], qsA=[list(map(float, q)) for q in best.get("qsA", [])],
                                     qsB=[list(map(float, q)) for q in best.get("qsB", [])], body=body.name)
     A.release()
+    if jaws_open is not None:
+        cl.static["Trunnion jaws"] = jaws_open
     if st.get("merge"):
         run.merge(st["merge"], st["grp"]) if st["merge"] != "chamber" else None
     run.add(idx, st["grp"], st["phase"])
@@ -1018,6 +1037,19 @@ def carry_frames(cl, st):
             frames.append(Tob(180.0 * s, c0 * (1 - s) + c1 * s + np.array([0, 0, H])))
         for s in np.linspace(0, 1, 26)[1:]:
             frames.append(Tob(180.0, c1 + np.array([0, 0, H * (1 - s)])))
+    elif st.get("frm"):
+        # straight carry between two fixtures, the same way up: lift, cross, lower
+        T0 = cl.T_phase(st["frm"])
+        H = float(st.get("lift", 120.0))
+        n = 1 + int(np.linalg.norm(T1[:3, 3] - T0[:3, 3]) / 10.0)
+        for s_ in np.linspace(0, 1, 13):
+            frames.append(Tm(p=(0, 0, H * s_)) @ T0)
+        for s_ in np.linspace(0, 1, n + 1)[1:]:
+            Ti = T0.copy()
+            Ti[:3, 3] = T0[:3, 3] * (1 - s_) + T1[:3, 3] * s_ + np.array([0, 0, H])
+            frames.append(Ti)
+        for s_ in np.linspace(0, 1, 13)[1:]:
+            frames.append(Tm(p=(0, 0, H * (1 - s_))) @ T1)
     else:
         for o in dense(path[::-1], 5.0):
             frames.append(T1 @ Tm(p=o))
@@ -1034,6 +1066,46 @@ def tipover(payload_kg, push_N, reach_mm=1100.0, push_h_mm=1000.0):
     stab = (m["mir"] + m["ballast"] + m["cabinet"] + m["control_box"]) * 9.81 * W + m["arm"] * 9.81 * (W - arm_off)
     over = payload_kg * 9.81 * max(0.0, reach_mm + arm_off - W) + push_N * push_h_mm
     return round(stab / max(over, 1e-9), 1)
+
+
+def do_rotate(run, st, row):
+    """The trunnion turns its jaws and the sub-assembly 180 deg about x; both arms parked. Every frame: the turning chamber and
+    jaws against the cell, everything placed and both arms (FCL on meshes), as PR 318's movers check."""
+    cl = run.cl
+    grp = st["grp"]
+    idx = sorted(run.asm.get(grp, set()))
+    T0 = cl.T_phase(st["frm"])
+    for n in ("A", "B"):
+        go_park(run, n)
+    body = run.held_body(idx, f"turning:{st['id']}", {})
+    jaws = cl.static.pop("Trunnion jaws")
+    J0 = jaws.M.copy()
+    cl.take(idx)
+    TT = cl.T_fix["T"]
+    sign = float(st.get("sign", 1.0))
+    hits, worst = [], None
+    md = math.inf
+    for th in np.linspace(0.0, 180.0, 37):
+        R = TT @ Tm(rot((1, 0, 0), sign * th)) @ inv(TT)
+        body.place(R @ T0)
+        jaws.place(R @ J0)
+        w = cl.world("A", other=True)
+        for b in cl.A.bodies():
+            w.add(b)
+        mov = Group([body, jaws])
+        hh = [(x.name, y.name) for x, y in C.group_hits(mov, w) if not (x is jaws and y.name.startswith("Trunnion stands"))]
+        if hh:
+            hits.append((round(float(th)), hh[0]))
+        if int(th) % 30 == 0:
+            d, x, y = C.group_distance(mov, w, margin=60.0)
+            if y is not None and d < md and not y.name.startswith("Trunnion stands"):
+                md, worst = d, f"{x.name[:20]} to {y.name[:40]}"
+    jaws.place(TT @ Tm(rot((1, 0, 0), sign * 180.0)) @ inv(TT) @ J0)
+    cl.static["Trunnion jaws"] = jaws
+    run.add(idx, grp, st["to"])
+    run.snapshot(st["id"])
+    row.update(sweep="-", arm="PASS" if not hits else "FAIL", why="" if not hits else f"at {hits[0][0]} deg: {hits[0][1][0][:30]} hits {hits[0][1][1][:50]}",
+               arm_clear=None if md == math.inf else round(float(md), 1), arm_clear_with=worst, mass_kg=None)
 
 
 def do_note(run, st, row):
@@ -1255,7 +1327,8 @@ def main(argv):
                    phase=st.get("phase"), joint=st.get("joint"))
         t = time.time()
         try:
-            {"place": do_place, "screws": do_screws, "seal": do_seal, "flip": do_flip, "dual": do_dual, "note": do_note}[st["do"]](run, st, row)
+            {"place": do_place, "screws": do_screws, "seal": do_seal, "flip": do_flip, "dual": do_dual, "note": do_note,
+             "rotate": do_rotate}[st["do"]](run, st, row)
         except Exception as e:  # noqa: BLE001
             row.update(arm="ERROR", why=f"{type(e).__name__}: {e}"[:300])
             traceback.print_exc()

@@ -33,12 +33,13 @@ from cell import Body, Group, Tm, inv, rot, box_mesh  # noqa: E402
 MIR = dict(C.MIR)                         # L 800 (along x), W 580, H 300, cabinet 480, plate 20
 ARM_Z = MIR["H"] + MIR["cab_h"] + MIR["plate"]   # 800: arm base above the floor
 ARM_OFF = 130.0                           # the arm sits 130 mm toward the work from the MiR's centre (cell.py)
-BENCH = dict(x0=-1550.0, x1=-150.0, y0=-400.0, y1=400.0, top=760.0, t=40.0)
+BENCH = dict(x0=-1550.0, x1=-750.0, y0=-400.0, y1=400.0, top=760.0, t=40.0)
 ARM_Y = 640.0                             # |y| of the arm bases: 240 mm off the bench edge, as PR 318 parks at the VLM face
 Z_B = 1000.0                              # Fixture B: underside of the process base plate above the floor (screws from below with the angle-head nutrunner)
 Z_P = 1000.0                              # Fixture P: underside of the chamber floor plate above the floor
-STATIONS = dict(stack=-1400.0, body_inv=-1250.0, body_up=-1100.0, C=-400.0, P=50.0, B=700.0)
-DOCKS = dict(M=-1250.0, M2=-1400.0, M3=-1100.0, PC=-175.0, C=-400.0, P=50.0, CB=150.0, B=700.0, Bl=480.0, Br=920.0)
+# run 2: the chamber turns over in a trunnion positioner (station T, on the floor) instead of in the two arms; Fixture C left
+STATIONS = dict(stack=-1400.0, body_inv=-1250.0, body_up=-1100.0, P=-350.0, T=350.0, B=1350.0)
+DOCKS = dict(M=-1250.0, M2=-1400.0, M3=-1100.0, P=-350.0, PT=0.0, T=350.0, TB=850.0, B=1350.0, Bl=1130.0, Br=1570.0)
 TC_H = TL.TC["h"]
 # MiR250 + 131 kg ballast plate low in its base (byu-vcl PR 318); masses for the tip-over check (run_assembly.py)
 MASS = dict(mir=94.0, ballast=131.0, cabinet=30.0, control_box=12.0, arm=33.5)     # MiR and UR datasheets; cabinet estimated
@@ -83,6 +84,8 @@ def tool_mesh(name, extra_bit=0.0, tip_d=None):
             _TOOL_MESH[key] = TL.mesh(name, float(extra_bit), float(tip_d or (3.0 if name == "screwdriver" else 5.8)))
         elif name == "vacuum":
             _TOOL_MESH[key] = TL.mesh("vacuum")
+        elif name == "nozzle":
+            _TOOL_MESH[key] = TL.mesh("nozzle")
         elif name in ("roller", "roller_n"):
             _TOOL_MESH[key] = TL.mesh("roller", 3.2 if name == "roller" else 1.4)
         else:
@@ -91,7 +94,7 @@ def tool_mesh(name, extra_bit=0.0, tip_d=None):
 
 
 TOOL_MASS = dict(gripper=0.925, screwdriver=TL.SCREWDRIVER["mass"], nutrunner=TL.NUTRUNNER["mass"], nutrunner_angle=TL.NUT_ANGLE["mass"],
-                 vacuum=TL.VAC["mass"], roller=0.35,
+                 vacuum=TL.VAC["mass"], nozzle=TL.VAC["mass"] + 0.05, roller=0.35,
                  roller_n=0.35)
 
 
@@ -228,8 +231,11 @@ def mir_bodies(tag, x, side):
     out = [(f"{tag} MiR250", box_mesh(x - L / 2, x + L / 2, yc - W / 2, yc + W / 2, 30.0, H), "#3b4148"),
            (f"{tag} cabinet", box_mesh(x - L / 2 + 40, x + L / 2 - 40, yc - W / 2 + 30, yc + W / 2 - 30, H, H + Cb), "#3b4148"),
            (f"{tag} mounting plate", box_mesh(x - 170, x + 170, yc - W / 2 + 30, yc + W / 2 - 30, H + Cb, ARM_Z - 1.0), "#59616a")]
-    ys = yc + s * 165.0                      # tool stand on the cabinet's far end, behind the arm base
-    out.append((f"{tag} tool stand", box_mesh(x - 170, x + 170, ys - 85, ys + 85, H + Cb, H + Cb + 260.0), "#8a6d3b"))
+    # tool stand: hung on the cabinet's far face, below its top (run 1 had it on the top behind the arm base, where arm B's
+    # upper arm met it in the second turn-over, F05)
+    y_face = yc + s * (W / 2 - 30)
+    out.append((f"{tag} tool stand", box_mesh(x - 170, x + 170, min(y_face, y_face + s * 170), max(y_face, y_face + s * 170),
+                                               H + 40.0, H + Cb - 20.0), "#8a6d3b"))
     return out
 
 
@@ -239,12 +245,12 @@ class Cell:
         self.sc = sc
         self.static = {}
         self._add_static()
-        self.A = ArmT("A", DOCKS["C"], "front")
-        self.B = ArmT("B", DOCKS["C"], "back")
+        self.A = ArmT("A", DOCKS["T"], "front")
+        self.B = ArmT("B", DOCKS["T"], "back")
         self.mir = {"A": [], "B": []}
         self.dock = {"A": None, "B": None}
-        self.move_mir("A", DOCKS["C"])
-        self.move_mir("B", DOCKS["C"])
+        self.move_mir("A", DOCKS["T"])
+        self.move_mir("B", DOCKS["T"])
         self.mbody = {}                      # machine object index -> MBody
         self.where = {}                      # machine object index -> 4x4 machine-to-world of its sub-assembly
         self.state = {}
@@ -262,9 +268,13 @@ class Cell:
                 self._add(f"bench leg {x:.0f} {y:.0f}", box_mesh(x - 30, x + 30, y - 30, y + 30, 0.0, b["top"] - b["t"]), "#7d8790")
         # fixtures, posed in the world
         self.T_fix = {}
-        T = Tm(p=(STATIONS["C"], 0.0, b["top"] + 45.0))
-        self.T_fix["C"] = T
-        self._add("Fixture C (chamber upside down)", self._tx(TL.mesh("fixture_C")[0], T), "#c9a227", "fixture")
+        TT = Tm(p=(STATIONS["T"], 0.0, TL.TRUNNION["h_axis"]))
+        self.T_fix["T"] = TT
+        self._add("Trunnion stands", self._tx(TL.mesh("trunnion_stands")[0], TT), "#c9a227", "fixture")
+        v, f = TL.mesh("trunnion_jaws")[0]
+        self.static["Trunnion jaws"] = Body("Trunnion jaws", v, f, kind="fixture", color="#d18a1f")
+        self.static["Trunnion jaws"].place(TT)
+        self.jaw_angle = 0.0
         TB = Tm(p=(STATIONS["B"], 0.0, Z_B + 175.0))
         self.T_fix["B"] = TB
         self._add("Fixture B (open stand)", self._tx(TL.mesh("fixture_B", Z_B)[0], TB), "#c9a227", "fixture")
@@ -296,8 +306,10 @@ class Cell:
             return Tm(p=(STATIONS["body_up"], 0.0, b["top"] + 200.0))
         if phase == "chamber_up_P":        # floor plate's underside (machine z = -20) on Fixture P's column
             return self.T_fix["P"]
-        if phase == "chamber_inv":         # chamber's top face (machine z = 120) on Fixture C, turned over about y
-            return self.T_fix["C"] @ Tm(p=(0.0, 0.0, 120.0)) @ Ry(180.0)
+        if phase == "chamber_up_T":        # chamber upright in the trunnion's jaws, machine z 50 on the turn axis
+            return self.T_fix["T"] @ Tm(p=(0.0, 0.0, -50.0))
+        if phase == "chamber_inv":         # the trunnion turned 180 deg about x: chamber upside down
+            return self.T_fix["T"] @ Rx(180.0) @ Tm(p=(0.0, 0.0, -50.0))
         if phase == "upright":             # process module on Fixture B
             return self.T_fix["B"]
         raise KeyError(phase)

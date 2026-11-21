@@ -93,8 +93,10 @@ def main():
             Lp = math.pi * MP.PORT_D / IN
             r.update(squeeze_pct=round(sq, 1), fc_lb_in=round(fc, 2), running_N=round(fc * Lp * LBF, 0), breakout_N=round(3 * fc * Lp * LBF, 0),
                      method="stretched over the acetal spigot mandrel (cone + 0.45 mm sleeve) and pushed off into the groove by the pusher",
-                     chamfer_needed=f"floor port's lower edge: >= {CHAMFER[3.53][0]} mm at 15 deg or {CHAMFER[3.53][1]} mm at 20 deg "
-                                    "(the ring enters the port from below); the spigot's top edge is covered by the mandrel's sleeve")
+                     chamfer_needed=("floor port's lower edge: 20 deg x 2.5 mm, now in the model (FP-04), = Trelleborg's minimum for 3.53 mm"
+                                     if "lead-in chamfer on its lower edge" in (CAD / "lpbf_low.py").read_text() else
+                                     f"floor port's lower edge: >= {CHAMFER[3.53][0]} mm at 15 deg or {CHAMFER[3.53][1]} mm at 20 deg")
+                                    + "; the spigot's top edge is covered by the mandrel's sleeve")
         elif g["kind"] == "rod":
             ring_od = rid + 2 * cs
             r["installed_stretch_pct"] = round(100 * (g["rod_d"] / rid - 1), 1)
@@ -114,10 +116,17 @@ def main():
             r["method"] = "comes fitted on the transducer and relief valve; turned in with the part"
             r["chamfer_needed"] = "SAE J1926 port's 12 deg chamfer (part of the port standard)"
         rows.append(r)
-    # the lid cord, and the moulded alternative
-    lid_in_hw, lid_in_hy, r_in = P["ix"] + 3.3, P["iy"] + 3.3, 4.3
+    # the lid cord, and the moulded alternative: the gland's inner wall read from the model (lpbf_low.py: rbox(-ix - 3, ix + 3,
+    # -iy - 3, iy + 3, ..., r) cut into the frame's top face; r read from the source so a change there flows through)
+    import re as _re
+    src = (CAD / "lpbf_low.py").read_text()
+    mm = _re.search(r"lid_gland = rbox\(.*?, (\d+(?:\.\d+)?) \+ gw\)\.cut\(rbox\(-ix - (\d+(?:\.\d+)?), ix \+ \d+(?:\.\d+)?, -iy - \d+(?:\.\d+)?, iy \+ \d+(?:\.\d+)?, [^,]+, [^,]+, (\d+(?:\.\d+)?)\)\)", src)
+    off, r_in = (float(mm.group(2)), float(mm.group(3))) if mm else (3.3, 4.3)
+    lid_in_hw, lid_in_hy = P["ix"] + off, P["iy"] + off
     per_in = 2 * (2 * lid_in_hw + 2 * lid_in_hy) - (8 - 2 * math.pi) * r_in
-    best = min(AS568_2XX.items(), key=lambda kv: abs(per_in / (math.pi * kv[1]) - 1.005))
+    cands = {k: v for k, v in AS568_2XX.items() if 0.0 <= per_in / (math.pi * v) - 1 <= 0.05}
+    best = min(cands.items(), key=lambda kv: abs(per_in / (math.pi * kv[1]) - 1.02)) if cands else \
+        min(AS568_2XX.items(), key=lambda kv: abs(per_in / (math.pi * kv[1]) - 1.02))
     cs = 3.53
     rc = r_in + cs / 2
     lid = dict(gland="lid", ring="3.53 mm cord (vulcanized splice)", n=1, cs=cs, kind="face", closure="chamber lid (20 x M5)",
@@ -126,7 +135,7 @@ def main():
                moulded_installed_stretch_pct=round(100 * (per_in / (math.pi * best[1]) - 1), 2),
                moulded_stretch_range_pct=[round(100 * (per_in / (math.pi * (best[1] + 1.65)) - 1), 2), round(100 * (per_in / (math.pi * (best[1] - 1.65)) - 1), 2)],
                corner_r_inner_mm=r_in, corner_r_parker_min_mm=round(3 * cs, 1), corner_bend_strain_pct=round(100 * (cs / 2) / rc, 0),
-               corner_bend_strain_at_3cs_pct=round(100 * (cs / 2) / (3 * cs + cs / 2), 0),
+               corner_bend_strain_at_3cs_pct=round(100 * (cs / 2) / (3 * cs + cs / 2), 0), gland_from_model=bool(mm),
                method="cord laid in by arm B at the midpoints, ends, quarter points (Adebola et al. 2024), rolled home by arm A's 3.2 mm "
                       "PTFE wheel at 10-20 N; the splice at a straight run",
                chamfer_needed="none (axial face seal)")

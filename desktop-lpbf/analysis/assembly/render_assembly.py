@@ -104,11 +104,12 @@ def main():
     run = build()
     shots = []
     S = K.STATIONS
-    want = [("F05-mid", "Chamber assembly (15.5 kg) turned over by both arms holding two legs", ((S["C"] + S["B"]) / 2, 0, 1350), 2600, -70, 22),
+    want = [("F05b-mid", "Chamber assembly (15.8 kg) carried upright by both arms, each holding a leg, from the trunnion to Fixture B",
+             ((S["T"] + S["B"]) / 2, 0, 1150), 2600, -70, 22),
+            ("C01b", "The trunnion has turned the chamber upside down for the under-floor work", (S["T"], 0, 1000), 1800, -60, 25),
             ("M22:1", "Heater stack into the bore: the rod on its bullet passes the two rod O-rings", (S["body_up"], 0, 1000), 1100, -60, 25),
             ("M20", "Spigot O-ring: mandrel on the spigot, pusher stroke", (S["body_up"], 0, 1000), 1000, -60, 25),
-            ("C10:1", "Build module (upside down) into the floor port on Fixture C", (S["C"], 0, 1000), 1500, -60, 30),
-            ("F05", "Chamber set onto the base plate on Fixture B", (S["B"], 0, 1150), 2200, -60, 25)]
+            ("C10:1", "Build module (upside down) into the floor port, chamber in the trunnion", (S["T"], 0, 1050), 1500, -60, 30)]
     for k in list(frames):
         if k.startswith("F29:"):
             want.append((k, "Lid cord rolled into the body's gland (roller on arm " + k.split(":")[1] + ")", (S["B"], 0, 1300), 1700, -60, 35))
@@ -129,8 +130,8 @@ def main():
     last = list(frames)[-1] if frames else None
     if last:
         frames["__cell__"] = frames[last]
-        want.insert(0, ("__cell__", "The cell: two UR12e on MiR250s, the bench with the module nests and Fixture C, Fixture P, and Fixture B "
-                        "with the finished process module", (150.0, 0.0, 900.0), 4200, -65, 28))
+        want.insert(0, ("__cell__", "The cell: two UR12e on MiR250s, the bench with the module nests, Fixture P, the trunnion, and Fixture B "
+                        "with the finished process module", (0.0, 0.0, 900.0), 4300, -65, 28))
     for key, title, focus, dist, az, el in want:
         if key not in frames:
             continue
@@ -149,11 +150,11 @@ def main():
         except Exception as e:  # noqa: BLE001
             print("failed", key, e, flush=True)
     # GIF of the turn-over
-    if "F05" in dual and dual["F05"]["qsA"]:
+    if "F05b" in dual and dual["F05b"]["qsA"]:
         import imageio.v2 as imageio
-        d = dual["F05"]
+        d = dual["F05b"]
         imgs = []
-        base = frames.get("F05-mid") or frames.get("F05")
+        base = frames.get("F05b-mid") or frames.get("F05b")
         n = len(d["qsA"])
         for k in list(range(0, n, max(1, n // 24))) + [n - 1]:
             snap = dict(base)
@@ -163,10 +164,10 @@ def main():
             snap["arms"]["A"]["held"] = dict(name=d["body"], M=d["frames"][k])
             snap["arms"]["B"]["held"] = None
             pth = pathlib.Path(f"/tmp/asm/gif_{k:03d}.png")
-            draw(run, snap, held, "Chamber turn-over by two UR12e (F05)", pth, ((S["C"] + S["B"]) / 2, 0, 1300), 2700, -70, 22)
-            imgs.append(imageio.imread(pth))
-        imageio.mimsave(OUT / "turnover_F05.gif", imgs, duration=0.25, loop=0)
-        shots.append(("turnover_F05.gif", "Chamber turn-over by both arms (F05), every few frames of the checked path"))
+            draw(run, snap, held, "Chamber assembly carried by two UR12e (F05b)", pth, ((S["T"] + S["B"]) / 2, 0, 1250), 2700, -70, 22)
+            imgs.append(imageio.imread(pth)[::2, ::2])
+        imageio.mimsave(OUT / "carry_F05b.gif", imgs, duration=0.25, loop=0)
+        shots.append(("carry_F05b.gif", "Chamber assembly carried by both arms from the trunnion to Fixture B (F05b), every few frames of the checked path"))
     import json as _j
     (OUT / "renders.json").write_text(_j.dumps(shots, indent=1))
     print(shots)

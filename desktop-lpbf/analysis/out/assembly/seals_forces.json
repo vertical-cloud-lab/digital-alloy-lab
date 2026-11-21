@@ -8,19 +8,20 @@
     "cs": 3.53,
     "kind": "face",
     "closure": "chamber lid (20 x M5)",
-    "inner_perimeter_mm": 959.0,
-    "centreline_mm": 973.5,
-    "moulded_alternative": "2-278",
-    "moulded_id": 304.39,
-    "moulded_installed_stretch_pct": 0.29,
+    "inner_perimeter_mm": 941.7,
+    "centreline_mm": 956.1,
+    "moulded_alternative": "2-277",
+    "moulded_id": 291.69,
+    "moulded_installed_stretch_pct": 2.76,
     "moulded_stretch_range_pct": [
-     -0.25,
-     0.83
+     2.18,
+     3.35
     ],
-    "corner_r_inner_mm": 4.3,
+    "corner_r_inner_mm": 13.0,
     "corner_r_parker_min_mm": 10.6,
-    "corner_bend_strain_pct": 29.0,
+    "corner_bend_strain_pct": 12.0,
     "corner_bend_strain_at_3cs_pct": 14.0,
+    "gland_from_model": true,
     "method": "cord laid in by arm B at the midpoints, ends, quarter points (Adebola et al. 2024), rolled home by arm A's 3.2 mm PTFE wheel at 10-20 N; the splice at a straight run",
     "chamfer_needed": "none (axial face seal)"
    },
@@ -40,7 +41,7 @@
     "running_N": 109.0,
     "breakout_N": 328.0,
     "method": "stretched over the acetal spigot mandrel (cone + 0.45 mm sleeve) and pushed off into the groove by the pusher",
-    "chamfer_needed": "floor port's lower edge: >= 3.5 mm at 15 deg or 2.5 mm at 20 deg (the ring enters the port from below); the spigot's top edge is covered by the mandrel's sleeve"
+    "chamfer_needed": "floor port's lower edge: 20 deg x 2.5 mm, now in the model (FP-04), = Trelleborg's minimum for 3.53 mm; the spigot's top edge is covered by the mandrel's sleeve"
    },
    {
     "gland": "gland_plate_M50",

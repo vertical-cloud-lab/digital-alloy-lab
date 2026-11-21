@@ -270,19 +270,57 @@ def fixture_C():
 
 
 def fixture_B(z_top, x0=-420.0, x1=310.0, y0=-265.0, y1=215.0):
-    """Open stand, machine frame with the floor at z = z_top - (base plate bottom): two end frames (60 x 60 tube legs and a
-    cross beam along y) carry the base plate's two ends on 30 mm ledges; the front and back are open down to a floor rail."""
-    zb = -175.0                                       # base plate bottom in the machine frame
-    zf = zb - z_top                                   # the floor
+    """Stand for the process base plate, machine frame with the floor at z_top below the plate's underside (z = -175): two
+    120 x 200 columns under the plate (x -300..-180 and 200..300, y -100..100), clear of the legs' and posts' base screws and
+    the Z actuator, on a floor plate. Nothing stands beside or above the plate, so the arms reach the chamber's side walls
+    and the plate's whole underside (run 1 had end frames that blocked the right-wall screws: F16, F23, F52)."""
+    zb = -175.0
+    zf = zb - z_top
+    cols = [_box(xa, xb, -100.0, 100.0, zf + 20.0, zb) for xa, xb in ((-300.0, -180.0), (200.0, 300.0))]
+    foot = _box(-340.0, 340.0, -160.0, 160.0, zf, zf + 20.0)
+    return _fuse(*cols, foot)
+
+
+TRUNNION = dict(h_axis=1000.0, half_span=330.0, stand=(90.0, 260.0), shaft_d=50.0, jaw=(12.0, 90.0, 70.0), jaw_y=-20.0, jaw_z=60.0)
+
+
+def trunnion_stands():
+    """Turn-over positioner (a motorized trunnion, e.g. a geared stepper with a brake on one stand): two stands on the floor
+    and the axis bearings, in a frame whose origin is the axis point (x along the axis)."""
+    t = TRUNNION
+    h, hs = t["h_axis"], t["half_span"]
+    sx, sy = t["stand"]
     parts = []
-    for xa, xb in ((x0 - 30.0, x0 + 30.0), (x1 - 30.0, x1 + 30.0)):
-        parts.append(_box(xa, xb, y0 - 60.0, y1 + 60.0, zb - 60.0, zb))                    # cross beam under the plate end
-        for ya in (y0 - 60.0, y1):
-            parts.append(_box(xa, xb, ya, ya + 60.0, zf, zb - 60.0))                     # legs
-        parts.append(_box(xa, xb, y0 - 60.0, y1 + 60.0, zf, zf + 40.0))                    # floor rail
-    for ya in (y0 - 60.0, y1):
-        parts.append(_box(x0 - 30.0, x1 + 30.0, ya, ya + 60.0, zf, zf + 40.0))             # floor rails along x
+    for s_ in (-1, 1):
+        xa = s_ * hs
+        parts.append(_box(min(xa, xa + s_ * sx), max(xa, xa + s_ * sx), -sy / 2, sy / 2, -h, 60.0))
+        parts.append(_box(min(xa, xa + s_ * sx), max(xa, xa + s_ * sx), -sy, sy, -h, -h + 20.0))
     return _fuse(*parts)
+
+
+def trunnion_jaws():
+    """The turning part: a shaft from each stand to a 12 mm jaw that clamps the chamber's side wall (machine x = +-156) at
+    machine y -20, z 60, i.e. 10 mm above the turn axis (axis at machine z 50). Frame: the axis point, x along the axis."""
+    t = TRUNNION
+    jt, jy, jz = t["jaw"]
+    parts = []
+    for s_ in (-1, 1):
+        x_face = s_ * 156.0
+        parts.append(_box(min(x_face, x_face + s_ * jt), max(x_face, x_face + s_ * jt), t["jaw_y"] - jy / 2, t["jaw_y"] + jy / 2,
+                          t["jaw_z"] - 50.0 - jz / 2, t["jaw_z"] - 50.0 + jz / 2))
+        x0 = x_face + s_ * jt
+        parts.append(cq.Solid.makeCylinder(t["shaft_d"] / 2, abs(t["half_span"] - abs(x0)), V(x0, 0, 0), V(s_, 0, 0)))
+    return _fuse(*parts)
+
+
+def nozzle():
+    """Small-part vacuum nozzle on the VGC10's adaptor plate: Ø5 x 60 stem, Ø6 silicone cup. TCP at the cup's face."""
+    v = VAC
+    body = _box(-v["w"] / 2, v["w"] / 2, -v["d"] / 2, v["d"] / 2, 0.0, v["h"])
+    stem = _cyl(2.5, v["h"], v["h"] + 60.0)
+    cup = _cyl(3.0, v["h"] + 60.0, v["h"] + 66.0)
+    L = v["h"] + 66.0
+    return _fuse(body, stem, cup), np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, L], [0, 0, 0, 1]], float)
 
 
 def fixture_P(z_top):
@@ -337,7 +375,7 @@ def tess(shape, tol=0.2, ang=0.3):
 
 def _key(name, args):
     h = hashlib.sha256(pathlib.Path(__file__).read_bytes())
-    h.update(f"{name}{args}{TC}{SCREWDRIVER}{NUTRUNNER}{NUT_ANGLE}{VAC}".encode())
+    h.update(f"{name}{args}{TC}{SCREWDRIVER}{NUTRUNNER}{NUT_ANGLE}{VAC}{TRUNNION}".encode())
     return h.hexdigest()[:16]
 
 
@@ -367,6 +405,7 @@ def export_steps():
     for name, fn in (("spigot_mandrel", spigot_mandrel), ("spigot_pusher", spigot_pusher), ("rod_bullet", rod_bullet),
                      ("ring_loader", ring_loader), ("roller_3p2", lambda: roller(3.2)[0]), ("roller_1p4", lambda: roller(1.4)[0]),
                      ("fixture_C", fixture_C), ("fixture_P", lambda: fixture_P(1000.0)), ("fixture_B", lambda: fixture_B(1000.0)),
+                     ("trunnion_stands", trunnion_stands), ("trunnion_jaws", trunnion_jaws), ("nozzle", lambda: nozzle()[0]),
                      ("nest_stack", nest_stack), ("nest_body_inv", nest_body_inv), ("nest_body_up", nest_body_up),
                      ("ring_caps_left", lambda: ring_caps()["left_finger_tip"]), ("ring_caps_right", lambda: ring_caps()["right_finger_tip"])):
         s = fn()

@@ -143,7 +143,7 @@ def sequence_json(rows, dual=None):
                                                                                     "turned back to 0 at the seat (bayonet)")
             if st["do"] == "seal":
                 e["seal_method"] = r.get("method")
-            if st["do"] == "dual" and st.get("flip"):
+            if st["do"] == "dual" and (st.get("flip") or st.get("frm")):
                 import cell2 as K2
                 import run_assembly as RA
                 Fs = RA.carry_frames(K2.Cell(None), st)
@@ -156,8 +156,13 @@ def sequence_json(rows, dual=None):
                     ks = list(range(0, len(Fs), max(1, len(Fs) // 30))) + [len(Fs) - 1]
                     e["waypoints_4x4"] = [np.round(Fe @ Fs[k], 3).tolist() for k in ks]
                     e.pop("waypoints", None)
-                e["note"] = ("turned over 180 deg about y between two fixtures, carried by both arms by two legs or two side walls: "
-                             "waypoints_4x4 are the part's pose relative to its final pose (model frame), ending at the identity")
+                e["note"] = (("turned over 180 deg about y between two fixtures" if st.get("flip") else
+                              "carried the same way up between two fixtures (lift, cross, lower)") +
+                             ", by both arms: waypoints_4x4 are the part's pose relative to its final pose (model frame), ending at the identity")
+        elif st["do"] == "rotate":
+            e["parts"] = ["(everything in the chamber sub-assembly)"]
+            e["note"] = ("the trunnion positioner turns the sub-assembly 180 deg about the model's x axis through machine (0, 0, 50); "
+                         "from upright to upside down, or back")
         elif st["do"] == "screws":
             e["joint"] = st["joint"]
             e["pn"] = st.get("pn")

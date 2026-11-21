@@ -1,11 +1,15 @@
 [
  [
   "render_cell.png",
-  "The cell: two UR12e on MiR250s, the bench with the module nests and Fixture C, Fixture P, and Fixture B with the finished process module"
+  "The cell: two UR12e on MiR250s, the bench with the module nests, Fixture P, the trunnion, and Fixture B with the finished process module"
  ],
  [
-  "render_F05_mid.png",
-  "Chamber assembly (15.5 kg) turned over by both arms holding two legs"
+  "render_F05b_mid.png",
+  "Chamber assembly (15.8 kg) carried upright by both arms, each holding a leg, from the trunnion to Fixture B"
+ ],
+ [
+  "render_C01b.png",
+  "The trunnion has turned the chamber upside down for the under-floor work"
  ],
  [
   "render_M22_1.png",
@@ -17,19 +21,15 @@
  ],
  [
   "render_C10_1.png",
-  "Build module (upside down) into the floor port on Fixture C"
- ],
- [
-  "render_F05.png",
-  "Chamber set onto the base plate on Fixture B"
+  "Build module (upside down) into the floor port, chamber in the trunnion"
  ],
  [
   "render_F29_A_0.png",
   "Lid cord rolled into the body's gland (roller on arm A)"
  ],
  [
-  "turnover_F05.gif",
-  "Chamber turn-over by both arms (F05), every few frames of the checked path"
+  "carry_F05b.gif",
+  "Chamber assembly carried by both arms from the trunnion to Fixture B (F05b), every few frames of the checked path"
  ],
  [
   "render_screw_F06.png",

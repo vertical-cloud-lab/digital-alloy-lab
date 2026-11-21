@@ -8,8 +8,8 @@
    -1
   ],
   "payload_kg": 0.05,
-  "max_push_N": 175.0,
-  "holding_torque_frac": 0.31
+  "max_push_N": 149.0,
+  "holding_torque_frac": 0.34
  },
  {
   "step": "C10",
@@ -20,8 +20,8 @@
    -1
   ],
   "payload_kg": 2.7,
-  "max_push_N": 138.0,
-  "holding_torque_frac": 0.43
+  "max_push_N": 119.0,
+  "holding_torque_frac": 0.47
  },
  {
   "step": "F39",

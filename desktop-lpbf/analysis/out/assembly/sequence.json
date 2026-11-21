@@ -122,16 +122,16 @@
    "do": "place",
    "arm": "A",
    "holder": null,
-   "tool": "gripper+caps",
+   "tool": "nozzle",
    "status": {
     "sweep": "PASS",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
    "min_gap_mm": 0.3,
    "gap_with": "Heater block M50 (6061-T6, bayonet socket)",
-   "arm_clearance_mm": 0.1,
-   "arm_clearance_with": "left_finger_tip to Type K thermocouples M50 (control, edge, limit; 0.",
-   "why": "released 27 mm above its seat and let drop over its guide; released 24 mm above its seat and let drop over its guide; released 21 mm above its seat and let drop over its guide; arm A: A/cap/left_finger_tip hits Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath); pushed home instead, but A/cap/left_finger_tip hits Type K thermocouples M50 (control, edge, limit; 0.04 in",
+   "arm_clearance_mm": 2.1,
+   "arm_clearance_with": "held:M05:Radiation shields M50 #1 to Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "why": "released 9 mm above its seat and let drop over its guide; released 6 mm above its seat and let drop over its guide",
    "parts": [
     "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
     "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)"
@@ -183,20 +183,20 @@
   },
   {
    "id": "M07",
-   "label": "Disc springs into the head's slotted counterbores",
+   "label": "Disc springs into the head's slotted counterbores (small-part vacuum nozzle)",
    "do": "place",
    "arm": "A",
    "holder": null,
-   "tool": "gripper+caps",
+   "tool": "nozzle",
    "status": {
     "sweep": "PASS",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
    "min_gap_mm": 0.3,
    "gap_with": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "arm_clearance_mm": null,
    "arm_clearance_with": null,
-   "why": "arm A: A/cap/left_finger_tip hits Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel) (3.0 mm deep); pushed home instead, but A/cap/left_finger_tip hits Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel) (3.0 mm deep) at 15 mm along the insertion",
+   "why": "",
    "parts": [],
    "waypoints": [
     [
@@ -1022,7 +1022,7 @@
    "gap_with": null,
    "arm_clearance_mm": 1.2,
    "arm_clearance_with": "nutrunner_angle to Fixture P (floor-plate pedestal)",
-   "why": "in the: approach: no path in 300 iterations; in the: approach: end pose in collision; in the: approach: no path in 300 iterations (+12 more)",
+   "why": "in the: approach: no path in 1000 iterations",
    "joint": "floor",
    "pn": null,
    "driver": [
@@ -1032,28 +1032,43 @@
    "per_screw": [
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #1",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #2",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #3",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #4",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #5",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #6",
@@ -1062,23 +1077,35 @@
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #7",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #8",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #9",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #10",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #11",
@@ -1098,67 +1125,82 @@
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #13",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #14",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #15",
      "ok": true,
      "clearance": [
-      1.2,
-      "nutrunner_angle to Fixture P (floor-plate pedestal)"
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
      ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #16",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #17",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ]
     },
     {
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #18",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      1.2,
+      "nutrunner_angle to Fixture P (floor-plate pedestal)"
+     ]
     }
    ]
   },
   {
    "id": "C01",
-   "label": "Chamber (frame + floor plate, about 11 kg) turned over by both arms onto Fixture C",
+   "label": "Chamber (frame + floor plate, 7.4 kg) carried upright by both arms from Fixture P into the trunnion's jaws",
    "do": "dual",
    "arm": null,
    "holder": null,
    "tool": null,
    "status": {
     "sweep": "-",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
    "min_gap_mm": null,
    "gap_with": null,
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "arm B: B/forearm hits B/gr/adapter",
+   "arm_clearance_mm": 0.0,
+   "arm_clearance_with": "held:C01 to Trunnion jaws",
+   "why": "",
    "parts": [
     "(everything in the chamber sub-assembly: chamber body, inserts, outlet plenum, funnel, module, Z stage, legs and their screws)"
    ],
-   "frames_checked": 51,
-   "frames_total": 101,
+   "frames_checked": 96,
+   "frames_total": 96,
    "waypoints_4x4": [
     [
      [
-      -1.0,
+      1.0,
       0.0,
-      -0.0,
-      -450.0
+      0.0,
+      -700.0
      ],
      [
       0.0,
@@ -1169,632 +1211,8 @@
      [
       0.0,
       0.0,
-      -1.0,
-      -95.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -1.0,
-      0.0,
-      -0.0,
-      -450.0
-     ],
-     [
-      0.0,
       1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      -1.0,
-      -185.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -1.0,
-      0.0,
-      -0.0,
-      -450.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      -1.0,
-      -275.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -1.0,
-      0.0,
-      -0.0,
-      -450.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      -1.0,
-      -365.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -1.0,
-      0.0,
-      -0.0,
-      -450.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      -1.0,
-      -455.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -1.0,
-      0.0,
-      -0.0,
-      -450.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      -1.0,
-      -545.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.988,
-      0.0,
-      -0.156,
-      -419.678
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.156,
-      0.0,
-      -0.988,
-      -535.866
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.951,
-      0.0,
-      -0.309,
-      -389.549
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.309,
-      0.0,
-      -0.951,
-      -527.947
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.891,
-      0.0,
-      -0.454,
-      -359.8
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.454,
-      0.0,
-      -0.891,
-      -521.2
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.809,
-      0.0,
-      -0.588,
-      -330.611
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.588,
-      0.0,
-      -0.809,
-      -515.549
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.707,
-      0.0,
-      -0.707,
-      -302.145
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.707,
-      0.0,
-      -0.707,
-      -510.895
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.588,
-      0.0,
-      -0.809,
-      -274.549
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.809,
-      0.0,
-      -0.588,
-      -507.111
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.454,
-      0.0,
-      -0.891,
-      -247.95
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.891,
-      0.0,
-      -0.454,
-      -504.05
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.309,
-      0.0,
-      -0.951,
-      -222.447
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.951,
-      0.0,
-      -0.309,
-      -501.549
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.156,
-      0.0,
-      -0.988,
-      -198.116
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.988,
-      0.0,
-      -0.156,
-      -499.428
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.0,
-      0.0,
-      -1.0,
-      -175.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      1.0,
-      0.0,
-      0.0,
-      -497.5
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.156,
-      0.0,
-      -0.988,
-      -153.116
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.988,
-      0.0,
-      0.156,
-      -495.572
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.309,
-      0.0,
-      -0.951,
-      -132.447
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.951,
-      0.0,
-      0.309,
-      -493.451
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.454,
-      0.0,
-      -0.891,
-      -112.95
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.891,
-      0.0,
-      0.454,
-      -490.95
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.588,
-      0.0,
-      -0.809,
-      -94.549
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.809,
-      0.0,
-      0.588,
-      -487.889
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.707,
-      0.0,
-      -0.707,
-      -77.145
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.707,
-      0.0,
-      0.707,
-      -484.105
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.809,
-      0.0,
-      -0.588,
-      -60.611
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.588,
-      0.0,
-      0.809,
-      -479.451
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.891,
-      0.0,
-      -0.454,
-      -44.8
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.454,
-      0.0,
-      0.891,
-      -473.8
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.951,
-      0.0,
-      -0.309,
-      -29.549
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.309,
-      0.0,
-      0.951,
-      -467.053
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.988,
-      0.0,
-      -0.156,
-      -14.678
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.156,
-      0.0,
-      0.988,
-      -459.134
+      70.0
      ],
      [
       0.0,
@@ -1808,7 +1226,7 @@
       1.0,
       0.0,
       0.0,
-      -0.0
+      -700.0
      ],
      [
       0.0,
@@ -1820,7 +1238,7 @@
       0.0,
       0.0,
       1.0,
-      -450.0
+      107.5
      ],
      [
       0.0,
@@ -1834,7 +1252,7 @@
       1.0,
       0.0,
       0.0,
-      -0.0
+      -700.0
      ],
      [
       0.0,
@@ -1846,7 +1264,7 @@
       0.0,
       0.0,
       1.0,
-      -396.0
+      145.0
      ],
      [
       0.0,
@@ -1860,7 +1278,7 @@
       1.0,
       0.0,
       0.0,
-      -0.0
+      -700.0
      ],
      [
       0.0,
@@ -1872,7 +1290,7 @@
       0.0,
       0.0,
       1.0,
-      -342.0
+      182.5
      ],
      [
       0.0,
@@ -1886,7 +1304,7 @@
       1.0,
       0.0,
       0.0,
-      -0.0
+      -700.0
      ],
      [
       0.0,
@@ -1898,7 +1316,605 @@
       0.0,
       0.0,
       1.0,
-      -288.0
+      220.0
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -670.423
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      217.042
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -640.845
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      214.085
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -611.268
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      211.127
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -581.69
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      208.169
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -552.113
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      205.211
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -522.535
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      202.254
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -492.958
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      199.296
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -463.38
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      196.338
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -433.803
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      193.38
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -404.225
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      190.423
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -374.648
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      187.465
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -345.07
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      184.507
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -315.493
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      181.549
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -285.915
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      178.592
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -256.338
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      175.634
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -226.761
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      172.676
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -197.183
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      169.718
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -167.606
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      166.761
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -138.028
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      163.803
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -108.451
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      160.845
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -78.873
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      157.887
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -49.296
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      154.93
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -19.718
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      151.972
      ],
      [
       0.0,
@@ -1924,7 +1940,7 @@
       0.0,
       0.0,
       1.0,
-      -234.0
+      137.5
      ],
      [
       0.0,
@@ -1950,7 +1966,7 @@
       0.0,
       0.0,
       1.0,
-      -180.0
+      100.0
      ],
      [
       0.0,
@@ -1976,7 +1992,7 @@
       0.0,
       0.0,
       1.0,
-      -126.0
+      62.5
      ],
      [
       0.0,
@@ -2002,33 +2018,7 @@
       0.0,
       0.0,
       1.0,
-      -72.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      1.0,
-      0.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      1.0,
-      -18.0
+      25.0
      ],
      [
       0.0,
@@ -2064,7 +2054,28 @@
      ]
     ]
    ],
-   "note": "turned over 180 deg about y between two fixtures, carried by both arms by two legs or two side walls: waypoints_4x4 are the part's pose relative to its final pose (model frame), ending at the identity"
+   "note": "carried the same way up between two fixtures (lift, cross, lower), by both arms: waypoints_4x4 are the part's pose relative to its final pose (model frame), ending at the identity"
+  },
+  {
+   "id": "C01b",
+   "label": "The trunnion turns the chamber upside down (180 deg about x), both arms parked",
+   "do": "rotate",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "(everything in the chamber sub-assembly)"
+   ],
+   "note": "the trunnion positioner turns the sub-assembly 180 deg about the model's x axis through machine (0, 0, 50); from upright to upside down, or back"
   },
   {
    "id": "C02",
@@ -2456,7 +2467,7 @@
   },
   {
    "id": "C11",
-   "label": "Two captive M6 screws pull the flange onto the floor (they also finish pushing the spigot seal home)",
+   "label": "Two captive M6 screws pull the flange onto the floor (they also finish pushing the spigot seal home); inline nutrunner on a 130 mm extension, so its body clears the module's gland plate",
    "do": "screws",
    "arm": "A",
    "holder": null,
@@ -2469,7 +2480,7 @@
    "gap_with": null,
    "arm_clearance_mm": null,
    "arm_clearance_with": null,
-   "why": "nge #1: screwdriver: A/upper_arm hits bench top; also no way with nutrunner, nutrunner_angle; nge #2: screwdriver: A/upper_arm hits bench top; also no way with nutrunner, nutrunner_angle",
+   "why": "nge #1: nutrunner: screw:Captive M6 panel screws on the hits Captive-screw retainers #1; also no w; nge #2: nutrunner: screw:Captive M6 panel screws on the hits Captive-screw retainers #2; also no w",
    "joint": "module_flange",
    "pn": "95966A705",
    "driver": [
@@ -2491,28 +2502,22 @@
   },
   {
    "id": "C12",
-   "label": "Z stage (flange, actuator, belt fold, servo, carriage, arm, magnet, pre-assembled) onto the floor",
+   "label": "Z mounting flange alone onto the floor (the actuator goes on after its screws, which sit beside it)",
    "do": "place",
    "arm": "A",
    "holder": null,
    "tool": "gripper",
    "status": {
     "sweep": "PASS",
-    "arm": "PASS"
+    "arm": "FAIL"
    },
    "min_gap_mm": 0.3,
    "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "arm_clearance_mm": 0.5,
-   "arm_clearance_with": "held:C12:Z mounting flange to Build module M50: spigot, flange, honed 316L cylin",
-   "why": "",
+   "arm_clearance_mm": 1.3,
+   "arm_clearance_with": "left_finger to Module M50 bottom flange: gland plate (316L, bolte",
+   "why": "arm A: A/gr/left_finger hits Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands) at 96 mm along the insertion",
    "parts": [
-    "Z mounting flange (bolted under the floor)",
-    "Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
-    "Z bracket + fold-back belt housing (2:1)",
-    "Z servo (ClearPath-SD, NEMA 23, folded)",
-    "Z carriage",
-    "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-    "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)"
+    "Z mounting flange (bolted under the floor)"
    ],
    "waypoints": [
     [
@@ -2536,40 +2541,89 @@
    "tool": "screwdriver",
    "status": {
     "sweep": "PASS",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
    "min_gap_mm": null,
    "gap_with": null,
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "red #1: screwdriver: A/upper_arm hits bench top; also no way with nutrunner, nutrunner_angle; red #2: screwdriver: A/upper_arm hits bench top; also no way with nutrunner, nutrunner_angle; red #3: screwdriver: A/upper_arm hits bench top; also no way with nutrunner, nutrunner_angle (+1 more)",
+   "arm_clearance_mm": 2.6,
+   "arm_clearance_with": "screwdriver to Z mounting flange (bolted under the floor)",
+   "why": "",
    "joint": "zmount",
    "pn": null,
    "driver": [
-    "nutrunner_angle"
+    "screwdriver"
    ],
    "torque_Nm": 4.2,
    "per_screw": [
     {
      "screw": "Z-flange screws, M5 x 12 316, counterbored #1",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ]
     },
     {
      "screw": "Z-flange screws, M5 x 12 316, counterbored #2",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ]
     },
     {
      "screw": "Z-flange screws, M5 x 12 316, counterbored #3",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ]
     },
     {
      "screw": "Z-flange screws, M5 x 12 316, counterbored #4",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ]
     }
+   ]
+  },
+  {
+   "id": "C13b",
+   "label": "Z actuator, belt fold, servo, carriage, arm and magnet (pre-assembled) onto the flange",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Z mounting flange (bolted under the floor)",
+   "arm_clearance_mm": 3.0,
+   "arm_clearance_with": "held:C13b:Z actuator body to Overflow funnel block (316L, bolted, FKM face O-ri",
+   "why": "",
+   "parts": [
+    "Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
+    "Z bracket + fold-back belt housing (2:1)",
+    "Z servo (ClearPath-SD, NEMA 23, folded)",
+    "Z carriage",
+    "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+    "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -150.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
    ]
   },
   {
@@ -2613,18 +2667,17 @@
    "tool": "screwdriver",
    "status": {
     "sweep": "PASS",
-    "arm": "PART"
+    "arm": "PASS"
    },
    "min_gap_mm": null,
    "gap_with": null,
    "arm_clearance_mm": 1.0,
    "arm_clearance_with": "nutrunner to Chamber legs #1",
-   "why": "ore #4: nutrunner: approach: end pose in collision; also no way with nutrunner_angle",
+   "why": "",
    "joint": "legs",
    "pn": null,
    "driver": [
-    "nutrunner",
-    "nutrunner_angle"
+    "nutrunner"
    ],
    "torque_Nm": 7.4,
    "per_screw": [
@@ -2640,8 +2693,8 @@
      "screw": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore #2",
      "ok": true,
      "clearance": [
-      1.5,
-      "nutrunner_angle to Chamber legs #2"
+      1.0,
+      "nutrunner to Chamber legs #2"
      ]
     },
     {
@@ -2654,8 +2707,11 @@
     },
     {
      "screw": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore #4",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      1.0,
+      "nutrunner to Chamber legs #4"
+     ]
     }
    ]
   },
@@ -2710,87 +2766,54 @@
    "who": "person"
   },
   {
-   "id": "F03",
-   "label": "Optics posts onto the base plate, one at a time, held by arm B while arm A drives their base screws from below",
-   "do": "place",
-   "arm": "B",
+   "id": "F05",
+   "label": "The trunnion turns the chamber assembly (module, Z stage, legs) back upright",
+   "do": "rotate",
+   "arm": null,
    "holder": null,
-   "tool": "gripper",
-   "status": {
-    "sweep": "PASS",
-    "arm": "FAIL"
-   },
-   "min_gap_mm": 0.3,
-   "gap_with": "Base plate, process module (MIC-6, 15 mm)",
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "held-part screws: 316 #5: approach: no clear way in to the hole's mouth (A/upper_arm hits A/gr/camera); held-part screws: 316 #7: approach: no clear way in to the hole's mouth (A/wrist1 hits Base plate, process module (M; 316 #8: approach: no clear way in to the hole's mo",
-   "parts": [
-    "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)"
-   ],
-   "waypoints": [
-    [
-     0.0,
-     0.0,
-     200.0
-    ],
-    [
-     0.0,
-     0.0,
-     0.0
-    ]
-   ]
-  },
-  {
-   "id": "F04",
-   "label": "Two M6 x 25 up into each post's bottom cap, from under the plate",
-   "do": "screws",
-   "arm": "A",
-   "holder": null,
-   "tool": "screwdriver",
+   "tool": null,
    "status": {
     "sweep": "-",
-    "arm": "-"
+    "arm": "PASS"
    },
    "min_gap_mm": null,
    "gap_with": null,
    "arm_clearance_mm": null,
    "arm_clearance_with": null,
-   "why": "all screws of this joint were already driven (with the part held)",
-   "joint": "bridge_base",
-   "pn": null,
-   "driver": null,
-   "torque_Nm": 7.4,
-   "per_screw": []
+   "why": "",
+   "parts": [
+    "(everything in the chamber sub-assembly)"
+   ],
+   "note": "the trunnion positioner turns the sub-assembly 180 deg about the model's x axis through machine (0, 0, 50); from upright to upside down, or back"
   },
   {
-   "id": "F05",
-   "label": "Chamber assembly (frame, floor plate, module, Z stage, legs; about 17 kg) turned over by both arms holding two legs, and set onto the base plate",
+   "id": "F05b",
+   "label": "Chamber assembly (15.8 kg) carried upright by both arms, each holding a leg, from the trunnion onto the base plate",
    "do": "dual",
    "arm": null,
    "holder": null,
    "tool": null,
    "status": {
     "sweep": "-",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
    "min_gap_mm": null,
    "gap_with": null,
-   "arm_clearance_mm": 48.8,
-   "arm_clearance_with": "held:F05 to Optics bridge posts #2",
-   "why": "arm B: B/upper_arm hits B tool stand",
+   "arm_clearance_mm": 122.6,
+   "arm_clearance_with": "held:F05b to Trunnion stands",
+   "why": "",
    "parts": [
     "(everything in the chamber sub-assembly: chamber body, inserts, outlet plenum, funnel, module, Z stage, legs and their screws)"
    ],
-   "frames_checked": 59,
-   "frames_total": 101,
+   "frames_checked": 128,
+   "frames_total": 128,
    "waypoints_4x4": [
     [
      [
-      -1.0,
+      1.0,
       0.0,
-      -0.0,
-      -1100.0
+      0.0,
+      -1000.0
      ],
      [
       0.0,
@@ -2801,632 +2824,8 @@
      [
       0.0,
       0.0,
-      -1.0,
-      -250.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -1.0,
-      0.0,
-      -0.0,
-      -1100.0
-     ],
-     [
-      0.0,
       1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      -1.0,
-      -160.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -1.0,
-      0.0,
-      -0.0,
-      -1100.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      -1.0,
-      -70.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -1.0,
-      0.0,
-      -0.0,
-      -1100.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      -1.0,
-      20.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -1.0,
-      0.0,
-      -0.0,
-      -1100.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      -1.0,
-      110.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -1.0,
-      0.0,
-      -0.0,
-      -1100.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      -1.0,
-      200.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.988,
-      0.0,
-      -0.156,
-      -1054.386
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.156,
-      0.0,
-      -0.988,
-      207.239
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.951,
-      0.0,
-      -0.309,
-      -1008.541
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.309,
-      0.0,
-      -0.951,
-      215.937
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.891,
-      0.0,
-      -0.454,
-      -962.239
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.454,
-      0.0,
-      -0.891,
-      226.04
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.809,
-      0.0,
-      -0.588,
-      -915.267
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.588,
-      0.0,
-      -0.809,
-      237.459
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.707,
-      0.0,
-      -0.707,
-      -867.426
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.707,
-      0.0,
-      -0.707,
-      250.074
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.588,
-      0.0,
-      -0.809,
-      -818.541
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.809,
-      0.0,
-      -0.588,
-      263.733
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.454,
-      0.0,
-      -0.891,
-      -768.46
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.891,
-      0.0,
-      -0.454,
-      278.261
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.309,
-      0.0,
-      -0.951,
-      -717.063
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.951,
-      0.0,
-      -0.309,
-      293.459
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      -0.156,
-      0.0,
-      -0.988,
-      -664.261
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.988,
-      0.0,
-      -0.156,
-      309.114
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.0,
-      0.0,
-      -1.0,
-      -610.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      1.0,
-      0.0,
-      0.0,
-      325.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.156,
-      0.0,
-      -0.988,
-      -554.261
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.988,
-      0.0,
-      0.156,
-      340.886
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.309,
-      0.0,
-      -0.951,
-      -497.063
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.951,
-      0.0,
-      0.309,
-      356.541
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.454,
-      0.0,
-      -0.891,
-      -438.46
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.891,
-      0.0,
-      0.454,
-      371.739
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.588,
-      0.0,
-      -0.809,
-      -378.541
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.809,
-      0.0,
-      0.588,
-      386.267
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.707,
-      0.0,
-      -0.707,
-      -317.426
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.707,
-      0.0,
-      0.707,
-      399.926
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.809,
-      0.0,
-      -0.588,
-      -255.267
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.588,
-      0.0,
-      0.809,
-      412.541
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.891,
-      0.0,
-      -0.454,
-      -192.239
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.454,
-      0.0,
-      0.891,
-      423.96
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.951,
-      0.0,
-      -0.309,
-      -128.541
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.309,
-      0.0,
-      0.951,
-      434.063
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      0.988,
-      0.0,
-      -0.156,
-      -64.386
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.156,
-      0.0,
-      0.988,
-      442.761
+      -225.0
      ],
      [
       0.0,
@@ -3440,7 +2839,7 @@
       1.0,
       0.0,
       0.0,
-      0.0
+      -1000.0
      ],
      [
       0.0,
@@ -3452,7 +2851,7 @@
       0.0,
       0.0,
       1.0,
-      450.0
+      -118.333
      ],
      [
       0.0,
@@ -3466,7 +2865,7 @@
       1.0,
       0.0,
       0.0,
-      0.0
+      -1000.0
      ],
      [
       0.0,
@@ -3478,7 +2877,7 @@
       0.0,
       0.0,
       1.0,
-      396.0
+      -11.667
      ],
      [
       0.0,
@@ -3492,7 +2891,7 @@
       1.0,
       0.0,
       0.0,
-      0.0
+      -1000.0
      ],
      [
       0.0,
@@ -3504,7 +2903,7 @@
       0.0,
       0.0,
       1.0,
-      342.0
+      95.0
      ],
      [
       0.0,
@@ -3518,7 +2917,7 @@
       1.0,
       0.0,
       0.0,
-      0.0
+      -961.165
      ],
      [
       0.0,
@@ -3530,7 +2929,7 @@
       0.0,
       0.0,
       1.0,
-      288.0
+      103.738
      ],
      [
       0.0,
@@ -3544,7 +2943,7 @@
       1.0,
       0.0,
       0.0,
-      0.0
+      -922.33
      ],
      [
       0.0,
@@ -3556,7 +2955,605 @@
       0.0,
       0.0,
       1.0,
-      234.0
+      112.476
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -883.495
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      121.214
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -844.66
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      129.951
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -805.825
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      138.689
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -766.99
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      147.427
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -728.155
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      156.165
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -689.32
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      164.903
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -650.485
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      173.641
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -611.65
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      182.379
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -572.816
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      191.117
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -533.981
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      199.854
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -495.146
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      208.592
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -456.311
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      217.33
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -417.476
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      226.068
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -378.641
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      234.806
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -339.806
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      243.544
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -300.971
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      252.282
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -262.136
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      261.019
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -223.301
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      269.757
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -184.466
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      278.495
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -145.631
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      287.233
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -106.796
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      295.971
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -67.961
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      304.709
+     ],
+     [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    [
+     [
+      1.0,
+      0.0,
+      0.0,
+      -29.126
+     ],
+     [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0,
+      313.447
      ],
      [
       0.0,
@@ -3582,7 +3579,7 @@
       0.0,
       0.0,
       1.0,
-      180.0
+      293.333
      ],
      [
       0.0,
@@ -3608,7 +3605,7 @@
       0.0,
       0.0,
       1.0,
-      126.0
+      186.667
      ],
      [
       0.0,
@@ -3634,33 +3631,7 @@
       0.0,
       0.0,
       1.0,
-      72.0
-     ],
-     [
-      0.0,
-      0.0,
-      0.0,
-      1.0
-     ]
-    ],
-    [
-     [
-      1.0,
-      0.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      1.0,
-      0.0,
-      0.0
-     ],
-     [
-      0.0,
-      0.0,
-      1.0,
-      18.0
+      80.0
      ],
      [
       0.0,
@@ -3696,7 +3667,7 @@
      ]
     ]
    ],
-   "note": "turned over 180 deg about y between two fixtures, carried by both arms by two legs or two side walls: waypoints_4x4 are the part's pose relative to its final pose (model frame), ending at the identity"
+   "note": "carried the same way up between two fixtures (lift, cross, lower), by both arms: waypoints_4x4 are the part's pose relative to its final pose (model frame), ending at the identity"
   },
   {
    "id": "F06",
@@ -3707,13 +3678,13 @@
    "tool": "screwdriver",
    "status": {
     "sweep": "PASS",
-    "arm": "FAIL"
+    "arm": "PART"
    },
    "min_gap_mm": null,
    "gap_with": null,
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "316 #1: approach: no clear way in to the hole's mouth (A/upper_arm hits Base plate, process module; 316 #2: approach: no clear way in to the hole's mouth (no IK (out of reach or joint limit)); 316 #3: approach: no clear way in to the hole's mouth (no IK (out of reach or joint limit)) (+5 more)",
+   "arm_clearance_mm": 0.7,
+   "arm_clearance_with": "nutrunner_angle to Fixture B (open stand)",
+   "why": "316 #1: approach: no clear way in to the hole's mouth (A/upper_arm hits Base plate, process module",
    "joint": "legs_base",
    "pn": null,
    "driver": [
@@ -3728,38 +3699,59 @@
     },
     {
      "screw": "Base-plate-to-leg screws, M6 x 25 316 #2",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
     },
     {
      "screw": "Base-plate-to-leg screws, M6 x 25 316 #3",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
     },
     {
      "screw": "Base-plate-to-leg screws, M6 x 25 316 #4",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
     },
     {
      "screw": "Base-plate-to-leg screws, M6 x 25 316 #5",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
     },
     {
      "screw": "Base-plate-to-leg screws, M6 x 25 316 #6",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      0.7,
+      "nutrunner_angle to Fixture B (open stand)"
+     ]
     },
     {
      "screw": "Base-plate-to-leg screws, M6 x 25 316 #7",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
     },
     {
      "screw": "Base-plate-to-leg screws, M6 x 25 316 #8",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ]
     }
    ]
   },
@@ -3851,6 +3843,38 @@
    ]
   },
   {
+   "id": "F11",
+   "label": "LED bar (small-part vacuum nozzle on its top face)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "nozzle",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 1.0,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 0.5,
+   "arm_clearance_with": "nozzle to Process chamber body (6061-T6 through-frame from 5",
+   "why": "arm A: A/tool/nozzle hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 105 mm along the insertion",
+   "parts": [
+    "Layer-light LED bar"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     120.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
    "id": "F10",
    "label": "Lift-out wall liners into the open chamber",
    "do": "place",
@@ -3874,38 +3898,6 @@
      0.0,
      0.0,
      160.0
-    ],
-    [
-     0.0,
-     0.0,
-     0.0
-    ]
-   ]
-  },
-  {
-   "id": "F11",
-   "label": "LED bar",
-   "do": "place",
-   "arm": "A",
-   "holder": null,
-   "tool": "gripper",
-   "status": {
-    "sweep": "PASS",
-    "arm": "FAIL"
-   },
-   "min_gap_mm": 0.4,
-   "gap_with": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
-   "arm_clearance_mm": 2.9,
-   "arm_clearance_with": "left_finger_tip to Process chamber body (6061-T6 through-frame from 5",
-   "why": "arm A: A/gr/left_finger_tip hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 15 mm along the insertion",
-   "parts": [
-    "Layer-light LED bar"
-   ],
-   "waypoints": [
-    [
-     0.0,
-     0.0,
-     120.0
     ],
     [
      0.0,
@@ -4034,9 +4026,9 @@
    },
    "min_gap_mm": 0.3,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clearance_mm": 198.3,
-   "arm_clearance_with": "forearm to Optics bridge posts #3",
-   "why": "released 12 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/upper_arm hits Fixture B (open stand); also no way with nutrunner, nutrunne; 316 #2: screwdriver: B/upper_arm hits Fixture B (o",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "released 12 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wri",
    "parts": [
     "Vacuum port (KF-25, stub welded into the adapter plate)",
     "Vacuum port adapter plate (304, 8 mm, FKM face O-ring)",
@@ -4079,7 +4071,7 @@
   },
   {
    "id": "F18",
-   "label": "Recoater guide rail onto the back wall",
+   "label": "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assembled on the rail) onto the back wall",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -4088,13 +4080,17 @@
     "sweep": "PASS",
     "arm": "FAIL"
    },
-   "min_gap_mm": 2.5,
-   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "min_gap_mm": 2.4,
+   "gap_with": "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)",
    "arm_clearance_mm": null,
    "arm_clearance_with": null,
-   "why": "arm A: A/gr/left_finger_tip hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) (3.0 mm deep) at 168 mm along the insertion",
+   "why": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with ",
    "parts": [
-    "Recoater guide rail (15 mm, 260 mm)"
+    "Recoater guide rail (15 mm, 260 mm)",
+    "Recoater carriage (15 mm rail)",
+    "Recoater carriage block (6061)",
+    "Recoater ball nut (flange on the +x face)",
+    "Recoater arm (6061, 40 x 14 web)"
    ],
    "waypoints": [
     [
@@ -4132,68 +4128,23 @@
    "per_screw": []
   },
   {
-   "id": "F20",
-   "label": "Carriage onto the rail from its end",
-   "do": "place",
-   "arm": "A",
-   "holder": null,
-   "tool": "gripper",
-   "status": {
-    "sweep": "FAIL",
-    "arm": "FAIL"
-   },
-   "min_gap_mm": 0.3,
-   "gap_with": "Recoater guide rail (15 mm, 260 mm)",
-   "arm_clearance_mm": 0.5,
-   "arm_clearance_with": "held:F20:Recoater carriage to Process chamber body (6061-T6 through-frame from 5",
-   "why": "sweep: Recoater carriage blocked by Process chamber body (6061-T6 through-frame from 5 after 182.0 mm; arm A: held:F20:Recoater carriage hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 108 mm along the insertion",
-   "parts": [
-    "Recoater carriage (15 mm rail)",
-    "Recoater carriage block (6061)"
-   ],
-   "waypoints": [
-    [
-     30.0,
-     -150.0,
-     200.0
-    ],
-    [
-     30.0,
-     -150.0,
-     0.0
-    ],
-    [
-     30.0,
-     0.0,
-     0.0
-    ],
-    [
-     0.0,
-     0.0,
-     0.0
-    ]
-   ]
-  },
-  {
    "id": "F21",
-   "label": "Ball screw through the side-wall bores and the ball nut (turned through the nut: 30 turns at 10 mm lead)",
+   "label": "Ball screw in through the right wall's bore and turned through the ball nut (30 turns at 10 mm lead) into the left bore",
    "do": "place",
    "arm": "A",
    "holder": null,
    "tool": "gripper",
    "status": {
-    "sweep": "FAIL",
-    "arm": "FAIL"
+    "sweep": "PASS",
+    "arm": "PASS"
    },
-   "min_gap_mm": 0.3,
-   "gap_with": "Recoater carriage block (6061)",
-   "arm_clearance_mm": 0.0,
+   "min_gap_mm": 1.0,
+   "gap_with": "Recoater ball nut (flange on the +x face)",
+   "arm_clearance_mm": 3.0,
    "arm_clearance_with": "held:F21:Recoater ball screw to Process chamber body (6061-T6 through-frame from 5",
-   "why": "sweep: Recoater ball screw blocked by Process chamber body (6061-T6 through-frame from 5 after 214.0 mm; arm A: held:F21:Recoater ball screw hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 141 mm along the insertion",
+   "why": "released 33 mm short and pushed home with the closed fingers",
    "parts": [
-    "Recoater ball screw (M12, 10 mm lead)",
-    "Recoater ball nut (flange on the +x face)",
-    "Recoater arm (6061, 40 x 14 web)"
+    "Recoater ball screw (M12, 10 mm lead)"
    ],
    "waypoints": [
     [
@@ -4217,13 +4168,13 @@
    "tool": "gripper",
    "status": {
     "sweep": "PASS",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
    "min_gap_mm": 0.3,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clearance_mm": 1.7,
-   "arm_clearance_with": "left_finger to Optics bridge posts #2",
-   "why": "arm A: A/gr/left_finger hits Optics bridge posts #2 at 60 mm along the insertion",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
    "parts": [
     "Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rings both sides)",
     "Recoater feedthrough O-rings (2 x FKM 75A 2-024, spacer to wall and to flange)",
@@ -4256,9 +4207,9 @@
    },
    "min_gap_mm": 0.3,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clearance_mm": 0.9,
-   "arm_clearance_with": "left_finger_tip to Optics bridge posts #4",
-   "why": "arm A: A/gr/left_finger hits Optics bridge posts #4 at 111 mm along the insertion; held-part screws: 316 #1: screwdriver: screw:Bearing-cap screws, M4 x 20 31 hits A/wrist2; also no way with nutrunne; 316 #2: screwdriver: screw:Bearing-cap screws, M4 ",
+   "arm_clearance_mm": 22.1,
+   "arm_clearance_with": "right_finger_tip to Vacuum-port adapter screws, M5 x 20 316 #3",
+   "why": "released 15 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wri",
    "parts": [
     "Recoater floating bearing housing (blind cap, FKM face O-ring)",
     "Recoater bearing-cap O-ring (FKM 75A 2-019)"
@@ -4313,7 +4264,7 @@
    "gap_with": "Recoater motor bracket",
    "arm_clearance_mm": 0.0,
    "arm_clearance_with": "held:F25:Recoater servo to Recoater motor bracket",
-   "why": "arm A: A/gr/left_finger_tip hits Optics bridge posts #2 at 108 mm along the insertion; arm A: approach: no path in 800 iterations; released 9 mm short and pushed home with the closed fingers; arm A: approach: no path in 800 iterations; released 15 mm short and pushed home with the closed fingers",
+   "why": "arm A: held:F25:Recoater motor bracket hits Trunnion stands at 0 mm along the insertion",
    "parts": [
     "Recoater motor standoff",
     "Recoater motor bracket",
@@ -4334,7 +4285,7 @@
   },
   {
    "id": "F26",
-   "label": "Blade holder and blade",
+   "label": "Blade holder and blade, in through the door opening and up under the recoater arm",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -4343,11 +4294,11 @@
     "sweep": "FAIL",
     "arm": "FAIL"
    },
-   "min_gap_mm": null,
-   "gap_with": null,
-   "arm_clearance_mm": 22.7,
-   "arm_clearance_with": "right_finger_tip to Process chamber body (6061-T6 through-frame from 5",
-   "why": "sweep: Blade holder blocked by Recoater carriage block (6061) after 0.0 mm; arm A: held:F26:Blade holder hits Recoater carriage block (6061) (3.0 mm deep) at 129 mm along the insertion",
+   "min_gap_mm": 0.05,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clearance_mm": 1.3,
+   "arm_clearance_with": "held:F26:Blade holder to Process chamber body (6061-T6 through-frame from 5",
+   "why": "sweep: Blade holder blocked by Process chamber body (6061-T6 through-frame from 5 after 43.0 mm; arm A: held:F26:Blade holder hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 90 mm along the insertion",
    "parts": [
     "Blade holder (6061, 18 x 31, quick-swap)",
     "HSS recoater blade (1.5 mm, wide nose)"
@@ -4355,8 +4306,8 @@
    "waypoints": [
     [
      0.0,
-     0.0,
-     220.0
+     -260.0,
+     0.0
     ],
     [
      0.0,
@@ -4380,7 +4331,7 @@
    "gap_with": null,
    "arm_clearance_mm": null,
    "arm_clearance_with": null,
-   "why": "316 #1: screwdriver: A/upper_arm hits A cabinet; also no way with nutrunner_angle; 316 #2: screwdriver: A/upper_arm hits A cabinet; also no way with nutrunner_angle",
+   "why": "316 #1: screwdriver: A/tool/screwdriver hits Build module M50: spigot, flange, honed 316L cylinder; 316 #2: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle",
    "joint": "blade",
    "pn": null,
    "driver": [
@@ -4446,7 +4397,7 @@
    },
    "min_gap_mm": null,
    "gap_with": null,
-   "arm_clearance_mm": 1.0,
+   "arm_clearance_mm": 0.9,
    "arm_clearance_with": "roller to Process chamber body (6061-T6 through-frame from 5",
    "why": "",
    "parts": [
@@ -4467,8 +4418,8 @@
    },
    "min_gap_mm": 0.3,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clearance_mm": 26.2,
-   "arm_clearance_with": "held:F30:Chamber lid to Optics bridge posts #4",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
    "why": "",
    "parts": [
     "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
@@ -4709,22 +4660,53 @@
   },
   {
    "id": "F33",
-   "label": "Field stop, then the window flange with its O-ring",
+   "label": "Field stop",
    "do": "place",
    "arm": "A",
    "holder": null,
    "tool": "gripper",
    "status": {
     "sweep": "PASS",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
    "min_gap_mm": 0.1,
    "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
    "arm_clearance_mm": 0.1,
    "arm_clearance_with": "held:F33:Field-stop aperture to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl",
-   "why": "released 27 mm short and pushed home with the closed fingers; arm A: part 100 mm across at the grasp: wider than the 2F-85's 85 mm stroke",
+   "why": "released 27 mm short and pushed home with the closed fingers",
    "parts": [
-    "Field-stop aperture (\u00d836, passive beam limit)",
+    "Field-stop aperture (\u00d836, passive beam limit)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     300.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F33b",
+   "label": "Window flange with its O-ring (\u00d8100: the vacuum gripper)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "vacuum",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
     "Window flange (6061, two FKM O-ring grooves)",
     "Window-flange O-ring (FKM 75A 2-036, face seal on the lid)"
    ],
@@ -4732,7 +4714,7 @@
     [
      0.0,
      0.0,
-     300.0
+     360.0
     ],
     [
      0.0,
@@ -4881,29 +4863,60 @@
   },
   {
    "id": "F37",
-   "label": "FKM flat ring and the retaining ring",
+   "label": "FKM flat ring",
    "do": "place",
    "arm": "A",
    "holder": null,
    "tool": "gripper",
    "status": {
     "sweep": "PASS",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
-   "min_gap_mm": 0.2,
+   "min_gap_mm": 0.3,
    "gap_with": "Window flange (6061, two FKM O-ring grooves)",
    "arm_clearance_mm": 0.3,
    "arm_clearance_with": "held:F37:Window clamp ring, upper to Window flange (6061, two FKM O-ring grooves)",
-   "why": "released 24 mm short and pushed home with the closed fingers; arm A: part 100 mm across at the grasp: wider than the 2F-85's 85 mm stroke",
+   "why": "released 24 mm short and pushed home with the closed fingers",
    "parts": [
-    "Window clamp ring, upper (FKM 75A sheet, 1.0 mm, squeezed to 0.75)",
-    "Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry)"
+    "Window clamp ring, upper (FKM 75A sheet, 1.0 mm, squeezed to 0.75)"
    ],
    "waypoints": [
     [
      0.0,
      0.0,
      390.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F37b",
+   "label": "Window retaining ring (\u00d8100: the vacuum gripper)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "vacuum",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.2,
+   "gap_with": "Window flange (6061, two FKM O-ring grooves)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     400.0
     ],
     [
      0.0,
@@ -5144,14 +5157,14 @@
    "holder": null,
    "tool": "gripper",
    "status": {
-    "sweep": "FAIL",
-    "arm": "FAIL"
+    "sweep": "PASS",
+    "arm": "PASS"
    },
-   "min_gap_mm": null,
-   "gap_with": null,
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "sweep: Metering base blocked by Metering-base dock-face O-ring (FKM 75A 2-040, sea after 0.0 mm; arm A: held:F43:Metering base hits Metering-base dock-face O-ring (FKM 75A 2-040, seals the reservoir's base plate) (3.0 mm deep); pushed home instead, but held:F43:Metering base hits Metering-base dock-face O-ring (FKM 75A 2-040, seals the reservoir's base plate) (3.0 mm deep) at 285 mm along the inse",
+   "min_gap_mm": 0.3,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clearance_mm": 23.2,
+   "arm_clearance_with": "held:F43:Metering base to Window retaining ring (spigot bottoms metal-to-met",
+   "why": "",
    "parts": [
     "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
     "Metering-base O-ring on the lid (FKM 75A 2-040, round the dose slot)",
@@ -5344,14 +5357,14 @@
    "holder": null,
    "tool": "gripper",
    "status": {
-    "sweep": "FAIL",
-    "arm": "FAIL"
+    "sweep": "PASS",
+    "arm": "PASS"
    },
-   "min_gap_mm": 0.04,
-   "gap_with": "Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings)",
-   "arm_clearance_mm": 1.6,
-   "arm_clearance_with": "held:F48:Camera window flat ring to Camera viewport adapter + boss (6061; \u00d81 in. windo",
-   "why": "sweep: Camera window blocked by Camera viewport adapter + boss (6061; \u00d81 in. windo after 0.0 mm; released 33 mm short and pushed home with the closed fingers; sweep: Camera window O-ring blocked by Camera viewport adapter + boss (6061; \u00d81 in. windo after 0.0 mm; arm A: A/gr/right_finger_tip hits Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings) (3.0 mm",
+   "min_gap_mm": 0.3,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clearance_mm": 13.0,
+   "arm_clearance_with": "held:F48:Camera viewport adapter + boss to Window retaining ring (spigot bottoms metal-to-met",
+   "why": "",
    "parts": [
     "Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings)",
     "Camera adapter O-ring (FKM 75A 2-022, face seal on the lid)"
@@ -5377,14 +5390,14 @@
    "holder": null,
    "tool": "gripper",
    "status": {
-    "sweep": null,
-    "arm": null
+    "sweep": "FAIL",
+    "arm": "FAIL"
    },
-   "min_gap_mm": null,
-   "gap_with": null,
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": null,
+   "min_gap_mm": 0.04,
+   "gap_with": "Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings)",
+   "arm_clearance_mm": 1.6,
+   "arm_clearance_with": "held:F48b:Camera window flat ring to Camera viewport adapter + boss (6061; \u00d81 in. windo",
+   "why": "sweep: Camera window O-ring blocked by Camera viewport adapter + boss (6061; \u00d81 in. windo after 0.0 mm; arm A: A/gr/right_finger_tip hits Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings) (3.0 mm deep); pushed home instead, but A/gr/right_finger_tip hits Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings) (3.",
    "parts": [
     "Camera window O-ring (FKM 75A 2-017, under the window)",
     "Camera window (\u00d81 in. x 3 mm fused silica, 1070 nm blocking coating)",
@@ -5431,14 +5444,14 @@
    "holder": null,
    "tool": "gripper",
    "status": {
-    "sweep": "FAIL",
-    "arm": "FAIL"
+    "sweep": "PASS",
+    "arm": "PASS"
    },
-   "min_gap_mm": 0.3,
-   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "arm_clearance_mm": 1.0,
-   "arm_clearance_with": "held:F50:Draw latches on the chamber's  to Optics bridge posts #3",
-   "why": "released 9 mm short and pushed home with the closed fingers; sweep: Draw latches on the chamber's side faces blocked by Optics bridge posts #3 after 16.0 mm; arm A: held:F50:Draw latches on the chamber's  hits Optics bridge posts #3 at 87 mm along the insertion",
+   "min_gap_mm": 0.26,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 0.4,
+   "arm_clearance_with": "left_finger_tip to Process chamber body (6061-T6 through-frame from 5",
+   "why": "released 9 mm short and pushed home with the closed fingers",
    "parts": [
     "Door hinge knuckles on the chamber (304 SS)"
    ],
@@ -5506,7 +5519,7 @@
    "gap_with": "Door hinge knuckles on the chamber (304 SS)",
    "arm_clearance_mm": null,
    "arm_clearance_with": null,
-   "why": "arm A: A/upper_arm hits Fixture B (open stand) at 0 mm along the insertion",
+   "why": "arm A: A/upper_arm hits A cabinet at 0 mm along the insertion",
    "parts": [
     "Hinge pins (\u00d85, 316)"
    ],
@@ -5522,6 +5535,60 @@
      0.0
     ]
    ]
+  },
+  {
+   "id": "F03",
+   "label": "Optics posts (moved here: they blocked the side-wall parts and the right latch) onto the base plate, one at a time, held by arm B while arm A drives their base screws from below",
+   "do": "place",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Base plate, process module (MIC-6, 15 mm)",
+   "arm_clearance_mm": 13.0,
+   "arm_clearance_with": "held:F03:Optics bridge posts #2 to Recoater motor bracket",
+   "why": "held-part screws: 316 #3: approach: no path in 1000 iterations",
+   "parts": [
+    "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     200.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F04",
+   "label": "Two M6 x 25 up into each post's bottom cap, from under the plate",
+   "do": "screws",
+   "arm": "A",
+   "holder": null,
+   "tool": "screwdriver",
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "all screws of this joint were already driven (with the part held)",
+   "joint": "bridge_base",
+   "pn": null,
+   "driver": null,
+   "torque_Nm": 7.4,
+   "per_screw": []
   },
   {
    "id": "F53",
@@ -5554,9 +5621,9 @@
    },
    "min_gap_mm": null,
    "gap_with": null,
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "no collision-free pair of arm poses at the start of the carry",
+   "arm_clearance_mm": 20.9,
+   "arm_clearance_with": "held:F54 to Reservoir M lid with robot handle (grip plane z = ",
+   "why": "arm A: A/gr/right_finger_tip hits Optics bridge posts #1",
    "parts": [
     "Optics bridge (6061, 25 mm)",
     "f-theta lens, f = 160 mm (Thorlabs FTH160-1064)",
@@ -5666,11 +5733,43 @@
   },
   {
    "id": "F56",
-   "label": "Galvo riser and the basiCube 20 scan head on the bridge",
+   "label": "Galvo riser plate (155 x 130: the vacuum gripper)",
    "do": "place",
    "arm": "A",
    "holder": null,
-   "tool": "gripper",
+   "tool": "vacuum",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Optics bridge (6061, 25 mm)",
+   "arm_clearance_mm": 19.8,
+   "arm_clearance_with": "held:F56:Galvo riser plate to Reservoir M lid with robot handle (grip plane z = ",
+   "why": "",
+   "parts": [
+    "Galvo riser plate (6061, 10 mm)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     330.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F56b",
+   "label": "basiCube 20 scan head on the riser (3.75 kg: the vacuum gripper on its top)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "vacuum",
    "status": {
     "sweep": "PASS",
     "arm": "FAIL"
@@ -5679,16 +5778,15 @@
    "gap_with": "Galvo riser plate (6061, 10 mm)",
    "arm_clearance_mm": null,
    "arm_clearance_with": null,
-   "why": "arm A: part 130 mm across at the grasp: wider than the 2F-85's 85 mm stroke; arm A: part 130 mm across at the grasp: wider than the 2F-85's 85 mm stroke",
+   "why": "arm A: no IK at the start pose at 0 mm along the insertion",
    "parts": [
-    "Galvo riser plate (6061, 10 mm)",
     "2-axis galvo scan head (SCANLAB basiCube 20)"
    ],
    "waypoints": [
     [
      0.0,
      0.0,
-     330.0
+     340.0
     ],
     [
      0.0,
