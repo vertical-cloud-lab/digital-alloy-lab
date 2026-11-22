@@ -29,9 +29,10 @@ outputs, `analysis/robot/robot_ops.py` and `analysis/out/robot/robot_ops_*.json`
 
 ## Short answer
 
-**With what is now drawn, the UR12e on its MiR250 passes byu-vcl PR 318's audit end to end for nine jobs on the M50 machine:
+**With what is now drawn, the UR12e on its MiR250 passes byu-vcl PR 318's audit end to end for 11 of its 12 jobs on the M50 machine:
 the guard door both ways, opening the chamber door (and closing it with its new actuator), the build plate out by the drawbar path
-(also on S25 and L75), the cover-slide drawer, the reservoir, the blade cartridge and cleaning the chamber with a vacuum wand.** Every frame was
+and by the bayonet (both also on S25 and L75), the cover-slide drawer, the reservoir, the blade cartridge, cleaning the chamber
+with a vacuum wand, and (since 2026-11-22) the build module swap, also on S25 and L75. Only the overflow jar fails.** Every frame was
 checked: the arm, its tools and what it holds against the whole cell (machine, VLM, MiR, ballast, tool stand), handled parts only
 up to 1.5 mm deep into their own fixtures, and every moving part against everything else. The arm is never the limit: peak static
 torque is about a third of the UR12e's limits (the module's 158 N push takes the elbow to 64 %), and with PR 318's 131 kg ballast
@@ -122,7 +123,7 @@ Not in the table:
 
 ## Round 4 (2026-11-22): the build module swap
 
-**Changed in the model** (commit e0e1a23, `cad/modules_low.py`, `cad/module_params.py`):
+**Changed in the model** (commits e0e1a23 and 9297709, `cad/modules_low.py`, `cad/module_params.py`):
 - **The module's handle.** The two side arms under the gland plate stay. A riser in front of the collar carries an arm forward,
   4 mm under the outlet plenum (z −52 to −40), to an I-section grip block:
   - at y −156 to −126 and z −69 to −25, in front of the door's hinge knuckles (their front is at y −138, their underside at z −20);
