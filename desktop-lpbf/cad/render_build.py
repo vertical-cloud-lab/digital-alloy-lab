@@ -548,7 +548,7 @@ CATS = [
     ("optics", "Laser and optics: 500 W fiber laser, galvo, f-theta lens, collimator, shutter, windows, fiber"),
     ("elec", "Electronics, heaters and sensors: UPS, PC, DIN drawer, cartridges, thermocouples, sensors, camera"),
     ("seal", "Seals and fasteners: FKM O-rings and cord, felt and PTFE seals, and the McMaster screws, inserts and pins, by part number"),
-    ("frame", "Frames: 10U rack, T-slot guard frame, levelling mounts"),
+    ("frame", "Frames: 11U rack, T-slot guard frame, levelling mounts"),
 ]
 
 
@@ -1279,11 +1279,11 @@ def chapter_tray(st):
     tray = F("VLM tray")
     fly(st, tray, nf(10), (0, 0, -260), lambda t: cam(t, 3800, az=20, el=30), cap, "The finished process module stands on the VLM tray (2450 x 864 mm)")
     rack = F("19 in. rack frame")
-    fly(st, rack, nf(8), (0, 0, 300), lambda t: cam(t, 2200, az=-30, el=22, f=(-700, 0, 40)), cap, "10U 19 in. rack on the left of the tray")
+    fly(st, rack, nf(8), (0, 0, 300), lambda t: cam(t, 2200, az=-30, el=22, f=(-700, 0, 40)), cap, "11U 19 in. rack on the left of the tray")
     units = F("UPS (", "Fiber laser source", "Scan + laser controller", "DIN-rail drawer")
     for i in units:
         fly(st, [i], nf(7), ex, lambda t: cam(0.3, 2000, az=-26, el=16, f=(-700, -100, 40)), cap,
-            "Rack: " + st.parts[i].name.split(" (")[0] + {"L1": " (quoted IPG YLR-500-U3-SM-AC is 4U and air-cooled; drawn 3U)"}.get(st.parts[i].bom, "")
+            "Rack: " + st.parts[i].name.split(" (")[0] + {"L1": " (as quoted: 4U, air-cooled)"}.get(st.parts[i].bom, "")
             + "; cage-nut screws not drawn")
     rest = F("Rack side panels", "Operator panel", "E-stop", "Key switch", "Emission indicator", "Reset button")
     fly(st, [i for i in rest if i not in st.shown], nf(8), ex, lambda t: cam(t, 2200, az=-30, el=20, f=(-700, 0, 40)), cap,
