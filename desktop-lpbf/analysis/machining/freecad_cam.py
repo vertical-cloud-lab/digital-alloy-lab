@@ -26,10 +26,16 @@ G-code goes to /tmp/chamber-cam/gcode/<setup>.ngc.
 
 Approximations (also written to the JSON): FreeCAD 1.0's Adaptive only knows the stock's bounding
 box, so the inside of the frame opening is cut with Profile passes (rough 2.7 mm + finish 0.3 mm
-radial) rather than Adaptive; floor setup B uses the part's own outline box as stock (its outside was
-cut in setup A) so the Adaptive pass there only cuts the U-notches and the corner slivers.
-Drills: one drill per hole step, the largest of 3.3/4.2/5.0/6.0 mm that fits; taps, reamers and
-insert tools are not costed. No lead-in/lead-out dressups.
+radial) rather than Adaptive. Drills: one drill per hole step, the largest of 3.3/4.2/5.0/6.0 mm that
+fits; taps, reamers and insert tools are not costed. No lead-in/lead-out dressups.
+
+Checked in CAMotics (camotics_sim.py, 2026-11-22), which led to four fixes here: face mills zig-zag along x
+(FreeCAD's default 45 deg left unfaced triangles at every edge); floor setup B's stock is the whole blank
+(it was the 312 x 222 outline, so the 2.2 mm web outside the outline was never faced and the notch tool
+ran through it); floor holes are drilled from the side they open on, nearest step first (two top-side
+dowel holes were drilled up through the bottom, and inner steps were drilled before the step above them
+was open, so the drill rapided into solid stock); steps whose far end opens at full diameter get
+ExtraOffset = Drill Tip so the 118 deg point does not leave a cone in the exit.
 """
 import json
 import math
@@ -126,12 +132,16 @@ SETUPS = [
          dict(face="port", start=0.0, final=-20.5, step=1.5)),
         ("Slots 124x8 and 20x104 through, profile", "profile_holes", 9, None,
          dict(face="top_inner", start=0.0, final=-20.5, step=3.0, extra=0.0)),
+        # added after the CAMotics check: the blind holes that open on the top side were drilled from below in B
+        ("Drill the blind holes that open on top", "drill_top", None, None, dict()),
     ]),
-    dict(name="floor_B", part="floor", flip=True, stock=(312.0, 222.0, -22.7, 2.7), ops=[
+    # floor B: the stock is the whole blank. It was the 312 x 222 outline box, so the face mill left the 2.2 mm web
+    # outside the outline (setup A's outside cut stops at z -20.5) and the notch op's tool ran through it.
+    dict(name="floor_B", part="floor", flip=True, stock=FLOOR_BLANK, ops=[
         ("Face bottom to 20 mm thick", "face", 1, None, dict(face="top", start=22.7, final=20.0, step=2.7)),
         ("18 U-notches 8 wide x 8 deep (adaptive outside the outline)", "adaptive_out", 9, None,
          dict(face="top", start=20.0, final=12.0, step=4.0, stepover=15)),
-        ("Drill the blind holes from below", "drill_all", None, None, dict()),
+        ("Drill the holes that open on the bottom", "drill_all", None, None, dict()),
     ]),
 ]
 
@@ -316,6 +326,10 @@ def run_cam():
                 op.BoundaryShape = "Stock"
                 op.StepOver = 70
                 op.ClearEdges = True
+                # FreeCAD's default 45 deg zig-zag only touches the boundary at its turns: CAMotics showed
+                # unfaced triangles up to 20 mm in from every edge. Along x the turns run down the x edges and
+                # the first and last passes run along the y edges.
+                op.ZigZagAngle = 0.0
             elif kind == "adaptive_out":
                 op = Path.Op.Adaptive.Create("Adaptive", parentJob=job)
                 op.Base = [(base, base_subs)]
@@ -363,6 +377,8 @@ def run_cam():
                 op.Proxy = Path.Op.Drilling.ObjectDrilling(op, "Drill", job)
                 op.Base = [(base, base_subs)]
                 op.RetractMode = "G98"  # back to the initial Z between holes
+                if cfg.get("through"):  # full diameter out of the far face (the 118 deg point goes 0.3 D past)
+                    op.ExtraOffset = "Drill Tip"
                 op.PeckEnabled = True
                 op.PeckDepth = TOOLS[t]["d"]
             else:
@@ -394,19 +410,40 @@ def run_cam():
             try:
                 if kind == "drill":
                     add(label, kind, t, ipt, cfg, holes(part, cfg["holes"]))
-                elif kind == "drill_all":  # every blind hole step that opens downward, grouped per drill
-                    g = cyl_groups(shapes[part])
+                elif kind in ("drill_all", "drill_top"):
+                    # drill_all (part upside down): every hole step that opens downward (through holes too);
+                    # drill_top: the blind steps that open only upward. Probed on the model, 0.05 mm past each end.
+                    s0 = shapes[part]
+                    g = cyl_groups(s0)
                     groups = {}
+
+                    def air(x, y, z):
+                        return not s0.isInside(FreeCAD.Vector(x, y, z), 1e-4, True)
+
                     for (x, y, r, zmin, zmax), names in g.items():
                         if r > 4.5:  # the 96 mm port (setup A); part-turn arcs are already left out
                             continue
                         dt = drill_for(2 * r)
                         if dt is None:
                             continue
-                        groups.setdefault((dt, zmin, zmax), []).append(names[0])
-                    for (dt, zmin, zmax), names in sorted(groups.items()):
-                        add("Drill %d x %.1f mm step z %.2f..%.2f (model)" % (len(names), DRILLS[dt], zmin, zmax),
-                            "drill", dt, None, {}, names, dict(holes=len(names)))
+                        down, up = air(x, y, zmin - 0.05), air(x, y, zmax + 0.05)
+                        if kind == "drill_all" and not down:
+                            continue
+                        if kind == "drill_top" and (down or not up):
+                            continue
+                        zfar = zmax + 0.05 if kind == "drill_all" else zmin - 0.05
+                        far_open = all(air(x + 0.9 * r * math.cos(a), y + 0.9 * r * math.sin(a), zfar)
+                                       for a in (0.3, 1.9, 3.5, 5.1))
+                        groups.setdefault((dt, zmin, zmax, far_open), []).append(names[0])
+                    # the step nearest the surface the drill enters from goes first: a step below another must
+                    # not be drilled before the one above it is open (its R plane would be inside solid stock)
+                    order = sorted(groups.items(), key=(lambda kv: (kv[0][1], kv[0][0])) if kind == "drill_all"
+                                   else (lambda kv: (-kv[0][2], kv[0][0])))
+                    for (dt, zmin, zmax, far_open), names in order:
+                        add("Drill %d x %.1f mm step z %.2f..%.2f (model)%s" % (
+                            len(names), DRILLS[dt], zmin, zmax, ", through" if far_open else ""),
+                            "drill", dt, None, dict(through=far_open), names,
+                            dict(holes=len(names), through=far_open))
                 elif "edges" in cfg:
                     add(label, kind, t, ipt, cfg, pick_edges(part, cfg["edges"]))
                 else:
@@ -559,11 +596,18 @@ def summarise(version, results):
             "Frame stock = 317.5 x 228.6 x 127 blank with the 274 x 184 core already waterjet/bandsawn out: "
             "the outside is cut by Adaptive (stock box), the opening by Profile only (3 mm radial).",
             "Setup A cuts outside and opening to z 58, setup B from the bottom to z 58 (meet line at mid-height).",
-            "Floor setup B stock = 312 x 222 outline box (outside already cut in A) so the Adaptive only cuts "
-            "the U-notches (and four corner slivers).",
+            "Floor setup B stock = the whole blank (setup A's outside cut stops 2.2 mm short of the blank's "
+            "bottom, so B faces that web off); its notch Adaptive also sweeps the (already cut) band round "
+            "the outline.",
+            "Face mills zig-zag along x (ZigZagAngle 0), so the turns run along the x edges and the first and "
+            "last passes along the y edges.",
             "Slots 124 x 8 and 20 x 104 both on a 1/4 in. end mill (T9): T3 1/2 in. does not fit an 8 mm slot.",
             "Drills: largest of 3.3/4.2/5.0/6.0 mm that fits each hole step; taps, reamers, insert tools, "
-            "chamfers and deburring are not costed. Tool changes are counted, not timed.",
+            "chamfers and deburring are not costed. Tool changes are counted, not timed. Floor holes: those "
+            "that open on top (and not on the bottom) are drilled in setup A, the rest from below in B; the "
+            "step nearest the entry face first. Steps whose far end opens at full diameter (through) get "
+            "ExtraOffset = Drill Tip; blind steps stop with the drill tip at the model's flat floor, so their "
+            "full diameter ends 0.3 x D short.",
             "Setup C (front face up) programs only the door opening, T3 adaptive through the 16 mm wall "
             "(the whole 220 x 92 window is cut to chips). Back-wall slot, side bores and ports are not programmed.",
         ],
@@ -577,8 +621,10 @@ def summarise(version, results):
             "Helix generator in 1.0.2 puts a single helix at (outer+inner)/2; worked around (see the script) so "
             "the port trepan runs on radius 48 - D/2.",
         ],
-        camotics=dict(ran=False, reason="no camotics package for Ubuntu 26.04; the newest release "
-                      "(camotics_1.2.0_amd64.deb, 2019) needs libv8-3.14.5, libssl1.1 and Qt5, not present"),
+        camotics=dict(ran=True, script="desktop-lpbf/analysis/machining/camotics_sim.py",
+                      results="desktop-lpbf/analysis/out/machining/camotics/camotics_sim.json",
+                      how="CAMotics 1.2.0 camsim in Docker on ubuntu:18.04 (camotics.Dockerfile); the summary "
+                          "is written here by camotics_sim.py after each run"),
         parts={},
     )
     for r in results:
