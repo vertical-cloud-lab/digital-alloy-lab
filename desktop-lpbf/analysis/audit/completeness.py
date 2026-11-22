@@ -130,7 +130,7 @@ MAP = [
     (r"^Safety shutter \+ beam dump", "L4", r"shutter", "generic", [], "no shutter chosen (L4: quote)"),
     (r"^Collimator \(IPG", "L3", r"IPG standard collimator", "bought", ["IPG-COLLIMATOR"], "not priced by IPG yet"),
     (r"^Dry scroll pump", "G2", r"pump", "bought", ["A73501983"], ""),
-    (r"^Pump inlet \(KF-25\)", "G2", r"4518K49|flare", "bought", ["4518K49"], "flare-to-NPT adapter not chosen"),
+    (r"^Pump inlet \(KF-25\)", "G2", r"NW25|4518K49|flare", "bought", ["4518K49"], "the nXDS6i inlet is NW25; only the 4396K21 alternative needs a flare-to-NPT adapter + 4518K49"),
     (r"^Sealed cyclone \+ HEPA housing", "G5", r"5169K72", "bought", ["5169K72"], "cyclone stage not chosen"),
     (r"^(Filter|Blower) (inlet|outlet) \(KF-25\)", "G7", r"KF-25", "generic", [], "adapters to the filter's 1/2 NPSC ports / the blower not chosen"),
     (r"^Sealed side-channel blower", "G4", r"blower", "generic", [], "no gas-tight blower of this size found (real-parts.md)"),
@@ -499,6 +499,26 @@ def write_md(out, rev, summary):
                  f"BOM total now ${summary['bom_total_usd'][0]:,} - ${summary['bom_total_usd'][1]:,}. "
                  f"Extra purchase lists read: {', '.join(pathlib.Path(x).name for x in summary['extra']) or 'none'}.\n")
     order = {s: i for i, s in enumerate(["inconsistent", "missing from BOM", "generic", "real part unpriced", "real part priced", "custom", "excluded"])}
+    bb = OUT / "bom_before.csv"
+    if bb.exists():
+        old = {r["id"]: r for r in read_csv(bb)}
+        new = {r["id"]: r for r in read_csv(LPBF / "bom.csv")}
+        ch = [i for i in new if i not in old or any(old[i].get(c) != new[i].get(c) for c in ("item", "candidate", "qty", "unit_low_usd", "unit_high_usd"))]
+        if ch:
+            def rng(r):
+                q = float(r["qty"])
+                return f"{q * float(r['unit_low_usd']):,.0f} – {q * float(r['unit_high_usd']):,.0f}"
+            lines.append("\n## BOM lines this audit changed (generated from [`analysis/out/audit/bom_before.csv`](analysis/out/audit/bom_before.csv), the BOM at the start)\n")
+            lines.append("| Line | Item now | Was (USD, qty x unit) | Now (USD) | Candidate now |")
+            lines.append("|---|---|---|---|---|")
+            for i in ch:
+                r = new[i]
+                was = rng(old[i]) if i in old else "new line"
+                cand = r["candidate"] if len(r["candidate"]) < 160 else r["candidate"][:157] + "..."
+                lines.append(f"| {i} | {r['item']} | {was} | {rng(r)} | {cand} |")
+            lo0 = sum(float(r["qty"]) * float(r["unit_low_usd"]) for r in old.values())
+            hi0 = sum(float(r["qty"]) * float(r["unit_high_usd"]) for r in old.values())
+            lines.append(f"\nBOM total: ${lo0:,.0f} – ${hi0:,.0f} before, ${summary['bom_total_usd'][0]:,} – ${summary['bom_total_usd'][1]:,} now.\n")
     lines.append("\n## Every model part (generated; also in [`analysis/out/audit/model_vs_bom.csv`](analysis/out/audit/model_vs_bom.csv))\n")
     lines.append("Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) are counted above but listed only in the CSV.\n")
     lines.append("| Status | Part | Kind | BOM line | Part numbers | Note |")
@@ -509,14 +529,24 @@ def write_md(out, rev, summary):
         nm = r["part"] if len(r["part"]) < 95 else r["part"][:92] + "..."
         lines.append(f"| {r['status']} | {nm} | {r['kind']} | {r['bom_line'] or '–'} | {r['part_numbers'] or '–'} | {r['note'] or ''} |")
     lines.append("\n## bom.csv lines and the model (generated)\n")
-    lines.append("| Line | Item | Model parts mapped |")
-    lines.append("|---|---|---|")
+    why = {"L2": "no chiller for the air-cooled IPG unit", "C1": "the model draws no scan PC (C1 is a card)",
+           "C2": "inside the drawn DIN-rail drawer", "C3": "inside the drawn DIN-rail drawer", "C4": "inside the drawn DIN-rail drawer",
+           "C5": "inside the drawn DIN-rail drawer", "C6": "the model draws a 3U drawer, not this wall box",
+           "G9": "inside the drawn O2 / dew-point panel box (G6)", "S1": "inside the drawn DIN-rail drawer",
+           "S6": "PPE", "S7": "room safety", "S8": "room safety", "P1": "off the tray", "T1": "commissioning tool",
+           "T2": "not drawn", "H2": "inside the drawn DIN-rail drawer", "H3": "not drawn yet (heat.md)", "X1": "labour"}
+    lines.append("| Line | Item | Model parts mapped | Why none |")
+    lines.append("|---|---|---|---|")
     for r in rev:
         if r["kind"] == "bom.csv line":
-            lines.append(f"| {r['id']} | {r['item']} | {r['model_parts'] or '**none**'} |")
+            lines.append(f"| {r['id']} | {r['item']} | {r['model_parts'] or '**none**'} | {why.get(r['id'], '') if not r['model_parts'] else ''} |")
     cnt = Counter(r["file"] for r in rev if r["kind"] == "purchase row")
     lines.append("\n## Purchase-list rows that no model part uses (generated; full list in "
                  "[`analysis/out/audit/purchase_vs_model.csv`](analysis/out/audit/purchase_vs_model.csv))\n")
+    lines.append("Most of these are expected: stock for the custom parts (a plate or bar has no part in the model to carry its part "
+                 "number), tools and fixtures (`assembly-tooling.csv`), the robot cell (`robot-tooling.csv`), room safety and PPE "
+                 "(`safety-parts.csv`), alternatives with qty 0, sizes for the S25 and L75 modules (the model draws M50), and the "
+                 "lab's other plate materials. The stale ones are the tall model's rows in `mcmaster-parts.csv` named above.\n")
     lines.append("| File | Rows with no model part |")
     lines.append("|---|---|")
     for f, c in sorted(cnt.items()):

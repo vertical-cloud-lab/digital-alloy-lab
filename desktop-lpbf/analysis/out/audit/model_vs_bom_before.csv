@@ -104,7 +104,7 @@ Dovetail rails for the reservoirs (lips pull the plate onto the dock O-ring),pro
 "Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)",process,bearing / alloy steel,0.054,bought,M4,LOADCELL_SP,ALLUE3,A1,options-vendors.csv:A1,122.0,inconsistent,model label 2 kg; A1 lists a 3 kg Laumas ALLUE3
 "Build plate M50 (Ø50.5 x 10, 6061-T6; bayonet spigot, gripper groove)",process,6061-T6 aluminium,0.053,custom (machined),B1,,,B1,,,custom,
 Layer-light LED bar,process,mixed (vendor unit; mass from datasheet or estimate),0.05,bought,M6,,,M6,,,generic,
-Pump inlet (KF-25),gas,304 stainless,0.05,bought,G7,KF25_WELD,4518K49,G2,mcmaster-parts.csv:G7,42.13,real part priced,flare-to-NPT adapter not chosen
+Pump inlet (KF-25),gas,304 stainless,0.05,bought,G7,KF25_WELD,4518K49,G2,mcmaster-parts.csv:G7,42.13,real part priced,the nXDS6i inlet is NW25; only the 4396K21 alternative needs a flare-to-NPT adapter + 4518K49
 Filter inlet (KF-25),gas,304 stainless,0.05,bought,G7,,,G7,,,generic,adapters to the filter's 1/2 NPSC ports / the blower not chosen
 Filter outlet (KF-25),gas,304 stainless,0.05,bought,G7,,,G7,,,generic,adapters to the filter's 1/2 NPSC ports / the blower not chosen
 Blower inlet (KF-25),gas,304 stainless,0.05,bought,G7,,,G7,,,generic,adapters to the filter's 1/2 NPSC ports / the blower not chosen

@@ -1,5 +1,5 @@
 {
- "bom": "/tmp/audit-work/bom_before.csv",
+ "bom": "desktop-lpbf/analysis/out/audit/bom_before.csv",
  "parts": 223,
  "by_status": {
   "real part priced": 87,
