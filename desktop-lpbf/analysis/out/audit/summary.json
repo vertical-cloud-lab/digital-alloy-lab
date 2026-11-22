@@ -1,0 +1,55 @@
+{
+ "bom": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/desktop-lpbf/bom.csv",
+ "parts": 223,
+ "by_status": {
+  "real part priced": 116,
+  "real part unpriced": 4,
+  "generic": 23,
+  "custom": 65,
+  "missing from BOM": 2,
+  "inconsistent": 12,
+  "excluded": 1
+ },
+ "by_kind": {
+  "bought": 113,
+  "custom (machined)": 55,
+  "custom (sheet)": 13,
+  "fastener": 41,
+  "excluded": 1
+ },
+ "bom_lines": 56,
+ "bom_lines_without_model_part": [
+  "L2",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "C5",
+  "C6",
+  "G9",
+  "S1",
+  "S6",
+  "S7",
+  "S8",
+  "P1",
+  "T1",
+  "T2",
+  "H2",
+  "H3",
+  "X1"
+ ],
+ "model_tags_without_bom_line": [
+  "RA1",
+  "RA2",
+  "RA3",
+  "RA4",
+  "RA5",
+  "RA6",
+  "RA7"
+ ],
+ "bom_total_usd": [
+  57665,
+  144043
+ ],
+ "extra": []
+}

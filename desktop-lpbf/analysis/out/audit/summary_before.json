@@ -1,0 +1,58 @@
+{
+ "bom": "/tmp/audit-work/bom_before.csv",
+ "parts": 223,
+ "by_status": {
+  "real part priced": 87,
+  "real part unpriced": 2,
+  "generic": 8,
+  "custom": 26,
+  "missing from BOM": 70,
+  "inconsistent": 29,
+  "excluded": 1
+ },
+ "by_kind": {
+  "bought": 113,
+  "custom (machined)": 55,
+  "custom (sheet)": 13,
+  "fastener": 41,
+  "excluded": 1
+ },
+ "bom_lines": 48,
+ "bom_lines_without_model_part": [
+  "L2",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "C5",
+  "C6",
+  "M3",
+  "G9",
+  "S1",
+  "S6",
+  "S7",
+  "S8",
+  "P1",
+  "T1",
+  "T2",
+  "H2"
+ ],
+ "model_tags_without_bom_line": [
+  "D1",
+  "F3",
+  "F4",
+  "F5",
+  "RA1",
+  "RA2",
+  "RA3",
+  "RA4",
+  "RA5",
+  "RA6",
+  "RA7"
+ ],
+ "bom_total_usd": [
+  39440,
+  112978
+ ],
+ "extra": []
+}
