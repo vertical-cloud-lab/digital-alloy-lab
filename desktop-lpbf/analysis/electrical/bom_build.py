@@ -184,11 +184,39 @@ def main():
         L.append(f"| {pid} | {txt} | {ol:,.2f} / {oh:,.2f} | {lo:,.2f} / {hi:,.2f} | {lo - ol:+,.2f} |")
     L += ["", f"**Net change to the machine BOM: {dl:+,.2f} USD at the low end, {dh:+,.2f} at the high end** (qty 1 per line; S3 and C5 change from qty 2 to a line total)."]
     (OUT / "bom_summary.md").write_text("\n".join(L) + "\n")
+    # the same rows in bom.csv's own columns, ready to paste (replaces the row with the same id; E1-E5 are new)
+    meta = {
+        "C1": ("Controls", "Scan + laser controller", None, None),
+        "C3": ("Controls", "Motion controller and stepper drive", "4 step/dir axes for 2 ClearPath-SD + the dosing stepper, 13 I/O, Ethernet", "Teknic Duet 3 / Klipper on the supervisor"),
+        "C4": ("Controls", "DC supplies (UPS-backed) and 24 V branch protection", "+24 V CTRL 10 A, +48 V SERVO 5 A, +24 V GALVO 3.8 A (basiCube 20 is 24 V, not +/-15 V), 5 V for the Pi; 4 electronic breakers", "Teknic IPC-5 75 V (regen control) for the servo bus"),
+        "C5": ("Controls", "Process I/O PLC and thermocouple inputs", "32 DI, 32 DO, 4 TC, 8 x 4-20 mA, 4 x 0-10 V in, 4 x 0-10 V out, PID, Modbus TCP to the supervisor", "CLICK PLUS C2-03CPU-2 ($277) + C0-04THM ($217)"),
+        "C6": ("Controls", "4U control drawer, PB2 box and DIN hardware", "4U drawer (the XS26 stands 129 mm off its rail: 3U is too shallow), rack 11U -> 12U; PB2 box on the process module for the Pi, NFC, load cell, camera", ""),
+        "S1": ("Safety", "Safety controller and final elements", "42 safety inputs, 8 safety outputs; K3A+K3B (servo bus) and K4+K5 (laser loop) with mirror contacts", "Banner SC26-2 ($904.01, 26 inputs, not expandable); Pilz PNOZ m B0 ($871.91)"),
+        "S2": ("Safety", "Guard lock and guard-position switch", "spring lock / power to unlock, 1,400 N; separate guard-position interlock (ISO 14119)", "IDEC HS5L-VC7Y4M-G power to lock ($269.44); Schmersal AZM201 ($915)"),
+        "S3": ("Safety", "E-stops (rack, guard front, gas module, spare)", None, None),
+        "S4": ("Safety", "Key switch + emission indicator + manual reset + HOT lamp", None, None),
+        "H1": ("Heated plate", "Heater stacks for the three build modules, rod-end feedthroughs and thermocouple wiring", None, None),
+        "H2": ("Heated plate", "Heater power, switching, independent limit and the plate < 50 C channel", "24 V 350 W supply, 20 A DC SSR on a heat sink, K1 (safety controller) + K2 (CN708) contactors, latching type K limit at 235 C, K8DT on the edge TC for the door", "DwyerOmega CNI32-AL-DC (2 relays, 56-week lead time)"),
+        "A1": ("Automation", None, None, None),
+        "A3": ("Automation", None, None, None),
+        "E1": ("Electrical", "Power box PB1: main disconnect, branch protection, contactors", "lockable UL 98 disconnect; UL 489 MCBs Q1 2P D15 laser, Q2 2P D15 UPS + heater supply, Q3 C15 pump, Q4 C6 blower, 24 V heater and 48 V bus breakers; KM0 laser mains, KM1 pump, KM2 blower; 16 x 12 x 6 in NEMA 12 box with a filter fan, left of the rack", "ABB OT40F3 (UL 508) + OHB45J6; Eaton R5A3040U"),
+        "E2": ("Electrical", "Ethernet switch", "8 x 10/100, 12-48 VDC, DIN", ""),
+        "E3": ("Electrical", "Axis home sensors and chamber-at-ambient switch", "4 inductive M8 PNP; +/-5 mbar differential pressure switch (safety input for the guard unlock)", ""),
+        "E4": ("Electrical", "Bulk wire, bonding straps, ESD", "10 AWG feeder, 14 AWG MTW, 16 AWG heater pair, 18-22 AWG control; 8 tinned braided straps; wrist strap", ""),
+        "E5": ("Electrical", "Optional: milliohm meter, UPS network card, LED-bar feedthrough", "0.1 ohm bonding check; power-cut signal; only if the LED bar stays inside the chamber", ""),
+    }
     with open(OUT / "bom_proposed_rows.csv", "w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["id", "change", "qty", "unit_low_usd", "unit_high_usd", "price_basis", "source"])
+        w.writerow(["id", "subsystem", "item", "spec", "candidate", "alternative", "qty", "unit_low_usd", "unit_high_usd", "price_basis", "source", "notes"])
         for pid, txt, q, lo, hi in prop:
-            w.writerow([pid, txt, q, f"{lo:.2f}", f"{hi:.2f}", "fetched 2026-11-22 + estimates marked in electrical-bom.csv", "electrical-bom.csv"])
+            sub_, item, spec, alt = meta[pid]
+            o = old.get(pid, {})
+            item = item or o.get("item", "")
+            spec = spec if spec is not None else o.get("spec", "")
+            alt = alt if alt is not None else o.get("alternative", "")
+            cand = txt.replace("NEW ", "").replace("NEW, optional: ", "")
+            notes = ("electrical.md 2026-11-22: " + (txt if pid in old else "new line")) if pid in old else "electrical.md 2026-11-22: new line"
+            w.writerow([pid, sub_, item, spec, cand, alt, q, f"{lo:.2f}", f"{hi:.2f}", "fetched 2026-11-22 (electrical-bom.csv) + estimates marked there", "electrical-bom.csv", notes])
     print("\n".join(L))
 
 

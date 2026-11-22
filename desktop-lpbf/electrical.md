@@ -23,7 +23,7 @@ on 2026-11-22 (UTC) from the pages linked in [`electrical-bom.csv`](electrical-b
 ## 0. The short answers
 
 **Custom PCBs: no.** Every function has an off-the-shelf part that is cheaper than the engineering time a board would take:
-the SCANLAB RTC6 makes the XY2-100 stream and the laser timing, a Productivity1000 PLC reads the thermocouples and 4-20 mA
+the SCANLAB RTC6 makes the scanner stream (SL2-100 to a basiCube 20 ordered in that version) and the laser timing, a Productivity1000 PLC reads the thermocouples and 4-20 mA
 transmitters, a Banner XS26 safety controller runs the interlocks, a DC SSR and two contactors switch the heaters, and
 DIN-rail breakouts, M12 cordsets and hermetic feedthroughs with their own connectors do the wiring (§5). The open and
 lab-built LPBF machines we found agree: the ones that made a board (DTU's Teensy controller, OPAL) made it to *replace* a
@@ -167,7 +167,7 @@ The full list is [`electrical-io.csv`](electrical-io.csv); the channel count is 
 | Safety inputs (XS26-2 26 + XS16si 16) | 31 / 42 |
 | Safety outputs (XS26-2 4 + XS2so 4) | 6 / 8 |
 | ClearCore | M-0 recoater, M-1 Z, M-2 dosing stepper drive, M-3 spare; IO-1..4 home and limit sensors |
-| RTC6 | XY2-100 to the basiCube; LASERON (gate) and ANALOG OUT1 (power) to the laser |
+| RTC6 | SL2-100 to the basiCube; LASERON (gate) and ANALOG OUT1 (power) to the laser |
 
 **Devices the model does not draw** (37 rows, the main ones): the safety shutter's two position switches (L4 has no product
 yet), home and over-travel sensors for the recoater and Z, the door actuator's and latch cylinders' auto switches, the drawbar
@@ -187,7 +187,7 @@ those as qty-0 alternatives so nothing is counted twice.
 
 | Function | Choice | Price | Why | Alternatives |
 |---|---|---|---|---|
-| Scan and laser timing | **SCANLAB RTC6** (PCIe board in the 2U PC) | quote | laser on/off delays and skywriting in hardware, XY2-100, analog and gate outputs in step with the mirrors, Linux and Windows libraries; the same family as the scan head; used by the IFSW research platform (Edison r5) and GE's M2-Open (RTC5) | JCZ DLC2-M4 ($1,785, EZCAD3 SDK, BOM C1); Mesa 7I96S + LinuxCNC xy2mod ($149, needs a custom bitfile, Mesa forum); OPAL on a Teensy 4.0: "PRE ALPHA ... DO NOT USE THIS WITH OTHER LASERS THAN LASERPOINTERS" (README) |
+| Scan and laser timing | **SCANLAB RTC6 Ethernet board** (in the 2U PC or beside it), basiCube 20 ordered in its **SL2-100** version | quote | laser on/off delays (1/64 µs steps) and skywriting in hardware, two 12-bit 0-10 V outputs, 16- and 8-bit digital I/O, a 15-pin D-sub laser connector; SCANLAB's Linux library (Debian, amd64) covers only the Ethernet board, so Linux means the Ethernet board, driven from Python through ctypes (no Python binding is supplied); the RTC6 speaks SL2-100 and needs an optional converter for XY2-100 heads; used by the IFSW research platform (Edison r5) and GE's M2-Open (RTC5) | Novanta ScanMaster Controller and JCZ DLC2-M4 ($1,785, EZCAD3 SDK, BOM C1) talk XY2-100 directly; Mesa 7I96S + LinuxCNC xy2mod ($149, needs a custom bitfile, Mesa forum); OPAL on a Teensy 4.0: "PRE ALPHA ... DO NOT USE THIS WITH OTHER LASERS THAN LASERPOINTERS" (README) |
 | Motion | **Teknic ClearCore CLCR-4-13** + DIN-MNT | $105 + $21 | four step/dir axes made for ClearPath (HLFB read-back), 13 I/O, Ethernet, C++ SDK; 127 × 89 × 25 mm | Klipper on the Pi (BOM C3), Duet 3 |
 | Stepper drive (dosing roller) | AutomationDirect SureStep STP-DRV-4830 (3 A/phase, 12-48 VDC) | $99 | step/dir from ClearCore M-2, 24 V; the STP-DRV-4035 is discontinued | – |
 | Process I/O and heater PI | **AutomationDirect Productivity1000**: P1-540 CPU + 2 × P1-16ND3 + 4 × P1-08TD2 + P1-04THM + P1-08ADL-1 + P1-04ADL-2 + P1-04DAL-2 | $237 + modules ≈ $1,000 | 24 V industrial I/O, a 4-channel 16-bit thermocouple module, 4-20 mA in, PID with time-proportioned outputs, Ethernet with Modbus TCP for the Python supervisor, 17-21 mm modules | CLICK PLUS C2-03CPU-2 ($277) + C0-04THM ($217); Arduino Opta and Pi HATs have no thermocouple module and aren't industrial I/O |
@@ -242,14 +242,14 @@ permissive, so the mirrors are under control before emission and emission stops 
 
 | Function | Off-the-shelf part | Price | When a custom board would pay |
 |---|---|---|---|
-| XY2-100 to the galvo | RTC6 (quote); Mesa 7I96S + LinuxCNC xy2mod ($149) | quote / $149 | only to replace the RTC6 (below) |
+| Scanner link to the galvo | RTC6 over SL2-100 (quote); for XY2-100: Mesa 7I96S + LinuxCNC xy2mod ($149) | quote / $149 | only to replace the RTC6 (below) |
 | Laser modulation and timing | RTC6 LASERON + ANALOG OUT1; IPG takes "CMOS to 24 VDC" on its gate (2012 guide) | in the RTC6 | never on its own: it has to move in step with the mirrors |
 | Interlock logic | Banner XS26 safety controller | $1,927 | never: none of the lab-built machines put safety on a custom board (DTU used an ABB Pluto safety PLC) |
 | Thermocouple inputs | P1-04THM (4 ch, 16-bit) | $172 | never; MAX31856 breakouts ($17.50) are non-isolated, which matters with a grounded heater block |
 | Heater switching | D1D20 + HS151, two WEG CWBS12 contactors | $383 | never |
 | Feedthrough wiring | the feedthroughs' own plugs; SMPW-K type K connectors; M12 L-coded cordsets ($51.72 + $65.36, H1) | – | never |
 | Sensor breakouts on the lid | Pi 5 + Adafruit PN532 ($39.95) + SparkFun NAU7802 ($5.95) with Qwiic cables in PB2 | ~$50 | optional: a Pi HAT with the NFC chip, the load-cell ADC, 24 V → 5 V and M12 jacks would be tidier; ~$60-80 at JLCPCB with assembly; not needed |
-| Laser and RTC6 connectors | AutomationDirect ZL-RTB-DB15 ($48.50) + ZL-DB15-CBL-2 ($16.50); the IPG plug is a 24-pin circular, not a D-sub (2012 guide): use IPG's cable or plug on DIN terminals | ~$65 | never |
+| Laser and RTC6 connectors | AutomationDirect ZL-RTB-DB15 ($48.50) + ZL-DB15-CBL-2 ($16.50); the IPG side is a 24-pin connector in the 2012 guide, a round 25-pin plug in one manual and a 25-pin D-sub in RAYLASE's diagram: check the U3 before buying a breakout | ~$65 | never |
 | Dock | Harting Han-Modular modules | ~$100 | never |
 
 **If the RTC6 is dropped:** DTU's open PBF controller (Teensy 3.6 with XY2-100 drivers, a 10-bit 0-10 V DAC, a 24 V PWM
@@ -321,8 +321,9 @@ control**, and every one that described safety kept it off the custom electronic
   connectors; 4-20 mA in shielded twisted pairs; shields grounded at the drawer end only, at one star point. Keep thermocouple,
   4-20 mA and XY2-100 cables in a separate duct from the servo and 120/208 V cables (NFPA 79 / IEC 60204-1 separation; Edison
   r5 point 5). Scanner link on SCANLAB's shielded cable, 2-3 m (PC to head is ~1.3 m in the model): the RTC6 speaks SCANLAB's
-  SL2-100 natively and needs an optional converter for XY2-100; the basiCube takes both, so run SL2-100 (A2 notes, from the two
-  datasheets; neither gives a maximum cable length: ask SCANLAB). The laser's analog input is
+  SL2-100 natively and needs an optional converter for XY2-100; the basiCube 20 is sold in SL2-100 and XY2-100 versions, so order
+  SL2-100 (research notes, from the datasheets). SCANLAB gives no maximum length; RAYLASE recommends ≤ 20 m for XY2-100 and
+  ≤ 25 m for SL2-100, far above the ~1.3 m here. The laser's analog input is
   single-ended: short, shielded, and grounded at the laser end.
 - **Moving parts:** the Z axis moves the rod end 50 mm (slowly, once per layer) and drops 45 mm at a module swap: a 0.3 m
   service loop in PTFE-jacketed cable, or a short igus micro chain. At a swap the M12 L-coded and SMPW-K plugs at the rod end
@@ -441,7 +442,9 @@ PTFE/Kapton inside; a validated safety interface to the UR12e; and DIN-rail modu
 
 ## 12. Open items
 
-- **IPG:** the YLR-500-U3 interface pinout, interlock voltage and response, gate level, AC inlet, inrush, earth-leakage current,
+- **IPG:** the YLR-500-U3 interface connector (the 2012 YLR guide says a 24-pin connector, a third-party manual a round 25-pin
+  plug, RAYLASE's wiring diagram a 25-pin D-sub; same pin functions: interlock loops 1-4 and 2-3, analog 12/14, modulation
+  15/16, guide 17, emission enable 18) and pinout, interlock voltage and response, gate level, AC inlet, inrush, earth-leakage current,
   rise time and back-reflection rating. The 2012 YLR guide is the closest public document; the U3 may differ (its U2 page lists
   "5 and 24 Volt Control Interfaces").
 - **SCANLAB:** RTC6 price and the laser-connector pinout; basiCube 20 power connector and status signal.

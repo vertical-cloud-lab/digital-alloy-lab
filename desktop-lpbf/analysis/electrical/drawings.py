@@ -65,7 +65,7 @@ def single_line():
     line(ax, [(16.8, 12.4), (16.8, 11.4), (2.0, 11.4), (2.0, 10.6)], C_UPS, 2.2)
     ax.text(5.0, 11.55, "UPS outputs (5-15R): backed AC, ~240 W while building, 791 W rated", fontsize=7, color=C_UPS)
     ups_loads = [
-        (0.3, "Scan PC (2U)\nSCANLAB RTC6 PCIe\nXY2-100 + laser signals", C_UPS),
+        (0.3, "Scan PC (2U)\nSCANLAB RTC6 (Ethernet)\nSL2-100 + laser signals", C_UPS),
         (4.3, "SDR-240-24\n+24 V CTRL 10 A\n(PB1)", C_DC),
         (8.3, "SDR-240-48\n+48 V SERVO 5 A\n(PB1)", C_DC),
         (12.3, "HDR-100-24\n+24 V GALVO 3.8 A\n(basiCube 20: 24 V, <= 2.6 A)", C_DC),
@@ -81,7 +81,7 @@ def single_line():
     line(ax, [(8.5, 5.9), (8.5, 5.2)], C_SAFE, 1.8)
     box(ax, 6.2, 3.7, 4.6, 1.5, "ClearPath-SD x2 (recoater, Z)\n48 V bus, 1.6 m 18 AWG\nstep/dir/enable from ClearCore", fc="#ffffff", fs=6.2)
     line(ax, [(14.0, 8.9), (14.0, 7.2)], C_DC, 1.8)
-    box(ax, 11.5, 5.9, 5.0, 1.3, "basiCube 20 galvo, 1.6 m 18 AWG\nXY2-100 from RTC6 (shielded, < 3 m)", fc="#ffffff", fs=6.2)
+    box(ax, 11.5, 5.9, 5.0, 1.3, "basiCube 20 galvo (SL2-100 version)\n24 V 1.6 m 18 AWG; link from RTC6, < 3 m", fc="#ffffff", fs=6.2)
     # heater chain
     line(ax, [(21.0, 12.4), (21.0, 10.9)], C_HEAT, 2.0)
     box(ax, 18.6, 8.6, 5.0, 2.3, "24 V heater chain (PB1):\nF 15 A -> K1 (XS26 safety output)\n-> K2 (CN708 latching limit, own TC)\n-> SSR D1D20 (PLC PI, 1 s cycle)\n-> M12 L-coded -> rod-end feedthrough", fc="#fdf2e9", ec=C_SAFE, fs=6.0)
@@ -90,7 +90,7 @@ def single_line():
     # control network
     box(ax, 24.6, 8.6, 4.2, 2.3, "4U control drawer (rack)\nBanner XS26-2 + XS16si + XS2so\nProductivity1000 PLC\nTeknic ClearCore + SureStep drive\nK4/K5 laser-loop relays\nEthernet switch", fc="#eef7ee", fs=6.0, bold=False)
     box(ax, 29.2, 8.6, 4.5, 2.3, "PB2 box (process module)\nRaspberry Pi 5 supervisor + HQ camera\nPN532 NFC, NAU7802 load cell\nE3NX fibre amp, M12 junction", fc="#eef7ee", fs=6.0)
-    box(ax, 24.0, 5.4, 9.9, 2.6, "Ethernet: PC (RTC6 host) - Pi 5 (recipe, REST API) - PLC (Modbus TCP) - ClearCore - laser (status) - UPS card - dock uplink\nHard-wired safety: E-stops (rack, guard, gas module), guard sensor + lock, key, reset, room/Shuttle O2 relays,\nrobot Safe Home, tray docked, shutter switches, CN708 relay, plate < 50 C relay, laser status -> XS26-2", fc="#f7f7f7", fs=4.9)
+    box(ax, 24.0, 5.4, 9.9, 2.6, "Ethernet: PC + RTC6 Ethernet board - Pi 5 (recipe, REST API) - PLC (Modbus TCP) - ClearCore - laser (status) - UPS card - dock uplink\nHard-wired safety: E-stops (rack, guard, gas module), guard sensor + lock, key, reset, room/Shuttle O2 relays,\nrobot Safe Home, tray docked, shutter switches, CN708 relay, plate < 50 C relay, laser status -> XS26-2", fc="#f7f7f7", fs=4.9)
     # notes
     ax.text(0.3, 2.6, "Notes: PE bonded in PB1 to the tray frame and every module base (two PE paths through the dock: protective-conductor current ~8 mA estimated, IEC 60204-1 8.2.8). "
                       "Pump and laser never run together (PLC): worst leg 17.9 A of 24 A. "
