@@ -295,6 +295,53 @@ The machine as a whole is in [`machining.md`](machining.md#hours-for-the-whole-m
 - **Machining:** `cam_sim.py`, `per_setup.py`, `dfm.py`, `setup_plan.py` and FreeCAD CAM ([`machining.md`](machining.md)).
 - **FEA:** cases 1, 1b and 1f ([structure](#structure-calculix)).
 
+## Second opinion: Edison r4 (2026-11-22)
+
+Edison reviewed this design on 2026-11-22. The query was written in round 3 and sat unsent until the account had
+credit again: [`edison/r4-frame-floor-review/`](edison/r4-frame-floor-review/) has the query, answer, references and full
+trajectory. Each point below is checked against the model.
+
+- **The lid's bolt land is thin. New, and not drawn.**
+  - **What Edison says:** a 3.53 mm cord gland next to an M5 helical insert needs about 17.1 mm side by side, using its
+    3 mm ligament allowance, against the 16 mm wall.
+  - **What the model has:** `cad/joints.py` puts the 20 lid inserts at 11.8 mm outside the inner face. The
+    gland's outer edge is at 7.6 mm. The Ø6.04 insert hole then leaves **1.18 mm of web to the gland and 1.18 mm to the
+    outer face**, over the groove's 2.65 mm depth. [`machining.md`](machining.md) already lists "thicker webs at the
+    lid inserts" as a change to draw.
+  - **Options, by web left on each side:**
+
+    | Option | Web each side | Trade-off |
+    |---|---|---|
+    | M4 inserts (91732A656) | 1.75 mm | – |
+    | Plain tapped M5 | 1.7 mm | the lid comes off for service, so 6061 threads wear |
+    | A 4 mm external lip round the frame's top band, with M5 inserts | 3.2 mm | the outside grows to 320 × 230 mm there, which fits the 241 × 381 mm blank, but the door's seal land on the front face has to be checked against it |
+- **Floor crevice: already done.** Edison recommends a spigot or step so the floor locates inside the frame and seals on
+  a horizontal face. The floor plate's 4 mm pad already sits in the frame's 8 × 3.9 mm rebate, with the O-ring on the
+  pad's face. The worst-case crevice is about 35 mm³ (above).
+- **Residual stress: new, add to the plan.**
+  - Confirm the blank is certified T651 (stress-relieved by stretching), not plain T6.
+  - Rough the core and the opening first, leaving 0.5–1 mm on the top, bottom and door sealing faces.
+  - Unclamp, let it relax, re-indicate, then finish. With symmetric passes from both ends, Edison estimates the sealing
+    faces stay within 0.1 mm. That figure is an estimate, not a measurement.
+  - In the setup plan this adds a re-clamp between roughing and finishing in F-S1 and F-S2.
+- **Taking the core out: agrees with the plan.** For a university shop Edison favours drilled corner holes plus a
+  bandsaw, or waterjet at a job shop. It rates wire EDM as too slow and costly for roughing.
+- **Blind tapped holes and virtual leaks.**
+  - **Edison's advice:** at 1 mbar and with argon above ambient they are minor; use vented screws where a blind hole
+    opens inside the seal, and clean and dry every hole.
+  - **The model:** the lid and floor screw holes sit outboard of their glands, and the rail holes are tapped through
+    and plugged from outside.
+  - **Not checked:** the other joints, hole by hole.
+- **Where Edison is wrong or out of date:**
+  - **Gas flow:** its "3.8–7.6 L/min" for 2 m/s over the bed is a unit slip. 2 m/s through 190 mm × 10–20 mm is
+    3.8–7.6 L/s, or 228–456 L/min. [`gas-flow.md`](gas-flow.md) sizes 140–200 L/min through the perforated 120 × 8 mm
+    slot.
+  - **FKM at 200 °C:** the spigot O-ring runs at ≤ 121 °C in the thermal FEA ([`modules.md`](modules.md)), not at the
+    plate's 200 °C.
+  - **Anodising:** Edison suggests it against galvanic attack. The materials selection already rejects it inside the
+    chamber, because it outgasses 41–68× more water ([`low-profile.md`](low-profile.md) §3). Keep the 316 screws and
+    18-8 inserts dry and use anti-seize.
+
 ## Scripts that should learn about the floor plate
 
 The frame keeps the name prefix "Process chamber body", so scripts that look it up still find it. The floor plate is
