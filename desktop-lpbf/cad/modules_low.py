@@ -320,10 +320,6 @@ def add_reservoir(h, add, key, xd, z_dock, step=7):
     L2 = MP.RES_BASE_HALF_Y
     base = h.box(xd - 15, xd + 15, -L2, L2, z_dock, z_dock + MP.GATE_T).cut(h.box(xd - MP.SLOT_W / 2, xd + MP.SLOT_W / 2, -r["slot"] / 2, r["slot"] / 2, z_dock - 1, z_dock + MP.GATE_T + 1))
     base = base.cut(h.box(xd - 13, xd + 13, -L2 + 3.0, L2 - 3.0, z_dock + 1.0, z_dock + 2.4))       # shutter slot, closed at both ends
-    # front pull tab (2026-11-22, operations.md U1.1): the enclosed beam tube runs 15 mm over the lid's handle fin, so a hand can't pinch
-    # the fin from the front; it pinches this tab instead, between the rails, 8 mm in front of their ends (the robot keeps the fin)
-    tab = h.box(xd - 8.0, xd + 8.0, -L2 - 14.0, -L2 + 0.5, z_dock + 0.5, z_dock + 3.5).cut(h.cyl(4.0, (xd, -L2 - 7.5, z_dock), "z", 5.0))
-    base = h.fuse([base, tab])
     # top frame (304, 6 mm, welded on the hopper walls): overhangs the inside by 5 mm (sides) and 12 mm (ends) to carry the lid seal
     zt = zi + r["iz"]
     ox, oy = r["ix"] / 2 + 1.2, r["iy"] / 2 + 1.2

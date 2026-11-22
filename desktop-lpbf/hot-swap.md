@@ -322,6 +322,9 @@ dovetail. The recommendations above are not drawn yet.
    - pick STARK.easyclick ET (150 °C) or SCHUNK NSE-AM mini (200 °C) and get prices;
    - extend the flange arms;
    - keep the dowel and diamond pin.
+
+   Status 2026-11-22: the robot's handle is drawn (a grip block in front of the door; the robot module swap passes on S25, M50
+   and L75, robot-ops.md). The clamps are not drawn: a pair fits under the floor only once the overflow jar moves (§3.2a).
 4. **Blade:** a ball-lock-pin cartridge.
 5. **Quotes:** none of the vendor parts above is quoted. The SCHUNK NSE-M mini 90 (manual) lists at $1,430 at one reseller, so
    expect ~$1–2k per powered module.

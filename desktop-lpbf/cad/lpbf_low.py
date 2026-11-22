@@ -476,7 +476,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
 
     # ===================== 2. Rack module =====================
     rx0, rx1, ry0, ry1 = bases["rack"]
-    rz0, rz1 = Z_TRAY, Z_TRAY + 515.0                       # 11U (was 10U, 470): the IPG YLR-500-U3 is 4U
+    rz0, rz1 = Z_TRAY, Z_TRAY + 25.0 + 12 * 44.45 + 1.6       # 12U, 560 mm (was 11U, 515): a 4U control drawer (electrical.md §12, cad/electrical.py)
     posts = []
     for x in (rx0, rx1 - 25):
         for y in (ry0, ry1 - 25):
@@ -484,12 +484,12 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     for z in (rz0 + 0, rz1 - 20):
         posts += [box(rx0, rx1, ry0, ry0 + 25, z, z + 20), box(rx0, rx1, ry1 - 25, ry1, z, z + 20),
                   box(rx0, rx0 + 25, ry0 + 25, ry1 - 25, z, z + 20), box(rx1 - 25, rx1, ry0 + 25, ry1 - 25, z, z + 20)]
-    add("19 in. rack frame (11U, 515 mm tall)", comp(posts), C["rack"], 2, (0, 0, 0), mat="steel", mass_kg=22.0, module="rack", bom="S9")
+    add("19 in. rack frame (12U, 560 mm tall)", comp(posts), C["rack"], 2, (0, 0, 0), mat="steel", mass_kg=22.0, module="rack", bom="S9")
     ux0, ux1 = (rx0 + rx1) / 2 - 241.3, (rx0 + rx1) / 2 + 241.3      # 19 in. front panel width
     u = 44.45
     zr = rz0 + 25.0
     units = [("UPS (Eaton 5PX1500RTG2, 2U)", 2, C["black"], 23.0, "C6"), ("Fiber laser source, 500 W single-mode, IPG YLR-500-U3-SM-AC (4U)", 4, C["white"], 40.0, "L1"),
-             ("Scan + laser controller PC (2U)", 2, C["anod"], 8.0, "C1"), ("DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5 (3U)", 3, C["din"], 9.0, "C3")]
+             ("Scan + laser controller PC (2U)", 2, C["anod"], 8.0, "C1"), ("DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5 (4U: the safety controller stands 129 mm off its rail)", 4, C["din"], 9.0, "C3")]
     for nm, nu, col, m, b in units:
         bx = box(ux0 + 18, ux1 - 18, ry0 + 30, ry1 - 40, zr + 1, zr + nu * u - 1)
         face = box(ux0, ux1, ry0 + 26, ry0 + 30, zr + 1, zr + nu * u - 1)

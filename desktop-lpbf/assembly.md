@@ -7,6 +7,23 @@ two comments on the [build animation](build-sequence.md):
 
 The cell follows [byu-vcl PR 318](https://github.com/vertical-cloud-lab/byu-vcl/pull/318) (round 14, commit 11d4410), through [`analysis/robot/cell.py`](analysis/robot/cell.py).
 
+> **Update 2026-11-22 (round 4): patch 1 is answered by an order change, not a clamped cap; the two-arm run was not repeated.**
+> - **Why not the clamped sleeve:** as specified below, the rod would run 20 mm into the cap. The hermetic connector's M12 bore
+>   crosses the cap at 9 to 21 mm above the striker, so the rod would block it. A Ø20 groove in the Ø22 cap leaves a 1 mm wall.
+>   And set screws below the rod seal are a leak path.
+> - **What works instead:** keep the rod end welded, made by the shop on the bare rod, away from every O-ring. Then change the
+>   order:
+>   1. the gland plate, with its two 2-114s already loaded, goes onto the rod's top end;
+>   2. the rod goes into the head's socket;
+>   3. the stack, the rod and the gland plate enter the bore from the bottom, the tube's open end. With the body upside down on
+>      its nest, that is from above.
+>
+>   In service the same holds in reverse. The gland plate comes out with the stack; then, on the bench, the rod comes down out of
+>   the head and through the gland plate. This is exactly the person's procedure in [operations.md](operations.md) A1 and M7,
+>   re-run step by step on this model (results there).
+> - **Not re-run here:** chapter 3 (M10-M27) needs that order, and steps M16 and C10 see the module's new handle. It now has a
+>   grip block for the robot in front of the chamber ([robot-ops.md](robot-ops.md)). The rest of this note is run 2's.
+
 Nothing here has been built or tried on hardware. The numbers come from the model, from the sources cited, or from estimates, which are labelled as such. The model is `cad/lpbf_low.py` with the M50 module. It includes:
 - the chamber change of [chamber-construction.md](chamber-construction.md): a through-frame and a bolted floor plate with a second 3.53 mm cord;
 - for run 2, two items from this note's patch list: the lid gland's R13 corners and the floor port's lead-in.
