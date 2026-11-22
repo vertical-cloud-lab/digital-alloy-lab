@@ -53,7 +53,9 @@ Ranked by consequence. Section numbers point to the evidence.
 4. **The cover slide is uncoated and, at 500 W, a consumable that has to stay almost perfectly clean (§2.2, §2.3).**
    - The Edmund 25-250 slide (A2) is uncoated: its two faces send 6.7 % of the beam, 34 W, back toward the lens, the
      galvo and the fibre end, and their ghosts come to a focus in or near the f-theta (thin-lens estimate). **Buy
-     AR-coated slides.**
+     AR-coated slides:** Edmund 36-299 (Ø50 × 2 mm, 1064 nm V-coat, $103 at 6–25), and trial Cloudray's Ø50 × 2 mm
+     fibre-laser protective windows ($12–16, coating not stated) against it. A sapphire slide (Edmund 15-808, $950)
+     cuts the thermal lens tenfold, but pays only if slides are cleaned and reused.
    - The slide's thermal lens grows the spot past +10 % once it absorbs about **0.03 %**. A light film (0.05 %)
      moves the focus 1.1–2.8 mm toward the lens; a fogged slide (0.5 %) moves it 10–23 mm; mech.md's 43.8 mm overstates
      it (§2.2). The ratio to the Rayleigh range doesn't depend on the beam size, so no collimator choice fixes this.
@@ -361,7 +363,8 @@ Same MPE (5 mW/cm², t ≥ 10 s at 1070 nm) and method as [`safety.md`](safety.m
   A 10 % specular reflection of 500 W at 150 mm from focus is ~150 W/cm² (low-profile.md), so it must never see a
   direct or specular path, which is what safety.md already requires.
 - **Guard burn-through** (1.6 mm 5052, the same 1-D lower bound as safety_calcs.py, no conduction): at 150 mm past the
-  focus, 0.39 s hot / 1.95 s cold with the 5 mm beam, 0.16 / 0.80 s with the 3.2 mm beam. The smaller beam makes the
+  focus, 0.39 s hot / 1.95 s cold with the 5 mm beam, 0.16 / 0.80 s with the 3.2 mm beam; 50 mm past it, 0.02–0.2 s;
+  at the focus itself, under a millisecond. The smaller beam makes the
   guard's job harder, which is one more reason the chamber, not the guard, is the primary barrier. Only a test on the
   real panel settles it (safety.md §4.3).
 - **The chamber has no viewport;** the camera window carries a 1070 nm filter (§4.6).
