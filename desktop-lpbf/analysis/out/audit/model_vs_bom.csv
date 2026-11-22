@@ -1,7 +1,7 @@
 part,module,material,mass_kg,kind,model_bom_tag,model_mcm,part_numbers,bom_line,purchase_refs,unit_price_usd,status,note
-"Fiber laser source, 500 W single-mode, IPG YLR-500-U3-SM-AC (4U)",rack,mixed (vendor unit; mass from datasheet or estimate),40.0,bought,L1,,YLR-500-U3-SM-AC,L1,vendor-parts.csv:row17 vendor-parts.csv:row18,23000.0,real part priced,
+"Fiber laser source, 500 W single-mode, IPG YLR-500-U3-SM-AC (4U)",rack,mixed (vendor unit; mass from datasheet or estimate),40.0,bought,L1,,YLR-500-U3-SM-AC,L1,optics-bom.csv:O1 vendor-parts.csv:row17 vendor-parts.csv:row18,23000.0,real part priced,
 "Dry scroll pump (≤ 0.3 mbar, 6 m3/h class)",gas,mixed (vendor unit; mass from datasheet or estimate),26.0,bought,G2,PUMP,A73501983,G2,audit-prices.csv:G2,5977.85,real part priced,
-"UPS (Eaton 5PX1500RTG2, 2U)",rack,mixed (vendor unit; mass from datasheet or estimate),23.0,bought,C6,,5PX1500RTG2,D2,audit-prices.csv:D2 vendor-parts.csv:row19,1137.99,inconsistent,"model tag is C6 (controls enclosure), which has no UPS; model draws an Eaton 5PX1500RTG2; analysis/out/tray/tray_budget.md sizes the UPS as a Vertiv GXT5LI-1500"
+"UPS (Eaton 5PX1500RTG2, 2U)",rack,mixed (vendor unit; mass from datasheet or estimate),23.0,bought,C6,,5PX1500RTG2,D2,audit-prices.csv:D2 electrical-bom.csv:E9-12 vendor-parts.csv:row19,1137.99,inconsistent,"model tag is C6 (controls enclosure), which has no UPS; model draws an Eaton 5PX1500RTG2; analysis/out/tray/tray_budget.md sizes the UPS as a Vertiv GXT5LI-1500"
 "19 in. rack frame (11U, 515 mm tall)",rack,bearing / alloy steel,22.0,bought,S9,,7648K62,S9,audit-prices.csv:S9,609.03,inconsistent,model draws an 11U rack 515 mm tall; S9's McMaster 7648K62 cabinet is 10U (no catalogue 11U rack that low was found)
 "Optics bridge (6061, 25 mm)",process,6061-T6 aluminium,13.319,custom (machined),F5,,,F5,,,custom,
 "Base plate, gas module (MIC-6, 15 mm)",gas,MIC-6 cast tooling plate,12.891,custom (machined),F4,,,F4,,,custom,
@@ -17,7 +17,7 @@ Trace O2 analyzer + dew-point transmitter (panel box),gas,mixed (vendor unit; ma
 "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",process,6061-T6 aluminium,4.273,custom (machined),G1,PLATE_CHAMBER,,G1,,,custom,
 "Sealed cyclone + HEPA housing (316L, valves off for passivation)",gas,316L stainless,4.0,bought,G5,FILTER,5169K72,G5,mcmaster-parts.csv:G5 vendor-parts.csv:row13,107.84,real part priced,cyclone stage not chosen
 Umbilical duct along the back edge,tray,6061-T6 aluminium,4.0,custom (sheet),D1,,,D1,,,custom,
-2-axis galvo scan head (SCANLAB basiCube 20),process,mixed (vendor unit; mass from datasheet or estimate),3.75,bought,L5,,basiCube 20,L5,vendor-parts.csv:row16,,real part priced,
+2-axis galvo scan head (SCANLAB basiCube 20),process,mixed (vendor unit; mass from datasheet or estimate),3.75,bought,L5,,basiCube 20,L5,optics-bom.csv:O6 vendor-parts.csv:row16,,real part priced,
 Rack side panels (vented),rack,6061-T6 aluminium,3.208,custom (sheet),S9,,,S9,,,custom,vented sheet panels
 "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",process,6061-T6 aluminium,3.01,custom (machined),G1,PLATE_CHAMBER,,G1,,,custom,
 Gas-loop + vacuum hoses (KF-25 SS bellows),process,316L stainless,3.0,bought,G7,HOSE_KF25,3497N23,G7,mcmaster-parts.csv:G2 mcmaster-parts.csv:G7,384.45,real part priced,real-parts.md: routed lengths not matched to the 24 in. hose
@@ -33,14 +33,14 @@ Operator panel box (on the rack's front post),rack,6061-T6 aluminium,1.285,custo
 "Chamber legs (6061, 30 x 30)",process,6061-T6 aluminium,1.22,custom (machined),G1,,,G1,,,custom,
 Safety shutter + beam dump,process,mixed (vendor unit; mass from datasheet or estimate),1.2,bought,L4,,,L4,,,generic,no shutter chosen (L4: quote)
 Argon pressure regulator + flowmeter,gas,brass,1.2,bought,G3,,78595A5,G3,vendor-lookups.csv:row22,334.1,real part priced,
-"f-theta lens, f = 160 mm (Thorlabs FTH160-1064)",process,mixed (vendor unit; mass from datasheet or estimate),0.8,bought,L6,,FTH160-1064,L6,vendor-lookups.csv:row2 vendor-parts.csv:row15,1011.78,inconsistent,"model uses f = 160 mm (Thorlabs FTH160-1064, $1,011.78 in vendor-lookups.csv); L6 still specifies f = 254 mm"
+"f-theta lens, f = 160 mm (Thorlabs FTH160-1064)",process,mixed (vendor unit; mass from datasheet or estimate),0.8,bought,L6,,FTH160-1064,L6,optics-bom.csv:O7 vendor-lookups.csv:row2 vendor-parts.csv:row15,1011.78,inconsistent,"model uses f = 160 mm (Thorlabs FTH160-1064, $1,011.78 in vendor-lookups.csv); L6 still specifies f = 254 mm"
 Z bracket + fold-back belt housing (2:1),process,6061-T6 aluminium,0.755,custom (machined),M3,,,M3,,,custom,
 Guard door rail (top + bottom),process,bearing / alloy steel,0.666,bought,S9,,5537T353,S9,audit-prices.csv:S9,9.66,real part priced,rails are the frame's own 20 mm T-slot; McMaster 5537T353 rollers
 Sliding guard door (aluminium),process,6061-T6 aluminium,0.627,custom (sheet),S9,SHEET,,S9,,,custom,
 "Z servo (ClearPath-SD, NEMA 23, folded)",process,mixed (vendor unit; mass from datasheet or estimate),0.6,bought,M2,,CPM-SDSK-2311S-RLN,M2,vendor-parts.csv:row2,293.0,real part priced,
 "Cross-flow inlet plenum + nozzle (316L, bolted flange)",process,316L stainless,0.6,custom (sheet),G4,,,G1,,,custom,"model tag G4 (blower), which does not cost them"
 "Recoater servo (ClearPath-SD, NEMA 23)",process,mixed (vendor unit; mass from datasheet or estimate),0.6,bought,M2,,CPM-SDSK-2311S-RLN,M2,vendor-parts.csv:row2,293.0,real part priced,
-"Process fiber (armoured, ≥ 100 mm bend radius)",rack,mixed (vendor unit; mass from datasheet or estimate),0.6,bought,L1,,YLR-500-U3-SM-AC,L1,vendor-parts.csv:row17 vendor-parts.csv:row18,23000.0,real part priced,comes fitted to the laser
+"Process fiber (armoured, ≥ 100 mm bend radius)",rack,mixed (vendor unit; mass from datasheet or estimate),0.6,bought,L1,,YLR-500-U3-SM-AC,L1,optics-bom.csv:O1 vendor-parts.csv:row17 vendor-parts.csv:row18,23000.0,real part priced,comes fitted to the laser
 "Overflow funnel block (316L, bolted, FKM face O-ring)",process,316L stainless,0.593,custom (machined),M4,,,M4,,,custom,
 "Galvo riser plate (6061, 10 mm)",process,6061-T6 aluminium,0.544,custom (machined),L5,,,F5,,,custom,
 "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",process,316L stainless,0.528,custom (machined),B1,,2-114,B1,seal-parts.csv:row3,10.44,custom,
@@ -48,7 +48,7 @@ Sliding guard door (aluminium),process,6061-T6 aluminium,0.627,custom (sheet),S9
 "Draw latches on the chamber's side faces (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",process,304 stainless,0.5,bought,G1,1807A61,1807A61,G1,audit-prices.csv:G1 mcmaster-parts.csv:G1 seal-parts.csv:row23,51.77,real part priced,
 "Collimator (IPG, 5 mm beam, 128 mm + 78 mm strain relief) on V-mount",process,mixed (vendor unit; mass from datasheet or estimate),0.5,bought,L3,,,L3,,,inconsistent,not priced by IPG yet; low-profile.md §2: f = 160 mm needs a ~3.2 mm beam for the 75 um spot; the model and L3 keep IPG's 5 mm collimator (sized for f = 254 mm; ~48 um at f = 160)
 Pump exhaust to the dock,tray,mixed (vendor unit; mass from datasheet or estimate),0.5,bought,D1,,,D1,,,generic,
-"OD 7+ viewing window (1070 nm, polycarbonate)",process,laser-safety polycarbonate,0.494,bought,S5,,LW1P1/M,S5,safety-parts.csv:SP18 vendor-lookups.csv:row9,411.95,real part priced,
+"OD 7+ viewing window (1070 nm, polycarbonate)",process,laser-safety polycarbonate,0.494,bought,S5,,LW1P1/M,S5,optics-bom.csv:O29 safety-parts.csv:SP18 vendor-lookups.csv:row9,411.95,real part priced,
 "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",process,6061-T6 aluminium,0.471,custom (machined),M4,,,M4,,,custom,
 Recoater fixed bearing: magnetic-fluid rotary feedthrough Ferrotec SFL-006-NN on the left wall (Ferrotec SFL-006-NN; FKM face O-ring),process,mixed (vendor unit; mass from datasheet or estimate),0.45,bought,M1,Ferrotec SFL-006-NN,SFL-006-NN,M1,seal-parts.csv:row28,,real part unpriced,
 "Recoater guide rail (15 mm, 260 mm)",process,bearing / alloy steel,0.413,bought,M1,6709K33,6709K33,M1,mcmaster-parts.csv:M1 mcmaster-parts.csv:M3 vendor-parts.csv:row4,86.8,real part priced,
@@ -176,7 +176,7 @@ Camera window retaining ring (bottoms metal-to-metal on the boss),process,6061-T
 "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",process,304 stainless,0.005,custom (machined),RA4,,,A3,,,custom,not in machining/hours.csv
 "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",process,316L stainless,0.004,fastener,B1,92290A144,92290A144,FX,fasteners.csv:row20,17.81,real part priced,
 Door drive shaft and disc (Ø6 D-shaft keyed into a 6061 disc screwed to the door's left edge),process,6061-T6 aluminium,0.004,custom (machined),RA2,,,A3,,,custom,not in machining/hours.csv
-"Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating)",process,UV fused silica,0.003,bought,M6,,FESH0900 NF1064-44,,,,missing from BOM,no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs filter); model tag M6 does not cover it
+"Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating)",process,UV fused silica,0.003,bought,M6,,FESH0900 FESH0950,M6,optics-bom.csv:O21,169.26,generic,no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs short-pass filter)
 "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",process,304 stainless,0.003,fastener,B2,91732A782,91732A782,B2,fasteners.csv:row12 options-mcmaster.csv:B2,4.56,real part priced,
 "Inlet-plenum helical inserts, M4 x 6 18-8, in the back wall (7 x McMaster 91732A656)",process,304 stainless,0.003,fastener,G4,91732A656,91732A656,FX,fasteners.csv:row9,3.68,real part priced,
 "Outlet-plenum helical inserts, M4 x 6 18-8, in the floor (6 x McMaster 91732A656)",process,304 stainless,0.003,fastener,G4,91732A656,91732A656,FX,fasteners.csv:row9,3.68,real part priced,
@@ -212,7 +212,7 @@ Vacuum port adapter O-ring (FKM 75A 2-024),process,FKM (Viton) 75A,0.001,bought,
 Reservoir M lid O-ring (FKM 75A 2-030),process,FKM (Viton) 75A,0.001,bought,R1,,2-030,G8,seal-parts.csv:row15,9.02,real part priced,
 "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",process,304 stainless,0.001,fastener,H1,91732A647,91732A647,FX,fasteners.csv:row7,3.85,real part priced,
 "Rail-hole bonded seal washers (4 x M4, 316 ring + FKM lip, Dowty type; seal the through-tapped rail holes)",process,FKM (Viton) 75A,0.001,bought,M1,,,G8,,,generic,Dowty-type M4 washer: no part number chosen
-"Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",process,bearing / alloy steel,0.0,bought,H1,,3871K606,H1,options-mcmaster.csv:H1,148.67,real part priced,
+"Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",process,bearing / alloy steel,0.0,bought,H1,,3871K606,H1,electrical-bom.csv:E4-06 options-mcmaster.csv:H1,148.67,real part priced,
 "Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange)",process,FKM (Viton) 75A,0.0,bought,H2,,2-014,G8,seal-parts.csv:row8,,real part unpriced,
 "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",process,FKM (Viton) 75A,0.0,bought,A1,,2-010,G8,seal-parts.csv:row20,6.05,real part priced,
 Recoater bearing-cap O-ring (FKM 75A 2-019),process,FKM (Viton) 75A,0.0,bought,M1,,2-019,G8,seal-parts.csv:row17,8.23,real part priced,

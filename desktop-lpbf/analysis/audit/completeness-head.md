@@ -122,3 +122,24 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
 - **Stale rows left in place:** the tall model's rows in `mcmaster-parts.csv` still exist. These are the G1, S9 and M3
   rows, the 9572K33 V-ring, the 1165N11 cord and the 4277T52 nylon relief. Their lines now say they no longer apply.
   They show up in the reverse table below as rows with no model part.
+
+## Overlaps to settle when the electrical and optics lists are merged
+
+`electrical-bom.csv` and `optics-bom.csv` were still being written during this audit. As read at 06:10 UTC, they overlap
+with this audit's lines in these places. Merge one of each pair, not both:
+- **UPS:** D2 and `electrical-bom.csv` E9-12 are the same Eaton 5PX1500RTG2 at the same CDW price ($1,137.99).
+- **Pneumatics:** A3 (SMC) and E8-01 to E8-08 (Mindman, NITRA, SMC switches, a pressure switch, a lockable shut-off)
+  price the same door and latch actuators. A3's custom robot hardware and its X1 machining stay either way.
+- **Dock:** D1 estimates a Stäubli CombiTac. E7-01 to E7-07 price a HARTING Han-Modular docking frame at about $261,
+  with no argon coupling.
+- **Vacuum gauge:** G7 has the Vacuum Research 902377 Pirani ($455); E9-11 has a Kurt J. Lesker 275i ($515). Keep one.
+- **Rack height:** E9-01 moves the controls into a 4U drawer (the XS26-2 safety controller needs it). That makes the
+  rack 12U: 2U UPS + 4U laser + 2U PC + 4U drawer, 533 mm of rails alone, against the 11U, 515 mm rack the model draws
+  and S9's 10U cabinet.
+- **Rod-end connector:** E6-01 (Solid Sealing FA23474 type K feedthroughs) replaces the LEMO envelope that fails the seal
+  spec.
+- **Optics:**
+  - O2 and O7 fix L3 and L6.
+  - O12 replaces A2's uncoated Edmund 25-250 cover slides with the AR-coated 11-742.
+  - O13 turns F5's single field stop into three inserts.
+  - O19 to O23 add to M6.

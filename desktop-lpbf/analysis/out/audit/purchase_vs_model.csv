@@ -17,7 +17,7 @@ bom.csv line,bom.csv,M2,,Servo motors,2,M2,
 bom.csv line,bom.csv,M3,,Z stage (less servo): integrated actuator under the floor,5,M3,
 bom.csv line,bom.csv,M4,,"Metering base, roller drive and overflow",7,M4,
 bom.csv line,bom.csv,M5,,Recoater blade cartridges,2,M5,
-bom.csv line,bom.csv,M6,,Layer camera + lighting,2,M6,
+bom.csv line,bom.csv,M6,,Layer camera + lighting,3,M6,
 bom.csv line,bom.csv,G1,,"Process chamber: through-frame, floor plate, lid, door and their small parts",22,G1,
 bom.csv line,bom.csv,G2,,Vacuum pump,2,G2,
 bom.csv line,bom.csv,G3,,Argon supply,1,G3,
@@ -301,3 +301,124 @@ purchase row,audit-prices.csv,A3,8800N538,"SMC Modular Compressed Air Filter/Reg
 purchase row,audit-prices.csv,A3,8847N84,Pressure gauge for the 8800N538 filter-regulator,0,A3,
 purchase row,audit-prices.csv,A3,AS2201F-01-06S,"SMC AS2201F-01-06S flow control (speed controller, R1/8 x 6 mm tube, elbow)",0,A3,stock for custom parts
 purchase row,audit-prices.csv,H3,1939K12,"Low-Voltage Equipment-Cooling Fan, 24V DC with Wire Leads, 3.15"" Square x 1.26"" Deep Overall, 18 CFM",0,H3,
+purchase row,electrical-bom.csv,E1-01,22013003 SIRCO M Compact,"Main disconnect, UL 98, 3P 30 A, 100 kA SCCR with class J fuses",0,electrical-bom.csv:E1-01,stock for custom parts
+purchase row,electrical-bom.csv,E1-02,147E1111,"Disconnect handle, red/yellow, padlockable in OFF, side mount",0,electrical-bom.csv:E1-02,stock for custom parts
+purchase row,electrical-bom.csv,E1-03,14070515,"Handle shaft 150 mm, 5 x 5 mm",0,electrical-bom.csv:E1-03,
+purchase row,electrical-bom.csv,E1-04,FAZ-D15-2-NA,"UL 489 MCB 2P 15 A D curve (Q1 laser, Q2 UPS + heater supply)",0,electrical-bom.csv:E1-04,
+purchase row,electrical-bom.csv,E1-05,FAZ-C15-1-NA-SP,UL 489 MCB 1P 15 A C curve (Q3 pump; F-heat 24 V DC),0,electrical-bom.csv:E1-05,
+purchase row,electrical-bom.csv,E1-06,FAZ-C6-1-NA-SP,UL 489 MCB 1P 6 A C curve (Q4 blower),0,electrical-bom.csv:E1-06,
+purchase row,electrical-bom.csv,E1-07,FAZ-C10-1-NA-SP,UL 489 MCB 1P 10 A C curve (48 V servo bus),0,electrical-bom.csv:E1-07,
+purchase row,electrical-bom.csv,E1-08,CWB9-11-30C03,"Contactor 9 A, 24 VDC coil (KM0 laser mains, KM1 pump, KM2 blower)",0,electrical-bom.csv:E1-08,
+purchase row,electrical-bom.csv,E1-09,RW17-1D3 RW17-1D3 class,Overload relay for the 1/2 hp pump (7 A),0,electrical-bom.csv:E1-09,
+purchase row,electrical-bom.csv,E1-10,16 x 12 x 6 7812K 7812K class,"PB1 enclosure 16 x 12 x 6 in, steel, NEMA 12",0,C6,
+purchase row,electrical-bom.csv,E1-11,FF12D24UN,"Filter fan 27 CFM 24 VDC, NEMA 12 (PB1)",0,electrical-bom.csv:E1-11,
+purchase row,electrical-bom.csv,E2-01,SDR-240-24,"+24 V CTRL, 10 A DIN, PFC, DC-OK relay",0,C4,
+purchase row,electrical-bom.csv,E2-02,SDR-240-48,"+48 V SERVO, 5 A DIN, PFC",0,C4,
+purchase row,electrical-bom.csv,E2-03,HDR-100-24,"+24 V GALVO, 3.83 A DIN (basiCube 20: 24 V, <= 2.6 A)",0,C4,
+purchase row,electrical-bom.csv,E2-04,DDR-30G-5,24 V -> 5 V 6 A DC-DC for the Pi 5 (PB2),0,C4,
+purchase row,electrical-bom.csv,E2-05,24DC/1-10A 2906032 CBMC E4 24DC/1-10A NO,"4-channel 24 V electronic circuit breaker, 1-10 A per channel",0,C4,
+purchase row,electrical-bom.csv,E3-01,CLCR-4-13,"ClearCore I/O and motion controller (4 axes step/dir, 13 I/O, Ethernet)",0,C3,
+purchase row,electrical-bom.csv,E3-02,DIN-MNT,DIN rail kit for ClearCore,0,C3,
+purchase row,electrical-bom.csv,E3-03,CPM-CABLE-CTRL-MU120,"ClearPath controller cable, 10 ft",0,C3,
+purchase row,electrical-bom.csv,E3-04,CPM-CABLE-PWR-MS120,"ClearPath DC power cable, 10 ft",0,C3,
+purchase row,electrical-bom.csv,E3-05,STP-DRV-4830,"Stepper drive 3 A/phase, 12-48 VDC, step/dir (dosing roller)",0,C3,
+purchase row,electrical-bom.csv,E3-06,P1-540,"Productivity1000 CPU, Ethernet, Modbus TCP",0,C5,
+purchase row,electrical-bom.csv,E3-07,P1-16ND3,16-point 12-24 VDC input module,0,C5,
+purchase row,electrical-bom.csv,E3-08,P1-08TD2,"8-point 12-24 VDC sourcing output module, 1 A/pt",0,C5,
+purchase row,electrical-bom.csv,E3-09,P1-04THM,"4-channel thermocouple module, 16-bit",0,C5,
+purchase row,electrical-bom.csv,E3-10,P1-08ADL-1,8-channel 4-20 mA input module,0,C5,
+purchase row,electrical-bom.csv,E3-11,P1-04ADL-2,4-channel 0-10 V input module (Pirani),0,C5,
+purchase row,electrical-bom.csv,E3-12,P1-04DAL-2,4-channel 0-10 V output module (blower speed),0,C5,
+purchase row,electrical-bom.csv,E3-13,P1-10RTB,10-pin terminal blocks for 8-pt and analog modules,0,C5,
+purchase row,electrical-bom.csv,E3-14,P2-RTB,18-pin terminal blocks for the 16-pt modules,0,C5,
+purchase row,electrical-bom.csv,E3-15,XS26-2,"Safety controller, 26 inputs, 2 OSSD pairs (4 outputs 0.5 A), expandable",0,S1,
+purchase row,electrical-bom.csv,E3-16,XS16si,"Safety input expansion, 16 inputs",0,S1,
+purchase row,electrical-bom.csv,E3-17,XS2so,"Safety output expansion, 2 dual-channel outputs (0.75 A)",0,S1,
+purchase row,electrical-bom.csv,E3-18,SC-USB2,USB configuration cable,0,S1,
+purchase row,electrical-bom.csv,E3-19,CWBS9-33-30C03,"Safety contactor 9 A, mirror contacts, 24 VDC (K3A, K3B servo bus; K4, K5 laser loop)",0,S1,
+purchase row,electrical-bom.csv,E3-20,SE3-SW8U,"Industrial unmanaged Ethernet switch, 8 ports, 12-48 VDC",0,electrical-bom.csv:E3-20,
+purchase row,electrical-bom.csv,E3-21,ZL-RTB-DB15,D-sub 15 to terminal DIN module (RTC6 laser connector),0,C1,
+purchase row,electrical-bom.csv,E3-22,ZL-DB15-CBL-2,"D-sub 15 cable, 2 m",0,C1,
+purchase row,electrical-bom.csv,E3-23,ask IPG,IPG interface cable / mating plug (24-pin circular in the 2012 YLR guide),0,C1,
+purchase row,electrical-bom.csv,E4-01,D1D20,"DC SSR 20 A, 1-100 VDC load, 3.5-32 VDC control",0,H2,alternative in line H2
+purchase row,electrical-bom.csv,E4-02,HS151,"SSR heat sink 1.5 C/W, through the PB1 wall",0,H2,
+purchase row,electrical-bom.csv,E4-03,CWBS12-33-30C03,"Safety contactors K1 (safety controller) and K2 (CN708), 12 A, mirror contacts, 24 VDC",0,H2,
+purchase row,electrical-bom.csv,E4-04,K8DT-TH1CD,Plate < 50 C relay on the edge TC (2nd door channel),0,H2,stock for custom parts
+purchase row,electrical-bom.csv,E4-05,9GA0824P6G001,Module fan 80 mm 24 VDC with tach (heat.md),0,electrical-bom.csv:E4-05,alternative (qty 0)
+purchase row,electrical-bom.csv,E5-01,HS5L-VC44M-G,"Guard lock, spring lock / power to unlock, 1,400 N, 24 VDC",0,S2,
+purchase row,electrical-bom.csv,E5-02,HS9Z-A51,Straight actuator key for HS5L,0,S2,
+purchase row,electrical-bom.csv,E5-03,HS6B-12B05,"Guard-position interlock, separate from the lock (2NC + 1NO)",0,S2,
+purchase row,electrical-bom.csv,E5-04,XW1E-BV402M-R,"E-stop 40 mm, 2NC (guard front, gas module)",0,S3,
+purchase row,electrical-bom.csv,E5-05,class,"E-stop enclosures (yellow, 1 hole)",0,S3,
+purchase row,electrical-bom.csv,E5-06,1950 class,Chamber-at-ambient differential pressure switch (+/-5 mbar),0,electrical-bom.csv:E5-06,stock for custom parts
+purchase row,electrical-bom.csv,E5-07,ECX2053-24L,"HOT lamp, amber 22 mm 24 V LED",0,S4,
+purchase row,electrical-bom.csv,E6-01,FA23474,"Type K 3-pair weld-in feedthrough, Chromel/Alumel, 304L/316L, -269 to 450 C (rod end, per module)",0,H1,stock for custom parts
+purchase row,electrical-bom.csv,E6-02,plug,Mating plug for FA23474 (26482 circular),0,H1,
+purchase row,electrical-bom.csv,E6-03,FA10594,"2-pin 27 A copper weld-in feedthrough, 3 kV (heater power, per module)",0,H1,
+purchase row,electrical-bom.csv,E6-04,FA11643,2-pin 27 A Cu on KF16 (only if the LED bar stays inside),0,M6,stock for custom parts
+purchase row,electrical-bom.csv,E6-05,100712,"22 AWG Kapton-insulated silver-plated Cu, 30 ft (in-vacuum joints)",0,H1,stock for custom parts
+purchase row,electrical-bom.csv,E6-06,THMWK-UL-20-1S-F-1,"Type K extension, shielded, FEP, PLTC, per ft",0,H1,
+purchase row,electrical-bom.csv,E6-07,SMPW-K-F class SMPW-K-M,"Type K mini connectors, panel jack + plug pairs",0,H1,
+purchase row,electrical-bom.csv,E6-08,7000-13201-3310500,"M12 A-coded 4-pole PUR shielded cordset, 5 m",0,A1,
+purchase row,electrical-bom.csv,E6-09,class,"Bulk wire: 10 AWG feeder (3 m), 14 AWG MTW (15 m), 16 AWG heater pair (3 m), 18-22 AWG control",0,L6,
+purchase row,electrical-bom.csv,E7-01,09140161701,"Han-Modular docking frame, floating, 4 modules",0,electrical-bom.csv:E7-01,alternative (qty 0)
+purchase row,electrical-bom.csv,E7-02,09140161711,Han-Modular carrier frame,0,electrical-bom.csv:E7-02,alternative (qty 0)
+purchase row,electrical-bom.csv,E7-03,09140009936,Float washers,0,electrical-bom.csv:E7-03,alternative (qty 0)
+purchase row,electrical-bom.csv,E7-04,09140033001 09140033101,"Han C 3-position modules (male + female) for L1, L2, N and 2 x PE",0,electrical-bom.csv:E7-04,alternative (qty 0)
+purchase row,electrical-bom.csv,E7-05,09320006108,"Han C crimp contacts, 10 AWG",0,electrical-bom.csv:E7-05,alternative (qty 0)
+purchase row,electrical-bom.csv,E7-06,09140123001 09140123101,"Han DD 12-position modules (male + female), signals",0,electrical-bom.csv:E7-06,alternative (qty 0)
+purchase row,electrical-bom.csv,E7-07,class,"Han DD contacts, RJ45 module, pneumatic module",0,L6,alternative (qty 0)
+purchase row,electrical-bom.csv,E8-01,100818015324002 MVSC1-180-4E1-DC24,"5/2 single-solenoid valve, 24 VDC 0.95 W (door, latches, drawbar)",0,electrical-bom.csv:E8-01,alternative (qty 0)
+purchase row,electrical-bom.csv,E8-02,100018093044002 MVSC1-180-5B4,4-station manifold,0,electrical-bom.csv:E8-02,alternative (qty 0)
+purchase row,electrical-bom.csv,E8-03,MCRQ220ANPT,"Rotary actuator 20 mm, 0-190 deg (chamber door)",0,electrical-bom.csv:E8-03,alternative (qty 0)
+purchase row,electrical-bom.csv,E8-04,C12005D,"Compact cylinder 3/4 in. bore, 1/2 in. stroke (draw latches)",0,electrical-bom.csv:E8-04,alternative (qty 0)
+purchase row,electrical-bom.csv,E8-05,D-M9B,"Auto switches (door open/closed, two latches, drawbar)",0,A3,stock for custom parts
+purchase row,electrical-bom.csv,E8-06,5U11S101,Air pressure switch,0,A3,
+purchase row,electrical-bom.csv,E8-07,AFR2-2133,Filter-regulator 1/8 NPT,0,electrical-bom.csv:E8-07,alternative (qty 0)
+purchase row,electrical-bom.csv,E8-08,ARV-21,"Lockable 3/2 shut-off, exhausts downstream (LOTO)",0,A3,
+purchase row,electrical-bom.csv,E9-01,UD4 class,"4U rack drawer, ~403 x 368 mm inside",0,C6,
+purchase row,electrical-bom.csv,E9-02,class,"PB2 box on the process module (~200 x 150 x 100 mm, DIN rail)",0,C6,
+purchase row,electrical-bom.csv,E9-03,9GA0824P6G001,Drawer fan 80 mm 24 VDC,0,C6,
+purchase row,electrical-bom.csv,E9-04,DN-T12-A,"Feed-through terminal blocks, pack of 100",0,C6,
+purchase row,electrical-bom.csv,E9-05,DN-G10,"Ground terminal blocks, pack of 50",0,C6,
+purchase row,electrical-bom.csv,E9-06,DN-EB35,"End brackets, pack of 50",0,C6,
+purchase row,electrical-bom.csv,E9-07,DN-R35S1,"35 mm DIN rail 1 m, pack of 10",0,C6,
+purchase row,electrical-bom.csv,E9-08,T1E-1022G-1,"Wire duct 25 x 57 mm, 2 m",0,C6,
+purchase row,electrical-bom.csv,E9-09,V30AE000009,"Ferrules 18 AWG, pack of 500",0,C6,
+purchase row,electrical-bom.csv,E9-10,class,"Inductive M8 home / over-travel sensors (recoater, Z)",0,L6,
+purchase row,electrical-bom.csv,E9-11,275i KJL275800,"Convection gauge with controller and analog out, 1e-4 to 1000 Torr, KF16",0,G7,alternative (qty 0)
+purchase row,electrical-bom.csv,E9-13,NETWORK-M3,UPS network card (power-cut signal to the Pi),0,D2,
+purchase row,electrical-bom.csv,E9-14,class,Tinned braided bonding straps with lugs (8),0,L6,
+purchase row,electrical-bom.csv,E9-15,09060,ESD wrist strap,0,electrical-bom.csv:E9-15,
+purchase row,electrical-bom.csv,E9-16,380580,Milliohm meter for the 0.1 ohm bonding check,0,electrical-bom.csv:E9-16,
+purchase row,electrical-bom.csv,TOTAL,,"92 lines; estimates $1,312.00; optional (E6-04 LED feedthrough, E9-13 UPS card, E9-16 meter) $1,570.99",0,electrical-bom.csv:TOTAL,
+purchase row,optics-bom.csv,O2,'other diameters on request' custom diameter,Collimator for a 3.2 mm beam (f ~ 23 mm; 21-25 mm over 130-150 mrad) -> 75 um at f = 160 mm,0,L3,
+purchase row,optics-bom.csv,O3,industrial fibre-laser shutter,"Safety shutter, >= 500 W CW at 1070 nm, normally closed, position feedback to the safety controller",0,L4,
+purchase row,optics-bom.csv,O4,LB2L,"Commissioning beam dump, 500 W at 1 L/min, water-cooled (graphite)",0,L4,alternative in line L4
+purchase row,optics-bom.csv,O5,DMSP1000 Ø1 in.,"45 deg short-pass dichroic fold mirror: HR 1070 nm (laser reflected), HT 400-1000 nm to the coaxial photodiode",0,T2,
+purchase row,optics-bom.csv,O8,"S4LFT-series S4LFT-series, f ~ 160 mm",Alternative: industrial fused-silica f-theta qualified for >= 500 W CW (Sill S4LFT class),0,optics-bom.csv:O8,alternative (qty 0)
+purchase row,optics-bom.csv,O9,FTHW75-1064,Spare protective window for the f-theta (Ø75 x 2 mm),0,L6,
+purchase row,optics-bom.csv,O10,custom 6061 ring stainless shim washers,Focus adjustment for the f-theta: adapter ring 3.4 mm shorter plus a shim set (or an M85x1 lock ring: 1 mm per,0,F5,stock for custom parts
+purchase row,optics-bom.csv,O11,38-990,"Chamber window, fused silica (Corning 7980), Ø50.8 x 9.53 mm, 1064 nm V-coat both faces (Rabs < 0.25 %)",0,L7,
+purchase row,optics-bom.csv,O12,36-299 laser debris shield,"Cover slides, fused quartz, Ø50.0 x 2.0 mm, 1064 nm V-coat both faces (Rabs < 0.25 %)",0,A2,
+purchase row,optics-bom.csv,O12b,"/ PW02FYZ50X2 0-6kW Cloudray HC PW02FS50X2 PW02FYZ50X2 Raytools, '0-6kW'","Trial consumable: fibre-laser protective windows, JGS1 fused silica, Ø50 x 2 mm",0,A2,
+purchase row,optics-bom.csv,O12c,15-808,"Upgrade: sapphire cover slide (C-axis, AR 1000-1100 nm), tenfold smaller thermal lens",0,optics-bom.csv:O12c,alternative (qty 0)
+purchase row,optics-bom.csv,O13,"custom 6061, black anodised","Field-stop inserts, one per module (S25 / M50 / L75), sized from the measured chief-ray angle",0,F5,
+purchase row,optics-bom.csv,O14,201878B UP55G-600F-HD-D0,"Thermal power head, 600 W continuous, fan-cooled, Ø55 mm, HD absorber (45 kW/cm2 at 10 W CW)",0,T1,
+purchase row,optics-bom.csv,O14a,203510 U-LINK,USB interface for the power head,0,T1,
+purchase row,optics-bom.csv,O14b,7Z02779,"Alternative head: Ophir FL600A-LP2-65 (600 W, fan, LP2 coating 11 kW/cm2 at 600 W) + Juno USB ($752) + fan sup",0,optics-bom.csv:O14b,alternative (qty 0)
+purchase row,optics-bom.csv,O15,PDA36A2,"Coaxial melt-pool photodiode, Si 350-1100 nm, switchable gain",0,T2,
+purchase row,optics-bom.csv,O16,NF1064-44,"Notch filter for the photodiode, 1064 nm, 44 nm FWHM, OD > 6 (1070 nm inside the band)",0,T2,
+purchase row,optics-bom.csv,O17,FESH1000,"Short-pass filter for the photodiode, 1000 nm edge (OD > 4, 1013-1500 nm)",0,T2,
+purchase row,optics-bom.csv,O18,AC254-050-B SM1 parts,"Photodiode lens and mounts (f ~ 30-50 mm achromat, SM1 tubes, 45 deg mirror mount)",0,T2,stock for custom parts
+purchase row,optics-bom.csv,O19,Adafruit 4561 Raspberry Pi SC0261 SC0261,"Layer camera, 12.3 MP IMX477, 1.55 um pixels, C/CS mount",0,M6,
+purchase row,optics-bom.csv,O20,"12 mm C-mount, f/1.4-16 TBD f/1.4-16",12 mm C-mount lens (26 um per pixel; all three plates fit the frame),0,M6,stock for custom parts
+purchase row,optics-bom.csv,O20a,Adafruit 4562 Raspberry Pi 16 mm telephoto,"16 mm C-mount lens, f/1.4-16 (19 um per pixel; S25 and M50 only)",0,optics-bom.csv:O20a,alternative (qty 0)
+purchase row,optics-bom.csv,O22,aluminium custom,"Scheimpflug wedge, 2.2 deg, between lens and sensor",0,M6,
+purchase row,optics-bom.csv,O23,TBD,"Second LED bar on the back wall (light across the recoater streaks); vacuum-safe, unpotted",0,M6,stock for custom parts
+purchase row,optics-bom.csv,O24,McMaster anodised sheet TBD,"Black-anodised 6061 coupons for scan-field grids and Z-scan burns (one sheet, cut)",0,optics-bom.csv:O24,stock for custom parts
+purchase row,optics-bom.csv,O25,57-983,"Glass dot-grid distortion target, 50 x 50 mm, 1.0 mm pitch (layer-camera calibration)",0,optics-bom.csv:O25,
+purchase row,optics-bom.csv,O26,VRC2,IR detector card (alignment at low power),0,optics-bom.csv:O26,
+purchase row,optics-bom.csv,O27,BC207VIS/M BSF20-C,"Camera beam profiler (350-1100 nm, 20 um-7 mm) + Ø2 in. UVFS beam sampler (BSF20-C, $155.15)",0,optics-bom.csv:O27,alternative (qty 0)
+purchase row,optics-bom.csv,O28,LG1,Laser-safety eyewear,0,S6,
+purchase row,optics-bom.csv,O30,TBD,"Free-space isolator, 500 W, random polarisation, 1070 nm",0,optics-bom.csv:O30,alternative (qty 0)

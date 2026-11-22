@@ -118,7 +118,7 @@ MAP = [
     (r"^Reservoir M powder", "", "", "excluded", [], "powder feedstock, not a machine part"),
     (r"^Load cell \(single-point", "A1", r"ALLUE3", "bought", ["ALLUE3"], ""),
     (r"^Layer camera \(Pi HQ", "M6", r"HQ camera", "bought", ["4561"], ""),
-    (r"^Camera window \(Ø1 in\.", "M6", r"camera window|blocking", "generic", ["NF1064-44", "FESH0900"], "no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs filter)"),
+    (r"^Camera window \(Ø1 in\.", "M6", r"camera window|blocking", "generic", ["FESH0950", "FESH0900"], "no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs short-pass filter)"),
     (r"^Pressure transducer \(7/16-20", "G7", r"3861N11", "bought", ["3861N11"], ""),
     (r"^Module-cooling fan", "H3", r"fan", "bought", ["1939K12"], ""),
     (r"^Overpressure relief valve \(316", "G7", r"relief", "bought", ["RELIEF316"], ""),
@@ -268,9 +268,10 @@ def dump_tags(snapshot, dest):
 
 
 # ------------------------------------------------------------------ purchase index
-LINK_COLS = ("bom_line", "in_bom", "bom line")
-PN_COLS = ("part_number", "part", "product", "candidate", "pn", "mpn", "manufacturer_part_number")
+LINK_COLS = ("bom_line", "in_bom", "bom line", "bom.csv line (replaces / adds to)")
+PN_COLS = ("part_number", "part number", "part", "product", "candidate", "pn", "mpn", "manufacturer_part_number")
 PRICE_COLS = ("unit_price_usd", "price_usd", "price_per_pack_usd", "unit_usd", "unit_low_usd", "price", "unit_price")
+BASIS_COLS = ("price_note", "price_basis", "price basis", "part_number", "part number")
 ID_COLS = ("id", "line", "key", "bom_line")
 WHOLESALE = ("fasteners.csv", "seal-parts.csv")   # no per-row link: covered by the bom line that cites the file
 
@@ -313,7 +314,7 @@ def build_index(files, bom):
             if name == "seal-parts.csv":
                 pns |= pns_in(r.get("size", ""))
             price = next((num(r[c]) for c in PRICE_COLS if r.get(c) not in (None, "")), None)
-            praw = " ".join(str(r.get(c) or "") for c in PRICE_COLS + ("price_note", "price_basis", "part_number"))
+            praw = " ".join(str(r.get(c) or "") for c in PRICE_COLS + BASIS_COLS)
             no_price = price is None and bool(re.search(r"not (published|found|quoted|priced|confirmed|read)|request a quote|no public price", praw + " " + str(r.get("sold_as") or ""), re.I))
             qty = num(r.get("qty", "")) if r.get("qty", "") not in ("", None) else None
             rid = next((r[c] for c in ID_COLS if r.get(c)), f"row{k + 2}")
@@ -526,12 +527,16 @@ def write_md(out, rev, summary):
     before = OUT / "summary_before.json"
     lines = [head.read_text().rstrip() + "\n" if head.exists() else "# Completeness audit\n"]
     lines.append("\n## Counts by status (generated)\n")
-    b = json.loads(before.read_text())["by_status"] if before.exists() else None
-    lines.append("| Status | Before (bom.csv at the start of this audit) | Now |" if b else "| Status | Parts |")
-    lines.append("|---|---|---|" if b else "|---|---|")
-    for s in STATUSES:
-        lines.append(f"| {s} | {b.get(s, 0)} | {summary['by_status'][s]} |" if b else f"| {s} | {summary['by_status'][s]} |")
-    lines.append(f"| **total** | {sum(b.values())} | {summary['parts']} |" if b else f"| **total** | {summary['parts']} |")
+    b = json.loads(before.read_text())["by_status"] if before.exists() else {}
+    only = OUT / "summary_bomonly.json"
+    o = json.loads(only.read_text())["by_status"] if (summary["extra"] and only.exists()) else None
+    extra_names = ", ".join(pathlib.Path(x).name for x in summary["extra"])
+    head_row = "| Status | Before (bom.csv at the start of this audit) | Now, bom.csv |" + (f" Now, bom.csv + {extra_names} |" if o else "")
+    lines.append(head_row)
+    lines.append("|---|---|---|" + ("---|" if o else ""))
+    for st in STATUSES:
+        lines.append(f"| {st} | {b.get(st, 0)} | {(o or summary['by_status'])[st]} |" + (f" {summary['by_status'][st]} |" if o else ""))
+    lines.append(f"| **total** | {sum(b.values())} | {summary['parts']} |" + (f" {summary['parts']} |" if o else ""))
     lines.append(f"\nModel tags with no bom.csv line: {', '.join(summary['model_tags_without_bom_line']) or 'none'}. "
                  f"BOM total now ${summary['bom_total_usd'][0]:,} - ${summary['bom_total_usd'][1]:,}. "
                  f"Extra purchase lists read: {', '.join(pathlib.Path(x).name for x in summary['extra']) or 'none'}.\n")

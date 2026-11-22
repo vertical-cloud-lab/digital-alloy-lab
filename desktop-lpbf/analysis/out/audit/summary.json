@@ -4,9 +4,9 @@
  "by_status": {
   "real part priced": 116,
   "real part unpriced": 4,
-  "generic": 22,
+  "generic": 23,
   "custom": 65,
-  "missing from BOM": 2,
+  "missing from BOM": 1,
   "inconsistent": 13,
   "excluded": 1
  },
@@ -51,5 +51,8 @@
   58132,
   144632
  ],
- "extra": []
+ "extra": [
+  "desktop-lpbf/electrical-bom.csv",
+  "desktop-lpbf/optics-bom.csv"
+ ]
 }

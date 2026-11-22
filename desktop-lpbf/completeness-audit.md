@@ -123,21 +123,42 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
   rows, the 9572K33 V-ring, the 1165N11 cord and the 4277T52 nylon relief. Their lines now say they no longer apply.
   They show up in the reverse table below as rows with no model part.
 
+## Overlaps to settle when the electrical and optics lists are merged
+
+`electrical-bom.csv` and `optics-bom.csv` were still being written during this audit. As read at 06:10 UTC, they overlap
+with this audit's lines in these places. Merge one of each pair, not both:
+- **UPS:** D2 and `electrical-bom.csv` E9-12 are the same Eaton 5PX1500RTG2 at the same CDW price ($1,137.99).
+- **Pneumatics:** A3 (SMC) and E8-01 to E8-08 (Mindman, NITRA, SMC switches, a pressure switch, a lockable shut-off)
+  price the same door and latch actuators. A3's custom robot hardware and its X1 machining stay either way.
+- **Dock:** D1 estimates a Stäubli CombiTac. E7-01 to E7-07 price a HARTING Han-Modular docking frame at about $261,
+  with no argon coupling.
+- **Vacuum gauge:** G7 has the Vacuum Research 902377 Pirani ($455); E9-11 has a Kurt J. Lesker 275i ($515). Keep one.
+- **Rack height:** E9-01 moves the controls into a 4U drawer (the XS26-2 safety controller needs it). That makes the
+  rack 12U: 2U UPS + 4U laser + 2U PC + 4U drawer, 533 mm of rails alone, against the 11U, 515 mm rack the model draws
+  and S9's 10U cabinet.
+- **Rod-end connector:** E6-01 (Solid Sealing FA23474 type K feedthroughs) replaces the LEMO envelope that fails the seal
+  spec.
+- **Optics:**
+  - O2 and O7 fix L3 and L6.
+  - O12 replaces A2's uncoated Edmund 25-250 cover slides with the AR-coated 11-742.
+  - O13 turns F5's single field stop into three inserts.
+  - O19 to O23 add to M6.
+
 
 ## Counts by status (generated)
 
-| Status | Before (bom.csv at the start of this audit) | Now |
-|---|---|---|
-| real part priced | 87 | 116 |
-| real part unpriced | 3 | 4 |
-| generic | 7 | 22 |
-| custom | 26 | 65 |
-| missing from BOM | 70 | 2 |
-| inconsistent | 29 | 13 |
-| excluded | 1 | 1 |
-| **total** | 223 | 223 |
+| Status | Before (bom.csv at the start of this audit) | Now, bom.csv | Now, bom.csv + electrical-bom.csv, optics-bom.csv |
+|---|---|---|---|
+| real part priced | 87 | 116 | 116 |
+| real part unpriced | 3 | 4 | 4 |
+| generic | 7 | 22 | 23 |
+| custom | 26 | 65 | 65 |
+| missing from BOM | 70 | 2 | 1 |
+| inconsistent | 29 | 13 | 13 |
+| excluded | 1 | 1 | 1 |
+| **total** | 223 | 223 | 223 |
 
-Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total now $58,132 - $144,632. Extra purchase lists read: none.
+Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total now $58,132 - $144,632. Extra purchase lists read: electrical-bom.csv, optics-bom.csv.
 
 
 ## BOM lines this audit changed (generated from [`analysis/out/audit/bom_before.csv`](analysis/out/audit/bom_before.csv), the BOM at the start)
@@ -190,7 +211,6 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | inconsistent | f-theta lens, f = 160 mm (Thorlabs FTH160-1064) | bought | L6 | FTH160-1064 | model uses f = 160 mm (Thorlabs FTH160-1064, $1,011.78 in vendor-lookups.csv); L6 still specifies f = 254 mm |
 | inconsistent | HSS recoater blade (1.5 mm, wide nose) | bought | M5 | 2634T15 9011K104 | cut from M2 HSS sheet; the model's part-number tag is still 9011K104, the 18-8 shim, though the part is named HSS |
 | inconsistent | 19 in. rack frame (11U, 515 mm tall) | bought | S9 | 7648K62 | model draws an 11U rack 515 mm tall; S9's McMaster 7648K62 cabinet is 10U (no catalogue 11U rack that low was found) |
-| missing from BOM | Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating) | bought | – | FESH0900 NF1064-44 | no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs filter); model tag M6 does not cover it |
 | missing from BOM | Scan + laser controller PC (2U) | bought | – | – | C1 is the RTC6 card; no 2U PC is chosen; model tag C1 does not cover it |
 | generic | Bore seal M50 (aramid felt + carbon-filled PTFE scraper) | bought | B2 | – | carbon-filled PTFE / aramid felt: no stock part number chosen |
 | generic | Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap) | bought | B2 | – | carbon-filled PTFE / aramid felt: no stock part number chosen |
@@ -212,6 +232,7 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | generic | Ø2 in. fused-silica window, 8 mm, AR 1064 | bought | L7 | – | L7 names a Ø1 in. Thorlabs WG41050-C; the model's Ø2 in. x 8 mm window has no part number |
 | generic | Recoater shaft coupling (clamp type, 6 to 8 mm, in the wall bore) | bought | M1 | – |  |
 | generic | Roller drive coupling (5 mm to 5 mm) | bought | M4 | – |  |
+| generic | Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating) | bought | M6 | FESH0900 FESH0950 | no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs short-pass filter) |
 | generic | Layer-light LED bar | bought | M6 | – |  |
 | generic | Side reservoir port (KF-16 flange machined in the 6061 base, blanked; reserved for a >= 500 ... | bought | R1 | – | KF-16 blank: no part number |
 | real part unpriced | Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange) | bought | G8 | 2-014 |  |
@@ -382,7 +403,7 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | M3 | Z stage (less servo): integrated actuator under the floor | 5 |  |
 | M4 | Metering base, roller drive and overflow | 7 |  |
 | M5 | Recoater blade cartridges | 2 |  |
-| M6 | Layer camera + lighting | 2 |  |
+| M6 | Layer camera + lighting | 3 |  |
 | G1 | Process chamber: through-frame, floor plate, lid, door and their small parts | 22 |  |
 | G2 | Vacuum pump | 2 |  |
 | G3 | Argon supply | 1 |  |
@@ -429,8 +450,10 @@ Most of these are expected: stock for the custom parts (a plate or bar has no pa
 |---|---|---|
 | assembly-tooling.csv | 26 | tool or fixture 26 |
 | audit-prices.csv | 25 | alternative (qty 0) 2; other 14; stock for custom parts 9 |
+| electrical-bom.csv | 91 | alternative (qty 0) 14; alternative in line H2 1; other 68; stock for custom parts 8 |
 | fasteners.csv | 3 | other 3 |
 | mcmaster-parts.csv | 43 | alternative (qty 0) 4; alternative in line G2 1; other 11; stale: line G1 no longer cites mcmaster-parts.csv 3; stale: line G7's notes retire it 1; stale: line G8's notes retire it 1; stale: line M1's notes retire it 2; stale: line M3 no longer cites mcmaster-parts.csv 6; stale: line M4's notes retire it 3; stale: line S9's notes retire it 6; stock for custom parts 5 |
+| optics-bom.csv | 30 | alternative (qty 0) 6; alternative in line L4 1; other 18; stock for custom parts 5 |
 | options-mcmaster.csv | 18 | alternative in line A2 1; alternative in line H1 1; other 10; stock for custom parts 6 |
 | options-vendors.csv | 21 | alternative (qty 0) 6; alternative in line A2 1; alternative in line H1 1; other 13 |
 | plate-materials.csv | 11 | plate-material options (study) 11 |
