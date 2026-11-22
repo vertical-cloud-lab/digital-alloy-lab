@@ -14,11 +14,26 @@ with the M50 module and reservoir M) into [`cad/img/sequence/`](cad/img/sequence
   (uploaded 2026-11-19);
 - [`build-sheet.png`](cad/img/sequence/build-sheet.png): three key frames from each chapter.
 
-**Captions corrected 2026-11-22.** The model has an 11U rack and draws the laser as IPG's 4U chassis, but the video said
-"10U rack" twice and "drawn 3U" once. The MP4, `1-kit.gif`, `5-tray.gif` and the contact sheet are re-rendered with the
-fixed captions. Every other frame of the MP4 matches the 2026-11-20 render to within encoding noise: median PSNR 42.3 dB
-against the lossless frames for both files. The one other change is anti-aliasing on the T-slot edges in the first
-machining frame. The contact sheet's machining row came from an earlier render than the video; it now matches the video.
+**Re-rendered 2026-11-22 on the model as of c2df027,** before the YouTube upload of this version:
+
+- **Captions.**
+  - The video said "10U rack" twice and that the laser was "drawn 3U". The model had an 11U rack, and the laser is drawn as
+    IPG's 4U chassis.
+  - The rack caption now reads the height off the model, so it can't go stale again.
+  - The laser caption reads "as quoted: 4U, air-cooled".
+  - The handle caption now mentions the robot's grip block.
+- **Model changes from this round that now show:**
+  - the 12U rack with its 4U DIN drawer;
+  - the I-section grip block on the build module's handle ([`robot-ops.md`](robot-ops.md)).
+- **How the new render was checked:**
+  - **Captions alone (dcf1e94):** a re-render with only the caption fixes matched the 2026-11-20 render to within
+    encoding noise (median PSNR 42.3 dB against the lossless frames for both files). The only other change was
+    anti-aliasing on the T-slot edges in the first machining frame.
+  - **This render:** it differs from that one only where the kit layout, the handle and the rack changed, and twelve key
+    frames were checked by eye.
+  - **Unchanged files kept:** `2-machining-a.gif`, `2-machining-b.gif`, `2-machining-c.gif` and `3-module-a.gif` are
+    as committed before, because their content didn't change.
+- **Contact sheet:** its machining row came from an earlier render than the video. It now matches the video.
 
 Nothing here has been built. The sequence is one reasonable way to make and assemble the machine, not a process plan.
 
@@ -60,9 +75,9 @@ like 5-axis work, and the assembly ignored space and collisions. The scale wasn'
 |---|---|---|
 | 1. What arrives | [`1-kit.gif`](cad/img/sequence/1-kit.gif) | Every part laid out by kind, then a closer look at each kind: stock for the 37 machined parts (6061-T6 and MIC-6 plate and bar, 316 bar, tube and plate, Macor rod, 416 rod; three of them are tube cut to length), sheet for the 13 cut, bent and welded parts, and the 90 bought parts (motion, vacuum and gas, laser and optics, electronics and sensors, seals and fasteners, frames). Hoses, lines and the fiber are shown as coils |
 | 2. Machining | [`2-machining-a.gif`](cad/img/sequence/2-machining-a.gif), [`-b`](cad/img/sequence/2-machining-b.gif), [`-c`](cad/img/sequence/2-machining-c.gif), [`-d`](cad/img/sequence/2-machining-d.gif) | The chamber's through-frame from a 15 × 9.5 × 5.5 in. 6061-T651 blank: the core waterjetted out as one slug, bottom-up and top-up setups on the VF-4, then the four walls on an HRT210 4th axis (door opening; Ø18 bores and through-beams; inlet slot, argon port, plenum and rail holes; KF-25 bore, vacuum and bearing-cap inserts, O₂ port). The floor plate from 1 in. plate in two setups. The M50 module body: spigot turned from 4 in. 316 bar, flange and bottom collar waterjet-cut from 1/2 in. 316 plate, cylinder bored from 2-1/4 × 1/4 in. 316 tube, stacked, TIG-welded and honed to Ø50.80 H7. Heater block, build plate and piston head turned from 2-1/4 in. 6061 bar, then drilled and milled. Then every other machined and sheet part as one batch |
-| 3. Build module | [`3-module-a.gif`](cad/img/sequence/3-module-a.gif), [`-b`](cad/img/sequence/3-module-b.gif) | Heater block; 3 cartridge heaters, 3 thermocouples and the thermal cutoff slide in from below; three M3 helical inserts in the block; Macor standoff rings with the radiation shields between them; piston head; disc springs; M3 × 25 screws up through the head's slotted counterbores into the block; bore seal stretched into its groove; hollow rod and its two set screws; PTFE rim wiper; the plate dropped onto its bayonet and turned 60° to lock; the welded body; the gland plate and its face O-ring bolted to the welded collar (6 × M4) and the handle under it; the spigot O-ring; the whole stack lowered into the bore from the top, with the rod passing down through the gland; rod end, and the striker on three flat-head screws |
+| 3. Build module | [`3-module-a.gif`](cad/img/sequence/3-module-a.gif), [`-b`](cad/img/sequence/3-module-b.gif) | Heater block; 3 cartridge heaters, 3 thermocouples and the thermal cutoff slide in from below; three M3 helical inserts in the block; Macor standoff rings with the radiation shields between them; piston head; disc springs; M3 × 25 screws up through the head's slotted counterbores into the block; bore seal stretched into its groove; hollow rod and its two set screws; PTFE rim wiper; the plate dropped onto its bayonet and turned 60° to lock; the welded body; the gland plate and its face O-ring bolted to the welded collar (6 × M4) and the handle under it, with its grip block for the robot; the spigot O-ring; the whole stack lowered into the bore from the top, with the rod passing down through the gland; rod end, and the striker on three flat-head screws |
 | 4. Process module | [`4-process-a.gif`](cad/img/sequence/4-process-a.gif), [`-b`](cad/img/sequence/4-process-b.gif), [`-c`](cad/img/sequence/4-process-c.gif) | Base plate on four 5537T983 levelling mounts (their M8 stems thread into it); legs (2 × M6 each from below); the floor plate with its inserts and dowels, one M6 up each leg's bore, its O-ring cord, the frame over its pad onto the dowels, 18 M4 floor screws from below; under-floor plenum, overflow jar and dowel pins; liners, LED bar, inlet plenum and ports; recoater rail on 5 × M4 × 16 at McMaster 6709K33's 60 mm pitch, carriage, ball screw, bearings and servo, blade holder and blade (2 × M3 × 8); the Z stage under the floor (4 counterbored M5 × 12); the M50 module brought in along its swap path and up into the floor port, its two captive screws driven, then the Z arm rises so its magnet takes the striker; gas knife, dose chute, lid O-ring; the lid and its 20 M5 screws in a star pattern; window flange (6 × M4 into M4 × 4 inserts), O-ring, window and ring (6 × M3); cover-slide drawer; dosing base (4 × M4 through its tabs), the reservoir sliding in on its dovetail; camera and gauges; hinge knuckles; the door brought in open and swung shut (hinge and latch screws not drawn yet); optics posts (2 × M6 each from below) and bridge (2 × M6 × 35 into each post); galvo; the f-theta lens threaded up into it; beam tube, shutter, collimator and fiber; the laser guard |
-| 5. Tray | [`5-tray.gif`](cad/img/sequence/5-tray.gif) | The process module on the VLM tray; the 11U rack and its four units, each slid in (their cage-nut screws are not drawn yet); panels and operator panel; the gas module's base on its levelling mounts, pump, blower, filter housing, O₂ box and argon manifold; hoses and lines; the tray dock and umbilicals; a closing orbit |
+| 5. Tray | [`5-tray.gif`](cad/img/sequence/5-tray.gif) | The process module on the VLM tray; the 12U rack and its four units, each slid in (their cage-nut screws are not drawn yet); panels and operator panel; the gas module's base on its levelling mounts, pump, blower, filter housing, O₂ box and argon manifold; hoses and lines; the tray dock and umbilicals; a closing orbit |
 
 ## What comes from the model, and what is drawn for the animation
 

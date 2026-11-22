@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import math
 import pathlib
+import re
 import shutil
 import subprocess
 import sys
@@ -548,8 +549,18 @@ CATS = [
     ("optics", "Laser and optics: 500 W fiber laser, galvo, f-theta lens, collimator, shutter, windows, fiber"),
     ("elec", "Electronics, heaters and sensors: UPS, PC, DIN drawer, cartridges, thermocouples, sensors, camera"),
     ("seal", "Seals and fasteners: FKM O-rings and cord, felt and PTFE seals, and the McMaster screws, inserts and pins, by part number"),
-    ("frame", "Frames: 11U rack, T-slot guard frame, levelling mounts"),
+    ("frame", "Frames: {rack_u}U rack, T-slot guard frame, levelling mounts"),     # main() fills in the model's rack height
 ]
+
+
+def rack_units(parts):
+    """The rack's height in U, read off the model's rack frame name ("19 in. rack frame (12U, 560 mm tall)"), so the
+    captions follow the model (they said 10U for two rounds after the rack grew to 11U)."""
+    for p in parts:
+        m = re.search(r"rack frame \((\d+)U", p.name)
+        if m:
+            return int(m.group(1))
+    raise ValueError("no rack frame in the model")
 
 
 def kit_cat(p, k):
@@ -1043,7 +1054,7 @@ def chapter_module(st):
         "Gland plate with its double FKM rod gland (2-114) and a 1.78 mm FKM face O-ring, up against the collar")
     st.caption(cap, "Six M4 x 16 316 screws into the welded collar: the plate comes off to change the rod seals or clean out powder")
     drive(st, "gland_M50", lambda: (cam(0.85, d=600, el=-30, fz=-60), st.shot()), frames=5, star=True)
-    fly(st, handle, nf(6), (0, -80, 0), lambda t: cam(0.85, d=600, el=-20, fz=-60), cap, "Front handle under the gland plate")
+    fly(st, handle, nf(6), (0, -80, 0), lambda t: cam(0.85, d=600, el=-20, fz=-60), cap, "Handle under the gland plate, with an I-section grip block in front for the robot's gripper")
     drive(st, "handle_M50", lambda: (cam(0.86, d=600, el=-30, fz=-60), st.shot()), frames=5)
 
     def oring_xf(i, t):
@@ -1279,7 +1290,7 @@ def chapter_tray(st):
     tray = F("VLM tray")
     fly(st, tray, nf(10), (0, 0, -260), lambda t: cam(t, 3800, az=20, el=30), cap, "The finished process module stands on the VLM tray (2450 x 864 mm)")
     rack = F("19 in. rack frame")
-    fly(st, rack, nf(8), (0, 0, 300), lambda t: cam(t, 2200, az=-30, el=22, f=(-700, 0, 40)), cap, "11U 19 in. rack on the left of the tray")
+    fly(st, rack, nf(8), (0, 0, 300), lambda t: cam(t, 2200, az=-30, el=22, f=(-700, 0, 40)), cap, f"{rack_units(st.parts)}U 19 in. rack on the left of the tray")
     units = F("UPS (", "Fiber laser source", "Scan + laser controller", "DIN-rail drawer")
     for i in units:
         fly(st, [i], nf(7), ex, lambda t: cam(0.3, 2000, az=-26, el=16, f=(-700, -100, 40)), cap,
@@ -1365,6 +1376,7 @@ def main(argv):
     t0 = time.time()
     parts = M.build(module="M50")
     print(f"{len(parts)} parts in {time.time() - t0:.1f} s")
+    CATS[:] = [(c, title.replace("{rack_u}", str(rack_units(parts)))) for c, title in CATS]
     st = Stage(parts)
     st.hidden.update(i for i, p in enumerate(parts) if "fastener" in p.tags
                      and FS.CATALOG[p.mcm]["kind"] in ("shcs", "fhcs", "set", "captive"))
