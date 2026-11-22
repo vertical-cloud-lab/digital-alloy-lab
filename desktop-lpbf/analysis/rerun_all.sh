@@ -40,8 +40,9 @@ declare -A STEP=(
 )
 ORDER=(interference_M50 interference_S25 interference_L75 mass tray seals door_seal_fea mech joint_calcs hotswap_fea fea
        thermal_module thermal_laser mujoco ops_M50 ops_S25 ops_L75 cfd_coarse dem_baseline)
-# fea and hotswap_fea fit in 4.5 GB since 2026-11-22 (SPOOLES only up to 150,000 nodes, ITERATIVE CHOLESKY above, one process per
-# case; fea/fea.py's docstring). With SPOOLES on every mesh they outgrew 10 GB.
+# fea and hotswap_fea fit in 4.5 GB since 2026-11-22 (SPOOLES only up to 60,000 nodes, ITERATIVE CHOLESKY above, one process per
+# case; fea/fea.py's docstring): peaks 3.5 GB (fea, the bridge's modes) and 1.7 GB (hotswap_fea). With SPOOLES on every mesh they
+# outgrew 10 GB. fea's cases 1 and 1b haven't been run under the 4.5 GB cap yet.
 CAP=(); declare -A CAPGB=([fea]=4.5 [hotswap_fea]=4.5 [thermal_module]=5 [door_seal_fea]=4 [mujoco]=4 [ops_M50]=4 [cfd_coarse]=4)
 
 want=("$@")
