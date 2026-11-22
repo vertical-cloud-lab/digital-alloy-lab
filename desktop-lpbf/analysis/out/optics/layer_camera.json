@@ -1,0 +1,1859 @@
+{
+ "geometry": {
+  "cam_p": [
+   75.0,
+   -45.0,
+   136.0
+  ],
+  "tilt_deg": 32.74586920808143,
+  "dist_cam_p_to_centre": 161.69724796668618,
+  "lens_front_t": 43.27,
+  "axis_offset_in_lid_hole_at_z120_mm": 10.289915108550534,
+  "lid_hole_radius_mm": 11.0
+ },
+ "sensor": {
+  "px": 0.00155,
+  "nx": 4056,
+  "ny": 3040,
+  "w": 6.287,
+  "h": 4.712
+ },
+ "lenses": [
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "6 mm (Raspberry Pi CS-mount)",
+   "f_mm": 6.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 6.172275800874495,
+   "mag": 0.02871263347908246,
+   "px_on_plate_um": 53.98320572472726,
+   "px_along_tilt_um": 64.18335148608719,
+   "fov_mm": [
+    218.96284799442603,
+    164.10894540317088
+   ],
+   "airy_fwhm_on_plate_um": 55.243974787459614,
+   "dof_total_mm": 21.661959519319613,
+   "scheimpflug_deg": 1.0578841592628723,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.48907696759259267,
+     "area_fraction_over_50pct": 0.5591054313099042,
+     "area_fraction_fully": 0.43769968051118213,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 68.46857523384391
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.39337384259259256,
+     "area_fraction_over_50pct": 0.46325878594249204,
+     "area_fraction_fully": 0.402555910543131,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 136.9371504676881
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.30844907407407407,
+     "area_fraction_over_50pct": 0.39747634069400634,
+     "area_fraction_fully": 0.35646687697160884,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 205.40572570153213
+    }
+   }
+  },
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "6 mm (Raspberry Pi CS-mount)",
+   "f_mm": 6.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 6.172275800874495,
+   "mag": 0.02871263347908246,
+   "px_on_plate_um": 53.98320572472726,
+   "px_along_tilt_um": 64.18335148608719,
+   "fov_mm": [
+    218.96284799442603,
+    164.10894540317088
+   ],
+   "airy_fwhm_on_plate_um": 78.91996398208516,
+   "dof_total_mm": 30.945656456170877,
+   "scheimpflug_deg": 1.0578841592628723,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.48857060185185186,
+     "area_fraction_over_50pct": 0.5591054313099042,
+     "area_fraction_fully": 0.476038338658147,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 47.928002663690734
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.3930121527777778,
+     "area_fraction_over_50pct": 0.46325878594249204,
+     "area_fraction_fully": 0.41533546325878595,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 95.85600532738167
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.308521412037037,
+     "area_fraction_over_50pct": 0.39747634069400634,
+     "area_fraction_fully": 0.36908517350157727,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 143.78400799107249
+    }
+   }
+  },
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "6 mm (Raspberry Pi CS-mount)",
+   "f_mm": 6.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 6.172275800874495,
+   "mag": 0.02871263347908246,
+   "px_on_plate_um": 53.98320572472726,
+   "px_along_tilt_um": 64.18335148608719,
+   "fov_mm": [
+    218.96284799442603,
+    164.10894540317088
+   ],
+   "airy_fwhm_on_plate_um": 157.83992796417033,
+   "dof_total_mm": 61.89131291234175,
+   "scheimpflug_deg": 1.0578841592628723,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.4891493055555556,
+     "area_fraction_over_50pct": 0.5591054313099042,
+     "area_fraction_fully": 0.5207667731629393,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 23.964001331845367
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.3941695601851852,
+     "area_fraction_over_50pct": 0.46325878594249204,
+     "area_fraction_fully": 0.4440894568690096,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 47.92800266369083
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.3103298611111111,
+     "area_fraction_over_50pct": 0.39747634069400634,
+     "area_fraction_fully": 0.38170347003154576,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 71.89200399553624
+    }
+   }
+  },
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "12 mm C-mount",
+   "f_mm": 12.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 12.70947407250472,
+   "mag": 0.05912283937539326,
+   "px_on_plate_um": 26.216602862363626,
+   "px_along_tilt_um": 31.170239219704015,
+   "fov_mm": [
+    106.33792399721298,
+    79.69847270158543
+   ],
+   "airy_fwhm_on_plate_um": 26.828887393729797,
+   "dof_total_mm": 5.259996903800665,
+   "scheimpflug_deg": 2.177512021340465,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.4898003472222222,
+     "area_fraction_over_50pct": 0.5559105431309904,
+     "area_fraction_fully": 0.3194888178913738,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 136.93715046768781
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.3934461805555556,
+     "area_fraction_over_50pct": 0.46006389776357826,
+     "area_fraction_fully": 0.33865814696485624,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 273.8743009353762
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.3025173611111111,
+     "area_fraction_over_50pct": 0.39747634069400634,
+     "area_fraction_fully": 0.31230283911671924,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 410.81145140306427
+    }
+   }
+  },
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "12 mm C-mount",
+   "f_mm": 12.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 12.70947407250472,
+   "mag": 0.05912283937539326,
+   "px_on_plate_um": 26.216602862363626,
+   "px_along_tilt_um": 31.170239219704015,
+   "fov_mm": [
+    106.33792399721298,
+    79.69847270158543
+   ],
+   "airy_fwhm_on_plate_um": 38.32698199104257,
+   "dof_total_mm": 7.514281291143808,
+   "scheimpflug_deg": 2.177512021340465,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.48900462962962965,
+     "area_fraction_over_50pct": 0.5591054313099042,
+     "area_fraction_fully": 0.3929712460063898,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 95.85600532738147
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.39337384259259256,
+     "area_fraction_over_50pct": 0.46325878594249204,
+     "area_fraction_fully": 0.38338658146964855,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 191.71201065476333
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.3083767361111111,
+     "area_fraction_over_50pct": 0.39747634069400634,
+     "area_fraction_fully": 0.33753943217665616,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 287.56801598214497
+    }
+   }
+  },
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "12 mm C-mount",
+   "f_mm": 12.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 12.70947407250472,
+   "mag": 0.05912283937539326,
+   "px_on_plate_um": 26.216602862363626,
+   "px_along_tilt_um": 31.170239219704015,
+   "fov_mm": [
+    106.33792399721298,
+    79.69847270158543
+   ],
+   "airy_fwhm_on_plate_um": 76.65396398208514,
+   "dof_total_mm": 15.028562582287616,
+   "scheimpflug_deg": 2.177512021340465,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.48857060185185186,
+     "area_fraction_over_50pct": 0.5591054313099042,
+     "area_fraction_fully": 0.476038338658147,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 47.928002663690734
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.3930121527777778,
+     "area_fraction_over_50pct": 0.46325878594249204,
+     "area_fraction_fully": 0.41533546325878595,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 95.85600532738167
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.308521412037037,
+     "area_fraction_over_50pct": 0.39747634069400634,
+     "area_fraction_fully": 0.36908517350157727,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 143.78400799107249
+    }
+   }
+  },
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "16 mm (Raspberry Pi C-mount)",
+   "f_mm": 16.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 17.286643920625888,
+   "mag": 0.0804152450391179,
+   "px_on_plate_um": 19.27495214677272,
+   "px_along_tilt_um": 22.916961153108225,
+   "fov_mm": [
+    78.18169299790974,
+    58.59585452618907
+   ],
+   "airy_fwhm_on_plate_um": 19.72511554529735,
+   "dof_total_mm": 2.90043839237691,
+   "scheimpflug_deg": 2.960506983635983,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.4913194444444444,
+     "area_fraction_over_50pct": 0.5559105431309904,
+     "area_fraction_fully": 0.25878594249201275,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 182.58286729025042
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.39315682870370366,
+     "area_fraction_over_50pct": 0.46006389776357826,
+     "area_fraction_fully": 0.31309904153354634,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 365.1657345805016
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.27633101851851855,
+     "area_fraction_over_50pct": 0.39747634069400634,
+     "area_fraction_fully": 0.2586750788643533,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 547.7486018707525
+    }
+   }
+  },
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "16 mm (Raspberry Pi C-mount)",
+   "f_mm": 16.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 17.286643920625888,
+   "mag": 0.0804152450391179,
+   "px_on_plate_um": 19.27495214677272,
+   "px_along_tilt_um": 22.916961153108225,
+   "fov_mm": [
+    78.18169299790974,
+    58.59585452618907
+   ],
+   "airy_fwhm_on_plate_um": 28.178736493281928,
+   "dof_total_mm": 4.1434834176813,
+   "scheimpflug_deg": 2.960506983635983,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.48943865740740733,
+     "area_fraction_over_50pct": 0.5559105431309904,
+     "area_fraction_fully": 0.34185303514376997,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 127.8080071031753
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.39359085648148145,
+     "area_fraction_over_50pct": 0.46325878594249204,
+     "area_fraction_fully": 0.3514376996805112,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 255.6160142063511
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.3068576388888889,
+     "area_fraction_over_50pct": 0.39747634069400634,
+     "area_fraction_fully": 0.3249211356466877,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 383.42402130952667
+    }
+   }
+  },
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "16 mm (Raspberry Pi C-mount)",
+   "f_mm": 16.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 17.286643920625888,
+   "mag": 0.0804152450391179,
+   "px_on_plate_um": 19.27495214677272,
+   "px_along_tilt_um": 22.916961153108225,
+   "fov_mm": [
+    78.18169299790974,
+    58.59585452618907
+   ],
+   "airy_fwhm_on_plate_um": 56.357472986563856,
+   "dof_total_mm": 8.2869668353626,
+   "scheimpflug_deg": 2.960506983635983,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.4888599537037038,
+     "area_fraction_over_50pct": 0.5591054313099042,
+     "area_fraction_fully": 0.44089456869009586,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 63.90400355158765
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.3934461805555556,
+     "area_fraction_over_50pct": 0.46325878594249204,
+     "area_fraction_fully": 0.40894568690095845,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 127.80800710317556
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.30852141203703703,
+     "area_fraction_over_50pct": 0.39747634069400634,
+     "area_fraction_fully": 0.35646687697160884,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 191.71201065476333
+    }
+   }
+  },
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "25 mm C-mount",
+   "f_mm": 25.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 28.290040818560488,
+   "mag": 0.13160163274241962,
+   "px_on_plate_um": 11.777969373934546,
+   "px_along_tilt_um": 14.003420841184777,
+   "fov_mm": [
+    47.77296351866225,
+    35.805026896761014
+   ],
+   "airy_fwhm_on_plate_um": 12.053041948990307,
+   "dof_total_mm": 1.134281193001879,
+   "scheimpflug_deg": 4.8377335694591475,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.005208333333333333,
+     "edge_transmission_mean": 0.4983362268518518,
+     "area_fraction_over_50pct": 0.549520766773163,
+     "area_fraction_fully": 0.1182108626198083,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 285.28573014101624
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.39308449074074076,
+     "area_fraction_over_50pct": 0.46006389776357826,
+     "area_fraction_fully": 0.23322683706070288,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 570.5714602820337
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.23712384259259256,
+     "area_fraction_over_50pct": 0.3911671924290221,
+     "area_fraction_fully": 0.14826498422712933,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 855.8571904230506
+    }
+   }
+  },
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "25 mm C-mount",
+   "f_mm": 25.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 28.290040818560488,
+   "mag": 0.13160163274241962,
+   "px_on_plate_um": 11.777969373934546,
+   "px_along_tilt_um": 14.003420841184777,
+   "fov_mm": [
+    47.77296351866225,
+    35.805026896761014
+   ],
+   "airy_fwhm_on_plate_um": 17.21863135570044,
+   "dof_total_mm": 1.6204017042883991,
+   "scheimpflug_deg": 4.8377335694591475,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.49139178240740733,
+     "area_fraction_over_50pct": 0.5559105431309904,
+     "area_fraction_fully": 0.2268370607028754,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 199.70001109871137
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.392650462962963,
+     "area_fraction_over_50pct": 0.46006389776357826,
+     "area_fraction_fully": 0.28753993610223644,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 399.4000221974236
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.26815682870370366,
+     "area_fraction_over_50pct": 0.39747634069400634,
+     "area_fraction_fully": 0.2334384858044164,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 599.1000332961354
+    }
+   }
+  },
+  {
+   "variant": "as drawn (vertical \u00d822 lid hole, \u00d822 bore, \u00d815 aperture)",
+   "lens": "25 mm C-mount",
+   "f_mm": 25.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 28.290040818560488,
+   "mag": 0.13160163274241962,
+   "px_on_plate_um": 11.777969373934546,
+   "px_along_tilt_um": 14.003420841184777,
+   "fov_mm": [
+    47.77296351866225,
+    35.805026896761014
+   ],
+   "airy_fwhm_on_plate_um": 34.43726271140088,
+   "dof_total_mm": 3.2408034085767983,
+   "scheimpflug_deg": 4.8377335694591475,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.48922164351851843,
+     "area_fraction_over_50pct": 0.5591054313099042,
+     "area_fraction_fully": 0.3865814696485623,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 99.85000554935569
+    },
+    "M50": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.39337384259259256,
+     "area_fraction_over_50pct": 0.46325878594249204,
+     "area_fraction_fully": 0.3769968051118211,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 199.7000110987118
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.30852141203703703,
+     "area_fraction_over_50pct": 0.39747634069400634,
+     "area_fraction_fully": 0.334384858044164,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 299.5500166480677
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "6 mm (Raspberry Pi CS-mount)",
+   "f_mm": 6.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 6.172275800874495,
+   "mag": 0.02871263347908246,
+   "px_on_plate_um": 53.98320572472726,
+   "px_along_tilt_um": 64.18335148608719,
+   "fov_mm": [
+    218.96284799442603,
+    164.10894540317088
+   ],
+   "airy_fwhm_on_plate_um": 55.243974787459614,
+   "dof_total_mm": 21.661959519319613,
+   "scheimpflug_deg": 1.0578841592628723,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 68.46857523384391
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 136.9371504676881
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.2367621527777778,
+     "area_fraction_over_50pct": 0.8359621451104101,
+     "area_fraction_fully": 0.7570977917981072,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 205.40572570153213
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "6 mm (Raspberry Pi CS-mount)",
+   "f_mm": 6.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 6.172275800874495,
+   "mag": 0.02871263347908246,
+   "px_on_plate_um": 53.98320572472726,
+   "px_along_tilt_um": 64.18335148608719,
+   "fov_mm": [
+    218.96284799442603,
+    164.10894540317088
+   ],
+   "airy_fwhm_on_plate_um": 78.91996398208516,
+   "dof_total_mm": 30.945656456170877,
+   "scheimpflug_deg": 1.0578841592628723,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 47.928002663690734
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 95.85600532738167
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.2378472222222222,
+     "area_fraction_over_50pct": 0.8359621451104101,
+     "area_fraction_fully": 0.7981072555205048,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 143.78400799107249
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "6 mm (Raspberry Pi CS-mount)",
+   "f_mm": 6.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 6.172275800874495,
+   "mag": 0.02871263347908246,
+   "px_on_plate_um": 53.98320572472726,
+   "px_along_tilt_um": 64.18335148608719,
+   "fov_mm": [
+    218.96284799442603,
+    164.10894540317088
+   ],
+   "airy_fwhm_on_plate_um": 157.83992796417033,
+   "dof_total_mm": 61.89131291234175,
+   "scheimpflug_deg": 1.0578841592628723,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 23.964001331845367
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 47.92800266369083
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.23893229166666666,
+     "area_fraction_over_50pct": 0.8391167192429022,
+     "area_fraction_fully": 0.8201892744479495,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 71.89200399553624
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "12 mm C-mount",
+   "f_mm": 12.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 12.70947407250472,
+   "mag": 0.05912283937539326,
+   "px_on_plate_um": 26.216602862363626,
+   "px_along_tilt_um": 31.170239219704015,
+   "fov_mm": [
+    106.33792399721298,
+    79.69847270158543
+   ],
+   "airy_fwhm_on_plate_um": 26.828887393729797,
+   "dof_total_mm": 5.259996903800665,
+   "scheimpflug_deg": 2.177512021340465,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 136.93715046768781
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 273.8743009353762
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.2348090277777778,
+     "area_fraction_over_50pct": 0.8359621451104101,
+     "area_fraction_fully": 0.6750788643533123,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 410.81145140306427
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "12 mm C-mount",
+   "f_mm": 12.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 12.70947407250472,
+   "mag": 0.05912283937539326,
+   "px_on_plate_um": 26.216602862363626,
+   "px_along_tilt_um": 31.170239219704015,
+   "fov_mm": [
+    106.33792399721298,
+    79.69847270158543
+   ],
+   "airy_fwhm_on_plate_um": 38.32698199104257,
+   "dof_total_mm": 7.514281291143808,
+   "scheimpflug_deg": 2.177512021340465,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 95.85600532738147
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 191.71201065476333
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.2339409722222222,
+     "area_fraction_over_50pct": 0.8359621451104101,
+     "area_fraction_fully": 0.7255520504731862,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 287.56801598214497
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "12 mm C-mount",
+   "f_mm": 12.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 12.70947407250472,
+   "mag": 0.05912283937539326,
+   "px_on_plate_um": 26.216602862363626,
+   "px_along_tilt_um": 31.170239219704015,
+   "fov_mm": [
+    106.33792399721298,
+    79.69847270158543
+   ],
+   "airy_fwhm_on_plate_um": 76.65396398208514,
+   "dof_total_mm": 15.028562582287616,
+   "scheimpflug_deg": 2.177512021340465,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 47.928002663690734
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 95.85600532738167
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.2378472222222222,
+     "area_fraction_over_50pct": 0.8359621451104101,
+     "area_fraction_fully": 0.7981072555205048,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 143.78400799107249
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "16 mm (Raspberry Pi C-mount)",
+   "f_mm": 16.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 17.286643920625888,
+   "mag": 0.0804152450391179,
+   "px_on_plate_um": 19.27495214677272,
+   "px_along_tilt_um": 22.916961153108225,
+   "fov_mm": [
+    78.18169299790974,
+    58.59585452618907
+   ],
+   "airy_fwhm_on_plate_um": 19.72511554529735,
+   "dof_total_mm": 2.90043839237691,
+   "scheimpflug_deg": 2.960506983635983,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 182.58286729025042
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 365.1657345805016
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.24898726851851855,
+     "area_fraction_over_50pct": 0.8359621451104101,
+     "area_fraction_fully": 0.6056782334384858,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 547.7486018707525
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "16 mm (Raspberry Pi C-mount)",
+   "f_mm": 16.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 17.286643920625888,
+   "mag": 0.0804152450391179,
+   "px_on_plate_um": 19.27495214677272,
+   "px_along_tilt_um": 22.916961153108225,
+   "fov_mm": [
+    78.18169299790974,
+    58.59585452618907
+   ],
+   "airy_fwhm_on_plate_um": 28.178736493281928,
+   "dof_total_mm": 4.1434834176813,
+   "scheimpflug_deg": 2.960506983635983,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 127.8080071031753
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 255.6160142063511
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.23365162037037035,
+     "area_fraction_over_50pct": 0.8359621451104101,
+     "area_fraction_fully": 0.6876971608832808,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 383.42402130952667
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "16 mm (Raspberry Pi C-mount)",
+   "f_mm": 16.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 17.286643920625888,
+   "mag": 0.0804152450391179,
+   "px_on_plate_um": 19.27495214677272,
+   "px_along_tilt_um": 22.916961153108225,
+   "fov_mm": [
+    78.18169299790974,
+    58.59585452618907
+   ],
+   "airy_fwhm_on_plate_um": 56.357472986563856,
+   "dof_total_mm": 8.2869668353626,
+   "scheimpflug_deg": 2.960506983635983,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 63.90400355158765
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 127.80800710317556
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.23705150462962965,
+     "area_fraction_over_50pct": 0.8359621451104101,
+     "area_fraction_fully": 0.7760252365930599,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 191.71201065476333
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "25 mm C-mount",
+   "f_mm": 25.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 28.290040818560488,
+   "mag": 0.13160163274241962,
+   "px_on_plate_um": 11.777969373934546,
+   "px_along_tilt_um": 14.003420841184777,
+   "fov_mm": [
+    47.77296351866225,
+    35.805026896761014
+   ],
+   "airy_fwhm_on_plate_um": 12.053041948990307,
+   "dof_total_mm": 1.134281193001879,
+   "scheimpflug_deg": 4.8377335694591475,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 285.28573014101624
+    },
+    "M50": {
+     "edge_transmission_min": 0.9375,
+     "edge_transmission_mean": 0.9837239583333334,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 0.9712460063897763,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 570.5714602820337
+    },
+    "L75": {
+     "edge_transmission_min": 0.08333333333333333,
+     "edge_transmission_mean": 0.2975260416666667,
+     "area_fraction_over_50pct": 0.8233438485804416,
+     "area_fraction_fully": 0.47003154574132494,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 855.8571904230506
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "25 mm C-mount",
+   "f_mm": 25.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 28.290040818560488,
+   "mag": 0.13160163274241962,
+   "px_on_plate_um": 11.777969373934546,
+   "px_along_tilt_um": 14.003420841184777,
+   "fov_mm": [
+    47.77296351866225,
+    35.805026896761014
+   ],
+   "airy_fwhm_on_plate_um": 17.21863135570044,
+   "dof_total_mm": 1.6204017042883991,
+   "scheimpflug_deg": 4.8377335694591475,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 199.70001109871137
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 399.4000221974236
+    },
+    "L75": {
+     "edge_transmission_min": 0.005208333333333333,
+     "edge_transmission_mean": 0.25614872685185186,
+     "area_fraction_over_50pct": 0.8264984227129337,
+     "area_fraction_fully": 0.5867507886435331,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 599.1000332961354
+    }
+   }
+  },
+  {
+   "variant": "lid hole drilled on the line of sight, \u00d822",
+   "lens": "25 mm C-mount",
+   "f_mm": 25.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 28.290040818560488,
+   "mag": 0.13160163274241962,
+   "px_on_plate_um": 11.777969373934546,
+   "px_along_tilt_um": 14.003420841184777,
+   "fov_mm": [
+    47.77296351866225,
+    35.805026896761014
+   ],
+   "airy_fwhm_on_plate_um": 34.43726271140088,
+   "dof_total_mm": 3.2408034085767983,
+   "scheimpflug_deg": 4.8377335694591475,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 99.85000554935569
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 199.7000110987118
+    },
+    "L75": {
+     "edge_transmission_min": 0.0,
+     "edge_transmission_mean": 0.23372395833333334,
+     "area_fraction_over_50pct": 0.8359621451104101,
+     "area_fraction_fully": 0.722397476340694,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 299.5500166480677
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "6 mm (Raspberry Pi CS-mount)",
+   "f_mm": 6.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 6.172275800874495,
+   "mag": 0.02871263347908246,
+   "px_on_plate_um": 53.98320572472726,
+   "px_along_tilt_um": 64.18335148608719,
+   "fov_mm": [
+    218.96284799442603,
+    164.10894540317088
+   ],
+   "airy_fwhm_on_plate_um": 55.243974787459614,
+   "dof_total_mm": 21.661959519319613,
+   "scheimpflug_deg": 1.0578841592628723,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 68.46857523384391
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 136.9371504676881
+    },
+    "L75": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 205.40572570153213
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "6 mm (Raspberry Pi CS-mount)",
+   "f_mm": 6.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 6.172275800874495,
+   "mag": 0.02871263347908246,
+   "px_on_plate_um": 53.98320572472726,
+   "px_along_tilt_um": 64.18335148608719,
+   "fov_mm": [
+    218.96284799442603,
+    164.10894540317088
+   ],
+   "airy_fwhm_on_plate_um": 78.91996398208516,
+   "dof_total_mm": 30.945656456170877,
+   "scheimpflug_deg": 1.0578841592628723,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 47.928002663690734
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 95.85600532738167
+    },
+    "L75": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 143.78400799107249
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "6 mm (Raspberry Pi CS-mount)",
+   "f_mm": 6.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 6.172275800874495,
+   "mag": 0.02871263347908246,
+   "px_on_plate_um": 53.98320572472726,
+   "px_along_tilt_um": 64.18335148608719,
+   "fov_mm": [
+    218.96284799442603,
+    164.10894540317088
+   ],
+   "airy_fwhm_on_plate_um": 157.83992796417033,
+   "dof_total_mm": 61.89131291234175,
+   "scheimpflug_deg": 1.0578841592628723,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 23.964001331845367
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 47.92800266369083
+    },
+    "L75": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 71.89200399553624
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "12 mm C-mount",
+   "f_mm": 12.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 12.70947407250472,
+   "mag": 0.05912283937539326,
+   "px_on_plate_um": 26.216602862363626,
+   "px_along_tilt_um": 31.170239219704015,
+   "fov_mm": [
+    106.33792399721298,
+    79.69847270158543
+   ],
+   "airy_fwhm_on_plate_um": 26.828887393729797,
+   "dof_total_mm": 5.259996903800665,
+   "scheimpflug_deg": 2.177512021340465,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 136.93715046768781
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 273.8743009353762
+    },
+    "L75": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 410.81145140306427
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "12 mm C-mount",
+   "f_mm": 12.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 12.70947407250472,
+   "mag": 0.05912283937539326,
+   "px_on_plate_um": 26.216602862363626,
+   "px_along_tilt_um": 31.170239219704015,
+   "fov_mm": [
+    106.33792399721298,
+    79.69847270158543
+   ],
+   "airy_fwhm_on_plate_um": 38.32698199104257,
+   "dof_total_mm": 7.514281291143808,
+   "scheimpflug_deg": 2.177512021340465,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 95.85600532738147
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 191.71201065476333
+    },
+    "L75": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 287.56801598214497
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "12 mm C-mount",
+   "f_mm": 12.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 12.70947407250472,
+   "mag": 0.05912283937539326,
+   "px_on_plate_um": 26.216602862363626,
+   "px_along_tilt_um": 31.170239219704015,
+   "fov_mm": [
+    106.33792399721298,
+    79.69847270158543
+   ],
+   "airy_fwhm_on_plate_um": 76.65396398208514,
+   "dof_total_mm": 15.028562582287616,
+   "scheimpflug_deg": 2.177512021340465,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 47.928002663690734
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 95.85600532738167
+    },
+    "L75": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 143.78400799107249
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "16 mm (Raspberry Pi C-mount)",
+   "f_mm": 16.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 17.286643920625888,
+   "mag": 0.0804152450391179,
+   "px_on_plate_um": 19.27495214677272,
+   "px_along_tilt_um": 22.916961153108225,
+   "fov_mm": [
+    78.18169299790974,
+    58.59585452618907
+   ],
+   "airy_fwhm_on_plate_um": 19.72511554529735,
+   "dof_total_mm": 2.90043839237691,
+   "scheimpflug_deg": 2.960506983635983,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 182.58286729025042
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 365.1657345805016
+    },
+    "L75": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 547.7486018707525
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "16 mm (Raspberry Pi C-mount)",
+   "f_mm": 16.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 17.286643920625888,
+   "mag": 0.0804152450391179,
+   "px_on_plate_um": 19.27495214677272,
+   "px_along_tilt_um": 22.916961153108225,
+   "fov_mm": [
+    78.18169299790974,
+    58.59585452618907
+   ],
+   "airy_fwhm_on_plate_um": 28.178736493281928,
+   "dof_total_mm": 4.1434834176813,
+   "scheimpflug_deg": 2.960506983635983,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 127.8080071031753
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 255.6160142063511
+    },
+    "L75": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 383.42402130952667
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "16 mm (Raspberry Pi C-mount)",
+   "f_mm": 16.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 17.286643920625888,
+   "mag": 0.0804152450391179,
+   "px_on_plate_um": 19.27495214677272,
+   "px_along_tilt_um": 22.916961153108225,
+   "fov_mm": [
+    78.18169299790974,
+    58.59585452618907
+   ],
+   "airy_fwhm_on_plate_um": 56.357472986563856,
+   "dof_total_mm": 8.2869668353626,
+   "scheimpflug_deg": 2.960506983635983,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 63.90400355158765
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 127.80800710317556
+    },
+    "L75": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 191.71201065476333
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "25 mm C-mount",
+   "f_mm": 25.0,
+   "N": 2.8,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 28.290040818560488,
+   "mag": 0.13160163274241962,
+   "px_on_plate_um": 11.777969373934546,
+   "px_along_tilt_um": 14.003420841184777,
+   "fov_mm": [
+    47.77296351866225,
+    35.805026896761014
+   ],
+   "airy_fwhm_on_plate_um": 12.053041948990307,
+   "dof_total_mm": 1.134281193001879,
+   "scheimpflug_deg": 4.8377335694591475,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 285.28573014101624
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 570.5714602820337
+    },
+    "L75": {
+     "edge_transmission_min": 0.8802083333333334,
+     "edge_transmission_mean": 0.9649884259259258,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 0.9652996845425867,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 855.8571904230506
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "25 mm C-mount",
+   "f_mm": 25.0,
+   "N": 4.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 28.290040818560488,
+   "mag": 0.13160163274241962,
+   "px_on_plate_um": 11.777969373934546,
+   "px_along_tilt_um": 14.003420841184777,
+   "fov_mm": [
+    47.77296351866225,
+    35.805026896761014
+   ],
+   "airy_fwhm_on_plate_um": 17.21863135570044,
+   "dof_total_mm": 1.6204017042883991,
+   "scheimpflug_deg": 4.8377335694591475,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 199.70001109871137
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 399.4000221974236
+    },
+    "L75": {
+     "edge_transmission_min": 0.9895833333333334,
+     "edge_transmission_mean": 0.9992766203703702,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 599.1000332961354
+    }
+   }
+  },
+  {
+   "variant": "\u00d830 on the line of sight through lid and boss, \u00d820 aperture",
+   "lens": "25 mm C-mount",
+   "f_mm": 25.0,
+   "N": 8.0,
+   "pupil_t": 53.27,
+   "u_mm": 214.9672479666862,
+   "v_mm": 28.290040818560488,
+   "mag": 0.13160163274241962,
+   "px_on_plate_um": 11.777969373934546,
+   "px_along_tilt_um": 14.003420841184777,
+   "fov_mm": [
+    47.77296351866225,
+    35.805026896761014
+   ],
+   "airy_fwhm_on_plate_um": 34.43726271140088,
+   "dof_total_mm": 3.2408034085767983,
+   "scheimpflug_deg": 4.8377335694591475,
+   "plates": {
+    "S25": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": true,
+     "fits_portrait": true,
+     "depth_span_mm": 13.737267777538136,
+     "edge_defocus_blur_um": 99.85000554935569
+    },
+    "M50": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 27.47453555507633,
+     "edge_defocus_blur_um": 199.7000110987118
+    },
+    "L75": {
+     "edge_transmission_min": 1.0,
+     "edge_transmission_mean": 1.0,
+     "area_fraction_over_50pct": 1.0,
+     "area_fraction_fully": 1.0,
+     "fits_landscape": false,
+     "fits_portrait": false,
+     "depth_span_mm": 41.211803332614494,
+     "edge_defocus_blur_um": 299.5500166480677
+    }
+   }
+  }
+ ]
+}
