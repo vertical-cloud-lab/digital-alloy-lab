@@ -1,0 +1,96 @@
+id,device,"where (model part, module)",in model,bom line,signal type,voltage / current,controller,channel,connector,cable,chamber feedthrough,notes
+L-01,Fibre laser IPG YLR-500-U3-SM-AC: AC input,"Fiber laser source (rack, 4U)",yes,L1,AC power,"208 V L1-L2, 9.1 A max (1.9 kVA)",PB1 Q1 + KM0,Q1 2P D15,rear 3-pin screw terminal L1/L2/PE (2012 YLR guide; U3 not confirmed),"14 AWG 3c + PE, 0.5 m",-,KM0 lets the PLC stagger power-up and switch the laser off between builds (150 W of idle heat in the Shuttle)
+L-02,Laser interlock channel 1,laser interface connector,yes,L1,dry-contact loop (laser-side source),"24 V, > 1 A contacts (2012 guide)",XS O1 -> K4,K4 NO,IPG 24-pin circular interface plug (2012 YLR guide); U3 pinout still owed by IPG,"shielded 18 AWG, 1 m",-,"two-channel interlock, Cat 3 PL d per the 2012 guide, 500 ms response"
+L-03,Laser interlock channel 2,laser interface connector,yes,L1,dry-contact loop,24 V,XS O2 -> K5,K5 NO,IPG interface plug,"shielded, same cable",-,
+L-04,Laser modulation / gate,laser interface connector,yes,L1,"digital, 'CMOS to 24 VDC', ~11 mA",5-24 V,RTC6,"LASERON (laser connector, 15-pin D-sub)",RTC6 D-sub 15 -> ZL-RTB-DB15 -> IPG plug,"shielded twisted pair, 1.5 m",-,<= 100 kHz (U3 spec sheet); level to be matched to the U3 input
+L-05,Laser analog power set point,laser interface connector,yes,L1,analog 0-10 V (1-10 V active in the 2012 guide),0-10 V,RTC6,ANALOG OUT1,RTC6 D-sub 15 breakout,"shielded twisted pair, 1.5 m",-,"single-ended: keep it short, one shield end, separate from servo cables (Edison r5)"
+L-06,Laser emission enable / guide laser,laser interface connector,yes,L1,digital in (laser),24 V,PLC,"s3.1 (EE), s3.2 (guide)",IPG plug,shielded multi-core,-,"standard functions, through K4/K5 for EE"
+L-07,"Laser status: Ready, Emission ON, Error",laser interface connector,yes,L1,digital out (laser),24 V,XS + PLC,"XS IN33-34 (Ready, Emission); PLC s1.1-1.3",IPG plug,shielded multi-core,-,read back so a laser that ignores its loop is caught (interlock_logic.py)
+L-08,"Laser Ethernet / RS-232 (monitoring, power read-back)",laser rear panel,yes,L1,Ethernet,-,PI / PC,switch port,RJ45,Cat6 S/FTP,-,
+L-09,QBH fibre-present / head interlock,collimator on V-mount,yes,L1/L3,laser-internal loop,-,laser,-,QBH connector,-,-,IPG's own QBH interlock (confirm on the U3); stops emission if the fibre is pulled (safety.md 4.2)
+L-10,"Safety shutter coil (power to open, spring closed)",Safety shutter + beam dump (process),yes,L4,24 V coil through K4 + K5 NO,"24 V, ~0.5-1 A pull-in (estimate)",PLC request through K4+K5,s3.3,M12 A-coded 4-pin,"PUR 4x0.34 mm2, 1.6 m",-,no product chosen in L4: pick one with two position switches
+L-11,Shutter closed switch A,shutter,no (no product),L4,dry contact,24 V test-pulsed,XS,IN23,M12 (with L-12),PUR 4 x 0.34,-,
+L-12,Shutter closed switch B,shutter,no (no product),L4,dry contact,24 V test-pulsed,XS,IN24,M12,PUR,-,
+L-13,Galvo SCANLAB basiCube 20: power,2-axis galvo scan head (process),yes,L5,DC power,"24 V single rail, <= 2.6 A (A1: basiCube series data, 24 V or 30 V variants)",PB1 HDR-100-24,-,basiCube power connector,"2 x 18 AWG, 1.6 m",-,not +/-15 V (tray_budget.py and Edison r5 both assumed +/-15 V)
+L-14,"Galvo XY2-100 (CLOCK, SYNC, X, Y, STATUS)",galvo,yes,L5/C1,"RS-422 differential, 2 MHz",-,RTC6,SCANNER connector,D-sub 15 (SCANLAB),"SCANLAB cable, 2-3 m, shielded twisted pairs",-,keep < 3 m and away from servo power
+L-15,Galvo status / ready,galvo,yes,L5,via XY2-100 status channel,-,RTC6 -> PLC,RTC6 digital in,-,-,-,Edison r5: galvo powered and in position control before emission is permitted (PLC permissive)
+L-16,Melt-pool photodiode Thorlabs PDA36A2,not drawn,no,T2,"analog 0-10 V, 12 MHz bw",+/-12 V supply (Thorlabs),RTC6 analog in / DAQ,-,BNC,"RG-58, 2 m",-,commissioning; coaxial port in the galvo not chosen
+M-01,Recoater servo Teknic ClearPath-SD CPM-SDSK-2311S,Recoater servo (process),yes,M2,DC power + step/dir/enable + HLFB,"48 V bus, 5 A peak (estimate)",CC M-0,M-0,"Molex Mini-Fit 8-pin (control), 4-pin (power)",CPM-CABLE-CTRL-MU120 + CPM-CABLE-PWR-MS120 (3 m),-,bus through K3A + K3B
+M-02,"Z servo ClearPath-SD (folded, belt 2:1)","Z servo (process, under the floor)",yes,M2,as M-01,48 V,CC M-1,M-1,Mini-Fit,"as M-01, plus 0.3 m loop for the 45 mm drop at a swap",-,
+M-03,Dosing stepper McMaster 6627T91 (NEMA 17),Dosing stepper (lid),yes,M4,bipolar stepper,"24 V drive, ~1.7 A/phase (not read)",SureStep STP-DRV-4035 <- CC M-2,M-2 (step/dir/enable),4-pin M8 or flying leads,"shielded 4 x 20 AWG, 1.5 m",-,
+M-04,"Recoater home sensor (inductive M8, PNP)",not drawn,no,none,PNP,"24 V, 10 mA",CC,IO-1,M8 3-pin,PUR 3 x 0.25,-,or ClearPath hard-stop homing; then no sensor
+M-05,Recoater far over-travel switch,not drawn,no,none,PNP / NC switch,24 V,CC,IO-2,M8,PUR,-,
+M-06,Z home / lower limit (inductive M8 on the Z carriage),not drawn,no,none,PNP,24 V,CC,"IO-3, IO-4",M8,PUR,-,the module swap drops the arm 45 mm: the limit must not stop that move
+M-07,"Door rotary actuator SMC CRQ2 size 20, open/close valve",Door drive (process),yes,none (robot-tooling.csv),5/2 solenoid valve,"24 V, 0.5 W",PLC,s3.4,valve manifold DIN connector,manifold multi-pin cable,-,plus two auto switches on the actuator
+M-08,Door open / closed auto switches (D-M9B class),door actuator,no,none,PNP 2-wire / 3-wire,24 V,PLC,"s1.4, s1.5",M8 3-pin,PUR,-,
+M-09,"Draw-latch cylinders 2 x SMC CJ2/CQ2 20 mm, valve",Draw-latch actuators (process),yes,none (robot-tooling.csv),5/2 solenoid valve,"24 V, 0.5 W",PLC,s3.5,manifold,manifold cable,-,both cylinders on one valve
+M-10,Latch-closed switches 2 x D-M9B,draw latches,no,none,PNP 3-wire,24 V,PLC,"s1.6, s1.7",M8,PUR,-,
+M-11,"Plate drawbar release cylinder SMC CDQ2B40-10DCMZ, valve",not drawn (hot-swap.md patch),no,none,5/2 solenoid valve,24 V,PLC,s3.6,manifold,manifold cable,-,only if the drawbar plate is built
+M-12,Drawbar released switch,not drawn,no,none,PNP,24 V,PLC,s1.8,M8,PUR,-,
+M-13,Air supply pressure switch (dock air),not drawn,no,none,PNP,24 V,PLC,s1.9,M12,PUR,-,no air -> no door/latch moves
+M-14,Air dump / soft-start valve (LOTO of air),not drawn,no,none,3/2 solenoid,24 V,PLC (through K3A aux),s3.7,DIN,-,-,
+H-01,Cartridge heaters 2/3/5 x 50 W 24 V (McMaster 3714N36),Cartridge heaters M50 (module),yes,H1,DC power,"24 V, 4.2 / 6.3 / 10.4 A",SSR D1D20 <- PLC s4.1 (1 s time-proportioning),s4.1,rod end -> M12 L-coded 5-pin (Molex 1205020022 / 1205000300),"16 AWG pair + PE, 1.7 m incl. 0.3 m service loop",FT1 rod end: 2 Cu pins >= 15 A (SST FA10594 27 A weld-in),PTFE/fibreglass leads inside the rod; RT240 TCO in series inside the block
+H-02,"Thermocouple, control (type K, ungrounded)",Type K thermocouples M50,yes,H1,type K,uV,PLC,s5.1 (P1-04THM),rod end -> SMPW-K (type K mini),"type K extension, shielded twisted, 2 m","FT1: type K alloy pair (SST FA23474, 3 pairs)",
+H-03,"Thermocouple, edge (type K)",Type K thermocouples M50,yes,H1,type K,uV,PLC,s5.2,SMPW-K,type K extension,FT1 pair 2,PLC cross-checks control vs edge (> 15 K = fault)
+H-04,"Thermocouple, limit (type K)",Type K thermocouples M50,yes,H1,type K,uV,CN708 (latching) + K8DT (plate < 50 C),CN708 input; K8DT in parallel is NOT allowed: K8DT on the edge TC instead,SMPW-K,type K extension,FT1 pair 3,the limit TC feeds only the CN708 (independence)
+H-05,"Thermal cutoff Cantherm RT240 (240 C, in series)",Thermal cutoff M50 (module),yes,H1,in series with the heater,24 V 10.4 A DC (only AC rating listed),-,-,-,-,inside,holding temperature 205 C is below the S25 block's 221 C: replace or relocate (heater_loop.md)
+H-06,Heater 24 V supply Mean Well LRS-350-24,not drawn (in the 3U drawer envelope),no,H2,AC in / DC out,120 V L2-N in; 24 V 14.6 A out,PB1 Q2,-,screw terminals,"14 AWG in, 14 AWG out",-,unbacked
+H-07,Heater SSR Crydom D1D20 (+ HS151 heat sink),not drawn,no,H2,DC SSR,3.5-32 V control; 20 A 100 V load,PLC,s4.1,screw,-,-,D1D12 (12 A) in H2 replaced by D1D20: 10.4 A on a 12 A part
+H-08,"K1 heater safety contactor (Eaton DILM12-01 24VDC, mirror contact)",not drawn,no,none,contactor,24 V coil; DC-1 20 A,XS O5 (XS2so),O5; EDM -> IN35,screw,-,-,
+H-09,K2 limit contactor (DILM12-01) driven by the CN708 relay,not drawn,no,none,contactor,24 V coil,CN708 relay (hard-wired),"aux -> XS IN30, PLC s1.10",screw,-,-,"the CN708's 15 A relay drives K2's coil, not the heater current"
+H-10,"Limit controller DwyerOmega CN708 (latching, manual reset)",not drawn,no,H2,"TC in, relay out",24 V supply,-,-,panel cutout 71 x 29 (PB1 door),-,-,set 235 C (heater_loop.md)
+H-11,Plate < 50 C relay Omron K8DT-TH1CD on the edge TC (2nd channel for the door),not drawn,no,none,"TC in, SPDT relay",24 V,XS,IN17 (ch A); PLC s1.11 / ch B from PLC output s4.2,DIN,type K ext.,-,replaces the 67F bimetal idea in modules.md
+H-12,"Module fan under the chamber floor (24 V, tach)",not drawn (heat.md recommends),no,none,DC fan + tach,"24 V, ~0.1-0.3 A",PLC,"s4.3 (on), s1.12 (tach alarm)",M8 / leads,PUR 3c,-,heat.md: fixes the magnet and rod gland temperatures
+H-13,"Module present (inductive M12 PNP, PAM-AP-1H)",Module-present sensor (under the floor),yes,A1,PNP,24 V,PLC,s1.13,M12 A 4-pin,PUR 2 m,-,in the PLC permissive (beam must not fall through an empty port)
+P-01,Plate-up fibre through-beam Omron E32-T61-S + E3NX-FA41,Plate-height through-beam (side walls),yes,A1,PNP from the amplifier,24 V,PLC,s1.14,amplifier in PB2,glass fibres 2 m,"optical, through M6 heads with O-rings: leak along the fibre not checked",
+P-02,Overflow jar present (PAM-AP-1H),Overflow-jar present sensor,yes,A1,PNP,24 V,PLC,s1.15,M12,PUR,-,
+P-03,Cover-slide drawer closed (PAM-AP-1H),Drawer-closed sensor (lid front),yes,A1,PNP,24 V,PLC,s1.16,M12,PUR,-,in the PLC permissive: no lasing without the slide
+P-04,Reservoir docked (PAM-AP-1H),Reservoir-docked sensor,yes,A1,PNP,24 V,PLC,s2.1,M12,PUR,-,
+P-05,NFC reader PN532 (Adafruit 364) + antenna in the dock face,NFC reader antenna (lid),yes,A1,I2C/SPI,3.3-5 V,PI,I2C1,JST / Qwiic,< 0.5 m (I2C): the board sits in PB2 on the guard frame,-,cannot run from the rack: I2C/SPI over 1.5 m is unreliable
+P-06,Load cell Laumas ALLUE3 + NAU7802 (SparkFun SEN-15242),Load cell (lid),yes,A1,bridge mV/V -> I2C,5 V excitation,PI,I2C1 (0x2A),4-wire shielded 0.5 m (integral),< 0.5 m to PB2,-,
+P-07,Layer camera Raspberry Pi HQ + C-mount lens,"Layer camera (lid, viewport)",yes,M6,MIPI CSI-2,3.3 V from the Pi,PI,CAM0,CSI ribbon,"<= 0.5 m: Pi 5 in PB2, not in the rack",-,
+P-08,Layer-light LED bar,"Layer-light LED bar (inside the chamber, right wall)",yes,M6,DC LED,"24 V, ~0.3 A (estimate)",PLC,s4.4,-,PTFE 2 x 22 AWG inside,"needs FT2 (2-pin KF16, SST FA11643) or move it outside behind a window: the model has no feedthrough for it",recommend outside
+P-09,Chamber wall thermocouple (outside surface),not drawn,no,none,type K,uV,PLC,s5.3,SMPW-K,type K ext.,"- (surface mount, outside)",logs the chamber warm-up (heat.md)
+P-10,Filter-cake thermocouple well (safety.md P8),not drawn,no,none,type K in a closed well,uV,PLC,s5.4,SMPW-K,type K ext.,- (the well is the pressure boundary),for passivation
+G-01,O2 analyser Ntron Microx (4-20 mA + alarm relays),Trace O2 analyzer + dew-point (gas module box),yes,G6,4-20 mA + 2 relays,"24 V, ~15-20 W (estimate)",PLC,"s6.1 (mA), s2.2 (alarm)",terminals,"shielded twisted 2c, 2.3 m",-,"O2 < set point is in the PLC permissive (laser, heaters)"
+G-02,Dew-point transmitter (Vaisala DMT143 class),same box,yes,G9,4-20 mA,24 V,PLC,s6.2,M8 / M12,shielded,-,
+G-03,Chamber absolute pressure 0-15 psia (3861N11),Pressure transducer (lid),yes,G7,4-20 mA,24 V,PLC,s6.3,coiled lead,shielded 2c,- (lid SAE-4 port),port mismatch noted in real-parts.md
+G-04,Chamber differential pressure 0-10 inH2O (5539N26),not drawn,no,G7,4-20 mA,24 V,PLC,s6.4,terminals,shielded,-,overpressure control +5-20 mbar
+G-05,Chamber-at-ambient pressure switch (+/-5 mbar),not drawn,no,none,dry contact,24 V,XS,IN31,M12,PUR,-,safety input for the guard unlock; the transmitter is not safety-rated
+G-06,"Pirani / convection gauge, 0-10 V (<= 1 mbar purge check)",not drawn: no KF16 port for it,no,G7 (estimate only),0-10 V,24 V,PLC,s7.1,M8 / RJ,shielded,- (needs a KF16 port: patch request),
+G-07,"Argon NC solenoid, purge (8077K237)",Argon solenoid manifold (gas),yes,G7,24 V coil,~8 W held,PLC via the O2/flow chain,s3.8,DIN 43650,3c 18 AWG,-,24 V for both argon valves passes both O2-monitor relays and the exhaust flow switch in series
+G-08,"Argon NC solenoid, make-up",manifold,yes,G7,24 V coil,~8 W,PLC via the O2/flow chain,s3.9,DIN 43650,3c,-,
+G-09,Vent valve (to the vent header),manifold,yes (envelope),G7,24 V coil,~8 W,PLC,s3.10,DIN 43650,3c,-,
+G-10,Argon supply shutoff at the dock / cylinder (NC),not drawn (safety.md P5/P13),no,safety-parts.csv SP4,24 V coil,~8 W,hard-wired O2 chain,-,DIN 43650,via the dock signal module,-,
+G-11,Exhaust flow switch in the vent header,not drawn (safety.md P6),no,safety-parts.csv SP10,dry contact,24 V,XS + valve chain,IN32,M12,PUR,-,
+G-12,"Vacuum pump 4396K21 (115 V, 1/2 hp)",Dry scroll pump (gas),yes,G2,AC motor,120 V 7 A,PB1 Q3 + KM1 <- PLC,s3.11,NEMA 5-15 plug -> receptacle in a box or hard-wired,"14 AWG, 2.3 m",-,PLC never runs it while lasing
+G-13,Pump isolation valve 4123K45 (manual) or a powered KF angle valve,Vacuum isolation valve (manual),yes,G7,manual (no signal),-,-,-,-,-,-,a position switch would let the PLC refuse a purge with the valve shut
+G-14,Recirculation blower,Sealed side-channel blower (gas),yes (envelope),G4,AC motor or 24 V BLDC + 0-10 V speed,120 V <= 230 W or 24 V 20-50 W,PB1 Q4 + KM2; speed s8.1,"s3.12, s8.1",-,-,-,G4 product still open
+G-15,"Room / Shuttle O2 monitors (Macurco OX-6 class, relays)",not on the tray,no,safety-parts.csv SP1/SP2,relay contacts + 4-20 mA,24 V,"XS (relays), PLC (mA)","IN15, IN16; PLC s6.5, s6.6",via the dock signal module,shielded,-,one monitor per safety channel
+S-01,"E-stop, rack operator panel (2 NC)",E-stop (rack front post),yes,S3,"2 NC, test-pulsed",24 V,XS,"IN1, IN2",22 mm block,PUR 4c,-,
+S-02,"E-stop, guard front",not drawn (safety.md P4),no,S3 (2nd),2 NC,24 V,XS,"IN3, IN4",M12 8-pin,PUR,-,
+S-03,"E-stop, gas module / dock side",not drawn,no,safety-parts.csv SP30,2 NC,24 V,XS,"IN5, IN6",M12,PUR,-,
+S-04,Guard-closed coded sensor (separate from the lock),not drawn,no,none,2 OSSD (PNP),24 V,XS,"IN7, IN8",M12 8-pin,PUR,-,ISO 14119: actuator separate from the lock
+S-05,"Guard lock IDEC HS5L-VC44M-G (spring lock, power to unlock)",Guard-locking door switch (Omron D4JL drawn),yes,S2,solenoid + monitoring contacts,"24 V, ~0.25 A (estimate)","XS O6 (unlock); monitoring IN9, IN10",O6,M20 cable gland / M12,PUR 8c,-,replaces the out-of-stock D4JL; see electrical.md §4 on spring lock vs power to lock
+S-06,"Key switch (laser master, 2 channels)",Key switch (rack panel),yes,S4,2 contacts,24 V,XS,"IN11, IN12",22 mm block,PUR,-,CFR 1040.10(f)(4)
+S-07,Reset push-button (illuminated),Reset button (rack panel),yes,S4,"NO, trailing edge",24 V,XS,IN13,22 mm,PUR,-,CFR 1040.10(f)(10)
+S-08,"Emission indicator lamp (red, 24 V)",Emission indicator (rack panel),yes,S4,lamp via K4+K5 aux,"24 V, 20 mA",K4/K5 aux contacts,-,22 mm,PUR,-,lit whenever emission is possible
+S-09,Stack light (green/amber/red/buzzer) + beacon,not drawn,no,S4 (1577T43),4 x DO,24 V,PLC,s3.13-3.16,M12,PUR,-,
+S-10,HOT lamp on the guard (plate > 50 C),not drawn (safety.md P4),no,none,DO,24 V,PLC (from K8DT),s4.9,22 mm,PUR,-,
+S-11,Plate over-temperature from the PLC (diverse channel),-,-,-,PNP output -> safety input,24 V,PLC -> XS,s4.10 -> IN18,-,-,-,interlock_logic.py: needed so a welded CN708 relay is caught
+S-12,PLC process permissive,-,-,-,PNP output -> safety input,24 V,PLC -> XS,s4.11 -> IN19,-,-,-,"chamber O2, pressure window, module/slide present, galvo ready"
+S-13,"EDM: K1 mirror, K3A+K3B mirrors in series, K4+K5 mirrors in series",-,-,-,NC mirror contacts,24 V,XS,"IN35, IN36, IN37",-,-,-,
+S-14,K3A / K3B 48 V servo-bus contactors (DILM12-01),not drawn,no,none,contactor,24 V coil,XS,"O3, O4",-,-,-,ClearPath-SD has no safe torque off
+S-15,K4 / K5 force-guided relays for the laser loop,not drawn,no,none,relay 2NO+1NC,24 V coil,XS,"O1, O2",DIN,-,-,
+R-01,"UR12e Safe Home (configurable safety output, 2 ch)",on the MiR,no,robot-tooling.csv,2 x 24 V,24 V,XS,"IN25, IN26",via the dock signal module or a wireless safety link,-,-,laser chain needs the robot home
+R-02,Robot entry permitted -> UR reduced-mode input,-,-,-,standard output (pair),24 V,PLC,"s4.12, s4.13",dock signal module,-,-,"UR safety plane at the guard opening, 'normal mode only' (check against the UR e-Series manual)"
+R-03,Robot job request / done (UR standard I/O),-,-,-,2 DI + 2 DO,24 V,PLC,"s2.3, s2.4 / s4.14, s4.15",dock signal module,-,-,or over Ethernet
+V-01,"Tray docked + VLM at rest (dock pins, 2 ch)",Tray dock,yes (envelope),D1,2 contacts,24 V,XS,"IN21, IN22",Han-Modular signal module,-,-,
+V-02,VLM may move (to the Kardex controller),-,-,D1,standard output,24 V,PLC,s4.16,dock signal module,-,-,"Kardex interface not defined (heat.md, safety.md 9)"
+V-03,"Dock power L1, L2, N, PE",Tray dock,yes (envelope),D1,AC,"208Y/120 V, 30 A",PB1 Q0,-,"Han C 40 A contacts, PE leading (Harting)","10 AWG 4c + PE, 2.7 m",-,"two PE contacts (protective-conductor current ~8 mA, estimate)"
+V-04,Dock Ethernet uplink,Tray dock,yes (envelope),D1,Ethernet,-,switch,uplink,Han RJ45 module,Cat6 S/FTP,-,
+U-01,UPS Eaton 5PX1500RTG2 + Network-M3 card,"UPS (rack, 2U)",yes,C6 (model tag),AC in/out + status,120 V L1-N in,PB1 Q2; status -> PI over the network card,-,5-15P / 5-15R,-,-,PI starts the power-cut sequence (power.md §3)
+U-02,Scan PC (2U) with RTC6 PCIe,Scan + laser controller PC (rack),yes,C1,AC (UPS),"120 V, 200 W",UPS,-,IEC C14,-,-,
+U-03,Supervisor Raspberry Pi 5 (8 GB) in PB2,not drawn (PB2 box),no,C2,5 V DC,5 V 5 A from DDR-30G-5,-,-,USB-C / terminals,-,-,"next to the camera, NFC and load cell"
+U-04,Ethernet switch AutomationDirect STRIDE SE2-SW8U,DIN drawer,yes (envelope),none,24 V DC,"24 V, 0.2 A",-,-,RJ45,-,-,
+U-05,Drawer fan 80 mm 24 V + PB1 filter fan 120 mm 24 V,not drawn,no,none,DC fans,"24 V, 0.1-0.3 A",always on (CTRL rail),-,leads,-,-,power.md §4: the drawer needs ~26 CFM without them it runs 51-104 K above ambient
