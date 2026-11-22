@@ -51,7 +51,7 @@ STATUSES = ["real part priced", "real part unpriced", "generic", "custom", "miss
 # (name regex, bom line, keyword the line must contain to cover the part, kind override, part numbers, note)
 # kind: 'custom' (machined/sheet/weld), 'generic' (no part number), 'bought' (pn given), 'excluded', None (automatic)
 MAP = [
-    (r"^19 in\. rack frame", "S9", r"\brack\b|cabinet", "bought", ["7648K62"], ""),
+    (r"^19 in\. rack frame", "S9", r"\brack\b", "generic", [], "12U open frame, 560 mm tall: not chosen (StarTech 4POSTRACK12U class, price not shown)"),
     (r"^Rack side panels", "S9", r"side panel", "custom", [], "vented sheet panels"),
     (r"^UPS \(Eaton 5PX1500RTG2", "D2", r"5PX1500RTG2", "bought", ["5PX1500RTG2"], "model tag is C6 (controls enclosure), which has no UPS"),
     (r"^Fiber laser source", "L1", r"YLR-500", "bought", ["YLR-500-U3-SM-AC"], ""),
@@ -128,7 +128,7 @@ MAP = [
     (r"^f-theta lens, f = 160", "L6", r"FTH", "bought", ["FTH160-1064"], ""),
     (r"^2-axis galvo scan head", "L5", r"basiCube", "bought", ["basiCube 20"], ""),
     (r"^Safety shutter \+ beam dump", "L4", r"shutter", "generic", [], "no shutter chosen (L4: quote)"),
-    (r"^Collimator \(IPG", "L3", r"IPG standard collimator", "bought", ["IPG-COLLIMATOR"], "not priced by IPG yet"),
+    (r"^Collimator \(IPG", "L3", r"IPG.{0,40}collimator", "generic", [], "custom-diameter IPG collimator: not priced by IPG yet"),
     (r"^Dry scroll pump", "G2", r"pump", "bought", ["A73501983"], ""),
     (r"^Pump inlet \(KF-25\)", "G2", r"NW25|4518K49|flare", "bought", ["4518K49"], "the nXDS6i inlet is NW25; only the 4396K21 alternative needs a flare-to-NPT adapter + 4518K49"),
     (r"^Sealed cyclone \+ HEPA housing", "G5", r"5169K72", "bought", ["5169K72"], "cyclone stage not chosen"),
@@ -147,7 +147,7 @@ MAP = [
     (r"^Guard door rail", "S9", r"sliding|roller", "bought", ["5537T353"], "rails are the frame's own 20 mm T-slot; McMaster 5537T353 rollers"),
     (r"^OD 7\+ viewing window", "S5", r"LW1P1|OD", "bought", ["LW1P1/M"], ""),
     (r"^Guard-locking door switch", "S2", r"D4JL", "bought", ["D4JL-4NFA-C5-NPT"], ""),
-    (r"^Operator panel box", "S4", r"operator box", "custom", [], ""),
+    (r"^Operator panel box", "S4", r"operator (box|panel)|panel box|enclosure|box", "custom", [], ""),
     (r"^E-stop$", "S3", r"XA1E", "bought", ["XA1E-BV3U02-R"], ""),
     (r"^Key switch$", "S4", r"6749K3", "bought", ["6749K3"], ""),
     (r"^Emission indicator$", "S4", r"7545K316", "bought", ["7545K316"], ""),

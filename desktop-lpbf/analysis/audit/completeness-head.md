@@ -10,20 +10,21 @@ Nothing here has been built, quoted by a shop or reviewed by BYU's LSO or EHS.
 **Before this audit, no.** The model's part list (`analysis/out/mass.json`, 223 parts) was checked part by part
 against `bom.csv` and the part-number lists. At the start of the audit (bom.csv as committed in `cc1e0a1`):
 - **87** parts were real parts with a vendor price and **26** were custom parts costed in a BOM line;
-- **70** parts were in no bom.csv line at all, and **29** contradicted their BOM line;
+- **71** parts were in no bom.csv line at all, and **29** contradicted their BOM line;
 - the BOM still described the tall model's welded box, 30 mm T-slot cabinet and ball-screw piston (G1, S9, M3), and
   the model tagged parts with lines that did not exist (D1, F3, F4, F5).
 
-**Now:** 116 priced, 4 real but unpriced, 22 generic, 65 custom, **2 missing** and **13 inconsistent**. The BOM total
-goes from **$39,440 – $112,978** to **$58,132 – $144,632**. $7,708 – $20,770 of the rise is line X1, the machining no
-line costed before. Without X1 the total is $50,424 – $123,862.
+**Now**, with the electrical and optics workers' rows merged into bom.csv (07:02 UTC): 117 priced, 4 real but unpriced,
+26 generic, 65 custom, **1 missing** and **9 inconsistent**. The BOM total goes from **$39,440 – $112,978** to
+**$70,478 – $154,119**. $7,708 – $20,770 of the rise is line X1, the machining no line costed before; without X1 the
+total is $62,770 – $133,349. Before the merge, this audit's own changes alone gave $58,132 – $144,632.
 
 ## How it was checked
 
 [`analysis/audit/completeness.py`](analysis/audit/completeness.py) reads:
 - the part list in `analysis/out/mass.json`;
 - each part's own BOM tag and part number (`bom`, `mcm` in `cad/lpbf_low.py`), dumped to
-  [`analysis/out/audit/model_tags.json`](analysis/out/audit/model_tags.json) from a snapshot of `cc1e0a1`.
+  [`analysis/out/audit/model_tags.json`](analysis/out/audit/model_tags.json) from a snapshot of `97882b9` (the 12U-rack model; first run on `cc1e0a1`).
 
 It maps every part to a bom.csv line and to rows of `mcmaster-parts.csv`, `fasteners.csv`, `seal-parts.csv`,
 `vendor-parts.csv`, `safety-parts.csv`, `robot-tooling.csv`, `assembly-tooling.csv`, `options-*.csv`,
@@ -41,8 +42,9 @@ Any CSV named on the command line is read as an extra purchase list. That is how
 
 ```bash
 python desktop-lpbf/analysis/audit/completeness.py --bom desktop-lpbf/analysis/out/audit/bom_before.csv --no-audit-prices --tag before
-python desktop-lpbf/analysis/audit/completeness.py [desktop-lpbf/electrical-bom.csv desktop-lpbf/optics-bom.csv]
-python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   # re-dump the model's tags (CadQuery, ~25 s)
+python desktop-lpbf/analysis/audit/completeness.py --tag bomonly                 # bom.csv and the repo's part lists only
+python desktop-lpbf/analysis/audit/completeness.py desktop-lpbf/electrical-bom.csv desktop-lpbf/optics-bom.csv   # writes this note
+python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO     # re-dump the model's tags (CadQuery, ~25 s)
 ```
 
 ## The gaps that matter most
@@ -65,20 +67,18 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
    - **Cooling:** chilled-water lines run to a laser that IPG quotes as air-cooled (`heat.md` says decide first).
    - **UPS:** the model draws an Eaton 5PX1500RTG2 ($1,137.99) but the tray budget sizes a Vertiv GXT5LI-1500
      ($2,706.99). D2 lists both.
-   - **Rack:** the model's 11U rack, 515 mm tall, has no catalogue match. McMaster's 7648K62 cabinet is 10U and
-     495 mm tall ($609.03). Its next size is 30 in. tall, and its open racks start at 24U. So either the 3U DIN drawer
-     becomes 2U or the rack is a custom frame.
-5. **For the optics audit** (`optics-bom.csv` O2 and O7 already propose the L3 and L6 fixes):
-   - L6 still specifies f = 254 mm, while the model uses the Thorlabs FTH160-1064 (f = 160 mm).
-   - The IPG 5 mm collimator in the model and L3 gives ~48 µm at f = 160 mm, not 75 µm. `low-profile.md` §2 calls for a
-     ~3.2 mm beam.
-   - The camera window (Ø1 in., 1070 nm blocking coating) is in no line. `optics-bom.csv` O21 proposes a plain window and a
-     Thorlabs filter.
-   - The Ø2 in. × 8 mm main window has no part number: L7 names a Ø1 in. WG41050-C.
-6. **For the electrical design:**
-   - No 2U scan/laser PC is chosen (C1 is the RTC6 card).
-   - C6 is a NEMA wall box, but the model draws a 3U DIN-rail drawer.
-   - The model tags the UPS C6.
+   - **Rack:** the model's rack is now 12U and 560 mm tall, for the electrical design's 4U drawer (the XS26 safety
+     controller stands 129 mm off its rail). No 12U rack that low was priced: McMaster's 7648K62 cabinet is 10U
+     ($609.03), its next size is 30 in. tall and its open racks start at 24U. S9 carries a $250-650 estimate.
+5. **Optics (merged from `optics-bom.csv`):**
+   - L6 is now the Thorlabs FTH160-1064 the model uses (it said f = 254 mm).
+   - L3 now asks IPG for a ~3.2 mm beam: the 5 mm collimator the model still draws gives ~48 µm at f = 160 mm, not 75 µm.
+     IPG's 2.5 mm collimator (~96 µm) is the fallback. Not priced.
+   - The camera window becomes a plain window with a Thorlabs FESH0950 filter (M6), and the main window an Edmund 38-990
+     (Ø50.8 × 9.53 mm, against 8 mm drawn).
+6. **Electrical (merged from `analysis/out/electrical/bom_proposed_rows.csv`):**
+   - No 2U scan/laser PC is chosen (C1 is the RTC6 card): the one part still in no line.
+   - C6 is now the 4U drawer the model draws. The model still tags the UPS C6.
    - A1's load cell is 3 kg; the model's label says 2 kg.
 7. **Vacuum feedthroughs and connectors have no price.**
    - The two Ferrotec magnetic-fluid feedthroughs (SFL-006-NN on the recoater, SSL-005-NN on the roller) have no
@@ -115,7 +115,11 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
   - B2 wipers and bore seals; R1 the KF-16 blank (estimate).
 - **Added:** F3 levelling mounts, F4 MIC-6 base plates, F5 optics bridge, H3 module fan (`heat.md`), A3 pneumatics,
   D1 dock and umbilicals, D2 UPS, X1 machining.
-- **Not touched:** C1-C6, S1-S4, H2, A1, L1-L7, S5, S6, T1 and T2, which are the electrical and optics lines.
+- **Merged from the electrical design:** C1, C3, C4, C5, C6, S1, S2, S3, S4, H1, H2, A1 and A3, and new lines E1-E5
+  (E5 is optional: $0 at the low end).
+- **Merged from the optics audit:** L6, L7, A2 (AR-coated slides), T1, T2, M6 (plus the drawn LED bar the optics list
+  leaves out, $20-60), F5 (focus shims and field-stop inserts) and a new T3 (calibration tools); text changes in L3, L4
+  and L5.
 - **Sources:** every fetched price is in [`analysis/audit/audit-prices.csv`](analysis/audit/audit-prices.csv), with its
   URL and UTC time. The prices were read on 2026-11-22 between 05:35 and 06:05 UTC; McMaster's and the plate distributor's through the lab tunnel.
   Estimates are marked "ESTIMATE" there and "estimate" in `price_basis`.
@@ -123,23 +127,15 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
   rows, the 9572K33 V-ring, the 1165N11 cord and the 4277T52 nylon relief. Their lines now say they no longer apply.
   They show up in the reverse table below as rows with no model part.
 
-## Overlaps to settle when the electrical and optics lists are merged
+## How the overlaps with the electrical and optics lists were settled (07:02 UTC)
 
-`electrical-bom.csv` and `optics-bom.csv` were still being written during this audit. As read at 06:10 UTC, they overlap
-with this audit's lines in these places. Merge one of each pair, not both:
-- **UPS:** D2 and `electrical-bom.csv` E9-12 are the same Eaton 5PX1500RTG2 at the same CDW price ($1,137.99).
-- **Pneumatics:** A3 (SMC) and E8-01 to E8-08 (Mindman, NITRA, SMC switches, a pressure switch, a lockable shut-off)
-  price the same door and latch actuators. A3's custom robot hardware and its X1 machining stay either way.
-- **Dock:** D1 estimates a Stäubli CombiTac. E7-01 to E7-07 price a HARTING Han-Modular docking frame at about $261,
-  with no argon coupling.
-- **Vacuum gauge:** G7 has the Vacuum Research 902377 Pirani ($455); E9-11 has a Kurt J. Lesker 275i ($515). Keep one.
-- **Rack height:** E9-01 moves the controls into a 4U drawer (the XS26-2 safety controller needs it). That makes the
-  rack 12U: 2U UPS + 4U laser + 2U PC + 4U drawer, 533 mm of rails alone, against the 11U, 515 mm rack the model draws
-  and S9's 10U cabinet.
-- **Rod-end connector:** E6-01 (Solid Sealing FA23474 type K feedthroughs) replaces the LEMO envelope that fails the seal
-  spec.
-- **Optics:**
-  - O2 and O7 fix L3 and L6.
-  - O12 replaces A2's uncoated Edmund 25-250 cover slides with the AR-coated 11-742.
-  - O13 turns F5's single field stop into three inserts.
-  - O19 to O23 add to M6.
+Every item is counted once, in one bom.csv line:
+- **UPS:** in D2 only. `electrical-bom.csv` E9-12 is the same Eaton at qty 0; its network card is optional in E5.
+- **Pneumatics:** in A3 only, as the electrical worker's A3 row: this audit's SMC parts plus a pressure switch, a lockable
+  dump valve and two D-M9B switches. The Mindman/NITRA set in E8 is not added.
+- **Dock:** in D1 only. The low end is E7's HARTING Han-Modular frame and modules ($261.26) plus a $50 argon coupling
+  estimate; the high end is a Stäubli CombiTac.
+- **Vacuum gauge:** in G7 only (Vacuum Research 902377, $455). E9-11's Kurt J. Lesker 275i ($515) is the alternative.
+- **Rack:** 12U in S9, as above.
+- **Where a proposed row listed only its additions** (C1, S3, S4, H1, A1, A3), the line keeps its earlier candidate text in
+  front of them, so the README table still names every part.

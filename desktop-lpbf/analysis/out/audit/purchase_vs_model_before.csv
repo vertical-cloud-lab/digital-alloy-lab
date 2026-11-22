@@ -35,7 +35,7 @@ bom.csv line,bom.csv,S5,,Laser-safe viewing window,1,S5,
 bom.csv line,bom.csv,S6,,Laser safety eyewear (service/alignment),0,S6,
 bom.csv line,bom.csv,S7,,Room O2-deficiency monitor,0,S7,
 bom.csv line,bom.csv,S8,,Class D extinguisher,0,S8,
-bom.csv line,bom.csv,S9,,"Frame, deck and laser guard",5,S9,
+bom.csv line,bom.csv,S9,,"Frame, deck and laser guard",4,S9,
 bom.csv line,bom.csv,P1,,Glovebox,0,P1,
 bom.csv line,bom.csv,T1,,Laser power sensor,0,T1,
 bom.csv line,bom.csv,T2,,Melt-pool photodiode,0,T2,
@@ -163,6 +163,7 @@ purchase row,robot-tooling.csv,RA9,CDQ2B40-10DCMZ,drawbar release cylinder,0,,ro
 purchase row,robot-tooling.csv,RA10,1460874,module zero-point clamps,0,,robot cell
 purchase row,robot-tooling.csv,RA11,100318805,overflow jar lever clamp,0,,robot cell
 purchase row,robot-tooling.csv,RA12,SS5Y3-45FD-05U-N7,valve manifold,0,,robot cell
+purchase row,robot-tooling.csv,RA13,modules_low.py MODULE_GRIP,module grip block,0,,robot cell
 purchase row,assembly-tooling.csv,E1,UR12e,UR12e collaborative arm (the UR10e renamed),0,,tool or fixture
 purchase row,assembly-tooling.csv,E2,MiR250,MiR250 with a 131 kg ballast plate and a 480 mm cabinet,0,,tool or fixture
 purchase row,assembly-tooling.csv,E3,2F-85 GRP-CPL-062,Robotiq 2F-85 with the ISO 9409 coupling,0,,tool or fixture

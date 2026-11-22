@@ -5,19 +5,19 @@ bom.csv line,bom.csv,L3,,Collimator / beam expander,1,L3,
 bom.csv line,bom.csv,L4,,Safety shutter + beam dump,1,L4,
 bom.csv line,bom.csv,L5,,2-axis galvo scan head,1,L5,
 bom.csv line,bom.csv,L6,,F-theta lens,1,L6,
-bom.csv line,bom.csv,L7,,Chamber laser window + sacrificial cover slide,1,L7,
+bom.csv line,bom.csv,L7,,Chamber laser window,1,L7,
 bom.csv line,bom.csv,C1,,Scan + laser controller,0,C1,
 bom.csv line,bom.csv,C2,,Supervisor computer,0,C2,
-bom.csv line,bom.csv,C3,,Motion controller,0,C3,
-bom.csv line,bom.csv,C4,,24 V DC supply,0,C4,
-bom.csv line,bom.csv,C5,,Thermocouple interface,0,C5,
-bom.csv line,bom.csv,C6,,Controls enclosure,0,C6,
+bom.csv line,bom.csv,C3,,Motion controller and stepper drive,0,C3,
+bom.csv line,bom.csv,C4,,DC supplies (UPS-backed) and 24 V branch protection,0,C4,
+bom.csv line,bom.csv,C5,,Process I/O PLC and thermocouple inputs,0,C5,
+bom.csv line,bom.csv,C6,,"4U control drawer, PB2 box and DIN hardware",1,C6,
 bom.csv line,bom.csv,M1,,Recoater axis (less servo),12,M1,
 bom.csv line,bom.csv,M2,,Servo motors,2,M2,
 bom.csv line,bom.csv,M3,,Z stage (less servo): integrated actuator under the floor,5,M3,
 bom.csv line,bom.csv,M4,,"Metering base, roller drive and overflow",7,M4,
 bom.csv line,bom.csv,M5,,Recoater blade cartridges,2,M5,
-bom.csv line,bom.csv,M6,,Layer camera + lighting,2,M6,
+bom.csv line,bom.csv,M6,,Layer camera + lighting,3,M6,
 bom.csv line,bom.csv,G1,,"Process chamber: through-frame, floor plate, lid, door and their small parts",22,G1,
 bom.csv line,bom.csv,G2,,Vacuum pump,2,G2,
 bom.csv line,bom.csv,G3,,Argon supply,1,G3,
@@ -27,10 +27,10 @@ bom.csv line,bom.csv,G6,,O2 analyzer,1,G6,
 bom.csv line,bom.csv,G7,,Valves / fittings / gauges,16,G7,
 bom.csv line,bom.csv,G8,,"Chamber, module and port seals",26,G8,
 bom.csv line,bom.csv,G9,,Dew-point / moisture sensor,0,G9,
-bom.csv line,bom.csv,S1,,Safety relay,0,S1,
-bom.csv line,bom.csv,S2,,Guard-locking door interlock,1,S2,
-bom.csv line,bom.csv,S3,,E-stop,1,S3,
-bom.csv line,bom.csv,S4,,Key switch + emission indicator + manual reset,4,S4,
+bom.csv line,bom.csv,S1,,Safety controller and final elements,0,S1,
+bom.csv line,bom.csv,S2,,Guard lock and guard-position switch,1,S2,
+bom.csv line,bom.csv,S3,,"E-stops (rack, guard front, gas module, spare)",1,S3,
+bom.csv line,bom.csv,S4,,Key switch + emission indicator + manual reset + HOT lamp,4,S4,
 bom.csv line,bom.csv,S5,,Laser-safe viewing window,1,S5,
 bom.csv line,bom.csv,S6,,Laser safety eyewear (service/alignment),0,S6,
 bom.csv line,bom.csv,S7,,Room O2-deficiency monitor,0,S7,
@@ -41,9 +41,10 @@ bom.csv line,bom.csv,F4,,Module base plates (process and gas),2,F4,
 bom.csv line,bom.csv,F5,,"Optics bridge, posts and beam-path mounts",6,F5,
 bom.csv line,bom.csv,P1,,Glovebox,0,P1,
 bom.csv line,bom.csv,T1,,Laser power sensor,0,T1,
-bom.csv line,bom.csv,T2,,Melt-pool photodiode,0,T2,
-bom.csv line,bom.csv,H1,,Heater stacks for the three build modules,7,H1,
-bom.csv line,bom.csv,H2,,"Heater power, switching and independent limit",0,H2,
+bom.csv line,bom.csv,T2,,Melt-pool photodiode and its optics,0,T2,
+bom.csv line,bom.csv,T3,,Calibration tools,0,T3,
+bom.csv line,bom.csv,H1,,"Heater stacks for the three build modules, rod-end feedthroughs and thermocouple wiring",7,H1,
+bom.csv line,bom.csv,H2,,"Heater power, switching, independent limit and the plate < 50 C channel",0,H2,
 bom.csv line,bom.csv,H3,,Module cooling fan under the floor,0,H3,
 bom.csv line,bom.csv,B1,,"Three build modules (Ø25 / Ø50 / Ø75): cylinders, spigot-flanges, pistons, plates, hollow rods",7,B1,
 bom.csv line,bom.csv,B2,,"Module seals, clamping and Z coupling",7,B2,
@@ -54,6 +55,11 @@ bom.csv line,bom.csv,A3,,"Pneumatic door drive and latch actuators, valves and a
 bom.csv line,bom.csv,D1,,Tray dock (tray half) and umbilicals,5,D1,
 bom.csv line,bom.csv,D2,,"UPS (2U, in the rack)",1,D2,
 bom.csv line,bom.csv,FX,,"Screws, helical inserts, dowels, set screws, retainers and disc springs",38,FX,
+bom.csv line,bom.csv,E1,,"Power box PB1: main disconnect, branch protection, contactors",0,E1,
+bom.csv line,bom.csv,E2,,Ethernet switch,0,E2,
+bom.csv line,bom.csv,E3,,Axis home sensors and chamber-at-ambient switch,0,E3,
+bom.csv line,bom.csv,E4,,"Bulk wire, bonding straps, ESD",0,E4,
+bom.csv line,bom.csv,E5,,"Optional: milliohm meter, UPS network card, LED-bar feedthrough",0,E5,
 bom.csv line,bom.csv,X1,,Machining and fabrication of the custom parts not costed elsewhere,0,X1,
 purchase row,mcmaster-parts.csv,S9,5537T97,"T-Slotted Framing, Single 4-Slot Rail, Silver, 30 mm Square, Hollow",0,S9,stale: line S9's notes retire it
 purchase row,mcmaster-parts.csv,S9,5537T536,"T-Slotted Framing, Gusset Bracket for 30 mm High Rail, 1-3/16"" Long",0,S9,stale: line S9's notes retire it
@@ -92,12 +98,12 @@ purchase row,mcmaster-parts.csv,G7,5182K111,"Yor-Lok Fitting for Stainless Steel
 purchase row,mcmaster-parts.csv,G7,4518K72,"Wing Nut Clamp for 1"" Tube OD Quick-Clamp High-Vacuum Fitting",0,G7,stock for custom parts
 purchase row,mcmaster-parts.csv,G7,4518K63,"Fluoroelastomer Rubber O-Ring for 1"" Tube OD Quick-Clamp High-Vacuum Fitting",0,G7,stock for custom parts
 purchase row,mcmaster-parts.csv,G7,4518K64,"Fluoroelastomer Rubber O-Ring for 1.5"" Tube OD Quick-Clamp High-Vacuum Fitting",0,G7,stock for custom parts
-purchase row,mcmaster-parts.csv,S4,7545K7,Lens Cap for 22 mm Panel Cutout Diameter Oil-Resistant Panel Light with Screw Terminals,0,S4,
-purchase row,mcmaster-parts.csv,S4,1577T43,"Surface-Mount LED Stack Light, 3 Lights, 6-3/8"" High",0,S4,
-purchase row,mcmaster-parts.csv,C6,7812K14,"Powder-Coated Steel Watertight Enclosure, Hinged Cover with Slotted Latch, 10"" x 12"" x 6"", Gray",0,C6,
-purchase row,mcmaster-parts.csv,C6,7812K54,"11"" x 9"" Steel Panel for Powder-Coated Steel Watertight Enclosure",0,C6,
-purchase row,mcmaster-parts.csv,C6,8961K15,"Steel DIN 3 Rail, 7.5mm Deep, 1m Long",0,C6,
-purchase row,mcmaster-parts.csv,C6,69915K54,"Liquid-Tight Plastic Cord Grip, Straight, for 0.2""-0.35"" Cord OD, 1/2 NPT Thread, Nylon",0,C6,
+purchase row,mcmaster-parts.csv,S4,7545K7,Lens Cap for 22 mm Panel Cutout Diameter Oil-Resistant Panel Light with Screw Terminals,0,S4,stale: line S4 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,S4,1577T43,"Surface-Mount LED Stack Light, 3 Lights, 6-3/8"" High",0,S4,stale: line S4 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,C6,7812K14,"Powder-Coated Steel Watertight Enclosure, Hinged Cover with Slotted Latch, 10"" x 12"" x 6"", Gray",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,C6,7812K54,"11"" x 9"" Steel Panel for Powder-Coated Steel Watertight Enclosure",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,C6,8961K15,"Steel DIN 3 Rail, 7.5mm Deep, 1m Long",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
+purchase row,mcmaster-parts.csv,C6,69915K54,"Liquid-Tight Plastic Cord Grip, Straight, for 0.2""-0.35"" Cord OD, 1/2 NPT Thread, Nylon",0,C6,stale: line C6 no longer cites mcmaster-parts.csv
 purchase row,fasteners.csv,row6,91732A767,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M2.5 x 0.45 mm Thread Size, 3.8 mm Installed Length",0,FX,
 purchase row,fasteners.csv,row14,92029A142,"316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 6 mm Long",0,FX,
 purchase row,fasteners.csv,row16,92290A854,"316 Stainless Steel Socket Head Screw, M2.5 x 0.45 mm Thread, 30 mm Long, Fully Threaded",0,FX,
@@ -116,7 +122,7 @@ purchase row,seal-parts.csv,row35,85015A47,"Reservoir dock detent (spring plunge
 purchase row,seal-parts.csv,row36,,"Window and camera-window flat clamp rings, FKM sheet 1.0 mm",0,G8,stock for custom parts
 purchase row,vendor-parts.csv,row9,4518K72,,0,,
 purchase row,vendor-parts.csv,row14,4396K21,,0,G2,
-purchase row,safety-parts.csv,SP1,0-25 % O2 2 relays 4-20 mA LED Macurco OX-6,Fixed O2 monitor for the lab room (breathing height and near the argon cylinder),0,G6,"room safety, PPE or option"
+purchase row,safety-parts.csv,SP1,0-25 % O2 2 relays 4-20 mA LED Macurco OX-6,Fixed O2 monitor for the lab room (breathing height and near the argon cylinder),0,C5,"room safety, PPE or option"
 purchase row,safety-parts.csv,SP2,Macurco OX-6 same part,Fixed O2 monitor inside the Kardex Shuttle shaft (low) and one at the tray bay,0,S7,"room safety, PPE or option"
 purchase row,safety-parts.csv,SP3,18995T81 McMaster 18995T81 portable O2 detector nonreplaceable battery,Personal O2 monitor for filter changes and any entry,0,S7,"room safety, PPE or option"
 purchase row,safety-parts.csv,SP5,"Critical-flow orifice, 0.5-1 mm class Lee Co. or O'Keefe Controls",Critical-flow (sonic) orifice in the argon line,0,,"room safety, PPE or option"
@@ -171,6 +177,7 @@ purchase row,robot-tooling.csv,RA9,CDQ2B40-10DCMZ,drawbar release cylinder,0,,ro
 purchase row,robot-tooling.csv,RA10,1460874,module zero-point clamps,0,,robot cell
 purchase row,robot-tooling.csv,RA11,100318805,overflow jar lever clamp,0,,robot cell
 purchase row,robot-tooling.csv,RA12,SS5Y3-45FD-05U-N7,valve manifold,0,A3,robot cell
+purchase row,robot-tooling.csv,RA13,modules_low.py MODULE_GRIP,module grip block,0,,robot cell
 purchase row,assembly-tooling.csv,E1,UR12e,UR12e collaborative arm (the UR10e renamed),0,,tool or fixture
 purchase row,assembly-tooling.csv,E2,MiR250,MiR250 with a 131 kg ballast plate and a 480 mm cabinet,0,,tool or fixture
 purchase row,assembly-tooling.csv,E3,2F-85 GRP-CPL-062,Robotiq 2F-85 with the ISO 9409 coupling,0,,tool or fixture
@@ -197,11 +204,11 @@ purchase row,assembly-tooling.csv,C10,,three temporary M3 guide pins for stackin
 purchase row,assembly-tooling.csv,C11,cell2.mir cell2.mir_bodies,tool stand on each MiR's cabinet (as byu-vcl PR 318's finger stand),0,,tool or fixture
 purchase row,assembly-tooling.csv,C12,,small-part vacuum nozzle: Ø5 x 60 mm stem with a 4 mm silicone cup on the VGC10's adaptor plate,0,,tool or fixture
 purchase row,assembly-tooling.csv,C13,trunnion_jaws.step,"trunnion turn-over positioner: two stands, axis 1000 mm up along x, Ø50 shafts, two 12 x 90 x 70 mm jaws on th",0,,tool or fixture
-purchase row,options-mcmaster.csv,H1,6455N24,"Insertion Heater with Standard Wire Lead Covering for 1/4"" Hole, 120V AC, 1-1/2"" Long Heating Element, 50W",0,H1,
-purchase row,options-mcmaster.csv,H1,3618K422,"Insertion Heater with Standard Wire Lead Covering for 1/4"" Hole, 120V AC, 1-1/2"" Long Heating Element, 100W",0,H1,alternative in line H1
-purchase row,options-mcmaster.csv,H1,5586N19,"Dual-Output Thermocouple Probe for Liquids and Gases, Type K/K, 6"" Long x 1/8"" Diameter Probe",0,H1,
-purchase row,options-mcmaster.csv,H1,3869K35,"Thermocouple Connector, Flat-Pin Mini, Male Connection, Type K, 400 Degree F Maximum",0,H1,
-purchase row,options-mcmaster.csv,H1,3869K34,"Thermocouple Connector, Flat-Pin Mini, Female Connection, Type K, 400 Degree F Maximum",0,H1,
+purchase row,options-mcmaster.csv,H1,6455N24,"Insertion Heater with Standard Wire Lead Covering for 1/4"" Hole, 120V AC, 1-1/2"" Long Heating Element, 50W",0,H1,stale: line H1 no longer cites options-mcmaster.csv
+purchase row,options-mcmaster.csv,H1,3618K422,"Insertion Heater with Standard Wire Lead Covering for 1/4"" Hole, 120V AC, 1-1/2"" Long Heating Element, 100W",0,H1,stale: line H1 no longer cites options-mcmaster.csv
+purchase row,options-mcmaster.csv,H1,5586N19,"Dual-Output Thermocouple Probe for Liquids and Gases, Type K/K, 6"" Long x 1/8"" Diameter Probe",0,H1,stale: line H1 no longer cites options-mcmaster.csv
+purchase row,options-mcmaster.csv,H1,3869K35,"Thermocouple Connector, Flat-Pin Mini, Male Connection, Type K, 400 Degree F Maximum",0,H1,stale: line H1 no longer cites options-mcmaster.csv
+purchase row,options-mcmaster.csv,H1,3869K34,"Thermocouple Connector, Flat-Pin Mini, Female Connection, Type K, 400 Degree F Maximum",0,H1,stale: line H1 no longer cites options-mcmaster.csv
 purchase row,options-mcmaster.csv,B1,89495K18,"Highly Corrosion-Resistant Round Tube, 316 Stainless Steel, 0.188"" Thick Wall, 1-1/4"" OD, Seamless",0,B1,stock for custom parts
 purchase row,options-mcmaster.csv,B1,11119N55,"Highly Corrosion-Resistant 316 Stainless Steel Round Tube, 1/4"" Thick Wall, 2-1/4"" OD, Seamless",0,B1,stock for custom parts
 purchase row,options-mcmaster.csv,B1,89495K4,"Highly Corrosion-Resistant Round Tube, 316 Stainless Steel, 3/8"" Thick Wall, 3-1/2"" OD, Seamless",0,B1,stock for custom parts
@@ -215,27 +222,27 @@ purchase row,options-mcmaster.csv,R1,85015A47,"18-8 Stainless Steel Slotted Ball
 purchase row,options-mcmaster.csv,R1,8969T3,"316 Stainless Steel Corrosion-Resistant Compression Springs, 1"" Long, 0.25"" OD, 0.192"" ID",0,R1,
 purchase row,options-mcmaster.csv,A2,4123K47,"On/Off Valve with Ultra-High-Vacuum Fittings, Valve Trade Number 40, for 1-1/2"" Tube OD",0,A2,alternative in line A2
 purchase row,options-mcmaster.csv,A2,5572N116,"Vacuum System for Powered Sanders, Air-Powered, Wall-Mount, 1-1/2 Gallon Capacity",0,A2,
-purchase row,options-vendors.csv,H1,P-IH5-0069-24V,"Industrial Heater (50W 24V), Bare Leads",0,H1,
-purchase row,options-vendors.csv,H1,24V option Standard Heater Cartridge 40W,Standard Heater Cartridge 40W,0,H1,
-purchase row,options-vendors.csv,H1,100801,2 Pairs of Thermocouple pins and two Power Pins Feedthrough - KF50,0,H1,alternative in line H1
+purchase row,options-vendors.csv,H1,P-IH5-0069-24V,"Industrial Heater (50W 24V), Bare Leads",0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,24V option Standard Heater Cartridge 40W,Standard Heater Cartridge 40W,0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,100801,2 Pairs of Thermocouple pins and two Power Pins Feedthrough - KF50,0,H1,stale: line H1 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,H1,TFT2KY00008,"THERMOCOUPLE FEEDTHROUGH, SINGLE ENDED, 2 PAIR TYPE K, MINI PLUG STYLE ATM CONNECTOR, MOUNTED ON A QF16 FLANGE",0,,alternative (qty 0)
-purchase row,options-vendors.csv,H1,1205020022,"CIRC CBL 5POS RCPT TO WIRE 1.64' (Brad M12 Power L-Code; receptacle, male pins, panel mount, wire leads)",0,H1,
-purchase row,options-vendors.csv,H1,1205000300,"CIRC CBL 5POS PLUG TO WIRE 3.28' (Brad M12 Power L-Code; plug, female sockets, free-hanging, wire leads)",0,H1,
-purchase row,options-vendors.csv,H1,SMPW-K-M,"Miniature Thermocouple Connectors Flat Pin with Write-on Window (Type K, ANSI, male)",0,H1,
-purchase row,options-vendors.csv,H1,SMPW-K-F,"Miniature Thermocouple Connectors Flat Pin with Write-on Window (Type K, ANSI, female)",0,H1,
-purchase row,options-vendors.csv,H2,CN708,"Temperature Limit Controller with Audible Buzzer and 15 Amp Relay (°C display, 24 Vac/Vdc supply)",0,H2,
+purchase row,options-vendors.csv,H1,1205020022,"CIRC CBL 5POS RCPT TO WIRE 1.64' (Brad M12 Power L-Code; receptacle, male pins, panel mount, wire leads)",0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,1205000300,"CIRC CBL 5POS PLUG TO WIRE 3.28' (Brad M12 Power L-Code; plug, female sockets, free-hanging, wire leads)",0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,SMPW-K-M,"Miniature Thermocouple Connectors Flat Pin with Write-on Window (Type K, ANSI, male)",0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H1,SMPW-K-F,"Miniature Thermocouple Connectors Flat Pin with Write-on Window (Type K, ANSI, female)",0,H1,stale: line H1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H2,CN708,"Temperature Limit Controller with Audible Buzzer and 15 Amp Relay (°C display, 24 Vac/Vdc supply)",0,H2,stale: line H2 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,H2,CNI32-AL-DC,"1/32, 1/16, and 1/8 DIN Temperature and Process Limit Controller (1/32 DIN, DC supply)",0,,alternative (qty 0)
-purchase row,options-vendors.csv,H2,D1D12,SSR RELAY SPST-NO 12A 0-100V,0,H2,
-purchase row,options-vendors.csv,H2,LRS-350-24,"24Vdc 14.6A, Power Supply, 24 Volts DC, 350 Watts",0,H2,
+purchase row,options-vendors.csv,H2,D1D12,SSR RELAY SPST-NO 12A 0-100V,0,H2,stale: line H2 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,H2,LRS-350-24,"24Vdc 14.6A, Power Supply, 24 Volts DC, 350 Watts",0,H2,stale: line H2 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,A1,E2E-X2B1D12 E2E-X2B1D12 2M,SENSOR INDUCT 2MM PNP M12 NO,0,,alternative (qty 0)
-purchase row,options-vendors.csv,A1,E3NX-FA41 E3NX-FA41 2M,FIBER AMP 1-OUT PNP PW,0,A1,
-purchase row,options-vendors.csv,A1,3001300,Beontag Ironside Micro NFC Tag | NXP NTAG213,0,A1,
+purchase row,options-vendors.csv,A1,E3NX-FA41 E3NX-FA41 2M,FIBER AMP 1-OUT PNP PW,0,A1,stale: line A1 no longer cites options-vendors.csv
+purchase row,options-vendors.csv,A1,3001300,Beontag Ironside Micro NFC Tag | NXP NTAG213,0,A1,stale: line A1 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,A1,DTI410,RFID read/write head HF for flush mounting (IO-Link),0,,alternative (qty 0)
-purchase row,options-vendors.csv,A1,SEN-15242,SparkFun Qwiic Scale - NAU7802,0,A1,
+purchase row,options-vendors.csv,A1,SEN-15242,SparkFun Qwiic Scale - NAU7802,0,A1,stale: line A1 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,A2,11-742,"Thin Fused Silica Laser Window, 50.80 mm dia. x 1.00 mm, BBAR (950-1150nm)",0,,alternative (qty 0)
-purchase row,options-vendors.csv,A2,MX200 MX200 Series,"MX200 Series: Compact C2D2, Universities and Labs (listed under Group E Metals, Immersion Separators)",0,A2,alternative in line A2
+purchase row,options-vendors.csv,A2,MX200 MX200 Series,"MX200 Series: Compact C2D2, Universities and Labs (listed under Group E Metals, Immersion Separators)",0,A2,stale: line A2 no longer cites options-vendors.csv
 purchase row,options-vendors.csv,A2,Mini Immersion Separator Wet Mix for 3D Printing,"Mini Immersion Separator ""Wet (Water) Mix"" Models for 3D Printing and Additive Manufacturing",0,,alternative (qty 0)
-purchase row,options-vendors.csv,A2,FSD75-AP-6H,"ProSense liquid flow switch, spring-supported piston, 3/4in female NPT process connection, 0.26 to 6.6 GPM, Ou",0,A2,
+purchase row,options-vendors.csv,A2,FSD75-AP-6H,"ProSense liquid flow switch, spring-supported piston, 3/4in female NPT process connection, 0.26 to 6.6 GPM, Ou",0,A2,stale: line A2 no longer cites options-vendors.csv
 purchase row,plate-materials.csv,B1,1610T27,"Multipurpose 6061 Aluminum, 3-1/4"" Diameter Rod",0,B1,plate-material options (study)
 purchase row,plate-materials.csv,B1,9257K14,"High-Strength Grade 5 Titanium Disc, 3-1/2"" Diameter x 1/2"" Long",0,B1,plate-material options (study)
 purchase row,plate-materials.csv,B1,1319T2,"High-Strength 17-4 PH Stainless Steel Disc, Heat Treatment Condition A, 3-1/2"" Diameter",0,B1,plate-material options (study)
@@ -248,7 +255,7 @@ purchase row,plate-materials.csv,B1,4279K18,"Thermally Stable Invar 36 Nickel Al
 purchase row,plate-materials.csv,B1,,(AlSi10Mg is not sold as plate stock),0,B1,plate-material options (study)
 purchase row,plate-materials.csv,B1,,"(spray-formed hypereutectic Al-Si, e.g. CE17)",0,B1,plate-material options (study)
 purchase row,vendor-lookups.csv,row3,FTH254-1064,"F-Theta Lens, EFL 254 mm, M85x1.0",0,L6,
-purchase row,vendor-lookups.csv,row4,FTHW75-1064,Replacement protective window for FTH100/FTH160,0,,
+purchase row,vendor-lookups.csv,row4,FTHW75-1064,Replacement protective window for FTH100/FTH160,0,L6,
 purchase row,vendor-lookups.csv,row5,GVS012,"2D Large Beam (10 mm) Galvo System, Silver-Coated Mirrors, PSU Not Included",0,,
 purchase row,vendor-lookups.csv,row6,GBE02-C,"2X Achromatic Galilean Beam Expander, AR 1050-1650 nm",0,L3,
 purchase row,vendor-lookups.csv,row7,GBE03-C,"3X Achromatic Galilean Beam Expander, AR 1050-1650 nm",0,,
@@ -262,7 +269,7 @@ purchase row,vendor-lookups.csv,row15,SG7210,Fiber Galvo Scanner Head,0,L5,
 purchase row,vendor-lookups.csv,row16,RC1001,Input Aperture 10 mm Galvo Scanner Head,0,,
 purchase row,vendor-lookups.csv,row17,DLC2-M4-2D,JCZ Marking Control Card 2.5D (EZCAD3),0,C1,
 purchase row,vendor-lookups.csv,row18,Raycus single-module CW,1.5 kW / 2 kW Raycus Single Module CW Fiber Laser for Cutting,0,,
-purchase row,vendor-lookups.csv,row19,ClearPath-SD,ClearPath-SD integrated servo (step/dir),0,M2,
+purchase row,vendor-lookups.csv,row19,ClearPath-SD,ClearPath-SD integrated servo (step/dir),0,C3,
 purchase row,vendor-lookups.csv,row21,6624K69,"Ball screw, M14, 500 mm, 4 mm lead, ±0.210 mm/300 mm",0,,
 purchase row,vendor-lookups.csv,row23,9901K64,Rotary vane vacuum pump,0,,
 purchase row,vendor-lookups.csv,row24,1165N11,"Viton O-ring cord, 0.070 in., 90A",0,G8,
@@ -271,10 +278,10 @@ purchase row,vendor-lookups.csv,row26,4083N11,Glove box (14 x 24 1/2 x 10 in. cl
 purchase row,vendor-lookups.csv,row27,4083N14,Glove box with humidity meter and two 1/4 in. gas ports,0,P1,
 purchase row,vendor-lookups.csv,row28,18995T81,"Single-gas O2 detector, 0-25%, nonreplaceable battery",0,S7,
 purchase row,vendor-lookups.csv,row29,6435T23,"Class D fire extinguisher, sodium chloride, 30 lb",0,S8,
-purchase row,vendor-lookups.csv,row30,G9SE-201 Omron,"Safety relay unit, 2+1 outputs",0,S1,
-purchase row,vendor-lookups.csv,row33,SDR-480-24,"Mean Well AC/DC DIN rail supply, 24 V 480 W",0,C4,
+purchase row,vendor-lookups.csv,row30,G9SE-201 Omron,"Safety relay unit, 2+1 outputs",0,S2,
+purchase row,vendor-lookups.csv,row33,SDR-480-24,"Mean Well AC/DC DIN rail supply, 24 V 480 W",0,,
 purchase row,vendor-lookups.csv,row34,OXY-FLEX-0-H,"SST Sensing zirconia oxygen sensor, 4-20 mA output",0,G6,
-purchase row,vendor-lookups.csv,row35,3263 Adafruit,MAX31856 universal thermocouple amplifier breakout,0,C5,
+purchase row,vendor-lookups.csv,row35,3263 Adafruit,MAX31856 universal thermocouple amplifier breakout,0,M6,
 purchase row,vendor-lookups.csv,row36,QS20XY-Y1,"Dual-Axis, Ø20 mm Beam Galvo System, Mirrors Coated for 1064 nm (Power Supply & Cables Sold Separately)",0,L5,
 purchase row,audit-prices.csv,G1,6061-T651,"6061 T651 Aluminum Plate, 5-1/2 in., width 9.5 in., length 15 in.",0,G1,stock for custom parts
 purchase row,audit-prices.csv,G1,89155K165,"Oversized multipurpose 6061 aluminium sheet, 1 in. thick, 12 x 24 in.",0,G1,stock for custom parts
@@ -287,10 +294,11 @@ purchase row,audit-prices.csv,G7,5182K862,"Yor-Lok straight adapter, 1/4 in. tub
 purchase row,audit-prices.csv,G8,9262N11,O-ring splicing jig,0,G8,
 purchase row,audit-prices.csv,G9,DMT143,Vaisala DMT143 Miniature Dew Point Transmitter for OEM Applications,0,G9,
 purchase row,audit-prices.csv,M4,5786N32,"Quick-Clamp High-Vacuum Fitting, Cap for 1-1/2"" OD Aluminum Tube",0,M4,stock for custom parts
-purchase row,audit-prices.csv,M6,4562,16mm 10MP Telephoto Lens for Raspberry Pi HQ Camera,0,M6,
+purchase row,audit-prices.csv,M6,4562,16mm 10MP Telephoto Lens for Raspberry Pi HQ Camera,0,,alternative (qty 0)
+purchase row,audit-prices.csv,S9,7648K62,"Steel Electronics Cabinet, 19-1/2"" x 21"" x 24-1/2""",0,,alternative (qty 0)
 purchase row,audit-prices.csv,S9,5537T935,"Silver Corner Bracket for 20 mm High Rail, 3/4"" Long",0,S9,
 purchase row,audit-prices.csv,S9,5278N44,"Self-Aligning T-Slotted Framing Nuts with Spring-Loaded Ball, Drop-in, for 20mm Rail, M5 Thread",0,S9,
-purchase row,audit-prices.csv,S9,7648K69,Back panel for the 7648K62 cabinet,0,S9,
+purchase row,audit-prices.csv,S9,7648K69,Back panel for the 7648K62 cabinet,0,,alternative (qty 0)
 purchase row,audit-prices.csv,F4,86825K49,"Easy-to-Machine MIC6 Cast Aluminum Sheet, 5/8"" Thick, 24"" x 72""",0,F4,stock for custom parts
 purchase row,audit-prices.csv,F5,89155K86,"Oversized Multipurpose 6061 Aluminum Sheet, 1"" Thick, 24"" x 24""",0,F5,stock for custom parts
 purchase row,audit-prices.csv,F5,6546K31,"Multipurpose 6061 Aluminum Rectangular Tube, 1/4"" Wall Thickness, 2-1/2"" High x 2-1/2"" Wide Outside",0,F5,stock for custom parts

@@ -3,10 +3,10 @@
  "parts": 223,
  "by_status": {
   "real part priced": 87,
-  "real part unpriced": 3,
+  "real part unpriced": 2,
   "generic": 7,
   "custom": 26,
-  "missing from BOM": 70,
+  "missing from BOM": 71,
   "inconsistent": 29,
   "excluded": 1
  },

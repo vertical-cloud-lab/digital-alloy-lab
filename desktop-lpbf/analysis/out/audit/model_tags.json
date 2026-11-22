@@ -42,7 +42,7 @@
   "tags": []
  },
  {
-  "part": "19 in. rack frame (11U, 515 mm tall)",
+  "part": "19 in. rack frame (12U, 560 mm tall)",
   "bom": "S9",
   "mcm": "",
   "mat": "steel",
@@ -74,7 +74,7 @@
   "tags": []
  },
  {
-  "part": "DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5 (3U)",
+  "part": "DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5 (4U: the safety controller stands 129 mm off its rail)",
   "bom": "C3",
   "mcm": "",
   "mat": "misc",
@@ -194,7 +194,7 @@
   "tags": []
  },
  {
-  "part": "Module M50 handle (6061, screwed under the gland plate; for a hand or a gripper)",
+  "part": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
   "bom": "B1",
   "mcm": "",
   "mat": "al6061",
