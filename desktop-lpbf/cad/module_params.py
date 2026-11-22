@@ -38,6 +38,10 @@ ROD_END_T = 24.0        # rod-end hardware: 430 SS striker (5) + end cap (19) ca
 ROD_L = (OVERTRAVEL - (-(BUILD_STROKE + STOP_BELOW))) + BOT_FLANGE_T + ROD_END_T + 3.0   # 77: piston-head bottom to the coupling face
 ARM_T = 12.0            # Z lift arm under the coupling face (pot magnet set flush in its top)
 ZSTAGE_RELEASE = -45.0  # arm drops 45 mm below the rod end (magnet breaks away) before a module swap
+# robot grip block on every module's handle (robot-ops.md, 2026-11-22): one place for S25, M50 and L75, in front of the door's hinge
+# knuckles (y >= -138) and under them (their underside is at z -20); the web (40 wide, 34 tall) is what the 2F-85's pads close on,
+# the 5 mm flanges above and below it take the pull and push. The arm runs 4 mm under the outlet plenum (z -36)
+MODULE_GRIP = dict(y0=-156.0, y1=-126.0, web_w=40.0, z_web=(-64.0, -30.0), flange_w=56.0, flange_t=5.0, arm_w=20.0, z_arm=(-52.0, -40.0))
 MODULE_DROP = 40.0      # module drops 40 mm: spigot out of the floor port and under the outlet plenum
 
 # ---- floor port (one port takes every module) ----

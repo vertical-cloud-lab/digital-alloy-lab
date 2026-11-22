@@ -129,10 +129,26 @@ def add_build_module(h, add, key, step=4):
     h.GLANDS[f"rod_{key}"] = dict(kind="rod", ring=rg["ring"], cs=rcs, depth=(rg["groove_d"] - rod_od) / 2, width=rg["width"], groove_d=rg["groove_d"],
                                   rod_d=rod_od, groove_mat="ss", T=110.0, n=2, closure=f"hollow rod through the gland plate ({key})")
     zt = z_stop - MP.BOT_FLANGE_T                                                         # gland plate's bottom face
-    hd = h.fuse([h.box(-24, -14, -rc - 26, -rc + 12, zt - 4, zt), h.box(14, 24, -rc - 26, -rc + 12, zt - 4, zt),
-                 h.box(-24, 24, -rc - 32, -rc - 26, zt - 4, zt + 4)])
-    add(f"Module {lab} handle (6061, screwed under the gland plate; for a hand or a gripper)", hd, C["anod"], step, (0, -320, -60), mat="al6061",
-        bom="B1", **mg)
+    # handle (robot-ops.md, 2026-11-22): the two side arms under the gland plate as before, then a riser in front of the collar, an
+    # arm forward under the outlet plenum (4 mm below it) and an I-section grip block in front of the door's hinge knuckles. The block
+    # is in the same place for S25, M50 and L75 (MP.MODULE_GRIP), so the gripper takes it from the front without reaching under the
+    # chamber; the 2F-85's pads close on the 40 mm web between the two flanges, which carry the 106 N pull and 158 N push by form
+    # closure. The old handle sat under the gland plate (y -72 to -28), where the gripper's camera met the door
+    G = MP.MODULE_GRIP
+    yb0, yb1 = G["y0"], G["y1"]
+    zw0, zw1 = G["z_web"]
+    ft = G["flange_t"]
+    za0, za1 = G["z_arm"]
+    # the riser is 6 mm further back than the old handle's cross bar (front face at -rc - 26): on L75 it then passes the guard's bottom
+    # front rail at 7.9 mm on the module's path (the robot audit found the cross bar's 1.9 mm too tight)
+    hd = h.fuse([h.box(-24, -14, -rc - 20.5, -rc + 12, zt - 4, zt), h.box(14, 24, -rc - 20.5, -rc + 12, zt - 4, zt),
+                 h.box(-24, 24, -rc - 26, -rc - 20, zt - 4, za1),                                  # riser in front of the collar
+                 h.box(-G["arm_w"] / 2, G["arm_w"] / 2, yb1 - 0.01, -rc - 25.0, za0, za1),         # arm forward under the plenum
+                 h.box(-G["web_w"] / 2, G["web_w"] / 2, yb0, yb1, zw0, zw1),                        # grip block: web
+                 h.box(-G["flange_w"] / 2, G["flange_w"] / 2, yb0, yb1, zw1, zw1 + ft),            # top flange
+                 h.box(-G["flange_w"] / 2, G["flange_w"] / 2, yb0, yb1, zw0 - ft, zw0)])           # bottom flange
+    add(f"Module {lab} handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y {yb0:.0f} to {yb1:.0f}, "
+        f"in front of the door's hinge knuckles)", hd, C["anod"], step, (0, -320, -60), mat="al6061", bom="B1", **mg)
 
     # ---------- plate and heater stack (moves with the piston, leaves with the module) ----------
     zb1, zb0, zk0, zh0, zc = z["zb1"], z["zb0"], z["zk0"], z["zh0"], z["zc"]
@@ -304,6 +320,10 @@ def add_reservoir(h, add, key, xd, z_dock, step=7):
     L2 = MP.RES_BASE_HALF_Y
     base = h.box(xd - 15, xd + 15, -L2, L2, z_dock, z_dock + MP.GATE_T).cut(h.box(xd - MP.SLOT_W / 2, xd + MP.SLOT_W / 2, -r["slot"] / 2, r["slot"] / 2, z_dock - 1, z_dock + MP.GATE_T + 1))
     base = base.cut(h.box(xd - 13, xd + 13, -L2 + 3.0, L2 - 3.0, z_dock + 1.0, z_dock + 2.4))       # shutter slot, closed at both ends
+    # front pull tab (2026-11-22, operations.md U1.1): the enclosed beam tube runs 15 mm over the lid's handle fin, so a hand can't pinch
+    # the fin from the front; it pinches this tab instead, between the rails, 8 mm in front of their ends (the robot keeps the fin)
+    tab = h.box(xd - 8.0, xd + 8.0, -L2 - 14.0, -L2 + 0.5, z_dock + 0.5, z_dock + 3.5).cut(h.cyl(4.0, (xd, -L2 - 7.5, z_dock), "z", 5.0))
+    base = h.fuse([base, tab])
     # top frame (304, 6 mm, welded on the hopper walls): overhangs the inside by 5 mm (sides) and 12 mm (ends) to carry the lid seal
     zt = zi + r["iz"]
     ox, oy = r["ix"] / 2 + 1.2, r["iy"] / 2 + 1.2

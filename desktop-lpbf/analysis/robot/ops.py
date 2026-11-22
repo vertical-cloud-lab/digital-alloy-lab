@@ -97,7 +97,7 @@ class Cell:
         self.sc = C.Scene(self.parts, region=REGION, deck=True)
         for nm, (b, p) in list(self.sc.machine.items()):
             if any(k in nm for k in ("Build plate", "Heater block", "Plate rim wiper", "Build module", "Blade holder", "Recoater arm",
-                                     "Recoater carriage block", "lid with robot handle", "Dovetail rails")):
+                                     "Recoater carriage block", "lid with robot handle", "Dovetail rails", "Chamber floor plate")):
                 v, f = C.tess(p.shape, 0.05, 0.2)
                 nb = C.Body(nm, v, f, kind="machine", group=p.group, color=p.color, mat=p.mat)
                 nb.place(b.M)
@@ -827,38 +827,49 @@ def job_blade(cell: Cell, arm_x=0.0, **kw):
     return j
 
 
-def job_module(cell: Cell, arm_x=0.0, tilt=25.0, roll=0.0, **kw):
-    """Release the module (twist-lock or zero-point clamps, see the patch requests) and the Z arm, then carry the module by its
-    handle along the model's own extraction path (MODULE_PATH: down 40, forward under the plenum, up under the hinges, over the
-    guard sill and out)."""
+def job_module(cell: Cell, arm_x=0.0, tilt=0.0, roll=0.0, lift=66.0, **kw):
+    """Release the module (its clamps, see robot-ops.md) and the Z arm, then carry the module by the grip block on its handle along the
+    model's own extraction path (MODULE_PATH: down 40, forward under the plenum, up under the hinges, up to +4), lift it `lift` mm clear of
+    the chamber floor's front edge, and bring it out over the guard sill. The grip block (MP.MODULE_GRIP, 2026-11-22) is in front of the
+    door's hinge knuckles at the same place on S25, M50 and L75: the gripper comes in level from the front and its pads close on the
+    block's 40 mm web, between the two flanges that take the pull and the push."""
     M = cell.M
+    G = M.MP.MODULE_GRIP
     st0 = {"zstage": M.MP.ZSTAGE_RELEASE, "gdoor": GT}
     j = Job(cell, "module_swap", arm_x=arm_x, state0=st0)
     mod = cell.names(group="module")
     pis = [n for n, (b, p) in cell.sc.machine.items() if "in_module" in p.tags]
     held = sorted(set(mod) | set(pis))
-    hd = cell.name("handle (6061, screwed under the gland plate")
-    b, p = cell.sc.machine[hd]
-    lo, hi = b.box()
-    # the side arms' outer faces are at x = +/-24; take them from the front, the gripper tilted 25 deg down so its housing rides
-    # over the guard's bottom rail
-    pg = np.array([0.0, (lo[1] + hi[1]) / 2 + 4.0, lo[2] + 5.0])
+    pg = np.array([0.0, (G["y0"] + G["y1"]) / 2, sum(G["z_web"]) / 2])
     a = np.array([0.0, math.cos(math.radians(tilt)), -math.sin(math.radians(tilt))])
     R = R_of(a, (1, 0, 0)) @ C.rot((0, 0, 1), roll)
     al = allow_of(*held)
+    web = G["web_w"]
     j.machine("module clamps open; the Z arm drops 45 mm off the rod end", 2.0)
-    path_ = [np.array(q) for q in M.MODULE_PATH]
-    j.goto(T_of(R, pg - a * 90), "to the module handle", close=j.arm.close_for_gap(60.0),
-           then=[(T_of(R, pg), al, None)] + [(T_of(R, pg + q_), al, j.arm.close_for_gap(48.3)) for q_ in path_[1:]])
-    j.line(T_of(R, pg), "round the handle's side arms", allow=al)
-    j.grip(48.3, "close on the side arms", allow=al)
-    j.attach(held, "build module")
     path = [np.array(q) for q in M.MODULE_PATH]
-    fixtures = allow_of(*cell.names("Process chamber body"), *cell.names("Locating dowel"), *cell.names("helical inserts"),
-                        *cell.names("thumb screw"), kind="held") | frozenset(("soft", n) for n in cell.names("Spigot O-ring"))
+    k_up = max(i for i, q in enumerate(path) if q[2] > 0.0)          # the last waypoint the model's path rises to (y -190, z +4)
+    path = path[:k_up + 1] + [path[k_up] + (0, 0, lift), path[-1] + (0, 0, lift)]
+    j.goto(T_of(R, pg - a * 90), "to the module's grip block, in front of the door", close=j.arm.close_for_gap(web + 20.0),
+           then=[(T_of(R, pg), al, None)] + [(T_of(R, pg + q_), al, j.arm.close_for_gap(web + 0.3)) for q_ in path[1:]])
+    j.line(T_of(R, pg), "in level round the grip block's web", allow=al)
+    j.grip(web + 0.3, "close on the 40 mm web, between the flanges", allow=al)
+    j.attach(held, "build module")
+    # the module's own fixtures for the first 40 mm: the floor plate's port (since the frame + floor-plate split the port is in the
+    # floor plate, not the body), the screw inserts, the module-present sensor 0.3 mm beside the flange tab; the spigot O-ring and the
+    # dowel and diamond pin (a slip fit drawn line on line, so the meshes coincide) and the floor inserts of the two captive screws (drawn
+    # engaged; they stand in for the clamp, released in the first step) are soft, as the seals a part slides over. So is the floor plate,
+    # for this straight 40 mm drop only: the spigot leaves its port (0.1 mm radial fit) and the captive screws' tips, drawn screwed in,
+    # leave their holes (they read 3 mm deep at the first frame); interference.py checks those fits exactly. The floor plate is
+    # tessellated at 0.05 mm (it was 0.4 mm, which put the Ø96 port's chords 0.3 mm into the spigot's 0.1 mm fit)
+    fixtures = allow_of(*cell.names("Process chamber body"), *cell.names("Chamber floor plate"), *cell.names("helical inserts"),
+                        *cell.names("Helical inserts for the module"), *cell.names("Module-present sensor"), *cell.names("thumb screw"),
+                        *cell.names("Captive M6"), kind="held") | \
+        frozenset(("soft", n) for n in cell.names("Spigot O-ring") + cell.names("Locating dowel") + cell.names("Helical inserts for the module") +
+                  cell.names("Chamber floor plate"))
     for k, (pa, pb) in enumerate(zip(path[:-1], path[1:])):
         F = (0, 0, -158.0) if k == 0 else (0, 0, 0)       # the first 40 mm: the 2-238 O-ring's 132 N plus the module's weight
-        j.line(T_of(R, pg + pb), f"module path {tuple(int(v) for v in pa)} -> {tuple(int(v) for v in pb)}",
+        lab = "lift clear of the floor's front edge" if k == len(path) - 3 else "out over the guard sill" if k == len(path) - 2 else "module path"
+        j.line(T_of(R, pg + pb), f"{lab} {tuple(int(v) for v in pa)} -> {tuple(int(v) for v in pb)}",
                allow=(al | fixtures) if k == 0 else al, step_mm=3.0, force=F)
     j.line(T_of(R, pg + path[-1] + (0, -60, 60)), "up and out (to the MiR's module rack)", allow=al, fine=False)
     return j
@@ -969,7 +980,7 @@ for _k in ("chamber_door_open", "drawer", "plate_drawbar", "plate_bayonet", "res
            "module_swap", "overflow_jar", "vacuum_clean", "liner_right"):
     VARIANTS[_k] = [dict(v) for v in _SIDES]
 VARIANTS["reservoir"] = [dict(arm_x=x, roll=0.0) for x in (-390.0, 210.0, -540.0, 360.0, -240.0, -90.0)]
-VARIANTS["module_swap"] = [dict(arm_x=x, tilt=t, roll=r) for r in (180.0, 0.0) for t in (40.0, 25.0) for x in (-300.0, 250.0, -70.0)]
+VARIANTS["module_swap"] = [dict(arm_x=x, roll=r) for r in (0.0, 180.0) for x in (300.0, -300.0, 450.0, -450.0, 150.0, -150.0)]
 VARIANTS["chamber_door_close"] = [dict(arm_x=x, tilt=t) for t in (-45.0, -30.0, -60.0, 20.0) for x in (-450.0, -300.0, 0.0, 300.0)]
 VARIANTS["plate_bayonet"] = [dict(arm_x=x) for x in (450.0, -450.0, 300.0, -300.0, 600.0)]
 VARIANTS["plate_drawbar"] = [dict(arm_x=x) for x in (450.0, -450.0, 300.0, -300.0, 600.0)]

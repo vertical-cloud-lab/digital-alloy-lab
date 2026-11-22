@@ -191,6 +191,33 @@ kinematic seat for location. Either way, **replace the Z coupling's pot magnet**
 - A fail-safe "permanent electro" magnet, or a small ball lock like the plate's drawbar, would release on command before the
   arm drops.
 
+### 3.2a Where two zero-point modules would go (layout check, 2026-11-22)
+
+The part: **SCHUNK NSE-HT mini 88-20 V1, ID 1460874**: Ø88 × Ø73 × 20 mm, 1.0 kg, repeat < 0.005 mm, sold without clamping
+pins ([schunk.com p/1460874](https://schunk.com/us/en/p/000000000001460874), read 2026-11-22 through the lab tunnel). Its
+0.5 kN pull (2.5 kN with turbo) and 200 °C rating are in the table above.
+
+Two of them must straddle the module, so that their pull acts inside the flange's contact. A single one off to the side tips the
+module, and its spigot binds in the port. The under-floor layout was read off the model (M50, bounding boxes, z is negative under
+the floor) to find a place for a pair:
+
+| Pair | At the floor's underside (z −40 to −20) | At the gland plate (z −106 to −86) |
+|---|---|---|
+| left and right (x ±100) | right: the overflow funnel, x 78 to 122, y ±59 | right: the overflow jar, x 73 to 127, down to z −150 |
+| front and back (y ±95) | front: the outlet plenum, y −106 to −75; back: the Z flange, y 60 to 108 | front: the module's own exit lane, x ±53; back: the Z bracket and actuator |
+| front-right and back-left | front-right: the plenum's boot | front-right: the plenum's KF-25 port, the jar and the front-right leg |
+| front-left and back-right | front-left: the plenum | back-right: the Z servo, x 34 to 94, y 28 to 110; a front-left one has to sit at x ≤ −99 to stay out of the exit lane, which is where the front-left leg is |
+
+Only the left side is free: one module fits at (−100, 0). **So the pair doesn't fit until the overflow jar moves.** The jar has to
+move anyway, because it has no way out (robot-ops.md, operations.md U4.7). With the jar gone from under the funnel, a pair at the
+gland-plate level fits at (−100, +18) and (+100, −18):
+- each 2.2 mm from the Z servo's corner and 16 mm from the front-right leg;
+- 2.9 mm outside the L75 gland plate's path;
+- on arms under the gland plate, which pass 4 mm over the base plate when the module drops 40 mm.
+
+They would hang from the floor on two posts each. Until then, the module keeps its two captive M6, and the robot job assumes they are
+released. The robot side is drawn: the grip block on the handle (robot-ops.md).
+
 ### 3.3 Reservoir, blade, jar and drawer
 
 - **Reservoir:** three 85015A47 ball plungers in 90° detents hold 40 N along the slide, against 2 N for 1 kg at
