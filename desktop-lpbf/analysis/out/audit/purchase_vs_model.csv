@@ -158,7 +158,7 @@ purchase row,robot-tooling.csv,RT11,am-5750,camera calibration target,0,,robot c
 purchase row,robot-tooling.csv,RA1,automation.py,guard-door handle,0,,robot cell
 purchase row,robot-tooling.csv,RA3,CDQ2B20 SMC CDQ2B20 class,draw-latch actuators,0,A3,robot cell
 purchase row,robot-tooling.csv,RA3b,8051,door clamp (catalogue alternative to RA3),0,A3,robot cell
-purchase row,robot-tooling.csv,RA3c,D-M9B,clamp-closed sensors,0,,robot cell
+purchase row,robot-tooling.csv,RA3c,D-M9B,clamp-closed sensors,0,A3,robot cell
 purchase row,robot-tooling.csv,RA4,automation.py,drawer latch wing heads,0,,robot cell
 purchase row,robot-tooling.csv,RA4b,MKB25-10LZ MKB25-10RZ,drawer clamp (powered alternative to RA4),0,,robot cell
 purchase row,robot-tooling.csv,RA5,automation.py,blade-cartridge grip fin,0,,robot cell
