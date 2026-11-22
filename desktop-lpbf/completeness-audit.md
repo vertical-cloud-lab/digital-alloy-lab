@@ -14,7 +14,7 @@ against `bom.csv` and the part-number lists. At the start of the audit (bom.csv 
 - the BOM still described the tall model's welded box, 30 mm T-slot cabinet and ball-screw piston (G1, S9, M3), and
   the model tagged parts with lines that did not exist (D1, F3, F4, F5).
 
-**Now:** 117 priced, 4 real but unpriced, 22 generic, 65 custom, **2 missing** and **12 inconsistent**. The BOM total
+**Now:** 116 priced, 4 real but unpriced, 22 generic, 65 custom, **2 missing** and **13 inconsistent**. The BOM total
 goes from **$39,440 – $112,978** to **$58,132 – $144,632**. $7,708 – $20,770 of the rise is line X1, the machining no
 line costed before. Without X1 the total is $50,424 – $123,862.
 
@@ -97,7 +97,8 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
     - The optics posts are drawn 60 × 60 × 5 mm. McMaster's nearest is 2-1/2 × 1/4 in. (6546K31).
     - THK's KR26 rail is nominally 26 mm wide, against the 46 × 28 mm Z envelope.
     - The SMC door actuator weighs 0.60 kg, against the 0.3 kg the model assumes.
-    - The hinge is labelled 1151A87 but drawn as custom knuckles.
+    - The hinge is labelled 1151A87 but drawn as custom knuckles, and the HSS blade still carries the 18-8 shim's
+      part number (9011K104) in the model.
     - H1's 2317K275 shim is 0.13 mm thick, against the 0.3 mm shields the model draws.
 
 ## What changed in bom.csv
@@ -127,12 +128,12 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
 
 | Status | Before (bom.csv at the start of this audit) | Now |
 |---|---|---|
-| real part priced | 87 | 117 |
+| real part priced | 87 | 116 |
 | real part unpriced | 3 | 4 |
 | generic | 7 | 22 |
 | custom | 26 | 65 |
 | missing from BOM | 70 | 2 |
-| inconsistent | 29 | 12 |
+| inconsistent | 29 | 13 |
 | excluded | 1 | 1 |
 | **total** | 223 | 223 |
 
@@ -187,6 +188,7 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | inconsistent | Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings) | custom (sheet) | H1 | 2317K275 | model's shields are 0.3 mm; H1's 2317K275 shim is 0.005 in. (0.13 mm) |
 | inconsistent | Collimator (IPG, 5 mm beam, 128 mm + 78 mm strain relief) on V-mount | bought | L3 | – | not priced by IPG yet; low-profile.md §2: f = 160 mm needs a ~3.2 mm beam for the 75 um spot; the model and L3 keep IPG's 5 mm collimator (sized for f = 254 mm; ~48 um at f = 160) |
 | inconsistent | f-theta lens, f = 160 mm (Thorlabs FTH160-1064) | bought | L6 | FTH160-1064 | model uses f = 160 mm (Thorlabs FTH160-1064, $1,011.78 in vendor-lookups.csv); L6 still specifies f = 254 mm |
+| inconsistent | HSS recoater blade (1.5 mm, wide nose) | bought | M5 | 2634T15 9011K104 | cut from M2 HSS sheet; the model's part-number tag is still 9011K104, the 18-8 shim, though the part is named HSS |
 | inconsistent | 19 in. rack frame (11U, 515 mm tall) | bought | S9 | 7648K62 | model draws an 11U rack 515 mm tall; S9's McMaster 7648K62 cabinet is 10U (no catalogue 11U rack that low was found) |
 | missing from BOM | Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating) | bought | – | FESH0900 NF1064-44 | no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs filter); model tag M6 does not cover it |
 | missing from BOM | Scan + laser controller PC (2U) | bought | – | – | C1 is the RTC6 card; no 2U PC is chosen; model tag C1 does not cover it |
@@ -282,7 +284,6 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | real part priced | Z carriage | bought | M3 | KR2602A-0110-0-01A0 | the carriage is part of the actuator |
 | real part priced | Dosing stepper (NEMA 17) | bought | M4 | 6627T91 |  |
 | real part priced | Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank) | bought | M4 | 4518K42 |  |
-| real part priced | HSS recoater blade (1.5 mm, wide nose) | bought | M5 | 2634T15 9011K104 | cut from M2 HSS sheet |
 | real part priced | Layer camera (Pi HQ + C-mount lens) | bought | M6 | 4561 |  |
 | real part priced | Guard-locking door switch (Omron D4JL) | bought | S2 | D4JL-4NFA-C5-NPT |  |
 | real part priced | E-stop | bought | S3 | XA1E-BV3U02-R |  |

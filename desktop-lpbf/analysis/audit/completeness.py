@@ -210,7 +210,8 @@ RULES = [
      "model draws a 1/8 in. O2 sample line; G7 lists only 1/4 in. 316 tube (89785K824) for the argon and O2 lines"),
     (r"^DIN-rail drawer", lambda b, c: "" if "drawer" in _t(b, "C6").lower() else
      "model draws a 3U 19 in. DIN-rail drawer; C6 is a McMaster 7812K14 NEMA wall box"),
-    (r"^HSS recoater blade", lambda b, c: "" if "HSS" in b.get("M5", {}).get("candidate", "") else "model blade is HSS; M5 lists 9011K104 18-8 shim (low-profile.md §5)"),
+    (r"^HSS recoater blade", lambda b, c: ("" if "HSS" in b.get("M5", {}).get("candidate", "") else "model blade is HSS; M5 lists 9011K104 18-8 shim (low-profile.md §5)")
+     or ("the model's part-number tag is still 9011K104, the 18-8 shim, though the part is named HSS" if c["mcm"] == "9011K104" else "")),
     (r"^Recoater shaft coupling \(clamp type, 6 to 8 mm", lambda b, c: "" if re.search(r"6 mm", _t(b, "M1")) else
      "drawn coupling is 6 to 8 mm (the Ferrotec SFL-006 has a 6 mm shaft); M1 lists 6446K781, 3/8 in. x 8 mm"),
 ]
@@ -425,7 +426,8 @@ def main():
             kind = "excluded"
         # purchase rows for the part numbers
         hits = []
-        for q in sorted(pns):
+        first = list(entry[4]) if entry else []
+        for q in first + sorted(x for x in pns if x not in first):   # the explicit map's part numbers first
             for rec in idx.get(q.upper(), []):
                 hits.append(rec)
                 rec["used"] = True

@@ -14,7 +14,7 @@ against `bom.csv` and the part-number lists. At the start of the audit (bom.csv 
 - the BOM still described the tall model's welded box, 30 mm T-slot cabinet and ball-screw piston (G1, S9, M3), and
   the model tagged parts with lines that did not exist (D1, F3, F4, F5).
 
-**Now:** 117 priced, 4 real but unpriced, 22 generic, 65 custom, **2 missing** and **12 inconsistent**. The BOM total
+**Now:** 116 priced, 4 real but unpriced, 22 generic, 65 custom, **2 missing** and **13 inconsistent**. The BOM total
 goes from **$39,440 – $112,978** to **$58,132 – $144,632**. $7,708 – $20,770 of the rise is line X1, the machining no
 line costed before. Without X1 the total is $50,424 – $123,862.
 
@@ -97,7 +97,8 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
     - The optics posts are drawn 60 × 60 × 5 mm. McMaster's nearest is 2-1/2 × 1/4 in. (6546K31).
     - THK's KR26 rail is nominally 26 mm wide, against the 46 × 28 mm Z envelope.
     - The SMC door actuator weighs 0.60 kg, against the 0.3 kg the model assumes.
-    - The hinge is labelled 1151A87 but drawn as custom knuckles.
+    - The hinge is labelled 1151A87 but drawn as custom knuckles, and the HSS blade still carries the 18-8 shim's
+      part number (9011K104) in the model.
     - H1's 2317K275 shim is 0.13 mm thick, against the 0.3 mm shields the model draws.
 
 ## What changed in bom.csv
