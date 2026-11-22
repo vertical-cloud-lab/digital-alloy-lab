@@ -102,7 +102,7 @@ fixes, is in [`camotics_sim_before_fixes.json`](analysis/out/machining/camotics/
      45° zig-zag also touches the edges only at its turns.
    - CAMotics showed 1.55-2.7 mm of skin in patches up to 20 mm in from every edge.
    - Fix: face the face's bounding box plus the tool radius (`BoundaryShape = Boundbox` with `ClearEdges`), zig-zag along
-     x. That adds 0.5 min per face op.
+     x. That adds 0.5-0.7 min per face op.
 2. **The floor plate's bottom web was never faced off.**
    - Setup A cuts the outside down to z -20.5, 2.2 mm short of the blank's bottom. Setup B's stock was the 312 × 222
      outline, so its face mill stayed inside the outline and the web ring outside it stayed on.

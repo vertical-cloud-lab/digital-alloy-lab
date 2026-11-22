@@ -1,5 +1,5 @@
 {
- "note": "First CAMotics run, on freecad_cam.py's G-code before the four fixes (2026-11-22; same model, snapshot of commit cc1e0a1). The floor numbers show the four problems; the frame had no gouges or rapids through stock, only unfaced edge patches and the unprogrammed setup-C features. The FreeCAD times in the frame entries are from the freecad_cam.json committed before this run.",
+ "note": "First CAMotics run, on freecad_cam.py's G-code before the fixes (2026-11-22; same model, snapshot of commit cc1e0a1). The floor numbers show the drilling, facing and web problems; the frame had no gouges or rapids through stock, only unfaced edge patches and the unprogrammed setup-C features. In this run CAMotics also logged parse errors on nested parentheses in the comments and dropped floor B's last two drill ops, and the leftover counts include the two slugs (no loose-piece split yet). The FreeCAD times in the frame entries are from the freecad_cam.json committed before this run.",
  "camotics": {
   "version": "CAMotics 1.2.0 (camsim), Docker image on ubuntu:18.04",
   "resolution_mm": 0.5,
