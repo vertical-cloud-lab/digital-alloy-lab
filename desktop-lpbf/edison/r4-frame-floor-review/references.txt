@@ -1,0 +1,45 @@
+1. (sonderegger2006vacuumsealingtechnology pages 23-25): K Sonderegger. Vacuum sealing technology. Unknown journal, 2006.
+
+2. (adderley2008aroadmap pages 5-7): P Adderley and G Myneni. A road map to extreme high vacuum. Journal of Physics: Conference Series, 114:012011, May 2008. URL: https://doi.org/10.1088/1742-6596/114/1/012011, doi:10.1088/1742-6596/114/1/012011. This article has 8 citations.
+
+3. (danielson2006nitpickingyourvacuum pages 1-4): P Danielson. Nitpicking your vacuum system. Unknown journal, 2006.
+
+4. (mccall2026alargenonmagnetic pages 1-2): N. McCall, Hei-Man Yau, Z. Corriveau, J. P. Garcia, T. Chauhan, G. Koyanagi, R. Lambo, M. C. George, C. H. Storry, and E. Hessels. A large nonmagnetic aluminum-and-viton vacuum chamber suitable for vacuum pressures down into the extremely-high-vacuum (xhv) regime. ArXiv, Oct 2026. URL: https://doi.org/10.48550/arxiv.2610.24262, doi:10.48550/arxiv.2610.24262. This article has 0 citations.
+
+5. (mccall2026alargenonmagnetic pages 6-8): N. McCall, Hei-Man Yau, Z. Corriveau, J. P. Garcia, T. Chauhan, G. Koyanagi, R. Lambo, M. C. George, C. H. Storry, and E. Hessels. A large nonmagnetic aluminum-and-viton vacuum chamber suitable for vacuum pressures down into the extremely-high-vacuum (xhv) regime. ArXiv, Oct 2026. URL: https://doi.org/10.48550/arxiv.2610.24262, doi:10.48550/arxiv.2610.24262. This article has 0 citations.
+
+6. (bregliozzi2020vacuumacceptancetests pages 1-3): G. Bregliozzi. Vacuum acceptance tests for particle accelerator equipment. Preprint, Jan 2020. URL: https://doi.org/10.48550/arxiv.2006.10367, doi:10.48550/arxiv.2006.10367. This article has 5 citations.
+
+7. (younger2007overcomingresidualstresses pages 6-11): Mandy Younger and Kenneth Eckelmeyer. Overcoming residual stresses and machining distortion in the production of aluminum alloy satellite boxes. ArXiv, Nov 2007. URL: https://doi.org/10.2172/922073, doi:10.2172/922073. This article has 41 citations.
+
+8. (younger2007overcomingresidualstresses pages 45-49): Mandy Younger and Kenneth Eckelmeyer. Overcoming residual stresses and machining distortion in the production of aluminum alloy satellite boxes. ArXiv, Nov 2007. URL: https://doi.org/10.2172/922073, doi:10.2172/922073. This article has 41 citations.
+
+9. (younger2007aluminumalloysfor pages 13-16): Mandy Younger and Kenneth Eckelmeyer. Aluminum alloys for satellite boxes : engineering guidelines for obtaining adequate strength while minimizing residual stresses and machining distortion. ArXiv, Nov 2007. URL: https://doi.org/10.2172/922072, doi:10.2172/922072. This article has 11 citations.
+
+10. (younger2007overcomingresidualstresses pages 49-51): Mandy Younger and Kenneth Eckelmeyer. Overcoming residual stresses and machining distortion in the production of aluminum alloy satellite boxes. ArXiv, Nov 2007. URL: https://doi.org/10.2172/922073, doi:10.2172/922073. This article has 41 citations.
+
+11. (younger2007overcomingresidualstresses pages 22-25): Mandy Younger and Kenneth Eckelmeyer. Overcoming residual stresses and machining distortion in the production of aluminum alloy satellite boxes. ArXiv, Nov 2007. URL: https://doi.org/10.2172/922073, doi:10.2172/922073. This article has 41 citations.
+
+12. (younger2007overcomingresidualstresses pages 51-56): Mandy Younger and Kenneth Eckelmeyer. Overcoming residual stresses and machining distortion in the production of aluminum alloy satellite boxes. ArXiv, Nov 2007. URL: https://doi.org/10.2172/922073, doi:10.2172/922073. This article has 41 citations.
+
+13. (hashish2024abrasivewaterjetmachining pages 27-30): Mohamed Hashish. Abrasive waterjet machining. Jul 2024. URL: https://doi.org/10.3390/ma17133273, doi:10.3390/ma17133273. This article has 55 citations.
+
+14. (hashish2024abrasivewaterjetmachining pages 1-2): Mohamed Hashish. Abrasive waterjet machining. Jul 2024. URL: https://doi.org/10.3390/ma17133273, doi:10.3390/ma17133273. This article has 55 citations.
+
+15. (hashish2024abrasivewaterjetmachining pages 20-23): Mohamed Hashish. Abrasive waterjet machining. Jul 2024. URL: https://doi.org/10.3390/ma17133273, doi:10.3390/ma17133273. This article has 55 citations.
+
+16. (tavares2008vacuumsystems–drawbacks pages 38-42): VMS Tavares. Vacuum systems–drawbacks. Unknown journal, 2008.
+
+17. (sturm2004permeationofatmospheric pages 2-3): P. Sturm, M. Leuenberger, C. Sirignano, R. E. M. Neubert, H. A. J. Meijer, R. Langenfelds, W. A. Brand, and Y. Tohjima. Permeation of atmospheric gases through polymer o-rings used in flasks for air sampling. Journal of Geophysical Research, 109:309-318, Feb 2004. URL: https://doi.org/10.1029/2003jd004073, doi:10.1029/2003jd004073. This article has 125 citations.
+
+18. (bregliozzi2020vacuumacceptancetests pages 3-5): G. Bregliozzi. Vacuum acceptance tests for particle accelerator equipment. Preprint, Jan 2020. URL: https://doi.org/10.48550/arxiv.2006.10367, doi:10.48550/arxiv.2006.10367. This article has 5 citations.
+
+19. (pauzon2021tailoredprocessgases pages 26-29): CNG Pauzon. Tailored process gases for laser powder bed fusion. Unknown journal, 2021.
+
+20. (baroutaji2023theinfluenceof pages 11-12): Ahmad Baroutaji, Arun Arjunan, James Beal, John Robinson, and Julio Coroado. The influence of atmospheric oxygen content on the mechanical properties of selectively laser melted alsi10mg tpms-based lattice. Materials, 16:430, Jan 2023. URL: https://doi.org/10.3390/ma16010430, doi:10.3390/ma16010430. This article has 34 citations.
+
+21. (baroutaji2023theinfluenceof pages 1-2): Ahmad Baroutaji, Arun Arjunan, James Beal, John Robinson, and Julio Coroado. The influence of atmospheric oxygen content on the mechanical properties of selectively laser melted alsi10mg tpms-based lattice. Materials, 16:430, Jan 2023. URL: https://doi.org/10.3390/ma16010430, doi:10.3390/ma16010430. This article has 34 citations.
+
+22. (mccall2026alargenonmagnetic pages 3-5): N. McCall, Hei-Man Yau, Z. Corriveau, J. P. Garcia, T. Chauhan, G. Koyanagi, R. Lambo, M. C. George, C. H. Storry, and E. Hessels. A large nonmagnetic aluminum-and-viton vacuum chamber suitable for vacuum pressures down into the extremely-high-vacuum (xhv) regime. ArXiv, Oct 2026. URL: https://doi.org/10.48550/arxiv.2610.24262, doi:10.48550/arxiv.2610.24262. This article has 0 citations.
+
+23. (griggs2022atestbedfor pages 3-7): David A. Griggs, Jonathan S. Gibbs, Stuart P. Baker, Ryan W. Penny, Martin C. Feldmann, and A. John Hart. A testbed for investigation of laser powder bed fusion at elevated atmospheric pressure. Additive Manufacturing, 51:102581, Mar 2022. URL: https://doi.org/10.1016/j.addma.2021.102581, doi:10.1016/j.addma.2021.102581. This article has 10 citations and is from a highest quality peer-reviewed journal.
