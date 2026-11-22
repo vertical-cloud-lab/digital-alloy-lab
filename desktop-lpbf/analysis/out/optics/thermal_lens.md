@@ -46,6 +46,17 @@ f-theta lens heated by its own absorption (all elements lumped, beam at its coll
 | 3.2 mm | N-BK7-type glass | 0.10 % | 0.5 | 0.189 | **4.7** | 1.3 |
 | 3.2 mm | N-BK7-type glass | 0.30 % | 1.5 | 0.568 | **13** | 3.6 |
 
+Sapphire cover slide (c-plane, 2 mm, χ = 1.82e-05 /K, k 27.0), same geometry:
+
+| Collimator D | Absorption | ΔT centre (K) | D_eff (1/m) | Focus shift (mm) | × z_R |
+|---|---|---|---|---|---|
+| 5.0 mm | 0.05 % | 2.2 | 0.00692 | **0.11** | 0.071 |
+| 5.0 mm | 0.50 % | 22 | 0.0692 | **1.1** | 0.71 |
+| 5.0 mm | 2.00 % | 90 | 0.277 | **4.2** | 2.8 |
+| 3.2 mm | 0.05 % | 2.6 | 0.017 | **0.27** | 0.072 |
+| 3.2 mm | 0.50 % | 26 | 0.17 | **2.6** | 0.7 |
+| 3.2 mm | 2.00 % | 1e+02 | 0.679 | **9.9** | 2.6 |
+
 Check against mech.md E (500 W, 0.5 %): its formula gives 43.8 mm. mech.md: w = 1.27 mm, D = P dn/dT/(2 pi k w^2), dz = f^2 D: 43.8 mm. Here: the slide is at z 126 (not 145), the central-curvature power is 2x, and dz = h^2 D/(1 + h D) for an element h above focus.
 
 Time constants: local (w = 2 mm) 1.2 s; whole slide 108 s.

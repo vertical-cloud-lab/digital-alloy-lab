@@ -35,6 +35,9 @@ FS["chi"] = FS["dndT"] + (FS["n"] - 1) * (1 + FS["nu"]) * FS["alpha"]
 BK7 = dict(k=1.114, dndT=2.4e-6, alpha=7.1e-6, nu=0.206, n=1.507)
 BK7["chi"] = BK7["dndT"] + (BK7["n"] - 1) * (1 + BK7["nu"]) * BK7["alpha"]
 
+# sapphire, c-plane (mech.md E inputs: k 27, dn/dT 13.1e-6, alpha 5.3e-6, nu 0.27, n 1.755): the cover-slide upgrade
+SAP = dict(k=27.0, dndT=13.1e-6, alpha=5.3e-6, nu=0.27, n=1.755)
+SAP["chi"] = SAP["dndT"] + (SAP["n"] - 1) * (1 + SAP["nu"]) * SAP["alpha"]
 P = 500.0
 SIGMA = 5.670e-8
 
@@ -126,7 +129,7 @@ ABS = {"clean, uncoated (bulk 20 ppm/cm + 2 x 5 ppm surfaces)": None,
        "clean, AR both faces (2 x 30 ppm + bulk)": None,
        "light film 0.05 %": 5e-4, "fogged 0.5 %": 5e-3, "sooted 2 %": 2e-2}
 
-res = dict(material=dict(fused_silica=FS, NBK7=BK7), cases=[], lens=[], check=[])
+res = dict(material=dict(fused_silica=FS, NBK7=BK7, sapphire=SAP), cases=[], lens=[], check=[], sapphire_slide=[])
 
 for D_coll in (5.0, 3.2):
     zR = zr_mm(D_coll)
@@ -163,6 +166,16 @@ for D_coll in (5.0, 3.2):
             res["lens"].append(dict(D_coll_mm=D_coll, material=mat_name, a_tot=a_tot, P_abs_W=Pabs, T_centre_K=Tc, D_eff_per_m=D_eff,
                                     dz_mm=dz, x_zR=dz / zR, zR_mm=zR))
 
+# sapphire cover slide (2 mm), same geometry: the thermal lens scales as chi / k
+for D_coll in (5.0, 3.2):
+    zR = zr_mm(D_coll)
+    w = beam_w(D_coll, 126.0)
+    for a in (5e-4, 5e-3, 2e-2):
+        r, opd, Tc, Trim, Tmax = solve_disc(23.0e-3, 2.0e-3, w, a * P, where="bottom", mat=SAP)
+        D_eff, rms = fit_defocus(r, opd, w)
+        dz = focus_shift(0.126, D_eff) * 1e3
+        res["sapphire_slide"].append(dict(D_coll_mm=D_coll, a_tot=a, P_abs_W=a * P, T_centre_K=Tc, D_eff_per_m=D_eff, dz_mm=dz, x_zR=dz / zR))
+
 # reproduce mech.md E's 500 W / 0.5 % row with its own formula, and with this one at the model's real slide height
 w_mech = 3.2e-3 / 2 * (0.145 / 0.1825)
 D_mech = 2.5 * 9.6e-6 / (2 * math.pi * 1.38 * w_mech ** 2)
@@ -189,6 +202,10 @@ L += ["", "f-theta lens heated by its own absorption (all elements lumped, beam 
       "| Collimator D | Material | Total absorption | P_abs (W) | D_eff (1/m) | Focus shift (mm) | × z_R |", "|---|---|---|---|---|---|---|"]
 for c in res["lens"]:
     L.append(f"| {c['D_coll_mm']} mm | {c['material']} | {100*c['a_tot']:.2f} % | {c['P_abs_W']:.2g} | {c['D_eff_per_m']:.3g} | **{c['dz_mm']:.2g}** | {c['x_zR']:.2g} |")
+L += ["", f"Sapphire cover slide (c-plane, 2 mm, χ = {SAP['chi']:.2e} /K, k {SAP['k']}), same geometry:", "",
+      "| Collimator D | Absorption | ΔT centre (K) | D_eff (1/m) | Focus shift (mm) | × z_R |", "|---|---|---|---|---|---|"]
+for c in res["sapphire_slide"]:
+    L.append(f"| {c['D_coll_mm']} mm | {100*c['a_tot']:.2f} % | {c['T_centre_K']:.2g} | {c['D_eff_per_m']:.3g} | **{c['dz_mm']:.2g}** | {c['x_zR']:.2g} |")
 L += ["", f"Check against mech.md E (500 W, 0.5 %): its formula gives {res['check']['mech_md_formula_dz_mm']:.1f} mm. {res['check']['note']}", "",
       f"Time constants: local (w = 2 mm) {res['time_constants_s']['local_w2mm']:.1f} s; whole slide {res['time_constants_s']['disc_R23mm']:.0f} s."]
 (OUT / "thermal_lens.md").write_text("\n".join(L) + "\n")
