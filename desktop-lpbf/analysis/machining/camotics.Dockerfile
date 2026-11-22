@@ -1,5 +1,5 @@
-# CAMotics 1.2.0 (the last release, 2019) on Ubuntu 18.04, the newest Ubuntu that still ships the
-# libraries its binaries link against: libv8.so.3.14.5 (V8 3.14) and libssl.so.1.1 / libcrypto.so.1.1.
+# CAMotics 1.2.0 (the last release, 2019) on Ubuntu 18.04, the newest LTS that ships the libraries its binaries
+# link against: libv8.so.3.14.5 (V8 3.14, gone from Ubuntu after 19.10) and libssl.so.1.1 / libcrypto.so.1.1.
 # The .deb does not declare libQt5WebSockets.so.5, so libqt5websockets5 is added by hand.
 FROM ubuntu:18.04
 ARG DEBIAN_FRONTEND=noninteractive

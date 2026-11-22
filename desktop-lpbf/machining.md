@@ -5,6 +5,162 @@ design-for-machining (DFM) rules. It covers what BYU's shops list, what a 3-axis
 cannot reach, and the tools to buy. Nothing here has been quoted by a shop. A BYU machinist reviewed the build animation;
 the first section answers him.
 
+## G-code simulated in CAMotics (2026-11-22)
+
+Sterling asked for last round's CAMotics install error to be sorted out. It was a library problem on the runner, not a
+CAMotics bug. CAMotics now runs in Docker and has cut every setup of the frame and the floor plate.
+
+It found six problems in the G-code, all caused by `freecad_cam.py`'s settings. All six are fixed. The re-run shows no
+gouges and no rapids through stock. What's left is the frame features that were never programmed, six undersized hole
+steps in the floor plate, and two slugs that drop out.
+
+### The install error, and the fix
+
+- **The error.** CAMotics' last release is 1.2.0, from February 2019.
+  - Its `.deb` declares `libv8-3.14.5 | libv8-dev`. On the runner's Ubuntu 26.04, apt satisfies `libv8-dev` with Node
+    22's `libnode-dev`, so the package would install.
+  - The programs, though, are linked against V8 3.14 and OpenSSL 1.1, and don't start:
+    `camsim: error while loading shared libraries: libv8.so.3.14.5: cannot open shared object file: No such file or directory`.
+  - `ldd` also lists `libssl.so.1.1` and `libcrypto.so.1.1` as missing (Ubuntu moved to OpenSSL 3 in 22.04), plus the
+    Qt 5 libraries.
+- **The fix: a Docker image on Ubuntu 18.04**, the newest LTS that ships V8 3.14 (it left Ubuntu after 19.10) and
+  OpenSSL 1.1 ([`camotics.Dockerfile`](analysis/machining/camotics.Dockerfile)).
+  - It checks the `.deb`'s sha256.
+  - The `.deb` also needs `libqt5websockets5`, which it doesn't declare. Without it, camsim stops with
+    `libQt5WebSockets.so.5: cannot open shared object file`.
+  - The command-line simulator `camsim` needs no display, so no xvfb. Building from source wasn't needed.
+- **CAMotics 1.2.0's own limits,** worked around in the script:
+  - **No G83.** It doesn't implement peck drilling: it logs `Not implemented: G83` and skips the hole. The script expands
+    every canned cycle into G0/G1 moves the way LinuxCNC runs them.
+  - **Start point.** The tool starts at (0, 0, 0), which is inside the blank. A `G92 Z1000` after the preamble starts it
+    1 m above the part.
+  - **Memory.** A whole frame blank at 0.5 mm needs more than the container's 3 GB, so each blank is cut in 32 mm slabs.
+  - **Timing.** Every move takes length / F. Rapids run at a hard-coded 10 m/min (`src/gcode/Move.cpp`:
+    `feed = 10000; // TODO FIXME`).
+
+### Method
+
+- **G-code.** FreeCAD 1.0.2 re-posted all five setups from the committed model (a snapshot of `cc1e0a1`), then again
+  after each round of fixes.
+- **Simulation.** [`camotics_sim.py`](analysis/machining/camotics_sim.py) cuts each setup in camsim on the full blank at
+  0.5 mm, with each tool's diameter and stick-out from `freecad_cam.TOOLS`. All the tools are flat-ended cylinders:
+  CAMotics has no drill-point shape, so the drill points are checked by arithmetic ([below](#drill-points)).
+- **Chaining.** camsim's workpiece can only be a box, so a setup can't start from the last one's result.
+  - Each setup's result is turned back into the part frame and intersected with the others. For the frame, it's also
+    intersected with the blank minus the 274 × 184 waterjet slug.
+  - The final shape is the same as chaining.
+- **Compared with the model on a 0.5 mm voxel grid:**
+  - gouges (material the part keeps that was cut away);
+  - leftover (material that should be gone);
+  - the deepest point of each.
+
+  Differences within 1 mm of the model's surface are voxel noise and are not counted. Material no longer joined to the
+  part is listed as loose.
+- **Rapids through stock.** CAMotics cuts with rapids like any other move and doesn't flag them.
+  - So the script sweeps every G0 against the stock in front of it: the chained result of the earlier setups, minus
+    what this setup has cut so far (a z-map of the lowest tool tip).
+  - It counts material more than 0.5 mm inside the tool's path.
+
+### Results after the fixes
+
+Results are in [`camotics_sim.json`](analysis/out/machining/camotics/camotics_sim.json). The first run, before the
+fixes, is in [`camotics_sim_before_fixes.json`](analysis/out/machining/camotics/camotics_sim_before_fixes.json).
+
+| Setup | Cut away (cm³) | Rapids through stock | CAMotics time (min) | Recount (min) | FreeCAD's estimate (min) |
+|---|---|---|---|---|---|
+| frame A, top up | 427 | 0 | 41.7 | 41.3 | 49.2 |
+| frame B, bottom up | 445 | 0 | 6.8 | 6.5 | 11.0 |
+| frame C, front up (door) | 323 | 0 | 11.1 | 10.5 | 15.9 |
+| floor A, top up | 455 | 0 | 51.2 | 51.0 | 58.9 |
+| floor B, bottom up | 177 | 0 | 10.0 | 9.2 | 23.9 |
+| **frame / floor plate** | | **0** | **59.6 / 61.2** | **58.3 / 60.2** | **76.0 / 82.8** |
+
+| Part | Gouge deeper than 1 mm | Leftover deeper than 1 mm | Deepest leftover | Loose pieces |
+|---|---|---|---|---|
+| frame | none | 31.8 cm³ in 27 places | 12.4 mm: the bore in the right wall at y 0, z 58-82 | none |
+| floor plate | none (deepest 0.5 mm, voxel noise) | 0.14 cm³ in 6 places | 2.0 mm: four hole steps at (±135, ±90) | port slug 52.6 cm³, slot core 12.7 cm³; both drop in setup A |
+
+- **All of the frame's leftover is setup-C work that `freecad_cam.py` never programmed:** the back-wall inlet slot
+  (13.1 cm³), the side-wall bores (7.3 and 2 × 3.5 cm³), the ports, the rail holes and the plenum and insert holes.
+  Setup C programs only the door opening, as before.
+- **The floor plate's leftover is six hole steps wider than the biggest drill in the set.** They are at (±135, ±90),
+  z -11 to -9.5, and at (±58, 0), z -8 to -7. The 6.0 mm drill leaves up to 1 mm of wall. They need the right drill
+  or a helical end-mill pass.
+
+| Floor plate, first run | Floor plate, after the fixes |
+|---|---|
+| ![](analysis/out/machining/camotics/camotics_floor_before_fixes.png) | ![](analysis/out/machining/camotics/camotics_floor.png) |
+
+| Frame, first run | Frame, after the fixes |
+|---|---|
+| ![](analysis/out/machining/camotics/camotics_frame_before_fixes.png) | ![](analysis/out/machining/camotics/camotics_frame.png) |
+
+### What it found, and the fixes in freecad_cam.py
+
+1. **The face mills left the corners and patches along the edges unfaced** (both parts, all four face ops).
+   - The face op used the stock as its boundary, which keeps the 63.5 mm face mill inside the stock. FreeCAD's default
+     45° zig-zag also touches the edges only at its turns.
+   - CAMotics showed 1.55-2.7 mm of skin in patches up to 20 mm in from every edge.
+   - Fix: face the face's bounding box plus the tool radius (`BoundaryShape = Boundbox` with `ClearEdges`), zig-zag along
+     x. That adds 0.5 min per face op.
+2. **The floor plate's bottom web was never faced off.**
+   - Setup A cuts the outside down to z -20.5, 2.2 mm short of the blank's bottom. Setup B's stock was the 312 × 222
+     outline, so its face mill stayed inside the outline and the web ring outside it stayed on.
+   - Then 303 rapids of the 1/4 in. notch tool ran its shank through the ring (10 cm³ in all).
+   - Fix 1 faces the web off.
+3. **Two dowel holes that open on top were drilled up through the bottom** in setup B, because `drill_all` took every
+   hole.
+   - That cut two Ø6 × 5.5 mm holes into the underside (127 mm³ each). The drill also rapided 3.5 mm into solid stock.
+   - Fix: holes that open only on top are drilled in setup A, and the rest from below.
+4. **Inner hole steps were drilled before the step above them.**
+   - The 5.0 mm step of four stepped holes went before their 6.0 mm counterbore, and the 3.3 mm step of ten M4 holes
+     before their 4.2 mm step. So the drill rapided down to its R plane 4-5.5 mm inside solid stock, 14 times.
+   - Fix: the step nearest the entry face goes first.
+5. **Through holes stopped with the drill's tip at the far face.** That leaves the 118° point's cone in the exit: 1.3 mm
+   for the 4.2 mm drill.
+   - Fix: `ExtraOffset = Drill Tip` on steps whose far end opens at full diameter.
+6. **The port and slot slugs were held by the web until setup B,** whose fixture needs the port open for its centre stud.
+   - Fix: the trepan and the slot profiles go to z -23.2, 0.5 mm past the blank, so the slugs drop in setup A. The
+     fixture must leave room under them.
+   - The 20 × 104 slot is cut by its outline only, so its 7 × 91 × 20 mm core drops too. Hold it, or pocket the slot.
+
+Before the fixes, floor setup B had 319 rapids through stock: 303 from the notch tool, 16 from the drills. The floor
+plate had 0.25 cm³ of gouges and 71 cm³ of leftover deeper than 1 mm, 65 cm³ of it the two slugs. The frame had no
+gouges and no rapids through stock, only the unfaced edges and the unprogrammed features.
+
+### Drill points
+
+The simulation's drills are flat, so it can't see their points. By arithmetic, from the programmed depths:
+
+- **Blind steps still stop with the drill's tip at the model's flat floor.** So the full diameter ends 0.3 × D short:
+  1.0 mm for the 3.3 mm M4 tap drill, 1.5 mm for the 5.0 mm pilot, 1.8 mm for the 6.0 mm drill.
+- That matters for the frame's 18 M4 holes (thread depth) and the 20 lid inserts' 5.0 mm pilots. Drill to the thread or
+  insert depth plus the point, or use a flat-bottom drill.
+- Every drill op is listed under `drills` in `camotics_sim.json`.
+
+### Cycle time
+
+- **CAMotics' time and the recount agree to within the rapid speed:** 59.6 against 58.3 min for the frame, 61.2 against
+  60.2 min for the floor plate. Both are length / F. CAMotics runs rapids at 10 m/min, the recount at the VF-4's
+  25.4 m/min.
+- **FreeCAD's own estimate is 15-140 % higher than CAMotics' per setup,** because it times every move that changes Z at
+  the plunge feed (`freecad_notes` in [`freecad_cam.json`](analysis/out/machining/freecad_cam.json)).
+- None of the three counts acceleration, tool changes or spindle ramp-up.
+- The fixes changed the cutting time from 57 to 58 min for the frame and from 58 to 60 min for the floor plate.
+
+### Not checked
+
+- **Holder, spindle and fixture collisions.** CAMotics models the cutter only, and the rapid check treats the tool as a
+  cylinder going up forever.
+- **Cutting loads:** chip load, deflection and chatter.
+- **The taps, reamers, insert tools and chamfers,** which aren't programmed.
+- **Anything under about 1 mm.** The 0.5 mm grid doesn't check the O-ring grooves' width and depth to tolerance.
+- **Frame setup C beyond the door opening,** which isn't programmed.
+
+Run: `docker build -t camotics:1.2.0 -f desktop-lpbf/analysis/machining/camotics.Dockerfile desktop-lpbf/analysis/machining`,
+then `freecad_cam.py` (its docstring), then `/tmp/capmem 3 /tmp/venv/bin/python desktop-lpbf/analysis/machining/camotics_sim.py`.
+It takes about 13 min.
+
 ## Update: the chamber as a through-frame, the 4th axis, and honest hours (2026-11-20, evening)
 
 ### The answer to the machinist
@@ -73,8 +229,9 @@ He is right on both counts.
   - Taps, reamers and tool changes are not timed.
   - Its 1.0 Adaptive op only sees the stock as a box, so the frame's opening was cut with Profile passes. Its Drilling and
     Helix ops needed work-arounds headless; both are documented in the script.
-  - CAMotics would not install on the runner (no package for this OS; the 2019 .deb needs libraries the runner lacks), so
-    the G-code has not been simulated.
+  - CAMotics now runs (in Docker) and has cut this G-code; six fixes followed. See
+    [G-code simulated in CAMotics](#g-code-simulated-in-camotics-2026-11-22) above. The times in this bullet are from
+    before those fixes.
   - Use it as a head start and a check. The shop will still program and prove out in its own CAM.
 - **Setup plan:** [`setup_plan.json`](analysis/out/machining/setup_plan.json) ([`setup_plan.py`](analysis/machining/setup_plan.py)).
   For the frame and the floor plate it gives:

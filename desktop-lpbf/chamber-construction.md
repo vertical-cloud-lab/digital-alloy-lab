@@ -262,7 +262,10 @@ The full plan is in [`analysis/out/machining/setup_plan.json`](analysis/out/mach
 - **FreeCAD 1.0.2's CAM workbench,** run headless, programmed the same features and posted G-code: 60 min of cutting for the
   frame and 58 min for the floor plate ([`freecad_cam.json`](analysis/out/machining/freecad_cam.json)). Its O-ring grooves
   used a slow 1/8 in. tool and account for 38 and 35 min of that. FreeCAD didn't time taps, reamers or tool changes.
-  CAMotics could not be installed on the runner.
+  CAMotics 1.2.0 then cut that G-code setup by setup, in Docker on Ubuntu 18.04 because its 2019 package needs V8 3.14
+  and OpenSSL 1.1, which the runner's Ubuntu 26.04 lacks. It found six problems in the facing, floor-drilling and stock
+  settings. With them fixed there are no gouges and no rapids through stock, and the cutting time is 58 min for the
+  frame and 60 min for the floor plate ([`machining.md`](machining.md#g-code-simulated-in-camotics-2026-11-22)).
 
 ## Hours
 

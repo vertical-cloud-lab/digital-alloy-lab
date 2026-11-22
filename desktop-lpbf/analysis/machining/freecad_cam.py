@@ -29,13 +29,15 @@ box, so the inside of the frame opening is cut with Profile passes (rough 2.7 mm
 radial) rather than Adaptive. Drills: one drill per hole step, the largest of 3.3/4.2/5.0/6.0 mm that
 fits; taps, reamers and insert tools are not costed. No lead-in/lead-out dressups.
 
-Checked in CAMotics (camotics_sim.py, 2026-11-22), which led to four fixes here: face mills zig-zag along x
-(FreeCAD's default 45 deg left unfaced triangles at every edge); floor setup B's stock is the whole blank
-(it was the 312 x 222 outline, so the 2.2 mm web outside the outline was never faced and the notch tool
-ran through it); floor holes are drilled from the side they open on, nearest step first (two top-side
-dowel holes were drilled up through the bottom, and inner steps were drilled before the step above them
-was open, so the drill rapided into solid stock); steps whose far end opens at full diameter get
-ExtraOffset = Drill Tip so the 118 deg point does not leave a cone in the exit.
+Checked in CAMotics (camotics_sim.py, 2026-11-22), which led to these fixes: face ops cover their face's
+bounding box plus the tool radius, zig-zag along x (with the stock as the boundary and FreeCAD's default
+45 deg, corners and patches up to 20 mm in from every edge stayed unfaced, and on the floor plate the
+2.2 mm web outside the outline was never faced, so the notch tool ran through it); floor holes are drilled
+from the side they open on, nearest step first (two top-side dowel holes were drilled up through the
+bottom, and inner steps were drilled before the step above them was open, so the drill rapided into
+solid stock); steps whose far end opens at full diameter get ExtraOffset = Drill Tip so the 118 deg point
+does not leave a cone in the exit; the floor's port trepan and slots go through the blank in setup A, so
+their slugs drop there.
 """
 import json
 import math
@@ -128,16 +130,20 @@ SETUPS = [
         ("Outside 312x222 R8, adaptive, z -4 to -20.5", "adaptive_out", 2, None,
          dict(face="band", start=-4.0, final=-20.5, step=16.5, stepover=10)),
         ("Floor O-ring groove 4.6 x 2.65", "pocket", 4, None, dict(face="gland", start=0.0, step=0.5)),
+        # port and slots go 0.5 mm past the blank's bottom (z -22.7), so their slugs drop in this setup: at z -20.5
+        # a 2.2 mm web held them until setup B, whose fixture needs the port open for its centre stud
         ("Port 96 mm through: helical trepan (slug drops)", "helix", 2, 0.002,
-         dict(face="port", start=0.0, final=-20.5, step=1.5)),
+         dict(face="port", start=0.0, final=-23.2, step=1.5)),
         ("Slots 124x8 and 20x104 through, profile", "profile_holes", 9, None,
-         dict(face="top_inner", start=0.0, final=-20.5, step=3.0, extra=0.0)),
+         dict(face="top_inner", start=0.0, final=-23.2, step=3.0, extra=0.0)),
         # added after the CAMotics check: the blind holes that open on the top side were drilled from below in B
         ("Drill the blind holes that open on top", "drill_top", None, None, dict()),
     ]),
-    # floor B: the stock is the whole blank. It was the 312 x 222 outline box, so the face mill left the 2.2 mm web
-    # outside the outline (setup A's outside cut stops at z -20.5) and the notch op's tool ran through it.
-    dict(name="floor_B", part="floor", flip=True, stock=FLOOR_BLANK, ops=[
+    # floor B: the stock is the 312 x 222 outline box (A cut the outside down to z -20.5), so the notch Adaptive only
+    # cuts the notches. The 2.2 mm web left under z -20.5 is faced off by the face op, which now covers its face's
+    # bounding box plus the tool radius whatever the stock (with the stock as the boundary it missed the web, and
+    # the notch op's tool ran through it).
+    dict(name="floor_B", part="floor", flip=True, stock=(312.0, 222.0, -22.7, 2.7), ops=[
         ("Face bottom to 20 mm thick", "face", 1, None, dict(face="top", start=22.7, final=20.0, step=2.7)),
         ("18 U-notches 8 wide x 8 deep (adaptive outside the outline)", "adaptive_out", 9, None,
          dict(face="top", start=20.0, final=12.0, step=4.0, stepover=15)),
@@ -323,12 +329,13 @@ def run_cam():
             if kind == "face":
                 op = Path.Op.MillFace.Create("Face", parentJob=job)
                 op.Base = [(base, base_subs)]
-                op.BoundaryShape = "Stock"
+                # The face's bounding box grown by the tool radius (ClearEdges only works with "Boundbox"). With
+                # "Stock", the tool stayed inside the stock, so the corners were never faced, and FreeCAD's default
+                # 45 deg zig-zag touched the edges only at its turns: CAMotics showed unfaced patches up to 20 mm in
+                # from every edge. Along x the turns run down the x edges and the outer passes along the y edges.
+                op.BoundaryShape = "Boundbox"
                 op.StepOver = 70
                 op.ClearEdges = True
-                # FreeCAD's default 45 deg zig-zag only touches the boundary at its turns: CAMotics showed
-                # unfaced triangles up to 20 mm in from every edge. Along x the turns run down the x edges and
-                # the first and last passes run along the y edges.
                 op.ZigZagAngle = 0.0
             elif kind == "adaptive_out":
                 op = Path.Op.Adaptive.Create("Adaptive", parentJob=job)
@@ -596,11 +603,11 @@ def summarise(version, results):
             "Frame stock = 317.5 x 228.6 x 127 blank with the 274 x 184 core already waterjet/bandsawn out: "
             "the outside is cut by Adaptive (stock box), the opening by Profile only (3 mm radial).",
             "Setup A cuts outside and opening to z 58, setup B from the bottom to z 58 (meet line at mid-height).",
-            "Floor setup B stock = the whole blank (setup A's outside cut stops 2.2 mm short of the blank's "
-            "bottom, so B faces that web off); its notch Adaptive also sweeps the (already cut) band round "
-            "the outline.",
-            "Face mills zig-zag along x (ZigZagAngle 0), so the turns run along the x edges and the first and "
-            "last passes along the y edges.",
+            "Floor setup B stock = 312 x 222 outline box (outside already cut in A, down to z -20.5) so the "
+            "Adaptive only cuts the U-notches (and four corner slivers); the 2.2 mm web under z -20.5 is faced off.",
+            "Face ops: BoundaryShape Boundbox with ClearEdges (the face's bounding box plus the tool radius) and "
+            "ZigZagAngle 0, so the turns run along the x edges and the outer passes along the y edges.",
+            "Floor port trepan and slots: final depth z -23.2, 0.5 mm past the blank, so the slugs drop in A.",
             "Slots 124 x 8 and 20 x 104 both on a 1/4 in. end mill (T9): T3 1/2 in. does not fit an 8 mm slot.",
             "Drills: largest of 3.3/4.2/5.0/6.0 mm that fits each hole step; taps, reamers, insert tools, "
             "chamfers and deburring are not costed. Tool changes are counted, not timed. Floor holes: those "

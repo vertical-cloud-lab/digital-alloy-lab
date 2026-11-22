@@ -1,0 +1,1681 @@
+{
+ "camotics": {
+  "version": "CAMotics 1.2.0 (camsim), Docker image on ubuntu:18.04",
+  "resolution_mm": 0.5,
+  "tool_shapes": "cylindrical (flat end) for end mills, face mill and drills; drills cut a flat-bottomed hole to the programmed Z"
+ },
+ "setups": {
+  "frame_A": {
+   "part": "frame",
+   "rot_about_x_deg": 0,
+   "moves": 783,
+   "camotics_runs": [
+    {
+     "z0": -5.45,
+     "z1": 27.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 58.00)"
+    },
+    {
+     "z0": 27.0,
+     "z1": 59.0,
+     "stl": "/tmp/cam-sim3/frame_A/frame_A_s1.stl",
+     "seconds": 37.4,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-973.5), (159.25,114.75,-940.5)) at 0.5 grid resolution",
+      "Time: 18.35 secs Triangles: 1479164 Triangles/sec: 80592.68",
+      "Reducing mesh",
+      "Time: 16.75 secs Triangles: 7608 Reduction: 99.49%"
+     ],
+     "not_implemented": []
+    },
+    {
+     "z0": 59.0,
+     "z1": 91.0,
+     "stl": "/tmp/cam-sim3/frame_A/frame_A_s2.stl",
+     "seconds": 31.2,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-941.5), (159.25,114.75,-908.5)) at 0.5 grid resolution",
+      "Time: 17.04 secs Triangles: 1576180 Triangles/sec: 92503.85",
+      "Reducing mesh",
+      "Time: 12.09 secs Triangles: 11223 Reduction: 99.29%"
+     ],
+     "not_implemented": []
+    },
+    {
+     "z0": 91.0,
+     "z1": 121.55,
+     "stl": "/tmp/cam-sim3/frame_A/frame_A_s3.stl",
+     "seconds": 43.7,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-909.475), (159.25,114.75,-877.975)) at 0.5 grid resolution",
+      "Time: 26.71 secs Triangles: 1575480 Triangles/sec: 58981.88",
+      "Reducing mesh",
+      "Time: 14.87 secs Triangles: 33597 Reduction: 97.87%"
+     ],
+     "not_implemented": []
+    }
+   ],
+   "removed_cm3": 427.17,
+   "gouge_cm3_raw": 0.0,
+   "rapids_through_stock": [],
+   "n_rapids_through_stock": 0,
+   "time": {
+    "camotics_min": 41.66,
+    "camotics_feed_min": 41.06,
+    "camotics_rapid_min": 0.6,
+    "with_vf4_rapids_min": 41.3,
+    "freecad_job_cycle_time": "00:49:14",
+    "freecad_sum_of_ops_min": 49.23,
+    "recount_min": 41.31
+   },
+   "ops": [
+    {
+     "label": "Face top to z 120",
+     "tool": 1,
+     "camotics_min": 1.78,
+     "camotics_vf4_rapids_min": 1.77,
+     "freecad_cycle_time": "00:02:07",
+     "recount_min": 1.77
+    },
+    {
+     "label": "Outside 312x222 R8, adaptive, z 120 to 58",
+     "tool": 2,
+     "camotics_min": 2.04,
+     "camotics_vf4_rapids_min": 1.97,
+     "freecad_cycle_time": "00:02:38",
+     "recount_min": 1.96
+    },
+    {
+     "label": "Opening 280x190 R10 from top, rough (2.7 mm radial)",
+     "tool": 2,
+     "camotics_min": 0.97,
+     "camotics_vf4_rapids_min": 0.96,
+     "freecad_cycle_time": "00:01:14",
+     "recount_min": 0.95
+    },
+    {
+     "label": "Opening 280x190 R10 from top, finish (0.3 mm radial, full depth)",
+     "tool": 2,
+     "camotics_min": 0.52,
+     "camotics_vf4_rapids_min": 0.52,
+     "freecad_cycle_time": "00:00:47",
+     "recount_min": 0.51
+    },
+    {
+     "label": "Lid O-ring gland 4.6 x 2.65",
+     "tool": 4,
+     "camotics_min": 35.36,
+     "camotics_vf4_rapids_min": 35.32,
+     "freecad_cycle_time": "00:37:40",
+     "recount_min": 35.34
+    },
+    {
+     "label": "Drill 20 insert holes: 6.0 mm counterbore",
+     "tool": 8,
+     "camotics_min": 0.61,
+     "camotics_vf4_rapids_min": 0.48,
+     "freecad_cycle_time": "00:02:24",
+     "recount_min": 0.48
+    },
+    {
+     "label": "Drill 20 insert holes: 5.0 mm pilot",
+     "tool": 5,
+     "camotics_min": 0.38,
+     "camotics_vf4_rapids_min": 0.28,
+     "freecad_cycle_time": "00:02:24",
+     "recount_min": 0.28
+    }
+   ],
+   "drills": [
+    {
+     "label": "Drill 20 insert holes: 6.0 mm counterbore",
+     "drill_mm": 6.0,
+     "model_floor_z": 112.5,
+     "tip_z": 112.5,
+     "full_diameter_to_z": 114.303,
+     "full_diameter_short_by_mm": 1.8
+    },
+    {
+     "label": "Drill 20 insert holes: 5.0 mm pilot",
+     "drill_mm": 5.0,
+     "model_floor_z": 109.5,
+     "tip_z": 109.5,
+     "full_diameter_to_z": 111.002,
+     "full_diameter_short_by_mm": 1.5
+    }
+   ],
+   "pieces_free_after_setup_cm3": []
+  },
+  "frame_B": {
+   "part": "frame",
+   "rot_about_x_deg": 180,
+   "moves": 772,
+   "camotics_runs": [
+    {
+     "z0": -121.55,
+     "z1": -89.5,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z -58.00)"
+    },
+    {
+     "z0": -89.5,
+     "z1": -57.5,
+     "stl": "/tmp/cam-sim3/frame_B/frame_B_s1.stl",
+     "seconds": 35.3,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-1090), (159.25,114.75,-1057)) at 0.5 grid resolution",
+      "Time: 15.71 secs Triangles: 1472328 Triangles/sec: 93741.79",
+      "Reducing mesh",
+      "Time: 17.28 secs Triangles: 5461 Reduction: 99.63%"
+     ],
+     "not_implemented": []
+    },
+    {
+     "z0": -57.5,
+     "z1": -25.5,
+     "stl": "/tmp/cam-sim3/frame_B/frame_B_s2.stl",
+     "seconds": 37.2,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-1058), (159.25,114.75,-1025)) at 0.5 grid resolution",
+      "Time: 20.50 secs Triangles: 1575468 Triangles/sec: 76846.63",
+      "Reducing mesh",
+      "Time: 14.35 secs Triangles: 11014 Reduction: 99.30%"
+     ],
+     "not_implemented": []
+    },
+    {
+     "z0": -25.5,
+     "z1": 5.45,
+     "stl": "/tmp/cam-sim3/frame_B/frame_B_s3.stl",
+     "seconds": 35.7,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-1026.03), (159.25,114.75,-994.025)) at 0.5 grid resolution",
+      "Time: 19.32 secs Triangles: 1518140 Triangles/sec: 78577.60",
+      "Reducing mesh",
+      "Time: 14.18 secs Triangles: 23922 Reduction: 98.42%"
+     ],
+     "not_implemented": []
+    }
+   ],
+   "removed_cm3": 445.03,
+   "gouge_cm3_raw": 0.0,
+   "rapids_through_stock": [],
+   "n_rapids_through_stock": 0,
+   "time": {
+    "camotics_min": 6.84,
+    "camotics_feed_min": 6.2,
+    "camotics_rapid_min": 0.64,
+    "with_vf4_rapids_min": 6.45,
+    "freecad_job_cycle_time": "00:10:57",
+    "freecad_sum_of_ops_min": 10.95,
+    "recount_min": 6.45
+   },
+   "ops": [
+    {
+     "label": "Face bottom to z -3.9",
+     "tool": 1,
+     "camotics_min": 1.78,
+     "camotics_vf4_rapids_min": 1.77,
+     "freecad_cycle_time": "00:01:55",
+     "recount_min": 1.77
+    },
+    {
+     "label": "Outside 312x222 R8, adaptive, bottom up to mid-height",
+     "tool": 2,
+     "camotics_min": 2.22,
+     "camotics_vf4_rapids_min": 2.04,
+     "freecad_cycle_time": "00:03:25",
+     "recount_min": 2.03
+    },
+    {
+     "label": "Rebate 8 x 3.9 round the bottom of the opening",
+     "tool": 3,
+     "camotics_min": 0.58,
+     "camotics_vf4_rapids_min": 0.56,
+     "freecad_cycle_time": "00:00:39",
+     "recount_min": 0.56
+    },
+    {
+     "label": "Opening from bottom, rough (2.7 mm radial)",
+     "tool": 2,
+     "camotics_min": 0.96,
+     "camotics_vf4_rapids_min": 0.96,
+     "freecad_cycle_time": "00:01:07",
+     "recount_min": 0.95
+    },
+    {
+     "label": "Opening from bottom, finish (0.3 mm radial)",
+     "tool": 2,
+     "camotics_min": 0.52,
+     "camotics_vf4_rapids_min": 0.52,
+     "freecad_cycle_time": "00:00:40",
+     "recount_min": 0.51
+    },
+    {
+     "label": "Drill 18 M4 tap holes 3.3 mm",
+     "tool": 6,
+     "camotics_min": 0.68,
+     "camotics_vf4_rapids_min": 0.54,
+     "freecad_cycle_time": "00:02:03",
+     "recount_min": 0.54
+    },
+    {
+     "label": "Drill 2 dowel holes 6.0 mm",
+     "tool": 8,
+     "camotics_min": 0.11,
+     "camotics_vf4_rapids_min": 0.07,
+     "freecad_cycle_time": "00:01:08",
+     "recount_min": 0.07
+    }
+   ],
+   "drills": [
+    {
+     "label": "Drill 18 M4 tap holes 3.3 mm",
+     "drill_mm": 3.3,
+     "model_floor_z": -5.5,
+     "tip_z": -5.5,
+     "full_diameter_to_z": -4.509,
+     "full_diameter_short_by_mm": 0.99
+    },
+    {
+     "label": "Drill 2 dowel holes 6.0 mm",
+     "drill_mm": 6.0,
+     "model_floor_z": -6.5,
+     "tip_z": -6.5,
+     "full_diameter_to_z": -4.697,
+     "full_diameter_short_by_mm": 1.8
+    }
+   ],
+   "pieces_free_after_setup_cm3": []
+  },
+  "frame_C": {
+   "part": "frame",
+   "rot_about_x_deg": -90,
+   "moves": 15289,
+   "camotics_runs": [
+    {
+     "z0": -114.3,
+     "z1": -82.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": -82.0,
+     "z1": -50.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": -50.0,
+     "z1": -18.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": -18.0,
+     "z1": 14.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": 14.0,
+     "z1": 46.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": 46.0,
+     "z1": 78.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": 78.0,
+     "z1": 110.0,
+     "stl": "/tmp/cam-sim3/frame_C/frame_C_s6.stl",
+     "seconds": 47.4,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-5.95,-922.5), (159.25,122.05,-889.5)) at 0.5 grid resolution",
+      "Time: 33.79 secs Triangles: 961656 Triangles/sec: 28461.08",
+      "Reducing mesh",
+      "Time: 10.87 secs Triangles: 3035 Reduction: 99.68%"
+     ],
+     "not_implemented": []
+    },
+    {
+     "z0": 110.0,
+     "z1": 114.3,
+     "stl": "/tmp/cam-sim3/frame_C/frame_C_s7.stl",
+     "seconds": 14.2,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-5.95,-890.6), (159.25,122.05,-885.1)) at 0.5 grid resolution",
+      "Time: 9.19 secs Triangles: 372464 Triangles/sec: 40529.25",
+      "Reducing mesh",
+      "Time: 3.32 secs Triangles: 2315 Reduction: 99.38%"
+     ],
+     "not_implemented": []
+    }
+   ],
+   "removed_cm3": 323.17,
+   "gouge_cm3_raw": 0.0,
+   "rapids_through_stock": [],
+   "n_rapids_through_stock": 0,
+   "time": {
+    "camotics_min": 11.09,
+    "camotics_feed_min": 10.12,
+    "camotics_rapid_min": 0.97,
+    "with_vf4_rapids_min": 10.5,
+    "freecad_job_cycle_time": "00:15:51",
+    "freecad_sum_of_ops_min": 15.85,
+    "recount_min": 10.51
+   },
+   "ops": [
+    {
+     "label": "Door opening 220x92 R6.5 through the 16 mm front wall, adaptive",
+     "tool": 3,
+     "camotics_min": 11.09,
+     "camotics_vf4_rapids_min": 10.5,
+     "freecad_cycle_time": "00:15:51",
+     "recount_min": 10.51
+    }
+   ],
+   "drills": [],
+   "pieces_free_after_setup_cm3": []
+  },
+  "floor_A": {
+   "part": "floor",
+   "rot_about_x_deg": 0,
+   "moves": 1743,
+   "camotics_runs": [
+    {
+     "z0": -22.7,
+     "z1": 2.7,
+     "stl": "/tmp/cam-sim3/floor_A/floor_A_s0.stl",
+     "seconds": 40.4,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-1023.25), (159.25,114.75,-996.75)) at 0.5 grid resolution",
+      "Time: 24.38 secs Triangles: 1534096 Triangles/sec: 62925.42",
+      "Reducing mesh",
+      "Time: 14.10 secs Triangles: 29146 Reduction: 98.10%"
+     ],
+     "not_implemented": []
+    }
+   ],
+   "removed_cm3": 454.8,
+   "gouge_cm3_raw": 0.965,
+   "rapids_through_stock": [],
+   "n_rapids_through_stock": 0,
+   "time": {
+    "camotics_min": 51.19,
+    "camotics_feed_min": 50.9,
+    "camotics_rapid_min": 0.29,
+    "with_vf4_rapids_min": 51.01,
+    "freecad_job_cycle_time": "00:58:56",
+    "freecad_sum_of_ops_min": 58.93,
+    "recount_min": 51.04
+   },
+   "ops": [
+    {
+     "label": "Face top to z 0",
+     "tool": 1,
+     "camotics_min": 1.67,
+     "camotics_vf4_rapids_min": 1.66,
+     "freecad_cycle_time": "00:01:49",
+     "recount_min": 1.67
+    },
+    {
+     "label": "Step the 4 mm band round the pad (adaptive outside the pad)",
+     "tool": 2,
+     "camotics_min": 3.89,
+     "camotics_vf4_rapids_min": 3.87,
+     "freecad_cycle_time": "00:04:00",
+     "recount_min": 3.87
+    },
+    {
+     "label": "Outside 312x222 R8, adaptive, z -4 to -20.5",
+     "tool": 2,
+     "camotics_min": 0.99,
+     "camotics_vf4_rapids_min": 0.96,
+     "freecad_cycle_time": "00:01:19",
+     "recount_min": 0.96
+    },
+    {
+     "label": "Floor O-ring groove 4.6 x 2.65",
+     "tool": 4,
+     "camotics_min": 35.1,
+     "camotics_vf4_rapids_min": 35.06,
+     "freecad_cycle_time": "00:36:43",
+     "recount_min": 35.08
+    },
+    {
+     "label": "Port 96 mm through: helical trepan (slug drops)",
+     "tool": 2,
+     "camotics_min": 5.3,
+     "camotics_vf4_rapids_min": 5.29,
+     "freecad_cycle_time": "00:09:35",
+     "recount_min": 5.3
+    },
+    {
+     "label": "Slots 124x8 and 20x104 through, profile",
+     "tool": 9,
+     "camotics_min": 4.11,
+     "camotics_vf4_rapids_min": 4.09,
+     "freecad_cycle_time": "00:04:22",
+     "recount_min": 4.1
+    },
+    {
+     "label": "Drill 2 x 6.0 mm step z -14.50..-4.00 (model)",
+     "tool": 8,
+     "camotics_min": 0.12,
+     "camotics_vf4_rapids_min": 0.08,
+     "freecad_cycle_time": "00:01:08",
+     "recount_min": 0.08
+    }
+   ],
+   "drills": [
+    {
+     "label": "Drill 2 x 6.0 mm step z -14.50..-4.00 (model)",
+     "drill_mm": 6.0,
+     "model_floor_z": -14.5,
+     "tip_z": -14.5,
+     "full_diameter_to_z": -12.697,
+     "full_diameter_short_by_mm": 1.8
+    }
+   ],
+   "pieces_free_after_setup_cm3": [
+    59.17,
+    14.33
+   ]
+  },
+  "floor_B": {
+   "part": "floor",
+   "rot_about_x_deg": 180,
+   "moves": 18501,
+   "camotics_runs": [
+    {
+     "z0": -2.7,
+     "z1": 22.7,
+     "stl": "/tmp/cam-sim3/floor_B/floor_B_s0.stl",
+     "seconds": 27.0,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-1003.25), (159.25,114.75,-976.75)) at 0.5 grid resolution",
+      "Time: 11.30 secs Triangles: 1440528 Triangles/sec: 127438.41",
+      "Reducing mesh",
+      "Time: 13.62 secs Triangles: 27396 Reduction: 98.10%"
+     ],
+     "not_implemented": []
+    }
+   ],
+   "removed_cm3": 177.18,
+   "gouge_cm3_raw": 0.0,
+   "rapids_through_stock": [],
+   "n_rapids_through_stock": 0,
+   "time": {
+    "camotics_min": 10.03,
+    "camotics_feed_min": 8.63,
+    "camotics_rapid_min": 1.4,
+    "with_vf4_rapids_min": 9.18,
+    "freecad_job_cycle_time": "00:23:52",
+    "freecad_sum_of_ops_min": 23.87,
+    "recount_min": 9.18
+   },
+   "ops": [
+    {
+     "label": "Face bottom to 20 mm thick",
+     "tool": 1,
+     "camotics_min": 1.78,
+     "camotics_vf4_rapids_min": 1.77,
+     "freecad_cycle_time": "00:01:57",
+     "recount_min": 1.77
+    },
+    {
+     "label": "18 U-notches 8 wide x 8 deep (adaptive outside the outline)",
+     "tool": 9,
+     "camotics_min": 6.38,
+     "camotics_vf4_rapids_min": 6.05,
+     "freecad_cycle_time": "00:11:41",
+     "recount_min": 6.04
+    },
+    {
+     "label": "Drill 10 x 4.2 mm step z -20.00..-14.00 (model)",
+     "tool": 7,
+     "camotics_min": 0.28,
+     "camotics_vf4_rapids_min": 0.21,
+     "freecad_cycle_time": "00:01:13",
+     "recount_min": 0.21
+    },
+    {
+     "label": "Drill 4 x 6.0 mm step z -20.00..-11.00 (model)",
+     "tool": 8,
+     "camotics_min": 0.18,
+     "camotics_vf4_rapids_min": 0.13,
+     "freecad_cycle_time": "00:01:40",
+     "recount_min": 0.13
+    },
+    {
+     "label": "Drill 2 x 6.0 mm step z -20.00..-8.00 (model)",
+     "tool": 8,
+     "camotics_min": 0.11,
+     "camotics_vf4_rapids_min": 0.08,
+     "freecad_cycle_time": "00:00:26",
+     "recount_min": 0.08
+    },
+    {
+     "label": "Drill 2 x 6.0 mm step z -20.00..-10.00 (model)",
+     "tool": 8,
+     "camotics_min": 0.08,
+     "camotics_vf4_rapids_min": 0.06,
+     "freecad_cycle_time": "00:00:24",
+     "recount_min": 0.06
+    },
+    {
+     "label": "Drill 4 x 6.0 mm step z -20.00..-12.50 (model)",
+     "tool": 8,
+     "camotics_min": 0.12,
+     "camotics_vf4_rapids_min": 0.1,
+     "freecad_cycle_time": "00:00:33",
+     "recount_min": 0.1
+    },
+    {
+     "label": "Drill 10 x 3.3 mm step z -14.00..-12.50 (model)",
+     "tool": 6,
+     "camotics_min": 0.18,
+     "camotics_vf4_rapids_min": 0.11,
+     "freecad_cycle_time": "00:01:13",
+     "recount_min": 0.12
+    },
+    {
+     "label": "Drill 4 x 5.0 mm step z -12.50..-11.00 (model)",
+     "tool": 5,
+     "camotics_min": 0.07,
+     "camotics_vf4_rapids_min": 0.05,
+     "freecad_cycle_time": "00:00:33",
+     "recount_min": 0.05
+    },
+    {
+     "label": "Drill 18 x 4.2 mm step z -12.00..-4.00 (model), through",
+     "tool": 7,
+     "camotics_min": 0.68,
+     "camotics_vf4_rapids_min": 0.53,
+     "freecad_cycle_time": "00:02:06",
+     "recount_min": 0.53
+    },
+    {
+     "label": "Drill 4 x 6.0 mm step z -11.00..-9.00 (model)",
+     "tool": 8,
+     "camotics_min": 0.12,
+     "camotics_vf4_rapids_min": 0.06,
+     "freecad_cycle_time": "00:01:40",
+     "recount_min": 0.06
+    },
+    {
+     "label": "Drill 2 x 6.0 mm step z -8.00..-6.50 (model)",
+     "tool": 8,
+     "camotics_min": 0.05,
+     "camotics_vf4_rapids_min": 0.03,
+     "freecad_cycle_time": "00:00:26",
+     "recount_min": 0.03
+    }
+   ],
+   "drills": [
+    {
+     "label": "Drill 10 x 4.2 mm step z -20.00..-14.00 (model)",
+     "drill_mm": 4.2,
+     "model_floor_z": 14.0,
+     "tip_z": 14.0,
+     "full_diameter_to_z": 15.262,
+     "full_diameter_short_by_mm": 1.26
+    },
+    {
+     "label": "Drill 4 x 6.0 mm step z -20.00..-11.00 (model)",
+     "drill_mm": 6.0,
+     "model_floor_z": 11.0,
+     "tip_z": 11.0,
+     "full_diameter_to_z": 12.803,
+     "full_diameter_short_by_mm": 1.8
+    },
+    {
+     "label": "Drill 2 x 6.0 mm step z -20.00..-8.00 (model)",
+     "drill_mm": 6.0,
+     "model_floor_z": 8.0,
+     "tip_z": 8.0,
+     "full_diameter_to_z": 9.803,
+     "full_diameter_short_by_mm": 1.8
+    },
+    {
+     "label": "Drill 2 x 6.0 mm step z -20.00..-10.00 (model)",
+     "drill_mm": 6.0,
+     "model_floor_z": 10.0,
+     "tip_z": 10.0,
+     "full_diameter_to_z": 11.803,
+     "full_diameter_short_by_mm": 1.8
+    },
+    {
+     "label": "Drill 4 x 6.0 mm step z -20.00..-12.50 (model)",
+     "drill_mm": 6.0,
+     "model_floor_z": 12.5,
+     "tip_z": 12.5,
+     "full_diameter_to_z": 14.303,
+     "full_diameter_short_by_mm": 1.8
+    },
+    {
+     "label": "Drill 10 x 3.3 mm step z -14.00..-12.50 (model)",
+     "drill_mm": 3.3,
+     "model_floor_z": 12.5,
+     "tip_z": 12.5,
+     "full_diameter_to_z": 13.491,
+     "full_diameter_short_by_mm": 0.99
+    },
+    {
+     "label": "Drill 4 x 5.0 mm step z -12.50..-11.00 (model)",
+     "drill_mm": 5.0,
+     "model_floor_z": 11.0,
+     "tip_z": 11.0,
+     "full_diameter_to_z": 12.502,
+     "full_diameter_short_by_mm": 1.5
+    },
+    {
+     "label": "Drill 18 x 4.2 mm step z -12.00..-4.00 (model), through",
+     "drill_mm": 4.2,
+     "model_floor_z": 4.0,
+     "tip_z": 2.763,
+     "full_diameter_to_z": 4.025,
+     "full_diameter_short_by_mm": 0.02
+    },
+    {
+     "label": "Drill 4 x 6.0 mm step z -11.00..-9.00 (model)",
+     "drill_mm": 6.0,
+     "model_floor_z": 9.0,
+     "tip_z": 9.0,
+     "full_diameter_to_z": 10.803,
+     "full_diameter_short_by_mm": 1.8
+    },
+    {
+     "label": "Drill 2 x 6.0 mm step z -8.00..-6.50 (model)",
+     "drill_mm": 6.0,
+     "model_floor_z": 6.5,
+     "tip_z": 6.5,
+     "full_diameter_to_z": 8.303,
+     "full_diameter_short_by_mm": 1.8
+    }
+   ],
+   "pieces_free_after_setup_cm3": [
+    52.6,
+    12.74
+   ]
+  }
+ },
+ "parts": {
+  "frame": {
+   "target_cm3": 1584.33,
+   "simulated_cm3": 1626.45,
+   "stock_cm3": 2821.81,
+   "gouge_all_cm3": 0.0,
+   "leftover_all_cm3": 42.112,
+   "gouge_deeper_than_min_cm3": 0.0,
+   "leftover_deeper_than_min_cm3": 31.826,
+   "min_depth_mm": 1.0,
+   "n_gouge_regions": 0,
+   "n_leftover_regions": 27,
+   "max_gouge_depth_mm": 0.0,
+   "max_leftover_mm": 12.35,
+   "loose_pieces": [],
+   "n_loose_pieces": 0,
+   "gouges": [],
+   "leftovers": [
+    {
+     "volume_mm3": 13136.0,
+     "max_depth_mm": 4.0,
+     "deepest_at": [
+      -55.75,
+      95.25,
+      7.75
+     ],
+     "bbox": [
+      [
+       -59.5,
+       59.5
+      ],
+      [
+       95.0,
+       111.0
+      ],
+      [
+       4.5,
+       11.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 7280.0,
+     "max_depth_mm": 12.35,
+     "deepest_at": [
+      140.25,
+      -0.25,
+      69.75
+     ],
+     "bbox": [
+      [
+       140.0,
+       156.0
+      ],
+      [
+       -12.0,
+       12.0
+      ],
+      [
+       58.0,
+       82.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 3520.0,
+     "max_depth_mm": 8.73,
+     "deepest_at": [
+      -155.75,
+      71.75,
+      39.75
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -140.0
+      ],
+      [
+       63.5,
+       80.5
+      ],
+      [
+       31.5,
+       48.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 3520.0,
+     "max_depth_mm": 8.73,
+     "deepest_at": [
+      140.25,
+      71.75,
+      39.75
+     ],
+     "bbox": [
+      [
+       140.0,
+       156.0
+      ],
+      [
+       63.5,
+       80.5
+      ],
+      [
+       31.5,
+       48.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 886.0,
+     "max_depth_mm": 5.5,
+     "deepest_at": [
+      99.75,
+      110.75,
+      99.75
+     ],
+     "bbox": [
+      [
+       94.5,
+       105.5
+      ],
+      [
+       95.0,
+       111.0
+      ],
+      [
+       94.5,
+       105.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 886.0,
+     "max_depth_mm": 5.5,
+     "deepest_at": [
+      155.75,
+      -40.25,
+      17.75
+     ],
+     "bbox": [
+      [
+       140.0,
+       156.0
+      ],
+      [
+       -45.5,
+       -34.5
+      ],
+      [
+       12.5,
+       23.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 328.0,
+     "max_depth_mm": 3.08,
+     "deepest_at": [
+      -155.75,
+      -0.25,
+      4.75
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -140.0
+      ],
+      [
+       -5.0,
+       5.0
+      ],
+      [
+       0.0,
+       10.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 328.0,
+     "max_depth_mm": 3.08,
+     "deepest_at": [
+      155.75,
+      -0.25,
+      4.75
+     ],
+     "bbox": [
+      [
+       140.0,
+       156.0
+      ],
+      [
+       -5.0,
+       5.0
+      ],
+      [
+       0.0,
+       10.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 174.0,
+     "max_depth_mm": 2.69,
+     "deepest_at": [
+      149.75,
+      -23.25,
+      46.75
+     ],
+     "bbox": [
+      [
+       144.0,
+       156.0
+      ],
+      [
+       -25.5,
+       -20.5
+      ],
+      [
+       44.5,
+       49.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 174.0,
+     "max_depth_mm": 2.69,
+     "deepest_at": [
+      149.75,
+      -23.25,
+      92.75
+     ],
+     "bbox": [
+      [
+       144.0,
+       156.0
+      ],
+      [
+       -25.5,
+       -20.5
+      ],
+      [
+       90.5,
+       95.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 174.0,
+     "max_depth_mm": 2.69,
+     "deepest_at": [
+      149.75,
+      22.75,
+      46.75
+     ],
+     "bbox": [
+      [
+       144.0,
+       156.0
+      ],
+      [
+       20.5,
+       25.5
+      ],
+      [
+       44.5,
+       49.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 174.0,
+     "max_depth_mm": 2.69,
+     "deepest_at": [
+      149.75,
+      22.75,
+      92.75
+     ],
+     "bbox": [
+      [
+       144.0,
+       156.0
+      ],
+      [
+       20.5,
+       25.5
+      ],
+      [
+       90.5,
+       95.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 96.0,
+     "max_depth_mm": 1.8,
+     "deepest_at": [
+      -110.25,
+      95.25,
+      81.75
+     ],
+     "bbox": [
+      [
+       -111.5,
+       -108.5
+      ],
+      [
+       95.0,
+       111.0
+      ],
+      [
+       80.5,
+       83.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 96.0,
+     "max_depth_mm": 1.8,
+     "deepest_at": [
+      -50.25,
+      95.25,
+      81.75
+     ],
+     "bbox": [
+      [
+       -51.5,
+       -48.5
+      ],
+      [
+       95.0,
+       111.0
+      ],
+      [
+       80.5,
+       83.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 96.0,
+     "max_depth_mm": 1.8,
+     "deepest_at": [
+      9.75,
+      95.25,
+      81.75
+     ],
+     "bbox": [
+      [
+       8.5,
+       11.5
+      ],
+      [
+       95.0,
+       111.0
+      ],
+      [
+       80.5,
+       83.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 96.0,
+     "max_depth_mm": 1.8,
+     "deepest_at": [
+      69.75,
+      95.25,
+      81.75
+     ],
+     "bbox": [
+      [
+       68.5,
+       71.5
+      ],
+      [
+       95.0,
+       111.0
+      ],
+      [
+       80.5,
+       83.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 88.0,
+     "max_depth_mm": 2.12,
+     "deepest_at": [
+      -71.25,
+      106.25,
+      4.25
+     ],
+     "bbox": [
+      [
+       -73.0,
+       -69.0
+      ],
+      [
+       100.0,
+       111.0
+      ],
+      [
+       2.5,
+       6.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 88.0,
+     "max_depth_mm": 2.12,
+     "deepest_at": [
+      -71.25,
+      106.25,
+      21.75
+     ],
+     "bbox": [
+      [
+       -73.0,
+       -69.0
+      ],
+      [
+       100.0,
+       111.0
+      ],
+      [
+       20.0,
+       24.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 88.0,
+     "max_depth_mm": 2.12,
+     "deepest_at": [
+      -40.25,
+      106.25,
+      33.75
+     ],
+     "bbox": [
+      [
+       -42.0,
+       -38.0
+      ],
+      [
+       100.0,
+       111.0
+      ],
+      [
+       32.0,
+       36.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 88.0,
+     "max_depth_mm": 2.12,
+     "deepest_at": [
+      -0.25,
+      106.25,
+      33.75
+     ],
+     "bbox": [
+      [
+       -2.0,
+       2.0
+      ],
+      [
+       100.0,
+       111.0
+      ],
+      [
+       32.0,
+       36.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 88.0,
+     "max_depth_mm": 2.12,
+     "deepest_at": [
+      39.75,
+      106.25,
+      33.75
+     ],
+     "bbox": [
+      [
+       38.0,
+       42.0
+      ],
+      [
+       100.0,
+       111.0
+      ],
+      [
+       32.0,
+       36.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 88.0,
+     "max_depth_mm": 2.12,
+     "deepest_at": [
+      70.75,
+      106.25,
+      4.25
+     ],
+     "bbox": [
+      [
+       69.0,
+       73.0
+      ],
+      [
+       100.0,
+       111.0
+      ],
+      [
+       2.5,
+       6.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 88.0,
+     "max_depth_mm": 2.12,
+     "deepest_at": [
+      70.75,
+      106.25,
+      21.75
+     ],
+     "bbox": [
+      [
+       69.0,
+       73.0
+      ],
+      [
+       100.0,
+       111.0
+      ],
+      [
+       20.0,
+       24.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 61.5,
+     "max_depth_mm": 2.5,
+     "deepest_at": [
+      151.25,
+      60.75,
+      28.75
+     ],
+     "bbox": [
+      [
+       149.0,
+       156.0
+      ],
+      [
+       59.0,
+       62.5
+      ],
+      [
+       27.0,
+       30.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 61.5,
+     "max_depth_mm": 2.5,
+     "deepest_at": [
+      151.25,
+      60.75,
+      51.25
+     ],
+     "bbox": [
+      [
+       149.0,
+       156.0
+      ],
+      [
+       59.0,
+       62.5
+      ],
+      [
+       49.5,
+       53.0
+      ]
+     ]
+    }
+   ]
+  },
+  "floor": {
+   "target_cm3": 1115.77,
+   "simulated_cm3": 1117.51,
+   "stock_cm3": 1814.83,
+   "gouge_all_cm3": 0.965,
+   "leftover_all_cm3": 2.707,
+   "gouge_deeper_than_min_cm3": 0.0,
+   "leftover_deeper_than_min_cm3": 0.137,
+   "min_depth_mm": 1.0,
+   "n_gouge_regions": 0,
+   "n_leftover_regions": 14,
+   "max_gouge_depth_mm": 0.5,
+   "max_leftover_mm": 2.0,
+   "loose_pieces": [
+    {
+     "volume_cm3": 52.6,
+     "bbox": [
+      [
+       -29.0,
+       29.0
+      ],
+      [
+       -29.0,
+       29.0
+      ],
+      [
+       -20.0,
+       0.0
+      ]
+     ]
+    },
+    {
+     "volume_cm3": 12.74,
+     "bbox": [
+      [
+       96.5,
+       103.5
+      ],
+      [
+       -45.5,
+       45.5
+      ],
+      [
+       -20.0,
+       0.0
+      ]
+     ]
+    }
+   ],
+   "n_loose_pieces": 2,
+   "gouges": [],
+   "leftovers": [
+    {
+     "volume_mm3": 25.5,
+     "max_depth_mm": 2.0,
+     "deepest_at": [
+      -135.75,
+      -90.75,
+      -10.75
+     ],
+     "bbox": [
+      [
+       -137.5,
+       -132.5
+      ],
+      [
+       -92.5,
+       -87.5
+      ],
+      [
+       -11.0,
+       -9.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 25.5,
+     "max_depth_mm": 2.0,
+     "deepest_at": [
+      -135.75,
+      89.25,
+      -10.75
+     ],
+     "bbox": [
+      [
+       -137.5,
+       -132.5
+      ],
+      [
+       87.5,
+       92.5
+      ],
+      [
+       -11.0,
+       -9.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 25.5,
+     "max_depth_mm": 2.0,
+     "deepest_at": [
+      134.25,
+      -90.75,
+      -10.75
+     ],
+     "bbox": [
+      [
+       132.5,
+       137.5
+      ],
+      [
+       -92.5,
+       -87.5
+      ],
+      [
+       -11.0,
+       -9.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 25.5,
+     "max_depth_mm": 2.0,
+     "deepest_at": [
+      134.25,
+      89.25,
+      -10.75
+     ],
+     "bbox": [
+      [
+       132.5,
+       137.5
+      ],
+      [
+       87.5,
+       92.5
+      ],
+      [
+       -11.0,
+       -9.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 17.0,
+     "max_depth_mm": 1.5,
+     "deepest_at": [
+      -59.25,
+      -0.75,
+      -7.75
+     ],
+     "bbox": [
+      [
+       -60.5,
+       -55.5
+      ],
+      [
+       -2.5,
+       2.5
+      ],
+      [
+       -8.0,
+       -7.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 17.0,
+     "max_depth_mm": 1.5,
+     "deepest_at": [
+      56.75,
+      -0.75,
+      -7.75
+     ],
+     "bbox": [
+      [
+       55.5,
+       60.5
+      ],
+      [
+       -2.5,
+       2.5
+      ],
+      [
+       -8.0,
+       -7.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.1,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      -47.75,
+      -5.25,
+      -19.75
+     ],
+     "bbox": [
+      [
+       -48.0,
+       -47.5
+      ],
+      [
+       -5.5,
+       -5.0
+      ],
+      [
+       -20.0,
+       -19.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.1,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      -47.75,
+      5.25,
+      -19.75
+     ],
+     "bbox": [
+      [
+       -48.0,
+       -47.5
+      ],
+      [
+       5.0,
+       5.5
+      ],
+      [
+       -20.0,
+       -19.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.1,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      -5.25,
+      -47.75,
+      -19.75
+     ],
+     "bbox": [
+      [
+       -5.5,
+       -5.0
+      ],
+      [
+       -48.0,
+       -47.5
+      ],
+      [
+       -20.0,
+       -19.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.1,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      -5.25,
+      47.75,
+      -19.75
+     ],
+     "bbox": [
+      [
+       -5.5,
+       -5.0
+      ],
+      [
+       47.5,
+       48.0
+      ],
+      [
+       -20.0,
+       -19.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.1,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      5.25,
+      -47.75,
+      -19.75
+     ],
+     "bbox": [
+      [
+       5.0,
+       5.5
+      ],
+      [
+       -48.0,
+       -47.5
+      ],
+      [
+       -20.0,
+       -19.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.1,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      5.25,
+      47.75,
+      -19.75
+     ],
+     "bbox": [
+      [
+       5.0,
+       5.5
+      ],
+      [
+       47.5,
+       48.0
+      ],
+      [
+       -20.0,
+       -19.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.1,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      47.75,
+      -5.25,
+      -19.75
+     ],
+     "bbox": [
+      [
+       47.5,
+       48.0
+      ],
+      [
+       -5.5,
+       -5.0
+      ],
+      [
+       -20.0,
+       -19.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.1,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      47.75,
+      5.25,
+      -19.75
+     ],
+     "bbox": [
+      [
+       47.5,
+       48.0
+      ],
+      [
+       5.0,
+       5.5
+      ],
+      [
+       -20.0,
+       -19.5
+      ]
+     ]
+    }
+   ]
+  }
+ }
+}

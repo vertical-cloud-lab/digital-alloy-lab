@@ -5,7 +5,11 @@ What it checks (issue #260, PR #266)
     CAMotics 1.2.0's command-line simulator (camsim) with freecad_cam.TOOLS' tool sizes, chains the setups (the material
     left by A is the stock for B, and so on, in the part frame), and compares the result with the model:
       * gouges: material the part keeps that a setup removed;
-      * leftover: material still there that the part does not have (unprogrammed features, missed cuts);
+      * leftover: material still there that the part does not have (unprogrammed features, missed cuts); both on a
+        voxel grid (--res, 0.5 mm), counted only deeper than --min-depth (1 mm) from the model's surface (voxel noise);
+      * loose pieces: material no longer joined to the part (slugs), per setup and at the end;
+      * drill points: CAMotics has no drill shape (drills are flat cylinders here), so the 118 deg point's shortfall
+        at full diameter is worked out from the programmed depths;
       * rapids (G0) through stock: every G0 move is swept against the in-process stock (the chained CAMotics result of
         the earlier setups, minus what this setup has cut so far, tracked as a z-map);
       * cycle time: CAMotics' own move timing (distance / F; rapids at the 10 m/min hard-coded in its src/gcode/Move.cpp)
@@ -17,12 +21,12 @@ Why Docker (the install error, 2026-11-22)
     Ubuntu 26.04 satisfies through libnode-dev, so apt would install it; but the binaries are linked against
     libv8.so.3.14.5 (V8 3.14) and OpenSSL 1.1 (libssl.so.1.1, libcrypto.so.1.1), which 26.04 does not have:
         camsim: error while loading shared libraries: libv8.so.3.14.5: cannot open shared object file
-    The fix is a container on Ubuntu 18.04, the newest Ubuntu that ships V8 3.14 and OpenSSL 1.1, plus
+    The fix is a container on Ubuntu 18.04, the newest LTS with V8 3.14 (gone after 19.10) and OpenSSL 1.1, plus
     libqt5websockets5, which the .deb needs but does not declare (without it: "libQt5WebSockets.so.5: cannot open
     shared object file"). camsim needs no display. Build once (the Dockerfile checks the .deb's sha256):
         docker build -t camotics:1.2.0 -f desktop-lpbf/analysis/machining/camotics.Dockerfile desktop-lpbf/analysis/machining
 
-Two CAMotics 1.2.0 limits, and what this script does about them
+CAMotics 1.2.0's limits, and what this script does about them
     * G83 (peck drilling) is not implemented: camsim logs "Not implemented: G83" and skips the hole. Every canned cycle
       is expanded here into G0/G1 moves the way LinuxCNC runs it (pecks back to R, rapid down to 0.254 mm above the last
       depth), so the holes are cut and timed.
@@ -610,6 +614,12 @@ def main():
             before = float(stock.sum()) * a.res ** 3
             new_stock = stock & occ
             removed = before - float(new_stock.sum()) * a.res ** 3
+            # pieces cut free in this setup (they drop out, or are held only by the fixture)
+            from scipy import ndimage
+            lab, nlab = ndimage.label(new_stock)
+            sizes = np.bincount(lab.ravel())[1:] * a.res ** 3 / 1000
+            del lab
+            free = sorted((round(float(v), 2) for v in sizes if v > 0.001), reverse=True)[1:]
             gouge_here = stock & ~occ & tgt  # what this setup cut that the part keeps
             times = camotics_times(moves)
             fsu = next(s for s in fc["parts"][part]["setups"] if s["setup"] == name)
@@ -648,7 +658,7 @@ def main():
                           freecad_job_cycle_time=fsu.get("freecad_job_cycle_time"),
                           freecad_sum_of_ops_min=fsu["totals"]["freecad_sum_of_op_cycle_times_min"],
                           recount_min=fsu["totals"]["total_min"]),
-                ops=ops, drills=drills)
+                ops=ops, drills=drills, pieces_free_after_setup_cm3=free[:10])
             print(f"{name}: removed {removed / 1000:.1f} cm3, {len(hits)} rapids through stock, CAMotics time "
                   f"{report['setups'][name]['time']['camotics_min']} min", flush=True)
             stock = new_stock
