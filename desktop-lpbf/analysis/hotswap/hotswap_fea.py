@@ -12,8 +12,12 @@ H2  build-module body (316L, M50): (i) as modelled, pulled up to the floor by tw
     (Z-magnet release, 202 N on the tube end besides the body's own weight). Reports stress, contact/separation and the
     movement of the spigot top (the powder plane).
 
-Geometry: the model at commit REV (snapshot via git show), so the analysis is stable while the model is edited.
-Helpers (meshing, .inp writing, ccx, .frd reading, rendering) are imported from analysis/fea/fea.py.
+Geometry: the model at commit REV (every cad/*.py at REV, via git show), so the analysis is stable while the model is
+edited. REV was 1c7a977 until 2026-11-22; 9f45d80 since (the module body gained its welded bottom collar and the larger
+spigot groove in between, so the M50 numbers moved too).
+Helpers (meshing, .inp writing, ccx, .frd reading, rendering) are imported from analysis/fea/fea.py, including its solver
+choice: SPOOLES up to 150,000 nodes, ccx's ITERATIVE CHOLESKY above (the L75 heater block, ~173,000 nodes: with SPOOLES
+it outgrew the 10 GB cap on 2026-11-21). H2, H1 M50 and H1 L75 each run in their own process.
 
 Run:  OMP_NUM_THREADS=2 xvfb-run -a -s "-screen 0 1920x1080x24" python desktop-lpbf/analysis/hotswap/hotswap_fea.py [H1 H2]
 Out:  analysis/out/hotswap/fea_hotswap.md, fea_hotswap.json, PNGs; scratch in /tmp/fea-hotswap
@@ -33,12 +37,14 @@ HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 REPO = ROOT.parent
 OUT = ROOT / "analysis" / "out" / "hotswap"
-REV = "1c7a977"
+REV = "9f45d80"
 SCRATCH = pathlib.Path(os.environ.get("FEA_RUN", "/tmp/fea-hotswap"))
 os.environ["FEA_RUN"] = str(SCRATCH)
 SNAP = SCRATCH / "snap"
 SNAP.mkdir(parents=True, exist_ok=True)
-for name in ("lpbf_low", "modules_low", "module_params"):
+CAD_FILES = [p.rsplit("/", 1)[-1][:-3] for p in subprocess.run(["git", "ls-tree", "--name-only", REV, "desktop-lpbf/cad/"], cwd=REPO,
+                                                                 capture_output=True, text=True, check=True).stdout.split() if p.endswith(".py")]
+for name in CAD_FILES:              # lpbf_low imports vendor_parts, fasteners, joints, ... from cad/ since 1c7a977
     src = subprocess.run(["git", "show", f"{REV}:desktop-lpbf/cad/{name}.py"], cwd=REPO, capture_output=True, text=True, check=True).stdout
     (SNAP / f"{name}.py").write_text(src)
 sys.path.insert(0, str(SNAP))
@@ -62,14 +68,11 @@ KIN_PRE = 218.0                                     # per ball: 3 x LC2 / 3
 
 
 def safe_render(*a, **k):
-    """Render in a child process so a VTK/OpenGL failure under Xvfb can't take the solver run down with it."""
-    import multiprocessing as mp
-    ctx = mp.get_context("fork")
-    pr = ctx.Process(target=F.render, args=a, kwargs=k)
-    pr.start()
-    pr.join(300)
-    if pr.exitcode != 0:
-        print(f"  render failed for {a[3]} (exit {pr.exitcode}); results are unaffected")
+    """F.render draws in a child process (render_fea.py), so a VTK/OpenGL failure under Xvfb can't take the solver run down."""
+    try:
+        F.render(*a, **k)
+    except Exception as e:  # noqa: BLE001
+        print(f"  render failed for {a[3]} ({e}); results are unaffected")
 
 
 def module_parts(key):
@@ -95,7 +98,7 @@ def solve_active_set(job, m, mat, contact_ids, sign, other_bc, loads, extra_sets
     released = np.array([], dtype=np.int64)
     for it in range(max_it):
         F.write_model(job, m, mat, extra_sets + F.nset("CONTACT", active))
-        F.append(job, "*STEP\n*STATIC, SOLVER=SPOOLES\n*BOUNDARY\nCONTACT,3,3\n" + other_bc + loads +
+        F.append(job, f"*STEP\n*STATIC, SOLVER={F.solver_for(m)}\n*BOUNDARY\nCONTACT,3,3\n" + other_bc + loads +
                  "*NODE FILE\nU,RF\n*EL FILE\nS\n*END STEP\n")
         F.run_ccx(job)
         b = F.read_frd(job)
@@ -150,7 +153,7 @@ def h1(key, R):
         i = int(np.argmax(vm))
         il = int(np.argmax(np.where(lugmask, vm, 0)))
         res[f"plate {case}"] = dict(vm_max=float(vm[i]), at=xyz[i].tolist(), vm_lug=float(vm[il]), flatness_um=float((uz_top.max() - uz_top.min()) * 1e3),
-                                   contact_frac=float(len(act) / max(len(sup), 1)), F_pre=Fpre)
+                                   contact_frac=float(len(act) / max(len(sup), 1)), F_pre=Fpre, nodes=len(m["ntags"]), solver=F.solver_for(m))
         if strike:
             png = f"h1_plate_{key}.png"
             safe_render(m, U, vm, OUT / png, f"H1 {key} plate, 6061 at 200 C: {Fpre:.0f} N bayonet preload + 50 N strike\n"
@@ -185,14 +188,14 @@ def h1(key, R):
     job = f"h1_block_{key}"
     F.write_model(job, m, AL200, F.nset("LEDGE", led) + F.nset("TOPF", tp) + F.nset("PADS", pads))
     loads = "*CLOAD\n" + F.cload_lines(led, (0, 0, Fpre)) + F.cload_lines(tp, (0, 0, -Fpre))
-    F.append(job, F.static_step(f"PADS,3,3\n{pin},1,2\n{pin2},1,1\n", loads))
+    F.append(job, F.static_step(f"PADS,3,3\n{pin},1,2\n{pin2},1,1\n", loads, solver=F.solver_for(m)))
     F.run_ccx(job)
     U, S, vm = F.static_results(m, job)
     i = int(np.argmax(vm))
     png = f"h1_block_{key}.png"
     safe_render(m, U, vm, OUT / png, f"H1 {key} heater-block ledge, 6061 at 200 C: {Fpre:.0f} N from the lugs\nmax von Mises {vm[i]:.1f} MPa",
              (0.5, -0.8, 1.0), mark=xyz[i], clim=(0, max(SY_225, vm.max())))
-    res["block ledge"] = dict(vm_max=float(vm[i]), at=xyz[i].tolist(), png=png, F_pre=Fpre)
+    res["block ledge"] = dict(vm_max=float(vm[i]), at=xyz[i].tolist(), png=png, F_pre=Fpre, nodes=len(m["ntags"]), solver=F.solver_for(m))
     R[f"H1_{key}"] = res
     return res
 
@@ -259,7 +262,7 @@ def h2(key, R):
             F.write_model(job, m, SS316, F.nset("BALLS", allb) + "*TRANSFORM, NSET=BALLS, TYPE=C\n0.,0.,0.,0.,0.,1.\n")
             loads = "*CLOAD\n" + "".join(F.cload_lines(p, (0, 0, KIN_PRE)) for p in pre) + F.cload_lines(tub, (0, 0, -LC2_EXTRA)) + grav
             # preload goes in at the lobe underside and out through the ball (support); the supports fix axial + tangential
-            F.append(job, "*STEP\n*STATIC, SOLVER=SPOOLES\n*BOUNDARY\nBALLS,2,3\n" + loads + "*NODE FILE\nU,RF\n*EL FILE\nS\n*END STEP\n")
+            F.append(job, f"*STEP\n*STATIC, SOLVER={F.solver_for(m)}\n*BOUNDARY\nBALLS,2,3\n" + loads + "*NODE FILE\nU,RF\n*EL FILE\nS\n*END STEP\n")
             F.run_ccx(job)
             b = F.read_frd(job)
             U = F.field(m, [x for x in b if x["name"] == "DISP"][-1], 3)
@@ -270,7 +273,7 @@ def h2(key, R):
         i = int(np.argmax(vm))
         flmask = (xyz[:, 2] <= zf + 0.01) & (xyz[:, 2] >= zf - MP.FLANGE_T - 0.01)
         ifl = int(np.argmax(np.where(flmask, vm, 0)))
-        res[variant].update(vm_max=float(vm[i]), at=xyz[i].tolist(), vm_flange=float(vm[ifl]), spigot_top_uz_mean_um=float(uzs.mean() * 1e3),
+        res[variant].update(nodes=len(m["ntags"]), solver=F.solver_for(m), vm_max=float(vm[i]), at=xyz[i].tolist(), vm_flange=float(vm[ifl]), spigot_top_uz_mean_um=float(uzs.mean() * 1e3),
                             spigot_top_uz_range_um=float((uzs.max() - uzs.min()) * 1e3), sy=SY_316L)
         png = f"h2_{variant}_{key}.png"
         title = ("H2 M50 module body, 316L: 2 captive M6 at 2.18 kN + gravity + LC2" if variant == "screws" else
@@ -282,23 +285,47 @@ def h2(key, R):
     return res
 
 
+JOBS = {"H2": ("H2_M50", lambda R: h2("M50", R)), "H1:M50": ("H1_M50", lambda R: h1("M50", R)), "H1:L75": ("H1_L75", lambda R: h1("L75", R))}
+
+
+def run_job(job, jpath):
+    """One job in this process: the previous result for its key is kept under R["previous"] if it came from another commit."""
+    key, fn = JOBS[job]
+    R = json.loads(jpath.read_text()) if jpath.exists() else {}
+    old = R.get(key)
+    if old and old.get("rev", R.get("rev")) != REV:
+        R.setdefault("previous", {})[key] = dict(old, rev=old.get("rev", R.get("rev")))
+    fn(R)
+    R[key]["rev"] = REV
+    jpath.write_text(json.dumps(R, indent=1))
+
+
 def main():
-    which = sys.argv[1:] or ["H1", "H2"]          # "report" rewrites fea_hotswap.md from the json without solving
+    args = sys.argv[1:] or ["H1", "H2"]          # "report" rewrites fea_hotswap.md from the json without solving
+    jobs = []
+    for a in args:
+        jobs += ["H1:M50", "H1:L75"] if a == "H1" else [a] if a in JOBS else []
     OUT.mkdir(parents=True, exist_ok=True)
     jpath = OUT / "fea_hotswap.json"
+    failed = []
+    if len(jobs) > 1:                             # each job in its own process: memory is returned in between
+        failed = [j for j in jobs if subprocess.run([sys.executable, __file__, j]).returncode != 0]
+    elif jobs:
+        run_job(jobs[0], jpath)
     R = json.loads(jpath.read_text()) if jpath.exists() else {}
-    if "H2" in which:
-        h2("M50", R)
-        jpath.write_text(json.dumps(R, indent=1))
-    if "H1" in which:
-        for key in ("M50", "L75"):
-            h1(key, R)
-            jpath.write_text(json.dumps(R, indent=1))
-    R["rev"] = REV
+    revs = {R[k].get("rev", R.get("rev")) for k in ("H2_M50", "H1_M50", "H1_L75") if k in R}
+    R["rev"] = revs.pop() if len(revs) == 1 else "mixed: " + ", ".join(sorted(revs))
     jpath.write_text(json.dumps(R, indent=1))
+    write_md(R)
+    if failed:
+        sys.exit(f"failed: {' '.join(failed)}")
+
+
+def write_md(R):
+    prev = R.get("previous", {})
     md = ["# CalculiX checks of the hot-swappable joints", "",
-          f"Generated by [`analysis/hotswap/hotswap_fea.py`](../../hotswap/hotswap_fea.py) from the model at commit {REV}. C3D10 (gmsh), ccx, SPOOLES. "
-          "Contact is modelled as compression-only prescribed supports, solved by an active-set loop (no contact elements).", ""]
+          f"Generated by [`analysis/hotswap/hotswap_fea.py`](../../hotswap/hotswap_fea.py) from the model at commit {R['rev']}. C3D10 (gmsh), ccx: SPOOLES up to 150,000 nodes, "
+          "ITERATIVE CHOLESKY above (the L75 heater block). Contact is modelled as compression-only prescribed supports, solved by an active-set loop (no contact elements).", ""]
     for key in ("M50", "L75"):
         r = R.get(f"H1_{key}")
         if not r:
@@ -312,6 +339,11 @@ def main():
                       f"{x['flatness_um']:.2f} | {100 * x['contact_frac']:.0f} % |")
         x = r["block ledge"]
         md.append(f"| block ledge | {x['vm_max']:.1f} | – | {SY_200 / x['vm_max']:.2f} / {SY_225 / x['vm_max']:.2f} | – | – |")
+        o = prev.get(f"H1_{key}")
+        if o:
+            a, b = o["plate preload + 50 N strike"], r["plate preload + 50 N strike"]
+            md += ["", f"Against the run on the model at {o['rev']}: lugs {a['vm_lug']:.1f} → {b['vm_lug']:.1f} MPa, flatness change with the strike "
+                   f"{a['flatness_um']:.2f} → {b['flatness_um']:.2f} µm, ledge {o['block ledge']['vm_max']:.1f} → {x['vm_max']:.1f} MPa."]
         md += [""] + [f"![]({q})" for q in (r['plate preload + 50 N strike']['png'], x['png']) if (OUT / q).exists()] + [""]
     r = R.get("H2_M50")
     if r:
@@ -324,6 +356,11 @@ def main():
         k = r["kinematic"]
         md.append(f"| 3-groove kinematic seat, 218 N per ball | {k['vm_max']:.1f} | {k['vm_flange']:.1f} | {SY_316L / k['vm_flange']:.2f} | {k['spigot_top_uz_mean_um']:.2f} / {k['spigot_top_uz_range_um']:.2f} | "
                   "3 balls (axial + tangential fixed) |")
+        o = prev.get("H2_M50")
+        if o:
+            md += ["", f"Against the run on the model at {o['rev']} (before the module body's welded bottom collar and the wider spigot groove): flange "
+                   f"{o['screws']['vm_flange']:.1f} → {s['vm_flange']:.1f} MPa with the screws, {o['kinematic']['vm_flange']:.1f} → {k['vm_flange']:.1f} MPa on the kinematic seat; "
+                   f"spigot top {o['screws']['spigot_top_uz_mean_um']:.2f} → {s['spigot_top_uz_mean_um']:.2f} µm."]
         md += [""] + [f"![]({q})" for q in (s['png'], k['png']) if (OUT / q).exists()] + [""]
     (OUT / "fea_hotswap.md").write_text("\n".join(md) + "\n")
     print("wrote", OUT / "fea_hotswap.md")

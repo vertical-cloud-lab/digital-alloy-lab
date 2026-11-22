@@ -73,23 +73,29 @@
   "case": "2 lid, vacuum",
   "material": "6061-T6 aluminium",
   "load": "0.1013 MPa on the top face; window 250 N, dose slot and camera port carried round their flanges; z fixed on the outer sealing land, 4 bolt points pinned in-plane",
-  "nodes": 55632,
-  "elements": 32907,
-  "vm_max": 15.18898365941102,
+  "nodes": 265140,
+  "elements": 164615,
+  "vm_max": 47.28030472828195,
   "vm_max_at": [
-   -29.943419450885237,
-   -84.45595164277353,
+   -44.565784930203606,
+   -107.4875,
    120.0
   ],
-  "vm_p995": 7.171940735684894,
-  "u_max": 0.027989151242987242,
-  "window_seat_uz": -0.0278203,
-  "window_seat_tilt_urad": 7.68275065854956,
-  "camera_port_uz": -0.0169776,
-  "sf_yield": 18.171064383823452,
+  "vm_p995": 15.696003745635373,
+  "u_max": 0.06804774603259986,
+  "window_seat_uz": -0.067628,
+  "window_seat_tilt_urad": 155.7935177768185,
+  "camera_port_uz": -0.0355585,
+  "sf_yield": 5.8375258278507545,
   "criterion": "window seat sag << Rayleigh range (\u00b13.7 mm) and seat tilt negligible; SF >= 2 on yield",
   "pass": true,
-  "png": "c2_lid_vm.png"
+  "png": "c2_lid_vm.png",
+  "run": {
+   "utc": "2026-11-22 06:16",
+   "commit": "9f45d80",
+   "nodes": 265140,
+   "solver": "ITERATIVE CHOLESKY"
+  }
  },
  "4": {
   "case": "4 recoater carriage block + arm + blade holder",
@@ -176,50 +182,50 @@
   "variants": [
    {
     "variant": "first layout: 15 mm plate, 40x40x4 posts",
-    "nodes": 141403,
-    "elements": 74556,
+    "nodes": 63484,
+    "elements": 31399,
     "gravity": {
-     "lens_bore_sag_um": -13.37612435064935,
-     "u_max_um": 19.07048296096554,
-     "vm_max": 1.9729268217554345
+     "lens_bore_sag_um": -13.220739086956522,
+     "u_max_um": 18.760368022576877,
+     "vm_max": 1.6538797702166865
     },
     "png": "c6a_bridge_mode1.png",
     "modes": [
      {
-      "f_hz": 78.50268,
+      "f_hz": 78.74373,
       "galvo_dir": [
-       1.0,
-       0.03,
-       0.04
+       -1.0,
+       -0.03,
+       -0.04
       ],
       "max_at": [
        -116.0,
        -170.0,
        233.0
       ],
-      "galvo_rel": 0.9168954194556685,
-      "galvo_tilt_rel": 0.08790211342477636
+      "galvo_rel": 0.9179219478873304,
+      "galvo_tilt_rel": 0.08832285074368657
      },
      {
-      "f_hz": 86.79143,
+      "f_hz": 87.01168,
       "galvo_dir": [
-       -0.03,
-       1.0,
-       0.01
+       0.03,
+       -1.0,
+       -0.01
       ],
       "max_at": [
        -64.0,
        -170.0,
        233.0
       ],
-      "galvo_rel": 0.9884354239881947,
-      "galvo_tilt_rel": 0.016604287038014243
+      "galvo_rel": 0.9883952988141571,
+      "galvo_tilt_rel": 0.015942595317891967
      },
      {
-      "f_hz": 139.782,
+      "f_hz": 141.2095,
       "galvo_dir": [
        0.05,
-       0.03,
+       0.04,
        1.0
       ],
       "max_at": [
@@ -227,159 +233,181 @@
        -170.0,
        233.0
       ],
-      "galvo_rel": 0.6654357501990171,
-      "galvo_tilt_rel": 0.30970781114576884
+      "galvo_rel": 0.6598780997497486,
+      "galvo_tilt_rel": 0.3068040669652635
      },
      {
-      "f_hz": 153.1851,
+      "f_hz": 153.5937,
       "galvo_dir": [
-       0.03,
-       -0.94,
-       0.35
+       -0.05,
+       0.92,
+       -0.4
       ],
       "max_at": [
        225.0,
        170.0,
        233.0
       ],
-      "galvo_rel": 0.20923910646053642,
-      "galvo_tilt_rel": 0.06519202943089626
+      "galvo_rel": 0.21496715792926,
+      "galvo_tilt_rel": 0.06631027192686495
      },
      {
-      "f_hz": 318.1628,
+      "f_hz": 320.7124,
       "galvo_dir": [
-       -0.21,
-       -0.08,
+       -0.2,
+       -0.09,
        0.98
       ],
       "max_at": [
-       -116.0,
+       -64.0,
        -170.0,
        218.0
       ],
-      "galvo_rel": 0.2680394961524373,
-      "galvo_tilt_rel": 0.4192431852078203
+      "galvo_rel": 0.25797883486827183,
+      "galvo_tilt_rel": 0.42668916906628596
      },
      {
-      "f_hz": 394.0886,
+      "f_hz": 397.4555,
       "galvo_dir": [
-       0.09,
-       -0.56,
-       -0.82
+       0.08,
+       -0.49,
+       -0.87
       ],
       "max_at": [
        -25.0,
        170.0,
        218.0
       ],
-      "galvo_rel": 0.0960317971343733,
-      "galvo_tilt_rel": 0.5115083606893227
+      "galvo_rel": 0.10503138017354376,
+      "galvo_tilt_rel": 0.5043663983403119
      }
     ],
+    "run": {
+     "utc": "2026-11-22 06:01",
+     "commit": "9f45d80",
+     "nodes": 63484,
+     "solver": "SPOOLES (gravity), SPOOLES (modes)",
+     "mesh": {
+      "hmax": 10.0,
+      "hmin": 3.0,
+      "per_circle": 6.0
+     }
+    },
     "pass": false
    },
    {
     "variant": "as built in lpbf_low.py",
-    "nodes": 214736,
-    "elements": 119582,
+    "nodes": 131318,
+    "elements": 73000,
     "gravity": {
-     "lens_bore_sag_um": -4.293170566448802,
-     "u_max_um": 6.128319670268188,
-     "vm_max": 1.0791838908992433
+     "lens_bore_sag_um": -4.417078632478632,
+     "u_max_um": 6.2620557802677705,
+     "vm_max": 0.9146015264278701
     },
     "png": "c6b_bridge_mode1.png",
     "modes": [
      {
-      "f_hz": 133.1281,
+      "f_hz": 133.6819,
       "galvo_dir": [
-       1.0,
-       0.03,
-       0.06
-      ],
-      "max_at": [
-       -116.0,
-       -190.0,
-       233.0
-      ],
-      "galvo_rel": 0.8836330427287176,
-      "galvo_tilt_rel": 0.08983663862094086
-     },
-     {
-      "f_hz": 148.1722,
-      "galvo_dir": [
-       0.04,
        -1.0,
-       0.0
+       -0.03,
+       -0.08
       ],
       "max_at": [
-       -64.0,
+       -118.0,
        -190.0,
        233.0
       ],
-      "galvo_rel": 0.9748062638121279,
-      "galvo_tilt_rel": 0.018543959554560015
+      "galvo_rel": 0.878394727846551,
+      "galvo_tilt_rel": 0.08664095186809992
      },
      {
-      "f_hz": 235.2119,
+      "f_hz": 149.7723,
       "galvo_dir": [
-       -0.0,
-       -0.71,
-       -0.7
+       -0.05,
+       1.0,
+       -0.01
+      ],
+      "max_at": [
+       -62.0,
+       -190.0,
+       233.0
+      ],
+      "galvo_rel": 0.9712877722132586,
+      "galvo_tilt_rel": 0.01772607213418132
+     },
+     {
+      "f_hz": 235.0815,
+      "galvo_dir": [
+       0.0,
+       -0.65,
+       -0.76
       ],
       "max_at": [
        245.0,
        -190.0,
        233.0
       ],
-      "galvo_rel": 0.25110735449085547,
-      "galvo_tilt_rel": 0.11129026384356708
+      "galvo_rel": 0.27925952592498515,
+      "galvo_tilt_rel": 0.13052474909803333
      },
      {
-      "f_hz": 254.2875,
+      "f_hz": 253.1072,
       "galvo_dir": [
-       -0.08,
-       0.05,
-       -1.0
+       0.08,
+       -0.06,
+       1.0
       ],
       "max_at": [
-       -64.0,
+       -62.0,
        -190.0,
        208.0
       ],
-      "galvo_rel": 0.6746853612672615,
-      "galvo_tilt_rel": 0.285194846052024
+      "galvo_rel": 0.674415176903622,
+      "galvo_tilt_rel": 0.30057297911426045
      },
      {
-      "f_hz": 499.3882,
+      "f_hz": 487.5447,
       "galvo_dir": [
-       -0.36,
-       0.15,
-       0.92
+       0.47,
+       -0.22,
+       -0.86
       ],
       "max_at": [
-       -64.0,
+       -62.0,
        -190.0,
        208.0
       ],
-      "galvo_rel": 0.18751301444045884,
-      "galvo_tilt_rel": 0.37474110387645415
+      "galvo_rel": 0.24482082951384737,
+      "galvo_tilt_rel": 0.34827229762743933
      },
      {
-      "f_hz": 573.1093,
+      "f_hz": 535.5455,
       "galvo_dir": [
-       0.7,
-       -0.46,
-       -0.55
+       0.83,
+       -0.56,
+       -0.0
       ],
       "max_at": [
-       -116.0,
+       -62.0,
        -190.0,
-       233.0
+       208.0
       ],
-      "galvo_rel": 0.2128043794118753,
-      "galvo_tilt_rel": 0.39990732429565645
+      "galvo_rel": 0.21593888879363557,
+      "galvo_tilt_rel": 0.33238315610358526
      }
     ],
+    "run": {
+     "utc": "2026-11-22 06:04",
+     "commit": "9f45d80",
+     "nodes": 131318,
+     "solver": "SPOOLES (gravity), SPOOLES (modes)",
+     "mesh": {
+      "hmax": 10.0,
+      "hmin": 3.0,
+      "per_circle": 6.0
+     }
+    },
     "pass": true
    }
   ],

@@ -17,6 +17,18 @@ Cases
 
 Run:  OMP_NUM_THREADS=2 xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/venv/bin/python desktop-lpbf/analysis/fea/fea.py [1 2 ...]
 Scratch (.brep/.inp/.frd/.dat) goes to /tmp/fea-run/; results to analysis/out/fea/ (fea.md, fea.json, PNGs).
+
+Memory (2026-11-22; the runner has 15 GB shared by several jobs, and this script must fit in 4.5 GB): gmsh and the model
+build take < 1 GB. The memory goes to ccx's direct solver: SPOOLES on the 265,000-node lid passed 4.2 GB before it was
+killed, and the recoater (300,000 nodes) and the bridge (350,000) are larger. So
+  - static steps use SPOOLES up to FEA_DIRECT_MAX nodes (default 150,000: 3.0 GB in all for the 141,500-node bridge) and
+    ccx's ITERATIVE CHOLESKY (PCG with an incomplete-Cholesky preconditioner, memory ~ the matrix) above;
+    FEA_SOLVER=SPOOLES or FEA_SOLVER="ITERATIVE CHOLESKY" forces one. On the door and the Z arm the two agree to 0.01 %
+    in displacement and 2 % in peak stress;
+  - the bridge (case 6) is meshed coarser (hmax 10 mm, was 7) because *FREQUENCY needs SPOOLES here (this ccx has no
+    PARDISO or PaStiX), and the PCG solver needs ~20 min for its gravity step (the rigid masses make it ill-conditioned);
+  - several cases on the command line run one after another, each in its own process;
+  - images are drawn by render_fea.py in a child process from the surface triangles only, not the volume mesh.
 """
 from __future__ import annotations
 
@@ -46,6 +58,27 @@ P = M.P
 AL = M.MAT["al6061"]
 HAZ_ALLOW = 110.0         # MPa, 6061-T6 weld heat-affected zone (as-welded, ~O/T4 strength)
 FATIGUE = AL["fat"]       # 96.5 MPa at 5e8 cycles (R = -1)
+DIRECT_MAX = int(os.environ.get("FEA_DIRECT_MAX", "150000"))   # nodes; SPOOLES above this outgrows a 4.5 GB budget
+
+
+def solver_for(m):
+    """ccx solver for a static step on mesh m: SPOOLES (direct) for small meshes, ITERATIVE CHOLESKY for large ones."""
+    return os.environ.get("FEA_SOLVER") or ("SPOOLES" if len(m["ntags"]) <= DIRECT_MAX else "ITERATIVE CHOLESKY")
+
+
+def model_commit():
+    """Commit of the model these results come from, with '+dirty' if cad/ has uncommitted changes."""
+    try:
+        h = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
+        d = subprocess.run(["git", "status", "--porcelain", "--", "cad"], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
+        return h + ("+dirty" if d else "")
+    except Exception:  # noqa: BLE001
+        return "unknown"
+
+
+def stamp(r, m, solver, **kw):
+    """Record how a case was run (UTC date, model commit, mesh size, solver) in its result dict."""
+    r["run"] = dict(utc=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), commit=model_commit(), nodes=len(m["ntags"]), solver=solver, **kw)
 
 
 # --------------------------------------------------------------------------------------------
@@ -318,35 +351,33 @@ def nice(x):
     return 10 * e
 
 
+def surface_tris(m):
+    """The boundary as linear triangles (each 6-node face triangle split in 4 at its mid-side nodes, so the quadratic mesh's
+    nodal values are all shown), on the surface nodes only: (row indices of those nodes, triangles numbered 0..n-1)."""
+    tri = m["idx"][np.vstack([s["tri"] for s in m["surfs"].values()])]
+    lin = np.vstack([tri[:, [0, 3, 5]], tri[:, [3, 1, 4]], tri[:, [5, 4, 2]], tri[:, [3, 4, 5]]])
+    used, inv = np.unique(lin, return_inverse=True)
+    return used, inv.reshape(-1, 3)
+
+
 def render(m, U, s, path, title, view, label="von Mises (MPa)", scale=None, clim=None, mark=None, zoom=1.15, cmap="turbo", up=(0, 0, 1)):
-    import pyvista as pv
+    """Draw the deformed surface coloured by s. The drawing runs in its own process (render_fea.py) on the surface triangles
+    only, so VTK never holds the volume mesh and its memory is freed before the next solve. Returns the deformation scale."""
     pts = m["xyz"]
-    t = m["idx"][m["tets"]]
-    cells = np.hstack([np.full((len(t), 1), 10), t]).ravel()
-    grid = pv.UnstructuredGrid(cells, np.full(len(t), pv.CellType.QUADRATIC_TETRA, dtype=np.uint8), pts)
-    grid.point_data["s"] = s
-    grid.point_data["U"] = U
-    diag = np.linalg.norm(pts.max(0) - pts.min(0))
+    diag = float(np.linalg.norm(pts.max(0) - pts.min(0)))
     umax = np.linalg.norm(U, axis=1).max()
     if scale is None:
         scale = nice(0.05 * diag / max(umax, 1e-12))
-    w = grid.warp_by_vector("U", factor=scale)
-    try:
-        surf = w.extract_surface(nonlinear_subdivision=2)
-    except TypeError:
-        surf = w.extract_surface()
-    pl = pv.Plotter(off_screen=True, window_size=(1200, 820))
-    pl.set_background("white")
-    pl.add_mesh(surf, scalars="s", cmap=cmap, clim=clim, smooth_shading=True,
-                scalar_bar_args=dict(title=label, vertical=True, fmt="%.3g", title_font_size=14, label_font_size=12, position_x=0.86, position_y=0.12))
-    pl.add_mesh(grid.extract_surface().extract_feature_edges(35), color="black", line_width=0.6, opacity=0.25)
-    if mark is not None:
-        pl.add_mesh(pv.Sphere(radius=0.012 * diag, center=np.asarray(mark) + scale * U[m["idx"][nearest(m, mark)]]), color="magenta")
-    pl.add_text(title + f"\ndeformation x{scale:g}", font_size=10, color="black")
-    pl.view_vector(view, viewup=up)
-    pl.camera.zoom(zoom)
-    pl.screenshot(str(path))
-    pl.close()
+    used, tri = surface_tris(m)
+    mk = None if mark is None else (np.asarray(mark) + scale * U[m["idx"][nearest(m, mark)]]).tolist()
+    opt = dict(path=str(path), title=title + f"\ndeformation x{scale:g}", view=list(view), up=list(up), label=label, scale=float(scale),
+               clim=None if clim is None else [float(c) for c in clim], mark=mk, diag=diag, zoom=zoom, cmap=cmap)
+    RUN.mkdir(parents=True, exist_ok=True)
+    npz = RUN / f"render_{pathlib.Path(path).stem}.npz"
+    np.savez(npz, pts=pts[used], tri=tri, U=np.asarray(U)[used], s=np.asarray(s, dtype=float)[used], opt=json.dumps(opt))
+    r = subprocess.run([sys.executable, str(HERE / "render_fea.py"), str(npz)], capture_output=True, text=True, timeout=900)
+    if r.returncode != 0 or not pathlib.Path(path).exists():
+        print(f"  render failed for {pathlib.Path(path).name} (exit {r.returncode}); results are unaffected\n{r.stderr[-800:]}")
     return scale
 
 
@@ -464,6 +495,7 @@ def case1(parts, R):
     r["criterion"] = "SF >= 2 on yield at the peak; seal faces move << the O-rings' squeeze; Goodman SF >= 2 for vacuum cycles"
     r["pass"] = r["sf_yield"] >= 2 and r["sf_fatigue_goodman"] >= 2
     r["png"] = "c1_chamber_vm.png"
+    stamp(r, m, "ITERATIVE CHOLESKY")
     render(m, U, vm, OUT / r["png"], f"Case 1: frame + floor plate at full vacuum, 6061-T6\nmax von Mises {vmax:.1f} MPa at {loc_text(m['xyz'][i])}",
            (-1.0, -1.6, 1.1), mark=m["xyz"][i], clim=(0, max(p995 * 1.2, 1e-3)))
     R["1"] = r
@@ -503,6 +535,7 @@ def case1b(parts, R):
     r["criterion"] = "as case 1"
     r["pass"] = r["sf_yield"] >= 2 and r["sf_fatigue_goodman"] >= 2
     r["png"] = "c1b_chamber_lid_vm.png"
+    stamp(r, m, "ITERATIVE CHOLESKY")
     R["1b"] = r
 
 
@@ -597,7 +630,8 @@ def case2(parts, R):
     job = "c2_lid"
     write_model(job, m, AL, nset("LAND", land) + nset("PINS", pins))
     loads = "*DLOAD\n" + dload_lines(f_top, P_ATM) + dload_lines(f_win, p_win) + dload_lines(f_dose, p_dose) + dload_lines(f_cam, p_cam)
-    append(job, static_step("LAND,3,3\nPINS,1,2\n", loads))
+    sol = solver_for(m)
+    append(job, static_step("LAND,3,3\nPINS,1,2\n", loads, solver=sol))
     run_ccx(job)
     U, S, vm = static_results(m, job)
     i = int(np.argmax(vm))
@@ -616,6 +650,7 @@ def case2(parts, R):
     r["criterion"] = "window seat sag << Rayleigh range (±3.7 mm) and seat tilt negligible; SF >= 2 on yield"
     r["pass"] = r["sf_yield"] >= 2
     r["png"] = "c2_lid_vm.png"
+    stamp(r, m, sol)
     render(m, U, vm, OUT / r["png"], f"Case 2: lid at vacuum, 6061-T6\nmax von Mises {vm[i]:.1f} MPa; window seat sag {abs(r['window_seat_uz']) * 1000:.1f} um",
            (-0.6, -1.4, 1.6), mark=m["xyz"][i])
     R["2"] = r
@@ -635,7 +670,8 @@ def case3(parts, R):
     pb = nearest(m, (124, dy1, 54), land)
     job = "c3_door"
     write_model(job, m, AL, nset("LAND", land))
-    append(job, static_step(f"LAND,2,2\n{pa},1,1\n{pa},3,3\n{pb},3,3\n", "*DLOAD\n" + dload_lines(f_out, p_eq)))
+    sol = solver_for(m)
+    append(job, static_step(f"LAND,2,2\n{pa},1,1\n{pa},3,3\n{pb},3,3\n", "*DLOAD\n" + dload_lines(f_out, p_eq), solver=sol))
     run_ccx(job)
     U, S, vm = static_results(m, job)
     i = int(np.argmax(vm))
@@ -649,6 +685,7 @@ def case3(parts, R):
     r["criterion"] = "SF >= 2 on yield; at +50 mbar each of the 2 toggle latches (McMaster 1807A61, 800 lb) carries half the door load"
     r["pass"] = r["sf_yield"] >= 2
     r["png"] = "c3_door_vm.png"
+    stamp(r, m, sol)
     render(m, U, vm, OUT / r["png"], f"Case 3: drop-down door at vacuum, 6061-T6\nmax von Mises {vm[i]:.1f} MPa", (-0.8, -1.5, 0.6), mark=m["xyz"][i])
     R["3"] = r
     print(f"  case 3: vm max {vm[i]:.1f} MPa, u max {r['u_max'] * 1000:.2f} um, latch {F_over / 2:.0f} N each")
@@ -697,7 +734,7 @@ def case4(parts, R):
         for lc, loads in (("spread", cload_lines(botn, (-10.0, 0.0, 10.0))), ("hit", cload_lines(frontn, (-50.0, 0.0, 0.0)))):
             job = f"c4{tag}_{lc}"
             write_model(job, m, AL, nset("CAR", car) + nset("BORE", boren))
-            append(job, static_step("CAR,2,3\nBORE,1,1\n", "*CLOAD\n" + loads))
+            append(job, static_step("CAR,2,3\nBORE,1,1\n", "*CLOAD\n" + loads, solver=solver_for(m)))
             run_ccx(job)
             U, S, vm = static_results(m, job)
             bi = m["idx"][botn]
@@ -716,6 +753,7 @@ def case4(parts, R):
                        (-1.0, -1.2, 0.5), mark=m["xyz"][i], zoom=1.3)
                 res[lc]["png"] = png
         out.append(dict(variant=variant, nodes=len(m["ntags"]), elements=len(m["tets"]), **res))
+        stamp(out[-1], m, solver_for(m))
         print(f"  case 4 {variant}: spread uz max {res['spread']['uz_max_um']:.1f} um (tip {res['spread']['uz_tip_um']:.1f}), ux max {res['spread']['ux_max_um']:.1f} um; "
               f"hit vm {res['hit']['vm_max']:.1f} MPa, hit uz {res['hit']['uz_max_um']:.0f} um")
     r = dict(case="4 recoater carriage block + arm + blade holder", material=AL["label"],
@@ -732,7 +770,8 @@ def case5(parts, R):
     boren = nodes_on(m, list(m["surfs"]), lambda q: (np.abs(np.hypot(q[:, 0], q[:, 1]) - 6.0) < 0.2))
     job = "c5_zarm"
     write_model(job, m, AL, nset("FIX", fixn) + nset("BORE", boren))
-    append(job, static_step("FIX,1,3\n", "*CLOAD\n" + cload_lines(boren, (10.0, 0.0, -50.0))))
+    sol = solver_for(m)
+    append(job, static_step("FIX,1,3\n", "*CLOAD\n" + cload_lines(boren, (10.0, 0.0, -50.0)), solver=sol))
     run_ccx(job)
     U, S, vm = static_results(m, job)
     i = int(np.argmax(vm))
@@ -750,6 +789,7 @@ def case5(parts, R):
     r["criterion"] = "plate tilt < 10 um across Ø50 (arm only; the carriage, rail and actuator add their own compliance)"
     r["pass"] = r["plate_tilt_um_over_50mm"] < 10
     r["png"] = "c5_zarm_vm.png"
+    stamp(r, m, sol)
     render(m, U, vm, OUT / r["png"], f"Case 5: Z lift arm, 50 N down + 10 N side at the rod\nrod sag {abs(r['u_rod_um'][2]):.1f} um, plate tilt {r['plate_tilt_um_over_50mm']:.1f} um over Ø50",
            (1.0, -1.3, 0.9), mark=m["xyz"][i], zoom=1.3)
     R["5"] = r
@@ -784,10 +824,17 @@ def case6(parts, R):
               "SHUTTER": (1.2e-3, (-170.0, 0.0, beam_z), lambda q: (q[:, 0] >= -190) & (q[:, 0] <= -150) & (np.abs(q[:, 1]) <= 20)),
               "COLLIM": (0.5e-3, (-265.0, 0.0, beam_z), lambda q: (q[:, 0] >= -300) & (q[:, 0] <= -230) & (np.abs(q[:, 1]) <= 20))}
     out = []
+    # mesh: hmax, hmin, elements per circle. *FREQUENCY needs a direct solver (SPOOLES; this ccx has no PARDISO or PaStiX), and
+    # the bridge's mesh is set by its volume, not its details: hmax 7 gave 141,500 nodes for 6a (SPOOLES: 3.0 GB) and 350,000
+    # for 6b, too many for SPOOLES in 4.5 GB. hmax 10 keeps 6b near 100,000; 6a on both meshes is compared in fea.md.
+    hmax, hmin, curv = (float(x) for x in os.environ.get("FEA_C6_MESH", "10,3,6").split(","))
+    only = os.environ.get("FEA_C6_ONLY", "ab")
     model_shape = part(parts, "Optics bridge (").shape.fuse(part(parts, "Optics bridge posts").shape).clean()
     for variant, shape in ((FIRST + ": 15 mm plate, 40x40x4 posts", bridge_variant()), (BUILT, model_shape)):
         tag = "a" if variant.startswith(FIRST) else "b"
-        m = mesh_shape(shape, f"c6{tag}_bridge", hmax=7.0, hmin=1.5)
+        if tag not in only:
+            continue
+        m = mesh_shape(shape, f"c6{tag}_bridge", hmax=hmax, hmin=hmin, curv=curv)
         feet = nodes_on(m, surfaces(m, planar("z", zb1)))
         topf = surfaces(m, planar("z", zb1_))
         nmax = int(m["ntags"].max())
@@ -807,14 +854,15 @@ def case6(parts, R):
         res = {}
         job = f"c6{tag}_static"
         write_model(job, m, AL, extra)
-        append(job, "*STEP\n*STATIC\n*BOUNDARY\nFEET,1,3\n*DLOAD\nEALL,GRAV,9810.,0.,0.,-1.\n*CLOAD\n" + cl + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
+        sol = solver_for(m)
+        append(job, f"*STEP\n*STATIC, SOLVER={sol}\n*BOUNDARY\nFEET,1,3\n*DLOAD\nEALL,GRAV,9810.,0.,0.,-1.\n*CLOAD\n" + cl + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
         run_ccx(job)
         U, S, vm = static_results(m, job)
         rim = m["idx"][nodes_on(m, topf, lambda q: np.hypot(q[:, 0], q[:, 1]) <= 60)]
         res["gravity"] = dict(lens_bore_sag_um=float(U[rim, 2].mean() * 1000), u_max_um=float(np.linalg.norm(U[:len(m["ntags"])], axis=1).max() * 1000), vm_max=float(vm.max()))
         job = f"c6{tag}_modal"
         write_model(job, m, AL, extra)
-        append(job, "*BOUNDARY\nFEET,1,3\n*STEP\n*FREQUENCY\n6\n*NODE FILE\nU\n*END STEP\n")
+        append(job, "*BOUNDARY\nFEET,1,3\n*STEP\n*FREQUENCY, SOLVER=SPOOLES\n6\n*NODE FILE\nU\n*END STEP\n")
         run_ccx(job)
         f = read_freqs(job)
         blocks = [b for b in read_frd(job) if b["name"] == "DISP"]
@@ -838,6 +886,7 @@ def case6(parts, R):
                 res["png"] = png
         res["modes"] = shapes
         out.append(dict(variant=variant, nodes=len(m["ntags"]), elements=len(m["tets"]), **res))
+        stamp(out[-1], m, f"{sol} (gravity), SPOOLES (modes)", mesh=dict(hmax=hmax, hmin=hmin, per_circle=curv))
         print(f"  case 6 {variant}: f = {[round(x, 1) for x in f]} Hz; gravity sag at lens {res['gravity']['lens_bore_sag_um']:.1f} um")
     r = dict(case="6 optics bridge + posts", material=AL["label"],
              load="gravity + galvo/lens 3.1 kg, shutter 1.2 kg, collimator 0.5 kg as rigid masses at their centres of mass; post feet fixed",
@@ -862,7 +911,8 @@ def case7(parts, R):
     fs = M.MAT["fused_silica"]
     job = "c7_window"
     write_model(job, m, fs, nset("RING", ring))
-    append(job, static_step(f"RING,3,3\n{c0},1,2\n{c1},2,2\n", "*DLOAD\n" + dload_lines(faces_on(m, top), P_ATM)))
+    sol = solver_for(m)
+    append(job, static_step(f"RING,3,3\n{c0},1,2\n{c1},2,2\n", "*DLOAD\n" + dload_lines(faces_on(m, top), P_ATM), solver=sol))
     run_ccx(job)
     U, S, vm = static_results(m, job)
     s1 = principal_max(S)
@@ -875,6 +925,7 @@ def case7(parts, R):
              t_required_mm={str(k): v for k, v in t_req.items()}, u_max_um=float(np.linalg.norm(U, axis=1).max() * 1000))
     r["criterion"] = "SF >= 4-6 against the 52.4 MPa abraded modulus of rupture (Corning 7980)"
     r["pass"] = r["sf_fea"] >= 6
+    stamp(r, m, sol)
     R["7"] = r
     print(f"  case 7: s1 max {s1[i]:.2f} MPa (Roark {roark:.2f}), SF {r['sf_fea']:.0f}; t needed {t_req}")
 
@@ -945,6 +996,23 @@ def write_md(R):
               f"{g['parker_range']['width_face'][0]}–{g['parker_range']['width_face'][1]}); squeeze {g['squeeze_nom']:.1f} % ({g['squeeze_min']:.1f}–{g['squeeze_max']:.1f} % at ±0.05 mm and cord tolerance); "
               f"fill {g['fill_nom']:.0f} % (max {g['fill_max_cold']:.0f} % cold); path {g['path_mm']:.0f} mm; {g['splice']}. O-ring force {r['oring_force_N']['nominal'] / 1000:.1f} kN nominal, "
               f"{r['oring_force_N']['max_tolerance'] / 1000:.1f} kN at max squeeze, {r['oring_force_N']['parker_80A'] / 1000:.1f} kN on Parker's 80A bar. {'pass' if r['pass'] else 'FAIL'}."]
+    L += ["", "## How each case was run", "",
+          "Since 2026-11-22 every case records when it ran, on which commit of the model, its mesh and its solver (SPOOLES up to 150,000 nodes, "
+          "ccx's ITERATIVE CHOLESKY above; the bridge on a coarser mesh so that its modes can use SPOOLES; see the script's docstring). "
+          "Cases without a record ran earlier, on the model of their day.", "",
+          "| Case | Run (UTC) | Model commit | Nodes | Solver |", "|---|---|---|---|---|"]
+    rows = [(k, R[k]) for k in ("1", "1b", "2", "3", "5", "7") if k in R]
+    rows += [(f"{k} ({v['variant']})", v) for k in ("4", "6") for v in R.get(k, {}).get("variants", [])]
+    for k, r in sorted(rows, key=lambda x: x[0]):
+        run = r.get("run")
+        if run:
+            mesh = run.get("mesh")
+            ms = f", hmax {mesh['hmax']:g} mm" if mesh else ""
+            L.append(f"| {k} | {run['utc']} | {run['commit']} | {run['nodes']:,}{ms} | {run['solver']} |")
+        else:
+            L.append(f"| {k} | before 2026-11-22 (not recorded) | – | {r.get('nodes', 0):,} | {'ITERATIVE CHOLESKY' if k in ('1', '1b') else 'SPOOLES'} |")
+    for line in R.get("checks", {}).get("notes", []):
+        L += ["", line]
     if "6" in R:
         L += ["", "Mode shapes (case 6): direction of the galvo's centre of mass in each mode, and where the largest motion is."]
         for v in R["6"]["variants"]:
@@ -958,8 +1026,17 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     RUN.mkdir(parents=True, exist_ok=True)
     which = sys.argv[1:] or ["7", "5", "4", "3", "2", "6", "1", "1b", "1f"]
-    parts = M.build()
     jf = OUT / "fea.json"
+    if len(which) > 1:              # one process per case: memory is returned between cases, and a failed case doesn't stop the rest
+        failed = []
+        for c in which:
+            if subprocess.run([sys.executable, __file__, c]).returncode != 0:
+                failed.append(c)
+                print(f"case {c} FAILED")
+        if failed:
+            sys.exit(f"failed cases: {' '.join(failed)}")
+        return
+    parts = M.build()
     R = json.loads(jf.read_text()) if jf.exists() else {}
     for c in which:
         t0 = time.time()
