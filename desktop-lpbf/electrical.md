@@ -451,7 +451,8 @@ PTFE/Kapton inside; a validated safety interface to the UR12e; and DIN-rail modu
   rise time and back-reflection rating. The 2012 YLR guide is the closest public document; the U3 may differ (its U2 page lists
   "5 and 24 Volt Control Interfaces").
 - **SCANLAB:** RTC6 price and the laser-connector pinout; basiCube 20 power connector and status signal.
-- **Model patch requests** (not made here): 4U drawer and 12U rack; PB1 beside the rack; PB2 on the guard frame; rod-end block
+- **Vacuum pump changed after this note was written.** The completeness audit moved BOM line G2 to the dry scroll pump the model draws, an Edwards nXDS6i. The single-line diagram, the I/O list and `power_budget.py` still use the McMaster 4396K21 rotary-vane pump (115 V, 7 A). Re-run them with the nXDS6i's nameplate before the breaker and leg sizes are fixed.
+- **Model patch requests** (not made here): 4U drawer and 12U rack (both drawn since, in 9297709); PB1 beside the rack; PB2 on the guard frame; rod-end block
   for the weld-in feedthroughs; LED bar outside the chamber; a KF16 Pirani port; recoater and Z home sensors; a guard-position
   sensor separate from the lock; E-stops on the guard front and the gas module.
 - **Prices not fetched** (estimates in electrical-bom.csv, marked so): the 4U drawer (3U versions $217.80-286.20), the
