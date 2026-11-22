@@ -293,9 +293,12 @@ def run_job(job, jpath):
     """One job in this process: the previous result for its key is kept under R["previous"] if it came from another commit."""
     key, fn = JOBS[job]
     R = json.loads(jpath.read_text()) if jpath.exists() else {}
+    for k in ("H2_M50", "H1_M50", "H1_L75"):         # results from before per-result revs carry the file's single rev
+        if k in R and "rev" not in R[k] and not str(R.get("rev", "")).startswith("mixed"):
+            R[k]["rev"] = R["rev"]
     old = R.get(key)
-    if old and old.get("rev", R.get("rev")) != REV:
-        R.setdefault("previous", {})[key] = dict(old, rev=old.get("rev", R.get("rev")))
+    if old and old.get("rev") != REV:
+        R.setdefault("previous", {})[key] = dict(old, rev=old.get("rev", "unknown"))
     fn(R)
     R[key]["rev"] = REV
     jpath.write_text(json.dumps(R, indent=1))
