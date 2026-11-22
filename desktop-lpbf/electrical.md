@@ -35,7 +35,7 @@ Teensy carrier would cost about $50 in boards and assembly plus ~$60 of parts, a
 drawn in the model ([`io_check.md`](analysis/out/electrical/io_check.md)). The ones that change the design:
 
 1. **There was no supply design.** No main disconnect, no branch protection, no 48 V servo supply, no place for the AC parts
-   (the UPS only got a bom.csv line, D2, today). Now: a lockable main disconnect and five branches in a power
+   (the UPS only got a bom.csv line, D2, today). Now: a lockable main disconnect and four AC branches in a power
    box PB1 beside the rack (§1).
 2. **The 3U DIN drawer cannot hold the controls.** A safety controller with enough inputs (Banner SC26/XS26) stands 129 mm
    off its rail, and the 480 W DIN supplies 128.5 mm; a 3U drawer has ~120 mm clear. Make it **4U and the rack 12U (560 mm,
@@ -61,8 +61,8 @@ drawn in the model ([`io_check.md`](analysis/out/electrical/io_check.md)). The o
     type K pairs plus power. Six single-lead type K weld-ins (Ø6.27 mm sleeves) and one 4-pin 16 A copper weld-in (Ø12.62 mm)
     do it, but need a rod-end face ~28-30 mm across, not 24 (§6).
 11. **Missing devices:** home and over-travel sensors on the recoater and Z, a guard-position sensor separate from the lock,
-    two more E-stops, a chamber-at-ambient pressure switch, a Pirani gauge port, auto switches on the door actuator and latch
-    cylinders, an air pressure switch, and a second plate-temperature channel for the door (electrical-io.csv).
+    two more E-stops, a chamber-at-ambient pressure switch, a Pirani gauge port, auto switches on the door actuator (A3's latch
+    cylinders carry theirs), an air pressure switch, and a second plate-temperature channel for the door (electrical-io.csv).
 12. **Earth leakage ~8 mA (estimate).** Above 3.5 mA a plug-in machine needs reinforced protective earth: two PE contacts in
     the dock, and no 5 mA GFCI upstream (§8).
 
