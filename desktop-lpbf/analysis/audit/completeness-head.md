@@ -68,11 +68,12 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
    - **Rack:** the model's 11U rack, 515 mm tall, has no catalogue match. McMaster's 7648K62 cabinet is 10U and
      495 mm tall ($609.03). Its next size is 30 in. tall, and its open racks start at 24U. So either the 3U DIN drawer
      becomes 2U or the rack is a custom frame.
-5. **For the optics audit:**
+5. **For the optics audit** (`optics-bom.csv` O2 and O7 already propose the L3 and L6 fixes):
    - L6 still specifies f = 254 mm, while the model uses the Thorlabs FTH160-1064 (f = 160 mm).
    - The IPG 5 mm collimator in the model and L3 gives ~48 µm at f = 160 mm, not 75 µm. `low-profile.md` §2 calls for a
      ~3.2 mm beam.
-   - The camera window (Ø1 in., 1070 nm blocking coating) is in no line.
+   - The camera window (Ø1 in., 1070 nm blocking coating) is in no line. `optics-bom.csv` O21 proposes a plain window and a
+     Thorlabs filter.
    - The Ø2 in. × 8 mm main window has no part number: L7 names a Ø1 in. WG41050-C.
 6. **For the electrical design:**
    - No 2U scan/laser PC is chosen (C1 is the RTC6 card).
@@ -106,7 +107,7 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
   - G2 dry scroll pump;
   - G7 Pirani, 316 relief and SAE-4 adapters; G8 seals from `seal-parts.csv`; G9 Vaisala DMT143;
   - M1 Ferrotec feedthrough; M2 ClearPath part number; M3 THK KR26 Z actuator; M4 roller feedthrough and overflow jar;
-    M5 HSS blank; M6 Pi HQ camera and 16 mm lens (Adafruit);
+    M5 HSS blank; M6 Pi HQ camera (the lens is left to the optics audit, `optics-bom.csv` O20);
   - S9 rack, 20 mm guard frame and sliding door;
   - S7 the fixed Macurco OX-6 room O2 monitor that `safety-parts.csv` SP1 asks for, in place of the portable 18995T81;
   - G4 a note only: still no gas-tight blower;
@@ -115,7 +116,7 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
   D1 dock and umbilicals, D2 UPS, X1 machining.
 - **Not touched:** C1-C6, S1-S4, H2, A1, L1-L7, S5, S6, T1 and T2, which are the electrical and optics lines.
 - **Sources:** every fetched price is in [`analysis/audit/audit-prices.csv`](analysis/audit/audit-prices.csv), with its
-  URL and UTC time. The prices were read on 2026-11-22 between 05:35 and 05:56 UTC, McMaster's through the lab tunnel.
+  URL and UTC time. The prices were read on 2026-11-22 between 05:35 and 06:05 UTC; McMaster's and the plate distributor's through the lab tunnel.
   Estimates are marked "ESTIMATE" there and "estimate" in `price_basis`.
 - **Stale rows left in place:** the tall model's rows in `mcmaster-parts.csv` still exist. These are the G1, S9 and M3
   rows, the 9572K33 V-ring, the 1165N11 cord and the 4277T52 nylon relief. Their lines now say they no longer apply.

@@ -68,11 +68,12 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
    - **Rack:** the model's 11U rack, 515 mm tall, has no catalogue match. McMaster's 7648K62 cabinet is 10U and
      495 mm tall ($609.03). Its next size is 30 in. tall, and its open racks start at 24U. So either the 3U DIN drawer
      becomes 2U or the rack is a custom frame.
-5. **For the optics audit:**
+5. **For the optics audit** (`optics-bom.csv` O2 and O7 already propose the L3 and L6 fixes):
    - L6 still specifies f = 254 mm, while the model uses the Thorlabs FTH160-1064 (f = 160 mm).
    - The IPG 5 mm collimator in the model and L3 gives ~48 µm at f = 160 mm, not 75 µm. `low-profile.md` §2 calls for a
      ~3.2 mm beam.
-   - The camera window (Ø1 in., 1070 nm blocking coating) is in no line.
+   - The camera window (Ø1 in., 1070 nm blocking coating) is in no line. `optics-bom.csv` O21 proposes a plain window and a
+     Thorlabs filter.
    - The Ø2 in. × 8 mm main window has no part number: L7 names a Ø1 in. WG41050-C.
 6. **For the electrical design:**
    - No 2U scan/laser PC is chosen (C1 is the RTC6 card).
@@ -106,7 +107,7 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
   - G2 dry scroll pump;
   - G7 Pirani, 316 relief and SAE-4 adapters; G8 seals from `seal-parts.csv`; G9 Vaisala DMT143;
   - M1 Ferrotec feedthrough; M2 ClearPath part number; M3 THK KR26 Z actuator; M4 roller feedthrough and overflow jar;
-    M5 HSS blank; M6 Pi HQ camera and 16 mm lens (Adafruit);
+    M5 HSS blank; M6 Pi HQ camera (the lens is left to the optics audit, `optics-bom.csv` O20);
   - S9 rack, 20 mm guard frame and sliding door;
   - S7 the fixed Macurco OX-6 room O2 monitor that `safety-parts.csv` SP1 asks for, in place of the portable 18995T81;
   - G4 a note only: still no gas-tight blower;
@@ -115,7 +116,7 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
   D1 dock and umbilicals, D2 UPS, X1 machining.
 - **Not touched:** C1-C6, S1-S4, H2, A1, L1-L7, S5, S6, T1 and T2, which are the electrical and optics lines.
 - **Sources:** every fetched price is in [`analysis/audit/audit-prices.csv`](analysis/audit/audit-prices.csv), with its
-  URL and UTC time. The prices were read on 2026-11-22 between 05:35 and 05:56 UTC, McMaster's through the lab tunnel.
+  URL and UTC time. The prices were read on 2026-11-22 between 05:35 and 06:05 UTC; McMaster's and the plate distributor's through the lab tunnel.
   Estimates are marked "ESTIMATE" there and "estimate" in `price_basis`.
 - **Stale rows left in place:** the tall model's rows in `mcmaster-parts.csv` still exist. These are the G1, S9 and M3
   rows, the 9572K33 V-ring, the 1165N11 cord and the 4277T52 nylon relief. Their lines now say they no longer apply.
@@ -423,18 +424,45 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 
 Most of these are expected: stock for the custom parts (a plate or bar has no part in the model to carry its part number), tools and fixtures (`assembly-tooling.csv`), the robot cell (`robot-tooling.csv`), room safety and PPE (`safety-parts.csv`), alternatives with qty 0, sizes for the S25 and L75 modules (the model draws M50), and the lab's other plate materials. The stale ones are the tall model's rows in `mcmaster-parts.csv` named above.
 
-| File | Rows with no model part |
-|---|---|
-| assembly-tooling.csv | 26 |
-| audit-prices.csv | 25 |
-| fasteners.csv | 3 |
-| mcmaster-parts.csv | 43 |
-| options-mcmaster.csv | 18 |
-| options-vendors.csv | 21 |
-| plate-materials.csv | 11 |
-| robot-tooling.csv | 27 |
-| safety-parts.csv | 28 |
-| seal-parts.csv | 13 |
-| vendor-lookups.csv | 29 |
-| vendor-parts.csv | 2 |
+| File | Rows with no model part | By reason (a guess from the file, qty and the line's text) |
+|---|---|---|
+| assembly-tooling.csv | 26 | tool or fixture 26 |
+| audit-prices.csv | 25 | alternative (qty 0) 2; other 14; stock for custom parts 9 |
+| fasteners.csv | 3 | other 3 |
+| mcmaster-parts.csv | 43 | alternative (qty 0) 4; alternative in line G2 1; other 11; stale: line G1 no longer cites mcmaster-parts.csv 3; stale: line G7's notes retire it 1; stale: line G8's notes retire it 1; stale: line M1's notes retire it 2; stale: line M3 no longer cites mcmaster-parts.csv 6; stale: line M4's notes retire it 3; stale: line S9's notes retire it 6; stock for custom parts 5 |
+| options-mcmaster.csv | 18 | alternative in line A2 1; alternative in line H1 1; other 10; stock for custom parts 6 |
+| options-vendors.csv | 21 | alternative (qty 0) 6; alternative in line A2 1; alternative in line H1 1; other 13 |
+| plate-materials.csv | 11 | plate-material options (study) 11 |
+| robot-tooling.csv | 27 | robot cell 27 |
+| safety-parts.csv | 28 | room safety, PPE or option 28 |
+| seal-parts.csv | 13 | alternative (qty 0) 1; other 5; stock for custom parts 7 |
+| vendor-lookups.csv | 29 | other 29 |
+| vendor-parts.csv | 2 | other 2 |
+
+Rows their own BOM line has retired (the tall model's parts, and parts moved to other lines):
+
+| File | Line | Part numbers | Item |
+|---|---|---|---|
+| mcmaster-parts.csv | S9 | 5537T97 | T-Slotted Framing, Single 4-Slot Rail, Silver, 30 mm Square, Hollow |
+| mcmaster-parts.csv | S9 | 5537T536 | T-Slotted Framing, Gusset Bracket for 30 mm High Rail, 1-3/16" Long |
+| mcmaster-parts.csv | S9 | 5278N47 | Self-Aligning T-Slotted Framing Nuts with Spring Tab, Drop-in, for 30 mm Rail, M6 Thread Size |
+| mcmaster-parts.csv | S9 | 5537T847 | T-Slotted Framing, Rail-to-Rail Hinge for 30 mm High Rail, Silver |
+| mcmaster-parts.csv | S9 | 5537T419 | T-Slotted Framing, Black Plastic Pull Handle for 30 mm High Rail, 5-3/16" Long |
+| mcmaster-parts.csv | S9 | 89155K135 | Oversized Multipurpose 6061 Aluminum Sheet, 1/2" Thick, 12" x 24" |
+| mcmaster-parts.csv | G1 | 89155K135 | Oversized Multipurpose 6061 Aluminum Sheet, 1/2" Thick, 12" x 24" |
+| mcmaster-parts.csv | G1 | 91292A137 | 18-8 Stainless Steel Socket Head Screw, M6 x 1 mm Thread Size, 20 mm Long, Fully Threaded |
+| mcmaster-parts.csv | G1 | 91292A126 | 18-8 Stainless Steel Socket Head Screw, M5 x 0.8 mm Thread Size, 16 mm Long, Fully Threaded |
+| mcmaster-parts.csv | G8 | 1165N11 | Viton O-ring cord, 0.070 in., 90A |
+| mcmaster-parts.csv | M3 | 6638K11 | Ball Screw with Flange Ball Nut, M12 Thread Size, 300 mm Long Ball Screw |
+| mcmaster-parts.csv | M3 | 6446K781 | High-Speed Precision Flexible Shaft Coupling for 3/8" x 8 mm Shaft Diameter, 1-11/32" Overall Length |
+| mcmaster-parts.csv | M3 | 89895K623 | Smooth-Bore Seamless 304 Stainless Steel Tubing, 2-1/4" OD, 0.065" Wall Thickness |
+| mcmaster-parts.csv | M3 | 1490N11 | Fluoroelastomer Rod Wiper for 1/2" Rod Diameter, MS28776-1 |
+| mcmaster-parts.csv | M3 | 1240K129 | Tapped Linear Motion Shaft, Tapped on Both Ends, 440C Stainless Steel, 1/2" Diameter, 12" Long |
+| mcmaster-parts.csv | M3 | 1465N1 | Wear Ring Stock for 0.250" Groove Width, 0.250" Wide x 0.063" Thick Seal |
+| mcmaster-parts.csv | M1 | 9572K33 | V-Ring for 3/8" ID x 3/4" OD PTFE Stackable V-Ring Packing Seal |
+| mcmaster-parts.csv | M1 | 9572K63 | One Male and One Female Adapter for 3/8" ID x 3/4" OD PTFE Stackable V-Ring Packing Seal |
+| mcmaster-parts.csv | M4 | 8989K418 | Welded 304 Stainless Steel Tubing, 2" OD, 0.065" Wall Thickness |
+| mcmaster-parts.csv | M4 | 4518K43 | Quick-Clamp High-Vacuum Fitting for Stainless Steel Tubing, for 2" Tube x Butt-Weld, 1-9/16" Long |
+| mcmaster-parts.csv | M4 | 3487N257 | Force Sensor for Tension and Compression, S-Shape, 25-lb. Capacity |
+| mcmaster-parts.csv | G7 | 4277T52 | Compact Nylon Pressure-Relief Valve for Air, 1/4 NPT Male |
 

@@ -331,11 +331,45 @@ def build_index(files, bom):
             if name.endswith("-bom.csv") and not costed_by:
                 costed_by = f"{name}:{rid}"   # extra purchase lists (electrical-bom.csv, optics-bom.csv) are their own lines
             desc = next((r[c] for c in ("description_as_listed", "item", "element", "device", "description", "used_for") if r.get(c)), "")
-            rec = dict(file=name, id=rid, pns=sorted(pns), price=price, no_price=no_price, qty=qty, desc=desc[:110], costed_by=costed_by, used=False)
+            rec = dict(file=name, id=rid, pns=sorted(pns), price=price, no_price=no_price, qty=qty, desc=desc[:110], costed_by=costed_by,
+                       link=(lk.group(1) if lk else ""), used=False)
             rows_all.append(rec)
             for p in pns:
                 idx[p.upper()].append(rec)
     return idx, rows_all
+
+
+def cited_files(r):
+    return {pathlib.Path(c).name for c in re.split(r"[;,\s]+", r.get("source", "") + " " + r.get("price_basis", "")) if c.endswith(".csv")}
+
+
+def reason_for(rec, bom, old=None):
+    """Why a purchase row has no model part (a guess from the file, qty and its line's text). `old` is the BOM at the
+    start of the audit: a line that cited the file then and does not now has retired the row."""
+    f = rec["file"]
+    if f == "plate-materials.csv":
+        return "plate-material options (study)"
+    if f == "assembly-tooling.csv":
+        return "tool or fixture"
+    if f == "robot-tooling.csv":
+        return "robot cell"
+    if f == "safety-parts.csv":
+        return "room safety, PPE or option"
+    if rec["qty"] == 0:
+        return "alternative (qty 0)"
+    line = rec["link"] if rec["link"] in bom else ""
+    if line and f not in WHOLESALE:
+        b = bom[line]
+        if old and line in old and f in cited_files(old[line]) and f not in cited_files(b):
+            return f"stale: line {line} no longer cites {f}"
+        for sent in re.split(r"(?<=[.;|])\s+", b.get("notes", "")):
+            if any(q in sent for q in rec["pns"]) and re.search(r"no longer|moved to|replaces|replace[ds]? (it|them)|without the", sent, re.I):
+                return f"stale: line {line}'s notes retire it"
+        if any(q in b.get("alternative", "") for q in rec["pns"]):
+            return f"alternative in line {line}"
+    if re.search(r"sheet|plate|bar\b|rod\b|tube|tubing|disc|shim|stock", rec["desc"], re.I):
+        return "stock for custom parts"
+    return ""
 
 
 # ------------------------------------------------------------------ main
@@ -457,14 +491,15 @@ def main():
         w.writerows(out)
 
     # reverse: bom lines and purchase rows with no model part
+    old_bom = {r["id"]: r for r in read_csv(OUT / "bom_before.csv")} if (OUT / "bom_before.csv").exists() else None
     rev = []
     for i, b in bom.items():
         rev.append(dict(kind="bom.csv line", file="bom.csv", id=i, part_numbers="", item=b["item"][:110],
-                        model_parts=len(line_parts.get(i, [])), costed_by=i))
+                        model_parts=len(line_parts.get(i, [])), costed_by=i, reason=""))
     for rec in prow:
         if not rec["used"]:
             rev.append(dict(kind="purchase row", file=rec["file"], id=rec["id"], part_numbers=" ".join(rec["pns"])[:80], item=rec["desc"],
-                            model_parts=0, costed_by=rec["costed_by"]))
+                            model_parts=0, costed_by=rec["costed_by"], reason=reason_for(rec, bom, old_bom)))
     with open(OUT / f"purchase_vs_model{sfx}.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(rev[0].keys()))
         w.writeheader()
@@ -547,10 +582,19 @@ def write_md(out, rev, summary):
                  "number), tools and fixtures (`assembly-tooling.csv`), the robot cell (`robot-tooling.csv`), room safety and PPE "
                  "(`safety-parts.csv`), alternatives with qty 0, sizes for the S25 and L75 modules (the model draws M50), and the "
                  "lab's other plate materials. The stale ones are the tall model's rows in `mcmaster-parts.csv` named above.\n")
-    lines.append("| File | Rows with no model part |")
-    lines.append("|---|---|")
+    rc = Counter((r["file"], r["reason"] or "other") for r in rev if r["kind"] == "purchase row")
+    lines.append("| File | Rows with no model part | By reason (a guess from the file, qty and the line's text) |")
+    lines.append("|---|---|---|")
     for f, c in sorted(cnt.items()):
-        lines.append(f"| {f} | {c} |")
+        why = "; ".join(f"{k[1]} {v}" for k, v in sorted(rc.items()) if k[0] == f)
+        lines.append(f"| {f} | {c} | {why} |")
+    stale = [r for r in rev if r["kind"] == "purchase row" and r["reason"].startswith("stale")]
+    if stale:
+        lines.append("\nRows their own BOM line has retired (the tall model's parts, and parts moved to other lines):\n")
+        lines.append("| File | Line | Part numbers | Item |")
+        lines.append("|---|---|---|---|")
+        for r in stale:
+            lines.append(f"| {r['file']} | {r['costed_by']} | {r['part_numbers']} | {r['item']} |")
     lines.append("")
     (LPBF / "completeness-audit.md").write_text("\n".join(lines) + "\n")
 
