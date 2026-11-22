@@ -211,7 +211,7 @@ the floor) to find a place for a pair:
 Only the left side is free: one module fits at (−100, 0). **So the pair doesn't fit until the overflow jar moves.** The jar has to
 move anyway, because it has no way out (robot-ops.md, operations.md U4.7). With the jar gone from under the funnel, a pair at the
 gland-plate level fits at (−100, +18) and (+100, −18):
-- each 2.2 mm from the Z servo's corner and 16 mm from the front-right leg;
+- the right one 2.2 mm from the Z servo's corner and 16 mm from the front-right leg, the left one 16 mm from the back-left leg;
 - 2.9 mm outside the L75 gland plate's path;
 - on arms under the gland plate, which pass 4 mm over the base plate when the module drops 40 mm.
 
