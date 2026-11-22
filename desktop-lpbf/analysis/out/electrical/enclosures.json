@@ -1,0 +1,48 @@
+{
+ "pb1_box_mm": [
+  152.4,
+  304.8,
+  406.4
+ ],
+ "pb1_top_above_tray_mm": 421.4,
+ "rack_12U_height_mm": 560.0,
+ "rack_11U_height_mm": 515.0,
+ "machine_height_mm": 564.0,
+ "machine_on_mounts_mm": 581.2,
+ "bays_mm": {
+  "Modula bay S": 695.0,
+  "Kardex": 727.5
+ },
+ "drawer_4U": {
+  "front_mm": [
+   483.0,
+   177.8
+  ],
+  "z_mm": [
+   168.6,
+   346.4
+  ]
+ },
+ "checks": [
+  {
+   "part": "rack frame + side panels (12U)",
+   "intersection_mm3": 0.0,
+   "min_distance_mm": 16.0
+  },
+  {
+   "part": "tray rim (inside face)",
+   "intersection_mm3": 0.0,
+   "min_distance_mm": 52.6
+  },
+  {
+   "part": "umbilical duct (back edge)",
+   "intersection_mm3": 0.0,
+   "min_distance_mm": 316.44
+  },
+  {
+   "part": "operator panel box",
+   "intersection_mm3": 0.0,
+   "min_distance_mm": 538.0
+  }
+ ]
+}

@@ -18,6 +18,7 @@ on 2026-11-22 (UTC) from the pages linked in [`electrical-bom.csv`](electrical-b
 | [`analysis/electrical/interlock_logic.py`](analysis/electrical/interlock_logic.py) → [`interlock.md`](analysis/out/electrical/interlock.md) | the safety logic as a function of every input, checked over all 16.8 M input combinations, plus 49 single faults |
 | [`analysis/electrical/power_budget.py`](analysis/electrical/power_budget.py) → [`power.md`](analysis/out/electrical/power.md) | dock legs, inrush against the breakers, UPS runtime through a power cut, drawer heat, voltage drop, hermetic-pin heating, earth-leakage current |
 | [`analysis/electrical/io_list.py`](analysis/electrical/io_list.py) → [`io_check.md`](analysis/out/electrical/io_check.md) | writes the I/O list and counts channels against the controllers |
+| [`cad/electrical.py`](cad/electrical.py) → [`enclosures.md`](analysis/out/electrical/enclosures.md) | separate model of the power box PB1 and the 12U rack with its 4U drawer, checked against the rack, tray rim, duct and operator panel |
 | [`analysis/electrical/drawings.py`](analysis/electrical/drawings.py) | [single-line diagram](analysis/out/electrical/single_line.png), [interlock schematic](analysis/out/electrical/interlock.png), [panel layouts to scale](analysis/out/electrical/panels.png) |
 
 ## 0. The short answers
@@ -89,7 +90,9 @@ switch at the front of PB1: Socomec SIRCO M Compact 22013003 (UL 98, 100 kA SCCR
 (UL 508, $75.05) + OHB45J6 handle ($72.22) and Eaton R5A3040U ($193.03, UL 508, SCCR 10/65 kA) are the alternatives.
 
 **PB1, the power box.** A 16 × 12 × 6 in steel NEMA 12 enclosure on the tray at the left end, beside the rack (the tray has
-223 mm free between the rack at x = −990 and the rim at x = −1213; not checked against the full model). It holds the
+223 mm free between the rack at x = −990 and the rim at x = −1213). [`cad/electrical.py`](cad/electrical.py) puts the 6 × 12 × 16 in box
+there with its handle: no intersection, 16 mm from the rack's side panel and 53 mm from the tray rim
+([`enclosures.md`](analysis/out/electrical/enclosures.md)); checked against the rack, rim, duct and operator panel only, not the full model). It holds the
 disconnect, the branch breakers, the laser, pump and blower contactors, the UPS-backed DC supplies, the heater supply, SSR,
 contactors K1 and K2, the CN708 on the door and the K8DT. The DC supplies sit here, not in the drawer, because their losses
 (up to ~60 W) would overheat the drawer. A 27 CFM filter fan (Fandis FF12D24UN, $95) holds PB1 ~5 K above ambient.
