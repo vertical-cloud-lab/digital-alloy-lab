@@ -15,8 +15,8 @@ against `bom.csv` and the part-number lists. At the start of the audit (bom.csv 
   the model tagged parts with lines that did not exist (D1, F3, F4, F5).
 
 **Now:** 117 priced, 4 real but unpriced, 22 generic, 65 custom, **2 missing** and **12 inconsistent**. The BOM total
-goes from **$39,440 – $112,978** to **$57,941 – $144,841**. $7,708 – $20,770 of the rise is line X1, the machining no
-line costed before. Without X1 the total is $50,233 – $124,071.
+goes from **$39,440 – $112,978** to **$58,132 – $144,632**. $7,708 – $20,770 of the rise is line X1, the machining no
+line costed before. Without X1 the total is $50,424 – $123,862.
 
 ## How it was checked
 
@@ -83,9 +83,8 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
    - The two Ferrotec magnetic-fluid feedthroughs (SFL-006-NN on the recoater, SSL-005-NN on the roller) have no
      published price. They are estimated at $500-1,500 and $400-1,000, against Rigaku's $921.57 alternative.
    - The drawn LEMO 1B rod-end connector fails the seal spec (`seal-parts.csv`).
-8. **Chamber stock.**
-   - McMaster sells no 6061 plate thicker than 4 in., so the 5-1/2 in. frame blank has to come from a plate distributor.
-   - Midwest Steel & Aluminum stocks it, but its price calculator did not load. The blank is estimated at $400-800.
+8. **Chamber stock.** McMaster sells no 6061 plate thicker than 4 in. Midwest Steel & Aluminum cuts the 5-1/2 x 9.5 x
+   15 in. 6061-T651 frame blank for $590.89 (read 2026-11-22), so G1 now names a distributor for it.
 9. **Small parts with no catalogue match:**
    - the drawer's quarter-turn latches (`seals.md`);
    - a 316 SS 0.5 psi relief with an FKM seat (McMaster's stainless reliefs start at 25 psi);

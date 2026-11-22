@@ -15,8 +15,8 @@ against `bom.csv` and the part-number lists. At the start of the audit (bom.csv 
   the model tagged parts with lines that did not exist (D1, F3, F4, F5).
 
 **Now:** 117 priced, 4 real but unpriced, 22 generic, 65 custom, **2 missing** and **12 inconsistent**. The BOM total
-goes from **$39,440 – $112,978** to **$57,941 – $144,841**. $7,708 – $20,770 of the rise is line X1, the machining no
-line costed before. Without X1 the total is $50,233 – $124,071.
+goes from **$39,440 – $112,978** to **$58,132 – $144,632**. $7,708 – $20,770 of the rise is line X1, the machining no
+line costed before. Without X1 the total is $50,424 – $123,862.
 
 ## How it was checked
 
@@ -83,9 +83,8 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
    - The two Ferrotec magnetic-fluid feedthroughs (SFL-006-NN on the recoater, SSL-005-NN on the roller) have no
      published price. They are estimated at $500-1,500 and $400-1,000, against Rigaku's $921.57 alternative.
    - The drawn LEMO 1B rod-end connector fails the seal spec (`seal-parts.csv`).
-8. **Chamber stock.**
-   - McMaster sells no 6061 plate thicker than 4 in., so the 5-1/2 in. frame blank has to come from a plate distributor.
-   - Midwest Steel & Aluminum stocks it, but its price calculator did not load. The blank is estimated at $400-800.
+8. **Chamber stock.** McMaster sells no 6061 plate thicker than 4 in. Midwest Steel & Aluminum cuts the 5-1/2 x 9.5 x
+   15 in. 6061-T651 frame blank for $590.89 (read 2026-11-22), so G1 now names a distributor for it.
 9. **Small parts with no catalogue match:**
    - the drawer's quarter-turn latches (`seals.md`);
    - a 316 SS 0.5 psi relief with an FKM seat (McMaster's stainless reliefs start at 25 psi);
@@ -136,7 +135,7 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
 | excluded | 1 | 1 |
 | **total** | 223 | 223 |
 
-Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total now $57,941 - $144,841. Extra purchase lists read: none.
+Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total now $58,132 - $144,632. Extra purchase lists read: none.
 
 
 ## BOM lines this audit changed (generated from [`analysis/out/audit/bom_before.csv`](analysis/out/audit/bom_before.csv), the BOM at the start)
@@ -149,7 +148,7 @@ Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total no
 | M4 | Metering base, roller drive and overflow | 282 – 682 | 776 – 1,851 | McMaster 6627T91 NEMA 17 stepper; Ferrotec SSL-005-NN feedthrough (5 mm shaft; drawn); 5-to-5 mm coupling; custom metering base and roller; overflow jar from... |
 | M5 | Recoater blade cartridges | 127 – 527 | 275 – 675 | McMaster 2634T15 HSS flat stock (hard blade, the model's default) + 1187N14 3 mm silicone cord (compliant); custom quick-swap holders |
 | M6 | Layer camera + lighting | 100 – 300 | 152 – 242 | Raspberry Pi HQ camera (Adafruit 4561, $55.00) + C-mount lens (the optics audit asks for 12 mm: optics-bom.csv O20; priced here with Adafruit's 16 mm 4562, $... |
-| G1 | Process chamber: through-frame, floor plate, lid, door and their small parts | 2,435 – 6,435 | 1,133 – 1,833 | 6061-T651 plate 5-1/2 in. cut to 15 x 9.5 in. from a plate distributor (frame blank; McMaster stops at 4 in.), McMaster 89155K165 1 in. plate (floor), 89155K... |
+| G1 | Process chamber: through-frame, floor plate, lid, door and their small parts | 2,435 – 6,435 | 1,323 – 1,623 | Midwest Steel & Aluminum 6061-T651 plate 5-1/2 in. cut to 9.5 x 15 in. (frame blank; McMaster stops at 4 in.), McMaster 89155K165 1 in. plate (floor), 89155K... |
 | G2 | Vacuum pump | 2,079 – 5,491 | 5,470 – 7,469 | Edwards nXDS6i dry scroll (A73501983; 0.02 mbar, 6.8 m3/h, 26.2 kg) + McMaster 3394N12 KF-25 inlet filter + 2 x 3497N23 KF-25 hose |
 | G7 | Valves / fittings / gauges | 3,281 – 3,781 | 3,680 – 3,980 | McMaster: 3861N11 0-15 psia + 5539N26 0-10 inH2O transmitters, 2 x 8077K237 24 V NC solenoids, 4123K45 KF-25 ball valve, 7833K76 needle valve, KF-25/40 alumi... |
 | G8 | Chamber, module and port seals | 16 – 16 | 231 – 291 | McMaster 96515K127 0.139 in. cord (10 ft), 96515K123 0.070 in. cord (3 ft), 16 packs of 9464K AS568 rings and 5267T786 port rings (seal-parts.csv), 9262N11 s... |
@@ -167,7 +166,7 @@ Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total no
 | D2 | UPS (2U, in the rack) | new line | 1,138 – 2,707 | Eaton 5PX1500RTG2 (1440 VA / 1440 W, line-interactive; CDW $1,137.99) |
 | X1 | Machining and fabrication of the custom parts not costed elsewhere | new line | 7,708 – 20,770 | BYU ME Prototyping Lab (Haas VF-4 + HRT210) or a job shop |
 
-BOM total: $39,440 – $112,978 before, $57,941 – $144,841 now.
+BOM total: $39,440 – $112,978 before, $58,132 – $144,632 now.
 
 
 ## Every model part (generated; also in [`analysis/out/audit/model_vs_bom.csv`](analysis/out/audit/model_vs_bom.csv))

@@ -276,7 +276,7 @@ purchase row,vendor-lookups.csv,row33,SDR-480-24,"Mean Well AC/DC DIN rail suppl
 purchase row,vendor-lookups.csv,row34,OXY-FLEX-0-H,"SST Sensing zirconia oxygen sensor, 4-20 mA output",0,G6
 purchase row,vendor-lookups.csv,row35,3263 Adafruit,MAX31856 universal thermocouple amplifier breakout,0,C5
 purchase row,vendor-lookups.csv,row36,QS20XY-Y1,"Dual-Axis, Ø20 mm Beam Galvo System, Mirrors Coated for 1064 nm (Power Supply & Cables Sold Separately)",0,L5
-purchase row,audit-prices.csv,G1,6061-T651 plate distributor,"6061-T651 plate, 5-1/2 in. thick, cut to 15 x 9.5 in.",0,G1
+purchase row,audit-prices.csv,G1,6061-T651,"6061 T651 Aluminum Plate, 5-1/2 in., width 9.5 in., length 15 in.",0,G1
 purchase row,audit-prices.csv,G1,89155K165,"Oversized multipurpose 6061 aluminium sheet, 1 in. thick, 12 x 24 in.",0,G1
 purchase row,audit-prices.csv,G1,89155K155,"Oversized Multipurpose 6061 Aluminum Sheet, 3/4"" Thick, 12"" x 24""",0,G1
 purchase row,audit-prices.csv,G2,Agilent IDP-3 IDP-3 IDP3A01,"Agilent IDP-3 Dry Scroll Pump, 220 VAC",0,
