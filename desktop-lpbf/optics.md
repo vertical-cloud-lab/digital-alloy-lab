@@ -20,7 +20,7 @@ given as a range.
 
 Re-run: `python desktop-lpbf/analysis/optics/<script>.py` (each takes under a minute; run under `/tmp/capmem 1.5`).
 
-## 0. What changes what we buy or draw
+## 0. Recommendations, ranked: what changes what we buy or draw
 
 Ranked by consequence. Section numbers point to the evidence.
 
@@ -28,9 +28,8 @@ Ranked by consequence. Section numbers point to the evidence.
    standard 5 mm collimator under the f = 160 mm lens. That gives a **48 µm** spot with a ±1.5 mm Rayleigh range, not the
    ~75 µm that [`low-profile.md`](low-profile.md) assumes. Its "30 mm collimator gives a ~3.2 mm beam" (also the old part
    label in `vendor_parts.py`) is off too: with IPG's 140 mrad fibre divergence a 30 mm collimator gives D = 4.2 mm and a
-   57 µm spot. **For ~75 µm the beam must be
-   D ≈ 3.2 mm, from a collimator of f ≈ 23 mm (21–25 mm over IPG's 130–150 mrad).** Ask IPG for it: its spec sheet offers
-   "other diameters on request". IPG's series datasheet (rev 2/26) also lists a **2.5 mm** affixed collimator, which
+   57 µm spot. **For ~75 µm the beam must be D ≈ 3.2 mm, from a collimator of f ≈ 23 mm (21–25 mm over IPG's
+   130–150 mrad).** Ask IPG for it: its spec sheet offers "other diameters on request". IPG's series datasheet (rev 2/26) also lists a **2.5 mm** affixed collimator, which
    gives 92–96 µm with a ±6.1 mm Rayleigh range, still inside the 70–100 µm commercial range: that is the catalogue
    fallback. No third-party collimator with f ≈ 20–30 mm was found. The series datasheet also says 500 W single-mode
    lasers end in IPG's HLC-8 connector, while the quoted spec sheet says QBH-compatible, so confirm the termination
@@ -39,8 +38,9 @@ Ranked by consequence. Section numbers point to the evidence.
 2. **As drawn, the focus is 3.4 mm below the powder (§1.3).** The model sets the lens's flange focal length from the
    powder plane, but the 8 mm window and 3 mm slide push the focus down by t(1 − 1/n) = 3.41 mm. That puts the plate
    0.9 Rayleigh ranges out with the 3.2 mm beam (spot 101 µm instead of 75) or 2.2 out with the 5 mm beam (117 µm
-   instead of 48). **Raise the lens 3.4 mm, and give the f-theta adapter ring ±3 mm of focus adjustment** (shims under
-   its flange, or a fine-thread ring with a lock), set by a burn test at process power.
+   instead of 48). **Raise the lens by the plates' shift (3.4 mm as drawn, 3.6 mm with the window and slide in the optics
+   BOM), and give the f-theta adapter ring ±3 mm of focus adjustment** (shims under the lens's shoulder, or an M85×1
+   lock ring), set by a burn test at process power.
 3. **As drawn, the lid stack cuts off the outer ring of the L75 plate (§1.4).** How far the beam leans at the plate
    depends on the f-theta's chief-ray angle, which Thorlabs doesn't publish. Write it as k = (chief-ray angle at the
    plate) / (scan angle). Thorlabs designs the FTH160-1064 for the second galvo mirror 7.5 mm from the lens; the model
@@ -98,7 +98,8 @@ Ranked by consequence. Section numbers point to the evidence.
 **Fibre.** IPG's spec for the YLR-500-U3-SM-AC gives M² 1.05 typical, 1.1 max, and a bare-QBH divergence of
 130/140/150 mrad full angle at 86 % ([quote notes](quotes/ipg-ylr-500-u3-sm-ac.md)). For a near-Gaussian beam 86 % is
 the 1/e² definition, so the fibre's output beam is 2W₀ = 4M²λ/(πθ) = **10.2 µm** across (9.5–11.0 µm). IPG's mode-field
-diameter itself is not on the spec sheet; this is the value its divergence implies.
+diameter is on neither the quoted spec sheet nor the YLR series datasheet (rev 2/26); this is the value its divergence
+implies.
 
 **Collimated beam and spot.** D = f_c·θ, and the spot is d = 4M²λf/(πD), the README's formula. With f = 160 mm, M² 1.1:
 
@@ -204,7 +205,9 @@ replacement), which its working distance already includes.
 | M50 | 25.4 | 9.1° | ±4.5° | 2.7–6.8° | 0.11–0.71 % |
 | L75 | 38.1 | 13.6° | ±6.8° | 4.1–10.2° | 0.26–1.6 % |
 
-- The FTH160-1064's field is 110.6 mm square; the L75 plate (76.2 mm) uses its central 69 %, so all three plates sit well inside it.
+- The FTH160-1064's field is 110.6 mm square; the L75 plate (76.2 mm) uses its central 69 %, so all three plates sit
+  well inside it. The basiCube 20 scans ±0.35 rad optical (±56 mm at f = 160 mm); L75 needs ±0.24 rad. SCANLAB's
+  "60 × 60 mm at f = 160 mm" (BOM L5's note) is for SCANLAB's own objective, not a limit of the scanner.
 - Spot ellipticity is at most 1.6 % at the L75 edge, inside the 5 % spot-size spread that IPG's M² tolerance (1.05–1.1) allows.
 - f-theta distortion and the plates' outward shift (0.24–0.62 mm at the L75 edge) are static, so the scanner's
   correction table takes them out. Thermal drift of the galvo is larger: ~0.24 mm at the plate over a warm-up
@@ -402,8 +405,8 @@ Same MPE (5 mW/cm², t ≥ 10 s at 1070 nm) and method as [`safety.md`](safety.m
   1. On a bead-blasted 6061 plate, burn single 10 mm tracks at 350–500 W and 1 m/s, stepping the plate from −3 to
      +3 mm in 0.25 mm steps (0.1 mm near the minimum).
   2. Measure track widths under a microscope; the narrowest is the focus. Shim the lens to it.
-  3. Repeat after 10 minutes with the beam in the dump at full power. The difference is the thermal shift of the
-     collimator, galvo and f-theta (the window and slide are downstream of the dump).
+  3. Repeat after 10 minutes of hatching a sacrificial plate at full power, so the beam has heated every optic in the
+     train (with the shutter closed only the collimator warms). The difference is the clean train's thermal shift.
   4. Repeat after a build on a used slide. The difference is the slide's share.
 - **A tilted coupon** (a 2–3° wedge) gives a continuous Z-scan in one track and is quicker for routine checks.
 - **Optional caustic measurement:** a camera beam profiler behind a high-power beam sampler measures D and M² of the
@@ -477,8 +480,8 @@ Same MPE (5 mW/cm², t ≥ 10 s at 1070 nm) and method as [`safety.md`](safety.m
   M50 are fully seen and L75 84 %. **At Ø30 through the lid and boss with a Ø20 aperture under the window, all three
   plates are fully seen.**
 - **Pixel size against the powder:** with the 12 mm lens a 30–40 µm D50 particle is 1.2–1.5 pixels. Single particles
-  aren't resolved, but streaks, short feeds, spatter and lifted edges (≥ 100 µm) are 4 or more pixels wide. That is
-  finer than most layer cameras in the literature. The 16 mm lens gives 19 µm on S25 and M50.
+  aren't resolved, but streaks, short feeds, spatter and lifted edges (≥ 100 µm) are 4 or more pixels wide. The 16 mm
+  lens gives 19 µm on S25 and M50.
 - **Depth of field:** the plate's near and far edges differ by ±7 / ±14 / ±21 mm along the line of sight (S25 / M50 /
   L75). Without a tilt, the L75 edges blur by ~290 µm at f/4 with the 12 mm lens. A **2.2° wedge** between the lens and
   the sensor (Scheimpflug) brings the whole plate into focus at f/2.8–4. At f/8 diffraction alone is 77 µm on the plate.
@@ -493,17 +496,17 @@ Same MPE (5 mW/cm², t ≥ 10 s at 1070 nm) and method as [`safety.md`](safety.m
 - **Parts and prices** (fetched 2026-11-22T05:45Z): Raspberry Pi HQ camera $55 (Adafruit 4561; out of stock at Adafruit
   and PiShop), 16 mm C-mount lens $77.50 (Adafruit 4562), 6 mm CS-mount lens $49.30 (Adafruit 4563). A 12 mm C-mount
   lens wasn't priced (estimate $30–80).
-- **Temperature:** the chamber reaches 61–78 °C over a 10 h build (mech.md D), and the HQ board's electronics are
-  rated to about 50 °C. Stand the camera off the boss on a short insulating tube, or give it an air feed.
+- **Temperature:** the chamber reaches 61–78 °C over a 10 h build, and mech.md D puts the HQ camera's electronics at
+  ~50 °C. Stand the camera off the boss on a short insulating tube, or give it an air feed.
 
 ## 5. Optics BOM and gaps
 
-[`optics-bom.csv`](optics-bom.csv) lists 30 rows: every optical element and instrument, with part number, price, source
+[`optics-bom.csv`](optics-bom.csv) lists 35 rows: every optical element and instrument, with part number, price, source
 URL and fetch time, the `bom.csv` line each replaces or adds to, and the part in the model that stands for it. It is
 written by [`analysis/optics/optics_bom.py`](analysis/optics/optics_bom.py), which also totals it
 ([`optics_bom.md`](analysis/out/optics/optics_bom.md)).
 
-**Totals.** The 35 rows (qty > 0, priced) come to **$24,467–25,688**, without the laser (L1, whose quote is already in
+**Totals.** The rows with qty > 0 come to **$24,467–25,688**, without the laser (L1, whose quote is already in
 `bom.csv`) and the collimator (IPG quote pending). The basiCube 20 ($12,000, `bom.csv` L5's high value) is half of it;
 the shutter ($1,500–2,000) is an estimate; everything else is a fetched price or a small estimate. Optional rows
 (qty 0): the beam profiler and sampler ($5,558.40), a sapphire slide ($950 each), an industrial f-theta
@@ -535,8 +538,8 @@ F5 +$75 / +$200). L1, L3, L5 wait on quotes.
 - The **camera window's "1070 nm blocking coating"** isn't a buyable part; it becomes a plain window plus a Ø25 mm filter
   (O21).
 - The **gas knife** (tagged L7) has no slot, supply or flow (gas-flow.md §3.3).
-- The **collimator** is drawn as IPG's 5 mm unit but labelled "f = 30 mm, D ≈ 3.2 mm" in `vendor_parts.py`; neither
-  gives 75 µm at f = 160 mm.
+- The **collimator** is drawn as IPG's 5 mm unit, while `vendor_parts.py`'s inventory still names the old envelope
+  "f = 30 mm, D ≈ 3.2 mm"; neither gives 75 µm at f = 160 mm.
 
 **BOM parts with nothing in the model:**
 - the dichroic fold mirror, photodiode, filters and lens (T2, O5, O15–O18): not drawn, and the beam line has no fold;
@@ -544,6 +547,21 @@ F5 +$75 / +$200). L1, L3, L5 wait on quotes.
 - the second LED bar, the Scheimpflug wedge and the camera filter (M6);
 - the field-stop inserts per module (one fixed stop is drawn);
 - eyewear (S6), the calibration coupons, target and IR card: tools, no model part needed.
+
+**Inconsistencies found in other files** (for their owners; not edited here):
+- `bom.csv` L3 and L6 describe f = 254 mm and a 5 mm beam "for ~75 µm at f = 254 mm"; L5's note says the basiCube 20
+  "at f = 160 has only a 60 × 60 mm field, so pair it with f = 254 mm" (it's SCANLAB's objective; §1.5); L7 names a
+  Ø1 in. × 5 mm window.
+- README §3 block diagram and §3.2 still say f = 254 mm; §3.2's "Rayleigh range about ±3.9 mm" is for f = 254 mm.
+- `low-profile.md`: "a 30 mm collimator gives a ~3.2 mm beam" (it gives 4.2 mm with IPG's fibre), and the window and
+  slide focus shift isn't in the layout.
+- `mech.md` E: slide at z 145 (the model has 126) and Δz = f²D; with the model's height the 0.5 % case is 23 mm, not
+  43.8 mm (§2.2).
+- `quotes/ipg-ylr-500-u3-sm-ac.md` says QBH-compatible output; IPG's series datasheet says HLC-8 for 500 W
+  single-mode. Its line "with D = 5 mm and f = 254 mm, the spot is about 76 µm" is right, but the layout now uses
+  f = 160 mm.
+- `vendor_parts.py`'s inventory still names the collimator "QBH, f = 30 mm, D ~ 3.2 mm" while drawing IPG's 5 mm unit.
+- `lpbf_low.py` tags the beam tube, riser, adapter ring and field stop L4–L7; the audit moved them to F5.
 
 ## 6. Edison's second opinion (r5-optics-review)
 
@@ -566,8 +584,8 @@ F5 +$75 / +$200). L1, L3, L5 wait on quotes.
 
 **Where this note disagrees:**
 - **"Use f = 254 mm with the 7.5 mm beam for edge-spot quality."** That pairing gives a 51 µm spot, not 75 µm. f = 254
-  with the 5 mm beam gives 76 µm, but puts the galvo 116 mm higher, which the low-profile layout's VLM height doesn't
-  have (581 mm against a 695 mm bay). The edge penalty it is avoiding is small here: the angle at the L75 edge is
+  with the 5 mm beam gives 76 µm, but puts the galvo 116 mm higher: the machine stands 581 mm above the tray now, so
+  697 mm, over the 695 mm VLM bay. The edge penalty it is avoiding is small here: the angle at the L75 edge is
   4–10°, a 0.3–1.6 % elongation, and a 3.2–5 mm beam uses a quarter to two-fifths of the lens's 12 mm design beam, so
   its field aberrations are far below their design limit. Keep f = 160 mm and fix the collimator (§0 item 1).
 - **"Tilt the window 1–2° so its ghosts don't go back into the galvo and fibre."** The window's and slide's
@@ -588,8 +606,9 @@ F5 +$75 / +$200). L1, L3, L5 wait on quotes.
   (finite-volume and CalculiX) against the analytic form, Faas et al. and LiM 2017; ghosts and fibre coupling of every
   plane surface; the melt-pool cat's eye; NOHD, eyewear OD and guard bounds against safety.md; the layer camera's
   field, pixel size, depth of field and vignetting by ray trace through the model's openings.
-- **Not checked (needs data or hardware):** the f-theta's chief-ray angle, distortion, field curvature, glass and CW
-  absorption (Thorlabs doesn't publish them; ask for the Zemax black box); IPG's mode-field diameter and back-reflection
+- **Not checked (needs data or hardware):** the f-theta's chief-ray angle, field curvature, element glass and CW
+  absorption (Thorlabs doesn't publish them; its Zemax file is an encrypted black box, so ask Thorlabs to trace it at
+  our pupil distance); IPG's mode-field diameter and back-reflection
   limit (open in L1); the basiCube 20's mirror clear aperture at full scan and its CW rating at our beam size; the
   ghost foci through the real lens (only a thin-lens estimate here); real melt-pool return fractions; LED and camera
   heat in the chamber; the guard burn test.
@@ -599,8 +618,10 @@ F5 +$75 / +$200). L1, L3, L5 wait on quotes.
 ## Sources
 
 1. IPG spec G22-29856 for YLR-500-U3-SM-AC, transcribed in [`quotes/ipg-ylr-500-u3-sm-ac.md`](quotes/ipg-ylr-500-u3-sm-ac.md).
-2. Thorlabs FTH160-1064 and FTH254-1064, FTHW75-1064: [`vendor-lookups.csv`](vendor-lookups.csv), fetched 2026-11-13T23:45Z, https://www.thorlabs.com/newgrouppage9.cfm?objectgroup_id=6430; drawing stn012046 (vendor-parts.csv).
-3. SCANLAB basiCube brochure (2025-06), https://www.scanlab.de/sites/default/files/2025-06/SCANLAB-basiCube-Series-EN.pdf, and README §3.2.
+2. Thorlabs FTH160-1064 and FTHW75-1064 specifications (A1, ±28°, distortion, N-BK7 window, AR, damage threshold), https://www.thorlabs.com/f-theta-scan-lenses, fetched 2026-11-22T05:36Z; earlier [`vendor-lookups.csv`](vendor-lookups.csv) (2026-11-13T23:45Z); drawing stn012046 (vendor-parts.csv).
+3. SCANLAB basiCube 20 page and series datasheet, https://www.scanlab.de/en/basicube-20 and https://www.scanlab.de/sites/default/files/2025-06/SCANLAB-basiCube-Series-EN.pdf, fetched 2026-11-22T05:41Z.
+3a. IPG YLR series datasheet (rev 2/26): affixed collimators 2.5 / 5 / 7.5 mm, HLC-8 for 500–4,000 W single-mode, https://cdn.ipgphotonics.com/6f98cba1-ae50-4feb-8635-b10901309bcd/IPG_YLR-Series_DS_EN_LTR.pdf, fetched 2026-11-22T05:44Z.
+3b. Every price in this note: the URL and fetch time are in its row of [`optics-bom.csv`](optics-bom.csv) (Thorlabs, Edmund Optics, Gentec-EO, Ophir, Cloudray, Adafruit, nmLaser; fetched 2026-11-22T05:36–06:05Z through the lab's network).
 4. I. H. Malitson, "Interspecimen comparison of the refractive index of fused silica", JOSA 55, 1205 (1965).
 5. Corning 7980 data (k 1.38 W/m·K, dn/dT 9.6 × 10⁻⁶ /K near 1 µm, α 0.52 ppm/K), as used in [mech.md](analysis/out/mech/mech.md) E.
 6. S. Faas et al., "Determination of the thermally induced focal shift of processing optics for ultrafast lasers with average powers of up to 525 W", Opt. Express 26, 26020 (2018), https://doi.org/10.1364/oe.26.026020 (via Edison r5-optics-review).
