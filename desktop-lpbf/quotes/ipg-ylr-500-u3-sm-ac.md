@@ -1,6 +1,6 @@
 # IPG YLR-500-U3-SM-AC: budgetary quote and spec sheet (2026-11-18)
 
-Sterling asked IPG for a budgetary quote on a 500 W single-mode CW fiber laser for this machine (BOM line L1). Johnny, IPG's scientific laser sales manager, replied on 2026-11-18.
+Sterling asked IPG for a budgetary quote on a 500 W single-mode CW fiber laser for this machine (BOM line L1). IPG's scientific laser sales manager replied on 2026-11-18.
 
 ## Quote
 
