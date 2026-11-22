@@ -176,7 +176,7 @@ Camera window retaining ring (bottoms metal-to-metal on the boss),process,6061-T
 "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",process,304 stainless,0.005,custom (machined),RA4,,,A3,,,custom,not in machining/hours.csv
 "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",process,316L stainless,0.004,fastener,B1,92290A144,92290A144,FX,fasteners.csv:row20,17.81,real part priced,
 Door drive shaft and disc (Ø6 D-shaft keyed into a 6061 disc screwed to the door's left edge),process,6061-T6 aluminium,0.004,custom (machined),RA2,,,A3,,,custom,not in machining/hours.csv
-"Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating)",process,UV fused silica,0.003,bought,M6,,,,,,missing from BOM,no BOM line has a Ø1 in. window with a 1070 nm blocking coating; model tag M6 does not cover it
+"Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating)",process,UV fused silica,0.003,bought,M6,,FESH0900 NF1064-44,,,,missing from BOM,no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs filter); model tag M6 does not cover it
 "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",process,304 stainless,0.003,fastener,B2,91732A782,91732A782,B2,fasteners.csv:row12 options-mcmaster.csv:B2,4.56,real part priced,
 "Inlet-plenum helical inserts, M4 x 6 18-8, in the back wall (7 x McMaster 91732A656)",process,304 stainless,0.003,fastener,G4,91732A656,91732A656,FX,fasteners.csv:row9,3.68,real part priced,
 "Outlet-plenum helical inserts, M4 x 6 18-8, in the floor (6 x McMaster 91732A656)",process,304 stainless,0.003,fastener,G4,91732A656,91732A656,FX,fasteners.csv:row9,3.68,real part priced,

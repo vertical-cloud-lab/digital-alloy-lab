@@ -118,7 +118,7 @@ MAP = [
     (r"^Reservoir M powder", "", "", "excluded", [], "powder feedstock, not a machine part"),
     (r"^Load cell \(single-point", "A1", r"ALLUE3", "bought", ["ALLUE3"], ""),
     (r"^Layer camera \(Pi HQ", "M6", r"HQ camera", "bought", ["4561"], ""),
-    (r"^Camera window \(Ø1 in\.", "M6", r"camera window|blocking", "generic", [], "no BOM line has a Ø1 in. window with a 1070 nm blocking coating"),
+    (r"^Camera window \(Ø1 in\.", "M6", r"camera window|blocking", "generic", ["NF1064-44", "FESH0900"], "no BOM line has a Ø1 in. window with a 1070 nm blocking coating (optics-bom.csv O21 proposes a plain window + a Thorlabs filter)"),
     (r"^Pressure transducer \(7/16-20", "G7", r"3861N11", "bought", ["3861N11"], ""),
     (r"^Module-cooling fan", "H3", r"fan", "bought", ["1939K12"], ""),
     (r"^Overpressure relief valve \(316", "G7", r"relief", "bought", ["RELIEF316"], ""),
@@ -267,7 +267,7 @@ def dump_tags(snapshot, dest):
 
 
 # ------------------------------------------------------------------ purchase index
-LINK_COLS = ("bom_line", "in_bom")
+LINK_COLS = ("bom_line", "in_bom", "bom line")
 PN_COLS = ("part_number", "part", "product", "candidate", "pn", "mpn", "manufacturer_part_number")
 PRICE_COLS = ("unit_price_usd", "price_usd", "price_per_pack_usd", "unit_usd", "unit_low_usd", "price", "unit_price")
 ID_COLS = ("id", "line", "key", "bom_line")
@@ -330,7 +330,7 @@ def build_index(files, bom):
                         break
             if name.endswith("-bom.csv") and not costed_by:
                 costed_by = f"{name}:{rid}"   # extra purchase lists (electrical-bom.csv, optics-bom.csv) are their own lines
-            desc = next((r[c] for c in ("description_as_listed", "item", "description", "used_for") if r.get(c)), "")
+            desc = next((r[c] for c in ("description_as_listed", "item", "element", "device", "description", "used_for") if r.get(c)), "")
             rec = dict(file=name, id=rid, pns=sorted(pns), price=price, no_price=no_price, qty=qty, desc=desc[:110], costed_by=costed_by, used=False)
             rows_all.append(rec)
             for p in pns:
