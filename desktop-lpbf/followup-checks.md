@@ -9,7 +9,115 @@ seal, use Shigley, heat transfer and CalculiX, and say what the machine costs us
 Nothing here has been built, quoted by a shop, or reviewed by BYU's Laser Safety Officer or EHS. Each note below has
 its own sources, assumptions and re-run instructions.
 
-## 0. Round 3 (2026-11-20 evening): the machinist's review, the robots, safety, and a full re-run
+## 0. Round 4 (2026-11-22): CAMotics, the unfinished re-runs, outsourcing, electrical, optics and a BOM audit
+
+Sterling asked on 2026-11-22 for four things:
+- fix the CAMotics install error;
+- run and simulate whatever round 3 left undone;
+- price outsourcing for the custom parts, uploading files for automated quotes where a service allows it;
+- say whether the electrical side is covered (do we need custom PCBs?) and whether the mechanical, electrical and optical
+  parts are complete.
+
+Nothing here has been built, quoted by a shop, wired, or reviewed by BYU's LSO, EHS or an electrician.
+
+### What changes what we buy or draw
+
+1. **Optics** ([`optics.md`](optics.md) §0):
+   - **Spot size.** The drawn 5 mm IPG collimator gives a 48 µm spot at f = 160 mm (±1.5 mm depth of focus), not 75 µm.
+     A 75 µm spot needs a ~3.2 mm beam (a collimator of f ≈ 23 mm); ask IPG. The fallback is IPG's 2.5 mm collimator, which
+     gives 96 µm.
+   - **Focus.** The 8 mm window and 3 mm cover slide push the focus 3.4 mm below the powder. Raise the lens 3.4–3.6 mm and
+     give its mount ±3 mm of shims. Not drawn: it moves the bridge, galvo and guard top.
+   - **Field reach.** The outer ring of the L75 plate may be out of reach. The model has the galvo's second mirror ~40 mm
+     from the lens, where Thorlabs specifies 7.5 mm. Measure the beam's lean with the guide laser before the lid is
+     machined.
+   - **Cover slides and lens.** Buy AR-coated slides: an uncoated slide sends 34 W back up the beam. The f-theta has only
+     a pulsed rating, and its protective window is N-BK7.
+   - **Back-reflection.** A polished plate near the lens axis can return up to ~440 W to the fibre. Get IPG's limit in
+     writing, and bead-blast the plates.
+   - **Layer camera.** It sees only 40–56 % of each plate through the vertical lid hole. A Ø30 bore on its line of sight
+     would fix that, but the bore cuts into the adapter's seal groove, so it is not drawn.
+2. **Electrical** ([`electrical.md`](electrical.md) §0). **No custom PCBs are needed.** The gaps the design had:
+   - **Supply:** there was no supply design. It is now a power box (main disconnect and four AC branches) beside the rack.
+   - **Drawer:** the 3U drawer was too shallow for a safety controller with enough inputs, and too hot without a fan. The
+     model now has a 4U drawer in a 12U, 560 mm rack.
+   - **Galvo supply:** one 24 V rail, not ±15 V.
+   - **Servo bus:** it needs two contactors in series, because ClearPath has no safe torque off.
+   - **Thermal cutoff:** the 240 °C cutoff holds only to 205 °C, while the S25 block runs at 216–221 °C. Replace it or
+     drop it.
+   - **Dense builds:** they trip the 235 °C limit within 3–12 min unless the scan software holds each layer until the
+     plate settles. That dwell costs 22–54 % more build time at the end of the stroke.
+   - **Pi location:** the lid's camera, NFC and load-cell boards need a Pi within 0.5 m, on the process module.
+   - **Rod end:** it needs a ~30 mm face for six type K weld-ins and a 4-pin power weld-in.
+   - **Missing from model and BOM:** home and limit sensors, a guard-position sensor, two more E-stops, a Pirani port and
+     an LED feedthrough.
+   - **Earth leakage:** about 8 mA, so the dock needs two PE contacts.
+3. **The recoater blade now deflects 5.1 µm, against its 5 µm criterion** ([`fea.md`](analysis/out/fea/fea.md)). The
+   committed 3.4 µm came from a 74 mm holder; the holder is now 114 mm long because the blade spans ±50 mm. It needs a
+   stiffer holder or a second support. Not drawn.
+4. **The lid is weaker than the committed numbers said, and its insert webs are thin.**
+   - **FEA:** CalculiX now gives SF 5.8, not 18, and a window-seat sag of 67.6 µm, not 27.8 µm. The lid grew from 182 to
+     222 mm across and gained the drawer slot after the old run. It still passes.
+   - **Insert webs:** Edison r4 flags the M5 lid inserts beside the gland. The model leaves 1.18 mm of web each side.
+     Options are M4 inserts (1.75 mm) or a 4 mm lip round the frame's top (3.2 mm)
+     ([`chamber-construction.md`](chamber-construction.md), Edison r4).
+5. **The L75 bayonet lugs still yield at 204 °C** (107.1 MPa against 103 MPa, CalculiX re-run on the current model). Use
+   the drawbar, or steel lugs, on L75.
+6. **Make or buy** ([`outsourcing.md`](outsourcing.md)):
+   - **Make at BYU (27 parts):** the frame from a bought, cut-to-size blank, the floor plate, lid, door and drawer, the
+     module internals, the optics bridge, and the robot tools.
+   - **Outsource (32 parts):** brackets, flanges, handles and panels, mostly to SendCutSend.
+   - **Buy instead (15 parts):** catalogue parts that replace custom ones.
+   - **Hybrids (8 parts):** for example, buy the base plates profile-cut and drill them here.
+   - **Cost:** $25.7k and 152 shop hours, against $32.5k and 329 h to make everything here at $65/h.
+   - **Long pole:** honing has no quote, so the module's honing loop (assumed 3–6 weeks) sets the schedule.
+7. **The BOM was missing a third of the machine** ([`completeness-audit.md`](completeness-audit.md)).
+   - **Before:** 71 of the model's 223 parts had no BOM line, and 29 disagreed with theirs. G1 (chamber), S9 (frame and
+     guard) and M3 (Z stage) still described the tall model of 2026-11-17.
+   - **Now:** 1 part is missing, the scan PC, and 9 are inconsistent.
+   - **Total:** $70,478–$154,119, with shop hours as line X1. Without X1 it is $62,770–$133,349. It was
+     $39,440–$112,978.
+   - **Biggest decisions still open:** a gas-tight blower for 140–200 L/min (none found); the dry scroll pump the model
+     draws (G2 is now an Edwards nXDS6i at $5,978, while the tray budget still uses the $588 rotary-vane pump);
+     chilled-water lines to an air-cooled laser; and the UPS model.
+
+### What was run
+
+| Check | Result | Note |
+|---|---|---|
+| CAMotics (the install error) | **Fixed.** The 2019 1.2.0 .deb installs on Ubuntu 26.04, because apt counts Node's libnode-dev as libv8-dev, but its programs are linked against V8 3.14 and OpenSSL 1.1 and won't start. It now runs in Docker on Ubuntu 18.04, plus the libqt5websockets5 the package doesn't declare. All five setups are cut and chained. **Seven real CAM errors** turned up and were fixed in `freecad_cam.py`: unfaced corners, an unfaced web with 303 notch-tool rapids through it, dowels drilled from the wrong side, 14 drill rapids into solid stock, drill points left in through holes, slugs held until the wrong setup, and nested comments that made CAMotics drop two drill ops. Final run: 0 gouges, 0 rapids through stock. Cutting time is 59.7 min (frame) and 61.2 min (floor plate), against FreeCAD's 76.1 and 82.8. | [`machining.md`](machining.md#g-code-simulated-in-camotics-2026-11-22) |
+| FEA cases that ran out of memory | **Fixed:** they now run under 4.5 GB, with SPOOLES up to 60,000 nodes, iterative Cholesky above, and one case per process. Same-mesh checks of the solver change: −0.01 % and −1.9 % in peak stress. Lid SF 5.8 (was 18). Recoater blade 5.1 µm (was 3.4). Bridge first mode 134 Hz (was 133). | [`fea.md`](analysis/out/fea/fea.md) |
+| Hot-swap FEA, both halves, on the current model | L75 lugs 107.1 MPa, so they still yield. M50 lugs 43.0 MPa. Module flange 131 MPa (was 126.4). Kinematic seat 27.5 MPa. | [`fea_hotswap.md`](analysis/out/hotswap/fea_hotswap.md) |
+| Model fixes | **Module swap:** a robot grip block on every module's handle; the robot swap passes on M50, S25 and L75, so **11 of 12 tending jobs now pass on M50**. **Gland plate:** it stays on the welded rod end and goes on first, with the stack entering the bore from below; M50 hand operations 82 pass / 2 warn / 37 fail (was 81 / 2 / 40). **Rack:** 12U with a 4U drawer. Interference 0 for M50, S25 and L75; mass 268.8 kg. | [`robot-ops.md`](robot-ops.md), [`operations.md`](operations.md), [`hot-swap.md`](hot-swap.md) §3.2a |
+| Outsourcing | **Quotes:** 59 attempts through the lab Pi in headed Chrome, with no accounts and no orders. Live quotes cover 39 of 82 custom parts: SendCutSend sheet and CNC ($3.55–1,075.62 a part, 5–15 days), OSH Cut, JLCCNC and JLC3DP. Xometry, RapidDirect, Protolabs and Fictiv need an e-mail or an account. Hubs and Craftcloud asked for declarations or terms we didn't accept. | [`outsourcing.md`](outsourcing.md), [`outsourcing-quotes.csv`](outsourcing-quotes.csv) |
+| Electrical | Safety logic checked over all 16.8 M input combinations and 49 single faults. Heater loop fitted to the CalculiX runs, including a shorted SSR: the limit trips in 35–51 s on M50 and L75. Power, inrush, UPS runtime, drawer heat and voltage drop checked. Single-line diagram, interlock schematic and panel layouts drawn to scale. 95 devices and signals listed. | [`electrical.md`](electrical.md), [`electrical-io.csv`](electrical-io.csv), [`electrical-bom.csv`](electrical-bom.csv) |
+| Optics | Gaussian beam from the fibre to the plate. Irradiance against ratings. Thermal lens of the slide, window and lens, by a finite-volume solve with a CalculiX cross-check (within 1 %). Ghost and back-reflection estimates and a layer-camera ray trace. 35-row optics BOM. | [`optics.md`](optics.md), [`optics-bom.csv`](optics-bom.csv) |
+| Completeness audit | Every model part mapped to a purchase record and back; BOM lines rewritten and added. | [`completeness-audit.md`](completeness-audit.md) |
+| Edison (new account) | **r4:** the chamber frame and floor, the query that was blocked by HTTP 402. **r5:** electrical, optics and outsourcing. Each note says where it agrees and where it doesn't. | [`edison/r4-*`, `edison/r5-*`](edison/) |
+
+### Still not done
+
+- **Model:**
+  - the overflow jar is the last failing robot job: the gripper can't pass the front-right leg and the plenum's KF-25
+    hose, which must move;
+  - the zero-point clamps (no room under the floor until the jar moves);
+  - the liners, locating pins, the right draw latch and the reservoir handle;
+  - the optics and electrical patches listed above;
+  - the two-arm assembly chapter that needs the new gland-plate order.
+- **FEA:** cases 1 and 1b weren't re-run this round. `thermal_module.py` still lacks the stack screws and S25's thinner
+  rod.
+- **CAMotics:** no holder, spindle or fixture collision check. The frame's setup-C features were never programmed.
+- **Quotes:**
+  - no services that need an account;
+  - no honing quote;
+  - SendCutSend's CNC prices come before its review;
+  - no certificates, passivation or vacuum cleaning priced.
+- **Still generic or unpriced:** the RTC6, the IPG interface cable and a 3.2 mm collimator, a 500 W shutter, the CombiTac
+  dock, the 12U rack, the blower.
+- **Unanswered from 2026-11-20:** refining the OEM parts from photos and video, and the VCL and Y logos. That run
+  stopped before it pushed anything, and this round didn't take it up.
+
+## 0a. Round 3 (2026-11-20 evening): the machinist's review, the robots, safety, and a full re-run
 
 Sterling asked for four things on 2026-11-20:
 - the UR12e aligned with byu-vcl PR 318, with whatever tools make each automated job work;
