@@ -390,6 +390,96 @@
    "galvo_clip": 1.176910943921689e-34,
    "lens_beam_ok": true,
    "spot_at_model_focus_um": 101.34012642647508
+  },
+  {
+   "collimator": "IPG affixed 2.5 mm option (YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 19.23076923076923,
+   "D_mm": 2.5,
+   "M2": 1.05,
+   "spot_um": 91.55101622463712,
+   "zR_mm": 5.859265038376775,
+   "dof5_mm": 1.8758800990386624,
+   "dof10_mm": 2.685052555516992,
+   "spot_f254_um": 145.33723825661147,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 105.93844769219552
+  },
+  {
+   "collimator": "IPG affixed 2.5 mm option (YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 130.0,
+   "fc_mm": 19.23076923076923,
+   "D_mm": 2.5,
+   "M2": 1.1,
+   "spot_um": 95.91058842581035,
+   "zR_mm": 6.138277659251863,
+   "dof5_mm": 1.9652077228024094,
+   "dof10_mm": 2.8129122010178027,
+   "spot_f254_um": 152.25805912597392,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 109.72787749634759
+  },
+  {
+   "collimator": "IPG affixed 2.5 mm option (YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 17.857142857142854,
+   "D_mm": 2.5,
+   "M2": 1.05,
+   "spot_um": 91.55101622463712,
+   "zR_mm": 5.859265038376775,
+   "dof5_mm": 1.8758800990386624,
+   "dof10_mm": 2.685052555516992,
+   "spot_f254_um": 145.33723825661147,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 105.93844769219552
+  },
+  {
+   "collimator": "IPG affixed 2.5 mm option (YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 140.0,
+   "fc_mm": 17.857142857142854,
+   "D_mm": 2.5,
+   "M2": 1.1,
+   "spot_um": 95.91058842581035,
+   "zR_mm": 6.138277659251863,
+   "dof5_mm": 1.9652077228024094,
+   "dof10_mm": 2.8129122010178027,
+   "spot_f254_um": 152.25805912597392,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 109.72787749634759
+  },
+  {
+   "collimator": "IPG affixed 2.5 mm option (YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 16.666666666666668,
+   "D_mm": 2.5,
+   "M2": 1.05,
+   "spot_um": 91.55101622463712,
+   "zR_mm": 5.859265038376775,
+   "dof5_mm": 1.8758800990386624,
+   "dof10_mm": 2.685052555516992,
+   "spot_f254_um": 145.33723825661147,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 105.93844769219552
+  },
+  {
+   "collimator": "IPG affixed 2.5 mm option (YLR series datasheet rev 2/26)",
+   "theta_full_mrad": 150.0,
+   "fc_mm": 16.666666666666668,
+   "D_mm": 2.5,
+   "M2": 1.1,
+   "spot_um": 95.91058842581035,
+   "zR_mm": 6.138277659251863,
+   "dof5_mm": 1.9652077228024094,
+   "dof10_mm": 2.8129122010178027,
+   "spot_f254_um": 152.25805912597392,
+   "galvo_clip": 2.572209372642415e-56,
+   "lens_beam_ok": true,
+   "spot_at_model_focus_um": 109.72787749634759
   }
  ],
  "collimator_for_spot": {
@@ -604,6 +694,78 @@
    "chief_r_at_lens_out": 5.155632037409546
   }
  ],
+ "k_range_thin_lens": {
+  "as drawn (2nd mirror ~40 mm above the nose)": [
+   0.295625,
+   0.593125
+  ],
+  "Thorlabs A1 = 7.5 mm (2nd mirror 7.5 mm above the nose)": [
+   0.49875,
+   0.79625
+  ]
+ },
+ "needed_clear_diameter_L75": [
+  {
+   "D_mm": 5.0,
+   "k": 0.3,
+   "lid bore": 64.85361447293307,
+   "drawer opening": 64.3808094991125,
+   "field stop": 63.813445450599154,
+   "window flange bore (below window)": 63.34064348868069,
+   "window retaining ring (above window)": 61.3785262846097
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.45,
+   "lid bore": 56.23012168909586,
+   "drawer opening": 55.39800439129835,
+   "field stop": 54.39946556016369,
+   "window flange bore (below window)": 53.567351283917034,
+   "window retaining ring (above window)": 50.11408801042401
+  },
+  {
+   "D_mm": 5.0,
+   "k": 0.6,
+   "lid bore": 47.54757036514056,
+   "drawer opening": 46.353679919878665,
+   "field stop": 44.92101332045357,
+   "window flange bore (below window)": 43.72712591033766,
+   "window retaining ring (above window)": 38.77250418065873
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.3,
+   "lid bore": 62.7571044994395,
+   "drawer opening": 62.19683548077806,
+   "field stop": 61.52451997469026,
+   "window flange bore (below window)": 60.96426243316628,
+   "window retaining ring (above window)": 58.6392353234785
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.45,
+   "lid bore": 54.12689546018608,
+   "drawer opening": 53.207033922904074,
+   "field stop": 52.10320741790966,
+   "window flange bore (below window)": 51.18335739453261,
+   "window retaining ring (above window)": 47.36602161870252
+  },
+  {
+   "D_mm": 3.2,
+   "k": 0.6,
+   "lid bore": 45.434880905035506,
+   "drawer opening": 44.152851424896745,
+   "field stop": 42.614423421498586,
+   "window flange bore (below window)": 41.3324055070703,
+   "window retaining ring (above window)": 36.01207317154736
+  }
+ ],
+ "k_thin_lens_estimate": {
+  "k": 0.295625,
+  "stop_above_lens_mm": 112.69999999999999,
+  "exit_pupil_above_lens_mm": 381.22621564482023,
+  "note": "thin lens at H' (z 160) with H = H'; the real front principal plane is unknown, so k could be ~0.3-0.8"
+ },
  "apertures": [
   {
    "collimator": "IPG 5 mm",

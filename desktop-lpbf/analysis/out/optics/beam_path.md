@@ -10,6 +10,7 @@
 | IPG standard, 7.5 mm beam | 53.6 | 7.50 | 31 / 32 [31–32] | 0.68 | 0.22 / 0.31 | 51 | 6.7e-07 |
 | f = 30 mm QBH collimator (the model's label, low-profile.md) | 30.0 | 4.20 | 54 / 57 [51–61] | 2.17 | 0.70 / 1.00 | 91 | 2.0e-20 |
 | D = 3.2 mm (the ~75 um target; f_c ~ 23 mm) | 22.9 | 3.20 | 72 / 75 [72–75] | 3.75 | 1.20 / 1.72 | 119 | 1.2e-34 |
+| IPG affixed 2.5 mm option (YLR series datasheet rev 2/26) | 17.9 | 2.50 | 92 / 96 [92–96] | 6.14 | 1.97 / 2.81 | 152 | 2.6e-56 |
 
 Collimated beam needed for a given spot at f = 160 mm (M² 1.1): 60 µm → D 4.00 mm, f_c 28.5 mm (26.6–30.7); 70 µm → D 3.43 mm, f_c 24.5 mm (22.8–26.3); 75 µm → D 3.20 mm, f_c 22.8 mm (21.3–24.6); 80 µm → D 3.00 mm, f_c 21.4 mm (20.0–23.1); 90 µm → D 2.66 mm, f_c 19.0 mm (17.8–20.5); 100 µm → D 2.40 mm, f_c 17.1 mm (16.0–18.4)
 
@@ -23,6 +24,7 @@ The model puts the lens's air focus on the powder plane. The 8 mm window and 3 m
 - IPG standard, 7.5 mm beam: 32 µm at focus, **163 µm on the powder** (5.0 z_R out)
 - f = 30 mm QBH collimator (the model's label, low-profile.md): 57 µm at focus, **106 µm on the powder** (1.6 z_R out)
 - D = 3.2 mm (the ~75 um target; f_c ~ 23 mm): 75 µm at focus, **101 µm on the powder** (0.9 z_R out)
+- IPG affixed 2.5 mm option (YLR series datasheet rev 2/26): 96 µm at focus, **110 µm on the powder** (0.6 z_R out)
 
 | Focus budget item | mm | kind |
 |---|---|---|
@@ -44,6 +46,22 @@ The model puts the lens's air focus on the powder plane. The 8 mm window and 3 m
 | 0.75 | S25 | 12.7 | 4.5 | 2.3 | 3.4 | 0.18 | 0.203 | 0.001 | 0.014 | 5.1 / 3.6 / 1.8 |
 | 0.75 | M50 | 25.4 | 9.1 | 4.5 | 6.8 | 0.71 | 0.409 | 0.004 | 0.057 | 10.1 / 7.2 / 3.6 |
 | 0.75 | L75 | 38.1 | 13.6 | 6.8 | 10.2 | 1.62 | 0.617 | 0.009 | 0.128 | 15.1 / 10.7 / 5.2 |
+
+Thin-lens estimate of k (lens at z 160, stop at the mirrors, z 272.7): exit pupil 381 mm above the lens, k = 0.30. The lens's real principal planes are not published, so the tables span k = 0.3-0.75.
+
+
+k from a thin lens with its front principal plane between the lens body's middle and H' (z 160): as drawn (2nd mirror ~40 mm above the nose): 0.30-0.59; Thorlabs A1 = 7.5 mm (2nd mirror 7.5 mm above the nose): 0.50-0.80
+
+Clear diameter each lid opening needs to pass the L75 edge (r 38.1 mm) with < 0.1 % clipped (mm):
+
+| Beam | k | lid bore (drawn Ø56) | drawer opening (drawn Ø46) | field stop (drawn Ø36) | window flange bore (below window) (drawn Ø42) | window retaining ring (above window) (drawn Ø44) |
+|---|---|---|---|---|---|---|
+| 5.0 mm | 0.3 | 64.9 | 64.4 | 63.8 | 63.3 | 61.4 |
+| 5.0 mm | 0.45 | 56.2 | 55.4 | 54.4 | 53.6 | 50.1 |
+| 5.0 mm | 0.6 | 47.5 | 46.4 | 44.9 | 43.7 | 38.8 |
+| 3.2 mm | 0.3 | 62.8 | 62.2 | 61.5 | 61.0 | 58.6 |
+| 3.2 mm | 0.45 | 54.1 | 53.2 | 52.1 | 51.2 | 47.4 |
+| 3.2 mm | 0.6 | 45.4 | 44.2 | 42.6 | 41.3 | 36.0 |
 
 Largest plate radius each lid aperture passes with < 0.1 % clipped (mm; plates are 12.7 / 25.4 / 38.1):
 

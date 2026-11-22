@@ -16,7 +16,7 @@ given as a range.
 | [`analysis/optics/thermal_lens.py`](analysis/optics/thermal_lens.py) | thermal lens of the slide, window and f-theta: analytic, plus an axisymmetric finite-volume conduction solve → [`thermal_lens.md`](analysis/out/optics/thermal_lens.md) |
 | [`analysis/optics/thermal_lens_ccx.py`](analysis/optics/thermal_lens_ccx.py) | CalculiX cross-check of one slide case → [`thermal_lens_ccx.md`](analysis/out/optics/thermal_lens_ccx.md) |
 | [`analysis/optics/layer_camera.py`](analysis/optics/layer_camera.py) | the M6 camera from its mounted position: field, pixel size, depth of field, vignetting → [`layer_camera.md`](analysis/out/optics/layer_camera.md) |
-| [`optics-bom.csv`](optics-bom.csv) | every optical element and instrument, with part numbers, prices, sources and the `bom.csv` line each replaces or adds |
+| [`analysis/optics/optics_bom.py`](analysis/optics/optics_bom.py) → [`optics-bom.csv`](optics-bom.csv) | every optical element and instrument, with part numbers, prices, sources, the `bom.csv` line each replaces or adds, and the model part it maps to; totals in [`optics_bom.md`](analysis/out/optics/optics_bom.md) |
 
 Re-run: `python desktop-lpbf/analysis/optics/<script>.py` (each takes under a minute; run under `/tmp/capmem 1.5`).
 
@@ -26,36 +26,45 @@ Ranked by consequence. Section numbers point to the evidence.
 
 1. **The collimator in the model doesn't give the spot the layout was designed for (§1.1).** The model draws IPG's
    standard 5 mm collimator under the f = 160 mm lens. That gives a **48 µm** spot with a ±1.5 mm Rayleigh range, not the
-   ~75 µm that [`low-profile.md`](low-profile.md) assumes. The model's label, "f = 30 mm, D ≈ 3.2 mm", is also off: with
-   IPG's 140 mrad fibre divergence a 30 mm collimator gives D = 4.2 mm and a 57 µm spot. **For ~75 µm the beam must be
-   D ≈ 3.2 mm, from a collimator of f ≈ 23 mm (21–25 mm over IPG's 130–150 mrad).** Ask IPG for it (its spec sheet
-   offers "other diameters on request"), or buy a QBH collimator of that focal length, since the laser's default output
-   is a QBH-compatible connector. If neither works, the 5 mm collimator with a 48 µm spot is usable but gives Al
-   keyhole-level intensities at 300–400 W, and is twice as sensitive to focus.
+   ~75 µm that [`low-profile.md`](low-profile.md) assumes. Its "30 mm collimator gives a ~3.2 mm beam" (also the old part
+   label in `vendor_parts.py`) is off too: with IPG's 140 mrad fibre divergence a 30 mm collimator gives D = 4.2 mm and a
+   57 µm spot. **For ~75 µm the beam must be
+   D ≈ 3.2 mm, from a collimator of f ≈ 23 mm (21–25 mm over IPG's 130–150 mrad).** Ask IPG for it: its spec sheet offers
+   "other diameters on request". IPG's series datasheet (rev 2/26) also lists a **2.5 mm** affixed collimator, which
+   gives 92–96 µm with a ±6.1 mm Rayleigh range, still inside the 70–100 µm commercial range: that is the catalogue
+   fallback. No third-party collimator with f ≈ 20–30 mm was found. The series datasheet also says 500 W single-mode
+   lasers end in IPG's HLC-8 connector, while the quoted spec sheet says QBH-compatible, so confirm the termination
+   before planning any third-party optic. The 5 mm collimator as drawn is usable, but it gives Al keyhole-level
+   intensities at 300–400 W and is 2.5 times as sensitive to focus errors.
 2. **As drawn, the focus is 3.4 mm below the powder (§1.3).** The model sets the lens's flange focal length from the
    powder plane, but the 8 mm window and 3 mm slide push the focus down by t(1 − 1/n) = 3.41 mm. That puts the plate
    0.9 Rayleigh ranges out with the 3.2 mm beam (spot 101 µm instead of 75) or 2.2 out with the 5 mm beam (117 µm
    instead of 48). **Raise the lens 3.4 mm, and give the f-theta adapter ring ±3 mm of focus adjustment** (shims under
    its flange, or a fine-thread ring with a lock), set by a burn test at process power.
-3. **The lid stack may cut off the outer part of the L75 plate (§1.4).** How far the beam leans at the plate depends on
-   the f-theta's chief-ray angle, which Thorlabs doesn't publish. Written as k = (chief-ray angle at the plate) /
-   (scan angle), the Ø36 field stop passes plates up to r = 19.7 mm at k = 0.3, 25.1 mm at k = 0.5 and 39 mm at
-   k = 0.75, with the 5 mm beam. The plates are 12.7, 25.4 and 38.1 mm. The Ø42 bore under the window and the Ø50.8
-   window itself also clip L75 at k ≤ 0.5. **Get the chief-ray data (Thorlabs' Zemax black box) or measure it with the
-   guide laser before the lid is machined, and make the field stop an insert, one per module.**
+3. **As drawn, the lid stack cuts off the outer ring of the L75 plate (§1.4).** How far the beam leans at the plate
+   depends on the f-theta's chief-ray angle, which Thorlabs doesn't publish. Write it as k = (chief-ray angle at the
+   plate) / (scan angle). Thorlabs designs the FTH160-1064 for the second galvo mirror 7.5 mm from the lens; the model
+   has the basiCube's second mirror ~40 mm away, which makes the lens more telecentric. A thin-lens bound then puts k
+   at **0.30–0.59**. Over that range the beam to the L75 edge (r = 38.1 mm) needs a field stop of Ø44–64 mm (drawn
+   Ø36), a bore under the window of Ø42–63 mm (drawn Ø42) and a window clear aperture to match. A Ø2 in. window clears
+   ~Ø46 mm, which is enough only for k ≥ ~0.55. **Measure k with the guide laser (§4.4) or get Thorlabs' Zemax black
+   box before the lid is machined; then size the window (Ø3 in. if k < 0.55), its bores, and one field-stop insert per
+   module.**
 4. **The cover slide is uncoated and, at 500 W, a consumable that has to stay almost perfectly clean (§2.2, §2.3).**
    - The Edmund 25-250 slide (A2) is uncoated: its two faces send 6.7 % of the beam, 34 W, back toward the lens, the
      galvo and the fibre end, and their ghosts come to a focus in or near the f-theta (thin-lens estimate). **Buy
      AR-coated slides.**
-   - The slide's thermal lens grows the spot past +10 % once it absorbs about **0.01–0.03 %**. A light film (0.05 %)
+   - The slide's thermal lens grows the spot past +10 % once it absorbs about **0.03 %**. A light film (0.05 %)
      moves the focus 1.1–2.8 mm toward the lens; a fogged slide (0.5 %) moves it 10–23 mm; mech.md's 43.8 mm overstates
      it (§2.2). The ratio to the Rayleigh range doesn't depend on the beam size, so no collimator choice fixes this.
      **Inspect and swap the slide every build, and watch the coaxial photodiode's mean for drift during a build.**
 5. **The f-theta has no CW rating, and its own absorption could move the focus by more than the depth of focus
    (§2.1–2.2).** Thorlabs gives the FTH160-1064 only a pulsed damage threshold. If the lens absorbs 0.05 % of 500 W, its
    thermal lens alone moves the focus 1.2 mm (5 mm beam) to 2.8 mm (3.2 mm beam), 0.75 Rayleigh ranges either way.
-   **Ask Thorlabs for the glass, the coating absorption and a CW rating; if they can't give them, quote a fused-silica
-   high-power f-theta.** In any case, find focus at process power, not at low power.
+   Thorlabs lists it as three air-spaced elements plus a protective window that is **N-BK7**, not fused silica
+   (FTHW75-1064), with < 0.3 % reflection per surface. **Ask Thorlabs for the element glass, the coating absorption and
+   a CW rating; replace the protective window with a fused-silica one; and if Thorlabs can't answer, quote a
+   fused-silica high-power f-theta.** In any case, find focus at process power, not at low power.
 6. **A specular spot at the field centre sends the beam back into the fibre (§2.3).** A bare, polished plate, or a flat
    melt pool, within 3–5 mm of the lens axis acts as a cat's eye: up to ~440 W can couple back into the fibre core. The
    powder bed and real melt pools return far less, but the risk is real on first light and on bare plates. **Get IPG's
@@ -68,14 +77,19 @@ Ranked by consequence. Section numbers point to the evidence.
    (26 µm per pixel; the L75 plate fits the frame) with a ~2.2° Scheimpflug wedge, because the plate's near and far
    edges are ±21 mm apart along the line of sight.
 8. **The power meter and the dump need cooling the machine no longer has (§4.1).** The quoted IPG laser is air-cooled,
-   so L2 dropped to $0, but the BOM's dump (Thorlabs LB2L/M) is water-cooled and most 500 W heads are too. Pick a
-   fan-cooled 500 W-class thermal head and mount it where the shutter dumps the beam, so every build starts with a power
-   reading at the collimated beam.
+   so L2 dropped to $0, but the BOM's dump (Thorlabs LB2L, $507.50) is water-cooled, no fan-cooled 500 W dump was
+   found, and most 500 W heads are water-cooled too. **Buy the Gentec-EO UP55G-600F-HD-D0** ($3,033; fan-cooled, 600 W
+   continuous) with a U-LINK USB interface ($816), and mount it where the shutter dumps the beam. It is then the dump
+   and the power meter, and every build starts with a logged power reading at the collimated beam.
 9. **The melt-pool photodiode (T2) has no way to look down the beam (§4.5).** A coaxial signal needs a 45° dichroic
    between the shutter and the galvo that reflects 1070 nm and passes the visible and near-IR glow, plus a notch and a
-   short-pass filter. The fold also lets the collimator lie along y.
-10. **BOM text to fix:** L3 and L6 still describe f = 254 mm; L7 names a Ø1 in. 5 mm window (the model has Ø2 in. ×
-    8 mm); T1 has no 500 W head; M6 has no lens, filter or Scheimpflug part; the README's block diagram says f = 254 mm.
+   short-pass filter (Thorlabs DMSP1000 $331.76, NF1064-44 $635.55, FESH1000 $169.26). The DMSP1000 has only a
+   pulsed damage rating, so it is a commissioning part until Thorlabs gives a CW figure or a high-power HR1070/HT-VIS
+   mirror is quoted. The fold also lets the collimator lie along y.
+10. **BOM text to fix (§5):** L3 and L6 still describe f = 254 mm; L7 names a Ø1 in. 5 mm window (the model has
+    Ø2 in. × 8 mm; Edmund 38-990, Ø50.8 × 9.53 mm with a 1064 nm V-coat, $295, is the nearest real part); A2's slides are
+    uncoated; T1 has no 500 W head; T2 has no dichroic or filters; M6 has no lens, filter or Scheimpflug part; the
+    README's block diagram says f = 254 mm. The optics BOM adds about $6.1k at the low end and $2.9k at the high end.
 
 ## 1. Beam path
 
@@ -92,23 +106,24 @@ diameter itself is not on the spec sheet; this is the value its divergence impli
 |---|---|---|---|---|---|
 | IPG standard, 5 mm beam (drawn) | 35.7 | 5.0 | 48 | ±1.53 | ±0.70 |
 | IPG standard, 7.5 mm beam | 53.6 | 7.5 | 32 | ±0.68 | ±0.31 |
-| f = 30 mm (the model's label) | 30 | 4.2 | 57 | ±2.17 | ±1.00 |
+| f = 30 mm (low-profile.md) | 30 | 4.2 | 57 | ±2.17 | ±1.00 |
 | **D = 3.2 mm (the 75 µm target)** | **22.9** | **3.2** | **75** | **±3.75** | **±1.72** |
+| IPG affixed 2.5 mm (series datasheet) | 17.9 | 2.5 | 96 | ±6.14 | ±2.81 |
 
 The spread over 130–150 mrad is a few µm (the full table is in `beam_path.md`). For other targets: 60 µm needs
 f_c = 28.5 mm, 70 µm 24.5 mm, 80 µm 21.4 mm, 90 µm 19.0 mm.
 
 **Which spot.** Commercial Al machines run 70–100 µm (README §3.2). A 48 µm spot at 350 W is 3.9 × 10⁷ W/cm² peak,
-roughly 2.5 times the 75 µm spot's, which pushes Al into keyhole mode and narrows the process window. It also halves
-the Rayleigh range against every focus error below. So the 3.2 mm beam stays the target. Defocusing the 48 µm spot to
+roughly 2.5 times the 75 µm spot's, which pushes Al into keyhole mode and narrows the process window. It also cuts
+the Rayleigh range to 40 %, against every focus error below. So the 3.2 mm beam stays the target. Defocusing the 48 µm spot to
 75 µm (1.8 mm out) works, but then the spot changes linearly with any focus error instead of quadratically.
 
 ### 1.2 Depth of focus against the layer, the plate growth and the powder surface
 
-- **Layers** of 20–60 µm are 0.5–1.6 % of the 3.2 mm beam's ±1.72 mm (±10 %) depth of focus: irrelevant.
+- **Layers** of 20–60 µm are 1.2–3.5 % of the 3.2 mm beam's ±1.72 mm (±10 %) depth of focus, and the powder plane doesn't move between layers anyway: irrelevant.
 - **The plate stack grows ~112 µm at 200 °C** ([`powder-spreading.md`](powder-spreading.md)). The blade, not the plate,
   sets the powder surface, so once the blade gap is zeroed hot the powder plane stays at the focus. Even uncorrected,
-  0.112 mm is 3 % of z_R (6.5 % with the 5 mm beam).
+  0.112 mm is 3 % of z_R (7.3 % with the 5 mm beam).
 - **The bridge posts grow 70 µm** over a 50 K warm-up ([mech.md F](analysis/out/mech/mech.md)): negligible.
 - **The powder surface doesn't rise** in this design, because the piston steps down each layer. On the engraver route
   (README §1b.2), where the tray is fixed, the surface rises by the build height (15–20 mm, 4–5 z_R), so that route
@@ -124,11 +139,13 @@ FTH160-1064's flange shoulder at z = 191.7 mm, its flange focal length, so the a
 real focus is 3.4 mm below it. The FTH160-1064 ships with its own Ø75 protective window (Thorlabs sells the FTHW75-1064
 replacement), which its working distance already includes.
 
-- **Fix:** raise the lens and bridge by 3.4 mm, or shorten the adapter ring by 3.4 mm, and keep ±3 mm of shim
-  adjustment for the lens's working-distance tolerance and the thermal shift.
+- **With the real parts in the optics BOM** (Edmund 38-990 window, 9.53 mm; Edmund 36-299 slide, 2 mm) the shift
+  is 3.58 mm.
+- **Fix:** raise the lens by the shift (shorten the 16 mm adapter ring to ~12.4 mm, so the lens's shoulder sits higher),
+  and keep ±3 mm of shim adjustment for the lens's working-distance tolerance, slide changes and the thermal shift.
 - **Slide tolerance:** Edmund's 3.00 ± 0.38 mm moves focus ±0.12 mm per slide. Small, but specify ±0.1 mm when
   ordering AR-coated slides.
-- **Off axis** the plates' shift grows by only 0.001–0.009 mm at the L75 edge, their astigmatism is 0.002–0.13 mm, and
+- **Off axis** the plates' shift grows by only 0.001–0.009 mm at the L75 edge, their astigmatism is 0.02–0.13 mm, and
   they move the spot outward by 0.24–0.62 mm. The scan-field calibration absorbs that, so **calibrate with the window
   and slide in place.**
 - **Spherical aberration** from 11 mm of glass at NA 0.01–0.016 is under λ/1000: negligible.
@@ -154,10 +171,27 @@ replacement), which its working distance already includes.
   | 3.2 mm | 0.5 | 42.0 | 34.6 | **27.1** | 32.9 | 38.5 |
   | 3.2 mm | 0.75 | 60 | 52 | 42 | 54 | 60 |
 
-  Plates: S25 12.7, M50 25.4, L75 38.1 mm. Thorlabs doesn't publish k for the FTH160-1064. A thin-lens estimate with
-  the mirrors where the model has them (z ≈ 273) gives k ≈ 0.3, but the lens's front principal plane is unknown, so k
-  could be anywhere from about 0.3 to 0.8. **Until it is known, the lid stack as drawn cannot be relied on to reach the
-  L75 plate edge.** At k = 0.3 even the window would have to be Ø64.
+  Plates: S25 12.7, M50 25.4, L75 38.1 mm.
+- **What k is.** Thorlabs doesn't publish it, but it does give the galvo geometry the lens is designed for: the second
+  mirror A1 = 7.5 mm from the lens, 20 mm between mirrors. The basiCube 20's second mirror sits at the beam height,
+  z ≈ 272.7, about 40 mm above the lens's nose (z 232.7). A stop farther from the lens makes it more telecentric. With a
+  thin lens of f = 160 mm whose front principal plane lies between the lens body's middle and its rear principal
+  plane (z 160), k = 1 − d/f gives **k ≈ 0.30–0.59 as drawn**, and 0.50–0.80 at Thorlabs' A1.
+- **So, as drawn, the L75 edge is out of reach.** The clear diameter each opening needs for the L75 edge, < 0.1 %
+  clipped:
+
+  | Beam | k | Lid bore (drawn Ø56) | Drawer (Ø46) | Field stop (Ø36) | Bore under window (Ø42) | Above window (Ø44) |
+  |---|---|---|---|---|---|---|
+  | 5 mm | 0.30 | 64.9 | 64.4 | 63.8 | 63.3 | 61.4 |
+  | 5 mm | 0.45 | 56.2 | 55.4 | 54.4 | 53.6 | 50.1 |
+  | 5 mm | 0.60 | 47.5 | 46.4 | 44.9 | 43.7 | 38.8 |
+  | 3.2 mm | 0.30 | 62.8 | 62.2 | 61.5 | 61.0 | 58.6 |
+  | 3.2 mm | 0.45 | 54.1 | 53.2 | 52.1 | 51.2 | 47.4 |
+  | 3.2 mm | 0.60 | 45.4 | 44.2 | 42.6 | 41.3 | 36.0 |
+
+  A Ø2 in. window has ~Ø46 mm clear (Thorlabs WG42012-C: ≥ Ø45.7 mm), enough only for k ≳ 0.55. Below that the window
+  goes to Ø3 in. and the flange, drawer and lid bore grow with it. M50 and S25 fit at any k in the range, except that
+  the Ø36 field stop clips the M50 edge at k ≈ 0.3.
 - **The field stop's job** is to keep a runaway galvo off the chamber walls. Its reach (beam centre on the stop's edge)
   is 23.9 / 30.5 / 48 mm at k = 0.3 / 0.5 / 0.75. One fixed stop can't both pass L75 and stop the beam just past S25,
   so a per-module insert (or one sized for L75, accepting a reach a little past it) is the honest design.
@@ -170,8 +204,8 @@ replacement), which its working distance already includes.
 | M50 | 25.4 | 9.1° | ±4.5° | 2.7–6.8° | 0.11–0.71 % |
 | L75 | 38.1 | 13.6° | ±6.8° | 4.1–10.2° | 0.26–1.6 % |
 
-- The FTH160-1064's 110.6 × 110.6 mm field is 2.9 times the L75 plate's width, so all three plates sit in its centre.
-- Spot ellipticity is at most 1.6 % at the L75 edge, well inside the 3 % spread of IPG's M² tolerance.
+- The FTH160-1064's field is 110.6 mm square; the L75 plate (76.2 mm) uses its central 69 %, so all three plates sit well inside it.
+- Spot ellipticity is at most 1.6 % at the L75 edge, inside the 5 % spot-size spread that IPG's M² tolerance (1.05–1.1) allows.
 - f-theta distortion and the plates' outward shift (0.24–0.62 mm at the L75 edge) are static, so the scanner's
   correction table takes them out. Thermal drift of the galvo is larger: ~0.24 mm at the plate over a warm-up
   ([mech.md F](analysis/out/mech/mech.md)). Calibrate warm, and re-register on fiducials every few hours.
@@ -186,18 +220,22 @@ Thorlabs rates CW damage by linear power density, P/D in W/cm, because CW damage
 | Surface | 5 mm beam: Ø (mm), peak (W/cm²), P/D (W/cm) | 3.2 mm beam: Ø, peak, P/D | Rating found |
 |---|---|---|---|
 | Collimator output | 5.0, 5.1 k, 1.0 k | 3.2, 12 k, 1.6 k | IPG builds it for the laser |
-| Shutter mirror and dump (closed) | 5.0, 5.1 k, 1.0 k | 3.2, 12 k, 1.6 k | dump rated 500 W (LB2L/M) |
-| Galvo mirrors (×0.71 on the 45° face) | 5.0, 5.1 k, 1.0 k | 3.2, 12 k, 1.6 k | basiCube 20: 1000 W at 1064 nm (README §3.2) |
+| Shutter mirror and dump (closed) | 5.0, 5.1 k, 1.0 k | 3.2, 12 k, 1.6 k | LB2L dump 500 W at 1 L/min water; Gentec head 600 W, fan |
+| Dichroic (if added; ×0.71 on its 45° face) | 5.0, 5.1 k, 1.0 k | 3.2, 12 k, 1.6 k | DMSP1000: pulsed only (9.5 J/cm², 12 ns) |
+| Galvo mirrors (×0.71 on the 45° face) | 5.0, 5.1 k, 1.0 k | 3.2, 12 k, 1.6 k | basiCube 20: 1000 W at 1064 nm, 100 % duty, no cooling |
 | f-theta input | 5.0, 5.1 k, 1.0 k | 3.2, 12 k, 1.6 k | **pulsed only, 5 J/cm² (10 ns)** |
-| f-theta protective window | 5.7, 3.9 k, 0.9 k | 3.7, 9.6 k, 1.4 k | as above |
-| Chamber window (top / bottom) | 4.8 / 4.6, 5.6–6.0 k, 1.1 k | 3.1 / 2.9, 14–15 k, 1.7 k | none (no part chosen) |
-| Cover slide (top / bottom) | 4.0 / 3.9, 8.0–8.2 k, 1.3 k | 2.6 / 2.5, 19–20 k, 2.0 k | none (uncoated Edmund 25-250) |
+| f-theta protective window (N-BK7) | 5.7, 3.9 k, 0.9 k | 3.7, 9.6 k, 1.4 k | pulsed only, 20 J/cm² |
+| Chamber window (top / bottom) | 4.8 / 4.6, 5.6–6.0 k, 1.1 k | 3.1 / 2.9, 14–15 k, 1.7 k | Edmund 38-990: pulsed only (15 J/cm², 20 ns) |
+| Cover slide (top / bottom) | 4.0 / 3.9, 8.0–8.2 k, 1.3 k | 2.6 / 2.5, 19–20 k, 2.0 k | Edmund 36-299: pulsed only (15 J/cm², 20 ns) |
 | Plate (focus) | 0.048, 5.5 × 10⁷ | 0.075, 2.3 × 10⁷ | — |
 
-Most of the beam path sees 1–2 kW/cm of linear power density. Thorlabs' own CW ratings for its -C coated optics are
-given in the same unit (see the BOM notes for the values found). The f-theta and the galvo mirrors are the parts whose CW rating has
-to come from the vendor: SCANLAB states 1000 W for the basiCube 20; Thorlabs states nothing for CW. A smaller beam
-raises the irradiance 2.4× on every surface but the plate.
+Most of the beam path sees 1–2 kW/cm. **No catalogue part found states a CW rating at that level and 1070 nm.** The
+only CW figure found for a transmissive part is Thorlabs' 350 W/cm for its -C coated UV fused-silica window
+(WG42012-C, measured at 1540 nm as a certification test, which usually marks the test laser's limit rather than the
+coating's): 3–6 times below our load. Laser-cutting protective windows are sold for "0–6 kW" heads (Cloudray/Raytools
+Ø50 × 2 mm, $12–16), so the coating class exists. SCANLAB's 1000 W for the basiCube 20 is the one rating that covers
+its part. **Ask every vendor for a CW rating at 1070 nm and a 3–5 mm beam when ordering.** A smaller beam raises the
+irradiance 2.4× on every surface but the plate.
 
 ### 2.2 Thermal lensing
 
@@ -234,6 +272,12 @@ beam-weighted defocus. A lens h above the focus moves it toward the lens by Δz 
   and uses Δz = f²D with f = 160 mm. With the slide where the model has it, the same case gives 23 mm.
 - **Time constants:** ~1 s for the beam-sized hot spot, ~110 s for the whole slide. A small coupon near the centre
   sees the static case; scanning spread over the plate lowers it.
+- **The f-theta's own protective window is N-BK7** (FTHW75-1064, Ø75 × 2 mm), 186 mm above the focus. N-BK7 absorbs
+  ~0.12 %/cm at 1 µm against ~0.002 %/cm for fused silica (low-profile.md), so this 2 mm plate takes ~0.15 W at 500 W
+  and is worth ~0.35 z_R. (In the converging beam the beam radius grows in step with the height, so every plate's shift
+  in Rayleigh ranges depends only on the power it absorbs and its χ/k: 0.15 W against the clean window's 0.038 W and
+  0.11 z_R.) A fused-silica Ø75 × 2 mm
+  replacement with a 1064 nm V-coat removes it.
 - **CalculiX, Faas et al. and Edison** cross-checks are in §2.2a.
 
 ### 2.2a Cross-checks: CalculiX, the literature and Edison
@@ -267,7 +311,7 @@ sits behind the slide and stays clean, so the slide is where the upgrade pays.
 
 | Source | Power sent back toward the head | Into the fibre core | Comment |
 |---|---|---|---|
-| Uncoated slide, both faces | 2 × 16.8 W | 2–15 mW | the returned beam focuses 5–15 mm from the fibre end and spreads 0.4–1 mm wide on the QBH connector |
+| Uncoated slide, both faces | 2 × 16.8 W | 2–15 mW | the returned beam focuses 5–15 mm from the fibre end and is 0.7–2 mm across on the QBH connector |
 | AR slide, both faces | 2 × 1.25 W | < 1 mW | |
 | AR window, both faces | 2 × 1.25 W | < 1 mW | |
 
@@ -290,7 +334,8 @@ fibre core. Off axis, a non-telecentric lens tilts the returned cone by 2× the 
 - **What protects the laser:** IPG's back-reflection tolerance (to be confirmed in writing, L1); a back-reflection
   alarm wired into the safety controller as a laser fault; bead-blasted plates; first light on powder at reduced power.
   A free-space isolator at 500 W randomly polarised is a specialist part (quote). Moving the plate off the lens axis
-  doesn't help, because L75 covers the axis wherever it sits.
+  doesn't help: to keep the axis off the L75 plate, its far edge would sit 81 mm off axis, outside the lens's 55 mm
+  half-field.
 
 ## 3. Laser-safety optics
 
@@ -305,14 +350,18 @@ Same MPE (5 mW/cm², t ≥ 10 s at 1070 nm) and method as [`safety.md`](safety.m
 
 - safety.md's numbers hold for the 5 mm beam. **With the 3.2 mm collimator the NOHD out of the focus grows to 178 m.**
   Either way it is "the whole room", so the enclosure, not distance, has to contain it.
-- **Eyewear** for the direct beam needs OD ≥ 5.4 (safety.md: OD 6 minimum, 7 for margin). See the BOM row for S6's
-  rating at 1070 nm.
+- **Eyewear (S6, Thorlabs LG1)** is OD 7+ at 950–1080 nm, against the OD ≥ 5.4 needed (fetched 2026-11-22T06:02Z,
+  https://www.thorlabs.com/certified-laser-safety-glasses?pn=LG1). Its EN 207 rating is D LB6: it holds 100 W/cm² for
+  10 s. The collimated beam is 2.5–6 kW/cm², so the glasses protect against diffuse light and low-power alignment, not
+  a direct hit at power.
+- **The guard panel (S5, Thorlabs LW1P1/M)** is OD 7+ at 1060–1100 nm, rated D AB4 (1 W/cm² for 10 s), 3.2 mm acrylic.
+  A 10 % specular reflection of 500 W at 150 mm from focus is ~150 W/cm² (low-profile.md), so it must never see a
+  direct or specular path, which is what safety.md already requires.
 - **Guard burn-through** (1.6 mm 5052, the same 1-D lower bound as safety_calcs.py, no conduction): at 150 mm past the
   focus, 0.39 s hot / 1.95 s cold with the 5 mm beam, 0.16 / 0.80 s with the 3.2 mm beam. The smaller beam makes the
   guard's job harder, which is one more reason the chamber, not the guard, is the primary barrier. Only a test on the
   real panel settles it (safety.md §4.3).
-- **The viewing window (S5)** must never see a direct or specular path; the chamber has no viewport, and the camera
-  window carries a 1070 nm filter (§4.6).
+- **The chamber has no viewport;** the camera window carries a 1070 nm filter (§4.6).
 
 ## 4. Calibration and monitoring
 
@@ -323,15 +372,28 @@ Same MPE (5 mW/cm², t ≥ 10 s at 1070 nm) and method as [`safety.md`](safety.m
   separately:
   1. **At the shutter's dump port, at full power.** Mount a thermal head as the shutter's dump, or in place of it, so
      closing the shutter puts the collimated 3.2–5 mm beam on the head. At 500 W that is 2.5–6.2 kW/cm² averaged over
-     the beam, so check the head's density rating, or use the 5 mm beam for this one measurement. Every build then starts
-     with a logged power reading at no extra effort, which trends the laser.
+     the beam, so pick a head whose density rating covers it, or spread the beam with a short negative fused-silica lens
+     in front of the head. Every build then starts with a logged power reading at no extra effort, which trends the
+     laser.
   2. **Through the f-theta, window and slide, at ~50 W.** Put the head just above the window, then just below the slide,
      and compare with the dump reading. At 50 W the 2.5–4 mm beam is under 1 kW/cm². Expect ~1–2 % loss with AR-coated
      parts and ~8 % with the uncoated slide.
-- **Which head.** No 500 W head is in the BOM (T1). The machine has no chiller any more (L2 is $0 with the air-cooled
-  IPG), so a fan-cooled head is the practical choice. The candidates and prices are in [`optics-bom.csv`](optics-bom.csv).
-- **The commissioning dump** (L4, Thorlabs LB2L/M) is water-cooled. Either run it from a tap with a flow switch during
-  commissioning, or use the fan-cooled power head as the dump.
+- **Which head.** No 500 W head is in the BOM (T1). The machine has no chiller (L2 is $0 with the air-cooled IPG),
+  and of the heads found only 600 W fan-cooled ones avoid water (fetched 2026-11-22):
+
+  | Head | Cooling | Rating | Density limit | Price | Interface |
+  |---|---|---|---|---|---|
+  | **Gentec-EO UP55G-600F-HD-D0** | fan | 600 W continuous, Ø55 mm | 45 kW/cm² (at 10 W CW; "may vary") | $3,033 | U-LINK USB $816 |
+  | Ophir FL600A-LP2-65 | fan | 600 W, Ø65 mm | 11 kW/cm² at 600 W, 33 at 150 W | $3,302 | Juno USB $752, fan supply $52 |
+  | Ophir FL600A-BB-65 | fan | 600 W | 7 kW/cm² at 600 W | $3,183 | as above |
+  | Gentec UP55M-500W-H12-D0 | water, 1.5 L/min | 500 W | — | $1,969 | — |
+  | Ophir 1000W-BB-34, L1500W-BB-50; Coherent PM1K-36C | water | 1000–1500 W | — | quote | — |
+
+  The Gentec is rated continuous and its maker says its heads can double as dumps, so it can sit at the dump port
+  permanently. Confirm its density rating at 500 W with Gentec for the 3.2 mm beam (6.2 kW/cm² averaged, 12 peak).
+- **The commissioning dump** (L4, Thorlabs LB2L, $507.50) needs 1 L/min of water. No fan-cooled ≥ 500 W dump was found
+  (Gentec's BD series is water-cooled too), so either run the LB2L from a tap with a flow switch during commissioning,
+  or let the power head be the dump.
 
 ### 4.2 Focus
 
@@ -364,7 +426,8 @@ Same MPE (5 mW/cm², t ≥ 10 s at 1070 nm) and method as [`safety.md`](safety.m
 ### 4.4 Guide laser
 
 - The IPG has a 0.1–1 mW red guide laser (Class 2M) on the same fibre. Use it to align the collimator, galvo and lens,
-  to check the field stop, and to trace where ghosts go.
+  to check the field stop, and to trace where ghosts go. For the 1070 nm beam itself at low power, a Thorlabs VRC2 card
+  (absorbs 800–1700 nm, $100.63) shows where it lands.
 - **Don't use it for focus or the field calibration.** The f-theta is coated and corrected for 1020–1080 nm. In fused
   silica, n is 1.4565 at 650 nm against 1.4496 at 1070 nm, so a fused-silica singlet's focal length is ~1.5 % shorter in
   the red: the red focus sits ~2.4 mm higher, and the field scale differs by ~1.5 %, 0.6 mm at the L75 edge. The real
@@ -377,13 +440,17 @@ Same MPE (5 mW/cm², t ≥ 10 s at 1070 nm) and method as [`safety.md`](safety.m
 - **The coaxial photodiode needs a dichroic in the collimated beam.** As far as the brochure shows, the basiCube 20 has
   no camera or detector port, so the emission has to be picked off between the shutter and the galvo, where the galvo
   has already de-scanned it.
-  - Fold the beam 90° with a 45° short-pass dichroic that reflects 1070 nm and passes 400–1000 nm. The laser then
-    reflects off a dielectric HR coat and never crosses the substrate, which avoids a thermal lens and astigmatism in
-    a tilted plate.
+  - Fold the beam 90° with a 45° short-pass dichroic that reflects 1070 nm and passes 400–1000 nm: Thorlabs DMSP1000
+    (T 520–985 nm, R 1020–1550 nm, IBS on UV fused silica, $331.76). The laser then reflects off a dielectric HR coat and
+    never crosses the substrate, which avoids a thermal lens and astigmatism in a tilted plate. The DMSP1000 has only a
+    pulsed rating (9.5 J/cm², 12 ns), so use it at reduced power until Thorlabs gives a CW figure, or quote a
+    high-power HR1070/HT-VIS laser mirror.
   - Edison r5-optics-review describes the opposite layout (laser transmitted, emission reflected), which is also used.
     Reflecting the laser is the safer one at 500 W.
   - The fold lets the collimator lie along y, which real-parts.md suggested for the guard clearance.
-- **Detector chain:** the PDA36A2 (T2) behind a 1064/44 notch (OD 6) and a 1000 nm short-pass, with a f ≈ 25–50 mm lens.
+- **Detector chain:** the PDA36A2 (T2, $400.01) behind a NF1064-44 notch (OD > 6 at 1042–1086 nm, $635.55) and a
+  FESH1000 short-pass (OD > 4 at 1013–1500 nm, $169.26), with a f ≈ 30–50 mm lens. The dichroic leaks up to 10 % of any
+  1070 nm light coming back up the beam; the two filters add OD 10.
   Set the gain for ≥ 100 kHz bandwidth: at 1 m/s a 75 µm spot crosses itself in 75 µs.
 - **What it gives:** a scalar melt-pool intensity per scan vector, good for spotting lack-of-fusion, keyholing, a dirty
   slide (the mean falls) and focus drift. Calibrated temperature needs two-colour pyrometry, which is a later upgrade.
@@ -420,12 +487,63 @@ Same MPE (5 mW/cm², t ≥ 10 s at 1070 nm) and method as [`safety.md`](safety.m
   across them, and take one image per bar. Its specular reflection leaves away from the camera, so bare metal shows
   dark and powder bright, which is the contrast wanted. Inside the chamber the LEDs must survive vacuum cycles: no
   potting, no silicone.
-- **The 1070 nm filter** is drawn as a coating on the camera window. As a real part it is a Ø25 mm notch or short-pass
-  filter behind a plain window. The HQ camera's own IR-cut filter isn't rated at 1070 nm.
+- **The 1070 nm filter** is drawn as a coating on the camera window. As a real part it is a Ø25 mm short-pass filter
+  behind a plain window: Thorlabs FESH0950 (rejects 970–1500 nm, $169.26). The HQ camera's own IR-cut filter isn't
+  rated at 1070 nm.
+- **Parts and prices** (fetched 2026-11-22T05:45Z): Raspberry Pi HQ camera $55 (Adafruit 4561; out of stock at Adafruit
+  and PiShop), 16 mm C-mount lens $77.50 (Adafruit 4562), 6 mm CS-mount lens $49.30 (Adafruit 4563). A 12 mm C-mount
+  lens wasn't priced (estimate $30–80).
 - **Temperature:** the chamber reaches 61–78 °C over a 10 h build (mech.md D), and the HQ board's electronics are
   rated to about 50 °C. Stand the camera off the boss on a short insulating tube, or give it an air feed.
 
 ## 5. Optics BOM and gaps
+
+[`optics-bom.csv`](optics-bom.csv) lists 30 rows: every optical element and instrument, with part number, price, source
+URL and fetch time, the `bom.csv` line each replaces or adds to, and the part in the model that stands for it. It is
+written by [`analysis/optics/optics_bom.py`](analysis/optics/optics_bom.py), which also totals it
+([`optics_bom.md`](analysis/out/optics/optics_bom.md)).
+
+**Totals.** The 35 rows (qty > 0, priced) come to **$24,467–25,688**, without the laser (L1, whose quote is already in
+`bom.csv`) and the collimator (IPG quote pending). The basiCube 20 ($12,000, `bom.csv` L5's high value) is half of it;
+the shutter ($1,500–2,000) is an estimate; everything else is a fetched price or a small estimate. Optional rows
+(qty 0): the beam profiler and sampler ($5,558.40), a sapphire slide ($950 each), an industrial f-theta
+($2,500–6,000, estimate), a 500 W isolator (quote) and the Ophir head set ($4,106).
+
+**Changes to `bom.csv` this implies** (not made here; `bom.csv` belongs to the coordinator):
+
+| id | item | candidate | qty | low | high | basis | source |
+|---|---|---|---|---|---|---|---|
+| L3 | Collimator | IPG collimator for D ≈ 3.2 mm (f ≈ 23 mm) → ~75 µm at f = 160 mm; fallback IPG 2.5 mm affixed (92–96 µm); not the 5 mm (48 µm) | 1 | 0 | quote | quote | quotes/ipg-ylr-500-u3-sm-ac.md; IPG YLR datasheet rev 2/26 |
+| L4 | Safety shutter + dump | industrial ≥ 500 W shutter (quote; nmLaser LST800 is only 300 W); LB2L dump for commissioning; the T1 head is the permanent dump | 1 | 507.50 | 2,000 | fetched + estimate | thorlabs.com/beam-blocks-and-traps?pn=BT610 (2026-11-22T05:48Z) |
+| L6 | f-theta | **f = 160 mm**, Thorlabs FTH160-1064 + 2 spare FTHW75-1064 windows (high: an industrial fused-silica lens) | 1 | 1,255.84 | 2,500 | fetched | thorlabs.com/f-theta-scan-lenses (2026-11-22T05:36Z) |
+| L7 | Chamber window | Edmund 38-990, Ø50.8 × 9.53 mm fused silica, 1064 V-coat (Ø3 in. if k < 0.55) | 1 | 295 | 295 | fetched | edmundoptics.com/p/…/39556/ (2026-11-22T05:53Z) |
+| A2 | Cover slides (part of A2) | 12 × Edmund 36-299 (Ø50 × 2 mm, 1064 V-coat) instead of 6 × uncoated 25-250; 10 × Cloudray Ø50 × 2 mm to trial | 12 + 10 | 1,356 | 1,612 | fetched | edmundoptics.com/p/…/33156/ (05:48Z); cloudraylaser.com (05:46Z) |
+| T1 | Laser power sensor | Gentec-EO UP55G-600F-HD-D0 (600 W, fan) + U-LINK | 1 | 3,849 | 3,849 | fetched | gentec-eo.com (05:58Z, 05:51Z) |
+| T2 | Melt-pool photodiode | PDA36A2 + DMSP1000 dichroic + NF1064-44 + FESH1000 + lens and mounts | 1 | 1,686.58 | 1,836.58 | fetched + estimate | thorlabs.com (05:43–05:44Z) |
+| M6 | Layer camera + lighting | Pi HQ ($55) + 12 mm C-mount lens + FESH0950 filter + 2.2° wedge + second LED bar | 1 | 284.26 | 394.26 | fetched + estimate | adafruit.com (05:45Z); thorlabs.com (05:44Z) |
+| T3 (new) | Optics calibration | VRC2 card + anodised coupons + Edmund 57-983 dot target | 1 | 810.63 | 890.63 | fetched + estimate | thorlabs.com (06:03Z); edmundoptics.com (05:48Z) |
+| F5 | (add to) | focus shims for the f-theta ring + three field-stop inserts | 1 | 75 | 200 | estimate | — |
+| S5, S6 | (no price change) | OD 7+ at 1070 nm now confirmed for LW1P1/M and LG1 | | | | fetched | thorlabs.com (06:02Z) |
+
+Against today's lines this raises the BOM by about **$6.1k at the low end and $2.9k at the high end** (L6 +$770 low;
+L7 +$41 / −$505; A2 slides +$726 / +$982; T1 +$2,158 / −$151; T2 +$1,287 / +$1,437; M6 +$184 / +$94; T3 +$811 / +$891;
+F5 +$75 / +$200). L1, L3, L5 wait on quotes.
+
+**Model parts with no BOM line, or the wrong one:**
+- The **enclosed beam tube, galvo riser plate, f-theta adapter ring and field stop** carry L4, L5, L6 and L7 in the
+  model; the audit moved them to F5. They should carry F5 in `lpbf_low.py` too.
+- The **camera window's "1070 nm blocking coating"** isn't a buyable part; it becomes a plain window plus a Ø25 mm filter
+  (O21).
+- The **gas knife** (tagged L7) has no slot, supply or flow (gas-flow.md §3.3).
+- The **collimator** is drawn as IPG's 5 mm unit but labelled "f = 30 mm, D ≈ 3.2 mm" in `vendor_parts.py`; neither
+  gives 75 µm at f = 160 mm.
+
+**BOM parts with nothing in the model:**
+- the dichroic fold mirror, photodiode, filters and lens (T2, O5, O15–O18): not drawn, and the beam line has no fold;
+- the 500 W power head (T1, O14) at the shutter's dump port;
+- the second LED bar, the Scheimpflug wedge and the camera filter (M6);
+- the field-stop inserts per module (one fixed stop is drawn);
+- eyewear (S6), the calibration coupons, target and IR card: tools, no model part needed.
 
 ## 6. Edison's second opinion (r5-optics-review)
 

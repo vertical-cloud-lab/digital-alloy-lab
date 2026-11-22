@@ -87,6 +87,7 @@ COLL = {
     "IPG standard, 7.5 mm beam": dict(D=7.5),
     "f = 30 mm QBH collimator (the model's label, low-profile.md)": dict(fc=30.0),
     "D = 3.2 mm (the ~75 um target; f_c ~ 23 mm)": dict(D=3.2),
+    "IPG affixed 2.5 mm option (YLR series datasheet rev 2/26)": dict(D=2.5),
 }
 
 
@@ -189,6 +190,14 @@ def plate_astig(u):
 # D/E. Field geometry and apertures, for a range of chief-ray ratios k = u'/theta (u' = chief-ray angle at the plate)
 # ---------------------------------------------------------------------------------------------------------------
 KS = (0.3, 0.5, 0.75)
+# thin-lens estimate of k: lens at its rear principal plane (160 mm above the focus), stop at the galvo's mirrors (z 272.7)
+_d_s = Z_GALVO_IN - F_FT
+_d_xp = _d_s * F_FT / (F_FT - _d_s)          # virtual exit pupil above the lens
+K_THIN = F_FT / (F_FT + _d_xp)
+Z_NOSE = Z_LENS_OUT + 50.2
+Z_H_MID = Z_LENS_OUT + 50.2 / 2
+K_RANGE = {"as drawn (2nd mirror ~40 mm above the nose)": (1 - (Z_GALVO_IN - F_FT) / F_FT, 1 - (Z_GALVO_IN - Z_H_MID) / F_FT),
+           "Thorlabs A1 = 7.5 mm (2nd mirror 7.5 mm above the nose)": (1 - (Z_NOSE + 7.5 - F_FT) / F_FT, 1 - (Z_NOSE + 7.5 - Z_H_MID) / F_FT)}
 
 
 def chief_r(r_img, k, z):
@@ -231,6 +240,23 @@ for k in KS:
                           plate_astig_mm=plate_astig(u), chief_r_at_slide=chief_r(r, k, 127.5), chief_r_at_window=chief_r(r, k, 152.0),
                           chief_r_at_lens_out=chief_r(r, k, Z_LENS_OUT)))
 R["field"] = field
+R["k_range_thin_lens"] = {k: list(v) for k, v in K_RANGE.items()}
+# clear diameter each lid opening needs to pass the L75 edge (r 38.1) with < 0.1 % clipped
+need_d = []
+for D in (5.0, 3.2):
+    for k in (0.3, 0.45, 0.6):
+        rec = dict(D_mm=D, k=k)
+        for name, z0, z1, dia in LID_APS:
+            worst = 0.0
+            for z in np.linspace(z0, z1, 6):
+                rc = abs(chief_r(38.1, k, z))
+                w = beam_w(D, M2_MAX, z) / math.cos(k * 38.1 / F_FT)
+                worst = max(worst, rc + 1.55 * w)      # 0.5 erfc(1.55 sqrt2) = 0.1 %
+            rec[name] = 2 * worst
+        need_d.append(rec)
+R["needed_clear_diameter_L75"] = need_d
+R["k_thin_lens_estimate"] = dict(k=K_THIN, stop_above_lens_mm=_d_s, exit_pupil_above_lens_mm=_d_xp,
+                                 note="thin lens at H' (z 160) with H = H'; the real front principal plane is unknown, so k could be ~0.3-0.8")
 
 aps = []
 for cname, D in (("IPG 5 mm", 5.0), ("D 3.2 mm", 3.2)):
@@ -393,6 +419,14 @@ for f_ in field:
     L.append(f"| {f_['k']} | {f_['plate']} | {f_['r_mm']:.1f} | {f_['scan_optical_deg']:.1f} | {f_['mirror_mech_deg']:.1f} | {f_['aoi_deg']:.1f} | "
              f"{f_['elongation_pct']:.2f} | {f_['plate_lateral_shift_mm']:.3f} | {f_['plate_focus_shift_extra_mm']:.3f} | {f_['plate_astig_mm']:.3f} | "
              f"{f_['chief_r_at_slide']:.1f} / {f_['chief_r_at_window']:.1f} / {f_['chief_r_at_lens_out']:.1f} |")
+L += ["", f"Thin-lens estimate of k (lens at z 160, stop at the mirrors, z 272.7): exit pupil {_d_xp:.0f} mm above the lens, k = {K_THIN:.2f}. "
+      "The lens's real principal planes are not published, so the tables span k = 0.3-0.75.", ""]
+L += ["", "k from a thin lens with its front principal plane between the lens body's middle and H' (z 160): " + "; ".join(
+    f"{k}: {a:.2f}-{b:.2f}" for k, (a, b) in K_RANGE.items()), "",
+    "Clear diameter each lid opening needs to pass the L75 edge (r 38.1 mm) with < 0.1 % clipped (mm):", "",
+    "| Beam | k | " + " | ".join(f"{a[0]} (drawn Ø{a[3]:.0f})" for a in LID_APS) + " |", "|---|---|" + "---|" * len(LID_APS)]
+for r_ in need_d:
+    L.append(f"| {r_['D_mm']} mm | {r_['k']} | " + " | ".join(f"{r_[a[0]]:.1f}" for a in LID_APS) + " |")
 L += ["", "Largest plate radius each lid aperture passes with < 0.1 % clipped (mm; plates are 12.7 / 25.4 / 38.1):", "",
       "| Collimator | k | " + " | ".join(a[0] + f" Ø{a[3]:.0f}" for a in LID_APS) + " | field stop, 50 % reach |",
       "|---|---|" + "---|" * (len(LID_APS) + 1)]
