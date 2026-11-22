@@ -117,7 +117,7 @@ purchase row,seal-parts.csv,row36,,"Window and camera-window flat clamp rings, F
 purchase row,vendor-parts.csv,row9,4518K72,,0,
 purchase row,vendor-parts.csv,row14,4396K21,,0,G2
 purchase row,safety-parts.csv,SP1,0-25 % O2 2 relays 4-20 mA LED Macurco OX-6,Fixed O2 monitor for the lab room (breathing height and near the argon cylinder),0,G6
-purchase row,safety-parts.csv,SP2,Macurco OX-6 same part,Fixed O2 monitor inside the Kardex Shuttle shaft (low) and one at the tray bay,0,
+purchase row,safety-parts.csv,SP2,Macurco OX-6 same part,Fixed O2 monitor inside the Kardex Shuttle shaft (low) and one at the tray bay,0,S7
 purchase row,safety-parts.csv,SP3,18995T81 McMaster 18995T81 portable O2 detector nonreplaceable battery,Personal O2 monitor for filter changes and any entry,0,S7
 purchase row,safety-parts.csv,SP5,"Critical-flow orifice, 0.5-1 mm class Lee Co. or O'Keefe Controls",Critical-flow (sonic) orifice in the argon line,0,
 purchase row,safety-parts.csv,SP6,34.5 mbar 4277T52 McMaster 4277T52 nylon relief 0.5 psi,Low-pressure relief on the chamber (BOM part),0,G7
@@ -287,6 +287,7 @@ purchase row,audit-prices.csv,G7,5182K862,"Yor-Lok straight adapter, 1/4 in. tub
 purchase row,audit-prices.csv,G8,9262N11,O-ring splicing jig,0,G8
 purchase row,audit-prices.csv,G9,DMT143,Vaisala DMT143 Miniature Dew Point Transmitter for OEM Applications,0,G9
 purchase row,audit-prices.csv,M4,5786N32,"Quick-Clamp High-Vacuum Fitting, Cap for 1-1/2"" OD Aluminum Tube",0,M4
+purchase row,audit-prices.csv,M6,4562,16mm 10MP Telephoto Lens for Raspberry Pi HQ Camera,0,M6
 purchase row,audit-prices.csv,S9,5537T935,"Silver Corner Bracket for 20 mm High Rail, 3/4"" Long",0,S9
 purchase row,audit-prices.csv,S9,5278N44,"Self-Aligning T-Slotted Framing Nuts with Spring-Loaded Ball, Drop-in, for 20mm Rail, M5 Thread",0,S9
 purchase row,audit-prices.csv,S9,7648K69,Back panel for the 7648K62 cabinet,0,S9

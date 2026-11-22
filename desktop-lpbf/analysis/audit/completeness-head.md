@@ -14,9 +14,9 @@ against `bom.csv` and the part-number lists. At the start of the audit (bom.csv 
 - the BOM still described the tall model's welded box, 30 mm T-slot cabinet and ball-screw piston (G1, S9, M3), and
   the model tagged parts with lines that did not exist (D1, F3, F4, F5).
 
-**Now:** 116 priced, 4 real but unpriced, 23 generic, 65 custom, **2 missing** and **12 inconsistent**. The BOM total
-goes from **$39,440 – $112,978** to **$57,665 – $144,043**. $7,708 – $20,770 of the rise is line X1, the machining no
-line costed before. Without X1 the total is $49,957 – $123,273.
+**Now:** 117 priced, 4 real but unpriced, 22 generic, 65 custom, **2 missing** and **12 inconsistent**. The BOM total
+goes from **$39,440 – $112,978** to **$57,941 – $144,841**. $7,708 – $20,770 of the rise is line X1, the machining no
+line costed before. Without X1 the total is $50,233 – $124,071.
 
 ## How it was checked
 
@@ -107,9 +107,11 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
   - G2 dry scroll pump;
   - G7 Pirani, 316 relief and SAE-4 adapters; G8 seals from `seal-parts.csv`; G9 Vaisala DMT143;
   - M1 Ferrotec feedthrough; M2 ClearPath part number; M3 THK KR26 Z actuator; M4 roller feedthrough and overflow jar;
-    M5 HSS blank;
+    M5 HSS blank; M6 Pi HQ camera and 16 mm lens (Adafruit);
   - S9 rack, 20 mm guard frame and sliding door;
-  - B2 wipers and bore seals; R1 a note on the KF-16 blank.
+  - S7 the fixed Macurco OX-6 room O2 monitor that `safety-parts.csv` SP1 asks for, in place of the portable 18995T81;
+  - G4 a note only: still no gas-tight blower;
+  - B2 wipers and bore seals; R1 the KF-16 blank (estimate).
 - **Added:** F3 levelling mounts, F4 MIC-6 base plates, F5 optics bridge, H3 module fan (`heat.md`), A3 pneumatics,
   D1 dock and umbilicals, D2 UPS, X1 machining.
 - **Not touched:** C1-C6, S1-S4, H2, A1, L1-L7, S5, S6, T1 and T2, which are the electrical and optics lines.

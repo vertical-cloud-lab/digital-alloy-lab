@@ -74,7 +74,7 @@ Z mounting flange (bolted under the floor),process,6061-T6 aluminium,0.176,custo
 "Blade holder (6061, 18 x 31, quick-swap)",process,6061-T6 aluminium,0.17,custom (machined),M5,,,M5,,,custom,
 "Vacuum port adapter plate (304, 8 mm, FKM face O-ring)",process,304 stainless,0.167,custom (machined),G7,,,G1,,,custom,machined 304; not in analysis/out/machining/hours.csv
 "f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge)",process,6061-T6 aluminium,0.165,custom (machined),L6,,,F5,,,custom,
-Layer camera (Pi HQ + C-mount lens),process,mixed (vendor unit; mass from datasheet or estimate),0.15,bought,M6,,,M6,,,generic,
+Layer camera (Pi HQ + C-mount lens),process,mixed (vendor unit; mass from datasheet or estimate),0.15,bought,M6,,4561,M6,audit-prices.csv:M6,55.0,real part priced,
 Recoater ball nut (flange on the +x face),process,bearing / alloy steel,0.147,bought,M1,4566N401,4566N401,M1,mcmaster-parts.csv:M1 vendor-parts.csv:row5,244.44,real part priced,
 "Z lift arm (6061, 12 mm, pot-magnet coupling)",process,6061-T6 aluminium,0.141,custom (machined),M3,,,M3,,,custom,
 Z carriage,process,bearing / alloy steel,0.132,bought,M3,,KR2602A-0110-0-01A0,M3,audit-prices.csv:M3,883.0,real part priced,the carriage is part of the actuator

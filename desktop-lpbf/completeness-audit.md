@@ -14,9 +14,9 @@ against `bom.csv` and the part-number lists. At the start of the audit (bom.csv 
 - the BOM still described the tall model's welded box, 30 mm T-slot cabinet and ball-screw piston (G1, S9, M3), and
   the model tagged parts with lines that did not exist (D1, F3, F4, F5).
 
-**Now:** 116 priced, 4 real but unpriced, 23 generic, 65 custom, **2 missing** and **12 inconsistent**. The BOM total
-goes from **$39,440 – $112,978** to **$57,665 – $144,043**. $7,708 – $20,770 of the rise is line X1, the machining no
-line costed before. Without X1 the total is $49,957 – $123,273.
+**Now:** 117 priced, 4 real but unpriced, 22 generic, 65 custom, **2 missing** and **12 inconsistent**. The BOM total
+goes from **$39,440 – $112,978** to **$57,941 – $144,841**. $7,708 – $20,770 of the rise is line X1, the machining no
+line costed before. Without X1 the total is $50,233 – $124,071.
 
 ## How it was checked
 
@@ -107,9 +107,11 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
   - G2 dry scroll pump;
   - G7 Pirani, 316 relief and SAE-4 adapters; G8 seals from `seal-parts.csv`; G9 Vaisala DMT143;
   - M1 Ferrotec feedthrough; M2 ClearPath part number; M3 THK KR26 Z actuator; M4 roller feedthrough and overflow jar;
-    M5 HSS blank;
+    M5 HSS blank; M6 Pi HQ camera and 16 mm lens (Adafruit);
   - S9 rack, 20 mm guard frame and sliding door;
-  - B2 wipers and bore seals; R1 a note on the KF-16 blank.
+  - S7 the fixed Macurco OX-6 room O2 monitor that `safety-parts.csv` SP1 asks for, in place of the portable 18995T81;
+  - G4 a note only: still no gas-tight blower;
+  - B2 wipers and bore seals; R1 the KF-16 blank (estimate).
 - **Added:** F3 levelling mounts, F4 MIC-6 base plates, F5 optics bridge, H3 module fan (`heat.md`), A3 pneumatics,
   D1 dock and umbilicals, D2 UPS, X1 machining.
 - **Not touched:** C1-C6, S1-S4, H2, A1, L1-L7, S5, S6, T1 and T2, which are the electrical and optics lines.
@@ -125,16 +127,16 @@ python desktop-lpbf/analysis/audit/completeness.py --dump-tags SNAPSHOT_REPO   #
 
 | Status | Before (bom.csv at the start of this audit) | Now |
 |---|---|---|
-| real part priced | 87 | 116 |
-| real part unpriced | 2 | 4 |
-| generic | 8 | 23 |
+| real part priced | 87 | 117 |
+| real part unpriced | 3 | 4 |
+| generic | 7 | 22 |
 | custom | 26 | 65 |
 | missing from BOM | 70 | 2 |
 | inconsistent | 29 | 12 |
 | excluded | 1 | 1 |
 | **total** | 223 | 223 |
 
-Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total now $57,665 - $144,043. Extra purchase lists read: none.
+Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total now $57,941 - $144,841. Extra purchase lists read: none.
 
 
 ## BOM lines this audit changed (generated from [`analysis/out/audit/bom_before.csv`](analysis/out/audit/bom_before.csv), the BOM at the start)
@@ -146,23 +148,26 @@ Model tags with no bom.csv line: RA1, RA2, RA3, RA4, RA5, RA6, RA7. BOM total no
 | M3 | Z stage (less servo): integrated actuator under the floor | 752 – 852 | 923 – 1,113 | THK KR2602A-0110-0-01A0 KR26 actuator, 2 mm lead, 110 mm stroke (Oriental Motor, a THK reseller: $883.00); GT2/HTD belt and two pulleys; custom Z flange, bel... |
 | M4 | Metering base, roller drive and overflow | 282 – 682 | 776 – 1,851 | McMaster 6627T91 NEMA 17 stepper; Ferrotec SSL-005-NN feedthrough (5 mm shaft; drawn); 5-to-5 mm coupling; custom metering base and roller; overflow jar from... |
 | M5 | Recoater blade cartridges | 127 – 527 | 275 – 675 | McMaster 2634T15 HSS flat stock (hard blade, the model's default) + 1187N14 3 mm silicone cord (compliant); custom quick-swap holders |
+| M6 | Layer camera + lighting | 100 – 300 | 152 – 242 | Raspberry Pi HQ camera (Adafruit 4561) + 16 mm C-mount lens (Adafruit 4562); oblique 24 V LED bar (not chosen) |
 | G1 | Process chamber: through-frame, floor plate, lid, door and their small parts | 2,435 – 6,435 | 1,133 – 1,833 | 6061-T651 plate 5-1/2 in. cut to 15 x 9.5 in. from a plate distributor (frame blank; McMaster stops at 4 in.), McMaster 89155K165 1 in. plate (floor), 89155K... |
 | G2 | Vacuum pump | 2,079 – 5,491 | 5,470 – 7,469 | Edwards nXDS6i dry scroll (A73501983; 0.02 mbar, 6.8 m3/h, 26.2 kg) + McMaster 3394N12 KF-25 inlet filter + 2 x 3497N23 KF-25 hose |
 | G7 | Valves / fittings / gauges | 3,281 – 3,781 | 3,680 – 3,980 | McMaster: 3861N11 0-15 psia + 5539N26 0-10 inH2O transmitters, 2 x 8077K237 24 V NC solenoids, 4123K45 KF-25 ball valve, 7833K76 needle valve, KF-25/40 alumi... |
 | G8 | Chamber, module and port seals | 16 – 16 | 231 – 291 | McMaster 96515K127 0.139 in. cord (10 ft), 96515K123 0.070 in. cord (3 ft), 16 packs of 9464K AS568 rings and 5267T786 port rings (seal-parts.csv), 9262N11 s... |
 | G9 | Dew-point / moisture sensor | 1,000 – 2,500 | 1,868 – 2,282 | Vaisala DMT143 (Selectum, a Vaisala distributor: $2,281.70) |
+| S7 | Room O2-deficiency monitor | 459 – 459 | 663 – 1,275 | Macurco OX-6 fixed O2 monitor (0-25 % O2, 4-20 mA, 2 relays, LED): $663 (Kele, search extract; list $1,275) |
 | S9 | Rack, guard frame, guard panels and sliding guard door | 2,009 – 2,309 | 1,583 – 1,833 | McMaster 7648K62 steel 19 in. cabinet (10U inside, 495 x 533 x 622 mm) + 7648K69 back panel; 20 mm T-slot 5537T101 x 4 (8 ft), corner brackets 5537T935 x 24,... |
 | F3 | Levelling mounts (process and gas modules) | new line | 61 – 61 | McMaster 5537T983 |
 | F4 | Module base plates (process and gas) | new line | 1,349 – 1,499 | McMaster 86825K49 5/8 in. MIC-6, 24 x 72 in. (one sheet nests both plates) |
 | F5 | Optics bridge, posts and beam-path mounts | new line | 796 – 896 | McMaster 89155K86 (bridge), 6546K31 (posts); 3/8 in. 6061 offcuts for the riser, ring and aperture |
 | H3 | Module cooling fan under the floor | new line | 44 – 74 | McMaster 1939K12 |
 | B2 | Module seals, clamping and Z coupling | 81 – 218 | 111 – 318 | McMaster 9464K982, 95966A705 + 91065A610, 91732A782, 5679K95, 89095K23, 6435K35; 2-238 FKM (same family as 9464K367, not fetched) |
+| R1 | Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters | 473 – 1,273 | 493 – 1,313 | McMaster 8983K56 sheet, 8969T3 springs, 85015A47 plungers |
 | A3 | Pneumatic door drive and latch actuators, valves and air prep; robot handles and tags | new line | 970 – 1,120 | SMC CDRQ2BS20-180 rotary actuator, 2 x CDQ2B20-15DZ-F7PS cylinders, SS5Y3-45FD-05U-N7 manifold + 2 x SY3140-5LOZ valves, 4 x AS2201F-01-06S speed controllers... |
 | D1 | Tray dock (tray half) and umbilicals | new line | 1,728 – 5,628 | Staubli CombiTac (frame, housing, power, signal, air, fluid modules: configurator or sales office, no public price); 1/4 in. 316 tube for the argon line; 1-1... |
 | D2 | UPS (2U, in the rack) | new line | 1,138 – 2,707 | Eaton 5PX1500RTG2 (1440 VA / 1440 W, line-interactive; CDW $1,137.99) |
 | X1 | Machining and fabrication of the custom parts not costed elsewhere | new line | 7,708 – 20,770 | BYU ME Prototyping Lab (Haas VF-4 + HRT210) or a job shop |
 
-BOM total: $39,440 – $112,978 before, $57,665 – $144,043 now.
+BOM total: $39,440 – $112,978 before, $57,941 – $144,841 now.
 
 
 ## Every model part (generated; also in [`analysis/out/audit/model_vs_bom.csv`](analysis/out/audit/model_vs_bom.csv))
@@ -205,7 +210,6 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | generic | Ø2 in. fused-silica window, 8 mm, AR 1064 | bought | L7 | – | L7 names a Ø1 in. Thorlabs WG41050-C; the model's Ø2 in. x 8 mm window has no part number |
 | generic | Recoater shaft coupling (clamp type, 6 to 8 mm, in the wall bore) | bought | M1 | – |  |
 | generic | Roller drive coupling (5 mm to 5 mm) | bought | M4 | – |  |
-| generic | Layer camera (Pi HQ + C-mount lens) | bought | M6 | – |  |
 | generic | Layer-light LED bar | bought | M6 | – |  |
 | generic | Side reservoir port (KF-16 flange machined in the 6061 base, blanked; reserved for a >= 500 ... | bought | R1 | – | KF-16 blank: no part number |
 | real part unpriced | Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange) | bought | G8 | 2-014 |  |
@@ -279,6 +283,7 @@ Fasteners (tag `fastener`, all McMaster and all in `fasteners.csv` / line FX) ar
 | real part priced | Dosing stepper (NEMA 17) | bought | M4 | 6627T91 |  |
 | real part priced | Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank) | bought | M4 | 4518K42 |  |
 | real part priced | HSS recoater blade (1.5 mm, wide nose) | bought | M5 | 2634T15 9011K104 | cut from M2 HSS sheet |
+| real part priced | Layer camera (Pi HQ + C-mount lens) | bought | M6 | 4561 |  |
 | real part priced | Guard-locking door switch (Omron D4JL) | bought | S2 | D4JL-4NFA-C5-NPT |  |
 | real part priced | E-stop | bought | S3 | XA1E-BV3U02-R |  |
 | real part priced | Emission indicator | bought | S4 | 7545K316 |  |
@@ -422,7 +427,7 @@ Most of these are expected: stock for the custom parts (a plate or bar has no pa
 | File | Rows with no model part |
 |---|---|
 | assembly-tooling.csv | 26 |
-| audit-prices.csv | 24 |
+| audit-prices.csv | 25 |
 | fasteners.csv | 3 |
 | mcmaster-parts.csv | 43 |
 | options-mcmaster.csv | 18 |

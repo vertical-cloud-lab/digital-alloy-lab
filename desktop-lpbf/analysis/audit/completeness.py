@@ -117,7 +117,7 @@ MAP = [
     (r"^Reservoir M \(|^Reservoir M shutter|^Reservoir M lid with", "R1", r"reservoir", "custom", [], ""),
     (r"^Reservoir M powder", "", "", "excluded", [], "powder feedstock, not a machine part"),
     (r"^Load cell \(single-point", "A1", r"ALLUE3", "bought", ["ALLUE3"], ""),
-    (r"^Layer camera \(Pi HQ", "M6", r"HQ camera", "bought", ["PI-HQ"], ""),
+    (r"^Layer camera \(Pi HQ", "M6", r"HQ camera", "bought", ["4561"], ""),
     (r"^Camera window \(Ø1 in\.", "M6", r"camera window|blocking", "generic", [], "no BOM line has a Ø1 in. window with a 1070 nm blocking coating"),
     (r"^Pressure transducer \(7/16-20", "G7", r"3861N11", "bought", ["3861N11"], ""),
     (r"^Module-cooling fan", "H3", r"fan", "bought", ["1939K12"], ""),

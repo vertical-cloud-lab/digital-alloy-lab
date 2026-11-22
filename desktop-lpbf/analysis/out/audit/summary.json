@@ -2,9 +2,9 @@
  "bom": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/desktop-lpbf/bom.csv",
  "parts": 223,
  "by_status": {
-  "real part priced": 116,
+  "real part priced": 117,
   "real part unpriced": 4,
-  "generic": 23,
+  "generic": 22,
   "custom": 65,
   "missing from BOM": 2,
   "inconsistent": 12,
@@ -48,8 +48,8 @@
   "RA7"
  ],
  "bom_total_usd": [
-  57665,
-  144043
+  57941,
+  144841
  ],
  "extra": []
 }
