@@ -1,7 +1,7 @@
 """Export every custom part of the low-profile desktop LPBF (issue #260, PR #266) for outsourcing quotes.
 
-For each part render_build.kind() calls 'stock' (machined) or 'sheet' (cut, bent, welded), and for the printed robot
-assembly fixtures in analysis/out/assembly/tooling/, this writes:
+For each part render_build.kind() calls 'stock' (machined) or 'sheet' (cut, bent, welded), and for the robot
+assembly tooling in analysis/out/assembly/tooling/, this writes:
   <out>/<slug>.step          one solid per distinct piece, in mm, moved so its bounding box starts at the origin
   <out>/<slug>.dxf           for flat profile parts only (a plate whose through-profile times its thickness is the
                              part's volume within 10 %): the through-profile (outline and through holes), 1:1 in mm
@@ -221,11 +221,11 @@ def main():
         dst = out / f"tooling_{f.name}"
         shutil.copyfile(f, dst)
         rows.append(dict(part=f"Robot assembly fixture {f.stem} (analysis/out/assembly/tooling)", slug=f"tooling_{f.stem}",
-                         file=dst.stem, kind="printed", material="PETG / PLA (printed)", stock="filament",
+                         file=dst.stem, kind="printed", material="see assembly-tooling.csv", stock="see assembly-tooling.csv",
                          qty_per_machine=1, pieces_in_model=len(shp.Solids()),
                          envelope_mm=" x ".join(f"{x:.1f}" for x in sorted((bb.xlen, bb.ylen, bb.zlen), reverse=True)),
                          volume_cm3=round(shp.Volume() / 1000.0, 2), mass_kg=round(shp.Volume() * 1.27e-6, 3),
-                         flat_profile=False, thickness_mm="", process="print (FDM)", holes="", critical="", files=dst.name))
+                         flat_profile=False, thickness_mm="", process="robot assembly tooling: lathe, plate, tube or print (assembly-tooling.csv C1-C9)", holes="", critical="", files=dst.name))
     (out / "parts.json").write_text(json.dumps(dict(module=a.module, cad=str(cad), built_utc=time.strftime("%Y-%m-%dT%H:%MZ", time.gmtime()),
                                                     parts=rows), indent=1))
     with open(out / "parts.csv", "w", newline="") as fh:
