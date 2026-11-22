@@ -39,7 +39,7 @@ drawn in the model ([`io_check.md`](analysis/out/electrical/io_check.md)). The o
    box PB1 beside the rack (§1).
 2. **The 3U DIN drawer cannot hold the controls.** A safety controller with enough inputs (Banner SC26/XS26) stands 129 mm
    off its rail, and the 480 W DIN supplies 128.5 mm; a 3U drawer has ~120 mm clear. Make it **4U and the rack 12U (560 mm,
-   still under the machine's 564 mm)**, and move the power parts to PB1 ([panels.png](analysis/out/electrical/panels.png)).
+   still under the process module's 581.2 mm)**, and move the power parts to PB1 ([panels.png](analysis/out/electrical/panels.png)).
 3. **The drawer would cook without a fan:** 72-147 W in a closed 3U box is 51-104 K above the air around it. With the power
    parts in PB1 (with its own 27 CFM filter fan) and an 80 mm fan in the drawer, the controls stay ≤ 10 K above ambient; in the Shuttle's worst case (43 °C, heat.md) that is
    53 °C against the safety controller's 55 °C ([`power.md`](analysis/out/electrical/power.md) §4).
