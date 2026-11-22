@@ -8,10 +8,11 @@ things like custom machining, screwing things together, etc.)".
 with the M50 module and reservoir M) into [`cad/img/sequence/`](cad/img/sequence/):
 
 - one GIF per chapter (the long ones split into parts of ≤ 200 frames, 720 px wide, ~9 frames/s);
-- [`build.mp4`](cad/img/sequence/build.mp4): the whole run in one video (880 × 540, about 3 min 20 s since 2026-11-20 evening). Download it to play it: GitHub
-  plays videos inline only when they are uploaded as comment attachments. The version re-rendered with the real fasteners
-  (59df6d6) is also on the lab's YouTube channel, with chapters: [youtu.be/ZGwjNoBWEmw](https://youtu.be/ZGwjNoBWEmw)
-  (uploaded 2026-11-19);
+- [`build.mp4`](cad/img/sequence/build.mp4): the whole run in one video (880 × 540, 3 min 19 s since 2026-11-20 evening). Download it to play it: GitHub
+  plays videos inline only when they are uploaded as comment attachments. **This version (2f9ae4a) is on the lab's YouTube
+  channel, with 11 chapters: [youtu.be/13vLrdFv0to](https://youtu.be/13vLrdFv0to)** (uploaded 2026-11-22, public,
+  subscribers not notified). The version re-rendered with the real fasteners (59df6d6) is
+  [youtu.be/ZGwjNoBWEmw](https://youtu.be/ZGwjNoBWEmw) (uploaded 2026-11-19);
 - [`build-sheet.png`](cad/img/sequence/build-sheet.png): three key frames from each chapter.
 
 **Re-rendered 2026-11-22 on the model as of c2df027,** before the YouTube upload of this version:
