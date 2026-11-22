@@ -43,7 +43,7 @@ def single_line():
     box(ax, 0.3, 18.6, 3.6, 2.6, "Lab panel\n208Y/120 V\n30 A 2-pole breaker\n(byu-vcl PR 318 dock)", fc="#fdecea", fs=7.5)
     box(ax, 4.5, 18.6, 3.6, 2.6, "Tray dock\nHarting Han-Modular\ndocking frame:\nHan C 40 A L1 L2 N PE (PE leads),\nRJ45, 12-pin signal, air", fc="#fff7e0", fs=6.5)
     line(ax, [(3.9, 19.9), (4.5, 19.9)], C_AC, 2.5)
-    box(ax, 8.8, 18.6, 3.8, 2.6, "PB1 power box (left of the rack)\nQ0 main disconnect, 3P 40 A,\nlockable (ABB OT40F3 + OHB45J6)\nSCCR: see §1.3", fc="#fdecea", fs=5.8, bold=False)
+    box(ax, 8.8, 18.6, 3.8, 2.6, "PB1 power box (left of the rack)\nQ0 main disconnect, 3P 30 A,\nUL 98, lockable (Socomec 22013003 + 147E1111)\nSCCR: see §1.3", fc="#fdecea", fs=5.8, bold=False)
     line(ax, [(8.1, 19.9), (8.8, 19.9)], C_AC, 2.5)
     ax.text(4.6, 18.1, "dock -> PB1: 10 AWG, 2.7 m along the back duct", fontsize=6, color=C_AC)
     # bus
@@ -122,8 +122,8 @@ def interlock():
         y -= 1.05
     box(ax, 11.0, 1.0, 5.6, 19.0, "Banner XS26-2\n+ XS16si (16 safety inputs)\n+ XS2so (2 safety outputs)\n\n26 + 16 inputs\n4 + 2 safety outputs\n(PNP OSSD, 0.5 A each)\n\nTest pulses on the\ninput pairs, 0.5 s\ndiscrepancy check,\nmanual reset after\nany trip or power loss\n(21 CFR 1040.10(f)(10))\n\nStatus to the PLC\nover Ethernet\n(XS26-2E) or 4\nconvertible outputs", fc="#fdf2e9", ec=C_SAFE, fs=8, bold=False, lw=1.8)
     outs = [
-        (18.6, "O1 -> K4 force-guided relay", "IPG interlock channel 1 (dry contact, pins 1-4 in the 2012 YLR guide)"),
-        (16.6, "O2 -> K5 force-guided relay", "IPG interlock channel 2 (pins 2-3); 500 ms laser response"),
+        (18.6, "O1 -> K4 (mirror contacts)", "IPG interlock channel 1 (dry contact, pins 1-4 in the 2012 YLR guide)"),
+        (16.6, "O2 -> K5 (mirror contacts)", "IPG interlock channel 2 (pins 2-3); 500 ms laser response"),
         (14.6, "K4 + K5 NO in series", "shutter coil (power to open, spring closed, ~20-50 ms) <- RTC6/PLC request; emission lamps"),
         (12.6, "O3 -> K3A, O4 -> K3B", "48 V servo bus, two contactors in series (no STO on ClearPath-SD)"),
         (10.6, "O5 (XS2so) -> K1", "heater 24 V, in series with K2 (CN708, hard-wired) and the SSR"),
@@ -168,15 +168,15 @@ def panels():
         ax.text(W / 2, yd + 11, "wire duct 25 x 25", fontsize=5, ha="center", va="center", color="#3d85c6")
     x = 14
     row1 = [(45, 110, "XS26-2\n45x110x129", "#f9cb9c"), (22.5, 110, "XS16si", "#f9cb9c"), (22.5, 110, "XS2so ~", "#f9cb9c"),
-            (55, 100, "P1-540\nCPU ~", "#b6d7a8")] + [(28, 100, n, "#b6d7a8") for n in ("16ND3", "16ND3", "16TD2", "16TD2", "04THM", "08ADL", "04DAL")]
+            (38.4, 95.4, "P1-540\nCPU", "#b6d7a8")] + [(20.6, 93.6, n, "#b6d7a8") for n in ("16ND3", "16ND3", "16TD2", "16TD2", "04THM", "08ADL", "04DAL")]
     for w, h, lab, fc in row1:
         dev(ax, x, 76 - h / 2, w, h, lab, fc)
         x += w + 1
     ax.text(x + 2, 76, f"row 1: {x - 14:.0f} mm", fontsize=6, va="center")
     x = 14
     row2 = [(89, 127, "ClearCore\n(on DIN-MNT)\n127 x 89", "#a4c2f4"), (30, 100, "SureStep\nSTP-DRV ~", "#a4c2f4"),
-            (45, 68, "K3A\nDILM12", "#f6b26b"), (45, 68, "K3B\nDILM12", "#f6b26b"), (17.5, 90, "K4 ~", "#f6b26b"), (17.5, 90, "K5 ~", "#f6b26b"),
-            (30, 100, "switch\nSE2-SW8U ~", "#d5a6bd"), (36, 90, "CBMC E4\n36x90x98", "#ffe599"), (60, 60, "terminals\n(DN-T12 x 11)", "#eeeeee")]
+            (45, 68, "K3A\nCWBS9", "#f6b26b"), (45, 68, "K3B\nCWBS9", "#f6b26b"), (45, 68, "K4\nCWBS9", "#f6b26b"), (45, 68, "K5\nCWBS9", "#f6b26b"),
+            (30, 100, "switch\nSE3-SW8U ~", "#d5a6bd"), (36, 90, "CBMC E4\n36x90x98", "#ffe599")]
     for w, h, lab, fc in row2:
         dev(ax, x, 233 - h / 2, w, h, lab, fc)
         x += w + 1
@@ -214,9 +214,9 @@ def panels():
     ax3.add_patch(Rectangle((0, 0), PW, PH, fc="#f2f2f2", ec="k", lw=1.2))
     # top row: disconnect + breakers + contactors
     x = 10
-    top = [(35, 68, "Q0\nOT40F3", "#ea9999"), (36, 90, "Q1 2P\nD15 ~", "#ea9999"), (36, 90, "Q2 2P\nD15 ~", "#ea9999"),
+    top = [(35, 68, "Q0\nSIRCO M\n30 A", "#ea9999"), (36, 90, "Q1 2P\nD15 ~", "#ea9999"), (36, 90, "Q2 2P\nD15 ~", "#ea9999"),
            (18, 90, "Q3\nC15 ~", "#ea9999"), (18, 90, "Q4\nC6 ~", "#ea9999"), (45, 68, "KM0\nlaser ~", "#f6b26b"),
-           (45, 68, "KM1\npump ~", "#f6b26b"), (45, 68, "KM2 ~", "#f6b26b"), (45, 68, "K1\nDILM12", "#f6b26b"), (45, 68, "K2\nDILM12", "#f6b26b")]
+           (45, 68, "KM1\npump ~", "#f6b26b"), (45, 68, "KM2 ~", "#f6b26b"), (45, 68, "K1\nCWBS12", "#f6b26b"), (45, 68, "K2\nCWBS12", "#f6b26b")]
     for w, h, lab, fc in top:
         dev(ax3, x, 250 - h / 2, w, h, lab, fc)
         x += w + 2
@@ -232,7 +232,7 @@ def panels():
     ax3.add_patch(Rectangle((232, 10), 70, 55, fc="#cccccc", ec="k", lw=0.6))
     ax3.text(267, 37, "SSR D1D20 on\nHS151 heat sink\n(through the wall)", fontsize=5.5, ha="center", va="center")
     dev(ax3, 310, 10, 86, 55, "terminals, PE bar\nreceptacle for the\nUPS cord (backed)", "#eeeeee", rot=0)
-    ax3.text(PW / 2, -18, "door: CN708 (cutout 71 x 29), Q0 handle OHB45J6 on the front side wall, 120 mm filter fan + grille", fontsize=6.5, ha="center")
+    ax3.text(PW / 2, -18, "door: CN708 (cutout 71 x 29); Q0 handle Socomec 147E1111 on the front side wall; Fandis 120 mm filter fan + grille", fontsize=6.5, ha="center")
     ax3.set_xlim(-20, 430)
     ax3.set_ylim(-30, 330)
     ax3.set_aspect("equal")

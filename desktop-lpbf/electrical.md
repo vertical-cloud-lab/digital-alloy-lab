@@ -30,17 +30,17 @@ lab-built LPBF machines we found agree: the ones that made a board (DTU's Teensy
 scan card, and none put safety on it. A board is worth making only if the RTC6 is dropped for cost: a ~100 × 80 mm 4-layer
 Teensy carrier would cost about $50 in boards and assembly plus ~$60 of parts, and weeks of firmware and timing work (§5).
 
-**Thorough? Not yet, and these were the gaps.** Twenty-four of the 95 devices and signals have no bom.csv line and 37 are not
+**Thorough? Not yet, and these were the gaps.** Twenty of the 95 devices and signals have no bom.csv line and 37 are not
 drawn in the model ([`io_check.md`](analysis/out/electrical/io_check.md)). The ones that change the design:
 
-1. **There was no supply design.** No main disconnect, no branch protection, no UPS line in bom.csv (the model draws an Eaton
-   5PX1500RTG2), no 48 V servo supply, no place for the AC parts. Now: a lockable main disconnect and five branches in a power
+1. **There was no supply design.** No main disconnect, no branch protection, no 48 V servo supply, no place for the AC parts
+   (the UPS only got a bom.csv line, D2, today). Now: a lockable main disconnect and five branches in a power
    box PB1 beside the rack (§1).
 2. **The 3U DIN drawer cannot hold the controls.** A safety controller with enough inputs (Banner SC26/XS26) stands 129 mm
    off its rail, and the 480 W DIN supplies 128.5 mm; a 3U drawer has ~120 mm clear. Make it **4U and the rack 12U (560 mm,
    still under the machine's 564 mm)**, and move the power parts to PB1 ([panels.png](analysis/out/electrical/panels.png)).
 3. **The drawer would cook without a fan:** 72-147 W in a closed 3U box is 51-104 K above the air around it. With the power
-   parts in PB1 and a 27 CFM fan the controls stay ≤ 10 K above ambient; in the Shuttle's worst case (43 °C, heat.md) that is
+   parts in PB1 (with its own 27 CFM filter fan) and an 80 mm fan in the drawer, the controls stay ≤ 10 K above ambient; in the Shuttle's worst case (43 °C, heat.md) that is
    53 °C against the safety controller's 55 °C ([`power.md`](analysis/out/electrical/power.md) §4).
 4. **The galvo needs one 24 V (or 30 V) rail at ≤ 2.6-3 A, not ±15 V** (SCANLAB basiCube series data; the tray budget and
    Edison both assumed ±15 V).
@@ -56,15 +56,19 @@ drawn in the model ([`io_check.md`](analysis/out/electrical/io_check.md)). The o
 8. **The sensors on the lid cannot be wired to a Pi in the rack.** The Pi HQ camera's CSI ribbon and the NFC and load-cell
    boards' I2C/SPI want ≤ 0.5 m. Put the Pi 5 in a small box (PB2) on the process module.
 9. **The chamber has an LED bar inside it and no feedthrough for it.** Move it outside a window, or add a 2-pin KF16 feedthrough.
-10. **The rod-end connector is not real yet.** The drawn LEMO 1B misses the spec (seals.md). Real weld-in feedthroughs exist
-    for 3 type K pairs (Ø22.1 mm weld flange) and two 27 A copper pins (Ø19 mm sleeve), but not in a Ø24 mm rod end (§6).
+10. **The rod-end connector is not real yet.** The drawn LEMO 1B misses the spec (seals.md), and no catalogue part carries 3
+    type K pairs plus power. Six single-lead type K weld-ins (Ø6.27 mm sleeves) and one 4-pin 16 A copper weld-in (Ø12.62 mm)
+    do it, but need a rod-end face ~28-30 mm across, not 24 (§6).
 11. **Missing devices:** home and over-travel sensors on the recoater and Z, a guard-position sensor separate from the lock,
     two more E-stops, a chamber-at-ambient pressure switch, a Pirani gauge port, auto switches on the door actuator and latch
     cylinders, an air pressure switch, and a second plate-temperature channel for the door (electrical-io.csv).
 12. **Earth leakage ~8 mA (estimate).** Above 3.5 mA a plug-in machine needs reinforced protective earth: two PE contacts in
     the dock, and no 5 mA GFCI upstream (§8).
 
-**Electrical BOM:** see §10 for the total and the exact bom.csv changes.
+**Electrical BOM:** $11,359 in 94 lines ($1,177 of it estimates, $1,571 optional), not counting the RTC6 and the IPG cable
+(quotes). Against today's bom.csv it is **+$8.0k at the low end and +$7.7k at the high end** (§10): the safety controller (+$2.1k),
+the rod-end feedthroughs and thermocouple wiring (+$1.5k), the PLC (+$1.1k), the power box (+$0.9k) and the drawer (+$0.5k)
+are most of it; the guard lock gets cheaper (−$0.4k).
 
 ## 1. Architecture
 
@@ -79,9 +83,10 @@ priced equivalent is a Harting Han-Modular docking frame (floating frame $9.56, 
 L1, L2, N at ≥ 30 A, **two leading PE contacts**, an RJ45 module, a 12-pin signal module (tray docked ×2, E-stop loop through the
 dock, room-O2 relays ×2, VLM may move, robot signals) and the air line.
 
-**Main disconnect.** The dock is not a disconnecting means (NFPA 79; Edison r5 point 1). Q0 is a lockable 3-pole 40 A rotary
-switch at the front of PB1: ABB OT40F3 (UL 508, $75.05) with the OHB45J6 padlockable handle ($72.22) and a 105 mm shaft
-($4.12). Eaton's R5A3040U ($193.03, UL 508, SCCR 10/65 kA) is the alternative.
+**Main disconnect.** The dock is not a disconnecting means (NFPA 79; Edison r5 point 1). Q0 is a lockable 3-pole 30 A rotary
+switch at the front of PB1: Socomec SIRCO M Compact 22013003 (UL 98, 100 kA SCCR with 30 A class J fuses, $75) with the
+147E1111 red/yellow handle, padlockable in OFF ($27), and a 150 mm shaft ($7) (AutomationDirect, read 06:03Z). ABB OT40F3
+(UL 508, $75.05) + OHB45J6 handle ($72.22) and Eaton R5A3040U ($193.03, UL 508, SCCR 10/65 kA) are the alternatives.
 
 **PB1, the power box.** A 16 × 12 × 6 in steel NEMA 12 enclosure on the tray at the left end, beside the rack (the tray has
 223 mm free between the rack at x = −990 and the rim at x = −1213; not checked against the full model). It holds the
@@ -107,7 +112,7 @@ contactor KM0 that the PLC closes after the rest has started.
 ### 1.2 What the UPS carries, and the DC rails
 
 **UPS:** Eaton 5PX1500RTG2 (line-interactive, 1,440 VA / 1,440 W, 2U, 5-15P in, 8 × 5-15R; $1,137.99 at CDW, read 2026-11-22),
-drawn in the model but missing from bom.csv. PR 318 standardises on the Vertiv GXT5LI-1500 (online, Li-ion, $2,706.99); either
+in bom.csv as D2 (added 2026-11-22). PR 318 standardises on the Vertiv GXT5LI-1500 (online, Li-ion, $2,706.99); either
 works. A Network-M3 card ($462.99) lets the Pi start the power-cut sequence.
 
 | Rail | Supply (location) | Backed? | Loads | Protection |
@@ -171,10 +176,12 @@ K8DT, the module fan (heat.md), the chamber-wall and filter-cake thermocouples, 
 chamber-at-ambient pressure switch, a Pirani gauge (and a KF16 port for it), the argon shutoff at the dock, the exhaust flow
 switch, two E-stops, the guard-position sensor, the stack light and HOT lamp, PB1, PB2 and the Pi.
 
-**Devices with no bom.csv line** (24 rows): the UPS, the pneumatic valves and actuators (only in robot-tooling.csv), the axis
-home sensors, the contactors K1-K5, KM0-KM2, the K8DT, the module and cabinet fans, the guard-position sensor, the
-chamber-at-ambient switch, the Ethernet switch, the PLC, and the wall and cake thermocouples. They are in
-[`electrical-bom.csv`](electrical-bom.csv).
+**Devices with no bom.csv line** (20 rows): the axis home and over-travel sensors, the door actuator's auto switches, the
+drawbar cylinder and its switch, the air pressure switch and dump valve, the contactors K1-K5, the K8DT, the wall and cake
+thermocouples, the chamber-at-ambient switch, the guard-position sensor, the HOT lamp, the Ethernet switch and the cabinet fans.
+They are in [`electrical-bom.csv`](electrical-bom.csv). Since this note started, other work added bom.csv lines for the UPS (D2),
+the dock (D1), the pneumatics (A3), the module fan (H3) and a Pirani gauge (G7); electrical-bom.csv keeps its own picks for
+those as qty-0 alternatives so nothing is counted twice.
 
 ## 3. Controllers, and why
 
@@ -182,12 +189,12 @@ chamber-at-ambient switch, the Ethernet switch, the PLC, and the wall and cake t
 |---|---|---|---|---|
 | Scan and laser timing | **SCANLAB RTC6** (PCIe board in the 2U PC) | quote | laser on/off delays and skywriting in hardware, XY2-100, analog and gate outputs in step with the mirrors, Linux and Windows libraries; the same family as the scan head; used by the IFSW research platform (Edison r5) and GE's M2-Open (RTC5) | JCZ DLC2-M4 ($1,785, EZCAD3 SDK, BOM C1); Mesa 7I96S + LinuxCNC xy2mod ($149, needs a custom bitfile, Mesa forum); OPAL on a Teensy 4.0: "PRE ALPHA ... DO NOT USE THIS WITH OTHER LASERS THAN LASERPOINTERS" (README) |
 | Motion | **Teknic ClearCore CLCR-4-13** + DIN-MNT | $105 + $21 | four step/dir axes made for ClearPath (HLFB read-back), 13 I/O, Ethernet, C++ SDK; 127 × 89 × 25 mm | Klipper on the Pi (BOM C3), Duet 3 |
-| Stepper drive (dosing roller) | AutomationDirect SureStep STP-DRV-4035 class | not fetched | step/dir from ClearCore M-2, 24 V | – |
+| Stepper drive (dosing roller) | AutomationDirect SureStep STP-DRV-4830 (3 A/phase, 12-48 VDC) | $99 | step/dir from ClearCore M-2, 24 V; the STP-DRV-4035 is discontinued | – |
 | Process I/O and heater PI | **AutomationDirect Productivity1000**: P1-540 CPU + 2 × P1-16ND3 + 4 × P1-08TD2 + P1-04THM + P1-08ADL-1 + P1-04ADL-2 + P1-04DAL-2 | $237 + modules ≈ $1,000 | 24 V industrial I/O, a 4-channel 16-bit thermocouple module, 4-20 mA in, PID with time-proportioned outputs, Ethernet with Modbus TCP for the Python supervisor, 17-21 mm modules | CLICK PLUS C2-03CPU-2 ($277) + C0-04THM ($217); Arduino Opta and Pi HATs have no thermocouple module and aren't industrial I/O |
-| Safety | **Banner XS26-2 + XS16si + XS2so** | $1,093.01 + $464 + $370 | 42 safety inputs and 8 safety outputs (0.5-0.75 A) with test pulses and EDM; the logic in §4 needs 31 inputs and 6 outputs | SC26-2 ($904.01) has 26 inputs and is not expandable; Pilz PNOZ m B0 ($871.91, 20 inputs, 4 outputs at 2 A); the G9SE-201 in S1 has too few inputs (safety.md) |
-| Heater switching | DC SSR Crydom D1D20 (20 A, 100 mΩ max) on an HS151 heat sink | $93.36 + $49.32 | 10.4 A at up to 10.8 W; the D1D12 in H2 is a 12 A part | Crydom DRA1-CMXE100D10 DIN module ($107.20, 10 A: too close) |
+| Safety | **Banner XS26-2 + XS16si + XS2so**, with four WEG CWBS9-33-30C03 contactors (K3A, K3B, K4, K5; mirror contacts, $108 each) | $1,093.01 + $464 + $370 | 42 safety inputs and 8 safety outputs (0.5-0.75 A) with test pulses and EDM; the logic in §4 needs 31 inputs and 6 outputs | SC26-2 ($904.01) has 26 inputs and is not expandable; Pilz PNOZ m B0 ($871.91, 20 inputs, 4 outputs at 2 A); the G9SE-201 in S1 has too few inputs (safety.md) |
+| Heater switching | DC SSR Crydom D1D20 (20 A, 100 mΩ max) on an HS151 heat sink; K1 and K2 WEG CWBS12-33-30C03 safety contactors (mirror contacts, $120 each) | $93.36 + $49.32 + $240 | 10.4 A at up to 10.8 W; the D1D12 in H2 is a 12 A part | Crydom DRA1-CMXE100D10 DIN module ($107.20, 10 A: too close) |
 | Independent limit | DwyerOmega CN708, latching, on the limit TC → K2 | $204.60 (H2) | own sensor, own relay, manual reset | – |
-| Plate < 50 °C for the door | Omron K8DT-TH1CD on the edge TC | $240.25 | second, independent channel (with the PLC) for the guard unlock | the 67F bimetal of modules.md; SOLO SL4848-RR-D ($143, panel mount) |
+| Plate < 50 °C for the door | Omron K8DT-TH1CD on the edge TC | $240.25 | second, independent channel (with the PLC) for the guard unlock; it latches alarms by default (set it non-latching) and listed a 19-week lead time | the 67F bimetal of modules.md; SOLO SL4848-RR-D ($143, panel mount) |
 | Supervisor | Raspberry Pi 5 in PB2 | BOM C2 | recipe, state machine, logging, REST API; camera, NFC and load cell next to it | the scan PC (then the camera needs USB or GigE) |
 
 ## 4. Safety and interlock logic
@@ -239,7 +246,7 @@ permissive, so the mirrors are under control before emission and emission stops 
 | Laser modulation and timing | RTC6 LASERON + ANALOG OUT1; IPG takes "CMOS to 24 VDC" on its gate (2012 guide) | in the RTC6 | never on its own: it has to move in step with the mirrors |
 | Interlock logic | Banner XS26 safety controller | $1,927 | never: none of the lab-built machines put safety on a custom board (DTU used an ABB Pluto safety PLC) |
 | Thermocouple inputs | P1-04THM (4 ch, 16-bit) | $172 | never; MAX31856 breakouts ($17.50) are non-isolated, which matters with a grounded heater block |
-| Heater switching | D1D20 + HS151, two DILM12 contactors | $143 + contactors | never |
+| Heater switching | D1D20 + HS151, two WEG CWBS12 contactors | $383 | never |
 | Feedthrough wiring | the feedthroughs' own plugs; SMPW-K type K connectors; M12 L-coded cordsets ($51.72 + $65.36, H1) | – | never |
 | Sensor breakouts on the lid | Pi 5 + Adafruit PN532 ($39.95) + SparkFun NAU7802 ($5.95) with Qwiic cables in PB2 | ~$50 | optional: a Pi HAT with the NFC chip, the load-cell ADC, 24 V → 5 V and M12 jacks would be tidier; ~$60-80 at JLCPCB with assembly; not needed |
 | Laser and RTC6 connectors | AutomationDirect ZL-RTB-DB15 ($48.50) + ZL-DB15-CBL-2 ($16.50); the IPG plug is a 24-pin circular, not a D-sub (2012 guide): use IPG's cable or plug on DIN terminals | ~$65 | never |
@@ -265,7 +272,7 @@ control**, and every one that described safety kept it off the custom electronic
 
 | Penetration | Pins | Where | Product |
 |---|---|---|---|
-| **FT1, module rod end** (×3 modules) | 2 power (10.4 A at 24 V on L75) + 3 type K pairs (control, edge, limit) | the rod end below the gland plate; the leads run down the hollow rod, which is open to the chamber gas | **Solid Sealing Technology FA23474** (3 Chromel/Alumel pairs, weld flange Ø22.1 mm, 304L or 316L, −269 to 450 °C, $265.50) + **FA10594** (2 × 1.27 mm Cu, 27 A, 3 kV, weld sleeve Ø18.97 mm, $57.50) |
+| **FT1, module rod end** (×3 modules) | 2 power (10.4 A at 24 V on L75) + 3 type K pairs (control, edge, limit) | the rod end below the gland plate; the leads run down the hollow rod, which is open to the chamber gas | **Solid Sealing Technology: 3 × FA11631 (single Chromel lead) + 3 × FA11632 (single Alumel lead), Ø6.27 × 38 mm weld sleeves, −269 to 450 °C, $44 each; 1 × FA10443 (4 × 0.81 mm Cu, 16 A per pin, 2 kV, Ø12.62 × 24 mm sleeve, $92), two pins per pole** = $356 per module |
 | FT2, LED bar (if it stays inside) | 2 power | chamber wall | SST FA11643 (2 × 27 A Cu on KF16, $108); better: move the LED bar outside a window |
 | Plate-up through-beam | optical | two M6 fibre heads in the side walls, O-ring under each head | whether the Omron E32-T61-S fibre leaks along its sheath is not known; ask Omron or use a vacuum fibre feedthrough |
 | O₂ sample, pressure transducer, Pirani | – | gas and KF ports | the instruments seal on their own ports; the Pirani needs a KF16 port the model doesn't have |
@@ -274,13 +281,20 @@ control**, and every one that described safety kept it off the custom electronic
   error whenever the two ends of the pin differ in temperature (Edison r5 point 4 agrees).
 - **Copper power pins.** Ni-Fe glass-sealed pins (Accu-Glass Sub-C class, 1.02 mm) carry 10.4 A at ~1.4 W per pin in vacuum
   with no convection ([`power.md`](analysis/out/electrical/power.md) §6); two per pole halves the current but still sits above
-  their 5 A rating. The FA10594's 27 A copper pins avoid it.
-- **Alternatives:** MDC 9391007 (1 TC pair + 2 × 15 A Cu, 3/4 in. weld sleeve, $212.52) with MDC 9311009 ($207.90); Accu-Glass
+  their 5 A rating. The FA10443's copper pins (16 A each) at 5.2 A avoid it.
+- **No single catalogue part carries 3 type K pairs and power** (combined parts stop at 1 pair at Solid Sealing, 2 pairs at MDC
+  on a 2.75 in. CF flange or Accu-Glass on KF50; research notes A2, 06:12Z). Hence separate parts.
+- **Plug and flange limits:** Solid Sealing nylon plugs 218 °C, PEEK vacuum plugs 200 °C, SMPW connectors 180 °C, KF O-ring
+  mounts 150 °C: all fine at the ~57-70 °C rod end (thermal.md), none usable at the heater block.
+- **Alternatives:** two KF16 ports on a rod-end block: SST FA14198 (3 type K pairs on KF16, $309.50) + FA11643 (2 × 27 A Cu on
+  KF16, $108), $417.50; or FA23474 (3 pairs, Ø22.1 mm weld flange, $265.50 without plug) + FA10594 (2 × 27 A, Ø18.97 mm sleeve,
+  $57.50) on a ~Ø40 block; MDC 9391007 (1 TC pair + 2 × 15 A Cu, 3/4 in. weld sleeve, $212.52) with MDC 9311009 ($207.90; MDC
+  parts showed 84-day lead times); Accu-Glass
   100791 (Thermo-D on KF40, $426) or 100801 (2 TC pairs + 2 power on KF50, $463, options-vendors.csv); MPF A0408-2-QF (2 type K
   pairs on KF16, $361.63, seal-parts.csv).
-- **Model patch request (modules_low.py):** a weld-in pair needs a rod-end block about Ø40-45 mm with two radial bosses for the
-  Ø22.1 and Ø19 mm sleeves, in place of today's Ø24 rod end with a Ø12 boss. Check it against the Z arm, the pot magnet and
-  the module's swap path. Not drawn here.
+- **Model patch request (modules_low.py):** the compact route needs a rod-end face ~28-30 mm across for six Ø6.27 mm and one
+  Ø12.62 mm sleeve (a rough layout, not drawn), in place of today's Ø24 rod end with a Ø12 boss. Check it against the Z arm,
+  the pot magnet and the module's swap path.
 - **Insulation inside:** the heater stack runs at 200-240 °C, the rod at ≤ 120 °C. Use the cartridges' own leads (fibreglass
   and PTFE on 3714N36), fibreglass-sheathed thermocouples (3871K606, 900 °F cable), and Kapton-insulated silver-plated copper
   hook-up wire (Accu-Glass 100712 class, 250 °C bakeable, 1e-10 Torr) where a joint is needed. No PVC or silicone in the hot
@@ -306,7 +320,9 @@ control**, and every one that described safety kept it off the custom electronic
 - **Signals:** thermocouples in shielded type K extension (TE THMWK-UL-20-1S-F-1, FEP, PLTC, $1.59/ft) with SMPW-K mini
   connectors; 4-20 mA in shielded twisted pairs; shields grounded at the drawer end only, at one star point. Keep thermocouple,
   4-20 mA and XY2-100 cables in a separate duct from the servo and 120/208 V cables (NFPA 79 / IEC 60204-1 separation; Edison
-  r5 point 5). XY2-100 on SCANLAB's shielded cable, 2-3 m (PC to head is ~1.3 m in the model). The laser's analog input is
+  r5 point 5). Scanner link on SCANLAB's shielded cable, 2-3 m (PC to head is ~1.3 m in the model): the RTC6 speaks SCANLAB's
+  SL2-100 natively and needs an optional converter for XY2-100; the basiCube takes both, so run SL2-100 (A2 notes, from the two
+  datasheets; neither gives a maximum cable length: ask SCANLAB). The laser's analog input is
   single-ended: short, shielded, and grounded at the laser end.
 - **Moving parts:** the Z axis moves the rod end 50 mm (slowly, once per layer) and drops 45 mm at a module swap: a 0.3 m
   service loop in PTFE-jacketed cable, or a short igus micro chain. At a swap the M12 L-coded and SMPW-K plugs at the rod end
@@ -327,7 +343,7 @@ control**, and every one that described safety kept it off the custom electronic
   anodized bore, low-profile.md), lid, door, filter housing, cyclone, reservoir dock, drawer, pump and exchange pail to the PE
   bar. Check each to ≤ 0.1 Ω (the lab's SOP) with a 4-wire milliohm meter; NFPA 77 asks ≤ 10 Ω for all-metal paths (research
   notes B7). ESD wrist-strap point on PB1 and the drawer.
-- **Class II, Group E.** Aluminium is a Group E dust; where it "may be present" in hazardous quantities the location is
+- **Class II, Group E.** (NFPA 484's 2022 edition was its last; it is now part of NFPA 660.) Aluminium is a Group E dust; where it "may be present" in hazardous quantities the location is
   Class II, Division 1, and NEC 502.100(A)(3) bars transformers and capacitors there (research notes B7; Edison r5 §2). So
   the plan is to keep the electronics out of any powder zone, not to rate them for it:
   - inside the chamber there are only the heaters, thermocouples and cutoff (sealed in the module) and, as drawn, the LED bar
@@ -353,7 +369,7 @@ control**, and every one that described safety kept it off the custom electronic
 - **Dense builds:** with no dwell the 235 °C limit tripped in 3-12 min in every module at the end of the stroke. With a dwell
   at +3 K the plate stays at ~205 °C (band 5-8 K) and the build takes 22 % (S25), 54 % (M50) and 51 % (L75) longer. **The dwell
   is a requirement on the scan software, not an option.** The module fan of heat.md cuts it.
-- **SSR fails shorted** (full power from 200 °C): the limit trips after 35-51 s on M50 and 48-51 s on L75, with the plate
+- **SSR fails shorted** (full power from 200 °C): the limit trips after 35-40 s on M50 and 48-51 s on L75, with the plate
   ≤ 227 °C and the seals unchanged. With no protection at all the plate would reach 464-532 °C at the end of the stroke, the rod
   gland 231-250 °C (FKM 200 °C) and the magnet face 102-109 °C. On S25 the block reaches 240 °C in 4-5 s, before the limit
   thermocouple (2 s lag assumed) catches it. **Limit set point 235 °C**; replace the RT240 (holding 205 °C).
@@ -372,7 +388,35 @@ balance).
 ## 10. Electrical BOM
 
 [`electrical-bom.csv`](electrical-bom.csv) lists each part with its price, URL and fetch time, and the bom.csv line it
-replaces or adds to. The total and the proposed bom.csv lines are in §10.1 below.
+replaces or adds to ([`bom_summary.md`](analysis/out/electrical/bom_summary.md), [`bom_proposed_rows.csv`](analysis/out/electrical/bom_proposed_rows.csv)).
+**94 lines, $11,358.57** (of which $1,177.00 are estimates and $1,570.99 optional). Quotes not included: SCANLAB RTC6, IPG interface cable.
+
+### 10.1 Proposed bom.csv rows (line totals, USD)
+
+| id | change | old low / high | new low / high | delta low |
+|---|---|---|---|---|
+| C1 | adds the RTC6 laser-connector breakout (ZL-RTB-DB15 + ZL-DB15-CBL-2) | 60.00 / 6,000.00 | 125.00 / 6,065.00 | +65.00 |
+| C3 | Teknic ClearCore CLCR-4-13 + DIN-MNT + 2 ClearPath cable sets + SureStep STP-DRV-4830 | 150.00 / 400.00 | 319.00 / 400.00 | +169.00 |
+| C4 | Mean Well SDR-240-24 + SDR-240-48 + HDR-100-24 + DDR-30G-5 + Phoenix CBMC E4 (high: Teknic IPC-5 for the servo bus) | 151.10 / 151.10 | 404.71 / 553.33 | +253.61 |
+| C5 | AutomationDirect Productivity1000: P1-540 + 2 P1-16ND3 + 4 P1-08TD2 + P1-04THM + P1-08ADL-1 + P1-04ADL-2 + P1-04DAL-2 + terminal blocks (replaces 2 MAX31856 boards) | 35.00 / 35.00 | 1,092.50 / 1,092.50 | +1,057.50 |
+| C6 | 4U rack drawer (Middle Atlantic UD class) + PB2 box + 80 mm fan + DIN terminals, rail, duct, ferrules (replaces the 10 x 12 x 6 in enclosure) | 275.10 / 275.10 | 814.90 / 814.90 | +539.80 |
+| S1 | Banner XS26-2 + XS16si + XS2so + SC-USB2 + 4 WEG CWBS9-33-30C03 (K3A, K3B, K4, K5) | 275.29 / 275.29 | 2,376.01 / 2,376.01 | +2,100.72 |
+| S2 | IDEC HS5L-VC44M-G spring lock + HS9Z-A51 actuator + IDEC HS6B-12B05 guard-position switch (replaces Omron D4JL) | 803.42 / 803.42 | 389.24 / 389.24 | -414.18 |
+| S3 | qty 2 -> 4: two more E-stops IDEC XW1E-BV402M-R with enclosures (guard front, gas module); line total shown | 153.34 / 153.34 | 276.58 / 276.58 | +123.24 |
+| S4 | adds an amber HOT lamp ECX2053-24L | 367.15 / 467.15 | 373.40 / 473.40 | +6.25 |
+| H1 | rod-end weld-in feedthroughs (per module 3 SST FA11631 + 3 FA11632 single type K leads + 1 FA10443 4-pin 16 A Cu), Kapton wire, shielded type K extension, SMPW-K, wall and cake TCs; drops the $50 potting and the $1,389 KF50 high option | 2,241.00 / 4,100.00 | 3,759.94 / 4,279.94 | +1,518.94 |
+| H2 | Mean Well LRS-350-24 + Crydom D1D20 + HS151 + 2 WEG CWBS12-33-30C03 (K1, K2) + DwyerOmega CN708 + Omron K8DT-TH1CD | 324.63 / 770.00 | 862.34 / 862.34 | +537.71 |
+| A1 | adds 12 Murrelektronik M12 PUR shielded cordsets, 5 m | 1,131.82 / 1,600.00 | 1,527.82 / 1,996.00 | +396.00 |
+| A3 | adds a Metal Work 5U11S101 air pressure switch, a NITRA ARV-21 lockable dump valve and two D-M9B switches on the rotary actuator | 969.73 / 1,119.73 | 1,139.43 / 1,289.43 | +169.70 |
+| E1 | NEW Power box PB1: Socomec 22013003 UL 98 disconnect + 147E1111 handle + shaft, 6 Eaton FAZ UL 489 MCBs, 3 WEG CWB9-11-30C03 contactors, overload, 16 x 12 x 6 in NEMA 12 enclosure, Fandis FF12D24UN filter fan | 0.00 / 0.00 | 925.00 / 925.00 | +925.00 |
+| E2 | NEW AutomationDirect STRIDE SE3-SW8U Ethernet switch | 0.00 / 0.00 | 124.00 / 124.00 | +124.00 |
+| E3 | NEW 4 inductive M8 home/over-travel sensors + a +/-5 mbar chamber-at-ambient pressure switch (estimates) | 0.00 / 0.00 | 200.00 / 200.00 | +200.00 |
+| E4 | NEW bulk wire, braided bonding straps, ESD wrist strap | 0.00 / 0.00 | 190.16 / 190.16 | +190.16 |
+| E5 | NEW, optional: FLIR Extech 380580 milliohm meter, Eaton NETWORK-M3 card, SST FA11643 LED-bar feedthrough | 0.00 / 0.00 | 0.00 / 1,570.99 | +0.00 |
+
+**Net change to the machine BOM: +7,962.45 USD at the low end, +7,728.69 at the high end** (qty 1 per line; S3 and C5 change from qty 2 to a line total).
+
+bom.csv itself is not edited here (another worker owns it): the rows above are the change to make.
 
 ## 11. Edison's second opinion (`r5-electrical-review`): where it agrees and where it doesn't
 
@@ -404,8 +448,8 @@ PTFE/Kapton inside; a validated safety interface to the UR12e; and DIN-rail modu
 - **Model patch requests** (not made here): 4U drawer and 12U rack; PB1 beside the rack; PB2 on the guard frame; rod-end block
   for the weld-in feedthroughs; LED bar outside the chamber; a KF16 Pirani port; recoater and Z home sensors; a guard-position
   sensor separate from the lock; E-stops on the guard front and the gas module.
-- **Prices not fetched:** UL 489 breakers, the stepper drive, the Ethernet switch, terminal blocks, the 4U drawer (3U versions
-  $217.80-286.20), the 16 × 12 × 6 in enclosure, the FA23474 plugs, the RTC6 and the IPG interface cable (estimates in
-  electrical-bom.csv are marked so).
+- **Prices not fetched** (estimates in electrical-bom.csv, marked so): the 4U drawer (3U versions $217.80-286.20), the
+  16 × 12 × 6 in enclosure, the PB2 box, the FA23474 plugs, SMPW-K connectors, the overload relay, the M8 home sensors, the
+  chamber-at-ambient switch, the P1-04ADL-2, bulk wire and bonding straps; the RTC6 and the IPG interface cable are quotes.
 - **Checks still to do:** a real SC26/XS26 program and its response times; PL calculation; the TCO replacement; a UR safety
   configuration; the Kardex interface for "tray docked" and "VLM may move"; the DHA.
