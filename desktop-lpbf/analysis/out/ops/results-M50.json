@@ -1,6 +1,6 @@
 {
  "module": "M50",
- "cad": "desktop-lpbf/cad",
+ "cad": "cad",
  "ops": [
   {
    "id": "A1",
@@ -9,7 +9,7 @@
    "where": "bench",
    "interval": "once per module",
    "air": false,
-   "minutes": 81,
+   "minutes": 59,
    "steps": [
     {
      "id": "A1.1",
@@ -153,16 +153,27 @@
     {
      "id": "A1.11",
      "op": "A1",
-     "step": "Hollow rod up into the head's socket",
+     "step": "Gland plate with its two rod O-rings (ring loader) and its face O-ring, under the head",
      "do": "place",
-     "minutes": 1,
+     "minutes": 4,
      "note": "",
      "status": "PASS",
-     "detail": "documented path clear (gap 0.02 mm to Piston head M50 (6061-T6, cool side of t)",
-     "clearance": 0.02
+     "detail": "documented path clear (gap None mm to None)",
+     "clearance": null
     },
     {
      "id": "A1.12",
+     "op": "A1",
+     "step": "Rod with its end cap (welded by the shop on the bare rod), top end up through the gland plate's rings into the head's socket",
+     "do": "place",
+     "minutes": 3,
+     "note": "the rod's top end on the PEEK bullet through the rings",
+     "status": "PASS",
+     "detail": "documented path clear (gap 2.0 mm to Module M50 bottom flange: gland plate (3)",
+     "clearance": 2.0
+    },
+    {
+     "id": "A1.13",
      "op": "A1",
      "step": "Rod set screws (radial)",
      "do": "screws",
@@ -195,7 +206,72 @@
      ]
     },
     {
-     "id": "A1.13",
+     "id": "A1.14",
+     "op": "A1",
+     "step": "Hermetic connector with its O-ring into the rod end's side boss",
+     "do": "place",
+     "minutes": 3,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap 0.0 mm to Rod end M50: end cap with a side boss fo)",
+     "clearance": 0.0
+    },
+    {
+     "id": "A1.15",
+     "op": "A1",
+     "step": "Striker disc",
+     "do": "place",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap 0.3 mm to Rod end M50: end cap with a side boss fo)",
+     "clearance": 0.3
+    },
+    {
+     "id": "A1.16",
+     "op": "A1",
+     "step": "Three M3 flat-head striker screws from below",
+     "do": "screws",
+     "minutes": 3,
+     "note": "",
+     "status": "PASS",
+     "detail": "3 screws; 3 reachable with: torque screwdriver + 2 mm bit",
+     "clearance": 1.63,
+     "per_screw": [
+      {
+       "screw": "Striker screws M50, M3 x 10 316 flat head #1",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 1.63,
+       "clear_with": "tool: Striker disc M50",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Striker screws M50, M3 x 10 316 flat head #2",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 1.63,
+       "clear_with": "tool: Striker disc M50",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Striker screws M50, M3 x 10 316 flat head #3",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 1.63,
+       "clear_with": "tool: Striker disc M50",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      }
+     ]
+    },
+    {
+     "id": "A1.17",
      "op": "A1",
      "step": "Rim wiper onto the plate, plate onto the bayonet (turned 60 deg)",
      "do": "place",
@@ -206,9 +282,9 @@
      "clearance": 2.0
     },
     {
-     "id": "A1.14",
+     "id": "A1.18",
      "op": "A1",
-     "step": "Welded module body on the bench (the stack waits above it)",
+     "step": "Welded module body on the bench (the stack waits below it)",
      "do": "place",
      "minutes": 1,
      "note": "",
@@ -216,18 +292,18 @@
      "detail": "placed by hand or welded on; no path check"
     },
     {
-     "id": "A1.15",
+     "id": "A1.19",
      "op": "A1",
-     "step": "Gland plate with its rod O-rings and face O-ring up against the collar",
+     "step": "Stack, rod and gland plate up into the bore from below (lead-in on the bore's bottom edge); gland plate onto the collar",
      "do": "place",
-     "minutes": 2,
-     "note": "",
+     "minutes": 4,
+     "note": "the bore seal and plate must enter the honed bore square",
      "status": "PASS",
-     "detail": "documented path clear (gap 0.03 mm to Hollow piston rod M50 (5/8 in. x 0.065 i)",
-     "clearance": 0.03
+     "detail": "documented path clear (gap 0.15 mm to Build module M50: spigot, flange, honed )",
+     "clearance": 0.15
     },
     {
-     "id": "A1.16",
+     "id": "A1.20",
      "op": "A1",
      "step": "Six M4 gland-plate screws from below",
      "do": "screws",
@@ -300,7 +376,7 @@
      ]
     },
     {
-     "id": "A1.17",
+     "id": "A1.21",
      "op": "A1",
      "step": "Handle under the gland plate",
      "do": "place",
@@ -311,7 +387,7 @@
      "clearance": 2.43
     },
     {
-     "id": "A1.18",
+     "id": "A1.22",
      "op": "A1",
      "step": "Two M4 handle screws",
      "do": "screws",
@@ -338,82 +414,6 @@
        "arc": 360.0,
        "clearance": 4.24,
        "clear_with": "tool: Module M50 handle",
-       "torque_ok": true,
-       "torque_blocked_by": []
-      }
-     ]
-    },
-    {
-     "id": "A1.19",
-     "op": "A1",
-     "step": "Heater stack into the bore from the top, rod down through the gland",
-     "do": "place",
-     "minutes": 3,
-     "note": "the bore seal and plate must enter the honed bore square",
-     "status": "PASS",
-     "detail": "documented path clear (gap 0.03 mm to Module M50 bottom flange: gland plate (3)",
-     "clearance": 0.03
-    },
-    {
-     "id": "A1.20",
-     "op": "A1",
-     "step": "Rod end with its hermetic connector onto the rod from below (rod welded in)",
-     "do": "place",
-     "minutes": 30,
-     "note": "welding not included",
-     "status": "FAIL",
-     "detail": "documented path (0, 0, -80) blocked by Hollow piston rod M50 (5/8 in. x 0.065 in. seamles after 0.0 mm; free straight directions: none; no two-leg path (10/30 mm then an axis) found",
-     "clearance": null
-    },
-    {
-     "id": "A1.21",
-     "op": "A1",
-     "step": "Striker disc",
-     "do": "place",
-     "minutes": 1,
-     "note": "",
-     "status": "PASS",
-     "detail": "documented path clear (gap 0.3 mm to Rod end M50: end cap with a side boss fo)",
-     "clearance": 0.3
-    },
-    {
-     "id": "A1.22",
-     "op": "A1",
-     "step": "Three M3 flat-head striker screws from below",
-     "do": "screws",
-     "minutes": 3,
-     "note": "",
-     "status": "PASS",
-     "detail": "3 screws; 3 reachable with: torque screwdriver + 2 mm bit",
-     "clearance": 1.63,
-     "per_screw": [
-      {
-       "screw": "Striker screws M50, M3 x 10 316 flat head #1",
-       "withdraw_ok": true,
-       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
-       "arc": 360.0,
-       "clearance": 1.63,
-       "clear_with": "tool: Striker disc M50",
-       "torque_ok": true,
-       "torque_blocked_by": []
-      },
-      {
-       "screw": "Striker screws M50, M3 x 10 316 flat head #2",
-       "withdraw_ok": true,
-       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
-       "arc": 360.0,
-       "clearance": 1.63,
-       "clear_with": "tool: Striker disc M50",
-       "torque_ok": true,
-       "torque_blocked_by": []
-      },
-      {
-       "screw": "Striker screws M50, M3 x 10 316 flat head #3",
-       "withdraw_ok": true,
-       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
-       "arc": 360.0,
-       "clearance": 1.63,
-       "clear_with": "tool: Striker disc M50",
        "torque_ok": true,
        "torque_blocked_by": []
       }
@@ -3578,7 +3578,7 @@
    "where": "bench (module out, see S2)",
    "interval": "rod and bore seals on wear or powder past the seal; heaters and TCs on failure (P42, P43)",
    "air": false,
-   "minutes": 72,
+   "minutes": 83,
    "steps": [
     {
      "id": "M7.1",
@@ -3656,36 +3656,26 @@
     {
      "id": "M7.2",
      "op": "M7",
-     "step": "Gland plate (with its rod O-rings) down off the rod",
+     "step": "Gland plate, heater stack, rod and its welded end down out of the bore together (the gland plate rides on the rod)",
      "do": "remove",
-     "minutes": 2,
+     "minutes": 4,
      "note": "",
-     "status": "FAIL",
-     "detail": "(0, 0, -140) blocked by Rod end M50: end cap with a side boss for the hermetic conne after 12.0 mm"
+     "status": "PASS",
+     "clearance": 0.15,
+     "detail": "free along (0, 0, -260); tightest gap 0.15 mm to Build module M50: spigot, flange, honed 316L cylin"
     },
     {
      "id": "M7.3",
      "op": "M7",
-     "step": "Heater stack up out of the bore (plate side)",
-     "do": "remove",
-     "minutes": 3,
+     "step": "On the bench: the two rod set screws out of the head, the rod (with its welded end, connector and striker) pulled down out of the head's socket and through the gland plate; the two 2-114s then come out of their grooves. The rod's top end is a plain \u00d815.875 tube end in the gland's \u00d815.93 throat",
+     "do": "note",
+     "minutes": 15,
      "note": "",
-     "status": "FAIL",
-     "detail": "(0, 0, 260) blocked by Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal unde after 0.0 mm"
+     "status": "-",
+     "detail": ""
     },
     {
      "id": "M7.4",
-     "op": "M7",
-     "step": "Heater stack down out of the bore (rod side)",
-     "do": "remove",
-     "minutes": 3,
-     "note": "",
-     "status": "PASS",
-     "clearance": null,
-     "detail": "free along (0, 0, -260); tightest gap None mm to "
-    },
-    {
-     "id": "M7.5",
      "op": "M7",
      "step": "Heaters and thermocouples slide down out of the block once the head is off (3 stack screws); their leads run down the rod to the hermetic connector in the rod end",
      "do": "note",
@@ -4027,7 +4017,7 @@
     {
      "id": "S2.3",
      "op": "S2",
-     "step": "Hand on the module handle under the chamber",
+     "step": "Hand on the module handle's grip block, in front of the door",
      "do": "reach",
      "minutes": 1,
      "note": "",

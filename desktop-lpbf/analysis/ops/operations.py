@@ -116,22 +116,28 @@ def catalogue(module="M50"):
         place("Stack screws up through the head (placed)", ["Heater-stack screws"], path=[(0, 0, 0), (0, 0, -40)], minutes=1),
         screws("Stack screws driven from below (disc-spring preload: torque-controlled)", f"stack_{module}", 4, torque=True),
         place("Bore seal into its groove", ["Bore seal"], path=None, minutes=3),
-        place("Hollow rod up into the head's socket", ["Hollow piston rod"], path=[(0, 0, 0), (0, 0, -120)], minutes=1),
+        # 2026-11-22: the rod end stays welded (an all-metal gas boundary with one static O-ring at the connector). The gland plate goes
+        # onto the rod from the rod's top end, before the rod goes into the head, and the stack enters the bore from below with the
+        # gland plate riding on the rod, so the weld is made by the shop on the bare rod, away from every O-ring (assembly.md M25)
+        place("Gland plate with its two rod O-rings (ring loader) and its face O-ring, under the head", ["bottom flange: gland plate", "gland-plate O-ring", "Rod O-rings"],
+              path=[(0, 0, 0), (0, 0, -80)], minutes=4),
+        place("Rod with its end cap (welded by the shop on the bare rod), top end up through the gland plate's rings into the head's socket",
+              ["Hollow piston rod", "Rod end"], path=[(0, 0, 0), (0, 0, -150)], minutes=3, note="the rod's top end on the PEEK bullet through the rings"),
         screws("Rod set screws (radial)", f"rod_{module}", 2),
+        place("Hermetic connector with its O-ring into the rod end's side boss", ["Hermetic connector", "Hermetic-connector O-ring"],
+              path=[(0, 0, 0), (-60, 0, 0)], minutes=3),
+        place("Striker disc", ["Striker disc"], path=[(0, 0, 0), (0, 0, -60)], minutes=1),
+        screws("Three M3 flat-head striker screws from below", f"striker_{module}", 3),
         place("Rim wiper onto the plate, plate onto the bayonet (turned 60 deg)", ["Build plate", "Plate rim wiper"],
               path=[(0, 0, 0), (0, 0, 60)], minutes=2, rot=60.0),
-        place("Welded module body on the bench (the stack waits above it)", ["Build module", "Spigot O-ring"], path=None, minutes=1),
-        place("Gland plate with its rod O-rings and face O-ring up against the collar", ["bottom flange: gland plate", "gland-plate O-ring", "Rod O-rings"],
-              path=[(0, 0, 0), (0, 0, -80)], minutes=2),
+        place("Welded module body on the bench (the stack waits below it)", ["Build module", "Spigot O-ring"], path=None, minutes=1),
+        place("Stack, rod and gland plate up into the bore from below (lead-in on the bore's bottom edge); gland plate onto the collar",
+              STACK + ["Rod end", "Hermetic connector", "Hermetic-connector O-ring", "Striker disc", "Striker screws", "bottom flange: gland plate",
+                       "gland-plate O-ring", "Rod O-rings"], path=[(0, 0, 0), (0, 0, -260)], minutes=4,
+              note="the bore seal and plate must enter the honed bore square", move_placed=True),
         screws("Six M4 gland-plate screws from below", f"gland_{module}", 4, torque=True),
         place("Handle under the gland plate", ["handle (6061"], path=[(0, 0, 0), (0, -80, 0)], minutes=1),
         screws("Two M4 handle screws", f"handle_{module}", 2),
-        place("Heater stack into the bore from the top, rod down through the gland", STACK, path=[(0, 0, 0), (0, 0, 175)], minutes=3,
-              note="the bore seal and plate must enter the honed bore square", move_placed=True),
-        place("Rod end with its hermetic connector onto the rod from below (rod welded in)", ["Rod end", "Hermetic connector", "Hermetic-connector O-ring"],
-              path=[(0, 0, 0), (0, 0, -80)], minutes=30, note="welding not included"),
-        place("Striker disc", ["Striker disc"], path=[(0, 0, 0), (0, 0, -60)], minutes=1),
-        screws("Three M3 flat-head striker screws from below", f"striker_{module}", 3),
     ]))
 
     ops.append(dict(id="A2", kind="assembly", name="Assemble the process module and put it on the tray (render_build chapters 4-5)",
@@ -326,12 +332,12 @@ def catalogue(module="M50"):
                     where="bench (module out, see S2)", interval="rod and bore seals on wear or powder past the seal; heaters and TCs on failure (P42, P43)",
                     state={}, present="module", bench=True, air=False, steps=[
         screws("Six M4 gland-plate screws from below", f"gland_{module}", 4),
-        remove("Gland plate (with its rod O-rings) down off the rod", ["bottom flange: gland plate", "gland-plate O-ring", "Rod O-rings", "handle (6061", "Handle screws"],
-               [[(0, 0, 0), (0, 0, -140)]], minutes=2),
-        remove("Heater stack up out of the bore (plate side)", STACK + ["Rod end", "Hermetic connector", "Striker disc", "Striker screws"], [[(0, 0, 0), (0, 0, 260)]],
-               minutes=3),
-        remove("Heater stack down out of the bore (rod side)", STACK + ["Rod end", "Hermetic connector", "Striker disc", "Striker screws"], [[(0, 0, 0), (0, 0, -260)]],
-               minutes=3),
+        remove("Gland plate, heater stack, rod and its welded end down out of the bore together (the gland plate rides on the rod)",
+               ["bottom flange: gland plate", "gland-plate O-ring", "Rod O-rings", "handle (6061", "Handle screws"] + STACK +
+               ["Rod end", "Hermetic connector", "Hermetic-connector O-ring", "Striker disc", "Striker screws"], [[(0, 0, 0), (0, 0, -260)]], minutes=4),
+        note("On the bench: the two rod set screws out of the head, the rod (with its welded end, connector and striker) pulled down out of the "
+             "head's socket and through the gland plate; the two 2-114s then come out of their grooves. The rod's top end is a plain Ø15.875 tube "
+             "end in the gland's Ø15.93 throat", 15),
         note("Heaters and thermocouples slide down out of the block once the head is off (3 stack screws); their leads run down the rod to the hermetic "
              "connector in the rod end", 60),
     ]))
@@ -385,7 +391,7 @@ def catalogue(module="M50"):
                     state=dict(OPEN, zstage=MP.ZSTAGE_RELEASE), present="all", air=True, steps=[
         note("Cool, vent; Z arm released (drops 45 mm away from the striker)", 2),
         screws("Two captive M6 screws, from under the chamber", "module_flange", 3, pn="95966A705"),
-        reach("Hand on the module handle under the chamber", "handle (6061", (FRONT,), skip=["handle (6061"]),
+        reach("Hand on the module handle's grip block, in front of the door", (0.0, -141.0, -47.0), (FRONT,), skip=["handle (6061"]),
         dict(do="module", label="Module out along its swap path (drop 40, forward 170, up 18, over the guard sill)", minutes=3),
         note("New module in (reverse path); captive screws at half torque (hot-swap.md); Z arm up; purge", 20),
     ]))

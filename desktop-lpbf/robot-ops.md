@@ -1,5 +1,13 @@
 # Robot tending: every job planned and audited the byu-vcl PR 318 way
 
+> **Update 2026-11-22 (round 4): the build module swap passes on M50, S25 and L75** ([`analysis/out/robot/ops_w3.md`](analysis/out/robot/ops_w3.md)).
+> The module's handle now ends in an I-section grip block in front of the door's hinge knuckles, in the same place on every module
+> (`cad/modules_low.py`, `MP.MODULE_GRIP`), so the gripper takes it level from the front instead of reaching under the chamber. The
+> job follows the model's path to +4 mm, lifts the module 66 mm clear of the floor's front edge and carries it out over the guard
+> sill, with the MiR at x = +300 mm. The clamp is still the two captive M6, which the job assumes released: two SCHUNK NSE-HT
+> mini 88-20 don't fit under the floor until the overflow jar moves ([`hot-swap.md`](hot-swap.md) §3.2a). Section "Round 4" below
+> has the numbers; the reservoir and blade jobs were re-run on this model too.
+>
 > **Update 2026-11-21 02:00 UTC (coordinator):** the bayonet plate exchange now passes on M50, S25 and L75 ([`analysis/out/robot/ops_bayonet_fix.md`](analysis/out/robot/ops_bayonet_fix.md)), after the thermal cutoff was lowered 1 mm out of the lugs' path (`cad/modules_low.py`, patch request 3 below). So 10 of the 12 jobs pass; the build-module swap and the overflow jar still need the changes listed.
 
 Written 2026-11-20/21 (22:15–01:15 UTC) for [PR #266](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/266) (issue #260),
@@ -47,35 +55,37 @@ over the 2F-85's fingertips from a stand on the MiR, and a vacuum wand with a cl
   The robot can still pull it open.
 - **The bayonet plate fails, on a model clash.** Twisting the plate runs its lugs into the thermal cutoff, whose top sits in the
   lugs' channel. The drawbar path passes on S25, M50 and L75, so the drawbar is the way (hot-swap.md agrees).
-- **The build module fails.** The gripper can't reach the handle under the chamber past the door's hinge knuckles and the guard's
-  panels, and the last 140 mm of the module's path out brings it too close to the arm's own base. The module joint (two captive M6)
-  and its handle need the patch requests below. Until then a person swaps modules between campaigns.
+- **The build module's motion now passes (2026-11-22); its clamp is still open.** The gripper couldn't reach the old handle under the
+  chamber past the door's hinge knuckles, and the last 140 mm of the path brought the arm too close to its own base. The handle's new
+  grip block sits in front of the knuckles, and the job lifts the module 66 mm before the last 140 mm. The two captive M6 still hold
+  the module, and the robot can't turn them; the zero-point modules that would replace them need the overflow jar moved first
+  (hot-swap.md §3.2a). Until then a person releases the two screws, or swaps the module.
 - **The overflow jar has no way out as drawn**, and **the liners are captive** (patch requests).
 
 ## Results
 
-Final run (`ops.py --render`, on the model as built at 23:56 UTC, with the chamber body as a through-frame plus a bolted floor plate). The drawer, blade cartridge and vacuum were re-run at 00:46–01:10 UTC after the last fixes, on the same model. Each job was tried at up to 12 MiR positions along the opening (and grasp variants); the table gives the first that passes, or the one that got furthest. **Clearance** is the smallest FCL distance from the robot, its tools and what it holds to anything it may not touch. **Torque** is the peak static joint torque against the UR12e's limits (330/330/150/56/56/56 N·m). **Force** is the largest the job applies, against the 100 N force mode. **CoG margin** is how far the MiR250's centre of gravity (base, cabinet, 131 kg ballast, arm, tool and payload) stays inside its wheels at the worst frame; the tip-over forces are in the forces section. **Time** is the arm's own time from the planned paths; add ~5 s for a tag read after docking and ~20 s for each cap change.
+Final run (`ops.py --render`, on the model as built at 23:56 UTC, with the chamber body as a through-frame plus a bolted floor plate). The drawer, blade cartridge and vacuum were re-run at 00:46–01:10 UTC after the last fixes, on the same model. **Rows re-run on 2026-11-22:** the build module on S25, M50 and L75 ([`ops_w3.md`](analysis/out/robot/ops_w3.md), 06:22–06:32 UTC), and the five jobs the MiR does from the rack's side (x −390 to −450: chamber door open, drawer, reservoir, blade, vacuum) on the final model with the 12U rack ([`ops_w3_rack.md`](analysis/out/robot/ops_w3_rack.md), 06:49 UTC). All pass; clearances moved by up to 3.6 mm because the planner found other branches. The bayonet rows are superseded by the 02:00 update above. Each job was tried at up to 12 MiR positions along the opening (and grasp variants); the table gives the first that passes, or the one that got furthest. **Clearance** is the smallest FCL distance from the robot, its tools and what it holds to anything it may not touch. **Torque** is the peak static joint torque against the UR12e's limits (330/330/150/56/56/56 N·m). **Force** is the largest the job applies, against the 100 N force mode. **CoG margin** is how far the MiR250's centre of gravity (base, cabinet, 131 kg ballast, arm, tool and payload) stays inside its wheels at the worst frame; the tip-over forces are in the forces section. **Time** is the arm's own time from the planned paths; add ~5 s for a tag read after docking and ~20 s for each cap change.
 
 | Job | Module | MiR arm x (mm) | Result | Blocking step, or the first collision | Min clearance (mm), pair | Peak torque | Force (N) / limit | Payload (kg) | CoG margin (mm) | Time (s) |
 |---|---|---|---|---|---|---|---|---|---|---|
 | Guard door open (515 mm) | M50 | 450.0 | **pass** |  | 1.9, right_finger_tip / Guard-locking door switch (Omron D | 32.4 % elbow | 30 / 100 | 0.0 | 200.0 | 8.2 |
 | Guard door close | M50 | 450.0 | **pass** |  | 26.1, left_finger_tip / Guard-door handle for the robot (Ø | 32.8 % elbow | 30 / 100 | 0.0 | 200.0 | 8.5 |
-| Chamber door open (pull to 20 deg, then the drive) | M50 | -450.0 | **pass** |  | 4.5, right_finger_tip / Guard door rail (top + bottom) | 32.2 % elbow | 15 / 100 | 0.0 | 199.0 | 13.5 |
+| Chamber door open (pull to 20 deg, then the drive) | M50 | -450.0 | **pass** |  | 0.9, ur/gr/left_finger_tip / Guard door rail (top + bottom) | 32.6 % elbow | 15 / 100 | 0.0 | 199.0 | 13.4 |
 | Chamber door close (its actuator; robot parked) | M50 | 0.0 | **pass** |  | 21.5, wrist2 / Guard door rail (top + bottom) | 30.8 % elbow | 0 | 0.0 | 206.0 | 3.5 |
 | Build plate out, drawbar | M50 | 450.0 | **pass** |  | 1.3, right_finger_tip / Chamber floor plate (6061-T6, 20 m | 33.7 % elbow | 5 / 100 | 0.053 | 191.0 | 24.7 |
 | Build plate out, bayonet (2 x 30 deg twists) | M50 | 300.0 | **fail** | twist the plate 30 deg (lugs at their slots): held: build plate vs Thermal cutoff M50 (240 C, in series with the heat | 0.0, held: build plate / Thermal cutoff M50 (240 C, in seri | 31.6 % elbow | 5 / 100 | 0.053 | 191.0 | 28.7 |
-| Cover-slide drawer: wings off, drawer out | M50 | -450.0 | **pass** |  | 1.2, left_finger_tip / Drawer-closed sensor (inductive M1 | 31.7 % elbow | 20 / 100 | 0.0 | 199.0 | 27.5 |
-| Reservoir off the dock and out | M50 | -390.0 | **pass** |  | 1.9, left_finger_tip / Enclosed beam tube | 33.3 % elbow | 40 / 100 | 0.37 | 199.0 | 23.5 |
-| Blade cartridge out | M50 | -450.0 | **pass** |  | 2.0, held: blade cartridge / Build plate M50 (Ø50.5 x 10, 6061- | 33.3 % elbow | 40 / 100 | 0.197 | 199.0 | 23.2 |
-| Build module out | M50 | 250.0 | **fail** | round the handle's side arms: camera vs Chamber door (6061-T6, 15 mm, drops down; half-dov | 0.0, camera / Chamber door (6061-T6, 15 mm, drop | 61.8 % wrist 1 | 106 out, 158 in / 100 | 2.675 | 181.0 | 21.8 |
+| Cover-slide drawer: wings off, drawer out | M50 | -450.0 | **pass** |  | 1.8, ur/gr/left_finger_tip / Drawer-closed sensor (inductive M12, o | 31.7 % elbow | 20 / 100 | 0.0 | 199.0 | 27.5 |
+| Reservoir off the dock and out | M50 | -390.0 | **pass** |  | 1.9, ur/cap/right_finger_tip / Enclosed beam tube | 33.4 % elbow | 40 / 100 | 0.37 | 199.0 | 24.2 |
+| Blade cartridge out | M50 | -450.0 | **pass** |  | 2.0, held: blade cartridge / Recoater ball nut (flange on the +x fa | 33.7 % elbow | 40 / 100 | 0.197 | 199.0 | 22.3 |
+| Build module out (grip block; lift 66 mm, then out) | M50 | 300.0 | **pass** |  | 0.5, held: build module / Overflow clamp (KF-40) | 55.7 % wrist 1 | 106 out, 158 in / 100 | 2.916 | 190.0 | 26.0 |
 | Overflow jar out (as drawn) | M50 | -350.0 | **fail** | in to the jar: left_finger_tip vs Gas-loop + vacuum hoses (KF-25 SS bellows) | 0.0, base / Guard frame (20 mm T-slot) | 32.8 % elbow | 0 | 0.22 | 191.0 | 24.6 |
-| Chamber vacuum, 3 lanes (wand from the MiR cradle) | M50 | -450.0 | **pass** |  | 3.0, wand (ATEX vacuum wand, collar, cr / Chamber floor plate (6061-T6, 20 m | 35.4 % elbow | 0 | 0.0 | 198.0 | 31.2 |
+| Chamber vacuum, 3 lanes (wand from the MiR cradle) | M50 | -450.0 | **pass** |  | 3.0, wand (ATEX vacuum wand, collar, crevic / Chamber floor plate (6061-T6, 20 mm, b | 35.4 % elbow | 0 | 0.0 | 198.0 | 31.2 |
 | Build plate out, drawbar | S25 | 450.0 | **pass** |  | 1.0, held: build plate / Thermal cutoff S25 (240 C, in seri | 33.7 % elbow | 5 / 100 | 0.014 | 191.0 | 24.6 |
 | Build plate out, bayonet (2 x 30 deg twists) | S25 | -450.0 | **fail** | twist the plate 30 deg (half): held: build plate vs Thermal cutoff S25 (240 C, in series with the heat | 0.0, held: build plate / Thermal cutoff S25 (240 C, in seri | 33.4 % elbow | 5 / 100 | 0.014 | 195.0 | 29.2 |
-| Build module out | S25 | 250.0 | **fail** | round the handle's side arms: camera vs Chamber door (6061-T6, 15 mm, drops down; half-dov | 0.0, camera / Chamber door (6061-T6, 15 mm, drop | 63.3 % wrist 1 | 106 out, 158 in / 100 | 2.381 | 181.0 | 21.8 |
+| Build module out (grip block; lift 66 mm, then out) | S25 | 300.0 | **pass** |  | 0.5, held: build module / Overflow clamp (KF-40) | 57.0 % wrist 1 | 106 out, 158 in / 100 | 2.631 | 191.0 | 26.0 |
 | Build plate out, drawbar | L75 | 450.0 | **pass** |  | 1.0, held: build plate / Thermal cutoff L75 (240 C, in seri | 33.7 % elbow | 5 / 100 | 0.12 | 191.0 | 24.9 |
 | Build plate out, bayonet (2 x 30 deg twists) | L75 | -450.0 | **fail** | twist the plate 30 deg (half): held: build plate vs Thermal cutoff L75 (240 C, in series with the heat | 0.0, held: build plate / Thermal cutoff L75 (240 C, in seri | 32.9 % elbow | 5 / 100 | 0.12 | 194.0 | 29.7 |
-| Build module out | L75 | 250.0 | **fail** | round the handle's side arms: base vs Chamber door (6061-T6, 15 mm, drops down; half-dov | 0.0, base / Chamber door (6061-T6, 15 mm, drop | 56.7 % wrist 1 | 106 out, 158 in / 100 | 2.959 | 182.0 | 22.7 |
+| Build module out (grip block; lift 66 mm, then out) | L75 | 300.0 | **pass** |  | 0.5, held: build module / Overflow clamp (KF-40) | 54.5 % wrist 1 | 106 out, 158 in / 100 | 3.192 | 189.0 | 26.0 |
 
 GIFs and stills (`analysis/out/robot/ops_<job>_<module>.gif`, `_tightest.png`: the first collision frame, or else the tightest):
 
@@ -100,7 +110,7 @@ Not in the table:
 - **The liners** need the patch requests first (both side liners are threaded on the ball screw, and the LED bar stands in front
   of the right one), so `liner_right` is written but not run.
 - **The build module's force column** gives the removal (106 N down: the spigot O-ring's 132 N less the module's 26 N) and the
-  insertion (158 N up); the job itself fails before either.
+  insertion (158 N up). Since round 4 the job passes, and both forces are over the 100 N force mode (round 4, still open).
 - **Tight but passing:**
   - the guard-door approach passes 1.9 mm from the guard-lock switch;
   - the plate fingers' lower blades ride 1.0–1.3 mm over the floor and past the thermal cutoff;
@@ -109,6 +119,45 @@ Not in the table:
   A real program would keep 5–10 mm away from the switch, the floor and the thermal cutoff.
 - **The vacuum misses one strip**: the strip under the dose chute (x < −60 mm, |y| ≤ 50 mm) is out of the level wand's reach. That
   is the recoater's park and dose zone, where powder collects, so it needs a narrower nozzle or a person with the same wand.
+
+## Round 4 (2026-11-22): the build module swap
+
+**Changed in the model** (commit e0e1a23, `cad/modules_low.py`, `cad/module_params.py`):
+- **The module's handle.** The two side arms under the gland plate stay. A riser in front of the collar carries an arm forward,
+  4 mm under the outlet plenum (z −52 to −40), to an I-section grip block:
+  - at y −156 to −126 and z −69 to −25, in front of the door's hinge knuckles (their front is at y −138, their underside at z −20);
+  - in the same place on S25, M50 and L75 (`MP.MODULE_GRIP`), so one grasp serves all three;
+  - the 2F-85's stock pads close on its 40 mm web; the 5 mm flanges above and below take the 106 N pull and the 158 N push by form
+    closure, with ±4 mm of vertical capture for the 22 mm pads;
+  - 6061, about 0.25 kg, made in-house.
+- **The job** (`ops.py`, `job_module`): the MiR stands at x = +300 mm. The gripper comes in level along +y and closes on the web. It
+  follows the model's path to (0, −190, +4), lifts the module 66 mm (the spigot stays 19 mm under the door handle), then carries it
+  140 mm forward over the guard sill and up to the MiR's rack. The first variant tried passes on all three modules.
+- **Audit fixes on the way:**
+  - the floor port is in the floor plate since the frame and floor plate were split, and the job's fixture list had missed it;
+  - the floor plate is now tessellated at 0.05 mm: at 0.4 mm the Ø96 port's chords sat 0.3 mm inside the spigot's 0.1 mm fit;
+  - during the straight 40 mm drop, the floor plate, the dowel and diamond pin, and the captive screws' floor inserts are soft
+    (the screws are drawn screwed in; `interference.py` checks those fits exactly);
+  - the riser moved 6 mm back, because the robot found its L75 pass at the guard's bottom front rail too tight (1.9 mm exact). It
+    is 7.9 mm now.
+
+| Job | Before (2026-11-21) | After (2026-11-22, [`ops_w3.md`](analysis/out/robot/ops_w3.md)) |
+|---|---|---|
+| Build module out, M50 | fail: the camera meets the door while reaching under the chamber | **pass**: 0.5 mm, 55.7 % wrist 1, 2.92 kg, centre of gravity 190 mm inside the wheels, 26.0 s |
+| Build module out, S25 | fail | **pass**: 0.5 mm, 57.0 % wrist 1, 2.63 kg, 191 mm, 26.0 s |
+| Build module out, L75 | fail | **pass**: 0.5 mm, 54.5 % wrist 1, 3.19 kg, 189 mm, 26.0 s |
+| Reservoir, M50 | pass, on the 13:54 UTC model | **pass** on the final model: 1.9 mm (cap to the beam tube), 33.4 % elbow, 24.2 s |
+| Blade cartridge, M50 | pass, on the 13:54 UTC model | **pass** on the final model: 2.0 mm (cartridge to the recoater's ball nut), 33.7 % elbow, 22.3 s |
+| Chamber door open, drawer, vacuum (M50, MiR at x −450) | pass, on the 23:56 UTC model | **pass** on the final model, with the rack now 12U (560 mm) beside them: 0.9, 1.8 and 3.0 mm |
+
+The 0.5 mm is the module flange's tab passing the overflow clamp's wing during the drop, as drawn before; `interference.py` finds
+the same gap. **Jobs passing on M50: 11 of 12** (was 10): only the overflow jar fails. The module swap also passes on S25 and L75.
+
+**Still open for the module:**
+- **The clamp.** It is still the two captive M6, and the job assumes a person has released them. Two SCHUNK NSE-HT mini 88-20
+  (ID 1460874, Ø88 × 20 mm) fit under the floor only once the overflow jar moves ([`hot-swap.md`](hot-swap.md) §3.2a).
+- **The forces.** The 106 N pull and 158 N push are over the 100 N force mode. Run that part under position control with a
+  200 N PFL limit; zero-point clamps would pull the last millimetre themselves.
 
 ## Alignment with byu-vcl PR 318
 
@@ -216,11 +265,13 @@ make the groove and the lips 45° V-shapes (patch request), which centre over ±
 
 ## Patch requests (parts other sections draw)
 
-1. **Build module joint** (modules_low.py): the robot can't turn the two captive M6 thumb screws. Two SCHUNK NSE-HT mini 88-20
+1. **Build module joint** (modules_low.py; **not drawn, 2026-11-22**: no straddling place for two Ø88 modules under the floor until
+   the overflow jar moves, hot-swap.md §3.2a): the robot can't turn the two captive M6 thumb screws. Two SCHUNK NSE-HT mini 88-20
    zero-point modules (0.5 kN pull-down, 2.5 kN with turbo, rated 200 °C, Ø88 × 20; $2,680 each, MROSupply) on flange arms, or a
    twist-lock ring with ramps (about 29 N at the handle for a 13° ramp). The overflow funnel (x 78–122 under the floor) has to make
    room on the right.
-2. **Module handle**: a hook the fingers close under (form closure), for the 106 N pull and 158 N push.
+2. **Module handle** (**drawn 2026-11-22**: the I-section grip block, round 4): a hook the fingers close under (form closure), for
+   the 106 N pull and 158 N push.
 3. **Plate drawbar** (modules_low.py, hot-swap.md): pull stud in the plate, Jergens 16 mm ball lock (49607 + 49517, $178), disc
    springs at the rod end, SMC CDQ2B40-10DCMZ release cylinder ($55.27, 628 N at 0.5 MPa). The jobs here use the drawn plate turned
    60°, lugs in their slots, as a stand-in.
@@ -244,7 +295,8 @@ make the groove and the lips 45° V-shapes (patch request), which centre over ±
 - **Not simulated:** fitting and stripping the caps at the stand (byu-vcl PR 318 doesn't animate it either), MiR docking, the
   install direction of each part (the same poses as removal, reversed), and anything after the part is out (the racks on the MiR).
 - **The robot's own door close fails** (below the results table), so the door needs its actuator.
-- **The overflow jar, the liners and the module joint** need the patch requests before a robot can do them.
+- **The overflow jar and the liners** need the patch requests before a robot can do them. The module's motion passes (round 4), but
+  its clamp needs the jar moved first.
 - **Dynamics:** only the door is simulated in MuJoCo. The arm moves slowly (60°/s joints, 30–150 mm/s lines), so the static
   torques stand in for the dynamic ones; the module's carry is the heaviest case.
 - **Powder safety**: PR 318's bonded floor plates, sprung shoes and wand continuity checks apply here (AlSi10Mg is a combustible
@@ -260,6 +312,8 @@ OMP_NUM_THREADS=1 MUJOCO_GL=egl /tmp/capmem 3 xvfb-run -a python analysis/robot/
 python analysis/robot/ops.py --jobs chamber_door_close --modules M50                             # the robot's own door-close attempt
 python analysis/robot/automation_check.py M50                                                    # interference of the automation parts
 python analysis/robot/door_mj.py                                                                 # the door in MuJoCo
+# round 4 (2026-11-22): the module swap on all three modules, the reservoir and the blade, with GIFs (~10 min; needs imageio)
+OMP_NUM_THREADS=1 MUJOCO_GL=egl /tmp/capmem 3.5 xvfb-run -a python analysis/robot/ops.py --jobs module_swap,reservoir,blade_cartridge --modules M50,S25,L75 --render --tag _w3
 ```
 
 Each script rebuilds the model from `cad/lpbf_low.py`, so it runs on whatever the model is now. The UR and Robotiq meshes are

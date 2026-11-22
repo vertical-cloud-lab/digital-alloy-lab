@@ -1,6 +1,6 @@
 {
  "module": "S25",
- "cad": "desktop-lpbf/cad",
+ "cad": "cad",
  "ops": [
   {
    "id": "U1",
@@ -241,7 +241,7 @@
     {
      "id": "S2.3",
      "op": "S2",
-     "step": "Hand on the module handle under the chamber",
+     "step": "Hand on the module handle's grip block, in front of the door",
      "do": "reach",
      "minutes": 1,
      "note": "",

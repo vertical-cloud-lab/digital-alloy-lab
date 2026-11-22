@@ -5,6 +5,27 @@ Written 2026-11-20 for [PR #266](https://github.com/vertical-cloud-lab/digital-a
 This note covers what a person does. Automated operations (the build loop, robot plate and reservoir handling) are
 covered separately. Nothing has been built or tried on a mock-up.
 
+> **Update 2026-11-22 (round 4): M50 now 82 pass / 2 warn / 37 fail** (was 81 / 2 / 40 on 9c67f44), re-run on the model with
+> the module's robot grip block and the 12U rack ([`results-M50.md`](analysis/out/ops/results-M50.md)). Three fails are gone:
+> - **The gland plate and its rod O-rings are no longer trapped (M7.2).** The rod end stays welded. The gland plate comes out of
+>   the bottom of the bore together with the heater stack and the rod (M7.2, passes, 0.15 mm). Then, on the bench, the two rod set
+>   screws come out and the rod slides down out of the head and through the gland plate. The rod's top end is a plain Ø15.875
+>   tube end in the gland's Ø15.93 throat.
+> - **A1 assembles in the matching order and passes all 18 checked steps** (was 17 / 1). The gland plate goes onto the rod's top
+>   end, the rod into the head, and the whole stack into the bore from below. So the rod end can be welded by the shop on the bare
+>   rod, away from every O-ring. The old A1.20 (the welded end treated as a slide-on part) and M7.3 (the connector's O-ring left
+>   out of the move) were errors in my list, and both are gone.
+> - **S2.3:** the hand takes the module by the new grip block in front of the door (passes). S2.4, the swap path, still passes at
+>   0.1 mm.
+>
+> **Tried and reverted:** a pull tab on the front of the reservoir's base plate for U1.1. The forearm still meets the optics
+> bridge: there are 72 mm between the lid and the bridge, for a 65 mm forearm. U1.1 stays a fail; the robot takes the reservoir
+> by the lid's fin and passes.
+>
+> **S25 and L75** (S1-S3, U1, U4) re-run on the same model: 8 pass / 0 warn / 3 fail each, as before (U1.1 and the overflow
+> jar's U4.5 and U4.7). The hand takes the grip block on both (S2.3 passes); the block is in the same place on every module.
+> **Still failing every build:** the overflow jar (U4.5, U4.7), the right draw latch (U2.2) and the reservoir's handle (U1.1).
+
 **Results are for the final model at commit 9e6464a.** That model has the seal fixes (70779c5) and the real-part swaps
 (17cac94): the guard door slides 515 mm, the draw latches are on the chamber's side faces, the rod end is welded with a
 hermetic connector, the shaft seals are Ferrotec magnetic-fluid feedthroughs, the galvo is a basiCube 20 on a riser, the
@@ -169,7 +190,7 @@ Ranked by how often the job is done. Fixes have not yet been checked on the mode
 | 4 | M3.2 liners, **each alloy change** | The side liners have closed Ø22 holes round the ball screw. The back liner sits behind the carriage block. | Slots open to the top edge in the side liners; a two-piece back liner. |
 | 5 | M5.1, M6.1, M6.2 window | The ring screws (r = 32) are under the Ø90 lens, ~16 mm below it. The lens can drop only 20 mm before the window ring. The galvo is 4 mm under the guard top panel. The lens's 182.5 mm working distance fixes its height. | Ring screws on a bolt circle of r ≥ 60, outside the lens, where the bridge leaves ~42 mm for a short-arm key (use a torque-limiting key). Or a lift-off guard top panel plus a recalibration each time. |
 | 6 | M4.2, M4.3, M4.4 lid | The chute hangs 83 mm into the chamber, but the lid can lift only ~8 mm before the transducer meets the bridge. Moving forward, it meets the manual vacuum valve after 31 mm. Lid screw #4 is under the roller feedthrough and coupling. The camera can't come out of the bridge's Ø80 hole. | Hang the chute and gas knife from the walls. Move the vacuum valve clear of the lid's path, and lid screw #4 clear of the feedthrough. A ~Ø100 camera hole. |
-| 7 | M7.2 gland plate and rod O-rings | The rod is welded into a Ø22 end cap, and the gland plate's rod bore is Ø16, so the plate and its two 2-114 rod O-rings are trapped between the piston head and the cap. The stack itself comes out of the bottom (M7.4, pass). | A split gland plate, or a bolted end cap no wider than the rod, so the rod O-rings can be changed. |
+| 7 | M7.2 gland plate and rod O-rings (**fixed 2026-11-22 by the order, no part change**: see the update at the top) | The rod is welded into a Ø22 end cap, and the gland plate's rod bore is Ø16, so the plate and its two 2-114 rod O-rings are trapped between the piston head and the cap. The stack itself comes out of the bottom (M7.4, pass). | Take the gland plate out with the stack, then the rod out of the head and down through the plate on the bench. (A split gland plate or a clamped end cap was the earlier suggestion.) |
 | 8 | M8.2-M8.4 recoater servo and feedthrough | The servo (x −342 to −236) can't pass the front-left optics post or lift past the bridge. New: the Ferrotec unit's way out to the front is blocked after 126 mm by the left side draw latch. | Move the front-left post inboard, or fold the motor behind the chamber. Let the latch clear the feedthrough's path (or take the feedthrough out sideways once the servo is off). |
 | 9 | M9.1, M9.2 dosing stepper and roller feedthrough | The stepper (now y 107-181) and the feedthrough are under the bridge, with the docked sensor above and the guard's back panel behind. | Extend the bridge's reservoir slot back past the stepper, so both lift out through it. |
 | 10 | A2.45 metering-base screws | Two of four are under the roller feedthrough. | Move the tabs or screws clear of it. |
@@ -228,7 +249,7 @@ Ranked by how often the job is done. Fixes have not yet been checked on the mode
 | | |
 |---|---|
 | ![U4.7](analysis/out/ops/fail-M50-U4-7.png) U4.7 overflow jar against the outlet plenum | ![M5.1](analysis/out/ops/fail-M50-M5-1.png) M5.1 key on a window-ring screw under the lens |
-| ![M4.4](analysis/out/ops/fail-M50-M4-4.png) M4.4 lid moving out | ![M7.2](analysis/out/ops/fail-M50-M7-2.png) M7.2 gland plate against the welded rod end |
+| ![M4.4](analysis/out/ops/fail-M50-M4-4.png) M4.4 lid moving out | ![M7.2](analysis/out/ops/fail-M50-M7-2.png) M7.2 before round 4: the gland plate pulled down alone against the welded rod end (it now comes out with the stack and passes) |
 | ![M3.2](analysis/out/ops/fail-M50-M3-2.png) M3.2 liners against the carriage block | ![M8.2](analysis/out/ops/fail-M50-M8-2.png) M8.2 recoater servo against the front-left post |
 
 There are more in [`analysis/out/ops/`](analysis/out/ops/): M9.1, A2.3, A2.2, A2.5, A2.7 and A1.20 (that last one is an

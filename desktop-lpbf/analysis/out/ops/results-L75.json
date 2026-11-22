@@ -1,6 +1,6 @@
 {
  "module": "L75",
- "cad": "desktop-lpbf/cad",
+ "cad": "cad",
  "ops": [
   {
    "id": "U1",
@@ -212,7 +212,7 @@
        "screw": "Captive M6 panel screws on the module flange #1",
        "withdraw_ok": true,
        "tool": "hex key 5 mm, short arm in (ISO 2936 85 x 33)",
-       "arc": 225.0,
+       "arc": 210.0,
        "clearance": 6.22,
        "clear_with": "tool: Build module L75",
        "torque_ok": false,
@@ -241,7 +241,7 @@
     {
      "id": "S2.3",
      "op": "S2",
-     "step": "Hand on the module handle under the chamber",
+     "step": "Hand on the module handle's grip block, in front of the door",
      "do": "reach",
      "minutes": 1,
      "note": "",
