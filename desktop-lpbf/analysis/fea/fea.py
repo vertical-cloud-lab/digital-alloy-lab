@@ -21,10 +21,11 @@ Scratch (.brep/.inp/.frd/.dat) goes to /tmp/fea-run/; results to analysis/out/fe
 Memory (2026-11-22; the runner has 15 GB shared by several jobs, and this script must fit in 4.5 GB): gmsh and the model
 build take < 1 GB. The memory goes to ccx's direct solver: SPOOLES on the 265,000-node lid passed 4.2 GB before it was
 killed, and the recoater (300,000 nodes) and the bridge (350,000) are larger. So
-  - static steps use SPOOLES up to FEA_DIRECT_MAX nodes (default 150,000: 3.0 GB in all for the 141,500-node bridge) and
-    ccx's ITERATIVE CHOLESKY (PCG with an incomplete-Cholesky preconditioner, memory ~ the matrix) above;
-    FEA_SOLVER=SPOOLES or FEA_SOLVER="ITERATIVE CHOLESKY" forces one. On the door and the Z arm the two agree to 0.01 %
-    in displacement and 2 % in peak stress;
+  - static steps use SPOOLES up to FEA_DIRECT_MAX nodes (default 60,000) and ccx's ITERATIVE CHOLESKY (PCG with an
+    incomplete-Cholesky preconditioner, memory ~ the matrix: 1.5 GB for the lid) above. SPOOLES's memory depends on the
+    shape as well as the size: 3.0 GB in all for the 141,500-node bridge, but more than 4.4 GB for the 115,000-node
+    recoater, a compact block. FEA_SOLVER=SPOOLES or FEA_SOLVER="ITERATIVE CHOLESKY" forces one. On the door and the Z
+    arm the two agree to 0.01 % in displacement and 2 % in peak stress;
   - the bridge (case 6) is meshed coarser (hmax 10 mm, was 7) because *FREQUENCY needs SPOOLES here (this ccx has no
     PARDISO or PaStiX), and the PCG solver needs ~20 min for its gravity step (the rigid masses make it ill-conditioned);
   - several cases on the command line run one after another, each in its own process;
@@ -58,7 +59,7 @@ P = M.P
 AL = M.MAT["al6061"]
 HAZ_ALLOW = 110.0         # MPa, 6061-T6 weld heat-affected zone (as-welded, ~O/T4 strength)
 FATIGUE = AL["fat"]       # 96.5 MPa at 5e8 cycles (R = -1)
-DIRECT_MAX = int(os.environ.get("FEA_DIRECT_MAX", "150000"))   # nodes; SPOOLES above this outgrows a 4.5 GB budget
+DIRECT_MAX = int(os.environ.get("FEA_DIRECT_MAX", "60000"))    # nodes; SPOOLES above this can outgrow a 4.5 GB budget
 
 
 def solver_for(m):
@@ -854,7 +855,7 @@ def case6(parts, R):
         res = {}
         job = f"c6{tag}_static"
         write_model(job, m, AL, extra)
-        sol = solver_for(m)
+        sol = "SPOOLES"           # the modal step below needs SPOOLES on this mesh anyway (3.5 GB for 6b's 131,000 nodes)
         append(job, f"*STEP\n*STATIC, SOLVER={sol}\n*BOUNDARY\nFEET,1,3\n*DLOAD\nEALL,GRAV,9810.,0.,0.,-1.\n*CLOAD\n" + cl + "*NODE FILE\nU\n*EL FILE\nS\n*END STEP\n")
         run_ccx(job)
         U, S, vm = static_results(m, job)
@@ -997,7 +998,7 @@ def write_md(R):
               f"fill {g['fill_nom']:.0f} % (max {g['fill_max_cold']:.0f} % cold); path {g['path_mm']:.0f} mm; {g['splice']}. O-ring force {r['oring_force_N']['nominal'] / 1000:.1f} kN nominal, "
               f"{r['oring_force_N']['max_tolerance'] / 1000:.1f} kN at max squeeze, {r['oring_force_N']['parker_80A'] / 1000:.1f} kN on Parker's 80A bar. {'pass' if r['pass'] else 'FAIL'}."]
     L += ["", "## How each case was run", "",
-          "Since 2026-11-22 every case records when it ran, on which commit of the model, its mesh and its solver (SPOOLES up to 150,000 nodes, "
+          "Since 2026-11-22 every case records when it ran, on which commit of the model, its mesh and its solver (SPOOLES up to 60,000 nodes, "
           "ccx's ITERATIVE CHOLESKY above; the bridge on a coarser mesh so that its modes can use SPOOLES; see the script's docstring). "
           "Cases without a record ran earlier, on the model of their day.", "",
           "| Case | Run (UTC) | Model commit | Nodes | Solver |", "|---|---|---|---|---|"]
@@ -1011,8 +1012,9 @@ def write_md(R):
             L.append(f"| {k} | {run['utc']} | {run['commit']} | {run['nodes']:,}{ms} | {run['solver']} |")
         else:
             L.append(f"| {k} | before 2026-11-22 (not recorded) | – | {r.get('nodes', 0):,} | {'ITERATIVE CHOLESKY' if k in ('1', '1b') else 'SPOOLES'} |")
-    for line in R.get("checks", {}).get("notes", []):
-        L += ["", line]
+    for head, key in (("Checks of the solver and mesh settings", "checks"), ("What changed against the previous results", "changes")):
+        if R.get("notes", {}).get(key):
+            L += ["", f"### {head}", ""] + [f"- {x}" for x in R["notes"][key]]
     if "6" in R:
         L += ["", "Mode shapes (case 6): direction of the galvo's centre of mass in each mode, and where the largest motion is."]
         for v in R["6"]["variants"]:
