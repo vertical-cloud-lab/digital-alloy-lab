@@ -5,6 +5,8 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 
 **Low-profile version (2026-11-17):** [`low-profile.md`](low-profile.md) re-lays the machine out as three modules side by side on a VLM tray, 564 mm tall (581.2 mm since 2026-11-19, on real levelling mounts: [`fasteners.md`](fasteners.md)), as byu-vcl PR 318's height limits ask. It also has exact interference sweeps, MuJoCo and CalculiX checks, a mass budget, and a materials selection matched to the lab's other systems.
 
+**Round 4 (2026-11-22):** the machine now has an electrical design ([`electrical.md`](electrical.md): no custom PCBs are needed), an end-to-end optics check ([`optics.md`](optics.md)), instant quotes and a make-or-buy split for the custom parts ([`outsourcing.md`](outsourcing.md)), a check of every model part against the BOM ([`completeness-audit.md`](completeness-audit.md)), and the FreeCAD G-code simulated in CAMotics ([`machining.md`](machining.md#g-code-simulated-in-camotics-2026-11-22)). [`followup-checks.md`](followup-checks.md) §0 has the round summary.
+
 **Round 3 (2026-11-20 evening):** after a BYU machinist's review the chamber is a through-frame plus a bolted floor plate ([`chamber-construction.md`](chamber-construction.md)), nothing needs 5-axis, and the robots, assembly and safety are checked ([`followup-checks.md`](followup-checks.md) §0).
 
 **Follow-up checks (2026-11-20):** [`followup-checks.md`](followup-checks.md) collects the CalculiX, OpenFOAM, LIGGGHTS, MuJoCo, CAM and operation-by-operation checks, real parts, used and cheaper-source costs, and an optional tooling BOM. Two of its findings come before any purchase: the quoted laser is air-cooled and the machine would run inside the VLM ([`heat.md`](heat.md) §2), and the build module can't shed the laser's heat ([`heat.md`](heat.md) §1).
@@ -46,6 +48,10 @@ Nothing here has been built, quoted or reviewed by BYU's Laser Safety Officer or
 | [`safety.md`](safety.md) | laser, argon, aluminium powder, hot plate and robot safety: what BYU publishes, the standards, the numbers for this machine ([`safety_calcs.py`](safety_calcs.py)), gaps and parts ([`safety-parts.csv`](safety-parts.csv)) |
 | [`real-parts.md`](real-parts.md) | bought parts drawn to published dimensions ([`cad/vendor_parts.py`](cad/vendor_parts.py), [`vendor-parts.csv`](vendor-parts.csv)), checked against vendor CAD, and the fit problems they showed |
 | [`cost-scenarios.md`](cost-scenarios.md) | what the machine costs with used major parts and with cheaper same-spec catalogue parts, from live listings ([`cost/`](cost/)) |
+| [`electrical.md`](electrical.md) | the electrical design: supply and power box, UPS and DC rails, 95 devices and signals ([`electrical-io.csv`](electrical-io.csv)), controllers, the safety chain checked over every input combination, chamber feedthroughs, wiring, bonding and the aluminium-dust rules, heater-loop and power simulations, and the electrical BOM ([`electrical-bom.csv`](electrical-bom.csv)); custom PCBs: none needed |
+| [`optics.md`](optics.md) | the beam path from fibre to plate (spot, depth of focus, where the focus lands, clipping, field), irradiance against part ratings, thermal lensing (with a CalculiX cross-check), ghosts and back-reflection, safety optics, calibration and monitoring instruments, the layer camera, and the optics BOM ([`optics-bom.csv`](optics-bom.csv)) |
+| [`outsourcing.md`](outsourcing.md) | instant quotes for the custom parts (SendCutSend, OSH Cut, JLCCNC, JLC3DP; [`outsourcing-quotes.csv`](outsourcing-quotes.csv)), a should-cost model, and which parts to make at BYU, outsource or buy instead |
+| [`completeness-audit.md`](completeness-audit.md) | every model part mapped to its BOM line or parts list, and every BOM line to the model: what is generic, missing or inconsistent, and the BOM lines rewritten for the low-profile design |
 | [`notes/2026-11-20-pain-points.md`](notes/2026-11-20-pain-points.md) | 59 sourced pain points from similar and adjacent systems, each turned into a check or a change ([`pain-points.csv`](notes/pain-points.csv)) |
 
 ## 1. Short answers
@@ -280,6 +286,12 @@ It is an open frame with no inert enclosure and is roughly 10–30× too slow fo
 
 ### 3.2 Laser and optics
 
+**Checked end to end on 2026-11-22 in [`optics.md`](optics.md).** Its findings that change the design:
+- **Spot:** the drawn 5 mm collimator gives a 48 µm spot at f = 160 mm. A 75 µm spot needs a ~3.2 mm beam.
+- **Focus:** the window and cover slide push the focus 3.4 mm below the powder, so the lens needs raising and a shim range.
+- **Field:** the L75 plate's outer ring may be out of reach as drawn.
+- **Cover slides:** they need an AR coating.
+
 - **Laser.** Use a CW Yb fiber laser at 1070 nm, 300–500 W (run at 150–400 W), single-mode with M² ≤ 1.1. It needs analog power control, a TTL gate or modulation input (IPG's YLR-500-U3-SM-AC: to 100 kHz, ≤ 12 µs on/off), a hardware interlock input and a guide laser.
   - Aluminium reflects strongly at 1 µm, so keep power headroom: commercial Al work on an EOS M 290 uses 370 W.
   - Ask every vendor for M² and fiber core size. "Single-module" on Raycus and similar listings describes packaging, not beam mode.
@@ -361,6 +373,13 @@ Sizing comes from `budgets.py`, assuming AlSi10Mg, 30 µm layers, a 1.8 dose fac
 - **No belts and no lubricant inside the chamber.** Use dry or vacuum grease, and bellows or covers over the screws. Motors sit outside on rotary feedthroughs, or are sealed, to protect the gas.
 
 ### 3.6 Controls and electronics
+
+**Updated 2026-11-22 in [`electrical.md`](electrical.md), which replaces the choices below where they differ:**
+- **Controls:** an RTC6 Ethernet board streams SL2-100 to the scan head. A Productivity1000 PLC reads the thermocouples and 4–20 mA lines, and a Banner XS26 safety controller runs the interlocks.
+- **Power:** a power box beside the rack holds the main disconnect and four AC branches.
+- **Rack:** a 4U drawer in a 12U rack.
+- **Scan head supply:** a single 24 V rail, not ±15 V.
+- **Custom PCBs:** none needed.
 
 - **Supervisor.** A Raspberry Pi 5 or small Linux PC runs one Python service. It handles the recipe, the state machine (purge, heat, spread, expose, repeat), logging and a REST API. That fits the lab's other automated instruments, and a CubOS-driven gantry can call it.
 - **Scan and laser controller.** It outputs XY2-100 to the head and drives the laser gate, analog power and PWM, with programmable laser on/off delays and skywriting. Options:
