@@ -10,9 +10,9 @@ the first section answers him.
 Sterling asked for last round's CAMotics install error to be sorted out. It was a library problem on the runner, not a
 CAMotics bug. CAMotics now runs in Docker and has cut every setup of the frame and the floor plate.
 
-It found six problems in the G-code, all caused by `freecad_cam.py`'s settings. All six are fixed. The re-run shows no
-gouges and no rapids through stock. What's left is the frame features that were never programmed, six undersized hole
-steps in the floor plate, and two slugs that drop out.
+It found seven problems in the G-code, all caused by `freecad_cam.py`'s settings. All seven are fixed. The re-run shows no
+gouges and no rapids through stock. What's left is the frame features that were never programmed, and two slugs that
+drop out of the floor plate.
 
 ### The install error, and the fix
 
@@ -69,23 +69,23 @@ fixes, is in [`camotics_sim_before_fixes.json`](analysis/out/machining/camotics/
 | Setup | Cut away (cm³) | Rapids through stock | CAMotics time (min) | Recount (min) | FreeCAD's estimate (min) |
 |---|---|---|---|---|---|
 | frame A, top up | 427 | 0 | 41.7 | 41.3 | 49.2 |
-| frame B, bottom up | 445 | 0 | 6.8 | 6.5 | 11.0 |
+| frame B, bottom up | 445 | 0 | 6.9 | 6.5 | 11.0 |
 | frame C, front up (door) | 323 | 0 | 11.1 | 10.5 | 15.9 |
 | floor A, top up | 455 | 0 | 51.2 | 51.0 | 58.9 |
 | floor B, bottom up | 177 | 0 | 10.0 | 9.2 | 23.9 |
-| **frame / floor plate** | | **0** | **59.6 / 61.2** | **58.3 / 60.2** | **76.0 / 82.8** |
+| **frame / floor plate** | | **0** | **59.7 / 61.2** | **58.4 / 60.2** | **76.1 / 82.8** |
 
 | Part | Gouge deeper than 1 mm | Leftover deeper than 1 mm | Deepest leftover | Loose pieces |
 |---|---|---|---|---|
 | frame | none | 31.8 cm³ in 27 places | 12.4 mm: the bore in the right wall at y 0, z 58-82 | none |
-| floor plate | none (deepest 0.5 mm, voxel noise) | 0.14 cm³ in 6 places | 2.0 mm: four hole steps at (±135, ±90) | port slug 52.6 cm³, slot core 12.7 cm³; both drop in setup A |
+| floor plate | none (deepest 0.5 mm, voxel noise) | none (8 single voxels at the port's lower edge) | 1.0 mm (one voxel) | port slug 52.6 cm³, slot core 12.7 cm³; both drop in setup A |
 
 - **All of the frame's leftover is setup-C work that `freecad_cam.py` never programmed:** the back-wall inlet slot
   (13.1 cm³), the side-wall bores (7.3 and 2 × 3.5 cm³), the ports, the rail holes and the plenum and insert holes.
   Setup C programs only the door opening, as before.
-- **The floor plate's leftover is six hole steps wider than the biggest drill in the set.** They are at (±135, ±90),
-  z -11 to -9.5, and at (±58, 0), z -8 to -7. The 6.0 mm drill leaves up to 1 mm of wall. They need the right drill
-  or a helical end-mill pass.
+- **The floor plate is clean at this resolution.** One thing sits under the 1 mm threshold: the six Ø7.3 hole steps at
+  (±135, ±90) and (±58, 0) are drilled 6.0 mm, the biggest drill in the set, which leaves a 0.65 mm wall. They need a
+  7.3 mm drill or a helical end-mill pass.
 
 | Floor plate, first run | Floor plate, after the fixes |
 |---|---|
@@ -123,6 +123,13 @@ fixes, is in [`camotics_sim_before_fixes.json`](analysis/out/machining/camotics/
    - Fix: the trepan and the slot profiles go to z -23.2, 0.5 mm past the blank, so the slugs drop in setup A. The
      fixture must leave room under them.
    - The 20 × 104 slot is cut by its outline only, so its 7 × 91 × 20 mm core drops too. Hold it, or pocket the slot.
+7. **The G-code's comments had nested parentheses.** The post writes each op's label into a comment, and labels like
+   "rough (2.7 mm radial)" closed the comment early.
+   - LinuxCNC rejects a nested comment, and another control may misread the rest of the line.
+   - CAMotics logged 6-32 parse errors in every setup but frame C, and it dropped floor B's last two drill ops. That
+     showed up as leftover in six stepped holes.
+   - Fix: op labels without parentheses (`clean_label` in `freecad_cam.py`). `camotics_sim.py` also cleans comments and
+     records any CAMotics error; the final run had none.
 
 Before the fixes, floor setup B had 319 rapids through stock: 303 from the notch tool, 16 from the drills. The floor
 plate had 0.25 cm³ of gouges and 71 cm³ of leftover deeper than 1 mm, 65 cm³ of it the two slugs. The frame had no
@@ -140,7 +147,7 @@ The simulation's drills are flat, so it can't see their points. By arithmetic, f
 
 ### Cycle time
 
-- **CAMotics' time and the recount agree to within the rapid speed:** 59.6 against 58.3 min for the frame, 61.2 against
+- **CAMotics' time and the recount agree to within the rapid speed:** 59.7 against 58.4 min for the frame, 61.2 against
   60.2 min for the floor plate. Both are length / F. CAMotics runs rapids at 10 m/min, the recount at the VF-4's
   25.4 m/min.
 - **FreeCAD's own estimate is 15-140 % higher than CAMotics' per setup,** because it times every move that changes Z at
@@ -229,7 +236,7 @@ He is right on both counts.
   - Taps, reamers and tool changes are not timed.
   - Its 1.0 Adaptive op only sees the stock as a box, so the frame's opening was cut with Profile passes. Its Drilling and
     Helix ops needed work-arounds headless; both are documented in the script.
-  - CAMotics now runs (in Docker) and has cut this G-code; six fixes followed. See
+  - CAMotics now runs (in Docker) and has cut this G-code; seven fixes followed. See
     [G-code simulated in CAMotics](#g-code-simulated-in-camotics-2026-11-22) above. The times in this bullet are from
     before those fixes.
   - Use it as a head start and a check. The shop will still program and prove out in its own CAM.

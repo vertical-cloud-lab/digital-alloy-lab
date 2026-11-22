@@ -19,41 +19,44 @@
     {
      "z0": 27.0,
      "z1": 59.0,
-     "stl": "/tmp/cam-sim3/frame_A/frame_A_s1.stl",
-     "seconds": 37.4,
+     "stl": "/tmp/cam-sim4/frame_A/frame_A_s1.stl",
+     "seconds": 30.0,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-114.75,-973.5), (159.25,114.75,-940.5)) at 0.5 grid resolution",
-      "Time: 18.35 secs Triangles: 1479164 Triangles/sec: 80592.68",
+      "Time: 12.77 secs Triangles: 1479164 Triangles/sec: 115854.23",
       "Reducing mesh",
-      "Time: 16.75 secs Triangles: 7608 Reduction: 99.49%"
+      "Time: 15.13 secs Triangles: 7608 Reduction: 99.49%"
      ],
-     "not_implemented": []
+     "not_implemented": [],
+     "errors": []
     },
     {
      "z0": 59.0,
      "z1": 91.0,
-     "stl": "/tmp/cam-sim3/frame_A/frame_A_s2.stl",
-     "seconds": 31.2,
+     "stl": "/tmp/cam-sim4/frame_A/frame_A_s2.stl",
+     "seconds": 33.3,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-114.75,-941.5), (159.25,114.75,-908.5)) at 0.5 grid resolution",
-      "Time: 17.04 secs Triangles: 1576180 Triangles/sec: 92503.85",
+      "Time: 17.11 secs Triangles: 1576180 Triangles/sec: 92144.69",
       "Reducing mesh",
-      "Time: 12.09 secs Triangles: 11223 Reduction: 99.29%"
+      "Time: 14.18 secs Triangles: 11223 Reduction: 99.29%"
      ],
-     "not_implemented": []
+     "not_implemented": [],
+     "errors": []
     },
     {
      "z0": 91.0,
      "z1": 121.55,
-     "stl": "/tmp/cam-sim3/frame_A/frame_A_s3.stl",
-     "seconds": 43.7,
+     "stl": "/tmp/cam-sim4/frame_A/frame_A_s3.stl",
+     "seconds": 31.6,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-114.75,-909.475), (159.25,114.75,-877.975)) at 0.5 grid resolution",
-      "Time: 26.71 secs Triangles: 1575480 Triangles/sec: 58981.88",
+      "Time: 16.03 secs Triangles: 1575480 Triangles/sec: 98310.52",
       "Reducing mesh",
-      "Time: 14.87 secs Triangles: 33597 Reduction: 97.87%"
+      "Time: 13.61 secs Triangles: 33597 Reduction: 97.87%"
      ],
-     "not_implemented": []
+     "not_implemented": [],
+     "errors": []
     }
    ],
    "removed_cm3": 427.17,
@@ -87,7 +90,7 @@
      "recount_min": 1.96
     },
     {
-     "label": "Opening 280x190 R10 from top, rough (2.7 mm radial)",
+     "label": "Opening 280x190 R10 from top, rough, 2.7 mm radial",
      "tool": 2,
      "camotics_min": 0.97,
      "camotics_vf4_rapids_min": 0.96,
@@ -95,7 +98,7 @@
      "recount_min": 0.95
     },
     {
-     "label": "Opening 280x190 R10 from top, finish (0.3 mm radial, full depth)",
+     "label": "Opening 280x190 R10 from top, finish, 0.3 mm radial, full depth",
      "tool": 2,
      "camotics_min": 0.52,
      "camotics_vf4_rapids_min": 0.52,
@@ -145,12 +148,13 @@
      "full_diameter_short_by_mm": 1.5
     }
    ],
-   "pieces_free_after_setup_cm3": []
+   "pieces_free_after_setup_cm3": [],
+   "comments_with_nested_parentheses": 0
   },
   "frame_B": {
    "part": "frame",
    "rot_about_x_deg": 180,
-   "moves": 772,
+   "moves": 710,
    "camotics_runs": [
     {
      "z0": -121.55,
@@ -161,41 +165,44 @@
     {
      "z0": -89.5,
      "z1": -57.5,
-     "stl": "/tmp/cam-sim3/frame_B/frame_B_s1.stl",
-     "seconds": 35.3,
+     "stl": "/tmp/cam-sim4/frame_B/frame_B_s1.stl",
+     "seconds": 31.8,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-114.75,-1090), (159.25,114.75,-1057)) at 0.5 grid resolution",
-      "Time: 15.71 secs Triangles: 1472328 Triangles/sec: 93741.79",
+      "Time: 13.96 secs Triangles: 1472328 Triangles/sec: 105490.35",
       "Reducing mesh",
-      "Time: 17.28 secs Triangles: 5461 Reduction: 99.63%"
+      "Time: 15.61 secs Triangles: 5463 Reduction: 99.63%"
      ],
-     "not_implemented": []
+     "not_implemented": [],
+     "errors": []
     },
     {
      "z0": -57.5,
      "z1": -25.5,
-     "stl": "/tmp/cam-sim3/frame_B/frame_B_s2.stl",
-     "seconds": 37.2,
+     "stl": "/tmp/cam-sim4/frame_B/frame_B_s2.stl",
+     "seconds": 32.9,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-114.75,-1058), (159.25,114.75,-1025)) at 0.5 grid resolution",
-      "Time: 20.50 secs Triangles: 1575468 Triangles/sec: 76846.63",
+      "Time: 16.74 secs Triangles: 1575468 Triangles/sec: 94099.95",
       "Reducing mesh",
-      "Time: 14.35 secs Triangles: 11014 Reduction: 99.30%"
+      "Time: 14.09 secs Triangles: 11014 Reduction: 99.30%"
      ],
-     "not_implemented": []
+     "not_implemented": [],
+     "errors": []
     },
     {
      "z0": -25.5,
      "z1": 5.45,
-     "stl": "/tmp/cam-sim3/frame_B/frame_B_s3.stl",
-     "seconds": 35.7,
+     "stl": "/tmp/cam-sim4/frame_B/frame_B_s3.stl",
+     "seconds": 32.4,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-114.75,-1026.03), (159.25,114.75,-994.025)) at 0.5 grid resolution",
-      "Time: 19.32 secs Triangles: 1518140 Triangles/sec: 78577.60",
+      "Time: 16.87 secs Triangles: 1518140 Triangles/sec: 89982.94",
       "Reducing mesh",
-      "Time: 14.18 secs Triangles: 23922 Reduction: 98.42%"
+      "Time: 13.34 secs Triangles: 23922 Reduction: 98.42%"
      ],
-     "not_implemented": []
+     "not_implemented": [],
+     "errors": []
     }
    ],
    "removed_cm3": 445.03,
@@ -203,13 +210,13 @@
    "rapids_through_stock": [],
    "n_rapids_through_stock": 0,
    "time": {
-    "camotics_min": 6.84,
-    "camotics_feed_min": 6.2,
-    "camotics_rapid_min": 0.64,
-    "with_vf4_rapids_min": 6.45,
-    "freecad_job_cycle_time": "00:10:57",
-    "freecad_sum_of_ops_min": 10.95,
-    "recount_min": 6.45
+    "camotics_min": 6.92,
+    "camotics_feed_min": 6.31,
+    "camotics_rapid_min": 0.61,
+    "with_vf4_rapids_min": 6.55,
+    "freecad_job_cycle_time": "00:11:00",
+    "freecad_sum_of_ops_min": 11.0,
+    "recount_min": 6.55
    },
    "ops": [
     {
@@ -223,10 +230,10 @@
     {
      "label": "Outside 312x222 R8, adaptive, bottom up to mid-height",
      "tool": 2,
-     "camotics_min": 2.22,
-     "camotics_vf4_rapids_min": 2.04,
-     "freecad_cycle_time": "00:03:25",
-     "recount_min": 2.03
+     "camotics_min": 2.3,
+     "camotics_vf4_rapids_min": 2.14,
+     "freecad_cycle_time": "00:03:28",
+     "recount_min": 2.14
     },
     {
      "label": "Rebate 8 x 3.9 round the bottom of the opening",
@@ -237,7 +244,7 @@
      "recount_min": 0.56
     },
     {
-     "label": "Opening from bottom, rough (2.7 mm radial)",
+     "label": "Opening from bottom, rough, 2.7 mm radial",
      "tool": 2,
      "camotics_min": 0.96,
      "camotics_vf4_rapids_min": 0.96,
@@ -245,7 +252,7 @@
      "recount_min": 0.95
     },
     {
-     "label": "Opening from bottom, finish (0.3 mm radial)",
+     "label": "Opening from bottom, finish, 0.3 mm radial",
      "tool": 2,
      "camotics_min": 0.52,
      "camotics_vf4_rapids_min": 0.52,
@@ -287,7 +294,8 @@
      "full_diameter_short_by_mm": 1.8
     }
    ],
-   "pieces_free_after_setup_cm3": []
+   "pieces_free_after_setup_cm3": [],
+   "comments_with_nested_parentheses": 0
   },
   "frame_C": {
    "part": "frame",
@@ -333,28 +341,30 @@
     {
      "z0": 78.0,
      "z1": 110.0,
-     "stl": "/tmp/cam-sim3/frame_C/frame_C_s6.stl",
-     "seconds": 47.4,
+     "stl": "/tmp/cam-sim4/frame_C/frame_C_s6.stl",
+     "seconds": 36.9,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-5.95,-922.5), (159.25,122.05,-889.5)) at 0.5 grid resolution",
-      "Time: 33.79 secs Triangles: 961656 Triangles/sec: 28461.08",
+      "Time: 25.52 secs Triangles: 961656 Triangles/sec: 37687.89",
       "Reducing mesh",
-      "Time: 10.87 secs Triangles: 3035 Reduction: 99.68%"
+      "Time: 9.29 secs Triangles: 3035 Reduction: 99.68%"
      ],
-     "not_implemented": []
+     "not_implemented": [],
+     "errors": []
     },
     {
      "z0": 110.0,
      "z1": 114.3,
-     "stl": "/tmp/cam-sim3/frame_C/frame_C_s7.stl",
-     "seconds": 14.2,
+     "stl": "/tmp/cam-sim4/frame_C/frame_C_s7.stl",
+     "seconds": 11.3,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-5.95,-890.6), (159.25,122.05,-885.1)) at 0.5 grid resolution",
-      "Time: 9.19 secs Triangles: 372464 Triangles/sec: 40529.25",
+      "Time: 6.87 secs Triangles: 372464 Triangles/sec: 54214.04",
       "Reducing mesh",
-      "Time: 3.32 secs Triangles: 2315 Reduction: 99.38%"
+      "Time: 3.11 secs Triangles: 2315 Reduction: 99.38%"
      ],
-     "not_implemented": []
+     "not_implemented": [],
+     "errors": []
     }
    ],
    "removed_cm3": 323.17,
@@ -381,7 +391,8 @@
     }
    ],
    "drills": [],
-   "pieces_free_after_setup_cm3": []
+   "pieces_free_after_setup_cm3": [],
+   "comments_with_nested_parentheses": 0
   },
   "floor_A": {
    "part": "floor",
@@ -391,15 +402,16 @@
     {
      "z0": -22.7,
      "z1": 2.7,
-     "stl": "/tmp/cam-sim3/floor_A/floor_A_s0.stl",
-     "seconds": 40.4,
+     "stl": "/tmp/cam-sim4/floor_A/floor_A_s0.stl",
+     "seconds": 34.1,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-114.75,-1023.25), (159.25,114.75,-996.75)) at 0.5 grid resolution",
-      "Time: 24.38 secs Triangles: 1534096 Triangles/sec: 62925.42",
+      "Time: 18.01 secs Triangles: 1534096 Triangles/sec: 85162.54",
       "Reducing mesh",
-      "Time: 14.10 secs Triangles: 29146 Reduction: 98.10%"
+      "Time: 14.00 secs Triangles: 29146 Reduction: 98.10%"
      ],
-     "not_implemented": []
+     "not_implemented": [],
+     "errors": []
     }
    ],
    "removed_cm3": 454.8,
@@ -425,7 +437,7 @@
      "recount_min": 1.67
     },
     {
-     "label": "Step the 4 mm band round the pad (adaptive outside the pad)",
+     "label": "Step the 4 mm band round the pad, adaptive outside the pad",
      "tool": 2,
      "camotics_min": 3.89,
      "camotics_vf4_rapids_min": 3.87,
@@ -449,7 +461,7 @@
      "recount_min": 35.08
     },
     {
-     "label": "Port 96 mm through: helical trepan (slug drops)",
+     "label": "Port 96 mm through: helical trepan, slug drops",
      "tool": 2,
      "camotics_min": 5.3,
      "camotics_vf4_rapids_min": 5.29,
@@ -465,7 +477,7 @@
      "recount_min": 4.1
     },
     {
-     "label": "Drill 2 x 6.0 mm step z -14.50..-4.00 (model)",
+     "label": "Drill 2 x 6.0 mm step z -14.50..-4.00, model",
      "tool": 8,
      "camotics_min": 0.12,
      "camotics_vf4_rapids_min": 0.08,
@@ -475,7 +487,7 @@
    ],
    "drills": [
     {
-     "label": "Drill 2 x 6.0 mm step z -14.50..-4.00 (model)",
+     "label": "Drill 2 x 6.0 mm step z -14.50..-4.00, model",
      "drill_mm": 6.0,
      "model_floor_z": -14.5,
      "tip_z": -14.5,
@@ -486,7 +498,8 @@
    "pieces_free_after_setup_cm3": [
     59.17,
     14.33
-   ]
+   ],
+   "comments_with_nested_parentheses": 0
   },
   "floor_B": {
    "part": "floor",
@@ -496,18 +509,19 @@
     {
      "z0": -2.7,
      "z1": 22.7,
-     "stl": "/tmp/cam-sim3/floor_B/floor_B_s0.stl",
-     "seconds": 27.0,
+     "stl": "/tmp/cam-sim4/floor_B/floor_B_s0.stl",
+     "seconds": 33.6,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-114.75,-1003.25), (159.25,114.75,-976.75)) at 0.5 grid resolution",
-      "Time: 11.30 secs Triangles: 1440528 Triangles/sec: 127438.41",
+      "Time: 15.55 secs Triangles: 1442664 Triangles/sec: 92779.75",
       "Reducing mesh",
-      "Time: 13.62 secs Triangles: 27396 Reduction: 98.10%"
+      "Time: 15.45 secs Triangles: 27396 Reduction: 98.10%"
      ],
-     "not_implemented": []
+     "not_implemented": [],
+     "errors": []
     }
    ],
-   "removed_cm3": 177.18,
+   "removed_cm3": 177.49,
    "gouge_cm3_raw": 0.0,
    "rapids_through_stock": [],
    "n_rapids_through_stock": 0,
@@ -530,7 +544,7 @@
      "recount_min": 1.77
     },
     {
-     "label": "18 U-notches 8 wide x 8 deep (adaptive outside the outline)",
+     "label": "18 U-notches 8 wide x 8 deep, adaptive outside the outline",
      "tool": 9,
      "camotics_min": 6.38,
      "camotics_vf4_rapids_min": 6.05,
@@ -538,7 +552,7 @@
      "recount_min": 6.04
     },
     {
-     "label": "Drill 10 x 4.2 mm step z -20.00..-14.00 (model)",
+     "label": "Drill 10 x 4.2 mm step z -20.00..-14.00, model",
      "tool": 7,
      "camotics_min": 0.28,
      "camotics_vf4_rapids_min": 0.21,
@@ -546,7 +560,7 @@
      "recount_min": 0.21
     },
     {
-     "label": "Drill 4 x 6.0 mm step z -20.00..-11.00 (model)",
+     "label": "Drill 4 x 6.0 mm step z -20.00..-11.00, model",
      "tool": 8,
      "camotics_min": 0.18,
      "camotics_vf4_rapids_min": 0.13,
@@ -554,7 +568,7 @@
      "recount_min": 0.13
     },
     {
-     "label": "Drill 2 x 6.0 mm step z -20.00..-8.00 (model)",
+     "label": "Drill 2 x 6.0 mm step z -20.00..-8.00, model",
      "tool": 8,
      "camotics_min": 0.11,
      "camotics_vf4_rapids_min": 0.08,
@@ -562,7 +576,7 @@
      "recount_min": 0.08
     },
     {
-     "label": "Drill 2 x 6.0 mm step z -20.00..-10.00 (model)",
+     "label": "Drill 2 x 6.0 mm step z -20.00..-10.00, model",
      "tool": 8,
      "camotics_min": 0.08,
      "camotics_vf4_rapids_min": 0.06,
@@ -570,7 +584,7 @@
      "recount_min": 0.06
     },
     {
-     "label": "Drill 4 x 6.0 mm step z -20.00..-12.50 (model)",
+     "label": "Drill 4 x 6.0 mm step z -20.00..-12.50, model",
      "tool": 8,
      "camotics_min": 0.12,
      "camotics_vf4_rapids_min": 0.1,
@@ -578,7 +592,7 @@
      "recount_min": 0.1
     },
     {
-     "label": "Drill 10 x 3.3 mm step z -14.00..-12.50 (model)",
+     "label": "Drill 10 x 3.3 mm step z -14.00..-12.50, model",
      "tool": 6,
      "camotics_min": 0.18,
      "camotics_vf4_rapids_min": 0.11,
@@ -586,7 +600,7 @@
      "recount_min": 0.12
     },
     {
-     "label": "Drill 4 x 5.0 mm step z -12.50..-11.00 (model)",
+     "label": "Drill 4 x 5.0 mm step z -12.50..-11.00, model",
      "tool": 5,
      "camotics_min": 0.07,
      "camotics_vf4_rapids_min": 0.05,
@@ -594,7 +608,7 @@
      "recount_min": 0.05
     },
     {
-     "label": "Drill 18 x 4.2 mm step z -12.00..-4.00 (model), through",
+     "label": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
      "tool": 7,
      "camotics_min": 0.68,
      "camotics_vf4_rapids_min": 0.53,
@@ -602,7 +616,7 @@
      "recount_min": 0.53
     },
     {
-     "label": "Drill 4 x 6.0 mm step z -11.00..-9.00 (model)",
+     "label": "Drill 4 x 6.0 mm step z -11.00..-9.00, model",
      "tool": 8,
      "camotics_min": 0.12,
      "camotics_vf4_rapids_min": 0.06,
@@ -610,7 +624,7 @@
      "recount_min": 0.06
     },
     {
-     "label": "Drill 2 x 6.0 mm step z -8.00..-6.50 (model)",
+     "label": "Drill 2 x 6.0 mm step z -8.00..-6.50, model",
      "tool": 8,
      "camotics_min": 0.05,
      "camotics_vf4_rapids_min": 0.03,
@@ -620,7 +634,7 @@
    ],
    "drills": [
     {
-     "label": "Drill 10 x 4.2 mm step z -20.00..-14.00 (model)",
+     "label": "Drill 10 x 4.2 mm step z -20.00..-14.00, model",
      "drill_mm": 4.2,
      "model_floor_z": 14.0,
      "tip_z": 14.0,
@@ -628,7 +642,7 @@
      "full_diameter_short_by_mm": 1.26
     },
     {
-     "label": "Drill 4 x 6.0 mm step z -20.00..-11.00 (model)",
+     "label": "Drill 4 x 6.0 mm step z -20.00..-11.00, model",
      "drill_mm": 6.0,
      "model_floor_z": 11.0,
      "tip_z": 11.0,
@@ -636,7 +650,7 @@
      "full_diameter_short_by_mm": 1.8
     },
     {
-     "label": "Drill 2 x 6.0 mm step z -20.00..-8.00 (model)",
+     "label": "Drill 2 x 6.0 mm step z -20.00..-8.00, model",
      "drill_mm": 6.0,
      "model_floor_z": 8.0,
      "tip_z": 8.0,
@@ -644,7 +658,7 @@
      "full_diameter_short_by_mm": 1.8
     },
     {
-     "label": "Drill 2 x 6.0 mm step z -20.00..-10.00 (model)",
+     "label": "Drill 2 x 6.0 mm step z -20.00..-10.00, model",
      "drill_mm": 6.0,
      "model_floor_z": 10.0,
      "tip_z": 10.0,
@@ -652,7 +666,7 @@
      "full_diameter_short_by_mm": 1.8
     },
     {
-     "label": "Drill 4 x 6.0 mm step z -20.00..-12.50 (model)",
+     "label": "Drill 4 x 6.0 mm step z -20.00..-12.50, model",
      "drill_mm": 6.0,
      "model_floor_z": 12.5,
      "tip_z": 12.5,
@@ -660,7 +674,7 @@
      "full_diameter_short_by_mm": 1.8
     },
     {
-     "label": "Drill 10 x 3.3 mm step z -14.00..-12.50 (model)",
+     "label": "Drill 10 x 3.3 mm step z -14.00..-12.50, model",
      "drill_mm": 3.3,
      "model_floor_z": 12.5,
      "tip_z": 12.5,
@@ -668,7 +682,7 @@
      "full_diameter_short_by_mm": 0.99
     },
     {
-     "label": "Drill 4 x 5.0 mm step z -12.50..-11.00 (model)",
+     "label": "Drill 4 x 5.0 mm step z -12.50..-11.00, model",
      "drill_mm": 5.0,
      "model_floor_z": 11.0,
      "tip_z": 11.0,
@@ -676,7 +690,7 @@
      "full_diameter_short_by_mm": 1.5
     },
     {
-     "label": "Drill 18 x 4.2 mm step z -12.00..-4.00 (model), through",
+     "label": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
      "drill_mm": 4.2,
      "model_floor_z": 4.0,
      "tip_z": 2.763,
@@ -684,7 +698,7 @@
      "full_diameter_short_by_mm": 0.02
     },
     {
-     "label": "Drill 4 x 6.0 mm step z -11.00..-9.00 (model)",
+     "label": "Drill 4 x 6.0 mm step z -11.00..-9.00, model",
      "drill_mm": 6.0,
      "model_floor_z": 9.0,
      "tip_z": 9.0,
@@ -692,7 +706,7 @@
      "full_diameter_short_by_mm": 1.8
     },
     {
-     "label": "Drill 2 x 6.0 mm step z -8.00..-6.50 (model)",
+     "label": "Drill 2 x 6.0 mm step z -8.00..-6.50, model",
      "drill_mm": 6.0,
      "model_floor_z": 6.5,
      "tip_z": 6.5,
@@ -703,7 +717,8 @@
    "pieces_free_after_setup_cm3": [
     52.6,
     12.74
-   ]
+   ],
+   "comments_with_nested_parentheses": 0
   }
  },
  "parts": {
@@ -1303,17 +1318,17 @@
   },
   "floor": {
    "target_cm3": 1115.77,
-   "simulated_cm3": 1117.51,
+   "simulated_cm3": 1117.2,
    "stock_cm3": 1814.83,
    "gouge_all_cm3": 0.965,
-   "leftover_all_cm3": 2.707,
+   "leftover_all_cm3": 2.399,
    "gouge_deeper_than_min_cm3": 0.0,
-   "leftover_deeper_than_min_cm3": 0.137,
+   "leftover_deeper_than_min_cm3": 0.001,
    "min_depth_mm": 1.0,
    "n_gouge_regions": 0,
-   "n_leftover_regions": 14,
+   "n_leftover_regions": 8,
    "max_gouge_depth_mm": 0.5,
-   "max_leftover_mm": 2.0,
+   "max_leftover_mm": 1.0,
    "loose_pieces": [
     {
      "volume_cm3": 52.6,
@@ -1353,144 +1368,6 @@
    "n_loose_pieces": 2,
    "gouges": [],
    "leftovers": [
-    {
-     "volume_mm3": 25.5,
-     "max_depth_mm": 2.0,
-     "deepest_at": [
-      -135.75,
-      -90.75,
-      -10.75
-     ],
-     "bbox": [
-      [
-       -137.5,
-       -132.5
-      ],
-      [
-       -92.5,
-       -87.5
-      ],
-      [
-       -11.0,
-       -9.5
-      ]
-     ]
-    },
-    {
-     "volume_mm3": 25.5,
-     "max_depth_mm": 2.0,
-     "deepest_at": [
-      -135.75,
-      89.25,
-      -10.75
-     ],
-     "bbox": [
-      [
-       -137.5,
-       -132.5
-      ],
-      [
-       87.5,
-       92.5
-      ],
-      [
-       -11.0,
-       -9.5
-      ]
-     ]
-    },
-    {
-     "volume_mm3": 25.5,
-     "max_depth_mm": 2.0,
-     "deepest_at": [
-      134.25,
-      -90.75,
-      -10.75
-     ],
-     "bbox": [
-      [
-       132.5,
-       137.5
-      ],
-      [
-       -92.5,
-       -87.5
-      ],
-      [
-       -11.0,
-       -9.5
-      ]
-     ]
-    },
-    {
-     "volume_mm3": 25.5,
-     "max_depth_mm": 2.0,
-     "deepest_at": [
-      134.25,
-      89.25,
-      -10.75
-     ],
-     "bbox": [
-      [
-       132.5,
-       137.5
-      ],
-      [
-       87.5,
-       92.5
-      ],
-      [
-       -11.0,
-       -9.5
-      ]
-     ]
-    },
-    {
-     "volume_mm3": 17.0,
-     "max_depth_mm": 1.5,
-     "deepest_at": [
-      -59.25,
-      -0.75,
-      -7.75
-     ],
-     "bbox": [
-      [
-       -60.5,
-       -55.5
-      ],
-      [
-       -2.5,
-       2.5
-      ],
-      [
-       -8.0,
-       -7.0
-      ]
-     ]
-    },
-    {
-     "volume_mm3": 17.0,
-     "max_depth_mm": 1.5,
-     "deepest_at": [
-      56.75,
-      -0.75,
-      -7.75
-     ],
-     "bbox": [
-      [
-       55.5,
-       60.5
-      ],
-      [
-       -2.5,
-       2.5
-      ],
-      [
-       -8.0,
-       -7.0
-      ]
-     ]
-    },
     {
      "volume_mm3": 0.1,
      "max_depth_mm": 1.0,

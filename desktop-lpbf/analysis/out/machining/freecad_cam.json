@@ -1,6 +1,6 @@
 {
  "tool": "FreeCAD 1.0.2 (39319 (Git)), CAM workbench, run headless with freecadcmd",
- "post": "linuxcnc (FreeCAD's Path/Post/scripts/linuxcnc_post.py, --precision 3), mm, G-code in /tmp/chamber-cam3/gcode",
+ "post": "linuxcnc (FreeCAD's Path/Post/scripts/linuxcnc_post.py, --precision 3), mm, G-code in /tmp/chamber-cam4/gcode",
  "machine": "Haas VF-4 (CT40, 8100 rpm, 22.4 kW), 3-axis; rapids 25.4 m/min for the recount",
  "material": "6061-T6",
  "tools": {
@@ -130,9 +130,9 @@
    },
    "floor": {
     "gouge_deeper_than_min_cm3": 0.0,
-    "leftover_deeper_than_min_cm3": 0.137,
+    "leftover_deeper_than_min_cm3": 0.001,
     "max_gouge_depth_mm": 0.5,
-    "max_leftover_mm": 2.0,
+    "max_leftover_mm": 1.0,
     "n_loose_pieces": 2
    }
   },
@@ -143,7 +143,7 @@
    },
    "frame_B": {
     "rapids_through_stock": 0,
-    "camotics_min": 6.84
+    "camotics_min": 6.92
    },
    "frame_C": {
     "rapids_through_stock": 0,
@@ -172,7 +172,7 @@
       -5.45,
       121.55
      ],
-     "gcode": "/tmp/chamber-cam3/gcode/frame_A.ngc",
+     "gcode": "/tmp/chamber-cam4/gcode/frame_A.ngc",
      "freecad_job_cycle_time": "00:49:14",
      "ops": [
       {
@@ -239,7 +239,7 @@
       },
       {
        "op": "Profile",
-       "label": "Opening 280x190 R10 from top, rough (2.7 mm radial)",
+       "label": "Opening 280x190 R10 from top, rough, 2.7 mm radial",
        "kind": "profile_holes",
        "tool": 2,
        "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 63 mm stick-out",
@@ -270,7 +270,7 @@
       },
       {
        "op": "Profile001",
-       "label": "Opening 280x190 R10 from top, finish (0.3 mm radial, full depth)",
+       "label": "Opening 280x190 R10 from top, finish, 0.3 mm radial, full depth",
        "kind": "profile_holes",
        "tool": 2,
        "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 63 mm stick-out",
@@ -410,8 +410,8 @@
       -5.45,
       121.55
      ],
-     "gcode": "/tmp/chamber-cam3/gcode/frame_B.ngc",
-     "freecad_job_cycle_time": "00:10:57",
+     "gcode": "/tmp/chamber-cam4/gcode/frame_B.ngc",
+     "freecad_job_cycle_time": "00:11:00",
      "ops": [
       {
        "op": "Face001",
@@ -460,8 +460,8 @@
        "start_depth": 3.9,
        "final_depth": -58.0,
        "step_down": 31.0,
-       "freecad_cycle_time": "00:03:25",
-       "commands": 422,
+       "freecad_cycle_time": "00:03:28",
+       "commands": 364,
        "feed_move_bbox": [
         -166.03,
         165.59,
@@ -470,9 +470,9 @@
         -58.0,
         -27.1
        ],
-       "path_feed_mm": 3634.3,
-       "path_rapid_mm": 2903.3,
-       "cut_time_min": 1.92,
+       "path_feed_mm": 3739.4,
+       "path_rapid_mm": 2676.1,
+       "cut_time_min": 2.03,
        "rapid_time_min": 0.11
       },
       {
@@ -508,7 +508,7 @@
       },
       {
        "op": "Profile003",
-       "label": "Opening from bottom, rough (2.7 mm radial)",
+       "label": "Opening from bottom, rough, 2.7 mm radial",
        "kind": "profile_holes",
        "tool": 2,
        "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 63 mm stick-out",
@@ -539,7 +539,7 @@
       },
       {
        "op": "Profile004",
-       "label": "Opening from bottom, finish (0.3 mm radial)",
+       "label": "Opening from bottom, finish, 0.3 mm radial",
        "kind": "profile_holes",
        "tool": 2,
        "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 63 mm stick-out",
@@ -631,14 +631,14 @@
       }
      ],
      "totals": {
-      "path_feed_mm": 9687.6,
-      "path_rapid_mm": 6386.3,
-      "cut_time_min": 6.2,
-      "rapid_time_min": 0.25,
-      "total_min": 6.45,
-      "total_hms": "0:06:27",
+      "path_feed_mm": 9792.7,
+      "path_rapid_mm": 6159.1,
+      "cut_time_min": 6.31,
+      "rapid_time_min": 0.24,
+      "total_min": 6.55,
+      "total_hms": "0:06:33",
       "tool_changes": 6,
-      "freecad_sum_of_op_cycle_times_min": 10.95
+      "freecad_sum_of_op_cycle_times_min": 11.0
      }
     },
     {
@@ -653,7 +653,7 @@
       123.9,
       222.0
      ],
-     "gcode": "/tmp/chamber-cam3/gcode/frame_C.ngc",
+     "gcode": "/tmp/chamber-cam4/gcode/frame_C.ngc",
      "freecad_job_cycle_time": "00:15:51",
      "ops": [
       {
@@ -698,9 +698,9 @@
      }
     }
    ],
-   "total_min": 58.27,
-   "freecad_total_min": 76.03,
-   "total_hms": "0:58:16"
+   "total_min": 58.37,
+   "freecad_total_min": 76.08,
+   "total_hms": "0:58:22"
   },
   "floor": {
    "setups": [
@@ -714,7 +714,7 @@
       -22.7,
       2.7
      ],
-     "gcode": "/tmp/chamber-cam3/gcode/floor_A.ngc",
+     "gcode": "/tmp/chamber-cam4/gcode/floor_A.ngc",
      "freecad_job_cycle_time": "00:58:56",
      "ops": [
       {
@@ -750,7 +750,7 @@
       },
       {
        "op": "Adaptive003",
-       "label": "Step the 4 mm band round the pad (adaptive outside the pad)",
+       "label": "Step the 4 mm band round the pad, adaptive outside the pad",
        "kind": "adaptive_out",
        "tool": 2,
        "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 63 mm stick-out",
@@ -843,7 +843,7 @@
       },
       {
        "op": "Helix",
-       "label": "Port 96 mm through: helical trepan (slug drops)",
+       "label": "Port 96 mm through: helical trepan, slug drops",
        "kind": "helix",
        "tool": 2,
        "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 63 mm stick-out",
@@ -905,7 +905,7 @@
       },
       {
        "op": "Drill004",
-       "label": "Drill 2 x 6.0 mm step z -14.50..-4.00 (model)",
+       "label": "Drill 2 x 6.0 mm step z -14.50..-4.00, model",
        "kind": "drill",
        "tool": 8,
        "tool_name": "6.0 mm carbide drill (added: insert counterbores, dowels)",
@@ -959,7 +959,7 @@
       -22.7,
       2.7
      ],
-     "gcode": "/tmp/chamber-cam3/gcode/floor_B.ngc",
+     "gcode": "/tmp/chamber-cam4/gcode/floor_B.ngc",
      "freecad_job_cycle_time": "00:23:52",
      "ops": [
       {
@@ -995,7 +995,7 @@
       },
       {
        "op": "Adaptive005",
-       "label": "18 U-notches 8 wide x 8 deep (adaptive outside the outline)",
+       "label": "18 U-notches 8 wide x 8 deep, adaptive outside the outline",
        "kind": "adaptive_out",
        "tool": 9,
        "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
@@ -1026,7 +1026,7 @@
       },
       {
        "op": "Drill005",
-       "label": "Drill 10 x 4.2 mm step z -20.00..-14.00 (model)",
+       "label": "Drill 10 x 4.2 mm step z -20.00..-14.00, model",
        "kind": "drill",
        "tool": 7,
        "tool_name": "4.2 mm carbide drill",
@@ -1057,7 +1057,7 @@
       },
       {
        "op": "Drill006",
-       "label": "Drill 4 x 6.0 mm step z -20.00..-11.00 (model)",
+       "label": "Drill 4 x 6.0 mm step z -20.00..-11.00, model",
        "kind": "drill",
        "tool": 8,
        "tool_name": "6.0 mm carbide drill (added: insert counterbores, dowels)",
@@ -1093,7 +1093,7 @@
       },
       {
        "op": "Drill007",
-       "label": "Drill 2 x 6.0 mm step z -20.00..-8.00 (model)",
+       "label": "Drill 2 x 6.0 mm step z -20.00..-8.00, model",
        "kind": "drill",
        "tool": 8,
        "tool_name": "6.0 mm carbide drill (added: insert counterbores, dowels)",
@@ -1127,7 +1127,7 @@
       },
       {
        "op": "Drill008",
-       "label": "Drill 2 x 6.0 mm step z -20.00..-10.00 (model)",
+       "label": "Drill 2 x 6.0 mm step z -20.00..-10.00, model",
        "kind": "drill",
        "tool": 8,
        "tool_name": "6.0 mm carbide drill (added: insert counterbores, dowels)",
@@ -1161,7 +1161,7 @@
       },
       {
        "op": "Drill009",
-       "label": "Drill 4 x 6.0 mm step z -20.00..-12.50 (model)",
+       "label": "Drill 4 x 6.0 mm step z -20.00..-12.50, model",
        "kind": "drill",
        "tool": 8,
        "tool_name": "6.0 mm carbide drill (added: insert counterbores, dowels)",
@@ -1197,7 +1197,7 @@
       },
       {
        "op": "Drill010",
-       "label": "Drill 10 x 3.3 mm step z -14.00..-12.50 (model)",
+       "label": "Drill 10 x 3.3 mm step z -14.00..-12.50, model",
        "kind": "drill",
        "tool": 6,
        "tool_name": "3.3 mm carbide drill (M4 tap drill)",
@@ -1228,7 +1228,7 @@
       },
       {
        "op": "Drill011",
-       "label": "Drill 4 x 5.0 mm step z -12.50..-11.00 (model)",
+       "label": "Drill 4 x 5.0 mm step z -12.50..-11.00, model",
        "kind": "drill",
        "tool": 5,
        "tool_name": "5.0 mm carbide drill",
@@ -1264,7 +1264,7 @@
       },
       {
        "op": "Drill012",
-       "label": "Drill 18 x 4.2 mm step z -12.00..-4.00 (model), through",
+       "label": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
        "kind": "drill",
        "tool": 7,
        "tool_name": "4.2 mm carbide drill",
@@ -1295,7 +1295,7 @@
       },
       {
        "op": "Drill013",
-       "label": "Drill 4 x 6.0 mm step z -11.00..-9.00 (model)",
+       "label": "Drill 4 x 6.0 mm step z -11.00..-9.00, model",
        "kind": "drill",
        "tool": 8,
        "tool_name": "6.0 mm carbide drill (added: insert counterbores, dowels)",
@@ -1331,7 +1331,7 @@
       },
       {
        "op": "Drill014",
-       "label": "Drill 2 x 6.0 mm step z -8.00..-6.50 (model)",
+       "label": "Drill 2 x 6.0 mm step z -8.00..-6.50, model",
        "kind": "drill",
        "tool": 8,
        "tool_name": "6.0 mm carbide drill (added: insert counterbores, dowels)",

@@ -112,10 +112,19 @@ def blank_box_setup(part, rot):
 WORD = re.compile(r"([A-Z])([-+]?\d*\.?\d+)")
 
 
+def clean_comment(raw):
+    """one comment per line, with any nested parentheses turned into brackets (G-code comments don't nest)"""
+    a, b = raw.find("("), raw.rfind(")")
+    if a < 0 or b <= a:
+        return raw
+    inner = raw[a + 1:b].replace("(", "[").replace(")", "]")
+    return raw[:a] + "(" + inner + ")" + raw[b + 1:]
+
+
 def expand(text):
     """Returns (camotics_text, moves). Canned cycles (G81/G83) become G0/G1 lines; G92 Z<SHIFT> goes after G21.
     moves: dicts with op, tool, rapid, p0, p1 (work coords), feed, arc=(cx, cy, cw) or None, line."""
-    out, moves = [], []
+    out, moves, nested = [], [], []
     pos = [0.0, 0.0, None]  # z unknown until the first Z word (the tool starts at the tool-change height)
     feed, tool, op, motion, cycle, rmode = None, None, None, None, None, 98
     cyc = {}
@@ -188,7 +197,9 @@ def expand(text):
                                                          "" if rapid else " F%.3f" % feed))
                 emit_move(rapid, tgt)
             continue
-        out.append(raw)
+        out.append(clean_comment(raw))
+        if raw.count("(") > 1 or raw.count(")") > 1:
+            nested.append(raw.strip())
         if line == "G21":
             out.append("G92 Z%.1f (camotics_sim: the start point %.0f mm above work zero)" % (SHIFT, SHIFT))
         if motion is None or not has_xyz:
@@ -198,6 +209,7 @@ def expand(text):
         if motion in (2, 3):
             arc = (pos[0] + p.get("I", 0.0), pos[1] + p.get("J", 0.0), motion == 2)
         emit_move(motion == 0, tgt, arc)
+    expand.nested_comments = nested
     return "\n".join(out) + "\n", moves
 
 
@@ -291,6 +303,9 @@ def run_camsim(su, cam_text, moves, res, threads=2):
             rec["stl"] = str(stl)
         warn = sorted({ln.split("Not implemented:")[-1].strip() for ln in log if "Not implemented" in ln})
         rec["not_implemented"] = warn
+        rec["errors"] = [re.sub(r"\x1b\[[0-9;]*m", "", ln) for ln in log if "ERROR" in ln][:10]
+        if rec["errors"]:
+            print("  CAMotics reported errors:", rec["errors"][:3], flush=True)
         print(f"  {tag}: z {z0:.2f}..{z1:.2f}, {rec['seconds']} s, {'ok' if rec['stl'] else 'FAILED'}", flush=True)
     return dict(slabs=slabs, res=res)
 
@@ -602,6 +617,7 @@ def main():
             name = su["name"]
             text = open(IN_DIR / "gcode" / f"{name}.ngc").read()
             cam_text, moves = expand(text)
+            nested = list(expand.nested_comments)
             t0 = time.time()
             if name not in runs:
                 print(name, "CAMotics", flush=True)
@@ -658,7 +674,8 @@ def main():
                           freecad_job_cycle_time=fsu.get("freecad_job_cycle_time"),
                           freecad_sum_of_ops_min=fsu["totals"]["freecad_sum_of_op_cycle_times_min"],
                           recount_min=fsu["totals"]["total_min"]),
-                ops=ops, drills=drills, pieces_free_after_setup_cm3=free[:10])
+                ops=ops, drills=drills, pieces_free_after_setup_cm3=free[:10],
+                comments_with_nested_parentheses=len(nested))
             print(f"{name}: removed {removed / 1000:.1f} cm3, {len(hits)} rapids through stock, CAMotics time "
                   f"{report['setups'][name]['time']['camotics_min']} min", flush=True)
             stock = new_stock

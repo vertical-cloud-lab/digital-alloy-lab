@@ -81,6 +81,12 @@ TOOLS = {
 DRILLS = {6: 3.3, 7: 4.2, 5: 5.0, 8: 6.0}
 
 
+def clean_label(s):
+    """op label without parentheses: the post writes labels into G-code comments, and a nested "(" or ")" ends the
+    comment early (LinuxCNC rejects it; CAMotics logged parse errors and dropped floor B's last two drill ops)"""
+    return re.sub(r"\s*\(([^()]*)\)", r", \1", s).replace("(", "").replace(")", "")
+
+
 def feed_mm_min(t, ipt=None):
     if TOOLS[t]["shape"] == "drill":
         return TOOLS[t]["rpm"] * TOOLS[t]["mm_rev"]
@@ -325,6 +331,7 @@ def run_cam():
         ops_meta = []
 
         def add(label, kind, t, ipt, cfg, base_subs, extra_meta=None):
+            label = clean_label(label)
             tc = tool_controller(job, t, ipt)
             if kind == "face":
                 op = Path.Op.MillFace.Create("Face", parentJob=job)
