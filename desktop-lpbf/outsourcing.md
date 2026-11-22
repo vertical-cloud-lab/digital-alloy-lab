@@ -27,9 +27,11 @@ How it was checked:
 ## Short answer
 
 - **Who gave a price without an account:**
-  - **SendCutSend**, for sheet and plate cutting and, new since Edison r5 was written, CNC machining of 6061 parts up
-    to 8 × 8 × 12 in. It priced 36 parts in 39 rows: sheet and plate $3.55–689.66 a part, CNC $47.55–1,075.62. Delivery
-    dates were Nov 27 to Dec 7, 5 to 15 days out.
+  - **SendCutSend**, for sheet and plate cutting and, new since Edison r5 was written, CNC machining of 6061 parts.
+    - Its check states a largest billet of 8 × 8 × 12 in. It still priced the 12.3 × 8.7 in. lid and floor plate, but
+      it rejected the frame, the base plates and the optics bridge.
+    - It priced 36 parts in 39 rows: sheet and plate $3.55–689.66 a part, CNC $47.55–1,075.62.
+    - Delivery dates were Nov 27 to Dec 7, 5 to 15 days out.
   - **OSH Cut**, for stainless sheet: $22.85 for a 316 liner.
   - **JLCCNC**, for one CNC part: the 316L overflow block at $123.46 in 304 (316L isn't in its instant list), with a
     6-day build plus 2-4 days UPS at $25.99.
@@ -54,7 +56,8 @@ How it was checked:
   - **Make (27 parts):**
     - the frame (from a bought, cut-to-size 5-1/2 in. blank with the core waterjetted), the floor plate, the lid, the door
       and the cover-slide drawer: they carry every seal face, and their rework has to stay on campus;
-    - the build plate, heater block, piston head, gland plate and rod end, which will change during thermal testing;
+    - the build plate, heater block, piston head, gland plate and rod end, which will change during thermal testing,
+      and the hollow piston rod (bought tube, cut, welded into the rod end and polished);
     - the optics bridge and its welded posts, which are too big for any instant service;
     - the 14 robot tooling items.
   - **Outsource (32 parts):** the brackets, arms, legs, flanges, handles and small housings to SendCutSend CNC, the sheet
@@ -185,49 +188,49 @@ All prices are for one machine, before shipping and tax unless the row says othe
 
 | Service | Part (file) | As quoted | Qty | $ each | Lead time | UTC | Screenshot |
 |---|---|---|---:|---:|---|---|---|
-| SendCutSend | galvo riser plate 6061 10 mm | 6061-T6 .375 in. (model 10 mm) | 1 | 65.00 | arrives Sat Nov 28 (US ground; shipping not shown before che | 05:31 | [scs_07.jpg](analysis/out/outsourcing/scs_07.jpg) |
-| SendCutSend | galvo riser plate 6061 10 mm | 6061-T6 .500 in. (thickness check; model 10 mm) | 1 | 87.71 | arrives Sat Nov 28 | 05:32 | []() |
-| SendCutSend | galvo riser plate 6061 10 mm | 5052-H32 .187 in. (thickness check) | 1 | 30.04 | arrives Sat Nov 28 | 05:33 | []() |
+| SendCutSend | galvo riser plate 6061 10 mm | 6061-T6 .375 in. (model 10 mm) | 1 | 65.00 | arrives Sat Nov 28 | 05:31 | [scs_07.jpg](analysis/out/outsourcing/scs_07.jpg) |
+| SendCutSend | galvo riser plate 6061 10 mm | 6061-T6 .500 in. (thickness check; model 10 mm) | 1 | 87.71 | arrives Sat Nov 28 | 05:32 | none (overwritten) |
+| SendCutSend | galvo riser plate 6061 10 mm | 5052-H32 .187 in. (thickness check) | 1 | 30.04 | arrives Sat Nov 28 | 05:33 | none (overwritten) |
 | SendCutSend | z lift arm 6061 12 mm pot magnet coupling | 6061-T6 .500 in. (model 12 mm) | 1 | 27.12 | arrives Sat Nov 28 | 05:34 | [scs_zlift.jpg](analysis/out/outsourcing/scs_zlift.jpg) |
 | SendCutSend | sliding guard door aluminium | 5052-H32 .187 in. (model 4 mm) | 1 | 138.78 | arrives Sat Nov 28 | 05:35 | [scs_guarddoor.jpg](analysis/out/outsourcing/scs_guarddoor.jpg) |
 | SendCutSend | laser guard panels 1 5 mm aluminium 3 | 5052-H32 .063 in. (model 1.5 mm) | 2 | 46.29 | arrives Sat Nov 28 | 05:35 | [scs_guardpanel3.jpg](analysis/out/outsourcing/scs_guardpanel3.jpg) |
-| SendCutSend | base plate gas module mic 6 15 mm | 6061-T6 .625 in. (model 15 mm MIC-6; SendCutSend MIC-6 stops at .500 i | 1 | 689.66 | arrives Tue Dec 1 | 05:39 | [scs_baseplate_6061.jpg](analysis/out/outsourcing/scs_baseplate_6061.jpg) |
+| SendCutSend | base plate gas module mic 6 15 mm | 6061-T6 .625 in. (model 15 mm MIC-6; SendCutSend MIC-6 stops at .500 in.) | 1 | 689.66 | arrives Tue Dec 1 | 05:39 | [scs_baseplate_6061.jpg](analysis/out/outsourcing/scs_baseplate_6061.jpg) |
 | SendCutSend | base plate gas module mic 6 15 mm | MIC-6 .500 in. (thinner than the model 15 mm) | 1 | 666.42 | arrives Tue Dec 1 | 05:40 | [scs_baseplate_mic6.jpg](analysis/out/outsourcing/scs_baseplate_mic6.jpg) |
 | SendCutSend | apriltag plates 2 x tag36h11 56 mm on the g… | 6061-T6 .080 in. (model 2 mm) | 2 | 3.55 | arrives Fri Nov 27 | 05:41 | [scs_apriltag.jpg](analysis/out/outsourcing/scs_apriltag.jpg) |
-| SendCutSend | recoater feedthrough spacer ring 6061 9 mm … | 6061-T6 .375 in. (model 9 mm; the face O-ring grooves are machined aft | 1 | 14.01 | arrives Fri Nov 27 | 05:42 | [scs_spacer.jpg](analysis/out/outsourcing/scs_spacer.jpg) |
+| SendCutSend | recoater feedthrough spacer ring 6061 9 mm … | 6061-T6 .375 in. (model 9 mm; the face O-ring grooves are machined after) | 1 | 14.01 | arrives Fri Nov 27 | 05:42 | [scs_spacer.jpg](analysis/out/outsourcing/scs_spacer.jpg) |
 | SendCutSend | laser guard panels 1 5 mm aluminium 1 | 5052-H32 .063 in. (model 1.5 mm) | 1 | 76.81 | arrives Sat Nov 28 | 05:43 | [scs_guardpanel1.jpg](analysis/out/outsourcing/scs_guardpanel1.jpg) |
-| SendCutSend | operator panel box on the rack s front post | 6061-T6, CNC machining (SendCutSend routed the STEP to CNC; the design | 1 | 181.63 | arrives Tue Dec 1 | 05:44 | [scs_panelbox_cnc.jpg](analysis/out/outsourcing/scs_panelbox_cnc.jpg) |
-| SendCutSend CNC | chamber lid 6061 t6 16 mm cover slide drawe… | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 637.94 | arrives Wed Dec 2 | 05:46 | [scs_cnc_lid.jpg](analysis/out/outsourcing/scs_cnc_lid.jpg) |
-| SendCutSend CNC | chamber floor plate 6061 t6 20 mm bolted un… | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 1,075.62 | arrives Mon Dec 7 | 05:46 | [scs_cnc_floor.jpg](analysis/out/outsourcing/scs_cnc_floor.jpg) |
-| SendCutSend CNC | chamber door 6061 t6 15 mm drops down half … | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 454.14 | arrives Wed Dec 2 | 05:47 | [scs_cnc_door.jpg](analysis/out/outsourcing/scs_cnc_door.jpg) |
-| SendCutSend CNC | window flange 6061 two fkm o ring grooves | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 395.05 | arrives Mon Nov 30 | 05:47 | [scs_cnc_windowflange.jpg](analysis/out/outsourcing/scs_cnc_windowflange.jpg) |
-| SendCutSend CNC | z mounting flange bolted under the floor | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 115.83 | arrives Sat Nov 28 | 05:47 | [scs_cnc_zflange.jpg](analysis/out/outsourcing/scs_cnc_zflange.jpg) |
-| SendCutSend CNC | blade holder 6061 18 x 31 quick swap | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 102.55 | arrives Mon Nov 30 | 05:47 | [scs_cnc_bladeholder.jpg](analysis/out/outsourcing/scs_cnc_bladeholder.jpg) |
-| SendCutSend CNC | recoater carriage block 6061 | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 376.23 | arrives Mon Nov 30 | 05:48 | [scs_cnc_carriage.jpg](analysis/out/outsourcing/scs_cnc_carriage.jpg) |
-| SendCutSend CNC | heater block m50 6061 t6 bayonet socket | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 207.36 | arrives Sat Nov 28 | 05:49 | [scs_cnc_heaterblock.jpg](analysis/out/outsourcing/scs_cnc_heaterblock.jpg) |
-| SendCutSend CNC | metering base 6061 fluted roller over a 100… | 6061-T6, CNC machining (instant price before SendCutSend review) | 1 | 434.80 | arrives Sat Nov 28 | 05:51 | [scs_cnc_meteringbase.jpg](analysis/out/outsourcing/scs_cnc_meteringbase.jpg) |
-| SendCutSend CNC | recoater floating bearing housing blind cap… | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 155.70 | arrives Mon Nov 30 | 05:55 | [scs_cnc_bearinghousing.jpg](analysis/out/outsourcing/scs_cnc_bearinghousing.jpg) |
-| SendCutSend CNC | piston head m50 6061 t6 cool side of the br… | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 270.76 | arrives Mon Nov 30 | 05:55 | [scs_cnc_pistonhead.jpg](analysis/out/outsourcing/scs_cnc_pistonhead.jpg) |
-| SendCutSend CNC | cover slide drawer 6061 robot pull tab half… | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 444.45 | arrives Wed Dec 2 | 05:56 | [scs_cnc_drawer.jpg](analysis/out/outsourcing/scs_cnc_drawer.jpg) |
-| SendCutSend CNC | build plate m50 50 5 x 10 6061 t6 bayonet s… | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 227.94 | arrives Mon Nov 30 | 05:56 | [scs_cnc_buildplate.jpg](analysis/out/outsourcing/scs_cnc_buildplate.jpg) |
-| SendCutSend CNC | camera viewport adapter boss 6061 1 in wind… | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 379.48 | arrives Mon Nov 30 | 05:56 | [scs_cnc_cameraadapter.jpg](analysis/out/outsourcing/scs_cnc_cameraadapter.jpg) |
-| SendCutSend CNC | recoater motor bracket | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 206.98 | arrives Sat Nov 28 | 05:57 | [scs_cnc_motorbracket.jpg](analysis/out/outsourcing/scs_cnc_motorbracket.jpg) |
-| SendCutSend CNC | f theta adapter ring 6061 m85x1 internal th… | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 388.47 | arrives Sat Nov 28 | 06:03 | [scs_cnc_fthetaring.jpg](analysis/out/outsourcing/scs_cnc_fthetaring.jpg) |
-| SendCutSend CNC | window retaining ring spigot bottoms metal … | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 291.67 | arrives Sat Nov 28 | 06:03 | [scs_cnc_windowring.jpg](analysis/out/outsourcing/scs_cnc_windowring.jpg) |
-| SendCutSend CNC | recoater motor standoff | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 385.34 | arrives Sat Nov 28 | 06:03 | [scs_cnc_motorstandoff.jpg](analysis/out/outsourcing/scs_cnc_motorstandoff.jpg) |
-| SendCutSend CNC | field stop aperture 36 passive beam limit | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 156.14 | arrives Sat Nov 28 | 06:03 | [scs_cnc_fieldstop.jpg](analysis/out/outsourcing/scs_cnc_fieldstop.jpg) |
-| SendCutSend CNC | door handle 1 | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 76.21 | arrives Sat Nov 28 | 06:04 | [scs_cnc_doorhandle.jpg](analysis/out/outsourcing/scs_cnc_doorhandle.jpg) |
-| SendCutSend CNC | guard door handle for the robot 12 x 130 ba… | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 130.42 | arrives Sat Nov 28 | 06:04 | [scs_cnc_guardhandle.jpg](analysis/out/outsourcing/scs_cnc_guardhandle.jpg) |
-| SendCutSend CNC | reservoir m lid with robot handle grip plan… | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 214.78 | arrives Mon Nov 30 | 06:04 | [scs_cnc_reservoirlid.jpg](analysis/out/outsourcing/scs_cnc_reservoirlid.jpg) |
-| SendCutSend CNC | module m50 handle 6061 screwed under the gl… | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 188.40 | arrives Mon Nov 30 | 06:04 | [scs_cnc_modulehandle.jpg](analysis/out/outsourcing/scs_cnc_modulehandle.jpg) |
-| SendCutSend CNC | recoater arm 6061 40 x 14 web | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 47.55 | arrives Mon Nov 30 | 06:04 | [scs_cnc_recoaterarm.jpg](analysis/out/outsourcing/scs_cnc_recoaterarm.jpg) |
-| SendCutSend CNC | enclosed beam tube | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 264.44 | arrives Sat Nov 28 | 06:05 | [scs_cnc_beamtube.jpg](analysis/out/outsourcing/scs_cnc_beamtube.jpg) |
-| SendCutSend CNC | z bracket fold back belt housing 2 1 | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 1 | 146.29 | arrives Sat Nov 28 | 06:05 | [scs_cnc_zbracket.jpg](analysis/out/outsourcing/scs_cnc_zbracket.jpg) |
-| SendCutSend CNC | chamber legs 6061 30 x 30 | 6061-T6, CNC machining (instant price before SendCutSend's manufactura | 4 | 99.27 | arrives Mon Nov 30 | 06:06 | [scs_cnc_legs_q4.jpg](analysis/out/outsourcing/scs_cnc_legs_q4.jpg) |
-| OSH Cut | lift out wall liners 0 5 mm 316l back sides… | 316 stainless #2B, 0.036 in. (20 ga; thinnest 316 offered; model 0.5 m | 1 | 22.85 | not shown before sign-in | 06:08 | [osh_liner.jpg](analysis/out/outsourcing/osh_liner.jpg) |
-| JLCCNC | overflow funnel block 316l bolted fkm face … | default spec: 6061 aluminium, bead blast + natural anodize, ISO 2768-m | 1 | 32.98 | standard 6 days build + UPS Express Saver DDP 2-4 business d | 06:14 | [jlccnc_02.jpg](analysis/out/outsourcing/jlccnc_02.jpg) |
-| JLCCNC | overflow funnel block 316l bolted fkm face … | SUS304 (the only stainless grade in the instant quote; the design is 3 | 1 | 123.46 | build time for this spec not shown (the spec dialog would no | 06:16 | [jlccnc_overflow_304.jpg](analysis/out/outsourcing/jlccnc_overflow_304.jpg) |
-| JLC3DP | tooling spigot mandrel | default: 9600 resin (SLA), white, general sanding | 1 | 26.20 | standard build 3 days + Global Standard Direct Line 8-10 bus | 06:21 | [jlc3dp_mandrel.jpg](analysis/out/outsourcing/jlc3dp_mandrel.jpg) |
+| SendCutSend | operator panel box on the rack s front post | 6061-T6, CNC (SendCutSend routed this bent-box STEP to CNC) | 1 | 181.63 | arrives Tue Dec 1 | 05:44 | [scs_panelbox_cnc.jpg](analysis/out/outsourcing/scs_panelbox_cnc.jpg) |
+| SendCutSend CNC | chamber lid 6061 t6 16 mm cover slide drawe… | 6061-T6, CNC (price before review) | 1 | 637.94 | arrives Wed Dec 2 | 05:46 | [scs_cnc_lid.jpg](analysis/out/outsourcing/scs_cnc_lid.jpg) |
+| SendCutSend CNC | chamber floor plate 6061 t6 20 mm bolted un… | 6061-T6, CNC (price before review) | 1 | 1,075.62 | arrives Mon Dec 7 | 05:46 | [scs_cnc_floor.jpg](analysis/out/outsourcing/scs_cnc_floor.jpg) |
+| SendCutSend CNC | chamber door 6061 t6 15 mm drops down half … | 6061-T6, CNC (price before review) | 1 | 454.14 | arrives Wed Dec 2 | 05:47 | [scs_cnc_door.jpg](analysis/out/outsourcing/scs_cnc_door.jpg) |
+| SendCutSend CNC | window flange 6061 two fkm o ring grooves | 6061-T6, CNC (price before review) | 1 | 395.05 | arrives Mon Nov 30 | 05:47 | [scs_cnc_windowflange.jpg](analysis/out/outsourcing/scs_cnc_windowflange.jpg) |
+| SendCutSend CNC | z mounting flange bolted under the floor | 6061-T6, CNC (price before review) | 1 | 115.83 | arrives Sat Nov 28 | 05:47 | [scs_cnc_zflange.jpg](analysis/out/outsourcing/scs_cnc_zflange.jpg) |
+| SendCutSend CNC | blade holder 6061 18 x 31 quick swap | 6061-T6, CNC (price before review) | 1 | 102.55 | arrives Mon Nov 30 | 05:47 | [scs_cnc_bladeholder.jpg](analysis/out/outsourcing/scs_cnc_bladeholder.jpg) |
+| SendCutSend CNC | recoater carriage block 6061 | 6061-T6, CNC (price before review) | 1 | 376.23 | arrives Mon Nov 30 | 05:48 | [scs_cnc_carriage.jpg](analysis/out/outsourcing/scs_cnc_carriage.jpg) |
+| SendCutSend CNC | heater block m50 6061 t6 bayonet socket | 6061-T6, CNC (price before review) | 1 | 207.36 | arrives Sat Nov 28 | 05:49 | [scs_cnc_heaterblock.jpg](analysis/out/outsourcing/scs_cnc_heaterblock.jpg) |
+| SendCutSend CNC | metering base 6061 fluted roller over a 100… | 6061-T6, CNC (price before review) | 1 | 434.80 | arrives Sat Nov 28 | 05:51 | [scs_cnc_meteringbase.jpg](analysis/out/outsourcing/scs_cnc_meteringbase.jpg) |
+| SendCutSend CNC | recoater floating bearing housing blind cap… | 6061-T6, CNC (price before review) | 1 | 155.70 | arrives Mon Nov 30 | 05:55 | [scs_cnc_bearinghousing.jpg](analysis/out/outsourcing/scs_cnc_bearinghousing.jpg) |
+| SendCutSend CNC | piston head m50 6061 t6 cool side of the br… | 6061-T6, CNC (price before review) | 1 | 270.76 | arrives Mon Nov 30 | 05:55 | [scs_cnc_pistonhead.jpg](analysis/out/outsourcing/scs_cnc_pistonhead.jpg) |
+| SendCutSend CNC | cover slide drawer 6061 robot pull tab half… | 6061-T6, CNC (price before review) | 1 | 444.45 | arrives Wed Dec 2 | 05:56 | [scs_cnc_drawer.jpg](analysis/out/outsourcing/scs_cnc_drawer.jpg) |
+| SendCutSend CNC | build plate m50 50 5 x 10 6061 t6 bayonet s… | 6061-T6, CNC (price before review) | 1 | 227.94 | arrives Mon Nov 30 | 05:56 | [scs_cnc_buildplate.jpg](analysis/out/outsourcing/scs_cnc_buildplate.jpg) |
+| SendCutSend CNC | camera viewport adapter boss 6061 1 in wind… | 6061-T6, CNC (price before review) | 1 | 379.48 | arrives Mon Nov 30 | 05:56 | [scs_cnc_cameraadapter.jpg](analysis/out/outsourcing/scs_cnc_cameraadapter.jpg) |
+| SendCutSend CNC | recoater motor bracket | 6061-T6, CNC (price before review) | 1 | 206.98 | arrives Sat Nov 28 | 05:57 | [scs_cnc_motorbracket.jpg](analysis/out/outsourcing/scs_cnc_motorbracket.jpg) |
+| SendCutSend CNC | f theta adapter ring 6061 m85x1 internal th… | 6061-T6, CNC (price before review) | 1 | 388.47 | arrives Sat Nov 28 | 06:03 | [scs_cnc_fthetaring.jpg](analysis/out/outsourcing/scs_cnc_fthetaring.jpg) |
+| SendCutSend CNC | window retaining ring spigot bottoms metal … | 6061-T6, CNC (price before review) | 1 | 291.67 | arrives Sat Nov 28 | 06:03 | [scs_cnc_windowring.jpg](analysis/out/outsourcing/scs_cnc_windowring.jpg) |
+| SendCutSend CNC | recoater motor standoff | 6061-T6, CNC (price before review) | 1 | 385.34 | arrives Sat Nov 28 | 06:03 | [scs_cnc_motorstandoff.jpg](analysis/out/outsourcing/scs_cnc_motorstandoff.jpg) |
+| SendCutSend CNC | field stop aperture 36 passive beam limit | 6061-T6, CNC (price before review) | 1 | 156.14 | arrives Sat Nov 28 | 06:03 | [scs_cnc_fieldstop.jpg](analysis/out/outsourcing/scs_cnc_fieldstop.jpg) |
+| SendCutSend CNC | door handle 1 | 6061-T6, CNC (price before review) | 1 | 76.21 | arrives Sat Nov 28 | 06:04 | [scs_cnc_doorhandle.jpg](analysis/out/outsourcing/scs_cnc_doorhandle.jpg) |
+| SendCutSend CNC | guard door handle for the robot 12 x 130 ba… | 6061-T6, CNC (price before review) | 1 | 130.42 | arrives Sat Nov 28 | 06:04 | [scs_cnc_guardhandle.jpg](analysis/out/outsourcing/scs_cnc_guardhandle.jpg) |
+| SendCutSend CNC | reservoir m lid with robot handle grip plan… | 6061-T6, CNC (price before review) | 1 | 214.78 | arrives Mon Nov 30 | 06:04 | [scs_cnc_reservoirlid.jpg](analysis/out/outsourcing/scs_cnc_reservoirlid.jpg) |
+| SendCutSend CNC | module m50 handle 6061 screwed under the gl… | 6061-T6, CNC (price before review) | 1 | 188.40 | arrives Mon Nov 30 | 06:04 | [scs_cnc_modulehandle.jpg](analysis/out/outsourcing/scs_cnc_modulehandle.jpg) |
+| SendCutSend CNC | recoater arm 6061 40 x 14 web | 6061-T6, CNC (price before review) | 1 | 47.55 | arrives Mon Nov 30 | 06:04 | [scs_cnc_recoaterarm.jpg](analysis/out/outsourcing/scs_cnc_recoaterarm.jpg) |
+| SendCutSend CNC | enclosed beam tube | 6061-T6, CNC (price before review) | 1 | 264.44 | arrives Sat Nov 28 | 06:05 | [scs_cnc_beamtube.jpg](analysis/out/outsourcing/scs_cnc_beamtube.jpg) |
+| SendCutSend CNC | z bracket fold back belt housing 2 1 | 6061-T6, CNC (price before review) | 1 | 146.29 | arrives Sat Nov 28 | 06:05 | [scs_cnc_zbracket.jpg](analysis/out/outsourcing/scs_cnc_zbracket.jpg) |
+| SendCutSend CNC | chamber legs 6061 30 x 30 | 6061-T6, CNC (price before review) | 4 | 99.27 | arrives Mon Nov 30 | 06:06 | [scs_cnc_legs_q4.jpg](analysis/out/outsourcing/scs_cnc_legs_q4.jpg) |
+| OSH Cut | lift out wall liners 0 5 mm 316l back sides… | 316 stainless #2B, 0.036 in. (20 ga; thinnest 316 offered; model 0.5 mm), deburred | 1 | 22.85 | not shown before sign-in | 06:08 | [osh_liner.jpg](analysis/out/outsourcing/osh_liner.jpg) |
+| JLCCNC | overflow funnel block 316l bolted fkm face … | default spec: 6061 aluminium, bead blast + natural anodize, ISO 2768-m (the part is 316L; for scale only) | 1 | 32.98 | standard 6 days build + UPS Express Saver DDP 2-4 business days ($25.99) | 06:14 | [jlccnc_02.jpg](analysis/out/outsourcing/jlccnc_02.jpg) |
+| JLCCNC | overflow funnel block 316l bolted fkm face … | SUS304 (the only stainless grade in the instant quote; the design is 316L), no finish, +/-0.05 mm, threads yes | 1 | 123.46 | build time for this spec not shown (the dialog's Save did not apply the spec); shipping as above | 06:16 | [jlccnc_overflow_304.jpg](analysis/out/outsourcing/jlccnc_overflow_304.jpg) |
+| JLC3DP | tooling spigot mandrel | default: 9600 resin (SLA), white, general sanding | 1 | 26.20 | standard build 3 days + Global Standard Direct Line 8-10 business days ($17.10) or UPS Express Saver DDP 2-4 business days ($22.97) | 06:21 | [jlc3dp_mandrel.jpg](analysis/out/outsourcing/jlc3dp_mandrel.jpg) |
 
 What the screenshots show and what to check:
 
@@ -276,7 +279,7 @@ machining.md). None publishes prices.
   module, which are the parts worth the time.
 - **The module's honing loop is the new long pole.** It runs: turn, weld, bore, ship out, hone, ship back. No honing
   shop published a lead time; plan 3-6 weeks, an estimate. Start the M50 body first.
-- **The used laser (cost-scenarios.md) still sets the overall date** if it is bought new from IPG (10-12 weeks).
+- **The laser still sets the overall date** if it is bought new from IPG (10-12 weeks; cost-scenarios.md).
 
 ## 5. Not done, and caveats
 

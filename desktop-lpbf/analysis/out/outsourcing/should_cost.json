@@ -550,7 +550,7 @@
    "recommended_usd": 123,
    "recommended_in_house_h": 0.0,
    "recommended_basis": "outsourced",
-   "lead_outsourced": "build time for this spec not shown (the spec dialog would not save without signing in); shipping as above",
+   "lead_outsourced": "build time for this spec not shown (the dialog's Save did not apply the spec); shipping as above",
    "basis_hours": "hours.csv (4th-axis column)",
    "basis_stock": "dfm.json stock x $45/kg (estimate)",
    "basis_outsourced": "quote: JLCCNC $123.46 x 1 (2026-11-22T06:16Z)",
