@@ -41,12 +41,13 @@ How it was checked:
   - Protolabs Network (Hubs) asks for an export-control declaration before upload, and Craftcloud asks you to accept its
     terms. I made neither on the lab's behalf.
   - Big Blue Saw now redirects to Xometry, whose bot check failed. PCBWay's CNC page is a reviewed request form.
-- **Cost (in-house at $65/h, BYU's published academic shop rate, including the $3,695 of tools to buy):**
+- **Cost (in-house at $65/h, including the $3,695 of tools to buy).** $65/h is the academic labour rate of BYU's
+  Prototype Manufacturing Lab. It was seen only in search results for pml.byu.edu; the page itself wasn't read.
 
   | Route | Shop hours here | Cost | In-house queue at 20 h/week |
   |---|---:|---:|---:|
   | Everything made here | 329 h | $32,534 ($42,395 at $95/h; $11,169 if the labour is free) | 16.4 weeks |
-  | Everything outsourced (39 parts on live quotes, the rest estimates) | 0 | $31,358 | about 2-8 weeks, in parallel |
+  | Everything outsourced (39 parts on live quotes, the rest estimates) | 0 | $31,358 | none (deliveries take 1-8 weeks, in parallel) |
   | **Recommended split** | **152 h** | **$25,667** | **7.6 weeks** |
 
   At $65/h, outsourcing everything costs about the same as making everything. The split is cheaper than both, and it
