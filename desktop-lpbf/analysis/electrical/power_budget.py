@@ -26,11 +26,13 @@ AC = {
     "laser": ("Q1 2P 15 A", "L1-L2", 1700.0, 1700 / 1900, 1056.0, 40.0, 0.01,
               "IPG spec sheet: 1,700 W / 1,900 VA max at 500 W out; typical-build draw from tray_budget.py (350 W at 60 % duty). Inrush not published: 40 A for 10 ms assumed (PFC front end)"),
     "UPS input": ("Q2 2P 15 A (multiwire)", "L1-N", None, 0.95, None, 50.0, 0.01,
-                  "Eaton 5PX1500RTG2, 1,500 VA / 1,440 W out (model); input = backed load / 0.9 + recharge 100 W (estimate). Inrush 50 A, one half-cycle (estimate)"),
+                  "Eaton 5PX1500RTG2 (bom.csv D2 and the model), line-interactive, 1,500 VA / 1,500 W, 98.6 % efficient in normal mode (ENERGY STAR); input = backed load / 0.9 + recharge 100 W (estimate, kept from the online-UPS figure as the high side). Inrush 50 A, one half-cycle (estimate)"),
     "heater supply": ("Q2 2P 15 A (multiwire)", "L2-N", 250 / 0.89, 0.95, 97 / 0.89, 30.0, 0.005,
                       "Mean Well LRS-350-24 at the L75's 250 W, 89 % efficient (datasheet); its cold-start inrush is listed as 60 A at 230 VAC, so ~30 A at 120 VAC"),
-    "pump": ("Q3 1P 15 A", "L2-N", 7 * 115 * 0.75, 0.75, 0.0, 42.0, 0.3,
-             "McMaster 4396K21, 1/2 hp, 7 A at 115 V; locked-rotor ~6 x FLA (typical for a PSC/cap-start motor, estimate)"),
+    "pump": ("Q3 2P 10 A", "L1-L2", 6.0 * 208 * 0.6, 0.6, 260.0, 40.0, 0.01,
+             "Edwards nXDS6i A73501983 (bom.csv G2), nXDS instruction manual A73501880 issue I (idealvac.com mirror, sha256 d04f0234..., read 2026-11-23 22:28Z): 100-127 V or 200-240 V +/-10 %, 1-phase 50/60 Hz, auto-sensing inverter drive; continuous rating 10 A rms at 100-127 V, 6 A rms at 200-240 V (Table 8); supply protection 10 A (Table 9); time-lag fuses or breakers, 'current transients can exceed the rated values' (issue B 3.6.1); RCD >= 30 mA 'to avoid trip during start up'; 260 W at ultimate, 170 W standby (Edwards catalogue page, search snippet). Run at 208 V across L1-L2 (6 A) so it does not load L2 alone; power factor 0.6 assumed (inverter drive, no PFC stated), "
+             "so the rated line is the 6 A nameplate; the build-typical 260 W is the catalogue's draw at ultimate. Inrush not published: "
+             "40 A for 10 ms assumed (the drive's DC-bus capacitors), with a soft-started motor after it"),
     "blower": ("Q4 1P 6 A", "L2-N", 230.0, 0.8, 50.0, 12.0, 0.2,
                "upper bound McMaster 9960K51 (1/8 hp, 115 V); a sealed 24 V brushless blower would be 20-50 W (tray_budget.py)"),
 }
@@ -38,7 +40,7 @@ AC = {
 # ------------------------------------------------------------------ loads behind the UPS (W, rated / typical while building / held through a power cut)
 BACKED = {
     "scan PC with RTC6": (200, 80, 0, "estimate (tray_budget.py); shut down 120 s into a power cut"),
-    "galvo +/-15 V supply": (90, 30, 0, "estimate (tray_budget.py); off with the PC"),
+    "galvo 24 V supply (HDR-100-24 -> basiCube 20)": (69, 30, 0, "SCANLAB basiCube 20: one 24 V rail <= 2.6 A, through a ~90 % HDR-100-24 (tray_budget.py); off with the PC"),
     "48 V servo bus (2 ClearPath-SD)": (300, 30, 0, "estimate; disabled 60 s into a power cut"),
     "stepper drive + NEMA 17": (40, 10, 0, "estimate: 1.7 A class motor on 24 V"),
     "PLC + I/O modules": (12, 8, 8, "estimate: Productivity1000 CPU and five modules"),
@@ -55,8 +57,10 @@ BACKED = {
 }
 
 # ------------------------------------------------------------------ the UPS battery (Eaton 5PX1500RTG2 class)
-UPS = dict(n=4, v=12.0, ah=9.0, k_peukert=1.15, inverter_eff=0.88, rated_w=1440.0,
-           source="battery 4 x 12 V 9 Ah assumed for the 5PX 1500 G2 class (not read from Eaton's datasheet: its page timed out); Peukert k 1.15 for VRLA; inverter 88 % (byu-vcl PR 318's Vertiv figure)")
+UPS = dict(n=4, v=12.0, ah=9.0, k_peukert=1.15, inverter_eff=0.88, rated_w=1500.0,
+           es_runtime_min={1500.0: 7.0, 750.0: 14.0},
+           source="battery 4 x 12 V 9 Ah assumed for the 5PX 1500 G2 class (not read from Eaton's datasheet: its page timed out); Peukert k 1.15 for VRLA; inverter 88 % (byu-vcl PR 318's Vertiv figure). "
+                  "ENERGY STAR's listing of the 5PX1500RTG2 (read 2026-11-23 22:48Z) gives 7 min at 100 % (1,500 W) and 14 min at 50 % load: about 175 Wh delivered at both, which the Peukert model is checked against below")
 
 # ------------------------------------------------------------------ the 3U DIN drawer (cad/lpbf_low.py: 446.6 x 530 x 131 mm box)
 DRAWER = dict(w=0.4466, d=0.530, h=0.131)
@@ -85,13 +89,13 @@ RUNS = {   # name: (length m, current A, volts, conductor mm^2 [AWG], note)
     "dock -> PB1 (gas module) feeder": (0.8, 24.0, 208.0, 5.26, "10 AWG; at the full 24 A continuous"),
     "PB1 -> rack, laser 208 V": (2.4, 9.1, 208.0, 2.08, "14 AWG along the back duct"),
     "PB1 -> rack, UPS 120 V": (2.4, 7.4, 120.0, 2.08, "14 AWG"),
-    "PB1 -> pump 120 V": (0.6, 7.0, 120.0, 2.08, "14 AWG"),
+    "PB1 -> pump 208 V (nXDS6i)": (2.3, 6.0, 208.0, 2.08, "14 AWG along the back duct, KM1 in PB1"),
     "heater 24 V: drawer -> rod end (L75, 10.4 A)": (1.7, 10.4, 24.0, 1.31, "16 AWG pair incl. a 0.3 m service loop for the 50 mm stroke"),
     "heater 24 V with 18 AWG": (1.7, 10.4, 24.0, 0.823, "18 AWG for comparison"),
     "48 V servo bus: drawer -> Z servo (peak 5 A)": (1.6, 5.0, 48.0, 0.823, "18 AWG (Teknic DC power cable class)"),
     "24 V: drawer -> guard lock (0.5 A hold, 1 A pull-in)": (1.6, 1.0, 24.0, 0.326, "22 AWG"),
     "24 V: drawer -> gas module valves + O2 (2 A)": (2.3, 2.0, 24.0, 0.519, "20 AWG"),
-    "+/-15 V: rack -> galvo (3 A peak per rail, estimate)": (1.3, 3.0, 15.0, 0.823, "18 AWG; better: the supply beside the head"),
+    "24 V galvo: PB1 HDR-100-24 -> basiCube 20 (2.6 A)": (1.6, 2.6, 24.0, 0.823, "18 AWG (electrical.md 7)"),
 }
 RHO_CU = 0.0172e-6 * 1.2       # ohm m at ~60 C conductor
 
@@ -128,7 +132,7 @@ def main():
     ups_in_rated = backed_rated / UPS["inverter_eff"] + 100.0
     ups_in_typ = backed_typ / UPS["inverter_eff"] + 30.0
     phases = {
-        "purge (pump on, heaters preheating)": {"pump": AC["pump"][2], "UPS input": ups_in_typ, "heater supply": AC["heater supply"][2], "blower": 50.0, "laser": 150.0},
+        "purge (pump on at its 6 A rating, heaters preheating)": {"pump": AC["pump"][2], "UPS input": ups_in_typ, "heater supply": AC["heater supply"][2], "blower": 50.0, "laser": 150.0},
         "building, typical": {"laser": AC["laser"][4], "UPS input": ups_in_typ, "heater supply": AC["heater supply"][4], "blower": 50.0},
         "building, worst (500 W CW, blower at its AC upper bound, UPS recharging)": {"laser": 1700.0, "UPS input": ups_in_rated, "heater supply": AC["heater supply"][2], "blower": 230.0},
         "everything at rated at once (pump interlocked off while lasing, so not a real state)": {"laser": 1700.0, "UPS input": ups_in_rated, "heater supply": AC["heater supply"][2], "blower": 230.0, "pump": AC["pump"][2]},
@@ -139,7 +143,7 @@ def main():
         R["legs"][ph] = dict(L1=L1, L2=L2, N=N, total_W=sum(loads.values()), ok=max(L1, L2) <= DOCK_CONT_A)
     # inrush against breakers: UL 489 curves, magnetic trip band (multiples of In): B 3-5, C 5-10, D 10-20
     curves = {"B": (3, 5), "C": (5, 10), "D": (10, 20)}
-    branch = {"laser": ("D", 15), "UPS input": ("D", 15), "heater supply": ("D", 15), "pump": ("C", 15), "blower": ("C", 6)}
+    branch = {"laser": ("D", 15), "UPS input": ("D", 15), "heater supply": ("D", 15), "pump": ("D", 10), "blower": ("C", 6)}
     R["inrush"] = {}
     for name, (curve, In) in branch.items():
         pk, dur = AC[name][5], AC[name][6]
@@ -181,7 +185,9 @@ def main():
     R["ups"] = dict(battery_Wh_nominal=E_nom, backed_rated_W=backed_rated, backed_typical_W=backed_typ, held_W=backed_hold,
                     runtime_at_rated_min=runtime_min(backed_rated), runtime_at_typical_min=runtime_min(backed_typ),
                     runtime_hold_only_min=runtime_min(backed_hold), power_cut_total_min=t / 60,
-                    cooldown_to_50C_min=dict(S25=15, M50=28, L75=41), ups_rated_W=UPS["rated_w"], source=UPS["source"])
+                    cooldown_to_50C_min=dict(S25=15, M50=28, L75=41), ups_rated_W=UPS["rated_w"], source=UPS["source"],
+                    energy_star_check={f"{w:.0f} W": dict(energy_star_min=m, model_min=runtime_min(w)) for w, m in UPS["es_runtime_min"].items()},
+                    hold_lower_bound_min=175.0 / max(backed_hold, 1.0) * 60.0)
     # drawer heat
     typ = sum(v[0] for v in DRAWER_HEAT.values())
     worst = sum(v[1] for v in DRAWER_HEAT.values())
@@ -211,7 +217,7 @@ def main():
     R["pins"]["source"] = PIN["source"]
     # protective-conductor current (estimates; datasheet values to be read)
     leak = {"laser (EMI filter, estimate)": 3.5, "UPS (estimate)": 1.0, "heater supply LRS-350 (datasheet class < 0.75 mA at 240 V)": 0.75,
-            "24 V / 48 V / +/-15 V DIN supplies behind the UPS (3 x 0.5, estimate)": 1.5, "pump motor (estimate)": 0.5, "PC (estimate)": 0.5}
+            "24 V / 48 V / 24 V galvo DIN supplies behind the UPS (3 x 0.5, estimate)": 1.5, "pump inverter drive (estimate; Edwards asks for a >= 30 mA RCD to ride through start-up)": 2.0, "PC (estimate)": 0.5}
     R["pe_current"] = dict(items=leak, total_mA=sum(leak.values()),
                            note="IEC 60204-1 8.2.8: above 10 mA in the protective conductor, use >= 10 mm2 Cu or a second PE conductor; above 3.5 mA, a plug-connected machine needs a warning and reinforced PE. A 5 mA GFCI upstream would trip.")
     (OUT / "power.json").write_text(json.dumps(R, indent=1, default=float))
@@ -227,7 +233,7 @@ def md(R):
          "| State | Input (W) | L1 (A) | L2 (A) | N (A) | Within 24 A? |", "|---|---|---|---|---|---|"]
     for ph, v in R["legs"].items():
         L.append(f"| {ph} | {v['total_W']:.0f} | {v['L1']:.1f} | {v['L2']:.1f} | {v['N']:.1f} | {'yes' if v['ok'] else '**no**'} |")
-    L += ["", "Branch currents are added as magnitudes (power factors differ), so the leg figures lean high. Laser across L1-L2; UPS on L1-N; heater supply, pump and blower on L2-N.", "",
+    L += ["", "Branch currents are added as magnitudes (power factors differ), so the leg figures lean high. Laser and pump (nXDS6i at 208 V) across L1-L2; UPS on L1-N; heater supply and blower on L2-N.", "",
           "## 2. Inrush against the branch breakers (UL 489 DIN; magnetic trip band B 3-5, C 5-10, D 10-20 × In)", "",
           "| Load | Breaker | Inrush peak (A, estimate) | Duration (s) | Lowest magnetic trip (A) | Margin | Margin with a C curve | with a B curve |", "|---|---|---|---|---|---|---|---|"]
     for k, v in R["inrush"].items():
@@ -236,13 +242,15 @@ def md(R):
         else:
             L.append(f"| {k} | {v['upstream']} | {v['peak_A']:.0f} | – | 150 | {v['margin_vs_C']:.1f}× | – | – |")
     u = R["ups"]
-    L += ["", "## 3. UPS (Eaton 5PX1500RTG2 class, 1,440 W) through a power cut", "",
+    L += ["", "## 3. UPS (Eaton 5PX1500RTG2, 1,500 W) through a power cut", "",
           f"Backed load: {u['backed_rated_W']:.0f} W rated, {u['backed_typical_W']:.0f} W while building, {u['held_W']:.0f} W held after the PC and servos shut down (safety controller, guard lock, PLC, O2 analyser, Pi, switch). Battery {u['battery_Wh_nominal']:.0f} Wh nominal ({u['source']}).", "",
           "| Case | Runtime (min) |", "|---|---|",
           f"| at the rated backed load | {u['runtime_at_rated_min']:.0f} |",
           f"| at the building load | {u['runtime_at_typical_min']:.0f} |",
           f"| power-cut sequence: building load 60 s, servos off, PC off at 120 s, then the held load | **{u['power_cut_total_min']:.0f}** |",
           f"| cool-down of the plate to 50 °C (thermal.md): S25 / M50 / L75 | {u['cooldown_to_50C_min']['S25']} / {u['cooldown_to_50C_min']['M50']} / {u['cooldown_to_50C_min']['L75']} |", "",
+          "Check against ENERGY STAR's listing of the 5PX1500RTG2: " + "; ".join(f"{k}: {v['energy_star_min']:.0f} min listed, {v['model_min']:.0f} min from the model" for k, v in u["energy_star_check"].items()) +
+          f". If the battery delivered no more than the ~175 Wh it gives at those rates (no low-rate gain at all), the held load would still last **{u['hold_lower_bound_min']:.0f} min**, past the 41 min L75 cool-down.", "",
           "## 4. Heat in the 3U DIN drawer", "",
           f"{R['drawer']['heat_typ_W']:.0f} W while building, {R['drawer']['heat_worst_W']:.0f} W worst. Free surface (front, back, two sides; top and bottom face the PC and the rack top) {R['drawer']['free_area_m2']:.3f} m² at 5.5 W/m²K: "
           f"**{R['drawer']['rise_natural_typ_K']:.0f} K / {R['drawer']['rise_natural_worst_K']:.0f} K above the air around it with no fan**. A fan moving {R['drawer']['fan_cfm_for_10K_worst']:.0f} CFM holds the worst case to a 10 K rise ({R['drawer']['fan_cfm_for_5K_worst']:.0f} CFM for 5 K).", "",

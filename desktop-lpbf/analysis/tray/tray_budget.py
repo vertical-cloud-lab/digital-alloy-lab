@@ -25,23 +25,27 @@ OUT = Path(__file__).resolve().parents[1] / "out" / "tray"
 SRC = {
     "ipg": "IPG spec sheet G22-29856 rev. 00 for YLR-500-U3-SM-AC (quotes/ipg-ylr-500-u3-sm-ac.md): 1,500 W typ / "
            "1,700 W max, 1,600 VA typ / 1,900 VA max at 500 W out; 200-240 VAC 1-phase; forced air; 10-35 C ambient",
-    "pump": "McMaster 4396K21 (mcmaster-parts.csv, read 2026-11-17): 1/2 hp, 7 A at 115 V AC",
+    "pump": "Edwards nXDS6i A73501983 (bom.csv G2), nXDS instruction manual A73501880 issue I (idealvac.com mirror, sha256 d04f0234..., read 2026-11-23 22:28Z): 100-127 V or 200-240 V +/-10 %, 1-phase 50/60 Hz, auto-sensing inverter drive; continuous rating 10 A rms at 100-127 V, 6 A rms at 200-240 V (Table 8); supply protection 10 A (Table 9); time-lag fuses or breakers, 'current transients can exceed the rated values' (issue B 3.6.1); RCD >= 30 mA 'to avoid trip during start up'; 260 W at ultimate, 170 W standby (Edwards catalogue page, search snippet). Taken at 208 V across L1-L2 at its 6 A rating while purging (power factor 0.6 assumed, so 749 W: a high "
+            "side for the heat; the catalogue's 260 W at ultimate is the low side)",
     "blower_hi": "McMaster 9960K51 regenerative blower (mcmaster-parts.csv): 1/8 hp, 115 V; taken as the upper bound",
     "blower_lo": "sealed 24 V brushless blower: ~2.4 L/s (144 L/min, 2.5 m/s through 120 x 8 mm) against ~2 kPa is "
                  "~5 W of gas power; at 10-25 % blower efficiency, 20-50 W (estimate)",
     "heat": "modules.md / analysis/out/thermal: 2 / 3 / 5 x 50 W cartridges (S25 / M50 / L75), worst steady 44 / 72 / "
             "97 W at 200 C; Mean Well LRS-350-24 about 89 % efficient (datasheet)",
     "pc": "2U scan/laser controller PC with an RTC6 card: 80 W typical, 200 W rated (estimate)",
-    "galvo": "SCANLAB basiCube-class head on +/-15 V: about 30 W typical, 90 W peak (estimate; SCANLAB's datasheet "
-             "gives the supply, not a measured draw)",
+    "galvo": "SCANLAB basiCube 20 on one 24 V rail, <= 2.6 A (SCANLAB basiCube series data, electrical.md section 0 point 4; "
+             "it is not +/-15 V), through a Mean Well HDR-100-24 (~90 % efficient): 69 W rated, ~30 W typical (estimate)",
     "servo": "three Teknic ClearPath-SD axes (recoater, Z, metering roller): ~10 W each holding/average, 100 W each "
              "peak (estimate)",
     "gas_inst": "O2 analyzer (zirconia cell heater ~10-20 W), dew-point transmitter (~2 W), pressure transmitters, "
                 "two 24 V solenoids (~8 W each when held) (estimates)",
     "ctrl": "Pi 5 + cameras ~15 W, safety relay + guard lock + panel lamps ~15 W, network switch ~10 W, 24 V supply "
             "losses ~15 W (estimates)",
-    "ups": "Vertiv Liebert GXT5LI-1500LVRT2UXL, 1500 VA / 1350 W online, ENERGY STAR efficiency 88.8 % at 25 % load, "
-           "no-load input 29.1 W (byu-vcl PR 318 ups.CATALOGUE)",
+    "ups": "Eaton 5PX1500RTG2 (bom.csv D2, the model's 2U unit, electrical.md 1.2): line-interactive, 1,500 VA / 1,500 W; "
+           "ENERGY STAR UPS dataset (data.energystar.gov resource ifxy-2uty, read 2026-11-23 22:48Z): efficiency 98.6 % at "
+           "50 % and 75 % load, 98.4 % at 100 %, weighted 98.6 %; battery runtime 14 min at 50 % and 7 min at 100 % load. "
+           "No 25 % or no-load figure is listed: 98.6 % at 25 % and a 10 W no-load draw are assumed. The Vertiv "
+           "GXT5LI-1500 that byu-vcl PR 318 standardises on (online, 1,350 W, 88.8 % at 25 %, 29.1 W no-load) is D2's alternative",
     "dock": "byu-vcl PR 318 services.py: dock 208Y/120 V, L1, L2, N, PE, 30 A breaker; CombiTac O3 mm contacts 39 A",
     "shuttle": "byu-vcl PR 318 services.heat_budget: Shuttle enclosure 2.83 x 3.12 x 3.95 m, 55.9 m2 of walls and "
                "roof, 5.5 W/m2K for painted sheet steel in still air; Shuttle 1 idle 1,317 W (4.3 K), Shuttle 1 with a "
@@ -66,11 +70,11 @@ AL_POWER, DUTY = 350.0, 0.6
 # loads: key -> (rated W, typical W while building, volts, backed?, source key)
 LOADS = {
     "laser": (LASER_MAX_W, laser_w(AL_POWER * DUTY), 208, False, "ipg"),
-    "pump": (7 * 115 * 0.75, 0.0, 120, False, "pump"),     # pf ~0.75; runs only while purging
+    "pump": (6.0 * 208 * 0.6, 0.0, 208, False, "pump"),   # nXDS6i at 208 V, 6 A rating, pf 0.6 assumed; runs only while purging
     "blower": (230.0, 50.0, 120, False, "blower_hi"),
     "heaters": (250 / 0.89, 97 / 0.89, 120, False, "heat"),
     "pc": (200.0, 80.0, 120, True, "pc"),
-    "galvo": (90.0, 30.0, 120, True, "galvo"),
+    "galvo": (24 * 2.6 / 0.9, 30.0, 120, True, "galvo"),
     "servos": (300.0, 30.0, 120, True, "servo"),
     "gas_instruments": (60.0, 35.0, 120, True, "gas_inst"),
     "controls": (55.0, 55.0, 120, True, "ctrl"),
@@ -91,8 +95,9 @@ PHASES = {
                                                      "gas_instruments": 1.0, "controls": 1.0},
 }
 
-UPS_IDLE, UPS_W = 29.1, 1350.0
-UPS_EFF = [(0.25, 0.888), (0.50, 0.916), (0.75, 0.921), (1.0, 0.917)]
+UPS_MODEL = "Eaton 5PX1500RTG2"
+UPS_IDLE, UPS_W = 10.0, 1500.0                 # no-load draw assumed (ENERGY STAR lists none for this line-interactive unit)
+UPS_EFF = [(0.25, 0.986), (0.50, 0.986), (0.75, 0.986), (1.0, 0.984)]   # ENERGY STAR; the 25 % point assumed equal to 50 %
 
 
 def ups_loss(w):
@@ -135,7 +140,8 @@ def phase_rows(name, spec):
     heat_water_variant = total - WATER_SHARE * laser_loss   # the beam's own power still ends up in the chamber
     # dock currents: laser across L1-L2 at 208 V (VA), 120 V loads split between the legs, largest first
     amps_208 = (laser / PF) / 208.0 if laser else 0.0
-    loads120 = sorted(((r["w"] / (0.75 if k == "pump" else 0.95)) / 120.0 for k, r in rows.items()
+    amps_208 += sum(r["w"] / 0.6 / 208.0 for k, r in rows.items() if r["volts"] == 208 and k != "laser")   # the pump (pf 0.6)
+    loads120 = sorted(((r["w"] / 0.95) / 120.0 for k, r in rows.items()
                        if r["volts"] == 120 and not r["backed"] and k != "ups loss"), reverse=True)
     ups_in_a = (backed_w + rows["ups loss"]["w"]) / 0.95 / 120.0
     legs = [amps_208, amps_208]
@@ -166,7 +172,7 @@ def main():
     data = dict(
         sources=SRC, laser_model=dict(ready_w=LASER_READY_W, wall_plug_eff=round(ETA, 3), pf=round(PF, 3),
                                       al_power_w=AL_POWER, duty=DUTY),
-        ups=dict(model="Vertiv GXT5LI-1500LVRT2UXL", rated_w=UPS_W, backed_rated_w=ups_backed_rated,
+        ups=dict(model=UPS_MODEL, rated_w=UPS_W, backed_rated_w=ups_backed_rated,
                  fits=ups_backed_rated <= UPS_W),
         phases=res,
         shuttle=dict(area_m2=AREA, k_w_m2k=K_ENCL, room_c=ROOM_C, idle_w=SHUTTLE1_IDLE, busy_w=SHUTTLE1_BUSY),
@@ -212,9 +218,10 @@ def main():
           "open question); (3) only build at the access opening, which ties up the opening for hours.",
           f"- **Electrically it fits one dock.** The worst coincident case puts {max(w['dock_leg_amps'])} A on a leg "
           "against 24 A continuous on the 30 A breaker; the pump only runs while purging, before the laser fires. The "
-          "laser goes across L1-L2 at 208 V, inside IPG's 200-240 V.",
+          "laser goes across L1-L2 at 208 V, inside IPG's 200-240 V, and so does the nXDS6i pump (200-240 V +/-10 %, 6 A).",
           f"- **UPS:** the backed branch (PC, scan head, servos' logic and drives, O₂ and dew-point, controls) is "
-          f"{ups_backed_rated:.0f} W rated, inside a GXT5LI-1500's 1,350 W. The laser, pump, blower and heaters stay on "
+          f"{ups_backed_rated:.0f} W rated, inside the {UPS_MODEL}'s {UPS_W:,.0f} W (ENERGY STAR: 7 min at full load, 14 min at "
+          "half). The laser, pump, blower and heaters stay on "
           "the unbacked branch, as PR 318's rule puts heaters and pumps. On a power cut the build stops, the O₂ "
           "logging and the guard lock stay alive, and the chamber holds its argon (valves fail closed).",
           "", "## Sources and estimates", ""]
