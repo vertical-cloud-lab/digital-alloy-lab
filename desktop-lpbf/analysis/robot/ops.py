@@ -875,19 +875,29 @@ def job_module(cell: Cell, arm_x=0.0, tilt=0.0, roll=0.0, lift=66.0, **kw):
     return j
 
 
-def job_overflow(cell: Cell, skip_note="", arm_x=100.0, **kw):
-    """The overflow jar as drawn: open the KF-40 clamp, lower the jar 6 mm off the stub, and out to the front."""
+def job_overflow(cell: Cell, skip_note="", arm_x=100.0, lift=60.0, **kw):
+    """The overflow jar (2026-11-23: joint at z -84, a 2 in. cup 45 mm long, the outlet port moved to the plenum's left end and the
+    front-right leg to the side, so the jar has a straight lane to the front). The MKS toggle clamp comes off first: one push on its
+    lever and the clamp lifts off forward (a machine step here, not simulated). The gripper comes in level from the front, closes on the
+    cup with its pads 10 mm above the jar sensor, lowers the jar 8 mm off the centring ring, slides it out under the outlet plenum and
+    the floor's front edge, lifts it `lift` mm once it is past the door's hinge knuckles, and carries it out over the guard sill."""
     j = Job(cell, "overflow_jar", arm_x=arm_x, state0={"gdoor": GT})
     jar = cell.name("Overflow jar")
-    al = allow_of(jar, *cell.names("Overflow clamp"))
+    clamp = cell.names("Overflow clamp")
+    j.machine("toggle clamp off (lever pushed, clamp lifted off forward; not simulated)", 4.0,
+              state_fn=lambda s: (None, {n: C.Tm(None, (0.0, 0.0, -3000.0)) for n in clamp}), n=2)
+    al = allow_of(jar)
     R = R_of((0, 1, 0), (1, 0, 0))
-    p = np.array([100.0, 0.0, -110.0])
-    j.goto(T_of(R, p + (0, -260, 0)), "to the jar under the chamber", close=j.arm.close_for_gap(62.0))
-    j.line(T_of(R, p), "in to the jar", allow=al, step_mm=3.0)
-    j.grip(55.2, "close on the jar", allow=al)
+    p = np.array([100.0, 0.0, -100.0])                  # pads at z -111 to -89 on the Ø50.8 cup (z -129 to -91); the sensor is at -127 to -115
+    j.goto(T_of(R, p + (0, -260, 0)), "to the jar under the chamber", close=j.arm.close_for_gap(62.0), then=[(T_of(R, p), al, None)])
+    j.line(T_of(R, p), "in level to the jar", allow=al, step_mm=3.0)
+    j.grip(50.8, "close on the 2 in. cup", allow=al)
     j.attach([jar], "overflow jar")
-    j.line(T_of(R, p + (0, 0, -6)), "lower 6 mm off the KF-40 stub", allow=al | allow_of(*cell.names("Overflow port"), kind="held"), step_mm=1.0)
-    j.line(T_of(R, p + (0, -300, -6)), "out to the front", allow=al, step_mm=3.0)
+    j.line(T_of(R, p + (0, 0, -8)), "lower 8 mm off the centring ring", allow=al | allow_of(*cell.names("Overflow port"), *cell.names("Overflow-jar present"), kind="held"),
+           step_mm=1.0, force=(0, 0, 0))
+    j.line(T_of(R, p + (0, -160, -8)), "straight out to the front, under the plenum and the floor's front edge", allow=al, step_mm=3.0)
+    j.line(T_of(R, p + (0, -160, -8 + lift)), f"lift {lift:.0f} mm, clear of the hinge knuckles", allow=al, step_mm=3.0)
+    j.line(T_of(R, p + (0, -330, -8 + lift)), "out over the guard sill", allow=al, step_mm=3.0)
     return j
 
 
@@ -984,7 +994,7 @@ VARIANTS["module_swap"] = [dict(arm_x=x, roll=r) for r in (0.0, 180.0) for x in 
 VARIANTS["chamber_door_close"] = [dict(arm_x=x, tilt=t) for t in (-45.0, -30.0, -60.0, 20.0) for x in (-450.0, -300.0, 0.0, 300.0)]
 VARIANTS["plate_bayonet"] = [dict(arm_x=x) for x in (450.0, -450.0, 300.0, -300.0, 600.0)]
 VARIANTS["plate_drawbar"] = [dict(arm_x=x) for x in (450.0, -450.0, 300.0, -300.0, 600.0)]
-VARIANTS["overflow_jar"] = [dict(arm_x=x) for x in (100.0, 550.0, -350.0)]
+VARIANTS["overflow_jar"] = [dict(arm_x=x) for x in (300.0, 450.0, 100.0, -300.0, 550.0, -450.0)]
 
 JOBS = {
     "guard_door": job_guard_door,
@@ -1151,7 +1161,7 @@ def run_variant(cell, name, variant, render_dir=None):
 LABEL = {"guard_door": "Guard door open (515 mm)", "guard_door_close": "Guard door close", "chamber_door_open": "Chamber door open",
          "chamber_door_close": "Chamber door close by the robot", "chamber_door_powered": "Chamber door close by its actuator", "plate_drawbar": "Plate out, drawbar", "plate_bayonet": "Plate out, bayonet",
          "drawer": "Cover-slide drawer out (whole drawer)", "reservoir": "Reservoir off the dock and out", "blade_cartridge": "Blade cartridge out",
-         "module_swap": "Build module out", "overflow_jar": "Overflow jar out (as drawn)", "vacuum_clean": "Chamber vacuum (3 lanes)",
+         "module_swap": "Build module out", "overflow_jar": "Overflow jar out (toggle clamp off, drop 8, straight out)", "vacuum_clean": "Chamber vacuum (3 lanes)",
          "liner_right": "Right liner (slotted)"}
 
 
