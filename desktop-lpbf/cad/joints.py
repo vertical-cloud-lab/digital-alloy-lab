@@ -405,7 +405,7 @@ def add_joints(h, parts, add, module="M50"):
 
     _KEY[0] = "funnel"
     ox = (P["ovf_x0"] + P["ovf_x1"]) / 2
-    items = [((x, y, zf - 6.0), Z) for x in (ox - 17.0, ox + 17.0) for y in (-40.0, 40.0)]
+    items = [((x, y, zf - 6.0), Z) for x in (ox - 17.0, ox + 17.0) for y in (-50.0, 50.0)]   # y +/-50 (was 40): 10 mm more room for the key's hand beside the 42 mm KF-40 stub (2026-11-23)
     cut_parts(parts, "Overflow funnel block", [hole(p, n, -16.01, 0.0, CBORE[4][0]) for p, n in items] + [hole(p, n, -0.01, 6.01, CLEAR[4]) for p, n in items])
     cut_parts(parts, "Chamber floor plate", [hole(p, n, 6.0, 12.0, insert_od(ins4)) for p, n in items] + [hole(p, n, 11.99, 13.5, 4.0) for p, n in items])
     add_fasteners(h, add, "funnel", "Overflow-funnel screws, M4 x 12 316, counterbored", pn412, items, 4, "M4", explode=(0, 0, -200))

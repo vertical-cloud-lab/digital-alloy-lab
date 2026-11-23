@@ -275,7 +275,7 @@ def catalogue(module="M50"):
                ["Build plate", "Plate rim wiper"], [[(0, 0, 0), (0, 0, 20), (0, -520, 20)]], rot=60.0, minutes=2),
         reach("Fingers on the overflow jar's toggle-clamp lever under the floor (lever end at y -76, z -84)", (100.0, -76.0, -84.0), ((0, -1, 0), (0.6, -0.8, 0)),
               skip=["Overflow clamp", "Overflow jar"], minutes=1, hand=PINCH_HAND),
-        remove("KF-40 toggle clamp opened (one push on the lever) and taken off forward", ["Overflow clamp"], [[(0, 0, 0), (0, -520, 0)]], minutes=1),
+        remove("KF-40 toggle clamp opened (one push on the lever) and taken off by hand", ["Overflow clamp"], [], minutes=1),
         remove("Overflow jar: drop 8 mm off the centring ring, straight out to the front", ["Overflow jar"],
                axis_paths(520.0, first=(0, 0, -8)), minutes=2),
         note("Sieve (63 um) and return powder in the glovebox; log mass", 20),

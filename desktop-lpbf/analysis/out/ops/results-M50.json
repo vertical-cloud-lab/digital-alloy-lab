@@ -1,6 +1,6 @@
 {
  "module": "M50",
- "cad": "cad",
+ "cad": "desktop-lpbf/cad",
  "ops": [
   {
    "id": "A1",
@@ -428,7 +428,7 @@
    "where": "bench, then the VLM tray",
    "interval": "once",
    "air": false,
-   "minutes": 634,
+   "minutes": 636,
    "steps": [
     {
      "id": "A2.1",
@@ -568,7 +568,7 @@
      "minutes": 5,
      "note": "",
      "status": "PASS",
-     "detail": "documented path clear (gap 0.3 mm to Chamber legs (6061, 30 x 30))",
+     "detail": "documented path clear (gap 0.3 mm to Chamber legs (6061, 30 x 30; the right-h)",
      "clearance": 0.3
     },
     {
@@ -671,7 +671,7 @@
      "note": "",
      "status": "WARN",
      "detail": "18 screws; 18 reachable with: hex key 3 mm, long arm in, hex key 3 mm, short arm in; torque screwdriver fits 0/18; torque driver blocked by tool: Base plate, process module, hand: Base plate, process module",
-     "clearance": 1.4,
+     "clearance": 0.5,
      "per_screw": [
       {
        "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #1",
@@ -740,14 +740,13 @@
       {
        "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #6",
        "withdraw_ok": true,
-       "tool": "hex key 3 mm, short arm in (ISO 2936 66 x 23)",
-       "arc": 225.0,
-       "clearance": 1.4,
-       "clear_with": "hand: Chamber floor plate",
+       "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
+       "arc": 360.0,
+       "clearance": 2.29,
+       "clear_with": "tool: Chamber floor plate",
        "torque_ok": false,
        "torque_blocked_by": [
         "tool: Base plate, process module",
-        "tool: Chamber legs",
         "hand: Base plate, process module"
        ]
       },
@@ -865,13 +864,12 @@
        "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #15",
        "withdraw_ok": true,
        "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
-       "arc": 90.0,
+       "arc": 360.0,
        "clearance": 2.29,
        "clear_with": "tool: Chamber floor plate",
        "torque_ok": false,
        "torque_blocked_by": [
         "tool: Base plate, process module",
-        "tool: Chamber legs",
         "hand: Base plate, process module"
        ]
       },
@@ -891,28 +889,29 @@
       {
        "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #17",
        "withdraw_ok": true,
-       "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
-       "arc": 360.0,
-       "clearance": 2.29,
-       "clear_with": "tool: Chamber floor plate",
+       "tool": "hex key 3 mm, short arm in (ISO 2936 66 x 23)",
+       "arc": 195.0,
+       "clearance": 0.5,
+       "clear_with": "hand: Chamber floor plate",
        "torque_ok": false,
        "torque_blocked_by": [
         "tool: Base plate, process module",
+        "tool: Chamber legs",
         "hand: Base plate, process module"
        ]
       },
       {
        "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #18",
        "withdraw_ok": true,
-       "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
-       "arc": 90.0,
+       "tool": "hex key 3 mm, short arm in (ISO 2936 66 x 23)",
+       "arc": 105.0,
        "clearance": 2.29,
        "clear_with": "tool: Chamber floor plate",
        "torque_ok": false,
        "torque_blocked_by": [
         "tool: Base plate, process module",
         "tool: Chamber legs",
-        "tool: Base-plate-to-leg screws, M6 x 25 316 #7"
+        "tool: Base-plate-to-leg screws, M6 x 25 316 #6"
        ]
       }
      ]
@@ -936,7 +935,7 @@
      "minutes": 5,
      "note": "",
      "status": "FAIL",
-     "detail": "documented path (0, 0, -180) blocked by Base plate, process module (MIC-6, 15 mm) after 44.0 mm; free straight directions: -y",
+     "detail": "documented path (0, 0, -180) blocked by Base plate, process module (MIC-6, 15 mm) after 70.0 mm; free straight directions: +x, -y",
      "clearance": null
     },
     {
@@ -954,7 +953,7 @@
        "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #1",
        "withdraw_ok": true,
        "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
-       "arc": 360.0,
+       "arc": 240.0,
        "clearance": 2.29,
        "clear_with": "tool: Cross-flow outlet plenum under the floor",
        "torque_ok": false,
@@ -968,7 +967,7 @@
        "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #2",
        "withdraw_ok": true,
        "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
-       "arc": 360.0,
+       "arc": 240.0,
        "clearance": 2.29,
        "clear_with": "tool: Cross-flow outlet plenum under the floor",
        "torque_ok": false,
@@ -1008,7 +1007,7 @@
        "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #5",
        "withdraw_ok": true,
        "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
-       "arc": 255.0,
+       "arc": 360.0,
        "clearance": 2.29,
        "clear_with": "tool: Cross-flow outlet plenum under the floor",
        "torque_ok": false,
@@ -1022,7 +1021,7 @@
        "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #6",
        "withdraw_ok": true,
        "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
-       "arc": 255.0,
+       "arc": 360.0,
        "clearance": 2.29,
        "clear_with": "tool: Cross-flow outlet plenum under the floor",
        "torque_ok": false,
@@ -1042,7 +1041,7 @@
      "minutes": 4,
      "note": "",
      "status": "FAIL",
-     "detail": "documented path (0, 0, -200) blocked by Base plate, process module (MIC-6, 15 mm) after 104.0 mm; free straight directions: +x",
+     "detail": "documented path (0, 0, -200) blocked by Base plate, process module (MIC-6, 15 mm) after 78.0 mm; free straight directions: none; free two-leg path: 10 mm -x, then +y",
      "clearance": null
     },
     {
@@ -1052,15 +1051,15 @@
      "do": "screws",
      "minutes": 3,
      "note": "",
-     "status": "PASS",
-     "detail": "4 screws; 4 reachable with: hex key 3 mm, long arm in; torque driver blocked by tool: VLM tray 2450 x 864 mm, tool: Base plate, process module",
+     "status": "FAIL",
+     "detail": "4 screws; 3 reachable with: hex key 3 mm, long arm in; torque driver blocked by tool: VLM tray 2450 x 864 mm, tool: Base plate, process module; e.g. Overflow-funnel screws, M4 x 12 316, counterbored #4: short-arm key free arc 0 deg, blocked by hand: Overflow funnel block, hand: Chamber legs",
      "clearance": 2.29,
      "per_screw": [
       {
        "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #1",
        "withdraw_ok": true,
        "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
-       "arc": 285.0,
+       "arc": 240.0,
        "clearance": 2.29,
        "clear_with": "tool: Overflow funnel block",
        "torque_ok": false,
@@ -1074,7 +1073,7 @@
        "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #2",
        "withdraw_ok": true,
        "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
-       "arc": 360.0,
+       "arc": 240.0,
        "clearance": 2.29,
        "clear_with": "tool: Overflow funnel block",
        "torque_ok": false,
@@ -1088,7 +1087,7 @@
        "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #3",
        "withdraw_ok": true,
        "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
-       "arc": 255.0,
+       "arc": 240.0,
        "clearance": 2.29,
        "clear_with": "tool: Overflow funnel block",
        "torque_ok": false,
@@ -1101,15 +1100,15 @@
       {
        "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #4",
        "withdraw_ok": true,
-       "tool": "hex key 3 mm, long arm in (ISO 2936 standard 66 x 23)",
-       "arc": 285.0,
-       "clearance": 2.29,
-       "clear_with": "tool: Overflow funnel block",
+       "tool": null,
+       "arc": null,
+       "clearance": null,
+       "clear_with": null,
        "torque_ok": false,
        "torque_blocked_by": [
         "tool: VLM tray 2450 x 864 mm",
         "tool: Base plate, process module",
-        "hand: VLM tray 2450 x 864 mm"
+        "tool: Chamber legs"
        ]
       }
      ]
@@ -1117,28 +1116,7 @@
     {
      "id": "A2.14",
      "op": "A2",
-     "step": "Overflow jar up to its port (clamp put on by hand)",
-     "do": "place",
-     "minutes": 2,
-     "note": "",
-     "status": "PASS",
-     "detail": "documented path clear (gap 0.3 mm to Overflow port (KF-40))",
-     "clearance": 0.3
-    },
-    {
-     "id": "A2.15",
-     "op": "A2",
-     "step": "KF-40 clamp",
-     "do": "place",
-     "minutes": 1,
-     "note": "",
-     "status": "-",
-     "detail": "placed by hand or welded on; no path check"
-    },
-    {
-     "id": "A2.16",
-     "op": "A2",
-     "step": "Overflow-jar and module-present sensors",
+     "step": "Overflow-jar and module-present sensors, the jar sensor's bracket on the right-hand leg",
      "do": "place",
      "minutes": 4,
      "note": "",
@@ -1147,7 +1125,67 @@
      "clearance": 0.52
     },
     {
+     "id": "A2.15",
+     "op": "A2",
+     "step": "Two M4 screws, jar-sensor bracket into the right-hand leg",
+     "do": "screws",
+     "minutes": 2,
+     "note": "",
+     "status": "FAIL",
+     "detail": "2 screws; 0 reachable with: ball-end key 3 mm, tilted up to 25 deg; torque driver blocked by tool: Overflow-jar present sensor, hand: Base plate, process module; withdrawal: Overflow-jar present sensor; e.g. Jar-sensor bracket screws, M4 x 10 316, into the right-hand leg #2: short-arm key free arc 0 deg, blocked by tool: Overflow-jar present sensor, hand: Base plate, process module",
+     "clearance": 0.31,
+     "per_screw": [
+      {
+       "screw": "Jar-sensor bracket screws, M4 x 10 316, into the right-hand leg #1",
+       "withdraw_ok": false,
+       "tool": "ball-end key 3 mm, tilted up to 25 deg (Bondhus 10956, 98 x 19)",
+       "arc": 360.0,
+       "clearance": 0.31,
+       "clear_with": "tool: Overflow-jar present sensor",
+       "torque_ok": false,
+       "torque_blocked_by": [
+        "tool: Overflow-jar present sensor",
+        "hand: Base plate, process module"
+       ]
+      },
+      {
+       "screw": "Jar-sensor bracket screws, M4 x 10 316, into the right-hand leg #2",
+       "withdraw_ok": false,
+       "tool": null,
+       "arc": null,
+       "clearance": null,
+       "clear_with": null,
+       "torque_ok": false,
+       "torque_blocked_by": [
+        "tool: Overflow-jar present sensor",
+        "hand: Base plate, process module"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "A2.16",
+     "op": "A2",
+     "step": "Overflow jar in from the front and up onto its port (2026-11-23: its lane to the front is clear)",
+     "do": "place",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap 0.3 mm to Overflow port (KF-40, weld stub to 42 mm)",
+     "clearance": 0.3
+    },
+    {
      "id": "A2.17",
+     "op": "A2",
+     "step": "KF-40 toggle clamp (MKS 100318805), lever to the front",
+     "do": "place",
+     "minutes": 1,
+     "note": "",
+     "status": "-",
+     "detail": "placed by hand or welded on; no path check"
+    },
+    {
+     "id": "A2.18",
      "op": "A2",
      "step": "Wall liners into the open chamber",
      "do": "place",
@@ -1158,7 +1196,7 @@
      "clearance": 0.06
     },
     {
-     "id": "A2.18",
+     "id": "A2.19",
      "op": "A2",
      "step": "LED bar",
      "do": "place",
@@ -1169,7 +1207,7 @@
      "clearance": 0.4
     },
     {
-     "id": "A2.19",
+     "id": "A2.20",
      "op": "A2",
      "step": "Through-beam fibre heads and their O-rings, threaded into the side walls from outside",
      "do": "place",
@@ -1179,7 +1217,7 @@
      "detail": "placed by hand or welded on; no path check"
     },
     {
-     "id": "A2.20",
+     "id": "A2.21",
      "op": "A2",
      "step": "Inlet plenum and its O-ring on the back wall",
      "do": "place",
@@ -1190,7 +1228,7 @@
      "clearance": 0.3
     },
     {
-     "id": "A2.21",
+     "id": "A2.22",
      "op": "A2",
      "step": "Seven M4 inlet-plenum screws into the back wall",
      "do": "screws",
@@ -1275,7 +1313,7 @@
      ]
     },
     {
-     "id": "A2.22",
+     "id": "A2.23",
      "op": "A2",
      "step": "Vacuum-port adapter plate and its O-ring on the right wall",
      "do": "place",
@@ -1286,7 +1324,7 @@
      "clearance": 0.3
     },
     {
-     "id": "A2.23",
+     "id": "A2.24",
      "op": "A2",
      "step": "Four M5 vacuum-port adapter screws",
      "do": "screws",
@@ -1339,7 +1377,7 @@
      ]
     },
     {
-     "id": "A2.24",
+     "id": "A2.25",
      "op": "A2",
      "step": "Recoater rail onto the back wall",
      "do": "place",
@@ -1350,7 +1388,7 @@
      "clearance": 2.5
     },
     {
-     "id": "A2.25",
+     "id": "A2.26",
      "op": "A2",
      "step": "Four M4 rail screws into the back wall's holes, tapped through from outside",
      "do": "screws",
@@ -1419,7 +1457,7 @@
      ]
     },
     {
-     "id": "A2.26",
+     "id": "A2.27",
      "op": "A2",
      "step": "Four M4 plug screws on bonded seal washers in those holes, on the back wall's outer face",
      "do": "screws",
@@ -1472,7 +1510,7 @@
      ]
     },
     {
-     "id": "A2.27",
+     "id": "A2.28",
      "op": "A2",
      "step": "Carriage on the rail (slid on from the rail's end)",
      "do": "place",
@@ -1483,7 +1521,7 @@
      "clearance": null
     },
     {
-     "id": "A2.28",
+     "id": "A2.29",
      "op": "A2",
      "step": "Ball screw (animation: dropped in from above)",
      "do": "place",
@@ -1494,7 +1532,7 @@
      "clearance": null
     },
     {
-     "id": "A2.29",
+     "id": "A2.30",
      "op": "A2",
      "step": "Ball nut threaded onto the screw, arm on the block",
      "do": "place",
@@ -1504,7 +1542,7 @@
      "detail": "placed by hand or welded on; no path check"
     },
     {
-     "id": "A2.30",
+     "id": "A2.31",
      "op": "A2",
      "step": "Feedthrough (spacer, O-rings, Ferrotec unit, coupling), bearing cap, motor standoff, bracket, servo",
      "do": "place",
@@ -1515,7 +1553,7 @@
      "clearance": 0.3
     },
     {
-     "id": "A2.31",
+     "id": "A2.32",
      "op": "A2",
      "step": "Four M4 bearing-cap screws on the right wall",
      "do": "screws",
@@ -1568,7 +1606,7 @@
      ]
     },
     {
-     "id": "A2.32",
+     "id": "A2.33",
      "op": "A2",
      "step": "Blade holder and blade",
      "do": "place",
@@ -1579,7 +1617,7 @@
      "clearance": null
     },
     {
-     "id": "A2.33",
+     "id": "A2.34",
      "op": "A2",
      "step": "Two M3 blade screws",
      "do": "screws",
@@ -1620,7 +1658,7 @@
      ]
     },
     {
-     "id": "A2.34",
+     "id": "A2.35",
      "op": "A2",
      "step": "Z stage hung under the floor",
      "do": "place",
@@ -1631,7 +1669,7 @@
      "clearance": null
     },
     {
-     "id": "A2.35",
+     "id": "A2.36",
      "op": "A2",
      "step": "Four counterbored M5 Z-flange screws from below",
      "do": "screws",
@@ -1700,7 +1738,7 @@
      ]
     },
     {
-     "id": "A2.36",
+     "id": "A2.37",
      "op": "A2",
      "step": "Build module M50 in along its swap path (Z arm released)",
      "do": "module",
@@ -1711,15 +1749,15 @@
      "detail": "swap path clear; tightest gap 0.1 mm to Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)"
     },
     {
-     "id": "A2.37",
+     "id": "A2.38",
      "op": "A2",
      "step": "Two captive M6 screws pull the module flange up to the floor",
      "do": "screws",
      "minutes": 2,
      "note": "",
      "status": "WARN",
-     "detail": "2 screws; 2 reachable with: hex key 5 mm, long arm in; torque screwdriver fits 0/2; torque driver blocked by tool: VLM tray 2450 x 864 mm, hand: VLM tray 2450 x 864 mm",
-     "clearance": 3.74,
+     "detail": "2 screws; 2 reachable with: hex key 5 mm, long arm in; torque screwdriver fits 0/2; torque driver blocked by tool: VLM tray 2450 x 864 mm, tool: Base plate, process module",
+     "clearance": 2.06,
      "per_screw": [
       {
        "screw": "Captive M6 panel screws on the module flange #1",
@@ -1738,21 +1776,21 @@
       {
        "screw": "Captive M6 panel screws on the module flange #2",
        "withdraw_ok": true,
-       "tool": "hex key 5 mm, long arm in (ISO 2936 standard 85 x 33)",
+       "tool": "hex key 5 mm, long arm in (ISO 2936 long 120 x 33)",
        "arc": 60.0,
-       "clearance": 3.74,
-       "clear_with": "tool: Overflow clamp",
+       "clearance": 2.06,
+       "clear_with": "hand: Base plate, process module",
        "torque_ok": false,
        "torque_blocked_by": [
         "tool: VLM tray 2450 x 864 mm",
-        "hand: VLM tray 2450 x 864 mm",
-        "hand: Base plate, process module"
+        "tool: Overflow jar",
+        "tool: Overflow clamp"
        ]
       }
      ]
     },
     {
-     "id": "A2.38",
+     "id": "A2.39",
      "op": "A2",
      "step": "Gas knife and dose chute (hung under the lid line)",
      "do": "place",
@@ -1763,7 +1801,7 @@
      "clearance": 3.0
     },
     {
-     "id": "A2.39",
+     "id": "A2.40",
      "op": "A2",
      "step": "Lid O-ring cord into the body's gland",
      "do": "place",
@@ -1773,7 +1811,7 @@
      "detail": "placed by hand or welded on; no path check"
     },
     {
-     "id": "A2.40",
+     "id": "A2.41",
      "op": "A2",
      "step": "Lid with its inserts",
      "do": "place",
@@ -1784,7 +1822,7 @@
      "clearance": 0.3
     },
     {
-     "id": "A2.41",
+     "id": "A2.42",
      "op": "A2",
      "step": "Twenty M5 lid screws, star pattern",
      "do": "screws",
@@ -1997,7 +2035,7 @@
      ]
     },
     {
-     "id": "A2.42",
+     "id": "A2.43",
      "op": "A2",
      "step": "Field stop, window flange and its O-ring",
      "do": "place",
@@ -2008,7 +2046,7 @@
      "clearance": 0.1
     },
     {
-     "id": "A2.43",
+     "id": "A2.44",
      "op": "A2",
      "step": "Six counterbored M4 window-flange screws",
      "do": "screws",
@@ -2081,7 +2119,7 @@
      ]
     },
     {
-     "id": "A2.44",
+     "id": "A2.45",
      "op": "A2",
      "step": "Window O-rings, fused-silica window, clamp ring, retaining ring",
      "do": "place",
@@ -2092,7 +2130,7 @@
      "clearance": 0.2
     },
     {
-     "id": "A2.45",
+     "id": "A2.46",
      "op": "A2",
      "step": "Six M3 retaining-ring screws (clamp the fused silica evenly)",
      "do": "screws",
@@ -2165,7 +2203,7 @@
      ]
     },
     {
-     "id": "A2.46",
+     "id": "A2.47",
      "op": "A2",
      "step": "Cover-slide drawer into the lid's front edge",
      "do": "place",
@@ -2176,7 +2214,7 @@
      "clearance": 0.3
     },
     {
-     "id": "A2.47",
+     "id": "A2.48",
      "op": "A2",
      "step": "Drawer-closed sensor",
      "do": "place",
@@ -2187,7 +2225,7 @@
      "clearance": 1.32
     },
     {
-     "id": "A2.48",
+     "id": "A2.49",
      "op": "A2",
      "step": "Metering base, dock rails, load cell, NFC, stepper, seal housing, side port, docked sensor",
      "do": "place",
@@ -2198,7 +2236,7 @@
      "clearance": 0.3
     },
     {
-     "id": "A2.49",
+     "id": "A2.50",
      "op": "A2",
      "step": "Four M4 metering-base screws",
      "do": "screws",
@@ -2263,7 +2301,7 @@
      ]
     },
     {
-     "id": "A2.50",
+     "id": "A2.51",
      "op": "A2",
      "step": "Reservoir M onto the dovetail",
      "do": "place",
@@ -2274,7 +2312,7 @@
      "clearance": 1.1
     },
     {
-     "id": "A2.51",
+     "id": "A2.52",
      "op": "A2",
      "step": "Camera viewport, window and camera, pressure transducer, relief valve",
      "do": "place",
@@ -2285,7 +2323,7 @@
      "clearance": 0.05
     },
     {
-     "id": "A2.52",
+     "id": "A2.53",
      "op": "A2",
      "step": "Hinge knuckles on the chamber front, draw latches on its side faces",
      "do": "place",
@@ -2296,7 +2334,7 @@
      "clearance": 0.3
     },
     {
-     "id": "A2.53",
+     "id": "A2.54",
      "op": "A2",
      "step": "Door (with its O-ring, leaves, strikes, handle), knuckles lined up",
      "do": "place",
@@ -2307,7 +2345,7 @@
      "clearance": 0.01
     },
     {
-     "id": "A2.54",
+     "id": "A2.55",
      "op": "A2",
      "step": "Hinge pins slid in along x",
      "do": "place",
@@ -2318,7 +2356,7 @@
      "clearance": 0.1
     },
     {
-     "id": "A2.55",
+     "id": "A2.56",
      "op": "A2",
      "step": "Optics bridge posts on the base plate",
      "do": "place",
@@ -2329,7 +2367,7 @@
      "clearance": 0.3
     },
     {
-     "id": "A2.56",
+     "id": "A2.57",
      "op": "A2",
      "step": "Optics-post base screws, 2 x M6 up into each post from under the base plate",
      "do": "screws",
@@ -2438,7 +2476,7 @@
      ]
     },
     {
-     "id": "A2.57",
+     "id": "A2.58",
      "op": "A2",
      "step": "Optics bridge onto the posts",
      "do": "place",
@@ -2449,7 +2487,7 @@
      "clearance": 0.3
     },
     {
-     "id": "A2.58",
+     "id": "A2.59",
      "op": "A2",
      "step": "Optics-bridge screws, 2 x M6 x 35 down into each post",
      "do": "screws",
@@ -2542,7 +2580,7 @@
      ]
     },
     {
-     "id": "A2.59",
+     "id": "A2.60",
      "op": "A2",
      "step": "f-theta adapter ring under the bridge, galvo riser and galvo on the bridge",
      "do": "place",
@@ -2553,7 +2591,7 @@
      "clearance": null
     },
     {
-     "id": "A2.60",
+     "id": "A2.61",
      "op": "A2",
      "step": "f-theta lens threaded up into its adapter ring from under the bridge",
      "do": "place",
@@ -2564,7 +2602,7 @@
      "clearance": null
     },
     {
-     "id": "A2.61",
+     "id": "A2.62",
      "op": "A2",
      "step": "Beam tube, shutter, collimator, fiber",
      "do": "place",
@@ -2575,7 +2613,7 @@
      "clearance": 0.0
     },
     {
-     "id": "A2.62",
+     "id": "A2.63",
      "op": "A2",
      "step": "Laser guard: frame, panels, door rail, sliding door, lock",
      "do": "place",
@@ -2586,7 +2624,7 @@
      "clearance": null
     },
     {
-     "id": "A2.63",
+     "id": "A2.64",
      "op": "A2",
      "step": "Rack frame, units, panels, operator panel",
      "do": "place",
@@ -2596,7 +2634,7 @@
      "detail": "placed by hand or welded on; no path check"
     },
     {
-     "id": "A2.64",
+     "id": "A2.65",
      "op": "A2",
      "step": "Gas module base and units",
      "do": "place",
@@ -2606,7 +2644,7 @@
      "detail": "placed by hand or welded on; no path check"
     },
     {
-     "id": "A2.65",
+     "id": "A2.66",
      "op": "A2",
      "step": "Vacuum valve, hoses, argon and O2 lines",
      "do": "place",
@@ -2616,7 +2654,7 @@
      "detail": "placed by hand or welded on; no path check"
     },
     {
-     "id": "A2.66",
+     "id": "A2.67",
      "op": "A2",
      "step": "Tray dock and umbilicals",
      "do": "place",
@@ -2626,7 +2664,7 @@
      "detail": "placed by hand or welded on; no path check"
     },
     {
-     "id": "A2.67",
+     "id": "A2.68",
      "op": "A2",
      "step": "Leak check: rate of rise from <= 1 mbar and O2 drift over 1 h at +20 mbar argon (pain-points P27)",
      "do": "note",
@@ -2798,7 +2836,7 @@
    "where": "tray at the access opening",
    "interval": "each build",
    "air": true,
-   "minutes": 88,
+   "minutes": 87,
    "steps": [
     {
      "id": "U4.1",
@@ -2844,32 +2882,33 @@
     {
      "id": "U4.5",
      "op": "U4",
-     "step": "Fingers on the overflow jar's KF-40 clamp under the floor",
+     "step": "Fingers on the overflow jar's toggle-clamp lever under the floor (lever end at y -76, z -84)",
      "do": "reach",
      "minutes": 1,
      "note": "",
-     "status": "FAIL",
-     "detail": "blocked: from the front: hand: Cross-flow outlet plenum under the floor, hand: Outlet plenum port; from (0.6, -0.8, 0): hand: Chamber legs, forearm: Chamber legs; from the right: forearm: Sealed cyclone + HEPA housing, forearm: Filter outlet"
+     "status": "PASS",
+     "detail": "hand + forearm clear from the front"
     },
     {
      "id": "U4.6",
      "op": "U4",
-     "step": "KF-40 clamp opened and taken off by hand",
+     "step": "KF-40 toggle clamp opened (one push on the lever) and taken off forward",
      "do": "remove",
      "minutes": 1,
      "note": "",
-     "status": "-",
-     "detail": "by hand; no path check"
+     "status": "FAIL",
+     "detail": "(0, -520, 0) blocked by Overflow jar (KF-40 flange on a 2 in. 316L cup, 45 mm, ~68 c after 0.0 mm"
     },
     {
      "id": "U4.7",
      "op": "U4",
-     "step": "Overflow jar: clamp off, drop 5 mm off the centring ring, out",
+     "step": "Overflow jar: drop 8 mm off the centring ring, straight out to the front",
      "do": "remove",
-     "minutes": 3,
+     "minutes": 2,
      "note": "",
-     "status": "FAIL",
-     "detail": "(0, 0, -5) -> (0, -520, -5) blocked by Cross-flow outlet plenum under the floor (316L, flat over th after 57.0 mm; also tried (0, 0, -5) -> (0, 0, 515): Overflow port (KF-40) at 11.0 mm; (0, 0, -5) -> (520, 0, -5): Overflow-jar present sensor (inductive M at 15.0 mm; (0, 0, -5) -> (-520, 0, -5): Build module M50: spigot, flange, honed  at 47.0 mm"
+     "status": "PASS",
+     "clearance": 0.3,
+     "detail": "free along (0, 0, -8) -> (0, -520, -8); tightest gap 0.3 mm to Overflow port (KF-40, weld stub to 42 mm)"
     },
     {
      "id": "U4.8",
@@ -3820,12 +3859,12 @@
     {
      "id": "M10.4",
      "op": "M10",
-     "step": "Overflow-jar sensor",
+     "step": "Overflow-jar sensor (its M12 nuts, in front of the bracket)",
      "do": "reach",
      "minutes": 1,
      "note": "",
      "status": "FAIL",
-     "detail": "blocked: from the front: hand: Chamber legs, forearm: Chamber legs; from the right: forearm: Sealed cyclone + HEPA housing, forearm: Filter outlet"
+     "detail": "blocked: from the front: forearm: Optics bridge posts, forearm: Guard frame; from the right: forearm: Sealed cyclone + HEPA housing, forearm: Filter outlet"
     }
    ]
   },
@@ -3981,16 +4020,16 @@
      "minutes": 3,
      "note": "",
      "status": "PASS",
-     "detail": "2 screws; 2 reachable with: hex key 5 mm, long arm in; torque driver blocked by tool: VLM tray 2450 x 864 mm, hand: VLM tray 2450 x 864 mm",
-     "clearance": 3.74,
+     "detail": "2 screws; 2 reachable with: hex key 5 mm, long arm in; torque driver blocked by tool: VLM tray 2450 x 864 mm, tool: Base plate, process module",
+     "clearance": 3.79,
      "per_screw": [
       {
        "screw": "Captive M6 panel screws on the module flange #1",
        "withdraw_ok": true,
        "tool": "hex key 5 mm, long arm in (ISO 2936 standard 85 x 33)",
-       "arc": 225.0,
-       "clearance": 6.22,
-       "clear_with": "tool: Build module M50",
+       "arc": 60.0,
+       "clearance": 5.1,
+       "clear_with": "hand: Module M50 bottom flange",
        "torque_ok": false,
        "torque_blocked_by": [
         "tool: VLM tray 2450 x 864 mm",
@@ -4001,15 +4040,15 @@
       {
        "screw": "Captive M6 panel screws on the module flange #2",
        "withdraw_ok": true,
-       "tool": "hex key 5 mm, long arm in (ISO 2936 standard 85 x 33)",
-       "arc": 60.0,
-       "clearance": 3.74,
+       "tool": "hex key 5 mm, long arm in (ISO 2936 long 120 x 33)",
+       "arc": 105.0,
+       "clearance": 3.79,
        "clear_with": "tool: Overflow clamp",
        "torque_ok": false,
        "torque_blocked_by": [
         "tool: VLM tray 2450 x 864 mm",
-        "hand: VLM tray 2450 x 864 mm",
-        "hand: Base plate, process module"
+        "tool: Overflow jar",
+        "tool: Overflow clamp"
        ]
       }
      ]
