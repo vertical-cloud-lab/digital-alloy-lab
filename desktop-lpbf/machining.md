@@ -5,6 +5,154 @@ design-for-machining (DFM) rules. It covers what BYU's shops list, what a 3-axis
 cannot reach, and the tools to buy. Nothing here has been quoted by a shop. A BYU machinist reviewed the build animation;
 the first section answers him.
 
+## Tool holders, spindle, fixtures and travels checked (2026-11-23)
+
+CAMotics models the cutter only. [`holder_check.py`](analysis/machining/holder_check.py) now sweeps the whole tool
+assembly along every move of the frame and floor-plate programs. The assembly is the flutes, the shank, a real Haas CT40
+holder, the CAT40 flange and the spindle nose. It is checked against three things:
+
+- the in-process stock at that point in the program;
+- the setup's fixtures;
+- the VF-4's travels.
+
+As programmed, with the fixtures `setup_plan.json` describes, it found 417 collisions in 4 of the 5 setups and two
+clearances under 2 mm. After the fixes in [`freecad_cam.py`](analysis/machining/freecad_cam.py), the frame's three
+setups and the floor plate's setup B are clean. The floor plate's setup A still has 26 rapids through its end tabs, and
+its workholding needs re-planning ([below](#still-open-after-this-check)). Frame setup C beyond the door opening is
+still not programmed.
+
+### Method
+
+- **Tool assemblies.** Haas Tooling CT40 holders, with dimensions read off each product page's technical specifications
+  (haastooling.com, fetched 22:30 UTC through the lab tunnel). Flute lengths and overall lengths are from
+  [`tooling-bom.csv`](tooling-bom.csv).
+
+  | Tool | Cutter (BOM line) | Holder (Haas part number) | Holder dimensions | Stick-out (mm) |
+  |---|---|---|---|---|
+  | T1 | 2.5 in. face mill (body 40 mm tall, assumed) | 04-0015 shell mill holder, 3/4 in. pilot, 2 in. gauge length | body Ø1.69 in. x 1.25 in. | 40 |
+  | T2 | 3/4 in., 1-1/2 in. flutes, 4 in. OAL (A5) | **04-0010 ER32 collet chuck, 2-1/2 in. gauge length** (was 04-0004 side-lock, 1-3/4 in.) | nut Ø1.97 in. (was body Ø1.75 in.) | **66** (was 63) |
+  | T3 | 1/2 in., 1 in. flutes, 3 in. OAL (A4) | 04-0001 side-lock, 1-3/4 in. gauge length | body Ø1.25 in. x 1.0 in., shoulder Ø1.75 in. | 38 |
+  | T4, T5-T8, T9 | 1/8 in. end mill (A1); 3.3, 4.2, 5.0 and 6.0 mm drills; 1/4 in. end mill (A2) | 04-0006 ER16 collet chuck, 2-1/2 in. gauge length | nut Ø1.1 in. x 1.12 in. | 12; 30-40; **28** (was 25) |
+
+  The flange is taken as the CAT40 V-flange, Ø2.50 in. x 5/8 in. No Haas drawing of the spindle was found, so the
+  spindle nose is assumed to be Ø150 mm for 100 mm above the gauge line, then a Ø300 mm head.
+- **In-process stock.** The stock starts as the blank, minus the frame's waterjet core. Each setup starts from the
+  stock the earlier setups left, seen from its own side. As the flutes pass, each column is cut down to the lowest tool
+  tip over it. The stock is held on a 0.5 mm grid:
+  - a voxel grid in the part frame between setups;
+  - within a setup, a top-surface height map that also knows where the topmost layer of material ends. That way the
+    floor plate's 2.2 mm web, standing over the air that setup A cut, empties its column when B faces it off.
+- **Why a height map is enough.** Every setup here has the tool vertical, and the assembly only gets wider going up. So
+  a column is hit if, and only if, its top is above the tool tip plus the height of the lowest part of the assembly at
+  least that wide. Each straight piece of each move is tested exactly against every column within reach. Arcs are split
+  to a 0.25 mm chord.
+- **What counts as a collision:**
+  - anything above the flutes touching stock;
+  - any part of the assembly touching a fixture, flutes included;
+  - a rapid whose flutes go into stock. As in `camotics_sim.py`, the rapid's radius is reduced by 0.5 mm, so grazing a
+    wall at the voxel size is not counted.
+- **Clearance.** Clearance is the largest c for which the assembly, grown by c in radius and lowered by c, still
+  misses. It is reported for each tool, setup and part of the assembly, with the G-code line of the tightest move.
+- **What is not counted.** A same-diameter shank in its own kerf reads 0.0 mm, which is expected. Flutes against stock
+  on rapids read 0.5 mm, the allowance.
+- **Fixtures.** Each setup's fixtures are written out in `freecad_cam.FIXTURES`, in that setup's frame, from
+  `setup_plan.json`'s fixture notes. The HRT210 is drawn from Haas' layout drawing `hrt210_10-2020.pdf` (Rev 1, 11 Nov
+  2019): platter Ø210, centre height 152.4, housing 276.4 tall and 177.8 deep, 466.9 overall with the motor box.
+
+Results are in [`holder_check.json`](analysis/out/machining/holder_check.json). The run before the fixes is in
+[`holder_check_before_fixes.json`](analysis/out/machining/holder_check_before_fixes.json). Each setup takes 3-35 s.
+
+| Setup (plan id) | Collisions as planned | Collisions after the fixes | Tightest holder clearance after (mm) | Tightest fixture clearance after (mm) |
+|---|---|---|---|---|
+| frame B, bottom up (F-S1, now first) | 213 | **0** | T2 4.1 (top of the stock) | T2 flutes 5.0 (edge clamp) |
+| frame A, top up (F-S2) | 0 (T2's holder 1.0 mm over the top face) | **0** | T2 4.0 | 10 or more |
+| frame C, door opening (F-S3) | 2 | **0** | T3 shank 8.9 | 10 or more |
+| floor A, top up (P-S1) | 159 | **26** (open) | T9 4.8 (was 1.8) | T2 2.2 (parallel) |
+| floor B, bottom up (P-S2) | 43 | **0** | 10 or more | T7 2.8 (fixture plate); T1 5.0 and T8 4.3 (port clamp) |
+
+**Travels.** Every setup is inside the VF-4's travels. The tool-centre span is at most 334 x 244 mm against
+1270 x 508 mm. On the rotary the span is 94 mm along X (the A axis) and 207 mm along Y. The spindle nose stays 122-428 mm
+above the table, inside the 107-742 mm range. At the tool change (Z home), every tool tip clears the highest point of
+the part or fixtures by at least 319 mm (setup C).
+
+### What it found, and the fixes in freecad_cam.py
+
+1. **T2's holder had 1.0 mm over the frame's top face** at the mid-height meet line. It cut z 58 from the top (A) and
+   z -58 from the bottom (B), with 62 mm of wall at 63 mm stick-out from a side-lock holder.
+   - A side-lock also fixes how far the end mill sticks out.
+   - Fix: T2 is now 66 mm out of an ER32 collet chuck (04-0010). A5's 4 in. OAL leaves 35.6 mm in the 40 mm collet,
+     and the nut now clears the top face by 4.0-4.1 mm. That is 3.5:1 against 3.3:1 before.
+2. **The opening's finish pass was one 62 mm pass** (58 from the bottom), but A5 has 38.1 mm of flutes. The shank above
+   them would have rubbed the 0.3 mm finishing skin over the top 24 mm.
+   - Fix: two 31 mm passes (29 mm from the bottom). Each pass's flutes cover its own depth, and the shank runs in the
+     wall the pass above has already finished.
+   - The 0.3 mm skin is under the grid's resolution, so this one is by arithmetic, not by the check.
+3. **Frame F-S1: the toe clamps on 1 in. end tabs were in the way** (213 collisions). The face mill faces the bounding
+   box plus its radius, out to x ±187.9, and ran into the clamps, which start at ±161.75.
+   - T2's outside passes reach x ±175.7, into the tab roots, which the CAM's blank doesn't have.
+   - With T2's tip at z -58, its holder came 0.45 mm under the tabs' top, and its holder and flange passed through the
+     clamps.
+   - Fix: no tabs. The blank sits on its risers, held by four low-profile edge clamps (BOM line L3, McMaster 2172A42)
+     on the x-end faces, below z -63, 5 mm under B's deepest cut. The tightest point is T2's flutes, 5.0 mm over a clamp.
+   - B now runs before A in `SETUPS`, as in the setup plan. A then sits on the dummy-floor plate, screwed down through
+     the 18 holes B drilled.
+4. **Frame setup C came down onto the fixture plate.** The dummy-floor plate (330 x 240) stands 9 mm proud of the
+   frame's front face (z' 120 against 111). FreeCAD's clearance height, stock top + 5 = 116, brought T3 down into the
+   plate's edge on the first move: lines 21-22, 1.6 mm deep.
+   - Fix: clearance and safe heights of 130 in setup C (`clear_z`).
+   - The plate's overhang also blocks any setup-C cut within about 10 mm of the frame's floor on every wall. Keep that
+     in mind when the rest of setup C is programmed, or make the plate no bigger than the frame (312 x 222).
+5. **Floor P-S2: the centre stud's Ø104 washer sat on the face this setup faces.** There were 43 collisions: the face mill
+   went 20 mm into the washer and nut, and the 3.3-6.0 mm drills near the port 1.2-2.5 mm into the washer.
+   - Fix: hold the port from inside. An expanding ID clamp, about Ø94, shop-made (assumed), its top 5 mm under the faced
+     bottom, pulls the plate onto the fixture plate with the 2 dowel pins.
+   - The tightest points are the face mill 5.0 mm and the 6.0 mm drill 4.3 mm from the clamp.
+6. **T9's ER16 nut had 1.8 mm** over the floor's top face when profiling the slots to z -23.2.
+   - Fix: 28 mm stick-out. A2's 2-1/2 in. OAL leaves 35.5 mm in the collet, and the nut now clears by 4.8 mm.
+7. **Floor P-S1: the face mill ran into the toe clamps on 1 in. end tabs** (159 collisions), as on the frame.
+   - Fix: 2-1/4 in. tabs, with the clamp noses 33 mm out along them (x ±191.75). The face mill and every holder now
+     clear the clamps.
+   - What's left: 26 rapids of T2 at z -20.5, through the tab roots (lines 1387-1473; [below](#still-open-after-this-check)).
+
+The re-posted G-code differs from the 2026-11-22 run only in:
+- setup C's clearance and safe heights;
+- the finish passes;
+- T2's and T9's tool lengths.
+
+The material each setup removes is unchanged. CAMotics on the pre-fix G-code (re-run today on the current model, in
+Docker at 2 GB with 16 mm slabs) reproduced the 2026-11-22 numbers exactly:
+- no gouges and no rapids through stock;
+- frame leftover 31.8 cm³ in 27 places;
+- floor plate clean, apart from the two slugs.
+
+### Still open after this check
+
+- **Floor P-S1.** T2's outside passes reach x ±175.7 at z -20.5. With tabs, that is a slot into the tab roots that
+  FreeCAD's blank (317.5 mm long) doesn't know about: it rapids through them and would cut them at full width. Two ways
+  out (not done):
+  - give FreeCAD the tabs as stock and bound the outside op at x ±176;
+  - or cut the outline in A only to z -12, holding the blank by edge clamps under z -15, and let B cut the rest of the
+    outline together with the U-notches. B is held by the port ID clamp and the pins, and its stock would be the whole
+    blank.
+- **`setup_plan.json` still describes the old workholding** for F-S1 (toe clamps on tabs) and P-S2 (stud and washer).
+  `freecad_cam.FIXTURES` is the checked version. `setup_plan.py` was not re-run.
+- **Assumed dimensions:**
+  - the spindle nose and head;
+  - each holder body between its nose and the flange (taken as wide as the nose or shoulder);
+  - the face mill's body height;
+  - the clamps' sizes;
+  - the side the HRT210's motor box is on.
+
+  No tailstock: the plan uses none.
+- **Frame setup C beyond the door opening** (the walls' slots, ports, bores and through-beam holes) is still not
+  programmed. So the check covers only the door opening on the rotary.
+- **Not modelled:** coolant lines and probes. Fixtures that sit under the part (risers, pins, screws from below) are
+  drawn, but the tool can't reach them.
+
+Run: `freecad_cam.py` (its docstring), then
+`OMP_NUM_THREADS=1 /tmp/capmem 2 env CHAMBER_CAM_IN=/tmp/chamber-cam /tmp/venv/bin/python desktop-lpbf/analysis/machining/holder_check.py`.
+It takes about 1 min and under 1 GB.
+
 ## G-code simulated in CAMotics (2026-11-22)
 
 Sterling asked for last round's CAMotics install error to be sorted out. It was a library problem on the runner, not a
@@ -158,7 +306,8 @@ The simulation's drills are flat, so it can't see their points. By arithmetic, f
 ### Not checked
 
 - **Holder, spindle and fixture collisions.** CAMotics models the cutter only, and the rapid check treats the tool as a
-  cylinder going up forever.
+  cylinder going up forever. Checked since by `holder_check.py`: see
+  [Tool holders, spindle, fixtures and travels checked](#tool-holders-spindle-fixtures-and-travels-checked-2026-11-23).
 - **Cutting loads:** chip load, deflection and chatter.
 - **The taps, reamers, insert tools and chamfers,** which aren't programmed.
 - **Anything under about 1 mm.** The 0.5 mm grid doesn't check the O-ring grooves' width and depth to tolerance.
