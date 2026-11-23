@@ -20,8 +20,8 @@ models, and their inputs (permeability, outgassing, powder moisture) are uncerta
    - **A well-made static O-ring joint doesn't leak.** The real risk is a defect left when the floor is put back on. A
      20 µm channel across the seal land, about one fine powder grain, lets in 8 × 10⁻³ mbar·L/s at vacuum, 80 times the
      whole machine's leak budget. This seal sits at the bottom of the chamber, where powder collects.
-   - **The rate-of-rise test catches it.** Anything wider than about 8 µm fails the test already in `seals.md` §7, so test
-     after every reassembly.
+   - **The rate-of-rise test catches it.** A channel wider than about 8 µm fails the acceptance test in `seals.md` §7, so
+     run it after every reassembly.
    - **During a build such a leak lets no air in.** At +20 mbar argon flows out through it fast enough that O₂ can't
      diffuse back (Péclet 16–320 for 10–45 µm channels). O₂ still comes in through the rubber itself, because overpressure
      doesn't stop permeation.
@@ -30,9 +30,9 @@ models, and their inputs (permeability, outgassing, powder moisture) are uncerta
      20 s, so neither is a virtual leak.
 2. **Yes: vacuum, then argon back-fill, three times, then the build runs at +5–20 mbar of argon.** The sequence is
    [below](#the-atmosphere-cycle).
-3. **It's a roughing pump, with no turbo.** BOM line G2 is an Edwards nXDS6i dry scroll: oil-free, 6.8 m³/h, 0.02 mbar
-   ultimate.
-   - **Speed:** with a throttled start, it pumps the 11.3 L gas envelope to 1 mbar in 1.4 min. One cycle takes about
+3. **It's a roughing pump, with no turbo.** BOM line G2 is an Edwards nXDS6i dry scroll: oil-free, 6.2 m³/h peak pumping
+   speed, 0.02 mbar ultimate.
+   - **Speed:** with a throttled start, it pumps the 11.3 L gas envelope to 1 mbar in 1.5 min. One cycle takes about
      4 min, and three take about 12.
    - **Three cycles reach the argon's own impurity:** 1.2–2.2 ppm O₂ in theory, with Ar 5.0 at 1–2 ppm.
    - **Why no turbo:** it would get there in one cycle instead of two, but no lower. It needs this pump as its backing pump
@@ -40,7 +40,8 @@ models, and their inputs (permeability, outgassing, powder moisture) are uncerta
 4. **Effect on prints: the pump and the floor joint change nothing you'd measure. Water in the powder matters far more.**
    - **We print at about 1 atm of argon, not in vacuum.** The melt pool, plume and spatter behave as in commercial argon
      machines. The vacuum only takes the air out first.
-   - **Oxygen:** this machine starts a build at a few ppm O₂, against 100–1,000 ppm for flow-purged commercial machines.
+   - **Oxygen:** this machine starts a build at ~1–2 ppm O₂ in theory, and probably a few to tens of ppm at the sensor,
+     against 100–1,000 ppm for flow-purged commercial machines.
      For AlSi10Mg, going from 1,000 to 100 ppm changed tensile properties by only 1–6 %
      ([Baroutaji et al. 2023](https://doi.org/10.3390/ma16010430), EOS M 290). The floor joint's +0.45 ppm/h is far below
      anything that matters.
@@ -74,8 +75,8 @@ models, and their inputs (permeability, outgassing, powder moisture) are uncerta
   40 °C its share is 0.42 times this.
 - Overpressure doesn't stop permeation. O₂ dissolves in the rubber on the room side and diffuses through, driven by its own
   partial pressure, whatever the total pressure inside. That's why the make-up flow exists.
-- Per unit of partial pressure, water permeates FKM about 200 times faster than O₂
-  ([Sturm et al. 2004](https://doi.org/10.1029/2003JD004073)). Room air at 50 % RH holds 15 times less water than O₂, so
+- Per unit of partial pressure, water permeates FKM 130–200 times faster than O₂ (Parker's O₂ value against
+  [Sturm et al. 2004](https://doi.org/10.1029/2003JD004073)'s water value, and Sturm's own pair). Room air at 50 % RH holds 15 times less water than O₂, so
   the water column still comes out 9 times larger.
 
 ### Real leaks: what the extra seal could cost
@@ -158,7 +159,7 @@ What the machine does before every build. Times are for the nXDS6i through two 2
    ([`seals.md`](seals.md) §0).
 2. **Soft pump to 100 mbar (about 1 min).** A needle valve beside the main KF-25 valve limits the start to V/S ≥ 25 s, so
    the gas leaving the powder beds doesn't lift them.
-3. **Full pump to ≤ 1 mbar (about 0.4 min more).** The main valve opens.
+3. **Full pump to ≤ 1 mbar (about 0.5 min more).** The main valve opens.
 4. **Hold at ≤ 1 mbar, about 2 min (assumed here).** The powder's pores and the walls give up air. A longer hold on the
    first cycle after the chamber has been open also takes off more water.
 5. **Back-fill with Ar 5.0 to +20 mbar (about 0.5 min).** It goes through the same flow limit (≤ 25 L/min) and a sintered
@@ -171,8 +172,8 @@ What the machine does before every build. Times are for the nXDS6i through two 2
 7. **Start the loop.**
    - The blower starts and the plate heats.
    - The analyser opens the make-up valve to hold O₂ at its setpoint, at +5–20 mbar.
-   - The laser is enabled when O₂ and the dew point are under their setpoints. The permissives are hardwired
-     ([README](README.md) §3.4).
+   - The laser is enabled when O₂ is under its setpoint and the pressure is in its window; those two permissives are
+     hardwired ([README](README.md) §3.4). This note suggests adding the dew point as a third.
 
 **What a real machine will read.** It will read higher than the ideal numbers: the O₂ that the powder and seals release,
 sensor offset, and where the sample is taken all add. Expect a few ppm to a few tens of ppm. Measuring this is phase 2
@@ -193,7 +194,7 @@ of the plan ([README](README.md) §5).
 
 | | Roughing pump only (as designed) | Roughing pump + turbo |
 |---|---|---|
-| Pump | Edwards nXDS6i dry scroll (BOM G2): oil-free, 6.8 m³/h, 0.02 mbar ultimate, 26 kg, $5,978 new; a used Agilent IDP-3 is about $1,285 ([`cost-scenarios.md`](cost-scenarios.md)) | the same scroll as backing pump, plus a ~60 L/s turbo with its controller and a gate valve |
+| Pump | Edwards nXDS6i dry scroll (BOM G2): oil-free, 6.2 m³/h peak pumping speed (6.8 m³/h displacement), 0.02 mbar ultimate, 26 kg, $5,978 new; a used Agilent IDP-3 is about $1,285 ([`cost-scenarios.md`](cost-scenarios.md)) | the same scroll as backing pump, plus a ~60 L/s turbo with its controller and a gate valve |
 | Base pressure here | ≈ 0.02 mbar after 5 min (the pump's ultimate, not the walls' outgassing) | 10⁻⁴–10⁻⁵ mbar after an hour or more, limited by the unbaked Al and FKM giving off water and by the KF-25 hose (~0.6 L/s in molecular flow) unless the turbo sits on the chamber |
 | O₂ after one cycle | 204 ppm at 1 mbar; 11 ppm if held at 0.05 mbar | 1.2–2.2 ppm |
 | O₂ after three cycles | **1.2–2.2 ppm** | **1.2–2.2 ppm**: the argon's own impurity sets both |
@@ -220,7 +221,7 @@ when the build starts, and how much O₂ and water creep in over the hours of a 
 | Start of build | O₂ |
 |---|---|
 | Flow-purged commercial machines | 100–1,000 ppm (a typical start threshold is ~1,000 ppm) |
-| This machine, 3 roughing cycles | ~1–2 ppm in theory, a few to tens of ppm measured |
+| This machine, 3 roughing cycles | ~1–2 ppm in theory; a few to tens of ppm expected at the sensor (not measured yet) |
 | With a turbo | the same |
 | During a build | rises ~2.2 ppm/h without make-up (0.45 ppm/h of it from the floor joint); 47 sccm of make-up argon holds 10 ppm |
 
@@ -254,7 +255,7 @@ when the build starts, and how much O₂ and water creep in over the hours of a 
 - **What to do:**
   - Dry the powder in a vacuum oven and load it dry. Lubkowitz et al. (2024) found vacuum-dried AlSi10Mg gave denser parts
     than oven-dried.
-  - Use the dew-point sensor (BOM G9) as a laser permissive alongside O₂.
+  - Make the dew-point sensor (BOM G9) a laser permissive alongside O₂. Today only O₂ and pressure are.
   - Size the make-up flow for water as well as O₂: about 60 sccm holds a −40 °C dew point against the walls and seals
     ([`seals.md` results](analysis/out/seals/seals.md)).
 - **The vacuum step does help with water.** Van Cauwenbergh et al. (2019) printed AlSi7Mg0.6 at ~3 ppm O₂ and ≤ 5 ppm H₂O
@@ -275,8 +276,9 @@ when the build starts, and how much O₂ and water creep in over the hours of a 
 
 - **More evaporation.** At reduced pressure the boiling point drops, so more Mg and Zn evaporate. That would shift exactly
   the compositions we are screening, as the 500 °C note found for heat ([`preheat-and-plates.md`](preheat-and-plates.md)).
-- **Powder blown off the track.** The vapour jet pushes powder away and widens the denuded zone beside the track
-  ([Matthews et al. 2016](https://doi.org/10.1016/j.actamat.2016.05.017)).
+- **A wider powder-free strip beside each track.** The metal vapour jet drives a flow of gas that pulls powder in toward
+  the track. Between atmospheric pressure and ~10 Torr of argon, the lower the pressure, the wider the denuded zone it
+  leaves ([Matthews et al. 2016](https://doi.org/10.1016/j.actamat.2016.05.017); Bidare et al. 2018 found the same).
 - **Different conditions.** Results would also not carry over to commercial argon machines.
 - **So vacuum is only for purging,** which is all a roughing pump has to do.
 
@@ -285,14 +287,18 @@ when the build starts, and how much O₂ and water creep in over the hours of a 
 - **New:** [`analysis/seals/vacuum_purge.py`](analysis/seals/vacuum_purge.py) and its
   [results](analysis/out/seals/vacuum_purge.md).
 - **The purge re-sized for the dry scroll.** `seals.py` still sizes the purge with the McMaster 4396K21 rotary vane
-  (3 cfm, 0.013 mbar), which BOM line G2 replaced on 2026-11-22. The scroll does it in about the same time: 1.4 min to
+  (3 cfm, 0.013 mbar), which BOM line G2 replaced on 2026-11-22. The scroll does it in about the same time: 1.5 min to
   1 mbar with the throttled start, against 1.6 min. So the conclusions in `seals.md` §6 stand.
 - **[README](README.md) §3.4** now says the pump is a roughing pump with no turbo, and links here.
 
 ## Not done
 
 - **No measurements.** The first rate-of-rise test and an O₂ and dew-point log through a purge are phase 2 of the plan.
-- **The pump's speed curve is a simple model:** S = S₀(1 − p_ult/p) through the hose conductance, using the listing's
-  6.8 m³/h. Edwards' own curve may differ by 10–20 %, which doesn't change the conclusions.
+- **The pump's speed curve is a simple model:** S = S₀(1 − p_ult/p) through the hose conductance, with S₀ the listed
+  6.2 m³/h peak speed. Edwards' own curve may differ by 10–20 % below 1 mbar, which doesn't change the conclusions. The
+  BOM's "6.8 m³/h" for G2 is the displacement, not the pumping speed.
+- **The pump's inlet limit.** Edwards lists 200 mbar as the nXDS6i's maximum continuous inlet pressure. Each cycle starts
+  from atmosphere for about a minute, which the soft-pump valve throttles, but the duty of repeated cycling isn't checked
+  against Edwards' manual.
 - **Gas the powder and seals give off after the purge isn't modelled**, apart from water.
 - **The floor seal's temperature is assumed (60 °C),** not taken from the thermal FEA.

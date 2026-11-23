@@ -158,7 +158,7 @@ From [`seals.md` (results)](analysis/out/seals/seals.md):
 
 ## 6. Purge and the powder
 
-- **Pump-down.** The McMaster 4396K21 (3 cfm, 1.42 L/s) through two KF-25 bellows reaches 1 mbar in **~1 min**. BOM line G2 is now the Edwards nXDS6i dry scroll; [`vacuum-and-purge.md`](vacuum-and-purge.md) re-runs the purge with it (1.4 min to 1 mbar with the soft-pump start, ~4 min per cycle) and compares the frame + floor plate with the old block.
+- **Pump-down.** The McMaster 4396K21 (3 cfm, 1.42 L/s) through two KF-25 bellows reaches 1 mbar in **~1 min**. BOM line G2 is now the Edwards nXDS6i dry scroll; [`vacuum-and-purge.md`](vacuum-and-purge.md) re-runs the purge with it (1.5 min to 1 mbar with the soft-pump start, ~4 min per cycle) and compares the frame + floor plate with the old block.
 - **Two cycles reach ~1 ppm O₂ in theory**, at the limit of Ar 5.0 purity. Plan three, with a hold at ≤ 1 mbar, to drain the powder's pores and the walls.
 - **Pumping that fast lifts powder.** At atmospheric pressure the pump-down time constant is 8 s. The gas leaving a powder bed then pushes on it with 0.42 × the bed's weight for a 40 mm bed, 0.59 for the L reservoir and **0.95 for the 90 mm overflow jar** (Kozeny–Carman, Klinkenberg slip).
   - **Throttle the first stage:** a needle-valve bypass ("soft pump") that keeps τ = V/S ≥ 25 s until ~100 mbar. Pump-down grows to ~3 min.

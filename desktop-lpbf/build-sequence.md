@@ -38,6 +38,8 @@ with the M50 module and reservoir M) into [`cad/img/sequence/`](cad/img/sequence
 
 Nothing here has been built. The sequence is one reasonable way to make and assemble the machine, not a process plan.
 
+**The person, redrawn 2026-11-23.** The 1.75 m figure beside the tray and the kit layout was a cylinder with a ball on top ("human looks weird"). It is now a person in a shirt and trousers, lofted from smooth sections, with a neck, shoulders, tapered arms and legs, hands, shoes and hair. Its heights and breadths are close to the ANSUR II (2012) male means at 1.75 m: shoulder 1436 mm, elbow 1100, crotch 836, shoulders ~400 mm across ([`cad/render_scale.py`](cad/render_scale.py), `person()`; before and after: [`person-before-after.png`](cad/img/sequence/person-before-after.png)). Only the kit and tray chapters show it. A full re-render (10 min on 4 cores) changed only `1-kit.gif`, `5-tray.gif`, `build.mp4` (still 3:19, 1,788 frames) and the tray row of the contact sheet; the other GIFs came out byte-identical, apart from encoder noise in `2-machining-a.gif`, which is kept as committed. The two YouTube videos still show the old figure.
+
 ## Update 2026-11-20 (evening): after a BYU machinist watched it
 
 He made three points about the first version: the chamber block was the part he worried about most, the machining looked

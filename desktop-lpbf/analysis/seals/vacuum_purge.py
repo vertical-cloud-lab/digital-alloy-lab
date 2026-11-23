@@ -54,8 +54,10 @@ SOURCES = {
     2: "Sturm et al. (2004) J. Geophys. Res. 109, D04309, https://doi.org/10.1029/2003JD004073: water permeation of Viton O-rings; via seals.py",
     3: "O'Hanlon, A User's Guide to Vacuum Technology, 3rd ed. (Wiley 2003): viscous and molecular conductance (C = 135 d^4 p / L, "
        "C = 12.1 d^3 / L for air, d and L in cm), outgassing of unbaked Al and Viton after 1 h, falling ~1/t",
-    4: "Edwards nXDS6i dry scroll pump: 6.8 m3/h and 0.02 mbar ultimate as listed in BOM line G2 (Marshall Scientific listing, "
-       "fetched 2026-11-22)",
+    4: "Edwards nXDS6i dry scroll pump (BOM G2, A73501983): peak pumping speed 6.2 m3/h (displacement 6.8 m3/h), ultimate "
+       "0.020 mbar, maximum continuous inlet pressure 200 mbar; Marshall Scientific spec sheet "
+       "https://marshallscientific.com/v/vspfiles/specs/Edwards%20nXDS%20Dry%20Scroll%20Pump%20-%20Marshall%20Scientific.pdf "
+       "(read 2026-11-23); the BOM's 6.8 m3/h is the displacement",
     5: "Shah & London (1978): laminar flow in a square duct, Q = 0.03514 a^4 dp / (mu L)",
     6: "Airgas/Linde argon 5.0 (UHP): O2 <= 1-2 ppm, H2O <= 1-3 ppm (seals.py source 9)",
 }
@@ -152,7 +154,7 @@ def virtual_leaks():
 
 
 # ------------------------------------------------------------------ 4. purge with the nXDS6i
-S0 = 6.8 / 3.6                    # L/s, listed peak speed
+S0 = 6.2 / 3.6                    # L/s, peak pumping speed (6.8 m3/h is the displacement)
 P_ULT = 0.02                      # mbar, listed ultimate
 D_CM, L_CM, CORR = 2.2, 2 * 61.0, 0.6      # two 24 in. KF-25 bellows to the pump (as seals.py), corrugation factor
 
@@ -267,7 +269,7 @@ def write_md(R):
     for k, v in VL.items():
         L.append(f"| {k} | {v['volume_mm3']:.0f} mm³ | {v['n']} | {fmt(v['conductance_Ls'])} | {fmt(v['tau_s_molecular'])} | {fmt(v['air_content_mbarL'])} | {fmt(v['o2_ppm_if_released_after_backfill'])} |")
     L += ["", "## 4. Purge with the Edwards nXDS6i dry scroll (BOM G2)", "",
-          f"Listed {PU['S0_Ls'] * 3.6:.1f} m³/h ({PU['S0_Ls']:.2f} L/s), ultimate {PU['p_ult_mbar']} mbar; two KF-25 bellows (1.2 m). "
+          f"Listed {PU['S0_Ls'] * 3.6:.1f} m³/h peak pumping speed ({PU['S0_Ls']:.2f} L/s), ultimate {PU['p_ult_mbar']} mbar; two KF-25 bellows (1.2 m). "
           "Effective speed at the chamber (L/s): " + ", ".join(f"{k} mbar {v:.2f}" for k, v in PU["S_eff_Ls"].items()) + ".", "",
           "Pump-down from 1013 mbar with the soft-pump start (V/S = 25 s to 100 mbar), against the walls' outgassing 5 min after closing: "
           + ", ".join(f"{k.replace('to_', '').replace('_mbar_s', ' mbar')}: {v / 60:.1f} min" for k, v in PU["pump_down_s"].items()) + ".", "",

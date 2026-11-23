@@ -115,38 +115,38 @@
   }
  },
  "purge": {
-  "S0_Ls": 1.8888888888888888,
+  "S0_Ls": 1.7222222222222223,
   "p_ult_mbar": 0.02,
   "S_eff_Ls": {
-   "800": 1.8885549868131717,
-   "100": 1.886221722720417,
-   "10": 1.8626267207197715,
-   "1": 1.661142867972737,
-   "0.1": 0.8939707382729437,
-   "0.05": 0.6285665961814279
+   "800": 1.721940842247348,
+   "100": 1.7199743715469127,
+   "10": 1.700066477473444,
+   "1": 1.5284112791139854,
+   "0.1": 0.8455611397401919,
+   "0.05": 0.5965482586521088
   },
   "pump_down_s": {
    "to_100_mbar_s": 58.58842641186426,
-   "to_10_mbar_s": 72.39402509470888,
-   "to_1_mbar_s": 86.87212433098738,
-   "to_0.1_mbar_s": 107.2347549959337,
-   "to_0.05_mbar_s": 117.75543243245856
+   "to_10_mbar_s": 73.72377952081186,
+   "to_1_mbar_s": 89.54151084536645,
+   "to_0.1_mbar_s": 111.35771206934838,
+   "to_0.05_mbar_s": 122.46161082771775
   },
   "base_pressure": [
    {
     "minutes_after_closing": 5,
     "outgassing_mbarLs": 0.0007223539686656897,
-    "base_pressure_mbar": 0.021149208330595397
+    "base_pressure_mbar": 0.021210889409513718
    },
    {
     "minutes_after_closing": 15,
     "outgassing_mbarLs": 0.00024078465622189656,
-    "base_pressure_mbar": 0.0203830694435318
+    "base_pressure_mbar": 0.02040362980317124
    },
    {
     "minutes_after_closing": 60,
     "outgassing_mbarLs": 6.019616405547414e-05,
-    "base_pressure_mbar": 0.02009576736088295
+    "base_pressure_mbar": 0.02010090745079281
    }
   ],
   "cycles": {
@@ -203,8 +203,8 @@
     ]
    }
   },
-  "one_cycle_s": 234.43654843171896,
-  "three_cycles_min": 11.721827421585948,
+  "one_cycle_s": 237.10593494609802,
+  "three_cycles_min": 11.8552967473049,
   "note": "soft pump at V/S = 25 s to 100 mbar (seals.py), then full speed; 2 min hold; back-fill at 25 L/min"
  },
  "water": {
@@ -239,7 +239,7 @@
   "1": "Parker O-Ring Handbook ORD 5700 \u00a73.12.1 (leak rate L = 0.7 F D P Q (1-S)^2) and Table 3-24 (permeability); via seals.py",
   "2": "Sturm et al. (2004) J. Geophys. Res. 109, D04309, https://doi.org/10.1029/2003JD004073: water permeation of Viton O-rings; via seals.py",
   "3": "O'Hanlon, A User's Guide to Vacuum Technology, 3rd ed. (Wiley 2003): viscous and molecular conductance (C = 135 d^4 p / L, C = 12.1 d^3 / L for air, d and L in cm), outgassing of unbaked Al and Viton after 1 h, falling ~1/t",
-  "4": "Edwards nXDS6i dry scroll pump: 6.8 m3/h and 0.02 mbar ultimate as listed in BOM line G2 (Marshall Scientific listing, fetched 2026-11-22)",
+  "4": "Edwards nXDS6i dry scroll pump (BOM G2, A73501983): peak pumping speed 6.2 m3/h (displacement 6.8 m3/h), ultimate 0.020 mbar, maximum continuous inlet pressure 200 mbar; Marshall Scientific spec sheet https://marshallscientific.com/v/vspfiles/specs/Edwards%20nXDS%20Dry%20Scroll%20Pump%20-%20Marshall%20Scientific.pdf (read 2026-11-23); the BOM's 6.8 m3/h is the displacement",
   "5": "Shah & London (1978): laminar flow in a square duct, Q = 0.03514 a^4 dp / (mu L)",
   "6": "Airgas/Linde argon 5.0 (UHP): O2 <= 1-2 ppm, H2O <= 1-3 ppm (seals.py source 9)"
  }

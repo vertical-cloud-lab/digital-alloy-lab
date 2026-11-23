@@ -37,9 +37,9 @@ The leak budget in `seals.md` is 1e-4 mbar·L/s in all, a rise of 5e-4 mbar/min;
 
 ## 4. Purge with the Edwards nXDS6i dry scroll (BOM G2)
 
-Listed 6.8 m³/h (1.89 L/s), ultimate 0.02 mbar; two KF-25 bellows (1.2 m). Effective speed at the chamber (L/s): 800 mbar 1.89, 100 mbar 1.89, 10 mbar 1.86, 1 mbar 1.66, 0.1 mbar 0.89, 0.05 mbar 0.63.
+Listed 6.2 m³/h peak pumping speed (1.72 L/s), ultimate 0.02 mbar; two KF-25 bellows (1.2 m). Effective speed at the chamber (L/s): 800 mbar 1.72, 100 mbar 1.72, 10 mbar 1.70, 1 mbar 1.53, 0.1 mbar 0.85, 0.05 mbar 0.60.
 
-Pump-down from 1013 mbar with the soft-pump start (V/S = 25 s to 100 mbar), against the walls' outgassing 5 min after closing: 100 mbar: 1.0 min, 10 mbar: 1.2 min, 1 mbar: 1.4 min, 0.1 mbar: 1.8 min, 0.05 mbar: 2.0 min.
+Pump-down from 1013 mbar with the soft-pump start (V/S = 25 s to 100 mbar), against the walls' outgassing 5 min after closing: 100 mbar: 1.0 min, 10 mbar: 1.2 min, 1 mbar: 1.5 min, 0.1 mbar: 1.9 min, 0.05 mbar: 2.0 min.
 
 | Minutes after closing | Wall + seal outgassing (mbar·L/s) | Base pressure (mbar) |
 |---|---|---|
@@ -47,7 +47,7 @@ Pump-down from 1013 mbar with the soft-pump start (V/S = 25 s to 100 mbar), agai
 | 15 | 2.41e-04 | 0.020 |
 | 60 | 6.02e-05 | 0.020 |
 
-O₂ after each cycle (pump to the base pressure, 2 min hold with a 1e-4 mbar·L/s leak, back-fill to +20 mbar). One cycle takes ~3.9 min, three ~12 min.
+O₂ after each cycle (pump to the base pressure, 2 min hold with a 1e-4 mbar·L/s leak, back-fill to +20 mbar). One cycle takes ~4.0 min, three ~12 min.
 
 | Base pressure | Ar 5.0 at 1 ppm O₂: cycles 1 / 2 / 3 (ppm) | at 2 ppm O₂ (ppm) |
 |---|---|---|
@@ -71,6 +71,6 @@ Powder: 22.5–45.0 mg of water in 150 g (30–61 mbar·L), 2486–4971 ppmv if 
 1. Parker O-Ring Handbook ORD 5700 §3.12.1 (leak rate L = 0.7 F D P Q (1-S)^2) and Table 3-24 (permeability); via seals.py
 2. Sturm et al. (2004) J. Geophys. Res. 109, D04309, https://doi.org/10.1029/2003JD004073: water permeation of Viton O-rings; via seals.py
 3. O'Hanlon, A User's Guide to Vacuum Technology, 3rd ed. (Wiley 2003): viscous and molecular conductance (C = 135 d^4 p / L, C = 12.1 d^3 / L for air, d and L in cm), outgassing of unbaked Al and Viton after 1 h, falling ~1/t
-4. Edwards nXDS6i dry scroll pump: 6.8 m3/h and 0.02 mbar ultimate as listed in BOM line G2 (Marshall Scientific listing, fetched 2026-11-22)
+4. Edwards nXDS6i dry scroll pump (BOM G2, A73501983): peak pumping speed 6.2 m3/h (displacement 6.8 m3/h), ultimate 0.020 mbar, maximum continuous inlet pressure 200 mbar; Marshall Scientific spec sheet https://marshallscientific.com/v/vspfiles/specs/Edwards%20nXDS%20Dry%20Scroll%20Pump%20-%20Marshall%20Scientific.pdf (read 2026-11-23); the BOM's 6.8 m3/h is the displacement
 5. Shah & London (1978): laminar flow in a square duct, Q = 0.03514 a^4 dp / (mu L)
 6. Airgas/Linde argon 5.0 (UHP): O2 <= 1-2 ppm, H2O <= 1-3 ppm (seals.py source 9)
