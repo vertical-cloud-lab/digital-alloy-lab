@@ -4,7 +4,7 @@ Total on the tray: **268.8 kg**, against tray ratings of 490 kg (Kardex Shuttle 
 
 | Module | Mass (kg) | CoM height above tray (mm) | Shortest lever to a foot line (mm) | Tips at (g) |
 |---|---|---|---|---|
-| process | 88.0 | 275.2 | 189.6 | 0.69 |
+| process | 88.0 | 274.4 | 188.2 | 0.69 |
 | gas | 60.6 | 143.1 | 222.6 | 1.56 |
 | rack | 107.8 | 227.2 | 244.5 | 1.08 |
 | tray | 12.4 |  |  |  |
@@ -15,8 +15,8 @@ Total on the tray: **268.8 kg**, against tray ratings of 490 kg (Kardex Shuttle 
 | 6061-T6 aluminium | 58.6 |
 | bearing / alloy steel | 25.9 |
 | MIC-6 cast tooling plate | 24.9 |
-| 316L stainless | 13.1 |
-| 304 stainless | 3.8 |
+| 316L stainless | 13.2 |
+| 304 stainless | 3.7 |
 | brass | 3.2 |
 | laser-safety polycarbonate | 0.5 |
 | AlSi10Mg powder (~50 % packing) | 0.1 |

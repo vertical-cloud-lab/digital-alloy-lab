@@ -176,6 +176,7 @@ until a lug meets the ledge.
 |---|---|---|---|---|---|
 | **2 captive M6** (95966A705) into 18-8 inserts, F_i = 0.75 F_p | 4,364 | 24× (separation) | dowel + diamond pin, face contact | steel | 3.9 N·m dry, 2.4 N·m with anti-seize. The 18-8 screw in an 18-8 insert is the galling pair; the 4.2 mm reduced shank sets the proof load. Heating to 85 °C adds 98 N |
 | **2 zero-point modules**: STARK.easyclick D085 (FKM) / SCHUNK NSE-AM mini 78-20 | 2 × 5,000 / 2 × 1,500 | 46× / 14× | < 10 / < 5 µm | 150 / 200 °C | spring-locked, opened by 4–6 bar air, seat check and blow-off available. Ø78–88 mm each: the flange needs arms to about x = ±95 mm, clear of the overflow funnel |
+| **2 SCHUNK NSE-HT mini 88-20 V1** (ID 1460874; the part §3.2a places) | 2 × 500, 2 × 2,500 with turbo | 4.6× / 23× | < 5 µm | 200 °C | Ø88 × Ø73 × 20, 1.0 kg, opens at 6 bar, closes by spring; $2,680 each (MROSupply, re-checked 2026-11-23), sold without pins. **Not drawn (2026-11-23): no place for the right-hand one while the overflow jar stays removable (§3.2a)** |
 | **Kendrion fail-safe magnets** (power to release) on a 430 plate | 78–250 each at 0 gap | needs 3–12 | – | coil 120 °C | lose half their force at 0.05 mm; only ~25–35 % in shear |
 | **plain electromagnet** (Kendrion GTB040) | 301 at 0 gap, 84 °C | 1.4× | – | 550 °C | **drops the module on a power cut** |
 | **3-groove kinematic seat**: Ø16 Si₃N₄ balls in 17-4 H900 or 440C vees, preloaded by one of the above | the preload | – | 0.05–1 µm clean (Slocum); ~1–2 µm offset from a crushed Al grain | – | 6061 or 316 vees yield at this preload |
@@ -214,6 +215,42 @@ gland-plate level fits at (−100, +18) and (+100, −18):
 - the right one 2.2 mm from the Z servo's corner and 16 mm from the front-right leg, the left one 16 mm from the back-left leg;
 - 2.9 mm outside the L75 gland plate's path;
 - on arms under the gland plate, which pass 4 mm over the base plate when the module drops 40 mm.
+
+**Update 2026-11-23 (round 5, A1): the jar can't leave the funnel, so the pair still does not fit.** The jar now has a straight lane to
+the front (robot-ops.md patch request 6, operations.md U4.7): its KF-40 joint is 26 mm lower (z −84), it is a 45 mm long 2 in. cup,
+the outlet plenum's KF-25 port moved to the plenum's left end and the front-right leg to the right side (x 128–156, y 26–56). It has
+to stay under the funnel at (100, 0):
+- the overflow slot sits at x 90–110 because the blade's stroke ends at x = +100, and the funnel's outlet can't move sideways: a
+  chute steep enough for fine Al powder (55–60°) loses 1.6–1.7 mm of height per mm of run, and there are 118 mm between the funnel's
+  bottom (z −42) and the base plate (z −160);
+- so the jar, its toggle clamp (r 35.5 at z −94 to −75) and its lane to the front (x 72.6 to 127.4) own the right-hand side under
+  the floor.
+
+**Every place the right-hand module could take on that side is blocked**, read off the model (M50; an NSE centre has to be ≥ 97 mm
+from the module's axis to stay 2 mm outside L75's gland plate):
+- in front of the jar, (+100, −18) or further forward: it stands in the jar's lane;
+- under the jar: the jar and clamp hang to z −129, where the module would sit (z −106 to −86) with its arm under it;
+- behind the jar: the Z servo hangs at x 34.5 to 93.5, y 27.7 to 109.5, from z −187 up to −84. At x = 100 an NSE needs y ≤ −16
+  to clear its corner, but y ≥ +65 to clear the jar's cup;
+- beside the jar, at x ≥ 172: the arm out to it sweeps the legs and the front-right optics post on the module's path.
+
+**What it would take** (not done; it moves parts outside this task):
+1. Fold the Z servo to the back of the actuator. That means extending the base plate's window back past y 114, and new bracket and belt
+   housing in `modules_low.add_zstage`.
+2. Move the funnel's outlet and the jar to the slot's front end, (100, −45). The funnel screws at (83/117, −40) move, and the jar keeps
+   its lane.
+3. Put the right-hand module behind the jar at (+100, +30), 5.2 mm from the back-right leg and 5.4 mm from the cup. Put the left-hand
+   one at (−100, −30), 5.2 mm from the front-left leg and 2.9 mm outside L75's gland-plate path.
+4. Route the outlet hose, which now runs back along x = −86 at z −145 to −109 (lpbf_low.py section 11), under or round the left
+   module's arm.
+
+**The pins:** VERO-S **SPC mini 20**, the clamping pin "with centering clearance ... without alignment function" (schunk.com
+PGR_4245, read through the lab tunnel 2026-11-23). Not the SPA mini 20 (ID 0435610), which centres to < 5 µm: the dowel and diamond pin
+already locate the module, and a second centring pair would fight them. The SPC's ID number and dimensions were not on the page as
+read (the product list loads dynamically), so the pin is not drawn.
+
+**The joint:** with the pull in place of the screws, 2 × 500 N = 1,000 N holds 4.6× the worst separating load (LC2, 218 N; joint_calcs.md,
+re-run 2026-11-23), and 23× with turbo. The 132 N spigot O-ring and the module's 26 N weight are inside that.
 
 They would hang from the floor on two posts each. Until then, the module keeps its two captive M6, and the robot job assumes they are
 released. The robot side is drawn: the grip block on the handle (robot-ops.md).

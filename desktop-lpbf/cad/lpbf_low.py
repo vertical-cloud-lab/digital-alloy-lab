@@ -177,6 +177,10 @@ MOTION = {
                    note="build module drops 22 mm out of the floor port, slides forward under the chamber, lifts over the guard sill and out"),
 }
 MOTION["module"]["hi"] = sum(math.dist(a, b) for a, b in zip(MODULE_PATH[:-1], MODULE_PATH[1:]))
+# chamber legs (x0, x1, y0, y1) under the floor plate: front-left, back-left, right side (moved from the front-right corner,
+# 2026-11-23, so the overflow jar has a lane to the front), back-right
+LEG_BOXES = [(-P["cx"] + 6, -P["cx"] + 36, -P["cy"] + 6, -P["cy"] + 36), (-P["cx"] + 6, -P["cx"] + 36, P["cy"] - 36, P["cy"] - 6),
+             (128.0, P["cx"], 26.0, 56.0), (P["cx"] - 36, P["cx"] - 6, P["cy"] - 36, P["cy"] - 6)]
 DOOR_HINGE = None   # (y, z) of the door hinge axis (parallel to X); set in build()
 _RES = None         # the docked reservoir's screw positions (joints.py)
 GLANDS: dict = {}   # every O-ring gland drawn by build(): analysis/seals/seals.py checks each one (Parker squeeze, fill, stretch)
@@ -524,11 +528,12 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
 
     # ===================== 3. Chamber legs and Z stage =====================
     zf = -fl
-    legs = []
-    for x in (-cx + 6, cx - 36):
-        for y in (-cy + 6, cy - 36):
-            legs.append(box(x, x + 30, y, y + 30, zb1, zf))
-    add("Chamber legs (6061, 30 x 30)", comp(legs), C["alu_dark"], 3, (0, 0, -120), mat="al6061", bom="G1")
+    # the front-right leg moved back to the right side (2026-11-23, robot-ops.md patch request 6): at x 120-150, y -105 to -75 it stood in
+    # the overflow jar's lane to the front. It is 28 x 30 at x 128-156, y 26-56: behind the jar's sensor, 2.7 mm outside the KF-40 toggle
+    # clamp's ring, and 2 mm clear of the U-notches of the floor-plate screws at (148, 20) and (148, 62), so those stay reachable.
+    # joints.py and analysis/fea/fea.py read LEG_BOXES.
+    legs = [box(x0, x1, y0, y1, zb1, zf) for x0, x1, y0, y1 in LEG_BOXES]
+    add("Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)", comp(legs), C["alu_dark"], 3, (0, 0, -120), mat="al6061", bom="G1")
     ML.add_zstage(sys.modules[__name__], add, 3)
     zz = ML.zlevels()
     az1 = MP.Z_P_MAX + (zz["zc"] - MP.ARM_T) + 40.0 + 3.0
@@ -550,12 +555,42 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add(f"Overflow funnel O-ring (FKM 75A {pk[0]}, face seal under the floor)", ring_loop("z", (ox, 0, 0), hi_f, 2.0, (zf - 1.32, zf), 1.5), C["black"], 4, (0, 0, -200), mat="fkm", bom="M4")
     GLANDS["overflow_funnel"] = dict(kind="face", ring=pk[0], cs=1.78, depth=1.32, width=2.3, inner_perimeter=loop_perimeter(hi_f, 1.5), groove_mat="ss", T=50.0,
                                      closure="overflow funnel block (316L) under the floor")
-    add("Overflow port (KF-40)", place(VP.kf_weld_stub(40, 16), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, -1)), C["ss"], 4, (0, 0, -220), mat="ss304", bom="G7", mcm="KF40_WELD", section=True)
-    jar = fuse([place(VP.kf_weld_stub(40, 90), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1)), cyl(VP.KF_REAL[40]["to"] / 2, (ox, 0, zf - 22 - 16 - 92), "z", 2)])
-    add("Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)", jar, C["ss"], 4, (0, 0, -260), mat="ss304", bom="M4", mcm="KF40_NIPPLE", section=True)
-    add("Overflow clamp (KF-40)", place(VP.kf_wing_clamp(40), (ox, 0, zf - 22 - 16), (0, -1, 0), (0, 0, 1)),   # hinge to +y, wing to +x: clear of the module path
-        C["alu_dark"], 4, (0, 0, -260), mat="al6061", bom="G7", mcm="KF40_CLAMP", section=True)
-    add("Overflow-jar present sensor (inductive M12, PNP)", cyl(6.0, (ox + 28.0, 0, zf - 22 - 16 - 60), "x", 30.0), C["blue"], 4, (120, 0, 0), mat="misc", mass_kg=0.02, bom="A1")
+    # The jar's way out (2026-11-23, robot-ops.md patch request 6, operations.md U4.5/U4.7): the KF-40 joint is 26 mm lower (z -84,
+    # was -58) so the toggle clamp's ring and side links pass 4.5 mm under the module flange's tabs on the module's path; the jar is a
+    # short 2 in. cup (bottom z -129, -137 when dropped 8 mm off the centring ring) so it slides straight out to the front over the guard's
+    # bottom front rail (top z -140); the outlet plenum's KF-25 port moved to the plenum's left end and the front-right leg to the right
+    # side, so nothing stands in its lane (x 72.6 to 127.4) between the jar and the guard door.
+    zj = zf - 22 - 42                                                       # KF-40 joint plane, z -84
+    add("Overflow port (KF-40, weld stub to 42 mm)", place(VP.kf_weld_stub(40, 42), (ox, 0, zj), (1, 0, 0), (0, 0, -1)), C["ss"], 4, (0, 0, -220), mat="ss304", bom="G7", mcm="KF40_WELD", section=True)
+    # jar: a KF-40 flange (6 mm stub) welded into the top of a 2 in. x 0.065 in. 316L tube cup with a welded bottom: ~68 cm3 (was a 90 mm
+    # KF-40 half nipple, ~120 cm3; a wider cup meets the Z servo's corner, a longer one the guard rail on the way out)
+    jar = fuse([place(VP.kf_weld_stub(40, 6), (ox, 0, zj), (1, 0, 0), (0, 0, 1)), tube(25.4, 16.94, (ox, 0, zj - 7.5), "z", 1.5),
+                tube(25.4, 23.75, (ox, 0, zj - 43.0), "z", 35.5), cyl(25.4, (ox, 0, zj - 45.0), "z", 2.0)])
+    add("Overflow jar (KF-40 flange on a 2 in. 316L cup, 45 mm, ~68 cm3, welded bottom)", jar, C["ss"], 4, (0, 0, -260), mat="ss304", bom="M4", mcm="KF40_NIPPLE", section=True)
+
+    def kf40_toggle_clamp():
+        """MKS 100318805 toggle clamp, NW40 (Series 31, aluminium, $23.34; mks.com/p/100318805, read 2026-11-23): A 123.7 (4.87 in.) from
+        the hinge to the lever's end, B 83.6 (3.29 in.) across the toggle's side links, C 19.05 (0.75 in.) thick. The ring's section is
+        assumed to be the McMaster KF-40 clamp's (OD 71, lips on the flanges' 15 deg tapers); hinge boss to +x 40 and the side links' and
+        lever's sections are assumed. Local frame as kf_wing_clamp: joint plane z = 0, hinge toward +x, lever toward -x."""
+        k = VP.KF_REAL[40]
+        A, B, Cc = 123.7, 83.6, 19.05
+        hh, ro, rl = Cc / 2, 35.5, 22.5
+        rr, zr = k["fo"] / 2 + 0.4, k["rim"] + 0.1
+        zl = zr + (rr - rl) / 3.73
+        ring = VP._revolve([(rr, -zr), (rl, -zl), (rl, -hh), (ro, -hh), (ro, hh), (rl, hh), (rl, zl), (rr, zr)])
+        hinge = box(ro - 4.0, 40.0, -7.0, 7.0, -6.5, 6.5)
+        links = box(-44.0, -30.0, -B / 2, B / 2, -5.0, 5.0).cut(cyl(rr, (0, 0, -6), "z", 12))
+        lever = box(-(A - 40.0), -ro + 4.0, -8.0, 8.0, -4.0, 4.0)
+        return fuse([ring, hinge, links, lever])
+    add("Overflow clamp (KF-40 toggle, MKS 100318805; lever to the front)", place(kf40_toggle_clamp(), (ox, 0, zj), (0, 1, 0), (0, 0, 1)),
+        C["alu_dark"], 4, (0, 0, -260), mat="al6061", bom="G7", mcm="KF40_TOGGLE", section=True)
+    # inductive M12 (as before) now 2 mm from the cup's side, low on it (z -121), so the 2F-85's pads (z -111 to -89) pass above it;
+    # its 6 mm bracket bolts to the right-hand leg's front face (2 x M4, joints.py); the foot rises above the sensor (z -113 to -95) at
+    # x >= 144, so a key reaches its screws from the front over the sensor and the gripper's right finger (x <= ~141) clears it
+    add("Overflow-jar present sensor (inductive M12, PNP)", cyl(6.0, (ox + 27.4, 0, zj - 37.0), "x", 30.0), C["blue"], 4, (120, 0, 0), mat="misc", mass_kg=0.02, bom="A1")
+    sb = fuse([box(138.0, 144.0, -10.0, 26.0, zj - 45.0, zj - 29.0), box(144.0, 156.0, 20.0, 26.0, zj - 45.0, zj - 11.0)]).cut(cyl(6.0, (130.0, 0, zj - 37.0), "x", 20.0))
+    add("Overflow-jar sensor bracket (6061, 6 mm, on the right-hand leg)", sb, C["alu"], 4, (120, 0, 0), mat="al6061", bom="A1")
 
     # ===================== 5. Chamber body: through-frame + bolted floor plate (FRAME, chamber-construction.md) =====================
     # Each part is its saw-cut blank minus an ordered list of cuts, one per machining operation, which CHAMBER_OPS keeps so that
@@ -663,9 +698,14 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # flat (16 mm) under the module's path to the front, with a deeper boot at the right end for the KF-25 port
     y0o, y1o = MP.OUTLET_Y
     # 9 mm flanges along the slot carry an FKM face O-ring and 6 counterbored M4 screws up into the floor (joints.py)
-    plo = fuse([rbox(-75, 84, y0o - 11, y1o + 11, zf - 16, zf, 3), rbox(72, 100, y0o - 12, y1o + 8, zf - 45, zf, 4)])
-    plo = plo.cut(fuse([box(-63, 72, y0o - 1, y1o + 1, zf - 13, zf + 1), box(76, 96, y0o - 8, y1o + 4, zf - 41, zf - 3), box(60, 80, y0o - 1, y1o + 1, zf - 13, zf - 3)]))
-    plo = plo.cut(cyl(12.7, (86, (y0o + y1o) / 2, zf - 46), "z", 6))
+    # the boot and its KF-25 port are at the plenum's LEFT end (x -100 to -72; 2026-11-23, A1): at the right end (x 72-100) the port and
+    # its hose stood in the overflow jar's only lane to the front (robot-ops.md patch request 6). The hose now runs back under the left
+    # side and behind the chamber (section 11). Mirror of the old boot; the flow now leaves at the left end (gas-flow.md, analysis/cfd)
+    xb_o = -86.0
+    plo = fuse([rbox(-75, 84, y0o - 11, y1o + 11, zf - 16, zf, 3), rbox(xb_o - 14, xb_o + 14, y0o - 12, y1o + 8, zf - 45, zf, 4)])
+    plo = plo.cut(fuse([box(-63, 72, y0o - 1, y1o + 1, zf - 13, zf + 1), box(xb_o - 10, xb_o + 10, y0o - 8, y1o + 4, zf - 41, zf - 3),
+                        box(xb_o + 6, xb_o + 26, y0o - 1, y1o + 1, zf - 13, zf - 3)]))
+    plo = plo.cut(cyl(12.7, (xb_o, (y0o + y1o) / 2, zf - 46), "z", 6))
     hi_o, c_o = fit_loop((69.0, 6.5), 1.5, 2.0, 0.5)[0], (4.5, (y0o + y1o) / 2, 0.0)   # groove inner wall >= 1.5 mm outside the opening (x -63..72, y -95..-85)
     plo = plo.cut(ring_loop("z", c_o, hi_o, F["width"], (zf - F["depth"], zf + 0.01), 1.5))
     add("Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)", plo, C["ss"], 5, (0, 0, -180), mat="ss316l", bom="G4", section=True)
@@ -674,7 +714,8 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         C["black"], 5, (0, 0, -180), mat="fkm", bom="G8", section=True)
     GLANDS["outlet_plenum"] = dict(kind="face", ring=pk[0], cs=1.78, depth=F["depth"], width=F["width"], inner_perimeter=loop_perimeter(hi_o, 1.5),
                                    groove_mat="ss", T=45.0, closure="outlet plenum (316L) under the floor (6061)")
-    add("Outlet plenum port (KF-25)", place(VP.kf_weld_stub(25, 26), (86, (y0o + y1o) / 2, zf - 45 - 26), (1, 0, 0), (0, 0, 1)), C["ss"], 5, (180, 0, -180), mat="ss304", bom="G7", mcm="KF25_WELD")
+    # flange face down at z -91, its tube up into the boot's bottom (it was drawn hanging from -91 to -117, off the boot)
+    add("Outlet plenum port (KF-25)", place(VP.kf_weld_stub(25, 26), (xb_o, (y0o + y1o) / 2, zf - 45 - 26), (1, 0, 0), (0, 0, -1)), C["ss"], 5, (-180, 0, -180), mat="ss304", bom="G7", mcm="KF25_WELD")
     # 304 cannot be welded to the 6061 body: the KF-25 stub is welded into a 304 adapter plate that bolts on (4 x M5, joints.py)
     # over an FKM face O-ring (seals.md item 10)
     add("Vacuum port (KF-25, stub welded into the adapter plate)", place(VP.kf_weld_stub(25, 10), (cx + 18, 0, 70), (0, 1, 0), (1, 0, 0)), C["ss"], 5, (180, 0, 0), mat="ss304", bom="G7", mcm="KF25_WELD")
@@ -1122,7 +1163,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
                VP.mcm_4123K45("-x").translate(V(cx + 18, 0, 70))])   # McMaster 4123K45
     add("Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)", vv, C["ss"], 11, (220, 0, 0), mat="ss304", bom="G7", mcm="VALVE_KF25")
     hoses = {
-        "Outlet plenum to filter": [(86, -90, zf - 45 - 26), (86, -90, -105), (110, -122, -115), (170, -132, -100), (300, -60, 20), (400, -40, 160), (470, -40, g0 + 294)],
+        # from the port at the plenum's left end (2026-11-23): down, back under the left side (under the module's gland plate level,
+        # clear of the Z arm), behind the chamber (12 mm behind the Z servo), then up past the back-right leg to the old route
+        "Outlet plenum to filter": [(-86, -90, zf - 45 - 26), (-86, -90, -122), (-86, 135, -132), (150, 135, -132), (175, 95, -90), (300, -60, 20),
+                                    (400, -40, 160), (470, -40, g0 + 294)],
         "Filter to blower": [(470 + 55 + 40, -40, g0 + 60), (560, -100, g0 + 60), (580 - 20, -150, g0 + 60)],
         "Blower to inlet plenum": [(700, -150, g0 + 270), (650, 20, 150), (420, 205, 100), (250, 205, 60), (110, cy + 78, 30), (0, cy + 32 + 46, 11)],
         "Vacuum line to pump": [(xpv + 2 * PIR_TEE["A"], 0, 70), (400, 50, 64), (500, 165, 80), (640, 165, g0 + 330)],   # from the Pirani tee (section 10)

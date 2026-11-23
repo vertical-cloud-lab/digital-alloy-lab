@@ -3,9 +3,9 @@
   "process": {
    "mass_kg": 88.0,
    "com_mm": [
-    -23.7,
-    -4.6,
-    63.2
+    -25.8,
+    -3.2,
+    62.4
    ],
    "foot": [
     -370.0,
@@ -13,8 +13,8 @@
     -265.0,
     215.0
    ],
-   "com_height_above_tray_mm": 275.2,
-   "min_lever_mm": 189.6,
+   "com_height_above_tray_mm": 274.4,
+   "min_lever_mm": 188.2,
    "tip_accel_g": 0.69
   },
   "gas": {
@@ -70,8 +70,8 @@
   "6061-T6 aluminium": 58.6,
   "bearing / alloy steel": 25.9,
   "MIC-6 cast tooling plate": 24.9,
-  "316L stainless": 13.1,
-  "304 stainless": 3.8,
+  "316L stainless": 13.2,
+  "304 stainless": 3.7,
   "brass": 3.2,
   "laser-safety polycarbonate": 0.5,
   "AlSi10Mg powder (~50 % packing)": 0.1,
@@ -161,9 +161,9 @@
    "mass_kg": 11.992,
    "basis": "MIC-6 cast tooling plate x volume",
    "com": [
-    -65.6586697300349,
-    -19.019297039695413,
-    -167.49999999999991
+    -65.66246230501913,
+    -19.090272371542518,
+    -167.50000000000006
    ]
   },
   {
@@ -329,9 +329,9 @@
    "mass_kg": 3.01,
    "basis": "6061-T6 aluminium x volume",
    "com": [
-    -3.768153934417931,
-    1.6752800762789917,
-    -10.272443286880502
+    -3.77087359761146,
+    1.624383522228162,
+    -10.272443286880494
    ]
   },
   {
@@ -341,9 +341,9 @@
    "mass_kg": 3.0,
    "basis": "catalogue/estimate",
    "com": [
-    367.30869906987175,
-    30.922969571766448,
-    38.64140590332348
+    311.5700424033093,
+    60.38979456717813,
+    18.00489116591669
    ]
   },
   {
@@ -455,18 +455,6 @@
    ]
   },
   {
-   "part": "Chamber legs (6061, 30 x 30)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 1.22,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    2.3194597160544708e-14,
-    -2.6432176347537408e-14,
-    -89.11051010986802
-   ]
-  },
-  {
    "part": "Safety shutter + beam dump",
    "module": "process",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
@@ -488,6 +476,18 @@
     499.99999999999994,
     119.99999999999999,
     -119.37093275488067
+   ]
+  },
+  {
+   "part": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 1.197,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    -0.9588196293373814,
+    32.59490105003625,
+    -89.0827991640843
    ]
   },
   {
@@ -599,6 +599,18 @@
    ]
   },
   {
+   "part": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.551,
+   "basis": "316L stainless x volume",
+   "com": [
+    -15.179291000311625,
+    -90.54290682738622,
+    -31.517338010444742
+   ]
+  },
+  {
    "part": "Galvo riser plate (6061, 10 mm)",
    "module": "process",
    "material": "6061-T6 aluminium",
@@ -620,18 +632,6 @@
     -1.3430488552644595e-16,
     0.10164368106905673,
     -99.04918277264734
-   ]
-  },
-  {
-   "part": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
-   "module": "process",
-   "material": "316L stainless",
-   "mass_kg": 0.527,
-   "basis": "316L stainless x volume",
-   "com": [
-    20.162283171911238,
-    -90.47932581066031,
-    -31.676542089876882
    ]
   },
   {
@@ -875,18 +875,6 @@
    ]
   },
   {
-   "part": "Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)",
-   "module": "process",
-   "material": "304 stainless",
-   "mass_kg": 0.22,
-   "basis": "304 stainless x volume",
-   "com": [
-    100.00000000000007,
-    -5.210859281540071e-15,
-    -100.9132005889016
-   ]
-  },
-  {
    "part": "Dose chute (316L)",
    "module": "process",
    "material": "316L stainless",
@@ -995,6 +983,18 @@
    ]
   },
   {
+   "part": "Overflow jar (KF-40 flange on a 2 in. 316L cup, 45 mm, ~68 cm3, welded bottom)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.16,
+   "basis": "304 stainless x volume",
+   "com": [
+    100.00000000000006,
+    -1.3091915662232547e-15,
+    -105.53844799643211
+   ]
+  },
+  {
    "part": "Layer camera (Pi HQ + C-mount lens)",
    "module": "process",
    "material": "mixed (vendor unit; mass from datasheet or estimate)",
@@ -1004,6 +1004,18 @@
     107.0897382610576,
     -64.25384295663456,
     194.18939204671784
+   ]
+  },
+  {
+   "part": "Overflow clamp (KF-40 toggle, MKS 100318805; lever to the front)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.148,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    100.0,
+    -12.380694291551055,
+    -84.0
    ]
   },
   {
@@ -1040,6 +1052,18 @@
     6.272760089132134e-17,
     60.99999999999999,
     -133.0
+   ]
+  },
+  {
+   "part": "Overflow port (KF-40, weld stub to 42 mm)",
+   "module": "process",
+   "material": "304 stainless",
+   "mass_kg": 0.111,
+   "basis": "304 stainless x volume",
+   "com": [
+    100.0,
+    2.444864079368177e-15,
+    -68.14097402499058
    ]
   },
   {
@@ -1139,18 +1163,6 @@
    ]
   },
   {
-   "part": "Overflow clamp (KF-40)",
-   "module": "process",
-   "material": "6061-T6 aluminium",
-   "mass_kg": 0.081,
-   "basis": "6061-T6 aluminium x volume",
-   "com": [
-    101.61119809133555,
-    -6.69335096782869,
-    -57.999999999999964
-   ]
-  },
-  {
    "part": "Reservoir M powder",
    "module": "process",
    "material": "AlSi10Mg powder (~50 % packing)",
@@ -1235,27 +1247,15 @@
    ]
   },
   {
-   "part": "Overflow port (KF-40)",
-   "module": "process",
-   "material": "304 stainless",
-   "mass_kg": 0.061,
-   "basis": "304 stainless x volume",
-   "com": [
-    100.0,
-    2.568999599724684e-15,
-    -52.83498982747184
-   ]
-  },
-  {
    "part": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
    "module": "process",
    "material": "316L stainless",
    "mass_kg": 0.061,
    "basis": "catalogue/estimate",
    "com": [
-    2.529869246205078e-10,
-    -7.303583761132972e-10,
-    -168.00066460292237
+    1.749999999863865,
+    32.74999999957166,
+    -168.00066460292217
    ]
   },
   {
@@ -1445,9 +1445,9 @@
    "mass_kg": 0.046,
    "basis": "304 stainless x volume",
    "com": [
-    85.99999999999999,
+    -86.0,
     -90.0,
-    -99.23503829883074
+    -82.76496170116926
    ]
   },
   {
@@ -1565,9 +1565,9 @@
    "mass_kg": 0.031,
    "basis": "catalogue/estimate",
    "com": [
-    2.455455151494499e-10,
-    -7.22852287396871e-10,
-    -28.00066460292245
+    1.7499999998563776,
+    32.74999999957916,
+    -28.000664602922445
    ]
   },
   {
@@ -1685,9 +1685,9 @@
    "mass_kg": 0.02,
    "basis": "catalogue/estimate",
    "com": [
-    143.0,
-    -2.2171498108293637e-16,
-    -118.0
+    142.4,
+    -1.7627807581586665e-16,
+    -121.0
    ]
   },
   {
@@ -1991,6 +1991,18 @@
    ]
   },
   {
+   "part": "Overflow-jar sensor bracket (6061, 6 mm, on the right-hand leg)",
+   "module": "process",
+   "material": "6061-T6 aluminium",
+   "mass_kg": 0.01,
+   "basis": "6061-T6 aluminium x volume",
+   "com": [
+    143.31381184787963,
+    13.308427129326686,
+    -120.99999999999999
+   ]
+  },
+  {
    "part": "Drawer latch receptacles in the lid (2 x quarter-turn latch)",
    "module": "process",
    "material": "304 stainless",
@@ -2153,8 +2165,8 @@
    "mass_kg": 0.005,
    "basis": "catalogue/estimate",
    "com": [
-    1.3406399307598174e-13,
-    4.4687997691993915e-14,
+    1.7499999999999443,
+    32.750000000000036,
     -15.5
    ]
   },
@@ -2192,6 +2204,18 @@
     -3.277529357875781e-11,
     -33.39999999999978,
     -108.60103991515055
+   ]
+  },
+  {
+   "part": "Jar-sensor bracket screws, M4 x 10 316, into the right-hand leg (2 x McMaster 92290A144)",
+   "module": "process",
+   "material": "316L stainless",
+   "mass_kg": 0.004,
+   "basis": "catalogue/estimate",
+   "com": [
+    149.99999999999227,
+    21.39896008484957,
+    -120.99999999999355
    ]
   },
   {

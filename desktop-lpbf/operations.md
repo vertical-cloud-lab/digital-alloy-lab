@@ -28,6 +28,31 @@ covered separately. Nothing has been built or tried on a mock-up.
 > - **Ferrotec feedthrough out to the front (M8.4).** With the left latch off the left side face, the unit and its coupling come
 >   out 45 mm sideways (was 30), then forward. M8.4: RESULT_M84 M8.1-M8.3 (the servo against the front-left post and the
 >   bridge) still fail, as before: those need the bridge changes.
+
+> **Update 2026-11-23 (round 5, A1): the overflow jar comes out. U4.5 and U4.7 pass on M50.** The model changes are in
+> robot-ops.md "Round 5":
+> - the KF-40 joint is 26 mm lower (z −84), on a 42 mm stub;
+> - the jar is a 45 mm 2 in. cup (~68 cm³) on an MKS 100318805 toggle clamp with its lever to the front;
+> - the outlet plenum's KF-25 port and hose moved to the plenum's left end;
+> - the front-right leg moved to the right side (x 128–156, y 26–56);
+> - the jar sensor is on a bracket on that leg.
+>
+> Results:
+> - **U4.5** (fingers on the clamp's lever at y −76, z −84): passes, with the hand and forearm clear from the front.
+> - **U4.6**: the clamp opens with one push on the lever and comes off by hand (no path check: the model can't open a hinged ring).
+> - **U4.7** (the jar drops 8 mm off the centring ring and goes straight out to the front): passes, 0.3 mm from the port's flange
+>   as it drops, then clear to y −520 under the plenum and over the guard's bottom front rail.
+> - **S2.2–S2.4** (module swap) still pass. S2.4 is still 0.1 mm at the floor port; the clamp's links pass 4.5 mm under the module
+>   flange's tabs.
+>
+> Full M50 run on d8ec123 ([`results-M50.md`](analysis/out/ops/results-M50.md)): **83 pass / 2 warn / 38 fail** (was 82 / 2 / 37). The
+> jar's two fails are gone, but the run found three new ones, all fixed in 9481fc5 and after:
+> - A2.13: one of the four funnel screws had no key room beside the longer stub. The screws moved from y ±40 to ±50.
+> - A2.15: the sensor sat in front of the bracket's screws. The bracket's foot now rises above the sensor.
+> - U4.6: I gave the clamp a straight path off. It is "by hand" again.
+>
+> The re-check of A2, U4, S2 and M10 on the fixed model is in the round-5 section of robot-ops.md. M10.4 (the jar sensor) fails as
+> before, for the same model limit as the other M10 sensors. U2.2 (right draw latch) and U1.1 (reservoir handle) are in the access-fixes update above.
 >
 > **Update 2026-11-22 (round 4): M50 now 82 pass / 2 warn / 37 fail** (was 81 / 2 / 40 on 9c67f44), re-run on the model with
 > the module's robot grip block and the 12U rack ([`results-M50.md`](analysis/out/ops/results-M50.md)). Three fails are gone:
@@ -208,7 +233,7 @@ Ranked by how often the job is done. Fixes have not yet been checked on the mode
 
 | # | Step | Fails because | Fix |
 |---|---|---|---|
-| 1 | U4.5, U4.7 overflow jar, **each build** | After the clamp comes off, the jar (x 73-127, z −150 to −58) can drop ≤ 10 mm before the base plate. Then it is blocked on every side: front, outlet plenum and its KF-25 port; right, jar sensor, then the guard; left, build module; back, Z stage and back legs. The front-right leg also overlaps its lane. | Give the jar a lane to the front: move the outlet port and hose to x < 60, move the front-right leg out (or use thinner posts), and use a jar ≤ 75 mm tall on a quarter-turn bayonet so it drops 20 mm and slides forward. Or use an overflow drawer. |
+| 1 | U4.5, U4.7 overflow jar, **each build** (**fixed 2026-11-23, round 5: both pass**; see the update at the top) | After the clamp comes off, the jar (x 73-127, z −150 to −58) can drop ≤ 10 mm before the base plate. Then it is blocked on every side: front, outlet plenum and its KF-25 port; right, jar sensor, then the guard; left, build module; back, Z stage and back legs. The front-right leg also overlaps its lane. | Give the jar a lane to the front: move the outlet port and hose to x < 60, move the front-right leg out (or use thinner posts), and use a jar ≤ 75 mm tall on a quarter-turn bayonet so it drops 20 mm and slides forward. Or use an overflow drawer. |
 | 2 | U2.2 right draw latch, **each build** | The latch (x 156-188, y −110 to −30) is directly behind the front-right optics post (x 180-240, y −185 to −125). No hand reaches it from the front or at an angle. | Mirror the latch to the chamber's front face, or move the post 40 mm outboard (re-run the bridge FEA). |
 | 3 | U1.1 reservoir handle, **each build or alloy** | The enclosed beam tube, now on the galvo's real axis, passes where the hand has to be to grip the handle (z 258) from the front. | Route the beam tube clear of the slot over the reservoir, or give the reservoir a pull tab at the front of its plate. |
 | 4 | M3.2 liners, **each alloy change** | The side liners have closed Ø22 holes round the ball screw. The back liner sits behind the carriage block. | Slots open to the top edge in the side liners; a two-piece back liner. |
@@ -272,7 +297,7 @@ Ranked by how often the job is done. Fixes have not yet been checked on the mode
 
 | | |
 |---|---|
-| ![U4.7](analysis/out/ops/fail-M50-U4-7.png) U4.7 overflow jar against the outlet plenum | ![M5.1](analysis/out/ops/fail-M50-M5-1.png) M5.1 key on a window-ring screw under the lens |
+| ![U4.7](analysis/out/ops/fail-M50-U4-7.png) U4.7 before round 5: the overflow jar against the outlet plenum (it passes since 2026-11-23) | ![M5.1](analysis/out/ops/fail-M50-M5-1.png) M5.1 key on a window-ring screw under the lens |
 | ![M4.4](analysis/out/ops/fail-M50-M4-4.png) M4.4 lid moving out | ![M7.2](analysis/out/ops/fail-M50-M7-2.png) M7.2 before round 4: the gland plate pulled down alone against the welded rod end (it now comes out with the stack and passes) |
 | ![M3.2](analysis/out/ops/fail-M50-M3-2.png) M3.2 liners against the carriage block | ![M8.2](analysis/out/ops/fail-M50-M8-2.png) M8.2 recoater servo against the front-left post |
 

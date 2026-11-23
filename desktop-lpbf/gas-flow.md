@@ -6,6 +6,14 @@ Written 2026-11-20 for [PR #266](https://github.com/vertical-cloud-lab/digital-a
 a margin, and small chambers recirculate".
 This note answers it with OpenFOAM on the chamber of [`cad/lpbf_low.py`](cad/lpbf_low.py). Nothing has been built or measured.
 
+> **Update 2026-11-23 (round 5, A1): the outlet boot and its KF-25 port moved to the plenum's left end (x −100 to −72, port at
+> x = −86).** At the right end, the port and its hose stood in the overflow jar's only lane to the front (robot-ops.md patch
+> request 6). The channel, slot and O-ring are unchanged; the boot is the old one mirrored. The CFD below was not re-run. By symmetry,
+> the channel now drains toward the left end: §2's 85 % of the suction and the slot's 8.1 m/s end are expected at x ≈ −60 instead
+> of +63. That end is next to the recoater's park and dose zone (x < −60), where the old fast end was next to the overflow slot. Re-run
+> `make_case.py` on the current model before relying on §2–4. The §5 fixes (a wider channel and a larger link into the boot) matter
+> more now, since they even out the drain.
+
 | File | What it is |
 |---|---|
 | [`analysis/cfd/make_case.py`](analysis/cfd/make_case.py) | writes the OpenFOAM case from the model's dimensions: mesh, boundary conditions, solver settings; `--variant fix` adds the changes tried in §5 |

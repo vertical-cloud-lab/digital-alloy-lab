@@ -452,7 +452,7 @@ def add_joints(h, parts, add, module="M50"):
 
     _KEY[0] = "funnel"
     ox = (P["ovf_x0"] + P["ovf_x1"]) / 2
-    items = [((x, y, zf - 6.0), Z) for x in (ox - 17.0, ox + 17.0) for y in (-40.0, 40.0)]
+    items = [((x, y, zf - 6.0), Z) for x in (ox - 17.0, ox + 17.0) for y in (-50.0, 50.0)]   # y +/-50 (was 40): 10 mm more room for the key's hand beside the 42 mm KF-40 stub (2026-11-23)
     cut_parts(parts, "Overflow funnel block", [hole(p, n, -16.01, 0.0, CBORE[4][0]) for p, n in items] + [hole(p, n, -0.01, 6.01, CLEAR[4]) for p, n in items])
     cut_parts(parts, "Chamber floor plate", [hole(p, n, 6.0, 12.0, insert_od(ins4)) for p, n in items] + [hole(p, n, 11.99, 13.5, 4.0) for p, n in items])
     add_fasteners(h, add, "funnel", "Overflow-funnel screws, M4 x 12 316, counterbored", pn412, items, 4, "M4", explode=(0, 0, -200))
@@ -507,9 +507,9 @@ def add_joints(h, parts, add, module="M50"):
     _KEY[0] = "legs"
     pn625, ins69 = find("shcs", 6, 25), find("insert", 6, 9)
     tops, bots, cb_tools, base_tools, leg_taps, top_ins = [], [], [], [], [], []
-    for x0 in (-cx + 6, cx - 36):
-        for y0 in (-cy + 6, cy - 36):
-            xc_, yc_ = x0 + 15.0, y0 + 15.0
+    for lx0, lx1, ly0, ly1 in h.LEG_BOXES:          # the right-hand leg moved to the side (2026-11-23): lpbf_low.LEG_BOXES
+        if True:
+            xc_, yc_ = (lx0 + lx1) / 2, (ly0 + ly1) / 2
             p = (xc_, yc_, zf - 15.0)
             tops.append((p, Z))
             cb_tools += [hole(p, Z, -(zf - 15.0 - zb1) - 0.01, 0.0, 11.0), hole(p, Z, -0.01, 15.01, CLEAR[6])]
@@ -526,6 +526,17 @@ def add_joints(h, parts, add, module="M50"):
     add_fasteners(h, add, "legs", "Leg-to-floor screws, M6 x 25 316, up each leg's Ø11 bore", pn625, tops, 3, "G1", explode=(0, 0, -120))
     add_fasteners(h, add, "legs", "Leg helical inserts, M6 x 9 18-8, in the floor", ins69, top_ins, 3, "G1", explode=(0, 0, -40))
     add_fasteners(h, add, "legs_base", "Base-plate-to-leg screws, M6 x 25 316", pn625, bots, 3, "G1", explode=(0, 0, -150))
+
+    # ---------------- 11b. overflow-jar sensor bracket: 2 x M4 x 10 into tapped holes in the right-hand leg's front face (2026-11-23) ----------------
+    _KEY[0] = "jar_sensor"
+    pn410 = find("shcs", 4, 10)
+    zj_ = zf - 22.0 - 42.0
+    items = [((150.0, 20.0, zj_ + dz), (0.0, 1.0, 0.0)) for dz in (-15.0, -23.0)]       # z -99 and -107: above the sensor (top -115)
+    cut_parts(parts, "Overflow-jar sensor bracket", [hole(p, n, -0.01, 6.01, CLEAR[4]) for p, n in items])
+    cut_parts(parts, "Chamber legs", [hole(p, n, 5.99, 12.0, 4.0) for p, n in items])
+    add_fasteners(h, add, "jar_sensor", "Jar-sensor bracket screws, M4 x 10 316, into the right-hand leg", pn410, items, 4, "A1", explode=(120, 0, 0))
+    JOINT_NOTES["jar_sensor"] = ("The jar sensor's bracket is set once and left: two plain M4 screws into tapped holes in the 6061 leg, "
+                                 "with the sensor's own M12 nuts setting its 2 mm gap to the jar.")
 
     # ---------------- 12. optics bridge: 2 x M6 x 35 down into each post's top cap; 2 x M6 x 25 up into its bottom cap ----------------
     pn635 = find("shcs", 6, 35)
