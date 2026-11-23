@@ -96,13 +96,19 @@ def draw(run, snap, held, title, path, focus=None, dist=1600.0, az=-60.0, el=25.
 
 
 def main():
-    fr = pickle.loads((ASM_DIR / "frames.pkl").read_bytes())
-    frames, held, dual = fr["frames"], fr["held"], fr.get("dual", {})
-    pm = (ASM_DIR / "frames_M.pkl")
-    if pm.exists():
-        fm = pickle.loads(pm.read_bytes())
-        frames.update({k: v for k, v in fm["frames"].items() if k.startswith("M")})
-        held.update(fm["held"])
+    full = (ASM_DIR / "frames.pkl").exists()
+    frames, held, dual = {}, {}, {}
+    if full:
+        fr = pickle.loads((ASM_DIR / "frames.pkl").read_bytes())
+        frames, held, dual = fr["frames"], fr["held"], fr.get("dual", {})
+    for name, pre in (("frames_M.pkl", ("M",)), ("frames_M_C.pkl", ("M", "C"))):     # partial re-runs (run_assembly.py --only=)
+        pm = ASM_DIR / name
+        if pm.exists():
+            fm = pickle.loads(pm.read_bytes())
+            frames.update({k: v for k, v in fm["frames"].items() if k.startswith(pre) or not full})
+            held.update(fm["held"])
+            dual.update(fm.get("dual", {}))
+    only = [k for k in os.environ.get("RENDER_ONLY", "").split(",") if k]       # e.g. RENDER_ONLY=M17:1 renders just that view
     run = build()
     shots = []
     S = K.STATIONS
@@ -130,12 +136,12 @@ def main():
                     want.append((f"screw:{i}", f"{jid}: {title}", None, 1300, -60, 20))
                     break
     last = list(frames)[-1] if frames else None
-    if last:
+    if last and full:                 # the cell overview needs the full run's last frame (the finished process module)
         frames["__cell__"] = frames[last]
         want.insert(0, ("__cell__", "The cell: two UR12e on MiR250s, the bench with the module nests, Fixture P, the trunnion, and Fixture B "
                         "with the finished process module", (0.0, 0.0, 900.0), 4300, -65, 28))
     for key, title, focus, dist, az, el in want:
-        if key not in frames:
+        if key not in frames or (only and key not in only):
             continue
         snap = frames[key]
         if focus is None:
@@ -152,7 +158,7 @@ def main():
         except Exception as e:  # noqa: BLE001
             print("failed", key, e, flush=True)
     # GIF of the turn-over
-    if "F05b" in dual and dual["F05b"]["qsA"]:
+    if "F05b" in dual and dual["F05b"]["qsA"] and not only:
         import imageio.v2 as imageio
         d = dual["F05b"]
         imgs = []
@@ -171,6 +177,9 @@ def main():
         imageio.mimsave(OUT / "carry_F05b.gif", imgs, duration=0.25, loop=0)
         shots.append(("carry_F05b.gif", "Chamber assembly carried by both arms from the trunnion to Fixture B (F05b), every few frames of the checked path"))
     import json as _j
+    if only and (OUT / "renders.json").exists():     # keep the earlier renders' entries that this call didn't redraw
+        new = {n for n, _ in shots}
+        shots = [x for x in _j.loads((OUT / "renders.json").read_text()) if x[0] not in new and (OUT / x[0]).exists()] + shots
     (OUT / "renders.json").write_text(_j.dumps(shots, indent=1))
     print(shots)
 
