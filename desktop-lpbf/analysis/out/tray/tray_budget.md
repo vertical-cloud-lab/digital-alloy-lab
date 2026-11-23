@@ -6,34 +6,34 @@ Laser model: 150 W ready + optical / 0.32 (fitted to IPG's 1700 W at 500 W out);
 
 | Phase | Tray input (W) | Of it UPS-backed (W) | Heat into the Shuttle, air-cooled laser (W) | Same, water-cooled laser (W) | Shuttle rise, this tray alone (K) | + Shuttle 1 idle (K) | + Shuttle 1 busy (K) | + busy, water-cooled (K) | Air for a 5 K rise (m³/h) | Dock legs L1 / L2 (A, limit 24) |
 |---|---|---|---|---|---|---|---|---|---|---|
-| standby (docked, nothing running) | 206 | 170 | 206 | 206 | 0.7 | 5.0 | 12.8 | 12.8 | 123 | 1.8 / 0.0 |
-| purge (pump on, 3 cycles, ~10-15 min) | 1010 | 170 | 1010 | 882 | 3.3 | 7.6 | 15.4 | 15.0 | 603 | 3.1 / 7.5 |
-| preheat (heaters at full power, ~15-40 min) | 687 | 170 | 687 | 559 | 2.2 | 6.5 | 14.3 | 13.9 | 410 | 3.1 / 3.3 |
-| building, typical (Al at 350 W, beam on 60 %) | 1228 | 230 | 1228 | 726 | 4.0 | 8.3 | 16.1 | 14.5 | 733 | 6.7 / 5.7 |
-| building, worst (500 W, beam on continuously) | 2668 | 410 | 2668 | 1648 | 8.7 | 13.0 | 20.8 | 17.5 | 1593 | 13.1 / 13.6 |
+| standby (docked, nothing running) | 178 | 170 | 178 | 178 | 0.6 | 4.9 | 12.7 | 12.7 | 106 | 1.6 / 0.0 |
+| purge (pump on, 3 cycles, ~10-15 min) | 1127 | 170 | 1127 | 999 | 3.7 | 7.9 | 15.8 | 15.3 | 673 | 8.4 / 7.2 |
+| preheat (heaters at full power, ~15-40 min) | 659 | 170 | 659 | 531 | 2.1 | 6.4 | 14.2 | 13.8 | 393 | 2.8 / 3.3 |
+| building, typical (Al at 350 W, beam on 60 %) | 1197 | 230 | 1197 | 695 | 3.9 | 8.2 | 16.0 | 14.4 | 715 | 6.4 / 5.7 |
+| building, worst (500 W, beam on continuously) | 2606 | 389 | 2606 | 1586 | 8.5 | 12.8 | 20.6 | 17.3 | 1556 | 12.6 / 13.6 |
 
 ## What it means
 
-- **The laser's ambient limit is the binding one.** IPG rates the unit for 10-35 °C. With no ventilation, a typical build alone holds the Shuttle's air 4.0 K above the room (26 °C in a 22 °C room), 30 °C with the rest of Shuttle 1 idling, and 38 °C if it shares the Shuttle with PR 318's busy case (a printer and the furnace working). The worst case (500 W, beam on continuously) reaches 43 °C. These are enclosure averages; the laser's own intake can be hotter if it breathes its exhaust.
-- **This tray would be the largest heat source in its Shuttle while it builds:** 1228-2668 W against 1,317 W for all six trays of Shuttle 1 idling.
+- **The laser's ambient limit is the binding one.** IPG rates the unit for 10-35 °C. With no ventilation, a typical build alone holds the Shuttle's air 3.9 K above the room (26 °C in a 22 °C room), 30 °C with the rest of Shuttle 1 idling, and 38 °C if it shares the Shuttle with PR 318's busy case (a printer and the furnace working). The worst case (500 W, beam on continuously) reaches 43 °C. These are enclosure averages; the laser's own intake can be hotter if it breathes its exhaust.
+- **This tray would be the largest heat source in its Shuttle while it builds:** 1197-2606 W against 1,317 W for all six trays of Shuttle 1 idling.
 - **The air-cooled laser recirculates its own exhaust in a 695 mm slot.** Its fans are on the front panel; with the tray stored, the front faces the lift shaft and the back faces the dock wall. Nothing here models that air path; it needs the Shuttle's interior air speed from Kardex, or a test.
 - **Options, best first:** (1) order the water-cooled YLR-500 and take its heat out through the dock's chilled-water couplings; the shared ThermoFlex 900 (900 W) is then too small for a 500 W fibre laser's ~1.2 kW loss and needs upsizing or a second chiller; (2) keep the air-cooled unit and duct its exhaust out of the Shuttle through a ventilated dock (Kardex has to say whether a column can be ventilated: PR 318's open question); (3) only build at the access opening, which ties up the opening for hours.
-- **Electrically it fits one dock.** The worst coincident case puts 13.6 A on a leg against 24 A continuous on the 30 A breaker; the pump only runs while purging, before the laser fires. The laser goes across L1-L2 at 208 V, inside IPG's 200-240 V.
-- **UPS:** the backed branch (PC, scan head, servos' logic and drives, O₂ and dew-point, controls) is 705 W rated, inside a GXT5LI-1500's 1,350 W. The laser, pump, blower and heaters stay on the unbacked branch, as PR 318's rule puts heaters and pumps. On a power cut the build stops, the O₂ logging and the guard lock stay alive, and the chamber holds its argon (valves fail closed).
+- **Electrically it fits one dock.** The worst coincident case puts 13.6 A on a leg against 24 A continuous on the 30 A breaker; the pump only runs while purging, before the laser fires. The laser goes across L1-L2 at 208 V, inside IPG's 200-240 V, and so does the nXDS6i pump (200-240 V +/-10 %, 6 A).
+- **UPS:** the backed branch (PC, scan head, servos' logic and drives, O₂ and dew-point, controls) is 684 W rated, inside the Eaton 5PX1500RTG2's 1,500 W (ENERGY STAR: 7 min at full load, 14 min at half). The laser, pump, blower and heaters stay on the unbacked branch, as PR 318's rule puts heaters and pumps. On a power cut the build stops, the O₂ logging and the guard lock stay alive, and the chamber holds its argon (valves fail closed).
 
 ## Sources and estimates
 
 - **ipg:** IPG spec sheet G22-29856 rev. 00 for YLR-500-U3-SM-AC (quotes/ipg-ylr-500-u3-sm-ac.md): 1,500 W typ / 1,700 W max, 1,600 VA typ / 1,900 VA max at 500 W out; 200-240 VAC 1-phase; forced air; 10-35 C ambient
-- **pump:** McMaster 4396K21 (mcmaster-parts.csv, read 2026-11-17): 1/2 hp, 7 A at 115 V AC
+- **pump:** Edwards nXDS6i A73501983 (bom.csv G2), nXDS instruction manual A73501880 issue I (idealvac.com mirror, sha256 d04f0234..., read 2026-11-23 22:28Z): 100-127 V or 200-240 V +/-10 %, 1-phase 50/60 Hz, auto-sensing inverter drive; continuous rating 10 A rms at 100-127 V, 6 A rms at 200-240 V (Table 8); supply protection 10 A (Table 9); time-lag fuses or breakers, 'current transients can exceed the rated values' (issue B 3.6.1); RCD >= 30 mA 'to avoid trip during start up'; 260 W at ultimate, 170 W standby (Edwards catalogue page, search snippet). Taken at 208 V across L1-L2 at its 6 A rating while purging (power factor 0.6 assumed, so 749 W: a high side for the heat; the catalogue's 260 W at ultimate is the low side)
 - **blower_hi:** McMaster 9960K51 regenerative blower (mcmaster-parts.csv): 1/8 hp, 115 V; taken as the upper bound
 - **blower_lo:** sealed 24 V brushless blower: ~2.4 L/s (144 L/min, 2.5 m/s through 120 x 8 mm) against ~2 kPa is ~5 W of gas power; at 10-25 % blower efficiency, 20-50 W (estimate)
 - **heat:** modules.md / analysis/out/thermal: 2 / 3 / 5 x 50 W cartridges (S25 / M50 / L75), worst steady 44 / 72 / 97 W at 200 C; Mean Well LRS-350-24 about 89 % efficient (datasheet)
 - **pc:** 2U scan/laser controller PC with an RTC6 card: 80 W typical, 200 W rated (estimate)
-- **galvo:** SCANLAB basiCube-class head on +/-15 V: about 30 W typical, 90 W peak (estimate; SCANLAB's datasheet gives the supply, not a measured draw)
+- **galvo:** SCANLAB basiCube 20 on one 24 V rail, <= 2.6 A (SCANLAB basiCube series data, electrical.md section 0 point 4; it is not +/-15 V), through a Mean Well HDR-100-24 (~90 % efficient): 69 W rated, ~30 W typical (estimate)
 - **servo:** three Teknic ClearPath-SD axes (recoater, Z, metering roller): ~10 W each holding/average, 100 W each peak (estimate)
 - **gas_inst:** O2 analyzer (zirconia cell heater ~10-20 W), dew-point transmitter (~2 W), pressure transmitters, two 24 V solenoids (~8 W each when held) (estimates)
 - **ctrl:** Pi 5 + cameras ~15 W, safety relay + guard lock + panel lamps ~15 W, network switch ~10 W, 24 V supply losses ~15 W (estimates)
-- **ups:** Vertiv Liebert GXT5LI-1500LVRT2UXL, 1500 VA / 1350 W online, ENERGY STAR efficiency 88.8 % at 25 % load, no-load input 29.1 W (byu-vcl PR 318 ups.CATALOGUE)
+- **ups:** Eaton 5PX1500RTG2 (bom.csv D2, the model's 2U unit, electrical.md 1.2): line-interactive, 1,500 VA / 1,500 W; ENERGY STAR UPS dataset (data.energystar.gov resource ifxy-2uty, read 2026-11-23 22:48Z): efficiency 98.6 % at 50 % and 75 % load, 98.4 % at 100 %, weighted 98.6 %; battery runtime 14 min at 50 % and 7 min at 100 % load. No 25 % or no-load figure is listed: 98.6 % at 25 % and a 10 W no-load draw are assumed. The Vertiv GXT5LI-1500 that byu-vcl PR 318 standardises on (online, 1,350 W, 88.8 % at 25 %, 29.1 W no-load) is D2's alternative
 - **dock:** byu-vcl PR 318 services.py: dock 208Y/120 V, L1, L2, N, PE, 30 A breaker; CombiTac O3 mm contacts 39 A
 - **shuttle:** byu-vcl PR 318 services.heat_budget: Shuttle enclosure 2.83 x 3.12 x 3.95 m, 55.9 m2 of walls and roof, 5.5 W/m2K for painted sheet steel in still air; Shuttle 1 idle 1,317 W (4.3 K), Shuttle 1 with a printer and the furnace working 3,720 W (12.1 K)
 - **chiller:** byu-vcl PR 318: the shared chiller is a Thermo Scientific ThermoFlex 900, 900 W at +20 C

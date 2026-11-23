@@ -988,10 +988,12 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     xpv = cx + 18 + 124.2
     PIR_TEE = dict(A=38.1, fo=40.0, to=25.4)            # centre-to-face 1.5 in. (assumed: no catalogue drawing read), KF-25 flanges
     xpt = xpv + PIR_TEE["A"]
-    prun = tube(PIR_TEE["to"] / 2, PIR_TEE["to"] / 2 - 1.6, (xpv, 0, 70.0), "x", 2 * PIR_TEE["A"])
-    pbrn = tube(PIR_TEE["to"] / 2, PIR_TEE["to"] / 2 - 1.6, (xpt, 0, 70.0 + 11.0), "z", PIR_TEE["A"] - 11.0)
-    pfl = [cyl(PIR_TEE["fo"] / 2, (xpv, 0, 70.0), "x", 5.5), cyl(PIR_TEE["fo"] / 2, (xpv + 2 * PIR_TEE["A"] - 5.5, 0, 70.0), "x", 5.5),
-           cyl(PIR_TEE["fo"] / 2, (xpt, 0, 70.0 + PIR_TEE["A"] - 5.5), "z", 5.5)]
+    prun = tube(PIR_TEE["to"] / 2, PIR_TEE["to"] / 2 - 1.6, (xpv + 11.0, 0, 70.0), "x", 2 * PIR_TEE["A"] - 22.0)
+    pbrn = tube(PIR_TEE["to"] / 2, PIR_TEE["to"] / 2 - 1.6, (xpt, 0, 70.0 + 11.0), "z", PIR_TEE["A"] - 22.0)
+    # ISO-KF 25 flange ends with the real profile (McMaster weld fitting, vendor_parts.kf_weld_stub), so the clamps seat on the tapers
+    pfl = [place(VP.kf_weld_stub(25, 12), (xpv, 0, 70.0), (0, 1, 0), (-1, 0, 0)),
+           place(VP.kf_weld_stub(25, 12), (xpv + 2 * PIR_TEE["A"], 0, 70.0), (0, 1, 0), (1, 0, 0)),
+           place(VP.kf_weld_stub(25, 12), (xpt, 0, 70.0 + PIR_TEE["A"]), (1, 0, 0), (0, 0, 1))]
     ptee = fuse([prun, pbrn] + pfl).cut(cyl(PIR_TEE["to"] / 2 - 1.6, (xpt, 0, 70.0), "z", PIR_TEE["A"] + 1.0))
     ptee = ptee.cut(cyl(PIR_TEE["to"] / 2 - 1.6, (xpv - 1, 0, 70.0), "x", 2 * PIR_TEE["A"] + 2))
     add("Vacuum line Pirani tee (KF-25 304 SS tee on the isolation valve's pump-side flange)", ptee, C["ss"], 11, (220, 0, 120), mat="ss304",

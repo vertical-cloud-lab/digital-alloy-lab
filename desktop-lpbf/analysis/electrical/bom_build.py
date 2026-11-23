@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "analysis" / "out" / "electrical"
 AD = "https://www.automationdirect.com/pn/"
 T = "2026-11-22T"
+T2 = "2026-11-23T"
 
 # id, bom line (replaces / adds to), group, item, maker, part number, qty, unit USD, basis, url, fetched, notes
 P = [
@@ -22,12 +23,13 @@ P = [
     ("E1-02", "E1 (new)", "Power distribution", "Disconnect handle, red/yellow, padlockable in OFF, side mount", "Socomec", "147E1111", 1, 27.00, "fetched", AD + "147E1111", T + "06:03Z", ""),
     ("E1-03", "E1 (new)", "Power distribution", "Handle shaft 150 mm, 5 x 5 mm", "Socomec", "14070515", 1, 7.00, "fetched", AD + "14070515", T + "06:03Z", ""),
     ("E1-04", "E1 (new)", "Power distribution", "UL 489 MCB 2P 15 A D curve (Q1 laser, Q2 UPS + heater supply)", "Eaton", "FAZ-D15-2-NA", 2, 79.00, "fetched", AD + "FAZ-D15-2-NA", T + "05:58Z", "back-ordered at fetch; 14 kA"),
-    ("E1-05", "E1 (new)", "Power distribution", "UL 489 MCB 1P 15 A C curve (Q3 pump; F-heat 24 V DC)", "Eaton", "FAZ-C15-1-NA-SP", 2, 40.00, "fetched", AD + "FAZ-C15-1-NA-SP", T + "05:56Z", "277 VAC / 48 VDC"),
+    ("E1-05", "E1 (new)", "Power distribution", "UL 489 MCB 1P 15 A C curve (F-heat 24 V DC)", "Eaton", "FAZ-C15-1-NA-SP", 1, 40.00, "fetched", AD + "FAZ-C15-1-NA-SP", T + "05:56Z", "277 VAC / 48 VDC; was 2 with Q3, which is now E1-12"),
     ("E1-06", "E1 (new)", "Power distribution", "UL 489 MCB 1P 6 A C curve (Q4 blower)", "Eaton", "FAZ-C6-1-NA-SP", 1, 40.00, "fetched", AD + "FAZ-C6-1-NA-SP", T + "05:56Z", ""),
     ("E1-07", "E1 (new)", "Power distribution", "UL 489 MCB 1P 10 A C curve (48 V servo bus)", "Eaton", "FAZ-C10-1-NA-SP", 1, 40.00, "fetched", AD + "FAZ-C10-1-NA-SP", T + "05:56Z", "rated 48 VDC: set the bus at 48 V, or use a 2-pole (96 VDC)"),
     ("E1-08", "E1 (new)", "Power distribution", "Contactor 9 A, 24 VDC coil (KM0 laser mains, KM1 pump, KM2 blower)", "WEG", "CWB9-11-30C03", 3, 41.00, "fetched", AD + "CWB9-11-30C03", T + "06:04Z", "UL 508, 5 kA SCCR"),
-    ("E1-09", "E1 (new)", "Power distribution", "Overload relay for the 1/2 hp pump (7 A)", "WEG", "RW17-1D3 class", 1, 50.00, "estimate", "", "", "not fetched"),
+    ("E1-09", "E1 (new)", "Power distribution", "Overload relay for the 1/2 hp pump (7 A)", "WEG", "RW17-1D3 class", 0, 50.00, "estimate", "", "", "qty 0 (2026-11-23): the nXDS6i's integral controller drives and protects its own motor (manual A73501880 p.11)"),
     ("E1-10", "E1 (new)", "Power distribution", "PB1 enclosure 16 x 12 x 6 in, steel, NEMA 12", "McMaster-Carr", "7812K class (16 x 12 x 6)", 1, 230.00, "estimate", "", "", "estimate from 7812K14 10 x 12 x 6 in at $194.78 (mcmaster-parts.csv); replaces C6"),
+    ("E1-12", "E1 (new)", "Power distribution", "UL 489 MCB 2P 10 A D curve (Q3: nXDS6i pump at 208 V L1-L2; Edwards asks for a time-lag breaker and 10 A supply protection)", "Eaton", "FAZ-D10-2-NA", 1, 79.00, "estimate", "", "", "priced as FAZ-D15-2-NA (same family, read 2026-11-22); not fetched"),
     ("E1-11", "E1 (new)", "Power distribution", "Filter fan 27 CFM 24 VDC, NEMA 12 (PB1)", "Fandis", "FF12D24UN", 1, 95.00, "fetched", "https://www.automationdirect.com/adc/shopping/catalog/enclosure_thermal_management_-a-_lights", T + "06:01Z", "plus an exhaust grille (not priced)"),
     # ---- E2 DC supplies
     ("E2-01", "C4 (replaces SDR-480-24)", "DC supplies", "+24 V CTRL, 10 A DIN, PFC, DC-OK relay", "Mean Well", "SDR-240-24", 1, 104.38, "fetched", "https://www.trcelectronics.com/products/mean-well-sdr-240-24", T + "05:37Z", "63 x 125.2 x 113.5 mm; the SDR-480 is 128.5 mm deep"),
@@ -105,7 +107,7 @@ P = [
     ('E8-08', 'A3 (adds to)', 'Pneumatics', 'Lockable 3/2 shut-off, exhausts downstream (LOTO)', 'NITRA', 'ARV-21', 1, 38.5, 'fetched', 'https://www.automationdirect.com/adc/shopping/catalog/pneumatic_components/pneumatic_air_preparation_(frl-filters,_regulators,_lubricators)', '2026-11-22T05:54Z', ''),
     # ---- E9 enclosures, DIN hardware, sensors, misc
     ("E9-01", "C6 (replaces)", "Enclosure", "4U rack drawer, ~403 x 368 mm inside", "Middle Atlantic", "UD4 class", 1, 240.00, "estimate", "https://www.cdw.com/product/middle-atlantic-ud-3ru-utility-rack-mounted-drawer-14.5in-depth-rack-draw/415703", T + "05:37Z", "UD3 (3U) is $217.80; the 4U price not fetched"),
-    ("E9-02", "C6", "Enclosure", "PB2 box on the process module (~200 x 150 x 100 mm, DIN rail)", "various", "class", 1, 60.00, "estimate", "", "", "not fetched"),
+    ("E9-02", "C6", "Enclosure", "PB2 box on the optics bridge, polycarbonate IP66, 160 x 90 x 60.5 mm, with a DIN rail strip and glands", "Hammond", "1554JGY", 1, 40.00, "estimate", "", "", "box GBP 14.50 (search snippet, 2026-11-23) + rail and glands; not fetched"),
     ("E9-03", "C6", "Enclosure", "Drawer fan 80 mm 24 VDC", "Sanyo Denki", "9GA0824P6G001", 1, 26.90, "fetched", "https://www.digikey.com/en/products/result?keywords=9GA0824P6G001", T + "06:00Z", "60.8 CFM free air"),
     ("E9-04", "C6", "DIN hardware", "Feed-through terminal blocks, pack of 100", "AutomationDirect", "DN-T12-A", 1, 75.00, "fetched", AD + "DN-T12-A", T + "05:58Z", ""),
     ("E9-05", "C6", "DIN hardware", "Ground terminal blocks, pack of 50", "AutomationDirect", "DN-G10", 1, 232.00, "fetched", AD + "DN-G10", T + "06:04Z", ""),
@@ -113,12 +115,19 @@ P = [
     ("E9-07", "C6", "DIN hardware", "35 mm DIN rail 1 m, pack of 10", "AutomationDirect", "DN-R35S1", 1, 42.50, "fetched", AD + "DN-R35S1", T + "05:56Z", ""),
     ("E9-08", "C6", "DIN hardware", "Wire duct 25 x 57 mm, 2 m", "Iboco", "T1E-1022G-1", 2, 24.50, "fetched", "https://www.automationdirect.com/adc/shopping/catalog/wire_-a-_cable_management/wire_duct/narrow_finger_wall", T + "06:04Z", ""),
     ("E9-09", "C6", "DIN hardware", "Ferrules 18 AWG, pack of 500", "Z+F", "V30AE000009", 1, 10.50, "fetched", "https://www.automationdirect.com/adc/shopping/catalog/wire_-a-_cable_termination/wire_end_connectors/insulated_ferrules", T + "06:04Z", ""),
-    ("E9-10", "new", "Sensors", "Inductive M8 home / over-travel sensors (recoater, Z)", "AutomationDirect", "class", 4, 20.00, "estimate", "", "", "not fetched; PAM-AP-1H (M12) is $12.50 (options-vendors.csv)"),
+    ("E9-10", "new", "Sensors", "Inductive M8 sensors, Z home (top) and lower limit: PNP NO, 3 mm flush, 10-30 VDC, 40 mm, M8 3-pin", "AutomationDirect", "KSE-AP-3F", 2, 33.50, "fetched", AD + "KSE-AP-3F", T2 + "22:48Z", "spec cdn.automationdirect.com/static/specs/proxkse.pdf"),
+    ("E9-17", "new", "Sensors", "Magnetic-field sensors, recoater home and far over-travel, through the chamber's back wall: M12, PNP NO, 10-65 VDC, 62 mm", "Turck", "BIM-M12E-AP4X-H1141", 2, 120.00, "estimate", "https://www.turck.us/datasheet/_us/edb_1579913_eng_us.pdf", T2 + "22:48Z", "range 59 mm with DMR20-10-4, 90 mm with DMR31-15-5 (datasheet); price not found"),
+    ("E9-18", "new", "Sensors", "Actuating magnets for E9-17, on the recoater carriage block", "Turck", "DMR20-10-4", 2, 15.00, "estimate", "", "", "not fetched; the model draws a Ø12 x 3 stand-in"),
+    ("E9-19", "new", "Sensors", "Sensor mounts: 2 x 20 mm T-slot posts 0.21 m, 2 clamps, Z bracket and flag (6061, shop-made)", "shop", "-", 1, 60.00, "estimate", "", "", "material and T-slot"),
     ('E9-11', 'G7 (exists)', 'Sensors', 'Convection gauge with controller and analog out, 1e-4 to 1000 Torr, KF16', 'Kurt J. Lesker', 'KJL275800 (275i)', 0, 515.0, 'fetched', 'https://www.lesker.com/newweb/gauges/convection_kjlc_2.cfm', '2026-11-22T05:59Z', 'needs a KF16 port (model patch); qty 0: G7 now carries a Pirani gauge; alternative'),
     ('E9-12', 'D2 (exists)', 'UPS', 'UPS 1,440 VA / 1,440 W, 2U, 5-15P', 'Eaton', '5PX1500RTG2', 0, 1137.99, 'fetched', 'https://www.cdw.com/', '2026-11-22T05:35Z', "CDW price; eaton.com list $1,367.10 (read 05:35Z); PR 318's Vertiv GXT5LI-1500 is $2,706.99; qty 0: bom.csv D2 carries this UPS"),
     ('E9-13', 'D2 (adds to, optional)', 'UPS', 'UPS network card (power-cut signal to the Pi)', 'Eaton', 'NETWORK-M3', 1, 462.99, 'fetched', 'https://www.cdw.com/product/eaton-cybersecure-gigabit-network-m3-card/7599719', '2026-11-22T05:36Z', 'or USB to the Pi (free); optional: USB to the Pi does the same for free'),
     ("E9-14", "new", "Bonding", "Tinned braided bonding straps with lugs (8)", "various", "class", 1, 60.00, "estimate", "", "", "not fetched"),
     ("E9-15", "new", "Bonding", "ESD wrist strap", "Desco", "09060", 1, 10.16, "fetched", "https://www.digikey.com/en/products/result?keywords=09060", T + "06:05Z", ""),
+    ("E9-20", "G7 (adds to)", "Vacuum", "KF-25 tee, 304 SS (Pirani on the vacuum line)", "McMaster-Carr", "4518K21", 1, 120.01, "estimate", "https://www.mcmaster.com/products/kf-tees", T2 + "22:46Z", "McMaster price did not render; Ideal Vacuum P101210 KF-25 tee $120.01 (search snippet)"),
+    ("E9-21", "G7 (adds to)", "Vacuum", "KF-25 to KF-16 reducer, 304 SS", "McMaster-Carr", "4518K521", 1, 54.00, "estimate", "https://www.mcmaster.com/products/kf-tees", T2 + "22:46Z", "price did not render; MKS 100313711 conical reducer ~$54 (search snippet)"),
+    ("E9-22", "G7 (adds to)", "Vacuum", "KF-25 wing-nut clamps for the tee", "McMaster-Carr", "4518K72", 2, 13.67, "fetched (repo)", "https://www.mcmaster.com/4518K72/", "2026-11-17", "mcmaster-parts.csv"),
+    ("E9-23", "D1 (alternative)", "Dock", "Han PE module, male crimp (the dock's two leading PE contacts, if D1 becomes a Han-Modular dock)", "HARTING", "09140013071", 0, 0.00, "estimate", "", "", "part number from a HARTING catalogue search snippet; price not read; D1 carries PR 318's dock"),
     ("E9-16", "T (test equipment, optional)", "Test", "Milliohm meter for the 0.1 ohm bonding check", "FLIR Extech", "380580", 1, 1000.00, "fetched", "https://www.digikey.com/en/products/result?keywords=380580", T + "06:05Z", "optional if the lab has one"),
 ]
 
@@ -165,9 +174,9 @@ def main():
         ("H2", "Mean Well LRS-350-24 + Crydom D1D20 + HS151 + 2 WEG CWBS12-33-30C03 (K1, K2) + DwyerOmega CN708 + Omron K8DT-TH1CD", 1, 34.81 + 204.60 + sub("E4-01", "E4-02", "E4-03", "E4-04"), 34.81 + 204.60 + sub("E4-01", "E4-02", "E4-03", "E4-04")),
         ("A1", "adds 12 Murrelektronik M12 PUR shielded cordsets, 5 m", 1, float(old["A1"]["unit_low_usd"]) + sub("E6-08"), float(old["A1"]["unit_high_usd"]) + sub("E6-08")),
         ("A3", "adds a Metal Work 5U11S101 air pressure switch, a NITRA ARV-21 lockable dump valve and two D-M9B switches on the rotary actuator", 1, float(old["A3"]["unit_low_usd"]) + sub("E8-05", "E8-06", "E8-08"), float(old["A3"]["unit_high_usd"]) + sub("E8-05", "E8-06", "E8-08")),
-        ("E1", "NEW Power box PB1: Socomec 22013003 UL 98 disconnect + 147E1111 handle + shaft, 6 Eaton FAZ UL 489 MCBs, 3 WEG CWB9-11-30C03 contactors, overload, 16 x 12 x 6 in NEMA 12 enclosure, Fandis FF12D24UN filter fan", 1, sub(*rng("E1", 11)), sub(*rng("E1", 11))),
+        ("E1", "NEW Power box PB1: Socomec 22013003 UL 98 disconnect + 147E1111 handle + shaft, 6 Eaton FAZ UL 489 MCBs (Q3 2P D10 for the nXDS6i at 208 V), 3 WEG CWB9-11-30C03 contactors, 16 x 12 x 6 in NEMA 12 enclosure, Fandis FF12D24UN filter fan", 1, sub(*rng("E1", 12)), sub(*rng("E1", 12))),
         ("E2", "NEW AutomationDirect STRIDE SE3-SW8U Ethernet switch", 1, sub("E3-20"), sub("E3-20")),
-        ("E3", "NEW 4 inductive M8 home/over-travel sensors + a +/-5 mbar chamber-at-ambient pressure switch (estimates)", 1, sub("E9-10", "E5-06"), sub("E9-10", "E5-06")),
+        ("E3", "NEW 2 AutomationDirect KSE-AP-3F (Z home, lower limit) + 2 Turck BIM-M12E-AP4X-H1141 with DMR20-10-4 magnets (recoater home, over-travel, through the back wall) + mounts + a +/-5 mbar chamber-at-ambient pressure switch", 1, sub("E9-10", "E9-17", "E9-18", "E9-19", "E5-06"), sub("E9-10", "E9-17", "E9-18", "E9-19", "E5-06")),
         ("E4", "NEW bulk wire, braided bonding straps, ESD wrist strap", 1, sub("E6-09", "E9-14", "E9-15"), sub("E6-09", "E9-14", "E9-15")),
         ("E5", "NEW, optional: FLIR Extech 380580 milliohm meter, Eaton NETWORK-M3 card, SST FA11643 LED-bar feedthrough", 1, 0.0, sub("E9-16", "E9-13", "E6-04")),
     ]
@@ -199,9 +208,9 @@ def main():
         "H2": ("Heated plate", "Heater power, switching, independent limit and the plate < 50 C channel", "24 V 350 W supply, 20 A DC SSR on a heat sink, K1 (safety controller) + K2 (CN708) contactors, latching type K limit at 235 C, K8DT on the edge TC for the door", "DwyerOmega CNI32-AL-DC (2 relays, 56-week lead time)"),
         "A1": ("Automation", None, None, None),
         "A3": ("Automation", None, None, None),
-        "E1": ("Electrical", "Power box PB1: main disconnect, branch protection, contactors", "lockable UL 98 disconnect; UL 489 MCBs Q1 2P D15 laser, Q2 2P D15 UPS + heater supply, Q3 C15 pump, Q4 C6 blower, 24 V heater and 48 V bus breakers; KM0 laser mains, KM1 pump, KM2 blower; 16 x 12 x 6 in NEMA 12 box with a filter fan, left of the rack", "ABB OT40F3 (UL 508) + OHB45J6; Eaton R5A3040U"),
+        "E1": ("Electrical", "Power box PB1: main disconnect, branch protection, contactors", "lockable UL 98 disconnect; UL 489 MCBs Q1 2P D15 laser, Q2 2P D15 UPS + heater supply, Q3 2P D10 pump (nXDS6i at 208 V), Q4 C6 blower, 24 V heater and 48 V bus breakers; KM0 laser mains, KM1 pump, KM2 blower; 16 x 12 x 6 in NEMA 12 box with a filter fan, left of the rack", "ABB OT40F3 (UL 508) + OHB45J6; Eaton R5A3040U"),
         "E2": ("Electrical", "Ethernet switch", "8 x 10/100, 12-48 VDC, DIN", ""),
-        "E3": ("Electrical", "Axis home sensors and chamber-at-ambient switch", "4 inductive M8 PNP; +/-5 mbar differential pressure switch (safety input for the guard unlock)", ""),
+        "E3": ("Electrical", "Axis home sensors and chamber-at-ambient switch", "Z: 2 inductive M8 PNP on the actuator; recoater: 2 magnetic-field M12 PNP outside the back wall (no chamber port); +/-5 mbar differential pressure switch (safety input for the guard unlock)", ""),
         "E4": ("Electrical", "Bulk wire, bonding straps, ESD", "10 AWG feeder, 14 AWG MTW, 16 AWG heater pair, 18-22 AWG control; 8 tinned braided straps; wrist strap", ""),
         "E5": ("Electrical", "Optional: milliohm meter, UPS network card, LED-bar feedthrough", "0.1 ohm bonding check; power-cut signal; only if the LED bar stays inside the chamber", ""),
     }
@@ -215,7 +224,7 @@ def main():
             spec = spec if spec is not None else o.get("spec", "")
             alt = alt if alt is not None else o.get("alternative", "")
             cand = txt.replace("NEW ", "").replace("NEW, optional: ", "")
-            notes = ("electrical.md 2026-11-22: " + (txt if pid in old else "new line")) if pid in old else "electrical.md 2026-11-22: new line"
+            notes = ("electrical.md 2026-11-23: " + (txt if pid in old else "new line")) if pid in old else "electrical.md 2026-11-23: new line"
             w.writerow([pid, sub_, item, spec, cand, alt, q, f"{lo:.2f}", f"{hi:.2f}", "fetched 2026-11-22 (electrical-bom.csv) + estimates marked there", "electrical-bom.csv", notes])
     print("\n".join(L))
 

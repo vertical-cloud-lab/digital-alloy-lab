@@ -18,6 +18,7 @@ on 2026-11-22 (UTC) from the pages linked in [`electrical-bom.csv`](electrical-b
 | [`analysis/electrical/interlock_logic.py`](analysis/electrical/interlock_logic.py) → [`interlock.md`](analysis/out/electrical/interlock.md) | the safety logic as a function of every input, checked over all 16.8 M input combinations, plus 49 single faults |
 | [`analysis/electrical/power_budget.py`](analysis/electrical/power_budget.py) → [`power.md`](analysis/out/electrical/power.md) | dock legs, inrush against the breakers, UPS runtime through a power cut, drawer heat, voltage drop, hermetic-pin heating, earth-leakage current |
 | [`analysis/electrical/io_list.py`](analysis/electrical/io_list.py) → [`io_check.md`](analysis/out/electrical/io_check.md) | writes the I/O list and counts channels against the controllers |
+| [`cad/electrical_parts.py`](cad/electrical_parts.py) | the electrical parts drawn in the main model since 2026-11-23 (§13): PB1, PB2, home and limit sensors, guard-position switch, two E-stops, dock PE contacts; the Pirani tee is in `lpbf_low.py` section 10 |
 | [`cad/electrical.py`](cad/electrical.py) → [`enclosures.md`](analysis/out/electrical/enclosures.md) | separate model of the power box PB1 and the 12U rack with its 4U drawer, checked against the rack, tray rim, duct and operator panel |
 | [`analysis/electrical/drawings.py`](analysis/electrical/drawings.py) | [single-line diagram](analysis/out/electrical/single_line.png), [interlock schematic](analysis/out/electrical/interlock.png), [panel layouts to scale](analysis/out/electrical/panels.png) |
 
@@ -36,7 +37,7 @@ drawn in the model ([`io_check.md`](analysis/out/electrical/io_check.md)). The o
 
 1. **There was no supply design.** No main disconnect, no branch protection, no 48 V servo supply, no place for the AC parts
    (the UPS only got a bom.csv line, D2, today). Now: a lockable main disconnect and four AC branches in a power
-   box PB1 beside the rack (§1).
+   box PB1 beside the rack (§1), drawn in the model since 2026-11-23 (§13.2).
 2. **The 3U DIN drawer cannot hold the controls.** A safety controller with enough inputs (Banner SC26/XS26) stands 129 mm
    off its rail, and the 480 W DIN supplies 128.5 mm; a 3U drawer has ~120 mm clear. Make it **4U and the rack 12U (560 mm,
    still under the process module's 581.2 mm)**, and move the power parts to PB1 ([panels.png](analysis/out/electrical/panels.png)).
@@ -50,20 +51,22 @@ drawn in the model ([`io_check.md`](analysis/out/electrical/io_check.md)). The o
 6. **The 240 °C thermal cutoff is below its own holding rating.** The Cantherm RT240's holding temperature is 205 °C; the S25
    block runs at 216-221 °C and M50 at 205-206 °C in normal running. It will age and may open on its own. The latching limit
    (235 °C) trips 35-51 s after an SSR short on M50 and L75 and keeps the plate under 227 °C, but on S25 the block reaches
-   the TCO's 240 °C in 4-5 s (§9.1). Replace the TCO with one rated above ~225 °C holding, or drop it.
+   the TCO's 240 °C in 4-5 s (§9.1). Replace the TCO with one rated above ~225 °C holding, or drop it. **Dropped 2026-11-23 (§13.4):** no catalogue cutoff holds 225 °C with a 24 V DC rating.
 7. **A dense build trips any sensible limit without a dwell.** With more laser heat than the module loses, the plate drifts up
    (heat.md); the 235 °C limit tripped after 3-12 minutes in every dense case. The scan software's dwell (hold the next layer
    until the plate is within 3 K) keeps it at ~205 °C and costs 22-54 % more build time at the end of the stroke (§9.1).
 8. **The sensors on the lid cannot be wired to a Pi in the rack.** The Pi HQ camera's CSI ribbon and the NFC and load-cell
-   boards' I2C/SPI want ≤ 0.5 m. Put the Pi 5 in a small box (PB2) on the process module.
+   boards' I2C/SPI want ≤ 0.5 m. Put the Pi 5 in a small box (PB2) on the process module. **Drawn 2026-11-23 (§13.2):** a
+   Hammond 1554JGY on the optics bridge, 0.19-0.22 m from the camera, the NFC antenna and the load cell.
 9. **The chamber has an LED bar inside it and no feedthrough for it.** Move it outside a window, or add a 2-pin KF16 feedthrough.
+   **Still open 2026-11-23 (§13.2):** with no new chamber port allowed, no existing opening can carry it; move the bar outside.
 10. **The rod-end connector is not real yet.** The drawn LEMO 1B misses the spec (seals.md), and no catalogue part carries 3
     type K pairs plus power. Six single-lead type K weld-ins (Ø6.27 mm sleeves) and one 4-pin 16 A copper weld-in (Ø12.62 mm)
-    do it, but need a rod-end face ~28-30 mm across, not 24 (§6).
+    do it, but need a rod-end face ~28-30 mm across, not 24 (§6). **Drawn 2026-11-23 (§13.3):** a 48 × 20 mm face, because the rod end cannot grow taller.
 11. **Missing devices:** home and over-travel sensors on the recoater and Z, a guard-position sensor separate from the lock,
     two more E-stops, a chamber-at-ambient pressure switch, a Pirani gauge port, auto switches on the door actuator (A3's latch
-    cylinders carry theirs), an air pressure switch, and a second plate-temperature channel for the door (electrical-io.csv).
-12. **Earth leakage ~8 mA (estimate).** Above 3.5 mA a plug-in machine needs reinforced protective earth: two PE contacts in
+    cylinders carry theirs), an air pressure switch, and a second plate-temperature channel for the door (electrical-io.csv). **Drawn 2026-11-23 (§13.2)** except the LED feedthrough, the chamber-at-ambient switch, the auto switches, the air pressure switch and the second plate channel.
+12. **Earth leakage ~8 mA (estimate; ~9.3 mA with the nXDS6i's drive, §13.1).** Above 3.5 mA a plug-in machine needs reinforced protective earth: two PE contacts in
     the dock, and no 5 mA GFCI upstream (§8).
 
 **Electrical BOM:** $11,359 in 94 lines ($1,177 of it estimates, $1,571 optional), not counting the RTC6 and the IPG cable
@@ -101,7 +104,7 @@ contactors K1 and K2, the CN708 on the door and the K8DT. The DC supplies sit he
 |---|---|---|---|---|
 | Q1 | 2-pole 15 A, D curve | KM0 (PLC: 5 s after power-up, off between builds) | IPG YLR-500-U3, 208 V L1-L2, 1.7 kW / 1.9 kVA, rear terminal block (2012 YLR guide) | 14 AWG |
 | Q2 | 2-pole 15 A, D curve, multiwire (handle-tied) | – | L1-N: UPS (120 V, 1,440 W); L2-N: heater supply LRS-350-24 | 14 AWG |
-| Q3 | 1-pole 15 A, C curve | KM1 + overload (PLC) | vacuum pump 4396K21, 115 V 7 A, 1/2 hp | 14 AWG, 2.3 m |
+| Q3 | 2-pole 10 A, D curve (time-lag, Edwards) | KM1 (PLC) | dry scroll pump Edwards nXDS6i, 208 V L1-L2, 6 A rated, 260 W at ultimate (§13.1; was the 4396K21 rotary vane, 115 V 7 A) | 14 AWG, 2.3 m |
 | Q4 | 1-pole 6 A, C curve | KM2 (PLC) | recirculation blower (≤ 230 W at its AC upper bound; G4 still open) | 16-14 AWG |
 
 D curves on Q1 and Q2 because the laser, UPS and LRS-350 (60 A cold-start at 230 V, ~30 A at 120 V) each have inrush that a
@@ -114,7 +117,7 @@ contactor KM0 that the PLC closes after the rest has started.
 
 ### 1.2 What the UPS carries, and the DC rails
 
-**UPS:** Eaton 5PX1500RTG2 (line-interactive, 1,440 VA / 1,440 W, 2U, 5-15P in, 8 × 5-15R; $1,137.99 at CDW, read 2026-11-22),
+**UPS:** Eaton 5PX1500RTG2 (line-interactive, 1,500 VA / 1,500 W per ENERGY STAR, §13.1; 2U, 5-15P in, 8 × 5-15R; $1,137.99 at CDW, read 2026-11-22),
 in bom.csv as D2 (added 2026-11-22). PR 318 standardises on the Vertiv GXT5LI-1500 (online, Li-ion, $2,706.99); either
 works. A Network-M3 card ($462.99) lets the Pi start the power-cut sequence.
 
@@ -451,12 +454,146 @@ PTFE/Kapton inside; a validated safety interface to the UR12e; and DIN-rail modu
   rise time and back-reflection rating. The 2012 YLR guide is the closest public document; the U3 may differ (its U2 page lists
   "5 and 24 Volt Control Interfaces").
 - **SCANLAB:** RTC6 price and the laser-connector pinout; basiCube 20 power connector and status signal.
-- **Vacuum pump changed after this note was written.** The completeness audit moved BOM line G2 to the dry scroll pump the model draws, an Edwards nXDS6i. The single-line diagram, the I/O list and `power_budget.py` still use the McMaster 4396K21 rotary-vane pump (115 V, 7 A). Re-run them with the nXDS6i's nameplate before the breaker and leg sizes are fixed.
-- **Model patch requests** (not made here): 4U drawer and 12U rack (both drawn since, in 9297709); PB1 beside the rack; PB2 on the guard frame; rod-end block
+- **Done 2026-11-23 (§13.1): vacuum pump changed after this note was written.** The completeness audit moved BOM line G2 to the dry scroll pump the model draws, an Edwards nXDS6i. The single-line diagram, the I/O list and `power_budget.py` still use the McMaster 4396K21 rotary-vane pump (115 V, 7 A). Re-run them with the nXDS6i's nameplate before the breaker and leg sizes are fixed.
+- **Model patch requests** (most drawn on 2026-11-23, §13.2; still open: the LED bar, the chamber-at-ambient switch): 4U drawer and 12U rack (both drawn since, in 9297709); PB1 beside the rack; PB2 on the guard frame; rod-end block
   for the weld-in feedthroughs; LED bar outside the chamber; a KF16 Pirani port; recoater and Z home sensors; a guard-position
   sensor separate from the lock; E-stops on the guard front and the gas module.
 - **Prices not fetched** (estimates in electrical-bom.csv, marked so): the 4U drawer (3U versions $217.80-286.20), the
   16 × 12 × 6 in enclosure, the PB2 box, the FA23474 plugs, SMPW-K connectors, the overload relay, the M8 home sensors, the
   chamber-at-ambient switch, the P1-04ADL-2, bulk wire and bonding straps; the RTC6 and the IPG interface cable are quotes.
-- **Checks still to do:** a real SC26/XS26 program and its response times; PL calculation; the TCO replacement; a UR safety
+- **Checks still to do:** a real SC26/XS26 program and its response times; PL calculation; the TCO replacement (dropped instead, §13.4); a UR safety
   configuration; the Kardex interface for "tray docked" and "VLM may move"; the DHA.
+
+## 13. 2026-11-23: the electrical parts drawn, the dry scroll pump, the rod-end face and the cutoff
+
+Done in round 5 of [PR #266](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/266). The model's new parts are in
+[`cad/electrical_parts.py`](cad/electrical_parts.py) (one hook line at the end of `lpbf_low.build()`), the Pirani tee in
+`lpbf_low.py` section 10, and the rod end in `modules_low.py`.
+
+### 13.1 The single-line and the power budget on the Edwards nXDS6i, and one UPS everywhere
+
+**The pump's electrical data** (Edwards nXDS instruction manual A73501880 issue I, Table 8 and 9, an Ideal Vacuum mirror read
+22:28Z, and issue B §3.6.1): 100-127 V or 200-240 V ±10 %, single phase, 50/60 Hz, auto-sensing, with an integral controller
+driving a three-phase motor; **continuous rating 10 A rms at 100-127 V and 6 A rms at 200-240 V**; supply protection 10 A;
+"time-lag fuses should be used, as current transients can exceed the rated values"; an RCD of at least 30 mA "to avoid trip
+during start up"; IEC C14 inlet; 26.2 kg. Edwards' catalogue page gives 260 W at ultimate and 170 W in standby (search
+snippet; the page itself returned 403). Inrush and power factor are not published: 40 A for 10 ms (the drive's DC-bus
+capacitors) and 0.6 are assumed.
+
+What changed:
+- **The pump runs at 208 V across L1-L2** (6 A), as the laser does, instead of 120 V on L2 (10 A): Q3 becomes a **2-pole 10 A
+  D-curve** breaker (Eaton FAZ-D10-2-NA, priced as its 15 A sibling), the time-lag type Edwards asks for. The 7 A motor overload
+  relay goes: the pump's own controller protects its motor. The cord is an IEC C13 to KM1 in PB1.
+- **Legs** ([`power.md`](analysis/out/electrical/power.md) §1): purge 9.5 / 9.8 A (L1 / L2), building worst 17.7 / 14.0 A,
+  everything at rated at once 23.7 / 20.0 A (was 20.7 A on L2 with the rotary vane): all inside 24 A. The pump still never
+  runs while the laser fires.
+- **Inrush:** 40 A against Q3's lowest magnetic trip of 100 A, 2.5× (§2 of power.md). It is not switched by Q0 (KM1 is open
+  at power-up), so the 120 A at Q0 closing does not change.
+- **Not on the UPS.** It could run from the 5PX's sine-wave output at ultimate (260 W), but its 6-10 A rating at full inlet
+  flow would take most of the UPS, and during a power cut it has no job: the argon valves close and the build stops. Its
+  factory default is to stay off when power returns (manual §5.5), which is what an unattended restart wants; **set Auto-run on
+  (hold START for 8 s, or over serial) or the pump will not start when KM1 closes**, or wire the PLC to the pump's own start
+  input instead.
+- **Earth leakage:** the pump's inverter drive is now counted at 2.0 mA (estimate), so the total is ~9.3 mA (power.md §7): still
+  under 10 mA, and the two PE contacts in the dock stay.
+
+**The UPS is now one model everywhere.** The model's 2U unit, bom.csv D2, power_budget.py and electrical.md were already the
+Eaton 5PX1500RTG2; **[`tray_budget.py`](analysis/tray/tray_budget.py) still used byu-vcl PR 318's Vertiv GXT5LI-1500** and is
+changed. ENERGY STAR's UPS listing of the 5PX1500RTG2 (data.energystar.gov dataset ifxy-2uty, read 22:48Z): 1,500 VA /
+1,500 W line-interactive, **98.6 % efficient at 50 and 75 % load, 98.4 % at 100 %, battery runtime 14 min at 50 % and 7 min
+at 100 %** (VRLA). The Peukert model in power_budget.py gives 7.9 and 17.5 min at those loads, 13-25 % optimistic; for the
+63 W held through a power cut it gives ~5 h, and even with no low-rate gain at all (the ~175 Wh ENERGY STAR's two points imply)
+the held load lasts **167 min**, against 41 min for the L75 plate to cool to 50 °C. The tray budget's backed branch is 684 W
+rated against 1,500 W. Both budgets also now carry the galvo on its real 24 V rail (≤ 2.6 A through the HDR-100-24, 69 W), not
+±15 V.
+
+Re-run: [`power.md`](analysis/out/electrical/power.md), [`tray_budget.md`](analysis/out/tray/tray_budget.md),
+[`single_line.png`](analysis/out/electrical/single_line.png) and the other two drawings (only the labels changed).
+
+### 13.2 Parts drawn in the model
+
+| Part | Real part | Where (model mm) | Mount |
+|---|---|---|---|
+| PB1 power box | 16 × 12 × 6 in steel NEMA 12 (McMaster 7812K class, E1-10 estimate); Socomec 147E1111 handle on its 150 mm shaft; Fandis FF12D24UN fan and grille on the door | x −1160 to −1008 (16 mm left of the rack's side panel), y −300 to 5, on two 15 mm rails on the tray: where `cad/electrical.py` checked it | rails bolted to the tray (tray holes not drawn) |
+| PB2 process-module box | Hammond 1554JGY, 160 × 90 × 60.5 mm polycarbonate, IP66 | on the optics bridge behind the galvo, x −40 to 120, y 75 to 165: **0.19-0.22 m in a straight line** from the layer camera, the NFC antenna and the load cell, so the CSI ribbon and the I2C cables stay under 0.5 m | 4 × M4 × 10 (McMaster 92290A144) through two tabs into tapped holes cut in the optics bridge (joints.py helpers) |
+| Z home (top) and lower limit | 2 × AutomationDirect KSE-AP-3F, M8 PNP NO, 3 mm flush ($33.50) | bracket on the actuator body's −x side; a 2 mm steel flag on the carriage, 1 mm from the sensor faces | the home sensor sees the flag at the +8 mm overtravel; **the lower one is 14 mm below the flag's swap-release position, so the 45 mm release does not trip it** (electrical-io.csv M-06) |
+| Recoater home and far over-travel | 2 × Turck BIM-M12E-AP4X-H1141 magnetic-field sensors (59 mm range with Turck's DMR20-10-4 magnet, 90 mm with the DMR31-15-5; datasheet read 22:48Z) | **outside the chamber's back wall**, at the park position and 10 mm past the end of spread, on two 20 mm T-slot posts bolted to the process base plate (M5 × 25, holes cut through the plate) | they see a magnet bonded into the carriage block's back face through the 16 mm 6061 wall and the 0.5 mm 316L liner, 18 mm in all: no chamber port and no hole in the frame (its machining is frozen). The drawn Ø12 × 3 magnet is a stand-in; test the switching distance through the wall |
+| Guard-position switch | IDEC HS6B-12B05 (2NC + 1NO), separate from the lock (ISO 14119) | on the door rail at x 181-200, z 176-240: between the lock above it and the door handle, which reaches x 197-209 below z 170 with the door open | envelope; tongue on the door not drawn |
+| Two more E-stops | IDEC XW1E-BV402M-R in 1-hole yellow enclosures (70 mm class, estimate) | guard right side near its front corner (x 312-382, y −250 to −180); front of the gas module's O₂ box (x 870-940, y −310 to −240) | rivnuts in the guard panel; the O₂ box's face |
+| Pirani gauge | Vacuum Research 902377 (NW-16, 1-2000 mTorr, 0-10 V and 4-20 mA, 12-35 V DC < 100 mA, RJ-45; $455.00, read 22:46Z) on a McMaster 4518K21 KF-25 tee and a 4518K521 KF-25 to KF-16 reducer, two 4518K72 clamps | **at the vacuum port, on the isolation valve's pump-side flange**, the tee's run through the guard's right panel where the vacuum hose passed, the gauge up at x 336; the vacuum hose now starts at the tee | KF clamps; the tee's ends use the real ISO-KF flange profile. The tee's 38.1 mm centre-to-face is assumed (McMaster's drawing did not render) |
+| Dock PE contacts | two leading PE contacts on the dock's face (HARTING Han PE module 09 14 001 3071 if the dock is Han-Modular; D1 carries PR 318's CombiTac) | dock face, y 346-394, z −101 to −93 | in the dock's face plate |
+
+**The Pirani sits on the pump side of the valve, not the chamber side.** With the valve open, as in every purge, it reads the
+chamber through 0.1 m of KF-25, which is the purge check it is for. A leak-up test with the valve shut would need it on the
+chamber side; a tee there pushes the 124 mm valve 76 mm or more through the guard's right panel (the guard was sized for the
+valve). The chamber-side option stays open for whoever next moves the valve.
+
+**The LED feedthrough is not drawn.** No chamber port may be added this round, and the only opening the LED bar's two leads could
+share is the vacuum port, on the chamber side of the isolation valve, which has the same problem: a KF-25 cross there moves the
+valve through the guard. **Move the LED bar outside**, behind the camera viewport or a window (electrical.md §0 point 9 already
+preferred that); the FA11643 KF16 feedthrough stays an optional line (E5).
+
+Checks of these parts: see §13.5.
+
+### 13.3 The rod end: a 48 × 20 mm feedthrough face
+
+The rod end is now a 316L block with the rod TIG-welded into its top and **seven weld-in feedthroughs welded into a 3 mm front
+(−y) wall**: Solid Sealing Technology 3 × FA11631 (Chromel) + 3 × FA11632 (Alumel) single-lead type K, Ø6.27 × 38 mm sleeves,
+in two rows of three at 9.5 mm pitch; and one FA10443 4-pin 16 A copper weld-in, Ø12.62 × 24 mm, beside them (2 pins per heater
+pole). The gas boundary at the rod end is now metal, glass/ceramic and welds, with no O-ring; the LEMO 1B envelope, its O-ring
+and its gland entry are gone. A pocket behind the face joins the rod bore by a 12 mm channel, 4 mm above the striker's pocket.
+
+**The face is 48 × 20 mm, not the ~30 mm square this note asked for, because the rod end cannot grow in height.** At the +8 mm
+plate-exchange overtravel the old cap's top was 3 mm under the gland plate, the module's handle bottom is 2 mm above the new
+block's front (y < −28) at that height, and on the module's way out (MODULE_PATH) the striker clears the guard's bottom rail by 3
+mm, so nothing may hang below the striker either; below it is also the Z arm. So the block keeps to z = zc + 1 to zc + 21 (zc =
+the striker's underside) and widens instead: x ±24, with 2.3-3.6 mm between sleeves and to the edges. **Check weld access with
+Solid Sealing before machining it.** The sleeves stand 21-35 mm proud toward the front, in the base plate's slot (x ±56), so
+they also pass at the bottom of the stroke and on the way out; their plugs (SMPW-K, M12) come off at a module swap.
+
+### 13.4 The thermal cutoff: dropped
+
+The RT240's 205 °C holding temperature is below S25's 216-221 °C running block and the 225 °C block cap. A replacement needs a
+holding temperature ≥ 225 °C **and** a 24 V DC rating for 4.2 / 6.2 / 10.4 A. The best found (research notes, 22:31-22:49Z):
+
+| Cutoff | Tf / Th (°C) | DC rating | Verdict |
+|---|---|---|---|
+| Cantherm RT240 (the old part) | 240 / 205 | – | holds below the running block |
+| Therm-O-Disc Microtemp G4, 257 °C | 257 / 220 | 5 A at 24 V DC | 5 K short on holding, and too small for M50 and L75 |
+| Cantherm SDF DF280S | 280 / 230 | AC ratings only (250 V 10 A); UL, VDE, CCC "applied for" | holds, but no DC rating and no listing |
+| ATC Semitec PEPI H-8 (bimetal one-shot, 250-280 °C) | – | 10 A at 250 V AC (2013 news item) | may not be made any more |
+
+**So it is dropped** ([`heater_loop.md`](analysis/out/electrical/heater_loop.md) §4-5, re-run): with an SSR failing shorted,
+the latching limit (CN708 on its own thermocouple, K2) trips after **6 s on S25 with the plate at 209-211 °C** (the block peaks
+at 245 °C), **35-40 s on M50 (plate 223-224 °C) and 48-51 s on L75 (plate 227 °C)**, the seals unchanged. The PLC's
+over-temperature on the control and edge thermocouples (K1 through the safety controller, the diverse input the interlock check
+added in §4) reads thermocouples in the same block with the same lag, so it is a second channel with the same numbers; the
+interlock check's 49 single faults already include the CN708 failing. The cases with both channels failed show what each
+cutoff would have added: the RT240 opens first on S25 in normal fault handling (4-5 s, the nuisance a one-shot part makes); a
+257 °C part opens after 10 s on S25 (plate 216-217 °C) and 68-96 s on M50/L75 (plate 244-248 °C); a 280 °C part after
+20-152 s with the plate at 232-271 °C. The model has no cutoff part or pocket now (its place, kept in `block_layout()` as
+`tco`, is free); bom.csv H1 drops the six RT240s ($6.36). `module_params.TCO_A` (240 °C), which thermal_module.py still
+reports blocks against, is not changed here.
+
+### 13.5 Checks
+
+- **Interference:** a targeted exact check (`/tmp` script: every new or changed part against every other part, OpenCascade
+  booleans, in 22 states: piston at both ends, Z released, recoater at both ends and mid-way, guard door open and half-way,
+  chamber door open, and 12 points along the module's swap path) found **no new interference in M50, S25 or L75**; the only
+  contacts are the designed ones now listed in `interference.py`'s JOINTS (the magnet in the carriage block, the tee on the
+  valve and the hose, the tee through the guard panel where the hose went, sensors in their clamps, and so on). The full sweeps:
+  SWEEP_RESULTS
+- **I/O list** ([`io_check.md`](analysis/out/electrical/io_check.md)): 95 devices and signals; **30 not drawn (was 37)**, 16 with
+  no bom.csv line (was 20). Channel counts are unchanged. **interlock_logic.py was not re-run:** no input changed (the cutoff
+  was never one of its inputs; the guard-position switch and the E-stops were already).
+- **Electrical BOM** ([`electrical-bom.csv`](electrical-bom.csv), [`bom_summary.md`](analysis/out/electrical/bom_summary.md)):
+  102 lines, **$11,845.92** ($1,610.01 estimates, $1,570.99 optional). bom.csv rows changed: **E1 $925.00 → $914.00** (Q3 2P D10,
+  no overload relay), **E3 $200.00 → $517.00** (real sensors and mounts), **C6 $814.90 → $794.90** (PB2 a Hammond 1554JGY),
+  **H1 −$6.36** (no cutoffs), **G7 +$201.35** (the Pirani tee, reducer and clamps): **+$480.99** on the machine. bom_build.py's
+  "proposed rows" table now compares against a bom.csv that already has the 2026-11-22 changes, so its C1, S3, S4, A1, A3 and
+  H1-high deltas count those twice; only the five rows above were changed in bom.csv.
+- **Mass:** MASS_RESULTS
+
+Not done: cable routes; a test of the magnetic sensors through the back wall; the tee's and the E-stop enclosures' catalogue
+drawings (envelopes from nominal sizes); McMaster prices for the tee and reducer (estimates from other vendors); the PB1 tray
+holes.
