@@ -13,12 +13,13 @@ Drawn here (every part tagged "automation"):
      to 95 deg and closes it, at a speed its flow controls set (the robot can pull the door open, but no arm path lifts it shut
      from 95 deg past the guard's frame: analysis/robot/ops.py). A one-way damper in the same place is the passive alternative,
      if a person closes the door;
-  3. a compact air cylinder under each draw latch that throws the latch's lever, so the over-centre draw latches (3.56 kN
-     rated, set to >= 0.4 kN) close and open without a hand; the robot only lifts the door to its balance point;
+  3. a compact air cylinder above each draw latch that throws the latch's lever, so the over-centre draw latches (3.56 kN
+     rated, set to >= 0.4 kN) close and open without a hand; since 2026-11-23 the latches and their cylinders ride on brackets
+     on the door's ears (lpbf_low section 8), so they move with the door;
   4. wing heads on the cover-slide drawer's two quarter-turn latch studs, so the gripper's fingers drive the wings and the
      wrist turns them 90 deg (no screwdriver, no grip-friction torque);
   5. a grip fin on the front end of the recoater's blade holder (the blade cartridge), for the plate fingers' lips;
-  6. a pull tab on each side wall liner, standing 12 mm off the sheet, for the plate fingers' lips;
+  6. a pull tab on each side wall liner, standing 12 mm off the sheet, for the plate fingers' lips (one part per liner);
   7. two AprilTag (tag36h11) plates on the laser guard's front-left post, for the wrist camera's re-registration after each
      MiR250 docking and VLM move (byu-vcl PR 318 docks at AprilTag targets with the same D405 camera).
 """
