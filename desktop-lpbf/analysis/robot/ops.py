@@ -886,6 +886,7 @@ def job_overflow(cell: Cell, skip_note="", arm_x=100.0, lift=60.0, **kw):
     clamp = cell.names("Overflow clamp")
     j.machine("toggle clamp off (lever pushed, clamp lifted off forward; not simulated)", 4.0,
               state_fn=lambda s: (None, {n: C.Tm(None, (0.0, 0.0, -3000.0)) for n in clamp}), n=2)
+    j.sc.set_state(j.state, j.ov)                         # the planner sees the clamp gone too
     al = allow_of(jar)
     R = R_of((0, 1, 0), (1, 0, 0))
     p = np.array([100.0, 0.0, -100.0])                  # pads at z -111 to -89 on the Ø50.8 cup (z -129 to -91); the sensor is at -127 to -115

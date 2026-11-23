@@ -566,9 +566,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add("Overflow clamp (KF-40 toggle, MKS 100318805; lever to the front)", place(kf40_toggle_clamp(), (ox, 0, zj), (0, 1, 0), (0, 0, 1)),
         C["alu_dark"], 4, (0, 0, -260), mat="al6061", bom="G7", mcm="KF40_TOGGLE", section=True)
     # inductive M12 (as before) now 2 mm from the cup's side, low on it (z -121), so the 2F-85's pads (z -111 to -89) pass above it;
-    # its 6 mm bracket bolts to the right-hand leg's front face (2 x M4, joints.py)
+    # its 6 mm bracket bolts to the right-hand leg's front face (2 x M4, joints.py); the foot rises above the sensor (z -113 to -95) at
+    # x >= 144, so a key reaches its screws from the front over the sensor and the gripper's right finger (x <= ~141) clears it
     add("Overflow-jar present sensor (inductive M12, PNP)", cyl(6.0, (ox + 27.4, 0, zj - 37.0), "x", 30.0), C["blue"], 4, (120, 0, 0), mat="misc", mass_kg=0.02, bom="A1")
-    sb = fuse([box(138.0, 144.0, -10.0, 26.0, zj - 45.0, zj - 29.0), box(138.0, 156.0, 20.0, 26.0, zj - 45.0, zj - 29.0)]).cut(cyl(6.0, (130.0, 0, zj - 37.0), "x", 20.0))
+    sb = fuse([box(138.0, 144.0, -10.0, 26.0, zj - 45.0, zj - 29.0), box(144.0, 156.0, 20.0, 26.0, zj - 45.0, zj - 11.0)]).cut(cyl(6.0, (130.0, 0, zj - 37.0), "x", 20.0))
     add("Overflow-jar sensor bracket (6061, 6 mm, on the right-hand leg)", sb, C["alu"], 4, (120, 0, 0), mat="al6061", bom="A1")
 
     # ===================== 5. Chamber body: through-frame + bolted floor plate (FRAME, chamber-construction.md) =====================

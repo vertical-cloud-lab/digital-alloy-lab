@@ -266,11 +266,14 @@ make the groove and the lips 45° V-shapes (patch request), which centre over ±
 
 ## Patch requests (parts other sections draw)
 
-1. **Build module joint** (modules_low.py; **not drawn, 2026-11-22**: no straddling place for two Ø88 modules under the floor until
-   the overflow jar moves, hot-swap.md §3.2a): the robot can't turn the two captive M6 thumb screws. Two SCHUNK NSE-HT mini 88-20
-   zero-point modules (0.5 kN pull-down, 2.5 kN with turbo, rated 200 °C, Ø88 × 20; $2,680 each, MROSupply) on flange arms, or a
-   twist-lock ring with ramps (about 29 N at the handle for a 13° ramp). The overflow funnel (x 78–122 under the floor) has to make
-   room on the right.
+1. **Build module joint** (modules_low.py; **still not drawn, 2026-11-23 (round 5)**): the robot can't turn the two captive M6 thumb
+   screws. The overflow jar now has its lane to the front (request 6), but it has to stay under the funnel at x = 100, and with it
+   there the right-hand SCHUNK NSE-HT mini 88-20 has no place: in front of the jar it blocks the lane, behind it is the Z servo
+   (x 34.5–93.5, y 27.7–109.5, z −187 to −84). [`hot-swap.md`](hot-swap.md) §3.2a lists the four moves it would take: fold the Z
+   servo to the back, move the jar to the slot's front end, modules at (+100, +30) and (−100, −30), and re-route the outlet hose.
+   The pins would be VERO-S SPC mini 20 (clamping only, with centring clearance), since the dowel and diamond pin keep locating the
+   module. Two modules would pull 2 × 500 N (2 × 2,500 N with turbo), 4.6× (23×) the worst separating load. $2,680 each
+   (MROSupply, re-checked 2026-11-23). Until then a person releases the two screws.
 2. **Module handle** (**drawn 2026-11-22**: the I-section grip block, round 4): a hook the fingers close under (form closure), for
    the 106 N pull and 158 N push.
 3. **Plate drawbar** (modules_low.py, hot-swap.md): pull stud in the plate, Jergens 16 mm ball lock (49607 + 49517, $178), disc
@@ -278,10 +281,16 @@ make the groove and the lips 45° V-shapes (patch request), which centre over ±
    60°, lugs in their slots, as a stand-in.
 4. **Plate rim groove and lips as 45° V-shapes**, for ±1.5 mm vertical capture.
 5. **Blade cartridge** (section 6): two Ø3 dowels and two ball plungers (85015A47, as the reservoir) instead of the 2 × M3 screws.
-6. **Overflow jar** (sections 4 and 11): as drawn it has no way out. In front of it are the outlet plenum's KF-25 port and hose
-   (x 66–106, y −110 to −70, z −117 to −91) and the front-right leg (x 120–150). The gripper reaching in also meets the guard's
-   bottom front rail. Re-route the outlet hose, or move the jar to a port reachable from the front, then fit an MKS 100318805
-   toggle KF-40 clamp ($23.34).
+6. **Overflow jar** (sections 3, 4, 5 and 11; **drawn 2026-11-23, round 5**: see "Round 5" below). The jar stays under the funnel
+   and gets a straight lane to the front:
+   - its KF-40 joint is 26 mm lower (z −84), on a 42 mm weld stub;
+   - it is a 45 mm long 2 in. 316L cup (~68 cm³, was ~120 cm³);
+   - the outlet plenum's boot and KF-25 port moved to the plenum's left end, and their hose runs back under the left side;
+   - the front-right leg moved to the right side (x 128–156, y 26–56);
+   - the jar sensor sits 2 mm from the cup on a bracket on that leg.
+
+   The clamp is an **MKS 100318805** toggle clamp, NW40, aluminium, lever to the front: $23.34 (mks.com, read 2026-11-23). Its A, B and
+   C (123.7 × 83.6 × 19.05 mm) are drawn; its ring section is assumed.
 7. **Liners** (section 5): both side liners are threaded on the recoater's ball screw (Ø22 holes at y 72, z 40), the LED bar
    (x 134–139) stands in front of the right liner, and the back liner is 2.4 mm behind the carriage block. Slot the screw holes to
    the back edge and shorten the liners 15 mm at the front, mount the LED bar on the lid or cut the liner round it, and split the

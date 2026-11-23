@@ -478,7 +478,7 @@ def add_joints(h, parts, add, module="M50"):
     _KEY[0] = "jar_sensor"
     pn410 = find("shcs", 4, 10)
     zj_ = zf - 22.0 - 42.0
-    items = [((150.0, 20.0, zj_ + dz), (0.0, 1.0, 0.0)) for dz in (-33.0, -41.0)]
+    items = [((150.0, 20.0, zj_ + dz), (0.0, 1.0, 0.0)) for dz in (-15.0, -23.0)]       # z -99 and -107: above the sensor (top -115)
     cut_parts(parts, "Overflow-jar sensor bracket", [hole(p, n, -0.01, 6.01, CLEAR[4]) for p, n in items])
     cut_parts(parts, "Chamber legs", [hole(p, n, 5.99, 12.0, 4.0) for p, n in items])
     add_fasteners(h, add, "jar_sensor", "Jar-sensor bracket screws, M4 x 10 316, into the right-hand leg", pn410, items, 4, "A1", explode=(120, 0, 0))
