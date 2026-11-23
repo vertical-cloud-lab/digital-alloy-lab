@@ -41,10 +41,12 @@ Frame setup C beyond the door opening is still not programmed, and CAMotics has 
   stock the earlier setups left, seen from its own side. As the flutes pass, each column is cut down to the lowest tool
   tip over it. The stock is held on a 0.5 mm grid:
   - a voxel grid in the part frame between setups;
-  - within a setup, a top-surface height map that also knows where the topmost layer of material ends. That way the
-    floor plate's 2.2 mm web, standing over the air that setup A cut, empties its column when B faces it off.
+  - within a setup, a top-surface height map that also knows where the topmost layer of material ends. That way a
+    layer standing over air empties its column when it is faced off. The floor plate's 2.2 mm web in the first plan
+    was such a layer.
 
-  At the end, this chained stock agrees with CAMotics' own chained result on the same grid. For the frame, this check
+  At the end, this chained stock agrees with CAMotics' chained result on the same grid. CAMotics ran the pre-fix
+  programs, which leave the same part. For the frame, this check
   has 0.07 cm³ that CAMotics doesn't and CAMotics 0.03 cm³ that it doesn't, out of 1626 cm³. For the floor plate it is
   0.89 and 0.04 cm³ out of 1117 cm³ (`stock_vs_camotics` in the JSON).
 - **Why a height map is enough.** Every setup here has the tool vertical, and the assembly only gets wider going up. So
