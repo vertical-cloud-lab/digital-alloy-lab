@@ -895,7 +895,7 @@ def case6(parts, R):
                        label="|u| (normalised)", scale=nice(40.0 / mag.max()), zoom=1.2, cmap="viridis")
                 res["png"] = png
         res["modes"] = shapes
-        out.append(dict(variant=variant, nodes=len(m["ntags"]), elements=len(m["tets"]), **res))
+        out.append(dict(variant=variant, nodes=len(m["ntags"]), elements=len(m["tets"]), optics_kg=round(sum(q_[0] for q_ in masses.values()) * 1e3, 2), **res))
         stamp(out[-1], m, f"{sol} (gravity), SPOOLES (modes)", mesh=dict(hmax=hmax, hmin=hmin, per_circle=curv))
         print(f"  case 6 {variant}: f = {[round(x, 1) for x in f]} Hz; gravity sag at lens {res['gravity']['lens_bore_sag_um']:.1f} um")
     r = dict(case="6 optics bridge + posts", material=AL["label"],
@@ -983,7 +983,7 @@ def write_md(R):
     if "6" in R:
         for v in R["6"]["variants"]:
             f = [x["f_hz"] for x in v["modes"]]
-            L.append(f"| 6 Optics bridge + posts ({v['variant']}) | 6061-T6 | gravity + 4.8 kg of optics | {v['gravity']['vm_max']:.1f} | "
+            L.append(f"| 6 Optics bridge + posts ({v['variant']}) | 6061-T6 | gravity + {v.get("optics_kg", 4.8):.1f} kg of optics | {v['gravity']['vm_max']:.1f} | "
                      f"lens bore sag {abs(v['gravity']['lens_bore_sag_um']):.1f} µm; f1–f6 = {', '.join(f'{x:.0f}' for x in f)} Hz | f1 > 100 Hz | {'pass' if f[0] > 100 else 'FAIL'} |")
     if "7" in R:
         r = R["7"]

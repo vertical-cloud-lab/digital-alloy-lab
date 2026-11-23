@@ -12,8 +12,8 @@ Peak stresses at sharp re-entrant edges of the CAD (pocket floors, box-cut slots
 | 4 Recoater block + arm + blade holder (first layout) | 6061-T6 | 10 N up + 10 N drag; 50 N hit | spread 13.1; hit 75.1 at (-112, 33, 14) | blade |uz| 28.1 µm (tip 28.1), |ux| 23.5 µm; over the plate Δuz 15.7 µm; hit |uz| 1 µm | < 5 µm spreading, no yield in a hit | FAIL (hit SF 3.7) |
 | 4 Recoater block + arm + blade holder (as built in lpbf_low.py) | 6061-T6 | 10 N up + 10 N drag; 50 N hit | spread 2.1; hit 11.4 at (-97, 53, 33) | blade |uz| 5.1 µm (tip 4.9), |ux| 2.9 µm; over the plate Δuz 2.4 µm; hit |uz| 0 µm | < 5 µm spreading, no yield in a hit | FAIL (hit SF 24.1) |
 | 5 Z lift arm, as built in lpbf_low.py | 6061-T6 | 50 N down + 10 N side | 2.8 at (24, 55, -153) | rod (0.1, 0.5, -5.5) µm | plate tilt < 10 µm over Ø50 | tilt 7.0 µm: pass |
-| 6 Optics bridge + posts (first layout: 15 mm plate, 40x40x4 posts) | 6061-T6 | gravity + 4.8 kg of optics | 1.7 | lens bore sag 13.2 µm; f1–f6 = 79, 87, 141, 154, 321, 397 Hz | f1 > 100 Hz | FAIL |
-| 6 Optics bridge + posts (as built in lpbf_low.py) | 6061-T6 | gravity + 4.8 kg of optics | 0.9 | lens bore sag 4.4 µm; f1–f6 = 134, 150, 235, 253, 488, 536 Hz | f1 > 100 Hz | pass |
+| 6 Optics bridge + posts (first layout: 15 mm plate, 40x40x4 posts) | 6061-T6 | gravity + 6.9 kg of optics | 2.1 | lens bore sag 15.7 µm; f1–f6 = 74, 80, 130, 146, 314, 414 Hz | f1 > 100 Hz | FAIL |
+| 6 Optics bridge + posts (as built in lpbf_low.py) | 6061-T6 | gravity + 6.9 kg of optics | 1.1 | lens bore sag 5.0 µm; f1–f6 = 128, 141, 226, 240, 487, 536 Hz | f1 > 100 Hz | pass |
 | 7 Window Ø50.8 × 8 | UV fused silica | 1 atm, simply supported Ø48 | max principal 1.18 (Roark 1.08) | 0.74 µm | SF ≥ 6 vs 52.4 MPa | SF 45 (formula 46); 2.4 mm would do at SF 4, 2.9 mm at SF 6: pass |
 
 ## 1f Floor-plate bolted joint (Shigley) and floor gland (Parker), as built in lpbf_low.py
@@ -43,8 +43,8 @@ Since 2026-11-22 every case records when it ran, on which commit of the model, i
 | 4 (as built in lpbf_low.py) | 2026-11-22 06:45 | 9f45d80 | 300,172 | ITERATIVE CHOLESKY |
 | 4 (first layout) | 2026-11-22 06:33 | 9f45d80 | 114,961 | ITERATIVE CHOLESKY |
 | 5 | before 2026-11-22 (not recorded) | – | 16,985 | SPOOLES |
-| 6 (as built in lpbf_low.py) | 2026-11-22 06:04 | 9f45d80 | 131,318, hmax 10 mm | SPOOLES (gravity), SPOOLES (modes) |
-| 6 (first layout: 15 mm plate, 40x40x4 posts) | 2026-11-22 06:01 | 9f45d80 | 63,484, hmax 10 mm | SPOOLES (gravity), SPOOLES (modes) |
+| 6 (as built in lpbf_low.py) | 2026-11-23 23:08 | ca392b5+dirty | 133,809, hmax 10 mm | SPOOLES (gravity), SPOOLES (modes) |
+| 6 (first layout: 15 mm plate, 40x40x4 posts) | 2026-11-23 23:03 | ca392b5 | 64,271, hmax 10 mm | SPOOLES (gravity), SPOOLES (modes) |
 | 7 | before 2026-11-22 (not recorded) | – | 16,253 | SPOOLES |
 
 ### Checks of the solver and mesh settings
@@ -61,15 +61,15 @@ Since 2026-11-22 every case records when it ran, on which commit of the model, i
 - Bridge (case 6b): modes 1–4 unchanged within 1 % (133 → 134, 148 → 150, 235 → 235, 254 → 253 Hz). Modes 5–6 dropped from 499 to 488 Hz and from 573 to 536 Hz. The posts have gained welded end caps and M6 screw holes since the old run. The coarser mesh raises 6a's modes 5–6 by 0.6 %, so the drop is not the mesh. Lens bore sag 4.3 → 4.4 µm.
 
 Mode shapes (case 6): direction of the galvo's centre of mass in each mode, and where the largest motion is.
-- first layout: 15 mm plate, 40x40x4 posts, mode 1: 79 Hz; galvo translates along [-1.0, -0.03, -0.04] at 0.92 of the peak motion (tilt x 100 mm: 0.09); peak at [-116.0, -170.0, 233.0]
-- first layout: 15 mm plate, 40x40x4 posts, mode 2: 87 Hz; galvo translates along [0.03, -1.0, -0.01] at 0.99 of the peak motion (tilt x 100 mm: 0.02); peak at [-64.0, -170.0, 233.0]
-- first layout: 15 mm plate, 40x40x4 posts, mode 3: 141 Hz; galvo translates along [0.05, 0.04, 1.0] at 0.66 of the peak motion (tilt x 100 mm: 0.31); peak at [-64.0, -170.0, 233.0]
-- first layout: 15 mm plate, 40x40x4 posts, mode 4: 154 Hz; galvo translates along [-0.05, 0.92, -0.4] at 0.21 of the peak motion (tilt x 100 mm: 0.07); peak at [225.0, 170.0, 233.0]
-- first layout: 15 mm plate, 40x40x4 posts, mode 5: 321 Hz; galvo translates along [-0.2, -0.09, 0.98] at 0.26 of the peak motion (tilt x 100 mm: 0.43); peak at [-64.0, -170.0, 218.0]
-- first layout: 15 mm plate, 40x40x4 posts, mode 6: 397 Hz; galvo translates along [0.08, -0.49, -0.87] at 0.11 of the peak motion (tilt x 100 mm: 0.50); peak at [-25.0, 170.0, 218.0]
-- as built in lpbf_low.py, mode 1: 134 Hz; galvo translates along [-1.0, -0.03, -0.08] at 0.88 of the peak motion (tilt x 100 mm: 0.09); peak at [-118.0, -190.0, 233.0]
-- as built in lpbf_low.py, mode 2: 150 Hz; galvo translates along [-0.05, 1.0, -0.01] at 0.97 of the peak motion (tilt x 100 mm: 0.02); peak at [-62.0, -190.0, 233.0]
-- as built in lpbf_low.py, mode 3: 235 Hz; galvo translates along [0.0, -0.65, -0.76] at 0.28 of the peak motion (tilt x 100 mm: 0.13); peak at [245.0, -190.0, 233.0]
-- as built in lpbf_low.py, mode 4: 253 Hz; galvo translates along [0.08, -0.06, 1.0] at 0.67 of the peak motion (tilt x 100 mm: 0.30); peak at [-62.0, -190.0, 208.0]
-- as built in lpbf_low.py, mode 5: 488 Hz; galvo translates along [0.47, -0.22, -0.86] at 0.24 of the peak motion (tilt x 100 mm: 0.35); peak at [-62.0, -190.0, 208.0]
-- as built in lpbf_low.py, mode 6: 536 Hz; galvo translates along [0.83, -0.56, -0.0] at 0.22 of the peak motion (tilt x 100 mm: 0.33); peak at [-62.0, -190.0, 208.0]
+- first layout: 15 mm plate, 40x40x4 posts, mode 1: 74 Hz; galvo translates along [-1.0, 0.02, -0.07] at 0.95 of the peak motion (tilt x 100 mm: 0.06); peak at [-116.0, -170.0, 236.0]
+- first layout: 15 mm plate, 40x40x4 posts, mode 2: 80 Hz; galvo translates along [0.01, 1.0, 0.01] at 0.99 of the peak motion (tilt x 100 mm: 0.02); peak at [215.0, 170.0, 236.0]
+- first layout: 15 mm plate, 40x40x4 posts, mode 3: 130 Hz; galvo translates along [0.0, 0.07, 1.0] at 0.59 of the peak motion (tilt x 100 mm: 0.32); peak at [-64.0, -170.0, 236.0]
+- first layout: 15 mm plate, 40x40x4 posts, mode 4: 146 Hz; galvo translates along [0.13, 0.91, -0.39] at 0.27 of the peak motion (tilt x 100 mm: 0.08); peak at [-345.0, -170.0, 236.0]
+- first layout: 15 mm plate, 40x40x4 posts, mode 5: 314 Hz; galvo translates along [0.12, 0.24, -0.96] at 0.30 of the peak motion (tilt x 100 mm: 0.47); peak at [-64.0, -170.0, 221.0]
+- first layout: 15 mm plate, 40x40x4 posts, mode 6: 414 Hz; galvo translates along [-0.06, -0.88, -0.46] at 0.07 of the peak motion (tilt x 100 mm: 0.32); peak at [-116.0, -170.0, 221.0]
+- as built in lpbf_low.py, mode 1: 128 Hz; galvo translates along [-1.0, 0.0, -0.1] at 0.92 of the peak motion (tilt x 100 mm: 0.07); peak at [-118.0, -190.0, 236.0]
+- as built in lpbf_low.py, mode 2: 141 Hz; galvo translates along [0.02, -1.0, 0.0] at 0.97 of the peak motion (tilt x 100 mm: 0.03); peak at [-62.0, -190.0, 236.0]
+- as built in lpbf_low.py, mode 3: 226 Hz; galvo translates along [-0.07, -0.55, -0.83] at 0.43 of the peak motion (tilt x 100 mm: 0.20); peak at [245.0, -190.0, 236.0]
+- as built in lpbf_low.py, mode 4: 240 Hz; galvo translates along [-0.04, 0.18, -0.98] at 0.62 of the peak motion (tilt x 100 mm: 0.31); peak at [-62.0, -190.0, 211.0]
+- as built in lpbf_low.py, mode 5: 487 Hz; galvo translates along [0.39, -0.02, -0.92] at 0.26 of the peak motion (tilt x 100 mm: 0.38); peak at [-62.0, -190.0, 211.0]
+- as built in lpbf_low.py, mode 6: 536 Hz; galvo translates along [0.9, -0.42, 0.12] at 0.24 of the peak motion (tilt x 100 mm: 0.26); peak at [-360.0, -190.0, 236.0]

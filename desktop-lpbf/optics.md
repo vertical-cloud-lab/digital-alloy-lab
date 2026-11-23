@@ -753,7 +753,7 @@ bom.csv L3 now says this. The termination question stands: IPG's quote says QBH-
 | `layer_camera.py` | 100 / 100 / 100 % of S25 / M50 / L75 seen (was 56 / 46 / 40) |
 | `thermal_lens.py` | not re-run: the glass, its heights and the focus height are unchanged. The f-theta's thermal lens sits 3.4 mm higher, which is negligible |
 | `optics_bom.py` | 39 rows; $23,863–25,317 without the laser (it was $24,467–25,688) |
-| FEA case 6b (bridge first mode) | FEA6_PLACEHOLDER |
+| FEA case 6b (bridge first mode) | **f1 = 128 Hz** (pass, > 100 Hz; was 134), f1–f6 = 128, 141, 226, 240, 487, 536 Hz; lens-bore sag 5.0 µm (was 4.4). With the vendor masses (galvo 3.75 kg + lens 0.8 kg, was 2.5 + 0.6), 6.9 kg of optics in all, and posts 3.4 mm longer |
 | Interference, exact (M50 / S25 / L75) | INTF_PLACEHOLDER |
 
 ### 8.7 Not done, and for other owners

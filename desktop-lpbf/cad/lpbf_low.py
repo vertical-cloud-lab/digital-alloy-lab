@@ -1007,7 +1007,9 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     coll = fuse([VP.ipg_collimator_d25().translate(V(xc_, yC, bz_)), box(xc_ - 90, xc_ - 20, yC - 20, yC + 20, zb1_, bz_ - 15)])
     add("Collimator (IPG affixed, 2.5 mm beam: 96 µm at f = 160; housing drawn as the 5 mm unit, 128 mm + 78 mm strain relief) on V-mount", coll, C["ss"], 9, (0, 0, 340), mat="misc", mass_kg=0.5, bom="L3")
     xe_ = xc_ - 206.0
-    fiber = polyline_pipe([(xe_, yC, bz_), (xe_ - 14, yC - 8, bz_ - 18), (-412, 60, 228), (-424, -60, 170), (-430, -150, 150), (-460, -220, 60),
+    # from the collimator line along the guard's left wall to the old route: its last six points are unchanged, so the cable below z 230 (past the
+    # guard bulkhead and into the rack) is the same curve as before (Catmull-Rom segments depend on their two neighbours)
+    fiber = polyline_pipe([(xe_, yC, bz_), (xe_ - 14, yC - 8, bz_ - 14), (-414, 40, 266), (-421, -32, 262), (-422, -40, 230), (-430, -150, 150), (-460, -220, 60),
                            (-560, -260, 0), (-600, -280, -20)], 5)
     add("Process fiber (armoured, ≥ 100 mm bend radius)", fiber, C["fiber"], 9, (0, 0, 300), mat="misc", mass_kg=0.6, bom="L1", module="rack")
     # calibration fixture (optics.md §4.1 and §8.4): a thin water-cooled 500 W head on a stand on the plate, aperture 95 mm above
