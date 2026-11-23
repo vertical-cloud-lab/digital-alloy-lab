@@ -317,8 +317,9 @@ before → after. Colours are measured sRGB hex values (linear RGB in `finishes.
     and module.
   - The 18 designed joints are unchanged.
   - The only gap changes are +0.02 mm, between the overflow clamp and the module on its swap path (0.50 → 0.52 mm).
-- **Exact interference sweeps, S25/S and L75/L:** see the round report. When this note was committed, both were waiting for
-  the shared heavy-job slots.
+- **Exact interference sweeps, S25/S (585 s) and L75/L (516 s):** **0 interferences** in all 5 static states and 8 motion
+  sweeps. S25 has 17 designed joints and L75 has 18, both unchanged. The only gap changes are the same +0.02 mm at the
+  overflow clamp.
 - **`vendor_parts.py inventory`:** 63 bought parts, 17 drawn as real parts.
 - **`vendor_parts.py verify`**, against the re-fetched McMaster CAD:
   - The volume deltas match the IoU table: clamps +5.6 / +1.7 %, valve −6.9 %, carriage +3.2 %, stepper +0.8 %.
