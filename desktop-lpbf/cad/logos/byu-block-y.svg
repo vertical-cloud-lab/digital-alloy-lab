@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- BYU block Y (BYU navy #1e3158), the official outline only: the navy polygon of BYU's brand-guide figure
+     https://brightspotcdn.byu.edu/fa/1b/f3f3e9574e698995e2fb8c720c5f/block-y-usage.svg (on https://brand.byu.edu/logos-marks,
+     fetched 2026-11-23, sha256 e711df1defc0d24d6f1d30eb557012b2d72b81145036b46ae34e873a1ba84633), translated to the origin, not
+     otherwise changed. The block-Y download (.zip) on that page needs a BYU sign-in. BYU's brand guidelines govern its use: the shape
+     must not be modified; navy, white or royal; clear space = the width of the top of the Y; minimum width 0.375 in. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80.2695 98.6168">
+  <polygon fill="#1e3158" points="46.8293,0.0000 46.8293,15.6062 52.4536,15.6062 40.1347,39.5669 27.8267,15.6062 33.4401,15.6062 33.4401,0.0000 0.0000,0.0000 0.0000,15.8573 6.4434,15.8573 28.9297,56.6801 28.9297,82.8360 21.8857,82.8360 21.8857,98.6168 58.3837,98.6168 58.3837,82.8360 51.3506,82.8360 51.3506,56.6801 73.8261,15.8573 80.2695,15.8573 80.2695,0.0000 46.8293,0.0000"/>
+</svg>

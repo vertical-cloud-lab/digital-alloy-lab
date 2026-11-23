@@ -1,0 +1,838 @@
+[
+ {
+  "key": "clearpath_sd_231x",
+  "vendor_part": "Teknic CPM-SDSK-231x (-Q STEP)",
+  "call": "clearpath_sd_231x()",
+  "tess_tol_mm": 0.105,
+  "iou": 0.6613,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 271603.9,
+  "vendor_mm3": 201746.0,
+  "inter_mm3": 188415.6,
+  "dvol_pct": 34.6,
+  "ours_ext": [
+   59.1,
+   81.85,
+   105.38
+  ],
+  "vendor_ext": [
+   59.69,
+   81.98,
+   105.7
+  ],
+  "dext_max_mm": 0.59,
+  "rotation_index": 11,
+  "icp_kept": false,
+  "transform": [
+   [
+    0.0,
+    -1.0,
+    0.0,
+    0.0
+   ],
+   [
+    -1.0,
+    0.0,
+    0.0,
+    0.2302
+   ],
+   [
+    0.0,
+    0.0,
+    -1.0,
+    -56.1708
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 0.867,
+   "rms": 1.394,
+   "p95": 3.313,
+   "max": 8.581
+  },
+  "vendor_to_ours": {
+   "mean": 2.544,
+   "rms": 4.856,
+   "p95": 12.048,
+   "max": 23.806
+  },
+  "sym_mean_mm": 1.706,
+  "sym_p95_mm": 12.048,
+  "hausdorff_mm": 23.806,
+  "vendor_info": {
+   "solids": 1,
+   "non_manifold_solids_dropped": 0,
+   "note": "",
+   "load_s": 285.7,
+   "sha256_16": "7d8e484aba2471c8"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 263.2
+ },
+ {
+  "key": "mcm_6627T91",
+  "vendor_part": "McMaster 6627T91",
+  "call": "mcm_6627T91()",
+  "tess_tol_mm": 0.074,
+  "iou": 0.9821,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 82145.0,
+  "vendor_mm3": 81502.3,
+  "inter_mm3": 81085.0,
+  "dvol_pct": 0.8,
+  "ours_ext": [
+   42.3,
+   43.11,
+   74.0
+  ],
+  "vendor_ext": [
+   42.4,
+   43.16,
+   74.04
+  ],
+  "dext_max_mm": 0.1,
+  "rotation_index": 0,
+  "icp_kept": false,
+  "transform": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.024
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -11.0
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 0.075,
+   "rms": 0.185,
+   "p95": 0.436,
+   "max": 1.442
+  },
+  "vendor_to_ours": {
+   "mean": 1.3,
+   "rms": 4.049,
+   "p95": 11.433,
+   "max": 19.168
+  },
+  "sym_mean_mm": 0.688,
+  "sym_p95_mm": 11.433,
+  "hausdorff_mm": 19.168,
+  "vendor_info": {
+   "solids": 8,
+   "non_manifold_solids_dropped": 0,
+   "note": "",
+   "load_s": 14.6,
+   "sha256_16": "7e20c8399c8770c7"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 22.5
+ },
+ {
+  "key": "mcm_6709K12",
+  "vendor_part": "McMaster 6709K12",
+  "call": "mcm_6709K12()",
+  "tess_tol_mm": 0.062,
+  "iou": 0.8344,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 31675.8,
+  "vendor_mm3": 30615.2,
+  "inter_mm3": 28333.0,
+  "dvol_pct": 3.5,
+  "ours_ext": [
+   23.3,
+   34.0,
+   62.1
+  ],
+  "vendor_ext": [
+   23.3,
+   34.0,
+   62.1
+  ],
+  "dext_max_mm": 0.0,
+  "rotation_index": 16,
+  "icp_kept": false,
+  "transform": [
+   [
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    14.0
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 0.497,
+   "rms": 0.78,
+   "p95": 2.0,
+   "max": 2.742
+  },
+  "vendor_to_ours": {
+   "mean": 0.764,
+   "rms": 1.112,
+   "p95": 2.561,
+   "max": 4.042
+  },
+  "sym_mean_mm": 0.631,
+  "sym_p95_mm": 2.561,
+  "hausdorff_mm": 4.042,
+  "vendor_info": {
+   "solids": 25,
+   "non_manifold_solids_dropped": 0,
+   "note": "",
+   "load_s": 19.8,
+   "sha256_16": "17a17095110edf12"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 35.5
+ },
+ {
+  "key": "mcm_4566N401",
+  "vendor_part": "McMaster 4566N401",
+  "call": "mcm_4566N401()",
+  "tess_tol_mm": 0.043,
+  "iou": 0.8408,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 18743.2,
+  "vendor_mm3": 18624.8,
+  "inter_mm3": 17068.6,
+  "dvol_pct": 0.6,
+  "ours_ext": [
+   30.0,
+   39.95,
+   43.0
+  ],
+  "vendor_ext": [
+   30.0,
+   39.95,
+   43.0
+  ],
+  "dext_max_mm": 0.0,
+  "rotation_index": 0,
+  "icp_kept": false,
+  "transform": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 0.27,
+   "rms": 0.438,
+   "p95": 0.885,
+   "max": 2.738
+  },
+  "vendor_to_ours": {
+   "mean": 0.537,
+   "rms": 0.882,
+   "p95": 1.803,
+   "max": 4.956
+  },
+  "sym_mean_mm": 0.404,
+  "sym_p95_mm": 1.803,
+  "hausdorff_mm": 4.956,
+  "vendor_info": {
+   "solids": 4,
+   "non_manifold_solids_dropped": 0,
+   "note": "",
+   "load_s": 3.7,
+   "sha256_16": "f4765dc6844286f4"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 45.6
+ },
+ {
+  "key": "mcm_5786N23",
+  "vendor_part": "McMaster 5786N23",
+  "call": "kf_weld_stub(25)",
+  "tess_tol_mm": 0.04,
+  "iou": 0.9727,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 4047.0,
+  "vendor_mm3": 4051.7,
+  "inter_mm3": 3993.2,
+  "dvol_pct": -0.1,
+  "ours_ext": [
+   12.7,
+   39.86,
+   39.87
+  ],
+  "vendor_ext": [
+   12.7,
+   39.88,
+   39.88
+  ],
+  "dext_max_mm": 0.02,
+  "rotation_index": 2,
+  "icp_kept": false,
+  "transform": [
+   [
+    -1.0,
+    0.0,
+    0.0,
+    0.0124
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    -1.0,
+    -6.35
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 0.036,
+   "rms": 0.107,
+   "p95": 0.31,
+   "max": 0.732
+  },
+  "vendor_to_ours": {
+   "mean": 0.027,
+   "rms": 0.081,
+   "p95": 0.269,
+   "max": 0.519
+  },
+  "sym_mean_mm": 0.032,
+  "sym_p95_mm": 0.31,
+  "hausdorff_mm": 0.732,
+  "vendor_info": {
+   "solids": 1,
+   "non_manifold_solids_dropped": 0,
+   "note": "",
+   "load_s": 0.5,
+   "sha256_16": "ff02ab013ef02b8b"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 5.5
+ },
+ {
+  "key": "mcm_5786N25",
+  "vendor_part": "McMaster 5786N25",
+  "call": "kf_weld_stub(40)",
+  "tess_tol_mm": 0.055,
+  "iou": 0.9694,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 8329.4,
+  "vendor_mm3": 8394.4,
+  "inter_mm3": 8232.2,
+  "dvol_pct": -0.8,
+  "ours_ext": [
+   19.05,
+   54.83,
+   54.84
+  ],
+  "vendor_ext": [
+   19.05,
+   54.86,
+   54.86
+  ],
+  "dext_max_mm": 0.03,
+  "rotation_index": 1,
+  "icp_kept": false,
+  "transform": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.017
+   ],
+   [
+    0.0,
+    -1.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    -1.0,
+    -9.525
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 0.041,
+   "rms": 0.111,
+   "p95": 0.31,
+   "max": 0.737
+  },
+  "vendor_to_ours": {
+   "mean": 0.032,
+   "rms": 0.086,
+   "p95": 0.31,
+   "max": 0.522
+  },
+  "sym_mean_mm": 0.037,
+  "sym_p95_mm": 0.31,
+  "hausdorff_mm": 0.737,
+  "vendor_info": {
+   "solids": 1,
+   "non_manifold_solids_dropped": 0,
+   "note": "",
+   "load_s": 0.4,
+   "sha256_16": "9c8c2dbce0432bf4"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 3.9
+ },
+ {
+  "key": "mcm_4518K72",
+  "vendor_part": "McMaster 4518K72",
+  "call": "kf_wing_clamp(25)",
+  "tess_tol_mm": 0.077,
+  "iou": 0.7064,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 20501.5,
+  "vendor_mm3": 19411.7,
+  "inter_mm3": 16522.5,
+  "dvol_pct": 5.6,
+  "ours_ext": [
+   17.0,
+   63.67,
+   77.15
+  ],
+  "vendor_ext": [
+   17.0,
+   63.7,
+   77.17
+  ],
+  "dext_max_mm": 0.03,
+  "rotation_index": 0,
+  "icp_kept": true,
+  "transform": [
+   [
+    0.9998,
+    -0.0187,
+    0.0004,
+    0.112
+   ],
+   [
+    0.0187,
+    0.9998,
+    0.0003,
+    0.2688
+   ],
+   [
+    -0.0004,
+    -0.0003,
+    1.0,
+    -0.0103
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 0.471,
+   "rms": 0.964,
+   "p95": 2.229,
+   "max": 6.91
+  },
+  "vendor_to_ours": {
+   "mean": 0.611,
+   "rms": 1.114,
+   "p95": 2.768,
+   "max": 6.143
+  },
+  "sym_mean_mm": 0.541,
+  "sym_p95_mm": 2.768,
+  "hausdorff_mm": 6.91,
+  "vendor_info": {
+   "solids": 6,
+   "non_manifold_solids_dropped": 0,
+   "note": "",
+   "load_s": 3.4,
+   "sha256_16": "911c4c3e4d8aa77c"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 16.9
+ },
+ {
+  "key": "mcm_4518K73",
+  "vendor_part": "McMaster 4518K73",
+  "call": "kf_wing_clamp(40)",
+  "tess_tol_mm": 0.093,
+  "iou": 0.7979,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 31327.1,
+  "vendor_mm3": 30780.9,
+  "inter_mm3": 27563.2,
+  "dvol_pct": 1.8,
+  "ours_ext": [
+   17.0,
+   71.57,
+   93.47
+  ],
+  "vendor_ext": [
+   17.0,
+   71.57,
+   93.47
+  ],
+  "dext_max_mm": 0.0,
+  "rotation_index": 0,
+  "icp_kept": true,
+  "transform": [
+   [
+    0.9997,
+    -0.0263,
+    0.0008,
+    -0.1701
+   ],
+   [
+    0.0263,
+    0.9997,
+    -0.001,
+    0.1198
+   ],
+   [
+    -0.0008,
+    0.001,
+    1.0,
+    -0.0132
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 0.354,
+   "rms": 0.775,
+   "p95": 1.87,
+   "max": 7.356
+  },
+  "vendor_to_ours": {
+   "mean": 0.559,
+   "rms": 1.12,
+   "p95": 2.84,
+   "max": 5.848
+  },
+  "sym_mean_mm": 0.457,
+  "sym_p95_mm": 2.84,
+  "hausdorff_mm": 7.356,
+  "vendor_info": {
+   "solids": 6,
+   "non_manifold_solids_dropped": 0,
+   "note": "",
+   "load_s": 2.7,
+   "sha256_16": "f1c8a156b130dbe6"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 13.7
+ },
+ {
+  "key": "mcm_4123K45",
+  "vendor_part": "McMaster 4123K45",
+  "call": "mcm_4123K45('-x')",
+  "tess_tol_mm": 0.2,
+  "iou": 0.8809,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 201046.7,
+  "vendor_mm3": 216084.4,
+  "inter_mm3": 195362.8,
+  "dvol_pct": -7.0,
+  "ours_ext": [
+   58.62,
+   121.0,
+   200.28
+  ],
+  "vendor_ext": [
+   60.45,
+   121.92,
+   200.28
+  ],
+  "dext_max_mm": 1.83,
+  "rotation_index": 16,
+  "icp_kept": true,
+  "transform": [
+   [
+    -0.0029,
+    0.0003,
+    1.0,
+    62.0782
+   ],
+   [
+    1.0,
+    0.003,
+    0.0029,
+    -0.0466
+   ],
+   [
+    -0.003,
+    1.0,
+    -0.0003,
+    -0.0577
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 0.399,
+   "rms": 0.763,
+   "p95": 1.636,
+   "max": 8.803
+  },
+  "vendor_to_ours": {
+   "mean": 0.605,
+   "rms": 1.197,
+   "p95": 2.72,
+   "max": 9.189
+  },
+  "sym_mean_mm": 0.502,
+  "sym_p95_mm": 2.72,
+  "hausdorff_mm": 9.189,
+  "vendor_info": {
+   "solids": 18,
+   "non_manifold_solids_dropped": 0,
+   "note": "",
+   "load_s": 10.9,
+   "sha256_16": "048676e30cbae662"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 21.4
+ },
+ {
+  "key": "mcm_3861N11",
+  "vendor_part": "McMaster 3861N11 (coiled lead dropped)",
+  "call": "mcm_3861N11()",
+  "tess_tol_mm": 0.086,
+  "iou": 0.2668,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 23941.2,
+  "vendor_mm3": 19480.4,
+  "inter_mm3": 9143.7,
+  "dvol_pct": 22.9,
+  "ours_ext": [
+   23.8,
+   27.0,
+   86.3
+  ],
+  "vendor_ext": [
+   27.0,
+   36.2,
+   172.83
+  ],
+  "dext_max_mm": 86.53,
+  "rotation_index": 19,
+  "icp_kept": true,
+  "transform": [
+   [
+    0.0205,
+    0.2009,
+    -0.9794,
+    1.9436
+   ],
+   [
+    -0.9998,
+    -0.0017,
+    -0.0213,
+    0.0176
+   ],
+   [
+    -0.006,
+    0.9796,
+    0.2008,
+    -2.1979
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 8.628,
+   "rms": 12.005,
+   "p95": 26.277,
+   "max": 39.289
+  },
+  "vendor_to_ours": {
+   "mean": 8.145,
+   "rms": 14.188,
+   "p95": 43.928,
+   "max": 69.32
+  },
+  "sym_mean_mm": 8.386,
+  "sym_p95_mm": 43.928,
+  "hausdorff_mm": 69.32,
+  "vendor_info": {
+   "solids": 12,
+   "non_manifold_solids_dropped": 0,
+   "note": "coiled lead solid dropped",
+   "load_s": 16.3,
+   "sha256_16": "b26f3a72c8835a16"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 23.7
+ },
+ {
+  "key": "mcm_5169K72",
+  "vendor_part": "McMaster 5169K72",
+  "call": "mcm_5169K72()",
+  "tess_tol_mm": 0.121,
+  "iou": 0.7455,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 652869.8,
+  "vendor_mm3": 499933.4,
+  "inter_mm3": 492361.7,
+  "dvol_pct": 30.6,
+  "ours_ext": [
+   92.1,
+   104.94,
+   121.2
+  ],
+  "vendor_ext": [
+   97.86,
+   104.9,
+   121.27
+  ],
+  "dext_max_mm": 5.76,
+  "rotation_index": 5,
+  "icp_kept": false,
+  "transform": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.0234
+   ],
+   [
+    0.0,
+    0.0,
+    -1.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    43.6011
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 4.207,
+   "rms": 5.376,
+   "p95": 10.868,
+   "max": 13.465
+  },
+  "vendor_to_ours": {
+   "mean": 3.968,
+   "rms": 4.955,
+   "p95": 10.581,
+   "max": 13.877
+  },
+  "sym_mean_mm": 4.088,
+  "sym_p95_mm": 10.868,
+  "hausdorff_mm": 13.877,
+  "vendor_info": {
+   "solids": 7,
+   "non_manifold_solids_dropped": 0,
+   "note": "",
+   "load_s": 11.8,
+   "sha256_16": "b2e98dcf424317b5"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 22.4
+ }
+]
