@@ -880,9 +880,13 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # forward, to y -100, puts a grip 35-65 mm in front of the tube: a hand pinches it there with the forearm over the optics bridge
     # (bridge top z 232.7), and the robot's reservoir fingers close on it as they did on the handle. Same plane (z 248..258) for S, M
     # and L; it rides out with the reservoir through the bridge's slot. Screwed to the handle fin (2 x M3, not drawn).
+    # over the M and L lids (half-length 37.2 / 56.2 > 30) the tab is a web above the lid's top and its two M3 heads (top + 3 mm)
+    tab = box(xd - 4, xd + 4, RES_TAB["y"][0], RES_TAB["y"][1], RES_TAB["z"][0], RES_TAB["z"][1])
+    oy_ = MP.RESERVOIRS[reservoir]["iy"] / 2 + 1.2
+    if oy_ > -RES_TAB["y"][1]:
+        tab = tab.cut(box(xd - 5, xd + 5, -oy_ - 1.0, RES_TAB["y"][1] + 1.0, RES_TAB["z"][0] - 1.0, _RES["frame_top"] + 4.0 + 3.6))
     add(f"Reservoir {reservoir} pull tab (6061, 8 mm fin, the lid's handle carried 70 mm forward, in front of the beam tube)",
-        box(xd - 4, xd + 4, RES_TAB["y"][0], RES_TAB["y"][1], RES_TAB["z"][0], RES_TAB["z"][1]), C["anod"], 7, (0, 0, 420), group="cartridge",
-        mat="al6061", bom="R1")
+        tab, C["anod"], 7, (0, 0, 420), group="cartridge", mat="al6061", bom="R1")
     add("Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)", box(xd + 17, xd + 30, -6, 6, lz1, zd), C["ss"], 7, (0, 0, 380), mat="steel", bom="M4", mcm="LOADCELL_SP")
     d = (V(0, 0, 0) - cam_p).normalized()
     up = d * -1

@@ -5,8 +5,10 @@ Written 2026-11-20 for [PR #266](https://github.com/vertical-cloud-lab/digital-a
 This note covers what a person does. Automated operations (the build loop, robot plate and reservoir handling) are
 covered separately. Nothing has been built or tried on a mock-up.
 
-> **Update 2026-11-23 (round 5, access fixes): U1.1 and M3.2 now pass; U2.2 and M8.4 see below.** Re-run of U1, U2, M3 and M8 on
-> M50 ([`results-M50-a2.md`](analysis/out/ops/results-M50-a2.md); the full run in `results-M50.md` is from round 4). What changed:
+> **Update 2026-11-23 (round 5, access fixes): U1.1, U2.2, M3.2 and M8.4 now pass.** U1, U2, M3 and M8 re-run on M50: 12 pass /
+> 0 warn / 3 fail, against 3 / 0 / 7 in round 4 ([`results-M50-a2.md`](analysis/out/ops/results-M50-a2.md); M3 is now six removal
+> steps instead of one; the full run in `results-M50.md` is from round 4 and was not repeated). The three fails left are M8.1-M8.3,
+> the recoater servo. What changed:
 > - **Reservoir pull tab (U1.1, passes).** The lid's 8 × 10 mm handle fin (z 248–258) ran under the enclosed beam tube
 >   (y −35.25 to −15.25, z 262.7–282.7). A 6061 tab now carries the same fin 70 mm forward, to y −100, at the same height for S, M
 >   and L. A hand pinches it 50–65 mm in front of the tube, with the forearm over the optics bridge (forearm bottom z 239.5, bridge
@@ -24,10 +26,21 @@ covered separately. Nothing has been built or tried on a mock-up.
 > - **Draw latches (U2.2).** Both 1807A61 latches sit on 6061 brackets bolted to the door's ears and point forward, so the levers
 >   are at y −207 with the door shut, in front of the front-right optics post (y −185 to −125). The strikes moved to the chamber's
 >   side faces (y −100 to −72). The pull is still straight back at the seal's centroid height (z 54), at x ±158. The ears now end at
->   x ±146 (were ±156). The latch cylinders ride on the brackets. U2.2: RESULT_U22
+>   x ±146 (were ±156). The latch cylinders ride on the brackets. **U2.2 passes**: the hand comes in from the front-left at 30° (approach
+>   (−0.5, −0.85, 0)), with the door shut and the guard door at its full 515 mm. At the 470 mm the operation used before, the guard
+>   door's left edge (x 140) is in front of the right latch, so a person opens it fully. U2.3 (left latch) passes from the front. The
+>   right latch clears the post by 2.25 mm; in the door sweep a bracket passes 2.15 mm from the closed guard door's window (55°).
 > - **Ferrotec feedthrough out to the front (M8.4).** With the left latch off the left side face, the unit and its coupling come
->   out 45 mm sideways (was 30), then forward. M8.4: RESULT_M84 M8.1-M8.3 (the servo against the front-left post and the
->   bridge) still fail, as before: those need the bridge changes.
+>   out 45 mm sideways (was 30), then forward. **M8.4 passes** (tightest 0.3 mm, to the ball screw). M8.1-M8.3 (the servo against
+>   the front-left post and the bridge) still fail, as before: those need the bridge changes.
+> - **Blade cartridge** (robot-ops.md patch 5): the holder sits in the arm's pocket on two Ø3 × 10 316 dowels (McMaster 93600A304)
+>   and is held by two M6 ball plungers (85015A47) in the pocket's walls, so it comes out with a 40 N pull and no screwdriver. M2 (the
+>   blade off the holder on the bench) is unchanged and was not re-run.
+> - **Locating pins** (assembly.md patch 9): two Ø3 × 10 dowels each on the inlet plenum, the vacuum-port adapter and the bearing
+>   cap, pressed into the frame's walls (six new Ø3 H7 holes in the frame: back wall at x ±71, z 13.25; right wall at y 0,
+>   z 47 / 93 and at y 56 / 88, z 40).
+>
+> **Still failing every build: only the overflow jar (U4.5, U4.7).**
 >
 > **Update 2026-11-22 (round 4): M50 now 82 pass / 2 warn / 37 fail** (was 81 / 2 / 40 on 9c67f44), re-run on the model with
 > the module's robot grip block and the 12U rack ([`results-M50.md`](analysis/out/ops/results-M50.md)). Three fails are gone:
@@ -209,13 +222,13 @@ Ranked by how often the job is done. Fixes have not yet been checked on the mode
 | # | Step | Fails because | Fix |
 |---|---|---|---|
 | 1 | U4.5, U4.7 overflow jar, **each build** | After the clamp comes off, the jar (x 73-127, z −150 to −58) can drop ≤ 10 mm before the base plate. Then it is blocked on every side: front, outlet plenum and its KF-25 port; right, jar sensor, then the guard; left, build module; back, Z stage and back legs. The front-right leg also overlaps its lane. | Give the jar a lane to the front: move the outlet port and hose to x < 60, move the front-right leg out (or use thinner posts), and use a jar ≤ 75 mm tall on a quarter-turn bayonet so it drops 20 mm and slides forward. Or use an overflow drawer. |
-| 2 | U2.2 right draw latch, **each build** | The latch (x 156-188, y −110 to −30) is directly behind the front-right optics post (x 180-240, y −185 to −125). No hand reaches it from the front or at an angle. | Mirror the latch to the chamber's front face, or move the post 40 mm outboard (re-run the bridge FEA). |
-| 3 | U1.1 reservoir handle, **each build or alloy** | The enclosed beam tube, now on the galvo's real axis, passes where the hand has to be to grip the handle (z 258) from the front. | Route the beam tube clear of the slot over the reservoir, or give the reservoir a pull tab at the front of its plate. |
-| 4 | M3.2 liners, **each alloy change** | The side liners have closed Ø22 holes round the ball screw. The back liner sits behind the carriage block. | Slots open to the top edge in the side liners; a two-piece back liner. |
+| 2 | U2.2 right draw latch, **each build** (**fixed 2026-11-23**: latches on brackets on the door, see the update at the top) | The latch (x 156-188, y −110 to −30) is directly behind the front-right optics post (x 180-240, y −185 to −125). No hand reaches it from the front or at an angle. | Mirror the latch to the chamber's front face, or move the post 40 mm outboard (re-run the bridge FEA). |
+| 3 | U1.1 reservoir handle, **each build or alloy** (**fixed 2026-11-23**: pull tab in front of the beam tube) | The enclosed beam tube, now on the galvo's real axis, passes where the hand has to be to grip the handle (z 258) from the front. | Route the beam tube clear of the slot over the reservoir, or give the reservoir a pull tab at the front of its plate. |
+| 4 | M3.2 liners, **each alloy change** (**fixed 2026-11-23**: six liners, see the update at the top) | The side liners have closed Ø22 holes round the ball screw. The back liner sits behind the carriage block. | Slots open to the top edge in the side liners; a two-piece back liner. |
 | 5 | M5.1, M6.1, M6.2 window | The ring screws (r = 32) are under the Ø90 lens, ~16 mm below it. The lens can drop only 20 mm before the window ring. The galvo is 4 mm under the guard top panel. The lens's 182.5 mm working distance fixes its height. | Ring screws on a bolt circle of r ≥ 60, outside the lens, where the bridge leaves ~42 mm for a short-arm key (use a torque-limiting key). Or a lift-off guard top panel plus a recalibration each time. |
 | 6 | M4.2, M4.3, M4.4 lid | The chute hangs 83 mm into the chamber, but the lid can lift only ~8 mm before the transducer meets the bridge. Moving forward, it meets the manual vacuum valve after 31 mm. Lid screw #4 is under the roller feedthrough and coupling. The camera can't come out of the bridge's Ø80 hole. | Hang the chute and gas knife from the walls. Move the vacuum valve clear of the lid's path, and lid screw #4 clear of the feedthrough. A ~Ø100 camera hole. |
 | 7 | M7.2 gland plate and rod O-rings (**fixed 2026-11-22 by the order, no part change**: see the update at the top) | The rod is welded into a Ø22 end cap, and the gland plate's rod bore is Ø16, so the plate and its two 2-114 rod O-rings are trapped between the piston head and the cap. The stack itself comes out of the bottom (M7.4, pass). | Take the gland plate out with the stack, then the rod out of the head and down through the plate on the bench. (A split gland plate or a clamped end cap was the earlier suggestion.) |
-| 8 | M8.2-M8.4 recoater servo and feedthrough | The servo (x −342 to −236) can't pass the front-left optics post or lift past the bridge. New: the Ferrotec unit's way out to the front is blocked after 126 mm by the left side draw latch. | Move the front-left post inboard, or fold the motor behind the chamber. Let the latch clear the feedthrough's path (or take the feedthrough out sideways once the servo is off). |
+| 8 | M8.2-M8.4 recoater servo and feedthrough (**M8.4 fixed 2026-11-23**: the left latch is off the side face; M8.2, M8.3 still fail) | The servo (x −342 to −236) can't pass the front-left optics post or lift past the bridge. New: the Ferrotec unit's way out to the front is blocked after 126 mm by the left side draw latch. | Move the front-left post inboard, or fold the motor behind the chamber. Let the latch clear the feedthrough's path (or take the feedthrough out sideways once the servo is off). |
 | 9 | M9.1, M9.2 dosing stepper and roller feedthrough | The stepper (now y 107-181) and the feedthrough are under the bridge, with the docked sensor above and the guard's back panel behind. | Extend the bridge's reservoir slot back past the stepper, so both lift out through it. |
 | 10 | A2.45 metering-base screws | Two of four are under the roller feedthrough. | Move the tabs or screws clear of it. |
 | 11 | A2.3, A2.5, A2.52: 20 M6 screws | There is 37 mm under the base plate on its feet. The leg-to-floor screws sit 134 mm up the bore, past the long key (120 mm). | Order: bolt legs and posts to the base plate on blocks, before the feet go on. Leg-to-floor screws with the chamber upside down and a 152 mm T-handle (Bondhus 15264). |
@@ -274,7 +287,7 @@ Ranked by how often the job is done. Fixes have not yet been checked on the mode
 |---|---|
 | ![U4.7](analysis/out/ops/fail-M50-U4-7.png) U4.7 overflow jar against the outlet plenum | ![M5.1](analysis/out/ops/fail-M50-M5-1.png) M5.1 key on a window-ring screw under the lens |
 | ![M4.4](analysis/out/ops/fail-M50-M4-4.png) M4.4 lid moving out | ![M7.2](analysis/out/ops/fail-M50-M7-2.png) M7.2 before round 4: the gland plate pulled down alone against the welded rod end (it now comes out with the stack and passes) |
-| ![M3.2](analysis/out/ops/fail-M50-M3-2.png) M3.2 liners against the carriage block | ![M8.2](analysis/out/ops/fail-M50-M8-2.png) M8.2 recoater servo against the front-left post |
+| ![M3.2](analysis/out/ops/fail-M50-M3-2.png) M3.2 before round 5: the one-piece liners against the carriage block (they now pass) | ![M8.2](analysis/out/ops/fail-M50-M8-2.png) M8.2 recoater servo against the front-left post |
 
 There are more in [`analysis/out/ops/`](analysis/out/ops/): M9.1, A2.3, A2.2, A2.5, A2.7 and A1.20 (that last one is an
 error in my list, above).
