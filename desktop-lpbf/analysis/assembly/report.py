@@ -2,7 +2,7 @@
 
     /tmp/venv/bin/python desktop-lpbf/analysis/assembly/report.py
 Reads analysis/out/assembly/results.json (+ results_M.json if chapter 3 was re-run on its own), seals_forces.json and
-/tmp/asm/frames.pkl; writes steps.md (the step table), sequence.json (for render_build.py: parts, insertion waypoints
+/tmp/asm/frames.pkl (ASM_DIR overrides /tmp/asm); writes steps.md (the step table), sequence.json (for render_build.py: parts, insertion waypoints
 ending at the identity, tool, arm, clearance, pass/fail, seal method) and push.json (largest push at the force steps'
 poses, with link masses loading only the joints upstream of them, as shop_checks.joint_torques).
 """
@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import pathlib
 import pickle
 import sys
@@ -18,6 +19,7 @@ import numpy as np
 
 HERE = pathlib.Path(__file__).resolve().parent
 OUT = HERE.parent / "out" / "assembly"
+ASM_DIR = pathlib.Path(os.environ.get("ASM_DIR", "/tmp/asm"))
 sys.path.insert(0, str(HERE))
 
 
@@ -77,7 +79,7 @@ def push_table(frames):
     import cell2 as K
     out = []
     for sid, d, kg in (("C02:1", (0, 0, -1), 0.05), ("C10:1", (0, 0, -1), 2.7), ("F39:1", (0, 1, 0), 0.4), ("F46:1", (0, 1, 0), 0.6),
-                       ("M22:1", (0, 0, -1), 1.0), ("M23:1", (0, 0, -1), 0.1), ("F30:1", (0, 0, -1), 2.65)):
+                       ("M13:1", (0, 0, -1), 0.2), ("M26:1", (0, 0, -1), 0.1), ("F30:1", (0, 0, -1), 2.65)):
         fr = frames.get(sid)
         if not fr:
             continue
@@ -98,7 +100,7 @@ def push_table(frames):
 def sequence_json(rows, dual=None):
     import sequence as SQ
     dual = dual or {}
-    parts = json.loads(pathlib.Path("/tmp/asm/parts.json").read_text())
+    parts = json.loads((ASM_DIR / "parts.json").read_text())
     names = [p["name"] for p in parts]
     expl = {p["name"]: p["explode"] for p in parts}
 
@@ -241,7 +243,7 @@ def steps_md(rows, seals, push):
 def main():
     rows = load_rows()
     frames = {}
-    fp = pathlib.Path("/tmp/asm/frames.pkl")
+    fp = ASM_DIR / "frames.pkl"
     if fp.exists():
         frames = pickle.loads(fp.read_bytes()).get("frames", {})
     try:

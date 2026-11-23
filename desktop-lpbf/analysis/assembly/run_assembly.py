@@ -41,6 +41,7 @@ from cell import Tm, inv, rot, Group, Body  # noqa: E402
 
 OUT = HERE.parent / "out" / "assembly"
 CAD = HERE.parents[1] / "cad"
+ASM_DIR = pathlib.Path(os.environ.get("ASM_DIR", "/tmp/asm"))    # scratch: frames*.pkl, parts.json, tool meshes (other runs may use /tmp/asm)
 DS = 3.0                       # mm between frames along a Cartesian path
 JUMP = math.radians(20.0)      # a bigger joint step between frames is a branch flip: not a continuous path
 PLAN_ITERS = int(os.environ.get("ASM_PLAN_ITERS", "1500"))
@@ -515,8 +516,14 @@ def do_place(run, st, row):
         extra = None
         if st.get("bullet"):
             (bv, bf), _ = TL.mesh("rod_bullet")
-            # bullet on the rod's lower end: machine (0, 0, -117), pointing -z
-            Mb = Tm(p=(0.0, 0.0, -117.0)) @ K.Rx(180.0)
+            if st["bullet"] == "top":
+                # round 4 order: the rod's top end goes through the gland plate's rings first, so the bullet sits on that end
+                # (head bottom + 8 mm, machine z -42 on M50), pointing +z, the way the rod travels through the rings
+                import module_params as MP
+                Mb = Tm(p=(0.0, 0.0, -(MP.PLATE_T + MP.BLOCK_T + MP.BREAK_T + MP.HEAD_T) + 8.0))
+            else:
+                # bullet on the rod's lower end: machine (0, 0, -117), pointing -z
+                Mb = Tm(p=(0.0, 0.0, -117.0)) @ K.Rx(180.0)
             extra = [(bv @ Mb[:3, :3].T + Mb[:3, 3], bf)]
         r = arm_place(run, st, u, path, state, actor, tool, f"held:{st['id']}:{sc.short(u[0])[:30]}", st.get("grasp"),
                       extra, internal=bool(st.get("grasp", {}).get("internal")), rot_deg=st.get("rot"))
@@ -1319,6 +1326,11 @@ def main(argv):
     OUT.mkdir(parents=True, exist_ok=True)
     run = Run()
     log(f"scene ready: {run.sc.n} objects")
+    # the part list report.py's replay file matches step keys against (name, explode offset, motion group)
+    ASM_DIR.mkdir(parents=True, exist_ok=True)
+    plist = run.sc.parts.values() if isinstance(run.sc.parts, dict) else run.sc.parts
+    (ASM_DIR / "parts.json").write_text(json.dumps([dict(name=p.name, explode=[float(v) for v in p.explode], group=p.group)
+                                                    for p in plist], indent=0))
     steps = SQ.steps("M50")
     for st in steps:
         if only and not any(st["id"].startswith(o) for o in only):
@@ -1352,7 +1364,7 @@ def save(run, final=False):
     if final:
         import pickle
         pickle.dump(dict(frames=run.frames, held=getattr(run, "held_meshes", {}), dual=getattr(run, "dual_paths", {})),
-                    open(f"/tmp/asm/frames{TAG}.pkl" if not ONLY else f"/tmp/asm/frames_{'_'.join(ONLY)}{TAG}.pkl", "wb"))
+                    open(ASM_DIR / (f"frames{TAG}.pkl" if not ONLY else f"frames_{'_'.join(ONLY)}{TAG}.pkl"), "wb"))
 
 
 if __name__ == "__main__":

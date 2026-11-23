@@ -7,6 +7,7 @@ to analysis/out/assembly/.
 """
 from __future__ import annotations
 
+import os
 import pathlib
 import pickle
 import sys
@@ -20,11 +21,12 @@ import tooling as TL  # noqa: E402
 import run_assembly as RA  # noqa: E402
 
 OUT = HERE.parent / "out" / "assembly"
+ASM_DIR = pathlib.Path(os.environ.get("ASM_DIR", "/tmp/asm"))
 
 
 def build():
     run = RA.Run()
-    # the temporary tool objects, in the order the run added them (M18 loader, M20 mandrel and pusher)
+    # the temporary tool objects, in the order the run added them (M12 loader, M25 mandrel and pusher)
     (lv, lf), _ = TL.mesh("ring_loader")
     Ml = K.Tm(p=(0.0, 0.0, -96.0)) @ K.Rx(180.0)
     RA.add_temp_obj(run, "Ring loader (tool)", lv @ Ml[:3, :3].T + Ml[:3, 3], lf)
@@ -94,9 +96,9 @@ def draw(run, snap, held, title, path, focus=None, dist=1600.0, az=-60.0, el=25.
 
 
 def main():
-    fr = pickle.loads(pathlib.Path("/tmp/asm/frames.pkl").read_bytes())
+    fr = pickle.loads((ASM_DIR / "frames.pkl").read_bytes())
     frames, held, dual = fr["frames"], fr["held"], fr.get("dual", {})
-    pm = pathlib.Path("/tmp/asm/frames_M.pkl")
+    pm = (ASM_DIR / "frames_M.pkl")
     if pm.exists():
         fm = pickle.loads(pm.read_bytes())
         frames.update({k: v for k, v in fm["frames"].items() if k.startswith("M")})
@@ -107,8 +109,8 @@ def main():
     want = [("F05b-mid", "Chamber assembly (15.8 kg) carried upright by both arms, each holding a leg, from the trunnion to Fixture B",
              ((S["T"] + S["B"]) / 2, 0, 1150), 2600, -70, 22),
             ("C01b", "The trunnion has turned the chamber upside down for the under-floor work", (S["T"], 0, 1000), 1800, -60, 25),
-            ("M22:1", "Heater stack into the bore: the rod on its bullet passes the two rod O-rings", (S["body_up"], 0, 1000), 1100, -60, 25),
-            ("M20", "Spigot O-ring: mandrel on the spigot, pusher stroke", (S["body_up"], 0, 1000), 1000, -60, 25),
+            ("M18:1", "Heater stack, rod and gland plate into the bore from the tube's open end, module upside down", (S["body_inv"], 0, 1000), 1100, -60, 25),
+            ("M25", "Spigot O-ring: mandrel on the spigot, pusher stroke", (S["body_up"], 0, 1000), 1000, -60, 25),
             ("C10:1", "Build module (upside down) into the floor port, chamber in the trunnion", (S["T"], 0, 1050), 1500, -60, 30)]
     for k in list(frames):
         if k.startswith("F29:"):
@@ -163,7 +165,7 @@ def main():
             snap["arms"]["B"]["q"] = d["qsB"][k]
             snap["arms"]["A"]["held"] = dict(name=d["body"], M=d["frames"][k])
             snap["arms"]["B"]["held"] = None
-            pth = pathlib.Path(f"/tmp/asm/gif_{k:03d}.png")
+            pth = (ASM_DIR / f"gif_{k:03d}.png")
             draw(run, snap, held, "Chamber assembly carried by two UR12e (F05b)", pth, ((S["T"] + S["B"]) / 2, 0, 1250), 2700, -70, 22)
             imgs.append(imageio.imread(pth)[::2, ::2])
         imageio.mimsave(OUT / "carry_F05b.gif", imgs, duration=0.25, loop=0)
