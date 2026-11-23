@@ -12,48 +12,88 @@
    "camotics_runs": [
     {
      "z0": -5.45,
+     "z1": 11.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 58.00)"
+    },
+    {
+     "z0": 11.0,
      "z1": 27.0,
      "stl": null,
      "skipped": "below the lowest tool tip (z 58.00)"
     },
     {
      "z0": 27.0,
+     "z1": 43.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 58.00)"
+    },
+    {
+     "z0": 43.0,
      "z1": 59.0,
-     "stl": "/tmp/cam-sim4/frame_A/frame_A_s1.stl",
-     "seconds": 30.0,
+     "stl": "/tmp/agentD/cam-sim-before/frame_A/frame_A_s3.stl",
+     "seconds": 28.5,
      "log_tail": [
-      "Computing surface bounded by ((-159.25,-114.75,-973.5), (159.25,114.75,-940.5)) at 0.5 grid resolution",
-      "Time: 12.77 secs Triangles: 1479164 Triangles/sec: 115854.23",
+      "Computing surface bounded by ((-159.25,-114.75,-957.5), (159.25,114.75,-940.5)) at 0.5 grid resolution",
+      "Time: 10.47 secs Triangles: 1338620 Triangles/sec: 127821.04",
       "Reducing mesh",
-      "Time: 15.13 secs Triangles: 7608 Reduction: 99.49%"
+      "Time: 15.46 secs Triangles: 7392 Reduction: 99.45%"
      ],
      "not_implemented": [],
      "errors": []
     },
     {
      "z0": 59.0,
-     "z1": 91.0,
-     "stl": "/tmp/cam-sim4/frame_A/frame_A_s2.stl",
-     "seconds": 33.3,
+     "z1": 75.0,
+     "stl": "/tmp/agentD/cam-sim-before/frame_A/frame_A_s4.stl",
+     "seconds": 18.7,
      "log_tail": [
-      "Computing surface bounded by ((-159.25,-114.75,-941.5), (159.25,114.75,-908.5)) at 0.5 grid resolution",
-      "Time: 17.11 secs Triangles: 1576180 Triangles/sec: 92144.69",
+      "Computing surface bounded by ((-159.25,-114.75,-941.5), (159.25,114.75,-924.5)) at 0.5 grid resolution",
+      "Time: 8.07 secs Triangles: 1217140 Triangles/sec: 150745.82",
       "Reducing mesh",
-      "Time: 14.18 secs Triangles: 11223 Reduction: 99.29%"
+      "Time: 9.32 secs Triangles: 10009 Reduction: 99.18%"
+     ],
+     "not_implemented": [],
+     "errors": []
+    },
+    {
+     "z0": 75.0,
+     "z1": 91.0,
+     "stl": "/tmp/agentD/cam-sim-before/frame_A/frame_A_s5.stl",
+     "seconds": 17.6,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-925.5), (159.25,114.75,-908.5)) at 0.5 grid resolution",
+      "Time: 7.98 secs Triangles: 1217140 Triangles/sec: 152446.19",
+      "Reducing mesh",
+      "Time: 8.18 secs Triangles: 10009 Reduction: 99.18%"
      ],
      "not_implemented": [],
      "errors": []
     },
     {
      "z0": 91.0,
-     "z1": 121.55,
-     "stl": "/tmp/cam-sim4/frame_A/frame_A_s3.stl",
-     "seconds": 31.6,
+     "z1": 107.0,
+     "stl": "/tmp/agentD/cam-sim-before/frame_A/frame_A_s6.stl",
+     "seconds": 16.8,
      "log_tail": [
-      "Computing surface bounded by ((-159.25,-114.75,-909.475), (159.25,114.75,-877.975)) at 0.5 grid resolution",
-      "Time: 16.03 secs Triangles: 1575480 Triangles/sec: 98310.52",
+      "Computing surface bounded by ((-159.25,-114.75,-909.5), (159.25,114.75,-892.5)) at 0.5 grid resolution",
+      "Time: 7.66 secs Triangles: 1217140 Triangles/sec: 158866.80",
       "Reducing mesh",
-      "Time: 13.61 secs Triangles: 33597 Reduction: 97.87%"
+      "Time: 8.01 secs Triangles: 10009 Reduction: 99.18%"
+     ],
+     "not_implemented": [],
+     "errors": []
+    },
+    {
+     "z0": 107.0,
+     "z1": 121.55,
+     "stl": "/tmp/agentD/cam-sim-before/frame_A/frame_A_s7.stl",
+     "seconds": 17.3,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-893.475), (159.25,114.75,-877.975)) at 0.5 grid resolution",
+      "Time: 7.59 secs Triangles: 1216440 Triangles/sec: 160318.18",
+      "Reducing mesh",
+      "Time: 8.64 secs Triangles: 31371 Reduction: 97.42%"
      ],
      "not_implemented": [],
      "errors": []
@@ -154,52 +194,92 @@
   "frame_B": {
    "part": "frame",
    "rot_about_x_deg": 180,
-   "moves": 710,
+   "moves": 772,
    "camotics_runs": [
     {
      "z0": -121.55,
+     "z1": -105.5,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z -58.00)"
+    },
+    {
+     "z0": -105.5,
      "z1": -89.5,
      "stl": null,
      "skipped": "below the lowest tool tip (z -58.00)"
     },
     {
      "z0": -89.5,
+     "z1": -73.5,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z -58.00)"
+    },
+    {
+     "z0": -73.5,
      "z1": -57.5,
-     "stl": "/tmp/cam-sim4/frame_B/frame_B_s1.stl",
-     "seconds": 31.8,
+     "stl": "/tmp/agentD/cam-sim-before/frame_B/frame_B_s3.stl",
+     "seconds": 35.4,
      "log_tail": [
-      "Computing surface bounded by ((-159.25,-114.75,-1090), (159.25,114.75,-1057)) at 0.5 grid resolution",
-      "Time: 13.96 secs Triangles: 1472328 Triangles/sec: 105490.35",
+      "Computing surface bounded by ((-159.25,-114.75,-1074), (159.25,114.75,-1057)) at 0.5 grid resolution",
+      "Time: 14.23 secs Triangles: 1331784 Triangles/sec: 93583.70",
       "Reducing mesh",
-      "Time: 15.61 secs Triangles: 5463 Reduction: 99.63%"
+      "Time: 18.59 secs Triangles: 5339 Reduction: 99.60%"
      ],
      "not_implemented": [],
      "errors": []
     },
     {
      "z0": -57.5,
-     "z1": -25.5,
-     "stl": "/tmp/cam-sim4/frame_B/frame_B_s2.stl",
-     "seconds": 32.9,
+     "z1": -41.5,
+     "stl": "/tmp/agentD/cam-sim-before/frame_B/frame_B_s4.stl",
+     "seconds": 37.2,
      "log_tail": [
-      "Computing surface bounded by ((-159.25,-114.75,-1058), (159.25,114.75,-1025)) at 0.5 grid resolution",
-      "Time: 16.74 secs Triangles: 1575468 Triangles/sec: 94099.95",
+      "Computing surface bounded by ((-159.25,-114.75,-1058), (159.25,114.75,-1041)) at 0.5 grid resolution",
+      "Time: 20.22 secs Triangles: 1216556 Triangles/sec: 60178.09",
       "Reducing mesh",
-      "Time: 14.09 secs Triangles: 11014 Reduction: 99.30%"
+      "Time: 14.66 secs Triangles: 9689 Reduction: 99.20%"
+     ],
+     "not_implemented": [],
+     "errors": []
+    },
+    {
+     "z0": -41.5,
+     "z1": -25.5,
+     "stl": "/tmp/agentD/cam-sim-before/frame_B/frame_B_s5.stl",
+     "seconds": 51.1,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-1042), (159.25,114.75,-1025)) at 0.5 grid resolution",
+      "Time: 26.41 secs Triangles: 1216556 Triangles/sec: 46059.05",
+      "Reducing mesh",
+      "Time: 21.66 secs Triangles: 9689 Reduction: 99.20%"
      ],
      "not_implemented": [],
      "errors": []
     },
     {
      "z0": -25.5,
-     "z1": 5.45,
-     "stl": "/tmp/cam-sim4/frame_B/frame_B_s3.stl",
-     "seconds": 32.4,
+     "z1": -9.5,
+     "stl": "/tmp/agentD/cam-sim-before/frame_B/frame_B_s6.stl",
+     "seconds": 59.5,
      "log_tail": [
-      "Computing surface bounded by ((-159.25,-114.75,-1026.03), (159.25,114.75,-994.025)) at 0.5 grid resolution",
-      "Time: 16.87 secs Triangles: 1518140 Triangles/sec: 89982.94",
+      "Computing surface bounded by ((-159.25,-114.75,-1026), (159.25,114.75,-1009)) at 0.5 grid resolution",
+      "Time: 33.08 secs Triangles: 1216556 Triangles/sec: 36775.87",
       "Reducing mesh",
-      "Time: 13.34 secs Triangles: 23922 Reduction: 98.42%"
+      "Time: 22.75 secs Triangles: 9689 Reduction: 99.20%"
+     ],
+     "not_implemented": [],
+     "errors": []
+    },
+    {
+     "z0": -9.5,
+     "z1": 5.45,
+     "stl": "/tmp/agentD/cam-sim-before/frame_B/frame_B_s7.stl",
+     "seconds": 60.6,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-1010.02), (159.25,114.75,-994.025)) at 0.5 grid resolution",
+      "Time: 34.08 secs Triangles: 1159228 Triangles/sec: 34013.53",
+      "Reducing mesh",
+      "Time: 23.22 secs Triangles: 22298 Reduction: 98.08%"
      ],
      "not_implemented": [],
      "errors": []
@@ -210,13 +290,13 @@
    "rapids_through_stock": [],
    "n_rapids_through_stock": 0,
    "time": {
-    "camotics_min": 6.92,
-    "camotics_feed_min": 6.31,
-    "camotics_rapid_min": 0.61,
-    "with_vf4_rapids_min": 6.55,
-    "freecad_job_cycle_time": "00:11:00",
-    "freecad_sum_of_ops_min": 11.0,
-    "recount_min": 6.55
+    "camotics_min": 6.84,
+    "camotics_feed_min": 6.2,
+    "camotics_rapid_min": 0.64,
+    "with_vf4_rapids_min": 6.45,
+    "freecad_job_cycle_time": "00:10:57",
+    "freecad_sum_of_ops_min": 10.95,
+    "recount_min": 6.45
    },
    "ops": [
     {
@@ -230,10 +310,10 @@
     {
      "label": "Outside 312x222 R8, adaptive, bottom up to mid-height",
      "tool": 2,
-     "camotics_min": 2.3,
-     "camotics_vf4_rapids_min": 2.14,
-     "freecad_cycle_time": "00:03:28",
-     "recount_min": 2.14
+     "camotics_min": 2.22,
+     "camotics_vf4_rapids_min": 2.04,
+     "freecad_cycle_time": "00:03:25",
+     "recount_min": 2.03
     },
     {
      "label": "Rebate 8 x 3.9 round the bottom of the opening",
@@ -304,50 +384,92 @@
    "camotics_runs": [
     {
      "z0": -114.3,
+     "z1": -98.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": -98.0,
      "z1": -82.0,
      "stl": null,
      "skipped": "below the lowest tool tip (z 94.50)"
     },
     {
      "z0": -82.0,
+     "z1": -66.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": -66.0,
      "z1": -50.0,
      "stl": null,
      "skipped": "below the lowest tool tip (z 94.50)"
     },
     {
      "z0": -50.0,
+     "z1": -34.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": -34.0,
      "z1": -18.0,
      "stl": null,
      "skipped": "below the lowest tool tip (z 94.50)"
     },
     {
      "z0": -18.0,
+     "z1": -2.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": -2.0,
      "z1": 14.0,
      "stl": null,
      "skipped": "below the lowest tool tip (z 94.50)"
     },
     {
      "z0": 14.0,
+     "z1": 30.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": 30.0,
      "z1": 46.0,
      "stl": null,
      "skipped": "below the lowest tool tip (z 94.50)"
     },
     {
      "z0": 46.0,
+     "z1": 62.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": 62.0,
      "z1": 78.0,
      "stl": null,
      "skipped": "below the lowest tool tip (z 94.50)"
     },
     {
      "z0": 78.0,
+     "z1": 94.0,
+     "stl": null,
+     "skipped": "below the lowest tool tip (z 94.50)"
+    },
+    {
+     "z0": 94.0,
      "z1": 110.0,
-     "stl": "/tmp/cam-sim4/frame_C/frame_C_s6.stl",
-     "seconds": 36.9,
+     "stl": "/tmp/agentD/cam-sim-before/frame_C/frame_C_s13.stl",
+     "seconds": 90.6,
      "log_tail": [
-      "Computing surface bounded by ((-159.25,-5.95,-922.5), (159.25,122.05,-889.5)) at 0.5 grid resolution",
-      "Time: 25.52 secs Triangles: 961656 Triangles/sec: 37687.89",
+      "Computing surface bounded by ((-159.25,-5.95,-906.5), (159.25,122.05,-889.5)) at 0.5 grid resolution",
+      "Time: 1 mins 09 secs Triangles: 847352 Triangles/sec: 12243.23",
       "Reducing mesh",
-      "Time: 9.29 secs Triangles: 3035 Reduction: 99.68%"
+      "Time: 18.13 secs Triangles: 2864 Reduction: 99.66%"
      ],
      "not_implemented": [],
      "errors": []
@@ -355,13 +477,13 @@
     {
      "z0": 110.0,
      "z1": 114.3,
-     "stl": "/tmp/cam-sim4/frame_C/frame_C_s7.stl",
-     "seconds": 11.3,
+     "stl": "/tmp/agentD/cam-sim-before/frame_C/frame_C_s14.stl",
+     "seconds": 29.8,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-5.95,-890.6), (159.25,122.05,-885.1)) at 0.5 grid resolution",
-      "Time: 6.87 secs Triangles: 372464 Triangles/sec: 54214.04",
+      "Time: 22.22 secs Triangles: 372464 Triangles/sec: 16764.48",
       "Reducing mesh",
-      "Time: 3.11 secs Triangles: 2315 Reduction: 99.38%"
+      "Time: 5.43 secs Triangles: 2315 Reduction: 99.38%"
      ],
      "not_implemented": [],
      "errors": []
@@ -401,14 +523,28 @@
    "camotics_runs": [
     {
      "z0": -22.7,
-     "z1": 2.7,
-     "stl": "/tmp/cam-sim4/floor_A/floor_A_s0.stl",
-     "seconds": 34.1,
+     "z1": -6.5,
+     "stl": "/tmp/agentD/cam-sim-before/floor_A/floor_A_s0.stl",
+     "seconds": 46.9,
      "log_tail": [
-      "Computing surface bounded by ((-159.25,-114.75,-1023.25), (159.25,114.75,-996.75)) at 0.5 grid resolution",
-      "Time: 18.01 secs Triangles: 1534096 Triangles/sec: 85162.54",
+      "Computing surface bounded by ((-159.25,-114.75,-1023.35), (159.25,114.75,-1005.85)) at 0.5 grid resolution",
+      "Time: 25.70 secs Triangles: 1371356 Triangles/sec: 53351.16",
       "Reducing mesh",
-      "Time: 14.00 secs Triangles: 29146 Reduction: 98.10%"
+      "Time: 18.42 secs Triangles: 20477 Reduction: 98.51%"
+     ],
+     "not_implemented": [],
+     "errors": []
+    },
+    {
+     "z0": -6.5,
+     "z1": 2.7,
+     "stl": "/tmp/agentD/cam-sim-before/floor_A/floor_A_s1.stl",
+     "seconds": 42.9,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-1007.15), (159.25,114.75,-996.65)) at 0.5 grid resolution",
+      "Time: 23.05 secs Triangles: 1172872 Triangles/sec: 50889.43",
+      "Reducing mesh",
+      "Time: 17.88 secs Triangles: 25090 Reduction: 97.86%"
      ],
      "not_implemented": [],
      "errors": []
@@ -508,14 +644,28 @@
    "camotics_runs": [
     {
      "z0": -2.7,
-     "z1": 22.7,
-     "stl": "/tmp/cam-sim4/floor_B/floor_B_s0.stl",
-     "seconds": 33.6,
+     "z1": 13.5,
+     "stl": "/tmp/agentD/cam-sim-before/floor_B/floor_B_s0.stl",
+     "seconds": 44.7,
      "log_tail": [
-      "Computing surface bounded by ((-159.25,-114.75,-1003.25), (159.25,114.75,-976.75)) at 0.5 grid resolution",
-      "Time: 15.55 secs Triangles: 1442664 Triangles/sec: 92779.75",
+      "Computing surface bounded by ((-159.25,-114.75,-1003.35), (159.25,114.75,-985.85)) at 0.5 grid resolution",
+      "Time: 19.71 secs Triangles: 1348080 Triangles/sec: 68380.20",
       "Reducing mesh",
-      "Time: 15.45 secs Triangles: 27396 Reduction: 98.10%"
+      "Time: 21.61 secs Triangles: 22829 Reduction: 98.31%"
+     ],
+     "not_implemented": [],
+     "errors": []
+    },
+    {
+     "z0": 13.5,
+     "z1": 22.7,
+     "stl": "/tmp/agentD/cam-sim-before/floor_B/floor_B_s1.stl",
+     "seconds": 37.2,
+     "log_tail": [
+      "Computing surface bounded by ((-159.25,-114.75,-987.15), (159.25,114.75,-976.65)) at 0.5 grid resolution",
+      "Time: 17.79 secs Triangles: 1186168 Triangles/sec: 66669.12",
+      "Reducing mesh",
+      "Time: 16.92 secs Triangles: 18399 Reduction: 98.45%"
      ],
      "not_implemented": [],
      "errors": []
