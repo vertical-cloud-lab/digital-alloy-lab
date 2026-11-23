@@ -1017,7 +1017,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         "Outlet plenum to filter": [(86, -90, zf - 45 - 26), (86, -90, -105), (110, -122, -115), (170, -132, -100), (300, -60, 20), (400, -40, 160), (470, -40, g0 + 294)],
         "Filter to blower": [(470 + 55 + 40, -40, g0 + 60), (560, -100, g0 + 60), (580 - 20, -150, g0 + 60)],
         "Blower to inlet plenum": [(700, -150, g0 + 270), (650, 20, 150), (420, 205, 100), (250, 205, 60), (110, cy + 78, 30), (0, cy + 32 + 46, 11)],
-        "Vacuum line to pump": [(xpv + 2 * PIR_TEE["A"], 0, 70), (400, 50, 64), (500, 165, 80), (640, 165, g0 + 330)],   # from the Pirani tee (section 10)
+        "Vacuum line to pump": [(xpv + 2 * PIR_TEE["A"], 0, 70), (400, 70, 60), (500, 165, 80), (640, 165, g0 + 330)],   # from the Pirani tee (section 10)
     }
     add("Gas-loop + vacuum hoses (KF-25 SS bellows)", comp([polyline_pipe(h, 13) for h in hoses.values()]), C["hose"], 11, (0, 0, -160), mat="ss316l", mass_kg=3.0, bom="G7", mcm="HOSE_KF25")
     add("Argon line (1/4 in. 316L)", polyline_pipe([(477, 215, g0 + 82), (477, 215, 140), (300, 100, 130), (150, 100, 105), (100, 100, 100), (100, cy + 0.0, 100)], 3.2), C["argon"], 11, (0, 200, 0), mat="ss316l", bom="G7", mcm="TUBE_SS")
