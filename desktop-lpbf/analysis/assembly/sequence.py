@@ -251,10 +251,10 @@ def steps(module="M50"):
         [(0, 0, 0), (0, -160, 0)], force="reservoir", grasp=dict(point=(-90.0, 0.0, 255.0), z=DN, x=(1.0, 0.0, 0.0))))
     a(dict(do="seal", id="F47", label="Camera adapter O-ring (2-022), PFPE film", keys=["Camera adapter O-ring"], grp="camad", phase="upright",
            method="ring", ring="camera_adapter", tool="gripper+caps", actor="B", path=[(0, 0, 0), (0, 0, -60)]))
-    a(P("F48", "Camera viewport adapter with its 2-022", ["Camera viewport", "Camera adapter O-ring"], "machine", "upright", "explode",
+    a(P("F48", "Camera viewport adapter with its 2-030", ["Camera viewport", "Camera adapter O-ring"], "machine", "upright", "explode",
         merge="camad", moved=True, note="its screws are not drawn"))
-    a(P("F48b", "Camera window O-ring (2-017), window, flat ring, retaining ring, in that order, then the camera",
-        ["Camera window O-ring", "Camera window (", "Camera window flat ring", "Camera window retaining ring", "Layer camera"], "machine",
+    a(P("F48b", "Camera window gasket (1 mm FKM flat ring), window, flat ring, retaining ring, in that order, then the camera",
+        ["Camera window gasket", "Camera window (", "Camera window flat ring", "Camera window retaining ring", "Layer camera"], "machine",
         "upright", "explode", per_part=True, note="the retaining ring's and camera's screws are not drawn"))
     a(N("F49", "Pressure transducer and relief valve (SAE-4 O-ring-boss ports)", "person",
         "Threaded ports need a wrench on a hex and a set torque; a 2F-85 can only spin a plain body."))
@@ -269,20 +269,21 @@ def steps(module="M50"):
     a(P("F03", "Optics posts (moved here: they blocked the side-wall parts and the right latch) onto the base plate, one at a time, held by arm B while arm A drives their base screws from below",
         ["@posts"], "machine", "upright", [(0, 0, 0), (0, 0, 200)], actor="B", per_solid=True, hold_for="bridge_base"))
     a(S("F04", "Two M6 x 25 up into each post's bottom cap, from under the plate", "bridge_base", "machine", "upright", torque_Nm=7.4))
-    a(N("F53", "f-theta lens threaded into its adapter ring under the bridge (on the bench, bridge upside down)", "person",
+    a(N("F53", "f-theta lens threaded into its adapter ring over its 3 mm shim stack, under the bridge (on the bench, bridge upside down)", "person",
         "The Ø90 lens is wider than the 2F-85's 85 mm stroke and threads M85 x 1; a strap wrench by hand (operations.md: lens and ring "
         "fitted to the bridge on the bench)."))
     a(dict(do="dual", id="F54", label="Optics bridge (13.3 kg, lens and ring under it) onto the four posts, one arm at each end",
-           keys=["Optics bridge (", "f-theta lens", "f-theta adapter ring"], grp="machine", phase="upright", path=[(0, 0, 0), (0, 0, 260)],
+           keys=["Optics bridge (", "f-theta lens", "f-theta focus shims", "f-theta adapter ring"], grp="machine", phase="upright", path=[(0, 0, 0), (0, 0, 260)],
            grip_gap=25.5,
            grasps={"A": dict(point=(-330.0, -190.0, 220.2), z=(0.0, 1.0, 0.0), x=(0.0, 0.0, 1.0)),
                    "B": dict(point=(215.0, 180.0, 220.2), z=(0.0, -1.0, 0.0), x=(0.0, 0.0, 1.0))}))
     a(S("F55", "Eight M6 x 35 bridge screws down into the posts", "bridge", "machine", "upright", torque_Nm=7.4))
     a(P("F56", "Galvo riser plate (155 x 130: the vacuum gripper)", ["Galvo riser plate"], "machine", "upright", "explode", tool="vacuum",
-        grasp=dict(point=(20.35, -6.8, 242.7), z=DN, x=(1.0, 0.0, 0.0))))
+        grasp=dict(point=(20.35, -6.8, 241.11), z=DN, x=(1.0, 0.0, 0.0))))
     a(P("F56b", "basiCube 20 scan head on the riser (3.75 kg: the vacuum gripper on its top)", ["2-axis galvo"], "machine", "upright", "explode",
-        tool="vacuum", grasp=dict(point=(20.35, -6.8, 364.7), z=DN, x=(1.0, 0.0, 0.0)), note="its screws are not drawn"))
-    a(P("F57", "Beam tube, shutter and collimator", ["Enclosed beam tube", "Safety shutter", "Collimator"], "machine", "upright", "explode",
+        tool="vacuum", grasp=dict(point=(20.35, -6.8, 363.11), z=DN, x=(1.0, 0.0, 0.0)), note="its screws are not drawn"))
+    a(P("F57", "Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collimator",
+        ["Enclosed beam tube", "Coaxial-monitoring dichroic", "Fold mirror", "Safety shutter", "Coaxial photodiode chain", "Collimator"], "machine", "upright", "explode",
         per_part=True))
     a(N("F58", "Process fiber routed to the collimator", "person", "Armoured fiber, >= 100 mm bend radius: cable routing stays manual."))
     a(N("F59", "Class 1 laser guard: T-slot frame, panels, door rail, sliding door, guard lock, operator panel", "person",
