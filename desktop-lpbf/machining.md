@@ -145,8 +145,8 @@ CAMotics on the pre-fix G-code (re-run today on the current model, in Docker at 
 
 ### Still open after this check
 
-- **CAMotics was not re-run on the final programs.** The run was queued for one of the runner's three shared
-  heavy-job slots, which stayed busy until the deadline. The material check of the final programs is this check's own
+- **CAMotics was not re-run on the final programs.** The run waited 29 min for one of the runner's three shared
+  heavy-job slots, then was stopped by the session's time limit after two slabs. The material check of the final programs is this check's own
   chained stock (above). It agrees with CAMotics' result for the pre-fix programs to within 0.07 cm³ (frame) and 0.89 cm³
   (floor plate). Run `camotics_sim.py` on the new G-code before the shop does.
 - **Edge clamps on 1 in. plate.** The floor plate's P-S1 relies on edge clamps gripping the bottom 7.7 mm of a 1 in.
