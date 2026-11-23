@@ -109,7 +109,7 @@ def main():
     want = [("F05b-mid", "Chamber assembly (15.8 kg) carried upright by both arms, each holding a leg, from the trunnion to Fixture B",
              ((S["T"] + S["B"]) / 2, 0, 1150), 2600, -70, 22),
             ("C01b", "The trunnion has turned the chamber upside down for the under-floor work", (S["T"], 0, 1000), 1800, -60, 25),
-            ("M18:1", "Heater stack, rod and gland plate into the bore from the tube's open end, module upside down", (S["body_inv"], 0, 1000), 1100, -60, 25),
+            ("M17:1", "Heater stack, rod and gland plate into the bore from the tube's open end, module upside down", (S["body_inv"], 0, 1000), 1100, -60, 25),
             ("M25", "Spigot O-ring: mandrel on the spigot, pusher stroke", (S["body_up"], 0, 1000), 1000, -60, 25),
             ("C10:1", "Build module (upside down) into the floor port, chamber in the trunnion", (S["T"], 0, 1050), 1500, -60, 30)]
     for k in list(frames):
