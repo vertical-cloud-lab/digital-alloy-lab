@@ -24,7 +24,7 @@ Stefan-Boltzmann constant is 5.669e-11; density in kg/m3 is x1e-12; specific hea
 the reaction heat (RFL) of a CAX model for a 2-degree sector, so it is x180 for the whole ring (checked against
 the analytic annulus, film, radiation and body-flux cases in sanity()).
 
-Run:   python desktop-lpbf/analysis/thermal_module.py          all cases (~10 min on 4 cores)
+Run:   python desktop-lpbf/analysis/thermal_module.py          all cases (24 min with 3 workers on the shared runner, 2026-11-23)
        python desktop-lpbf/analysis/thermal_module.py quick    M50 cases 1, 2 and the cool-down only
        python desktop-lpbf/analysis/thermal_module.py sanity   the unit and convention checks only
        python desktop-lpbf/analysis/thermal_module.py plates   plate-material sweep at build start -> plate_materials.md/.json
