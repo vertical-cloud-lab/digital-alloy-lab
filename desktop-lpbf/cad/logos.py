@@ -238,17 +238,24 @@ def _find(parts, prefix):
 
 
 def placements(parts):
-    """Where each logo goes, read off the current parts: {key: (part, size, centre_xz, y_face)}."""
+    """Where each logo goes, read off the current parts: {key: (part, size, centre_xz, y_face)}. A target part that is
+    missing or ambiguous (renamed by another change) is skipped with a warning, so build() never fails on a logo."""
     out = {}
-    door = _find(parts, PLACE["vcl"]["part"])
-    b = door.shape.BoundingBox()
-    out["vcl"] = (door, PLACE["vcl"]["width"], PLACE["vcl"]["centre"], b.ymin)
-    dr = _find(parts, PLACE["y"]["part"])
-    b = dr.shape.BoundingBox()
-    h = PLACE["y"]["height"]
-    w = h * 80.2695 / 98.6168                 # the block Y's width/height (logos/byu-block-y.svg)
-    xc = b.xmin + PLACE["y"]["ear"] + w + w / 2   # clear space = one Y-top width inside the rack ear
-    out["y"] = (dr, h, (xc, (b.zmin + b.zmax) / 2), b.ymin)
+    try:
+        door = _find(parts, PLACE["vcl"]["part"])
+        b = door.shape.BoundingBox()
+        out["vcl"] = (door, PLACE["vcl"]["width"], PLACE["vcl"]["centre"], b.ymin)
+    except LookupError as e:
+        print(f"WARNING {e}: VCL lockup not cut", file=sys.stderr)
+    try:
+        dr = _find(parts, PLACE["y"]["part"])
+        b = dr.shape.BoundingBox()
+        h = PLACE["y"]["height"]
+        w = h * 80.2695 / 98.6168                 # the block Y's width/height (logos/byu-block-y.svg)
+        xc = b.xmin + PLACE["y"]["ear"] + w + w / 2   # clear space = one Y-top width inside the rack ear
+        out["y"] = (dr, h, (xc, (b.zmin + b.zmax) / 2), b.ymin)
+    except LookupError as e:
+        print(f"WARNING {e}: block Y not cut", file=sys.stderr)
     return out
 
 

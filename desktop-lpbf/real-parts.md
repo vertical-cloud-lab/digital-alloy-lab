@@ -25,6 +25,25 @@ Re-run any of them with `python desktop-lpbf/cad/vendor_parts.py inventory|verif
 `verify` needs the vendor files back in `/tmp/parts-work`. On a busy runner, `swapcheck` took 17 min of wall clock
 (7 min of CPU).
 
+## Refined to the vendors' evidence (2026-11-23)
+
+See [`oem-parts.md`](oem-parts.md). In short:
+
+- **Six builders were refined to the vendor CAD.**
+  - The aligned volume IoU, from exact mesh booleans after the best axis rotation and ICP, went up for each:
+    - ClearPath 0.59 → 0.66;
+    - 6627T91 0.95 → 0.98;
+    - 6709K12 0.78 → 0.83;
+    - KF-25 / KF-40 clamps 0.28 / 0.52 → 0.71 / 0.80;
+    - 4123K45 valve 0.58 → 0.88.
+  - The KF stubs (0.97) and the ball nut (0.84) were left as they were.
+- **The IPG laser and Eaton UPS fronts are now drawn** from the vendors' own render and photo: controls, display, grilles and
+  handles.
+- **The finishes were measured** from vendor photos (`cad/oem/finishes.json`), with silhouette overlays.
+- **No builder grows outside its old box,** and no placement moved.
+- **The 2026-11-23 vendor files were re-fetched into `/tmp/agentE/vcad`.** Every sha256 matches. `cad/oem/cad-manifest.csv`
+  lists them. For `verify`, link that directory as `/tmp/parts-work/vcad` and `/tmp/parts-work/teknic`.
+
 ## Integrated into `lpbf_low.py` (2026-11-20)
 
 After the seal work was committed, the real parts below went into the model. `lpbf_low.py` now does
