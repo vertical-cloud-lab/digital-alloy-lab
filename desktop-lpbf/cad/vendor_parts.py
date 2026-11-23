@@ -106,7 +106,7 @@ SOURCES = {
         dims="overall 14 1/2 x 5 5/8 x 12 in. (368.3 x 142.9 x 304.8, to the handle top); layout (motor, pump block, handle, top intake) from the catalogue photo; no CAD offered",
         cad="", fetched="2026-11-20T14:02Z"),
     "thorlabs_fth160_1064": dict(vendor="Thorlabs", pn="FTH160-1064", price="$1,011.78 (vendor-lookups.csv)", url="https://media.thorlabs.com/globalassets/items/f/ft/fth/fth160-1064/stn012046-e0w.pdf",
-        dims="50.2 long; output ring 90 dia x 9.2 (= FFL 191.7 - WD 182.5); M85x1 thread 12.8 long; 78 dia step to 29.1; cone to 53 dia at 44.1; nose 53 dia with a 39 aperture; 0.8 kg",
+        dims="50.2 long; output ring 90 dia x 9.2 (= FFL 191.7 - WD 182.5); nose face 41.0 and cone end 34.8 above the flange (dimensioned); M85x1 thread ~12.5 long and 78 dia step to 29.3 (scaled, not dimensioned); nose 53 dia with a 39 aperture; 0.8 kg; A1 7.5 / A2 12.3 / mirror spacing 20 (Figure 1.3)",
         cad="", fetched="2026-11-20T14:00Z"),
     "scanlab_basicube20": dict(vendor="SCANLAB", pn="basiCube 20", price="quote (BOM L5)", url="https://www.scanlab.de/sites/default/files/2025-06/SCANLAB-basiCube-Series-EN.pdf",
         dims="155 deep x 130 wide x 122 high; input aperture 20 dia, axis 30 above the bottom face and 83.5 from the left edge of the input face; output axis 57.15 from the input face, 58.25 from the left edge (beam displacement 25.25); 3.75 kg without objective; objective ring and holes not dimensioned",
@@ -115,6 +115,23 @@ SOURCES = {
         url="quotes/ipg-ylr-500-u3-sm-ac.md (IPG drawing transcribed; PDF not committed)",
         dims="housing 30 dia, 28 dia at the output end, 128 +/- 3 long, plus 78 strain relief (relief diameters and the 28 dia step length assumed)",
         cad="", fetched="2026-11-18"),
+    "ipg_collimator_d25": dict(vendor="IPG Photonics", pn="affixed collimator, 2.5 mm beam (YLR series option)", price="not quoted yet",
+        url="IPG YLR series datasheet rev 2/26 (lists the 2.5 mm option; no drawing); quotes/ipg-ylr-500-u3-sm-ac.md",
+        dims="no IPG drawing found: drawn as the 5 mm unit's housing (30 dia x 128 + 78 strain relief), assumed. No catalogued QBH collimator of f 20-25 mm rated >= 500 W was found "
+             "(IPG's shortest standard is 50 mm; Wavelength COL-1070-D25-F30 is f = 30 mm), so the 2.5 mm unit (96 um at f = 160) is the catalogue choice",
+        cad="", fetched="2026-11-23T22:41Z"),
+    "thorlabs_cage_cube": dict(vendor="Thorlabs", pn="CM1-DCH/M (dichroic cube) + DMSP1000; fold mirror NB1-K14 in a 30 mm cage cube", price="DMSP1000 $331.76; NB1-K14 $172.87",
+        url="https://www.thorlabs.com/ndyag-laser-line-mirrors?pn=NB1-K14",
+        dims="cube side 41.9 assumed (no Thorlabs drawing read); NB1-K14: Ø1 in. x 6 mm, R > 99.5 % at 1047-1064 nm, 0-45 deg, typ. 99.80 % (s) / 99.41 % (p) at 1070 nm and 45 deg, "
+             "CW 20 kW/cm at 1070 nm (Thorlabs certification measurement)",
+        cad="", fetched="2026-11-23T22:41Z"),
+    "thorlabs_pda36a2": dict(vendor="Thorlabs", pn="PDA36A2", price="$400.01 (vendor-lookups.csv)", url="https://www.thorlabs.com/item/PDA36A2",
+        dims="envelope 22.4 x 50.8 x 71.1 with an SM1 port, assumed (the PDA36A2 drawing was not read); 350-1100 nm, 13 mm2, 12 MHz BW",
+        cad="", fetched="2026-11-23T22:37Z"),
+    "gentec_up55m_500w": dict(vendor="Gentec-EO", pn="UP55M-500W-H12-D0", price="$1,969.00", url="https://www.gentec-eo.com/products/up55m-500w-h12-d0",
+        dims="89 H x 89 W x 43 D, 0.81 kg, Ø55 aperture, water-cooled, 500 W continuous, 45 kW/cm2 (Gentec page); fittings and recess assumed. "
+             "The fan-cooled UP55G-600F-HD-D0 is 120 x 120 x 135 mm, 2.75 kg: taller than the 120 mm chamber",
+        cad="", fetched="2026-11-23T22:38Z"),
     "ipg_ylr500_u3": dict(vendor="IPG Photonics", pn="YLR-500-U3-SM-AC", price="approx. $23k (quote 2026-11-18)", url="quotes/ipg-ylr-500-u3-sm-ac.md (IPG spec G22-29856 and drawings; PDF not committed)",
         dims="4U: 176.5 high; 482.3 over the rack ears, 465 body; 506 body deep, 557.2 over the handles; 40 kg (handle positions assumed)",
         cad="", fetched="2026-11-18"),
@@ -317,12 +334,15 @@ def mcm_4396K21():
 # Optics and laser
 # --------------------------------------------------------------------------------------------
 def thorlabs_fth160_1064():
-    """Thorlabs FTH160-1064 f-theta lens, from drawing stn012046 (rev A). Local frame: output end (toward the work) at
-    z = 0, axis +z, input nose at z = 50.2. The flange shoulder (top of the Ø90 ring) is at z = 9.2 = FFL 191.7 - WD
-    182.5; the M85x1 thread runs from there to z = 22.0. Drop-in for the lens envelope: translate to (0, 0, P['z_lens0'])."""
-    prof = [(0, 0), (45.0, 0), (45.0, 9.2), (42.5, 9.2), (42.5, 22.0), (39.0, 22.0), (39.0, 29.1), (26.5, 44.1), (26.5, 50.2), (0, 50.2)]
+    """Thorlabs FTH160-1064 f-theta lens, from drawing stn012046 (rev A, re-read 2026-11-23). Local frame: output end (toward
+    the work) at z = 0, axis +z, input nose at z = 50.2. The flange shoulder (top of the Ø90 ring) is at z = 9.2 = FFL 191.7 -
+    WD 182.5; the nose face is 41.0 above it and the cone ends 34.8 above it (both dimensioned). The M85x1 thread's length isn't
+    dimensioned: scaled off the PDF it ends ~12.5 above the shoulder (z 21.7) and the Ø78 step runs to z 29.3. Thorlabs designs
+    the lens for the 2nd galvo mirror A1 = 7.5 mm above the nose face (A2 = 12.3 to the first lens vertex, mirrors 20 apart;
+    f-theta page, Figure 1.3). Drop-in for the lens envelope: translate to (0, 0, P['z_lens0'])."""
+    prof = [(0, 0), (45.0, 0), (45.0, 9.2), (42.5, 9.2), (42.5, 21.7), (39.0, 21.7), (39.0, 29.3), (26.5, 44.0), (26.5, 50.2), (0, 50.2)]
     s = _revolve(prof)
-    return s.cut(_cyl(19.5, (0, 0, 44.1), (0, 0, 1), 6.2)).cut(_cyl(37.5, (0, 0, -0.01), (0, 0, 1), 1.5))   # Ø39 input aperture, window recess
+    return s.cut(_cyl(19.5, (0, 0, 44.0), (0, 0, 1), 6.3)).cut(_cyl(37.5, (0, 0, -0.01), (0, 0, 1), 1.5))   # Ø39 input aperture, window recess
 
 
 def scanlab_basicube20():
@@ -337,6 +357,12 @@ def scanlab_basicube20():
 
 
 GALVO_IN = (-57.15, -25.25, 30.0)   # input beam point of scanlab_basicube20() in its local frame
+GALVO_H = 122.0                     # basiCube 20 height (brochure)
+# 2nd (y) mirror centre in scanlab_basicube20()'s frame: on the output axis at the input beam's height. The brochure gives the
+# input height (30 above the mounting face) but not the mirror's: the beam runs level from the x mirror to the y mirror, so the
+# y mirror's centre is taken at the same height (assumed). The lens's Ø53 nose can't enter the Ø20 output aperture, so with
+# the galvo on the lens's nose plane the mirror sits >= 30 mm from the nose (Thorlabs designs the FTH160-1064 for 7.5 mm).
+GALVO_M2 = (0.0, 0.0, 30.0)
 
 
 def ipg_collimator_d5(relief=True):
@@ -350,6 +376,43 @@ def ipg_collimator_d5(relief=True):
     if relief:
         parts.append(cq.Solid.makeCone(5.0, 9.0, 78.0, V(-206.0, 0, 0), V(1, 0, 0)))
     return _fuse(parts)
+
+
+def ipg_collimator_d25(relief=True):
+    """IPG affixed collimator for a 2.5 mm beam (YLR series datasheet rev 2/26), which gives 96 um at f = 160 mm. IPG publishes no
+    drawing of it, so it is drawn as the 5 mm unit's housing (Ø30 x 128 + 78 strain relief): assumed. Local frame as
+    ipg_collimator_d5 (output face at x = 0, beam toward +x)."""
+    return ipg_collimator_d5(relief)
+
+
+def thorlabs_cage_cube(side=41.9):
+    """30 mm cage cube holding a Ø1 in. optic at 45 deg (Thorlabs CM1-DCH/M dichroic mount for the DMSP1000; a kinematic cube of
+    the same size for the fold mirror). Envelope only: the cube's side (41.9 mm) is assumed, not read off a Thorlabs drawing.
+    Local frame: centred on the optic; Ø25.4 bores on the four beam faces (+/-x, +/-y); the optic's normal in the xy plane."""
+    h = side / 2
+    s = _box(-h, h, -h, h, -h, h)
+    for d in ((1, 0, 0), (0, 1, 0)):
+        s = s.cut(_cyl(12.7, tuple(-(h + 1) * c for c in d), d, side + 2))
+    return s
+
+
+def thorlabs_pda36a2():
+    """Thorlabs PDA36A2 switchable-gain Si detector (350-1100 nm, 13 mm2): housing envelope 22.4 deep x 50.8 x 71.1 mm with an
+    SM1 port on its face (envelope assumed from the PDA series' published outline, not read off the PDA36A2 drawing this
+    round). Local frame: the port face at x = 0 facing +x (light arrives travelling -x), the detector on the x axis, the
+    71.1 mm side along y."""
+    body = _box(-22.4, 0.0, -35.55, 35.55, -25.4, 25.4)
+    return _fuse([body, _cyl(15.25, (0, 0, 0), (1, 0, 0), 4.0)])
+
+
+def gentec_up55m_500w():
+    """Gentec-EO UP55M-500W-H12-D0 thermal power head: water-cooled, 500 W continuous, Ø55 mm aperture, 45 kW/cm2 average
+    density, 89 H x 89 W x 43 D mm, 0.81 kg (Gentec product page, fetched 2026-11-23T22:38Z). Local frame: aperture face at
+    z = 0 facing +z, centred on x = y = 0, body below. The 2 mm aperture recess and the two water fittings (Ø10 x 15 on the
+    -y face) are assumed: Gentec's drawing wasn't fetched."""
+    body = _box(-44.5, 44.5, -44.5, 44.5, -43.0, 0.0).cut(_cyl(27.5, (0, 0, -2.0), (0, 0, 1), 2.1))
+    fits = [_cyl(5.0, (sx * 20.0, -44.5, -21.5), (0, -1, 0), 15.0) for sx in (-1, 1)]
+    return _fuse([body] + fits)
 
 
 def ipg_ylr500_u3():
@@ -506,7 +569,11 @@ GENERIC = [
     ("f-theta lens", "done", "Thorlabs FTH160-1064"),
     ("2-axis galvo scan head", "done", "SCANLAB basiCube 20"),
     ("Safety shutter + beam dump", "env", "no product chosen (BOM L4: quote)"),
-    ("Collimator (", "done", "IPG 5 mm collimator"),
+    ("Collimator (", "env", "IPG 2.5 mm affixed collimator: no IPG drawing, drawn as the 5 mm unit's housing"),
+    ("Coaxial-monitoring dichroic", "env", "Thorlabs DMSP1000 in a 30 mm cage cube: cube size assumed"),
+    ("Fold mirror", "env", "Thorlabs NB1-K14 in a 30 mm cage cube: cube size assumed"),
+    ("Coaxial photodiode chain", "env", "Thorlabs PDA36A2 + SM1 tube: envelope assumed"),
+    ("Calibration power head", "done", "Gentec-EO UP55M-500W-H12-D0 (89 x 89 x 43, page dimensions)"),
     ("Process fiber", "env", "IPG delivery cable (Ø8.5 per IPG's QBH drawing; drawn Ø10)"),
     ("Dry scroll pump", "env", "McMaster 4396K21 builder exists, not used yet: the vacuum hose must be re-routed to its flare intake"),
     ("Pump inlet (KF-25)", "env", "needs a flare-to-NPT adapter + 4518K49 (BOM G2)"),

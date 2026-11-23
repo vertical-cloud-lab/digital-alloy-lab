@@ -22,7 +22,7 @@ Re-run: `python desktop-lpbf/analysis/optics/<script>.py` (each takes under a mi
 
 ## 0. Recommendations, ranked: what changes what we buy or draw
 
-Ranked by consequence. Section numbers point to the evidence.
+Ranked by consequence. Section numbers point to the evidence. **Round 6 (2026-11-23, §8):** items 1, 2, 7, 8 and 9 are now drawn in the model (lens raised 3.41 mm on ±3 mm of shims; IPG's 2.5 mm collimator, because no catalogued f ≈ 23 mm collimator exists; the coaxial tap; a calibration head on the plate; the camera's Ø30 bore), and item 3's galvo spacing is set by the real parts (35 mm, k 0.33–0.62): L75 is still out of reach.
 
 1. **The collimator in the model doesn't give the spot the layout was designed for (§1.1).** The model draws IPG's
    standard 5 mm collimator under the f = 160 mm lens. That gives a **48 µm** spot with a ±1.5 mm Rayleigh range, not the
@@ -617,6 +617,173 @@ F5 +$75 / +$200). L1, L3, L5 wait on quotes.
   heat in the chamber; the guard burn test.
 - **Assumed:** AR coatings absorb 30 ppm per face, fused silica 20 ppm/cm; the HQ camera's entrance pupil 10 mm behind
   the lens front; the slide's rim is at the drawer temperature; plates and lens are paraxial.
+
+## 8. Round 6 (2026-11-23): the §0 patches drawn into the model
+
+This round draws §0's items 1, 2, 7, 8 and 9 into `cad/lpbf_low.py` (section 9, the guard's top in section 12, and the camera
+viewport in section 7) and re-runs the checks. `beam_path.py` and `layer_camera.py` now read the lens, galvo and camera
+geometry from the model's `P` block instead of repeating it, and `beam_path.py` fails if the model's lens raise and its own
+focus shift disagree by more than 0.01 mm. Vendor facts were fetched through the lab tunnel on BYU's network on 2026-11-23
+(22:28–22:46 UTC); PDFs stay out of the repo, and their sha256 are given below.
+
+### 8.1 Focus: the lens is raised 3.41 mm and shimmed ±3 mm
+
+- `beam_path.py` §C: the 8 mm window and the 3 mm slide shift the focus by (8 + 3)(1 − 1/1.44956) = **3.41 mm**. `P["focus_shift"]`
+  computes the same number, and the lens's output end moves from z 182.5 to **z 185.91**. As drawn, the focus lands at
+  z = −0.001 mm. With the optics BOM's glass (Edmund 38-990, 9.53 mm; Edmund 36-299, 2 mm) the shift is 3.58 mm, so the focus
+  would land 0.17 mm low, which the shims take up.
+- **The shims.** The lens's shoulder bears on a 3 mm stack of rings (ID 85.5, OD 105) under a 13 mm M85×1 adapter ring (it was
+  16 mm). Taking shims out or adding them moves the focus ±3 mm, set by the burn test (§4.2). The lens's ~12.5 mm thread
+  engages the ring 9.5 mm at the nominal stack, and 6.5–12.5 mm over the range. McMaster sells no ring shim over 80 mm ID:
+  metric steel stops at 80 × 100 and stainless at 70 × 90. So the rings are cut from 18-8 shim stock: 95055K25 (0.5 mm,
+  $48.20), 95055K19 (0.25 mm, $36.75) and 95055K13 (0.1 mm, $32.48), all 150 × 1250 mm rolls (optics-bom O10).
+- **What moves.** The bridge goes up 3.41 mm (z 211.11–236.11), and with it the galvo, the beam line and the guard's top.
+  The galvo now sits on a 5 mm riser instead of 10 mm (§8.3), so the beam drops to z 271.11 (it was 272.7) and the galvo's
+  top to 363.11 (it was 364.7). The guard's top is now set 3 mm over the galvo; before, it used the old 110 mm galvo envelope.
+  It ends at z 367.6 (it was 369.2). **The machine is 579.6 mm tall (it was 581.2): 115.4 mm under the 695 mm Modula bay.**
+- **A model bug fixed:** the 10 mm galvo riser had no hole, so the drawn beam passed through solid aluminium between the galvo and
+  the lens. The 5 mm riser now has a Ø40 bore.
+
+### 8.2 Collimator: no catalogue part gives the 3.2 mm beam, so IPG's 2.5 mm one is drawn
+
+The search (optics-bom O2, O2b) found no catalogued collimator that is QBH, rated ≥ 500 W CW, and has f ≈ 20–25 mm:
+
+| Maker / part | f | D with IPG's 130–150 mrad | Spot at f = 160 | Why not |
+|---|---|---|---|---|
+| IPG standard range (web page and DirectIndustry catalogue) | ≥ 50 mm (D25: 50/60/70/85 mm) | ≥ 6.5 mm | ≤ 37 µm | too long |
+| Coherent / Optoskand collimating units | 50–250 mm | ≥ 6.5 mm | | too long |
+| Wavelength Opto-Electronic COL-1070-D25-F30 (QBH) | 30 mm | 3.9–4.5 mm | 51–61 µm | f too long; the same page also says "50–250 mm", and its single-mode rating is unconfirmed |
+| Sill S1ADX0220-328 | 20 mm | 2.6–3.0 mm | ~86 µm | an unhoused asphere, not a collimator |
+| OZ Optics FLPC | – | ~0.5 mm | – | pigtailed, no QBH |
+
+**So the model draws IPG's affixed 2.5 mm collimator: 92–96 µm at f = 160 mm, z_R ±6.1 mm.** That is inside the 70–100 µm
+commercial range, but at the top of it. IPG publishes no drawing of this unit, so `vendor_parts.ipg_collimator_d25()` draws
+the 5 mm unit's housing (Ø30 × 128 mm plus 78 mm of strain relief). That outline is assumed.
+
+There are two routes to a smaller spot:
+- **About 80 µm** (D 3.0 mm): add the Sill S6EXK0012-328 1.2× expander after the 2.5 mm collimator. It is catalogued for
+  1030–1080 nm, with 12 mm clear aperture in and 26 mm out, 44.7 mm long, M30×1. The catalogue gives no power rating; ask
+  Sill.
+- **75 µm:** ask IPG ("other diameters on request") or Wavelength for a custom f ≈ 23 mm.
+
+bom.csv L3 now says this. The termination question stands: IPG's quote says QBH-compatible, its series datasheet says HLC-8.
+
+### 8.3 Galvo-to-lens spacing and the L75 reach
+
+- **Thorlabs (f-theta page, Figure 1.3):** A1 = 7.5 mm is measured from the centre of the second galvo mirror to the
+  lens's input face, A2 = 12.3 mm to its first lens vertex, and ΔM = 20 mm between the mirrors. All three are recommended
+  values. The drawing (Rev A) gives Ø90 / M85×1 / Ø78 / Ø53 / Ø39 and 50.2 mm overall, with the nose face 41.0 mm above the
+  flange. The thread length isn't dimensioned: scaled from the PDF it is ~12.5 mm, which `thorlabs_fth160_1064()` now draws (it drew 12.8).
+- **SCANLAB (basiCube brochure, the 11/2026 edition, and the basiCube 20 page):** confirms 155 × 130 × 122 mm, the Ø20 input
+  30 mm above the bottom face, and the 25.25 mm beam displacement. It does not publish the mirror positions, the output
+  aperture or the objective interface: "objectives with optimised mounting kits" is an option with no details. Read off the
+  bottom view, which is not a SCANLAB number, the second mirror sits over the output axis at the input beam's height, so
+  30 mm above the mounting face (`VP.GALVO_M2`).
+- **What that dictates.** The lens's Ø53 nose can't enter the galvo's output, so with the galvo bolted on the nose plane, the
+  second mirror is at least **30 mm** from the lens, not 7.5 mm. The model draws **35 mm** (it was 40): the riser is 5 mm
+  because the Ø18 beam tube has to pass 4.1 mm over the reservoir lids' grip plane (z 258) where it crosses the bridge slot.
+  Reaching Thorlabs' 7.5 mm needs a galvo whose output takes the lens's nose, SCANLAB's own mounting kit (ask SCANLAB), or a
+  scan head whose mirror is lower.
+- **k as drawn: 0.33–0.62** on the thin-lens bounds (it was 0.30–0.59; Thorlabs' A1 would give 0.50–0.80). The 5 mm the
+  riser lost is worth +0.03.
+- **L75 reach as drawn** (`beam_path.md`, "L75 reach as drawn"; 2.5 mm beam, < 0.1 % clipped): **22.4 / 26.9 / 33.8 mm at
+  k = 0.33 / 0.48 / 0.62**, every time limited by the Ø36 field stop. L75 (r 38.1) is not reached, and M50 (r 25.4) is only
+  reached from k ≈ 0.45 up. With a per-module L75 field-stop insert (O13), the next limit is the Ø42 bore under the window:
+  26.8 / 32.5 / 41.6 mm. So L75 is reached only for k ≳ 0.58. §0 item 3 stands: measure k with the guide laser, then size the
+  window (Ø3 in. if k < 0.55), its bores and the field-stop inserts.
+
+### 8.4 Coaxial photodiode tap and the power head
+
+- **The beam line is now a Z-fold** (§4.5's layout). The collimator lies along x on a line 120 mm behind the galvo's input
+  line (y = 94.75). A Thorlabs NB1-K14 laser-line mirror at x = −155 folds the beam to −y, through the shutter (now on the
+  fold leg), onto the DMSP1000 dichroic on the galvo's input line. The dichroic reflects 1070 nm into the galvo. The melt
+  pool's 520–985 nm light comes back de-scanned, passes the dichroic, and goes on along −x through an SM1 tube to the
+  PDA36A2. The tube holds the FESH1000 and the NF1064-44 and an AC254-050-B lens. The laser reflects only off HR coats and
+  never crosses a substrate. NB1-K14: R > 99.5 % at 1047–1064 nm and 0–45°; typically 99.80 % (s) and 99.41 % (p) at 1070 nm and 45°.
+  Its CW figure is 20 kW/cm at 1070 nm (a Thorlabs certification measurement), which is 10 times our 1.6–2.0 kW/cm. It costs
+  $172.87.
+- **Clearances.** The shutter (x −187 to −123) stays 8 mm clear of the widest reservoir (x −115 to −65) in the bridge slot.
+  The collimator's strain relief ends at x −387, inside the guard (x −420).
+- The two 30 mm cage cubes (41.9 mm) and the PDA36A2 outline (22.4 × 50.8 × 71.1 mm) are assumed, not read off Thorlabs
+  drawings.
+- **The power head: the 600 W one doesn't fit.** Gentec's UP55G-600F-HD-D0 is 120 × 120 × 135 mm and weighs 2.75 kg. It is
+  taller than the 120 mm chamber, so it can't sit on the plate. In the folded beam line there is no room for it at the
+  shutter's dump port either: it would need a cut-out in the bridge. The fan-cooled 300 W UP55N-300F (92 × 92 × 117 mm) also
+  hits the gas knife.
+- **So the calibration fixture is Gentec's water-cooled UP55M-500W-H12-D0:** 89 × 89 × 43 mm, 0.81 kg, 500 W continuous,
+  45 kW/cm², $1,969. It sits on a 6061 stand with a Ø24 foot on the plate, which fits S25 too, with its aperture at z 95,
+  31 mm under the slide.
+  - **Density at the head.** With the drawn 2.5 mm collimator the beam is 1.5 mm across there: 57 kW/cm² peak, or 29 kW/cm²
+    over the 1/e² area, at 500 W. So measure the train's transmission at ~50 W (5.7 kW/cm² peak), as §4.1 already says, and
+    ask Gentec before going higher.
+  - **Water.** It needs 1.5 L/min at ≤ 22 °C, through 1/8 NPT fittings for 1/4 in. tube: tap water through the open chamber
+    door, during calibration only.
+  - **In the model.** The head and stand are tagged `calibration` and `context`, so they count toward no machine mass,
+    envelope or inventory. `interference.py` has a new state, "calibration: power head on the plate, chamber door open", the
+    only state in which they are checked.
+  - T1 in bom.csv and optics-bom O14 now name this head (with the U-LINK, $2,785). The 600 W head is the alternative (O14c).
+    The cost is losing §0 item 8's "every build starts with a logged power reading at the dump". That reading would need a
+    dump-port head that fits the bridge.
+- **AR-coated cover slides** are already the real parts in bom.csv A2 and optics-bom O12/O12b: 12 × Edmund 36-299 (Ø50 × 2 mm,
+  1064 nm V-coat, $103 at 6–25), and 10 × Cloudray PW02FS50X2 to trial. The model still draws the 3 mm slide; the 2 mm one
+  moves the focus 0.31 mm, inside the shims.
+
+### 8.5 Layer camera: a Ø30 bore on the line of sight
+
+- The lid's vertical Ø22 hole is replaced by a **Ø30 bore drilled on the camera's line of sight**. The bore continues through
+  a Ø38 boss to a **Ø20 aperture** under the Ø1 in. window, and the retaining and flat rings open to Ø21.
+- **The adapter seal had to move.** The bore's ellipse on the lid's top face is 30 × 35.7 mm, and that would cut the old 2-022
+  groove (ID 25.8). The adapter grows from Ø50 to Ø64, and its face O-ring moves out to a **2-030** in a groove of ID 42.
+  That leaves 3.2 mm of land outside the bore, at 2.4 % stretch (`MP.pick_ring`).
+- **The window seal changed too.** A Ø20 aperture would also cut the window's old 2-017 groove (ID 17.6), so the window now
+  sits on a 1 mm FKM flat gasket (ID 21, squeezed to 0.75 mm), the same material as the ring above it. `GLANDS` drops
+  `camera_window`, and `camera_adapter` is now the 2-030.
+- The boss is trimmed at the lid's top face so its wall closes on the adapter all round. Its old start, inside the 12 mm
+  adapter, would have left the tilted Ø38 wall open on the uphill side.
+- **`layer_camera.py` as drawn:** S25, M50 and L75 are all 100 % seen. Every edge point gets the full pupil with any of the
+  four lenses at f/2.8–8; the only exception is the 25 mm lens at f/2.8–4, whose L75 edge falls to 88–99 %, and that lens doesn't
+  fit L75 in the frame anyway. Before this round it was 56 / 46 / 40 %. With the 12 mm lens: 26 µm per pixel, all three
+  plates in the frame, 2.2° Scheimpflug.
+
+### 8.6 Checks re-run
+
+| Check | Result |
+|---|---|
+| `beam_path.py` | focus as drawn z = −0.001 mm (the assert passes); k 0.33–0.62; L75 reach 22–34 mm (field stop) |
+| `layer_camera.py` | 100 / 100 / 100 % of S25 / M50 / L75 seen (was 56 / 46 / 40) |
+| `thermal_lens.py` | not re-run: the glass, its heights and the focus height are unchanged. The f-theta's thermal lens sits 3.4 mm higher, which is negligible |
+| `optics_bom.py` | 39 rows; $23,863–25,317 without the laser (it was $24,467–25,688) |
+| FEA case 6b (bridge first mode) | **f1 = 128 Hz** (pass, > 100 Hz; was 134), f1–f6 = 128, 141, 226, 240, 487, 536 Hz; lens-bore sag 5.0 µm (was 4.4). With the vendor masses (galvo 3.75 kg + lens 0.8 kg, was 2.5 + 0.6), 6.9 kg of optics in all, and posts 3.4 mm longer |
+| Interference, exact (M50 / S25 / L75) | INTF_PLACEHOLDER |
+
+### 8.7 Not done, and for other owners
+
+- **Not drawn:**
+  - the window stays the drawn 8 mm part, not the BOM's 9.53 mm Edmund 38-990;
+  - the slide stays 3 mm, not the BOM's 2 mm;
+  - the single Ø36 field stop (section 7) is not yet the three per-module inserts;
+  - the head's water lines.
+- **Still to get from vendors:**
+  - the dichroic's CW rating;
+  - SCANLAB's mirror positions and objective kit;
+  - IPG's 2.5 mm collimator drawing and its termination (QBH or HLC-8);
+  - Gentec's density limit for a 1.5 mm beam at 500 W.
+- `analysis/assembly/sequence.py` changes (assembly is C's): F48b now names the camera window gasket, F54 carries the shims,
+  F57 carries the new beam-line parts, and the F56/F56b grasp heights follow the riser and galvo, at 241.11 and 363.11. The
+  assembly isn't re-run here.
+- `analysis/seals/seals.py`'s camera row still describes the 2-022/2-017 seals.
+- `fea.py` case 6 now uses the vendor masses: the basiCube 20 at 3.75 kg and the FTH160-1064 at 0.8 kg (it used 2.5 and 0.6).
+  It also uses the new positions of the shutter, collimator, dichroic with the photodiode, and fold mirror.
+
+Sources for this round:
+- Gentec-EO product pages for the UP55M-500W-H12-D0, UP55G-600F-HD-D0 and UP55N-300F-H12-D0 (fetched 22:37–22:39Z);
+- Thorlabs NB1-K14 (22:41Z) and the f-theta family page with Figure 1.3 (22:34Z; GIF sha256 3963043654b6b5a1…);
+- the FTH160-1064 drawing PDF (sha256 fd59f665a79c0564…);
+- the SCANLAB basiCube brochure (sha256 8ed910d5d41c6402…) and the basiCube 20 page (22:44Z);
+- McMaster 95055K13/K19/K25 and its shim pages (22:36–22:44Z);
+- the Sill Optics 2026 catalogue (sha256 59dcee21fe704a61…);
+- the Wavelength Opto-Electronic collimator page (22:39Z);
+- IPG's collimator range (22:29Z, 22:41Z).
 
 ## Sources
 

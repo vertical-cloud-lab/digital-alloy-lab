@@ -32,20 +32,30 @@ add("O1", "source", "500 W single-mode CW fibre laser, 1070 nm, M2 <= 1.1, QBH o
     "YLR-500-U3-SM-AC", "IPG Photonics", 1, "", "", "quote (see bom.csv L1; not repeated here)", "quotes/ipg-ylr-500-u3-sm-ac.md", "2026-11-18",
     "L1", "keep", "Fiber laser source (YLR-500-U3, 4U) + Process fiber",
     "Ask IPG in writing: back-reflection tolerance and whether a back-reflection alarm output exists (wire it to the safety controller); mode-field diameter; minimum stable power. Fibre minimum bend radius 70 mm (the model draws >= 100 mm)")
-add("O2", "beam delivery", "Collimator for a 3.2 mm beam (f ~ 23 mm; 21-25 mm over 130-150 mrad) -> 75 um at f = 160 mm",
-    "custom diameter ('other diameters on request')", "IPG Photonics", 1, "", "", "quote", "quotes/ipg-ylr-500-u3-sm-ac.md", "2026-11-18",
-    "L3", "replace text (f = 254 mm / 5 mm beam -> f = 160 mm / 3.2 mm beam)", "Collimator (IPG, 5 mm beam ...) on V-mount: redraw from IPG's drawing",
-    "The 5 mm standard collimator drawn in the model gives 48 um (z_R +/-1.5 mm) at f = 160 mm; the 7.5 mm gives 32 um; IPG's series datasheet (rev 2/26) also lists a 2.5 mm affixed collimator: 92-96 um. Termination: the quoted spec sheet says QBH-compatible, the series datasheet says HLC-8 for 500 W SM: confirm before buying any third-party collimator (none with f ~ 20-30 mm was found)")
+add("O2", "beam delivery", "Collimator: IPG affixed 2.5 mm beam -> 92-96 um at f = 160 mm (z_R +/-6.1 mm); drawn",
+    "2.5 mm affixed collimator (YLR series option)", "IPG Photonics", 1, "", "", "quote", "IPG YLR series datasheet rev 2/26; quotes/ipg-ylr-500-u3-sm-ac.md", "2026-11-23T22:41Z",
+    "L3", "replace (5 mm -> 2.5 mm: no catalogued collimator gives the 3.2 mm beam)", "Collimator (IPG affixed, 2.5 mm beam ...) on V-mount",
+    "Searched 2026-11-23 through BYU's network for a QBH collimator of f 20-25 mm rated >= 500 W CW: none. IPG's shortest standard collimator is 50 mm (D25: 50/60/70/85 mm); Coherent/Optoskand 50-250 mm; Wavelength Opto-Electronic COL-1070-D25-F30 is f = 30 mm (D 3.9-4.5 mm, 57 um; its page also says 50-250 mm, single-mode rating unconfirmed); Sill S1ADX0220-328 is an unhoused f = 20 mm asphere. For ~80 um: O2b; for 75 um: ask IPG or Wavelength for f ~ 23 mm. IPG publishes no drawing of the 2.5 mm unit: the model draws the 5 mm unit's housing. Termination: QBH-compatible (quote) vs HLC-8 (series datasheet): confirm")
+add("O2b", "beam delivery", "Option: 1.2x beam expander after the 2.5 mm collimator -> D 3.0 mm, ~80 um at f = 160 mm", "S6EXK0012-328", "Sill Optics", 0, "", "", "quote",
+    "https://www.silloptics.de/fileadmin/user_upload/pdf/Katalog/Laser_Optics_Imaging_Optics_2026_10.03.26_Web_01.pdf", "2026-11-23T22:38Z",
+    "L3", "option (needs a CW rating from Sill)", "not drawn",
+    "Catalogued for 1030-1080 nm, clear aperture 12 mm in / 26 mm out, 44.7 mm long, M30x1 thread; the catalogue gives no power rating (catalogue PDF sha256 59dcee21...ecf65)")
 add("O3", "beam delivery", "Safety shutter, >= 500 W CW at 1070 nm, normally closed, position feedback to the safety controller",
     "industrial fibre-laser shutter", "TBD (quote)", 1, 1500, 2000, "estimate", "", "", "L4", "keep (still no product)",
     "Safety shutter + beam dump (envelope)", "nmLaser LST800-20mm is rated 300 W (with a chiller plate), too low; EOPC, Kentek, LaserMech not priced (fetched 2026-11-22T05:55Z). Make its dump port the power head (O14)")
 add("O4", "beam delivery", "Commissioning beam dump, 500 W at 1 L/min, water-cooled (graphite)", "LB2L", "Thorlabs", 1, 507.50, 507.50, "fetched",
     "https://www.thorlabs.com/beam-blocks-and-traps?pn=BT610", "2026-11-22T05:48Z", "L4", "keep, commissioning only",
     "not drawn", "Needs tap water and a flow switch: the machine has no chiller (L2 = $0). No fan-cooled >= 500 W dump was found (Gentec BD series is water-cooled); the fan-cooled power head (O14, rated 600 W continuous) serves as the dump")
-add("O5", "beam delivery", "45 deg short-pass dichroic fold mirror: HR 1070 nm (laser reflected), HT 400-1000 nm to the coaxial photodiode",
+add("O5", "beam delivery", "45 deg short-pass dichroic: HR 1070 nm (laser reflected into the galvo), HT 520-985 nm to the coaxial photodiode",
     "DMSP1000 (Ø1 in.)", "Thorlabs", 1, 331.76, 331.76, "fetched", "https://www.thorlabs.com/shortpass-dichroic-mirrors-beamsplitters?pn=DMSP1000",
-    "2026-11-22T05:44Z", "T2", "add", "not drawn: goes between the shutter and the galvo; the collimator then lies along y",
-    "T 520-985 nm, R 1020-1550 nm (Rabs > 90 %), IBS on UV fused silica, 45 deg. Pulsed LIDT only (9.5 J/cm2, 1064 nm, 12 ns): no CW rating. Our load is 1.0-1.6 kW/cm: ask Thorlabs, or buy a high-power HR1070/HT-VIS laser mirror (quote)")
+    "2026-11-22T05:44Z", "T2", "add (drawn 2026-11-23)", "Coaxial-monitoring dichroic (Thorlabs DMSP1000 ...) in a 30 mm cage cube",
+    "Drawn on the galvo's input line at x -155, between the shutter and the galvo; the collimator lies along x on a line 120 mm behind it and O5b folds the beam onto it (a Z-fold), so the laser only reflects off HR coats. T 520-985 nm, R 1020-1550 nm (Rabs > 90 %), IBS on UV fused silica, 45 deg. Pulsed LIDT only (9.5 J/cm2, 1064 nm, 12 ns): no CW rating. Our load is 1.6-2.0 kW/cm: ask Thorlabs, or buy a high-power HR1070/HT-VIS laser mirror (quote)")
+add("O5b", "beam delivery", "45 deg fold mirror, Ø1 in. Nd:YAG laser line (R > 99.5 % at 1047-1064 nm; typ. 99.80 % s / 99.41 % p at 1070 nm)",
+    "NB1-K14", "Thorlabs", 1, 172.87, 172.87, "fetched", "https://www.thorlabs.com/ndyag-laser-line-mirrors?pn=NB1-K14", "2026-11-23T22:41Z",
+    "T2", "add (drawn 2026-11-23)", "Fold mirror (Thorlabs NB1-K14 ...) in a 30 mm cage cube",
+    "CW 20 kW/cm at 1070 nm (Thorlabs certification measurement, Ø0.974 mm): 10x our 1.6-2.0 kW/cm. 1070 nm is just outside the guaranteed band: the p-polarised 0.6 % loss heats the mirror ~3 W at 500 W")
+add("O5c", "beam delivery", "30 mm cage cubes for the dichroic and the fold mirror (CM1-DCH/M class), with SM1 tube adapters", "CM1-DCH/M class", "Thorlabs", 2, 100, 200,
+    "estimate", "", "", "T2", "add", "the two cage cubes (envelope 41.9 mm assumed)", "Not priced this round")
 add("O6", "scanner", "2-axis galvo, 20 mm aperture, 1000 W at 1064 nm without cooling, XY2-100", "basiCube 20", "SCANLAB", 1, "", 12000,
     "quote (bom.csv L5)", "https://www.scanlab.de/en/print-product/1061", "", "L5", "keep", "2-axis galvo scan head (SCANLAB basiCube 20) + Galvo riser plate (F5)",
     "Datasheet (fetched 2026-11-22T05:41Z): 1000 W @ 1064 nm (standard systems, 100 % duty), no water or air cooling; coatings 532/1064/1080/10600 nm; +/-0.35 rad optical; drift offset < 30 urad/K, gain < 160 ppm/K; its 60 x 60 mm field at f = 160 mm is for SCANLAB's own objective. Ask: 1080 nm coating, mirror positions (Thorlabs wants the 2nd mirror 7.5 mm from the FTH160), camera/detector adapter")
@@ -58,10 +68,11 @@ add("O8", "scanner", "Alternative: industrial fused-silica f-theta qualified for
 add("O9", "scanner", "Spare protective window for the f-theta (Ø75 x 2 mm)", "FTHW75-1064", "Thorlabs", 2, 122.03, 122.03, "fetched",
     "https://www.thorlabs.com/f-theta-scan-lenses", "2026-11-22T05:36Z", "L6", "add", "inside the lens envelope",
     "N-BK7, not fused silica (absorbs more at 1070 nm: a thermal-lens source at 500 W). A fused-silica Ø75 x 2 mm AR-1064 replacement is worth quoting")
-add("O10", "scanner", "Focus adjustment for the f-theta: adapter ring 3.4 mm shorter plus a shim set (or an M85x1 lock ring: 1 mm per turn)",
-    "custom 6061 ring + stainless shim washers", "in-house / McMaster", 1, 30, 80, "estimate", "", "", "F5", "change the drawn part",
-    "f-theta adapter ring (6061, M85x1 internal thread)", "The 8 mm window + 3 mm slide move the focus 3.41 mm below the powder plane as drawn")
-# ---------------------------------------------------------------- chamber optics
+add("O10", "scanner", "Focus adjustment for the f-theta: 13 mm adapter ring (was 16) + a 3 mm stack of ring shims (ID 85.5, OD 105) cut from 18-8 shim stock: 0-6 mm = +/-3 mm",
+    "95055K25 (0.5 mm) + 95055K19 (0.25 mm) + 95055K13 (0.1 mm), 150 x 1250 mm rolls", "McMaster-Carr", 1, 117.43, 200, "fetched (rolls $48.20 + $36.75 + $32.48) + estimate (cutting the rings)",
+    "https://www.mcmaster.com/95055K25/", "2026-11-23T22:44Z", "F5", "drawn 2026-11-23",
+    "f-theta focus shims (85.5 x 105 rings ...) + f-theta adapter ring (6061, 13 mm ...)",
+    "The lens is drawn 3.41 mm higher (the drawn 8 mm window + 3 mm slide); with the BOM glass (9.53 + 2 mm) the focus wants 0.17 mm more: inside the shims. McMaster has no ring shim over 80 mm ID (metric steel stops at 80 x 100, stainless at 70 x 90), so the rings are cut from stock. Thread engagement 6.5-12.5 mm over the range")
 add("O11", "chamber optics", "Chamber window, fused silica (Corning 7980), Ø50.8 x 9.53 mm, 1064 nm V-coat both faces (Rabs < 0.25 %)", "38-990",
     "Edmund Optics", 1, 295.00, 295.00, "fetched", "https://www.edmundoptics.com/p/508mm-dia-1064nm-10-fused-silica-window/39556/", "2026-11-22T05:53Z",
     "L7", "replace text (Thorlabs WG41050-C Ø1 in. x 5 mm -> Ø2 in. x 9.53 mm)", "Ø2 in. fused-silica window, 8 mm, AR 1064 (deepen the seat 1.53 mm)",
@@ -81,22 +92,26 @@ add("O13", "chamber optics", "Field-stop inserts, one per module (S25 / M50 / L7
     "in-house", 3, 15, 40, "estimate", "", "", "F5", "change the drawn part (one fixed Ø36 stop)", "Field-stop aperture (Ø36, passive beam limit)",
     "At k = 0.3-0.5 the Ø36 stop passes plates only to r 20-27 mm (L75 is 38.1)")
 # ---------------------------------------------------------------- instruments
-add("O14", "instrument", "Thermal power head, 600 W continuous, fan-cooled, Ø55 mm, HD absorber (45 kW/cm2 at 10 W CW)", "UP55G-600F-HD-D0 (201878B)",
-    "Gentec-EO", 1, 3033.00, 3033.00, "fetched", "https://www.gentec-eo.com/products/up55g-600f-hd-d0", "2026-11-22T05:58Z", "T1",
-    "replace (Thorlabs S322C stops at 200 W)", "not drawn: mount at the shutter's dump port", "Price excludes shipping and import fees. Doubles as the dump; check the density rating at 500 W for the 3.2 mm beam with Gentec")
+add("O14", "instrument", "Thermal power head on the plate (calibration fixture): 500 W continuous, water-cooled, Ø55 mm, H12 absorber (45 kW/cm2), 89 x 89 x 43 mm",
+    "UP55M-500W-H12-D0", "Gentec-EO", 1, 1969.00, 1969.00, "fetched", "https://www.gentec-eo.com/products/up55m-500w-h12-d0", "2026-11-23T22:38Z",
+    "T1", "replace UP55G-600F (it doesn't fit in the chamber)", "Calibration power head on the plate (Gentec-EO UP55M-500W-H12-D0 ...) + its stand",
+    "Drawn on a stand on the plate with its aperture at z 95 (31 mm under the slide). With the drawn 2.5 mm collimator the beam there is 1.5 mm across: 57 kW/cm2 peak, 29 kW/cm2 over the 1/e2 area at 500 W against a 45 kW/cm2 rating, so measure through the train at 50 W (5.7 kW/cm2 peak) and ask Gentec before going higher. 1.5 L/min of water at <= 22 C through 1/8 NPT fittings for 1/4 in. tube: tap water through the open chamber door during calibration only. Price excludes shipping and import fees")
+add("O14c", "instrument", "Alternative: fan-cooled 600 W head (no water), 120 x 120 x 135 mm, 2.75 kg", "UP55G-600F-HD-D0 (201878B)", "Gentec-EO", 0, 3033.00, 3033.00, "fetched",
+    "https://www.gentec-eo.com/products/up55g-600f-hd-d0", "2026-11-23T22:37Z", "T1", "alternative (no place to mount it)", "not drawn",
+    "Taller (135 mm) than the 120 mm chamber, so it can't sit on the plate; there is no room for it at the shutter's dump port in the folded beam line either. The fan-cooled 300 W UP55N-300F-H12-D0 (92 x 92 x 117 mm, $1,931) is also too tall with the gas knife at z 106")
 add("O14a", "instrument", "USB interface for the power head", "U-LINK (203510)", "Gentec-EO", 1, 816.00, 816.00, "fetched", "https://www.gentec-eo.com/products/u-link-usb",
     "2026-11-22T05:51Z", "T1", "add", "not drawn", "INTEGRA (built-in USB) is a detector option, not priced")
 add("O14b", "instrument", "Alternative head: Ophir FL600A-LP2-65 (600 W, fan, LP2 coating 11 kW/cm2 at 600 W) + Juno USB ($752) + fan supply 7E05029 ($52)", "7Z02779",
     "Ophir (MKS)", 0, 4106.00, 4106.00, "fetched (sum of three listed prices)", "https://www.ophiropt.com/en/f/fl600a-lp2-65-thermopile-sensor", "2026-11-22T05:46Z",
     "T1", "alternative", "-", "FL600A-BB-65 is $3,183 (7 kW/cm2 at 600 W)")
 add("O15", "instrument", "Coaxial melt-pool photodiode, Si 350-1100 nm, switchable gain", "PDA36A2", "Thorlabs", 1, 400.01, 400.01, "repo (vendor-lookups.csv)",
-    "https://www.thorlabs.com/item/PDA36A2", "2026-11-13T23:47Z", "T2", "keep", "not drawn", "Set the gain for >= 100 kHz bandwidth")
+    "https://www.thorlabs.com/item/PDA36A2", "2026-11-13T23:47Z", "T2", "keep", "Coaxial photodiode chain (... Thorlabs PDA36A2)", "Set the gain for >= 100 kHz bandwidth")
 add("O16", "instrument", "Notch filter for the photodiode, 1064 nm, 44 nm FWHM, OD > 6 (1070 nm inside the band)", "NF1064-44", "Thorlabs", 1, 635.55, 635.55,
-    "fetched", "https://www.thorlabs.com/notch-filters?pn=NF1064-44", "2026-11-22T05:43Z", "T2", "add", "not drawn", "No damage threshold published; it sees only stray light behind the dichroic")
+    "fetched", "https://www.thorlabs.com/notch-filters?pn=NF1064-44", "2026-11-22T05:43Z", "T2", "add", "Coaxial photodiode chain (SM1 tube ...)", "No damage threshold published; it sees only stray light behind the dichroic")
 add("O17", "instrument", "Short-pass filter for the photodiode, 1000 nm edge (OD > 4, 1013-1500 nm)", "FESH1000", "Thorlabs", 1, 169.26, 169.26, "fetched",
-    "https://www.thorlabs.com/hard-coated-edgepass-filters?pn=FESH1000", "2026-11-22T05:44Z", "T2", "add", "not drawn", "")
+    "https://www.thorlabs.com/hard-coated-edgepass-filters?pn=FESH1000", "2026-11-22T05:44Z", "T2", "add", "Coaxial photodiode chain (SM1 tube ...)", "")
 add("O18", "instrument", "Photodiode lens and mounts (f ~ 30-50 mm achromat, SM1 tubes, 45 deg mirror mount)", "AC254-050-B + SM1 parts", "Thorlabs", 1, 150, 300,
-    "estimate", "", "", "T2", "add", "not drawn", "")
+    "estimate", "", "", "T2", "add", "Coaxial photodiode chain (SM1 tube ...)", "")
 add("O19", "camera", "Layer camera, 12.3 MP IMX477, 1.55 um pixels, C/CS mount", "Adafruit 4561 (Raspberry Pi SC0261)", "Adafruit", 1, 55.00, 55.00, "fetched",
     "https://www.adafruit.com/product/4561", "2026-11-22T05:45Z", "M6", "price (was a $100-300 estimate)", "Layer camera (Pi HQ + C-mount lens)", "Out of stock at Adafruit and PiShop at fetch time")
 add("O20", "camera", "12 mm C-mount lens (26 um per pixel; all three plates fit the frame)", "TBD (12 mm C-mount, f/1.4-16)", "Arducam / reseller", 1, 30, 80,
@@ -105,7 +120,7 @@ add("O20a", "camera", "16 mm C-mount lens, f/1.4-16 (19 um per pixel; S25 and M5
     "fetched", "https://www.adafruit.com/product/4562", "2026-11-22T05:45Z", "M6", "alternative", "Layer camera", "6 mm CS lens (Adafruit 4563) is $49.30: 54 um per pixel")
 add("O21", "camera", "1070 nm blocking filter for the camera, Ø25 mm short-pass 950 nm (rejects 970-1500 nm), behind a plain window", "FESH0950", "Thorlabs", 1,
     169.26, 169.26, "fetched", "https://www.thorlabs.com/hard-coated-edgepass-filters?pn=FESH0950", "2026-11-22T05:44Z", "M6", "add (replaces the drawn 'blocking coating')",
-    "Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating)", "")
+    "Camera window (Ø1 in. x 3 mm fused silica; FESH0950 ...)", "")
 add("O22", "camera", "Scheimpflug wedge, 2.2 deg, between lens and sensor", "custom (aluminium)", "in-house", 1, 10, 30, "estimate", "", "", "M6", "add", "not drawn", "")
 add("O23", "camera", "Second LED bar on the back wall (light across the recoater streaks); vacuum-safe, unpotted", "TBD", "TBD", 1, 20, 60, "estimate", "", "",
     "M6", "add", "Layer-light LED bar (one drawn, +x wall)", "")

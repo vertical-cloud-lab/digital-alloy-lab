@@ -32,6 +32,10 @@ from scipy.special import erfc
 HERE = Path(__file__).resolve().parent
 OUT = HERE.parent / "out" / "optics"
 OUT.mkdir(parents=True, exist_ok=True)
+import sys  # noqa: E402
+sys.path.insert(0, str(HERE.parents[1] / "cad"))
+import lpbf_low as MODEL  # noqa: E402  (the lens, bridge and galvo heights come from the model's P block)
+MP_ = MODEL.P
 
 # ---------------------------------------------------------------------------------------------------------------
 # A. Inputs
@@ -43,8 +47,9 @@ SRC = {
            "EFL 160 mm, scan field 110.6 x 110.6 mm, max entrance beam 12 mm, WD 182.5 mm, FFL 191.7 mm, AR 1020-1080 nm, "
            "damage threshold given only for pulses (5 J/cm2, 10 ns); drawing stn012046: input aperture 39 mm, Ø75 protective window",
     "bc": "SCANLAB basiCube 20: 20 mm aperture; 1000 W at 1064 nm (README 3.2, https://www.scanlab.de/en/print-product/1061)",
-    "model": "cad/lpbf_low.py (P block and section 7): lens output end z 182.5, flange z 191.7, nose z 232.7; galvo bottom z 242.7, "
-             "beam input z 272.7; window Ø50.8 x 8 fused silica z 148-156, flange bore Ø42 below it, retaining ring Ø44 above; "
+    "model": f"cad/lpbf_low.py (P block and sections 7 and 9): lens output end z {MP_['z_lens0']:.2f} (raised {MP_['focus_shift']} mm), "
+             f"nose z {MP_['z_lens0'] + 50.2:.2f}; galvo bottom z {MP_['z_bridge1'] + MP_['galvo_riser']:.2f}, beam input and 2nd mirror z {MP_['z_galvo_m2']:.2f}; "
+             "window Ø50.8 x 8 fused silica z 148-156, flange bore Ø42 below it, retaining ring Ø44 above; "
              "field stop Ø36 z 131-136; cover slide Ø50.8 x 3 z 126-129 (Edmund 25-250, uncoated); drawer opening Ø46 z 125-126; "
              "lid bore Ø56 z 120-125; plates in Ø25.4 / 50.8 / 76.2 bores",
     "malitson": "Malitson 1965, fused silica Sellmeier (JOSA 55, 1205; refractiveindex.info)",
@@ -57,8 +62,11 @@ THETA_FULL = (0.130, 0.140, 0.150)  # rad, bare fibre, full angle 86 % (= 1/e2 f
 P_LASER = 500.0
 F_FT = 160.0
 WD, FFL = 182.5, 191.7
-Z_LENS_OUT = 182.5
-Z_GALVO_IN = 272.7
+Z_LENS_OUT = MP_["z_lens0"]          # 185.91: raised by the plates' focus shift (was 182.5)
+Z_GALVO_IN = MP_["z_galvo_m2"]       # 271.11: the 2nd mirror, the scan pupil (was 272.7)
+Z_GALVO_IN_OLD = 272.7               # before 2026-11-23: 10 mm riser, lens not raised
+Z_LENS_OUT_OLD = 182.5
+Z_HP = Z_LENS_OUT - WD + F_FT        # the lens's rear principal plane (air focus at Z_LENS_OUT - WD)
 GALVO_AP = 20.0
 LENS_IN_AP = 39.0
 LENS_MAX_BEAM = 12.0
@@ -83,11 +91,12 @@ LID_APS = [("lid bore", 120.0, 125.0, 56.0), ("drawer opening", 125.0, 126.0, 46
 
 # collimator options: name -> beam diameter D (1/e2), or focal length
 COLL = {
-    "IPG standard, 5 mm beam (drawn in the model)": dict(D=5.0),
+    "IPG affixed 2.5 mm (drawn from 2026-11-23; YLR series datasheet rev 2/26)": dict(D=2.5),
+    "IPG 2.5 mm + Sill S6EXK0012-328 1.2x expander (catalogue, no power rating)": dict(D=3.0),
+    "D = 3.2 mm (the ~75 um target; f_c ~ 23 mm: no catalogue part found)": dict(D=3.2),
+    "Wavelength COL-1070-D25-F30 (QBH, f = 30 mm; also low-profile.md's label)": dict(fc=30.0),
+    "IPG standard, 5 mm beam (drawn until 2026-11-22)": dict(D=5.0),
     "IPG standard, 7.5 mm beam": dict(D=7.5),
-    "f = 30 mm QBH collimator (the model's label, low-profile.md)": dict(fc=30.0),
-    "D = 3.2 mm (the ~75 um target; f_c ~ 23 mm)": dict(D=3.2),
-    "IPG affixed 2.5 mm option (YLR series datasheet rev 2/26)": dict(D=2.5),
 }
 
 
@@ -163,9 +172,17 @@ budget = [
     ("plate stack growth at 200 C (powder-spreading.md), if the blade is zeroed cold", 0.112, "zero the blade hot"),
     ("bridge posts +50 K (mech.md F)", 0.070, "slow drift"),
 ]
-R["focus_shift_mm"] = dict(plates=shift, budget=[dict(item=a, mm=b, kind=c) for a, b, c in budget])
+# the model raises the lens by P["focus_shift"]; check it against this script's own number
+Z_FOCUS_DRAWN = (Z_LENS_OUT - WD) - shift          # where the focus lands as drawn (0 = on the powder)
+assert abs(MP_["focus_shift"] - shift) < 0.01, f"model raises the lens {MP_['focus_shift']} mm, the plates shift the focus {shift:.3f} mm"
+shift_bom = (9.53 + 2.0) * (1 - 1 / N_FS)           # with the optics BOM's glass: Edmund 38-990 window, 36-299 slide
+R["focus_shift_mm"] = dict(plates=shift, model_lens_raise=MP_["focus_shift"], focus_as_drawn_z=Z_FOCUS_DRAWN,
+                           plates_bom_glass=shift_bom, focus_with_bom_glass_z=(Z_LENS_OUT - WD) - shift_bom,
+                           shim_range_mm=[-MP_["lens_shim"], MP_["lens_shim"]],
+                           budget=[dict(item=a, mm=b, kind=c) for a, b, c in budget])
 for r in rows:
-    r["spot_at_model_focus_um"] = 2 * w_at(r["spot_um"] / 2, r["zR_mm"], shift)
+    r["spot_at_model_focus_um"] = 2 * w_at(r["spot_um"] / 2, r["zR_mm"], Z_FOCUS_DRAWN)
+    r["spot_before_raise_um"] = 2 * w_at(r["spot_um"] / 2, r["zR_mm"], shift)
 
 # off-axis: the plates' focus shift along z grows with the chief-ray angle u
 def plate_focus_shift_z(u):
@@ -191,13 +208,15 @@ def plate_astig(u):
 # ---------------------------------------------------------------------------------------------------------------
 KS = (0.3, 0.5, 0.75)
 # thin-lens estimate of k: lens at its rear principal plane (160 mm above the focus), stop at the galvo's mirrors (z 272.7)
-_d_s = Z_GALVO_IN - F_FT
+_d_s = Z_GALVO_IN - Z_HP
 _d_xp = _d_s * F_FT / (F_FT - _d_s)          # virtual exit pupil above the lens
 K_THIN = F_FT / (F_FT + _d_xp)
 Z_NOSE = Z_LENS_OUT + 50.2
 Z_H_MID = Z_LENS_OUT + 50.2 / 2
-K_RANGE = {"as drawn (2nd mirror ~40 mm above the nose)": (1 - (Z_GALVO_IN - F_FT) / F_FT, 1 - (Z_GALVO_IN - Z_H_MID) / F_FT),
-           "Thorlabs A1 = 7.5 mm (2nd mirror 7.5 mm above the nose)": (1 - (Z_NOSE + 7.5 - F_FT) / F_FT, 1 - (Z_NOSE + 7.5 - Z_H_MID) / F_FT)}
+K_RANGE = {f"as drawn (2nd mirror {Z_GALVO_IN - Z_NOSE:.0f} mm above the nose)": (1 - (Z_GALVO_IN - Z_HP) / F_FT, 1 - (Z_GALVO_IN - Z_H_MID) / F_FT),
+           "before 2026-11-23 (2nd mirror 40 mm above the nose)": (1 - (Z_GALVO_IN_OLD - F_FT) / F_FT, 1 - (Z_GALVO_IN_OLD - (Z_LENS_OUT_OLD + 25.1)) / F_FT),
+           "Thorlabs A1 = 7.5 mm (2nd mirror 7.5 mm above the nose)": (1 - (Z_NOSE + 7.5 - Z_HP) / F_FT, 1 - (Z_NOSE + 7.5 - Z_H_MID) / F_FT)}
+K_DRAWN = list(K_RANGE.values())[0]
 
 
 def chief_r(r_img, k, z):
@@ -259,7 +278,7 @@ R["k_thin_lens_estimate"] = dict(k=K_THIN, stop_above_lens_mm=_d_s, exit_pupil_a
                                  note="thin lens at H' (z 160) with H = H'; the real front principal plane is unknown, so k could be ~0.3-0.8")
 
 aps = []
-for cname, D in (("IPG 5 mm", 5.0), ("D 3.2 mm", 3.2)):
+for cname, D in (("IPG 2.5 mm (drawn)", 2.5), ("IPG 5 mm", 5.0), ("D 3.2 mm", 3.2)):
     for k in KS:
         rec = dict(collimator=cname, k=k)
         for ap in LID_APS:
@@ -268,6 +287,15 @@ for cname, D in (("IPG 5 mm", 5.0), ("D 3.2 mm", 3.2)):
         rec["field stop: beam centre on the edge (50 % passes)"] = max_radius(D, M2_MAX, k, LID_APS[2], loss=0.5)
         aps.append(rec)
 R["apertures"] = aps
+# L75 reach as drawn: the drawn k range (thin-lens bounds and their middle), every lid opening, < 0.1 % clipped
+reach = []
+for cname, D in (("IPG 2.5 mm (drawn)", 2.5), ("D 3.2 mm", 3.2), ("IPG 5 mm", 5.0)):
+    for k in (K_DRAWN[0], sum(K_DRAWN) / 2, K_DRAWN[1]):
+        per = {ap[0]: max_radius(D, M2_MAX, k, ap) for ap in LID_APS}
+        lim = min(per, key=per.get)
+        reach.append(dict(collimator=cname, k=k, reach_mm=per[lim], limited_by=lim, per_aperture=per, L75_passes=per[lim] >= 38.1,
+                          M50_passes=per[lim] >= 25.4))
+R["reach_as_drawn"] = reach
 # galvo and lens input apertures: beam walk at the lens nose for a pupil d_p above it
 walk = []
 for d_p in (30.0, 45.0, 60.0):
@@ -302,7 +330,7 @@ def surf_table(D, m2):
             elif z > a:
                 red -= (z - a) * (1 - 1 / N_FS)
         return w_at(w0, z_r, red)
-    add("f-theta output (protective window, z 182.5 + 3.4)", w_img(Z_LENS_OUT + shift))
+    add(f"f-theta output (protective window, z {Z_LENS_OUT:.1f})", w_img(Z_LENS_OUT))
     add("chamber window, top (z 156)", w_img(156.0))
     add("chamber window, bottom (z 148)", w_img(148.0))
     add("cover slide, top (z 129)", w_img(129.0))
@@ -324,7 +352,7 @@ for D in (5.0, 3.2):
     z_r = zr(d, M2_MAX)
     fc = D / 0.140
     for name, h in (("slide bottom", 126.0), ("slide top", 129.0), ("window bottom", 148.0), ("window top", 156.0),
-                    ("f-theta protective window (lower face)", Z_LENS_OUT + shift)):
+                    ("f-theta protective window (lower face)", Z_LENS_OUT)):
         # air-equivalent height above the focus
         red = h - sum((b - a) * (1 - 1 / N_FS) for _, a, b in PLATES_GLASS if h >= b)
         eta = coupling_defocus(2 * red, z_r)
@@ -406,11 +434,14 @@ L += ["", "Collimated beam needed for a given spot at f = 160 mm (M² 1.1): " + 
     f"{k} µm → D {v['D_mm']:.2f} mm, f_c {v['fc_mm_at_140']:.1f} mm ({v['fc_range'][0]:.1f}–{v['fc_range'][1]:.1f})" for k, v in need.items()), "",
     f"Fibre: the divergence spec implies a {mfd['140 mrad']:.1f} µm beam diameter at the fibre end ({mfd['150 mrad']:.1f}–{mfd['130 mrad']:.1f} µm).", "",
     "## C. Where the focus lands", "",
-    f"The model puts the lens's air focus on the powder plane. The 8 mm window and 3 mm slide push it **{shift:.2f} mm below the powder plane**. "
-    "Spot on the powder plane as drawn (M² 1.1, 140 mrad):", ""]
+    f"The 8 mm window and 3 mm slide push the focus down by **{shift:.2f} mm**. The model now raises the lens by {MP_['focus_shift']} mm "
+    f"(lens output end z {Z_LENS_OUT:.2f}), so the focus lands at z = {Z_FOCUS_DRAWN:+.3f} mm; with the optics BOM's glass (9.53 mm window, "
+    f"2 mm slide) the shift is {shift_bom:.2f} mm and the focus lands at {(Z_LENS_OUT - WD) - shift_bom:+.2f} mm, inside the ±{MP_['lens_shim']:.0f} mm "
+    "of shims. Spot on the powder plane as drawn, and before the lens was raised (M² 1.1, 140 mrad):", ""]
 for name in COLL:
     b = [r for r in rows if r["collimator"] == name and abs(r["theta_full_mrad"] - 140) < 1][1]
-    L.append(f"- {name}: {b['spot_um']:.0f} µm at focus, **{b['spot_at_model_focus_um']:.0f} µm on the powder** ({shift / b['zR_mm']:.1f} z_R out)")
+    L.append(f"- {name}: {b['spot_um']:.0f} µm at focus, **{b['spot_at_model_focus_um']:.0f} µm on the powder** "
+             f"(before: {b['spot_before_raise_um']:.0f} µm, {shift / b['zR_mm']:.1f} z_R out)")
 L += ["", "| Focus budget item | mm | kind |", "|---|---|---|"] + [f"| {a} | {b:.3f} | {c} |" for a, b, c in budget]
 L += ["", "## D/E. Field geometry (k = chief-ray angle at the plate / optical scan angle; not published for the FTH160-1064)", "",
       "| k | Plate | r (mm) | Scan, optical (°) | Mirror (°) | AOI (°) | Elongation (%) | Plate lateral shift (mm) | Extra focus shift (mm) | Astigmatism (mm) | Chief ray r at slide / window / lens out (mm) |",
@@ -419,7 +450,7 @@ for f_ in field:
     L.append(f"| {f_['k']} | {f_['plate']} | {f_['r_mm']:.1f} | {f_['scan_optical_deg']:.1f} | {f_['mirror_mech_deg']:.1f} | {f_['aoi_deg']:.1f} | "
              f"{f_['elongation_pct']:.2f} | {f_['plate_lateral_shift_mm']:.3f} | {f_['plate_focus_shift_extra_mm']:.3f} | {f_['plate_astig_mm']:.3f} | "
              f"{f_['chief_r_at_slide']:.1f} / {f_['chief_r_at_window']:.1f} / {f_['chief_r_at_lens_out']:.1f} |")
-L += ["", f"Thin-lens estimate of k (lens at z 160, stop at the mirrors, z 272.7): exit pupil {_d_xp:.0f} mm above the lens, k = {K_THIN:.2f}. "
+L += ["", f"Thin-lens estimate of k (lens at H', z {Z_HP:.1f}; stop at the 2nd mirror, z {Z_GALVO_IN:.1f}): exit pupil {_d_xp:.0f} mm above the lens, k = {K_THIN:.2f}. "
       "The lens's real principal planes are not published, so the tables span k = 0.3-0.75.", ""]
 L += ["", "k from a thin lens with its front principal plane between the lens body's middle and H' (z 160): " + "; ".join(
     f"{k}: {a:.2f}-{b:.2f}" for k, (a, b) in K_RANGE.items()), "",
@@ -433,6 +464,9 @@ L += ["", "Largest plate radius each lid aperture passes with < 0.1 % clipped (m
 for a in aps:
     L.append(f"| {a['collimator']} | {a['k']} | " + " | ".join(f"{a[x[0]]:.1f}" for x in LID_APS) +
              f" | {a['field stop: beam centre on the edge (50 % passes)']:.1f} |")
+L += ["", "L75 reach as drawn (k over the drawn thin-lens range; the opening that limits it; < 0.1 % clipped):", "",
+      "| Collimator | k | Reach (mm) | Limited by | L75 (38.1) | M50 (25.4) |", "|---|---|---|---|---|---|"]
+L += [f"| {r_['collimator']} | {r_['k']:.2f} | {r_['reach_mm']:.1f} | {r_['limited_by']} | {'yes' if r_['L75_passes'] else 'no'} | {'yes' if r_['M50_passes'] else 'no'} |" for r_ in reach]
 L += ["", "## F. Irradiance at 500 W (lens refocused onto the plate)", ""]
 for key, tab in R["irradiance"].items():
     L += [f"**{key}**", "", "| Surface | Beam Ø (mm) | Peak (W/cm²) | P/D (W/cm) | Note |", "|---|---|---|---|---|"]
@@ -474,7 +508,7 @@ try:
     ax.set_facecolor("#fcfcfb")
     zz = np.linspace(-6, 6, 400)
     cols = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100"]      # categorical slots 1-4, fixed order (dataviz palette)
-    short = ["IPG 5 mm (drawn)", "IPG 7.5 mm", "f_c 30 mm (label)", "D 3.2 mm (75 µm target)"]
+    short = ["IPG 2.5 mm (drawn)", "2.5 mm + 1.2x expander", "D 3.2 mm (75 µm target)", "QBH f_c 30 mm"]
     for (name, c), col, lab in zip(COLL.items(), cols, short):
         D = c.get("D") or c["fc"] * 0.140
         d = spot_d(D, F_FT, M2_MAX)
@@ -484,7 +518,7 @@ try:
         ax.annotate(lab, (zz[0], yy[0]), xytext=(4, 0), textcoords="offset points", fontsize=7, color="#52514e",
                     va="center") if yy[0] < 235 else None
     ax.axvline(shift, color="#52514e", ls="--", lw=1)
-    ax.text(shift + 0.12, 28, f"powder plane as drawn:\nfocus {shift:.1f} mm below it", fontsize=7, color="#52514e")
+    ax.text(shift + 0.12, 28, f"powder plane before the lens\nwas raised {shift:.1f} mm", fontsize=7, color="#52514e")
     ax.axvspan(0, 0.112, color="#52514e", alpha=0.18, lw=0)
     ax.text(0.2, 6, "plate growth at 200 °C (0.11 mm)", fontsize=7, color="#52514e")
     ax.set_xlabel("height above the focus (mm)")
