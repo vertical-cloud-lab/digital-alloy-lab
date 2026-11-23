@@ -72,7 +72,9 @@ over the 2F-85's fingertips from a stand on the MiR, and a vacuum wand with a cl
   grip block sits in front of the knuckles, and the job lifts the module 66 mm before the last 140 mm. The two captive M6 still hold
   the module, and the robot can't turn them; the zero-point modules that would replace them need the overflow jar moved first
   (hot-swap.md §3.2a). Until then a person releases the two screws, or swaps the module.
-- **The overflow jar has no way out as drawn**, and **the liners are captive** (patch requests).
+- **The overflow jar** has a straight way out since round 5, but the gripper can't reach its cup at z −102 past the guard frame and
+  the guard door's handle. It needs a grip fin forward at z ≈ −50, as on the module (round 5). **The liners are captive** (patch
+  requests).
 
 ## Results
 
@@ -353,8 +355,8 @@ make the groove and the lips 45° V-shapes (patch request), which centre over ±
 - **Not simulated:** fitting and stripping the caps at the stand (byu-vcl PR 318 doesn't animate it either), MiR docking, the
   install direction of each part (the same poses as removal, reversed), and anything after the part is out (the racks on the MiR).
 - **The robot's own door close fails** (below the results table), so the door needs its actuator.
-- **The overflow jar and the liners** need the patch requests before a robot can do them. The module's motion passes (round 4), but
-  its clamp needs the jar moved first.
+- **The overflow jar** needs a grip fin the gripper can reach (round 5), and **the liners** need their patch request. The module's
+  motion passes (rounds 4 and 5), but its zero-point clamps still have no place under the floor (hot-swap.md §3.2a).
 - **Dynamics:** only the door is simulated in MuJoCo. The arm moves slowly (60°/s joints, 30–150 mm/s lines), so the static
   torques stand in for the dynamic ones; the module's carry is the heaviest case.
 - **Powder safety**: PR 318's bonded floor plates, sprung shoes and wand continuity checks apply here (AlSi10Mg is a combustible
