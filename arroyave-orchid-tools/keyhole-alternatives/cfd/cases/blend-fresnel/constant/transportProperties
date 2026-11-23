@@ -1,0 +1,46 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  Written by scripts/keyhole_cfd_laserbeamfoam.py (digital-alloy-lab, issue #235)
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+interfaceTrackingScheme MULES;
+phases          (metal gas);
+metal
+{
+    transportModel  Newtonian;
+    nu              4.900000e-07;
+    rho             2650.0;
+    Tsolidus        846.7;
+    Tliquidus       1019.3;
+    LatentHeat      7.354990e+05;
+    beta            1.000000e-04;
+    poly_kappa      (110.0 0 0 0 0 0 0 0);
+    poly_cp         (1040.0 0 0 0 0 0 0 0);
+    Elec_conductivity 2.500000e+06;
+}
+gas
+{
+    transportModel  Newtonian;
+    nu              1.48e-05;
+    rho             1;
+    poly_kappa      (0.04 0 0 0 0 0 0 0);
+    poly_cp         (520 0 0 0 0 0 0 0);
+    Tsolidus        1.0;
+    Tliquidus       10.0;
+    LatentHeat      1;
+    beta            4.0e-5;
+}
+emS             0.1;
+emL             0.1;
+TRef            TRef [0 0 0 1 0 0 0] 303.15;
+sigma           0.86;
+Marangoni_Constant -3.500000e-04;
+p0              1e5;
+Tvap            2743.0;
+Mm              0.02698;
+LatentHeatVap   1.090000e+07;

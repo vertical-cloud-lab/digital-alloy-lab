@@ -1,0 +1,17 @@
+#!/bin/bash
+# usage: ./Allrun [nProc]   (nProc 1 runs in serial)
+cd "${0%/*}" || exit 1
+NP=${1:-1}
+rm -rf 0 && cp -r initial 0
+blockMesh > log.blockMesh 2>&1 || exit 1
+setFields > log.setFields 2>&1 || exit 1
+postProcess -func writeCellCentres -time 0 > log.writeCellCentres 2>&1
+# With maxRayBounces set, laserbeamFoam prints a four-line warning for every ray at every step
+# (~0.6 MB per step); they carry nothing the summary needs, so they are dropped from the log.
+FILTER='^(--> FOAM Warning : *$|    From bool Foam::laserRayParticle::move|    in file laserRayParticle.C|    Terminating ray )'
+if [ "$NP" -gt 1 ]; then
+    decomposePar -force > log.decomposePar 2>&1 || exit 1
+    mpirun --oversubscribe -np "$NP" laserbeamFoam -parallel 2>&1 | grep -v -E "$FILTER" > log.laserbeamFoam
+else
+    laserbeamFoam 2>&1 | grep -v -E "$FILTER" > log.laserbeamFoam
+fi
