@@ -112,8 +112,8 @@ B curve would trip on ([`power.md`](analysis/out/electrical/power.md) §2). **Cl
 supply together: ~120 A peak against the dock breaker's lowest C-curve magnetic trip of 150 A.** That is why the laser gets a
 contactor KM0 that the PLC closes after the rest has started.
 
-**Legs:** worst real case (500 W CW, blower at its AC bound, UPS recharging) is **17.9 A on L1 and 14.0 A on L2, inside
-24 A**. The pump never runs while the laser fires (PLC); with everything at rated at once L2 would see 20.7 A.
+**Legs:** worst real case (500 W CW, blower at its AC bound, UPS recharging) is **17.7 A on L1 and 14.0 A on L2, inside
+24 A**. The pump never runs while the laser fires (PLC); with everything at rated at once L1 would see 23.7 A and L2 20.0 A (2026-11-23, with the nXDS6i at 208 V, §13.1).
 
 ### 1.2 What the UPS carries, and the DC rails
 
@@ -134,7 +134,7 @@ Unbacked: laser, pump, blower, heaters (PR 318's rule for heaters and pumps). On
 close (they are normally closed), the safety controller, guard lock, PLC, O₂ analyser and Pi stay up, the PC saves and shuts
 down at 120 s and the servos are disabled at 60 s. **The held load is ~63 W, which the UPS carries for ~5 h by a Peukert
 estimate (4 × 12 V 9 Ah assumed: Eaton's page timed out)**, far past the 15 / 28 / 41 min the plate takes to cool to 50 °C
-(power.md §3). At the rated 791 W backed load it would last ~16 min.
+(power.md §3). At the rated 770 W backed load it would last ~17 min by the model, which ENERGY STAR's figures put 13-25 % optimistic (§13.1).
 
 The 48 V bus is a choice: ClearPath-SD runs on 24-75 V and the manual puts the minimum at about 21.5 V; 48 V gives speed
 headroom over 24 V and the recoater (≤ 100 mm/s on a 10 mm lead, 600 rpm) and Z axis need little. Teknic's own IPC-5 (75 V,
@@ -595,7 +595,7 @@ reports blocks against, is not changed here.
   guard-position switch, the E-stops, the Pirani tee, reducer, gauge and clamps, the dock PE contacts, the rod end and its
   feedthroughs) against every other part, in 22 states (piston at both ends, Z released, recoater at both ends and mid-way, guard
   door open and half-way, chamber door open, 12 points along the module's swap path): **no interference in M50, S25 or L75**
-  without fasteners on the first rod-end layout; the final rod end and the re-routed hose with fasteners: RODCHECK. The contacts found are designed ones, now listed in `interference.py`'s
+  without fasteners on the first rod-end layout; the final rod end and the re-routed vacuum hose, with all fasteners, against every part in the same 22 states (the swap path sampled at 12 points including the rise at y −190): **no interference in S25 or M50** (L75 not re-run: its handle screws sit at y −38, in front of the sleeves, and 5 mm above them at the overtravel). The contacts found are designed ones, now listed in `interference.py`'s
   JOINTS: the magnet in the carriage block, the tee on the valve and the hose, the tee through the guard panel where the hose went
   (as the hose did), sensors in their clamps, and so on.
 - **I/O list** ([`io_check.md`](analysis/out/electrical/io_check.md)): 95 devices and signals; **30 not drawn (was 37)**, 16 with
