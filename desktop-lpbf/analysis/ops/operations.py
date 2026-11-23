@@ -252,12 +252,13 @@ def catalogue(module="M50"):
         reach("Plate in through the chamber door onto the bayonet (piston at +8 mm)", (0.0, 0.0, 45.0), (FRONT,), skip=["Build plate", "Plate rim wiper"],
               minutes=2),
         # since 2026-11-23 the latches ride on brackets on the door's ears and point forward: their levers are at y -207 when the door is
-        # shut, in front of the front-right optics post (y -185..-125). Checked with the door shut (the latch moves with the door).
-        reach("Close the door and the right draw latch (on the door's right bracket, lever at its front end)", (161.9, -222.0, 54.0),
+        # shut, in front of the front-right optics post (y -185..-125). Checked with the door shut (the latch moves with the door) and the
+        # guard door at its full 515 mm (MOTION: "clears the right door latch"); at 470 its left edge (x 140) is in front of the latch.
+        reach("Close the door and the right draw latch (on the door's right bracket, lever at its front end)", (161.9, -212.0, 54.0),
               ((0, -1, 0), (-0.5, -0.85, 0), (0, -0.7, 0.7)), skip=["Draw latches", "Draw-latch strikes", "Draw-latch actuators"], minutes=1,
-              hand=PINCH_HAND, state={"door": 0.0}),
-        reach("Left draw latch", (-161.9, -222.0, 54.0), ((0, -1, 0), (0.5, -0.85, 0), (0, -0.7, 0.7)),
-              skip=["Draw latches", "Draw-latch strikes", "Draw-latch actuators"], minutes=0, hand=PINCH_HAND, state={"door": 0.0}),
+              hand=PINCH_HAND, state={"door": 0.0, "gdoor": 515.0}),
+        reach("Left draw latch", (-161.9, -212.0, 54.0), ((0, -1, 0), (0.5, -0.85, 0), (0, -0.7, 0.7)),
+              skip=["Draw latches", "Draw-latch strikes", "Draw-latch actuators"], minutes=0, hand=PINCH_HAND, state={"door": 0.0, "gdoor": 515.0}),
         note("Close the guard door (guard lock engages)", 0.5),
         note("Purge: 2-3 vacuum-argon cycles to <= 100 ppm O2 (budgets.py: 2 cycles from 1 mbar, 3 from 10 mbar), then flow", 15),
         note("Preheat the plate to 200 C (~15 min ramp on Ø50, README)", 15),
@@ -367,7 +368,9 @@ def catalogue(module="M50"):
         reach("Hand to the recoater servo, left of the chamber", (-289.0, 15.0, 51.0), (FRONT, (0, 0, 1)), skip=["Recoater servo", "Recoater motor"]),
         remove("Servo off its standoff", ["Recoater servo"], axis_paths(520.0, first=(-25, 0, 0)), minutes=5),
         remove("Motor standoff and bracket", ["Recoater motor standoff", "Recoater motor bracket"], axis_paths(520.0, first=(-10, 0, 0)), minutes=5),
-        remove("Feedthrough unit and coupling off the left wall", ["Recoater fixed bearing", "Recoater shaft coupling"], axis_paths(520.0, first=(-30, 0, 0)),
+        # 45 mm out sideways (was 30): the coupling (x -157..-143 in the wall bore) then clears the left draw latch, which since 2026-11-23
+        # rides on the door bracket at x -177.75..-146 in front of the chamber
+        remove("Feedthrough unit and coupling off the left wall", ["Recoater fixed bearing", "Recoater shaft coupling"], axis_paths(520.0, first=(-45, 0, 0)),
                minutes=10),
         note("New packing; refit; leak check", 60),
     ]))

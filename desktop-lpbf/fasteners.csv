@@ -1,15 +1,17 @@
 joints,part_number,description_as_listed,qty_per_machine,sold_as,price_per_pack_usd,packs,line_usd,url,fetched_utc
 module_flange,95966A705,"Socket Head Captive Panel Screw, M6 x 1 mm Thread, 20 mm Long (6 mm thread, 4.2 mm reduced shank)",6,each (1-24),10.64,6,63.84,https://www.mcmaster.com/95966A705/,2026-11-19
 stack,9713K54,"Belleville Disc Spring, 302 Stainless Steel, for 1/8"" Shaft, 0.125"" ID, 0.25"" OD, 0.013"" Thick",6,pack of 12,11.81,1,11.81,https://www.mcmaster.com/9713K54/,2026-11-19
-module_dowels,93600A686,"316 Stainless Steel Dowel Pin, 6 mm Diameter, 20 mm Long (ISO 2338 m6)",2,pack of 5,7.89,1,7.89,https://www.mcmaster.com/93600A686/,2026-11-19
+"bearing_cap_pins, blade_cartridge, plenum_in_pins, vac_port_pins",93600A304,"316 Stainless Steel Dowel Pin, 3 mm Diameter, 10 mm Long (ISO 2338 m6)",8,pack of 25,9.64,1,9.64,https://www.mcmaster.com/93600A304/,2026-11-23
+"floor_dowels, module_dowels",93600A686,"316 Stainless Steel Dowel Pin, 6 mm Diameter, 20 mm Long (ISO 2338 m6)",4,pack of 5,7.89,1,7.89,https://www.mcmaster.com/93600A686/,2026-11-19
 striker,93395A204,"316 Stainless Steel Hex Drive Flat Head Screw, 90 Degree Countersink, M3 x 0.5 mm Thread, 10 mm Long",9,pack of 100,15.65,1,15.65,https://www.mcmaster.com/93395A204/,2026-11-19
 stack,91732A767,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M2.5 x 0.45 mm Thread Size, 3.8 mm Installed Length",3,pack of 10,4.26,1,4.26,https://www.mcmaster.com/91732A767/,2026-11-19
 stack,91732A647,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M3 x 0.5 mm Thread Size, 4.5 mm Installed Length",6,pack of 10,3.85,1,3.85,https://www.mcmaster.com/91732A647/,2026-11-19
 window,91732A649,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M4 x 0.7 mm Thread Size, 4 mm Installed Length",6,pack of 10,3.56,1,3.56,https://www.mcmaster.com/91732A649/,2026-11-19
-"bearing_cap, dose, funnel, plenum_in, plenum_out, rail",91732A656,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M4 x 0.7 mm Thread Size, 6 mm Installed Length",32,pack of 10,3.68,4,14.72,https://www.mcmaster.com/91732A656/,2026-11-19
+"bearing_cap, dose, funnel, plenum_in, plenum_out",91732A656,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M4 x 0.7 mm Thread Size, 6 mm Installed Length",25,pack of 10,3.68,3,11.04,https://www.mcmaster.com/91732A656/,2026-11-19
 "lid, vac_port, zmount",91732A261,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M5 x 0.8 mm Thread Size, 7.5 mm Installed Length",28,pack of 10,3.82,3,11.46,https://www.mcmaster.com/91732A261/,2026-11-19
 legs,91732A262,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M6 x 1 mm Thread Size, 9 mm Installed Length",4,pack of 10,6.71,1,6.71,https://www.mcmaster.com/91732A262/,2026-11-19
 module_flange,91732A782,"18-8 Stainless Steel Helical Threaded Insert, Pronged, M6 x 1 mm Thread Size, 12 mm Installed Length",6,pack of 10,4.56,1,4.56,https://www.mcmaster.com/91732A782/,2026-11-19
+blade_cartridge,85015A47,"18-8 Stainless Steel Slotted Ball-Nose Spring Plunger with 440C Stainless Steel Nose, M6x1, 2-2.9 lb. Nose Force",2,each,7.17,2,14.34,https://www.mcmaster.com/85015A47/,2026-11-17
 module_flange,91065A610,"Retainer for M6 x 1 mm Thread Size Captive Panel Screws, 18-8 Stainless Steel",6,pack of 25,13.54,1,13.54,https://www.mcmaster.com/91065A610/,2026-11-19
 rod,92029A142,"316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 6 mm Long",2,pack of 50,12.38,1,12.38,https://www.mcmaster.com/92029A142/,2026-11-19
 rod,92029A152,"316 Stainless Steel Cup-Point Set Screw, M4 x 0.7 mm Thread, 16 mm Long",4,pack of 10,4.95,1,4.95,https://www.mcmaster.com/92029A152/,2026-11-19
@@ -17,9 +19,9 @@ stack,92290A854,"316 Stainless Steel Socket Head Screw, M2.5 x 0.45 mm Thread, 3
 "blade, res_lid",92290A113,"316 Stainless Steel Socket Head Screw, M3 x 0.5 mm Thread, 8 mm Long, Fully Threaded",8,pack of 50,14.30,1,14.30,https://www.mcmaster.com/92290A113/,2026-11-19
 window_ring,92290A115,"316 Stainless Steel Socket Head Screw, M3 x 0.5 mm Thread, 10 mm Long, Fully Threaded",6,pack of 50,14.84,1,14.84,https://www.mcmaster.com/92290A115/,2026-11-19
 stack,92290A124,"316 Stainless Steel Socket Head Screw, M3 x 0.5 mm Thread, 25 mm Long, Partially Threaded",6,pack of 50,19.97,1,19.97,https://www.mcmaster.com/92290A124/,2026-11-19
-handle,92290A144,"316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 10 mm Long, Fully Threaded",6,pack of 50,17.81,1,17.81,https://www.mcmaster.com/92290A144/,2026-11-19
+"handle, rail_plugs",92290A144,"316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 10 mm Long, Fully Threaded",10,pack of 50,17.81,1,17.81,https://www.mcmaster.com/92290A144/,2026-11-19
 "funnel, plenum_out",92290A148,"316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 12 mm Long, Fully Threaded",10,pack of 50,18.62,1,18.62,https://www.mcmaster.com/92290A148/,2026-11-19
-"dose, plenum_in, rail, window",92290A154,"316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 16 mm Long, Fully Threaded",24,pack of 50,19.02,1,19.02,https://www.mcmaster.com/92290A154/,2026-11-19
+"dose, floor, plenum_in, rail, window",92290A154,"316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 16 mm Long, Fully Threaded",39,pack of 50,19.02,1,19.02,https://www.mcmaster.com/92290A154/,2026-11-19
 "bearing_cap, gland",92290A168,"316 Stainless Steel Socket Head Screw, M4 x 0.7 mm Thread, 20 mm Long, Fully Threaded",22,pack of 25,10.40,1,10.40,https://www.mcmaster.com/92290A168/,2026-11-19
 zmount,92290A228,"316 Stainless Steel Socket Head Screw, M5 x 0.8 mm Thread, 12 mm Long, Fully Threaded",4,pack of 25,11.47,1,11.47,https://www.mcmaster.com/92290A228/,2026-11-19
 vac_port,92290A242,"316 Stainless Steel Socket Head Screw, M5 x 0.8 mm Thread, 20 mm Long, Fully Threaded",4,pack of 25,14.30,1,14.30,https://www.mcmaster.com/92290A242/,2026-11-19
