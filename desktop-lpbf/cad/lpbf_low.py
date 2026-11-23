@@ -74,12 +74,25 @@ P["plate_d"], P["bore_d"], P["plate_t"] = MP.MODULES["M50"]["plate_d"], MP.MODUL
 P["ix"], P["iy"] = P["ch_x"] / 2, P["ch_y"] / 2
 P["cx"], P["cy"] = P["ix"] + P["wall"], P["iy"] + P["wall"]
 P["lid_z0"], P["lid_z1"] = P["ch_z"], P["ch_z"] + P["lid"]
-P["z_lens0"] = P["lens_wd"]                              # lens housing bottom
-P["z_bridge1"] = P["lens_wd"] + P["lens_len"]            # galvo mounting face = bridge top
-P["z_bridge0"] = P["z_bridge1"] - 25.0               # 25 mm: FEA put f1 at 79 Hz with 15 mm + 40 mm posts
-P["galvo_riser"] = 10.0                              # basiCube 20 sits on a 10 mm plate so the beam tube clears the reservoir handles
-P["beam_z"] = P["z_bridge1"] + P["galvo_riser"] + VP.GALVO_IN[2]   # 272.7: real beam entry (was z_bridge1 + 45)
+# focus (optics.md §1.3 and §8): the 8 mm window and the 3 mm cover slide sit in the converging beam and push the focus down
+# by t(1 - 1/n), n = 1.44956 (fused silica at 1070 nm, Malitson). analysis/optics/beam_path.py §C computes the same 3.41 mm
+# and checks this value; the lens is raised by it so the focus lands on the powder (it was 3.41 mm below it)
+P["glass_t"] = 8.0 + 3.0
+P["focus_shift"] = round(P["glass_t"] * (1 - 1 / 1.44956), 2)     # 3.41 mm
+P["lens_shim"] = 3.0          # nominal ring-shim stack between the lens's shoulder and the adapter ring: 0-6 mm = +/-3 mm of focus
+P["lens_ring"] = 13.0         # f-theta adapter ring (was 16): engages 9.8 mm of the lens's 12.8 mm M85x1 thread at 3 mm of shims
+P["z_lens0"] = P["lens_wd"] + P["focus_shift"]                      # lens housing bottom (was 182.5)
+P["z_bridge0"] = P["z_lens0"] + 9.2 + P["lens_shim"] + P["lens_ring"]   # 9.2: the lens's output ring below its shoulder
+P["z_bridge1"] = P["z_bridge0"] + 25.0               # 25 mm bridge: FEA put f1 at 79 Hz with 15 mm + 40 mm posts; = z_lens0 + 50.2
+# basiCube 20 on a 5 mm riser (was 10): the y mirror is 30 mm above the galvo's mounting face, so it sits 35 mm above the lens
+# nose (was 40); 5 mm is what the Ø18 beam tube needs to pass 4.1 mm over the reservoir lids' grip plane (z 258) in the bridge slot
+P["galvo_riser"] = 5.0
+P["beam_z"] = P["z_bridge1"] + P["galvo_riser"] + VP.GALVO_IN[2]   # 271.1 (was 272.7)
 P["beam_y"] = VP.GALVO_IN[1]                         # -25.25: the input axis is offset from the lens axis
+P["z_galvo_m2"] = P["z_bridge1"] + P["galvo_riser"] + VP.GALVO_M2[2]   # 2nd galvo mirror (the scan pupil): 35 mm above the lens nose
+# layer camera (optics.md §4.6 and §8): Ø30 bore on the line of sight through the lid and the boss, Ø20 aperture under the
+# window, retaining ring opening Ø21 (analysis/optics/layer_camera.py reads these)
+P["cam_bore_d"], P["cam_ap_d"], P["cam_ring_d"] = 30.0, 20.0, 21.0
 P["z_base1"] = Z_TRAY + FOOT["body"] + FOOT["stem"]     # module base plates (15 mm) on the leveling mounts
 P["z_base0"] = P["z_base1"] - 15.0
 
@@ -745,7 +758,9 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     xd = P["x_dose"]
     lid = lid.cut(box(xd - 6, xd + 6, -P["dose_y"], P["dose_y"], lz0 - 1, lz1 + 1))
     cam_p = V(75, -45, lz1)
-    lid = lid.cut(cyl(11, (75, -45, lz0 - 1), "z", P["lid"] + 2))
+    cam_up = (cam_p - V(0, 0, 0)).normalized()             # the layer camera's line of sight, from the plate centre up through cam_p
+    # Ø30 bore drilled on the line of sight (was a vertical Ø22 hole that cut off the far half of every plate: optics.md §4.6)
+    lid = lid.cut(cq.Solid.makeCylinder(P["cam_bore_d"] / 2, (P["lid"] + 4) / cam_up.z, cam_p - cam_up * ((P["lid"] + 2) / cam_up.z), cam_up))
     for (x, y) in [(100, 50), (40, 70)]:                     # pressure transducer, relief valve: SAE-4 O-ring-boss ports
         lid = sae_port(lid, (x, y, lz1), "-z", P["lid"])
     dz0, dz1 = lz0 + 5.0, lz0 + 11.0                       # cover-slide drawer slot through the lid's front edge
@@ -852,32 +867,37 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add("Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)", box(xd + 17, xd + 30, -6, 6, lz1, zd), C["ss"], 7, (0, 0, 380), mat="steel", bom="M4", mcm="LOADCELL_SP")
     d = (V(0, 0, 0) - cam_p).normalized()
     up = d * -1
-    # camera viewport (item 10): a 2-022 FKM face O-ring under the adapter (4 x M3, joints.py); at the top of the boss a Ø1 in.
-    # window on a 2-017 FKM O-ring, held by a screwed retaining ring that bottoms on the boss over a 1 mm FKM flat ring
-    # the boss now runs on the line of sight through the lid hole (it was 6.5 mm off it, so the old Ø22 bore broke through its wall)
-    adp = cyl(25, (75, -45, lz1), "z", 12).cut(tube(12.9 + F["width"], 12.9, (75, -45, lz1 - 0.01), "z", F["depth"] + 0.01))
+    # camera viewport (item 10; optics.md §8.5): the Ø30 bore runs on the line of sight through the lid and the boss up to a Ø20
+    # aperture under the Ø1 in. window. The bore's ellipse on the lid's top face is 30 x 35.7, so the adapter's face O-ring
+    # moves out to a groove of ID 42 (2-030 FKM, 2.4 % stretch) on a Ø64 adapter (was 2-022 on Ø50, which the Ø30 bore cuts), and
+    # the window sits on a 1 mm FKM flat gasket (ID 21) instead of a 2-017 O-ring, whose groove (ID 17.6) a Ø20 aperture would
+    # cut. 4 x M3 screws on a Ø56 circle (not drawn); a retaining ring bottoms on the boss over a 1 mm FKM flat ring.
+    r_ag = 21.0                                            # adapter groove inner radius (bore ellipse half-length 17.8 + 3.2 land)
+    adp = cyl(32, (75, -45, lz1), "z", 12)
     t_b0 = 12.0 / up.z                                     # where the line of sight leaves the adapter's top face
     bl_ = 26.0
     t_top = t_b0 + bl_
-    tb = t_b0 - 3.9                                        # the boss starts inside the adapter, clear of the lid
-    boss = fuse([adp, cq.Solid.makeCylinder(16, t_top - tb, cam_p + up * tb, up), cq.Solid.makeCylinder(16.5, 6.0, cam_p + up * (t_top - 6.0), up)])
-    boss = boss.cut(cq.Solid.makeCylinder(11, 20 + t_top - 8.0, cam_p - up * 20, up))           # Ø22 bore
-    boss = boss.cut(cq.Solid.makeCylinder(7.5, 10, cam_p + up * (t_top - 8.5), up))             # Ø15 aperture under the window
+    rb_, ra_ = P["cam_bore_d"] / 2, P["cam_ap_d"] / 2
+    # the Ø38 boss runs down to the lid's top face (trimmed there), so its wall closes on the adapter all round
+    bcyl = cq.Solid.makeCylinder(rb_ + 4.0, t_top + 30.0, cam_p - up * 30.0, up).intersect(box(-1e3, 1e3, -1e3, 1e3, lz1, lz1 + 300))
+    boss = fuse([adp, bcyl, cq.Solid.makeCylinder(rb_ + 4.5, 6.0, cam_p + up * (t_top - 6.0), up)])
+    boss = boss.cut(tube(r_ag + F["width"], r_ag, (75, -45, lz1 - 0.01), "z", F["depth"] + 0.01))       # adapter face groove (after the fuse)
+    boss = boss.cut(cq.Solid.makeCylinder(rb_, 20 + t_top - 8.5, cam_p - up * 20, up))       # Ø30 bore on the line of sight
+    boss = boss.cut(cq.Solid.makeCylinder(ra_, 10, cam_p + up * (t_top - 8.6), up))           # Ø20 aperture under the window
     w_top = cam_p + up * t_top
     zw0 = w_top - up * 3.75                                                                      # window seat (3 mm window + 0.75 squeezed ring)
-    boss = boss.cut(cq.Solid.makeCylinder(12.8, 3.76, zw0, up))
-    boss = boss.cut(cq.Solid.makeCylinder(8.8 + 2.3, 1.33, zw0 - up * 1.32, up).cut(cq.Solid.makeCylinder(8.8, 1.4, zw0 - up * 1.35, up)))   # 2-017 groove
-    add("Camera viewport adapter + boss (6061; Ø1 in. window, 1070 nm blocking filter; FKM face O-rings)", boss, C["anod"], 7, (0, 0, 300), mat="al6061", bom="M6")
-    add("Camera adapter O-ring (FKM 75A 2-022, face seal on the lid)", tube(12.9 + F["width"] - 0.3, 12.9, (75, -45, lz1), "z", F["depth"]), C["black"], 7, (0, 0, 300), mat="fkm", bom="M6")
-    add("Camera window (Ø1 in. x 3 mm fused silica, 1070 nm blocking coating)", cq.Solid.makeCylinder(12.7, 3.0, zw0, up), C["glass"], 7, (0, 0, 330), mat="fused_silica", bom="M6", opacity=0.5)
-    add("Camera window O-ring (FKM 75A 2-017, under the window)", cq.Solid.makeCylinder(8.8 + 2.0, 1.32, zw0 - up * 1.32, up).cut(cq.Solid.makeCylinder(8.8, 1.4, zw0 - up * 1.35, up)),
+    boss = boss.cut(cq.Solid.makeCylinder(12.8, 4.51, zw0 - up * 0.75, up))                    # window + its 0.75 mm gasket below
+    add("Camera viewport adapter + boss (6061; Ø30 bore on the line of sight, Ø20 aperture, Ø1 in. window; FKM seals)", boss, C["anod"], 7, (0, 0, 300), mat="al6061", bom="M6")
+    pk_c = MP.pick_ring(2 * math.pi * r_ag)
+    add(f"Camera adapter O-ring (FKM 75A {pk_c[0]}, face seal on the lid)", tube(r_ag + F["width"] - 0.3, r_ag, (75, -45, lz1), "z", F["depth"]), C["black"], 7, (0, 0, 300), mat="fkm", bom="M6")
+    add("Camera window (Ø1 in. x 3 mm fused silica; FESH0950 short-pass filter behind it in the lens)", cq.Solid.makeCylinder(12.7, 3.0, zw0, up), C["glass"], 7, (0, 0, 330), mat="fused_silica", bom="M6", opacity=0.5)
+    add("Camera window gasket, under the window (FKM 75A sheet, 1.0 mm, squeezed to 0.75; ID 21)", cq.Solid.makeCylinder(12.6, 0.75, zw0 - up * 0.75, up).cut(cq.Solid.makeCylinder(P["cam_ring_d"] / 2, 1.0, zw0 - up * 0.85, up)),
         C["black"], 7, (0, 0, 330), mat="fkm", bom="M6")
-    add("Camera window flat ring (FKM 75A sheet, 1.0 mm, squeezed to 0.75)", cq.Solid.makeCylinder(12.6, 0.75, zw0 + up * 3.0, up).cut(cq.Solid.makeCylinder(9.0, 1.0, zw0 + up * 2.9, up)),
+    add("Camera window flat ring (FKM 75A sheet, 1.0 mm, squeezed to 0.75)", cq.Solid.makeCylinder(12.6, 0.75, zw0 + up * 3.0, up).cut(cq.Solid.makeCylinder(P["cam_ring_d"] / 2, 1.0, zw0 + up * 2.9, up)),
         C["black"], 7, (0, 0, 330), mat="fkm", bom="M6")
-    rr_c = cq.Solid.makeCylinder(16.5, 3.0, w_top, up).cut(cq.Solid.makeCylinder(9.0, 3.2, w_top - up * 0.1, up))
+    rr_c = cq.Solid.makeCylinder(16.5, 3.0, w_top, up).cut(cq.Solid.makeCylinder(P["cam_ring_d"] / 2, 3.2, w_top - up * 0.1, up))
     add("Camera window retaining ring (bottoms metal-to-metal on the boss)", rr_c, C["anod"], 7, (0, 0, 335), mat="al6061", bom="M6")
-    GLANDS["camera_adapter"] = dict(kind="face", ring="2-022", cs=1.78, depth=F["depth"], width=F["width"], groove_id=25.8, groove_mat="al", T=45.0, closure="camera adapter on the lid")
-    GLANDS["camera_window"] = dict(kind="face", ring="2-017", cs=1.78, depth=F["depth"], width=F["width"], groove_id=17.6, groove_mat="al", T=45.0, closure="camera window on the boss")
+    GLANDS["camera_adapter"] = dict(kind="face", ring=pk_c[0], cs=1.78, depth=F["depth"], width=F["width"], groove_id=2 * r_ag, groove_mat="al", T=45.0, closure="camera adapter on the lid")
     cam_base = w_top + up * 3.0
     cam = comp([cq.Solid.makeCylinder(15, 38, cam_base, up),
                 place(box(-19, 19, -19, 19, 0, 8), (cam_base + up * 38).toTuple(), (0, 1, 0), up.toTuple())])
@@ -945,21 +965,61 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     zl0 = P["z_lens0"]
     lens = VP.thorlabs_fth160_1064().translate(V(0, 0, zl0))
     add("f-theta lens, f = 160 mm (Thorlabs FTH160-1064)", lens, C["black"], 9, (0, 0, 300), mat="misc", mass_kg=0.8, bom="L6")
-    # the lens's M85x1 thread (z 191.7-204.5) ends 3.2 mm below the bridge: a 16 mm adapter ring takes it
-    add("f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge)", tube(55.0, 42.5, (0, 0, zl0 + 9.2), "z", zb0_ - zl0 - 9.2), C["anod"], 9, (0, 0, 280), mat="al6061", bom="L6")
-    g = P["galvo"] / 2
-    galvo = VP.scanlab_basicube20().translate(V(0, 0, zb1_ + P["galvo_riser"]))
+    # focus (optics.md §8.1): the lens sits 3.41 mm higher than its flange focal length so the window and slide put the focus on
+    # the powder. Its shoulder (z_lens0 + 9.2) bears on a 3 mm stack of ring shims (ID 85.5, OD 105, laser-cut from McMaster
+    # 18-8 shim stock 95055K25 0.5 mm, 95055K19 0.25 mm and 95055K13 0.1 mm: McMaster has no ring shim over 80 mm ID) under a 13 mm adapter ring:
+    # 0-6 mm of shims sets the focus +/-3 mm (burn test, optics.md §4.2); the M85x1 thread engages 6.8-12.8 mm over that range
+    zsh = zl0 + 9.2
+    add("f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; 3 mm nominal stack: 0-6 mm = +/-3 mm of focus)",
+        tube(52.5, 42.75, (0, 0, zsh), "z", P["lens_shim"]), C["steel"], 9, (0, 0, 270), mat="ss304", bom="F5", mcm="95055K25")
+    add("f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridge)", tube(55.0, 42.5, (0, 0, zsh + P["lens_shim"]), "z", P["lens_ring"]),
+        C["anod"], 9, (0, 0, 280), mat="al6061", bom="F5")
+    zg0 = zb1_ + P["galvo_riser"]
+    galvo = VP.scanlab_basicube20().translate(V(0, 0, zg0))
     add("2-axis galvo scan head (SCANLAB basiCube 20)", galvo, C["anod"], 9, (0, 0, 340), mat="misc", mass_kg=3.75, bom="L5")
-    add("Galvo riser plate (6061, 10 mm)", box(-57.15, 97.85, -71.75, 58.25, zb1_, zb1_ + P["galvo_riser"]), C["alu_dark"], 9, (0, 0, 330), mat="al6061", bom="L5")
+    rs = box(-57.15, 97.85, -71.75, 58.25, zb1_, zg0).cut(cyl(20, (0, 0, zb1_ - 1), "z", P["galvo_riser"] + 2))
+    add("Galvo riser plate (6061, 5 mm, Ø40 bore for the scanned beam)", rs, C["alu_dark"], 9, (0, 0, 330), mat="al6061", bom="F5")
+    # beam line (optics.md §4.5 and §8.4): the collimator lies along x 120 mm behind the galvo's input line; a laser-line mirror
+    # folds the beam to -y, through the shutter, onto a 45 deg short-pass dichroic (DMSP1000) that reflects 1070 nm into the
+    # galvo. The melt pool's 520-985 nm light comes back de-scanned through the galvo, passes the dichroic and reaches the
+    # photodiode behind it: the laser only ever reflects off dielectric HR coats and never crosses a substrate.
     yb_, bz_ = P["beam_y"], P["beam_z"]
-    btube = tube(10, 8, (-140, yb_, bz_), "x", 140 + VP.GALVO_IN[0])
-    add("Enclosed beam tube", btube, C["anod"], 9, (0, 0, 340), mat="al6061", bom="L4")
-    sh = fuse([rbox(-200, -140, yb_ - 32, yb_ + 32, bz_ - 26, bz_ + 26, 4), box(-190, -150, yb_ - 20, yb_ + 20, zb1_, bz_ - 26)])
+    hc = 41.9 / 2                                          # cage-cube half side (VP.thorlabs_cage_cube)
+    xD, yC = -155.0, yb_ + 120.0                           # dichroic on the galvo's input line; collimator line (+y)
+    ym = (yb_ + yC) / 2                                    # shutter centre on the fold leg
+    bt = [tube(9, 7, (xD + hc, yb_, bz_), "x", VP.GALVO_IN[0] - xD - hc),
+          tube(9, 7, (xD, yb_ + hc, bz_), "y", ym - 30.0 - yb_ - hc),
+          tube(9, 7, (xD, ym + 30.0, bz_), "y", yC - hc - ym - 30.0)]
+    add("Enclosed beam tubes (6061, Ø18 x 2: dichroic to galvo, fold leg)", comp(bt), C["anod"], 9, (0, 0, 340), mat="al6061", bom="F5")
+    cube_posts = [box(xD - 12, xD + 12, y - 12, y + 12, zb1_, bz_ - hc) for y in (yb_, yC)]
+    add("Coaxial-monitoring dichroic (Thorlabs DMSP1000, 45 deg: reflects 1070 nm into the galvo, passes 520-985 nm) in a 30 mm cage cube",
+        fuse([VP.thorlabs_cage_cube().translate(V(xD, yb_, bz_)), cube_posts[0]]), C["anod"], 9, (0, 0, 340), mat="misc", mass_kg=0.15, bom="T2")
+    add("Fold mirror (Thorlabs NB1-K14, Ø1 in. Nd:YAG laser-line mirror, 45 deg) in a 30 mm cage cube",
+        fuse([VP.thorlabs_cage_cube().translate(V(xD, yC, bz_)), cube_posts[1]]), C["anod"], 9, (0, 0, 340), mat="misc", mass_kg=0.15, bom="T2")
+    sh = fuse([rbox(xD - 32, xD + 32, ym - 30, ym + 30, bz_ - 26, bz_ + 26, 4), box(xD - 20, xD + 20, ym - 20, ym + 20, zb1_, bz_ - 26)])
     add("Safety shutter + beam dump", sh, C["yellow"], 9, (0, 0, 340), mat="misc", mass_kg=1.2, bom="L4")
-    coll = fuse([VP.ipg_collimator_d5().translate(V(-210, yb_, bz_)), box(-300, -230, yb_ - 20, yb_ + 20, zb1_, bz_ - 15)])   # IPG 5 mm collimator + V-mount
-    add("Collimator (IPG, 5 mm beam, 128 mm + 78 mm strain relief) on V-mount", coll, C["ss"], 9, (0, 0, 340), mat="misc", mass_kg=0.5, bom="L3")
-    fiber = polyline_pipe([(-416, yb_, bz_), (-421, -32, 262), (-422, -40, 230), (-430, -150, 150), (-460, -220, 60), (-560, -260, 0), (-600, -280, -20)], 5)
+    xp0 = xD - hc                                          # dichroic cube's -x face: the photodiode chain runs on along -x
+    pdc = [tube(15.25, 12.7, (xp0 - 55.0, yb_, bz_), "x", 55.0), VP.thorlabs_pda36a2().translate(V(xp0 - 55.0, yb_, bz_)),
+           box(xp0 - 72.0, xp0 - 60.0, yb_ - 10, yb_ + 10, zb1_, bz_ - 25.4)]
+    add("Coaxial photodiode chain (SM1 tube: FESH1000 short-pass, NF1064-44 notch, AC254-050-B lens; Thorlabs PDA36A2)", comp(pdc), C["black"], 9, (0, 0, 340),
+        mat="misc", mass_kg=0.35, bom="T2")
+    xc_ = xD - hc - 5.0                                    # collimator output face, beam toward +x
+    coll = fuse([VP.ipg_collimator_d25().translate(V(xc_, yC, bz_)), box(xc_ - 90, xc_ - 20, yC - 20, yC + 20, zb1_, bz_ - 15)])
+    add("Collimator (IPG affixed, 2.5 mm beam: 96 µm at f = 160; housing drawn as the 5 mm unit, 128 mm + 78 mm strain relief) on V-mount", coll, C["ss"], 9, (0, 0, 340), mat="misc", mass_kg=0.5, bom="L3")
+    xe_ = xc_ - 206.0
+    fiber = polyline_pipe([(xe_, yC, bz_), (xe_ - 14, yC - 8, bz_ - 18), (-412, 60, 228), (-424, -60, 170), (-430, -150, 150), (-460, -220, 60),
+                           (-560, -260, 0), (-600, -280, -20)], 5)
     add("Process fiber (armoured, ≥ 100 mm bend radius)", fiber, C["fiber"], 9, (0, 0, 300), mat="misc", mass_kg=0.6, bom="L1", module="rack")
+    # calibration fixture (optics.md §4.1 and §8.4): a thin water-cooled 500 W head on a stand on the plate, aperture 95 mm above
+    # it (31 mm under the slide), for the power through the f-theta, window and slide. The fan-cooled 600 W head (UP55G-600F,
+    # 120 x 120 x 135) is taller than the chamber (120). Tagged 'calibration' (+ 'context': not part of the machine's mass,
+    # envelope or inventory); analysis/interference.py checks it only in its calibration state.
+    zh_ = 95.0
+    add("Calibration power head on the plate (Gentec-EO UP55M-500W-H12-D0, water-cooled 500 W, aperture z 95; calibration state only)",
+        VP.gentec_up55m_500w().translate(V(0, 0, zh_)), C["black"], 9, (0, -200, 0), mat="misc", mass_kg=0.81, bom="T1", tags=("context", "calibration"))
+    std = fuse([cyl(12.0, (0, 0, 0), "z", 6.0), cyl(6.0, (0, 0, 5.9), "z", zh_ - 43.0 - 6.0 - 5.8), box(-30, 30, -30, 30, zh_ - 43.0 - 6.0, zh_ - 43.0)])
+    add("Calibration stand for the power head (6061: Ø24 foot on the plate, Ø12 column, 60 x 60 table)", std, C["alu"], 9, (0, -200, 0), mat="al6061", bom="T1",
+        tags=("context", "calibration"))
 
     # ===================== 10. Gas & vacuum module =====================
     g0 = zb1
@@ -997,7 +1057,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
 
     # ===================== 12. Laser guard =====================
     gx0, gx1, gy0, gy1 = -420.0, 310.0, -265.0, 215.0     # was -370 / 290: real collimator (206 mm) and KF-25 ball valve (124 mm)
-    gz0, gz1 = zb1, P["z_bridge1"] + P["galvo_h"] + 25.0
+    gz0, gz1 = zb1, P["z_bridge1"] + P["galvo_riser"] + VP.GALVO_H + 3.0   # top panel 3 mm over the galvo (was z_bridge1 + 135 = 367.7)
     fr = []
     for x in (gx0 + 10, gx1 - 10):
         for y in (gy0 + 10, gy1 - 10):

@@ -19,6 +19,10 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 OUT = HERE.parent / "out" / "optics"
 OUT.mkdir(parents=True, exist_ok=True)
+import sys  # noqa: E402
+sys.path.insert(0, str(HERE.parents[1] / "cad"))
+import lpbf_low as MODEL  # noqa: E402  (the camera bore, aperture and ring sizes come from the model's P block)
+MP_ = MODEL.P
 
 CAM_P = np.array([75.0, -45.0, 136.0])
 UP = CAM_P / np.linalg.norm(CAM_P)              # from the plate centre toward the camera
@@ -33,10 +37,12 @@ PLATES = {"S25": 25.4 / 2, "M50": 50.8 / 2, "L75": 76.2 / 2}
 LENSES = {"6 mm (Raspberry Pi CS-mount)": 6.0, "12 mm C-mount": 12.0, "16 mm (Raspberry Pi C-mount)": 16.0, "25 mm C-mount": 25.0}
 
 
+_b, _a, _r = MP_["cam_bore_d"], MP_["cam_ap_d"], MP_["cam_ring_d"]
 VARIANTS = {
-    "as drawn (vertical Ø22 lid hole, Ø22 bore, Ø15 aperture)": dict(lid="vertical", lid_r=11.0, bore_r=11.0, ap_r=7.5),
-    "lid hole drilled on the line of sight, Ø22": dict(lid="axis", lid_r=11.0, bore_r=11.0, ap_r=7.5),
-    "Ø30 on the line of sight through lid and boss, Ø20 aperture": dict(lid="axis", lid_r=15.0, bore_r=15.0, ap_r=10.0),
+    f"as drawn (2026-11-23: Ø{_b:.0f} bore on the line of sight through lid and boss, Ø{_a:.0f} aperture, Ø{_r:.0f} ring)":
+        dict(lid="axis", lid_r=_b / 2, bore_r=_b / 2, ap_r=_a / 2, ring_r=_r / 2),
+    "before (vertical Ø22 lid hole, Ø22 bore, Ø15 aperture)": dict(lid="vertical", lid_r=11.0, bore_r=11.0, ap_r=7.5, ring_r=9.0),
+    "lid hole drilled on the line of sight, Ø22": dict(lid="axis", lid_r=11.0, bore_r=11.0, ap_r=7.5, ring_r=9.0),
 }
 
 
@@ -56,7 +62,7 @@ def openings_pass(P, Q, var=None):
     else:
         axis = ((-16.0 / UP[2], 0.0, var["lid_r"]), (0.0, 31.77, var["bore_r"]))
     # along-axis openings: (t0, t1, radius)
-    for t0, t1, rad in axis + ((31.77, 36.52, var["ap_r"]), (36.52, 39.52, 12.7), (40.27, 43.27, 9.0)):
+    for t0, t1, rad in axis + ((31.77, 36.52, var["ap_r"]), (36.52, 39.52, 12.7), (40.27, 43.27, var["ring_r"])):
         for t in np.linspace(t0, t1, 5):
             # plane perpendicular to the axis at distance t from cam_p
             c = CAM_P + UP * t
@@ -157,7 +163,7 @@ try:
     X, Y = np.meshgrid(g, g)
     pts = np.stack([X.ravel(), Y.ravel(), np.zeros(X.size)], -1)
     fig, axs = plt.subplots(1, 2, figsize=(9, 4.3), dpi=150)
-    for ax, (vname, var) in zip(axs, [list(VARIANTS.items())[0], list(VARIANTS.items())[2]]):
+    for ax, (vname, var) in zip(axs, [list(VARIANTS.items())[1], list(VARIANTS.items())[0]]):
         T = openings_pass(pts[:, None, :], Q[None, :, :], var).mean(axis=1).reshape(X.shape)
         im = ax.pcolormesh(X, Y, 100 * T, cmap="Greys_r", vmin=0, vmax=100, shading="auto")
         for pl, R in PLATES.items():
@@ -167,7 +173,7 @@ try:
         ax.set_aspect("equal")
         ax.set_xlabel("x (mm)")
         ax.set_ylabel("y (mm)")
-        ax.set_title(vname.split(" (")[0] if "drawn" in vname else "Ø30 bore on the line of sight, Ø20 aperture", fontsize=8)
+        ax.set_title("before: vertical Ø22 lid hole" if vname.startswith("before") else f"as drawn: Ø{_b:.0f} bore on the line of sight, Ø{_a:.0f} aperture", fontsize=8)
     fig.colorbar(im, ax=axs, label="% of the pupil that sees the point (12 mm, f/4)")
     fig.suptitle("Layer camera: vignetting by the lid hole and the boss (camera toward +x, -y)", fontsize=9)
     fig.savefig(OUT / "layer_camera.png")

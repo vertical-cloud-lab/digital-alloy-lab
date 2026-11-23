@@ -212,6 +212,9 @@ class Model:
             self.man.append(m)
             self.fcl.append(to_fcl(p.shape)[0])
         self.ctx = [("context" in p.tags) for p in self.parts]
+        # calibration fixtures (tagged 'calibration' + 'context', e.g. the power head on the plate) are checked only in states
+        # with "_calibration" set; everywhere else they are context, like the tray
+        self.cal = [("calibration" in p.tags) for p in self.parts]
         print(f"meshed {len(self.parts)} parts in {time.time() - t0:.1f} s", flush=True)
 
     def posed(self, state):
@@ -240,11 +243,13 @@ class Model:
         bbs = [bbox_of(m) if m is not None else None for m in mans]
         hits, joints, n = [], [], 0
         N = len(mans)
+        cal = bool(state.get("_calibration"))
+        skip = [c and not (cal and k) for c, k in zip(self.ctx, self.cal)]
         for i in range(N):
-            if mans[i] is None or self.ctx[i]:
+            if mans[i] is None or skip[i]:
                 continue
             for j in range(i + 1, N):
-                if mans[j] is None or self.ctx[j]:
+                if mans[j] is None or skip[j]:
                     continue
                 if only is not None and (i in only) == (j in only):
                     continue
@@ -303,7 +308,9 @@ def main():
               "plate exchange: doors open, plate up 8 mm": {"door": M.MOTION["door"]["hi"], "gdoor": M.MOTION["gdoor"]["hi"], "piston": M.MOTION["piston"]["hi"]},
               "doors open, reservoir and drawer out": {"door": M.MOTION["door"]["hi"], "gdoor": M.MOTION["gdoor"]["hi"], "cartridge": M.MOTION["cartridge"]["lo"],
                                                         "drawer": M.MOTION["drawer"]["lo"]},
-              "module swap: arm released, module dropped": {"zstage": M.MOTION["zstage"]["lo"], "module": M.MP.MODULE_DROP, "gdoor": M.MOTION["gdoor"]["hi"]}}
+              "module swap: arm released, module dropped": {"zstage": M.MOTION["zstage"]["lo"], "module": M.MP.MODULE_DROP, "gdoor": M.MOTION["gdoor"]["hi"]},
+              # optics calibration (optics.md §4.1): power head on its stand on the plate, chamber door down for its water lines, recoater parked
+              "calibration: power head on the plate, chamber door open": {"_calibration": 1.0, "door": M.MOTION["door"]["hi"]}}
     for label, st in states.items():
         n, hits, joints = md.check(st)
         rep["states"].append(dict(state=label, pose=st, pairs_checked=n,

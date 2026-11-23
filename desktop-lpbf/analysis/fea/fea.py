@@ -820,10 +820,19 @@ def case6(parts, R):
     zb1 = P["z_base1"]
     zb1_ = P["z_bridge1"]
     beam_z = P["beam_z"]
-    galvo_cm = (2.5 * (zb1_ + P["galvo_h"] / 2) + 0.6 * (P["z_lens0"] + P["lens_len"] / 2)) / 3.1
-    masses = {"GALVO": (3.1e-3, (0.0, 0.0, galvo_cm), lambda q: (np.abs(q[:, 0]) <= 57.5) & (np.abs(q[:, 1]) <= 57.5)),
-              "SHUTTER": (1.2e-3, (-170.0, 0.0, beam_z), lambda q: (q[:, 0] >= -190) & (q[:, 0] <= -150) & (np.abs(q[:, 1]) <= 20)),
-              "COLLIM": (0.5e-3, (-265.0, 0.0, beam_z), lambda q: (q[:, 0] >= -300) & (q[:, 0] <= -230) & (np.abs(q[:, 1]) <= 20))}
+    # masses and positions from lpbf_low.py section 9 (2026-11-23 layout): basiCube 20 3.75 kg (brochure) on its 5 mm riser and the
+    # FTH160-1064 0.8 kg (Thorlabs) as one rigid body on the riser's footprint; the shutter on the fold leg at x -155; the collimator
+    # on its V-mount on the line 120 mm behind the galvo input; the dichroic + photodiode chain (0.5 kg, centre of mass at x -195)
+    # and the fold mirror (0.15 kg) on their cube posts
+    zg_ = zb1_ + P["galvo_riser"]
+    galvo_cm = (3.75 * (zg_ + 61.0) + 0.8 * (P["z_lens0"] + P["lens_len"] / 2)) / 4.55
+    yb_ = P["beam_y"]
+    yc_ = yb_ + 120.0
+    masses = {"GALVO": (4.55e-3, (16.8, -5.6, galvo_cm), lambda q: (q[:, 0] >= -57.15) & (q[:, 0] <= 97.85) & (q[:, 1] >= -71.75) & (q[:, 1] <= 58.25)),
+              "SHUTTER": (1.2e-3, (-155.0, 34.75, beam_z), lambda q: (np.abs(q[:, 0] + 155.0) <= 20) & (np.abs(q[:, 1] - 34.75) <= 20)),
+              "COLLIM": (0.5e-3, (-255.0, yc_, beam_z), lambda q: (q[:, 0] >= -271) & (q[:, 0] <= -201) & (np.abs(q[:, 1] - yc_) <= 20)),
+              "TAP": (0.5e-3, (-195.0, yb_, beam_z), lambda q: (np.abs(q[:, 0] + 155.0) <= 20) & (np.abs(q[:, 1] - yb_) <= 20)),
+              "FOLD": (0.15e-3, (-155.0, yc_, beam_z), lambda q: (np.abs(q[:, 0] + 155.0) <= 20) & (np.abs(q[:, 1] - yc_) <= 20))}
     out = []
     # mesh: hmax, hmin, elements per circle. *FREQUENCY needs a direct solver (SPOOLES; this ccx has no PARDISO or PaStiX), and
     # the bridge's mesh is set by its volume, not its details: hmax 7 gave 141,500 nodes for 6a (SPOOLES: 3.0 GB) and 350,000

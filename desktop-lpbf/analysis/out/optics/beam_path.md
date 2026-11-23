@@ -6,11 +6,12 @@
 
 | Collimator | f_c (mm) | D (mm) | Spot, M² 1.05 / 1.1 (µm) | Rayleigh range ±z_R (mm) | ±5 % / ±10 % spot growth (mm) | Spot at f = 254 (µm) | Galvo Ø20 clip |
 |---|---|---|---|---|---|---|---|
-| IPG standard, 5 mm beam (drawn in the model) | 35.7 | 5.00 | 46 / 48 [46–48] | 1.53 | 0.49 / 0.70 | 76 | 1.3e-14 |
+| IPG affixed 2.5 mm (drawn from 2026-11-23; YLR series datasheet rev 2/26) | 17.9 | 2.50 | 92 / 96 [92–96] | 6.14 | 1.97 / 2.81 | 152 | 2.6e-56 |
+| IPG 2.5 mm + Sill S6EXK0012-328 1.2x expander (catalogue, no power rating) | 21.4 | 3.00 | 76 / 80 [76–80] | 4.26 | 1.36 / 1.95 | 127 | 2.5e-39 |
+| D = 3.2 mm (the ~75 um target; f_c ~ 23 mm: no catalogue part found) | 22.9 | 3.20 | 72 / 75 [72–75] | 3.75 | 1.20 / 1.72 | 119 | 1.2e-34 |
+| Wavelength COL-1070-D25-F30 (QBH, f = 30 mm; also low-profile.md's label) | 30.0 | 4.20 | 54 / 57 [51–61] | 2.17 | 0.70 / 1.00 | 91 | 2.0e-20 |
+| IPG standard, 5 mm beam (drawn until 2026-11-22) | 35.7 | 5.00 | 46 / 48 [46–48] | 1.53 | 0.49 / 0.70 | 76 | 1.3e-14 |
 | IPG standard, 7.5 mm beam | 53.6 | 7.50 | 31 / 32 [31–32] | 0.68 | 0.22 / 0.31 | 51 | 6.7e-07 |
-| f = 30 mm QBH collimator (the model's label, low-profile.md) | 30.0 | 4.20 | 54 / 57 [51–61] | 2.17 | 0.70 / 1.00 | 91 | 2.0e-20 |
-| D = 3.2 mm (the ~75 um target; f_c ~ 23 mm) | 22.9 | 3.20 | 72 / 75 [72–75] | 3.75 | 1.20 / 1.72 | 119 | 1.2e-34 |
-| IPG affixed 2.5 mm option (YLR series datasheet rev 2/26) | 17.9 | 2.50 | 92 / 96 [92–96] | 6.14 | 1.97 / 2.81 | 152 | 2.6e-56 |
 
 Collimated beam needed for a given spot at f = 160 mm (M² 1.1): 60 µm → D 4.00 mm, f_c 28.5 mm (26.6–30.7); 70 µm → D 3.43 mm, f_c 24.5 mm (22.8–26.3); 75 µm → D 3.20 mm, f_c 22.8 mm (21.3–24.6); 80 µm → D 3.00 mm, f_c 21.4 mm (20.0–23.1); 90 µm → D 2.66 mm, f_c 19.0 mm (17.8–20.5); 100 µm → D 2.40 mm, f_c 17.1 mm (16.0–18.4)
 
@@ -18,13 +19,14 @@ Fibre: the divergence spec implies a 10.2 µm beam diameter at the fibre end (9.
 
 ## C. Where the focus lands
 
-The model puts the lens's air focus on the powder plane. The 8 mm window and 3 mm slide push it **3.41 mm below the powder plane**. Spot on the powder plane as drawn (M² 1.1, 140 mrad):
+The 8 mm window and 3 mm slide push the focus down by **3.41 mm**. The model now raises the lens by 3.41 mm (lens output end z 185.91), so the focus lands at z = -0.001 mm; with the optics BOM's glass (9.53 mm window, 2 mm slide) the shift is 3.58 mm and the focus lands at -0.17 mm, inside the ±3 mm of shims. Spot on the powder plane as drawn, and before the lens was raised (M² 1.1, 140 mrad):
 
-- IPG standard, 5 mm beam (drawn in the model): 48 µm at focus, **117 µm on the powder** (2.2 z_R out)
-- IPG standard, 7.5 mm beam: 32 µm at focus, **163 µm on the powder** (5.0 z_R out)
-- f = 30 mm QBH collimator (the model's label, low-profile.md): 57 µm at focus, **106 µm on the powder** (1.6 z_R out)
-- D = 3.2 mm (the ~75 um target; f_c ~ 23 mm): 75 µm at focus, **101 µm on the powder** (0.9 z_R out)
-- IPG affixed 2.5 mm option (YLR series datasheet rev 2/26): 96 µm at focus, **110 µm on the powder** (0.6 z_R out)
+- IPG affixed 2.5 mm (drawn from 2026-11-23; YLR series datasheet rev 2/26): 96 µm at focus, **96 µm on the powder** (before: 110 µm, 0.6 z_R out)
+- IPG 2.5 mm + Sill S6EXK0012-328 1.2x expander (catalogue, no power rating): 80 µm at focus, **80 µm on the powder** (before: 102 µm, 0.8 z_R out)
+- D = 3.2 mm (the ~75 um target; f_c ~ 23 mm: no catalogue part found): 75 µm at focus, **75 µm on the powder** (before: 101 µm, 0.9 z_R out)
+- Wavelength COL-1070-D25-F30 (QBH, f = 30 mm; also low-profile.md's label): 57 µm at focus, **57 µm on the powder** (before: 106 µm, 1.6 z_R out)
+- IPG standard, 5 mm beam (drawn until 2026-11-22): 48 µm at focus, **48 µm on the powder** (before: 117 µm, 2.2 z_R out)
+- IPG standard, 7.5 mm beam: 32 µm at focus, **32 µm on the powder** (before: 163 µm, 5.0 z_R out)
 
 | Focus budget item | mm | kind |
 |---|---|---|
@@ -37,20 +39,20 @@ The model puts the lens's air focus on the powder plane. The 8 mm window and 3 m
 
 | k | Plate | r (mm) | Scan, optical (°) | Mirror (°) | AOI (°) | Elongation (%) | Plate lateral shift (mm) | Extra focus shift (mm) | Astigmatism (mm) | Chief ray r at slide / window / lens out (mm) |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 0.3 | S25 | 12.7 | 4.5 | 2.3 | 1.4 | 0.03 | 0.081 | 0.000 | 0.002 | 9.7 / 9.1 / 8.4 |
-| 0.3 | M50 | 25.4 | 9.1 | 4.5 | 2.7 | 0.11 | 0.163 | 0.001 | 0.009 | 19.3 / 18.2 / 16.7 |
-| 0.3 | L75 | 38.1 | 13.6 | 6.8 | 4.1 | 0.26 | 0.244 | 0.001 | 0.020 | 29.0 / 27.2 / 25.0 |
-| 0.5 | S25 | 12.7 | 4.5 | 2.3 | 2.3 | 0.08 | 0.135 | 0.000 | 0.006 | 7.6 / 6.7 / 5.5 |
-| 0.5 | M50 | 25.4 | 9.1 | 4.5 | 4.5 | 0.32 | 0.271 | 0.002 | 0.025 | 15.3 / 13.3 / 10.9 |
-| 0.5 | L75 | 38.1 | 13.6 | 6.8 | 6.8 | 0.71 | 0.409 | 0.004 | 0.057 | 22.8 / 19.9 / 16.3 |
-| 0.75 | S25 | 12.7 | 4.5 | 2.3 | 3.4 | 0.18 | 0.203 | 0.001 | 0.014 | 5.1 / 3.6 / 1.8 |
-| 0.75 | M50 | 25.4 | 9.1 | 4.5 | 6.8 | 0.71 | 0.409 | 0.004 | 0.057 | 10.1 / 7.2 / 3.6 |
-| 0.75 | L75 | 38.1 | 13.6 | 6.8 | 10.2 | 1.62 | 0.617 | 0.009 | 0.128 | 15.1 / 10.7 / 5.2 |
+| 0.3 | S25 | 12.7 | 4.5 | 2.3 | 1.4 | 0.03 | 0.081 | 0.000 | 0.002 | 9.7 / 9.1 / 8.3 |
+| 0.3 | M50 | 25.4 | 9.1 | 4.5 | 2.7 | 0.11 | 0.163 | 0.001 | 0.009 | 19.3 / 18.2 / 16.5 |
+| 0.3 | L75 | 38.1 | 13.6 | 6.8 | 4.1 | 0.26 | 0.244 | 0.001 | 0.020 | 29.0 / 27.2 / 24.8 |
+| 0.5 | S25 | 12.7 | 4.5 | 2.3 | 2.3 | 0.08 | 0.135 | 0.000 | 0.006 | 7.6 / 6.7 / 5.3 |
+| 0.5 | M50 | 25.4 | 9.1 | 4.5 | 4.5 | 0.32 | 0.271 | 0.002 | 0.025 | 15.3 / 13.3 / 10.6 |
+| 0.5 | L75 | 38.1 | 13.6 | 6.8 | 6.8 | 0.71 | 0.409 | 0.004 | 0.057 | 22.8 / 19.9 / 15.9 |
+| 0.75 | S25 | 12.7 | 4.5 | 2.3 | 3.4 | 0.18 | 0.203 | 0.001 | 0.014 | 5.1 / 3.6 / 1.6 |
+| 0.75 | M50 | 25.4 | 9.1 | 4.5 | 6.8 | 0.71 | 0.409 | 0.004 | 0.057 | 10.1 / 7.2 / 3.2 |
+| 0.75 | L75 | 38.1 | 13.6 | 6.8 | 10.2 | 1.62 | 0.617 | 0.009 | 0.128 | 15.1 / 10.7 / 4.5 |
 
-Thin-lens estimate of k (lens at z 160, stop at the mirrors, z 272.7): exit pupil 381 mm above the lens, k = 0.30. The lens's real principal planes are not published, so the tables span k = 0.3-0.75.
+Thin-lens estimate of k (lens at H', z 163.4; stop at the 2nd mirror, z 271.1): exit pupil 329 mm above the lens, k = 0.33. The lens's real principal planes are not published, so the tables span k = 0.3-0.75.
 
 
-k from a thin lens with its front principal plane between the lens body's middle and H' (z 160): as drawn (2nd mirror ~40 mm above the nose): 0.30-0.59; Thorlabs A1 = 7.5 mm (2nd mirror 7.5 mm above the nose): 0.50-0.80
+k from a thin lens with its front principal plane between the lens body's middle and H' (z 160): as drawn (2nd mirror 35 mm above the nose): 0.33-0.62; before 2026-11-23 (2nd mirror 40 mm above the nose): 0.30-0.59; Thorlabs A1 = 7.5 mm (2nd mirror 7.5 mm above the nose): 0.50-0.80
 
 Clear diameter each lid opening needs to pass the L75 edge (r 38.1 mm) with < 0.1 % clipped (mm):
 
@@ -67,12 +69,29 @@ Largest plate radius each lid aperture passes with < 0.1 % clipped (mm; plates a
 
 | Collimator | k | lid bore Ø56 | drawer opening Ø46 | field stop Ø36 | window flange bore (below window) Ø42 | window retaining ring (above window) Ø44 | field stop, 50 % reach |
 |---|---|---|---|---|---|---|---|
+| IPG 2.5 mm (drawn) | 0.3 | 34.3 | 28.1 | 21.8 | 26.0 | 28.5 | 23.9 |
+| IPG 2.5 mm (drawn) | 0.5 | 42.6 | 35.3 | 27.8 | 33.7 | 39.6 | 30.5 |
+| IPG 2.5 mm (drawn) | 0.75 | 60.0 | 53.4 | 43.4 | 55.5 | 60.0 | 48.0 |
 | IPG 5 mm | 0.3 | 32.4 | 26.1 | 19.7 | 23.8 | 25.8 | 23.9 |
 | IPG 5 mm | 0.5 | 40.3 | 32.8 | 25.1 | 30.9 | 35.8 | 30.5 |
 | IPG 5 mm | 0.75 | 59.1 | 49.3 | 39.0 | 50.3 | 60.0 | 48.0 |
 | D 3.2 mm | 0.3 | 33.7 | 27.5 | 21.2 | 25.4 | 27.7 | 23.9 |
 | D 3.2 mm | 0.5 | 42.0 | 34.6 | 27.1 | 32.9 | 38.5 | 30.5 |
 | D 3.2 mm | 0.75 | 60.0 | 52.3 | 42.2 | 54.0 | 60.0 | 48.0 |
+
+L75 reach as drawn (k over the drawn thin-lens range; the opening that limits it; < 0.1 % clipped):
+
+| Collimator | k | Reach (mm) | Limited by | L75 (38.1) | M50 (25.4) |
+|---|---|---|---|---|---|
+| IPG 2.5 mm (drawn) | 0.33 | 22.4 | field stop | no | no |
+| IPG 2.5 mm (drawn) | 0.48 | 26.9 | field stop | no | yes |
+| IPG 2.5 mm (drawn) | 0.62 | 33.8 | field stop | no | yes |
+| D 3.2 mm | 0.33 | 21.8 | field stop | no | no |
+| D 3.2 mm | 0.48 | 26.2 | field stop | no | yes |
+| D 3.2 mm | 0.62 | 32.8 | field stop | no | yes |
+| IPG 5 mm | 0.33 | 20.3 | field stop | no | no |
+| IPG 5 mm | 0.48 | 24.3 | field stop | no | no |
+| IPG 5 mm | 0.62 | 30.5 | field stop | no | yes |
 
 ## F. Irradiance at 500 W (lens refocused onto the plate)
 
@@ -84,7 +103,7 @@ Largest plate radius each lid aperture passes with < 0.1 % clipped (mm; plates a
 | shutter mirror / dump (closed) | 5.000 | 5.09e+03 | 1e+03 | the dump takes all 500 W |
 | galvo mirrors (45 deg: the footprint is 1.41x longer, so the surface irradiance is 0.71x this) | 5.000 | 5.09e+03 | 1e+03 |  |
 | f-theta input | 5.000 | 5.09e+03 | 1e+03 |  |
-| f-theta output (protective window, z 182.5 + 3.4) | 5.703 | 3.91e+03 | 877 |  |
+| f-theta output (protective window, z 185.9) | 5.703 | 3.91e+03 | 877 |  |
 | chamber window, top (z 156) | 4.769 | 5.6e+03 | 1.05e+03 |  |
 | chamber window, bottom (z 148) | 4.596 | 6.03e+03 | 1.09e+03 |  |
 | cover slide, top (z 129) | 4.002 | 7.95e+03 | 1.25e+03 |  |
@@ -99,7 +118,7 @@ Largest plate radius each lid aperture passes with < 0.1 % clipped (mm; plates a
 | shutter mirror / dump (closed) | 3.200 | 1.24e+04 | 1.56e+03 | the dump takes all 500 W |
 | galvo mirrors (45 deg: the footprint is 1.41x longer, so the surface irradiance is 0.71x this) | 3.200 | 1.24e+04 | 1.56e+03 |  |
 | f-theta input | 3.200 | 1.24e+04 | 1.56e+03 |  |
-| f-theta output (protective window, z 182.5 + 3.4) | 3.651 | 9.55e+03 | 1.37e+03 |  |
+| f-theta output (protective window, z 185.9) | 3.651 | 9.55e+03 | 1.37e+03 |  |
 | chamber window, top (z 156) | 3.053 | 1.37e+04 | 1.64e+03 |  |
 | chamber window, bottom (z 148) | 2.942 | 1.47e+04 | 1.7e+03 |  |
 | cover slide, top (z 129) | 2.562 | 1.94e+04 | 1.95e+03 |  |
