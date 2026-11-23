@@ -33,7 +33,10 @@ CAMotics 1.2.0's limits, and what this script does about them
     * The tool starts at (0, 0, 0), inside the blank. A "G92 Z1000" after the preamble puts the start 1000 mm above work
       zero; the workpiece is given 1000 mm lower and the result is shifted back.
     * Memory: a full frame blank at 0.5 mm runs out of a 3 GB container, so each blank is cut in z slabs (each slab is
-      its own CAMotics run; slabs the tool never reaches are not run, they are uncut blank).
+      its own CAMotics run; slabs the tool never reaches are not run, they are uncut blank). $CAMOTICS_MEM (default 3g)
+      caps the container and $CAMOTICS_SLAB (default 32 mm) sets the slab: 2g with 16 mm slabs ran on 2026-11-23 and
+      gave the same result. Under /tmp/capmem or /tmp/heavy (a systemd scope that drops the docker group), wrap the
+      command in sg docker -c '...'.
 
 Run (after freecad_cam.py has written /tmp/chamber-cam/gcode/*.ngc; frame.stl and floor.stl are inventory.py's STLs
 of the same model, copied next to frame.brep and floor.brep):

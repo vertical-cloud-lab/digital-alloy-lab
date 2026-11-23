@@ -1,6 +1,6 @@
 {
  "tool": "FreeCAD 1.0.2 (39319 (Git)), CAM workbench, run headless with freecadcmd",
- "post": "linuxcnc (FreeCAD's Path/Post/scripts/linuxcnc_post.py, --precision 3), mm, G-code in /tmp/agentD/chamber-cam/gcode",
+ "post": "linuxcnc (FreeCAD's Path/Post/scripts/linuxcnc_post.py, --precision 3), mm, G-code in /tmp/agentD/floorfix/gcode",
  "machine": "Haas VF-4 (CT40, 8100 rpm, 22.4 kW), 3-axis; rapids 25.4 m/min for the recount",
  "material": "6061-T6",
  "tools": {
@@ -134,7 +134,7 @@
       -5.45,
       121.55
      ],
-     "gcode": "/tmp/agentD/chamber-cam/gcode/frame_B.ngc",
+     "gcode": "/tmp/agentD/floorfix/gcode/frame_B.ngc",
      "freecad_job_cycle_time": "00:11:27",
      "ops": [
       {
@@ -282,8 +282,8 @@
        "feed_move_bbox": [
         -130.48,
         130.48,
-        -85.47,
-        85.48,
+        -85.48,
+        85.47,
         -58.0,
         -29.0
        ],
@@ -375,7 +375,7 @@
       -5.45,
       121.55
      ],
-     "gcode": "/tmp/agentD/chamber-cam/gcode/frame_A.ngc",
+     "gcode": "/tmp/agentD/floorfix/gcode/frame_A.ngc",
      "freecad_job_cycle_time": "00:49:41",
      "ops": [
       {
@@ -615,7 +615,7 @@
       123.9,
       222.0
      ],
-     "gcode": "/tmp/agentD/chamber-cam/gcode/frame_C.ngc",
+     "gcode": "/tmp/agentD/floorfix/gcode/frame_C.ngc",
      "freecad_job_cycle_time": "00:15:54",
      "ops": [
       {
@@ -676,8 +676,8 @@
       -22.7,
       2.7
      ],
-     "gcode": "/tmp/agentD/chamber-cam/gcode/floor_A.ngc",
-     "freecad_job_cycle_time": "00:58:56",
+     "gcode": "/tmp/agentD/floorfix/gcode/floor_A.ngc",
+     "freecad_job_cycle_time": "00:58:55",
      "ops": [
       {
        "op": "Face002",
@@ -743,7 +743,7 @@
       },
       {
        "op": "Adaptive004",
-       "label": "Outside 312x222 R8, adaptive, z -4 to -20.5",
+       "label": "Outside 312x222 R8, adaptive, z -4 to -12",
        "kind": "adaptive_out",
        "tool": 2,
        "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
@@ -755,21 +755,21 @@
         "Face21"
        ],
        "start_depth": -4.0,
-       "final_depth": -20.5,
-       "step_down": 16.5,
-       "freecad_cycle_time": "00:01:19",
+       "final_depth": -12.0,
+       "step_down": 8.0,
+       "freecad_cycle_time": "00:01:18",
        "commands": 178,
        "feed_move_bbox": [
         -166.15,
         166.31,
         -121.99,
         121.49,
-        -20.5,
-        -20.5
+        -12.0,
+        -12.0
        ],
-       "path_feed_mm": 1798.1,
-       "path_rapid_mm": 510.8,
-       "cut_time_min": 0.94,
+       "path_feed_mm": 1789.6,
+       "path_rapid_mm": 502.3,
+       "cut_time_min": 0.93,
        "rapid_time_min": 0.02
       },
       {
@@ -854,7 +854,7 @@
        "commands": 156,
        "feed_move_bbox": [
         -58.82,
-        106.83,
+        106.82,
         -90.82,
         48.83,
         -23.2,
@@ -901,14 +901,14 @@
       }
      ],
      "totals": {
-      "path_feed_mm": 30593.8,
-      "path_rapid_mm": 2894.8,
-      "cut_time_min": 50.93,
+      "path_feed_mm": 30585.3,
+      "path_rapid_mm": 2886.3,
+      "cut_time_min": 50.92,
       "rapid_time_min": 0.11,
-      "total_min": 51.04,
+      "total_min": 51.03,
       "total_hms": "0:51:02",
       "tool_changes": 6,
-      "freecad_sum_of_op_cycle_times_min": 58.93
+      "freecad_sum_of_op_cycle_times_min": 58.92
      }
     },
     {
@@ -916,13 +916,13 @@
      "part": "floor",
      "rot_about_x_deg": 180,
      "stock_box": [
-      312.0,
-      222.0,
+      317.5,
+      228.6,
       -22.7,
       2.7
      ],
-     "gcode": "/tmp/agentD/chamber-cam/gcode/floor_B.ngc",
-     "freecad_job_cycle_time": "00:23:52",
+     "gcode": "/tmp/agentD/floorfix/gcode/floor_B.ngc",
+     "freecad_job_cycle_time": "00:29:12",
      "ops": [
       {
        "op": "Face003",
@@ -957,7 +957,7 @@
       },
       {
        "op": "Adaptive005",
-       "label": "18 U-notches 8 wide x 8 deep, adaptive outside the outline",
+       "label": "Outside below z -12 and the 18 U-notches 8 wide x 8 deep, adaptive outside the outline",
        "kind": "adaptive_out",
        "tool": 9,
        "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
@@ -971,20 +971,20 @@
        "start_depth": 20.0,
        "final_depth": 12.0,
        "step_down": 4.0,
-       "freecad_cycle_time": "00:11:41",
-       "commands": 19512,
+       "freecad_cycle_time": "00:17:01",
+       "commands": 20244,
        "feed_move_bbox": [
-        -159.48,
-        159.47,
-        -114.47,
-        114.51,
+        -160.99,
+        160.99,
+        -116.62,
+        116.54,
         12.0,
         16.0
        ],
-       "path_feed_mm": 5373.8,
-       "path_rapid_mm": 5458.1,
-       "cut_time_min": 5.83,
-       "rapid_time_min": 0.21
+       "path_feed_mm": 13027.0,
+       "path_rapid_mm": 2632.8,
+       "cut_time_min": 14.16,
+       "rapid_time_min": 0.1
       },
       {
        "op": "Drill005",
@@ -1013,7 +1013,7 @@
         14.0
        ],
        "path_feed_mm": 85.1,
-       "path_rapid_mm": 1113.2,
+       "path_rapid_mm": 1115.5,
        "cut_time_min": 0.17,
        "rapid_time_min": 0.04
       },
@@ -1327,20 +1327,20 @@
       }
      ],
      "totals": {
-      "path_feed_mm": 8035.5,
-      "path_rapid_mm": 14043.5,
-      "cut_time_min": 8.63,
-      "rapid_time_min": 0.55,
-      "total_min": 9.18,
-      "total_hms": "0:09:11",
+      "path_feed_mm": 15688.7,
+      "path_rapid_mm": 11220.5,
+      "cut_time_min": 16.96,
+      "rapid_time_min": 0.44,
+      "total_min": 17.4,
+      "total_hms": "0:17:23",
       "tool_changes": 8,
-      "freecad_sum_of_op_cycle_times_min": 23.87
+      "freecad_sum_of_op_cycle_times_min": 29.2
      }
     }
    ],
-   "total_min": 60.22,
-   "freecad_total_min": 82.8,
-   "total_hms": "1:00:13"
+   "total_min": 68.43,
+   "freecad_total_min": 88.12,
+   "total_hms": "1:08:25"
   }
  }
 }
