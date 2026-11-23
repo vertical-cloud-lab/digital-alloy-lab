@@ -111,7 +111,10 @@ Renders: [`cad/img/oem/logo_vcl.png`](cad/img/oem/logo_vcl.png) (bare deboss und
     principal point is assumed to be at the image centre.
   - **What gets committed.** The overlays committed in `analysis/out/oem/` show only the outline of the photo-derived mask
     and the model's silhouette. No vendor pixels are in them.
-- **(d) Multi-view.** See the per-part notes and §5.
+- **(d) Multi-view.** Not done (§5).
+- **Fill-rule bug.** The first fit run filled all the model's triangles in one `cv2.fillPoly` call. That call fills even-odd,
+  so overlapping triangles cancelled and the silhouette had holes. The fit now fills one triangle at a time, starts from
+  400 random rotations, and keeps the model in front of the camera. The numbers below are from the fixed run.
 
 ## 3. Per part
 
@@ -205,6 +208,13 @@ before → after. Colours are measured sRGB hex values (linear RGB in `finishes.
   | Connectors | #0c0e10 | | |
   | Ground shaft | #aeaba7 | | |
 
+- **Photo fit** (Teknic's gallery photo `cpm_231_L_lg.jpg`, [`overlay_clearpath_sd_231x.png`](analysis/out/oem/overlay_clearpath_sd_231x.png)):
+  - Silhouette IoU **0.917**, at f = 2549 px (91 mm equivalent), with the part 592 mm from the camera.
+  - Outline distance: mean 6.8 px (1.57 mm), P95 25 px.
+  - The contact shadow was cut out of the photo's mask.
+  - With f held at 1020, 1784, 2549, 3823 and 6372 px, the IoU is 0.895, 0.919, 0.915, 0.908 and 0.891. A single silhouette
+    barely fixes this focal length.
+  - The outline misses the rear housing's fins, the round rear cap and the top of the connector shroud.
 - **Still approximate.**
   - Teknic's model is hollow between r 6.5 and 26.5, from z −12.5 to −40. That void is not drawn, because the real stator
     fills it, and it is most of the remaining +35 %. Mass stays at the datasheet's 0.6 kg.
@@ -267,10 +277,17 @@ before → after. Colours are measured sRGB hex values (linear RGB in `finishes.
 - **CAD check.** IoU 0.578 → **0.881**. Volume −2.4 → −7.0 %. Distance 2.65 / 18.2 / 35.7 → 0.50 / 2.72 / 9.2 mm.
 - **Colours.** Cast 316 body #a5a5a5 (m 1, r 0.53). KF flanges #9c9c9c (m 1, r 0.42). Grey vinyl lever grip #b1b1b1 (m 0,
   r 0.46).
-- **Photo fit.** McMaster's product render: silhouette IoU 0.42, f = 2462 px (110 mm equivalent), contour mean 5.3 mm.
-  - The low IoU is mostly the photo mask. McMaster's render shows the lever in a different position and includes the shadow
-    region.
-  - The IoU is flat across f = 1723 to 3693 px (0.42), so the focal length is weakly determined from one view.
+- **Photo fit** (McMaster's product render, [`overlay_mcm_4123K45.png`](analysis/out/oem/overlay_mcm_4123K45.png)):
+  - Silhouette IoU **0.932**, at f = 2360 px (105 mm equivalent).
+  - Outline distance: mean 3.5 px (0.84 mm at the part), P95 15 px.
+  - How well f is fixed, as the IoU with f held at each value:
+
+    | f (px) | 944 | 1652 | 2360 | 3539 | 5899 |
+    |---|---|---|---|---|---|
+    | IoU | 0.834 | 0.908 | 0.931 | 0.936 | 0.912 |
+
+    The IoU falls off below about 1650 px, so f is bounded from below.
+  - **Still missing:** the render's mounting pad on top of the body is wider than the model's 30 × 30 pad.
 
 ### McMaster 3861N11 transmitter and 5169K72 filter housing (built, not in the model)
 
@@ -295,7 +312,14 @@ before → after. Colours are measured sRGB hex values (linear RGB in `finishes.
 
 ## 5. Not done
 
-- **(d) multi-view / NeRF-style reconstruction.** See below.
+- **(d) multi-view / NeRF-style reconstruction.** Skipped. Two videos were found but not downloaded:
+  - Teknic's ClearPath SD overview (YouTube, linked from the ClearPath products page);
+  - IPG's Wistia video on the ultra-compact laser page.
+
+  The 20-minute time box went on the silhouette fits instead. The next step is frames from the Teknic video, then COLMAP
+  (Docker) for the intrinsics and poses, then a visual hull against `clearpath_sd_231x()`.
+- **Eaton product pages.** eaton.com and the Tripp Lite product page return 503 through the tunnel, even in headed Chrome. So
+  the Eaton front comes from the datasheet's photo alone.
 - **Lens, galvo and collimator.** Another agent's area this round.
 - **The rack drawer, PC and the other envelope parts** listed in `analysis/out/real-parts/inventory.md`. They have no vendor
   part chosen yet.

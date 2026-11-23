@@ -163,6 +163,58 @@
  },
  "fits": [
   {
+   "photo": "teknic_cpm231",
+   "builder": "clearpath_sd_231x",
+   "kwargs": {},
+   "image_px": [
+    1000,
+    682
+   ],
+   "iou": 0.9171,
+   "f_px": 2548.9,
+   "f_35mm_equiv_mm": 91.1,
+   "principal_point": "image centre (assumed)",
+   "rvec": [
+    -2.2376,
+    -0.4896,
+    1.604
+   ],
+   "t_mm": [
+    -39.9,
+    9.5,
+    569.5
+   ],
+   "object_distance_mm": 591.9,
+   "mm_per_px_at_object": 0.2322,
+   "contour_mean_px": 6.76,
+   "contour_p95_px": 24.99,
+   "contour_mean_mm": 1.57,
+   "f_profile": [
+    {
+     "f_px": 1019.6,
+     "iou": 0.8949
+    },
+    {
+     "f_px": 1784.3,
+     "iou": 0.9188
+    },
+    {
+     "f_px": 2548.9,
+     "iou": 0.9154
+    },
+    {
+     "f_px": 3823.4,
+     "iou": 0.9078
+    },
+    {
+     "f_px": 6372.3,
+     "iou": 0.8906
+    }
+   ],
+   "mask_px": 142722,
+   "model_px": 142665
+  },
+  {
    "photo": "mcm_4123K45",
    "builder": "mcm_4123K45",
    "kwargs": {

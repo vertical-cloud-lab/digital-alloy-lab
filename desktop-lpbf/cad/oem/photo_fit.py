@@ -13,7 +13,7 @@
 3. layouts              front-panel features of the IPG YLR-U rack chassis (perspective photo rectified with a homography) and of
                         the Eaton 5PX G2 (orthographic front view in Eaton's datasheet), as fractions of the panel width/height.
 4. silhouette fits      camera pose AND focal length solved by silhouette fitting: the vendor_parts model is tessellated, projected
-                        through a pinhole camera (principal point at the image centre), filled with cv2.fillPoly, and the pose
+                        through a pinhole camera (principal point at the image centre), filled triangle by triangle, and the pose
                         (Rodrigues vector, translation) and log focal length are optimised (Nelder-Mead, restarts) to maximise
                         the IoU with the photo's object mask. A focal-length profile (best IoU with f held fixed) shows how well
                         the silhouette pins down f. Outputs: analysis/out/oem/photo_fit.json and overlay_<part>.png, which show
