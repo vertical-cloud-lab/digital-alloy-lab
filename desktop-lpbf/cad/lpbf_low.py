@@ -1047,6 +1047,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         import joints as J
         J.add_joints(sys.modules[__name__], parts, add, module)
     __import__("automation").add_features(add, sys.modules[__name__], module)   # robot-tending features (cad/automation.py, robot-ops.md)
+    __import__("logos").apply(parts, sys.modules[__name__])   # 0.5 mm debosses: VCL lockup on the door, BYU block Y on the 4U drawer (cad/logos.py); keep last
     return parts
 
 
