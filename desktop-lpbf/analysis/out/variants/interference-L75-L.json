@@ -2,12 +2,12 @@
  "variant": "L75 module, L reservoir",
  "vol_tol_mm3": 0.5,
  "chord_mm": 0.05,
- "n_parts": 224,
+ "n_parts": 230,
  "states": [
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 1512,
+   "pairs_checked": 1537,
    "interferences": []
   },
   {
@@ -16,7 +16,7 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 1457,
+   "pairs_checked": 1482,
    "interferences": []
   },
   {
@@ -26,7 +26,7 @@
     "gdoor": 515.0,
     "piston": 8.0
    },
-   "pairs_checked": 1516,
+   "pairs_checked": 1541,
    "interferences": []
   },
   {
@@ -37,7 +37,7 @@
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 1478,
+   "pairs_checked": 1503,
    "interferences": []
   },
   {
@@ -47,7 +47,16 @@
     "module": 40.0,
     "gdoor": 515.0
    },
-   "pairs_checked": 1432,
+   "pairs_checked": 1457,
+   "interferences": []
+  },
+  {
+   "state": "calibration: power head on the plate, chamber door open",
+   "pose": {
+    "_calibration": 1.0,
+    "door": 95.0
+   },
+   "pairs_checked": 1551,
    "interferences": []
   }
  ],
@@ -3611,7 +3620,7 @@
    "at": -42.0,
    "moving": "Rod set screws L75, M4 cup point 316 (2 x McMaster 92029A152)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 191.063
+   "gap_mm": 191.062
   },
   {
    "group": "piston",
@@ -4598,7 +4607,7 @@
    "at": 0.0,
    "moving": "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 standoffs, 6061)",
    "other": "Guard door rail (top + bottom)",
-   "gap_mm": 192.723
+   "gap_mm": 191.158
   },
   {
    "group": "cartridge",
@@ -4644,6 +4653,13 @@
   },
   {
    "group": "cartridge",
+   "at": -52.08,
+   "moving": "Reservoir L lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
+   "other": "Enclosed beam tubes (6061, \u00d818 x 2: dichroic to galvo, fold leg)",
+   "gap_mm": 4.121
+  },
+  {
+   "group": "cartridge",
    "at": -57.29,
    "moving": "Reservoir L shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",
    "other": "Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)",
@@ -4655,13 +4671,6 @@
    "moving": "Reservoir L powder",
    "other": "Optics bridge (6061, 25 mm)",
    "gap_mm": 4.5
-  },
-  {
-   "group": "cartridge",
-   "at": -52.08,
-   "moving": "Reservoir L lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
-   "other": "Enclosed beam tube",
-   "gap_mm": 4.712
   },
   {
    "group": "cartridge",
@@ -4681,7 +4690,7 @@
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
-   "other": "Galvo riser plate (6061, 10 mm)",
+   "other": "Galvo riser plate (6061, 5 mm, \u00d840 bore for the scanned beam)",
    "gap_mm": 7.65
   },
   {
@@ -4700,10 +4709,38 @@
   },
   {
    "group": "cartridge",
+   "at": -46.88,
+   "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
+   "other": "Safety shutter + beam dump",
+   "gap_mm": 7.8
+  },
+  {
+   "group": "cartridge",
+   "at": -46.88,
+   "moving": "Reservoir L lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
+   "other": "Safety shutter + beam dump",
+   "gap_mm": 7.8
+  },
+  {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Reservoir L lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",
+   "other": "Optics bridge (6061, 25 mm)",
+   "gap_mm": 8.637
+  },
+  {
+   "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
-   "other": "Galvo riser plate (6061, 10 mm)",
-   "gap_mm": 8.331
+   "other": "Galvo riser plate (6061, 5 mm, \u00d840 bore for the scanned beam)",
+   "gap_mm": 9.079
+  },
+  {
+   "group": "cartridge",
+   "at": -78.12,
+   "moving": "Reservoir L lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",
+   "other": "Enclosed beam tubes (6061, \u00d818 x 2: dichroic to galvo, fold leg)",
+   "gap_mm": 9.121
   },
   {
    "group": "cartridge",
@@ -4721,24 +4758,17 @@
   },
   {
    "group": "cartridge",
-   "at": -125.0,
-   "moving": "Reservoir L powder",
-   "other": "Galvo riser plate (6061, 10 mm)",
-   "gap_mm": 9.561
-  },
-  {
-   "group": "cartridge",
-   "at": -78.12,
-   "moving": "Reservoir L lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",
-   "other": "Enclosed beam tube",
-   "gap_mm": 9.712
-  },
-  {
-   "group": "cartridge",
    "at": 0.0,
    "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
    "other": "Roller shaft: magnetic-fluid rotary feedthrough Ferrotec SSL-005-NN in the metering base (M8 x 1 nose; FKM face O-ring)",
    "gap_mm": 9.881
+  },
+  {
+   "group": "cartridge",
+   "at": -57.29,
+   "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
+   "other": "f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridge)",
+   "gap_mm": 9.975
   },
   {
    "group": "cartridge",
@@ -4756,31 +4786,45 @@
   },
   {
    "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir L lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
+   "other": "Optics bridge (6061, 25 mm)",
+   "gap_mm": 10.279
+  },
+  {
+   "group": "cartridge",
+   "at": -31.25,
+   "moving": "Reservoir L lid O-ring (FKM 75A 2-042)",
+   "other": "Safety shutter + beam dump",
+   "gap_mm": 10.4
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir L powder",
+   "other": "Galvo riser plate (6061, 5 mm, \u00d840 bore for the scanned beam)",
+   "gap_mm": 10.8
+  },
+  {
+   "group": "cartridge",
+   "at": -125.0,
+   "moving": "Reservoir L lid O-ring (FKM 75A 2-042)",
+   "other": "Optics bridge (6061, 25 mm)",
+   "gap_mm": 11.268
+  },
+  {
+   "group": "cartridge",
    "at": -114.58,
    "moving": "Reservoir L lid O-ring (FKM 75A 2-042)",
-   "other": "Galvo riser plate (6061, 10 mm)",
-   "gap_mm": 10.768
-  },
-  {
-   "group": "cartridge",
-   "at": -57.29,
-   "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
-   "other": "f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge)",
-   "gap_mm": 11.002
-  },
-  {
-   "group": "cartridge",
-   "at": 0.0,
-   "moving": "Reservoir L lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",
-   "other": "Optics bridge (6061, 25 mm)",
-   "gap_mm": 11.247
+   "other": "Galvo riser plate (6061, 5 mm, \u00d840 bore for the scanned beam)",
+   "gap_mm": 11.357
   },
   {
    "group": "cartridge",
    "at": -52.08,
    "moving": "Reservoir L powder",
-   "other": "f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge)",
-   "gap_mm": 12.549
+   "other": "f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridge)",
+   "gap_mm": 11.659
   },
   {
    "group": "cartridge",
@@ -4798,13 +4842,6 @@
   },
   {
    "group": "cartridge",
-   "at": -125.0,
-   "moving": "Reservoir L lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
-   "other": "Optics bridge (6061, 25 mm)",
-   "gap_mm": 13.592
-  },
-  {
-   "group": "cartridge",
    "at": 0.0,
    "moving": "Reservoir L powder",
    "other": "Reservoir-docked sensor (inductive M12, at the back of the dock)",
@@ -4812,87 +4849,108 @@
   },
   {
    "group": "cartridge",
-   "at": -125.0,
-   "moving": "Reservoir L lid O-ring (FKM 75A 2-042)",
-   "other": "Optics bridge (6061, 25 mm)",
-   "gap_mm": 14.354
-  },
-  {
-   "group": "cartridge",
    "at": -119.79,
    "moving": "Reservoir L powder",
    "other": "2-axis galvo scan head (SCANLAB basiCube 20)",
-   "gap_mm": 15.209
+   "gap_mm": 13.989
+  },
+  {
+   "group": "cartridge",
+   "at": -72.92,
+   "moving": "Reservoir L lid O-ring (FKM 75A 2-042)",
+   "other": "Enclosed beam tubes (6061, \u00d818 x 2: dichroic to galvo, fold leg)",
+   "gap_mm": 14.801
+  },
+  {
+   "group": "cartridge",
+   "at": -41.67,
+   "moving": "Reservoir L powder",
+   "other": "Safety shutter + beam dump",
+   "gap_mm": 17.256
+  },
+  {
+   "group": "cartridge",
+   "at": -52.08,
+   "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
+   "other": "f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; 3 mm nominal stack: 0-6 mm = +/-3 mm of focus)",
+   "gap_mm": 18.418
+  },
+  {
+   "group": "cartridge",
+   "at": -52.08,
+   "moving": "Reservoir L powder",
+   "other": "f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; 3 mm nominal stack: 0-6 mm = +/-3 mm of focus)",
+   "gap_mm": 20.167
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 109.7
+   "gap_mm": 108.11
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 114.7
+   "gap_mm": 113.11
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 114.84
+   "gap_mm": 113.532
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 116.686
+   "gap_mm": 115.358
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 120.056
+   "gap_mm": 118.712
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L lid O-ring (FKM 75A 2-042)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 120.38
+   "gap_mm": 118.79
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 121.7
+   "gap_mm": 120.11
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L lid O-ring (FKM 75A 2-042)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 122.946
+   "gap_mm": 121.652
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L powder",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 134.083
+   "gap_mm": 132.698
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L powder",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 136.996
+   "gap_mm": 135.406
   },
   {
    "group": "cartridge",
@@ -4906,21 +4964,21 @@
    "at": -125.0,
    "moving": "Reservoir L (233 cm3, 304 SS wedge hopper, 95 mm outlet for the L75 module; same 30 x 112 mm dock plate for every size)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 169.87
+   "gap_mm": 169.806
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L powder",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 171.569
+   "gap_mm": 171.506
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 178.568
+   "gap_mm": 177.096
   },
   {
    "group": "cartridge",
@@ -4934,14 +4992,14 @@
    "at": -125.0,
    "moving": "Reservoir L lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
    "other": "Optics-bridge screws, M6 x 35 316 (8 x McMaster 92290A334)",
-   "gap_mm": 179.969
+   "gap_mm": 179.854
   },
   {
    "group": "cartridge",
    "at": -125.0,
    "moving": "Reservoir L powder",
    "other": "Optics-bridge screws, M6 x 35 316 (8 x McMaster 92290A334)",
-   "gap_mm": 181.514
+   "gap_mm": 181.588
   },
   {
    "group": "cartridge",
@@ -4955,14 +5013,14 @@
    "at": -125.0,
    "moving": "Reservoir L lid O-ring (FKM 75A 2-042)",
    "other": "Optics-bridge screws, M6 x 35 316 (8 x McMaster 92290A334)",
-   "gap_mm": 182.567
+   "gap_mm": 182.453
   },
   {
    "group": "cartridge",
    "at": -104.17,
    "moving": "Reservoir L lid screws, M3 x 8 316 (blind tapped holes in the top frame, outside the seal) (2 x McMaster 92290A113)",
    "other": "Optics-bridge screws, M6 x 35 316 (8 x McMaster 92290A334)",
-   "gap_mm": 202.616
+   "gap_mm": 202.443
   },
   {
    "group": "drawer",
@@ -5211,6 +5269,13 @@
   },
   {
    "group": "drawer",
+   "at": -80.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
+   "other": "Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals)",
+   "gap_mm": 9.216
+  },
+  {
+   "group": "drawer",
    "at": 0.0,
    "moving": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
    "other": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
@@ -5337,13 +5402,6 @@
   },
   {
    "group": "drawer",
-   "at": -75.0,
-   "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
-   "other": "Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings)",
-   "gap_mm": 15.467
-  },
-  {
-   "group": "drawer",
    "at": -55.0,
    "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
    "other": "Window O-ring, lower (FKM 75A 2-031, under the window)",
@@ -5365,6 +5423,13 @@
   },
   {
    "group": "drawer",
+   "at": -75.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
+   "other": "Camera adapter O-ring (FKM 75A 2-030, face seal on the lid)",
+   "gap_mm": 17.358
+  },
+  {
+   "group": "drawer",
    "at": -110.0,
    "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
    "other": "Drawer latch receptacles in the lid (2 x quarter-turn latch)",
@@ -5376,13 +5441,6 @@
    "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
    "other": "Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)",
    "gap_mm": 25.067
-  },
-  {
-   "group": "drawer",
-   "at": -75.0,
-   "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
-   "other": "Camera adapter O-ring (FKM 75A 2-022, face seal on the lid)",
-   "gap_mm": 25.183
   },
   {
    "group": "drawer",
@@ -5536,35 +5594,35 @@
    "at": -120.0,
    "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 211.785
+   "gap_mm": 210.196
   },
   {
    "group": "drawer",
    "at": -120.0,
    "moving": "Drawer latches: 2 x quarter-turn latch studs (envelope)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 212.715
+   "gap_mm": 211.125
   },
   {
    "group": "drawer",
    "at": -120.0,
    "moving": "Drawer O-ring (FKM 75A 2-033 in a half-dovetail groove, seals on the lid's front face)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 213.976
+   "gap_mm": 212.389
   },
   {
    "group": "drawer",
    "at": -120.0,
    "moving": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 217.7
+   "gap_mm": 216.11
   },
   {
    "group": "drawer",
    "at": -120.0,
    "moving": "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 217.7
+   "gap_mm": 216.11
   },
   {
    "group": "drawer",
@@ -5585,7 +5643,7 @@
    "at": -120.0,
    "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 240.315
+   "gap_mm": 238.869
   },
   {
    "group": "zstage",
@@ -9252,7 +9310,7 @@
    "why": "tube fitting into the manifold"
   },
   {
-   "a": "Collimator (IPG, 5 mm beam, 128 mm + 78 mm strain relief) on V-mount",
+   "a": "Collimator (IPG affixed, 2.5 mm beam: 96 \u00b5m at f = 160; housing drawn as the 5 mm unit, 128 mm + 78 mm strain relief) on V-mount",
    "b": "Process fiber (armoured, \u2265 100 mm bend radius)",
    "why": "fiber connector (QBH) in the collimator"
   },
@@ -9327,5 +9385,5 @@
    "why": "hose end clamped onto its KF-25 flange"
   }
  ],
- "runtime_s": 170.2
+ "runtime_s": 572.3
 }
