@@ -207,29 +207,31 @@ So the joint never opens in service, even with the stiffest O-ring and a regulat
 
 [`analysis/fea/fea.py`](analysis/fea/fea.py) cases 1, 1b and 1f; results in [`analysis/out/fea/fea.md`](analysis/out/fea/fea.md).
 Both chamber cases use 6061-T6 (yield 276 MPa), quadratic tetrahedra and the four leg pads under the floor plate fixed.
+Cases 1 and 1b were last run on 2026-11-23, on the model at 0dbb5a3, under the 4.5 GB memory cap (ccx's ITERATIVE CHOLESKY; 2.0 GB peak).
+Against the run before, every peak, displacement and safety factor moved by 3 % or less.
 Loads: suction on every wetted face; the lid (case 1) and the door carried on their lands; and the module, outlet plenum and
 funnel, which close the port and the two slots from below, pushing up on the floor plate round their openings.
 
 | Case | Mesh | Peak σ_vM | 99.5 % | Largest displacement | Seal faces | Safety factors |
 |---|---|---|---|---|---|---|
-| 1: frame + floor plate, open top (the lid's 5907 N on the top land), full vacuum | 139,613 nodes | 54.4 MPa at the door opening's top corner (inside edge, R6.5) | 22.3 MPa | 208 µm at the top of the front wall | door land Δy 194 µm; lid land Δz 84 µm | yield 5.1; Goodman (vacuum cycles) 2.7; welded-HAZ allowable 2.0 |
-| 1b: frame + floor plate + lid, full vacuum | 284,108 nodes | 28.0 MPa at the inlet slot's round end (back wall, x 60, z 8) | 9.6 MPa | 63 µm at the floor plate's centre | door land Δy 4.3 µm; window seat 49 µm | yield 9.9; Goodman 5.3; HAZ 3.9 |
-| 1b′: the same at +20 mbar (argon working pressure) | same mesh | 0.55 MPa | 0.19 MPa | 1.2 µm | door land Δy 0.08 µm | yield 500 |
+| 1: frame + floor plate, open top (the lid's 5907 N on the top land), full vacuum | 138,021 nodes | 53.9 MPa at the door opening's top corner (inside edge, R6.5) | 22.5 MPa | 208 µm at the top of the front wall | door land Δy 194 µm; lid land Δz 83 µm | yield 5.1; Goodman (vacuum cycles) 2.7; welded-HAZ allowable 2.0 |
+| 1b: frame + floor plate + lid, full vacuum | 280,819 nodes | 28.8 MPa at the inlet slot's round end (back wall, x 60, z 8) | 9.6 MPa | 62 µm at the floor plate's centre | door land Δy 4.3 µm; window seat 49 µm | yield 9.6; Goodman 5.1; HAZ 3.8 |
+| 1b′: the same at +20 mbar (argon working pressure) | same mesh | 0.57 MPa | 0.19 MPa | 1.2 µm | door land Δy 0.08 µm | yield 486 |
 | block + lid, before (old case 1b) | 166,211 nodes | 9.1 MPa | 4.1 MPa | 24 µm | door Δy 4.1 µm; window seat 24 µm | yield 30; Goodman 16 |
 | block, before (old case 1) | 131,797 nodes | 42.9 MPa | 21.3 MPa | 223 µm | door Δy 209 µm; lid Δz 79 µm | yield 6.4; Goodman 3.4 |
 
 - **Case 1 is the worst case.** With the top open, the front wall's beam over the door bows in and peaks at the opening's
   top corners. With the lid on (case 1b) the lid ties the top of the walls and the peak halves.
-- **Case 1b's peak is higher than the block's 9.1 MPa**, though still a yield SF of 9.9. Two things
+- **Case 1b's peak is higher than the block's 9.1 MPa**, though still a yield SF of 9.6. Two things
   differ:
   - Case 1b now also carries the module, plenum and funnel pushing up under the floor (1.2 kN). That bows the floor plate
-    63 µm and loads the round end of the inlet slot just above the floor joint.
+    62 µm and loads the round end of the inlet slot just above the floor joint.
   - The window seat sags 49 µm, against 24 µm before. That is negligible beside the
     beam's ±3.7 mm Rayleigh range.
 - **At +20 mbar everything is tiny** (the linear model just reverses the loads and scales them by 0.002/0.1013): the
-  joint sees at most +0.17 MPa of tension against 8.3 MPa of preload.
-- **The floor joint stays closed.** Across the joint in case 1, σz averages -0.86 MPa
-  (compression), with at most +0.34 MPa of tension locally. The 18 screws' preload puts
+  joint sees at most +0.18 MPa of tension against 8.3 MPa of preload.
+- **The floor joint stays closed.** Across the joint in case 1, σz averages -0.88 MPa
+  (compression), with at most +0.31 MPa of tension locally. The 18 screws' preload puts
   8.3 MPa on the lands, and at vacuum the atmosphere presses the plate on.
 - **Modelling.**
   - The joint is bonded over its full width. The 0.1 mm skirt gap, the 0.25 mm pad clearance and the groove are filled,

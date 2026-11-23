@@ -429,97 +429,109 @@
   "case": "1 chamber: frame + floor plate (bonded across the floor joint), open top, full vacuum",
   "material": "6061-T6 aluminium",
   "load": "-0.1013 MPa on 1416 cm2 of wetted faces; lid 5907 N on the top land; door 2445 N on its land; module 733 N, outlet plenum 185 N and funnel 257 N up on the floor plate round their openings; 4 leg pads under the floor plate fixed",
-  "nodes": 139613,
-  "elements": 81589,
-  "vm_max": 54.41508186820452,
+  "nodes": 138021,
+  "elements": 80636,
+  "vm_max": 53.875655006718944,
   "vm_max_at": [
-   -106.74999999999999,
+   106.75,
    -95.0,
-   99.12916512459886
+   99.12916512459884
   ],
-  "vm_p995": 22.30110700952492,
-  "u_max": 0.20845740789331582,
+  "vm_p995": 22.49126958427568,
+  "u_max": 0.20816383437699057,
   "u_max_at": [
    4.263256414560601e-13,
    -95.0,
    120.0
   ],
-  "door_land_uy_range": 0.194129,
-  "door_land_u_max": 0.191972,
-  "lid_land_uz_range": 0.08379267,
+  "door_land_uy_range": 0.1939951,
+  "door_land_u_max": 0.191881,
+  "lid_land_uz_range": 0.08305003,
   "floor_joint_sz": {
-   "n": 450,
-   "mean": -0.8610857529111111,
-   "min": -13.9971,
-   "max": 0.336651
+   "n": 419,
+   "mean": -0.8831371249642004,
+   "min": -12.6911,
+   "max": 0.310093
   },
-  "sf_yield": 5.0721232151866085,
-  "sf_haz": 2.021498382864228,
-  "sf_fatigue_goodman": 2.70482496358642,
-  "sf_yield_p995": 12.376067245546105,
+  "sf_yield": 5.122907553802909,
+  "sf_haz": 2.04173851782,
+  "sf_fatigue_goodman": 2.731906866178477,
+  "sf_yield_p995": 12.271428207545911,
   "criterion": "SF >= 2 on yield at the peak; seal faces move << the O-rings' squeeze; Goodman SF >= 2 for vacuum cycles",
   "pass": true,
-  "png": "c1_chamber_vm.png"
+  "png": "c1_chamber_vm.png",
+  "run": {
+   "utc": "2026-11-23 22:27",
+   "commit": "0dbb5a3",
+   "nodes": 138021,
+   "solver": "ITERATIVE CHOLESKY"
+  }
  },
  "1b": {
   "case": "1b chamber: frame + floor plate + lid bonded, full vacuum and +20 mbar",
   "material": "6061-T6 aluminium",
   "load": "vacuum: suction inside incl. the lid underside, door on its land, window/dose/camera covers round their flanges, module/plenum/funnel loads under the floor; +20 mbar: the same loads reversed and scaled by 0.002/0.101325 (linear); 4 leg pads fixed",
-  "nodes": 284108,
-  "elements": 164906,
-  "vm_max": 27.975783462001083,
+  "nodes": 280819,
+  "elements": 162669,
+  "vm_max": 28.761521877959776,
   "vm_max_at": [
    60.0,
    95.0,
    8.0
   ],
-  "vm_p995": 9.630375445810355,
-  "u_max": 0.06269101976219665,
+  "vm_p995": 9.64665810597239,
+  "u_max": 0.06239583447726884,
   "u_max_at": [
    1.793000237060511,
    -4.561370388153904,
    -2.0
   ],
-  "door_land_uy_range": 0.00427241,
-  "window_seat_uz": -0.048765,
+  "door_land_uy_range": 0.0042755499999999995,
+  "window_seat_uz": -0.0487161,
   "floor_joint_sz": {
    "n": 417,
-   "mean": -0.8162247175779377,
-   "min": -8.8448,
-   "max": 0.202487
+   "mean": -0.864001997908873,
+   "min": -9.06365,
+   "max": 0.252846
   },
-  "sf_yield": 9.86567544658347,
-  "sf_haz": 3.9319720982760207,
-  "sf_fatigue_goodman": 5.2610956198111225,
+  "sf_yield": 9.596154235896028,
+  "sf_haz": 3.8245542244513158,
+  "sf_fatigue_goodman": 5.117367309603538,
   "plus20mbar": {
-   "vm_max": 0.5521889837577422,
+   "vm_max": 0.5677224555303189,
    "vm_max_at": [
     60.0,
     95.0,
     8.0
    ],
-   "vm_p995": 0.19009166308325176,
-   "u_max": 0.0012374260536283093,
+   "vm_p995": 0.1904114313446323,
+   "u_max": 0.0012315983127231575,
    "u_max_at": [
     1.793000237060511,
     -4.561370388153904,
     -2.0
    ],
-   "door_land_uy_range": 8.433099999999999e-05,
-   "window_seat_uz": 0.000962543,
+   "door_land_uy_range": 8.439170000000001e-05,
+   "window_seat_uz": 0.000961572,
    "floor_joint_sz": {
     "n": 417,
-    "mean": 0.01611099013357314,
-    "min": -0.00399675,
-    "max": 0.174581
+    "mean": 0.017054077158752998,
+    "min": -0.0049886,
+    "max": 0.178904
    },
-   "sf_yield": 499.82887764578703,
-   "sf_haz": 199.2071613805673,
-   "sf_fatigue_goodman": 266.54510713182026
+   "sf_yield": 486.1530441704721,
+   "sf_haz": 193.75664803895629,
+   "sf_fatigue_goodman": 259.2521581610367
   },
   "criterion": "as case 1",
   "pass": true,
-  "png": "c1b_chamber_lid_vm.png"
+  "png": "c1b_chamber_lid_vm.png",
+  "run": {
+   "utc": "2026-11-23 22:53",
+   "commit": "0dbb5a3",
+   "nodes": 280819,
+   "solver": "ITERATIVE CHOLESKY"
+  }
  },
  "1f": {
   "case": "1f floor-plate bolted joint (Shigley) and floor O-ring gland (Parker)",
@@ -625,7 +637,9 @@
    "The old results for cases 2, 4 and 6 date from 2026-11-17 (78afc86). Since then the chamber has grown 40 mm in y (inner half-width iy 75 \u2192 95 mm, so the lid is 222 mm across, was 182), the dose slot and the blade have grown from \u00b130 to \u00b150 mm (dose_y), and joints.py has cut the screw and insert holes. This run (cases 2, 4 and 6) used the model at commit 9f45d80 (9f45d80745b77afb2c7b884fde5d0b435439105d), from a separate worktree, while the model was being edited.",
    "Lid (case 2): window-seat sag 27.8 \u2192 67.6 \u00b5m, peak 15.2 \u2192 47.3 MPa (SF 18 \u2192 5.8), 99.5th percentile 7.2 \u2192 15.7 MPa, seat tilt 8 \u2192 156 \u00b5rad, camera port 17.0 \u2192 35.6 \u00b5m. Mostly the wider lid: its span between the sealing lands grew from ~164 to ~204 mm in y, and a plate's sag grows as about the fourth power of its short span (\u00d72.4). The cover-slide drawer slot, added after the old run, leaves two 5 mm skins from the front edge to y = +35 mm, past the window bore: it tilts the seat, and the peak sits on the top face at the slot's front corner, beside the drawer-latch receptacle. Still a pass: SF \u2265 2, the sag is far inside the \u00b13.7 mm Rayleigh range, and tilting an 8 mm window by 156 \u00b5rad shifts the beam ~0.4 \u00b5m.",
    "Recoater (case 4), as built: blade |uz| 3.4 \u2192 5.1 \u00b5m (tip 4.9), |ux| 1.7 \u2192 2.9 \u00b5m, so it is now just over the 5 \u00b5m criterion and the table says FAIL. The blade holder is 114 mm long (was 74), because the blade now spans \u00b150 mm, though 31 mm deep (was 19). Hit peak 14.5 \u2192 11.4 MPa (SF 24). The first layout, rebuilt from today's parameters (a 94 mm holder), went 17.2 \u2192 28.1 \u00b5m.",
-   "Bridge (case 6b): modes 1\u20134 unchanged within 1 % (133 \u2192 134, 148 \u2192 150, 235 \u2192 235, 254 \u2192 253 Hz). Modes 5\u20136 dropped from 499 to 488 Hz and from 573 to 536 Hz. The posts have gained welded end caps and M6 screw holes since the old run. The coarser mesh raises 6a's modes 5\u20136 by 0.6 %, so the drop is not the mesh. Lens bore sag 4.3 \u2192 4.4 \u00b5m."
+   "Bridge (case 6b): modes 1\u20134 unchanged within 1 % (133 \u2192 134, 148 \u2192 150, 235 \u2192 235, 254 \u2192 253 Hz). Modes 5\u20136 dropped from 499 to 488 Hz and from 573 to 536 Hz. The posts have gained welded end caps and M6 screw holes since the old run. The coarser mesh raises 6a's modes 5\u20136 by 0.6 %, so the drop is not the mesh. Lens bore sag 4.3 \u2192 4.4 \u00b5m.",
+   "Cases 1 and 1b, re-run 2026-11-23 on the model at 0dbb5a3: the first run of either under the 4.5 GB cap (ITERATIVE CHOLESKY on 138,021 and 280,819 nodes; the cgroup's memory peak was 2.0 GB for the whole run, 1b's two ccx steps 12 min each). The old results predate the run record (before 2026-11-22). Case 1: 139,613 \u2192 138,021 nodes; peak von Mises 54.4 \u2192 53.9 MPa at the same top corner of the door opening (now the +x one; the two corners mirror each other), 99.5th percentile 22.3 \u2192 22.5 MPa, largest displacement 208 \u2192 208 \u00b5m, door land \u0394y 194 \u2192 194 \u00b5m, lid land \u0394z 84 \u2192 83 \u00b5m; floor joint \u03c3z mean -0.86 \u2192 -0.88 MPa, most tension +0.34 \u2192 +0.31 MPa; SF yield 5.1 \u2192 5.1, Goodman 2.7 \u2192 2.7, HAZ 2.0 \u2192 2.0.",
+   "Case 1b: 284,108 \u2192 280,819 nodes; peak 28.0 \u2192 28.8 MPa, still at the inlet slot's round end (back wall, x 60, z 8), 99.5th percentile 9.6 \u2192 9.6 MPa, largest displacement 63 \u2192 62 \u00b5m, door land \u0394y 4.3 \u00b5m in both, window seat 49 \u00b5m in both; floor joint \u03c3z mean -0.82 \u2192 -0.86 MPa, most tension +0.20 \u2192 +0.25 MPa; SF yield 9.9 \u2192 9.6, Goodman 5.3 \u2192 5.1, HAZ 3.9 \u2192 3.8. At +20 mbar: peak 0.55 \u2192 0.57 MPa, joint tension +0.17 \u2192 +0.18 MPa. Peaks, displacements and safety factors moved by 3 % or less (re-meshing alone moves a peak about that much; see the checks above); the joint's local tension, though up by a quarter, stays far below the 8.3 MPa of screw preload on the lands. The chamber's structure conclusions stand. 1b's run record names 0dbb5a3 although HEAD had moved to b09e506 by the end of the run: the commits between touch nothing in cad/."
   ]
  }
 }
