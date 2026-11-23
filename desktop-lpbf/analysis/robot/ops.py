@@ -894,7 +894,7 @@ def job_overflow(cell: Cell, skip_note="", arm_x=100.0, lift=60.0, **kw):
     j.sc.set_state(j.state, j.ov)                         # the planner sees the clamp gone too
     al = allow_of(jar)
     R = R_of((0, 1, 0), (1, 0, 0))
-    p = np.array([100.0, 0.0, -100.0])                  # pads at z -111 to -89 on the Ø50.8 cup (z -129 to -91); the sensor is at -127 to -115
+    p = np.array([100.0, 0.0, -102.0])                  # pads at z -113 to -91, on the Ø50.8 cup (z -127 to -96.5) and its neck; the sensor is at -127 to -115
     j.goto(T_of(R, p + (0, -260, 0)), "to the jar under the chamber", close=j.arm.close_for_gap(62.0), then=[(T_of(R, p), al, None)])
     j.line(T_of(R, p), "in level to the jar", allow=al, step_mm=3.0)
     j.grip(50.8, "close on the 2 in. cup", allow=al)

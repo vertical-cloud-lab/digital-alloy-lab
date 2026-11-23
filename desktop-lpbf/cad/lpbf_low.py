@@ -562,11 +562,13 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # side, so nothing stands in its lane (x 72.6 to 127.4) between the jar and the guard door.
     zj = zf - 22 - 42                                                       # KF-40 joint plane, z -84
     add("Overflow port (KF-40, weld stub to 42 mm)", place(VP.kf_weld_stub(40, 42), (ox, 0, zj), (1, 0, 0), (0, 0, -1)), C["ss"], 4, (0, 0, -220), mat="ss304", bom="G7", mcm="KF40_WELD", section=True)
-    # jar: a KF-40 flange (6 mm stub) welded into the top of a 2 in. x 0.065 in. 316L tube cup with a welded bottom: ~68 cm3 (was a 90 mm
+    # jar: a KF-40 flange (6 mm stub) welded into the top of a 2 in. x 0.065 in. 316L tube cup with a welded bottom: ~65 cm3 (was a 90 mm
     # KF-40 half nipple, ~120 cm3; a wider cup meets the Z servo's corner, a longer one the guard rail on the way out)
-    jar = fuse([place(VP.kf_weld_stub(40, 6), (ox, 0, zj), (1, 0, 0), (0, 0, 1)), tube(25.4, 16.94, (ox, 0, zj - 7.5), "z", 1.5),
-                tube(25.4, 23.75, (ox, 0, zj - 43.0), "z", 35.5), cyl(25.4, (ox, 0, zj - 45.0), "z", 2.0)])
-    add("Overflow jar (KF-40 flange on a 2 in. 316L cup, 45 mm, ~68 cm3, welded bottom)", jar, C["ss"], 4, (0, 0, -260), mat="ss304", bom="M4", mcm="KF40_NIPPLE", section=True)
+    # the flange's own Ø38.1 neck runs 11 mm down before the cup widens, so the toggle clamp's lower lip (to 9.5 mm under the joint,
+    # r >= 22.5) wraps the flange's back taper clear of the cup
+    jar = fuse([place(VP.kf_weld_stub(40, 11), (ox, 0, zj), (1, 0, 0), (0, 0, 1)), tube(25.4, 16.94, (ox, 0, zj - 12.5), "z", 1.5),
+                tube(25.4, 23.75, (ox, 0, zj - 43.0), "z", 30.5), cyl(25.4, (ox, 0, zj - 45.0), "z", 2.0)])
+    add("Overflow jar (KF-40 flange on a 2 in. 316L cup, 45 mm, ~65 cm3, welded bottom)", jar, C["ss"], 4, (0, 0, -260), mat="ss304", bom="M4", mcm="KF40_NIPPLE", section=True)
 
     def kf40_toggle_clamp():
         """MKS 100318805 toggle clamp, NW40 (Series 31, aluminium, $23.34; mks.com/p/100318805, read 2026-11-23): A 123.7 (4.87 in.) from
