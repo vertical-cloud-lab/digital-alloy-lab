@@ -1,0 +1,570 @@
+{
+ "clearpath_sd_231x": {
+  "flange (machined/cast aluminium front plate)": {
+   "srgb_hex": "#abaaa9",
+   "linear_rgb": [
+    0.4072,
+    0.402,
+    0.3968
+   ],
+   "metallic": 1.0,
+   "roughness": 0.95,
+   "material": "bare_metal",
+   "n_px": 2925,
+   "highlight_chroma": 2.0,
+   "specular_contrast": 0.472,
+   "photo": "teknic_cpm231",
+   "method": "median of the pixels in a hand-picked rectangle, L* 55-100, chroma <= 12"
+  },
+  "body (black anodised extrusion)": {
+   "srgb_hex": "#2a2b2e",
+   "linear_rgb": [
+    0.0232,
+    0.0242,
+    0.0273
+   ],
+   "metallic": 0.5,
+   "roughness": 0.41,
+   "material": "anodised",
+   "n_px": 28763,
+   "highlight_chroma": 4.0,
+   "specular_contrast": 0.822,
+   "photo": "teknic_cpm231",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-45"
+  },
+  "rear housing (die-cast aluminium, fins)": {
+   "srgb_hex": "#bdbcbd",
+   "linear_rgb": [
+    0.5089,
+    0.5029,
+    0.5089
+   ],
+   "metallic": 1.0,
+   "roughness": 0.58,
+   "material": "bare_metal",
+   "n_px": 14684,
+   "highlight_chroma": 1.0,
+   "specular_contrast": 0.348,
+   "photo": "teknic_cpm231",
+   "method": "median of the pixels in a hand-picked rectangle, L* 50-100, chroma <= 15"
+  },
+  "connectors (black plastic)": {
+   "srgb_hex": "#0c0e10",
+   "linear_rgb": [
+    0.0037,
+    0.0044,
+    0.0052
+   ],
+   "metallic": 0.0,
+   "roughness": 0.34,
+   "material": "plastic",
+   "n_px": 3028,
+   "highlight_chroma": 1.4,
+   "specular_contrast": 0.939,
+   "photo": "teknic_cpm231",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-35"
+  },
+  "shaft (ground steel)": {
+   "srgb_hex": "#aeaba7",
+   "linear_rgb": [
+    0.4233,
+    0.4072,
+    0.3864
+   ],
+   "metallic": 1.0,
+   "roughness": 0.64,
+   "material": "bare_metal",
+   "n_px": 1770,
+   "highlight_chroma": 1.0,
+   "specular_contrast": 0.458,
+   "photo": "teknic_cpm231",
+   "method": "median of the pixels in a hand-picked rectangle, L* 40-100, chroma <= 12"
+  },
+  "rear cap (grey plastic)": {
+   "srgb_hex": "#c0c2c4",
+   "linear_rgb": [
+    0.5271,
+    0.5395,
+    0.552
+   ],
+   "metallic": 0.0,
+   "roughness": 0.76,
+   "material": "plastic",
+   "n_px": 1660,
+   "highlight_chroma": 2.0,
+   "specular_contrast": 0.216,
+   "photo": "teknic_cpm231",
+   "method": "median of the pixels in a hand-picked rectangle, L* 60-100, chroma <= 12"
+  }
+ },
+ "eaton_5px1500rtg2": {
+  "grille (perforated silver bezel, holes included)": {
+   "srgb_hex": "#a3a3a3",
+   "linear_rgb": [
+    0.3663,
+    0.3663,
+    0.3663
+   ],
+   "metallic": 0.0,
+   "roughness": 0.79,
+   "material": "paint",
+   "n_px": 16100,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.563,
+   "photo": "eaton_front",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  },
+  "grille metal between holes": {
+   "srgb_hex": "#bdbdbd",
+   "linear_rgb": [
+    0.5089,
+    0.5089,
+    0.5089
+   ],
+   "metallic": 0.0,
+   "roughness": 0.8,
+   "material": "paint",
+   "n_px": 9249,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.413,
+   "photo": "eaton_front",
+   "method": "median of the pixels in a hand-picked rectangle, L* 62-100"
+  },
+  "display module surround (black)": {
+   "srgb_hex": "#27262c",
+   "linear_rgb": [
+    0.0203,
+    0.0194,
+    0.0252
+   ],
+   "metallic": 0.0,
+   "roughness": 0.54,
+   "material": "plastic",
+   "n_px": 922,
+   "highlight_chroma": 1.4,
+   "specular_contrast": 0.665,
+   "photo": "eaton_front",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-30"
+  },
+  "LCD (lit, blue-white)": {
+   "srgb_hex": "#45699f",
+   "linear_rgb": [
+    0.0595,
+    0.1413,
+    0.3467
+   ],
+   "metallic": 0.0,
+   "roughness": 0.84,
+   "material": "lcd",
+   "n_px": 1120,
+   "highlight_chroma": 18.9,
+   "specular_contrast": 0.81,
+   "photo": "eaton_front",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  },
+  "status light bar (blue)": {
+   "srgb_hex": "#0859a8",
+   "linear_rgb": [
+    0.0024,
+    0.0999,
+    0.3916
+   ],
+   "metallic": 0.0,
+   "roughness": 0.95,
+   "material": "plastic",
+   "n_px": 305,
+   "highlight_chroma": 50.9,
+   "specular_contrast": 0.707,
+   "photo": "eaton_front",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100, chroma <= 200"
+  },
+  "Eaton badge": {
+   "srgb_hex": "#d3d3d7",
+   "linear_rgb": [
+    0.6514,
+    0.6514,
+    0.6795
+   ],
+   "metallic": 0.0,
+   "roughness": 0.66,
+   "material": "plastic",
+   "n_px": 575,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.153,
+   "photo": "eaton_front",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  }
+ },
+ "ipg_ylr500_u3": {
+  "front panel, light area (left)": {
+   "srgb_hex": "#cbcbcb",
+   "linear_rgb": [
+    0.5972,
+    0.5972,
+    0.5972
+   ],
+   "metallic": 0.0,
+   "roughness": 0.57,
+   "material": "paint",
+   "n_px": 14855,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.181,
+   "photo": "ipg_rack_card",
+   "method": "median of the pixels in a hand-picked rectangle, L* 60-100, chroma <= 15"
+  },
+  "front panel, dark dot-pattern area": {
+   "srgb_hex": "#1e2022",
+   "linear_rgb": [
+    0.013,
+    0.0144,
+    0.016
+   ],
+   "metallic": 0.0,
+   "roughness": 0.48,
+   "material": "paint",
+   "n_px": 13200,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.985,
+   "photo": "ipg_rack_card",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  },
+  "blue swoosh stripe": {
+   "srgb_hex": "#30a9dc",
+   "linear_rgb": [
+    0.0296,
+    0.3968,
+    0.7157
+   ],
+   "metallic": 0.0,
+   "roughness": 0.88,
+   "material": "paint",
+   "n_px": 780,
+   "highlight_chroma": 39.4,
+   "specular_contrast": 0.062,
+   "photo": "ipg_rack_card",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  },
+  "model label (black)": {
+   "srgb_hex": "#272725",
+   "linear_rgb": [
+    0.0203,
+    0.0203,
+    0.0185
+   ],
+   "metallic": 0.0,
+   "roughness": 0.41,
+   "material": "paint",
+   "n_px": 1548,
+   "highlight_chroma": 1.4,
+   "specular_contrast": 0.48,
+   "photo": "ipg_rack_card",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-30"
+  },
+  "rack handles (black)": {
+   "srgb_hex": "#101010",
+   "linear_rgb": [
+    0.0052,
+    0.0052,
+    0.0052
+   ],
+   "metallic": 0.0,
+   "roughness": 0.55,
+   "material": "plastic",
+   "n_px": 2240,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.395,
+   "photo": "ipg_rack_card",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-35"
+  },
+  "chassis side (black)": {
+   "srgb_hex": "#323536",
+   "linear_rgb": [
+    0.0319,
+    0.0356,
+    0.0369
+   ],
+   "metallic": 0.0,
+   "roughness": 0.49,
+   "material": "paint",
+   "n_px": 8000,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.932,
+   "photo": "ipg_rack_card",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  }
+ },
+ "mcm_4123K45": {
+  "lever grip (grey vinyl)": {
+   "srgb_hex": "#b1b1b1",
+   "linear_rgb": [
+    0.4397,
+    0.4397,
+    0.4397
+   ],
+   "metallic": 0.0,
+   "roughness": 0.46,
+   "material": "plastic",
+   "n_px": 11614,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.36,
+   "photo": "mcm_4123K45",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100, chroma <= 10"
+  },
+  "body, end caps, tie bolts (cast 316 stainless)": {
+   "srgb_hex": "#a5a5a5",
+   "linear_rgb": [
+    0.3763,
+    0.3763,
+    0.3763
+   ],
+   "metallic": 1.0,
+   "roughness": 0.53,
+   "material": "bare_metal",
+   "n_px": 67534,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.617,
+   "photo": "mcm_4123K45",
+   "method": "median of the pixels in a hand-picked rectangle, L* 20-100, chroma <= 10"
+  },
+  "KF flanges (machined stainless)": {
+   "srgb_hex": "#9c9c9c",
+   "linear_rgb": [
+    0.3325,
+    0.3325,
+    0.3325
+   ],
+   "metallic": 1.0,
+   "roughness": 0.42,
+   "material": "bare_metal",
+   "n_px": 17390,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.668,
+   "photo": "mcm_4123K45",
+   "method": "median of the pixels in a hand-picked rectangle, L* 20-100, chroma <= 10"
+  }
+ },
+ "mcm_4518K72": {
+  "clamp (aluminium)": {
+   "srgb_hex": "#c4c4c4",
+   "linear_rgb": [
+    0.552,
+    0.552,
+    0.552
+   ],
+   "metallic": 1.0,
+   "roughness": 0.77,
+   "material": "bare_metal",
+   "n_px": 189683,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.342,
+   "photo": "mcm_4518K72",
+   "method": "median over the whole object mask, L* 0-100"
+  }
+ },
+ "mcm_5786N23": {
+  "fitting (aluminium)": {
+   "srgb_hex": "#bebebd",
+   "linear_rgb": [
+    0.5149,
+    0.5149,
+    0.5089
+   ],
+   "metallic": 1.0,
+   "roughness": 0.55,
+   "material": "bare_metal",
+   "n_px": 161987,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.486,
+   "photo": "mcm_5786N23",
+   "method": "median over the whole object mask, L* 0-100"
+  }
+ },
+ "mcm_4566N401": {
+  "nut and flange (steel)": {
+   "srgb_hex": "#c1c1c1",
+   "linear_rgb": [
+    0.5333,
+    0.5333,
+    0.5333
+   ],
+   "metallic": 1.0,
+   "roughness": 0.62,
+   "material": "bare_metal",
+   "n_px": 228475,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.452,
+   "photo": "mcm_4566N401",
+   "method": "median over the whole object mask, L* 0-100"
+  }
+ },
+ "mcm_6627T91": {
+  "housing and end caps (black)": {
+   "srgb_hex": "#3a383a",
+   "linear_rgb": [
+    0.0423,
+    0.0395,
+    0.0423
+   ],
+   "metallic": 0.0,
+   "roughness": 0.82,
+   "material": "paint",
+   "n_px": 163502,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.341,
+   "photo": "mcm_6627T91",
+   "method": "median over the whole object mask, L* 0-30"
+  },
+  "front face, pilot and shaft (aluminium/steel)": {
+   "srgb_hex": "#c6c7c7",
+   "linear_rgb": [
+    0.5647,
+    0.5711,
+    0.5711
+   ],
+   "metallic": 1.0,
+   "roughness": 0.47,
+   "material": "bare_metal",
+   "n_px": 87675,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.414,
+   "photo": "mcm_6627T91",
+   "method": "median over the whole object mask, L* 55-100, chroma <= 12"
+  }
+ },
+ "mcm_6709K12": {
+  "steel block": {
+   "srgb_hex": "#bfbeb8",
+   "linear_rgb": [
+    0.521,
+    0.5149,
+    0.4793
+   ],
+   "metallic": 1.0,
+   "roughness": 0.95,
+   "material": "bare_metal",
+   "n_px": 158210,
+   "highlight_chroma": 2.2,
+   "specular_contrast": 0.218,
+   "photo": "mcm_6709K12",
+   "method": "median over the whole object mask, L* 50-100, chroma <= 12"
+  },
+  "end caps and seals (black plastic)": {
+   "srgb_hex": "#2b2c2b",
+   "linear_rgb": [
+    0.0242,
+    0.0252,
+    0.0242
+   ],
+   "metallic": 0.0,
+   "roughness": 0.95,
+   "material": "plastic",
+   "n_px": 36646,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.582,
+   "photo": "mcm_6709K12",
+   "method": "median over the whole object mask, L* 0-30"
+  }
+ },
+ "mcm_5169K72": {
+  "housing (black)": {
+   "srgb_hex": "#3b3d3a",
+   "linear_rgb": [
+    0.0437,
+    0.0467,
+    0.0423
+   ],
+   "metallic": 0.0,
+   "roughness": 0.73,
+   "material": "paint",
+   "n_px": 205885,
+   "highlight_chroma": 1.4,
+   "specular_contrast": 0.449,
+   "photo": "mcm_5169K72",
+   "method": "median over the whole object mask, L* 0-35"
+  },
+  "bail clips (steel wire)": {
+   "srgb_hex": "#a6a7a5",
+   "linear_rgb": [
+    0.3813,
+    0.3864,
+    0.3763
+   ],
+   "metallic": 1.0,
+   "roughness": 0.39,
+   "material": "bare_metal",
+   "n_px": 64634,
+   "highlight_chroma": 1.0,
+   "specular_contrast": 0.553,
+   "photo": "mcm_5169K72",
+   "method": "median over the whole object mask, L* 60-100, chroma <= 12"
+  }
+ },
+ "mcm_3861N11": {
+  "body and cable (black)": {
+   "srgb_hex": "#272727",
+   "linear_rgb": [
+    0.0203,
+    0.0203,
+    0.0203
+   ],
+   "metallic": 0.0,
+   "roughness": 0.89,
+   "material": "plastic",
+   "n_px": 72032,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.659,
+   "photo": "mcm_3861N11",
+   "method": "median over the whole object mask, L* 0-30"
+  },
+  "hex and thread (stainless)": {
+   "srgb_hex": "#aeafac",
+   "linear_rgb": [
+    0.4233,
+    0.4287,
+    0.4125
+   ],
+   "metallic": 1.0,
+   "roughness": 0.48,
+   "material": "bare_metal",
+   "n_px": 33150,
+   "highlight_chroma": 1.0,
+   "specular_contrast": 0.423,
+   "photo": "mcm_3861N11",
+   "method": "median over the whole object mask, L* 55-100, chroma <= 12"
+  }
+ },
+ "mcm_4396K21": {
+  "motor and handle grip (black)": {
+   "srgb_hex": "#383838",
+   "linear_rgb": [
+    0.0395,
+    0.0395,
+    0.0395
+   ],
+   "metallic": 0.0,
+   "roughness": 0.95,
+   "material": "paint",
+   "n_px": 62276,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.335,
+   "photo": "mcm_4396K21",
+   "method": "median over the whole object mask, L* 0-30"
+  },
+  "pump block and guard (aluminium)": {
+   "srgb_hex": "#aeaeae",
+   "linear_rgb": [
+    0.4233,
+    0.4233,
+    0.4233
+   ],
+   "metallic": 1.0,
+   "roughness": 0.52,
+   "material": "bare_metal",
+   "n_px": 154982,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.569,
+   "photo": "mcm_4396K21",
+   "method": "median over the whole object mask, L* 55-100, chroma <= 12"
+  }
+ }
+}

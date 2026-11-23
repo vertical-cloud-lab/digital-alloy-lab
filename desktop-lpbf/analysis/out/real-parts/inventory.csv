@@ -1,7 +1,7 @@
 rank,tier,name,status,real,bom,module,group,ext,bbox_l,dist_mm
 1,A,Guard frame (20 mm T-slot),env,simplified 20 mm profile; BOM S9 lists 30 mm 5537T97,S9,process,,730 x 480 x 528,184.906,0.0
 2,A,Gas-loop + vacuum hoses (KF-25 SS bellows),env,McMaster 3497N23 is a 24 in. hose; routed lengths not matched,G7,process,,715 x 390 x 310,86.373,0.0
-3,A,Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve),done,"McMaster 4123K45 (straight ball valve, not an angle valve)",G7,process,,200 x 66 x 124,1.642,0.0
+3,A,Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve),done,"McMaster 4123K45 (straight ball valve, not an angle valve)",G7,process,,200 x 65 x 124,1.627,0.0
 4,A,"Recoater servo (ClearPath-SD, NEMA 23)",done,Teknic CPM-SDSK-2311S-RLN,M2,process,,105 x 59 x 82,0.51,80.0
 5,A,"Z servo (ClearPath-SD, NEMA 23, folded)",done,Teknic CPM-SDSK-2311S-RLN,M2,process,,59 x 82 x 103,0.497,64.0
 6,A,"f-theta lens, f = 160 mm (Thorlabs FTH160-1064)",done,Thorlabs FTH160-1064,L6,process,,90 x 90 x 50,0.407,46.0
@@ -13,8 +13,8 @@ rank,tier,name,status,real,bom,module,group,ext,bbox_l,dist_mm
 12,A,"Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",env,labelled 1151A87 but drawn as custom knuckles; 1151A87 is a 3 x 3 in. two-leaf hinge (CAD fetched),G1,process,door,200 x 12 x 48,0.115,15.0
 13,A,Overflow clamp (KF-40),done,McMaster 4518K73,G7,process,,72 x 93 x 17,0.114,30.0
 14,A,Door hinge knuckles on the chamber (304 SS),env,as above,G1,process,,224 x 27 x 14,0.085,0.0
-15,A,"Recoater guide rail (15 mm, 270 mm)",done,McMaster 6709K33 (no CAD offered for the cut length: drawn to the listing),M1,process,,270 x 15 x 15,0.061,0.0
-16,A,"Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",env,Omron E32-T61-S: not drawn yet,A1,process,,356 x 13 x 13,0.06,0.0
+15,A,"Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",env,Omron E32-T61-S: not drawn yet,A1,process,,356 x 13 x 13,0.06,0.0
+16,A,"Recoater guide rail (15 mm, 260 mm)",done,McMaster 6709K33 (no CAD offered for the cut length: drawn to the listing),M1,process,,260 x 15 x 15,0.059,0.0
 17,A,Recoater ball nut (flange on the +x face),done,McMaster 4566N401,M1,process,recoater,43 x 30 x 40,0.052,0.0
 18,A,Recoater carriage (15 mm rail),done,McMaster 6709K12,M1,process,recoater,62 x 23 x 34,0.049,0.0
 19,A,Overflow port (KF-40),done,McMaster 5786N25,G7,process,,55 x 55 x 16,0.048,22.0
@@ -50,10 +50,10 @@ rank,tier,name,status,real,bom,module,group,ext,bbox_l,dist_mm
 49,C,Filter outlet (KF-25),env,as above,G7,gas,,20 x 40 x 40,0.032,374.0
 50,C,Blower inlet (KF-25),env,follows the blower,G7,gas,,20 x 40 x 40,0.032,429.0
 51,C,Blower outlet (KF-25),env,follows the blower,G7,gas,,40 x 40 x 20,0.032,524.0
-52,D,"19 in. rack frame (11U, 515 mm tall)",env,no rack chosen; S9 lists 30 mm T-slot for the old cabinet,S9,rack,,560 x 600 x 515,173.04,274.0
-53,D,Rack side panels (vented),env,"sheet, no part number",S9,rack,,564 x 600 x 495,167.508,272.0
+52,D,"19 in. rack frame (12U, 560 mm tall)",env,no rack chosen; S9 lists 30 mm T-slot for the old cabinet,S9,rack,,560 x 600 x 560,188.16,274.0
+53,D,Rack side panels (vented),env,"sheet, no part number",S9,rack,,564 x 600 x 540,182.736,272.0
 54,D,"Fiber laser source, 500 W single-mode, IPG YLR-500-U3-SM-AC (4U)",done,IPG YLR-500-U3-SM-AC (4U),L1,rack,,482 x 557 x 176,47.432,313.0
-55,D,"DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5 (3U)",env,"contents chosen (C3, C4, S1) but no drawer/enclosure: BOM C6 is a McMaster 7812K14 wall box",C3,rack,,483 x 534 x 131,33.85,314.0
+55,D,"DIN-rail drawer: 24 V supply, safety relay, ClearCore, Pi 5 (4U: the safety controller stands 129 mm off its rail)",env,"contents chosen (C3, C4, S1) but no drawer/enclosure: BOM C6 is a McMaster 7812K14 wall box",C3,rack,,483 x 534 x 176,45.305,314.0
 56,D,Scan + laser controller PC (2U),env,"no PC chosen (BOM C1 is a SCANLAB RTC6 card, quote)",C1,rack,,483 x 534 x 87,22.395,313.0
 57,D,"UPS (Eaton 5PX1500RTG2, 2U)",done,Eaton 5PX1500RTG2,C6,rack,,483 x 450 x 86,18.756,323.0
 58,D,"Process fiber (armoured, ≥ 100 mm bend radius)",env,IPG delivery cable (Ø8.5 per IPG's QBH drawing; drawn Ø10),L1,rack,,191 x 264 x 301,15.209,255.0
