@@ -8,7 +8,7 @@ covered separately. Nothing has been built or tried on a mock-up.
 > **Update 2026-11-23 (round 5, A1): the overflow jar comes out. U4.5 and U4.7 pass on M50.** The model changes are in
 > robot-ops.md "Round 5":
 > - the KF-40 joint is 26 mm lower (z −84), on a 42 mm stub;
-> - the jar is a 45 mm 2 in. cup (~68 cm³) on an MKS 100318805 toggle clamp with its lever to the front;
+> - the jar is a 45 mm 2 in. cup (~65 cm³) on an MKS 100318805 toggle clamp with its lever to the front;
 > - the outlet plenum's KF-25 port and hose moved to the plenum's left end;
 > - the front-right leg moved to the right side (x 128–156, y 26–56);
 > - the jar sensor is on a bracket on that leg.
