@@ -72,7 +72,7 @@ add("O10", "scanner", "Focus adjustment for the f-theta: 13 mm adapter ring (was
     "95055K25 (0.5 mm) + 95055K19 (0.25 mm) + 95055K13 (0.1 mm), 150 x 1250 mm rolls", "McMaster-Carr", 1, 117.43, 200, "fetched (rolls $48.20 + $36.75 + $32.48) + estimate (cutting the rings)",
     "https://www.mcmaster.com/95055K25/", "2026-11-23T22:44Z", "F5", "drawn 2026-11-23",
     "f-theta focus shims (85.5 x 105 rings ...) + f-theta adapter ring (6061, 13 mm ...)",
-    "The lens is drawn 3.41 mm higher (the drawn 8 mm window + 3 mm slide); with the BOM glass (9.53 + 2 mm) the focus wants 0.17 mm more: inside the shims. McMaster has no ring shim over 80 mm ID (metric steel stops at 80 x 100, stainless at 70 x 90), so the rings are cut from stock. Thread engagement 6.8-12.8 mm over the range")
+    "The lens is drawn 3.41 mm higher (the drawn 8 mm window + 3 mm slide); with the BOM glass (9.53 + 2 mm) the focus wants 0.17 mm more: inside the shims. McMaster has no ring shim over 80 mm ID (metric steel stops at 80 x 100, stainless at 70 x 90), so the rings are cut from stock. Thread engagement 6.5-12.5 mm over the range")
 add("O11", "chamber optics", "Chamber window, fused silica (Corning 7980), Ø50.8 x 9.53 mm, 1064 nm V-coat both faces (Rabs < 0.25 %)", "38-990",
     "Edmund Optics", 1, 295.00, 295.00, "fetched", "https://www.edmundoptics.com/p/508mm-dia-1064nm-10-fused-silica-window/39556/", "2026-11-22T05:53Z",
     "L7", "replace text (Thorlabs WG41050-C Ø1 in. x 5 mm -> Ø2 in. x 9.53 mm)", "Ø2 in. fused-silica window, 8 mm, AR 1064 (deepen the seat 1.53 mm)",

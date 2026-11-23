@@ -106,7 +106,7 @@ SOURCES = {
         dims="overall 14 1/2 x 5 5/8 x 12 in. (368.3 x 142.9 x 304.8, to the handle top); layout (motor, pump block, handle, top intake) from the catalogue photo; no CAD offered",
         cad="", fetched="2026-11-20T14:02Z"),
     "thorlabs_fth160_1064": dict(vendor="Thorlabs", pn="FTH160-1064", price="$1,011.78 (vendor-lookups.csv)", url="https://media.thorlabs.com/globalassets/items/f/ft/fth/fth160-1064/stn012046-e0w.pdf",
-        dims="50.2 long; output ring 90 dia x 9.2 (= FFL 191.7 - WD 182.5); M85x1 thread 12.8 long; 78 dia step to 29.1; cone to 53 dia at 44.1; nose 53 dia with a 39 aperture; 0.8 kg",
+        dims="50.2 long; output ring 90 dia x 9.2 (= FFL 191.7 - WD 182.5); nose face 41.0 and cone end 34.8 above the flange (dimensioned); M85x1 thread ~12.5 long and 78 dia step to 29.3 (scaled, not dimensioned); nose 53 dia with a 39 aperture; 0.8 kg; A1 7.5 / A2 12.3 / mirror spacing 20 (Figure 1.3)",
         cad="", fetched="2026-11-20T14:00Z"),
     "scanlab_basicube20": dict(vendor="SCANLAB", pn="basiCube 20", price="quote (BOM L5)", url="https://www.scanlab.de/sites/default/files/2025-06/SCANLAB-basiCube-Series-EN.pdf",
         dims="155 deep x 130 wide x 122 high; input aperture 20 dia, axis 30 above the bottom face and 83.5 from the left edge of the input face; output axis 57.15 from the input face, 58.25 from the left edge (beam displacement 25.25); 3.75 kg without objective; objective ring and holes not dimensioned",
@@ -334,12 +334,15 @@ def mcm_4396K21():
 # Optics and laser
 # --------------------------------------------------------------------------------------------
 def thorlabs_fth160_1064():
-    """Thorlabs FTH160-1064 f-theta lens, from drawing stn012046 (rev A). Local frame: output end (toward the work) at
-    z = 0, axis +z, input nose at z = 50.2. The flange shoulder (top of the Ø90 ring) is at z = 9.2 = FFL 191.7 - WD
-    182.5; the M85x1 thread runs from there to z = 22.0. Drop-in for the lens envelope: translate to (0, 0, P['z_lens0'])."""
-    prof = [(0, 0), (45.0, 0), (45.0, 9.2), (42.5, 9.2), (42.5, 22.0), (39.0, 22.0), (39.0, 29.1), (26.5, 44.1), (26.5, 50.2), (0, 50.2)]
+    """Thorlabs FTH160-1064 f-theta lens, from drawing stn012046 (rev A, re-read 2026-11-23). Local frame: output end (toward
+    the work) at z = 0, axis +z, input nose at z = 50.2. The flange shoulder (top of the Ø90 ring) is at z = 9.2 = FFL 191.7 -
+    WD 182.5; the nose face is 41.0 above it and the cone ends 34.8 above it (both dimensioned). The M85x1 thread's length isn't
+    dimensioned: scaled off the PDF it ends ~12.5 above the shoulder (z 21.7) and the Ø78 step runs to z 29.3. Thorlabs designs
+    the lens for the 2nd galvo mirror A1 = 7.5 mm above the nose face (A2 = 12.3 to the first lens vertex, mirrors 20 apart;
+    f-theta page, Figure 1.3). Drop-in for the lens envelope: translate to (0, 0, P['z_lens0'])."""
+    prof = [(0, 0), (45.0, 0), (45.0, 9.2), (42.5, 9.2), (42.5, 21.7), (39.0, 21.7), (39.0, 29.3), (26.5, 44.0), (26.5, 50.2), (0, 50.2)]
     s = _revolve(prof)
-    return s.cut(_cyl(19.5, (0, 0, 44.1), (0, 0, 1), 6.2)).cut(_cyl(37.5, (0, 0, -0.01), (0, 0, 1), 1.5))   # Ø39 input aperture, window recess
+    return s.cut(_cyl(19.5, (0, 0, 44.0), (0, 0, 1), 6.3)).cut(_cyl(37.5, (0, 0, -0.01), (0, 0, 1), 1.5))   # Ø39 input aperture, window recess
 
 
 def scanlab_basicube20():

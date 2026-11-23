@@ -80,7 +80,7 @@ P["lid_z0"], P["lid_z1"] = P["ch_z"], P["ch_z"] + P["lid"]
 P["glass_t"] = 8.0 + 3.0
 P["focus_shift"] = round(P["glass_t"] * (1 - 1 / 1.44956), 2)     # 3.41 mm
 P["lens_shim"] = 3.0          # nominal ring-shim stack between the lens's shoulder and the adapter ring: 0-6 mm = +/-3 mm of focus
-P["lens_ring"] = 13.0         # f-theta adapter ring (was 16): engages 9.8 mm of the lens's 12.8 mm M85x1 thread at 3 mm of shims
+P["lens_ring"] = 13.0         # f-theta adapter ring (was 16): engages 9.5 mm of the lens's ~12.5 mm M85x1 thread at 3 mm of shims
 P["z_lens0"] = P["lens_wd"] + P["focus_shift"]                      # lens housing bottom (was 182.5)
 P["z_bridge0"] = P["z_lens0"] + 9.2 + P["lens_shim"] + P["lens_ring"]   # 9.2: the lens's output ring below its shoulder
 P["z_bridge1"] = P["z_bridge0"] + 25.0               # 25 mm bridge: FEA put f1 at 79 Hz with 15 mm + 40 mm posts; = z_lens0 + 50.2
@@ -968,7 +968,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # focus (optics.md §8.1): the lens sits 3.41 mm higher than its flange focal length so the window and slide put the focus on
     # the powder. Its shoulder (z_lens0 + 9.2) bears on a 3 mm stack of ring shims (ID 85.5, OD 105, laser-cut from McMaster
     # 18-8 shim stock 95055K25 0.5 mm, 95055K19 0.25 mm and 95055K13 0.1 mm: McMaster has no ring shim over 80 mm ID) under a 13 mm adapter ring:
-    # 0-6 mm of shims sets the focus +/-3 mm (burn test, optics.md §4.2); the M85x1 thread engages 6.8-12.8 mm over that range
+    # 0-6 mm of shims sets the focus +/-3 mm (burn test, optics.md §4.2); the M85x1 thread engages 6.5-12.5 mm over that range
     zsh = zl0 + 9.2
     add("f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; 3 mm nominal stack: 0-6 mm = +/-3 mm of focus)",
         tube(52.5, 42.75, (0, 0, zsh), "z", P["lens_shim"]), C["steel"], 9, (0, 0, 270), mat="ss304", bom="F5", mcm="95055K25")

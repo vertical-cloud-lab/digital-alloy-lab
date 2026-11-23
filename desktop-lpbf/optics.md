@@ -633,8 +633,8 @@ focus shift disagree by more than 0.01 mm. Vendor facts were fetched through the
   z = −0.001 mm. With the optics BOM's glass (Edmund 38-990, 9.53 mm; Edmund 36-299, 2 mm) the shift is 3.58 mm, so the focus
   would land 0.17 mm low, which the shims take up.
 - **The shims.** The lens's shoulder bears on a 3 mm stack of rings (ID 85.5, OD 105) under a 13 mm M85×1 adapter ring (it was
-  16 mm). Taking shims out or adding them moves the focus ±3 mm, set by the burn test (§4.2). The lens's 12.8 mm thread
-  engages the ring 9.8 mm at the nominal stack, and 6.8–12.8 mm over the range. McMaster sells no ring shim over 80 mm ID:
+  16 mm). Taking shims out or adding them moves the focus ±3 mm, set by the burn test (§4.2). The lens's ~12.5 mm thread
+  engages the ring 9.5 mm at the nominal stack, and 6.5–12.5 mm over the range. McMaster sells no ring shim over 80 mm ID:
   metric steel stops at 80 × 100 and stainless at 70 × 90. So the rings are cut from 18-8 shim stock: 95055K25 (0.5 mm,
   $48.20), 95055K19 (0.25 mm, $36.75) and 95055K13 (0.1 mm, $32.48), all 150 × 1250 mm rolls (optics-bom O10).
 - **What moves.** The bridge goes up 3.41 mm (z 211.11–236.11), and with it the galvo, the beam line and the guard's top.
@@ -673,7 +673,7 @@ bom.csv L3 now says this. The termination question stands: IPG's quote says QBH-
 - **Thorlabs (f-theta page, Figure 1.3):** A1 = 7.5 mm is measured from the centre of the second galvo mirror to the
   lens's input face, A2 = 12.3 mm to its first lens vertex, and ΔM = 20 mm between the mirrors. All three are recommended
   values. The drawing (Rev A) gives Ø90 / M85×1 / Ø78 / Ø53 / Ø39 and 50.2 mm overall, with the nose face 41.0 mm above the
-  flange. The thread length isn't dimensioned: scaled from the PDF it is ~12.5 mm, and the model draws 12.8.
+  flange. The thread length isn't dimensioned: scaled from the PDF it is ~12.5 mm, which `thorlabs_fth160_1064()` now draws (it drew 12.8).
 - **SCANLAB (basiCube brochure, the 11/2026 edition, and the basiCube 20 page):** confirms 155 × 130 × 122 mm, the Ø20 input
   30 mm above the bottom face, and the 25.25 mm beam displacement. It does not publish the mirror positions, the output
   aperture or the objective interface: "objectives with optimised mounting kits" is an option with no details. Read off the
