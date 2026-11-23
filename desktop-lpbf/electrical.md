@@ -62,7 +62,7 @@ drawn in the model ([`io_check.md`](analysis/out/electrical/io_check.md)). The o
    **Still open 2026-11-23 (§13.2):** with no new chamber port allowed, no existing opening can carry it; move the bar outside.
 10. **The rod-end connector is not real yet.** The drawn LEMO 1B misses the spec (seals.md), and no catalogue part carries 3
     type K pairs plus power. Six single-lead type K weld-ins (Ø6.27 mm sleeves) and one 4-pin 16 A copper weld-in (Ø12.62 mm)
-    do it, but need a rod-end face ~28-30 mm across, not 24 (§6). **Drawn 2026-11-23 (§13.3):** a 48 × 20 mm face, because the rod end cannot grow taller.
+    do it, but need a rod-end face ~28-30 mm across, not 24 (§6). **Drawn 2026-11-23 (§13.3):** a 72 × 16 mm face in one row, because the rod end cannot grow in height or reach.
 11. **Missing devices:** home and over-travel sensors on the recoater and Z, a guard-position sensor separate from the lock,
     two more E-stops, a chamber-at-ambient pressure switch, a Pirani gauge port, auto switches on the door actuator (A3's latch
     cylinders carry theirs), an air pressure switch, and a second plate-temperature channel for the door (electrical-io.csv). **Drawn 2026-11-23 (§13.2)** except the LED feedthrough, the chamber-at-ambient switch, the auto switches, the air pressure switch and the second plate channel.
@@ -112,8 +112,8 @@ B curve would trip on ([`power.md`](analysis/out/electrical/power.md) §2). **Cl
 supply together: ~120 A peak against the dock breaker's lowest C-curve magnetic trip of 150 A.** That is why the laser gets a
 contactor KM0 that the PLC closes after the rest has started.
 
-**Legs:** worst real case (500 W CW, blower at its AC bound, UPS recharging) is **17.9 A on L1 and 14.0 A on L2, inside
-24 A**. The pump never runs while the laser fires (PLC); with everything at rated at once L2 would see 20.7 A.
+**Legs:** worst real case (500 W CW, blower at its AC bound, UPS recharging) is **17.7 A on L1 and 14.0 A on L2, inside
+24 A**. The pump never runs while the laser fires (PLC); with everything at rated at once L1 would see 23.7 A and L2 20.0 A (2026-11-23, with the nXDS6i at 208 V, §13.1).
 
 ### 1.2 What the UPS carries, and the DC rails
 
@@ -134,7 +134,7 @@ Unbacked: laser, pump, blower, heaters (PR 318's rule for heaters and pumps). On
 close (they are normally closed), the safety controller, guard lock, PLC, O₂ analyser and Pi stay up, the PC saves and shuts
 down at 120 s and the servos are disabled at 60 s. **The held load is ~63 W, which the UPS carries for ~5 h by a Peukert
 estimate (4 × 12 V 9 Ah assumed: Eaton's page timed out)**, far past the 15 / 28 / 41 min the plate takes to cool to 50 °C
-(power.md §3). At the rated 791 W backed load it would last ~16 min.
+(power.md §3). At the rated 770 W backed load it would last ~17 min by the model, which ENERGY STAR's figures put 13-25 % optimistic (§13.1).
 
 The 48 V bus is a choice: ClearPath-SD runs on 24-75 V and the manual puts the minimum at about 21.5 V; 48 V gives speed
 headroom over 24 V and the recoater (≤ 100 mm/s on a 10 mm lead, 600 rpm) and Z axis need little. Teknic's own IPC-5 (75 V,
@@ -535,21 +535,29 @@ preferred that); the FA11643 KF16 feedthrough stays an optional line (E5).
 
 Checks of these parts: see §13.5.
 
-### 13.3 The rod end: a 48 × 20 mm feedthrough face
+### 13.3 The rod end: a 72 × 16 mm feedthrough face
 
-The rod end is now a 316L block with the rod TIG-welded into its top and **seven weld-in feedthroughs welded into a 3 mm front
-(−y) wall**: Solid Sealing Technology 3 × FA11631 (Chromel) + 3 × FA11632 (Alumel) single-lead type K, Ø6.27 × 38 mm sleeves,
-in two rows of three at 9.5 mm pitch; and one FA10443 4-pin 16 A copper weld-in, Ø12.62 × 24 mm, beside them (2 pins per heater
-pole). The gas boundary at the rod end is now metal, glass/ceramic and welds, with no O-ring; the LEMO 1B envelope, its O-ring
-and its gland entry are gone. A pocket behind the face joins the rod bore by a 12 mm channel, 4 mm above the striker's pocket.
+The rod end is now a 316L block with the rod TIG-welded into its top and **seven weld-in feedthroughs welded at its front (−y)
+face**: Solid Sealing Technology 3 × FA11631 (Chromel) + 3 × FA11632 (Alumel) single-lead type K, Ø6.27 × 38 mm sleeves, and one
+FA10443 4-pin 16 A copper weld-in, Ø12.62 × 24 mm (2 pins per heater pole). The gas boundary at the rod end is now metal,
+glass/ceramic and welds, with no O-ring; the LEMO 1B envelope, its O-ring and its gland entry are gone.
 
-**The face is 48 × 20 mm, not the ~30 mm square this note asked for, because the rod end cannot grow in height.** At the +8 mm
-plate-exchange overtravel the old cap's top was 3 mm under the gland plate, the module's handle bottom is 2 mm above the new
-block's front (y < −28) at that height, and on the module's way out (MODULE_PATH) the striker clears the guard's bottom rail by 3
-mm, so nothing may hang below the striker either; below it is also the Z arm. So the block keeps to z = zc + 1 to zc + 21 (zc =
-the striker's underside) and widens instead: x ±24, with 2.3-3.6 mm between sleeves and to the edges. **Check weld access with
-Solid Sealing before machining it.** The sleeves stand 21-35 mm proud toward the front, in the base plate's slot (x ±56), so
-they also pass at the bottom of the stroke and on the way out; their plugs (SMPW-K, M12) come off at a module swap.
+**The face is 72 × 16 mm in one row, not the ~30 mm square this note asked for, because the rod end cannot grow in height or
+reach.** Above: at the +8 mm plate-exchange overtravel the cap is 2.5 mm under the gland plate, and in front of the rod the
+handle's two M4 screw heads hang 8 mm below it (joints.py; at y −13, −26 and −38 on S25, M50 and L75), so in front of the cap the
+block stops at zc + 17 (zc: the striker's underside), 2 mm under those heads. Below: the Z arm, and on the module's way out
+(MODULE_PATH) the striker clears the guard's bottom rail by 3 mm. Forward: on the way out the module rises at y −190, just behind
+that rail, so nothing may stand more than ~50 mm in front of the rod. A first layout (48 × 20 mm, two rows of three type K
+sleeves standing 35 mm proud) failed both of the last two in the S25 sweep: 120 mm³ into the handle screws at the overtravel and
+320 mm³ into the rail on the way out. So:
+- the power sleeve sits in the middle of the face at zc + 9, 21 mm proud, over a small pocket and a channel into the rod bore;
+- the six type K sleeves sit in one row at zc + 10.5, x = ±12.5, ±21.5 and ±30.5, **26 mm deep in blind bores** with their welds
+  at the face and 12 mm proud; one Ø4 cross-drilling at y +2 joins the bores' ends to the rod bore (its two ends welded shut);
+- 2.4-3.1 mm between sleeves and to the face's edges, ≥ 1.9 mm of wall over the striker's pocket.
+
+**Check with Solid Sealing that the single-lead parts can be welded at the face of a blind bore, and the weld access, before
+machining the block.** Everything stays inside the base plate's slot (x ±56), so it passes at the bottom of the stroke and on the
+way out; the plugs (SMPW-K, M12) come off at a module swap.
 
 ### 13.4 The thermal cutoff: dropped
 
@@ -577,12 +585,19 @@ reports blocks against, is not changed here.
 
 ### 13.5 Checks
 
-- **Interference:** a targeted exact check (`/tmp` script: every new or changed part against every other part, OpenCascade
-  booleans, in 22 states: piston at both ends, Z released, recoater at both ends and mid-way, guard door open and half-way,
-  chamber door open, and 12 points along the module's swap path) found **no new interference in M50, S25 or L75**; the only
-  contacts are the designed ones now listed in `interference.py`'s JOINTS (the magnet in the carriage block, the tee on the
-  valve and the hose, the tee through the guard panel where the hose went, sensors in their clamps, and so on). The full sweeps:
-  SWEEP_RESULTS
+- **Interference.** The full sweep (`interference.py`) ran once, for S25, on the first rod-end layout: besides the two rod-end
+  hits of §13.3 it found the re-routed vacuum hose clipping the pump by 0.57 mm³, fixed by keeping the hose's old via-point at
+  (400, 70, 60). All three are fixed; **the full sweeps of the final geometry (M50, S25, L75) did not run before the deadline**: the
+  shared heavy-job queue held them for 15-20 min each and the M50 run was stopped by its time limit before writing its report. The
+  committed `interference.md` and `variants/` reports are therefore still the 2026-11-22 ones. What was checked on the final
+  geometry instead, with exact OpenCascade booleans (a script under /tmp, not committed): every part this round added or changed
+  (PB1 and its handle, fan and stand, PB2 and its screws, the Z and recoater sensors, flag, magnet, posts and clamps, the
+  guard-position switch, the E-stops, the Pirani tee, reducer, gauge and clamps, the dock PE contacts, the rod end and its
+  feedthroughs) against every other part, in 22 states (piston at both ends, Z released, recoater at both ends and mid-way, guard
+  door open and half-way, chamber door open, 12 points along the module's swap path): **no interference in M50, S25 or L75**
+  without fasteners on the first rod-end layout; the final rod end and the re-routed vacuum hose, with all fasteners, against every part in the same 22 states (the swap path sampled at 12 points including the rise at y −190): **no interference in S25 or M50** (L75 not re-run: its handle screws sit at y −38, in front of the sleeves, and 5 mm above them at the overtravel). The contacts found are designed ones, now listed in `interference.py`'s
+  JOINTS: the magnet in the carriage block, the tee on the valve and the hose, the tee through the guard panel where the hose went
+  (as the hose did), sensors in their clamps, and so on.
 - **I/O list** ([`io_check.md`](analysis/out/electrical/io_check.md)): 95 devices and signals; **30 not drawn (was 37)**, 16 with
   no bom.csv line (was 20). Channel counts are unchanged. **interlock_logic.py was not re-run:** no input changed (the cutoff
   was never one of its inputs; the guard-position switch and the E-stops were already).
@@ -592,7 +607,7 @@ reports blocks against, is not changed here.
   **H1 −$6.36** (no cutoffs), **G7 +$201.35** (the Pirani tee, reducer and clamps): **+$480.99** on the machine. bom_build.py's
   "proposed rows" table now compares against a bom.csv that already has the 2026-11-22 changes, so its C1, S3, S4, A1, A3 and
   H1-high deltas count those twice; only the five rows above were changed in bom.csv.
-- **Mass:** MASS_RESULTS
+- **Mass** ([`mass.md`](analysis/out/mass.md), re-run): **288.9 kg on the tray (was 268.8)**, against 490 kg (Kardex) and 500 kg (Modula): PB1 and its stand add 17.2 kg to the tray, the process module 2.7 kg (90.7 kg; tip-over margin 0.68 g, was 0.69), the gas module 0.2 kg.
 
 Not done: cable routes; a test of the magnetic sensors through the back wall; the tee's and the E-stop enclosures' catalogue
 drawings (envelopes from nominal sizes); McMaster prices for the tee and reducer (estimates from other vendors); the PB1 tray
