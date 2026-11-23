@@ -464,6 +464,31 @@ def main():
             for hh in hits[:8]:
                 print("   HIT", hh, flush=True)
             print("   travel", json.dumps(travel), flush=True)
+        # the chained stock at the end against the model (as camotics_sim.py does with CAMotics' result): gouges and
+        # leftover deeper than 1 mm, without the pieces cut free
+        stl = IN_DIR / f"{part}.stl"
+        if stl.exists():
+            from scipy import ndimage
+            tgt = CS.voxelize(CS.read_stl(str(stl)), grid)
+            lab, _ = ndimage.label(stock)
+            sizes = np.bincount(lab.ravel())
+            sizes[0] = 0
+            fin = lab == int(np.argmax(sizes))
+            loose = [round(float(v) * h ** 3 / 1000, 2) for v in sorted(sizes[1:], reverse=True)[1:4] if v * h ** 3 > 1000]
+            del lab
+            din = CS.depth_into(tgt, grid)
+            _, gn, gvol, _ = CS.deep_regions(tgt & ~fin, din, grid, 1.0)
+            del din
+            dout = CS.depth_into(~tgt, grid)
+            lcomp, ln, lvol, _ = CS.deep_regions(fin & ~tgt, dout, grid, 1.0)
+            del dout
+            report.setdefault("stock_vs_model", {})[part] = dict(
+                gouge_deeper_than_1mm_cm3=round(gvol / 1000, 3), n_gouge_regions=gn,
+                leftover_deeper_than_1mm_cm3=round(lvol / 1000, 3), n_leftover_regions=ln,
+                largest_leftovers=lcomp[:5], loose_pieces_cm3=loose)
+            print(part, "stock vs model", {k: v for k, v in report["stock_vs_model"][part].items()
+                                           if k != "largest_leftovers"}, flush=True)
+            del tgt, fin
         # cross-check of the stock model: this script's chained stock at the end against CAMotics' (camotics_sim.py's
         # final voxels, same grid), both without the pieces cut free (slugs)
         npz = pathlib.Path(os.environ.get("CAMOTICS_WORK", "/tmp/cam-sim")) / f"{part}_voxels.npz"

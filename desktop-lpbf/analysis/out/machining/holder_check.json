@@ -1,5 +1,5 @@
 {
- "method": "Tool-holder, spindle, fixture and travel check of the chamber frame and floor plate G-code (issue #260, PR #266).\n\nCAMotics models the cutter only, and camotics_sim.py's rapid check treats the tool as a cylinder going up forever. This\nscript sweeps the whole tool assembly along every move of each setup's posted program (freecad_cam.py's .ngc files):\n  * the cutter's flutes and shank (flute length and overall length of the end mills in tooling-bom.csv), the CT40 holder\n    (Haas Tooling part numbers, dimensions read off haastooling.com's product pages, HOLDERS below), the CAT40 flange and\n    the spindle nose;\n  * against the in-process stock at that point in the program: the blank (minus the frame's waterjet core) less every\n    earlier setup's cuts, less what this setup has cut so far. The flutes cut; anything above them (shank, holder,\n    flange, spindle) that meets stock is a collision, and so is a rapid whose flutes go more than 0.5 mm into stock;\n  * against that setup's fixtures (FIXTURES below, from setup_plan.json's fixture notes: end tabs and toe clamps, risers,\n    parallels, the dummy-floor plate, the floor plate's stud and clamp washer, the HRT210 rotary with its riser), which\n    nothing may touch, flutes included;\n  * against the Haas VF-4's travels (X 1270, Y 508 mm; spindle nose 107-742 mm above the table), with the part centred in\n    X and Y travel and the table height set by the fixture stack.\n\nMethod. The tool is vertical in every setup, and the assembly's radius grows upward (each part is taken as at least as\nwide as the parts below it). So a column of material at horizontal distance rho from the tool axis is hit iff its top is\nabove tip + h(rho), where h is the height of the lowest part of the assembly at least rho wide. Stock and fixtures are\ntherefore held as top-surface height maps on a --res grid (0.5 mm), in the setup frame, and each straight piece of each\nmove (arcs split to 0.25 mm chord) is tested exactly against the columns within reach. The in-process stock is a voxel\ngrid at --res in the part frame: each setup starts from the top surface of the stock its predecessors left (seen from\nthat setup's side) and lowers it column by column as the flutes pass (the lowest tip over each column); at the end of a\nsetup every voxel above that z-map is removed. Clearance is the largest c for which the assembly, grown by c in radius\nand lowered by c, still misses: c = min over columns of max(distance - radius, tip + height - top). It is reported per\ntool per setup against stock and against fixtures, with the G-code line of the tightest move; it is exact to the grid\n(0.5 mm in x and y; z is exact for flat tops, +-0.5 mm on the voxel stock's curved tops).",
+ "method": "Tool-holder, spindle, fixture and travel check of the chamber frame and floor plate G-code (issue #260, PR #266).\n\nCAMotics models the cutter only, and camotics_sim.py's rapid check treats the tool as a cylinder going up forever. This\nscript sweeps the whole tool assembly along every move of each setup's posted program (freecad_cam.py's .ngc files):\n  * the cutter's flutes and shank (flute length and overall length of the end mills in tooling-bom.csv), the CT40 holder\n    (Haas Tooling part numbers, dimensions read off haastooling.com's product pages, HOLDERS below), the CAT40 flange and\n    the spindle nose;\n  * against the in-process stock at that point in the program: the blank (minus the frame's waterjet core) less every\n    earlier setup's cuts, less what this setup has cut so far. The flutes cut; anything above them (shank, holder,\n    flange, spindle) that meets stock is a collision, and so is a rapid whose flutes go more than 0.5 mm into stock;\n  * against that setup's fixtures (FIXTURES below, from setup_plan.json's fixture notes: end tabs and toe clamps, risers,\n    parallels, the dummy-floor plate, the floor plate's stud and clamp washer, the HRT210 rotary with its riser), which\n    nothing may touch, flutes included;\n  * against the Haas VF-4's travels (X 1270, Y 508 mm; spindle nose 107-742 mm above the table), with the part centred in\n    X and Y travel and the table height set by the fixture stack.\n\nMethod. The tool is vertical in every setup, and the assembly's radius grows upward (each part is taken as at least as\nwide as the parts below it). So a column of material at horizontal distance rho from the tool axis is hit iff its top is\nabove tip + h(rho), where h is the height of the lowest part of the assembly at least rho wide. Stock and fixtures are\ntherefore held as top-surface height maps on a --res grid (0.5 mm), in the setup frame, and each straight piece of each\nmove (arcs split to 0.25 mm chord) is tested exactly against the columns within reach. The in-process stock is a voxel\ngrid at --res in the part frame: each setup starts from the top surface of the stock its predecessors left (seen from\nthat setup's side) and lowers it column by column as the flutes pass (the lowest tip over each column); at the end of a\nsetup every voxel above that z-map is removed. Clearance is the largest c for which the assembly, grown by c in radius\nand lowered by c, still misses: c = min over columns of max(distance - radius, tip + height - top). It is reported per\ntool per setup against stock and against fixtures, with the G-code line of the tightest move; it is exact to the grid\n(0.5 mm in x and y; z is exact for flat tops, +-0.5 mm on the voxel stock's curved tops).\nIf $CAMOTICS_WORK holds camotics_sim.py's final voxels, the chained stock at the end is compared with CAMotics' own\n(stock_vs_camotics in the JSON).",
  "resolution_mm": 0.5,
  "clearance_cap_mm": 10.0,
  "tight_below_mm": 2.0,
@@ -597,7 +597,7 @@
      }
     ]
    },
-   "seconds": 3.0
+   "seconds": 3.3
   },
   "frame_A": {
    "part": "frame",
@@ -895,7 +895,7 @@
      }
     ]
    },
-   "seconds": 2.6
+   "seconds": 2.7
   },
   "frame_C": {
    "part": "frame",
@@ -1030,7 +1030,7 @@
      }
     ]
    },
-   "seconds": 21.5
+   "seconds": 21.8
   },
   "floor_A": {
    "part": "floor",
@@ -1062,116 +1062,55 @@
      ]
     },
     {
-     "name": "toe clamp strap",
+     "name": "edge clamp",
      "kind": "box",
      "params": [
-      -291.75,
-      -191.75,
-      -72.7,
-      -47.3,
-      2.7,
-      18.6
+      -198.75,
+      -158.75,
+      -80.0,
+      -40.0,
+      -60.8,
+      -15.0
      ]
     },
     {
-     "name": "toe clamp nut and stud",
-     "kind": "vcyl",
-     "params": [
-      -221.75,
-      -60.0,
-      15.6,
-      2.7,
-      39.5
-     ]
-    },
-    {
-     "name": "toe clamp strap",
+     "name": "edge clamp",
      "kind": "box",
      "params": [
-      -291.75,
-      -191.75,
-      47.3,
-      72.7,
-      2.7,
-      18.6
+      -198.75,
+      -158.75,
+      40.0,
+      80.0,
+      -60.8,
+      -15.0
      ]
     },
     {
-     "name": "toe clamp nut and stud",
-     "kind": "vcyl",
-     "params": [
-      -221.75,
-      60.0,
-      15.6,
-      2.7,
-      39.5
-     ]
-    },
-    {
-     "name": "toe clamp strap",
+     "name": "edge clamp",
      "kind": "box",
      "params": [
-      191.75,
-      291.75,
-      -72.7,
-      -47.3,
-      2.7,
-      18.6
+      158.75,
+      198.75,
+      -80.0,
+      -40.0,
+      -60.8,
+      -15.0
      ]
     },
     {
-     "name": "toe clamp nut and stud",
-     "kind": "vcyl",
-     "params": [
-      221.75,
-      -60.0,
-      15.6,
-      2.7,
-      39.5
-     ]
-    },
-    {
-     "name": "toe clamp strap",
+     "name": "edge clamp",
      "kind": "box",
      "params": [
-      191.75,
-      291.75,
-      47.3,
-      72.7,
-      2.7,
-      18.6
-     ]
-    },
-    {
-     "name": "toe clamp nut and stud",
-     "kind": "vcyl",
-     "params": [
-      221.75,
-      60.0,
-      15.6,
-      2.7,
-      39.5
+      158.75,
+      198.75,
+      40.0,
+      80.0,
+      -60.8,
+      -15.0
      ]
     }
    ],
-   "end_tabs": [
-    [
-     -215.9,
-     -158.75,
-     -114.3,
-     114.3,
-     -22.7,
-     2.7
-    ],
-    [
-     158.75,
-     215.9,
-     -114.3,
-     114.3,
-     -22.7,
-     2.7
-    ]
-   ],
+   "end_tabs": [],
    "tools": {
     "T1": {
      "cutter": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
@@ -1186,8 +1125,8 @@
       "op": "Face top to z 0",
       "part": "flutes",
       "at": [
-       -179.2,
-       -107.2
+       -157.8,
+       -113.8
       ],
       "tip": [
        -147.85,
@@ -1211,8 +1150,8 @@
       },
       "shank": {
        "stock": {
-        "c": 5.3,
-        "line": 36
+        "c": 5.5,
+        "line": 23
        }
       }
      },
@@ -1227,51 +1166,49 @@
      "stick_out_mm": 66.0,
      "gauge_length_mm": 129.5,
      "min_clearance_to_stock_mm": {
-      "c": -0.61,
-      "line": 1395,
-      "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
+      "c": 0.5,
+      "line": 1042,
+      "op": "Step the 4 mm band round the pad, adaptive outside the pad",
       "part": "flutes",
       "at": [
-       -175.2,
-       4.8
+       -157.8,
+       -106.2
       ],
       "tip": [
-       -166.84,
-       0.06,
-       -20.5
+       -154.56,
+       -97.57,
+       -4.0
       ]
      },
      "min_clearance_to_fixtures_mm": {
-      "c": 2.2,
-      "line": 1322,
-      "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
+      "c": 3.0,
+      "line": 1333,
+      "op": "Outside 312x222 R8, adaptive, z -4 to -12",
       "part": "flutes",
-      "what": "parallel",
+      "what": "edge clamp",
       "at": [
-       -149.8,
-       -110.2
+       -178.2,
+       40.2
       ],
       "tip": [
-       160.59,
-       -121.72,
-       -20.5
+       -165.59,
+       -104.08,
+       -12.0
       ]
      },
      "by_part": {
       "flutes": {
        "stock": {
-        "c": -0.61,
-        "line": 1395
+        "c": 0.5,
+        "line": 1042
        },
        "fixture": {
-        "c": 2.2,
-        "line": 1322
+        "c": 3.0,
+        "line": 1333
        }
-      },
-      "holder 04-0010": {},
-      "shank": {}
+      }
      },
-     "collisions": 26,
+     "collisions": 0,
      "tight": true
     },
     "T4": {
@@ -1439,529 +1376,8 @@
      "tight": true
     }
    },
-   "n_collisions": 26,
-   "collisions": [
-    {
-     "move": 1303,
-     "line": 1387,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      -162.469,
-      -115.463,
-      -20.5
-     ],
-     "p1": [
-      -164.0,
-      -113.162,
-      -20.5
-     ]
-    },
-    {
-     "move": 1304,
-     "line": 1388,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 20.0,
-     "p0": [
-      -164.0,
-      -113.162,
-      -20.5
-     ],
-     "p1": [
-      -165.375,
-      -109.644,
-      -20.5
-     ]
-    },
-    {
-     "move": 1305,
-     "line": 1389,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 20.0,
-     "p0": [
-      -165.375,
-      -109.644,
-      -20.5
-     ],
-     "p1": [
-      -166.062,
-      -107.544,
-      -20.5
-     ]
-    },
-    {
-     "move": 1306,
-     "line": 1390,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 20.0,
-     "p0": [
-      -166.062,
-      -107.544,
-      -20.5
-     ],
-     "p1": [
-      -166.512,
-      -104.369,
-      -20.5
-     ]
-    },
-    {
-     "move": 1307,
-     "line": 1391,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 20.0,
-     "p0": [
-      -166.512,
-      -104.369,
-      -20.5
-     ],
-     "p1": [
-      -166.669,
-      -100.631,
-      -20.5
-     ]
-    },
-    {
-     "move": 1308,
-     "line": 1392,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      -166.669,
-      -100.631,
-      -20.5
-     ],
-     "p1": [
-      -166.619,
-      -57.719,
-      -20.5
-     ]
-    },
-    {
-     "move": 1309,
-     "line": 1393,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      -166.619,
-      -57.719,
-      -20.5
-     ],
-     "p1": [
-      -166.662,
-      -6.806,
-      -20.5
-     ]
-    },
-    {
-     "move": 1310,
-     "line": 1394,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      -166.662,
-      -6.806,
-      -20.5
-     ],
-     "p1": [
-      -166.838,
-      0.056,
-      -20.5
-     ]
-    },
-    {
-     "move": 1311,
-     "line": 1395,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      -166.838,
-      0.056,
-      -20.5
-     ],
-     "p1": [
-      -166.856,
-      100.925,
-      -20.5
-     ]
-    },
-    {
-     "move": 1312,
-     "line": 1396,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      -166.856,
-      100.925,
-      -20.5
-     ],
-     "p1": [
-      -166.819,
-      101.112,
-      -20.5
-     ]
-    },
-    {
-     "move": 1313,
-     "line": 1397,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      -166.819,
-      101.112,
-      -20.5
-     ],
-     "p1": [
-      -166.2,
-      102.175,
-      -20.5
-     ]
-    },
-    {
-     "move": 1363,
-     "line": 1459,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      163.506,
-      114.013,
-      -20.5
-     ],
-     "p1": [
-      163.912,
-      113.312,
-      -20.5
-     ]
-    },
-    {
-     "move": 1364,
-     "line": 1460,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 20.0,
-     "p0": [
-      163.912,
-      113.312,
-      -20.5
-     ],
-     "p1": [
-      165.231,
-      110.044,
-      -20.5
-     ]
-    },
-    {
-     "move": 1365,
-     "line": 1461,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 20.0,
-     "p0": [
-      165.231,
-      110.044,
-      -20.5
-     ],
-     "p1": [
-      166.213,
-      106.975,
-      -20.5
-     ]
-    },
-    {
-     "move": 1366,
-     "line": 1462,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 20.0,
-     "p0": [
-      166.213,
-      106.975,
-      -20.5
-     ],
-     "p1": [
-      166.613,
-      103.062,
-      -20.5
-     ]
-    },
-    {
-     "move": 1367,
-     "line": 1463,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 20.0,
-     "p0": [
-      166.613,
-      103.062,
-      -20.5
-     ],
-     "p1": [
-      166.594,
-      87.869,
-      -20.5
-     ]
-    },
-    {
-     "move": 1368,
-     "line": 1464,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      166.594,
-      87.869,
-      -20.5
-     ],
-     "p1": [
-      166.675,
-      6.619,
-      -20.5
-     ]
-    },
-    {
-     "move": 1369,
-     "line": 1465,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      166.675,
-      6.619,
-      -20.5
-     ],
-     "p1": [
-      166.969,
-      -7.156,
-      -20.5
-     ]
-    },
-    {
-     "move": 1370,
-     "line": 1466,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      166.969,
-      -7.156,
-      -20.5
-     ],
-     "p1": [
-      166.906,
-      -21.119,
-      -20.5
-     ]
-    },
-    {
-     "move": 1371,
-     "line": 1467,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      166.906,
-      -21.119,
-      -20.5
-     ],
-     "p1": [
-      166.963,
-      -50.519,
-      -20.5
-     ]
-    },
-    {
-     "move": 1372,
-     "line": 1468,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      166.963,
-      -50.519,
-      -20.5
-     ],
-     "p1": [
-      166.912,
-      -90.3,
-      -20.5
-     ]
-    },
-    {
-     "move": 1373,
-     "line": 1469,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      166.912,
-      -90.3,
-      -20.5
-     ],
-     "p1": [
-      166.969,
-      -96.975,
-      -20.5
-     ]
-    },
-    {
-     "move": 1374,
-     "line": 1470,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      166.969,
-      -96.975,
-      -20.5
-     ],
-     "p1": [
-      166.944,
-      -101.444,
-      -20.5
-     ]
-    },
-    {
-     "move": 1375,
-     "line": 1471,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      166.944,
-      -101.444,
-      -20.5
-     ],
-     "p1": [
-      166.9,
-      -101.631,
-      -20.5
-     ]
-    },
-    {
-     "move": 1376,
-     "line": 1472,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      166.9,
-      -101.631,
-      -20.5
-     ],
-     "p1": [
-      166.731,
-      -101.875,
-      -20.5
-     ]
-    },
-    {
-     "move": 1377,
-     "line": 1473,
-     "op": "Outside 312x222 R8, adaptive, z -4 to -20.5",
-     "tool": 2,
-     "rapid": true,
-     "part": "flutes",
-     "against": "stock",
-     "depth_mm": 16.0,
-     "p0": [
-      166.731,
-      -101.875,
-      -20.5
-     ],
-     "p1": [
-      166.381,
-      -102.275,
-      -20.5
-     ]
-    }
-   ],
+   "n_collisions": 0,
+   "collisions": [],
    "travel": {
     "table_z_setup": -60.8,
     "x_span_mm": 333.8,
@@ -1975,7 +1391,7 @@
       "nose_above_table_min": 151.6,
       "nose_above_table_max": 159.3,
       "ok": true,
-      "tip_at_z_home_clears_by_mm": 550.9
+      "tip_at_z_home_clears_by_mm": 590.4
      },
      {
       "tool": 2,
@@ -1983,7 +1399,7 @@
       "nose_above_table_min": 167.1,
       "nose_above_table_max": 198.0,
       "ok": true,
-      "tip_at_z_home_clears_by_mm": 512.2
+      "tip_at_z_home_clears_by_mm": 551.7
      },
      {
       "tool": 4,
@@ -1991,7 +1407,7 @@
       "nose_above_table_min": 133.6,
       "nose_above_table_max": 144.0,
       "ok": true,
-      "tip_at_z_home_clears_by_mm": 566.2
+      "tip_at_z_home_clears_by_mm": 605.7
      },
      {
       "tool": 8,
@@ -1999,7 +1415,7 @@
       "nose_above_table_min": 149.8,
       "nose_above_table_max": 172.0,
       "ok": true,
-      "tip_at_z_home_clears_by_mm": 538.2
+      "tip_at_z_home_clears_by_mm": 577.7
      },
      {
       "tool": 9,
@@ -2007,16 +1423,16 @@
       "nose_above_table_min": 129.1,
       "nose_above_table_max": 160.0,
       "ok": true,
-      "tip_at_z_home_clears_by_mm": 550.2
+      "tip_at_z_home_clears_by_mm": 589.7
      }
     ]
    },
-   "seconds": 3.3
+   "seconds": 3.0
   },
   "floor_B": {
    "part": "floor",
    "rot_about_x_deg": 180,
-   "moves": 18501,
+   "moves": 19211,
    "fixtures": [
     {
      "name": "fixture plate",
@@ -2057,8 +1473,8 @@
       "op": "Face bottom to 20 mm thick",
       "part": "flutes",
       "at": [
-       -156.2,
-       -101.2
+       -157.8,
+       -113.8
       ],
       "tip": [
        -156.1,
@@ -2112,7 +1528,7 @@
      "gauge_length_mm": 103.5,
      "min_clearance_to_stock_mm": {
       "c": 0.5,
-      "line": 19758,
+      "line": 20490,
       "op": "Drill 4 x 5.0 mm step z -12.50..-11.00, model",
       "part": "flutes",
       "at": [
@@ -2136,7 +1552,7 @@
       "flutes": {
        "stock": {
         "c": 0.5,
-        "line": 19758
+        "line": 20490
        }
       }
      },
@@ -2152,7 +1568,7 @@
      "gauge_length_mm": 93.5,
      "min_clearance_to_stock_mm": {
       "c": 0.5,
-      "line": 19716,
+      "line": 20448,
       "op": "Drill 10 x 3.3 mm step z -14.00..-12.50, model",
       "part": "flutes",
       "at": [
@@ -2176,7 +1592,7 @@
       "flutes": {
        "stock": {
         "c": 0.5,
-        "line": 19716
+        "line": 20448
        }
       }
      },
@@ -2192,7 +1608,7 @@
      "gauge_length_mm": 93.5,
      "min_clearance_to_stock_mm": {
       "c": 0.5,
-      "line": 19822,
+      "line": 20554,
       "op": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
       "part": "flutes",
       "at": [
@@ -2207,7 +1623,7 @@
      },
      "min_clearance_to_fixtures_mm": {
       "c": 2.76,
-      "line": 19788,
+      "line": 20520,
       "op": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
       "part": "flutes",
       "what": "fixture plate",
@@ -2225,11 +1641,11 @@
       "flutes": {
        "stock": {
         "c": 0.5,
-        "line": 19822
+        "line": 20554
        },
        "fixture": {
         "c": 2.76,
-        "line": 19788
+        "line": 20520
        }
       }
      },
@@ -2245,7 +1661,7 @@
      "gauge_length_mm": 103.5,
      "min_clearance_to_stock_mm": {
       "c": 0.5,
-      "line": 19628,
+      "line": 20360,
       "op": "Drill 4 x 6.0 mm step z -20.00..-11.00, model",
       "part": "flutes",
       "at": [
@@ -2260,7 +1676,7 @@
      },
      "min_clearance_to_fixtures_mm": {
       "c": 4.25,
-      "line": 19668,
+      "line": 20400,
       "op": "Drill 2 x 6.0 mm step z -20.00..-10.00, model",
       "part": "flutes",
       "what": "port ID clamp",
@@ -2278,11 +1694,11 @@
       "flutes": {
        "stock": {
         "c": 0.5,
-        "line": 19628
+        "line": 20360
        },
        "fixture": {
         "c": 4.25,
-        "line": 19668
+        "line": 20400
        }
       }
      },
@@ -2298,16 +1714,16 @@
      "gauge_length_mm": 91.5,
      "min_clearance_to_stock_mm": {
       "c": 0.5,
-      "line": 91,
-      "op": "18 U-notches 8 wide x 8 deep, adaptive outside the outline",
+      "line": 588,
+      "op": "Outside below z -12 and the 18 U-notches 8 wide x 8 deep, adaptive outside the outline",
       "part": "flutes",
       "at": [
-       106.8,
-       -110.8
+       146.8,
+       -113.8
       ],
       "tip": [
-       108.11,
-       -113.55,
+       149.41,
+       -114.12,
        16.0
       ]
      },
@@ -2322,7 +1738,7 @@
       "flutes": {
        "stock": {
         "c": 0.5,
-        "line": 91
+        "line": 588
        }
       }
      },
@@ -2334,8 +1750,8 @@
    "collisions": [],
    "travel": {
     "table_z_setup": -25.4,
-    "x_span_mm": 319.5,
-    "y_span_mm": 229.5,
+    "x_span_mm": 322.0,
+    "y_span_mm": 233.2,
     "x_ok": true,
     "y_ok": true,
     "z": [
@@ -2390,6 +1806,259 @@
     ]
    },
    "seconds": 13.0
+  }
+ },
+ "stock_vs_model": {
+  "frame": {
+   "gouge_deeper_than_1mm_cm3": 0.0,
+   "n_gouge_regions": 0,
+   "leftover_deeper_than_1mm_cm3": 31.826,
+   "n_leftover_regions": 27,
+   "largest_leftovers": [
+    {
+     "volume_mm3": 13136.0,
+     "max_depth_mm": 4.0,
+     "deepest_at": [
+      -55.75,
+      95.25,
+      7.75
+     ],
+     "bbox": [
+      [
+       -59.5,
+       59.5
+      ],
+      [
+       95.0,
+       111.0
+      ],
+      [
+       4.5,
+       11.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 7280.0,
+     "max_depth_mm": 12.35,
+     "deepest_at": [
+      140.25,
+      -0.25,
+      69.75
+     ],
+     "bbox": [
+      [
+       140.0,
+       156.0
+      ],
+      [
+       -12.0,
+       12.0
+      ],
+      [
+       58.0,
+       82.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 3520.0,
+     "max_depth_mm": 8.73,
+     "deepest_at": [
+      -155.75,
+      71.75,
+      39.75
+     ],
+     "bbox": [
+      [
+       -156.0,
+       -140.0
+      ],
+      [
+       63.5,
+       80.5
+      ],
+      [
+       31.5,
+       48.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 3520.0,
+     "max_depth_mm": 8.73,
+     "deepest_at": [
+      140.25,
+      71.75,
+      39.75
+     ],
+     "bbox": [
+      [
+       140.0,
+       156.0
+      ],
+      [
+       63.5,
+       80.5
+      ],
+      [
+       31.5,
+       48.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 886.0,
+     "max_depth_mm": 5.5,
+     "deepest_at": [
+      99.75,
+      110.75,
+      99.75
+     ],
+     "bbox": [
+      [
+       94.5,
+       105.5
+      ],
+      [
+       95.0,
+       111.0
+      ],
+      [
+       94.5,
+       105.5
+      ]
+     ]
+    }
+   ],
+   "loose_pieces_cm3": []
+  },
+  "floor": {
+   "gouge_deeper_than_1mm_cm3": 0.0,
+   "n_gouge_regions": 0,
+   "leftover_deeper_than_1mm_cm3": 0.02,
+   "n_leftover_regions": 80,
+   "largest_leftovers": [
+    {
+     "volume_mm3": 0.8,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      -47.75,
+      -5.25,
+      -19.75
+     ],
+     "bbox": [
+      [
+       -48.0,
+       -47.5
+      ],
+      [
+       -5.5,
+       -3.0
+      ],
+      [
+       -20.0,
+       -19.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.8,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      -47.75,
+      3.25,
+      -19.75
+     ],
+     "bbox": [
+      [
+       -48.0,
+       -47.5
+      ],
+      [
+       3.0,
+       5.5
+      ],
+      [
+       -20.0,
+       -19.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.8,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      -5.25,
+      -47.75,
+      -19.75
+     ],
+     "bbox": [
+      [
+       -5.5,
+       -3.0
+      ],
+      [
+       -48.0,
+       -47.5
+      ],
+      [
+       -20.0,
+       -19.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.8,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      -5.25,
+      47.75,
+      -19.75
+     ],
+     "bbox": [
+      [
+       -5.5,
+       -3.0
+      ],
+      [
+       47.5,
+       48.0
+      ],
+      [
+       -20.0,
+       -19.0
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 0.8,
+     "max_depth_mm": 1.0,
+     "deepest_at": [
+      3.25,
+      -47.75,
+      -19.75
+     ],
+     "bbox": [
+      [
+       3.0,
+       5.5
+      ],
+      [
+       -48.0,
+       -47.5
+      ],
+      [
+       -20.0,
+       -19.0
+      ]
+     ]
+    }
+   ],
+   "loose_pieces_cm3": [
+    52.06,
+    12.74
+   ]
   }
  },
  "stock_vs_camotics": {

@@ -16,10 +16,11 @@ holder, the CAT40 flange and the spindle nose. It is checked against three thing
 - the VF-4's travels.
 
 As programmed, with the fixtures `setup_plan.json` describes, it found 417 collisions in 4 of the 5 setups and two
-clearances under 2 mm. After the fixes in [`freecad_cam.py`](analysis/machining/freecad_cam.py), the frame's three
-setups and the floor plate's setup B are clean. The floor plate's setup A still has 26 rapids through its end tabs, and
-its workholding needs re-planning ([below](#still-open-after-this-check)). Frame setup C beyond the door opening is
-still not programmed.
+clearances under 2 mm. After the fixes in [`freecad_cam.py`](analysis/machining/freecad_cam.py), all five setups are
+clean, every holder clears the stock by 4.0 mm or more, and every tool clears the fixtures by 2.7 mm or more.
+
+Frame setup C beyond the door opening is still not programmed, and CAMotics has not been re-run on the final programs
+([below](#still-open-after-this-check)).
 
 ### Method
 
@@ -71,7 +72,7 @@ Results are in [`holder_check.json`](analysis/out/machining/holder_check.json). 
 | frame B, bottom up (F-S1, now first) | 213 | **0** | T2 4.1 (top of the stock) | T2 flutes 5.0 (edge clamp) |
 | frame A, top up (F-S2) | 0 (T2's holder 1.0 mm over the top face) | **0** | T2 4.0 | 10 or more |
 | frame C, door opening (F-S3) | 2 | **0** | T3 shank 8.9 | 10 or more |
-| floor A, top up (P-S1) | 159 | **26** (open) | T9 4.8 (was 1.8) | T2 2.2 (parallel) |
+| floor A, top up (P-S1) | 159 | **0** | T9 4.8 (was 1.8) | T2 flutes 3.0 (edge clamp) |
 | floor B, bottom up (P-S2) | 43 | **0** | 10 or more | T7 2.8 (fixture plate); T1 5.0 and T8 4.3 (port clamp) |
 
 **Travels.** Every setup is inside the VF-4's travels. The tool-centre span is at most 334 x 244 mm against
@@ -113,33 +114,44 @@ the part or fixtures by at least 319 mm (setup C).
    - The tightest points are the face mill 5.0 mm and the 6.0 mm drill 4.3 mm from the clamp.
 6. **T9's ER16 nut had 1.8 mm** over the floor's top face when profiling the slots to z -23.2.
    - Fix: 28 mm stick-out. A2's 2-1/2 in. OAL leaves 35.5 mm in the collet, and the nut now clears by 4.8 mm.
-7. **Floor P-S1: the face mill ran into the toe clamps on 1 in. end tabs** (159 collisions), as on the frame.
-   - Fix: 2-1/4 in. tabs, with the clamp noses 33 mm out along them (x ±191.75). The face mill and every holder now
-     clear the clamps.
-   - What's left: 26 rapids of T2 at z -20.5, through the tab roots (lines 1387-1473; [below](#still-open-after-this-check)).
+7. **Floor P-S1: the toe clamps on 1 in. end tabs were in the way** (159 collisions), as on the frame. The face mill ran
+   into them, and T2's outside passes to z -20.5 ran through the tab roots, which FreeCAD's 317.5 mm blank doesn't have.
+   - Moving the clamps out on 2-1/4 in. tabs cleared the face mill, but still left 26 rapids through the tab roots
+     (lines 1387-1473).
+   - Fix: A now cuts the outline only to z -12. The blank has no tabs: four edge clamps (L3) sit on its x-end faces
+     under z -15, 3.0 mm below T2's flutes.
+   - B, held by the port clamp and the pins, takes the whole blank as its stock. It cuts the rest of the outline, the
+     ring outside it and the U-notches in one 1/4 in. adaptive.
+   - That op is now 14.2 min, up from 5.8. Floor B is 17.4 min and the floor plate 68 min by the recount, up from
+     9.2 and 60.
 
-The re-posted G-code differs from the 2026-11-22 run only in:
+For the frame, the re-posted G-code differs from the 2026-11-22 run only in:
 - setup C's clearance and safe heights;
 - the finish passes;
-- T2's and T9's tool lengths.
+- T2's tool length.
 
-The material each setup removes is unchanged. CAMotics on the pre-fix G-code (re-run today on the current model, in
-Docker at 2 GB with 16 mm slabs) reproduced the 2026-11-22 numbers exactly:
+The floor plate's outline is now split between A and B. Its final shape, from this check's own stock on the 0.5 mm
+grid, matches the model with no gouges. The only leftover deeper than 1 mm is 0.02 cm³ of single voxels at the port's
+edge, as in CAMotics' run. For the frame, the leftover is the same 31.8 cm³ in 27 places that CAMotics found: setup C's
+unprogrammed features.
+
+CAMotics on the pre-fix G-code (re-run today on the current model, in Docker at 2 GB with 16 mm slabs) reproduced the
+2026-11-22 numbers exactly:
 - no gouges and no rapids through stock;
 - frame leftover 31.8 cm³ in 27 places;
 - floor plate clean, apart from the two slugs.
 
 ### Still open after this check
 
-- **Floor P-S1.** T2's outside passes reach x ±175.7 at z -20.5. With tabs, that is a slot into the tab roots that
-  FreeCAD's blank (317.5 mm long) doesn't know about: it rapids through them and would cut them at full width. Two ways
-  out (not done):
-  - give FreeCAD the tabs as stock and bound the outside op at x ±176;
-  - or cut the outline in A only to z -12, holding the blank by edge clamps under z -15, and let B cut the rest of the
-    outline together with the U-notches. B is held by the port ID clamp and the pins, and its stock would be the whole
-    blank.
-- **`setup_plan.json` still describes the old workholding** for F-S1 (toe clamps on tabs) and P-S2 (stud and washer).
-  `freecad_cam.FIXTURES` is the checked version. `setup_plan.py` was not re-run.
+- **CAMotics was not re-run on the final programs.** The run was queued for one of the runner's three shared
+  heavy-job slots, which stayed busy until the deadline. The material check of the final programs is this check's own
+  chained stock (above). It agrees with CAMotics' result for the pre-fix programs to within 0.07 cm³ (frame) and 0.89 cm³
+  (floor plate). Run `camotics_sim.py` on the new G-code before the shop does.
+- **Edge clamps on 1 in. plate.** The floor plate's P-S1 relies on edge clamps gripping the bottom 7.7 mm of a 1 in.
+  blank under adaptive cuts. Check the clamping force against the cutting load (not done).
+- **`setup_plan.json` still describes the old workholding** for F-S1 and P-S1 (toe clamps on end tabs) and P-S2 (stud
+  and washer), and the old floor op split. `freecad_cam.FIXTURES` is the checked version. `setup_plan.py` was not
+  re-run, and neither were `hours.py` and the hours tables.
 - **Assumed dimensions:**
   - the spindle nose and head;
   - each holder body between its nose and the flange (taken as wide as the nose or shoulder);

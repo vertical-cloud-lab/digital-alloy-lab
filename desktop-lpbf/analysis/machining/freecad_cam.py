@@ -43,10 +43,10 @@ Checked with holder_check.py (2026-11-23: holders, spindle, fixtures, travels), 
 out of an ER32 collet chuck (was 63 mm from a side-lock: its nose had 1.0 mm over the top face at the meet line); the
 opening's finish in two passes (A5 has 38.1 mm of flutes); T9 28 mm out (its ER16 nut had 1.8 mm over the floor);
 frame setup C's clearance and safe heights at 130 (the dummy-floor plate stands 9 mm proud of the front face); frame B
-now runs first, as setup_plan.json's F-S1. FIXTURES below holds each setup's workholding for that check: frame F-S1 on
-low-profile edge clamps (toe clamps on end tabs were in the face mill's and T2's way) and floor P-S2 held by a port
-ID clamp (the centre stud's washer sat on the face P-S2 faces). Floor P-S1's toe clamps sit on 2-1/4 in. tabs, but
-T2's outside passes still run through the tab roots, which this blank does not have (open, see machining.md).
+now runs first, as setup_plan.json's F-S1; floor A cuts the outline only to z -12 and floor B (stock: the whole blank)
+cuts the rest of it with the U-notches. FIXTURES below holds each setup's workholding for that check: frame F-S1 and
+floor P-S1 on low-profile edge clamps under the deepest cut (toe clamps on end tabs were in the face mill's and T2's
+way), floor P-S2 held by a port ID clamp (the centre stud's washer sat on the face P-S2 faces).
 """
 import json
 import math
@@ -153,8 +153,11 @@ SETUPS = [
         ("Face top to z 0", "face", 1, None, dict(face="top", start=2.7, final=0.0, step=2.7)),
         ("Step the 4 mm band round the pad (adaptive outside the pad)", "adaptive_out", 2, None,
          dict(face="top", start=0.0, final=-4.0, step=4.0, stepover=10)),
-        ("Outside 312x222 R8, adaptive, z -4 to -20.5", "adaptive_out", 2, None,
-         dict(face="band", start=-4.0, final=-20.5, step=16.5, stepover=10)),
+        # only to z -12 (holder_check.py): the blank is held by low edge clamps under z -15, and setup B, held by the
+        # port and the pins, cuts the rest of the outline with the U-notches. To z -20.5 it needed toe clamps on end tabs,
+        # whose roots the outside passes ran through (the CAM blank has no tabs)
+        ("Outside 312x222 R8, adaptive, z -4 to -12", "adaptive_out", 2, None,
+         dict(face="band", start=-4.0, final=-12.0, step=8.0, stepover=10)),
         ("Floor O-ring groove 4.6 x 2.65", "pocket", 4, None, dict(face="gland", start=0.0, step=0.5)),
         # port and slots go 0.5 mm past the blank's bottom (z -22.7), so their slugs drop in this setup: at z -20.5
         # a 2.2 mm web held them until setup B, whose fixture needs the port open for its centre stud
@@ -169,10 +172,12 @@ SETUPS = [
     # cuts the notches. The 2.2 mm web left under z -20.5 is faced off by the face op, which now covers its face's
     # bounding box plus the tool radius whatever the stock (with the stock as the boundary it missed the web, and
     # the notch op's tool ran through it).
-    dict(name="floor_B", part="floor", flip=True, stock=(312.0, 222.0, -22.7, 2.7), ops=[
+    # (since holder_check.py: A cuts the outline only to z -12, so B's stock is the whole blank and its outside op
+    # cuts the rest of the outline, the ring round it and the U-notches together, with the plate held by the port)
+    dict(name="floor_B", part="floor", flip=True, stock=FLOOR_BLANK, ops=[
         ("Face bottom to 20 mm thick", "face", 1, None, dict(face="top", start=22.7, final=20.0, step=2.7)),
-        ("18 U-notches 8 wide x 8 deep (adaptive outside the outline)", "adaptive_out", 9, None,
-         dict(face="top", start=20.0, final=12.0, step=4.0, stepover=15)),
+        ("Outside below z -12 and the 18 U-notches 8 wide x 8 deep (adaptive outside the outline)", "adaptive_out", 9,
+         None, dict(face="top", start=20.0, final=12.0, step=4.0, stepover=15)),
         ("Drill the holes that open on the bottom", "drill_all", None, None, dict()),
     ]),
 ]
@@ -184,10 +189,11 @@ SETUPS = [
 # z1); ycyl, a cylinder along y (cx, cz, r, y0, y1). End tabs (x0, x1, y0, y1, z0, z1) are blank the CAM stock box does
 # not have: holder_check.py treats them as stock (the cutter may cut them; nothing else may touch them).
 # setup_plan.json: "1 in. at each x end for F-S1's toe clamps", noses 3 mm out along the tab. holder_check.py found the
-# face mill (it faces the bounding box plus its radius, to x +-187.9) running into such clamps. Floor P-S1 now has
-# 2-1/4 in. tabs with the clamp noses 33 mm out (x +-191.75): 3.9 mm clear of the face mill.
-TAB_LEN = 2.25 * IN
-CLAMP_IN = 33.0
+# face mill (it faces the bounding box plus its radius, to x +-187.9) running into such clamps, and the 3/4 in. end
+# mill's outside passes (to x +-175.7) running through the tab roots, which the CAM blank does not have. Neither the
+# frame nor the floor plate uses tabs now; toe_clamps() and end_tabs() stay for re-checking that layout.
+TAB_LEN = 1.0 * IN
+CLAMP_IN = 3.0
 
 
 def toe_clamps(x_root, top, ys=(-60.0, 60.0)):
@@ -243,9 +249,13 @@ def _fixtures():
             ("2-1/2 in. riser", "box", (-124.0, 342.9, hrt_face - 15.9 - 177.8, hrt_face - 15.9, -215.9, -152.4)),
         ], []),
         # P-S1: blank on 1/2 x 1-1/2 in. parallels along x, clear of the port and slots; toe clamps on the end tabs
+        # (since holder_check.py: no tabs; low-profile edge clamps, ASSUMED 40 x 40 mm, on the x-end faces under
+        # z -15, 3 mm below A's outside passes, which now stop at z -12)
         "floor_A": (fl_bot - 1.5 * IN, [("parallel", "box", (-150, 150, y0, y0 + 12.7, fl_bot - 1.5 * IN, fl_bot))
-                                        for y0 in (-110.7, 98.0)] + toe_clamps(x_root, fl_top),
-                    end_tabs(x_root, fl_bot, fl_top, TAB_LEN)),
+                                        for y0 in (-110.7, 98.0)]
+                    + [("edge clamp", "box", (x_root if sx > 0 else -x_root - 40.0, x_root + 40.0 if sx > 0 else -x_root,
+                                              y - 20.0, y + 20.0, fl_bot - 1.5 * IN, -15.0))
+                       for sx in (-1, 1) for y in (-60.0, 60.0)], []),
         # P-S2 (bottom up): fixture plate under the sealing face and 2 dowel pins. setup_plan.json's central M12 stud
         # with a dia. 104 clamp washer sat on the very face this setup faces: holder_check.py found the face mill and
         # the drills of the holes near the port running into it. Now the port is held from inside: an expanding ID
