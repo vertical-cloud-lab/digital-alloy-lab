@@ -22,14 +22,17 @@ covered separately. Nothing has been built or tried on a mock-up.
 >   flange's tabs.
 >
 > Full M50 run on d8ec123 ([`results-M50.md`](analysis/out/ops/results-M50.md)): **83 pass / 2 warn / 38 fail** (was 82 / 2 / 37). The
-> jar's two fails are gone, but the run found three new ones, all fixed in 9481fc5 and after:
-> - A2.13: one of the four funnel screws had no key room beside the longer stub. The screws moved from y ±40 to ±50.
-> - A2.15: the sensor sat in front of the bracket's screws. The bracket's foot now rises above the sensor.
-> - U4.6: I gave the clamp a straight path off. It is "by hand" again.
+> jar's two fails are gone, but the run found three new ones. A re-check of A2, U4, S2 and M10 on 9481fc5
+> ([`results-M50-a1-recheck.md`](analysis/out/ops/results-M50-a1-recheck.md)) settles two of them, **so M50 stands at 84 / 2 / 36**:
+> - **A2.15** now passes, 2.9 mm: the sensor had sat in front of the bracket's screws, and the bracket's foot now rises above it.
+> - **U4.6**: I had given the clamp a straight path off. It is "by hand" again.
+> - **A2.13 still fails:** one of the four overflow-funnel screws, the back-right one at (117, +40), has a 15° key swing. The hand
+>   meets the moved right-hand leg (x 128–156, y 26–56). Moving the screws to y ±50 did not help, so they stay at ±40. Fix: bolt the
+>   funnel block to the floor plate on the bench, upside down, before the floor plate goes onto the legs (A2.4). The leg-to-floor
+>   screws already need the chamber upside down (fix #11 below).
 >
-> The re-check of A2, U4, S2 and M10 on the fixed model is in the round-5 section of robot-ops.md. M10.4 (the jar sensor) fails as
-> before, for the same model limit as the other M10 sensors. **Still failing every build:** the right draw latch (U2.2) and the
-> reservoir's handle (U1.1).
+> M10.4 (the jar sensor) fails as before, for the same model limit as the other M10 sensors. **Still failing every build:** the right
+> draw latch (U2.2) and the reservoir's handle (U1.1).
 >
 > **Update 2026-11-22 (round 4): M50 now 82 pass / 2 warn / 37 fail** (was 81 / 2 / 40 on 9c67f44), re-run on the model with
 > the module's robot grip block and the 12U rack ([`results-M50.md`](analysis/out/ops/results-M50.md)). Three fails are gone:

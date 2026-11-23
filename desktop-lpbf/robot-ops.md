@@ -1,5 +1,12 @@
 # Robot tending: every job planned and audited the byu-vcl PR 318 way
 
+> **Update 2026-11-23 (round 5, A1): the overflow jar has a straight way out to the front** (section "Round 5" below). The jar stays
+> under the funnel. Its KF-40 joint is 26 mm lower and it is a 45 mm 2 in. cup on an MKS 100318805 toggle clamp. The outlet plenum's
+> KF-25 port and hose moved to the plenum's left end, and the front-right leg moved to the right side. The hand operations U4.5 and
+> U4.7 now pass (operations.md). ROBOT_RESULT
+> **The zero-point modules are still not drawn**: with the jar under the funnel, the right-hand NSE-HT has no place
+> ([`hot-swap.md`](hot-swap.md) §3.2a lists what it would take), so the two captive M6 stay and the module job still assumes them released.
+>
 > **Update 2026-11-22 (round 4): the build module swap passes on M50, S25 and L75** ([`analysis/out/robot/ops_w3.md`](analysis/out/robot/ops_w3.md)).
 > The module's handle now ends in an I-section grip block in front of the door's hinge knuckles, in the same place on every module
 > (`cad/modules_low.py`, `MP.MODULE_GRIP`), so the gripper takes it level from the front instead of reaching under the chamber. The
@@ -159,6 +166,26 @@ the same gap. **Jobs passing on M50: 11 of 12** (was 10): only the overflow jar 
   (ID 1460874, Ø88 × 20 mm) fit under the floor only once the overflow jar moves ([`hot-swap.md`](hot-swap.md) §3.2a).
 - **The forces.** The 106 N pull and 158 N push are over the 100 N force mode. Run that part under position control with a
   200 N PFL limit; zero-point clamps would pull the last millimetre themselves.
+
+## Round 5 (2026-11-23, A1): the overflow jar gets a way out; the zero-point modules still don't fit
+
+**Changed in the model** (`cad/lpbf_low.py` sections 3, 4, 5 and 11, `cad/joints.py`; commits d8ec123, 9481fc5, 4344f5d):
+
+| What | Before | Now | Why |
+|---|---|---|---|
+| KF-40 joint under the funnel | z −58, 16 mm weld stub | z −84, 42 mm weld stub | the toggle clamp's side links (z −89 to −79) pass 4.5 mm under the module flange's tabs when the module drops (tabs z −70 to −60) |
+| Jar | 90 mm KF-40 half nipple, ~120 cm³, bottom z −150 | KF-40 flange on a 2 in. × 0.065 in. 316L cup, 45 mm, ~68 cm³, bottom z −129 (−137 dropped) | it passes 3 mm over the guard's bottom front rail (top z −140) on the way out; a wider cup meets the Z servo's corner (x 93.5, y 27.7) |
+| Clamp | McMaster 4518K73 wing-nut clamp | **MKS 100318805** toggle clamp, NW40, aluminium, $23.34 (mks.com, 2026-11-23), lever to the front | one push on the lever opens it, for a hand or a fingertip; A 123.7, B 83.6, C 19.05 mm drawn, ring section assumed |
+| Outlet plenum's boot, KF-25 port and hose | right end (x 72–100), port at x 86 pointing down, hose down and right | left end (x −100 to −72), port at x −86; the hose runs back along x −86 under the left side (z −145 to −109), behind the chamber at y 135 and up past the back-right leg | at the right end they stood in the jar's only lane; gas-flow.md has the update (the CFD's drain flips to the left end) |
+| Front-right leg | x 120–150, y −105 to −75 | x 128–156, y 26–56 (28 × 30), on the right side behind the jar sensor | it overlapped the jar's lane by 7 mm; it stays 2 mm clear of the floor-plate screws' U-notches at (148, 20) and (148, 62), so those stay reachable. `analysis/fea/fea.py` still places the legs itself (line 441) and should read `lpbf_low.LEG_BOXES` |
+| Jar sensor | M12 9 mm from the jar's side (beyond an inductive M12's range), no bracket | M12 2 mm from the cup at z −121 on a 6061 bracket, 2 × M4 into the leg's front face | the gripper's pads close on the cup at z −111 to −89, above it |
+
+**The jar's lane** is x 72.6 to 127.4, from the jar to the guard door, and is now empty: under the plenum's flat part (z −36), under the
+door's hinge knuckles, and over the guard's bottom front rail. The robot job (`ops.py`, `job_overflow`):
+1. the toggle clamp comes off (a machine step, not simulated);
+2. the gripper comes in level from the front and closes on the cup with its pads at z −111 to −89;
+3. it lowers the jar 8 mm, slides it 160 mm straight out, lifts it 60 mm past the hinge knuckles, and carries it out over the guard
+   sill.
 
 ## Alignment with byu-vcl PR 318
 
