@@ -3,7 +3,11 @@
 > **Update 2026-11-23 (round 5, A1): the overflow jar has a straight way out to the front** (section "Round 5" below). The jar stays
 > under the funnel. Its KF-40 joint is 26 mm lower and it is a 45 mm 2 in. cup on an MKS 100318805 toggle clamp. The outlet plenum's
 > KF-25 port and hose moved to the plenum's left end, and the front-right leg moved to the right side. The hand operations U4.5 and
-> U4.7 now pass (operations.md). ROBOT_RESULT
+> U4.7 now pass (operations.md). **The robot still can't take the jar** ([`ops_a1.md`](analysis/out/robot/ops_a1.md)). In all six MiR
+> positions tried, reaching level to the cup at z −102 fails in one of three ways: the wrist camera meets the guard frame, the
+> forearm meets the guard door's handle, or the arm runs out of reach. The cup sits 55 mm lower than the module's grip block, which
+> the robot does reach. The fix is a grip fin on the jar, forward to y ≈ −150 in front of the hinge knuckles at z ≈ −50, as the
+> module has; it is not drawn.
 > **The zero-point modules are still not drawn**: with the jar under the funnel, the right-hand NSE-HT has no place
 > ([`hot-swap.md`](hot-swap.md) §3.2a lists what it would take), so the two captive M6 stay and the module job still assumes them released.
 >
