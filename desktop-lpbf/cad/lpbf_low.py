@@ -981,6 +981,32 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add("Argon solenoid manifold (purge / make-up / vent)", man, C["brass"], 10, (0, 300, 0), mat="brass", mass_kg=2.0, module="gas", bom="G7", mcm="8077K237")
     add("Argon pressure regulator + flowmeter", comp([cyl(22, (500, 120, g0), "z", 60), cyl(14, (500, 120, g0 + 60), "z", 40)]), C["brass"], 10, (0, 300, 0), mat="brass", mass_kg=1.2, module="gas", bom="G3")
 
+    # Pirani gauge on a KF-25 tee at the chamber's vacuum port (electrical.md 2026-11-23; no new chamber port: the frame's machining
+    # is frozen). The tee clamps to the isolation valve's pump-side flange (x = cx + 18 + 124.2, section 11), its run along +x through
+    # the guard's right panel where the vacuum hose passed before, its branch up with a KF-25 to KF-16 reducer and the NW-16 transmitter
+    # (G7's Vacuum Research 902377). With the valve open, as in every purge, it reads the chamber through 0.1 m of KF-25.
+    xpv = cx + 18 + 124.2
+    PIR_TEE = dict(A=38.1, fo=40.0, to=25.4)            # centre-to-face 1.5 in. (assumed: no catalogue drawing read), KF-25 flanges
+    xpt = xpv + PIR_TEE["A"]
+    prun = tube(PIR_TEE["to"] / 2, PIR_TEE["to"] / 2 - 1.6, (xpv, 0, 70.0), "x", 2 * PIR_TEE["A"])
+    pbrn = tube(PIR_TEE["to"] / 2, PIR_TEE["to"] / 2 - 1.6, (xpt, 0, 70.0 + 11.0), "z", PIR_TEE["A"] - 11.0)
+    pfl = [cyl(PIR_TEE["fo"] / 2, (xpv, 0, 70.0), "x", 5.5), cyl(PIR_TEE["fo"] / 2, (xpv + 2 * PIR_TEE["A"] - 5.5, 0, 70.0), "x", 5.5),
+           cyl(PIR_TEE["fo"] / 2, (xpt, 0, 70.0 + PIR_TEE["A"] - 5.5), "z", 5.5)]
+    ptee = fuse([prun, pbrn] + pfl).cut(cyl(PIR_TEE["to"] / 2 - 1.6, (xpt, 0, 70.0), "z", PIR_TEE["A"] + 1.0))
+    ptee = ptee.cut(cyl(PIR_TEE["to"] / 2 - 1.6, (xpv - 1, 0, 70.0), "x", 2 * PIR_TEE["A"] + 2))
+    add("Vacuum line Pirani tee (KF-25 304 SS tee on the isolation valve's pump-side flange)", ptee, C["ss"], 11, (220, 0, 120), mat="ss304",
+        mass_kg=0.25, bom="G7", tags=("electrical",))
+    zpr = 70.0 + PIR_TEE["A"]
+    pred = fuse([cyl(20.0, (xpt, 0, zpr), "z", 5.5), tube(9.0, 7.5, (xpt, 0, zpr + 5.5), "z", 20.0), cyl(15.0, (xpt, 0, zpr + 25.5), "z", 5.5)])
+    add("Vacuum line Pirani reducer (KF-25 to KF-16, 304 SS)", pred, C["ss"], 11, (220, 0, 160), mat="ss304", mass_kg=0.08, bom="G7", tags=("electrical",))
+    zpg = zpr + 31.0
+    pga = fuse([cyl(15.0, (xpt, 0, zpg), "z", 5.5), cyl(17.5, (xpt, 0, zpg + 5.5), "z", 70.0), cyl(7.0, (xpt, 0, zpg + 75.5), "z", 15.0)])
+    add("Pirani transmitter Vacuum Research 902377 on the vacuum line (NW-16, 0-10 V; envelope Ø35 x 76 mm + connector, assumed)", pga, C["anod"], 11,
+        (220, 0, 200), mat="misc", mass_kg=0.2, bom="G7", tags=("electrical",))
+    for xj in (xpv, xpv + 2 * PIR_TEE["A"]):
+        add("Vacuum line Pirani tee clamp (KF-25 wing-nut clamp, McMaster 4518K72)", place(VP.kf_wing_clamp(25), (xj, 0, 70.0), (0, 0, 1), (1, 0, 0)),
+            C["ss"], 11, (220, 0, 120), mat="ss304", mass_kg=0.05, bom="G7", mcm="4518K72", tags=("electrical",))
+
     # ===================== 11. Hoses =====================
     vv = comp([place(VP.kf_wing_clamp(25), (cx + 18, 0, 70), (0, 0, 1), (1, 0, 0)),   # ears up, hinge down: clear of the side draw latch
                VP.mcm_4123K45("-x").translate(V(cx + 18, 0, 70))])   # McMaster 4123K45
@@ -989,7 +1015,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         "Outlet plenum to filter": [(86, -90, zf - 45 - 26), (86, -90, -105), (110, -122, -115), (170, -132, -100), (300, -60, 20), (400, -40, 160), (470, -40, g0 + 294)],
         "Filter to blower": [(470 + 55 + 40, -40, g0 + 60), (560, -100, g0 + 60), (580 - 20, -150, g0 + 60)],
         "Blower to inlet plenum": [(700, -150, g0 + 270), (650, 20, 150), (420, 205, 100), (250, 205, 60), (110, cy + 78, 30), (0, cy + 32 + 46, 11)],
-        "Vacuum line to pump": [(cx + 18 + 124.2, 0, 70), (345, 0, 70), (400, 70, 60), (500, 165, 80), (640, 165, g0 + 330)],
+        "Vacuum line to pump": [(xpv + 2 * PIR_TEE["A"], 0, 70), (400, 50, 64), (500, 165, 80), (640, 165, g0 + 330)],   # from the Pirani tee (section 10)
     }
     add("Gas-loop + vacuum hoses (KF-25 SS bellows)", comp([polyline_pipe(h, 13) for h in hoses.values()]), C["hose"], 11, (0, 0, -160), mat="ss316l", mass_kg=3.0, bom="G7", mcm="HOSE_KF25")
     add("Argon line (1/4 in. 316L)", polyline_pipe([(477, 215, g0 + 82), (477, 215, 140), (300, 100, 130), (150, 100, 105), (100, 100, 100), (100, cy + 0.0, 100)], 3.2), C["argon"], 11, (0, 200, 0), mat="ss316l", bom="G7", mcm="TUBE_SS")
@@ -1047,6 +1073,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         import joints as J
         J.add_joints(sys.modules[__name__], parts, add, module)
     __import__("automation").add_features(add, sys.modules[__name__], module)   # robot-tending features (cad/automation.py, robot-ops.md)
+    __import__("electrical_parts").add_features(add, sys.modules[__name__], module)   # electrical parts (cad/electrical_parts.py, electrical.md)
     return parts
 
 

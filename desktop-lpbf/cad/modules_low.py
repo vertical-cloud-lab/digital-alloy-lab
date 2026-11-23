@@ -7,9 +7,10 @@ Build module (one of S25, M50, L75 in the machine at a time):
   fixed in the floor port ('module' group): spigot + flange + honed 316L cylinder, radial FKM O-ring, bottom flange
       with the rod gland, a front handle, two captive M6 thumb screws.
   moving with the piston ('piston' group, tagged 'in_module' so it leaves with the module):
-      build plate (bayonet spigot, gripper groove) on a heater block (24 V cartridges, 3 type K thermocouples,
-      240 C thermal cutoff), three Macor standoffs and two polished 316 shields, the piston head with the bore seal,
-      the hollow 316 rod (inert inside) and its rod end: a potted end cap with a side cable exit and a 430 striker.
+      build plate (bayonet spigot, gripper groove) on a heater block (24 V cartridges, 3 type K thermocouples;
+      no thermal cutoff: electrical.md 2026-11-23), three Macor standoffs and two polished 316 shields, the piston head with the bore seal,
+      the hollow 316 rod (inert inside) and its rod end: a 316L block with seven weld-in feedthroughs on its front face
+      (six type K single leads, one 4-pin power) and a 416 striker.
   Z stage ('zstage' group, follows the piston, offset by its own value): lift arm with a NdFeB pot magnet that
       holds the striker (a floating coupling: the bore centres the piston, the magnet only pulls it down).
 """
@@ -23,12 +24,15 @@ import module_params as MP
 
 V = cq.Vector
 BAYONET_R = 6.0          # plate spigot radius; three lugs reach BAYONET_R + 2.5
-# hermetic glass-to-metal receptacle on the rod end (seals.md item 7). Envelope placeholders, replaced by the vendor's drawing below.
-# Envelope: LEMO 1B hermetic receptacle (HGG.1B.310.CLLPV: M12 x 1 panel thread, Ø16 nut) on a Ø19 boss face with an O-ring. That
-# part's published rating (2 A per contact, 1e-7 mbar L/s) misses the spec; see seal-parts.csv for the KF-16 parts that meet it.
-HERMETIC = dict(label="hermetic receptacle, LEMO 1B envelope (HGG.1B.310)", pn="", mass_kg=0.02, thread_d=12.0, body_in=12.0, flange_d=19.0,
-                flange_t=2.5, shell_d=12.0, shell_l=10.0, boss_r=9.5, boss_x=16.0, axis_above_striker=10.0,
-                oring="2-014", oring_groove_id=12.6, oring_groove_od=17.2)
+# rod-end feedthroughs (electrical.md section 6, FT1), Solid Sealing Technology weld-ins (solidsealing.com, read 2026-11-22):
+# FA11631 single Chromel lead and FA11632 single Alumel lead, Ø6.27 mm x 38 mm 304 sleeves, -269 to 450 C, $44 each (3 + 3 = the
+# control, edge and limit pairs); FA10443 4 x 0.81 mm Cu pins, 16 A per pin, 2 kV, Ø12.62 x 24 mm sleeve, $92 (heater power, two
+# pins per pole). Sleeve diameters and lengths are the catalogue's; the split between wall and outside, and the 2.3-3.6 mm between
+# sleeves and to the face's edges, are this layout's (check weld access with Solid Sealing before machining the block).
+ROD_FT = dict(label="3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, Ø6.27 x 38 sleeves; "
+                    "1 x FA10443 4-pin 16 A Cu, Ø12.62 x 24 sleeve", pn="FA11631/FA11632/FA10443", mass_kg=0.06,
+              face_w=48.0, face_y=-24.0, face_z0=1.0, face_z1=21.0, face_zm=11.0, wall=3.0,
+              pwr_x=-15.5, pwr_d=12.62, pwr_out=21.0, tc_x=(-1.5, 8.0, 17.5), tc_z=(-4.6, 4.6), tc_d=6.27, tc_out=35.0)
 
 
 def polar(r, deg):
@@ -37,7 +41,7 @@ def polar(r, deg):
 
 
 def block_layout(key):
-    """(heaters, thermocouples, standoffs, standoff dia, thermal cutoff) positions as (r, deg) in the heater block.
+    """(heaters, thermocouples, standoffs, standoff dia; tco = where the dropped thermal cutoff was) positions as (r, deg) in the heater block.
     Heater counts follow the thermal FEA: >= 1.5x the worst steady loss at 200 C (47 / 90 / 135 W) in 50 W cartridges."""
     m = MP.MODULES[key]
     rb = m["block_d"] / 2
@@ -163,7 +167,7 @@ def add_build_module(h, add, key, step=4):
     blk = blk.cut(h.cyl(BAYONET_R + 0.2, (0, 0, zb1 - 4.3), "z", 4.4)).cut(h.cyl(BAYONET_R + 2.9, (0, 0, zb1 - 4.3), "z", 2.3))
     for a in (60.0, 180.0, 300.0):                      # entry slots for the lugs (locked 60 deg away from them)
         blk = blk.cut(h.box(BAYONET_R - 0.5, BAYONET_R + 2.9, -3.3, 3.3, zb1 - 4.3, zb1 + 0.1).rotate(V(0, 0, 0), V(0, 0, 1), a))
-    heaters, tcs, tcobj = [], [], []
+    heaters, tcs = [], []
     ht = L["heater_top"]
     for r, a in L["heaters"]:
         x, y = polar(r, a)
@@ -174,12 +178,12 @@ def add_build_module(h, add, key, step=4):
         top = zb1 - 5.0 if r < BAYONET_R + 3.5 else zb1 - 1.5
         blk = blk.cut(h.cyl(0.6, (x, y, zb0 - 1), "z", top - zb0 + 1))
         tcs.append(h.cyl(0.508, (x, y, zk0 - 1.0), "z", top - zk0 + 1.0))
-    xt, yt = polar(*L["tco"])
-    # 1 mm lower than first drawn: its top was level with the bayonet lugs' underside, and the robot's plate twist hit it
-    # (robot-ops.md). The pocket now stops 0.6 mm below the lug channel; the 10 mm body stands 1 mm proud of the block's
-    # underside, 1.5 mm above the upper radiation shield.
-    blk = blk.cut(h.cyl(2.1, (xt, yt, zb0 - 1), "z", 10.1))
-    tcobj.append(h.cyl(2.0, (xt, yt, zb0 - 1.0), "z", 10.0))
+    # No thermal cutoff (electrical.md 2026-11-23). The Cantherm RT240 that sat here (Ø4 x 10 at L["tco"], 1 mm proud of the block)
+    # holds only to 205 C, while S25's block runs at 216-221 C and every block may reach the 225 C cap; and no catalogue one-shot
+    # cutoff holds >= 225 C with a DC rating for 10.4 A (Cantherm SDF DF280S: Th 230 C, AC ratings only, UL pending; Microtemp G4
+    # 257 C: Th 220 C, 5 A at 24 V DC). Over-temperature is cut by the CN708 latching limit on its own thermocouple (K2) and the
+    # PLC's diverse over-temperature on the control and edge thermocouples (K1 through the safety controller), each of which
+    # stops an SSR short with the plate <= 227 C (analysis/out/electrical/heater_loop.md section 4). The block has no cutoff pocket.
     add(f"Plate rim wiper {lab} (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
         h.tube(R, Rp - 1.1, (0, 0, -2.9), "z", 1.4), C["white"], step, (0, 0, 300), mat="ptfe", bom="B2", section=True, **pg)
     add(f"Heater block {lab} (6061-T6, bayonet socket)", blk, C["alu"], step, (0, 0, 250), mat="al6061", bom="H1",
@@ -188,8 +192,6 @@ def add_build_module(h, add, key, step=4):
         (0, 0, 220), mat="steel", bom="H1", section=True, **pg)
     add(f"Type K thermocouples {lab} (control, edge, limit; 0.04 in. ungrounded, 316 sheath)", h.comp(tcs), C["yellow"], step,
         (0, 0, 220), mat="steel", bom="H1", section=True, **pg)
-    add(f"Thermal cutoff {lab} (240 C, in series with the heaters)", h.comp(tcobj), C["red"], step, (0, 0, 220),
-        mat="misc", mass_kg=0.002, bom="H2", section=True, **pg)
     # thermal break: each standoff is three Macor rings with the two polished 316 shields clamped between them, all on one
     # stack screw (joints.py: M3, M2.5 on S25) that runs up from a slotted counterbore in the piston head into a helical
     # insert in the heater block. Earlier drafts threaded M3 screws into the Macor itself, which is too weak for threads.
@@ -226,7 +228,7 @@ def add_build_module(h, add, key, step=4):
     for r, a in L["heaters"]:                                                             # lead pockets under the heaters
         x, y = polar(r, a)
         head = head.cut(h.cyl(4.0, (x, y, zk0 - 8.0), "z", 8.1))
-    for nm, r, a in L["tcs"] + [("tco",) + tuple(L["tco"])]:
+    for nm, r, a in L["tcs"]:
         x, y = polar(r, a)
         head = head.cut(h.cyl(1.6, (x, y, zk0 - 3.0), "z", 3.1))
     add(f"Piston head {lab} (6061-T6, cool side of the break; Tier B: 316L with a water channel)", head, C["alu"], step,
@@ -238,26 +240,33 @@ def add_build_module(h, add, key, step=4):
     add(f"Hollow piston rod {lab} ({rod_lab} seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
         h.tube(rod_od / 2, rod_id / 2, (0, 0, zr0), "z", zh0 + 8.0 - zr0), C["ss"], step, (0, 0, 140), mat="ss316l",
         bom="B1", section=True, **pg)
-    # rod end cap: the rod is TIG-welded into it; a hermetic glass-to-metal receptacle screws into its side boss on an FKM face
-    # O-ring, so the gas boundary at the rod end is metal, glass and one static O-ring (was potted stranded leads)
-    HC = HERMETIC
-    zx = zc + 5.0 + HC["axis_above_striker"]
-    cap = h.cyl(11.0, (0, 0, zc + 5.0), "z", MP.ROD_END_T - 5.0).cut(h.cyl(rod_id / 2, (0, 0, zc + 8.0), "z", MP.ROD_END_T))
-    cap = h.fuse([cap, h.cyl(HC["boss_r"], (-HC["boss_x"], 0, zx), "x", HC["boss_x"] - 6.0)])
-    cap = cap.cut(h.cyl(HC["thread_d"] / 2, (-HC["boss_x"] - 1, 0, zx), "x", HC["boss_x"] - 2.0))            # panel thread / bore
-    cap = cap.cut(h.tube(HC["oring_groove_od"] / 2, HC["oring_groove_id"] / 2, (-HC["boss_x"] - 0.01, 0, zx), "x", 1.35))   # face O-ring groove
-    add(f"Rod end {lab}: end cap with a side boss for the hermetic connector (316L, rod welded in)", cap, C["ss"], step, (0, 0, 120), mat="ss316l",
-        bom="H2", section=True, **pg)
-    conn = h.fuse([h.cyl(HC["thread_d"] / 2 - 0.02, (-HC["boss_x"], 0, zx), "x", HC["body_in"]),
-                   h.cyl(HC["flange_d"] / 2, (-HC["boss_x"] - HC["flange_t"], 0, zx), "x", HC["flange_t"]),
-                   h.cyl(HC["shell_d"] / 2, (-HC["boss_x"] - HC["flange_t"] - HC["shell_l"], 0, zx), "x", HC["shell_l"])])
-    add(f"Hermetic connector {lab} on the rod end ({HC['label']})", conn, C["ss"], step, (-60, 0, 120), mat="ss316l", mass_kg=HC["mass_kg"],
-        bom="H2", mcm=HC["pn"], section=True, **pg)
-    add(f"Hermetic-connector O-ring {lab} (FKM 75A {HC['oring']}, face seal under the flange)",
-        h.tube(HC["oring_groove_od"] / 2 - 0.2, HC["oring_groove_id"] / 2, (-HC["boss_x"], 0, zx), "x", 1.32), C["black"], step, (-60, 0, 120),
-        mat="fkm", bom="H2", section=True, **pg)
-    h.GLANDS[f"hermetic_{key}"] = dict(kind="face", ring=HC["oring"], cs=1.78, depth=1.32, width=(HC["oring_groove_od"] - HC["oring_groove_id"]) / 2,
-                                       groove_id=HC["oring_groove_id"], groove_mat="ss", T=40.0, closure=f"hermetic connector on the rod end ({key})")
+    # rod end (electrical.md section 6, FT1): a 316L block with the rod TIG-welded into its top and a 48 x 20 mm feedthrough face
+    # toward the front (-y). Seven weld-in feedthroughs are TIG-welded into the face's 3 mm wall, so the gas boundary at the rod end is
+    # metal, glass/ceramic and welds, no O-ring (it was a LEMO 1B receptacle on an O-ring, which misses the leak and current spec).
+    # The face cannot be ~30 mm square: the block has to stay between the striker (zc) and zc + 21, because the gland plate sits
+    # 3 mm above the old cap at the +8 mm overtravel, the handle 2 mm above the face at y < -28, and the rod end clears the guard's
+    # bottom rail by 3 mm on the module's way out (MODULE_PATH). So the face is wide instead: 2 rows of 3 type K sleeves beside the
+    # power sleeve. Nothing below zc, where the Z arm and the guard sill are.
+    RF = ROD_FT
+    zm = zc + RF["face_zm"]
+    x0f, x1f, yf = -RF["face_w"] / 2, RF["face_w"] / 2, RF["face_y"]
+    cap = h.cyl(11.0, (0, 0, zc + 5.0), "z", MP.ROD_END_T - 5.0)                                   # rod socket (rod welded in)
+    blk = h.box(x0f, x1f, yf, 2.0, zc + RF["face_z0"], zc + RF["face_z1"])                          # feedthrough body
+    body = h.fuse([cap, blk])
+    body = body.cut(h.cyl(12.85, (0, 0, zc - 0.01), "z", 5.01))                                      # striker pocket (striker screwed in it)
+    cav = h.fuse([h.box(-22.0, 21.0, yf + RF["wall"], -15.0, zc + 3.0, zc + 19.0),   # pocket behind the face (2.1 mm to the striker pocket)
+                  h.box(-6.0, 6.0, -16.0, 0.0, zc + 9.0, zc + 18.0),                     # channel to the rod bore (4 mm over the striker pocket)
+                  h.cyl(rod_id / 2, (0, 0, zc + 9.0), "z", MP.ROD_END_T - 8.0)])                     # the rod bore
+    body = body.cut(cav)
+    sleeves = []
+    for (x, z), (d, L_out) in [((RF["pwr_x"], 0.0), (RF["pwr_d"], RF["pwr_out"]))] + \
+            [((x, z), (RF["tc_d"], RF["tc_out"])) for x in RF["tc_x"] for z in RF["tc_z"]]:
+        body = body.cut(h.cyl(d / 2, (x, yf - 1.0, zm + z), "y", RF["wall"] + 2.0))
+        sleeves.append(h.cyl(d / 2, (x, yf - L_out, zm + z), "y", L_out + RF["wall"]))
+    add(f"Rod end {lab}: 316L feedthrough block, rod welded into its top, 48 x 20 mm face to the front", body, C["ss"], step, (0, 0, 120),
+        mat="ss316l", bom="H1", section=True, **pg)
+    add(f"Rod end {lab} feedthroughs, welded in ({RF['label']})", h.comp(sleeves), C["ss"], step, (0, -60, 120), mat="ss316l",
+        mass_kg=RF["mass_kg"], bom="H1", mcm=RF["pn"], section=True, **pg)
     add(f"Striker disc {lab} (416 stainless, on the pot magnet)", h.cyl(12.7, (0, 0, zc), "z", 5.0), C["steel"], step,
         (0, 0, 110), mat="steel", bom="B2", section=True, **pg)
 

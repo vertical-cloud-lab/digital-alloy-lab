@@ -128,6 +128,25 @@ JOINTS = [
     ("HSS recoater blade", "Chamber floor plate", "blade passes 0.05 mm above the floor"),
     ("Floor O-ring", "Chamber floor plate", "O-ring in the pad's face gland"),
     ("Floor O-ring", "Process chamber body", "O-ring squeezed by the frame's rebate"),
+    # electrical parts (cad/electrical_parts.py and the Pirani tee in lpbf_low.py section 10, electrical.md 2026-11-23)
+    ("Pirani tee clamp", "Vacuum isolation valve", "KF-25 clamp over the valve / tee flange joint"),
+    ("Pirani tee clamp", "Vacuum line Pirani tee (", "KF-25 clamp on the tee's flange"),
+    ("Pirani reducer", "Vacuum line Pirani tee (", "reducer clamped onto the tee's branch flange"),
+    ("Pirani transmitter", "Pirani reducer", "transmitter clamped onto the reducer's KF-16 flange"),
+    ("Vacuum line Pirani tee (", "Vacuum isolation valve", "tee's flange on the valve's pump-side flange"),
+    ("Recoater position magnet", "Recoater carriage block", "magnet bonded into a pocket in the block's back face"),
+    ("Z sensor flag", "Z carriage", "flag screwed to the carriage's side"),
+    ("Z sensor bracket", "Z actuator body", "bracket clamped to the actuator body"),
+    ("Z home and lower-limit sensors", "Z sensor bracket", "sensors in their clamp bores"),
+    ("Recoater home and over-travel sensors", "Recoater sensor clamps", "sensors in their clamp bores"),
+    ("Recoater sensor clamps", "Recoater sensor posts", "clamp on its post"),
+    ("Recoater sensor posts to the base plate", "Recoater sensor posts", "screw in the post's tapped core"),
+    ("PB1 stand", "Power box PB1", "box bolted on its stand"),
+    ("PB1 disconnect handle", "Power box PB1", "handle on the box's side wall, shaft through it"),
+    ("PB1 filter fan", "Power box PB1", "fan and grille in the door's cut-outs"),
+    ("E-stops IDEC", "E-stop enclosure", "operator in its enclosure's 22 mm hole"),
+    ("Dock PE contacts", "Tray dock", "contacts in the dock's face plate"),
+    ("Rod end", "Rod end", "feedthroughs welded into the rod-end block's bores"),
 ]
 
 ALLOW_HOSE_THROUGH = ("Laser guard panels", "Guard frame")   # hoses pass the guard through bulkheads

@@ -51,9 +51,9 @@ def single_line():
     ax.text(11.0, 17.75, "L1, L2, N, PE bus in PB1", fontsize=7, color=C_AC)
     branches = [
         (11.0, "Q1 2P 15 A D\nKM0 laser mains\ncontactor (PLC)", "IPG YLR-500-U3\n208 V L1-L2\n1.7 kW / 1.9 kVA\nrear terminal L1 L2 PE", C_AC),
-        (15.2, "Q2 2P 15 A D\n(multiwire,\nhandle-tied)", "UPS Eaton 5PX1500RTG2\n120 V L1-N, 1,440 W\n(see backed side)", C_AC),
+        (15.2, "Q2 2P 15 A D\n(multiwire,\nhandle-tied)", "UPS Eaton 5PX1500RTG2\n120 V L1-N, 1,500 W\n(see backed side)", C_AC),
         (19.4, "Q2 (L2-N leg)", "Heater supply\nMean Well LRS-350-24\n24 V 14.6 A (unbacked)", C_AC),
-        (23.6, "Q3 1P 15 A C\nKM1 + overload", "Vacuum pump 4396K21\n115 V 7 A, 1/2 hp\n(gas module, 2.3 m)", C_AC),
+        (23.6, "Q3 2P 10 A D\n(time-lag, Edwards)\nKM1 (PLC)", "Dry scroll pump\nEdwards nXDS6i\n208 V L1-L2, 6 A\n(gas module, 2.3 m)", C_AC),
         (27.8, "Q4 1P 6 A C\nKM2", "Recirculation blower\n(AC upper bound 230 W;\nor 24 V brushless)", C_AC),
     ]
     for x, brk, load, c in branches:
@@ -63,7 +63,7 @@ def single_line():
         box(ax, x, 12.4, 3.2, 1.8, load, fc="#ffffff", fs=6.3)
     # UPS backed side
     line(ax, [(16.8, 12.4), (16.8, 11.4), (2.0, 11.4), (2.0, 10.6)], C_UPS, 2.2)
-    ax.text(5.0, 11.55, "UPS outputs (5-15R): backed AC, ~240 W while building, 791 W rated", fontsize=7, color=C_UPS)
+    ax.text(5.0, 11.55, "UPS outputs (5-15R): backed AC, ~240 W while building, 770 W rated", fontsize=7, color=C_UPS)
     ups_loads = [
         (0.3, "Scan PC (2U)\nSCANLAB RTC6 (Ethernet)\nSL2-100 + laser signals", C_UPS),
         (4.3, "SDR-240-24\n+24 V CTRL 10 A\n(PB1)", C_DC),
@@ -86,14 +86,14 @@ def single_line():
     line(ax, [(21.0, 12.4), (21.0, 10.9)], C_HEAT, 2.0)
     box(ax, 18.6, 8.6, 5.0, 2.3, "24 V heater chain (PB1):\nF 15 A -> K1 (XS26 safety output)\n-> K2 (CN708 latching limit, own TC)\n-> SSR D1D20 (PLC PI, 1 s cycle)\n-> M12 L-coded -> rod-end feedthrough", fc="#fdf2e9", ec=C_SAFE, fs=6.0)
     line(ax, [(21.0, 8.6), (21.0, 7.6)], C_HEAT, 2.0)
-    box(ax, 18.6, 5.6, 5.0, 2.0, "Module heaters 2/3/5 x 50 W 24 V\n(10.4 A max, L75), RT240 TCO in series\n3 type K: control, edge -> PLC;\nlimit -> CN708 (K2)", fc="#ffffff", fs=6.0)
+    box(ax, 18.6, 5.6, 5.0, 2.0, "Module heaters 2/3/5 x 50 W 24 V\n(10.4 A max, L75), no thermal cutoff\n3 type K: control, edge -> PLC;\nlimit -> CN708 (K2)", fc="#ffffff", fs=6.0)
     # control network
     box(ax, 24.6, 8.6, 4.2, 2.3, "4U control drawer (rack)\nBanner XS26-2 + XS16si + XS2so\nProductivity1000 PLC\nTeknic ClearCore + SureStep drive\nK4/K5 laser-loop relays\nEthernet switch", fc="#eef7ee", fs=6.0, bold=False)
     box(ax, 29.2, 8.6, 4.5, 2.3, "PB2 box (process module)\nRaspberry Pi 5 supervisor + HQ camera\nPN532 NFC, NAU7802 load cell\nE3NX fibre amp, M12 junction", fc="#eef7ee", fs=6.0)
     box(ax, 24.0, 5.4, 9.9, 2.6, "Ethernet: PC + RTC6 Ethernet board - Pi 5 (recipe, REST API) - PLC (Modbus TCP) - ClearCore - laser (status) - UPS card - dock uplink\nHard-wired safety: E-stops (rack, guard, gas module), guard sensor + lock, key, reset, room/Shuttle O2 relays,\nrobot Safe Home, tray docked, shutter switches, CN708 relay, plate < 50 C relay, laser status -> XS26-2", fc="#f7f7f7", fs=4.9)
     # notes
-    ax.text(0.3, 2.6, "Notes: PE bonded in PB1 to the tray frame and every module base (two PE paths through the dock: protective-conductor current ~8 mA estimated, IEC 60204-1 8.2.8). "
-                      "Pump and laser never run together (PLC): worst leg 17.9 A of 24 A. "
+    ax.text(0.3, 2.6, "Notes: PE bonded in PB1 to the tray frame and every module base (two PE paths through the dock: protective-conductor current ~9 mA estimated, IEC 60204-1 8.2.8). "
+                      "Pump and laser never run together (PLC): worst leg 17.7 A of 24 A; the nXDS6i pump runs at 208 V across L1-L2. "
                       "Inrush: laser + UPS + heater supply at once ~120 A against the dock breaker's 150 A lowest C-curve trip: the PLC closes KM0 (laser mains) 5 s after power-up.", fontsize=6.5, wrap=True)
     ax.text(0.3, 1.6, "Not shown: argon NC valves (24 V, opened only through the O2-monitor relays and the exhaust flow switch in series), pneumatic valves, fans, lamps, and the 0 V/PE details (electrical-io.csv).", fontsize=6.5)
     fig.savefig(OUT / "single_line.png", dpi=120, bbox_inches="tight")
@@ -130,7 +130,7 @@ def interlock():
         (8.6, "O6 (XS2so) -> guard lock", "spring-lock, power to unlock (IDEC HS5L-VC44M-G): unlock only laser off, shutter closed, plate < 50 C, chamber ambient"),
         (6.6, "Standard outputs (PLC)", "robot entry permitted (UR reduced mode lifts the guard plane), VLM may move, stack light, HOT lamp"),
         (4.6, "Hard-wired, no controller", "argon supply valve: 24 V through both O2-monitor relays + exhaust flow switch in series"),
-        (2.6, "Hard-wired, no controller", "CN708 latching limit opens K2 on its own; RT240 TCO in the block (see heater_loop.md: holding 205 C)"),
+        (2.6, "Hard-wired, no controller", "CN708 latching limit opens K2 on its own; no thermal cutoff (none holds 225 C with a 24 V DC rating: heater_loop.md 5)"),
     ]
     for yy, a, b in outs:
         line(ax, [(16.6, yy), (18.0, yy)], C_SAFE, 1.4)
@@ -215,7 +215,7 @@ def panels():
     # top row: disconnect + breakers + contactors
     x = 10
     top = [(35, 68, "Q0\nSIRCO M\n30 A", "#ea9999"), (36, 90, "Q1 2P\nD15 ~", "#ea9999"), (36, 90, "Q2 2P\nD15 ~", "#ea9999"),
-           (18, 90, "Q3\nC15 ~", "#ea9999"), (18, 90, "Q4\nC6 ~", "#ea9999"), (45, 68, "KM0\nlaser ~", "#f6b26b"),
+           (18, 90, "Q3\nD10 ~", "#ea9999"), (18, 90, "Q4\nC6 ~", "#ea9999"), (45, 68, "KM0\nlaser ~", "#f6b26b"),
            (45, 68, "KM1\npump ~", "#f6b26b"), (45, 68, "KM2 ~", "#f6b26b"), (45, 68, "K1\nCWBS12", "#f6b26b"), (45, 68, "K2\nCWBS12", "#f6b26b")]
     for w, h, lab, fc in top:
         dev(ax3, x, 250 - h / 2, w, h, lab, fc)

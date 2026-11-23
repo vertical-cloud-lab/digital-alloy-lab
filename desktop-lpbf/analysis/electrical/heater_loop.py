@@ -47,8 +47,15 @@ T_A = 25.0
 INSTALLED = {"S25": 100.0, "M50": 150.0, "L75": 250.0}       # module_params.py: 2 / 3 / 5 x 50 W
 T_SET = 200.0
 BLOCK_CAP = 225.0                                             # modules.md: PID output limited by a block ceiling
-T_LIMIT = 235.0                                               # chosen below (normal block peak <= 225; RT240 TCO 240)
-TCO = 240.0                                                   # Cantherm RT240 functioning temperature (holding 205 C)
+T_LIMIT = 235.0                                               # chosen below (normal block peak <= 225)
+TCO = None                                                    # no thermal cutoff (electrical.md 2026-11-23); was the Cantherm RT240, 240 C (holding 205 C)
+# one-shot cutoffs checked against the job (Tf, Th, DC rating): the old part and the two highest-holding ones found
+TCO_CANDIDATES = {
+    "Cantherm RT240 (the old part)": dict(Tf=240.0, Th=205.0, dc="not read", src="electrical.md 0 point 6 (holding 205 C)"),
+    "Therm-O-Disc Microtemp G4, 257 C": dict(Tf=257.0, Th=220.0, dc="5 A at 24 V DC", src="farnell.com/datasheets/3689251.pdf p.4, read 2026-11-23 22:31Z"),
+    "Cantherm SDF DF280S": dict(Tf=280.0, Th=230.0, dc="AC only (250 V 10 A, 125 V 15 A); UL, VDE, CCC applied for",
+                                src="Cantherm SDF datasheet p.4 (mirror datasheet.chipsmall.com/SDF-DF091S/256659.pdf), read 2026-11-23 22:46Z"),
+}
 TAU_TC, TAU_B = 2.0, 8.0
 DT = 0.25
 
@@ -159,7 +166,7 @@ class Sim:
         self.sp_block = None
 
     def run(self, t_end, y0=None, laser=None, ssr_short_at=None, limit_on=True, limit=T_LIMIT, tco_on=True,
-            dwell=None, sp=T_SET, cap=BLOCK_CAP, record_every=2.0):
+            dwell=None, sp=T_SET, cap=BLOCK_CAP, record_every=2.0, tco=None):
         """laser: callable(t, state) -> W absorbed in the plate; dwell: K above the set point at which the next layer is held."""
         C_F, C_S, G_FS, G_Sa, G_Fa, k_r = self.par
         TF, TS = y0 if y0 is not None else (T_A, T_A)
@@ -229,7 +236,7 @@ class Sim:
                 trip_pending = t + 0.5 + 0.05
             if trip_pending is not None and t >= trip_pending and not tripped:
                 tripped, t_trip = True, t
-            if tco_on and not tco_open and TB >= TCO:
+            if tco_on and not tco_open and (tco or TCO) is not None and TB >= (tco or TCO):
                 tco_open, t_tco = True, t
             peaks["TF"] = max(peaks["TF"], TF)
             peaks["TB"] = max(peaks["TB"], TB)
@@ -365,8 +372,10 @@ def main():
             G_FS, G_Sa = par[2], par[3]
             ss_ratio = (G_FS + G_Sa) / G_FS          # slow node -> plate-equivalent rise at steady
             case = {}
-            for label, kw in (("limit trips", dict(limit_on=True, tco_on=True)),
-                              ("limit failed, TCO opens", dict(limit_on=False, tco_on=True)),
+            for label, kw in (("limit trips", dict(limit_on=True, tco_on=False)),
+                              ("limit failed, RT240 (240 C) would open", dict(limit_on=False, tco_on=True, tco=240.0)),
+                              ("limit failed, a 257 C cutoff would open", dict(limit_on=False, tco_on=True, tco=257.0)),
+                              ("limit failed, a 280 C cutoff would open", dict(limit_on=False, tco_on=True, tco=280.0)),
                               ("no protection (1 h)", dict(limit_on=False, tco_on=False))):
                 rs = simS.run(3600 if "no protection" in label else 1800, y0=y0, ssr_short_at=60.0, **kw)
                 TS_pk = rs["peaks"]["TS"]
@@ -432,12 +441,12 @@ def main():
     ax[1, 0].set_title("(c) Dense M50 build, plate at the end of the stroke (81 W absorbed vs 52 W lost)")
     ax[1, 0].legend(fontsize=7)
     # (d) SSR shorted, M50 end
-    for label, c in (("limit trips", "#2e8b57"), ("limit failed, TCO opens", "#e67e22"), ("no protection (1 h)", "#c0392b")):
+    for label, c in (("limit trips", "#2e8b57"), ("limit failed, a 280 C cutoff would open", "#e67e22"), ("no protection (1 h)", "#c0392b")):
         rs = results["ssr_short"]["M50"]["end"][label]["rec"]
         ax[1, 1].plot(np.array(rs["t"]) / 60, rs["TB"], color=c, lw=1.0, label=f"block, {label}")
         ax[1, 1].plot(np.array(rs["t"]) / 60, rs["TS"], color=c, lw=0.8, ls=":")
     ax[1, 1].axhline(T_LIMIT, color="k", lw=0.6, ls=":")
-    ax[1, 1].axhline(TCO, color="#e67e22", lw=0.6, ls=":")
+    ax[1, 1].axhline(280.0, color="#e67e22", lw=0.6, ls=":")
     ax[1, 1].set_xlabel("time (min); the SSR shorts at 1 min")
     ax[1, 1].set_ylabel("°C (dotted: slow node, bore wall / head / rod)")
     ax[1, 1].set_title("(d) M50, SSR fails shorted at the end of the stroke (150 W)")
@@ -454,7 +463,7 @@ def main():
         for pos in results["ssr_short"][key]:
             for label in results["ssr_short"][key][pos]:
                 results["ssr_short"][key][pos][label].pop("rec", None)
-    results["notes"] = dict(T_SET=T_SET, BLOCK_CAP=BLOCK_CAP, T_LIMIT=T_LIMIT, TCO=TCO, TAU_TC=TAU_TC, TAU_B=TAU_B, DT=DT)
+    results["notes"] = dict(T_SET=T_SET, BLOCK_CAP=BLOCK_CAP, T_LIMIT=T_LIMIT, TCO=TCO, TCO_CANDIDATES=TCO_CANDIDATES, TAU_TC=TAU_TC, TAU_B=TAU_B, DT=DT)
     (OUT / "heater_loop.json").write_text(json.dumps(results, indent=1, default=float))
     write_md(results)
 
@@ -467,7 +476,7 @@ def write_md(R):
     L = ["# Heater control loop: lumped model, PID, laser heat and an SSR that fails shorted", "",
          "Generated by [`analysis/electrical/heater_loop.py`](../../electrical/heater_loop.py). Method, inputs and assumptions are in the script's docstring. "
          "The lumped model is fitted to this repo's CalculiX results (`analysis/out/thermal/thermal.json`, `laser_heat.json`); it is not a new FEA.", "",
-         f"Set point {T_SET:.0f} °C at the plate centre; block cap {BLOCK_CAP:.0f} °C; latching limit {T_LIMIT:.0f} °C on the limit thermocouple; RT240 thermal cutoff {TCO:.0f} °C; thermocouple lag {TAU_TC:.0f} s.", "",
+         f"Set point {T_SET:.0f} °C at the plate centre; block cap {BLOCK_CAP:.0f} °C; latching limit {T_LIMIT:.0f} °C on the limit thermocouple; no thermal cutoff (dropped 2026-11-23, section 5); thermocouple lag {TAU_TC:.0f} s.", "",
          "## 1. Fit of the lumped model to the FEA", "",
          "| Module, position | C fast / slow (J/K) | G fast-slow / slow-ambient / fast-ambient (W/K) | r_B block offset (K/W) | Fit: RMS over the FEA curve (K) | worst in the first 30 min (K) | worst steady point (K) |",
          "|---|---|---|---|---|---|---|"]
@@ -507,6 +516,21 @@ def write_md(R):
                 else:
                     L.append(f"| {k} {pos} | {label} | {f1(c['t_to_trip_s'])} | {f1(c['t_to_tco_s'])} | {c['plate_peak_C']:.0f} | {c['block_peak_C']:.0f} | "
                              f"{c['bore seal_peak_C']:.0f} | {c['rod gland_peak_C']:.0f} | {c['magnet face_peak_C']:.0f} |")
+    hb = {k: R["heatup"][k]["block_peak_C"] for k in R["heatup"]}
+    L += ["", "## 5. Is there a thermal cutoff that fits? (2026-11-23)", "",
+          "A one-shot cutoff in series with the heaters must hold (Th, 168 h without opening) at the hottest normal block temperature, "
+          f"which is the {BLOCK_CAP:.0f} °C block cap (heat-up block peaks: " + ", ".join(f"{k} {v:.0f} °C" for k, v in hb.items()) +
+          "; S25's block runs 216-221 °C at 200 °C on the plate), and it must break the heater current at 24 V DC: "
+          f"{INSTALLED['S25'] / 24:.1f} / {INSTALLED['M50'] / 24:.1f} / {INSTALLED['L75'] / 24:.1f} A (S25 / M50 / L75).", "",
+          "| Cutoff | Tf (°C) | Th (°C) | Holds at the 225 °C cap? | DC rating | Source |", "|---|---|---|---|---|---|"]
+    for n, c in TCO_CANDIDATES.items():
+        L.append(f"| {n} | {c['Tf']:.0f} | {c['Th']:.0f} | {'yes' if c['Th'] >= BLOCK_CAP else 'no'} | {c['dc']} | {c['src']} |")
+    L += ["", "None of them does both, so the cutoff is dropped: the latching limit (CN708 on its own thermocouple, K2) and the PLC's "
+          "over-temperature on the control and edge thermocouples (K1 through the safety controller, the diverse input the interlock check "
+          "added) each stop an SSR short on their own. Both read thermocouples in the same block with the same lag, so the 'limit trips' "
+          "rows of section 4 stand for either channel. The 'would open' rows show what each cutoff would add if both channels failed: "
+          "a 280 °C part opens only after the plate has passed the limit by tens of kelvin, and the 240 °C part opens first on S25 in "
+          "normal fault handling, which is the nuisance trip the drop removes."]
     L += ["", "![Heater loop](heater_loop.png)", "",
           "## Caveats", "",
           "- Two lumped nodes stand in for a 14,000-node axisymmetric model. They reproduce the FEA heat-up and cool-down to the RMS errors in §1; seal temperatures are scaled from the slow node with the FEA's steady ratios, so they are estimates.",
