@@ -130,6 +130,19 @@ CATALOG: dict[str, dict] = {
     "93600A686": dict(kind="dowel", d=6.0, L=20.0, ch_len=1.2, ch_half=15.0, mat="ss316", price_usd=7.89, sold_as="pack of 5",
                       pack=5, url=_MCM.format("93600A686"), fetched_utc=_T, tol_um="+4 to +12 (m6)",
                       desc="316 Stainless Steel Dowel Pin, 6 mm Diameter, 20 mm Long (ISO 2338 m6)"),
+    # --- 316 dowel pins Ø3, ISO 2338 m6 (93600A), read off McMaster's 3 mm 316 table through the lab Pi 2026-11-23 22:35 UTC; the
+    #     0.6 mm x 15 deg end chamfers are scaled from the measured 6 mm pin (assumed; not checked against McMaster's CAD) ---
+    "93600A303": dict(kind="dowel", d=3.0, L=8.0, ch_len=0.6, ch_half=15.0, mat="ss316", price_usd=9.02, sold_as="pack of 25",
+                      pack=25, url=_MCM.format("93600A303"), fetched_utc="2026-11-23", tol_um="+2 to +8 (m6)",
+                      desc="316 Stainless Steel Dowel Pin, 3 mm Diameter, 8 mm Long (ISO 2338 m6)"),
+    "93600A304": dict(kind="dowel", d=3.0, L=10.0, ch_len=0.6, ch_half=15.0, mat="ss316", price_usd=9.64, sold_as="pack of 25",
+                      pack=25, url=_MCM.format("93600A304"), fetched_utc="2026-11-23", tol_um="+2 to +8 (m6)",
+                      desc="316 Stainless Steel Dowel Pin, 3 mm Diameter, 10 mm Long (ISO 2338 m6)"),
+    # --- ball-nose spring plunger, M6 x 1 (85015A47): body 14 mm, Ø3.5 440C ball, 1 mm travel, 2 lbf extended / 2.9 lbf compressed
+    #     (options-mcmaster.csv, McMaster 2026-11-17); the ball's 1.0 mm stand-out at full extension is the listed travel ---
+    "85015A47": dict(kind="plunger", d=6.0, P=1.0, L=14.0, ball_d=3.5, travel=1.0, mat="ss188", price_usd=7.17, sold_as="each", pack=1,
+                     url=_MCM.format("85015A47"), fetched_utc="2026-11-17",
+                     desc="18-8 Stainless Steel Slotted Ball-Nose Spring Plunger with 440C Stainless Steel Nose, M6x1, 2-2.9 lb. Nose Force"),
     # --- 18-8 helical inserts, pronged (91732A) ---
     "91732A767": _insert("91732A767", 2.5, 0.45, 3.8, 1.85, 4.26, 10, (3.744 - 0.3942) / 0.45),
     "91732A647": _insert("91732A647", 3.0, 0.5, 4.5, 2.175, 3.85, 10, (4.438 - 0.438) / 0.5),
@@ -387,8 +400,17 @@ def _g_disc(c, detail=False):
     return body.translate(V(0, 0, -bb.zmin))
 
 
+def _g_plunger(c, detail=False):
+    """Ball-nose spring plunger: threaded body (drawn at the nominal diameter) from z 0 (slotted top) to -L, the ball standing
+    `travel` proud of the body's end at full extension."""
+    R, L, rb, tr = c["d"] / 2, c["L"], c["ball_d"] / 2, c["travel"]
+    body = cq.Solid.makeCylinder(R, L, V(0, 0, -L), V(0, 0, 1))
+    ball = cq.Solid.makeSphere(rb, V(0, 0, -L - tr + rb), angleDegrees1=-90, angleDegrees2=90)
+    return body.fuse(ball).clean()
+
+
 GEN = {"shcs": _g_shcs, "fhcs": _g_fhcs, "set": _g_set, "dowel": _g_dowel, "insert": _g_insert, "captive": _g_captive,
-       "retainer": _g_retainer, "disc": _g_disc}
+       "retainer": _g_retainer, "disc": _g_disc, "plunger": _g_plunger}
 
 _cache: dict[tuple, cq.Solid] = {}
 

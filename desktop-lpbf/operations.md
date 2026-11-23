@@ -5,6 +5,30 @@ Written 2026-11-20 for [PR #266](https://github.com/vertical-cloud-lab/digital-a
 This note covers what a person does. Automated operations (the build loop, robot plate and reservoir handling) are
 covered separately. Nothing has been built or tried on a mock-up.
 
+> **Update 2026-11-23 (round 5, access fixes): U1.1 and M3.2 now pass; U2.2 and M8.4 see below.** Re-run of U1, U2, M3 and M8 on
+> M50 ([`results-M50-a2.md`](analysis/out/ops/results-M50-a2.md); the full run in `results-M50.md` is from round 4). What changed:
+> - **Reservoir pull tab (U1.1, passes).** The lid's 8 × 10 mm handle fin (z 248–258) ran under the enclosed beam tube
+>   (y −35.25 to −15.25, z 262.7–282.7). A 6061 tab now carries the same fin 70 mm forward, to y −100, at the same height for S, M
+>   and L. A hand pinches it 50–65 mm in front of the tube, with the forearm over the optics bridge (forearm bottom z 239.5, bridge
+>   top 232.7). This is not the base-plate tab tried in round 4, which left the forearm between the lid and the bridge. The robot's
+>   reservoir job now grips the tab too (robot-ops.md).
+> - **Liners (M3.2, passes in six steps, tightest 0.36 mm).** Six parts. The side liners have their Ø22 ball-screw holes slotted
+>   open to the back edge, are 15 mm shorter at the front and 88 mm tall (z 16–104; the door opening is 92 mm). Each steps 4 mm in
+>   off the wall, slides 21 mm forward off the screw, moves in to x ±105, drops 6 mm and comes out through the door. The LED bar
+>   moved from the right wall to the lid's underside (x 126–134, z 112–120), where it no longer traps the right liner; it now lights
+>   the layer from ~40° instead of ~10°, which a recoat-defect camera may not like (not checked). The back liner is two bands behind
+>   the ball screw, each split at x = 0: upper z 48–72 (between the screw, z ≤ 46, and the rail, z ≥ 74.5) and lower z 16–32. A
+>   one-piece or full-height back liner can't pass the screw, which runs the chamber's width 16 mm in front of it. So the back wall
+>   from z 32 to 48, behind the screw, is no longer lined. Each half comes forward with the recoater at the other end of its stroke
+>   (the step now sets the recoater: `run_ops.py` takes a per-step state).
+> - **Draw latches (U2.2).** Both 1807A61 latches sit on 6061 brackets bolted to the door's ears and point forward, so the levers
+>   are at y −207 with the door shut, in front of the front-right optics post (y −185 to −125). The strikes moved to the chamber's
+>   side faces (y −100 to −72). The pull is still straight back at the seal's centroid height (z 54), at x ±158. The ears now end at
+>   x ±146 (were ±156). The latch cylinders ride on the brackets. U2.2: RESULT_U22
+> - **Ferrotec feedthrough out to the front (M8.4).** With the left latch off the left side face, the unit and its coupling come
+>   out 45 mm sideways (was 30), then forward. M8.4: RESULT_M84 M8.1-M8.3 (the servo against the front-left post and the
+>   bridge) still fail, as before: those need the bridge changes.
+>
 > **Update 2026-11-22 (round 4): M50 now 82 pass / 2 warn / 37 fail** (was 81 / 2 / 40 on 9c67f44), re-run on the model with
 > the module's robot grip block and the 12U rack ([`results-M50.md`](analysis/out/ops/results-M50.md)). Three fails are gone:
 > - **The gland plate and its rod O-rings are no longer trapped (M7.2).** The rod end stays welded. The gland plate comes out of

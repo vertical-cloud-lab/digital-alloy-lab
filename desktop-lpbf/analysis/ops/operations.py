@@ -46,16 +46,16 @@ def screws(label, joint, minutes, torque=False, pn=None, note=""):
     return dict(do="screws", label=label, joint=joint, torque=torque, pn=pn, minutes=minutes, note=note)
 
 
-def remove(label, keys, paths, minutes=2, exclude=(), rot=None, note=""):
-    return dict(do="remove", label=label, keys=list(keys), exclude=list(exclude), paths=paths, minutes=minutes, rot=rot, note=note)
+def remove(label, keys, paths, minutes=2, exclude=(), rot=None, note="", state=None):
+    return dict(do="remove", label=label, keys=list(keys), exclude=list(exclude), paths=paths, minutes=minutes, rot=rot, note=note, state=state)
 
 
 PINCH_HAND = (46.0, 25.0, 60.0)     # fingers pinching a tab, a key or a clamp's wing nut (width x thickness x length)
 
 
-def reach(label, point, approach=(FRONT,), skip=(), minutes=1, note="", hand=None):
+def reach(label, point, approach=(FRONT,), skip=(), minutes=1, note="", hand=None, state=None):
     """hand centre at `point` (put ~30 mm above a grip point for a horizontal reach, so the fingers reach down to it)."""
-    return dict(do="reach", label=label, point=point, approach=list(approach), skip=list(skip), minutes=minutes, note=note, hand=hand)
+    return dict(do="reach", label=label, point=point, approach=list(approach), skip=list(skip), minutes=minutes, note=note, hand=hand, state=state)
 
 
 def note(label, minutes, why=""):
@@ -163,7 +163,7 @@ def catalogue(module="M50"):
         place("Overflow jar up to its port (clamp put on by hand)", ["Overflow jar"], path=[(0, 0, 0), (0, 0, -8), (520, 0, -8)], minutes=2),
         place("KF-40 clamp", ["Overflow clamp"], path=None, minutes=1),
         place("Overflow-jar and module-present sensors", ["Overflow-jar present", "Module-present sensor"], minutes=4),
-        place("Wall liners into the open chamber", ["Lift-out wall liners"], minutes=3),
+        place("Wall liners (six pieces) and their pull tabs into the open chamber", ["Lift-out wall liner", "Liner pull tab"], minutes=3, per_part=True),
         place("LED bar", ["Layer-light"], minutes=3),
         place("Through-beam fibre heads and their O-rings, threaded into the side walls from outside", ["Plate-height through-beam", "Fibre-head O-rings"],
               path=None, minutes=3),
@@ -212,8 +212,9 @@ def catalogue(module="M50"):
         place("Camera viewport, window and camera, pressure transducer, relief valve", ["Camera viewport", "Camera adapter O-ring", "Camera window",
                                                                                         "Layer camera", "Pressure transducer", "Overpressure relief"],
               minutes=8),
-        place("Hinge knuckles on the chamber front, draw latches on its side faces", ["Door hinge knuckles on the chamber", "Draw latches on the chamber"], minutes=10),
-        place("Door (with its O-ring, leaves, strikes, handle), knuckles lined up", ["Chamber door", "Door O-ring", "Door hinge leaves", "Draw-latch strikes",
+        place("Hinge knuckles on the chamber front, draw-latch strikes on its side faces", ["Door hinge knuckles on the chamber", "Draw-latch strikes"], minutes=10),
+        place("Door (with its O-ring, leaves, latch brackets and latches, handle), knuckles lined up", ["Chamber door", "Door O-ring", "Door hinge leaves",
+                                                                                                       "Draw-latch brackets", "Draw latches",
                                                                                    "Door handle"], path=[(0, 0, 0), (0, -200, 0)], minutes=8,
               note="hinge and latch screws are not drawn"),
         place("Hinge pins slid in along x", ["Hinge pins"], path=[(0, 0, 0), (-160, 0, 0)], minutes=2),
@@ -239,7 +240,8 @@ def catalogue(module="M50"):
     # ============================== U. use ==============================
     ops.append(dict(id="U1", kind="use", name=f"Fill reservoir {res} and put it on the dock", where="glovebox or hood, then the tray at the access opening",
                     interval="each alloy / each build", state=OPEN, present="all", air=True, steps=[
-        reach("Hand on the reservoir's lid handle (z = 258)", (XD, -20.0, 272.0), (FRONT,), skip=[f"Reservoir {res}"], hand=PINCH_HAND),
+        reach("Hand on the reservoir's pull tab (the lid handle carried forward to y -100, z 248..258, in front of the beam tube)", (XD, -85.0, 272.0),
+              (FRONT,), skip=[f"Reservoir {res}"], hand=PINCH_HAND),
         remove(f"Reservoir {res} slides out on its dovetail and out through the guard door", [f"Reservoir {res}"],
                [[(0, 0, 0), (0, -125, 0), (0, -520, 0)]], minutes=1),
         note("Fill it in the glovebox (or under argon in a hood): ~80 g per 15 mm build; weigh, close, NFC tag", 15),
@@ -249,10 +251,14 @@ def catalogue(module="M50"):
                     interval="each build", state=OPEN_DOOR, present="all", air=True, steps=[
         reach("Plate in through the chamber door onto the bayonet (piston at +8 mm)", (0.0, 0.0, 45.0), (FRONT,), skip=["Build plate", "Plate rim wiper"],
               minutes=2),
-        reach("Close the door and the right draw latch (on the chamber's right side face)", (172.0, -125.0, 54.0), ((0, -1, 0), (-0.5, -0.85, 0), (0, -0.7, 0.7)),
-              skip=["Draw latches", "Draw-latch strikes"], minutes=1, hand=PINCH_HAND),
-        reach("Left draw latch", (-172.0, -125.0, 54.0), ((0, -1, 0), (0.5, -0.85, 0), (0, -0.7, 0.7)), skip=["Draw latches", "Draw-latch strikes"], minutes=0,
-              hand=PINCH_HAND),
+        # since 2026-11-23 the latches ride on brackets on the door's ears and point forward: their levers are at y -207 when the door is
+        # shut, in front of the front-right optics post (y -185..-125). Checked with the door shut (the latch moves with the door) and the
+        # guard door at its full 515 mm (MOTION: "clears the right door latch"); at 470 its left edge (x 140) is in front of the latch.
+        reach("Close the door and the right draw latch (on the door's right bracket, lever at its front end)", (161.9, -212.0, 54.0),
+              ((0, -1, 0), (-0.5, -0.85, 0), (0, -0.7, 0.7)), skip=["Draw latches", "Draw-latch strikes", "Draw-latch actuators"], minutes=1,
+              hand=PINCH_HAND, state={"door": 0.0, "gdoor": 515.0}),
+        reach("Left draw latch", (-161.9, -212.0, 54.0), ((0, -1, 0), (0.5, -0.85, 0), (0, -0.7, 0.7)),
+              skip=["Draw latches", "Draw-latch strikes", "Draw-latch actuators"], minutes=0, hand=PINCH_HAND, state={"door": 0.0, "gdoor": 515.0}),
         note("Close the guard door (guard lock engages)", 0.5),
         note("Purge: 2-3 vacuum-argon cycles to <= 100 ppm O2 (budgets.py: 2 cycles from 1 mbar, 3 from 10 mbar), then flow", 15),
         note("Preheat the plate to 200 C (~15 min ramp on Ø50, README)", 15),
@@ -300,8 +306,24 @@ def catalogue(module="M50"):
     ops.append(dict(id="M3", kind="maintenance", name="Liners out, chamber cleaned (alloy change)", where="tray at the access opening",
                     interval="each alloy change (~1 h on an Aconity MINI, pain-points)", state=dict(OPEN_DOOR, recoater=0.0), present="all", air=True, steps=[
         note("Passivate condensate (slow air bleed, liner thermocouple watched) before vacuuming (pain-points P35)", 30),
-        remove("Back liner (one piece) toward the door", ["Lift-out wall liners"], axis_paths(520.0, first=(0, -3, 0)), minutes=3,
-               note="the three liners are one part in the model; checked as one sheet set"),
+        # six pieces since 2026-11-23 (lpbf_low section 5). The recoater sits at one end of its stroke while the pieces on the other side come out.
+        remove("Right side liner with its pull tab: 4 mm in off the wall, 21 mm forward (the ball screw leaves its slot), in to x 105, down 6 mm, "
+               "out through the door", ["Lift-out wall liner, right", "Liner pull tab, right"],
+               [[(0, 0, 0), (-4, 0, 0), (-4, -21, 0), (-35, -21, 0), (-35, -21, -6), (-35, -541, -6)]], minutes=2, state={"recoater": 0.0}),
+        remove("Back liner, upper right: 3 mm off the wall, forward over the ball screw, left 25 mm, out through the door",
+               ["Lift-out wall liner, back upper right"], [[(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -560, 0)]], minutes=1,
+               state={"recoater": 0.0}),
+        remove("Back liner, lower right: forward under the ball screw, left 25 mm, out through the door", ["Lift-out wall liner, back lower right"],
+               [[(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -560, 0)]], minutes=1, state={"recoater": 0.0}),
+        note("Recoater to the right end of its stroke (x +100), so the carriage block is clear of the left pieces", 1),
+        remove("Left side liner with its pull tab (mirror of the right)", ["Lift-out wall liner, left", "Liner pull tab, left"],
+               [[(0, 0, 0), (4, 0, 0), (4, -21, 0), (35, -21, 0), (35, -21, -6), (35, -541, -6)]], minutes=2, state={"recoater": 206.0}),
+        remove("Back liner, upper left: forward over the ball screw to y 54 (behind the dose chute), right 50 mm, out through the door",
+               ["Lift-out wall liner, back upper left"], [[(0, 0, 0), (0, -3, 0), (0, -40, 0), (50, -40, 0), (50, -560, 0)]], minutes=1,
+               state={"recoater": 206.0}),
+        remove("Back liner, lower left: forward under the ball screw, right 26 mm, out under the dose chute and through the door",
+               ["Lift-out wall liner, back lower left"], [[(0, 0, 0), (0, -3, 0), (0, -40, 0), (26, -40, 0), (26, -560, 0)]], minutes=1,
+               state={"recoater": 206.0}),
         note("HEPA-vacuum the chamber, swab the coves, wipe the window side of the cover slide", 30),
     ]))
     ops.append(dict(id="M4", kind="maintenance", name="Lid off (lid O-ring, chute, gas knife, inside of the window)", where="tray at the access opening",
@@ -346,7 +368,9 @@ def catalogue(module="M50"):
         reach("Hand to the recoater servo, left of the chamber", (-289.0, 15.0, 51.0), (FRONT, (0, 0, 1)), skip=["Recoater servo", "Recoater motor"]),
         remove("Servo off its standoff", ["Recoater servo"], axis_paths(520.0, first=(-25, 0, 0)), minutes=5),
         remove("Motor standoff and bracket", ["Recoater motor standoff", "Recoater motor bracket"], axis_paths(520.0, first=(-10, 0, 0)), minutes=5),
-        remove("Feedthrough unit and coupling off the left wall", ["Recoater fixed bearing", "Recoater shaft coupling"], axis_paths(520.0, first=(-30, 0, 0)),
+        # 45 mm out sideways (was 30): the coupling (x -157..-143 in the wall bore) then clears the left draw latch, which since 2026-11-23
+        # rides on the door bracket at x -177.75..-146 in front of the chamber
+        remove("Feedthrough unit and coupling off the left wall", ["Recoater fixed bearing", "Recoater shaft coupling"], axis_paths(520.0, first=(-45, 0, 0)),
                minutes=10),
         note("New packing; refit; leak check", 60),
     ]))

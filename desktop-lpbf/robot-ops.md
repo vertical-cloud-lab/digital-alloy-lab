@@ -192,10 +192,10 @@ handle to the guard's panels (6.0 mm at 494 mm of travel).
 |---|---|---|
 | Guard-door handle: Ø12 × 130 bar on two Ø10 standoffs at the door's left end | the door had nothing to hold | ours |
 | Door drive: rotary actuator on the hinge axis, with its bracket and a drive disc keyed to the door | no arm path lifts the door shut from 95° (below); the actuator opens and closes it, its flow controls set the speed | SMC CRQ2 size 20 class (~1.8 N·m at 0.5 MPa), stroke set to 95°; envelope 47 × 47 × 42 mm. Passive alternative in the same place: McMaster 6597K124 one-way damper (2.0 N·m, $71.70) if a person closes the door |
-| Draw-latch actuators: a Ø20 compact cylinder under each 1807A61 draw latch | throw the over-centre latches, so the 1.4 kN squeeze never goes through the arm; the latches still hold with the air off | SMC CQ2/CJ2 20 mm class, 157 N at 0.5 MPa; D-M9B switch ($37.10) for latch-closed. Catalogue alternative: DESTACO 8051 pull-action pneumatic latch (holds 2,669 N; $429.99, search snippet) |
+| Draw-latch actuators: a Ø20 compact cylinder above each 1807A61 draw latch, on the latch's bracket on the door (since 2026-11-23) | throw the over-centre latches, so the 1.4 kN squeeze never goes through the arm; the latches still hold with the air off | SMC CQ2/CJ2 20 mm class, 157 N at 0.5 MPa; D-M9B switch ($37.10) for latch-closed. Catalogue alternative: DESTACO 8051 pull-action pneumatic latch (holds 2,669 N; $429.99, search snippet) |
 | Wing heads on the drawer's two quarter-turn studs | the fingers drive the wing and the wrist turns it 90°: about 0.34 N·m for the 179 N each cam pulls, 26 N at the wing's end | ours; the quarter-turn latch itself is still an envelope (seals.md: no catalogue part fits) |
 | Blade-cartridge grip fin, 4 mm, on the holder's front end | the lips of the plate fingers take it | ours |
-| Liner pull tabs, 2 mm on 12 mm standoffs at each side liner's front top corner | something to hold, once the liners can come out at all (patch requests) | ours |
+| Liner pull tabs, 2 mm on 12 mm standoffs near each side liner's front top corner (z 88–104), one part per liner | something to hold; the liners come out since 2026-11-23 (patch request 7) | ours |
 | Two AprilTag plates (tag36h11, 56 mm) on the guard's front-left post | re-registration after each docking and VLM move | ours |
 
 The earlier note's other machine-side needs are resolved like this: the plate's grip groove level with the sill is handled by the
@@ -277,16 +277,23 @@ make the groove and the lips 45° V-shapes (patch request), which centre over ±
    springs at the rod end, SMC CDQ2B40-10DCMZ release cylinder ($55.27, 628 N at 0.5 MPa). The jobs here use the drawn plate turned
    60°, lugs in their slots, as a stand-in.
 4. **Plate rim groove and lips as 45° V-shapes**, for ±1.5 mm vertical capture.
-5. **Blade cartridge** (section 6): two Ø3 dowels and two ball plungers (85015A47, as the reservoir) instead of the 2 × M3 screws.
+5. **Blade cartridge** (section 6; **drawn 2026-11-23**, `cad/joints.py` key `blade_cartridge`): two Ø3 × 10 316 dowels (McMaster 93600A304) pressed
+   into the back wall of the arm's pocket, in slip holes in the holder's back face, and two M6 ball plungers (85015A47, as the reservoir) in
+   the pocket's side walls, their balls in 0.8 mm dimples in the holder. The cartridge comes out with a straight 40 N pull and no
+   screwdriver; the blade's own 2 × M3 stay inside the cartridge, which is re-bladed on the bench.
 6. **Overflow jar** (sections 4 and 11): as drawn it has no way out. In front of it are the outlet plenum's KF-25 port and hose
    (x 66–106, y −110 to −70, z −117 to −91) and the front-right leg (x 120–150). The gripper reaching in also meets the guard's
    bottom front rail. Re-route the outlet hose, or move the jar to a port reachable from the front, then fit an MKS 100318805
    toggle KF-40 clamp ($23.34).
-7. **Liners** (section 5): both side liners are threaded on the recoater's ball screw (Ø22 holes at y 72, z 40), the LED bar
-   (x 134–139) stands in front of the right liner, and the back liner is 2.4 mm behind the carriage block. Slot the screw holes to
-   the back edge and shorten the liners 15 mm at the front, mount the LED bar on the lid or cut the liner round it, and split the
-   back liner. The pull tabs are drawn already.
-8. **Draw latches**: if the custom cylinder-on-latch is not wanted, replace each 1807A61 with a DESTACO 8051 pneumatic latch.
+7. **Liners** (section 5; **drawn 2026-11-23**): six parts now. Each side liner has its Ø22 screw hole slotted open to the back
+   edge, is 15 mm shorter at the front (y −70.5 to 85.5) and 88 mm tall (z 16–104, was 94, so it passes the 92 mm door opening
+   upright). The LED bar hangs from the lid's underside (x 126–134, z 112–120). The back liner is in two bands behind the ball screw
+   (upper z 48–72, between the screw and the rail; lower z 16–32, under the screw), each split at x = 0, so every half comes forward
+   clear of the carriage block with the recoater at the other end of its stroke. The side tabs are one part per liner (z 88–104).
+   The back pieces have no tab: a person takes them (operations.md M3); the robot does the side liners (below).
+8. **Draw latches** (**moved 2026-11-23**): both 1807A61 latches and their Ø20 cylinders now ride on 6061 brackets on the door's
+   ears, pointing forward, with the strikes on the chamber's side faces (the right latch was unreachable behind the front-right
+   optics post). If the custom cylinder-on-latch is not wanted, a DESTACO 8051 pneumatic latch fits the same bracket.
 9. **Thermal cutoff vs the bayonet** (modules_low.py): twisting the plate runs its lugs into the thermal cutoff, whose top sits in
    the lugs' channel in the heater block (S25, M50 and L75; the drawbar plate clears it by 1.0 mm as it lifts). Drop the cutoff
    1 mm, or go to the drawbar. The model's own interference sweep never turns the plate, so it doesn't see this.

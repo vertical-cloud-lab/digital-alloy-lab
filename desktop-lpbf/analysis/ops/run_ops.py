@@ -2,7 +2,7 @@
 
 Run (from the repo root; the cad folder is an argument so the checks can be re-run on the final model):
     OMP_NUM_THREADS=1 /tmp/capmem 4 xvfb-run -a -s "-screen 0 1280x960x24" \
-        /tmp/venv/bin/python desktop-lpbf/analysis/ops/run_ops.py desktop-lpbf/cad [M50|S25|L75] [--no-png]
+        /tmp/venv/bin/python desktop-lpbf/analysis/ops/run_ops.py desktop-lpbf/cad [M50|S25|L75] [--no-png] [--only=U1,U2] [--tag=-x]
 Writes desktop-lpbf/analysis/out/ops/results-<module>.json, results-<module>.md and fail-*.png.
 The first run tessellates the model (~2 min); later runs on unchanged cad files reuse /tmp/ops-work/cache.
 """
@@ -28,6 +28,7 @@ def main(argv):
     module = args[1] if len(args) > 1 else "M50"
     png = "--no-png" not in argv
     only = [a.split("=", 1)[1] for a in argv if a.startswith("--only=")]
+    tag = next((a.split("=", 1)[1] for a in argv if a.startswith("--tag=")), "")     # results-<module><tag>.*: a partial run keeps the full one
     t0 = time.time()
     sc = CK.Scene(cad, module)
     import operations as OP  # noqa: E402  (needs module_params from the cad folder on sys.path)
@@ -45,7 +46,8 @@ def main(argv):
 
     for op in ops:
         print(f"[{time.time() - t0:6.1f} s] {op['id']} {op['name']}", flush=True)
-        state = dict(op.get("state", {}))
+        op_state = dict(op.get("state", {}))
+        state = dict(op_state)
         seq = op.get("present") == "sequence"
         if op.get("present") == "module":
             base = list(MODULE_SET)
@@ -57,6 +59,7 @@ def main(argv):
         op_rows = []
         for k, st in enumerate(op["steps"]):
             sid = f"{op['id']}.{k + 1}"
+            state = dict(op_state, **(st.get("state") or {}))     # a step may move a group first (door shut, recoater to one end)
             r = dict(id=sid, op=op["id"], step=st["label"], do=st["do"], minutes=st.get("minutes", 0), note=st.get("note", ""))
 
             def present_now(extra=()):
@@ -269,8 +272,8 @@ def main(argv):
             op_rows.append(r)
         rows.append(dict(id=op["id"], kind=op["kind"], name=op["name"], where=op["where"], interval=op["interval"], air=op["air"],
                          minutes=round(sum(s.get("minutes", 0) for s in op["steps"]), 1), steps=op_rows))
-        (OUT / f"results-{module}.json").write_text(json.dumps(dict(module=module, cad=str(cad), ops=rows), indent=1, default=str))
-    write_md(rows, module, OUT / f"results-{module}.md", time.time() - t0)
+        (OUT / f"results-{module}{tag}.json").write_text(json.dumps(dict(module=module, cad=str(cad), ops=rows), indent=1, default=str))
+    write_md(rows, module, OUT / f"results-{module}{tag}.md", time.time() - t0)
     print(f"[{time.time() - t0:6.1f} s] checks done; {len(renders)} failing cases to draw", flush=True)
     if png and renders:
         draw(sc, renders, module)

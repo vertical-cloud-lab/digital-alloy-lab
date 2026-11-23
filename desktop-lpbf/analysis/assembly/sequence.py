@@ -191,7 +191,7 @@ def steps(module="M50"):
         "A robot-friendly alternative is a lever (over-centre) KF clamp."))
     a(P("F09", "Overflow-jar sensor", ["Overflow-jar present"], "machine", "upright", "explode", actor="B"))
     a(P("F11", "LED bar (small-part vacuum nozzle on its top face)", ["Layer-light"], "machine", "upright", "explode", tool="nozzle"))
-    a(P("F10", "Lift-out wall liners into the open chamber", ["Lift-out wall liners"], "machine", "upright", "explode", tool="vacuum"))
+    a(P("F10", "Lift-out wall liners into the open chamber", ["Lift-out wall liner"], "machine", "upright", "explode", tool="vacuum"))
     a(N("F12", "Through-beam fibre heads with their 2-010 O-rings, threaded into the side walls from outside", "person",
         "Threading an M6 head with a fibre attached means winding the fibre with it; the ring itself is a pick-and-place."))
     a(dict(do="seal", id="F13", label="Inlet-plenum O-ring (2-044) into the plenum's flange groove, PFPE film", keys=["Inlet plenum O-ring"],
@@ -275,10 +275,10 @@ def steps(module="M50"):
         "upright", "explode", per_part=True, note="the retaining ring's and camera's screws are not drawn"))
     a(N("F49", "Pressure transducer and relief valve (SAE-4 O-ring-boss ports)", "person",
         "Threaded ports need a wrench on a hex and a set torque; a 2F-85 can only spin a plain body."))
-    a(P("F50", "Hinge knuckles on the chamber and the two draw latches", ["Door hinge knuckles on the chamber", "Draw latches on the chamber"],
+    a(P("F50", "Hinge knuckles on the chamber and the two draw-latch strikes on its side faces", ["Door hinge knuckles on the chamber", "Draw-latch strikes"],
         "machine", "upright", "explode", per_part=True, note="hinge and latch screws are not drawn"))
     a(P("F51", "Door (cord rolled into its half-dovetail on the bench) brought in, knuckles in line", ["Chamber door", "Door O-ring",
-                                                                                                   "Door hinge leaves", "Draw-latch strikes",
+                                                                                                   "Door hinge leaves", "Draw-latch brackets", "Draw latches",
                                                                                                    "Door handle"],
         "machine", "upright", [(0, 0, 0), (0, -200, 0)], grasp=dict(point=(0.0, -150.0, 95.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0))))
     a(P("F52", "Hinge pins slid in along x", ["Hinge pins"], "machine", "upright", [(0, 0, 0), (-160, 0, 0)],

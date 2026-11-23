@@ -1146,7 +1146,7 @@ def chapter_process(st):
               "Overflow-jar present", "Module-present sensor", "Locating dowel")
     fly(st, under, nf(12), ex, lambda t: cam(t, 1300, az=-20, el=-14), cap,
         "Under the floor: cross-flow outlet plenum, overflow funnel and KF-40 jar, dowel pins, sensors")
-    inside = F("Lift-out wall liners", "Layer-light", "Plate-height through-beam", "inlet plenum", "Inlet plenum port", "Vacuum port")
+    inside = F("Lift-out wall liner", "Layer-light", "Plate-height through-beam", "inlet plenum", "Inlet plenum port", "Vacuum port")
     fly(st, inside, nf(12), ex, lambda t: cam(t, 1300, az=-24, el=40), cap,
         "Lift-out 316L wall liners, LED bar, through-beam fibres; inlet plenum and KF-25 ports welded on")
     # recoater

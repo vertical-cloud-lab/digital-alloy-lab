@@ -29,7 +29,7 @@ SECTION_KEYS = ("Process chamber body", "Chamber floor plate", "Floor O-ring", "
                 "Hopper", "Load cell", "Build cylinder", "Build plate", "Piston (", "Piston seal", "Overflow",
                 "Deck plate", "Cross-flow outlet", "Rod clamp", "Z lift arm", "Blade holder", "Silicone-cord")
 # parts hidden in the section views
-SECTION_HIDE = ("Chamber door", "Door O-ring", "Door hinges", "Draw latches", "Door handle", "Laser guard", "Guard door",
+SECTION_HIDE = ("Chamber door", "Door O-ring", "Door hinges", "Draw latches", "Draw-latch brackets", "Door handle", "Laser guard", "Guard door",
                 "OD 7+", "Guard-locking", "T-slot frame", "Gusset", "Leveling", "Operator panel", "E-stop", "Key switch",
                 "Emission indicator", "Reset button", "Stack light", "Fiber laser", "Chiller", "Process fiber", "Outlet plenum KF",
                 "O2 sample", "Gas-loop hoses", "Trace O2", "Argon", "DIN", "24 V", "Safety relay", "Motion controller",
