@@ -851,16 +851,16 @@
   {
    "group": "recoater",
    "at": 206.0,
-   "moving": "Recoater carriage (15 mm rail)",
-   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 57.515
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)",
+   "gap_mm": 57.256
   },
   {
    "group": "recoater",
    "at": 206.0,
-   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
-   "other": "Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)",
-   "gap_mm": 58.75
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 57.515
   },
   {
    "group": "recoater",
@@ -1215,13 +1215,6 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 5.786
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
    "moving": "Heater-block helical inserts L75, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Build module L75: spigot, flange, honed 316L cylinder (\u00d876.2 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "gap_mm": 5.99
@@ -1253,6 +1246,13 @@
    "moving": "Heater-stack screws L75, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Module L75 gland-plate O-ring (FKM 75A 2-041, face seal on the tube end and collar)",
    "gap_mm": 6.977
+  },
+  {
+   "group": "piston",
+   "at": -39.92,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 7.075
   },
   {
    "group": "piston",
@@ -1452,7 +1452,7 @@
   },
   {
    "group": "piston",
-   "at": -42.0,
+   "at": 5.92,
    "moving": "Z carriage",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
    "gap_mm": 13.45
@@ -1950,6 +1950,13 @@
   {
    "group": "piston",
    "at": -42.0,
+   "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 26.47
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
    "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Rod O-rings L75 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
    "gap_mm": 26.527
@@ -1960,13 +1967,6 @@
    "moving": "Hermetic-connector O-ring L75 (FKM 75A 2-014, face seal under the flange)",
    "other": "Gland-plate screws L75, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "gap_mm": 26.872
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 28.088
   },
   {
    "group": "piston",
@@ -1992,6 +1992,13 @@
   {
    "group": "piston",
    "at": -42.0,
+   "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 29.129
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
    "moving": "Hollow piston rod L75 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Build module L75: spigot, flange, honed 316L cylinder (\u00d876.2 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "gap_mm": 30.125
@@ -2002,13 +2009,6 @@
    "moving": "Cartridge heaters L75 (5 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 30.365
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 30.589
   },
   {
    "group": "piston",
@@ -2062,6 +2062,13 @@
   {
    "group": "piston",
    "at": -42.0,
+   "moving": "Heater-stack screws L75, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 34.844
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
    "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Module L75 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "gap_mm": 35.012
@@ -2090,9 +2097,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "Heater-stack screws L75, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
+   "moving": "Disc springs under the stack screws L75 (3 x McMaster 9713K54)",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 35.753
+   "gap_mm": 35.638
   },
   {
    "group": "piston",
@@ -2107,13 +2114,6 @@
    "moving": "Hollow piston rod L75 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Gland-plate screws L75, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "gap_mm": 36.166
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Disc springs under the stack screws L75 (3 x McMaster 9713K54)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 36.516
   },
   {
    "group": "piston",
@@ -2169,14 +2169,14 @@
    "at": -42.0,
    "moving": "Radiation shields L75 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 40.91
+   "gap_mm": 39.773
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Macor standoff rings L75 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 42.485
+   "gap_mm": 41.751
   },
   {
    "group": "piston",
@@ -2243,6 +2243,13 @@
   },
   {
    "group": "piston",
+   "at": -42.0,
+   "moving": "Cartridge heaters L75 (5 x 50 W, 24 V, \u00d86 x 22)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 49.412
+  },
+  {
+   "group": "piston",
    "at": -23.25,
    "moving": "Type K thermocouples L75 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
@@ -2254,13 +2261,6 @@
    "moving": "Type K thermocouples L75 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
    "gap_mm": 51.221
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Cartridge heaters L75 (5 x 50 W, 24 V, \u00d86 x 22)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 51.279
   },
   {
    "group": "piston",
@@ -5631,13 +5631,6 @@
   },
   {
    "group": "zstage",
-   "at": -45.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 5.786
-  },
-  {
-   "group": "zstage",
    "at": 0.0,
    "moving": "Z carriage",
    "other": "Gland-plate screws L75, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
@@ -5666,6 +5659,13 @@
   },
   {
    "group": "zstage",
+   "at": -39.38,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 7.075
+  },
+  {
+   "group": "zstage",
    "at": 0.0,
    "moving": "Z carriage",
    "other": "Module L75 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
@@ -5690,7 +5690,7 @@
    "at": -45.0,
    "moving": "Z carriage",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 13.45
+   "gap_mm": 13.591
   },
   {
    "group": "zstage",
@@ -5921,7 +5921,7 @@
    "at": 34.5,
    "moving": "Build module L75: spigot, flange, honed 316L cylinder (\u00d876.2 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Overflow clamp (KF-40)",
-   "gap_mm": 0.503
+   "gap_mm": 0.523
   },
   {
    "group": "module",
@@ -5942,7 +5942,7 @@
    "at": 17.25,
    "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
    "other": "Overflow clamp (KF-40)",
-   "gap_mm": 1.518
+   "gap_mm": 1.538
   },
   {
    "group": "module",
@@ -5956,14 +5956,7 @@
    "at": 34.5,
    "moving": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
    "other": "Overflow clamp (KF-40)",
-   "gap_mm": 2.517
-  },
-  {
-   "group": "module",
-   "at": 51.75,
-   "moving": "Module L75 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 2.558
+   "gap_mm": 2.537
   },
   {
    "group": "module",
@@ -5985,6 +5978,13 @@
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 3.043
+  },
+  {
+   "group": "module",
+   "at": 51.75,
+   "moving": "Module L75 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 3.579
   },
   {
    "group": "module",
@@ -6114,6 +6114,13 @@
   },
   {
    "group": "module",
+   "at": 17.25,
+   "moving": "Build module L75: spigot, flange, honed 316L cylinder (\u00d876.2 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 9.227
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
    "other": "Module-present sensor (inductive M12, under the floor, sees the module flange)",
@@ -6237,13 +6244,6 @@
    "moving": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
    "other": "Module-present sensor (inductive M12, under the floor, sees the module flange)",
    "gap_mm": 10.938
-  },
-  {
-   "group": "module",
-   "at": 17.25,
-   "moving": "Build module L75: spigot, flange, honed 316L cylinder (\u00d876.2 bore, 3 mm wall) and bottom collar, one TIG-welded body",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 10.957
   },
   {
    "group": "module",
@@ -6653,13 +6653,6 @@
   },
   {
    "group": "module",
-   "at": 51.75,
-   "moving": "Module L75 gland-plate O-ring (FKM 75A 2-041, face seal on the tube end and collar)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 19.581
-  },
-  {
-   "group": "module",
    "at": 0.0,
    "moving": "Module L75 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "other": "Outlet-plenum helical inserts, M4 x 6 18-8, in the floor (6 x McMaster 91732A656)",
@@ -6706,6 +6699,13 @@
    "moving": "Hermetic connector L75 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",
    "other": "Guard door rail (top + bottom)",
    "gap_mm": 20.512
+  },
+  {
+   "group": "module",
+   "at": 51.75,
+   "moving": "Module L75 gland-plate O-ring (FKM 75A 2-041, face seal on the tube end and collar)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 20.678
   },
   {
    "group": "module",
@@ -6884,6 +6884,13 @@
   },
   {
    "group": "module",
+   "at": 34.5,
+   "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 30.115
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Cartridge heaters L75 (5 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
@@ -6919,13 +6926,6 @@
   },
   {
    "group": "module",
-   "at": 34.5,
-   "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 31.546
-  },
-  {
-   "group": "module",
    "at": 241.5,
    "moving": "Module L75 gland-plate O-ring (FKM 75A 2-041, face seal on the tube end and collar)",
    "other": "Guard frame (20 mm T-slot)",
@@ -6954,6 +6954,13 @@
   },
   {
    "group": "module",
+   "at": 34.5,
+   "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 33.878
+  },
+  {
+   "group": "module",
    "at": 51.75,
    "moving": "Handle screws L75, M4 x 10 316 (2 x McMaster 92290A144)",
    "other": "Base plate, process module (MIC-6, 15 mm)",
@@ -6972,13 +6979,6 @@
    "moving": "Piston head L75 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 34.738
-  },
-  {
-   "group": "module",
-   "at": 34.5,
-   "moving": "Bore seal L75 (aramid felt + carbon-filled PTFE scraper)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 35.142
   },
   {
    "group": "module",
@@ -7052,6 +7052,13 @@
   },
   {
    "group": "module",
+   "at": 34.5,
+   "moving": "Heater-stack screws L75, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 38.332
+  },
+  {
+   "group": "module",
    "at": 224.25,
    "moving": "Plate rim wiper L75 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Hinge pins (\u00d85, 316)",
@@ -7080,17 +7087,17 @@
   },
   {
    "group": "module",
-   "at": 34.5,
-   "moving": "Heater-stack screws L75, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 39.161
-  },
-  {
-   "group": "module",
    "at": 0.0,
    "moving": "Heater-stack screws L75, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 39.214
+  },
+  {
+   "group": "module",
+   "at": 34.5,
+   "moving": "Disc springs under the stack screws L75 (3 x McMaster 9713K54)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 39.61
   },
   {
    "group": "module",
@@ -7119,13 +7126,6 @@
    "moving": "Module L75 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "other": "Door hinge knuckles on the chamber (304 SS)",
    "gap_mm": 40.311
-  },
-  {
-   "group": "module",
-   "at": 34.5,
-   "moving": "Disc springs under the stack screws L75 (3 x McMaster 9713K54)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 40.401
   },
   {
    "group": "module",
@@ -7241,6 +7241,13 @@
   },
   {
    "group": "module",
+   "at": 51.75,
+   "moving": "Radiation shields L75 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 48.095
+  },
+  {
+   "group": "module",
    "at": 155.25,
    "moving": "Macor standoff rings L75 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
@@ -7252,13 +7259,6 @@
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
    "gap_mm": 48.492
-  },
-  {
-   "group": "module",
-   "at": 51.75,
-   "moving": "Radiation shields L75 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 49.151
   },
   {
    "group": "module",
@@ -9327,5 +9327,5 @@
    "why": "hose end clamped onto its KF-25 flange"
   }
  ],
- "runtime_s": 170.2
+ "runtime_s": 515.6
 }
