@@ -116,11 +116,11 @@ SOURCES = {
         dims="housing 30 dia, 28 dia at the output end, 128 +/- 3 long, plus 78 strain relief (relief diameters and the 28 dia step length assumed)",
         cad="", fetched="2026-11-18"),
     "ipg_ylr500_u3": dict(vendor="IPG Photonics", pn="YLR-500-U3-SM-AC", price="approx. $23k (quote 2026-11-18)", url="quotes/ipg-ylr-500-u3-sm-ac.md (IPG spec G22-29856 and drawings; PDF not committed)",
-        dims="4U: 176.5 high; 482.3 over the rack ears, 465 body; 506 body deep, 557.2 over the handles; 40 kg (handle positions assumed)",
-        cad="", fetched="2026-11-18"),
+        dims="4U: 176.5 high; 482.3 over the rack ears, 465 body; 506 body deep, 557.2 over the handles; 40 kg. Front (2026-11-23, from IPG's render of a current rack-mount YLR, YLR_Series_Card on cdn.ipgphotonics.com; the U3's own front drawing is not public): control strip x -212..-144 with START (z 138), e-stop (z 88), key switch (z 36); display x -139..-87, z 22..162; slatted fan grille x -62/-14.5..212, z 12..150, 9 deep; 12 x 12 bar handles z 10..166.5 (+/-5 mm, button sizes assumed)",
+        cad="", fetched="2026-11-23T22:45Z"),
     "eaton_5px1500rtg2": dict(vendor="Eaton", pn="5PX1500RTG2", price="not found", url="https://assets.tripplite.com/product-pdfs/en/5px1500rtg2.pdf",
-        dims="2U, 86.36 high x 436.88 wide x 447.04 deep; 23 kg; rack ears 482.6 (standard 19 in., not stated for this model)",
-        cad="", fetched="2026-11-20T14:15Z"),
+        dims="2U, 86.36 high x 436.88 wide x 447.04 deep; 23 kg; rack ears 482.6 (standard 19 in., not stated for this model). Front (2026-11-23, from the datasheet's straight-on photo, 1.04 mm/px): grille x -213.2..115.3, z 4.3..81.2, 1.5 deep; badge x -176.9..-153.8, z 30.2..55.3; LCD module x 120.1..213.2; LCD x 146.4..195.3, z 29.9..66.1; 5 keys at z 19; LED bar z 6..9.5 (+/-2 mm)",
+        cad="", fetched="2026-11-23T22:40Z"),
 }
 
 

@@ -1,0 +1,123 @@
+{
+ "ipg_ylr500_u3": {
+  "before": {
+   "body": "assumed"
+  },
+  "after": {
+   "chassis": "measured: ipg_ylr500_u3 / chassis side (black)",
+   "front_panel": "measured: ipg_ylr500_u3 / front panel, light area (left)",
+   "control_strip": "assumed",
+   "display": "assumed",
+   "fan_grille": "measured: ipg_ylr500_u3 / front panel, dark dot-pattern area",
+   "start_button": "assumed",
+   "estop": "assumed",
+   "key_switch": "assumed",
+   "handles": "measured: ipg_ylr500_u3 / rack handles (black)"
+  }
+ },
+ "eaton_5px1500rtg2": {
+  "before": {
+   "body": "assumed"
+  },
+  "after": {
+   "chassis": "assumed",
+   "rack_ears": "assumed",
+   "bezel": "assumed",
+   "badge": "measured: eaton_5px1500rtg2 / Eaton badge",
+   "grille": "measured: eaton_5px1500rtg2 / grille (perforated silver bezel, holes included)",
+   "lcd_module": "measured: eaton_5px1500rtg2 / display module surround (black)",
+   "lcd_screen": "measured: eaton_5px1500rtg2 / LCD (lit, blue-white)",
+   "led_bar": "measured: eaton_5px1500rtg2 / status light bar (blue)"
+  }
+ },
+ "clearpath_sd_231x": {
+  "before": {
+   "body": "measured: clearpath_sd_231x / body (black anodised extrusion)",
+   "connectors": "measured: clearpath_sd_231x / connectors (black plastic)",
+   "fins": "measured: clearpath_sd_231x / rear housing (die-cast aluminium, fins)",
+   "flange": "measured: clearpath_sd_231x / flange (machined/cast aluminium front plate)",
+   "shaft": "measured: clearpath_sd_231x / shaft (ground steel)"
+  },
+  "after": {
+   "body": "measured: clearpath_sd_231x / body (black anodised extrusion)",
+   "connectors": "measured: clearpath_sd_231x / connectors (black plastic)",
+   "fins": "measured: clearpath_sd_231x / rear housing (die-cast aluminium, fins)",
+   "flange": "measured: clearpath_sd_231x / flange (machined/cast aluminium front plate)",
+   "shaft": "measured: clearpath_sd_231x / shaft (ground steel)"
+  }
+ },
+ "mcm_6627T91": {
+  "before": {
+   "body": "measured: mcm_6627T91 / housing and end caps (black)",
+   "front": "measured: mcm_6627T91 / front face, pilot and shaft (aluminium/steel)"
+  },
+  "after": {
+   "body": "measured: mcm_6627T91 / housing and end caps (black)",
+   "front": "measured: mcm_6627T91 / front face, pilot and shaft (aluminium/steel)"
+  }
+ },
+ "mcm_6709K12": {
+  "before": {
+   "body": "measured: mcm_6709K12 / steel block",
+   "caps": "measured: mcm_6709K12 / end caps and seals (black plastic)"
+  },
+  "after": {
+   "body": "measured: mcm_6709K12 / steel block",
+   "caps": "measured: mcm_6709K12 / end caps and seals (black plastic)"
+  }
+ },
+ "mcm_4566N401": {
+  "before": {
+   "body": "measured: mcm_4566N401 / nut and flange (steel)"
+  },
+  "after": {
+   "body": "measured: mcm_4566N401 / nut and flange (steel)"
+  }
+ },
+ "mcm_4123K45": {
+  "before": {
+   "body": "measured: mcm_4123K45 / body, end caps, tie bolts (cast 316 stainless)",
+   "flanges": "measured: mcm_4123K45 / KF flanges (machined stainless)",
+   "grip": "measured: mcm_4123K45 / lever grip (grey vinyl)"
+  },
+  "after": {
+   "body": "measured: mcm_4123K45 / body, end caps, tie bolts (cast 316 stainless)",
+   "flanges": "measured: mcm_4123K45 / KF flanges (machined stainless)",
+   "grip": "measured: mcm_4123K45 / lever grip (grey vinyl)"
+  }
+ },
+ "mcm_4518K72": {
+  "before": {
+   "body": "measured: mcm_4518K72 / clamp (aluminium)"
+  },
+  "after": {
+   "body": "measured: mcm_4518K72 / clamp (aluminium)"
+  }
+ },
+ "mcm_5786N25": {
+  "before": {
+   "body": "measured: mcm_5786N23 / fitting (aluminium)"
+  },
+  "after": {
+   "body": "measured: mcm_5786N23 / fitting (aluminium)"
+  }
+ },
+ "mcm_3861N11": {
+  "before": {
+   "body": "measured: mcm_3861N11 / body and cable (black)",
+   "hex": "measured: mcm_3861N11 / hex and thread (stainless)"
+  },
+  "after": {
+   "body": "measured: mcm_3861N11 / body and cable (black)",
+   "hex": "measured: mcm_3861N11 / hex and thread (stainless)"
+  }
+ },
+ "mcm_5169K72": {
+  "before": {
+   "body": "measured: mcm_5169K72 / housing (black)"
+  },
+  "after": {
+   "body": "measured: mcm_5169K72 / housing (black)"
+  }
+ }
+}
