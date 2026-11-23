@@ -67,10 +67,10 @@ def _rbox(x0, x1, y0, y1, z0, z1, r, edges="|Z"):
 SOURCES = {
     "clearpath_sd_231x": dict(vendor="Teknic", pn="CPM-SDSK-2311S-RLN (2310S same frame)", price="$293 (2311S), $265 (2310S), qty 1-9",
         url="https://teknic.com/files/downloads/23xx%20CPM%20Dimensional%20Drawing.pdf",
-        dims="flange 59.10 sq; body 84.81 behind the mounting face; pilot 38.10 x 1.90; shaft 9.50 x 20.57 (3 mm key); 4 x 5.20 on 66.67 BC; connector block 53.85 wide, 22.75 above the flange, 38.49 long (assumed: the unlabelled .515 [38.49] dimension); 0.6 kg",
+        dims="flange 59.10 sq; body 84.81 behind the mounting face; pilot 38.10 x 1.90; shaft 9.50 x 20.57 (3 mm key); 4 x 5.20 on 66.67 BC; connector block 53.85 wide, 22.75 above the flange, 38.49 long (assumed: the unlabelled .515 [38.49] dimension); 0.6 kg. From Teknic's STEP (2026-11-23): 6 mm flange plate with R3 corners, octagonal body behind it (17.5 mm chamfers), Ø2.5 pin fins on the rear 9.8 mm, connector block ends 4.8 mm short of the rear face with a Ø11 boss under it, two connector pockets 9 deep opening toward the flange",
         cad="/tmp/parts-work/teknic/CPM-231x-Q.STEP", fetched="2026-11-20T14:11Z"),
     "mcm_6709K12": dict(vendor="McMaster-Carr", pn="6709K12", price="$144.71 each", url="https://www.mcmaster.com/6709K12/",
-        dims="28 overall height from rail bottom; 34 wide; 38.8 steel block + end caps/seals = 56.6 long; grease nipple +5.5; carriage underside 4.7 above rail bottom; 4 x M4 on 26 x 26",
+        dims="28 overall height from rail bottom; 34 wide; 38.8 steel block + end caps/seals = 56.6 long; grease nipple +5.5; carriage underside 4.7 above rail bottom; 4 x M4 on 26 x 26; end caps and seals 23.5 high (McMaster CAD, 2026-11-23)",
         cad="/tmp/parts-work/vcad/6709K12.STEP", fetched="2026-11-20T13:57Z"),
     "mcm_6709K33": dict(vendor="McMaster-Carr", pn="6709K33", price="$0.31 per mm (280 mm = $86.80)", url="https://www.mcmaster.com/6709K33/",
         dims="15 wide x 15 high; M4 holes 60 c-c, 20 from the end, 9.7 deep counterbore listed; raceway grooves 2 per side (assumed R1.6 at 3.5 and 11 mm, not published)",
@@ -79,7 +79,7 @@ SOURCES = {
         dims="length 43; body 23; flange 40 x 10 with flats 30 across (McMaster CAD); bolt circle 32, 6 x 4.5 holes; bore = screw 12",
         cad="/tmp/parts-work/vcad/4566N401.STEP", fetched="2026-11-20T13:58Z"),
     "mcm_6627T91": dict(vendor="McMaster-Carr", pn="6627T91", price="$81.74 each", url="https://www.mcmaster.com/6627T91/",
-        dims="NEMA 17, 42.3 sq (stator 41.9); body 48.0 behind the mounting face; pilot 22 x 2; shaft 5 D-profile x 24 beyond the pilot; rear cap with a 0.76 lead boss",
+        dims="NEMA 17, 42.3 sq (stator 41.9); body 48.0 behind the mounting face; pilot 22 x 2; shaft 5 D-profile x 24 beyond the pilot; rear cap with a 0.76 lead boss. From McMaster's CAD (2026-11-23): 9.5 mm end caps (3.5 chamfers), 41.9 stator with 6.4 chamfers, 4 x M3 9 deep, lead notch 9 x 7 through the rear cap, Ø10 x 4.5 rear recess",
         cad="/tmp/parts-work/vcad/6627T91.STEP", fetched="2026-11-20T14:00Z"),
     "mcm_5786N23": dict(vendor="McMaster-Carr", pn="5786N23", price="$13.65 each", url="https://www.mcmaster.com/5786N23/",
         dims="ISO-KF 25 flange OD 39.88 (1.57 in.), face bore 26.16, rim 3.05 thick, 15 deg back taper; 1 in. x 0.065 in. tube end; 12.7 long",
@@ -88,13 +88,13 @@ SOURCES = {
         dims="ISO-KF 40 flange OD 54.86 (2.16 in.), face bore 41.14, rim 3.05 thick, 15 deg back taper; 1.5 in. x 0.083 in. tube end; 19.05 long",
         cad="/tmp/parts-work/vcad/5786N25.STEP", fetched="2026-11-20T14:00Z"),
     "mcm_4518K72": dict(vendor="McMaster-Carr", pn="4518K72", price="$13.67 each", url="https://www.mcmaster.com/4518K72/",
-        dims="KF-25 wing-nut clamp: ring OD 55.2, 17 thick at the ears; hinge to -x (32.5 from the axis), wing nut to +x (44.7) and +y (36.1) (McMaster CAD extents)",
+        dims="KF-25 wing-nut clamp: ring OD 55.2, 17 thick at the ears; hinge to -x (32.5 from the axis), wing nut to +x (44.7) and +y (36.1) (McMaster CAD extents). Ring section from the CAD (2026-11-23): C-channel 16 tall, OD 55.2, channel bottom r 25.0, lips r 15.9 on 15 deg tapers; hinge block 22.4 wide",
         cad="/tmp/parts-work/vcad/4518K72.STEP", fetched="2026-11-20T14:01Z"),
     "mcm_4518K73": dict(vendor="McMaster-Carr", pn="4518K73", price="$15.31 each", url="https://www.mcmaster.com/4518K73/",
-        dims="KF-40 wing-nut clamp: ring OD 71.0, 17 thick at the ears; hinge to -x (40.0), wing nut to +x (53.5) and +y (36.1) (McMaster CAD extents)",
+        dims="KF-40 wing-nut clamp: ring OD 71.0, 17 thick at the ears; hinge to -x (40.0), wing nut to +x (53.5) and +y (36.1) (McMaster CAD extents). Ring section from the CAD (2026-11-23): C-channel 16 tall, OD 71.0, channel bottom r 30.2, lips r 23.7 on 15 deg tapers; hinge block 22.4 wide",
         cad="/tmp/parts-work/vcad/4518K73.STEP", fetched="2026-11-20T14:01Z"),
     "mcm_4123K45": dict(vendor="McMaster-Carr", pn="4123K45", price="$300.80 each", url="https://www.mcmaster.com/4123K45/",
-        dims="KF-25 x KF-25 full-port ball valve: end to end 124.2 (4.89 in.); body 60.45 square (2.38 in.); handle top 91.7 above the axis; lever 138.2 long from the stem (7.89 in. overall)",
+        dims="KF-25 x KF-25 full-port ball valve: end to end 124.2 (4.89 in.); body 60.45 square (2.38 in.); handle top 91.7 above the axis; lever 138.2 long from the stem (7.89 in. overall). From McMaster's CAD (2026-11-23): 7.5 mm end caps with lobes round 4 x Ø4.8 tie bolts, Ø54.6 centre body, Ø26.6 stem neck flaring to Ø33.8, Ø50 stop plate, lever plate 24 wide rising at 72 deg to a 4.8 thick grip at z 86.9-91.7; bore Ø21.8",
         cad="/tmp/parts-work/vcad/4123K45.STEP", fetched="2026-11-20T14:00Z"),
     "mcm_3861N11": dict(vendor="McMaster-Carr", pn="3861N11", price="$358.05 each", url="https://www.mcmaster.com/3861N11/",
         dims="1/4 NPT male x 16.5 (0.65 in.); 1.96 in. (49.8) from the thread shoulder to the cable exit; 24 A/F hex (0.94 in.), 27 across corners; 36 in. cable (not drawn beyond a 20 mm stub)",
@@ -128,45 +128,74 @@ SOURCES = {
 # Motion: servos, steppers, guides, screws
 # --------------------------------------------------------------------------------------------
 def clearpath_sd_231x(shaft_l=20.57, connector="+y"):
-    """Teknic ClearPath-SD NEMA 23, 231x frame (CPM-SDSK-2310S/2311S), drawing D1171/M.
-    Drop-in for lpbf_low.servo_nema23(): mounting face at local z = 0, body toward -z, shaft +z; the connector block
-    is on local +y (connector="-y" puts it on the other side)."""
+    """Teknic ClearPath-SD NEMA 23, 231x frame (CPM-SDSK-2310S/2311S), drawing D1171/M, refined to Teknic's 3D model
+    (CPM-231x-Q.STEP, sections compared 2026-11-23). Drop-in for lpbf_low.servo_nema23(): mounting face at local z = 0,
+    body toward -z, shaft +z; the connector block is on local +y (connector="-y" puts it on the other side).
+    Drawn: the 6 mm flange plate (59.1 square, R3 corners, 4 x Ø5.2 through on the 66.67 BC), the body behind it as an
+    octagon with 17.5 mm corner chamfers (so the bolt heads clear it), the pin-fin heat sink on the rear 9.8 mm (Ø2.5
+    pins on a 4.4 x 4.2 mm staggered grid), the connector block with its two connector pockets (8-pin I/O, 4-pin power)
+    opening toward the flange, and the rear boss under the block. Not drawn: Teknic's internal annular void (its model
+    is hollow between r 6.5 and 26.5 from z -12.5 to -40: the real motor's stator fills it), the four small cover
+    screws and the logo relief."""
     sq, L = 59.10, 84.81
-    body = cq.Workplane("XY").rect(sq, sq).extrude(-L).edges("|Z").chamfer(5.0).val()
-    for sx in (-1, 1):                                   # 4 x Ø5.2 on a Ø66.67 bolt circle (47.14 square), 10 mm deep
+    t_fl, fin = 6.0, 9.8                                   # flange plate; pin-fin depth at the rear
+    zf = -L + fin                                          # rear face of the solid body (pin roots)
+    flange = cq.Workplane("XY").rect(sq, sq).extrude(-t_fl).edges("|Z").fillet(3.0).val()
+    for sx in (-1, 1):                                     # 4 x Ø5.2 on a Ø66.67 bolt circle (47.14 square), through the flange
         for sy in (-1, 1):
-            body = body.cut(_cyl(2.6, (sx * 23.57, sy * 23.57, -10.0), (0, 0, 1), 10.01))
+            flange = flange.cut(_cyl(2.6, (sx * 23.57, sy * 23.57, -t_fl - 0.01), (0, 0, 1), t_fl + 0.02))
+    body = cq.Workplane("XY").rect(sq, sq).extrude(-(L - fin - t_fl)).edges("|Z").chamfer(17.5).val().translate(V(0, 0, -t_fl))
+    pts = []
+    for j in range(14):                                    # staggered pin grid; keep pins inside the octagon (2 mm margin)
+        y = 28.5 - 4.2 * j
+        for i in range(-7, 8):
+            x = 4.4 * i + (2.2 if j % 2 else 0.0)
+            if abs(x) <= sq / 2 - 3.0 and abs(y) <= sq / 2 - 3.0 and abs(x) + abs(y) <= sq - 17.5 - 4.5:
+                pts.append((x, y))
+    pins = cq.Workplane("XY").workplane(offset=-L).pushPoints(pts).circle(1.25).extrude(fin + 0.5).val()
     s = 1.0 if connector == "+y" else -1.0
-    blk = _box(-53.85 / 2, 53.85 / 2, 0, 22.75, -L, -L + 38.49)
+    blk = cq.Workplane("XY").box(53.85, 22.75 + 6.0, 38.49 - 4.8, centered=False).edges("|Z").fillet(4.0).val()
+    blk = blk.translate(V(-53.85 / 2, sq / 2 - 6.0, -L + 4.8))           # block: 53.85 wide, 22.75 proud of the body, z -80.0..-46.32
+    for x0, x1 in ((-22.0, -2.0), (2.0, 16.0)):                           # connector pockets (8-pin I/O, 4-pin power), 9 deep from the top
+        blk = blk.cut(_box(x0, x1, sq / 2 + 6.5, sq / 2 + 19.5, -L + 38.49 - 9.0, -L + 38.49 + 0.01))
+    boss = _cyl(5.5, (10.0, sq / 2 + 11.5, -L), (0, 0, 1), 4.85)          # round boss under the block (Teknic model)
+    rear = _fuse([blk, boss])
     if s < 0:
-        blk = blk.mirror("XZ")
-    blk = blk.translate(V(0, s * sq / 2, 0))
+        rear = rear.mirror("XZ")
     pilot = _cyl(19.05, (0, 0, 0), (0, 0, 1), 1.90)
     shaft = _cyl(4.75, (0, 0, 0), (0, 0, 1), shaft_l).cut(_box(-1.5, 1.5, 4.75 - 1.8, 5.0, shaft_l - 12.0, shaft_l + 0.1))
-    return _fuse([body, blk, pilot, shaft])
+    return _fuse([flange, body, pins, rear, pilot, shaft])
 
 
 def mcm_6627T91():
     """McMaster 6627T91 NEMA 17 stepper. Drop-in for lpbf_low.stepper_nema17(40): mounting face at z = 0, body toward
-    -z, pilot (and here the 5 mm D shaft) toward +z."""
-    body = cq.Workplane("XY").rect(42.3, 42.3).extrude(-48.0).edges("|Z").chamfer(3.5).val()
+    -z, pilot (and here the 5 mm D shaft) toward +z. Refined to McMaster's CAD (2026-11-23): two 9.5 mm end caps 42.3
+    square with 3.5 mm chamfers, the 41.9 square stator between them with 6.4 mm chamfers, 4 x M3 tapped 9 deep, the
+    lead notch (9 wide, 7 deep) through the rear cap beside its boss, and the Ø10 x 4.5 rear bearing recess."""
+    cap_f = cq.Workplane("XY").rect(42.3, 42.3).extrude(-9.5).edges("|Z").chamfer(3.5).val()
+    cap_r = cap_f.translate(V(0, 0, -38.5))
+    stator = cq.Workplane("XY").rect(41.9, 41.9).extrude(-29.2).edges("|Z").chamfer(6.4).val().translate(V(0, 0, -9.4))
     boss = _box(-8.0, 8.0, 21.15, 21.96, -48.0, -38.4)          # lead exit on the rear cap
     pilot = _cyl(11.0, (0, 0, 0), (0, 0, 1), 2.0)
     shaft = _cyl(2.5, (0, 0, 0), (0, 0, 1), 26.0).cut(_box(2.0, 3.0, -3.0, 3.0, 11.0, 26.1))
-    holes = [_cyl(1.5, (sx * 15.5, sy * 15.5, -4.5), (0, 0, 1), 4.51) for sx in (-1, 1) for sy in (-1, 1)]
-    out = _fuse([body, boss, pilot, shaft])
-    for h in holes:
-        out = out.cut(h)
-    return out
+    out = _fuse([cap_f, stator, cap_r, boss, pilot, shaft])
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            out = out.cut(_cyl(1.5, (sx * 15.5, sy * 15.5, -9.0), (0, 0, 1), 9.01))
+    out = out.cut(_box(-4.5, 4.5, 14.3, 22.5, -48.01, -38.5))               # lead notch
+    out = out.cut(_cyl(5.0, (0, 0, -48.01), (0, 0, 1), 4.51))               # rear bearing recess
+    return out.clean()
 
 
 def mcm_6709K12():
     """McMaster 6709K12 ball carriage for the 15 mm rail. Drop-in for lpbf_low.guide_carriage(57, 34, 28, 3, 15, 15):
-    rail along local x, carriage centred at x = 0, rail centred in y, rail bottom at z = 0, carriage top at z = 28."""
+    rail along local x, carriage centred at x = 0, rail centred in y, rail bottom at z = 0, carriage top at z = 28.
+    McMaster's CAD (2026-11-23): only the steel block reaches the top; the end caps and seals stop at z = 23.5. Not drawn:
+    the ball-retainer strips that reach into the rail's grooves, the balls and their return holes."""
     zb, zt = 4.7, 28.0
     blk = _box(-19.4, 19.4, -17.0, 17.0, zb, zt)
-    caps = _box(-25.8, 25.8, -16.0, 16.0, zb + 0.4, zt - 0.3)          # plastic end caps
-    seals = _box(-28.3, 28.3, -16.0, 16.0, zb + 0.5, zt - 1.2)         # rubber end seals
+    caps = _box(-25.8, 25.8, -16.0, 16.0, zb + 0.4, 23.5)              # plastic end caps (top at z 23.5, McMaster CAD)
+    seals = _box(-28.3, 28.3, -16.0, 16.0, zb + 0.5, 23.5)             # rubber end seals
     body = _fuse([blk, caps, seals])
     body = body.cut(_box(-30, 30, -7.8, 7.8, zb - 1, 15.4))            # rail channel (rail 15 x 15, 0.4 above its top)
     body = body.cut(_box(-30, 30, -17.5, -16.2, zb - 1, zb + 3.0)).cut(_box(-30, 30, 16.2, 17.5, zb - 1, zb + 3.0))
@@ -228,16 +257,16 @@ def kf_weld_stub(size, stub=None):
 
 def kf_wing_clamp(size):
     """McMaster 4518K72 (KF-25) / 4518K73 (KF-40) wing-nut clamp. Drop-in for lpbf_low.kf_clamp(size): centred on the
-    joint plane (local z = 0), axis z, hinge toward -x, the bolt ears and wing nut toward +x (wing up +y)."""
-    k = KF_REAL[size]
+    joint plane (local z = 0), axis z, hinge toward -x, the bolt ears and wing nut toward +x (wing up +y).
+    Ring section from McMaster's CAD (2026-11-23): a C-channel 16 mm tall, its bottom 5 mm outside the flange rims and
+    its lips on the flanges' 15 deg back tapers; the hinge is a 22.4 mm wide block on -x."""
     if size == 25:
-        ro, rl, h, xh, xe, yw = 27.6, 15.5, 5.4, -32.5, 44.65, 36.09
+        ro, rb, rt, rl, zl, h, xh, xe, yw = 27.59, 25.02, 24.30, 15.86, 6.56, 8.0, -32.5, 44.65, 36.09
     else:
-        ro, rl, h, xh, xe, yw = 35.5, 22.5, 6.5, -40.0, 53.47, 36.09
-    rr, zr = k["fo"] / 2 + 0.4, k["rim"] + 0.1                 # clears both flange rims at the joint plane,
-    zl = zr + (rr - rl) / 3.73                                 # then follows their 15 deg back tapers in to the lips
-    ring = _revolve([(rr, -zr), (rl, -zl), (rl, -h), (ro, -h), (ro, h), (rl, h), (rl, zl), (rr, zr)])
-    hinge = _cyl(4.0, (xh + 4.0, -6.0, -6.5), (0, 0, 1), 13.0)
+        ro, rb, rt, rl, zl, h, xh, xe, yw = 35.48, 30.17, 29.44, 23.67, 5.84, 8.0, -40.0, 53.47, 36.09
+    zb, zt = 3.45, 4.29                                        # channel bottom half-height; start of the lip taper
+    ring = _revolve([(rb, -zb), (rt, -zt), (rl, -zl), (rl, -h), (ro, -h), (ro, h), (rl, h), (rl, zl), (rt, zt), (rb, zb)])
+    hinge = _box(xh, -ro + 3.0, -11.2, 11.2, -h, h)
     ears = _box(ro - 4.0, xe - 6.0, -7.0, 7.0, -8.5, 8.5).cut(_box(ro - 4.5, xe, -1.0, 1.0, -9, 9))
     bolt = _cyl(2.5, (xe - 12.0, -10.0, 0), (0, 1, 0), 32.0)
     wing = _fuse([_cyl(6.0, (xe - 12.0, 9.0, 0), (0, 1, 0), 9.0), _box(xe - 24.0, xe, 14.0, yw, -1.5, 1.5)])
@@ -248,25 +277,38 @@ def mcm_4123K45(handle="+x"):
     """McMaster 4123K45 KF-25 x KF-25 manual full-port ball valve (the BOM's pump isolation valve, line G7).
     Local frame: inlet flange face at x = 0, flow along +x, outlet face at x = 124.2, stem up (+z) at x = 62.1; the
     lever (138.2 from the stem) points along `handle` ("+x": over the outlet, "-x": back over the inlet).
-    Replaces the 'KF-25 angle, pneumatic' envelope: NOT a drop-in (straight-through, 124 mm long)."""
+    Replaces the 'KF-25 angle, pneumatic' envelope: NOT a drop-in (straight-through, 124 mm long).
+    Refined to McMaster's CAD (2026-11-23): KF-25 flange, Ø25.1 neck to x 22.1, Ø28.4 collar, then a 3-piece body: two
+    7.5 mm end caps (Ø57.8 disc with lobes round the 4 tie bolts, 60 mm over the lobes) and a Ø54.6 centre body; 4 tie
+    bolts Ø4.8 from x 23 to 101; a Ø26.6 stem neck flaring to Ø33.8, the Ø50 stop plate and stem nut; the lever is a
+    plate 24 wide, flat over the hub, rising at 72 deg to a 4.8 mm thick straight grip at z 86.9-91.7."""
     k = KF_REAL[25]
-    fl_in = _revolve([(11.05, 0), (k["fo"] / 2, 0), (k["fo"] / 2, 3.05), (12.7, 3.05 + (k["fo"] / 2 - 12.7) / 3.73), (12.7, 18.0), (11.05, 18.0)])
+    fl_in = _revolve([(10.9, 0), (k["fo"] / 2, 0), (k["fo"] / 2, 3.05), (12.54, 5.05), (12.54, 22.12), (14.19, 23.77), (14.19, 30.0), (10.9, 30.0)])
     fl_out = fl_in.mirror("XY").translate(V(0, 0, 124.2))
     tube = _fuse([fl_in, fl_out]).rotate(V(0, 0, 0), V(0, 1, 0), 90)     # axis z -> x
-    body = _cyl(27.0, (62.1 - 20.05, 0, 0), (1, 0, 0), 40.1)                       # centre section of the 3-piece body
-    caps = _cyl(21.0, (18.0, 0, 0), (1, 0, 0), 88.2)                                # end caps between body and flanges
-    bolts = []
-    for sy in (-1, 1):                                                              # 4 tie bolts with heads and nuts
-        for sz in (-1, 1):
-            bolts += [_cyl(3.0, (62.1 - 38.4, sy * 23.71, sz * 23.71), (1, 0, 0), 74.9),
-                      _cyl(6.2, (62.1 - 38.4, sy * 23.71, sz * 23.71), (1, 0, 0), 5.0), _cyl(6.2, (62.1 + 31.5, sy * 23.71, sz * 23.71), (1, 0, 0), 5.0)]
-    pad = _box(62.1 - 15.0, 62.1 + 15.0, -15.0, 15.0, 30.23, 53.64)
-    stem = _cyl(6.5, (62.1, 0, 53.64), (0, 0, 1), 6.9)
-    sgn = 1.0 if handle == "+x" else -1.0
-    lever_x0, lever_x1 = sorted((62.1 - sgn * 25.0, 62.1 + sgn * 138.18))
-    lever = _box(lever_x0, lever_x1, -13.3, 13.3, 86.75, 91.69)
-    riser = _box(62.1 - 12.5, 62.1 + 12.5, -13.0, 13.0, 53.64, 90.9)
-    return _fuse([tube, body, caps, pad, stem, lever, riser] + bolts).cut(_cyl(11.05, (-1, 0, 0), (1, 0, 0), 126.2))   # full port, open
+    body = [_cyl(27.3, (36.9, 0, 0), (1, 0, 0), 50.8)]                      # round centre body, x 37-87.5
+    for x0 in (29.5, 87.2):                                                 # end caps 7.5 thick: Ø58 disc + lobes round the tie bolts
+        body.append(_cyl(28.9, (x0, 0, 0), (1, 0, 0), 7.5))
+        for sy in (-1, 1):
+            for sz in (-1, 1):
+                body.append(_cyl(5.6, (x0, sy * 23.71, sz * 23.71), (1, 0, 0), 7.5))
+                web = _box(x0, x0 + 7.5, -5.6, 5.6, 18.0, 33.53).rotate(V(0, 0, 0), V(1, 0, 0), {(1, 1): -45, (-1, 1): 45, (-1, -1): 135, (1, -1): -135}[(sy, sz)])
+                body.append(web)
+    body = _fuse(body)
+    bolts = [_cyl(2.4, (23.0, sy * 23.71, sz * 23.71), (1, 0, 0), 78.2) for sy in (-1, 1) for sz in (-1, 1)]
+    neck = _fuse([_cyl(13.3, (62.1, 0, 27.0), (0, 0, 1), 11.2), cq.Solid.makeCone(13.3, 16.9, 3.7, V(62.1, 0, 38.2), V(0, 0, 1)),
+                  _cyl(16.9, (62.1, 0, 41.9), (0, 0, 1), 6.7)])
+    plate = _cyl(25.0, (62.1, 0, 48.5), (0, 0, 1), 4.6)
+    stop = _cyl(2.5, (81.35, 0, 53.0), (0, 0, 1), 4.4)
+    nut = _fuse([_cyl(12.5, (62.1, 0, 53.1), (0, 0, 1), 4.06), cq.Workplane("XY").polygon(6, 15.1).extrude(3.56).val().translate(V(62.1, 0, 57.16))])
+    # lever (built for "-x", mirrored about the stem for "+x"): hub, rising arm, straight grip to 138.18 from the stem
+    xs = 62.1
+    prof = [(xs + 12.5, 53.8), (36.0, 53.8), (25.0, 86.9), (xs - 138.18, 86.9), (xs - 138.18, 91.69), (28.0, 91.69), (39.0, 57.16), (xs + 12.5, 57.16)]
+    lever = cq.Workplane("XZ").polyline(prof).close().extrude(12.0, both=True).val()
+    if handle == "+x":
+        lever = lever.mirror("YZ", (xs, 0, 0))
+    out = _fuse([tube, body, neck, plate, stop, nut, lever] + bolts)
+    return out.cut(_cyl(10.9, (-1, 0, 0), (1, 0, 0), 126.2))   # full port, open
 
 
 def mcm_3861N11():
@@ -352,26 +394,85 @@ def ipg_collimator_d5(relief=True):
     return _fuse(parts)
 
 
-def ipg_ylr500_u3():
+def _prism_y(pts_xz, y0, y1):
+    """Prism along +y from y0 to y1 over a closed (x, z) polygon."""
+    w = cq.Workplane("XZ", origin=(0, y1, 0)).polyline(pts_xz).close().extrude(y1 - y0)   # XZ normal is -y: extrude from y1 back to y0
+    return w.val()
+
+
+def _bodies_or_solid(bodies, as_dict):
+    if as_dict:
+        return bodies
+    return _fuse(list(bodies.values()))
+
+
+def ipg_ylr500_u3(bodies=False):
     """IPG YLR-500-U3-SM-AC, 4U 19 in. chassis. Local frame: x centred, y = 0 at the rack-ear plane (rear face of the
-    front panel), +y into the rack, z = 0 at the chassis bottom. Body 465 x 506 x 176.5, ears 482.3 wide x 3 thick, two
-    handles to 557.2 - 506 = 51.2 in front of the body (handle position and section assumed: Ø12 bars 120 mm apart)."""
-    H = 176.5
-    body = _box(-232.5, 232.5, 0, 506.0, 0, H)
-    ears = _box(-482.3 / 2, 482.3 / 2, -3.0, 0, 0, H)
+    front panel), +y into the rack, z = 0 at the chassis bottom. Body 465 x 506 x 176.5, front panel 482.3 wide x 3 thick
+    (it carries the ears), two handles to 557.2 - 506 = 51.2 in front of the body (IPG drawing, quotes/ipg-ylr-500-u3-sm-ac.md).
+    Front-panel layout (2026-11-23) from IPG's own render of the rack-mount YLR-U family (YLR_Series_Card, cdn.ipgphotonics.com;
+    the same front as the 4U U3 drawing: fans behind the front panel), read as fractions of the panel width and height:
+    a dark control strip at the left (green START button, red emergency-stop mushroom, key switch, top to bottom), a portrait
+    touch display next to it, and a recessed black fan grille with horizontal slats over the right ~55 %, its left edge slanted;
+    vertical bar handles on both ears. Positions +/-5 mm, button sizes from standard 22 mm operators (assumed).
+    bodies=True returns the named bodies (for per-body finishes in cad/oem/render_oem.py); their union is the part."""
+    H, W = 176.5, 482.3
+    b = {}
+    b["chassis"] = _box(-232.5, 232.5, 0, 506.0, 0, H)
+    panel = _box(-W / 2, W / 2, -3.0, 0, 0, H)
+    vent = [(-62.0, 12.0), (212.0, 12.0), (212.0, 150.0), (-14.5, 150.0)]           # slanted left edge, as in the render
+    vent_cut = _prism_y(vent, -3.01, 6.0)
+    strip = _box(-212.0, -144.0, -3.01, -2.5, 8.0, 168.5)                            # control strip, 0.5 mm recess
+    disp = _box(-139.0, -87.0, -3.01, -1.5, 22.0, 162.0)                             # touch display, 1.5 mm recess
+    b["front_panel"] = panel.cut(vent_cut).cut(strip).cut(disp)
+    b["chassis"] = b["chassis"].cut(vent_cut)
+    b["control_strip"] = _box(-212.0, -144.0, -2.5, 0, 8.0, 168.5)
+    b["display"] = _box(-139.0, -87.0, -1.5, 0, 22.0, 162.0)
+    slats = [_box(-70.0, 215.0, -1.0, 6.0, z, z + 3.0) for z in [13.5 + 12.5 * k for k in range(11)]]
+    b["fan_grille"] = _fuse([_prism_y(vent, 4.0, 6.0)] + slats).intersect(_prism_y(vent, -1.0, 6.0))
+    xc = -178.0
+    b["start_button"] = _fuse([_cyl(15.0, (xc, -2.5, 138.0), (0, -1, 0), 3.0), _cyl(11.0, (xc, -5.5, 138.0), (0, -1, 0), 4.0)])
+    b["estop"] = _fuse([_cyl(17.0, (xc, -2.5, 88.0), (0, -1, 0), 8.0), _cyl(20.0, (xc, -10.5, 88.0), (0, -1, 0), 12.0)])
+    b["key_switch"] = _fuse([_cyl(14.0, (xc, -2.5, 36.0), (0, -1, 0), 4.0)]).cut(_box(xc - 1.0, xc + 1.0, -6.6, -4.5, 30.0, 42.0))
     hd = []
-    for sx in (-1, 1):
-        xh = sx * (482.3 / 2 - 14.0)
-        hd += [_box(xh - 6, xh + 6, -45.0, -2.0, H / 2 + sz * 60.0 - 6, H / 2 + sz * 60.0 + 6) for sz in (-1, 1)]
-        hd.append(_box(xh - 6, xh + 6, -51.2, -39.2, H / 2 - 66.0, H / 2 + 66.0))
-    return _fuse([body, ears] + hd)
+    for sx in (-1, 1):                     # vertical bar handles nearly the panel's height (IPG render), 12 x 12 bars
+        xh = sx * (W / 2 - 14.0)
+        hd += [_box(xh - 6, xh + 6, -45.0, -2.0, z0, z0 + 12.0) for z0 in (10.0, H - 22.0)]
+        hd.append(_box(xh - 6, xh + 6, -51.2, -39.2, 10.0, H - 10.0))
+    b["handles"] = _fuse(hd)
+    return _bodies_or_solid(b, bodies)
 
 
-def eaton_5px1500rtg2():
-    """Eaton 5PX1500RTG2 2U UPS (datasheet: 86.36 x 436.88 x 447.04, 23 kg). Same frame as ipg_ylr500_u3(); the 482.6 mm
-    ear width is the 19 in. standard (not stated for this model); ears 3 mm thick in front of the body."""
-    H = 86.36
-    return _fuse([_box(-436.88 / 2, 436.88 / 2, 0, 447.04, 0, H), _box(-482.6 / 2, 482.6 / 2, -3.0, 0, 0, H)])
+def eaton_5px1500rtg2(bodies=False):
+    """Eaton 5PX1500RTG2 2U UPS (datasheet: 86.36 x 436.88 x 447.04, 23 kg). Same frame as ipg_ylr500_u3(): y = 0 at the
+    rack-ear plane, the 3 mm front at y -3..0. The 482.6 mm ear width is the 19 in. standard (not stated for this model).
+    Front (2026-11-23) from Eaton's product photo in the datasheet (assets.tripplite.com 5px1500rtg2.pdf, image 3: a
+    straight-on view whose bezel measures 5.05:1, the datasheet's 436.88 / 86.36 = 5.06): a dark-grey frame bezel, a
+    silver perforated grille over its left 75 % with the Eaton badge near its left end, and the black LCD module at the
+    right end (portrait LCD, five buttons, the blue LED status bar along its bottom). The bezel is the full 436.88 width,
+    with the rack ears beside it (they were drawn across the whole front). Positions +/-2 mm (1.04 mm per photo pixel);
+    the perforation is a render texture, not drawn. bodies=True returns the named bodies; their union is the part."""
+    H, Wb = 86.36, 436.88
+    b = {}
+    b["chassis"] = _box(-Wb / 2, Wb / 2, 0, 447.04, 0, H)
+    b["rack_ears"] = _fuse([_box(-482.6 / 2, -Wb / 2, -3.0, 0, 0, H), _box(Wb / 2, 482.6 / 2, -3.0, 0, 0, H)])
+    xg0, xg1, zg0, zg1 = -213.2, 115.3, 4.3, 81.2                                     # grille window
+    xm0, xm1 = 120.1, 213.2                                                          # LCD module window
+    bez = _box(-Wb / 2, Wb / 2, -3.0, 0, 0, H).cut(_box(xg0, xg1, -3.01, 0.01, zg0, zg1)).cut(_box(xm0, xm1, -3.01, 0.01, 4.0, 82.0))
+    b["bezel"] = bez
+    badge = _box(-176.9, -153.8, -3.0, 0, 30.2, 55.3)
+    b["badge"] = badge
+    b["grille"] = _box(xg0, xg1, -1.5, 0, zg0, zg1).cut(badge)
+    scr = _box(146.4, 195.3, -3.01, -2.0, 29.9, 66.1)
+    led = _box(128.0, 208.0, -3.01, -2.6, 6.0, 9.5)
+    btns = [_cyl(3.5, (134.0 + 16.25 * k, -3.01, 19.0), (0, 1, 0), 0.6) for k in range(5)]
+    mod = _box(xm0, xm1, -3.0, 0, 4.0, 82.0).cut(scr).cut(led)
+    for c in btns:
+        mod = mod.cut(c)
+    b["lcd_module"] = mod
+    b["lcd_screen"] = _box(146.4, 195.3, -2.0, 0, 29.9, 66.1)
+    b["led_bar"] = _box(128.0, 208.0, -2.6, 0, 6.0, 9.5)
+    return _bodies_or_solid(b, bodies)
 
 
 # --------------------------------------------------------------------------------------------
