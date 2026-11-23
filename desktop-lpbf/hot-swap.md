@@ -269,7 +269,8 @@ needs 0.8 W more (72.9 W against 72.1 W; 1 %). Ti-6Al-4V screws carry 1.0 W and 
 its Ø5 Macor rings do (1.3 W against 1.1 W) and add 0.6 W. The screws are modelled as a calibrated ring in the axisymmetric mesh:
 each screw's path from the insert threads, across the break and down its clearance hole in the head to the disc spring is worked
 out in `thermal_module.stack_screw_link()`, and an end contact of zero or infinite conductance moves the three-screw conductance
-by −19 % / +7 % (M50, 316). Either way the screws change no limit: the bore seal, gland O-rings and magnet move by ≤ 5 K on M50 and
+by −19 % / +7 % (M50, 316). In the solved fields the ring passes heat over its temperature drop at 12.6 mW/K on M50 (316) and
+7.2 mW/K (Ti), as calibrated to within 0.2 %, and so does L75's; S25's ring runs 5–6 % above its calibration. Either way the screws change no limit: the bore seal, gland O-rings and magnet move by ≤ 5 K on M50 and
 L75. **Macor bearing
 stress:** 1–13 MPa against its 345 MPa compressive strength.
 
