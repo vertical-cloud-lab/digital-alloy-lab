@@ -10,6 +10,15 @@ rectangle in r-z, so the mesh is a conformal structured grid of 8-node axisymmet
 conductivity gives the stated conductance (k = h * t). Material and boundary-condition assumptions are the named
 constants below.
 
+Heater-stack screws (since 2026-11-23): the three screws that hold block, Macor rings and head together (M3 x 25 316 on M50
+and L75, M2.5 x 30 on S25; cad/joints.py) are a ring of solid elements across the break at the standoff radius, as wide as
+the three bores through the Macor. A 2D axisymmetric mesh can't draw three screws, and a ring with the screws' own k would
+be bonded to the head along its whole length, so the ring's conductivity is calibrated: stack_screw_link() works out one
+screw's block-to-head conductance as a series path (insert threads, shank across the break, shank in the head's clearance
+hole as a fin losing heat to the head through argon, disc spring) and the ring passes three of them. Cases "_scrTI" use
+Ti-6Al-4V screws; "_scrnone" fills the bores with Macor (the solid posts this model had before). S25 has its own rod
+(3/8 in. x 0.035 in., module_params.ROD_S25); the standoff radii are module_params's (as modules_low.block_layout).
+
 Units inside ccx: mm, t, s, mJ (so power in mW). k in W/m.K is unchanged; h in W/m2.K is x1e-3; the
 Stefan-Boltzmann constant is 5.669e-11; density in kg/m3 is x1e-12; specific heat in J/kg.K is x1e6. CalculiX gives
 the reaction heat (RFL) of a CAX model for a 2-degree sector, so it is x180 for the whole ring (checked against
@@ -71,6 +80,52 @@ LIMITS = dict(seal=204.0, oring=200.0, oring_pref=150.0, gland=200.0, magnet=80.
 H0 = 1.0                         # baseline element size (mm) in the module; grows to 4x at the floor edge
 H0_TRANSIENT = 2.0               # transients run on the coarse mesh (its steady power is checked against H0)
 
+# Heater-stack screws (cad/joints.py, "stack_<key>"; fasteners.md): one per standoff, from a counterbore in the piston head's
+# underside, up through a slotted (+/- 0.3 mm radial) clearance hole in the head and the bored Macor rings, into an 18-8 helical
+# insert in the block. In the mesh they are a ring of solid elements ("scr") at the standoff radius, as wide as the three bores,
+# across the break (so the Macor ring keeps only its bored area). The ring's conductivity is calibrated (stack_screw_link) so
+# that it carries what the three screws carry from the block to the head, worked out per screw as a 1D series path: thread
+# contact in the insert -> shank across the break -> shank in the head's clearance hole, which loses heat sideways to the head
+# through the argon in the hole (a fin) -> screw head -> disc spring (S25: none) -> counterbore floor.
+# d, stress area As (mm2), counterbore depth cbh and clearance hole as cad/joints.py; insert length 1.5 d (91732A647 / A767).
+SCREW = {"S25": dict(d=2.5, As=3.39, L=30.0, cbh=3.2, hole=2.9, ins_L=3.75, spring=False),
+         "M50": dict(d=3.0, As=5.03, L=25.0, cbh=6.5, hole=3.4, ins_L=4.5, spring=True),
+         "L75": dict(d=3.0, As=5.03, L=25.0, cbh=6.5, hole=3.4, ins_L=4.5, spring=True)}
+SCREW_MATS = {"316": dict(label="316 stainless", k=16.0, rho=8000.0, c=500.0),
+              "TI": dict(label="Ti-6Al-4V", k=7.5, rho=4430.0, c=526.0)}   # Ti-6Al-4V: 6.7 W/m K at 20 C, ~8.5 at 200 C
+H_THREAD = 3000.0                # W/m2K, each threaded interface (block-coil, coil-screw), on pi d x engagement
+G_END_SPRING = 0.02              # W/K, screw head -> 302 disc spring (line contacts at its ID and OD) -> counterbore floor
+G_END_DIRECT = 0.03              # W/K, S25: M2.5 head straight on the counterbore floor (~9 mm2 at <= 30 N)
+SLOT = 0.3                       # mm, radial slot half-length added to the head's clearance hole
+T_GAS_SCREW = 100.0              # C, argon in the head's clearance hole (the head runs 60-115 C)
+
+
+def stack_screw_link(key, mat="316", G_end=None):
+    """Conductance block -> head of one heater-stack screw (W/K) and its parts (K/W), with no lateral loss across the break."""
+    s, k = SCREW[key], SCREW_MATS[mat]["k"]
+    kA = k * s["As"] * 1e-6                                              # W m/K
+    R_ins = 2.0 / (H_THREAD * math.pi * s["d"] * 1e-3 * s["ins_L"] * 1e-3)
+    R_brk = MP.BREAK_T * 1e-3 / kA
+    r_s, r_h = s["d"] / 2, s["hole"] / 2 + SLOT / 2
+    gl = 2 * math.pi * k_ar(T_GAS_SCREW) / math.log(r_h / r_s)            # W/m K, shank -> head across the argon in the hole
+    m = math.sqrt(gl / kA)
+    L2 = (MP.HEAD_T - s["cbh"]) * 1e-3                                     # shank length inside the head
+    Ge = G_end if G_end is not None else (G_END_SPRING if s["spring"] else G_END_DIRECT)
+    b, t = Ge / (kA * m), math.tanh(m * L2)
+    G_head = kA * m * (t + b) / (1 + b * t)                                # fin with an end conductance, into an isothermal head
+    R = R_ins + R_brk + 1 / G_head
+    return dict(mat=mat, k=k, R_insert=R_ins, R_break=R_brk, R_head=1 / G_head, R_total=R, G_screw=1 / R, G_three=3 / R,
+                fin_m_per_mm=m * 1e-3, L_head_mm=L2 * 1e3, g_lateral=gl, G_end=Ge,
+                G_three_bounds=(3 / (R_ins + R_brk + 1 / (kA * m * t)), 3 / (R_ins + R_brk + 1 / (kA * m / t))))
+
+
+def screw_ring(key):
+    """(r0, r1) of the 'scr' ring and the three bores' area (mm2) it stands for."""
+    m, s = MP.MODULES[key], SCREW[key]
+    A = m["n_standoffs"] * math.pi * s["hole"] ** 2 / 4
+    w = A / (2 * math.pi * m["standoff_r"])
+    return (m["standoff_r"] - w / 2, m["standoff_r"] + w / 2), A
+
 
 def k_ar(T):
     return 0.018 + 4.5e-5 * (T - 25.0)
@@ -108,6 +163,12 @@ REGION_MAT = dict(plate="AL6061", cpb="C_PB", block="AL6061", heater="AL6061", g
                   rodcap="SS316L", potting="POTTING", striker="SS430",
                   spigot="SS316L", mflange="SS316L", tube="SS316L", oring="FKM", sgap_ar="ARGON", sgap_air="AIR",
                   cff="C_FF", floor="AL6061", botfl="SS316L", ggap="ARGON", goring="FKM", cake="POWDER")
+# the stack-screw ring's calibrated materials, one per module and screw material: SCR316_M50, SCRTI_M50, ...
+SCREW_LINKS = {key: {mat: stack_screw_link(key, mat) for mat in SCREW_MATS} for key in MP.MODULES}
+for _key, _links in SCREW_LINKS.items():
+    for _mat, _lk in _links.items():
+        _lk["k_ring"] = _lk["G_three"] * MP.BREAK_T * 1e-3 / (screw_ring(_key)[1] * 1e-6)
+        MATS[f"SCR{_mat}_{_key}"] = (_lk["k_ring"], SCREW_MATS[_mat]["rho"], SCREW_MATS[_mat]["c"])
 RODLIKE = ("rod", "rodcap", "potting", "striker")
 
 
@@ -117,9 +178,11 @@ def kfun(mat):
 
 
 # ---------------------------------------------------------------- geometry
-def geometry(key, z_p, tier="A", gap_fill="ARGON", clear_plate=None, mat_over=None):
+def geometry(key, z_p, tier="A", gap_fill="ARGON", clear_plate=None, mat_over=None, screws="316"):
     """Rectangles (region, r0, r1, z0, z1) in paint order (later wins) and the levels the post-processing needs.
-    mat_over: {region: MATS key} swaps region materials (the `plates` sweep); None leaves every case as it was."""
+    mat_over: {region: MATS key} swaps region materials (the `plates` sweep); None leaves every case as it was.
+    screws: heater-stack screw material, "316" (as drawn) or "TI" (Ti-6Al-4V); "none" fills the bores with Macor, i.e. the
+    solid standoffs with no screw that this model had before 2026-11-23."""
     m = MP.MODULES[key]
     c = dict(MP.CLEAR[tier])
     if tier == "A":
@@ -135,7 +198,8 @@ def geometry(key, z_p, tier="A", gap_fill="ARGON", clear_plate=None, mat_over=No
     g["Rsg"] = Rsg = Rs + MP.SPIGOT_FIT
     g["Rf"] = Rf = MP.FLANGE_D / 2
     Rbf = Ro + 8.0
-    rri, rro = MP.ROD_ID / 2, MP.ROD_OD / 2
+    rod_od, rod_id = MP.ROD_S25 if key == "S25" else (MP.ROD_OD, MP.ROD_ID)     # S25: 3/8 in. x 0.035 in. tube
+    rri, rro = rod_id / 2, rod_od / 2
     rg = rro + GLAND_CLR
     zF = -MP.FLOOR_T
     zFb = zF - MP.FLANGE_T
@@ -188,6 +252,8 @@ def geometry(key, z_p, tier="A", gap_fill="ARGON", clear_plate=None, mat_over=No
     add("heater", *g["heater"])
     add("brk", 0.0, Rb, zht, zbb)
     add("macor", mc[0], mc[1], zht, zbb)
+    g["scr"] = screw_ring(key)[0]
+    add("scr", *g["scr"], zht, zbb)                  # the three stack screws in their bores (calibrated ring)
     add("head", 0.0, Rk, zhb, zht)
     add("gap_h", Rk, Rb, zhb, zht)
     add("seal", Rb - SEAL_DEPTH, Rb, zs1 - SEAL_H, zs1)
@@ -200,6 +266,8 @@ def geometry(key, z_p, tier="A", gap_fill="ARGON", clear_plate=None, mat_over=No
     g["extra_r"] = [Rf - FLANGE_BAND]
     mats = dict(REGION_MAT)
     mats["gap_p"] = mats["gap_b"] = gap_fill
+    mats["scr"] = "MACOR" if screws == "none" else f"SCR{screws}_{key}"
+    g["screws"] = screws
     if tier == "B":
         mats["head"] = "SS316L"     # 316L head with a water channel (module_params docstring)
     if mat_over:
@@ -554,7 +622,7 @@ def solve_steady(case):
     """Find the heater power that puts the plate top centre at case['T_set'] (secant on P), then post-process."""
     t0 = time.time()
     g = geometry(case["key"], case["z_p"], case.get("tier", "A"), case.get("gap", "ARGON"), case.get("clear_plate"),
-                 case.get("mat_over"))
+                 case.get("mat_over"), case.get("screws", "316"))
     mesh = Mesh(g, case.get("h0", H0))
     nc, _ = centre_node(mesh)
     job = case["name"]
@@ -630,9 +698,12 @@ def post(mesh, case, P_w, T, rfl, par):
     x["radial_gaps"] = (face_flux(mesh, L, with_nb("gap_p", 4, {"plate"}), 4, mat_of, at=0.0)
                         + face_flux(mesh, L, with_nb("gap_b", 4, {"block", "heater", "cpb"}), 4, mat_of, at=0.0)
                         - face_flux(mesh, L, with_nb("gap_b", 3, {"plate"}), 3, mat_of, at=0.0))
-    x["break"] = -face_flux(mesh, L, [e for e in np.concatenate([mesh.region("brk"), mesh.region("macor")])
+    x["break"] = -face_flux(mesh, L, [e for e in np.concatenate([mesh.region("brk"), mesh.region("macor"), mesh.region("scr")])
                                        if mesh.neighbour(e, 3) in ("block", "heater")], 3, mat_of, at=GL)
     x["through_macor"] = -face_flux(mesh, L, with_nb("macor", 3, {"block", "heater"}), 3, mat_of, at=GL)
+    x["through_screws"] = -face_flux(mesh, L, with_nb("scr", 3, {"block", "heater"}), 3, mat_of, at=GL)
+    if case.get("screws") == "none":       # bores filled with Macor: count them as Macor
+        x["through_macor"] += x.pop("through_screws")
     r["exit_balance_err_pct"] = 100 * (x["plate_top"] + x["radial_gaps"] + x["break"] - P_w) / P_w
     if case["z_p"] < 0:     # the cake gradient at the plate's top corner is under-resolved: take the top share as the remainder
         x["plate_top_direct"] = x["plate_top"]
@@ -937,6 +1008,11 @@ def steady_cases(quick=False):
                        T_ch=25.0, eps=EPS_POWDER, h0=H0_TRANSIENT, group="transient_init"))
     if quick:
         return cs
+    for key in keys:                       # heater-stack screws: Ti-6Al-4V, and none (solid Macor, as before 2026-11-23)
+        for z_p, pos in ((0.0, "start"), (-MP.BUILD_STROKE, "end")):
+            for scr in ("TI", "none"):
+                cs.append(dict(name=f"{key}_{pos}_ch25_e0.5_scr{scr}", key=key, z_p=z_p, pos=pos, T_set=MP.T_SET_A, T_ch=25.0,
+                               eps=EPS_POWDER, screws=scr, group="screws"))
     for z_p, pos in ((0.0, "start"), (-MP.BUILD_STROKE, "end")):
         cs.append(dict(name=f"M50_{pos}_powdergaps", key="M50", z_p=z_p, pos=pos, T_set=MP.T_SET_A, T_ch=25.0,
                        eps=EPS_POWDER, gap="POWDER", group="powder_gaps"))
@@ -1085,6 +1161,46 @@ def narrative(S, TR, SG, LU):
     return "\n".join(out)
 
 
+def screw_section(S, links):
+    """Table: the heater-stack screws (316 as drawn, Ti-6Al-4V, none) and how their calibrated ring was set."""
+    if not links or not any(f"{k}_start_ch25_e0.5_scrTI" in S for k in MP.MODULES):
+        return []
+    L = ["", "## Heater-stack screws: 316 (as drawn), Ti-6Al-4V, or none (solid Macor posts, the model before 2026-11-23)", "",
+         "Chamber 25 °C, powder on the plate (ε 0.5). Break = all the heat from the block into the head (argon and radiation, Macor, "
+         "screws); the screws' and the Macor's shares are the heat through their own rings. Temperatures in °C.", "",
+         "| Module, position | Screws | Heater (W) | Break (W) | of which screws / Macor (W) | Block max | Head mean | Bore seal | "
+         "Rod-gland O-rings | Coupling face (magnet) |", "|---|---|---|---|---|---|---|---|---|---|"]
+    for key in ("S25", "M50", "L75"):
+        for pos in ("start", "end"):
+            for suf, sl in (("_scrnone", "none (solid Macor)"), ("", "316"), ("_scrTI", "Ti-6Al-4V")):
+                r = S.get(f"{key}_{pos}_ch25_e0.5{suf}")
+                if not r:
+                    continue
+                x = r["exit_W"]
+                sc = x.get("through_screws")
+                L.append(f"| {key}, {pos} | {sl} | {r['P_heater_W']:.1f} | {x['break']:.2f} | "
+                         f"{'–' if sc is None else f'{sc:.2f}'} / {x['through_macor']:.2f} | {r['T_block_max']:.0f} | "
+                         f"{r['T_head_mean']:.0f} | {r['T_seal_max']:.0f} | {r['T_gland_max']:.0f} | {r['T_rod_end']:.0f} |")
+    L += ["", "How the screws are modelled (a calibrated ring in the mesh): each module's three screws are one ring of solid elements at "
+          "the standoff radius, as wide as the three bores through the Macor rings, across the 8 mm break; the Macor ring keeps only its "
+          "bored area. The ring's conductivity is set so that it passes the conductance of three screws from the block to the head, "
+          f"each a series path: two threaded interfaces in the helical insert ({H_THREAD:.0f} W/m²K on π d × engagement); the shank "
+          "(stress area) across the break; the shank inside the head's slotted clearance hole, losing heat sideways to the head through "
+          f"the argon in the hole (a fin, argon at {T_GAS_SCREW:.0f} °C); and the screw head on its disc spring ({G_END_SPRING} W/K; "
+          f"S25 has no spring, its head sits on the counterbore floor, {G_END_DIRECT} W/K). An end conductance of 0 or infinity moves "
+          "the three-screw conductance to the bounds in brackets.", "",
+          "| Module | Screw | R insert / break / in the head (K/W, one screw) | Three screws (W/K) [bounds] | Ring k (W/m K) |",
+          "|---|---|---|---|---|"]
+    for key in ("S25", "M50", "L75"):
+        s = SCREW[key]
+        for mat, lk in links.get(key, {}).items():
+            lo, hi = lk["G_three_bounds"]
+            L.append(f"| {key} | M{s['d']:g} × {s['L']:.0f} {SCREW_MATS[mat]['label']} (k {lk['k']:g}) | {lk['R_insert']:.0f} / "
+                     f"{lk['R_break']:.0f} / {lk['R_head']:.0f} | {lk['G_three'] * 1000:.1f} × 10⁻³ [{lo * 1000:.1f}–{hi * 1000:.1f}] | "
+                     f"{lk['k_ring']:.2f} |")
+    return L
+
+
 def write_report(data):
     """thermal.md from thermal.json (re-run with `report` to regenerate without solving)."""
     S, SG, LU = data["steady"], data["suggested"], data["lumped"]
@@ -1107,7 +1223,9 @@ def write_report(data):
          "meshes it with 8-node axisymmetric quads (CAX8) and solves it with ccx 2.21. For each steady case it finds, by a secant on "
          "heater power, the power that holds the **plate top centre at 200 °C**. Inputs: radial argon plate and 0.30 mm block "
          "gaps to the bore (cold radial plate clearance per size: " +
-         ", ".join(f"{k} {m['plate_clear']:.2f} mm" for k, m in MP.MODULES.items()) + f"); plate–block contact {H_PB:.0f} W/m²K; 8 mm argon break with smeared Macor posts and radiation through 2 shields; "
+         ", ".join(f"{k} {m['plate_clear']:.2f} mm" for k, m in MP.MODULES.items()) + f"); plate–block contact {H_PB:.0f} W/m²K; 8 mm argon break with smeared Macor posts (bored for the stack screws), the three "
+         f"316 stack screws as a calibrated ring (section below), and radiation through 2 shields; hollow 316 rod {MP.ROD_OD:.2f} × {MP.ROD_ID:.2f} mm "
+         f"(S25: {MP.ROD_S25[0]:.3f} × {MP.ROD_S25[1]:.3f} mm); "
          f"felt/PTFE bore seal on the head rim; {MP.SPIGOT_FIT:.2f} mm spigot fit plus an FKM O-ring; flange on the floor at 1500 W/m²K; floor edge "
          "(r = 120 mm) at the chamber temperature. Plate top: forced argon h 17 W/m²K (× (50/D)^0.5) plus radiation. Under the floor: "
          "5 W/m²K plus ε 0.3 to 25 °C. Coupling face: 10 W/m²K. Inside the cylinder below the head: adiabatic.", "",
@@ -1142,6 +1260,7 @@ def write_report(data):
                  f"**{sg['n_suggested']} × {m['heater_w']:.0f} W = {sg['suggested_W']:.0f} W** | {ht} | {hst} | "
                  f"{f0(hx.get('T_block_at_target'))} °C | {min_clear_um(hx):.0f} | "
                  f"{f0(c['t_target_min']) + ' min' if c and c['t_target_min'] else '–'} |")
+    L += screw_section(S, data.get("screw_links"))
     # sensitivities
     L += ["", "## Sensitivities (heater power in W for 200 °C at the plate top centre)", "",
           "| Case | S25 start | S25 end | M50 start | M50 end | L75 start | L75 end |", "|---|---|---|---|---|---|---|"]
@@ -1571,7 +1690,7 @@ def main(argv):
                 specs.append(dict(name=f"heatS_{key}", key=key, z_p=0.0, T_ch=25.0, eps=EPS_POWDER, P_w=pw, T_init=25.0,
                                   t_end=3 * 3600.0, stop=MP.T_SET_A))
         trans = _pool(run_transient, specs)
-        data = dict(sanity=san, steady=steady, transient=trans, suggested=sugg, lumped=lumped(), mesh_h0=H0,
+        data = dict(sanity=san, steady=steady, transient=trans, suggested=sugg, lumped=lumped(), mesh_h0=H0, screw_links=SCREW_LINKS,
                     params=dict(STACK=MP.STACK, PLATE_T=MP.PLATE_T, BLOCK_T=MP.BLOCK_T, BREAK_T=MP.BREAK_T,
                                 HEAD_T=MP.HEAD_T, ROD_L=MP.ROD_L, BOT_FLANGE_T=MP.BOT_FLANGE_T, Z_P_MIN=MP.Z_P_MIN),
                     wall_s=round(time.time() - t0, 1))
