@@ -43,35 +43,36 @@ the lab Pi on 2026-11-17; machining is not priced.
 | Hollow rod | 77 mm | 5/8 in. × 0.065 in. 316 tube (McMaster 11119N35; welded, so polish it for the O-ring gland). Inert inside: the leads run down it to a potted cable exit (Torr Seal) at the rod end, beside a 416 stainless striker |
 
 **What the thermal FEA found** ([`thermal.md`](analysis/out/thermal/thermal.md): axisymmetric CalculiX, CAX8, 1 mm mesh, power within 0.6 % of a
-0.5 mm mesh, energy balance closed to 0.03 %). It was run three times, and each run changed the design:
+0.5 mm mesh, energy balance closed to 0.03 %). It has been run four times; the first two runs changed the design:
 
 | Run | Design | What it found | Change |
 |---|---|---|---|
 | 1 | 1 / 2 / 4 × 40 W; 0.10 mm plate gap; bare Al plate–block face; 0.03 mm spigot fit | S25 and M50 never reach 200 °C (they level at 179 and 182 °C); the worst steady loss is 47 / 90 / 135 W. The hot plate closes its gap in the cooler spigot: +5 µm on M50, **−36 µm (seized) on L75** | 2 / 3 / 5 × 50 W cartridges; cold plate clearance 0.10 / 0.15 / 0.20 mm |
 | 2 | as built after run 1 | gaps now 51–96 µm hot; S25's block sits at its 240 °C cutoff (it pushes its heat through a small face); powder in the gaps would more than double the power; a 0.03 mm spigot fit closes to −23 µm hot | graphite foil under the plate (5000 W/m²K); a carbon-filled PTFE wiper on the plate rim; spigot fit 0.10 mm with two dowels locating the module on its flange |
-| 3 | final (`module_params.py` as committed) | the table below | – |
+| 3 | final (`module_params.py` as committed) | the table below, before the stack screws | – |
+| 4 (2026-11-23) | the heater-stack screws modelled (3 × M3 316, M2.5 on S25, through bored Macor rings; a calibrated ring in the mesh, [`hot-swap.md`](hot-swap.md) §4); S25 on its 3/8 in. rod; current standoff radii | heater power up by 0.8 W at most; S25's head and bore seal 9–12 K warmer, and its magnet 9 K cooler at the build end (the thinner rod carries less heat down); the rest within 5 K | none |
 
-Final run, 200 °C at the plate top centre, chamber at 25 °C:
+Final run (run 4), 200 °C at the plate top centre, chamber at 25 °C:
 
 | Module | Heater power, build start / end | Installed | Block max | Plate centre − edge | Hot plate clearance | Heat-up at full power | Cool-down to 50 °C |
 |---|---|---|---|---|---|---|---|
-| S25 | 44 / 30 W | 2 × 50 = 100 W | 221 °C | 1.2–1.6 °C | 51–67 µm | 1 min (block reaches 242 °C) | 15 min |
-| M50 | 72 / 52 W | 3 × 50 = 150 W | 206 °C | 1.6–2.0 °C | 56–82 µm | 3 min (211 °C) | 28 min |
-| L75 | 97 / 71 W | 5 × 50 = 250 W | 204 °C | 1.9–2.3 °C | 64–96 µm | 4 min (209 °C) | 40 min |
+| S25 | 45 / 30 W | 2 × 50 = 100 W | 221 °C | 1.2–1.6 °C | 51–67 µm | 1 min (block reaches 242 °C) | 16 min |
+| M50 | 73 / 52 W | 3 × 50 = 150 W | 206 °C | 1.6–2.0 °C | 56–82 µm | 3 min (211 °C) | 29 min |
+| L75 | 98 / 72 W | 5 × 50 = 250 W | 204 °C | 1.9–2.3 °C | 64–96 µm | 4 min (209 °C) | 41 min |
 
-- **Where the heat goes.** 66–89 % of the heater power leaves through the plate's and block's radial gaps into the bore wall, and on
+- **Where the heat goes.** 65–87 % of the heater power leaves through the plate's and block's radial gaps into the bore wall, and on
   through the spigot into the chamber floor. Build start, with the plate inside the 316L spigot, is the worst case. The lumped
   estimate in `requirements_budgets.py` agrees at the build end (49 W against 52 W for Ø50) and is low at the start, because it has
   no plate-to-bore gap.
-- **Seals and magnet, clean argon gaps:** bore seal ≤ 121 °C (aramid/PTFE: 204 °C), rod-gland O-rings ≤ 117 °C (FKM: 200 °C),
-  spigot O-ring ≤ 56 °C (84 °C with a 60 °C chamber), coupling face ≤ 68 °C. The last is 11 °C under the 79 °C rating of the
+- **Seals and magnet, clean argon gaps:** bore seal ≤ 125 °C (aramid/PTFE: 204 °C), rod-gland O-rings ≤ 119 °C (FKM: 200 °C),
+  spigot O-ring ≤ 56 °C (84 °C with a 60 °C chamber), coupling face ≤ 61 °C. The last is 18 °C under the 79 °C rating of the
   McMaster pot magnet (5679K95), with only 10 W/m²K on the rod end in the model (the Z arm under it is a better sink than that).
-- **Powder in the gaps is the largest risk.** If powder fills the plate and block gaps, M50 needs 226 W at the build start (more than
-  the 150 W installed) and the coupling face reaches 84 °C. That is why the plate now carries a rim wiper. Use a samarium-cobalt pot
+- **Powder in the gaps is the largest risk.** If powder fills the plate and block gaps, M50 needs 227 W at the build start (more than
+  the 150 W installed) and the coupling face reaches 74 °C at the build end. That is why the plate now carries a rim wiper. Use a samarium-cobalt pot
   magnet, or a 3–5 mm G10 washer under the striker, for margin.
 - **The heat-up has to be capped.** Full power takes S25's block to 242 °C, at its cutoff, by the time the plate reaches 200 °C.
   The supervisor's PID runs on the plate's control thermocouple with its output limited by a block ceiling of ~225 °C.
-- **Heat into the chamber:** 42–92 W at the build start, mostly through the floor, so a long build warms the chamber. With the floor
+- **Heat into the chamber:** 42–93 W at the build start, mostly through the floor, so a long build warms the chamber. With the floor
   edge at 60 °C the heater power drops by ~17 %.
 - **Tier B (500 °C, reserved):** M50 needs 235 W with a water-cooled 316L head and flange; seals stay ≤ 159 °C. But the 6061 block
   reaches 520 °C, too near its ~580 °C solidus, so **Tier B needs a steel or ceramic heater block**, and plates need ≥ 0.3 mm cold
@@ -98,9 +99,9 @@ Final run, 200 °C at the plate top centre, chamber at 25 °C:
 
 | Module | Bore (honed) | Plate, cold clearance | Cylinder blank (McMaster) | Heaters | Steady at 200 °C (FEA) | Powder, 15 mm build | Reservoir |
 |---|---|---|---|---|---|---|---|
-| S25 | 25.4 | Ø25.2, 0.10 mm | 89495K18, 1-1/4 × 0.188 in. 316, $66.07 / 6 in. | 2 × 50 W | 30–44 W | 18 g (12 cm³) | S, 38 cm³ |
-| M50 | 50.8 | Ø50.5, 0.15 mm | 11119N55, 2-1/4 × 1/4 in. 316, $144.98 / ft | 3 × 50 W | 52–72 W | 72 g (49 cm³) | M, 97 cm³ (L for > 29 mm) |
-| L75 | 76.2 | Ø75.8, 0.20 mm | 89495K4, 3-1/2 × 3/8 in. 316 (turn OD to 82.6), $188.68 / 6 in. | 5 × 50 W | 71–97 W | 163 g (111 cm³) | L, 233 cm³ |
+| S25 | 25.4 | Ø25.2, 0.10 mm | 89495K18, 1-1/4 × 0.188 in. 316, $66.07 / 6 in. | 2 × 50 W | 30–45 W | 18 g (12 cm³) | S, 38 cm³ |
+| M50 | 50.8 | Ø50.5, 0.15 mm | 11119N55, 2-1/4 × 1/4 in. 316, $144.98 / ft | 3 × 50 W | 52–73 W | 72 g (49 cm³) | M, 97 cm³ (L for > 29 mm) |
+| L75 | 76.2 | Ø75.8, 0.20 mm | 89495K4, 3-1/2 × 3/8 in. 316 (turn OD to 82.6), $188.68 / 6 in. | 5 × 50 W | 72–98 W | 163 g (111 cm³) | L, 233 cm³ |
 
 Powder at 30 µm layers, 1.8 dose factor, AlSi10Mg, as in `requirements_budgets.py`. Every blank is bored and honed to H7 with a 3 mm wall.
 

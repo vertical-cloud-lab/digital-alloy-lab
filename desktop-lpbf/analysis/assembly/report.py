@@ -2,7 +2,7 @@
 
     /tmp/venv/bin/python desktop-lpbf/analysis/assembly/report.py
 Reads analysis/out/assembly/results.json (+ results_M.json if chapter 3 was re-run on its own), seals_forces.json and
-/tmp/asm/frames.pkl; writes steps.md (the step table), sequence.json (for render_build.py: parts, insertion waypoints
+/tmp/asm/frames.pkl (ASM_DIR overrides /tmp/asm); writes steps.md (the step table), sequence.json (for render_build.py: parts, insertion waypoints
 ending at the identity, tool, arm, clearance, pass/fail, seal method) and push.json (largest push at the force steps'
 poses, with link masses loading only the joints upstream of them, as shop_checks.joint_torques).
 """
@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import pathlib
 import pickle
 import sys
@@ -18,17 +19,27 @@ import numpy as np
 
 HERE = pathlib.Path(__file__).resolve().parent
 OUT = HERE.parent / "out" / "assembly"
+ASM_DIR = pathlib.Path(os.environ.get("ASM_DIR", "/tmp/asm"))
 sys.path.insert(0, str(HERE))
 
 
+PARTIAL = ("results_M.json", "results_M_C.json")     # run_assembly.py --only=M / --only=M,C: re-runs of chapter 3 (and 4a)
+
+
 def load_rows():
+    """results.json's rows, with the chapters of a partial re-run (PARTIAL) replacing theirs; each row keeps a 'run' tag."""
     rows = json.loads((OUT / "results.json").read_text())["rows"]
-    pm = OUT / "results_M.json"
-    if pm.exists():
-        m = {r["id"]: r for r in json.loads(pm.read_text())["rows"]}
-        rows = [m.get(r["id"], r) if r["id"].startswith("M") else r for r in rows]
-        have = {r["id"] for r in rows}
-        rows = [r for r in rows] + [r for k, r in m.items() if k not in have]
+    for r in rows:
+        r.setdefault("run", "results.json")
+    for name in PARTIAL:
+        pm = OUT / name
+        if not pm.exists():
+            continue
+        pre = tuple(name[len("results_"):-len(".json")].split("_"))
+        new = json.loads(pm.read_text())["rows"]
+        for r in new:
+            r["run"] = name
+        rows = [r for r in rows if not r["id"].startswith(pre)] + new     # the old order's rows of those chapters all go
         order = {s["id"]: i for i, s in enumerate(__import__("sequence").steps())}
         rows.sort(key=lambda r: (order.get(r["id"].rstrip("h"), 999), r["id"]))
     return rows
@@ -77,7 +88,7 @@ def push_table(frames):
     import cell2 as K
     out = []
     for sid, d, kg in (("C02:1", (0, 0, -1), 0.05), ("C10:1", (0, 0, -1), 2.7), ("F39:1", (0, 1, 0), 0.4), ("F46:1", (0, 1, 0), 0.6),
-                       ("M22:1", (0, 0, -1), 1.0), ("M23:1", (0, 0, -1), 0.1), ("F30:1", (0, 0, -1), 2.65)):
+                       ("M13:1", (0, 0, -1), 0.2), ("M26:1", (0, 0, -1), 0.1), ("F30:1", (0, 0, -1), 2.65)):
         fr = frames.get(sid)
         if not fr:
             continue
@@ -98,7 +109,9 @@ def push_table(frames):
 def sequence_json(rows, dual=None):
     import sequence as SQ
     dual = dual or {}
-    parts = json.loads(pathlib.Path("/tmp/asm/parts.json").read_text())
+    old_seq = OUT / "sequence.json"      # a partial re-run has no two-arm paths for the other chapters: keep their counts
+    old = {x["id"]: x for x in json.loads(old_seq.read_text()).get("steps", [])} if old_seq.exists() else {}
+    parts = json.loads((ASM_DIR / "parts.json").read_text())
     names = [p["name"] for p in parts]
     expl = {p["name"]: p["explode"] for p in parts}
 
@@ -151,7 +164,8 @@ def sequence_json(rows, dual=None):
                 if Fs:
                     Fs = [np.asarray(f, float) for f in Fs]
                     Fe = np.linalg.inv(Fs[-1])
-                    e["frames_checked"] = len(dual.get(st["id"], {}).get("frames", []))
+                    e["frames_checked"] = (len(dual[st["id"]].get("frames", [])) if st["id"] in dual
+                                           else old.get(st["id"], {}).get("frames_checked", 0))
                     e["frames_total"] = len(Fs)
                     ks = list(range(0, len(Fs), max(1, len(Fs) // 30))) + [len(Fs) - 1]
                     e["waypoints_4x4"] = [np.round(Fe @ Fs[k], 3).tolist() for k in ks]
@@ -197,8 +211,13 @@ def steps_md(rows, seals, push):
          "sub-assembly (FCL on 0.1 mm meshes, OpenCascade booleans to confirm a block); gap = smallest clearance on the way. Arm: "
          "IK at every 3 mm of the path on one branch, FCL each frame for both arms, tools, D405, changer and held part, the approach "
          "planned (RRT-Connect), 1.5 mm depth limit at the seat (byu-vcl PR 318). Clearance = smallest distance from the tool, "
-         "wrist, forearm and held part to anything they are not meant to touch.", "",
-         "| Step | What | Tool | Arm | Sweep | Gap (mm) | Arms | Arm clearance (mm) | Force / torque | Notes |",
+         "wrist, forearm and held part to anything they are not meant to touch.", ""]
+    runs = sorted({r.get("run", "results.json") for r in rows})
+    if len(runs) > 1:
+        L += ["Rows from more than one run: " + "; ".join(
+            f"{n} ({', '.join(sorted({r['id'][0] for r in rows if r.get('run', 'results.json') == n}))} steps)" for n in runs) +
+            ". A partial re-run (`--only=`) replaces every row of its chapters; the other chapters' rows are the full run's.", ""]
+    L += ["| Step | What | Tool | Arm | Sweep | Gap (mm) | Arms | Arm clearance (mm) | Force / torque | Notes |",
          "|---|---|---|---|---|---|---|---|---|---|"]
     fneed = {f["step"]: f for f in (seals or {}).get("forces", []) if f.get("step", "").startswith(("C", "M", "F"))}
     pmax = {p["step"]: p["max_push_N"] for p in (push or []) if "max_push_N" in p}
@@ -238,23 +257,33 @@ def steps_md(rows, seals, push):
     return L
 
 
+def load_frames():
+    """Snapshots and two-arm paths: frames.pkl (a full run), then a partial re-run's frames_M*.pkl over its own chapters."""
+    frames, dual = {}, {}
+    for name in ("frames.pkl", "frames_M.pkl", "frames_M_C.pkl"):
+        fp = ASM_DIR / name
+        if fp.exists():
+            d = pickle.loads(fp.read_bytes())
+            frames.update(d.get("frames", {}))
+            dual.update(d.get("dual", {}))
+    return frames, dual
+
+
 def main():
     rows = load_rows()
-    frames = {}
-    fp = pathlib.Path("/tmp/asm/frames.pkl")
-    if fp.exists():
-        frames = pickle.loads(fp.read_bytes()).get("frames", {})
+    frames, dual = load_frames()
+    old_push = json.loads((OUT / "push.json").read_text()) if (OUT / "push.json").exists() else []
     try:
         push = push_table(frames)
     except Exception as e:  # noqa: BLE001
         push = [dict(error=str(e))]
+    # steps whose snapshots this run doesn't have (a partial re-run) keep their earlier push figures
+    have = {p.get("step") for p in push}
+    push += [p for p in old_push if p.get("step") and p["step"] not in have and p["step"] not in ("M22", "M23")]
     (OUT / "push.json").write_text(json.dumps(push, indent=1))
     sf = OUT / "seals_forces.json"
     seals = json.loads(sf.read_text()) if sf.exists() else {}
     steps_md(rows, seals, push)
-    dual = {}
-    if fp.exists():
-        dual = pickle.loads(fp.read_bytes()).get("dual", {})
     sequence_json(rows, dual)
     n = dict(place=0, pass_=0, fail=0)
     tot = {}

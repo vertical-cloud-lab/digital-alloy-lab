@@ -191,10 +191,10 @@ def main():
         dict(step="C10", what="spigot's 2-238 entering the Ø96 floor port", need_N=spig["running_N"], peak_N=spig["breakout_N"],
              basis=f"Parker 5.11.2: fc {spig['fc_lb_in']} lb/in at {spig['squeeze_pct']} % over pi x 96 mm; break-out 3x",
              robot="robot starts it on the lead-in chamfer (<= 50 N in force mode), the two captive M6 screws pull it home"),
-        dict(step="M22", what="hollow rod through the two 2-114 rod O-rings", need_N=rod["running_N"], peak_N=rod["breakout_N"],
+        dict(step="M13", what="hollow rod, top end first, through the two 2-114 rod O-rings", need_N=rod["running_N"], peak_N=rod["breakout_N"],
              basis=f"Parker 5.11.2: fc {rod['fc_lb_in']} lb/in at {rod['squeeze_pct']} % over pi x 15.875 mm, two rings",
              robot="yes in force mode with a PFPE film (lubricated, about half); dry break-out is at the F/T range"),
-        dict(step="M23", what="build plate into the honed bore (0.15 mm radial clearance) and onto the bayonet", need_N=10.0,
+        dict(step="M26", what="build plate into the honed bore (0.15 mm radial clearance) and onto the bayonet", need_N=10.0,
              basis="sliding fit; 10 N contact for a spiral search", robot="yes: force-guided spiral search; positioning alone (AprilTag + D405, "
                                                                           "about +-0.4 mm) is coarser than the clearance"),
         dict(step="F39", what="drawer against its 2-033 (358 N to squeeze, seals.md)", need_N=50.0, peak_N=358.0,

@@ -7,6 +7,7 @@ to analysis/out/assembly/.
 """
 from __future__ import annotations
 
+import os
 import pathlib
 import pickle
 import sys
@@ -20,11 +21,12 @@ import tooling as TL  # noqa: E402
 import run_assembly as RA  # noqa: E402
 
 OUT = HERE.parent / "out" / "assembly"
+ASM_DIR = pathlib.Path(os.environ.get("ASM_DIR", "/tmp/asm"))
 
 
 def build():
     run = RA.Run()
-    # the temporary tool objects, in the order the run added them (M18 loader, M20 mandrel and pusher)
+    # the temporary tool objects, in the order the run added them (M12 loader, M25 mandrel and pusher)
     (lv, lf), _ = TL.mesh("ring_loader")
     Ml = K.Tm(p=(0.0, 0.0, -96.0)) @ K.Rx(180.0)
     RA.add_temp_obj(run, "Ring loader (tool)", lv @ Ml[:3, :3].T + Ml[:3, 3], lf)
@@ -94,21 +96,27 @@ def draw(run, snap, held, title, path, focus=None, dist=1600.0, az=-60.0, el=25.
 
 
 def main():
-    fr = pickle.loads(pathlib.Path("/tmp/asm/frames.pkl").read_bytes())
-    frames, held, dual = fr["frames"], fr["held"], fr.get("dual", {})
-    pm = pathlib.Path("/tmp/asm/frames_M.pkl")
-    if pm.exists():
-        fm = pickle.loads(pm.read_bytes())
-        frames.update({k: v for k, v in fm["frames"].items() if k.startswith("M")})
-        held.update(fm["held"])
+    full = (ASM_DIR / "frames.pkl").exists()
+    frames, held, dual = {}, {}, {}
+    if full:
+        fr = pickle.loads((ASM_DIR / "frames.pkl").read_bytes())
+        frames, held, dual = fr["frames"], fr["held"], fr.get("dual", {})
+    for name, pre in (("frames_M.pkl", ("M",)), ("frames_M_C.pkl", ("M", "C"))):     # partial re-runs (run_assembly.py --only=)
+        pm = ASM_DIR / name
+        if pm.exists():
+            fm = pickle.loads(pm.read_bytes())
+            frames.update({k: v for k, v in fm["frames"].items() if k.startswith(pre) or not full})
+            held.update(fm["held"])
+            dual.update(fm.get("dual", {}))
+    only = [k for k in os.environ.get("RENDER_ONLY", "").split(",") if k]       # e.g. RENDER_ONLY=M17:1 renders just that view
     run = build()
     shots = []
     S = K.STATIONS
     want = [("F05b-mid", "Chamber assembly (15.8 kg) carried upright by both arms, each holding a leg, from the trunnion to Fixture B",
              ((S["T"] + S["B"]) / 2, 0, 1150), 2600, -70, 22),
             ("C01b", "The trunnion has turned the chamber upside down for the under-floor work", (S["T"], 0, 1000), 1800, -60, 25),
-            ("M22:1", "Heater stack into the bore: the rod on its bullet passes the two rod O-rings", (S["body_up"], 0, 1000), 1100, -60, 25),
-            ("M20", "Spigot O-ring: mandrel on the spigot, pusher stroke", (S["body_up"], 0, 1000), 1000, -60, 25),
+            ("M17:1", "Heater stack, rod and gland plate into the bore from the tube's open end, module upside down", (S["body_inv"], 0, 1000), 1100, -60, 25),
+            ("M25", "Spigot O-ring: mandrel on the spigot, pusher stroke", (S["body_up"], 0, 1000), 1000, -60, 25),
             ("C10:1", "Build module (upside down) into the floor port, chamber in the trunnion", (S["T"], 0, 1050), 1500, -60, 30)]
     for k in list(frames):
         if k.startswith("F29:"):
@@ -128,12 +136,12 @@ def main():
                     want.append((f"screw:{i}", f"{jid}: {title}", None, 1300, -60, 20))
                     break
     last = list(frames)[-1] if frames else None
-    if last:
+    if last and full:                 # the cell overview needs the full run's last frame (the finished process module)
         frames["__cell__"] = frames[last]
         want.insert(0, ("__cell__", "The cell: two UR12e on MiR250s, the bench with the module nests, Fixture P, the trunnion, and Fixture B "
                         "with the finished process module", (0.0, 0.0, 900.0), 4300, -65, 28))
     for key, title, focus, dist, az, el in want:
-        if key not in frames:
+        if key not in frames or (only and key not in only):
             continue
         snap = frames[key]
         if focus is None:
@@ -150,7 +158,7 @@ def main():
         except Exception as e:  # noqa: BLE001
             print("failed", key, e, flush=True)
     # GIF of the turn-over
-    if "F05b" in dual and dual["F05b"]["qsA"]:
+    if "F05b" in dual and dual["F05b"]["qsA"] and not only:
         import imageio.v2 as imageio
         d = dual["F05b"]
         imgs = []
@@ -163,12 +171,15 @@ def main():
             snap["arms"]["B"]["q"] = d["qsB"][k]
             snap["arms"]["A"]["held"] = dict(name=d["body"], M=d["frames"][k])
             snap["arms"]["B"]["held"] = None
-            pth = pathlib.Path(f"/tmp/asm/gif_{k:03d}.png")
+            pth = (ASM_DIR / f"gif_{k:03d}.png")
             draw(run, snap, held, "Chamber assembly carried by two UR12e (F05b)", pth, ((S["T"] + S["B"]) / 2, 0, 1250), 2700, -70, 22)
             imgs.append(imageio.imread(pth)[::2, ::2])
         imageio.mimsave(OUT / "carry_F05b.gif", imgs, duration=0.25, loop=0)
         shots.append(("carry_F05b.gif", "Chamber assembly carried by both arms from the trunnion to Fixture B (F05b), every few frames of the checked path"))
     import json as _j
+    if only and (OUT / "renders.json").exists():     # keep the earlier renders' entries that this call didn't redraw
+        new = {n for n, _ in shots}
+        shots = [x for x in _j.loads((OUT / "renders.json").read_text()) if x[0] not in new and (OUT / x[0]).exists()] + shots
     (OUT / "renders.json").write_text(_j.dumps(shots, indent=1))
     print(shots)
 

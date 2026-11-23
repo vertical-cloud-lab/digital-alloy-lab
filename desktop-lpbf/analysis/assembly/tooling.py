@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import hashlib
 import math
+import os
 import pathlib
 import pickle
 
@@ -31,7 +32,7 @@ import numpy as np
 V = cq.Vector
 HERE = pathlib.Path(__file__).resolve().parent
 OUT = HERE.parent / "out" / "assembly" / "tooling"
-CACHE = pathlib.Path("/tmp/asm/tool-mesh-cache")
+CACHE = pathlib.Path(os.environ.get("ASM_DIR", "/tmp/asm")) / "tool-mesh-cache"
 
 # ------------------------------------------------------------------------------------------------ bought tools (envelopes)
 # Published numbers (vendor pages read 2026-11-20 22:18-22:43 UTC; every source is in assembly-tooling.csv):

@@ -232,19 +232,25 @@ released. The robot side is drawn: the grip block on the handle (robot-ops.md).
 
 ## 4. The heater-stack screws
 
-The heater block runs 90–136 K hotter than the piston head. At the M50 screw circle it grows 43–64 µm more than the head,
+The heater block runs 88–132 K hotter than the piston head. At the M50 screw circle it grows 42–62 µm more than the head,
 from the end of a build to its start. Two things follow.
 
 | | S25 | M50 | L75 |
 |---|---|---|---|
-| block growth at the screw (build end / start), µm | 25 / 36 | 43 / 64 | 65 / 99 |
-| 316 screw bending if the block can't slide, MPa (vs ~160 at 200 °C) | 115 / 167 | 245 / 371 | 376 / 567 |
-| Ti-6Al-4V screw bending at build start, MPa (vs ~650) | 99 | 219 | 335 |
+| block growth at the screw (build end / start), µm | 22 / 34 | 42 / 62 | 64 / 96 |
+| 316 screw bending if the block can't slide, MPa (vs ~160 at 200 °C) | 105 / 158 | 239 / 359 | 368 / 553 |
+| Ti-6Al-4V screw bending at build start, MPa (vs ~650) | 93 | 212 | 326 |
 | largest spring preload that still lets the block slide (μ 0.3), N | ≤ 30 | ≤ 55 | ≤ 55 |
-| heat across the break at build start, W: solid Macor (FEA) → bored, with 316 screws → with Ti screws | 1.79 → 1.86 → 0.82 | 3.78 → 5.37 → 4.10 | 3.73 → 5.30 → 4.05 |
+| heat through the Macor and screws at build start, W (thermal FEA): solid Macor, no screws → bored, with 316 screws → with Ti screws | 1.74 → 2.42 → 1.93 | 3.72 → 4.58 → 3.97 | 3.74 → 4.65 → 4.00 |
+| of which through the screws, W: 316 / Ti | 1.33 / 0.79 | 1.64 / 0.96 | 1.66 / 0.96 |
+| heater power for 200 °C at build start, W: no screws → 316 → Ti | 44.1 → 44.7 → 44.2 | 72.1 → 72.9 → 72.4 | 97.2 → 98.0 → 97.4 |
 
-The calculation used the earlier screw circles (r = 9.4 / 20.1 / 30.2 mm). The model now has S25 and M50 at r = 9.0 and 18 mm,
-which cuts their growth by 4 % and 10 %.
+The growth and bending rows come from [`joint_calcs.py`](analysis/hotswap/joint_calcs.py), re-run on 2026-11-23 with the head
+temperatures of the thermal FEA that now has the screws in it (the head runs 2–12 K warmer, so the growth fell 1–3 µm). They
+still use the screw circles of the model snapshot the script reads (r = 9.4 / 20.1 / 30.2 mm). The model now has S25 and M50 at
+r = 9.0 and 18 mm, which cuts their growth by 4 % and 10 %. The heat rows are from the thermal FEA
+([`thermal.md`](analysis/out/thermal/thermal.md), "Heater-stack screws"): plate at 200 °C, chamber 25 °C, build start, with S25 on
+its 3/8 in. rod and the current standoff radii.
 
 **1. The block has to be able to slide, or the screw has to bend elastically.** If the head can't slide in its slot, the
 growth bends a 316 M3 past yield. So either:
@@ -257,7 +263,15 @@ growth bends a 316 M3 past yield. So either:
 **2. The disc spring also carries the axial mismatch.** In a heat-up the block is hot before the screw. Without a spring, an
 M3 is stretched by ~33 µm, past its proof load. With the spring the change is a few newtons.
 
-**Heat:** the screws add 1.6 W through the M50 break (316) or 0.3 W (Ti), against 72 W of heater power. **Macor bearing
+**Heat** (thermal FEA, 2026-11-23; was a hand estimate of +1.6 W for 316 and +0.3 W for Ti on M50): the three 316 screws carry
+1.6 W across the M50 break at build start, but boring the Macor for them takes 0.8 W off what the Macor carries, so the heater
+needs 0.8 W more (72.9 W against 72.1 W; 1 %). Ti-6Al-4V screws carry 1.0 W and add 0.3 W. S25's M2.5 screws carry more than
+its Ø5 Macor rings do (1.3 W against 1.1 W) and add 0.6 W. The screws are modelled as a calibrated ring in the axisymmetric mesh:
+each screw's path from the insert threads, across the break and down its clearance hole in the head to the disc spring is worked
+out in `thermal_module.stack_screw_link()`, and an end contact of zero or infinite conductance moves the three-screw conductance
+by −19 % / +7 % (M50, 316). In the solved fields the ring passes heat over its temperature drop at 12.6 mW/K on M50 (316) and
+7.2 mW/K (Ti), as calibrated to within 0.2 %, and so does L75's; S25's ring runs 5–6 % above its calibration. Either way the screws change no limit: the bore seal, gland O-rings and magnet move by ≤ 5 K on M50 and
+L75. **Macor bearing
 stress:** 1–13 MPa against its 345 MPa compressive strength.
 
 ## 5. CalculiX checks

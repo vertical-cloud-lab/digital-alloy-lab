@@ -457,20 +457,31 @@ def plate_options(key, p_contact=0.10):
 # --------------------------------------------------------------------------------------------
 # c. heater stack joint
 # --------------------------------------------------------------------------------------------
+def heat_cell(hs):
+    """Heat across the break through Macor + screws at build start: FEA where thermal.json has the screws, else the hand estimate."""
+    hand = f"{hs['Q_mac_bored'] + hs['Q_316']:.2f} (316) / {hs['Q_mac_bored'] + hs['Q_ti']:.2f} (Ti)"
+    if hs.get("fea_316") is None:
+        return f"{hs['Q_fea']:.2f} → {hand}"
+    return f"{hs['Q_fea']:.2f} → {hs['fea_316']:.2f} (316) / {hs['fea_ti']:.2f} (Ti); hand estimate {hand}"
+
+
 def stack_joint(key):
     m = MP.MODULES[key]
     rb = m["block_d"] / 2
-    r_so = 9.4 if key == "S25" else 0.8 * rb
+    r_so = m["standoff_r"]                     # screw circle of the model snapshot REV (9.4 / 20.1 / 30.2; now 9.0 / 18 / 30.2)
     thr = THREAD["M2.5" if key == "S25" else "M3"]
     D_so = 5.0 if key == "S25" else 8.0
     bore = thr["d"] + 0.4
     A_mac = math.pi / 4 * (D_so ** 2 - bore ** 2)
     A_mac_full = math.pi / 4 * D_so ** 2
     st = THERMAL["steady"]
-    T_blk = {"S25": 221.0, "M50": 206.0, "L75": 204.0}[key]           # thermal.md block max at 200 C plate
+    T_blk = st[f"{key}_start_ch25_e0.5"]["T_block_max"]                 # thermal.md block max at 200 C plate (build start)
     T_head_start = st[f"{key}_start_ch25_e0.5"]["T_head_mean"]
     T_head_end = st[f"{key}_end_ch25_e0.5"]["T_head_mean"]
-    Q_mac_fea = st[f"{key}_start_ch25_e0.5"]["exit_W"]["through_macor"]
+    # solid Macor, no screws: thermal_module's "_scrnone" case since it models the screws (2026-11-23); the base case before
+    Q_mac_fea = st.get(f"{key}_start_ch25_e0.5_scrnone", st[f"{key}_start_ch25_e0.5"])["exit_W"]["through_macor"]
+    fea = {sm: st.get(f"{key}_start_ch25_e0.5{suf}", {}).get("exit_W", {}) for sm, suf in (("a4_50", ""), ("ti64", "_scrTI"))}
+    fea = {sm: (x["through_macor"] + x["through_screws"] if "through_screws" in x else None) for sm, x in fea.items()}
     L_free = 7.5 + MP.BREAK_T                                          # head bearing (counterbore floor) to insert top
     L_cond = L_free
     I = math.pi * thr["d3"] ** 4 / 64
@@ -510,7 +521,8 @@ def stack_joint(key):
     G_mac_full = MAT["macor"]["k"] * A_mac_full * 1e-6 / (MP.BREAK_T * 1e-3)
     G_s = {sm: MAT[sm]["k"] * thr["At"] * 1e-6 / (L_cond * 1e-3) for sm in ("a4_50", "ti64")}
     dT = Q_mac_fea / (3 * G_mac_full)                                   # the break's effective dT, from the FEA's Macor heat
-    heat = dict(Q_fea=Q_mac_fea, dT=dT, Q_mac_bored=3 * G_mac * dT, Q_316=3 * G_s["a4_50"] * dT, Q_ti=3 * G_s["ti64"] * dT)
+    heat = dict(Q_fea=Q_mac_fea, dT=dT, Q_mac_bored=3 * G_mac * dT, Q_316=3 * G_s["a4_50"] * dT, Q_ti=3 * G_s["ti64"] * dT,
+                fea_316=fea["a4_50"], fea_ti=fea["ti64"])
     return dict(r_so=r_so, thread="M2.5" if key == "S25" else "M3", D_so=D_so, A_mac=A_mac, T_blk=T_blk, T_head_start=T_head_start,
                 T_head_end=T_head_end, bend=rows, F_slip_max=F_slip_max, d_all_um=d_all * 1e3, axial=axial, heat=heat,
                 bearing_302=VENDOR["mcm_9713K53"]["work_N"] / A_mac, bearing_718=(VENDOR["mcm_97125K111"]["work_N"] + 100) / A_mac)
@@ -697,26 +709,35 @@ def main():
                      f"≤ {f(sj['F_slip_max'], 0)} N",
                      f"{ax['dl_um']:.0f} µm → {f(ax['dF_rigid'], 0)} N rigid (F_p {f(ax['Fp'], 0)}); {f(ax['dF_spring_302'], 0)} N with 9713K53",
                      f"{ax_t['dl_um']:+.0f} µm → {f(ax_t['dF_rigid'], 0)} N rigid; {f(ax_t['dF_spring_718'], 0)} N with 97125K111",
-                     f"{sj['heat']['Q_fea']:.2f} → {sj['heat']['Q_mac_bored'] + sj['heat']['Q_316']:.2f} (316) / {sj['heat']['Q_mac_bored'] + sj['heat']['Q_ti']:.2f} (Ti)"])
+                     heat_cell(sj["heat"])])
     J["stack"] = cj
     table(crow, ["module", "joint", "block growth at the screw, µm (end / start)", "316 screw bending if it can't slip, MPa (end / start) vs S_p 200 °C",
                  "Ti-6Al-4V bending at start vs S_p", "316: preload that lets the block slide (μ 0.3)", "316 axial, heat-up transient",
-                 "Ti axial, steady (Ti grows less)", "heat through the break at build start, W: FEA Macor → with screws"])
+                 "Ti axial, steady (Ti grows less)", "heat through the Macor and screws at build start, W: solid Macor (FEA) → with screws"])
     sj = stack_joint("M50")
-    line(f"- **Radial growth:** the block runs 90–136 K hotter than the head, so at the screw circle it grows {sj['bend'][('build end', 'a4_50')]['d_rad_um']:.0f}–"
+    dTs = (sj["T_blk"] - sj["T_head_end"], sj["T_blk"] - sj["T_head_start"])
+    sbs = (sj["bend"][("build end", "a4_50")]["sigma_b"], sj["bend"][("build start", "a4_50")]["sigma_b"])
+    line(f"- **Radial growth:** the block runs {dTs[0]:.0f}–{dTs[1]:.0f} K hotter than the head (M50), so at the screw circle it grows {sj['bend'][('build end', 'a4_50')]['d_rad_um']:.0f}–"
          f"{sj['bend'][('build start', 'a4_50')]['d_rad_um']:.0f} µm (M50) relative to it. A slot or a clearance hole only helps if the block can "
          "actually slide; the friction under the screw head (μ·F) holds it unless the preload is small. Bending a guided M3 316 screw "
-         f"(Roark: M = 6EIδ/L², L = {7.5 + MP.BREAK_T:.1f} mm) by that much gives 250–400 MPa, past its ~160 MPa yield at 200 °C. So either "
+         f"(Roark: M = 6EIδ/L², L = {7.5 + MP.BREAK_T:.1f} mm) by that much gives {sbs[0]:.0f}–{sbs[1]:.0f} MPa, past its ~160 MPa yield at 200 °C. So either "
          f"**keep the 316 screw's spring preload ≤ {f(sj['F_slip_max'], 0)} N** (McMaster 9713K53, 302 stainless, ~49 N at 0.1 mm) so the block "
          "slides on the Macor first, or **use Ti-6Al-4V screws**, which take the full growth elastically (E 114 GPa, S_p ~650 MPa at 200 °C) "
          "and carry less heat.")
     line("- **Axial:** in a heat-up the block reaches temperature before the screw. Without a spring that stretches an M3 by ~30 µm, "
          "which is past its proof load; a disc spring under the head turns it into a few newtons. With Ti screws the steady-state "
          "growth is larger still (Ti expands less than Al), so Ti screws need the stiffer 718 spring (97125K111) and a set deflection.")
-    line(f"- **Heat:** the FEA puts {sj['heat']['Q_fea']:.2f} W through the three solid Macor standoffs at build start (M50). Boring them for the "
-         f"screw and adding 316 screws gives {sj['heat']['Q_mac_bored'] + sj['heat']['Q_316']:.2f} W; Ti screws give "
-         f"{sj['heat']['Q_mac_bored'] + sj['heat']['Q_ti']:.2f} W. Against 72 W of heater power that is +2 % (316) or +0.4 % (Ti). For S25 the "
-         "M2.5 screws carry more than the Ø5 Macor does.")
+    hs = sj["heat"]
+    if hs.get("fea_316") is not None:
+        P50 = THERMAL["steady"]["M50_start_ch25_e0.5"]["P_heater_W"]
+        line(f"- **Heat:** the thermal FEA (thermal_module.py, which models the screws since 2026-11-23) puts {hs['Q_fea']:.2f} W through the "
+             f"three solid Macor standoffs at build start (M50, no screws); through the bored Macor and the screws, {hs['fea_316']:.2f} W with 316 "
+             f"screws and {hs['fea_ti']:.2f} W with Ti-6Al-4V, against {P50:.0f} W of heater power. The hand estimate (screw conduction over "
+             f"{7.5 + MP.BREAK_T:.1f} mm at the FEA's break ΔT) gave {hs['Q_mac_bored'] + hs['Q_316']:.2f} and {hs['Q_mac_bored'] + hs['Q_ti']:.2f} W.")
+    else:
+        line(f"- **Heat:** the FEA puts {hs['Q_fea']:.2f} W through the three solid Macor standoffs at build start (M50). Boring them for the "
+             f"screw and adding 316 screws gives {hs['Q_mac_bored'] + hs['Q_316']:.2f} W; Ti screws give "
+             f"{hs['Q_mac_bored'] + hs['Q_ti']:.2f} W (hand estimate).")
     line(f"- **Macor bearing:** {sj['bearing_302']:.1f} MPa (302 spring) to {sj['bearing_718']:.1f} MPa (718 spring + 100 N) on the standoff "
          "annulus against 345 MPa compressive strength (Corning).")
 
