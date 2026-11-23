@@ -419,7 +419,7 @@
    "robot": "yes in force mode with a PFPE film (lubricated, about half); dry break-out is at the F/T range"
   },
   {
-   "step": "M26",
+   "step": "M27",
    "what": "build plate into the honed bore (0.15 mm radial clearance) and onto the bayonet",
    "need_N": 10.0,
    "basis": "sliding fit; 10 N contact for a spiral search",
