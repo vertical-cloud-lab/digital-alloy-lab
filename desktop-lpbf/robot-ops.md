@@ -108,8 +108,12 @@ Not in the table:
   A lift lug on the door's top corner, taken from the front at 95° and lifted along the door's arc, failed in all 16 combinations
   of MiR position (x −450 to +300) and grasp tilt (−60° to +20°). The wrist or forearm hit the guard's frame or rails, or no
   branch reached the lug past the VLM's front. The lug was dropped and the door got its actuator.
-- **The liners** need the patch requests first (both side liners are threaded on the ball screw, and the LED bar stands in front
-  of the right one), so `liner_right` is written but not run.
+- **The liners** (2026-11-23): patch request 7 is drawn, and `ops.py` has `liner_right` and `liner_left`. Each job puts the lips on
+  the side liner's tab, then moves it 4 mm in, 21 mm forward off the ball screw, in to x ±105, down 6 mm and out through the door,
+  with the recoater at the other end of its stroke. The same path passes as hand operation M3 (tightest 0.36 mm). **Not run yet**:
+  the shared heavy-job slots stayed full until the round's deadline. The reservoir job now grips the new pull tab at y −84 (the tab
+  is 5.45 mm below the beam tube), and the blade job lets the holder slide off its two dowels and plungers. Neither was re-run.
+  Command: `OMP_NUM_THREADS=1 MUJOCO_GL=egl /tmp/capmem 4 xvfb-run -a python analysis/robot/ops.py --jobs liner_right,liner_left,reservoir,blade_cartridge --modules M50 --tag _a2`.
 - **The build module's force column** gives the removal (106 N down: the spigot O-ring's 132 N less the module's 26 N) and the
   insertion (158 N up). Since round 4 the job passes, and both forces are over the 100 N force mode (round 4, still open).
 - **Tight but passing:**

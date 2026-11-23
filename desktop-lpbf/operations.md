@@ -40,6 +40,13 @@ covered separately. Nothing has been built or tried on a mock-up.
 >   cap, pressed into the frame's walls (six new Ø3 H7 holes in the frame: back wall at x ±71, z 13.25; right wall at y 0,
 >   z 47 / 93 and at y 56 / 88, z 40).
 >
+> **Interference.** The exact sweep on this model (M50 23:19 UTC, S25 23:09) found nothing in any moving sweep. In the static states
+> it found only these parts' own first-draft overlaps: the pull tab in the M lid's front edge (97 mm³) and over one of its M3 heads
+> (75 mm³), and the plunger balls in the holder (2.98 mm³: CadQuery's `makeSphere` cut only half of each dimple). All three are
+> fixed. Exact booleans on the fixed model (M50 with the M and with the L reservoir) give 0 mm³ for every pair. The tab clears the
+> lid screws by 0.6 mm and the beam tube by 5.45 mm; the right latch clears the post by 2.25 mm. The sweeps were not repeated on the
+> fixed model, and L75 was not swept: the shared heavy-job slots were full until the deadline.
+>
 > **Still failing every build: only the overflow jar (U4.5, U4.7).**
 >
 > **Update 2026-11-22 (round 4): M50 now 82 pass / 2 warn / 37 fail** (was 81 / 2 / 40 on 9c67f44), re-run on the model with
