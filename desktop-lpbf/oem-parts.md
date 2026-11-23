@@ -306,9 +306,25 @@ before → after. Colours are measured sRGB hex values (linear RGB in `finishes.
 
 ## 4. Checks
 
-- **Static contacts, the parts changed in this round** (`cad/oem/contact_check.py`, M50): see the table below.
-- **Exact interference sweeps** (`analysis/interference.py`): see the table below.
-- **`vendor_parts.py inventory` and `verify`:** see the table below.
+- **Static contacts of the parts changed in this round** (`cad/oem/contact_check.py`, M50, closed and parked).
+  - Each changed part was intersected exactly with every part whose box it touches, on this tree and on 0dbb5a3.
+  - Before and after alike there is one contact: the IPG chassis with the armoured process fibre where the fibre enters it,
+    which is a designed joint.
+  - Its shared volume went from 5,760 to 4,189 mm³, because the fan-grille recess now takes some of the chassis there.
+  - No new contact appeared.
+- **Exact interference sweep, M50/M** (`analysis/interference.py`, 597 s): **0 interferences**.
+  - It covers all 5 static states and all 8 motion sweeps: recoater, piston, door, guard door, cartridge, drawer, Z stage
+    and module.
+  - The 18 designed joints are unchanged.
+  - The only gap changes are +0.02 mm, between the overflow clamp and the module on its swap path (0.50 → 0.52 mm).
+- **Exact interference sweeps, S25/S (585 s) and L75/L (516 s):** **0 interferences** in all 5 static states and 8 motion
+  sweeps. S25 has 17 designed joints and L75 has 18, both unchanged. The only gap changes are the same +0.02 mm at the
+  overflow clamp.
+- **`vendor_parts.py inventory`:** 63 bought parts, 17 drawn as real parts.
+- **`vendor_parts.py verify`**, against the re-fetched McMaster CAD:
+  - The volume deltas match the IoU table: clamps +5.6 / +1.7 %, valve −6.9 %, carriage +3.2 %, stepper +0.8 %.
+  - The sorted extents match within 0.1 mm, except the valve body, which is now 58.6 against the vendor's 60.45 mm
+    (it was 59.8).
 
 ## 5. Not done
 

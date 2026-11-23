@@ -837,16 +837,16 @@
   {
    "group": "recoater",
    "at": 206.0,
-   "moving": "Recoater carriage (15 mm rail)",
-   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 57.515
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)",
+   "gap_mm": 57.256
   },
   {
    "group": "recoater",
    "at": 206.0,
-   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
-   "other": "Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)",
-   "gap_mm": 58.75
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 57.515
   },
   {
    "group": "recoater",
@@ -1257,13 +1257,6 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 5.786
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
    "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Module S25 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-110 rod glands)",
    "gap_mm": 6.2
@@ -1274,6 +1267,13 @@
    "moving": "Bore seal S25 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Module S25 gland-plate O-ring (FKM 75A 2-024, face seal on the tube end and collar)",
    "gap_mm": 6.418
+  },
+  {
+   "group": "piston",
+   "at": -39.92,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 7.075
   },
   {
    "group": "piston",
@@ -1403,7 +1403,7 @@
   },
   {
    "group": "piston",
-   "at": -42.0,
+   "at": 5.92,
    "moving": "Z carriage",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
    "gap_mm": 13.45
@@ -5428,13 +5428,6 @@
   },
   {
    "group": "zstage",
-   "at": -45.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 5.786
-  },
-  {
-   "group": "zstage",
    "at": 0.0,
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
    "other": "Hermetic connector S25 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",
@@ -5456,6 +5449,13 @@
   },
   {
    "group": "zstage",
+   "at": -39.38,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 7.075
+  },
+  {
+   "group": "zstage",
    "at": -45.0,
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "other": "Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
@@ -5473,7 +5473,7 @@
    "at": -45.0,
    "moving": "Z carriage",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 13.45
+   "gap_mm": 13.591
   },
   {
    "group": "zstage",
@@ -5704,7 +5704,7 @@
    "at": 34.5,
    "moving": "Build module S25: spigot, flange, honed 316L cylinder (\u00d825.4 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Overflow clamp (KF-40)",
-   "gap_mm": 0.503
+   "gap_mm": 0.523
   },
   {
    "group": "module",
@@ -5725,7 +5725,7 @@
    "at": 17.25,
    "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
    "other": "Overflow clamp (KF-40)",
-   "gap_mm": 1.518
+   "gap_mm": 1.538
   },
   {
    "group": "module",
@@ -5739,7 +5739,7 @@
    "at": 34.5,
    "moving": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
    "other": "Overflow clamp (KF-40)",
-   "gap_mm": 2.517
+   "gap_mm": 2.537
   },
   {
    "group": "module",
@@ -6191,13 +6191,6 @@
   },
   {
    "group": "module",
-   "at": 34.5,
-   "moving": "Module S25 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-110 rod glands)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 20.189
-  },
-  {
-   "group": "module",
    "at": 224.25,
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Outlet-plenum helical inserts, M4 x 6 18-8, in the floor (6 x McMaster 91732A656)",
@@ -6226,17 +6219,24 @@
   },
   {
    "group": "module",
-   "at": 34.5,
-   "moving": "Gland-plate screws S25, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 21.279
-  },
-  {
-   "group": "module",
    "at": 362.25,
    "moving": "Hermetic-connector O-ring S25 (FKM 75A 2-014, face seal under the flange)",
    "other": "Guard door rail (top + bottom)",
    "gap_mm": 21.61
+  },
+  {
+   "group": "module",
+   "at": 34.5,
+   "moving": "Module S25 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-110 rod glands)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 21.68
+  },
+  {
+   "group": "module",
+   "at": 34.5,
+   "moving": "Gland-plate screws S25, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 22.906
   },
   {
    "group": "module",
@@ -6311,13 +6311,6 @@
   {
    "group": "module",
    "at": 34.5,
-   "moving": "Build module S25: spigot, flange, honed 316L cylinder (\u00d825.4 bore, 3 mm wall) and bottom collar, one TIG-welded body",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 28.681
-  },
-  {
-   "group": "module",
-   "at": 34.5,
    "moving": "Rod end S25: end cap with a side boss for the hermetic connector (316L, rod welded in)",
    "other": "Base plate, process module (MIC-6, 15 mm)",
    "gap_mm": 29.0
@@ -6328,6 +6321,13 @@
    "moving": "Hermetic-connector O-ring S25 (FKM 75A 2-014, face seal under the flange)",
    "other": "Base plate, process module (MIC-6, 15 mm)",
    "gap_mm": 29.0
+  },
+  {
+   "group": "module",
+   "at": 34.5,
+   "moving": "Build module S25: spigot, flange, honed 316L cylinder (\u00d825.4 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 29.748
   },
   {
    "group": "module",
@@ -8853,5 +8853,5 @@
    "why": "hose end clamped onto its KF-25 flange"
   }
  ],
- "runtime_s": 176.0
+ "runtime_s": 584.5
 }

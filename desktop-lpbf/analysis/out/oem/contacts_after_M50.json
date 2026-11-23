@@ -1,0 +1,11 @@
+{
+ "cad": "desktop-lpbf/cad, this round",
+ "module": "M50",
+ "contacts": [
+  {
+   "part": "Fiber laser source, 500 W single-mode, IPG YLR-500-U3-SM-AC (4U)",
+   "other": "Process fiber (armoured, \u2265 100 mm bend radius)",
+   "mm3": 4188.79
+  }
+ ]
+}

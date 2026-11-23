@@ -851,16 +851,16 @@
   {
    "group": "recoater",
    "at": 206.0,
-   "moving": "Recoater carriage (15 mm rail)",
-   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 57.515
+   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
+   "other": "Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)",
+   "gap_mm": 57.256
   },
   {
    "group": "recoater",
    "at": 206.0,
-   "moving": "Blade holder (6061, 18 x 31, quick-swap)",
-   "other": "Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)",
-   "gap_mm": 58.75
+   "moving": "Recoater carriage (15 mm rail)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 57.515
   },
   {
    "group": "recoater",
@@ -1229,13 +1229,6 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 5.786
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
    "moving": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
    "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "gap_mm": 5.994
@@ -1253,6 +1246,13 @@
    "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "gap_mm": 6.469
+  },
+  {
+   "group": "piston",
+   "at": -39.92,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 7.075
   },
   {
    "group": "piston",
@@ -1340,7 +1340,7 @@
   },
   {
    "group": "piston",
-   "at": -42.0,
+   "at": 5.92,
    "moving": "Z carriage",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
    "gap_mm": 13.45
@@ -2103,6 +2103,13 @@
   },
   {
    "group": "piston",
+   "at": -42.0,
+   "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 38.513
+  },
+  {
+   "group": "piston",
    "at": -8.67,
    "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
@@ -2111,9 +2118,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 40.208
+   "gap_mm": 40.293
   },
   {
    "group": "piston",
@@ -2121,13 +2128,6 @@
    "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "gap_mm": 41.741
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 41.903
   },
   {
    "group": "piston",
@@ -2187,6 +2187,13 @@
   },
   {
    "group": "piston",
+   "at": -42.0,
+   "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 48.886
+  },
+  {
+   "group": "piston",
    "at": -19.08,
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
@@ -2198,13 +2205,6 @@
    "moving": "Thermal cutoff M50 (240 C, in series with the heaters)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 49.59
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 50.268
   },
   {
    "group": "piston",
@@ -5484,13 +5484,6 @@
   },
   {
    "group": "zstage",
-   "at": -45.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 5.786
-  },
-  {
-   "group": "zstage",
    "at": 0.0,
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
    "other": "Hermetic connector M50 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",
@@ -5512,6 +5505,13 @@
   },
   {
    "group": "zstage",
+   "at": -39.38,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 7.075
+  },
+  {
+   "group": "zstage",
    "at": -45.0,
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "other": "Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
@@ -5529,7 +5529,7 @@
    "at": -45.0,
    "moving": "Z carriage",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 13.45
+   "gap_mm": 13.591
   },
   {
    "group": "zstage",
@@ -5760,7 +5760,7 @@
    "at": 34.5,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Overflow clamp (KF-40)",
-   "gap_mm": 0.503
+   "gap_mm": 0.523
   },
   {
    "group": "module",
@@ -5781,7 +5781,7 @@
    "at": 17.25,
    "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
    "other": "Overflow clamp (KF-40)",
-   "gap_mm": 1.518
+   "gap_mm": 1.538
   },
   {
    "group": "module",
@@ -5795,7 +5795,7 @@
    "at": 34.5,
    "moving": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
    "other": "Overflow clamp (KF-40)",
-   "gap_mm": 2.517
+   "gap_mm": 2.537
   },
   {
    "group": "module",
@@ -5946,20 +5946,6 @@
   },
   {
    "group": "module",
-   "at": 34.5,
-   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 9.733
-  },
-  {
-   "group": "module",
-   "at": 34.5,
-   "moving": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 9.814
-  },
-  {
-   "group": "module",
    "at": 17.25,
    "moving": "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
    "other": "Overflow port (KF-40)",
@@ -6037,6 +6023,13 @@
   },
   {
    "group": "module",
+   "at": 34.5,
+   "moving": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 10.86
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
    "other": "Module-present sensor (inductive M12, under the floor, sees the module flange)",
@@ -6048,6 +6041,13 @@
    "moving": "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
    "other": "Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)",
    "gap_mm": 11.02
+  },
+  {
+   "group": "module",
+   "at": 34.5,
+   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 11.193
   },
   {
    "group": "module",
@@ -6296,17 +6296,17 @@
   },
   {
    "group": "module",
-   "at": 51.75,
-   "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 21.347
-  },
-  {
-   "group": "module",
    "at": 362.25,
    "moving": "Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange)",
    "other": "Guard door rail (top + bottom)",
    "gap_mm": 21.61
+  },
+  {
+   "group": "module",
+   "at": 17.25,
+   "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 21.911
   },
   {
    "group": "module",
@@ -6415,13 +6415,6 @@
   },
   {
    "group": "module",
-   "at": 34.5,
-   "moving": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 26.435
-  },
-  {
-   "group": "module",
    "at": 0.0,
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
@@ -6461,6 +6454,13 @@
    "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 27.202
+  },
+  {
+   "group": "module",
+   "at": 34.5,
+   "moving": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 27.477
   },
   {
    "group": "module",
@@ -6765,6 +6765,13 @@
   },
   {
    "group": "module",
+   "at": 34.5,
+   "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
+   "gap_mm": 41.104
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; face seal in the floor plate's pad)",
@@ -6794,9 +6801,9 @@
   {
    "group": "module",
    "at": 34.5,
-   "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+   "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 42.696
+   "gap_mm": 43.849
   },
   {
    "group": "module",
@@ -6818,13 +6825,6 @@
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 45.016
-  },
-  {
-   "group": "module",
-   "at": 34.5,
-   "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
-   "other": "Z servo (ClearPath-SD, NEMA 23, folded)",
-   "gap_mm": 45.333
   },
   {
    "group": "module",
@@ -9019,5 +9019,5 @@
    "why": "hose end clamped onto its KF-25 flange"
   }
  ],
- "runtime_s": 171.8
+ "runtime_s": 596.7
 }
