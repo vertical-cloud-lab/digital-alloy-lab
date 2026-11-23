@@ -191,6 +191,23 @@ door's hinge knuckles, and over the guard's bottom front rail. The robot job (`o
 3. it lowers the jar 8 mm, slides it 160 mm straight out, lifts it 60 mm past the hinge knuckles, and carries it out over the guard
    sill.
 
+**Re-run on this model** (`ops.py --jobs overflow_jar,module_swap --modules M50,S25,L75 --render --tag _a1`, 23:35 UTC, on 7db3b5d):
+
+| Job | Module | Result | Blocking step, or min clearance | Peak torque | Time (s) |
+|---|---|---|---|---|---|
+| Overflow jar out (toggle clamp off, drop 8, straight out) | M50 | **fail** in all six MiR positions (x 300, 450, 100, −300, 550, −450) | "in level to the jar": the wrist camera meets the guard frame (x 300, −450); the forearm meets the guard door's robot handle (x 450, 550); no clear path past the VLM's front skin and the guard frame (x −300); no IK at the end (x 100) | 31–33 % elbow | – |
+| Build module out (grip block) | M50 | **pass** | 1.0 mm, the module to the Z mounting flange (was 0.5 mm to the old overflow clamp's wing) | 55.7 % wrist 1 | 26.0 |
+
+**Interference, as far as it got before the 23:59 deadline (the shared heavy-job queue held these runs for up to 35 minutes):**
+- **Full M50 sweep on d8ec123 (the first version):** stopped after the first four static states. Each state had **1 interference**,
+  the jar's cup inside the toggle clamp's lower lip: 1,170 mm³ exact, from `/tmp` scratch built from section 4's code.
+- **Fixed in 7db3b5d:** the jar flange keeps an 11 mm Ø38.1 neck before the cup widens, and that pair is now 0.
+- **Exact OpenCascade check of the overflow parts on the final geometry: all 0.** It covers jar, port, clamp, sensor, bracket,
+  right-hand leg and funnel, and the dropped module tab swept 182 mm forward against the clamp (4.5 mm under it).
+- **Not run on the final geometry:** the full sweeps (`interference.py M50`, `S25 S`, `L75 L`). Run them first.
+- **Indirect evidence for the module path:** the module swap passes in the robot audit above, and the hand check S2.4 passes on M50
+  (0.1 mm at the floor port, as before).
+
 ## Alignment with byu-vcl PR 318
 
 PR 318's latest round is round 14 (runs A–D, 2026-11-20). Its branch head (`e60fcb0`, 21:54 UTC) is three commits past `11d4410`:
