@@ -143,6 +143,12 @@ OMP_NUM_THREADS=1 /tmp/capmem 3 /tmp/venv/bin/python desktop-lpbf/analysis/assem
 xvfb-run -a -s "-screen 0 1600x1200x24" /tmp/venv/bin/python desktop-lpbf/analysis/assembly/render_assembly.py
 ```
 
+- Scratch (frames, `parts.json`, tool meshes) goes to `/tmp/asm`; `ASM_DIR` moves it, so that two runs on different models
+  don't share it. The UR arm meshes are cached under `/tmp/ur_arm_cache` (`UR_ARM_CACHE`); loading them needs `pycollada`.
+- `--only=M` (or `--only=M,C`) re-runs chapter 3 (and 4a) alone into `results_M.json` (`results_M_C.json`). `report.py`
+  then uses those rows for those chapters and the full run's `results.json` for the rest, and `steps.md` says which rows
+  came from which run.
+
 | File | What it does |
 |---|---|
 | [`cell2.py`](analysis/assembly/cell2.py) | The cell: two UR12e on MiR250s, the bench, the fixtures and the tool stands. It imports [`../robot/cell.py`](analysis/robot/cell.py) (byu-vcl PR 318's arm, 2F-85, D405, FCL bodies, IK branches, RRT-Connect, 1.5 mm audit) and adds an automatic tool changer, so the arm can carry the 2F-85, a screwdriver, a nutrunner, a vacuum gripper or a roller. The D405 stays on the arm side of the changer. Each arm's world includes the other arm, with its tool and whatever it holds. |
@@ -234,28 +240,35 @@ MiR publishes a centre-of-mass ceiling for the payload when it drives at 1.2 m/s
 
 The robot sequence ([`sequence.py`](analysis/assembly/sequence.py)) keeps the animation's sub-assemblies (render_build.py chapters 3-5), but it changes the order and which way up each part sits. The rule behind every change: every screw is driven from above or from the side, every part goes onto something it can rest on, and nothing heavier than about 8 kg rests on one arm.
 
-1. **Heater stack, built upside down on a pedestal nest.** In order:
-   - the block, bayonet face down;
+1. **Heater stack, gland plate and rod, all upside down (run 3: the round-4 order).** In order:
+   - the block, bayonet face down on a pedestal nest;
    - the heaters, thermocouples, cutoff, Macor rings and shields, all dropping in from above;
    - the piston head;
    - the disc springs;
    - the three M3 stack screws, driven down;
-   - the rod, into the head's socket;
-   - its two radial set screws.
+   - meanwhile, on its own nest: the gland plate's 2-034 face ring, laid in groove up and held by the PFPE film; the plate
+     turned over onto the nest; the two 2-114 rod rings, folded through the throat by the loader;
+   - the rod, its end cap welded on by the shop on the bare rod, lowered top end first through both rod rings on the PEEK
+     bullet. Arm A holds it by the Ø22 end cap; the nest holds the plate;
+   - the rod, with the gland plate riding on it, into the head's socket, and the rod's two radial set screws.
 
-   Arm A then turns the stack over in its wrist (a 180° roll about the tool axis, 320 mm above the bench) and hands it to arm B. B takes it by the heater block from above, with its fingers crossed at 90° to A's.
-2. **Module body, built upside down on its spigot face.** In order:
-   - the gland plate with its 2-034 face ring (held by the PFPE film);
+   Run 2 built the rod into the head first, turned the stack over and handed it to arm B, and fitted the rod end last
+   (M25). That step failed because the rod end is welded to the rod, and in service the weld trapped the gland plate
+   (operations.md M7.2). The stack is no longer turned over or handed between the arms.
+2. **Module body, upside down on its spigot face.** In order:
+   - arm A lowers the whole stack, the rod and the gland plate into the bore from the tube's open end, which faces up, and
+     the gland plate lands on the welded collar;
    - six M4, driven down;
    - the handle and its two M4;
-   - the two 2-114 rod rings, folded through the throat by the loader.
+   - the striker disc and its three flat-head M3;
+   - the hermetic connector into the end cap's side boss. It goes on last so that the cap's side is clear for the driver
+     on the gland-plate screws and for the handle; a person's order (operations.md A1) fits it before the stack goes in.
 
-   Arm A then turns the body upright onto a three-post nest. Next:
+   Arm A then turns the module upright onto a three-post nest. Next:
    - the 2-238 goes on over the mandrel;
-   - arm B lowers the stack into the bore on the PEEK bullet, the rod passing down through both rod rings;
    - arm A drops the plate in at +8 mm overtravel and gives it the 60° bayonet turn.
 
-   A turns the module over again for the rod end and the striker's three flat-head M3.
+   A turns the module over again, ready for the chamber (C10).
 3. **Chamber (frame + floor plate).**
    - **On Fixture P.** The plate goes face up on Fixture P, a floor-standing pedestal, and the floor cord is rolled into its gland. Both arms lower the frame onto the plate's two dowels. The 18 M4 floor screws go up through the U-notches with the angle-head nutrunner.
    - **Into the trunnion (run 2).** Both arms carry the 7.4 kg chamber upright into the trunnion's jaws. The trunnion turns it upside down, with both arms parked.
@@ -557,7 +570,9 @@ The reservoir plate's leading edge slides across the dock's 2-040. It should get
 
 ## Changes needed, as patch requests for files this note doesn't own
 
-1. **Rod end: clamp it, don't weld it** (`cad/modules_low.py` / `cad/lpbf_low.py` rod-end part; `cad/joints.py` new joint `rod_end_M50`).
+1. **ANSWERED BY THE ORDER (round 4, 2026-11-22), no part change:** the rod end stays welded, the gland plate goes onto the
+   rod's top end first and the stack enters the bore from the tube's open end (the update at the top; chapter 3 re-run as
+   run 3). The original request follows. **Rod end: clamp it, don't weld it** (`cad/modules_low.py` / `cad/lpbf_low.py` rod-end part; `cad/joints.py` new joint `rod_end_M50`).
    - **Why:** step M25 fails, and the sweep shows it: the welded cap is part of the rod. At assembly the rod has to pass down through the gland plate's two 2-114 rings, so the cap can only go on afterwards, and welding 10 mm from FKM is not an option. In service the same weld traps the gland plate (operations.md M7.2).
    - **Change:**
      - make the cap a sleeve on the plain Ø15.875 rod: bore Ø15.90 H8 × 20 deep;
@@ -582,7 +597,7 @@ The reservoir plate's leading edge slides across the dock's 2-040. It should get
      - Pushed by an arm on a MiR at 1 m height, it would tip the MiR: restoring / overturning moment 0.5.
    - **Either:** press them in the machine shop on an arbor press before the floor plate reaches the cell. Mark both dowel steps "machine shop".
    - **Or:** ream for a slip fit (H7 hole, g6 pin) and retain them with a retaining compound (e.g. Loctite 638). Then the robot inserts them with a 10 N spiral search.
-5. **Rod gland: open grooves instead of a throat** (`cad/modules_low.py`, gland plate). This is optional, but it removes the riskiest seal step (M18).
+5. **Rod gland: open grooves instead of a throat** (`cad/modules_low.py`, gland plate). This is optional, but it removes the riskiest seal step (M12; M18 in runs 1-2).
    - Split the 14 mm gland plate at the first groove. A 5 mm 316L retainer ring then forms each groove's outer side, held by the same six M4.
    - Each 2-114 then drops into an open, stepped bore instead of being folded through a Ø15.93 throat.
 6. **KF-40 clamp on the overflow jar: over-centre lever clamp** (`cad/lpbf_low.py`, "Overflow clamp").
@@ -602,7 +617,6 @@ The reservoir plate's leading edge slides across the dock's 2-040. It should get
    - With pins, the arm that places the flange can also drive its screws.
 
 **Which remaining failures depend on these patches:**
-- M25 (rod end) needs 1.
 - C02 (dowels: the arm can push 149 N, the press needs 1.6 kN) needs 4.
 - F08 (KF-40 clamp, a person) needs 6.
 - F51 (door latches, a person) needs 7.
