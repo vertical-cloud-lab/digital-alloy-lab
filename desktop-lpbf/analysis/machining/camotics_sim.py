@@ -64,7 +64,8 @@ IMAGE = "camotics:1.2.0"
 SHIFT = 1000.0             # G92 offset: the simulated start point is this far above work zero
 CAMOTICS_RAPID = 10000.0   # mm/min, CAMotics 1.2.0 src/gcode/Move.cpp ("feed = 10000; // TODO FIXME")
 PECK_BACKOFF = 0.254       # mm, LinuxCNC's G83 clearance above the last peck
-SLAB = 32.0                # mm, z thickness of one CAMotics run
+SLAB = float(os.environ.get("CAMOTICS_SLAB", "32"))  # mm, z thickness of one CAMotics run (16 fits a 2 GB container)
+DOCKER_MEM = os.environ.get("CAMOTICS_MEM", "3g")      # container memory cap (the shared runner asks for 2g)
 
 L, W = 317.5, 228.6        # blank in x, y (both parts), centred on the part origin
 BLANK_Z = {"frame": FC.FRAME_BLANK[2:], "floor": FC.FLOOR_BLANK[2:]}
@@ -123,7 +124,8 @@ def clean_comment(raw):
 
 def expand(text):
     """Returns (camotics_text, moves). Canned cycles (G81/G83) become G0/G1 lines; G92 Z<SHIFT> goes after G21.
-    moves: dicts with op, tool, rapid, p0, p1 (work coords), feed, arc=(cx, cy, cw) or None, line."""
+    moves: dicts with op, tool, rapid, p0, p1 (work coords), feed, arc=(cx, cy, cw) or None, line (in the CAMotics
+    text), src_line (in the posted .ngc; a canned cycle's moves all carry its line)."""
     out, moves, nested = [], [], []
     pos = [0.0, 0.0, None]  # z unknown until the first Z word (the tool starts at the tool-change height)
     feed, tool, op, motion, cycle, rmode = None, None, None, None, None, 98
@@ -136,10 +138,11 @@ def expand(text):
             p0[2] = max(tgt[2], 300.0)
         if tgt != p0:
             moves.append(dict(op=op, tool=tool, rapid=rapid, p0=tuple(p0), p1=tuple(tgt), feed=feed, arc=arc,
-                              line=len(out)))
+                              line=len(out), src_line=src_no))
         pos = list(tgt)
 
-    for raw in text.splitlines():
+    src_no = 0
+    for src_no, raw in enumerate(text.splitlines(), 1):  # src_no: the line in the posted .ngc
         m = re.search(r"\(begin operation: (.*)\)", raw)
         if m:
             op = m.group(1)
@@ -291,7 +294,7 @@ def run_camsim(su, cam_text, moves, res, threads=2):
                 "files": [f"{name}.ngc"]}
         (d / f"{tag}.camotics").write_text(json.dumps(proj, indent=1))
         t0 = time.time()
-        cmd = ["docker", "run", "--rm", "--memory=3g", "--memory-swap=3g", "-v", f"{d}:/work", IMAGE, "sh", "-c",
+        cmd = ["docker", "run", "--rm", f"--memory={DOCKER_MEM}", f"--memory-swap={DOCKER_MEM}", "-v", f"{d}:/work", IMAGE, "sh", "-c",
                f"camsim -v --binary --threads {threads} {tag}.camotics {tag}.stl; echo exit=$?; "
                "cat /sys/fs/cgroup/memory.peak 2>/dev/null || true"]
         p = subprocess.run(cmd, capture_output=True, text=True)

@@ -64,8 +64,11 @@ IN = 25.4
 TOOLS = {
     1: dict(name="2.5 in. (63.5 mm) indexable face mill, 4 inserts", shape="endmill", d=63.5, flutes=4,
             rpm=3000, ipt=0.004, length=60.0, edge=8.0),
-    2: dict(name="3/4 in. (19.05 mm) 3-flute carbide end mill, 63 mm stick-out", shape="endmill", d=19.05,
-            flutes=3, rpm=5100, ipt=0.005, length=63.0, edge=63.0),
+    # T2 was 63 mm out of a side-lock holder: holder_check.py found its nose 1.0 mm over the top face at the
+    # mid-height meet line (frame A z 58, B z -58). Now 66 mm out of an ER32 collet chuck (Haas 04-0010; A5's 4 in. OAL
+    # leaves 35.6 mm in the 40 mm collet): 4.0 mm clear. Flute length 1-1/2 in. (A5), so walls go in 31 mm passes.
+    2: dict(name="3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck", shape="endmill",
+            d=19.05, flutes=3, rpm=5100, ipt=0.005, length=66.0, edge=38.1, holder="04-0010"),
     3: dict(name="1/2 in. (12.7 mm) 3-flute carbide end mill, 38 mm stick-out", shape="endmill", d=12.7,
             flutes=3, rpm=7600, ipt=0.003, length=38.0, edge=32.0),
     4: dict(name="1/8 in. (3.175 mm) 2-flute carbide end mill (O-ring grooves)", shape="endmill", d=3.175,
@@ -75,8 +78,10 @@ TOOLS = {
     7: dict(name="4.2 mm carbide drill", shape="drill", d=4.2, rpm=5000, mm_rev=0.1, length=30.0),
     8: dict(name="6.0 mm carbide drill (added: insert counterbores, dowels)", shape="drill", d=6.0, rpm=5000,
             mm_rev=0.1, length=40.0),
+    # T9 was 25 mm out: holder_check.py found the ER16 nut 1.8 mm over the floor's top face at the slots' z -23.2. 28 mm
+    # out (A2's 2-1/2 in. OAL leaves 35.5 mm in the collet): 4.8 mm clear.
     9: dict(name="1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)", shape="endmill",
-            d=6.35, flutes=3, rpm=8100, ipt=0.0015, length=25.0, edge=19.0),
+            d=6.35, flutes=3, rpm=8100, ipt=0.0015, length=28.0, edge=19.0),
 }
 DRILLS = {6: 3.3, 7: 4.2, 5: 5.0, 8: 6.0}
 
@@ -99,18 +104,8 @@ def feed_mm_min(t, ipt=None):
 FRAME_BLANK = (317.5, 228.6, -5.45, 121.55)
 FLOOR_BLANK = (317.5, 228.6, -22.7, 2.7)
 SETUPS = [
-    dict(name="frame_A", part="frame", flip=False, stock=FRAME_BLANK, ops=[
-        ("Face top to z 120", "face", 1, None, dict(face="top", start=121.55, final=120.0, step=1.55)),
-        ("Outside 312x222 R8, adaptive, z 120 to 58", "adaptive_out", 2, None,
-         dict(face="top", start=120.0, final=58.0, step=31.0, stepover=10)),
-        ("Opening 280x190 R10 from top, rough (2.7 mm radial)", "profile_holes", 2, None,
-         dict(face="top_inner", start=120.0, final=58.0, step=31.0, extra=0.3)),
-        ("Opening 280x190 R10 from top, finish (0.3 mm radial, full depth)", "profile_holes", 2, None,
-         dict(face="top_inner", start=120.0, final=58.0, step=62.0, extra=0.0)),
-        ("Lid O-ring gland 4.6 x 2.65", "pocket", 4, None, dict(face="gland", start=120.0, step=0.5)),
-        ("Drill 20 insert holes: 6.0 mm counterbore", "drill", 8, None, dict(holes="top_r3.02")),
-        ("Drill 20 insert holes: 5.0 mm pilot", "drill", 5, None, dict(holes="top_r2.5")),
-    ]),
+    # frame B (bottom up) runs first, as setup_plan.json's F-S1: the blank is held by toe clamps on its end tabs;
+    # frame A (top up, F-S2) then sits on the dummy-floor plate, pulled down through the 18 holes B drilled
     dict(name="frame_B", part="frame", flip=True, stock=FRAME_BLANK, ops=[
         ("Face bottom to z -3.9", "face", 1, None, dict(face="top", start=5.45, final=3.9, step=1.55)),
         ("Outside 312x222 R8, adaptive, bottom up to mid-height", "adaptive_out", 2, None,
@@ -119,13 +114,29 @@ SETUPS = [
          dict(face="rebate", start=3.9, final=0.0, step=3.9)),
         ("Opening from bottom, rough (2.7 mm radial)", "profile_holes", 2, None,
          dict(face="rebate", start=0.0, final=-58.0, step=29.0, extra=0.3)),
-        ("Opening from bottom, finish (0.3 mm radial)", "profile_holes", 2, None,
-         dict(face="rebate", start=0.0, final=-58.0, step=58.0, extra=0.0)),
+        ("Opening from bottom, finish (0.3 mm radial, two 29 mm passes)", "profile_holes", 2, None,
+         dict(face="rebate", start=0.0, final=-58.0, step=29.0, extra=0.0)),
         ("Drill 18 M4 tap holes 3.3 mm", "drill", 6, None, dict(holes="bottom_r2.0")),
         ("Drill 2 dowel holes 6.0 mm", "drill", 8, None, dict(holes="bottom_r3.0")),
     ]),
+    dict(name="frame_A", part="frame", flip=False, stock=FRAME_BLANK, ops=[
+        ("Face top to z 120", "face", 1, None, dict(face="top", start=121.55, final=120.0, step=1.55)),
+        ("Outside 312x222 R8, adaptive, z 120 to 58", "adaptive_out", 2, None,
+         dict(face="top", start=120.0, final=58.0, step=31.0, stepover=10)),
+        ("Opening 280x190 R10 from top, rough (2.7 mm radial)", "profile_holes", 2, None,
+         dict(face="top_inner", start=120.0, final=58.0, step=31.0, extra=0.3)),
+        # finish in two 31 mm passes: in one 62 mm pass the shank above A5's 38.1 mm of flutes rubbed the 0.3 mm skin
+        ("Opening 280x190 R10 from top, finish (0.3 mm radial, two 31 mm passes)", "profile_holes", 2, None,
+         dict(face="top_inner", start=120.0, final=58.0, step=31.0, extra=0.0)),
+        ("Lid O-ring gland 4.6 x 2.65", "pocket", 4, None, dict(face="gland", start=120.0, step=0.5)),
+        ("Drill 20 insert holes: 6.0 mm counterbore", "drill", 8, None, dict(holes="top_r3.02")),
+        ("Drill 20 insert holes: 5.0 mm pilot", "drill", 5, None, dict(holes="top_r2.5")),
+    ]),
     # setup C: front face up (part turned -90 deg about x, model -y -> +z); stock = the finished outline
-    dict(name="frame_C", part="frame", rot_x=-90, stock_box=(-156.0, -3.9, -111.0, 312.0, 123.9, 222.0), ops=[
+    # clear_z: the dummy-floor plate (z' to 120) stands 9 mm proud of the front face (111); FreeCAD's default clearance
+    # (stock top + 5 = 116) brought the tool down into it on the first move (holder_check.py)
+    dict(name="frame_C", part="frame", rot_x=-90, stock_box=(-156.0, -3.9, -111.0, 312.0, 123.9, 222.0), clear_z=130.0,
+         ops=[
         ("Door opening 220x92 R6.5 through the 16 mm front wall, adaptive", "adaptive_in", 3, None,
          dict(edges="door", start=111.0, final=94.5, step=16.5, stepover=10)),
     ]),
@@ -156,6 +167,87 @@ SETUPS = [
         ("Drill the holes that open on the bottom", "drill_all", None, None, dict()),
     ]),
 ]
+
+
+# --- workholding, for holder_check.py (plain Python) -----------------------------------------------------------
+# Each setup's fixtures in its own setup frame (mm, z up, the frame freecad_cam programs in), from setup_plan.json's
+# fixture notes: (table z, [(name, kind, params)], end tabs). Kinds: box (x0, x1, y0, y1, z0, z1); vcyl (cx, cy, r, z0,
+# z1); ycyl, a cylinder along y (cx, cz, r, y0, y1). End tabs (x0, x1, y0, y1, z0, z1) are blank the CAM stock box does
+# not have: holder_check.py treats them as stock (the cutter may cut them; nothing else may touch them).
+# setup_plan.json: "1 in. at each x end for F-S1's toe clamps", noses 3 mm out along the tab. holder_check.py found the
+# face mill (it faces the bounding box plus its radius, to x +-187.9) running into such clamps. Floor P-S1 now has
+# 2-1/4 in. tabs with the clamp noses 33 mm out (x +-191.75): 3.9 mm clear of the face mill.
+TAB_LEN = 2.25 * IN
+CLAMP_IN = 33.0
+
+
+def toe_clamps(x_root, top, ys=(-60.0, 60.0)):
+    """four strap clamps (1 in. wide x 5/8 in. strap, 5/8-11 stud, 1-1/16 in. flange nut 5/8 in. tall, stud 5 mm proud)
+    on end tabs whose root is at |x| = x_root, nose CLAMP_IN out along the tab, heel 100 mm further out"""
+    out = []
+    for sx in (-1, 1):
+        for y in ys:
+            xn = x_root + CLAMP_IN
+            x0, x1 = (xn, xn + 100.0) if sx > 0 else (-xn - 100.0, -xn)
+            out.append(("toe clamp strap", "box", (x0, x1, y - 12.7, y + 12.7, top, top + 15.9)))
+            xs = sx * (xn + 30.0)
+            out.append(("toe clamp nut and stud", "vcyl", (xs, y, 15.6, top, top + 15.9 + 15.9 + 5.0)))
+    return out
+
+
+def end_tabs(x_root, z0, z1, length):
+    return [(-x_root - length, -x_root, -FRAME_BLANK[1] / 2, FRAME_BLANK[1] / 2, z0, z1),
+            (x_root, x_root + length, -FRAME_BLANK[1] / 2, FRAME_BLANK[1] / 2, z0, z1)]
+
+
+def _fixtures():
+    fb_top = -FRAME_BLANK[2]          # frame B (bottom up): the blank's bottom face, now on top
+    fb_bot = -FRAME_BLANK[3]
+    fl_top, fl_bot = FLOOR_BLANK[3], FLOOR_BLANK[2]
+    x_root = FRAME_BLANK[0] / 2
+    hrt_face = -3.9 - 25.4            # frame C: the platter face, behind the 1 in. dummy-floor plate
+    return {
+        # F-S1: blank on four 1-1/2 in. risers. setup_plan.json had toe clamps on 1 in. end tabs: holder_check.py found the
+        # face mill (it faces the bounding box plus its radius, to x +-187.9) running into the clamps, and the 3/4 in. end
+        # mill cutting into the tab roots (its outside passes reach x +-175.7) and its holder and flange passing over the
+        # clamps. Now low-profile edge clamps (ASSUMED 40 x 40 mm bodies, on risers) push on the blank's x-end faces
+        # below z -63, 5 mm under B's deepest cut (z -58): no tabs, nothing on top.
+        "frame_B": (fb_bot - 1.5 * IN, [("riser block", "box", (sx * 150 - 25, sx * 150 + 25, sy * 100 - 25,
+                                                                 sy * 100 + 25, fb_bot - 1.5 * IN, fb_bot))
+                                         for sx in (-1, 1) for sy in (-1, 1)]
+                    + [("edge clamp", "box", (sx * x_root if sx > 0 else -x_root - 40.0, x_root + 40.0 if sx > 0
+                                              else -x_root, y - 20.0, y + 20.0, fb_bot - 1.5 * IN, -63.0))
+                       for sx in (-1, 1) for y in (-60.0, 60.0)], []),
+        # (setup_plan.json's toe clamps on end tabs, kept for the record: toe_clamps(x_root, fb_top), end_tabs(...))
+        # F-S2: the dummy-floor plate (1 in. MIC-6, 330 x 240) under the frame's skirt face; screws from below
+        "frame_A": (-3.9 - 25.4, [("dummy-floor plate", "box", (-165, 165, -120, 120, -3.9 - 25.4, -3.9))], []),
+        # F-S3: the dummy-floor plate on an HRT210 platter, A along the frame's z (setup y'), A 215.9 above the table
+        # (2-1/2 in. riser). HRT210 from Haas' layout drawing hrt210_10-2020.pdf (Rev 1, 2019-11-11): platter dia. 210,
+        # centre height 152.4, housing 276.4 tall, 124.0 from the platter centre to its side (taken as symmetric),
+        # 177.8 deep; motor box beside it to 466.9 overall (side ASSUMED +x'). Platter taken as 15.9 thick.
+        "frame_C": (-215.9, [
+            ("dummy-floor plate", "box", (-165, 165, hrt_face, -3.9, -120, 120)),
+            ("HRT210 platter", "ycyl", (0.0, 0.0, 105.0, hrt_face - 15.9, hrt_face)),
+            ("HRT210 housing", "box", (-124.0, 124.0, hrt_face - 15.9 - 177.8, hrt_face - 15.9, -152.4, -152.4 + 276.4)),
+            ("HRT210 motor box", "box", (124.0, 124.0 + 342.9 - 124.0, hrt_face - 15.9 - 177.8, hrt_face - 15.9,
+                                         -152.4, -152.4 + 276.4)),
+            ("2-1/2 in. riser", "box", (-124.0, 342.9, hrt_face - 15.9 - 177.8, hrt_face - 15.9, -215.9, -152.4)),
+        ], []),
+        # P-S1: blank on 1/2 x 1-1/2 in. parallels along x, clear of the port and slots; toe clamps on the end tabs
+        "floor_A": (fl_bot - 1.5 * IN, [("parallel", "box", (-150, 150, y0, y0 + 12.7, fl_bot - 1.5 * IN, fl_bot))
+                                        for y0 in (-110.7, 98.0)] + toe_clamps(x_root, fl_top),
+                    end_tabs(x_root, fl_bot, fl_top, TAB_LEN)),
+        # P-S2 (bottom up): fixture plate under the sealing face and 2 dowel pins. setup_plan.json's central M12 stud
+        # with a dia. 104 clamp washer sat on the very face this setup faces: holder_check.py found the face mill and
+        # the drills of the holes near the port running into it. Now the port is held from inside: an expanding ID
+        # clamp (ASSUMED dia. 94, its top 5 mm under the faced bottom at z 20) pulls the plate onto the fixture plate.
+        "floor_B": (-25.4, [("fixture plate", "box", (-165, 165, -120, 120, -25.4, 0.0)),
+                            ("port ID clamp", "vcyl", (0.0, 0.0, 47.0, 0.0, 15.0))], []),
+        # (setup_plan.json's version, for the record: a dia. 104 x 3/8 in. washer and M12 nut on the bottom face)
+    }
+
+
+FIXTURES = _fixtures()
 
 
 # --- FreeCAD side ---------------------------------------------------------------------------------
@@ -411,6 +503,11 @@ def run_cam():
                 op.RetractHeight = op.StartDepth.Value + 2.0
             else:
                 set_depths(op, cfg.get("start"), cfg.get("final"), cfg.get("step"))
+            if su.get("clear_z") is not None:  # above the fixtures, not just the stock
+                for prop in ("ClearanceHeight", "SafeHeight"):
+                    if hasattr(op, prop):
+                        op.setExpression(prop, None)
+                        setattr(op, prop, su["clear_z"])
             meta = dict(op=op.Name, label=label, kind=kind, tool=t, tool_name=TOOLS[t]["name"],
                         rpm=TOOLS[t]["rpm"], feed_mm_min=round(feed_mm_min(t, ipt), 1),
                         chip_load_in=ipt or TOOLS[t].get("ipt"), mm_per_rev=TOOLS[t].get("mm_rev"),
