@@ -394,7 +394,8 @@ def add_joints(h, parts, add, module="M50"):
     pitems = [((xc + s * (9.0 + xr), yp, zc_), (-s, 0.0, 0.0)) for s in (-1, 1)]
     cut_parts(parts, "Recoater arm", [hole(p, n, -3.5, xr + 0.01, c_pl["d"]) for p, n in pitems])          # M6 tapped through the pocket wall
     rb = c_pl["ball_d"] / 2
-    cut_parts(parts, "Blade holder", [cq.Solid.makeSphere(rb + 0.05, V(xc + s * (9.0 - 0.8 + rb), yp, zc_)) for s in (-1, 1)])
+    cut_parts(parts, "Blade holder", [cq.Solid.makeSphere(rb + 0.05, V(xc + s * (9.0 - 0.8 + rb), yp, zc_), angleDegrees1=-90, angleDegrees2=90)
+                                      for s in (-1, 1)])                       # full sphere (makeSphere's default is a hemisphere)
     add_fasteners(h, add, "blade_cartridge", "Blade-cartridge ball plungers, M6 x 1 18-8 with 440C ball, in the arm's pocket walls (detents in the holder's sides)",
                   pl, pitems, 6, "M5", group="recoater", explode=(0, 0, 220))
     JOINT_NOTES["blade_cartridge"] = ("Swapped at every alloy change by the robot (or a hand) with a 40 N straight pull: no screwdriver at the machine. The "
