@@ -38,6 +38,15 @@ bottom, and inner steps were drilled before the step above them was open, so the
 solid stock); steps whose far end opens at full diameter get ExtraOffset = Drill Tip so the 118 deg point
 does not leave a cone in the exit; the floor's port trepan and slots go through the blank in setup A, so
 their slugs drop there.
+
+Checked with holder_check.py (2026-11-23: holders, spindle, fixtures, travels), which led to these changes: T2 66 mm
+out of an ER32 collet chuck (was 63 mm from a side-lock: its nose had 1.0 mm over the top face at the meet line); the
+opening's finish in two passes (A5 has 38.1 mm of flutes); T9 28 mm out (its ER16 nut had 1.8 mm over the floor);
+frame setup C's clearance and safe heights at 130 (the dummy-floor plate stands 9 mm proud of the front face); frame B
+now runs first, as setup_plan.json's F-S1. FIXTURES below holds each setup's workholding for that check: frame F-S1 on
+low-profile edge clamps (toe clamps on end tabs were in the face mill's and T2's way) and floor P-S2 held by a port
+ID clamp (the centre stud's washer sat on the face P-S2 faces). Floor P-S1's toe clamps sit on 2-1/4 in. tabs, but
+T2's outside passes still run through the tab roots, which this blank does not have (open, see machining.md).
 """
 import json
 import math

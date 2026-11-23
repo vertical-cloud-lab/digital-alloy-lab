@@ -42,6 +42,10 @@ still not programmed.
   - a voxel grid in the part frame between setups;
   - within a setup, a top-surface height map that also knows where the topmost layer of material ends. That way the
     floor plate's 2.2 mm web, standing over the air that setup A cut, empties its column when B faces it off.
+
+  At the end, this chained stock agrees with CAMotics' own chained result on the same grid. For the frame, this check
+  has 0.07 cm³ that CAMotics doesn't and CAMotics 0.03 cm³ that it doesn't, out of 1626 cm³. For the floor plate it is
+  0.89 and 0.04 cm³ out of 1117 cm³ (`stock_vs_camotics` in the JSON).
 - **Why a height map is enough.** Every setup here has the tool vertical, and the assembly only gets wider going up. So
   a column is hit if, and only if, its top is above the tool tip plus the height of the lowest part of the assembly at
   least that wide. Each straight piece of each move is tested exactly against every column within reach. Arcs are split
@@ -150,7 +154,8 @@ Docker at 2 GB with 16 mm slabs) reproduced the 2026-11-22 numbers exactly:
   drawn, but the tool can't reach them.
 
 Run: `freecad_cam.py` (its docstring), then
-`OMP_NUM_THREADS=1 /tmp/capmem 2 env CHAMBER_CAM_IN=/tmp/chamber-cam /tmp/venv/bin/python desktop-lpbf/analysis/machining/holder_check.py`.
+`OMP_NUM_THREADS=1 /tmp/capmem 2 env CHAMBER_CAM_IN=/tmp/chamber-cam CAMOTICS_WORK=/tmp/cam-sim /tmp/venv/bin/python desktop-lpbf/analysis/machining/holder_check.py`
+(`CAMOTICS_WORK` only for the cross-check against `camotics_sim.py`'s final voxels).
 It takes about 1 min and under 1 GB.
 
 ## G-code simulated in CAMotics (2026-11-22)

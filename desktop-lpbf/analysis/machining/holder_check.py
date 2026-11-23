@@ -25,9 +25,11 @@ setup every voxel above that z-map is removed. Clearance is the largest c for wh
 and lowered by c, still misses: c = min over columns of max(distance - radius, tip + height - top). It is reported per
 tool per setup against stock and against fixtures, with the G-code line of the tightest move; it is exact to the grid
 (0.5 mm in x and y; z is exact for flat tops, +-0.5 mm on the voxel stock's curved tops).
+If $CAMOTICS_WORK holds camotics_sim.py's final voxels, the chained stock at the end is compared with CAMotics' own
+(stock_vs_camotics in the JSON).
 
 Run (after freecad_cam.py has written $CHAMBER_CAM_IN/gcode/*.ngc):
-    OMP_NUM_THREADS=1 /tmp/heavy 3 env CHAMBER_CAM_IN=/tmp/chamber-cam /tmp/venv/bin/python \
+    OMP_NUM_THREADS=1 /tmp/capmem 2 env CHAMBER_CAM_IN=/tmp/chamber-cam CAMOTICS_WORK=/tmp/cam-sim /tmp/venv/bin/python \
         desktop-lpbf/analysis/machining/holder_check.py [--res 0.5]
 Writes desktop-lpbf/analysis/out/machining/holder_check.json.
 """
@@ -462,8 +464,27 @@ def main():
             for hh in hits[:8]:
                 print("   HIT", hh, flush=True)
             print("   travel", json.dumps(travel), flush=True)
-        if part == "frame":
-            pass
+        # cross-check of the stock model: this script's chained stock at the end against CAMotics' (camotics_sim.py's
+        # final voxels, same grid), both without the pieces cut free (slugs)
+        npz = pathlib.Path(os.environ.get("CAMOTICS_WORK", "/tmp/cam-sim")) / f"{part}_voxels.npz"
+        if npz.exists():
+            from scipy import ndimage
+            z = np.load(npz)
+            shape = tuple(z["shape"])
+            cam = np.unpackbits(z["final"])[:int(np.prod(shape))].reshape(shape).astype(bool)
+            lab, _ = ndimage.label(stock)
+            sizes = np.bincount(lab.ravel())
+            sizes[0] = 0
+            mine = lab == int(np.argmax(sizes))
+            del lab
+            if cam.shape == mine.shape:
+                v = h ** 3 / 1000
+                report.setdefault("stock_vs_camotics", {})[part] = dict(
+                    camotics_final="$CAMOTICS_WORK/" + npz.name, this_cm3=round(float(mine.sum()) * v, 2),
+                    camotics_cm3=round(float(cam.sum()) * v, 2),
+                    only_here_cm3=round(float((mine & ~cam).sum()) * v, 2),
+                    only_in_camotics_cm3=round(float((cam & ~mine).sum()) * v, 2))
+                print(part, "stock vs CAMotics", report["stock_vs_camotics"][part], flush=True)
     pathlib.Path(a.out).write_text(json.dumps(report, indent=1))
     print("wrote", a.out)
 

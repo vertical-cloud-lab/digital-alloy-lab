@@ -597,7 +597,7 @@
      }
     ]
    },
-   "seconds": 3.6
+   "seconds": 3.0
   },
   "frame_A": {
    "part": "frame",
@@ -895,7 +895,7 @@
      }
     ]
    },
-   "seconds": 3.2
+   "seconds": 2.6
   },
   "frame_C": {
    "part": "frame",
@@ -1030,7 +1030,7 @@
      }
     ]
    },
-   "seconds": 24.0
+   "seconds": 21.5
   },
   "floor_A": {
    "part": "floor",
@@ -2011,7 +2011,7 @@
      }
     ]
    },
-   "seconds": 4.1
+   "seconds": 3.3
   },
   "floor_B": {
    "part": "floor",
@@ -2389,7 +2389,23 @@
      }
     ]
    },
-   "seconds": 15.7
+   "seconds": 13.0
+  }
+ },
+ "stock_vs_camotics": {
+  "frame": {
+   "camotics_final": "$CAMOTICS_WORK/frame_voxels.npz",
+   "this_cm3": 1626.49,
+   "camotics_cm3": 1626.45,
+   "only_here_cm3": 0.07,
+   "only_in_camotics_cm3": 0.03
+  },
+  "floor": {
+   "camotics_final": "$CAMOTICS_WORK/floor_voxels.npz",
+   "this_cm3": 1118.05,
+   "camotics_cm3": 1117.2,
+   "only_here_cm3": 0.89,
+   "only_in_camotics_cm3": 0.04
   }
  }
 }
