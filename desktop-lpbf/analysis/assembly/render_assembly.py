@@ -26,7 +26,7 @@ ASM_DIR = pathlib.Path(os.environ.get("ASM_DIR", "/tmp/asm"))
 
 def build():
     run = RA.Run()
-    # the temporary tool objects, in the order the run added them (M12 loader, M25 mandrel and pusher)
+    # the temporary tool objects, in the order the run added them (M12 loader, M17 mandrel and pusher)
     (lv, lf), _ = TL.mesh("ring_loader")
     Ml = K.Tm(p=(0.0, 0.0, -96.0)) @ K.Rx(180.0)
     RA.add_temp_obj(run, "Ring loader (tool)", lv @ Ml[:3, :3].T + Ml[:3, 3], lf)
@@ -115,8 +115,8 @@ def main():
     want = [("F05b-mid", "Chamber assembly (15.8 kg) carried upright by both arms, each holding a leg, from the trunnion to Fixture B",
              ((S["T"] + S["B"]) / 2, 0, 1150), 2600, -70, 22),
             ("C01b", "The trunnion has turned the chamber upside down for the under-floor work", (S["T"], 0, 1000), 1800, -60, 25),
-            ("M17:1", "Heater stack, rod and gland plate into the bore from the tube's open end, module upside down", (S["body_inv"], 0, 1000), 1100, -60, 25),
-            ("M25", "Spigot O-ring: mandrel on the spigot, pusher stroke", (S["body_up"], 0, 1000), 1000, -60, 25),
+            ("M19:1", "Heater stack, rod and gland plate into the bore from the tube's open end, module upside down", (S["body_inv"], 0, 1000), 1100, -60, 25),
+            ("M17", "Spigot O-ring: mandrel on the spigot, pusher stroke", (S["body_up"], 0, 1000), 1000, -60, 25),
             ("C10:1", "Build module (upside down) into the floor port, chamber in the trunnion", (S["T"], 0, 1050), 1500, -60, 30)]
     for k in list(frames):
         if k.startswith("F29:"):

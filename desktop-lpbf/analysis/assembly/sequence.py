@@ -6,10 +6,11 @@ re-ordered so that every screw is driven from above or from the side and nothing
   * the gland plate (face ring, then its two rod rings by the ring loader) waits on its own nest; the rod, its end cap
     welded on by the shop, goes top end first through the plate's rings and then, with the plate riding on it, into the
     head's socket (round 4, 2026-11-22: the welded rod end no longer has to slide on after the rod rings);
-  * the module body goes upside down on its spigot face and the whole stack, rod and gland plate drop into the bore from
-    the tube's open bottom end, which faces up; then the gland-plate screws, the handle, the striker and the rod end's
-    hermetic connector (last, so the end cap's side is clear for the driver and the handle) from above; it is
-    turned upright for the spigot O-ring and the plate, then turned over again for the chamber;
+  * the module body goes upright onto its nest for the spigot O-ring (the mandrel reaches into the bore), then upside down
+    on its spigot face; the whole stack, rod and gland plate drop into the bore from the tube's open bottom end, which faces
+    up; then the gland-plate screws, the handle (lowered from above), the striker and the rod end's hermetic connector (last,
+    so the end cap's side is clear for the driver and the handle); it is turned upright for the plate, then turned over
+    again for the chamber;
   * the chamber is worked upside down on Fixture C (outlet plenum, overflow funnel, module, Z stage and legs all go on
     from above), then both arms turn it over by two legs onto the base plate, which waits on Fixture B, an open stand
     the arms reach under (posts' and legs' base screws from below);
@@ -70,7 +71,7 @@ def steps(module="M50"):
     # ---- gland plate and rod (round 4, 2026-11-22: operations.md A1, assembly.md patch 1). The rod end stays welded, made by
     # the shop on the bare rod away from every O-ring. So the gland plate, its rod rings already loaded, goes onto the rod's
     # top end, the rod goes into the head with the plate riding on it, and the whole stack enters the bore from the tube's
-    # open bottom end. The gland plate's own nest stands at the body_inv station before the body goes there (M16).
+    # open bottom end. The gland plate's own nest stands at the body_inv station before the body goes there (M18).
     a(dict(do="seal", id="M10", label="Gland-plate face O-ring (2-034) into the gland plate's groove, groove up, PFPE film",
            keys=["gland-plate O-ring"], grp="gland", phase="body_inv", method="ring", ring="gland_plate_M50", tool="gripper+caps",
            actor="B", path=[(0, 0, 0), (0, 0, 60)], note="the plate is then turned over onto its nest with the ring held by the grease film"))
@@ -88,33 +89,41 @@ def steps(module="M50"):
         [(0, 0, 0), (0, 0, -150)], merge="gland", moved=True,
         grasp=dict(point=(0.0, 0.0, -126.5), z=UP, x=(0.0, 1.0, 0.0), width=22.0)))
     a(S("M15", "Two M4 cup-point set screws into the rod (radial)", f"rod_{m}", "stack", "stack_inv", torque_Nm=1.1))
-    # ---- module body, upside down on its spigot face; the stack goes in from the tube's open (bottom) end, which faces up
-    a(P("M16", "Welded module body onto its nest, spigot face down", ["Build module"], "body", "body_inv", [(0, 0, 0), (0, 0, -120)],
-        exclude=["Captive", "retainers"]))
-    a(P("M17", "Heater stack, rod and gland plate lowered into the bore from the tube's open end (body upside down); the gland plate "
+    # ---- module body: upright first for the spigot O-ring (the mandrel reaches 13 mm into the bore, where the heater block
+    # sits once the stack is in: run 3's first pass), then upside down on its spigot face; the stack goes in from the tube's
+    # open (bottom) end, which then faces up
+    a(P("M16", "Welded module body onto its upright nest (flange on the nest's three posts)", ["Build module"], "body", "body_up",
+        [(0, 0, 0), (0, 0, 120)], exclude=["Captive", "retainers"]))
+    a(dict(do="seal", id="M17", label="Spigot O-ring (2-238) over the mandrel into the spigot groove (before the stack: the mandrel reaches into the bore)",
+           keys=["Spigot O-ring"], grp="body", phase="body_up", method="mandrel", ring="spigot", tool="gripper", actor="A", holder="B",
+           path=[(0, 0, 0), (0, 0, 40)]))
+    a(dict(do="flip", id="M18", label="Module body turned upside down (wrist roll) onto its spigot nest, the tube's open end up",
+           grp="body", frm="body_up", to="body_inv", actor="A"))
+    a(P("M19", "Heater stack, rod and gland plate lowered into the bore from the tube's open end (body upside down); the gland plate "
         "lands on the welded collar",
         ["Heater block", "Cartridge heaters", "Type K thermocouples", "Thermal cutoff", "Macor standoff", "Radiation shields", "Piston head",
          "Bore seal", "Hollow piston rod", "Heater-stack screws", "Heater-block helical inserts", "Disc springs under", "Rod set screws",
-         "Rod end", "Hermetic connector", "Hermetic-connector O-ring", "bottom flange: gland plate", "gland-plate O-ring", "Rod O-rings"],
+         "Rod end", "bottom flange: gland plate", "gland-plate O-ring", "Rod O-rings"],
         "body", "body_inv", [(0, 0, 0), (0, 0, -260)], merge="stack", moved=True,
         grasp=dict(point=(0.0, 0.0, -126.5), z=UP, x=(0.0, 1.0, 0.0), width=22.0),
         note="the bore seal and the block enter the honed bore square, over the bore's bottom lead-in"))
-    a(S("M18", "Six M4 x 20 gland-plate screws, star pattern", f"gland_{m}", "body", "body_inv", torque_Nm=2.2))
-    a(P("M19", "Handle under the gland plate", ["handle (6061"], "body", "body_inv", [(0, 0, 0), (0, -80, 0)]))
-    a(S("M20", "Two M4 handle screws", f"handle_{m}", "body", "body_inv", torque_Nm=2.2))
-    a(P("M21", "Striker disc onto the rod end", ["Striker disc"], "body", "body_inv", [(0, 0, 0), (0, 0, -60)]))
-    a(S("M22", "Three M3 x 10 flat-head striker screws", f"striker_{m}", "body", "body_inv", torque_Nm=1.1))
-    a(P("M23", "Hermetic connector with its 2-014 face O-ring into the rod end's side boss (last, so the cap's side is clear for the gland-plate screws and the handle)", ["Hermetic connector", "Hermetic-connector O-ring"],
-        "body", "body_inv", [(0, 0, 0), (-60, 0, 0)],
+    a(S("M20", "Six M4 x 20 gland-plate screws, star pattern", f"gland_{m}", "body", "body_inv", torque_Nm=2.2))
+    # the round-4 handle runs from under the gland plate up the front of the tube and forward to the robot grip block; slid in
+    # along y (runs 1-2) its start pose was out of arm A's reach, so with the module upside down it is lowered from above
+    a(P("M21", "Handle lowered onto the gland plate (module upside down; riser in front of the tube, arm toward the grip block)",
+        ["handle (6061"], "body", "body_inv", [(0, 0, 0), (0, 0, -80)]))
+    a(S("M22", "Two M4 handle screws", f"handle_{m}", "body", "body_inv", torque_Nm=2.2))
+    a(P("M23", "Striker disc onto the rod end", ["Striker disc"], "body", "body_inv", [(0, 0, 0), (0, 0, -60)]))
+    a(S("M24", "Three M3 x 10 flat-head striker screws", f"striker_{m}", "body", "body_inv", torque_Nm=1.1))
+    a(P("M25", "Hermetic connector with its 2-014 face O-ring into the rod end's side boss (last, so the cap's side is clear for the "
+        "gland-plate screws and the handle)", ["Hermetic connector", "Hermetic-connector O-ring"], "body", "body_inv", [(0, 0, 0), (-60, 0, 0)],
         note="threaded: turned in by wrist rotation with regrasps, which a straight sweep can't show; the leads are soldered to its pins by a person"))
-    a(dict(do="flip", id="M24", label="Module turned upright (wrist roll, 180 deg about the tool axis) onto the upright nest",
+    a(dict(do="flip", id="M26", label="Module turned upright (wrist roll, 180 deg about the tool axis) onto the upright nest",
            grp="body", frm="body_inv", to="body_up", actor="A"))
-    a(dict(do="seal", id="M25", label="Spigot O-ring (2-238) over the mandrel into the spigot groove", keys=["Spigot O-ring"], grp="body",
-           phase="body_up", method="mandrel", ring="spigot", tool="gripper", actor="A", holder="B", path=[(0, 0, 0), (0, 0, 40)]))
-    a(P("M26", "Rim wiper onto the plate; plate into the bore onto the bayonet, turned 60 deg (piston at +8 mm overtravel)",
+    a(P("M27", "Rim wiper onto the plate; plate into the bore onto the bayonet, turned 60 deg (piston at +8 mm overtravel)",
         ["Build plate", "Plate rim wiper"], "body", "body_up", [(0, 0, 0), (0, 0, 60)], rot=60.0, state={"piston": 8.0},
         grasp=dict(point=(0.0, 0.0, 5.5), z=DN, x=(1.0, 0.0, 0.0), width=50.5)))
-    a(dict(do="flip", id="M27", label="Module turned upside down again (wrist roll) onto its spigot nest, ready for the chamber (C10)",
+    a(dict(do="flip", id="M28", label="Module turned upside down again (wrist roll) onto its spigot nest, ready for the chamber (C10)",
            grp="body", frm="body_up", to="body_inv", actor="A"))
     # =========================================================== chapter 4a: the chamber, upside down on Fixture C
     # chamber-construction.md (landed 2026-11-20 22:58 UTC): a through-frame and a bolted 20 mm floor plate with a second 3.53 mm cord.
