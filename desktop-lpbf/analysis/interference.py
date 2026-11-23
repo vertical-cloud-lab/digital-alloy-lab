@@ -106,7 +106,7 @@ JOINTS = [
     ("Drawer O-ring", "Chamber lid", "O-ring squeezed against the lid's front face"),
     ("Drawer O-ring", "Cover-slide drawer", "O-ring in the front plate's groove"),
     ("Cover slide (", "Cover-slide drawer", "slide in its pocket"),
-    ("Lift-out wall liners", "Process chamber body", "liners clipped to the walls"),
+    ("Lift-out wall liner", "Process chamber body", "liners clipped to the walls"),
     ("Plate-height through-beam", "Process chamber body", "fibre heads in the side walls"),
     ("Module-present sensor", "Process chamber body", "sensor bracket under the floor"),
     ("Overflow-jar present sensor", "Overflow jar", "sensor beside the jar"),

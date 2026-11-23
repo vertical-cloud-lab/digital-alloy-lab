@@ -187,6 +187,13 @@ FERRO_S = dict(body_d=16.0, body_l=35.0, nose_d=8.0, nose_l=8.0, shaft_d=5.0, ai
                label="magnetic-fluid rotary feedthrough Ferrotec SSL-005-NN", pn="Ferrotec SSL-005-NN", oring="2-012")
 
 
+# door draw latches (section 8): ear tip, latch bracket x span (foot) and length forward of the door, strike y span on the side faces
+LATCH_POS = dict(ear_x=146.0, bracket_x=(128.0, 146.0), bracket_len=82.0, strike_y=(-100.0, -72.0))
+# reservoir pull tab (section 7): the lid's handle fin (y -30..30, z 248..258) carried forward to y -100
+RES_TAB = dict(y=(-100.0, -30.0), z=(248.0, 258.0))
+# lift-out wall liners (section 5): sheet thickness, side-liner y span is set in build(); z bands; back split at x = +/-0.5
+LINER = dict(t=0.5, z_side=(16.0, 104.0), back_up=(48.0, 72.0), back_lo=(16.0, 32.0), back_split=0.5)
+
 # --------------------------------------------------------------------------------------------
 # Geometry helpers
 # --------------------------------------------------------------------------------------------
@@ -663,14 +670,33 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add("Vacuum port adapter O-ring (FKM 75A 2-024)", tube(16.6, 14.5, (cx, 0, 70), "x", F["depth"]), C["black"], 5, (180, 0, 0), mat="fkm", bom="G8")
     GLANDS["vacuum_port"] = dict(kind="face", ring="2-024", cs=1.78, depth=F["depth"], width=2.3, groove_id=29.0, groove_mat="ss", T=40.0,
                                  closure="KF-25 vacuum-port adapter plate on the right wall")
-    add("Layer-light LED bar", box(ix - 6, ix - 1, -45, 45, 30, 38), C["white"], 5, (0, 0, 120), mat="misc", mass_kg=0.05, bom="M6")
-    # lift-out wall liners: 0.5 mm 316L held by spring clips; they take the condensate and lift out through the door. They stop
-    # 9.5 mm short of each inside corner, clear of the frame's R10 corners (they stopped 8 mm short of the old R5 corners).
+    # layer light: hung from the lid's underside along the right wall (was on the right wall at z 30..38, where it stood in front
+    # of the right liner and trapped it: robot-ops.md patch 7). It now lights the layer from z 112..120, 126..134 mm off the axis
+    # (about 40 deg above the plate instead of ~10 deg), and comes off with the lid.
+    add("Layer-light LED bar (on the lid's underside, along the right wall)", box(ix - 14, ix - 6, -45, 45, lz0 - 8, lz0), C["white"], 7, (0, 0, 300),
+        mat="misc", mass_kg=0.05, bom="M6")
+    # lift-out wall liners: 0.5 mm 316L held by spring clips; they take the condensate and come out through the door. Each is its own
+    # part (operations.md M3.2, robot-ops.md patch 7):
+    #  - the side liners stop 24.5 mm short of the front inside corners (15 mm shorter than before) and 9.5 mm short of the back
+    #    ones, clear of the frame's R10 corners; their Ø22 ball-screw holes are slotted open to the back edge, so each steps 4 mm in
+    #    off the wall, slides 21 mm forward off the screw, moves in to x +/-105 and comes out through the door. They are 88 mm tall
+    #    (z 16..104, were 94): the door opening is 92 mm (z 8..100), so a side liner passes it upright, lowered 6 mm;
+    #  - the back liner is two pieces in two bands, all behind the ball screw (y 66..78, z 34..46) and the carriage block: an upper
+    #    band (z 48..72, between the screw and the rail at z 74.5) and a lower band (z 16..32, under the screw and the chute), each
+    #    split at x = 0 so a half comes forward clear of the carriage block with the recoater at the other end of its stroke.
     ry_, rz_ = P["rc_screw_y"], P["rc_screw_z"]
-    lb = box(-ix + 9.5, ix - 9.5, iy - 0.6, iy - 0.1, 16, 72)
-    ll = box(-ix + 0.1, -ix + 0.6, -iy + 9.5, iy - 9.5, 16, 110).cut(cyl(11, (-ix - 1, ry_, rz_), "x", 3))
-    lr = box(ix - 0.6, ix - 0.1, -iy + 9.5, iy - 9.5, 16, 110).cut(cyl(11, (ix - 2, ry_, rz_), "x", 3)).cut(cyl(14, (ix - 2, 0, 70), "x", 3)).cut(cyl(4.5, (ix - 2, -40, 18), "x", 3))
-    add("Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)", comp([lb, ll, lr]), C["ss"], 5, (0, 0, 160), mat="ss316l", bom="A2", section=True, opacity=0.8)
+    ys0, ys1 = -iy + 24.5, iy - 9.5
+    slot_r = fuse([cyl(11, (ix - 2, ry_, rz_), "x", 3), box(ix - 2, ix + 1, ry_, ys1 + 1, rz_ - 11, rz_ + 11)])
+    slot_l = fuse([cyl(11, (-ix - 1, ry_, rz_), "x", 3), box(-ix - 1, -ix + 2, ry_, ys1 + 1, rz_ - 11, rz_ + 11)])
+    ll = box(-ix + 0.1, -ix + 0.6, ys0, ys1, LINER["z_side"][0], LINER["z_side"][1]).cut(slot_l)
+    lr = box(ix - 0.6, ix - 0.1, ys0, ys1, LINER["z_side"][0], LINER["z_side"][1]).cut(slot_r).cut(cyl(14, (ix - 2, 0, 70), "x", 3)).cut(cyl(4.5, (ix - 2, -40, 18), "x", 3))
+    lkw = dict(mat="ss316l", bom="A2", section=True, opacity=0.8)
+    add("Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back edge, spring clips)", ll, C["ss"], 5, (-60, 0, 160), **lkw)
+    add("Lift-out wall liner, right (0.5 mm 316L, screw hole slotted to the back edge, spring clips)", lr, C["ss"], 5, (60, 0, 160), **lkw)
+    for band, (z0_, z1_) in (("upper", LINER["back_up"]), ("lower", LINER["back_lo"])):
+        for side, (x0_, x1_) in (("left", (-ix + 9.5, -LINER["back_split"])), ("right", (LINER["back_split"], ix - 9.5))):
+            add(f"Lift-out wall liner, back {band} {side} (0.5 mm 316L, behind the ball screw, spring clips)", box(x0_, x1_, iy - 0.6, iy - 0.1, z0_, z1_),
+                C["ss"], 5, (0, -60, 160), **lkw)
     # threaded M6 fibre heads screwed into the walls from outside, each sealed by a 2-010 FKM face O-ring under its flange
     fib = comp([fuse([cyl(2.98, (sx * (ix + 1.0), 0, 5.0), "x" if sx > 0 else "-x", P["wall"] - 1.0), cyl(6.5, (sx * cx, 0, 5.0), "x" if sx > 0 else "-x", 2.5),
                       cyl(3.0, (sx * (cx + 2.5), 0, 5.0), "x" if sx > 0 else "-x", 19.5)]) for sx in (-1, 1)])
@@ -849,6 +875,14 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         place(kf_stub(16, 18), (xd - 17 - 18, 35, rzc), (0, 1, 0), (-1, 0, 0)), C["ss"], 7, (-120, 0, 0), mat="ss304", bom="R1")
     add("Reservoir-docked sensor (inductive M12, at the back of the dock)", cyl(6.0, (xd, 60.0, zd + 14.0), "y", 30.0), C["blue"], 7, (0, 160, 300), mat="misc", mass_kg=0.02, bom="A1")
     _RES = dict(ML.add_reservoir(sys.modules[__name__], add, reservoir, xd, zd, 7), key=reservoir)
+    # pull tab (operations.md U1.1, 2026-11-23): the lid's handle fin (x xd +/-4, z 248..258, y -30..30) runs under the enclosed beam tube
+    # (y -35.25..-15.25, z 262.7..282.7), so no hand can close on it from the front. The same 8 x 10 mm fin carried 70 mm further
+    # forward, to y -100, puts a grip 35-65 mm in front of the tube: a hand pinches it there with the forearm over the optics bridge
+    # (bridge top z 232.7), and the robot's reservoir fingers close on it as they did on the handle. Same plane (z 248..258) for S, M
+    # and L; it rides out with the reservoir through the bridge's slot. Screwed to the handle fin (2 x M3, not drawn).
+    add(f"Reservoir {reservoir} pull tab (6061, 8 mm fin, the lid's handle carried 70 mm forward, in front of the beam tube)",
+        box(xd - 4, xd + 4, RES_TAB["y"][0], RES_TAB["y"][1], RES_TAB["z"][0], RES_TAB["z"][1]), C["anod"], 7, (0, 0, 420), group="cartridge",
+        mat="al6061", bom="R1")
     add("Load cell (single-point, 2 kg, carries the dock rails: reservoir inventory)", box(xd + 17, xd + 30, -6, 6, lz1, zd), C["ss"], 7, (0, 0, 380), mat="steel", bom="M4", mcm="LOADCELL_SP")
     d = (V(0, 0, 0) - cam_p).normalized()
     up = d * -1
@@ -895,7 +929,8 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     LT = LATCH_1807A61
     zl_c = 54.0                                            # latch centre line at the seal's centroid height: with floating hinges the
                                                            # latches alone set the squeeze, so they pull the door flat (seals.md)
-    door = fuse([rbox(-124, 124, dy0, dy1, -6, 114, 6, "|Y")] + [box(sx * 124.0 if sx > 0 else -cx, cx if sx > 0 else -124.0, dy0, dy1, zl_c - 18.0, zl_c + 18.0) for sx in (-1, 1)])
+    ex_ = LATCH_POS["ear_x"]                               # ears end at x +/-146 (were +/-156): the latch brackets bolt to their front faces
+    door = fuse([rbox(-124, 124, dy0, dy1, -6, 114, 6, "|Y")] + [box(124.0, ex_, dy0, dy1, zl_c - 18.0, zl_c + 18.0), box(-ex_, -124.0, dy0, dy1, zl_c - 18.0, zl_c + 18.0)])
     dw_in, dh_in, dr_in = 232.0 - 2.3, 104.0 - 2.3, 4.4
     door = door.cut(dovetail_loop((0, dy1, 54.0), (0, 1, 0), (1, 0, 0), dw_in, dh_in, dr_in, F["width"], F["depth"], MP.DOVETAIL_DEG))
     add("Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)", door, C["alu"], 8, (0, -240, 0), group="door", mat="al6061", bom="G1", mcm="PLATE_CHAMBER", section=True)
@@ -918,15 +953,26 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
             blocks.append(fuse([box(xa, xb, hy, dy1, zf, hz), cyl(6, (xa, hy, hz), "x", xb - xa)]).cut(cyl(2.6, (xa - 1, hy, hz), "x", xb - xa + 2)))
     add("Door hinge knuckles on the chamber (304 SS)", comp(blocks), C["ss"], 8, (0, -240, 0), mat="ss304", bom="G1", mcm="1151A87", section=True)
     add("Hinge pins (Ø5, 316)", comp([cyl(2.5, (x - 12.0, hy, hz), "x", 44) for x in hx]), C["steel"], 8, (0, -240, 0), mat="ss316l", bom="G1", section=True)
-    # draw latches (McMaster 1807A61, 800 lb, adjustable grip) on the chamber's side faces at mid-height, pulling strikes on the door's ears straight
-    # back (+y): set each to >= 0.4 kN of preload (seals.md). For the robot cell a pneumatic latch clamp takes the same face and strike.
+    # draw latches (McMaster 1807A61, 800 lb, adjustable grip), mirrored onto the door (operations.md U2.2, 2026-11-23): each latch sits on a
+    # bracket bolted to the front face of a door ear and points forward, so its lever is in front of the door at y -207, ahead of the
+    # front-right optics post (x 180..240, y -185..-125) that hid the right latch when it was on the chamber's side face. The strike moved
+    # to the chamber's side face, 35..63 mm behind the latch (the 1807A61's latching distance). The pull is still straight back (+y) on
+    # the ears at the seal's centroid height (z 54), one each side of the door's centre line (x +/-158), so the resultant stays at the
+    # seal's centroid; the brackets load the ears' front faces where door_seal_fea.py holds them. Set each to >= 0.4 kN (seals.md).
+    # This also takes the left latch off the chamber's left side face, out of the recoater feedthrough's way to the front (M8.4).
     lb_ = LT["body_L"]
-    lat = [box(cx, cx + LT["H"], dy1 + 1.0, dy1 + 1.0 + lb_, zl_c - LT["W"] / 2, zl_c + LT["W"] / 2) if sx > 0 else
-           box(-cx - LT["H"], -cx, dy1 + 1.0, dy1 + 1.0 + lb_, zl_c - LT["W"] / 2, zl_c + LT["W"] / 2) for sx in (1, -1)]
-    add(f"Draw latches on the chamber's side faces (2 x McMaster 1807A61, 304 SS, {LT['rating_N'] / 1000:.1f} kN rated, preload set >= 0.4 kN)", comp(lat), C["ss"], 8, (0, -240, 0),
-        mat="ss304", mass_kg=2 * 0.25, bom="G1", mcm="1807A61", section=True)
-    strike = [box(cx, cx + 3.0, dy0, dy1 - 1.0, zl_c - 14.0, zl_c + 14.0) if sx > 0 else box(-cx - 3.0, -cx, dy0, dy1 - 1.0, zl_c - 14.0, zl_c + 14.0) for sx in (1, -1)]
-    add("Draw-latch strikes on the door's ears (1807A61 strike plates)", comp(strike), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", mass_kg=2 * 0.03, bom="G1", mcm="1807A61", section=True)
+    xb0, xb1 = LATCH_POS["bracket_x"]                      # bracket: 6 mm plate (x 140..146) on an 18 x 6 foot on the ear's front face
+    yb0 = dy0 - LATCH_POS["bracket_len"]
+    brk = fuse([box(xb1 - 6.0, xb1, yb0, dy0, zl_c - 20.0, zl_c + 46.0), box(xb0, xb1, dy0 - 6.0, dy0, zl_c - 18.0, zl_c + 18.0)])
+    add("Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate on a foot bolted to each ear's front face)", comp([brk, brk.mirror("YZ")]), C["alu_dark"], 8,
+        (0, -240, 0), group="door", mat="al6061", bom="G1", section=True)
+    lat_r = box(xb1, xb1 + LT["H"], dy0 - 1.0 - lb_, dy0 - 1.0, zl_c - LT["W"] / 2, zl_c + LT["W"] / 2)
+    add(f"Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, {LT['rating_N'] / 1000:.1f} kN rated, preload set >= 0.4 kN)",
+        comp([lat_r, lat_r.mirror("YZ")]), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", mass_kg=2 * 0.25, bom="G1", mcm="1807A61", section=True)
+    ys0_, ys1_ = LATCH_POS["strike_y"]
+    strike = [box(cx, cx + 3.0, ys0_, ys1_, zl_c - 14.0, zl_c + 14.0), box(-cx - 3.0, -cx, ys0_, ys1_, zl_c - 14.0, zl_c + 14.0)]
+    add("Draw-latch strikes on the chamber's side faces (1807A61 strike plates)", comp(strike), C["ss"], 8, (0, -240, 0), mat="ss304", mass_kg=2 * 0.03, bom="G1",
+        mcm="1807A61", section=True)
     add("Door handle", comp([cyl(5, (-30, dy0, 95), "-y", 26), cyl(5, (30, dy0, 95), "-y", 26), cyl(6, (-36, dy0 - 26, 95), "x", 72)]), C["anod"], 8, (0, -260, 0), group="door", mat="al6061", bom="G1", section=True)
 
     # ===================== 9. Optics =====================

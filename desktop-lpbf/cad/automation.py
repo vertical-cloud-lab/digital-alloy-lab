@@ -64,17 +64,21 @@ def add_features(add, M, module):
         group="door", mat="al6061", bom="RA2", tags=tag)
 
     # ---------------------------------------------------------------- 3. latch actuators
-    # a Ø20 compact cylinder on each side face, under its draw latch (the latch body is at z 31.8..76.2, y -110..-30); on the right
-    # it stops 8 mm short of the O2 sample line (y -40) and stays below the vacuum valve (z >= 37.5)
+    # since 2026-11-23 the latches sit on brackets on the door's ears, pointing forward (lpbf_low section 8: the right one was behind the
+    # front-right optics post). A Ø20 compact cylinder rides on each bracket's outer face above its latch (latch z 31.8..76.2, x 146..177.75;
+    # cylinder z 78..98, x 146..166), its rod forward toward the lever at the latch's front end (y -207). They move with the door
+    # (group "door"), on a coiled air line; inboard of the post (x >= 180) and clear of the door drive (z <= 11.5) in every door position.
+    ex_ = M.LATCH_POS["bracket_x"][1]
+    dy0 = -cy - 15.0
     acts = []
     for sx in (-1, 1):
-        x0, x1 = (cx, cx + 22.0) if sx > 0 else (-cx - 22.0, -cx)
-        body = cyl(10.0, (x0 + 11.0 if sx > 0 else x1 - 11.0, -50.0, 18.0), "-y", 46.0)
-        rod = cyl(4.0, (x0 + 11.0 if sx > 0 else x1 - 11.0, -96.0, 18.0), "-y", 10.0)
-        foot = box(x0, x1, -60.0, -48.0, 6.0, 30.0)
+        xc_ = sx * (ex_ + 10.0)
+        body = cyl(10.0, (xc_, dy0 - 4.0, 88.0), "-y", 46.0)
+        rod = cyl(4.0, (xc_, dy0 - 50.0, 88.0), "-y", 10.0)
+        foot = box(min(sx * ex_, sx * (ex_ + 20.0)), max(sx * ex_, sx * (ex_ + 20.0)), dy0 - 10.0, dy0 - 4.0, 78.0, 98.0)
         acts.append(fuse([body, rod, foot]))
     add("Draw-latch actuators: 2 x Ø20 compact air cylinders (SMC CJ2/CQ2 class, 157 N at 0.5 MPa) that throw the latch levers",
-        comp(acts), C["blue"], 8, (0, -240, 0), mat="misc", mass_kg=2 * 0.12, bom="RA3", tags=tag)
+        comp(acts), C["blue"], 8, (0, -240, 0), group="door", mat="misc", mass_kg=2 * 0.12, bom="RA3", tags=tag)
 
     # ---------------------------------------------------------------- 4. drawer wing heads
     # the quarter-turn studs' heads are Ø14 x 3.5 at x = +/-51, y -122.5..-119, z = lz0 + 8; a wing 26 x 4 x 9 mm in front of
@@ -95,18 +99,16 @@ def add_features(add, M, module):
         bom="RA5", tags=tag)
 
     # ---------------------------------------------------------------- 6. liner pull tabs
-    # each side liner (0.5 mm 316L at x = +/-(ix - 0.6 .. ix - 0.1), y -87..87, z 16..110) gets a 2 mm tab on two 12 mm standoffs at
-    # its front top corner, inside the chamber above the door opening's top (z 100): z 92..108, y -70..-46, so it stays on the
-    # liner when the liner is shortened 15 mm at the front (the patch that frees it from the ball screw, robot-ops.md)
-    tabs = []
-    for sx in (-1, 1):
+    # each side liner (0.5 mm 316L at x = +/-(ix - 0.6 .. ix - 0.1), y -70.5..85.5, z 16..104 since 2026-11-23) gets a 2 mm tab on two
+    # 12 mm standoffs near its front top corner: z 88..104, y -70..-46. One part per liner, so each comes out with its own liner
+    # (operations.md M3, robot-ops.md liner jobs)
+    for sx, side in ((-1, "left"), (1, "right")):
         xl = sx * (ix - 0.6)
         xs = sx * (ix - 0.6 - 12.0)
-        so_ = [box(min(xl, xs), max(xl, xs), y, y + 4.0, 94.0, 106.0) for y in (-68.0, -52.0)]
-        pl = box(min(xs, xs - sx * 2.0), max(xs, xs - sx * 2.0), -70.0, -46.0, 92.0, 108.0)
-        tabs.append(fuse(so_ + [pl]))
-    add("Liner pull tabs (316L, 2 mm, 12 mm off each side liner, spot-welded)", comp(tabs), C["ss"], 5, (0, 0, 160), mat="ss316l", mass_kg=0.02,
-        bom="RA6", tags=tag)
+        so_ = [box(min(xl, xs), max(xl, xs), y, y + 4.0, 90.0, 102.0) for y in (-68.0, -52.0)]
+        pl = box(min(xs, xs - sx * 2.0), max(xs, xs - sx * 2.0), -70.0, -46.0, 88.0, 104.0)
+        add(f"Liner pull tab, {side} (316L, 2 mm, 12 mm off the {side} side liner, spot-welded)", fuse(so_ + [pl]), C["ss"], 5, (sx * 60, 0, 160),
+            mat="ss316l", mass_kg=0.01, bom="RA6", tags=tag)
 
     # ---------------------------------------------------------------- 7. fiducials
     # tag36h11 on 56 x 56 x 2 mm anodised plates on the front face of the guard's front-left post (x -420..-400, y -265), left of the

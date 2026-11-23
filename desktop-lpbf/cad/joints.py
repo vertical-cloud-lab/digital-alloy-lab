@@ -124,6 +124,20 @@ def add_fasteners(h, add, key, name, pn, items, step, bom, group="", tags=(), ex
         REGISTRY[key]["extra"].append((pn, list(items)))
 
 
+def locating_pins(h, parts, add, key, wall, flange, items, name, step, bom, explode):
+    """Two Ø3 x 10 316 dowels (ISO 2338 m6, McMaster 93600A304) for a bolted flange (assembly.md patch 9): each item is the pin's outer
+    end, 5 mm out from the wall face, and its axis into the wall. Pressed 5 mm into the wall (H7 hole... m6 pin: a light press made in
+    the shop, not by the robot, assembly.md patch 4) and a slip hole 6 mm deep in the flange, so the arm that places the flange is
+    also the arm that drives its screws."""
+    _KEY[0] = key + "_pins"
+    pn = find("dowel", 3, 10)
+    cut_parts(parts, wall, [hole(p, n, 4.99, 10.5, 3.0) for p, n in items])
+    cut_parts(parts, flange, [hole(p, n, -1.0, 5.01, 3.0) for p, n in items])
+    add_fasteners(h, add, key + "_pins", f"{name}, Ø3 x 10 316 (pressed 5 mm into the wall, slip fit in the flange)", pn, items, step, bom, explode=explode)
+    JOINT_NOTES[key + "_pins"] = ("Two Ø3 m6 dowels locate the flange on its wall (assembly.md patch 9), so one arm places it and drives its screws; "
+                                  "the wall's two H7 holes are drilled and reamed in the setup that taps the flange's screw holes.")
+
+
 def polar(r, deg):
     a = math.radians(deg)
     return r * math.cos(a), r * math.sin(a)
@@ -359,6 +373,34 @@ def add_joints(h, parts, add, module="M50"):
     add_fasteners(h, add, "blade", "Blade screws, M3 x 8 316 (heads 11-17 mm above the plate, over the powder heap)", pn3, items, 6, "M5",
                   group="recoater", explode=(0, 0, 220))
 
+    # ---------------- 7b. blade cartridge in the arm's pocket: 2 x Ø3 dowels and 2 ball plungers, no screws (robot-ops.md patch 5) ----------------
+    # The cartridge (holder + blade + grip fin) slides 8 mm into the arm's pocket from the front (the holder's back end, y 53..61). Two
+    # Ø3 x 10 316 dowels pressed 5.5 mm into the pocket's back wall (y 61..67) enter slip holes in the holder's back face and take the
+    # blade's 50 N strike in shear; two M6 ball plungers in the pocket's side walls drop into 0.8 mm dimples in the holder's sides
+    # and hold it home (~40 N straight pull to release, as the reservoir's detents). The blade's own two M3 stay: it is changed on
+    # the bench in a spare cartridge, so neither the robot nor a person needs a screwdriver at the machine.
+    _KEY[0] = "blade_cartridge"
+    yb_c, zc_ = P["iy"] - 34.0, 19.5                            # holder back face; arm mid-height (arm z 14..25)
+    dw3 = find("dowel", 3, 10)
+    ditems = [((xc + s * 4.5, yb_c + 5.5, zc_), (0.0, -1.0, 0.0)) for s in (-1, 1)]
+    cut_parts(parts, "Recoater arm", [hole(p, n, -0.01, 5.5 + 0.01, 3.0) for p, n in ditems])
+    cut_parts(parts, "Blade holder", [hole(p, n, 5.49, 10.6, 3.0) for p, n in ditems])
+    add_fasteners(h, add, "blade_cartridge", "Blade-cartridge dowels, Ø3 x 10 316 (pressed into the arm's pocket, slip fit in the holder's back face)", dw3,
+                  ditems, 6, "M5", group="recoater", explode=(0, 0, 220))
+    pl = "85015A47"
+    c_pl = FS.CATALOG[pl]
+    yp = yb_c - 4.0                                             # 4 mm in front of the holder's back face, inside the pocket
+    xr = c_pl["L"] + c_pl["travel"] - 0.8                       # top of the plunger from the holder's side face: ball 0.8 mm into its dimple
+    pitems = [((xc + s * (9.0 + xr), yp, zc_), (-s, 0.0, 0.0)) for s in (-1, 1)]
+    cut_parts(parts, "Recoater arm", [hole(p, n, -3.5, xr + 0.01, c_pl["d"]) for p, n in pitems])          # M6 tapped through the pocket wall
+    rb = c_pl["ball_d"] / 2
+    cut_parts(parts, "Blade holder", [cq.Solid.makeSphere(rb + 0.05, V(xc + s * (9.0 - 0.8 + rb), yp, zc_)) for s in (-1, 1)])
+    add_fasteners(h, add, "blade_cartridge", "Blade-cartridge ball plungers, M6 x 1 18-8 with 440C ball, in the arm's pocket walls (detents in the holder's sides)",
+                  pl, pitems, 6, "M5", group="recoater", explode=(0, 0, 220))
+    JOINT_NOTES["blade_cartridge"] = ("Swapped at every alloy change by the robot (or a hand) with a 40 N straight pull: no screwdriver at the machine. The "
+                                      "dowels locate the holder to the arm (H7 holes; pressed in the arm, slip in the holder) and take the blade's 50 N "
+                                      "strike in shear; the plungers' balls sit in 0.8 mm dimples (hot-swap.md 3.3; robot-ops.md patch 5).")
+
     # ---------------- 8. window: flange to lid (6 x M4 x 16, M4 x 4 inserts: the drawer slot is 5 mm under the lid top) ----------------
     ins44 = find("insert", 4, 4)
     items = [((*polar(40.0, 60.0 * k), lz1 + 12.0), mZ) for k in range(6)]
@@ -392,6 +434,10 @@ def add_joints(h, parts, add, module="M50"):
     add_fasteners(h, add, "plenum_in", "Inlet-plenum screws, M4 x 16 316 (clear of the Z flange's screws)", pn4, items, 5, "G4", explode=(0, 180, 0))
     add_fasteners(h, add, "plenum_in", "Inlet-plenum helical inserts, M4 x 6 18-8, in the back wall", ins4, [((p[0], cy, p[2]), n) for p, n in items], 5, "G4", explode=(0, 180, 0))
     JOINT_NOTES["plenum_in"] = "316L plenum on the 6061 back wall: bolted over an FKM face O-ring, never welded (dissimilar metals)."
+    # locating pins (assembly.md patch 9, 2026-11-23): two Ø3 x 10 316 dowels pressed 5 mm into the back wall, slip holes through the flange,
+    # so the arm that places the plenum also drives its screws (F14). Between the side screws at x +/-71, at the O-ring loop's mid-height.
+    locating_pins(h, parts, add, "plenum_in", "Process chamber body", "Cross-flow inlet plenum", [((s * 71.0, cy + 5.0, 13.25), (0.0, -1.0, 0.0)) for s in (-1, 1)],
+                  "Inlet-plenum locating dowels", 5, "G4", (0, 180, 0))
 
     _KEY[0] = "plenum_out"
     y0o, y1o = MP.OUTLET_Y
@@ -418,6 +464,9 @@ def add_joints(h, parts, add, module="M50"):
     cut_parts(parts, "Process chamber body", [hole(p, n, 8.0, 15.5, od) for p, n in items] + [hole(p, n, 15.49, 20.5, 5.0) for p, n in items])
     add_fasteners(h, add, "vac_port", "Vacuum-port adapter screws, M5 x 20 316", pn520, items, 5, "G7", explode=(180, 0, 0))
     add_fasteners(h, add, "vac_port", "Vacuum-port adapter helical inserts, M5 x 7.5 18-8, in the right wall", ins, [((cx, p[1], p[2]), n) for p, n in items], 5, "G7", explode=(180, 0, 0))
+    # locating pins (assembly.md patch 9): above and below the bore on the plate's centre line, outside the 2-024 groove (F16)
+    locating_pins(h, parts, add, "vac_port", "Process chamber body", "Vacuum port adapter plate", [((cx + 5.0, 0.0, z), (-1.0, 0.0, 0.0)) for z in (47.0, 93.0)],
+                  "Vacuum-port adapter locating dowels", 5, "G7", (180, 0, 0))
 
     _KEY[0] = "bearing_cap"
     ry_, rz_ = P["rc_screw_y"], P["rc_screw_z"]
@@ -427,6 +476,9 @@ def add_joints(h, parts, add, module="M50"):
     cut_parts(parts, "Process chamber body", [hole(p, n, 14.0, 20.0, insert_od(ins4)) for p, n in items] + [hole(p, n, 19.99, 21.5, 4.0) for p, n in items])
     add_fasteners(h, add, "bearing_cap", "Bearing-cap screws, M4 x 20 316", pn420, items, 6, "M1", explode=(160, 0, 0))
     add_fasteners(h, add, "bearing_cap", "Bearing-cap helical inserts, M4 x 6 18-8, in the right wall", ins4, [((cx, p[1], p[2]), n) for p, n in items], 6, "M1", explode=(160, 0, 0))
+    # locating pins (assembly.md patch 9): on the 16 mm screw circle at 90 deg (front) and 270 deg (back), between the screws, outside the 2-019 groove (F23)
+    locating_pins(h, parts, add, "bearing_cap", "Process chamber body", "Recoater floating bearing housing",
+                  [((cx + 5.0, ry_ + s * 16.0, rz_), (-1.0, 0.0, 0.0)) for s in (-1, 1)], "Bearing-cap locating dowels", 6, "M1", (160, 0, 0))
 
     _KEY[0] = "res_lid"
     res = getattr(h, "_RES", None)

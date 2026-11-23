@@ -786,8 +786,10 @@ def job_reservoir(cell: Cell, arm_x=-90.0, roll=0.0, **kw):
     al = allow_of(*res)
     xd = cell.M.P["x_dose"]
     R = R_of((0, 1, 0), (1, 0, 0)) @ C.rot((0, 0, 1), roll)      # roll 180: the caps' step goes up, the camera is underneath
-    p = np.array([xd, -18.0, 252.0 if roll == 0 else 255.0])     # lips on the handle fin (fin z 248..258, 8 mm thick)
-    j.goto(T_of(R, p + (0, -230, 0)), "to the reservoir's handle, in front of the bridge slot", close=j.arm.close_for_gap(16.0),
+    # lips on the pull tab (2026-11-23: the handle fin carried forward to y -100, z 248..258, 8 mm thick), 50-65 mm in front of the
+    # enclosed beam tube (y >= -35.25) instead of under it; the same grip a hand uses (operations.md U1.1)
+    p = np.array([xd, -84.0, 252.0 if roll == 0 else 255.0])
+    j.goto(T_of(R, p + (0, -230, 0)), "to the reservoir's pull tab, in front of the bridge slot", close=j.arm.close_for_gap(16.0),
            then=[(T_of(R, p), al, None), (T_of(R, p + (0, -330, 0)), al, j.arm.close_for_gap(8.1))])
     j.line(T_of(R, p), "in along the slot, the blades either side of the fin", allow=al, step_mm=3.0)
     j.grip(8.1, "close on the fin", allow=al)
@@ -818,9 +820,12 @@ def job_blade(cell: Cell, arm_x=0.0, **kw):
     j.line(T_of(R, p), "in over the sill, blades either side of the fin", allow=al, step_mm=3.0)
     j.grip(4.1, "close on the fin", allow=al)
     j.attach(held, "blade cartridge")
+    # 2026-11-23: the cartridge sits on two Ø3 dowels in the pocket's back wall and two M6 ball plungers in its side walls (joints.py
+    # blade_cartridge); the holder slides off the dowels along their axis and the balls ride out of their 0.8 mm dimples
     alh = al | allow_of(cell.name("Recoater arm"), cell.name("Recoater carriage block"), *cell.names("Chamber floor plate"),
-                        *cell.names("Build module"), *cell.names("Process chamber body"), kind="held")
-    j.line(j.moved((0, -10.0, 0)), "pull 10 mm out of the arm's pocket (40 N over the plungers)", allow=alh, step_mm=1.0, force=(0, -40.0, 0))
+                        *cell.names("Build module"), *cell.names("Process chamber body"), *cell.names("Blade-cartridge dowels"),
+                        *cell.names("Blade-cartridge ball plungers"), kind="held")
+    j.line(j.moved((0, -10.0, 0)), "pull 10 mm out of the arm's pocket (40 N over the plungers, off the dowels)", allow=alh, step_mm=1.0, force=(0, -40.0, 0))
     j.line(j.moved((0, 0, 12.0)), "lift 12 mm (the blade's edge over the sill)", allow=alh, step_mm=1.0)
     j.line(j.moved((0, -290.0, 0)), "out through the door", allow=al, step_mm=3.0)
     j.line(j.moved((0, -30.0, 88.0)), "up clear (to the MiR's tool rack)", allow=al, fine=False)
@@ -946,28 +951,35 @@ def job_vacuum(cell: Cell, arm_x=0.0, **kw):
     return j
 
 
-def job_liner(cell: Cell, arm_x=0.0, **kw):
-    """The right side liner, with its screw hole slotted to the back edge and 15 mm shorter at the front (patch): lips on its pull
-    tab, slide it 26 mm forward along the wall (off the ball screw), in 30 mm off the wall, roll 30 deg, out through the door."""
+def job_liner(cell: Cell, arm_x=0.0, side="right", **kw):
+    """A side liner (2026-11-23: its own part, the ball-screw hole slotted open to the back edge, 15 mm shorter at the front, 88 mm tall)
+    with the recoater at the other end of its stroke: lips on the liner's pull tab, 4 mm in off the wall, slide 21 mm forward (the screw
+    leaves the slot), in to x +/-105, down 6 mm under the door opening's top, out through the door (operations.md M3, the same path)."""
+    s = 1.0 if side == "right" else -1.0
     caps = E.plate_finger_spec()
-    j = Job(cell, "liner_right", arm_x=arm_x, caps=caps, state0={"gdoor": GT, "door": DOOR_OPEN})
-    tab = cell.name("Liner pull tabs")
-    liner = cell.name("Lift-out wall liners")
+    j = Job(cell, f"liner_{side}", arm_x=arm_x, caps=caps,
+            state0={"gdoor": GT, "door": DOOR_OPEN, "recoater": 0.0 if side == "right" else cell.M.MOTION["recoater"]["hi"]})
+    tab = cell.name(f"Liner pull tab, {side}")
+    liner = cell.name(f"Lift-out wall liner, {side}")
     held = [tab, liner]
     al = allow_of(*held, cell.name("Process chamber body"))
-    ix = cell.M.P["ix"]
-    # the tab plate: x 125.4..127.4, y -70..-46, z 92..108 (right); approach +y with a slight yaw so the blades reach past the opening
-    xc = 126.4
+    # the tab plate: x +/-(125.4..127.4), y -70..-46, z 88..104; approach +y with a slight yaw so the blades reach past the opening
+    xc = s * 126.4
     R = R_of((0, 1, 0), (1, 0, 0))
-    p = np.array([xc, -58.0, 100.0])
-    yaw = -8.0
+    p = np.array([xc, -58.0, 96.0])
+    yaw = -8.0 * s
     Rr = rotz(yaw) @ R
     j.goto(C.Tm(Rr, p + rotz(yaw) @ np.array([0, -230.0, 0])), "to the door", close=j.arm.close_for_gap(16.0))
     j.line(C.Tm(Rr, p), "in to the liner's tab", allow=al, step_mm=3.0)
     j.grip(2.1, "close on the tab", allow=al)
-    j.attach(held, "liners (right liner + tabs)")
-    j.line(C.Tm(Rr, p + (0, -26, 0)), "slide 26 mm forward along the wall (off the screw)", allow=al | allow_of(cell.name("Process chamber body"), kind="held"),
-           step_mm=1.0, force=(0, -20.0, 0))
+    j.attach(held, f"{side} side liner + its tab")
+    alw = al | allow_of(cell.name("Process chamber body"), kind="held")
+    j.line(j.moved((-s * 4.0, 0, 0)), "4 mm in off the wall (the clips let go)", allow=alw, step_mm=1.0, force=(-s * 15.0, 0, 0))
+    j.line(j.moved((0, -21.0, 0)), "slide 21 mm forward along the wall: the ball screw leaves the slot", allow=alw, step_mm=1.0, force=(0, -20.0, 0))
+    j.line(j.moved((-s * 31.0, 0, 0)), "in to x +/-105, inside the door opening", allow=al, step_mm=2.0)
+    j.line(j.moved((0, 0, -6.0)), "down 6 mm, under the door opening's top", allow=al, step_mm=1.0)
+    j.line(j.moved((0, -300.0, 0)), "out through the door", allow=al, step_mm=3.0)
+    j.line(j.moved((0, -30.0, 60.0)), "up clear (to the MiR's rack)", allow=al, fine=False)
     return j
 
 
@@ -977,7 +989,7 @@ VARIANTS = {
     "guard_door_close": [dict(arm_x=450.0), dict(arm_x=300.0), dict(arm_x=300.0, yaw=-30.0), dict(arm_x=-450.0), dict(arm_x=150.0, yaw=-40.0)],
 }
 for _k in ("chamber_door_open", "drawer", "plate_drawbar", "plate_bayonet", "reservoir", "blade_cartridge",
-           "module_swap", "overflow_jar", "vacuum_clean", "liner_right"):
+           "module_swap", "overflow_jar", "vacuum_clean", "liner_right", "liner_left"):
     VARIANTS[_k] = [dict(v) for v in _SIDES]
 VARIANTS["reservoir"] = [dict(arm_x=x, roll=0.0) for x in (-390.0, 210.0, -540.0, 360.0, -240.0, -90.0)]
 VARIANTS["module_swap"] = [dict(arm_x=x, roll=r) for r in (0.0, 180.0) for x in (300.0, -300.0, 450.0, -450.0, 150.0, -150.0)]
@@ -1000,7 +1012,8 @@ JOBS = {
     "module_swap": job_module,
     "overflow_jar": job_overflow,
     "vacuum_clean": job_vacuum,
-    "liner_right": job_liner,
+    "liner_right": lambda c, **kw: job_liner(c, side="right", **kw),
+    "liner_left": lambda c, **kw: job_liner(c, side="left", **kw),
 }
 
 
@@ -1152,7 +1165,7 @@ LABEL = {"guard_door": "Guard door open (515 mm)", "guard_door_close": "Guard do
          "chamber_door_close": "Chamber door close by the robot", "chamber_door_powered": "Chamber door close by its actuator", "plate_drawbar": "Plate out, drawbar", "plate_bayonet": "Plate out, bayonet",
          "drawer": "Cover-slide drawer out (whole drawer)", "reservoir": "Reservoir off the dock and out", "blade_cartridge": "Blade cartridge out",
          "module_swap": "Build module out", "overflow_jar": "Overflow jar out (as drawn)", "vacuum_clean": "Chamber vacuum (3 lanes)",
-         "liner_right": "Right liner (slotted)"}
+         "liner_right": "Right side liner (slotted, own part)", "liner_left": "Left side liner (slotted, own part)"}
 
 
 def write_md(results, path):
@@ -1184,7 +1197,7 @@ def write_md(results, path):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--jobs", default=",".join(j for j in JOBS if j not in ("chamber_door_close", "liner_right")))
+    ap.add_argument("--jobs", default=",".join(j for j in JOBS if j not in ("chamber_door_close",)))
     ap.add_argument("--modules", default="M50,S25,L75")
     ap.add_argument("--render", action="store_true")
     ap.add_argument("--tag", default="")

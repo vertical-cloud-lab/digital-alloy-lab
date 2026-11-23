@@ -141,7 +141,7 @@ def door_T(deg, hinge):
 REGION = dict(x=(-560.0, 1010.0), y=(-470.0, 240.0))
 HULL_ONLY = ("Guard frame", "Optics bridge posts", "Chamber legs", "rack frame", "Rack side", "Leveling", "UPS", "Fiber laser",
              "Scan +", "DIN-rail", "Dry scroll", "Trace O2", "Sealed side-channel", "Sealed cyclone", "Argon solenoid", "Argon pressure",
-             "Z actuator", "Z bracket", "Z servo", "Recoater servo", "Recoater motor", "Base plate", "Lift-out wall liners")
+             "Z actuator", "Z bracket", "Z servo", "Recoater servo", "Recoater motor", "Base plate", "Lift-out wall liner")
 
 
 def body_of(p):
@@ -153,7 +153,7 @@ def body_of(p):
         return "plate"
     if n.startswith("Overflow jar") or n.startswith("Overflow clamp"):
         return "jar"
-    if n.startswith("Lift-out wall liners"):
+    if n.startswith("Lift-out wall liner"):
         return "liners"
     g = p.group
     if g == "recoater":
