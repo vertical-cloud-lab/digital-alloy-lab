@@ -212,8 +212,9 @@ door's hinge knuckles, and over the guard's bottom front rail. The robot job (`o
 - **Fixed in 7db3b5d:** the jar flange keeps an 11 mm Ø38.1 neck before the cup widens, and that pair is now 0.
 - **Exact OpenCascade check of the overflow parts on the final geometry: all 0.** It covers jar, port, clamp, sensor, bracket,
   right-hand leg and funnel, and the dropped module tab swept 182 mm forward against the clamp (4.5 mm under it).
-- **L75 full sweep on the final geometry (started 23:49):** the first three static states, **0 interferences**. The rest was still
-  running at the deadline, as was the M50 sweep (started 23:51). S25 was not run. Finish all three first.
+- **Full sweeps on the final geometry (7db3b5d): M50 and L75 both 0 interferences** in all five static states and all eight motion
+  sweeps (M50 311 s, L75 337 s; `analysis/out/interference.md`, `variants/interference-L75-L.md`). **S25 was not run** before the
+  deadline. Hand ops on S25 (S1–S3, U1, U4): 10 pass / 0 warn / 1 fail; the fail is U1.1, as before.
 - **Indirect evidence for the module path:** the module swap passes in the robot audit above, and the hand check S2.4 passes on M50
   (0.1 mm at the floor port, as before).
 
