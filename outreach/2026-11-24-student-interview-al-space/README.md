@@ -24,7 +24,7 @@ The transcript and Edison's answer are copied unchanged from the staged drop. Bo
     whole hulls of some fast ships. Steel makes the big hulls. Copper alloys go where seawater flows: pipes, heat
     exchangers, propellers.
   - **13, rockets.** Rocket corrosion is mostly a problem on the ground, at seaside launch pads, not on the way up.
-  - **15, cold and brittleness.** Aluminum alloys don't have a ductile-to-brittle transition. That is why
+  - **15, cold and brittleness.** Aluminum alloys don't have a ductile-to-brittle transition. That is part of why
     liquid-hydrogen and liquid-oxygen tanks are made of aluminum.
   - **17, price.** Copper costs three to five times as much as aluminum per kilogram, and bronzes are mostly
     copper. The student had it right.
@@ -32,8 +32,8 @@ The transcript and Edison's answer are copied unchanged from the staged drop. Bo
     percent copper is the classic aerospace family (the review's own example, AA2024, is one), and copper with
     about 10% aluminum is the bronze of Navy propellers. A literal 50-50 mix is brittle.
 - **Two of the qualifications matter for a piece about this review:**
-  - **4, radiation against strength.** The review's point is the reverse of a trade-off: radiation is what
-    strips strength from today's alloys, and the new alloys are built to keep it.
+  - **4, radiation against strength.** The review's point is different: radiation is what strips strength from
+    today's alloys, and the new alloys are built to keep it.
   - **8, "a quadrillion dollars".** It's an order-of-magnitude illustration of the size of the composition
     search space, not a measured cost.
 - **Edison's verdicts are mostly right, but check its sources before reusing them.** It caught 9, 13, 15 and 17.
@@ -191,12 +191,12 @@ passages of the review that were spot-checked.
 
 - **Statements 1 and 15:** the lab's review of cryogenic testing of aerospace alloys
   ([`cryogenic-testing-aerospace-alloys.md`](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/6c997cd/cryogenic-testing-aerospace-alloys.md),
-  issue #254). It gives the propellant temperatures, the Shuttle tank's rule that 2195 had to be at least as tough at
+  issue [#254](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/254)). It gives the propellant temperatures, the Shuttle tank's rule that 2195 had to be at least as tough at
   −196 °C as at room temperature, and the exceptions (7075-T6, some Al–Li tempers and directions) where aluminum
   does lose toughness in the cold.
 - **Statements 9, 11, 17 and 19:** the lab's plan to test naval copper alloys on the CubXL
   ([`alloy-corrosion/copper/`](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/b1db1a0/alloy-corrosion/copper/README.md),
-  PRs #180 and #264). Its targets are the alloys Navy ships do use in seawater: 90-10 and 70-30 copper-nickel (C70600,
+  PRs [#180](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/180) and [#264](https://github.com/vertical-cloud-lab/digital-alloy-lab/pull/264)). Its targets are the alloys Navy ships do use in seawater: 90-10 and 70-30 copper-nickel (C70600,
   C71500) and nickel-aluminum bronze (C95800), cast or wrought and as laser-deposited repairs. The companion Edison
   batch ([`copper-ded-edison/`](https://github.com/vertical-cloud-lab/digital-alloy-lab/blob/b1db1a0/alloy-corrosion/copper-ded-edison/README.md))
   covers copper release and antifouling in the Navy's seawater tests. Nickel-aluminum bronze is itself an
@@ -211,10 +211,12 @@ passages of the review that were spot-checked.
   equivalents).
 - **Other sources:**
   - Every DOI above was checked against Crossref.
-  - Every link was checked. A few sites refuse scripted requests (copper.org, Europe PMC); the review was read
-    through the Europe PMC API, and copper.org pages are linked as archived copies where possible.
-  - Numbers come from the source itself: NASA NTRS PDFs, USGS 2026 summaries, the FAA page, the Sandia chapter,
-    the Leoben release, and abstracts for the papers.
+  - Every link was checked. A few sites refuse scripted requests (copper.org, navsea.navy.mil, Europe PMC).
+    The review was read through the Europe PMC API, and the copper.org and NAVSEA pages are linked as Wayback
+    Machine copies where possible.
+  - Numbers come from the source itself: NASA NTRS PDFs, the USGS 2026 summaries, the World Bank Pink Sheet, the
+    FAA page, the Sandia chapter, the Leoben release, the 2012 National Academies report, and abstracts for the
+    papers.
   - Paywalled papers were judged from their abstracts and are cited only for what those show.
 - **Edison's sources:** each was looked up (Crossref, NTRS, publisher pages), and the open-access ones were read
   for the specific claim Edison attaches to them.
