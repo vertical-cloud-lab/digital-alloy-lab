@@ -9,7 +9,129 @@ seal, use Shigley, heat transfer and CalculiX, and say what the machine costs us
 Nothing here has been built, quoted by a shop, or reviewed by BYU's Laser Safety Officer or EHS. Each note below has
 its own sources, assumptions and re-run instructions.
 
-## 0. Round 4 (2026-11-22): CAMotics, the unfinished re-runs, outsourcing, electrical, optics and a BOM audit
+## 0. Round 5 (2026-11-23): what round 4 left undone
+
+Sterling asked on 2026-11-23 for everything round 4 listed as not done:
+- the model changes: the overflow jar, the zero-point clamps, the liners, and the optics and electrical patches;
+- the two-arm assembly chapter with the new gland-plate order;
+- FEA cases 1 and 1b, and the thermal model with the heater-stack screws;
+- a holder and fixture collision check for the CAMotics runs;
+- the single-line diagram on the dry scroll pump;
+- the 2026-11-20 OEM-part refinement, and the VCL and Y logos.
+
+Seven workers did these in parallel, each in its own git worktree. Their branches were merged, and the merged model was re-checked.
+Nothing here has been built, quoted by a shop, wired, or reviewed by BYU's LSO, EHS or an electrician.
+
+### What changes what we buy or draw
+
+1. **The zero-point module clamps still don't fit** ([`hot-swap.md`](hot-swap.md) §3.2a).
+   - The overflow jar now comes out (item 2), but it has to stay under the funnel: the overflow slot is fixed at x 90–110.
+   - On the right, every place for the second SCHUNK NSE-HT mini 88-20 is taken: the jar's lane, the jar itself, the Z servo
+     behind it, and the legs' sweep.
+   - §3.2a lists the four moves it would take. Fold the Z servo to the back, move the jar to the slot's front end, put the
+     modules at (+100, +30) and (−100, −30), and re-route the outlet hose.
+   - Until then, the module keeps its two captive M6. Two modules would pull 2 × 500 N, 4.6× the worst separating load (218 N).
+2. **The overflow jar comes out by hand, but not yet by robot** ([`operations.md`](operations.md), [`robot-ops.md`](robot-ops.md)).
+   - **What changed:**
+     - the KF-40 joint is 26 mm lower, on a 42 mm stub;
+     - the jar is a 2 in. 316L cup of ~65 cm³, with an 11 mm neck;
+     - it is held by an MKS 100318805 toggle clamp ($23.34), lever to the front;
+     - the outlet plenum's KF-25 port and hose moved to its left end;
+     - the front-right leg moved to the right side.
+   - **Hand:** U4.5 and U4.7 pass.
+   - **Robot:** fails at all six MiR positions. Either the wrist camera meets the guard frame, the forearm meets the guard
+     door's handle, or the arm runs out of reach. The cup sits 55 mm below the module's grip block, which the robot does
+     reach. A grip fin on the jar at z ≈ −50 is the likely fix; it isn't drawn.
+   - **Emptying:** the jar holds ~65 cm³ (was ~120). L75 makes ~70 cm³ of overflow per 15 mm of build, so it needs emptying
+     more often.
+   - **CFD:** the outlet now drains at the slot's left end, next to the dose zone, so the CFD needs a re-run
+     ([`gas-flow.md`](gas-flow.md)).
+3. **No catalogue collimator gives the 75 µm spot** ([`optics.md`](optics.md) §8).
+   - No QBH collimator with f ≈ 20–25 mm is rated for 500 W. IPG's shortest is f = 50 mm, and Coherent's run 50–250 mm.
+     Wavelength's COL-1070-D25-F30 is the closest and gives 57 µm.
+   - The model draws IPG's 2.5 mm collimator, which gives **96 µm**.
+   - 75 µm needs a custom f ≈ 23 mm collimator: ask IPG or Wavelength with the laser order.
+4. **L75's outer ring is still out of the beam's reach.**
+   - The galvo now sits 35 mm above the lens. 30 mm is the least possible, because SCANLAB's second mirror is 30 mm above the
+     mounting face.
+   - The reach is 22–34 mm against L75's 38.1 mm radius, and the Ø36 field stop is the limit.
+   - An L75 field-stop insert would reach it only if the beam's lean is k ≳ 0.58. Measure k with the guide laser before the
+     lid is machined.
+5. **The focus is on the powder now.**
+   - The lens is raised 3.41 mm, the shift `beam_path.py` computes, on 3 mm of shim rings (±3 mm) cut from McMaster 18-8 shim
+     stock.
+   - The machine is 579.6 mm tall, 115.4 mm under Modula's 695 mm bay.
+   - The old 10 mm galvo riser had no hole: the beam went through solid aluminium. It is now 5 mm, bored Ø40.
+6. **The 600 W power head doesn't fit the chamber,** which is 120 mm tall.
+   - A water-cooled Gentec UP55M-500W-H12-D0 (89 × 89 × 43 mm, $1,969) sits on a stand on the plate instead, in a new
+     "calibration" state of the interference check.
+   - With the 2.5 mm beam it sees 57 kW/cm² at 500 W, against its 45 kW/cm² rating. Calibrate at 50 W until Gentec confirms.
+7. **The thermal cutoff is dropped** ([`electrical.md`](electrical.md) §13).
+   - No catalogue cutoff holds 225 °C with a DC rating for 10.4 A.
+   - With an SSR failed shorted and no cutoff, the limit trips in 6 s on S25 (plate 209–211 °C), 35–40 s on M50
+     (223–224 °C) and 48–51 s on L75 (227 °C).
+   - The PLC's over-temperature channel is the second, diverse channel.
+8. **The rod end is a 316L block with seven Solid Sealing weld-ins** on a 72 × 16 mm face: 3 × FA11631 and 3 × FA11632 type K,
+   and an FA10443 4-pin power feedthrough. Ask Solid Sealing to confirm the blind-bore weld and weld access.
+9. **The pump runs on 208 V** (2-pole 10 A D-curve breaker), off the UPS: it has no job in a power cut.
+   - Set its Auto-run, or it won't restart when power returns.
+   - Worst real leg currents are 17.7 / 14.0 A, and everything at rated is 23.7 / 20.0 A, both inside 24 A.
+10. **Decide where the LED bar goes.**
+    - The access fixes moved it to the lid's underside, because it trapped the right liner. From there it lights the layer at
+      ~40° instead of ~10°, and that hasn't been checked against the defect camera.
+    - The electrical work found no free opening for its feedthrough and recommends moving the bar outside the chamber.
+11. **The CAM set-ups had 417 tool, holder and fixture collisions; all are fixed in `freecad_cam.py`** ([`machining.md`](machining.md)).
+    - **Fixes:** low-profile edge clamps instead of toe clamps and tabs; an ER32 chuck at 66 mm stick-out for the 3/4 in. end
+      mill; a split finish pass; an expanding clamp inside the floor plate's port.
+    - **For the shop:** check the floor plate's edge clamps, which grip only 7.7 mm of the blank.
+
+### What was run
+
+| Check | Result | Note |
+|---|---|---|
+| Interference, exact booleans, on the merged model | **0 for M50, S25 and L75**, in 6 static states (including the new calibration state) and 8 motion sweeps each. The first sweep of the merged model found one clash between two workers' parts: the re-routed outlet hose ran through a recoater sensor post (135.8 mm³). The hose's run behind the chamber moved from y 135 to y 166 to clear it | [`interference.md`](analysis/out/interference.md) |
+| Mass | 289.6 kg on the tray (was 268.8). The process module is 91.4 kg and tips at 0.67 g (was 88.0 kg, 0.69 g). The tray's own parts grew from 12.4 to 29.6 kg, which includes the new power box beside the rack | [`mass.md`](analysis/out/mass.md) |
+| Hand operations, overflow jar | **U4.5 and U4.7 pass.** M50 is 84 pass / 2 warn / 36 fail (round 4: 82 / 2 / 37). New fail **A2.13**: one funnel screw sits behind the moved leg, so bolt the funnel to the floor plate on the bench | [`operations.md`](operations.md) |
+| Hand operations, access fixes | M50 U1, U2, M3, M8: 12 pass / 0 warn / 3 fail (round 4: 3 / 0 / 7). **Pass:** U1.1 (the reservoir's pull tab), U2.2 (latches on brackets on the door, levers in front of the optics post), all six liners out (tightest 0.36 mm), M8.4. **Still fail:** M8.1–M8.3 (the recoater servo against the front-left post and the bridge) | [`operations.md`](operations.md) |
+| Robot (UR12e on MiR250) | Module swap passes on M50, S25 and L75: 1.0 mm closest, wrist 1 at 55–57 %. The overflow jar fails at all six MiR positions (item 2) | [`robot-ops.md`](robot-ops.md) |
+| Optics | **Focus:** z −0.001 mm at the plate. **Spot:** 96 µm. **Layer camera:** sees all three plates through a Ø30 bore (was 56 / 46 / 40 %). **Bridge:** first mode 128 Hz with the vendors' masses (6.9 kg of optics; was 134 Hz) | [`optics.md`](optics.md) §8 |
+| Electrical | Single-line, power budget and tray budget on the nXDS6i and the Eaton 5PX1500RTG2. **Devices not drawn:** 37 → 30. **Devices with no BOM line:** 20 → 16. **Electrical BOM:** 102 lines, $11,845.92 | [`electrical.md`](electrical.md) §13 |
+| FEA cases 1 and 1b (CalculiX) | **Case 1 (open top):** 53.9 MPa; SF 5.1 / 2.7 / 2.0 (yield / Goodman / weld HAZ), unchanged. **Case 1b (lid on):** 28.8 MPa; SF 9.6 / 5.1 / 3.8 (was 9.9 / 5.3 / 3.9). The floor joint stays closed | [`fea.md`](analysis/out/fea/fea.md), [`chamber-construction.md`](chamber-construction.md) |
+| Module thermal with the stack screws (CalculiX) | **Heater power:** on M50 the 316 screws add 0.8 W (Ti: 0.3 W), not the hand estimate's 1.6 W, because boring the Macor takes about as much off. S25 / M50 / L75: 44.7 / 72.9 / 98.0 W, margins 2.2× / 2.1× / 2.6×. **Cool-down:** 16.3 / 28.9 / 41.3 min. **Temperatures:** worst bore seal 125 °C, magnet face ≤ 61 °C. **Dense M50 build, end of stroke:** magnet 74 °C (heat.md's 85 °C came from an older run) | [`heat.md`](heat.md), [`modules.md`](modules.md), [`hot-swap.md`](hot-swap.md) §4 |
+| Two-arm assembly, new gland-plate order | Chapter 3 is re-sequenced: the gland plate goes onto the welded rod end, and the stack enters the bore from below. **First pass:** 17 pass / 3 fail, screws 16 of 16; with chapters 4–5 unchanged, 61 of 79 steps (was 63) and 118 of 135 screws. **Second pass,** with the three fixes: 27 of 28 chapter-3 steps pass. M16 fails: the welded module body is 119 mm across where it is gripped, wider than the 2F-85's 85 mm stroke. Both passes ran on the round-4 model | [`assembly.md`](assembly.md) |
+| CAMotics: tool holders, spindle, fixtures | **Check:** the new `holder_check.py` sweeps flutes, shank, holder (Haas Tooling CAT40 ER32, ER16, shell mill, side-lock), flange and spindle along every G-code move. It checks them against the in-process stock, each setup's fixtures and the VF-4's travels, on a 0.5 mm grid. Its stock agrees with CAMotics' to 0.07 cm³ of 1,626 (frame). **Result:** 417 → 0 collisions. Every holder is ≥ 4.0 mm from the stock and every tool ≥ 2.7 mm from the fixtures | [`machining.md`](machining.md) |
+| OEM parts | **Aligned volume IoU against the vendors' CAD, before → after:** ClearPath 0.59 → 0.66; NEMA 17 0.95 → 0.98; carriage 0.78 → 0.83; KF-25 clamp 0.28 → 0.71; KF-40 clamp 0.52 → 0.80; KF-25 valve 0.58 → 0.88. **Photo overlays,** camera pose and focal length solved: silhouette IoU 0.917 (ClearPath) and 0.932 (valve). **Colour,** metallic and roughness are stored per body | [`oem-parts.md`](oem-parts.md) |
+| Logos | **VCL:** the lab's own SVG lockup, 180 × 24.5 mm, debossed 0.5 mm into the chamber door's front face. **BYU:** the block Y, 50 mm, on the 4U drawer's front. **Machining:** a 1/32 in. cutter misses 0.39 % and 0.05 % of their areas, at most 0.32 mm, all in inner corners | [`oem-parts.md`](oem-parts.md) |
+
+![](cad/img/oem/logo_vcl.png)
+
+### Still not done
+- **Zero-point clamps:** they need the four moves in item 1.
+- **Robot jobs:**
+  - the jar job needs the grip fin;
+  - the liner, reservoir and blade-cartridge jobs are written but haven't run.
+- **Not re-run after the latch move:** the door seal FEA and the mech checks. The access fixes' hand operations weren't run on
+  S25 or L75.
+- **Stale part names:** the rod end's new block replaced the "Hermetic connector" and the "Thermal cutoff". `seals.py`,
+  `audit/completeness.py`, `ops/operations.py`, `assembly/sequence.py` and `render_build.py` still name them, so on the merged
+  model the assembly's connector step matches nothing.
+- **Machining:**
+  - CAMotics hasn't run on the final programs;
+  - the frame's setup C isn't programmed;
+  - `setup_plan.json` and the hours tables are not regenerated.
+- **CFD:** not re-run with the outlet at the slot's left end.
+- **Optics:** the window is drawn 8 mm and the slide 3 mm (the BOM parts are 9.53 mm and 2 mm). There are no field-stop inserts
+  per module.
+- **Electrical:** the LED feedthrough (item 10). Cable routes aren't drawn.
+- **OEM parts:**
+  - the multi-view reconstruction from a product video was skipped;
+  - the pump, transmitter and filter housing aren't refined;
+  - the IPG front panel's style is a guess;
+  - Eaton's pages returned 503 through the tunnel, so its front comes from the datasheet photo alone.
+- **BYU Y:** traced from BYU's brand-guide page. The official file needs a BYU sign-in, so check the outline against it. BYU's
+  guide also says the main BYU logo should usually appear with the Y.
+
+## 0a. Round 4 (2026-11-22): CAMotics, the unfinished re-runs, outsourcing, electrical, optics and a BOM audit
 
 Sterling asked on 2026-11-22 for four things:
 - fix the CAMotics install error;
@@ -117,7 +239,7 @@ Nothing here has been built, quoted by a shop, wired, or reviewed by BYU's LSO, 
 - **Unanswered from 2026-11-20:** refining the OEM parts from photos and video, and the VCL and Y logos. That run
   stopped before it pushed anything, and this round didn't take it up.
 
-## 0a. Round 3 (2026-11-20 evening): the machinist's review, the robots, safety, and a full re-run
+## 0b. Round 3 (2026-11-20 evening): the machinist's review, the robots, safety, and a full re-run
 
 Sterling asked for four things on 2026-11-20:
 - the UR12e aligned with byu-vcl PR 318, with whatever tools make each automated job work;
