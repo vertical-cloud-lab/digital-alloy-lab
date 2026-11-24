@@ -559,7 +559,7 @@ came back empty.
 - Solyaev et al.'s plate temperature isn't stated for the main study. I assumed room temperature.
 - The laserbeamFoam runs are coarse and short:
   - 15–25 µm cells, so the beam's 1/e² diameter spans 3.6–5.3 cells;
-  - 0.8–1.2 ms of track, and one run per variant;
+  - 0.8–1.6 ms of track, and one run per variant;
   - the blend pool's length had not settled at the solidus when its run stopped.
 - The matched-A runs put all of each ray's power where it first meets the metal. That fixes the absorbed power, but
   sends none of it down the keyhole by reflection, which biases those keyholes shallow and wide.
