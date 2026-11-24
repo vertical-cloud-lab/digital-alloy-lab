@@ -1,0 +1,23 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  Written by scripts/keyhole_cfd_laserbeamfoam.py (digital-alloy-lab, issue #235)
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      LaserProperties;
+}
+timeVsLaserPosition { file "$FOAM_CASE/constant/timeVsLaserPosition"; outOfBounds clamp; }
+timeVsLaserPower { file "$FOAM_CASE/constant/timeVsLaserPower"; outOfBounds clamp; }
+V_incident      (0 1 0);
+laserRadius     4.000000e-05;
+N_sub_divisions 1;
+nRadial         20;
+nAngular        72;
+wavelength      1.070000e-06;
+e_num_density   1.810000e+29;
+Radius_Flavour  2.0;
+useLocalSearch  true;
+maxRayBounces   1;
+maxRayBounceAction deposit;   // all of each ray's power goes in at its first hit

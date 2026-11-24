@@ -1,0 +1,146 @@
+{
+  "run": "alsi10mg-fresnel",
+  "case": "alsi10mg",
+  "label": "AlSi10Mg, 250 W, 0.9 m/s, 40 um beam, 150 C plate",
+  "meta": {
+    "case": "alsi10mg",
+    "label": "AlSi10Mg, 250 W, 0.9 m/s, 40 um beam, 150 C plate",
+    "P": 250.0,
+    "v": 0.9,
+    "r0": 4e-05,
+    "T0": 423.15,
+    "T_l": 868.6,
+    "T_s": 842.7,
+    "Si": 0.1,
+    "Lx": 0.001,
+    "Lz": 0.0004,
+    "metal_depth": 0.00035,
+    "x_start": 0.0001,
+    "am_module": {
+      "A": 0.3074,
+      "peak_T_K": 3044.0
+    },
+    "props": {
+      "k": 110.0,
+      "rho": 2650.0,
+      "cp": 1040.0,
+      "nu": 4.9e-07,
+      "beta": 0.0001,
+      "sigma": 0.86,
+      "dsigma_dT": -0.00035,
+      "T_vap": 2743.0,
+      "L_vap": 10900000.0,
+      "M": 0.02698,
+      "e_num_density": 1.81e+29,
+      "elec_resistivity": 4e-07,
+      "wavelength": 1.07e-06,
+      "emissivity": 0.1
+    },
+    "latent_heat": 536300.0,
+    "geometry": {
+      "dx": 1.5e-05,
+      "nx": 67,
+      "ny": 27,
+      "nz": 27,
+      "y_surface": 6e-05,
+      "Lx": 0.001005,
+      "Ly": 0.00040500000000000003,
+      "Lz": 0.00040500000000000003,
+      "y_laser": 3e-05
+    },
+    "end_time": 0.0008,
+    "write_interval": 5e-05,
+    "x_end": 0.0008200000000000001,
+    "n_proc": 2,
+    "maxCo": 0.3,
+    "absorbed_fraction": null,
+    "laser_power_set": 250.0,
+    "note": "the first 0.32 ms ran as an 80 s smoke test of this same case; it was continued from its 0.3 ms write to 0.8 ms"
+  },
+  "n_steps": 1628,
+  "t_end_reached_ms": 0.8,
+  "wall_s": 220.53,
+  "A_eff_mean_second_half": 0.13923672155,
+  "A_eff_std_second_half": 0.00012617239755976654,
+  "A_eff_first_step": 0.1389998,
+  "dt_median_s": 5e-07,
+  "dt_min_s": 1.19999e-09,
+  "last_write": {
+    "t_ms": 0.8,
+    "x_beam_mm": 0.8200000000000001,
+    "T_max_K": 1890.684,
+    "keyhole_depth_um": 9.717592277531445,
+    "keyhole_width_surface_um": 75.0,
+    "keyhole_width_q1_um": 75.0,
+    "keyhole_width_mid_um": 75.0,
+    "pool_depth_um": 57.11044104679489,
+    "pool_width_um": 112.30037267337488,
+    "pool_length_um": 192.62336969116564,
+    "pool_front_um_rel_beam": 41.5203357305579,
+    "pool_back_um_rel_beam": -151.10303396060775,
+    "pool_back_touches_domain_start": false,
+    "pool_volume_mm3": 0.00041175000000000006,
+    "n_liquid_regions": 1,
+    "pool_depth_solidus_um": 59.87539045569355,
+    "pool_width_solidus_um": 116.32749423762415,
+    "pool_length_solidus_um": 227.2454412249582,
+    "keyhole_x_um_rel_beam": -107.50000000000007
+  },
+  "second_half_of_writes": {
+    "T_max_K": {
+      "mean": 1891.1275555555558,
+      "min": 1890.106,
+      "max": 1893.748
+    },
+    "keyhole_depth_um": {
+      "mean": 9.53803011390767,
+      "min": 8.927510397012073,
+      "max": 9.717592277531445
+    },
+    "keyhole_width_surface_um": {
+      "mean": 75.0,
+      "min": 75.0,
+      "max": 75.0
+    },
+    "keyhole_width_q1_um": {
+      "mean": 75.0,
+      "min": 75.0,
+      "max": 75.0
+    },
+    "keyhole_width_mid_um": {
+      "mean": 75.0,
+      "min": 75.0,
+      "max": 75.0
+    },
+    "pool_depth_um": {
+      "mean": 56.98288059679132,
+      "min": 56.72334770579085,
+      "max": 57.11044104679489
+    },
+    "pool_width_um": {
+      "mean": 112.12610189506984,
+      "min": 111.61534730297528,
+      "max": 112.30037267337488
+    },
+    "pool_length_um": {
+      "mean": 191.88226723419803,
+      "min": 190.52167280439264,
+      "max": 192.62336969116564
+    },
+    "pool_depth_solidus_um": {
+      "mean": 59.746252073300155,
+      "min": 59.48163837495856,
+      "max": 59.87539045569355
+    },
+    "pool_width_solidus_um": {
+      "mean": 116.07049050661271,
+      "min": 115.38951910214823,
+      "max": 116.32749423762415
+    },
+    "pool_length_solidus_um": {
+      "mean": 222.00612810331435,
+      "min": 212.6620210037703,
+      "max": 227.2454412249582
+    }
+  }
+}

@@ -62,6 +62,7 @@ L_FUSION_SI = 1.79e6  # J/kg
 CASES = {
     "alsi10mg": {
         "label": "AlSi10Mg, 250 W, 0.9 m/s, 40 um beam, 150 C plate",
+        "short": "AlSi10Mg, 250 W, 0.9 m/s",
         "P": 250.0, "v": 0.9, "r0": 40e-6, "T0": 423.15,
         "T_l": 868.6, "T_s": 842.7, "Si": 0.100,
         # domain (m): track along +x, beam along +y (down), z across
@@ -69,8 +70,19 @@ CASES = {
         # AM-module render (#238): peak 3044 K; no length scale; A read off its colour bar 0.31
         "am": {"A": 0.3074, "peak_T_K": 3044.0},
     },
+    # the next AlSi10Mg grid point the AM module calls keyhole at 0.9 m/s (its boundary there is ~293 W)
+    "alsi10mg_350W": {
+        "label": "AlSi10Mg, 350 W, 0.9 m/s, 40 um beam, 150 C plate",
+        "short": "AlSi10Mg, 350 W, 0.9 m/s",
+        "P": 350.0, "v": 0.9, "r0": 40e-6, "T0": 423.15,
+        "T_l": 868.6, "T_s": 842.7, "Si": 0.100,
+        "Lx": 1.0e-3, "Lz": 0.40e-3, "metal_depth": 0.45e-3, "x_start": 0.10e-3,
+        # no render at this point; the AM map calls it keyhole. A is the one read off the 250 W render.
+        "am": {"A": 0.3074, "map_class": "keyhole"},
+    },
     "blend": {
         "label": "BYU blend (Al-24Si), 375 W, 0.4 m/s, 45 um beam, 30 C plate",
+        "short": "Blend (Al-24Si), 375 W, 0.4 m/s",
         "P": 375.0, "v": 0.4, "r0": 45e-6, "T0": 303.15,
         "T_l": 1019.3, "T_s": 846.7, "Si": 0.243,
         "Lx": 1.3e-3, "Lz": 0.64e-3, "metal_depth": 0.60e-3, "x_start": 0.15e-3,
@@ -111,14 +123,17 @@ def geometry(c: dict, dx: float) -> dict:
 
 
 def setup(case: str, dx: float, end_time: float, write_interval: float, out: pathlib.Path,
-          n_proc: int, max_co: float, absorbed_fraction: float | None = None) -> None:
+          n_proc: int, max_co: float, absorbed_fraction: float | None = None,
+          elec_resistivity: float | None = None) -> None:
     """Write a case. With ``absorbed_fraction`` A, the laser power is set to A*P and every ray deposits all
     of its power where it first meets the metal (maxRayBounces 1, action deposit), so the absorbed power
     is fixed at A*P whatever the keyhole does. Without it, each bounce absorbs its Fresnel fraction and
     reflects the rest, so the absorptivity comes out of the ray tracing."""
     c = CASES[case]
     g = geometry(c, dx)
-    p = PROPS
+    p = dict(PROPS)
+    if elec_resistivity is not None:
+        p["elec_resistivity"] = elec_resistivity
     out.mkdir(parents=True, exist_ok=True)
     x0 = c["x_start"]
     x1 = x0 + c["v"] * end_time
@@ -425,6 +440,7 @@ def pool_metrics(T: np.ndarray, alpha: np.ndarray, g: dict, c: dict, x_beam: flo
     gas_below = gas_open & (yc[None, :, None] > ys) & near[None, None, :]
     out["keyhole_depth_um"] = 0.0
     out["keyhole_width_surface_um"] = 0.0
+    out["keyhole_width_q1_um"] = 0.0
     out["keyhole_width_mid_um"] = 0.0
     if gas_below.any():
         kk, jj, ii = np.nonzero(gas_below)
@@ -438,13 +454,27 @@ def pool_metrics(T: np.ndarray, alpha: np.ndarray, g: dict, c: dict, x_beam: flo
         out["keyhole_x_um_rel_beam"] = float((xc[i0] - x_beam) * 1e6)
         row = gas_below[:, js, :]
         out["keyhole_width_surface_um"] = float(row.any(axis=1).sum() * dx * 1e6)
-        j_mid = int(round(0.5 * (js + j)))
-        row_mid = gas_below[:, j_mid, :]
-        out["keyhole_width_mid_um"] = float(row_mid.any(axis=1).sum() * dx * 1e6)
+        # widths across the track (z) at a quarter and half of the keyhole depth: the surface opening also takes in
+        # any shallow depression of the pool surface around the keyhole
+        for name, frac in (("q1", 0.25), ("mid", 0.5)):
+            jq = int(round(js + frac * (j - js)))
+            rowq = gas_below[:, jq, :]
+            out[f"keyhole_width_{name}_um"] = float(rowq.any(axis=1).sum() * dx * 1e6)
+    out.update(_pool_extent(T3, metal, T_l, xc, yc, zc, ys, dx, x_beam, ""))
+    # the same at the solidus: the blend's mushy range is 170 K wide, and which edge the AM module draws is not stated
+    out.update(_pool_extent(T3, metal, c["T_s"], xc, yc, zc, ys, dx, x_beam, "_solidus"))
+    return out
+
+
+def _pool_extent(T3, metal, level, xc, yc, zc, ys, dx, x_beam, sfx: str) -> dict:
+    from scipy import ndimage
+
+    nz, ny, nx = T3.shape
+    out: dict = {}
+    T_l = level
     liquid_all = metal & (T3 >= T_l)
     if not liquid_all.any():
-        out.update(pool_depth_um=0.0, pool_width_um=0.0, pool_length_um=0.0, pool_volume_mm3=0.0)
-        return out
+        return {f"pool_depth{sfx}_um": 0.0, f"pool_width{sfx}_um": 0.0, f"pool_length{sfx}_um": 0.0}
     lab, n = ndimage.label(liquid_all)
     kk, jj, ii = np.nonzero(liquid_all)
     d2 = (xc[ii] - x_beam) ** 2 + (yc[jj] - ys) ** 2 + zc[kk] ** 2
@@ -466,18 +496,19 @@ def pool_metrics(T: np.ndarray, alpha: np.ndarray, g: dict, c: dict, x_beam: flo
         return coord[(k, j, i)[axis]] + step * 0.5 * dx
 
     jmax = jj.max()
-    out["pool_depth_um"] = (max(edge(k, j, i, 1, +1, yc) for k, j, i in zip(kk, jj, ii) if j == jmax) - ys) * 1e6
+    out[f"pool_depth{sfx}_um"] = (max(edge(k, j, i, 1, +1, yc) for k, j, i in zip(kk, jj, ii) if j == jmax) - ys) * 1e6
     zs = [abs(edge(k, j, i, 0, -1, zc)) for k, j, i in zip(kk, jj, ii) if k == kk.min()]
     zs += [abs(edge(k, j, i, 0, +1, zc)) for k, j, i in zip(kk, jj, ii) if k == kk.max()]
-    out["pool_width_um"] = 2 * max(zs) * 1e6
+    out[f"pool_width{sfx}_um"] = 2 * max(zs) * 1e6
     x_front = max(edge(k, j, i, 2, +1, xc) for k, j, i in zip(kk, jj, ii) if i == ii.max())
     x_back = min(edge(k, j, i, 2, -1, xc) for k, j, i in zip(kk, jj, ii) if i == ii.min())
-    out["pool_length_um"] = (x_front - x_back) * 1e6
-    out["pool_front_um_rel_beam"] = (x_front - x_beam) * 1e6
-    out["pool_back_um_rel_beam"] = (x_back - x_beam) * 1e6
-    out["pool_back_touches_domain_start"] = bool(ii.min() == 0)
-    out["pool_volume_mm3"] = float(liquid.sum() * dx ** 3 * 1e9)
-    out["n_liquid_regions"] = int(n)
+    out[f"pool_length{sfx}_um"] = (x_front - x_back) * 1e6
+    if not sfx:
+        out["pool_front_um_rel_beam"] = (x_front - x_beam) * 1e6
+        out["pool_back_um_rel_beam"] = (x_back - x_beam) * 1e6
+        out["pool_back_touches_domain_start"] = bool(ii.min() == 0)
+        out["pool_volume_mm3"] = float(liquid.sum() * dx ** 3 * 1e9)
+        out["n_liquid_regions"] = int(n)
     return out
 
 
@@ -543,6 +574,8 @@ def post(case_dir: pathlib.Path, out: pathlib.Path) -> dict:
     df.to_csv(out / f"{run}-pool-vs-time.csv", index=False, float_format="%.4g")
     ldf = pd.DataFrame(log_rows)
     if not ldf.empty:
+        # a restarted run repeats the steps after its last write; keep the later copy of each
+        ldf = ldf.drop_duplicates("t", keep="last").sort_values("t").reset_index(drop=True)
         ldf["A_eff"] = ldf["Q"] / c["P"]
         step = max(1, len(ldf) // 2000)  # thin the per-step log to ~2000 rows for the repo
         ldf.iloc[::step].to_csv(out / f"{run}-absorbed-power-vs-time.csv", index=False, float_format="%.5g")
@@ -562,8 +595,9 @@ def post(case_dir: pathlib.Path, out: pathlib.Path) -> dict:
         late = df[df["t_ms"] >= 0.5 * df["t_ms"].max()]
         summary["second_half_of_writes"] = {
             k: {"mean": float(late[k].mean()), "min": float(late[k].min()), "max": float(late[k].max())}
-            for k in ["T_max_K", "keyhole_depth_um", "keyhole_width_surface_um", "keyhole_width_mid_um",
-                      "pool_depth_um", "pool_width_um", "pool_length_um"] if k in late}
+            for k in ["T_max_K", "keyhole_depth_um", "keyhole_width_surface_um", "keyhole_width_q1_um",
+                      "keyhole_width_mid_um", "pool_depth_um", "pool_width_um", "pool_length_um",
+                      "pool_depth_solidus_um", "pool_width_solidus_um", "pool_length_solidus_um"] if k in late}
     (out / f"{run}-summary.json").write_text(json.dumps(summary, indent=2, default=float))
     print(json.dumps({k: v for k, v in summary.items() if k != "meta"}, indent=2, default=float))
     return summary
@@ -573,13 +607,17 @@ def post(case_dir: pathlib.Path, out: pathlib.Path) -> dict:
 # figures
 
 INK, INK2, SURFACE = "#0b0b0b", "#52514e", "#fcfcfb"
-RUN_COLOURS = {"fresnel": "#2a78d6", "matchedA": "#eb6834"}  # categorical slots 1 and 2
-RUN_LABELS = {"fresnel": "laserbeamFoam, Fresnel ray tracing", "matchedA": "laserbeamFoam, AM module's A·P"}
+RUN_COLOURS = {"fresnel": "#2a78d6", "matchedA": "#eb6834", "fresnel_hot": "#eda100"}  # categorical slots 1, 2, 4
+GAN_COLOUR = "#1baf7a"  # categorical slot 3
+RUN_LABELS = {"fresnel": "laserbeamFoam, Fresnel ray tracing (40 µΩ cm)", "matchedA": "laserbeamFoam, AM module's A·P",
+              "fresnel_hot": "laserbeamFoam, Fresnel ray tracing (65 µΩ cm)"}
 SEQ_BLUE = ["#fcfcfb", "#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"]
 
 
 def _variant(run: str) -> str:
-    return "matchedA" if run.endswith("matchedA") else "fresnel"
+    if "matchedA" in run:
+        return "matchedA"
+    return "fresnel_hot" if "rho65" in run else "fresnel"
 
 
 def plot_histories(post_dir: pathlib.Path, runs: list[str], out_png: pathlib.Path) -> None:
@@ -610,34 +648,52 @@ def plot_histories(post_dir: pathlib.Path, runs: list[str], out_png: pathlib.Pat
                 if s["case"] != case:
                     continue
                 colour = RUN_COLOURS[_variant(r)]
+                ls = (0, (4, 2)) if r.endswith("25um") else "-"
                 if key == "A_eff":
                     f = post_dir / f"{r}-absorbed-power-vs-time.csv"
                     if not f.exists():
                         continue
                     d = pd.read_csv(f)
-                    ax.plot(d["t"] * 1e3, d["A_eff"], color=colour, lw=1.5)
+                    # 10 µs bin means: the per-step value flickers as the keyhole wall moves
+                    d = d.groupby((d["t"] / 1e-5).astype(int)).agg(t=("t", "mean"), A_eff=("A_eff", "mean"))
+                    ax.plot(d["t"] * 1e3, d["A_eff"], color=colour, lw=1.5, ls=ls)
                 else:
                     d = pd.read_csv(post_dir / f"{r}-pool-vs-time.csv")
                     if key in d:
-                        ax.plot(d["t_ms"], d[key], color=colour, lw=2, marker="o", ms=3)
+                        ax.plot(d["t_ms"], d[key], color=colour, lw=2, ls=ls, marker="o" if ls == "-" else None, ms=3)
+            if key == "keyhole_depth_um":
+                # Gan et al. 2021's depth law at the AM module's absorptivity, for comparison with the matched-A run
+                ke = am["A"] * c["P"] / ((c["T_l"] - c["T0"]) * math.pi * PROPS["rho"] * PROPS["cp"]
+                                         * math.sqrt(PROPS["k"] / (PROPS["rho"] * PROPS["cp"]) * c["v"] * c["r0"] ** 3))
+                e_gan = max(0.0, 0.4 * (ke - 1.4)) * c["r0"] * 1e6
+                ax.axhline(e_gan, color=GAN_COLOUR, ls=(0, (1.5, 1.5)), lw=1.6)
+                ax.annotate("Gan et al. law, AM module's A", xy=(0.02, e_gan), xycoords=("axes fraction", "data"),
+                            xytext=(0, 3), textcoords="offset points", fontsize=7, color=INK2)
             ref = am_ref.get(key)
             if ref:
                 ax.axhline(ref, color=INK2, ls=(0, (5, 3)), lw=1.2)
                 ax.annotate("AM module", xy=(0.02, ref), xycoords=("axes fraction", "data"), xytext=(0, 3),
                             textcoords="offset points", fontsize=7, color=INK2)
             ax.set_xlabel("time (ms)", fontsize=8, color=INK2)
-            ax.set_ylabel(ylabel, fontsize=8, color=INK2)
+            ax.set_ylabel(ylabel if key != "A_eff" else ylabel + " (10 µs means)", fontsize=8, color=INK2)
             ax.tick_params(labelsize=7, colors=INK2)
             for sp in ("top", "right"):
                 ax.spines[sp].set_visible(False)
             ax.grid(color="#e6e5e1", lw=0.5)
             ax.set_ylim(bottom=0)
             if col == 0:
-                ax.set_title(c["label"], fontsize=8.5, loc="left", color=INK)
-    handles = [plt.Line2D([], [], color=RUN_COLOURS[v], lw=2, label=RUN_LABELS[v]) for v in ("fresnel", "matchedA")]
+                ax.set_title(c["short"], fontsize=8.5, loc="left", color=INK)
+    present = {_variant(r) for r in runs}
+    handles = [plt.Line2D([], [], color=RUN_COLOURS[v], lw=2, label=RUN_LABELS[v])
+               for v in ("fresnel", "fresnel_hot", "matchedA") if v in present]
+    if any(r.endswith("25um") for r in runs):
+        handles.append(plt.Line2D([], [], color=RUN_COLOURS["matchedA"], lw=2, ls=(0, (4, 2)),
+                                  label="laserbeamFoam, AM module's A·P, 25 µm cells"))
     handles.append(plt.Line2D([], [], color=INK2, ls=(0, (5, 3)), lw=1.2, label="AM module (Thermo-Calc), read off its render"))
+    handles.append(plt.Line2D([], [], color=GAN_COLOUR, ls=(0, (1.5, 1.5)), lw=1.6,
+                              label="Gan et al. 2021 keyhole depth law at the AM module's A"))
     fig.legend(handles=handles, loc="upper center", ncol=3, fontsize=8, frameon=False)
-    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    fig.tight_layout(rect=(0, 0, 1, 1 - 0.75 / fig.get_figheight()))
     fig.savefig(out_png, dpi=150)
     plt.close(fig)
 
@@ -651,8 +707,8 @@ def plot_sections(case_dirs: list[pathlib.Path], out_png: pathlib.Path) -> None:
     from matplotlib.colors import LinearSegmentedColormap
 
     cmap = LinearSegmentedColormap.from_list("seq_blue", SEQ_BLUE)
-    fig, axes = plt.subplots(len(case_dirs), 2, figsize=(11, 2.9 * len(case_dirs)), squeeze=False,
-                             gridspec_kw={"width_ratios": [2.0, 1.0]}, facecolor=SURFACE)
+    fig, axes = plt.subplots(len(case_dirs), 2, figsize=(12, 3.4 * len(case_dirs)), squeeze=False,
+                             gridspec_kw={"width_ratios": [2.0, 1.0], "hspace": 0.55}, facecolor=SURFACE)
     for row, cd in enumerate(case_dirs):
         meta = json.loads((cd / "case.json").read_text())
         c = CASES[meta["case"]]
@@ -682,21 +738,25 @@ def plot_sections(case_dirs: list[pathlib.Path], out_png: pathlib.Path) -> None:
         am = c["am"]
         if "pool_depth_um" in am:
             ax.axhline(am["pool_depth_um"], color=INK2, ls=(0, (5, 3)), lw=1.1)
-            ax.axvline(-am["pool_length_um"] + 60, color=INK2, ls=(0, (5, 3)), lw=1.1)
-            ax.annotate("AM module: depth 349 µm", xy=(X.min() + 20, am["pool_depth_um"]), xytext=(0, 3),
+            ax.annotate(f"AM module: depth {am['pool_depth_um']:.0f} µm; its pool ends "
+                        f"{am['pool_length_um'] / 1000:.2f} mm behind the beam, off this plot",
+                        xy=(X.min() + 20, am["pool_depth_um"]), xytext=(0, 3),
                         textcoords="offset points", fontsize=7, color=INK2)
         ax.set_xlim(X.min(), X.max())
         ax.set_ylim(depth.max(), depth.min())
         ax.set_aspect("equal")
         ax.set_xlabel("x − beam position (µm)", fontsize=8, color=INK2)
         ax.set_ylabel("depth below plate (µm)", fontsize=8, color=INK2)
-        ax.set_title(f"{c['label']} — {RUN_LABELS[_variant(cd.name)]}, t = {t * 1e3:.2f} ms",
+        short_variant = {"fresnel": "own Fresnel A, 40 µΩ cm", "fresnel_hot": "own Fresnel A, 65 µΩ cm",
+                         "matchedA": "absorbed power = AM module's A·P"}[_variant(cd.name)]
+        ax.set_title(f"{c['short']} | {short_variant} | {dx * 1e6:g} µm cells | t = {t * 1e3:.2f} ms",
                      fontsize=8.5, loc="left", color=INK)
         ax.tick_params(labelsize=7, colors=INK2)
-        # transverse section where the pool is widest
+        # transverse section through the deepest point of the pool (under the keyhole)
         liquid = (a3 >= 0.5) & (T3 >= c["T_l"])
         if liquid.any():
-            i_w = int(np.argmax(liquid.any(axis=1).sum(axis=0)))
+            _, jj_, ii_ = np.nonzero(liquid)
+            i_w = int(ii_[np.argmax(jj_)])
         else:
             i_w = int(np.argmin(np.abs(xc - x_beam)))
         ax2 = axes[row, 1]
@@ -714,7 +774,9 @@ def plot_sections(case_dirs: list[pathlib.Path], out_png: pathlib.Path) -> None:
         ax2.set_aspect("equal")
         ax2.set_xlabel(f"z (µm), at x − beam = {(xc[i_w] - x_beam) * 1e6:.0f} µm", fontsize=8, color=INK2)
         ax2.tick_params(labelsize=7, colors=INK2)
-    cb = fig.colorbar(im, ax=axes, shrink=0.6, pad=0.01)
+    fig.subplots_adjust(top=1 - 0.55 / fig.get_figheight(), bottom=0.9 / fig.get_figheight())
+    cax = fig.add_axes([0.3, 0.25 / fig.get_figheight(), 0.4, 0.12 / fig.get_figheight()])
+    cb = fig.colorbar(im, cax=cax, orientation="horizontal")
     cb.set_label("metal temperature (K)", fontsize=8, color=INK2)
     cb.ax.tick_params(labelsize=7, colors=INK2)
     handles = [plt.Line2D([], [], color="#eb6834", lw=1.8, label="liquidus (pool edge)"),
@@ -735,6 +797,8 @@ def main() -> None:
     s.add_argument("--write-interval", type=float, default=1e-4)
     s.add_argument("--n-proc", type=int, default=2)
     s.add_argument("--max-co", type=float, default=0.3)
+    s.add_argument("--elec-resistivity", type=float, default=None,
+                   help="liquid electrical resistivity for the Drude model, Ohm m (default 4.0e-7)")
     s.add_argument("--absorbed-fraction", type=float, default=None,
                    help="fix the absorbed power at this fraction of P (first-hit deposition)")
     s.add_argument("--out", type=pathlib.Path, required=True)
@@ -744,16 +808,19 @@ def main() -> None:
     f = sub.add_parser("figures", help="time histories and sections of finished (reconstructed) runs")
     f.add_argument("--post-dir", type=pathlib.Path, required=True)
     f.add_argument("--case-dirs", type=pathlib.Path, nargs="+", required=True)
+    f.add_argument("--sections", nargs="*", default=None,
+                   help="run names to draw sections for (default: all of --case-dirs)")
     f.add_argument("--out", type=pathlib.Path, required=True)
     args = ap.parse_args()
     if args.cmd == "figures":
         runs = [d.name for d in args.case_dirs]
         plot_histories(args.post_dir, runs, args.out / "cfd-histories.png")
-        plot_sections(args.case_dirs, args.out / "cfd-sections.png")
+        sec = [d for d in args.case_dirs if args.sections is None or d.name in args.sections]
+        plot_sections(sec, args.out / "cfd-sections.png")
         return
     if args.cmd == "setup":
         setup(args.case, args.dx, args.end_time, args.write_interval, args.out, args.n_proc, args.max_co,
-              args.absorbed_fraction)
+              args.absorbed_fraction, args.elec_resistivity)
     else:
         post(args.case_dir, args.out)
 

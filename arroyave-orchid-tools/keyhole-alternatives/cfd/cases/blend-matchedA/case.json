@@ -1,6 +1,7 @@
 {
   "case": "blend",
   "label": "BYU blend (Al-24Si), 375 W, 0.4 m/s, 45 um beam, 30 C plate",
+  "short": "Blend (Al-24Si), 375 W, 0.4 m/s",
   "P": 375.0,
   "v": 0.4,
   "r0": 4.5e-05,
@@ -47,11 +48,12 @@
     "Lz": 0.0006475,
     "y_laser": 3.5e-05
   },
-  "end_time": 0.0025,
+  "end_time": 0.0016,
   "write_interval": 0.0001,
-  "x_end": 0.00115,
+  "x_end": 0.00079,
   "n_proc": 2,
   "maxCo": 0.3,
   "absorbed_fraction": 0.3841,
-  "laser_power_set": 144.0375
+  "laser_power_set": 144.0375,
+  "note": "endTime lowered to 1.6 ms while running; the run was stopped at 1.27 ms by the agent harness's 30-minute limit on background jobs and restarted from its 1.2 ms write"
 }

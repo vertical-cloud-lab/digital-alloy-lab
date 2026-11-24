@@ -12,7 +12,7 @@ application     laserbeamFoam;
 startFrom       latestTime;
 startTime       0;
 stopAt          endTime;
-endTime         2.500000e-03;
+endTime         1.200000e-03;
 deltaT          1e-9;
 writeControl    adjustableRunTime;
 writeInterval   1.000000e-04;

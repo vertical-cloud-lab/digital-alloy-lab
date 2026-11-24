@@ -50,5 +50,6 @@
   "n_proc": 2,
   "maxCo": 0.3,
   "absorbed_fraction": null,
-  "laser_power_set": 250.0
+  "laser_power_set": 250.0,
+  "note": "the first 0.32 ms ran as an 80 s smoke test of this same case; it was continued from its 0.3 ms write to 0.8 ms"
 }

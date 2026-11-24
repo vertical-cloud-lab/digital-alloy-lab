@@ -1,0 +1,511 @@
+alloy,variant,power_W,speed_mm_s,am_class,predicted
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",100,300,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",100,500,none,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",100,700,none,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",100,900,lof_hatch,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",100,1100,lof_hatch,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",100,1300,lof_hatch,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",100,1500,lof_hatch,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",100,1700,lof,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",100,1900,lof,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",100,2100,lof,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",150,300,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",150,500,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",150,700,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",150,900,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",150,1100,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",150,1300,none,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",150,1500,lof_hatch,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",150,1700,lof_hatch,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",150,1900,lof_hatch,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",150,2100,lof_hatch,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",200,300,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",200,500,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",200,700,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",200,900,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",200,1100,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",200,1300,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",200,1500,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",200,1700,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",200,1900,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",200,2100,lof_hatch,lof_hatch
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",250,300,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",250,500,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",250,700,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",250,900,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",250,1100,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",250,1300,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",250,1500,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",250,1700,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",250,1900,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",250,2100,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",300,300,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",300,500,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",300,700,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",300,900,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",300,1100,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",300,1300,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",300,1500,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",300,1700,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",300,1900,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",300,2100,none,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",350,300,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",350,500,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",350,700,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",350,900,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",400,300,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",400,500,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",400,700,keyhole,none
+alsi10mg,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",400,900,keyhole,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),100,300,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),100,500,none,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),100,700,none,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),100,900,lof_hatch,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),100,1100,lof_hatch,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),100,1300,lof_hatch,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),100,1500,lof_hatch,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),100,1700,lof,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),100,1900,lof,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),100,2100,lof,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),150,300,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),150,500,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),150,700,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),150,900,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),150,1100,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),150,1300,none,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),150,1500,lof_hatch,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),150,1700,lof_hatch,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),150,1900,lof_hatch,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),150,2100,lof_hatch,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),200,300,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),200,500,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),200,700,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),200,900,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),200,1100,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),200,1300,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),200,1500,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),200,1700,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),200,1900,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),200,2100,lof_hatch,lof_hatch
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),250,300,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),250,500,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),250,700,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),250,900,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),250,1100,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),250,1300,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),250,1500,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),250,1700,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),250,1900,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),250,2100,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),300,300,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),300,500,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),300,700,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),300,900,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),300,1100,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),300,1300,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),300,1500,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),300,1700,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),300,1900,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),300,2100,none,none
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),350,300,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),350,500,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),350,700,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),350,900,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),400,300,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),400,500,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),400,700,keyhole,keyhole
+alsi10mg,Ke threshold fitted to this map's own boundary (Ke 15.6; not open),400,900,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",100,300,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",100,500,none,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",100,700,none,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",100,900,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",100,1100,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",100,1300,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",100,1500,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",100,1700,lof,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",100,1900,lof,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",100,2100,lof,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",150,300,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",150,500,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",150,700,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",150,900,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",150,1100,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",150,1300,none,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",150,1500,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",150,1700,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",150,1900,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",150,2100,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",200,300,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",200,500,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",200,700,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",200,900,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",200,1100,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",200,1300,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",200,1500,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",200,1700,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",200,1900,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",200,2100,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",250,300,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",250,500,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",250,700,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",250,900,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",250,1100,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",250,1300,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",250,1500,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",250,1700,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",250,1900,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",250,2100,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",300,300,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",300,500,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",300,700,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",300,900,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",300,1100,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",300,1300,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",300,1500,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",300,1700,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",300,1900,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",300,2100,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",350,300,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",350,500,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",350,700,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",350,900,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",400,300,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",400,500,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",400,700,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",400,900,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",100,300,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",100,500,none,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",100,700,none,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",100,900,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",100,1100,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",100,1300,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",100,1500,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",100,1700,lof,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",100,1900,lof,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",100,2100,lof,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",150,300,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",150,500,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",150,700,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",150,900,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",150,1100,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",150,1300,none,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",150,1500,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",150,1700,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",150,1900,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",150,2100,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",200,300,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",200,500,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",200,700,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",200,900,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",200,1100,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",200,1300,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",200,1500,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",200,1700,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",200,1900,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",200,2100,lof_hatch,lof_hatch
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",250,300,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",250,500,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",250,700,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",250,900,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",250,1100,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",250,1300,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",250,1500,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",250,1700,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",250,1900,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",250,2100,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",300,300,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",300,500,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",300,700,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",300,900,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",300,1100,none,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",300,1300,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",300,1500,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",300,1700,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",300,1900,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",300,2100,none,none
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",350,300,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",350,500,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",350,700,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",350,900,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",400,300,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",400,500,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",400,700,keyhole,keyhole
+alsi10mg,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.76)",400,900,keyhole,keyhole
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),100,300,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),100,500,none,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),100,700,none,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),100,900,lof_hatch,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),100,1100,lof_hatch,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),100,1300,lof_hatch,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),100,1500,lof_hatch,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),100,1700,lof,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),100,1900,lof,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),100,2100,lof,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),150,300,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),150,500,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),150,700,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),150,900,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),150,1100,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),150,1300,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),150,1500,lof_hatch,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),150,1700,lof_hatch,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),150,1900,lof_hatch,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),150,2100,lof_hatch,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),200,300,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),200,500,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),200,700,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),200,900,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),200,1100,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),200,1300,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),200,1500,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),200,1700,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),200,1900,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),200,2100,lof_hatch,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),250,300,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),250,500,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),250,700,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),250,900,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),250,1100,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),250,1300,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),250,1500,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),250,1700,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),250,1900,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),250,2100,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),300,300,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),300,500,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),300,700,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),300,900,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),300,1100,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),300,1300,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),300,1500,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),300,1700,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),300,1900,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),300,2100,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),350,300,keyhole,keyhole
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),350,500,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),350,700,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),350,900,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),400,300,keyhole,keyhole
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),400,500,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),400,700,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),400,900,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),100,300,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),100,500,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),100,700,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),100,900,lof_hatch,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),100,1100,lof_hatch,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),100,1300,lof_hatch,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),100,1500,lof_hatch,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),100,1700,lof,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),100,1900,lof,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),100,2100,lof,lof
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),150,300,none,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),150,500,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),150,700,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),150,900,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),150,1100,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),150,1300,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),150,1500,lof_hatch,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),150,1700,lof_hatch,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),150,1900,lof_hatch,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),150,2100,lof_hatch,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),200,300,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),200,500,none,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),200,700,none,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),200,900,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),200,1100,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),200,1300,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),200,1500,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),200,1700,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),200,1900,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),200,2100,lof_hatch,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),250,300,keyhole,keyhole
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),250,500,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),250,700,none,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),250,900,none,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),250,1100,none,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),250,1300,none,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),250,1500,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),250,1700,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),250,1900,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),250,2100,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),300,300,keyhole,keyhole
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),300,500,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),300,700,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),300,900,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),300,1100,none,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),300,1300,none,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),300,1500,none,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),300,1700,none,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),300,1900,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),300,2100,none,lof_hatch
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),350,300,keyhole,keyhole
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),350,500,keyhole,keyhole
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),350,700,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),350,900,keyhole,none
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),400,300,keyhole,keyhole
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),400,500,keyhole,keyhole
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),400,700,keyhole,keyhole
+alsi10mg,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),400,900,keyhole,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",75,400,none,lof_hatch
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",75,800,lof_hatch,lof_hatch
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",75,1200,lof,lof
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",75,1600,lof,lof
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",75,2000,lof,lof
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",75,2400,lof,lof
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",135,400,none,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",135,800,none,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",135,1200,none,lof_hatch
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",135,1600,lof_hatch,lof_hatch
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",135,2000,lof_hatch,lof_hatch
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",135,2400,lof_hatch,lof_hatch
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",195,400,keyhole,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",195,800,none,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",195,1200,none,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",195,1600,none,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",195,2000,none,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",195,2400,lof_hatch,lof_hatch
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",255,400,keyhole,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",255,800,keyhole,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",255,1200,none,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",255,1600,none,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",255,2000,none,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",255,2400,none,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",315,400,keyhole,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",315,800,keyhole,none
+blend,"eagar-tsai with the AM module's LOF tests, no keyhole test (#238)",315,1200,none,none
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),75,400,none,lof_hatch
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),75,800,lof_hatch,lof_hatch
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),75,1200,lof,lof
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),75,1600,lof,lof
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),75,2000,lof,lof
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),75,2400,lof,lof
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),135,400,none,none
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),135,800,none,none
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),135,1200,none,lof_hatch
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),135,1600,lof_hatch,lof_hatch
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),135,2000,lof_hatch,lof_hatch
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),135,2400,lof_hatch,lof_hatch
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),195,400,keyhole,keyhole
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),195,800,none,none
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),195,1200,none,none
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),195,1600,none,none
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),195,2000,none,none
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),195,2400,lof_hatch,lof_hatch
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),255,400,keyhole,keyhole
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),255,800,keyhole,keyhole
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),255,1200,none,none
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),255,1600,none,none
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),255,2000,none,none
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),255,2400,none,none
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),315,400,keyhole,keyhole
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),315,800,keyhole,keyhole
+blend,Ke threshold fitted to this map's own boundary (Ke 9.2; not open),315,1200,none,keyhole
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",75,400,none,lof_hatch
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",75,800,lof_hatch,lof_hatch
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",75,1200,lof,lof
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",75,1600,lof,lof
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",75,2000,lof,lof
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",75,2400,lof,lof
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",135,400,none,none
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",135,800,none,none
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",135,1200,none,lof_hatch
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",135,1600,lof_hatch,lof_hatch
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",135,2000,lof_hatch,lof_hatch
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",135,2400,lof_hatch,lof_hatch
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",195,400,keyhole,keyhole
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",195,800,none,none
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",195,1200,none,none
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",195,1600,none,none
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",195,2000,none,none
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",195,2400,lof_hatch,lof_hatch
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",255,400,keyhole,keyhole
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",255,800,keyhole,keyhole
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",255,1200,none,none
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",255,1600,none,none
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",255,2000,none,none
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",255,2400,none,none
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",315,400,keyhole,keyhole
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",315,800,keyhole,keyhole
+blend,"amalgamated: Gan depth law, Wk = 2r0 (no CFD)",315,1200,none,keyhole
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",75,400,none,lof_hatch
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",75,800,lof_hatch,lof_hatch
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",75,1200,lof,lof
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",75,1600,lof,lof
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",75,2000,lof,lof
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",75,2400,lof,lof
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",135,400,none,none
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",135,800,none,none
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",135,1200,none,lof_hatch
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",135,1600,lof_hatch,lof_hatch
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",135,2000,lof_hatch,lof_hatch
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",135,2400,lof_hatch,lof_hatch
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",195,400,keyhole,keyhole
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",195,800,none,none
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",195,1200,none,none
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",195,1600,none,none
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",195,2000,none,none
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",195,2400,lof_hatch,lof_hatch
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",255,400,keyhole,keyhole
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",255,800,keyhole,none
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",255,1200,none,none
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",255,1600,none,none
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",255,2000,none,none
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",255,2400,none,none
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",315,400,keyhole,keyhole
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",315,800,keyhole,keyhole
+blend,"amalgamated: Gan depth law, Wk from laserbeamFoam (c_w 1.10)",315,1200,none,keyhole
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),75,400,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),75,800,lof_hatch,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),75,1200,lof,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),75,1600,lof,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),75,2000,lof,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),75,2400,lof,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),135,400,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),135,800,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),135,1200,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),135,1600,lof_hatch,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),135,2000,lof_hatch,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),135,2400,lof_hatch,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),195,400,keyhole,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),195,800,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),195,1200,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),195,1600,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),195,2000,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),195,2400,lof_hatch,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),255,400,keyhole,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),255,800,keyhole,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),255,1200,none,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),255,1600,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),255,2000,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),255,2400,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),315,400,keyhole,none
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),315,800,keyhole,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 40 µΩ cm (0.139),315,1200,none,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),75,400,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),75,800,lof_hatch,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),75,1200,lof,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),75,1600,lof,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),75,2000,lof,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),75,2400,lof,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),135,400,none,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),135,800,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),135,1200,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),135,1600,lof_hatch,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),135,2000,lof_hatch,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),135,2400,lof_hatch,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),195,400,keyhole,none
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),195,800,none,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),195,1200,none,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),195,1600,none,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),195,2000,none,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),195,2400,lof_hatch,lof
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),255,400,keyhole,none
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),255,800,keyhole,none
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),255,1200,none,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),255,1600,none,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),255,2000,none,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),255,2400,none,lof_hatch
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),315,400,keyhole,none
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),315,800,keyhole,none
+blend,fully open: laserbeamFoam's flat-surface A at 65 µΩ cm (0.196),315,1200,none,none

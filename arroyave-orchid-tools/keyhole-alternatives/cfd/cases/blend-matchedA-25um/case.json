@@ -47,11 +47,12 @@
     "Lz": 0.0006500000000000001,
     "y_laser": 5e-05
   },
-  "end_time": 0.0025,
+  "end_time": 0.0012,
   "write_interval": 0.0001,
-  "x_end": 0.00115,
+  "x_end": 0.0006299999999999999,
   "n_proc": 2,
   "maxCo": 0.3,
   "absorbed_fraction": 0.3841,
-  "laser_power_set": 144.0375
+  "laser_power_set": 144.0375,
+  "note": "endTime lowered to 1.2 ms while running, to compare with blend-matchedA's last write and fit the job's time"
 }
