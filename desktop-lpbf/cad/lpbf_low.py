@@ -1170,8 +1170,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add("Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)", vv, C["ss"], 11, (220, 0, 0), mat="ss304", bom="G7", mcm="VALVE_KF25")
     hoses = {
         # from the port at the plenum's left end (2026-11-23): down, back under the left side (under the module's gland plate level,
-        # clear of the Z arm), behind the chamber (12 mm behind the Z servo), then up past the back-right leg to the old route
-        "Outlet plenum to filter": [(-86, -90, zf - 45 - 26), (-86, -90, -122), (-86, 135, -132), (150, 135, -132), (175, 95, -90), (300, -60, 20),
+        # clear of the Z arm), behind the chamber (12 mm behind the Z servo), then up past the back-right leg to the old route.
+        # The run behind the chamber is at y 166 (was 135), 2 mm behind the recoater sensor posts (y 131-151, electrical_parts.py),
+        # which the y 135 run went through; it jogs back to (150, 135) for the old way up between the back-right leg and optics post
+        "Outlet plenum to filter": [(-86, -90, zf - 45 - 26), (-86, -90, -122), (-86, 166, -132), (150, 166, -132), (150, 135, -132), (175, 95, -90), (300, -60, 20),
                                     (400, -40, 160), (470, -40, g0 + 294)],
         "Filter to blower": [(470 + 55 + 40, -40, g0 + 60), (560, -100, g0 + 60), (580 - 20, -150, g0 + 60)],
         "Blower to inlet plenum": [(700, -150, g0 + 270), (650, 20, 150), (420, 205, 100), (250, 205, 60), (110, cy + 78, 30), (0, cy + 32 + 46, 11)],
