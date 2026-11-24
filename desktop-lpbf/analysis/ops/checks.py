@@ -140,6 +140,8 @@ class Scene:
         self.module = module
         objs = []
         for i, p in enumerate(self.parts):
+            if "calibration" in p.tags:      # calibration fixtures (the power head on the plate) exist only in interference.py's
+                continue                     # calibration state; no hand operation here runs with them in place
             if "fastener" in p.tags:
                 key, pn = p.tags[1], p.mcm
                 r = self.reg[key]
@@ -155,7 +157,7 @@ class Scene:
         h = hashlib.sha256()
         for f in sorted(pathlib.Path(cad).glob("*.py")):
             h.update(f.read_bytes())
-        h.update(f"{module}-{reservoir}-{CHORD}".encode())
+        h.update(f"{module}-{reservoir}-{CHORD}-nocal".encode())
         CACHE.mkdir(parents=True, exist_ok=True)
         cf = CACHE / f"mesh-{h.hexdigest()[:16]}.pkl"
         if cf.exists():
