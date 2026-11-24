@@ -220,7 +220,7 @@ numbers as indicative, not converged.
   - its width Wk is taken across the track at a quarter of its depth. The opening at the plate surface also picks up
     any dip of the pool surface around it.
 
-### At the points the AM module rendered
+### At the three CFD points
 
 laserbeamFoam rows are means over the second half of each run (writes every 0.05 or 0.1 ms), with the pool at the
 solidus in brackets. Each eagar-tsai row "at a run's absorbed power" is the grid point with the nearest A·P at the
@@ -283,7 +283,8 @@ same speed, since eagar-tsai's field depends on A·P only.
 2. **At 65 µΩ cm the blend point does keyhole, and the absorbed fraction climbs well past the AM module's.**
    - The flat-surface value is 0.20.
    - A dimple deepens into a keyhole between 0.2 and 0.3 ms. Multiple reflections then take the absorbed fraction to
-     0.66 on average over the second half of the run (0.51–0.78 in 10 µs means over its last 0.2 ms). The AM module's is 0.38.
+     0.66 on average over the second half of the run (0.51–0.78 in 10 µs means over its last 0.2 ms). The AM
+     module's is 0.38.
    - That is the ~0.7 at which calorimetry finds keyhole-mode absorptivity saturating for other alloys (Ye et al. 2019).
    - So whether laserbeamFoam predicts a keyhole here at all turns on a liquid resistivity somewhere between 40 and
      65 µΩ cm, which nobody has measured for this alloy.
@@ -328,7 +329,10 @@ same speed, since eagar-tsai's field depends on A·P only.
    - laserbeamFoam's pools are a little shallower and narrower, which fits the latent heat that eagar-tsai leaves
      out.
    - So the cheap model is sound on the lack-of-fusion side, where #238 found it agrees with the AM module.
-7. **Coarsening the blend matched-A mesh from 17.5 to 25 µm moves the pool by under 10 %.** Over 0.6–1.2 ms: keyhole depth -6 %, pool depth -7 %, width 0 %, length +9 %. So the pool-scale numbers aren't set by the mesh at this level. Both meshes are coarse, though, and a finer one was out of reach here.
+7. **Coarsening the blend matched-A mesh from 17.5 to 25 µm moves the pool by under 10 %.**
+   - Over 0.6–1.2 ms: keyhole depth −6 %, pool depth −7 %, width 0 %, length +9 %.
+   - So at this level the mesh doesn't set the pool-scale numbers. Both meshes are coarse, though, and a finer one was
+     out of reach here.
 
 ### The combined model on the AM module's maps
 
@@ -376,7 +380,8 @@ How the agreement moves with the keyhole width, at the AM module's absorptivity 
 
 - **With laserbeamFoam's keyhole widths, the combined model comes close to a threshold fitted to the maps
   themselves:**
-  - 49 of 58 points for AlSi10Mg (c_w 1.76) and 23 of 27 for the blend (c_w 1.10), against 52 and 24 for a keyhole-number threshold fitted to each map.
+  - 49 of 58 points for AlSi10Mg (c_w 1.76) and 23 of 27 for the blend (c_w 1.10), against 52 and 24 for a
+    keyhole-number threshold fitted to each map.
   - With the keyhole only as wide as the beam (Wk = 2r0, no CFD), the AlSi10Mg map gets 29 of 58.
   - No single width fits both maps. AlSi10Mg is best near c_w = 2.0 and the blend near 1.0. laserbeamFoam
     puts each alloy within about 0.25 of its own best: AlSi10Mg's keyholes come out wider relative to the beam than
@@ -384,18 +389,20 @@ How the agreement moves with the keyhole width, at the AM module's absorptivity 
   - Most remaining disagreements are on the lack-of-fusion side, which is eagar-tsai's, as in #238.
 - **The keyhole width is the least certain number in the chain.**
   - It comes from one run (blend) or two (AlSi10Mg), on 15–17.5 µm cells, so ±1 cell is ±0.2 in c_w.
-  - How it is measured matters. For the blend, c_w is 1.22 at a quarter of the keyhole's depth, 2.6 at the plate
-    surface and 0.83 at half depth.
-  - With reflections (the 65 µΩ cm run) the blend keyhole is narrower: its width at a quarter depth averages 102 µm over the second half of the run, c_w 1.14.
+  - How it is measured matters. For the blend, c_w is 1.10 at a quarter of the keyhole's depth, 2.81 at the plate
+    surface and 0.65 at half depth.
+  - With reflections (the 65 µΩ cm run) the blend keyhole is about as wide (102 µm at a quarter depth, c_w 1.14) but
+    deeper.
   - The AM module's own definition of Wk isn't public.
 - **The fully open rows use laserbeamFoam's own flat-surface absorptivity in place of the AM module's.** They
-  show what an uncalibrated open model would draw: 7 of 58 and 4 of 27 at A = 0.139; 29 of 58 and 5 of 27 at A = 0.196. At a flat-surface absorptivity, most of both maps falls to lack of fusion.
+  show what an uncalibrated open model would draw: 7 of 58 and 4 of 27 at A = 0.139; 29 of 58 and 5 of 27 at
+  A = 0.196. At a flat-surface absorptivity, most of both maps falls to lack of fusion.
 
 ### What this changes in the answer
 
 - **Keyhole boundary: the recommendation holds, and laserbeamFoam supplies its missing piece.**
   - Combined, the keyhole number, Gan's depth law, a keyhole width from laserbeamFoam and the AM module's own
-    Wk/Dk test come within one or two grid points of a threshold fitted to the AM module's own boundary, on both
+    Wk/Dk test come within one to three grid points of a threshold fitted to the AM module's own boundary, on both
     maps. They make the AM module's keyhole-or-not call at 55 of 58 and 25 of 27 points without being fitted to
     them.
   - That holds at the AM module's absorptivity.
@@ -418,6 +425,23 @@ How the agreement moves with the keyhole width, at the AM module's absorptivity 
   - The next step: 3–5 ms of track at ≤ 10 µm, with Fresnel reflections and a powder layer. At the cost measured
     here (about 7.5 µs of core time per cell per step) that is 100–200 core-hours, a few hours on a 64-core node.
     Check its pool length against the AM-Bench and MeltpoolNet lengths in the benchmark table.
+
+**To rerun** (about an hour on 4 vCPUs for all seven runs, two at a time):
+
+```bash
+# OpenFOAM v2506 from openfoam.com's apt repository (dl.openfoam.com/add-debian-repo.sh), then laserbeamFoam
+sudo apt-get install openfoam2506-dev
+git clone https://github.com/laserbeamfoam/LaserbeamFoam && cd LaserbeamFoam && git checkout 38a6d38
+source /usr/lib/openfoam/openfoam2506/etc/bashrc
+(cd src && ./Allwmake -j 4) && (cd applications/solvers/laserbeamFoam && wmake -j 4) && cd ..
+# each run: copy its case under its own name, run it on 2 ranks, reconstruct, measure
+R=blend-matchedA; OUT=arroyave-orchid-tools/keyhole-alternatives/cfd
+cp -r $OUT/cases/$R /tmp/$R && (cd /tmp/$R && ./Allrun 2 && reconstructPar -fields '(T alpha.metal U)')
+python scripts/keyhole_cfd_laserbeamfoam.py post --case-dir /tmp/$R --out $OUT
+# then the figures and the combined model
+python scripts/keyhole_cfd_laserbeamfoam.py figures --post-dir $OUT --case-dirs /tmp/<each run> --out $OUT
+python scripts/keyhole_amalgamation.py --cfd-dir $OUT --out $OUT
+```
 
 ## An ORCHID-style benchmark for keyhole models
 

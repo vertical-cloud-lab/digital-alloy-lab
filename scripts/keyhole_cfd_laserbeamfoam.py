@@ -1,16 +1,18 @@
-"""laserbeamFoam runs at the AM module's two melt-pool renders, and their post-processing (issue #235).
+"""laserbeamFoam runs at the AM module's melt-pool points, and their post-processing (issue #235).
 
 The keyhole write-up (arroyave-orchid-tools/keyhole-alternatives/README.md) named an open thermal-fluid
 code as the only open way to get keyhole-mode pool width and length, with laserbeamFoam
 (github.com/laserbeamfoam/LaserbeamFoam, GPL-3.0; Flint et al. 2023, SoftwareX 21, 101299,
-doi:10.1016/j.softx.2022.101299) first. This script writes laserbeamFoam cases for the two points where
-the in-house Thermo-Calc AM-module results include a 3D melt-pool render:
+doi:10.1016/j.softx.2022.101299) first. This script writes laserbeamFoam cases at the points where the
+in-house Thermo-Calc AM-module results have a 3D melt-pool render, plus one more map point:
 
-* ``alsi10mg``: AlSi10Mg, 250 W, 0.9 m/s, Gaussian 1/e^2 radius 40 um, 150 C plate;
-* ``blend``: BYU AA1100 + Si + AlSi10Mg blend (Al-24Si), 375 W, 0.4 m/s, 45 um, 30 C plate.
+* ``alsi10mg``: AlSi10Mg, 250 W, 0.9 m/s, Gaussian 1/e^2 radius 40 um, 150 C plate (render; map: no defect);
+* ``alsi10mg_350W``: the same at 350 W, the next grid point the AM map calls keyhole at 0.9 m/s;
+* ``blend``: BYU AA1100 + Si + AlSi10Mg blend (Al-24Si), 375 W, 0.4 m/s, 45 um, 30 C plate (render; keyhole).
 
-It then reads the fields back and measures the melt pool (T >= liquidus in the metal) and the keyhole
-(gas below the original surface) at each write time, and the absorbed power from the solver log.
+It then reads the fields back and measures the melt pool (liquid metal above the liquidus, and above the
+solidus) and the keyhole (gas below the original surface) at each write, and the absorbed power from the
+solver log; and it draws the time histories and sections.
 
 Choices, kept the same as the cheap models in scripts/keyhole_open_models.py where they overlap:
 
@@ -19,18 +21,25 @@ Choices, kept the same as the cheap models in scripts/keyhole_open_models.py whe
 * latent heat of fusion from the mass-weighted pure-element values (Al 397 kJ/kg, Si 1790 kJ/kg);
 * pure-Al vapour (T_b 2743 K, 10.9 MJ/kg, 26.98 g/mol) for recoil pressure and evaporative cooling;
 * liquid Al-Si surface tension 0.86 N/m, dsigma/dT -3.5e-4 N/m/K, kinematic viscosity 4.9e-7 m^2/s;
-* absorptivity is NOT imposed: laserbeamFoam traces rays and takes each bounce's absorption from the
-  Fresnel equations with a Drude permittivity (free-electron density 1.81e29 m^-3, three electrons
-  per Al atom; electrical resistivity 4.0e-7 Ohm m, a liquid Al-Si value), at 1070 nm;
+* absorptivity, one of two ways:
+  - by default laserbeamFoam traces rays and takes each bounce's absorption from the Fresnel equations
+    with a Drude permittivity (free-electron density 1.81e29 m^-3, three electrons per Al atom; liquid
+    electrical resistivity 4.0e-7 Ohm m, or ``--elec-resistivity``), at 1070 nm;
+  - with ``--absorbed-fraction A`` the beam power is set to A*P and every ray deposits all of it where it
+    first meets the metal, which fixes the absorbed power at the AM module's;
 * bare plate, no powder layer; full 3D domain (the ray tracing has no symmetry-plane reflection).
 
 The mesh is uniform and coarse (``--dx``), because the runs had to fit on a 4-vCPU runner.
 
-Usage (OpenFOAM v2506 sourced, laserbeamFoam built):
+Usage (OpenFOAM v2506 sourced, laserbeamFoam built; the committed cases are in
+arroyave-orchid-tools/keyhole-alternatives/cfd/cases/):
 
-    python scripts/keyhole_cfd_laserbeamfoam.py setup --case blend --dx 20e-6 --end-time 2.5e-3 --out /tmp/cfd/blend
-    (cd /tmp/cfd/blend && ./Allrun 2)            # blockMesh, setFields, decomposePar, mpirun -np 2
-    python scripts/keyhole_cfd_laserbeamfoam.py post --case-dir /tmp/cfd/blend --out <dir>
+    python scripts/keyhole_cfd_laserbeamfoam.py setup --case blend --dx 17.5e-6 --end-time 1.6e-3 \
+        --absorbed-fraction 0.3841 --out /tmp/cfd/blend-matchedA
+    (cd /tmp/cfd/blend-matchedA && ./Allrun 2)   # blockMesh, setFields, decomposePar, mpirun -np 2
+    (cd /tmp/cfd/blend-matchedA && reconstructPar -fields '(T alpha.metal U)')
+    python scripts/keyhole_cfd_laserbeamfoam.py post --case-dir /tmp/cfd/blend-matchedA --out <dir>
+    python scripts/keyhole_cfd_laserbeamfoam.py figures --post-dir <dir> --case-dirs /tmp/cfd/<run> ... --out <dir>
 """
 
 from __future__ import annotations
