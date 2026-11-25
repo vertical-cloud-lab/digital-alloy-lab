@@ -233,8 +233,8 @@ spatter lands on the floor at Al-like speeds; dashed: the Ø75 plate; green: the
 - The lid ports trade places: the slower ceiling sweep halves what reaches the LP (850 against 1,860 s/m³ next to its slide)
   and doubles to triples what reaches the layer camera's bore (1,300 against 440). The back-half lid candidates stay
   13–15× cleaner than (−60, −80).
-- **The LW purge doesn't change spatter** (`p200_lw3` and `p200_lw1` match `p200` within one particle per size): 3 L/min
-  can't turn a 100 µm droplet.
+- **The LW purge doesn't change spatter** (`p200_lw3` and `p200_lw1` match `p200` to within 0–4 of 1,200 launches per
+  size): 3 L/min can't turn a 100 µm droplet.
 
 ## 2. Spatter on its own
 
