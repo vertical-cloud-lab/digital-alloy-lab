@@ -70,6 +70,11 @@ add("O5b", "beam delivery", "45 deg fold mirror, Ø1 in. Nd:YAG laser line (R > 
     "CW 20 kW/cm at 1070 nm (Thorlabs certification measurement, Ø0.974 mm): 10x our 1.6-2.0 kW/cm. 1070 nm is just outside the guaranteed band: the p-polarised 0.6 % loss heats the mirror ~3 W at 500 W")
 add("O5c", "beam delivery", "30 mm cage cubes for the dichroic and the fold mirror (CM1-DCH/M class), with SM1 tube adapters", "CM1-DCH/M class", "Thorlabs", 2, 100, 200,
     "estimate", "", "", "T2", "add", "the two cage cubes (envelope 41.9 mm assumed)", "Not priced this round")
+# 2026-11-25 (monitoring/optics.md, monitoring/fabrication.md): the DMSP1000 passes 0.06-0.12 % of the forward beam (0.3-0.6 W at
+# 500 W) out of its cube's far (-y) port, so that port needs a trap with or without the monitoring.
+add("O5d", "beam delivery", "Beam trap on the DMSP1000 cube's far (-y) port, 30 mm cage, 5 W CW (0.3-0.6 W of the forward beam leaks through the dichroic)",
+    "BTC30", "Thorlabs", 1, 258.03, 258.03, "fetched", "https://www.thorlabs.com/item/BTC30", "2026-11-25T07:53Z", "T2", "add now (2026-11-25)", "",
+    "Needed with or without the monitoring: a Class 4 stray beam leaves cube 1's -y face today (11 in US stock on 2026-11-25)")
 add("O6", "scanner", "2-axis galvo, 20 mm aperture, 1000 W at 1064 nm without cooling, XY2-100", "basiCube 20", "SCANLAB", 1, "", 12000,
     "quote (bom.csv L5)", "https://www.scanlab.de/en/print-product/1061", "", "L5", "keep", "2-axis galvo scan head (SCANLAB basiCube 20) + Galvo riser plate (F5)",
     "Datasheet (fetched 2026-11-22T05:41Z): 1000 W @ 1064 nm (standard systems, 100 % duty), no water or air cooling; coatings 532/1064/1080/10600 nm; +/-0.35 rad optical; drift offset < 30 urad/K, gain < 160 ppm/K; its 60 x 60 mm field at f = 160 mm is for SCANLAB's own objective. Ask: 1080 nm coating, mirror positions (Thorlabs wants the 2nd mirror 7.5 mm from the FTH160), camera/detector adapter")
@@ -121,8 +126,11 @@ add("O14b", "instrument", "Alternative head: Ophir FL600A-LP2-65 (600 W, fan, LP
     "T1", "alternative", "-", "FL600A-BB-65 is $3,183 (7 kW/cm2 at 600 W)")
 add("O15", "instrument", "Coaxial melt-pool photodiode, Si 350-1100 nm, switchable gain", "PDA36A2", "Thorlabs", 1, 400.01, 400.01, "repo (vendor-lookups.csv)",
     "https://www.thorlabs.com/item/PDA36A2", "2026-11-13T23:47Z", "T2", "keep", "Coaxial photodiode chain (... Thorlabs PDA36A2)", "Set the gain for >= 100 kHz bandwidth")
-add("O16", "instrument", "Notch filter for the photodiode, 1064 nm, 44 nm FWHM, OD > 6 (1070 nm inside the band)", "NF1064-44", "Thorlabs", 1, 635.55, 635.55,
-    "fetched", "https://www.thorlabs.com/notch-filters?pn=NF1064-44", "2026-11-22T05:43Z", "T2", "add", "Coaxial photodiode chain (SM1 tube ...)", "No damage threshold published; it sees only stray light behind the dichroic")
+# 2026-11-25 (monitoring/optics.md): dropped. The NF1064-44 also blocks 520-720 nm (OD 4.2-4.6), which would cut the two-colour
+# pair's 700 nm band; the FESH1000 (O17) after the dichroic is the shared 1070 nm blocker (OD 6.0 at 1070 nm). qty 0 keeps it out of the total.
+add("O16", "instrument", "Notch filter for the photodiode, 1064 nm, 44 nm FWHM, OD > 6 (1070 nm inside the band)", "NF1064-44", "Thorlabs", 0, 635.55, 635.55,
+    "fetched", "https://www.thorlabs.com/notch-filters?pn=NF1064-44", "2026-11-22T05:43Z", "T2", "drop (2026-11-25)", "Coaxial photodiode chain (SM1 tube ...)",
+    "Dropped 2026-11-25 (monitoring/optics.md): it also blocks 520-720 nm, which cuts the two-colour pair's 700 nm band; O17 (FESH1000) is the shared blocker")
 add("O17", "instrument", "Short-pass filter for the photodiode, 1000 nm edge (OD > 4, 1013-1500 nm)", "FESH1000", "Thorlabs", 1, 169.26, 169.26, "fetched",
     "https://www.thorlabs.com/hard-coated-edgepass-filters?pn=FESH1000", "2026-11-22T05:44Z", "T2", "add", "Coaxial photodiode chain (SM1 tube ...)", "")
 add("O18", "instrument", "Photodiode lens and mounts (f ~ 30-50 mm achromat, SM1 tubes, 45 deg mirror mount)", "AC254-050-B + SM1 parts", "Thorlabs", 1, 150, 300,
