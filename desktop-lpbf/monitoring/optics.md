@@ -307,7 +307,9 @@ change it by ≤ 18 %. Full tables: [`radiometry.md`](../analysis/out/monitoring
       counts read noise and asks for SNR 3 in the coldest pixel: a usable range of ~480:1 for the IMX296 and ~190:1 for the
       Chronos, against A's 4,096 levels.
   - **So the pair is a mode monitor:**
-    - it shows whether a depression is open (~2,620 K against ~2,250 K on AlSi10Mg), and how steady it is, at 90 kHz;
+    - it shows whether a depression is open (~2,620 K against ~2,250 K on AlSi10Mg), and how steady it is;
+    - noise: at 90 kHz, PD-A's SNR of 11–26 makes each ratio sample uncertain by ±5–10 %, about ±75–125 K. That resolves the
+      ~370 K step 3–5-fold. At 9 kHz it is ±2–4 % (±30–50 K);
     - it doesn't measure cooling, and no field stop fixes that. A smaller stop only raises the depression's share. The
       annulus that would read the trailing pool must block the depression in both bands, but lateral colour moves the
       700 nm view 0.1–0.6 mm off the laser spot anywhere off axis;
