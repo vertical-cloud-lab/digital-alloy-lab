@@ -2,18 +2,18 @@
 
 | port | centre (mm) | to plate centre (mm) | elevation | window seat | window tilt to the view (on the face) | window + slide | focus shift / astigmatism / blur at NA 0.035 | ghost offset |
 |---|---|---:|---:|---|---:|---|---|---:|
-| LW | (-156, -20, 36) | 161 | 12.9 deg | on the wall's face | 14.8 deg (14.8) | 38.1 x 5.0 mm + 1.0 mm | 2.01 / 0.148 mm / 5.2 um | 2.07 mm |
-| BW | (-125, 111, 25) | 169 | 8.5 deg | on the wall's face | 49.0 deg (49.0) | 25.4 x 3.0 mm | 2.15 / 0.990 mm / 34.6 um | 2.39 mm |
-| LP | (-60, -80, 136) | 169 | 53.7 deg | on the wall's face | 36.3 deg (36.3) | 25.4 x 3.0 mm + 1.0 mm | 1.95 / 0.668 mm / 23.4 um | 2.88 mm |
+| LW | (-156, -20, 36) | 161 | 12.9 deg | on the wall's face | 14.8 deg (14.8) | 40.0 x 4.0 mm + 1.5 mm | 1.84 / 0.136 mm / 4.8 um | 1.90 mm |
+| BW | (-125, 111, 30) | 170 | 10.0 deg | on the wall's face | 49.2 deg (49.2) | 25.4 x 3.0 mm | 2.17 / 1.000 mm / 35.0 um | 2.39 mm |
+| LP | (-40, 60, 136) | 154 | 62.1 deg | square to the line of sight (boss) | 0.0 deg (27.9) | 25.4 x 3.0 mm + 1.0 mm | 1.25 / 0.000 mm / 0.0 um | 0.00 mm |
 
-LP as in cad/monitoring_spec.py now: centre (-60, -80, 136), 53.7 deg; working distances LW 176 mm, LP 197 mm. Every LP candidate the spec lists:
+LP as in cad/monitoring_spec.py now: centre (-40, 60, 136), 62.1 deg; working distances LW 176 mm, LP 203 mm. Every LP candidate the spec lists:
 
 | LP centre | elevation | to plate centre (mm) | WD (mm) | IMX296 + 50 mm: um/px across / along | window tilt if seated on the lid (astigmatism) | 1070 nm diffuse at the window (W/cm2) | into a 12.5 mm pupil (W) | glint bound into the pupil (W) |
 |---|---:|---:|---:|---|---|---:|---:|---:|
-| (-60, -80, 136) (spec) | 53.7 deg | 169 | 197 | 10.1 / 12.6 | 36 deg (0.67 mm) | 0.31 | 0.39 | 1.32 |
-| (-40, 60, 136) | 62.1 deg | 154 | 182 | 9.1 / 10.3 | 28 deg (0.37 mm) | 0.42 | 0.51 | 1.59 |
-| (-20, 80, 136) | 58.8 deg | 159 | 187 | 9.5 / 11.1 | 31 deg (0.48 mm) | 0.38 | 0.46 | 1.49 |
-| (80, 80, 136) | 50.2 deg | 177 | 205 | 10.7 / 13.9 | 40 deg (0.82 mm) | 0.27 | 0.34 | 1.20 |
+| (-60, -80, 136) | 53.7 deg | 169 | 218 | 11.6 / 14.4 | 36 deg (0.67 mm); seated square on a boss | 0.31 | 0.39 | 1.32 |
+| (-40, 60, 136) (spec) | 62.1 deg | 154 | 203 | 10.6 / 11.9 | 28 deg (0.37 mm); seated square on a boss | 0.42 | 0.51 | 1.59 |
+| (-20, 80, 136) | 58.8 deg | 159 | 208 | 10.9 / 12.8 | 31 deg (0.48 mm); seated square on a boss | 0.38 | 0.46 | 1.49 |
+| (80, 80, 136) | 50.2 deg | 177 | 226 | 12.1 / 15.8 | 40 deg (0.82 mm); seated square on a boss | 0.27 | 0.34 | 1.20 |
 
 | camera + lens | port | f/# | WD (mm) | m | um/px across / along the plate | Rayleigh (um) | DOF (mm) | lens focuses at this WD | lens covers the sensor |
 |---|---|---:|---:|---:|---|---:|---:|---|---|
@@ -25,8 +25,8 @@ LP as in cad/monitoring_spec.py now: centre (-60, -80, 136), 53.7 deg; working d
 | Chronos 2.1-HD mono + Edmund 35 mm C VIS-NIR #67-716 | LW | 4.0 | 176 | 0.248 | 40.4 / 181 | 21 | 4.64 | yes | centre crop only |
 | Chronos 2.1-HD mono + Edmund 75 mm C VIS-NIR #74-054 | LW | 5.6 | 176 | 0.740 | 13.5 / 61 | 14 | 1.30 | no (MOD 500 mm): extension tube | centre crop only |
 | IMX296 mono + Kowa LM50JC10M 50 mm | LW | 4.0 | 176 | 0.396 | 8.7 / 39 | 15 | 1.17 | yes | yes |
-| IMX296 mono + Kowa LM50JC10M 50 mm | LP | 5.6 | 197 | 0.341 | 10.1 / 13 | 23 | 2.55 | yes | yes |
-| IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 | LP | 4.0 | 197 | 0.216 | 15.9 / 20 | 23 | 3.16 | yes | yes |
+| IMX296 mono + Kowa LM50JC10M 50 mm | LP | 5.6 | 203 | 0.327 | 10.6 / 12 | 24 | 2.72 | yes | yes |
+| IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 | LP | 4.0 | 203 | 0.208 | 16.6 / 19 | 24 | 3.36 | yes | yes |
 
 ## Motion blur (pixels) for spatter, across the view
 
@@ -70,19 +70,19 @@ LP as in cad/monitoring_spec.py now: centre (-60, -80, 136), 53.7 deg; working d
 
 | speed | 1 us | 2 us | 5 us | 10 us | 20 us | 41 us |
 |---|---:|---:|---:|---:|---:|---:|
-| 1 m/s | 0.1 | 0.2 | 0.5 | 1.0 | 2.0 | 4.0 |
-| 5 m/s | 0.5 | 1.0 | 2.5 | 4.9 | 9.9 | 20.2 |
-| 10 m/s | 1.0 | 2.0 | 4.9 | 9.9 | 19.7 | 40.5 |
-| 20 m/s | 2.0 | 3.9 | 9.9 | 19.7 | 39.5 | 80.9 |
+| 1 m/s | 0.1 | 0.2 | 0.5 | 0.9 | 1.9 | 3.9 |
+| 5 m/s | 0.5 | 0.9 | 2.4 | 4.7 | 9.5 | 19.4 |
+| 10 m/s | 0.9 | 1.9 | 4.7 | 9.5 | 19.0 | 38.9 |
+| 20 m/s | 1.9 | 3.8 | 9.5 | 19.0 | 37.9 | 77.7 |
 
 **IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 at LP**
 
 | speed | 1 us | 2 us | 5 us | 10 us | 20 us | 41 us |
 |---|---:|---:|---:|---:|---:|---:|
-| 1 m/s | 0.1 | 0.1 | 0.3 | 0.6 | 1.3 | 2.6 |
-| 5 m/s | 0.3 | 0.6 | 1.6 | 3.1 | 6.3 | 12.9 |
-| 10 m/s | 0.6 | 1.3 | 3.1 | 6.3 | 12.5 | 25.7 |
-| 20 m/s | 1.3 | 2.5 | 6.3 | 12.5 | 25.1 | 51.4 |
+| 1 m/s | 0.1 | 0.1 | 0.3 | 0.6 | 1.2 | 2.5 |
+| 5 m/s | 0.3 | 0.6 | 1.5 | 3.0 | 6.0 | 12.4 |
+| 10 m/s | 0.6 | 1.2 | 3.0 | 6.0 | 12.1 | 24.8 |
+| 20 m/s | 1.2 | 2.4 | 6.0 | 12.1 | 24.2 | 49.5 |
 
 ## Light needed on the plate for half the full well (powder reflectance 0.5, optics 0.8)
 
@@ -120,43 +120,43 @@ LP as in cad/monitoring_spec.py now: centre (-60, -80, 136), 53.7 deg; working d
 | IMX296 mono + Kowa LM50JC10M 50 mm f/4.0 at LW | diode laser or LED behind a filter as wide as its spectrum | 100 | 0.197 | 5.4 | 1.07 |
 | IMX296 mono + Kowa LM50JC10M 50 mm f/4.0 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 10 | 6.57 | 5.4 | 35.5 |
 | IMX296 mono + Kowa LM50JC10M 50 mm f/4.0 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 100 | 0.657 | 5.4 | 3.55 |
-| IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP | diode laser or LED behind a filter as wide as its spectrum | 10 | 3.57 | 2.02 | 7.2 |
-| IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP | diode laser or LED behind a filter as wide as its spectrum | 100 | 0.357 | 2.02 | 0.72 |
-| IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP | LED (~30-40 nm wide) behind a 10 nm filter | 10 | 11.9 | 2.02 | 24 |
-| IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP | LED (~30-40 nm wide) behind a 10 nm filter | 100 | 1.19 | 2.02 | 2.4 |
-| IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP | diode laser or LED behind a filter as wide as its spectrum | 10 | 1.5 | 5.0 | 7.49 |
-| IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP | diode laser or LED behind a filter as wide as its spectrum | 100 | 0.15 | 5.0 | 0.749 |
-| IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP | LED (~30-40 nm wide) behind a 10 nm filter | 10 | 4.99 | 5.0 | 25 |
-| IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP | LED (~30-40 nm wide) behind a 10 nm filter | 100 | 0.499 | 5.0 | 2.5 |
+| IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP | diode laser or LED behind a filter as wide as its spectrum | 10 | 3.49 | 2.0 | 6.99 |
+| IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP | diode laser or LED behind a filter as wide as its spectrum | 100 | 0.349 | 2.0 | 0.699 |
+| IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP | LED (~30-40 nm wide) behind a 10 nm filter | 10 | 11.6 | 2.0 | 23.3 |
+| IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP | LED (~30-40 nm wide) behind a 10 nm filter | 100 | 1.16 | 2.0 | 2.33 |
+| IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP | diode laser or LED behind a filter as wide as its spectrum | 10 | 1.48 | 4.91 | 7.26 |
+| IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP | diode laser or LED behind a filter as wide as its spectrum | 100 | 0.148 | 4.91 | 0.726 |
+| IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP | LED (~30-40 nm wide) behind a 10 nm filter | 10 | 4.93 | 4.91 | 24.2 |
+| IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP | LED (~30-40 nm wide) behind a 10 nm filter | 100 | 0.493 | 4.91 | 2.42 |
 
 ## Source power for the Chronos + 50 mm f/4 at LW, 640 x 96 field, half full well
 
 | exposure (us) | source | from | elevation | W of light needed |
 |---:|---|---|---:|---:|
 | 10 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LW: through the camera's own port with a 50:50 cube (x 0.25 round trip) | 12.9 deg | 39 |
-| 10 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | BW: back-wall window, raking | 8.5 deg | 15 |
-| 10 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LP: steep lid port | 53.7 deg | 2.7 |
+| 10 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | BW: back-wall window, raking | 10.0 deg | 12 |
+| 10 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LP: steep lid port | 62.1 deg | 2.4 |
 | 10 | 808 nm diode laser, fibre + collimator | LW: through the camera's own port with a 50:50 cube (x 0.25 round trip) | 12.9 deg | 16 |
-| 10 | 808 nm diode laser, fibre + collimator | BW: back-wall window, raking | 8.5 deg | 5.9 |
-| 10 | 808 nm diode laser, fibre + collimator | LP: steep lid port | 53.7 deg | 1.1 |
+| 10 | 808 nm diode laser, fibre + collimator | BW: back-wall window, raking | 10.0 deg | 5 |
+| 10 | 808 nm diode laser, fibre + collimator | LP: steep lid port | 62.1 deg | 0.98 |
 | 20 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LW: through the camera's own port with a 50:50 cube (x 0.25 round trip) | 12.9 deg | 19 |
-| 20 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | BW: back-wall window, raking | 8.5 deg | 7.3 |
-| 20 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LP: steep lid port | 53.7 deg | 1.3 |
+| 20 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | BW: back-wall window, raking | 10.0 deg | 6.2 |
+| 20 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LP: steep lid port | 62.1 deg | 1.2 |
 | 20 | 808 nm diode laser, fibre + collimator | LW: through the camera's own port with a 50:50 cube (x 0.25 round trip) | 12.9 deg | 7.8 |
-| 20 | 808 nm diode laser, fibre + collimator | BW: back-wall window, raking | 8.5 deg | 2.9 |
-| 20 | 808 nm diode laser, fibre + collimator | LP: steep lid port | 53.7 deg | 0.54 |
+| 20 | 808 nm diode laser, fibre + collimator | BW: back-wall window, raking | 10.0 deg | 2.5 |
+| 20 | 808 nm diode laser, fibre + collimator | LP: steep lid port | 62.1 deg | 0.49 |
 | 2 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LW: through the camera's own port with a 50:50 cube (x 0.25 round trip) | 12.9 deg | 1.9e+02 |
-| 2 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | BW: back-wall window, raking | 8.5 deg | 73 |
-| 2 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LP: steep lid port | 53.7 deg | 13 |
+| 2 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | BW: back-wall window, raking | 10.0 deg | 62 |
+| 2 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LP: steep lid port | 62.1 deg | 12 |
 | 2 | 808 nm diode laser, fibre + collimator | LW: through the camera's own port with a 50:50 cube (x 0.25 round trip) | 12.9 deg | 78 |
-| 2 | 808 nm diode laser, fibre + collimator | BW: back-wall window, raking | 8.5 deg | 29 |
-| 2 | 808 nm diode laser, fibre + collimator | LP: steep lid port | 53.7 deg | 5.4 |
+| 2 | 808 nm diode laser, fibre + collimator | BW: back-wall window, raking | 10.0 deg | 25 |
+| 2 | 808 nm diode laser, fibre + collimator | LP: steep lid port | 62.1 deg | 4.9 |
 
 ## 1070 nm at each viewport, 500 W
 
 | port | emission angle from the normal | diffuse at the window (W/cm2) | diffuse into the window (W) | diffuse into a 12.5 mm pupil (W) | glint bound into the pupil (W) |
 |---|---:|---:|---:|---:|---:|
 | LW | 77 deg | 0.0955 | 0.469 | 0.117 | 0 (outside the +/-40 deg cone) |
-| LP | 36 deg | 0.315 | 0.99 | 0.387 | 1.32 |
-| BW | 81 deg | 0.0577 | 0.181 | 0.0708 | 0 (outside the +/-40 deg cone) |
+| LP | 28 deg | 0.415 | 1.3 | 0.51 | 1.59 |
+| BW | 80 deg | 0.0672 | 0.211 | 0.0825 | 0 (outside the +/-40 deg cone) |
 | layer camera (75, -45, 136) | 33 deg | 0.358 | 1.13 | 0.44 | 1.44 |

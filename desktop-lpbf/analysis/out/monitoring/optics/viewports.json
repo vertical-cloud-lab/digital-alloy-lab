@@ -16,26 +16,26 @@
    "face_tilt_deg": 14.788169647893747,
    "seat": "on the wall's face",
    "window": {
-    "d": 38.1,
-    "t": 5.0,
-    "mat": "UV fused silica, AR 650-1050 nm"
+    "d": 40.0,
+    "t": 4.0,
+    "mat": "UV fused silica, NIR I AR 600-1050 nm (Edmund 36-983)"
    },
    "slide": {
     "d": 30.0,
-    "t": 1.0
+    "t": 1.5
    },
    "key": "LW",
    "clear_d": 25.0,
    "plates": {
-    "focus_shift_mm": 2.0113716979883285,
-    "astigmatism_mm": 0.14842910401756954,
-    "blur_um": 5.195018640614935,
-    "boresight_shift_mm": 0.4963891973343187,
-    "ghost_offset_mm": 2.0701750952052977,
+    "focus_shift_mm": 1.8437573898226343,
+    "astigmatism_mm": 0.13606001201610537,
+    "blur_um": 4.762100420563689,
+    "boresight_shift_mm": 0.45502343088979214,
+    "ghost_offset_mm": 1.8976605039381893,
     "reflection_deviation_deg": 29.576339295787495
    },
    "plates_if_window_normal_to_view": {
-    "focus_shift_mm": 1.8710284526262528,
+    "focus_shift_mm": 1.7151094149073984,
     "astigmatism_mm": 0.0,
     "blur_um": 0.0,
     "boresight_shift_mm": 0.0,
@@ -47,12 +47,12 @@
    "centre": [
     -125.0,
     111.0,
-    25.0
+    29.5
    ],
-   "dist_mm": 169.0295832095672,
-   "elevation_deg": 8.50542785605438,
-   "window_tilt_deg": 48.952097366655195,
-   "face_tilt_deg": 48.952097366655195,
+   "dist_mm": 169.75349775483272,
+   "elevation_deg": 10.007750752847498,
+   "window_tilt_deg": 49.164513775389935,
+   "face_tilt_deg": 49.164513775389935,
    "seat": "on the wall's face",
    "window": {
     "d": 25.4,
@@ -63,12 +63,12 @@
    "key": "BW",
    "clear_d": 20.0,
    "plates": {
-    "focus_shift_mm": 2.1531522826739535,
-    "astigmatism_mm": 0.9897253135118241,
-    "blur_um": 34.64038597291385,
-    "boresight_shift_mm": 1.0663480199022946,
-    "ghost_offset_mm": 2.3922688362587534,
-    "reflection_deviation_deg": 97.90419473331039
+    "focus_shift_mm": 2.1698397278454022,
+    "astigmatism_mm": 0.9996769986851283,
+    "blur_um": 34.98869495397949,
+    "boresight_shift_mm": 1.073476701415327,
+    "ghost_offset_mm": 2.392587878069047,
+    "reflection_deviation_deg": 98.32902755077987
    },
    "plates_if_window_normal_to_view": {
     "focus_shift_mm": 0.9355142263131264,
@@ -81,15 +81,15 @@
   },
   "LP": {
    "centre": [
-    -60.0,
-    -80.0,
+    -40.0,
+    60.0,
     136.0
    ],
-   "dist_mm": 168.80758276807353,
-   "elevation_deg": 53.67317404787977,
-   "window_tilt_deg": 36.32682595212023,
-   "face_tilt_deg": 36.32682595212023,
-   "seat": "on the wall's face",
+   "dist_mm": 153.93505123915085,
+   "elevation_deg": 62.0662068494337,
+   "window_tilt_deg": 0.0,
+   "face_tilt_deg": 27.93379315056631,
+   "seat": "square to the line of sight (boss)",
    "window": {
     "d": 25.4,
     "t": 3.0,
@@ -102,12 +102,12 @@
    "key": "LP",
    "clear_d": 20.0,
    "plates": {
-    "focus_shift_mm": 1.9504216529932223,
-    "astigmatism_mm": 0.6678932846154021,
-    "blur_um": 23.376264961539075,
-    "boresight_shift_mm": 0.9308581723999095,
-    "ghost_offset_mm": 2.877407259020325,
-    "reflection_deviation_deg": 72.65365190424046
+    "focus_shift_mm": 1.2473523017508352,
+    "astigmatism_mm": 0.0,
+    "blur_um": 0.0,
+    "boresight_shift_mm": 0.0,
+    "ghost_offset_mm": 0.0,
+    "reflection_deviation_deg": 0.0
    },
    "plates_if_window_normal_to_view": {
     "focus_shift_mm": 1.2473523017508352,
@@ -349,14 +349,14 @@
    "camera": "IMX296 mono",
    "lens": "Kowa LM50JC10M 50 mm",
    "f_number": 5.6,
-   "wd_mm": 196.80758276807353,
-   "magnification": 0.3405818627161102,
-   "um_per_px_across": 10.129723210997074,
-   "um_per_px_along_plate": 12.573338892338707,
-   "rayleigh_um": 22.85801989301513,
-   "diffraction_vs_2px": 1.128264781618115,
-   "dof_mm": 2.5450921773845723,
-   "focus_band_on_plate_mm": 4.296308583862227,
+   "wd_mm": 202.93505123915085,
+   "magnification": 0.3269361705827197,
+   "um_per_px_across": 10.55251853550141,
+   "um_per_px_along_plate": 11.944135893121313,
+   "rayleigh_um": 23.569688591119935,
+   "diffraction_vs_2px": 1.116780250696807,
+   "dof_mm": 2.715804109197692,
+   "focus_band_on_plate_mm": 5.797413665279861,
    "lens_mod_ok": true,
    "lens_mod_mm": 100.0,
    "image_circle_mm": 11.0,
@@ -367,24 +367,24 @@
     1088
    ],
    "roi_field_mm": [
-    14.74887699521174,
-    13.679792714864515
+    15.364466987690053,
+    12.995219851715989
    ],
-   "field_cm2_roi": 2.017615800715304
+   "field_cm2_roi": 1.9966462640946474
   },
   {
    "port": "LP",
    "camera": "IMX296 mono",
    "lens": "Edmund 35 mm C VIS-NIR #67-716",
    "f_number": 4.0,
-   "wd_mm": 196.80758276807353,
-   "magnification": 0.21630630283975724,
-   "um_per_px_across": 15.949604587138678,
-   "um_per_px_along_plate": 19.797163209275425,
-   "rayleigh_um": 23.3245100949134,
-   "diffraction_vs_2px": 0.7311939919100453,
-   "dof_mm": 3.155044220481151,
-   "focus_band_on_plate_mm": 5.325953883858039,
+   "wd_mm": 202.93505123915085,
+   "magnification": 0.208413906100863,
+   "um_per_px_across": 16.553597907859157,
+   "um_per_px_along_plate": 18.736609868666175,
+   "rayleigh_um": 24.050702643999934,
+   "diffraction_vs_2px": 0.7264494032617941,
+   "dof_mm": 3.364527574984026,
+   "focus_band_on_plate_mm": 7.182240454811622,
    "lens_mod_ok": true,
    "lens_mod_mm": 165.0,
    "image_circle_mm": 11.0,
@@ -395,10 +395,10 @@
     1088
    ],
    "roi_field_mm": [
-    23.222624278873916,
-    21.53931357169166
+    24.102038553842934,
+    20.385431537108797
    ],
-   "field_cm2_roi": 5.001993863002451
+   "field_cm2_roi": 4.913304568441219
   }
  ],
  "blur": {
@@ -540,70 +540,70 @@
   },
   "IMX296 mono + Kowa LM50JC10M 50 mm at LP": {
    "1 m/s": {
-    "1 us": 0.09871938049742324,
-    "2 us": 0.19743876099484647,
-    "5 us": 0.49359690248711613,
-    "10 us": 0.9871938049742323,
-    "20 us": 1.9743876099484645,
-    "41 us": 4.047494600394352
+    "1 us": 0.09476410741528106,
+    "2 us": 0.18952821483056212,
+    "5 us": 0.4738205370764053,
+    "10 us": 0.9476410741528106,
+    "20 us": 1.8952821483056213,
+    "41 us": 3.8853284040265237
    },
    "5 m/s": {
-    "1 us": 0.49359690248711613,
-    "2 us": 0.9871938049742323,
-    "5 us": 2.4679845124355806,
-    "10 us": 4.935969024871161,
-    "20 us": 9.871938049742322,
-    "41 us": 20.23747300197176
+    "1 us": 0.4738205370764053,
+    "2 us": 0.9476410741528106,
+    "5 us": 2.3691026853820265,
+    "10 us": 4.738205370764053,
+    "20 us": 9.476410741528106,
+    "41 us": 19.42664202013262
    },
    "10 m/s": {
-    "1 us": 0.9871938049742323,
-    "2 us": 1.9743876099484645,
-    "5 us": 4.935969024871161,
-    "10 us": 9.871938049742322,
-    "20 us": 19.743876099484645,
-    "41 us": 40.47494600394352
+    "1 us": 0.9476410741528106,
+    "2 us": 1.8952821483056213,
+    "5 us": 4.738205370764053,
+    "10 us": 9.476410741528106,
+    "20 us": 18.952821483056212,
+    "41 us": 38.85328404026524
    },
    "20 m/s": {
-    "1 us": 1.9743876099484645,
-    "2 us": 3.948775219896929,
-    "5 us": 9.871938049742322,
-    "10 us": 19.743876099484645,
-    "20 us": 39.48775219896929,
-    "41 us": 80.94989200788704
+    "1 us": 1.8952821483056213,
+    "2 us": 3.7905642966112425,
+    "5 us": 9.476410741528106,
+    "10 us": 18.952821483056212,
+    "20 us": 37.905642966112424,
+    "41 us": 77.70656808053047
    }
   },
   "IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 at LP": {
    "1 m/s": {
-    "1 us": 0.06269747908398761,
-    "2 us": 0.12539495816797522,
-    "5 us": 0.31348739541993803,
-    "10 us": 0.6269747908398761,
-    "20 us": 1.2539495816797521,
-    "41 us": 2.570596642443492
+    "1 us": 0.060409827855322604,
+    "2 us": 0.12081965571064521,
+    "5 us": 0.302049139276613,
+    "10 us": 0.604098278553226,
+    "20 us": 1.208196557106452,
+    "41 us": 2.4768029420682267
    },
    "5 m/s": {
-    "1 us": 0.31348739541993803,
-    "2 us": 0.6269747908398761,
-    "5 us": 1.56743697709969,
-    "10 us": 3.13487395419938,
-    "20 us": 6.26974790839876,
-    "41 us": 12.852983212217458
+    "1 us": 0.302049139276613,
+    "2 us": 0.604098278553226,
+    "5 us": 1.510245696383065,
+    "10 us": 3.02049139276613,
+    "20 us": 6.04098278553226,
+    "41 us": 12.384014710341132
    },
    "10 m/s": {
-    "1 us": 0.6269747908398761,
-    "2 us": 1.2539495816797521,
-    "5 us": 3.13487395419938,
-    "10 us": 6.26974790839876,
-    "20 us": 12.53949581679752,
-    "41 us": 25.705966424434916
+    "1 us": 0.604098278553226,
+    "2 us": 1.208196557106452,
+    "5 us": 3.02049139276613,
+    "10 us": 6.04098278553226,
+    "20 us": 12.08196557106452,
+    "41 us": 24.768029420682264
    },
    "20 m/s": {
-    "1 us": 1.2539495816797521,
-    "2 us": 2.5078991633595042,
-    "5 us": 6.26974790839876,
-    "10 us": 12.53949581679752,
-    "20 us": 25.07899163359504,
-    "41 us": 51.41193284886983
+    "1 us": 1.208196557106452,
+    "2 us": 2.416393114212904,
+    "5 us": 6.04098278553226,
+    "10 us": 12.08196557106452,
+    "20 us": 24.16393114212904,
+    "41 us": 49.53605884136453
    }
   }
  },
@@ -964,8 +964,8 @@
    "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP",
    "source": "diode laser or LED behind a filter as wide as its spectrum",
    "exposure_us": 10.0,
-   "W_cm2_on_plate": 3.5665370340739586,
-   "field_cm2": 2.02,
+   "W_cm2_on_plate": 3.4942994867289148,
+   "field_cm2": 2.0,
    "roi": [
     1456,
     1088
@@ -975,8 +975,8 @@
    "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP",
    "source": "diode laser or LED behind a filter as wide as its spectrum",
    "exposure_us": 100.0,
-   "W_cm2_on_plate": 0.35665370340739583,
-   "field_cm2": 2.02,
+   "W_cm2_on_plate": 0.34942994867289145,
+   "field_cm2": 2.0,
    "roi": [
     1456,
     1088
@@ -986,8 +986,8 @@
    "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP",
    "source": "LED (~30-40 nm wide) behind a 10 nm filter",
    "exposure_us": 10.0,
-   "W_cm2_on_plate": 11.888456780246528,
-   "field_cm2": 2.02,
+   "W_cm2_on_plate": 11.64766495576305,
+   "field_cm2": 2.0,
    "roi": [
     1456,
     1088
@@ -997,8 +997,8 @@
    "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP",
    "source": "LED (~30-40 nm wide) behind a 10 nm filter",
    "exposure_us": 100.0,
-   "W_cm2_on_plate": 1.1888456780246528,
-   "field_cm2": 2.02,
+   "W_cm2_on_plate": 1.1647664955763048,
+   "field_cm2": 2.0,
    "roi": [
     1456,
     1088
@@ -1008,8 +1008,8 @@
    "case": "IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP",
    "source": "diode laser or LED behind a filter as wide as its spectrum",
    "exposure_us": 10.0,
-   "W_cm2_on_plate": 1.4979244250881907,
-   "field_cm2": 5.0,
+   "W_cm2_on_plate": 1.4785479609663972,
+   "field_cm2": 4.91,
    "roi": [
     1456,
     1088
@@ -1019,8 +1019,8 @@
    "case": "IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP",
    "source": "diode laser or LED behind a filter as wide as its spectrum",
    "exposure_us": 100.0,
-   "W_cm2_on_plate": 0.14979244250881907,
-   "field_cm2": 5.0,
+   "W_cm2_on_plate": 0.1478547960966397,
+   "field_cm2": 4.91,
    "roi": [
     1456,
     1088
@@ -1030,8 +1030,8 @@
    "case": "IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP",
    "source": "LED (~30-40 nm wide) behind a 10 nm filter",
    "exposure_us": 10.0,
-   "W_cm2_on_plate": 4.993081416960636,
-   "field_cm2": 5.0,
+   "W_cm2_on_plate": 4.928493203221324,
+   "field_cm2": 4.91,
    "roi": [
     1456,
     1088
@@ -1041,8 +1041,8 @@
    "case": "IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP",
    "source": "LED (~30-40 nm wide) behind a 10 nm filter",
    "exposure_us": 100.0,
-   "W_cm2_on_plate": 0.49930814169606363,
-   "field_cm2": 5.0,
+   "W_cm2_on_plate": 0.49284932032213236,
+   "field_cm2": 4.91,
    "roi": [
     1456,
     1088
@@ -1062,20 +1062,20 @@
   },
   {
    "port": "LP",
-   "emission_angle_deg": 36.32682595212023,
-   "diffuse_W_cm2": 0.3149787294676548,
-   "diffuse_W_into_window": 0.9895348625326313,
-   "diffuse_W_into_pupil": 0.3865370556768091,
-   "glint_bound_W_cm2": 1.0742747753509867,
-   "glint_bound_W_into_pupil": 1.3183334930388615,
+   "emission_angle_deg": 27.933793150566302,
+   "diffuse_W_cm2": 0.41537898259480416,
+   "diffuse_W_into_window": 1.3049515601754393,
+   "diffuse_W_into_pupil": 0.509746703193531,
+   "glint_bound_W_cm2": 1.2918861410534146,
+   "glint_bound_W_into_pupil": 1.5853828164093262,
    "in_glint_cone": true
   },
   {
    "port": "BW",
-   "emission_angle_deg": 81.49457214394562,
-   "diffuse_W_cm2": 0.05767266477897927,
-   "diffuse_W_into_window": 0.18118401998258807,
-   "diffuse_W_into_pupil": 0.07077500780569847,
+   "emission_angle_deg": 79.9922492471525,
+   "diffuse_W_cm2": 0.0671868055507248,
+   "diffuse_W_into_window": 0.211073574736323,
+   "diffuse_W_into_pupil": 0.08245061513137618,
    "glint_bound_W_cm2": 0.0,
    "glint_bound_W_into_pupil": 0.0,
    "in_glint_cone": false
@@ -1083,7 +1083,7 @@
  ],
  "working_distance_mm": {
   "LW": 176.34435224078965,
-  "LP": 196.80758276807353
+  "LP": 202.93505123915085
  },
  "light_power": [
   {
@@ -1099,16 +1099,16 @@
    "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
    "port": "BW",
    "how": "back-wall window, raking",
-   "elevation_deg": 8.50542785605438,
-   "W_needed": 14.627306784994252
+   "elevation_deg": 10.007750752847498,
+   "W_needed": 12.449111992542123
   },
   {
    "exposure_us": 10.0,
    "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
    "port": "LP",
    "how": "steep lid port",
-   "elevation_deg": 53.67317404787977,
-   "W_needed": 2.685311680332137
+   "elevation_deg": 62.0662068494337,
+   "W_needed": 2.4487264394570607
   },
   {
    "exposure_us": 10.0,
@@ -1123,16 +1123,16 @@
    "source": "808 nm diode laser, fibre + collimator",
    "port": "BW",
    "how": "back-wall window, raking",
-   "elevation_deg": 8.50542785605438,
-   "W_needed": 5.850922713997701
+   "elevation_deg": 10.007750752847498,
+   "W_needed": 4.979644797016849
   },
   {
    "exposure_us": 10.0,
    "source": "808 nm diode laser, fibre + collimator",
    "port": "LP",
    "how": "steep lid port",
-   "elevation_deg": 53.67317404787977,
-   "W_needed": 1.0741246721328546
+   "elevation_deg": 62.0662068494337,
+   "W_needed": 0.9794905757828242
   },
   {
    "exposure_us": 20.0,
@@ -1147,16 +1147,16 @@
    "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
    "port": "BW",
    "how": "back-wall window, raking",
-   "elevation_deg": 8.50542785605438,
-   "W_needed": 7.313653392497126
+   "elevation_deg": 10.007750752847498,
+   "W_needed": 6.224555996271062
   },
   {
    "exposure_us": 20.0,
    "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
    "port": "LP",
    "how": "steep lid port",
-   "elevation_deg": 53.67317404787977,
-   "W_needed": 1.3426558401660684
+   "elevation_deg": 62.0662068494337,
+   "W_needed": 1.2243632197285303
   },
   {
    "exposure_us": 20.0,
@@ -1171,16 +1171,16 @@
    "source": "808 nm diode laser, fibre + collimator",
    "port": "BW",
    "how": "back-wall window, raking",
-   "elevation_deg": 8.50542785605438,
-   "W_needed": 2.9254613569988503
+   "elevation_deg": 10.007750752847498,
+   "W_needed": 2.4898223985084247
   },
   {
    "exposure_us": 20.0,
    "source": "808 nm diode laser, fibre + collimator",
    "port": "LP",
    "how": "steep lid port",
-   "elevation_deg": 53.67317404787977,
-   "W_needed": 0.5370623360664273
+   "elevation_deg": 62.0662068494337,
+   "W_needed": 0.4897452878914121
   },
   {
    "exposure_us": 2.0,
@@ -1195,16 +1195,16 @@
    "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
    "port": "BW",
    "how": "back-wall window, raking",
-   "elevation_deg": 8.50542785605438,
-   "W_needed": 73.13653392497127
+   "elevation_deg": 10.007750752847498,
+   "W_needed": 62.24555996271062
   },
   {
    "exposure_us": 2.0,
    "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
    "port": "LP",
    "how": "steep lid port",
-   "elevation_deg": 53.67317404787977,
-   "W_needed": 13.426558401660687
+   "elevation_deg": 62.0662068494337,
+   "W_needed": 12.243632197285306
   },
   {
    "exposure_us": 2.0,
@@ -1219,16 +1219,16 @@
    "source": "808 nm diode laser, fibre + collimator",
    "port": "BW",
    "how": "back-wall window, raking",
-   "elevation_deg": 8.50542785605438,
-   "W_needed": 29.25461356998851
+   "elevation_deg": 10.007750752847498,
+   "W_needed": 24.89822398508425
   },
   {
    "exposure_us": 2.0,
    "source": "808 nm diode laser, fibre + collimator",
    "port": "LP",
    "how": "steep lid port",
-   "elevation_deg": 53.67317404787977,
-   "W_needed": 5.370623360664275
+   "elevation_deg": 62.0662068494337,
+   "W_needed": 4.897452878914122
   }
  ],
  "lp_candidates": [
@@ -1238,17 +1238,17 @@
     -80.0,
     136.0
    ],
-   "is_spec_centre": true,
+   "is_spec_centre": false,
    "elevation_deg": 53.67317404787977,
    "dist_mm": 168.80758276807353,
-   "wd_mm": 196.80758276807353,
+   "wd_mm": 217.80758276807353,
    "um_per_px": [
-    10.129723210997074,
-    12.573338892338707
+    11.578723210997074,
+    14.371884388154431
    ],
    "window_tilt_if_on_face_deg": 36.32682595212023,
    "astig_if_on_face_mm": 0.6678932846154021,
-   "seat_on_axis": false,
+   "seat_on_axis": true,
    "diffuse_W_cm2": 0.3149787294676548,
    "diffuse_W_into_pupil": 0.3865370556768091,
    "glint_bound_W_into_pupil": 1.3183334930388615
@@ -1259,17 +1259,17 @@
     60.0,
     136.0
    ],
-   "is_spec_centre": false,
+   "is_spec_centre": true,
    "elevation_deg": 62.0662068494337,
    "dist_mm": 153.93505123915085,
-   "wd_mm": 181.93505123915085,
+   "wd_mm": 202.93505123915085,
    "um_per_px": [
-    9.10351853550141,
-    10.304048472198302
+    10.55251853550141,
+    11.944135893121313
    ],
    "window_tilt_if_on_face_deg": 27.93379315056631,
    "astig_if_on_face_mm": 0.3748899657682442,
-   "seat_on_axis": false,
+   "seat_on_axis": true,
    "diffuse_W_cm2": 0.41537898259480416,
    "diffuse_W_into_pupil": 0.509746703193531,
    "glint_bound_W_into_pupil": 1.5853828164093262
@@ -1283,14 +1283,14 @@
    "is_spec_centre": false,
    "elevation_deg": 58.76993022442897,
    "dist_mm": 159.04716281656835,
-   "wd_mm": 187.04716281656835,
+   "wd_mm": 208.04716281656835,
    "um_per_px": [
-    9.456254234343216,
-    11.058752991503304
+    10.905254234343216,
+    12.75330695415924
    ],
    "window_tilt_if_on_face_deg": 31.230069775571028,
    "astig_if_on_face_mm": 0.47781044980531057,
-   "seat_on_axis": false,
+   "seat_on_axis": true,
    "diffuse_W_cm2": 0.37659912024211484,
    "diffuse_W_into_pupil": 0.46215665214883095,
    "glint_bound_W_into_pupil": 1.485105598420121
@@ -1304,14 +1304,14 @@
    "is_spec_centre": false,
    "elevation_deg": 50.24325709493154,
    "dist_mm": 176.90675509996785,
-   "wd_mm": 204.90675509996785,
+   "wd_mm": 225.90675509996785,
    "um_per_px": [
-    10.688566101897782,
-    13.90352607175183
+    12.137566101897782,
+    15.788363484544869
    ],
    "window_tilt_if_on_face_deg": 39.756742905068464,
    "astig_if_on_face_mm": 0.8185782808622124,
-   "seat_on_axis": false,
+   "seat_on_axis": true,
    "diffuse_W_cm2": 0.27366788155894745,
    "diffuse_W_into_pupil": 0.3358410180582308,
    "glint_bound_W_into_pupil": 1.2003844330788402

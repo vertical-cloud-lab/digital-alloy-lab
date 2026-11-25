@@ -1,0 +1,280 @@
+{
+ "model_module": "L75",
+ "state": "lasing: recoater at the end of its stroke, doors, drawer and reservoir closed",
+ "ports": {
+  "LW": {
+   "centre": [
+    -156.0,
+    -20.0,
+    36.0
+   ],
+   "aperture_at": [
+    -156.0,
+    -20.0,
+    36.0
+   ],
+   "aperture_d": 25.0,
+   "dist_mm": 161.3,
+   "clear_cylinder_length_mm": 103.0,
+   "clear_cylinder_blockers": [],
+   "M50_seen": 1.0,
+   "M50_blockers": [
+    "LW cover-slide clip (0.5 mm 316, folded sheet on the left liner; \u00d827 o (7.8 mm3)",
+    "Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back (5.1 mm3)",
+    "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in (0.8 mm3)"
+   ],
+   "L75_seen": 1.0,
+   "L75_blockers": [
+    "LW cover-slide clip (0.5 mm 316, folded sheet on the left liner; \u00d827 o (39.0 mm3)",
+    "Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back (32.2 mm3)",
+    "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in (47.9 mm3)"
+   ]
+  },
+  "BW": {
+   "centre": [
+    -125.0,
+    111.0,
+    29.5
+   ],
+   "aperture_at": [
+    -125.0,
+    111.0,
+    29.5
+   ],
+   "aperture_d": 20.0,
+   "dist_mm": 169.7,
+   "clear_cylinder_length_mm": 108.4,
+   "clear_cylinder_blockers": [],
+   "M50_seen": 1.0,
+   "M50_blockers": [
+    "Lift-out wall liner, back lower left (starts at x -90.8, clear of the  (20.5 mm3)",
+    "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in (69.6 mm3)"
+   ],
+   "L75_seen": 0.941,
+   "L75_blockers": [
+    "Lift-out wall liner, back lower left (starts at x -90.8, clear of the  (59.0 mm3)",
+    "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 in (384.5 mm3)"
+   ]
+  },
+  "LP": {
+   "centre": [
+    -40.0,
+    60.0,
+    136.0
+   ],
+   "aperture_at": [
+    -47.87,
+    71.81,
+    162.71
+   ],
+   "aperture_d": 20.0,
+   "dist_mm": 183.9,
+   "clear_cylinder_length_mm": 177.8,
+   "clear_cylinder_blockers": [],
+   "M50_seen": 1.0,
+   "M50_blockers": [
+    "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot) (1356.9 mm3)",
+    "LP adapter boss (6061; \u00d841 flange on the lid's face O-ring; \u00d824 bore a (67.8 mm3)"
+   ],
+   "L75_seen": 0.882,
+   "L75_blockers": [
+    "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot) (5455.9 mm3)",
+    "LP adapter O-ring (FKM 75A 2-025, in the lid's face groove) (31.7 mm3)",
+    "LP adapter boss (6061; \u00d841 flange on the lid's face O-ring; \u00d824 bore a (1394.0 mm3)"
+   ]
+  }
+ },
+ "note": "clear cylinder: the spec's clear aperture on the line of sight; plate fractions: \u00d86 pupil at the aperture to 17 plate points where the full sight volume is cut",
+ "drawn": {
+  "LW": {
+   "bore_d": 31.0,
+   "seat": {
+    "d": 40.2,
+    "depth": 5.5,
+    "window": {
+     "d": 40.0,
+     "t": 4.0,
+     "mat": "UV fused silica, NIR I AR 600-1050 nm (Edmund 36-983)"
+    },
+    "gasket_land_mm": 4.5,
+    "note": "concentric with the bore, flat on the wall: 0.75 mm gasket, 4.0 mm window, 0.75 mm flat ring; the clamp ring bottoms on the wall face"
+   },
+   "clamp_ring": {
+    "bolt_circle_d": 50.0,
+    "od": 58.0,
+    "id": 31.0,
+    "screws": "4 x M4 x 0.7, tapped 8 deep (3.3 drill 10 deep)",
+    "hole0_deg": 60.0,
+    "flat": {
+     "dist_mm": 27.28,
+     "dir_yz": [
+      0.5455,
+      -0.8381
+     ],
+     "web_to_hole_mm": 2.75
+    },
+    "holes_yz": [
+     [
+      -6.47,
+      55.8
+     ],
+     [
+      -40.62,
+      46.65
+     ],
+     [
+      -31.47,
+      12.5
+     ],
+     [
+      2.68,
+      21.65
+     ]
+    ]
+   },
+   "purge": {
+    "yz": [
+     -18.97,
+     72.45
+    ],
+    "kind": "SAE-4 (7/16-20 UNF) O-ring boss + \u00d84 passage through"
+   },
+   "liner_hole": {
+    "liner": "Lift-out wall liner, left",
+    "centre_yz": [
+     -17.9,
+     32.23
+    ],
+    "d": 27.0
+   },
+   "slide_centre": [
+    -138.65,
+    -17.78,
+    32.0
+   ],
+   "window_tilt_deg": 14.79
+  },
+  "chronos": {
+   "lens_front": [
+    -176.9,
+    -22.7,
+    40.8
+   ],
+   "body_back": [
+    -375.1,
+    -48.1,
+    86.6
+   ],
+   "post_xy": [
+    -300.1,
+    -38.5
+   ],
+   "camera_mid": [
+    -300.1,
+    -38.5,
+    69.3
+   ]
+  },
+  "BW": {
+   "centre": [
+    -125.0,
+    111.0,
+    29.5
+   ],
+   "slot": {
+    "kind": "obround, normal to the wall, through",
+    "length": 51.22,
+    "width": 20.5,
+    "end_centres_xz": [
+     [
+      -130.69,
+      30.84
+     ],
+     [
+      -101.29,
+      23.9
+     ]
+    ],
+    "radius": 10.25,
+    "long_axis_deg_from_x": -13.28,
+    "round_bore_needed_d": 50.7
+   },
+   "seat": {
+    "L": 58,
+    "W": 27,
+    "corner_r": 4.0,
+    "depth": 4.5,
+    "window": "57.7 x 26.7 x 3.0 mm, corners chamfered 2 mm (rectangular N-BK7 or fused silica)",
+    "x_min": -146.34,
+    "z_min": 7.34,
+    "on_flat_face": true,
+    "clear_of_floor_screws": true
+   },
+   "liner_x0": -90.8,
+   "led_front": [
+    -150.8,
+    133.9,
+    35.6
+   ]
+  },
+  "LP": {
+   "centre": [
+    -40.0,
+    60.0,
+    136.0
+   ],
+   "elevation_deg": 62.07,
+   "bore": "\u00d824 on the line of sight",
+   "bore_ellipse_on_top_mm": 27.2,
+   "adapter_d": 40.8,
+   "o_ring": "2-025",
+   "adapter_gap_to_window_flange_mm": 1.73,
+   "normal_bore_alternative": {
+    "d": 33.0,
+    "needed_d": 31.65,
+    "adapter_gap_to_window_flange_mm": -5.93
+   },
+   "s_top": 34.0,
+   "lens_front": [
+    -52.7,
+    79.1,
+    179.3
+   ],
+   "camera_top": [
+    -72.2,
+    108.3,
+    245.6
+   ],
+   "bridge_cutout": {
+    "x": [
+     -95.5,
+     -40.8
+    ],
+    "y": [
+     70.9,
+     130.9
+    ],
+    "area_mm2": 2982.0
+   }
+  },
+  "cage": {
+   "cubes_x": [
+    -155.0,
+    -215.0,
+    -285.0
+   ],
+   "camera_plate_y": -141.2,
+   "pd_b_face_x": -375.9,
+   "pd_a_face_y": -116.2
+  },
+  "AE": {
+   "waveguide_xy": [
+    -1.75,
+    3.03
+   ],
+   "z_top": -14.0,
+   "z_bottom": -135.0,
+   "length": 121.0
+  }
+ }
+}

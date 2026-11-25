@@ -47,23 +47,35 @@ VIEWPORTS = {
     "LW": dict(
         what="left-wall side viewport: high-speed camera for spatter, plume, denudation and the powder heap (monitoring.md §3, step 7)",
         face="-x", centre=(-156.0, -20.0, 36.0),          # monitoring.md's best left-wall view was (-156, -20, 40); z 36 keeps a Ø40
-        clear_d=25.0,                                     # centre clear (clear to z 35) - to check on the model
-        window=dict(d=38.1, t=5.0, mat="UV fused silica, AR 650-1050 nm"), slide=dict(d=30.0, t=1.0), purge=True, blank=True,
+        clear_d=25.0,                                     # centre clear (clear to z 35); checked on the model 2026-11-25 (mechanics.md)
+        # window: the catalogue part, flat on the wall (fabrication.md §0 item 1, monitoring.md §9): no Ø38.1 NIR-coated window is
+        # catalogued, so Edmund 36-983 (Ø40 x 4, NIR I AR) in a Ø40.2 x 5.5 seat (was Ø38.1 x 5). Slide: the bought Ø30 x 1.5 (BOM M0-02)
+        window=dict(d=40.0, t=4.0, mat="UV fused silica, NIR I AR 600-1050 nm (Edmund 36-983)"), slide=dict(d=30.0, t=1.5), purge=True, blank=True,
     ),
     "BW": dict(
         what="back-wall light window: raking light for the layer camera, 8-13 deg (optics.md §9.2 option D)",
-        face="+y", centre=(-125.0, 111.0, 25.0),          # optics.md used x -105; the recoater sensor posts stand outside at x -110
-        clear_d=20.0,                                     # (monitoring.md §3), so start at -125 - to check on the model
+        face="+y", centre=(-125.0, 111.0, 29.5),          # optics.md used x -105; the recoater sensor posts stand outside at x -110
+        clear_d=20.0,                                     # (monitoring.md §3), so x -125. z 29.5 (was 25): frame_features.py raised it
+        # 4.5 mm so the window seat clears the M4 floor screws under the back wall (frame_features.json bw_shift_search; the CAM in
+        # cam_monitoring.json was programmed at 29.5; fabrication.md and monitoring.md §9 round it to 29)
         window=dict(d=25.4, t=3.0, mat="N-BK7 or UV fused silica, AR visible"), slide=None, purge=False, blank=False,
     ),
     "LP": dict(
         what="steep lid port: compact camera at ~54-62 deg for a second, steep view (monitoring.md §3); needs a cut-out in the bridge",
-        face="+z", centre=(-60.0, -80.0, 136.0),          # 53.6 deg; its camera line crosses the bridge near (-93, -124) - inside the
-        clear_d=20.0,                                     # reservoir slot (x -118..-62), so it may block the reservoir's way out.
+        # moved 2026-11-25 from (-60, -80, 136) to the back half of the lid (plume.md §0 item 3: a port at (-40, 60) collects ~50x less
+        # condensate, under the upper slot's sweep). 62.1 deg. Checked on the model with every monitoring part drawn (mechanics.md §3,
+        # analysis/out/monitoring/mech/sight_drawn.md): the bore runs on the line of sight (Ø24, as the layer camera's), because a bore
+        # normal to the lid (Ø33 here) leaves no room for the adapter's face seal beside the window flange.
+        face="+z", centre=(-40.0, 60.0, 136.0),
+        clear_d=20.0, seat="axis",                        # window square to the line of sight on the adapter boss (optics.md §0 item 10)
         window=dict(d=25.4, t=3.0, mat="UV fused silica"), slide=dict(d=25.0, t=1.0), purge=False, blank=True,
         candidates=[(-60.0, -80.0, 136.0), (-40.0, 60.0, 136.0), (-20.0, 80.0, 136.0), (80.0, 80.0, 136.0)],   # monitoring.md §3 lid rows
     ),
 }
+
+# LP adapter boss (cad/monitoring_parts.py draws it): the window's top face is s_top mm along the line of sight from the port centre;
+# viewports.py adds it to the camera's working distance
+LP_GEOM = dict(s_top=34.0)
 
 # ---------------------------------------------------------------------------------------------------------------- instruments
 SIDE_CAMERA = dict(
@@ -71,7 +83,8 @@ SIDE_CAMERA = dict(
     lens_options=["50 mm f/2.8-4 C-mount", "75 mm f/4 C-mount"], standoff_mm=15.0,       # lens front 15 mm off the window adapter
     room_note="monitoring.md §3: behind a 60 mm lens a Ø120 body has 180 mm before the guard panel (140 mm behind a 100 mm lens)",
 )
-LID_CAMERA = dict(port="LP", body="monochrome IMX296 global-shutter board in a housing", lens="50 mm C-mount", body_mm=(40.0, 40.0, 30.0))
+LID_CAMERA = dict(port="LP", body="monochrome IMX296 global-shutter board in a housing", lens="50 mm C-mount", body_mm=(40.0, 40.0, 30.0),
+                  standoff_mm=15.0)                  # lens front 15 mm off the LP window's retaining ring (monitoring_parts.py)
 
 # Coaxial branch (monitoring.md §0 item 3): the existing DMSP1000 cube stays where it is; the SM1 photodiode tube behind it becomes
 # a 30 mm cage with two more cubes. Free room above the bridge (monitoring.md fits.json): x -230..-170, y -200..-62 (front branch),

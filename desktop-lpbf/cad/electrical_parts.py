@@ -84,7 +84,9 @@ def add_features(add, M, module):
 
     # ---------------------------------------------------------------- 2. PB2 Pi box on the optics bridge, behind the galvo
     zb = P["z_bridge1"]
-    bx0, by0 = -40.0, 75.0
+    # x -28 (was -40, 2026-11-25): the steep lid camera (monitoring_spec LP at (-40, 60)) passes up through a cut-out in the bridge
+    # beside PB2's left tab; 12 mm more leaves its housing 3 mm off the tab and 4 mm of bridge round the tab's tapped holes (mechanics.md)
+    bx0, by0 = -28.0, 75.0
     bx1, by1 = bx0 + PB2["L"], by0 + PB2["W"]
     body = box(bx0, bx1, by0, by1, zb, zb + PB2["H"])
     tabs = [box(x, x + 14.0, by0 + 20.0, by1 - 20.0, zb, zb + 4.0) for x in (bx0 - 14.0, bx1)]
