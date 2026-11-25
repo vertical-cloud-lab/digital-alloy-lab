@@ -1189,6 +1189,161 @@
    "M50_passes": true
   }
  ],
+ "reach_M50_insert": [
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.3279375,
+   "reach_mm": 25.86629064206301,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 28.035903458088256,
+   "per_aperture": {
+    "lid bore": 35.22440862884703,
+    "drawer opening": 28.918422812136008,
+    "cover slide clear aperture": 26.659181032132693,
+    "field stop": 25.86629064206301,
+    "window flange bore (below window)": 26.844545383144407,
+    "window clear aperture": 30.149643286541096,
+    "window retaining ring (above window)": 29.635938281458216
+   }
+  },
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.4766875,
+   "reach_mm": 31.071858011419227,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 33.695174032154156,
+   "per_aperture": {
+    "lid bore": 41.42371924902343,
+    "drawer opening": 34.343116093733876,
+    "cover slide clear aperture": 31.76212673197993,
+    "field stop": 31.071858011419227,
+    "window flange bore (below window)": 32.59926248449609,
+    "window clear aperture": 37.521232896279294,
+    "window retaining ring (above window)": 37.84189047700406
+   }
+  },
+  {
+   "collimator": "IPG 2.5 mm (drawn)",
+   "k": 0.6254375,
+   "reach_mm": 39.05354352355856,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 42.427624296544764,
+   "per_aperture": {
+    "lid bore": 50.54256828095175,
+    "drawer opening": 42.44871378053991,
+    "cover slide clear aperture": 39.42577039949801,
+    "field stop": 39.05354352355856,
+    "window flange bore (below window)": 41.703629498925366,
+    "window clear aperture": 50.132057031904615,
+    "window retaining ring (above window)": 53.03488135937366
+   }
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.3279375,
+   "reach_mm": 25.26095773891422,
+   "limited_by": "field stop",
+   "M50_passes": false,
+   "runaway_mm": 28.035903458088256,
+   "per_aperture": {
+    "lid bore": 34.68572281331605,
+    "drawer opening": 28.348343727098243,
+    "cover slide clear aperture": 26.078847551546602,
+    "field stop": 25.26095773891422,
+    "window flange bore (below window)": 26.206946822848007,
+    "window clear aperture": 29.441166865992724,
+    "window retaining ring (above window)": 28.854035242378988
+   }
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.4766875,
+   "reach_mm": 30.34075844430704,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 33.695174032154156,
+   "per_aperture": {
+    "lid bore": 40.78443907394928,
+    "drawer opening": 33.66175295309413,
+    "cover slide clear aperture": 31.06689557552193,
+    "field stop": 30.34075844430704,
+    "window flange bore (below window)": 31.820157816146047,
+    "window clear aperture": 36.63152492113139,
+    "window retaining ring (above window)": 36.83346534786861
+   }
+  },
+  {
+   "collimator": "D 3.2 mm",
+   "k": 0.6254375,
+   "reach_mm": 38.11691226479379,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 42.427624296544764,
+   "per_aperture": {
+    "lid bore": 49.739626327389686,
+    "drawer opening": 41.588422722524484,
+    "cover slide clear aperture": 38.54662521896557,
+    "field stop": 38.11691226479379,
+    "window flange bore (below window)": 40.68331117670173,
+    "window clear aperture": 48.894666566200954,
+    "window retaining ring (above window)": 51.54531197095682
+   }
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.3279375,
+   "reach_mm": 23.702489326690962,
+   "limited_by": "field stop",
+   "M50_passes": false,
+   "runaway_mm": 28.035903458088256,
+   "per_aperture": {
+    "lid bore": 33.29852552962498,
+    "drawer opening": 26.880453424740903,
+    "cover slide clear aperture": 24.58458921009172,
+    "field stop": 23.702489326690962,
+    "window flange bore (below window)": 24.565640518010436,
+    "window clear aperture": 27.617933729950256,
+    "window retaining ring (above window)": 26.842243775244288
+   }
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.4766875,
+   "reach_mm": 28.46001467478298,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 33.695174032154156,
+   "per_aperture": {
+    "lid bore": 39.13967641945996,
+    "drawer opening": 31.908737325608538,
+    "cover slide clear aperture": 29.27816679294814,
+    "field stop": 28.46001467478298,
+    "window flange bore (below window)": 29.81646543006793,
+    "window clear aperture": 34.344972597457314,
+    "window retaining ring (above window)": 34.24312909846588
+   }
+  },
+  {
+   "collimator": "IPG 5 mm",
+   "k": 0.6254375,
+   "reach_mm": 35.714230301994135,
+   "limited_by": "field stop",
+   "M50_passes": true,
+   "runaway_mm": 42.427624296544764,
+   "per_aperture": {
+    "lid bore": 47.67976711685185,
+    "drawer opening": 39.38098119989903,
+    "cover slide clear aperture": 36.29049502513115,
+    "field stop": 35.714230301994135,
+    "window flange bore (below window)": 38.06848258233083,
+    "window clear aperture": 45.73378753567082,
+    "window retaining ring (above window)": 47.75323996596096
+   }
+  }
+ ],
  "lens_input_walk": [
   {
    "pupil_above_nose_mm": 30.0,

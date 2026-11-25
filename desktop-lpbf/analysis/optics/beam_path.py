@@ -308,6 +308,17 @@ for cname, D in (("IPG 2.5 mm (drawn)", 2.5), ("D 3.2 mm", 3.2), ("IPG 5 mm", 5.
         reach.append(dict(collimator=cname, k=k, reach_mm=per[lim], limited_by=lim, per_aperture=per, L75_passes=per[lim] >= 38.1,
                           M50_passes=per[lim] >= 25.4))
 R["reach_as_drawn"] = reach
+# M50 with its field-stop insert (cad/lpbf_low.py P["field_stop_d"], 2026-11-25): every other opening as drawn
+FS_M50 = ("field stop", 131.0, 136.0, MP_["field_stop_d"]["M50"])
+APS_M50 = [FS_M50 if ap[0] == "field stop" else ap for ap in LID_APS]
+reach_m50 = []
+for cname, D in (("IPG 2.5 mm (drawn)", 2.5), ("D 3.2 mm", 3.2), ("IPG 5 mm", 5.0)):
+    for k in (K_DRAWN[0], sum(K_DRAWN) / 2, K_DRAWN[1]):
+        per = {ap[0]: max_radius(D, M2_MAX, k, ap) for ap in APS_M50}
+        lim = min(per, key=per.get)
+        reach_m50.append(dict(collimator=cname, k=k, reach_mm=per[lim], limited_by=lim, M50_passes=per[lim] >= 25.4,
+                              runaway_mm=max_radius(D, M2_MAX, k, FS_M50, loss=0.5), per_aperture=per))
+R["reach_M50_insert"] = reach_m50
 # galvo and lens input apertures: beam walk at the lens nose for a pupil d_p above it
 walk = []
 for d_p in (30.0, 45.0, 60.0):
@@ -552,6 +563,11 @@ for a in aps:
 L += ["", "L75 reach as drawn (k over the drawn thin-lens range; the opening that limits it; < 0.1 % clipped):", "",
       "| Collimator | k | Reach (mm) | Limited by | L75 (38.1) | M50 (25.4) |", "|---|---|---|---|---|---|"]
 L += [f"| {r_['collimator']} | {r_['k']:.2f} | {r_['reach_mm']:.1f} | {r_['limited_by']} | {'yes' if r_['L75_passes'] else 'no'} | {'yes' if r_['M50_passes'] else 'no'} |" for r_ in reach]
+L += ["", f"M50 with its Ø{MP_['field_stop_d']['M50']:g} field-stop insert (drawn 2026-11-25; S25 and L75 keep the Ø36 stop), < 0.1 % clipped; "
+      "'runaway reach' is where the beam centre sits on the insert's edge, the farthest a runaway galvo can put the beam:", "",
+      "| Collimator | k | Reach (mm) | Limited by | M50 (25.4) | Runaway reach (mm) |", "|---|---|---|---|---|---|"]
+L += [f"| {r_['collimator']} | {r_['k']:.2f} | {r_['reach_mm']:.1f} | {r_['limited_by']} | {'yes' if r_['M50_passes'] else 'no'} | {r_['runaway_mm']:.1f} |"
+      for r_ in R["reach_M50_insert"]]
 L += ["", "## F. Irradiance at 500 W (lens refocused onto the plate)", ""]
 for key, tab in R["irradiance"].items():
     L += [f"**{key}**", "", "| Surface | Beam Ø (mm) | Peak (W/cm²) | P/D (W/cm) | Note |", "|---|---|---|---|---|"]
