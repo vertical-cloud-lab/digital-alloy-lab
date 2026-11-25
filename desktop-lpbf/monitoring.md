@@ -328,6 +328,68 @@ Where this note differs:
   guard, so close-up melt-pool video here goes coaxial.
 - **The D9215's ~500 °C rating** is Edison's figure, not checked.
 
+## 10. Edison's review of the modelled design
+
+[`edison/r8-design-review/`](edison/r8-design-review/answer.md) (LITERATURE_HIGH, submitted 2026-11-25 08:37 UTC, fetched
+21:14 UTC, with its full trajectory) was given §9's design and model results. It was asked three things: what conflicts with
+published measurements, which failure modes others have hit, and the five biggest risks with the cheapest test for each.
+
+**What it confirms:**
+- **The regime.** 320 W on a 96 µm spot is P/d ≈ 3,330 W/mm. That sits inside the 3,000–3,500 W/mm "key-bowl" window that
+  Leis et al. (2021) found best for AlSi10Mg: a shallow vapour depression in a conduction-shaped track, as
+  [`melt-pool.md`](monitoring/melt-pool.md) §0 item 1 has it. An absorptivity of 0.35 lies between the conduction (~0.15) and
+  transition (~0.43) values that Patel & Vlasea collected for Al.
+- **Silicon can't see Al solidify.** A silicon camera at 0.875–1.05 µm was set up for ~700–2,200 °C, and an InGaAs camera was
+  needed for 300–1,000 °C (Taminger et al. 2016, electron-beam freeform fabrication). This is the case for the SWIR camera in
+  [`optics.md`](monitoring/optics.md) §0 item 6.
+- **No published counterpart exists for the spatter fraction on the laser slide or for the thermophoresis factor.** Both are
+  this machine's predictions, to be measured (risk 4 below; [`plume.md`](monitoring/plume.md) §7).
+
+**Where it disagrees, and what we make of it:**
+- **The two-colour pair is a regime index, not a thermometer.** Edison's reasons:
+  - the ratio is a radiance-weighted average over the field;
+  - the plume biases it: at NIST, plume radiation biased a solidification-temperature measurement on nickel by ~45 °C
+    (Deisenroth et al. 2021);
+  - near an overhang the ratio temperature moved the wrong way (Gutknecht et al. 2021).
+
+  The notes already read the pair as a depression monitor ([`optics.md`](monitoring/optics.md) §0 item 5,
+  [`melt-pool.md`](monitoring/melt-pool.md) §0 item 4). So label its output a regime index in the HDF5 file, not a temperature.
+- **Plume attenuation may be higher than modelled.** Edison set plume.md's 0.05–0.2 % against 11–23 % measured in Yb-fibre
+  welding at 1 atm, and ~2 % at 3 kPa (Brown et al. 2024, a review). Those welds differ from LPBF in three ways:
+  - kW lasers with mm-deep keyholes;
+  - the beam sits in its own plume for tens of ms at cm/s;
+  - there is no cross-flow.
+
+  To lose 11 % at 1070 nm, the column above our spot (19 mg/m² for AlSi10Mg, plume.md §3.4) would have to be ~90× denser as
+  20 nm primaries, or only ~1.6× denser as fully grown 300 nm agglomerates. Grown fully in the beam path, our own columns
+  would cost 3–11 % (6061 to 7075). So the answer hinges on how far the condensate grows in the < 1 ms before the scan and the
+  cross-flow carry it off the beam, which nothing here models. It matters: optics.md §3 finds that a plume absorbing 0.05–0.2 %
+  already adds 4–15 % to the photodiodes as emission. Treat 0.05–0.2 % as the low end; the test is in risk 2.
+
+**The failure modes it lists, and where the notes stand:**
+
+| Failure mode (Edison) | Where it's handled | Still open |
+|---|---|---|
+| The coaxial signal changes with scan angle: Brandau et al. 2022 saw it fall 36 % (solid) to 51 % (powder) across the field, with 30 % left at 18.5° | optics.md §3: calibrate the whole train with a lamp in an integrating sphere at several galvo angles. Our field reaches 9° (M50) and 13.6° (L75), inside Brandau's 18.5° | a map per band and per position, with an acceptance test (risk 1) |
+| Ghosts, and 1070 nm into the coaxial path (0.1 % of 500 W is 0.5 W) | optics.md §0 items 1, 2 and 9: the DMSP1000 leaks 0.063 %; a FESH1000 at OD 6 behind it; a beam trap on cube1's far port; OD ≥ 8 in front of every camera | ghosts from the dichroics' second surfaces are not traced (fabrication.md §6 says the same of the LW window) |
+| Dichroic and filter edges drifting with temperature (~0.01–0.02 nm/K, Edison's figure, unsourced) | – | 50 K moves an edge ~1 nm. The bands are 40 nm wide, but PD-B's 880 nm edge sits 5 nm above the 750–875 nm band that scanner coatings block. The spectral check (§4 step 2) decides, with the 950/10 fallback (optics.md §7) |
+| Emissivity changing with oxide and alloy | optics.md §3: a 5 % band-to-band difference reads ±44 K | an oxide comparison in risk 2 |
+| EMI from the galvo and servo drives | [`sync-and-data.md`](monitoring/sync-and-data.md) §2.3: one ground per chain, differential inputs, a signal duct away from the servo bus | the scan head's drivers are not in its list: record with the galvos moving and the laser off (risk 3) |
+| AE noise from the gas loop and the recoater (Seleznev: 0.2 V → 2 V with the pump on) | §5.4 and sync-and-data.md §2.3 item 4: a noise floor with the blower, pump and servos running | what the waveguide picks up from the Z drive and recoater (risk 3) |
+| Data volume | sync-and-data.md §3: 20–720 GB per build with features kept, raw data only for chosen layers | – |
+| Calibration drift (slides, dichroics, AE coupling) | sync-and-data.md §1.5: a spot grid each build and a noise floor each layer; plume.md §4.5: slide transmission each build; §5.4: pencil-lead breaks at each plate swap | a lamp reference for the coaxial channels before each build |
+
+**Its five risks, and the cheapest experiment for each.** The ranking is Edison's. The experiments are condensed; the
+cross-flow test in risk 2 is ours.
+
+| # | Risk | Cheapest experiment | When (§4) |
+|---|---|---|---|
+| 1 | The coaxial response changes across the field, and differently in each band, which corrupts the two-colour ratio | Laser off: step a stable lamp in an integrating sphere (or a diffuse target) over the field with the galvo, record every band against the RTC6 position, fit a map per channel, and repeat warm. Accept if the residuals are under 2–3 % (Brandau's reference-based system reached 1.8 %) and the ratio is flat | step 2, with the spectral check |
+| 2 | The two-colour ratio read as a temperature | Single tracks on bare AlSi10Mg plate and on powder over a randomised power, speed and focus matrix. Record both raw channels, the ratio, coaxial frames, a side view and cross-sections; add an oxide comparison and an ND filter over one band. If the ~2,600 K follows depression onset and nothing else, it is a regime index. The same tracks at full and at reduced cross-flow test the plume's beam loss: a 5–10 % loss narrows a conduction track by ~3–5 % (width ~ √P) | commissioning, step 5 |
+| 3 | AE buried in machine noise | Before any powder: record the noise with the pump, blower, recoater, Z servo, galvos and laser supply on, one at a time and together. Then pencil-lead breaks at several plate positions, pump off and on, through each AE path; run on battery power to find EMI | step 4, before choosing the path |
+| 4 | Window and slide fouling drifting every optical signal | Weighed witness coupons beside the laser slide and the LW slide, and a fixed LED shining through each window. Equal laser-on doses with the purge off and on, and with the slide colder than, equal to and warmer than the gas | step 0's ports, first builds |
+| 5 | Silicon can't see solidification | A heated Al coupon of known emissivity, viewed through the installed coaxial path at the planned exposures and stepped over 450–900 °C: find where each camera reaches SNR 5. Run one silicon + InGaAs single-track trial before buying a full SWIR camera | before step 8 |
+
 ## Sources
 - Lane, B., Yeung, H. (2020). Process monitoring dataset from the additive manufacturing metrology testbed (AMMT): overhang part X4.
   J. Res. NIST 125:125027. https://doi.org/10.6028/jres.125.027 (Tables 1–2, §4.4; read 2026-11-25)
@@ -369,3 +431,20 @@ Where this note differs:
 - Raspberry Pi Global Shutter Camera (Sony IMX296, 3.45 µm, 30 µs minimum exposure; colour):
   https://www.raspberrypi.com/products/raspberry-pi-global-shutter-camera/ ; cropped-mode frame rates from a community
   measurement on a Pi 5 (https://gist.github.com/Hermann-SW/e6049fe1a24fc2b5a53c654e0e9f6b9c)
+- Edison r8-design-review's sources (§10), all via Edison, not read here:
+  - Leis, A., Weber, R., Graf, T. (2021). Process window for highly efficient laser-based powder bed fusion of AlSi10Mg with
+    reduced pore formation. https://doi.org/10.18419/opus-11716
+  - Patel, S., Vlasea, M. (2019). Melting modes in laser powder bed fusion. SSRN. https://doi.org/10.2139/ssrn.3490412
+  - Taminger, K.M. et al. (2016). In-process thermal imaging of the electron beam freeform fabrication process. Proc. SPIE
+    9861:986102. https://doi.org/10.1117/12.2222439
+  - Deisenroth, D.C. et al. (2021). Measurement uncertainty of surface temperature distributions for laser powder bed fusion
+    processes. J. Res. NIST 126:126013. https://doi.org/10.6028/jres.126.013
+  - Gutknecht, K., Cloots, M., Wegener, K. (2021). Relevance of single channel signals for two-colour pyrometer process
+    monitoring of laser powder bed fusion. Int. J. Mechatronics Manuf. Syst. 14:111. https://doi.org/10.1504/ijmms.2021.119152
+  - Brown, B., Lough, C., Wilson, D., Newkirk, J., Liou, F. (2024). Atmosphere effects in laser powder bed fusion: a review.
+    Materials 17:5549. https://doi.org/10.3390/ma17225549
+  - Brandau, B., Mai, T., Brueckner, F., Kaplan, A.F.H. (2022). Angular dependence of coaxial and quasi-coaxial monitoring
+    systems for process radiation analysis in laser materials processing. Opt. Lasers Eng. 155:107050.
+    https://doi.org/10.1016/j.optlaseng.2022.107050
+  - Caprio, L., Demir, A.G., Previtali, B. (2022). External illumination enables coaxial sensing of surface and subsurface
+    molten pool geometry in LPBF. Metals 12:1762. https://doi.org/10.3390/met12101762

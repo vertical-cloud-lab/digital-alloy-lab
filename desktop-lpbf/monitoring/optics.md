@@ -43,7 +43,8 @@ Re-run: `python ftheta.py --reuse` (2 min; without `--reuse` it re-optimises the
    - The ratio reads 2,620–2,630 K on AlSi10Mg and 2,400–2,410 K on 6061, whatever the speed or plate temperature.
    - With the depression masked out it reads 2,240–2,250 and 2,010 K.
    - So it tells you whether a depression (keyhole-type melting) is there and how steady it is. That agrees with worker A's
-     melt-pool note.
+     melt-pool note, and with Edison's review of the whole design, which calls such a ratio a regime index, not a temperature
+     ([`monitoring.md`](../monitoring.md) §10). Record and label it that way.
    - A smaller field stop would make this worse. An annular stop would read the trailing pool (~1,100–1,170 K), but lateral
      colour moves the depression out of its blocked centre anywhere off axis.
 6. **Silicon sees only the hot core; image the pool edge in SWIR.**
@@ -490,7 +491,8 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
 
 1. **Measure the scan head and f-theta from 500 to 1750 nm** with a fibre spectrometer and a halogen lamp: the plate up to
    cube1, at three galvo angles. It decides:
-   - PD-B: 900/40 or the 950/10 fallback;
+   - PD-B: 900/40 or the 950/10 fallback (its 880 nm edge sits 5 nm above the 750–875 nm stop band; a coating edge moves
+     ~0.01–0.02 nm/K, ~1 nm over 50 K, per Edison's design review, unsourced);
    - whether 850 nm is usable;
    - the InGaAs and SWIR camera transmission at 1600–1750 nm.
 2. **Ask Thorlabs for the DMSP1000's tested curve** above 1600 nm on the unit in hand, and the DMSP1180's curve.

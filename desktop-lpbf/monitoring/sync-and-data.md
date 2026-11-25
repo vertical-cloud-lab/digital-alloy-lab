@@ -239,7 +239,9 @@ rules, on top of electrical.md §7:
    strap stays; the AE sensor must not be the module's ground path.
 3. Digital lines are shielded, with the shield grounded at the source end only, and received on Schmitt inputs.
 4. Record the noise floor with the blower, pump and servos running and the laser off, at every build (§1.5 step 6). Seleznev's
-   gas pump raised AE noise ten-fold, from 0.2 to 2 V. Vallen measured 13-15 dBAE more noise from a switched supply than from a
+   gas pump raised AE noise ten-fold, from 0.2 to 2 V. Once, before the first powder, record it source by source (pump, blower,
+   recoater, Z servo, the galvos marking a pattern with the laser off, the laser's supply) and then all together, with
+   pencil-lead breaks pump off and on (Edison's design review, [`monitoring.md`](../monitoring.md) §10 risk 3). Vallen measured 13-15 dBAE more noise from a switched supply than from a
    linear one on its DCPL2; if the drawer's 24 V does the same, give the decoupler a linear supply.
 
 ### 2.4 New connectors and feedthroughs

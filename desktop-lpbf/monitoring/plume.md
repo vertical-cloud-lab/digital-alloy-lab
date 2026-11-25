@@ -57,7 +57,9 @@ over the plate):
    transmission each build (§4.5).
 7. **The plume costs the beam ~0.05–0.2 % at 1070 nm** (worker A's source terms at 320 W: 6061 to 7075; at most ~1 % if
    all the vapour condensed above the spot) and the coaxial photodiode ~4× more at 850 nm, fluctuating with the keyhole;
-   the two-colour ratio cancels most of it (§3.4). It doesn't steer the beam. Old plume crosses the beam only where
+   the two-colour ratio cancels most of it (§3.4). These assume the condensate above the spot is still ~20 nm primaries;
+   grown into 300 nm agglomerates it would cost 3–11 %, the low end of what welding measures, so treat 0.05–0.2 % as the
+   low end until it is measured (§6, Edison's design review). It doesn't steer the beam. Old plume crosses the beam only where
    vectors are shorter than ~1 mm (§5).
 8. **For the side camera: 10–20 µs exposures.** Al spatter moves at a few m/s, so 10 µs blurs it by under a pixel to
    ~3 pixels at 29 µm/px (§2.3). Above ~100 µs the plume's own light, about as bright in total as the pool's in a side
@@ -660,6 +662,13 @@ Where this note differs or adds:
 - **Sacrificial cover slides of borosilicate or soda-lime glass** (r8-viewports) are fine for the camera ports, as long as
   each camera keeps its own 1070 nm blocking filter (monitoring.md §6); the laser slide stays fused silica (optics.md
   §2.2).
+- **Edison's later review of the whole design** ([`r8-design-review`](../edison/r8-design-review/answer.md), monitoring.md §10)
+  set §3.4's 0.05–0.2 % against **11–23 % measured in Yb-fibre welding at 1 atm** (~2 % at 3 kPa; Brown et al. 2024, a review).
+  Those are kW welds over mm-deep keyholes, with the beam in its own plume for tens of ms and no cross-flow. With §3.4's Mie
+  table, 11 % needs ~90× our column as 20 nm primaries, but only ~1.6× it as 300 nm agglomerates; our own columns, grown
+  fully, would cost 3–11 % (6061 to 7075). So the beam loss turns on how far the condensate grows in the < 1 ms before the
+  scan and the bed jet carry it off the beam. The CFD doesn't model that growth. Keep 0.05–0.2 % as the low end, not a
+  bound, and measure it (monitoring.md §10, risk 2).
 
 ## 7. Not done, and limits
 
