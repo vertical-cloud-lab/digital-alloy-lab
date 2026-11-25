@@ -282,7 +282,7 @@ Schiller–Naumann drag in argon at 25 °C (1.65 kg/m³, 22.6 µPa·s) and gravi
   outlet. 100–200 µm spatter is carried 100–160 mm along the flow over its 0.4–0.8 s flight, mostly inside the bed jet on
   the way up and down; on its way to the lid it crosses the jet in a few ms and keeps its line.
 - **What reaches the lid (z 120–126 mm):** a 100 µm Al droplet needs ~5 m/s straight up, a 50 µm one ~16–20 m/s. With the
-  fast speeds, 43–60 % of 100–200 µm Al spatter reaches the lid in a box chamber; with the Al-like speeds, much less (§1.3).
+  fast speeds, 43–60 % of 100–200 µm Al spatter reaches the lid in a box chamber; with the Al-like speeds, 7–30 % (§1.3).
 - **The LW port is hard to reach.** It looks in at 13° from 160 mm away, through a 4 mm recess. A particle must leave the bed
   within ~15° of horizontal toward −x and keep its speed for 140 mm. 0–0.1 % of launches do in the CFD (0–0.3 % in the
   box chamber), at every size and speed tried.
@@ -610,12 +610,12 @@ A scaling argument in place of a transient CFD of a plume puff (not run; §7):
 - **It crosses an older plume only if the gas is too slow to clear the plume's width between passes.** Successive hatch
   vectors are ~0.1 mm apart and, for a 10 mm vector at 1 m/s, ~10 ms apart. In that time the bed jet carries the plume
   20–30 mm downstream (2–3 m/s at 1–3 mm). The plume is ~1.5 mm wide (Shi et al. 2024). So the beam meets old condensate
-  only if the gas over the spot is slower than ~1.5 mm / 10 ms ≈ 0.15 m/s: a 15–20× margin at 140–200 L/min.
+  only if the gas over the spot is slower than ~1.5 mm / 10 ms ≈ 0.15 m/s: a 13–20× margin at 140–200 L/min.
 - **The margin shrinks at short vectors and turnarounds.** A 1 mm vector at 1 m/s returns in ~1 ms, by when the plume has
   moved only 2–3 mm: about two plume widths. So small features, contours and the skywriting at vector ends are where the
   beam can see its own recent plume.
 - **Scan against the flow when you can.** Moving upstream (+y) the beam runs away from its plume; moving downstream (−y) at
-  1.1 m/s it chases a plume that moves only 1.85 m/s faster than it. That is also the usual advice for commercial machines.
+  1.1 m/s it chases a plume that moves only 1.85 m/s faster than it. It is also common practice (not checked here).
 - **Off the plate centre the beam is tilted** (up to 13° at the Ø75 plate's edge with f = 160 mm), so above the spot it
   leans back toward the plate centre. At the upstream edge of the plate (+y) it leans downstream over its own plume and
   crosses it 0.2–1 mm downstream of the spot, 1–5 mm up (keyhole onset to hard keyhole, from §3.2's trajectories). That

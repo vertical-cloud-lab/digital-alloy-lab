@@ -8,7 +8,7 @@ Extends analysis/cfd/make_case.py (imported, not edited) with what the monitorin
       LC  the layer camera's existing Ø30 bore through the lid (optics.md §8.5), window at the lid's top face  -> lcWindow
     plus the laser cover slide as before (patch 'slide').
   - an optional argon purge across the LW cover slide (--lw-purge-lpm, 1-5 L/min): a 1.5 mm slot along the top edge of the
-    LW recess, next to the slide, blowing down across its face (patch 'inletLW'; a wall when the purge is off).
+    LW recess, next to the slide, blowing down across its face (patch 'lwPurge': an inlet when the purge runs, a wall when it is off).
   - the recoater in the lasing state: blade and carriage at the end of the stroke (x_end = +100), where monitoring_views.py
     and the layer cycle put it while the laser runs (gas-flow.md's runs had it at the park position, x -106, which would also
     block the LW view).
