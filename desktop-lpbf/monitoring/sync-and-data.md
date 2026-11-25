@@ -119,6 +119,10 @@ melting point, and suggests ≥ 50 µs or a 950 nm band ([`r8-coaxial-radiometry
 50 µs exposure smears 55 µm of track at 1.1 m/s, so each frame is labelled at mid-exposure; the view is de-scanned, so the pool
 itself stays put in the frame.
 
+**A dedicated AE system instead of the PicoScope's channel C** (a 2 MS/s AE digitizer from MISTRAS or Vallen) powers its
+preamps and extracts hits itself, but it runs on its own clock too. Give it the laser gate on a spare channel or a parametric input,
+and fit it to the RTC6 the same way. The photodiodes still need the PicoScope.
+
 ### 1.3 The trigger generator (MN-21)
 
 - **Why not list commands per frame** (§1.1): they would cut every vector. **Why not free-running cameras:** their frames have no
@@ -451,6 +455,25 @@ permissive, reset the safety controller, or open the guard.
   not measured.
 - **The guide-beam point (§0 item 9)** rests on the DMSP1000's transmission band as optics.md gives it, and on the U3's guide being
   red (optics.md §4.4: 0.1-1 mW, red); the dichroic's and the fold mirror's reflectance in the red are not checked.
+
+**Changes this note implies in files it doesn't own** (not made here):
+- [`electrical-io.csv`](../electrical-io.csv): L-16's controller becomes the PicoScope 4444, channel A (MN-13); merge MN-01 to
+  MN-28 from [`monitoring-io.csv`](../monitoring-io.csv).
+- [`electrical.md`](../electrical.md) §1.4:
+  - the drawer gains the AE decoupler, a breakout for the RTC6's digital port and the PicoScope;
+  - PB2 gains the Pico 2;
+  - the scan PC gains a NIC for the RTC6 alone and ~2 × 4 TB of NVMe.
+- [`monitoring.md`](../monitoring.md):
+  - §0 item 4 and §5.1: the sync reference is the laser gate, fitted every layer, plus the camera-window and layer-start bits;
+    positions are shifted by a calibrated lag;
+  - §2.1: the guide-beam height map (§0 item 9 here).
+- [`optics.md`](../optics.md) §4.4: aligning and measuring k with the guide beam has to happen before the DMSP1000 goes in.
+- [`cad/monitoring_spec.py`](../cad/monitoring_spec.py) `DAQ`:
+  - `where` is the 4U drawer;
+  - the "RTC6 layer-start / sync" signal is the laser-gate tap (MN-01);
+  - add the AE decoupler and the trigger generator.
+- The model: the guard bulkhead plate (MN-28), the AE preamp's bracket, the waveguide's seal at the rod end (MN-27), and the
+  contents of the drawer and PB2.
 
 ## 6. Sources
 
