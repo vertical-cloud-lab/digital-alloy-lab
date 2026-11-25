@@ -58,7 +58,9 @@ def steel_rule(at=(0.0, 0.0, 0.0), axis=(1.0, 0.0, 0.0), L=RULE["L"]):
 
 # ------------------------------------------------------------------ the person
 HUMAN = pathlib.Path(__file__).resolve().parent / "human" / "person.npz"     # built by human/build_person.py
-PERSON_COLOURS = {"skin": "#c49a7e", "shirt": "#4d6d91", "jeans": "#39465a", "shoe": "#2f3237", "sole": "#1d1f22",
+# a slate shirt rather than a bright blue one: the build GIFs share one 160-colour palette per file, mostly greys, and a
+# saturated shirt broke up into blotches in it
+PERSON_COLOURS = {"skin": "#c49a7e", "shirt": "#5f7186", "jeans": "#39465a", "shoe": "#2f3237", "sole": "#1d1f22",
                   "hair": "#3b2c22", "eye_white": "#dcd8d2", "iris": "#3a2a20", "brow": "#33261d"}
 POSES = {   # arm_out / arm_fwd: the upper arm's angle out from vertical to the side / forward (deg); elbow: forearm bend
     "stand": dict(arm_out=7.0, arm_fwd=4.0, elbow=12.0),          # arms hanging, hands beside the thighs
@@ -126,8 +128,8 @@ def person_pose(arm_out=7.0, arm_fwd=4.0, elbow=12.0, stance=260.0, curl=(14.0, 
         Ru = _rot_between(el - sh, trunk.T @ down)
         pose[f"upperarm.{S}"] = Ru
         side = np.cross(down, [0.0, -1.0, 0.0])                             # the elbow's hinge, across the arm
-        if np.linalg.norm(side) < 1e-6:
-            side = np.array([sg, 0.0, 0.0])
+        if np.linalg.norm(side) < 1e-6:                                    # arm straight ahead: bend the forearm down
+            side = np.array([1.0, 0.0, 0.0])
         pose[f"lowerarm.{S}"] = _rot_between(_unit(wr - el), (trunk @ Ru).T @ (_rot_axis(side, elbows[k]) @ down))
         # fingers: curled toward the palm about the knuckle line (index finger's knuckle to the little finger's)
         ax = H["mk"][f"knuckle5.{S}"] - H["mk"][f"knuckle2.{S}"]
