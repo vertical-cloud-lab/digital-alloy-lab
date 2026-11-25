@@ -73,7 +73,7 @@ def main():
     h.mir_to("B", 350.0)
     base = dict(proc_s=0.0, no_clock=True)
     shop_labels = ["Haas VF-4 + HRT210", "CNC lathe", "bandsaw", "deburr + wash", "measuring", "receiving",
-                   "stock racks", "kitting rack"]
+                   "stock racks", "kitting rack", "TIG welding"]
 
     def shot(n, cam0, cam1, caption, sub, labels=(), who=(), update=None, va=(30.0, 30.0)):
         for i in range(n):
@@ -96,13 +96,13 @@ def main():
     F2 = (6200.0, -5600.0, 900.0)
     c2 = [HL.orbit(F2, 9800.0, -10.0, 38.0), F2]
     shot(3 * FPS, c1, c2, "The robot shop beside the bench",
-         "Haas VF-4 with an HRT210 4th axis, a CNC lathe, a bandsaw, deburr and wash, measuring, receiving and racks",
-         labels=shop_labels)
+         "Haas VF-4 with an HRT210 4th axis, a Haas ST-10 lathe, a bandsaw, deburr and wash, measuring, TIG welding, "
+         "receiving and racks", labels=shop_labels)
     F3 = (9200.0, -5600.0, 900.0)
     c3 = [HL.orbit(F3, 9200.0, 8.0, 34.0), F3]
     shot(6 * FPS, c2, c3, "The robot shop beside the bench",
-         "Haas VF-4 with an HRT210 4th axis, a CNC lathe, a bandsaw, deburr and wash, measuring, receiving and racks "
-         "(analysis/shop/shop_cell.py)", labels=shop_labels)
+         "Machines drawn from their published layout drawings (the shop worker's equipment.py); the layout is "
+         "analysis/shop/shop_cell.py's, a hypothetical shop", labels=shop_labels)
     # 3. along the long table, from its far end back towards the bench
     F4 = (13200.0, 0.0, 860.0)                           # from behind lane B: MiR A and the shop stay out of view
     c4 = [HL.orbit(F4, 6200.0, 215.0, 36.0), F4]

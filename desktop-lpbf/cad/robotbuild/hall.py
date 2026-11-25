@@ -192,12 +192,25 @@ class Hall:
         self.labels3d["Fixture B"] = (K.STATIONS["B"], 0.0, K.Z_B + 200.0)
 
     def _shop(self):
+        """The robot shop: the shop worker's equipment models (equipment.py, from published drawings) at their station
+        poses where that module is there, else analysis/shop/shop_cell.py's boxes; the kitting rack, the chargers and
+        the receiving pallets from shop_cell either way."""
         import shop_cell as S
         sc = self.sc
         self.shop = S.build_shop()
         off = common.SHOP_IN_HALL
+        E = shop_equipment()
+        done = set()
+        if E is not None:
+            try:
+                done = self._shop_detailed(E)
+            except Exception as e:                              # noqa: BLE001
+                print(f"hall: equipment.py failed ({e!r}); the shop is drawn as boxes", flush=True)
+                done = set()
         items = []
-        for st in self.shop.values():
+        for key, st in self.shop.items():
+            if key in done:
+                continue
             for name, (v, f), col in st.world_items():
                 items.append((name, (np.asarray(v, float) + off, f), col))
         for k, (col, m) in enumerate(merged_by_colour(items).items()):
@@ -205,9 +218,48 @@ class Hall:
         for key, text in (("vf4", "Haas VF-4 + HRT210"), ("lathe", "CNC lathe"), ("saw", "bandsaw"),
                           ("wash", "deburr + wash"), ("measure", "measuring"), ("receiving", "receiving"),
                           ("stock", "stock racks"), ("kit", "kitting rack")):
+            if key in done:                                     # labelled from equipment.py's poses
+                continue
             st = self.shop[key]
             p = st.to_world((0.0, 600.0, 1500.0)) + off
             self.labels3d[text] = tuple(p)
+
+    def _shop_detailed(self, E):
+        """equipment.py's machines at the shop worker's station poses (shop_scene.POSE), moved into the hall."""
+        pose = dict(vf4=(2600.0, 7000.0, 0.0), lathe=(6700.0, 7000.0, 0.0), wash=(10100.0, 7000.0, 0.0),
+                    measure=(11900.0, 7000.0, 0.0), bench=(14200.0, 7000.0, 0.0), stock=(5600.0, 4000.0, 180.0),
+                    saw=(8600.0, 4000.0, 180.0), tools=(12900.0, 4000.0, 180.0), tig=(16300.0, 7000.0, 0.0))
+        build = dict(vf4=lambda: E.vf4(door=0.0), lathe=lambda: E.st10(door=0.0), wash=lambda: E.wash_deburr(),
+                     measure=lambda: E.granite_station(), bench=lambda: E.bench(1830.0, 760.0, 900.0),
+                     stock=lambda: E.cantilever_rack(), saw=lambda: E.s20a(), tools=lambda: E.tool_stand(),
+                     tig=lambda: E.tig_station())
+        off = common.SHOP_IN_HALL
+        by_col, glass = {}, []
+        done = set()
+        for key, f in build.items():
+            r = f()
+            parts = r[0] if isinstance(r, tuple) else r
+            x, y, yaw = pose[key]
+            M = Tm((x + off[0], y + off[1], off[2]), yaw)
+            for n, prt in parts.items():
+                m = prt.mesh.transform(M @ np.asarray(prt.M, float), inplace=False)
+                if prt.opacity < 1.0:
+                    glass.append((m, prt.color, prt.opacity))
+                else:
+                    by_col.setdefault(prt.color, []).append(m)
+            done.add(key)
+        for k, (col, ms) in enumerate(by_col.items()):
+            self.sc.add(f"shopq/{k}", ms[0].merge(ms[1:]) if len(ms) > 1 else ms[0], col, specular=0.25)
+        for k, (m, col, op) in enumerate(glass):
+            self.sc.add(f"shopq/glass {k}", m, col, opacity=op, specular=0.6)
+        for key, text in (("vf4", "Haas VF-4 + HRT210"), ("lathe", "CNC lathe"), ("saw", "bandsaw"),
+                          ("wash", "deburr + wash"), ("measure", "measuring"), ("stock", "stock racks"),
+                          ("tig", "TIG welding")):
+            x, y, yaw = pose[key]
+            c, s_ = math.cos(math.radians(yaw)), math.sin(math.radians(yaw))
+            self.labels3d[text] = (x + off[0] - 600.0 * s_, y + off[1] + 600.0 * c, 1600.0)
+        print(f"hall: the shop from equipment.py ({', '.join(sorted(done))})", flush=True)
+        return done
 
     def _robots(self):
         cl = self.cell if hasattr(self, "cell") else None
@@ -273,6 +325,20 @@ class Hall:
             if 0 <= x <= common.W and 70 <= y <= common.H - 20:
                 out.append([round(x, 1), round(y, 1), n])
         return out
+
+
+def shop_equipment():
+    """equipment.py (the shop worker's machine models): from this folder, or from $SHOP_EQUIP_DIR until merged."""
+    import os
+    extra = os.environ.get("SHOP_EQUIP_DIR")
+    if extra and extra not in sys.path:
+        sys.path.append(extra)
+    try:
+        import equipment as E
+        return E
+    except Exception as e:                                      # noqa: BLE001
+        print(f"hall: no equipment.py ({e!r})", flush=True)
+        return None
 
 
 def kit_table():
