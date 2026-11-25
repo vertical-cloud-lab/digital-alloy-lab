@@ -276,6 +276,28 @@ def read_cheaper_current():
     return keep, dropped
 
 
+def cheaper_rows():
+    """The counted cheaper-equivalents rows whose replaced part is still in today's line, for the item callouts."""
+    out = []
+    for r in csv.DictReader(open(LPBF / "cost" / "cheaper-equivalents.csv")):
+        if r.get("counted", "").strip().lower() != "yes" or num(r["alt_line_usd"]) is None:
+            continue
+        line = r["bom_line"].split(",")[0].strip()
+        toks = re.findall(r"\b\d{3,5}[A-Z]\d{1,4}\b|\b[A-Z0-9][A-Z0-9-]{4,}\b", r["base_part"])
+        if not toks or not any(t in bom_corpus(line) for t in toks):
+            continue
+        out.append(dict(line=line, key=r["replaces"], replaces=r["base_part"], alt_vendor=r["alt_vendor"],
+                        alt_part=r["alt_part_number"], base_usd=num(r["base_line_usd"]), alt_usd=num(r["alt_line_usd"]),
+                        saving=round((num(r["base_line_usd"]) or 0) - (num(r["alt_line_usd"]) or 0), 2),
+                        same_spec=r["same_spec"], lead_time_note=r["lead_time_note"], url=r["alt_url"],
+                        fetched_utc=r["fetched_utc"], source="cost/cheaper-equivalents.csv"))
+    out.sort(key=lambda o: -o["saving"])
+    return out
+
+
+CHEAPER_ROWS = cheaper_rows()
+
+
 def at_spec(lines, sc_new, sc_used, used):
     """cost_scenarios.py's at-spec rule, per line: the CW chain at spec (new = the BOM's high end; used = the used picks,
     as that script takes them), the cheapest listed option everywhere else (the scenario's low end)."""
@@ -762,9 +784,14 @@ def main():
             used_txt = k(x["used_best"]) if x["used_best"] is not None else "buy new"
         new_txt = (k(it["new_drawn"]) if it["new_drawn"] else
                    "$0 (air-cooled laser)" if it["line"] == "L2" else "with the laser (price TBD)")
+        # same-spec catalogue alternatives for the item's line (counted rows whose part is still in the line)
+        x["cheaper_options"] = [o for o in CHEAPER_ROWS if o["line"] == it["line"] and o["saving"] > 0
+                                and (it["line"] not in SPLIT or o["key"] not in DELTA_CAT or DELTA_CAT[o["key"]] == it["cat"])]
+        lead_used = r["short_used"] if used_txt != "buy new" else "buy new"
         x["hud"] = dict(name=it["name"], new=new_txt, used=used_txt, lead_new=r["short_new"],
-                        lead_new_days=r["days_new"], lead_used=r["short_used"],
-                        lead_used_days=r["days_used_route"])
+                        lead_new_days=r["days_new"], lead_used=lead_used, lead_used_days=r["days_used_route"],
+                        callout=f"{it['name']}: new {new_txt}, {r['short_new']}"
+                                + (f" | used {used_txt}, {r['short_used']}" if used_txt != "buy new" else " | buy new"))
         items.append(x)
     order_ix = {c: i for i, c in enumerate(ORDER)}
     items.sort(key=lambda x: (order_ix[x["cat"]], -x["new_drawn"], -x["new_high"]))
@@ -821,6 +848,14 @@ def main():
             C["hud"]["lead_new"] = C["hud"]["lead_used"] = (
                 "SendCutSend 5-15 d; BYU shop queue 7.6 wk (outsourcing split) to 16.4 wk (all in house); honing loop 3-6 wk "
                 "(estimate)")
+        ukeys = sorted({key for key, v in used.items() if v["line"].split(",")[0] in C["lines"]})
+        C["source"] = (f"bom.csv lines {' '.join(C['lines'])}"
+                       + (" (split by component: " + ", ".join(f"{ln} {w}" for ln in C["lines"] if ln in SPLIT
+                                                              for cat, _, _, w in SPLIT[ln] if cat == c) + ")"
+                          if any(ln in SPLIT for ln in C["lines"]) else "")
+                       + (f"; used: cost/used-options.csv picks {' '.join(ukeys)} (re-read 2026-11-25, ebay-recheck.csv)"
+                          if ukeys else "; no used route")
+                       + "; lead times: leadtimes.py from leadtime-lookups.csv (2026-11-25)")
         cat_list.append(C)
 
     tot = {s: [round(sum(v[0] for v in sc[s].values()), 2), round(sum(v[1] for v in sc[s].values()), 2)] for s in sc}
