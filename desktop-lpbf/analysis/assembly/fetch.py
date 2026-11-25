@@ -192,15 +192,14 @@ def follow(run, n, Ts, close, allow, chk, seed, ik_close=None, strict=False):
     a = run.arm(n)
     ikc = close if ik_close is None else ik_close
     a.close = ikc
-    firsts = a.ik_all(Ts[0], seed=seed)
-    if strict:
-        firsts = [q for q in firsts if np.abs(q - np.asarray(seed, float)).max() < 1e-2][:1]
-    best = (False, [], "no IK at the start" + (" on the same branch" if strict else ""))
+    # strict: the arm is already at the seed, which reaches Ts[0] (the lift starts where the descent ended)
+    firsts = [np.asarray(seed, float)] if strict else a.ik_all(Ts[0], seed=seed)
+    best = (False, [], "no IK at the start")
     for q0 in firsts[:8]:
         qs, prev, ok, why = [], q0, True, ""
         for k, T in enumerate(Ts):
             a.close = ikc
-            sols = a.ik_all(T, seed=prev)
+            sols = [q0] if (strict and k == 0) else a.ik_all(T, seed=prev)
             if not sols:
                 ok, why = False, f"no IK {k * 4:.0f} mm along"
                 break

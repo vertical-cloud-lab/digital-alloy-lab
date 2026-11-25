@@ -114,15 +114,16 @@ class Replay:
         self.arm = {"A": K.ArmT("A", K.DOCKS["T"], "front"), "B": K.ArmT("B", K.DOCKS["T"], "back")}
         self.vis = {n: hall.ArmVis(sc, self.arm[n], n) for n in ("A", "B")}
         self.mir = {n: hall.MirVis(sc, n, "front" if n == "A" else "back") for n in ("A", "B")}
-        self.tool_act = {}
+        self.tool_keys = {"A": [], "B": []}
+        # fingertip caps: the ring caps (internal two-pin grip) and the tending robot's cranked plate fingers
+        import tooling as TL0
+        import eoat
+        caps = {"ring": TL0.mesh("ring_caps")[0], "plate": eoat.plate_finger_spec()["meshes"]}
         for n in ("A", "B"):
-            for t in ("screwdriver", "nutrunner", "nutrunner_angle", "vacuum", "nozzle", "roller", "roller_n"):
-                try:
-                    (v, f), _ = K.tool_mesh(t)
-                except Exception:      # noqa: BLE001
-                    continue
-                sc.add(f"{n}/tool/{t}", poly(v, f), common.COL["tool"], group=f"{n}/tool/{t}", specular=0.4, shown=False)
-            self.caps = {}
+            for kind, ms in caps.items():
+                for tip, (v, f) in ms.items():
+                    sc.add(f"{n}/cap/{kind}/{tip}", poly(v, f), "#d9b23a" if kind == "ring" else "#7f8c99", group=f"{n}/cap/{kind}/{tip}",
+                           specular=0.3, shown=False)
         # hand tools held in the gripper (temporary objects in the run) are among self.objs
         # ---- the trunnion's jaws
         import tooling as TL
@@ -178,7 +179,7 @@ class Replay:
             s["x"] = float(x)
         if close is not None:
             s["close"] = float(close)
-        if tool is not None and tool != s["tool"]:
+        if tool is not None:
             s["tool"] = tool
         a = self.arm[n]
         a.move_base(s["x"])
@@ -190,14 +191,23 @@ class Replay:
         F = a.fk()
         W0 = a.base @ F["tool0"]
         Wt = W0 @ Tm((0.0, 0.0, self.K.TC_H))
-        grip_on = s["tool"].startswith("gripper") or s["tool"] in ("gripper+caps", "gripper+plate", "hand")
+        grip_on = s["tool"].startswith("gripper") or s["tool"] in ("hand",)
         for nm in self.vis[n].names():
             if "/gr/" in nm and "camera" not in nm:
                 sc.alpha[nm] = 1.0 if grip_on else 0.0
-        for t in ("screwdriver", "nutrunner", "nutrunner_angle", "vacuum", "nozzle", "roller", "roller_n"):
-            k = f"{n}/tool/{t}"
-            if k in sc.actors:
-                sc.alpha[k] = 1.0 if s["tool"] == t else 0.0
+        cap = "ring" if s["tool"] == "gripper+caps" else ("plate" if s["tool"] == "gripper+plate" else None)
+        import ur_arm
+        G = ur_arm.gripper_fk(s["close"])
+        for kind in ("ring", "plate"):
+            for tip in ("left_finger_tip", "right_finger_tip"):
+                k = f"{n}/cap/{kind}/{tip}"
+                sc.alpha[k] = 1.0 if kind == cap else 0.0
+                if kind == cap:
+                    sc.gmat[k] = Wt @ G[tip]
+        key = self.tool_key(n)
+        for k in self.tool_keys[n]:
+            sc.alpha[k] = 1.0 if k == key else 0.0
+            if k == key:
                 sc.gmat[k] = Wt
         # held objects ride on the TCP
         h = s["held"]
@@ -208,6 +218,25 @@ class Replay:
                 if f"o{i}" in sc.actors:
                     sc.gmat[f"o{i}"] = Tsp @ h["off"]
                     sc.alpha[f"o{i}"] = 1.0
+
+    def tool_key(self, n):
+        """The actor of arm n's current end effector (made on first use; screwdrivers per bit length)."""
+        s = self.st[n]
+        t = s["tool"]
+        if t.startswith("gripper") or t in ("hand", ""):
+            return None
+        sp = s.get("spec") or {}
+        eb, td = float(sp.get("extra_bit", 0.0) or 0.0), sp.get("tip_d")
+        key = f"{n}/tool/{t}/{eb:.0f}/{td}"
+        if key not in self.sc.actors:
+            try:
+                (v, f), _ = self.K.tool_mesh(t, eb, td) if t in ("screwdriver", "nutrunner", "nutrunner_angle") else self.K.tool_mesh(t)
+            except Exception as e:     # noqa: BLE001
+                print("no tool mesh", t, e)
+                return None
+            self.sc.add(key, poly(v, f), common.COL["tool"], group=key, specular=0.4, shown=False)
+            self.tool_keys[n].append(key)
+        return key
 
     def put(self, objs, T):
         for i in objs:
@@ -421,12 +450,17 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=()):
         nf, per = nfr.get(id(e), (0, 1.0 / FPS))
         if k == "put":
             rp.put(e["objs"], e["T"])
+        elif k == "take":
+            for i in e["objs"]:
+                if rp.objs.get(i, {}).get("kind") == "tool" and f"o{i}" in rp.sc.actors:
+                    rp.sc.alpha[f"o{i}"] = 0.0         # a hand tool goes back to the stand
         elif k == "attach":
             rp.st[n]["held"] = dict(objs=e["objs"], off=np.asarray(e["off"], float))
             rp.set_arm(n)
         elif k == "detach":
             rp.st[n]["held"] = None
         elif k == "tool":
+            rp.st[n]["spec"] = e.get("spec") or {}
             rp.set_arm(n, tool=e["tool"])
             for f in range(nf):
                 rp.aim(rp.tcp(n), "mid", side)
