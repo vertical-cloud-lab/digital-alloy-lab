@@ -1,0 +1,177 @@
+{
+ "boxes": [
+  {
+   "what": "coaxial camera branch from the photodiode chain toward the front (-y)",
+   "box": [
+    -230,
+    -170,
+    -200,
+    -62,
+    240,
+    300
+   ],
+   "hits": []
+  },
+  {
+   "what": "coaxial chain extended along -x (second photodiode, InGaAs channel)",
+   "box": [
+    -400,
+    -254,
+    -60,
+    10,
+    240,
+    300
+   ],
+   "hits": []
+  },
+  {
+   "what": "coaxial branch straight up (+z)",
+   "box": [
+    -235,
+    -165,
+    -60,
+    10,
+    297,
+    362
+   ],
+   "hits": [
+    [
+     "Safety shutter + beam dump",
+     12.3
+    ]
+   ]
+  },
+  {
+   "what": "folded arm for a Chronos-class coaxial camera, front-left above the bridge",
+   "box": [
+    -420,
+    -200,
+    -170,
+    -70,
+    244,
+    335
+   ],
+   "hits": []
+  }
+ ],
+ "cameras": [
+  {
+   "port": [
+    -156.0,
+    -10.0,
+    50.0
+   ],
+   "face": "left wall (-x)",
+   "standoff": 15,
+   "lens": "\u00d860 x 60",
+   "lens_clear": true,
+   "lens_hits": [],
+   "body": "\u00d8120",
+   "body_len_free": 180.0,
+   "body_first_hit": [
+    "Laser guard panels (1.5 mm aluminium)"
+   ],
+   "lens_front_to_plate_centre": 179,
+   "skipped": []
+  },
+  {
+   "port": [
+    -156.0,
+    -10.0,
+    50.0
+   ],
+   "face": "left wall (-x)",
+   "standoff": 15,
+   "lens": "\u00d860 x 100",
+   "lens_clear": true,
+   "lens_hits": [],
+   "body": "\u00d8120",
+   "body_len_free": 140.0,
+   "body_first_hit": [
+    "Laser guard panels (1.5 mm aluminium)"
+   ],
+   "lens_front_to_plate_centre": 179,
+   "skipped": []
+  },
+  {
+   "port": [
+    -156.0,
+    -30.0,
+    30.0
+   ],
+   "face": "left wall (-x)",
+   "standoff": 15,
+   "lens": "\u00d860 x 60",
+   "lens_clear": true,
+   "lens_hits": [],
+   "body": "\u00d8120",
+   "body_len_free": 120.0,
+   "body_first_hit": [
+    "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end"
+   ],
+   "lens_front_to_plate_centre": 177,
+   "skipped": []
+  },
+  {
+   "port": [
+    -156.0,
+    -30.0,
+    30.0
+   ],
+   "face": "left wall (-x)",
+   "standoff": 15,
+   "lens": "\u00d860 x 100",
+   "lens_clear": true,
+   "lens_hits": [],
+   "body": "\u00d8120",
+   "body_len_free": 80.0,
+   "body_first_hit": [
+    "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end"
+   ],
+   "lens_front_to_plate_centre": 177,
+   "skipped": []
+  },
+  {
+   "port": [
+    -60.0,
+    -80.0,
+    136.0
+   ],
+   "face": "lid",
+   "standoff": 28,
+   "lens": "\u00d860 x 60",
+   "lens_clear": true,
+   "lens_hits": [],
+   "body": "\u00d8120",
+   "body_len_free": 0.0,
+   "body_first_hit": [
+    "Reservoir M pull tab (6061, 8 mm fin, the lid's handle carri"
+   ],
+   "lens_front_to_plate_centre": 197,
+   "skipped": [
+    "Optics bridge (6061"
+   ]
+  },
+  {
+   "port": [
+    -60.0,
+    -80.0,
+    136.0
+   ],
+   "face": "lid",
+   "standoff": 28,
+   "lens": "\u00d860 x 100",
+   "lens_clear": true,
+   "lens_hits": [],
+   "body": "\u00d8120",
+   "body_len_free": 110.0,
+   "body_first_hit": [
+    "Laser guard panels (1.5 mm aluminium)"
+   ],
+   "lens_front_to_plate_centre": 197,
+   "skipped": [
+    "Optics bridge (6061"
+   ]
+  }
+ ]
+}
