@@ -12,7 +12,10 @@ bar and progress bar. What each slide reads (whatever is there when it runs; a s
   4. time and cost by route (in-house, outsourced, hybrid, robot shop): the route worker's /tmp/robotbuild/data/route.json;
   5. where a person is needed: the assembly worker's /tmp/robotbuild/data/assembly.json (steps whose status is "person"),
      the shop worker's /tmp/robotbuild/data/shop.json if it is there, and sequence.py's tray steps T01-T05;
-  6. what had to be redesigned: the same files' "redesign" steps (and any "redesigns" list in them).
+  6. what had to be redesigned: the same files' "redesign" steps (and any "redesigns" list in them);
+  7. Edison's estimate of the person-hours to commission the cell against building one machine by hand
+     (desktop-lpbf/edison/r7-robot-build-review/answer.md section 5: its own estimates, not measurements), and a closing
+     card: the video shows what the arms can physically do; it is not a claim that the cell pays for one machine.
 Colours: new #257de0 and used #f47230 (the cost and lead panels' pair, the dataviz skill's first two slots); text in
 text inks. No project time passes in this chapter (proc_s 0); the clocks are hidden (slide 1 shows their totals).
 """
@@ -242,6 +245,57 @@ def slide_assembly_hours(u, hud):
     return to_img(fig)
 
 
+# Edison's review of the two-arm build (desktop-lpbf/edison/r7-robot-build-review/answer.md, section 5): person-hours,
+# its own estimates "informed by published evidence, not a measured result"
+EDISON = [("Commissioning before\nthe first machine", (1230.0, 2470.0), (140.0, 340.0)),
+          ("Building the machine\n(machining, kitting, assembly)", (200.0, 380.0), (220.0, 400.0)),
+          ("Total for one machine", (1430.0, 2850.0), (360.0, 740.0))]
+
+
+def slide_edison(u):
+    fig, ax = fig_axes([0.27, 0.14, 0.66, 0.68])
+    s = ease(u)
+    cell_col, hand_col = common.WHO_COL["robot A"], "#7f8a96"
+    rows = EDISON[::-1]
+    for k, (name, cell, hand) in enumerate(rows):
+        for dy, (lo, hi), col in ((0.19, cell, cell_col), (-0.19, hand, hand_col)):
+            ax.barh(k + dy, lo * s, height=0.36, color=col, edgecolor=BG)
+            ax.barh(k + dy, (hi - lo) * s, left=lo * s, height=0.36, color=col, alpha=0.4, edgecolor=BG)
+            if u > 0.8:
+                ax.text(hi * s + 25, k + dy, f"{lo:,.0f}-{hi:,.0f} h", va="center", fontsize=10, color=INK2)
+    ax.set_yticks(range(len(rows)), [r[0] for r in rows])
+    ax.set_xlabel("person-hours (Edison's estimate: solid to the low end, pale to the high end)")
+    ax.set_xlim(0, 3400)
+    ax.grid(axis="x", color=GRID)
+    ax.set_axisbelow(True)
+    from matplotlib.patches import Patch
+    ax.legend(handles=[Patch(color=cell_col, label="the two-arm robot cell"), Patch(color=hand_col, label="by hand")],
+              loc="lower right", frameon=False)
+    return to_img(fig)
+
+
+def slide_closing(u):
+    fig = plt.figure(figsize=(common.W / 100, common.H / 100), dpi=100, facecolor=BG)
+    a = ease(u * 1.5)
+    lines = [("What this video is", 24, INK, "bold"),
+             ("A feasibility study of what two UR12e arms on MiR250s can physically do: every arm motion shown", 15, INK, "normal"),
+             ("is a collision-checked plan, and every step they can't do goes to a person.", 15, INK, "normal"),
+             ("", 10, INK, "normal"),
+             ("What it is not", 24, INK, "bold"),
+             ("A claim that the cell pays for one machine. Edison's review puts commissioning the cell at 1,230-2,470", 15, INK, "normal"),
+             ("person-hours, more than the 360-740 of building one by hand; it pays back only over 5-10 machines.", 15, INK, "normal"),
+             ("", 10, INK, "normal"),
+             ("Its recommendation: build the first machine mostly by hand, with the arms as material handlers", 15, INK2, "normal"),
+             ("and CNC tenders on the long mill runs, and treat robot assembly as a testbed.", 15, INK2, "normal")]
+    y = 0.80
+    for text, size, col, w in lines:
+        fig.text(0.07, y, text, fontsize=size, color=col, weight=w, alpha=a)
+        y -= 0.062 if size < 20 else 0.075
+    fig.text(0.07, 0.07, "Sources: desktop-lpbf/robot-build/ (this round's notes), desktop-lpbf/edison/r7-robot-build-review/answer.md",
+             fontsize=10, color=INK2, alpha=a)
+    return to_img(fig)
+
+
 def _routes(route):
     """[(name, weeks [lo, hi] or None, cost [lo, hi] or None, person_h or None)] from route.json, whatever its keys."""
     out = []
@@ -424,6 +478,12 @@ def main():
     _, n_r = slide_list(1.0, "redesign")
     run(lambda u: slide_list(u, "redesign")[0], f"What had to be redesigned for the arms: {n_r}",
         "Steps the arms failed until a part, a fixture or a tool changed (assembly and shop summaries)", 8.0)
+    run(slide_edison, "Edison's estimate: for one machine, setting up the robot cell costs more than the build",
+        "Commissioning 1,230-2,470 person-hours (end-effectors, ~90 assembly programs, vision, safety, debugging) against "
+        "140-340; 20-40 weeks against 10-20; break-even only over 5-10 machines (edison/r7-robot-build-review, section 5)",
+        11.0)
+    run(slide_closing, "A feasibility study, not a business case",
+        "The robots' part of this build is a testbed for skills that pay off if the lab builds more machines", 9.0)
     ch.close()
     print(f"{NAME}: {ch.n} frames ({ch.n / FPS:.0f} s)", flush=True)
 
