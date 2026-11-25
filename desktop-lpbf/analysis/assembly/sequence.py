@@ -335,7 +335,8 @@ def steps(module="M50"):
     # before the 2-044 is squeezed, so the plenum hangs there on its own while arm B changes to the screwdriver (assembly.md round 7)
     a(P("F14", "Inlet plenum with its O-ring and KF-25 port onto the back wall's two dowels by arm B (it hangs there on its own)",
         ["inlet plenum", "Inlet plenum O-ring", "Inlet plenum port"], "machine", "upright", "explode", actor="B", merge="plenum_in"))
-    a(S("F15", "Nine M4 x 16 inlet-plenum screws into the back wall", "plenum_in", "machine", "upright", actor="B", torque_Nm=2.2))
+    a(S("F15", "Nine M4 x 16 inlet-plenum screws into the back wall (60 mm bit extension: run 9 met the KF-25 port on one)", "plenum_in",
+        "machine", "upright", actor="B", torque_Nm=2.2, long_bit=60.0))
     # round 7 (run 8): hangs on its two Ø3 dowels (transition fit), so no arm holds it while the screws go in (run 7: arm B's
     # screwdriver met arm A's wrist on all four)
     a(P("F16", "Vacuum-port adapter (KF-25 stub welded in) with its 2-024 O-ring onto the right wall's two dowels (it hangs there)",

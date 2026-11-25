@@ -2849,7 +2849,589 @@
    "fetch_why": "pick at the table (F16): in to the grasp: no IK at the start",
    "seconds": 9.8,
    "compute_s": 9.8
+  },
+  {
+   "id": "F17",
+   "label": "Four M5 x 20 vacuum-port screws",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": "vac_port",
+   "presenter": "4/4",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 4,
+   "n_ok": 4,
+   "n_drive": 4,
+   "arm_clear": 2.6,
+   "arm_clear_with": "screwdriver to Vacuum port adapter plate (304, 8 mm, FKM face O-r",
+   "why": "",
+   "docks": [
+    1570.0
+   ],
+   "hex": 4.0,
+   "screw_L": 20.0,
+   "driver": [
+    "screwdriver"
+   ],
+   "driver_why": [],
+   "per_screw": [
+    {
+     "screw": "Vacuum-port adapter screws, M5 x 20 316 #1",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 180,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Vacuum port adapter plate (304, 8 mm, FKM face O-r"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Vacuum-port adapter screws, M5 x 20 316 #2",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 180,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Vacuum port adapter plate (304, 8 mm, FKM face O-r"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Vacuum-port adapter screws, M5 x 20 316 #3",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 180,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Vacuum port adapter plate (304, 8 mm, FKM face O-r"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Vacuum-port adapter screws, M5 x 20 316 #4",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 180,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Vacuum port adapter plate (304, 8 mm, FKM face O-r"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    }
+   ],
+   "seconds": 144.7,
+   "compute_s": 144.7
+  },
+  {
+   "id": "F18",
+   "label": "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assembled on the rail) onto the back wall",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "B",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 2.4,
+   "gap_with": "Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball screw, spring clips)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame from 5.5 ",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F18): in to the grasp: left_finger_tip hits Recoater guide rail (15 mm, 260 mm)",
+   "seconds": 318.7,
+   "compute_s": 318.7
+  },
+  {
+   "presenter": "3/3",
+   "sweep": "PASS",
+   "arm": "PART",
+   "n": 4,
+   "n_ok": 3,
+   "n_drive": 3,
+   "arm_clear": 1.9,
+   "arm_clear_with": "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)",
+   "why": "d thro: screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame from 5.5 ",
+   "docks": [
+    1350.0
+   ],
+   "hex": 3.0,
+   "screw_L": 16.0,
+   "driver": [
+    "nutrunner_angle"
+   ],
+   "driver_why": [
+    "screwdriver blocked (A/tool/screwdriver hits Process chamber body (6061-T6 throug)"
+   ],
+   "per_screw": [
+    {
+     "screw": "Recoater rail screws, M4 x 16 316, into M4 holes tapped through the back wall #1",
+     "ok": false,
+     "why": "screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R1; also no way with nutrunner, nutrunner_angle",
+     "dock": 1350.0,
+     "roll": 180,
+     "withdraw": true,
+     "clear": null,
+     "drive_ok": false,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Recoater rail screws, M4 x 16 316, into M4 holes tapped through the back wall #2",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      1.9,
+      "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "screwdriver blocked (A/tool/screwdriver hits Process chamber body (6061-T6 throug)"
+    },
+    {
+     "screw": "Recoater rail screws, M4 x 16 316, into M4 holes tapped through the back wall #3",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      1.9,
+      "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "screwdriver blocked (A/tool/screwdriver hits Process chamber body (6061-T6 throug)"
+    },
+    {
+     "screw": "Recoater rail screws, M4 x 16 316, into M4 holes tapped through the back wall #4",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      1.9,
+      "nutrunner_angle to Recoater guide rail (15 mm, 260 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "screwdriver blocked (A/tool/screwdriver hits Process chamber body (6061-T6 throug)"
+    }
+   ],
+   "id": "F18h",
+   "label": "Recoater rail with its carriage, carriage block, ball nut an: screws of rail driven while arm B holds it",
+   "do": "screws",
+   "joint": "rail",
+   "actor": "A",
+   "holder": "B"
+  },
+  {
+   "id": "F19",
+   "label": "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": "rail",
+   "sweep": "-",
+   "arm": "-",
+   "why": "all screws of this joint were already driven (with the part held)",
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "F21",
+   "label": "Ball screw in through the right wall's bore and turned through the ball nut (30 turns at 10 mm lead) into the left bore",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 1.0,
+   "gap_with": "Recoater ball nut (flange on the +x face)",
+   "arm_clear": 3.0,
+   "arm_clear_with": "held:F21:Recoater ball screw to Process chamber body (6061-T6 through-frame from 5",
+   "why": "released 33 mm short and pushed home with the closed fingers",
+   "docks": [
+    1570.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F21): in to the grasp: no IK at the start",
+   "seconds": 22.5,
+   "compute_s": 22.5,
+   "inspect": "a person turns the screw by hand over its stroke for smoothness (ball circuits, preload: Edison r7 would keep the install manual)"
+  },
+  {
+   "id": "F22",
+   "label": "Feedthrough spacer, its two 2-024 O-rings, the Ferrotec unit and the coupling on the left wall",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "",
+   "docks": [
+    1130.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F22): in to the grasp: no IK at the start",
+   "seconds": 11.1,
+   "compute_s": 11.1
+  },
+  {
+   "id": "F23",
+   "label": "Blind bearing cap and its 2-019 O-ring onto the right wall's two dowels (it hangs there; round 7)",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clear": 22.1,
+   "arm_clear_with": "right_finger_tip to Vacuum-port adapter screws, M5 x 20 316 #3",
+   "why": "released 15 mm short and pushed home with the closed fingers",
+   "docks": [
+    1570.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F23): in to the grasp: no IK at the start",
+   "seconds": 14.8,
+   "compute_s": 14.8
+  },
+  {
+   "id": "F24",
+   "label": "Four M4 x 20 bearing-cap screws",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": "bearing_cap",
+   "presenter": "4/4",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 4,
+   "n_ok": 4,
+   "n_drive": 4,
+   "arm_clear": 2.2,
+   "arm_clear_with": "screwdriver to Recoater floating bearing housing (blind cap, FKM ",
+   "why": "",
+   "docks": [
+    1570.0
+   ],
+   "hex": 3.0,
+   "screw_L": 20.0,
+   "driver": [
+    "screwdriver"
+   ],
+   "driver_why": [],
+   "per_screw": [
+    {
+     "screw": "Bearing-cap screws, M4 x 20 316 #1",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Recoater floating bearing housing (blind cap, FKM "
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Bearing-cap screws, M4 x 20 316 #2",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Recoater floating bearing housing (blind cap, FKM "
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Bearing-cap screws, M4 x 20 316 #3",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Recoater floating bearing housing (blind cap, FKM "
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Bearing-cap screws, M4 x 20 316 #4",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Recoater floating bearing housing (blind cap, FKM "
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    }
+   ],
+   "seconds": 19.8,
+   "compute_s": 19.8
+  },
+  {
+   "id": "F25",
+   "label": "Motor standoff onto the left wall's feedthrough",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 19.42,
+   "gap_with": "Recoater fixed bearing: magnetic-fluid rotary feedthrough Ferrotec SFL-006-NN on the left wall (Ferrotec SFL-006-NN; FKM face O-ring)",
+   "arm_clear": 18.0,
+   "arm_clear_with": "left_finger_tip to Recoater fixed bearing: magnetic-fluid rotary feed",
+   "why": "",
+   "docks": [
+    1130.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F25): in to the grasp: no IK at the start",
+   "seconds": 8.8,
+   "compute_s": 8.8
+  },
+  {
+   "id": "F25b",
+   "label": "Motor bracket lowered onto the base plate from above",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": null,
+   "gap_with": null,
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "",
+   "docks": [
+    1130.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 84.6,
+   "compute_s": 84.6
+  },
+  {
+   "id": "F25c",
+   "label": "Recoater servo onto the bracket, its shaft into the coupling along +x",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.05,
+   "gap_with": "Recoater motor bracket",
+   "arm_clear": 0.0,
+   "arm_clear_with": "held:F25c:Recoater servo to Recoater motor bracket",
+   "why": "",
+   "docks": [
+    1130.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F25c): in to the grasp: no IK at the start",
+   "seconds": 6.6,
+   "compute_s": 6.6
+  },
+  {
+   "id": "F26",
+   "label": "Blade holder and blade, in through the door opening and up under the recoater arm",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "FAIL",
+   "arm": "FAIL",
+   "gap": 0.05,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clear": 1.1,
+   "arm_clear_with": "held:F26:Blade holder to Process chamber body (6061-T6 through-frame from 5",
+   "why": "sweep: Blade holder blocked by Process chamber body (6061-T6 through-frame from 5 after 52.0 mm; arm A: held:F26:Blade holder hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 30 mm along the insertion",
+   "docks": [
+    1570.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F26): in to the grasp: no IK at the start",
+   "seconds": 4.5,
+   "compute_s": 4.5
+  },
+  {
+   "id": "F27",
+   "label": "Two M3 x 8 blade screws (100 mm bit extension: run 7's driver met the module and Fixture B)",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": "blade",
+   "presenter": "0/0",
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "n": 2,
+   "n_ok": 0,
+   "n_drive": 0,
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "316 #1: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle; 316 #2: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle",
+   "docks": [
+    1350.0
+   ],
+   "hex": 2.5,
+   "screw_L": 8.0,
+   "driver": [
+    "nutrunner_angle"
+   ],
+   "driver_why": [],
+   "per_screw": [
+    {
+     "screw": "Blade screws, M3 x 8 316 #1",
+     "ok": false,
+     "why": "screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": null,
+     "drive_ok": false,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Blade screws, M3 x 8 316 #2",
+     "ok": false,
+     "why": "screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": null,
+     "drive_ok": false,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": ""
+    }
+   ],
+   "seconds": 34.9,
+   "compute_s": 34.9
+  },
+  {
+   "id": "F28",
+   "label": "Gas knife and dose chute",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 3.0,
+   "gap_with": "Recoater carriage block (6061)",
+   "arm_clear": 3.0,
+   "arm_clear_with": "held:F28:Dose chute to Recoater carriage block (6061)",
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 2,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 46.1,
+   "compute_s": 46.1
   }
  ],
- "generated_s": 2907.8
+ "generated_s": 3625.0
 }
