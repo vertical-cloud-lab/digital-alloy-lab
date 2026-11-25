@@ -192,5 +192,5 @@ venv.bak/
 venv/
 wheels/
 
-# Per-proposal private files (cloned from <slug>-private repos)
-private/
+# Cached external benchmark datasets (large, not redistributable)
+benchmarks/data/
