@@ -149,7 +149,7 @@ lines are split by component (B1, S9, A2), and two pseudo-categories hold what t
 | Frames | S9 (frame) F3 | 689 | 689 | 689–1,339 | 689–1,339 | 689–1,339 |
 | Bought, not on the table | P1 S6 S7 S8 T1 T3 E5 A2 (vacuum) | 10,497 | 9,491 | 10,497–15,372 | 9,491–14,366 | 9,957–12,799 |
 | Services | X1, B1 (welding, boring, honing) | 9,215 | 9,215 | 9,215–24,777 | 9,215–24,777 | 9,215–24,777 |
-| **Total** | 59 lines | **115,594** | **69,894–75,620** | **76,339–161,155** | **67,762–117,519** | **72,751–155,512** |
+| **Total** | 64 lines | **115,594** | **69,894–75,620** | **76,339–161,155** | **67,762–117,519** | **72,751–155,512** |
 
 Both scenarios together (used majors and cheaper equivalents): $64,376–112,077.
 

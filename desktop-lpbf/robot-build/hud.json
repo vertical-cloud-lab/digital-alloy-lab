@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-25T06:03Z",
+ "generated_utc": "2026-11-25T06:17Z",
  "what": "Cost, lead-time and time numbers for the robot-built desktop LPBF video (issue #260, PR #266, round 7)",
  "how_to_show": "Tour the categories in the order of 'categories'. For each, show hud.new (at spec, all new) against hud.used (the used picks where a sensible listing exists, new elsewhere) and the running totals hud.run_new / hud.run_used; hud.range_new / hud.range_used are the BOM's full low-high ranges. Call out the category's 'items' in order with their hud.new, hud.used, hud.lead_new and hud.lead_used. 'offtable' and 'services' are not on the table: show them as text rows at the end of the tour.",
  "definitions": {
@@ -476,21 +476,21 @@
     48018.4
    ],
    "used": [
-    7675.99,
-    19454.0
+    8115.99,
+    19394.0
    ],
    "cheaper": [
     9387.79,
     47995.45
    ],
    "both": [
-    7675.99,
-    19431.05
+    8115.99,
+    19371.05
    ],
    "spec_new": 42702.95,
    "spec_used": [
-    8412.93,
-    14138.55
+    8852.93,
+    14078.55
    ],
    "on_table": true,
    "items": [
@@ -534,7 +534,7 @@
       8
      ],
      "text": "eBay, US surplus dealer (M6860): ships the same day from El Paso by LTL freight; under $3,500 with freight, so a PCard",
-     "short": "same day + ~1 wk freight",
+     "short": "ships same day; ~1 wk freight",
      "source": "cost/used-options.csv (2026-11-20); cost-scenarios.md section 4"
     },
     "unknown": [
@@ -549,33 +549,33 @@
      81598.11
     ],
     "used": [
-     26478.93,
-     45705.42
+     26918.93,
+     45645.42
     ],
     "cheaper": [
      31196.87,
      79410.58
     ],
     "both": [
-     24515.34,
-     43718.88
+     24955.34,
+     43658.88
     ],
     "spec_new": 66676.61,
     "spec_used": [
-     27215.87,
-     32941.49
+     27655.87,
+     32881.49
     ]
    },
    "hud": {
     "title": "Laser and optics",
     "new": "$42.7k",
-    "used": "$8.4k-$14.1k",
+    "used": "$8.9k-$14.1k",
     "run_new": "$66.7k",
-    "run_used": "$27.2k-$32.9k",
+    "run_used": "$27.7k-$32.9k",
     "range_new": "$9.4k-$48.0k",
-    "range_used": "$7.7k-$19.5k",
+    "range_used": "$8.1k-$19.4k",
     "lead_new": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
-    "lead_used": "3-8 d (L1: same day + ~1 wk freight)",
+    "lead_used": "3-8 d (L1: ships same day; ~1 wk freight)",
     "lead_new_as_chosen": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
     "lead_unknown": "L4 L5 T2"
    }
@@ -685,21 +685,21 @@
      118738.64
     ],
     "used": [
-     47705.92,
-     76109.29
+     48145.92,
+     76049.29
     ],
     "cheaper": [
      52314.07,
      115753.32
     ],
     "both": [
-     44944.54,
-     73324.96
+     45384.54,
+     73264.96
     ],
     "spec_new": 94531.6,
     "spec_used": [
-     49838.2,
-     55563.82
+     50278.2,
+     55503.82
     ]
    },
    "hud": {
@@ -707,7 +707,7 @@
     "new": "$27.9k",
     "used": "$22.6k",
     "run_new": "$94.5k",
-    "run_used": "$49.8k-$55.6k",
+    "run_used": "$50.3k-$55.5k",
     "range_new": "$21.9k-$37.1k",
     "range_used": "$21.2k-$30.4k",
     "lead_new": "3-5 wk (D2: backordered (~3-4 wk))",
@@ -789,21 +789,21 @@
      119666.31
     ],
     "used": [
-     48366.59,
-     77036.96
+     48806.59,
+     76976.96
     ],
     "cheaper": [
      52889.75,
      116596.0
     ],
     "both": [
-     45520.22,
-     74167.64
+     45960.22,
+     74107.64
     ],
     "spec_new": 95192.27,
     "spec_used": [
-     50498.87,
-     56224.49
+     50938.87,
+     56164.49
     ]
    },
    "hud": {
@@ -811,7 +811,7 @@
     "new": "$661",
     "used": "$661",
     "run_new": "$95.2k",
-    "run_used": "$50.5k-$56.2k",
+    "run_used": "$50.9k-$56.2k",
     "range_new": "$661-$928",
     "range_used": "$661-$928",
     "lead_new": "12-20 d (G8: same or next day + BYU PO)",
@@ -894,21 +894,21 @@
      121005.56
     ],
     "used": [
-     49055.84,
-     78376.21
+     49495.84,
+     78316.21
     ],
     "cheaper": [
      53579.0,
      117935.25
     ],
     "both": [
-     46209.47,
-     75506.89
+     46649.47,
+     75446.89
     ],
     "spec_new": 95881.52,
     "spec_used": [
-     51188.12,
-     56913.74
+     51628.12,
+     56853.74
     ]
    },
    "hud": {
@@ -916,7 +916,7 @@
     "new": "$689",
     "used": "$689",
     "run_new": "$95.9k",
-    "run_used": "$51.2k-$56.9k",
+    "run_used": "$51.6k-$56.9k",
     "range_new": "$689-$1.3k",
     "range_used": "$689-$1.3k",
     "lead_new": "2-3 wk (S9: 2-8 d + BYU PO)",
@@ -1012,21 +1012,21 @@
      136377.6
     ],
     "used": [
-     58547.16,
-     92742.24
+     58987.16,
+     92682.24
     ],
     "cheaper": [
      63536.32,
      130734.56
     ],
     "both": [
-     55160.78,
-     87300.19
+     55600.78,
+     87240.19
     ],
     "spec_new": 106378.85,
     "spec_used": [
-     60679.44,
-     66405.06
+     61119.44,
+     66345.06
     ]
    },
    "hud": {
@@ -1034,7 +1034,7 @@
     "new": "$10.5k",
     "used": "$9.5k",
     "run_new": "$106.4k",
-    "run_used": "$60.7k-$66.4k",
+    "run_used": "$61.1k-$66.3k",
     "range_new": "$10.5k-$15.4k",
     "range_used": "$9.5k-$14.4k",
     "lead_new": "12-20 d (S6: 2-6 d + BYU PO)",
@@ -1118,21 +1118,21 @@
      161154.6
     ],
     "used": [
-     67762.16,
-     117519.24
+     68202.16,
+     117459.24
     ],
     "cheaper": [
      72751.32,
      155511.56
     ],
     "both": [
-     64375.78,
-     112077.19
+     64815.78,
+     112017.19
     ],
     "spec_new": 115593.85,
     "spec_used": [
-     69894.44,
-     75620.06
+     70334.44,
+     75560.06
     ]
    },
    "hud": {
@@ -1140,7 +1140,7 @@
     "new": "$9.2k",
     "used": "$9.2k",
     "run_new": "$115.6k",
-    "run_used": "$69.9k-$75.6k",
+    "run_used": "$70.3k-$75.6k",
     "range_new": "$9.2k-$24.8k",
     "range_used": "$9.2k-$24.8k",
     "lead_new": "SendCutSend 5-15 d; BYU shop queue 7.6 wk (outsourcing split) to 16.4 wk (all in house); honing loop 3-6 wk (estimate)",
@@ -1425,7 +1425,22 @@
      "fetched_utc": "2026-11-20T14:06Z",
      "verdict": "sensible",
      "risks": "ClearPath-SD (step/direction) as the BOM specifies, NEMA 23. Only one SD unit was listed (others are MC models that don't take step/dir); the second servo stays new",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 189.99,
+      "shipping": "US $7.19 USPS Ground Advantage",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Fri Dec 4",
+      "days": [
+       5,
+       9
+      ],
+      "returns": "Seller does not accept returns.",
+      "fetched_utc": "2026-11-25T06:13Z",
+      "notes": "or Best Offer; New - Open box",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [],
@@ -1451,12 +1466,12 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay open box (US)",
+     "text": "eBay (Teknic, CPM-SDSK-2310S-RQN, ClearPath Servo Moto): 'Estimated between Mon Nov 30 and Fri Dec 4' to Provo, read 2026-11-25T06:13Z; Seller does not accept returns",
      "days": [
-      3,
-      8
+      5,
+      9
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
@@ -1469,10 +1484,10 @@
      2,
      10
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "5-9 d (used, US)",
     "lead_used_days": [
-     3,
-     8
+     5,
+     9
     ]
    }
   },
@@ -1502,7 +1517,22 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible with checks",
      "risks": "Oil-free; tip seals wear and hours are unknown; small seller",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1149.99,
+      "shipping": "US $134.59 USPS Ground Advantage",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Sat Dec 5",
+      "days": [
+       5,
+       10
+      ],
+      "returns": "Seller does not accept returns.",
+      "fetched_utc": "2026-11-25T06:06Z",
+      "notes": "or Best Offer; returns were 'not stated' on 2026-11-20",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -1521,7 +1551,9 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible (returnable)",
      "risks": "Lab two-stage rotary-vane pump, KF inlet, replaces the McMaster HVAC-type pump (4396K21). Change the oil on arrival; check ultimate pressure with the Pirani; hours unknown",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     },
     {
      "title": "Varian TriScroll 300 Dry Scroll Vacuum Pump MSPLP10665 115/230V",
@@ -1538,7 +1570,9 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible with checks",
      "risks": "Larger scroll pump",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     },
     {
      "title": "BOC Edwards XDS10 Dry Scroll Vacuum Pump - Rebuilt with Only 64hrs",
@@ -1555,7 +1589,9 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible",
      "risks": "Rebuilt, 64 h: the low-risk scroll option",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "risk": "Ask the seller for hours and tip-seal condition; a tip-seal kit may be needed (not priced). The $460.69 Edwards RV3 is an oil-sealed rotary vane (free returns): a budget route, not the dry pump drawn.",
@@ -1580,12 +1616,12 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay, US (Agilent IDP-3)",
+     "text": "eBay (Agilent Technologies IDP3 Dry Scroll Vacuum Pump): 'Estimated between Mon Nov 30 and Sat Dec 5' to Provo, read 2026-11-25T06:06Z; Seller does not accept returns",
      "days": [
-      3,
-      8
+      5,
+      10
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
@@ -1598,10 +1634,10 @@
      12,
      20
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "5-10 d (used, US)",
     "lead_used_days": [
-     3,
-     8
+     5,
+     10
     ]
    }
   },
@@ -1631,7 +1667,9 @@
      "fetched_utc": "2026-11-20T14:07Z",
      "verdict": "sensible",
      "risks": "Active Pirani, 14-30 V DC: check its analog output and cable",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "used_alt": [
@@ -1650,7 +1688,9 @@
      "fetched_utc": "2026-11-20T14:07Z",
      "verdict": "sensible with checks",
      "risks": "Convection Pirani with display, reads to atmosphere; used sensor may be contaminated",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "risk": "The KF-25 hoses (5 x 3497N23 across G2 and G7) are the biggest piece; Kurt J. Lesker's MHB-QF-B24 saves $825 new.",
@@ -1719,7 +1759,22 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible with checks",
      "risks": "Compressed-air dew-point sensor (ISO 8573 classes 1-6), -100 to +20 C dp. Check output (4-20 mA?), the sensor's accuracy near -60 C dp and its calibration date; budget a recalibration",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 150.0,
+      "shipping": "US $15.99 Standard Shipping",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Thu Dec 3",
+      "days": [
+       5,
+       8
+      ],
+      "returns": "30 days returns. Buyer pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:10Z",
+      "notes": "New - Open box",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -1738,7 +1793,22 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible with checks",
      "risks": "Michell Easidew 4-20 mA transmitter, -100 to +20 C dp range class; ask for the calibration certificate",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1100.0,
+      "shipping": "Free USPS Priority Mail",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Fri Dec 4",
+      "days": [
+       5,
+       9
+      ],
+      "returns": "14 days returns. Buyer pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:12Z",
+      "notes": "or Best Offer; refurbished",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "risk": "Check the calibration date; recalibrate if it is old.",
@@ -1763,12 +1833,12 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay, US (Atlas Copco open box or Michell refurbished)",
+     "text": "eBay (Atlas Copco P1624896681 class 1 -6 Dew Point Sen): 'Estimated between Mon Nov 30 and Thu Dec 3' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
      "days": [
-      3,
+      5,
       8
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
@@ -1781,9 +1851,9 @@
      16,
      19
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "5-8 d (used, US)",
     "lead_used_days": [
-     3,
+     5,
      8
     ]
    }
@@ -1814,7 +1884,22 @@
      "fetched_utc": "2026-11-20T14:04Z",
      "verdict": "sensible with checks",
      "risks": "Check the lowest range reaches 0-10 or 0-100 ppm and the 4-20 mA output; cells age on the shelf",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 650.0,
+      "shipping": "",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Thu Dec 3",
+      "days": [
+       5,
+       8
+      ],
+      "returns": "30 days returns. Buyer pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:10Z",
+      "notes": "or Best Offer",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -1833,7 +1918,22 @@
      "fetched_utc": "2026-11-20T14:04Z",
      "verdict": "sensible with checks (returnable)",
      "risks": "As above; returnable",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 779.0,
+      "shipping": "Free Standard Shipping",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Sat Dec 5",
+      "days": [
+       5,
+       10
+      ],
+      "returns": "60 days returns. Seller pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:08Z",
+      "notes": "or Best Offer; '1 sold' on the page",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "risk": "A used trace analyzer usually needs a new sensor cell (~$350, estimate) and a check of its lowest range (< 100 ppm).",
@@ -1858,12 +1958,12 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay, US (Alpha Omega Series 3000 or Teledyne 3190) plus a new sensor cell (cell lead not checked)",
+     "text": "eBay (ALPHA OMEGA,SERIES 3000,TRACE OXYGEN ANALYZER): 'Estimated between Mon Nov 30 and Thu Dec 3' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
      "days": [
-      3,
+      5,
       8
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": {
      "text": "SST OXY-FLEX-0-H: 6 in stock at Digi-Key (8 weeks after that); may be a percent-level sensor",
@@ -1883,9 +1983,9 @@
      44,
      61
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "5-8 d (used, US)",
     "lead_used_days": [
-     3,
+     5,
      8
     ]
    }
@@ -1917,7 +2017,9 @@
      "fetched_utc": "2026-11-20T14:12Z",
      "verdict": "risky: not shown to be gas-tight",
      "risks": "Same class as McMaster 9960K51 (27 cfm, 1/8 hp): ~10x the flow needed, and gas-tightness of the shaft seal is not stated, so argon loss and O2 ingress are unknown",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "risk": "Used regenerative blowers aren't shown to be gas-tight (cost-scenarios.md).",
@@ -1974,7 +2076,22 @@
      "fetched_utc": "2026-11-20T14:10Z",
      "verdict": "sensible with checks (returnable)",
      "risks": "400 W single-mode, inside the 300-500 W band. Cooling, hours and fibre termination not stated. '-EOS' is an OEM variant built for EOS LPBF machines: give IPG the serial and ask whether it runs stand-alone (interface, interlock input, guide laser) and whether it has back-reflection protection. Test inside the 30 days: power vs set point into a dump, status registers, fibre end",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 2099.99,
+      "shipping": "Freight - Check the item description or Contact the seller for details",
+      "delivery_to_provo": "Varies",
+      "days": [
+       3,
+       8
+      ],
+      "returns": "30 days returns. Seller pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:05Z",
+      "notes": "or Best Offer; days are an LTL-freight estimate (the listing gives no date)",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -1993,7 +2110,22 @@
      "fetched_utc": "2026-11-20T14:09Z",
      "verdict": "risky (no returns), but the closest used match to the quote",
      "risks": "Same power, mode and cooling as the quoted YLR-500-U3-SM-AC, so no chiller. Only power-on tested and no returns: a dead pump diode or fibre is the buyer's loss. Ask for the serial and a power-test video before paying; ask IPG about service on an imported unit",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 4999.9,
+      "shipping": "US $1,953.00 delivery in 2 days",
+      "delivery_to_provo": "Get it by Sat Nov 28",
+      "days": [
+       3,
+       3
+      ],
+      "returns": "Seller does not accept returns.",
+      "fetched_utc": "2026-11-25T06:07Z",
+      "notes": "import: customs and FDA laser-product paperwork not included",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     },
     {
      "title": "IPG LASER YLR-400-SM-EOS SINGLE - MODE FIBER LASER 400W M6861",
@@ -2010,7 +2142,19 @@
      "fetched_utc": "2026-11-20T14:14Z",
      "verdict": "risky: buy only with an IPG repair quote in hand",
      "risks": "The delivery fibre was cut. A single-mode output fibre has to be re-spliced or replaced and re-terminated by IPG; that repair is not quoted, so the $1,300 price is not the price of a working laser",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1299.99,
+      "shipping": "Freight - Check the item description or Contact the seller for details",
+      "delivery_to_provo": "Varies",
+      "days": null,
+      "returns": "30 days returns. Seller pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:05Z",
+      "notes": "2 available; the cut-fibre unit (cost-scenarios.md section 1)",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     },
     {
      "title": "IPG Photonics YLR-400-WC 400W CW Fiber Laser - 1070nm (2019) Accepting Offers (three listed: 2017, 2019, 2017)",
@@ -2027,7 +2171,9 @@
      "fetched_utc": "2026-11-20T14:19Z",
      "verdict": "sensible with checks (returnable) once IPG confirms single-mode from the serial",
      "risks": "New since PR 270. Mode not in the title (IPG names multimode units -MM, so ask). Water-cooled. Returnable, so a fallback if M6860 fails its checks",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "risk": "Try the $2,099.99 YLR-400-SM-EOS (US dealer, 'mint condition, all warranty seals in place', 30-day returns, seller pays return shipping) first, and test it inside the 30 days. The $1,299.99 unit from the same dealer has a cut fibre ('Laser cable was cut'): an IPG repair, not a $1.3k laser. The Korean YLR-500-AC takes no returns. No listing states hours, cooling or back-reflection protection: give IPG the serial number.",
@@ -2070,7 +2216,7 @@
      83,
      105
     ],
-    "lead_used": "same day + ~1 wk freight",
+    "lead_used": "ships same day; ~1 wk freight",
     "lead_used_days": [
      3,
      8
@@ -2103,7 +2249,22 @@
      "fetched_utc": "2026-11-19T19:59Z",
      "verdict": "sensible with checks (warranty)",
      "risks": "XY2-100 head; 1064 nm coating covers 1070 nm; rated to 1500 W per the listing. Needs its own DC supply. Check mirror coatings for burns",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1200.0,
+      "shipping": "Free Standard Shipping On All Domestic Orders",
+      "delivery_to_provo": "not dated",
+      "days": [
+       3,
+       8
+      ],
+      "returns": "(dealer's 30-day warranty per cost/used-options.csv; not re-read)",
+      "fetched_utc": "2026-11-25T06:16Z",
+      "notes": "the URL in cost/used-options.csv is cut short and returns 404; the dealer's search (https://www.nextdayautomation.com/search?q=hurryscan) still lists it at $1,200.00, and also 'Used Scanlab HurryScan 25 Laser ScanHead With Sill Optics 1064nm Lens F=163mm' at $1,500.00; days are a ground-shipping estimate",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -2122,7 +2283,22 @@
      "fetched_utc": "2026-11-20T14:15Z",
      "verdict": "sensible with checks (returnable)",
      "risks": "20 mm, 1080 nm fibre-laser coatings. The seller's spec text (1-2 kW CW) is not SCANLAB's datasheet: confirm the power rating and the interface (intelliSCAN heads may need SL2-100, which the RTC5 does not speak without the right option)",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1500.0,
+      "shipping": "US $27.71 FedEx Ground / FedEx Home Delivery",
+      "delivery_to_provo": "Estimated between Sat Nov 28 and Wed Dec 2",
+      "days": [
+       3,
+       7
+      ],
+      "returns": "30 days returns. Seller pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:06Z",
+      "notes": "or Best Offer; New - Open box",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "risk": "Check the head's protocol (XY2-100 vs SL2-100) against the card, and its mirrors' CW rating at 1070 nm. Used heads need their own DC supply (~$150, estimate).",
@@ -2141,12 +2317,12 @@
      "basis": "quote"
     },
     "used": {
-     "text": "eBay, US dealer (hurrySCAN 25 with a 30-day warranty) or open-box intelliSCAN III 20",
+     "text": "eBay (Used Scanlab hurryScan 25 YAG LASER Scan/Write H): 'not dated' to Provo, read 2026-11-25T06:16Z; (dealer's 30-day warranty per cost/used-options.csv; not re-read)",
      "days": [
       3,
       8
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": {
      "text": "Thorlabs QS20XY-Y1 ($5,893.56): 'Available: Today'",
@@ -2163,7 +2339,7 @@
     "used": "$1.4k",
     "lead_new": "quote; no published lead + BYU PO",
     "lead_new_days": null,
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "3-8 d (used, US)",
     "lead_used_days": [
      3,
      8
@@ -2314,6 +2490,40 @@
    "new_src": "Thorlabs FTH160-1064 $1,011.78 + 2 x FTHW75-1064 $122.03 (read 2026-11-22, bom.csv L6); high = a Sill lens qualified for 500 W CW ($2,500-6,000, quote)",
    "used": [
     {
+     "title": "Linos F-Theta Ronar 4401-288-000-20 Lens f=254mm 1064mm",
+     "condition": "Used",
+     "price": 599.99,
+     "shipping": 0.0,
+     "extra": null,
+     "extra_note": "",
+     "total": 539.99,
+     "location": "US",
+     "returns": "free returns (card)",
+     "seller_type": "eBay seller, 100 % positive (36.1K)",
+     "url": "https://www.ebay.com/itm/298724791756",
+     "fetched_utc": "2026-11-20T14:04Z",
+     "verdict": "sensible with checks (returnable)",
+     "risks": "Same lens from a larger seller; still a marking lens",
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 539.99,
+      "shipping": "Free UPS Ground",
+      "delivery_to_provo": "Estimated between Sat Nov 28 and Wed Dec 2",
+      "days": [
+       3,
+       7
+      ],
+      "returns": "30 days returns. Seller pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:11Z",
+      "notes": "or Best Offer; was $599.99 on 2026-11-20; 'Ships today if you order in the next 11 hrs'",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
+    }
+   ],
+   "used_alt": [
+    {
      "title": "LINOS F-THETA-RONAR 4401-288-000-20 1064NM F=254MM LENS GERMANY",
      "condition": "Used",
      "price": 99.99,
@@ -2328,30 +2538,23 @@
      "fetched_utc": "2026-11-20T14:04Z",
      "verdict": "sensible with checks (returnable)",
      "risks": "Marking lens: no CW rating (same caveat as the BOM's EKSMA and Thorlabs lenses). Inspect for coating burns; check the mount thread fits the head",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
-    }
-   ],
-   "used_alt": [
-    {
-     "title": "Linos F-Theta Ronar 4401-288-000-20 Lens f=254mm 1064mm",
-     "condition": "Used",
-     "price": 599.99,
-     "shipping": 0.0,
-     "extra": null,
-     "extra_note": "",
-     "total": 599.99,
-     "location": "US",
-     "returns": "free returns (card)",
-     "seller_type": "eBay seller, 100 % positive (36.1K)",
-     "url": "https://www.ebay.com/itm/298724791756",
-     "fetched_utc": "2026-11-20T14:04Z",
-     "verdict": "sensible with checks (returnable)",
-     "risks": "Same lens from a larger seller; still a marking lens",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": false,
+     "recheck": {
+      "status": "ended",
+      "price_now": null,
+      "shipping": "",
+      "delivery_to_provo": "",
+      "days": null,
+      "returns": "",
+      "fetched_utc": "2026-11-25T06:10Z",
+      "notes": "'This listing was ended by the seller on Mon, Nov 23 at 4:39 PM because the item is no longer available'; dropped from the used totals here",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "risk": "The used lenses are f = 254 mm marking lenses with no CW rating: the spot grows ~1.6x and the optics bridge moves up. Fine for early tracks; not the drawn lens.",
-   "used_best": 99.99,
+   "used_best": 539.99,
    "bom_line_new": [
     1255.84,
     2500.0
@@ -2372,28 +2575,28 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay, US (LINOS f = 254 mm, free returns)",
+     "text": "eBay (Linos F-Theta Ronar 4401-288-000-20 Lens f=254mm): 'Estimated between Sat Nov 28 and Wed Dec 2' to Provo, read 2026-11-25T06:11Z; 30 days returns. Seller pays for return shipping",
      "days": [
       3,
-      8
+      7
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
    "hud": {
     "name": "f-theta lens, f = 160 mm (Thorlabs FTH160-1064 + 2 windows)",
     "new": "$1.3k",
-    "used": "$100",
+    "used": "$540",
     "lead_new": "3-4 wk (overseas stock) + BYU PO",
     "lead_new_days": [
      33,
      47
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "3-7 d (used, US)",
     "lead_used_days": [
      3,
-     8
+     7
     ]
    }
   },
@@ -2475,7 +2678,22 @@
      "fetched_utc": "2026-11-20T14:04Z",
      "verdict": "sensible with checks",
      "risks": "Beam diameter, power rating and fibre connector not in the card; must match the laser's output termination",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 495.0,
+      "shipping": "Free 2 day delivery",
+      "delivery_to_provo": "Get it by Sat Nov 28",
+      "days": [
+       3,
+       3
+      ],
+      "returns": "30 days returns. Buyer pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:13Z",
+      "notes": "or Best Offer",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [],
@@ -2501,12 +2719,12 @@
      "basis": "quote"
     },
     "used": {
-     "text": "the used laser's own output optics, or the eBay IPG collimator (US)",
+     "text": "eBay (IPG PHOTONICS P30-001277 LASER COLLIMATOR): 'Get it by Sat Nov 28' to Provo, read 2026-11-25T06:13Z; 30 days returns. Buyer pays for return shipping",
      "days": [
       3,
-      8
+      3
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
@@ -2519,10 +2737,10 @@
      83,
      105
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "3 d (used, US)",
     "lead_used_days": [
      3,
-     8
+     3
     ]
    }
   },
@@ -2592,7 +2810,22 @@
      "fetched_utc": "2026-11-20T14:10Z",
      "verdict": "sensible with checks (returnable)",
      "risks": "XY2-100 (and SL2-100 only with the right board option: check). Ask SCANLAB whether a second-hand card can register for the RTC5 DLL and updates. Skywriting and laser delays are RTC5 features",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1499.99,
+      "shipping": "US $20.56 delivery in 2-4 days",
+      "delivery_to_provo": "Get it between Sat Nov 28 and Tue Dec 1",
+      "days": [
+       3,
+       6
+      ],
+      "returns": "30 days returns. Buyer pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:10Z",
+      "notes": "or Best Offer; '1 sold' on the page (two earlier reads got eBay's error page)",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -2611,7 +2844,9 @@
      "fetched_utc": "2026-11-20T14:12Z",
      "verdict": "sensible with checks",
      "risks": "Newer card; small seller",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "risk": "The used card is an RTC5 (PCIe), tested by the seller on an IPG YLR; it needs a Windows PC with a PCIe slot (C2 at its $600 end) and SCANLAB's driver and DLL: ask SCANLAB whether a second-hand card can register.",
@@ -2630,12 +2865,12 @@
      "basis": "quote"
     },
     "used": {
-     "text": "eBay, US (RTC5 PCIe): the listing gave delivery to Provo on Nov 23-25 when read on Nov 20",
+     "text": "eBay (Scanlab RTC5 PCIe Control Card with 3D-Option, 2): 'Get it between Sat Nov 28 and Tue Dec 1' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
      "days": [
       3,
-      5
+      6
      ],
-     "source": "cost-scenarios.md section 4"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
@@ -2645,10 +2880,10 @@
     "used": "$1.5k",
     "lead_new": "quote; no published lead + BYU PO",
     "lead_new_days": null,
-    "lead_used": "3-5 d",
+    "lead_used": "3-6 d (used, US)",
     "lead_used_days": [
      3,
-     5
+     6
     ]
    }
   },
@@ -2822,7 +3057,22 @@
      "fetched_utc": "2026-11-20T14:12Z",
      "verdict": "sensible (not in the BOM)",
      "risks": "The BOM has no UPS line. If one is added for the supervisor, controls and scan card (not the laser), a refurbished unit with new batteries is a sensible used buy",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 449.99,
+      "shipping": "Free UPS Ground",
+      "delivery_to_provo": "Estimated between Sat Nov 28 and Wed Dec 2",
+      "days": [
+       3,
+       7
+      ],
+      "returns": "Seller does not accept returns.",
+      "fetched_utc": "2026-11-25T06:12Z",
+      "notes": "refurbished by a UPS refurbisher",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [],
@@ -2848,12 +3098,12 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay, US UPS refurbisher (APC SMX1500RM2U)",
+     "text": "eBay (APC SmartUPS X 1500VA LCD Rack Tower UPS (SMX150): 'Estimated between Sat Nov 28 and Wed Dec 2' to Provo, read 2026-11-25T06:12Z; Seller does not accept returns",
      "days": [
       3,
-      8
+      7
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
@@ -2866,10 +3116,10 @@
      22,
      32
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "3-7 d (used, US)",
     "lead_used_days": [
      3,
-     8
+     7
     ]
    }
   },
@@ -3056,7 +3306,9 @@
      "fetched_utc": "2026-11-20T14:13Z",
      "verdict": "not cheaper",
      "risks": "Used inert gloveboxes ($3,000-7,875) are more capable but not cheaper than the McMaster boxes; purifier condition unknown",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "cheaper": "Cleatech 2100-2 with airlock, $2,135 at Lab Supply Network (acrylic; cost/cheaper-equivalents.csv)",
@@ -3179,7 +3431,22 @@
      "fetched_utc": "2026-11-20T14:18Z",
      "verdict": "sensible with checks",
      "risks": "1.5 kW thermal head covers 500 W (the BOM's low, Thorlabs S322C, stops at 200 W). Calibration certificate will be out of date: send to Ophir",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": null,
+      "shipping": "US $45.00 eBay SpeedPAK Standard",
+      "delivery_to_provo": "Estimated between Thu Dec 3 and Tue Dec 15",
+      "days": [
+       8,
+       20
+      ],
+      "returns": "Seller does not accept returns.",
+      "fetched_utc": "2026-11-25T06:12Z",
+      "notes": "the head only, still $454.00 or Best Offer; the Nova II meter ($1,279.99, US) was not re-read, so the pick's $1,733.99 stands (price_usd_now left blank)",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [],
@@ -3199,12 +3466,12 @@
      "basis": "quote"
     },
     "used": {
-     "text": "eBay: Ophir L1500W head from China (7-20 days, estimate) + Nova II meter (US)",
+     "text": "eBay (Ophir P/N 774208A, L1500W-LP1-UA-.003-Y Power/En): 'Estimated between Thu Dec 3 and Tue Dec 15' to Provo, read 2026-11-25T06:12Z; Seller does not accept returns",
      "days": [
-      7,
+      8,
       20
      ],
-     "source": "cost/used-options.csv; the China leg is an estimate"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
@@ -3216,7 +3483,7 @@
     "lead_new_days": null,
     "lead_used": "1-3 wk (head from China)",
     "lead_used_days": [
-     7,
+     8,
      20
     ]
    }
@@ -3425,28 +3692,28 @@
     161154.6
    ],
    "used": [
-    67762.16,
-    117519.24
+    68202.16,
+    117459.24
    ],
    "cheaper": [
     72751.32,
     155511.56
    ],
    "both": [
-    64375.78,
-    112077.19
+    64815.78,
+    112017.19
    ]
   },
   "at_spec": {
    "new": 115593.85,
    "used": [
-    69894.44,
-    75620.06
+    70334.44,
+    75560.06
    ],
    "cw_chain_new": 44355.0,
    "cw_chain_used": [
-    5520.32,
-    11245.94
+    5960.32,
+    11185.94
    ]
   },
   "cost_scenarios_py_as_is": {
@@ -3496,8 +3763,8 @@
    },
    {
     "key": "L6:lens",
-    "change": "base 486.0/2500.0 -> 1011.78/2500.0",
-    "why": "L6's low end is now the Thorlabs FTH160-1064 ($1,011.78; its two spare windows stay), not a $486 lens"
+    "change": "low pick dropped: LINOS F-THETA-RONAR 4401-288-000-20 1064NM F=254MM LENS GERM",
+    "why": "ended on 2026-11-25 ('This listing was ended by the seller on Mon, Nov 23 at 4:39 PM because the item is no longer available'; dropped from the used totals here)"
    },
    {
     "key": "G2:4396K21",
@@ -3928,7 +4195,7 @@
      3,
      8
     ],
-    "short_used": "same day + ~1 wk freight",
+    "short_used": "ships same day; ~1 wk freight",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -3979,17 +4246,17 @@
      91
     ],
     "short_new": "with the laser + BYU PO",
-    "used_text": "the used laser's own output optics, or the eBay IPG collimator (US)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (IPG PHOTONICS P30-001277 LASER COLLIMATOR): 'Get it by Sat Nov 28' to Provo, read 2026-11-25T06:13Z; 30 days returns. Buyer pays for return shipping",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
      3,
-     8
+     3
     ],
     "days_used_route": [
      3,
-     8
+     3
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "3 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -4025,8 +4292,8 @@
     "days_new": null,
     "days_new_vendor": null,
     "short_new": "quote; no published lead + BYU PO",
-    "used_text": "eBay, US dealer (hurrySCAN 25 with a 30-day warranty) or open-box intelliSCAN III 20",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (Used Scanlab hurryScan 25 YAG LASER Scan/Write H): 'not dated' to Provo, read 2026-11-25T06:16Z; (dealer's 30-day warranty per cost/used-options.csv; not re-read)",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
      3,
      8
@@ -4035,7 +4302,7 @@
      3,
      8
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "3-8 d (used, US)",
     "alt_text": "Thorlabs QS20XY-Y1 ($5,893.56): 'Available: Today'",
     "alt_source": "leadtime-lookups.csv L5-QS20XY (thorlabs.com via the lab Pi, 2026-11-25T05:45Z)",
     "days_alt": [
@@ -4060,17 +4327,17 @@
      33
     ],
     "short_new": "3-4 wk (overseas stock) + BYU PO",
-    "used_text": "eBay, US (LINOS f = 254 mm, free returns)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (Linos F-Theta Ronar 4401-288-000-20 Lens f=254mm): 'Estimated between Sat Nov 28 and Wed Dec 2' to Provo, read 2026-11-25T06:11Z; 30 days returns. Seller pays for return shipping",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
      3,
-     8
+     7
     ],
     "days_used_route": [
      3,
-     8
+     7
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "3-7 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -4115,17 +4382,17 @@
     "days_new": null,
     "days_new_vendor": null,
     "short_new": "quote; no published lead + BYU PO",
-    "used_text": "eBay, US (RTC5 PCIe): the listing gave delivery to Provo on Nov 23-25 when read on Nov 20",
-    "used_source": "cost-scenarios.md section 4",
+    "used_text": "eBay (Scanlab RTC5 PCIe Control Card with 3D-Option, 2): 'Get it between Sat Nov 28 and Tue Dec 1' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
      3,
-     5
+     6
     ],
     "days_used_route": [
      3,
-     5
+     6
     ],
-    "short_used": "3-5 d",
+    "short_used": "3-6 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -4312,17 +4579,17 @@
      10
     ],
     "short_new": "ships in 3 d",
-    "used_text": "eBay open box (US)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (Teknic, CPM-SDSK-2310S-RQN, ClearPath Servo Moto): 'Estimated between Mon Nov 30 and Fri Dec 4' to Provo, read 2026-11-25T06:13Z; Seller does not accept returns",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
-     3,
-     8
+     5,
+     9
     ],
     "days_used_route": [
-     3,
-     8
+     5,
+     9
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "5-9 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -4480,17 +4747,17 @@
      6
     ],
     "short_new": "ships same day + BYU PO",
-    "used_text": "eBay, US (Agilent IDP-3)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (Agilent Technologies IDP3 Dry Scroll Vacuum Pump): 'Estimated between Mon Nov 30 and Sat Dec 5' to Provo, read 2026-11-25T06:06Z; Seller does not accept returns",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
-     3,
-     8
+     5,
+     10
     ],
     "days_used_route": [
-     3,
-     8
+     5,
+     10
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "5-10 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -4590,17 +4857,17 @@
      61
     ],
     "short_new": "6-8 wk",
-    "used_text": "eBay, US (Alpha Omega Series 3000 or Teledyne 3190) plus a new sensor cell (cell lead not checked)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (ALPHA OMEGA,SERIES 3000,TRACE OXYGEN ANALYZER): 'Estimated between Mon Nov 30 and Thu Dec 3' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
-     3,
+     5,
      8
     ],
     "days_used_route": [
-     3,
+     5,
      8
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "5-8 d (used, US)",
     "alt_text": "SST OXY-FLEX-0-H: 6 in stock at Digi-Key (8 weeks after that); may be a percent-level sensor",
     "alt_source": "leadtime-lookups.csv G6-oxyflex",
     "days_alt": [
@@ -4683,17 +4950,17 @@
      19
     ],
     "short_new": "2 wk (made to order)",
-    "used_text": "eBay, US (Atlas Copco open box or Michell refurbished)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (Atlas Copco P1624896681 class 1 -6 Dew Point Sen): 'Estimated between Mon Nov 30 and Thu Dec 3' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
-     3,
+     5,
      8
     ],
     "days_used_route": [
-     3,
+     5,
      8
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "5-8 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -5080,14 +5347,14 @@
     "days_new": null,
     "days_new_vendor": null,
     "short_new": "contact sales",
-    "used_text": "eBay: Ophir L1500W head from China (7-20 days, estimate) + Nova II meter (US)",
-    "used_source": "cost/used-options.csv; the China leg is an estimate",
+    "used_text": "eBay (Ophir P/N 774208A, L1500W-LP1-UA-.003-Y Power/En): 'Estimated between Thu Dec 3 and Tue Dec 15' to Provo, read 2026-11-25T06:12Z; Seller does not accept returns",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
-     7,
+     8,
      20
     ],
     "days_used_route": [
-     7,
+     8,
      20
     ],
     "short_used": "1-3 wk (head from China)",
@@ -5494,17 +5761,17 @@
      32
     ],
     "short_new": "backordered (~3-4 wk)",
-    "used_text": "eBay, US UPS refurbisher (APC SMX1500RM2U)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (APC SmartUPS X 1500VA LCD Rack Tower UPS (SMX150): 'Estimated between Sat Nov 28 and Wed Dec 2' to Provo, read 2026-11-25T06:12Z; Seller does not accept returns",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
      3,
-     8
+     7
     ],
     "days_used_route": [
      3,
-     8
+     7
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "3-7 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -9059,10 +9326,10 @@
       2,
       10
      ],
-     "lead_used": "3-8 d (eBay, US)",
+     "lead_used": "5-9 d (used, US)",
      "lead_used_days": [
-      3,
-      8
+      5,
+      9
      ]
     }
    ]
@@ -9092,10 +9359,10 @@
       12,
       20
      ],
-     "lead_used": "3-8 d (eBay, US)",
+     "lead_used": "5-10 d (used, US)",
      "lead_used_days": [
-      3,
-      8
+      5,
+      10
      ]
     },
     {
@@ -9124,9 +9391,9 @@
       16,
       19
      ],
-     "lead_used": "3-8 d (eBay, US)",
+     "lead_used": "5-8 d (used, US)",
      "lead_used_days": [
-      3,
+      5,
       8
      ]
     },
@@ -9140,9 +9407,9 @@
       44,
       61
      ],
-     "lead_used": "3-8 d (eBay, US)",
+     "lead_used": "5-8 d (used, US)",
      "lead_used_days": [
-      3,
+      5,
       8
      ]
     },
@@ -9163,13 +9430,13 @@
    "on_table": true,
    "title": "Laser and optics",
    "new": "$42.7k",
-   "used": "$8.4k-$14.1k",
+   "used": "$8.9k-$14.1k",
    "run_new": "$66.7k",
-   "run_used": "$27.2k-$32.9k",
+   "run_used": "$27.7k-$32.9k",
    "range_new": "$9.4k-$48.0k",
-   "range_used": "$7.7k-$19.5k",
+   "range_used": "$8.1k-$19.4k",
    "lead_new": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
-   "lead_used": "3-8 d (L1: same day + ~1 wk freight)",
+   "lead_used": "3-8 d (L1: ships same day; ~1 wk freight)",
    "lead_new_as_chosen": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
    "lead_unknown": "L4 L5 T2",
    "items": [
@@ -9183,7 +9450,7 @@
       83,
       105
      ],
-     "lead_used": "same day + ~1 wk freight",
+     "lead_used": "ships same day; ~1 wk freight",
      "lead_used_days": [
       3,
       8
@@ -9196,7 +9463,7 @@
      "used": "$1.4k",
      "lead_new": "quote; no published lead + BYU PO",
      "lead_new_days": null,
-     "lead_used": "3-8 d (eBay, US)",
+     "lead_used": "3-8 d (used, US)",
      "lead_used_days": [
       3,
       8
@@ -9242,16 +9509,16 @@
      "id": "L6",
      "name": "f-theta lens, f = 160 mm (Thorlabs FTH160-1064 + 2 windows)",
      "new": "$1.3k",
-     "used": "$100",
+     "used": "$540",
      "lead_new": "3-4 wk (overseas stock) + BYU PO",
      "lead_new_days": [
       33,
       47
      ],
-     "lead_used": "3-8 d (eBay, US)",
+     "lead_used": "3-7 d (used, US)",
      "lead_used_days": [
       3,
-      8
+      7
      ]
     },
     {
@@ -9280,10 +9547,10 @@
       83,
       105
      ],
-     "lead_used": "3-8 d (eBay, US)",
+     "lead_used": "3 d (used, US)",
      "lead_used_days": [
       3,
-      8
+      3
      ]
     }
    ]
@@ -9295,7 +9562,7 @@
    "new": "$27.9k",
    "used": "$22.6k",
    "run_new": "$94.5k",
-   "run_used": "$49.8k-$55.6k",
+   "run_used": "$50.3k-$55.5k",
    "range_new": "$21.9k-$37.1k",
    "range_used": "$21.2k-$30.4k",
    "lead_new": "3-5 wk (D2: backordered (~3-4 wk))",
@@ -9320,10 +9587,10 @@
      "used": "$1.5k",
      "lead_new": "quote; no published lead + BYU PO",
      "lead_new_days": null,
-     "lead_used": "3-5 d",
+     "lead_used": "3-6 d (used, US)",
      "lead_used_days": [
       3,
-      5
+      6
      ]
     },
     {
@@ -9378,10 +9645,10 @@
       22,
       32
      ],
-     "lead_used": "3-8 d (eBay, US)",
+     "lead_used": "3-7 d (used, US)",
      "lead_used_days": [
       3,
-      8
+      7
      ]
     },
     {
@@ -9425,7 +9692,7 @@
    "new": "$661",
    "used": "$661",
    "run_new": "$95.2k",
-   "run_used": "$50.5k-$56.2k",
+   "run_used": "$50.9k-$56.2k",
    "range_new": "$661-$928",
    "range_used": "$661-$928",
    "lead_new": "12-20 d (G8: same or next day + BYU PO)",
@@ -9441,7 +9708,7 @@
    "new": "$689",
    "used": "$689",
    "run_new": "$95.9k",
-   "run_used": "$51.2k-$56.9k",
+   "run_used": "$51.6k-$56.9k",
    "range_new": "$689-$1.3k",
    "range_used": "$689-$1.3k",
    "lead_new": "2-3 wk (S9: 2-8 d + BYU PO)",
@@ -9474,7 +9741,7 @@
    "new": "$10.5k",
    "used": "$9.5k",
    "run_new": "$106.4k",
-   "run_used": "$60.7k-$66.4k",
+   "run_used": "$61.1k-$66.3k",
    "range_new": "$10.5k-$15.4k",
    "range_used": "$9.5k-$14.4k",
    "lead_new": "12-20 d (S6: 2-6 d + BYU PO)",
@@ -9523,7 +9790,7 @@
      "lead_new_days": null,
      "lead_used": "1-3 wk (head from China)",
      "lead_used_days": [
-      7,
+      8,
       20
      ]
     },
@@ -9562,7 +9829,7 @@
    "new": "$9.2k",
    "used": "$9.2k",
    "run_new": "$115.6k",
-   "run_used": "$69.9k-$75.6k",
+   "run_used": "$70.3k-$75.6k",
    "range_new": "$9.2k-$24.8k",
    "range_used": "$9.2k-$24.8k",
    "lead_new": "SendCutSend 5-15 d; BYU shop queue 7.6 wk (outsourcing split) to 16.4 wk (all in house); honing loop 3-6 wk (estimate)",
@@ -9609,12 +9876,12 @@
   "cost_at_spec": {
    "new": 115593.85,
    "used": [
-    69894.44,
-    75620.06
+    70334.44,
+    75560.06
    ],
    "saving": [
-    39973.79,
-    45699.41
+    40033.79,
+    45259.41
    ]
   },
   "cost_bom_range": {
@@ -9623,23 +9890,23 @@
     161154.6
    ],
    "used": [
-    67762.16,
-    117519.24
+    68202.16,
+    117459.24
    ],
    "cheaper": [
     72751.32,
     155511.56
    ],
    "both": [
-    64375.78,
-    112077.19
+    64815.78,
+    112017.19
    ]
   },
   "cw_chain": {
    "new": 44355.0,
    "used": [
-    5520.32,
-    11245.94
+    5960.32,
+    11185.94
    ]
   },
   "weeks": {

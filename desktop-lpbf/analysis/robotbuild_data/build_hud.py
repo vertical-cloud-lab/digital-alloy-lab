@@ -173,12 +173,47 @@ def used_cost(r):
     return sum(num(r[k]) or 0.0 for k in ("price_usd", "shipping_usd", "extra_usd"))
 
 
+RECHECK_CSV = HERE / "ebay-recheck.csv"   # the used picks re-read on 2026-11-25 (ebay_recheck.py, fetch_pages.py)
+
+
+def recheck_for(url):
+    """The 2026-11-25 re-read of a used listing (matched on its eBay item number or URL), or None."""
+    if not RECHECK_CSV.exists():
+        return None
+    m = re.search(r"/itm/(\d+)", url or "")
+    for r in csv.DictReader(open(RECHECK_CSV)):
+        if (m and r["ebay_item"] == m.group(1)) or (not m and r["ebay_item"] == "(dealer site)" and
+                                                     r["replaces"] in ("L5:head",) and "nextdayautomation" in (url or "")):
+            return r
+    return None
+
+
+def live(r):
+    rc = recheck_for(r["url"])
+    return not rc or rc["status_2026_11_25"] == "still listed"
+
+
+def used_cost(r):  # noqa: F811  (re-defined: the 2026-11-25 price where the listing was re-read)
+    rc = recheck_for(r["url"])
+    price = num(rc["price_usd_now"]) if rc and num(rc["price_usd_now"]) is not None else num(r["price_usd"])
+    return (price or 0.0) + (num(r["shipping_usd"]) or 0.0) + (num(r["extra_usd"]) or 0.0)
+
+
 def read_used_rebased():
-    """Like cost_scenarios.read_used(), with USED_REBASE applied and USED_EXTRA added. Returns (components, notes)."""
+    """Like cost_scenarios.read_used(), with USED_REBASE applied, USED_EXTRA added and the listings that ended by
+    2026-11-25 dropped (ebay-recheck.csv; the other end's pick then covers both ends). Returns (components, notes)."""
     comp, notes = {}, []
+    dropped_low = set()
     for r in USED_ROWS:
         pick, key = r["pick"].strip(), r["replaces"]
         if not pick or not key:
+            continue
+        if not live(r):
+            rc = recheck_for(r["url"])
+            notes.append(dict(key=key, change=f"{pick} pick dropped: {r['item_as_listed'][:60]}",
+                              why=f"{rc['status_2026_11_25']} on 2026-11-25 ({rc['notes'][:160]})"))
+            if "low" in pick:
+                dropped_low.add(key)
             continue
         fix = USED_REBASE.get(key, {})
         if fix.get("drop"):
@@ -194,6 +229,10 @@ def read_used_rebased():
         if fix and key not in [n["key"] for n in notes]:
             notes.append(dict(key=key, change=f"base {num(r['base_low_usd'])}/{num(r['base_high_usd'])} -> {base[0]}/{base[1]}"
                               + (", applied at both ends" if fix.get("both") else ""), why=fix["why"]))
+    for key in dropped_low:  # the remaining (high) pick covers the low end too
+        c = comp.get(key)
+        if c and c["low"] is None and c["high"] is not None:
+            c["low"] = c["high"]
     for x in USED_EXTRA:
         r = next(r for r in USED_ROWS if x["match"] in r["item_as_listed"])
         cost = used_cost(r)
@@ -262,11 +301,19 @@ def at_spec(lines, sc_new, sc_used, used):
 def used_row(match):
     r = next(r for r in USED_ROWS if match in r["item_as_listed"] or match in r["url"])
     cond = r["condition"]
+    rc = recheck_for(r["url"])
     return dict(title=r["item_as_listed"], condition=cond, price=num(r["price_usd"]), shipping=num(r["shipping_usd"]),
                 extra=num(r["extra_usd"]), extra_note=r["extra_note"], total=round(used_cost(r), 2),
                 location=r["location"], returns=r["returns_warranty"], seller_type=r["seller_type"], url=r["url"],
                 fetched_utc=r["fetched_utc"], verdict=r["verdict"], risks=r["checks_and_risks"],
-                source="cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)")
+                source="cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+                live=live(r),
+                recheck=(dict(status=rc["status_2026_11_25"], price_now=num(rc["price_usd_now"]),
+                              shipping=rc["shipping_as_listed"], delivery_to_provo=rc["delivery_to_84602_as_listed"],
+                              days=[int(rc["days_to_provo_low"]), int(rc["days_to_provo_high"])]
+                              if rc["days_to_provo_low"] else None,
+                              returns=rc["returns_as_listed"], fetched_utc=rc["fetched_utc"], notes=rc["notes"],
+                              source="analysis/robotbuild_data/ebay-recheck.csv") if rc else None))
 
 
 # kind: item = one purchasable unit; bundle = a BOM line of many parts. new_drawn = the part the model draws, new.
@@ -696,8 +743,14 @@ def main():
     items = []
     for it in ITEMS:
         x = dict(it)
-        x["used"] = [used_row(m) for m in it["used"]]
-        x["used_alt"] = [used_row(m) for m in it["used_alt"]]
+        # listings still up on 2026-11-25 first: an ended pick moves to used_alt, and the next live listing leads
+        primary = [used_row(m) for m in it["used"]]
+        alts = [used_row(m) for m in it["used_alt"]]
+        lead_u = [u for u in primary if u["live"]]
+        if primary and not lead_u:  # every pick ended: the next live alternative takes over
+            lead_u = [u for u in alts if u["live"]][:1]
+        x["used"] = lead_u
+        x["used_alt"] = [u for u in primary + alts if u not in lead_u]
         x["used_best"] = x["used"][0]["total"] if x["used"] else None
         x["bom_line_new"] = [round(lines[it["line"]]["low"], 2), round(lines[it["line"]]["high"], 2)]
         x["lead"] = lead_of(it["line"])
