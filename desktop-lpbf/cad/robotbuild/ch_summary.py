@@ -534,9 +534,9 @@ def main():
         "tool changes and docking; a person's time is an estimate per step (hud.json times.assembly)", 9.0)
     R = (route or {}).get("routes") or {}
     if all(k in R for k in ("b_cn", "c_cn", "d")):
-        cap = (f"By route: all outsourced costs least (\u0024{R['b_cn']['total_usd_at_65'][0] / 1000:.0f}k), the hybrid is "
-               f"recommended (\u0024{R['c_cn']['total_usd_at_65'][0] / 1000:.0f}k, {R['c_cn']['labour_h']:.0f} h at BYU), "
-               "the robot shop costs most for one machine")
+        cap = (f"Routes: outsourced costs least (\u0024{R['b_cn']['total_usd_at_65'][0] / 1000:.0f}k), the hybrid is "
+               f"recommended (\u0024{R['c_cn']['total_usd_at_65'][0] / 1000:.0f}k, {R['c_cn']['labour_h']:.0f} BYU hours), "
+               "the robot shop costs most")
     else:
         cap = "Time and cost by route: in-house, outsourced, hybrid, robot shop"
     run(lambda u: slide_routes(u, route), cap, "BYU hours, cost (labour at $65/h) and weeks to the first leak test for "
@@ -549,8 +549,8 @@ def main():
         "Each failed step goes to a redesign (a part, a fixture or a tool) or to a person (assembly and shop summaries)",
         8.0)
     run(slide_edison, "Edison's estimate: for one machine, setting up the robot cell costs more than the build",
-        "Commissioning 1,230-2,470 person-hours (end-effectors, ~90 assembly programs, vision, safety, debugging) against "
-        "140-340; 20-40 weeks against 10-20; break-even only over 5-10 machines (edison/r7-robot-build-review, section 5)",
+        "Commissioning: 1,230-2,470 person-hours (end-effectors, ~90 assembly programs, vision, safety, debugging) vs "
+        "140-340 by hand; it pays back over 5-10 machines",
         11.0)
     run(slide_closing, "A feasibility study, not a business case",
         "The robots' part of this build is a testbed for skills that pay off if the lab builds more machines", 9.0)

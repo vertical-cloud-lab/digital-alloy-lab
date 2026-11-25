@@ -491,7 +491,7 @@ def write_meta():
             cap = "Every part of one machine, as it arrives, on 12 m of table"
             if t_in < 3.5:
                 sub = "Machined parts are still stock blanks; parts over the UR12e's 12.5 kg wait on pallets for a " \
-                      "person and a lift. " + src_note
+                      "person and a lift"
             else:
                 sub = "On the right: the running cost (new at spec against used where a sensible listing exists) and " \
                       "every order's lead time in weeks, the longest first"
@@ -506,13 +506,13 @@ def write_meta():
             cost = dict(cat=c["title"].split(":")[0], cat_no=ci + 1, n_cats=n_cats, new=new_of(c), used=used_of(c),
                         run_new=rn, run_used=ru, items=items_of(cat, hid), foot=foot)
             if ph == "cat":
-                cap = c["title"]
+                cap = min((c["title"], CAT_TITLE.get(cat, c["title"])), key=len)     # the shorter fits the bar
                 sub = _cat_sub(c, at_spec)
                 lead["highlight"] = [big[i]["short"] for i in (c.get("items") or []) if i in big]
             else:
                 b = big.get(hid)
                 if b is None:
-                    cap, sub = c["title"], _cat_sub(c, at_spec)
+                    cap, sub = min((c["title"], CAT_TITLE.get(cat, c["title"])), key=len), _cat_sub(c, at_spec)
                 else:
                     cap = _item_caption(b, item_new(b))
                     sub = _item_sub(b)
