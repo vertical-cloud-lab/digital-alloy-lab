@@ -82,7 +82,7 @@ PHOTOS = {
 RECT_ONLY = {"nxds_brochure_p1"}
 # per-photo cut (photo px polygon set to background): McMaster's 3861N11 image shows the coiled 36 in. lead, which the builder
 # does not draw; everything left of the cable gland is cut
-CUTS = {"mcm_3861N11": [(0, 0), (452, 0), (452, 297), (0, 297)]}
+CUTS = {"mcm_3861N11": [(0, 0), (497, 0), (325, 297), (0, 297)]}   # a line square to the axis through the gland end (443, 94)
 
 METALLIC = {"bare_metal": 1.0, "anodised": 0.5, "paint": 0.0, "plastic": 0.0, "rubber": 0.0, "lcd": 0.0, "printed": 0.0}
 
