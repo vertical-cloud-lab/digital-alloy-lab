@@ -365,9 +365,15 @@ def person_lift(w, scn, vf4, name, load_name, load_spec, P_from, P_to, kg, capti
     g_from, g_to = grip_point(P_from), grip_point(P_to)
     lift_z = max(g_from[2], g_to[2]) + 130.0
     door_y = -260.0                                         # in front of the doors, while it swings round
+    inside_from, inside_to = g_from[1] > 0.0, g_to[1] > 0.0
+    if inside_from and inside_to:                           # from fixture to fixture: stay inside, lifted, then across
+        mid = np.array([(g_from[0] + g_to[0]) / 2, min(g_from[1], g_to[1]) - 60.0, lift_z])
+    elif inside_from:                                       # out of the machine: straight out through the doors first
+        mid = np.array([g_from[0], door_y, lift_z])
+    else:                                                   # into the machine: line up in front of the doors, then in
+        mid = np.array([g_to[0], door_y, lift_z])
     keys = [(0.00, g_from + [0, 0, 260.0]), (0.12, g_from), (0.20, g_from), (0.34, np.r_[g_from[:2], lift_z]),
-            (0.58, np.array([g_to[0] - 250.0, door_y, lift_z])), (0.80, np.r_[g_to[:2], lift_z]), (0.90, g_to),
-            (0.95, g_to), (1.00, g_to + [0, 0, 220.0])]
+            (0.58, mid), (0.80, np.r_[g_to[:2], lift_z]), (0.90, g_to), (0.95, g_to), (1.00, g_to + [0, 0, 220.0])]
     hold_s = (0.20, 0.90)
     n = n_frames or int(24 * FPS)
     poses = []
