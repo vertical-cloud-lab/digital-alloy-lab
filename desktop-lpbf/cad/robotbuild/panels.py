@@ -254,8 +254,8 @@ def cost_panel(d, cost, scale, y0=72):
             _bar(d, bx, y + 2, bw, 13, r[0] / scale, r[1] / scale, col)
             d.text((bx + bw + 6, y), money_range(cost.get(key)), font=f, fill=INK)
         y += 22
-    d.text((x0 + 10, y), "solid: low end, tint: up to the high end; used = eBay and surplus where sensible",
-           font=font(9), fill=INK3)
+    d.text((x0 + 10, y), fit(d, cost.get("foot") or "solid: low end, tint: up to the high end; used = eBay and "
+                             "surplus where sensible", font(9), w - 20), font=font(9), fill=INK3)
     y += 18
     d.line([(x0 + 10, y), (x0 + w - 10, y)], fill=RULE, width=1)
     y += 6

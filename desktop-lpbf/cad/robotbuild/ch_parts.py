@@ -59,8 +59,15 @@ BIG = [
     ("pump", "Dry scroll pump", ["G2"], "Dry scroll vacuum pump"),
     ("o2", "Trace O2 analyzer", ["G6", "G9"], "Trace O2 analyzer + dew-point sensor"),
     ("blower", "Sealed side-channel blower", ["G4"], "Recirculation blower"),
-    ("guardswitch", "Guard-position switch IDEC", ["S2"], "Guard-position switch (IDEC HS6B-12B05)"),
     ("rackframe", "19 in. rack frame", ["S9"], "12U rack (22 kg), guard frame and panels"),
+]
+CW_CHAIN = ("L1", "L3", "L5", "L6", "C1")     # at spec, these are the specified parts (the BOM's high end)
+# the long leads, after the zones: what sets the date the parts are all in (hud.json headline and lead_times)
+LONG = [
+    ("guardswitch", "Guard-position switch IDEC", ["S2"], "IDEC HS6B guard-position switch"),
+    ("relay", "Power box PB1", ["H2"], "Omron K8DT plate-temperature relay (in the power box)"),
+    ("laserlead", "Fiber laser source", ["L1"], "Fiber laser (IPG YLR-500)"),
+    ("honing", "Build module M50", ["B1s"], "Build module: welded, bored and honed outside"),
 ]
 # BOM line -> the kit category its cost is shown under (provisional hud only; X1, the machining, is left out: the
 # robot shop makes those parts in chapters 30-32)
@@ -178,7 +185,9 @@ def adapt(raw):
         key = c.get("cat") or c.get("key")
         out["cats"].append(dict(key=key, title=c.get("title") or CAT_TITLE.get(key, key), new=_num_pair(c.get("new")),
                                 used=_num_pair(c.get("used")), bom=c.get("lines") or [], items=c.get("items") or [],
-                                on_table=c.get("on_table", key in CAT_ORDER)))
+                                on_table=c.get("on_table", key in CAT_ORDER),
+                                spec_new=_num_pair(c.get("spec_new")), spec_used=_num_pair(c.get("spec_used"))))
+    out["headline"] = raw.get("headline") or {}
     lt = raw.get("lead_times") or {}
     lines = lt.get("lines") or {}
     table = lt.get("table") or {}
@@ -202,7 +211,10 @@ def adapt(raw):
             lu, tu = _days_to_wk(row[1][1]), row[1][0]
         hudx = x.get("hud") or {}
         ub = x.get("used_best")
+        lo_, hi_ = x.get("new_low"), x.get("new_high")
+        spec = (hi_ if line in CW_CHAIN else lo_) if lo_ is not None else None
         out["big"].append(dict(key=iid, name=x.get("name") or iid, short=short(iid, x.get("name")), bom=[line],
+                               spec_new=None if spec is None else [float(spec), float(spec)],
                                cat=x.get("cat"), new=_num_pair([x.get("new_low"), x.get("new_high")]),
                                used=None if ub is None else [float(ub), float(ub)], used_label="used",
                                lead_new=ln, lead_used=lu, lead_note=hudx.get("lead_new") or tn,
@@ -341,6 +353,22 @@ def render():
             ch.frame(img, "", shot=dict(shot, u=round(i / max(1, n - 1), 3)), labels=labs, proc_s=0.0, no_clock=True)
         return cam1
 
+    def closeup(cam, s, label, shot, hold=3.0):
+        """Fly to a slot's item (a camera no other item hides, clear_view) and hold on it."""
+        bb = np.asarray(s["bbox"], float)
+        c = ((bb[0] + bb[1]) / 2, (bb[2] + bb[3]) / 2, (bb[4] + bb[5]) / 2)
+        size = max(bb[1] - bb[0], bb[3] - bb[2], bb[5] - bb[4])
+        d = max(1100.0, 3.2 * size)
+        prefs = [(AZ - 10.0, 30.0), (AZ - 10.0, 45.0), (AZ + 20.0, 35.0), (AZ - 40.0, 35.0), (AZ + 40.0, 40.0),
+                 (AZ - 70.0, 40.0), (0.0, 35.0), (-25.0, 40.0), (25.0, 40.0), (AZ - 10.0, 60.0)]
+        az_i, el_i = clear_view(c, slots, s, d, prefs)
+        near = view(c, d, az_i, el_i, shift=0.16)
+        lab = [(label.split(" (")[0], (c[0], c[1], bb[5]))]
+        cam = frames(int(1.6 * FPS), cam, near, shot, lab)
+        near2 = view(c, d * 0.93, az_i + 8.0, max(25.0, el_i - 2.0), shift=0.16)
+        frames(int(hold * FPS), near, near2, shot, lab)
+        return near2
+
     # the opening: the whole table from behind lane B
     c_open = view(((LT["x0"] + LT["x1"]) / 2, 400.0, 600.0), 11500.0, 200.0, 36.0, shift=0.12)
     cam = frames(int(2.5 * FPS), cam, c_open, dict(phase="open"))
@@ -361,22 +389,16 @@ def render():
             s = next((s for s in slots if match.lower() in s["name"].lower()), None)
             if s is None or s["category"] != cat:
                 continue
-            bb = np.asarray(s["bbox"], float)
-            c = ((bb[0] + bb[1]) / 2, (bb[2] + bb[3]) / 2, (bb[4] + bb[5]) / 2)
-            size = max(bb[1] - bb[0], bb[3] - bb[2], bb[5] - bb[4])
-            d = max(1100.0, 3.2 * size)
-            prefs = [(AZ - 10.0, 30.0), (AZ - 10.0, 45.0), (AZ + 20.0, 35.0), (AZ - 40.0, 35.0), (AZ + 40.0, 40.0),
-                     (AZ - 70.0, 40.0), (0.0, 35.0), (-25.0, 40.0), (25.0, 40.0), (AZ - 10.0, 60.0)]
-            az_i, el_i = clear_view(c, slots, s, d, prefs)
-            near = view(c, d, az_i, el_i, shift=0.16)
-            lab = [(label.split(" (")[0], (c[0], c[1], bb[5]))]
-            cam = frames(int(1.6 * FPS), cam, near, dict(phase="item", cat=cat, item=key), lab)
-            near2 = view(c, d * 0.93, az_i + 8.0, max(25.0, el_i - 2.0), shift=0.16)
-            cam = frames(int(3.0 * FPS), near, near2, dict(phase="item", cat=cat, item=key), lab)
-            cam = near2
+            cam = closeup(cam, s, label, dict(phase="item", cat=cat, item=key))
+    # the long leads: what sets the date
+    for key, match, ids, label in LONG:
+        s = next((s for s in slots if match.lower() in s["name"].lower()), None)
+        if s is None:
+            continue
+        cam = closeup(cam, s, label, dict(phase="long", item=key), hold=3.6)
     c_close = view(((LT["x0"] + LT["x1"]) / 2, 400.0, 600.0), 12500.0, 196.0, 40.0, shift=0.12)
     cam = frames(int(2.5 * FPS), cam, c_close, dict(phase="close"))
-    frames(int(6.0 * FPS), c_close, c_close, dict(phase="close"))
+    frames(int(8.0 * FPS), c_close, c_close, dict(phase="close"))
     ch.close()
     print(f"{NAME}: {ch.n} frames ({ch.n / FPS:.0f} s) in {time.time() - t0:.0f} s", flush=True)
 
@@ -395,37 +417,53 @@ def write_meta():
     common.DATA.mkdir(parents=True, exist_ok=True)
     (common.DATA / "hud_panel.json").write_text(json.dumps(dict(source=H["source"], lead=lead_rows), indent=1))
     prov = H["source"].startswith("provisional")
+    hl = H.get("headline") or {}
+    at_spec = any(c.get("spec_new") for c in H["cats"])
     src_note = "Provisional numbers (bom.csv, cost/used-options.csv; rough lead times)." if prov else \
-        "Prices: bom.csv and eBay / surplus listings; lead times: catalogue pages and quotes (hud.json)."
+        "Prices: bom.csv and eBay / surplus listings; lead times: catalogue pages and quotes, BYU's PO time included."
+    foot = ("at spec: the laser chain as specified, the cheapest listed option elsewhere; used: eBay, surplus"
+            if at_spec else "solid: low end, tint: up to the high end; used = eBay and surplus where sensible")
 
     def pair(v):
         return v if v is not None else [0.0, 0.0]
+
+    def new_of(c):
+        return c.get("spec_new") or c.get("new")
+
+    def used_of(c):
+        return c.get("spec_used") or c.get("used") or new_of(c)
 
     def running(keys, frac):
         """Running totals over categories `keys`, the last one counted in at `frac` (0-1)."""
         rn, ru = [0.0, 0.0], [0.0, 0.0]
         for k, c in enumerate(keys):
             f = frac if k == len(keys) - 1 else 1.0
-            un = pair(cats[c]["new"])
-            uu = pair(cats[c]["used"] or cats[c]["new"])
+            un, uu = pair(new_of(cats[c])), pair(used_of(cats[c]))
             rn = [rn[0] + f * un[0], rn[1] + f * un[1]]
             ru = [ru[0] + f * uu[0], ru[1] + f * uu[1]]
         return rn, ru
 
+    def item_new(b):
+        return b.get("spec_new") or b.get("new")
+
     def items_of(cat, hl_key=None):
         ids = cats[cat].get("items") or []
         its = [big[i] for i in ids if i in big]
-        its.sort(key=lambda b: -pair(b["new"])[1])
+        its.sort(key=lambda b: -pair(item_new(b))[1])
         if hl_key in big and big[hl_key] not in its:
             its.insert(0, big[hl_key])
         if hl_key:
             its.sort(key=lambda b: b["key"] != hl_key)
-        return [dict(name=b["name"], new=b["new"], used=b["used"], used_label=b.get("used_label", "used"),
+        return [dict(name=b["name"], new=item_new(b), used=b["used"], used_label=b.get("used_label", "used"),
                      lead_new=b["lead_new"], lead_used=b["lead_used"], hl=(b["key"] == hl_key)) for b in its[:4]]
 
-    big_of = {b[0]: b[2][0] for b in BIG}                    # 3-D close-up key -> hud item key (its BOM id)
+    def item_row(b, on=True):
+        return dict(name=b["name"], new=item_new(b), used=b["used"], used_label=b.get("used_label", "used"),
+                    lead_new=b["lead_new"], lead_used=b["lead_used"], hl=on)
+
+    big_of = {b[0]: b[2][0] for b in BIG + LONG}            # 3-D close-up key -> hud item key (its BOM id)
     lines = H.get("lines") or {}
-    for key, match, ids, label in BIG:                       # close-ups that are not hud items: a lead-time risk
+    for key, match, ids, label in BIG + LONG:               # close-ups that are not hud items: a lead-time risk
         i = ids[0]
         if i in big:
             continue
@@ -435,10 +473,12 @@ def write_meta():
             continue
         usd = float(risk["usd"]) if risk and risk.get("usd") else None
         big[i] = dict(key=i, name=(risk or {}).get("part") or label, short=ln.get("short") or short(i, label), bom=[i],
-                      cat=_cat_of(key), new=[usd, usd] if usd else None, used=None, used_label="used",
-                      lead_new=ln.get("new"), lead_used=ln.get("used"),
+                      cat=_cat_of(key), new=[usd, usd] if usd else None, spec_new=[usd, usd] if usd else None, used=None,
+                      used_label="used", lead_new=ln.get("new"), lead_used=ln.get("used"),
                       lead_note=(risk or {}).get("stated") or ln.get("short_new", ""),
                       used_note=(risk or {}).get("action") or "", note="")
+    wk = hl.get("weeks") or {}
+    tn, tu = running(order + extra, 1.0)
     out, seen = [], {}
     for m in rows:
         sh = m.get("shot") or {}
@@ -451,49 +491,89 @@ def write_meta():
             cap = "Every part of one machine, as it arrives, on 12 m of table"
             sub = "Machined parts are still stock blanks; parts over the UR12e's 12.5 kg wait on pallets for a person " \
                   "and a lift. " + src_note
-            cost = dict(cat="", n_cats=n_cats, run_new=[0, 0], run_used=[0, 0], items=[],
-                        note="new: catalogue and quotes; used: eBay and surplus, where sensible")
+            cost = dict(cat="", n_cats=n_cats, run_new=[0, 0], run_used=[0, 0], items=[], foot=foot,
+                        note="new at spec against used where a sensible listing exists" if at_spec else "")
         elif ph in ("cat", "item") and cat in cats:
             c = cats[cat]
             ci = order.index(cat)
             frac = min(1.0, t_in / 1.2) if ph == "cat" else 1.0
             rn, ru = running(order[:ci + 1], frac)
             hid = big_of.get(item) if item else None
-            cost = dict(cat=c["title"].split(":")[0], cat_no=ci + 1, n_cats=n_cats, new=c["new"], used=c["used"],
-                        run_new=rn, run_used=ru, items=items_of(cat, hid))
+            cost = dict(cat=c["title"].split(":")[0], cat_no=ci + 1, n_cats=n_cats, new=new_of(c), used=used_of(c),
+                        run_new=rn, run_used=ru, items=items_of(cat, hid), foot=foot)
             if ph == "cat":
                 cap = c["title"]
-                sub = _cat_sub(c)
+                sub = _cat_sub(c, at_spec)
                 lead["highlight"] = [big[i]["short"] for i in (c.get("items") or []) if i in big]
             else:
                 b = big.get(hid)
                 if b is None:
-                    cap, sub = c["title"], _cat_sub(c)
+                    cap, sub = c["title"], _cat_sub(c, at_spec)
                 else:
-                    cap = _item_caption(b)
+                    cap = _item_caption(b, item_new(b))
                     sub = _item_sub(b)
                     lead["highlight"] = [b["short"]]
-        else:                                                    # the close: what is not on the table, then the total
+        elif ph == "long":
+            hid = big_of.get(item)
+            b = big.get(hid)
+            cap, sub = _long_caption(item, b, H, wk)
+            cost = dict(cat="What sets the date the parts are in", n_cats=n_cats, cat_no=n_cats, new=tn, used=tu,
+                        run_new=tn, run_used=tu, items=[item_row(b)] if b and b.get("new") else [], foot=foot)
+            lead["highlight"] = [b["short"]] if b else []
+        else:                                                    # the close: what is not on the table, the totals, the date
             k = min(1.0, t_in / 1.5)
             keys = order + extra
             rn, ru = running(keys, k) if extra else running(order, 1.0)
-            tn, tu = running(keys, 1.0)
-            cost = dict(cat="The whole machine", cat_no=n_cats, n_cats=n_cats, new=tn, used=tu, run_new=rn,
-                        run_used=ru, items=[],
-                        note=("+ off the table and services: " + ", ".join(
-                            f"{cats[e]['title'].split(':')[0].lower()} {_m(cats[e]['new'])}" for e in extra)) if extra else "")
-            cap = f"The whole machine: {_m(tn)} all new, {_m(tu)} with used parts where it makes sense"
-            longest = lead_rows[0] if lead_rows else None
-            sub = "The new range runs from the cheapest listed option on every line to the premium one."
-            if longest and longest.get("new"):
-                sub = (f"Longest lead: {longest['name']}, {_wk(longest['new'])} new"
-                       + (f", {_wk(longest['used'])} used" if longest.get("used") else "") + ". " + sub)
+            bom = (hl.get("cost_bom_range") or {}).get("new") or (H.get("totals") or {}).get("new")
+            cost = dict(cat="The whole machine" + (" at spec" if at_spec else ""), cat_no=n_cats, n_cats=n_cats,
+                        new=tn, used=tu, run_new=rn, run_used=ru, items=[], foot=foot,
+                        note=(f"BOM range, cheapest to premium option on every line: new {_m(bom)}" if bom else ""))
+            if t_in < 4.0:
+                cap = f"The whole machine at spec: {_m(tn)} new, {_m(tu)} with used parts where it makes sense"
+                cw = hl.get("cw_chain") or {}
+                sub = ("Off the table and services included. " +
+                       (f"The laser, scan head, lens, collimator and scan card alone: {_m(cw.get('new'))} new, "
+                        f"{_m(cw.get('used'))} used" if cw else ""))
+            else:
+                nw, uw = wk.get("new") or {}, wk.get("used") or {}
+                if nw and uw:
+                    cap = (f"Ready to assemble: {_wk(nw.get('ready_split'))} bought new, {_wk(uw.get('ready_split'))} "
+                           "with the majors bought used")
+                    sub = (f"Bought new, the laser sets the date (all parts in {_wk(nw.get('parts'))}); bought used, the "
+                           f"fabrication does (parts in {_wk(uw.get('parts'))}). Assumes the two slow parts are swapped")
+                else:
+                    cap = "When the parts are in"
+                    sub = "See the lead-time panel"
             lead["highlight"] = [r["name"] for r in lead_rows if r.get("long")]
         nm = dict(m)
         nm.update(caption=cap, sub=sub, who=["supplier"], cost=cost, lead=lead, chapter=TITLE, proc_s=0.0, no_clock=True)
         out.append(nm)
     (d / "meta.jsonl").write_text("".join(json.dumps(x) + "\n" for x in out))
     print(f"{NAME}: meta for {len(out)} frames from {H['source']}", flush=True)
+
+
+def _long_caption(key, b, H, wk):
+    """The long-lead beat's caption and subtitle for one close-up."""
+    risks = {r.get("line"): r for r in H.get("risks") or []}
+    if key == "guardswitch":
+        r = risks.get("S2") or {}
+        cap = "The longest lead as chosen: a $123 guard-position switch, 27 weeks + the purchase order"
+        sub = ((r.get("stated") or "Digi-Key: not kept in stock; 27 weeks") + ". "
+               + (r.get("action") or "Swap it for a stocked switch before ordering"))
+    elif key == "relay":
+        r = risks.get("H2") or {}
+        cap = "Next: the Omron K8DT plate-temperature relay, out of stock until March 2027 (19 weeks)"
+        sub = (r.get("action") or "Use a stocked thermostat, or order it on day one")
+    elif key == "laserlead":
+        nw = (wk.get("new") or {}).get("parts")
+        cap = ("The laser: 12-15 weeks new (IPG, 10-12 wk after the order + BYU's PO), about a week used (eBay)")
+        sub = ("A returnable 400 W IPG YLR-400-SM, $2,100 + freight, ships the same day: under BYU's $3,500 PO line. "
+               + (f"Bought new, it sets the date: every part in {_wk(nw)}" if nw else ""))
+    else:
+        cap = "Honing the build-module bores is sent out: 3-6 weeks (estimate)"
+        sub = ("Welded, bored and honed outside (BOM B1s); the honing loop sets the date for the in-house and hybrid "
+               "routes (route.json)")
+    return cap, sub
 
 
 def _cat_of(key):
@@ -513,17 +593,26 @@ def _wk(v):
     return P.weeks(v)
 
 
-def _cat_sub(c):
-    s = f"new {_m(c['new'])}"
-    if c.get("used") and c["used"] != c["new"]:
-        s += f", with used parts where sensible {_m(c['used'])}"
+def _cat_sub(c, at_spec=False):
+    if at_spec and c.get("spec_new"):
+        s = f"at spec {_m(c['spec_new'])} new"
+        su = c.get("spec_used")
+        if su and su != c["spec_new"]:
+            s += f", {_m(su)} with used parts where sensible"
+        if c.get("new") and c["new"] != c["spec_new"]:
+            s += f"; BOM range {_m(c['new'])}"
+    else:
+        s = f"new {_m(c['new'])}"
+        if c.get("used") and c["used"] != c["new"]:
+            s += f", with used parts where sensible {_m(c['used'])}"
     if c.get("bom"):
         s += "   (BOM " + ", ".join(c["bom"][:9]) + (" ..." if len(c["bom"]) > 9 else "") + ")"
     return s
 
 
-def _item_caption(b):
-    s = f"{b['short']}: new {_m(b['new'])}"
+def _item_caption(b, new=None):
+    new = new or b["new"]
+    s = f"{b['short']}: new {_m(new)}"
     if b.get("lead_new"):
         s += f", {_wk(b['lead_new'])}"
     if b.get("used"):
@@ -535,6 +624,8 @@ def _item_caption(b):
 
 def _item_sub(b):
     parts = [b["name"]]
+    if b.get("new") and b.get("spec_new") and b["new"] != b["spec_new"]:
+        parts.append(f"BOM range {_m(b['new'])}")
     if b.get("lead_note"):
         parts.append("new: " + b["lead_note"])
     if b.get("used_note"):
