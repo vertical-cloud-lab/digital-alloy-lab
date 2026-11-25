@@ -1,8 +1,12 @@
 # High-Throughput CALPHAD / Thermo-Calc on HPC Clusters
 
+> **Project**: FLAIME (Fast Learning AI for Mineral Efficiency) — Genesis Mission Topic 3B (Critical Minerals, AMMTO)
+>
 > **Issue**: [Can CALPHAD / ThermoCalc be run in high throughput?](https://github.com/vertical-cloud-lab/digital-alloy-lab-private/issues/3)
 >
 > **Short answer**: Yes — both open-source (pycalphad, Equilipy) and commercial (Thermo-Calc TC-Python) CALPHAD tools support high-throughput parallel execution. Published studies have screened up to **450,000 compositions** with TC-Python and **2 billion compositions** using ML surrogates trained on CALPHAD data. Multiple parallelization frameworks (joblib, MPI, Dask, Parsl, SLURM job arrays) have been demonstrated in the literature.
+>
+> **Partnership**: Thermo-Calc is providing a **letter of collaboration** for the Genesis Mission proposal, with AM Module simulations delivered as preliminary results and TC-Python running on BYU HPC. Together with Valimet (gas atomization) and AMAZEMET (ultrasonic atomization, atomizer installed at BYU), these form the three collaboration partners.
 
 *Edison Scientific literature search results backing this analysis are in [`edison-trajectories/`](edison-trajectories/).*
 
@@ -478,9 +482,11 @@ These three open-source CALPHAD tools take fundamentally different architectural
 
 ### Recommendation for BYU VCL (Topic 3B — Critical Minerals)
 
-**Start with pycalphad (free)** for immediate HT screening of **Al-Zr and Al-Mn-Cr-Zr** composition spaces using TDBDB/COST507 TDB files. This requires $0 in licensing and has no processor limits. For multicomponent (4+ element) refinement of top candidates, upgrade to **TCAl10** via Thermo-Calc — essential for consistent Al-Zr-Mn-Cr quaternary predictions where free TDB files from different papers cannot be combined.
+**Start with pycalphad (free)** for immediate HT screening of **Al-Zr and Al-Mn-Cr-Zr** composition spaces using TDBDB/COST507 TDB files. This requires $0 in licensing and has no processor limits. For multicomponent (4+ element) refinement of top candidates, upgrade to **TCAl10** via Thermo-Calc — essential for consistent Al-Zr-Mn-Cr quaternary predictions where free TDB files from different papers cannot be combined. BYU has already demonstrated Thermo-Calc CALPHAD simulations running on BYU's HPC clusters and received AM Module simulations from Thermo-Calc as preliminary results.
 
-**Topic 3B framing:** The screening pipeline is framed around **critical mineral substitution** — discovering Al alloys that eliminate dependence on supply-constrained Mg, Sc, and REE additions while maintaining or exceeding AM-relevant mechanical properties. The mineral-burden objective (weighted sum of critical mineral content) is integrated as a CALPHAD screening criterion alongside phase stability and crack resistance.
+**Topic 3B framing:** The screening pipeline targets **critical mineral substitution** — discovering Al alloys that eliminate dependence on supply-constrained Mg, Sc, and REE additions while maintaining or exceeding AM-relevant mechanical properties. The mineral-burden objective (weighted sum of critical mineral content) is integrated as a CALPHAD screening criterion alongside phase stability and crack resistance. This aligns with the AMMTO mission and DOE Genesis Mission Topic 3B (Securing America's Critical Minerals Supply).
+
+**Partnership context:** Thermo-Calc is providing a **letter of collaboration** for the Genesis Mission proposal. Together with Valimet (gas atomization) and AMAZEMET (ultrasonic atomization, atomizer installed at BYU), these form the three collaboration partners. Eight additional partners provide letters of support: Ames National Lab, Fehrmann Alloys, Taylor Sparks (U of Utah), Ashley Speer, Adam Clare, Chris Stiles, Jae Hattrick-Simpers, and Keith Brown.
 
 > **Important note on database costs**: Commercial CALPHAD databases (TCFE, TCNI, TCHEA, TCAl, etc.) are sold **separately** from the software license and can represent a significant additional expense (Andersson et al. 2002; Vary 2023). For Topic 3B, **TCAl10 is the priority database** (Al alloys with Zr, Mn, Cr coverage). TCFE12/13 are not needed for the primary Al-Zr/Al-Mn-Cr-Zr focus.
 
@@ -578,19 +584,19 @@ The following parameters are required for a steady-state AM Module calculation (
 
 #### Proof-of-Concept Status
 
-**Status (April 2026):** Thermo-Calc's account manager agreed to run sample AM Module calculations for BYU. Sterling to send chemistry and process parameters (including Al-Zr-Mn-Cr candidate compositions alongside AlSi10Mg baseline); Thermo-Calc to return results the week of April 20th. BYU does not currently have the AM Module.
+**Status (April 2026):** Thermo-Calc has provided AM Module simulations for BYU as preliminary results — these demonstrate melt pool geometry and process parameter predictions for AlSi10Mg baseline and Al-Zr candidate compositions. Additionally, BYU has run Thermo-Calc CALPHAD simulations on BYU's HPC clusters, confirming the TC-Python + SLURM integration pathway. Thermo-Calc is providing a **letter of collaboration** for the Genesis Mission proposal (Topic 3B — Critical Minerals).
 
 
 
 #### Edison Scientific Analysis of Discussion (task `eb5a3fde`)
 
-Key strategic findings from Edison ANALYSIS of the Thermo-Calc call transcript (full analysis in `edison-trajectories/thermocalc_discussion_analysis.md`):
+Key strategic findings from Edison ANALYSIS of the Thermo-Calc call transcript (full analysis in `edison-trajectories/thermocalc_discussion_analysis.md`). Note: The original analysis described an advisory-only model. Since then, Thermo-Calc has **upgraded to a letter of collaboration** with AM Module simulations provided as preliminary results and TC-Python running on BYU HPC:
 
-1. **Thermo-Calc support model:** Advisory role only — letter of support, single-digit hours/year for project calls, free student training. NOT a funded partner (DOE accounting overhead prohibitive).
+1. **Thermo-Calc collaboration model:** Thermo-Calc is providing a **letter of collaboration** for the Genesis Mission proposal, with AM Module simulations delivered as preliminary results and TC-Python + TCAl10 for HPC CALPHAD screening on BYU clusters. Support includes advisory hours, student training, and reciprocal data exchange (BYU provides first systematic Al-Zr LPBF melt pool validation data for TC).
 2. **Five confirmed AM Module outputs:** (a) melt pool shape, (b) process maps, (c) G/R solidification conditions, (d) equiaxed-to-columnar transition, (e) thermal profiles. Crack susceptibility is in base TC (Scheil), NOT the AM Module.
 3. **Recommended hybrid architecture for Topic 3B:** pycalphad ($0) for 100K+ Al-Zr/Al-Mn-Cr-Zr phase screening with mineral-burden filter → TC-Python + TCAl10 for top 1,000 multicomponent refinements → TC AM Module for top 50–100 printability maps. Mineral-burden objective integrated at Stage 1 as a scalarized criterion alongside phase stability and crack resistance.
 4. **BOFN integration:** AM Module outputs map to the 9-node DAG: melt pool geometry → Node 2 (energy delivery), process maps → Node 3 (scan strategy), G/R + equiaxed transition → Node 4 (thermal management). Proposed new Node 0.5 (AM Printability) as second computational filter before experiments. Mineral-burden as Node 0 multi-objective criterion.
-5. **Absorptivity calibration as Month 1–2 deliverable:** Print 5–10 single tracks with AlSi10Mg (baseline), cross-section, compare to AM Module predictions — concrete early result that also generates data valuable to Thermo-Calc. Al-Zr alloys will require separate calibration due to different oxide behavior and solidification characteristics.
+5. **Absorptivity calibration as Month 1–2 deliverable:** Print 5–10 single tracks with AlSi10Mg (baseline), cross-section, compare to AM Module predictions — concrete early result that also generates data valuable to Thermo-Calc. Al-Zr alloys will require separate calibration due to different oxide behavior and solidification characteristics. Preliminary AM Module simulations from TC are in hand to anchor these comparisons.
 6. **License budget:** to be set from a Thermo-Calc quote.
 7. **Open-source value gap:** pycalphad/OpenCalphad handle phase equilibria identically, but melt pool simulation, process maps, absorptivity prediction, and equiaxed transition modeling have NO open-source equivalent.
 
@@ -612,9 +618,10 @@ Key findings from Edison ANALYSIS reframing the CALPHAD strategy for Topic 3B (C
 - Zr has very low solubility in Al (~0.28 wt% at peritectic, ~0.01 wt% at room temperature). LPBF rapid solidification can extend this dramatically — CALPHAD equilibrium predictions need to be complemented with Scheil non-equilibrium calculations.
 - Al-Mn forms complex intermetallic sequences that are more sensitive to database accuracy than Al-Si eutectic.
 
-**Thermo-Calc collaboration reframing for 3B:**
-- Letter of support should emphasize: (1) AM Module enables critical mineral substitution by predicting printability of novel Zr/Mn/Cr-containing Al alloys that have NO published LPBF parameter windows, (2) reciprocal value — BYU provides first systematic Al-Zr LPBF melt pool validation data for TC, (3) AMMTO mission alignment — reducing supply chain vulnerability of structural Al alloys.
-- AM Module demo should use Al-Zr composition (not just AlSi10Mg) to demonstrate relevance to Topic 3B.
+**Thermo-Calc collaboration for 3B:**
+- **Letter of collaboration** emphasizes: (1) AM Module enables critical mineral substitution by predicting printability of novel Zr/Mn/Cr-containing Al alloys that have NO published LPBF parameter windows, (2) reciprocal value — BYU provides first systematic Al-Zr LPBF melt pool validation data for TC, (3) AMMTO mission alignment — reducing supply chain vulnerability of structural Al alloys.
+- Thermo-Calc has already provided AM Module simulations as preliminary results and BYU has run TC-Python CALPHAD simulations on BYU's HPC clusters.
+- AM Module demo includes Al-Zr composition alongside AlSi10Mg baseline to demonstrate relevance to Topic 3B.
 
 ---
 
@@ -1299,7 +1306,7 @@ Stage 2: TC-Python + TCAl10 (commercial, assessed DB — essential for quaternar
   → Compute diffusion coefficients, microsegregation, crack susceptibility index
   → Filter to top 50–100 candidates
 
-Stage 3: TC AM Module (commercial add-on)
+Stage 3: TC AM Module (commercial add-on — simulations already provided by TC as preliminary results)
   → Printability maps (power vs. speed) for shortlisted compositions
   → Melt pool geometry, G/R, equiaxed-to-columnar transition
   → Generate final candidate list (~10–20 for experimental validation)
@@ -1328,13 +1335,30 @@ Stage 4 (optional): ML surrogate for >100K scale
 
 ### Immediate Next Steps for BYU VCL (Topic 3B)
 
-1. **Install pycalphad** on BYU's [supercomputer](https://rc.byu.edu/): `pip install pycalphad`
+**Genesis Mission Partnership Structure:**
+- **Letters of Collaboration (3):** Valimet (gas atomization), AMAZEMET (ultrasonic atomization — atomizer installed at BYU), Thermo-Calc (CALPHAD/AM Module — simulations running on BYU HPC)
+- **Letters of Support (8):** Ames National Lab, Fehrmann Alloys, Taylor Sparks (U of Utah), Ashley Speer, Adam Clare, Chris Stiles, Jae Hattrick-Simpers, Keith Brown
+
+**Preliminary Results In Hand:**
+- ✅ AMAZEMET ultrasonic atomizer installed at BYU
+- ✅ AlSi10Mg tensile specimen printed at University of Utah (Taylor Sparks)
+- ✅ Tensile data for the U of Utah AlSi10Mg specimen
+- ✅ AlSi10Mg tensile specimen from 3D Powder Tech
+- ✅ SEM and EDS for precursor powders (AlSi10Mg, Si powder) and the AMAZEMET-atomized mixture (composition change via Al wire + Si addition)
+- ✅ High-temperature tensile data using a standard aluminum tensile specimen
+- ✅ Thermo-Calc AM Module simulations provided by TC for BYU
+- ✅ Thermo-Calc CALPHAD simulations running on BYU's HPC clusters
+- ✅ Full pKGFN pipeline implementation (BoTorch 0.12+)
+- ✅ Automated powder dispensing demonstration
+
+**Remaining CALPHAD-Specific Steps:**
+
+1. **Expand pycalphad screening** on BYU's [supercomputer](https://rc.byu.edu/) — scale from demo 600-calc runs to 10K+ Al-Zr and Al-Mn-Cr-Zr compositions using the SLURM job array pattern (Example 3 above)
 2. **Search TDBDB** ([avdwalle.github.io/tdbdb](https://avdwalle.github.io/tdbdb/)) for Al-Zr, Al-Mn, Al-Cr, and Al-Zr-Mn TDB files — verify coverage of key binaries/ternaries for the target composition spaces
 3. **Download COST507** from [NIST](https://materialsdata.nist.gov/dspace/xmlui/handle/11256/618) as supplemental database for Al alloy baseline screening
-4. **Define mineral-burden scoring function** — implement `MB = Σᵢ wᵢ · xᵢ` with USGS supply risk weights for Mg, Sc, REE elements; integrate as pycalphad post-processing filter
-5. **Use the SLURM job array pattern** (Example 3 above) to screen Al-Zr composition grid (0–2 at% Zr × 0–5 at% Mn × 0–3 at% Cr × temperature) — target 10K+ compositions in initial sweep
-6. **Request TCAl10 pricing** from Thermo-Calc for Stage 2 multicomponent refinement (pending quote)
-7. **Send Al-Zr-Mn-Cr chemistry + process parameters** to Thermo-Calc for AM Module proof-of-concept calculation alongside AlSi10Mg baseline
+4. **Refine mineral-burden scoring function** — implement `MB = Σᵢ wᵢ · xᵢ` with USGS supply risk weights for Mg, Sc, REE elements; integrate as pycalphad post-processing filter
+5. **Finalize TCAl10 pricing** with Thermo-Calc for Stage 2 multicomponent refinement (quote pending)
+6. **Integrate AM Module results** into the three-stage funnel demonstration — use the simulations already provided by Thermo-Calc as Stage 3 proof-of-concept
 
 ### Compelling Visualizations for Genesis Mission Proposal (Topic 3B)
 
@@ -1361,13 +1385,15 @@ Based on Edison Scientific analysis (task `8028123c`, 24K chars, `edison-traject
 
 #### What Can Be Generated NOW as Preliminary Results
 
-Using pycalphad with free TDB databases (COST507, TDBDB):
+Using pycalphad with free TDB databases (COST507, TDBDB), plus Thermo-Calc AM Module simulations already provided and BYU HPC CALPHAD runs already completed:
 
 1. **Al-Zr binary phase diagram** — Al-rich corner showing peritectic and Al₃Zr fields (`pycalphad.equilibrium()` over composition-temperature grid)
 2. **Scheil solidification curves** — `from scheil import simulate_scheil_solidification` for selected Al-Zr compositions
 3. **Mineral-burden scatter plot** — MB = Σᵢ wᵢ·xᵢ computed for screened compositions vs. any thermodynamic property
 4. **Composition-property heatmap** — Ternary slice colored by solidus, freezing range, or precipitate fraction
 5. **Screening funnel mockup** — Based on actual pycalphad run counts from our live demos (600+ calculations demonstrated)
+6. **Thermo-Calc AM Module printability predictions** — Simulations already provided by Thermo-Calc for AlSi10Mg baseline and Al-Zr candidates
+7. **BYU HPC CALPHAD results** — TC-Python runs on BYU supercomputer demonstrating the full Stage 2 pipeline
 
 #### What Makes the Mineral-Burden Pareto Front Novel
 

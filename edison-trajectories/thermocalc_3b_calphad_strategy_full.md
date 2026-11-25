@@ -292,7 +292,7 @@ The "single-digit hours per year" advisory commitment should focus on:
 
 5. **Uncharted composition space = high discovery potential:** Al-Mn-Cr-Zr quaternary has essentially no prior experimental AM data. CALPHAD-guided exploration of this space is exactly what Topic 3B calls for — AI-enabled discovery of new alloys, not incremental optimization.
 
-6. **Reciprocal TC collaboration value:** First AM Module validation for Al-Zr LPBF. This makes the TC letter of support more genuine (TC benefits scientifically) and differentiates from competitors with generic TC support letters.
+6. **Reciprocal TC collaboration value:** First AM Module validation for Al-Zr LPBF. Thermo-Calc is providing a **letter of collaboration** (not just support), with AM Module simulations already delivered as preliminary results and TC-Python running on BYU HPC. This differentiates from competitors with generic TC support letters.
 
 7. **Open-source + commercial hybrid:** Using pycalphad for initial screening (transparent, reproducible, free) combined with TCAl10 for refined predictions addresses both the open-science ethos of DOE and the practical need for validated multicomponent databases.
 

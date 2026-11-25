@@ -1,0 +1,29 @@
+# BYU Office of Research Computing (ORC / "RC") — drop into ~/.ssh/config
+#
+# Mirrors the recommendation on
+# https://rc.byu.edu/wiki/index.php?page=SSH+Multiplexing
+#
+# After adding this block, replace <your-orc-username> with your ORC login
+# name (separate from your campus NetID). Then run `bash hpc/connect.sh`
+# from this repository to open the master session; subsequent `ssh orc …`,
+# `scp … orc:…`, and `rsync … orc:…` calls will reuse it without prompting
+# for a password or a 6-digit verification code.
+
+Host orc
+    User <your-orc-username>
+    HostName ssh.rc.byu.edu
+    ControlMaster auto
+    ControlPath ~/.ssh/master-%r@%h:%p.socket
+    ControlPersist 8h
+    ServerAliveInterval 300
+    ForwardX11 no
+    # First-time connections accept the host key automatically and pin it;
+    # subsequent connections require an exact match. Set to "yes" if you
+    # prefer to verify the fingerprint manually before the first login.
+    StrictHostKeyChecking accept-new
+
+# macOS users who want X11 forwarding via XQuartz: change `ForwardX11 no`
+# above to `ForwardX11 yes` AND add the XAuthLocation directive below.
+# Setting only XAuthLocation is not sufficient — ForwardX11 must also be on.
+#     ForwardX11 yes
+#     XAuthLocation /opt/X11/bin/xauth

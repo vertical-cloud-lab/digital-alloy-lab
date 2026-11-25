@@ -122,9 +122,11 @@
 
 ---
 
-## Q6: Thermo-Calc Letter of Support Reframing for 3B
+## Q6: Thermo-Calc Letter of Collaboration Framing for 3B
 
-The letter must shift from "TC enables AI-driven alloy design for AM" (12F framing) to critical minerals mission alignment:
+> **UPDATE:** Thermo-Calc has upgraded from a letter of support to a **letter of collaboration** for the Genesis Mission proposal.
+
+The letter frames CALPHAD capabilities for critical minerals mission alignment:
 
 1. **Mission alignment:** "TC's CALPHAD capabilities enable discovery of critical-mineral-lean aluminum alloys, directly supporting DOE AMMTO's mission to reduce dependence on Sc, Mg, and REE imports"
 2. **Supply chain security:** "TCAl10 is the ONLY tool capable of modeling L1₂ Al₃Zr precipitation enabling Sc/REE-free strengthening — no open-source alternative exists for this specific phase" (verified: COST507 has L1₂ commented out, D0₂₃ absent)
@@ -133,7 +135,7 @@ The letter must shift from "TC enables AI-driven alloy design for AM" (12F frami
 5. **Five AM Module outputs + peritectic solidification path** as sixth 3B-specific capability
 6. **Policy relevance:** Direct DOE CMS 5-Pillar alignment (Pillars 2/3/5)
 
-Letter commitments unchanged: advisory hours, student training, sample calculations, reciprocal data exchange, publication support.
+Letter commitments: advisory hours, student training, sample calculations (AM Module simulations already provided as preliminary results), reciprocal data exchange, publication support, TC-Python integration on BYU HPC.
 
 ---
 
