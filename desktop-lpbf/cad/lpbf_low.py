@@ -984,7 +984,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
                 place(box(-19, 19, -19, 19, 0, 8), (cam_base + up * 38).toTuple(), (0, 1, 0), up.toTuple())])
     add("Layer camera (Pi HQ + C-mount lens)", cam, C["black"], 7, (0, 0, 340), mat="misc", mass_kg=0.15, bom="M6")
     # both screw into SAE-4 (7/16-20) O-ring-boss ports in the lid, each sealed by an AS568-904 FKM O-ring in the port's chamfer
-    add("Pressure transducer (7/16-20 SAE-4 O-ring-boss port)", comp([cyl(5.5, (100, 50, lz1 - 9.0), "z", 9.0), cyl(7.9, (100, 50, lz1), "z", 12), cyl(11, (100, 50, lz1 + 12), "z", 52)]), C["ss"], 7, (0, 0, 300), mat="ss316l", bom="G7", mcm="TRANSDUCER")
+    # McMaster 3861N11 on BOM G7's SAE-4 x 1/4 NPT adapter (vendor_parts.transmitter_on_sae4, oem-parts.md round 6): its cable
+    # gland ends at lz1 + 73.75, 1.25 mm under the optics bridge, so its lead has no room to leave upward (open question)
+    add("Pressure transducer (7/16-20 SAE-4 O-ring-boss port; McMaster 3861N11 on an SAE-4 x 1/4 NPT adapter)", VP.transmitter_on_sae4().translate(V(100, 50, lz1)),
+        C["black"], 7, (0, 0, 300), mat="ss316l", mass_kg=0.17, bom="G7", mcm="TRANSDUCER")
     add("Overpressure relief valve (316 SS, FKM seat, +34 mbar; SAE-4 O-ring-boss port)", comp([cyl(5.5, (40, 70, lz1 - 9.0), "z", 9.0), cyl(7.9, (40, 70, lz1), "z", 10), cyl(9, (40, 70, lz1 + 10), "z", 28)]), C["ss"], 7, (0, 0, 300), mat="ss316l", bom="G7", mcm="RELIEF")
     GLANDS["sae4_ports"] = dict(kind="sae", ring="3-904", cs=1.83, n=4, closure="SAE-4 O-ring-boss ports: argon in, O2 sample, transducer, relief valve")
 
@@ -1118,13 +1121,20 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
 
     # ===================== 10. Gas & vacuum module =====================
     g0 = zb1
-    pump = fuse([rbox(560, 980, 40, 290, g0, g0 + 270, 10), cyl(16, (640, 165, g0 + 270), "z", 20), cyl(14, (980, 120, g0 + 60), "x", 25)])
-    add("Dry scroll pump (≤ 0.3 mbar, 6 m3/h class)", pump, C["blue"], 10, (300, 0, 0), mat="misc", mass_kg=26.0, module="gas", bom="G2", mcm="PUMP")
-    add("Pump inlet (KF-25)", place(kf_stub(25, 20), (640, 165, g0 + 290 + 20), (1, 0, 0), (0, 0, 1)), C["ss"], 10, (300, 0, 0), mat="ss304", module="gas", bom="G7", mcm="KF25_WELD")
-    filt = fuse([cyl(55, (470, -40, g0 + 20), "z", 220), cyl(58, (470, -40, g0 + 240), "z", 14), cyl(58, (470, -40, g0 + 20), "z", 14),
-                 box(440, 500, -70, -10, g0, g0 + 20)])
-    add("Sealed cyclone + HEPA housing (316L, valves off for passivation)", filt, C["ss"], 10, (0, -300, 0), mat="ss316l", mass_kg=4.0, module="gas", bom="G5", mcm="FILTER")
-    add("Filter inlet (KF-25)", place(kf_stub(25, 20), (470, -40, g0 + 254 + 20), (1, 0, 0), (0, 0, 1)), C["ss"], 10, (0, -300, 0), mat="ss304", module="gas", bom="G7")
+    # Edwards nXDS6i (BOM G2) from Edwards' dimension drawing (vendor_parts.edwards_nxds6i; oem-parts.md round 6, 2026-11-25): motor
+    # end at x 557, fan end toward +x (989), centre line y 150; NW25 inlet on top at (782, 95), NW25 exhaust on the front side (-y)
+    # at x 904, z g0 + 145. The 420 x 250 x 270 envelope it replaces had its inlet at (640, 165) and its exhaust on the +x end.
+    PUMP_O = (557.0, 150.0, g0)
+    add("Dry scroll pump (Edwards nXDS6i, A73501983: 432 x 282 x 302 mm, NW25 inlet and exhaust)", VP.edwards_nxds6i().translate(V(*PUMP_O)), C["alu"], 10, (300, 0, 0),
+        mat="misc", mass_kg=26.2, module="gas", bom="G2", mcm="PUMP")
+    xpi, ypi = PUMP_O[0] + 225.0, PUMP_O[1] - 55.0
+    add("Pump inlet (KF-25)", place(kf_stub(25, 20), (xpi, ypi, g0 + 285 + 20), (1, 0, 0), (0, 0, 1)), C["ss"], 10, (300, 0, 0), mat="ss304", module="gas", bom="G7", mcm="KF25_WELD")
+    # McMaster 5169K72 HEPA housing on KF-25 adapters and elbows (vendor_parts.filter_train_5169K72; round 6): axis at (470, -40), side
+    # inlet turned to the front; the outlet elbow lands on the unchanged outlet stub below, the inlet stub moves onto the inlet elbow
+    add("Sealed cyclone + HEPA housing (McMaster 5169K72 + 9179K14 HEPA element on KF-25 adapters and elbows; cyclone stage not chosen)",
+        VP.filter_train_5169K72().translate(V(470, -40, g0)), C["anod"], 10, (0, -300, 0), mat="steel", mass_kg=1.5, module="gas", bom="G5", mcm="FILTER")   # 1.5 kg: estimate (no listed weight)
+    fin_ = VP.FILTER_TRAIN_INLET
+    add("Filter inlet (KF-25)", place(kf_stub(25, 20), (470 + fin_[0], -40 + fin_[1], g0 + fin_[2] + 20), (1, 0, 0), (0, 0, 1)), C["ss"], 10, (0, -300, 0), mat="ss304", module="gas", bom="G7")
     add("Filter outlet (KF-25)", place(kf_stub(25, 20), (470 + 55 + 20, -40, g0 + 60), (0, 1, 0), (1, 0, 0)), C["ss"], 10, (0, -300, 0), mat="ss304", module="gas", bom="G7")
     bl = fuse([rbox(600, 800, -240, -60, g0, g0 + 200, 12), cyl(40, (700, -150, g0 + 200), "z", 30)])
     add("Sealed side-channel blower (gas-tight, ~100 L/min)", bl, C["blue"], 10, (0, -300, 0), mat="misc", mass_kg=9.0, module="gas", bom="G4", mcm="BLOWER")
@@ -1174,10 +1184,11 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         # The run behind the chamber is at y 166 (was 135), 2 mm behind the recoater sensor posts (y 131-151, electrical_parts.py),
         # which the y 135 run went through; it jogs back to (150, 135) for the old way up between the back-right leg and optics post
         "Outlet plenum to filter": [(-86, -90, zf - 45 - 26), (-86, -90, -122), (-86, 166, -132), (150, 166, -132), (150, 135, -132), (175, 95, -90), (300, -60, 20),
-                                    (400, -40, 160), (470, -40, g0 + 294)],
+                                    (400, -40, 160), (470 + fin_[0], -40 + fin_[1], 160), (470 + fin_[0], -40 + fin_[1], g0 + fin_[2] + 40)],   # round 6: to the 5169K72's inlet elbow
         "Filter to blower": [(470 + 55 + 40, -40, g0 + 60), (560, -100, g0 + 60), (580 - 20, -150, g0 + 60)],
         "Blower to inlet plenum": [(700, -150, g0 + 270), (650, 20, 150), (420, 205, 100), (250, 205, 60), (110, cy + 78, 30), (0, cy + 32 + 46, 11)],
-        "Vacuum line to pump": [(xpv + 2 * PIR_TEE["A"], 0, 70), (400, 70, 60), (500, 165, 80), (640, 165, g0 + 330)],   # from the Pirani tee (section 10)
+        "Vacuum line to pump": [(xpv + 2 * PIR_TEE["A"], 0, 70), (400, 70, 60), (500, 165, 80), (600, 150, 185), (720, 100, 205), (xpi, ypi, 192),
+                                (xpi, ypi, g0 + 285 + 40)],   # from the Pirani tee (section 10); round 6: over the nXDS6i to its inlet
     }
     add("Gas-loop + vacuum hoses (KF-25 SS bellows)", comp([polyline_pipe(h, 13) for h in hoses.values()]), C["hose"], 11, (0, 0, -160), mat="ss316l", mass_kg=3.0, bom="G7", mcm="HOSE_KF25")
     add("Argon line (1/4 in. 316L)", polyline_pipe([(477, 215, g0 + 82), (477, 215, 140), (300, 100, 130), (150, 100, 105), (100, 100, 100), (100, cy + 0.0, 100)], 3.2), C["argon"], 11, (0, 200, 0), mat="ss316l", bom="G7", mcm="TUBE_SS")
@@ -1228,7 +1239,9 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
               polyline_pipe([(dx0, 335, Z_TRAY + 95), (900, 335, Z_TRAY + 95), (-660, 335, Z_TRAY + 95), (-720, 300, Z_TRAY + 160)], 7)]
         add("Chilled-water supply + return to the laser", comp(cw), C["water"], 13, (0, 200, 0), mat="misc", mass_kg=1.5, module="tray", bom="D1")
         add("Argon supply from the dock", polyline_pipe([(dx0, 365, Z_TRAY + 115), (700, 360, Z_TRAY + 115), (548, 300, Z_TRAY + 115), (548, 120, g0 + 30), (522, 120, g0 + 30)], 4), C["argon"], 13, (0, 200, 0), mat="ss316l", module="tray", bom="D1")
-        add("Pump exhaust to the dock", polyline_pipe([(1005, 120, g0 + 60), (1060, 200, Z_TRAY + 60), (dx0, 395, Z_TRAY + 60)], 10), C["hose"], 13, (0, 200, 0), mat="misc", mass_kg=0.5, module="tray", bom="D1")
+        # round 6: from the nXDS6i's exhaust on its front side (x 904, y 1, z g0 + 145) round the fan end to the old route
+        add("Pump exhaust to the dock", polyline_pipe([(904, 1, g0 + 145), (904, -25, g0 + 145), (950, -40, g0 + 135), (1035, 0, g0 + 100), (1055, 120, Z_TRAY + 80), (1060, 200, Z_TRAY + 60),
+                                                       (dx0, 395, Z_TRAY + 60)], 10), C["hose"], 13, (0, 200, 0), mat="misc", mass_kg=0.5, module="tray", bom="D1")
 
     # ===================== Fasteners: real McMaster-Carr parts, their holes cut into the parts they join =====================
     if fasteners:
