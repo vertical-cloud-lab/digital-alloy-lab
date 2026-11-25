@@ -8,12 +8,13 @@ drives back to the station dock, the parked arm and the held part swept along th
 everything on it (every robot body's swept box against every other body's box, and the overlapping pairs checked with
 FCL every 20 mm). The station planner (run_assembly.arm_place) then takes over from park, holding the part, as before.
 
-Screw presenter (one on each MiR's cabinet top, 300 mm along x from the arm base): drawn as a Weber/Ohtake-class screw
-presenter (vibratory rail feeder: a hopper and a straight rail that presents one screw head-up at a pick-up nest). Its
-envelope (250 x 130 x 150 mm, pick point 150 mm above the cabinet) is an ESTIMATE in the class of the OHTAKE NJ / NSB
-"screw feeders" and Weber's SEV presenters (vendor pages, not a drawing). Each screw: from the previous screw's retreat
-pose the screwdriver is planned to 40 mm above the pick-up nest, goes down 40 mm and back up (checked), and is planned to
-the next hole's approach. These trips are recorded and reported separately: they do not change the station results.
+Screw presenter (one on each MiR, hung on the cabinet's far face beside the tool stand, its top 20 mm under the deck; run 8 first
+had it on the cabinet top, where it took the elbow's room): a vibratory rail presenter, a hopper and a straight rail that presents
+one screw head-up at a pick-up nest, as cobot screwdriving cells use. The OnRobot Screwdriver picks its screw from such a
+presenter and checks "whether a screw was picked" (onrobot.com/en/products/onrobot-screwdriver, read 2026-11-25; OnRobot leaves
+the feeding method to its integrators). No vendor or model is chosen here: the 250 x 130 x 150 mm envelope is an ESTIMATE.
+Each screw: from the previous screw's retreat pose the screwdriver is planned to 40 mm above the pick-up nest, goes down 40 mm
+and back up (checked), and is planned to the next hole's approach. These trips are recorded and reported separately: they do not change the station results.
 """
 from __future__ import annotations
 
@@ -29,26 +30,27 @@ import cell as C  # noqa: E402
 import cell2 as K  # noqa: E402
 from cell import Body, Group, Tm, inv, box_mesh  # noqa: E402
 
-PRESENTER = dict(name="screw presenter (vibratory rail class: OHTAKE NJ/NSB, Weber SEV; envelope estimated)",
+PRESENTER = dict(name="screw presenter (vibratory rail class; vendor not chosen, envelope estimated)",
                  dx=300.0, L=250.0, W=130.0, H=150.0, pick_up=40.0)
 DRIVE_STEP = 20.0
 PICK_BACK, LIFT = 70.0, 90.0
 
 
 def presenter_box(x_base, side):
-    """World box of the presenter on the MiR of an arm whose base is at x_base."""
+    """World box of the presenter on the MiR of an arm whose base is at x_base (as cell2.mir_bodies draws it: on the
+    cabinet's far face beside the tool stand, its top 20 mm under the deck)."""
     ya = -K.ARM_Y if side == "front" else K.ARM_Y
     s = -1.0 if side == "front" else 1.0
     yc = ya + s * K.ARM_OFF
-    z0 = K.MIR["H"] + K.MIR["cab_h"]
-    p = PRESENTER
-    x0 = x_base + p["dx"] - p["L"] / 2
-    return (x0, x0 + p["L"], yc - p["W"] / 2, yc + p["W"] / 2, z0, z0 + p["H"])
+    y_face = yc + s * (K.MIR["W"] / 2 - 30.0)
+    z1 = K.MIR["H"] + K.MIR["cab_h"] - 20.0
+    y0, y1 = sorted((y_face, y_face + s * 130.0))
+    return (x_base + 190.0, x_base + 440.0, y0, y1, z1 - 150.0, z1)
 
 
 def presenter_pick(x_base, side):
     b = presenter_box(x_base, side)
-    # the pick-up nest at the rail's end nearest the arm, screw head up; the bit comes straight down
+    # the pick-up nest at the rail's end nearest the arm base, screw head up; the bit comes straight down
     return np.array([b[0] + 30.0, 0.5 * (b[2] + b[3]), b[5]])
 
 
@@ -184,15 +186,21 @@ def frames_line(T0, T1, ds=4.0):
     return out
 
 
-def follow(run, n, Ts, close, allow, chk, seed):
-    """IK along Ts with one branch held, each frame checked against chk's world. -> (ok, qs, why)."""
+def follow(run, n, Ts, close, allow, chk, seed, ik_close=None, strict=False):
+    """IK along Ts with one branch held, each frame checked against chk's world. -> (ok, qs, why).
+    ik_close: the gripper opening whose TCP the IK places on Ts (the fingers may be checked open, `close`, while the arm already
+    stands where the closed fingers' TCP will be: no arm motion when they close). strict: start on the seed's own branch."""
     a = run.arm(n)
-    firsts = a.ik_all(Ts[0], seed=seed)
+    ikc = close if ik_close is None else ik_close
+    a.close = ikc
+    # strict: the arm is already at the seed, which reaches Ts[0] (the lift starts where the descent ended)
+    firsts = [np.asarray(seed, float)] if strict else a.ik_all(Ts[0], seed=seed)
     best = (False, [], "no IK at the start")
     for q0 in firsts[:8]:
         qs, prev, ok, why = [], q0, True, ""
         for k, T in enumerate(Ts):
-            sols = a.ik_all(T, seed=prev)
+            a.close = ikc
+            sols = [q0] if (strict and k == 0) else a.ik_all(T, seed=prev)
             if not sols:
                 ok, why = False, f"no IK {k * 4:.0f} mm along"
                 break
@@ -208,7 +216,7 @@ def follow(run, n, Ts, close, allow, chk, seed):
             prev = q
         if ok:
             return True, qs, ""
-        if len(qs) > len(best[1]):
+        if len(qs) > len(best[1]) or (not best[1] and best[2].startswith("no IK at the start")):
             best = (False, qs, why)
     return best
 
@@ -279,7 +287,7 @@ def pick_plan(run, n, idx, body, off, G_rel, close, tool, slot):
     item_names = [cl.body(i).name for i in idx]
     furn = [b.name for b in T.furn.get(slot["key"], [])]
     allow_tool = frozenset([("tool", nm) for nm in item_names] + [("tool", nm) for nm in furn])
-    allow_held = frozenset([("held", nm) for nm in furn + ["long table top"]])
+    allow_held = frozenset([("held", nm) for nm in furn + ["long table top"]] + [("tool", nm) for nm in furn + ["long table top"]])
     for xb in (gx - 350.0, gx + 350.0, gx, gx - 600.0, gx + 600.0):
         cl.move_mir(n, xb)
         q_park = a.park_q()
@@ -289,12 +297,12 @@ def pick_plan(run, n, idx, body, off, G_rel, close, tool, slot):
         chk = checker(run, n, [tw, mir_group(run, n), Group([cl.static["floor"]])])
         P0 = G @ Tm(p=(0.0, 0.0, -PICK_BACK))
         c_open = 0.0 if tool.startswith("gripper") else 0.0
-        ok, qs_in, why = follow(run, n, frames_line(P0, G), c_open, allow_tool, chk, q_park)
+        ok, qs_in, why = follow(run, n, frames_line(P0, G), c_open, allow_tool, chk, q_park, ik_close=close)
         if not ok:
             out["why"] = f"in to the grasp: {why}"
             continue
         a.place(q_park, c_open)
-        p1, info1 = chk.plan(q_park, qs_in[0], c_open, iters=400)
+        p1, info1 = chk.plan(q_park, qs_in[0], c_open, iters=1200)
         if p1 is None:
             out["why"] = f"park to the item: {info1.get('reason')}"
             continue
@@ -303,13 +311,13 @@ def pick_plan(run, n, idx, body, off, G_rel, close, tool, slot):
         a.hold(body, off)
         chk2 = checker(run, n, [tw2, mir_group(run, n), Group([cl.static["floor"]])])
         Gl = Tm(p=(0.0, 0.0, LIFT)) @ G
-        ok, qs_up, why = follow(run, n, frames_line(G, Gl), close, allow_held, chk2, qs_in[-1])
+        ok, qs_up, why = follow(run, n, frames_line(G, Gl), close, allow_held, chk2, qs_in[-1], strict=True)
         if not ok:
             a.release()
             out["why"] = f"lift: {why}"
             continue
         a.place(qs_up[-1], close)
-        p2, info2 = chk2.plan(qs_up[-1], q_park, close, allow=allow_held, iters=600)
+        p2, info2 = chk2.plan(qs_up[-1], q_park, close, allow=allow_held, iters=1200)
         a.release()
         if p2 is None:
             out["why"] = f"back to park holding it: {info2.get('reason')}"

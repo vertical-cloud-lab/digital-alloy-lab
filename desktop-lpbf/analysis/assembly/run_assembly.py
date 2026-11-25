@@ -96,7 +96,7 @@ class Run:
         # fours drawn as one compound each
         for key in ("Chamber legs", "Optics bridge posts", "Macor standoff rings", "Radiation shields", "Zero-point posts",
                     "Zero-point module plates", "Zero-point clamping modules", "Zero-point arms", "Zero-point clamping pins",
-                    "Door hinge knuckles on the chamber"):
+                    "Door hinge knuckles on the chamber", "Enclosed beam tubes", "Hinge pins"):
             found = sc.find(key, fasteners=False)
             if not found:
                 continue
@@ -197,7 +197,7 @@ class Run:
             a.set_tool("gripper", caps=E.plate_finger_spec())
         elif tool in ("screwdriver", "nutrunner", "nutrunner_angle"):
             a.set_tool(tool, extra_bit=float(long_bit or 0.0), tip_d=tip_d)
-        elif tool in ("vacuum", "nozzle", "roller", "roller_n"):
+        elif tool in ("vacuum", "nozzle", "roller", "roller_n", "wand", "ringpad"):
             a.set_tool(tool)
         else:
             a.set_tool("gripper")
@@ -288,7 +288,7 @@ def auto_grasp(run, idx, T, d_w, state, tool):
     s = V @ d
     smax = float(s.max())
     ext_d = float(smax - s.min())
-    inset = min(14.0, 0.5 * ext_d) if tool not in ("vacuum", "nozzle") else 0.0
+    inset = min(14.0, 0.5 * ext_d) if tool not in ("vacuum", "nozzle", "ringpad", "wand") else 0.0
     sl = V[s > smax - max(2 * inset, 3.0)]
     c = 0.5 * (sl.min(0) + sl.max(0))
     c = c - d * (np.dot(c, d) - (smax - inset))
@@ -534,6 +534,12 @@ def do_place(run, st, row):
         if not sw["ok"]:
             why.append(f"sweep: {sc.short(u[0])} blocked by {sw['blocked_by'][:50]} after {sw['at_s']} mm")
         actor = st.get("actor", "A")
+        if st.get("actor_by_y"):
+            # round 7: the arm on the far side holds the piece, so the near arm drives its screws from below (run 7: arm A could not
+            # reach the back posts' screws under the plate while arm B held them)
+            Tph = run.cl.T_phase(st["phase"])
+            yc = float(np.mean([(Tph @ np.r_[sc.objs[i]["V"].mean(0), 1.0])[1] for i in u]))
+            actor = "A" if yc > 0 else "B"
         tool = st.get("tool", "gripper")
         extra = None
         if st.get("bullet"):
@@ -1389,6 +1395,7 @@ def main(argv):
         def _put(idx, T, state=None, _o=_orig_put):
             _o(idx, T, state)
             RECM.REC.put([i for i in idx if run.sc.objs[i]["V"] is not None], T, run.cl.state if state is None else state)
+            run.table.remove(idx)          # in the cell now, so no longer on the table (seals fitted by their tools, merges)
         run.cl.put = _put
         save_scene(run)
     # the part list report.py's replay file matches step keys against (name, explode offset, motion group)
@@ -1422,7 +1429,7 @@ def main(argv):
     save(run, final=True)
     if RECM.REC is not None:
         RECM.REC.flush()
-        RECM.REC.save_summary("/tmp/robotbuild/data/assembly.json")
+        RECM.REC.save_summary(os.environ.get("ASM_SUMMARY", "/tmp/robotbuild/data/assembly.json"))
     log("done")
 
 
