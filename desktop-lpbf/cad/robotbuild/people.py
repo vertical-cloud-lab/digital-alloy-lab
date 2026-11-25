@@ -3,11 +3,12 @@
 Vendored from byu-vcl PR 318 (vertical-cloud-lab/byu-vcl, branch claude/issue-303-20261103-1736, commit 9740ba8,
 ``vertical-lab/people.py``, round 11 of #303), which is the lab's own code. Changed here, and nothing else:
 
-* the clothes are for a machine shop, not a wet lab: a work shirt (the old coat's trunk and sleeves, in the shirt colour
-  of ``common.COL``) with its sleeves rolled to just below the elbow and its tail out to the hip (the coat's skirt, cut
-  short), a dark T-shirt in its open collar, bare hands by default (no gloves near a spindle; ``gloves=`` gives a
-  colour for leather work gloves when handling stock or a hoist), dark work boots, and the same wrap-around safety
-  glasses (ANSI Z87.1 style);
+* the clothes are for a machine shop, not a wet lab, in the colours of the PR branch's other MakeHuman figure
+  (render_scale.PERSON_COLOURS, from cad/human/build_person.py: a long-sleeved T-shirt, jeans, trainers), so the people
+  in the two videos look alike: the old coat's trunk and sleeves are the T-shirt (sleeves to 55 mm above the wrist, or
+  rolled with ``SLEEVE``; no collar unless ``collar=True``), its skirt cut short to a T-shirt's hem at the hip, bare
+  hands by default (no gloves near a spindle; ``gloves=`` gives a colour for leather work gloves when handling stock or
+  a hoist), and the same wrap-around safety glasses (ANSI Z87.1 style);
 * the MakeHuman files and the derived model are cached in ``$ROBOTBUILD/cache/makehuman`` (``/tmp/robotbuild/...``),
   never in the repo;
 * the scene it draws into is ``pvscene.PVScene`` (an adapter over ``common.plotter()``), not PR 318's ``scene.Scene``.
@@ -84,18 +85,20 @@ def _rgb(h):
     return tuple(int(h[k:k + 2], 16) / 255 for k in (1, 3, 5))
 
 
-SKIN = _rgb("#d9a982")               # common.COL["skin"]
-COAT = _rgb("#3b6ea5")               # the work shirt (the lab coat's region): common.COL["person_shirt"]
-SHIRT = (0.20, 0.21, 0.23)           # a dark T-shirt in the work shirt's open collar
-TROUSERS = _rgb("#2e3440")           # common.COL["person_trousers"]
-SHOES = (0.21, 0.15, 0.10)           # brown leather work boots
+# Colours as render_scale.PERSON_COLOURS (cad/human/build_person.py's MakeHuman figure on the PR branch, 2026-11-25:
+# a long-sleeved T-shirt, jeans and trainers), so the people in the two videos look alike.
+SKIN = _rgb("#c49a7e")
+COAT = _rgb("#4d6d91")               # the long-sleeved T-shirt (the lab coat's region)
+SHIRT = COAT                         # the coat's V: the same T-shirt (a V-neck)
+TROUSERS = _rgb("#39465a")           # jeans
+SHOES = _rgb("#2f3237")              # trainers
 GLOVE = (0.71, 0.56, 0.36)           # tan leather work gloves, when asked for (Person(gloves=True)); none by default
-SLEEVE = 50.0                        # the rolled sleeves end this far down the forearm from the elbow, mm
+SLEEVE = None                        # None: sleeves to the wrist; a number (mm): rolled to that far below the elbow
 TAIL = 80.0                          # the shirt's tail hangs out to this far under the hip joints, mm
-HAIR = (0.24, 0.17, 0.12)
-BROW = (0.22, 0.16, 0.12)
-IRIS = (0.20, 0.14, 0.10)
-SCLERA = (0.93, 0.92, 0.90)
+HAIR = _rgb("#3b2c22")
+BROW = _rgb("#33261d")
+IRIS = _rgb("#3a2a20")
+SCLERA = _rgb("#dcd8d2")
 LENS = (0.80, 0.88, 0.93)
 FRAME = (0.16, 0.18, 0.22)
 
@@ -461,17 +464,20 @@ def _dress(m: dict) -> dict:
                         for b in dl])
         f_g = np.where(arm, (Pl - w_) @ a_ + 55.0, f_g)
     glove, lower = _split(lower, f_g)
-    # 3b. the work shirt's sleeves are rolled to SLEEVE mm below the elbow: the forearm from there to the hand is skin
+    # 3b. with SLEEVE set, the sleeves are rolled to SLEEVE mm below the elbow: the forearm from there to the hand is skin
     Pl = np.asarray(lower.points)
     dl = dom(lower.point_data["W"])
     f_f = np.full(len(Pl), -500.0)
+    SL = 0.0 if SLEEVE is None else SLEEVE
     for sd in ("L", "R"):
         e_, w_ = H(f"lowerarm01.{sd}"), H(f"wrist.{sd}")
         a_ = _unit(w_ - e_)
         arm = np.array([b.endswith(sd) and b.startswith(("upperarm", "lowerarm", "wrist", "metacarpal", "finger"))
                         for b in dl])
-        f_f = np.where(arm, (Pl - e_) @ a_ - SLEEVE, f_f)
-    forearm, lower = _split(lower, f_f)
+        f_f = np.where(arm, (Pl - e_) @ a_ - SL, f_f)
+    forearm = None
+    if SLEEVE is not None:
+        forearm, lower = _split(lower, f_f)
     # 4. the shoes, up to the ankle
     Pl = np.asarray(lower.points)
     dl = dom(lower.point_data["W"])
@@ -526,7 +532,7 @@ def _dress(m: dict) -> dict:
     trousers.points = Pt
     parts = dict(
         skin=skin, hair=hair, brow=_offset(brow, OFFSET["brow"]),
-        shirt=_offset(shirt, OFFSET["shirt"]), glove=_offset(glove, OFFSET["glove"]), forearm=forearm,
+        shirt=_offset(shirt, OFFSET["shirt"]), glove=_offset(glove, OFFSET["glove"]),
         shoes=_offset(shoes, OFFSET["shoes"], smooth=25), trousers=_offset(trousers, OFFSET["trousers"], smooth=24),
         coat=_offset(coat, OFFSET["coat"], smooth=30), skirt=_offset(skirt, OFFSET["skirt"], smooth=20))
     # eyes: the iris where the eyeball faces forward
@@ -548,6 +554,13 @@ def _dress(m: dict) -> dict:
         v_ = W[r_, c_]
         v_ = v_ / np.bincount(r_, weights=v_, minlength=len(W))[r_]
         out[k_] = dict(P=np.asarray(part.points, float), F=F, rows=r_, cols=c_, vals=v_)
+    if forearm is not None:
+        F_ = _faces(forearm)
+        W_ = np.asarray(forearm.point_data["W"], float)
+        r_, c_ = np.nonzero(W_ > 1e-4)
+        v_ = W_[r_, c_]
+        v_ = v_ / np.bincount(r_, weights=v_, minlength=len(W_))[r_]
+        out["forearm"] = dict(P=np.asarray(forearm.points, float), F=F_, rows=r_, cols=c_, vals=v_)
     out["collar"] = _collar(out["coat"], H)
     return dict(parts=out, glasses=_glasses(m), skirt_cut=cut)
 
@@ -697,8 +710,8 @@ class Person:
     LEAN_HIPS = 0.6                     # of a lean, the share taken at the hips (the rest along the lower spine)
     STRIDE = 1016.0                     # mm per gait cycle
 
-    def __init__(self, sc, name="person", coat=COAT, skin=SKIN, hair=HAIR, trousers=TROUSERS, gloves=None):
-        """coat: the work shirt's colour; gloves: None (bare hands, the default near a spindle), True (tan leather) or
+    def __init__(self, sc, name="person", coat=COAT, skin=SKIN, hair=HAIR, trousers=TROUSERS, gloves=None, collar=False):
+        """coat: the T-shirt's colour; gloves: None (bare hands, the default near a spindle), True (tan leather) or
         an RGB colour."""
         self.sc, self.n = sc, name
         m = self.m = model()
@@ -706,13 +719,15 @@ class Person:
         self.bi = {b: i for i, b in enumerate(self.order)}
         self.group = f"{name}_body"
         glove = skin if not gloves else (GLOVE if gloves is True else gloves)
-        colours = dict(skin=skin, forearm=skin, coat=coat, skirt=coat, collar=coat, shirt=SHIRT, glove=glove, shoes=SHOES,
+        colours = dict(skin=skin, forearm=skin, coat=coat, skirt=coat, collar=coat, shirt=coat, glove=glove, shoes=SHOES,
                        trousers=trousers, hair=hair, brow=BROW, iris=IRIS, sclera=SCLERA)
         spec = dict(coat=0.08, skirt=0.08, collar=0.08, glove=0.15 if gloves else 0.12, shoes=0.3, hair=0.05, skin=0.12,
                     forearm=0.12, iris=0.6,
                     sclera=0.4)
         self.parts = {}                                  # part -> (its data, PolyData)
         for part, d in m["parts"].items():
+            if part == "collar" and not collar:              # a T-shirt has no collar (collar=True: a work shirt's)
+                continue
             if d is None or not len(d["F"]):
                 continue
             poly = _poly(d["P"], d["F"])
