@@ -156,6 +156,8 @@ def badges(d, x_right, y, who, status):
 
 
 def caption_bar(d, caption, sub, who, status, chapter_no=None, step=""):
+    if not (caption or sub or who or status):              # a frame with nothing to say (a renderer's own title card)
+        return 0
     h = 62 if sub else 44
     d.rectangle((0, 0, W, h), fill=(255, 255, 255, 232))
     d.line([(0, h), (W, h)], fill=(30, 60, 140, 255), width=2)
@@ -165,14 +167,20 @@ def caption_bar(d, caption, sub, who, status, chapter_no=None, step=""):
         d.text((left - d.textlength(step, font=f) - 4, 15), step, font=f, fill=INK2)
         left -= d.textlength(step, font=f) + 10
     room = max(200, left - 24)
-    fc = font(21, bold=True)
     cap = caption or ""
-    if d.textlength(cap, font=fc) > room:
-        fc = font(18, bold=True)
-    d.text((14, 8), fit(d, cap, fc, room), font=fc, fill=INK)
+    size = 21                                               # shrink a long caption before cutting it short
+    fc = font(size, bold=True)
+    while d.textlength(cap, font=fc) > room and size > 15:
+        size -= 1
+        fc = font(size, bold=True)
+    d.text((14, 8 + (21 - size) // 2), fit(d, cap, fc, room), font=fc, fill=INK)
     if sub:
-        fs = font(14)
-        d.text((14, 37), fit(d, sub, fs, W - 28), font=fs, fill=INK2)
+        ss = 14
+        fs = font(ss)
+        while d.textlength(sub, font=fs) > W - 28 and ss > 12:
+            ss -= 1
+            fs = font(ss)
+        d.text((14, 37 + (14 - ss) // 2), fit(d, sub, fs, W - 28), font=fs, fill=INK2)
     return h
 
 
