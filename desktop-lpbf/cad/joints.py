@@ -34,6 +34,7 @@ REGISTRY: dict[str, dict] = {}     # joint key -> dict(name, pn, items, group, t
 CUTS: dict[str, list] = {}         # part-name prefix -> [(joint key, tool)] cut by the last add_joints() (the animation re-machines them)
 _KEY = [""]
 JOINT_NOTES: dict[str, str] = {}
+GLAND_ANGLES: dict[str, tuple] = {}  # module -> (gland-plate screw angles in deg, plan clearance to the rod end in mm)
 
 NOT_DRAWN = [
     ("Door hinges (2 x McMaster 1151A87) to door and chamber", "the hinge's own countersunk holes; screws chosen when the hinge CAD replaces the drawn knuckles"),
@@ -141,6 +142,48 @@ def locating_pins(h, parts, add, key, wall, flange, items, name, step, bom, expl
 def polar(r, deg):
     a = math.radians(deg)
     return r * math.cos(a), r * math.sin(a)
+
+
+def rod_end_footprint():
+    """Plan-view rectangles (x0, x1, y0, y1) of the rod end's feedthrough block and its welded-in sleeves (modules_low.ROD_FT),
+    which hang 10.5-17.5 mm under the gland plate at z_p = 0 and 2.5 mm under it at the +8 mm overtravel."""
+    RF = ML.ROD_FT
+    hw, yf = RF["face_w"] / 2, RF["face_y"]
+    rects = [(-hw, hw, yf, RF["back_y"]), (-RF["pwr_d"] / 2, RF["pwr_d"] / 2, yf - RF["pwr_out"], yf)]
+    rects += [(x - RF["tc_d"] / 2, x + RF["tc_d"] / 2, yf - RF["tc_out"], yf) for x in RF["tc_x"]]
+    return rects
+
+
+def _clear(x, y, rects):
+    """plan distance from (x, y) to the nearest rectangle (0 inside one)."""
+    return min(math.hypot(max(x0 - x, 0.0, x - x1), max(y0 - y, 0.0, y - y1)) for x0, x1, y0, y1 in rects)
+
+
+def gland_screw_angles(rbc, n=6, c_min=4.5, c_want=9.0, pitch_min=11.0):
+    """Angles (deg) of the gland plate's n M4 on their circle of radius rbc, and the plan clearance to the rod end.
+
+    Round 6 (2026-11-25): the even 30 + 60 k pattern put 3 of the 6 screws over the rod end's feedthrough block (72 mm in round 5,
+    81 mm now) on S25 and M50, so a torque screwdriver (Ø4-5 bit shank, then a Ø16 chuck 35 mm out) could not reach them and they
+    could not be withdrawn (operations.md A1.20, M7.1). The even pattern stays wherever every screw clears the block and sleeves by
+    >= c_min (head Ø7 on the way out, plus 1 mm): L75 did on the 72 mm block, none does on the 81 mm one. Otherwise the n screws
+    are spread evenly over the arc behind the block's back face, at c_want (the chuck's radius plus 1 mm) if they then stay
+    >= pitch_min apart (M50, L75), else at c_min (S25). The 14 mm 316L plate carries the open front arc: see JOINT_NOTES['gland_*']."""
+    rects = rod_end_footprint()
+    even = [30.0 + 360.0 / n * k for k in range(n)]
+    c_even = min(_clear(*polar(rbc, a), rects) for a in even)
+    if c_even >= c_min:
+        return even, c_even
+    back = ML.ROD_FT["back_y"]
+    for c in (c_want, c_min):
+        s = (back + c) / rbc
+        if s >= 1.0:
+            continue
+        a0 = math.degrees(math.asin(s))
+        step = (180.0 - 2 * a0) / (n - 1)
+        if c == c_min or 2 * rbc * math.sin(math.radians(step / 2)) >= pitch_min:
+            angs = [a0 + step * k for k in range(n)]
+            return angs, min(_clear(*polar(rbc, a), rects) for a in angs)
+    raise ValueError(f"no room for {n} gland-plate screws on r {rbc:.1f} behind the rod end")
 
 
 # ------------------------------------------------------------------------------------------------ the joints
@@ -299,7 +342,9 @@ def add_joints(h, parts, add, module="M50"):
     zst = zl["z_stop"]
     pn4 = find("shcs", 4, 16)
     pn4g = find("shcs", 4, 20)                      # 14 mm gland plate (two rod glands) + 6 mm into the collar
-    items = [((*polar(rbc, 30.0 + 60.0 * k), zst - MP.BOT_FLANGE_T), Z) for k in range(6)]
+    g_angs, g_clear = gland_screw_angles(rbc)       # round 6: clear of the rod end's feedthrough block (A1.20, M7.1)
+    GLAND_ANGLES[key] = (g_angs, g_clear)
+    items = [((*polar(rbc, a), zst - MP.BOT_FLANGE_T), Z) for a in g_angs]
     cut_parts(parts, f"Module {key} bottom flange", [hole(p, n, -0.01, MP.BOT_FLANGE_T + 0.01, CLEAR[4]) for p, n in items])
     cut_parts(parts, f"Build module {key}", [hole(p, n, MP.BOT_FLANGE_T - 0.01, MP.BOT_FLANGE_T + MP.COLLAR_T + 0.01, 4.0) for p, n in items])
     add_fasteners(h, add, f"gland_{key}", f"Gland-plate screws {key}, M4 x 20 316, into the welded collar", pn4g, items, 4, "B1",
@@ -312,9 +357,16 @@ def add_joints(h, parts, add, module="M50"):
     cut_parts(parts, f"Module {key} handle", [hole(p, n, -0.01, 4.01, CLEAR[4]) for p, n in items])
     cut_parts(parts, f"Module {key} bottom flange", [hole(p, n, 3.99, 12.0, 4.0) for p, n in items])
     add_fasteners(h, add, f"handle_{key}", f"Handle screws {key}, M4 x 10 316", pn4s, items, 4, "B1", group="module", explode=(0, -320, -60))
+    lay = ("on the even 60 deg pattern" if abs(g_angs[1] - g_angs[0] - 60.0) < 1e-6 else
+           f"spread every {g_angs[1] - g_angs[0]:.1f} deg over {g_angs[0]:.1f}-{g_angs[-1]:.1f} deg, behind the rod end's feedthrough block")
     JOINT_NOTES[f"gland_{key}"] = ("Replaces a welded bottom flange. A 316L collar welded round the tube end takes 6 x M4; the plate "
-                                   "seals on the tube end and collar with a 1.78 mm FKM face O-ring. Take the piston out of the top, "
-                                   "then the plate comes off to replace the rod O-rings or clean out powder that passed the bore seal.")
+                                   "seals on the tube end and collar with a 1.78 mm FKM face O-ring. The plate comes off with the stack, "
+                                   "down out of the bore, to replace the rod O-rings or clean out powder that passed the bore seal. "
+                                   f"The six M4 sit {lay}, {g_clear:.1f} mm in plan from the block and its sleeves, so a torque "
+                                   "screwdriver reaches all six and they withdraw past it (round 6; the even pattern put 3 over the block "
+                                   "on S25 and M50). With no screw in front, the metal-to-metal joint still holds: ~11-16 kN of M4 preload "
+                                   "against <= 0.3 kN of ring reaction and ~0.3 kN of vacuum load (closing), and the 14 mm plate's front overhang "
+                                   "bends ~1-2 um under its share of the ring, against a 0.48 mm squeeze.")
 
     # ---------------- 5. rod in the piston head: 2 cup-point set screws; striker on the rod end: 3 flat-head screws ----------------
     rod_od = (MP.ROD_S25 if key == "S25" else (MP.ROD_OD, MP.ROD_ID))[0]

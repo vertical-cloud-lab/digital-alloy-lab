@@ -27,12 +27,17 @@ BAYONET_R = 6.0          # plate spigot radius; three lugs reach BAYONET_R + 2.5
 # rod-end feedthroughs (electrical.md section 6, FT1), Solid Sealing Technology weld-ins (solidsealing.com, read 2026-11-22):
 # FA11631 single Chromel lead and FA11632 single Alumel lead, Ø6.27 mm x 38 mm 304 sleeves, -269 to 450 C, $44 each (3 + 3 = the
 # control, edge and limit pairs); FA10443 4 x 0.81 mm Cu pins, 16 A per pin, 2 kV, Ø12.62 x 24 mm sleeve, $92 (heater power, two
-# pins per pole). Sleeve diameters and lengths are the catalogue's; how deep each sits, and the 2.4-3.1 mm between sleeves and to
-# the face's edges, are this layout's (check weld access, and a blind-bore weld-in, with Solid Sealing before machining the block).
+# pins per pole). Sleeve diameters and lengths are the catalogue's; how deep each sits, and the 2.4 mm between sleeves and the
+# 2.5 mm to the face's edges, are this layout's (check weld access, and a blind-bore weld-in, with Solid Sealing before machining the block).
+# Round 6 (2026-11-25): the type K sleeves moved from x +-12.5, +-21.5, +-30.5 (72 mm face) to +-11.85, +-26.16, +-34.83 (81 mm
+# face), so that the 8.0 mm gap between the inner two on each side sits under the handle's M4 at x +-19 (joints.py). Before, a
+# sleeve stood under each handle screw, so neither a torque screwdriver (operations.md A1.22: a ball-end key only) nor the robot's
+# driver (assembly.md M22: 0 of 2) could reach them. The gland plate's six M4 now sit on the arc behind the block (joints.py).
 ROD_FT = dict(label="3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, Ø6.27 x 38 sleeves; "
                     "1 x FA10443 4-pin 16 A Cu, Ø12.62 x 24 sleeve", pn="FA11631/FA11632/FA10443", mass_kg=0.06,
-              face_w=72.0, face_y=-22.0, back_y=6.0, face_z0=1.0, face_z1=17.0, wall=3.0, xdrill_y=2.0,
-              pwr_z=9.0, pwr_d=12.62, pwr_out=21.0, tc_z=10.5, tc_x=(-30.5, -21.5, -12.5, 12.5, 21.5, 30.5), tc_d=6.27, tc_len=38.0, tc_out=12.0)
+              face_w=81.0, face_y=-22.0, back_y=6.0, face_z0=1.0, face_z1=17.0, wall=3.0, xdrill_y=2.0,
+              pwr_z=9.0, pwr_d=12.62, pwr_out=21.0, tc_z=10.5, tc_x=(-34.83, -26.16, -11.85, 11.85, 26.16, 34.83), tc_d=6.27, tc_len=38.0,
+              tc_out=12.0)
 
 
 def polar(r, deg):
@@ -240,10 +245,10 @@ def add_build_module(h, add, key, step=4):
     add(f"Hollow piston rod {lab} ({rod_lab} seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
         h.tube(rod_od / 2, rod_id / 2, (0, 0, zr0), "z", zh0 + 8.0 - zr0), C["ss"], step, (0, 0, 140), mat="ss316l",
         bom="B1", section=True, **pg)
-    # rod end (electrical.md section 6, FT1, and 13.3): a 316L block with the rod TIG-welded into its top and a 72 x 16 mm feedthrough
+    # rod end (electrical.md section 6, FT1, and 13.3): a 316L block with the rod TIG-welded into its top and an 81 x 16 mm feedthrough
     # face toward the front (-y). Seven weld-ins are TIG-welded at the face, so the gas boundary at the rod end is metal, glass/ceramic
     # and welds, no O-ring (it was a LEMO 1B receptacle on an O-ring, which misses the leak and current spec).
-    # Why 72 x 16 and not ~30 mm square: the rod end cannot grow in height. Above: the gland plate is 2.5 mm over the cap at the +8 mm
+    # Why 81 x 16 (72 x 16 in round 5; ROD_FT says why it grew) and not ~30 mm square: the rod end cannot grow in height. Above: the gland plate is 2.5 mm over the cap at the +8 mm
     # overtravel, and the handle's two M4 screw heads hang 8 mm below the gland plate in front of the rod (joints.py), so in front of
     # the cap the block stops at zc + 17. Below: the Z arm, and on the module's way out (MODULE_PATH) the striker clears the guard's
     # bottom rail by 3 mm. And forward: on the way out the module rises at y -190 just behind that rail, so nothing may stand more than
@@ -267,7 +272,7 @@ def add_build_module(h, add, key, step=4):
         L_in = RF["tc_len"] - RF["tc_out"]
         body = body.cut(h.cyl(RF["tc_d"] / 2, (x, yf - 1.0, zt), "y", L_in + 1.0))                 # blind bore, its end on the cross-drilling
         sleeves.append(h.cyl(RF["tc_d"] / 2, (x, yf - RF["tc_out"], zt), "y", RF["tc_len"]))
-    add(f"Rod end {lab}: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front", body, C["ss"], step, (0, 0, 120),
+    add(f"Rod end {lab}: 316L feedthrough block, rod welded into its top, {RF['face_w']:.0f} x 16 mm face to the front", body, C["ss"], step, (0, 0, 120),
         mat="ss316l", bom="H1", section=True, **pg)
     add(f"Rod end {lab} feedthroughs, welded in ({RF['label']})", h.comp(sleeves), C["ss"], step, (0, -60, 120), mat="ss316l",
         mass_kg=RF["mass_kg"], bom="H1", mcm=RF["pn"], section=True, **pg)

@@ -6,9 +6,9 @@ Chapters, each written as its own GIF, plus one MP4 of the whole run:
   2-machining  the chamber body hogged out of a 6061-T6 block one operation at a time; the build module's spigot,
                flange and cylinder turned, cut and bored, TIG-welded and honed; the heater block, plate and piston
                head turned and drilled; then every other machined and sheet-metal part as one batch
-  3-module     the heated build module: cartridges, thermocouples and cutoff into the block, Macor break and shields,
+  3-module     the heated build module: cartridges and thermocouples into the block, Macor break and shields,
                piston head and seals, screws, the plate twisted onto its bayonet, the stack into the bore, the gland
-               flange screwed on, rod end and striker
+               flange screwed on, the rod end's feedthrough block and the striker
   4-process    the process module: base and feet, legs, chamber, plenums and overflow, Z stage, recoater (rail
                screws), the build module in along its swap path and its thumb screws, the lid on its O-ring with 20 M5
                screws in a star pattern, window stack, dosing and reservoir, door, optics bridge and scan head, guard
@@ -1007,7 +1007,7 @@ def chapter_module(st):
         st.cam((0.0, 0.0, fz), d, az + 12 * t, el)
 
     F = st.find
-    blk, cart, tc, tco = F("Heater block M50"), F("Cartridge heaters M50"), F("Type K thermocouples M50"), F("Thermal cutoff M50")
+    blk, cart, tc = F("Heater block M50"), F("Cartridge heaters M50"), F("Type K thermocouples M50")   # no thermal cutoff (electrical.md 13.4)
     mac, shd, head, seal = F("Macor standoff rings M50"), F("Radiation shields M50"), F("Piston head M50"), F("Bore seal M50")
     bins, springs = F("Heater-block helical inserts M50"), F("Disc springs under the stack screws M50")
     glo = F("Module M50 gland-plate O-ring")
@@ -1015,7 +1015,7 @@ def chapter_module(st):
     plate, wiper = F("Build plate M50"), F("Plate rim wiper M50")
     body, oring, bfl, handle = F("Build module M50"), F("Spigot O-ring"), F("Module M50 bottom flange"), F("Module M50 handle")
     lift = np.array([0, 0, 170.0])          # the piston stack is built above the cylinder, then lowered in
-    stack = blk + bins + cart + tc + tco + mac + shd + head + springs + seal + rod + plate + wiper
+    stack = blk + bins + cart + tc + mac + shd + head + springs + seal + rod + plate + wiper
 
     def rise(dz):
         return lambda i, t: T(lift + np.array([0, 0, dz * (1 - t)]))
@@ -1024,8 +1024,8 @@ def chapter_module(st):
     fly(st, bins, nf(6), None, lambda t: cam(0.1, el=-6), cap, "Three M3 helical inserts (McMaster 91732A647) into the block's underside", xf=rise(-40))
     fly(st, cart, nf(10), None, lambda t: cam(0.1 + 0.1 * t, el=6), cap,
         "3 x 50 W, 24 V cartridge heaters (McMaster 3714N36) slide up into their Ø6.1 bores", xf=rise(-90))
-    fly(st, tc + tco, nf(10), None, lambda t: cam(0.2 + 0.1 * t, el=6), cap,
-        "Type K thermocouples (control, edge, limit; McMaster 3871K606) and the 240 °C thermal cutoff", xf=rise(-100))
+    fly(st, tc, nf(10), None, lambda t: cam(0.2 + 0.1 * t, el=6), cap,
+        "Type K thermocouples (control, edge, limit; McMaster 3871K606); the limit one trips the latching limit controller", xf=rise(-100))
     fly(st, mac + shd, nf(10), None, lambda t: cam(0.3 + 0.1 * t, el=10), cap,
         "Thermal break: three Macor standoffs, each three rings cut from 8489K75 rod, with the two polished 316 shields between them", xf=rise(-70))
     fly(st, head, nf(10), None, lambda t: cam(0.4 + 0.1 * t, el=10), cap, "Piston head: the cool side of the break", xf=rise(-80))
@@ -1074,7 +1074,8 @@ def chapter_module(st):
     for i in stack:
         st.mat.pop(i, None)
     fly(st, rodend + strk, nf(10), (0, 0, -80), lambda t: cam(0.95, d=620, el=-12, fz=-80), cap,
-        "Rod end: leads potted out of a side exit (Torr Seal); the 416 striker disc for the Z stage's pot magnet")
+        "Rod end: a 316L block welded to the rod, seven Solid Sealing weld-in feedthroughs on its front face "
+        "(3 x FA11631 + 3 x FA11632 type K, 1 x FA10443 4-pin power); the 416 striker disc for the Z stage's pot magnet")
     st.caption(cap, "Three M3 x 10 316 flat-head screws hold the striker, flush with the magnet face")
     drive(st, "striker_M50", lambda: (cam(0.97, d=420, el=-30, fz=-120), st.shot()), frames=5)
     st.caption(cap, "Done: the module leaves and returns as one unit; S25 and L75 modules are built the same way")
