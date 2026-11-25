@@ -32,8 +32,9 @@ models, and their inputs (permeability, outgassing, powder moisture) are uncerta
    [below](#the-atmosphere-cycle).
 3. **It's a roughing pump, with no turbo.** BOM line G2 is an Edwards nXDS6i dry scroll: oil-free, 6.2 m³/h peak pumping
    speed, 0.02 mbar ultimate.
-   - **Speed:** with a throttled start, it pumps the 11.3 L gas envelope to 1 mbar in 1.5 min. One cycle takes about
-     4 min, and three take about 12.
+   - **Speed:** with a throttled start, it pumps the 11.3 L gas envelope to 1 mbar in about 1.1 min. One cycle takes about
+     3.6 min, and three take about 11 (1.5, 4 and 12 min until round 6, when the soft-pump check started reading the jar's
+     real depth from the model: [`analysis/out/seals/vacuum_purge.md`](analysis/out/seals/vacuum_purge.md)).
    - **Three cycles reach the argon's own impurity:** 1.2–2.2 ppm O₂ in theory, with Ar 5.0 at 1–2 ppm.
    - **Why no turbo:** it would get there in one cycle instead of two, but no lower. It needs this pump as its backing pump
      anyway, and fine powder in a turbo wrecks it.
@@ -198,7 +199,7 @@ of the plan ([README](README.md) §5).
 | Base pressure here | ≈ 0.02 mbar after 5 min (the pump's ultimate, not the walls' outgassing) | 10⁻⁴–10⁻⁵ mbar after an hour or more, limited by the unbaked Al and FKM giving off water and by the KF-25 hose (~0.6 L/s in molecular flow) unless the turbo sits on the chamber |
 | O₂ after one cycle | 204 ppm at 1 mbar; 11 ppm if held at 0.05 mbar | 1.2–2.2 ppm |
 | O₂ after three cycles | **1.2–2.2 ppm** | **1.2–2.2 ppm**: the argon's own impurity sets both |
-| Time | ~4 min per cycle, ~12 min for three | one cycle instead of two or three: a few minutes faster, if the turbo stays spinning behind a gate valve |
+| Time | ~3.6 min per cycle, ~11 min for three (round 6) | one cycle instead of two or three: a few minutes faster, if the turbo stays spinning behind a gate valve |
 | Water | the walls give up water at a rate that falls as ~1/t; time and temperature set it, not the pump | the same; a turbo lowers the pressure, but the walls dry no faster unless they are heated |
 | Powder | an inlet filter (McMaster 3394N12) and the soft-pump start protect the scroll | fine Al powder wrecks a turbo's blades: it needs a filter, a gate valve and a slow start, and still risks a crash |
 | Cost | in the BOM | +$5–10k (turbo, controller, gate valve), not priced here |
