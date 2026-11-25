@@ -17,6 +17,7 @@ Writes analysis/out/interference.json and analysis/out/interference.md.
 from __future__ import annotations
 
 import json
+import os
 import pathlib
 import sys
 import time
@@ -152,6 +153,68 @@ JOINTS = [
     ("Zero-point release-air line", "Zero-point release valve", "tube in the valve's push-in port"),
     ("Zero-point clamping pins", "Zero-point arms", "pin screwed into its arm"),
     ("Zero-point clamping pins", "Zero-point clamping modules", "pin in the module's bore (clamped)"),
+    # in-situ monitoring hardware (cad/monitoring_parts.py, monitoring/mechanics.md; only built with LPBF_MONITORING=1)
+    ("LW viewport gasket", "Process chamber body", "gasket on the window seat's floor"),
+    ("LW viewport gasket", "LW viewport window", "window between its gasket and flat ring"),
+    ("LW viewport gasket", "LW window clamp ring", "clamp ring presses the flat ring"),
+    ("LW window clamp ring", "Process chamber body", "clamp ring bottoms on the wall face (4 x M4)"),
+    ("LW viewport window", "Process chamber body", "window in its seat"),
+    ("LW cover slide", "Lift-out wall liner, left", "slide held against the liner over its hole"),
+    ("LW cover-slide clip", "Lift-out wall liner, left", "clip on the liner"),
+    ("LW cover-slide clip", "LW cover slide", "clip holds the slide"),
+    ("LW purge fitting", "Process chamber body", "fitting in the wall's SAE-4 port"),
+    ("LW purge tube", "LW purge fitting", "tube through the bored-through fitting"),
+    ("LW purge tube", "LW purge needle valve", "tube in the valve's compression port"),
+    ("LW purge tube", "Process chamber body", "tube through the wall's 4 mm passage"),
+    ("Side camera filters", "Side camera lens", "filter holder on the lens's filter thread"),
+    ("Side camera lens", "Side high-speed camera", "lens in the camera's C-mount"),
+    ("Side camera tilt block", "Side high-speed camera", "camera screwed to its tilt block"),
+    ("Side camera tilt block", "Side camera post", "plate bolted on the post"),
+    ("Side camera post", "Base plate, process module", "post bolted to the base plate"),
+    ("BW window gasket", "Process chamber body", "gasket in the seat"),
+    ("BW window gasket", "BW light window", "window between its gaskets"),
+    ("BW window gasket", "BW window clamp frame", "frame presses the flat ring"),
+    ("BW window clamp frame", "Process chamber body", "frame bottoms on the wall (3 x M4)"),
+    ("BW light window", "Process chamber body", "window in its seat"),
+    ("LP adapter boss", "Chamber lid", "boss bolted on the lid (4 x M4)"),
+    ("LP adapter O-ring", "Chamber lid", "O-ring squeezed on the lid"),
+    ("LP adapter O-ring", "LP adapter boss", "O-ring in the boss's face groove"),
+    ("LP window", "LP adapter boss", "window in its seat"),
+    ("LP window gasket", "LP adapter boss", "gasket in the seat"),
+    ("LP window gasket", "LP window", "window between its gaskets"),
+    ("LP window gasket", "LP window retaining ring", "ring presses the flat ring"),
+    ("LP window retaining ring", "LP adapter boss", "ring threaded into the boss"),
+    ("LP cover slide", "LP adapter boss", "slide in its pocket"),
+    ("LP camera filters", "LP window retaining ring", "filter holder on the boss's thread"),
+    ("LP camera filters", "LP camera lens", "filter holder on the lens"),
+    ("LP camera lens", "LP camera (", "lens in the camera's C-mount"),
+    ("Coaxial cube 2", "Optics bridge", "post on the bridge"),
+    ("Coaxial cube 3", "Optics bridge", "post on the bridge"),
+    ("Coaxial lens tubes", "Coaxial-monitoring dichroic", "tube in the cube's SM1 port"),
+    ("Coaxial lens tubes", "Coaxial cube", "tube in the cube's SM1 port"),
+    ("Cage rods", "Coaxial", "rods in the cubes' and plates' rod holes"),
+    ("Cage rods", "Photodiode", "rods in the cage plates"),
+    ("Cage rods", "Beam trap", "rods by the trap"),
+    ("Coaxial camera arm", "Coaxial cube 2", "tube in the cube's SM1 port"),
+    ("Coaxial camera (", "Coaxial camera arm", "board on its cage plate"),
+    ("Coaxial camera (", "Optics bridge", "post on the bridge"),
+    ("Photodiode B arm", "Coaxial cube 3", "tube in the cube's SM1 port"),
+    ("Photodiode B (", "Photodiode B arm", "detector on its tube"),
+    ("Photodiode B (", "Optics bridge", "post on the bridge"),
+    ("Photodiode A arm", "Coaxial cube 3", "tube in the cube's SM1 port"),
+    ("Photodiode A (", "Photodiode A arm", "detector on its tube"),
+    ("Photodiode A (", "Optics bridge", "post on the bridge"),
+    ("Beam trap on cube 1", "Coaxial-monitoring dichroic", "trap on the cube's far port"),
+    ("Beam trap on cube 1", "Optics bridge", "post on the bridge"),
+    ("AE waveguide", "Build plate", "polished tip pressed on the plate's spigot"),
+    ("AE waveguide", "Rod end", "cold end screwed into the rod end's bore floor"),
+    ("AE sensor (", "Rod end", "sensor face on the rod end's back face (couplant)"),
+    ("AE sensor strap", "Rod end", "strap screwed to the rod end"),
+    ("AE sensor strap", "AE sensor (", "strap over the sensor"),
+    ("AE preamplifier", "Base plate, process module", "preamp on the base plate"),
+    ("Digitizer bracket", "Rack side panels", "bracket on the rack's side panel"),
+    ("Digitizer PicoScope", "Digitizer bracket", "digitizer on its bracket"),
+    ("Sync breakout box", "Digitizer bracket", "box on the bracket"),
 ]
 
 ALLOW_HOSE_THROUGH = ("Laser guard panels", "Guard frame")   # hoses pass the guard through bulkheads
@@ -369,8 +432,10 @@ def main():
     rep["joints"] = [dict(a=a, b=b, why=w) for (a, b), w in sorted(seen_joints.items())]
     rep["runtime_s"] = round(time.time() - t0, 1)
     out = OUT if (module, reservoir) in (("M50", None), ("M50", "M")) else OUT / "variants"
-    out.mkdir(exist_ok=True)
     stem = "interference" if out == OUT else f"interference-{module}-{reservoir or M.MP.MODULES[module]['reservoir']}"
+    if os.environ.get("LPBF_MONITORING", "") not in ("", "0"):      # with the monitoring parts: its own file; the default stays as it was
+        out, stem = OUT / "monitoring" / "mech", f"interference-monitoring-{module}-{reservoir or M.MP.MODULES[module]['reservoir']}"
+    out.mkdir(parents=True, exist_ok=True)
     (out / f"{stem}.json").write_text(json.dumps(rep, indent=1))
     write_md(rep, out / f"{stem}.md")
     print(f"done in {rep['runtime_s']} s")

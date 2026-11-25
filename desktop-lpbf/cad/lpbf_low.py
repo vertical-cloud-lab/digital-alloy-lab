@@ -21,6 +21,7 @@ same geometry, and every moving part carries the motion group it belongs to (MOT
 from __future__ import annotations
 
 import math
+import os
 import pathlib
 import sys
 from dataclasses import dataclass, field
@@ -477,8 +478,10 @@ CHAMBER_OPS: dict = {}          # "frame" / "floor": dict(blank=solid, ops=[(op 
 # --------------------------------------------------------------------------------------------
 # The machine
 # --------------------------------------------------------------------------------------------
-def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
-    """The machine with one build module (S25, M50 or L75) and one reservoir (S, M or L; default: the module's)."""
+def build(include_tray=True, module="M50", reservoir=None, fasteners=True, monitoring=None):
+    """The machine with one build module (S25, M50 or L75) and one reservoir (S, M or L; default: the module's).
+    monitoring=True adds the in-situ monitoring hardware (cad/monitoring_parts.py, monitoring/mechanics.md); None reads
+    LPBF_MONITORING from the environment (1 = on), so scripts that call build() unchanged can include it."""
     global DOOR_HINGE, _RES
     GLANDS.clear()
     parts: list[Part] = []
@@ -1373,6 +1376,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         J.add_joints(sys.modules[__name__], parts, add, module)
     __import__("automation").add_features(add, sys.modules[__name__], module)   # robot-tending features (cad/automation.py, robot-ops.md)
     __import__("electrical_parts").add_features(add, sys.modules[__name__], module)   # electrical parts (cad/electrical_parts.py, electrical.md)
+    if monitoring is None:
+        monitoring = os.environ.get("LPBF_MONITORING", "") not in ("", "0")
+    if monitoring:   # ports, windows, cameras, coaxial cage, AE path, digitizer (cad/monitoring_parts.py)
+        __import__("monitoring_parts").apply(parts, add, sys.modules[__name__], module)
     __import__("logos").apply(parts, sys.modules[__name__])   # 0.5 mm debosses: VCL lockup on the door, BYU block Y on the 4U drawer (cad/logos.py); keep last
     return parts
 
