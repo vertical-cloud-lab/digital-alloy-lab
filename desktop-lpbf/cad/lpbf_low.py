@@ -74,16 +74,24 @@ P["plate_d"], P["bore_d"], P["plate_t"] = MP.MODULES["M50"]["plate_d"], MP.MODUL
 P["ix"], P["iy"] = P["ch_x"] / 2, P["ch_y"] / 2
 P["cx"], P["cy"] = P["ix"] + P["wall"], P["iy"] + P["wall"]
 P["lid_z0"], P["lid_z1"] = P["ch_z"], P["ch_z"] + P["lid"]
-# focus (optics.md §1.3 and §8): the 8 mm window and the 3 mm cover slide sit in the converging beam and push the focus down
-# by t(1 - 1/n), n = 1.44956 (fused silica at 1070 nm, Malitson). analysis/optics/beam_path.py §C computes the same 3.41 mm
-# and checks this value; the lens is raised by it so the focus lands on the powder (it was 3.41 mm below it)
-P["glass_t"] = 8.0 + 3.0
-P["focus_shift"] = round(P["glass_t"] * (1 - 1 / 1.44956), 2)     # 3.41 mm
-P["lens_shim"] = 3.0          # nominal ring-shim stack between the lens's shoulder and the adapter ring: 0-6 mm = +/-3 mm of focus
-P["lens_ring"] = 13.0         # f-theta adapter ring (was 16): engages 9.5 mm of the lens's ~12.5 mm M85x1 thread at 3 mm of shims
+# focus (optics.md §1.3, §8 and §9.3): the chamber window and the cover slide sit in the converging beam and push the focus down
+# by t(1 - 1/n), n = 1.44956 (fused silica at 1070 nm, Malitson). Since 2026-11-25 they are drawn as the BOM parts: window Edmund
+# 38-990 (Ø50.8 x 9.53 mm, L7) and slide Edmund 36-299 (Ø50.0 x 2.0 mm, A2); they were drawn 8 + 3 mm (shift 3.41 mm).
+# analysis/optics/beam_path.py §C computes the same 3.58 mm and checks this value; the lens is raised by it so the focus lands
+# on the powder
+P["win_t"], P["slide_t"], P["slide_d"] = 9.53, 2.0, 50.0
+P["glass_t"] = P["win_t"] + P["slide_t"]
+P["focus_shift"] = round(P["glass_t"] * (1 - 1 / 1.44956), 2)     # 3.58 mm (was 3.41 with 8 + 3 mm)
+P["z_win0"] = P["lid_z1"] + 20.0 - P["win_t"]   # window bottom 146.47: its top stays at z 156 under the clamp ring (the seat is 1.53 mm deeper)
+P["z_slide0"] = P["lid_z0"] + 7.0               # slide bottom 127.0, on a 1.7 mm seat in the drawer (the Ø50 slide sits in a Ø50.4 pocket)
+# nominal ring-shim stack between the lens's shoulder and the adapter ring: the extra 0.17 mm of focus shift comes out of the stack
+# (3.00 -> 2.83 mm), so the lens rises 0.17 mm and the bridge, galvo and guard stay put; 0-6 mm of shims moves the lens 2.83 mm up
+# (no shims) to 3.17 mm down (6 mm) from nominal
+P["lens_shim"] = round(3.0 - (P["focus_shift"] - 3.41), 2)
+P["lens_ring"] = 13.0         # f-theta adapter ring (was 16): engages 9.67 mm of the lens's ~12.5 mm M85x1 thread at 2.83 mm of shims
 P["z_lens0"] = P["lens_wd"] + P["focus_shift"]                      # lens housing bottom (was 182.5)
 P["z_bridge0"] = P["z_lens0"] + 9.2 + P["lens_shim"] + P["lens_ring"]   # 9.2: the lens's output ring below its shoulder
-P["z_bridge1"] = P["z_bridge0"] + 25.0               # 25 mm bridge: FEA put f1 at 79 Hz with 15 mm + 40 mm posts; = z_lens0 + 50.2
+P["z_bridge1"] = P["z_bridge0"] + 25.0               # 25 mm bridge: FEA put f1 at 79 Hz with 15 mm + 40 mm posts; the lens nose (z_lens0 + 50.2) is 0.17 mm above it at 2.83 mm of shims
 # basiCube 20 on a 5 mm riser (was 10): the y mirror is 30 mm above the galvo's mounting face, so it sits 35 mm above the lens
 # nose (was 40); 5 mm is what the Ø18 beam tube needs to pass 4.1 mm over the reservoir lids' grip plane (z 258) in the bridge slot
 P["galvo_riser"] = 5.0
@@ -843,23 +851,26 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # window (seals.md item 3): an O-ring sandwich. The window sits on a 2-031 FKM O-ring in a groove in the seat; a 1 mm FKM flat
     # ring on top; the retaining ring's spigot presses that ring to 0.75 mm when the ring bottoms metal-to-metal on the flange, so
     # the squeeze is set by the geometry, not the screw torque. A 2-036 FKM face O-ring seals the flange to the lid.
-    zs = lz1 + 12.0                                        # window seat
-    wf = tube(50, 21, (0, 0, lz1), "z", 22).cut(cyl(25.6, (0, 0, zs), "z", 11))
+    zs = P["z_win0"]                                       # window seat: 146.47 for the 9.53 mm Edmund 38-990 (was lz1 + 12 for 8 mm)
+    wf = tube(50, 21, (0, 0, lz1), "z", 22).cut(cyl(25.6, (0, 0, zs), "z", lz1 + 23.0 - zs))
     wf = wf.cut(tube(22.45 + F["width"], 22.45, (0, 0, zs - F["depth"]), "z", F["depth"] + 0.01))          # lower window O-ring groove (2-031)
     wf = wf.cut(tube(30.8 + F["width"], 30.8, (0, 0, lz1 - 0.01), "z", F["depth"] + 0.01))                 # flange-to-lid face groove (2-036)
     add("Window flange (6061, two FKM O-ring grooves)", wf, C["anod"], 7, (0, 0, 360), mat="al6061", bom="L7", section=True)
-    add("Ø2 in. fused-silica window, 8 mm, AR 1064", cyl(25.4, (0, 0, zs), "z", 8), C["glass"], 7, (0, 0, 380), mat="fused_silica", bom="L7", opacity=0.45, section=True)
+    add("Ø2 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990)", cyl(25.4, (0, 0, zs), "z", P["win_t"]), C["glass"], 7, (0, 0, 380), mat="fused_silica", bom="L7", opacity=0.45, section=True)
     add("Window O-ring, lower (FKM 75A 2-031, under the window)", tube(22.45 + F["width"] - 0.3, 22.45, (0, 0, zs - F["depth"]), "z", F["depth"]), C["black"], 7, (0, 0, 370), mat="fkm", bom="G8", section=True)
-    add("Window clamp ring, upper (FKM 75A sheet, 1.0 mm, squeezed to 0.75)", tube(25.3, 22.2, (0, 0, zs + 8.0), "z", 0.75), C["black"], 7, (0, 0, 390), mat="fkm", bom="G8", section=True)
+    add("Window clamp ring, upper (FKM 75A sheet, 1.0 mm, squeezed to 0.75)", tube(25.3, 22.2, (0, 0, zs + P["win_t"]), "z", 0.75), C["black"], 7, (0, 0, 390), mat="fkm", bom="G8", section=True)
     add("Window-flange O-ring (FKM 75A 2-036, face seal on the lid)", tube(30.8 + F["width"] - 0.3, 30.8, (0, 0, lz1), "z", F["depth"]), C["black"], 7, (0, 0, 350), mat="fkm", bom="G8", section=True)
     GLANDS["window_lower"] = dict(kind="face", ring="2-031", cs=1.78, depth=F["depth"], width=F["width"], groove_id=44.9, groove_mat="al", T=80.0, closure="window on its seat")
     GLANDS["window_flange"] = dict(kind="face", ring="2-036", cs=1.78, depth=F["depth"], width=F["width"], groove_id=61.6, groove_mat="al", T=60.0, closure="window flange on the lid")
-    rrb = fuse([tube(50, 22, (0, 0, lz1 + 22), "z", 5), tube(25.4, 22, (0, 0, zs + 8.75), "z", lz1 + 22 - zs - 8.75)])
+    rrb = fuse([tube(50, 22, (0, 0, lz1 + 22), "z", 5), tube(25.4, 22, (0, 0, zs + P["win_t"] + 0.75), "z", lz1 + 22 - zs - P["win_t"] - 0.75)])
     add("Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry)", rrb, C["anod"], 7, (0, 0, 400), mat="al6061", bom="L7", section=True)
     add("Field-stop aperture (Ø36, passive beam limit)", tube(27.9, 18, (0, 0, dz1), "z", lz1 - dz1), C["black"], 7, (0, 0, 300), mat="al6061", bom="L7", section=True)
     # cover-slide drawer: pulls out of the lid's front edge (a person or the robot through the guard door) without
     # lifting the lid; an FKM O-ring on its front plate seals it against the lid. Only opened at atmosphere.
-    drw = box(-35.5, 35.5, -cy, 33.5, dz0 + 0.3, dz1 - 0.3).cut(cyl(25.6, (0, 0, dz0), "z", 7)).cut(cyl(23.0, (0, 0, dz0 - 1), "z", 8))
+    # the Ø50.0 x 2 mm slide (Edmund 36-299) sits on a 1.7 mm seat in a Ø50.4 pocket (optics-bom O12; the pocket was Ø51.2, cut
+    # through, so the drawn slide had nothing under it); the Ø46 opening under the seat is the "drawer opening" in beam_path.py
+    zsl = P["z_slide0"]
+    drw = box(-35.5, 35.5, -cy, 33.5, dz0 + 0.3, dz1 - 0.3).cut(cyl(25.2, (0, 0, zsl), "z", dz1 - zsl + 1.0)).cut(cyl(23.0, (0, 0, dz0 - 1), "z", 8))
     # front plate widened to x +/-64 for two quarter-turn latches; 1.78 mm FKM ring in a half-dovetail groove round the slot (item 4)
     fp = rbox(-64, 64, -cy - 8, -cy, lz0 - 2, lz1, 3)                   # top at the lid's top: clears the front lid screws' heads
     hd_r = 1.5
@@ -869,7 +880,8 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         fp = fp.cut(cyl(QT["stud_d"] / 2 + 0.25, (sx * x_qt, -cy - 8.01, lz0 + 8.0), "y", 8.02))
     drw = fuse([drw, fp, box(-20, 20, -cy - 20, -cy - 8, dz0 + 1, dz1 - 1), box(-20, -14, -cy - 20, -cy - 8, lz0 + 1, lz1 - 1), box(14, 20, -cy - 20, -cy - 8, lz0 + 1, lz1 - 1)])
     add("Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)", drw, C["anod"], 7, (0, -200, 0), group="drawer", mat="al6061", bom="A2", section=True)
-    add("Cover slide (Ø2 in. x 3 mm fused silica, consumable)", cyl(25.4, (0, 0, dz0 + 1.0), "z", 3.0), C["glass"], 7, (0, -200, 0), group="drawer", mat="fused_silica", bom="A2", opacity=0.5, section=True)
+    add("Cover slide (Ø50 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)", cyl(P["slide_d"] / 2, (0, 0, zsl), "z", P["slide_t"]), C["glass"], 7, (0, -200, 0),
+        group="drawer", mat="fused_silica", bom="A2", opacity=0.5, section=True)
     per = loop_perimeter((hd_w / 2, hd_h / 2), hd_r)
     pk = MP.pick_ring(per)
     add(f"Drawer O-ring (FKM 75A {pk[0]} in a half-dovetail groove, seals on the lid's front face)",
@@ -1058,20 +1070,26 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     zl0 = P["z_lens0"]
     lens = VP.thorlabs_fth160_1064().translate(V(0, 0, zl0))
     add("f-theta lens, f = 160 mm (Thorlabs FTH160-1064)", lens, C["black"], 9, (0, 0, 300), mat="misc", mass_kg=0.8, bom="L6")
-    # focus (optics.md §8.1): the lens sits 3.41 mm higher than its flange focal length so the window and slide put the focus on
-    # the powder. Its shoulder (z_lens0 + 9.2) bears on a 3 mm stack of ring shims (ID 85.5, OD 105, laser-cut from McMaster
-    # 18-8 shim stock 95055K25 0.5 mm, 95055K19 0.25 mm and 95055K13 0.1 mm: McMaster has no ring shim over 80 mm ID) under a 13 mm adapter ring:
-    # 0-6 mm of shims sets the focus +/-3 mm (burn test, optics.md §4.2); the M85x1 thread engages 6.5-12.5 mm over that range
+    # focus (optics.md §8.1 and §9.3): the lens sits 3.58 mm higher than its flange focal length so the 9.53 mm window and the 2 mm
+    # slide put the focus on the powder. Its shoulder (z_lens0 + 9.2) bears on a 2.83 mm stack of ring shims (ID 85.5, OD 105,
+    # laser-cut from McMaster 18-8 shim stock 95055K25 0.5 mm, 95055K19 0.25 mm and 95055K13 0.1 mm: McMaster has no ring shim over
+    # 80 mm ID; 5 x 0.5 + 1 x 0.25 + 1 x 0.1 = 2.85 mm, 0.02 mm off) under a 13 mm adapter ring: 0-6 mm of shims moves the lens
+    # 2.83 mm up to 3.17 mm down (burn test, optics.md §4.2); the M85x1 thread engages 6.5-12.5 mm over that range (9.67 mm nominal)
     zsh = zl0 + 9.2
-    add("f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; 3 mm nominal stack: 0-6 mm = +/-3 mm of focus)",
+    add(f"f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; {P['lens_shim']:.2f} mm nominal stack: "
+        f"0-6 mm: lens {P['lens_shim']:.2f} mm up to {6 - P['lens_shim']:.2f} mm down)",
         tube(52.5, 42.75, (0, 0, zsh), "z", P["lens_shim"]), C["steel"], 9, (0, 0, 270), mat="ss304", bom="F5", mcm="95055K25")
     add("f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridge)", tube(55.0, 42.5, (0, 0, zsh + P["lens_shim"]), "z", P["lens_ring"]),
         C["anod"], 9, (0, 0, 280), mat="al6061", bom="F5")
     zg0 = zb1_ + P["galvo_riser"]
     galvo = VP.scanlab_basicube20().translate(V(0, 0, zg0))
     add("2-axis galvo scan head (SCANLAB basiCube 20)", galvo, C["anod"], 9, (0, 0, 340), mat="misc", mass_kg=3.75, bom="L5")
-    rs = box(-57.15, 97.85, -71.75, 58.25, zb1_, zg0).cut(cyl(20, (0, 0, zb1_ - 1), "z", P["galvo_riser"] + 2))
-    add("Galvo riser plate (6061, 5 mm, Ø40 bore for the scanned beam)", rs, C["alu_dark"], 9, (0, 0, 330), mat="al6061", bom="F5")
+    # Ø56 bore (was Ø40, 2026-11-25): the lens's Ø53 nose is flush with the bridge top only at 3 mm of shims; with fewer shims
+    # (2.83 nominal now, 0 at the top of the range) it rises up to 3.0 mm into the riser, so the bore clears the nose by 1.5 mm
+    # radially and the nose stays 2.0 mm under the galvo's base at the top of the range. The scanned beam needs only Ø40
+    rs = box(-57.15, 97.85, -71.75, 58.25, zb1_, zg0).cut(cyl(28, (0, 0, zb1_ - 1), "z", P["galvo_riser"] + 2))
+    add("Galvo riser plate (6061, 5 mm, Ø56 bore: clears the f-theta's Ø53 nose over the shim range and the scanned beam)", rs, C["alu_dark"], 9, (0, 0, 330),
+        mat="al6061", bom="F5")
     # beam line (optics.md §4.5 and §8.4): the collimator lies along x 120 mm behind the galvo's input line; a laser-line mirror
     # folds the beam to -y, through the shutter, onto a 45 deg short-pass dichroic (DMSP1000) that reflects 1070 nm into the
     # galvo. The melt pool's 520-985 nm light comes back de-scanned through the galvo, passes the dichroic and reaches the
