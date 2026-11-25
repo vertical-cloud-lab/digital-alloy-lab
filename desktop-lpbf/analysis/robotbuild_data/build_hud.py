@@ -937,7 +937,7 @@ def write_costs_csv(cat_list, items, leads, lines, sc):
             "spec_used_low_usd", "spec_used_high_usd", "run_spec_new_usd", "run_spec_used_low_usd", "run_spec_used_high_usd",
             "run_new_low_usd", "run_new_high_usd", "run_used_low_usd", "run_used_high_usd", "price_source",
             "used_listing", "used_condition", "used_returns", "used_seller_type", "used_location", "used_url",
-            "used_fetched_utc", "lead_new", "lead_new_days_low", "lead_new_days_high", "lead_new_po", "lead_new_source",
+            "used_fetched_utc", "used_status_2026_11_25", "used_price_2026_11_25", "used_delivery_to_provo", "lead_new", "lead_new_days_low", "lead_new_days_high", "lead_new_po", "lead_new_source",
             "lead_used", "lead_used_days_low", "lead_used_days_high", "lead_used_source", "faster_new_option", "risk"]
     rows = []
     for C in cat_list:
@@ -969,7 +969,7 @@ def write_costs_csv(cat_list, items, leads, lines, sc):
                          price_source=x["new_src"], used_listing=u.get("title", ""), used_condition=u.get("condition", ""),
                          used_returns=u.get("returns", ""), used_seller_type=u.get("seller_type", ""),
                          used_location=u.get("location", ""), used_url=u.get("url", ""),
-                         used_fetched_utc=u.get("fetched_utc", ""),
+                         used_fetched_utc=u.get("fetched_utc", ""), used_status_2026_11_25=(u.get("recheck") or {}).get("status", "not re-read" if u else ""), used_price_2026_11_25=(u.get("recheck") or {}).get("price_now") or "", used_delivery_to_provo=(u.get("recheck") or {}).get("delivery_to_provo", ""),
                          lead_new=L["new"]["text"], lead_new_days_low=(L["new"]["days"] or ["", ""])[0],
                          lead_new_days_high=(L["new"]["days"] or ["", ""])[1], lead_new_po=L["new"]["po"],
                          lead_new_source=L["new"]["source"],
