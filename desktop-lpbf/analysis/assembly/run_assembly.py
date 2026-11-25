@@ -188,6 +188,11 @@ class Run:
         if tool == "gripper+caps":
             caps, _ = TL.mesh("ring_caps")
             a.set_tool("gripper", caps=dict(name="ring caps", meshes=caps, grasp_z=31.9, inner_x=23.0, color="#d9b23a"))
+        elif tool == "gripper+plate":
+            # round 6 (run 7): the tending robot's cranked plate fingers (analysis/robot/eoat.py, robot-tooling.csv), for the side
+            # liners' hanger tabs, as its liner jobs (analysis/robot/ops.py job_liner) take them out through the door
+            import eoat as E
+            a.set_tool("gripper", caps=E.plate_finger_spec())
         elif tool in ("screwdriver", "nutrunner", "nutrunner_angle"):
             a.set_tool(tool, extra_bit=float(long_bit or 0.0), tip_d=tip_d)
         elif tool in ("vacuum", "nozzle", "roller", "roller_n"):

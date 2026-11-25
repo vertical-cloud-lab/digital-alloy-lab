@@ -1005,8 +1005,26 @@
    ]
   },
   {
+   "id": "C00",
+   "label": "Overflow funnel: its 2-042 in the block's groove, the block (KF-40 stub welded on) and its four M4 x 12 onto the floor plate's underside, on the bench before C00a",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "operations.md A2.13: with the plate on the bench, face down, all four screws are open from above; on the machine two sit under the KF-40 stub's flange (run 6: 2 of 4). Not checked here: the bench is not modelled.",
+   "who": "person (bench)"
+  },
+  {
    "id": "C00a",
-   "label": "Floor plate (inserts and the two frame dowels already in) onto Fixture P, gland face up, by the vacuum gripper",
+   "label": "Floor plate (inserts, the two frame dowels and the overflow funnel already on) onto Fixture P, gland face up, by the vacuum gripper",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -1027,7 +1045,10 @@
     "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
     "Outlet-plenum helical inserts, M4 x 6 18-8, in the floor (6 x McMaster 91732A656)",
     "Overflow-funnel helical inserts, M4 x 6 18-8, in the floor (4 x McMaster 91732A656)",
-    "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)"
+    "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
+    "Overflow funnel block (316L, bolted, FKM face O-ring)",
+    "Overflow funnel O-ring (FKM 75A 2-042, face seal under the floor)",
+    "Overflow port (KF-40, weld stub to 40 mm)"
    ],
    "waypoints": [
     [
@@ -1112,8 +1133,8 @@
    },
    "min_gap_mm": null,
    "gap_with": null,
-   "arm_clearance_mm": 1.2,
-   "arm_clearance_with": "nutrunner_angle to Fixture P (floor-plate pedestal)",
+   "arm_clearance_mm": 2.2,
+   "arm_clearance_with": "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under ",
    "why": "in the: approach: no path in 500 iterations",
    "joint": "floor",
    "pn": null,
@@ -1259,8 +1280,8 @@
      "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #18",
      "ok": true,
      "clearance": [
-      1.2,
-      "nutrunner_angle to Fixture P (floor-plate pedestal)"
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
      ]
     }
    ]
@@ -1330,7 +1351,7 @@
       0.0,
       0.0,
       1.0,
-      107.5
+      127.5
      ],
      [
       0.0,
@@ -1356,7 +1377,7 @@
       0.0,
       0.0,
       1.0,
-      145.0
+      185.0
      ],
      [
       0.0,
@@ -1382,7 +1403,7 @@
       0.0,
       0.0,
       1.0,
-      182.5
+      242.5
      ],
      [
       0.0,
@@ -1408,7 +1429,7 @@
       0.0,
       0.0,
       1.0,
-      220.0
+      300.0
      ],
      [
       0.0,
@@ -1434,7 +1455,7 @@
       0.0,
       0.0,
       1.0,
-      217.042
+      297.042
      ],
      [
       0.0,
@@ -1460,7 +1481,7 @@
       0.0,
       0.0,
       1.0,
-      214.085
+      294.085
      ],
      [
       0.0,
@@ -1486,7 +1507,7 @@
       0.0,
       0.0,
       1.0,
-      211.127
+      291.127
      ],
      [
       0.0,
@@ -1512,7 +1533,7 @@
       0.0,
       0.0,
       1.0,
-      208.169
+      288.169
      ],
      [
       0.0,
@@ -1538,7 +1559,7 @@
       0.0,
       0.0,
       1.0,
-      205.211
+      285.211
      ],
      [
       0.0,
@@ -1564,7 +1585,7 @@
       0.0,
       0.0,
       1.0,
-      202.254
+      282.254
      ],
      [
       0.0,
@@ -1590,7 +1611,7 @@
       0.0,
       0.0,
       1.0,
-      199.296
+      279.296
      ],
      [
       0.0,
@@ -1616,7 +1637,7 @@
       0.0,
       0.0,
       1.0,
-      196.338
+      276.338
      ],
      [
       0.0,
@@ -1642,7 +1663,7 @@
       0.0,
       0.0,
       1.0,
-      193.38
+      273.38
      ],
      [
       0.0,
@@ -1668,7 +1689,7 @@
       0.0,
       0.0,
       1.0,
-      190.423
+      270.423
      ],
      [
       0.0,
@@ -1694,7 +1715,7 @@
       0.0,
       0.0,
       1.0,
-      187.465
+      267.465
      ],
      [
       0.0,
@@ -1720,7 +1741,7 @@
       0.0,
       0.0,
       1.0,
-      184.507
+      264.507
      ],
      [
       0.0,
@@ -1746,7 +1767,7 @@
       0.0,
       0.0,
       1.0,
-      181.549
+      261.549
      ],
      [
       0.0,
@@ -1772,7 +1793,7 @@
       0.0,
       0.0,
       1.0,
-      178.592
+      258.592
      ],
      [
       0.0,
@@ -1798,7 +1819,7 @@
       0.0,
       0.0,
       1.0,
-      175.634
+      255.634
      ],
      [
       0.0,
@@ -1824,7 +1845,7 @@
       0.0,
       0.0,
       1.0,
-      172.676
+      252.676
      ],
      [
       0.0,
@@ -1850,7 +1871,7 @@
       0.0,
       0.0,
       1.0,
-      169.718
+      249.718
      ],
      [
       0.0,
@@ -1876,7 +1897,7 @@
       0.0,
       0.0,
       1.0,
-      166.761
+      246.761
      ],
      [
       0.0,
@@ -1902,7 +1923,7 @@
       0.0,
       0.0,
       1.0,
-      163.803
+      243.803
      ],
      [
       0.0,
@@ -1928,7 +1949,7 @@
       0.0,
       0.0,
       1.0,
-      160.845
+      240.845
      ],
      [
       0.0,
@@ -1954,7 +1975,7 @@
       0.0,
       0.0,
       1.0,
-      157.887
+      237.887
      ],
      [
       0.0,
@@ -1980,7 +2001,7 @@
       0.0,
       0.0,
       1.0,
-      154.93
+      234.93
      ],
      [
       0.0,
@@ -2006,7 +2027,7 @@
       0.0,
       0.0,
       1.0,
-      151.972
+      231.972
      ],
      [
       0.0,
@@ -2032,7 +2053,7 @@
       0.0,
       0.0,
       1.0,
-      137.5
+      210.833
      ],
      [
       0.0,
@@ -2058,7 +2079,7 @@
       0.0,
       0.0,
       1.0,
-      100.0
+      153.333
      ],
      [
       0.0,
@@ -2084,7 +2105,7 @@
       0.0,
       0.0,
       1.0,
-      62.5
+      95.833
      ],
      [
       0.0,
@@ -2110,7 +2131,7 @@
       0.0,
       0.0,
       1.0,
-      25.0
+      38.333
      ],
      [
       0.0,
@@ -2182,8 +2203,8 @@
    },
    "min_gap_mm": 0.05,
    "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
+   "arm_clearance_mm": 37.7,
+   "arm_clearance_with": "left_finger to Overflow port (KF-40, weld stub to 40 mm)",
    "why": "",
    "parts": [],
    "waypoints": [
@@ -2245,8 +2266,8 @@
    },
    "min_gap_mm": 1.68,
    "gap_with": "Outlet plenum O-ring (FKM 75A 2-044, face seal under the floor)",
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
+   "arm_clearance_mm": 2.0,
+   "arm_clearance_with": "held:C04:Cross-flow outlet plenum under to Overflow funnel block (316L, bolted, FKM face O-ri",
    "why": "",
    "parts": [
     "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
@@ -2336,125 +2357,6 @@
       2.2,
       "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
      ]
-    }
-   ]
-  },
-  {
-   "id": "C06",
-   "label": "Overflow-funnel O-ring (2-042) into the funnel block's groove, PFPE film",
-   "do": "seal",
-   "arm": "B",
-   "holder": null,
-   "tool": "gripper+caps",
-   "status": {
-    "sweep": "PASS",
-    "arm": "-"
-   },
-   "min_gap_mm": 1.68,
-   "gap_with": "Overflow funnel block (316L, bolted, FKM face O-ring)",
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "",
-   "parts": [
-    "Overflow funnel O-ring (FKM 75A 2-042, face seal under the floor)"
-   ],
-   "waypoints": [
-    [
-     0.0,
-     0.0,
-     60.0
-    ],
-    [
-     0.0,
-     0.0,
-     0.0
-    ]
-   ],
-   "seal_method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down"
-  },
-  {
-   "id": "C07",
-   "label": "Overflow funnel block (KF-40 port welded on) onto the floor",
-   "do": "place",
-   "arm": "A",
-   "holder": null,
-   "tool": "gripper",
-   "status": {
-    "sweep": "PASS",
-    "arm": "PASS"
-   },
-   "min_gap_mm": 1.68,
-   "gap_with": "Overflow funnel O-ring (FKM 75A 2-042, face seal under the floor)",
-   "arm_clearance_mm": 5.3,
-   "arm_clearance_with": "held:C07:Overflow funnel block to Cross-flow outlet plenum under the floor (316L, fl",
-   "why": "",
-   "parts": [
-    "Overflow funnel block (316L, bolted, FKM face O-ring)",
-    "Overflow funnel O-ring (FKM 75A 2-042, face seal under the floor)",
-    "Overflow port (KF-40, weld stub to 40 mm)"
-   ],
-   "waypoints": [
-    [
-     0.0,
-     0.0,
-     -200.0
-    ],
-    [
-     0.0,
-     0.0,
-     0.0
-    ]
-   ]
-  },
-  {
-   "id": "C08",
-   "label": "Four M4 x 12 overflow-funnel screws (60 mm bit extension: two sit beside the KF-40 stub)",
-   "do": "screws",
-   "arm": "A",
-   "holder": null,
-   "tool": "screwdriver",
-   "status": {
-    "sweep": "PASS",
-    "arm": "PART"
-   },
-   "min_gap_mm": null,
-   "gap_with": null,
-   "arm_clearance_mm": 0.8,
-   "arm_clearance_with": "screwdriver to Overflow funnel block (316L, bolted, FKM face O-ri",
-   "why": "red #3: screwdriver: A/tool/screwdriver hits Overflow port (KF-40, weld stub to 40 mm); also no wa; red #4: screwdriver: A/tool/screwdriver hits Overflow port (KF-40, weld stub to 40 mm); also no wa",
-   "joint": "funnel",
-   "pn": null,
-   "driver": [
-    "nutrunner_angle",
-    "screwdriver"
-   ],
-   "torque_Nm": 2.2,
-   "per_screw": [
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #1",
-     "ok": true,
-     "clearance": [
-      0.8,
-      "screwdriver to Overflow funnel block (316L, bolted, FKM face O-ri"
-     ]
-    },
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #2",
-     "ok": true,
-     "clearance": [
-      0.8,
-      "screwdriver to Overflow funnel block (316L, bolted, FKM face O-ri"
-     ]
-    },
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #3",
-     "ok": false,
-     "clearance": null
-    },
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #4",
-     "ok": false,
-     "clearance": null
     }
    ]
   },
@@ -4230,20 +4132,20 @@
   },
   {
    "id": "F10c",
-   "label": "Wall liner, left, in through the door opening and onto its wall",
+   "label": "Wall liner, left, in through the door opening and onto its wall, held by its hanger tab (plate fingers)",
    "do": "place",
    "arm": "A",
    "holder": null,
-   "tool": "gripper",
+   "tool": "gripper+plate",
    "status": {
     "sweep": "PASS",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
    "min_gap_mm": 0.36,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clearance_mm": 0.9,
-   "arm_clearance_with": "wrist3 to Process chamber body (6061-T6 through-frame from 5",
-   "why": "arm A: A/wrist3 hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 462 mm along the insertion",
+   "arm_clearance_mm": 0.1,
+   "arm_clearance_with": "held:F10c:Lift-out wall liner, left to Process chamber body (6061-T6 through-frame from 5",
+   "why": "",
    "parts": [
     "Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
     "Liner pull tab, left (316L, 2 mm hanger: a web from the left side liner in to a grip plate 44 mm off it, inside the door opening's width; spot-welded)"
@@ -4377,20 +4279,20 @@
   },
   {
    "id": "F10f",
-   "label": "Wall liner, right, in through the door opening and onto its wall",
+   "label": "Wall liner, right, in through the door opening and onto its wall, held by its hanger tab (plate fingers)",
    "do": "place",
    "arm": "A",
    "holder": null,
-   "tool": "gripper",
+   "tool": "gripper+plate",
    "status": {
     "sweep": "PASS",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
    "min_gap_mm": 0.36,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clearance_mm": 1.0,
-   "arm_clearance_with": "wrist3 to Process chamber body (6061-T6 through-frame from 5",
-   "why": "arm A: A/wrist3 hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 462 mm along the insertion",
+   "arm_clearance_mm": 0.1,
+   "arm_clearance_with": "held:F10f:Lift-out wall liner, right to Process chamber body (6061-T6 through-frame from 5",
+   "why": "",
    "parts": [
     "Lift-out wall liner, right (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
     "Liner pull tab, right (316L, 2 mm hanger: a web from the right side liner in to a grip plate 44 mm off it, inside the door opening's width; spot-welded)"
