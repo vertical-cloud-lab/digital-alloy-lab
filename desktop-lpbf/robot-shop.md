@@ -49,9 +49,10 @@ chapters are `20-receiving`, `30-machining-chamber`, `31-machining-parts` and `3
 
   The 3FG15 and the VGP20 are modelled as their own collision bodies, not as the 2F-85 (round 6 used the 2F-85 for all).
 - **Loads over about 10 kg go to a person with the vacuum tube lifter, not to two arms.** Edison's review of the build
-  (r7, section 2.1) says two UR12e on separate MiR250 bases sharing one load "has no published safety standard or
-  industrial precedent". It recommends a rated lifting device above about 10 kg. Round 6's two-arm moves (P3, P6) are
-  feasibility checks only; no shared lifts appear in the video.
+  ([r7](edison/r7-robot-build-review/answer.md), section 2.1) says two UR12e on separate MiR250 bases sharing a load
+  "requires coordinated dual-mobile-base control, which has no published safety standard or industrial precedent". It
+  recommends "a rated lifting device (vacuum lifter, hoist, or jib crane) for any part above approximately 10 kg".
+  Round 6's two-arm moves (P3, P6) were feasibility checks only, and no shared lifts appear in the video.
 - **The chamber frame's core is trepanned on the VF-4.** The robot shop has no waterjet. `setup_plan.json` lists
   trepanning from both sides with the 3/4 in. end mill as the alternative.
   - A 19.05 mm kerf inside the slug's 274 x 184 mm outline: its lower half in F-S1, its upper half in F-S2.
@@ -160,7 +161,8 @@ motion class, chosen by its stock:
 How each part's hours are counted:
 - **Machine:** `hours.json`'s run time (vendor feeds where it has them).
 - **Robot:** each setup costs the class's planned arm motion twice (unload, load), plus 211 s of overhead:
-  - docking and re-registration at the station, 120 s (Edison r7 reports 1-3 min a visit);
+  - docking and re-registration at the station, 120 s (Edison r7 reports 1-3 min a visit, and accuracies of 10 mm with
+    fiducials, 0.19 mm with vision compensation and ±0.12 mm with touch calibration);
   - the door, 6 s;
   - the air blast, 20 s;
   - WIPS probing, 60 s;
