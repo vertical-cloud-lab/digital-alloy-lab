@@ -9,6 +9,225 @@ This note covers receiving, stock prep, machining, deburring, washing, measuring
 study in this PR (`analysis/assembly/`). Nothing here was built or run on real machines. The shop is a layout made up for
 the check, not a BYU room.
 
+## Round 7 (2026-11-25): the shop modelled, every shown motion planned, and the video's shop chapters
+
+Sterling asked for the two mobile manipulators to be shown carrying out the machining and assembly steps, with a person
+"where a human is absolutely necessary (e.g., the loading of the initial massive block onto [the mill])", accurate models
+of the equipment, custom tools where they help, and time estimates. This round does that for the shop. The video's
+chapters are `20-receiving`, `30-machining-chamber`, `31-machining-parts` and `32-finishing`
+([`cad/robotbuild/shop_chapters.py`](cad/robotbuild/shop_chapters.py)).
+
+### What changed
+
+- **The equipment is modelled from drawings and spec sheets**
+  ([`cad/robotbuild/equipment.py`](cad/robotbuild/equipment.py)), replacing `shop_cell.py`'s boxes. Each piece is
+  pyvista meshes for the renders and FCL arrays for the planner, with its moving parts separate. Sources are in the
+  module's docstring and in [`robot-shop-equipment.csv`](robot-shop-equipment.csv).
+
+  | Equipment | From | Estimated here |
+  |---|---|---|
+  | Haas VF-4 | Haas's page and layout drawing: travels 1270 / 508 / 635 mm; table 1321 x 495 mm, 5 T-slots, top at 940 mm; spindle 838 mm and table front 341 mm behind the front face; enclosure 3128 x 2314 mm, roof at 2004 mm; 1588 mm door aperture (2023 VF-3/SS drawing); 20-pocket carousel | sill 880 and header 1900 mm; door windows; column hood to 2740 mm; carousel size; pendant swung against the right side |
+  | Haas HRT210 on a 63.5 mm riser | the HRT210 page and drawing; sized as `freecad_cam.FIXTURES`, which `holder_check.py` swept the tools against | |
+  | Kurt XL6A air vise | 6 in. jaws, opens to 14.5 in. (Penn Tool) | body length and height |
+  | Haas ST-10 lathe | vendored from byu-vcl PR 318 (`machining_cell.py`, 9740ba8): fitted to Haas's 12/2024 layout drawing and footage; door 794-1382 mm from a 680 mm sill; spindle axis 307 mm behind the front at 991 mm. Kept as fitted | the inside: 6.5 in. chuck (ST-10 page), 12-station turret, slant bed |
+  | Hyd-Mech S-20A bandsaw | 13 x 18 in. capacity, table 31 in. (787 mm) (a reseller's listing) | the head, wheels and shuttle vise |
+  | Jib and vacuum tube lifter | Schmalz JumboFlex 50 (50 kg), Gorbel WSJ360 class jib | the low machine-side jib (below) |
+  | Pallet, pallet jack, Vestil SCTAB lift table | GMA 48 x 40 in. pallet; 27 x 48 in. forks, 2.9 in. lowered; 20 x 40 in. platform | the bodies |
+  | Crest 7 gal ultrasonic tank, ATI compliant deburr spindle | tank 19.5 x 11.75 x 8 in. | the outside, the rinse tank |
+  | Granite plate, height gauge, bore gauge | 36 x 24 x 4 in. grade A plate at 36 in.; Mitutoyo 570-412, 511-712-20 | the gauges' bodies |
+  | Robot tools | Robotiq 2F-85 (ur_arm's meshes); OnRobot 3FG15 (4-152 mm, 10 kg); OnRobot VGP20 (264 x 184 x 92 mm); ATI QC-11 | 3FG15 body; a nut runner and a box cutter held by a 20 mm fin |
+
+- **Every robot motion in the chapters is planned and recorded**
+  ([`analysis/shop/shop_plan.py`](analysis/shop/shop_plan.py), [`shop_clips.py`](analysis/shop/shop_clips.py)). The
+  checks are `shop_checks.py`'s:
+  - FCL on meshes: the arm, its gripper or tool and the part it holds, against the equipment, the fixtures and the MiR;
+  - every IK branch tried;
+  - RRT-Connect with 0.5° edges;
+  - every segment re-checked at 0.2°;
+  - PR 318's rule that a handled part may touch its fixture, the deck or the jaws only up to 1.5 mm deep;
+  - the static joint torques (`joint_torques`), and PR 318's tip-over check of the MiR at the worst-torque pose.
+
+  The 3FG15 and the VGP20 are modelled as their own collision bodies, not as the 2F-85 (round 6 used the 2F-85 for all).
+- **Loads over about 10 kg go to a person with the vacuum tube lifter, not to two arms.** Edison's review of the build
+  (r7, section 2.1) says two UR12e on separate MiR250 bases sharing one load "has no published safety standard or
+  industrial precedent". It recommends a rated lifting device above about 10 kg. Round 6's two-arm moves (P3, P6) are
+  feasibility checks only; no shared lifts appear in the video.
+- **The chamber frame's core is trepanned on the VF-4.** The robot shop has no waterjet. `setup_plan.json` lists
+  trepanning from both sides with the 3/4 in. end mill as the alternative.
+  - A 19.05 mm kerf inside the slug's 274 x 184 mm outline: its lower half in F-S1, its upper half in F-S2.
+  - That frees a 235.9 x 145.9 mm core (13.0 kg from the 139.7 mm blank) on the dummy-floor plate.
+  - The cut states reproduce the model's part to 0.000 % in volume
+    ([`cad/robotbuild/shop_chamber_cache.py`](cad/robotbuild/shop_chamber_cache.py)).
+  - The trepan's time is our estimate: about 7 min a side, from 0.5D passes at 60 % efficiency.
+- **The blank is ordered at 13 in.**: 30.0 kg. `setup_plan.json` lists 15 in. and 34.7 kg; F-S1 holds the ends with edge
+  clamps since 2026-11-23, so 13 in. will do. Either is beyond two arms' 22.4 kg.
+- **A low jib at the VF-4** (our assumption): its boom runs at 1700-1850 mm and swings in through the doors under the
+  1900 mm header. A tube lifter can't come down through the VF-4's roof, and a person can't guide a load lifted over a
+  2 m enclosure.
+  - Its boom is at head height when parked: pad it, or use a wall-mounted articulating arm.
+  - It is drawn as a Gorbel WSJ360-class free-standing jib built to that height.
+
+### The planned motions
+
+From [`analysis/out/shop/shop_plan.json`](analysis/out/shop/shop_plan.json) and
+[`shop_summary.json`](analysis/out/shop/shop_summary.json).
+- **Torque:** the most loaded joint, as a fraction of its limit, at any recorded pose.
+- **Tip-over:** the restoring moment of the MiR at that pose, with PR 318's 131 kg ballast plate. The weakest edge is
+  always the one facing the station.
+- **Closest pass:** the smallest distance, in the RRT-Connect moves, from the arm, its tool or the part to the machine.
+  Fixtures and decks a part is set on are left out.
+
+| Clip (chapter) | What | Gripper or tool | Arm time | Torque | Tip-over | Closest pass | Result |
+|---|---|---|---|---|---|---|---|
+| `recv_tape` (20) | cut a box's tape on the lift table (760 mm) | safety knife in the 2F-85 | 5.7 s | 33 % | 571 N·m | straight moves only | pass |
+| `recv_unbox` (20) | a 4.0 kg tray out of the opened box onto the deck | 2F-85 on a 20 mm fin | 10.4 s | 50 % | 613 N·m | 24.3 mm | pass |
+| `vf4_clamps` (30) | drive the four F-S1 edge clamps' screws | nut runner held by its fin | 24.7 s | 37 % | 550 N·m | 6.0 mm, wrist 2 to the roof over the table | pass |
+| `vf4_floor_load` (30) | the floor plate's blank (5.0 kg, dry) onto the P-S1 parallels | VGP20 vacuum | 9.1 s | 51 % | 508 N·m | 26.4 mm | pass |
+| `vf4_vise_part` (31) | a 1.9 kg bracket blank into the Kurt XL6A, on a 1 in. parallel | 2F-85 | 10.4 s | 41 % | 533 N·m | 26.2 mm | pass |
+| `lathe_slug` (31) | a Ø54 x 100 slug into the ST-10's chuck, from above through the 588 mm door | 2F-85 | 13.0 s | 35 % | 632 N·m | 15.0 mm, upper arm to the door | pass |
+| `lathe_big` (31) | a Ø108 x 50 316L blank (3.6 kg) | 3FG15 | – | – | – | – | **fail**: see below |
+| `saw_bar` (31) | 600 mm of 2-1/8 in. bar (3.7 kg) onto the S-20A's infeed rollers | 2F-85 | 12.0 s | 47 % | 550 N·m | 81.5 mm | pass |
+| `deburr` (32) | a bracket on the brush wheel, then the compliant spindle | 2F-85 | 21.9 s | 37 % | 607 N·m | 71.9 mm | pass |
+| `wash` (32) | the parts basket (~4 kg) from the ultrasonic tank into the rinse | 2F-85 on the handle | 15.0 s | 33 % | 600 N·m | 48.0 mm | pass |
+| `measure` (32) | a part onto the granite plate | 2F-85, VGP20 | – | – | – | – | **fail**: see below |
+| `kit` (32) | the finished floor plate into its slot (C00a) on the long table, from lane A | VGP20 | 9.5 s | 41 % | 600 N·m | 27.4 mm | pass |
+
+**What failed, and the fixes:**
+
+- **The measuring station.** No collision-free carry onto the granite was found, from three docking positions, with
+  either the 2F-85 or the VGP20 (RRT-Connect, 3000-9000 iterations).
+  - The plate's top is at 914 mm, 114 mm above the arm's base.
+  - While the base turns about 100° from the deck to the plate, the upper arm sweeps through the granite.
+  - Round 6's P5 checked only reach, so it missed this.
+  - Fix: a lower inspection table (about 760 mm), or dock at the plate's end. A robot-loadable gauge (Renishaw Equator)
+    would also do.
+  - In the video the person sets the part down, then gauges it.
+- **The 3FG15 at the lathe: no plan, three fixes tried.** The Ø108 x 50 mm blank is for the four Ø3.375 and Ø4.25 in.
+  parts.
+  - From above, the 3FG15's 156 mm body met the chuck's top jaw.
+  - Turning the spindle so no jaw is on top (M19 before the load) didn't free it.
+  - With fingertips 40 mm longer (a custom tool), the body clears. But the 3FG15's three fingers sit 120° apart, so
+    gripping a disc across its axis puts two of them 55 mm either side of its middle. A 50 mm disc can't go into the jaws
+    without a finger reaching the chuck.
+  - Gripping it along its axis means loading along the spindle axis, which fails as round 6's P2 found: the ST-10's
+    588 mm door's jamb is in the way.
+  - What would fix it:
+    - a two-finger gripper with long parallel fingers (OnRobot 2FG14 class), which grips a disc across its faces;
+    - a lathe with a wider door (an ST-20 class, about 730 mm);
+    - or a person, for four parts.
+  - The class table counts these four parts' robot time as if a fix were in place.
+- **Fixed by a fixture or a tool, then passed:**
+  - the floor plate's blank: 228.6 mm wide, past the 2F-85's 85 mm stroke, and too heavy to hold by an edge, so the
+    VGP20 takes it (dry stock only);
+  - the vise blank: on a 1 in. parallel, so the fingers stay above the jaws;
+  - the saw bar: on two 40 mm V-blocks, so it clears the arm's mounting plate as it lifts;
+  - the clamp screws: a 1/4 in. hex extension on the nut runner, so the bit reaches a screw 20 mm from the blank's end;
+  - the shipping box is hollow;
+  - the rinse tank was made big enough for the basket.
+
+**Each motion class, rerun with each part's own stock attached.** Every vise-class and plate-class part's stock was
+attached to its class's recorded path and checked with FCL against the VF-4, the fixtures and the MiR. All 35 parts are
+clear (`class_recheck` in `shop_summary.json`).
+
+### The person's lifts
+
+The person is scripted, not planned. Two things were checked with FCL at every third frame
+(`person_lifts` in [`shop_summary.json`](analysis/out/shop/shop_summary.json), from `shop_person.json`):
+- the lifted load's path against the VF-4;
+- the posed person (`people.Person.posed()`) against the machine, the lifter and the load. The hands on the handle bar
+  touch it on purpose and are left out.
+
+| Lift | kg | Why a person | Load's closest pass | The person |
+|---|---|---|---|---|
+| the 13 x 9.5 x 5.5 in. blank onto the F-S1 risers | 30.0 | over two arms' 22.4 kg | 21.9 mm, to the HRT210's motor box | no contacts |
+| turning it over onto the dummy-floor plate (F-S2) | 22.8 | over 10 kg; the core is still attached | 23.0 mm | the hands touch the part as it is set down |
+| the freed core out | 13.0 | over 10 kg | in `shop_person.json` | in `shop_person.json` |
+| the frame and its fixture plate onto the HRT210 (F-S3), turned 90° | 10.0 | at 10 kg, and it has to be turned | in `shop_person.json` | in `shop_person.json` |
+
+The person also fits F-S2's 18 M4 screws from below the dummy-floor plate, where no arm reaches. They bolt the plate to
+the platter through the frame's opening, and set and bolt the fixtures.
+
+### Time per part: machine, robot and person
+
+From [`shop_summary.json`](analysis/out/shop/shop_summary.json). Every part of `setup_plan.json` / `hours.json` gets a
+motion class, chosen by its stock:
+- over 10 kg: the person's lift;
+- bar up to 82 mm: `lathe_slug`; over 82 mm: `lathe_big`;
+- plate up to 80 mm wide and 5 kg: the vise class;
+- larger plate: the plate class;
+- weldment: lathe and TIG.
+
+How each part's hours are counted:
+- **Machine:** `hours.json`'s run time (vendor feeds where it has them).
+- **Robot:** each setup costs the class's planned arm motion twice (unload, load), plus 211 s of overhead:
+  - docking and re-registration at the station, 120 s (Edison r7 reports 1-3 min a visit);
+  - the door, 6 s;
+  - the air blast, 20 s;
+  - WIPS probing, 60 s;
+  - a camera check that the part is seated, 5 s.
+
+  Add 53 s per part for the deburr, wash and kitting moves.
+- **Person:**
+  - CAM, unchanged;
+  - 8 min watching each setup's first run;
+  - 4 min of gauging a part, or 10 min with a sealing face, plus 15 min of deburring that face;
+  - for the heavy parts, 4 min per lift (two lifts a setup).
+
+| Motion class | Parts | Setups | Machine h | Robot h | Person h (incl. CAM) |
+|---|---|---|---|---|---|
+| vise class (`vf4_vise_part`) | 25 | 27 | 4.0 | 2.1 | 52.5 |
+| plate class (`vf4_floor_load` + `vf4_clamps`) | 10 | 11 | 7.1 | 1.0 | 25.6 |
+| lathe class (`lathe_slug`) | 9 | 12 | 0.9 | 0.9 | 32.5 |
+| lathe class, 3FG15 (`lathe_big`) | 4 | 4 | 1.9 | 0.3 | 14.3 |
+| saw and vise class (tube stock) | 4 | 5 | 1.8 | 0.4 | 8.2 |
+| person's lift (the frame blank, two base plates, the optics bridge) | 4 | 9 | 12.1 | 0 | 14.2 |
+| lathe and TIG (the build module's body) | 1 | 1 | 0.6 | 0.1 | 6.2 |
+| **all 57 parts** | **57** | **69** | **28.3** | **4.8** | **153.4** |
+
+- **By hand** (`hours.json`, with the 4th axis): 287.3 h, of which 132.1 h is CAM.
+- **In the robot shop:** 28.3 h of cutting, 4.8 h of arm time and 153.4 person-hours. Set CAM aside and the person's
+  share falls from 155.2 h to 21.3 h.
+- The robot figure is a floor. It counts no failures, no re-registration retries and no chips under parts. A real cobot
+  cell reported a 12 min unload, clean and load cycle (round 6).
+
+### Where a person is needed, and why
+
+| Task | Why |
+|---|---|
+| CAM, and watching each new program's first run | Edison r7: first-article runs and judgement at the control |
+| Tool setting (holders, lengths), cycle start, the E-stop, chips under a part, mis-seating | Edison r7: exception handling stays with a person |
+| Lifts over about 10 kg: the 30 kg frame blank, its 22.8 kg flip, the 13 kg core, the 10 kg F-S3 unit, the MIC-6 base plates (18.1, 16.8 kg) and the optics bridge plate (19.7 kg) | over two arms' 22.4 kg, or no precedent for two separate bases sharing a load (Edison r7) |
+| F-S2's 18 screws from below, bolting the fixtures | no access for an arm |
+| Reading the bore and height gauges (Ø50.80 H7, seal faces ±0.05 mm) | the arms place parts but can't read gauges; at the granite even placing failed |
+| Deburring the sealing faces and threads | Edison r7: robots are fine for outside edges, not these |
+| TIG-welding the build module's body; sending the bore out to be honed | a welder; outsourced (about 10 working days, our estimate) |
+| The three crates over 22.4 kg (pallet jack), box flaps and dunnage | weight; cardboard and loose fill deform |
+
+### The video's shop chapters
+
+Frames are written to `/tmp/robotbuild/frames/`, never committed. Metadata follows `common.py`'s contract: caption,
+sub, who, step, status and proc_s per frame, with the robot, person and machine hours in `add`. Robot motions run in real
+time. Cutting is time-lapsed at `setup_plan.json`'s minutes per setup, spread over the setup's cut states by volume.
+
+| Chapter | Shows | Frames | Length |
+|---|---|---|---|
+| `20-receiving` | the shop from above; the person brings in the three heavy crates with a pallet jack; arm A cuts a box's tape; arm B lifts the tray of seals out onto its deck | see `/tmp/robotbuild/data/shop.json` | about 45 s |
+| `30-machining-chamber` | the person loads the 30 kg blank; arm A clamps it; F-S1 cut (time-lapse); arm A unclamps; the person turns it over; F-S2 cut frees the core; the person lifts the core out and sets the frame on the 4th axis; F-S3 indexing 0/90/180/270; arm A loads the floor plate (VGP20); P-S1 cut | as above | about 3.5 min |
+| `31-machining-parts` | arm A, vise part; arm B, saw; arm A, lathe from above; the other parts by motion class | as above | about 1 min |
+| `32-finishing` | TIG by a person; honing sent out; arm A deburrs; arm B washes; the failed granite carry and the person gauging; arm A kits the floor plate onto the long table | as above | about 1.3 min |
+
+Stills are in [`analysis/out/shop/`](analysis/out/shop/) (`r7_*.png`).
+
+### Not done in round 7
+
+- No MiR drives between stations are animated. The route table above (205 s per part's trip) stands.
+- Not planned:
+  - the floor plate's turnover between P-S1 and P-S2 (a regrip stand; counted as two plate-class moves);
+  - unloading the lathe and parting off;
+  - the arm's bolt-up of the F-S3 plate.
+- Dynamics and grip slip are not checked: all torques are static.
+- The jib's height and the VF-4's sill, header and roof are our estimates. So is the trepan.
+
 ## Result
 
 - **Reach and collisions are not the problem. Payload and grippers are.** Every representative motion planned here

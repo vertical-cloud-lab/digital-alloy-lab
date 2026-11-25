@@ -454,21 +454,21 @@
    "name": "ST-10: arm A (3FG15) loads a \u00d84.25 in. blank from above",
    "ok": false,
    "fail": "staging pose outside the machine",
-   "time_s": 5.3,
-   "gripper": "3FG15",
+   "time_s": 5.4,
+   "gripper": "3FG15L",
    "fine_audit_0p2deg": [],
-   "worst_torque_frac": 0.436,
+   "worst_torque_frac": 0.456,
    "segments": [
     {
      "kind": "joint",
      "note": "home -> above the part",
      "ok": true,
-     "t_s": 2.9,
+     "t_s": 3.0,
      "info": {
       "planned": true,
-      "iterations": 337,
-      "nodes": 141,
-      "waypoints": 4
+      "iterations": 164,
+      "nodes": 87,
+      "waypoints": 5
      }
     },
     {
@@ -500,7 +500,7 @@
      "ok": false,
      "t_s": 0.0,
      "info": {
-      "why": "[\"{'reason': 'collision', 'at': [6756.0, 7307.0, 991.0], 'hits': [('A/gr/puck', 'lathe/chuck (6.5 in.)', None)]}\", \"via pose collides: [('A/upper_arm', 'lathe/front panel below the door'), ('A/upper_arm', 'lathe/door surround')]\", \"{'reason': 'collision', 'at': [6791.0, 7307.0, 991.0], 'hits': [('A/forearm', 'lathe/headstock', None)]}\", \"{'reason': 'collision', 'at': [6756.0, 7307.0, 991.0], 'hits': [('A/gr/puck', 'lathe/chuck (6.5 in.)', None)]}\", \"via pose collides: [('A/upper_arm', 'lathe/chip pan'), ('A/forearm', 'lathe/chip pan')]\", \"via pose collides: [('A/upper_arm', 'lathe/chip pan'), ('A/forearm', 'lathe/front panel below the door')]\", \"via pose collides: [('A/upper_arm', 'lathe/front panel below the door'), ('A/upper_arm', 'lathe/door surround')]\", \"{'reason': 'collision', 'at': [6756.0, 7307.0, 991.0], 'hits': [('A/gr/puck', 'lathe/chuck (6.5 in.)', None)]}\"]"
+      "why": "[\"{'reason': 'collision', 'at': [6746.0, 7307.0, 991.0], 'hits': [('A/gr/finger1', 'lathe/chuck (6.5 in.)', None)]}\", \"via pose collides: [('A/upper_arm', 'lathe/chip pan'), ('A/forearm', 'lathe/chip pan')]\", \"{'reason': 'collision', 'at': [6791.0, 7307.0, 991.0], 'hits': [('A/forearm', 'lathe/headstock', None)]}\", \"{'reason': 'collision', 'at': [6746.0, 7307.0, 991.0], 'hits': [('A/gr/finger1', 'lathe/chuck (6.5 in.)', None)]}\", \"{'reason': 'collision', 'at': [6811.0, 7087.0, 991.0], 'hits': [('A/upper_arm', 'lathe/chip pan', None)]}\", \"{'reason': 'collision', 'at': [6811.0, 7087.0, 991.0], 'hits': [('A/upper_arm', 'lathe/chip pan', None)]}\", \"via pose collides: [('A/upper_arm', 'lathe/chip pan'), ('A/forearm', 'lathe/front panel below the door')]\", \"{'reason': 'collision', 'at': [6746.0, 7307.0, 991.0], 'hits': [('A/forearm', 'lathe/headstock', None), ('A/gr/finger1', 'lathe/chuck (6.5"
      }
     }
    ],
@@ -1077,5 +1077,5 @@
    }
   }
  },
- "run_utc": "2026-11-25T07:31Z"
+ "run_utc": "2026-11-25T07:33Z"
 }

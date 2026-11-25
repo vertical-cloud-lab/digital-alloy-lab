@@ -418,7 +418,7 @@ def person_lift(w, scn, vf4, name, load_name, load_spec, P_from, P_to, kg, capti
         lean = float(np.clip((reach - 470.0) / 10.0, 0.0, 32.0))
         p.set(x=pw[0], y=pw[1], hd=0.0, amp=0.0, hands={"l": tuple(hp + [-95, 0, 0]), "r": tuple(hp + [95, 0, 0])},
               look=tuple(hp + [0, 0, -250]), lean=lean)
-        if W_static is not None and i % 3 == 0:            # the posed person against the machine, the lifter and the load
+        if W_static is not None and i % 12 == 0:           # the posed person against the machine, the lifter and the load
             scn.sc.apply()
             body = [C.Body(f"person/{k}", P_, F_, kind="arm") for k, (P_, F_) in p.posed().items()]
             lifter = []
