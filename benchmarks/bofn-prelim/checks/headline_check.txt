@@ -1,0 +1,69 @@
+Run files: 292
+
+kappa = 1: best alloy demonstrated, % of optimum, mean ± SE (population SD / sqrt n)
+method                                       n   $25k        $50k        $100k       median $ to 80% (share of seeds reaching)
+BOFN with powder reuse                       20   61.0 ±  6.1   73.8 ±  5.1   90.0 ±  2.4  $52.38k (85%)
+pKGFN (picks one step at a time)             20   62.0 ±  5.2   69.6 ±  3.5   83.8 ±  1.8  $85.88k (75%)
+BOFN, full chain every time                  20   50.1 ±  6.1   76.8 ±  4.6   85.8 ±  4.1  $42.25k (80%)
+Standard BO (one model, full chain)          20   48.5 ±  6.8   63.2 ±  5.2   83.8 ±  2.8  $59.00k (70%)
+Random designs (full chain)                  20   52.2 ±  5.2   61.1 ±  3.8   68.4 ±  2.2  >$100k (15%)
+Tiered screening (screen, then test)         20   46.1 ±  5.0   55.9 ±  3.5   62.7 ±  2.2  >$100k (10%)
+Tiered screening, no powder reuse            20   44.5 ±  5.3   51.6 ±  4.2   57.4 ±  3.3  >$100k (10%)
+pKGFN variant: any alloy, with lookahead     20   51.2 ±  6.4   60.6 ±  5.2   81.6 ±  4.7  $80.25k (75%)
+pKGFN variant: lookahead, simulated alloys only 4    64.8 ± 10.5   67.4 ± 10.8   83.9 ±  6.1  $81.38k (75%)
+
+kappa = 0.5: best alloy demonstrated, % of optimum, mean ± SE (population SD / sqrt n)
+method                                       n   $25k        $50k        $100k       median $ to 80% (share of seeds reaching)
+BOFN with powder reuse                       8    46.4 ±  7.8   63.8 ±  9.2   86.8 ±  3.7  $82.25k (75%)
+pKGFN (picks one step at a time)             12   33.6 ±  6.6   55.1 ±  6.1   65.5 ±  5.2  >$100k (33%)
+BOFN, full chain every time                  12   32.5 ±  6.1   57.6 ±  7.4   87.4 ±  5.3  $63.25k (92%)
+Standard BO (one model, full chain)          12   40.6 ±  6.3   51.3 ±  6.0   78.3 ±  3.6  >$100k (50%)
+Tiered screening (screen, then test)         12   43.2 ±  5.4   60.2 ±  4.4   78.4 ±  2.2  >$100k (50%)
+pKGFN variant: any alloy, with lookahead     8    35.5 ± 10.1   59.5 ±  9.4   80.7 ±  7.0  $70.25k (75%)
+
+kappa = 0: best alloy demonstrated, % of optimum, mean ± SE (population SD / sqrt n)
+method                                       n   $25k        $50k        $100k       median $ to 80% (share of seeds reaching)
+BOFN with powder reuse                       8    46.8 ±  7.3   69.0 ±  7.5   86.5 ±  6.7  $50.38k (88%)
+pKGFN (picks one step at a time)             12   26.5 ±  6.4   36.2 ±  8.0   57.0 ±  6.9  >$100k (25%)
+BOFN, full chain every time                  12   35.1 ±  7.7   62.3 ±  8.4   79.2 ±  7.7  $65.38k (75%)
+Standard BO (one model, full chain)          12   19.5 ±  5.3   33.9 ±  5.9   71.2 ±  5.1  >$100k (33%)
+Tiered screening (screen, then test)         12   43.3 ±  5.4   63.7 ±  4.2   85.1 ±  1.5  $69.88k (75%)
+pKGFN variant: any alloy, with lookahead     8    59.4 ±  5.9   80.7 ±  2.7   90.9 ±  1.9  $39.00k (100%)
+
+kappa = 1: spend to reach tiered screening's $100k mean level (mean curves), 90% bootstrap CI
+  pKGFN (picks one step at a time)             reaches 62.7% at $26.50k vs $99.50k for screening: 3.75x (90% CI 2.0 to 5.7)
+  BOFN with powder reuse                       reaches 62.7% at $26.25k vs $99.50k for screening: 3.79x (90% CI 2.2 to 5.9)
+  BOFN, full chain every time                  reaches 62.7% at $38.00k vs $99.50k for screening: 2.62x (90% CI 2.1 to 3.9)
+  Standard BO (one model, full chain)          reaches 62.7% at $46.50k vs $99.50k for screening: 2.14x (90% CI 1.5 to 2.9)
+  Random designs (full chain)                  reaches 62.7% at $76.00k vs $99.50k for screening: 1.31x (90% CI 1.0 to 3.4)
+
+kappa = 1: the same ratio against fixed targets (mean curves; tiered's spend / the method's spend)
+  target 55.0%: tiered $44.00k; eifn_reuse $16.75k (2.63x); pkgfn $18.25k (2.41x); eifn $29.50k (1.49x); ei $33.75k (1.30x)
+  target 60.0%: tiered $83.00k; eifn_reuse $20.75k (4.00x); pkgfn $21.00k (3.95x); eifn $38.00k (2.18x); ei $42.25k (1.96x)
+  target 62.5%: tiered $95.00k; eifn_reuse $26.25k (3.62x); pkgfn $26.50k (3.58x); eifn $38.00k (2.50x); ei $46.50k (2.04x)
+
+Matched seeds, Wilcoxon signed-rank (scipy default, two-sided), best share at a given spend
+  kappa 1 eifn vs ei @$25k (n=20): 50.1% vs 48.5%, wins/ties/losses 11/2/7, p = 0.586
+  kappa 1 eifn vs ei @$50k (n=20): 76.8% vs 63.2%, wins/ties/losses 15/0/5, p = 0.0073
+  kappa 1 eifn vs ei @$100k (n=20): 85.8% vs 83.8%, wins/ties/losses 12/0/8, p = 0.452
+  kappa 1 eifn_reuse vs ei @$25k (n=20): 61.0% vs 48.5%, wins/ties/losses 11/2/7, p = 0.0778
+  kappa 1 eifn_reuse vs ei @$50k (n=20): 73.8% vs 63.2%, wins/ties/losses 15/0/5, p = 0.04
+  kappa 1 eifn_reuse vs ei @$100k (n=20): 90.0% vs 83.8%, wins/ties/losses 14/0/6, p = 0.0484
+  kappa 1 eifn_reuse vs eifn @$25k (n=20): 61.0% vs 50.1%, wins/ties/losses 14/1/5, p = 0.0242
+  kappa 1 eifn_reuse vs eifn @$50k (n=20): 73.8% vs 76.8%, wins/ties/losses 8/0/12, p = 0.898
+  kappa 1 eifn_reuse vs eifn @$100k (n=20): 90.0% vs 85.8%, wins/ties/losses 13/0/7, p = 0.123
+  kappa 1 eifn_reuse vs tiered @$25k (n=20): 61.0% vs 46.1%, wins/ties/losses 15/3/2, p = 0.001
+  kappa 1 eifn_reuse vs tiered @$50k (n=20): 73.8% vs 55.9%, wins/ties/losses 18/0/2, p = 0.000105
+  kappa 1 eifn_reuse vs tiered @$100k (n=20): 90.0% vs 62.7%, wins/ties/losses 20/0/0, p = 1.91e-06
+  kappa 1 pkgfn vs tiered @$25k (n=20): 62.0% vs 46.1%, wins/ties/losses 12/4/4, p = 0.0113
+  kappa 1 pkgfn vs tiered @$50k (n=20): 69.6% vs 55.9%, wins/ties/losses 15/2/3, p = 0.00842
+  kappa 1 pkgfn vs tiered @$100k (n=20): 83.8% vs 62.7%, wins/ties/losses 19/1/0, p = 0.000132
+  kappa 0 eifn_reuse vs tiered @$25k (n=8): 46.8% vs 49.7%, wins/ties/losses 3/0/5, p = 0.742
+  kappa 0 eifn_reuse vs tiered @$50k (n=8): 69.0% vs 60.3%, wins/ties/losses 5/0/3, p = 0.25
+  kappa 0 eifn_reuse vs tiered @$100k (n=8): 86.5% vs 86.3%, wins/ties/losses 7/0/1, p = 0.195
+  kappa 0 eifn vs tiered @$25k (n=12): 35.1% vs 43.3%, wins/ties/losses 5/0/7, p = 0.569
+  kappa 0 eifn vs tiered @$50k (n=12): 62.3% vs 63.7%, wins/ties/losses 6/0/6, p = 0.91
+  kappa 0 eifn vs tiered @$100k (n=12): 79.2% vs 85.1%, wins/ties/losses 8/0/4, p = 0.733
+  kappa 0 ei vs tiered @$25k (n=12): 19.5% vs 43.3%, wins/ties/losses 3/1/8, p = 0.0137
+  kappa 0 ei vs tiered @$50k (n=12): 33.9% vs 63.7%, wins/ties/losses 2/0/10, p = 0.00684
+  kappa 0 ei vs tiered @$100k (n=12): 71.2% vs 85.1%, wins/ties/losses 4/0/8, p = 0.021

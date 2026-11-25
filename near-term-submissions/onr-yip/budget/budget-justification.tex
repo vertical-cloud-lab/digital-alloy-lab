@@ -1,0 +1,184 @@
+% ============================================================================
+% ONR FY2027 YIP (NOFO N0001426SF004): Budget Justification
+% Attach under Section L of the R&R Budget form (NOFO p. 21). No page limit.
+% Numbers come from budget.py (budget-table.tex, budget-items.tex); edit the
+% assumptions there and rebuild, rather than editing numbers here.
+% Build: python budget.py && xelatex budget-justification.tex (twice)
+% ============================================================================
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{fontspec}
+\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{TeX Gyre Termes}}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[colorlinks=true,urlcolor=blue!70!black,linkcolor=blue!70!black]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO Sterling or BYU RAO: #1]}}
+\pagestyle{plain}
+\input{budget-numbers.tex}
+
+\begin{document}
+
+\begin{center}
+{\large\bfseries Budget Justification\par}
+\vspace{4pt}
+Office of Naval Research FY2027 Young Investigator Program, NOFO N0001426SF004\\
+Cost-Aware Selection of Experiments for Printable, Corrosion-Resistant
+High-Strength Aluminum Alloys\\
+Principal Investigator: Sterling G.\ Baird, Brigham Young University (BYU)\\
+Period of performance: 1 April 2027 to 31 March 2030 (36 months, base period only)
+\end{center}
+
+\textcolor{red}{Draft of 10 October 2026. Red items are assumptions that
+BYU Research Administration must replace with current figures before the
+budget is entered in Kuali.}
+
+\section*{Summary}
+
+The request is \$\BudgetTotal{} over 36 months, below the \$250,000 limit in each
+12-month period (NOFO p.~21). All amounts are rounded to the nearest dollar.
+There are no subawards, consultants, participant support costs, or option
+periods.
+
+\begin{center}
+\input{budget-table.tex}
+\end{center}
+
+\section*{Rates and bases}
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{Escalation.} Salaries, wages, and tuition rise 3\% per year
+after Year 1, the inflation rate BYU's budget guide suggests.
+\item \textbf{Fringe benefits.} From BYU's 2026 budget planning sheet: 19.7\%
+of faculty spring and summer salary; 0\% for students while enrolled; 7.7\%
+(FICA) for students when not enrolled, taken here as the four summer months
+of student wages \todo{confirm the 2027 rates, which Kuali fills in, and
+whether the graduate students will be enrolled in spring and summer}.
+\item \textbf{Facilities and administrative (F\&A) costs.} 51.5\% of modified
+total direct costs (MTDC), BYU's on-campus research rate negotiated with the
+Department of Health and Human Services (agreement of 2 August 2023, with
+the same rate provisional from 1 January 2025 until amended)
+\todo{attach the current agreement from BYU's Sponsored Projects Office, as
+the NOFO requires (p.~21)}. MTDC excludes equipment and tuition remission.
+\item \textbf{Single audit.} \todo{insert the link to BYU's most recent
+single audit report in the Federal Audit Clearinghouse (NOFO p.~21 asks for
+it); BYU's UEI is JWSYC7RUMJD1.}
+\end{itemize}
+
+\section*{A. Senior personnel}
+
+Sterling G.\ Baird, Principal Investigator, summer salary only [per-person salary detail removed].
+%
+%
+%
+%
+%
+The PI leads the method development, sets the campaign
+plans, and supervises the students.
+
+\section*{B. Other personnel}
+
+\textbf{Two Ph.D.\ research assistants}, 12 months each for 3 years
+[per-person rate removed].
+Student 1 develops the multi-objective and
+asynchronous search rules, the benchmarks, and the software (Task 1).
+Student 2 runs the experimental platform: powder, builds, microscopy,
+tensile tests, and corrosion tests (Task 2). Both run the live campaigns
+(Task 3).
+
+\textbf{One undergraduate researcher}, 500 hours per year [per-person rate removed]
+\todo{confirm BYU's student wage scale}, who weighs feedstock, operates the
+atomizer under supervision, prepares metallographic specimens, and runs the
+electrochemical corrosion screen.
+
+\section*{C. Fringe benefits}
+
+Faculty fringe is 19.7\% of the PI's summer salary. Student fringe is 7.7\%
+of the wages paid in the four summer months, when students are assumed not
+to be enrolled, and 0\% otherwise. Year-by-year amounts are in the tables
+below.
+
+\section*{D. Equipment}
+
+\textbf{Potentiostat with corrosion software and a flat cell} (Year 1,
+\$18,000 estimate) \todo{obtain a vendor quote, for example for a Gamry
+Interface 1010E or BioLogic SP-150e with a flat cell; the NOFO requires
+quotes for equipment (p.~22)}. The electrochemical corrosion screen is one
+step of the workflow that the search schedules (Technical Proposal,
+Section~1), so the instrument must be available every day and controlled by
+the lab's own scripts. A shared instrument booked by the hour cannot be
+scheduled by the search this way \todo{confirm that no BYU potentiostat can
+be dedicated to the project; if one can, delete this line, and Year 1 has room
+for about 14 more builds}. Equipment is excluded from MTDC.
+
+\section*{E. Travel}
+
+Each trip is estimated from airfare, lodging and meals at General Services
+Administration (GSA) rates, ground transport, and registration where it
+applies \todo{rebuild each trip on ONR's travel estimate spreadsheet with
+current GSA rates}.
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{ONR program review} (each year): Provo, UT to Arlington, VA;
+PI; 3 days; \$2,000. The NOFO allows PI travel to ONR peer reviews
+(pp.~22, 38).
+\item \textbf{Conference} (each year): TMS Annual Meeting or Materials Science
+\& Technology; PI and one student; 4 days; \$2,300 per traveler including
+registration; \$4,600. Results are presented to the materials and
+manufacturing community.
+\item \textbf{Navy laboratory visit} (Years 2 and 3): Provo, UT to NSWC
+Carderock Division, West Bethesda, MD; PI; 3 days; \$2,000. Purpose: share
+results and corrosion data with Navy materials engineers and discuss
+transition.
+\end{itemize}
+
+\section*{F. Materials and supplies}
+
+Itemized with quantities and unit prices in the tables below. The basis is
+current catalog prices \todo{obtain quotes for master alloys, especially the
+aluminum-scandium master alloy, and confirm the argon use per atomizer run}.
+Feedstock is weighed into machined crucibles of high-purity aluminum, about
+100~g per composition, and atomized in the PI's laboratory.
+
+\section*{G. Other direct costs}
+
+\begin{itemize}\setlength{\itemsep}{1pt}
+\item \textbf{LPBF builds}, University of Utah user facility, \$800 per build,
+bought on a purchase order (not a subaward). The facility's staff run each
+build to the laser settings that the search chooses. The number of builds
+(\BuildsYearOne, \BuildsYearTwo, and \BuildsYearThree) is what remains
+under the annual limit after the other costs; builds are the step that sets
+the pace of the campaigns.
+\item \textbf{BYU Microscopy Center} (SEM, EDS, EBSD), 100 hours per year at
+\$45 per hour \todo{confirm the internal rates}.
+\item \textbf{ICP-MS composition checks} at BYU, 40 samples per year at \$35
+\todo{confirm the internal rate}.
+\item \textbf{Tensile specimen machining} at BYU, 60 specimens per year at \$40
+\todo{confirm the shop rate}.
+\item \textbf{Neutral salt-spray exposure} (ASTM B117) at an outside test lab
+for the leading candidates, two runs per year in Years 2 and 3 at \$1,500
+\todo{obtain a quote, or use a BYU chamber if one exists}.
+\item \textbf{Open-access publication charges}, one article per year in Years
+2 and 3, \$3,000 each.
+\item \textbf{Graduate tuition} for the two Ph.D.\ students, fall and winter
+semesters. BYU's 2026--27 graduate tuition is \$4,468 per semester for
+Latter-day Saint students and \$8,936 for others; the budget assumes the
+first rate plus 3\% for 2027--28 \todo{double this line for a student who
+pays the non-member rate}. BYU charges tuition to a sponsored project only
+with a research assistant wage, as its own line. Excluded from MTDC.
+\end{itemize}
+
+\section*{H. Indirect costs}
+
+F\&A is 51.5\% of MTDC. MTDC is total direct costs less equipment and tuition:
+\$\MTDCYearOne{} in Year 1, \$\MTDCYearTwo{} in Year 2, and \$\MTDCYearThree{}
+in Year 3, for F\&A of \$\FAYearOne, \$\FAYearTwo, and \$\FAYearThree.
+
+\section*{Itemized budget by year}
+
+\input{budget-items.tex}
+
+\end{document}

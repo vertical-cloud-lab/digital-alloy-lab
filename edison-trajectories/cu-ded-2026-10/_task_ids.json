@@ -1,0 +1,426 @@
+{
+  "b1-01-closest-prior-work": {
+    "batch": 1,
+    "task_id": "ed902e26-fd17-4f11-8309-dc9f5c5c924d",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-17T05:10:41Z",
+    "status": "success",
+    "fetched": "2026-10-17T05:42:01Z"
+  },
+  "b1-02-ded-nab": {
+    "batch": 1,
+    "task_id": "83c4382b-0668-473f-9f8a-ab068b3c6c91",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:10:42Z",
+    "status": "success",
+    "fetched": "2026-10-17T05:42:02Z"
+  },
+  "b1-03-ded-cuni": {
+    "batch": 1,
+    "task_id": "70814fb7-d0ca-4d06-8818-841e6a0154c9",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:10:43Z",
+    "status": "success",
+    "fetched": "2026-10-17T05:42:03Z"
+  },
+  "b1-04-cu-powder-making": {
+    "batch": 1,
+    "task_id": "e0a95fe6-6d76-432d-85e8-b2ce48e5ac3e",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-17T05:10:43Z",
+    "status": "success",
+    "fetched": "2026-10-17T05:44:54Z"
+  },
+  "b1-05-ded-powder-requirements": {
+    "batch": 1,
+    "task_id": "cf5e23c9-cdbd-4ead-8d0e-bdb734f32c99",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:10:44Z",
+    "status": "success",
+    "fetched": "2026-10-17T05:42:05Z"
+  },
+  "b1-06-seawater-film-mechanisms": {
+    "batch": 1,
+    "task_id": "695a9d41-f20a-4d61-ae57-92af3b1248ee",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:10:45Z",
+    "status": "success",
+    "fetched": "2026-10-17T05:42:07Z"
+  },
+  "b1-07-icme-calphad-cu": {
+    "batch": 1,
+    "task_id": "413b4e08-3e52-4cda-b8dd-f1257c3046db",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:10:46Z",
+    "status": "success",
+    "fetched": "2026-10-17T05:42:08Z"
+  },
+  "b1-08-navy-needs": {
+    "batch": 1,
+    "task_id": "547ec63c-d418-4e5b-a51e-19a259f65ed1",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:10:47Z",
+    "status": "success",
+    "fetched": "2026-10-17T05:42:09Z"
+  },
+  "b1-09-precedent-ml-cu-am": {
+    "batch": 1,
+    "task_id": "9a135f0a-50a2-44c7-b213-1b9dc3a8d2cb",
+    "job": "PRECEDENT",
+    "submitted": "2026-10-17T05:10:48Z",
+    "status": "success",
+    "fetched": "2026-10-17T05:42:10Z"
+  },
+  "b1-10-repair-on-cast-nab": {
+    "batch": 1,
+    "task_id": "0112f9fd-a99c-45d7-9b7a-dd53c3a55555",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:10:48Z",
+    "status": "success",
+    "fetched": "2026-10-17T05:42:12Z"
+  },
+  "b2-01-ultrasonic-atomization-cu-melts": {
+    "batch": 2,
+    "task_id": "4f682962-96a3-4ab9-8128-08ceaae95e73",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:37:00Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:08:50Z"
+  },
+  "b2-02-crucibles-melt-practice": {
+    "batch": 2,
+    "task_id": "14972c4a-bfc1-4200-a826-5dedf50fafd1",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:37:00Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:08:51Z"
+  },
+  "b2-03-nickel-lean-seawater-alloys": {
+    "batch": 2,
+    "task_id": "c9833365-3e58-47e0-a285-58a7c69d8305",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:37:01Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:08:53Z"
+  },
+  "b2-04-cracking-cuni-nab-welding": {
+    "batch": 2,
+    "task_id": "f6ce3ed1-8e93-4230-bf0a-876adaa985dd",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:37:02Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:08:54Z"
+  },
+  "b2-05-short-tests-vs-immersion": {
+    "batch": 2,
+    "task_id": "14416633-6364-4823-b85e-daa613017132",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:37:03Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:08:55Z"
+  },
+  "b2-06-heat-flow-models-cu-ded": {
+    "batch": 2,
+    "task_id": "cb999416-b429-4ffb-88a3-eb0093a12c7c",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:37:04Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:08:56Z"
+  },
+  "b2-07-ded-process-windows-cu": {
+    "batch": 2,
+    "task_id": "13cc8d3b-4e30-4dc6-bec3-efefaee291fc",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:37:04Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:08:57Z"
+  },
+  "b2-08-precedent-cuni-ded-corrosion": {
+    "batch": 2,
+    "task_id": "0ff6e38c-46cf-4a70-9152-136cd0898516",
+    "job": "PRECEDENT",
+    "submitted": "2026-10-17T05:37:05Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:08:59Z"
+  },
+  "b2-09-precedent-as-deposited-design": {
+    "batch": 2,
+    "task_id": "96525e49-088d-443d-a4e8-6dfd0c280a00",
+    "job": "PRECEDENT",
+    "submitted": "2026-10-17T05:37:06Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:09:00Z"
+  },
+  "b2-10-commercial-cu-powders": {
+    "batch": 2,
+    "task_id": "01090695-cefa-423d-b504-06ede2b4db8a",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:37:07Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:09:01Z"
+  },
+  "b3-01-dmd-cuni-corrosion-details": {
+    "batch": 3,
+    "task_id": "925abe7b-5acf-4953-8379-f19edb1a8e9f",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:46:03Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:16:51Z"
+  },
+  "b3-02-recent-laser-ded-nab-papers": {
+    "batch": 3,
+    "task_id": "f1a334b2-df7e-46c3-bbf9-73d65a364256",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-17T05:46:04Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:16:52Z"
+  },
+  "b3-03-as-built-vs-annealed-nab": {
+    "batch": 3,
+    "task_id": "18dab2a5-9c9c-477b-a3a2-5856a68768aa",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:46:05Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:16:54Z"
+  },
+  "b3-04-ultrasonic-atomized-cu-for-ded": {
+    "batch": 3,
+    "task_id": "b93c9cc9-31ad-44d3-9dbf-898b17ecd928",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:46:06Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:16:55Z"
+  },
+  "b3-05-calphad-nab-kappa-martensite": {
+    "batch": 3,
+    "task_id": "99c12723-c37b-4550-9bd5-47d18750c625",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:46:06Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:16:56Z"
+  },
+  "b3-06-thermal-history-phase-response": {
+    "batch": 3,
+    "task_id": "e2e87126-d111-493e-82ca-e89a442c49f3",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:46:07Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:16:57Z"
+  },
+  "b3-07-navy-funded-cu-am-programs": {
+    "batch": 3,
+    "task_id": "19d70011-c7ec-47ef-a020-16561f510d45",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:46:08Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:16:58Z"
+  },
+  "b3-08-cavitation-erosion-am-cu": {
+    "batch": 3,
+    "task_id": "61bad818-736f-47a4-9c7e-3f9b3348abdf",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:46:09Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:17:00Z"
+  },
+  "b3-09-precedent-ni-bearing-repair": {
+    "batch": 3,
+    "task_id": "50f607e6-b432-411f-9c7b-f993baf9061c",
+    "job": "PRECEDENT",
+    "submitted": "2026-10-17T05:46:10Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:17:01Z"
+  },
+  "b3-10-porosity-oxygen-cu-deposits": {
+    "batch": 3,
+    "task_id": "1c764462-13f2-4a2b-8501-9fc55b4650f2",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T05:46:10Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:17:02Z"
+  },
+  "b4-01-ultrasonic-nab-powder-deposits": {
+    "batch": 4,
+    "task_id": "72c8d01e-68d1-441c-80d6-d38f5bdadcc6",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:11:08Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:41:49Z"
+  },
+  "b4-02-sonotrode-and-wetting": {
+    "batch": 4,
+    "task_id": "56cc4802-3f13-42c0-a2a9-556393227548",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:11:09Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:41:50Z"
+  },
+  "b4-03-liquid-properties-cuni-nab": {
+    "batch": 4,
+    "task_id": "ae462e78-bbfc-4fdd-b3b7-94d27225e306",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:11:10Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:41:51Z"
+  },
+  "b4-04-chromium-modified-cuni": {
+    "batch": 4,
+    "task_id": "9864ee44-946d-4a61-a4aa-f3c82e2666b4",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:11:11Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:41:52Z"
+  },
+  "b4-05-al-bronze-phase-and-cracking": {
+    "batch": 4,
+    "task_id": "35ff7da1-9b33-48f5-be8b-02ddcbbebba7",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:11:12Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:41:53Z"
+  },
+  "b4-06-accelerated-corrosion-screening": {
+    "batch": 4,
+    "task_id": "fd7064b9-a644-42dc-9196-47550bffdeb8",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:11:13Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:41:54Z"
+  },
+  "b4-07-bo-for-ded-process-windows": {
+    "batch": 4,
+    "task_id": "e2806913-5a0a-4937-a752-e79545467dab",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:11:14Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:41:56Z"
+  },
+  "b4-08-am-qualification-marine": {
+    "batch": 4,
+    "task_id": "9bc6bf04-7fc3-46b1-979d-088e4c993e87",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:11:15Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:41:57Z"
+  },
+  "b4-09-precedent-ua-powder-ded": {
+    "batch": 4,
+    "task_id": "7d388cc1-e5a1-49d8-88f0-c73333c43c59",
+    "job": "PRECEDENT",
+    "submitted": "2026-10-17T06:11:16Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:41:58Z"
+  },
+  "b4-10-nickel-lean-am-alloys": {
+    "batch": 4,
+    "task_id": "4a7669c6-b815-4939-b8fa-c113c2997a04",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:11:17Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:41:59Z"
+  },
+  "b5-01-precedent-final-novelty": {
+    "batch": 5,
+    "task_id": "5e00978c-82dc-449f-9c58-9057ee6cb816",
+    "job": "PRECEDENT",
+    "submitted": "2026-10-17T06:20:03Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:51:54Z"
+  },
+  "b5-02-dalhousie-nab-program": {
+    "batch": 5,
+    "task_id": "b45018d6-acf4-4651-90d6-490f52bcf3ab",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:20:04Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:42:01Z"
+  },
+  "b5-03-martensite-start-al-bronze": {
+    "batch": 5,
+    "task_id": "e66da3ae-694f-4411-aa47-cfd00d8633bb",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:20:05Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:51:55Z"
+  },
+  "b5-04-cavitation-ded-waam-nab": {
+    "batch": 5,
+    "task_id": "768b1c22-c6f9-4a77-9253-c3c35c417c4d",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:20:06Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:42:02Z"
+  },
+  "b5-05-nab-am-2026-details": {
+    "batch": 5,
+    "task_id": "dba9c173-6152-4a52-95ad-a0b790903889",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:20:06Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:42:04Z"
+  },
+  "b5-06-corrosion-metrology-cu": {
+    "batch": 5,
+    "task_id": "332a778e-556a-4651-a1b9-30c710b8332e",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:20:07Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:51:56Z"
+  },
+  "b5-07-absorptivity-catchment-cu": {
+    "batch": 5,
+    "task_id": "04a840be-d0ab-4488-9e63-7a24cda84ce0",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:20:08Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:51:58Z"
+  },
+  "b5-08-point-of-need-recycling": {
+    "batch": 5,
+    "task_id": "3dc07109-89a5-41f4-a7f8-cef0e9d895c6",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:20:08Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:51:59Z"
+  },
+  "b5-09-bo-delayed-long-experiments": {
+    "batch": 5,
+    "task_id": "04c29905-5680-4dc7-9348-8204ec420901",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:20:09Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:52:00Z"
+  },
+  "b5-10-cuni-segregation-film-am": {
+    "batch": 5,
+    "task_id": "1a8c4326-4281-450f-bdf7-31ac5fcb5a78",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T06:20:10Z",
+    "status": "success",
+    "fetched": "2026-10-17T06:52:02Z"
+  },
+  "b6-01-laser-and-system-for-cu-ded": {
+    "batch": 6,
+    "task_id": "5626113e-ae05-4b3a-93ef-b9f9ba99807c",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-17T18:37:39Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:07:36Z"
+  },
+  "b6-02-claims-audit": {
+    "batch": 6,
+    "task_id": "06cfe424-fd60-4a82-823b-9cc69dbf795a",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-17T18:37:41Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:07:38Z"
+  },
+  "b6-03-blended-vs-prealloyed-ded": {
+    "batch": 6,
+    "task_id": "9b7269e1-9196-4f5c-88ed-239c947fcec6",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-17T18:37:41Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:07:39Z"
+  }
+}

@@ -1,0 +1,442 @@
+{
+  "el-01-Cu": {
+    "phase": 1,
+    "task_id": "bc684233-0a2d-4ae8-821a-b229696e2bea",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:58:27Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:27:52Z"
+  },
+  "el-02-Ni": {
+    "phase": 1,
+    "task_id": "b158a188-99fd-4da4-8597-365951f28b27",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:58:31Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:24Z"
+  },
+  "el-03-Al": {
+    "phase": 1,
+    "task_id": "3fc93807-2056-4c5c-9f3a-25c6b44de250",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:58:34Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:26Z"
+  },
+  "el-04-Fe": {
+    "phase": 1,
+    "task_id": "2ff874ec-9ef6-4f9f-934a-0ac59cc3b0bb",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:58:37Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:27Z"
+  },
+  "el-05-Mn": {
+    "phase": 1,
+    "task_id": "de43757e-5446-49f5-899b-5c5f0294e244",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:58:40Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:33:05Z"
+  },
+  "el-06-Cr": {
+    "phase": 1,
+    "task_id": "3be91072-c969-4110-9549-cc3c259b6311",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:58:43Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:27:55Z"
+  },
+  "el-07-Sn": {
+    "phase": 1,
+    "task_id": "1854f32a-8feb-416b-8952-fbddb3f24cbc",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:58:46Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:29Z"
+  },
+  "el-08-Zn": {
+    "phase": 1,
+    "task_id": "04506a13-f16b-4c5b-9bf2-276d19c7394b",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:58:49Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:30Z"
+  },
+  "el-09-Si": {
+    "phase": 1,
+    "task_id": "a1d1eede-9769-433a-9931-b31276d3db8e",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:58:51Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:31Z"
+  },
+  "el-10-Nb": {
+    "phase": 1,
+    "task_id": "92ee0861-d702-4058-bb4c-d3cd18188ca1",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:58:55Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:33Z"
+  },
+  "el-11-Be": {
+    "phase": 1,
+    "task_id": "6c901ba2-c872-41f4-bb94-288e98a8c5fc",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:58:59Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:34Z"
+  },
+  "el-12-Co": {
+    "phase": 1,
+    "task_id": "793106a9-5a24-4130-ae17-5077f1a72015",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:02Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:36Z"
+  },
+  "el-13-Ti": {
+    "phase": 1,
+    "task_id": "aaeddb2b-ebd5-45e7-9c7b-da10af3dcd9d",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:04Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:37Z"
+  },
+  "el-14-Zr": {
+    "phase": 1,
+    "task_id": "efebb573-f92b-46ef-b3e0-c8dedaf004bb",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:07Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:39Z"
+  },
+  "el-15-Hf": {
+    "phase": 1,
+    "task_id": "e97325ef-17fe-43f6-937a-6a4f3b8efab1",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:10Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:25:28Z"
+  },
+  "el-16-Mg": {
+    "phase": 1,
+    "task_id": "b1b8cab3-0d80-4e2f-9cb4-aee6252ab969",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:39Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:40Z"
+  },
+  "el-17-Ag": {
+    "phase": 1,
+    "task_id": "55689735-1895-4174-a832-26168d8b1abf",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:41Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:41Z"
+  },
+  "el-18-V": {
+    "phase": 1,
+    "task_id": "0910b75a-7128-4a5b-a40d-240bd4590ff2",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:44Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:43Z"
+  },
+  "el-19-B": {
+    "phase": 1,
+    "task_id": "085e153b-3ea7-447c-9d2c-92d4bd6b7ce3",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:47Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:44Z"
+  },
+  "el-20-As": {
+    "phase": 1,
+    "task_id": "183535ec-e1e6-40fa-b116-b28129c937c3",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:50Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:33:06Z"
+  },
+  "el-21-Sb": {
+    "phase": 1,
+    "task_id": "c89c6f74-0bbb-4eb0-a8ae-6fd86812e968",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:52Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:46Z"
+  },
+  "el-22-P": {
+    "phase": 1,
+    "task_id": "41b884d2-755a-4c74-98fd-9b3ae0a36029",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:55Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:33:08Z"
+  },
+  "el-23-Pb": {
+    "phase": 1,
+    "task_id": "9faf4e8e-468a-4f1e-94f9-250dd406393c",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T18:59:58Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:22:56Z"
+  },
+  "el-24-Bi": {
+    "phase": 1,
+    "task_id": "9e252e78-da6b-4bd4-9f94-2a1bbe9477c4",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:01Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:33:09Z"
+  },
+  "el-25-Se": {
+    "phase": 1,
+    "task_id": "37922a77-287d-4c31-891b-142a1ded1f38",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:04Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:25:33Z"
+  },
+  "el-26-Te": {
+    "phase": 1,
+    "task_id": "36e10129-9536-48c5-aeb7-a3ef0adbfe0a",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:07Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:22:58Z"
+  },
+  "el-27-S": {
+    "phase": 1,
+    "task_id": "f460e55f-026d-422c-839b-fb279ee3a944",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:10Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:33:10Z"
+  },
+  "el-28-Cd": {
+    "phase": 1,
+    "task_id": "3df9fabf-2a1f-4c2a-829c-4d6938a091fe",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:12Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:28:07Z"
+  },
+  "el-29-O": {
+    "phase": 1,
+    "task_id": "850dc22f-484e-484d-b52e-a87f5a6fc3a7",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:15Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:33:12Z"
+  },
+  "el-30-H": {
+    "phase": 1,
+    "task_id": "e863848a-c917-4dad-af1a-4c69ce2190e2",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:18Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:33:13Z"
+  },
+  "el-31-N": {
+    "phase": 1,
+    "task_id": "6a3b0d5a-4dc9-40ed-b01c-69ace225da49",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:46Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:33:15Z"
+  },
+  "el-32-C": {
+    "phase": 1,
+    "task_id": "2060f087-32ba-4df8-953a-80b9ed319042",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:49Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:51Z"
+  },
+  "el-33-Mo": {
+    "phase": 1,
+    "task_id": "d8b5d0f1-4ab6-4655-8138-33f1da1fc91a",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:52Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:52Z"
+  },
+  "el-34-W": {
+    "phase": 1,
+    "task_id": "f118b313-8cd9-40a3-aaac-78b0af1d9f0e",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:55Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:20:25Z"
+  },
+  "el-35-Ta": {
+    "phase": 1,
+    "task_id": "0ddac0ad-f994-4d18-9bf2-0cce5474b7fe",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:00:58Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:20:26Z"
+  },
+  "el-36-Ga": {
+    "phase": 1,
+    "task_id": "9e90a308-d5e0-42c9-be5e-563efae592fa",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:00Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:54Z"
+  },
+  "el-37-Ge": {
+    "phase": 1,
+    "task_id": "be061b72-07f4-4bf6-89dc-c581dca1e992",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:03Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:23:04Z"
+  },
+  "el-38-In": {
+    "phase": 1,
+    "task_id": "37e1f94f-6c6e-4d43-b7a3-953a8e95ff25",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:06Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:55Z"
+  },
+  "el-39-Li": {
+    "phase": 1,
+    "task_id": "9c720ce8-fc44-4a3b-a2c7-ec2be7d02b2b",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:09Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:35:23Z"
+  },
+  "el-40-Ca": {
+    "phase": 1,
+    "task_id": "208a52b1-baaf-4053-a8d5-c829f64e31a6",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:12Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:25:40Z"
+  },
+  "el-41-Sr": {
+    "phase": 1,
+    "task_id": "d9d08475-7124-465c-9d92-3c93df8ba79b",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:15Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:33:16Z"
+  },
+  "el-42-Sc": {
+    "phase": 1,
+    "task_id": "2eea4b0e-704a-442e-a41f-5d7141e56722",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:17Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:25:42Z"
+  },
+  "el-43-Y": {
+    "phase": 1,
+    "task_id": "3a6a153c-2f65-4e4c-9f0a-f7d9baf9bfa1",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:20Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:28:13Z"
+  },
+  "el-44-La": {
+    "phase": 1,
+    "task_id": "322c7c4b-d2ca-43bc-b4af-f0e4292d7d0f",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:23Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:35:25Z"
+  },
+  "el-45-Ce": {
+    "phase": 1,
+    "task_id": "696ec571-e47d-4d26-afae-53b4f5da984b",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:25Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:28:15Z"
+  },
+  "el-46-Pr": {
+    "phase": 1,
+    "task_id": "f62e43c2-c199-4560-ac22-b549fee8c7b5",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:54Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:23:10Z"
+  },
+  "el-47-Nd": {
+    "phase": 1,
+    "task_id": "267e7570-049b-4535-9dd3-a08dbe90274b",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:01:57Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:23:11Z"
+  },
+  "el-48-Er": {
+    "phase": 1,
+    "task_id": "18e844f5-d208-4077-92c5-9019754e6d70",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:02:00Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:20:34Z"
+  },
+  "el-49-Gd": {
+    "phase": 1,
+    "task_id": "1de568a4-8bf1-4bc8-ba18-27dea662848a",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:02:02Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:20:35Z"
+  },
+  "el-50-Pd": {
+    "phase": 1,
+    "task_id": "a3701dd9-736a-43ce-91c9-80bae66a8c9a",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:02:05Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:28:16Z"
+  },
+  "joint-shortlist": {
+    "phase": 1,
+    "task_id": "56198956-471d-41b7-b796-170fc45cfcb9",
+    "job": "LITERATURE_HIGH",
+    "submitted": "2026-10-17T19:02:08Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:35:26Z"
+  },
+  "ec-01-droplet-cell-screen": {
+    "phase": 4,
+    "task_id": "6019b766-9f83-4a81-9026-5ae0dc2d3fbe",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:03:31Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:30:59Z"
+  },
+  "ec-02-potentiostat-free": {
+    "phase": 4,
+    "task_id": "ae047073-dfe1-428f-a501-8ca6b9721354",
+    "job": "LITERATURE",
+    "submitted": "2026-10-17T19:03:34Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:28:18Z"
+  },
+  "palette-bounds-table": {
+    "phase": 2,
+    "task_id": "ea13ca40-78dd-4b62-9748-76c8cdd5e641",
+    "job": "ANALYSIS",
+    "submitted": "2026-10-17T19:36:01Z",
+    "status": "success",
+    "fetched": "2026-10-17T20:02:36Z"
+  },
+  "multi-element-constraints": {
+    "phase": 3,
+    "task_id": "84ef6022-25ed-4bc7-bb59-eea9c9478217",
+    "job": "ANALYSIS",
+    "submitted": "2026-10-17T19:36:21Z",
+    "status": "success",
+    "fetched": "2026-10-17T19:48:38Z"
+  }
+}

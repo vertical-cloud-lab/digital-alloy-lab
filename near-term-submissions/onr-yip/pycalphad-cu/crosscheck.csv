@@ -1,0 +1,10 @@
+database,alloy,composition_wt,handbook_solidus_C,handbook_liquidus_C,handbook_range_C,eq_liquidus_C,eq_solidus_C,eq_range_C,eq_primary_phase,eq_wall_s
+mc_ni,C71500 70-30 Cu-Ni,CU68.8 NI30 FE0.6 MN0.6,1171,1238,67,1229.2,1171.2,58.0,alpha (fcc),1.13
+mc_ni,C70600 90-10 Cu-Ni,CU87.8 NI10 FE1.4 MN0.8,1099,1149,50,1131.3,1104.0,27.3,alpha (fcc),0.89
+mc_ni,C95800 NAB,CU81.1 NI4.5 AL9.2 FE4 MN1.2,1043,1060,17,1111.5,1035.6,75.9,kappa Fe-rich bcc,2.08
+mc_fe,C71500 70-30 Cu-Ni,CU68.8 NI30 FE0.6 MN0.6,1171,1238,67,1242.9,1197.0,45.9,alpha (fcc),1.5
+mc_fe,C70600 90-10 Cu-Ni,CU87.8 NI10 FE1.4 MN0.8,1099,1149,50,1146.3,1119.0,27.3,alpha (fcc),1.23
+mc_fe,C95800 NAB,CU81.1 NI4.5 AL9.2 FE4 MN1.2,1043,1060,17,1244.8,1030.9,213.9,kappa Fe-rich bcc,3.44
+cost507,C71500 70-30 Cu-Ni,CU68.8 NI30 FE0.6 MN0.6,1171,1238,67,1249.8,1201.3,48.4,alpha (fcc),1.69
+cost507,C70600 90-10 Cu-Ni,CU87.8 NI10 FE1.4 MN0.8,1099,1149,50,1154.2,1131.1,23.0,alpha (fcc),1.53
+cost507,C95800 NAB,CU81.1 NI4.5 AL9.2 FE4 MN1.2,1043,1060,17,1061.8,1050.0,11.8,beta (Cu-rich bcc),3.25
