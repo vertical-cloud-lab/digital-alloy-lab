@@ -30,7 +30,8 @@ K_CM = 0.6950348   # Boltzmann constant in cm^-1 per K
 # candidate bands (centre, FWHM, nm): camera, two-colour pair, InGaAs
 BANDS = {"650/40": (650, 40), "650/10": (650, 10), "700/40": (700, 40), "700/10": (700, 10), "750/40": (750, 40),
          "800/40": (800, 40), "850/40": (850, 40), "850/10": (850, 10), "900/40": (900, 40), "940/10": (940, 10),
-         "950/25": (950, 25), "1300/12": (1300, 12), "1550/12": (1550, 12), "1600/12": (1600, 12), "1650/12": (1650, 12)}
+         "950/25": (950, 25), "955-990 (camera, DMSP950 R)": (972.5, 35), "1300/12": (1300, 12), "1550/12": (1550, 12),
+         "1600/12": (1600, 12), "1650/12": (1650, 12), "1625-1725 (InGaAs behind the DMSP1000)": (1675, 100)}
 ELEMENTS = ("Al_I", "Mg_I", "Si_I", "Zn_I", "Ca_I", "Na_I", "K_I", "Li_I", "Ar_I")
 
 
@@ -42,7 +43,24 @@ def num(s):
         return None
 
 
+NIST_URL = ("https://physics.nist.gov/cgi-bin/ASD/lines1.pl?spectra={sp}&limits_type=0&low_w=500&upp_w=1800&unit=1&de=0&I_scale_type=1"
+            "&format=2&line_out=0&remove_js=on&en_unit=0&output=0&page_size=15&show_obs_wl=1&show_calc_wl=1&order_out=0&show_av=2"
+            "&tsb_value=0&A_out=0&intens_out=on&allowed_out=1&forbid_out=1&conf_out=on&term_out=on&enrg_out=on&J_out=on&submit=Retrieve+Data")
+
+
+def fetch(dirpath):
+    """Download the NIST ASD line lists that are missing (public site, no tunnel needed)."""
+    import urllib.request
+    Path(dirpath).mkdir(parents=True, exist_ok=True)
+    for el in ELEMENTS:
+        f = Path(dirpath) / f"{el}.csv"
+        if not f.exists():
+            with urllib.request.urlopen(NIST_URL.format(sp=el.replace("_", "+")), timeout=60) as r:
+                f.write_bytes(r.read())
+
+
 def load(dirpath):
+    fetch(dirpath)
     lines = []
     for el in ELEMENTS:
         f = Path(dirpath) / f"{el}.csv"

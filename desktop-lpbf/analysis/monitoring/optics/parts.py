@@ -129,8 +129,11 @@ LENSES = {
 
 def CAMERA_CASES(wd_lw, wd_lp):
     """(camera, lens, f-number, port, working distance) cases for viewports.py."""
-    return [("Chronos 2.1-HD mono", "Kowa LM50JC10M 50 mm", 4.0, "LW", wd_lw),
+    return [("Chronos 2.1-HD mono", "Kowa LM50JC10M 50 mm", 2.8, "LW", wd_lw),
+            ("Chronos 2.1-HD mono", "Kowa LM50JC10M 50 mm", 4.0, "LW", wd_lw),
+            ("Chronos 2.1-HD mono", "Kowa LM50JC10M 50 mm", 5.6, "LW", wd_lw),
             ("Chronos 2.1-HD mono", "Kowa LM50JC10M 50 mm", 8.0, "LW", wd_lw),
+            ("Chronos 2.1-HD mono", "Kowa LM50JC10M 50 mm", 11.0, "LW", wd_lw),
             ("Chronos 2.1-HD mono", "Edmund 35 mm C VIS-NIR #67-716", 4.0, "LW", wd_lw),
             ("Chronos 2.1-HD mono", "Edmund 75 mm C VIS-NIR #74-054", 5.6, "LW", wd_lw),
             ("IMX296 mono", "Kowa LM50JC10M 50 mm", 4.0, "LW", wd_lw),
@@ -139,3 +142,114 @@ def CAMERA_CASES(wd_lw, wd_lp):
 
 
 ROI = {"Chronos 2.1-HD mono": (640, 96), "IMX296 mono": (1456, 1088)}     # Chronos at 24,046 fps; the IMX296 full frame (60 fps)
+
+# ------------------------------------------------------------------------------------------------ the parts list
+# group, item, part number, vendor, qty, unit price (USD; None = quote), price basis, url, fetched (UTC), where / why
+T_ = "https://www.thorlabs.com/item/"
+PARTS = [
+    # coaxial branch, baseline (monitoring_spec.COAX: cube1 x -155, cube2 x -215 to -y, cube3 x -285)
+    ("coax", "45 deg short-pass dichroic, cube1 (already in the design: optics-bom O5)", "DMSP1000", "Thorlabs", 0, 331.76, "list",
+     T_ + "DMSP1000", "2026-11-25T06:43Z", "reflects the laser into the galvo; T 0.96 at 520-985 nm; leaks 0.063 % at 1070 nm (OD 3.2)"),
+    ("coax", "beam trap on cube1's far port: the DMSP1000 passes 0.06-0.12 % of the forward beam (0.3-0.6 W at 500 W) straight through",
+     "cage-mounted beam trap rated >= 1 W at 1070 nm (Thorlabs BTC30 class)", "Thorlabs", 1, None, "estimate $100-200", "", "",
+     "a Class 4 stray beam exists today wherever cube1's -y face is open"),
+    ("coax", "shared 1070 nm blocker after cube1 (short-pass 1000 nm, OD 5.4-6.0 at 1064-1100 nm)", "FESH1000", "Thorlabs", 1, 169.26, "list",
+     T_ + "FESH1000", "2026-11-25T06:57Z", "replaces the NF1064-44 (O16), which also blocks 520-720 nm (OD 4.2-4.6) and would cut the 700 nm channel"),
+    ("coax", "cube2 dichroic: reflects 955-990 nm to the camera (-y), passes < 930 nm on", "DMSP950", "Thorlabs", 1, 331.76, "list",
+     T_ + "DMSP950", "2026-11-25T06:43Z", "Thorlabs raw data: T 0.96 below 920 nm, R 0.93-0.97 at 960-1000 nm"),
+    ("coax", "cube3 dichroic: reflects < 790 nm to photodiode A, passes > 825 nm to photodiode B", "DMLP805", "Thorlabs", 1, 331.76, "list",
+     T_ + "DMLP805", "2026-11-25T06:46Z", "R 0.99 at 650-775 nm; T 0.97-0.98 at 850-1000 nm"),
+    ("coax", "photodiode A band, 700 nm, 40 nm FWHM (OD > 5 at 200-1200 nm)", "FBH700-40", "Thorlabs", 1, 193.82, "list",
+     "https://www.thorlabs.com/hard-coated-nir-bandpass-filters", "2026-11-25T06:48Z", "clean of plume lines for metals (lines.md); outside the 750-875 nm galvo stop band"),
+    ("coax", "photodiode B band, 900 nm, 40 nm FWHM", "FBH900-40", "Thorlabs", 1, 193.82, "list",
+     "https://www.thorlabs.com/hard-coated-nir-bandpass-filters", "2026-11-25T06:48Z", "Mg I 880.7 nm at its edge (weak); Ar I 912 nm only if argon were excited"),
+    ("coax", "photodiode B (A is the existing T2 / O15 unit)", "PDA36A2", "Thorlabs", 1, 400.01, "list", T_ + "PDA36A2", "2026-11-25T06:51Z",
+     "run at 30-40 dB (260-90 kHz): SNR 40-150 on the pool"),
+    ("coax", "photodiode lenses, f = 50 mm achromat (one exists as O18)", "AC254-050-B", "Thorlabs", 1, 110.91, "list", T_ + "AC254-050-B",
+     "2026-11-25T07:09Z", "images the plate at 0.31x onto the field stop"),
+    ("coax", "field stops, 500 um pinhole (1.6 mm on the plate), one per photodiode, at each band's own focus", "P500K", "Thorlabs", 2, 84.12, "list",
+     T_ + "P500K", "2026-11-25T07:11Z", "sized for the lateral colour (up to 0.6 mm at 700 nm at the L75 edge) plus the pool"),
+    ("coax", "coaxial camera, monochrome IMX296 board for the Pi 5 (C/CS mount, trigger input, no IR filter on the mono version)",
+     "CAM-IMX296RAW (mono)", "InnoMaker", 1, 69.0, "list (sale; $79 regular)", "https://www.inno-maker.com/product/cam-mipi296raw-trigger/",
+     "2026-11-25T06:49Z", "7.4 um/px with the 75 mm tube lens; minimum exposure ~30 us"),
+    ("coax", "tube lens for the IMX296, f = 75 mm (7.4 um/px; 0.94 x 0.71 mm at 128 x 96 px)", "AC254-075-B", "Thorlabs", 1, 110.91, "list",
+     T_ + "AC254-075-B", "2026-11-25T07:09Z", "refocus 0.1-0.3 mm at the sensor for the 955-990 nm band"),
+    ("coax", "second 1070 nm blocker in the camera arm (OD ~14 in all)", "FESH1000", "Thorlabs", 1, 169.26, "list", T_ + "FESH1000",
+     "2026-11-25T06:57Z", "the camera band has no bandpass filter, so this replaces its out-of-band blocking"),
+    ("coax", "30 mm cage cube for a round Ø1 in. dichroic (cube + base + 45 deg mount), cubes 2 and 3", "C4W + B4C/M + FFM1", "Thorlabs", 2,
+     75.32 + 122.65 + 72.77, "list (sum)", T_ + "C4W", "2026-11-25T07:13-07:17Z", "CM1-DCH/M ($205.91) takes only 25 x 36 mm rectangles"),
+    ("coax", "cage plates, rods and lens tubes (4 x CP33/M, 12 x ER2-ER4, 6 x SM1L10, 2 x SM1A3/A6)", "CP33/M, ER2/3/4, SM1L10, SM1A3", "Thorlabs", 1,
+     4 * 20.43 + 12 * 7.64 + 6 * 16.49 + 2 * 22.8, "list (sum, typical counts)", T_ + "CP33_M", "2026-11-25T07:15-07:19Z", "count to be set from the drawn layout"),
+    # options
+    ("coax option", "InGaAs channel behind the DMSP1000 (1625-1725 nm leaks through it at 3-30 %): photodiode", "PDA20CS2", "Thorlabs", 0, 676.21,
+     "list", T_ + "PDA20CS2", "2026-11-25T06:51Z", "sees solid metal down to ~770-850 K filling the field stop at 9-90 kHz (radiometry.md)"),
+    ("coax option", "InGaAs channel: 1070 nm blocker (long-pass 1250 nm, OD ~5.2 at 1070, T ~0.99 at 1300-1700)", "FELH1250", "Thorlabs", 0, 169.26,
+     "list", T_ + "FELH1250", "2026-11-25T06:57Z", ""),
+    ("coax option", "InGaAs channel: lens f = 100 mm, 1050-1700 nm AR", "AC254-100-C", "Thorlabs", 0, 120.45, "list", T_ + "AC254-100-C",
+     "2026-11-25T07:09Z", ""),
+    ("coax option", "InGaAs channel: pick-off right after cube1, 45 deg short-pass ~1180 nm (passes the Si bands, reflects 1200-1750 nm)",
+     "DMSP1180 class", "Thorlabs", 0, None, "not priced (Ø1 in. DMSP parts list at $331.76)", "", "", "curve not read: check it reflects 1600-1750 nm"),
+    ("coax option", "notch dichroic to replace the DMSP1000 (InGaAs at 1140-1600 nm): NOT recommended", "NFD01-1064-25x36", "Semrock (IDEX)", 0, 774.18,
+     "list", "https://www.idex-hs.com/store/product-detail/nfd01_1064_25x36?cat_id=semrock_optical_filters&node=individual_optical_filters",
+     "2026-11-25T07:05Z", "no CW rating (1 J/cm2 at 532 nm, 10 ns only); 1070 nm not specified; would carry 500 W at 20 kW/cm2"),
+    ("coax option", "if the galvo passes 850 nm: cube2 a 50:50 plate (camera 850/10, NIST-like)", "BSW26 + FBH850-10", "Thorlabs", 0, 363.52 + 193.82,
+     "list (sum)", T_ + "BSW26", "2026-11-25T07:02Z", "halves every channel's light"),
+    ("coax option", "Chronos on the coaxial arm: tube lens f = 200 mm (8.0 um/px)", "AC254-200-B", "Thorlabs", 0, 110.91, "list", T_ + "AC254-200-B",
+     "2026-11-25T07:09Z", "the camera itself is the side camera's (S1), moved"),
+    # side camera at LW
+    ("side (LW)", "high-speed camera, mono, 8 GB (16 GB $7,200, 32 GB $7,900)", "Chronos 2.1-HD", "Kron Technologies", 1, 6800.0, "list",
+     "https://www.krontech.ca/product/chronos-2-1-hd-high-speed-camera/", "2026-11-25T06:49Z", "24,046 fps at 640 x 96; 10 us minimum exposure"),
+    ("side (LW)", "50 mm C-mount lens that focuses at 176 mm (MOD 100 mm), 400-1000 nm coating, 2/3 in. image circle", "LM50JC10M", "Kowa", 1, 931.0,
+     "reseller list (wilcoimaging.com)", "https://wilcoimaging.com/products/kowa-lm50jc10m", "2026-11-25T07:14Z", "25 um/px across, 113 um along the plate"),
+    ("side (LW)", "camera filter: 850 nm, 10 nm FWHM (OD > 5 to 1200 nm)", "FBH850-10", "Thorlabs", 1, 193.82, "list", T_ + "FBH850-10",
+     "2026-11-25T06:56Z", "FBH850-40 ($193.82) with an LED source"),
+    ("side (LW)", "second 1070 nm blocker (OD > 11 with the bandpass)", "FESH1000", "Thorlabs", 1, 169.26, "list", T_ + "FESH1000", "2026-11-25T06:57Z",
+     "0.1 W of diffuse 1070 nm reaches a 12.5 mm pupil at LW"),
+    ("side (LW)", "light: 850 nm LED, 2.7 W minimum, through LP or BW", "SOLIS-850C", "Thorlabs", 1, 1377.86, "list", T_ + "SOLIS-850C",
+     "2026-11-25T07:00Z", "enough for ~10 us at f/4 from LP, ~50 us from BW (viewports.md)"),
+    ("side (LW)", "LED driver with pulse mode (250 kHz small-signal; rise time not published)", "DC2200", "Thorlabs", 1, 2593.01, "list", T_ + "DC2200",
+     "2026-11-25T06:56Z", "check a 10 us pulse on the bench"),
+    ("side (LW) option", "light: 808 nm, 10 W, fibre-coupled, pulses from 10 us (Class 4: the guard panel is transparent at 808 nm)",
+     "808LD-2-CCMMINI-2-MM (AeroDIODE)", "LaserDiodeSource", 0, 6490.0, "list",
+     "https://www.laserdiodesource.com/shop/808nm-10W-CW-Source-System-AeroDiode", "2026-11-25T07:03Z", "LSO review first"),
+    ("side (LW) option", "camera with 1 us minimum exposure (freezes 20 m/s spatter with enough light)", "Chronos 1.4", "Kron Technologies", 0, 4500.0,
+     "list (8 GB)", "https://www.krontech.ca/product/chronos-1-4-high-speed-camera/", "2026-11-25T06:51Z", "24 % QE at 850 nm"),
+    ("side (LW) option", "pulsed diode-laser illumination, 300-500 W peak at 810 nm, 10 ns-10 us", "CAVILUX Smart UHS", "Cavitar", 0, None, "quote",
+     "https://www.cavitar.com/product/cavilux-smart-uhs-for-ultra-high-speed-illumination/", "2026-11-25T07:03Z", "Class 3B/4"),
+    # steep camera at LP
+    ("steep (LP)", "monochrome IMX296 board", "CAM-IMX296RAW (mono)", "InnoMaker", 1, 69.0, "list (sale)",
+     "https://www.inno-maker.com/product/cam-mipi296raw-trigger/", "2026-11-25T06:49Z", "10 um/px over 15 x 11 mm with the 50 mm lens"),
+    ("steep (LP)", "50 mm C-mount lens, MOD 100 mm", "LM50JC10M", "Kowa", 1, 931.0, "reseller list", "https://wilcoimaging.com/products/kowa-lm50jc10m",
+     "2026-11-25T07:14Z", "alternative: Edmund 35 mm C VIS-NIR #67-716 ($635, MOD 165 mm; 16 um/px)"),
+    ("steep (LP)", "filters: 850 nm 10 nm bandpass + 1070 nm short-pass", "FBH850-10 + FESH1000", "Thorlabs", 1, 193.82 + 169.26, "list (sum)",
+     T_ + "FBH850-10", "2026-11-25T06:56Z", "up to 0.4 W diffuse and a 1.3 W glint bound at 1070 nm reach its pupil"),
+    # layer camera (existing M6): blocking during lasing
+    ("layer camera (M6)", "second 1070 nm blocker behind the FESH0950 (OD 5.1 alone; 0.44 W diffuse + a 1.4 W glint bound reach its pupil)",
+     "FESH1000", "Thorlabs", 1, 169.26, "list", T_ + "FESH1000", "2026-11-25T06:57Z", "for dashcam video during lasing"),
+]
+
+
+def main():
+    out = ROOT / "monitoring" / "optics-parts.csv"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    cols = ["id", "group", "item", "part_number", "vendor", "qty", "unit_usd", "line_usd", "price_basis", "url", "fetched_utc", "notes"]
+    rows = []
+    tot = {}
+    for i, (g, item, pn, ven, q, u, basis, url, t, note) in enumerate(PARTS, 1):
+        line = None if u is None else round(q * u, 2)
+        rows.append(dict(id=f"MO{i}", group=g, item=item, part_number=pn, vendor=ven, qty=q, unit_usd="" if u is None else round(u, 2),
+                         line_usd="" if line is None else line, price_basis=basis, url=url, fetched_utc=t, notes=note))
+        if line:
+            tot[g] = tot.get(g, 0.0) + line
+    with out.open("w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=cols)
+        w.writeheader()
+        w.writerows(rows)
+    for g, v in tot.items():
+        print(f"{g}: ${v:,.2f}")
+    print("wrote", out)
+    return tot
+
+
+if __name__ == "__main__":
+    main()

@@ -5,8 +5,8 @@ Fields: own Eagar-Tsai fields (worker A's surface_fields.npz not given).
 | case | T peak (K) | liquid area (mm2) | liquid length x width (mm) |
 |---|---:|---:|---|
 | 200 W, 0.4 m/s | 2743 | 0.073 | 0.33 x 0.27 |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | 2743 | 0.078 | 0.36 x 0.25 |
-| 350 W, 0.8 m/s | 2743 | 0.097 | 0.37 x 0.30 |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | 2743 | 0.091 | 0.45 x 0.25 |
+| 350 W, 0.8 m/s | 2743 | 0.121 | 0.50 x 0.30 |
 
 ## Photodiodes: photocurrent and SNR (12 mm pupil, field stop Ø1.6 mm on the plate, liquid emissivity 0.12 at 1 um (literature midpoint))
 
@@ -18,59 +18,59 @@ Fields: own Eagar-Tsai fields (worker A's surface_fields.npz not given).
 | 200 W, 0.4 m/s | PD-B 900/40 (PDA36A2) | Kozjek | 53.1 nA | 0.00796 V, 86 | 0.000796 V, 25 | 0.0796 V, 220 |
 | 200 W, 0.4 m/s | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | pass | 23.1 nA | 0.00347 V, 37 | 0.000347 V, 11 | 0.0347 V, 96 |
 | 200 W, 0.4 m/s | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | Kozjek | 0.5 nA | 7.68e-05 V, 1 | 7.68e-06 V, 0 | 0.000768 V, 2 |
-| 200 W, 0.4 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 9.2 nA | 0.00139 V, 15 | 0.000138 V, 3 | 0.0138 V, 42 |
+| 200 W, 0.4 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 9.2 nA | 0.0014 V, 15 | 0.000139 V, 3 | 0.0139 V, 42 |
 | 200 W, 0.4 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 9.2 nA | 0.00139 V, 15 | 0.000138 V, 3 | 0.0138 V, 42 |
-| 200 W, 0.4 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 16.3 nA | 0.00246 V, 27 | 0.000244 V, 5 | 0.0244 V, 74 |
-| 200 W, 0.4 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 16.3 nA | 0.00245 V, 27 | 0.000244 V, 5 | 0.0244 V, 73 |
+| 200 W, 0.4 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 16.3 nA | 0.00246 V, 27 | 0.000245 V, 5 | 0.0245 V, 74 |
+| 200 W, 0.4 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 16.3 nA | 0.00246 V, 27 | 0.000244 V, 5 | 0.0244 V, 74 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | PD-A 700/40 (PDA36A2) | pass | 35.3 nA | 0.0053 V, 57 | 0.00053 V, 16 | 0.053 V, 146 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | PD-A 700/40 (PDA36A2) | Kozjek | 35.2 nA | 0.00528 V, 57 | 0.000528 V, 16 | 0.0528 V, 146 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | PD-B 900/40 (PDA36A2) | pass | 75.5 nA | 0.0113 V, 122 | 0.00113 V, 35 | 0.113 V, 313 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | PD-B 900/40 (PDA36A2) | Kozjek | 75.3 nA | 0.0113 V, 122 | 0.00113 V, 35 | 0.113 V, 312 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | pass | 32.8 nA | 0.00493 V, 53 | 0.000493 V, 15 | 0.0493 V, 136 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | Kozjek | 0.7 nA | 0.000109 V, 1 | 1.09e-05 V, 0 | 0.00109 V, 3 |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 12.7 nA | 0.00192 V, 21 | 0.000191 V, 4 | 0.0191 V, 58 |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 12.7 nA | 0.00192 V, 21 | 0.000191 V, 4 | 0.0191 V, 57 |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 22.6 nA | 0.00342 V, 37 | 0.000339 V, 7 | 0.0339 V, 102 |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 22.6 nA | 0.00341 V, 37 | 0.000338 V, 7 | 0.0338 V, 102 |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 12.8 nA | 0.00193 V, 21 | 0.000192 V, 4 | 0.0192 V, 58 |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 12.8 nA | 0.00193 V, 21 | 0.000191 V, 4 | 0.0191 V, 58 |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 22.7 nA | 0.00342 V, 37 | 0.00034 V, 7 | 0.034 V, 103 |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 22.6 nA | 0.00341 V, 37 | 0.000339 V, 7 | 0.0339 V, 102 |
 | 350 W, 0.8 m/s | PD-A 700/40 (PDA36A2) | pass | 44.7 nA | 0.00671 V, 72 | 0.000671 V, 21 | 0.0671 V, 185 |
 | 350 W, 0.8 m/s | PD-A 700/40 (PDA36A2) | Kozjek | 44.6 nA | 0.00669 V, 72 | 0.000669 V, 21 | 0.0669 V, 185 |
 | 350 W, 0.8 m/s | PD-B 900/40 (PDA36A2) | pass | 95.8 nA | 0.0144 V, 155 | 0.00144 V, 44 | 0.144 V, 397 |
 | 350 W, 0.8 m/s | PD-B 900/40 (PDA36A2) | Kozjek | 95.5 nA | 0.0143 V, 154 | 0.00143 V, 44 | 0.143 V, 396 |
 | 350 W, 0.8 m/s | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | pass | 41.6 nA | 0.00625 V, 67 | 0.000625 V, 19 | 0.0625 V, 173 |
 | 350 W, 0.8 m/s | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | Kozjek | 0.9 nA | 0.000138 V, 1 | 1.38e-05 V, 0 | 0.00138 V, 4 |
-| 350 W, 0.8 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 16.2 nA | 0.00245 V, 27 | 0.000244 V, 5 | 0.0244 V, 73 |
-| 350 W, 0.8 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 16.2 nA | 0.00244 V, 27 | 0.000243 V, 5 | 0.0243 V, 73 |
-| 350 W, 0.8 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 28.8 nA | 0.00435 V, 48 | 0.000432 V, 9 | 0.0432 V, 130 |
-| 350 W, 0.8 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 28.7 nA | 0.00434 V, 47 | 0.000431 V, 9 | 0.0431 V, 130 |
+| 350 W, 0.8 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 16.3 nA | 0.00246 V, 27 | 0.000245 V, 5 | 0.0245 V, 74 |
+| 350 W, 0.8 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 16.3 nA | 0.00246 V, 27 | 0.000244 V, 5 | 0.0244 V, 74 |
+| 350 W, 0.8 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 28.9 nA | 0.00436 V, 48 | 0.000433 V, 10 | 0.0433 V, 131 |
+| 350 W, 0.8 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 28.8 nA | 0.00435 V, 48 | 0.000432 V, 9 | 0.0432 V, 130 |
 
 ## Cameras: peak pixel at 8 um/px (12 mm pupil)
 
-| case | channel | galvo | peak e-/s | full well in (us) | 10 us: peak e-, SNR, mm2 at SNR>=3 | 100 us | 500 us |
-|---|---|---|---:|---:|---|---|---|
-| 200 W, 0.4 m/s | camera 955-990 (IMX296) | pass | 1.68e+08 | 63 | 1684, 41, 0.016 | 16841, 130, 0.025 SAT | 84203, 290, 0.035 SAT |
-| 200 W, 0.4 m/s | camera 955-990 (IMX296) | Kozjek | 1.68e+08 | 63 | 1679, 41, 0.016 | 16794, 129, 0.025 SAT | 83970, 290, 0.035 SAT |
-| 200 W, 0.4 m/s | camera 955-990 (Chronos 2.1-HD) | pass | 2.62e+08 | 57 | 2617, 46, 0.014 | 26169, 160, 0.022 SAT | 130846, 361, 0.030 SAT |
-| 200 W, 0.4 m/s | camera 955-990 (Chronos 2.1-HD) | Kozjek | 2.61e+08 | 57 | 2610, 46, 0.014 | 26097, 160, 0.022 SAT | 130483, 360, 0.030 SAT |
-| 200 W, 0.4 m/s | alt: camera 850/10, 50:50 plate (IMX296) | pass | 6.65e+07 | 160 | 665, 25, 0.012 | 6651, 81, 0.019 | 33256, 182, 0.025 SAT |
-| 200 W, 0.4 m/s | alt: camera 850/10, 50:50 plate (IMX296) | Kozjek | 1.47e+06 | 7216 | 15, 2, 0.000 | 147, 11, 0.009 | 737, 27, 0.013 |
-| 200 W, 0.4 m/s | alt: camera 700/10, 50:50 plate (IMX296) | pass | 1.21e+08 | 88 | 1208, 34, 0.012 | 12079, 110, 0.018 SAT | 60393, 246, 0.022 SAT |
-| 200 W, 0.4 m/s | alt: camera 700/10, 50:50 plate (IMX296) | Kozjek | 1.2e+08 | 88 | 1205, 34, 0.012 | 12045, 110, 0.018 SAT | 60225, 245, 0.022 SAT |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | camera 955-990 (IMX296) | pass | 1.68e+08 | 63 | 1684, 41, 0.022 | 16841, 130, 0.034 SAT | 84203, 290, 0.045 SAT |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | camera 955-990 (IMX296) | Kozjek | 1.68e+08 | 63 | 1679, 41, 0.022 | 16794, 129, 0.034 SAT | 83970, 290, 0.045 SAT |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | camera 955-990 (Chronos 2.1-HD) | pass | 2.62e+08 | 57 | 2617, 46, 0.019 | 26169, 160, 0.029 SAT | 130846, 361, 0.039 SAT |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | camera 955-990 (Chronos 2.1-HD) | Kozjek | 2.61e+08 | 57 | 2610, 46, 0.019 | 26097, 160, 0.029 SAT | 130483, 360, 0.039 SAT |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: camera 850/10, 50:50 plate (IMX296) | pass | 6.65e+07 | 160 | 665, 25, 0.017 | 6651, 81, 0.025 | 33256, 182, 0.033 SAT |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: camera 850/10, 50:50 plate (IMX296) | Kozjek | 1.47e+06 | 7216 | 15, 2, 0.000 | 147, 11, 0.013 | 737, 27, 0.017 |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: camera 700/10, 50:50 plate (IMX296) | pass | 1.21e+08 | 88 | 1208, 34, 0.017 | 12079, 110, 0.024 SAT | 60393, 246, 0.029 SAT |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: camera 700/10, 50:50 plate (IMX296) | Kozjek | 1.2e+08 | 88 | 1205, 34, 0.017 | 12045, 110, 0.024 SAT | 60225, 245, 0.029 SAT |
-| 350 W, 0.8 m/s | camera 955-990 (IMX296) | pass | 1.68e+08 | 63 | 1684, 41, 0.028 | 16841, 130, 0.044 SAT | 84203, 290, 0.059 SAT |
-| 350 W, 0.8 m/s | camera 955-990 (IMX296) | Kozjek | 1.68e+08 | 63 | 1679, 41, 0.028 | 16794, 129, 0.044 SAT | 83970, 290, 0.059 SAT |
-| 350 W, 0.8 m/s | camera 955-990 (Chronos 2.1-HD) | pass | 2.62e+08 | 57 | 2617, 46, 0.024 | 26169, 160, 0.038 SAT | 130846, 361, 0.051 SAT |
-| 350 W, 0.8 m/s | camera 955-990 (Chronos 2.1-HD) | Kozjek | 2.61e+08 | 57 | 2610, 46, 0.024 | 26097, 160, 0.038 SAT | 130483, 360, 0.051 SAT |
-| 350 W, 0.8 m/s | alt: camera 850/10, 50:50 plate (IMX296) | pass | 6.65e+07 | 160 | 665, 25, 0.022 | 6651, 81, 0.033 | 33256, 182, 0.043 SAT |
-| 350 W, 0.8 m/s | alt: camera 850/10, 50:50 plate (IMX296) | Kozjek | 1.47e+06 | 7216 | 15, 2, 0.000 | 147, 11, 0.016 | 737, 27, 0.022 |
-| 350 W, 0.8 m/s | alt: camera 700/10, 50:50 plate (IMX296) | pass | 1.21e+08 | 88 | 1208, 34, 0.021 | 12079, 110, 0.030 SAT | 60393, 246, 0.038 SAT |
-| 350 W, 0.8 m/s | alt: camera 700/10, 50:50 plate (IMX296) | Kozjek | 1.2e+08 | 88 | 1205, 34, 0.021 | 12045, 110, 0.030 SAT | 60225, 245, 0.038 SAT |
+| case | channel | galvo | peak e-/s | full well in (us) | 10 us (Chronos only): peak e-, SNR, mm2 at SNR>=3 | 30 us | 100 us | 500 us |
+|---|---|---|---:|---:|---|---|---|---|
+| 200 W, 0.4 m/s | camera 955-990 (IMX296) | pass | 1.68e+08 | 63 | - | 5052, 71, 0.020 | 16841, 130, 0.026 SAT | 84203, 290, 0.035 SAT |
+| 200 W, 0.4 m/s | camera 955-990 (IMX296) | Kozjek | 1.68e+08 | 63 | - | 5038, 71, 0.020 | 16794, 129, 0.026 SAT | 83970, 290, 0.035 SAT |
+| 200 W, 0.4 m/s | camera 955-990 (Chronos 2.1-HD) | pass | 2.62e+08 | 57 | 2617, 46, 0.014 | 7851, 85, 0.017 | 26169, 160, 0.022 SAT | 130846, 361, 0.030 SAT |
+| 200 W, 0.4 m/s | camera 955-990 (Chronos 2.1-HD) | Kozjek | 2.61e+08 | 57 | 2610, 46, 0.014 | 7829, 85, 0.017 | 26097, 160, 0.022 SAT | 130483, 360, 0.030 SAT |
+| 200 W, 0.4 m/s | alt: camera 850/10, 50:50 plate (IMX296) | pass | 6.65e+07 | 160 | - | 1995, 44, 0.015 | 6651, 81, 0.019 | 33256, 182, 0.025 SAT |
+| 200 W, 0.4 m/s | alt: camera 850/10, 50:50 plate (IMX296) | Kozjek | 1.47e+06 | 7216 | - | 44, 5, 0.007 | 147, 11, 0.009 | 737, 27, 0.013 |
+| 200 W, 0.4 m/s | alt: camera 700/10, 50:50 plate (IMX296) | pass | 1.21e+08 | 88 | - | 3624, 60, 0.015 | 12079, 110, 0.018 SAT | 60393, 246, 0.022 SAT |
+| 200 W, 0.4 m/s | alt: camera 700/10, 50:50 plate (IMX296) | Kozjek | 1.2e+08 | 88 | - | 3614, 60, 0.015 | 12045, 110, 0.018 SAT | 60225, 245, 0.022 SAT |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | camera 955-990 (IMX296) | pass | 1.68e+08 | 63 | - | 5052, 71, 0.027 | 16841, 130, 0.034 SAT | 84203, 290, 0.045 SAT |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | camera 955-990 (IMX296) | Kozjek | 1.68e+08 | 63 | - | 5038, 71, 0.027 | 16794, 129, 0.034 SAT | 83970, 290, 0.045 SAT |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | camera 955-990 (Chronos 2.1-HD) | pass | 2.62e+08 | 57 | 2617, 46, 0.019 | 7851, 85, 0.023 | 26169, 160, 0.029 SAT | 130846, 361, 0.039 SAT |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | camera 955-990 (Chronos 2.1-HD) | Kozjek | 2.61e+08 | 57 | 2610, 46, 0.019 | 7829, 85, 0.023 | 26097, 160, 0.029 SAT | 130483, 360, 0.039 SAT |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: camera 850/10, 50:50 plate (IMX296) | pass | 6.65e+07 | 160 | - | 1995, 44, 0.021 | 6651, 81, 0.025 | 33256, 182, 0.033 SAT |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: camera 850/10, 50:50 plate (IMX296) | Kozjek | 1.47e+06 | 7216 | - | 44, 5, 0.010 | 147, 11, 0.013 | 737, 27, 0.017 |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: camera 700/10, 50:50 plate (IMX296) | pass | 1.21e+08 | 88 | - | 3624, 60, 0.020 | 12079, 110, 0.023 SAT | 60393, 246, 0.029 SAT |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: camera 700/10, 50:50 plate (IMX296) | Kozjek | 1.2e+08 | 88 | - | 3614, 60, 0.020 | 12045, 110, 0.023 SAT | 60225, 245, 0.029 SAT |
+| 350 W, 0.8 m/s | camera 955-990 (IMX296) | pass | 1.68e+08 | 63 | - | 5052, 71, 0.035 | 16841, 130, 0.044 SAT | 84203, 290, 0.059 SAT |
+| 350 W, 0.8 m/s | camera 955-990 (IMX296) | Kozjek | 1.68e+08 | 63 | - | 5038, 71, 0.035 | 16794, 129, 0.044 SAT | 83970, 290, 0.059 SAT |
+| 350 W, 0.8 m/s | camera 955-990 (Chronos 2.1-HD) | pass | 2.62e+08 | 57 | 2617, 46, 0.024 | 7851, 85, 0.030 | 26169, 160, 0.038 SAT | 130846, 361, 0.051 SAT |
+| 350 W, 0.8 m/s | camera 955-990 (Chronos 2.1-HD) | Kozjek | 2.61e+08 | 57 | 2610, 46, 0.024 | 7829, 85, 0.030 | 26097, 160, 0.038 SAT | 130483, 360, 0.051 SAT |
+| 350 W, 0.8 m/s | alt: camera 850/10, 50:50 plate (IMX296) | pass | 6.65e+07 | 160 | - | 1995, 44, 0.026 | 6651, 81, 0.032 | 33256, 182, 0.043 SAT |
+| 350 W, 0.8 m/s | alt: camera 850/10, 50:50 plate (IMX296) | Kozjek | 1.47e+06 | 7216 | - | 44, 5, 0.012 | 147, 11, 0.016 | 737, 27, 0.022 |
+| 350 W, 0.8 m/s | alt: camera 700/10, 50:50 plate (IMX296) | pass | 1.21e+08 | 88 | - | 3624, 60, 0.025 | 12079, 110, 0.030 SAT | 60393, 246, 0.038 SAT |
+| 350 W, 0.8 m/s | alt: camera 700/10, 50:50 plate (IMX296) | Kozjek | 1.2e+08 | 88 | - | 3614, 60, 0.025 | 12045, 110, 0.030 SAT | 60225, 245, 0.038 SAT |
 
 ## Two-colour (700/40 over 900/40 nm, photodiodes)
 
@@ -113,29 +113,29 @@ Error at 2000 K for a 5 % emissivity difference, by band pair: 700/900: 43 K; 70
 
 ## Lowest temperature seen (SNR 3)
 
-| camera pixel, uniform liquid/solid | 10 us | 100 us | 500 us |
-|---|---:|---:|---:|
-| camera 955-990 (IMX296) | pass | 1572 K | 1277 K | 1126 K |
-| camera 955-990 (IMX296) | Kozjek | 1572 K | 1277 K | 1126 K |
-| camera 955-990 (Chronos 2.1-HD) | pass | 1717 K | 1368 K | 1202 K |
-| camera 955-990 (Chronos 2.1-HD) | Kozjek | 1717 K | 1368 K | 1202 K |
-| alt: camera 850/10, 50:50 plate (IMX296) | pass | 1808 K | 1465 K | 1293 K |
-| alt: camera 850/10, 50:50 plate (IMX296) | Kozjek | nan K | 2136 K | 1792 K |
-| alt: camera 700/10, 50:50 plate (IMX296) | pass | 1825 K | 1524 K | 1368 K |
-| alt: camera 700/10, 50:50 plate (IMX296) | Kozjek | 1825 K | 1524 K | 1368 K |
+| camera pixel, uniform liquid/solid | 10 us | 30 us | 100 us | 500 us |
+|---|---:|---:|---:|---:|
+| camera 955-990 (IMX296), galvo pass | 1572 K | 1416 K | 1277 K | 1126 K |
+| camera 955-990 (IMX296), galvo Kozjek | 1572 K | 1416 K | 1277 K | 1126 K |
+| camera 955-990 (Chronos 2.1-HD), galvo pass | 1717 K | 1535 K | 1368 K | 1202 K |
+| camera 955-990 (Chronos 2.1-HD), galvo Kozjek | 1717 K | 1535 K | 1368 K | 1202 K |
+| alt: camera 850/10, 50:50 plate (IMX296), galvo pass | 1808 K | 1631 K | 1465 K | 1293 K |
+| alt: camera 850/10, 50:50 plate (IMX296), galvo Kozjek | nan K | 2485 K | 2136 K | 1792 K |
+| alt: camera 700/10, 50:50 plate (IMX296), galvo pass | 1825 K | 1669 K | 1524 K | 1368 K |
+| alt: camera 700/10, 50:50 plate (IMX296), galvo Kozjek | 1825 K | 1669 K | 1524 K | 1368 K |
 
 | photodiode | 20 dB: solid fills the field stop | 20 dB: 0.05 mm2 of liquid | 40 dB: solid fills the field stop | 40 dB: 0.05 mm2 of liquid | 60 dB: solid fills the field stop | 60 dB: 0.05 mm2 of liquid |
 |---|---:|---:|---:|---:|---:|---:|
-| PD-A 700/40 (PDA36A2) | pass | 1427 K | 1937 K | 1314 K | 1744 K | 1239 K | 1620 K |
-| PD-A 700/40 (PDA36A2) | Kozjek | 1427 K | 1937 K | 1314 K | 1744 K | 1239 K | 1620 K |
-| PD-B 900/40 (PDA36A2) | pass | 1185 K | 1669 K | 1089 K | 1486 K | 1019 K | 1373 K |
-| PD-B 900/40 (PDA36A2) | Kozjek | 1185 K | 1674 K | 1089 K | 1486 K | 1019 K | 1373 K |
-| alt: PD 850/40 behind the 50:50 plate (PDA36A2) | pass | 1304 K | 1851 K | 1191 K | 1637 K | 1116 K | 1508 K |
-| alt: PD 850/40 behind the 50:50 plate (PDA36A2) | Kozjek | 1841 K | - | 1620 K | 2512 K | 1486 K | 2222 K |
-| InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 1008 K | 1868 K | 847 K | 1416 K | 772 K | 1228 K |
-| InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 1008 K | 1873 K | 847 K | 1416 K | 772 K | 1228 K |
-| InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 992 K | 1717 K | 847 K | 1347 K | 777 K | 1185 K |
-| InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 992 K | 1717 K | 847 K | 1347 K | 777 K | 1185 K |
+| PD-A 700/40 (PDA36A2), galvo pass | 1427 K | 1937 K | 1314 K | 1744 K | 1239 K | 1620 K |
+| PD-A 700/40 (PDA36A2), galvo Kozjek | 1427 K | 1937 K | 1314 K | 1744 K | 1239 K | 1620 K |
+| PD-B 900/40 (PDA36A2), galvo pass | 1185 K | 1669 K | 1089 K | 1486 K | 1019 K | 1373 K |
+| PD-B 900/40 (PDA36A2), galvo Kozjek | 1185 K | 1674 K | 1089 K | 1486 K | 1019 K | 1373 K |
+| alt: PD 850/40 behind the 50:50 plate (PDA36A2), galvo pass | 1304 K | 1851 K | 1191 K | 1637 K | 1116 K | 1508 K |
+| alt: PD 850/40 behind the 50:50 plate (PDA36A2), galvo Kozjek | 1841 K | - | 1620 K | 2512 K | 1486 K | 2222 K |
+| InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2), galvo pass | 1008 K | 1868 K | 847 K | 1416 K | 772 K | 1228 K |
+| InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2), galvo Kozjek | 1008 K | 1873 K | 847 K | 1416 K | 772 K | 1228 K |
+| InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2), galvo pass | 992 K | 1717 K | 847 K | 1347 K | 777 K | 1185 K |
+| InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2), galvo Kozjek | 992 K | 1717 K | 847 K | 1347 K | 777 K | 1185 K |
 
 ## Plume emission against the pool (field stop Ø1.6 mm)
 

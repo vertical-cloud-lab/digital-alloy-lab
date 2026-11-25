@@ -8,8 +8,11 @@
 
 | camera + lens | port | f/# | WD (mm) | m | um/px across / along the plate | Rayleigh (um) | DOF (mm) | lens focuses at this WD | lens covers the sensor |
 |---|---|---:|---:|---:|---|---:|---:|---|---|
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm | LW | 2.8 | 176 | 0.396 | 25.3 / 113 | 10 | 1.33 | yes | centre crop only |
 | Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm | LW | 4.0 | 176 | 0.396 | 25.3 / 113 | 15 | 2.10 | yes | centre crop only |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm | LW | 5.6 | 176 | 0.396 | 25.3 / 113 | 20 | 3.32 | yes | centre crop only |
 | Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm | LW | 8.0 | 176 | 0.396 | 25.3 / 113 | 29 | 5.56 | yes | centre crop only |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm | LW | 11.0 | 176 | 0.396 | 25.3 / 113 | 40 | 9.04 | yes | centre crop only |
 | Chronos 2.1-HD mono + Edmund 35 mm C VIS-NIR #67-716 | LW | 4.0 | 176 | 0.248 | 40.4 / 181 | 21 | 4.64 | yes | centre crop only |
 | Chronos 2.1-HD mono + Edmund 75 mm C VIS-NIR #74-054 | LW | 5.6 | 176 | 0.740 | 13.5 / 61 | 14 | 1.30 | no (MOD 500 mm): extension tube | centre crop only |
 | IMX296 mono + Kowa LM50JC10M 50 mm | LW | 4.0 | 176 | 0.396 | 8.7 / 39 | 15 | 1.17 | yes | yes |
@@ -76,14 +79,26 @@
 
 | case | source | exposure (us) | W/cm2 on the plate | field (cm2) | W in the field |
 |---|---|---:|---:|---:|---:|
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW | diode laser or LED behind a filter as wide as its spectrum | 10 | 0.145 | 1.76 | 0.255 |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW | diode laser or LED behind a filter as wide as its spectrum | 100 | 0.0145 | 1.76 | 0.0255 |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 10 | 0.482 | 1.76 | 0.849 |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 100 | 0.0482 | 1.76 | 0.0849 |
 | Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/4.0 at LW | diode laser or LED behind a filter as wide as its spectrum | 10 | 0.295 | 1.76 | 0.52 |
 | Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/4.0 at LW | diode laser or LED behind a filter as wide as its spectrum | 100 | 0.0295 | 1.76 | 0.052 |
 | Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/4.0 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 10 | 0.984 | 1.76 | 1.73 |
 | Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/4.0 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 100 | 0.0984 | 1.76 | 0.173 |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW | diode laser or LED behind a filter as wide as its spectrum | 10 | 0.579 | 1.76 | 1.02 |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW | diode laser or LED behind a filter as wide as its spectrum | 100 | 0.0579 | 1.76 | 0.102 |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 10 | 1.93 | 1.76 | 3.4 |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 100 | 0.193 | 1.76 | 0.34 |
 | Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/8.0 at LW | diode laser or LED behind a filter as wide as its spectrum | 10 | 1.18 | 1.76 | 2.08 |
 | Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/8.0 at LW | diode laser or LED behind a filter as wide as its spectrum | 100 | 0.118 | 1.76 | 0.208 |
 | Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/8.0 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 10 | 3.94 | 1.76 | 6.93 |
 | Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/8.0 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 100 | 0.394 | 1.76 | 0.693 |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW | diode laser or LED behind a filter as wide as its spectrum | 10 | 2.23 | 1.76 | 3.93 |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW | diode laser or LED behind a filter as wide as its spectrum | 100 | 0.223 | 1.76 | 0.393 |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 10 | 7.44 | 1.76 | 13.1 |
+| Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 100 | 0.744 | 1.76 | 1.31 |
 | Chronos 2.1-HD mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LW | diode laser or LED behind a filter as wide as its spectrum | 10 | 0.236 | 4.49 | 1.06 |
 | Chronos 2.1-HD mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LW | diode laser or LED behind a filter as wide as its spectrum | 100 | 0.0236 | 4.49 | 0.106 |
 | Chronos 2.1-HD mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LW | LED (~30-40 nm wide) behind a 10 nm filter | 10 | 0.787 | 4.49 | 3.53 |

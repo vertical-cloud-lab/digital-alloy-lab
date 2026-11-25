@@ -118,6 +118,34 @@
    "port": "LW",
    "camera": "Chronos 2.1-HD mono",
    "lens": "Kowa LM50JC10M 50 mm",
+   "f_number": 2.8,
+   "wd_mm": 176.34435224078965,
+   "magnification": 0.3957438469802669,
+   "um_per_px_across": 25.26887044815793,
+   "um_per_px_along_plate": 113.24970928651314,
+   "rayleigh_um": 10.240669223327135,
+   "diffraction_vs_2px": 0.20263409170459512,
+   "dof_mm": 1.3297212378322185,
+   "focus_band_on_plate_mm": 1.3641107671149486,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 100.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 22.0,
+   "covers_full_sensor": false,
+   "roi_px": [
+    640,
+    96
+   ],
+   "roi_field_mm": [
+    16.172077086821076,
+    10.87197209150526
+   ],
+   "field_cm2_roi": 1.7582237074959042
+  },
+  {
+   "port": "LW",
+   "camera": "Chronos 2.1-HD mono",
+   "lens": "Kowa LM50JC10M 50 mm",
    "f_number": 4.0,
    "wd_mm": 176.34435224078965,
    "magnification": 0.3957438469802669,
@@ -146,6 +174,34 @@
    "port": "LW",
    "camera": "Chronos 2.1-HD mono",
    "lens": "Kowa LM50JC10M 50 mm",
+   "f_number": 5.6,
+   "wd_mm": 176.34435224078965,
+   "magnification": 0.3957438469802669,
+   "um_per_px_across": 25.26887044815793,
+   "um_per_px_along_plate": 113.24970928651314,
+   "rayleigh_um": 20.48133844665427,
+   "diffraction_vs_2px": 0.40526818340919024,
+   "dof_mm": 3.3225868305443687,
+   "focus_band_on_plate_mm": 3.408516267371064,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 100.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 22.0,
+   "covers_full_sensor": false,
+   "roi_px": [
+    640,
+    96
+   ],
+   "roi_field_mm": [
+    16.172077086821076,
+    10.87197209150526
+   ],
+   "field_cm2_roi": 1.7582237074959042
+  },
+  {
+   "port": "LW",
+   "camera": "Chronos 2.1-HD mono",
+   "lens": "Kowa LM50JC10M 50 mm",
    "f_number": 8.0,
    "wd_mm": 176.34435224078965,
    "magnification": 0.3957438469802669,
@@ -155,6 +211,34 @@
    "diffraction_vs_2px": 0.5789545477274147,
    "dof_mm": 5.55856611083473,
    "focus_band_on_plate_mm": 5.702322912335603,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 100.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 22.0,
+   "covers_full_sensor": false,
+   "roi_px": [
+    640,
+    96
+   ],
+   "roi_field_mm": [
+    16.172077086821076,
+    10.87197209150526
+   ],
+   "field_cm2_roi": 1.7582237074959042
+  },
+  {
+   "port": "LW",
+   "camera": "Chronos 2.1-HD mono",
+   "lens": "Kowa LM50JC10M 50 mm",
+   "f_number": 11.0,
+   "wd_mm": 176.34435224078965,
+   "magnification": 0.3957438469802669,
+   "um_per_px_across": 25.26887044815793,
+   "um_per_px_along_plate": 113.24970928651314,
+   "rayleigh_um": 40.23120052021375,
+   "diffraction_vs_2px": 0.7960625031251951,
+   "dof_mm": 9.038676598254751,
+   "focus_band_on_plate_mm": 9.27243674640396,
    "lens_mod_ok": true,
    "lens_mod_mm": 100.0,
    "image_circle_mm": 11.0,
@@ -519,6 +603,50 @@
  },
  "illumination": [
   {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 0.14470210478968243,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.014470210478968244,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 0.4823403492989415,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.04823403492989415,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
    "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/4.0 at LW",
    "source": "diode laser or LED behind a filter as wide as its spectrum",
    "exposure_us": 10.0,
@@ -563,6 +691,50 @@
    ]
   },
   {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 0.5788084191587297,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.05788084191587298,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 1.929361397195766,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.1929361397195766,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
    "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/8.0 at LW",
    "source": "diode laser or LED behind a filter as wide as its spectrum",
    "exposure_us": 10.0,
@@ -600,6 +772,50 @@
    "source": "LED (~30-40 nm wide) behind a 10 nm filter",
    "exposure_us": 100.0,
    "W_cm2_on_plate": 0.3937472239175033,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 2.233285035657089,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.22332850356570888,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 7.444283452190297,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.7444283452190297,
    "field_cm2": 1.76,
    "roi": [
     640,

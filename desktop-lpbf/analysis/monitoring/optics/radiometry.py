@@ -49,7 +49,7 @@ T_LIQ_6061 = 925.0
 def eps_liquid_drude(lam_um, T):
     """Normal spectral emissivity of liquid Al from the Drude free-electron model, built from the liquid's measured DC
     resistivity and density (no fitted optical constants): rho_e = 24.2 + 0.0145 (T - 933) uOhm cm (Desai et al. 1984,
-    J. Phys. Chem. Ref. Data 13, 1069: 24.2 at the melting point), mass density 2377 - 0.311 (T - 933) kg/m3 (Assael et al.
+    J. Phys. Chem. Ref. Data 13, 1131: 24.2 at the melting point; the slope is approximate), mass density 2377 - 0.311 (T - 933) kg/m3 (Assael et al.
     2006, J. Phys. Chem. Ref. Data 35, 285), three free electrons per atom."""
     T = np.maximum(T, 933.0)
     rho_e = (24.2 + 0.0145 * (T - 933.0)) * 1e-8
@@ -72,7 +72,7 @@ def planck(lam_um, T):
 
 
 # ------------------------------------------------------------------------------------------------ melt-pool fields
-def eagar_tsai(P, v, absorptivity=0.3, w0=48e-6, T0=473.0, k=100.0, rho=2500.0, cp=1100.0, nx=360, ny=150, dx=4e-6):
+def eagar_tsai(P, v, absorptivity=0.3, w0=48e-6, T0=473.0, k=100.0, rho=2500.0, cp=1100.0, nx=360, ny=200, dx=4e-6):
     """Surface temperature of a semi-infinite body under a moving Gaussian source (Eagar & Tsai 1983, Weld. J. 62, 346s),
     clipped at boiling. w0: 1/e2 radius (96 um spot -> 48 um). Mid-range AlSi10Mg properties between solid and liquid
     (k 100 W/m K, rho 2500 kg/m3, cp 1100 J/kg K; solid k ~ 130-170, liquid ~ 90). T0 473 K: the 200 C plate."""
@@ -87,7 +87,8 @@ def eagar_tsai(P, v, absorptivity=0.3, w0=48e-6, T0=473.0, k=100.0, rho=2500.0, 
     pref = q / (math.pi * rho * cp * math.sqrt(4 * math.pi * alpha))
     for i in range(0, X.shape[0], 10):
         xs, ys = X[i:i + 10, :, None], Y[i:i + 10, :, None]
-        f = tau ** -0.5 / (2 * alpha * tau + sig ** 2) * np.exp(-((xs - v * tau) ** 2 + ys ** 2) / (4 * alpha * tau + 2 * sig ** 2))
+        # the beam was at x = -v tau a time tau ago (it moves toward +x), so the pool trails toward -x
+        f = tau ** -0.5 / (2 * alpha * tau + sig ** 2) * np.exp(-((xs + v * tau) ** 2 + ys ** 2) / (4 * alpha * tau + 2 * sig ** 2))
         T[i:i + 10] = np.trapezoid(f, tau, axis=-1)
     T = T0 + pref * T
     return x, y, np.minimum(T, T_BOIL)
@@ -98,28 +99,42 @@ OWN_CASES = {"200 W, 0.4 m/s": (200.0, 0.4), "320 W, 1.1 m/s (EOS-equivalent, op
 
 
 def load_fields(path):
-    """Worker A's surface_fields.npz, if present; otherwise this script's own Eagar-Tsai fields."""
+    """Worker A's surface_fields.npz, if present; otherwise this script's own Eagar-Tsai fields.
+    Returns {case: (x_m, y_m, T[ny, nx] in K, liquidus in K)}. Worker A's layout (analysis/monitoring/melt/run_cases.py, collect()):
+    x_um, y_um, T_K[case, ix, iy], T_capped_K (capped at the alloy's 1 atm boiling point: used here), cases, meta_json (T_liq_K
+    per case). Other layouts: 1-D x/y (m, mm or um) and a 2-D or 3-D temperature array; the axis order is matched to len(x)."""
     if path and Path(path).exists():
         z = np.load(path, allow_pickle=True)
         keys = list(z.keys())
-        def unit(a):
+        def unit(k):
+            a = z[k]
+            if k.lower().endswith("_um"):
+                return 1e-6
+            if k.lower().endswith("_mm"):
+                return 1e-3
             s = float(np.nanmax(a) - np.nanmin(a))
             return 1.0 if s < 0.05 else (1e-3 if s < 50 else 1e-6)
         xk = next(k for k in keys if k.lower() in ("x", "x_m", "x_mm", "x_um"))
         yk = next(k for k in keys if k.lower() in ("y", "y_m", "y_mm", "y_um"))
-        x, y = z[xk] * unit(z[xk]), z[yk] * unit(z[yk])
+        x, y = np.asarray(z[xk], float) * unit(xk), np.asarray(z[yk], float) * unit(yk)
+        meta = json.loads(str(z["meta_json"])) if "meta_json" in keys else None
+        tk = next((k for k in ("T_capped_K", "T_K", "T", "T_surface") if k in keys), None)
+        if tk is None:
+            tk = next(k for k in keys if k.lower().startswith("t") and z[k].ndim >= 2)
+        a = np.asarray(z[tk], float)
+        if a.ndim == 2:
+            a = a[None]
+        if a.shape[-2] == len(x) and a.shape[-1] == len(y) and len(x) != len(y):
+            a = np.swapaxes(a, -1, -2)                     # [case, ix, iy] -> [case, iy, ix]
+        labels = [str(c) for c in z["cases"]] if "cases" in keys else [f"{tk}[{i}]" for i in range(a.shape[0])]
         out = {}
-        Tk = [k for k in keys if k.lower().startswith("t") and z[k].ndim >= 2]
-        for k in Tk:
-            a = z[k]
-            if a.ndim == 3:
-                labels = list(z["cases"]) if "cases" in keys else [f"{k}[{i}]" for i in range(a.shape[0])]
-                for lab, t in zip(labels, a):
-                    out[str(lab)] = (x, y, np.minimum(np.asarray(t, float), T_BOIL))
-            else:
-                out[k] = (x, y, np.minimum(np.asarray(a, float), T_BOIL))
-        return out, f"{path} (keys {keys})"
-    return {k: eagar_tsai(P, v) for k, (P, v) in OWN_CASES.items()}, "own Eagar-Tsai fields (worker A's surface_fields.npz not given)"
+        for i, (lab, t) in enumerate(zip(labels, a)):
+            tl = float(meta[i]["T_liq_K"]) if meta and "T_liq_K" in meta[i] else T_LIQ
+            tb = float(meta[i].get("T_boil_alloy_1atm_K", T_BOIL)) if meta else T_BOIL
+            out[lab] = (x, y, np.minimum(t, tb), tl)
+        return out, f"{Path(path).name} ({tk}, {len(out)} cases, from worker A's melt-pool model)"
+    return ({k: (*eagar_tsai(P, v), T_LIQ) for k, (P, v) in OWN_CASES.items()},
+            "own Eagar-Tsai fields (worker A's surface_fields.npz not given)")
 
 
 # ------------------------------------------------------------------------------------------------ the optical train
@@ -237,9 +252,9 @@ def lut(ch, galvo="pass", level=None, Ts=np.linspace(600, T_BOIL, 400)):
     return Ts, liq, sol
 
 
-def signal_map(T, lt):
+def signal_map(T, lt, t_liq=T_LIQ):
     Ts, liq, sol = lt
-    s = np.where(T >= T_LIQ, np.interp(T, Ts, liq), np.interp(T, Ts, sol))
+    s = np.where(T >= t_liq, np.interp(T, Ts, liq), np.interp(T, Ts, sol))
     return np.where(T > 600, s, 0.0)
 
 
@@ -277,10 +292,10 @@ def main(argv=None):
     luts = {(k, g, lv): lut(ch, g, EPS_LEVELS[lv]) for k, ch in CH.items() for g in ("pass", "Kozjek")
             for lv in EPS_LEVELS}
     LV0 = "0.12 at 1 um (literature midpoint)"
-    for name, (x, y, T) in fields.items():
+    for name, (x, y, T, tl) in fields.items():
         X, Y = np.meshgrid(x, y)
         dA = (x[1] - x[0]) * (y[1] - y[0])
-        liq = T >= T_LIQ
+        liq = T >= tl
         case = dict(T_peak_K=float(T.max()), liquid_area_mm2=float(liq.sum() * dA * 1e6),
                     liquid_length_mm=float(np.ptp(X[liq]) * 1e3) if liq.any() else 0.0,
                     liquid_width_mm=float(np.ptp(Y[liq]) * 1e3) if liq.any() else 0.0, channels={})
@@ -290,7 +305,7 @@ def main(argv=None):
             rec = {}
             for g in ("pass", "Kozjek"):
                 for lv in EPS_LEVELS:
-                    smap = signal_map(T, luts[(k, g, lv)])
+                    smap = signal_map(T, luts[(k, g, lv)], tl)
                     if d["kind"] == "photodiode":
                         I = float((smap * fov).sum() * dA * omega)
                         Rpk = max(r for _, r in d["resp"])
@@ -302,7 +317,7 @@ def main(argv=None):
                         px = smap[:h, :w_].reshape(h // nb, nb, w_ // nb, nb).mean(axis=(1, 3))
                         rate = px * (8e-6) ** 2 * omega           # e-/s per pixel
                         ex = {}
-                        for t_us in (10, 50, 100, 500):
+                        for t_us in (10, 30, 100, 500):
                             Ne = rate * t_us * 1e-6
                             rn = math.hypot(d["read_e"], d["fwc_e"] / 2 ** d["bits"] / math.sqrt(12))
                             snr = Ne / np.sqrt(Ne + rn ** 2)
@@ -375,7 +390,7 @@ def t_min_tables(omega, luts, lv):
                 rn = math.hypot(d["read_e"], d["fwc_e"] / 2 ** d["bits"] / math.sqrt(12))
                 need = (9 + math.sqrt(81 + 36 * rn * rn)) / 2       # electrons for SNR 3
                 row = {}
-                for t_us in (10, 100, 500):
+                for t_us in (10, 30, 100, 500):
                     row[f"{t_us} us"] = t_min_uniform(lt, need / (t_us * 1e-6), (8e-6) ** 2, omega)
                 out[f"{k} | {g}"] = row
             else:
@@ -395,14 +410,14 @@ def plume_tables(fields, omega):
     """Plume emission against the pool's, per band: an optically thin plume column (optical depth tau) at T_p over a projected
     area A_p in the field stop, emitting tau x B(T_p) (grey condensate/vapour continuum; lines excluded by the band choice)."""
     out = []
-    x, y, T = next(iter(fields.values()))
+    x, y, T, tl = next(iter(fields.values()))
     X, Y = np.meshgrid(x, y)
     dA = (x[1] - x[0]) * (y[1] - y[0])
     for k in ("PD-A 700/40 (PDA36A2)", "PD-B 900/40 (PDA36A2)", "InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2)"):
         lam, w = weights(CH[k])
         lt = lut(CH[k], "pass", 0.12)
         fov = np.hypot(X, Y) <= PT.FOV_PD_MM * 1e-3 / 2
-        pool = float((signal_map(T, lt) * fov).sum() * dA)
+        pool = float((signal_map(T, lt, tl) * fov).sum() * dA)
         for Tp in (2000.0, 2700.0, 3360.0):
             for tau in (1e-3, 1e-2, 1e-1):
                 Ap = math.pi * (0.15e-3) ** 2                 # a Ø0.3 mm column, seen from above along its length (assumed)
@@ -419,7 +434,7 @@ def leak_tables(fields, omega, luts, lv):
     stop; cameras: the peak pixel at 100 us, the leak spread over the laser spot's image, ~150 px diffuse or ~9 px specular)."""
     out = dict(dmsp1000_T_1070=float(dmsp1000_T(1070.0)), fesh1000_OD_1070=float(interp(PT.FESH1000_OD, 1070.0)),
                filter_OD_1070=PT.FILTER_OD_1070, rows=[])
-    x, y, T = next(iter(fields.values()))
+    x, y, T, tl = next(iter(fields.values()))
     X, Y = np.meshgrid(x, y)
     dA = (x[1] - x[0]) * (y[1] - y[0])
     fov = np.hypot(X, Y) <= PT.FOV_PD_MM * 1e-3 / 2
@@ -435,13 +450,13 @@ def leak_tables(fields, omega, luts, lv):
             t = float(ch["branch"](np.array([1070.0]))[0]) * (10 ** -PT.FILTER_OD_1070 if "/40" in k or "/10" in k else 1.0)
             P = into_branch * t
             if d["kind"] == "photodiode":
-                sig = float((signal_map(T, luts[(k, "pass", lv)]) * fov).sum() * dA * omega)
+                sig = float((signal_map(T, luts[(k, "pass", lv)], tl) * fov).sum() * dA * omega)
                 leak = P * interp(d["resp"], 1070.0)
                 r["channels"][k] = dict(W=P, leak_over_signal=leak / sig)
             else:
                 qe = float(interp(d["qe"], 1070.0))
                 e_px = P * qe / (H * C / 1.07e-6) / npx * 100e-6
-                peak = float(np.max(signal_map(T, luts[(k, "pass", lv)]))) * (8e-6) ** 2 * omega * 100e-6
+                peak = float(np.max(signal_map(T, luts[(k, "pass", lv)], tl))) * (8e-6) ** 2 * omega * 100e-6
                 r["channels"][k] = dict(W=P, e_per_px_100us=e_px, leak_over_peak_pixel=e_px / peak)
         out["rows"].append(r)
     return out
@@ -465,7 +480,7 @@ def write_md(R):
                 L.append(f"| {n} | {k} | {g} | {q['photocurrent_A'] * 1e9:.1f} nA | {gg[40]['V']:.3g} V, {gg[40]['snr']:.0f}{' SAT' if gg[40]['saturated'] else ''} | "
                          f"{gg[20]['V']:.3g} V, {gg[20]['snr']:.0f} | {gg[60]['V']:.3g} V, {gg[60]['snr']:.0f}{' SAT' if gg[60]['saturated'] else ''} |")
     L += ["", "## Cameras: peak pixel at 8 um/px (12 mm pupil)", "",
-          "| case | channel | galvo | peak e-/s | full well in (us) | 10 us: peak e-, SNR, mm2 at SNR>=3 | 100 us | 500 us |", "|---|---|---|---:|---:|---|---|---|"]
+          "| case | channel | galvo | peak e-/s | full well in (us) | 10 us (Chronos only): peak e-, SNR, mm2 at SNR>=3 | 30 us | 100 us | 500 us |", "|---|---|---|---:|---:|---|---|---|---|"]
     for n, c in R["cases"].items():
         for k, rec in c["channels"].items():
             if "camera" not in k:
@@ -474,7 +489,7 @@ def write_md(R):
                 q = rec[f"{g} | {lv}"]
                 e = q["exposures"]
                 f = lambda t: f"{e[t]['peak_e']:.0f}, {e[t]['peak_snr']:.0f}, {e[t]['area_snr3_mm2']:.3f}{' SAT' if e[t]['saturated'] else ''}"
-                L.append(f"| {n} | {k} | {g} | {q['peak_rate_e_per_s']:.3g} | {q['t_sat_us']:.0f} | {f(10)} | {f(100)} | {f(500)} |")
+                L.append(f"| {n} | {k} | {g} | {q['peak_rate_e_per_s']:.3g} | {q['t_sat_us']:.0f} | {f(10) if 'Chronos' in k else '-'} | {f(30)} | {f(100)} | {f(500)} |")
     L += ["", "## Two-colour (700/40 over 900/40 nm, photodiodes)", "", "| case | galvo | emissivity | ratio T (K) | T peak (K) |", "|---|---|---|---:|---:|"]
     for n, c in R["cases"].items():
         for kk, v in c["two_colour"].items():
@@ -492,11 +507,11 @@ def write_md(R):
     if keys_cam:
         cols = list(R["t_min"][keys_cam[0]].keys())
         L += ["| camera pixel, uniform liquid/solid | " + " | ".join(cols) + " |", "|---|" + "---:|" * len(cols)]
-        L += [f"| {k} | " + " | ".join(f"{(R['t_min'][k][c] or float('nan')):.0f} K" for c in cols) + " |" for k in keys_cam]
+        L += [f"| {k.replace(' | ', ', galvo ')} | " + " | ".join(f"{(R['t_min'][k][c] or float('nan')):.0f} K" for c in cols) + " |" for k in keys_cam]
     if keys_pd:
         cols = list(R["t_min"][keys_pd[0]].keys())
         L += ["", "| photodiode | " + " | ".join(cols) + " |", "|---|" + "---:|" * len(cols)]
-        L += [f"| {k} | " + " | ".join(("%.0f K" % R['t_min'][k][c]) if R['t_min'][k][c] else "-" for c in cols) + " |" for k in keys_pd]
+        L += [f"| {k.replace(' | ', ', galvo ')} | " + " | ".join(("%.0f K" % R['t_min'][k][c]) if R['t_min'][k][c] else "-" for c in cols) + " |" for k in keys_pd]
     L += ["", "## Plume emission against the pool (field stop Ø%.1f mm)" % PT.FOV_PD_MM, "", "| channel | T plume (K) | optical depth | plume / pool |", "|---|---:|---:|---:|"]
     L += [f"| {r['channel']} | {r['T_plume_K']:.0f} | {r['optical_depth']:g} | {r['plume_over_pool']:.3g} |" for r in R["plume"]]
     lk = R["leak_1070"]
@@ -517,9 +532,9 @@ def plot(R, fields, luts, lv):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     fig, ax = plt.subplots(1, 2, figsize=(11.5, 4.3))
-    name, (x, y, T) = next(iter(fields.items()))
+    name, (x, y, T, tl) = next(iter(fields.items()))
     im = ax[0].imshow(T, extent=[x[0] * 1e3, x[-1] * 1e3, y[0] * 1e3, y[-1] * 1e3], origin="lower", cmap="inferno", aspect="equal")
-    ax[0].contour(x * 1e3, y * 1e3, T, levels=[T_LIQ], colors="c", linewidths=0.8)
+    ax[0].contour(x * 1e3, y * 1e3, T, levels=[tl], colors="c", linewidths=0.8)
     th = np.linspace(0, 2 * np.pi, 100)
     ax[0].plot(PT.FOV_PD_MM / 2 * np.cos(th), PT.FOV_PD_MM / 2 * np.sin(th), "w--", lw=0.8)
     ax[0].set_title(f"{name}: surface T (K); cyan = liquidus; dashed = PD field stop", fontsize=9)
