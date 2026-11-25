@@ -239,6 +239,10 @@ The interference sweep runs this whole path (400 mm) for every module; it is cle
   recoater drive (chamber made deeper), the arm and the longer blade, the holder and the chute, the stepper and the lid screws, the
   rail and the new corner fillets, the reservoir lid, the module path against the outlet plenum and the overflow clamp, the module's
   handle against the guard sill, and (after the FEA) the first dowel positions inside the port and a flange lug against the Z mount.
+- **Round 6 (2026-11-25), zero-point clamps, folded Z servo, jar at the slot's front end:** 276 parts.
+  - **M50 and L75:** 0 interferences in 6 static states (incl. calibration) and 8 sweeps.
+  - **Tightest new gaps on the module's path:** arms to the jar's toggle clamp 2.36 mm; flange tabs over its ring 2.48 mm.
+  - **S25:** not run before the merge ([`hot-swap.md`](hot-swap.md) §3.2a).
 - **MuJoCo** ([`mujoco.md`](analysis/out/mujoco.md)): the Z-arm sweep touches nothing, and the drawer's only contact is its own slot in the lid (convex pieces fill the slot). The piston carries 0.34 kg and needs
   4.2 N peak; the Z arm 3.7 N. MuJoCo moves each group on its own joint, so in the piston sweep the arm does not follow the rod and
   the contact it reports at −42 mm is not real; the exact check, which moves them together, is clear.
