@@ -1,6 +1,6 @@
 {
  "tool": "FreeCAD 1.0.2 (39319 (Git)), CAM workbench, run headless with freecadcmd",
- "post": "linuxcnc (FreeCAD's Path/Post/scripts/linuxcnc_post.py, --precision 3), mm, G-code in /tmp/machining/chamber-cam2/gcode",
+ "post": "linuxcnc (FreeCAD's Path/Post/scripts/linuxcnc_post.py, --precision 3), mm, G-code in /tmp/machining/p2/cam/gcode",
  "machine": "Haas VF-4 (CT40, 8100 rpm, 22.4 kW), 3-axis; setup C 3+1 on an HRT210 (A); rapids 25.4 m/min for the recount (A index moves not timed)",
  "material": "6061-T6",
  "tools": {
@@ -167,22 +167,30 @@
   "how": "CAMotics 1.2.0 camsim in Docker on ubuntu:18.04 (camotics.Dockerfile), 0.50 mm; setups chained in the part frame",
   "install_error": "camotics_1.2.0_amd64.deb links libv8.so.3.14.5 and libssl.so.1.1/libcrypto.so.1.1, which Ubuntu 26.04 lacks; the .deb also needs libqt5websockets5 undeclared",
   "parts": {
-   "frame": {
-    "gouge_deeper_than_min_cm3": 0.0,
-    "leftover_deeper_than_min_cm3": 0.017,
-    "max_gouge_depth_mm": 0.5,
-    "max_leftover_mm": 1.22,
-    "n_loose_pieces": 0
-   },
    "floor": {
     "gouge_deeper_than_min_cm3": 0.0,
     "leftover_deeper_than_min_cm3": 0.001,
     "max_gouge_depth_mm": 0.5,
     "max_leftover_mm": 1.0,
     "n_loose_pieces": 2
+   },
+   "frame": {
+    "gouge_deeper_than_min_cm3": 0.0,
+    "leftover_deeper_than_min_cm3": 0.017,
+    "max_gouge_depth_mm": 0.5,
+    "max_leftover_mm": 1.22,
+    "n_loose_pieces": 0
    }
   },
   "setups": {
+   "floor_A": {
+    "rapids_through_stock": 0,
+    "camotics_min": 51.18
+   },
+   "floor_B": {
+    "rapids_through_stock": 0,
+    "camotics_min": 18.0
+   },
    "frame_B": {
     "rapids_through_stock": 0,
     "camotics_min": 7.37
@@ -206,18 +214,668 @@
    "frame_C270": {
     "rapids_through_stock": 0,
     "camotics_min": 1.58
-   },
-   "floor_A": {
-    "rapids_through_stock": 0,
-    "camotics_min": 51.18
-   },
-   "floor_B": {
-    "rapids_through_stock": 0,
-    "camotics_min": 17.73
    }
   }
  },
  "parts": {
+  "floor": {
+   "setups": [
+    {
+     "setup": "floor_A",
+     "part": "floor",
+     "rot_about_x_deg": 0,
+     "rotation_model_to_setup": [
+      [
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       1,
+       0
+      ],
+      [
+       0,
+       0,
+       1
+      ]
+     ],
+     "a_deg": null,
+     "rotary": null,
+     "stock_box": [
+      317.5,
+      228.6,
+      -22.7,
+      2.7
+     ],
+     "gcode": "/tmp/machining/p2/cam/gcode/floor_A.ngc",
+     "freecad_job_cycle_time": "00:58:55",
+     "ops": [
+      {
+       "op": "Face",
+       "label": "Face top to z 0",
+       "kind": "face",
+       "tool": 1,
+       "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+       "rpm": 3000,
+       "feed_mm_min": 1219.2,
+       "chip_load_in": 0.004,
+       "mm_per_rev": null,
+       "faces": [
+        "Face237"
+       ],
+       "start_depth": 2.7,
+       "final_depth": 0.0,
+       "step_down": 2.7,
+       "freecad_cycle_time": "00:01:49",
+       "commands": 19,
+       "feed_move_bbox": [
+        -147.85,
+        147.85,
+        -102.85,
+        102.85,
+        0.0,
+        0.0
+       ],
+       "path_feed_mm": 2013.5,
+       "path_rapid_mm": 183.2,
+       "cut_time_min": 1.66,
+       "rapid_time_min": 0.01
+      },
+      {
+       "op": "Adaptive",
+       "label": "Step the 4 mm band round the pad, adaptive outside the pad",
+       "kind": "adaptive_out",
+       "tool": 2,
+       "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
+       "rpm": 5100,
+       "feed_mm_min": 1943.1,
+       "chip_load_in": 0.005,
+       "mm_per_rev": null,
+       "faces": [
+        "Face237"
+       ],
+       "start_depth": 0.0,
+       "final_depth": -4.0,
+       "step_down": 4.0,
+       "freecad_cycle_time": "00:04:00",
+       "commands": 1252,
+       "feed_move_bbox": [
+        -166.4,
+        166.38,
+        -121.99,
+        121.93,
+        -4.0,
+        -4.0
+       ],
+       "path_feed_mm": 7471.5,
+       "path_rapid_mm": 373.3,
+       "cut_time_min": 3.86,
+       "rapid_time_min": 0.01
+      },
+      {
+       "op": "Adaptive001",
+       "label": "Outside 312x222 R8, adaptive, z -4 to -12",
+       "kind": "adaptive_out",
+       "tool": 2,
+       "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
+       "rpm": 5100,
+       "feed_mm_min": 1943.1,
+       "chip_load_in": 0.005,
+       "mm_per_rev": null,
+       "faces": [
+        "Face21"
+       ],
+       "start_depth": -4.0,
+       "final_depth": -12.0,
+       "step_down": 8.0,
+       "freecad_cycle_time": "00:01:18",
+       "commands": 178,
+       "feed_move_bbox": [
+        -166.15,
+        166.31,
+        -121.99,
+        121.49,
+        -12.0,
+        -12.0
+       ],
+       "path_feed_mm": 1789.6,
+       "path_rapid_mm": 502.3,
+       "cut_time_min": 0.93,
+       "rapid_time_min": 0.02
+      },
+      {
+       "op": "Pocket",
+       "label": "Floor O-ring groove 4.6 x 2.65",
+       "kind": "pocket",
+       "tool": 4,
+       "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill (O-ring grooves)",
+       "rpm": 8100,
+       "feed_mm_min": 329.2,
+       "chip_load_in": 0.0008,
+       "mm_per_rev": null,
+       "faces": [
+        "Face287"
+       ],
+       "start_depth": 0.0,
+       "final_depth": -2.65,
+       "step_down": 0.5,
+       "freecad_cycle_time": "00:36:43",
+       "commands": 148,
+       "feed_move_bbox": [
+        -144.51,
+        144.51,
+        -99.51,
+        99.51,
+        -2.65,
+        -0.5
+       ],
+       "path_feed_mm": 11449.2,
+       "path_rapid_mm": 647.2,
+       "cut_time_min": 35.05,
+       "rapid_time_min": 0.03
+      },
+      {
+       "op": "Helix",
+       "label": "Port 96 mm through: helical trepan, slug drops",
+       "kind": "helix",
+       "tool": 2,
+       "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
+       "rpm": 5100,
+       "feed_mm_min": 777.2,
+       "chip_load_in": 0.002,
+       "mm_per_rev": null,
+       "faces": [
+        "Face208"
+       ],
+       "start_depth": 0.0,
+       "final_depth": -23.2,
+       "step_down": 1.5,
+       "freecad_cycle_time": "00:09:35",
+       "commands": 44,
+       "feed_move_bbox": [
+        -38.48,
+        38.48,
+        0.0,
+        0.0,
+        -23.2,
+        0.0
+       ],
+       "path_feed_mm": 4109.7,
+       "path_rapid_mm": 243.5,
+       "cut_time_min": 5.29,
+       "rapid_time_min": 0.01
+      },
+      {
+       "op": "Profile",
+       "label": "Slots 124x8 and 20x104 through, profile",
+       "kind": "profile_holes",
+       "tool": 9,
+       "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
+       "rpm": 8100,
+       "feed_mm_min": 925.8,
+       "chip_load_in": 0.0015,
+       "mm_per_rev": null,
+       "faces": [
+        "Face202"
+       ],
+       "start_depth": 0.0,
+       "final_depth": -23.2,
+       "step_down": 3.0,
+       "freecad_cycle_time": "00:04:22",
+       "commands": 156,
+       "feed_move_bbox": [
+        -58.82,
+        106.83,
+        -90.82,
+        48.83,
+        -23.2,
+        -3.0
+       ],
+       "path_feed_mm": 3725.8,
+       "path_rapid_mm": 211.1,
+       "cut_time_min": 4.09,
+       "rapid_time_min": 0.01
+      },
+      {
+       "op": "Drill",
+       "label": "Drill 2 x 5.8 mm for the floor_dowels holes, ream after, z -14.50..-4.00, setup",
+       "kind": "drill",
+       "tool": 14,
+       "tool_name": "5.8 mm carbide drill (added: 6 mm dowel holes, reamed after)",
+       "rpm": 5000,
+       "feed_mm_min": 500.0,
+       "chip_load_in": null,
+       "mm_per_rev": 0.1,
+       "faces": [
+        "Face124",
+        "Face151"
+       ],
+       "start_depth": -4.0,
+       "final_depth": -14.5,
+       "step_down": null,
+       "holes": 2,
+       "through": false,
+       "joint": "floor_dowels",
+       "freecad_cycle_time": "00:01:08",
+       "commands": 11,
+       "feed_move_bbox": [
+        -148.2,
+        148.2,
+        -103.2,
+        103.2,
+        -14.5,
+        -14.5
+       ],
+       "path_feed_mm": 26.0,
+       "path_rapid_mm": 723.9,
+       "cut_time_min": 0.05,
+       "rapid_time_min": 0.03
+      }
+     ],
+     "totals": {
+      "path_feed_mm": 30585.3,
+      "path_rapid_mm": 2884.5,
+      "cut_time_min": 50.92,
+      "rapid_time_min": 0.11,
+      "total_min": 51.03,
+      "total_hms": "0:51:02",
+      "tool_changes": 6,
+      "freecad_sum_of_op_cycle_times_min": 58.92
+     }
+    },
+    {
+     "setup": "floor_B",
+     "part": "floor",
+     "rot_about_x_deg": 180,
+     "rotation_model_to_setup": [
+      [
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       -1,
+       0
+      ],
+      [
+       0,
+       0,
+       -1
+      ]
+     ],
+     "a_deg": null,
+     "rotary": null,
+     "stock_box": [
+      317.5,
+      228.6,
+      -22.7,
+      2.7
+     ],
+     "gcode": "/tmp/machining/p2/cam/gcode/floor_B.ngc",
+     "freecad_job_cycle_time": "00:26:28",
+     "ops": [
+      {
+       "op": "Face001",
+       "label": "Face bottom to 20 mm thick",
+       "kind": "face",
+       "tool": 1,
+       "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+       "rpm": 3000,
+       "feed_mm_min": 1219.2,
+       "chip_load_in": 0.004,
+       "mm_per_rev": null,
+       "faces": [
+        "Face3"
+       ],
+       "start_depth": 22.7,
+       "final_depth": 20.0,
+       "step_down": 2.7,
+       "freecad_cycle_time": "00:01:57",
+       "commands": 19,
+       "feed_move_bbox": [
+        -156.1,
+        156.1,
+        -111.1,
+        111.1,
+        20.0,
+        20.0
+       ],
+       "path_feed_mm": 2145.5,
+       "path_rapid_mm": 207.2,
+       "cut_time_min": 1.76,
+       "rapid_time_min": 0.01
+      },
+      {
+       "op": "Adaptive002",
+       "label": "Outside below z -12 and the 18 U-notches 8 wide x 8 deep, adaptive outside the outline",
+       "kind": "adaptive_out",
+       "tool": 9,
+       "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
+       "rpm": 8100,
+       "feed_mm_min": 925.8,
+       "chip_load_in": 0.0015,
+       "mm_per_rev": null,
+       "faces": [
+        "Face3"
+       ],
+       "start_depth": 20.0,
+       "final_depth": 12.0,
+       "step_down": 4.0,
+       "freecad_cycle_time": "00:17:08",
+       "commands": 20316,
+       "feed_move_bbox": [
+        -160.99,
+        160.99,
+        -116.62,
+        116.54,
+        12.0,
+        16.0
+       ],
+       "path_feed_mm": 13056.7,
+       "path_rapid_mm": 2658.0,
+       "cut_time_min": 14.22,
+       "rapid_time_min": 0.1
+      },
+      {
+       "op": "Drill001",
+       "label": "Drill 6 x 4.2 mm for the plenum_out holes, STI tap after, z 12.50..20.00, setup",
+       "kind": "drill",
+       "tool": 7,
+       "tool_name": "4.2 mm carbide drill",
+       "rpm": 5000,
+       "feed_mm_min": 500.0,
+       "chip_load_in": null,
+       "mm_per_rev": 0.1,
+       "faces": "6 faces",
+       "start_depth": 20.0,
+       "final_depth": 12.5,
+       "step_down": null,
+       "holes": 6,
+       "through": false,
+       "joint": "plenum_out",
+       "freecad_cycle_time": "00:00:39",
+       "commands": 19,
+       "feed_move_bbox": [
+        -50.0,
+        45.0,
+        79.0,
+        101.0,
+        12.5,
+        12.5
+       ],
+       "path_feed_mm": 61.6,
+       "path_rapid_mm": 799.3,
+       "cut_time_min": 0.12,
+       "rapid_time_min": 0.03
+      },
+      {
+       "op": "Drill002",
+       "label": "Drill 4 x 4.2 mm for the funnel holes, STI tap after, z 12.50..20.00, setup",
+       "kind": "drill",
+       "tool": 7,
+       "tool_name": "4.2 mm carbide drill",
+       "rpm": 5000,
+       "feed_mm_min": 500.0,
+       "chip_load_in": null,
+       "mm_per_rev": 0.1,
+       "faces": [
+        "Face262",
+        "Face263",
+        "Face269",
+        "Face270"
+       ],
+       "start_depth": 20.0,
+       "final_depth": 12.5,
+       "step_down": null,
+       "holes": 4,
+       "through": false,
+       "joint": "funnel",
+       "freecad_cycle_time": "00:00:37",
+       "commands": 15,
+       "feed_move_bbox": [
+        79.0,
+        117.0,
+        -40.0,
+        67.0,
+        12.5,
+        12.5
+       ],
+       "path_feed_mm": 41.0,
+       "path_rapid_mm": 603.6,
+       "cut_time_min": 0.08,
+       "rapid_time_min": 0.02
+      },
+      {
+       "op": "Drill003",
+       "label": "Drill 4 x 5.3 mm for the zmount holes, STI tap after, z 11.00..20.00, setup",
+       "kind": "drill",
+       "tool": 12,
+       "tool_name": "5.3 mm carbide drill (added: M5 STI drill, tooling-bom D10)",
+       "rpm": 5000,
+       "feed_mm_min": 500.0,
+       "chip_load_in": null,
+       "mm_per_rev": 0.1,
+       "faces": [
+        "Face266",
+        "Face267",
+        "Face272",
+        "Face273"
+       ],
+       "start_depth": 20.0,
+       "final_depth": 11.0,
+       "step_down": null,
+       "holes": 4,
+       "through": false,
+       "joint": "zmount",
+       "freecad_cycle_time": "00:00:31",
+       "commands": 15,
+       "feed_move_bbox": [
+        -33.0,
+        40.0,
+        -102.0,
+        -66.0,
+        11.0,
+        11.0
+       ],
+       "path_feed_mm": 46.0,
+       "path_rapid_mm": 460.6,
+       "cut_time_min": 0.09,
+       "rapid_time_min": 0.02
+      },
+      {
+       "op": "Drill004",
+       "label": "Drill 4 x 6.3 mm for the legs holes, STI tap after, z 9.00..20.00, setup",
+       "kind": "drill",
+       "tool": 13,
+       "tool_name": "6.3 mm carbide drill (added: M6 STI drill, tooling-bom D11)",
+       "rpm": 5000,
+       "feed_mm_min": 500.0,
+       "chip_load_in": null,
+       "mm_per_rev": 0.1,
+       "faces": [
+        "Face243",
+        "Face261",
+        "Face265",
+        "Face274"
+       ],
+       "start_depth": 20.0,
+       "final_depth": 9.0,
+       "step_down": null,
+       "holes": 4,
+       "through": false,
+       "joint": "legs",
+       "freecad_cycle_time": "00:01:42",
+       "commands": 15,
+       "feed_move_bbox": [
+        -135.0,
+        147.0,
+        -96.0,
+        93.0,
+        9.0,
+        9.0
+       ],
+       "path_feed_mm": 54.0,
+       "path_rapid_mm": 1043.9,
+       "cut_time_min": 0.11,
+       "rapid_time_min": 0.04
+      },
+      {
+       "op": "Drill005",
+       "label": "Drill 4 x 6.3 mm for the zp_posts holes, STI tap after, z 9.50..20.00, setup",
+       "kind": "drill",
+       "tool": 13,
+       "tool_name": "6.3 mm carbide drill (added: M6 STI drill, tooling-bom D11)",
+       "rpm": 5000,
+       "feed_mm_min": 500.0,
+       "chip_load_in": null,
+       "mm_per_rev": 0.1,
+       "faces": [
+        "Face256",
+        "Face257",
+        "Face268",
+        "Face271"
+       ],
+       "start_depth": 20.0,
+       "final_depth": 9.5,
+       "step_down": null,
+       "holes": 4,
+       "through": false,
+       "joint": "zp_posts",
+       "freecad_cycle_time": "00:00:58",
+       "commands": 15,
+       "feed_move_bbox": [
+        -138.0,
+        136.0,
+        -40.0,
+        45.0,
+        9.5,
+        9.5
+       ],
+       "path_feed_mm": 52.0,
+       "path_rapid_mm": 728.3,
+       "cut_time_min": 0.1,
+       "rapid_time_min": 0.03
+      },
+      {
+       "op": "Drill006",
+       "label": "Drill 2 x 6.3 mm for the module_flange holes, STI tap after, z 6.50..20.00, setup",
+       "kind": "drill",
+       "tool": 13,
+       "tool_name": "6.3 mm carbide drill (added: M6 STI drill, tooling-bom D11)",
+       "rpm": 5000,
+       "feed_mm_min": 500.0,
+       "chip_load_in": null,
+       "mm_per_rev": 0.1,
+       "faces": [
+        "Face258",
+        "Face264"
+       ],
+       "start_depth": 20.0,
+       "final_depth": 6.5,
+       "step_down": null,
+       "holes": 2,
+       "through": false,
+       "joint": "module_flange",
+       "freecad_cycle_time": "00:00:26",
+       "commands": 11,
+       "feed_move_bbox": [
+        -58.0,
+        58.0,
+        0.0,
+        0.0,
+        6.5,
+        6.5
+       ],
+       "path_feed_mm": 32.5,
+       "path_rapid_mm": 366.4,
+       "cut_time_min": 0.07,
+       "rapid_time_min": 0.01
+      },
+      {
+       "op": "Drill007",
+       "label": "Drill 2 x 5.8 mm step z -20.00..-10.00, model, dowel or diamond-pin holes, ream 6 H7 after",
+       "kind": "drill",
+       "tool": 14,
+       "tool_name": "5.8 mm carbide drill (added: 6 mm dowel holes, reamed after)",
+       "rpm": 5000,
+       "feed_mm_min": 500.0,
+       "chip_load_in": null,
+       "mm_per_rev": 0.1,
+       "faces": [
+        "Face90",
+        "Face111"
+       ],
+       "start_depth": 20.0,
+       "final_depth": 10.0,
+       "step_down": null,
+       "holes": 2,
+       "through": false,
+       "freecad_cycle_time": "00:00:24",
+       "commands": 11,
+       "feed_move_bbox": [
+        0.0,
+        0.0,
+        -54.0,
+        54.0,
+        10.0,
+        10.0
+       ],
+       "path_feed_mm": 25.0,
+       "path_rapid_mm": 285.2,
+       "cut_time_min": 0.05,
+       "rapid_time_min": 0.01
+      },
+      {
+       "op": "Drill008",
+       "label": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
+       "kind": "drill",
+       "tool": 7,
+       "tool_name": "4.2 mm carbide drill",
+       "rpm": 5000,
+       "feed_mm_min": 500.0,
+       "chip_load_in": null,
+       "mm_per_rev": 0.1,
+       "faces": "18 faces",
+       "start_depth": 12.0,
+       "final_depth": 4.0,
+       "step_down": null,
+       "holes": 18,
+       "through": true,
+       "freecad_cycle_time": "00:02:06",
+       "commands": 43,
+       "feed_move_bbox": [
+        -152.0,
+        152.0,
+        -107.0,
+        107.0,
+        2.76,
+        2.76
+       ],
+       "path_feed_mm": 216.0,
+       "path_rapid_mm": 2419.0,
+       "cut_time_min": 0.43,
+       "rapid_time_min": 0.1
+      }
+     ],
+     "totals": {
+      "path_feed_mm": 15730.4,
+      "path_rapid_mm": 9571.5,
+      "cut_time_min": 17.04,
+      "rapid_time_min": 0.38,
+      "total_min": 17.42,
+      "total_hms": "0:17:25",
+      "tool_changes": 7,
+      "freecad_sum_of_op_cycle_times_min": 26.47
+     }
+    }
+   ],
+   "total_min": 68.45,
+   "freecad_total_min": 85.39,
+   "total_hms": "1:08:27"
+  },
   "frame": {
    "setups": [
     {
@@ -1542,627 +2200,6 @@
    "total_min": 63.22,
    "freecad_total_min": 88.36,
    "total_hms": "1:03:13"
-  },
-  "floor": {
-   "setups": [
-    {
-     "setup": "floor_A",
-     "part": "floor",
-     "rot_about_x_deg": 0,
-     "rotation_model_to_setup": [
-      [
-       1,
-       0,
-       0
-      ],
-      [
-       0,
-       1,
-       0
-      ],
-      [
-       0,
-       0,
-       1
-      ]
-     ],
-     "a_deg": null,
-     "rotary": null,
-     "stock_box": [
-      317.5,
-      228.6,
-      -22.7,
-      2.7
-     ],
-     "gcode": "/tmp/machining/chamber-cam2/gcode/floor_A.ngc",
-     "freecad_job_cycle_time": "00:58:55",
-     "ops": [
-      {
-       "op": "Face002",
-       "label": "Face top to z 0",
-       "kind": "face",
-       "tool": 1,
-       "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
-       "rpm": 3000,
-       "feed_mm_min": 1219.2,
-       "chip_load_in": 0.004,
-       "mm_per_rev": null,
-       "faces": [
-        "Face229"
-       ],
-       "start_depth": 2.7,
-       "final_depth": 0.0,
-       "step_down": 2.7,
-       "freecad_cycle_time": "00:01:49",
-       "commands": 19,
-       "feed_move_bbox": [
-        -147.85,
-        147.85,
-        -102.85,
-        102.85,
-        0.0,
-        0.0
-       ],
-       "path_feed_mm": 2013.5,
-       "path_rapid_mm": 183.2,
-       "cut_time_min": 1.66,
-       "rapid_time_min": 0.01
-      },
-      {
-       "op": "Adaptive003",
-       "label": "Step the 4 mm band round the pad, adaptive outside the pad",
-       "kind": "adaptive_out",
-       "tool": 2,
-       "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
-       "rpm": 5100,
-       "feed_mm_min": 1943.1,
-       "chip_load_in": 0.005,
-       "mm_per_rev": null,
-       "faces": [
-        "Face229"
-       ],
-       "start_depth": 0.0,
-       "final_depth": -4.0,
-       "step_down": 4.0,
-       "freecad_cycle_time": "00:04:00",
-       "commands": 1252,
-       "feed_move_bbox": [
-        -166.4,
-        166.38,
-        -121.99,
-        121.93,
-        -4.0,
-        -4.0
-       ],
-       "path_feed_mm": 7471.5,
-       "path_rapid_mm": 373.3,
-       "cut_time_min": 3.86,
-       "rapid_time_min": 0.01
-      },
-      {
-       "op": "Adaptive004",
-       "label": "Outside 312x222 R8, adaptive, z -4 to -12",
-       "kind": "adaptive_out",
-       "tool": 2,
-       "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
-       "rpm": 5100,
-       "feed_mm_min": 1943.1,
-       "chip_load_in": 0.005,
-       "mm_per_rev": null,
-       "faces": [
-        "Face21"
-       ],
-       "start_depth": -4.0,
-       "final_depth": -12.0,
-       "step_down": 8.0,
-       "freecad_cycle_time": "00:01:18",
-       "commands": 178,
-       "feed_move_bbox": [
-        -166.15,
-        166.31,
-        -121.99,
-        121.49,
-        -12.0,
-        -12.0
-       ],
-       "path_feed_mm": 1789.6,
-       "path_rapid_mm": 502.3,
-       "cut_time_min": 0.93,
-       "rapid_time_min": 0.02
-      },
-      {
-       "op": "Pocket001",
-       "label": "Floor O-ring groove 4.6 x 2.65",
-       "kind": "pocket",
-       "tool": 4,
-       "tool_name": "1/8 in. (3.175 mm) 2-flute carbide end mill (O-ring grooves)",
-       "rpm": 8100,
-       "feed_mm_min": 329.2,
-       "chip_load_in": 0.0008,
-       "mm_per_rev": null,
-       "faces": [
-        "Face275"
-       ],
-       "start_depth": 0.0,
-       "final_depth": -2.65,
-       "step_down": 0.5,
-       "freecad_cycle_time": "00:36:43",
-       "commands": 148,
-       "feed_move_bbox": [
-        -144.51,
-        144.51,
-        -99.51,
-        99.51,
-        -2.65,
-        -0.5
-       ],
-       "path_feed_mm": 11449.2,
-       "path_rapid_mm": 647.2,
-       "cut_time_min": 35.05,
-       "rapid_time_min": 0.03
-      },
-      {
-       "op": "Helix007",
-       "label": "Port 96 mm through: helical trepan, slug drops",
-       "kind": "helix",
-       "tool": 2,
-       "tool_name": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
-       "rpm": 5100,
-       "feed_mm_min": 777.2,
-       "chip_load_in": 0.002,
-       "mm_per_rev": null,
-       "faces": [
-        "Face202"
-       ],
-       "start_depth": 0.0,
-       "final_depth": -23.2,
-       "step_down": 1.5,
-       "freecad_cycle_time": "00:09:35",
-       "commands": 44,
-       "feed_move_bbox": [
-        -38.48,
-        38.48,
-        0.0,
-        0.0,
-        -23.2,
-        0.0
-       ],
-       "path_feed_mm": 4109.7,
-       "path_rapid_mm": 243.5,
-       "cut_time_min": 5.29,
-       "rapid_time_min": 0.01
-      },
-      {
-       "op": "Profile006",
-       "label": "Slots 124x8 and 20x104 through, profile",
-       "kind": "profile_holes",
-       "tool": 9,
-       "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
-       "rpm": 8100,
-       "feed_mm_min": 925.8,
-       "chip_load_in": 0.0015,
-       "mm_per_rev": null,
-       "faces": [
-        "Face198"
-       ],
-       "start_depth": 0.0,
-       "final_depth": -23.2,
-       "step_down": 3.0,
-       "freecad_cycle_time": "00:04:22",
-       "commands": 156,
-       "feed_move_bbox": [
-        -58.82,
-        106.83,
-        -90.82,
-        48.83,
-        -23.2,
-        -3.0
-       ],
-       "path_feed_mm": 3725.8,
-       "path_rapid_mm": 211.1,
-       "cut_time_min": 4.09,
-       "rapid_time_min": 0.01
-      },
-      {
-       "op": "Drill013",
-       "label": "Drill 2 x 5.8 mm for the floor_dowels holes, ream after, z -14.50..-4.00, setup",
-       "kind": "drill",
-       "tool": 14,
-       "tool_name": "5.8 mm carbide drill (added: 6 mm dowel holes, reamed after)",
-       "rpm": 5000,
-       "feed_mm_min": 500.0,
-       "chip_load_in": null,
-       "mm_per_rev": 0.1,
-       "faces": [
-        "Face120",
-        "Face147"
-       ],
-       "start_depth": -4.0,
-       "final_depth": -14.5,
-       "step_down": null,
-       "holes": 2,
-       "through": false,
-       "joint": "floor_dowels",
-       "freecad_cycle_time": "00:01:08",
-       "commands": 11,
-       "feed_move_bbox": [
-        -148.2,
-        148.2,
-        -103.2,
-        103.2,
-        -14.5,
-        -14.5
-       ],
-       "path_feed_mm": 26.0,
-       "path_rapid_mm": 723.9,
-       "cut_time_min": 0.05,
-       "rapid_time_min": 0.03
-      }
-     ],
-     "totals": {
-      "path_feed_mm": 30585.3,
-      "path_rapid_mm": 2884.5,
-      "cut_time_min": 50.92,
-      "rapid_time_min": 0.11,
-      "total_min": 51.03,
-      "total_hms": "0:51:02",
-      "tool_changes": 6,
-      "freecad_sum_of_op_cycle_times_min": 58.92
-     }
-    },
-    {
-     "setup": "floor_B",
-     "part": "floor",
-     "rot_about_x_deg": 180,
-     "rotation_model_to_setup": [
-      [
-       1,
-       0,
-       0
-      ],
-      [
-       0,
-       -1,
-       0
-      ],
-      [
-       0,
-       0,
-       -1
-      ]
-     ],
-     "a_deg": null,
-     "rotary": null,
-     "stock_box": [
-      317.5,
-      228.6,
-      -22.7,
-      2.7
-     ],
-     "gcode": "/tmp/machining/chamber-cam2/gcode/floor_B.ngc",
-     "freecad_job_cycle_time": "00:25:02",
-     "ops": [
-      {
-       "op": "Face003",
-       "label": "Face bottom to 20 mm thick",
-       "kind": "face",
-       "tool": 1,
-       "tool_name": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
-       "rpm": 3000,
-       "feed_mm_min": 1219.2,
-       "chip_load_in": 0.004,
-       "mm_per_rev": null,
-       "faces": [
-        "Face3"
-       ],
-       "start_depth": 22.7,
-       "final_depth": 20.0,
-       "step_down": 2.7,
-       "freecad_cycle_time": "00:01:57",
-       "commands": 19,
-       "feed_move_bbox": [
-        -156.1,
-        156.1,
-        -111.1,
-        111.1,
-        20.0,
-        20.0
-       ],
-       "path_feed_mm": 2145.5,
-       "path_rapid_mm": 207.2,
-       "cut_time_min": 1.76,
-       "rapid_time_min": 0.01
-      },
-      {
-       "op": "Adaptive005",
-       "label": "Outside below z -12 and the 18 U-notches 8 wide x 8 deep, adaptive outside the outline",
-       "kind": "adaptive_out",
-       "tool": 9,
-       "tool_name": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
-       "rpm": 8100,
-       "feed_mm_min": 925.8,
-       "chip_load_in": 0.0015,
-       "mm_per_rev": null,
-       "faces": [
-        "Face3"
-       ],
-       "start_depth": 20.0,
-       "final_depth": 12.0,
-       "step_down": 4.0,
-       "freecad_cycle_time": "00:17:01",
-       "commands": 20278,
-       "feed_move_bbox": [
-        -160.99,
-        160.99,
-        -116.62,
-        116.54,
-        12.0,
-        16.0
-       ],
-       "path_feed_mm": 13028.2,
-       "path_rapid_mm": 2635.1,
-       "cut_time_min": 14.16,
-       "rapid_time_min": 0.1
-      },
-      {
-       "op": "Drill014",
-       "label": "Drill 6 x 4.2 mm for the plenum_out holes, STI tap after, z 12.50..20.00, setup",
-       "kind": "drill",
-       "tool": 7,
-       "tool_name": "4.2 mm carbide drill",
-       "rpm": 5000,
-       "feed_mm_min": 500.0,
-       "chip_load_in": null,
-       "mm_per_rev": 0.1,
-       "faces": "6 faces",
-       "start_depth": 20.0,
-       "final_depth": 12.5,
-       "step_down": null,
-       "holes": 6,
-       "through": false,
-       "joint": "plenum_out",
-       "freecad_cycle_time": "00:00:39",
-       "commands": 19,
-       "feed_move_bbox": [
-        -50.0,
-        45.0,
-        79.0,
-        101.0,
-        12.5,
-        12.5
-       ],
-       "path_feed_mm": 61.6,
-       "path_rapid_mm": 799.3,
-       "cut_time_min": 0.12,
-       "rapid_time_min": 0.03
-      },
-      {
-       "op": "Drill015",
-       "label": "Drill 4 x 4.2 mm for the funnel holes, STI tap after, z 12.50..20.00, setup",
-       "kind": "drill",
-       "tool": 7,
-       "tool_name": "4.2 mm carbide drill",
-       "rpm": 5000,
-       "feed_mm_min": 500.0,
-       "chip_load_in": null,
-       "mm_per_rev": 0.1,
-       "faces": [
-        "Face252",
-        "Face253",
-        "Face257",
-        "Face258"
-       ],
-       "start_depth": 20.0,
-       "final_depth": 12.5,
-       "step_down": null,
-       "holes": 4,
-       "through": false,
-       "joint": "funnel",
-       "freecad_cycle_time": "00:00:33",
-       "commands": 15,
-       "feed_move_bbox": [
-        83.0,
-        117.0,
-        -40.0,
-        40.0,
-        12.5,
-        12.5
-       ],
-       "path_feed_mm": 41.0,
-       "path_rapid_mm": 526.1,
-       "cut_time_min": 0.08,
-       "rapid_time_min": 0.02
-      },
-      {
-       "op": "Drill016",
-       "label": "Drill 4 x 5.3 mm for the zmount holes, STI tap after, z 11.00..20.00, setup",
-       "kind": "drill",
-       "tool": 12,
-       "tool_name": "5.3 mm carbide drill (added: M5 STI drill, tooling-bom D10)",
-       "rpm": 5000,
-       "feed_mm_min": 500.0,
-       "chip_load_in": null,
-       "mm_per_rev": 0.1,
-       "faces": [
-        "Face255",
-        "Face256",
-        "Face260",
-        "Face261"
-       ],
-       "start_depth": 20.0,
-       "final_depth": 11.0,
-       "step_down": null,
-       "holes": 4,
-       "through": false,
-       "joint": "zmount",
-       "freecad_cycle_time": "00:00:33",
-       "commands": 15,
-       "feed_move_bbox": [
-        -33.0,
-        94.0,
-        -102.0,
-        -70.0,
-        11.0,
-        11.0
-       ],
-       "path_feed_mm": 46.0,
-       "path_rapid_mm": 459.8,
-       "cut_time_min": 0.09,
-       "rapid_time_min": 0.02
-      },
-      {
-       "op": "Drill017",
-       "label": "Drill 4 x 6.3 mm for the legs holes, STI tap after, z 9.00..20.00, setup",
-       "kind": "drill",
-       "tool": 13,
-       "tool_name": "6.3 mm carbide drill (added: M6 STI drill, tooling-bom D11)",
-       "rpm": 5000,
-       "feed_mm_min": 500.0,
-       "chip_load_in": null,
-       "mm_per_rev": 0.1,
-       "faces": [
-        "Face235",
-        "Face254",
-        "Face259",
-        "Face262"
-       ],
-       "start_depth": 20.0,
-       "final_depth": 9.0,
-       "step_down": null,
-       "holes": 4,
-       "through": false,
-       "joint": "legs",
-       "freecad_cycle_time": "00:01:23",
-       "commands": 15,
-       "feed_move_bbox": [
-        -135.0,
-        142.0,
-        -90.0,
-        90.0,
-        9.0,
-        9.0
-       ],
-       "path_feed_mm": 54.0,
-       "path_rapid_mm": 786.1,
-       "cut_time_min": 0.11,
-       "rapid_time_min": 0.03
-      },
-      {
-       "op": "Drill018",
-       "label": "Drill 2 x 6.3 mm for the module_flange holes, STI tap after, z 6.50..20.00, setup",
-       "kind": "drill",
-       "tool": 13,
-       "tool_name": "6.3 mm carbide drill (added: M6 STI drill, tooling-bom D11)",
-       "rpm": 5000,
-       "feed_mm_min": 500.0,
-       "chip_load_in": null,
-       "mm_per_rev": 0.1,
-       "faces": [
-        "Face248",
-        "Face251"
-       ],
-       "start_depth": 20.0,
-       "final_depth": 6.5,
-       "step_down": null,
-       "holes": 2,
-       "through": false,
-       "joint": "module_flange",
-       "freecad_cycle_time": "00:00:26",
-       "commands": 11,
-       "feed_move_bbox": [
-        -58.0,
-        58.0,
-        0.0,
-        0.0,
-        6.5,
-        6.5
-       ],
-       "path_feed_mm": 32.5,
-       "path_rapid_mm": 400.1,
-       "cut_time_min": 0.07,
-       "rapid_time_min": 0.02
-      },
-      {
-       "op": "Drill019",
-       "label": "Drill 2 x 5.8 mm step z -20.00..-10.00, model, dowel or diamond-pin holes, ream 6 H7 after",
-       "kind": "drill",
-       "tool": 14,
-       "tool_name": "5.8 mm carbide drill (added: 6 mm dowel holes, reamed after)",
-       "rpm": 5000,
-       "feed_mm_min": 500.0,
-       "chip_load_in": null,
-       "mm_per_rev": 0.1,
-       "faces": [
-        "Face90",
-        "Face108"
-       ],
-       "start_depth": 20.0,
-       "final_depth": 10.0,
-       "step_down": null,
-       "holes": 2,
-       "through": false,
-       "freecad_cycle_time": "00:00:24",
-       "commands": 11,
-       "feed_move_bbox": [
-        0.0,
-        0.0,
-        -54.0,
-        54.0,
-        10.0,
-        10.0
-       ],
-       "path_feed_mm": 25.0,
-       "path_rapid_mm": 285.2,
-       "cut_time_min": 0.05,
-       "rapid_time_min": 0.01
-      },
-      {
-       "op": "Drill020",
-       "label": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
-       "kind": "drill",
-       "tool": 7,
-       "tool_name": "4.2 mm carbide drill",
-       "rpm": 5000,
-       "feed_mm_min": 500.0,
-       "chip_load_in": null,
-       "mm_per_rev": 0.1,
-       "faces": "18 faces",
-       "start_depth": 12.0,
-       "final_depth": 4.0,
-       "step_down": null,
-       "holes": 18,
-       "through": true,
-       "freecad_cycle_time": "00:02:06",
-       "commands": 43,
-       "feed_move_bbox": [
-        -152.0,
-        152.0,
-        -107.0,
-        107.0,
-        2.76,
-        2.76
-       ],
-       "path_feed_mm": 216.0,
-       "path_rapid_mm": 2419.0,
-       "cut_time_min": 0.43,
-       "rapid_time_min": 0.1
-      }
-     ],
-     "totals": {
-      "path_feed_mm": 15649.9,
-      "path_rapid_mm": 8517.9,
-      "cut_time_min": 16.88,
-      "rapid_time_min": 0.34,
-      "total_min": 17.21,
-      "total_hms": "0:17:12",
-      "tool_changes": 7,
-      "freecad_sum_of_op_cycle_times_min": 25.03
-     }
-    }
-   ],
-   "total_min": 68.24,
-   "freecad_total_min": 83.95,
-   "total_hms": "1:08:14"
   }
  }
 }

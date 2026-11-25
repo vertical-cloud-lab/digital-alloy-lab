@@ -245,6 +245,828 @@
   }
  },
  "setups": {
+  "floor_A": {
+   "part": "floor",
+   "rotation_model_to_setup": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "a_deg": null,
+   "moves": 1743,
+   "fixtures": [
+    {
+     "name": "parallel",
+     "kind": "box",
+     "params": [
+      -150.0,
+      150.0,
+      -110.7,
+      -98.0,
+      -60.8,
+      -22.7
+     ]
+    },
+    {
+     "name": "parallel",
+     "kind": "box",
+     "params": [
+      -150.0,
+      150.0,
+      98.0,
+      110.7,
+      -60.8,
+      -22.7
+     ]
+    },
+    {
+     "name": "edge clamp",
+     "kind": "box",
+     "params": [
+      -198.75,
+      -158.75,
+      -80.0,
+      -40.0,
+      -60.8,
+      -15.0
+     ]
+    },
+    {
+     "name": "edge clamp",
+     "kind": "box",
+     "params": [
+      -198.75,
+      -158.75,
+      40.0,
+      80.0,
+      -60.8,
+      -15.0
+     ]
+    },
+    {
+     "name": "edge clamp",
+     "kind": "box",
+     "params": [
+      158.75,
+      198.75,
+      -80.0,
+      -40.0,
+      -60.8,
+      -15.0
+     ]
+    },
+    {
+     "name": "edge clamp",
+     "kind": "box",
+     "params": [
+      158.75,
+      198.75,
+      40.0,
+      80.0,
+      -60.8,
+      -15.0
+     ]
+    }
+   ],
+   "end_tabs": [],
+   "tools": {
+    "T1": {
+     "cutter": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "bom": "face mill (shop's, 3/4 in. arbor)",
+     "holder": "04-0015",
+     "holder_title": "CT40 Shell Mill Holder, 3/4\" Pilot Diameter x 2\" Gage Length, TSC",
+     "stick_out_mm": 40.0,
+     "gauge_length_mm": 90.8,
+     "min_clearance_to_stock_mm": {
+      "c": 0.5,
+      "line": 36,
+      "op": "Face top to z 0",
+      "part": "flutes",
+      "at": [
+       -157.8,
+       -113.8
+      ],
+      "tip": [
+       -147.85,
+       -102.85,
+       0.0
+      ]
+     },
+     "min_clearance_to_fixtures_mm": {
+      "c": 10.0,
+      "line": null,
+      "op": null,
+      "part": null,
+      "what": null
+     },
+     "by_part": {
+      "flutes": {
+       "stock": {
+        "c": 0.5,
+        "line": 36
+       }
+      },
+      "shank": {
+       "stock": {
+        "c": 5.5,
+        "line": 23
+       }
+      }
+     },
+     "collisions": 0,
+     "tight": true
+    },
+    "T2": {
+     "cutter": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
+     "bom": "A5 Lakeshore 1600034, 3/4 x 1-1/2 LOC x 4 OAL",
+     "holder": "04-0010",
+     "holder_title": "CT40 ER32 Collet Chuck x 2-1/2\" Gage Length, TSC",
+     "stick_out_mm": 66.0,
+     "gauge_length_mm": 129.5,
+     "min_clearance_to_stock_mm": {
+      "c": 0.5,
+      "line": 1042,
+      "op": "Step the 4 mm band round the pad, adaptive outside the pad",
+      "part": "flutes",
+      "at": [
+       -157.8,
+       -106.2
+      ],
+      "tip": [
+       -154.56,
+       -97.57,
+       -4.0
+      ]
+     },
+     "min_clearance_to_fixtures_mm": {
+      "c": 3.0,
+      "line": 1333,
+      "op": "Outside 312x222 R8, adaptive, z -4 to -12",
+      "part": "flutes",
+      "what": "edge clamp",
+      "at": [
+       -178.2,
+       40.2
+      ],
+      "tip": [
+       -165.59,
+       -104.08,
+       -12.0
+      ]
+     },
+     "by_part": {
+      "flutes": {
+       "stock": {
+        "c": 0.5,
+        "line": 1042
+       },
+       "fixture": {
+        "c": 3.0,
+        "line": 1333
+       }
+      }
+     },
+     "collisions": 0,
+     "tight": true
+    },
+    "T4": {
+     "cutter": "1/8 in. (3.175 mm) 2-flute carbide end mill (O-ring grooves)",
+     "bom": "A1 Lakeshore LC205018, 1/8 x 1/2 LOC x 1-1/2 OAL",
+     "holder": "04-0006",
+     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
+     "stick_out_mm": 12.0,
+     "gauge_length_mm": 75.5,
+     "min_clearance_to_stock_mm": {
+      "c": 0.5,
+      "line": 1519,
+      "op": "Floor O-ring groove 4.6 x 2.65",
+      "part": "flutes",
+      "at": [
+       -131.2,
+       -100.2
+      ],
+      "tip": [
+       -129.97,
+       -99.51,
+       -0.5
+      ]
+     },
+     "min_clearance_to_fixtures_mm": {
+      "c": 10.0,
+      "line": null,
+      "op": null,
+      "part": null,
+      "what": null
+     },
+     "by_part": {
+      "flutes": {
+       "stock": {
+        "c": 0.5,
+        "line": 1519
+       }
+      },
+      "holder 04-0006": {
+       "stock": {
+        "c": 9.35,
+        "line": 1630
+       }
+      }
+     },
+     "collisions": 0,
+     "tight": true
+    },
+    "T9": {
+     "cutter": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
+     "bom": "A2 Lakeshore LC205014, 1/4 x 3/4 LOC x 2-1/2 OAL",
+     "holder": "04-0006",
+     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
+     "stick_out_mm": 28.0,
+     "gauge_length_mm": 91.5,
+     "min_clearance_to_stock_mm": {
+      "c": 0.0,
+      "line": 1783,
+      "op": "Slots 124x8 and 20x104 through, profile",
+      "part": "shank",
+      "at": [
+       -59.2,
+       -86.2
+      ],
+      "tip": [
+       -57.99,
+       -89.17,
+       -21.0
+      ]
+     },
+     "min_clearance_to_fixtures_mm": {
+      "c": 4.25,
+      "line": 1793,
+      "op": "Slots 124x8 and 20x104 through, profile",
+      "part": "flutes",
+      "what": "parallel",
+      "at": [
+       -57.8,
+       -98.2
+      ],
+      "tip": [
+       -57.99,
+       -90.83,
+       -23.2
+      ]
+     },
+     "by_part": {
+      "flutes": {
+       "stock": {
+        "c": 0.67,
+        "line": 1796
+       },
+       "fixture": {
+        "c": 4.25,
+        "line": 1793
+       }
+      },
+      "shank": {
+       "stock": {
+        "c": 0.0,
+        "line": 1783
+       }
+      },
+      "holder 04-0006": {
+       "stock": {
+        "c": 4.8,
+        "line": 1788
+       }
+      }
+     },
+     "collisions": 0,
+     "tight": true
+    },
+    "T14": {
+     "cutter": "5.8 mm carbide drill (added: 6 mm dowel holes, reamed after)",
+     "bom": "5.8 mm carbide drill, 6 mm dowel holes before the F1 reamer (added 2026-11-25)",
+     "holder": "04-0006",
+     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
+     "stick_out_mm": 40.0,
+     "gauge_length_mm": 103.5,
+     "min_clearance_to_stock_mm": {
+      "c": 0.5,
+      "line": 1906,
+      "op": "Drill 2 x 5.8 mm for the floor_dowels holes, ream after, z -14.50..-4.00, setup",
+      "part": "flutes",
+      "at": [
+       145.8,
+       101.8
+      ],
+      "tip": [
+       148.2,
+       103.2,
+       -10.7
+      ]
+     },
+     "min_clearance_to_fixtures_mm": {
+      "c": 8.2,
+      "line": 1904,
+      "op": "Drill 2 x 5.8 mm for the floor_dowels holes, ream after, z -14.50..-4.00, setup",
+      "part": "flutes",
+      "what": "parallel",
+      "at": [
+       -149.8,
+       -110.2
+      ],
+      "tip": [
+       -148.2,
+       -103.2,
+       -10.45
+      ]
+     },
+     "by_part": {
+      "flutes": {
+       "stock": {
+        "c": 0.5,
+        "line": 1906
+       },
+       "fixture": {
+        "c": 8.2,
+        "line": 1904
+       }
+      }
+     },
+     "collisions": 0,
+     "tight": true
+    }
+   },
+   "n_collisions": 0,
+   "collisions": [],
+   "travel": {
+    "table_z_setup": -60.8,
+    "x_span_mm": 333.8,
+    "y_span_mm": 243.9,
+    "x_ok": true,
+    "y_ok": true,
+    "z": [
+     {
+      "tool": 1,
+      "gauge_length_mm": 90.8,
+      "nose_above_table_min": 151.6,
+      "nose_above_table_max": 159.3,
+      "ok": true,
+      "tip_at_z_home_clears_by_mm": 590.4
+     },
+     {
+      "tool": 2,
+      "gauge_length_mm": 129.5,
+      "nose_above_table_min": 167.1,
+      "nose_above_table_max": 198.0,
+      "ok": true,
+      "tip_at_z_home_clears_by_mm": 551.7
+     },
+     {
+      "tool": 4,
+      "gauge_length_mm": 75.5,
+      "nose_above_table_min": 133.6,
+      "nose_above_table_max": 144.0,
+      "ok": true,
+      "tip_at_z_home_clears_by_mm": 605.7
+     },
+     {
+      "tool": 9,
+      "gauge_length_mm": 91.5,
+      "nose_above_table_min": 129.1,
+      "nose_above_table_max": 160.0,
+      "ok": true,
+      "tip_at_z_home_clears_by_mm": 589.7
+     },
+     {
+      "tool": 14,
+      "gauge_length_mm": 103.5,
+      "nose_above_table_min": 149.8,
+      "nose_above_table_max": 172.0,
+      "ok": true,
+      "tip_at_z_home_clears_by_mm": 577.7
+     }
+    ]
+   },
+   "seconds": 5.2
+  },
+  "floor_B": {
+   "part": "floor",
+   "rotation_model_to_setup": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "a_deg": null,
+   "moves": 19237,
+   "fixtures": [
+    {
+     "name": "fixture plate",
+     "kind": "box",
+     "params": [
+      -156.0,
+      156.0,
+      -111.0,
+      111.0,
+      -25.4,
+      0.0
+     ]
+    },
+    {
+     "name": "port ID clamp",
+     "kind": "vcyl",
+     "params": [
+      0.0,
+      0.0,
+      47.0,
+      0.0,
+      15.0
+     ]
+    }
+   ],
+   "end_tabs": [],
+   "tools": {
+    "T1": {
+     "cutter": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
+     "bom": "face mill (shop's, 3/4 in. arbor)",
+     "holder": "04-0015",
+     "holder_title": "CT40 Shell Mill Holder, 3/4\" Pilot Diameter x 2\" Gage Length, TSC",
+     "stick_out_mm": 40.0,
+     "gauge_length_mm": 90.8,
+     "min_clearance_to_stock_mm": {
+      "c": 0.5,
+      "line": 36,
+      "op": "Face bottom to 20 mm thick",
+      "part": "flutes",
+      "at": [
+       -157.8,
+       -113.8
+      ],
+      "tip": [
+       -156.1,
+       -111.1,
+       20.0
+      ]
+     },
+     "min_clearance_to_fixtures_mm": {
+      "c": 5.0,
+      "line": 24,
+      "op": "Face bottom to 20 mm thick",
+      "part": "flutes",
+      "what": "port ID clamp",
+      "at": [
+       -35.8,
+       30.2
+      ],
+      "tip": [
+       -156.1,
+       66.7,
+       20.0
+      ]
+     },
+     "by_part": {
+      "flutes": {
+       "stock": {
+        "c": 0.5,
+        "line": 36
+       },
+       "fixture": {
+        "c": 5.0,
+        "line": 24
+       }
+      },
+      "shank": {
+       "stock": {
+        "c": 5.5,
+        "line": 23
+       }
+      }
+     },
+     "collisions": 0,
+     "tight": true
+    },
+    "T7": {
+     "cutter": "4.2 mm carbide drill",
+     "bom": "4.2 mm carbide drill (stub length)",
+     "holder": "04-0006",
+     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
+     "stick_out_mm": 30.0,
+     "gauge_length_mm": 93.5,
+     "min_clearance_to_stock_mm": {
+      "c": 0.5,
+      "line": 20606,
+      "op": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
+      "part": "flutes",
+      "at": [
+       -67.8,
+       106.2
+      ],
+      "tip": [
+       -66.0,
+       107.0,
+       4.55
+      ]
+     },
+     "min_clearance_to_fixtures_mm": {
+      "c": 2.76,
+      "line": 20572,
+      "op": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
+      "part": "flutes",
+      "what": "fixture plate",
+      "at": [
+       -26.8,
+       106.2
+      ],
+      "tip": [
+       -22.0,
+       107.0,
+       4.8
+      ]
+     },
+     "by_part": {
+      "flutes": {
+       "stock": {
+        "c": 0.5,
+        "line": 20606
+       },
+       "fixture": {
+        "c": 2.76,
+        "line": 20572
+       }
+      }
+     },
+     "collisions": 0,
+     "tight": true
+    },
+    "T9": {
+     "cutter": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
+     "bom": "A2 Lakeshore LC205014, 1/4 x 3/4 LOC x 2-1/2 OAL",
+     "holder": "04-0006",
+     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
+     "stick_out_mm": 28.0,
+     "gauge_length_mm": 91.5,
+     "min_clearance_to_stock_mm": {
+      "c": 0.5,
+      "line": 588,
+      "op": "Outside below z -12 and the 18 U-notches 8 wide x 8 deep, adaptive outside the outline",
+      "part": "flutes",
+      "at": [
+       146.8,
+       -113.8
+      ],
+      "tip": [
+       149.41,
+       -114.12,
+       16.0
+      ]
+     },
+     "min_clearance_to_fixtures_mm": {
+      "c": 10.0,
+      "line": null,
+      "op": null,
+      "part": null,
+      "what": null
+     },
+     "by_part": {
+      "flutes": {
+       "stock": {
+        "c": 0.5,
+        "line": 588
+       }
+      }
+     },
+     "collisions": 0,
+     "tight": true
+    },
+    "T12": {
+     "cutter": "5.3 mm carbide drill (added: M5 STI drill, tooling-bom D10)",
+     "bom": "5.3 mm carbide drill, M5 STI (tooling-bom D10; added 2026-11-25 for setup C)",
+     "holder": "04-0006",
+     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
+     "stick_out_mm": 35.0,
+     "gauge_length_mm": 98.5,
+     "min_clearance_to_stock_mm": {
+      "c": 0.5,
+      "line": 20452,
+      "op": "Drill 4 x 5.3 mm for the zmount holes, STI tap after, z 11.00..20.00, setup",
+      "part": "flutes",
+      "at": [
+       -35.2,
+       -71.2
+      ],
+      "tip": [
+       -33.0,
+       -70.0,
+       14.05
+      ]
+     },
+     "min_clearance_to_fixtures_mm": {
+      "c": 10.0,
+      "line": null,
+      "op": null,
+      "part": null,
+      "what": null
+     },
+     "by_part": {
+      "flutes": {
+       "stock": {
+        "c": 0.5,
+        "line": 20452
+       }
+      }
+     },
+     "collisions": 0,
+     "tight": true
+    },
+    "T13": {
+     "cutter": "6.3 mm carbide drill (added: M6 STI drill, tooling-bom D11)",
+     "bom": "6.3 mm carbide drill, M6 STI (tooling-bom D11; added 2026-11-25)",
+     "holder": "04-0006",
+     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
+     "stick_out_mm": 40.0,
+     "gauge_length_mm": 103.5,
+     "min_clearance_to_stock_mm": {
+      "c": 0.5,
+      "line": 20522,
+      "op": "Drill 2 x 6.3 mm for the module_flange holes, STI tap after, z 6.50..20.00, setup",
+      "part": "flutes",
+      "at": [
+       55.2,
+       -1.2
+      ],
+      "tip": [
+       58.0,
+       0.0,
+       12.55
+      ]
+     },
+     "min_clearance_to_fixtures_mm": {
+      "c": 6.5,
+      "line": 20520,
+      "op": "Drill 2 x 6.3 mm for the module_flange holes, STI tap after, z 6.50..20.00, setup",
+      "part": "flutes",
+      "what": "fixture plate",
+      "at": [
+       -67.2,
+       -2.2
+      ],
+      "tip": [
+       -58.0,
+       0.0,
+       8.08
+      ]
+     },
+     "by_part": {
+      "flutes": {
+       "stock": {
+        "c": 0.5,
+        "line": 20522
+       },
+       "fixture": {
+        "c": 6.5,
+        "line": 20520
+       }
+      }
+     },
+     "collisions": 0,
+     "tight": true
+    },
+    "T14": {
+     "cutter": "5.8 mm carbide drill (added: 6 mm dowel holes, reamed after)",
+     "bom": "5.8 mm carbide drill, 6 mm dowel holes before the F1 reamer (added 2026-11-25)",
+     "holder": "04-0006",
+     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
+     "stick_out_mm": 40.0,
+     "gauge_length_mm": 103.5,
+     "min_clearance_to_stock_mm": {
+      "c": 0.5,
+      "line": 20548,
+      "op": "Drill 2 x 5.8 mm step z -20.00..-10.00, model, dowel or diamond-pin holes, ream 6 H7 after",
+      "part": "flutes",
+      "at": [
+       -2.8,
+       -54.8
+      ],
+      "tip": [
+       0.0,
+       -54.0,
+       13.3
+      ]
+     },
+     "min_clearance_to_fixtures_mm": {
+      "c": 4.35,
+      "line": 20546,
+      "op": "Drill 2 x 5.8 mm step z -20.00..-10.00, model, dowel or diamond-pin holes, ream 6 H7 after",
+      "part": "flutes",
+      "what": "port ID clamp",
+      "at": [
+       -0.2,
+       46.8
+      ],
+      "tip": [
+       0.0,
+       54.0,
+       22.0
+      ]
+     },
+     "by_part": {
+      "flutes": {
+       "stock": {
+        "c": 0.5,
+        "line": 20548
+       },
+       "fixture": {
+        "c": 4.35,
+        "line": 20546
+       }
+      }
+     },
+     "collisions": 0,
+     "tight": true
+    }
+   },
+   "n_collisions": 0,
+   "collisions": [],
+   "travel": {
+    "table_z_setup": -25.4,
+    "x_span_mm": 322.0,
+    "y_span_mm": 233.2,
+    "x_ok": true,
+    "y_ok": true,
+    "z": [
+     {
+      "tool": 1,
+      "gauge_length_mm": 90.8,
+      "nose_above_table_min": 136.2,
+      "nose_above_table_max": 143.9,
+      "ok": true,
+      "tip_at_z_home_clears_by_mm": 605.8
+     },
+     {
+      "tool": 7,
+      "gauge_length_mm": 93.5,
+      "nose_above_table_min": 121.7,
+      "nose_above_table_max": 146.6,
+      "ok": true,
+      "tip_at_z_home_clears_by_mm": 603.1
+     },
+     {
+      "tool": 9,
+      "gauge_length_mm": 91.5,
+      "nose_above_table_min": 128.9,
+      "nose_above_table_max": 144.6,
+      "ok": true,
+      "tip_at_z_home_clears_by_mm": 605.1
+     },
+     {
+      "tool": 12,
+      "gauge_length_mm": 98.5,
+      "nose_above_table_min": 134.9,
+      "nose_above_table_max": 151.6,
+      "ok": true,
+      "tip_at_z_home_clears_by_mm": 598.1
+     },
+     {
+      "tool": 13,
+      "gauge_length_mm": 103.5,
+      "nose_above_table_min": 135.4,
+      "nose_above_table_max": 156.6,
+      "ok": true,
+      "tip_at_z_home_clears_by_mm": 593.1
+     },
+     {
+      "tool": 14,
+      "gauge_length_mm": 103.5,
+      "nose_above_table_min": 138.9,
+      "nose_above_table_max": 156.6,
+      "ok": true,
+      "tip_at_z_home_clears_by_mm": 593.1
+     }
+    ]
+   },
+   "seconds": 19.0
+  },
   "frame_B": {
    "part": "frame",
    "rotation_model_to_setup": [
@@ -2141,955 +2963,9 @@
     ]
    },
    "seconds": 6.7
-  },
-  "floor_A": {
-   "part": "floor",
-   "rotation_model_to_setup": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     0,
-     1,
-     0
-    ],
-    [
-     0,
-     0,
-     1
-    ]
-   ],
-   "a_deg": null,
-   "moves": 1743,
-   "fixtures": [
-    {
-     "name": "parallel",
-     "kind": "box",
-     "params": [
-      -150.0,
-      150.0,
-      -110.7,
-      -98.0,
-      -60.8,
-      -22.7
-     ]
-    },
-    {
-     "name": "parallel",
-     "kind": "box",
-     "params": [
-      -150.0,
-      150.0,
-      98.0,
-      110.7,
-      -60.8,
-      -22.7
-     ]
-    },
-    {
-     "name": "edge clamp",
-     "kind": "box",
-     "params": [
-      -198.75,
-      -158.75,
-      -80.0,
-      -40.0,
-      -60.8,
-      -15.0
-     ]
-    },
-    {
-     "name": "edge clamp",
-     "kind": "box",
-     "params": [
-      -198.75,
-      -158.75,
-      40.0,
-      80.0,
-      -60.8,
-      -15.0
-     ]
-    },
-    {
-     "name": "edge clamp",
-     "kind": "box",
-     "params": [
-      158.75,
-      198.75,
-      -80.0,
-      -40.0,
-      -60.8,
-      -15.0
-     ]
-    },
-    {
-     "name": "edge clamp",
-     "kind": "box",
-     "params": [
-      158.75,
-      198.75,
-      40.0,
-      80.0,
-      -60.8,
-      -15.0
-     ]
-    }
-   ],
-   "end_tabs": [],
-   "tools": {
-    "T1": {
-     "cutter": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
-     "bom": "face mill (shop's, 3/4 in. arbor)",
-     "holder": "04-0015",
-     "holder_title": "CT40 Shell Mill Holder, 3/4\" Pilot Diameter x 2\" Gage Length, TSC",
-     "stick_out_mm": 40.0,
-     "gauge_length_mm": 90.8,
-     "min_clearance_to_stock_mm": {
-      "c": 0.5,
-      "line": 36,
-      "op": "Face top to z 0",
-      "part": "flutes",
-      "at": [
-       -157.8,
-       -113.8
-      ],
-      "tip": [
-       -147.85,
-       -102.85,
-       0.0
-      ]
-     },
-     "min_clearance_to_fixtures_mm": {
-      "c": 10.0,
-      "line": null,
-      "op": null,
-      "part": null,
-      "what": null
-     },
-     "by_part": {
-      "flutes": {
-       "stock": {
-        "c": 0.5,
-        "line": 36
-       }
-      },
-      "shank": {
-       "stock": {
-        "c": 5.5,
-        "line": 23
-       }
-      }
-     },
-     "collisions": 0,
-     "tight": true
-    },
-    "T2": {
-     "cutter": "3/4 in. (19.05 mm) 3-flute carbide end mill, 66 mm stick-out, ER32 collet chuck",
-     "bom": "A5 Lakeshore 1600034, 3/4 x 1-1/2 LOC x 4 OAL",
-     "holder": "04-0010",
-     "holder_title": "CT40 ER32 Collet Chuck x 2-1/2\" Gage Length, TSC",
-     "stick_out_mm": 66.0,
-     "gauge_length_mm": 129.5,
-     "min_clearance_to_stock_mm": {
-      "c": 0.5,
-      "line": 1042,
-      "op": "Step the 4 mm band round the pad, adaptive outside the pad",
-      "part": "flutes",
-      "at": [
-       -157.8,
-       -106.2
-      ],
-      "tip": [
-       -154.56,
-       -97.57,
-       -4.0
-      ]
-     },
-     "min_clearance_to_fixtures_mm": {
-      "c": 3.0,
-      "line": 1333,
-      "op": "Outside 312x222 R8, adaptive, z -4 to -12",
-      "part": "flutes",
-      "what": "edge clamp",
-      "at": [
-       -178.2,
-       40.2
-      ],
-      "tip": [
-       -165.59,
-       -104.08,
-       -12.0
-      ]
-     },
-     "by_part": {
-      "flutes": {
-       "stock": {
-        "c": 0.5,
-        "line": 1042
-       },
-       "fixture": {
-        "c": 3.0,
-        "line": 1333
-       }
-      }
-     },
-     "collisions": 0,
-     "tight": true
-    },
-    "T4": {
-     "cutter": "1/8 in. (3.175 mm) 2-flute carbide end mill (O-ring grooves)",
-     "bom": "A1 Lakeshore LC205018, 1/8 x 1/2 LOC x 1-1/2 OAL",
-     "holder": "04-0006",
-     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
-     "stick_out_mm": 12.0,
-     "gauge_length_mm": 75.5,
-     "min_clearance_to_stock_mm": {
-      "c": 0.5,
-      "line": 1519,
-      "op": "Floor O-ring groove 4.6 x 2.65",
-      "part": "flutes",
-      "at": [
-       -131.2,
-       -100.2
-      ],
-      "tip": [
-       -129.97,
-       -99.51,
-       -0.5
-      ]
-     },
-     "min_clearance_to_fixtures_mm": {
-      "c": 10.0,
-      "line": null,
-      "op": null,
-      "part": null,
-      "what": null
-     },
-     "by_part": {
-      "flutes": {
-       "stock": {
-        "c": 0.5,
-        "line": 1519
-       }
-      },
-      "holder 04-0006": {
-       "stock": {
-        "c": 9.35,
-        "line": 1630
-       }
-      }
-     },
-     "collisions": 0,
-     "tight": true
-    },
-    "T9": {
-     "cutter": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
-     "bom": "A2 Lakeshore LC205014, 1/4 x 3/4 LOC x 2-1/2 OAL",
-     "holder": "04-0006",
-     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
-     "stick_out_mm": 28.0,
-     "gauge_length_mm": 91.5,
-     "min_clearance_to_stock_mm": {
-      "c": 0.0,
-      "line": 1783,
-      "op": "Slots 124x8 and 20x104 through, profile",
-      "part": "shank",
-      "at": [
-       -59.2,
-       -86.2
-      ],
-      "tip": [
-       -57.99,
-       -89.17,
-       -21.0
-      ]
-     },
-     "min_clearance_to_fixtures_mm": {
-      "c": 4.25,
-      "line": 1793,
-      "op": "Slots 124x8 and 20x104 through, profile",
-      "part": "flutes",
-      "what": "parallel",
-      "at": [
-       -57.8,
-       -98.2
-      ],
-      "tip": [
-       -57.99,
-       -90.83,
-       -23.2
-      ]
-     },
-     "by_part": {
-      "flutes": {
-       "stock": {
-        "c": 0.67,
-        "line": 1796
-       },
-       "fixture": {
-        "c": 4.25,
-        "line": 1793
-       }
-      },
-      "shank": {
-       "stock": {
-        "c": 0.0,
-        "line": 1783
-       }
-      },
-      "holder 04-0006": {
-       "stock": {
-        "c": 4.8,
-        "line": 1788
-       }
-      }
-     },
-     "collisions": 0,
-     "tight": true
-    },
-    "T14": {
-     "cutter": "5.8 mm carbide drill (added: 6 mm dowel holes, reamed after)",
-     "bom": "5.8 mm carbide drill, 6 mm dowel holes before the F1 reamer (added 2026-11-25)",
-     "holder": "04-0006",
-     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
-     "stick_out_mm": 40.0,
-     "gauge_length_mm": 103.5,
-     "min_clearance_to_stock_mm": {
-      "c": 0.5,
-      "line": 1906,
-      "op": "Drill 2 x 5.8 mm for the floor_dowels holes, ream after, z -14.50..-4.00, setup",
-      "part": "flutes",
-      "at": [
-       145.8,
-       101.8
-      ],
-      "tip": [
-       148.2,
-       103.2,
-       -10.7
-      ]
-     },
-     "min_clearance_to_fixtures_mm": {
-      "c": 8.2,
-      "line": 1904,
-      "op": "Drill 2 x 5.8 mm for the floor_dowels holes, ream after, z -14.50..-4.00, setup",
-      "part": "flutes",
-      "what": "parallel",
-      "at": [
-       -149.8,
-       -110.2
-      ],
-      "tip": [
-       -148.2,
-       -103.2,
-       -10.45
-      ]
-     },
-     "by_part": {
-      "flutes": {
-       "stock": {
-        "c": 0.5,
-        "line": 1906
-       },
-       "fixture": {
-        "c": 8.2,
-        "line": 1904
-       }
-      }
-     },
-     "collisions": 0,
-     "tight": true
-    }
-   },
-   "n_collisions": 0,
-   "collisions": [],
-   "travel": {
-    "table_z_setup": -60.8,
-    "x_span_mm": 333.8,
-    "y_span_mm": 243.9,
-    "x_ok": true,
-    "y_ok": true,
-    "z": [
-     {
-      "tool": 1,
-      "gauge_length_mm": 90.8,
-      "nose_above_table_min": 151.6,
-      "nose_above_table_max": 159.3,
-      "ok": true,
-      "tip_at_z_home_clears_by_mm": 590.4
-     },
-     {
-      "tool": 2,
-      "gauge_length_mm": 129.5,
-      "nose_above_table_min": 167.1,
-      "nose_above_table_max": 198.0,
-      "ok": true,
-      "tip_at_z_home_clears_by_mm": 551.7
-     },
-     {
-      "tool": 4,
-      "gauge_length_mm": 75.5,
-      "nose_above_table_min": 133.6,
-      "nose_above_table_max": 144.0,
-      "ok": true,
-      "tip_at_z_home_clears_by_mm": 605.7
-     },
-     {
-      "tool": 9,
-      "gauge_length_mm": 91.5,
-      "nose_above_table_min": 129.1,
-      "nose_above_table_max": 160.0,
-      "ok": true,
-      "tip_at_z_home_clears_by_mm": 589.7
-     },
-     {
-      "tool": 14,
-      "gauge_length_mm": 103.5,
-      "nose_above_table_min": 149.8,
-      "nose_above_table_max": 172.0,
-      "ok": true,
-      "tip_at_z_home_clears_by_mm": 577.7
-     }
-    ]
-   },
-   "seconds": 5.9
-  },
-  "floor_B": {
-   "part": "floor",
-   "rotation_model_to_setup": [
-    [
-     1,
-     0,
-     0
-    ],
-    [
-     0,
-     -1,
-     0
-    ],
-    [
-     0,
-     0,
-     -1
-    ]
-   ],
-   "a_deg": null,
-   "moves": 19165,
-   "fixtures": [
-    {
-     "name": "fixture plate",
-     "kind": "box",
-     "params": [
-      -156.0,
-      156.0,
-      -111.0,
-      111.0,
-      -25.4,
-      0.0
-     ]
-    },
-    {
-     "name": "port ID clamp",
-     "kind": "vcyl",
-     "params": [
-      0.0,
-      0.0,
-      47.0,
-      0.0,
-      15.0
-     ]
-    }
-   ],
-   "end_tabs": [],
-   "tools": {
-    "T1": {
-     "cutter": "2.5 in. (63.5 mm) indexable face mill, 4 inserts",
-     "bom": "face mill (shop's, 3/4 in. arbor)",
-     "holder": "04-0015",
-     "holder_title": "CT40 Shell Mill Holder, 3/4\" Pilot Diameter x 2\" Gage Length, TSC",
-     "stick_out_mm": 40.0,
-     "gauge_length_mm": 90.8,
-     "min_clearance_to_stock_mm": {
-      "c": 0.5,
-      "line": 36,
-      "op": "Face bottom to 20 mm thick",
-      "part": "flutes",
-      "at": [
-       -157.8,
-       -113.8
-      ],
-      "tip": [
-       -156.1,
-       -111.1,
-       20.0
-      ]
-     },
-     "min_clearance_to_fixtures_mm": {
-      "c": 5.0,
-      "line": 24,
-      "op": "Face bottom to 20 mm thick",
-      "part": "flutes",
-      "what": "port ID clamp",
-      "at": [
-       -35.8,
-       30.2
-      ],
-      "tip": [
-       -156.1,
-       66.7,
-       20.0
-      ]
-     },
-     "by_part": {
-      "flutes": {
-       "stock": {
-        "c": 0.5,
-        "line": 36
-       },
-       "fixture": {
-        "c": 5.0,
-        "line": 24
-       }
-      },
-      "shank": {
-       "stock": {
-        "c": 5.5,
-        "line": 23
-       }
-      }
-     },
-     "collisions": 0,
-     "tight": true
-    },
-    "T7": {
-     "cutter": "4.2 mm carbide drill",
-     "bom": "4.2 mm carbide drill (stub length)",
-     "holder": "04-0006",
-     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
-     "stick_out_mm": 30.0,
-     "gauge_length_mm": 93.5,
-     "min_clearance_to_stock_mm": {
-      "c": 0.5,
-      "line": 20546,
-      "op": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
-      "part": "flutes",
-      "at": [
-       -67.8,
-       106.2
-      ],
-      "tip": [
-       -66.0,
-       107.0,
-       4.55
-      ]
-     },
-     "min_clearance_to_fixtures_mm": {
-      "c": 2.76,
-      "line": 20512,
-      "op": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
-      "part": "flutes",
-      "what": "fixture plate",
-      "at": [
-       -26.8,
-       106.2
-      ],
-      "tip": [
-       -22.0,
-       107.0,
-       4.8
-      ]
-     },
-     "by_part": {
-      "flutes": {
-       "stock": {
-        "c": 0.5,
-        "line": 20546
-       },
-       "fixture": {
-        "c": 2.76,
-        "line": 20512
-       }
-      }
-     },
-     "collisions": 0,
-     "tight": true
-    },
-    "T9": {
-     "cutter": "1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)",
-     "bom": "A2 Lakeshore LC205014, 1/4 x 3/4 LOC x 2-1/2 OAL",
-     "holder": "04-0006",
-     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
-     "stick_out_mm": 28.0,
-     "gauge_length_mm": 91.5,
-     "min_clearance_to_stock_mm": {
-      "c": 0.5,
-      "line": 588,
-      "op": "Outside below z -12 and the 18 U-notches 8 wide x 8 deep, adaptive outside the outline",
-      "part": "flutes",
-      "at": [
-       146.8,
-       -113.8
-      ],
-      "tip": [
-       149.41,
-       -114.12,
-       16.0
-      ]
-     },
-     "min_clearance_to_fixtures_mm": {
-      "c": 10.0,
-      "line": null,
-      "op": null,
-      "part": null,
-      "what": null
-     },
-     "by_part": {
-      "flutes": {
-       "stock": {
-        "c": 0.5,
-        "line": 588
-       }
-      }
-     },
-     "collisions": 0,
-     "tight": true
-    },
-    "T12": {
-     "cutter": "5.3 mm carbide drill (added: M5 STI drill, tooling-bom D10)",
-     "bom": "5.3 mm carbide drill, M5 STI (tooling-bom D10; added 2026-11-25 for setup C)",
-     "holder": "04-0006",
-     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
-     "stick_out_mm": 35.0,
-     "gauge_length_mm": 98.5,
-     "min_clearance_to_stock_mm": {
-      "c": 0.5,
-      "line": 20414,
-      "op": "Drill 4 x 5.3 mm for the zmount holes, STI tap after, z 11.00..20.00, setup",
-      "part": "flutes",
-      "at": [
-       91.8,
-       -103.2
-      ],
-      "tip": [
-       94.0,
-       -102.0,
-       14.05
-      ]
-     },
-     "min_clearance_to_fixtures_mm": {
-      "c": 10.0,
-      "line": null,
-      "op": null,
-      "part": null,
-      "what": null
-     },
-     "by_part": {
-      "flutes": {
-       "stock": {
-        "c": 0.5,
-        "line": 20414
-       }
-      }
-     },
-     "collisions": 0,
-     "tight": true
-    },
-    "T13": {
-     "cutter": "6.3 mm carbide drill (added: M6 STI drill, tooling-bom D11)",
-     "bom": "6.3 mm carbide drill, M6 STI (tooling-bom D11; added 2026-11-25)",
-     "holder": "04-0006",
-     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
-     "stick_out_mm": 40.0,
-     "gauge_length_mm": 103.5,
-     "min_clearance_to_stock_mm": {
-      "c": 0.5,
-      "line": 20462,
-      "op": "Drill 2 x 6.3 mm for the module_flange holes, STI tap after, z 6.50..20.00, setup",
-      "part": "flutes",
-      "at": [
-       55.2,
-       -1.2
-      ],
-      "tip": [
-       58.0,
-       0.0,
-       12.55
-      ]
-     },
-     "min_clearance_to_fixtures_mm": {
-      "c": 6.5,
-      "line": 20460,
-      "op": "Drill 2 x 6.3 mm for the module_flange holes, STI tap after, z 6.50..20.00, setup",
-      "part": "flutes",
-      "what": "fixture plate",
-      "at": [
-       -67.2,
-       -2.2
-      ],
-      "tip": [
-       -58.0,
-       0.0,
-       8.08
-      ]
-     },
-     "by_part": {
-      "flutes": {
-       "stock": {
-        "c": 0.5,
-        "line": 20462
-       },
-       "fixture": {
-        "c": 6.5,
-        "line": 20460
-       }
-      }
-     },
-     "collisions": 0,
-     "tight": true
-    },
-    "T14": {
-     "cutter": "5.8 mm carbide drill (added: 6 mm dowel holes, reamed after)",
-     "bom": "5.8 mm carbide drill, 6 mm dowel holes before the F1 reamer (added 2026-11-25)",
-     "holder": "04-0006",
-     "holder_title": "CT40 ER16 Collet Chuck x 2-1/2\" Gage Length, TSC",
-     "stick_out_mm": 40.0,
-     "gauge_length_mm": 103.5,
-     "min_clearance_to_stock_mm": {
-      "c": 0.5,
-      "line": 20488,
-      "op": "Drill 2 x 5.8 mm step z -20.00..-10.00, model, dowel or diamond-pin holes, ream 6 H7 after",
-      "part": "flutes",
-      "at": [
-       -2.8,
-       -54.8
-      ],
-      "tip": [
-       0.0,
-       -54.0,
-       13.3
-      ]
-     },
-     "min_clearance_to_fixtures_mm": {
-      "c": 4.35,
-      "line": 20486,
-      "op": "Drill 2 x 5.8 mm step z -20.00..-10.00, model, dowel or diamond-pin holes, ream 6 H7 after",
-      "part": "flutes",
-      "what": "port ID clamp",
-      "at": [
-       -0.2,
-       46.8
-      ],
-      "tip": [
-       0.0,
-       54.0,
-       22.0
-      ]
-     },
-     "by_part": {
-      "flutes": {
-       "stock": {
-        "c": 0.5,
-        "line": 20488
-       },
-       "fixture": {
-        "c": 4.35,
-        "line": 20486
-       }
-      }
-     },
-     "collisions": 0,
-     "tight": true
-    }
-   },
-   "n_collisions": 0,
-   "collisions": [],
-   "travel": {
-    "table_z_setup": -25.4,
-    "x_span_mm": 322.0,
-    "y_span_mm": 233.2,
-    "x_ok": true,
-    "y_ok": true,
-    "z": [
-     {
-      "tool": 1,
-      "gauge_length_mm": 90.8,
-      "nose_above_table_min": 136.2,
-      "nose_above_table_max": 143.9,
-      "ok": true,
-      "tip_at_z_home_clears_by_mm": 605.8
-     },
-     {
-      "tool": 7,
-      "gauge_length_mm": 93.5,
-      "nose_above_table_min": 121.7,
-      "nose_above_table_max": 146.6,
-      "ok": true,
-      "tip_at_z_home_clears_by_mm": 603.1
-     },
-     {
-      "tool": 9,
-      "gauge_length_mm": 91.5,
-      "nose_above_table_min": 128.9,
-      "nose_above_table_max": 144.6,
-      "ok": true,
-      "tip_at_z_home_clears_by_mm": 605.1
-     },
-     {
-      "tool": 12,
-      "gauge_length_mm": 98.5,
-      "nose_above_table_min": 134.9,
-      "nose_above_table_max": 151.6,
-      "ok": true,
-      "tip_at_z_home_clears_by_mm": 598.1
-     },
-     {
-      "tool": 13,
-      "gauge_length_mm": 103.5,
-      "nose_above_table_min": 135.4,
-      "nose_above_table_max": 156.6,
-      "ok": true,
-      "tip_at_z_home_clears_by_mm": 593.1
-     },
-     {
-      "tool": 14,
-      "gauge_length_mm": 103.5,
-      "nose_above_table_min": 138.9,
-      "nose_above_table_max": 156.6,
-      "ok": true,
-      "tip_at_z_home_clears_by_mm": 593.1
-     }
-    ]
-   },
-   "seconds": 27.2
   }
  },
  "stock_vs_model": {
-  "frame": {
-   "gouge_deeper_than_1mm_cm3": 0.0,
-   "n_gouge_regions": 0,
-   "leftover_deeper_than_1mm_cm3": 0.128,
-   "n_leftover_regions": 24,
-   "largest_leftovers": [
-    {
-     "volume_mm3": 17.8,
-     "max_depth_mm": 1.41,
-     "deepest_at": [
-      95.25,
-      110.75,
-      99.25
-     ],
-     "bbox": [
-      [
-       94.5,
-       95.5
-      ],
-      [
-       100.0,
-       111.0
-      ],
-      [
-       97.5,
-       102.5
-      ]
-     ]
-    },
-    {
-     "volume_mm3": 17.8,
-     "max_depth_mm": 1.41,
-     "deepest_at": [
-      104.75,
-      110.75,
-      99.25
-     ],
-     "bbox": [
-      [
-       104.5,
-       105.5
-      ],
-      [
-       100.0,
-       111.0
-      ],
-      [
-       97.5,
-       102.5
-      ]
-     ]
-    },
-    {
-     "volume_mm3": 17.8,
-     "max_depth_mm": 1.41,
-     "deepest_at": [
-      155.75,
-      -44.75,
-      17.25
-     ],
-     "bbox": [
-      [
-       145.0,
-       156.0
-      ],
-      [
-       -45.5,
-       -44.5
-      ],
-      [
-       15.5,
-       20.5
-      ]
-     ]
-    },
-    {
-     "volume_mm3": 17.8,
-     "max_depth_mm": 1.41,
-     "deepest_at": [
-      155.75,
-      -35.25,
-      17.25
-     ],
-     "bbox": [
-      [
-       145.0,
-       156.0
-      ],
-      [
-       -35.5,
-       -34.5
-      ],
-      [
-       15.5,
-       20.5
-      ]
-     ]
-    },
-    {
-     "volume_mm3": 12.8,
-     "max_depth_mm": 1.5,
-     "deepest_at": [
-      97.75,
-      110.75,
-      95.75
-     ],
-     "bbox": [
-      [
-       97.0,
-       103.0
-      ],
-      [
-       100.0,
-       111.0
-      ],
-      [
-       94.5,
-       96.0
-      ]
-     ]
-    }
-   ],
-   "loose_pieces_cm3": []
-  },
   "floor": {
    "gouge_deeper_than_1mm_cm3": 0.0,
    "n_gouge_regions": 0,
@@ -3216,22 +3092,146 @@
     52.06,
     12.74
    ]
+  },
+  "frame": {
+   "gouge_deeper_than_1mm_cm3": 0.0,
+   "n_gouge_regions": 0,
+   "leftover_deeper_than_1mm_cm3": 0.128,
+   "n_leftover_regions": 24,
+   "largest_leftovers": [
+    {
+     "volume_mm3": 17.8,
+     "max_depth_mm": 1.41,
+     "deepest_at": [
+      95.25,
+      110.75,
+      99.25
+     ],
+     "bbox": [
+      [
+       94.5,
+       95.5
+      ],
+      [
+       100.0,
+       111.0
+      ],
+      [
+       97.5,
+       102.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 17.8,
+     "max_depth_mm": 1.41,
+     "deepest_at": [
+      104.75,
+      110.75,
+      99.25
+     ],
+     "bbox": [
+      [
+       104.5,
+       105.5
+      ],
+      [
+       100.0,
+       111.0
+      ],
+      [
+       97.5,
+       102.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 17.8,
+     "max_depth_mm": 1.41,
+     "deepest_at": [
+      155.75,
+      -44.75,
+      17.25
+     ],
+     "bbox": [
+      [
+       145.0,
+       156.0
+      ],
+      [
+       -45.5,
+       -44.5
+      ],
+      [
+       15.5,
+       20.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 17.8,
+     "max_depth_mm": 1.41,
+     "deepest_at": [
+      155.75,
+      -35.25,
+      17.25
+     ],
+     "bbox": [
+      [
+       145.0,
+       156.0
+      ],
+      [
+       -35.5,
+       -34.5
+      ],
+      [
+       15.5,
+       20.5
+      ]
+     ]
+    },
+    {
+     "volume_mm3": 12.8,
+     "max_depth_mm": 1.5,
+     "deepest_at": [
+      97.75,
+      110.75,
+      95.75
+     ],
+     "bbox": [
+      [
+       97.0,
+       103.0
+      ],
+      [
+       100.0,
+       111.0
+      ],
+      [
+       94.5,
+       96.0
+      ]
+     ]
+    }
+   ],
+   "loose_pieces_cm3": []
   }
  },
  "stock_vs_camotics": {
+  "floor": {
+   "camotics_final": "$CAMOTICS_WORK/floor_voxels.npz",
+   "this_cm3": 1116.79,
+   "camotics_cm3": 1115.94,
+   "only_here_cm3": 0.89,
+   "only_in_camotics_cm3": 0.04
+  },
   "frame": {
    "camotics_final": "$CAMOTICS_WORK/frame_voxels.npz",
    "this_cm3": 1590.4,
    "camotics_cm3": 1589.98,
    "only_here_cm3": 0.45,
    "only_in_camotics_cm3": 0.03
-  },
-  "floor": {
-   "camotics_final": "$CAMOTICS_WORK/floor_voxels.npz",
-   "this_cm3": 1118.05,
-   "camotics_cm3": 1117.2,
-   "only_here_cm3": 0.89,
-   "only_in_camotics_cm3": 0.04
   }
  }
 }
