@@ -124,8 +124,19 @@ def slide_routes(u, route):
     return S.to_img(fig)
 
 
+def assembly_numbers(hud):
+    """hud.json's assembly headline, with the robot-hours re-summed from times.assembly rows without the machine's
+    (the leak check's pump hour is not robot time)."""
+    a = dict((hud.get("headline") or {}).get("assembly") or {})
+    rows = ((hud.get("times") or {}).get("assembly") or {}).get("rows") or []
+    if rows:
+        a["robot_h"] = sum(float(r.get("robot_s") or 0) for r in rows
+                           if (r.get("status") or "") != "machine" and (r.get("actor") or "") != "machine") / 3600.0
+    return a
+
+
 def slide_assembly(u, hud):
-    a = (hud.get("headline") or {}).get("assembly") or {}
+    a = assembly_numbers(hud)
     if not a:
         return S.note_slide("The assembly estimate (hud.json) was not ready for this cut")
     tiles = [("Steps", f"{a.get('steps', 0)}", "in the build sequence"),
@@ -181,7 +192,7 @@ def main():
         cap = "Which route: BYU hours, cost and weeks to the first leak test"
     run(lambda u: slide_routes(u, route), cap, "Make the seal and module parts, buy 12 catalogue swaps, outsource the "
         "rest; set by the honing loop (route.json, manufacturing-route.md)", 10.0)
-    a = (hud.get("headline") or {}).get("assembly") or {}
+    a = assembly_numbers(hud)
     cap = (f"Assembly: {a.get('steps', '')} steps, {a.get('robot_h', 0):.1f} robot-hours and "
            f"{a.get('person_h', 0):.1f} person-hours") if a else "Assembly: robot-hours and person-hours"
     run(lambda u: slide_assembly(u, hud), cap, "What the next chapters show, step by step (hud.json from the assembly "

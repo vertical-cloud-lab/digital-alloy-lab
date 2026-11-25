@@ -129,24 +129,61 @@ def slide_cost(u, hud):
     y = np.arange(len(cats))
     s = ease(u)
     for k, c in enumerate(cats):
-        n0, n1 = c["new"]
-        u0, u1 = (c.get("used") or c["new"])
+        sn, su = c.get("spec_new"), c.get("spec_used")
+        if sn is not None:                                       # at spec: one new price, a used range
+            n0 = n1 = float(sn if not isinstance(sn, list) else sn[0])
+            u0, u1 = (su if isinstance(su, list) else [su, su]) if su is not None else (n0, n1)
+        else:
+            n0, n1 = c["new"]
+            u0, u1 = (c.get("used") or c["new"])
         ax.barh(k + 0.18, n0 * s, height=0.32, color=NEW, edgecolor=BG, linewidth=1.0)
         ax.barh(k + 0.18, (n1 - n0) * s, left=n0 * s, height=0.32, color=NEW, alpha=0.40, edgecolor=BG, linewidth=1.0)
         ax.barh(k - 0.18, u0 * s, height=0.32, color=USED, edgecolor=BG, linewidth=1.0)
         ax.barh(k - 0.18, (u1 - u0) * s, left=u0 * s, height=0.32, color=USED, alpha=0.40, edgecolor=BG, linewidth=1.0)
         if u > 0.8 and n1 > 4000:
-            ax.text(n1 * s + 400, k + 0.18, f"{money_k(n0)}-{money_k(n1)}", va="center", fontsize=10, color=INK2)
+            ax.text(n1 * s + 400, k + 0.18, money_k(n0) if abs(n1 - n0) < 1 else f"{money_k(n0)}-{money_k(n1)}",
+                    va="center", fontsize=10, color=INK2)
             if (u1 < n1 - 500):
-                ax.text(u1 * s + 400, k - 0.18, f"{money_k(u0)}-{money_k(u1)}", va="center", fontsize=10, color=INK2)
+                ax.text(u1 * s + 400, k - 0.18, money_k(u0) if abs(u1 - u0) < 1 else f"{money_k(u0)}-{money_k(u1)}",
+                        va="center", fontsize=10, color=INK2)
     ax.set_yticks(y, names)
-    ax.set_xlabel("USD (solid: low end of the BOM range; pale: up to its high end)")
+    ax.set_xlabel("USD at spec: the laser chain as specified, the cheapest listed option elsewhere (pale: the used range)")
     ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"${v / 1000:.0f}k"))
     ax.grid(axis="x", color=GRID)
     ax.set_axisbelow(True)
     from matplotlib.patches import Patch
     ax.legend(handles=[Patch(color=NEW, label="new"), Patch(color=USED, label="used where sensible (eBay, surplus)")],
               loc="upper right", frameon=False, fontsize=12)
+    return to_img(fig)
+
+
+def slide_ready(u, hud):
+    """Weeks from ordering to every part in hand, and to ready-to-assemble (fabrication included), by buying route."""
+    wk = (hud.get("headline") or {}).get("weeks") or {}
+    spec = [("All new, as chosen", wk.get("new_as_chosen"), "parts", "ready"),
+            ("All new, two slow parts swapped", wk.get("new"), "parts", "ready_split"),
+            ("Majors bought used", wk.get("used"), "parts", "ready_split")]
+    rows = [(n, r[a], r[b], r.get("set_by", "")) for n, r, a, b in spec if r and r.get(a) and r.get(b)]
+    if not rows:
+        return slide_lead(u, hud)
+    rows = rows[::-1]
+    fig, ax = fig_axes([0.30, 0.16, 0.62, 0.66])
+    s = ease(u)
+    pc, rc = "#9dc8f7", NEW
+    for k, (name, parts, ready, by) in enumerate(rows):
+        for dy, (lo, hi), col in ((0.19, parts, pc), (-0.19, ready, rc)):
+            ax.barh(k + dy, lo * s, height=0.36, color=col, edgecolor=BG)
+            ax.barh(k + dy, (hi - lo) * s, left=lo * s, height=0.36, color=col, alpha=0.45, edgecolor=BG)
+            if u > 0.8:
+                ax.text(hi * s + 0.4, k + dy, f"{lo:.0f}-{hi:.0f} wk", va="center", fontsize=10, color=INK2)
+    ax.set_yticks(range(len(rows)), [r[0] for r in rows])
+    ax.set_xlabel("weeks from ordering (BYU purchase orders included); fabrication on the recommended split")
+    ax.set_xlim(0, max(r[2][1] for r in rows) * 1.25)
+    ax.grid(axis="x", color=GRID)
+    ax.set_axisbelow(True)
+    from matplotlib.patches import Patch
+    ax.legend(handles=[Patch(color=pc, label="every part in hand"), Patch(color=rc, label="ready to assemble")],
+              loc="lower right", frameon=False)
     return to_img(fig)
 
 
@@ -330,6 +367,9 @@ def _routes(route):
 
 
 def slide_routes(u, route):
+    if route and isinstance(route.get("routes"), dict) and any("labour_h" in v for v in route["routes"].values()):
+        import ch_estimates                                     # the route worker's schema: the same chart as 15
+        return ch_estimates.slide_routes(u, route)
     rows = _routes(route) if route else []
     rows = [r for r in rows if r[1] or r[2]]
     if not rows:
@@ -375,7 +415,8 @@ def _steps(kind):
         for s in d.get("steps") or []:
             st = (s.get("status") or "").lower()
             who = s.get("who") or []
-            if st == kind or (kind == "person" and st == "" and "person" in who and len(who) == 1):
+            want = (kind,) if kind != "redesign" else ("redesign", "fail", "partial")
+            if st in want or (kind == "person" and st == "" and "person" in who and len(who) == 1):
                 out.append((s.get("id", ""), s.get("label", ""), s.get("why", "")))
         for r in d.get("redesigns" if kind == "redesign" else "person_steps") or []:
             if isinstance(r, dict):
@@ -435,22 +476,27 @@ def main():
     img, n_ch = slide_clocks(1.0)
     run(lambda u: slide_clocks(u)[0], "What the video's clocks add up to",
         f"Real time for the robots' motions, time-lapse for machining and waiting; summed over {n_ch} chapters", 8.0)
-    tot = (hud.get("totals") or {}).get("scenarios") or {}
-    if tot.get("new") and tot.get("used"):
-        cap = (f"The kit: ${tot['new'][0] / 1000:.0f}k-{tot['new'][1] / 1000:.0f}k new, "
-               f"${tot['used'][0] / 1000:.0f}k-{tot['used'][1] / 1000:.0f}k with used parts where it makes sense")
+    hl = hud.get("headline") or {}
+    sp, bom, cw = hl.get("cost_at_spec") or {}, (hl.get("cost_bom_range") or {}).get("new"), hl.get("cw_chain") or {}
+    if sp.get("new") and sp.get("used"):
+        cap = (f"The machine at spec: ${sp['new'] / 1000:.1f}k new, ${sp['used'][0] / 1000:.1f}k-{sp['used'][1] / 1000:.1f}k "
+               "with used parts where it makes sense")
+        sub = ((f"The laser chain alone: ${cw['new'] / 1000:.1f}k new, ${cw['used'][0] / 1000:.1f}k-"
+                f"{cw['used'][1] / 1000:.1f}k used. " if cw.get("new") else "") +
+               (f"BOM range, cheapest to premium option on every line: ${bom[0] / 1000:.1f}k-{bom[1] / 1000:.1f}k new"
+                if bom else ""))
     else:
-        cap = "The kit's cost by category, new against used"
-    run(lambda u: slide_cost(u, hud), cap, "Most of the saving is the laser chain and the gas module; "
-        "prices from bom.csv and eBay / surplus listings (hud.json, cost/used-options.csv)", 10.0)
-    sch = ((hud.get("lead_times") or {}).get("schedule") or {}).get("routes") or {}
-    if sch.get("new") and sch.get("used"):
-        cap = (f"Every part in hand: {sch['new']['parts_in_hand_wk'][1]:.0f} weeks as chosen, "
-               f"{sch['used']['parts_in_hand_wk'][1]:.0f} with the majors bought used")
+        cap, sub = "The kit's cost by category, new against used", "hud.json"
+    run(lambda u: slide_cost(u, hud), cap, sub, 10.0)
+    wk = hl.get("weeks") or {}
+    if (wk.get("new") or {}).get("ready_split") and (wk.get("used") or {}).get("ready_split"):
+        a, b = wk["new"]["ready_split"], wk["used"]["ready_split"]
+        cap = f"Ready to assemble: {a[0]:.0f}-{a[1]:.0f} weeks bought new, {b[0]:.0f}-{b[1]:.0f} with the majors used"
+        sub = ("Bought new, the laser sets the date; bought used, fabrication does. As chosen, a $123 guard switch "
+               "(27 wk) would set it: swap it and the K8DT relay for stocked parts")
     else:
-        cap = "When every part is in hand, by how it is bought"
-    run(lambda u: slide_lead(u, hud), cap, "The slowest parts are not the laser: a guard switch (27 wk) and a "
-        "temperature relay (19 wk) have stocked swaps (hud.json lead_times)", 10.0)
+        cap, sub = "When every part is in hand, by how it is bought", "hud.json lead_times"
+    run(lambda u: slide_ready(u, hud), cap, sub, 10.0)
     rs = (hud.get("times") or {}).get("robot_shop") or {}
     if rs.get("total_hand_person_h"):
         cap = (f"Making the custom parts: {rs['total_hand_person_h']:.0f} person-hours by hand, "
@@ -470,14 +516,22 @@ def main():
         cap = "Assembly: robot-hours and person-hours"
     run(lambda u: slide_assembly_hours(u, hud), cap, "The arms' time is their recorded, collision-checked motions plus "
         "tool changes and docking; a person's time is an estimate per step (hud.json times.assembly)", 9.0)
-    run(lambda u: slide_routes(u, route), "Time and cost by route: in-house, outsourced, hybrid, robot shop",
-        "route.json (the route worker): labour, services and calendar time for each way of making the custom parts", 10.0)
+    R = (route or {}).get("routes") or {}
+    if all(k in R for k in ("b_cn", "c_cn", "d")):
+        cap = (f"By route: all outsourced costs least (\u0024{R['b_cn']['total_usd_at_65'][0] / 1000:.0f}k), the hybrid is "
+               f"recommended (\u0024{R['c_cn']['total_usd_at_65'][0] / 1000:.0f}k, {R['c_cn']['labour_h']:.0f} h at BYU), "
+               "the robot shop costs most for one machine")
+    else:
+        cap = "Time and cost by route: in-house, outsourced, hybrid, robot shop"
+    run(lambda u: slide_routes(u, route), cap, "BYU hours, cost (labour at $65/h) and weeks to the first leak test for "
+        "each way of making the custom parts (route.json, manufacturing-route.md)", 10.0)
     _, n_p = slide_list(1.0, "person")
     run(lambda u: slide_list(u, "person")[0], f"Where a person is needed: {n_p} steps",
         "Heavy lifts over the UR12e's 12.5 kg, deformable seals and hoses, and the welding and honing", 10.0)
     _, n_r = slide_list(1.0, "redesign")
-    run(lambda u: slide_list(u, "redesign")[0], f"What had to be redesigned for the arms: {n_r}",
-        "Steps the arms failed until a part, a fixture or a tool changed (assembly and shop summaries)", 8.0)
+    run(lambda u: slide_list(u, "redesign")[0], f"Where the arms failed or a part was redesigned: {n_r} steps",
+        "Each failed step goes to a redesign (a part, a fixture or a tool) or to a person (assembly and shop summaries)",
+        8.0)
     run(slide_edison, "Edison's estimate: for one machine, setting up the robot cell costs more than the build",
         "Commissioning 1,230-2,470 person-hours (end-effectors, ~90 assembly programs, vision, safety, debugging) against "
         "140-340; 20-40 weeks against 10-20; break-even only over 5-10 machines (edison/r7-robot-build-review, section 5)",
