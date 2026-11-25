@@ -111,6 +111,16 @@ DET = {
             "https://www.krontech.ca/product/chronos-2-1-hd-high-speed-camera/ and its manual, 2026-11-25T06:49Z): QE read off "
             "the manual's curve to 900 nm (48 % at 525, 26 % at 800, 18.5 % at 850, ~12.5 % at 900); 950-1070 nm extrapolated "
             "(assumed). Kron publishes no full well or read noise: XIMEA's LUX19HS camera (15,000 e-, 25 e-) stands in"),
+    "IMX991 (Alvium 1800 U-030 VSWIR)": dict(
+        kind="camera", px_um=5.0, fwc_e=30000.0, read_e=30.0, bits=12, diag_mm=4.1, min_exposure_us=15.0,
+        qe=[(400, 0.61), (450, 0.69), (500, 0.64), (600, 0.54), (650, 0.53), (700, 0.55), (800, 0.61), (900, 0.66), (1000, 0.70),
+            (1100, 0.72), (1200, 0.74), (1300, 0.735), (1400, 0.72), (1500, 0.705), (1550, 0.69), (1600, 0.65), (1625, 0.66),
+            (1650, 0.58), (1670, 0.35), (1690, 0.12), (1700, 0.07), (1750, 0.01)],
+        src="Allied Vision Alvium 1800 U-030 VSWIR (Sony IMX991 InGaAs, 656 x 520, 5 um, 400-1700 nm, 249 fps, 15 us-10 s, "
+            "12-bit, 38 x 29 x 29 mm): Edmund #92-403, $7,600 (https://www.edmundoptics.com/p/allied-vision-alvium-1800-u-030-vswir-"
+            "14-030mp-c-mount-usb-30-swir-camera/58165/, 2026-11-25T07:53Z); QE read off Allied Vision's datasheet curve "
+            "(datasheet/1243, sha256 aaededaf9ca58ab9...). No EMVA data found: full well 30,000 e- and read noise 30 e- are "
+            "assumptions; dark current neglected at <= 1 ms"),
 }
 CAMS = DET                                      # the viewport cameras use the same entries
 
@@ -194,6 +204,14 @@ PARTS = [
      "curve not read: check it splits 955-990 nm from 1600-1750 nm"),
     ("coax option", "InGaAs channel: move the shared FESH1000 into the two Si photodiode arms (it blocks 1550-1650 nm)", "FESH1000", "Thorlabs", 0,
      169.26, "list", T_ + "FESH1000", "2026-11-25T06:57Z", "qty 2 if the InGaAs channel is added"),
+    ("coax option", "SWIR area camera for the pool edge and mushy zone, in the camera arm in place of the IMX296 (Sony IMX991 InGaAs, "
+     "656 x 520, 5 um, 400-1700 nm, 249 fps, 15 us min. exposure, 38 x 29 x 29 mm, USB3, hardware trigger)",
+     "Alvium 1800 U-030 VSWIR (Edmund #92-403)", "Allied Vision (Edmund Optics)", 0, 7600.0, "list",
+     "https://www.edmundoptics.com/p/allied-vision-alvium-1800-u-030-vswir-14-030mp-c-mount-usb-30-swir-camera/58165/",
+     "2026-11-25T07:53Z", "sees 860 K at 500 us behind the existing DMSP1000 (radiometry.md); export needs an end-user statement; "
+     "ask Allied Vision for EMVA data (read noise, full well). U-130 VSWIR (1296 x 1032) is $11,870"),
+    ("coax option", "tube lens for the SWIR camera, f = 100 mm (8 um/px), 1050-1700 nm AR; with the FELH1250 pair above", "AC254-100-C",
+     "Thorlabs", 0, 120.45, "list", T_ + "AC254-100-C", "2026-11-25T07:09Z", "refocus 1.4-1.7 mm at the sensor for 1650-1700 nm"),
     ("coax option", "notch dichroic to replace the DMSP1000 (InGaAs at 1140-1600 nm): NOT recommended", "NFD01-1064-25x36", "Semrock (IDEX)", 0, 774.18,
      "list", "https://www.idex-hs.com/store/product-detail/nfd01_1064_25x36?cat_id=semrock_optical_filters&node=individual_optical_filters",
      "2026-11-25T07:05Z", "no CW rating (1 J/cm2 at 532 nm, 10 ns only); 1070 nm not specified; would carry 500 W at 20 kW/cm2"),

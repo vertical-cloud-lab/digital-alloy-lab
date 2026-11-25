@@ -98,6 +98,9 @@ OWN_CASES = {"200 W, 0.4 m/s": (200.0, 0.4), "320 W, 1.1 m/s (EOS-equivalent, op
              "350 W, 0.8 m/s": (350.0, 0.8)}
 
 
+DEPRESSION, META = {}, {}       # per case: the vapour-depression footprint (worker A's above_boil) and its metadata
+
+
 def load_fields(path):
     """Worker A's surface_fields.npz, if present; otherwise this script's own Eagar-Tsai fields.
     Returns {case: (x_m, y_m, T[ny, nx] in K, liquidus in K)}. Worker A's layout (analysis/monitoring/melt/run_cases.py, collect()):
@@ -127,11 +130,20 @@ def load_fields(path):
         if a.shape[-2] == len(x) and a.shape[-1] == len(y) and len(x) != len(y):
             a = np.swapaxes(a, -1, -2)                     # [case, ix, iy] -> [case, iy, ix]
         labels = [str(c) for c in z["cases"]] if "cases" in keys else [f"{tk}[{i}]" for i in range(a.shape[0])]
+        dep = None
+        if "above_boil" in keys:
+            dep = np.asarray(z["above_boil"], bool)
+            dep = dep[None] if dep.ndim == 2 else dep
+            if dep.shape[-2] == len(x) and dep.shape[-1] == len(y) and len(x) != len(y):
+                dep = np.swapaxes(dep, -1, -2)
         out = {}
         for i, (lab, t) in enumerate(zip(labels, a)):
             tl = float(meta[i]["T_liq_K"]) if meta and "T_liq_K" in meta[i] else T_LIQ
-            tb = float(meta[i].get("T_boil_alloy_1atm_K", T_BOIL)) if meta else T_BOIL
-            out[lab] = (x, y, np.minimum(t, tb), tl)
+            # T_capped_K is already capped at the depression wall (T_wall_K); other arrays are capped at boiling here
+            t = t if tk == "T_capped_K" else np.minimum(t, float(meta[i].get("T_wall_K", T_BOIL)) if meta else T_BOIL)
+            out[lab] = (x, y, t, tl)
+            DEPRESSION[lab] = dep[i] if dep is not None else None
+            META[lab] = meta[i] if meta else {}
         return out, f"{Path(path).name} ({tk}, {len(out)} cases, from worker A's melt-pool model)"
     return ({k: (*eagar_tsai(P, v), T_LIQ) for k, (P, v) in OWN_CASES.items()},
             "own Eagar-Tsai fields (worker A's surface_fields.npz not given)")
@@ -230,6 +242,11 @@ CH = {
                                                           branch=lambda l: dmsp950_r(l) * PT.PICKOFF_1180_R * filt("LP1250") ** 2 * 0.98),
     "InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2)": dict(det="PDA20CS2", band=(1550, 12), ingaas=True,
                                                                       branch=lambda l: dmsp950_r(l) * PT.PICKOFF_1180_R * filt("1550/12") * 0.98),
+    # coaxial SWIR area camera in place of the IMX296 (same arm; FELH1250 pair instead of the FESH1000s)
+    "SWIR camera 1600-1750 behind the DMSP1000 (Alvium U-030 VSWIR)": dict(det="IMX991 (Alvium 1800 U-030 VSWIR)", band=(1675, 150),
+                                                                         branch=lambda l: dmsp950_r(l) * filt("LP1250") ** 2 * 0.98),
+    "SWIR camera 1150-1600, notch dichroic (Alvium U-030 VSWIR)": dict(det="IMX991 (Alvium 1800 U-030 VSWIR)", band=(1375, 450), ingaas=True,
+                                                                     branch=lambda l: dmsp950_r(l) * filt("LP1250") ** 2 * 0.98),
 }
 
 
@@ -247,7 +264,7 @@ def weights(ch, galvo="pass"):
     return lam, tr * ch["branch"](lam) * resp
 
 
-def lut(ch, galvo="pass", level=None, Ts=np.linspace(600, T_BOIL, 400)):
+def lut(ch, galvo="pass", level=None, Ts=np.linspace(600, 3000, 481)):
     """Signal per unit area and solid angle (A or e-/s per m2 sr) against temperature, liquid and solid."""
     lam, w = weights(ch, galvo)
     liq = np.array([np.trapezoid(eps_liquid(lam / 1000, t, level) * planck(lam / 1000, t) * w, lam) for t in Ts])
@@ -279,6 +296,15 @@ def t_min_uniform(lt, need, area_m2, omega, liquid_ok=True):
     return float(Ts[ok[0]]) if len(ok) else None
 
 
+EPS_CAVITY = 0.35     # assumed effective emissivity inside the vapour depression (cavity effect; worker A: "higher inside above_boil")
+
+
+def need_e(d):
+    """Electrons for SNR 3 in one pixel (read noise with ADC quantisation)."""
+    rn = math.hypot(d["read_e"], d["fwc_e"] / 2 ** d["bits"] / math.sqrt(12))
+    return (9 + math.sqrt(81 + 36 * rn * rn)) / 2, rn
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--fields", default=str(ROOT / "analysis" / "out" / "monitoring" / "melt" / "surface_fields.npz"))
@@ -287,9 +313,10 @@ def main(argv=None):
     R = dict(fields_source=fsrc, assumptions=dict(
         eps_liquid="Drude from liquid Al's DC resistivity (Desai 1984) and density (Assael 2006), scaled to the level named; "
                    "Edison r8-coaxial-radiometry: 0.10-0.15 at 1 um for clean liquid Al, 0.15-0.25 effective in LPBF",
-        eps_solid=EPS_SOLID, train="slide and window (3.5 %/surface off their 1064 V-coat), f-theta (Thorlabs FTH100-1064 curve), "
-        "two galvo mirrors (pass: 0.90; Kozjek/Hooper: 0.02 at 750-875 nm), DMSP1000 (Thorlabs data)",
-        splitter=PT.SPLITTER, shared_blocker="FESH1000 (OD 5.4-6.0 at 1064-1100 nm)", fov_photodiodes_mm=PT.FOV_PD_MM), cases={}, channels={})
+        eps_solid=EPS_SOLID, eps_depression_variant=EPS_CAVITY,
+        train="slide and window (3.5 %/surface off their 1064 V-coat), f-theta (Thorlabs FTH100-1064 curve), "
+              "two galvo mirrors (pass: 0.90; Kozjek/Hooper: 0.02 at 750-875 nm), DMSP1000 (Thorlabs data)",
+        shared_blocker="FESH1000 (OD 5.4-6.0 at 1064-1100 nm)", fov_photodiodes_mm=PT.FOV_PD_MM), cases={}, channels={})
     na = NA_RETURN["12 mm"]
     omega = math.pi * na ** 2
     luts = {(k, g, lv): lut(ch, g, EPS_LEVELS[lv]) for k, ch in CH.items() for g in ("pass", "Kozjek")
@@ -299,10 +326,14 @@ def main(argv=None):
         X, Y = np.meshgrid(x, y)
         dA = (x[1] - x[0]) * (y[1] - y[0])
         liq = T >= tl
+        dep = DEPRESSION.get(name)
+        dep = np.zeros_like(liq) if dep is None else dep
         case = dict(T_peak_K=float(T.max()), liquid_area_mm2=float(liq.sum() * dA * 1e6),
                     liquid_length_mm=float(np.ptp(X[liq]) * 1e3) if liq.any() else 0.0,
-                    liquid_width_mm=float(np.ptp(Y[liq]) * 1e3) if liq.any() else 0.0, channels={})
-        fov = np.hypot(X, Y) <= PT.FOV_PD_MM * 1e-3 / 2
+                    liquid_width_mm=float(np.ptp(Y[liq]) * 1e3) if liq.any() else 0.0,
+                    depression_area_mm2=float(dep.sum() * dA * 1e6), T_liquidus_K=tl, channels={}, meta=META.get(name, {}))
+        r = np.hypot(X, Y)
+        fov = r <= PT.FOV_PD_MM * 1e-3 / 2
         for k, ch in CH.items():
             d = PT.DET[ch["det"]]
             rec = {}
@@ -311,31 +342,53 @@ def main(argv=None):
                     smap = signal_map(T, luts[(k, g, lv)], tl)
                     if d["kind"] == "photodiode":
                         I = float((smap * fov).sum() * dA * omega)
-                        Rpk = max(r for _, r in d["resp"])
-                        rec[f"{g} | {lv}"] = dict(photocurrent_A=I, gains=pd_numbers(I, d, Rpk))
+                        Rpk = max(r_ for _, r_ in d["resp"])
+                        rec[f"{g} | {lv}"] = dict(photocurrent_A=I, gains=pd_numbers(I, d, Rpk),
+                                                  depression_share=float((smap * fov * dep).sum() / max((smap * fov).sum(), 1e-30)))
                     else:
-                        # camera pixels of 8 um on the plate: 2 x 2 blocks of the 4 um grid (the own fields' spacing)
+                        # camera pixels of 8 um on the plate: 2 x 2 blocks of the 4 um grid
                         nb = max(1, int(round(8e-6 / (x[1] - x[0]))))
                         h, w_ = (smap.shape[0] // nb) * nb, (smap.shape[1] // nb) * nb
                         px = smap[:h, :w_].reshape(h // nb, nb, w_ // nb, nb).mean(axis=(1, 3))
                         rate = px * (8e-6) ** 2 * omega           # e-/s per pixel
+                        need, rn = need_e(d)
                         ex = {}
-                        for t_us in (10, 30, 100, 500):
+                        for t_us in (10, 30, 100, 500, 1000):
                             Ne = rate * t_us * 1e-6
-                            rn = math.hypot(d["read_e"], d["fwc_e"] / 2 ** d["bits"] / math.sqrt(12))
                             snr = Ne / np.sqrt(Ne + rn ** 2)
                             ex[t_us] = dict(peak_e=float(Ne.max()), saturated=bool(Ne.max() > d["fwc_e"]),
-                                            peak_snr=float(snr.max()), px_snr_over_3=int((snr >= 3).sum()),
-                                            area_snr3_mm2=float((snr >= 3).sum() * 64e-6), liquid_px=int(liq.sum() * dA / 64e-12))
-                        rec[f"{g} | {lv}"] = dict(peak_rate_e_per_s=float(rate.max()), t_sat_us=float(d["fwc_e"] / rate.max() * 1e6), exposures=ex)
+                                            peak_snr=float(snr.max()), area_snr3_mm2=float((snr >= 3).sum() * 64e-6))
+                        # dynamic-range floor: exposure set so the brightest pixel just fills the well
+                        Ts, ll, ss = luts[(k, g, lv)]
+                        s_pk = float(px.max())
+                        frac = need / d["fwc_e"]
+                        sig = np.where(Ts >= tl, ll, ss) / s_pk
+                        ok = np.nonzero(sig >= frac)[0]
+                        t_fill = d["fwc_e"] / float(rate.max()) * 1e6
+                        Ne_f = rate * t_fill * 1e-6
+                        rec[f"{g} | {lv}"] = dict(peak_rate_e_per_s=float(rate.max()), t_sat_us=t_fill, exposures=ex,
+                                                  dr_floor_K=float(Ts[ok[0]]) if len(ok) else None,
+                                                  dr_area_mm2=float((Ne_f >= need).sum() * 64e-6),
+                                                  liquid_area_mm2=float(liq.sum() * dA * 1e6))
             case["channels"][k] = rec
-        # two-colour: PD-A / PD-B (700/40 over 900/40), grey calibration with the same throughput
+        # two-colour: PD-A / PD-B (700/40 over 900/40), grey calibration with the same throughput, field stop as built;
+        # variants: the depression masked out (what the rest of the pool reads), the depression at a cavity emissivity, and
+        # an annular stop that blocks r < 0.1 mm around the 1070 nm spot (works only where lateral colour is small)
         tc = {}
+        ka, kb = "PD-A 700/40 (PDA36A2)", "PD-B 900/40 (PDA36A2)"
         for g in ("pass", "Kozjek"):
             for lv in EPS_LEVELS:
-                sa = case["channels"]["PD-A 700/40 (PDA36A2)"][f"{g} | {lv}"]["photocurrent_A"]
-                sb = case["channels"]["PD-B 900/40 (PDA36A2)"][f"{g} | {lv}"]["photocurrent_A"]
-                tc[f"{g} | {lv}"] = dict(ratio=sa / sb, T_ratio_K=t_from_ratio(sa / sb, g))
+                la, lb = luts[(ka, g, lv)], luts[(kb, g, lv)]
+                sa_map, sb_map = signal_map(T, la, tl), signal_map(T, lb, tl)
+                def ratio(mask):
+                    s_a, s_b = float((sa_map * mask).sum()), float((sb_map * mask).sum())
+                    return t_from_ratio(s_a / s_b, g) if s_b > 0 else None
+                ca = np.where(dep, np.interp(T, la[0], la[2]) * EPS_CAVITY / EPS_SOLID, sa_map)
+                cb = np.where(dep, np.interp(T, lb[0], lb[2]) * EPS_CAVITY / EPS_SOLID, sb_map)
+                tc[f"{g} | {lv}"] = dict(
+                    T_ratio_K=ratio(fov), T_ratio_no_depression_K=ratio(fov & ~dep) if dep.any() else None,
+                    T_ratio_cavity_K=t_from_ratio(float((ca * fov).sum()) / float((cb * fov).sum()), g),
+                    T_ratio_annulus_K=ratio(fov & (r > 1e-4)))
         case["two_colour"] = tc
         R["cases"][name] = case
     R["two_colour"] = two_colour_tables()
@@ -447,7 +500,7 @@ def leak_tables(fields, omega, luts, lv):
         into_branch = P_lens * 0.99 ** 2 * float(dmsp1000_T(1070.0))
         r = dict(case=case, W_into_lens=P_lens, W_into_branch=into_branch, channels={})
         for k, ch in CH.items():
-            if "InGaAs" in k:
+            if "InGaAs" in k or "SWIR" in k:
                 continue
             d = PT.DET[ch["det"]]
             t = float(ch["branch"](np.array([1070.0]))[0]) * (10 ** -PT.FILTER_OD_1070 if "/40" in k or "/10" in k else 1.0)
@@ -466,74 +519,87 @@ def leak_tables(fields, omega, luts, lv):
 
 
 def write_md(R):
-    L = ["# Coaxial radiometry (generated by analysis/monitoring/optics/radiometry.py)", "", f"Fields: {R['fields_source']}.", ""]
-    L += ["| case | T peak (K) | liquid area (mm2) | liquid length x width (mm) |", "|---|---:|---:|---|"]
-    for n, c in R["cases"].items():
-        L.append(f"| {n} | {c['T_peak_K']:.0f} | {c['liquid_area_mm2']:.3f} | {c['liquid_length_mm']:.2f} x {c['liquid_width_mm']:.2f} |")
     lv = "0.12 at 1 um (literature midpoint)"
-    L += ["", "## Photodiodes: photocurrent and SNR (12 mm pupil, field stop Ø%.1f mm on the plate, liquid emissivity %s)" % (PT.FOV_PD_MM, lv), "",
-          "| case | channel | galvo | photocurrent | 40 dB (90 kHz): V, SNR | 20 dB (1 MHz): V, SNR | 60 dB (9 kHz): V, SNR |", "|---|---|---|---:|---|---|---|"]
-    for n, c in R["cases"].items():
-        for k, rec in c["channels"].items():
-            if "PD" not in k and "InGaAs" not in k:
-                continue
-            for g in ("pass", "Kozjek"):
-                q = rec[f"{g} | {lv}"]
-                gg = q["gains"]
-                L.append(f"| {n} | {k} | {g} | {q['photocurrent_A'] * 1e9:.1f} nA | {gg[40]['V']:.3g} V, {gg[40]['snr']:.0f}{' SAT' if gg[40]['saturated'] else ''} | "
-                         f"{gg[20]['V']:.3g} V, {gg[20]['snr']:.0f} | {gg[60]['V']:.3g} V, {gg[60]['snr']:.0f}{' SAT' if gg[60]['saturated'] else ''} |")
-    # every gain, for the middle case
-    mid = list(R["cases"])[len(R["cases"]) // 2]
-    L += ["", f"### Every gain, {mid} (galvo 'pass'; V into Hi-Z, SNR = photocurrent / (NEP x peak responsivity x sqrt(bandwidth)))", "",
-          "| gain | bandwidth | NEP (pW/rtHz) | " + " | ".join(k for k in R["cases"][mid]["channels"] if "PD" in k or "InGaAs" in k) + " |",
-          "|---|---:|---:|" + "---|" * sum(1 for k in R["cases"][mid]["channels"] if "PD" in k or "InGaAs" in k)]
+    C = R["cases"]
+    L = ["# Coaxial radiometry (generated by analysis/monitoring/optics/radiometry.py)", "", f"Fields: {R['fields_source']}.", "",
+         "Liquid emissivity: Drude, scaled to 0.12 at 1 um; solid 0.2; galvo 'pass' unless stated; 12 mm return pupil (NA 0.0375); "
+         f"photodiode field stop Ø{PT.FOV_PD_MM} mm on the plate. Depression = worker A's above_boil footprint (when given).", "",
+         "| case | T peak, capped (K) | liquidus (K) | liquid area (mm2) | liquid L x W (mm) | depression area (mm2) |", "|---|---:|---:|---:|---|---:|"]
+    for n, c in C.items():
+        L.append(f"| {n} | {c['T_peak_K']:.0f} | {c['T_liquidus_K']:.0f} | {c['liquid_area_mm2']:.3f} | {c['liquid_length_mm']:.2f} x "
+                 f"{c['liquid_width_mm']:.2f} | {c['depression_area_mm2']:.4f} |")
+    pds = [k for k in next(iter(C.values()))["channels"] if PT.DET[CH[k]["det"]]["kind"] == "photodiode"]
+    L += ["", "## Photodiodes: photocurrent, SNR at 40 dB (90 kHz) and the share of the signal from the depression", "",
+          "| case | " + " | ".join(pds) + " |", "|---|" + "---|" * len(pds)]
+    for n, c in C.items():
+        cells = []
+        for k in pds:
+            q = c["channels"][k][f"pass | {lv}"]
+            cells.append(f"{q['photocurrent_A'] * 1e9:.1f} nA, SNR {q['gains'][40]['snr']:.0f}, depr. {100 * q['depression_share']:.0f} %")
+        L.append(f"| {n} | " + " | ".join(cells) + " |")
+    mid = list(C)[len(C) // 2]
+    L += ["", f"### Every gain, {mid} (V into Hi-Z; SNR = photocurrent / (NEP x peak responsivity x sqrt(bandwidth)))", "",
+          "| gain | bandwidth | " + " | ".join(pds) + " |", "|---|---:|" + "---|" * len(pds)]
     for gdb in sorted(PT.DET["PDA36A2"]["gains"]):
         cells = []
-        for k, rec in R["cases"][mid]["channels"].items():
-            if "PD" not in k and "InGaAs" not in k:
-                continue
-            gg = rec[f"pass | {lv}"]["gains"][gdb]
+        for k in pds:
+            gg = C[mid]["channels"][k][f"pass | {lv}"]["gains"][gdb]
             cells.append(f"{gg['V'] * 1e3:.3g} mV, SNR {gg['snr']:.0f}")
-        G, bw, nep = PT.DET["PDA36A2"]["gains"][gdb]
-        L.append(f"| {gdb} dB | {bw / 1e3:g} kHz | {nep * 1e12:.2f} (Si) | " + " | ".join(cells) + " |")
-    L += ["", "## Cameras: peak pixel at 8 um/px (12 mm pupil)", "",
-          "| case | channel | galvo | peak e-/s | full well in (us) | 10 us (Chronos only): peak e-, SNR, mm2 at SNR>=3 | 30 us | 100 us | 500 us |", "|---|---|---|---:|---:|---|---|---|---|"]
-    for n, c in R["cases"].items():
-        for k, rec in c["channels"].items():
-            if "camera" not in k:
-                continue
-            for g in ("pass", "Kozjek"):
-                q = rec[f"{g} | {lv}"]
-                e = q["exposures"]
-                f = lambda t: f"{e[t]['peak_e']:.0f}, {e[t]['peak_snr']:.0f}, {e[t]['area_snr3_mm2']:.3f}{' SAT' if e[t]['saturated'] else ''}"
-                L.append(f"| {n} | {k} | {g} | {q['peak_rate_e_per_s']:.3g} | {q['t_sat_us']:.0f} | {f(10) if 'Chronos' in k else '-'} | {f(30)} | {f(100)} | {f(500)} |")
-    L += ["", "## Two-colour (700/40 over 900/40 nm, photodiodes)", "", "| case | galvo | emissivity | ratio T (K) | T peak (K) |", "|---|---|---|---:|---:|"]
-    for n, c in R["cases"].items():
-        for kk, v in c["two_colour"].items():
-            g, lvv = kk.split(" | ")
-            L.append(f"| {n} | {g} | {lvv} | {v['T_ratio_K']:.0f} | {c['T_peak_K']:.0f} |")
+        L.append(f"| {gdb} dB | {PT.DET['PDA36A2']['gains'][gdb][1] / 1e3:g} kHz | " + " | ".join(cells) + " |")
+    L += ["", "## Two-colour, 700/40 over 900/40 nm (photodiodes, grey calibration through the same optics)", "",
+          "| case | field stop as built | depression masked out | depression at eps 0.35 (cavity) | annular stop, r > 0.1 mm | T peak (capped) |",
+          "|---|---:|---:|---:|---:|---:|"]
+    f = lambda v: f"{v:.0f} K" if v else "-"
+    for n, c in C.items():
+        t = c["two_colour"][f"pass | {lv}"]
+        L.append(f"| {n} | {f(t['T_ratio_K'])} | {f(t['T_ratio_no_depression_K'])} | {f(t['T_ratio_cavity_K'])} | {f(t['T_ratio_annulus_K'])} | {c['T_peak_K']:.0f} K |")
     tc = R["two_colour"]
     L += ["", "| T (K) | dlnR/dT (1/K) | dT for a 1 % ratio error (K) |", "|---:|---:|---:|"]
     L += [f"| {s['T_K']:.0f} | {s['dlnR_per_K']:.2e} | {s['dT_for_1pct_ratio_K']:.1f} |" for s in tc["sensitivity"]]
-    L += ["", "| T (K) | Drude eps700/eps950 | error, Drude (K) | +5 % | -5 % | +10 % | -10 % |", "|---:|---:|---:|---:|---:|---:|---:|"]
+    L += ["", "| T (K) | Drude eps700/eps900 | error, Drude (K) | +5 % | -5 % | +10 % | -10 % |", "|---:|---:|---:|---:|---:|---:|---:|"]
     L += [f"| {r['T_K']:.0f} | {r['drude_eps700_over_eps950']:.3f} | {r['Drude']:+.0f} | {r['+5 %']:+.0f} | {r['-5 %']:+.0f} | {r['+10 %']:+.0f} | {r['-10 %']:+.0f} |" for r in tc["non_grey"]]
     L += ["", "Error at 2000 K for a 5 % emissivity difference, by band pair: " + "; ".join(f"{k}: {v:.0f} K" for k, v in tc["pairs_error_K_at_2000K_for_5pct"].items()), ""]
-    L += ["## Lowest temperature seen (SNR 3)", ""]
-    keys_cam = [k for k in R["t_min"] if "camera" in k]
-    keys_pd = [k for k in R["t_min"] if "camera" not in k]
+    cams = [k for k in next(iter(C.values()))["channels"] if PT.DET[CH[k]["det"]]["kind"] == "camera"]
+    L += ["## Coaxial cameras, 8 um pixels on the plate", "",
+          "Dynamic-range floor: exposure set so the brightest pixel (the depression wall) just fills the well; the coldest uniform "
+          "liquid or solid that still gives SNR 3 in the same frame, and the area at SNR >= 3.", "",
+          "| case | camera | full well in (us) | 30 us: peak e-, SNR, area at SNR>=3 (mm2) | 1 ms | dynamic-range floor | area at that exposure / liquid area (mm2) |",
+          "|---|---|---:|---|---|---:|---|"]
+    for n, c in C.items():
+        for k in cams:
+            if k.startswith("alt"):
+                continue
+            q = c["channels"][k][f"pass | {lv}"]
+            e30, e1 = q["exposures"][30], q["exposures"][1000]
+            s30 = f"{e30['peak_e']:.0f}{' SAT' if e30['saturated'] else ''}, {e30['peak_snr']:.0f}, {e30['area_snr3_mm2']:.3f}"
+            s1 = ("SAT" if e1["saturated"] else f"{e1['peak_e']:.0f}") + f", area {e1['area_snr3_mm2']:.3f}"
+            L.append(f"| {n} | {k} | {q['t_sat_us']:.0f} | {s30} | {s1} | {f(q['dr_floor_K'])} | {q['dr_area_mm2']:.3f} / {q['liquid_area_mm2']:.3f} |")
+    L += ["", f"### If the scan head blocks 750-875 nm ({mid})", "", "| channel | galvo passes | galvo blocks |", "|---|---|---|"]
+    for k in [k for k in C[mid]["channels"] if "850" in k]:
+        cc = C[mid]["channels"][k]
+        if "camera" in k:
+            v = [cc[f"{g} | {lv}"]["exposures"][30] for g in ("pass", "Kozjek")]
+            L.append(f"| {k} | 30 us: {v[0]['peak_e']:.0f} e-, SNR {v[0]['peak_snr']:.0f} | {v[1]['peak_e']:.0f} e-, SNR {v[1]['peak_snr']:.0f} |")
+        else:
+            v = [cc[f"{g} | {lv}"] for g in ("pass", "Kozjek")]
+            L.append(f"| {k} | {v[0]['photocurrent_A'] * 1e9:.1f} nA, SNR {v[0]['gains'][40]['snr']:.0f} at 40 dB | "
+                     f"{v[1]['photocurrent_A'] * 1e9:.2f} nA, SNR {v[1]['gains'][40]['snr']:.1f} |")
+    L += ["", "## Lowest temperature seen (SNR 3, a uniform patch)", ""]
+    keys_cam = [k for k in R["t_min"] if "camera" in k and "Kozjek" not in k]
+    keys_pd = [k for k in R["t_min"] if "camera" not in k and "Kozjek" not in k]
     if keys_cam:
         cols = list(R["t_min"][keys_cam[0]].keys())
-        L += ["| camera pixel, uniform liquid/solid | " + " | ".join(cols) + " |", "|---|" + "---:|" * len(cols)]
-        L += [f"| {k.replace(' | ', ', galvo ')} | " + " | ".join(f"{(R['t_min'][k][c] or float('nan')):.0f} K" for c in cols) + " |" for k in keys_cam]
+        L += ["| camera pixel | " + " | ".join(cols) + " |", "|---|" + "---:|" * len(cols)]
+        L += [f"| {k.replace(' | ', ', galvo ')} | " + " | ".join(("%.0f K" % R['t_min'][k][cc]) if R['t_min'][k][cc] else "-" for cc in cols) + " |" for k in keys_cam]
     if keys_pd:
         cols = list(R["t_min"][keys_pd[0]].keys())
         L += ["", "| photodiode | " + " | ".join(cols) + " |", "|---|" + "---:|" * len(cols)]
-        L += [f"| {k.replace(' | ', ', galvo ')} | " + " | ".join(("%.0f K" % R['t_min'][k][c]) if R['t_min'][k][c] else "-" for c in cols) + " |" for k in keys_pd]
+        L += [f"| {k.replace(' | ', ', galvo ')} | " + " | ".join(("%.0f K" % R['t_min'][k][cc]) if R['t_min'][k][cc] else "-" for cc in cols) + " |" for k in keys_pd]
     L += ["", "## Plume emission against the pool (field stop Ø%.1f mm)" % PT.FOV_PD_MM, "", "| channel | T plume (K) | optical depth | plume / pool |", "|---|---:|---:|---:|"]
     L += [f"| {r['channel']} | {r['T_plume_K']:.0f} | {r['optical_depth']:g} | {r['plume_over_pool']:.3g} |" for r in R["plume"]]
     lk = R["leak_1070"]
     L += ["", f"## 1070 nm reaching each channel (DMSP1000 T at 1070 nm = {lk['dmsp1000_T_1070']:.2g}, OD {-math.log10(lk['dmsp1000_T_1070']):.1f}; "
-          f"FESH1000 OD {lk['fesh1000_OD_1070']:.1f}; bandpass out-of-band OD {lk['filter_OD_1070']})", "",
+          f"FESH1000 OD {lk['fesh1000_OD_1070']:.1f}; bandpass out-of-band OD {lk['filter_OD_1070']}; InGaAs and SWIR arms: two FELH1250, OD ~10.5, not tabulated)", "",
           "| case | W into the lens | W into the branch | " + " | ".join(next(iter(lk["rows"]))["channels"]) + " |",
           "|---|---:|---:|" + "---:|" * len(next(iter(lk["rows"]))["channels"])]
     for r in lk["rows"]:

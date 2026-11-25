@@ -37,28 +37,42 @@ Re-run: `python ftheta.py --reuse` (2 min; without `--reuse` it re-optimises the
 4. **Coaxial bands: 700/40 and 900/40 nm for the two-colour pair, 955–990 nm for the camera,** split by dichroics (DMSP950
    then DMLP805), with no plate beamsplitter. All three sit outside the 750–875 nm band that 1064 nm scanner coatings have
    been measured to block (Kozjek et al. 2026; Hooper 2018 saw 750–900 nm). They also avoid the metal lines from NIST ASD.
-   The photodiodes then get 25–96 nA: SNR 40–155 at 90 kHz (40 dB).
-5. **Silicon sees only the hot core of an aluminium pool, coaxially.** The IMX296 at 30 µs needs ≥ 1,420 K for SNR 3 in a
-   pixel, and the photodiodes ≥ 1,000–1,240 K. The liquidus is 869–925 K. In one exposure the camera shows the hottest
-   20–30 % of the liquid, so pool *size* from a silicon camera is an isotherm well above the liquidus.
-6. **An InGaAs channel can go behind the existing DMSP1000.** Its typical transmission rises to 7–27 % at 1650–1700 nm, and
-   the DMSP950 at cube2 reflects that band into the camera arm. That gets 40 % of a notch-dichroic channel's signal at
-   1550/12 nm: the PDA20CS2 sees solid metal at 800–890 K filling the field stop, at 9–90 kHz (the notch route: 780–850 K).
-   **Don't replace the DMSP1000:** the only 45° notch dichroic found (Semrock NFD01-1064) has no CW rating and doesn't
-   specify 1070 nm.
-7. **The guard's viewing panel is transparent at 808–850 nm** (LW1P1/M: OD 0.28–0.33; Thorlabs' raw data). An 808 nm
-   illumination laser over 0.5 W would make the machine Class 4 at 808 nm through its window. **Light the side camera with
-   LEDs**, or get the LSO's review and a panel that blocks 808 nm first.
-8. **Every camera needs OD ≥ 8 at 1070 nm; the layer camera has OD 5.1.** 0.1–0.4 W of diffuse 1070 nm reaches a 12.5 mm
+   On worker A's melt-pool fields (AlSi10Mg and 6061, 320 W) the photodiodes get 7–36 nA: SNR 11–58 at 90 kHz (40 dB).
+5. **The two-colour pair is a vapour-depression monitor, not a cooling sensor.** 71–86 % of each silicon photodiode's
+   signal comes from the 65–75 µm depression footprint.
+   - The ratio reads 2,620–2,630 K on AlSi10Mg and 2,400–2,410 K on 6061, whatever the speed or plate temperature.
+   - With the depression masked out it reads 2,240–2,250 and 2,010 K.
+   - So it tells you whether a depression (keyhole-type melting) is there and how steady it is. That agrees with worker A's
+     melt-pool note.
+   - A smaller field stop would make this worse. An annular stop would read the trailing pool (~1,100–1,170 K), but lateral
+     colour moves the depression out of its blocked centre anywhere off axis.
+6. **Silicon sees only the hot core; image the pool edge in SWIR.**
+   - The IMX296 needs ≥ 1,125–1,415 K for SNR 3 in a pixel at 500–30 µs. With the depression just filling the well, it sees
+     down to 1,265–1,330 K in the same frame. The liquidus is 869–925 K.
+   - An **Allied Vision Alvium 1800 U-030 VSWIR** (Sony IMX991 InGaAs, 5 µm pixels, 38 × 29 × 29 mm, Edmund #92-403,
+     $7,600) fits the camera arm in place of the IMX296, behind an AC254-100-C and two FELH1250s.
+   - It works off the 1600–1750 nm that the existing DMSP1000 lets through. It sees 860 K at 500 µs (core saturated) and
+     990–1,030 K with the core in range, so it reaches the mushy zone with two exposures.
+7. **InGaAs goes behind the existing DMSP1000; don't replace it.** The DMSP1000's typical transmission rises to 7–27 % at
+   1650–1700 nm, and the DMSP950 at cube2 reflects that band into the camera arm.
+   - A notch dichroic would give the photodiode 2.4× more signal, but the only 45° one found (Semrock NFD01-1064) has no CW
+     rating and doesn't specify 1070 nm.
+   - On A's fields an InGaAs photodiode (PDA20CS2) behind the DMSP1000 gets only 3–4.5 nA (SNR 5–7 at 90 kHz), so the
+     SWIR camera is the better InGaAs buy.
+8. **The guard's viewing panel is transparent at 808–850 nm** (LW1P1/M: OD 0.28–0.33; Thorlabs' raw data). A multi-watt
+   808 nm illumination laser (Class 4 itself) would leave the machine above Class 1 at 808 nm. Its light scattered off the bed
+   through that window can exceed the Class 1 limit, which is under 1 mW at 808 nm. **Light the side camera with LEDs**, or
+   get the LSO's review and a panel that blocks 808 nm first.
+9. **Every camera needs OD ≥ 8 at 1070 nm; the layer camera has OD 5.1.** 0.1–0.4 W of diffuse 1070 nm reaches a 12.5 mm
    camera pupil at the ports, and a curved pool can glint up to ~1.4 W into the steep ones (§5). A FESH1000 behind each
    bandpass gives OD > 11. Add one ($169.26) behind the layer camera's FESH0950 before filming during lasing.
-9. **Seat the LP window square to its line of sight.** On the lid's top face it is tilted 36° to the view. That gives
+10. **Seat the LP window square to its line of sight.** On the lid's top face it is tilted 36° to the view. That gives
    0.67 mm of astigmatism, ~1.5 px of blur at f/5.6. The LW window's 14.8° tilt costs only 5 µm.
-10. **Most 50 mm and 75 mm C-mount lenses don't focus at 176–197 mm.** The Kowa LM50JC10M (minimum object distance 100 mm) and
-    Edmund's 35 mm #67-716 (165 mm) do. The 75 mm ones need ~15 mm of extension tube.
-11. **By-product for optics.md §1.4: k ≈ 0.48–0.50 as drawn.** All three representative lenses give the same chief-ray ratio
-    at the M50 and L75 edges with the galvo mirror 34.8 mm above the nose (0.65–0.67 at Thorlabs' 7.5 mm). That supports
-    "L75 is out of reach" (it needs k ≳ 0.60). It is still not a measurement.
+11. **Most 50 mm and 75 mm C-mount lenses don't focus at 176–197 mm.** The Kowa LM50JC10M (minimum object distance 100 mm) and
+     Edmund's 35 mm #67-716 (165 mm) do. The 75 mm ones need ~15 mm of extension tube.
+12. **By-product for optics.md §1.4: k ≈ 0.48–0.50 as drawn.** All three representative lenses give the same chief-ray ratio
+     at the M50 and L75 edges with the galvo mirror 34.8 mm above the nose (0.65–0.67 at Thorlabs' 7.5 mm). That supports
+     "L75 is out of reach" (it needs k ≳ 0.60). It is still not a measurement.
 
 ## 1. The f-theta outside 1064 nm
 
@@ -164,15 +178,38 @@ Why these parts:
   and ≤ 1.3 × 10⁻⁵ of the camera's peak pixel. Diffuse returns are 10⁻¹⁰–10⁻⁹. The 0.27 W the DMSP1000 passes in the
   cat's-eye case lands on the FESH1000, which reflects it.
 
-**InGaAs.** Two routes, compared with the same pool:
+**InGaAs.** The DMSP950 reflects whatever 1300–1750 nm light the DMSP1000 lets through into the camera arm (R 0.96 at
+1600 nm, 0.57 at 1700 nm). There it can feed either an InGaAs photodiode on a fourth cube, or a SWIR camera in place of the
+IMX296. Signals are on worker A's AlSi10Mg and 6061 fields at 320 W (§3):
 
-| Route | Change to the laser path | Band | Photocurrent, 320 W case | Coldest solid seen (field-filling), 40 / 60 dB |
-|---|---|---|---:|---|
-| (a) behind the DMSP1000: the DMSP950 reflects it into the camera arm; a fourth cube there (~1180 nm dichroic) + 2 × FELH1250 + AC254-100-C + P1000K + PDA20CS2 | none | 1625–1725 nm (DMSP1000 T 3–30 %, DMSP950 R 0.96–0.57, PD responsivity falls past 1650) | 8.3 nA | 890 / 804 K |
-| (b) Semrock NFD01-1064 in place of the DMSP1000, same arm + FBH1550-12 | the 500 W beam reflects off a part with no CW rating | 1544–1556 nm | 20.9 nA | 852 / 783 K |
+| Route | Change to the laser path | Band | Signal | Coldest seen |
+|---|---|---|---|---|
+| (a) photodiode: a fourth cube (~1180 nm dichroic) + 2 × FELH1250 + AC254-100-C + P1000K + PDA20CS2 | none | 1625–1725 nm (DMSP1000 T 3–30 %; responsivity falls past 1650 nm) | 2.9–4.5 nA: SNR 5–7 at 90 kHz, 13 at 9 kHz | solid filling the field: 885 K at 90 kHz, 805 K at 9 kHz |
+| (b) photodiode, with a Semrock NFD01-1064 in place of the DMSP1000 + FBH1550-12 | the 500 W beam reflects off a part with no CW rating | 1544–1556 nm | 7–11 nA | 855 / 780 K |
+| (c) **SWIR camera: Alvium 1800 U-030 VSWIR** (Edmund #92-403, $7,600) + AC254-100-C (8 µm/px) + 2 × FELH1250, in place of the IMX296 | none | 1600–1750 nm (IMX991 QE 0.65 at 1600, 0.07 at 1700) | full well in 150–220 µs at the depression | one pixel at SNR 3: 1,265 K at 30 µs, 860 K at 500 µs |
 
-Route (a) needs no change to the 500 W path. It reaches the solidification range of 6061 (855–925 K) at 9 kHz and its top at
-90 kHz, and the top of 7075's (750–908 K). Three cautions:
+The camera (c) is the one that images the pool edge and the mushy zone:
+- **Si arm vs SWIR camera, same arm, same pool:**
+
+  | | IMX296 at 955–990 nm | Alvium U-030 VSWIR at 1600–1750 nm |
+  |---|---|---|
+  | Coldest pixel, one exposure, depression just at full well | 1,330 K (AlSi10Mg), 1,265 K (6061) | 1,030 K, 990 K |
+  | Coldest pixel with the core saturated (500 µs) | 1,125 K | 860 K |
+  | Area seen at that dynamic range / liquid area | 0.019 / 0.055 mm² | 0.034 / 0.055 mm² |
+  | Price | $69 | $7,600 |
+
+- **It reaches the liquidus and mushy zone (830–925 K)** with a second, longer exposure (≥ 0.5 ms), with the depression
+  saturated. The pool is stationary in the de-scanned view, so long exposures cost only time resolution.
+- Worker A's note gives ~800 K with the core in range for an ideal 12-bit InGaAs camera at 1,550 nm. The difference is noise:
+  this calculation assumes 30 e⁻ of read noise in a 30,000 e⁻ well, a usable range of ~320:1 at SNR 3, against 4,096
+  levels. Allied Vision publishes no EMVA data for the IMX991, so ask for it.
+- **Refocus:** at 1,650–1,700 nm the focus sits 3.7–4.3 mm below the 1070 nm focus on the plate side, 1.4–1.7 mm at the
+  sensor. The Airy radius is 27 µm (3.4 px) with the 12 mm pupil.
+- **With a notch dichroic** (no CW rating) the same camera would see 650–800 K, but it would be over-exposed at its 15 µs
+  minimum on the depression.
+
+Route (a) needs no change to the 500 W path. On A's fields it reaches the top of 6061's solidification range (855–925 K)
+and 7075's (750–908 K) only at 9 kHz. Three cautions:
 - **Al I 1671.9 and 1675.1 nm fall in its band** (lines.md). Check with a spectrometer on the first builds, or narrow it to
   FBH1650-12.
 - **The DMSP1000's transmission above 1600 nm is typical data, not a spec,** and it varies lot to lot. Check the unit in hand.
@@ -180,11 +217,13 @@ Route (a) needs no change to the 500 W path. It reaches the solidification range
   FELH1250s: with one, the diffuse 1070 nm leak is ~10 % of the pool signal and a cat's-eye return 100 times it.
 
 Read quickly, the DMSP1000's curve ("still reflecting at 1.6–1.7 µm") rules this route out. The radiometry says otherwise,
-because a 100 nm band at 7–27 % carries 40 % as much light as a 12 nm band at 90 %.
+because a 100 nm band at 7–27 % carries 40 % as much light as a 12 nm band at 90 %. Of the InGaAs options the camera is the
+better buy: the photodiode is marginal on A's pools.
 
 **Cost** ([`optics-parts.csv`](optics-parts.csv)): the baseline branch adds **$3,108** in list prices, plus a beam trap (est.
-$100–200). It drops the planned NF1064-44 ($635.55). Route (a) InGaAs adds ~$1,560 (PDA20CS2, two FELH1250, lens, pinhole, two
-more FESH1000s), plus the unpriced fourth cube (~$600 for a Ø1 in. DMLP/DMSP-series dichroic and its cube).
+$100–200). It drops the planned NF1064-44 ($635.55). The SWIR camera (c) adds $8,059 (camera, AC254-100-C, two FELH1250).
+Route (a) InGaAs adds ~$1,560 (PDA20CS2, two FELH1250, lens, pinhole, two more FESH1000s), plus the unpriced fourth cube
+(~$600 for a Ø1 in. DMLP/DMSP-series dichroic and its cube).
 
 ## 3. Radiometry, end to end
 
@@ -204,46 +243,76 @@ It is collected through NA 0.0375 (the 12 mm design beam), then through:
 - the DMSP1000, the dichroics and the filters (Thorlabs data);
 - the detector's responsivity or QE.
 
-The fields are this script's own Eagar–Tsai fields (AlSi10Mg, absorptivity 0.3, 96 µm spot, 200 °C plate, clipped at boiling):
-200 W/0.4 m/s, 320 W/1.1 m/s and 350 W/0.8 m/s, giving pools 0.33–0.50 mm long and 0.07–0.12 mm² of liquid. **Worker A's
-`surface_fields.npz` replaces them through `--fields`.** The loader reads its layout (`T_capped_K[case, ix, iy]`, the per-case
-liquidus from `meta_json`). It was tested on a mock file in that layout, because the real one didn't exist yet in A's
-worktree.
+**The fields are worker A's** (`analysis/out/monitoring/melt/surface_fields.npz`, read from A's worktree on 2026-11-25 07:58 UTC):
+- 3-D conduction fields for AlSi10Mg and 6061 at 320 W, 1.1 and 0.6 m/s, on 25 and 200 °C plates (8 cases);
+- capped at the vapour-depression wall temperature (`T_capped_K`: 2,763 K for AlSi10Mg, 2,508 K for 6061);
+- pools 0.25–0.44 mm long, 0.04–0.11 mm² of liquid, and a 0.003–0.005 mm² depression footprint (`above_boil`).
 
-| 320 W, 1.1 m/s (ε 0.12 at 1 µm) | Signal | At 90 kHz (40 dB) | At 9 kHz (60 dB) | Saturates |
+`radiometry.py --fields <path>` reads them. Without the file it falls back to its own Eagar–Tsai fields (clipped at boiling),
+which give brighter, larger pools: about 2× the signals below.
+
+| AlSi10Mg, 320 W, 1.1 m/s, 25 °C plate (ε 0.12 at 1 µm) | Signal | At 90 kHz (40 dB) | At 9 kHz (60 dB) | Saturates |
 |---|---:|---:|---:|---|
-| PD-A 700/40 | 35 nA (5.3 mV) | SNR 57 | SNR 146 | no: 10 V needs 70 µA |
-| PD-B 900/40 | 76 nA (11 mV) | SNR 122 | SNR 313 | no |
-| InGaAs (a) 1625–1725 | 8.3 nA | SNR 14 | SNR 37 | no |
-| IMX296 peak pixel, 955–990 nm | 1.7 × 10⁸ e⁻/s | 30 µs: 5,050 e⁻, SNR 71 | | full well at 63 µs |
-| Chronos 2.1-HD peak pixel, 955–990 nm, 24 kfps | 2.6 × 10⁸ e⁻/s | 10 µs: 2,620 e⁻, SNR 46 | 40 µs: ~10,500 e⁻ | ~57 µs (stand-in full well) |
+| PD-A 700/40 | 13.6 nA (2.0 mV) | SNR 22 | SNR 57 | no: 10 V needs 67 µA |
+| PD-B 900/40 | 30.5 nA (4.6 mV) | SNR 49 | SNR 127 | no |
+| InGaAs (a) 1625–1725 | 3.8 nA | SNR 6 | SNR 16 | no |
+| IMX296 peak pixel, 955–990 nm | 1.7 × 10⁸ e⁻/s | 30 µs: 5,270 e⁻, SNR 72 | | full well at 61 µs |
+| Chronos 2.1-HD peak pixel, 955–990 nm, 24 kfps | | 10 µs: ~2,700 e⁻ | 30 µs: 8,190 e⁻, SNR 87 | ~55 µs (stand-in full well) |
+| Alvium U-030 VSWIR peak pixel, 1600–1750 nm | | 30 µs: 5,885 e⁻, SNR 71 | | 153 µs |
 
-- **Gain:** run the PDA36A2s at 30 dB (260 kHz) for tracks and 40 dB (90 kHz) for most work. 20 dB (1 MHz) gives SNR 11–44.
-  None of these saturates. The 10 V output limit is 100–2,000 times the pool signal at 40–60 dB, so a keyhole spike or a
-  spatter flash won't clip either. Every gain is tabulated in radiometry.md.
-- **Small signals:** at 30–40 dB the pool gives only 2–11 mV, on top of the PDA36A2's ±8 mV output offset (12 mV max).
+6061 pools give about half the silicon photocurrent of AlSi10Mg's (lower wall temperature); speed and plate temperature
+change it by ≤ 18 %. Full tables: [`radiometry.md`](../analysis/out/monitoring/optics/radiometry.md).
+
+- **Gain:** run the PDA36A2s at 40 dB (90 kHz; SNR 11–58) and drop to 50 dB (28 kHz) for 6061. 20 dB (1 MHz) gives SNR
+  3–17. None of these saturates. The 10 V output limit is 190–10,000 times the pool signal at 40–60 dB, so a keyhole spike
+  or a spatter flash won't clip either. Every gain is tabulated in radiometry.md.
+- **Small signals:** at 40 dB the pool gives only 1–5 mV, on top of the PDA36A2's ±8 mV output offset (12 mV max).
   Digitise on a ±50–100 mV range and subtract the dark level, read with the shutter closed, at every layer.
 - **Galvo blocking** changes nothing for the baseline bands (all outside 750–875 nm). It would cut an 850/10 camera 45-fold:
-  at 30 µs the peak pixel falls from 2,000 e⁻ (SNR 44) to 44 e⁻ (SNR 5) (the "alt" rows in radiometry.md).
+  at 30 µs the peak pixel falls from 1,070 e⁻ (SNR 32) to 24 e⁻ (SNR 3) on 6061 (the "alt" rows in radiometry.md).
 - **Lowest temperature seen** (SNR 3, uniform patch):
 
   | Detector | Coldest liquid in one pixel or 0.05 mm² | Coldest solid filling the Ø1.6 mm field |
   |---|---|---|
-  | IMX296 at 955–990 nm, 30 / 100 / 500 µs | 1,416 / 1,277 / 1,126 K | – |
-  | Chronos at 955–990 nm, 10 / 40 µs | 1,717 / ~1,500 K | – |
-  | PD-A 700/40 at 1 MHz / 90 kHz / 9 kHz | 1,937 / 1,744 / 1,620 K | 1,427 / 1,314 / 1,239 K |
-  | PD-B 900/40, same gains | 1,669 / 1,486 / 1,373 K | 1,185 / 1,089 / 1,019 K |
-  | InGaAs (a), same gains | 2,045 / 1,518 / 1,304 K | 1,062 / 890 / 804 K |
+  | IMX296 at 955–990 nm, 30 / 100 / 500 µs | 1,415 / 1,275 / 1,125 K | – |
+  | Chronos at 955–990 nm, 10 / 30 µs | 1,715 / 1,530 K | – |
+  | Alvium U-030 VSWIR at 1600–1750 nm, 30 / 100 / 500 µs | 1,265 / 1,085 / 860 K | – |
+  | PD-A 700/40 at 1 MHz / 90 kHz / 9 kHz | 1,940 / 1,745 / 1,620 K | 1,425 / 1,310 / 1,235 K |
+  | PD-B 900/40, same gains | 1,670 / 1,485 / 1,370 K | 1,185 / 1,085 / 1,020 K |
+  | InGaAs photodiode (a), same gains | 2,045 / 1,520 / 1,305 K | 1,065 / 885 / 805 K |
 
-  Liquidus: AlSi10Mg 869 K, 6061 925 K, 7075 908 K. Silicon doesn't reach it, coaxially, at any useful rate. The InGaAs route
-  is the only one that sees the mushy zone, and only as an average over the field.
+  Liquidus: AlSi10Mg 869 K, 6061 925 K, 7075 908 K. Silicon doesn't reach it, coaxially, at any useful rate. The SWIR camera
+  reaches it at 0.5 ms exposures; the InGaAs photodiode only as an average over the field at 9 kHz.
 - **Two-colour, 700/40 over 900/40:**
   - Sensitivity: a 1 % ratio error is 2.2 K at 1,000 K, 8.8 K at 2,000 K and 13.8 K at 2,500 K.
   - Error from non-grey emissivity: the Drude slope (ε700/ε900 = 1.02) reads +19 K at 2,000 K. A 5 % band-to-band difference
     (oxide, roughness) reads ±44 K, and 10 % reads ±88 K. 700/950 would do slightly better (±36 K for 5 %); 900/1650 with
     InGaAs ±27 K; 700/1650 ±16 K.
-  - Mixing: over the whole pool the ratio reads 2,682–2,695 K against a 2,743 K peak. The ratio reports the hottest part of
-    the pool, not its mean.
+  - **What it reads** (worker A's fields, field stop Ø1.6 mm):
+
+    | | AlSi10Mg (wall 2,763 K) | 6061 (wall 2,508 K) |
+    |---|---:|---:|
+    | Ratio temperature, as built | 2,622–2,629 K | 2,401–2,408 K |
+    | Depression at a cavity emissivity of 0.35 (assumed) | 2,639–2,644 K | 2,412–2,418 K |
+    | Depression masked out | 2,244–2,251 K | 2,009–2,013 K |
+    | Annular stop, r > 0.1 mm (centre of the field only) | 1,121–1,169 K | 1,096–1,126 K |
+    | Share of the 700 / 900 nm signal from the depression | 78–80 % / 71–73 % | 85–86 % / 78–80 % |
+
+  - **Agreement with worker A** (melt-pool.md §0):
+    - It agrees that the ratio reads the depression, independent of speed and plate temperature. A has 2,567–2,574 K for
+      AlSi10Mg over a ~1 mm field, and ~2,200 K with no depression. These are 50–60 K higher, of which ~30 K is the Drude
+      slope between the bands that a grey calculation leaves out.
+    - It agrees that a 12-bit silicon camera sees only the hot core. A has ~1,170 K. This note has 1,265–1,445 K, because it
+      counts read noise and asks for SNR 3 in the coldest pixel: a usable range of ~480:1 for the IMX296 and ~190:1 for the
+      Chronos, against A's 4,096 levels.
+  - **So the pair is a mode monitor:**
+    - it shows whether a depression is open (~2,620 K against ~2,250 K on AlSi10Mg), and how steady it is, at 90 kHz;
+    - it doesn't measure cooling, and no field stop fixes that. A smaller stop only raises the depression's share. The
+      annulus that would read the trailing pool must block the depression in both bands, but lateral colour moves the
+      700 nm view 0.1–0.6 mm off the laser spot anywhere off axis;
+    - cooling and the pool edge come from the camera arm (SWIR, above).
+  - **Field stop:** worker A recommends 1.2–1.5 mm (the pool trails up to ~480 µm and turns with the hatch). The P500K's
+    1.6 mm is kept because the 700 nm view moves up to 0.6 mm at the L75 edge. A P400K (≈1.3 mm) would do on S25 and M50.
 - **Plume:** vapour line emission is excluded by the band choice. Condensate continuum is not. An optically thin column
   (Ø0.3 mm over the pool, seen end-on) at 2,700 K adds 4 % (optical depth 0.001), 42 % (0.01) or 4× (0.1) of the pool's
   signal at 700 and 900 nm, and 4 %, 39 % and 3.9× at 1,550 nm. At Edison's 3,360 K model-plume temperature it is 3–4.5×
@@ -392,15 +461,22 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
 
 - **The f-theta is representative.** Thorlabs' prescription is a black box, and the ZAR archive wasn't unpacked (its LZW
   variant didn't decode with standard tools). Three glass sets bracket it. Only SF11 meets the published field curvature to
-  28°; FS and SF11+BK7 don't.
+  28°; FS and SF11+BK7 don't, and re-optimising them from 24 more starts didn't improve them (merit 228 and 289 against 224
+  and 290).
 - **Galvo coating:** two bounds, no curve.
 - **Emissivity:**
   - Drude, scaled to a literature level. Oxide, roughness and the keyhole's cavity effect are in the ±5–10 % non-greyness
     only.
   - Solid ε is grey 0.2; clean solid Al's 1.5 eV band near 800–830 nm is not modelled.
-- **Fields:** Eagar–Tsai is crude. It has no latent heat, no keyhole, and is clipped at boiling. Worker A's fields go in with
-  `--fields` when merged.
-- **Plume:** column size, temperature and optical depth are parameters until the plume worker's numbers arrive.
+- **Fields:**
+  - The numbers in §3 use worker A's 3-D conduction fields, read from its worktree. That file isn't in this branch, so
+    re-run `radiometry.py` after the merge. A may add 7075 cases.
+  - The depression is A's `above_boil` footprint at the wall temperature. Its cavity emissivity (0.35) is an assumption.
+  - The fallback Eagar–Tsai fields have no latent heat or keyhole and are clipped at boiling.
+- **Plume:** column size, temperature and optical depth are parameters until the plume worker's numbers arrive. A's
+  `plume_source.json` gives evaporation rates, not optical depths.
+- **SWIR camera:** read noise (30 e⁻) and full well (30,000 e⁻) are assumptions. Allied Vision's datasheet gives only the QE
+  curve, and dark current at room temperature is neglected at ≤ 1 ms.
 - **Vendor data:**
   - IMX296 QE beyond 525 nm is read off FLIR's curve (±1 point).
   - The Chronos's QE above 900 nm is extrapolated, and its full well and read noise are a stand-in.
@@ -434,6 +510,12 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
 - Teledyne FLIR, FFY-U3-16S2M EMVA 1288 report (IMX296 mono),
   https://softwareservices.flir.com/FFY-U3-16S2/latest/EMVA/EMVA.html (06:46Z); Balluff BVS CA-UB1-0016AG EMVA report (07:06Z).
 - Kron Technologies, Chronos 2.1-HD and 1.4 pages, datasheets and user manual rev 1.3 (06:49–06:51Z).
+- Allied Vision Alvium 1800 U-030 VSWIR: Edmund Optics #92-403 product page ($7,600; U-130 VSWIR #92-406 $11,870),
+  https://www.edmundoptics.com/p/allied-vision-alvium-1800-u-030-vswir-14-030mp-c-mount-usb-30-swir-camera/58165/ (07:53Z),
+  and Allied Vision's datasheet (QE curve), https://www.alliedvision.com/en/products/area-scan-cameras/alvium/alvium-u/datasheet/1243
+  (07:55Z).
+- Worker A's melt-pool fields: `analysis/out/monitoring/melt/surface_fields.npz` and its note `monitoring/melt-pool.md` (§0),
+  in A's worktree at 07:27 UTC (8 cases, AlSi10Mg and 6061 at 320 W).
 - InnoMaker CAM-IMX296RAW page and user manual (06:49Z, 07:08Z).
 - Kowa LM50JC10M (wilcoimaging.com, 07:14Z); Edmund Optics #59-872, #59-873, #67-716, #74-054, #54-668 (06:52–07:10Z); Fujinon
   HF-XA-5M (07:12Z).
