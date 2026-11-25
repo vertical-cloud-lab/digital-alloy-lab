@@ -26,6 +26,8 @@ Copper and blown-powder DED version of [`../bofn-prelim/`](../bofn-prelim/README
 
 **What the data supports for the proposal.** "In a synthetic version of the copper workflow, with both screens biased, searches that model the linked steps reached about 73% of the optimum after $100,000, against about 14% for standard Bayesian optimization; screening on CALPHAD strength and crack index chose aluminum bronzes that fail immersion; the published one-step cost-aware rule reached 59%." The claim that choosing the stage beats running the full chain is not supported on this network at these settings.
 
+**"4.2x less spend"** is full-chain BOFN's mean curve reaching standard BO's $100k level (14.4% of the optimum) at $24k: $100k / $24k = 4.17 ([`copper_ratio_check.py`](copper_ratio_check.py) on `results/k1e1/`, the hand-written truth at (1, 1), 20 seeds each). It compares mean curves only, with no confidence interval, and it is against standard BO, not tiered screening, whose $100k mean (-7.7%) is below zero.
+
 **Not done yet** (next session; [`logs/plan.sh`](logs/plan.sh) resumes where this one stopped): pKGFN at the production settings for seeds 6 to 19 at (1, 1); more seeds of the physics-based truth (and its pKGFN); the sensitivity cells (0, 0), (1, 0) and (0, 1); the new policies (`pkgfn_screen`, `pkgfn_audit`, `mines_only`, `funnel`) and so the screen-audit and two-step tables; the S = 256 fidelity runs; the Edison analysis review of the complete results.
 
 ![partial vs full evaluation](bofn_cu_best_vs_spend_k1_partial_vs_full.png)
