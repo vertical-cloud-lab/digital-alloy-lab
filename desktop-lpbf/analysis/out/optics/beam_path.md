@@ -94,6 +94,20 @@ L75 reach as drawn (k over the drawn thin-lens range; the opening that limits it
 | IPG 5 mm | 0.48 | 24.3 | field stop | no | no |
 | IPG 5 mm | 0.63 | 30.5 | field stop | no | yes |
 
+M50 with its Ø41 field-stop insert (drawn 2026-11-25; S25 and L75 keep the Ø36 stop), < 0.1 % clipped; 'runaway reach' is where the beam centre sits on the insert's edge, the farthest a runaway galvo can put the beam:
+
+| Collimator | k | Reach (mm) | Limited by | M50 (25.4) | Runaway reach (mm) |
+|---|---|---|---|---|---|
+| IPG 2.5 mm (drawn) | 0.33 | 25.9 | field stop | yes | 28.0 |
+| IPG 2.5 mm (drawn) | 0.48 | 31.1 | field stop | yes | 33.7 |
+| IPG 2.5 mm (drawn) | 0.63 | 39.1 | field stop | yes | 42.4 |
+| D 3.2 mm | 0.33 | 25.3 | field stop | no | 28.0 |
+| D 3.2 mm | 0.48 | 30.3 | field stop | yes | 33.7 |
+| D 3.2 mm | 0.63 | 38.1 | field stop | yes | 42.4 |
+| IPG 5 mm | 0.33 | 23.7 | field stop | no | 28.0 |
+| IPG 5 mm | 0.48 | 28.5 | field stop | yes | 33.7 |
+| IPG 5 mm | 0.63 | 35.7 | field stop | yes | 42.4 |
+
 ## F. Irradiance at 500 W (lens refocused onto the plate)
 
 **IPG 5 mm, M2 1.1**

@@ -103,8 +103,9 @@ add("O12c", "chamber optics", "Upgrade: sapphire cover slide (C-axis, AR 1000-11
     "https://www.edmundoptics.com/f/laser-grade-c-axis-sapphire-windows/39685/", "2026-11-22T06:05Z", "A2", "option (only if slides can be cleaned and reused)", "Cover slide",
     "Raises the 'clean enough' limit from ~0.03 % to ~0.3 % absorption (thermal_lens.md). n = 1.77: a 3.18 mm slide shifts focus 1.38 mm")
 add("O13", "chamber optics", "Field-stop inserts, one per module (S25 / M50 / L75), sized from the measured chief-ray angle", "custom 6061, black anodised",
-    "in-house", 3, 15, 40, "estimate", "", "", "F5", "change the drawn part (one fixed Ø36 stop)", "Field-stop aperture (Ø36, passive beam limit)",
-    "At k = 0.3-0.5 the Ø36 stop passes plates only to r 20-27 mm (L75 is 38.1). 2026-11-25 (optics.md §9.3): an M50 insert of Ø41 passes the M50 edge at any k in the drawn 0.33-0.63; the L75 one helps only for k >~ 0.60 (the slide's Ø42.5 clear aperture is next); S25 needs none")
+    "in-house", 3, 15, 40, "estimate", "", "", "F5", "change the drawn part (one fixed Ø36 stop)",
+    "Field-stop aperture, M50 insert (Ø41): drawn in M50 builds 2026-11-25; S25 and L75 builds keep the Ø36 stop",
+    "At k = 0.3-0.5 the Ø36 stop passes plates only to r 20-27 mm (L75 is 38.1). 2026-11-25 (optics.md §9.3): the M50 insert (Ø41, drawn) passes the M50 edge at any k in the drawn 0.33-0.63 with the 2.5 mm beam (Ø42 for a 3.2 mm beam); the L75 one helps only for k >~ 0.60 (the slide's Ø42.5 clear aperture is next): size it after k is measured; S25 keeps the Ø36 stop")
 # ---------------------------------------------------------------- instruments
 add("O14", "instrument", "Thermal power head on the plate (calibration fixture): 500 W continuous, water-cooled, Ø55 mm, H12 absorber (45 kW/cm2), 89 x 89 x 43 mm",
     "UP55M-500W-H12-D0", "Gentec-EO", 1, 1969.00, 1969.00, "fetched", "https://www.gentec-eo.com/products/up55m-500w-h12-d0", "2026-11-23T22:38Z",

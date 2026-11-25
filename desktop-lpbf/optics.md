@@ -26,8 +26,8 @@ Ranked by consequence. Section numbers point to the evidence. **2026-11-25 (§9)
 and order it with the laser (§9.1, which also prices the alternatives); move the LED bar outside, behind a new window low in
 the back wall (§9.2, not drawn); the window and slide are now drawn as the BOM parts (9.53 mm and Ø50 × 2 mm): focus shift
 3.58 mm, shims 2.83 mm, and the galvo riser's bore opened to Ø56 so the lens can rise over its shim range (§9.3). With an L75
-field-stop insert, the slide's Ø42.5 clear aperture is now the next limit (L75 needs k ≳ 0.60); an M50 insert of Ø41 is worth
-drawing now, since it passes M50 at every k in the drawn range (§9.3). **Round 6 (2026-11-23, §8):** items 1, 2, 7, 8 and 9 are now drawn in the model (lens raised 3.41 mm on ±3 mm of shims; IPG's 2.5 mm collimator, because no catalogued f ≈ 23 mm collimator exists; the coaxial tap; a calibration head on the plate; the camera's Ø30 bore), and item 3's galvo spacing is set by the real parts (35 mm, k 0.33–0.62): L75 is still out of reach.
+field-stop insert, the slide's Ø42.5 clear aperture is now the next limit (L75 needs k ≳ 0.60). The M50 build now draws a Ø41
+field-stop insert, which passes M50 at every k in the drawn range; S25 and L75 keep the Ø36 stop (§9.3). **Round 6 (2026-11-23, §8):** items 1, 2, 7, 8 and 9 are now drawn in the model (lens raised 3.41 mm on ±3 mm of shims; IPG's 2.5 mm collimator, because no catalogued f ≈ 23 mm collimator exists; the coaxial tap; a calibration head on the plate; the camera's Ø30 bore), and item 3's galvo spacing is set by the real parts (35 mm, k 0.33–0.62): L75 is still out of reach.
 
 1. **The collimator in the model doesn't give the spot the layout was designed for (§1.1).** The model draws IPG's
    standard 5 mm collimator under the f = 160 mm lens. That gives a **48 µm** spot with a ±1.5 mm Rayleigh range, not the
@@ -770,7 +770,8 @@ bom.csv L3 now says this. The termination question stands: IPG's quote says QBH-
 - **Not drawn:**
   - ~~the window stays the drawn 8 mm part, not the BOM's 9.53 mm Edmund 38-990~~: drawn 2026-11-25 (§9.3);
   - ~~the slide stays 3 mm, not the BOM's 2 mm~~: drawn 2026-11-25 (§9.3);
-  - the single Ø36 field stop (section 7) is not yet the three per-module inserts (§9.3: the M50 one is worth drawing now);
+  - the single Ø36 field stop (section 7) is not yet the three per-module inserts (2026-11-25: the M50 insert, Ø41, is drawn;
+    S25 and L75 keep the Ø36 stop, §9.3);
   - the head's water lines.
 - **Still to get from vendors:**
   - the dichroic's CW rating;
@@ -1068,20 +1069,34 @@ low in the back wall, left of the inlet plenum (x ≈ −105, z ≈ 25, under th
     26.7 / 31.8 / 39.4 mm at k 0.33 / 0.48 / 0.63 (2.5 mm beam).
   - So an L75 field-stop insert reaches the plate's edge only for k ≳ 0.60 (it was 0.58 with the Ø42 bore as the limit).
   - Beyond the clear aperture the slide is still glass, but its coating isn't specified there.
-- **Field-stop inserts: one is worth drawing now, the others after k is measured.**
-  - **M50:** the fixed Ø36 stop clips the M50 edge below k ≈ 0.45. An M50 insert of **Ø41** passes the M50 edge at every k in
-    the drawn range (0.33–0.63), with the next aperture at 26.7 mm or more.
-  - **L75:** an insert only helps if k ≳ 0.60, so measure k with the guide laser first (§4.4).
-  - **S25:** needs none; the Ø36 stop passes it at any k.
-  - **Not drawn:** the model holds one module at a time and the stop is one fixed part. Making it the M50 insert is a one-line
-    change in section 7 if wanted.
+- **Field-stop inserts: the M50 one is drawn; S25 and L75 keep the Ø36 stop.**
+  - **M50 (drawn 2026-11-25):** the M50 build has a **Ø41** insert in place of the Ø36 stop (`P["field_stop_d"]`,
+    section 7). The fixed Ø36 stop clipped the M50 edge below k ≈ 0.45.
+    - With the drawn 2.5 mm beam, the insert passes the M50 edge (r 25.4) with < 0.1 % clipped at every k in the drawn range:
+      reach 25.9 / 31.1 / 39.1 mm at k 0.33 / 0.48 / 0.63, still set by the insert (`beam_path.md`, "M50 with its Ø41
+      field-stop insert").
+    - The margin at k 0.33 is 0.5 mm. A 3.2 mm beam would need Ø41.2 there and a 5 mm beam Ø43.5, so make the insert Ø42 if
+      the collimator changes.
+    - The cost is a longer runaway reach (beam centre on the insert's edge): 28.0 / 33.7 / 42.4 mm, against 24.6 / 29.6 /
+      37.2 mm with Ø36. Both land on the module's top inside the floor port, not on the walls or liners, which the stop is
+      there to protect.
+  - **S25: no insert.** The Ø36 stop passes S25 at any k (it needs Ø21.8–24.9). A tighter S25 insert would only shorten the
+    runaway reach, which already stays inside the floor port.
+  - **L75: no insert until k is measured.** An insert only helps if k ≳ 0.60, because the slide's Ø42.5 clear aperture and the
+    Ø42 bore under the window come next (§9.3 above). Measure k with the guide laser first (§4.4), then size the L75 insert,
+    or move to a Ø3 in. window, its bores and a larger slide (§0 item 3).
+  - How the insert is held and swapped isn't drawn. The ring (Ø55.8 × 5 mm) sits in the lid's Ø56 bore under the window
+    flange, so either the flange comes off, or the ring drops out through the drawer slot (72 × 6 mm).
 - **Checks re-run:**
   - `beam_path.py` (focus +0.004 mm, the assert passes), `thermal_lens.py`, `thermal_lens_ccx.py` and `layer_light.py` (new);
   - an exact check of every changed part against its neighbours: it found the lens against the riser (161 mm³) before the
     riser's bore was opened, and nothing after;
   - **`interference.py M50` (exact booleans): 0 interferences in all 6 static states and all 8 motion sweeps**, 1118 s under
     a 3 GB cap. The tightest gaps are unchanged except the slide's own: 2.0 mm to the lid at the drawer's −120 mm (it was
-    1.0 mm). S25 and L75 were not re-run; the changed parts are the same for every module.
+    1.0 mm).
+  - **`interference.py S25 S`: 0 in all 6 static states and all 8 sweeps** (1516 s, 3 GB cap), with the same single change in
+    the tightest gaps (the slide to the lid: 1.0 → 2.0 mm). L75 is in the next commit.
+  - The M50 insert only enlarges the stop's bore, so it can't add an interference; the M50 run above was before it.
   - Not re-run: the bridge FEA (case 6b) and mass. The lens moved 0.17 mm, the riser lost 16 g and the glass and window
     flange changed by a few grams; nothing else moved.
 

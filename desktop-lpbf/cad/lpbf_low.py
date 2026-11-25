@@ -88,6 +88,11 @@ P["z_slide0"] = P["lid_z0"] + 7.0               # slide bottom 127.0, on a 1.7 m
 # (3.00 -> 2.83 mm), so the lens rises 0.17 mm and the bridge, galvo and guard stay put; 0-6 mm of shims moves the lens 2.83 mm up
 # (no shims) to 3.17 mm down (6 mm) from nominal
 P["lens_shim"] = round(3.0 - (P["focus_shift"] - 3.41), 2)
+# field stop under the window (z 131-136), one per module (optics.md §9.3): M50 gets an insert with a Ø41 bore, which passes the
+# M50 edge (r 25.4) with < 0.1 % clipped at every k in the drawn range (0.33-0.63, the drawn 2.5 mm beam needs Ø40.3); the
+# fixed Ø36 stop clipped it below k ~ 0.45. S25 keeps Ø36 (it passes S25 at any k). L75 keeps Ø36 until k is measured: an L75
+# insert only helps for k >~ 0.60, where the slide's Ø42.5 clear aperture and the Ø42 bore under the window limit it anyway
+P["field_stop_d"] = {"S25": 36.0, "M50": 41.0, "L75": 36.0}
 P["lens_ring"] = 13.0         # f-theta adapter ring (was 16): engages 9.67 mm of the lens's ~12.5 mm M85x1 thread at 2.83 mm of shims
 P["z_lens0"] = P["lens_wd"] + P["focus_shift"]                      # lens housing bottom (was 182.5)
 P["z_bridge0"] = P["z_lens0"] + 9.2 + P["lens_shim"] + P["lens_ring"]   # 9.2: the lens's output ring below its shoulder
@@ -864,7 +869,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     GLANDS["window_flange"] = dict(kind="face", ring="2-036", cs=1.78, depth=F["depth"], width=F["width"], groove_id=61.6, groove_mat="al", T=60.0, closure="window flange on the lid")
     rrb = fuse([tube(50, 22, (0, 0, lz1 + 22), "z", 5), tube(25.4, 22, (0, 0, zs + P["win_t"] + 0.75), "z", lz1 + 22 - zs - P["win_t"] - 0.75)])
     add("Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry)", rrb, C["anod"], 7, (0, 0, 400), mat="al6061", bom="L7", section=True)
-    add("Field-stop aperture (Ø36, passive beam limit)", tube(27.9, 18, (0, 0, dz1), "z", lz1 - dz1), C["black"], 7, (0, 0, 300), mat="al6061", bom="L7", section=True)
+    fs_d = P["field_stop_d"].get(module, 36.0)       # Ø41 insert for M50; S25 and L75 keep the Ø36 stop (P block)
+    fs_name = (f"Field-stop aperture, {module} insert (Ø{fs_d:.0f}, passive beam limit; swapped with the module)" if fs_d != 36.0
+               else "Field-stop aperture (Ø36, passive beam limit)")
+    add(fs_name, tube(27.9, fs_d / 2, (0, 0, dz1), "z", lz1 - dz1), C["black"], 7, (0, 0, 300), mat="al6061", bom="L7", section=True)
     # cover-slide drawer: pulls out of the lid's front edge (a person or the robot through the guard door) without
     # lifting the lid; an FKM O-ring on its front plate seals it against the lid. Only opened at atmosphere.
     # the Ø50.0 x 2 mm slide (Edmund 36-299) sits on a 1.7 mm seat in a Ø50.4 pocket (optics-bom O12; the pocket was Ø51.2, cut
