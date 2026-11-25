@@ -145,6 +145,8 @@ def floor_shear(cs):
     for name, (x0, x1) in DOSE_STRIPS.items():
         s = (c[:, 0] > x0) & (c[:, 0] < x1) & (np.abs(c[:, 1]) < DOSE_HALF)
         res[name] = dict(mean=float(tau[s].mean()), max=float(tau[s].max()))
+    s = (np.abs(c[:, 0]) < 50) & (c[:, 1] > 38) & (c[:, 1] < 52)      # loose powder the blade leaves just upstream of the plate
+    res["upstream_strip"] = dict(mean=float(tau[s].mean()), max=float(tau[s].max()))
     res["floor_max"] = float(tau[chamber].max())
     imax = np.argmax(np.where(chamber, tau, 0))
     res["floor_max_at_mm"] = [float(v) for v in c[imax, :2]]
@@ -201,6 +203,28 @@ def window_stats(cs):
         sp = np.linalg.norm(u, axis=1)
         res[f"z{z:g}"] = dict(mean_speed=float(sp.mean()), max_speed=float(sp.max()), mean_uz=float(u[:, 2].mean()),
                               mean_uy=float(u[:, 1].mean()))
+    return res
+
+
+def dose_stats(cs):
+    """Gas over the dose zone (floor x -96..-60, |y| < 50) at 1, 3, 10 and 20 mm, and across the curtain of powder that falls
+    from the chute's bottom (z 37) onto the floor (x -96..-84, z 0-37): mean and max horizontal speed, and mean Ux, Uy."""
+    res = {}
+    x0, x1 = DOSE_STRIPS["dose_zone"]
+    xs, ys = np.linspace(x0 + 1, x1 - 1, 18), np.linspace(-DOSE_HALF + 1, DOSE_HALF - 1, 25)
+    for z in (1.0, 3.0, 10.0, 20.0):
+        X, Y = np.meshgrid(xs, ys)
+        P = np.column_stack([X.ravel(), Y.ravel(), np.full(X.size, z)])
+        P = P[cs.is_fluid(P)]
+        u = cs.U(P)
+        sp = np.hypot(u[:, 0], u[:, 1])
+        res[f"zone_z{z:g}"] = dict(mean=float(sp.mean()), max=float(sp.max()), mean_ux=float(u[:, 0].mean()), mean_uy=float(u[:, 1].mean()))
+    X, Y, Z = np.meshgrid(np.linspace(CHUTE[0] + 2, CHUTE[1] - 2, 6), ys, np.linspace(1.0, 36.0, 15))
+    P = np.column_stack([X.ravel(), Y.ravel(), Z.ravel()])
+    P = P[cs.is_fluid(P)]
+    u = cs.U(P)
+    sp = np.hypot(u[:, 0], u[:, 1])
+    res["curtain"] = dict(mean=float(sp.mean()), max=float(sp.max()), mean_ux=float(u[:, 0].mean()), mean_uy=float(u[:, 1].mean()))
     return res
 
 
@@ -471,7 +495,7 @@ def case_label(cs):
     m = cs.meta
     side = "outlet left" if m.get("outlet_boot_x_mm", 86.0) < 0 else "outlet right"
     up = m.get("upper_lpm", 0.0)
-    q = f"{m['q_lpm']:g}" + (f" + {up:g}" if up else "") + " L/min"
+    q = f"{m['q_lpm']:g}" + (f" + {up:g}" if up else "") + " L/min" + (f", slide purge {m['slide_purge_lpm']:g}" if m.get("slide_purge_lpm") else "")
     return f"{'as drawn' if m.get('variant', 'baseline') == 'baseline' else 'fix'}, {side}, {q}"
 
 
@@ -513,7 +537,7 @@ def fig_compare(items, title=None):
     axs[2].axhline(2.5, color=INK2, lw=0.7, ls="-.")
     axs[2].set_xlabel("x (mm) across the flow at z = 3 mm; thick: y = 0, thin: y = -30 (plate's downstream side)")
     axs[2].set_ylabel("horizontal speed (m/s)")
-    axs[2].text(-78, 0.1, "dose\nzone", ha="center", fontsize=7, color=INK2)
+    axs[2].text(-78, 0.97, "dose zone", ha="center", va="top", fontsize=7, color=INK2, transform=axs[2].get_xaxis_transform())
     axs[2].legend(fontsize=6.5, frameon=False)
     axs[3].set_xlabel("x (mm) along the outlet slot (peach: dose zone; the slot spans x -62 to 62)")
     axs[3].set_ylabel("down the slot, 10 mm below the floor (m/s)")
@@ -572,7 +596,8 @@ def fig_particles(lands, paths):
 def write_summary(res, before=None, path=None, src="cfd.json"):
     """cfd_summary.md: the key numbers of every case side by side (all from the json). With `before` (an earlier cfd.json),
     each of its cases sits next to the new case of the same name, so the table reads before -> after."""
-    new = [k for k in ("fine", "coarse") if k in res] + [k for k in res if k not in ("fine", "coarse", "threshold_shao_lu")]
+    order = ("coarse", "coarse_right", "fix140", "fix200", "fix200_noup", "fine", "fine_fix200")
+    new = [k for k in order if k in res] + [k for k in res if k not in order and k != "threshold_shao_lu"]
     R, names = {}, []
     tb, tn = ("2026-11-20", "round 6") if before else ("", "")
     for k in new:
@@ -608,7 +633,7 @@ def write_summary(res, before=None, path=None, src="cfd.json"):
              "| | " + " | ".join(names) + " |", "|---|" + "---|" * len(names),
              row("outlet boot / port at x (mm)", lambda r: f"{r['outlet_boot_x_mm']:+.0f}"),
              row("cells / iterations", lambda r: f"{r['cells']/1000:.0f}k / {r['iterations']:.0f}"),
-             row("bed slot + upper slot flow (L/min)", lambda r: f"{r['q_lpm']:g} + {r.get('upper_slot_lpm', 0):g}")]
+             row("bed slot + upper slot (+ slide purge) flow (L/min)", lambda r: f"{r['q_lpm']:g} + {r.get('upper_slot_lpm', 0):g}" + (f" + {r['slide_purge_lpm']:g}" if r.get('slide_purge_lpm') else ""))]
     for z in (1, 3, 10):
         for d in (25, 50, 75):
             lines.append(row(f"speed at {z} mm over Ø{d}: mean (min-max), CoV", rng(z, d)))
@@ -620,8 +645,11 @@ def write_summary(res, before=None, path=None, src="cfd.json"):
               row("outlet slot: share drawn by its left / right half", lambda r: f"{100 * (1 - r['outlet_slot']['right_half_share']):.0f} / {100 * r['outlet_slot']['right_half_share']:.0f} %"),
               row("pressure drop flange to flange (Pa)", lambda r: f"{r['dp_inlet_to_outlet_Pa']:.0f}"),
               row("bed shear over Ø75: mean / max (Pa)", lambda r: f"{r['floor_shear_Pa']['d75']['mean']:.3f} / {r['floor_shear_Pa']['d75']['max']:.3f}"),
+              row("bed shear on the strip upstream of the plate (y 38-52, |x| < 50): mean / max (Pa)", lambda r: f"{r['floor_shear_Pa']['upstream_strip']['mean']:.3f} / {r['floor_shear_Pa']['upstream_strip']['max']:.3f}"),
               row("bed shear on the dose zone: mean / max (Pa)", lambda r: f"{r['floor_shear_Pa']['dose_zone']['mean']:.3f} / {r['floor_shear_Pa']['dose_zone']['max']:.3f}"),
               row("bed shear on the strip x -60 to -37.5: mean / max (Pa)", lambda r: f"{r['floor_shear_Pa']['spread_strip_left']['mean']:.3f} / {r['floor_shear_Pa']['spread_strip_left']['max']:.3f}"),
+              row("gas over the dose zone at 3 / 10 mm: mean (max) speed", lambda r: f"{r['dose']['zone_z3']['mean']:.2f} ({r['dose']['zone_z3']['max']:.2f}) / {r['dose']['zone_z10']['mean']:.2f} ({r['dose']['zone_z10']['max']:.2f})"),
+              row("gas across the falling dose (x -94 to -86, z 1-36): mean (max) speed, mean Ux, Uy", lambda r: f"{r['dose']['curtain']['mean']:.2f} ({r['dose']['curtain']['max']:.2f}), {r['dose']['curtain']['mean_ux']:+.2f}, {r['dose']['curtain']['mean_uy']:+.2f}"),
               row("highest shear on the floor (Pa) at (x, y) mm", lambda r: f"{r['floor_shear_Pa']['floor_max']:.2f} at ({r['floor_shear_Pa']['floor_max_at_mm'][0]:.0f}, {r['floor_shear_Pa']['floor_max_at_mm'][1]:.0f})"),
               row("under the slide (z 121): mean speed, mean Uy", lambda r: f"{r['window']['z121']['mean_speed']:.2f}, {r['window']['z121']['mean_uy']:+.2f}"),
               row("gas over the plate at z 30-120 flowing toward the inlet", lambda r: f"{100 * r['recirculation']['over plate, z 30-120 mm']['frac_reversed']:.0f} %")]
@@ -653,6 +681,8 @@ def main():
                     help="only the comparison figures and the summary, for cases already in cfd<_tag>.json (no metrics, no particles)")
     ap.add_argument("--before", help="an earlier cfd.json: its cases go into cfd_summary.md next to the new ones")
     ap.add_argument("--compare-title", default=None)
+    ap.add_argument("--compare-name", default="compare_variants", help="file name (without the tag and .png) of the comparison figure; none = skip it")
+    ap.add_argument("--profiles-name", default="profiles_mesh_check", help="file name of the fine-against-coarse figure (--fine and --coarse given)")
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     sfx = f"_{a.tag}" if a.tag else ""
@@ -672,8 +702,9 @@ def main():
         sh, c, tau = floor_shear(cs)
         pr = pressure(cs)
         x, uin, xo, uo = slot_profiles(cs)
+        kept = {k: v for k, v in res.get(name, {}).items() if k in ("spatter", "condensate", "condensate_released_10_30mm")}
         res[name] = dict(case=str(cs.path), cells=cs.ncells, iterations=cs.time, q_lpm=cs.meta["q_lpm"],
-                         variant=cs.meta.get("variant", "baseline"), upper_slot_lpm=cs.meta.get("upper_lpm", 0.0),
+                         variant=cs.meta.get("variant", "baseline"), upper_slot_lpm=cs.meta.get("upper_lpm", 0.0), slide_purge_lpm=cs.meta.get("slide_purge_lpm", 0.0),
                          outlet_boot_x_mm=cs.meta.get("outlet_boot_x_mm", 86.0),
                          bed=bed_stats(cs), floor_shear_Pa=sh, pressure_Pa=pr,
                          dp_inlet_to_outlet_Pa=pr["inlet port"] - pr["outlet port"],
@@ -681,7 +712,9 @@ def main():
                                          centre_third_share=float(uin[np.abs(x) < 20].sum() / uin.sum())),
                          outlet_slot=dict(max=float(uo.max()), min=float(uo.min()), mean=float(uo.mean()),
                                           right_half_share=float(np.clip(uo[xo > 0], 0, None).sum() / np.clip(uo, 0, None).sum())),
-                         window=window_stats(cs), recirculation=recirculation(cs))
+                         window=window_stats(cs), recirculation=recirculation(cs), dose=dose_stats(cs))
+        if a.no_particles:
+            res[name].update(kept)                     # --no-particles --merge: keep the particle results of an earlier run
         print(name, json.dumps({k: res[name][k] for k in ("cells", "dp_inlet_to_outlet_Pa", "inlet_slot", "outlet_slot")}))
         tag = f"{name} mesh, {cs.ncells/1000:.0f}k cells, {case_label(cs)}" if name in ("fine", "coarse") else f"{name}, {case_label(cs)}"
         if a.tag or name != "coarse":
@@ -703,14 +736,14 @@ def main():
         plt.close("all")
         print(name, json.dumps(sp, indent=1), json.dumps(cd, indent=1), json.dumps(cd2, indent=1))
         jpath.write_text(json.dumps(res, indent=1))
-    if "fine" in cases and "coarse" in cases and not a.figures_only:
-        fig_profiles(cases["fine"], cases["coarse"]).savefig(OUT / f"profiles_mesh_check{sfx}.png", dpi=110)
+    if "fine" in cases and "coarse" in cases:
+        fig_profiles(cases["fine"], cases["coarse"]).savefig(OUT / f"{a.profiles_name}{sfx}.png", dpi=110)
         plt.close("all")
-    if len(cases) > 1:
+    if len(cases) > 1 and a.compare_name != "none":
         cols = (BLUE, ORANGE, AQUA, "#6250d6", INK2)
         items = [(cs, f"{name}: {case_label(cs)}", cols[i % len(cols)], "-" if cs.meta.get("outlet_boot_x_mm", 86.0) < 0 else "--")
                  for i, (name, cs) in enumerate(cases.items())]
-        fig_compare(items, a.compare_title).savefig(OUT / f"compare_variants{sfx}.png", dpi=110)
+        fig_compare(items, a.compare_title).savefig(OUT / f"{a.compare_name}{sfx}.png", dpi=110)
         plt.close("all")
     jpath.write_text(json.dumps(res, indent=1))
     before = None

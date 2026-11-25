@@ -222,6 +222,11 @@ def build(args):
         if abs(Z[k + 1] - (P["ch_z"] + 6.0)) < 1e-9:                                       # the cover slide's underside
             patches["slide"].append((v(i, j, k + 1), v(i + 1, j, k + 1), v(i + 1, j + 1, k + 1), v(i, j + 1, k + 1)))
 
+    purge = args.slide_purge_lpm > 0
+    if purge:
+        # gas-flow.md §7 item 6: argon fed into the lid bore above the Ø46 opening leaves the recess downward. Modelled as an
+        # even inflow through the cover slide's underside (the 40 x 40 square standing for the Ø46 opening, z 126)
+        patches["inlet3"] = patches.pop("slide")
     out = pathlib.Path(args.out)
     for d in ("system", "constant", "0"):
         (out / d).mkdir(parents=True, exist_ok=True)
@@ -237,7 +242,7 @@ def build(args):
         for name, faces in patches.items():
             if not faces:
                 continue
-            typ = "patch" if name in ("inlet", "inlet2", "outlet") else "wall"
+            typ = "patch" if name in ("inlet", "inlet2", "inlet3", "outlet") else "wall"
             f.write("    %s\n    {\n        type %s;\n        faces\n        (\n" % (name, typ))
             f.write("".join("            (%d %d %d %d)\n" % fc for fc in faces))
             f.write("        );\n    }\n")
@@ -245,6 +250,7 @@ def build(args):
 
     q = args.q_lpm / 60000.0           # m3/s
     q2 = args.upper_lpm / 60000.0 if args.variant == "fix" else 0.0
+    q3 = args.slide_purge_lpm / 60000.0
     a_port = (port[1] - port[0]) * (port[5] - port[4]) * 1e-6
     k_in = 1.5 * (0.05 * q / a_port) ** 2
     w_in = math.sqrt(k_in) / (0.09 ** 0.25 * 0.07 * 0.0254)
@@ -256,6 +262,7 @@ boundaryField
 {{
     inlet {{ type flowRateInletVelocity; volumetricFlowRate constant {q:.6g}; extrapolateProfile no; value uniform (0 0 0); }}
     inlet2 {{ type flowRateInletVelocity; volumetricFlowRate constant {q2:.6g}; extrapolateProfile no; value uniform (0 0 0); }}
+    inlet3 {{ type flowRateInletVelocity; volumetricFlowRate constant {q3:.6g}; extrapolateProfile no; value uniform (0 0 0); }}
     outlet {{ type inletOutlet; inletValue uniform (0 0 0); value uniform (0 0 0); }}
     "({walls})" {{ type noSlip; }}
 }}
@@ -315,7 +322,7 @@ timeFormat general;
 runTimeModifiable true;
 functions
 {{
-    wallShearStress {{ type wallShearStress; libs (fieldFunctionObjects); patches (floor walls slide); writeControl writeTime; log false; }}
+    wallShearStress {{ type wallShearStress; libs (fieldFunctionObjects); patches (floor walls{'' if purge else ' slide'}); writeControl writeTime; log false; }}
     yPlus {{ type yPlus; libs (fieldFunctionObjects); writeControl writeTime; log false; }}
     pIn {{ type surfaceFieldValue; libs (fieldFunctionObjects); regionType patch; name inlet; operation areaAverage; fields (p); writeFields false; writeControl timeStep; writeInterval 20; log false; }}
     qOut {{ type surfaceFieldValue; libs (fieldFunctionObjects); regionType patch; name outlet; operation sum; fields (phi); writeFields false; writeControl timeStep; writeInterval 20; log false; }}
@@ -383,7 +390,7 @@ relaxationFactors
     for name, txt in files.items():
         (out / name).write_text(txt)
     (out / "case.foam").write_text("")
-    meta = dict(res=args.res, variant=args.variant, upper_lpm=q2 * 60000.0, q_lpm=args.q_lpm, q_m3s=q, blocks=len(blocks), cells=ncell, lines=dict(x=X, y=Y, z=Z),
+    meta = dict(res=args.res, variant=args.variant, upper_lpm=q2 * 60000.0, slide_purge_lpm=args.slide_purge_lpm, q_lpm=args.q_lpm, q_m3s=q, blocks=len(blocks), cells=ncell, lines=dict(x=X, y=Y, z=Z),
                 n=dict(x=N[0], y=N[1], z=N[2]), fluid=fluid, solid=solid, rho=RHO, mu=MU, nu=NU,
                 slot_v=q / ((2 * MP.INLET_HALF) * 8.0e-6), port_area_m2=a_port, outlet_boot_x_mm=P["_cav"]["xb_o"],
                 patches={k_: len(v_) for k_, v_ in patches.items()})
@@ -399,6 +406,8 @@ if __name__ == "__main__":
     ap.add_argument("--variant", choices=("baseline", "fix"), default="baseline",
                     help="fix = screens in both slots, wider outlet channel + KF-40 boot, upper window-sweep slot")
     ap.add_argument("--upper-lpm", type=float, default=40.0, help="flow through the upper slot in the 'fix' variant, L/min")
+    ap.add_argument("--slide-purge-lpm", type=float, default=0.0,
+                    help="argon blown down out of the cover slide's recess (gas-flow.md §7 item 6), L/min; 0 = the slide is a wall")
     ap.add_argument("--outlet-end", choices=("model", "left", "right"), default="model",
                     help="where the outlet boot and its port sit: as in the model (left since 2026-11-23), or mirrored")
     ap.add_argument("--cad-dir", default=str(ROOT / "cad"))
