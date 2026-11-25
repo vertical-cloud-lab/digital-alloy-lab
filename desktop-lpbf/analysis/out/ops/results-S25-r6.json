@@ -1,0 +1,517 @@
+{
+ "module": "S25",
+ "cad": "desktop-lpbf/cad",
+ "ops": [
+  {
+   "id": "U1",
+   "kind": "use",
+   "name": "Fill reservoir S and put it on the dock",
+   "where": "glovebox or hood, then the tray at the access opening",
+   "interval": "each alloy / each build",
+   "air": true,
+   "minutes": 18,
+   "steps": [
+    {
+     "id": "U1.1",
+     "op": "U1",
+     "step": "Hand on the reservoir's pull tab (the lid handle carried forward to y -100, z 248..258, in front of the beam tube)",
+     "do": "reach",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "hand + forearm clear from the front"
+    },
+    {
+     "id": "U1.2",
+     "op": "U1",
+     "step": "Reservoir S slides out on its dovetail and out through the guard door",
+     "do": "remove",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.85,
+     "detail": "free along (0, -125, 0) -> (0, -520, 0); tightest gap 0.85 mm to Metering base (6061, fluted roller over a 100 mm d"
+    },
+    {
+     "id": "U1.3",
+     "op": "U1",
+     "step": "Fill it in the glovebox (or under argon in a hood): ~80 g per 15 mm build; weigh, close, NFC tag",
+     "do": "note",
+     "minutes": 15,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "U1.4",
+     "op": "U1",
+     "step": "Slide it back on (the reverse path, checked above); the dock cam opens its shutter",
+     "do": "note",
+     "minutes": 1,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "U2",
+   "kind": "use",
+   "name": "Start a build: plate in, door shut, purge, preheat",
+   "where": "tray at the access opening",
+   "interval": "each build",
+   "air": true,
+   "minutes": 33.5,
+   "steps": [
+    {
+     "id": "U2.1",
+     "op": "U2",
+     "step": "Plate in through the chamber door onto the bayonet (piston at +8 mm)",
+     "do": "reach",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "detail": "hand + forearm clear from the front"
+    },
+    {
+     "id": "U2.2",
+     "op": "U2",
+     "step": "Close the door and the right draw latch (on the door's right bracket, lever at its front end)",
+     "do": "reach",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "hand + forearm clear from (-0.5, -0.85, 0)"
+    },
+    {
+     "id": "U2.3",
+     "op": "U2",
+     "step": "Left draw latch",
+     "do": "reach",
+     "minutes": 0,
+     "note": "",
+     "status": "PASS",
+     "detail": "hand + forearm clear from the front"
+    },
+    {
+     "id": "U2.4",
+     "op": "U2",
+     "step": "Close the guard door (guard lock engages)",
+     "do": "note",
+     "minutes": 0.5,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "U2.5",
+     "op": "U2",
+     "step": "Purge: 2-3 vacuum-argon cycles to <= 100 ppm O2 (budgets.py: 2 cycles from 1 mbar, 3 from 10 mbar), then flow",
+     "do": "note",
+     "minutes": 15,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "U2.6",
+     "op": "U2",
+     "step": "Preheat the plate to 200 C (~15 min ramp on \u00d850, README)",
+     "do": "note",
+     "minutes": 15,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "U4",
+   "kind": "use",
+   "name": "Finish a build: cool down, raise the plate, take it out, empty the overflow, return powder",
+   "where": "tray at the access opening",
+   "interval": "each build",
+   "air": true,
+   "minutes": 87,
+   "steps": [
+    {
+     "id": "U4.1",
+     "op": "U4",
+     "step": "Cool the plate to < 50 C (door interlock, module_params.T_DOOR_OPEN): ~50 min for \u00d850 (preheat-and-plates.md)",
+     "do": "note",
+     "minutes": 50,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "U4.2",
+     "op": "U4",
+     "step": "Vent to air through the filter; passivation per the cleaning SOP (pain-points P35)",
+     "do": "note",
+     "minutes": 10,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "U4.3",
+     "op": "U4",
+     "step": "Hand through the chamber door to the plate (plate top at z = +8 mm; hand centre 37 mm above it)",
+     "do": "reach",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "hand + forearm clear from the front"
+    },
+    {
+     "id": "U4.4",
+     "op": "U4",
+     "step": "Plate: turned 60 deg off its bayonet, lifted 20 mm (spigot and lugs over the 8 mm door sill), out through the door",
+     "do": "remove",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "clearance": 2.0,
+     "detail": "free along (0, 0, 20) -> (0, -520, 20); tightest gap 2.0 mm to Heater block S25 (6061-T6, bayonet socket)"
+    },
+    {
+     "id": "U4.5",
+     "op": "U4",
+     "step": "Fingers on the overflow jar's toggle-clamp lever under the floor (lever end at y -122, z -82)",
+     "do": "reach",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "hand + forearm clear from the front"
+    },
+    {
+     "id": "U4.6",
+     "op": "U4",
+     "step": "KF-40 toggle clamp opened (one push on the lever) and taken off by hand",
+     "do": "remove",
+     "minutes": 1,
+     "note": "",
+     "status": "-",
+     "detail": "by hand; no path check"
+    },
+    {
+     "id": "U4.7",
+     "op": "U4",
+     "step": "Overflow jar: drop 8 mm off the centring ring, straight out to the front",
+     "do": "remove",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.3,
+     "detail": "free along (0, 0, -8) -> (0, -520, -8); tightest gap 0.3 mm to Overflow port (KF-40, weld stub to 40 mm)"
+    },
+    {
+     "id": "U4.8",
+     "op": "U4",
+     "step": "Sieve (63 um) and return powder in the glovebox; log mass",
+     "do": "note",
+     "minutes": 20,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "M3",
+   "kind": "maintenance",
+   "name": "Liners out, chamber cleaned (alloy change)",
+   "where": "tray at the access opening",
+   "interval": "each alloy change (~1 h on an Aconity MINI, pain-points)",
+   "air": true,
+   "minutes": 69,
+   "steps": [
+    {
+     "id": "M3.1",
+     "op": "M3",
+     "step": "Passivate condensate (slow air bleed, liner thermocouple watched) before vacuuming (pain-points P35)",
+     "do": "note",
+     "minutes": 30,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "M3.2",
+     "op": "M3",
+     "step": "Right side liner with its pull tab: 4 mm in off the wall, 21 mm forward (the ball screw leaves its slot), in to x 105, down 6 mm, out through the door",
+     "do": "remove",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.36,
+     "detail": "free along (-4, 0, 0) -> (-4, -21, 0) -> (-35, -21, 0) -> (-35, -21, -6) -> (-35, -541, -6); tightest gap 0.36 mm to Process chamber body (6061-T6 through-frame from 5"
+    },
+    {
+     "id": "M3.3",
+     "op": "M3",
+     "step": "Back liner, upper right: 3 mm off the wall, forward over the ball screw, left 25 mm, out through the door",
+     "do": "remove",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.36,
+     "detail": "free along (0, -3, 0) -> (0, -40, 0) -> (-25, -40, 0) -> (-25, -560, 0); tightest gap 0.36 mm to Process chamber body (6061-T6 through-frame from 5"
+    },
+    {
+     "id": "M3.4",
+     "op": "M3",
+     "step": "Back liner, lower right: forward under the ball screw, left 25 mm, out through the door",
+     "do": "remove",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.36,
+     "detail": "free along (0, -3, 0) -> (0, -40, 0) -> (-25, -40, 0) -> (-25, -560, 0); tightest gap 0.36 mm to Process chamber body (6061-T6 through-frame from 5"
+    },
+    {
+     "id": "M3.5",
+     "op": "M3",
+     "step": "Recoater to the right end of its stroke (x +100), so the carriage block is clear of the left pieces",
+     "do": "note",
+     "minutes": 1,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "M3.6",
+     "op": "M3",
+     "step": "Left side liner with its pull tab (mirror of the right)",
+     "do": "remove",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.36,
+     "detail": "free along (4, 0, 0) -> (4, -21, 0) -> (35, -21, 0) -> (35, -21, -6) -> (35, -541, -6); tightest gap 0.36 mm to Process chamber body (6061-T6 through-frame from 5"
+    },
+    {
+     "id": "M3.7",
+     "op": "M3",
+     "step": "Back liner, upper left: forward over the ball screw to y 54 (behind the dose chute), right 50 mm, out through the door",
+     "do": "remove",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.36,
+     "detail": "free along (0, -3, 0) -> (0, -40, 0) -> (50, -40, 0) -> (50, -560, 0); tightest gap 0.36 mm to Process chamber body (6061-T6 through-frame from 5"
+    },
+    {
+     "id": "M3.8",
+     "op": "M3",
+     "step": "Back liner, lower left: forward under the ball screw, right 26 mm, out under the dose chute and through the door",
+     "do": "remove",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.36,
+     "detail": "free along (0, -3, 0) -> (0, -40, 0) -> (26, -40, 0) -> (26, -560, 0); tightest gap 0.36 mm to Process chamber body (6061-T6 through-frame from 5"
+    },
+    {
+     "id": "M3.9",
+     "op": "M3",
+     "step": "HEPA-vacuum the chamber, swab the coves, wipe the window side of the cover slide",
+     "do": "note",
+     "minutes": 30,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "M8",
+   "kind": "maintenance",
+   "name": "Recoater shaft feedthrough (Ferrotec magnetic-fluid unit) and servo",
+   "where": "tray at the access opening",
+   "interval": "on leak-up rise or feedthrough wear",
+   "air": true,
+   "minutes": 81,
+   "steps": [
+    {
+     "id": "M8.1",
+     "op": "M8",
+     "step": "Hand to the recoater servo, left of the chamber",
+     "do": "reach",
+     "minutes": 1,
+     "note": "",
+     "status": "FAIL",
+     "detail": "blocked: from the front: forearm: Optics bridge posts, forearm: Laser guard panels; from above: forearm: Optics bridge, forearm: Laser guard panels"
+    },
+    {
+     "id": "M8.2",
+     "op": "M8",
+     "step": "Servo off its standoff",
+     "do": "remove",
+     "minutes": 5,
+     "note": "",
+     "status": "FAIL",
+     "detail": "(-25, 0, 0) -> (-25, -520, 0) blocked by Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end after 193.0 mm; also tried (-25, 0, 0) -> (-25, 0, 520): Optics bridge (6061, 25 mm) at 145.0 mm; (-25, 0, 0) -> (495, 0, 0): Recoater motor standoff at 51.0 mm; (-25, 0, 0) -> (-545, 0, 0): Laser guard panels (1.5 mm aluminium) at 79.0 mm"
+    },
+    {
+     "id": "M8.3",
+     "op": "M8",
+     "step": "Motor standoff and bracket",
+     "do": "remove",
+     "minutes": 5,
+     "note": "",
+     "status": "FAIL",
+     "detail": "(-10, 0, 0) -> (-10, -520, 0) blocked by Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end after 178.0 mm; also tried (-10, 0, 0) -> (-10, 0, 520): Optics bridge (6061, 25 mm) at 152.0 mm; (-10, 0, 0) -> (510, 0, 0): Process chamber body (6061-T6 through-fr at 98.0 mm; (-10, 0, 0) -> (-530, 0, 0): Guard frame (20 mm T-slot) at 54.0 mm"
+    },
+    {
+     "id": "M8.4",
+     "op": "M8",
+     "step": "Feedthrough unit and coupling off the left wall",
+     "do": "remove",
+     "minutes": 10,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.3,
+     "detail": "free along (-45, 0, 0) -> (-45, -520, 0); tightest gap 0.3 mm to Recoater ball screw (M12, 10 mm lead)"
+    },
+    {
+     "id": "M8.5",
+     "op": "M8",
+     "step": "New packing; refit; leak check",
+     "do": "note",
+     "minutes": 60,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "S1",
+   "kind": "swap",
+   "name": "Build plate swap",
+   "where": "tray at the access opening",
+   "interval": "each build",
+   "air": true,
+   "minutes": 4,
+   "steps": [
+    {
+     "id": "S1.1",
+     "op": "S1",
+     "step": "Old plate out (as U4)",
+     "do": "remove",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "clearance": 2.0,
+     "detail": "free along (0, 0, 20) -> (0, -520, 20); tightest gap 2.0 mm to Heater block S25 (6061-T6, bayonet socket)"
+    },
+    {
+     "id": "S1.2",
+     "op": "S1",
+     "step": "New plate in (reverse path); graphite foil; turned 60 deg to lock",
+     "do": "note",
+     "minutes": 2,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "S2",
+   "kind": "swap",
+   "name": "Build module swap (S25)",
+   "where": "tray at the access opening",
+   "interval": "between campaigns",
+   "air": true,
+   "minutes": 27,
+   "steps": [
+    {
+     "id": "S2.1",
+     "op": "S2",
+     "step": "Cool, vent; Z arm released (drops 45 mm away from the striker)",
+     "do": "note",
+     "minutes": 2,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "S2.2",
+     "op": "S2",
+     "step": "Release air on: both zero-point modules open (6 bar); round 6, the captive M6 are gone",
+     "do": "note",
+     "minutes": 1,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "S2.3",
+     "op": "S2",
+     "step": "Hand on the module handle's grip block, in front of the door",
+     "do": "reach",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "hand + forearm clear from the front"
+    },
+    {
+     "id": "S2.4",
+     "op": "S2",
+     "step": "Module out along its swap path (drop 40, forward 170, up 18, over the guard sill)",
+     "do": "module",
+     "minutes": 3,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.1,
+     "detail": "swap path clear; tightest gap 0.1 mm to Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)"
+    },
+    {
+     "id": "S2.5",
+     "op": "S2",
+     "step": "New module in (reverse path) onto the dowels; release air off, the zero-point modules pull it home (hot-swap.md 3.2a); Z arm up; purge",
+     "do": "note",
+     "minutes": 20,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "id": "S3",
+   "kind": "swap",
+   "name": "Reservoir swap (S)",
+   "where": "tray at the access opening",
+   "interval": "each alloy",
+   "air": true,
+   "minutes": 2,
+   "steps": [
+    {
+     "id": "S3.1",
+     "op": "S3",
+     "step": "Reservoir S out",
+     "do": "remove",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.85,
+     "detail": "free along (0, -125, 0) -> (0, -520, 0); tightest gap 0.85 mm to Metering base (6061, fluted roller over a 100 mm d"
+    },
+    {
+     "id": "S3.2",
+     "op": "S3",
+     "step": "Other reservoir on (reverse path); NFC read; the load cell tares",
+     "do": "note",
+     "minutes": 1,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  }
+ ]
+}

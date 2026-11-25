@@ -163,7 +163,9 @@ def catalogue(module="M50"):
                     where="bench, then the VLM tray", interval="once", state={}, present="sequence", bench=False, air=False, steps=[
         place("Base plate on its four levelling mounts (M8 stems threaded up)", ["Base plate, process", "Leveling mounts, process", "VLM tray"],
               path=None, minutes=10),
-        place("Chamber legs onto the base plate", ["Chamber legs"], minutes=3),
+        # round 6 (2026-11-25): steps whose animation line runs through a part now use the free path the checker found
+        # (operations.md fix #14); the old lines are in render_build.py
+        place("Chamber legs onto the base plate, from above", ["Chamber legs"], path=[(0, 0, 0), (0, 0, 120)], minutes=3),
         screws("Base-plate-to-leg screws, 2 x M6 per leg, up from under the plate (37 mm above the bench)", "legs_base", 8),
         # the chamber is a through-frame on a bolted floor plate (chamber-construction.md): floor plate, its cord, frame, floor screws
         place("Floor plate with its helical inserts and two pressed dowels onto the legs",
@@ -175,12 +177,14 @@ def catalogue(module="M50"):
               ["Process chamber body", "Lid screw helical inserts"], minutes=4),
         screws("Eighteen M4 floor screws up through the plate's U-notches into the frame's skirt (~1.1 N m)", "floor", 10, torque=True),
         place("Locating dowel and diamond pin pressed into the floor from below", ["Locating dowel"], path=[(0, 0, 0), (0, 0, -60)], minutes=5),
-        place("Outlet plenum and its O-ring under the floor", ["outlet plenum", "Outlet plenum O-ring", "Outlet plenum port"], minutes=5),
+        place("Outlet plenum and its O-ring under the floor, in from the front", ["outlet plenum", "Outlet plenum O-ring", "Outlet plenum port"],
+              path=[(0, 0, 0), (0, -520, 0)], minutes=5),
         screws("Six M4 outlet-plenum screws up into the floor", "plenum_out", 4),
-        place("Overflow funnel block, its O-ring, KF-40 port", ["Overflow funnel", "Overflow port"], minutes=4),
+        place("Overflow funnel block, its O-ring, KF-40 port, in from the right", ["Overflow funnel", "Overflow port"], path=[(0, 0, 0), (520, 0, 0)],
+              minutes=4),
         screws("Four M4 overflow-funnel screws up into the floor", "funnel", 3),
         place("Overflow-jar and module-present sensors, the jar sensor's bracket on the right-hand leg", ["Overflow-jar present", "Overflow-jar sensor bracket",
-              "Module-present sensor"], minutes=4),
+              "Module-present sensor"], minutes=4, per_part=True),     # each along its own line (they moved together into the funnel)
         screws("Two M4 screws, jar-sensor bracket into the right-hand leg", "jar_sensor", 2),
         place("Overflow jar in from the front and up onto its port (2026-11-23: its lane to the front is clear)", ["Overflow jar"],
               path=[(0, 0, 0), (0, 0, -8), (0, -520, -8)], minutes=2),
@@ -201,8 +205,10 @@ def catalogue(module="M50"):
         place("Recoater rail onto the back wall", ["Recoater guide rail"], minutes=2),
         screws("Four M4 rail screws into the back wall's holes, tapped through from outside", "rail", 4),
         screws("Four M4 plug screws on bonded seal washers in those holes, on the back wall's outer face", "rail_plugs", 3),
-        place("Carriage on the rail (slid on from the rail's end)", ["Recoater carriage (", "Recoater carriage block"], minutes=3),
-        place("Ball screw (animation: dropped in from above)", ["Recoater ball screw"], path="explode", minutes=4,
+        place("Carriage onto the rail: down from above, then 30 mm back onto it", ["Recoater carriage (", "Recoater carriage block"],
+              path=[(0, 0, 0), (0, -30, 0), (0, -30, 520)], minutes=3),
+        place("Ball screw in along x through the left wall's bore (the animation drops it in from above)", ["Recoater ball screw"],
+              path=[(0, 0, 0), (-520, 0, 0)], minutes=4,
               note="it passes through Ø18 bores in both side walls"),
         place("Ball nut threaded onto the screw, arm on the block", ["Recoater ball nut", "Recoater arm"], path=None, minutes=3,
               note="a threading (helical) motion; not a straight-line check"),
@@ -210,7 +216,10 @@ def catalogue(module="M50"):
               ["Recoater feedthrough", "Recoater fixed bearing", "Recoater shaft coupling", "Recoater floating bearing", "Recoater bearing-cap O-ring",
                "Recoater motor standoff", "Recoater motor bracket", "Recoater servo"], minutes=15, per_part=True),
         screws("Four M4 bearing-cap screws on the right wall", "bearing_cap", 3),
-        place("Blade holder and blade", ["Blade holder", "HSS recoater blade"], minutes=2),
+        # the cartridge slides 8 mm into the arm's pocket from the front (joints.py 7b); at the park end the left liner's hanger web
+        # (round 6, z 96..98) is over it, so it goes in with the recoater at mid-stroke: down from the open top, then 10 mm back
+        dict(place("Blade holder and blade (recoater at mid-stroke): down from the open top, then 10 mm back into the arm's pocket",
+                   ["Blade holder", "HSS recoater blade"], path=[(0, 0, 0), (0, -10, 0), (0, -10, 520)], minutes=2), state={"recoater": 106.0}),
         screws("Two M3 blade screws", "blade", 2),
         place("Z stage hung under the floor", ["Z mounting flange", "Z actuator", "Z bracket", "Z servo", "Z carriage", "Z lift arm", "Pot magnet"],
               minutes=6),
@@ -253,7 +262,8 @@ def catalogue(module="M50"):
         screws("Optics-post base screws, 2 x M6 up into each post from under the base plate", "bridge_base", 8),
         place("Optics bridge onto the posts", ["Optics bridge ("], minutes=3),
         screws("Optics-bridge screws, 2 x M6 x 35 down into each post", "bridge", 6),
-        place("f-theta adapter ring under the bridge, galvo riser and galvo on the bridge", ["f-theta adapter ring", "Galvo riser plate", "2-axis galvo"], minutes=6),
+        place("f-theta adapter ring under the bridge, galvo riser and galvo on the bridge (checked as one group along y)",
+              ["f-theta adapter ring", "Galvo riser plate", "2-axis galvo"], path=[(0, 0, 0), (0, -520, 0)], minutes=6),
         place("f-theta lens threaded up into its adapter ring from under the bridge", ["f-theta lens"], path=[(0, 0, 0), (0, 0, -60)], minutes=3),
         place("Beam tube, shutter, collimator, fiber", ["Enclosed beam tube", "Safety shutter", "Collimator", "Process fiber"], minutes=15),
         place("Laser guard: frame, panels, door rail, sliding door, lock", ["Guard frame", "Laser guard panels", "Guard door rail", "Sliding guard door", "OD 7+",
@@ -372,7 +382,9 @@ def catalogue(module="M50"):
     ops.append(dict(id="M5", kind="maintenance", name="Window: clean the inside face, replace the window O-ring", where="tray at the access opening",
                     interval="on fouling or when the leak-up rate rises", state=OPEN, present="all", air=True, steps=[
         screws("Six M3 retaining-ring screws, under the f-theta lens", "window_ring", 6, torque=True),
-        remove("Retaining ring up and out", ["Window retaining ring"], [lift_then(6, FRONT), lift_then(15, FRONT)]),
+        # round 6: the upper FKM clamp ring comes off with the retaining ring (M5.3 lifted the window through it: an error in this list)
+        remove("Retaining ring and the upper FKM clamp ring up and out", ["Window retaining ring", "Window clamp ring, upper"],
+               [lift_then(6, FRONT), lift_then(15, FRONT)]),
         remove("Window up and out", ["fused-silica window"], [lift_then(12, FRONT), lift_then(18, FRONT)]),
         note("New FKM O-ring; window back with the ring torqued evenly; leak check", 60),
     ]))
@@ -431,10 +443,15 @@ def catalogue(module="M50"):
     ops.append(dict(id="M12", kind="maintenance", name="HEPA element and cyclone (gas module)", where="tray at the access opening, two people",
                     interval="on pressure drop across the HEPA (pain-points P11: life depends on load, not hours)", state={}, present="all", air=True, steps=[
         note("Valve the housing off under argon; passivate by a slow air bleed with a thermocouple on the housing (P10)", 30),
-        reach("Hands to the housing's top clamp", (470.0, -110.0, 90.0), (FRONT, UP), skip=["Sealed cyclone", "Filter inlet"], hand=PINCH_HAND),
-        remove("Inlet hose end off the housing top", ["Filter inlet"], [[(0, 0, 0), (0, 0, 60)]]),
-        dict(do="clear", label="Element out straight up: a Ø110 x 230 mm column above the housing must be free",
-             box=(470.0 - 55.0, 470.0 + 55.0, -95.0, 15.0, 96.0, 96.0 + 230.0), skip=["Sealed cyclone", "Filter inlet", "Gas-loop + vacuum hoses"], minutes=10),
+        # round 6 (2026-11-25): the housing is now drawn as McMaster's 5169K72 (vendor_parts.filter_train_5169K72): can z -25..52, lid
+        # z 52..68 held by two bail clips at x 470 +/- 60, inlet on a side boss turned to the front with an elbow up to the hose. The
+        # old steps (a top clamp reached at y -110, the inlet hose off the housing's top) were written for the old envelope.
+        reach("Hand to the lid's right bail clip (x +60 from the housing's axis)", (545.0, -40.0, 55.0), (FRONT, (1, 0, 0), UP),
+              skip=["Sealed cyclone", "Filter inlet"], hand=PINCH_HAND),
+        note("The inlet is on the housing's side boss, so its hose stays on: open both bail clips and lift the lid", 2),
+        dict(do="clear", label="Element out straight up: a Ø110 x 230 mm column above the can must be free",
+             box=(470.0 - 55.0, 470.0 + 55.0, -95.0, 15.0, 52.0, 52.0 + 230.0), skip=["Sealed cyclone", "Filter inlet", "Gas-loop + vacuum hoses"],
+             minutes=10),   # the hoses skipped as before: the inlet hose crosses the square's front-left corner at z 160, ~18 mm clear of the Ø95 lid in plan
         note("Spent element under dry sand; Class D extinguisher at hand (P34, P10)", 10),
     ]))
 
