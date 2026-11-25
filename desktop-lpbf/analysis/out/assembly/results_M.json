@@ -20,7 +20,7 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 0.7
+   "seconds": 4.1
   },
   {
    "id": "M02",
@@ -57,11 +57,11 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 1.5
+   "seconds": 11.8
   },
   {
    "id": "M04",
-   "label": "Thermocouples and the thermal cutoff",
+   "label": "Three type K thermocouples (control, edge, limit) into their bores",
    "do": "place",
    "tool": "gripper",
    "actor": "A",
@@ -72,14 +72,14 @@
    "arm": "PASS",
    "gap": 0.09,
    "gap_with": "Heater block M50 (6061-T6, bayonet socket)",
-   "arm_clear": 0.1,
+   "arm_clear": 2.5,
    "arm_clear_with": "held:M04:Type K thermocouples M50 to Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
-   "why": "released 33 mm short and pushed home with the closed fingers",
+   "why": "released 36 mm short and pushed home with the closed fingers",
    "docks": [
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 1.4
+   "seconds": 7.5
   },
   {
    "id": "M05",
@@ -101,7 +101,7 @@
     -1400.0
    ],
    "n_units": 11,
-   "seconds": 6.4
+   "seconds": 57.0
   },
   {
    "id": "M06",
@@ -123,7 +123,7 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 0.9
+   "seconds": 7.8
   },
   {
    "id": "M07",
@@ -145,7 +145,7 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 0.5
+   "seconds": 5.2
   },
   {
    "id": "M08",
@@ -223,7 +223,7 @@
      "note": ""
     }
    ],
-   "seconds": 4.9
+   "seconds": 44.2
   },
   {
    "id": "M09",
@@ -255,7 +255,7 @@
    "arm": "-",
    "why": "",
    "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 0.0
+   "seconds": 0.5
   },
   {
    "id": "M11",
@@ -277,7 +277,7 @@
     -1250.0
    ],
    "n_units": 1,
-   "seconds": 0.4
+   "seconds": 6.2
   },
   {
    "id": "M12",
@@ -299,11 +299,11 @@
     -1250.0
    ],
    "method": "ring folded into the loader's slotted tube, pushed through the \u00d815.93 throat, released into the groove",
-   "seconds": 0.6
+   "seconds": 6.6
   },
   {
    "id": "M13",
-   "label": "Rod (end cap welded on by the shop) lowered top end first through the gland plate's two rod O-rings, on its PEEK bullet",
+   "label": "Rod (its rod end welded on by the shop: a 316L block with seven weld-in feedthroughs) lowered top end first through the gland plate's two rod O-rings, on its PEEK bullet",
    "do": "place",
    "tool": "gripper",
    "actor": "A",
@@ -321,7 +321,7 @@
     -1250.0
    ],
    "n_units": 1,
-   "seconds": 1.2
+   "seconds": 14.5
   },
   {
    "id": "M14",
@@ -343,7 +343,7 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 0.8
+   "seconds": 13.5
   },
   {
    "id": "M15",
@@ -405,11 +405,11 @@
      "note": ""
     }
    ],
-   "seconds": 1.4
+   "seconds": 15.7
   },
   {
    "id": "M16",
-   "label": "Welded module body onto its upright nest (flange on the nest's three posts)",
+   "label": "Welded module body onto its upright nest (flange on the nest's three posts), gripped across the tube",
    "do": "place",
    "tool": "gripper",
    "actor": "A",
@@ -417,15 +417,17 @@
    "phase": "body_up",
    "joint": null,
    "sweep": "PASS",
-   "arm": "FAIL",
+   "arm": "PASS",
    "gap": null,
    "gap_with": null,
    "arm_clear": null,
    "arm_clear_with": null,
-   "why": "arm A: part 119 mm across at the grasp: wider than the 2F-85's 85 mm stroke",
-   "docks": [],
+   "why": "",
+   "docks": [
+    -1100.0
+   ],
    "n_units": 1,
-   "seconds": 0.0
+   "seconds": 14.5
   },
   {
    "id": "M17",
@@ -446,7 +448,7 @@
     -1100.0
    ],
    "method": "2-238 stretched 9.4 % over an acetal mandrel (cone + 0.45 mm sleeve over the spigot's top edge), pushed into the groove by a sleeve that stops on the mandrel",
-   "seconds": 6.6
+   "seconds": 71.1
   },
   {
    "id": "M18",
@@ -466,7 +468,7 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "mass_kg": null,
-   "seconds": 31.1
+   "seconds": 217.6
   },
   {
    "id": "M19",
@@ -488,11 +490,11 @@
     -1250.0
    ],
    "n_units": 1,
-   "seconds": 5.2
+   "seconds": 27.8
   },
   {
    "id": "M20",
-   "label": "Six M4 x 20 gland-plate screws, star pattern",
+   "label": "Six M4 x 20 gland-plate screws on the arc behind the rod end's block (round 6, joints.py)",
    "do": "screws",
    "tool": "screwdriver",
    "actor": "A",
@@ -504,8 +506,8 @@
    "n": 6,
    "n_ok": 6,
    "n_drive": 6,
-   "arm_clear": 2.2,
-   "arm_clear_with": "screwdriver to Module M50 bottom flange: gland plate (316L, bolte",
+   "arm_clear": 1.0,
+   "arm_clear_with": "screwdriver to Rod end M50: 316L feedthrough block, rod welded in",
    "why": "",
    "docks": [
     -1250.0
@@ -525,8 +527,8 @@
      "roll": 0,
      "withdraw": true,
      "clear": [
-      2.2,
-      "screwdriver to Module M50 bottom flange: gland plate (316L, bolte"
+      1.0,
+      "screwdriver to Rod end M50: 316L feedthrough block, rod welded in"
      ],
      "drive_ok": true,
      "driver": "screwdriver",
@@ -605,8 +607,8 @@
      "roll": 0,
      "withdraw": true,
      "clear": [
-      2.2,
-      "screwdriver to Module M50 bottom flange: gland plate (316L, bolte"
+      1.0,
+      "screwdriver to Rod end M50: 316L feedthrough block, rod welded in"
      ],
      "drive_ok": true,
      "driver": "screwdriver",
@@ -614,11 +616,11 @@
      "note": ""
     }
    ],
-   "seconds": 1.3
+   "seconds": 10.4
   },
   {
    "id": "M21",
-   "label": "Handle lowered onto the gland plate (module upside down; riser in front of the tube, arm toward the grip block)",
+   "label": "Handle lowered in front of the rod end's sleeves, then slid 15 mm back onto the gland plate (module upside down; held by its grip block)",
    "do": "place",
    "tool": "gripper",
    "actor": "A",
@@ -626,17 +628,17 @@
    "phase": "body_inv",
    "joint": null,
    "sweep": "PASS",
-   "arm": "PASS",
-   "gap": 0.3,
+   "arm": "FAIL",
+   "gap": 2.43,
    "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
-   "arm_clear": 2.0,
-   "arm_clear_with": "held:M21:Module M50 handle to Gland-plate screws M50, M4 x 20 316, into the weld",
-   "why": "released 36 mm short and pushed home with the closed fingers",
+   "arm_clear": 16.9,
+   "arm_clear_with": "held:M21:Module M50 handle to Rod end M50 feedthroughs, welded in (3 x Solid Sea",
+   "why": "arm A: A/upper_arm hits A/wrist2 at 39 mm along the insertion",
    "docks": [
-    -1250.0
+    -1400.0
    ],
    "n_units": 1,
-   "seconds": 1.3
+   "seconds": 5.2
   },
   {
    "id": "M22",
@@ -652,8 +654,8 @@
    "n": 2,
    "n_ok": 2,
    "n_drive": 2,
-   "arm_clear": 2.2,
-   "arm_clear_with": "screwdriver to Module M50 handle (6061, screwed under the gland p",
+   "arm_clear": 0.8,
+   "arm_clear_with": "screwdriver to Rod end M50 feedthroughs, welded in (3 x Solid Sea",
    "why": "",
    "docks": [
     -1250.0
@@ -673,8 +675,8 @@
      "roll": 0,
      "withdraw": true,
      "clear": [
-      2.2,
-      "screwdriver to Module M50 handle (6061, screwed under the gland p"
+      0.8,
+      "screwdriver to Rod end M50 feedthroughs, welded in (3 x Solid Sea"
      ],
      "drive_ok": true,
      "driver": "screwdriver",
@@ -689,8 +691,8 @@
      "roll": 0,
      "withdraw": true,
      "clear": [
-      2.2,
-      "screwdriver to Module M50 handle (6061, screwed under the gland p"
+      0.8,
+      "screwdriver to Rod end M50 feedthroughs, welded in (3 x Solid Sea"
      ],
      "drive_ok": true,
      "driver": "screwdriver",
@@ -698,7 +700,7 @@
      "note": ""
     }
    ],
-   "seconds": 0.7
+   "seconds": 47.2
   },
   {
    "id": "M23",
@@ -711,16 +713,16 @@
    "joint": null,
    "sweep": "PASS",
    "arm": "PASS",
-   "gap": 0.3,
-   "gap_with": "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
+   "gap": 0.12,
+   "gap_with": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "arm_clear": null,
    "arm_clear_with": null,
-   "why": "",
+   "why": "released 24 mm short and pushed home with the closed fingers",
    "docks": [
     -1250.0
    ],
    "n_units": 1,
-   "seconds": 0.7
+   "seconds": 7.8
   },
   {
    "id": "M24",
@@ -798,29 +800,22 @@
      "note": ""
     }
    ],
-   "seconds": 0.7
+   "seconds": 6.1
   },
   {
    "id": "M25",
-   "label": "Hermetic connector with its 2-014 face O-ring into the rod end's side boss (last, so the cap's side is clear for the gland-plate screws and the handle)",
-   "do": "place",
-   "tool": "gripper",
-   "actor": "A",
+   "label": "Rod end's seven weld-in feedthroughs (3 x FA11631 + 3 x FA11632 type K, 1 x FA10443 4-pin power) welded into the 316L block's front face, and the rod into its top",
+   "do": "note",
+   "tool": null,
+   "actor": null,
    "holder": null,
-   "phase": "body_inv",
+   "phase": null,
    "joint": null,
-   "sweep": "PASS",
-   "arm": "PASS",
-   "gap": 0.0,
-   "gap_with": "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
-   "arm_clear": 5.0,
-   "arm_clear_with": "right_finger_tip to Gland-plate screws M50, M4 x 20 316, into the weld",
-   "why": "released 15 mm short and pushed home with the closed fingers",
-   "docks": [
-    -1250.0
-   ],
-   "n_units": 1,
-   "seconds": 1.2
+   "sweep": "-",
+   "arm": "-",
+   "who": "machine shop",
+   "why": "TIG welds at the block's face and at the rod, on the bare rod before chapter 3, away from every O-ring; the inner joints to the feedthrough pins are made before the sleeves are welded. Ask Solid Sealing to confirm the blind-bore weld and the weld access (electrical.md 13.3). The SMPW-K and power plugs go onto the sleeves at the machine, not here.",
+   "seconds": 0.0
   },
   {
    "id": "M26",
@@ -840,7 +835,7 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "mass_kg": null,
-   "seconds": 2.3
+   "seconds": 17.9
   },
   {
    "id": "M27",
@@ -862,7 +857,7 @@
     -1100.0
    ],
    "n_units": 1,
-   "seconds": 0.9
+   "seconds": 9.2
   },
   {
    "id": "M28",
@@ -882,8 +877,8 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "mass_kg": null,
-   "seconds": 26.3
+   "seconds": 203.9
   }
  ],
- "generated_s": 138.7
+ "generated_s": 1181.9
 }

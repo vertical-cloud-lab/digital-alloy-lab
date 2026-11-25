@@ -15,8 +15,8 @@ Chapters, each written as its own GIF, plus one MP4 of the whole run:
   5-tray       rack units in and screwed, the gas and vacuum module, hoses and lines, the tray dock; a closing orbit
 
 What is drawn here and not in lpbf_low.py: stock blanks (part bounding box plus a machining allowance, rounded up to a
-stock size), cutting tools, weld beads and most screws. The model has no fasteners except the lid screws and the
-module's captive screws, so the other screws mark where a joint is bolted, not a drawn hole pattern.
+stock size), cutting tools, weld beads and most screws. The model has no fasteners except the lid screws, so the
+other screws mark where a joint is bolted, not a drawn hole pattern.
 
 Run (headless):  xvfb-run -a -s "-screen 0 1920x1080x24" python desktop-lpbf/cad/render_build.py [chapter ...] [--quick]
   chapter: kit machining module process tray (default: all).  --quick: a few frames per step, for checking views.
@@ -1078,6 +1078,9 @@ def chapter_module(st):
         "(3 x FA11631 + 3 x FA11632 type K, 1 x FA10443 4-pin power); the 416 striker disc for the Z stage's pot magnet")
     st.caption(cap, "Three M3 x 10 316 flat-head screws hold the striker, flush with the magnet face")
     drive(st, "striker_M50", lambda: (cam(0.97, d=420, el=-30, fz=-120), st.shot()), frames=5)
+    zpa = F("Zero-point arms M50", "Zero-point clamping pins M50")      # round 6: the module side of the two zero-point clamps
+    fly(st, zpa, nf(10), (0, 0, -80), lambda t: cam(0.98, d=760, el=-14, fz=-80), cap,
+        "Zero-point arms under the flange's two ears, each with a clamping pin (SCHUNK SPC mini 20 class) for the clamps under the floor")
     st.caption(cap, "Done: the module leaves and returns as one unit; S25 and L75 modules are built the same way")
     mb = union_bbox([st.parts[i].shape for i in body + bfl + handle + plate + rod + rodend])
     RS.add_refs(st, "mod-scale", RS.soda_can((mb[1] + 95.0, (mb[2] + mb[3]) / 2 + 40.0, mb[4])))
@@ -1093,8 +1096,7 @@ def chapter_module(st):
     st.shown.clear()
     st.mat.clear()
     # from here on the module's screws are drawn as the model's own parts
-    st.hidden.difference_update(i for i, p in enumerate(st.parts) if "fastener" in p.tags and p.group in ("module", "piston")
-                                and "Captive" not in p.name)
+    st.hidden.difference_update(i for i, p in enumerate(st.parts) if "fastener" in p.tags and p.group in ("module", "piston"))
 
 
 # ------------------------------------------------------------------ chapter 4: the process module
@@ -1121,7 +1123,8 @@ def chapter_process(st):
     # the chamber is a through-frame on a bolted floor plate (chamber-construction.md): floor plate first, then its O-ring cord,
     # then the frame over the plate's pad onto the dowels, then the 18 floor screws from below
     flr = F("Chamber floor plate") + F("Helical inserts for the module screws", "Z-flange helical inserts", "Leg helical inserts",
-                                      "Outlet-plenum helical inserts", "Overflow-funnel helical inserts", "Floor-plate dowels")
+                                      "Outlet-plenum helical inserts", "Overflow-funnel helical inserts", "Floor-plate dowels",
+                                      "Zero-point post helical inserts")
     fly(st, flr, nf(10), ex, lambda t: cam(0.7, 1600), cap,
         "Floor plate (20 mm 6061) with its helical inserts and two pressed Ø6 dowels, onto the legs")
     st.caption(cap, "One M6 x 25 up each leg's bore into the floor plate, through the access holes in the base plate")
@@ -1144,9 +1147,16 @@ def chapter_process(st):
     drive(st, "floor", lambda: (cam(0.75, 1300, el=-24), st.shot()), frames=3, overlap=0.75)
     RS.remove_dims(st, "proc-dims")
     under = F("outlet plenum", "Outlet plenum port", "Overflow funnel", "Overflow port", "Overflow jar", "Overflow clamp",
-              "Overflow-jar present", "Module-present sensor", "Locating dowel")
+              "Overflow-jar present", "Overflow-jar sensor bracket", "Module-present sensor", "Locating dowel")
     fly(st, under, nf(12), ex, lambda t: cam(t, 1300, az=-20, el=-14), cap,
-        "Under the floor: cross-flow outlet plenum, overflow funnel and KF-40 jar, dowel pins, sensors")
+        "Under the floor: cross-flow outlet plenum, overflow funnel, the KF-40 jar at the slot's front end with its robot grip fin, "
+        "dowel pins, sensors")
+    # round 6 (hot-swap.md 3.2a): the two zero-point clamps that hold the module up, in place of its captive M6
+    zp = F("Zero-point posts", "Zero-point module plates", "Zero-point clamping modules", "Zero-point push-in fittings",
+           "Zero-point release valve", "Zero-point release-air line")
+    fly(st, zp, nf(12), ex, lambda t: cam(t, 1200, az=-34, el=-12, f=(0, 0, -90)), cap,
+        "Two SCHUNK NSE-HT mini 88-20 zero-point clamps under the floor, each on a plate and two posts; "
+        "a 3/2 valve on the base plate opens them with 6 bar")
     inside = F("Lift-out wall liner", "Layer-light", "Plate-height through-beam", "inlet plenum", "Inlet plenum port", "Vacuum port")
     fly(st, inside, nf(12), ex, lambda t: cam(t, 1300, az=-24, el=40), cap,
         "Lift-out 316L wall liners, LED bar, through-beam fibres; inlet plenum and KF-25 ports welded on")
@@ -1169,7 +1179,7 @@ def chapter_process(st):
     st.caption(cap, "Z flange: four counterbored M5 x 12 316 screws into the floor's inserts")
     drive(st, "zmount", lambda: (cam(0.6, 1000, az=-40, el=-16, f=(0, 40, -90)), st.shot()), frames=5, order=[0, 3, 1, 2])
     # the build module comes in along its swap path (reverse), then the arm rises and the magnet takes the striker
-    mod = [i for i, p in enumerate(st.parts) if p.group in ("module", "piston") and "Captive" not in p.name]
+    mod = [i for i, p in enumerate(st.parts) if p.group in ("module", "piston")]
     st.shown.update(mod)
     L = M.MOTION["module"]["hi"]
     nm_ = nf(22)
@@ -1180,18 +1190,20 @@ def chapter_process(st):
             st.mat[i] = loc
         for i in F("Z carriage", "Z lift arm", "Pot magnet"):
             st.mat[i] = T((0, 0, MP.ZSTAGE_RELEASE))
-        st.caption(cap, "The M50 module goes in along its swap path: in under the chamber, up into the Ø96 floor port")
+        st.caption(cap, "The M50 module goes in along its swap path: in under the chamber, up into the Ø96 floor port; its two "
+                        "clamping pins go up into the open zero-point clamps")
         cam(t, 1100, az=-34, el=-4, f=(0, -80, -60), daz=14)
         st.shot()
     for i in mod:
         st.mat.pop(i, None)
-    drive(st, "module_flange", lambda: (cam(0.8, 900, az=-30, el=-18, f=(0, 0, -60)), st.shot()), frames=7, overlap=0.3, color="#c9ced3")
+    # round 6: no screws here any more (the captive M6 are gone): the clamps' springs lock the pins when the release air is vented
     nz = nf(8)
     for f in range(nz):
         t = ease((f + 1) / nz)
         for i in F("Z carriage", "Z lift arm", "Pot magnet"):
             st.mat[i] = T((0, 0, MP.ZSTAGE_RELEASE * (1 - t)))
-        st.caption(cap, "Captive M6 screws pull the flange up to the floor (dowels locate it); the Z arm rises and its magnet takes the striker")
+        st.caption(cap, "Air off: the zero-point clamps' springs lock both pins and hold the module up (2 x 0.5 kN; the dowels locate it); "
+                        "the Z arm rises and its magnet takes the striker")
         cam(0.9, 900, az=-30, el=-18, f=(0, 0, -60))
         st.shot()
     for i in F("Z carriage", "Z lift arm", "Pot magnet"):

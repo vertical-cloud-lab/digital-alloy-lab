@@ -117,14 +117,25 @@ def main():
             ("C01b", "The trunnion has turned the chamber upside down for the under-floor work", (S["T"], 0, 1000), 1800, -60, 25),
             ("M19:1", "Heater stack, rod and gland plate into the bore from the tube's open end, module upside down", (S["body_inv"], 0, 1000), 1100, -60, 25),
             ("M17", "Spigot O-ring: mandrel on the spigot, pusher stroke", (S["body_up"], 0, 1000), 1000, -60, 25),
-            ("C10:1", "Build module (upside down) into the floor port, chamber in the trunnion", (S["T"], 0, 1050), 1500, -60, 30)]
+            ("C10:1", "Build module (upside down) into the floor port, chamber in the trunnion", (S["T"], 0, 1050), 1500, -60, 30),
+            # round 6: the steps the round-5 rod end and the M16 fix changed
+            ("M13:1", "Rod lowered through the gland plate's rod rings, held by its rod end's feedthrough block (81 mm across)",
+             (S["body_inv"], 0, 1000), 900, -60, 25),
+            ("M16:1", "Welded module body onto its upright nest, gripped across the tube (Ø56.8) between flange and collar",
+             (S["body_up"], 0, 1000), 1000, -60, 25),
+            ("M21:1", "Handle slid back onto the gland plate, in front of the rod end's sleeves, held by its grip block",
+             (S["body_inv"], 0, 1000), 900, -60, 25)]
     for k in list(frames):
         if k.startswith("F29:"):
             want.append((k, "Lid cord rolled into the body's gland (roller on arm " + k.split(":")[1] + ")", (S["B"], 0, 1300), 1700, -60, 35))
             break
     import json
     res = json.loads((OUT / "results.json").read_text())["rows"]
-    for jid, title in (("F06", "Base-plate-to-leg M6 screws from under the plate (inline nutrunner)"),
+    if (OUT / "results_M.json").exists():          # a chapter-3 re-run's rows (and screws) replace the full run's
+        res = [r for r in res if not r["id"].startswith("M")] + json.loads((OUT / "results_M.json").read_text())["rows"]
+    for jid, title in (("M20", "Gland-plate M4 on the arc behind the rod end's feedthrough block (round 6)"),
+                       ("M22", "Handle M4 driven between the rod end's type K sleeves (round 6)"),
+                       ("F06", "Base-plate-to-leg M6 screws from under the plate (inline nutrunner)"),
                        ("F19", "Recoater-rail screws, driven from inside the chamber"),
                        ("F31", "Lid M5 screws (OnRobot Screwdriver, side-mounted)"),
                        ("C15", "Leg-to-floor M6 down the leg's Ø11 bore (150 mm extension)")):

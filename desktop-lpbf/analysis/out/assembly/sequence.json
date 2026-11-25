@@ -85,7 +85,7 @@
   },
   {
    "id": "M04",
-   "label": "Thermocouples and the thermal cutoff",
+   "label": "Three type K thermocouples (control, edge, limit) into their bores",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -96,12 +96,11 @@
    },
    "min_gap_mm": 0.09,
    "gap_with": "Heater block M50 (6061-T6, bayonet socket)",
-   "arm_clearance_mm": 0.1,
+   "arm_clearance_mm": 2.5,
    "arm_clearance_with": "held:M04:Type K thermocouples M50 to Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
-   "why": "released 33 mm short and pushed home with the closed fingers",
+   "why": "released 36 mm short and pushed home with the closed fingers",
    "parts": [
-    "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
-    "Thermal cutoff M50 (240 C, in series with the heaters)"
+    "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)"
    ],
    "waypoints": [
     [
@@ -280,7 +279,140 @@
   },
   {
    "id": "M10",
-   "label": "Hollow rod into the head's socket",
+   "label": "Gland-plate face O-ring (2-034) into the gland plate's groove, groove up, PFPE film",
+   "do": "seal",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper+caps",
+   "status": {
+    "sweep": "PASS",
+    "arm": "-"
+   },
+   "min_gap_mm": 1.7,
+   "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down"
+  },
+  {
+   "id": "M11",
+   "label": "Gland plate, its face O-ring held by the film, turned over onto its own nest (face down, rod bore vertical)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "parts": [
+    "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+    "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -80.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M12",
+   "label": "Two 2-114 rod O-rings folded through the \u00d815.93 throat into their grooves (ring loader), plate on its nest",
+   "do": "seal",
+   "arm": "A",
+   "holder": null,
+   "tool": "ring_loader",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.14,
+   "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "arm_clearance_mm": 0.1,
+   "arm_clearance_with": "held:M12:loader to Module M50 bottom flange: gland plate (316L, bolte",
+   "why": "",
+   "parts": [
+    "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -120.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "seal_method": "ring folded into the loader's slotted tube, pushed through the \u00d815.93 throat, released into the groove"
+  },
+  {
+   "id": "M13",
+   "label": "Rod (its rod end welded on by the shop: a 316L block with seven weld-in feedthroughs) lowered top end first through the gland plate's two rod O-rings, on its PEEK bullet",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.03,
+   "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "arm_clearance_mm": 2.5,
+   "arm_clearance_with": "held:M13:Hollow piston rod M50 to Module M50 bottom flange: gland plate (316L, bolte",
+   "why": "",
+   "parts": [
+    "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+    "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+    "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     -150.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "M14",
+   "label": "Rod, with the gland plate riding on it, into the piston head's socket (stack upside down: from above)",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -295,13 +427,18 @@
    "arm_clearance_with": null,
    "why": "",
    "parts": [
-    "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)"
+    "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+    "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+    "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+    "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+    "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+    "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)"
    ],
    "waypoints": [
     [
      0.0,
      0.0,
-     -120.0
+     -150.0
     ],
     [
      0.0,
@@ -311,7 +448,7 @@
    ]
   },
   {
-   "id": "M11",
+   "id": "M15",
    "label": "Two M4 cup-point set screws into the rod (radial)",
    "do": "screws",
    "arm": "A",
@@ -352,8 +489,8 @@
    ]
   },
   {
-   "id": "M12",
-   "label": "Welded module body onto its nest, spigot face down",
+   "id": "M16",
+   "label": "Welded module body onto its upright nest (flange on the nest's three posts), gripped across the tube",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -364,8 +501,8 @@
    },
    "min_gap_mm": null,
    "gap_with": null,
-   "arm_clearance_mm": 41.4,
-   "arm_clearance_with": "held:M12:Build module M50 to Module nest, upright",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
    "why": "",
    "parts": [
     "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body"
@@ -374,7 +511,7 @@
     [
      0.0,
      0.0,
-     -120.0
+     120.0
     ],
     [
      0.0,
@@ -384,29 +521,29 @@
    ]
   },
   {
-   "id": "M13",
-   "label": "Gland-plate face O-ring (2-034) into the gland plate's groove, groove up, PFPE film",
+   "id": "M17",
+   "label": "Spigot O-ring (2-238) over the mandrel into the spigot groove (before the stack: the mandrel reaches into the bore)",
    "do": "seal",
-   "arm": "B",
-   "holder": null,
-   "tool": "gripper+caps",
+   "arm": "A",
+   "holder": "B",
+   "tool": "gripper",
    "status": {
     "sweep": "PASS",
-    "arm": "-"
+    "arm": "PASS"
    },
-   "min_gap_mm": 1.7,
-   "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "min_gap_mm": 0.05,
+   "gap_with": null,
    "arm_clearance_mm": null,
    "arm_clearance_with": null,
    "why": "",
    "parts": [
-    "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)"
+    "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)"
    ],
    "waypoints": [
     [
      0.0,
      0.0,
-     60.0
+     40.0
     ],
     [
      0.0,
@@ -414,11 +551,29 @@
      0.0
     ]
    ],
-   "seal_method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down"
+   "seal_method": "2-238 stretched 9.4 % over an acetal mandrel (cone + 0.45 mm sleeve over the spigot's top edge), pushed into the groove by a sleeve that stops on the mandrel"
   },
   {
-   "id": "M14",
-   "label": "Gland plate, its face O-ring, onto the welded collar",
+   "id": "M18",
+   "label": "Module body turned upside down (wrist roll) onto its spigot nest, the tube's open end up",
+   "do": "flip",
+   "arm": "A",
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "note": "sub-assembly 'body' turned over 180 deg about y by one arm (wrist roll), from body_up to body_inv"
+  },
+  {
+   "id": "M19",
+   "label": "Heater stack, rod and gland plate lowered into the bore from the tube's open end (body upside down); the gland plate lands on the welded collar",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -427,20 +582,32 @@
     "sweep": "PASS",
     "arm": "PASS"
    },
-   "min_gap_mm": 1.7,
-   "gap_with": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+   "min_gap_mm": 0.2,
+   "gap_with": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "arm_clearance_mm": null,
    "arm_clearance_with": null,
    "why": "",
    "parts": [
+    "Heater block M50 (6061-T6, bayonet socket)",
+    "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+    "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
+    "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
+    "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+    "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+    "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
+    "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
+    "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
+    "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+    "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
     "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
-    "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)"
+    "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+    "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)"
    ],
    "waypoints": [
     [
      0.0,
      0.0,
-     -80.0
+     -260.0
     ],
     [
      0.0,
@@ -450,8 +617,8 @@
    ]
   },
   {
-   "id": "M15",
-   "label": "Six M4 x 20 gland-plate screws, star pattern",
+   "id": "M20",
+   "label": "Six M4 x 20 gland-plate screws on the arc behind the rod end's block (round 6, joints.py)",
    "do": "screws",
    "arm": "A",
    "holder": null,
@@ -462,8 +629,8 @@
    },
    "min_gap_mm": null,
    "gap_with": null,
-   "arm_clearance_mm": 2.2,
-   "arm_clearance_with": "screwdriver to Module M50 bottom flange: gland plate (316L, bolte",
+   "arm_clearance_mm": 1.0,
+   "arm_clearance_with": "screwdriver to Rod end M50: 316L feedthrough block, rod welded in",
    "why": "",
    "joint": "gland_M50",
    "pn": null,
@@ -476,8 +643,8 @@
      "screw": "Gland-plate screws M50, M4 x 20 316, into the welded collar #1",
      "ok": true,
      "clearance": [
-      2.2,
-      "screwdriver to Module M50 bottom flange: gland plate (316L, bolte"
+      1.0,
+      "screwdriver to Rod end M50: 316L feedthrough block, rod welded in"
      ]
     },
     {
@@ -516,35 +683,40 @@
      "screw": "Gland-plate screws M50, M4 x 20 316, into the welded collar #6",
      "ok": true,
      "clearance": [
-      2.2,
-      "screwdriver to Module M50 bottom flange: gland plate (316L, bolte"
+      1.0,
+      "screwdriver to Rod end M50: 316L feedthrough block, rod welded in"
      ]
     }
    ]
   },
   {
-   "id": "M16",
-   "label": "Handle under the gland plate",
+   "id": "M21",
+   "label": "Handle lowered in front of the rod end's sleeves, then slid 15 mm back onto the gland plate (module upside down; held by its riser from above)",
    "do": "place",
    "arm": "A",
    "holder": null,
    "tool": "gripper",
    "status": {
     "sweep": "PASS",
-    "arm": "PASS"
+    "arm": "FAIL"
    },
    "min_gap_mm": 2.43,
    "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
-   "arm_clearance_mm": 36.6,
-   "arm_clearance_with": "held:M16:Module M50 handle to Build module M50: spigot, flange, honed 316L cylin",
-   "why": "",
+   "arm_clearance_mm": 16.9,
+   "arm_clearance_with": "held:M21:Module M50 handle to Rod end M50 feedthroughs, welded in (3 x Solid Sea",
+   "why": "arm A: A/upper_arm hits A/wrist2 at 39 mm along the insertion",
    "parts": [
-    "Module M50 handle (6061, screwed under the gland plate; for a hand or a gripper)"
+    "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)"
    ],
    "waypoints": [
     [
      0.0,
-     -80.0,
+     -15.0,
+     -40.0
+    ],
+    [
+     0.0,
+     -15.0,
      0.0
     ],
     [
@@ -555,7 +727,7 @@
    ]
   },
   {
-   "id": "M17",
+   "id": "M22",
    "label": "Two M4 handle screws",
    "do": "screws",
    "arm": "A",
@@ -567,8 +739,8 @@
    },
    "min_gap_mm": null,
    "gap_with": null,
-   "arm_clearance_mm": 2.2,
-   "arm_clearance_with": "screwdriver to Module M50 handle (6061, screwed under the gland p",
+   "arm_clearance_mm": 0.8,
+   "arm_clearance_with": "screwdriver to Rod end M50 feedthroughs, welded in (3 x Solid Sea",
    "why": "",
    "joint": "handle_M50",
    "pn": null,
@@ -581,166 +753,23 @@
      "screw": "Handle screws M50, M4 x 10 316 #1",
      "ok": true,
      "clearance": [
-      2.2,
-      "screwdriver to Module M50 handle (6061, screwed under the gland p"
+      0.8,
+      "screwdriver to Rod end M50 feedthroughs, welded in (3 x Solid Sea"
      ]
     },
     {
      "screw": "Handle screws M50, M4 x 10 316 #2",
      "ok": true,
      "clearance": [
-      2.2,
-      "screwdriver to Module M50 handle (6061, screwed under the gland p"
+      0.8,
+      "screwdriver to Rod end M50 feedthroughs, welded in (3 x Solid Sea"
      ]
     }
    ]
   },
   {
-   "id": "M18",
-   "label": "Two 2-114 rod O-rings folded through the \u00d815.93 throat into their grooves (ring loader)",
-   "do": "seal",
-   "arm": "A",
-   "holder": null,
-   "tool": "ring_loader",
-   "status": {
-    "sweep": "PASS",
-    "arm": "PASS"
-   },
-   "min_gap_mm": 0.14,
-   "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
-   "arm_clearance_mm": 0.1,
-   "arm_clearance_with": "held:M18:loader to Module M50 bottom flange: gland plate (316L, bolte",
-   "why": "",
-   "parts": [
-    "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)"
-   ],
-   "waypoints": [
-    [
-     0.0,
-     0.0,
-     -120.0
-    ],
-    [
-     0.0,
-     0.0,
-     0.0
-    ]
-   ],
-   "seal_method": "ring folded into the loader's slotted tube, pushed through the \u00d815.93 throat, released into the groove"
-  },
-  {
-   "id": "M19",
-   "label": "Module body turned upright (wrist roll, 180 deg about the tool axis) onto the upright nest",
-   "do": "flip",
-   "arm": "A",
-   "holder": null,
-   "tool": null,
-   "status": {
-    "sweep": "-",
-    "arm": "PASS"
-   },
-   "min_gap_mm": null,
-   "gap_with": null,
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "",
-   "note": "sub-assembly 'body' turned over 180 deg about y by one arm (wrist roll), from body_inv to body_up"
-  },
-  {
-   "id": "M20",
-   "label": "Spigot O-ring (2-238) over the mandrel into the spigot groove",
-   "do": "seal",
-   "arm": "A",
-   "holder": "B",
-   "tool": "gripper",
-   "status": {
-    "sweep": "PASS",
-    "arm": "PASS"
-   },
-   "min_gap_mm": 0.05,
-   "gap_with": null,
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "",
-   "parts": [
-    "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)"
-   ],
-   "waypoints": [
-    [
-     0.0,
-     0.0,
-     40.0
-    ],
-    [
-     0.0,
-     0.0,
-     0.0
-    ]
-   ],
-   "seal_method": "2-238 stretched 9.4 % over an acetal mandrel (cone + 0.45 mm sleeve over the spigot's top edge), pushed into the groove by a sleeve that stops on the mandrel"
-  },
-  {
-   "id": "M21",
-   "label": "Heater stack turned over by arm A and handed to arm B, which takes it by the heater block from above",
-   "do": "flip",
-   "arm": "A",
-   "holder": null,
-   "tool": null,
-   "status": {
-    "sweep": "-",
-    "arm": "PASS"
-   },
-   "min_gap_mm": null,
-   "gap_with": null,
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "",
-   "note": "sub-assembly 'stack' turned over 180 deg about y by one arm (wrist roll), from stack_inv to handoff"
-  },
-  {
-   "id": "M22",
-   "label": "Heater stack into the bore from the top; the rod (on its PEEK bullet) passes down through the two rod O-rings",
-   "do": "place",
-   "arm": "B",
-   "holder": null,
-   "tool": "gripper",
-   "status": {
-    "sweep": "PASS",
-    "arm": "PASS"
-   },
-   "min_gap_mm": 0.03,
-   "gap_with": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
-   "arm_clearance_mm": 11.4,
-   "arm_clearance_with": "held:M22:Heater block M50 to Module M50 bottom flange: gland plate (316L, bolte",
-   "why": "released 39 mm short and pushed home with the closed fingers",
-   "parts": [
-    "Heater block M50 (6061-T6, bayonet socket)",
-    "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
-    "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
-    "Thermal cutoff M50 (240 C, in series with the heaters)",
-    "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
-    "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
-    "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
-    "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
-    "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
-    "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)"
-   ],
-   "waypoints": [
-    [
-     0.0,
-     0.0,
-     175.0
-    ],
-    [
-     0.0,
-     0.0,
-     0.0
-    ]
-   ]
-  },
-  {
    "id": "M23",
-   "label": "Rim wiper onto the plate; plate into the bore onto the bayonet, turned 60 deg (piston at +8 mm overtravel)",
+   "label": "Striker disc onto the rod end",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -749,105 +778,11 @@
     "sweep": "PASS",
     "arm": "PASS"
    },
-   "min_gap_mm": 2.0,
-   "gap_with": "Heater block M50 (6061-T6, bayonet socket)",
-   "arm_clearance_mm": 0.1,
-   "arm_clearance_with": "held:M23:Build plate M50 to Build module M50: spigot, flange, honed 316L cylin",
-   "why": "released 18 mm short and pushed home with the closed fingers",
-   "parts": [
-    "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
-    "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)"
-   ],
-   "waypoints": [
-    [
-     0.0,
-     0.0,
-     60.0
-    ],
-    [
-     0.0,
-     0.0,
-     0.0
-    ]
-   ],
-   "rotation": {
-    "axis": [
-     0,
-     0,
-     1
-    ],
-    "deg": 60.0,
-    "note": "turned this much about z before the path; turned back to 0 at the seat (bayonet)"
-   }
-  },
-  {
-   "id": "M24",
-   "label": "Module turned upside down again (wrist roll) onto its spigot nest",
-   "do": "flip",
-   "arm": "A",
-   "holder": null,
-   "tool": null,
-   "status": {
-    "sweep": "-",
-    "arm": "PASS"
-   },
-   "min_gap_mm": null,
-   "gap_with": null,
+   "min_gap_mm": 0.12,
+   "gap_with": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "arm_clearance_mm": null,
    "arm_clearance_with": null,
-   "why": "",
-   "note": "sub-assembly 'body' turned over 180 deg about y by one arm (wrist roll), from body_up to body_inv"
-  },
-  {
-   "id": "M25",
-   "label": "Rod end with its hermetic connector onto the rod (as drawn: welded to the rod)",
-   "do": "place",
-   "arm": "A",
-   "holder": null,
-   "tool": "gripper",
-   "status": {
-    "sweep": "FAIL",
-    "arm": "PASS"
-   },
-   "min_gap_mm": null,
-   "gap_with": null,
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "sweep: Rod end M50 blocked by Hollow piston rod M50 (5/8 in. x 0.065 in. seamles after 0.0 mm",
-   "parts": [
-    "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
-    "Hermetic connector M50 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",
-    "Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange)"
-   ],
-   "waypoints": [
-    [
-     0.0,
-     0.0,
-     -80.0
-    ],
-    [
-     0.0,
-     0.0,
-     0.0
-    ]
-   ]
-  },
-  {
-   "id": "M26",
-   "label": "Striker disc",
-   "do": "place",
-   "arm": "A",
-   "holder": null,
-   "tool": "gripper",
-   "status": {
-    "sweep": "PASS",
-    "arm": "PASS"
-   },
-   "min_gap_mm": 0.3,
-   "gap_with": "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "",
+   "why": "released 24 mm short and pushed home with the closed fingers",
    "parts": [
     "Striker disc M50 (416 stainless, on the pot magnet)"
    ],
@@ -865,7 +800,7 @@
    ]
   },
   {
-   "id": "M27",
+   "id": "M24",
    "label": "Three M3 x 10 flat-head striker screws",
    "do": "screws",
    "arm": "A",
@@ -912,6 +847,102 @@
      ]
     }
    ]
+  },
+  {
+   "id": "M25",
+   "label": "Rod end's seven weld-in feedthroughs (3 x FA11631 + 3 x FA11632 type K, 1 x FA10443 4-pin power) welded into the 316L block's front face, and the rod into its top",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "TIG welds at the block's face and at the rod, on the bare rod before chapter 3, away from every O-ring; the inner joints to the feedthrough pins are made before the sleeves are welded. Ask Solid Sealing to confirm the blind-bore weld and the weld access (electrical.md 13.3). The SMPW-K and power plugs go onto the sleeves at the machine, not here.",
+   "who": "machine shop"
+  },
+  {
+   "id": "M26",
+   "label": "Module turned upright (wrist roll, 180 deg about the tool axis) onto the upright nest",
+   "do": "flip",
+   "arm": "A",
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "note": "sub-assembly 'body' turned over 180 deg about y by one arm (wrist roll), from body_inv to body_up"
+  },
+  {
+   "id": "M27",
+   "label": "Rim wiper onto the plate; plate into the bore onto the bayonet, turned 60 deg (piston at +8 mm overtravel)",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 2.0,
+   "gap_with": "Heater block M50 (6061-T6, bayonet socket)",
+   "arm_clearance_mm": 0.1,
+   "arm_clearance_with": "held:M27:Build plate M50 to Build module M50: spigot, flange, honed 316L cylin",
+   "why": "released 18 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+    "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     0.0,
+     60.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "rotation": {
+    "axis": [
+     0,
+     0,
+     1
+    ],
+    "deg": 60.0,
+    "note": "turned this much about z before the path; turned back to 0 at the seat (bayonet)"
+   }
+  },
+  {
+   "id": "M28",
+   "label": "Module turned upside down again (wrist roll) onto its spigot nest, ready for the chamber (C10)",
+   "do": "flip",
+   "arm": "A",
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "PASS"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
+   "note": "sub-assembly 'body' turned over 180 deg about y by one arm (wrist roll), from body_up to body_inv"
   },
   {
    "id": "C00a",
@@ -2300,7 +2331,7 @@
    "parts": [
     "Overflow funnel block (316L, bolted, FKM face O-ring)",
     "Overflow funnel O-ring (FKM 75A 2-042, face seal under the floor)",
-    "Overflow port (KF-40)"
+    "Overflow port (KF-40, weld stub to 42 mm)"
    ],
    "waypoints": [
     [
@@ -2406,9 +2437,9 @@
   },
   {
    "id": "C10",
-   "label": "Build module (upside down) down into the \u00d896 floor port; dowel and diamond pin through its flange lugs",
+   "label": "Build module (upside down) down into the \u00d896 floor port, held by its handle's grip block; dowel and diamond pin through its flange lugs",
    "do": "place",
-   "arm": "A",
+   "arm": "B",
    "holder": null,
    "tool": "gripper",
    "status": {
@@ -2426,21 +2457,19 @@
     "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
     "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
     "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
-    "Module M50 handle (6061, screwed under the gland plate; for a hand or a gripper)",
+    "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
     "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
     "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
     "Heater block M50 (6061-T6, bayonet socket)",
     "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
     "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
-    "Thermal cutoff M50 (240 C, in series with the heaters)",
     "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
     "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
     "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
     "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
     "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
-    "Rod end M50: end cap with a side boss for the hermetic connector (316L, rod welded in)",
-    "Hermetic connector M50 on the rod end (hermetic receptacle, LEMO 1B envelope (HGG.1B.310))",
-    "Hermetic-connector O-ring M50 (FKM 75A 2-014, face seal under the flange)",
+    "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+    "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
     "Striker disc M50 (416 stainless, on the pot magnet)",
     "Captive M6 panel screws on the module flange (knurled, 18-8) (2 x McMaster 95966A705)",
     "Captive-screw retainers (18-8) (2 x McMaster 91065A610)",
@@ -2643,7 +2672,7 @@
    "arm_clearance_with": "held:C14:Chamber legs #4 to Overflow funnel block (316L, bolted, FKM face O-ri",
    "why": "released 21 mm short and pushed home with the closed fingers",
    "parts": [
-    "Chamber legs (6061, 30 x 30)"
+    "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)"
    ],
    "waypoints": [
     [
@@ -3772,7 +3801,7 @@
    "arm_clearance_with": "held:F07:Overflow jar to Base plate, process module (MIC-6, 15 mm)",
    "why": "",
    "parts": [
-    "Overflow jar (KF-40 half nipple, 90 mm, ~120 cm3 + blank)"
+    "Overflow jar (KF-40 flange on a 2 in. 316L cup, 45 mm, ~65 cm3, welded bottom)"
    ],
    "waypoints": [
     [
@@ -3859,13 +3888,13 @@
    "arm_clearance_with": "nozzle to Process chamber body (6061-T6 through-frame from 5",
    "why": "arm A: A/tool/nozzle hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 105 mm along the insertion",
    "parts": [
-    "Layer-light LED bar"
+    "Layer-light LED bar (on the lid's underside, along the right wall)"
    ],
    "waypoints": [
     [
      0.0,
      0.0,
-     120.0
+     300.0
     ],
     [
      0.0,
@@ -3891,11 +3920,16 @@
    "arm_clearance_with": "held:F10:Lift-out wall liners to Process chamber body (6061-T6 through-frame from 5",
    "why": "",
    "parts": [
-    "Lift-out wall liners (0.5 mm 316L, back + sides, spring clips)"
+    "Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
+    "Lift-out wall liner, right (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
+    "Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball screw, spring clips)",
+    "Lift-out wall liner, back upper right (0.5 mm 316L, behind the ball screw, spring clips)",
+    "Lift-out wall liner, back lower left (0.5 mm 316L, behind the ball screw, spring clips)",
+    "Lift-out wall liner, back lower right (0.5 mm 316L, behind the ball screw, spring clips)"
    ],
    "waypoints": [
     [
-     0.0,
+     -60.0,
      0.0,
      160.0
     ],
@@ -5301,7 +5335,8 @@
     "Reservoir M shutter (shown open, as docked; in a slot closed at both ends, springs shut when the reservoir slides out)",
     "Reservoir M powder",
     "Reservoir M lid with robot handle (grip plane z = 258 for every size; FKM O-ring face seal on the top frame)",
-    "Reservoir M lid O-ring (FKM 75A 2-030)"
+    "Reservoir M lid O-ring (FKM 75A 2-030)",
+    "Reservoir M pull tab (6061, 8 mm fin, the lid's handle carried 70 mm forward, in front of the beam tube)"
    ],
    "waypoints": [
     [
@@ -5333,7 +5368,7 @@
    "arm_clearance_with": null,
    "why": "",
    "parts": [
-    "Camera adapter O-ring (FKM 75A 2-022, face seal on the lid)"
+    "Camera adapter O-ring (FKM 75A 2-030, face seal on the lid)"
    ],
    "waypoints": [
     [
@@ -5351,7 +5386,7 @@
   },
   {
    "id": "F48",
-   "label": "Camera viewport adapter with its 2-022",
+   "label": "Camera viewport adapter with its 2-030",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -5366,8 +5401,8 @@
    "arm_clearance_with": "held:F48:Camera viewport adapter + boss to Window retaining ring (spigot bottoms metal-to-met",
    "why": "",
    "parts": [
-    "Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings)",
-    "Camera adapter O-ring (FKM 75A 2-022, face seal on the lid)"
+    "Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals)",
+    "Camera adapter O-ring (FKM 75A 2-030, face seal on the lid)"
    ],
    "waypoints": [
     [
@@ -5384,7 +5419,7 @@
   },
   {
    "id": "F48b",
-   "label": "Camera window O-ring (2-017), window, flat ring, retaining ring, in that order, then the camera",
+   "label": "Camera window gasket (1 mm FKM flat ring), window, flat ring, retaining ring, in that order, then the camera",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -5399,8 +5434,8 @@
    "arm_clearance_with": "held:F48b:Camera window flat ring to Camera viewport adapter + boss (6061; \u00d81 in. windo",
    "why": "sweep: Camera window O-ring blocked by Camera viewport adapter + boss (6061; \u00d81 in. windo after 0.0 mm; arm A: A/gr/right_finger_tip hits Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings) (3.0 mm deep); pushed home instead, but A/gr/right_finger_tip hits Camera viewport adapter + boss (6061; \u00d81 in. window, 1070 nm blocking filter; FKM face O-rings) (3.",
    "parts": [
-    "Camera window O-ring (FKM 75A 2-017, under the window)",
-    "Camera window (\u00d81 in. x 3 mm fused silica, 1070 nm blocking coating)",
+    "Camera window gasket, under the window (FKM 75A sheet, 1.0 mm, squeezed to 0.75; ID 21)",
+    "Camera window (\u00d81 in. x 3 mm fused silica; FESH0950 short-pass filter behind it in the lens)",
     "Camera window flat ring (FKM 75A sheet, 1.0 mm, squeezed to 0.75)",
     "Camera window retaining ring (bottoms metal-to-metal on the boss)",
     "Layer camera (Pi HQ + C-mount lens)"
@@ -5438,7 +5473,7 @@
   },
   {
    "id": "F50",
-   "label": "Hinge knuckles on the chamber and the two draw latches",
+   "label": "Hinge knuckles on the chamber and the two draw-latch strikes on its side faces",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -5453,7 +5488,8 @@
    "arm_clearance_with": "left_finger_tip to Process chamber body (6061-T6 through-frame from 5",
    "why": "released 9 mm short and pushed home with the closed fingers",
    "parts": [
-    "Door hinge knuckles on the chamber (304 SS)"
+    "Door hinge knuckles on the chamber (304 SS)",
+    "Draw-latch strikes on the chamber's side faces (1807A61 strike plates)"
    ],
    "waypoints": [
     [
@@ -5488,7 +5524,7 @@
     "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
     "Door O-ring (FKM 75A 1.78 mm cord, vulcanized splice, in a half-dovetail groove)",
     "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
-    "Draw-latch strikes on the door's ears (1807A61 strike plates)",
+    "Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate on a foot bolted to each ear's front face)",
     "Door handle"
    ],
    "waypoints": [
@@ -5592,7 +5628,7 @@
   },
   {
    "id": "F53",
-   "label": "f-theta lens threaded into its adapter ring under the bridge (on the bench, bridge upside down)",
+   "label": "f-theta lens threaded into its adapter ring over its 3 mm shim stack, under the bridge (on the bench, bridge upside down)",
    "do": "note",
    "arm": null,
    "holder": null,
@@ -5627,7 +5663,8 @@
    "parts": [
     "Optics bridge (6061, 25 mm)",
     "f-theta lens, f = 160 mm (Thorlabs FTH160-1064)",
-    "f-theta adapter ring (6061, M85x1 internal thread, bolted under the bridge)"
+    "f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; 3 mm nominal stack: 0-6 mm = +/-3 mm of focus)",
+    "f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridge)"
    ],
    "waypoints": [
     [
@@ -5748,7 +5785,7 @@
    "arm_clearance_with": "held:F56:Galvo riser plate to Reservoir M lid with robot handle (grip plane z = ",
    "why": "",
    "parts": [
-    "Galvo riser plate (6061, 10 mm)"
+    "Galvo riser plate (6061, 5 mm, \u00d840 bore for the scanned beam)"
    ],
    "waypoints": [
     [
@@ -5797,7 +5834,7 @@
   },
   {
    "id": "F57",
-   "label": "Beam tube, shutter and collimator",
+   "label": "Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collimator",
    "do": "place",
    "arm": "A",
    "holder": null,
@@ -5812,9 +5849,12 @@
    "arm_clearance_with": null,
    "why": "arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion",
    "parts": [
-    "Enclosed beam tube",
+    "Enclosed beam tubes (6061, \u00d818 x 2: dichroic to galvo, fold leg)",
+    "Coaxial-monitoring dichroic (Thorlabs DMSP1000, 45 deg: reflects 1070 nm into the galvo, passes 520-985 nm) in a 30 mm cage cube",
+    "Fold mirror (Thorlabs NB1-K14, \u00d81 in. Nd:YAG laser-line mirror, 45 deg) in a 30 mm cage cube",
     "Safety shutter + beam dump",
-    "Collimator (IPG, 5 mm beam, 128 mm + 78 mm strain relief) on V-mount"
+    "Coaxial photodiode chain (SM1 tube: FESH1000 short-pass, NF1064-44 notch, AC254-050-B lens; Thorlabs PDA36A2)",
+    "Collimator (IPG affixed, 2.5 mm beam: 96 \u00b5m at f = 160; housing drawn as the 5 mm unit, 128 mm + 78 mm strain relief) on V-mount"
    ],
    "waypoints": [
     [

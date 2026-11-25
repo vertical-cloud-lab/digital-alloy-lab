@@ -306,13 +306,18 @@ def add_build_module(h, add, key, step=4):
            h.box(-4.5, 4.5, -15.0, 0.0, zc + 9.0, zc + 15.0),                                       # channel to the rod bore
            h.cyl(rod_id / 2, (0, 0, zc + 9.0), "z", MP.ROD_END_T - 8.0),                            # the rod bore
            h.cyl(2.0, (-hw + 3.0, RF["xdrill_y"], zt), "x", 2 * hw - 6.0)]                          # cross-drilling (ends welded shut)
-    body = body.cut(h.fuse(cav))
+    # round 6: each cavity is cut on its own. Cutting them as one fused compound left the cross-drilling's own volume behind as
+    # eight loose solids between the type K bores (280 mm3; the machining hours script counted the block as nine pieces)
+    for c in cav:
+        body = body.cut(c)
     sleeves = [h.cyl(RF["pwr_d"] / 2, (0.0, yf - RF["pwr_out"], zp), "y", RF["pwr_out"] + RF["wall"])]
     body = body.cut(h.cyl(RF["pwr_d"] / 2, (0.0, yf - 1.0, zp), "y", RF["wall"] + 2.0))
     for x in RF["tc_x"]:
         L_in = RF["tc_len"] - RF["tc_out"]
         body = body.cut(h.cyl(RF["tc_d"] / 2, (x, yf - 1.0, zt), "y", L_in + 1.0))                 # blind bore, its end on the cross-drilling
         sleeves.append(h.cyl(RF["tc_d"] / 2, (x, yf - RF["tc_out"], zt), "y", RF["tc_len"]))
+    if len(body.Solids()) > 1:                       # keep the block itself if a boolean still leaves a loose sliver
+        body = max(body.Solids(), key=lambda s: s.Volume())
     add(f"Rod end {lab}: 316L feedthrough block, rod welded into its top, {RF['face_w']:.0f} x 16 mm face to the front", body, C["ss"], step, (0, 0, 120),
         mat="ss316l", bom="H1", section=True, **pg)
     add(f"Rod end {lab} feedthroughs, welded in ({RF['label']})", h.comp(sleeves), C["ss"], step, (0, -60, 120), mat="ss316l",
