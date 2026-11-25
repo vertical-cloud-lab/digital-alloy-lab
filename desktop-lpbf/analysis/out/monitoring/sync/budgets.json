@@ -1,0 +1,393 @@
+{
+ "sources": {
+  "rtc6": "SCANLAB RTC6 brochure (SCANLAB-RTC6-EN.pdf, 11/2026): 10 µs output period, laser signals at 15 ns resolution",
+  "rtccmp": "SCANLAB RTC comparison table (SCANLAB-RTC-Comparison-EN.pdf): laser delays in 1/64 µs; 2 x 2^24 or 4 x 2^23 recorded values",
+  "basicube": "SCANLAB basiCube 20 page (read 2026-11-25): tracking error 0.25 ms; step 0.58 ms (10 mrad); drift offset < 30 µrad/K, gain < 160 ppm/K; 8 h offset < 100 µrad, gain < 250 ppm; repeatability < 2 µrad RMS",
+  "ipg": "electrical.md §11, from IPG's YLR-U3 sheet: on/off <= 12 µs, modulation <= 100 kHz",
+  "pda": "Thorlabs PDA36A user guide table (via search): 260 kHz at 30 dB, 150 kHz at 40 dB, 45 kHz at 50 dB; the PDA36A2's own sheet not read",
+  "pico": "PicoScope 4444 datasheet: 14-bit at 50 MS/s, streaming 10 MS/s (PicoScope 6) or 50 MS/s (SDK), timebase ±50 ppm, all channels sampled together, 3 ps RMS sample jitter, 1 MΩ || 17.5 pF per input",
+  "gs": "Raspberry Pi documentation, Global Shutter Camera, external trigger: XTR is a 1.8 V input; exposure = low pulse + 14.26 µs; frame rate = pulse rate",
+  "kron": "Kron Technologies, 'Triggering & Synchronizing Multiple Chronos Cameras' rev 0.1.0: with an external source, footage synchronised within 500 ns",
+  "zel": "Zelenyak et al. 2015 (Sensors 15:11805), via edison/r8-ae-waveguide: each extra 76.5 mm of waveguide added ~15 µs",
+  "nist": "Lane & Yeung 2020 (J. Res. NIST 125:125027): 100 kHz XYPT commands, 10 kHz coaxial camera, 20 µs exposure",
+  "heat": "heat.md: 0.2 s of jumps per layer, 8 s recoat; dense L75 build +51 % time with the dwell (electrical.md §9.1)",
+  "mon": "monitoring.md §5.3 and analysis/out/monitoring/optics.md (stream rates)",
+  "ours": "assumed in this note (sync-and-data.md); to measure"
+ },
+ "timing": [
+  {
+   "path": "beam position",
+   "element": "RTC6 output grid (the master clock)",
+   "latency_us": 0.0,
+   "uncertainty_us": 0.0,
+   "basis": "reference; outputs change only on 10 µs ticks",
+   "source": "rtc6",
+   "pos_um_at_0.4": 0.0,
+   "pos_um_at_1.1": 0.0
+  },
+  {
+   "path": "beam position",
+   "element": "commanded -> actual spot (tracking delay), before calibration",
+   "latency_us": 250.0,
+   "uncertainty_us": 25.0,
+   "basis": "±10 % assumed",
+   "source": "basicube",
+   "pos_um_at_0.4": 10.0,
+   "pos_um_at_1.1": 27.5
+  },
+  {
+   "path": "beam position",
+   "element": "commanded -> actual spot, after the knife-edge test (§1.5)",
+   "latency_us": 250.0,
+   "uncertainty_us": 3.0,
+   "basis": "assumed reach of the test",
+   "source": "basicube",
+   "pos_um_at_0.4": 1.2,
+   "pos_um_at_1.1": 3.3
+  },
+  {
+   "path": "laser",
+   "element": "LASERON edge after mark start (LaserOnDelay)",
+   "latency_us": 0.0,
+   "uncertainty_us": 0.016,
+   "basis": "set in 1/64 µs steps; deterministic",
+   "source": "rtccmp",
+   "pos_um_at_0.4": 0.01,
+   "pos_um_at_1.1": 0.02
+  },
+  {
+   "path": "laser",
+   "element": "gate -> light (IPG YLR-U3)",
+   "latency_us": 12.0,
+   "uncertainty_us": 1.0,
+   "basis": "<= 12 µs published; jitter assumed",
+   "source": "ipg",
+   "pos_um_at_0.4": 0.4,
+   "pos_um_at_1.1": 1.1
+  },
+  {
+   "path": "photodiode",
+   "element": "PDA36A2 at 30 dB (260 kHz): group delay",
+   "latency_us": 0.612,
+   "uncertainty_us": 0.1,
+   "basis": "first-order filter",
+   "source": "pda",
+   "pos_um_at_0.4": 0.04,
+   "pos_um_at_1.1": 0.11
+  },
+  {
+   "path": "photodiode",
+   "element": "2.5 m RG-58",
+   "latency_us": 0.013,
+   "uncertainty_us": 0.0,
+   "basis": "5.1 ns/m (velocity factor 0.66)",
+   "source": "ours",
+   "pos_um_at_0.4": 0.0,
+   "pos_um_at_1.1": 0.0
+  },
+  {
+   "path": "digitizer",
+   "element": "gate tap 10 kΩ into 17.5 pF: 50 % point of the RC step",
+   "latency_us": 0.121,
+   "uncertainty_us": 0.02,
+   "basis": "RC ln 2, calibrated out",
+   "source": "pico",
+   "pos_um_at_0.4": 0.01,
+   "pos_um_at_1.1": 0.02
+  },
+  {
+   "path": "digitizer",
+   "element": "PicoScope at 2 MS/s: sample quantisation",
+   "latency_us": 0.0,
+   "uncertainty_us": 0.144,
+   "basis": "uniform over 0.5 µs",
+   "source": "pico",
+   "pos_um_at_0.4": 0.06,
+   "pos_um_at_1.1": 0.16
+  },
+  {
+   "path": "digitizer",
+   "element": "clock vs RTC6, no fit, 30 s layer",
+   "latency_us": 0.0,
+   "uncertainty_us": 3000.0,
+   "basis": "±50 ppm each side (RTC6 assumed)",
+   "source": "pico",
+   "pos_um_at_0.4": 1200.0,
+   "pos_um_at_1.1": 3300.0
+  },
+  {
+   "path": "digitizer",
+   "element": "clock vs RTC6, per-layer fit to gate edges",
+   "latency_us": 0.0,
+   "uncertainty_us": 0.5,
+   "basis": "bound; synthetic check gives less (reader_check.md)",
+   "source": "pico",
+   "pos_um_at_0.4": 0.2,
+   "pos_um_at_1.1": 0.55
+  },
+  {
+   "path": "AE",
+   "element": "elastic path, plate and stack (10-25 mm at 5-6 km/s)",
+   "latency_us": 3.0,
+   "uncertainty_us": 2.0,
+   "basis": "assumed",
+   "source": "ours",
+   "pos_um_at_0.4": 0.8,
+   "pos_um_at_1.1": 2.2
+  },
+  {
+   "path": "AE",
+   "element": "elastic path, 150-250 mm waveguide",
+   "latency_us": 39.0,
+   "uncertainty_us": 10.0,
+   "basis": "15 µs per 76.5 mm",
+   "source": "zel",
+   "pos_um_at_0.4": 4.0,
+   "pos_um_at_1.1": 11.0
+  },
+  {
+   "path": "AE",
+   "element": "preamp and 50-600 kHz filter",
+   "latency_us": 2.0,
+   "uncertainty_us": 1.0,
+   "basis": "assumed",
+   "source": "ours",
+   "pos_um_at_0.4": 0.4,
+   "pos_um_at_1.1": 1.1
+  },
+  {
+   "path": "coaxial camera",
+   "element": "trigger generator (RP2350 PIO, 150 MHz)",
+   "latency_us": 0.05,
+   "uncertainty_us": 0.007,
+   "basis": "one clock cycle; assumed",
+   "source": "ours",
+   "pos_um_at_0.4": 0.0,
+   "pos_um_at_1.1": 0.01
+  },
+  {
+   "path": "coaxial camera",
+   "element": "XTR edge -> exposure start (IMX296)",
+   "latency_us": 15.0,
+   "uncertainty_us": 15.0,
+   "basis": "not published: assumed <= one line; measure (§1.5)",
+   "source": "gs",
+   "pos_um_at_0.4": 6.0,
+   "pos_um_at_1.1": 16.5
+  },
+  {
+   "path": "coaxial camera",
+   "element": "frame time label = mid-exposure (50 µs exposure)",
+   "latency_us": 25.0,
+   "uncertainty_us": 0.0,
+   "basis": "by definition",
+   "source": "gs",
+   "pos_um_at_0.4": 0.0,
+   "pos_um_at_1.1": 0.0
+  },
+  {
+   "path": "side camera",
+   "element": "Chronos exposure trigger on TRIG1 (BNC)",
+   "latency_us": 0.0,
+   "uncertainty_us": 0.5,
+   "basis": "within 500 ns",
+   "source": "kron",
+   "pos_um_at_0.4": 0.2,
+   "pos_um_at_1.1": 0.55
+  },
+  {
+   "path": "layer camera",
+   "element": "software still after spread / after lasing",
+   "latency_us": 100000.0,
+   "uncertainty_us": 50000.0,
+   "basis": "assumed; the scene is static",
+   "source": "ours",
+   "pos_um_at_0.4": 20000.0,
+   "pos_um_at_1.1": 55000.0
+  },
+  {
+   "path": "slow channels",
+   "element": "PLC -> Modbus TCP -> Pi timestamp",
+   "latency_us": 20000.0,
+   "uncertainty_us": 10000.0,
+   "basis": "assumed; module filtering not included",
+   "source": "ours",
+   "pos_um_at_0.4": 4000.0,
+   "pos_um_at_1.1": 11000.0
+  },
+  {
+   "path": "Pi clock",
+   "element": "RTC6 layer-start bit on a Pi GPIO (kernel edge timestamp)",
+   "latency_us": 50.0,
+   "uncertainty_us": 50.0,
+   "basis": "assumed",
+   "source": "ours",
+   "pos_um_at_0.4": 20.0,
+   "pos_um_at_1.1": 55.0
+  }
+ ],
+ "mapping_error_um": {
+  "no clock fit, no tracking delay (DAQ started on a trigger, nominal rate; worst point of a 30 s layer)": {
+   "0.4 m/s": 1204.2,
+   "1.1 m/s": 3311.4,
+   "timing_us": 3010.4
+  },
+  "clock fit, tracking delay ignored": {
+   "0.4 m/s": 100.0,
+   "1.1 m/s": 275.0,
+   "timing_us": 250.0
+  },
+  "clock fit + tracking delay from the data sheet (±25 µs)": {
+   "0.4 m/s": 10.0,
+   "1.1 m/s": 27.5,
+   "timing_us": 25.01
+  },
+  "clock fit + tracking delay calibrated (±3 µs)": {
+   "0.4 m/s": 1.2,
+   "1.1 m/s": 3.4,
+   "timing_us": 3.05
+  }
+ },
+ "static_galvo_um": {
+  "offset drift per K (30 µrad/K)": 4.8,
+  "gain drift per K at r = 37.9 mm (160 ppm/K)": 6.1,
+  "8 h offset drift (100 µrad)": 16.0,
+  "8 h gain drift at r = 37.9 mm (250 ppm)": 9.5,
+  "repeatability (2 µrad RMS)": 0.32
+ },
+ "builds": [
+  {
+   "name": "B1: S25, 25 % scanned, 5 mm tall",
+   "area_mm2": 124.7,
+   "lasing_s_per_layer": 1.25,
+   "scan_s_per_layer": 1.57,
+   "layer_s": 9.6,
+   "layers": 167,
+   "build_h": 0.44,
+   "lasing_h": 0.06,
+   "scan_h": 0.07,
+   "per_stream_GB": {
+    "baseline (monitoring.md §4 steps 1-6)": {
+     "RTC6 command log, 100 kHz x 12 B (x, y int32; power, gate+outputs uint16)": 0.3,
+     "photodiodes kept at 200 kS/s x 2 ch (decimated from 2 MS/s)": 0.2,
+     "AE raw 2 MS/s x 16-bit": 1.01,
+     "AE hits only (~100 hits/h x 4 ms snippets at 2 MS/s)": 0.0,
+     "coaxial IMX296 128 x 96 at 536 fps, 16-bit unpacked": 3.32,
+     "layer camera video H.264 ~15 Mbit/s": 2.97,
+     "layer stills: 4 x 18.5 MB (12-bit raw) per layer": 12.35,
+     "PLC slow channels, 20 x 8 B at 10 Hz": 0.0
+    },
+    "everything raw (4 ch continuous from build start to 1 h after, 4 Chronos bursts)": {
+     "RTC6 command log, 100 kHz x 12 B (x, y int32; power, gate+outputs uint16)": 0.3,
+     "PicoScope 4 ch x 2 MS/s x 16-bit, raw [continuous]": 82.94,
+     "coaxial IMX296 128 x 96 at 536 fps, 16-bit unpacked": 3.32,
+     "layer camera video H.264 ~15 Mbit/s": 2.97,
+     "layer stills: 4 x 18.5 MB (12-bit raw) per layer": 12.35,
+     "PLC slow channels, 20 x 8 B at 10 Hz": 0.0,
+     "Chronos 2.1-HD burst, 32 GB (15.5 s at 640 x 96, 24 kfps) [x4]": 128.0
+    }
+   },
+   "total_GB": {
+    "baseline (monitoring.md §4 steps 1-6)": 20.1,
+    "everything raw (4 ch continuous from build start to 1 h after, 4 Chronos bursts)": 229.9
+   },
+   "pi_MB_per_layer": 95.0,
+   "pi_to_pc_s_at_110MBps": 0.9
+  },
+  {
+   "name": "B2: M50, 25 % scanned, 10 mm tall",
+   "area_mm2": 500.7,
+   "lasing_s_per_layer": 5.01,
+   "scan_s_per_layer": 5.71,
+   "layer_s": 13.7,
+   "layers": 333,
+   "build_h": 1.27,
+   "lasing_h": 0.46,
+   "scan_h": 0.53,
+   "per_stream_GB": {
+    "baseline (monitoring.md §4 steps 1-6)": {
+     "RTC6 command log, 100 kHz x 12 B (x, y int32; power, gate+outputs uint16)": 2.29,
+     "photodiodes kept at 200 kS/s x 2 ch (decimated from 2 MS/s)": 1.53,
+     "AE raw 2 MS/s x 16-bit": 7.63,
+     "AE hits only (~100 hits/h x 4 ms snippets at 2 MS/s)": 0.0,
+     "coaxial IMX296 128 x 96 at 536 fps, 16-bit unpacked": 25.13,
+     "layer camera video H.264 ~15 Mbit/s": 8.57,
+     "layer stills: 4 x 18.5 MB (12-bit raw) per layer": 24.64,
+     "PLC slow channels, 20 x 8 B at 10 Hz": 0.01
+    },
+    "everything raw (4 ch continuous from build start to 1 h after, 4 Chronos bursts)": {
+     "RTC6 command log, 100 kHz x 12 B (x, y int32; power, gate+outputs uint16)": 2.29,
+     "PicoScope 4 ch x 2 MS/s x 16-bit, raw [continuous]": 130.75,
+     "coaxial IMX296 128 x 96 at 536 fps, 16-bit unpacked": 25.13,
+     "layer camera video H.264 ~15 Mbit/s": 8.57,
+     "layer stills: 4 x 18.5 MB (12-bit raw) per layer": 24.64,
+     "PLC slow channels, 20 x 8 B at 10 Hz": 0.01,
+     "Chronos 2.1-HD burst, 32 GB (15.5 s at 640 x 96, 24 kfps) [x4]": 128.0
+    }
+   },
+   "total_GB": {
+    "baseline (monitoring.md §4 steps 1-6)": 69.8,
+    "everything raw (4 ch continuous from build start to 1 h after, 4 Chronos bursts)": 319.4
+   },
+   "pi_MB_per_layer": 149.0,
+   "pi_to_pc_s_at_110MBps": 1.4
+  },
+  {
+   "name": "B3: L75, 70 % scanned, 25 mm tall, with the dwell",
+   "area_mm2": 3158.8,
+   "lasing_s_per_layer": 31.59,
+   "scan_s_per_layer": 34.95,
+   "layer_s": 64.9,
+   "layers": 833,
+   "build_h": 15.01,
+   "lasing_h": 7.31,
+   "scan_h": 8.09,
+   "per_stream_GB": {
+    "baseline (monitoring.md §4 steps 1-6)": {
+     "RTC6 command log, 100 kHz x 12 B (x, y int32; power, gate+outputs uint16)": 34.95,
+     "photodiodes kept at 200 kS/s x 2 ch (decimated from 2 MS/s)": 23.3,
+     "AE raw 2 MS/s x 16-bit": 116.5,
+     "AE hits only (~100 hits/h x 4 ms snippets at 2 MS/s)": 0.03,
+     "coaxial IMX296 128 x 96 at 536 fps, 16-bit unpacked": 383.64,
+     "layer camera video H.264 ~15 Mbit/s": 101.32,
+     "layer stills: 4 x 18.5 MB (12-bit raw) per layer": 61.63,
+     "PLC slow channels, 20 x 8 B at 10 Hz": 0.09
+    },
+    "everything raw (4 ch continuous from build start to 1 h after, 4 Chronos bursts)": {
+     "RTC6 command log, 100 kHz x 12 B (x, y int32; power, gate+outputs uint16)": 34.95,
+     "PicoScope 4 ch x 2 MS/s x 16-bit, raw [continuous]": 922.18,
+     "coaxial IMX296 128 x 96 at 536 fps, 16-bit unpacked": 383.64,
+     "layer camera video H.264 ~15 Mbit/s": 101.32,
+     "layer stills: 4 x 18.5 MB (12-bit raw) per layer": 61.63,
+     "PLC slow channels, 20 x 8 B at 10 Hz": 0.09,
+     "Chronos 2.1-HD burst, 32 GB (15.5 s at 640 x 96, 24 kfps) [x4]": 128.0
+    }
+   },
+   "total_GB": {
+    "baseline (monitoring.md §4 steps 1-6)": 721.5,
+    "everything raw (4 ch continuous from build start to 1 h after, 4 Chronos bursts)": 1631.8
+   },
+   "pi_MB_per_layer": 534.0,
+   "pi_to_pc_s_at_110MBps": 4.9
+  }
+ ],
+ "hosts": {
+  "Pi 5: coaxial camera + layer video while scanning (MB/s)": 15.0,
+  "Pi 5: PCIe Gen 2 x1 to the NVMe, ceiling (MB/s, Raspberry Pi: ~500)": 500,
+  "Pi 5: Gigabit Ethernet, practical (MB/s, assumed)": 110,
+  "scan PC: PicoScope 4 ch x 2 MS/s (MB/s)": 16.0,
+  "scan PC: PicoScope SDK streaming ceiling (MS/s, all channels)": 50,
+  "scan PC: RTC6 log (MB/s)": 1.2,
+  "NIST-class coaxial camera (MB/s): needs a frame grabber in the PC, not the Pi": 144.0,
+  "Chronos 32 GB burst over GbE at 110 MB/s (min)": 4.8
+ },
+ "assumptions": {
+  "hatch_mm": 0.1,
+  "speed_m_s": 1.0,
+  "recoat_s": 8.0,
+  "jumps_s": 0.2,
+  "layer_mm": 0.03,
+  "scan_overhead": "+10 % of lasing for mark and jump delays",
+  "cool_down_s": 3600.0
+ }
+}
