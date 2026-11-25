@@ -17,7 +17,7 @@ The scripts are in [`analysis/monitoring/melt/`](../analysis/monitoring/melt/) a
 | [`evap.py`](../analysis/monitoring/melt/evap.py) | evaporation, recoil and vapour exit state → [`plume_source.json`](../analysis/out/monitoring/melt/plume_source.json) (§5) |
 | [`plots.py`](../analysis/monitoring/melt/plots.py), [`report.py`](../analysis/monitoring/melt/report.py) | figures; what each camera band, the photodiode and a two-colour channel see; the tables |
 
-**To rerun** (one core, ~1.5 h in all): `analytic.py`; `run_cases.py ref+val+sens+map`; `run_cases.py collect`; `evap.py`;
+**To rerun** (one core, ~2 h in all): `analytic.py`; `run_cases.py ref+val+sens+map+ovh`; `run_cases.py collect`; `evap.py`;
 `transient.py`; `plots.py`; `report.py`, each under `OMP_NUM_THREADS=1` in `/tmp/venv`. The 3D fields go to `/tmp/melt_runs`
 (not committed); everything the note quotes is in the committed JSON.
 
@@ -35,8 +35,8 @@ hatch; plate at 25 or 200 °C.
      Vlasea, via Edison). Keyhole pores appear from ~0.4.
    - **The scaling laws disagree.** Gan's keyhole number calls keyhole mode (Ke > 6) from ~250 W for AlSi10Mg at 1.1 m/s, and
      predicts keyholes 130–250 µm deep where those tracks are 70–80 µm deep. Huang et al. found Al needs more: in an Al-Zn-Mg-Cu
-     alloy the keyhole threshold sat ~2.5× higher in normalised enthalpy than in Ti-6Al-4V. **I trust the measured tracks** for
-     Al in a powder bed.
+     alloy the onset of keyhole porosity sat ~2.5× higher in normalised enthalpy than in Ti-6Al-4V. **I trust the measured
+     tracks** for Al in a powder bed.
 2. **The pool against the coaxial camera (8 µm/px):** 200–440 µm long and 160–320 µm wide, so 25–55 × 20–40 px. The vapour
    depression is ~65–75 µm across (~9 px).
    - **A 1 mm field is tight.** The liquid trails up to ~340 µm behind the beam and the solidus up to ~480 µm on a 200 °C
@@ -72,13 +72,15 @@ hatch; plate at 25 or 200 °C.
    falls from ~250 W to ~180 W. **The photodiode barely notices:** +3 % at 1.1 m/s, +5 % at 0.6 m/s, because its signal is
    dominated by the depression, whose temperature is pinned. The part does not accumulate heat between layers with an 8 s recoat
    (a 15 mm tall, 10 × 10 mm part starts each layer within 0.3 K of the plate). The baseline drift to watch is the plate's own
-   ([`heat.md`](../heat.md): 240–288 °C in dense builds without module cooling).
+   ([`heat.md`](../heat.md): 240–288 °C in dense builds without module cooling). Overhangs are a different matter: on loose
+   powder the pool runs 4–6× longer and the photodiode reads ~4.4× (§4.2).
 
 **What this changes in the monitoring plan:**
 - **Measure pool size and cooling with an InGaAs (0.9–1.7 µm) coaxial camera, not a silicon one.** At 850 nm silicon images only
   the region above ~1,200 K, and Al solidifies at 750–925 K. The IMX296 board of monitoring.md §4 step 6 will show the hot core,
   the depression and spatter, not the pool's edge or the cooling that drives cracking.
-- **Make the coaxial field 1.2–1.5 mm**, not 1 mm.
+- **Make the coaxial field 1.2–1.5 mm**, not 1 mm. Over an overhang the pool runs 1.2–2 mm long (§4.2); no practical coaxial
+  field holds it, so the photodiode, which reads ~4.4× there, is the overhang detector.
 - **Treat the coaxial photodiode as a detector of dwell, keyholing and lack of fusion, not a thermometer.** Its 520–985 nm band
   is dominated by the depression. Keep it, sample it at ≥ 200 kS/s, and log the plate thermocouple for baseline drift. This fits
   Porter et al. 2022: across 155 AlSi10Mg tracks, a commercial three-photodiode system at 200 kHz showed no overall statistical
@@ -227,7 +229,9 @@ I paired the 0.688 m/s range ends with 200 and 350 W):
   keyhole; the tracks say conduction. Either Ke, fitted on bare-plate X-ray data, doesn't carry over to Al powder tracks, or the
   absorptivity in Ke should be lower than the one that sets the width.
   [Huang et al. 2022](https://doi.org/10.1038/s41467-022-28694-x) (read 2026-11-25) point the same way: in Al7A77, an
-  Al-Zn-Mg-Cu alloy, the keyhole transition sat at a normalised enthalpy of ~20 ± 3 against ~8 ± 3 for Ti-6Al-4V.
+  Al-Zn-Mg-Cu alloy, the transition from stable to unstable keyholes (the onset of keyhole porosity) sat at a normalised enthalpy
+  product of ~20 ± 3, against ~8 ± 3 for Ti-6Al-4V. They put it down to Al's lower absorptivity (~0.15 against ~0.45), its
+  larger Brewster angle and its lower melting enthalpy.
 - **Cooling rates agree.** Van Cauwenbergh et al. (read 2026-11-25) give 9.5 × 10⁵ K/s at the pool centre and 1.6 × 10⁵ K/s at
   its boundary from cell spacing, and 8.3 and 4.4 × 10⁵ K/s from their heat-transfer model;
   [Leis et al. 2022](https://doi.org/10.3390/met12122000) (via Edison) calculate up to 1.2–1.75 × 10⁶ K/s over 250–450 W. The 3D model's
@@ -406,8 +410,19 @@ over the scan) goes into its top during the scan; then 8 s of recoat ([`heat.md`
   baseline than the first. From the 3D model that is ~+7 % in pool length and width per 50 K (the 25 → 200 °C step adds ~25 %).
 - **The plate is the baseline drift to log.** [`heat.md`](../heat.md) finds dense M50 and L75 builds push the plate from 200 to
   240–288 °C unless the module is cooled. That changes the pool by ~+5–15 % and the photodiode by only ~1–2 %.
-- **Not covered:** overhangs and thin walls standing on powder, where heat has no path down. That is where published photodiode
-  signals rise most, and the 1D model says nothing about it.
+- **Overhangs are the big change, and the photodiode sees them.** The same 3D model with the track on 150 or 400 µm of loose
+  powder instead of a 30 µm layer on solid (`run_cases.py ovh`; AlSi10Mg, 320 W, 1.1 m/s, 25 °C):
+
+  | Under the track | Liquid pool L × W × D (µm) | Liquid trails the beam by (µm) | Evaporation (W) | Photodiode / on solid | Cooling at the liquidus, median (10⁶ K/s) |
+  |---|---|---|---|---|---|
+  | 30 µm powder on solid (reference) | 324 × 208 × 93 | 250 | 4.5 | 1.00 | 0.69 |
+  | 150 µm of powder | 1,185 × 306 × 137 | 1,110 | 28.8 | 4.42 | 0.44 |
+  | 400 µm of powder | 1,952 × 337 × 173 | 1,880 | 28.7 | 4.38 | 0.08 |
+
+  The pool runs 4–6× longer, the depression's footprint and the evaporation grow ~6×, and the photodiode reads ~4.4×. On 400 µm
+  of powder the melted track stays mushy for ~4 ms. An overhang is far outside a 1.5 mm camera field. These runs freeze the
+  melted-powder mask after 40 Newton iterations (it otherwise kept growing) and treat the powder as a static bed that doesn't
+  sag or ball up, so read them as indicative. Thin walls (heat only down a narrow path) were not run.
 
 ### 4.3 Time scales, and what they ask of each instrument
 
@@ -461,7 +476,8 @@ From each 3D surface field:
   supply-limited.
 - **So the vapour is ~0.05–0.25 µg per mm of track, mostly Al,** about 0.2–0.6 g per hour of lasing at 320–400 W. If the surface
   is fully depleted of Mg, the wall is hotter (~2,940 K for pure Al) and the Al vapour ~2–3× higher; the flat reading's upper
-  bound is ~1.5 g/h. This is the condensate source for window fouling.
+  bound is ~1.5 g/h. Over an overhang (§4.2) the best estimate rises ~3.5× to ~0.4 µg/mm. This is the condensate source for
+  window fouling.
 - **Evaporation takes ~2 % of the absorbed power** (1.3–3 W of 112–140 W), and 13–14 % for 7075 if its surface kept the bulk
   Zn.
 - **Exit velocity ~265–480 m/s at Mach 0.43** at the edge of the Knudsen layer (~1,090 m/s, sonic, in the flat reading). Edison's
@@ -496,10 +512,11 @@ the surface is a cavity, with a higher apparent emissivity than flat liquid.
 
 [`edison/r8-melt-plume/answer.md`](../edison/r8-melt-plume/answer.md) supplied the measured AlSi10Mg tracks, the absorptivities,
 the cooling rates, the keyhole fluctuation band, the plume velocities and the Mg and Zn losses used above. I read Gan, King,
-Huang and Van Cauwenbergh myself; the rest is as Edison reported it. Where this note and Edison differ:
+Huang, Van Cauwenbergh and Porter myself; the rest is as Edison reported it. Where this note and Edison differ:
 - **Keyhole thresholds.** Edison quotes ΔH/h_s ≈ 10 as a general keyhole criterion, and Gan's Ke. With the absorptivity that fits
   the measured widths, both call keyhole for tracks that were conduction-shaped. I go with the measured tracks for AlSi10Mg.
-- **Edison's "Ke ≈ (ΔH/h_m)/√π"** (via Huang et al.) is not Gan's definition. I used Gan's paper directly.
+- **Edison's "Ke ≈ (ΔH/h_m)/√π"** paraphrases Huang et al., who call Ke a scaled normalised enthalpy. The two differ in the
+  enthalpy reference (T_l − T₀ against T_m) and in the beam radius used, so I took Gan's definition from Gan's paper.
 - **Peak temperature.** Edison cites ~3,360 K (a generic plume model, not Al) and says Al keyhole surfaces reach "well above"
   2,743 K. For these alloys Mg and Zn hold the depression wall lower, ~1,840–2,760 K; only pure Al's reaches ~2,900 K. The flat 3D
   model passes 3,000 K only because it can't form a depression.
@@ -519,7 +536,7 @@ Huang and Van Cauwenbergh myself; the rest is as Edison reported it. Where this 
 - **Surface depletion of Mg and Zn** is handled only by the `fvol` runs for 7075 and by calibrating to measured losses. It
   changes 7075's surface temperature by ~700 K and its photodiode signal by ~7×.
 - **Galvo:** a first-order lag stands in for the basiCube 20's servo.
-- **Not run:** overhangs and thin walls on powder; more than one turnaround; the 48/57/75 µm spots in 3D (scaling laws only);
+- **Not run:** thin walls; more than one turnaround; the 48/57/75 µm spots in 3D (scaling laws only);
   Scheil solidification paths and a crack-susceptibility index; spatter.
 - **Evaporation:** no diffusion-limited regime below boiling, and Knight's jump treats the vapour as one species.
 
@@ -530,7 +547,8 @@ Huang and Van Cauwenbergh myself; the rest is as Edison reported it. Where this 
   J. Mater. Process. Technol. 214:2915–2925. https://doi.org/10.1016/j.jmatprotec.2014.06.005 (read via OSTI 1502044: Eq. 2.6–2.7,
   30 ± 4)
 - Huang, Y. et al. (2022). Keyhole fluctuation and pore formation mechanisms during laser powder bed fusion additive
-  manufacturing. Nat. Commun. 13:1170. https://doi.org/10.1038/s41467-022-28694-x (read: Al7A77, 2.5–10 kHz, thresholds)
+  manufacturing. Nat. Commun. 13:1170. https://doi.org/10.1038/s41467-022-28694-x (read: Al7A77, 2.5–10 kHz, stable-to-unstable
+  keyhole thresholds)
 - Porter, C. et al. (2022). Generation and analysis of AlSi10Mg L-PBF single track data set enabling deeper process insights.
   Proc. 33rd Solid Freeform Fabrication Symposium, 1541–1549.
   https://utw10945.utweb.utexas.edu/sites/default/files/2022/Generation%20and%20Analysis%20of%20AlSi10Mg%20L-PBF%20Single%20T.pdf

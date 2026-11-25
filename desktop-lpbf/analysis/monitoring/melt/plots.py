@@ -46,7 +46,7 @@ def surface_figure(R):
         X, Y = np.meshgrid(d["xg"], d["yg"], indexing="ij")
         Ts = d["Ts"]
         m = ax.pcolormesh(X, Y, Ts, cmap="magma", vmin=298.0, vmax=3400, shading="auto")
-        cs = ax.contour(X, Y, Ts, levels=[al.T_sol, al.T_liq, r["T_boil_alloy"]], colors=["#9c9c9c", "#ffffff", "#00b894"],
+        ax.contour(X, Y, Ts, levels=[al.T_sol, al.T_liq, r["T_boil_alloy"]], colors=["#9c9c9c", "#ffffff", "#00b894"],
                         linewidths=[0.8, 1.0, 1.2])
         # 1 mm coaxial-camera field centred on the beam
         ax.add_patch(plt.Rectangle((-CAM_FIELD / 2, -CAM_FIELD / 2), CAM_FIELD, CAM_FIELD, fill=False, ec="#257de0", lw=0.8,

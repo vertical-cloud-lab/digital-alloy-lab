@@ -83,7 +83,7 @@ def map_cases():
 def ovh_cases():
     """An overhang: the track melts a deep powder bed instead of a 30 um layer on solid (150 and 400 um of powder)."""
     return [fv3d.Case(alloy="AlSi10Mg", P=320.0, v=1.1, A=A_REF, T0=298.15, h=(8e-6, 6e-6, 5e-6), t_layer=t,
-                      tag=f"ovh_AlSi10Mg_320W_1.1ms_powder{round(t * 1e6)}um") for t in (150e-6, 400e-6)]
+                      tag=f"ovh_AlSi10Mg_320W_1.1ms_powder{round(t * 1e6)}um", extra=dict(maxit=150, freeze_mask_it=40)) for t in (150e-6, 400e-6)]
 
 
 def run_set(cases, skip_done=True):

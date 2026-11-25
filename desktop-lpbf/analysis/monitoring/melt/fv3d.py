@@ -131,12 +131,13 @@ class Solver:
         if c.t_layer > 0:
             Tl = T[:, :, self.layer]
             melted = np.maximum.accumulate(Tl[::-1, :, :], axis=0)[::-1] >= 0.5 * (al.T_sol + al.T_liq)
-            if update:
+            freeze = c.extra.get("freeze_mask_it")
+            if update and not (freeze is not None and getattr(self, "it", 0) >= freeze and getattr(self, "melted", None) is not None):
                 if getattr(self, "melted", None) is not None and getattr(self, "it", 0) >= 3:
                     melted = melted | self.melted
                 self.melted = melted
             else:
-                melted = self.melted
+                melted = self.melted       # deep powder (overhang runs): the mask stops growing after freeze_mask_it
             kl = k[:, :, self.layer]
             kl = np.where(melted, kl, c.k_powder)
             k[:, :, self.layer] = kl
@@ -383,7 +384,7 @@ class Solver:
         mush = self.pool(al.T_sol)
         sol = self.solidification()
         out = dict(case=c.__dict__ | {"h": list(c.h)}, cells=self.N, seconds=round(self.seconds, 1), converged=self.converged,
-                   iterations=len(self.hist), T_peak=float(Tsurf.max()), x_peak=float(self.xc[i]), T_boil_alloy=al.T_boil(),
+                   iterations=len(self.hist), dT_last=self.hist[-1]["dTmax"], T_peak=float(Tsurf.max()), x_peak=float(self.xc[i]), T_boil_alloy=al.T_boil(),
                    T_liq=al.T_liq, T_sol=al.T_sol, liquid=liq, mushy=mush, energy=self.energy_balance())
         if sol:
             G = np.array([p["G"] for p in sol])
@@ -408,7 +409,7 @@ def run(c: Case, verbose=True):
     if verbose:
         print(f"{c.alloy} P={c.P} W v={c.v} m/s d={c.d_spot * 1e6:.0f} um A={c.A} T0={c.T0 - 273.15:.0f} C f_M={c.f_M} "
               f"layer={c.t_layer * 1e6:.0f} um: grid {s.nx} x {s.ny} x {s.nz} = {s.N} cells", flush=True)
-    s.solve(verbose=verbose)
+    s.solve(verbose=verbose, maxit=c.extra.get("maxit", 60))
     return s, s.summary()
 
 

@@ -113,14 +113,14 @@ def grid(alloy, d, T0=298.15, Ps=None, vs=None):
     return Ps, vs, rows
 
 
-def plot_maps(maps, fname, title):
+def plot_maps(maps, fname, title, show_patel=True):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     from matplotlib.colors import ListedColormap
     from matplotlib.patches import Patch
     n = len(maps)
-    fig, axs = plt.subplots(1, n, figsize=(3.6 * n, 3.9), sharey=True)
+    fig, axs = plt.subplots(1, n, figsize=(max(3.6 * n, 11.0), 4.2), sharey=True)
     cmap = ListedColormap([COLORS[r] for r in REGIMES])
     for ax, (lab, (Ps, vs, rows)) in zip(np.atleast_1d(axs), maps.items()):
         Z = np.array([[REGIMES.index(p["regime"]) for p in row] for row in rows])
@@ -137,7 +137,7 @@ def plot_maps(maps, fname, title):
         dH = np.array([[p["dH_hs"] for p in row] for row in rows])
         cs2 = ax.contour(V, Pm, dH, levels=[30.0], colors="#191919", linewidths=1.2, linestyles="--")
         ax.clabel(cs2, fmt=lambda x: "dH/h_s 30", fontsize=7)
-        if "96" in lab or lab == "AlSi10Mg":
+        if show_patel and ("96" in lab or lab == "AlSi10Mg"):
             for P, v, D, W in PATEL:
                 ax.plot(v, P, marker="o", ms=5, mfc="white", mec="#191919", mew=1.0)
             ax.annotate("measured AlSi10Mg tracks, 108 um spot\n(Patel & Vlasea): D/W 0.32-0.36", xy=(0.69, 350), xytext=(0.22, 505),
@@ -197,7 +197,7 @@ def main():
     maps_al = {a: grid(a, 96e-6) for a in ("AlSi10Mg", "6061", "7075", "Al")}
     plot_maps(maps_al, "process_map_alloys.png", "96 um spot, 25 C plate: the same map for each alloy")
     maps_hot = {a: grid(a, 96e-6, T0=473.15) for a in ("AlSi10Mg", "6061")}
-    plot_maps(maps_hot, "process_map_200C.png", "96 um spot, 200 C plate")
+    plot_maps(maps_hot, "process_map_200C.png", "96 um spot, 200 C plate", show_patel=False)
     # where the regimes sit at the galvo's speed: power bands at 1.1 m/s, 96 um
     bands = {}
     for a in ("AlSi10Mg", "6061", "7075", "Al"):

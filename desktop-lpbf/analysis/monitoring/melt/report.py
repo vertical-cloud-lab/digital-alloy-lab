@@ -13,7 +13,6 @@ import numpy as np
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import props as PR  # noqa: E402
-import evap as EV  # noqa: E402
 
 OUT = HERE.parents[1] / "out" / "monitoring" / "melt"
 
@@ -127,14 +126,14 @@ def fv_table(rows, J):
 
 def sol_table(rows):
     L = ["| Case | Time liquid, surface centre (µs) | Mushy time, surface centre / range (µs) | Cooling at the liquidus, "
-         "centre / median / max (10⁶ K/s) | G at the liquidus, min–max (10⁶ K/m) | R min–max (m/s) | G/R median (K s/mm²) |",
+         "centre / median / max (10⁶ K/s) | G at the liquidus, min–max (10⁶ K/m) | R min–max (m/s) | G/R, ratio of medians (K s/mm²) |",
          "|---|---|---|---|---|---|---|"]
     for t, r in sorted(rows.items()):
         if not t.startswith(("ref_", "map_", "ovh_")) or "solid" not in r:
             continue
         s = r["solid"]
         c = s["centre"]
-        GR = np.median([1.0]) if False else s["G_range"][1] / max(s["R_range"][1], 1e-9) / 1e6
+        GR = s["G_range"][1] / max(s["R_range"][1], 1e-9) / 1e6     # ratio of the medians
         L.append(f"| {t.replace('ref_', '').replace('map_', '')} | {c['t_liquid'] * 1e6:.0f} | {c['t_sol'] * 1e6:.0f} / "
                  f"{s['t_sol_range'][0] * 1e6:.0f}–{s['t_sol_range'][2] * 1e6:.0f} | {c['Tdot_liq'] / 1e6:.2f} / "
                  f"{s['Tdot_range'][1] / 1e6:.2f} / {s['Tdot_range'][2] / 1e6:.2f} | {s['G_range'][0] / 1e6:.2f}–{s['G_range'][2] / 1e6:.1f} | "
@@ -143,7 +142,6 @@ def sol_table(rows):
 
 
 def sens_table(rows):
-    base = rows.get("sens_base_coarse")
     L = ["| Change (AlSi10Mg, 320 W, 1.1 m/s, A 0.35, 25 °C) | L × W × D (µm) | Peak T (K) | Cooling at liquidus, median (10⁶ K/s) | "
          "Evaporation (W) |", "|---|---|---|---|---|"]
     for t, lab in (("sens_base_coarse", "base, coarse grid (8/6/5 µm), Marangoni factor 2.5, 30 µm powder"),
