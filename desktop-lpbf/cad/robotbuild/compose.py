@@ -18,9 +18,13 @@ What it writes (default: desktop-lpbf/cad/img/robotbuild/):
   compose.json        what went in: chapters, frames, seconds, the counters' end values, missing chapters.
   still-*.png         with --stills: chosen frames, each under 400 kB.
 
-The clocks: project time is the sum of every frame's proc_s (shown as 8 h working days); the machine, robot, person and
-CAM hours and the outsourced days are the sums of the frames' "add" increments. A chapter none of whose frames has
-"add" is counted from "who" instead (each robot, person or machine named counts the frame's proc_s).
+The clocks: the machine, robot, person and CAM hours and the outsourced days, summed over the frames' "add" increments
+(a chapter none of whose frames has "add" is counted from "who": each robot, person or machine named counts the frame's
+proc_s), and a tag with how fast the frame runs (proc_s x FPS: "real time" or "time-lapse xN"). No calendar day is
+shown: the frames' summed time is work time, not weeks from the order (chapter 15 and the summary give those, from
+route.json).
+
+    compose.py --step 4 --out /tmp/robotbuild/preview/test.mp4    # a quick check of every chapter: every 4th frame
 """
 from __future__ import annotations
 
@@ -62,8 +66,10 @@ TITLE_S = 2.6
 # ------------------------------------------------------------------------------------------------ pass 1: what's there
 def scan(partial=False, only=None):
     names = {n for n, _ in EXPECTED}
-    if common.FRAMES.exists():
-        names |= {p.name for p in common.FRAMES.iterdir() if p.is_dir() and p.name[:2].isdigit()}
+    expected = set(names)
+    if common.FRAMES.exists():                               # other numbered folders: only when finished, never tests
+        names |= {p.name for p in common.FRAMES.iterdir() if p.is_dir() and p.name[:2].isdigit()
+                  and "test" not in p.name.lower() and (p / "done").exists()}
     if only:
         names = {n for n in names if n in only}
     titles = dict(EXPECTED)
@@ -92,6 +98,8 @@ def scan(partial=False, only=None):
             meta = meta[:n]
         if meta:
             chapters.append(dict(name=name, dir=d, meta=meta, done=done, card=None))
+        elif name not in expected:
+            continue
         else:
             state = "still rendering" if d.exists() and any(d.glob("*.png")) else "not rendered"
             t = titles.get(name, name)
@@ -276,6 +284,7 @@ def main(argv=None):
     ap.add_argument("--preset", default="medium", help="x264 preset")
     ap.add_argument("--threads", type=int, default=2, help="x264 threads")
     ap.add_argument("--workers", type=int, default=3, help="processes drawing the panels")
+    ap.add_argument("--step", type=int, default=1, help="use every Nth frame (a quick check; the clocks still count all)")
     ap.add_argument("--stills", default="", help="comma-separated chapter:fraction, e.g. 10-parts:0.4,50-integration:0.7")
     ap.add_argument("--no-cards", action="store_true", help="leave missing chapters out instead of a title card")
     a = ap.parse_args(argv)
@@ -304,6 +313,18 @@ def main(argv=None):
                 if r:
                     cost_scale = max(cost_scale, r[1])
     rows = lead_rows(load_hud())
+    if a.step > 1:                                         # a quick check: keep every Nth frame of each chapter
+        for ch in chapters:
+            keep = list(range(0, len(ch["meta"]), a.step))
+            ch["src"] = keep
+            ch["meta"] = [ch["meta"][i] for i in keep]
+            ch["clock"] = [ch["clock"][i] for i in keep]
+        starts, k = [], 0
+        for ch in chapters:
+            starts.append(k)
+            k += len(ch["meta"])
+        total = k
+        ticks = [s_ / total for s_ in starts[1:]]
     dur = total / FPS
     maxrate = int(min(4000, MAX_MB * 0.92 * 8e3 / max(dur, 1.0)))
     print(f"{len(chapters)} chapters, {total} frames, {dur:.0f} s; crf {a.crf}, maxrate {maxrate} kb/s", flush=True)
@@ -324,7 +345,8 @@ def main(argv=None):
             title = ch["meta"][0].get("chapter") or ch["name"]
             for i, m in enumerate(ch["meta"]):
                 window.acquire()
-                yield (str(ch["dir"]) if ch["dir"] else None, i, m, ch["clock"][i], (k + 1) / total, ticks, title,
+                src = ch["src"][i] if "src" in ch else i
+                yield (str(ch["dir"]) if ch["dir"] else None, src, m, ch["clock"][i], (k + 1) / total, ticks, title,
                        cost_scale, rows, ch["card"])
                 k += 1
 

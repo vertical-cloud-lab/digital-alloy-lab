@@ -23,11 +23,15 @@ change without re-rendering any 3-D, and every chapter shares one look:
 - **Caption bar** (top): what is happening, and a second line with the numbers and sources. At its right end, who is
   working (robot A, robot B, person, machine, outsourced, supplier) and the step's result (pass, fail, redesign, person
   needed).
-- **Clocks** (bottom left): project time in 8 h working days, and running machine, robot, person and CAM hours and
-  outsourced days. Each frame carries the real-world time it stands for (`proc_s`: 1/12 s for a robot motion shown in
-  real time, much more in a time-lapse) and what it adds to each counter (`add`); the clocks are the running sums over
-  the whole video. A chapter that sets no `add` is counted from who is working (each robot, person or machine named
-  counts the frame's time). The clocks are hidden where no project time passes (the hall, the parts tour, the summary).
+- **Clocks** (bottom left): the running machine, robot, person and CAM hours and outsourced days. Each frame carries
+  the real-world time it stands for (`proc_s`: 1/12 s for a robot motion shown in real time, much more in a time-lapse)
+  and what it adds to each counter (`add`); the clocks are the running sums over the whole video. There is no calendar
+  clock: the frames' summed time is work time, not weeks from the order, which chapter 15 and the summary give from
+  [`manufacturing-route.md`](manufacturing-route.md) (7-12 weeks from the purchase order to the first leak test on the
+  recommended hybrid route). A chapter that sets no `add` is counted from who is working (each robot, person or machine named
+  counts the frame's time). A tag over the clocks says how fast the frame runs ("real time", or "time-lapse xN" from
+  the frame's `proc_s`). The clocks are hidden where no project time passes (the hall, the parts tour, the estimates
+  and the summary).
 - **Cost panel** (right, chapter 10): the running total of the kit at spec (the laser chain as specified, the cheapest
   listed option on every other line), new against used where a sensible listing exists; the current category with its
   new and used cost; and its big items, the one in close-up highlighted, each with its new and used price and lead
@@ -52,12 +56,12 @@ STATUS_TABLE
 
 | Chapter | What it shows | Where its motion comes from | Time |
 |---|---|---|---|
-| 00 The hall | The hall from above, then a fly-over: the robot shop ([`analysis/shop/shop_cell.py`](../analysis/shop/shop_cell.py), beside the bench), the 12 m table with every part on it as delivered ([`kit_table.py`](../cad/robotbuild/kit_table.py), machined parts as their stock blanks, parts over 12.5 kg on pallets behind lane B), the assembly bench ([`analysis/assembly/cell2.py`](../analysis/assembly/cell2.py)), both MiR250 + UR12e (PR 318's meshes), a person and a 355 ml can | Only MiR A drives, along its own empty lane with its arm parked (1 m/s, 0.3 m/s²: shop_cell's MiR speed); no arm moves | No project time |
+| 00 The hall | The hall from above, then a fly-over: the robot shop (the shop worker's machine models, [`equipment.py`](../cad/robotbuild/equipment.py), at the stations of [`analysis/shop/shop_cell.py`](../analysis/shop/shop_cell.py), beside the bench), the 12 m table with every part on it as delivered ([`kit_table.py`](../cad/robotbuild/kit_table.py), machined parts as their stock blanks, parts over 12.5 kg on pallets behind lane B), the assembly bench ([`analysis/assembly/cell2.py`](../analysis/assembly/cell2.py)), both MiR250 + UR12e (PR 318's meshes), a person and a 355 ml can | Only MiR A drives, along its own empty lane with its arm parked (1 m/s, 0.3 m/s²: shop_cell's MiR speed); no arm moves | No project time |
 | 10 The parts | The camera runs along the table zone by zone (stock, sheet, motion, gas, optics, electronics, seals, frames) and closes in on the big items: the MIC-6 plate, the laser, galvo, f-theta lens, collimator, shutter, scan card and PC, UPS, safety controller, zero-point clamps, scroll pump, O2 analyzer, blower and the rack. Then the long leads, each with its own beat: the IDEC guard switch (27 weeks), the Omron K8DT relay (out of stock until March 2027), the laser (12-15 weeks new, about a week used) and the honing (3-6 weeks, estimate); it ends on the totals at spec and the weeks to ready-to-assemble. Cost and lead-time panels as above | Camera only | No project time |
 | 15 Estimates | Three cards: making the custom parts (287 shop hours: CAM, setups, cutting, deburr and inspection); the routes (BYU hours, cost, weeks to the first leak test; the recommended hybrid keeps 134 hours at BYU and takes 7-12 weeks); the assembly (steps, robot-hours, person-hours, failures) | None (2-D) | No project time |
 | 20-41 | The shop worker's receiving, machining and finishing chapters and the assembly worker's two assembly chapters: see their notes | Collision-checked plans (cell.py's FCL checks, IK branches, RRT-Connect) | Real time for the arms; machining time-lapsed |
-| 50 Integration | sequence.py's tray steps at the Kardex VLM: T01 the 84 kg process module onto the tray by a person with a lift table; T02 the 12U rack and its units (UPS 23 kg, laser 40 kg, PC, DIN drawer); T03 the gas module (scroll pump 26 kg); T04 the hoses and lines; T05 the tray dock; T06 the leak check (rate of rise) | A person's moves, keyframed (walk cycle, hand targets); the arms stay parked beside the opening because none of T01-T06 is planned for them | Time-lapsed: about 3.6 h of a person's work and 1.25 h of pumping |
-| 60 Summary | Charts: the clocks' totals; the kit's cost by category, new against used; when every part is in hand by buying route; time and cost by route (in-house, outsourced, hybrid, robot shop); where a person is needed; what was redesigned | None (2-D) | No project time |
+| 50 Integration | sequence.py's tray steps at the Kardex VLM: T01 the 84 kg process module onto the tray by a person with a lift table; T02 the 12U rack and its units (UPS 23 kg, laser 40 kg, PC, DIN drawer); T03 the gas module (scroll pump 26 kg); T04 the hoses and lines; T05 the tray dock; T06 the leak check (rate of rise) | A person's moves, keyframed (walk cycle, hand targets); the arms stay parked beside the opening because none of T01-T06 is planned for them | Time-lapsed: 4.25 h of a person's work (the data worker's estimates for T01-T05) and 1.25 h of pumping and reading |
+| 60 Summary | Charts: the clocks' totals over the whole video; the machine's cost at spec by category, new against used; parts in hand and ready to assemble by buying route; person-hours to make the parts by hand and in the robot shop; the assembly's robot- and person-hours; time and cost by route (in-house, outsourced, hybrid, robot shop); where a person is needed; where the arms failed or a part was redesigned; Edison's estimate of commissioning the cell against building one machine by hand; and a closing card: a feasibility study, not a business case | None (2-D) | No project time |
 
 ## Caveats
 
@@ -69,10 +73,14 @@ STATUS_TABLE
   measurement.
 - **The intro's and the parts tour's motions are camera moves and one MiR driving an empty lane**; the arms stay in
   cell2's park pose.
-- **Costs and lead times** are the data worker's ([`lead-times.md`](lead-times.md), [`hud.json`](hud.json)): new is
-  bom.csv's low-to-high range; used is the sensible eBay and surplus listings of
-  [`cost/used-options.csv`](../cost/used-options.csv) re-based on today's BOM. Lead times include BYU's purchase-order
-  time where an order needs one.
+- **Costs and lead times** are the data worker's ([`lead-times.md`](lead-times.md), [`hud.json`](hud.json)). New is at
+  spec: the CW laser chain (laser, collimator, scan head, f-theta lens, scan card) as specified and the cheapest listed
+  option on every other line; bom.csv's cheapest-to-premium range is shown as a second line. Used is the sensible eBay
+  and surplus listings of [`cost/used-options.csv`](../cost/used-options.csv) re-based on today's BOM, new elsewhere.
+  Lead times include BYU's purchase-order time where an order needs one. The routes are the route worker's
+  ([`route.json`'s source, manufacturing-route.md](manufacturing-route.md)); the robot shop's hours are Edison's
+  estimate ([`edison/r7-robot-build-review/answer.md`](../edison/r7-robot-build-review/answer.md) section 5), not a
+  measurement.
 - The 3-D frames are flat-shaded software renders at 12 fps; small parts are simplified as in the CAD (most screws are
   shown only where the assembly chapters drive them).
 

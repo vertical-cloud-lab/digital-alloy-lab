@@ -98,7 +98,9 @@ def slide_clocks(u):
     import compose as CP
     chs = [c for c in CP.scan(partial=True) if c["card"] is None and c["name"] != NAME]
     end = CP.counters(chs) if chs else {}
-    tiles = [("Project time", f"{end.get('t_s', 0) / 3600 / 8:.1f}", "working days of 8 h"),
+    R_ = ((load("route.json") or {}).get("routes") or {})
+    wk = (R_.get("c_cn") or {}).get("weeks_to_leak_test")
+    tiles = [("Calendar", f"{wk[0]:.0f}-{wk[1]:.0f}" if wk else "-", "weeks, PO to first leak test (hybrid)"),
              ("Machine", f"{end.get('machine_h', 0):.1f}", "hours"), ("Robots", f"{end.get('robot_h', 0):.1f}", "hours"),
              ("People", f"{end.get('person_h', 0):.1f}", "hours"), ("CAM", f"{end.get('cam_h', 0):.1f}", "hours"),
              ("Outsourced", f"{end.get('outsourced_d', 0):.1f}", "days")]
@@ -423,6 +425,22 @@ def _steps(kind):
                 out.append((r.get("id", ""), r.get("label") or r.get("what", ""), r.get("why", "")))
             else:
                 out.append(("", str(r), ""))
+    if kind == "person":                                       # the shop's person lifts (shop.json)
+        for name, r in ((load("shop.json") or {}).get("person_lifts") or {}).items():
+            out.append(("shop", f"Chamber blank at the VF-4: {name}, {float(r.get('kg', 0)):.1f} kg",
+                        "a person with the vacuum lifter on the jib (the shop worker's person lifts)"))
+    if kind == "redesign":                                     # the assembly's failed steps and their round-7 fixes
+        notes = load("asm_fail_notes.json") or {}
+        have = {o[0] for o in out}
+        for sid, note in notes.items():
+            if sid in have:
+                out = [o for o in out if o[0] != sid]
+            what, _, fix = str(note).partition("Round 7:")
+            out.append((sid, "Failed: " + what.strip().rstrip("."), ("Fix: " + fix.strip()) if fix else ""))
+        for chname, clips in ((load("shop.json") or {}).get("chapters") or {}).items():
+            for clip, c in clips.items():
+                if "fail" in (c.get("status") or []):
+                    out.append(("shop", f"{clip} ({chname}): failed for the arm", "shown with its fix in that chapter"))
     if kind == "person":
         for sid, what, why in (("T01", "Process module (84 kg) onto the VLM tray", "3.4 x two UR12e payloads: lift table"),
                                ("T02", "Rack units: UPS 23 kg, laser 40 kg", "over the 12.5 kg payload: lift"),
@@ -518,9 +536,9 @@ def main():
         "tool changes and docking; a person's time is an estimate per step (hud.json times.assembly)", 9.0)
     R = (route or {}).get("routes") or {}
     if all(k in R for k in ("b_cn", "c_cn", "d")):
-        cap = (f"By route: all outsourced costs least (\u0024{R['b_cn']['total_usd_at_65'][0] / 1000:.0f}k), the hybrid is "
-               f"recommended (\u0024{R['c_cn']['total_usd_at_65'][0] / 1000:.0f}k, {R['c_cn']['labour_h']:.0f} h at BYU), "
-               "the robot shop costs most for one machine")
+        cap = (f"Routes: outsourced costs least (\u0024{R['b_cn']['total_usd_at_65'][0] / 1000:.0f}k), the hybrid is "
+               f"recommended (\u0024{R['c_cn']['total_usd_at_65'][0] / 1000:.0f}k, {R['c_cn']['labour_h']:.0f} BYU hours), "
+               "the robot shop costs most")
     else:
         cap = "Time and cost by route: in-house, outsourced, hybrid, robot shop"
     run(lambda u: slide_routes(u, route), cap, "BYU hours, cost (labour at $65/h) and weeks to the first leak test for "
@@ -533,8 +551,8 @@ def main():
         "Each failed step goes to a redesign (a part, a fixture or a tool) or to a person (assembly and shop summaries)",
         8.0)
     run(slide_edison, "Edison's estimate: for one machine, setting up the robot cell costs more than the build",
-        "Commissioning 1,230-2,470 person-hours (end-effectors, ~90 assembly programs, vision, safety, debugging) against "
-        "140-340; 20-40 weeks against 10-20; break-even only over 5-10 machines (edison/r7-robot-build-review, section 5)",
+        "Commissioning: 1,230-2,470 person-hours (end-effectors, ~90 assembly programs, vision, safety, debugging) vs "
+        "140-340 by hand; it pays back over 5-10 machines",
         11.0)
     run(slide_closing, "A feasibility study, not a business case",
         "The robots' part of this build is a testbed for skills that pay off if the lab builds more machines", 9.0)
