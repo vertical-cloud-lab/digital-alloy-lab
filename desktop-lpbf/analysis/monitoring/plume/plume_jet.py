@@ -334,15 +334,20 @@ def figure(res):
     axs[0].set_ylabel("equilibrium vapour pressure (atm)")
     axs[0].set_title("Vapour pressure over the alloy (Raoult, ideal)", fontsize=9)
     axs[0].legend(fontsize=7, frameon=False)
-    for alloy, c in cols.items():
-        sc = res["alloys"][alloy]["scenarios"]["keyhole, p_sat 2 atm"]
+    for (scn, c) in (("conduction, T_s 2300 K", "#1baf7a"), ("keyhole onset, p_sat 1.2 atm", "#2a78d6"), ("keyhole, p_sat 2 atm", "#eb6834")):
+        sc = res["alloys"]["AlSi10Mg"]["scenarios"][scn]
         for k, ls in zip(U_CROSS, ("-", "--")):
             j = sc["jet"][k]
-            axs[1].plot(j["x_mm"], j["z_mm"], color=c, ls=ls, lw=1.4, label=f"{alloy}, {k.split(' (')[0]}")
+            axs[1].plot(j["x_mm"], j["z_mm"], color=c, ls=ls, lw=1.4, label=f"{scn.split(',')[0]}, {k.split(' (')[0]}")
+    axs[1].axhline(1.0, color="#52514e", lw=0.7, ls=":")
+    axs[1].text(30, 1.3, "Bitharas 2022: ~1 mm rise in 2.1 m/s", fontsize=6.5, color="#52514e")
+    axs[1].axhspan(0, 20, color="#e8e8e4", zorder=0)
+    axs[1].text(30, 18.5, "fixed layout's bed jet (~20 mm thick)", fontsize=6.5, color="#52514e")
+    axs[1].set_ylim(0, 22)
     axs[1].set_xlabel("distance downstream of the spot (mm)")
-    axs[1].set_ylabel("jet centreline height (mm)")
-    axs[1].set_title("Keyhole vapour jet in the cross-flow (p_sat 2 atm)", fontsize=9)
-    axs[1].legend(fontsize=6.5, frameon=False)
+    axs[1].set_ylabel("plume centreline height (mm)")
+    axs[1].set_title("AlSi10Mg plume in the cross-flow: no jet, keyhole onset, keyhole", fontsize=9)
+    axs[1].legend(fontsize=6, frameon=False, loc="center right")
     sizes = np.logspace(-8, -6, 40)
     for lam, ls in ((0.85, "--"), (1.07, "-")):
         axs[2].loglog(sizes * 1e9, [mie_mec(lam, d)["ext"] for d in sizes], color="#2a78d6", ls=ls, label=f"Al, {lam} um, extinction")

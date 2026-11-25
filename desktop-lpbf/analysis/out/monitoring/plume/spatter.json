@@ -1645,6 +1645,20 @@
    "median_rise_mm": 5.741447010437829,
    "p95_rise_mm": 14.17507684129991
   },
+  "Al, 20 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.0023333333333333335,
+   "floor": 0.03966666666666667,
+   "wall": 0.958,
+   "lid": 0.0,
+   "LW slide": 0.0,
+   "LP slide": 0.0,
+   "LC bore": 0.0,
+   "laser slide": 0.0,
+   "airborne": 0.0,
+   "n": 3000,
+   "median_rise_mm": 3.7864428255108518,
+   "p95_rise_mm": 9.86893102506943
+  },
   "Al, 35 um, Ly 2017 speeds": {
    "plate": 0.0,
    "floor": 0.0,
@@ -1672,6 +1686,20 @@
    "n": 3000,
    "median_rise_mm": 14.844415896813533,
    "p95_rise_mm": 37.20634789078054
+  },
+  "Al, 35 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.001,
+   "floor": 0.02,
+   "wall": 0.979,
+   "lid": 0.0,
+   "LW slide": 0.0,
+   "LP slide": 0.0,
+   "LC bore": 0.0,
+   "laser slide": 0.0,
+   "airborne": 0.0,
+   "n": 3000,
+   "median_rise_mm": 9.47965280733544,
+   "p95_rise_mm": 25.80792480239553
   },
   "Al, 50 um, Ly 2017 speeds": {
    "plate": 0.0,
@@ -1701,6 +1729,20 @@
    "median_rise_mm": 26.219580110452114,
    "p95_rise_mm": 66.99758704567664
   },
+  "Al, 50 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.001,
+   "floor": 0.013,
+   "wall": 0.9856666666666667,
+   "lid": 0.0003333333333333333,
+   "LW slide": 0.0,
+   "LP slide": 0.0,
+   "LC bore": 0.0,
+   "laser slide": 0.0,
+   "airborne": 0.0,
+   "n": 3000,
+   "median_rise_mm": 16.56149769215761,
+   "p95_rise_mm": 46.0590597866996
+  },
   "Al, 100 um, Ly 2017 speeds": {
    "plate": 0.0055,
    "floor": 0.0905,
@@ -1728,6 +1770,20 @@
    "n": 2000,
    "median_rise_mm": 67.36129820524276,
    "p95_rise_mm": 120.07644896794113
+  },
+  "Al, 100 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.0075,
+   "floor": 0.1595,
+   "wall": 0.763,
+   "lid": 0.05,
+   "LW slide": 0.0,
+   "LP slide": 0.0,
+   "LC bore": 0.0005,
+   "laser slide": 0.0195,
+   "airborne": 0.0,
+   "n": 2000,
+   "median_rise_mm": 42.54357392975975,
+   "p95_rise_mm": 120.01092232825013
   },
   "Al, 150 um, Ly 2017 speeds": {
    "plate": 0.0055,
@@ -1757,6 +1813,20 @@
    "median_rise_mm": 87.5075424642967,
    "p95_rise_mm": 120.16137297729738
   },
+  "Al, 150 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.0285,
+   "floor": 0.295,
+   "wall": 0.4585,
+   "lid": 0.166,
+   "LW slide": 0.003,
+   "LP slide": 0.0,
+   "LC bore": 0.0015,
+   "laser slide": 0.0475,
+   "airborne": 0.0,
+   "n": 2000,
+   "median_rise_mm": 61.995085231637205,
+   "p95_rise_mm": 120.06440416291159
+  },
   "Al, 200 um, Ly 2017 speeds": {
    "plate": 0.001,
    "floor": 0.023,
@@ -1784,6 +1854,20 @@
    "n": 2000,
    "median_rise_mm": 95.83875536537504,
    "p95_rise_mm": 120.18954883359066
+  },
+  "Al, 200 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.0385,
+   "floor": 0.2555,
+   "wall": 0.405,
+   "lid": 0.229,
+   "LW slide": 0.0015,
+   "LP slide": 0.001,
+   "LC bore": 0.0025,
+   "laser slide": 0.067,
+   "airborne": 0.0,
+   "n": 2000,
+   "median_rise_mm": 74.77807505771897,
+   "p95_rise_mm": 120.09302562870975
   },
   "steel, 20 um, Ly 2017 speeds": {
    "plate": 0.0,
@@ -1813,6 +1897,20 @@
    "median_rise_mm": 15.92293339869625,
    "p95_rise_mm": 41.148016469708615
   },
+  "steel, 20 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.001,
+   "floor": 0.016666666666666666,
+   "wall": 0.9823333333333333,
+   "lid": 0.0,
+   "LW slide": 0.0,
+   "LP slide": 0.0,
+   "LC bore": 0.0,
+   "laser slide": 0.0,
+   "airborne": 0.0,
+   "n": 3000,
+   "median_rise_mm": 10.023402182696909,
+   "p95_rise_mm": 28.16964923037802
+  },
   "steel, 35 um, Ly 2017 speeds": {
    "plate": 0.0,
    "floor": 0.0,
@@ -1840,6 +1938,20 @@
    "n": 3000,
    "median_rise_mm": 38.882059191398405,
    "p95_rise_mm": 104.7398291375323
+  },
+  "steel, 35 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.001,
+   "floor": 0.012,
+   "wall": 0.982,
+   "lid": 0.0036666666666666666,
+   "LW slide": 0.0,
+   "LP slide": 0.0,
+   "LC bore": 0.0,
+   "laser slide": 0.0013333333333333333,
+   "airborne": 0.0,
+   "n": 3000,
+   "median_rise_mm": 24.014778821421903,
+   "p95_rise_mm": 70.44463715310083
   },
   "steel, 50 um, Ly 2017 speeds": {
    "plate": 0.005333333333333333,
@@ -1869,6 +1981,20 @@
    "median_rise_mm": 60.99694608649456,
    "p95_rise_mm": 120.06995343210271
   },
+  "steel, 50 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.005,
+   "floor": 0.119,
+   "wall": 0.8263333333333334,
+   "lid": 0.039,
+   "LW slide": 0.0,
+   "LP slide": 0.0006666666666666666,
+   "LC bore": 0.0,
+   "laser slide": 0.01,
+   "airborne": 0.0,
+   "n": 3000,
+   "median_rise_mm": 38.67470076381303,
+   "p95_rise_mm": 119.23532059689641
+  },
   "steel, 100 um, Ly 2017 speeds": {
    "plate": 0.001,
    "floor": 0.028,
@@ -1896,6 +2022,20 @@
    "n": 2000,
    "median_rise_mm": 95.4366260856599,
    "p95_rise_mm": 120.17620601256753
+  },
+  "steel, 100 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.039,
+   "floor": 0.267,
+   "wall": 0.401,
+   "lid": 0.223,
+   "LW slide": 0.0015,
+   "LP slide": 0.001,
+   "LC bore": 0.0025,
+   "laser slide": 0.065,
+   "airborne": 0.0,
+   "n": 2000,
+   "median_rise_mm": 73.05798597802271,
+   "p95_rise_mm": 120.0927441129853
   },
   "steel, 150 um, Ly 2017 speeds": {
    "plate": 0.0,
@@ -1925,6 +2065,20 @@
    "median_rise_mm": 108.1079813650484,
    "p95_rise_mm": 120.21645111936867
   },
+  "steel, 150 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.048,
+   "floor": 0.197,
+   "wall": 0.3825,
+   "lid": 0.29,
+   "LW slide": 0.002,
+   "LP slide": 0.0005,
+   "LC bore": 0.002,
+   "laser slide": 0.078,
+   "airborne": 0.0,
+   "n": 2000,
+   "median_rise_mm": 88.29205796387762,
+   "p95_rise_mm": 120.11798020939152
+  },
   "steel, 200 um, Ly 2017 speeds": {
    "plate": 0.0,
    "floor": 0.0,
@@ -1952,6 +2106,20 @@
    "n": 2000,
    "median_rise_mm": 113.80067875100772,
    "p95_rise_mm": 120.24229671713104
+  },
+  "steel, 200 um, Al lognormal (median 2.5 m/s)": {
+   "plate": 0.0415,
+   "floor": 0.169,
+   "wall": 0.3895,
+   "lid": 0.314,
+   "LW slide": 0.002,
+   "LP slide": 0.0005,
+   "LC bore": 0.003,
+   "laser slide": 0.0805,
+   "airborne": 0.0,
+   "n": 2000,
+   "median_rise_mm": 94.67684972714855,
+   "p95_rise_mm": 120.13236278039228
   }
  },
  "glow": {
@@ -1977,8 +2145,8 @@
     "glow_ms": 2.2000000000000135,
     "glow_path_mm": 8.582991667932209
    },
-   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us": {
-    "T_visible_K": 1880.4284137886111,
+   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us": {
+    "T_visible_K": 1815.7018261852684,
     "glow_ms": 0.0,
     "glow_path_mm": 0.0
    },
@@ -2017,10 +2185,10 @@
     "glow_ms": 4.751999999999982,
     "glow_path_mm": 14.577307926808027
    },
-   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us": {
-    "T_visible_K": 1880,
-    "glow_ms": 0.9000000000000089,
-    "glow_path_mm": 4.042444606551177
+   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us": {
+    "T_visible_K": 1816,
+    "glow_ms": 1.150000000000015,
+    "glow_path_mm": 5.021427997774285
    },
    "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 100 us": {
     "T_visible_K": 1788,
@@ -2057,8 +2225,8 @@
     "glow_ms": 4.601999999999962,
     "glow_path_mm": 17.37221260498043
    },
-   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us": {
-    "T_visible_K": 1840.727976042775,
+   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us": {
+    "T_visible_K": 1762.9948569781159,
     "glow_ms": 0.0,
     "glow_path_mm": 0.0
    },
@@ -2097,10 +2265,10 @@
     "glow_ms": 9.700000000000639,
     "glow_path_mm": 28.437064270131845
    },
-   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us": {
-    "T_visible_K": 1841,
-    "glow_ms": 2.050000000000026,
-    "glow_path_mm": 8.972896686284084
+   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us": {
+    "T_visible_K": 1763,
+    "glow_ms": 2.551999999999984,
+    "glow_path_mm": 10.834547963494176
    },
    "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 100 us": {
     "T_visible_K": 1728,
@@ -2137,8 +2305,8 @@
     "glow_ms": 19.001999999998944,
     "glow_path_mm": 66.08606005579378
    },
-   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us": {
-    "T_visible_K": 1784.890774890505,
+   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us": {
+    "T_visible_K": 1680.718658238348,
     "glow_ms": 0.0,
     "glow_path_mm": 0.0
    },
@@ -2177,10 +2345,10 @@
     "glow_ms": 37.9019999999966,
     "glow_path_mm": 100.19141870651974
    },
-   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us": {
-    "T_visible_K": 1785,
-    "glow_ms": 8.50000000000048,
-    "glow_path_mm": 35.60569988609963
+   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us": {
+    "T_visible_K": 1681,
+    "glow_ms": 11.250000000000844,
+    "glow_path_mm": 44.74971962173272
    },
    "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 100 us": {
     "T_visible_K": 1628,
@@ -2217,8 +2385,8 @@
     "glow_ms": 74.35000000003305,
     "glow_path_mm": 234.3987180700038
    },
-   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us": {
-    "T_visible_K": 1751.223338166778,
+   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us": {
+    "T_visible_K": 1623.2296770004007,
     "glow_ms": 0.0,
     "glow_path_mm": 0.0
    },
@@ -2257,10 +2425,10 @@
     "glow_ms": 143.05000000010173,
     "glow_path_mm": 334.4018429458051
    },
-   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 10 us": {
-    "T_visible_K": 1751,
-    "glow_ms": 31.801999999990496,
-    "glow_path_mm": 127.23829021743188
+   "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 30 us": {
+    "T_visible_K": 1623,
+    "glow_ms": 44.25000000000295,
+    "glow_path_mm": 164.16730918742113
    },
    "LW IMX296 + 50 mm f/2.8, 850 +/- 5 nm, 100 us": {
     "T_visible_K": 1547,

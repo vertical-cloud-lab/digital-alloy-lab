@@ -114,6 +114,14 @@ def control_volumes(meta):
         cv[f"{k} near face"] = nb
     cv["beam column z 20-120 (r < 5 mm)"] = "beam"
     cv["over plate z 0-20"] = [-37.5, 37.5, -37.5, 37.5, 0.0, 20.0]
+    # where else a port could go: a 20 x 20 mm, 6 mm layer under the ceiling where each lid candidate's bore would open
+    # (monitoring_spec LP candidates), and a 20 x 20 mm, 4 mm layer along the left wall at the LW height, at several y
+    for (cx, cy, cz) in ((-60.0, -80.0, 136.0), (-40.0, 60.0, 136.0), (-20.0, 80.0, 136.0), (80.0, 80.0, 136.0)):
+        t = (cz - 120.0) / cz
+        x, y = cx * (1 - t), cy * (1 - t)
+        cv[f"ceiling layer at lid candidate ({cx:g}, {cy:g})"] = [x - 10, x + 10, y - 10, y + 10, 114.0, 120.0]
+    for y in (-60.0, -20.0, 20.0, 60.0):
+        cv[f"left-wall layer at y {y:g}, z 22-44"] = [-140.0, -136.0, y - 10, y + 10, 22.0, 44.0]
     return cv, vps
 
 
@@ -177,7 +185,9 @@ def track_condensate(cs, zr, n_per=600, t_end=8.0, dt=1e-3, seed=11, sc_t=0.7, d
             V = math.pi * 5.0 ** 2 * 100.0
         else:
             V = (b[1] - b[0]) * (b[3] - b[2]) * (b[5] - b[4])
-        conc[k] = dict(volume_mm3=V, C_per_S_s_m3=float(tres[k].mean() / (V * 1e-9)),
+        nv = int((tres[k] > 0).sum())                     # tracers that visited: the counting noise is ~1/sqrt(nv)
+        conc[k] = dict(volume_mm3=V, C_per_S_s_m3=float(tres[k].mean() / (V * 1e-9)), n_visited=nv,
+                       rel_noise=(1 / math.sqrt(nv)) if nv else None,
                        C_per_S_by_release=[float(tres[k][src == i].mean() / (V * 1e-9)) for i in range(len(RELEASES))])
     res["concentration_per_source"] = conc
     return res
@@ -272,6 +282,11 @@ def track_spatter(cs, vps, d_um, n_per=500, slow=False, seed=5, dt=5e-5, t_max=2
                         break
                 if f == "wall or part" and z >= 119.0:
                     f = "lid"
+                elif f == "wall or part":
+                    # where on the walls: the door side (front wall and door recess), the back wall, the side walls, or a
+                    # part standing in the gas (recoater at the end of its stroke, dose chute, ball screw, rail, gas knife)
+                    f = ("wall: door side" if y < -90.0 else "wall: back" if y > 90.0 else
+                         "wall: left or right" if abs(x) > 136.0 else "part (recoater, chute, screw, rail, knife)")
                 fate[i] = f
             alive[i] = False
         # a particle that fell into the outlet slot and keeps going down is gone
@@ -318,9 +333,11 @@ def figure(name, res):
         axs[0].plot(ds, [100 * res["spatter"]["Ly 2017 speeds"][str(d)]["windows"][w] for d in ds], color=c, lw=1.5, marker="o", ms=3, label=w)
         if "slow (speeds / 2)" in res["spatter"]:
             axs[0].plot(ds, [100 * res["spatter"]["slow (speeds / 2)"][str(d)]["windows"][w] for d in ds], color=c, lw=1.0, ls="--")
+        if "Al lognormal (median 2.5 m/s)" in res["spatter"]:
+            axs[0].plot(ds, [100 * res["spatter"]["Al lognormal (median 2.5 m/s)"][str(d)]["windows"][w] for d in ds], color=c, lw=1.0, ls=":")
     axs[0].set_xlabel("Al spatter diameter (um)")
     axs[0].set_ylabel("share of launches hitting the window (%)")
-    axs[0].set_title(f"{name}: spatter on each window (solid: Ly 2017 speeds, dashed: halved)", fontsize=9)
+    axs[0].set_title(f"{name}: spatter on each window\nsolid: Ly 2017 speeds; dashed: halved; dotted: median 2.5 m/s", fontsize=9)
     axs[0].legend(fontsize=7, frameon=False)
     bands = list(res["condensate"].keys())
     x = np.arange(len(WINDOWS))
@@ -339,7 +356,7 @@ def figure(name, res):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("cases", nargs="+")
-    ap.add_argument("--n-per", type=int, default=600)
+    ap.add_argument("--n-per", type=int, default=2000)
     ap.add_argument("--no-spatter", action="store_true")
     ap.add_argument("--no-slow", action="store_true")
     a = ap.parse_args()
@@ -368,8 +385,8 @@ def main():
                                         for key, c in res["condensate"].items()}
         if not a.no_spatter:
             res["spatter"] = {}
-            for slow in ((False,) if a.no_slow else (False, True)):
-                lab = "slow (speeds / 2)" if slow else "Ly 2017 speeds"
+            for slow in ((False,) if a.no_slow else (False, True, "al")):
+                lab = {False: "Ly 2017 speeds", True: "slow (speeds / 2)", "al": "Al lognormal (median 2.5 m/s)"}[slow]
                 res["spatter"][lab] = {}
                 for d_um in (20, 35, 50, 100, 150, 200):
                     r = track_spatter(cs, vps, d_um, n_per=300 if d_um < 100 else 240, slow=slow)

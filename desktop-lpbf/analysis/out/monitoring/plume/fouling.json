@@ -1181,5 +1181,793 @@
     2.220446049250313e-16
    ]
   }
+ },
+ "windows": {
+  "p200": {
+   "condensate": {
+    "LW | 0.5-5 mm | 0.05 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.0005259745928780175,
+     "hours (dense Al film)": 2070.9192704183693,
+     "hours (porous Al, f 0.1)": 1078793.1708944892,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 0.5-5 mm | 0.05 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.0004481989011993134,
+     "hours (dense Al film)": 2430.284673226262,
+     "hours (porous Al, f 0.1)": 1265995.5152555911,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 0.5-5 mm | 0.05 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.0032540372167300124,
+     "hours (dense Al film)": 334.7383104721012,
+     "hours (porous Al, f 0.1)": 174373.4816379923,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 0.5-5 mm | 0.1 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.00022889800796934277,
+     "hours (dense Al film)": 4758.673654719751,
+     "hours (porous Al, f 0.1)": 2478911.0394390635,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 0.5-5 mm | 0.1 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.00019505093410921446,
+     "hours (dense Al film)": 5584.44349480347,
+     "hours (porous Al, f 0.1)": 2909075.0139299585,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 0.5-5 mm | 0.1 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.001416119042351435,
+     "hours (dense Al film)": 769.1803355266413,
+     "hours (porous Al, f 0.1)": 400685.09912742185,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 0.5-5 mm | 0.3 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 7.278449509410387e-05,
+     "hours (dense Al film)": 14965.425242467347,
+     "hours (porous Al, f 0.1)": 7795860.89217482,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 0.5-5 mm | 0.3 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 6.202187551878529e-05,
+     "hours (dense Al film)": 17562.36668160138,
+     "hours (porous Al, f 0.1)": 9148672.04699339,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 0.5-5 mm | 0.3 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.000450294480083461,
+     "hours (dense Al film)": 2418.9746228726876,
+     "hours (porous Al, f 0.1)": 1260103.829733034,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 0.5-5 mm | 0.1 um, dT 10 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.015892741566436528,
+     "hours (dense Al film)": 68.53763496928082,
+     "hours (porous Al, f 0.1)": 35702.95260190536,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 0.5-5 mm | 0.1 um, dT 10 K | 6061": {
+     "mg_m2_per_h": 0.01354268704909379,
+     "hours (dense Al film)": 80.43093044924422,
+     "hours (porous Al, f 0.1)": 41898.464965177154,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 0.5-5 mm | 0.1 um, dT 10 K | 7075": {
+     "mg_m2_per_h": 0.09832332822405018,
+     "hours (dense Al film)": 11.078255179274016,
+     "hours (porous Al, f 0.1)": 5770.93767175817,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "BW | 0.5-5 mm | 0.05 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.014344846398790937,
+     "hours (dense Al film)": 158.05129058572209,
+     "hours (porous Al, f 0.1)": 74758.58584173696,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 0.5-5 mm | 0.05 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.012223678635561204,
+     "hours (dense Al film)": 185.47783806971495,
+     "hours (porous Al, f 0.1)": 87731.3992672148,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 0.5-5 mm | 0.05 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.08874699402213669,
+     "hours (dense Al film)": 25.547022877387025,
+     "hours (porous Al, f 0.1)": 12083.794417003559,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 0.5-5 mm | 0.1 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.00624247258454846,
+     "hours (dense Al film)": 363.1928624235763,
+     "hours (porous Al, f 0.1)": 171790.97166481416,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 0.5-5 mm | 0.1 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.0053194001973595915,
+     "hours (dense Al film)": 426.21750619707916,
+     "hours (porous Al, f 0.1)": 201601.75792429654,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 0.5-5 mm | 0.1 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.03862018886385347,
+     "hours (dense Al film)": 58.705603294054825,
+     "hours (porous Al, f 0.1)": 27767.87122069866,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 0.5-5 mm | 0.3 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.0019844812340433435,
+     "hours (dense Al film)": 1142.4756493985253,
+     "hours (porous Al, f 0.1)": 540393.3342849243,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 0.5-5 mm | 0.3 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.001691036640538188,
+     "hours (dense Al film)": 1340.7287767941511,
+     "hours (porous Al, f 0.1)": 634167.471704955,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 0.5-5 mm | 0.3 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.01227735308685711,
+     "hours (dense Al film)": 184.66696123693904,
+     "hours (porous Al, f 0.1)": 87347.85285588527,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 0.5-5 mm | 0.1 um, dT 10 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.7348024979742932,
+     "hours (dense Al film)": 3.08548418497915,
+     "hours (porous Al, f 0.1)": 1459.4403718644696,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 0.5-5 mm | 0.1 um, dT 10 K | 6061": {
+     "mg_m2_per_h": 0.6261474920081699,
+     "hours (dense Al film)": 3.6209064406078832,
+     "hours (porous Al, f 0.1)": 1712.6962010997738,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 0.5-5 mm | 0.1 um, dT 10 K | 7075": {
+     "mg_m2_per_h": 4.545988927470989,
+     "hours (dense Al film)": 0.49873009432166593,
+     "hours (porous Al, f 0.1)": 235.90036139554303,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "LP | 0.5-5 mm | 0.05 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.13718203427051967,
+     "hours (dense Al film)": 7.940186380335827,
+     "hours (porous Al, f 0.1)": 4136.23986463038,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 0.5-5 mm | 0.05 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.11689697155883887,
+     "hours (dense Al film)": 9.318042252217628,
+     "hours (porous Al, f 0.1)": 4853.999135257414,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 0.5-5 mm | 0.05 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.8487015362100003,
+     "hours (dense Al film)": 1.2834322475787552,
+     "hours (porous Al, f 0.1)": 668.5716646569309,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 0.5-5 mm | 0.1 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.051186793292544414,
+     "hours (dense Al film)": 21.27992105143647,
+     "hours (porous Al, f 0.1)": 11085.238249207954,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 0.5-5 mm | 0.1 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.04361781884577721,
+     "hours (dense Al film)": 24.972613233891614,
+     "hours (porous Al, f 0.1)": 13008.853121864624,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 0.5-5 mm | 0.1 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.3166763806358126,
+     "hours (dense Al film)": 3.439634234654887,
+     "hours (porous Al, f 0.1)": 1791.7907161928886,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 0.5-5 mm | 0.3 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.0006030634143900703,
+     "hours (dense Al film)": 1806.1963205696966,
+     "hours (porous Al, f 0.1)": 940892.4257736524,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 0.5-5 mm | 0.3 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.0005138886237910375,
+     "hours (dense Al film)": 2119.624505609731,
+     "hours (porous Al, f 0.1)": 1104164.9349520209,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 0.5-5 mm | 0.3 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.003730961192889167,
+     "hours (dense Al film)": 291.9491422793527,
+     "hours (porous Al, f 0.1)": 152083.5434960447,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 0.5-5 mm | 0.1 um, dT 10 K | AlSi10Mg": {
+     "mg_m2_per_h": 1.3145413709220344,
+     "hours (dense Al film)": 0.82861669038041,
+     "hours (porous Al, f 0.1)": 431.6469693630267,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 0.5-5 mm | 0.1 um, dT 10 K | 6061": {
+     "mg_m2_per_h": 1.1201605667004808,
+     "hours (dense Al film)": 0.9724060572405395,
+     "hours (porous Al, f 0.1)": 506.55041404661057,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 0.5-5 mm | 0.1 um, dT 10 K | 7075": {
+     "mg_m2_per_h": 8.132648614271814,
+     "hours (dense Al film)": 0.1339355690629544,
+     "hours (porous Al, f 0.1)": 69.77035720749879,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LC | 0.5-5 mm | 0.05 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.0149932544250248,
+     "hours (dense Al film)": 72.64939880720668,
+     "hours (porous Al, f 0.1)": 37844.872285616264,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 0.5-5 mm | 0.05 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.012776206778216627,
+     "hours (dense Al film)": 85.25620624728074,
+     "hours (porous Al, f 0.1)": 44412.070711649656,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 0.5-5 mm | 0.05 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.09275848788051162,
+     "hours (dense Al film)": 11.742870599019245,
+     "hours (porous Al, f 0.1)": 6117.152314856006,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 0.5-5 mm | 0.1 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.004574472663293452,
+     "hours (dense Al film)": 238.11507911762718,
+     "hours (porous Al, f 0.1)": 124040.04584263808,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 0.5-5 mm | 0.1 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.0038980468810019407,
+     "hours (dense Al film)": 279.4350487292153,
+     "hours (porous Al, f 0.1)": 145564.64203297815,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 0.5-5 mm | 0.1 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.028300804819907245,
+     "hours (dense Al film)": 38.488337242457014,
+     "hours (porous Al, f 0.1)": 20049.52871381536,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 0.5-5 mm | 0.3 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.00015217219779309042,
+     "hours (dense Al film)": 7158.015300683275,
+     "hours (porous Al, f 0.1)": 3728787.564942292,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 0.5-5 mm | 0.3 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.00012967054448534028,
+     "hours (dense Al film)": 8400.141485213604,
+     "hours (porous Al, f 0.1)": 4375841.877682276,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 0.5-5 mm | 0.3 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.0009414409016618719,
+     "hours (dense Al film)": 1157.0040330930497,
+     "hours (porous Al, f 0.1)": 602712.0745011017,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 0.5-5 mm | 0.1 um, dT 10 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.32335926060185094,
+     "hours (dense Al film)": 3.3685471636537634,
+     "hours (porous Al, f 0.1)": 1754.759699180134,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 0.5-5 mm | 0.1 um, dT 10 K | 6061": {
+     "mg_m2_per_h": 0.27554423209180284,
+     "hours (dense Al film)": 3.9530891714642684,
+     "hours (porous Al, f 0.1)": 2059.2621175672743,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 0.5-5 mm | 0.1 um, dT 10 K | 7075": {
+     "mg_m2_per_h": 2.0005207145371564,
+     "hours (dense Al film)": 0.5444836997819109,
+     "hours (porous Al, f 0.1)": 283.63505298273964,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "laser | 0.5-5 mm | 0.05 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 0.5-5 mm | 0.05 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 0.5-5 mm | 0.05 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 0.5-5 mm | 0.1 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 0.5-5 mm | 0.1 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 0.5-5 mm | 0.1 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 0.5-5 mm | 0.3 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 0.5-5 mm | 0.3 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 0.5-5 mm | 0.3 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 0.5-5 mm | 0.1 um, dT 10 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 0.5-5 mm | 0.1 um, dT 10 K | 6061": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 0.5-5 mm | 0.1 um, dT 10 K | 7075": {
+     "mg_m2_per_h": 0.0,
+     "hours (dense Al film)": Infinity,
+     "hours (porous Al, f 0.1)": Infinity,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "LW | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.06909202252045621,
+     "hours (dense Al film)": 15.765219780895055,
+     "hours (porous Al, f 0.1)": 8212.49368829546,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 5-20 mm | 0.05 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.05887540766154166,
+     "hours (dense Al film)": 18.50094909581507,
+     "hours (porous Al, f 0.1)": 9637.602887146728,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 5-20 mm | 0.05 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.4274503287896532,
+     "hours (dense Al film)": 2.5482514500007776,
+     "hours (porous Al, f 0.1)": 1327.447332810542,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.03006804232685279,
+     "hours (dense Al film)": 36.226200172957995,
+     "hours (porous Al, f 0.1)": 18871.125452489872,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 5-20 mm | 0.1 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.025621890704586345,
+     "hours (dense Al film)": 42.512511379441875,
+     "hours (porous Al, f 0.1)": 22145.820751598403,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 5-20 mm | 0.1 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.18602139740328405,
+     "hours (dense Al film)": 5.855514125507334,
+     "hours (porous Al, f 0.1)": 3050.28242332082,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.00956097127556146,
+     "hours (dense Al film)": 113.92680604801602,
+     "hours (porous Al, f 0.1)": 59347.296682207976,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 5-20 mm | 0.3 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.008147193568147613,
+     "hours (dense Al film)": 133.69645768575995,
+     "hours (porous Al, f 0.1)": 69645.79816529699,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 5-20 mm | 0.3 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.05915068290376328,
+     "hours (dense Al film)": 18.41484944330613,
+     "hours (porous Al, f 0.1)": 9592.75144437452,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg": {
+     "mg_m2_per_h": 2.0876705321670963,
+     "hours (dense Al film)": 0.5217542247965972,
+     "hours (porous Al, f 0.1)": 271.79470616554096,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 5-20 mm | 0.1 um, dT 10 K | 6061": {
+     "mg_m2_per_h": 1.778967370768955,
+     "hours (dense Al film)": 0.6122939285113006,
+     "hours (porous Al, f 0.1)": 318.9590816472082,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "LW | 5-20 mm | 0.1 um, dT 10 K | 7075": {
+     "mg_m2_per_h": 12.915752395511197,
+     "hours (dense Al film)": 0.084335072923828,
+     "hours (porous Al, f 0.1)": 43.93222953530896,
+     "threshold": "transmission loss 0.1 (camera: 10 % less light (exposure or gain can make it up))"
+    },
+    "BW | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.030802167690140162,
+     "hours (dense Al film)": 73.60590687611241,
+     "hours (porous Al, f 0.1)": 34815.74549163373,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 5-20 mm | 0.05 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.026247461189593133,
+     "hours (dense Al film)": 86.37869659873189,
+     "hours (porous Al, f 0.1)": 40857.301326946625,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 5-20 mm | 0.05 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.19056319711420008,
+     "hours (dense Al film)": 11.897478216762718,
+     "hours (porous Al, f 0.1)": 5627.531690958559,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.01340423466413491,
+     "hours (dense Al film)": 169.14218106380628,
+     "hours (porous Al, f 0.1)": 80004.5998717044,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 5-20 mm | 0.1 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.011422154851643789,
+     "hours (dense Al film)": 198.49332424840787,
+     "hours (porous Al, f 0.1)": 93887.75102591189,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 5-20 mm | 0.1 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.08292772892357796,
+     "hours (dense Al film)": 27.339727205989366,
+     "hours (porous Al, f 0.1)": 12931.747255237318,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.004261204480662226,
+     "hours (dense Al film)": 532.0611805586271,
+     "hours (porous Al, f 0.1)": 251666.03380739046,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 5-20 mm | 0.3 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.003631101562469067,
+     "hours (dense Al film)": 624.3894442438003,
+     "hours (porous Al, f 0.1)": 295337.49261514336,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 5-20 mm | 0.3 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.026362714389490203,
+     "hours (dense Al film)": 86.00106396808324,
+     "hours (porous Al, f 0.1)": 40678.68031518288,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg": {
+     "mg_m2_per_h": 1.577814717043309,
+     "hours (dense Al film)": 1.436937722847101,
+     "hours (porous Al, f 0.1)": 679.6745012621831,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 5-20 mm | 0.1 um, dT 10 K | 6061": {
+     "mg_m2_per_h": 1.344503768909086,
+     "hours (dense Al film)": 1.6862886806352737,
+     "hours (porous Al, f 0.1)": 797.6180176576792,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "BW | 5-20 mm | 0.1 um, dT 10 K | 7075": {
+     "mg_m2_per_h": 9.761436920878012,
+     "hours (dense Al film)": 0.23226308841208246,
+     "hours (porous Al, f 0.1)": 109.86091900024125,
+     "threshold": "transmission loss 0.2 (light window: 20 % less light)"
+    },
+    "LP | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 1.2097250332773573,
+     "hours (dense Al film)": 0.9004119863425255,
+     "hours (porous Al, f 0.1)": 469.04691830967585,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 5-20 mm | 0.05 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 1.0308433867526356,
+     "hours (dense Al film)": 1.056659948678434,
+     "hours (porous Al, f 0.1)": 550.4403541340018,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 5-20 mm | 0.05 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 7.484183330519563,
+     "hours (dense Al film)": 0.1455403845733861,
+     "hours (porous Al, f 0.1)": 75.81559320533421,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.45138523822351184,
+     "hours (dense Al film)": 2.4131292472665664,
+     "hours (porous Al, f 0.1)": 1257.0588287157211,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 5-20 mm | 0.1 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.3846390501152734,
+     "hours (dense Al film)": 2.8318781460569404,
+     "hours (porous Al, f 0.1)": 1475.1955078163896,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 5-20 mm | 0.1 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 2.7925766456223013,
+     "hours (dense Al film)": 0.39005229161716093,
+     "hours (porous Al, f 0.1)": 203.1879052452544,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.005318049939416608,
+     "hours (dense Al film)": 204.82149143959225,
+     "hours (porous Al, f 0.1)": 106696.59091675631,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 5-20 mm | 0.3 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.004531671627573051,
+     "hours (dense Al film)": 240.36404436587438,
+     "hours (porous Al, f 0.1)": 125211.58757584046,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 5-20 mm | 0.3 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.032901080503909025,
+     "hours (dense Al film)": 33.10684340631693,
+     "hours (porous Al, f 0.1)": 17246.17520672,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg": {
+     "mg_m2_per_h": 11.592141872945389,
+     "hours (dense Al film)": 0.0939645953336474,
+     "hours (porous Al, f 0.1)": 48.94848640397481,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 5-20 mm | 0.1 um, dT 10 K | 6061": {
+     "mg_m2_per_h": 9.878015631081288,
+     "hours (dense Al film)": 0.11027021628860383,
+     "hours (porous Al, f 0.1)": 57.44248845642924,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LP | 5-20 mm | 0.1 um, dT 10 K | 7075": {
+     "mg_m2_per_h": 71.71688820514349,
+     "hours (dense Al film)": 0.015188206674915695,
+     "hours (porous Al, f 0.1)": 7.911913261458543,
+     "threshold": "transmission loss 0.1 (camera)"
+    },
+    "LC | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.15188338504695556,
+     "hours (dense Al film)": 7.171626572615531,
+     "hours (porous Al, f 0.1)": 3735.878013815627,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 5-20 mm | 0.05 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.12942443838587697,
+     "hours (dense Al film)": 8.416114713157636,
+     "hours (porous Al, f 0.1)": 4384.1627279777495,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 5-20 mm | 0.05 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.9396541092249094,
+     "hours (dense Al film)": 1.1592041256968812,
+     "hours (porous Al, f 0.1)": 603.8581572626327,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.046339932159499955,
+     "hours (dense Al film)": 23.50566497146328,
+     "hours (porous Al, f 0.1)": 12244.683417053526,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 5-20 mm | 0.1 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.03948766148929822,
+     "hours (dense Al film)": 27.58458918709955,
+     "hours (porous Al, f 0.1)": 14369.496127659868,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 5-20 mm | 0.1 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.28669039514372135,
+     "hours (dense Al film)": 3.799398021672433,
+     "hours (porous Al, f 0.1)": 1979.2005887618282,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.0015415217974473346,
+     "hours (dense Al film)": 706.6075367505509,
+     "hours (porous Al, f 0.1)": 368089.37752318743,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 5-20 mm | 0.3 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.0013135774715090074,
+     "hours (dense Al film)": 829.2247269513816,
+     "hours (porous Al, f 0.1)": 431963.7106816228,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 5-20 mm | 0.3 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.009536904191221085,
+     "hours (dense Al film)": 114.21430878420911,
+     "hours (porous Al, f 0.1)": 59497.06398257981,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg": {
+     "mg_m2_per_h": 3.275666355965845,
+     "hours (dense Al film)": 0.3325280421669723,
+     "hours (porous Al, f 0.1)": 173.22209810147433,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 5-20 mm | 0.1 um, dT 10 K | 6061": {
+     "mg_m2_per_h": 2.7912946391688913,
+     "hours (dense Al film)": 0.3902314377194762,
+     "hours (porous Al, f 0.1)": 203.28122688967127,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "LC | 5-20 mm | 0.1 um, dT 10 K | 7075": {
+     "mg_m2_per_h": 20.26550403048703,
+     "hours (dense Al film)": 0.05374901697499826,
+     "hours (porous Al, f 0.1)": 27.99919498706779,
+     "threshold": "transmission loss 0.1 (layer camera (window in the boss, protected by its bore))"
+    },
+    "laser | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.022732955245960234,
+     "hours (dense Al film)": 0.3218242108173387,
+     "hours (porous Al, f 0.1)": 323.0400155992757,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 5-20 mm | 0.05 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.019371440560467374,
+     "hours (dense Al film)": 0.37767017681211207,
+     "hours (porous Al, f 0.1)": 379.0969594826793,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 5-20 mm | 0.05 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.14064155078640492,
+     "hours (dense Al film)": 0.05201887593438164,
+     "hours (porous Al, f 0.1)": 52.21539563671039,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.008636036894087484,
+     "hours (dense Al film)": 0.8471496209778606,
+     "hours (porous Al, f 0.1)": 850.3500282983204,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 5-20 mm | 0.1 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 0.007359028932305127,
+     "hours (dense Al film)": 0.9941549963828419,
+     "hours (porous Al, f 0.1)": 997.9107685030285,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 5-20 mm | 0.1 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.05342840859412284,
+     "hours (dense Al film)": 0.13693118649956942,
+     "hours (porous Al, f 0.1)": 137.4484924875797,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.00011553021044105788,
+     "hours (dense Al film)": 63.325560938968216,
+     "hours (porous Al, f 0.1)": 63564.795642948084,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 5-20 mm | 0.3 um, dT 0 K | 6061": {
+     "mg_m2_per_h": 9.844679586456063e-05,
+     "hours (dense Al film)": 74.31440827837739,
+     "hours (porous Al, f 0.1)": 74595.15723981259,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 5-20 mm | 0.3 um, dT 0 K | 7075": {
+     "mg_m2_per_h": 0.0007147486010204286,
+     "hours (dense Al film)": 10.235788319322543,
+     "hours (porous Al, f 0.1)": 10274.45762998106,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg": {
+     "mg_m2_per_h": 0.19365228975331072,
+     "hours (dense Al film)": 0.03777913181866705,
+     "hours (porous Al, f 0.1)": 37.92185585116265,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 5-20 mm | 0.1 um, dT 10 K | 6061": {
+     "mg_m2_per_h": 0.16501698876221974,
+     "hours (dense Al film)": 0.04433492234014161,
+     "hours (porous Al, f 0.1)": 44.502413190040855,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    },
+    "laser | 5-20 mm | 0.1 um, dT 10 K | 7075": {
+     "mg_m2_per_h": 1.1980650139661781,
+     "hours (dense Al film)": 0.006106526187053457,
+     "hours (porous Al, f 0.1)": 6.129595749534128,
+     "threshold": "absorption 0.0003 (optics.md \u00a72.2: >0.03 % absorbed puts the spot outside +/-10 %)"
+    }
+   },
+   "spatter": {
+    "LW | Ly 2017 speeds": {
+     "hits_per_h_at_100_per_s": 3.0,
+     "splat_mm2_per_h": 0.7127488332831844
+    },
+    "BW | Ly 2017 speeds": {
+     "hits_per_h_at_100_per_s": 0.0,
+     "splat_mm2_per_h": 0.0
+    },
+    "LP | Ly 2017 speeds": {
+     "hits_per_h_at_100_per_s": 93.0,
+     "splat_mm2_per_h": 8.909360416039807
+    },
+    "LC | Ly 2017 speeds": {
+     "hits_per_h_at_100_per_s": 0.0,
+     "splat_mm2_per_h": 0.0
+    },
+    "laser | Ly 2017 speeds": {
+     "hits_per_h_at_100_per_s": 5076.0,
+     "splat_mm2_per_h": 503.73523792289063
+    },
+    "LW | slow (speeds / 2)": {
+     "hits_per_h_at_100_per_s": 0.0,
+     "splat_mm2_per_h": 0.0
+    },
+    "BW | slow (speeds / 2)": {
+     "hits_per_h_at_100_per_s": 0.0,
+     "splat_mm2_per_h": 0.0
+    },
+    "LP | slow (speeds / 2)": {
+     "hits_per_h_at_100_per_s": 57.0,
+     "splat_mm2_per_h": 5.701990666265475
+    },
+    "LC | slow (speeds / 2)": {
+     "hits_per_h_at_100_per_s": 0.0,
+     "splat_mm2_per_h": 0.0
+    },
+    "laser | slow (speeds / 2)": {
+     "hits_per_h_at_100_per_s": 3507.0,
+     "splat_mm2_per_h": 365.4619642659528
+    },
+    "LW | Al lognormal (median 2.5 m/s)": {
+     "hits_per_h_at_100_per_s": 33.0,
+     "splat_mm2_per_h": 2.4946209164911455
+    },
+    "BW | Al lognormal (median 2.5 m/s)": {
+     "hits_per_h_at_100_per_s": 0.0,
+     "splat_mm2_per_h": 0.0
+    },
+    "LP | Al lognormal (median 2.5 m/s)": {
+     "hits_per_h_at_100_per_s": 0.0,
+     "splat_mm2_per_h": 0.0
+    },
+    "LC | Al lognormal (median 2.5 m/s)": {
+     "hits_per_h_at_100_per_s": 0.0,
+     "splat_mm2_per_h": 0.0
+    },
+    "laser | Al lognormal (median 2.5 m/s)": {
+     "hits_per_h_at_100_per_s": 1476.0,
+     "splat_mm2_per_h": 176.04896182094654
+    }
+   }
+  }
  }
 }

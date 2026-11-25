@@ -51,8 +51,10 @@ THRESH = {"laser": ("absorption", 3e-4, "optics.md §2.2: >0.03 % absorbed puts 
           "LP": ("transmission loss", 0.10, "camera"),
           "LC": ("transmission loss", 0.10, "layer camera (window in the boss, protected by its bore)"),
           "BW": ("transmission loss", 0.20, "light window: 20 % less light")}
-SPATTER_RATE = (100.0, 300.0, 1000.0)                        # spatters (all sizes) per second of lasing: assumed range
-SIZE_SHARE = {20: 0.25, 35: 0.30, 50: 0.20, 100: 0.15, 150: 0.07, 200: 0.03}   # by number (Chebil 2021: >50 % below 60 um)
+SPATTER_RATE = (30.0, 100.0, 300.0)                          # spatters (all sizes) per second of lasing: assumed range;
+# 100/s of this size mix is ~0.3 g/h, ~1-3 % of the deposited mass (no Al count per mm of track was found)
+SIZE_SHARE = {20: 0.35, 35: 0.30, 50: 0.20, 100: 0.10, 150: 0.04, 200: 0.01}   # by number (Chebil 2021: >50 % below 60 um;
+# Nagato 2023: ~1 droplet >= 63 um per 4 smaller)
 
 
 def source_g_per_h():
@@ -170,7 +172,7 @@ def main():
                             n = SPATTER_RATE[1] * share * frac * 3600
                             n_h += n
                             area_h += n * math.pi * (2.75 * d_s * 1e-3 / 2) ** 2 if d_s >= 50 else n * math.pi * (d_s * 1e-3 / 2) ** 2
-                        hits[f"{w} | {lab}"] = dict(hits_per_h_at_300_per_s=n_h, splat_mm2_per_h=area_h)
+                        hits[f"{w} | {lab}"] = dict(hits_per_h_at_100_per_s=n_h, splat_mm2_per_h=area_h)
             res["windows"][case] = dict(condensate=rows, spatter=hits)
     (OUT / "fouling.json").write_text(json.dumps(res, indent=1, default=float))
     figure(res)

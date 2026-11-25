@@ -109,10 +109,16 @@ def spec(cad_dir):
 
 
 def sample_launch(n, rng, slow=False):
+    """slow: False = Ly et al. 2017's speeds (316L, Ti-6Al-4V); True = the same halved; "al" = lognormal, median 2.5 m/s,
+    sigma_ln 0.6 (95 % within 0.8-8 m/s), from the Al and steel spatter speeds Edison found: Guo et al. 2024 (Al-Fe-Zr,
+    a 36 um particle at 3.4 m/s), Barrett 2019 (316L, 2.0 +/- 2.0 m/s for one condition), Ahmad 2019 (molten 3-8 m/s)."""
     mech = rng.choice(len(MECH), n, p=[m[1] for m in MECH])
     lo = np.array([MECH[i][2][0] for i in mech])
     hi = np.array([MECH[i][2][1] for i in mech])
-    spd = rng.uniform(lo, hi) * (0.5 if slow else 1.0)
+    if slow == "al":
+        spd = np.exp(np.log(2.5) + 0.6 * rng.standard_normal(n))
+    else:
+        spd = rng.uniform(lo, hi) * (0.5 if slow else 1.0)
     th = np.radians(rng.uniform(0, 70, n))
     az = rng.uniform(0, 2 * np.pi, n)
     vel = np.column_stack([spd * np.sin(th) * np.cos(az), spd * np.sin(th) * np.sin(az), spd * np.cos(th)])
@@ -260,8 +266,8 @@ def main():
     for mat in ("Al", "steel"):
         rho = 2670.0 if mat == "Al" else 7900.0
         for d in (20, 35, 50, 100, 150, 200):
-            for slow in (False, True):
-                key = f"{mat}, {d} um, {'slow (speeds / 2)' if slow else 'Ly 2017 speeds'}"
+            for slow in (False, True, "al"):
+                key = f"{mat}, {d} um, " + {False: "Ly 2017 speeds", True: "slow (speeds / 2)", "al": "Al lognormal (median 2.5 m/s)"}[slow]
                 mc[key] = monte_carlo(d * 1e-6, rho, vp, n=3000 if d < 100 else 2000, slow=slow)
                 print(key, {k: round(v, 4) for k, v in mc[key].items() if isinstance(v, float) and v > 0})
     res["monte_carlo_box_chamber"] = mc
@@ -273,7 +279,8 @@ def main():
                 t, T, x = cool(d * 1e-6, T0, 5.0, mat)
                 row = dict(T0=T0)
                 for cam_name, cam in CAMERAS.items():
-                    for t_exp in (10e-6, 100e-6) if "Layer" not in cam_name else (10e-3,):
+                    exps = (10e-3,) if "Layer" in cam_name else ((30e-6, 100e-6) if "IMX296" in cam_name else (10e-6, 100e-6))
+                    for t_exp in exps:                    # the IMX296's shortest exposure is 30 us
                         Tv = t_visible(cam, d * 1e-6, MATERIALS[mat]["eps"], 5.0, t_exp)
                         if Tv is None or Tv >= T0:
                             row[f"{cam_name}, {t_exp * 1e6:g} us"] = dict(T_visible_K=Tv, glow_ms=0.0, glow_path_mm=0.0)
@@ -335,9 +342,10 @@ def figure(res):
                         ("LC bore", "#1baf7a", "layer camera bore")):
         axs[2].plot(ds, [100 * mc[f"Al, {d} um, Ly 2017 speeds"][key] for d in ds], color=c, lw=1.5, label=lab)
         axs[2].plot(ds, [100 * mc[f"Al, {d} um, slow (speeds / 2)"][key] for d in ds], color=c, lw=1.0, ls="--")
+        axs[2].plot(ds, [100 * mc[f"Al, {d} um, Al lognormal (median 2.5 m/s)"][key] for d in ds], color=c, lw=1.0, ls=":")
     axs[2].set_xlabel("spatter diameter (um)")
     axs[2].set_ylabel("share of launches (%)")
-    axs[2].set_title("Al spatter reaching each window (box chamber, 1-D cross-flow)\nsolid: Ly 2017 speeds; dashed: halved", fontsize=9)
+    axs[2].set_title("Al spatter reaching each window (box chamber, 1-D cross-flow)\nsolid: Ly 2017 speeds; dashed: halved; dotted: median 2.5 m/s", fontsize=9)
     axs[2].legend(fontsize=7, frameon=False)
     fig.savefig(OUT / "spatter.png", dpi=110)
 
