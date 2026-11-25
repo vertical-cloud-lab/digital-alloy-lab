@@ -454,7 +454,7 @@ class Arm:
     # ---- self-collision pairs (MoveIt's "always touching" pairs left out, as byu-vcl does)
     def self_pairs(self):
         if self._acm is None:
-            cache = pathlib.Path("/tmp/cell_acm.json")
+            cache = pathlib.Path(os.environ.get("CELL_ACM_CACHE", "/tmp/cell_acm.json"))
             if cache.exists():
                 always = {tuple(p) for p in json.loads(cache.read_text())}
             else:

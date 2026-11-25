@@ -49,9 +49,12 @@ SRC = {
     "bc": "SCANLAB basiCube 20: 20 mm aperture; 1000 W at 1064 nm (README 3.2, https://www.scanlab.de/en/print-product/1061)",
     "model": f"cad/lpbf_low.py (P block and sections 7 and 9): lens output end z {MP_['z_lens0']:.2f} (raised {MP_['focus_shift']} mm), "
              f"nose z {MP_['z_lens0'] + 50.2:.2f}; galvo bottom z {MP_['z_bridge1'] + MP_['galvo_riser']:.2f}, beam input and 2nd mirror z {MP_['z_galvo_m2']:.2f}; "
-             "window Ø50.8 x 8 fused silica z 148-156, flange bore Ø42 below it, retaining ring Ø44 above; "
-             "field stop Ø36 z 131-136; cover slide Ø50.8 x 3 z 126-129 (Edmund 25-250, uncoated); drawer opening Ø46 z 125-126; "
-             "lid bore Ø56 z 120-125; plates in Ø25.4 / 50.8 / 76.2 bores",
+             f"window Ø50.8 x {MP_['win_t']} fused silica z {MP_['z_win0']:.2f}-{MP_['z_win0'] + MP_['win_t']:.2f} (Edmund 38-990, CA Ø45.72), "
+             "flange bore Ø42 below it, retaining ring Ø44 above; field stop Ø36 z 131-136; "
+             f"cover slide Ø{MP_['slide_d']:.0f} x {MP_['slide_t']} z {MP_['z_slide0']:.1f}-{MP_['z_slide0'] + MP_['slide_t']:.1f} (Edmund 36-299, 1064 V-coat, CA Ø42.5); "
+             f"drawer opening Ø46 z 125.3-{MP_['z_slide0']:.1f}; lid bore Ø56 z 120-125; plates in Ø25.4 / 50.8 / 76.2 bores (2026-11-25: was 8 mm window, 3 mm slide)",
+    "edmund": "Edmund Optics 36-299 (Ø50.00 ±0.1 x 2.00 +0.15/-0.00 mm, CA Ø42.50, 1064 nm V-coat, $121 / $103 at 6-25) and 38-990 "
+              "(Ø50.80 +0/-0.10 x 9.53 ±0.20 mm, CA Ø45.72, 1064 nm V-coat, $295), product pages fetched 2026-11-25T00:50Z through the lab tunnel",
     "malitson": "Malitson 1965, fused silica Sellmeier (JOSA 55, 1205; refractiveindex.info)",
     "safety": "desktop-lpbf/safety.md section 4 and safety_calcs.py (MPE 5 mW/cm2 for t >= 10 s at 1070 nm, 7 mm pupil, NOHD form)",
 }
@@ -82,12 +85,17 @@ def n_fs(lam_um: float) -> float:
 
 
 N_FS = n_fs(1.070)
-PLATES_GLASS = [("cover slide", 126.0, 129.0), ("window", 148.0, 156.0)]   # (name, z bottom, z top), fused silica
+# (name, z bottom, z top), fused silica: read from the model (Edmund 36-299 slide and 38-990 window since 2026-11-25)
+Z_S0, Z_S1 = MP_["z_slide0"], MP_["z_slide0"] + MP_["slide_t"]
+Z_W0, Z_W1 = MP_["z_win0"], MP_["z_win0"] + MP_["win_t"]
+PLATES_GLASS = [("cover slide", Z_S0, Z_S1), ("window", Z_W0, Z_W1)]
 T_GLASS = sum(b - a for _, a, b in PLATES_GLASS)
 
 # apertures in the lid stack: (name, z_lo, z_hi, diameter)
-LID_APS = [("lid bore", 120.0, 125.0, 56.0), ("drawer opening", 125.0, 126.0, 46.0), ("field stop", 131.0, 136.0, 36.0),
-           ("window flange bore (below window)", 136.0, 148.0, 42.0), ("window retaining ring (above window)", 156.75, 163.0, 44.0)]
+LID_APS = [("lid bore", 120.0, 125.0, 56.0), ("drawer opening", 125.3, Z_S0, 46.0), ("cover slide clear aperture", Z_S0, Z_S1, 42.5),
+           ("field stop", 131.0, 136.0, 36.0), ("window flange bore (below window)", 136.0, Z_W0, 42.0),
+           ("window clear aperture", Z_W0, Z_W1, 45.72), ("window retaining ring (above window)", Z_W1 + 0.75, 163.0, 44.0)]
+I_FS = [a[0] for a in LID_APS].index("field stop")
 
 # collimator options: name -> beam diameter D (1/e2), or focal length
 COLL = {
@@ -165,20 +173,24 @@ R["collimator_for_spot"] = need
 # C. Focus position in the model, and the depth-of-focus budget
 # ---------------------------------------------------------------------------------------------------------------
 shift = sum((b - a) * (1 - 1 / N_FS) for _, a, b in PLATES_GLASS)
-d_tol_slide = 0.38 * (1 - 1 / N_FS)        # Edmund 25-250 thickness tolerance +/-0.38 mm
+d_tol_slide = 0.15 * (1 - 1 / N_FS)        # Edmund 36-299 thickness tolerance +0.15/-0.00 mm (25-250 was +/-0.38)
+d_tol_win = 0.20 * (1 - 1 / N_FS)          # Edmund 38-990 thickness tolerance +/-0.20 mm
 budget = [
-    ("window 8 mm + slide 3 mm of fused silica in the converging beam (static; take out by raising the lens)", shift, "static"),
-    ("cover slide thickness tolerance +/-0.38 mm (Edmund 25-250)", d_tol_slide, "per slide"),
+    (f"window {MP_['win_t']} mm + slide {MP_['slide_t']} mm of fused silica in the converging beam (static; take out by raising the lens)", shift, "static"),
+    ("cover slide thickness tolerance +0.15/-0.00 mm (Edmund 36-299): focus up to this much lower", d_tol_slide, "per slide"),
+    ("window thickness tolerance +/-0.20 mm (Edmund 38-990)", d_tol_win, "once (the burn test takes it out)"),
     ("plate stack growth at 200 C (powder-spreading.md), if the blade is zeroed cold", 0.112, "zero the blade hot"),
     ("bridge posts +50 K (mech.md F)", 0.070, "slow drift"),
 ]
 # the model raises the lens by P["focus_shift"]; check it against this script's own number
 Z_FOCUS_DRAWN = (Z_LENS_OUT - WD) - shift          # where the focus lands as drawn (0 = on the powder)
 assert abs(MP_["focus_shift"] - shift) < 0.01, f"model raises the lens {MP_['focus_shift']} mm, the plates shift the focus {shift:.3f} mm"
-shift_bom = (9.53 + 2.0) * (1 - 1 / N_FS)           # with the optics BOM's glass: Edmund 38-990 window, 36-299 slide
+shift_bom = (9.53 + 2.0) * (1 - 1 / N_FS)           # with the optics BOM's glass: Edmund 38-990 window, 36-299 slide (drawn since 2026-11-25)
+shift_old = (8.0 + 3.0) * (1 - 1 / N_FS)            # the 8 mm window and 3 mm slide drawn until 2026-11-23
 R["focus_shift_mm"] = dict(plates=shift, model_lens_raise=MP_["focus_shift"], focus_as_drawn_z=Z_FOCUS_DRAWN,
                            plates_bom_glass=shift_bom, focus_with_bom_glass_z=(Z_LENS_OUT - WD) - shift_bom,
-                           shim_range_mm=[-MP_["lens_shim"], MP_["lens_shim"]],
+                           plates_old_8_3=shift_old, shim_nominal_mm=MP_["lens_shim"],
+                           lens_travel_mm=dict(up_with_no_shims=MP_["lens_shim"], down_with_6mm_of_shims=6.0 - MP_["lens_shim"]),
                            budget=[dict(item=a, mm=b, kind=c) for a, b, c in budget])
 for r in rows:
     r["spot_at_model_focus_um"] = 2 * w_at(r["spot_um"] / 2, r["zR_mm"], Z_FOCUS_DRAWN)
@@ -256,7 +268,7 @@ for k in KS:
         field.append(dict(k=k, plate=pl, r_mm=r, scan_optical_deg=math.degrees(th), mirror_mech_deg=math.degrees(th / 2),
                           aoi_deg=math.degrees(u), elongation_pct=100 * (1 / math.cos(u) - 1),
                           plate_lateral_shift_mm=plate_lateral_shift(u), plate_focus_shift_extra_mm=plate_focus_shift_z(u) - shift,
-                          plate_astig_mm=plate_astig(u), chief_r_at_slide=chief_r(r, k, 127.5), chief_r_at_window=chief_r(r, k, 152.0),
+                          plate_astig_mm=plate_astig(u), chief_r_at_slide=chief_r(r, k, (Z_S0 + Z_S1) / 2), chief_r_at_window=chief_r(r, k, (Z_W0 + Z_W1) / 2),
                           chief_r_at_lens_out=chief_r(r, k, Z_LENS_OUT)))
 R["field"] = field
 R["k_range_thin_lens"] = {k: list(v) for k, v in K_RANGE.items()}
@@ -284,7 +296,7 @@ for cname, D in (("IPG 2.5 mm (drawn)", 2.5), ("IPG 5 mm", 5.0), ("D 3.2 mm", 3.
         for ap in LID_APS:
             rec[ap[0]] = max_radius(D, M2_MAX, k, ap)
         # reach of the field stop: where half the beam still passes (beam centre on the stop edge, at its lowest face)
-        rec["field stop: beam centre on the edge (50 % passes)"] = max_radius(D, M2_MAX, k, LID_APS[2], loss=0.5)
+        rec["field stop: beam centre on the edge (50 % passes)"] = max_radius(D, M2_MAX, k, LID_APS[I_FS], loss=0.5)
         aps.append(rec)
 R["apertures"] = aps
 # L75 reach as drawn: the drawn k range (thin-lens bounds and their middle), every lid opening, < 0.1 % clipped
@@ -296,6 +308,17 @@ for cname, D in (("IPG 2.5 mm (drawn)", 2.5), ("D 3.2 mm", 3.2), ("IPG 5 mm", 5.
         reach.append(dict(collimator=cname, k=k, reach_mm=per[lim], limited_by=lim, per_aperture=per, L75_passes=per[lim] >= 38.1,
                           M50_passes=per[lim] >= 25.4))
 R["reach_as_drawn"] = reach
+# M50 with its field-stop insert (cad/lpbf_low.py P["field_stop_d"], 2026-11-25): every other opening as drawn
+FS_M50 = ("field stop", 131.0, 136.0, MP_["field_stop_d"]["M50"])
+APS_M50 = [FS_M50 if ap[0] == "field stop" else ap for ap in LID_APS]
+reach_m50 = []
+for cname, D in (("IPG 2.5 mm (drawn)", 2.5), ("D 3.2 mm", 3.2), ("IPG 5 mm", 5.0)):
+    for k in (K_DRAWN[0], sum(K_DRAWN) / 2, K_DRAWN[1]):
+        per = {ap[0]: max_radius(D, M2_MAX, k, ap) for ap in APS_M50}
+        lim = min(per, key=per.get)
+        reach_m50.append(dict(collimator=cname, k=k, reach_mm=per[lim], limited_by=lim, M50_passes=per[lim] >= 25.4,
+                              runaway_mm=max_radius(D, M2_MAX, k, FS_M50, loss=0.5), per_aperture=per))
+R["reach_M50_insert"] = reach_m50
 # galvo and lens input apertures: beam walk at the lens nose for a pupil d_p above it
 walk = []
 for d_p in (30.0, 45.0, 60.0):
@@ -331,10 +354,10 @@ def surf_table(D, m2):
                 red -= (z - a) * (1 - 1 / N_FS)
         return w_at(w0, z_r, red)
     add(f"f-theta output (protective window, z {Z_LENS_OUT:.1f})", w_img(Z_LENS_OUT))
-    add("chamber window, top (z 156)", w_img(156.0))
-    add("chamber window, bottom (z 148)", w_img(148.0))
-    add("cover slide, top (z 129)", w_img(129.0))
-    add("cover slide, bottom (z 126)", w_img(126.0), "the face that fouls")
+    add(f"chamber window, top (z {Z_W1:.1f})", w_img(Z_W1))
+    add(f"chamber window, bottom (z {Z_W0:.1f})", w_img(Z_W0))
+    add(f"cover slide, top (z {Z_S1:.1f})", w_img(Z_S1))
+    add(f"cover slide, bottom (z {Z_S0:.1f})", w_img(Z_S0), "the face that fouls")
     add("plate, at focus", w0, "melts")
     return out
 
@@ -351,7 +374,7 @@ for D in (5.0, 3.2):
     d = spot_d(D, F_FT, M2_MAX)
     z_r = zr(d, M2_MAX)
     fc = D / 0.140
-    for name, h in (("slide bottom", 126.0), ("slide top", 129.0), ("window bottom", 148.0), ("window top", 156.0),
+    for name, h in (("slide bottom", Z_S0), ("slide top", Z_S1), ("window bottom", Z_W0), ("window top", Z_W1),
                     ("f-theta protective window (lower face)", Z_LENS_OUT)):
         # air-equivalent height above the focus
         red = h - sum((b - a) * (1 - 1 / N_FS) for _, a, b in PLATES_GLASS if h >= b)
@@ -412,6 +435,77 @@ for D in (5.0, 3.2):
                          t_cold_s=E_area / (0.08 * I_avg), t_hot_s=E_area / (0.4 * I_avg)))
 R["guard_burn"] = dict(E_J_cm2=E_area, rows=burn)
 
+# ---------------------------------------------------------------------------------------------------------------
+# I. Collimator choice (2026-11-25, optics.md §9.1): what each option does to the process, in numbers
+# ---------------------------------------------------------------------------------------------------------------
+# The baseline with a known Al process window: EOS M 290 (100 um focus, EOS system datasheet) with AlSi10Mg at 370 W,
+# 1300 mm/s, 0.19 mm hatch, 30 um layers (Liu & Gibbons, SFF 2023, on an EOSINT M 280). Keyhole number (Gan et al. 2021,
+# Nat. Commun. 12, 2379, doi:10.1038/s41467-021-22704-0): Ke = eta P / ((T_l - T_0) pi rho C_p sqrt(alpha V r0^3));
+# conduction < 1.4, transition 1.4-6, keyhole > 6, fitted on Ti-6Al-4V, Al6061 and SS316. Only ratios to the baseline are
+# used here, so the absorptivity and the Al properties cancel: Ke ~ P / sqrt(V r0^3).
+BASE = dict(name="EOS M 290 / M 280, AlSi10Mg 30 um", d_um=100.0, P=370.0, V=1.3, h=0.19, t=0.030)
+V_GALVO = 1.1                 # m/s: basiCube 20 marking speed at f = 160 mm (README §3.1, SCANLAB)
+HATCH_PER_SPOT = BASE["h"] / (BASE["d_um"] * 1e-3)      # 1.9: the baseline's hatch / spot, assumed to carry over
+COUPON_MM2 = 3 * 10.0 * 10.0  # three 10 x 10 mm screening coupons per layer (README §3.3: "the galvo scans three coupons")
+RECOAT_S, JUMP_S = 8.0, 0.2   # recoat cycle and jumps per layer (heat.md)
+BUILD_MM = 15.0               # screening build height (README §3.3)
+PLATE_GROWTH = 0.112          # mm, plate stack at 200 C (powder-spreading.md)
+FILM_ZR = 0.73                # light-film (0.05 %) slide thermal shift in Rayleigh ranges: the same for every beam (thermal_lens.md)
+I_BASE = 2 * BASE["P"] / (math.pi * (BASE["d_um"] * 1e-4 / 2) ** 2)     # W/cm2 peak
+
+
+def ke_ratio(P, V, d_um):
+    return (P / BASE["P"]) * math.sqrt(BASE["V"] / V) * (BASE["d_um"] / d_um) ** 1.5
+
+
+def p_same_ke(V, d_um):
+    """Power that gives the baseline's Ke at speed V and spot d."""
+    return BASE["P"] * math.sqrt(V / BASE["V"]) * (d_um / BASE["d_um"]) ** 1.5
+
+
+CHOICE = [
+    ("IPG 5 mm affixed (in the quote; drawn until 2026-11-22)", dict(D=5.0)),
+    ("Wavelength COL-1070-D25-F30 (QBH, f 30 mm)", dict(fc=30.0)),
+    ("custom collimator, f ~ 23 mm (D 3.2 mm)", dict(D=3.2)),
+    ("IPG 5 mm + 1.5x Galilean expander used backwards (D 3.33 mm)", dict(D=5.0 / 1.5, extra="2 more lenses in the 500 W beam")),
+    ("IPG 2.5 mm + Sill 1.2x expander (D 3.0 mm)", dict(D=3.0, extra="2 more lenses in the 500 W beam")),
+    ("IPG 2.5 mm affixed (drawn since 2026-11-23)", dict(D=2.5)),
+    ("IPG 5 mm, run out of focus so the powder sees 75 um", dict(D=5.0, defocus_to_um=75.0)),
+]
+k_mid = sum(K_DRAWN) / 2
+choice = []
+for name, c in CHOICE:
+    D = c.get("D") or c["fc"] * 0.140
+    d0 = spot_d(D, F_FT, M2_MAX) * 1e3                  # um at focus
+    z_r = zr(d0 * 1e-3, M2_MAX)                          # mm
+    dz = z_r * math.sqrt((c["defocus_to_um"] / d0) ** 2 - 1) if "defocus_to_um" in c else 0.0
+    dd = lambda off: d0 * math.sqrt(1 + ((dz + off) / z_r) ** 2)     # spot (um) with the powder `off` mm further from the focus
+    d = dd(0.0)
+    band10 = z_r * math.sqrt(1.10 ** 2 - 1) if dz == 0 else None
+    # the light-film thermal lens moves the focus 0.73 z_R toward the lens: focus below the powder -> spot shrinks; above -> grows
+    film = (dd(-FILM_ZR * z_r), dd(+FILM_ZR * z_r)) if dz else (dd(FILM_ZR * z_r), dd(FILM_ZR * z_r))
+    hatch = HATCH_PER_SPOT * d * 1e-3
+    p_eq = p_same_ke(V_GALVO, d)
+    scan_s = COUPON_MM2 / (V_GALVO * 1e3 * hatch) + JUMP_S
+    layers = BUILD_MM / BASE["t"]
+    w0 = d0 * 1e-3 / 2
+    # cat's eye: radius at the plate beyond which < 10 W returns into the fibre core (flat specular reflector, R 0.9)
+    u10 = math.sqrt(math.log(0.9 * P_LASER * 0.98 / 10.0)) * M2_MAX * LAM / (math.pi * w0) / 2
+    reach_fs = max_radius(D, M2_MAX, k_mid, LID_APS[I_FS])
+    choice.append(dict(option=name, D_mm=D, spot_focus_um=d0, defocus_mm=dz, spot_powder_um=d, zR_mm=z_r, band10_mm=band10,
+                       growth_pct=100 * (dd(PLATE_GROWTH) / d - 1), err1mm_um=(min(dd(1.0), dd(-1.0)), max(dd(1.0), dd(-1.0))),
+                       err1mm_pct=100 * (max(dd(1.0), dd(-1.0)) / d - 1),
+                       film_um=film, film_mm=FILM_ZR * z_r,
+                       I350_MW_cm2=2 * 350 / (math.pi * (d * 1e-4 / 2) ** 2) / 1e6, I500_MW_cm2=2 * 500 / (math.pi * (d * 1e-4 / 2) ** 2) / 1e6,
+                       I350_x_base=2 * 350 / (math.pi * (d * 1e-4 / 2) ** 2) / I_BASE,
+                       ke350=ke_ratio(350, V_GALVO, d), ke500=ke_ratio(500, V_GALVO, d), p_same_ke_W=p_eq,
+                       hatch_mm=hatch, rate_mm3_s=V_GALVO * 1e3 * hatch * BASE["t"], scan_s_layer=scan_s,
+                       build_min=layers * (scan_s + RECOAT_S) / 60, scan_share=scan_s / (scan_s + RECOAT_S),
+                       PD_kW_cm=P_LASER / (D / 10) / 1e3, galvo_fill=D / GALVO_AP, lens_fill=D / LENS_MAX_BEAM,
+                       cats_eye_r10_mm=u10 / k_mid * F_FT, stop_reach_mm=reach_fs, extra=c.get("extra", "")))
+R["collimator_choice"] = dict(baseline=BASE, v_galvo_m_s=V_GALVO, hatch_per_spot=HATCH_PER_SPOT, coupons_mm2=COUPON_MM2,
+                              recoat_s=RECOAT_S, build_mm=BUILD_MM, k_mid=k_mid, I_base_W_cm2=I_BASE, rows=choice)
+
 (OUT / "beam_path.json").write_text(json.dumps(R, indent=1, default=float))
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -434,10 +528,12 @@ L += ["", "Collimated beam needed for a given spot at f = 160 mm (M² 1.1): " + 
     f"{k} µm → D {v['D_mm']:.2f} mm, f_c {v['fc_mm_at_140']:.1f} mm ({v['fc_range'][0]:.1f}–{v['fc_range'][1]:.1f})" for k, v in need.items()), "",
     f"Fibre: the divergence spec implies a {mfd['140 mrad']:.1f} µm beam diameter at the fibre end ({mfd['150 mrad']:.1f}–{mfd['130 mrad']:.1f} µm).", "",
     "## C. Where the focus lands", "",
-    f"The 8 mm window and 3 mm slide push the focus down by **{shift:.2f} mm**. The model now raises the lens by {MP_['focus_shift']} mm "
-    f"(lens output end z {Z_LENS_OUT:.2f}), so the focus lands at z = {Z_FOCUS_DRAWN:+.3f} mm; with the optics BOM's glass (9.53 mm window, "
-    f"2 mm slide) the shift is {shift_bom:.2f} mm and the focus lands at {(Z_LENS_OUT - WD) - shift_bom:+.2f} mm, inside the ±{MP_['lens_shim']:.0f} mm "
-    "of shims. Spot on the powder plane as drawn, and before the lens was raised (M² 1.1, 140 mrad):", ""]
+    f"The {MP_['win_t']} mm window (Edmund 38-990) and {MP_['slide_t']} mm slide (Edmund 36-299), drawn as the BOM parts since 2026-11-25, "
+    f"push the focus down by **{shift:.2f} mm** (the 8 mm window and 3 mm slide drawn before gave {shift_old:.2f} mm). The model raises the lens by "
+    f"{MP_['focus_shift']} mm (lens output end z {Z_LENS_OUT:.2f}), so the focus lands at z = {Z_FOCUS_DRAWN:+.3f} mm. The extra "
+    f"{MP_['focus_shift'] - round(shift_old, 2):.2f} mm comes out of the shim stack ({MP_['lens_shim']:.2f} mm nominal, was 3.00), so the bridge "
+    f"does not move; 0–6 mm of shims moves the lens {MP_['lens_shim']:.2f} mm up (no shims) to {6 - MP_['lens_shim']:.2f} mm down. "
+    "Spot on the powder plane as drawn, and if the lens had not been raised (M² 1.1, 140 mrad):", ""]
 for name in COLL:
     b = [r for r in rows if r["collimator"] == name and abs(r["theta_full_mrad"] - 140) < 1][1]
     L.append(f"- {name}: {b['spot_um']:.0f} µm at focus, **{b['spot_at_model_focus_um']:.0f} µm on the powder** "
@@ -455,11 +551,11 @@ L += ["", f"Thin-lens estimate of k (lens at H', z {Z_HP:.1f}; stop at the 2nd m
 L += ["", "k from a thin lens with its front principal plane between the lens body's middle and H' (z 160): " + "; ".join(
     f"{k}: {a:.2f}-{b:.2f}" for k, (a, b) in K_RANGE.items()), "",
     "Clear diameter each lid opening needs to pass the L75 edge (r 38.1 mm) with < 0.1 % clipped (mm):", "",
-    "| Beam | k | " + " | ".join(f"{a[0]} (drawn Ø{a[3]:.0f})" for a in LID_APS) + " |", "|---|---|" + "---|" * len(LID_APS)]
+    "| Beam | k | " + " | ".join(f"{a[0]} (drawn Ø{a[3]:g})" for a in LID_APS) + " |", "|---|---|" + "---|" * len(LID_APS)]
 for r_ in need_d:
     L.append(f"| {r_['D_mm']} mm | {r_['k']} | " + " | ".join(f"{r_[a[0]]:.1f}" for a in LID_APS) + " |")
 L += ["", "Largest plate radius each lid aperture passes with < 0.1 % clipped (mm; plates are 12.7 / 25.4 / 38.1):", "",
-      "| Collimator | k | " + " | ".join(a[0] + f" Ø{a[3]:.0f}" for a in LID_APS) + " | field stop, 50 % reach |",
+      "| Collimator | k | " + " | ".join(a[0] + f" Ø{a[3]:g}" for a in LID_APS) + " | field stop, 50 % reach |",
       "|---|---|" + "---|" * (len(LID_APS) + 1)]
 for a in aps:
     L.append(f"| {a['collimator']} | {a['k']} | " + " | ".join(f"{a[x[0]]:.1f}" for x in LID_APS) +
@@ -467,6 +563,11 @@ for a in aps:
 L += ["", "L75 reach as drawn (k over the drawn thin-lens range; the opening that limits it; < 0.1 % clipped):", "",
       "| Collimator | k | Reach (mm) | Limited by | L75 (38.1) | M50 (25.4) |", "|---|---|---|---|---|---|"]
 L += [f"| {r_['collimator']} | {r_['k']:.2f} | {r_['reach_mm']:.1f} | {r_['limited_by']} | {'yes' if r_['L75_passes'] else 'no'} | {'yes' if r_['M50_passes'] else 'no'} |" for r_ in reach]
+L += ["", f"M50 with its Ø{MP_['field_stop_d']['M50']:g} field-stop insert (drawn 2026-11-25; S25 and L75 keep the Ø36 stop), < 0.1 % clipped; "
+      "'runaway reach' is where the beam centre sits on the insert's edge, the farthest a runaway galvo can put the beam:", "",
+      "| Collimator | k | Reach (mm) | Limited by | M50 (25.4) | Runaway reach (mm) |", "|---|---|---|---|---|---|"]
+L += [f"| {r_['collimator']} | {r_['k']:.2f} | {r_['reach_mm']:.1f} | {r_['limited_by']} | {'yes' if r_['M50_passes'] else 'no'} | {r_['runaway_mm']:.1f} |"
+      for r_ in R["reach_M50_insert"]]
 L += ["", "## F. Irradiance at 500 W (lens refocused onto the plate)", ""]
 for key, tab in R["irradiance"].items():
     L += [f"**{key}**", "", "| Surface | Beam Ø (mm) | Peak (W/cm²) | P/D (W/cm) | Note |", "|---|---|---|---|---|"]
@@ -494,6 +595,25 @@ L += ["", f"Bare fibre: NOHD {R['safety']['NOHD_bare_fibre_m']:.1f} m (140 mrad)
       f"Guard, 1.6 mm 5052, 1-D lower bound on burn-through ({E_area:.0f} J/cm², no conduction):", "",
       "| D (mm) | From focus (mm) | Beam Ø (mm) | I (W/cm²) | t at absorptance 0.08 / 0.4 (s) |", "|---|---|---|---|---|"]
 L += [f"| {b['D_mm']} | {b['from_focus_mm']:.0f} | {b['beam_d_mm']:.2f} | {b['I_W_cm2']:.3g} | {b['t_cold_s']:.2f} / {b['t_hot_s']:.2f} |" for b in burn]
+CC = R["collimator_choice"]
+L += ["", "## I. Collimator choice: what each option does to the process (optics.md §9.1)", "",
+      f"Baseline with a known Al window: {BASE['name']}, {BASE['d_um']:.0f} µm, {BASE['P']:.0f} W, {BASE['V'] * 1e3:.0f} mm/s, hatch {BASE['h']} mm "
+      f"(peak {I_BASE / 1e6:.1f} MW/cm²). Ke ratio = keyhole number (Gan et al. 2021) over the baseline's, at {V_GALVO} m/s (the basiCube 20's marking speed); "
+      f"it scales as P/√(V r³). Hatch = {HATCH_PER_SPOT:.1f} × spot (the baseline's ratio, assumed). Screening build: three 10 × 10 mm coupons, "
+      f"{BUILD_MM:.0f} mm at {BASE['t'] * 1e3:.0f} µm, {RECOAT_S:.0f} s recoat, run at the power that matches the baseline's Ke. M² 1.1, 140 mrad.", "",
+      "| Option | D (mm) | Spot on powder (µm) | z_R (mm) | ±10 % band (mm) | 0.112 mm plate growth | Spot after a ±1 mm focus error | Light-film thermal shift | Peak at 350 W (MW/cm², × baseline) | Ke × baseline at 350 / 500 W | Power for the baseline's Ke at 1.1 m/s (W) | Hatch (mm) | Rate (mm³/s) | 15 mm screening build (min) | P/D on the optics at 500 W (kW/cm) | Cat's eye < 10 W beyond r (mm) | Field-stop reach, k {:.2f} (mm) |".format(k_mid),
+      "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+for c in CC["rows"]:
+    band = f"±{c['band10_mm']:.2f}" if c["band10_mm"] else "– (on the slope)"
+    film = (f"{c['film_mm']:.1f} mm → {c['film_um'][0]:.0f} µm" if not c["defocus_mm"]
+            else f"{c['film_mm']:.1f} mm → {c['film_um'][0]:.0f} or {c['film_um'][1]:.0f} µm")
+    L.append(f"| {c['option']} | {c['D_mm']:.2f} | {c['spot_powder_um']:.0f}" + (f" ({c['spot_focus_um']:.0f} at focus, {c['defocus_mm']:.2f} mm out)" if c["defocus_mm"] else "") +
+             f" | {c['zR_mm']:.2f} | {band} | {c['growth_pct']:+.1f} % | {c['err1mm_um'][0]:.0f}–{c['err1mm_um'][1]:.0f} µm | {film} | "
+             f"{c['I350_MW_cm2']:.1f} ({c['I350_x_base']:.2f}×) | {c['ke350']:.2f} / {c['ke500']:.2f} | {c['p_same_ke_W']:.0f} | {c['hatch_mm']:.3f} | {c['rate_mm3_s']:.1f} | "
+             f"{c['build_min']:.0f} (scan {100 * c['scan_share']:.0f} %) | {c['PD_kW_cm']:.2f} | {c['cats_eye_r10_mm']:.1f} | {c['stop_reach_mm']:.1f} |")
+L += ["", "Notes: the light-film shift (0.05 % absorbed in the slide) is 0.73 z_R for every beam size (thermal_lens.md); with the defocused option "
+      "it shrinks or grows the spot depending on which side of the powder the focus sits. The expander rows add two lenses to the 500 W beam "
+      "(each a further ~0.2 z_R of thermal shift when clean, Faas et al. 2018). Galvo fill D/20 mm and f-theta fill D/12 mm are ≤ 0.42 for every option."]
 (OUT / "beam_path.md").write_text("\n".join(L) + "\n")
 
 # ---------------------------------------------------------------------------------------------------------------

@@ -22,7 +22,12 @@ Re-run: `python desktop-lpbf/analysis/optics/<script>.py` (each takes under a mi
 
 ## 0. Recommendations, ranked: what changes what we buy or draw
 
-Ranked by consequence. Section numbers point to the evidence. **Round 6 (2026-11-23, §8):** items 1, 2, 7, 8 and 9 are now drawn in the model (lens raised 3.41 mm on ±3 mm of shims; IPG's 2.5 mm collimator, because no catalogued f ≈ 23 mm collimator exists; the coaxial tap; a calibration head on the plate; the camera's Ø30 bore), and item 3's galvo spacing is set by the real parts (35 mm, k 0.33–0.62): L75 is still out of reach.
+Ranked by consequence. Section numbers point to the evidence. **2026-11-25 (§9):** keep IPG's affixed 2.5 mm collimator (96 µm)
+and order it with the laser (§9.1, which also prices the alternatives); move the LED bar outside, behind a new window low in
+the back wall (§9.2, not drawn); the window and slide are now drawn as the BOM parts (9.53 mm and Ø50 × 2 mm): focus shift
+3.58 mm, shims 2.83 mm, and the galvo riser's bore opened to Ø56 so the lens can rise over its shim range (§9.3). With an L75
+field-stop insert, the slide's Ø42.5 clear aperture is now the next limit (L75 needs k ≳ 0.60). The M50 build now draws a Ø41
+field-stop insert, which passes M50 at every k in the drawn range; S25 and L75 keep the Ø36 stop (§9.3). **Round 6 (2026-11-23, §8):** items 1, 2, 7, 8 and 9 are now drawn in the model (lens raised 3.41 mm on ±3 mm of shims; IPG's 2.5 mm collimator, because no catalogued f ≈ 23 mm collimator exists; the coaxial tap; a calibration head on the plate; the camera's Ø30 bore), and item 3's galvo spacing is set by the real parts (35 mm, k 0.33–0.62): L75 is still out of reach.
 
 1. **The collimator in the model doesn't give the spot the layout was designed for (§1.1).** The model draws IPG's
    standard 5 mm collimator under the f = 160 mm lens. That gives a **48 µm** spot with a ±1.5 mm Rayleigh range, not the
@@ -34,7 +39,9 @@ Ranked by consequence. Section numbers point to the evidence. **Round 6 (2026-11
    fallback. No third-party collimator with f ≈ 20–30 mm was found. The series datasheet also says 500 W single-mode
    lasers end in IPG's HLC-8 connector, while the quoted spec sheet says QBH-compatible, so confirm the termination
    before planning any third-party optic. The 5 mm collimator as drawn is usable, but it gives Al keyhole-level
-   intensities at 300–400 W and is 2.5 times as sensitive to focus errors.
+   intensities at 300–400 W and is 2.5 times as sensitive to focus errors. **2026-11-25 (§9.1):** the 2.5 mm unit is the
+   recommendation, not a fallback: its 96 µm spot is the EOS M 290's, it uses ~320 W at the galvo's marking speed, and no
+   catalogue part gives 3.2 mm.
 2. **As drawn, the focus is 3.4 mm below the powder (§1.3).** The model sets the lens's flange focal length from the
    powder plane, but the 8 mm window and 3 mm slide push the focus down by t(1 − 1/n) = 3.41 mm. That puts the plate
    0.9 Rayleigh ranges out with the 3.2 mm beam (spot 101 µm instead of 75) or 2.2 out with the 5 mm beam (117 µm
@@ -143,7 +150,7 @@ real focus is 3.4 mm below it. The FTH160-1064 ships with its own Ø75 protectiv
 replacement), which its working distance already includes.
 
 - **With the real parts in the optics BOM** (Edmund 38-990 window, 9.53 mm; Edmund 36-299 slide, 2 mm) the shift
-  is 3.58 mm.
+  is 3.58 mm. They are drawn since 2026-11-25 (§9.3).
 - **Fix:** raise the lens by the shift (shorten the 16 mm adapter ring to ~12.4 mm, so the lens's shoulder sits higher),
   and keep ±3 mm of shim adjustment for the lens's working-distance tolerance, slide changes and the thermal shift.
 - **Slide tolerance:** Edmund's 3.00 ± 0.38 mm moves focus ±0.12 mm per slide. Small, but specify ±0.1 mm when
@@ -488,7 +495,8 @@ Same MPE (5 mW/cm², t ≥ 10 s at 1070 nm) and method as [`safety.md`](safety.m
 - **Depth of field:** the plate's near and far edges differ by ±7 / ±14 / ±21 mm along the line of sight (S25 / M50 /
   L75). Without a tilt, the L75 edges blur by ~290 µm at f/4 with the 12 mm lens. A **2.2° wedge** between the lens and
   the sensor (Scheimpflug) brings the whole plate into focus at f/2.8–4. At f/8 diffraction alone is 77 µm on the plate.
-- **Lighting:** the model has an LED bar on the +x wall at z 30–38, 14° above the plate. Its light runs along x,
+- **Lighting** (superseded: round 5 moved the bar to the lid's underside, and §9.2 recommends moving it outside, behind a low
+  back-wall window). The model had an LED bar on the +x wall at z 30–38, 14° above the plate. Its light runs along x,
   parallel to the recoater's streaks, so streaks cast little shadow. Add a second bar on the back (+y) wall for light
   across them, and take one image per bar. Its specular reflection leaves away from the camera, so bare metal shows
   dark and powder bright, which is the contrast wanted. Inside the chamber the LEDs must survive vacuum cycles: no
@@ -631,7 +639,8 @@ focus shift disagree by more than 0.01 mm. Vendor facts were fetched through the
 - `beam_path.py` §C: the 8 mm window and the 3 mm slide shift the focus by (8 + 3)(1 − 1/1.44956) = **3.41 mm**. `P["focus_shift"]`
   computes the same number, and the lens's output end moves from z 182.5 to **z 185.91**. As drawn, the focus lands at
   z = −0.001 mm. With the optics BOM's glass (Edmund 38-990, 9.53 mm; Edmund 36-299, 2 mm) the shift is 3.58 mm, so the focus
-  would land 0.17 mm low, which the shims take up.
+  would land 0.17 mm low, which the shims take up. **2026-11-25 (§9.3):** that glass is now drawn; the lens sits 3.58 mm
+  higher on 2.83 mm of shims, and the focus lands at z +0.004 mm.
 - **The shims.** The lens's shoulder bears on a 3 mm stack of rings (ID 85.5, OD 105) under a 13 mm M85×1 adapter ring (it was
   16 mm). Taking shims out or adding them moves the focus ±3 mm, set by the burn test (§4.2). The lens's ~12.5 mm thread
   engages the ring 9.5 mm at the nominal stack, and 6.5–12.5 mm over the range. McMaster sells no ring shim over 80 mm ID:
@@ -726,7 +735,7 @@ bom.csv L3 now says this. The termination question stands: IPG's quote says QBH-
     dump-port head that fits the bridge.
 - **AR-coated cover slides** are already the real parts in bom.csv A2 and optics-bom O12/O12b: 12 × Edmund 36-299 (Ø50 × 2 mm,
   1064 nm V-coat, $103 at 6–25), and 10 × Cloudray PW02FS50X2 to trial. The model still draws the 3 mm slide; the 2 mm one
-  moves the focus 0.31 mm, inside the shims.
+  moves the focus 0.31 mm, inside the shims. (2026-11-25: the 2 mm slide is drawn now, §9.3.)
 
 ### 8.5 Layer camera: a Ø30 bore on the line of sight
 
@@ -759,9 +768,10 @@ bom.csv L3 now says this. The termination question stands: IPG's quote says QBH-
 ### 8.7 Not done, and for other owners
 
 - **Not drawn:**
-  - the window stays the drawn 8 mm part, not the BOM's 9.53 mm Edmund 38-990;
-  - the slide stays 3 mm, not the BOM's 2 mm;
-  - the single Ø36 field stop (section 7) is not yet the three per-module inserts;
+  - ~~the window stays the drawn 8 mm part, not the BOM's 9.53 mm Edmund 38-990~~: drawn 2026-11-25 (§9.3);
+  - ~~the slide stays 3 mm, not the BOM's 2 mm~~: drawn 2026-11-25 (§9.3);
+  - the single Ø36 field stop (section 7) is not yet the three per-module inserts (2026-11-25: the M50 insert, Ø41, is drawn;
+    S25 and L75 keep the Ø36 stop, §9.3);
   - the head's water lines.
 - **Still to get from vendors:**
   - the dichroic's CW rating;
@@ -785,6 +795,311 @@ Sources for this round:
 - the Wavelength Opto-Electronic collimator page (22:39Z);
 - IPG's collimator range (22:29Z, 22:41Z).
 
+## 9. 2026-11-25: which collimator, where the LED goes, and the window and slide as bought
+
+Sterling asked on 2026-11-25 what the collimator options cost and why he would pick one, and what the trade-offs are for the
+LED bar. This section answers both with sourced numbers. It also draws two round-5 leftovers: the window and the slide as
+the BOM parts. New code: section I of [`beam_path.py`](analysis/optics/beam_path.py) (the process numbers for every
+collimator option) and [`layer_light.py`](analysis/optics/layer_light.py) (what each light position shows, from the
+model's geometry) → [`layer_light.md`](analysis/out/optics/layer_light.md). Vendor pages were fetched 2026-11-25
+00:44–01:25 UTC, partly through the lab tunnel on BYU's network. No vendor has quoted anything here.
+
+### 9.1 Collimator: which one, and why
+
+**Short answer: keep IPG's affixed 2.5 mm collimator (96 µm spot), which the model already draws, and order it with the
+laser.** It is IPG's own part, so it needs no extra optics or second vendor. Its spot matches the EOS M 290's, so published
+Al process windows carry over. It is also the option most forgiving of focus errors. The cost is twice the power density on
+every optic, so we need the vendors' CW ratings.
+
+**Price, lead time and 500 W rating.** "Ask" means not published: ask with the laser order. IPG's quote lists the collimator
+price as still to come.
+
+| Option | Spot at f = 160 mm | Price | Lead time | 500 W CW rating | Fits the laser | Risk |
+|---|---|---|---|---|---|---|
+| IPG affixed 5 mm (in the quote) | 48 µm | ask; no IPG collimator price is published | with the laser, 10–12 weeks ARO | made for the laser; no figure published | affixed to the fibre | keyhole-level intensity in Al; least load on the optics (1.0 kW/cm) |
+| **IPG affixed 2.5 mm (drawn)** | **96 µm** | ask | with the laser; ask if 2.5 mm is standard for this unit (the quote lists 5 and 7.5 mm, the series datasheet rev 2/26 lists 2.5, 5 and 7.5 mm) | as above | affixed | twice the 5 mm's load on every optic (2.0 kW/cm) |
+| Wavelength Opto-Electronic COL-1070-D25-F30 | 57 µm | not published (quote form only) | not published | "< 1000W for 25mm Lens Diameter", 1030–1080 nm; single-mode not stated | QBH, so the laser would be ordered with its connector end instead of a collimator | the shortest catalogued QBH collimator found; Wavelength lists no F20 or F25 (its next is F41.5) |
+| Custom collimator, f ≈ 23 mm (3.2 mm beam) | 75 µm | ask IPG ("other diameters on request") or Wavelength | unknown; custom | ask | either | none known, but no catalogue part exists |
+| IPG 5 mm + a 1.5× beam expander used backwards (5 → 3.33 mm) | 72 µm | Jenoptik 1.5× (Edmund 73-122) $790; Sill S6EXK0015-328 (Edmund 70-164) $1,115; Edmund Vega 12-875 $385 | Edmund stock | Jenoptik: CW 5.0 MW/cm² (the only expander found with a CW figure); Sill 5 J/cm² (1 ns) and Vega pulsed only | free-space, after the collimator | two more lenses in the 500 W beam (each about +0.2 z_R of thermal shift when clean, Faas et al.); no room as drawn: the collimator ends 5 mm from the fold mirror's cube and its strain relief 33 mm inside the guard, so the Sill (44.7 mm) would push it 12 mm through the guard's wall and the Jenoptik (93 mm) 60 mm |
+| IPG 2.5 mm + Sill 1.2× (S6EXK0012-328) | 80 µm | not published (ask Sill) | – | not published | free-space | as above |
+| IPG 5 mm, run out of focus | 75 µm on the powder (48 µm at focus, 1.85 mm away) | $0 | – | – | – | the spot changes with every focus error (below) |
+
+Also found, but they don't fit:
+- **Longer focal lengths.** These give 7–12 mm beams and 23–34 µm spots:
+  - IPG's D25 attachable collimators (f 50–85 mm, "up to 10 kW", no price);
+  - Coherent's QBH collimating units (f 50 mm: $1,825 in Coherent's 2021 web shop, air-cooled, 3 kW).
+- **Collimators sold only inside heads:**
+  - Laser Mechanisms' FiberMINI starts at f 35 mm (4.9 mm beam, 49 µm);
+  - Raytools/Cloudray collimating lenses start at f 60 mm.
+- **The connector question.** Coherent and Laser Mechanisms both list HLC-8 as fitting their QBH receptacles. That settles
+  the QBH vs HLC-8 question for any QBH option.
+- **No prices found:**
+  - IPG: its D25 F50 collimators have part numbers in IPG's own ordering table (P30-001459 air-cooled, P30-001354
+    water-cooled) but no price anywhere; IPG and its distributors quote them.
+  - eBay: no IPG collimator listing in search results, and listing pages refuse automated access even through the tunnel.
+  - Optoskand/II-VI, and Thorlabs (no QBH collimator).
+
+**Why one would pick each** (`beam_path.py` §I, M² 1.1, 140 mrad):
+- **Baseline:** the EOS M 290's ~100 µm spot running AlSi10Mg at 370 W, 1.3 m/s, 0.19 mm hatch and 30 µm layers
+  ([Liu & Gibbons, SFF 2023](https://utw10945.utweb.utexas.edu/sites/default/files/2023/027%20ControllingChemicalCompositionChangesinLaserPowderBedFusionofAlSi10Mg.pdf), EOSINT M 280).
+- **Speed:** every option is scanned at 1.1 m/s, the basiCube 20's marking speed.
+- **Keyhole number:** Ke ∝ P/√(V r³) (Gan et al. 2021), quoted against the baseline's.
+- **Screening build:** three 10 × 10 mm coupons, 15 mm tall, an 8 s recoat (heat.md), hatch 1.9 × spot (the EOS ratio,
+  assumed).
+
+| Option | Spot (µm) | Peak at 350 W (× EOS) | Ke at 350 / 500 W (× EOS) | Power that matches EOS's Ke at 1.1 m/s | ±10 % depth of focus | Spot after a 1 mm focus error | Slide light film (0.73 z_R) | Screening build | Fibre-return zone (> 10 W) |
+|---|---|---|---|---|---|---|---|---|---|
+| IPG 5 mm | 48 | 4.1× | 3.1 / 4.4 | 113 W | ±0.70 mm | 57 µm (+19 %) | 1.1 mm → 59 µm | 93 min | r < 5.1 mm |
+| Wavelength f 30 | 57 | 2.9× | 2.4 / 3.4 | 147 W | ±1.00 mm | 63 µm (+10 %) | 1.6 mm → 71 µm | 89 min | 4.3 mm |
+| custom f 23 | 75 | 1.7× | 1.6 / 2.3 | 221 W | ±1.72 mm | 78 µm (+3.5 %) | 2.7 mm → 93 µm | 84 min | 3.3 mm |
+| 5 mm + 1.5× backwards | 72 | 1.8× | 1.7 / 2.4 | 208 W | ±1.58 mm | 75 µm (+4 %) | 2.5 mm → 89 µm | 85 min | 3.4 mm |
+| 2.5 mm + 1.2× | 80 | 1.5× | 1.4 / 2.1 | 243 W | ±1.95 mm | 82 µm (+3 %) | 3.1 mm → 99 µm | 83 min | 3.1 mm |
+| **IPG 2.5 mm** | **96** | **1.0×** | **1.1 / 1.6** | **320 W** | **±2.81 mm** | **97 µm (+1 %)** | 4.5 mm → 119 µm | **81 min** | **2.6 mm** |
+| 5 mm out of focus | 75 | 1.7× | 1.6 / 2.3 | 221 W | – (on the slope) | 55–101 µm | 1.1 mm → 53 or 104 µm | 84 min | 5.1 mm |
+
+What the numbers mean:
+- **Keyhole against lack of fusion.** Too much intensity turns the melt pool into a deep, unstable keyhole that leaves round
+  pores; too little leaves unmelted gaps.
+  - [Gan et al. 2021](https://doi.org/10.1038/s41467-021-22704-0) (X-ray imaging of Ti-6Al-4V, Al6061 and SS316) put the
+    conduction-to-keyhole transition at a keyhole number of 1.4–6. At a given power and speed it grows as spot^−1.5, so the
+    48 µm spot is 3.1× EOS's at 350 W.
+  - The basiCube 20 marks at ~1.1 m/s, so a small spot can't be kept out of the keyhole by scanning faster. The 5 mm
+    collimator would have to drop to ~113 W to match EOS, leaving most of the 500 W laser unused. The 2.5 mm one matches EOS
+    at ~320 W.
+  - At 500 W every option is above EOS's keyhole number at 1.1 m/s (the 96 µm spot by 1.6×). Full power needs ~2.7 m/s with
+    skywriting, or a bigger spot.
+  - Focus placement matters for AlSi10Mg. In [Zhou et al. 2019](https://doi.org/10.3390/ma12010073) (Concept Laser M2,
+    320 W, defocus −2 to +2 mm, sign as the paper labels it), negative defocus gave keyhole pores. The best density and
+    strength came at +0.5 mm.
+- **Depth of focus.** The Rayleigh range scales with the spot squared: 6.1 mm at 96 µm, 1.5 mm at 48 µm.
+  - The hot plate's 0.112 mm growth changes no in-focus spot by more than 0.3 %. The layer (20–60 µm) doesn't move the
+    focus, because the piston steps down.
+  - A light film on the slide moves the focus 0.73 Rayleigh ranges for any beam (thermal_lens.md), a 24 % bigger spot
+    whichever collimator. What differs is the absolute error: 1 mm of focus error (shims, thermal drift) costs 19 % of the
+    spot at 48 µm and 1 % at 96 µm.
+- **Running out of focus** gives 75 µm for nothing, but the powder then sits on the slope of the caustic. ±1 mm of focus error
+  gives 55–101 µm, and the light film 53 or 104 µm depending on the side. Not as a fixed setting.
+- **Build rate barely differs for screening coupons.** The 8 s recoat dominates: 81 min with the 96 µm spot, 93 min with
+  48 µm. Area rate (6.0 against 3.0 mm³/s) matters for bigger parts.
+- **How well process windows carry over.** Published focus diameters:
+  - EOS M 290 ~100 µm; M 400 and M 290 1 kW ~90 µm (EOS data sheets);
+  - SLM 280 2.0 80–115 µm, SLM 125 70–100 µm;
+  - Renishaw AM 400 70 µm, RenAM 500 80 µm;
+  - TRUMPF TruPrint 1000 and 3000 80 µm;
+  - Aconity MINI 80 µm.
+
+  The 96 µm spot runs EOS's Al windows almost unchanged: at 350 W and the galvo's 1.1 m/s its keyhole number is 1.09× EOS's
+  at 370 W and 1.3 m/s. 75–80 µm matches Renishaw, TRUMPF and Aconity. 48 µm matches none of them.
+- **Galvo and f-theta.** No option fills more than 25 % of the basiCube 20's Ø20 aperture or 42 % of the FTH160-1064's 12 mm
+  design beam, so none clips (§1.4). The 2.5 mm beam puts 2.0 kW/cm on every optic, twice the 5 mm's. Only the basiCube 20
+  (1000 W) and the NB1-K14 fold mirror (20 kW/cm CW) have CW ratings. Ask SCANLAB, Thorlabs and Edmund for CW figures at a
+  2.5 mm beam.
+- **Back-reflection.** A flat, shiny spot near the field centre sends light back into the fibre (§2.3). The zone where more
+  than 10 W returns shrinks as the beam narrows: r < 2.6 mm with the 2.5 mm beam, 5.1 mm with the 5 mm beam (k 0.48).
+- **Lid stack.** The narrower beam reaches a little further: field-stop reach at k 0.48 is 27.0 mm with 2.5 mm, 24.3 mm with
+  5 mm.
+
+**Recommendation: keep the IPG 2.5 mm affixed collimator.**
+- It arrives with the laser, with no second vendor and nothing to align.
+- Its spot is EOS's, so published Al windows carry over.
+- It uses ~320 W at the galvo's marking speed without going deeper into keyhole mode than EOS does.
+- It tolerates focus errors and back-reflection best.
+- **Alternative:** if IPG offers a 3.2 mm (75 µm) unit at the same price and lead time, take it if you would rather match
+  Renishaw, TRUMPF or Aconity. Don't take anything that delays the laser.
+- **Not recommended:** the 5 mm (48 µm) unit, running out of focus, and an expander. The expander only helps if no 3.2 mm unit
+  is offered; it also needs a CW rating and a re-routed beam line (there is no room for it as drawn).
+
+**What to put in the IPG order** (BOM L1 and L3):
+1. **The unit:** YLR-500-U3-SM-AC, 5 m fibre, ending in IPG's affixed collimator with a **2.5 mm beam**. Ask:
+   - whether 2.5 mm is standard for this unit;
+   - its price and a drawing (length, diameter, mounting);
+   - the beam diameter definition and divergence;
+   - the lens material and coating, and the collimator's CW rating.
+2. **On the same quote:** the 5 mm unit's price, and a 3.2 mm (f ≈ 23 mm) unit's price and lead time.
+3. **Still open from the quote:** back-reflection tolerance and whether there is an alarm output; the STEP model; warranty;
+   academic pricing.
+
+### 9.2 LED bar: where it goes
+
+**Short answer: take the bar out of the chamber.** Light the bed from outside, through a small new window low in the back
+wall, left of the inlet plenum (x ≈ −105, z ≈ 25). The light comes in at 8–13° from the back-left, across the recoater's
+streaks and toward the camera. A 100 µm streak wall, short-feed edge or raised part edge then casts a 16–27 pixel shadow the
+camera sees, against 2–3 pixels from the lid as drawn. Nothing electrical, hot or outgassing sits in the argon. The window
+is a new port, so it isn't drawn here.
+
+**What each lighting angle shows** (the literature, verified by an agent 2026-11-25; DOIs resolve):
+- **Low, raking light (about 10–20°)** shows what stands up from or dips into the bed: recoater streaks, hopping, short
+  feed and super-elevated edges, through their shadows.
+  - Foster et al., SFF 2015, p. 304: a flash group low on a side wall reveals linear perturbations that are "nearly
+    impossible to detect" with the ceiling flash.
+  - [Craeghs et al., SFF 2011](https://doi.org/10.26153/tsw/15289); [Kleszczynski et al., SFF 2012](https://doi.org/10.26153/tsw/15404).
+  - [Pagani et al. 2020](https://doi.org/10.1016/j.addma.2020.101435) (the EOS M 290's low side light);
+    [Tosoratti et al. 2025](https://doi.org/10.1007/s40964-025-01060-1) (a dark-field light ~15° above the plate).
+- **The light must cross the feature.** Craeghs et al. lit streaks with light perpendicular to the coater's travel.
+  - In Scime & Beuth's EOS M 290 images ([2018](https://doi.org/10.1016/j.addma.2017.11.009),
+    [2018](https://doi.org/10.1016/j.addma.2018.09.034)) the light is a single LED array on the right-hand side. As we read
+    their set-up, that runs along the recoater's travel. Streaking was among their hardest classes (76.9 % with the CNN,
+    39.5 % with the earlier method); they blame the streaks' small size. That the light's direction also plays a part is our
+    inference, not theirs.
+- **Low and opposite the camera worked best for Kleszczynski et al. 2012:** "a light source placed close to the working
+  surface and opposite to the camera produces the best quality". Option D below is both.
+- **Steep light on the camera's side gives the best fused-against-powder contrast.**
+  [Caltanissetta et al. 2018](https://doi.org/10.1016/j.addma.2018.09.017) had a camera 30° off vertical, like ours (33°).
+  One LED strip on the camera's side at 29° off vertical gave Dice scores of 0.93–0.94 for the part outlines. Strips on the
+  far side, near the mirror direction, gave 0.48–0.61.
+- **Several lights fired in turn beat any one.**
+  - Foster et al. 2015, and [Gobert et al. 2018](https://doi.org/10.1016/j.addma.2018.04.005): five sources, eight images a
+    layer. In its conference version (Petrich et al., SFF 2017), all eight fused reached 80–90 % accuracy.
+  - Tosoratti et al. 2025, and [Abdelrahman et al. 2017](https://doi.org/10.1016/j.addma.2017.02.001): multiple lighting
+    conditions correlated.
+- **No paper found tested a light shining in through a window from outside.** All the lights above were inside the
+  chamber. Kleszczynski et al.'s camera was outside a machine window.
+
+**The options, from the model** (`layer_light.py`; L75 plate, 12 mm lens at 26 µm per pixel).
+- **Blade position:** the layer is imaged after the spread and after lasing, both with the blade holder at the end of its
+  stroke (x 91–110).
+- **Glare check:** "Fused metal dark" means the plate's mirror reflection of the light misses the camera by ≥ 37°, so fused
+  metal shows dark and powder bright.
+
+| Option | Elevation | Light vs the streaks (1 = across) | 100 µm step: shadow the camera sees | Fused metal dark? | Brightest / dimmest | Needs |
+|---|---|---|---|---|---|---|
+| A. inside, low on the right wall (round 4) | 11–20° | 0.12, along them | **blocked**: the blade holder sits between it and the plate | yes (89°) | – | a 2-pin feedthrough; it trapped the right liner |
+| B. inside, lid underside (as drawn) | 34–51° | 0.12 | 1.7–2.9 px | yes (60°), on the camera's side as in Caltanissetta's best case | 2.6 | a 2-pin feedthrough: no free opening (electrical.md §13.2) |
+| C. inside, low on the back wall | 10–23° | 0.98 | 8.9–22 px | yes (40°) | 9.5 | a feedthrough; stands in front of the lower back liner |
+| **D. outside, new window low in the back wall, left of the inlet plenum (x −105)** | **8–13°** | **0.66** | **16–27 px** | **yes (37°)** | **4.3** | **a Ø20–25 window port and a Ø22 hole in the lower back liner** |
+| E. as D, right of the plenum (x +105) | 8–13° | 0.66 | 16–26 px | yes (75°) | 4.3 | as D |
+| F. outside, new window low in the right wall | 8–14° | 0.12 | **blocked** by the blade holder | yes | – | a window port |
+| G. outside, through the camera's own window | 50–66° | 0.51 | 0 px: every shadow falls behind its step | yes (47°) | 1.7 | a beamsplitter cube in front of the lens, which moves it back so the Ø20 aperture vignettes, and crossed polarisers against the window's reflections |
+| H. outside, through the laser window | 70–86° | – | – | – | – | only 12 of 108 rays from a ring at r 23–45 mm reach the plate, and only from r 23–30 mm, right against the beam's envelope and in its scatter: no |
+
+![Layer light: the shadow of a 100 µm step the camera sees, per light position](analysis/out/optics/layer_light.png)
+
+**Inside against outside, the other trade-offs:**
+- **Feedthrough.** Inside needs two pins through the wall.
+  - No existing opening can take them (electrical.md §13.2). The only shareable one is the vacuum port, on the chamber side of
+    the valve, and a KF-25 cross there pushes the valve through the guard.
+  - Inside therefore means a new KF16 port plus an SST FA11643 ($108). Outside needs a window port instead.
+- **Powder zone.** electrical.md §8 keeps electronics out of the Class II, Division 1 aluminium-dust zone. An inside LED
+  would be the only electronics in the chamber apart from the module's sealed heaters.
+- **Heat.** The chamber reaches 61–78 °C over a 10 h build (§4.6). Machine-vision LED bars are rated below that:
+  - Effilux's adjustable bar lights at Edmund are rated −10 to 50 °C, IP40 (15-LED white bar, 24 V DC, $1,085; fetched
+    2026-11-25T01:41Z through the lab tunnel, https://www.edmundoptics.com/p/15-led-white-adjustable-led-bar-light/4029/).
+  - Advanced Illumination's EuroBrite and MicroBrite bars are rated 0–60 °C (Edmund's listings, search result only).
+
+  Outside, the bar is at room temperature, and its few watts stay out of the chamber.
+- **Water and vapours in the argon.**
+  - A 90 × 8 × 1.6 mm FR-4 LED board (~2.1 g) loses 0.22–0.35 % of its mass in NASA's outgassing test (laminate, and board
+    with solder mask), so 5–7 mg. As water that is 500–800 ppmv in the 11.3 L gas loop if it all came off. It comes off over
+    hours at 60–80 °C.
+  - For comparison, all the walls and seals give 13–36 ppm in the first hour, and the powder 2,500–5,000 ppmv
+    (vacuum-and-purge.md).
+  - Silicone potting and PVC wire are worse: Sylgard 184 has 0.48 % condensables (CVCM, what condenses on cold optics), PVC
+    insulation 15.5 % TML. An inside bar must be unpotted with PTFE wire.
+  - The NASA figures were pulled by the research agent and not re-checked here.
+- **Fouling and cleaning.**
+  - An inside LED collects condensate and spatter on its face. Tosoratti et al. warn that powder build-up and spatter degrade
+    in-chamber lights. On the lid it comes off with the lid; low on a wall it sits in the powder and spatter.
+  - Outside, only the window's inner face fouls. The back wall is upstream of the cross-flow: the inlet slot is in the back
+    wall at z 4–12, the outlet in the floor at the door. So a back-wall window sees the cleanest gas.
+  - It can be wiped when the back liners come out; the robot's liner jobs already reach there through the door.
+- **Camera view and glare.**
+  - Every option except G is dark field: the plate's mirror reflection misses the camera by ≥ 37°.
+  - Low light makes spatter and track ripples glint at 19–35° slopes (D) or 42–58° (E). D glints more, which helps find
+    spatter.
+  - Low light is 4–5× brighter at the near edge of L75 than the far edge. Divide each image by a flat-field image of a fresh
+    powder layer.
+- **Laser safety.** A window passes 1070 nm. The plate's specular reflections leave within ~20° of vertical, so they can't
+  reach a window 8–13° above the plate; scattered light can, and the Class 1 guard stops it. If the LSO wants the wall itself
+  to stay a barrier, use a glass that blocks 1070 nm, e.g. a 950 nm short-pass like the camera's FESH0950 ($169.26).
+- **Cost** (estimates unless fetched):
+  - **D:** a window port, ~$100–300. Kurt J. Lesker KF40 viewports are $180 (Kodial) or $280 (fused silica), checked
+    2026-11-25. A KF40 flange (Ø55) at x −100 overlaps the inlet plenum's flange (x ±78), so put it at x ≤ −106, or use a
+    Ø1 in. window bolted on like the camera's. Add an LED bar ($20–60 for a plain 12/24 V bar; ~$1,085 for an industrial
+    machine-vision bar such as Effilux's) and a liner hole.
+  - **B with a feedthrough:** LED bar $20–60, FA11643 $108, and a KF16 port somewhere on the lid.
+  - **G:** a 25 mm beamsplitter cube and polarisers, a few hundred dollars, plus re-checking the camera's vignetting.
+
+**Recommendation: D, with a second light later.** Take the bar out of the chamber, and light the bed through a small window
+low in the back wall, left of the inlet plenum (x ≈ −105, z ≈ 25, under the ball screw).
+- **Why D:** it gives raking light across the streaks, which the spreadability scores need. Fused metal still shows dark, and
+  the window fouls least there.
+- **Later:** if fused-against-powder segmentation needs it, add a steeper light on the camera's side, as Caltanissetta found
+  best, and fire the two in turn (Foster, Gobert).
+- **Not drawn:** it's a new port in the chamber wall and a hole in the liner, both other owners' sections. The model keeps the
+  bar on the lid as a placeholder. No feedthrough is bought.
+
+### 9.3 Window and slide as bought, the shims, and the field-stop inserts
+
+- **Drawn as the BOM parts** (`cad/lpbf_low.py` section 7; the P block's `win_t`, `slide_t`, `z_win0`, `z_slide0`).
+  - **Window:** Edmund 38-990, Ø50.8 × 9.53 ± 0.20 mm, clear aperture Ø45.72, $295. Its top stays at z 156 under the clamp
+    ring, so the seat is 1.53 mm deeper (bottom z 146.47).
+  - **Slide:** Edmund 36-299, Ø50.00 ± 0.1 × 2.00 +0.15/−0 mm, clear aperture Ø42.5, 1064 nm V-coat, $121 each or $103 at
+    6–25 (product pages fetched 2026-11-25T00:50Z).
+  - **Slide seat:** the slide now sits on a 1.7 mm seat in a Ø50.4 pocket in the drawer (bottom z 127.0). Before, the pocket
+    was Ø51.2 and cut through, so the drawn slide had nothing under it.
+- **Focus shift:** (9.53 + 2.0)(1 − 1/1.44956) = **3.58 mm** (it was 3.41 mm with the drawn 8 + 3 mm). `beam_path.py`
+  computes it from the model and checks it: the focus lands at **z +0.004 mm**.
+- **Shims.**
+  - The extra 0.17 mm comes out of the shim stack: **2.83 mm nominal**, was 3.00. The bridge, galvo, beam line and guard don't
+    move, and the machine stays 579.6 mm tall.
+  - From the 0.5, 0.25 and 0.1 mm shim stock, 5 × 0.5 + 0.25 + 0.1 = 2.85 mm is 0.02 mm off, which the burn test takes out.
+  - 0–6 mm of shims now moves the lens 2.83 mm up (no shims) to 3.17 mm down (6 mm). The thread engages 9.67 mm at the
+    nominal stack.
+- **A latent bug, fixed.**
+  - The lens's Ø53 nose sat flush with the bridge top at 3 mm of shims, under the galvo riser's Ø40 bore. With fewer shims it
+    rises into the riser, so the "+3 mm" half of the focus range never existed. The 0.17 mm raise made it a 161 mm³
+    interference.
+  - The riser's bore is now **Ø56**. That clears the nose by 1.5 mm radially. At the top of the range the nose is 3.0 mm
+    above the bridge top and 2.0 mm under the galvo's base.
+- **Tolerances.**
+  - Slide thickness (+0.15 mm) moves the focus up to 0.05 mm lower per slide (it was ±0.12 mm with the uncoated 25-250).
+  - Window thickness (±0.20 mm) moves it ±0.06 mm once, which the burn test takes out.
+- **Thermal lens** (`thermal_lens.py`, re-run with the 2 mm slide at z 127 and the 9.53 mm window at z 146.47, and now for the
+  2.5 mm beam too).
+  - Unchanged in Rayleigh ranges: light film 0.73–0.74 z_R, fogged 0.5 % 5.6–6.9 z_R.
+  - The thinner slide runs hotter but bends the beam the same, because the lens power depends on the absorbed power, not the
+    thickness. Light film: 42 K at the centre (was 30). Fogged 0.5 %: 422–427 K (was 296–302), which is hard on the coating;
+    swap a fogged slide, don't run it.
+  - With the drawn 2.5 mm beam, a light film moves the focus 4.5 mm.
+  - **CalculiX** (`thermal_lens_ccx.py`, re-run on the 2 mm slide at z 127, with a 2.5 mm beam case added) agrees with the
+    finite-volume solve within 1–2 %. Fogged 0.5 %, 3.2 mm beam: ΔT 426.6 / 422.1 K, focus shift 22.9 / 23.1 mm. Light film,
+    2.5 mm beam: 4.4 / 4.5 mm.
+- **The slide's clear aperture is now the next limit after the field stop.**
+  - Edmund specifies 36-299 over Ø42.5 only. Counted as an aperture, it limits the L75 reach once the field stop is opened:
+    26.7 / 31.8 / 39.4 mm at k 0.33 / 0.48 / 0.63 (2.5 mm beam).
+  - So an L75 field-stop insert reaches the plate's edge only for k ≳ 0.60 (it was 0.58 with the Ø42 bore as the limit).
+  - Beyond the clear aperture the slide is still glass, but its coating isn't specified there.
+- **Field-stop inserts: the M50 one is drawn; S25 and L75 keep the Ø36 stop.**
+  - **M50 (drawn 2026-11-25):** the M50 build has a **Ø41** insert in place of the Ø36 stop (`P["field_stop_d"]`,
+    section 7). The fixed Ø36 stop clipped the M50 edge below k ≈ 0.45.
+    - With the drawn 2.5 mm beam, the insert passes the M50 edge (r 25.4) with < 0.1 % clipped at every k in the drawn range:
+      reach 25.9 / 31.1 / 39.1 mm at k 0.33 / 0.48 / 0.63, still set by the insert (`beam_path.md`, "M50 with its Ø41
+      field-stop insert").
+    - The margin at k 0.33 is 0.5 mm. A 3.2 mm beam would need Ø41.2 there and a 5 mm beam Ø43.5, so make the insert Ø42 if
+      the collimator changes.
+    - The cost is a longer runaway reach (beam centre on the insert's edge): 28.0 / 33.7 / 42.4 mm, against 24.6 / 29.6 /
+      37.2 mm with Ø36. Both land on the module's top inside the floor port, not on the walls or liners, which the stop is
+      there to protect.
+  - **S25: no insert.** The Ø36 stop passes S25 at any k (it needs Ø21.8–24.9). A tighter S25 insert would only shorten the
+    runaway reach, which already stays inside the floor port.
+  - **L75: no insert until k is measured.** An insert only helps if k ≳ 0.60, because the slide's Ø42.5 clear aperture and the
+    Ø42 bore under the window come next (§9.3 above). Measure k with the guide laser first (§4.4), then size the L75 insert,
+    or move to a Ø3 in. window, its bores and a larger slide (§0 item 3).
+  - How the insert is held and swapped isn't drawn. The ring (Ø55.8 × 5 mm) sits in the lid's Ø56 bore under the window
+    flange, so either the flange comes off, or the ring drops out through the drawer slot (72 × 6 mm).
+- **Checks re-run:**
+  - `beam_path.py` (focus +0.004 mm, the assert passes), `thermal_lens.py`, `thermal_lens_ccx.py` and `layer_light.py` (new);
+  - an exact check of every changed part against its neighbours: it found the lens against the riser (161 mm³) before the
+    riser's bore was opened, and nothing after;
+  - **`interference.py M50` (exact booleans): 0 interferences in all 6 static states and all 8 motion sweeps**, 1118 s under
+    a 3 GB cap. The tightest gaps are unchanged except the slide's own: 2.0 mm to the lid at the drawer's −120 mm (it was
+    1.0 mm).
+  - **`interference.py S25 S`: 0 in all 6 static states and all 8 sweeps** (1516 s, 3 GB cap), with the same single change in
+    the tightest gaps (the slide to the lid: 1.0 → 2.0 mm). L75 is in the next commit.
+  - The M50 insert only enlarges the stop's bore, so it can't add an interference; the M50 run above was before it.
+  - Not re-run: the bridge FEA (case 6b) and mass. The lens moved 0.17 mm, the riser lost 16 g and the glass and window
+    flange changed by a few grams; nothing else moved.
+
 ## Sources
 
 1. IPG spec G22-29856 for YLR-500-U3-SM-AC, transcribed in [`quotes/ipg-ylr-500-u3-sm-ac.md`](quotes/ipg-ylr-500-u3-sm-ac.md).
@@ -802,3 +1117,22 @@ Sources for this round:
 11. W. J. Smith, *Modern Optical Engineering*, 4th ed.: plane-parallel plate focus shift t(1 − 1/n) and astigmatism.
 12. Edison r5-optics-review: [`edison/r5-optics-review/answer.md`](edison/r5-optics-review/answer.md) and its references.
 13. Model geometry: [`cad/lpbf_low.py`](cad/lpbf_low.py) (parameter block P and section 7), [`cad/vendor_parts.py`](cad/vendor_parts.py).
+14. Z. Gan et al., "Universal scaling laws of keyhole stability and porosity in 3D printing of metals", Nat. Commun. 12, 2379 (2021), https://doi.org/10.1038/s41467-021-22704-0 (keyhole number, its 1.4 and 6.0 thresholds; Ti-6Al-4V, Al6061, SS316), fetched 2026-11-25T01:00Z through the lab tunnel.
+15. B. Liu and G. J. Gibbons, "Controlling chemical composition changes in laser powder bed fusion of AlSi10Mg", SFF 2023, https://utw10945.utweb.utexas.edu/sites/default/files/2023/027%20ControllingChemicalCompositionChangesinLaserPowderBedFusionofAlSi10Mg.pdf (EOSINT M 280, 370 W, 1300 mm/s, 0.19 mm, 30 µm), read 2026-11-25.
+16. S. Zhou et al., "Impacts of defocusing amount and molten pool boundaries on mechanical properties and microstructure of selective laser melted AlSi10Mg", Materials 12, 73 (2019), https://doi.org/10.3390/ma12010073.
+17. EOS: M 290 system data sheet (focus ~100 µm), https://www.eos.info/metal-solutions/metal-printers/data-sheets/sds-eos-m-290; AlSi10Mg process data sheet, 30 µm, M 290 (5.1 mm³/s), https://www.eos.info/metal-solutions/data-sheets/aluminium/pds-eos-aluminium-alsi10mg-eos-m-290-30um (2026-11-25). Other focus diameters (SLM 280 2.0 and SLM 125, Renishaw AM 400 and RenAM 500 sheet H-5800-4030-03-A, TRUMPF TruPrint 1000/3000 from archived trumpf.com pages, Aconity MINI https://aconity3d.com/products/aconity-mini/) were read by a research agent 2026-11-25T00:46–00:53Z.
+18. Collimators, read 2026-11-25 by a research agent: Wavelength Opto-Electronic, https://wavelength-oe.com/laser-collimators/ (00:45Z); IPG D25 collimators, https://www.ipgphotonics.com/en/products/beam-delivery/collimators/collimators/d25-collimators (00:44Z); Coherent 102870X01 (archived web shop, https://web.archive.org/web/20211127084101/https://coherentinc.force.com/Coherent/beam-delivery-components/102870X01, 01:04Z); Laser Mechanisms FiberMINI, https://www.lasermech.com/products/fibermini/ (01:05Z); Cloudray product data (01:05Z).
+19. Beam expanders, Edmund Optics product pages fetched 2026-11-25T01:20Z through the lab tunnel: 73-122 (Jenoptik 1.5×, 1064 nm: $790, 93 mm, apertures 16 / 40 mm, CW 5.0 MW/cm²), 70-164 (Sill S6EXK0015-328 1.5×: $1,115, 44.7 mm, 5.0 J/cm² at 1 ns), 12-875 (Vega 1.5×: $385, 85.8 mm, apertures 8 / 23 mm).
+20. Edmund Optics 36-299 (https://www.edmundoptics.com/p/50mm-dia-1064nm-laser-debris-shield/33156/) and 38-990 (https://www.edmundoptics.com/p/508mm-dia-1064nm-10-fused-silica-window/39556/), fetched 2026-11-25T00:50Z through the lab tunnel.
+21. Layer lighting, DOIs checked against Crossref by a research agent 2026-11-25:
+    - L. Scime, J. Beuth, Addit. Manuf. 19, 114 (2018), https://doi.org/10.1016/j.addma.2017.11.009, and 24, 273 (2018), https://doi.org/10.1016/j.addma.2018.09.034;
+    - B. Foster et al., "Optical, layerwise monitoring of powder bed fusion", SFF 2015, pp. 295–307;
+    - M. Abdelrahman et al., Addit. Manuf. 15, 1 (2017), https://doi.org/10.1016/j.addma.2017.02.001;
+    - T. Craeghs et al., SFF 2011, pp. 212–226, https://doi.org/10.26153/tsw/15289;
+    - S. Kleszczynski et al., SFF 2012, https://doi.org/10.26153/tsw/15404;
+    - C. Gobert et al., Addit. Manuf. 21, 517 (2018), https://doi.org/10.1016/j.addma.2018.04.005 (conference version: Petrich et al., SFF 2017);
+    - F. Caltanissetta et al., Addit. Manuf. 24, 183 (2018), https://doi.org/10.1016/j.addma.2018.09.017;
+    - L. Pagani et al., Addit. Manuf. 36, 101435 (2020), https://doi.org/10.1016/j.addma.2020.101435;
+    - Tosoratti et al., Prog. Addit. Manuf. 10, 7659 (2025), https://doi.org/10.1007/s40964-025-01060-1.
+22. NASA outgassing database values (FR-4, LED package, silicones, wire insulation), as pulled by a research agent 2026-11-25; not re-checked here.
+23. Kurt J. Lesker KF-flanged viewports: https://www.lesker.com/viewports/viewports-kf-flanged-quartz-fused-silica.cfm (QF40-150-VPQ, $280) and https://www.lesker.com/viewports/viewports-kf-flanged-kodial-glass.cfm (QF40-150-VP, $180), checked 2026-11-25.

@@ -57,10 +57,32 @@ PHOTOS = {
     "mcm_6627T91": ("mcm_6627T91", "mcm_6627T91/img00.png", "McMaster-Carr", None, "product image (render)"),
     "mcm_6709K12": ("mcm_6709K12", "mcm_6709K12/img00.png", "McMaster-Carr", None, "product image (render)"),
     "mcm_4566N401": ("mcm_4566N401", "mcm_4566N401/img00.png", "McMaster-Carr", None, "product image (render)"),
-    "mcm_5169K72": ("mcm_5169K72", "mcm_5169K72/img00.png", "McMaster-Carr", None, "product image (render)"),
-    "mcm_3861N11": ("mcm_3861N11", "mcm_3861N11/img00.png", "McMaster-Carr", None, "product image (render)"),
+    "mcm_5169K72": ("mcm_5169K72", "mcm_5169K72/img00.png", "McMaster-Carr",
+                    "https://www.mcmaster.com/mvD/Contents/gfx/ImageCache/516/5169K72_d29df2b6-f3f2-4e58-bf9a-7bd86f0c4ef5@4x_1709241645.png?ver=ImageNotFound",
+                    "product image (render)"),
+    "mcm_3861N11": ("mcm_3861N11", "mcm_3861N11/img00.png", "McMaster-Carr",
+                    "https://www.mcmaster.com/mvC/Contents/gfx/ImageCache/386/3861N11_450d82a6-929b-4c94-b383-a8c3f12b78a8@4x_76lla_1768238631.png?ver=ImageNotFound",
+                    "product image (render)"),
     "mcm_4396K21": ("mcm_4396K21", "mcm_4396K21/img00.png", "McMaster-Carr", None, "product image (render)"),
+    # round 6 (2026-11-25)
+    "nxds_brochure_p1": ("edwards_nxds6i", "nxds/brochure_p1_150dpi.png", "Edwards",
+                         "https://assets.testequity.com/te1/Documents/pdf/Edwards/Edwards_nXDS_Brochure_0425.pdf",
+                         "cover photo of Edwards' nXDS brochure (rev 0425), page 1 rendered at 150 dpi with PyMuPDF; the fan end is under a translucent overlay"),
+    "ipg_sm_family": ("ipg_ylr500_u3", "ipg/yls_sm_family_hero.png", "IPG Photonics",
+                      "https://cdn.ipgphotonics.com/a55a8a0e-9911-4793-acae-b06c016526c8/YLS_SM_Family_Main_cms_hero_1x.png?disable=upscale&width=834&format=png",
+                      "single-mode family render on IPG's 'Single-Mode Fiber Lasers' page; its 4U rack unit (front, lower centre) is used"),
+    "eaton_front_2k": ("eaton_5px1500rtg2", "eaton/5PX1500RTG2_C_2000x2000_300dpi.jpeg", "Eaton",
+                       "https://www.eaton.com/mdmfiles/PDM93866092/5PX1500RTG2_C/2000x2000_300dpi",
+                       "straight-on product image on eaton.com's 5PX1500RTG2 SKU page (2000 x 2000 px)"),
+    "eaton_r_2k": ("eaton_5px1500rtg2", "eaton/5PX1500RTG2_R_2000x2000_300dpi.jpeg", "Eaton",
+                   "https://www.eaton.com/mdmfiles/PDM93866093/5PX1500RTG2_R/2000x2000_300dpi",
+                   "three-quarter product image on eaton.com's 5PX1500RTG2 SKU page (2000 x 2000 px), no rack ears"),
 }
+# photos whose background is not near-white (GrabCut seeds fail): colours are read from hand-picked rectangles inside the part only
+RECT_ONLY = {"nxds_brochure_p1"}
+# per-photo cut (photo px polygon set to background): McMaster's 3861N11 image shows the coiled 36 in. lead, which the builder
+# does not draw; everything left of the cable gland is cut
+CUTS = {"mcm_3861N11": [(0, 0), (452, 0), (452, 297), (0, 297)]}
 
 METALLIC = {"bare_metal": 1.0, "anodised": 0.5, "paint": 0.0, "plastic": 0.0, "rubber": 0.0, "lcd": 0.0, "printed": 0.0}
 
@@ -105,6 +127,37 @@ REGIONS = {
     "mcm_5169K72": [("housing (black)", None, (0, 35), None, "paint"), ("bail clips (steel wire)", None, (60, 100), 12, "bare_metal")],
     "mcm_3861N11": [("body and cable (black)", None, (0, 30), None, "plastic"), ("hex and thread (stainless)", None, (55, 100), 12, "bare_metal")],
     "mcm_4396K21": [("motor and handle grip (black)", None, (0, 30), None, "paint"), ("pump block and guard (aluminium)", None, (55, 100), 12, "bare_metal")],
+    # round 6: rectangles picked on gridded zooms of each photo (nxds_photo_grid.png, ipg4u_grid.png, eaton_left/right.png)
+    "nxds_brochure_p1": [
+        ("housing and fins (painted cast aluminium)", (205, 1025, 455, 1175), (55, 100), 12, "paint"),
+        ("base, side face (painted cast aluminium)", (217, 1237, 367, 1300), (55, 100), 12, "paint"),
+        ("connector panel (light grey plate)", (405, 1350, 605, 1525), (70, 100), 12, "plastic"),
+        ("inlet flange, NW25 (stainless)", (542, 806, 630, 887), (30, 100), 14, "bare_metal"),
+        ("exhaust flange, NW25 (stainless)", (711, 1250, 817, 1375), (30, 100), 14, "bare_metal"),
+        ("lifting eye (stainless)", (524, 712, 580, 775), (30, 100), 14, "bare_metal"),
+        ("IEC inlet (black)", (267, 1331, 330, 1400), (0, 30), None, "plastic"),
+        ("START key (green)", (365, 1365, 392, 1394), (0, 100), None, "plastic"),
+        ("STOP key (red)", (365, 1412, 392, 1435), (0, 100), None, "plastic"),
+    ],
+    "ipg_sm_family": [
+        ("4U front panel, light area", (455, 592, 468, 610), (60, 100), 15, "paint"),
+        ("4U fan field (dark perforated)", (495, 597, 553, 630), (0, 100), None, "paint"),
+        ("4U window (light grey)", (436, 585, 451, 618), (40, 100), 15, "plastic"),
+        ("4U handles (black)", (411, 588, 416, 642), (0, 40), None, "plastic"),
+        ("4U START (green)", (422, 587, 428, 592), (0, 100), None, "plastic"),
+        ("4U mushroom (red)", (421, 599, 431, 606), (0, 100), None, "plastic"),
+        ("4U chassis side (black)", (320, 570, 395, 635), (0, 45), None, "paint"),
+    ],
+    "eaton_front_2k": [
+        ("grille (perforated silver, holes included)", (450, 870, 1100, 1120), (0, 100), None, "paint"),
+        ("grille metal between holes", (450, 870, 1100, 1120), (62, 100), None, "paint"),
+        ("bezel frame (dark grey)", (300, 842, 1450, 862), (0, 60), None, "plastic"),
+        ("LCD module surround (black)", (1730, 880, 1785, 1060), (0, 30), None, "plastic"),
+        ("LCD (lit)", (1580, 935, 1710, 1020), (0, 100), None, "lcd"),
+        ("LED bar (blue)", (1530, 1132, 1780, 1139), (0, 100), 200, "plastic"),
+        ("Eaton badge", (290, 955, 385, 1055), (70, 100), None, "plastic"),
+        ("keys (dark grey)", (1525, 1082, 1567, 1122), (0, 45), None, "plastic"),
+    ],
 }
 
 
@@ -113,14 +166,19 @@ REGIONS = {
 SHADOW_CUT = {"img21.jpg": [(200, 560), (332, 548), (377, 556), (380, 522), (550, 502), (700, 452), (760, 440), (760, 682), (200, 682)]}
 
 
-def load(path):
-    """-> (BGR uint8 image, object mask uint8 0/1). Alpha where the image has it, else GrabCut seeded by near-white = background."""
+def load(path, pid=None):
+    """-> (BGR uint8 image, object mask uint8 0/1). Alpha where the image has it, else GrabCut seeded by near-white = background.
+    CUTS[pid] (a photo px polygon) is set to background."""
     im = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
     if im.ndim == 3 and im.shape[2] == 4:
         a = im[:, :, 3]
         bgr = im[:, :, :3].copy()
         bgr[a < 8] = 255
-        return bgr, (a > 127).astype(np.uint8)
+        mask = (a > 127).astype(np.uint8)
+        if pid in CUTS:
+            cv2.fillPoly(mask, [np.array(CUTS[pid], np.int32)], 0)
+            mask = _clean(mask)
+        return bgr, mask
     bgr = im[:, :, :3] if im.ndim == 3 else cv2.cvtColor(im, cv2.COLOR_GRAY2BGR)
     g = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)
     hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
@@ -234,10 +292,27 @@ def eaton_layout():
 # --------------------------------------------------------------------------------------------
 # Silhouette fitting
 # --------------------------------------------------------------------------------------------
+TAG = os.environ.get("OEM_FIT_TAG", "")      # e.g. "_before": results go to fits_before and overlay_<key>_before.png
+
+
 def model_mesh(key, **kw):
+    """Tessellated builder. $OEM_VP names another vendor_parts.py (e.g. the one before a refinement, for 'before' fits);
+    a builder without an 'ears' option is called with bodies=True and its rack ears dropped."""
     sys.path.insert(0, str(CAD))
-    import vendor_parts as VPm
-    s = getattr(VPm, key)(**kw)
+    if os.environ.get("OEM_VP"):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("vp_alt", os.environ["OEM_VP"])
+        VPm = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(VPm)
+    else:
+        import vendor_parts as VPm
+    try:
+        s = getattr(VPm, key)(**kw)
+    except TypeError:
+        kw2 = {k: v for k, v in kw.items() if k != "ears"}
+        d = getattr(VPm, key)(bodies=True, **kw2)
+        d.pop("rack_ears", None)
+        s = VPm._fuse(list(d.values()))
     vs, ts = s.tessellate(0.6, 0.6)
     return np.array([(v.x, v.y, v.z) for v in vs]), np.array(ts, dtype=np.int64)
 
@@ -327,12 +402,16 @@ def contour_dist(a, b):
 FITS = {   # photo id -> (builder key, builder kwargs, model z axis in camera coords, model y axis in camera coords, sensor note)
     "teknic_cpm231": ("clearpath_sd_231x", {}, (-0.85, 0.08, -0.52), (0.0, -1.0, 0.0)),
     "mcm_4123K45": ("mcm_4123K45", {"handle": "-x"}, (0.0, -1.0, 0.25), (0.25, 0.0, -1.0)),
+    # round 6 (2026-11-25)
+    "eaton_r_2k": ("eaton_5px1500rtg2", {"ears": False}, (0.0, -0.94, -0.34), (-0.3, 0.1, 0.95)),
+    "mcm_5169K72": ("mcm_5169K72", {}, (0.0, -0.95, -0.3), (1.0, 0.0, 0.0)),
+    "mcm_3861N11": ("mcm_3861N11", {}, (-0.9, -0.2, 0.3), (0.0, 1.0, 0.0)),
 }
 
 
 def run_fit(pid):
     key, kw, zc, yc = FITS[pid]
-    bgr, mask = load(PH / PHOTOS[pid][1])
+    bgr, mask = load(PH / PHOTOS[pid][1], pid)
     h, w = mask.shape
     V, T = model_mesh(key, **kw)
     from scipy.spatial.transform import Rotation as Rot
@@ -410,7 +489,7 @@ def run_fit(pid):
     sc = min(1.0, 900.0 / w)
     small = cv2.resize(can, (int(w * sc), int(h * sc)), interpolation=cv2.INTER_AREA)
     OUT.mkdir(parents=True, exist_ok=True)
-    cv2.imwrite(str(OUT / f"overlay_{key}.png"), small, [cv2.IMWRITE_PNG_COMPRESSION, 9])
+    cv2.imwrite(str(OUT / f"overlay_{key}{TAG}.png"), small, [cv2.IMWRITE_PNG_COMPRESSION, 9])
     # full overlay for viewing (photo pixels: /tmp only)
     OV.mkdir(parents=True, exist_ok=True)
     ov = bgr.copy()
@@ -419,17 +498,23 @@ def run_fit(pid):
     cv2.drawContours(ov, cs, -1, (255, 60, 0), 2)
     cs, _ = cv2.findContours(po.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     cv2.drawContours(ov, cs, -1, (0, 140, 255), 1)
-    cv2.imwrite(str(OV / f"photo_overlay_{key}.jpg"), ov)
+    cv2.imwrite(str(OV / f"photo_overlay_{key}{TAG}.jpg"), ov)
     print(json.dumps({k: res[k] for k in ("photo", "iou", "f_px", "f_35mm_equiv_mm", "contour_mean_px", "contour_mean_mm")}), flush=True)
     return res
 
 
 # --------------------------------------------------------------------------------------------
 def manifest():
+    old = {}
+    if (HERE / "photo-manifest.csv").exists():
+        with open(HERE / "photo-manifest.csv", newline="") as fh:
+            old = {r["id"]: r for r in csv.DictReader(fh)}
     rows = []
     for pid, (key, rel, vendor, url, note) in PHOTOS.items():
         f = PH / rel
         if not f.exists():
+            if pid in old:                      # fetched in an earlier round and not in /tmp now: keep its row
+                rows.append(old[pid])
             continue
         if url is None:
             idx = json.loads((f.parent / "index.json").read_text())
@@ -446,12 +531,16 @@ def manifest():
 
 
 def finishes():
-    out = {}
+    out = json.loads((HERE / "finishes.json").read_text()) if (HERE / "finishes.json").exists() else {}   # keeps earlier rounds'
     for pid, regs in REGIONS.items():
         key, rel = PHOTOS[pid][0], PHOTOS[pid][1]
         if not (PH / rel).exists():
             continue
-        bgr, mask = load(PH / rel)
+        if pid in RECT_ONLY:
+            bgr, mask = cv2.imread(str(PH / rel))[:, :, :3], None
+            mask = np.ones(bgr.shape[:2], np.uint8)
+        else:
+            bgr, mask = load(PH / rel, pid)
         for body, rect, Lr, cmax, mat in regs:
             r = measure(bgr, mask, rect, Lr, cmax, mat)
             r.update(photo=pid, method=("median of the pixels in a hand-picked rectangle" if rect else "median over the whole object mask")
@@ -478,9 +567,9 @@ if __name__ == "__main__":
         for pid in sel:
             r = run_fit(pid)
             cur = json.loads((OUT / "photo_fit.json").read_text()) if (OUT / "photo_fit.json").exists() else res
-            old = {q["photo"]: q for q in cur.get("fits", [])}
+            old = {q["photo"]: q for q in cur.get("fits" + TAG, [])}
             old[pid] = r
-            cur["fits"] = [old[k] for k in FITS if k in old]
+            cur["fits" + TAG] = [old[k] for k in FITS if k in old]
             cur.setdefault("layouts", res.get("layouts"))
             (OUT / "photo_fit.json").write_text(json.dumps(cur, indent=1))
             res = cur

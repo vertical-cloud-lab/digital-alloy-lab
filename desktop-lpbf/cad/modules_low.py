@@ -27,12 +27,17 @@ BAYONET_R = 6.0          # plate spigot radius; three lugs reach BAYONET_R + 2.5
 # rod-end feedthroughs (electrical.md section 6, FT1), Solid Sealing Technology weld-ins (solidsealing.com, read 2026-11-22):
 # FA11631 single Chromel lead and FA11632 single Alumel lead, Ø6.27 mm x 38 mm 304 sleeves, -269 to 450 C, $44 each (3 + 3 = the
 # control, edge and limit pairs); FA10443 4 x 0.81 mm Cu pins, 16 A per pin, 2 kV, Ø12.62 x 24 mm sleeve, $92 (heater power, two
-# pins per pole). Sleeve diameters and lengths are the catalogue's; how deep each sits, and the 2.4-3.1 mm between sleeves and to
-# the face's edges, are this layout's (check weld access, and a blind-bore weld-in, with Solid Sealing before machining the block).
+# pins per pole). Sleeve diameters and lengths are the catalogue's; how deep each sits, and the 2.4 mm between sleeves and the
+# 2.5 mm to the face's edges, are this layout's (check weld access, and a blind-bore weld-in, with Solid Sealing before machining the block).
+# Round 6 (2026-11-25): the type K sleeves moved from x +-12.5, +-21.5, +-30.5 (72 mm face) to +-11.85, +-26.16, +-34.83 (81 mm
+# face), so that the 8.0 mm gap between the inner two on each side sits under the handle's M4 at x +-19 (joints.py). Before, a
+# sleeve stood under each handle screw, so neither a torque screwdriver (operations.md A1.22: a ball-end key only) nor the robot's
+# driver (assembly.md M22: 0 of 2) could reach them. The gland plate's six M4 now sit on the arc behind the block (joints.py).
 ROD_FT = dict(label="3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, Ø6.27 x 38 sleeves; "
                     "1 x FA10443 4-pin 16 A Cu, Ø12.62 x 24 sleeve", pn="FA11631/FA11632/FA10443", mass_kg=0.06,
-              face_w=72.0, face_y=-22.0, back_y=6.0, face_z0=1.0, face_z1=17.0, wall=3.0, xdrill_y=2.0,
-              pwr_z=9.0, pwr_d=12.62, pwr_out=21.0, tc_z=10.5, tc_x=(-30.5, -21.5, -12.5, 12.5, 21.5, 30.5), tc_d=6.27, tc_len=38.0, tc_out=12.0)
+              face_w=81.0, face_y=-22.0, back_y=6.0, face_z0=1.0, face_z1=17.0, wall=3.0, xdrill_y=2.0,
+              pwr_z=9.0, pwr_d=12.62, pwr_out=21.0, tc_z=10.5, tc_x=(-34.83, -26.16, -11.85, 11.85, 26.16, 34.83), tc_d=6.27, tc_len=38.0,
+              tc_out=12.0)
 
 
 def polar(r, deg):
@@ -69,6 +74,43 @@ def zlevels():
     return dict(zb1=zb1, zb0=zb0, zk0=zk0, zh0=zh0, zc=zc, z_stop=MP.Z_P_MIN - MP.STACK)
 
 
+# Zero-point arms (round 6, 2026-11-25, hot-swap.md §3.2a): the module side of the SCHUNK NSE-HT mini 88-20 pair that lpbf_low hangs under
+# the floor (lpbf_low.NSE). Each arm is a 6061 hanger bolted under an ear of the module flange (at 50 and 135 deg, r 56-68, outside L75's
+# r 53.1 gland plate) and an 8 mm plate under the zero-point module, which carries a clamping pin up into it. The right hanger is at
+# 50 deg so it passes the jar's toggle-clamp side links (x >= 52.2) at 2.4 mm on the module's way out; the left one at 135 deg stays
+# 3.3 mm in front of the Z sensor bracket. The same arms fit S25, M50
+# and L75 (the flange is the same Ø100 on all three). Hangers 12 x 16, so the arm's 28 N m at a 0.5 kN pull bends them to ~73 MPa;
+# the plate (24 wide, 8 thick) sees ~110 MPa: sized for the 0.5 kN pull, not for the 2.5 kN turbo. The plate is 8 mm because the
+# module's path drops it to 3 mm over the base plate; the pin's top then passes 6 mm under the overflow jar.
+ZP_ARM = dict(angles=(50.0, 135.0), ear_r0=45.0, r0=56.0, r1=68.0, w=16.0, plate_w=24.0, pin_r=14.0, link0=4.0)
+
+
+def zp_arms(h, add, lab, step, mg):
+    """The module's two zero-point arms and their clamping pins (lpbf_low.NSE sets where the pins go)."""
+    N, A = h.NSE, ZP_ARM
+    zf = -MP.FLOOR_T
+    za0, za1 = N["z0"] - N["arm_t"], N["z0"]                     # arm plate under the zero-point module's pin face
+    arms, pins = [], []
+    for a, side in zip(A["angles"], ("right", "left")):
+        px, py = N[side]
+        rc = (A["r0"] + A["r1"]) / 2
+        hx, hy = rc * math.cos(math.radians(a)), rc * math.sin(math.radians(a))
+        bar = h.box(A["r0"], A["r1"], -A["w"] / 2, A["w"] / 2, za0, zf - MP.FLANGE_T).rotate(V(0, 0, 0), V(0, 0, 1), a)
+        L = math.hypot(px - hx, py - hy)
+        ang = math.degrees(math.atan2(py - hy, px - hx))
+        # the plate starts 4 mm out from the hanger's centre line, so its inner corner stays clear of L75's gland-plate screw heads
+        link = h.box(A["link0"], L, -A["plate_w"] / 2, A["plate_w"] / 2, za0, za1).rotate(V(0, 0, 0), V(0, 0, 1), ang).translate(V(hx, hy, 0))
+        arm = h.fuse([bar, link, h.cyl(A["pin_r"], (px, py, za0), "z", N["arm_t"])]).cut(h.cyl(4.0, (px, py, za0 - 1), "z", N["arm_t"] + 2))
+        # nothing of the plate inside r 53.5: L75's gland-plate screw heads reach r 51.1 at z -110 (and S25's rod end stays inside r 37)
+        arm = arm.cut(h.cyl(53.5, (0, 0, za0 - 1), "z", N["arm_t"] + 1.0))
+        arms.append(arm)
+        pins.append(h.fuse([h.cyl(N["pin_d"] / 2, (px, py, za1), "z", N["pin_in"]), h.cyl(4.0, (px, py, za0), "z", N["arm_t"])]))
+    add(f"Zero-point arms {lab} (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
+        h.comp(arms), h.C["anod"], step, (0, -320, -60), mat="al6061", bom="B3", **mg)
+    add(f"Zero-point clamping pins {lab} (2 x SCHUNK VERO-S SPC mini 20 class, Ø20, 14 mm into the module; centring clearance, no alignment)",
+        h.comp(pins), h.C["steel"], step, (0, -320, -60), mat="steel", bom="B3", **mg)
+
+
 def add_build_module(h, add, key, step=4):
     m = MP.MODULES[key]
     C = h.C
@@ -91,7 +133,10 @@ def add_build_module(h, add, key, step=4):
     fl = h.fuse([h.cyl(MP.FLANGE_D / 2, (0, 0, zf - MP.FLANGE_T), "z", MP.FLANGE_T),
                  h.rbox(-MP.TAB_X, MP.TAB_X, -12, 12, zf - MP.FLANGE_T, zf, 6)] +
                 [h.cyl(5.5, (0, s * MP.DOWEL_Y, zf - MP.FLANGE_T), "z", MP.FLANGE_T) for s in (-1, 1)] +
-                [h.box(-6.0, 6.0, 0, s * MP.DOWEL_Y, zf - MP.FLANGE_T, zf) if s > 0 else h.box(-6.0, 6.0, s * MP.DOWEL_Y, 0, zf - MP.FLANGE_T, zf) for s in (-1, 1)])
+                [h.box(-6.0, 6.0, 0, s * MP.DOWEL_Y, zf - MP.FLANGE_T, zf) if s > 0 else h.box(-6.0, 6.0, s * MP.DOWEL_Y, 0, zf - MP.FLANGE_T, zf) for s in (-1, 1)] +
+               # two ears at 50 and 135 deg (round 6, hot-swap.md §3.2a) carry the zero-point arms' hangers (zp_arms below)
+               [h.box(ZP_ARM["ear_r0"], ZP_ARM["r1"], -ZP_ARM["w"] / 2, ZP_ARM["w"] / 2, zf - MP.FLANGE_T, zf).rotate(V(0, 0, 0), V(0, 0, 1), a)
+                for a in ZP_ARM["angles"]])
     fl = fl.cut(h.cyl(R, (0, 0, zf - MP.FLANGE_T - 1), "z", MP.FLANGE_T + 2))
     for s in (-1, 1):
         fl = fl.cut(h.cyl(3.4, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T - 1), "z", MP.FLANGE_T + 2))
@@ -153,6 +198,7 @@ def add_build_module(h, add, key, step=4):
                  h.box(-G["flange_w"] / 2, G["flange_w"] / 2, yb0, yb1, zw0 - ft, zw0)])           # bottom flange
     add(f"Module {lab} handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y {yb0:.0f} to {yb1:.0f}, "
         f"in front of the door's hinge knuckles)", hd, C["anod"], step, (0, -320, -60), mat="al6061", bom="B1", **mg)
+    zp_arms(h, add, lab, step, mg)
 
     # ---------- plate and heater stack (moves with the piston, leaves with the module) ----------
     zb1, zb0, zk0, zh0, zc = z["zb1"], z["zb0"], z["zk0"], z["zh0"], z["zc"]
@@ -240,10 +286,10 @@ def add_build_module(h, add, key, step=4):
     add(f"Hollow piston rod {lab} ({rod_lab} seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
         h.tube(rod_od / 2, rod_id / 2, (0, 0, zr0), "z", zh0 + 8.0 - zr0), C["ss"], step, (0, 0, 140), mat="ss316l",
         bom="B1", section=True, **pg)
-    # rod end (electrical.md section 6, FT1, and 13.3): a 316L block with the rod TIG-welded into its top and a 72 x 16 mm feedthrough
+    # rod end (electrical.md section 6, FT1, and 13.3): a 316L block with the rod TIG-welded into its top and an 81 x 16 mm feedthrough
     # face toward the front (-y). Seven weld-ins are TIG-welded at the face, so the gas boundary at the rod end is metal, glass/ceramic
     # and welds, no O-ring (it was a LEMO 1B receptacle on an O-ring, which misses the leak and current spec).
-    # Why 72 x 16 and not ~30 mm square: the rod end cannot grow in height. Above: the gland plate is 2.5 mm over the cap at the +8 mm
+    # Why 81 x 16 (72 x 16 in round 5; ROD_FT says why it grew) and not ~30 mm square: the rod end cannot grow in height. Above: the gland plate is 2.5 mm over the cap at the +8 mm
     # overtravel, and the handle's two M4 screw heads hang 8 mm below the gland plate in front of the rod (joints.py), so in front of
     # the cap the block stops at zc + 17. Below: the Z arm, and on the module's way out (MODULE_PATH) the striker clears the guard's
     # bottom rail by 3 mm. And forward: on the way out the module rises at y -190 just behind that rail, so nothing may stand more than
@@ -267,12 +313,18 @@ def add_build_module(h, add, key, step=4):
         L_in = RF["tc_len"] - RF["tc_out"]
         body = body.cut(h.cyl(RF["tc_d"] / 2, (x, yf - 1.0, zt), "y", L_in + 1.0))                 # blind bore, its end on the cross-drilling
         sleeves.append(h.cyl(RF["tc_d"] / 2, (x, yf - RF["tc_out"], zt), "y", RF["tc_len"]))
-    add(f"Rod end {lab}: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front", body, C["ss"], step, (0, 0, 120),
+    add(f"Rod end {lab}: 316L feedthrough block, rod welded into its top, {RF['face_w']:.0f} x 16 mm face to the front", body, C["ss"], step, (0, 0, 120),
         mat="ss316l", bom="H1", section=True, **pg)
     add(f"Rod end {lab} feedthroughs, welded in ({RF['label']})", h.comp(sleeves), C["ss"], step, (0, -60, 120), mat="ss316l",
         mass_kg=RF["mass_kg"], bom="H1", mcm=RF["pn"], section=True, **pg)
     add(f"Striker disc {lab} (416 stainless, on the pot magnet)", h.cyl(12.7, (0, 0, zc), "z", 5.0), C["steel"], step,
         (0, 0, 110), mat="steel", bom="B2", section=True, **pg)
+
+
+# Z servo position (round 6, 2026-11-25, hot-swap.md §3.2a): folded to the back of the actuator (x 0, y 130), so the right-hand zero-point
+# module can hang where the servo was (x 34-94, y 28-110). Its body hangs through a window in the base plate (lpbf_low section 1) and
+# stays 5.4 mm in front of the outlet hose's run behind the chamber (y 165-191)
+ZSERVO = dict(x=0.0, y=130.0)
 
 
 def add_zstage(h, add, step=3):
@@ -286,13 +338,17 @@ def add_zstage(h, add, step=3):
     car_lo, car_hi = min(MP.Z_P_MIN, MP.ZSTAGE_RELEASE) + a0, MP.Z_P_MAX + a0 + 40.0
     az0, az1 = car_lo - 3.0, car_hi + 3.0
     zg = dict(group="zstage")
-    # 108 (was 100) deep in y so two of its four counterbored M5 screws (joints.py) sit behind the bracket, reachable from below
-    add("Z mounting flange (bolted under the floor)", h.box(-40, 100, 60, 108, zf - 10, zf), C["alu"], step, (0, 120, 0), mat="al6061", bom="M3")
+    sx, sy = ZSERVO["x"], ZSERVO["y"]
+    # 108 (was 100) deep in y so two of its four counterbored M5 screws (joints.py) sit behind the bracket, reachable from below;
+    # x -40..48 since round 6 (was -40..100: it carried the servo at x 64)
+    add("Z mounting flange (bolted under the floor)", h.box(-40, 48, 60, 108, zf - 10, zf), C["alu"], step, (0, 120, 0), mat="al6061", bom="M3")
     add("Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)", h.box(ax0, ax1, ay0, ay1, az0, az1), C["steel"], step,
         (0, 160, 0), mat="steel", mass_kg=1.4, bom="M3", mcm="ACT_Z")
-    bh = h.box(ax0, 100, ay0 - 4, ay1, az1, zf - 10).cut(h.cyl(19.2, (64.0, 80.0, az1 - 1), "z", 3.0)).cut(h.cyl(5.0, (64.0, 80.0, az1), "z", 25))
+    # the bracket and belt housing run back from the actuator to the servo (2:1 belt, y 80 to y 130), 60 wide, cantilevered 52 mm behind
+    # the flange's back edge
+    bh = h.box(-30.0, 30.0, ay0 - 4, sy + 30.0, az1, zf - 10).cut(h.cyl(19.2, (sx, sy, az1 - 1), "z", 3.0)).cut(h.cyl(5.0, (sx, sy, az1), "z", 25))
     add("Z bracket + fold-back belt housing (2:1)", bh, C["anod"], step, (0, 160, 0), mat="al6061", bom="M3")
-    add("Z servo (ClearPath-SD, NEMA 23, folded)", h.place(h.servo_nema23(100.0, 18.0), (64.0, 80.0, az1), (1, 0, 0), (0, 0, 1)),
+    add("Z servo (ClearPath-SD, NEMA 23, folded)", h.place(h.servo_nema23(100.0, 18.0), (sx, sy, az1), (0, 1, 0), (0, 0, 1)),
         C["motor"], step, (0, 200, 0), mat="misc", mass_kg=1.6, bom="M2")
     add("Z carriage", h.box(-21, 21, 56, ay0, a0, a0 + 40.0), C["steel"], step, (0, 160, 0), mat="steel", bom="M3", **zg)
     arm = h.rbox(-30, 30, -22, 56, a0, zc, 6).cut(h.cyl(12.7, (0, 0, zc - 7.0), "z", 7.1))

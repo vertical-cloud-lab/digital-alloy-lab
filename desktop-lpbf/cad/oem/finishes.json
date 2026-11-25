@@ -115,19 +115,19 @@
    "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
   },
   "grille metal between holes": {
-   "srgb_hex": "#bdbdbd",
+   "srgb_hex": "#cbcaca",
    "linear_rgb": [
-    0.5089,
-    0.5089,
-    0.5089
+    0.5972,
+    0.5906,
+    0.5906
    ],
    "metallic": 0.0,
    "roughness": 0.8,
    "material": "paint",
-   "n_px": 9249,
+   "n_px": 90146,
    "highlight_chroma": 0.0,
-   "specular_contrast": 0.413,
-   "photo": "eaton_front",
+   "specular_contrast": 0.331,
+   "photo": "eaton_front_2k",
    "method": "median of the pixels in a hand-picked rectangle, L* 62-100"
   },
   "display module surround (black)": {
@@ -179,20 +179,116 @@
    "method": "median of the pixels in a hand-picked rectangle, L* 0-100, chroma <= 200"
   },
   "Eaton badge": {
-   "srgb_hex": "#d3d3d7",
+   "srgb_hex": "#d5d6d6",
    "linear_rgb": [
-    0.6514,
-    0.6514,
-    0.6795
+    0.6654,
+    0.6724,
+    0.6724
    ],
    "metallic": 0.0,
-   "roughness": 0.66,
+   "roughness": 0.6,
    "material": "plastic",
-   "n_px": 575,
+   "n_px": 6936,
    "highlight_chroma": 0.0,
-   "specular_contrast": 0.153,
-   "photo": "eaton_front",
+   "specular_contrast": 0.236,
+   "photo": "eaton_front_2k",
+   "method": "median of the pixels in a hand-picked rectangle, L* 70-100"
+  },
+  "grille (perforated silver, holes included)": {
+   "srgb_hex": "#aaaaaa",
+   "linear_rgb": [
+    0.402,
+    0.402,
+    0.402
+   ],
+   "metallic": 0.0,
+   "roughness": 0.91,
+   "material": "paint",
+   "n_px": 162500,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.534,
+   "photo": "eaton_front_2k",
    "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  },
+  "bezel frame (dark grey)": {
+   "srgb_hex": "#2c2b31",
+   "linear_rgb": [
+    0.0252,
+    0.0242,
+    0.0307
+   ],
+   "metallic": 0.0,
+   "roughness": 0.32,
+   "material": "plastic",
+   "n_px": 21245,
+   "highlight_chroma": 3.6,
+   "specular_contrast": 0.91,
+   "photo": "eaton_front_2k",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-60"
+  },
+  "LCD module surround (black)": {
+   "srgb_hex": "#070709",
+   "linear_rgb": [
+    0.0021,
+    0.0021,
+    0.0027
+   ],
+   "metallic": 0.0,
+   "roughness": 0.35,
+   "material": "plastic",
+   "n_px": 9889,
+   "highlight_chroma": 53.5,
+   "specular_contrast": 0.955,
+   "photo": "eaton_front_2k",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-30"
+  },
+  "LCD (lit)": {
+   "srgb_hex": "#2a5d9c",
+   "linear_rgb": [
+    0.0237,
+    0.1095,
+    0.3325
+   ],
+   "metallic": 0.0,
+   "roughness": 0.95,
+   "material": "lcd",
+   "n_px": 11050,
+   "highlight_chroma": 19.4,
+   "specular_contrast": 0.867,
+   "photo": "eaton_front_2k",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  },
+  "LED bar (blue)": {
+   "srgb_hex": "#0093ee",
+   "linear_rgb": [
+    0.0,
+    0.2918,
+    0.855
+   ],
+   "metallic": 0.0,
+   "roughness": 0.9,
+   "material": "plastic",
+   "n_px": 1750,
+   "highlight_chroma": 49.5,
+   "specular_contrast": 0.179,
+   "photo": "eaton_front_2k",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100, chroma <= 200"
+  },
+  "keys (dark grey)": {
+   "srgb_hex": "#111017",
+   "linear_rgb": [
+    0.0056,
+    0.0052,
+    0.0086
+   ],
+   "metallic": 0.0,
+   "roughness": 0.25,
+   "material": "plastic",
+   "n_px": 1589,
+   "highlight_chroma": 1.0,
+   "specular_contrast": 0.95,
+   "photo": "eaton_front_2k",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-45"
   }
  },
  "ipg_ylr500_u3": {
@@ -291,6 +387,118 @@
    "specular_contrast": 0.932,
    "photo": "ipg_rack_card",
    "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  },
+  "4U front panel, light area": {
+   "srgb_hex": "#f6f6f6",
+   "linear_rgb": [
+    0.9216,
+    0.9216,
+    0.9216
+   ],
+   "metallic": 0.0,
+   "roughness": 0.94,
+   "material": "paint",
+   "n_px": 234,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.018,
+   "photo": "ipg_sm_family",
+   "method": "median of the pixels in a hand-picked rectangle, L* 60-100, chroma <= 15"
+  },
+  "4U fan field (dark perforated)": {
+   "srgb_hex": "#505051",
+   "linear_rgb": [
+    0.0802,
+    0.0812,
+    0.0823
+   ],
+   "metallic": 0.0,
+   "roughness": 0.49,
+   "material": "paint",
+   "n_px": 1914,
+   "highlight_chroma": 1.4,
+   "specular_contrast": 0.758,
+   "photo": "ipg_sm_family",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  },
+  "4U window (light grey)": {
+   "srgb_hex": "#dcdcdc",
+   "linear_rgb": [
+    0.7157,
+    0.7157,
+    0.7157
+   ],
+   "metallic": 0.0,
+   "roughness": 0.95,
+   "material": "plastic",
+   "n_px": 495,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.059,
+   "photo": "ipg_sm_family",
+   "method": "median of the pixels in a hand-picked rectangle, L* 40-100, chroma <= 15"
+  },
+  "4U handles (black)": {
+   "srgb_hex": "#454747",
+   "linear_rgb": [
+    0.0595,
+    0.063,
+    0.063
+   ],
+   "metallic": 0.0,
+   "roughness": 0.49,
+   "material": "plastic",
+   "n_px": 150,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.234,
+   "photo": "ipg_sm_family",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-40"
+  },
+  "4U START (green)": {
+   "srgb_hex": "#00d30c",
+   "linear_rgb": [
+    0.0,
+    0.6514,
+    0.0038
+   ],
+   "metallic": 0.0,
+   "roughness": 0.95,
+   "material": "plastic",
+   "n_px": 30,
+   "highlight_chroma": 102.6,
+   "specular_contrast": 0.072,
+   "photo": "ipg_sm_family",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  },
+  "4U mushroom (red)": {
+   "srgb_hex": "#f7525c",
+   "linear_rgb": [
+    0.9301,
+    0.0854,
+    0.107
+   ],
+   "metallic": 0.0,
+   "roughness": 0.95,
+   "material": "plastic",
+   "n_px": 70,
+   "highlight_chroma": 71.1,
+   "specular_contrast": 0.065,
+   "photo": "ipg_sm_family",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  },
+  "4U chassis side (black)": {
+   "srgb_hex": "#232323",
+   "linear_rgb": [
+    0.0168,
+    0.0168,
+    0.0168
+   ],
+   "metallic": 0.0,
+   "roughness": 0.27,
+   "material": "paint",
+   "n_px": 4640,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.857,
+   "photo": "ipg_sm_family",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-45"
   }
  },
  "mcm_4123K45": {
@@ -501,34 +709,34 @@
  },
  "mcm_3861N11": {
   "body and cable (black)": {
-   "srgb_hex": "#272727",
+   "srgb_hex": "#3a393a",
    "linear_rgb": [
-    0.0203,
-    0.0203,
-    0.0203
+    0.0423,
+    0.0409,
+    0.0423
    ],
    "metallic": 0.0,
-   "roughness": 0.89,
+   "roughness": 0.82,
    "material": "plastic",
-   "n_px": 72032,
-   "highlight_chroma": 0.0,
-   "specular_contrast": 0.659,
+   "n_px": 11426,
+   "highlight_chroma": 2.2,
+   "specular_contrast": 0.306,
    "photo": "mcm_3861N11",
    "method": "median over the whole object mask, L* 0-30"
   },
   "hex and thread (stainless)": {
-   "srgb_hex": "#aeafac",
+   "srgb_hex": "#afafad",
    "linear_rgb": [
-    0.4233,
     0.4287,
-    0.4125
+    0.4287,
+    0.4179
    ],
    "metallic": 1.0,
-   "roughness": 0.48,
+   "roughness": 0.45,
    "material": "bare_metal",
-   "n_px": 33150,
+   "n_px": 28723,
    "highlight_chroma": 1.0,
-   "specular_contrast": 0.423,
+   "specular_contrast": 0.455,
    "photo": "mcm_3861N11",
    "method": "median over the whole object mask, L* 55-100, chroma <= 12"
   }
@@ -565,6 +773,152 @@
    "specular_contrast": 0.569,
    "photo": "mcm_4396K21",
    "method": "median over the whole object mask, L* 55-100, chroma <= 12"
+  }
+ },
+ "edwards_nxds6i": {
+  "housing and fins (painted cast aluminium)": {
+   "srgb_hex": "#c9c9c9",
+   "linear_rgb": [
+    0.5841,
+    0.5841,
+    0.5841
+   ],
+   "metallic": 0.0,
+   "roughness": 0.95,
+   "material": "paint",
+   "n_px": 17043,
+   "highlight_chroma": 2.0,
+   "specular_contrast": 0.383,
+   "photo": "nxds_brochure_p1",
+   "method": "median of the pixels in a hand-picked rectangle, L* 55-100, chroma <= 12"
+  },
+  "base, side face (painted cast aluminium)": {
+   "srgb_hex": "#c1c0c0",
+   "linear_rgb": [
+    0.5333,
+    0.5271,
+    0.5271
+   ],
+   "metallic": 0.0,
+   "roughness": 0.95,
+   "material": "paint",
+   "n_px": 6629,
+   "highlight_chroma": 0.0,
+   "specular_contrast": 0.411,
+   "photo": "nxds_brochure_p1",
+   "method": "median of the pixels in a hand-picked rectangle, L* 55-100, chroma <= 12"
+  },
+  "connector panel (light grey plate)": {
+   "srgb_hex": "#cccdcc",
+   "linear_rgb": [
+    0.6038,
+    0.6105,
+    0.6038
+   ],
+   "metallic": 0.0,
+   "roughness": 0.76,
+   "material": "plastic",
+   "n_px": 29905,
+   "highlight_chroma": 2.2,
+   "specular_contrast": 0.209,
+   "photo": "nxds_brochure_p1",
+   "method": "median of the pixels in a hand-picked rectangle, L* 70-100, chroma <= 12"
+  },
+  "inlet flange, NW25 (stainless)": {
+   "srgb_hex": "#bcaea6",
+   "linear_rgb": [
+    0.5029,
+    0.4233,
+    0.3813
+   ],
+   "metallic": 1.0,
+   "roughness": 0.7,
+   "material": "bare_metal",
+   "n_px": 6605,
+   "highlight_chroma": 6.1,
+   "specular_contrast": 0.524,
+   "photo": "nxds_brochure_p1",
+   "method": "median of the pixels in a hand-picked rectangle, L* 30-100, chroma <= 14"
+  },
+  "exhaust flange, NW25 (stainless)": {
+   "srgb_hex": "#c4bab0",
+   "linear_rgb": [
+    0.552,
+    0.491,
+    0.4342
+   ],
+   "metallic": 1.0,
+   "roughness": 0.87,
+   "material": "bare_metal",
+   "n_px": 9852,
+   "highlight_chroma": 2.2,
+   "specular_contrast": 0.426,
+   "photo": "nxds_brochure_p1",
+   "method": "median of the pixels in a hand-picked rectangle, L* 30-100, chroma <= 14"
+  },
+  "lifting eye (stainless)": {
+   "srgb_hex": "#bfc3b7",
+   "linear_rgb": [
+    0.521,
+    0.5457,
+    0.4735
+   ],
+   "metallic": 1.0,
+   "roughness": 0.58,
+   "material": "bare_metal",
+   "n_px": 3474,
+   "highlight_chroma": 8.1,
+   "specular_contrast": 0.386,
+   "photo": "nxds_brochure_p1",
+   "method": "median of the pixels in a hand-picked rectangle, L* 30-100, chroma <= 14"
+  },
+  "IEC inlet (black)": {
+   "srgb_hex": "#181a1d",
+   "linear_rgb": [
+    0.0091,
+    0.0103,
+    0.0123
+   ],
+   "metallic": 0.0,
+   "roughness": 0.73,
+   "material": "plastic",
+   "n_px": 3416,
+   "highlight_chroma": 1.0,
+   "specular_contrast": 0.833,
+   "photo": "nxds_brochure_p1",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-30"
+  },
+  "START key (green)": {
+   "srgb_hex": "#7bb85f",
+   "linear_rgb": [
+    0.1981,
+    0.4793,
+    0.1144
+   ],
+   "metallic": 0.0,
+   "roughness": 0.67,
+   "material": "plastic",
+   "n_px": 783,
+   "highlight_chroma": 1.7,
+   "specular_contrast": 0.457,
+   "photo": "nxds_brochure_p1",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
+  },
+  "STOP key (red)": {
+   "srgb_hex": "#cb7063",
+   "linear_rgb": [
+    0.5972,
+    0.162,
+    0.1248
+   ],
+   "metallic": 0.0,
+   "roughness": 0.78,
+   "material": "plastic",
+   "n_px": 621,
+   "highlight_chroma": 4.5,
+   "specular_contrast": 0.636,
+   "photo": "nxds_brochure_p1",
+   "method": "median of the pixels in a hand-picked rectangle, L* 0-100"
   }
  }
 }

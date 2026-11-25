@@ -821,10 +821,14 @@ def job_blade(cell: Cell, arm_x=0.0, **kw):
     j.grip(4.1, "close on the fin", allow=al)
     j.attach(held, "blade cartridge")
     # 2026-11-23: the cartridge sits on two Ø3 dowels in the pocket's back wall and two M6 ball plungers in its side walls (joints.py
-    # blade_cartridge); the holder slides off the dowels along their axis and the balls ride out of their 0.8 mm dimples
+    # blade_cartridge); the holder slides off the dowels along their axis and the balls ride out of their 0.8 mm dimples.
+    # 2026-11-25 (round 6): the plungers are soft parts for the held cartridge, as the seals a part slides over are. Each Ø3.5 ball stands
+    # 0.8 mm proud into its dimple and has 1 mm of travel (McMaster 85015A47), so it is pushed back into its body as the holder slides;
+    # the bodies stop 0.2 mm short of the holder's sides. Drawn rigid, the balls pinch the holder from both sides, and no single
+    # translation frees a part pinched from both sides, so the sampled depth read 3.0 mm on three frames of the pull.
     alh = al | allow_of(cell.name("Recoater arm"), cell.name("Recoater carriage block"), *cell.names("Chamber floor plate"),
                         *cell.names("Build module"), *cell.names("Process chamber body"), *cell.names("Blade-cartridge dowels"),
-                        *cell.names("Blade-cartridge ball plungers"), kind="held")
+                        kind="held") | frozenset(("soft", n) for n in cell.names("Blade-cartridge ball plungers"))
     j.line(j.moved((0, -10.0, 0)), "pull 10 mm out of the arm's pocket (40 N over the plungers, off the dowels)", allow=alh, step_mm=1.0, force=(0, -40.0, 0))
     j.line(j.moved((0, 0, 12.0)), "lift 12 mm (the blade's edge over the sill)", allow=alh, step_mm=1.0)
     j.line(j.moved((0, -290.0, 0)), "out through the door", allow=al, step_mm=3.0)
@@ -962,10 +966,15 @@ def job_vacuum(cell: Cell, arm_x=0.0, **kw):
     return j
 
 
-def job_liner(cell: Cell, arm_x=0.0, side="right", **kw):
+def job_liner(cell: Cell, arm_x=0.0, side="right", yaw=0.0, **kw):
     """A side liner (2026-11-23: its own part, the ball-screw hole slotted open to the back edge, 15 mm shorter at the front, 88 mm tall)
     with the recoater at the other end of its stroke: lips on the liner's pull tab, 4 mm in off the wall, slide 21 mm forward (the screw
-    leaves the slot), in to x +/-105, down 6 mm under the door opening's top, out through the door (operations.md M3, the same path)."""
+    leaves the slot), in to x +/-105, down 6 mm under the door opening's top, out through the door (operations.md M3, the same path).
+    Round 6 (2026-11-25): the round-5 tab sat 15 mm outboard of the door opening's side, and no approach reached it (the blades cut
+    3 mm into the opening's side). The tab is now a hanger whose grip plate stands 44 mm in from the liner, inside the opening's width
+    (cad/automation.py add_liner_tabs, LINER_TAB): the plate fingers come straight in along +y, open to 10 mm, and close their lips on
+    the grip plate at y -76, z 76."""
+    import automation as A
     s = 1.0 if side == "right" else -1.0
     caps = E.plate_finger_spec()
     j = Job(cell, f"liner_{side}", arm_x=arm_x, caps=caps,
@@ -974,15 +983,16 @@ def job_liner(cell: Cell, arm_x=0.0, side="right", **kw):
     liner = cell.name(f"Lift-out wall liner, {side}")
     held = [tab, liner]
     al = allow_of(*held, cell.name("Process chamber body"))
-    # the tab plate: x +/-(125.4..127.4), y -70..-46, z 88..104; approach +y with a slight yaw so the blades reach past the opening
-    xc = s * 126.4
+    T = A.LINER_TAB
+    xc = s * (T["x_in"] + T["t"] / 2)                    # the grip plate's mid-plane
     R = R_of((0, 1, 0), (1, 0, 0))
-    p = np.array([xc, -58.0, 96.0])
-    yaw = -8.0 * s
+    p = np.array([xc, T["grasp"][0], T["grasp"][1]])
     Rr = rotz(yaw) @ R
-    j.goto(C.Tm(Rr, p + rotz(yaw) @ np.array([0, -230.0, 0])), "to the door", close=j.arm.close_for_gap(16.0))
-    j.line(C.Tm(Rr, p), "in to the liner's tab", allow=al, step_mm=3.0)
-    j.grip(2.1, "close on the tab", allow=al)
+    g_open = T["t"] + 8.0                                # 4 mm each side: the outer blade stays 2.6 mm inside the opening's side
+    j.goto(C.Tm(Rr, p + rotz(yaw) @ np.array([0, -230.0, 0])), "to the door", close=j.arm.close_for_gap(g_open),
+           then=[(C.Tm(Rr, p), al, None)])
+    j.line(C.Tm(Rr, p), "in to the liner's tab, the blades either side of its grip plate", allow=al, step_mm=3.0)
+    j.grip(T["t"] + 0.1, "close on the grip plate", allow=al)
     j.attach(held, f"{side} side liner + its tab")
     alw = al | allow_of(cell.name("Process chamber body"), kind="held")
     j.line(j.moved((-s * 4.0, 0, 0)), "4 mm in off the wall (the clips let go)", allow=alw, step_mm=1.0, force=(-s * 15.0, 0, 0))

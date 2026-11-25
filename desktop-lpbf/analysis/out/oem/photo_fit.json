@@ -267,6 +267,164 @@
    ],
    "mask_px": 169687,
    "model_px": 160617
+  },
+  {
+   "photo": "eaton_r_2k",
+   "builder": "eaton_5px1500rtg2",
+   "kwargs": {
+    "ears": false
+   },
+   "image_px": [
+    2000,
+    2000
+   ],
+   "iou": 0.9562,
+   "f_px": 2778.4,
+   "f_35mm_equiv_mm": 42.5,
+   "principal_point": "image centre (assumed)",
+   "rvec": [
+    0.2238,
+    -2.1549,
+    -2.4818
+   ],
+   "t_mm": [
+    12.9,
+    -32.0,
+    709.5
+   ],
+   "object_distance_mm": 711.5,
+   "mm_per_px_at_object": 0.2561,
+   "contour_mean_px": 8.51,
+   "contour_p95_px": 52.0,
+   "contour_mean_mm": 2.18,
+   "f_profile": [
+    {
+     "f_px": 1111.4,
+     "iou": 0.9191
+    },
+    {
+     "f_px": 1944.9,
+     "iou": 0.9424
+    },
+    {
+     "f_px": 2778.4,
+     "iou": 0.9559
+    },
+    {
+     "f_px": 4167.6,
+     "iou": 0.9643
+    },
+    {
+     "f_px": 6946.1,
+     "iou": 0.94
+    }
+   ],
+   "mask_px": 694865,
+   "model_px": 705386
+  },
+  {
+   "photo": "mcm_5169K72",
+   "builder": "mcm_5169K72",
+   "kwargs": {},
+   "image_px": [
+    670,
+    633
+   ],
+   "iou": 0.8971,
+   "f_px": 2681.6,
+   "f_35mm_equiv_mm": 125.9,
+   "principal_point": "image centre (assumed)",
+   "rvec": [
+    0.3749,
+    1.772,
+    -2.1906
+   ],
+   "t_mm": [
+    3.7,
+    53.9,
+    432.0
+   ],
+   "object_distance_mm": 441.6,
+   "mm_per_px_at_object": 0.1647,
+   "contour_mean_px": 14.86,
+   "contour_p95_px": 56.0,
+   "contour_mean_mm": 2.45,
+   "f_profile": [
+    {
+     "f_px": 1072.6,
+     "iou": 0.8721
+    },
+    {
+     "f_px": 1877.1,
+     "iou": 0.8911
+    },
+    {
+     "f_px": 2681.6,
+     "iou": 0.897
+    },
+    {
+     "f_px": 4022.4,
+     "iou": 0.8978
+    },
+    {
+     "f_px": 6704.0,
+     "iou": 0.8972
+    }
+   ],
+   "mask_px": 319727,
+   "model_px": 321429
+  },
+  {
+   "photo": "mcm_3861N11",
+   "builder": "mcm_3861N11",
+   "kwargs": {},
+   "image_px": [
+    785,
+    297
+   ],
+   "iou": 0.9155,
+   "f_px": 2587.4,
+   "f_35mm_equiv_mm": 133.4,
+   "principal_point": "image centre (assumed)",
+   "rvec": [
+    1.2381,
+    -1.9575,
+    -0.1616
+   ],
+   "t_mm": [
+    43.7,
+    8.0,
+    393.5
+   ],
+   "object_distance_mm": 386.5,
+   "mm_per_px_at_object": 0.1494,
+   "contour_mean_px": 4.25,
+   "contour_p95_px": 11.0,
+   "contour_mean_mm": 0.64,
+   "f_profile": [
+    {
+     "f_px": 1035.0,
+     "iou": 0.8794
+    },
+    {
+     "f_px": 1811.2,
+     "iou": 0.8968
+    },
+    {
+     "f_px": 2587.4,
+     "iou": 0.9146
+    },
+    {
+     "f_px": 3881.2,
+     "iou": 0.9188
+    },
+    {
+     "f_px": 6468.6,
+     "iou": 0.0
+    }
+   ],
+   "mask_px": 49526,
+   "model_px": 48690
   }
  ]
 }
