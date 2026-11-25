@@ -306,12 +306,15 @@ has the round-5 model's run):
   - the face mill's body height;
   - the clamps' sizes;
   - the HRT210's platter thickness and which side its motor box is on.
-- **Outside the machining files.** These two still describe the old workholding:
-  - the build animation's chamber chapter (`cad/render_machining.py`'s built-in plan) shows toe clamps on end tabs
-    (F-S1, P-S1) and a centre stud (P-S2);
-  - `analysis/shop/shop_checks.py` still quotes the 15 in. blank with tabs.
+- **The build video's chamber chapter** (`cad/render_machining.py`) now draws the fixtures from `freecad_cam.FIXTURES`,
+  so it can't drift from the checked programs:
+  - edge clamps and risers;
+  - the 312 x 222 dummy-floor plate;
+  - the HRT210 on its 2-1/2 in. riser, indexed as in the Haas program;
+  - the port's expanding clamp.
 
-  The checked workholding is low-profile edge clamps, the 312 x 222 dummy-floor plate and the port's expanding clamp.
+  Its blanks are the CAM's 12.5 x 9 in. footprint, and its cut-volume check still reproduces both parts to 0.000 %.
+  `analysis/shop/shop_checks.py`'s note on the tabbed blank is updated.
 
 Run, in order (each under `/tmp/capmem 3`, `OMP_NUM_THREADS=1`; the inputs as in `freecad_cam.py`'s docstring, including
 parts.json):
