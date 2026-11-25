@@ -35,11 +35,13 @@ _c = (75.0, -45.0, 136.0)                        # layer camera: its axis points
 CAM_UP = tuple(v / math.sqrt(sum(x * x for x in _c)) for v in _c)
 
 
-def place(label, keys, path="explode", minutes=2, exclude=(), note="", rot=None, move_placed=False, per_part=False):
+def place(label, keys, path="explode", minutes=2, exclude=(), note="", rot=None, move_placed=False, per_part=False, part_paths=None):
     """rot: turn the parts this many degrees about z (through the origin) before the path (the plate's bayonet);
-    move_placed: the parts were placed in earlier steps and now move as one unit (the heater stack into the bore)."""
+    move_placed: the parts were placed in earlier steps and now move as one unit (the heater stack into the bore);
+    part_paths: [(keys, path), ...] in the order the parts go in: each group (the step's parts matching those keys) is checked
+    along its own path (offsets from where it sits, as for remove), with the groups before it already in place."""
     return dict(do="place", label=label, keys=list(keys), exclude=list(exclude), path=path, minutes=minutes, note=note, rot=rot,
-                move_placed=move_placed, per_part=per_part)
+                move_placed=move_placed, per_part=per_part, part_paths=[(list(k), p) for k, p in (part_paths or [])])
 
 
 def screws(label, joint, minutes, torque=False, pn=None, note=""):
@@ -85,7 +87,21 @@ def axis_paths(L=520.0, first=None):
     return out
 
 
-STACK = ["Heater block", "Cartridge heaters", "Type K thermocouples", "Thermal cutoff", "Macor standoff", "Radiation shields",
+# the side wall liners and the back liner's four halves (lpbf_low section 5, 2026-11-23): each one's way out through the door, as
+# M3 takes them out; A2 puts them in along the same paths in the reverse order (2026-11-25)
+LINER_PATHS = {
+    "right": [(0, 0, 0), (-4, 0, 0), (-4, -21, 0), (-35, -21, 0), (-35, -21, -6), (-35, -541, -6)],
+    "back upper right": [(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -560, 0)],
+    "back lower right": [(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -560, 0)],
+    "left": [(0, 0, 0), (4, 0, 0), (4, -21, 0), (35, -21, 0), (35, -21, -6), (35, -541, -6)],
+    "back upper left": [(0, 0, 0), (0, -3, 0), (0, -40, 0), (50, -40, 0), (50, -560, 0)],
+    "back lower left": [(0, 0, 0), (0, -3, 0), (0, -40, 0), (26, -40, 0), (26, -560, 0)],
+}
+LINER_KEYS = {"right": ["Lift-out wall liner, right", "Liner pull tab, right"], "left": ["Lift-out wall liner, left", "Liner pull tab, left"]}
+LINER_KEYS.update({k: [f"Lift-out wall liner, {k}"] for k in LINER_PATHS if k.startswith("back")})
+
+# no thermal cutoff since 2026-11-23 (electrical.md 13.4); the rod end is a 316L block with seven weld-in feedthroughs (13.3)
+STACK = ["Heater block", "Cartridge heaters", "Type K thermocouples", "Macor standoff", "Radiation shields",
          "Piston head", "Bore seal", "Hollow piston rod", "Build plate", "Plate rim wiper", "Heater-stack screws",
          "Heater-block helical inserts", "Disc springs under", "Rod set screws"]
 MODULE_BODY = ["Build module", "Spigot O-ring", "bottom flange: gland plate", "gland-plate O-ring", "handle (6061", "Gland-plate screws",
@@ -109,30 +125,33 @@ def catalogue(module="M50"):
         place("Heater block on the bench", ["Heater block"], path=None, minutes=1),
         note("Three M3 helical inserts into the block's underside (insert tool, on the bench)", 5),
         place("Cartridge heaters up into their bores from below", ["Cartridge heaters"], path=[(0, 0, 0), (0, 0, -90)], minutes=3),
-        place("Thermocouples and the thermal cutoff from below", ["Type K thermocouples", "Thermal cutoff"], path=[(0, 0, 0), (0, 0, -100)], minutes=4),
+        place("Thermocouples from below (no thermal cutoff since 2026-11-23)", ["Type K thermocouples"], path=[(0, 0, 0), (0, 0, -100)], minutes=4),
         place("Macor rings and radiation shields under the block", ["Macor standoff", "Radiation shields"], path=[(0, 0, 0), (0, 0, -70)], minutes=4),
         place("Piston head under the break", ["Piston head"], path=[(0, 0, 0), (0, 0, -80)], minutes=2),
         place("Disc springs into the head's slotted counterbores", ["Disc springs under"], path=[(0, 0, 0), (0, 0, -40)], minutes=2),
         place("Stack screws up through the head (placed)", ["Heater-stack screws"], path=[(0, 0, 0), (0, 0, -40)], minutes=1),
         screws("Stack screws driven from below (disc-spring preload: torque-controlled)", f"stack_{module}", 4, torque=True),
         place("Bore seal into its groove", ["Bore seal"], path=None, minutes=3),
-        # 2026-11-22: the rod end stays welded (an all-metal gas boundary with one static O-ring at the connector). The gland plate goes
-        # onto the rod from the rod's top end, before the rod goes into the head, and the stack enters the bore from below with the
-        # gland plate riding on the rod, so the weld is made by the shop on the bare rod, away from every O-ring (assembly.md M25)
+        # 2026-11-22: the rod end stays welded. The gland plate goes onto the rod from the rod's top end, before the rod goes into the
+        # head, and the stack enters the bore from below with the gland plate riding on the rod, so the welds are made by the shop on
+        # the bare rod, away from every O-ring (assembly.md M25). Since 2026-11-23 the rod end is a 316L block with seven weld-in
+        # feedthroughs (electrical.md 13.3): an all-metal gas boundary with no O-ring; the "Rod end" key takes the block and its weld-ins.
         place("Gland plate with its two rod O-rings (ring loader) and its face O-ring, under the head", ["bottom flange: gland plate", "gland-plate O-ring", "Rod O-rings"],
               path=[(0, 0, 0), (0, 0, -80)], minutes=4),
-        place("Rod with its end cap (welded by the shop on the bare rod), top end up through the gland plate's rings into the head's socket",
+        place("Rod with its rod-end block and the block's seven weld-in feedthroughs (all welded by the shop on the bare rod), top end up through "
+              "the gland plate's rings into the head's socket",
               ["Hollow piston rod", "Rod end"], path=[(0, 0, 0), (0, 0, -150)], minutes=3, note="the rod's top end on the PEEK bullet through the rings"),
         screws("Rod set screws (radial)", f"rod_{module}", 2),
-        place("Hermetic connector with its O-ring into the rod end's side boss", ["Hermetic connector", "Hermetic-connector O-ring"],
-              path=[(0, 0, 0), (-60, 0, 0)], minutes=3),
+        note("Rod-end feedthroughs: nothing to fit here. The 3 x FA11631 + 3 x FA11632 type K and FA10443 power weld-ins are welded into the block "
+             "by the shop and came in with the rod; their air-side plugs (SMPW-K, power) go on at a module swap. How the heater and thermocouple "
+             "leads in the rod join the weld-ins' vacuum-side ends inside the welded block is not drawn (electrical.md 13.3)", 2),
         place("Striker disc", ["Striker disc"], path=[(0, 0, 0), (0, 0, -60)], minutes=1),
         screws("Three M3 flat-head striker screws from below", f"striker_{module}", 3),
         place("Rim wiper onto the plate, plate onto the bayonet (turned 60 deg)", ["Build plate", "Plate rim wiper"],
               path=[(0, 0, 0), (0, 0, 60)], minutes=2, rot=60.0),
         place("Welded module body on the bench (the stack waits below it)", ["Build module", "Spigot O-ring"], path=None, minutes=1),
         place("Stack, rod and gland plate up into the bore from below (lead-in on the bore's bottom edge); gland plate onto the collar",
-              STACK + ["Rod end", "Hermetic connector", "Hermetic-connector O-ring", "Striker disc", "Striker screws", "bottom flange: gland plate",
+              STACK + ["Rod end", "Striker disc", "Striker screws", "bottom flange: gland plate",
                        "gland-plate O-ring", "Rod O-rings"], path=[(0, 0, 0), (0, 0, -260)], minutes=4,
               note="the bore seal and plate must enter the honed bore square", move_placed=True),
         screws("Six M4 gland-plate screws from below", f"gland_{module}", 4, torque=True),
@@ -149,7 +168,7 @@ def catalogue(module="M50"):
         # the chamber is a through-frame on a bolted floor plate (chamber-construction.md): floor plate, its cord, frame, floor screws
         place("Floor plate with its helical inserts and two pressed dowels onto the legs",
               ["Chamber floor plate", "Helical inserts for the module screws", "Z-flange helical inserts", "Leg helical inserts",
-               "Outlet-plenum helical inserts", "Overflow-funnel helical inserts", "Floor-plate dowels"], minutes=5),
+               "Outlet-plenum helical inserts", "Overflow-funnel helical inserts", "Floor-plate dowels", "Zero-point post helical inserts"], minutes=5),
         screws("Leg-to-floor screws, one M6 up each leg's Ø11 bore through the base plate into the floor plate", "legs", 8),
         place("Floor O-ring: 3.53 mm FKM cord, a vulcanized loop, pressed into the pad's face gland", ["Floor O-ring"], minutes=4),
         place("Through-frame lowered over the floor plate's pad onto the two dowels, with its lid-screw inserts",
@@ -166,7 +185,12 @@ def catalogue(module="M50"):
         place("Overflow jar in from the front and up onto its port (2026-11-23: its lane to the front is clear)", ["Overflow jar"],
               path=[(0, 0, 0), (0, 0, -8), (0, -520, -8)], minutes=2),
         place("KF-40 toggle clamp (MKS 100318805), lever to the front", ["Overflow clamp"], path=None, minutes=1),
-        place("Wall liners (six pieces) and their pull tabs into the open chamber", ["Lift-out wall liner", "Liner pull tab"], minutes=3, per_part=True),
+        # 2026-11-25: the same ways in as M3's ways out, through the door opening (A2 until round 5 tried the animation's lines from above)
+        place("Wall liners (six pieces) and their pull tabs in through the door opening, M3's ways out reversed: the back halves first, then each "
+              "side liner (in 6 mm low through the opening, up 6 mm, out to 4 mm from its wall, 21 mm back, onto the wall)",
+              ["Lift-out wall liner", "Liner pull tab"], minutes=3,
+              part_paths=[(LINER_KEYS[k], LINER_PATHS[k]) for k in ("back lower left", "back upper left", "left", "back lower right",
+                                                                     "back upper right", "right")]),
         place("LED bar", ["Layer-light"], minutes=3),
         place("Through-beam fibre heads and their O-rings, threaded into the side walls from outside", ["Plate-height through-beam", "Fibre-head O-rings"],
               path=None, minutes=3),
@@ -191,8 +215,12 @@ def catalogue(module="M50"):
         place("Z stage hung under the floor", ["Z mounting flange", "Z actuator", "Z bracket", "Z servo", "Z carriage", "Z lift arm", "Pot magnet"],
               minutes=6),
         screws("Four counterbored M5 Z-flange screws from below", "zmount", 5),
+        # round 6 (2026-11-25, hot-swap.md 3.2a): the zero-point clamps replace the two captive M6
+        place("Zero-point modules on their plates, posts on studs into the floor; release valve, fittings and air line",
+              ["Zero-point clamping modules", "Zero-point module plates", "Zero-point posts", "Zero-point release", "Zero-point push-in"],
+              path=None, minutes=12),
         dict(do="module", label=f"Build module {module} in along its swap path (Z arm released)", minutes=3),
-        screws("Two captive M6 screws pull the module flange up to the floor", "module_flange", 2, torque=True, pn="95966A705"),
+        note("Release air off: the two zero-point modules pull the module flange up to the floor (round 6; the captive M6 are gone)", 1),
         place("Gas knife and dose chute (hung under the lid line)", ["Gas knife", "Dose chute"], minutes=4),
         place("Lid O-ring cord into the body's gland", ["Lid O-ring"], path=None, minutes=4),
         place("Lid with its inserts", ["Chamber lid", "Window-flange helical", "Metering-base helical"], minutes=2),
@@ -279,7 +307,8 @@ def catalogue(module="M50"):
               skip=["Build plate", "Plate rim wiper"], minutes=1),
         remove("Plate: turned 60 deg off its bayonet, lifted 20 mm (spigot and lugs over the 8 mm door sill), out through the door",
                ["Build plate", "Plate rim wiper"], [[(0, 0, 0), (0, 0, 20), (0, -520, 20)]], rot=60.0, minutes=2),
-        reach("Fingers on the overflow jar's toggle-clamp lever under the floor (lever end at y -76, z -84)", (100.0, -76.0, -84.0), ((0, -1, 0), (0.6, -0.8, 0)),
+        # round 6 (2026-11-25): the jar's joint is at (94, -46, -82) (lpbf_low.JAR); the lever's end is at y -122, under the jar's grip fin
+        reach("Fingers on the overflow jar's toggle-clamp lever under the floor (lever end at y -122, z -82)", (94.0, -122.0, -82.0), ((0, -1, 0), (0.6, -0.8, 0)),
               skip=["Overflow clamp", "Overflow jar"], minutes=1, hand=PINCH_HAND),
         remove("KF-40 toggle clamp opened (one push on the lever) and taken off by hand", ["Overflow clamp"], [], minutes=1),
         remove("Overflow jar: drop 8 mm off the centring ring, straight out to the front", ["Overflow jar"],
@@ -312,20 +341,20 @@ def catalogue(module="M50"):
         # six pieces since 2026-11-23 (lpbf_low section 5). The recoater sits at one end of its stroke while the pieces on the other side come out.
         remove("Right side liner with its pull tab: 4 mm in off the wall, 21 mm forward (the ball screw leaves its slot), in to x 105, down 6 mm, "
                "out through the door", ["Lift-out wall liner, right", "Liner pull tab, right"],
-               [[(0, 0, 0), (-4, 0, 0), (-4, -21, 0), (-35, -21, 0), (-35, -21, -6), (-35, -541, -6)]], minutes=2, state={"recoater": 0.0}),
+               [LINER_PATHS["right"]], minutes=2, state={"recoater": 0.0}),
         remove("Back liner, upper right: 3 mm off the wall, forward over the ball screw, left 25 mm, out through the door",
-               ["Lift-out wall liner, back upper right"], [[(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -560, 0)]], minutes=1,
+               ["Lift-out wall liner, back upper right"], [LINER_PATHS["back upper right"]], minutes=1,
                state={"recoater": 0.0}),
         remove("Back liner, lower right: forward under the ball screw, left 25 mm, out through the door", ["Lift-out wall liner, back lower right"],
-               [[(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -560, 0)]], minutes=1, state={"recoater": 0.0}),
+               [LINER_PATHS["back lower right"]], minutes=1, state={"recoater": 0.0}),
         note("Recoater to the right end of its stroke (x +100), so the carriage block is clear of the left pieces", 1),
         remove("Left side liner with its pull tab (mirror of the right)", ["Lift-out wall liner, left", "Liner pull tab, left"],
-               [[(0, 0, 0), (4, 0, 0), (4, -21, 0), (35, -21, 0), (35, -21, -6), (35, -541, -6)]], minutes=2, state={"recoater": 206.0}),
+               [LINER_PATHS["left"]], minutes=2, state={"recoater": 206.0}),
         remove("Back liner, upper left: forward over the ball screw to y 54 (behind the dose chute), right 50 mm, out through the door",
-               ["Lift-out wall liner, back upper left"], [[(0, 0, 0), (0, -3, 0), (0, -40, 0), (50, -40, 0), (50, -560, 0)]], minutes=1,
+               ["Lift-out wall liner, back upper left"], [LINER_PATHS["back upper left"]], minutes=1,
                state={"recoater": 206.0}),
         remove("Back liner, lower left: forward under the ball screw, right 26 mm, out under the dose chute and through the door",
-               ["Lift-out wall liner, back lower left"], [[(0, 0, 0), (0, -3, 0), (0, -40, 0), (26, -40, 0), (26, -560, 0)]], minutes=1,
+               ["Lift-out wall liner, back lower left"], [LINER_PATHS["back lower left"]], minutes=1,
                state={"recoater": 206.0}),
         note("HEPA-vacuum the chamber, swab the coves, wipe the window side of the cover slide", 30),
     ]))
@@ -357,14 +386,14 @@ def catalogue(module="M50"):
                     where="bench (module out, see S2)", interval="rod and bore seals on wear or powder past the seal; heaters and TCs on failure (P42, P43)",
                     state={}, present="module", bench=True, air=False, steps=[
         screws("Six M4 gland-plate screws from below", f"gland_{module}", 4),
-        remove("Gland plate, heater stack, rod and its welded end down out of the bore together (the gland plate rides on the rod)",
+        remove("Gland plate, heater stack, rod and its welded rod-end block down out of the bore together (the gland plate rides on the rod)",
                ["bottom flange: gland plate", "gland-plate O-ring", "Rod O-rings", "handle (6061", "Handle screws"] + STACK +
-               ["Rod end", "Hermetic connector", "Hermetic-connector O-ring", "Striker disc", "Striker screws"], [[(0, 0, 0), (0, 0, -260)]], minutes=4),
-        note("On the bench: the two rod set screws out of the head, the rod (with its welded end, connector and striker) pulled down out of the "
-             "head's socket and through the gland plate; the two 2-114s then come out of their grooves. The rod's top end is a plain Ø15.875 tube "
-             "end in the gland's Ø15.93 throat", 15),
-        note("Heaters and thermocouples slide down out of the block once the head is off (3 stack screws); their leads run down the rod to the hermetic "
-             "connector in the rod end", 60),
+               ["Rod end", "Striker disc", "Striker screws"], [[(0, 0, 0), (0, 0, -260)]], minutes=4),
+        note("On the bench: the two rod set screws out of the head, the rod (with its welded rod-end block, the block's weld-in feedthroughs and the "
+             "striker) pulled down out of the head's socket and through the gland plate; the two 2-114s then come out of their grooves. The rod's top "
+             "end is a plain Ø15.875 tube end in the gland's Ø15.93 throat", 15),
+        note("Heaters and thermocouples slide down out of the block once the head is off (3 stack screws); their leads run down the rod to the weld-in "
+             "feedthroughs in the rod-end block (how they join inside the welded block is not drawn: electrical.md 13.3)", 60),
     ]))
     ops.append(dict(id="M8", kind="maintenance", name="Recoater shaft feedthrough (Ferrotec magnetic-fluid unit) and servo", where="tray at the access opening",
                     interval="on leak-up rise or feedthrough wear", state=OPEN, present="all", air=True, steps=[
@@ -389,7 +418,8 @@ def catalogue(module="M50"):
         reach("Left through-beam head", (-180.0, 0.0, 5.0), (FRONT, UP, (-1, 0, 0), (0, -0.7, 0.7), (-0.5, -0.85, 0)), skip=["Plate-height through-beam"],
               hand=PINCH_HAND),
         reach("Module-present sensor under the floor", (-55.0, -25.0, -40.0), (FRONT, (0, 0, -1)), skip=["Module-present sensor"], hand=PINCH_HAND),
-        reach("Overflow-jar sensor (its M12 nuts, in front of the bracket)", (150.0, -26.0, -121.0), (FRONT, (1, 0, 0)), skip=["Overflow-jar present"], hand=PINCH_HAND),
+        reach("Overflow-jar sensor (its M12 nuts, right of the bracket on the front-right leg)", (152.0, -46.0, -110.0), (FRONT, (1, 0, 0)), skip=["Overflow-jar present"],
+              hand=PINCH_HAND),
     ]))
     ops.append(dict(id="M11", kind="maintenance", name="Lubricate the recoater rail carriage and ball nut (vacuum grease)", where="tray at the access opening",
                     interval="rule of thumb: every 6 months or ~100 km of travel (~500 builds at 0.2 m per stroke); vendor manual not checked",
@@ -417,10 +447,10 @@ def catalogue(module="M50"):
     ops.append(dict(id="S2", kind="swap", name=f"Build module swap ({module})", where="tray at the access opening", interval="between campaigns",
                     state=dict(OPEN, zstage=MP.ZSTAGE_RELEASE), present="all", air=True, steps=[
         note("Cool, vent; Z arm released (drops 45 mm away from the striker)", 2),
-        screws("Two captive M6 screws, from under the chamber", "module_flange", 3, pn="95966A705"),
+        note("Release air on: both zero-point modules open (6 bar); round 6, the captive M6 are gone", 1),
         reach("Hand on the module handle's grip block, in front of the door", (0.0, -141.0, -47.0), (FRONT,), skip=["handle (6061"]),
         dict(do="module", label="Module out along its swap path (drop 40, forward 170, up 18, over the guard sill)", minutes=3),
-        note("New module in (reverse path); captive screws at half torque (hot-swap.md); Z arm up; purge", 20),
+        note("New module in (reverse path) onto the dowels; release air off, the zero-point modules pull it home (hot-swap.md 3.2a); Z arm up; purge", 20),
     ]))
     ops.append(dict(id="S3", kind="swap", name=f"Reservoir swap ({res})", where="tray at the access opening", interval="each alloy",
                     state=OPEN, present="all", air=True, steps=[

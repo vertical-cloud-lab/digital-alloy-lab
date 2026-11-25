@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """CalculiX cross-check of the cover-slide thermal lens (issue #260).
 
-A 2-degree sector of the Ø46 (rim contact) x 3 mm fused-silica slide, meshed here as C3D6 wedges at the axis and C3D8
+A 2-degree sector of the Ø46 (rim contact) x 2 mm fused-silica slide (Edmund 36-299, read from the model since 2026-11-25;
+it was 3 mm), meshed here as C3D6 wedges at the axis and C3D8
 bricks elsewhere, graded toward the centre. The absorbed power (Gaussian, w = beam radius on the slide) goes into the
 bottom element row (the fouled face). Rim nodes are held at the mount temperature; top and bottom faces lose heat by
 *FILM at h = 10 W/m2K (radiation + natural convection in argon, linearised), as in thermal_lens.py. The nodal
@@ -23,16 +24,20 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE.parent / "out" / "optics"
+import sys  # noqa: E402
+sys.path.insert(0, str(HERE.parents[1] / "cad"))
+import lpbf_low as MODEL  # noqa: E402  (slide thickness and height from the model's P block, as thermal_lens.py)
 WORK = Path("/tmp/optics-ccx")
 WORK.mkdir(parents=True, exist_ok=True)
 
 K = 1.38e-3                 # W/(mm K), fused silica (Corning 7980)
 CHI = 9.871e-6              # 1/K, dn/dT + (n-1)(1+nu)alpha (thermal_lens.py)
 H = 10e-6                   # W/(mm2 K)
-R, T_TH = 23.0, 3.0         # mm: rim contact radius, slide thickness
+R, T_TH = 23.0, MODEL.P["slide_t"]   # mm: rim contact radius (the drawer's Ø46 seat), slide thickness (2.0 since 2026-11-25)
 P_LASER = 500.0
-CASES = [("3.2 mm beam, fogged 0.5 %", 3.2, 5e-3), ("5 mm beam, fogged 0.5 %", 5.0, 5e-3), ("3.2 mm beam, light film 0.05 %", 3.2, 5e-4)]
-H_SLIDE = 126.0             # mm above focus
+CASES = [("3.2 mm beam, fogged 0.5 %", 3.2, 5e-3), ("5 mm beam, fogged 0.5 %", 5.0, 5e-3), ("3.2 mm beam, light film 0.05 %", 3.2, 5e-4),
+         ("2.5 mm beam (drawn), light film 0.05 %", 2.5, 5e-4)]
+H_SLIDE = MODEL.P["z_slide0"]   # mm above focus: the slide's bottom face (127.0 since 2026-11-25; was 126)
 
 
 def build_and_run(w, P_abs, tag):

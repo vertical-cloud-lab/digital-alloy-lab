@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import hashlib
 import math
+import os
 import pathlib
 import pickle
 import sys
@@ -37,7 +38,7 @@ import trimesh
 
 VOL_TOL = 0.5        # mm3 of shared volume that counts as a block (as analysis/interference.py)
 CHORD = 0.1          # tessellation chord, mm
-CACHE = pathlib.Path("/tmp/ops-work/cache")
+CACHE = pathlib.Path(os.environ.get("OPS_CACHE", "/tmp/ops-work/cache"))   # OPS_CACHE: a per-worker cache (parallel runs)
 
 
 # ------------------------------------------------------------------------------------------------ small helpers

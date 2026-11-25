@@ -3,14 +3,19 @@ part whose bounding box it touches, in the closed, parked state of build(module)
 whether a refinement created a contact (the full answer, with the motion sweeps and the designed-contact list, is
 analysis/interference.py; this is the quick check when its shared heavy slots are busy).
 
-    python contact_check.py <cad dir> <module> <out.json>
+    python contact_check.py <cad dir> <module> <out.json> [r5|r6]      # r6 (default): the parts changed on 2026-11-25
 """
 import json
 import pathlib
 import sys
 
-CHANGED = ["Fiber laser source", "UPS (Eaton", "Recoater servo (ClearPath", "Z servo (ClearPath", "Dosing stepper (NEMA 17)",
-           "Recoater carriage", "Overflow clamp (KF-40)", "Vacuum isolation valve", "Chamber door (", "DIN-rail drawer"]
+CHANGED_R5 = ["Fiber laser source", "UPS (Eaton", "Recoater servo (ClearPath", "Z servo (ClearPath", "Dosing stepper (NEMA 17)",
+              "Recoater carriage", "Overflow clamp (KF-40)", "Vacuum isolation valve", "Chamber door (", "DIN-rail drawer"]
+# round 6 (2026-11-25): the nXDS6i, the 5169K72 filter train, the transmitter on its SAE-4 adapter, the KF stubs and the hose and
+# exhaust runs that moved with them, and the rack units whose fronts changed
+CHANGED_R6 = ["Dry scroll pump", "Pump inlet (KF-25)", "Sealed cyclone + HEPA housing", "Filter inlet (KF-25)", "Filter outlet (KF-25)",
+              "Pressure transducer", "Gas-loop + vacuum hoses", "Pump exhaust to the dock", "Fiber laser source", "UPS (Eaton"]
+CHANGED = CHANGED_R6
 
 
 def touch(a, b, tol=0.01):
@@ -18,12 +23,13 @@ def touch(a, b, tol=0.01):
             and a.zmin <= b.zmax + tol and b.zmin <= a.zmax + tol)
 
 
-def main(cad, module, out):
+def main(cad, module, out, which="r6"):
+    changed = CHANGED_R5 if which == "r5" else CHANGED_R6
     sys.path.insert(0, cad)
     import lpbf_low as M
     parts = M.build(module=module)
     res = []
-    for pre in CHANGED:
+    for pre in changed:
         for p in [q for q in parts if q.name.startswith(pre)]:
             pb = p.shape.BoundingBox()
             for q in parts:
@@ -41,4 +47,4 @@ def main(cad, module, out):
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:4])
+    main(*sys.argv[1:5])
