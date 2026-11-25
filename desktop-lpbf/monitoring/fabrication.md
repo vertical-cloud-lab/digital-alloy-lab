@@ -67,7 +67,7 @@ Scripts (all in [`analysis/monitoring/fab/`](../analysis/monitoring/fab/)):
 | 5. two-colour coaxial | $2,179 | $2,179 | the optics worker's parts ([`optics-parts.csv`](optics-parts.csv)) |
 | 6. coaxial camera | $987 | $987 | the same |
 | 7. side high-speed camera | $12,117 | $10,317 | Chronos 2.1-HD $6,800 (used $5,000) and $3,971 of pulsed 850 nm light; the steep lid camera is a ~$2.2k option |
-| 8. cooling: InGaAs behind the DMSP1000 (route A) | $2,160 | $2,160 | a SWIR camera instead (route B): $9,502 new, $2,819 with a used camera |
+| 8. cooling: InGaAs behind the DMSP1000 (route A) | $2,160 | $2,160 | the coaxial SWIR camera instead (route B, optics.md §0 item 6): $8,059 new; an off-axis SWIR camera at LW (route C): $9,502 new, $2,819 with a used camera |
 | **0–8** | **$23,096–25,558** | **$21,024** | before shipping and tax |
 
 Against monitoring.md's ranges: steps 0–6 $8,818–11,280 (it said $5–9k for steps 1–6; step 0 and the top of the
@@ -313,7 +313,7 @@ put in a cart.
 | 5. two-colour coaxial | the optics worker's branch: FESH1000, DMLP805, FBH700-40, FBH900-40, PDA36A2, achromat, 2 pinholes, cube 3, cage parts | $2,179 | $2,179 | - | - |
 | 6. coaxial camera | DMSP950, mono IMX296 board, 75 mm achromat, FESH1000, cube 2, C-mount adapter, Pi cable, adapter plate | $987 | $987 | $216 new / $216 used (M6-08) | M6-09 |
 | 7. side high-speed camera (and the steep lid camera) | Chronos 2.1-HD 8 GB, Kowa 50 mm lens, 850 nm filter, FESH1000, 850 nm LED (SOLIS) + pulsed driver, trigger cable, bracket | $12,117 | $10,317 | $13,444 new / $13,303 used (M7-09, M7-10, M7-11, M7-12, M7-13, M7-14, M7-15, M7-16, M7-17, M7-18) | - |
-| 8. cooling through solidification | route A, InGaAs behind the DMSP1000: PDA20CS2, 2 × FELH1250, 100 mm lens + pinhole, a ~1180 nm dichroic cube (estimated), 2 × FESH1000 | $2,160 | $2,160 | $10,276 new / $3,593 used (M8-06, M8-07, M8-08, M8-09) | M8-04 |
+| 8. cooling through solidification | route A, InGaAs behind the DMSP1000: PDA20CS2, 2 × FELH1250, 100 mm lens + pinhole, a ~1180 nm dichroic cube (estimated), 2 × FESH1000 | $2,160 | $2,160 | $18,335 new / $11,652 used (M8-06 to M8-12: route B $8,059, route C $9,502, and the notch dichroic, not recommended) | M8-04 |
 | **0–8** | | **$23,096–25,558** | **$21,024** | | |
 
 ### 4.1 Choices worth knowing
@@ -361,7 +361,7 @@ put in a cart.
 | M4-02 AE preamplifier 20/40/60 dB (MISTRAS 2/4/6 class) | $300–900 | $150 | [127880027110](https://www.ebay.com/itm/127880027110) (2026-11-25T06:54Z): used (Pre-Owned): Mistras IL-LP-WS in-line low-power AE preamplifier 26 dB 65-1100 kHz BNC/SMA (used) (MISTRAS | 28 V phantom power: needs a decoupler (Vallen DCPL2 class) to feed the PicoScope |
 | M7-01 Kron Chronos 2.1-HD, 8 GB, mono (4/3 in. sensor; 24,046 fps at 640 x 9 | $6,800 | $5,000 | [840036095876](https://www.ebay.com/itm/840036095876) (2026-11-25T07:38Z): used (pulled from a working environment; dent on the lens): Kron Technologies CR-21-1.0-32C High Speed Camera  | colour (not mono), 32 GB, lens dented; check the sensor and memory |
 | M7-09 Option: full-frame lens, Nikon F 50 mm f/1.8G (order the Chronos with  | $240 | $100 | [900049171921](https://www.ebay.com/itm/900049171921) (2026-11-25T07:41Z): used (Pre-Owned): Nikon AF-S Nikkor 50mm f/1.8G lens (used) (Nikon 2199) | a G lens: aperture control on Kron's F mount |
-| M8-07 Route B: SWIR camera 640 x 512 class, InGaAs, GigE, hardware trigger ( | $8,730 | $2,047 | [176713590028](https://www.ebay.com/itm/176713590028) (2026-11-25T06:48Z): used (Pre-Owned): Xenics XC251 (Bobcat 320 family) tested (used) (Xenics XC251) | interface (GigE or Camera Link), trigger input, 320 × 256; ships from China |
+| M8-10 Route C: off-axis SWIR camera at LW, 640 x 512 class, InGaAs, GigE ( | $8,730 | $2,047 | [176713590028](https://www.ebay.com/itm/176713590028) (2026-11-25T06:48Z): used (Pre-Owned): Xenics XC251 (Bobcat 320 family) tested (used) (Xenics XC251) | interface (GigE or Camera Link), trigger input, 320 × 256; ships from China |
 
 ## 5. Time and cost
 

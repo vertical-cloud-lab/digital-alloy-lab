@@ -151,10 +151,13 @@
     "M8-06",
     "M8-07",
     "M8-08",
-    "M8-09"
+    "M8-09",
+    "M8-10",
+    "M8-11",
+    "M8-12"
    ],
-   "options_usd": 10275.96,
-   "options_used_usd": 3592.96,
+   "options_usd": 18334.93,
+   "options_used_usd": 11651.93,
    "cumulative_new_low": 23095.89,
    "cumulative_with_used": 21023.89
   }
