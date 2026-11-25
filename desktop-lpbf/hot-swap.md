@@ -261,7 +261,7 @@ Where the model said no, the plan changed; the table gives what was drawn.
 
 | | Round 5 | Round 6 | Why |
 |---|---|---|---|
-| Z servo | beside the actuator at (64, 80), x 34–94, y 28–110 | behind it at (0, 130), connector block to −x; the bracket and 2:1 belt housing (60 wide) run back to y 160, 52 mm behind the Z flange; the base plate's window reaches y 166; the Z flange shrinks to x −40..48 and its screw at (94, 102) moves to (40, 66) | frees the right-hand module's place |
+| Z servo | beside the actuator at (64, 80), x 34–94, y 28–110 | behind it at (0, 130), connector block to −x; the bracket and 2:1 belt housing (60 wide) run back to y 160, 52 mm behind the Z flange; the base plate's window reaches y 166; the Z flange becomes x −45..48, its screw at (94, 102) moves to (40, 66) and its left pair from x −33 to x −37, so their heads come down past the wider bracket (operations.md A2.36) | frees the right-hand module's place |
 | Overflow outlet, jar | (100, 0); joint z −84; 2 in. cup, ~65 cm³ | **(94, −46)**, the slot's front end; joint z −82; **2.5 in. × 0.065 in. 316L cup down to z −129, ~104 cm³** | x 94 keeps the cup's lane (x 62.25–125.75) 12 mm inside the front-right leg. 2 mm higher, the clamp's ring (it now reaches x 58.5) passes 2.5 mm under the module flange's tabs on the module's path |
 | Funnel block | x 78–122, y ±59, flat 11 mm pocket over a centre outlet | front part extended to y −73 and x 72; the pocket floor slopes 13° down to the outlet; the front screw pair moves from (83/117, −40) to (79, −67) and (116, −67) | the outlet moved; see the flow caveat below |
 | Right-hand zero-point module | – | **(100, 40)**, pin face z −109, top z −89 | behind the jar's cup (10.5 mm) |
@@ -351,7 +351,7 @@ The robot jobs and the hand operations that name the screws need re-running on t
 |---|---|---|
 | zero-point posts (new) | (64, 40), (136, 40), (−80, −45), (−138, −28) | M6 × 9 helical insert, blind, 10.5 mm deep (9.5 mm of floor left) |
 | funnel screws, front pair (moved) | (79, −67), (116, −67); were (83, −40), (117, −40) | M4 × 6 insert, as before |
-| Z flange screw (moved) | (40, 66); was (94, 102) | M5 × 7.5 insert, as before |
+| Z flange screws (moved) | (40, 66), was (94, 102); (−37, 70) and (−37, 100), were (−33, 70) and (−33, 100) | M5 × 7.5 insert, as before |
 | leg screws (moved) | front-right (147, −93), was (142, 41); back-right (141, 96), was (135, 90) | M6 × 9 insert, as before |
 | captive-screw inserts | (±58, 0) | unchanged, kept for the hand fallback |
 

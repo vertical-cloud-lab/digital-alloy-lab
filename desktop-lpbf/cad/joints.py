@@ -547,8 +547,9 @@ def add_joints(h, parts, add, module="M50"):
 
     # ---------------- 10. Z mounting flange: 4 x M5 x 12, counterbored, into M5 x 7.5 inserts in the floor ----------------
     _KEY[0] = "zmount"
-    # round 6: the flange ends at x 48 (the servo moved behind the actuator), so the screw at (94, 102) moved to (40, 66)
-    items = [((x, y, zf - 4.5), Z) for x, y in ((-33.0, 70.0), (-33.0, 100.0), (40.0, 102.0), (40.0, 66.0))]
+    # round 6: the flange is x -45..48 (the servo moved behind the actuator): the screw at (94, 102) moved to (40, 66), and the left pair
+    # from x -33 to x -37 so their heads come down clear of the 60 mm wide bracket (A2.36)
+    items = [((x, y, zf - 4.5), Z) for x, y in ((-37.0, 70.0), (-37.0, 100.0), (40.0, 102.0), (40.0, 66.0))]
     pn512 = find("shcs", 5, 12)
     cut_parts(parts, "Z mounting flange", [hole(p, n, -5.51, 0.0, CBORE[5][0]) for p, n in items] + [hole(p, n, -0.01, 4.51, CLEAR[5]) for p, n in items])
     cut_parts(parts, "Chamber floor plate", [hole(p, n, 4.5, 12.0, insert_od(ins)) for p, n in items] + [hole(p, n, 11.99, 13.5, 5.0) for p, n in items])

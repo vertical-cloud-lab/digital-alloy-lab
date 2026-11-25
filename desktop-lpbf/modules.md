@@ -147,7 +147,7 @@ Powder at 30 µm layers, 1.8 dose factor, AlSi10Mg, as in `requirements_budgets.
   front edge for the module's rod end. **Round 6 (2026-11-25):** the servo folds to the back of the actuator.
   - **Servo:** at (0, 130), connector block to −x, on a 60 mm wide bracket and 2:1 belt housing that runs back to y 160. The base
     plate's window now reaches y 166.
-  - **Z flange:** narrows to x −40..48.
+  - **Z flange:** x −45..48. Its left screw pair moved from x −33 to x −37, so the heads come down past the bracket (A2.36).
   - **Why:** the right-hand zero-point module hangs where the servo was. **The machine is still 564 mm tall** (581.2 mm since the real levelling mounts went in, 2026-11-19: [`fasteners.md`](fasteners.md)).
 
 **Swapping a module** (by hand, between campaigns, with the chamber at atmosphere):

@@ -10594,16 +10594,6 @@
    "why": "magnet bonded into a pocket in the block's back face"
   },
   {
-   "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
-   "b": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "why": "feedthroughs welded into the rod-end block's bores"
-  },
-  {
-   "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
-   "b": "Striker disc M50 (416 stainless, on the pot magnet)",
-   "why": "striker screwed to the end cap"
-  },
-  {
    "a": "Trace O2 analyzer + dew-point transmitter (panel box)",
    "b": "O2 sample line (1/8 in. 316L)",
    "why": "tube fitting into the analyzer"
@@ -10644,5 +10634,5 @@
    "why": "tube in the valve's push-in port"
   }
  ],
- "runtime_s": 1013.9
+ "runtime_s": 372.9
 }
