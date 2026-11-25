@@ -395,7 +395,11 @@ def drawn(module="L75"):
         r_ap = v["clear_d"] / 2
         L = float(np.linalg.norm(tgt - p_ap))
         row = dict(centre=v["centre"], aperture_at=[round(float(x), 2) for x in p_ap], aperture_d=v["clear_d"], dist_mm=round(L, 1))
-        cyl_hits = hits(cylinder(p_ap, d_in, r_ap, L - 1.0), parts, glass[key])
+        # the clear cylinder runs down the line until its lowest edge is 1 mm above the powder (past that it would only meet the plate)
+        sin_e, cos_e = -float(d_in[2]), math.sqrt(max(0.0, 1.0 - float(d_in[2]) ** 2))
+        L_cyl = (float(p_ap[2]) - r_ap * cos_e - 1.0) / sin_e
+        row["clear_cylinder_length_mm"] = round(L_cyl, 1)
+        cyl_hits = hits(cylinder(p_ap, d_in, r_ap, L_cyl), parts, glass[key])
         row["clear_cylinder_blockers"] = sorted({f"{n[:70]} ({vv:.1f} mm3)" for n, vv in cyl_hits})
         for mod, R in PLATES.items():
             bl = hits(hull(disc(p_ap, d_in, r_ap), disc(tgt, up, R, 48)), parts, glass[key])

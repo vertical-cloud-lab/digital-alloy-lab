@@ -50,7 +50,7 @@ def mon(p):
     return "monitoring" in p.tags
 
 
-def scene(parts, view, box=None, clip=None, grey_op=0.35, mon_op=1.0, hide=HIDE, keep=None, title=""):
+def scene(parts, view, box=None, clip=None, grey_op=0.35, mon_op=1.0, hide=HIDE, keep=None, title="", recolour=None):
     pl = pv.Plotter(off_screen=True, window_size=(W, H), lighting="three lights")
     pl.set_background("#f7f9fb", top="#dfe6ee")
     for p in parts:
@@ -68,6 +68,8 @@ def scene(parts, view, box=None, clip=None, grey_op=0.35, mon_op=1.0, hide=HIDE,
                 continue
         if mon(p):
             col, op = hex2rgb(p.color), (min(p.opacity, 0.6) if p.opacity < 1 else mon_op)
+            if recolour:
+                col = recolour(p) or col
             if p.color.lower() in ("#151719", "#25292e", "#2d3136"):
                 col = tuple(0.15 + 0.85 * c for c in hex2rgb("#2b6cd2")) if "camera" in p.name.lower() and "lens" not in p.name.lower() else col
         else:
@@ -100,13 +102,14 @@ def main(which):
     parts = M.build(include_tray=True, module="M50", monitoring=True)
     state_parts = parts
     if "overview" in which:
-        save(scene(state_parts, [(-900, -1000, 750), (-150, -20, 120), (0, 0, 1)], box=(-460, 330, -300, 260, -230, 420),
-                   title="Monitoring hardware in the model (colour); the rest grey. Guard and bridge posts hidden."), "overview.png")
+        save(scene(state_parts, [(-760, -720, 560), (-170, -10, 90), (0, 0, 1)], box=(-425, 330, -300, 260, -230, 420),
+                   keep=lambda p: p.module == "process",
+                   title="Monitoring hardware in the process module (colour); the rest grey. Guard and bridge posts hidden."), "overview.png")
     if "lw" in which:
         save(scene(state_parts, [(-520, -620, 260), (-250, -25, 40), (0, 0, 1)], box=(-430, -100, -200, 140, -170, 200),
                    title="LW: Ø40 x 4 window flat on the wall, clamp ring, purge, Chronos 2.1-HD on the sight line"), "lw.png")
     if "lp" in which:
-        save(scene(state_parts, [(-330, -260, 520), (-55, 75, 175), (0, 0, 1)], box=(-200, 80, -80, 220, 100, 320),
+        save(scene(state_parts, [(-330, 330, 430), (-50, 70, 185), (0, 0, 1)], box=(-150, 80, 0, 230, 100, 320),
                    title="LP at (-40, 60): boss with the window square to the line of sight, IMX296 camera, cut-out in the optics bridge"),
              "lp.png")
     if "cage" in which:
@@ -116,8 +119,12 @@ def main(which):
     if "ae" in which:
         import monitoring_parts as MPT
         y_cut = MPT.REPORT.get("AE", {}).get("waveguide_xy", (0.0, 3.03))[1]
-        save(scene(state_parts, [(-40, -420, -60), (-10, 10, -75), (0, 0, 1)], box=(-120, 120, -60, 120, -170, 5),
-                   clip=((0, -1, 0), (0, y_cut, 0)), grey_op=0.9, hide=HIDE + ("Process chamber body", "Chamber floor", "Base plate", "Leveling"),
+        def ae_col(p):
+            return (0.95, 0.35, 0.05) if "waveguide" in p.name else ((0.15, 0.4, 0.95) if "sensor" in p.name.lower() else None)
+        save(scene(state_parts, [(-150, -260, -40), (-5, 10, -75), (0, 0, 1)], box=(-90, 90, -40, 70, -150, 2),
+                   clip=((0, 1, 0), (0, y_cut, 0)), grey_op=0.55, recolour=ae_col,
+                   keep=lambda p: "M50" in p.name or (mon(p) and ("AE " in p.name)) or "Z lift arm" in p.name or "Pot magnet" in p.name,
+                   hide=HIDE + ("Gland-plate screws", "handle", "Zero-point"),
                    title="AE path, section at the waveguide: plate, heater block, break, piston head, rod, rod end; sensor on the rod end"),
              "ae.png")
 
