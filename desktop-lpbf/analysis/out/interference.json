@@ -7,7 +7,7 @@
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 1874,
+   "pairs_checked": 1884,
    "interferences": []
   },
   {
@@ -16,7 +16,7 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 1822,
+   "pairs_checked": 1832,
    "interferences": []
   },
   {
@@ -26,7 +26,7 @@
     "gdoor": 515.0,
     "piston": 8.0
    },
-   "pairs_checked": 1875,
+   "pairs_checked": 1886,
    "interferences": []
   },
   {
@@ -37,7 +37,7 @@
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 1841,
+   "pairs_checked": 1853,
    "interferences": []
   },
   {
@@ -47,7 +47,7 @@
     "module": 40.0,
     "gdoor": 515.0
    },
-   "pairs_checked": 1784,
+   "pairs_checked": 1794,
    "interferences": []
   },
   {
@@ -56,7 +56,7 @@
     "_calibration": 1.0,
     "door": 95.0
    },
-   "pairs_checked": 1884,
+   "pairs_checked": 1896,
    "interferences": []
   }
  ],
@@ -1413,7 +1413,7 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "gap_mm": 3.0
   },
@@ -1454,6 +1454,13 @@
   },
   {
    "group": "piston",
+   "at": -42.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 4.5
+  },
+  {
+   "group": "piston",
    "at": 1.75,
    "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
@@ -1468,13 +1475,6 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
-   "gap_mm": 5.365
-  },
-  {
-   "group": "piston",
    "at": -29.5,
    "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
@@ -1483,7 +1483,7 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
    "gap_mm": 5.757
   },
@@ -1493,13 +1493,6 @@
    "moving": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
    "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "gap_mm": 5.994
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 6.0
   },
   {
    "group": "piston",
@@ -1517,10 +1510,24 @@
   },
   {
    "group": "piston",
+   "at": 8.0,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
+   "gap_mm": 6.225
+  },
+  {
+   "group": "piston",
    "at": -42.0,
    "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "gap_mm": 6.469
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 7.036
   },
   {
    "group": "piston",
@@ -1534,21 +1541,14 @@
    "at": -42.0,
    "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 7.549
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 7.69
+   "gap_mm": 7.531
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 7.801
+   "gap_mm": 7.802
   },
   {
    "group": "piston",
@@ -1560,9 +1560,16 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "gap_mm": 8.224
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 8.32
   },
   {
    "group": "piston",
@@ -1574,30 +1581,16 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "gap_mm": 8.773
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Rod set screws M50, M4 cup point 316 (2 x McMaster 92029A152)",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 8.963
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 9.0
   },
   {
    "group": "piston",
    "at": 8.0,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
-   "gap_mm": 9.365
+   "gap_mm": 9.55
   },
   {
    "group": "piston",
@@ -1605,6 +1598,13 @@
    "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "gap_mm": 9.688
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Rod set screws M50, M4 cup point 316 (2 x McMaster 92029A152)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 9.803
   },
   {
    "group": "piston",
@@ -1626,13 +1626,6 @@
    "moving": "Z carriage",
    "other": "Z home and lower-limit sensors (2 x AutomationDirect KSE-AP-3F inductive M8, PNP NO, 3 mm flush, 40 mm long; 1 mm to the flag)",
    "gap_mm": 11.0
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 11.366
   },
   {
    "group": "piston",
@@ -1658,6 +1651,27 @@
   {
    "group": "piston",
    "at": -42.0,
+   "moving": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 12.132
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 12.424
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 12.577
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
    "moving": "Z sensor flag (2 mm steel tab on the carriage's -x side)",
    "other": "Base plate, process module (MIC-6, 15 mm)",
    "gap_mm": 14.0
@@ -1668,6 +1682,13 @@
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "gap_mm": 14.131
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
+   "gap_mm": 14.782
   },
   {
    "group": "piston",
@@ -1692,38 +1713,31 @@
   },
   {
    "group": "piston",
-   "at": -42.0,
-   "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 16.096
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 16.108
-  },
-  {
-   "group": "piston",
    "at": 8.0,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
-   "gap_mm": 16.285
+   "gap_mm": 16.21
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
+   "moving": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 16.557
+   "gap_mm": 16.818
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 17.025
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
    "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 17.226
+   "gap_mm": 17.217
   },
   {
    "group": "piston",
@@ -1742,9 +1756,16 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
-   "gap_mm": 18.284
+   "gap_mm": 18.688
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 19.013
   },
   {
    "group": "piston",
@@ -1759,13 +1780,6 @@
    "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "gap_mm": 19.572
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 19.734
   },
   {
    "group": "piston",
@@ -1801,6 +1815,13 @@
    "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "gap_mm": 20.394
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 20.859
   },
   {
    "group": "piston",
@@ -1846,13 +1867,6 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
-   "gap_mm": 21.966
-  },
-  {
-   "group": "piston",
    "at": -14.92,
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
@@ -1874,13 +1888,6 @@
   },
   {
    "group": "piston",
-   "at": -42.0,
-   "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 22.816
-  },
-  {
-   "group": "piston",
    "at": -6.58,
    "moving": "Heater block M50 (6061-T6, bayonet socket)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
@@ -1895,14 +1902,7 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
-   "gap_mm": 23.251
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
+   "at": -33.67,
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "gap_mm": 23.466
@@ -1913,6 +1913,13 @@
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "gap_mm": 23.609
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 23.685
   },
   {
    "group": "piston",
@@ -1941,6 +1948,13 @@
    "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "gap_mm": 24.328
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
+   "moving": "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 25.287
   },
   {
    "group": "piston",
@@ -2014,24 +2028,10 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 26.463
-  },
-  {
-   "group": "piston",
    "at": -0.33,
    "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 26.914
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
-   "gap_mm": 27.5
   },
   {
    "group": "piston",
@@ -2651,6 +2651,13 @@
   },
   {
    "group": "piston",
+   "at": 8.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
+   "gap_mm": 52.109
+  },
+  {
+   "group": "piston",
    "at": 5.92,
    "moving": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
@@ -2694,6 +2701,13 @@
   {
    "group": "piston",
    "at": 8.0,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
+   "gap_mm": 55.61
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
    "moving": "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",
    "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
    "gap_mm": 55.741
@@ -2714,13 +2728,6 @@
   },
   {
    "group": "piston",
-   "at": 8.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
-   "gap_mm": 56.565
-  },
-  {
-   "group": "piston",
    "at": -8.67,
    "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
@@ -2736,9 +2743,16 @@
   {
    "group": "piston",
    "at": 8.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 60.513
+  },
+  {
+   "group": "piston",
+   "at": 8.0,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
-   "gap_mm": 59.832
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 60.992
   },
   {
    "group": "piston",
@@ -2751,15 +2765,8 @@
    "group": "piston",
    "at": 8.0,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 63.891
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
    "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
-   "gap_mm": 64.777
+   "gap_mm": 65.054
   },
   {
    "group": "piston",
@@ -2778,9 +2785,9 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
-   "gap_mm": 69.065
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 67.67
   },
   {
    "group": "piston",
@@ -2809,13 +2816,6 @@
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
    "gap_mm": 70.238
-  },
-  {
-   "group": "piston",
-   "at": 8.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 70.275
   },
   {
    "group": "piston",
@@ -3176,6 +3176,13 @@
   },
   {
    "group": "piston",
+   "at": -27.42,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 91.711
+  },
+  {
+   "group": "piston",
    "at": -42.0,
    "moving": "Z sensor flag (2 mm steel tab on the carriage's -x side)",
    "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
@@ -3204,10 +3211,10 @@
   },
   {
    "group": "piston",
-   "at": -27.42,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "at": -35.75,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 95.604
+   "gap_mm": 95.547
   },
   {
    "group": "piston",
@@ -3274,13 +3281,6 @@
   },
   {
    "group": "piston",
-   "at": -35.75,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 99.323
-  },
-  {
-   "group": "piston",
    "at": -42.0,
    "moving": "Z carriage",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
@@ -3340,7 +3340,14 @@
    "at": -42.0,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 108.105
+   "gap_mm": 104.58
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 109.44
   },
   {
    "group": "piston",
@@ -3355,13 +3362,6 @@
    "moving": "Z carriage",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 112.2
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 112.858
   },
   {
    "group": "piston",
@@ -3935,7 +3935,14 @@
    "at": -27.42,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 172.348
+   "gap_mm": 168.687
+  },
+  {
+   "group": "piston",
+   "at": -35.75,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 173.405
   },
   {
    "group": "piston",
@@ -3943,13 +3950,6 @@
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 176.558
-  },
-  {
-   "group": "piston",
-   "at": -35.75,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 177.045
   },
   {
    "group": "piston",
@@ -3989,7 +3989,7 @@
   {
    "group": "piston",
    "at": -17.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 184.0
   },
@@ -4241,6 +4241,13 @@
   {
    "group": "piston",
    "at": -42.0,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 197.091
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
    "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 197.588
@@ -4258,13 +4265,6 @@
    "moving": "Rod set screws M50, M4 cup point 316 (2 x McMaster 92029A152)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
    "gap_mm": 200.05
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 200.789
   },
   {
    "group": "piston",
@@ -4286,6 +4286,13 @@
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
    "gap_mm": 201.106
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 201.533
   },
   {
    "group": "piston",
@@ -4318,7 +4325,7 @@
   {
    "group": "piston",
    "at": -23.25,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 204.0
   },
@@ -4328,13 +4335,6 @@
    "moving": "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 204.423
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 205.244
   },
   {
    "group": "piston",
@@ -4416,16 +4416,16 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 290.98
+   "gap_mm": 287.373
   },
   {
    "group": "piston",
    "at": -42.0,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 294.914
+   "gap_mm": 291.454
   },
   {
    "group": "piston",
@@ -4479,8 +4479,8 @@
   {
    "group": "door",
    "at": 0.0,
-   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "moving": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 0.5
   },
   {
@@ -4521,7 +4521,7 @@
   {
    "group": "door",
    "at": 0.0,
-   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
    "gap_mm": 2.25
   },
@@ -4529,7 +4529,7 @@
    "group": "door",
    "at": 0.0,
    "moving": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 2.485
   },
   {
@@ -4591,7 +4591,7 @@
   {
    "group": "door",
    "at": 71.25,
-   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "moving": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "other": "Overflow jar grip fin (6061: tab on the cup, riser at x 117-125, I-section grip block at y -156 to -126, z -65 to -25, for the 2F-85)",
    "gap_mm": 7.0
   },
@@ -4654,7 +4654,7 @@
   {
    "group": "door",
    "at": 43.54,
-   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
    "other": "Door drive: pneumatic rotary actuator on the hinge axis, SMC CRQ2 size 20 class (~1.8 N m at 0.5 MPa, stroke set to 95 deg, meter-out flow controls; envelope 47 x 47 x 42 mm). Passive alternative: McMaster 6597K124 one-way damper, same envelope",
    "gap_mm": 10.552
   },
@@ -4683,7 +4683,7 @@
    "group": "door",
    "at": 0.0,
    "moving": "Door drive shaft and disc (\u00d86 D-shaft keyed into a 6061 disc screwed to the door's left edge)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 12.1
   },
   {
@@ -4711,7 +4711,7 @@
    "group": "door",
    "at": 0.0,
    "moving": "Door O-ring (FKM 75A 1.78 mm cord, vulcanized splice, in a half-dovetail groove)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 13.55
   },
   {
@@ -4773,14 +4773,14 @@
   {
    "group": "door",
    "at": 0.0,
-   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "moving": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
    "gap_mm": 15.0
   },
   {
    "group": "door",
    "at": 0.0,
-   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "moving": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
    "gap_mm": 15.0
   },
@@ -4822,7 +4822,7 @@
   {
    "group": "door",
    "at": 95.0,
-   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 16.264
   },
@@ -4850,7 +4850,7 @@
   {
    "group": "door",
    "at": 51.46,
-   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 17.409
   },
@@ -4927,7 +4927,7 @@
   {
    "group": "door",
    "at": 95.0,
-   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
    "other": "Overflow jar grip fin (6061: tab on the cup, riser at x 117-125, I-section grip block at y -156 to -126, z -65 to -25, for the 2F-85)",
    "gap_mm": 23.59
   },
@@ -4962,7 +4962,7 @@
   {
    "group": "door",
    "at": 7.92,
-   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "moving": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
    "gap_mm": 29.851
   },
@@ -5026,7 +5026,7 @@
    "group": "door",
    "at": 27.71,
    "moving": "Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate on a foot bolted to each ear's front face)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 44.945
   },
   {
@@ -5039,28 +5039,28 @@
   {
    "group": "door",
    "at": 27.71,
-   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 50.823
   },
   {
    "group": "door",
    "at": 71.25,
-   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "moving": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "gap_mm": 52.469
   },
   {
    "group": "door",
    "at": 27.71,
-   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
    "other": "Hinge pins (\u00d85, 316)",
    "gap_mm": 53.476
   },
   {
    "group": "door",
    "at": 95.0,
-   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 55.503
   },
@@ -5074,7 +5074,7 @@
   {
    "group": "door",
    "at": 0.0,
-   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
    "other": "O2 sample line (1/8 in. 316L)",
    "gap_mm": 57.966
   },
@@ -5109,7 +5109,7 @@
   {
    "group": "door",
    "at": 47.5,
-   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "moving": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 72.137
   },
@@ -5137,7 +5137,7 @@
   {
    "group": "door",
    "at": 0.0,
-   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "moving": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
    "gap_mm": 80.0
   },
@@ -5179,16 +5179,23 @@
   {
    "group": "door",
    "at": 95.0,
-   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set >= 0.4 kN)",
+   "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
    "other": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "gap_mm": 118.937
   },
   {
    "group": "door",
    "at": 95.0,
-   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "moving": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 120.893
+  },
+  {
+   "group": "door",
+   "at": 59.38,
+   "moving": "Draw-latch actuators: 2 x \u00d820 compact air cylinders (SMC CJ2/CQ2 class, 157 N at 0.5 MPa) that throw the latch levers",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 122.799
   },
   {
    "group": "door",
@@ -5235,16 +5242,9 @@
   {
    "group": "door",
    "at": 95.0,
-   "moving": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "moving": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 145.736
-  },
-  {
-   "group": "door",
-   "at": 0.0,
-   "moving": "Draw-latch actuators: 2 x \u00d820 compact air cylinders (SMC CJ2/CQ2 class, 157 N at 0.5 MPa) that throw the latch levers",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 148.74
   },
   {
    "group": "door",
@@ -5255,10 +5255,10 @@
   },
   {
    "group": "door",
-   "at": 0.0,
+   "at": 51.46,
    "moving": "Door handle",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 181.364
+   "gap_mm": 169.793
   },
   {
    "group": "door",
@@ -5709,6 +5709,13 @@
    "gap_mm": 218.522
   },
   {
+   "group": "cartridge",
+   "at": 0.0,
+   "moving": "Reservoir M powder",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 240.412
+  },
+  {
    "group": "drawer",
    "at": 0.0,
    "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
@@ -5740,15 +5747,8 @@
    "group": "drawer",
    "at": -60.0,
    "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
-   "other": "Field-stop aperture (\u00d836, passive beam limit)",
+   "other": "Field-stop aperture, M50 insert (\u00d841, passive beam limit; swapped with the module)",
    "gap_mm": 0.3
-  },
-  {
-   "group": "drawer",
-   "at": -120.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
-   "other": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
-   "gap_mm": 1.0
   },
   {
    "group": "drawer",
@@ -5794,9 +5794,16 @@
   },
   {
    "group": "drawer",
+   "at": -120.0,
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
+   "other": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "gap_mm": 2.0
+  },
+  {
+   "group": "drawer",
    "at": -50.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
-   "other": "Field-stop aperture (\u00d836, passive beam limit)",
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
+   "other": "Field-stop aperture, M50 insert (\u00d841, passive beam limit; swapped with the module)",
    "gap_mm": 2.0
   },
   {
@@ -5809,14 +5816,14 @@
   {
    "group": "drawer",
    "at": -50.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
    "other": "Window-flange screws, M4 x 16 316 (6 x McMaster 92290A154)",
    "gap_mm": 3.0
   },
   {
    "group": "drawer",
    "at": -50.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
    "other": "Window-flange helical inserts, M4 x 4 18-8, in the lid (6 x McMaster 91732A649)",
    "gap_mm": 3.0
   },
@@ -5885,20 +5892,6 @@
   },
   {
    "group": "drawer",
-   "at": -120.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
-   "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "gap_mm": 6.0
-  },
-  {
-   "group": "drawer",
-   "at": -120.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
-   "other": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
-   "gap_mm": 6.0
-  },
-  {
-   "group": "drawer",
    "at": -5.0,
    "moving": "Drawer latches: 2 x quarter-turn latch studs (envelope)",
    "other": "Lid screw helical inserts, M5 x 7.5 18-8, in the chamber body (20 x McMaster 91732A261)",
@@ -5906,15 +5899,29 @@
   },
   {
    "group": "drawer",
-   "at": -75.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
+   "at": -120.0,
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
+   "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "gap_mm": 7.0
+  },
+  {
+   "group": "drawer",
+   "at": -120.0,
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
+   "other": "Lid O-ring (FKM 75A, 3.53 mm cord, 25 % squeeze)",
+   "gap_mm": 7.0
+  },
+  {
+   "group": "drawer",
+   "at": -70.0,
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
    "other": "Window flange (6061, two FKM O-ring grooves)",
    "gap_mm": 7.0
   },
   {
    "group": "drawer",
    "at": -55.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
    "other": "Window-flange O-ring (FKM 75A 2-036, face seal on the lid)",
    "gap_mm": 7.0
   },
@@ -5997,38 +6004,38 @@
   },
   {
    "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
+   "gap_mm": 12.0
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
+   "gap_mm": 12.0
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "gap_mm": 12.971
+  },
+  {
+   "group": "drawer",
+   "at": 0.0,
+   "moving": "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
+   "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "gap_mm": 12.971
+  },
+  {
+   "group": "drawer",
    "at": -120.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
    "other": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
-   "gap_mm": 12.0
-  },
-  {
-   "group": "drawer",
-   "at": 0.0,
-   "moving": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
-   "other": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
-   "gap_mm": 12.0
-  },
-  {
-   "group": "drawer",
-   "at": 0.0,
-   "moving": "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
-   "other": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
-   "gap_mm": 12.0
-  },
-  {
-   "group": "drawer",
-   "at": 0.0,
-   "moving": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
-   "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "gap_mm": 12.971
-  },
-  {
-   "group": "drawer",
-   "at": 0.0,
-   "moving": "Drawer latch wing head, right (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
-   "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "gap_mm": 12.971
+   "gap_mm": 13.0
   },
   {
    "group": "drawer",
@@ -6053,13 +6060,6 @@
   },
   {
    "group": "drawer",
-   "at": -65.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
-   "other": "Gas knife (cover-slide purge, 316L)",
-   "gap_mm": 14.0
-  },
-  {
-   "group": "drawer",
    "at": 0.0,
    "moving": "Drawer latch wing head, left (26 mm wing on the quarter-turn stud: the robot turns it 90 deg)",
    "other": "Lid screw helical inserts, M5 x 7.5 18-8, in the chamber body (20 x McMaster 91732A261)",
@@ -6074,24 +6074,38 @@
   },
   {
    "group": "drawer",
-   "at": -105.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
-   "other": "Lid screws, M5 x 25 316 socket head (20 x McMaster 92290A252)",
-   "gap_mm": 14.142
+   "at": -55.0,
+   "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
+   "other": "Window O-ring, lower (FKM 75A 2-031, under the window)",
+   "gap_mm": 14.45
   },
   {
    "group": "drawer",
    "at": -105.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
+   "other": "Lid screws, M5 x 25 316 socket head (20 x McMaster 92290A252)",
+   "gap_mm": 14.542
+  },
+  {
+   "group": "drawer",
+   "at": -65.0,
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
+   "other": "Gas knife (cover-slide purge, 316L)",
+   "gap_mm": 15.0
+  },
+  {
+   "group": "drawer",
+   "at": -105.0,
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
    "other": "Lid screw helical inserts, M5 x 7.5 18-8, in the chamber body (20 x McMaster 91732A261)",
-   "gap_mm": 14.885
+   "gap_mm": 15.673
   },
   {
    "group": "drawer",
    "at": -55.0,
    "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
-   "other": "Window O-ring, lower (FKM 75A 2-031, under the window)",
-   "gap_mm": 15.98
+   "other": "\u00d82 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990)",
+   "gap_mm": 15.77
   },
   {
    "group": "drawer",
@@ -6099,13 +6113,6 @@
    "moving": "Drawer latches: 2 x quarter-turn latch studs (envelope)",
    "other": "Door O-ring (FKM 75A 1.78 mm cord, vulcanized splice, in a half-dovetail groove)",
    "gap_mm": 16.018
-  },
-  {
-   "group": "drawer",
-   "at": -55.0,
-   "moving": "Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)",
-   "other": "\u00d82 in. fused-silica window, 8 mm, AR 1064",
-   "gap_mm": 17.3
   },
   {
    "group": "drawer",
@@ -6117,9 +6124,9 @@
   {
    "group": "drawer",
    "at": -110.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
    "other": "Drawer latch receptacles in the lid (2 x quarter-turn latch)",
-   "gap_mm": 21.101
+   "gap_mm": 21.501
   },
   {
    "group": "drawer",
@@ -6208,9 +6215,9 @@
   {
    "group": "drawer",
    "at": -120.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 154.681
+   "gap_mm": 155.081
   },
   {
    "group": "drawer",
@@ -6222,16 +6229,16 @@
   {
    "group": "drawer",
    "at": 0.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 185.699
+   "gap_mm": 186.588
   },
   {
    "group": "drawer",
    "at": 0.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 189.608
+   "gap_mm": 190.008
   },
   {
    "group": "drawer",
@@ -6306,9 +6313,9 @@
   {
    "group": "drawer",
    "at": -120.0,
-   "moving": "Cover slide (\u00d82 in. x 3 mm fused silica, consumable)",
+   "moving": "Cover slide (\u00d850 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)",
    "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 238.869
+   "gap_mm": 239.036
   },
   {
    "group": "drawer",
@@ -6363,14 +6370,14 @@
    "group": "zstage",
    "at": 0.0,
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "other": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "gap_mm": 1.0
   },
   {
    "group": "zstage",
    "at": 0.0,
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
-   "other": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "other": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "gap_mm": 1.054
   },
   {
@@ -6838,7 +6845,7 @@
   {
    "group": "module",
    "at": 310.5,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 4.0
   },
@@ -6875,6 +6882,13 @@
    "at": 17.25,
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Module-present sensor (inductive M12, under the floor, sees the module flange)",
+   "gap_mm": 4.5
+  },
+  {
+   "group": "module",
+   "at": 34.5,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
    "gap_mm": 4.5
   },
   {
@@ -6957,14 +6971,14 @@
   {
    "group": "module",
    "at": 51.75,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "gap_mm": 6.0
   },
   {
    "group": "module",
    "at": 51.75,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
    "gap_mm": 6.005
   },
@@ -7002,6 +7016,13 @@
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
    "gap_mm": 6.355
+  },
+  {
+   "group": "module",
+   "at": 34.5,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 7.036
   },
   {
    "group": "module",
@@ -7054,13 +7075,6 @@
   },
   {
    "group": "module",
-   "at": 34.5,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 9.0
-  },
-  {
-   "group": "module",
    "at": 86.25,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Overflow port (KF-40, weld stub to 40 mm)",
@@ -7107,13 +7121,6 @@
    "moving": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 11.365
-  },
-  {
-   "group": "module",
-   "at": 34.5,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 11.366
   },
   {
    "group": "module",
@@ -7197,7 +7204,7 @@
    "at": 51.75,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
-   "gap_mm": 12.533
+   "gap_mm": 12.463
   },
   {
    "group": "module",
@@ -7278,6 +7285,13 @@
   },
   {
    "group": "module",
+   "at": 51.75,
+   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 14.322
+  },
+  {
+   "group": "module",
    "at": 138.0,
    "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
@@ -7314,13 +7328,6 @@
   {
    "group": "module",
    "at": 51.75,
-   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 15.251
-  },
-  {
-   "group": "module",
-   "at": 51.75,
    "moving": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "other": "Base plate, process module (MIC-6, 15 mm)",
    "gap_mm": 15.277
@@ -7349,7 +7356,7 @@
   {
    "group": "module",
    "at": 345.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Guard door rail (top + bottom)",
    "gap_mm": 16.0
   },
@@ -7399,7 +7406,7 @@
    "group": "module",
    "at": 276.0,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 18.654
   },
   {
@@ -7469,7 +7476,7 @@
    "group": "module",
    "at": 276.0,
    "moving": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 21.785
   },
   {
@@ -7477,7 +7484,7 @@
    "at": 0.0,
    "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
-   "gap_mm": 22.199
+   "gap_mm": 22.265
   },
   {
    "group": "module",
@@ -7506,6 +7513,13 @@
    "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
    "gap_mm": 23.008
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 23.184
   },
   {
    "group": "module",
@@ -7551,20 +7565,6 @@
   },
   {
    "group": "module",
-   "at": 241.5,
-   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 24.54
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
-   "gap_mm": 24.803
-  },
-  {
-   "group": "module",
    "at": 17.25,
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
    "other": "Z-flange screws, M5 x 12 316, counterbored (4 x McMaster 92290A228)",
@@ -7583,6 +7583,13 @@
    "moving": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
    "other": "Z sensor flag (2 mm steel tab on the carriage's -x side)",
    "gap_mm": 25.395
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 25.412
   },
   {
    "group": "module",
@@ -7646,13 +7653,6 @@
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "other": "Z home and lower-limit sensors (2 x AutomationDirect KSE-AP-3F inductive M8, PNP NO, 3 mm flush, 40 mm long; 1 mm to the flag)",
    "gap_mm": 26.753
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
-   "gap_mm": 26.769
   },
   {
    "group": "module",
@@ -7729,7 +7729,7 @@
    "at": 0.0,
    "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",
-   "gap_mm": 28.588
+   "gap_mm": 28.792
   },
   {
    "group": "module",
@@ -7742,7 +7742,7 @@
    "group": "module",
    "at": 276.0,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
-   "other": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "other": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "gap_mm": 28.881
   },
   {
@@ -7819,7 +7819,7 @@
    "group": "module",
    "at": 276.0,
    "moving": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
-   "other": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "other": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "gap_mm": 31.001
   },
   {
@@ -7833,7 +7833,7 @@
    "group": "module",
    "at": 224.25,
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 31.403
   },
   {
@@ -7943,6 +7943,13 @@
   },
   {
    "group": "module",
+   "at": 345.0,
+   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 34.0
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
    "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
@@ -8027,6 +8034,13 @@
   },
   {
    "group": "module",
+   "at": 172.5,
+   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 36.06
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
@@ -8059,13 +8073,6 @@
    "moving": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "other": "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",
    "gap_mm": 37.205
-  },
-  {
-   "group": "module",
-   "at": 172.5,
-   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 37.229
   },
   {
    "group": "module",
@@ -8218,7 +8225,7 @@
    "group": "module",
    "at": 0.0,
    "moving": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 40.311
   },
   {
@@ -8321,7 +8328,7 @@
   },
   {
    "group": "module",
-   "at": 327.75,
+   "at": 379.5,
    "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Guard door rail (top + bottom)",
    "gap_mm": 46.0
@@ -8414,14 +8421,14 @@
    "group": "module",
    "at": 207.0,
    "moving": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 48.45
   },
   {
    "group": "module",
    "at": 258.75,
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
-   "other": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "other": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "gap_mm": 48.492
   },
   {
@@ -8435,7 +8442,7 @@
    "group": "module",
    "at": 207.0,
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 48.785
   },
   {
@@ -8540,14 +8547,14 @@
    "group": "module",
    "at": 224.25,
    "moving": "Heater block M50 (6061-T6, bayonet socket)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 51.673
   },
   {
    "group": "module",
    "at": 0.0,
    "moving": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
-   "other": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "other": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "gap_mm": 52.47
   },
   {
@@ -8687,7 +8694,7 @@
    "group": "module",
    "at": 207.0,
    "moving": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
-   "other": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "other": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "gap_mm": 59.521
   },
   {
@@ -8701,7 +8708,7 @@
    "group": "module",
    "at": 207.0,
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
-   "other": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "other": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "gap_mm": 59.764
   },
   {
@@ -8722,14 +8729,14 @@
    "group": "module",
    "at": 224.25,
    "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 62.129
   },
   {
    "group": "module",
    "at": 224.25,
    "moving": "Heater block M50 (6061-T6, bayonet socket)",
-   "other": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "other": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "gap_mm": 62.346
   },
   {
@@ -8745,6 +8752,27 @@
    "moving": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "other": "Guard door rail (top + bottom)",
    "gap_mm": 62.7
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 62.951
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 63.043
+  },
+  {
+   "group": "module",
+   "at": 0.0,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 63.129
   },
   {
    "group": "module",
@@ -8769,10 +8797,10 @@
   },
   {
    "group": "module",
-   "at": 0.0,
-   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
-   "gap_mm": 64.17
+   "at": 276.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 64.373
   },
   {
    "group": "module",
@@ -8787,13 +8815,6 @@
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 65.838
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 65.934
   },
   {
    "group": "module",
@@ -8819,16 +8840,9 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
-   "gap_mm": 67.16
-  },
-  {
-   "group": "module",
-   "at": 0.0,
    "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Zero-point release-air line (\u00d84 tube, valve to a union Y to each module)",
-   "gap_mm": 67.77
+   "gap_mm": 66.989
   },
   {
    "group": "module",
@@ -8883,7 +8897,7 @@
    "group": "module",
    "at": 224.25,
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
-   "other": "Door hinge knuckles on the chamber (304 SS)",
+   "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 70.068
   },
   {
@@ -8913,13 +8927,6 @@
    "moving": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; face seal in the floor plate's pad)",
    "gap_mm": 71.558
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 71.717
   },
   {
    "group": "module",
@@ -8953,7 +8960,7 @@
    "group": "module",
    "at": 224.25,
    "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
-   "other": "Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)",
+   "other": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
    "gap_mm": 72.571
   },
   {
@@ -9028,6 +9035,13 @@
   },
   {
    "group": "module",
+   "at": 103.5,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 79.601
+  },
+  {
+   "group": "module",
    "at": 120.75,
    "moving": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
@@ -9077,6 +9091,13 @@
   },
   {
    "group": "module",
+   "at": 120.75,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 81.0
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
@@ -9095,6 +9116,13 @@
    "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 82.519
+  },
+  {
+   "group": "module",
+   "at": 86.25,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 82.684
   },
   {
    "group": "module",
@@ -9133,6 +9161,13 @@
   },
   {
    "group": "module",
+   "at": 120.75,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 83.676
+  },
+  {
+   "group": "module",
    "at": 224.25,
    "moving": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
    "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
@@ -9140,10 +9175,17 @@
   },
   {
    "group": "module",
-   "at": 103.5,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "at": 138.0,
+   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 84.095
+   "gap_mm": 84.992
+  },
+  {
+   "group": "module",
+   "at": 276.0,
+   "moving": "Striker disc M50 (416 stainless, on the pot magnet)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 85.149
   },
   {
    "group": "module",
@@ -9154,24 +9196,10 @@
   },
   {
    "group": "module",
-   "at": 120.75,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 85.5
-  },
-  {
-   "group": "module",
    "at": 241.5,
    "moving": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 85.585
-  },
-  {
-   "group": "module",
-   "at": 103.5,
-   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 86.28
   },
   {
    "group": "module",
@@ -9182,17 +9210,17 @@
   },
   {
    "group": "module",
-   "at": 86.25,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 86.982
-  },
-  {
-   "group": "module",
    "at": 0.0,
    "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
    "gap_mm": 87.091
+  },
+  {
+   "group": "module",
+   "at": 276.0,
+   "moving": "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 87.162
   },
   {
    "group": "module",
@@ -9210,10 +9238,10 @@
   },
   {
    "group": "module",
-   "at": 120.75,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "at": 155.25,
+   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 87.999
+   "gap_mm": 88.511
   },
   {
    "group": "module",
@@ -9221,13 +9249,6 @@
    "moving": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
    "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
    "gap_mm": 89.168
-  },
-  {
-   "group": "module",
-   "at": 120.75,
-   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 89.785
   },
   {
    "group": "module",
@@ -9459,20 +9480,6 @@
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 101.204
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "Striker disc M50 (416 stainless, on the pot magnet)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 101.398
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "Striker screws M50, M3 x 10 316 flat head (flush on the magnet face) (3 x McMaster 93395A204)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 102.906
   },
   {
    "group": "module",
@@ -9889,6 +9896,20 @@
   },
   {
    "group": "module",
+   "at": 207.0,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 139.5
+  },
+  {
+   "group": "module",
+   "at": 327.75,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 139.5
+  },
+  {
+   "group": "module",
    "at": 172.5,
    "moving": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
@@ -9938,6 +9959,20 @@
   },
   {
    "group": "module",
+   "at": 224.25,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
+   "gap_mm": 142.036
+  },
+  {
+   "group": "module",
+   "at": 327.75,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 142.036
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
@@ -9959,20 +9994,6 @@
   },
   {
    "group": "module",
-   "at": 327.75,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 144.0
-  },
-  {
-   "group": "module",
-   "at": 207.0,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 144.0
-  },
-  {
-   "group": "module",
    "at": 0.0,
    "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
    "other": "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
@@ -9980,31 +10001,17 @@
   },
   {
    "group": "module",
-   "at": 155.25,
+   "at": 189.75,
    "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 146.276
+   "gap_mm": 144.988
   },
   {
    "group": "module",
-   "at": 327.75,
+   "at": 362.25,
    "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 146.325
-  },
-  {
-   "group": "module",
-   "at": 224.25,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 146.366
-  },
-  {
-   "group": "module",
-   "at": 327.75,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
-   "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 146.366
+   "gap_mm": 144.998
   },
   {
    "group": "module",
@@ -10232,6 +10239,13 @@
   },
   {
    "group": "module",
+   "at": 172.5,
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
+   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 164.506
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
@@ -10257,6 +10271,13 @@
    "moving": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 167.016
+  },
+  {
+   "group": "module",
+   "at": 155.25,
+   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
+   "gap_mm": 167.112
   },
   {
    "group": "module",
@@ -10316,13 +10337,6 @@
   },
   {
    "group": "module",
-   "at": 172.5,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
-   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 169.006
-  },
-  {
-   "group": "module",
    "at": 155.25,
    "moving": "Heater-block helical inserts M50, M3 18-8 (3 x McMaster 91732A647)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
@@ -10351,10 +10365,10 @@
   },
   {
    "group": "module",
-   "at": 155.25,
-   "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
+   "at": 189.75,
+   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
    "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 171.44
+   "gap_mm": 171.997
   },
   {
    "group": "module",
@@ -10369,13 +10383,6 @@
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 172.109
-  },
-  {
-   "group": "module",
-   "at": 189.75,
-   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 173.217
   },
   {
    "group": "module",
@@ -10464,16 +10471,16 @@
   {
    "group": "module",
    "at": 241.5,
-   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 237.101
+   "gap_mm": 232.706
   },
   {
    "group": "module",
    "at": 241.5,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 240.086
+   "gap_mm": 235.869
   },
   {
    "group": "module",
@@ -10481,13 +10488,6 @@
    "moving": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
    "gap_mm": 246.812
-  },
-  {
-   "group": "module",
-   "at": 189.75,
-   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 248.894
   },
   {
    "group": "module",
@@ -10502,6 +10502,13 @@
    "moving": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
    "gap_mm": 255.206
+  },
+  {
+   "group": "module",
+   "at": 189.75,
+   "moving": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
+   "gap_mm": 257.818
   },
   {
    "group": "module",
@@ -10547,11 +10554,6 @@
    "why": "fiber connector (QBH) in the collimator"
   },
   {
-   "a": "Dry scroll pump (\u2264 0.3 mbar, 6 m3/h class)",
-   "b": "Pump exhaust to the dock",
-   "why": "hose on the exhaust port"
-  },
-  {
    "a": "Fiber laser source, 500 W single-mode, IPG YLR-500-U3-SM-AC (4U)",
    "b": "Process fiber (armoured, \u2265 100 mm bend radius)",
    "why": "fiber leaves the laser's front panel"
@@ -10587,22 +10589,17 @@
    "why": "fiber through a guarded bulkhead in the guard's side panel"
   },
   {
-   "a": "Pump inlet (KF-25)",
-   "b": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "why": "hose end clamped onto its KF-25 flange"
-  },
-  {
    "a": "Recoater carriage block (6061)",
    "b": "Recoater position magnet (NdFeB \u00d812 x 3, bonded into a pocket in the carriage block's back face)",
    "why": "magnet bonded into a pocket in the block's back face"
   },
   {
-   "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "b": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "why": "feedthroughs welded into the rod-end block's bores"
   },
   {
-   "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 72 x 16 mm face to the front",
+   "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "b": "Striker disc M50 (416 stainless, on the pot magnet)",
    "why": "striker screwed to the end cap"
   },
@@ -10647,5 +10644,5 @@
    "why": "tube in the valve's push-in port"
   }
  ],
- "runtime_s": 1214.9
+ "runtime_s": 1013.9
 }
