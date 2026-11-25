@@ -601,7 +601,7 @@ def fig_particles(lands, paths):
 def write_summary(res, before=None, path=None, src="cfd.json"):
     """cfd_summary.md: the key numbers of every case side by side (all from the json). With `before` (an earlier cfd.json),
     each of its cases sits next to the new case of the same name, so the table reads before -> after."""
-    order = ("coarse", "coarse_right", "fix140", "fix200", "fix200_noup", "fine", "fine_fix200")
+    order = ("coarse", "coarse_right", "fix140", "fix200", "fix200_noup", "fix200_purge", "fix200_wide", "fine", "fine_fix200", "fine_noup")
     new = [k for k in order if k in res] + [k for k in res if k not in order and k != "threshold_shao_lu"]
     R, names = {}, []
     tb, tn = ("2026-11-20", "round 6") if before else ("", "")
@@ -637,6 +637,7 @@ def write_summary(res, before=None, path=None, src="cfd.json"):
              "(fresh powder before it is spread); '-' = not computed in that run.", "",
              "| | " + " | ".join(names) + " |", "|---|" + "---|" * len(names),
              row("outlet boot / port at x (mm)", lambda r: f"{r['outlet_boot_x_mm']:+.0f}"),
+             row("floor slot width (mm)", lambda r: f"{r.get('floor_slot_mm', 8.0):g}"),
              row("cells / iterations", lambda r: f"{r['cells']/1000:.0f}k / {r['iterations']:.0f}"),
              row("bed slot + upper slot (+ slide purge) flow (L/min)", lambda r: f"{r['q_lpm']:g} + {r.get('upper_slot_lpm', 0):g}" + (f" + {r['slide_purge_lpm']:g}" if r.get('slide_purge_lpm') else ""))]
     for z in (1, 3, 10):
@@ -758,6 +759,7 @@ def main():
         for k, v in before.items():
             if k != "threshold_shao_lu":
                 v.setdefault("outlet_boot_x_mm", 86.0)
+                v.setdefault("floor_slot_mm", 8.0)
     write_summary(res, before, src=jpath.name)
     print("wrote", OUT)
 

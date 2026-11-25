@@ -29,29 +29,35 @@ on the model at commit 4b2232e. Nothing has been built or measured.
 
 ### 0.1 Short answer
 
-1. **The outlet move barely changes the flow over the plate. It does send the chamber's upper vortex through the cover
-   slide's recess.**
-   - The comparison is the drawn chamber at 115 L/min on the coarse mesh, against a control run. The control is the
-     same model with the boot mirrored back to the right.
-   - **Over the Ø75 plate at 3 mm:** 1.61 m/s mean (1.27–2.10), against 1.53 (1.16–2.03). None of the plate reaches
-     2.5 m/s, as before.
-   - **The floor slot:** it now drains 84 % of the flow through its left half, next to the dose zone. Before, 84 % went
-     through the right half.
-   - **Under the slide (z = 121 mm):** the gas moves at 0.46 m/s, against 0.11 m/s.
-     - With the outlet at the right, the recess sat between two slow cells.
+1. **The outlet move changes little over the plate. Above it, the vortex now carries more of the plume under the
+   window.**
+   - **What is compared:** the drawn chamber at 115 L/min.
+     - On the coarse mesh, against a control run: the same model with the boot mirrored back to the right.
+     - On the fine mesh, against the 2026-11-20 fine run (no fine control was run).
+   - **Over the Ø75 plate at 3 mm:**
+     - Coarse: 1.61 m/s mean (1.27–2.10), against 1.53 (1.16–2.03).
+     - Fine: 1.79 m/s (1.40–2.35), against 1.52 (1.20–1.99).
+     - None of the plate reaches 2.5 m/s on either mesh.
+   - **The floor slot:** it now drains 83–84 % of the flow through its left half, next to the dose zone. Before, 84–85 %
+     went through the right half.
+   - **Under the slide (z = 121 mm):** 0.46 m/s against 0.11 m/s on the coarse mesh, and 0.31 against 0.22 m/s on the
+     fine mesh. In all four runs the gas there moves toward the back wall.
+     - With the outlet at the right (coarse control), the recess sat between two slow cells.
      - Now the jet's right part has little suction under it. It climbs the door on the open right side of the chamber
-       and runs back diagonally along the ceiling to the back-left corner, through the recess (z = 115 mm plane in the
-       figures).
+       and runs back diagonally along the ceiling toward the back-left corner, across the recess (z = 115 mm plane, both
+       meshes).
      - The left side doesn't do the same when the outlet is at the right. Most likely that's because the dose chute
        (z 37–120 mm) and the parked recoater stand there and break up the return flow (read off the planes, not tested).
-   - **Condensate reaches the slide recess about 9× as often, and passes under the window 4–8× as often.**
-     - Of the tracers released 10–30 mm above the plate, 6.2 % enter the slide recess (control: 0.7 %), and 22 % pass
-       under the window (5 %).
-     - Of those released 1–10 mm up, 1.3 % enter the recess (0.1 %, 2 of 1,500 tracers) and 6 % pass under the window
-       (0.8 %).
-   - **Pressure drop:** the chamber's rises from 466 to 526 Pa. The extra loss is where the channel turns into the
-     link. The channel runs 10 mm past the slot's right end but only 1 mm past its left end, so the left link overlaps
-     it by 3 mm, where the right link overlapped it by 12 mm.
+   - **More of the plume passes under the window:** 22 % against 5 % on the coarse mesh, and 14 % against 8 % on the
+     fine mesh (tracers released 10–30 mm above the plate).
+   - **How much reaches the slide recess depends on the mesh.**
+     - Coarse: 6.2 % of the 10–30 mm tracers, against 0.7 % for the control.
+     - Fine: 2.1 %, against 1.9 % on 2026-11-20.
+     - The upper vortex is the mesh-sensitive, wandering part of this flow (§4, §8). Read these as "no better, possibly
+       a few times worse".
+   - **Pressure drop:** 526 against 466 Pa (coarse) and 525 against 473 Pa (fine). The extra loss is where the channel
+     turns into the link. The channel runs 10 mm past the slot's right end but only 1 mm past its left end, so the left
+     link overlaps it by 3 mm, where the right link overlapped it by 12 mm.
    - **The control run reproduces the 2026-11-20 run:** 466 against 467 Pa, the same 84 % split, and 0.11 against
      0.16 m/s under the slide. So the changes above come from the move, not from the new scripts.
    - At 1–3 mm the plate's speeds are 5–10 % higher than on 2026-11-20 in both round-6 runs, so that isn't the outlet.
@@ -60,15 +66,16 @@ on the model at commit 4b2232e. Nothing has been built or measured.
      length, against 1.05–2.82.
 2. **The dose zone sits in the edge of the drawn jet, whichever end drains.**
    - The bare slot's jet fans out to x ≈ ±100 mm by the door. So the floor where the chute drops fresh powder
-     (x −96…−60) sees 1.4 m/s at 3 mm.
-   - The shear there is 0.04 Pa on average and 0.09 Pa at most. 0.09 Pa is inside the 63 µm pick-up band (§3.4).
-   - The dose falls from the chute's bottom (z = 37 mm) through 1.0 m/s of cross-flow, 1.9 m/s at most.
-   - All of these are the same with the outlet at either end.
+     (x −96…−60) sees 1.2–1.4 m/s at 3 mm (fine and coarse mesh).
+   - The shear there is 0.02–0.04 Pa on average and 0.06–0.09 Pa at most. 0.09 Pa is inside the 63 µm pick-up band
+     (§3.4).
+   - The dose falls from the chute's bottom (z = 37 mm) through 0.6–1.0 m/s of cross-flow on average, 1.9 m/s at most.
+   - On the coarse mesh all of these are the same with the outlet at either end.
    - With the outlet at the left, more condensate passes below 10 mm over the dose zone: 3.3 / 11.2 % of the two
-     releases, against 1.2 / 6.5 %.
+     releases, against 1.2 / 6.5 % (coarse; fine 4.0 / 12.3 %).
 3. **Spatter:**
-   - 50 µm spatter now goes into the outlet slot more often (22 %, against 9 %), and lands back on the plate less
-     (4 %, against 14 %).
+   - 50 µm spatter now goes into the outlet slot more often (22–31 %, against 9–12 %), and lands back on the plate
+     less (3–4 %, against 10–14 %), on both meshes.
    - 100–150 µm spatter flies ballistically, as before, with the outlet at either end:
      - 2 % and 10 % of it hits the slide's footprint;
      - 1.5–5.5 % lands on the dose zone;
@@ -114,7 +121,7 @@ on the model at commit 4b2232e. Nothing has been built or measured.
 5. **What changes in the recommendation (§7).**
    - **The flow over the plate holds, with the outlet at either end.** Perforated plates in both slots, the 35 mm
      channel, and 140–200 L/min through the bed slot (items 1, 2 and 5). The outlet half (the floor-slot screen and the
-     wider channel) matters more now: as drawn, the left-end outlet sends about 9× the condensate into the slide recess.
+     wider channel) matters more now: as drawn, the left-end outlet puts more of the plume under the window (item 1).
    - **Keep the upper slot (item 4 is reversed):** 100 × 4 mm through the back wall, 30–40 L/min, blowing toward the
      door.
      - With the screened layout at 200 L/min it is the only option tried that keeps the slide clean: 0.2 % of the
@@ -315,7 +322,26 @@ Bottom right: the screen in the floor slot evens out its suction.*
 
 ⟨TABLE-FINE⟩
 
-⟨FINE-TEXT⟩
+- **As drawn**, the fine mesh keeps the coarse picture over the plate and at the outlet.
+  - 1.79 m/s mean at 3 mm over Ø75 (coarse 1.61), none of it at 2.5 m/s.
+  - 83 % of the suction goes through the slot's left half, and the chamber costs 525 Pa.
+  - The fine mesh holds the jet tighter at its upstream edge, as on 2026-11-20 (§4).
+- **Above the jet the two meshes differ.** On the fine mesh a cell sits over the recess. The gas under the slide is
+  slower (0.31 against 0.46 m/s), and fewer tracers reach the recess (2.1 % against 6.2 %). This is item 1's "depends
+  on the mesh".
+- **The fixed layout with the upper slot** is within 1–4 % of the coarse mesh over the plate and in pressure drop
+  (item 4).
+- ⟨FINE-NOUP⟩
+
+![Mesh check, as drawn](analysis/out/cfd/profiles_mesh_check_r6.png)
+
+*As drawn, outlet at the left end, fine (blue) against coarse (orange), laid out as §4's figure. Right: the outlet slot's
+suction now peaks at its left end on both meshes.*
+
+![Mesh check, fixed layout](analysis/out/cfd/profiles_mesh_check_fix200_r6.png)
+
+*The fixed layout at 200 + 40 L/min, fine against coarse. At 3 and 10 mm the two meshes agree over the plate; at 1 mm
+the fine mesh is slower, nearer the wall.*
 
 ### 0.7 Not done in this round
 
