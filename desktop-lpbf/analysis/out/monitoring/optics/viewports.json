@@ -13,6 +13,8 @@
    "dist_mm": 161.34435224078965,
    "elevation_deg": 12.892660960939805,
    "window_tilt_deg": 14.788169647893747,
+   "face_tilt_deg": 14.788169647893747,
+   "seat": "on the wall's face",
    "window": {
     "d": 38.1,
     "t": 5.0,
@@ -50,6 +52,8 @@
    "dist_mm": 169.0295832095672,
    "elevation_deg": 8.50542785605438,
    "window_tilt_deg": 48.952097366655195,
+   "face_tilt_deg": 48.952097366655195,
+   "seat": "on the wall's face",
    "window": {
     "d": 25.4,
     "t": 3.0,
@@ -84,6 +88,8 @@
    "dist_mm": 168.80758276807353,
    "elevation_deg": 53.67317404787977,
    "window_tilt_deg": 36.32682595212023,
+   "face_tilt_deg": 36.32682595212023,
+   "seat": "on the wall's face",
    "window": {
     "d": 25.4,
     "t": 3.0,
@@ -1075,6 +1081,10 @@
    "in_glint_cone": false
   }
  ],
+ "working_distance_mm": {
+  "LW": 176.34435224078965,
+  "LP": 196.80758276807353
+ },
  "light_power": [
   {
    "exposure_us": 10.0,

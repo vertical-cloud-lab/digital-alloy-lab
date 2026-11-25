@@ -66,8 +66,9 @@ Re-run: `python ftheta.py --reuse` (2 min; without `--reuse` it re-optimises the
 9. **Every camera needs OD ≥ 8 at 1070 nm; the layer camera has OD 5.1.** 0.1–0.4 W of diffuse 1070 nm reaches a 12.5 mm
    camera pupil at the ports, and a curved pool can glint up to ~1.4 W into the steep ones (§5). A FESH1000 behind each
    bandpass gives OD > 11. Add one ($169.26) behind the layer camera's FESH0950 before filming during lasing.
-10. **Seat the LP window square to its line of sight.** On the lid's top face it is tilted 36° to the view. That gives
-   0.67 mm of astigmatism, ~1.5 px of blur at f/5.6. The LW window's 14.8° tilt costs only 5 µm.
+10. **Seat each window square to its line of sight.** On the lid's top face the LP window is tilted 36° to the view: 0.67 mm
+    of astigmatism, ~1.5 px of blur at f/5.6. The LW window's 14.8° tilt costs only 5 µm. Worker C's port design (its
+    monitoring_spec, not yet merged) already seats every window on a boss square to the axis, which removes both.
 11. **Most 50 mm and 75 mm C-mount lenses don't focus at 176–197 mm.** The Kowa LM50JC10M (minimum object distance 100 mm) and
      Edmund's 35 mm #67-716 (165 mm) do. The 75 mm ones need ~15 mm of extension tube.
 12. **By-product for optics.md §1.4: k ≈ 0.48–0.50 as drawn.** All three representative lenses give the same chief-ray ratio
@@ -325,7 +326,15 @@ change it by ≤ 18 %. Full tables: [`radiometry.md`](../analysis/out/monitoring
 
 ## 4. Side camera at LW and steep camera at LP
 
-**Geometry** (monitoring_spec, `viewports.py`):
+**Geometry** (monitoring_spec as merged here, `viewports.py`). Worker C's port design, in its worktree and not yet merged,
+changes three things that `viewports.py` reads at run time:
+- each window sits on a boss end face square to its line of sight, so no tilt and no astigmatism;
+- LP moves to (0, −80, 136) at 59.5°;
+- the lens fronts sit 34 mm (LW) and 31 mm (LP) farther out along the axis, for working distances of 210 and 191 mm.
+
+With C's spec the Chronos + 50 mm at LW gives 32 µm/px across (it was 25). The IMX296 + 50 mm at LP gives 9.7 µm/px. LP's
+1070 nm exposure rises a little: 0.39 W/cm² diffuse at the window, and a 1.5 W glint bound into the pupil. Re-run
+`viewports.py` after the merge; the tables below are for the spec as merged.
 
 | Port | Centre | To plate centre | Elevation | Window tilt to the view | Window + slide | Astigmatism / blur at NA 0.035 | Ghost offset |
 |---|---|---:|---:|---:|---|---|---:|
