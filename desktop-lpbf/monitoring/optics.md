@@ -186,7 +186,9 @@ more FESH1000s), plus the unpriced fourth cube (~$600 for a Ø1 in. DMLP/DMSP-se
 - **Liquid:** a Drude model of liquid Al built from its measured DC resistivity (24.2 µΩ·cm at 933 K, Desai et al. 1984) and
   density (Assael et al. 2006). It gives 0.089 at 1 µm at the melting point, rising to 0.15 at 2,700 K, and falls 2–3 %
   from 700 to 900 nm. It is scaled to 0.12 at 1 µm (the midpoint of Edison's 0.10–0.15 for clean liquid Al) and checked at
-  0.20 (Edison's effective LPBF value).
+  0.20 (Edison's effective LPBF value). Krishnan & Nordine (1993) measured liquid Al's optical constants at 1.2–3.5 eV
+  (354–1,033 nm) by ellipsometry; their paper wasn't reachable here (APS returned 403), so the Drude curve hasn't been checked
+  against it.
 - **Solid:** grey ε = 0.2.
 
 It is collected through NA 0.0375 (the 12 mm design beam), then through:
@@ -431,9 +433,13 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
 - A. Kramida, Yu. Ralchenko, J. Reader and NIST ASD Team, NIST Atomic Spectra Database (v5.12), https://physics.nist.gov/asd,
   line lists fetched 2026-11-25T06:44Z.
 - I. H. Malitson, JOSA 55, 1205 (1965), fused silica; SCHOTT data sheets (N-BK7, N-SF11).
-- P. D. Desai, H. M. James, C. Y. Ho, "Electrical resistivity of aluminum and manganese", J. Phys. Chem. Ref. Data 13, 1131 (1984).
+- P. D. Desai, H. M. James, C. Y. Ho, "Electrical resistivity of aluminum and manganese", J. Phys. Chem. Ref. Data 13, 1131 (1984),
+  https://doi.org/10.1063/1.555725 (24.2 µΩ·cm at the melting point, as commonly quoted from it; not re-read here, and the
+  slope above it is approximate).
 - M. J. Assael et al., "Reference data for the density and viscosity of liquid aluminum and liquid iron", J. Phys. Chem. Ref.
-  Data 35, 285 (2006).
+  Data 35, 285 (2006), https://doi.org/10.1063/1.2149380 (2377 − 0.311 (T − 933) kg/m³ as quoted; not re-read here).
+- S. Krishnan, P. C. Nordine, "Optical properties of liquid aluminum in the energy range 1.2–3.5 eV", Phys. Rev. B 47, 11780
+  (1993), https://doi.org/10.1103/PhysRevB.47.11780 (title and pages checked on Crossref; not read).
 - T. W. Eagar, N.-S. Tsai, "Temperature fields produced by traveling distributed heat sources", Weld. J. 62, 346s (1983).
 - P. A. Hooper, "Melt pool temperature and cooling rates in laser powder bed fusion", Addit. Manuf. 22, 548 (2018),
   https://doi.org/10.1016/j.addma.2018.05.032 (via Edison r8).

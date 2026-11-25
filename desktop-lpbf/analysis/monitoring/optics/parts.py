@@ -240,7 +240,11 @@ def main():
     cols = ["id", "group", "item", "part_number", "vendor", "qty", "unit_usd", "line_usd", "price_basis", "url", "fetched_utc", "notes"]
     rows = []
     tot = {}
+    # option rows carry the quantity needed if that option is chosen (their group ends in "option"; totals are per group)
+    if_chosen = {"FELH1250": 2, "FESH1000": 2}
     for i, (g, item, pn, ven, q, u, basis, url, t, note) in enumerate(PARTS, 1):
+        if g.endswith("option"):
+            q = if_chosen.get(pn, 1)
         line = None if u is None else round(q * u, 2)
         rows.append(dict(id=f"MO{i}", group=g, item=item, part_number=pn, vendor=ven, qty=q, unit_usd="" if u is None else round(u, 2),
                          line_usd="" if line is None else line, price_basis=basis, url=url, fetched_utc=t, notes=note))
