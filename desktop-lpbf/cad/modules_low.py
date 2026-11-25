@@ -344,9 +344,10 @@ def add_zstage(h, add, step=3):
     az0, az1 = car_lo - 3.0, car_hi + 3.0
     zg = dict(group="zstage")
     sx, sy = ZSERVO["x"], ZSERVO["y"]
-    # 108 (was 100) deep in y so two of its four counterbored M5 screws (joints.py) sit behind the bracket, reachable from below;
-    # x -40..48 since round 6 (was -40..100: it carried the servo at x 64)
-    add("Z mounting flange (bolted under the floor)", h.box(-40, 48, 60, 108, zf - 10, zf), C["alu"], step, (0, 120, 0), mat="al6061", bom="M3")
+    # 108 (was 100) deep in y. Round 6: x -45..48 (was -40..100: it carried the servo at x 64). Its four counterbored M5 screws (joints.py)
+    # sit either side of the 60 mm bracket, at x -37 and x 40, so each head comes straight down past the bracket (>= 2.75 mm) when undone
+    # (operations.md A2.36: at x -33 the two left heads were 1.25 mm under the widened bracket)
+    add("Z mounting flange (bolted under the floor)", h.box(-45, 48, 60, 108, zf - 10, zf), C["alu"], step, (0, 120, 0), mat="al6061", bom="M3")
     add("Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)", h.box(ax0, ax1, ay0, ay1, az0, az1), C["steel"], step,
         (0, 160, 0), mat="steel", mass_kg=1.4, bom="M3", mcm="ACT_Z")
     # the bracket and belt housing run back from the actuator to the servo (2:1 belt, y 80 to y 130), 60 wide, cantilevered 52 mm behind
