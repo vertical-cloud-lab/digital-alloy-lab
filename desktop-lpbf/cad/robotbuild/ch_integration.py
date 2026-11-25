@@ -15,8 +15,8 @@ chapter 5, and every one of them is a person's:
   T04 KF-25 bellows, the vacuum valve, the argon and O2 lines: a person (hoses and wing-nut clamps);
   T05 the tray dock and the umbilicals: a person;
   T06 the leak check: the machine pumps down and holds, then the rate of rise (seals.md section 7).
-The two arms stay parked at the VLM's face (PR 318's park position, 240 mm in front of it): none of T01-T06 is planned
-for them, so no arm moves here. Times (proc_s) are estimates for a person with the lift and are shown time-lapsed; the
+The two arms stay parked at the VLM's face beside the opening (240 mm in front of it, as PR 318 parks them): none of
+T01-T06 is planned for them, so no arm moves here. Times (proc_s) are estimates for a person with the lift and are shown time-lapsed; the
 leak check's curve is the expected one (seals.md: pump-down to 1 mbar in about a minute, rise about 8e-4 mbar/min), not
 a measurement.
 """
@@ -176,7 +176,7 @@ def main():
     sc = HL.pvscene.PVScene(pl)
     sc.add("floor", pv.Plane(center=(0.0, 0.0, -1.0), i_size=16000.0, j_size=16000.0), common.FLOOR, specular=0.0)
     for k, (nm, m, col) in enumerate(vlm_meshes()):
-        sc.add(f"{nm}/{k}", m, col, specular=0.15)
+        sc.add(f"{nm}/{k}", m, col, specular=0.15, ambient=0.45 if col == "#e3e6ea" else 0.22)
     Z0 = TRAY_FLOOR - (-212.0)                           # machine z -> bay z (lpbf_low.Z_TRAY = -212)
     groups = {}
     ex = {}
@@ -213,7 +213,7 @@ def main():
         sc.gmat["lift"] = T((x, y, 0.0))
     # the robots, parked at the VLM face (PR 318: arm base 240 mm in front of it)
     import cell2 as K
-    for tag, x in (("A", -1350.0), ("B", 1350.0)):
+    for tag, x in (("A", -2550.0), ("B", 2550.0)):
         arm = K.ArmT(tag, x, "front")                    # both on the VLM's face, the arm towards it
         arm.move_base(x)
         arm.q = arm.park_q()
@@ -266,7 +266,7 @@ def main():
         frame([lerp(c1[0], c2[0], u), lerp(c1[1], c2[1], u), (0, 0, 1)],
               "T01: the 84 kg process module to the VLM tray: a person and a lift table",
               "84 kg is 3.4 times two UR12e payloads. Kardex tray 2450 x 864 mm, floor 857 mm up; both arms parked "
-              "at the VLM face (sequence.py: T01-T05 are person steps)",
+              "beside the opening (sequence.py: T01-T05 are person steps)",
               ["person"], "T01", proc_s=0.0, labels=[("VLM tray, 857 mm", (900.0, -300.0, TRAY_FLOOR)),
                                                                    ("lift table", (xm + 300.0, ly - 200.0, LIFT["lo"]))])
     # 2. up to the tray's height, then pushed onto it

@@ -58,6 +58,7 @@ BIG = [
     ("pump", "Dry scroll pump", ["G2"], "Dry scroll vacuum pump"),
     ("o2", "Trace O2 analyzer", ["G6", "G9"], "Trace O2 analyzer + dew-point sensor"),
     ("blower", "Sealed side-channel blower", ["G4"], "Recirculation blower"),
+    ("guardswitch", "Guard-position switch IDEC", ["S2"], "Guard-position switch (IDEC HS6B-12B05)"),
 ]
 # BOM line -> the kit category its cost is shown under (provisional hud only; X1, the machining, is left out: the
 # robot shop makes those parts in chapters 30-32)
@@ -205,6 +206,10 @@ def adapt(raw):
                                lead_new=ln, lead_used=lu, lead_note=hudx.get("lead_new") or tn,
                                used_note=(hudx.get("lead_used") if ub is not None else "") or tu,
                                note=x.get("new_src") or ""))
+    out["lines"] = {line: dict(short=short(line, v.get("item")), new=_days_to_wk(v.get("days_new")),
+                               used=_days_to_wk(v.get("days_used")) if v.get("days_used") else None,
+                               short_new=v.get("short_new") or "", short_used=v.get("short_used") or "")
+                    for line, v in lines.items()}
     if lines:
         for line, v in lines.items():
             new = _days_to_wk(v.get("days_new"))
@@ -370,6 +375,21 @@ def write_meta():
                      lead_new=b["lead_new"], lead_used=b["lead_used"], hl=(b["key"] == hl_key)) for b in its[:4]]
 
     big_of = {b[0]: b[2][0] for b in BIG}                    # 3-D close-up key -> hud item key (its BOM id)
+    lines = H.get("lines") or {}
+    for key, match, ids, label in BIG:                       # close-ups that are not hud items: a lead-time risk
+        i = ids[0]
+        if i in big:
+            continue
+        risk = next((r for r in H.get("risks") or [] if r.get("line") == i), None)
+        ln = lines.get(i) or {}
+        if risk is None and not ln:
+            continue
+        usd = float(risk["usd"]) if risk and risk.get("usd") else None
+        big[i] = dict(key=i, name=(risk or {}).get("part") or label, short=ln.get("short") or short(i, label), bom=[i],
+                      cat=_cat_of(key), new=[usd, usd] if usd else None, used=None, used_label="used",
+                      lead_new=ln.get("new"), lead_used=ln.get("used"),
+                      lead_note=(risk or {}).get("stated") or ln.get("short_new", ""),
+                      used_note=(risk or {}).get("action") or "", note="")
     out, seen = [], {}
     for m in rows:
         sh = m.get("shot") or {}
@@ -431,7 +451,7 @@ def _cat_of(key):
     """The kit category a big item is found under on the table (kit_table's slot category)."""
     return dict(laser="optics", galvo="optics", ftheta="optics", collimator="optics", shutter="optics",
                 controller="elec", ups="elec", safety="elec", zeropoint="elec", pump="gas", o2="gas",
-                blower="gas").get(key)
+                blower="gas", guardswitch="elec").get(key)
 
 
 def _m(v):
