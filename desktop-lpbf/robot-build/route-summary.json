@@ -1,0 +1,558 @@
+{
+ "generated_by": "desktop-lpbf/analysis/route/route_calcs.py",
+ "note": "manufacturing-route.md (round 7); estimates labelled there",
+ "hours": {
+  "total_4th": 287.3,
+  "cam": 132.1,
+  "setups": 98.6,
+  "cutting": 33.2,
+  "deburr_inspect": 23.2,
+  "parts": 57,
+  "chamber": {
+   "frame_floor_h": 24.9,
+   "frame_floor_pct": 8.7,
+   "shell_h": 36.3,
+   "shell_pct": 12.6,
+   "module_body_h": 7.2,
+   "shell_plus_module_body_h": 43.5,
+   "shell_plus_module_body_pct": 15.1,
+   "cutting_h_frame_floor": 7.43
+  },
+  "split": {
+   "one_off_cam": 132.1,
+   "per_batch_setups": 98.6,
+   "per_machine_run_deburr": 56.4,
+   "one_off_cam_pct": 46.0,
+   "per_batch_setups_pct": 34.3,
+   "per_machine_run_deburr_pct": 19.6
+  },
+  "fixed_overhead_h": 253.9,
+  "small_parts": {
+   "n": 25,
+   "h": 89.7,
+   "cutting_h": 2.7
+  },
+  "second_machine_later_h": 155.0,
+  "two_machines_together_h": 343.7,
+  "top10": [
+   {
+    "part": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor ",
+    "group": "Chamber shell",
+    "total": 16.2,
+    "cam": 5.7,
+    "setup": 4.5,
+    "run": 5.05,
+    "deburr": 1.0
+   },
+   {
+    "part": "Base plate, process module (MIC-6, 15 mm)",
+    "group": "Base, guard, aids",
+    "total": 8.8,
+    "cam": 2.1,
+    "setup": 2.5,
+    "run": 3.97,
+    "deburr": 0.25
+   },
+   {
+    "part": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module po",
+    "group": "Chamber shell",
+    "total": 8.7,
+    "cam": 2.8,
+    "setup": 2.5,
+    "run": 2.38,
+    "deburr": 1.0
+   },
+   {
+    "part": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
+    "group": "Build module",
+    "total": 8.6,
+    "cam": 5.2,
+    "setup": 3.0,
+    "run": 0.12,
+    "deburr": 0.25
+   },
+   {
+    "part": "Optics bridge (6061, 25 mm)",
+    "group": "Optics",
+    "total": 8.2,
+    "cam": 1.9,
+    "setup": 2.5,
+    "run": 3.53,
+    "deburr": 0.25
+   },
+   {
+    "part": "Base plate, gas module (MIC-6, 15 mm)",
+    "group": "Base, guard, aids",
+    "total": 7.5,
+    "cam": 1.8,
+    "setup": 2.5,
+    "run": 2.97,
+    "deburr": 0.25
+   },
+   {
+    "part": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom c",
+    "group": "Build module",
+    "total": 7.2,
+    "cam": 4.1,
+    "setup": 1.5,
+    "run": 0.58,
+    "deburr": 1.0
+   },
+   {
+    "part": "Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. ",
+    "group": "Chamber fittings",
+    "total": 7.1,
+    "cam": 3.6,
+    "setup": 2.2,
+    "run": 0.28,
+    "deburr": 1.0
+   },
+   {
+    "part": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
+    "group": "Build module",
+    "total": 7.0,
+    "cam": 4.5,
+    "setup": 2.2,
+    "run": 0.03,
+    "deburr": 0.25
+   },
+   {
+    "part": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+    "group": "Chamber shell",
+    "total": 6.8,
+    "cam": 2.4,
+    "setup": 2.0,
+    "run": 1.38,
+    "deburr": 1.0
+   }
+  ],
+  "groups": [
+   {
+    "group": "Chamber shell",
+    "h": 36.3,
+    "pct": 12.6
+   },
+   {
+    "group": "Chamber fittings",
+    "h": 57.2,
+    "pct": 19.9
+   },
+   {
+    "group": "Build module",
+    "h": 74.3,
+    "pct": 25.9
+   },
+   {
+    "group": "Recoater",
+    "h": 26.2,
+    "pct": 9.1
+   },
+   {
+    "group": "Powder dosing",
+    "h": 20.4,
+    "pct": 7.1
+   },
+   {
+    "group": "Optics",
+    "h": 26.5,
+    "pct": 9.2
+   },
+   {
+    "group": "Z stage, legs",
+    "h": 18.9,
+    "pct": 6.6
+   },
+   {
+    "group": "Base, guard, aids",
+    "h": 27.5,
+    "pct": 9.6
+   }
+  ]
+ },
+ "routes": {
+  "a1": {
+   "label": "All in house, one machinist (full-time)",
+   "labour_h": 291.3,
+   "labour_usd": 18934,
+   "outside_usd": 400,
+   "materials_usd": 9317,
+   "equipment_usd": null,
+   "total_usd_at_65": [
+    28652,
+    28652
+   ],
+   "total_usd_at_95": [
+    37390,
+    37390
+   ],
+   "total_usd_labour_free": 9717,
+   "calendar_days_to_leak_test": [
+    54,
+    84
+   ],
+   "weeks_to_leak_test": [
+    7.8,
+    12.0
+   ],
+   "critical": "machining"
+  },
+  "a2": {
+   "label": "All in house, two machinists (one programs, one runs)",
+   "labour_h": 291.3,
+   "labour_usd": 18934,
+   "outside_usd": 400,
+   "materials_usd": 9317,
+   "equipment_usd": null,
+   "total_usd_at_65": [
+    28652,
+    28652
+   ],
+   "total_usd_at_95": [
+    37390,
+    37390
+   ],
+   "total_usd_labour_free": 9717,
+   "calendar_days_to_leak_test": [
+    49,
+    84
+   ],
+   "weeks_to_leak_test": [
+    7.0,
+    12.0
+   ],
+   "critical": "honing loop"
+  },
+  "a3": {
+   "label": "All in house, shop shared: 20 h a week",
+   "labour_h": 291.3,
+   "labour_usd": 18934,
+   "outside_usd": 400,
+   "materials_usd": 9317,
+   "equipment_usd": null,
+   "total_usd_at_65": [
+    28652,
+    28652
+   ],
+   "total_usd_at_95": [
+    37390,
+    37390
+   ],
+   "total_usd_labour_free": 9717,
+   "calendar_days_to_leak_test": [
+    105,
+    108
+   ],
+   "weeks_to_leak_test": [
+    15.0,
+    15.4
+   ],
+   "critical": "machining"
+  },
+  "b_cn": {
+   "label": "All outsourced: JLCCNC (China) + a US specialist for the module",
+   "labour_h": 72.0,
+   "labour_usd": 4680,
+   "outside_usd": 6456,
+   "materials_usd": 0,
+   "equipment_usd": null,
+   "total_usd_at_65": [
+    11136,
+    11136
+   ],
+   "total_usd_at_95": [
+    13296,
+    13296
+   ],
+   "total_usd_labour_free": 6456,
+   "calendar_days_to_leak_test": [
+    52,
+    88
+   ],
+   "weeks_to_leak_test": [
+    7.4,
+    12.6
+   ],
+   "critical": "the module weldment (welded, bored and honed outside)"
+  },
+  "b_us": {
+   "label": "All outsourced: US instant quotes + job shops",
+   "labour_h": 72.0,
+   "labour_usd": 4680,
+   "outside_usd": 28494,
+   "materials_usd": 0,
+   "equipment_usd": null,
+   "total_usd_at_65": [
+    33174,
+    33174
+   ],
+   "total_usd_at_95": [
+    35334,
+    35334
+   ],
+   "total_usd_labour_free": 28494,
+   "calendar_days_to_leak_test": [
+    52,
+    88
+   ],
+   "weeks_to_leak_test": [
+    7.4,
+    12.6
+   ],
+   "critical": "the module weldment (welded, bored and honed outside)"
+  },
+  "c_cn": {
+   "label": "Hybrid: make the seal and module parts, buy 12 catalogue swaps, outsource the rest to JLCCNC",
+   "labour_h": 134.1,
+   "labour_usd": 8716,
+   "outside_usd": 4529,
+   "materials_usd": 6377,
+   "equipment_usd": null,
+   "total_usd_at_65": [
+    19622,
+    19622
+   ],
+   "total_usd_at_95": [
+    23646,
+    23646
+   ],
+   "total_usd_labour_free": 10906,
+   "calendar_days_to_leak_test": [
+    49,
+    84
+   ],
+   "weeks_to_leak_test": [
+    7.0,
+    12.0
+   ],
+   "critical": "honing loop"
+  },
+  "c_us": {
+   "label": "Hybrid with US instant quotes (SendCutSend etc.)",
+   "labour_h": 134.1,
+   "labour_usd": 8716,
+   "outside_usd": 11872,
+   "materials_usd": 6377,
+   "equipment_usd": null,
+   "total_usd_at_65": [
+    26966,
+    26966
+   ],
+   "total_usd_at_95": [
+    30988,
+    30988
+   ],
+   "total_usd_labour_free": 18249,
+   "calendar_days_to_leak_test": [
+    49,
+    84
+   ],
+   "weeks_to_leak_test": [
+    7.0,
+    12.0
+   ],
+   "critical": "honing loop"
+  },
+  "d": {
+   "label": "Robot shop: two UR12e on MiR250s tend the VF-4 and lathe (robot-shop.md)",
+   "labour_h": [
+    1430,
+    2850
+   ],
+   "labour_usd": [
+    92950.0,
+    185250.0
+   ],
+   "outside_usd": 400,
+   "materials_usd": 9317,
+   "equipment_usd": 329339,
+   "total_usd_at_65": [
+    432006,
+    524306
+   ],
+   "total_usd_at_95": [
+    474906,
+    609806
+   ],
+   "total_usd_labour_free": 339056,
+   "calendar_days_to_leak_test": [
+    154,
+    297
+   ],
+   "weeks_to_leak_test": [
+    22.0,
+    42.4
+   ],
+   "critical": "commissioning the cell (Edison r7 robot-build review, section 5: estimates)"
+  }
+ },
+ "chamber_share": {
+  "frame_floor_h": 24.9,
+  "frame_floor_pct": 8.7,
+  "shell_h": 36.3,
+  "shell_pct": 12.6
+ },
+ "chamber_options": [
+  {
+   "option": "1. Machined 6061 through-frame + bolted floor plate (the design now)",
+   "cost": "3,896 at BYU (stock $2,278 + 24.9 h x $65); outside: floor $83.68 (JLCCNC), frame manual quote (estimate $400-1,500), US job shop $4,000-10,",
+   "lead": "3-4 days on the VF-4 inside the shop queue; JLCCNC 6-7 days + 2-4 days UPS",
+   "verdict": "keep"
+  },
+  {
+   "option": "2a. Printed 316L by LPBF, frame + floor as one body, seal faces, bores and threads machined after",
+   "cost": "$4,826.37 (JLC3DP live quote, before review) + ~$270 UPS DDP (estimate from its $180-453 shipping lines) + 10-14 h of finishing at BYU; outs",
+   "lead": "3-day build + review + 2-4 business days UPS: about 1.5-2 weeks (JLC3DP; 'about ",
+   "verdict": "workable: $1,980 more than machining at $65/h ($5,876 against $3,896) for 11-15 h less shop time"
+  },
+  {
+   "option": "2b. Printed aluminium by LPBF (JLC3DP 'Aluminum 6061'; AlSi10Mg elsewhere), one body, machined after",
+   "cost": "$2,916.58 (JLC3DP live, before review) + shipping; US AlSi10Mg $8-25k (estimate)",
+   "lead": "about 1.5-2 weeks (as 2a)",
+   "verdict": "workable: about the same money as machining at $65/h ($3,767 against $3,896) for 13-17 h less shop time; a backup if the VF-4 queue is the bottleneck, after a design-for-AM pass and a first-article helium test"
+  },
+  {
+   "option": "3. DED (wire-arc or laser-wire) 316L walls on a 316L floor plate, machined all over",
+   "cost": "$4,000-12,000 including machining (helper's estimate); Edison $3,000-8,000 + significant machining",
+   "lead": "4-8 weeks (estimate); no instant quote anywhere",
+   "verdict": "no"
+  },
+  {
+   "option": "4. Welded box from cut plate (316L or 5083), seal faces machined after welding",
+   "cost": "$1,200-3,500 (Edison r7 estimate: plate, cutting, 8-15 h of TIG, post-weld machining); SendCutSend cuts 6061 to 0.75 in., 304/5052 to 0.5 in",
+   "lead": "2-4 weeks (estimate), plus a qualified welder's queue",
+   "verdict": "no: the same machining plus weld risk (chamber-construction.md option 4)"
+  },
+  {
+   "option": "5. Catalogue vacuum chamber, modified",
+   "cost": "Ideal Vacuum 6 x 12 x 12 in. short cube kit P109160 $4,150.04 (sale; 291 x 291 x 138 mm inside, ~336 x 336 x 184 outside); LACO 12 in. cube ",
+   "lead": "Ideal Vacuum 'arrives 2026-12-24'; welded cubes 6-8 weeks",
+   "verdict": "no (as in chamber-construction.md option 6)"
+  },
+  {
+   "option": "6. Purge-only enclosure (no vacuum): extrusion or sheet with gaskets",
+   "cost": "$500-1,500 for extrusion, panels and gaskets (estimate); the ports, window and recoater bores still need machined plates",
+   "lead": "1-2 weeks (catalogue extrusion and SendCutSend panels)",
+   "verdict": "no for an aluminium-screening machine; it saves ~10 h and the pump"
+  },
+  {
+   "option": "7. Bolted box of six flat plates, O-rings in every joint",
+   "cost": "6 waterjet plates (~$300-600, estimate) + machining",
+   "lead": "as option 1",
+   "verdict": "no (chamber-construction.md option 5)"
+  },
+  {
+   "option": "8. Casting (A356 sand cast from a printed mould, or investment-cast 316)",
+   "cost": "$4,500-12,000 one-off with a pattern (Edison r7); a printed sand mould ~EUR 450 at EUR 9/L (helper's estimate) + pouring + machining; impreg",
+   "lead": "6-12 weeks (Edison r7 estimate); every foundry is quote-only",
+   "verdict": "no"
+  }
+ ],
+ "standard_parts": {
+  "swaps": 15,
+  "hours_saved": 63.5
+ },
+ "quotes": {
+  "jlc3dp_frame_316l": 2833.47,
+  "jlc3dp_body_316l": 4826.37,
+  "jlc3dp_frame_al": 1716.66,
+  "jlc3dp_body_al": 2916.58,
+  "jlc3dp_build_days": 3,
+  "jlccnc_62_pieces_qty1": 2437.49,
+  "jlccnc_lead_days": "7 + 2-4 UPS",
+  "jlccnc_lid": 64.99,
+  "jlccnc_floor": 83.68,
+  "jlccnc_door": 33.74,
+  "jlccnc_frame": "manual quote"
+ },
+ "laser_weeks": {
+  "new_ipg": [
+   11.9,
+   15.0
+  ],
+  "used": [
+   0.4,
+   1.1
+  ]
+ },
+ "extras": {
+  "stock_usd": 5598,
+  "tooling_usd": 3718.7,
+  "drawings_all_h": 48.0,
+  "receive_all_h": 24.0,
+  "drawings_out_h": 24.0,
+  "receive_out_h": 12.0,
+  "buy_adapt_h": 8.0,
+  "buy_usd": 1235.0,
+  "n_make": 12,
+  "n_buy": 12,
+  "n_out": 33,
+  "n_seal_out": 5,
+  "cn_all_parts_usd": 5710,
+  "us_all_parts_usd": 28494,
+  "cn_out_usd": 2334,
+  "us_out_usd": 10237,
+  "make_list": [
+   "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8",
+   "Module M50 bottom flange: gland plate (316L, bolted to the w",
+   "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, grippe",
+   "Heater block M50 (6061-T6, bayonet socket)",
+   "Piston head M50 (6061-T6, cool side of the break; Tier B: 31",
+   "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, pol",
+   "Rod end M50: 316L feedthrough block, rod welded into its top",
+   "Process chamber body (6061-T6 through-frame from 5.5 in. pla",
+   "Chamber floor plate (6061-T6, 20 mm, bolted under the frame;",
+   "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "Cover-slide drawer (6061, robot pull tab, half-dovetail seal",
+   "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal"
+  ],
+  "buy_list": [
+   "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut fro",
+   "Striker disc M50 (416 stainless, on the pot magnet)",
+   "Recoater motor standoff",
+   "Recoater motor bracket",
+   "Window flange (6061, two FKM O-ring grooves)",
+   "Window retaining ring (spigot bottoms metal-to-metal: squeez",
+   "Field-stop aperture, M50 insert (\u00d841, passive beam limit; sw",
+   "Camera window retaining ring (bottoms metal-to-metal on the ",
+   "Door handle",
+   "f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bo",
+   "Enclosed beam tubes (6061, \u00d818 x 2: dichroic to galvo, fold ",
+   "Guard-door handle for the robot (\u00d812 x 130 bar on two \u00d810 st"
+  ],
+  "out_list": [
+   "Base plate, process module (MIC-6, 15 mm)",
+   "Base plate, gas module (MIC-6, 15 mm)",
+   "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at ",
+   "Z mounting flange (bolted under the floor)",
+   "Z bracket + fold-back belt housing (2:1)",
+   "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "Module M50 handle (6061, screwed under the gland plate; rise",
+   "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange",
+   "Overflow funnel block (316L, bolted, FKM face O-ring)",
+   "Overflow-jar sensor bracket (6061, 6 mm, on the front-right ",
+   "Zero-point module plates (2 x 6061, 10 mm, each on two posts",
+   "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor ins",
+   "Recoater carriage block (6061)",
+   "Recoater arm (6061, 40 x 14 web)",
+   "Blade holder (6061, 18 x 31, quick-swap)",
+   "Recoater feedthrough spacer ring (6061, 9 mm, FKM face O-rin",
+   "Recoater floating bearing housing (blind cap, FKM face O-rin",
+   "Metering base (6061, fluted roller over a 100 mm dose line, ",
+   "Reservoir M lid with robot handle (grip plane z = 258 for ev",
+   "Reservoir M pull tab (6061, 8 mm fin, the lid's handle carri",
+   "Camera viewport adapter + boss (6061; \u00d830 bore on the line o",
+   "Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate",
+   "Optics bridge (6061, 25 mm)",
+   "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end",
+   "Galvo riser plate (6061, 5 mm, \u00d856 bore: clears the f-theta'",
+   "Door drive bracket (6061, 4 mm, flanged onto the chamber's l",
+   "Door drive shaft and disc (\u00d86 D-shaft keyed into a 6061 disc",
+   "Blade-cartridge grip fin (6061, 4 mm, on the holder's front ",
+   "AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-l",
+   "Overflow jar grip fin (6061: tab on the cup, riser at x 117-",
+   "PB1 stand (2 x 30 x 15 mm 6061 rails, bolted to the tray)",
+   "Z sensor bracket (6061, clamped to the actuator body's -x si",
+   "Recoater sensor clamps (6061, split clamp on each post)"
+  ]
+ }
+}
