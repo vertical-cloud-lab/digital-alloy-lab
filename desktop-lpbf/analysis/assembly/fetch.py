@@ -215,7 +215,7 @@ def follow(run, n, Ts, close, allow, chk, seed, ik_close=None, strict=False):
             prev = q
         if ok:
             return True, qs, ""
-        if len(qs) > len(best[1]):
+        if len(qs) > len(best[1]) or (not best[1] and best[2].startswith("no IK at the start")):
             best = (False, qs, why)
     return best
 

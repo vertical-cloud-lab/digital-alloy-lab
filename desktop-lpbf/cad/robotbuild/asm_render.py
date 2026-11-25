@@ -44,6 +44,7 @@ CHAP = {"module": ("40-assembly-module", "Assembly 1: the build module, by two U
 # time-lapse factors per event kind (real seconds per real second shown); the renderer may raise them to fit the budget
 LAPSE = dict(drive=8.0, plan=1.5, cart=1.0, grip=1.0, screw=1.0, screw_rep=6.0, wait=40.0, turn=1.5, move2=1.5, tool=8.0)
 SHOT = dict(wide=3600.0, mid=1500.0, close=650.0)
+MAX_TRI = int(os.environ.get("ASM_MAX_TRI", "2500"))     # per object, for drawing only
 
 
 def poly(v, f):
@@ -98,14 +99,23 @@ class Replay:
             sc.add(f"st/{name}", poly(v, f), col, group="static", specular=0.2)
         for name, m, col in KT.table_meshes():
             sc.add(f"kt/{name}", m, col, group="static", specular=0.15)
-        for it in KT.item_meshes():
-            s = next((x for x in KT.slots() if x["key"] == it["key"]), None)
-            if s is not None and s["support"] in ("pallet", "bin"):
-                sc.add(f"kti/{it['key']}/{it['name'][:20]}", it["mesh"], it["color"], group="static", specular=0.25)
+        # the pallets' and bins' contents from kit_table's mesh cache (building it here would load the whole model: run
+        # `python kit_table.py --meshes` first; without it the pallets and bins are drawn empty)
+        if os.environ.get("ASM_KIT_ITEMS", "1") == "1" and list((KT.CACHE).glob(f"kit-meshes-finished-{KT._hash()}.pkl")):
+            sup = {x["key"]: x["support"] for x in KT.slots()}
+            for it in KT.item_meshes():
+                if sup.get(it["key"]) in ("pallet", "bin"):
+                    sc.add(f"kti/{it['key']}/{it['name'][:20]}", it["mesh"], it["color"], group="static", specular=0.25)
+        else:
+            print("kit item meshes not cached: pallets and bins drawn empty", flush=True)
         # ---- objects (each its own group, moved per frame)
         self.T = {}
         for i, o in scn["objs"].items():
-            sc.add(f"o{i}", poly(o["V"], o["F"]), o["color"], group=f"o{i}", specular=0.3, shown=False)
+            V, F = o["V"], o["F"]
+            if len(F) > MAX_TRI:           # software rendering (llvmpipe + SSAA): the frame time follows the triangle count
+                import cell as C0
+                V, F = C0.decimate(np.asarray(V, float), np.asarray(F, np.int64), MAX_TRI)
+            sc.add(f"o{i}", poly(V, F), o["color"], group=f"o{i}", specular=0.3, shown=False)
         for i, T in scn["table_T"].items():
             self.T[i] = np.asarray(T, float)
             sc.alpha[f"o{i}"] = 1.0
@@ -249,8 +259,12 @@ class Replay:
         return a.tcp(self.st[n]["q"], self.st[n]["close"])[:3, 3]
 
     # ------------------------------------------------------------------------------------------- camera
-    def aim(self, focus, shot="mid", side="A", az=None, el=28.0, snap=False):
-        side_az = {"A": -62.0, "B": 118.0, "C": -35.0}
+    def aim(self, focus, shot="mid", side="A", az=None, el=None, snap=False):
+        # down the bench's axis from +x, a little to the working arm's side and from above: between the two lanes, so neither
+        # MiR nor parked arm stands between the camera and the work
+        side_az = {"A": -28.0, "B": 28.0, "C": 0.0}
+        if el is None:
+            el = {"wide": 24.0, "mid": 38.0, "close": 46.0}.get(shot, 36.0)
         a = math.radians(side_az.get(side, -60.0) if az is None else az)
         R = SHOT.get(shot, shot) if isinstance(shot, str) else float(shot)
         e = math.radians(el)
@@ -303,12 +317,9 @@ def plan_frames(events, scale=1.0):
             if d <= 0:
                 continue
             n = int(round(d * FPS / (KW.get(kk, 1.0) * f)))
-            if e["kind"] in ("grip", "tool"):
-                n = max(n, 3)
-            elif e["kind"] == "wait":
-                n = max(n, 18)
-            else:
-                n = max(n, 2)
+            # minimum frames so each motion reads on screen (a drive at least 0.7 s, the work itself at least 0.8 s)
+            n = max(n, {"grip": 4, "tool": 6, "wait": 18, "drive": 8, "plan": 6, "cart": 10, "screw": 8, "screw_rep": 3,
+                        "turn": 30, "move2": 24}.get(kk, 2))
             out[id(e)] = (n, d / n)
     reps = {}
     for e in events:
@@ -482,7 +493,7 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=()):
                 s = smooth((f + 1) / nf)
                 x = e["x0"] + (e["x1"] - e["x0"]) * s
                 rp.set_arm(n, x=x)
-                rp.aim(np.array([x, (-1 if n == "A" else 1) * 500.0, 950.0]), "wide", side, el=22.0)
+                rp.aim(np.array([x, (-1 if n == "A" else 1) * 500.0, 950.0]), "wide", side, az=(-72.0 if n == "A" else 72.0), el=20.0)
                 chk = e.get("check") or {}
                 sub = (f"MiR {n} drives {abs(e['x1'] - e['x0']) / 1000:.1f} m "
                        + ("to the parts table" if e["x1"] > 2000 else "back to the bench")

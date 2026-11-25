@@ -761,3 +761,6 @@ if __name__ == "__main__":
                                         slots=[{k: (np.round(np.asarray(x[k]), 2).tolist() if k == "T" else x[k]) for k in keep}
                                                for x in ss]), indent=0))
     print("wrote", OUT_JSON)
+    if "--meshes" in sys.argv:
+        for md in ("finished", "stock"):
+            print(md, len(item_meshes(mode=md)), "item meshes cached")
