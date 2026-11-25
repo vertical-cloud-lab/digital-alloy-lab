@@ -44,6 +44,7 @@ MAX_MB = 95.0
 EXPECTED = [  # the contract's chapters (README.md), with the title a missing one's card shows
     ("00-intro", "The hall: two mobile manipulators, one long table"),
     ("10-parts", "The parts: cost and lead time"),
+    ("15-estimates", "Time estimates: machining, routes, assembly"),
     ("20-receiving", "Receiving"),
     ("30-machining-chamber", "Machining the chamber"),
     ("31-machining-parts", "Machining the other parts"),
