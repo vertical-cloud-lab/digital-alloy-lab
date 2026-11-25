@@ -72,12 +72,20 @@ def scan(partial=False, only=None):
         d = common.FRAMES / name
         done = (d / "done").exists()
         meta = []
-        if d.exists() and (done or partial) and (d / "meta.jsonl").exists():
+        if d.exists() and (d / "meta.jsonl").exists():
             for line in (d / "meta.jsonl").read_text().splitlines():
                 try:
                     meta.append(json.loads(line))
                 except json.JSONDecodeError:
                     break                                    # a line still being written
+            if done:                                         # a `done` left from an earlier run while a new one renders
+                try:
+                    done = int((d / "done").read_text().strip() or -1) == len(meta) and \
+                        (d / f"{len(meta) - 1:05d}.png").exists()
+                except ValueError:
+                    done = False
+            if not (done or partial):
+                meta = []
             n = len(meta)
             while n and not (d / f"{n - 1:05d}.png").exists():
                 n -= 1
