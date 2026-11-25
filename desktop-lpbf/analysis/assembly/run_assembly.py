@@ -93,7 +93,8 @@ class Run:
         # round 6 (the merged layout): the zero-point clamps' posts, plates and modules, and the module's arms and pins, are pairs or
         # fours drawn as one compound each
         for key in ("Chamber legs", "Optics bridge posts", "Macor standoff rings", "Radiation shields", "Zero-point posts",
-                    "Zero-point module plates", "Zero-point clamping modules", "Zero-point arms", "Zero-point clamping pins"):
+                    "Zero-point module plates", "Zero-point clamping modules", "Zero-point arms", "Zero-point clamping pins",
+                    "Door hinge knuckles on the chamber"):
             found = sc.find(key, fasteners=False)
             if not found:
                 continue

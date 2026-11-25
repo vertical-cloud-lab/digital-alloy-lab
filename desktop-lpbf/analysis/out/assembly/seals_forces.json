@@ -77,20 +77,6 @@
     "chamfer_needed": "rod end: the bullet's 15 deg nose (>= 3.0 mm at 15 deg); the throat's edges rounded R0.2-0.4 and polished"
    },
    {
-    "gland": "hermetic_M50",
-    "ring": "2-014",
-    "n": 1,
-    "cs": 1.78,
-    "ring_id": 12.42,
-    "kind": "face",
-    "closure": "hermetic connector on the rod end (M50)",
-    "dovetail": false,
-    "installed_stretch_pct": 1.4,
-    "install_stretch_pct": 9.5,
-    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
-    "chamfer_needed": "none (axial face seal)"
-   },
-   {
     "gland": "overflow_funnel",
     "ring": "2-042",
     "n": 1,
@@ -321,29 +307,15 @@
    },
    {
     "gland": "camera_adapter",
-    "ring": "2-022",
+    "ring": "2-030",
     "n": 1,
     "cs": 1.78,
-    "ring_id": 25.12,
+    "ring_id": 41.0,
     "kind": "face",
     "closure": "camera adapter on the lid",
     "dovetail": false,
-    "installed_stretch_pct": 2.7,
-    "install_stretch_pct": 6.7,
-    "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
-    "chamfer_needed": "none (axial face seal)"
-   },
-   {
-    "gland": "camera_window",
-    "ring": "2-017",
-    "n": 1,
-    "cs": 1.78,
-    "ring_id": 17.17,
-    "kind": "face",
-    "closure": "camera window on the boss",
-    "dovetail": false,
-    "installed_stretch_pct": 2.5,
-    "install_stretch_pct": 8.3,
+    "installed_stretch_pct": 2.4,
+    "install_stretch_pct": 4.9,
     "method": "2F-85 pin caps open inside the ring, lay it in the groove; PFPE film if the groove faces down when closed",
     "chamfer_needed": "none (axial face seal)"
    },
@@ -408,7 +380,7 @@
    "need_N": 109.0,
    "peak_N": 328.0,
    "basis": "Parker 5.11.2: fc 2.07 lb/in at 22.1 % over pi x 96 mm; break-out 3x",
-   "robot": "robot starts it on the lead-in chamfer (<= 50 N in force mode), the two captive M6 screws pull it home"
+   "robot": "robot starts it on the lead-in chamfer (<= 50 N in force mode) and pushes it home in force mode; the two zero-point modules then lock its pins (round 6: no captive M6)"
   },
   {
    "step": "M13",
