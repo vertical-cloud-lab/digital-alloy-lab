@@ -168,7 +168,8 @@ def slot_profiles(cs):
     zin = np.linspace(4.5, 11.5, 8)
     uin = np.array([cs("Uy", np.column_stack([np.full(8, xi), np.full(8, 103.0), zin])).mean() for xi in x])
     xo = np.linspace(-61, 61, 123)
-    uo = cs("Uz", np.column_stack([xo, np.full_like(xo, -90.0), np.full_like(xo, -10.0)]))
+    sl = cs.meta["fluid"]["outlet slot"]                          # y -94..-86 as drawn (wider with --floor-slot-width)
+    uo = cs("Uz", np.column_stack([xo, np.full_like(xo, 0.5 * (sl[2] + sl[3])), np.full_like(xo, -10.0)]))
     return x, -uin, xo, -uo
 
 
@@ -247,6 +248,7 @@ def recirculation(cs):
 # ------------------------------------------------------------------ particles
 def track_spatter(cs, n=600, seed=1):
     rng = np.random.default_rng(seed)
+    sl = cs.meta["fluid"]["outlet slot"]
     res = {}
     lands = {}
     for d_um in (50, 100, 150):
@@ -282,7 +284,7 @@ def track_spatter(cs, n=600, seed=1):
             down = ia[pm[ia, 2] <= 0.0]
             for i in down:
                 x, y = pm[i, 0], pm[i, 1]
-                if -62 < x < 62 and -94 < y < -86:
+                if sl[0] < x < sl[1] and sl[2] < y < sl[3]:
                     fate[i] = "outlet slot"
                 else:
                     fate[i] = "floor"
@@ -336,6 +338,7 @@ def track_condensate(cs, n=1500, t_end=12.0, dt=4e-3, seed=2, sc_t=0.7, zr=(1.0,
     """Tracers released over the Ø50 plate at 1-10 mm, moved by the mean flow plus a random walk with the RANS eddy
     diffusivity (nu + nut / Sc_t). Fates are first passages: out through the outlet slot, into the slide recess."""
     rng = np.random.default_rng(seed)
+    sl = cs.meta["fluid"]["outlet slot"]
     r = 25.0 * np.sqrt(rng.random(n))
     th = 2 * np.pi * rng.random(n)
     pos = np.column_stack([r * np.cos(th), r * np.sin(th), rng.uniform(zr[0], zr[1], n)])  # mm
@@ -362,7 +365,7 @@ def track_condensate(cs, n=1500, t_end=12.0, dt=4e-3, seed=2, sc_t=0.7, zr=(1.0,
         p = np.where(ok[:, None], new, p)
         pos[ia] = p
         x, y, z = p[:, 0], p[:, 1], p[:, 2]
-        out = (z < -2.0) & (np.abs(x) < 62) & (y > -94) & (y < -86)
+        out = (z < -2.0) & (x > sl[0]) & (x < sl[1]) & (y > sl[2]) & (y < sl[3])
         slide = (z > 120.0) & (np.abs(x) < 25) & (np.abs(y) < 25)
         near = (z > 105.0) & (np.hypot(x, y) < 30)
         near_window[ia[near]] = True

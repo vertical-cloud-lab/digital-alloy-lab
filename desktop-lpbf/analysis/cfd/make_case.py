@@ -81,7 +81,7 @@ def model_cavities(src, MP, P):
                 inlet_port_r=float(m.group(1)), inlet_port_z=float(eval(m.group(2).split(",")[2], {"cy": cy})))
 
 
-def geometry(MP, P, variant="baseline"):
+def geometry(MP, P, variant="baseline", floor_slot_w=0.0):
     """Fluid and solid boxes (x0, x1, y0, y1, z0, z1) in mm, with where each number comes from in lpbf_low.py."""
     ix, iy, iz = P["ch_x"] / 2, P["ch_y"] / 2, P["ch_z"]          # 140, 95, 120
     wall, fl = P["wall"], P["floor"]                                 # 16, 20
@@ -124,6 +124,9 @@ def geometry(MP, P, variant="baseline"):
         bx = (bt[0], bt[0] + 40.0) if bt[0] > 0 else (bt[1] - 40.0, bt[1])
         fluid["outlet boot"] = (bx[0], bx[1], oy0 - 8, -60.0, zf - 41, zf - 3)
         fluid["upper slot"] = (-50.0, 50.0, iy, cy, iz - 6.0, iz - 2.0)
+        if floor_slot_w:
+            # gas-flow.md §7 item 2: a wider floor slot (from the door side, y -94, toward the plate), still over the 35 mm channel
+            fluid["outlet slot"] = (-oh, oh, oy0, oy0 + floor_slot_w, zf, 0.0)
     solid = {
         # parked recoater: blade (x xp+9..xp+10.5, z 0.05-18) and holder (x xp-9..xp+9, z 3-34) as one block to the floor
         "blade + holder": (xp - 9.0, xp + 10.0, -dh - 3.0, dh + 3.0, 0.0, 35.0),
@@ -170,7 +173,7 @@ def build(args):
         # mirror the link and boot about x = 0 (the 2026-11-20 runs had them at x 60-80 and 76-96, the model's old right end)
         flip = lambda b: (-b[1], -b[0]) + tuple(b[2:])
         cav.update(link=flip(cav["link"]), boot=flip(cav["boot"]), xb_o=-cav["xb_o"])
-    fluid, solid = geometry(MP, P, args.variant)
+    fluid, solid = geometry(MP, P, args.variant, args.floor_slot_width)
     X, Y, Z = (lines(fluid, solid, a) for a in range(3))
     N = [[max(1, math.ceil((L[i + 1] - L[i]) / spacing(a, 0.5 * (L[i] + L[i + 1]), args.res) - 1e-9)) for i in range(len(L) - 1)]
          for a, L in enumerate((X, Y, Z))]
@@ -406,6 +409,8 @@ if __name__ == "__main__":
     ap.add_argument("--variant", choices=("baseline", "fix"), default="baseline",
                     help="fix = screens in both slots, wider outlet channel + KF-40 boot, upper window-sweep slot")
     ap.add_argument("--upper-lpm", type=float, default=40.0, help="flow through the upper slot in the 'fix' variant, L/min")
+    ap.add_argument("--floor-slot-width", type=float, default=0.0,
+                    help="fix variant only: the floor slot widened to this many mm in y, from its door-side edge (0 = as drawn, 8 mm)")
     ap.add_argument("--slide-purge-lpm", type=float, default=0.0,
                     help="argon blown down out of the cover slide's recess (gas-flow.md §7 item 6), L/min; 0 = the slide is a wall")
     ap.add_argument("--outlet-end", choices=("model", "left", "right"), default="model",
