@@ -26,6 +26,10 @@ import scipy.sparse.linalg as spla
 HERE = Path(__file__).resolve().parent
 OUT = HERE.parent / "out" / "optics"
 OUT.mkdir(parents=True, exist_ok=True)
+import sys  # noqa: E402
+sys.path.insert(0, str(HERE.parents[1] / "cad"))
+import lpbf_low as MODEL  # noqa: E402  (slide and window thickness and heights come from the model's P block since 2026-11-25)
+MP_ = MODEL.P
 
 # fused silica (Corning 7980 data sheet: k 1.38 W/mK, dn/dT 9.6e-6 /K near 1 um as used in mech.md, alpha 0.52e-6 /K,
 # nu 0.16, rho 2201 kg/m3, c 740 J/kgK); n at 1070 nm from Malitson (beam_path.py)
@@ -120,18 +124,23 @@ def zr_mm(D_coll):
     return math.pi * (d / 2) ** 2 / (1.1 * 1.070e-3)
 
 
+# heights from the model (2026-11-25: Edmund 36-299 slide, Ø50 x 2 mm, bottom z 127.0 on a seat with a Ø46 opening; Edmund 38-990
+# window, Ø50.8 x 9.53 mm, bottom z 146.47 on its 2-031 O-ring; they were 3 mm at z 126 and 8 mm at z 148)
+H_SLIDE = MP_["z_slide0"] * 1e-3
+H_WIN = (MP_["z_win0"] - MP_["slide_t"] * (1 - 1 / FS["n"])) * 1e-3      # air-equivalent: the slide below it counts t(1 - 1/n) less
 ELEMENTS = {
     # name: (R of the disc to the rim contact, thickness, air-equivalent height above focus, fouled face)
-    "cover slide (Ø50.8 x 3, rim on the drawer)": (23.0e-3, 3.0e-3, 0.126, "bottom"),
-    "window (Ø50.8 x 8, O-ring seat Ø44.9)": (22.45e-3, 8.0e-3, 0.147, "bottom"),
+    f"cover slide (Ø{MP_['slide_d']:.0f} x {MP_['slide_t']:g}, Edmund 36-299, rim on the drawer's Ø46 seat)": (23.0e-3, MP_["slide_t"] * 1e-3, H_SLIDE, "bottom"),
+    f"window (Ø50.8 x {MP_['win_t']:g}, Edmund 38-990, O-ring seat Ø44.9)": (22.45e-3, MP_["win_t"] * 1e-3, H_WIN, "bottom"),
 }
+BEAMS = (5.0, 3.2, 2.5)       # collimated beam D (mm): IPG 5 mm, the 75 um target, IPG 2.5 mm (drawn since 2026-11-23)
 ABS = {"clean, uncoated (bulk 20 ppm/cm + 2 x 5 ppm surfaces)": None,
        "clean, AR both faces (2 x 30 ppm + bulk)": None,
        "light film 0.05 %": 5e-4, "fogged 0.5 %": 5e-3, "sooted 2 %": 2e-2}
 
 res = dict(material=dict(fused_silica=FS, NBK7=BK7, sapphire=SAP), cases=[], lens=[], check=[], sapphire_slide=[])
 
-for D_coll in (5.0, 3.2):
+for D_coll in BEAMS:
     zR = zr_mm(D_coll)
     for ename, (Rm, tm, h, face) in ELEMENTS.items():
         w = beam_w(D_coll, h * 1e3)
@@ -167,20 +176,20 @@ for D_coll in (5.0, 3.2):
                                     dz_mm=dz, x_zR=dz / zR, zR_mm=zR))
 
 # sapphire cover slide (2 mm), same geometry: the thermal lens scales as chi / k
-for D_coll in (5.0, 3.2):
+for D_coll in BEAMS:
     zR = zr_mm(D_coll)
-    w = beam_w(D_coll, 126.0)
+    w = beam_w(D_coll, H_SLIDE * 1e3)
     for a in (5e-4, 5e-3, 2e-2):
         r, opd, Tc, Trim, Tmax = solve_disc(23.0e-3, 2.0e-3, w, a * P, where="bottom", mat=SAP)
         D_eff, rms = fit_defocus(r, opd, w)
-        dz = focus_shift(0.126, D_eff) * 1e3
+        dz = focus_shift(H_SLIDE, D_eff) * 1e3
         res["sapphire_slide"].append(dict(D_coll_mm=D_coll, a_tot=a, P_abs_W=a * P, T_centre_K=Tc, D_eff_per_m=D_eff, dz_mm=dz, x_zR=dz / zR))
 
 # reproduce mech.md E's 500 W / 0.5 % row with its own formula, and with this one at the model's real slide height
 w_mech = 3.2e-3 / 2 * (0.145 / 0.1825)
 D_mech = 2.5 * 9.6e-6 / (2 * math.pi * 1.38 * w_mech ** 2)
 res["check"] = dict(mech_md_formula_dz_mm=0.160 ** 2 * D_mech * 1e3,
-                    note="mech.md: w = 1.27 mm, D = P dn/dT/(2 pi k w^2), dz = f^2 D: 43.8 mm. Here: the slide is at z 126 "
+                    note=f"mech.md: w = 1.27 mm, D = P dn/dT/(2 pi k w^2), dz = f^2 D: 43.8 mm. Here: the slide is at z {H_SLIDE * 1e3:.0f} "
                          "(not 145), the central-curvature power is 2x, and dz = h^2 D/(1 + h D) for an element h above focus.")
 
 # time constants (fused silica): local (beam radius) and whole disc
@@ -216,13 +225,13 @@ try:
     import matplotlib.pyplot as plt
     fig, ax = plt.subplots(figsize=(7, 4), dpi=150)
     aa = np.logspace(-5, -1.5, 30)
-    for D_coll, col in ((5.0, "#2a78d6"), (3.2, "#eb6834")):
-        w = beam_w(D_coll, 126.0)
+    for D_coll, col in ((5.0, "#2a78d6"), (3.2, "#eb6834"), (2.5, "#1baf7a")):
+        w = beam_w(D_coll, H_SLIDE * 1e3)
         dz = []
         for a in aa:
-            r, opd, *_ = solve_disc(23e-3, 3e-3, w, a * P, where="bottom", nr=100, nz=12)
+            r, opd, *_ = solve_disc(23e-3, MP_["slide_t"] * 1e-3, w, a * P, where="bottom", nr=100, nz=12)
             De, _ = fit_defocus(r, opd, w)
-            dz.append(focus_shift(0.126, De) * 1e3)
+            dz.append(focus_shift(H_SLIDE, De) * 1e3)
         ax.loglog(aa * 100, dz, color=col, lw=2, label=f"cover slide, D = {D_coll} mm beam")
         ax.annotate(f"D {D_coll} mm", (aa[-1] * 100, dz[-1]), xytext=(-40, 4), textcoords="offset points", fontsize=7, color="#52514e")
         z_r = zr_mm(D_coll)
