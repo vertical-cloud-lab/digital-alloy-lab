@@ -3,14 +3,16 @@
 Taken from render_build.py chapters 3-5, joints.py's joint table and analysis/ops/operations.py's A1/A2 lists, then
 re-ordered so that every screw is driven from above or from the side and nothing heavy is lifted by one arm:
   * the heater stack is built upside down on a nest (everything drops in from above);
-  * the gland plate (face ring, then its two rod rings by the ring loader) waits on its own nest; the rod, its end cap
+  * the gland plate (face ring, then its two rod rings by the ring loader) waits on its own nest; the rod, its rod end
     welded on by the shop, goes top end first through the plate's rings and then, with the plate riding on it, into the
     head's socket (round 4, 2026-11-22: the welded rod end no longer has to slide on after the rod rings);
-  * the module body goes upright onto its nest for the spigot O-ring (the mandrel reaches into the bore), then upside down
-    on its spigot face; the whole stack, rod and gland plate drop into the bore from the tube's open bottom end, which faces
-    up; then the gland-plate screws, the handle (lowered from above), the striker and the rod end's hermetic connector (last,
-    so the end cap's side is clear for the driver and the handle); it is turned upright for the plate, then turned over
-    again for the chamber;
+  * the module body goes upright onto its nest for the spigot O-ring (the mandrel reaches into the bore), gripped across
+    its tube (round 6), then upside down on its spigot face; the whole stack, rod and gland plate drop into the bore from the
+    tube's open bottom end, which faces up; then the gland-plate screws (round 6: on the arc behind the rod end's
+    feedthrough block, joints.py), the handle (round 6: lowered in front of the rod end's sleeves and slid back) and the
+    striker. The rod end is a 316L block with seven weld-in feedthroughs, welded to the rod by the shop, so nothing is
+    fitted to it here (round 6: the hermetic connector and the thermal cutoff are gone from the model, electrical.md
+    section 13). It is turned upright for the plate, then turned over again for the chamber;
   * the chamber is worked upside down on Fixture C (outlet plenum, overflow funnel, module, Z stage and legs all go on
     from above), then both arms turn it over by two legs onto the base plate, which waits on Fixture B, an open stand
     the arms reach under (posts' and legs' base screws from below);
@@ -30,6 +32,12 @@ Step fields (run_assembly.py reads them):
 from __future__ import annotations
 
 UP, DN = (0.0, 0.0, 1.0), (0.0, 0.0, -1.0)
+# Round 6: the rod end is a 316L block (x +-40.5, y -22 to +6, zc + 1 to zc + 17 with zc = -141 at z_p = 0) with seven weld-in
+# sleeves standing 12-21 mm out of its front face (modules_low.ROD_FT). Run 3 held the rod by its Ø22 end cap with the fingers
+# along y, where the front finger now sits inside the block; so arm A takes the block by its two end faces, fingers along x
+# (81 mm across, in the 2F-85's 85 mm stroke: 2 mm a side as it opens round it), at its mid-height and mid-depth. The pads
+# (22 mm along y) stay behind the sleeves, and the fingertips stop 7 mm short of the gland plate's underside at the seat.
+ROD_END_GRASP = dict(point=(0.0, -8.0, -132.0), z=UP, x=(1.0, 0.0, 0.0), width=81.0)
 
 
 def P(id, label, keys, grp, phase, path, tool="gripper", actor="A", **kw):
@@ -56,8 +64,9 @@ def steps(module="M50"):
         "body (render_build chapter 2); a cobot would need a dedicated inserter and tang-break station for 3 inserts."))
     a(P("M03", "Three cartridge heaters into their bores", ["Cartridge heaters"], "stack", "stack_inv", [(0, 0, 0), (0, 0, -90)],
         note="leads routed by a person (flexible cable)"))
-    a(P("M04", "Thermocouples and the thermal cutoff", ["Type K thermocouples", "Thermal cutoff"], "stack", "stack_inv", [(0, 0, 0), (0, 0, -100)],
-        note="leads routed by a person"))
+    # round 6: no thermal cutoff any more (electrical.md section 13.4); the three type K are the control, edge and limit sensors
+    a(P("M04", "Three type K thermocouples (control, edge, limit) into their bores", ["Type K thermocouples"], "stack", "stack_inv",
+        [(0, 0, 0), (0, 0, -100)], note="leads routed by a person"))
     a(P("M05", "Macor rings and radiation shields over three guide pins", ["Macor standoff", "Radiation shields"], "stack", "stack_inv",
         [(0, 0, 0), (0, 0, -70)], tool="nozzle", per_solid=True, drop_ok=True, drop_mm=36.0, order="zdesc",
         note="3 temporary M3 guide pins in the inserts keep the 9 rings and 2 foils in line"))
@@ -80,20 +89,25 @@ def steps(module="M50"):
     a(dict(do="seal", id="M12", label="Two 2-114 rod O-rings folded through the Ø15.93 throat into their grooves (ring loader), plate on its nest",
            keys=["Rod O-rings"], grp="gland", phase="body_inv", method="loader", ring="rod_M50", tool="ring_loader", actor="A",
            path=[(0, 0, 0), (0, 0, -120)]))
-    a(P("M13", "Rod (end cap welded on by the shop) lowered top end first through the gland plate's two rod O-rings, on its PEEK bullet",
+    a(P("M13", "Rod (its rod end welded on by the shop: a 316L block with seven weld-in feedthroughs) lowered top end first through "
+        "the gland plate's two rod O-rings, on its PEEK bullet",
         ["Hollow piston rod", "Rod end"], "gland", "body_inv", [(0, 0, 0), (0, 0, -150)], bullet="top",
-        grasp=dict(point=(0.0, 0.0, -126.5), z=UP, x=(0.0, 1.0, 0.0), width=22.0),
-        note="arm A holds the rod by its Ø22 end cap; the nest holds the plate"))
+        grasp=ROD_END_GRASP,
+        note="arm A holds the rod by the feedthrough block's two ends (81 mm across); the nest holds the plate"))
     a(P("M14", "Rod, with the gland plate riding on it, into the piston head's socket (stack upside down: from above)",
         ["Hollow piston rod", "Rod end", "bottom flange: gland plate", "gland-plate O-ring", "Rod O-rings"], "stack", "stack_inv",
         [(0, 0, 0), (0, 0, -150)], merge="gland", moved=True,
-        grasp=dict(point=(0.0, 0.0, -126.5), z=UP, x=(0.0, 1.0, 0.0), width=22.0)))
+        grasp=ROD_END_GRASP))
     a(S("M15", "Two M4 cup-point set screws into the rod (radial)", f"rod_{m}", "stack", "stack_inv", torque_Nm=1.1))
     # ---- module body: upright first for the spigot O-ring (the mandrel reaches 13 mm into the bore, where the heater block
     # sits once the stack is in: run 3's first pass), then upside down on its spigot face; the stack goes in from the tube's
     # open (bottom) end, which then faces up
-    a(P("M16", "Welded module body onto its upright nest (flange on the nest's three posts)", ["Build module"], "body", "body_up",
-        [(0, 0, 0), (0, 0, 120)], exclude=["Captive", "retainers"]))
+    # round 6: gripped across the tube between the flange and the collar (Ø56.8 on M50), from the front, as the turn-overs
+    # (M18, M26, M28) grip it. Run 3's automatic grasp took the flange's top slice, 119 mm across the dowel lugs, wider than the
+    # 2F-85's 85 mm stroke. The nest's posts (20/90/160 deg) leave the front free for the fingers.
+    a(P("M16", "Welded module body onto its upright nest (flange on the nest's three posts), gripped across the tube",
+        ["Build module"], "body", "body_up", [(0, 0, 0), (0, 0, 120)], exclude=["Captive", "retainers"],
+        grasp=dict(point=(0.0, 0.0, -60.0), z=(0.0, 1.0, 0.0), x=(-1.0, 0.0, 0.0), width=56.8)))
     a(dict(do="seal", id="M17", label="Spigot O-ring (2-238) over the mandrel into the spigot groove (before the stack: the mandrel reaches into the bore)",
            keys=["Spigot O-ring"], grp="body", phase="body_up", method="mandrel", ring="spigot", tool="gripper", actor="A", holder="B",
            path=[(0, 0, 0), (0, 0, 40)]))
@@ -101,23 +115,35 @@ def steps(module="M50"):
            grp="body", frm="body_up", to="body_inv", actor="A"))
     a(P("M19", "Heater stack, rod and gland plate lowered into the bore from the tube's open end (body upside down); the gland plate "
         "lands on the welded collar",
-        ["Heater block", "Cartridge heaters", "Type K thermocouples", "Thermal cutoff", "Macor standoff", "Radiation shields", "Piston head",
+        ["Heater block", "Cartridge heaters", "Type K thermocouples", "Macor standoff", "Radiation shields", "Piston head",
          "Bore seal", "Hollow piston rod", "Heater-stack screws", "Heater-block helical inserts", "Disc springs under", "Rod set screws",
          "Rod end", "bottom flange: gland plate", "gland-plate O-ring", "Rod O-rings"],
         "body", "body_inv", [(0, 0, 0), (0, 0, -260)], merge="stack", moved=True,
-        grasp=dict(point=(0.0, 0.0, -126.5), z=UP, x=(0.0, 1.0, 0.0), width=22.0),
+        grasp=ROD_END_GRASP,
         note="the bore seal and the block enter the honed bore square, over the bore's bottom lead-in"))
-    a(S("M20", "Six M4 x 20 gland-plate screws, star pattern", f"gland_{m}", "body", "body_inv", torque_Nm=2.2))
+    a(S("M20", "Six M4 x 20 gland-plate screws on the arc behind the rod end's block (round 6, joints.py)", f"gland_{m}", "body", "body_inv",
+        torque_Nm=2.2))
     # the round-4 handle runs from under the gland plate up the front of the tube and forward to the robot grip block; slid in
-    # along y (runs 1-2) its start pose was out of arm A's reach, so with the module upside down it is lowered from above
-    a(P("M21", "Handle lowered onto the gland plate (module upside down; riser in front of the tube, arm toward the grip block)",
-        ["handle (6061"], "body", "body_inv", [(0, 0, 0), (0, 0, -80)]))
+    # along y (runs 1-2) its start pose was out of arm A's reach, so run 3 lowered it from above. On the round-5 rod end that
+    # drops its two side arms through the type K sleeves (run 4's first pass: blocked after 18 mm). Round 6: lowered 15 mm in
+    # front of its seat, where the side arms' back ends (y -43.4) clear the sleeves (y >= -34) and the power sleeve (x +-6.3),
+    # then slid the last 15 mm back along the gland plate's face, 17 mm above the sleeves. Held from above by the riser in front of
+    # the collar (48 x 6 mm, fingers across its 6 mm, the back finger in the 20 mm between riser and collar, between the side
+    # arms): run 4's second pass held the grip block's web from the front, and arm A's upper arm met its own wrist 2.
+    a(P("M21", "Handle lowered in front of the rod end's sleeves, then slid 15 mm back onto the gland plate (module upside down; held by "
+        "its riser from above)", ["handle (6061"], "body", "body_inv", [(0, 0, 0), (0, -15, 0), (0, -15, -40)],
+        grasp=dict(point=(0.0, -63.4, -90.0), z=UP, x=(0.0, 1.0, 0.0), width=6.0)))
     a(S("M22", "Two M4 handle screws", f"handle_{m}", "body", "body_inv", torque_Nm=2.2))
     a(P("M23", "Striker disc onto the rod end", ["Striker disc"], "body", "body_inv", [(0, 0, 0), (0, 0, -60)]))
     a(S("M24", "Three M3 x 10 flat-head striker screws", f"striker_{m}", "body", "body_inv", torque_Nm=1.1))
-    a(P("M25", "Hermetic connector with its 2-014 face O-ring into the rod end's side boss (last, so the cap's side is clear for the "
-        "gland-plate screws and the handle)", ["Hermetic connector", "Hermetic-connector O-ring"], "body", "body_inv", [(0, 0, 0), (-60, 0, 0)],
-        note="threaded: turned in by wrist rotation with regrasps, which a straight sweep can't show; the leads are soldered to its pins by a person"))
+    # round 6: the hermetic connector (a LEMO 1B on a 2-014 in a side boss) is gone. The rod end is a 316L block with seven Solid
+    # Sealing weld-ins TIG-welded at its front face, made by the shop with the rod (electrical.md section 13.3): it arrives with
+    # the rod in M13 and is checked in M13, M14, M19 and M20-M24. Its plugs go on at the machine (chapter 4, C10's cables).
+    a(N("M25", "Rod end's seven weld-in feedthroughs (3 x FA11631 + 3 x FA11632 type K, 1 x FA10443 4-pin power) welded into the 316L "
+        "block's front face, and the rod into its top", "machine shop",
+        "TIG welds at the block's face and at the rod, on the bare rod before chapter 3, away from every O-ring; the inner joints "
+        "to the feedthrough pins are made before the sleeves are welded. Ask Solid Sealing to confirm the blind-bore weld and the "
+        "weld access (electrical.md 13.3). The SMPW-K and power plugs go onto the sleeves at the machine, not here."))
     a(dict(do="flip", id="M26", label="Module turned upright (wrist roll, 180 deg about the tool axis) onto the upright nest",
            grp="body", frm="body_inv", to="body_up", actor="A"))
     a(P("M27", "Rim wiper onto the plate; plate into the bore onto the bayonet, turned 60 deg (piston at +8 mm overtravel)",
@@ -163,9 +189,13 @@ def steps(module="M50"):
         "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -200)], merge="funnel"))
     a(S("C08", "Four M4 x 12 overflow-funnel screws", "funnel", "chamber", "chamber_inv", torque_Nm=2.2))
     a(P("C09", "Module-present sensor", ["Module-present sensor"], "chamber", "chamber_inv", "explode", note="its bracket screws are not drawn"))
-    a(P("C10", "Build module (upside down) down into the Ø96 floor port; dowel and diamond pin through its flange lugs", ["@module"],
-        "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -150)], merge="body", moved=True, force="spigot",
-        grasp=dict(point=(0.0, 0.0, -62.0), z=UP, x=(1.0, 0.0, 0.0))))
+    # round 6: runs 1-3 held the module at (0, 0, -62) with the fingertips pointing along its axis, 40 mm apart: inside the bore,
+    # past the gland plate and the rod end. The check never tested the fingers against the part they hold, so that passed. Arm B
+    # now takes the handle's grip block (40 mm web) from behind the upside-down chamber (its front faces the back there), as the
+    # tending robot takes it from the front of the machine (robot-ops.md).
+    a(P("C10", "Build module (upside down) down into the Ø96 floor port, held by its handle's grip block; dowel and diamond pin "
+        "through its flange lugs", ["@module"], "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -150)], merge="body", moved=True,
+        force="spigot", actor="B", grasp=dict(point=(0.0, -141.0, -47.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=40.0)))
     a(S("C11", "Two captive M6 screws pull the flange onto the floor (they also finish pushing the spigot seal home); inline nutrunner on a "
         "130 mm extension, so its body clears the module's gland plate", "module_flange", "chamber", "chamber_inv", pn="95966A705", torque_Nm=4.0,
         driver="nutrunner", long_bit=130.0))

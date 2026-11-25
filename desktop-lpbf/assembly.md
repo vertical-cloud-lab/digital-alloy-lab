@@ -28,6 +28,146 @@ Nothing here has been built or tried on hardware. The numbers come from the mode
 - the chamber change of [chamber-construction.md](chamber-construction.md): a through-frame and a bolted floor plate with a second 3.53 mm cord;
 - for run 2, two items from this note's patch list: the lid gland's R13 corners and the floor port's lead-in.
 
+## Round 6 (2026-11-25): the round-5 rod end, its screws, M16, and a re-run on the round-5 model
+
+Sterling asked on 2026-11-25 for everything round 5 left undone ([followup-checks.md](followup-checks.md) §0). For this note
+that was four things:
+- the stale part names;
+- the gland-plate screws that round 5's rod end hid;
+- M16;
+- a re-run of the two-arm build on the round-5 model. Round 5 ran chapter 3 on the round-4 model and never re-ran chapters 4-5.
+
+### What changed in the model
+
+- **The gland plate's six M4 moved onto the arc behind the rod end** ([`cad/joints.py`](cad/joints.py), `gland_screw_angles()`).
+  - **Why:** the even 30° + 60° k pattern put three of them over the rod end's feedthrough block on S25 and M50. A torque
+    screwdriver could not reach them, and they could not be withdrawn: operations.md A1.20 and M7.1 failed, 3 of 6 on M50.
+  - **Rule:** keep the even pattern where every screw clears the block and its sleeves by ≥ 4.5 mm in plan (the Ø7 head
+    plus 1 mm). Otherwise spread the six evenly over the arc behind the block's back face (y +6). Keep them 9 mm clear (the
+    torque screwdriver's Ø16 chuck plus 1 mm) if they then stay ≥ 11 mm apart; otherwise 4.5 mm.
+  - **Result:**
+
+    | Module | Screw angles | Pitch | Plan clearance to the rod end |
+    |---|---|---|---|
+    | S25 | 28.2°-151.8°, every 24.7° | 9.5 mm | 4.5 mm |
+    | M50 | 25.5°-154.5°, every 25.8° | 15.6 mm | 9.0 mm |
+    | L75 | 18.4°-161.6°, every 28.6° | 23.5 mm | 10.1 mm |
+
+    L75's even pattern cleared round 5's block by 4.6 mm, but not the wider block below.
+  - **The seal holds with no screw in front.** The joint is metal to metal; the groove sets the 1.78 mm ring's squeeze at
+    0.48 mm. The figures:
+    - six M4 at 2.2 N m give ~11-16 kN of preload (nut factor 0.2-0.3);
+    - the ring pushes back with ≤ 0.3 kN (an estimate: 0.7-1.75 N/mm over 177 mm of ring at ~27 % squeeze);
+    - vacuum in the chamber adds ~0.3 kN, which closes the joint;
+    - the 14 mm 316L plate's front overhang bends ~1-2 µm under its share of the ring (a cantilever estimate).
+- **The rod end's type K sleeves moved apart, and the block is 81 mm wide (was 72)** ([`cad/modules_low.py`](cad/modules_low.py), `ROD_FT`).
+  - **Why:** a sleeve stood under each of the handle's two M4 (x ±19, y −33.4 on M50). A person could reach them only with a
+    ball-end key (A1.22); the robot's driver could not reach them at all (M22, 0 of 2 in this round's first pass).
+  - **Change:** the sleeves moved from x ±12.5, ±21.5 and ±30.5 to ±11.85, ±26.16 and ±34.83.
+    - The handle screws now sit in an 8.0 mm gap, 4.0 mm from the sleeve on each side.
+    - Every sleeve keeps 2.4 mm to its neighbour and 2.5 mm to the block's edge.
+    - Depth, height and the power sleeve are unchanged, and the block stays inside the base plate's slot (x ±56).
+    - [electrical.md](electrical.md) §13.3 still gives the round-5 layout (72 × 16 mm). Ask Solid Sealing about weld access on
+      this one.
+  - **Still open:** S25's handle screws sit over the block itself, at x ±13, y −20.7, behind its face at y −22. Inside S25's
+    Ø55.4 gland plate they cannot move clear of it. Two ways out:
+    - fit the handle before the rod goes through the gland plate (operations.md A1: A1.21-A1.22 straight after A1.11). S25's
+      rod set screws point sideways (0°, 180°), so the handle's riser doesn't block them;
+    - or move the handle's screws, which is a change to the handle.
+
+### Hand operations and interference on the changed model
+
+`run_ops.py <module> --only=A1,M7 --tag=-r6-rodend`; operations.md is not updated here.
+
+| Check | Round 5 | Round 6 |
+|---|---|---|
+| M50 A1.20 and M7.1, gland-plate screws | FAIL, 3 of 6 | PASS, 6 of 6 with the torque screwdriver |
+| M50 A1.22, handle screws | PASS, ball-end key only | PASS, 2 of 2 with the torque screwdriver |
+| S25 A1.20 and M7.1 | not run (3 of 6 sat over the block) | PASS, 6 of 6 with the torque screwdriver |
+| S25 A1.22 | not run | FAIL: both screws over the block (above) |
+| L75 A1.20, M7.1 and A1.22 | not run | PASS: 6 of 6, 6 of 6 and 2 of 2, all with the torque screwdriver |
+| A1 and M7, all steps | M50 only | M50 19 pass / 0 fail; S25 17 / 1 (A1.22); L75 19 / 0 |
+
+Sources: [M50](analysis/out/ops/results-M50-r6-rodend.md), [S25](analysis/out/ops/results-S25-r6-rodend.md),
+[L75](analysis/out/ops/results-L75-r6-rodend.md). Operations.py's A1.14 and M7.2 still name the removed hermetic connector
+(not this note's file).
+
+**Interference** (`interference.py`, exact booleans, the same 6 static states and 8 motion sweeps as round 5):
+
+| Module | Result | Rod end's tightest gaps |
+|---|---|---|
+| M50 | 0 | Z lift arm 1.0 mm (as designed: the block's underside is 1 mm over the arm); the guard frame 4.0 mm on the swap path; the base plate 4.5 mm at the bottom of the stroke; the gland plate 3.0 mm at the +8 mm overtravel |
+| S25 | 0 | the same, and its handle screws 2.0 mm above the block at the overtravel |
+| L75 | not finished | stopped when the merged model arrived (below); its rod end and gland plate changed as M50's did |
+
+These ran on this round's model before the merge with the other round-6 changes; the merged model is checked below.
+
+### The robot sequence ([`sequence.py`](analysis/assembly/sequence.py)) and the animation's captions
+
+- **Stale names.**
+  - M04 now places the three type K thermocouples; there is no cutoff. M19 no longer lists the cutoff.
+  - M25 was the hermetic connector. It is now a machine-shop step: the seven weld-ins are TIG-welded into the block's face, and
+    the rod into its top, before chapter 3.
+  - The rod end arrives with the rod at M13. The key "Rod end" matches both the block and its feedthroughs.
+  - [`render_build.py`](cad/render_build.py)'s chapter 3 now flies in the feedthrough block, and its captions say so. Nothing
+    else in it changed.
+- **M13, M14 and M19.** Arm A takes the rod end's block by its two end faces: 81 mm across, fingers along x. Run 3 gripped
+  the Ø22 end cap with the fingers along y, where one finger now sits inside the block.
+- **M16** (next section).
+- **M21.** The handle is now lowered 15 mm in front of its seat and slid back the last 15 mm, held by its grip block's 40 mm
+  web. Run 3 lowered it straight down the module's axis, which takes its two side arms through the type K sleeves. This
+  round's first pass found that: blocked after 18 mm.
+- **C10.** Arm B now holds the module by the handle's grip block. Runs 1-3 held it at (0, 0, −62) with the fingertips
+  pointing along its axis, 40 mm apart: inside the bore, beyond the gland plate and the rod end. The check never tests
+  the fingers against the part they hold, so C10 passed.
+
+### M16: the welded body is gripped by its tube, not its flange
+
+Run 3's automatic grasp took the top slice of the upright body: the flange, 119 mm across its dowel lugs, wider than the
+2F-85's 85 mm stroke. The handle's grip block, which the tending robot uses, isn't on yet at M16; the handle goes on at M21.
+
+So M16 now grips the tube between the flange and the collar, from the front, as the turn-overs M18, M26 and M28 already
+did:
+- **Fit:** the tube is Ø56.8 on M50, inside the 85 mm stroke. The nest's three posts (20°, 90°, 160°) leave the front free
+  for the fingers.
+- **Load:** the welded body is 1.73 kg ([`mass.json`](analysis/out/mass.json)), with its centre of mass on the axis, 31 mm
+  above the grip. The 2F-85 grips with 20-235 N and carries 5 kg ([Robotiq product sheet, May 2025](https://blog.robotiq.com/hubfs/Product-sheets/Adaptive%20Grippers/Product-sheet-Adaptive-Grippers-EN.pdf),
+  fetched 2026-11-25 01:02 UTC).
+- **Friction:** with μ 0.3 (assumed, steel on the stock pads), 2μF holds the 17 N body from F = 28 N; at 100 N the margin
+  is 3.5×.
+
+A Robotiq 2F-140 (140 mm stroke, 10-125 N, 2.5 kg, same sheet) would take the flange. It would be a third tool on each
+changer, with half the grip force, so it is not needed. On L75 the tube is Ø82.2, which leaves 1.4 mm a side in the
+2F-85's stroke: workable with the AprilTag re-registration, but tight. This study builds M50 only.
+[`assembly-tooling.csv`](assembly-tooling.csv) E3 records this; no tool changed.
+
+### Run 4: chapter 3 on the round-5 model
+
+`run_assembly.py --only=M` on the model above (round 5's merged model plus this round's two changes). Round 5's second
+pass ran on the round-4 model, with its Ø24 end cap and hermetic connector.
+
+| | Round 5, second pass | Round 6, first pass (72 mm block) | Round 6, second pass |
+|---|---|---|---|
+| Chapter 3, all 28 rows (notes count as passing) | 27 (M16 fails) | 26 (M21, M22) | 27 (M21) |
+| Chapter 3, checked part, seal and turn-over steps | 20 of 21 | 19 of 20 | 19 of 20 |
+| Chapter 3, screws | 16 of 16 | 14 of 16 | 16 of 16 |
+| All checked steps, with run 2's chapters 4-5 | 64 of 80 | 63 of 79 | 63 of 79 |
+| All screws, with run 2's chapters 4-5 | 118 of 135 | 116 of 135 | 118 of 135 |
+
+M25 is now a machine-shop step, so chapter 3 has 20 checked steps, not 21.
+
+- **First pass,** on the 72 mm block:
+  - M13, M14 and M19 passed with the new grip on the block;
+  - M16 passed on the tube;
+  - M20 passed, 6 of 6, with the screwdriver 1.0 mm from the block;
+  - M21 failed: lowered down the axis, the handle's side arms ran into the type K sleeves after 18 mm;
+  - M22 failed, 0 of 2: a sleeve stood on each handle screw's axis. That is why the sleeves moved.
+- **Second pass,** on the 81 mm block:
+  - M22 passes, 2 of 2. The OnRobot's Ø6.35 bit passes 0.8 mm from the sleeves.
+  - M21's handle now misses the sleeves (part sweep PASS, 2.43 mm). But arm A, holding the grip block from the front, hit
+    its own wrist 2 with its upper arm 39 mm along the insertion. M21 now holds the handle from above by its 6 mm riser;
+    that is checked in the full run on the merged model (run 5, below).
+
 ## Result
 
 **Two UR12e arms can do most of the fine assembly, given a turn-over positioner, three drivers and a few custom tools.** What still fails comes down to:
@@ -240,35 +380,38 @@ MiR publishes a centre-of-mass ceiling for the payload when it drives at 1.2 m/s
 
 The robot sequence ([`sequence.py`](analysis/assembly/sequence.py)) keeps the animation's sub-assemblies (render_build.py chapters 3-5), but it changes the order and which way up each part sits. The rule behind every change: every screw is driven from above or from the side, every part goes onto something it can rest on, and nothing heavier than about 8 kg rests on one arm.
 
-1. **Heater stack, gland plate and rod, all upside down (run 3: the round-4 order).** In order:
+1. **Heater stack, gland plate and rod, all upside down (runs 3-4: the round-4 order).** In order:
    - the block, bayonet face down on a pedestal nest;
-   - the heaters, thermocouples, cutoff, Macor rings and shields, all dropping in from above;
+   - the heaters, the three type K thermocouples (control, edge, limit), the Macor rings and shields, all dropping in from
+     above (round 6: the thermal cutoff is gone, [electrical.md](electrical.md) §13.4);
    - the piston head;
    - the disc springs;
    - the three M3 stack screws, driven down;
    - meanwhile, on its own nest: the gland plate's 2-034 face ring, laid in groove up and held by the PFPE film; the plate
      turned over onto the nest; the two 2-114 rod rings, folded through the throat by the loader;
-   - the rod, its end cap welded on by the shop on the bare rod, lowered top end first through both rod rings on the PEEK
-     bullet. Arm A holds it by the Ø22 end cap; the nest holds the plate;
+   - the rod, its rod end welded on by the shop (a 316L block with seven Solid Sealing weld-in feedthroughs on its front
+     face, [electrical.md](electrical.md) §13.3), lowered top end first through both rod rings on the PEEK bullet. Arm A
+     holds it by the block's two end faces, 81 mm across (round 6; run 3 held the Ø22 end cap, where a finger now sits in
+     the block); the nest holds the plate;
    - the rod, with the gland plate riding on it, into the head's socket, and the rod's two radial set screws.
 
    Run 2 built the rod into the head first, turned the stack over and handed it to arm B, and fitted the rod end last
    (M25). That step failed because the rod end is welded to the rod, and in service the weld trapped the gland plate
    (operations.md M7.2). The stack is no longer turned over or handed between the arms.
-2. **Module body, upside down on its spigot face.** In order:
+2. **Module body: upright for its spigot ring, then upside down for the stack (runs 3-4).** In order:
+   - arm A sets the welded body upright on a three-post nest, gripping it across the tube between the flange and the
+     collar (Ø56.8; round 6, as the turn-overs grip it), and the 2-238 goes on over the mandrel;
+   - arm A turns it upside down onto its spigot nest;
    - arm A lowers the whole stack, the rod and the gland plate into the bore from the tube's open end, which faces up, and
      the gland plate lands on the welded collar;
-   - six M4, driven down;
-   - the handle and its two M4;
-   - the striker disc and its three flat-head M3;
-   - the hermetic connector into the end cap's side boss. It goes on last so that the cap's side is clear for the driver
-     on the gland-plate screws and for the handle; a person's order (operations.md A1) fits it before the stack goes in.
+   - six M4, driven down. Round 6: they sit on the arc behind the rod end's block, where the even pattern put three over it;
+   - the handle, lowered 15 mm in front of its seat (clear of the rod end's sleeves) and slid back onto the gland plate,
+     held by its grip block; then its two M4, which now pass between the sleeves;
+   - the striker disc and its three flat-head M3.
 
-   Arm A then turns the module upright onto a three-post nest. Next:
-   - the 2-238 goes on over the mandrel;
-   - arm A drops the plate in at +8 mm overtravel and gives it the 60° bayonet turn.
-
-   A turns the module over again, ready for the chamber (C10).
+   The rod end needs nothing more here: its feedthroughs are welded in by the shop, and their plugs go on at the machine.
+   Arm A then turns the module upright, drops the plate in at +8 mm overtravel and gives it the 60° bayonet turn, and turns
+   the module over again, ready for the chamber (C10).
 3. **Chamber (frame + floor plate).**
    - **On Fixture P.** The plate goes face up on Fixture P, a floor-standing pedestal, and the floor cord is rolled into its gland. Both arms lower the frame onto the plate's two dowels. The 18 M4 floor screws go up through the U-notches with the angle-head nutrunner.
    - **Into the trunnion (run 2).** Both arms carry the 7.4 kg chamber upright into the trunnion's jaws. The trunnion turns it upside down, with both arms parked.
