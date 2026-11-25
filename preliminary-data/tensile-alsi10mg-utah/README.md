@@ -7,8 +7,8 @@ Source thread: [#138](https://github.com/vertical-cloud-lab/digital-alloy-lab/is
 ## What was tested
 
 - **Print.** Ten coupons were printed on 2026-04-23 to 04-27 from the lab's commercial AlSi10Mg
-  powder on the Aconity MIDI in the University of Utah's Metal 3D Printing Core Facility. They
-  used the facility's own parameters, on a 170 mm aluminium plate. All ten were printed flat
+  powder on the Aconity MIDI in the University of Utah's Metal 3D Printing Core Facility, on a
+  170 mm aluminium plate. #138 doesn't record the laser parameters. All ten were printed flat
   ([photo](coupons-on-build-plate.jpg)), so the load axis lies in the build plane. The datasheets
   call this orientation "horizontal".
 - **Condition.** As built: no heat treatment, and no machining (the surfaces are as printed,
@@ -63,7 +63,7 @@ All rows are room temperature and as built (no heat treatment). For the Nikon SL
   and close to Nikon's near-net-shape mean (5 %).
 - **Why ours are lower.** All three gaps point the same way, and that is expected for a
   first print:
-  - The facility's parameters were run on our powder, not on the vendor's qualified
+  - It was a first build of our powder with unrecorded parameters, not the vendor's qualified
     powder-and-parameter set.
   - The surfaces were not machined.
   - The coupons are small rectangular ones, while the datasheets use round bars (EOS: turned;
@@ -154,4 +154,4 @@ row). That folder also holds the proposal's plotting script and figure.
 - **Five untested coupons** from the same build. #138 mentions intact ones kept in the lab
   ([2026-05-14](https://github.com/vertical-cloud-lab/digital-alloy-lab/issues/138#issuecomment-6353375483)).
   They could serve the high-temperature test that hasn't been run yet
-  ([`../high-temperature-tensile/`](../high-temperature-tensile/README.md)).
+  ([`../README.md`](../README.md#high-temperature-tensile-none-found)).
