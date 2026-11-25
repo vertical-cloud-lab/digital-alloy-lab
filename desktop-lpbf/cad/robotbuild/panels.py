@@ -95,14 +95,16 @@ def weeks(v):
     def one(x):
         if x < 1.0:
             return f"{max(1, round(x * 7))} d"
-        return f"{x:g} wk" if x < 10 else f"{x:.0f} wk"
+        return f"{x:.1f} wk".replace(".0 wk", " wk") if x < 10 else f"{x:.0f} wk"
+    def num(x):
+        return f"{x:.0f}" if x >= 10 or abs(x - round(x)) < 0.05 else f"{x:.1f}"
     if abs(hi - lo) < 1e-6:
         return one(lo)
     if hi < 1.0:
         return f"{max(1, round(lo * 7))}-{max(1, round(hi * 7))} d"
     if lo < 1.0:
         return f"{one(lo)}-{one(hi)}"
-    return f"{lo:g}-{hi:g} wk"
+    return f"{num(lo)}-{num(hi)} wk"
 
 
 def fit(d, text, f, width):

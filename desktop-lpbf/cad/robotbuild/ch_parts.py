@@ -517,8 +517,11 @@ def write_meta():
             hid = big_of.get(item)
             b = big.get(hid)
             cap, sub = _long_caption(item, b, H, wk)
+            row = [item_row(b)] if b and b.get("new") else []
+            if row and item == "honing":                         # the service's lead, not its stock's (estimate)
+                row[0]["lead_new"] = [3.0, 6.0]
             cost = dict(cat="What sets the date the parts are in", n_cats=n_cats, cat_no=n_cats, new=tn, used=tu,
-                        run_new=tn, run_used=tu, items=[item_row(b)] if b and b.get("new") else [], foot=foot)
+                        run_new=tn, run_used=tu, items=row, foot=foot)
             lead["highlight"] = [b["short"]] if b else []
         else:                                                    # the close: what is not on the table, the totals, the date
             k = min(1.0, t_in / 1.5)
@@ -554,7 +557,9 @@ def write_meta():
 
 def _long_caption(key, b, H, wk):
     """The long-lead beat's caption and subtitle for one close-up."""
-    risks = {r.get("line"): r for r in H.get("risks") or []}
+    risks = {}
+    for r in H.get("risks") or []:                     # the first risk of each line is its slow part
+        risks.setdefault(r.get("line"), r)
     if key == "guardswitch":
         r = risks.get("S2") or {}
         cap = "The longest lead as chosen: a $123 guard-position switch, 27 weeks + the purchase order"
@@ -563,7 +568,8 @@ def _long_caption(key, b, H, wk):
     elif key == "relay":
         r = risks.get("H2") or {}
         cap = "Next: the Omron K8DT plate-temperature relay, out of stock until March 2027 (19 weeks)"
-        sub = (r.get("action") or "Use a stocked thermostat, or order it on day one")
+        act = r.get("action") or "use a stocked thermostat, or order it on day one"
+        sub = "In the power box. Swap: " + act
     elif key == "laserlead":
         nw = (wk.get("new") or {}).get("parts")
         cap = ("The laser: 12-15 weeks new (IPG, 10-12 wk after the order + BYU's PO), about a week used (eBay)")
