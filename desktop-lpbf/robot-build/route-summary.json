@@ -177,6 +177,15 @@
    "outside_usd": 400,
    "materials_usd": 9317,
    "equipment_usd": null,
+   "total_usd_at_65": [
+    28652,
+    28652
+   ],
+   "total_usd_at_95": [
+    37390,
+    37390
+   ],
+   "total_usd_labour_free": 9717,
    "calendar_days_to_leak_test": [
     54,
     84
@@ -194,6 +203,15 @@
    "outside_usd": 400,
    "materials_usd": 9317,
    "equipment_usd": null,
+   "total_usd_at_65": [
+    28652,
+    28652
+   ],
+   "total_usd_at_95": [
+    37390,
+    37390
+   ],
+   "total_usd_labour_free": 9717,
    "calendar_days_to_leak_test": [
     49,
     84
@@ -211,6 +229,15 @@
    "outside_usd": 400,
    "materials_usd": 9317,
    "equipment_usd": null,
+   "total_usd_at_65": [
+    28652,
+    28652
+   ],
+   "total_usd_at_95": [
+    37390,
+    37390
+   ],
+   "total_usd_labour_free": 9717,
    "calendar_days_to_leak_test": [
     105,
     108
@@ -228,6 +255,15 @@
    "outside_usd": 6456,
    "materials_usd": 0,
    "equipment_usd": null,
+   "total_usd_at_65": [
+    11136,
+    11136
+   ],
+   "total_usd_at_95": [
+    13296,
+    13296
+   ],
+   "total_usd_labour_free": 6456,
    "calendar_days_to_leak_test": [
     52,
     88
@@ -245,6 +281,15 @@
    "outside_usd": 28494,
    "materials_usd": 0,
    "equipment_usd": null,
+   "total_usd_at_65": [
+    33174,
+    33174
+   ],
+   "total_usd_at_95": [
+    35334,
+    35334
+   ],
+   "total_usd_labour_free": 28494,
    "calendar_days_to_leak_test": [
     52,
     88
@@ -262,6 +307,15 @@
    "outside_usd": 4529,
    "materials_usd": 6377,
    "equipment_usd": null,
+   "total_usd_at_65": [
+    19622,
+    19622
+   ],
+   "total_usd_at_95": [
+    23646,
+    23646
+   ],
+   "total_usd_labour_free": 10906,
    "calendar_days_to_leak_test": [
     49,
     84
@@ -279,6 +333,15 @@
    "outside_usd": 11872,
    "materials_usd": 6377,
    "equipment_usd": null,
+   "total_usd_at_65": [
+    26966,
+    26966
+   ],
+   "total_usd_at_95": [
+    30988,
+    30988
+   ],
+   "total_usd_labour_free": 18249,
    "calendar_days_to_leak_test": [
     49,
     84
@@ -302,6 +365,15 @@
    "outside_usd": 400,
    "materials_usd": 9317,
    "equipment_usd": 329339,
+   "total_usd_at_65": [
+    432006,
+    524306
+   ],
+   "total_usd_at_95": [
+    474906,
+    609806
+   ],
+   "total_usd_labour_free": 339056,
    "calendar_days_to_leak_test": [
     154,
     297

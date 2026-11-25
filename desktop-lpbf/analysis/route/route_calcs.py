@@ -335,6 +335,11 @@ def routes(rows, H):
                   ready_wd=[round(20 * WK + 7 + ASSY_WD[0], 1), round(40 * WK + 7 + ASSY_WD[1], 1)],
                   critical="commissioning the cell (Edison r7 robot-build review, section 5: estimates)")
     for v in R.values():
+        lh = v["labour_h"] if isinstance(v["labour_h"], list) else [v["labour_h"], v["labour_h"]]
+        fixed = v["outside_usd"] + (v.get("materials_usd") or 0) + (v.get("equipment_usd") or 0)
+        v["total_usd_at_65"] = [round(h * RATE + fixed) for h in lh]
+        v["total_usd_at_95"] = [round(h * RATE_OFF + fixed) for h in lh]
+        v["total_usd_labour_free"] = round(fixed)
         v["ready_cal_days"] = [round(wd2cal(x)) for x in v["ready_wd"]]
         v["ready_weeks"] = [round(wd2cal(x) / 7.0, 1) for x in v["ready_wd"]]
     extras = dict(stock_usd=round(stock_all), tooling_usd=TOOLING_BUY, drawings_all_h=drawings_all, receive_all_h=receive_all,
@@ -671,7 +676,9 @@ def main():
     for k, v in R.items():
         route_rows.append(dict(route=k, label=v["label"], labour_h=v["labour_h"], labour_usd_at_65=v["labour_usd"],
                                outside_usd=v["outside_usd"], materials_and_tools_usd=v.get("materials_usd", ""),
-                               equipment_usd=v.get("equipment_usd", ""), ready_working_days=v["ready_wd"],
+                               equipment_usd=v.get("equipment_usd", ""), total_usd_at_65=v["total_usd_at_65"],
+                               total_usd_at_95=v["total_usd_at_95"], total_usd_labour_free=v["total_usd_labour_free"],
+                               ready_working_days=v["ready_wd"],
                                ready_calendar_days=v["ready_cal_days"], ready_weeks=v["ready_weeks"], critical_path=v["critical"]))
     write_csv(RB / "route-routes.csv", route_rows)
     write_csv(RB / "route-schedule.csv", S)
@@ -689,6 +696,8 @@ def main():
                    top10=H["top10"], groups=[dict(group=SHORT[g["group"]], h=g["total"], pct=g["share_pct"]) for g in H["groups"]]),
         routes={k: dict(label=v["label"], labour_h=v["labour_h"], labour_usd=v["labour_usd"], outside_usd=v["outside_usd"],
                         materials_usd=v.get("materials_usd"), equipment_usd=v.get("equipment_usd"),
+                        total_usd_at_65=v["total_usd_at_65"], total_usd_at_95=v["total_usd_at_95"],
+                        total_usd_labour_free=v["total_usd_labour_free"],
                         calendar_days_to_leak_test=v["ready_cal_days"], weeks_to_leak_test=v["ready_weeks"], critical=v["critical"])
                 for k, v in R.items()},
         chamber_share=dict(frame_floor_h=H["chamber"]["frame_floor_h"], frame_floor_pct=H["chamber"]["frame_floor_pct"],
