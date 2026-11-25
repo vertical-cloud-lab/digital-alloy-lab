@@ -1,0 +1,52 @@
+{
+ "F-S1 load": {
+  "kg": 30.05,
+  "frames": 288,
+  "person_contacts": 0,
+  "person_first": [],
+  "person_min_clear_mm": 0.0,
+  "clear_mm": 40.1,
+  "nearest": "vf4/table",
+  "contact": null,
+  "samples": 67
+ },
+ "F-S1 to F-S2 flip": {
+  "kg": 22.8,
+  "frames": 264,
+  "person_contacts": 1,
+  "person_first": [
+   [
+    108,
+    "person/glove",
+    "jib/boom"
+   ]
+  ],
+  "person_min_clear_mm": 0.0,
+  "clear_mm": 25.6,
+  "nearest": "vf4/table",
+  "contact": null,
+  "samples": 62
+ },
+ "core out": {
+  "kg": 13.0,
+  "frames": 216,
+  "person_contacts": 0,
+  "person_first": [],
+  "person_min_clear_mm": 0.0,
+  "clear_mm": 25.4,
+  "nearest": "vf4/table",
+  "contact": null,
+  "samples": 51
+ },
+ "F-S3 onto the rotary": {
+  "kg": 10.0,
+  "frames": 216,
+  "person_contacts": 0,
+  "person_first": [],
+  "person_min_clear_mm": 0.0,
+  "clear_mm": 25.4,
+  "nearest": "vf4/table",
+  "contact": null,
+  "samples": 51
+ }
+}
