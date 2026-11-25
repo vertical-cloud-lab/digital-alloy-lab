@@ -1,10 +1,12 @@
 """Batch driver for the 3D melt-pool solver (fv3d.py): named case sets, one JSON line per case, fields kept in /tmp.
 
-Run (each case 1-5 min on one core):
-    OMP_NUM_THREADS=1 /tmp/capmem 3 python run_cases.py ref          # the 8 reference points behind surface_fields.npz
-    OMP_NUM_THREADS=1 /tmp/capmem 3 python run_cases.py sens         # Marangoni factor, absorptivity, layer, grid
-    OMP_NUM_THREADS=1 /tmp/capmem 3 python run_cases.py map          # cross-check points against the analytical models
-    python run_cases.py collect                                       # -> analysis/out/monitoring/melt/surface_fields.npz
+Run (each case 0.5-7 min on one core; sets can be chained with +, e.g. ref+val+sens+map; cases already in the log are skipped):
+    OMP_NUM_THREADS=1 python run_cases.py ref          # the 8 reference points behind surface_fields.npz
+    OMP_NUM_THREADS=1 python run_cases.py val          # Patel & Vlasea's AlSi10Mg tracks (108 um spot), A 0.30/0.35/0.40
+    OMP_NUM_THREADS=1 python run_cases.py sens         # grid, Marangoni factor, powder layer, evaporation
+    OMP_NUM_THREADS=1 python run_cases.py map          # 7075 (bulk and depleted surface), pure Al, 200 and 400 W
+    OMP_NUM_THREADS=1 python run_cases.py ovh          # overhang: 150 and 400 um of powder under the track
+    python run_cases.py collect                         # -> analysis/out/monitoring/melt/surface_fields.npz
 Results: analysis/out/monitoring/melt/fv_cases.jsonl (summaries), /tmp/melt_runs/<tag>.npz (fields, not committed).
 """
 from __future__ import annotations
@@ -76,6 +78,12 @@ def map_cases():
             out.append(fv3d.Case(alloy=alloy, P=P, v=v, A=A_REF, T0=298.15, h=(8e-6, 6e-6, 5e-6),
                                  tag=f"map_{alloy}_{P:.0f}W_{v:.1f}ms"))
     return out
+
+
+def ovh_cases():
+    """An overhang: the track melts a deep powder bed instead of a 30 um layer on solid (150 and 400 um of powder)."""
+    return [fv3d.Case(alloy="AlSi10Mg", P=320.0, v=1.1, A=A_REF, T0=298.15, h=(8e-6, 6e-6, 5e-6), t_layer=t,
+                      tag=f"ovh_AlSi10Mg_320W_1.1ms_powder{round(t * 1e6)}um") for t in (150e-6, 400e-6)]
 
 
 def run_set(cases, skip_done=True):
@@ -157,4 +165,4 @@ if __name__ == "__main__":
         collect()
     else:
         for name in cmd.split("+"):
-            run_set({"ref": ref_cases, "sens": sens_cases, "map": map_cases, "val": val_cases}[name]())
+            run_set({"ref": ref_cases, "sens": sens_cases, "map": map_cases, "val": val_cases, "ovh": ovh_cases}[name]())

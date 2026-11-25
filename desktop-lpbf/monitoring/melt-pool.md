@@ -49,8 +49,7 @@ hatch; plate at 25 or 200 °C.
 3. **Temperatures a pyrometer must span:** from the plate (25–200 °C) through the mushy zone (477–652 °C, 750–925 K) to the
    depression wall at ~2,500–2,900 K (2,763 K for AlSi10Mg; as low as ~1,840 K for 7075 while Zn keeps evaporating). The
    flat-surface model peaks at 3,000–3,600 K at 320–400 W; the real surface can't stay much hotter than the wall, because it is
-   pushed down into a depression. Between 750 K and 2,763 K the radiance
-   changes ~10⁴× at 1.55 µm and ~10⁷× at 0.85 µm.
+   pushed down into a depression. Between 750 K and 2,763 K the radiance changes ~10⁴× at 1.55 µm and ~10⁷× at 0.85 µm.
 4. **Cooling and solidification against bandwidth:** cooling at the liquidus is 0.2–2.6 × 10⁶ K/s (medians), in line with the
    0.8–0.95 × 10⁶ K/s published for the centre of AlSi10Mg pools. The **mushy zone lasts 22–72 µs for AlSi10Mg, 23–72 µs for
    6061 and 67–156 µs for 7075** at 1.1 m/s on a 25 °C plate, and 2–3× longer on a 200 °C plate.
@@ -81,7 +80,9 @@ hatch; plate at 25 or 200 °C.
   the depression and spatter, not the pool's edge or the cooling that drives cracking.
 - **Make the coaxial field 1.2–1.5 mm**, not 1 mm.
 - **Treat the coaxial photodiode as a detector of dwell, keyholing and lack of fusion, not a thermometer.** Its 520–985 nm band
-  is dominated by the depression. Keep it, sample it at ≥ 200 kS/s, and log the plate thermocouple for baseline drift.
+  is dominated by the depression. Keep it, sample it at ≥ 200 kS/s, and log the plate thermocouple for baseline drift. This fits
+  Porter et al. 2022: across 155 AlSi10Mg tracks, a commercial three-photodiode system at 200 kHz showed no overall statistical
+  correlation between its averaged signals and the track's width or height.
 - **The two-colour channel (step 5) will report the depression wall's temperature**, ~2,570 K on AlSi10Mg and ~2,360 K on 6061.
   It is a good regime and alloy indicator but will not give cooling rates.
 - **Use skywriting, or tune the laser-off delay on a test pattern,** before reading photodiode amplitudes. A mistuned delay makes
@@ -92,8 +93,10 @@ hatch; plate at 25 or 200 °C.
 - **Plan the photodiode's gain for a ~20× range.** From 200 to 400 W on AlSi10Mg the signal changes 0.25–1.37× (against
   320 W, 1.1 m/s), 6061 gives ~0.6×, and 7075 gives 0.1× if Zn evaporation holds its surface at ~1,840 K or ~0.7× if the surface
   is depleted of Zn.
-- **The vapour is Mg-rich for AlSi10Mg and 6061 and Zn-rich for 7075**, whose bulk boils at ~1,400 °C. Expect Mg and Zn in the
-  condensate on windows, and composition drift (§5).
+- **Mg and Zn set the boiling points** (AlSi10Mg and 6061 boil as Mg-rich vapour, 7075 as Zn-rich vapour at ~1,400 °C), but
+  their supply limits how much leaves. The condensate is mostly Al by moles, with ~15–30 % Mg from AlSi10Mg and 6061 and ~60 %
+  Zn + Mg from 7075: ~0.2–0.6 g per hour of lasing (§5). Expect Mg- and Zn-bearing condensate on the windows, and composition
+  drift.
 
 ## 1. Inputs
 
@@ -156,7 +159,8 @@ Two models are used:
   - Their data: Ti-6Al-4V, Al6061 and 316 bare plates, 100–520 W, 0.3–1.2 m/s, with a YLR-500-class laser at 1,070 nm.
 - **Normalised enthalpy** ([King et al. 2014](https://doi.org/10.1016/j.jmatprotec.2014.06.005), Eq. 2.6, read 2026-11-25):
   ΔH/h_s = A P / (ρ c T_m √(π α v σ³)), σ the Gaussian's standard deviation (a quarter of the 1/e² diameter). Keyhole from
-  π T_b/T_m in theory (≈ 9 for AlSi10Mg), 30 ± 4 measured on 316L.
+  π T_b/T_m in theory (≈ 9 for AlSi10Mg), 30 ± 4 measured on 316L. Here α is the mean diffusivity from the plate to the liquidus
+  (also in Ke); King used the liquid's, which for Al is ~2.3× lower and would raise ΔH/h_s by ~1.5×.
 - **Lack of fusion:** (h/W)² + (t/D)² > 1 ([Tang et al. 2017](https://doi.org/10.1016/j.addma.2016.12.001)), hatch 0.10 mm.
   **Balling:** L/W > π ([Yadroitsev et al. 2010](https://doi.org/10.1016/j.jmatprotec.2010.05.010)).
 - **Marangoni velocity scale:** u ≈ (|dσ/dT| ΔT)^(2/3) / (ρ μ W/2)^(1/3) ([Mukherjee et al. 2017](https://doi.org/10.1063/1.4976006)).
@@ -190,7 +194,10 @@ Other numbers from the same script (all in `tables.md`):
   teardrop.
 - **Marangoni scale** 6–17 m/s, flow Péclet 15–60. CFD of Al pools reports 0.5–5 m/s (Edison). Either way convection, not
   conduction, carries the heat inside the pool, which is why the 3D model multiplies the liquid's k (§3.3).
-- **Balling** (L/W > π) does not occur in the useful window.
+- **Balling** (L/W > π) does not occur in the useful window by this criterion. But in 352 AlSi10Mg single tracks on a 30 µm
+  layer, [Porter et al. 2022](https://utw10945.utweb.utexas.edu/sites/default/files/2022/Generation%20and%20Analysis%20of%20AlSi10Mg%20L-PBF%20Single%20T.pdf)
+  (read 2026-11-25) saw tracks turn incomplete and then break up as speed rose, even at the same line energy. Treat the balling
+  boundary as optimistic and find it on single tracks.
 - **Lack of fusion** (Tang) at 200 W and 1.1 m/s for every alloy on a 25 °C plate; the 3D model's 200 W pools (160–180 µm wide,
   62–72 µm deep) clear it narrowly.
 - **Rosenthal** gives pools within 3–15 % of Eagar–Tsai's: at Péclet ~1 the pool is 2–4 times the spot, so the beam's shape
@@ -282,7 +289,7 @@ What the fields say:
 - **Pools are short and wide** (L/W 1.2–1.7): Al conducts heat ahead of the beam (Péclet ~1).
 - **The flat model's surface runs past the alloy's boiling point** (by ~770–850 K for AlSi10Mg at 320 W, ~350 K for pure Al,
   ~1,300 K for 7075) over a circle ~65–75 µm across (0.004 mm²). There
-  the recoil pressure (1.2 bar at the wall temperature, up to ~8 bar at the flat peak) is 3–20× the capillary pressure of a
+  the recoil pressure (1.2 bar at the wall temperature, up to ~8 bar at the flat peak) is 3–50× the capillary pressure of a
   50 µm dimple, so the real surface is a shallow depression at ~2,500–2,900 K: the transition regime of §0.
 - **6061 runs smaller and cooler than AlSi10Mg** at the same power: higher k and liquidus, and its 1 % Mg boils off at a lower
   temperature (wall 2,508 K), which also cuts its photodiode signal to ~0.6×.
@@ -504,7 +511,8 @@ Huang and Van Cauwenbergh myself; the rest is as Edison reported it. Where this 
 - **No free surface and no flow.** The vapour depression, keyhole depth, spatter and humping are outside a conduction model.
   Where the surface passes boiling, the fields are a flat-surface upper bound; `T_capped_K` is the practical reading.
 - **One absorptivity (0.35),** fitted to widths at 200–350 W and 0.69–0.92 m/s with a 108 µm spot. It probably rises at 0.6 m/s and
-  as the depression deepens (Gan's Eq. 6 gives 0.5–0.6), so the 0.6 m/s pools are, if anything, too small.
+  as the depression deepens (Gan's Eq. 6 gives 0.5–0.6), so the 0.6 m/s pools are, if anything, too small. The same holds on a
+  200 °C plate (Gan's Eq. 6: 0.37 → 0.45 at 320 W and 1.1 m/s), so the +25 % pool growth there is a lower bound.
 - **The validation data are second-hand** (Patel & Vlasea via Edison), and I don't know which surface their depths are measured
   from.
 - **Properties:** liquid conductivities, AlSi10Mg's latent heat and Raoult activities are estimates (10–20 %; ×2 for activities).
@@ -523,6 +531,10 @@ Huang and Van Cauwenbergh myself; the rest is as Edison reported it. Where this 
   30 ± 4)
 - Huang, Y. et al. (2022). Keyhole fluctuation and pore formation mechanisms during laser powder bed fusion additive
   manufacturing. Nat. Commun. 13:1170. https://doi.org/10.1038/s41467-022-28694-x (read: Al7A77, 2.5–10 kHz, thresholds)
+- Porter, C. et al. (2022). Generation and analysis of AlSi10Mg L-PBF single track data set enabling deeper process insights.
+  Proc. 33rd Solid Freeform Fabrication Symposium, 1541–1549.
+  https://utw10945.utweb.utexas.edu/sites/default/files/2022/Generation%20and%20Analysis%20of%20AlSi10Mg%20L-PBF%20Single%20T.pdf
+  (read 2026-11-25: 352 tracks, 50–400 W, 0.27–2.5 m/s; photodiode signals against track size; balling at speed)
 - Van Cauwenbergh, P. et al. (2021). Unravelling the multi-scale structure–property relationship of laser powder bed fusion
   processed and heat-treated AlSi10Mg. Sci. Rep. 11:6423. https://doi.org/10.1038/s41598-021-85047-2 (read: cooling rates,
   conductivities)

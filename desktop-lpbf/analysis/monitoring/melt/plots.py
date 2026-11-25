@@ -165,7 +165,7 @@ def apparent(R):
     out = {}
     ref = None
     for t, r in sorted(R.items()):
-        if not t.startswith(("ref_", "map_")):
+        if not t.startswith(("ref_", "map_", "ovh_")):
             continue
         d = np.load(RUNS / f"{t}.npz")
         al = PR.Alloy(r["case"]["alloy"])

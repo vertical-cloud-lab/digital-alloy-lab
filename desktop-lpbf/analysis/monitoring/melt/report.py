@@ -112,12 +112,12 @@ def fv_table(rows, J):
          "Si camera 850 nm, 12-bit: sees above (K), L × W (µm) | InGaAs 1550 nm, 12-bit: above (K), L × W (µm) | Photodiode vs "
          "AlSi10Mg 1.1 m/s 25 °C |", "|---|---|---|---|---|---|---|---|"]
     for t, r in sorted(rows.items()):
-        if not t.startswith(("ref_", "map_")):
+        if not t.startswith(("ref_", "map_", "ovh_")):
             continue
         Lq = r["liquid"]
         a = ap.get(t, {})
         si, ig = a.get("Si_850nm_12bit", {}), a.get("InGaAs_1550nm_12bit", {})
-        L.append(f"| {t.replace('ref_', '').replace('map_', '')} | {Lq['L'] * 1e6:.0f} × {Lq['W_any'] * 1e6:.0f} × {Lq['D'] * 1e6:.0f} | "
+        L.append(f"| {t.replace('ref_', '').replace('map_', '').replace('ovh_', 'overhang ')} | {Lq['L'] * 1e6:.0f} × {Lq['W_any'] * 1e6:.0f} × {Lq['D'] * 1e6:.0f} | "
                  f"{Lq['L'] * 1e6 / 8:.0f} × {Lq['W_any'] * 1e6 / 8:.0f} | {r['T_peak']:.0f} | {r['T_boil_alloy']:.0f} / "
                  f"{f(a.get('T_wall_K'))} | {f(si.get('T_floor_K'))}, {f(si.get('L_um'))} × {f(si.get('W_um'))} | "
                  f"{f(ig.get('T_floor_K'))}, {f(ig.get('L_um'))} × {f(ig.get('W_um'))} | {f(a.get('photodiode_rel'), 2)} | "
@@ -130,7 +130,7 @@ def sol_table(rows):
          "centre / median / max (10⁶ K/s) | G at the liquidus, min–max (10⁶ K/m) | R min–max (m/s) | G/R median (K s/mm²) |",
          "|---|---|---|---|---|---|---|"]
     for t, r in sorted(rows.items()):
-        if not t.startswith(("ref_", "map_")) or "solid" not in r:
+        if not t.startswith(("ref_", "map_", "ovh_")) or "solid" not in r:
             continue
         s = r["solid"]
         c = s["centre"]
