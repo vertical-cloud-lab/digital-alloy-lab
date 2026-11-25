@@ -86,7 +86,7 @@ on the model at commit 4b2232e. Nothing has been built or measured.
      Ø25, Ø50 and Ø75 is at ≥ 2.5 m/s. The chamber costs 0.59 kPa, as before.
    - **At 140 + 30 L/min:** 2.03 m/s (1.77–2.31; was 2.00, 1.75–2.29) and 0.29 kPa.
    - **The outlet slot:** it draws 54/46 % from its left and right halves (47/53 % before).
-   - **The slide:** 0.0–0.3 % of the condensate enters its recess (2026-11-20: 0.1–1.1 %).
+   - **The slide:** 0.0–0.5 % of the condensate enters its recess, on both meshes (2026-11-20: 0.1–1.1 %).
    - **The dose zone:** the screened jet runs straight, inside |x| ≤ 60 mm, so it leaves the dose zone almost still:
      0.22–0.25 m/s at 3 mm and 0.1 m/s across the falling dose.
    - **On the fine mesh** (443k cells, 200 + 40 L/min) it holds:
@@ -95,7 +95,8 @@ on the model at commit 4b2232e. Nothing has been built or measured.
      - The strip just upstream of the plate sees more shear on the fine mesh: 0.10 Pa mean and 0.13 Pa max (coarse 0.08
        and 0.10). The max is past the 63 µm threshold's high-cohesion end (0.118 Pa), but the mean is still below the
        drawn chamber's 0.125 Pa at 115 L/min (§3.4, fine).
-   - **Without the upper slot** (200 L/min; the layout §7 recommends), the plate is the same but the slide isn't:
+   - **Without the upper slot** (200 L/min; the layout §7 recommends), the plate is the same but the slide isn't
+     (coarse mesh here; the fine mesh agrees, §0.6):
      - Over the plate: 2.97 m/s mean at 3 mm (2.64–3.30), all of Ø75 at ≥ 2.5 m/s. The chamber costs 0.47 kPa.
      - The thick, fast jet partly overshoots the 8 mm floor slot. It climbs the door and comes back along the ceiling
        at ~1 m/s, through the slide recess: 0.40 m/s toward the back wall at z = 121 mm. 64 % of the gas over the plate
@@ -124,8 +125,9 @@ on the model at commit 4b2232e. Nothing has been built or measured.
      wider channel) matters more now: as drawn, the left-end outlet puts more of the plume under the window (item 1).
    - **Keep the upper slot (item 4 is reversed):** 100 × 4 mm through the back wall, 30–40 L/min, blowing toward the
      door.
-     - With the screened layout at 200 L/min it is the only option tried that keeps the slide clean: 0.2 % of the
-       risen condensate into the recess, against 16 % without it.
+     - With the screened layout at 200 L/min it is the only option tried that keeps the slide clean. 0.2–0.5 % of the
+       risen condensate enters the recess, against 9–16 % without it (fine and coarse mesh). It also cuts what passes
+       under the window to about a third: 12 % against 33–38 %.
      - The 10 L/min purge gets 2.1 % and the 20 mm floor slot 15 %.
      - It needs its own feed from the loop, not drawn: a branch off the blower's outlet with a needle valve, and a
        plenum behind the back wall above the recoater rail.
@@ -320,7 +322,32 @@ Bottom right: the screen in the floor slot evens out its suction.*
 
 ### 0.6 Fine mesh
 
-⟨TABLE-FINE⟩
+| | As drawn, fine, 2026-11-20 (outlet right) | **As drawn, fine, round 6 (outlet left)** | Fix 200 + 40, coarse, round 6 | **Fix 200 + 40, fine, round 6** | Fix 200, no upper slot, coarse | **Fix 200, no upper slot, fine** |
+|---|---|---|---|---|---|---|
+| Speed at 3 mm over Ø75: mean (min–max), CoV | 1.52 (1.20–1.99), 14 % | 1.79 (1.40–2.35), 14 % | 2.94 (2.60–3.32), 6 % | 2.96 (2.60–3.30), 6 % | 2.97 (2.64–3.30), 6 % | 2.97 (2.64–3.28), 6 % |
+| Speed over Ø75 at 1 / 3 / 10 mm, mean (m/s) | 1.53 / 1.52 / 0.48 | 1.73 / 1.79 / 0.62 | 2.19 / 2.94 / 2.34 | 2.02 / 2.96 / 2.37 | 2.21 / 2.97 / 2.41 | 2.04 / 2.97 / 2.43 |
+| Speed at 10 mm over Ø75: min–max | 0.18–0.64 | 0.27–0.81 | 2.15–2.52 | 2.19–2.55 | 2.12–2.57 | 2.22–2.61 |
+| Share of Ø25 / Ø50 / Ø75 at ≥ 2.5 m/s, 3 mm up | 0 % / 0 % / 0 % | 0 % / 0 % / 0 % | 100 % / 100 % / 100 % | 100 % / 100 % / 100 % | 100 % / 100 % / 100 % | 100 % / 100 % / 100 % |
+| At 3 mm, left / right half of Ø75, mean | – | 1.81 / 1.77 | 2.94 / 2.95 | 2.95 / 2.97 | 2.97 / 2.97 | 2.98 / 2.96 |
+| Inlet slot, slowest / fastest (m/s) | 1.41 / 2.83 | 0.93 / 2.97 | 2.41 / 3.68 | 2.96 / 3.83 | 2.41 / 3.68 | 2.96 / 3.83 |
+| Outlet slot: share drawn by its left / right half; fastest (m/s) | 15 / 85 %; 8.1 | 83 / 17 %; 7.5 | 54 / 46 %; 4.6 | 54 / 46 %; 4.9 | 54 / 46 %; 3.8 | 54 / 46 %; 4.1 |
+| Pressure drop, inlet flange to outlet flange | 473 Pa | 525 Pa | 587 Pa | 608 Pa | 467 Pa | 481 Pa |
+| Bed shear over Ø75, mean / max (Pa) | 0.067 / 0.114 | 0.070 / 0.134 | 0.081 / 0.091 | 0.079 / 0.102 | 0.082 / 0.091 | 0.080 / 0.101 |
+| Bed shear on the strip upstream of the plate, mean / max (Pa) | 0.125 / – | 0.144 / 0.166 | 0.083 / 0.096 | 0.100 / 0.130 | 0.082 / 0.096 | 0.099 / 0.131 |
+| Highest shear on the floor (Pa), where | 0.34 at x = 63 | 0.32 at x = −56 | 0.24 at x = −43 | 0.41 at x = −45 | 0.19 at x = −43 | 0.32 at x = −45 |
+| Dose zone: gas at 3 / 10 mm, mean (m/s) | – | 1.21 / 1.15 | 0.25 / 0.18 | 0.32 / 0.20 | 0.65 / 0.49 | 0.61 / 0.50 |
+| Dose zone: gas across the falling dose, mean (max) (m/s) | – | 0.64 (1.85) | 0.13 (0.31) | 0.13 (0.27) | 0.29 (0.55) | 0.31 (0.51) |
+| Dose zone: bed shear, mean / max (Pa) | – | 0.021 / 0.059 | 0.008 / 0.050 | 0.009 / 0.076 | 0.021 / 0.068 | 0.016 / 0.085 |
+| Under the slide (z = 121 mm): mean speed, direction | 0.22 m/s toward the back wall | 0.31 m/s toward the back wall | 0.29 m/s toward the door | 0.20 m/s toward the door | 0.40 m/s toward the back wall | 0.18 m/s toward the door |
+| Gas over the plate at z 30–120 mm flowing back toward the inlet | 91 % | 84 % | 9 % | 15 % | 64 % | 65 % |
+| Condensate from 1–10 mm: out within 12 s; near the window; into the slide recess | 95 %; 2.1 %; 0.5 % | 95 %; 4.4 %; 0.9 % | 74 %; 4.3 %; 0.1 % | 68 %; 3.7 %; 0.1 % | 73 %; 10.9 %; 4.2 % | 68 %; 10.9 %; 3.3 % |
+| Condensate from 10–30 mm: out within 12 s; near the window; into the slide recess | 91 %; 8.1 %; 1.9 % | 91 %; 14.1 %; 2.1 % | 85 %; 11.9 %; 0.2 % | 78 %; 12.1 %; 0.5 % | 68 %; 37.7 %; 16.3 % | 70 %; 32.9 %; 8.9 % |
+| Condensate passing below 10 mm over the dose zone, from 1–10 / 10–30 mm | – | 4.0 % / 12.3 % | 3.6 % / 11.5 % | 1.5 % / 6.6 % | 4.1 % / 14.7 % | 4.3 % / 14.5 % |
+| Spatter back on the Ø75 plate, 50 / 100 / 150 µm | 10 / 17 / 7 % | 3 / 18 / 8 % | 0 / 3 / 2 % | 0 / 3 / 2 % | 0 / 5 / 4 % | 0 / 10 / 5 % |
+| Spatter into the outlet slot, 50 µm | 12 % | 31 % | 1 % | 2 % | 0 % | 0 % |
+| Spatter into the slide footprint, 100 / 150 µm | 2 / 10 % | 2 / 10 % | 2 / 9 % | 2 / 10 % | 2 / 10 % | 1 / 10 % |
+| Spatter on the dose zone / on the dose chute, 100 µm | – | 3.0 / 3.3 % | 4.2 / 5.5 % | 4.2 / 5.8 % | 2.5 / 4.2 % | 3.3 / 4.3 % |
+| Spatter on the dose zone / on the dose chute, 150 µm | – | 1.8 / 7.0 % | 1.0 / 7.5 % | 0.8 / 7.7 % | 0.5 / 7.5 % | 0.3 / 7.7 % |
 
 - **As drawn**, the fine mesh keeps the coarse picture over the plate and at the outlet.
   - 1.79 m/s mean at 3 mm over Ø75 (coarse 1.61), none of it at 2.5 m/s.
@@ -331,7 +358,13 @@ Bottom right: the screen in the floor slot evens out its suction.*
   on the mesh".
 - **The fixed layout with the upper slot** is within 1–4 % of the coarse mesh over the plate and in pressure drop
   (item 4).
-- ⟨FINE-NOUP⟩
+- **Without the upper slot** the fine mesh confirms item 5.
+  - 3.3 % and 8.9 % of the condensate enters the slide recess, against 0.1 % and 0.5 % with the upper slot. 11 % and
+    33 % passes under the window, against 4 % and 12 %.
+  - The plate is the same: 2.97 m/s at 3 mm, all of Ø75 at ≥ 2.5 m/s. The chamber costs 0.48 kPa.
+  - The gas over the plate above 30 mm runs back toward the inlet, 65 % of it, as on the coarse mesh (64 %). Right
+    under the slide the fine mesh has it at 0.18 m/s toward the door, where the coarse mesh had 0.40 toward the back
+    wall. Either way the recess takes 9–16 % of the risen condensate.
 
 ![Mesh check, as drawn](analysis/out/cfd/profiles_mesh_check_r6.png)
 
