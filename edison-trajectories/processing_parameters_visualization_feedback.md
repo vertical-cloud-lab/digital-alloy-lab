@@ -64,3 +64,20 @@
 8. Badini et al. 2024. "Laser powder bed fusion of pure titanium: optimization of processing parameters by means of efficient VED approach." Metals, 14:1357. doi:10.3390/met14121357. 6 citations.
 9. Chepiga et al. 2023. "Process parameter selection for production of stainless steel 316L using efficient multi-objective Bayesian optimization algorithm." Materials, 16:1050. doi:10.3390/ma16031050. 29 citations.
 10. Kavas et al. 2025. "In-situ controller autotuning by Bayesian optimization for closed-loop feedback control of LPBF process." arXiv. doi:10.48550/arxiv.2406.19096. 18 citations.
+
+## Process-block draft feedback (new account / Edison API)
+
+### Cycle 15: Process-representative blocks (task `c021f80a-212e-4d5f-8950-98c2f47d3c7a`) — 6.5/10
+- Submitted through the official `edison-client` v0.12.0 API. Official docs show `EdisonClient(api_key=...)` and the installed client resolves `Stage.PROD` to `https://api.platform.edisonscientific.com`; `api.edisonscientific.com` did not resolve from the sandbox.
+- Edison assessment: the generic-cube objection is substantially addressed; six of seven blocks carry recognizable LPBF cues.
+- Required fixes:
+  - Replace parameter-chip layout with a flexible packer to prevent overlap at proposal scale.
+  - Fix missing Powder/Feedstock `reuse` chip.
+  - Redraw Layer/Build: tilted layer stack and tree-support silhouette instead of X-zigzags.
+  - Move Powder/Feedstock moisture cue into the powder bed as a labeled particle (`H₂O`).
+- High-value polish applied:
+  - Scan Strategy rotation arc anchored to a pivot dot and bidirectional hatch arrows added.
+  - Atmosphere chamber now includes a tiny build plate + part silhouette.
+  - Machine-Specific arrows unified; powder dosing shown as dotted arrow with micro-legend.
+  - Thermal Mgmt clock labeled as inter-layer dwell and rotated/clipped text removed.
+  - v6 composite tightened vertically.
