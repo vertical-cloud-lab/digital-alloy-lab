@@ -1,6 +1,6 @@
 {
  "notes": [
-  "surface temperatures and areas from /home/runner/work/digital-alloy-lab/digital-alloy-lab/.claude/worktrees/agent-aaaa38da4e0999b1b/desktop-lpbf/analysis/out/monitoring/melt/plume_source.json"
+  "worker A's source terms from analysis/out/monitoring/melt/plume_source.json: jet from its 'wall' exit, condensate from its 'best' reading (results under 'worker_A'); the scenarios are this script's own Clausius-Clapeyron cross-check"
  ],
  "alloys": {
   "AlSi10Mg": {

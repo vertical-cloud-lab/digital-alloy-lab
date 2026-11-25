@@ -98,8 +98,9 @@ def main():
                                  + f"{pct(sum(v for k, v in f.items() if ('wall' in k or 'part' in k) and k != 'wall: door side'))} |")
                 L.append("")
     if F and F.get("windows"):
-        L += ["## Fouling (fouling.py)", "", "Condensate source, g per hour of lasing (from measured Mg / Zn losses x 1.5 for Al): "
-              + ", ".join(f"{a} {v['g_per_h_lasing'][0]:.2g}–{v['g_per_h_lasing'][1]:.2g} (nominal {v['nominal']:.2g})" for a, v in F["source"].items()), ""]
+        L += ["## Fouling (fouling.py)", "", f"Condensate source, g per hour of lasing (file: {F.get('source_file')}): "
+              + ", ".join(f"{a} {v['g_per_h_lasing'][0]:.2g}–{v['g_per_h_lasing'][1]:.2g} (nominal {v['nominal']:.2g}; {v.get('reading', '')})"
+                          for a, v in F["source"].items()), ""]
         for case, w in F["windows"].items():
             L += [f"### {case}", "", "| Window | Released | Size, ΔT | Alloy | mg/m² per h of lasing | h to the limit, dense Al film | h, porous Al (f 0.1) |",
                   "|---|---|---|---|---|---|---|"]

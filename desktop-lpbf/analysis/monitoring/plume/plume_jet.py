@@ -284,7 +284,9 @@ def main():
     src = None
     if pathlib.Path(a.source).exists():
         src = json.loads(pathlib.Path(a.source).read_text())
-        res["notes"].append(f"surface temperatures and areas from {a.source}")
+        rel = a.source.split("desktop-lpbf/", 1)[1] if "desktop-lpbf/" in a.source else a.source
+        res["notes"].append(f"worker A's source terms from {rel}: jet from its 'wall' exit, condensate from its 'best' reading "
+                            "(results under 'worker_A'); the scenarios are this script's own Clausius-Clapeyron cross-check")
     else:
         res["notes"].append("plume_source.json not found: surface temperatures are scenarios (Clausius-Clapeyron at T_s)")
     hot_area = math.pi * (SPOT_D / 2) ** 2 * 0.5               # conduction: hottest half of the spot area (assumption)

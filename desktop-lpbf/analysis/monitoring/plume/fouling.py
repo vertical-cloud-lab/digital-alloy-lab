@@ -175,6 +175,8 @@ def main():
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     src, src_path = source_g_per_h(a.source)
+    if src_path and "desktop-lpbf/" in src_path:
+        src_path = src_path.split("desktop-lpbf/", 1)[1]          # repo-relative (it may have been read from another worktree)
     res = dict(source=src, source_file=src_path)
     # optics curves
     masses = np.logspace(-8, -2, 61)                         # kg/m2 (1e-8 = 0.01 mg/m2 ... 10 g/m2)

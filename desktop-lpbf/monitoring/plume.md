@@ -42,10 +42,11 @@ over the plate):
    monitoring.md put it, the ceiling sweep carries the risen plume past it: it is the dirtiest window, ~12× the LW's
    deposit. Under the candidates at (−40, 60) and (−20, 80) the gas carries ~20× less condensate (10–40× across the four
    runs, §1.2). Its room outside needs the CAD check.
-4. **The left-wall port (LW) is the cleanest camera window,** and spatter almost never reaches it (≤ 0.1 % of launches;
-   it looks in at 13° through a 4 mm recess). **The purge cuts the condensate at its slide ~13× at 1 L/min and ~45× at
-   3 L/min,** and the deposit 4–6× by a turbulent-deposition model, more if its layer is laminar (§1.2). Fit the slot and
-   a needle valve on a branch of the loop after the HEPA filter; run it for 7075, keyhole-mode work and long builds.
+4. **The left-wall port (LW) is the cleanest camera window,** and spatter almost never reaches it (≤ 0.1 % of launches
+   in the CFD; it looks in at 13° through a 4 mm recess). **The purge cuts the condensate at its slide ~13× at 1 L/min
+   and ~45× at 3 L/min,** and the deposit 4–6× by a turbulent-deposition model, more if its layer is laminar (§1.2). Fit
+   the slot and a needle valve on a branch of the loop after the HEPA filter; run it for 7075, keyhole-mode work and long
+   builds.
 5. **Keep camera slides at or above the gas temperature.** Thermophoresis decides deposition: a slide 10 K colder than the
    gas collects 20–120× more condensate than an isothermal one; a few K warmer repels it (§4.3).
 6. **How fast the camera slides foul depends on what the deposit looks like, which only a measurement will show.** As
@@ -101,6 +102,9 @@ over the plate):
   | `p200_lw3` | 200 + 40 | 3 L/min | 400, from `p200` |
   | `p200_lw1` | 200 + 40 | 1 L/min | 200, from `p200_lw3` |
   | `p140` | 140 + 30 | off | 300, from `p200` |
+
+  The probe 3 mm above the plate centre held within 0.5 % over each case's last 100–200 iterations (−3.23 m/s at
+  200 + 40 L/min, −2.24 at 140 + 30). The upper vortex wanders as in gas-flow.md §0.7.
 
 - **Particles** (`particles.py`, frozen flow, one-way): condensate as 30,000 tracers per release band, 6,000 from each of
   five points (the plate centre and ±25 mm in x and y), tracked for 20 s. Two bands: 0.5–5 mm (conduction and keyhole
@@ -223,7 +227,7 @@ spatter lands on the floor at Al-like speeds; dashed: the Ø75 plate; green: the
 - **More spatter lands back on the plate: 6–8 % of 100–200 µm spatter at Al-like speeds, against 2.5–3.6 %.** The slower
   bed jet carries less of it past the plate's edge. The laser slide's share is the same (1.3–5 %): that spatter goes
   straight up.
-- 20 µm spatter goes to the outlet more (70 % against 59 %), because the slower jet climbs the door less.
+- 20 µm spatter goes to the outlet more (70 % against 59 %), as the slower jet carries less of it up the door.
 - Condensate leaves a little more slowly (99.3 / 91.5 % in 8 s for the two bands, against 99.5 / 94.8 %) but all of it is
   out by 20 s (99.2–100 %).
 - The lid ports trade places: the slower ceiling sweep halves what reaches the LP (850 against 1,860 s/m³ next to its slide)
@@ -280,7 +284,8 @@ Schiller–Naumann drag in argon at 25 °C (1.65 kg/m³, 22.6 µPa·s) and gravi
 - **What reaches the lid (z 120–126 mm):** a 100 µm Al droplet needs ~5 m/s straight up, a 50 µm one ~16–20 m/s. With the
   fast speeds, 43–60 % of 100–200 µm Al spatter reaches the lid in a box chamber; with the Al-like speeds, much less (§1.3).
 - **The LW port is hard to reach.** It looks in at 13° from 160 mm away, through a 4 mm recess. A particle must leave the bed
-  within ~15° of horizontal toward −x and keep its speed for 140 mm. 0–0.1 % of launches do, at every size and speed tried.
+  within ~15° of horizontal toward −x and keep its speed for 140 mm. 0–0.1 % of launches do in the CFD (0–0.3 % in the
+  box chamber), at every size and speed tried.
 
 ![Spatter: heights, cooling, and the share reaching each window](../analysis/out/monitoring/plume/spatter.png)
 
@@ -410,15 +415,16 @@ plume, Δz = 1.6 F^(1/3) x^(2/3) / U (Briggs). Cross-flow at 2.95 m/s (200 L/min
 
 ### 3.3 What it condenses into
 
-- **Primary particles: 3–8 nm in a jet (3–6 nm with A's exit states), 30–110 nm without one** (`plume_jet.py`): free-molecular coagulation with full
-  coalescence until the gas cools below ~900 K (650 K for Zn-rich 7075 condensate). In a jet the vapour mixes with argon
-  and cools that far within 0.3–0.65 mm and 1–16 µs, so the particles have little time to grow. Without a jet it cools
-  slowly in the hot boundary layer (~5 ms), and they grow larger.
+- **Primary particles: 3–8 nm in a jet (3–6 nm with A's exit states), 30–110 nm without one** (`plume_jet.py`):
+  free-molecular coagulation with full coalescence until the gas cools below ~900 K (650 K for Zn-rich 7075 condensate).
+  In a jet the vapour mixes with argon and cools that far within 0.3–0.65 mm and 1–16 µs, so the particles have little
+  time to grow. Without a jet it cools slowly in the hot boundary layer (~5 ms), and they grow larger.
 - **Measured, for comparison (stainless steel, no Al data found):** primary particles 4–16 nm, median 9.4 nm, with a metal
   core and oxide shell above ~30 nm (Noskov et al. 2020), in chain-like agglomerates 0.5 to > 10 µm long (Noskov et
   al. 2022). The jet case agrees.
-- So the condensate that reaches a window is agglomerates of ~10 nm Mg-, Zn- and Al-rich particles, partly oxidised. How
-  much depends on the chamber's O₂ (not modelled); in air, at the next slide change, the rest oxidises.
+- So the condensate that reaches a window is agglomerates of ~3–15 nm particles, Al-rich from AlSi10Mg and 6061 and Zn-
+  and Mg-rich from 7075 (§3.1), partly oxidised. How much depends on the chamber's O₂ (not modelled); in air, at the next
+  slide change, the rest oxidises.
 
 ### 3.4 What it does to the beam and the coaxial signal
 
@@ -442,9 +448,10 @@ Alumina spheres under 50 nm don't absorb and barely scatter (< 1 m²/kg). Al abs
   ~10⁻⁴ over ~1 mm, which moves the beam by under a µm (estimate). Edison found no evidence of a plasma in CW LPBF of Al at
   1 µm, only weakly ionised vapour; none is expected at ~10 MW/cm².
 - **The coaxial photodiode looks back through the same column.** At 700–900 nm it loses ~0.2–1 % to the plume (up to
-  ~5 % if all the vapour condensed), more in 7075 and in keyhole mode, and the loss fluctuates with the keyhole. It is one more reason to use the two-colour ratio
-  (monitoring.md §2.2), in which a grey loss cancels. Al's extinction falls by ~27 % from 700 to 900 nm (20 nm spheres), so
-  it cancels only partly: a 2 % loss at 700 nm biases a 700/900 nm ratio by ~0.5 %, ~5 K at 2,000 K.
+  ~5 % if all the vapour condensed), more in 7075 and in keyhole mode, and the loss fluctuates with the keyhole. It is
+  one more reason to use the two-colour ratio (monitoring.md §2.2), in which a grey loss cancels. Al's extinction falls by
+  ~27 % from 700 to 900 nm (20 nm spheres), so it cancels only partly: a 2 % loss at 700 nm biases a 700/900 nm ratio by
+  ~0.5 %, ~5 K at 2,000 K.
 - **Away from the spot, the chamber's background is negligible.** Along the beam axis (z 20–120 mm) the CFD gives C/S of
   22–270 s/m³ (§1.2), so 3–35 mg/m³ of condensate at A's 0.47 g/h for AlSi10Mg (about the same for 7075). Over the
   100 mm path that is an optical depth of ~0.06 % as agglomerates of 10 nm primaries (absorption ~70 m²/kg plus their
@@ -526,8 +533,8 @@ size of a ~0.5 µm chain) and the CFD's friction velocity on each window. Source
 
 *AlSi10Mg at A's 0.47 g/h; 7075 is about the same and 6061 about 0.4× (§4.1). Against the Mg-only lower bound the hours are
 5–8× longer. The laser slide's v_d is for a downward-facing surface. Hours to the limit from the 5–20 mm release, which
-A's jets reach (§3.2); the 0.5–5 mm release gives 7–40× longer (and none reached the LW slide). The near-face values behind them rest on 15–430 tracers
-(§1.2), so take them to within ~2×.*
+A's jets reach (§3.2); the 0.5–5 mm release gives 7–40× longer (and none reached the LW slide). The near-face values
+behind them rest on 15–430 tracers (§1.2), so take them to within ~2×.*
 
 - **Thermophoresis decides it.** A window 10 K colder than the gas next to it collects 20–120× more than an isothermal
   one: 0.5 × ν ∇T/T ≈ 1 × 10⁻⁴ m/s across a 2 mm layer, against 1–5 × 10⁻⁶ m/s for Brownian and turbulent
@@ -576,8 +583,10 @@ deposited; no Al count was found) and a splat 2.75 d across for molten droplets 
 | BW light window | condensate | rarely; it only has to pass light | 20 % loss is fine |
 
 **The LW purge is worth fitting, cheaply, and running when it matters:**
-- It cuts the condensate at the LW slide ~13× at 1 L/min and ~45× at 3 L/min (deposition 4–6× by the turbulent model, more for a laminar purge layer; §1.2), for 0.4–1.2 % of the loop's flow. Its gas should come from the loop after the HEPA filter
-  (a needle valve on a branch, like the slide purge in gas-flow.md §0), not from the cylinder, so it costs no argon.
+- It cuts the condensate at the LW slide ~13× at 1 L/min and ~45× at 3 L/min (deposition 4–6× by the turbulent model,
+  more for a laminar purge layer; §1.2), for 0.4–1.2 % of the loop's flow. Its gas should come from the loop after the
+  HEPA filter (a needle valve on a branch, like the slide purge in gas-flow.md §0), not from the cylinder, so it costs no
+  argon.
 - The LW slide is already the cleanest camera window, so the purge matters most for 7075, for keyhole-mode parameters, and
   if the slide runs colder than the gas.
 - Machining the slot into the LW adapter costs little when the adapter is made (monitoring.md §0 item 1), and it can stay

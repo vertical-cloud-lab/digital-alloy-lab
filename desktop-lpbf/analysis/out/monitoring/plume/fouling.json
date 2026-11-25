@@ -101,7 +101,7 @@
    }
   }
  },
- "source_file": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/.claude/worktrees/agent-aaaa38da4e0999b1b/desktop-lpbf/analysis/out/monitoring/melt/plume_source.json",
+ "source_file": "analysis/out/monitoring/melt/plume_source.json",
  "optics_curves": {
   "dense Al film, 0.85 um": {
    "m_kg_m2": [

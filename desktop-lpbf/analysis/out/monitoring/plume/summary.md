@@ -300,7 +300,7 @@ Spatter (Al) landing on each window, share of launches:
 
 ## Fouling (fouling.py)
 
-Condensate source, g per hour of lasing (from measured Mg / Zn losses x 1.5 for Al): AlSi10Mg 0.097–0.64 (nominal 0.47), 6061 0.074–0.24 (nominal 0.19), 7075 0.24–0.6 (nominal 0.44)
+Condensate source, g per hour of lasing (file: analysis/out/monitoring/melt/plume_source.json): AlSi10Mg 0.097–0.64 (nominal 0.47; worker A 'best': measured Mg/Zn rates + 'wall' reading for Al (plume_source.json)), 6061 0.074–0.24 (nominal 0.19; worker A 'best': measured Mg/Zn rates + 'wall' reading for Al (plume_source.json)), 7075 0.24–0.6 (nominal 0.44; worker A 'best': measured Mg/Zn rates + 'wall' reading for Al (plume_source.json))
 
 ### p200
 
