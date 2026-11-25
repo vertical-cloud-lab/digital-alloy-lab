@@ -831,7 +831,11 @@ Also found, but they don't fit:
   - Raytools/Cloudray collimating lenses start at f 60 mm.
 - **The connector question.** Coherent and Laser Mechanisms both list HLC-8 as fitting their QBH receptacles. That settles
   the QBH vs HLC-8 question for any QBH option.
-- **No prices found:** eBay listings (pages refused), Optoskand/II-VI, Thorlabs (no QBH collimator).
+- **No prices found:**
+  - IPG: its D25 F50 collimators have part numbers in IPG's own ordering table (P30-001459 air-cooled, P30-001354
+    water-cooled) but no price anywhere; IPG and its distributors quote them.
+  - eBay: no IPG collimator listing in search results, and listing pages refuse automated access even through the tunnel.
+  - Optoskand/II-VI, and Thorlabs (no QBH collimator).
 
 **Why one would pick each** (`beam_path.py` §I, M² 1.1, 140 mrad):
 - **Baseline:** the EOS M 290's ~100 µm spot running AlSi10Mg at 370 W, 1.3 m/s, 0.19 mm hatch and 30 µm layers
@@ -975,8 +979,12 @@ is a new port, so it isn't drawn here.
   - Inside therefore means a new KF16 port plus an SST FA11643 ($108). Outside needs a window port instead.
 - **Powder zone.** electrical.md §8 keeps electronics out of the Class II, Division 1 aluminium-dust zone. An inside LED
   would be the only electronics in the chamber apart from the module's sealed heaters.
-- **Heat.** The chamber reaches 61–78 °C over a 10 h build (§4.6), and LED strips are commonly rated for much lower ambients
-  (no specific part checked). Outside, the bar is at room temperature, and its few watts stay out of the chamber.
+- **Heat.** The chamber reaches 61–78 °C over a 10 h build (§4.6). Machine-vision LED bars are rated below that:
+  - Effilux's adjustable bar lights at Edmund are rated −10 to 50 °C, IP40 (15-LED white bar, 24 V DC, $1,085; fetched
+    2026-11-25T01:41Z through the lab tunnel, https://www.edmundoptics.com/p/15-led-white-adjustable-led-bar-light/4029/).
+  - Advanced Illumination's EuroBrite and MicroBrite bars are rated 0–60 °C (Edmund's listings, search result only).
+
+  Outside, the bar is at room temperature, and its few watts stay out of the chamber.
 - **Water and vapours in the argon.**
   - A 90 × 8 × 1.6 mm FR-4 LED board (~2.1 g) loses 0.22–0.35 % of its mass in NASA's outgassing test (laminate, and board
     with solder mask), so 5–7 mg. As water that is 500–800 ppmv in the 11.3 L gas loop if it all came off. It comes off over
@@ -1004,7 +1012,8 @@ is a new port, so it isn't drawn here.
 - **Cost** (estimates unless fetched):
   - **D:** a window port, ~$100–300. Kurt J. Lesker KF40 viewports are $180 (Kodial) or $280 (fused silica), checked
     2026-11-25. A KF40 flange (Ø55) at x −100 overlaps the inlet plenum's flange (x ±78), so put it at x ≤ −106, or use a
-    Ø1 in. window bolted on like the camera's. Add an LED bar ($20–60) and a liner hole.
+    Ø1 in. window bolted on like the camera's. Add an LED bar ($20–60 for a plain 12/24 V bar; ~$1,085 for an industrial
+    machine-vision bar such as Effilux's) and a liner hole.
   - **B with a feedthrough:** LED bar $20–60, FA11643 $108, and a KF16 port somewhere on the lid.
   - **G:** a 25 mm beamsplitter cube and polarisers, a few hundred dollars, plus re-checking the camera's vignetting.
 
