@@ -119,6 +119,30 @@ class Replay:
                 import cell as C0
                 V, F = C0.decimate(np.asarray(V, float), np.asarray(F, np.int64), MAX_TRI)
             sc.add(f"o{i}", poly(V, F), o["color"], group=f"o{i}", specular=0.3, shown=False)
+        # the seal steps' hand tools (run_assembly.add_temp_obj) are made after the scene was saved: draw them from tooling.py,
+        # in the machine frame the run gave them (the ring loader's tube tip at the deeper rod groove, machine z -96, pointing up)
+        import tooling as TLh
+        unknown = []
+        for e in self.ev:
+            if e["kind"] in ("attach", "put"):
+                for i in e["objs"]:
+                    if i not in scn["objs"] and i not in [u[0] for u in unknown]:
+                        unknown.append((i, e["step"]))
+        seen_m17 = 0
+        for i, sid in unknown:
+            name, M = None, np.eye(4)
+            if sid == "M12":
+                name = "ring_loader"
+                M = Tm((0.0, 0.0, -96.0)) @ np.diag([1.0, -1.0, -1.0, 1.0])
+            elif sid == "M17":
+                name = "spigot_mandrel" if seen_m17 == 0 else "spigot_pusher"
+                seen_m17 += 1
+            if name is None:
+                continue
+            (v, f), _ = TLh.mesh(name)
+            v = np.asarray(v, float) @ M[:3, :3].T + M[:3, 3]
+            sc.add(f"o{i}", poly(v, f), common.COL["tool"], group=f"o{i}", specular=0.4, shown=False)
+            self.objs[i] = dict(name=name, part=-1, kind="tool", V=v, F=f, color=common.COL["tool"])
         coil_parts = {i for x in KT.slots() if x.get("coil") for i in x["part_indices"]}
         for i, T in scn["table_T"].items():
             self.T[i] = np.asarray(T, float)
@@ -298,6 +322,76 @@ class Replay:
     def shot(self):
         self.sc.camera([self.cam_pos, self.cam_foc, (0, 0, 1)], view_angle=32.0)
         return self.sc.render()
+
+    # ------------------------------------------------------------------------------------------- occlusion-aware views
+    def _occluders(self):
+        """One vtkOBBTree over both arms (links and gripper), both MiRs and the cell's fixtures, as they stand now."""
+        import vtk
+        vs, fs, n0 = [], [], 0
+        for n in ("A", "B"):
+            a = self.arm[n]
+            s = self.st[n]
+            a.move_base(s["x"])
+            a.place(s["q"], s["close"])
+            for b in list(a.links.values()) + list(a.grip.values()):
+                vs.append(b.v @ b.M[:3, :3].T + b.M[:3, 3])
+                fs.append(b.f + n0)
+                n0 += len(b.v)
+            for _, (v, f), _ in self.K.mir_bodies(n, s["x"], "front" if n == "A" else "back"):
+                vs.append(np.asarray(v, float))
+                fs.append(np.asarray(f) + n0)
+                n0 += len(v)
+        if not hasattr(self, "_static_occ"):
+            self._static_occ = [(np.asarray(v, float), np.asarray(f)) for _, (v, f), _ in self._cell_static()]
+        for v, f in self._static_occ:
+            vs.append(v)
+            fs.append(f + n0)
+            n0 += len(v)
+        V, F = np.vstack(vs), np.vstack(fs).astype(np.int64)
+        pd = poly(V, F)
+        tree = vtk.vtkOBBTree()
+        tree.SetDataSet(pd)
+        tree.BuildLocator()
+        self._occ_keep = pd
+        return tree
+
+    def best_view(self, focus, dist, prefer_az, els=(30.0, 45.0), r_pts=45.0):
+        """(az, el) of the camera at `dist` from `focus` that sees the most of ~20 points round the work point: 12 azimuths x
+        the elevations, rays to each point cast against the arms, tools, MiRs and fixtures (vtkOBBTree)."""
+        import vtk
+        tree = self._occluders()
+        focus = np.asarray(focus, float)
+        pts = [focus]
+        for k in range(8):
+            a = 2 * math.pi * k / 8
+            pts.append(focus + r_pts * np.array([math.cos(a), math.sin(a), 0.0]))
+        for k in range(6):
+            a = 2 * math.pi * k / 6 + 0.4
+            pts.append(focus + r_pts * np.array([0.7 * math.cos(a), 0.7 * math.sin(a), 0.7]))
+        for z in (-1.0, 1.0):
+            pts.append(focus + np.array([0.0, 0.0, z * r_pts]))
+        best = None
+        hit_pts = vtk.vtkPoints()
+        for el in els:
+            e = math.radians(el)
+            for k in range(12):
+                az = prefer_az + 30.0 * k
+                a = math.radians(az)
+                cam = focus + dist * np.array([math.cos(a) * math.cos(e), math.sin(a) * math.cos(e), math.sin(e)])
+                if cam[2] < 300.0:
+                    continue
+                blocked = 0
+                for P in pts:
+                    hit_pts.Reset()
+                    if tree.IntersectWithLine(cam.tolist(), P.tolist(), hit_pts, None):
+                        dmin = min(np.linalg.norm(np.array(hit_pts.GetPoint(j)) - cam) for j in range(hit_pts.GetNumberOfPoints()))
+                        if dmin < np.linalg.norm(P - cam) - 12.0:
+                            blocked += 1
+                dev = min(abs(((az - prefer_az + 180.0) % 360.0) - 180.0), 180.0) / 180.0
+                score = blocked + 0.6 * dev + (0.2 if el < 40.0 else 0.0)
+                if best is None or score < best[0]:
+                    best = (score, az % 360.0, el, blocked)
+        return best
 
 
 # ------------------------------------------------------------------------------------------------ timing
@@ -528,7 +622,11 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
             for f in range(nf):
                 s = smooth((f + 1) / nf)
                 rp.set_arm(n, close=e["c0"] + (e["c1"] - e["c0"]) * s)
-                rp.aim(rp.tcp(n), "close" if cur["do"] in CLOSE_STEPS else "mid", side)
+                lv = getattr(rp, "_last_view", None)
+                if lv is not None and np.linalg.norm(lv[0] - rp.tcp(n)) < 200.0:
+                    rp.aim(lv[0], lv[3], side, az=lv[1], el=lv[2])
+                else:
+                    rp.aim(rp.tcp(n), "close" if cur["do"] in CLOSE_STEPS else "mid", side)
                 stop = emit(cur["label"], "2F-85 " + ("closes" if e["c1"] > e["c0"] else "opens"), who, proc=per,
                             add={"robot_h": per / 3600.0})
                 if stop:
@@ -559,6 +657,23 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
             d = np.r_[0.0, np.cumsum(np.abs(np.diff(Q, axis=0)).max(axis=1))] if len(Q) > 1 else np.array([0.0])
             L = d[-1] if d[-1] > 0 else 1.0
             in_table = rp.st[n]["x"] > 2000.0
+            seal_cu = cur["do"] in CLOSE_STEPS and e.get("how") == "cart"
+            view = None
+            if k == "screw" or e.get("how") == "cart" or seal_cu:
+                # the least-occluded view of where this motion ends (the screw seated, the part in place, the pick)
+                q_keep = rp.st[n]["q"].copy()
+                rp.st[n]["q"] = Q[-1]
+                f_end = rp.tcp(n)
+                dist = 380.0 if seal_cu else (750.0 if k == "screw" else 1000.0)
+                pref = math.degrees(math.atan2(*(rp.cam_pos - f_end)[1::-1])) if rp.cam_pos is not None else 0.0
+                lv = getattr(rp, "_last_view", None)
+                if lv is not None and np.linalg.norm(lv[0] - f_end) < 120.0 and lv[3] == dist:
+                    view = lv
+                else:
+                    bv = rp.best_view(f_end, dist, pref)
+                    view = (f_end, bv[1], bv[2], dist) if bv else None
+                    rp._last_view = view
+                rp.st[n]["q"] = q_keep
             for f in range(nf):
                 s = smooth((f + 1) / nf) * L
                 if len(Q) > 1:
@@ -572,15 +687,14 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
                     turns = e["L"] / max(e["pitch"], 0.1)
                     rp.st[n]["held"]["spin_deg"] = (360.0 * min(turns * (f + 1) / nf, 2.0 * (f + 1))) % 360.0
                 rp.set_arm(n, q=q, close=e.get("close"))
-                if k == "screw":
-                    shot = "close"
-                elif in_table:
-                    shot = "mid"
-                elif e.get("how") == "cart" or cur["do"] in CLOSE_STEPS:
-                    shot = "close"
+                if view is not None:
+                    # keep the chosen camera; the aim follows the tool a little
+                    tc = rp.tcp(n)
+                    foc = view[0] + 0.35 * (tc - view[0]) if np.linalg.norm(tc - view[0]) < 600.0 else tc
+                    rp.aim(foc, view[3], side, az=view[1], el=view[2], snap=(f == 0))
                 else:
-                    shot = "mid"
-                rp.aim(rp.tcp(n), shot, side)
+                    shot = "mid" if (in_table or e.get("how") == "plan") else "close"
+                    rp.aim(rp.tcp(n), shot, side)
                 if k == "screw":
                     msz = {0.5: 3, 0.7: 4, 0.8: 5, 1.0: 6}.get(round(float(e.get("pitch", 0.7)), 1), "")
                     sub = (f"{e['tool']}: M{msz} screw runs down {e['L']:.0f} mm and is torqued to {float(e.get('torque') or 0):.1f} N m "
