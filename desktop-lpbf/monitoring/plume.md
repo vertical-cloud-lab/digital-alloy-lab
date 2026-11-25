@@ -40,8 +40,8 @@ over the plate):
    hours of lasing until the first builds measure the real rates.
 3. **Move the steep lid port (LP) to the back half of the lid, under the upper slot's sweep.** At (−60, −80), where
    monitoring.md put it, the ceiling sweep carries the risen plume past it: it is the dirtiest window, ~12× the LW's
-   deposit. Under the candidates at (−40, 60) and (−20, 80) the gas carries ~20× less condensate (10–40× across the four
-   runs, §1.2). Its room outside needs the CAD check.
+   deposit. Under the candidates at (−40, 60) and (−20, 80) the gas carries ~20× less condensate (10–40× across the
+   runs), and a port drawn at (−40, 60) collects ~50× less (§1.2). Its room outside needs the CAD check.
 4. **The left-wall port (LW) is the cleanest camera window,** and spatter almost never reaches it (≤ 0.1 % of launches
    in the CFD; it looks in at 13° through a 4 mm recess). **The purge cuts the condensate at its slide ~13× at 1 L/min
    and ~45× at 3 L/min,** and the deposit 4–6× by a turbulent-deposition model, more if its layer is laminar (§1.2). Fit
@@ -102,6 +102,7 @@ over the plate):
   | `p200_lw3` | 200 + 40 | 3 L/min | 400, from `p200` |
   | `p200_lw1` | 200 + 40 | 1 L/min | 200, from `p200_lw3` |
   | `p140` | 140 + 30 | off | 300, from `p200` |
+  | `p200_lpback` | 200 + 40 | off; the LP port moved to the back-half candidate (−40, 60) | 500, from `p200` |
 
   The probe 3 mm above the plate centre held within 0.5 % over each case's last 100–200 iterations (−3.23 m/s at
   200 + 40 L/min, −2.24 at 140 + 30). The upper vortex wanders as in gas-flow.md §0.7.
@@ -154,9 +155,11 @@ kg/s for kg/m³). In brackets: how many of the 30,000 tracers visited, so the co
 - **Move the steep lid port to the back half of the lid, under the upper slot's sweep** (|x| < 50). Under the candidates
   at (−40, 60) and (−20, 80), which monitoring.md §3 also found clear (57–62° views), the gas carries **~20–25× less
   condensate** than at (−60, −80) (10–40× across the four runs). There the ceiling gas is fresh from the upper slot; the
-  candidate at (80, 80), beside the slot's end, gains little. It also moves the port's camera line away from the
-  reservoir slot that monitoring_spec.py flags for (−60, −80). The room outside (30–80 mm to the optics bridge,
-  monitoring.md §3) needs the CAD check.
+  candidate at (80, 80), beside the slot's end, gains little. **Drawn there as a real port** (`p200_lpback`, the LP's
+  recess and slide at (−40, 60)), it takes 0.05 % of the high-released condensate into its recess against 2.75 % at
+  (−60, −80), none of the low, and its slide's deposit falls ~50× (0.17 against 8.1 mg/m²/h per g/h). It also moves the
+  port's camera line away from the reservoir slot that monitoring_spec.py flags for (−60, −80). The room outside
+  (30–80 mm to the optics bridge, monitoring.md §3) needs the CAD check.
 - **The LW's own recess shelters its slide** from the low plume (no tracer reached it, against 47 in the wall layer
   outside), and a little from the high one (430 against 610). So keep the slide set back in its bore (4 mm here) rather
   than flush with the liner. Moving the LW along the wall changes little (420–910 along it).
@@ -357,7 +360,8 @@ Clausius–Clapeyron anchored at each element's boiling point (CRC Handbook: Al 
 | Primary particles (this note's coagulation model) | 3 nm | 3 nm | 6 nm |
 
 *From 200 to 400 W at 1.1 m/s A's `best` runs 0.10–0.64 g/h for AlSi10Mg and 0.07–0.24 g/h for 6061. At 200 W AlSi10Mg
-has no jet (the wall stays below its boiling point).*
+has no jet (the wall stays below its boiling point). **Over loose powder (an overhang, A's `ovh_` cases) AlSi10Mg at 320 W
+gives 1.5 g/h, 3.3× a track on solid metal**, and a jet whose centreline reaches 17–22 mm, the top of the bed jet.*
 
 ### 3.1 What evaporates, and when there is a jet
 
@@ -480,7 +484,7 @@ with them: ×1.5 for AlSi10Mg, ×1.07 for 6061, ×1.0 for 7075), at 0.4–1.1 m/
 
 | Alloy | Condensate, g per hour of lasing: A's `best`, nominal (A's cases) | Lower bound: measured Mg and Zn only |
 |---|---|---|
-| AlSi10Mg | **0.47** (0.10 at 200 W – 0.64 at 400 W) | 0.035–0.095 |
+| AlSi10Mg | **0.47** (0.10 at 200 W – 0.64 at 400 W; 1.5 over loose powder) | 0.035–0.095 |
 | 6061 | **0.19** (0.07–0.24) | 0.021–0.058 |
 | 7075 | **0.44** (0.24–0.61; 25 °C-plate cases) | 0.078–0.72 (Mg 19 %, Zn 3–30 %) |
 
@@ -528,6 +532,7 @@ size of a ~0.5 µm chain) and the CFD's friction velocity on each window. Source
 | LW slide | 1.6 × 10⁻⁶ | 0 / 0.32 | 0 / 22 | 1,800 (3.4) | 26 (0.05) |
 | LW slide, 3 L/min purge (`p200_lw3`) | 1.2 × 10⁻⁵ | 0.006 / 0.054 | 0.06 / 0.52 | 11,000 (20) | 1,100 (2.1) |
 | LP slide (−60, −80) | 4.3 × 10⁻⁶ | 0.46 / 3.8 | 12 / 97 | **150** (0.3) | 6 (0.01) |
+| LP slide moved to (−40, 60) (`p200_lpback`) | 3.1 × 10⁻⁶ | 0 / 0.08 | 0 / 2.9 | 6,900 (13) | 190 (0.4) |
 | Layer-camera bore | 1.5 × 10⁻⁶ | 0.03 / 0.32 | 2.2 / 23 | 1,800 (3.4) | 25 (0.05) |
 | BW window | 0.9 × 10⁻⁶ | 0.03 / 0.22 | 3.8 / 26 | 4,900 (10) | 42 (0.09) |
 
@@ -578,7 +583,7 @@ deposited; no Al count was found) and a splat 2.75 d across for molten droplets 
 |---|---|---|---|
 | Laser slide | molten spatter (§4.4); condensate within ~30 h of lasing (§4.3) | **inspect after every build; expect to change it every few hours of lasing** until the splat count and its absorption are measured | it sees the least condensate of any window, thanks to the upper slot, but tolerates ~100× less |
 | LW slide | condensate, slowly; spatter rarely | at the per-build transmission check, when it has lost ~10 % | the cleanest camera port; with the purge, cleaner still |
-| LP slide at (−60, −80) | condensate: the dirtiest window | as LW, but it fouls ~12× faster | **move it to (−40, 60) or (−20, 80)**: ~20× less |
+| LP slide at (−60, −80) | condensate: the dirtiest window | as LW, but it fouls ~12× faster | **move it to (−40, 60) or (−20, 80)**: ~50× less deposit when drawn at (−40, 60) |
 | Layer-camera window | condensate in its 16 mm bore; its window sits higher, in the boss | rarely | already behind a deep bore |
 | BW light window | condensate | rarely; it only has to pass light | 20 % loss is fine |
 
@@ -691,8 +696,9 @@ Where this note differs or adds:
 - **The deposit's optics** bracket rather than predict: a continuous film overstates absorption, Maxwell Garnett spheres
   understate it for chain-like agglomerates, and neither includes the haze a thick porous deposit scatters.
 - **Not run:** a transient puff (§5 is a scaling argument), the fine mesh, the upper slot at z 110–114 (gas-flow.md §0.1),
-  purge flows other than 1 and 3 L/min, and the LP port at another position as a real recess (§1.2 used the gas next to
-  the ceiling there instead).
+  purge flows other than 1 and 3 L/min, the LP at (−20, 80) as a real port (only (−40, 60) was drawn), and the Al-like
+  and halved spatter speeds in `p200_lpback` (only Ly's). Moving the LP shifted other windows' values by up to ~2×, the
+  same as the run-to-run noise (§1.2).
 
 ## 8. Re-running
 

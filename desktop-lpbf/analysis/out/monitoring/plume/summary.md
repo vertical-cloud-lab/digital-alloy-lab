@@ -298,9 +298,62 @@ Spatter (Al) landing on each window, share of launches:
 | Al lognormal (median 2.5 m/s) | 150 | 3.08 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 2.8 % | 32.0 % | 2.6 % | 12.0 % | 28.3 % | 19.2 % |
 | Al lognormal (median 2.5 m/s) | 200 | 4.92 % | 0.08 % | 0.00 % | 0.00 % | 0.00 % | 3.5 % | 24.7 % | 1.2 % | 17.2 % | 21.2 % | 27.3 % |
 
+### p200_lpback: 200 + 40 L/min, LW purge 0 L/min, 288k cells, 500 iterations
+
+Bed: 2.94 m/s mean at 3 mm over Ø75 (2.58–3.33); under the laser slide (z 121): 0.58 m/s, Uy -0.57.
+
+| Released | n | Out in 8 s | Out by the end (t_end) | Median time out (s) | Near the beam axis under the lid | Entered laser recess | Entered LW recess | Entered LP recess | Entered LC recess | Entered BW recess |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 0.5-5 mm | 30000 | 99.4 % | 100.0 % (20 s) | 0.038 | 0.8 % | 0.05 % | 0.02 % | 0.00 % | 0.14 % | 0.02 % |
+| 5-20 mm | 30000 | 94.6 % | 99.7 % (20 s) | 0.068 | 7.9 % | 0.46 % | 0.12 % | 0.05 % | 1.53 % | 0.16 % |
+
+Condensate concentration per unit source, C/S (s/m³), next to each window and at other places (in brackets: how many tracers visited; the counting noise is ~1/sqrt of it):
+
+| Control volume | 0.5-5 mm | 5-20 mm |
+|---|---|---|
+| LW recess | 78.7 (7) | 980 (37) |
+| LW near face | 66.8 (4) | 1e+03 (29) |
+| BW recess | 61.3 (6) | 1.03e+03 (48) |
+| BW near face | 68.5 (2) | 300 (8) |
+| LP recess | 0 (0) | 51.6 (16) |
+| LP near face | 0 (0) | 56.4 (3) |
+| LC recess | 37.2 (41) | 492 (458) |
+| LC near face | 44.7 (13) | 832 (189) |
+| laser recess | 40.7 (15) | 83.2 (139) |
+| laser near face | 177 (3) | 330 (16) |
+| beam column z 20-120 (r < 5 mm) | 31.3 (230) | 311 (3248) |
+| over plate z 0-20 | 128 (29999) | 246 (29936) |
+| ceiling layer at lid candidate (-60, -80) | 29 (114) | 312 (1149) |
+| ceiling layer at lid candidate (-40, 60) | 4.01 (21) | 43.8 (213) |
+| ceiling layer at lid candidate (-20, 80) | 3.64 (23) | 35.6 (241) |
+| ceiling layer at lid candidate (80, 80) | 58 (69) | 643 (726) |
+| left-wall layer at y -60, z 22-44 | 80.5 (25) | 895 (240) |
+| left-wall layer at y -20, z 22-44 | 70.7 (40) | 473 (361) |
+| left-wall layer at y 20, z 22-44 | 81.3 (39) | 869 (334) |
+| left-wall layer at y 60, z 22-44 | 108 (15) | 669 (101) |
+
+| Window | u* (m/s) | gas speed 1 mm off the face (m/s) |
+|---|---|---|
+| laser slide (lid, centre) | 0.056 | 0.077 |
+| LW slide (left wall, 13°) | 0.017 | 0.016 |
+| LP slide (lid, front-left, 54°) | 0.044 | 0.12 |
+| layer-camera bore (lid) | 0.034 | 0.14 |
+| BW light window (back wall, 8°) | 0.0067 | 0.0031 |
+
+Spatter (Al) landing on each window, share of launches:
+
+| Speeds | d (µm) | laser slide (lid, centre) | LW slide (left wall, 13°) | LP slide (lid, front-left, 54°) | layer-camera bore (lid) | BW light window (back wall, 8°) | plate (Ø75) | floor | outlet | lid | door side | other walls and parts |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Ly 2017 speeds | 20 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 19.7 % | 14.7 % | 0.0 % | 61.6 % | 3.7 % |
+| Ly 2017 speeds | 35 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 3.4 % | 1.9 % | 0.0 % | 93.7 % | 1.0 % |
+| Ly 2017 speeds | 50 | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.00 % | 0.4 % | 13.7 % | 1.9 % | 0.3 % | 75.5 % | 8.3 % |
+| Ly 2017 speeds | 100 | 5.50 % | 0.00 % | 0.17 % | 0.00 % | 0.00 % | 2.1 % | 21.2 % | 1.5 % | 26.1 % | 17.9 % | 25.6 % |
+| Ly 2017 speeds | 150 | 6.58 % | 0.00 % | 0.50 % | 0.00 % | 0.00 % | 1.4 % | 7.2 % | 0.2 % | 35.2 % | 15.0 % | 33.9 % |
+| Ly 2017 speeds | 200 | 7.58 % | 0.08 % | 0.50 % | 0.00 % | 0.00 % | 0.2 % | 2.8 % | 0.0 % | 37.2 % | 13.9 % | 37.6 % |
+
 ## Fouling (fouling.py)
 
-Condensate source, g per hour of lasing (file: analysis/out/monitoring/melt/plume_source.json): AlSi10Mg 0.097–0.64 (nominal 0.47; worker A 'best': measured Mg/Zn rates + 'wall' reading for Al (plume_source.json)), 6061 0.074–0.24 (nominal 0.19; worker A 'best': measured Mg/Zn rates + 'wall' reading for Al (plume_source.json)), 7075 0.24–0.6 (nominal 0.44; worker A 'best': measured Mg/Zn rates + 'wall' reading for Al (plume_source.json))
+Condensate source, g per hour of lasing (file: analysis/out/monitoring/melt/plume_source.json): AlSi10Mg 0.097–1.5 (nominal 0.47; worker A 'best': measured Mg/Zn rates + 'wall' reading for Al (plume_source.json)), 6061 0.074–0.24 (nominal 0.19; worker A 'best': measured Mg/Zn rates + 'wall' reading for Al (plume_source.json)), 7075 0.24–0.6 (nominal 0.44; worker A 'best': measured Mg/Zn rates + 'wall' reading for Al (plume_source.json))
 
 ### p200
 
@@ -706,6 +759,91 @@ Condensate source, g per hour of lasing (file: analysis/out/monitoring/melt/plum
 | LC | Al lognormal (median 2.5 m/s) | 0 | 0.0 |
 | laser | Al lognormal (median 2.5 m/s) | 1131 | 131.7 |
 
+### p200_lpback
+
+| Window | Released | Size, ΔT | Alloy | mg/m² per h of lasing | h to the limit, dense Al film | h, porous Al (f 0.1) |
+|---|---|---|---|---|---|---|
+| LW | 0.5-5 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.112 | 9.75 | 5.08e+03 |
+| LW | 0.5-5 mm | 0.05 um, dT 0 K | 7075 | 0.104 | 10.4 | 5.44e+03 |
+| LW | 0.5-5 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.0486 | 22.4 | 1.17e+04 |
+| LW | 0.5-5 mm | 0.1 um, dT 0 K | 7075 | 0.0454 | 24 | 1.25e+04 |
+| LW | 0.5-5 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.0155 | 70.4 | 3.67e+04 |
+| LW | 0.5-5 mm | 0.3 um, dT 0 K | 7075 | 0.0144 | 75.4 | 3.93e+04 |
+| LW | 0.5-5 mm | 0.1 um, dT 10 K | AlSi10Mg | 3.4 | 0.32 | 167 |
+| LW | 0.5-5 mm | 0.1 um, dT 10 K | 7075 | 3.18 | 0.343 | 179 |
+| BW | 0.5-5 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.0447 | 50.7 | 2.4e+04 |
+| BW | 0.5-5 mm | 0.05 um, dT 0 K | 7075 | 0.0417 | 54.3 | 2.57e+04 |
+| BW | 0.5-5 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.0194 | 117 | 5.51e+04 |
+| BW | 0.5-5 mm | 0.1 um, dT 0 K | 7075 | 0.0182 | 125 | 5.9e+04 |
+| BW | 0.5-5 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.00618 | 367 | 1.73e+05 |
+| BW | 0.5-5 mm | 0.3 um, dT 0 K | 7075 | 0.00577 | 393 | 1.86e+05 |
+| BW | 0.5-5 mm | 0.1 um, dT 10 K | AlSi10Mg | 3.46 | 0.656 | 310 |
+| BW | 0.5-5 mm | 0.1 um, dT 10 K | 7075 | 3.23 | 0.702 | 332 |
+| LC | 0.5-5 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.139 | 7.84 | 4.09e+03 |
+| LC | 0.5-5 mm | 0.05 um, dT 0 K | 7075 | 0.13 | 8.4 | 4.37e+03 |
+| LC | 0.5-5 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.0461 | 23.6 | 1.23e+04 |
+| LC | 0.5-5 mm | 0.1 um, dT 0 K | 7075 | 0.0431 | 25.3 | 1.32e+04 |
+| LC | 0.5-5 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.00107 | 1.02e+03 | 5.3e+05 |
+| LC | 0.5-5 mm | 0.3 um, dT 0 K | 7075 | 0.001 | 1.09e+03 | 5.67e+05 |
+| LC | 0.5-5 mm | 0.1 um, dT 10 K | AlSi10Mg | 2.29 | 0.476 | 248 |
+| LC | 0.5-5 mm | 0.1 um, dT 10 K | 7075 | 2.14 | 0.509 | 265 |
+| laser | 0.5-5 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.932 | 0.00785 | 7.88 |
+| laser | 0.5-5 mm | 0.05 um, dT 0 K | 7075 | 0.871 | 0.0084 | 8.43 |
+| laser | 0.5-5 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.346 | 0.0211 | 21.2 |
+| laser | 0.5-5 mm | 0.1 um, dT 0 K | 7075 | 0.323 | 0.0226 | 22.7 |
+| laser | 0.5-5 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.00424 | 1.72 | 1.73e+03 |
+| laser | 0.5-5 mm | 0.3 um, dT 0 K | 7075 | 0.00396 | 1.85 | 1.85e+03 |
+| laser | 0.5-5 mm | 0.1 um, dT 10 K | AlSi10Mg | 9.23 | 0.000792 | 0.795 |
+| laser | 0.5-5 mm | 0.1 um, dT 10 K | 7075 | 8.62 | 0.000848 | 0.852 |
+| LW | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg | 1.67 | 0.651 | 339 |
+| LW | 5-20 mm | 0.05 um, dT 0 K | 7075 | 1.56 | 0.697 | 363 |
+| LW | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.729 | 1.5 | 779 |
+| LW | 5-20 mm | 0.1 um, dT 0 K | 7075 | 0.68 | 1.6 | 834 |
+| LW | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.232 | 4.7 | 2.45e+03 |
+| LW | 5-20 mm | 0.3 um, dT 0 K | 7075 | 0.216 | 5.03 | 2.62e+03 |
+| LW | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg | 51 | 0.0214 | 11.1 |
+| LW | 5-20 mm | 0.1 um, dT 10 K | 7075 | 47.6 | 0.0229 | 11.9 |
+| BW | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.195 | 11.6 | 5.49e+03 |
+| BW | 5-20 mm | 0.05 um, dT 0 K | 7075 | 0.183 | 12.4 | 5.87e+03 |
+| BW | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.085 | 26.7 | 1.26e+04 |
+| BW | 5-20 mm | 0.1 um, dT 0 K | 7075 | 0.0794 | 28.5 | 1.35e+04 |
+| BW | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.027 | 83.9 | 3.97e+04 |
+| BW | 5-20 mm | 0.3 um, dT 0 K | 7075 | 0.0253 | 89.8 | 4.25e+04 |
+| BW | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg | 15.1 | 0.15 | 70.9 |
+| BW | 5-20 mm | 0.1 um, dT 10 K | 7075 | 14.1 | 0.161 | 75.9 |
+| LP | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg | 0.231 | 4.72 | 2.46e+03 |
+| LP | 5-20 mm | 0.05 um, dT 0 K | 7075 | 0.216 | 5.05 | 2.63e+03 |
+| LP | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.0819 | 13.3 | 6.93e+03 |
+| LP | 5-20 mm | 0.1 um, dT 0 K | 7075 | 0.0765 | 14.2 | 7.42e+03 |
+| LP | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.00135 | 806 | 4.2e+05 |
+| LP | 5-20 mm | 0.3 um, dT 0 K | 7075 | 0.00126 | 863 | 4.5e+05 |
+| LP | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg | 2.91 | 0.374 | 195 |
+| LP | 5-20 mm | 0.1 um, dT 10 K | 7075 | 2.72 | 0.401 | 209 |
+| LC | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg | 2.59 | 0.421 | 219 |
+| LC | 5-20 mm | 0.05 um, dT 0 K | 7075 | 2.41 | 0.451 | 235 |
+| LC | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.859 | 1.27 | 661 |
+| LC | 5-20 mm | 0.1 um, dT 0 K | 7075 | 0.802 | 1.36 | 707 |
+| LC | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.0199 | 54.6 | 2.84e+04 |
+| LC | 5-20 mm | 0.3 um, dT 0 K | 7075 | 0.0186 | 58.5 | 3.05e+04 |
+| LC | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg | 42.6 | 0.0255 | 13.3 |
+| LC | 5-20 mm | 0.1 um, dT 10 K | 7075 | 39.8 | 0.0273 | 14.2 |
+| laser | 5-20 mm | 0.05 um, dT 0 K | AlSi10Mg | 1.74 | 0.00421 | 4.23 |
+| laser | 5-20 mm | 0.05 um, dT 0 K | 7075 | 1.62 | 0.00451 | 4.53 |
+| laser | 5-20 mm | 0.1 um, dT 0 K | AlSi10Mg | 0.644 | 0.0114 | 11.4 |
+| laser | 5-20 mm | 0.1 um, dT 0 K | 7075 | 0.602 | 0.0122 | 12.2 |
+| laser | 5-20 mm | 0.3 um, dT 0 K | AlSi10Mg | 0.0079 | 0.926 | 930 |
+| laser | 5-20 mm | 0.3 um, dT 0 K | 7075 | 0.00738 | 0.992 | 996 |
+| laser | 5-20 mm | 0.1 um, dT 10 K | AlSi10Mg | 17.2 | 0.000426 | 0.427 |
+| laser | 5-20 mm | 0.1 um, dT 10 K | 7075 | 16.1 | 0.000456 | 0.457 |
+
+| Window, speeds | Spatter hits per hour of lasing at 100 spatters/s | splat area (mm²/h) |
+|---|---|---|
+| LW | Ly 2017 speeds | 3 | 0.7 |
+| BW | Ly 2017 speeds | 0 | 0.0 |
+| LP | Ly 2017 speeds | 150 | 17.5 |
+| LC | Ly 2017 speeds | 0 | 0.0 |
+| laser | Ly 2017 speeds | 3201 | 309.2 |
+
 ## Spatter glow and blur (spatter.py)
 
 | Spatter | Camera, exposure | visible above (K) | glows for (ms) | over (mm) |
@@ -1040,4 +1178,67 @@ Condensate source, g per hour of lasing (file: analysis/out/monitoring/melt/plum
 | Al lognormal (median 2.5 m/s) | 100 | 1.42 % | 0.08 % | 0.00 % | 2.2 % | 33.7 % | 5.3 % | 3.8 % | 45.7 % |
 | Al lognormal (median 2.5 m/s) | 150 | 3.08 % | 0.00 % | 0.00 % | 2.8 % | 32.0 % | 2.6 % | 12.0 % | 28.3 % |
 | Al lognormal (median 2.5 m/s) | 200 | 4.92 % | 0.08 % | 0.00 % | 3.5 % | 24.7 % | 1.2 % | 17.2 % | 21.2 % |
+
+### p200_lpback
+
+| Released | Out in 8 s | Out in 20 s | Median time out | Near the beam axis under the lid | laser | LW | LP | LC | BW |
+|---|---|---|---|---|---|---|---|---|---|
+| 0.5–5 mm | 99.4 % | 100.0 % | 0.038 s | 0.8 % | 0.05 % | 0.02 % | 0.00 % | 0.14 % | 0.02 % |
+| 5–20 mm | 94.6 % | 99.7 % | 0.068 s | 7.9 % | 0.46 % | 0.12 % | 0.05 % | 1.53 % | 0.16 % |
+
+| Where | 0.5–5 mm | 5–20 mm |
+|---|---|---|
+| LW recess | 79 (7) | 9.8e+02 (37) |
+| LW near face | 67 (4) | 1e+03 (29) |
+| BW recess | 61 (6) | 1e+03 (48) |
+| BW near face | 69 (2) | 3e+02 (8) |
+| LP recess | 0 (0) | 52 (16) |
+| LP near face | 0 (0) | 56 (3) |
+| LC recess | 37 (41) | 4.9e+02 (458) |
+| LC near face | 45 (13) | 8.3e+02 (189) |
+| laser recess | 41 (15) | 83 (139) |
+| laser near face | 1.8e+02 (3) | 3.3e+02 (16) |
+| beam column z 20-120 (r < 5 mm) | 31 (230) | 3.1e+02 (3248) |
+| over plate z 0-20 | 1.3e+02 (29999) | 2.5e+02 (29936) |
+| ceiling layer at lid candidate (-60, -80) | 29 (114) | 3.1e+02 (1149) |
+| ceiling layer at lid candidate (-40, 60) | 4 (21) | 44 (213) |
+| ceiling layer at lid candidate (-20, 80) | 3.6 (23) | 36 (241) |
+| ceiling layer at lid candidate (80, 80) | 58 (69) | 6.4e+02 (726) |
+| left-wall layer at y -60, z 22-44 | 81 (25) | 8.9e+02 (240) |
+| left-wall layer at y -20, z 22-44 | 71 (40) | 4.7e+02 (361) |
+| left-wall layer at y 20, z 22-44 | 81 (39) | 8.7e+02 (334) |
+| left-wall layer at y 60, z 22-44 | 1.1e+02 (15) | 6.7e+02 (101) |
+
+| Window | u* | gas 1 mm off | J/S 0.1 um dT0, low / high (mg/m2/h per g/h) |
+|---|---|---|---|
+| laser | 0.056 | 0.077 | 0.74 / 1.4 |
+| LW | 0.017 | 0.016 | 0.1 / 1.6 |
+| LP | 0.044 | 0.12 | 0 / 0.17 |
+| LC | 0.034 | 0.14 | 0.098 / 1.8 |
+| BW | 0.0067 | 0.0031 | 0.041 / 0.18 |
+
+| Window | v_d 0.1 um | mg/m2/h low / high (AlSi10Mg) | 10 K colder | h porous (dense), high | 10 K colder |
+|---|---|---|---|---|---|
+| laser | 4.2e-06 | 0.35 / 0.64 | 9.2 / 17 | 11 (0.011) | 0.43 (0.00043) |
+| LW | 1.6e-06 | 0.049 / 0.73 | 3.4 / 51 | 7.8e+02 (1.5) | 11 (0.021) |
+| LP | 3.1e-06 | 0 / 0.082 | 0 / 2.9 | 6.9e+03 (13) | 1.9e+02 (0.37) |
+| LC | 2.2e-06 | 0.046 / 0.86 | 2.3 / 43 | 6.6e+02 (1.3) | 13 (0.026) |
+| BW | 6.1e-07 | 0.019 / 0.085 | 3.5 / 15 | 1.3e+04 (27) | 71 (0.15) |
+
+| Window | Al-like hits/h, mm2/h | Ly hits/h, mm2/h |
+|---|---|---|
+| laser | 0 / 0.0 | 3201 / 309.2 |
+| LW | 0 / 0.0 | 3 / 0.7 |
+| LP | 0 / 0.0 | 150 / 17.5 |
+| LC | 0 / 0.0 | 0 / 0.0 |
+| BW | 0 / 0.0 | 0 / 0.0 |
+
+| Speeds | d | laser | LW | LP | plate | floor | outlet | lid | door side |
+|---|---|---|---|---|---|---|---|---|---|
+| Ly 2017 speeds | 20 | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 19.7 % | 14.7 % | 0.0 % | 61.6 % |
+| Ly 2017 speeds | 35 | 0.00 % | 0.00 % | 0.00 % | 0.0 % | 3.4 % | 1.9 % | 0.0 % | 93.7 % |
+| Ly 2017 speeds | 50 | 0.00 % | 0.00 % | 0.00 % | 0.4 % | 13.7 % | 1.9 % | 0.3 % | 75.5 % |
+| Ly 2017 speeds | 100 | 5.50 % | 0.00 % | 0.17 % | 2.1 % | 21.2 % | 1.5 % | 26.1 % | 17.9 % |
+| Ly 2017 speeds | 150 | 6.58 % | 0.00 % | 0.50 % | 1.4 % | 7.2 % | 0.2 % | 35.2 % | 15.0 % |
+| Ly 2017 speeds | 200 | 7.58 % | 0.08 % | 0.50 % | 0.2 % | 2.8 % | 0.0 % | 37.2 % | 13.9 % |
 
