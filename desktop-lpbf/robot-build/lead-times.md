@@ -70,8 +70,8 @@ How the numbers were read:
   chamber frame and floor plate alone are 25.4 h.
 - **Assembly: 139 checked steps.**
   - **Arms:** about 3.3 h, plus 0.8 h of MiR trips to the long table.
-  - **People:** about 12.9 person-hours, half of it the laser guard and the integration on the tray.
-  - **Steps the arms can't do:** 26 fail or partly fail for the arms, and 19 are steps for a person or the shop.
+  - **People:** about 13 person-hours, half of it the laser guard and the integration on the tray.
+  - **Steps the arms can't do:** 27 fail or partly fail (26 on reach or collisions, 1 on force: the dowel press) for the arms, and 19 are steps for a person or the shop.
 
   All of these times are estimates: `results.json`'s "seconds" is the checker's compute time, not how long a step takes
   (§5).
@@ -224,7 +224,7 @@ sellers aren't named) with the 2026-11-25 re-read, its lead times, and a note on
   | Chapter | Steps | Arm time | MiR trips | Person time | Failed or partial | Person or shop steps |
   |---|---:|---:|---:|---:|---:|---:|
   | 40, the build module | 30 | 26 min | 12 min | 2.2 h (2 h is the shop TIG-welding seven feedthroughs) | 0 | 3 |
-  | 41, chamber and process module | 103 | 1.9 h | 37 min | 6.4 h (3 h is the Class 1 laser guard) | 26 | 11 |
+  | 41, chamber and process module | 103 | 1.9 h | 37 min | 6.5 h (3 h is the Class 1 laser guard) | 27 | 11 |
   | 50, integration on the tray | 6 | 1 h (leak check) | 0 | 4.3 h (hoist, rack units, gas module, hoses, dock) | 0 | 5 |
 
   The assembly renderer's own motion times (`proc_s`) replace these once its trajectories exist.
@@ -267,6 +267,9 @@ sellers aren't named) with the 2026-11-25 re-read, its lead times, and a note on
    - `cost/used-options.csv`'s URL for the hurrySCAN 25 is cut short and returns 404. The dealer's search still lists
      the head.
    - The IDP-3 listing takes no returns; on 2026-11-20 its returns were "not stated".
+9. **The scan PC may not be costed.** The model draws a 2U "Scan + laser controller PC" and tags it C1, but C1 holds
+   only the RTC6 and its breakout ($6,065). The nearest cost is C2's $600 high end ("small industrial PC"); C2's low end
+   is the Raspberry Pi 5 the model draws in PB2. A used RTC5 also needs a PC with a PCIe slot.
 
 ## 7. Still open
 

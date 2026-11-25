@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-25T06:24Z",
+ "generated_utc": "2026-11-25T06:26Z",
  "what": "Cost, lead-time and time numbers for the robot-built desktop LPBF video (issue #260, PR #266, round 7)",
  "how_to_show": "Tour the categories in the order of 'categories'. For each, show hud.new (at spec, all new) against hud.used (the used picks where a sensible listing exists, new elsewhere) and the running totals hud.run_new / hud.run_used; hud.range_new / hud.range_used are the BOM's full low-high ranges. Call out the category's 'items' in order with their hud.new, hud.used, hud.lead_new and hud.lead_used. 'offtable' and 'services' are not on the table: show them as text rows at the end of the tour.",
  "definitions": {
@@ -8062,6 +8062,7 @@
      "robot_s": 51.0,
      "person_min": 0.0,
      "checker_compute_s": 1.5,
+     "force": "",
      "note": ""
     },
     {
@@ -8074,6 +8075,7 @@
      "robot_s": 0.0,
      "person_min": 3,
      "checker_compute_s": 0.0,
+     "force": "Installed right after tapping with a powered insert tool and the tang broken off, as for every insert in the chamber body (render_build chapter 2); a cobot would need a dedicated inserter and tang-break station for 3 inserts.",
      "note": "three M3 helical inserts, in the shop after tapping"
     },
     {
@@ -8086,6 +8088,7 @@
      "robot_s": 39.0,
      "person_min": 0.0,
      "checker_compute_s": 2.6,
+     "force": "released 24 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8098,6 +8101,7 @@
      "robot_s": 40.0,
      "person_min": 0.0,
      "checker_compute_s": 2.5,
+     "force": "released 36 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8110,6 +8114,7 @@
      "robot_s": 52.0,
      "person_min": 0.0,
      "checker_compute_s": 11.2,
+     "force": "released 9 mm above its seat and let drop over its guide; released 6 mm above its seat and let drop over its guide",
      "note": ""
     },
     {
@@ -8122,6 +8127,7 @@
      "robot_s": 53.0,
      "person_min": 0.0,
      "checker_compute_s": 1.7,
+     "force": "",
      "note": ""
     },
     {
@@ -8134,6 +8140,7 @@
      "robot_s": 49.0,
      "person_min": 0.0,
      "checker_compute_s": 0.9,
+     "force": "",
      "note": ""
     },
     {
@@ -8146,6 +8153,7 @@
      "robot_s": 80.0,
      "person_min": 0.0,
      "checker_compute_s": 11.3,
+     "force": "0.6 N m | 3/3 screws;",
      "note": ""
     },
     {
@@ -8158,6 +8166,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "A felt strip and a split PTFE scraper are wrapped, not pushed; no published robot method for felt.",
      "note": "felt strip and split PTFE scraper wrapped into the head's groove"
     },
     {
@@ -8170,6 +8179,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.1,
+     "force": "",
      "note": ""
     },
     {
@@ -8182,6 +8192,7 @@
      "robot_s": 53.0,
      "person_min": 0.0,
      "checker_compute_s": 1.1,
+     "force": "",
      "note": ""
     },
     {
@@ -8194,6 +8205,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 1.1,
+     "force": "",
      "note": ""
     },
     {
@@ -8206,6 +8218,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 2.7,
+     "force": "needs 35 N (peak 104); arm can push 156 N",
      "note": ""
     },
     {
@@ -8218,6 +8231,7 @@
      "robot_s": 45.0,
      "person_min": 0.0,
      "checker_compute_s": 2.4,
+     "force": "",
      "note": ""
     },
     {
@@ -8230,6 +8244,7 @@
      "robot_s": 65.0,
      "person_min": 0.0,
      "checker_compute_s": 3.5,
+     "force": "1.1 N m | 2/2 screws;",
      "note": ""
     },
     {
@@ -8242,6 +8257,7 @@
      "robot_s": 57.0,
      "person_min": 0.0,
      "checker_compute_s": 2.4,
+     "force": "",
      "note": ""
     },
     {
@@ -8254,6 +8270,7 @@
      "robot_s": 90.0,
      "person_min": 0.0,
      "checker_compute_s": 15.6,
+     "force": "",
      "note": ""
     },
     {
@@ -8266,6 +8283,7 @@
      "robot_s": 30.0,
      "person_min": 0.0,
      "checker_compute_s": 46.8,
+     "force": "",
      "note": ""
     },
     {
@@ -8278,6 +8296,7 @@
      "robot_s": 56.0,
      "person_min": 0.0,
      "checker_compute_s": 7.2,
+     "force": "",
      "note": ""
     },
     {
@@ -8290,6 +8309,7 @@
      "robot_s": 125.0,
      "person_min": 0.0,
      "checker_compute_s": 2.2,
+     "force": "2.2 N m | 6/6 screws;",
      "note": ""
     },
     {
@@ -8302,6 +8322,7 @@
      "robot_s": 50.5,
      "person_min": 0.0,
      "checker_compute_s": 1.3,
+     "force": "",
      "note": ""
     },
     {
@@ -8314,6 +8335,7 @@
      "robot_s": 65.0,
      "person_min": 0.0,
      "checker_compute_s": 13.6,
+     "force": "2.2 N m | 2/2 screws;",
      "note": ""
     },
     {
@@ -8326,6 +8348,7 @@
      "robot_s": 51.0,
      "person_min": 0.0,
      "checker_compute_s": 2.5,
+     "force": "released 24 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8338,6 +8361,7 @@
      "robot_s": 80.0,
      "person_min": 0.0,
      "checker_compute_s": 1.9,
+     "force": "1.1 N m | 3/3 screws;",
      "note": ""
     },
     {
@@ -8350,6 +8374,7 @@
      "robot_s": 0.0,
      "person_min": 120,
      "checker_compute_s": 0.0,
+     "force": "TIG welds at the block's face and at the rod, on the bare rod before chapter 3, away from every O-ring; the inner joints to the feedthrough pins are made before the sleeves are welded. Ask Solid Sealing to confirm the blind-bore weld and the weld access (elect",
      "note": "seven weld-in feedthroughs TIG-welded into the rod end (welder)"
     },
     {
@@ -8362,6 +8387,7 @@
      "robot_s": 30.0,
      "person_min": 0.0,
      "checker_compute_s": 4.6,
+     "force": "",
      "note": ""
     },
     {
@@ -8374,6 +8400,7 @@
      "robot_s": 51.0,
      "person_min": 0.0,
      "checker_compute_s": 2.5,
+     "force": "needs 10 N; arm can push 164 N | released 18 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8386,6 +8413,7 @@
      "robot_s": 30.0,
      "person_min": 0.0,
      "checker_compute_s": 48.9,
+     "force": "",
      "note": ""
     },
     {
@@ -8398,6 +8426,7 @@
      "robot_s": 36.0,
      "person_min": 0.0,
      "checker_compute_s": 12.9,
+     "force": "",
      "note": ""
     },
     {
@@ -8410,6 +8439,7 @@
      "robot_s": 36.0,
      "person_min": 0.0,
      "checker_compute_s": 1.0,
+     "force": "",
      "note": ""
     },
     {
@@ -8422,6 +8452,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "operations.md A2.13: with the plate on the bench, face down, all four screws are open from above; on the machine two sit under the KF-40 stub's flange (run 6: 2 of 4). Not checked here: the bench is not modelled.",
      "note": "overflow funnel on the bench: O-ring, block and four M4 screws"
     },
     {
@@ -8434,6 +8465,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 3.9,
+     "force": "",
      "note": ""
     },
     {
@@ -8446,6 +8478,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 4.8,
+     "force": "",
      "note": ""
     },
     {
@@ -8458,6 +8491,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 5.3,
+     "force": "4.3 kg, 2.1 kg per arm | 4.3 kg;",
      "note": ""
     },
     {
@@ -8470,6 +8504,7 @@
      "robot_s": 290.0,
      "person_min": 1.0,
      "checker_compute_s": 29.6,
+     "force": "1.1 N m | 17/18 screws; in the: approach: no path in 500 iterations",
      "note": "1 of 18 screws by a person (1 min each, estimate)"
     },
     {
@@ -8482,6 +8517,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 8.2,
+     "force": "8.25 kg, 4.1 kg per arm | 8.25 kg;",
      "note": ""
     },
     {
@@ -8494,6 +8530,7 @@
      "robot_s": 20.0,
      "person_min": 0.0,
      "checker_compute_s": 0.7,
+     "force": "",
      "note": ""
     },
     {
@@ -8502,11 +8539,12 @@
      "label": "Locating dowel and diamond pin into the floor",
      "do": "place",
      "actor": "A",
-     "status": "pass",
+     "status": "fail",
      "robot_s": 51.0,
-     "person_min": 0.0,
+     "person_min": 5.0,
      "checker_compute_s": 8.5,
-     "note": ""
+     "force": "needs 1644 N; arm can push 149 N | TOO MUCH FORCE for the arm: NO: 16x the F/T range; a UR pushing this hard is past its force limit. Arbor press by a person, or a slip fit (g6) with ;",
+     "note": "needs 1644 N; arm can push 149 N | TOO MUCH FORCE for the arm: NO: 16x the F/T range; a UR pushing this hard is past its force limit. Arbor press by a person, o"
     },
     {
      "step": "C03",
@@ -8518,6 +8556,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "",
      "note": ""
     },
     {
@@ -8530,6 +8569,7 @@
      "robot_s": 63.0,
      "person_min": 0.0,
      "checker_compute_s": 1.5,
+     "force": "",
      "note": ""
     },
     {
@@ -8542,6 +8582,7 @@
      "robot_s": 125.0,
      "person_min": 0.0,
      "checker_compute_s": 13.3,
+     "force": "2.2 N m | 6/6 screws;",
      "note": ""
     },
     {
@@ -8554,6 +8595,7 @@
      "robot_s": 57.0,
      "person_min": 0.0,
      "checker_compute_s": 1.2,
+     "force": "released 30 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8566,6 +8608,7 @@
      "robot_s": 38.0,
      "person_min": 0.0,
      "checker_compute_s": 5.0,
+     "force": "released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8578,6 +8621,7 @@
      "robot_s": 45.0,
      "person_min": 0.0,
      "checker_compute_s": 1.7,
+     "force": "released 30 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8590,6 +8634,7 @@
      "robot_s": 95.0,
      "person_min": 0.0,
      "checker_compute_s": 8.7,
+     "force": "4.2 N m | 4/4 screws;",
      "note": ""
     },
     {
@@ -8602,6 +8647,7 @@
      "robot_s": 53.0,
      "person_min": 0.0,
      "checker_compute_s": 3.4,
+     "force": "",
      "note": ""
     },
     {
@@ -8614,6 +8660,7 @@
      "robot_s": 53.0,
      "person_min": 0.0,
      "checker_compute_s": 1.5,
+     "force": "",
      "note": ""
     },
     {
@@ -8626,6 +8673,7 @@
      "robot_s": 38.0,
      "person_min": 0.0,
      "checker_compute_s": 1.5,
+     "force": "",
      "note": ""
     },
     {
@@ -8638,6 +8686,7 @@
      "robot_s": 0.0,
      "person_min": 5,
      "checker_compute_s": 0.0,
+     "force": "Small threaded fittings with a tube to follow. The modules have to be open (6 bar) for the clamping pins to enter in C10.",
      "note": "M5 push-in elbows and a temporary release-air line"
     },
     {
@@ -8650,6 +8699,7 @@
      "robot_s": 75.8,
      "person_min": 0.0,
      "checker_compute_s": 18.9,
+     "force": "needs 109 N (peak 328); arm can push 132 N | peak beyond the arm: robot starts it on the lead-in chamfer (<= 50 N in force mode) and pushes it home in force mode; the two zero-point modu;",
      "note": ""
     },
     {
@@ -8662,6 +8712,7 @@
      "robot_s": 10.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "The cell vents the temporary line. 1 kN holds 4.6x the worst separating load (hot-swap.md 3.2a). The spigot ring is already home: arm B pushed the module in at C10 (132 N running). The captive M6 are gone; the floor keeps their inserts for a hand fallback.",
      "note": "machine"
     },
     {
@@ -8674,6 +8725,7 @@
      "robot_s": 45.0,
      "person_min": 0.0,
      "checker_compute_s": 2.9,
+     "force": "",
      "note": ""
     },
     {
@@ -8686,6 +8738,7 @@
      "robot_s": 42.0,
      "person_min": 0.0,
      "checker_compute_s": 19.2,
+     "force": "",
      "note": ""
     },
     {
@@ -8698,6 +8751,7 @@
      "robot_s": 95.0,
      "person_min": 0.0,
      "checker_compute_s": 49.2,
+     "force": "7.4 N m | 4/4 screws;",
      "note": ""
     },
     {
@@ -8710,6 +8764,7 @@
      "robot_s": 0.0,
      "person_min": 5,
      "checker_compute_s": 0.0,
+     "force": "A leg on a nest is open on every side; on the machine its back face is hemmed in by the frame, the other legs, the Z servo and (upright) the base plate. Not checked here: the bench nest is not modelled.",
      "note": "overflow-jar sensor and its bracket on the bench"
     },
     {
@@ -8722,6 +8777,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 1.0,
+     "force": "11.79 kg, 5.9 kg per arm | 11.79 kg;",
      "note": ""
     },
     {
@@ -8734,6 +8790,7 @@
      "robot_s": 0.0,
      "person_min": 0,
      "checker_compute_s": 0.0,
+     "force": "They thread in when the finished process module goes onto the tray (chapter 5); until then Fixture B carries the plate on its ends.",
      "note": "levelling mounts go on in T01"
     },
     {
@@ -8746,6 +8803,7 @@
      "robot_s": 57.0,
      "person_min": 0.0,
      "checker_compute_s": 1.0,
+     "force": "",
      "note": ""
     },
     {
@@ -8758,6 +8816,7 @@
      "robot_s": 20.0,
      "person_min": 0.0,
      "checker_compute_s": 1.4,
+     "force": "",
      "note": ""
     },
     {
@@ -8770,6 +8829,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 10.1,
+     "force": "19.62 kg, 9.8 kg per arm | 19.62 kg;",
      "note": ""
     },
     {
@@ -8782,6 +8842,7 @@
      "robot_s": 140.0,
      "person_min": 1.0,
      "checker_compute_s": 291.0,
+     "force": "7.4 N m | 7/8 screws; 316 #1: approach: no clear way in to the hole's mouth (A/upper_arm hits Base plate, process module",
      "note": "1 of 8 screws by a person (1 min each, estimate)"
     },
     {
@@ -8794,6 +8855,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "Tube routing (deformable), as the hoses in chapter 5. The modules stay locked while the line is swapped: their springs hold.",
      "note": "release-air tube routed from the valve to both zero-point modules"
     },
     {
@@ -8806,6 +8868,7 @@
      "robot_s": 71.8,
      "person_min": 0.0,
      "checker_compute_s": 2.4,
+     "force": "",
      "note": ""
     },
     {
@@ -8818,6 +8881,7 @@
      "robot_s": 0.0,
      "person_min": 1,
      "checker_compute_s": 0.0,
+     "force": "Its hinged ring has to be held open round both flanges before one push on the lever locks it; nothing on the 2F-85 holds the ring open. An air-released KF clamp would let the robot do it (hot-swap.md).",
      "note": "KF-40 toggle clamp round the jar's flange"
     },
     {
@@ -8830,6 +8894,7 @@
      "robot_s": 75.0,
      "person_min": 0.0,
      "checker_compute_s": 1.6,
+     "force": "",
      "note": ""
     },
     {
@@ -8842,6 +8907,7 @@
      "robot_s": 103.6,
      "person_min": 5.0,
      "checker_compute_s": 5.6,
+     "force": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
      "note": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of t"
     },
     {
@@ -8854,6 +8920,7 @@
      "robot_s": 91.0,
      "person_min": 5.0,
      "checker_compute_s": 5.9,
+     "force": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
      "note": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along th"
     },
     {
@@ -8866,6 +8933,7 @@
      "robot_s": 103.2,
      "person_min": 0.0,
      "checker_compute_s": 7.5,
+     "force": "",
      "note": ""
     },
     {
@@ -8878,6 +8946,7 @@
      "robot_s": 103.5,
      "person_min": 5.0,
      "checker_compute_s": 4.8,
+     "force": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
      "note": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of t"
     },
     {
@@ -8890,6 +8959,7 @@
      "robot_s": 88.5,
      "person_min": 5.0,
      "checker_compute_s": 6.0,
+     "force": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
      "note": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along th"
     },
     {
@@ -8902,6 +8972,7 @@
      "robot_s": 103.2,
      "person_min": 0.0,
      "checker_compute_s": 17.6,
+     "force": "",
      "note": ""
     },
     {
@@ -8914,6 +8985,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "Threading an M6 head with a fibre attached means winding the fibre with it; the ring itself is a pick-and-place.",
      "note": "through-beam fibre heads threaded into the side walls"
     },
     {
@@ -8926,6 +8998,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.1,
+     "force": "",
      "note": ""
     },
     {
@@ -8938,6 +9011,7 @@
      "robot_s": 63.0,
      "person_min": 5.0,
      "checker_compute_s": 20.8,
+     "force": "arm A: no IK at the start pose at 0 mm along the insertion; held-part screws: 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner",
      "note": "arm A: no IK at the start pose at 0 mm along the insertion; held-part screws: 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no wa"
     },
     {
@@ -8950,6 +9024,7 @@
      "robot_s": 110.0,
      "person_min": 1.0,
      "checker_compute_s": null,
+     "force": "2.2 N m | 6/7 screws; 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner",
      "note": "1 of 7 screws by a person (1 min each, estimate)"
     },
     {
@@ -8962,6 +9037,7 @@
      "robot_s": 15.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "2.2 N m | all screws of this joint were already driven (with the part held)",
      "note": ""
     },
     {
@@ -8974,6 +9050,7 @@
      "robot_s": 63.0,
      "person_min": 5.0,
      "checker_compute_s": 40.5,
+     "force": "released 12 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wri",
      "note": "released 12 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunne"
     },
     {
@@ -8986,6 +9063,7 @@
      "robot_s": 20.0,
      "person_min": 9.0,
      "checker_compute_s": null,
+     "force": "4.2 N m | 0/4 screws; 316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #3: screwdriver: B/tool/screwdriver hits A/w",
      "note": "316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also "
     },
     {
@@ -8998,6 +9076,7 @@
      "robot_s": 15.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "4.2 N m | all screws of this joint were already driven (with the part held)",
      "note": ""
     },
     {
@@ -9010,6 +9089,7 @@
      "robot_s": 67.0,
      "person_min": 5.0,
      "checker_compute_s": 142.8,
+     "force": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with",
      "note": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm);"
     },
     {
@@ -9022,6 +9102,7 @@
      "robot_s": 65.0,
      "person_min": 1.0,
      "checker_compute_s": null,
+     "force": "2.2 N m | 3/4 screws; d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with",
      "note": "1 of 4 screws by a person (1 min each, estimate)"
     },
     {
@@ -9034,6 +9115,7 @@
      "robot_s": 15.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "2.2 N m | all screws of this joint were already driven (with the part held)",
      "note": ""
     },
     {
@@ -9046,6 +9128,7 @@
      "robot_s": 87.0,
      "person_min": 0.0,
      "checker_compute_s": 15.0,
+     "force": "released 33 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -9058,6 +9141,7 @@
      "robot_s": 46.0,
      "person_min": 0.0,
      "checker_compute_s": 3.9,
+     "force": "",
      "note": ""
     },
     {
@@ -9070,6 +9154,7 @@
      "robot_s": 46.0,
      "person_min": 5.0,
      "checker_compute_s": 29.3,
+     "force": "released 15 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wri",
      "note": "released 15 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunne"
     },
     {
@@ -9082,6 +9167,7 @@
      "robot_s": 20.0,
      "person_min": 9.0,
      "checker_compute_s": null,
+     "force": "2.2 N m | 0/4 screws; 316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #3: screwdriver: B/tool/screwdriver hits A/w",
      "note": "316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also "
     },
     {
@@ -9094,6 +9180,7 @@
      "robot_s": 15.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "2.2 N m | all screws of this joint were already driven (with the part held)",
      "note": ""
     },
     {
@@ -9106,6 +9193,7 @@
      "robot_s": 65.0,
      "person_min": 5.0,
      "checker_compute_s": 9.1,
+     "force": "arm A: held:F25:Recoater motor bracket hits Trunnion stands at 0 mm along the insertion",
      "note": "arm A: held:F25:Recoater motor bracket hits Trunnion stands at 0 mm along the insertion"
     },
     {
@@ -9118,6 +9206,7 @@
      "robot_s": 56.0,
      "person_min": 5.0,
      "checker_compute_s": 3.4,
+     "force": "sweep: Blade holder blocked by Process chamber body (6061-T6 through-frame from 5 after 43.0 mm; arm A: held:F26:Blade holder hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 90 mm along t",
      "note": "sweep: Blade holder blocked by Process chamber body (6061-T6 through-frame from 5 after 43.0 mm; arm A: held:F26:Blade holder hits Process chamber body (6061-T6"
     },
     {
@@ -9130,6 +9219,7 @@
      "robot_s": 35.0,
      "person_min": 7.0,
      "checker_compute_s": 17.7,
+     "force": "1.1 N m | 0/2 screws; 316 #1: screwdriver: A/tool/screwdriver hits Build module M50: spigot, flange, honed 316L cylinder; 316 #2: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle",
      "note": "316 #1: screwdriver: A/tool/screwdriver hits Build module M50: spigot, flange, honed 316L cylinder; 316 #2: screwdriver: A/upper_arm hits Fixture B (open stand)"
     },
     {
@@ -9142,6 +9232,7 @@
      "robot_s": 65.0,
      "person_min": 0.0,
      "checker_compute_s": 12.0,
+     "force": "",
      "note": ""
     },
     {
@@ -9154,6 +9245,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 82.9,
+     "force": "",
      "note": ""
     },
     {
@@ -9166,6 +9258,7 @@
      "robot_s": 79.0,
      "person_min": 0.0,
      "checker_compute_s": 14.3,
+     "force": "",
      "note": ""
     },
     {
@@ -9178,6 +9271,7 @@
      "robot_s": 335.0,
      "person_min": 0.0,
      "checker_compute_s": 93.1,
+     "force": "4.2 N m | 20/20 screws;",
      "note": ""
     },
     {
@@ -9190,6 +9284,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "",
      "note": ""
     },
     {
@@ -9202,6 +9297,7 @@
      "robot_s": 75.0,
      "person_min": 0.0,
      "checker_compute_s": 5.8,
+     "force": "released 27 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -9214,6 +9310,7 @@
      "robot_s": 81.0,
      "person_min": 0.0,
      "checker_compute_s": 5.9,
+     "force": "",
      "note": ""
     },
     {
@@ -9226,6 +9323,7 @@
      "robot_s": 125.0,
      "person_min": 0.0,
      "checker_compute_s": 7.4,
+     "force": "2.2 N m | 6/6 screws;",
      "note": ""
     },
     {
@@ -9238,6 +9336,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 3.0,
+     "force": "",
      "note": ""
     },
     {
@@ -9250,6 +9349,7 @@
      "robot_s": 83.0,
      "person_min": 0.0,
      "checker_compute_s": 4.2,
+     "force": "released 27 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -9262,6 +9362,7 @@
      "robot_s": 69.0,
      "person_min": 0.0,
      "checker_compute_s": 5.3,
+     "force": "released 24 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -9274,6 +9375,7 @@
      "robot_s": 85.0,
      "person_min": 0.0,
      "checker_compute_s": 3.5,
+     "force": "",
      "note": ""
     },
     {
@@ -9286,6 +9388,7 @@
      "robot_s": 125.0,
      "person_min": 0.0,
      "checker_compute_s": 3.1,
+     "force": "0.8 N m | 6/6 screws;",
      "note": ""
     },
     {
@@ -9298,6 +9401,7 @@
      "robot_s": 65.0,
      "person_min": 0.0,
      "checker_compute_s": 9.0,
+     "force": "needs 50 N (peak 358); arm can push 1500 N | released 6 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -9310,6 +9414,7 @@
      "robot_s": 30.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "Two quarter-turn studs, turned with a slotted bit on the screwdriver; the latch hardware is an envelope in the model (seals.md: no catalogue latch fits).",
      "note": "robot (custom bit)"
     },
     {
@@ -9322,6 +9427,7 @@
      "robot_s": 50.0,
      "person_min": 0.0,
      "checker_compute_s": 3.5,
+     "force": "released 18 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -9334,6 +9440,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "",
      "note": ""
     },
     {
@@ -9346,6 +9453,7 @@
      "robot_s": 90.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "",
      "note": ""
     },
     {
@@ -9358,6 +9466,7 @@
      "robot_s": 75.0,
      "person_min": 0.0,
      "checker_compute_s": 4.7,
+     "force": "",
      "note": ""
     },
     {
@@ -9370,6 +9479,7 @@
      "robot_s": 95.0,
      "person_min": 0.0,
      "checker_compute_s": 99.9,
+     "force": "2.2 N m | 4/4 screws;",
      "note": ""
     },
     {
@@ -9382,6 +9492,7 @@
      "robot_s": 79.0,
      "person_min": 5.0,
      "checker_compute_s": 76.3,
+     "force": "sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0 mm; arm A: no IK at the start pose at 0 mm along the insertion; sweep: Roller feedthrough O-ring blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0",
      "note": "sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0 mm; arm A: no IK at the start pose at 0 mm along the insertion; swee"
     },
     {
@@ -9394,6 +9505,7 @@
      "robot_s": 46.0,
      "person_min": 0.0,
      "checker_compute_s": 125.4,
+     "force": "needs 94 N; arm can push 191 N",
      "note": ""
     },
     {
@@ -9406,6 +9518,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.1,
+     "force": "",
      "note": ""
     },
     {
@@ -9418,6 +9531,7 @@
      "robot_s": 75.0,
      "person_min": 0.0,
      "checker_compute_s": 30.0,
+     "force": "",
      "note": ""
     },
     {
@@ -9430,6 +9544,7 @@
      "robot_s": 63.0,
      "person_min": 5.0,
      "checker_compute_s": 177.2,
+     "force": "sweep: Camera window gasket, under the window blocked by Camera viewport adapter + boss (6061; \u00d830 bore on  after 1.0 mm; arm A: A/gr/right_finger_tip hits Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM se",
      "note": "sweep: Camera window gasket, under the window blocked by Camera viewport adapter + boss (6061; \u00d830 bore on  after 1.0 mm; arm A: A/gr/right_finger_tip hits Came"
     },
     {
@@ -9442,6 +9557,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "Threaded ports need a wrench on a hex and a set torque; a 2F-85 can only spin a plain body.",
      "note": "pressure transducer and relief valve into their SAE-4 ports, with a wrench"
     },
     {
@@ -9454,6 +9570,7 @@
      "robot_s": 54.0,
      "person_min": 0.0,
      "checker_compute_s": 11.6,
+     "force": "",
      "note": ""
     },
     {
@@ -9466,6 +9583,7 @@
      "robot_s": 50.0,
      "person_min": 0.0,
      "checker_compute_s": 158.2,
+     "force": "needs 725 N",
      "note": ""
     },
     {
@@ -9478,6 +9596,7 @@
      "robot_s": 46.0,
      "person_min": 5.0,
      "checker_compute_s": 5.6,
+     "force": "arm A: A/upper_arm hits A cabinet at 0 mm along the insertion",
      "note": "arm A: A/upper_arm hits A cabinet at 0 mm along the insertion"
     },
     {
@@ -9490,6 +9609,7 @@
      "robot_s": 50.0,
      "person_min": 5.0,
      "checker_compute_s": 449.5,
+     "force": "held-part screws: 316 #3: approach: no path in 500 iterations; 316 #4: approach: no path in 500 iterations; held-part screws: 316 #7: approach: no clear way in to the hole's mouth (no IK (out of reach or joint limit)); 316 #8: approach: no clear way in to the",
      "note": "held-part screws: 316 #3: approach: no path in 500 iterations; 316 #4: approach: no path in 500 iterations; held-part screws: 316 #7: approach: no clear way in "
     },
     {
@@ -9502,6 +9622,7 @@
      "robot_s": 50.0,
      "person_min": 0.0,
      "checker_compute_s": null,
+     "force": "7.4 N m | 2/2 screws;",
      "note": ""
     },
     {
@@ -9514,6 +9635,7 @@
      "robot_s": 20.0,
      "person_min": 7.0,
      "checker_compute_s": null,
+     "force": "7.4 N m | 2/2 screws;",
      "note": "316 #3: approach: no path in 500 iterations; 316 #4: approach: no path in 500 iterations"
     },
     {
@@ -9526,6 +9648,7 @@
      "robot_s": 50.0,
      "person_min": 0.0,
      "checker_compute_s": null,
+     "force": "7.4 N m | 2/2 screws;",
      "note": ""
     },
     {
@@ -9538,6 +9661,7 @@
      "robot_s": 20.0,
      "person_min": 7.0,
      "checker_compute_s": null,
+     "force": "7.4 N m | 2/2 screws;",
      "note": "316 #7: approach: no clear way in to the hole's mouth (no IK (out of reach or joint limit)); 316 #8: approach: no clear way in to the hole's mouth (no IK (out o"
     },
     {
@@ -9550,6 +9674,7 @@
      "robot_s": 15.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "7.4 N m | all screws of this joint were already driven (with the part held)",
      "note": ""
     },
     {
@@ -9562,6 +9687,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "The \u00d890 lens is wider than the 2F-85's 85 mm stroke and threads M85 x 1; a strap wrench by hand (operations.md: lens and ring fitted to the bridge on the bench).",
      "note": "f-theta lens threaded into its ring over the shim stack (strap wrench)"
     },
     {
@@ -9574,6 +9700,7 @@
      "robot_s": 60.0,
      "person_min": 5.0,
      "checker_compute_s": 0.7,
+     "force": "14.32 kg, 7.2 kg per arm | 14.32 kg; no collision-free pair of arm poses at the start of the carry",
      "note": "no collision-free pair of arm poses at the start of the carry"
     },
     {
@@ -9586,6 +9713,7 @@
      "robot_s": 140.0,
      "person_min": 0.0,
      "checker_compute_s": 89.3,
+     "force": "7.4 N m | 8/8 screws;",
      "note": ""
     },
     {
@@ -9598,6 +9726,7 @@
      "robot_s": 78.0,
      "person_min": 0.0,
      "checker_compute_s": 2.7,
+     "force": "",
      "note": ""
     },
     {
@@ -9610,6 +9739,7 @@
      "robot_s": 64.0,
      "person_min": 5.0,
      "checker_compute_s": 0.7,
+     "force": "arm A: no IK at the start pose at 0 mm along the insertion",
      "note": "arm A: no IK at the start pose at 0 mm along the insertion"
     },
     {
@@ -9622,6 +9752,7 @@
      "robot_s": 79.0,
      "person_min": 5.0,
      "checker_compute_s": 4.6,
+     "force": "arm A: part 107 mm across at the grasp: wider than the 2F-85's 85 mm stroke; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm",
      "note": "arm A: part 107 mm across at the grasp: wider than the 2F-85's 85 mm stroke; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the sta"
     },
     {
@@ -9634,6 +9765,7 @@
      "robot_s": 0.0,
      "person_min": 15,
      "checker_compute_s": 0.0,
+     "force": "Armoured fiber, >= 100 mm bend radius: cable routing stays manual.",
      "note": "armoured process fiber routed to the collimator"
     },
     {
@@ -9646,6 +9778,7 @@
      "robot_s": 0.0,
      "person_min": 180,
      "checker_compute_s": 0.0,
+     "force": "T-slot nuts and 1.5 mm panels up to 730 mm wide; its hardware is not drawn (joints.NOT_DRAWN).",
      "note": "Class 1 laser guard: T-slot frame, panels, door rail, sliding door, guard lock, operator panel"
     },
     {
@@ -9658,6 +9791,7 @@
      "robot_s": 0.0,
      "person_min": 30,
      "checker_compute_s": 0.0,
+     "force": "84 kg is 3.4 times two UR12e payloads; a hoist or lift table.",
      "note": "process module (84 kg) onto the VLM tray with a hoist; levelling mounts"
     },
     {
@@ -9670,6 +9804,7 @@
      "robot_s": 0.0,
      "person_min": 60,
      "checker_compute_s": 0.0,
+     "force": "the UPS and the laser exceed a UR12e's 12.5 kg; cage nuts and screws are not drawn",
      "note": "rack units: UPS 23 kg, laser 40 kg, PC, DIN drawer (lift)"
     },
     {
@@ -9682,6 +9817,7 @@
      "robot_s": 0.0,
      "person_min": 60,
      "checker_compute_s": 0.0,
+     "force": "the pump exceeds 12.5 kg; the units' screws are not drawn",
      "note": "gas module: pump 26 kg, blower, filter, O2 box, argon manifold (lift)"
     },
     {
@@ -9694,6 +9830,7 @@
      "robot_s": 0.0,
      "person_min": 60,
      "checker_compute_s": 0.0,
+     "force": "hose and tube routing (deformable, KF wing-nut clamps)",
      "note": "KF bellows, vacuum valve, argon and O2 lines, release air"
     },
     {
@@ -9706,6 +9843,7 @@
      "robot_s": 0.0,
      "person_min": 45,
      "checker_compute_s": 0.0,
+     "force": "cable and hose routing",
      "note": "tray dock and umbilicals"
     },
     {
@@ -9718,6 +9856,7 @@
      "robot_s": 3600.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "the seal verification in assembly.md",
      "note": "leak check: rate of rise from <= 1 mbar and O2 drift (estimate 1 h)"
     }
    ],
@@ -9734,8 +9873,8 @@
     "41-assembly-chamber": {
      "steps": 103,
      "robot_s": 6661.6,
-     "person_min": 384.0,
-     "fail": 26,
+     "person_min": 389.0,
+     "fail": 27,
      "person_steps": 11,
      "fetch_trips": 16,
      "fetch_s": 2240.0
@@ -9754,8 +9893,8 @@
     "steps": 139,
     "robot_h": 3.29,
     "fetch_h": 0.82,
-    "person_h": 12.87,
-    "fail_steps": 26,
+    "person_h": 12.95,
+    "fail_steps": 27,
     "person_steps": 19
    },
    "assumptions": {
@@ -10658,8 +10797,8 @@
    "steps": 139,
    "robot_h": 3.29,
    "mir_fetch_h": 0.82,
-   "person_h": 12.87,
-   "failed_or_partial": 26,
+   "person_h": 12.95,
+   "failed_or_partial": 27,
    "person_or_shop_steps": 19,
    "basis": "estimates (results.json's seconds are compute time)"
   },

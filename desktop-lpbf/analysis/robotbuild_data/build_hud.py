@@ -610,9 +610,20 @@ def chapter_of(step_id):
             "T": "50-integration"}.get(step_id[0], "other")
 
 
+def force_verdicts():
+    """{step: 'force / torque | notes'} from steps.md: report.py writes the force checks there, not in results.json."""
+    out = {}
+    for ln in (LPBF / "analysis" / "out" / "assembly" / "steps.md").read_text().splitlines():
+        c = [x.strip() for x in ln.split("|")]
+        if len(c) > 11 and re.match(r"^[MCFT]\d", c[1]):
+            out.setdefault(c[1], f"{c[9]} | {c[10]}")
+    return out
+
+
 def assembly_times():
     res = json.load(open(LPBF / "analysis" / "out" / "assembly" / "results.json"))["rows"]
     seq = {s["id"]: s for s in json.load(open(LPBF / "analysis" / "out" / "assembly" / "sequence.json"))["steps"]}
+    forces = force_verdicts()
     rows, last_tool = [], None
     for r in res:
         sid, do = r["id"], r["do"]
@@ -656,13 +667,13 @@ def assembly_times():
                 robot_s += ASM["dual_s"]
             elif do == "rotate":
                 robot_s += ASM["rotate_s"]
-            if "FAIL" in (r.get("arm"), r.get("sweep")) or "TOO MUCH FORCE" in (r.get("why") or ""):
+            if "FAIL" in (r.get("arm"), r.get("sweep")) or "TOO MUCH FORCE" in forces.get(sid, ""):
                 st = "fail"
                 person_min += PERSON_MIN.get(sid, (FAIL_MIN, ""))[0]
-                why = (r.get("why") or "")[:160]
+                why = (r.get("why") or forces.get(sid, ""))[:160]
         rows.append(dict(step=sid, chapter=chapter_of(sid), label=r["label"], do=do, actor=r.get("actor") or who,
                          status=st, robot_s=round(robot_s, 1), person_min=round(person_min, 1),
-                         checker_compute_s=r.get("seconds"), note=why))
+                         checker_compute_s=r.get("seconds"), force=forces.get(sid, "").strip(" |"), note=why))
     chapters = {}
     for x in rows:
         c = chapters.setdefault(x["chapter"], dict(steps=0, robot_s=0.0, person_min=0.0, fail=0, person_steps=0))
