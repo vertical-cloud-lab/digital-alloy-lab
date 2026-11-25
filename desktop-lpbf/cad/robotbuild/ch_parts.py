@@ -265,6 +265,50 @@ def view(focal, dist, az, el, shift=0.15):
     return [tuple(pos + s), tuple(f + s)]
 
 
+def _seg_hits_box(p0, p1, b, pad=15.0):
+    """Does the segment p0-p1 pass through box b = (x0, x1, y0, y1, z0, z1) grown by pad (slab test)?"""
+    t0, t1 = 0.0, 1.0
+    d = np.asarray(p1, float) - np.asarray(p0, float)
+    for k in range(3):
+        lo, hi = b[2 * k] - pad, b[2 * k + 1] + pad
+        if abs(d[k]) < 1e-9:
+            if p0[k] < lo or p0[k] > hi:
+                return False
+            continue
+        a, c = (lo - p0[k]) / d[k], (hi - p0[k]) / d[k]
+        if a > c:
+            a, c = c, a
+        t0, t1 = max(t0, a), min(t1, c)
+        if t0 > t1:
+            return False
+    return True
+
+
+def clear_view(target, slots, me, d, prefs):
+    """The (az, el) of `prefs` (in order of preference) whose sight line to `target` crosses the fewest other items'
+    boxes (kit_table slots), so a close-up is not hidden behind a panel standing on its edge."""
+    import hall as HL
+    best, best_n = prefs[0], None
+    for az, el in prefs:
+        cam = np.array(HL.orbit(target, d, az, el))
+        if cam[1] < -2600.0:                                   # the shop's north row stands beyond y = -2686
+            continue
+        n = 0
+        for s in slots:
+            if s is me:
+                continue
+            b = s["bbox"]
+            if b[5] - b[4] < 25.0 and max(b[1] - b[0], b[3] - b[2]) < 80.0:
+                continue                                       # small, low parts don't hide anything
+            if _seg_hits_box(cam, target, b):
+                n += 1
+        if best_n is None or n < best_n:
+            best, best_n = (az, el), n
+        if n == 0:
+            break
+    return best
+
+
 def render():
     import hall as HL
     t0 = time.time()
@@ -321,10 +365,13 @@ def render():
             c = ((bb[0] + bb[1]) / 2, (bb[2] + bb[3]) / 2, (bb[4] + bb[5]) / 2)
             size = max(bb[1] - bb[0], bb[3] - bb[2], bb[5] - bb[4])
             d = max(1100.0, 3.2 * size)
-            near = view(c, d, AZ - 10.0, 30.0, shift=0.16)
+            prefs = [(AZ - 10.0, 30.0), (AZ - 10.0, 45.0), (AZ + 20.0, 35.0), (AZ - 40.0, 35.0), (AZ + 40.0, 40.0),
+                     (AZ - 70.0, 40.0), (0.0, 35.0), (-25.0, 40.0), (25.0, 40.0), (AZ - 10.0, 60.0)]
+            az_i, el_i = clear_view(c, slots, s, d, prefs)
+            near = view(c, d, az_i, el_i, shift=0.16)
             lab = [(label.split(" (")[0], (c[0], c[1], bb[5]))]
             cam = frames(int(1.6 * FPS), cam, near, dict(phase="item", cat=cat, item=key), lab)
-            near2 = view(c, d * 0.93, AZ - 2.0, 28.0, shift=0.16)
+            near2 = view(c, d * 0.93, az_i + 8.0, max(25.0, el_i - 2.0), shift=0.16)
             cam = frames(int(3.0 * FPS), near, near2, dict(phase="item", cat=cat, item=key), lab)
             cam = near2
     c_close = view(((LT["x0"] + LT["x1"]) / 2, 400.0, 600.0), 12500.0, 196.0, 40.0, shift=0.12)
