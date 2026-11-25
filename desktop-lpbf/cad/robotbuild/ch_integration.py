@@ -454,5 +454,35 @@ def main():
     print(f"{NAME}: {ch.n} frames ({ch.n / FPS:.0f} s) in {time.time() - t0:.0f} s", flush=True)
 
 
+def rescale_meta():
+    """Make each person step's time on the clocks the data worker's estimate (hud.json times.assembly, person_min for
+    T01-T05), so the clocks and the summary's charts agree; the frames keep their share of the step. T06 keeps the
+    75 min of seals.md's test (>= 1 h held at <= 1 mbar, then 10 min of reading)."""
+    import json
+    hud = common.DATA / "hud.json"
+    path = common.FRAMES / NAME / "meta.jsonl"
+    if not hud.exists() or not path.exists():
+        return
+    rows = ((json.loads(hud.read_text()).get("times") or {}).get("assembly") or {}).get("rows") or []
+    want = {r["step"]: float(r.get("person_min") or 0) * 60.0 for r in rows
+            if str(r.get("step", "")).startswith("T") and r["step"] != "T06" and r.get("person_min")}
+    meta = [json.loads(x) for x in path.read_text().splitlines()]
+    have = {}
+    for m in meta:
+        have[m.get("step", "")] = have.get(m.get("step", ""), 0.0) + float(m.get("proc_s") or 0.0)
+    for m in meta:
+        st = m.get("step", "")
+        if st in want and have.get(st, 0) > 0:
+            k = want[st] / have[st]
+            m["proc_s"] = float(m.get("proc_s") or 0.0) * k
+            if m.get("add"):
+                m["add"] = {a: v * k for a, v in m["add"].items()}
+    path.write_text("".join(json.dumps(m) + "\n" for m in meta))
+    print(f"{NAME}: person steps rescaled to hud.json: " + ", ".join(f"{k} {v / 60:.0f} min" for k, v in want.items()),
+          flush=True)
+
+
 if __name__ == "__main__":
-    main()
+    if "meta" not in sys.argv[1:]:
+        main()
+    rescale_meta()

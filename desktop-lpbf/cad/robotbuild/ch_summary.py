@@ -182,6 +182,66 @@ def slide_lead(u, hud):
     return to_img(fig)
 
 
+def slide_shop_hours(u, hud):
+    """Person-hours to make the custom parts, step by step: by hand against the robot shop (hud.json times.robot_shop)."""
+    rs = (hud.get("times") or {}).get("robot_shop") or {}
+    rows = [r for r in rs.get("rows") or [] if (r.get("hand_person_h") or 0) + (r.get("shop_person_h") or 0) > 0.05]
+    if not rows:
+        return note_slide("The machining time estimates (hud.json) were not ready for this cut")
+    rows = rows[::-1]
+    fig, ax = fig_axes([0.36, 0.10, 0.58, 0.74])
+    s = ease(u)
+    hand_col, shop_col = "#7f8a96", common.WHO_COL["robot A"]
+    for k, r in enumerate(rows):
+        a, b = float(r.get("hand_person_h") or 0), float(r.get("shop_person_h") or 0)
+        ax.barh(k + 0.19, a * s, height=0.36, color=hand_col, edgecolor=BG)
+        ax.barh(k - 0.19, b * s, height=0.36, color=shop_col, edgecolor=BG)
+        if u > 0.8:
+            ax.text(a * s + 0.5, k + 0.19, f"{a:.1f}", va="center", fontsize=9, color=INK2)
+            ax.text(b * s + 0.5, k - 0.19, f"{b:.1f}", va="center", fontsize=9, color=INK2)
+    ax.set_yticks(range(len(rows)), [(r.get("step") or "")[:44] for r in rows], fontsize=11)
+    ax.set_xlabel("person-hours")
+    ax.grid(axis="x", color=GRID)
+    ax.set_axisbelow(True)
+    from matplotlib.patches import Patch
+    ax.legend(handles=[Patch(color=hand_col, label="a person runs the machines"),
+                       Patch(color=shop_col, label="the robot shop (a person programs, checks, welds)")],
+              loc="lower right", frameon=False, fontsize=11)
+    return to_img(fig)
+
+
+def slide_assembly_hours(u, hud):
+    """Robot-hours and person-hours of the assembly, by chapter (hud.json times.assembly rows)."""
+    rows = ((hud.get("times") or {}).get("assembly") or {}).get("rows") or []
+    if not rows:
+        return note_slide("The assembly time estimates were not ready for this cut")
+    by = {}
+    for r in rows:
+        ch = (r.get("chapter") or "other").split("-", 1)[-1].replace("-", " ")
+        d = by.setdefault(ch, [0.0, 0.0])
+        if (r.get("status") or "") != "machine" and (r.get("actor") or "") != "machine":    # T06: the pump's hour
+            d[0] += float(r.get("robot_s") or 0) / 3600.0
+        d[1] += float(r.get("person_min") or 0) / 60.0
+    names = list(by)[::-1]
+    fig, ax = fig_axes([0.30, 0.14, 0.62, 0.68])
+    s = ease(u)
+    for k, n in enumerate(names):
+        rh, ph = by[n]
+        ax.barh(k + 0.19, rh * s, height=0.36, color=common.WHO_COL["robot A"], edgecolor=BG)
+        ax.barh(k - 0.19, ph * s, height=0.36, color=common.WHO_COL["person"], edgecolor=BG)
+        if u > 0.8:
+            ax.text(rh * s + 0.05, k + 0.19, f"{rh:.1f} h", va="center", fontsize=10, color=INK2)
+            ax.text(ph * s + 0.05, k - 0.19, f"{ph:.1f} h", va="center", fontsize=10, color=INK2)
+    ax.set_yticks(range(len(names)), names)
+    ax.set_xlabel("hours (robots: the arms' recorded motions plus tool changes and docking; people: estimates)")
+    ax.grid(axis="x", color=GRID)
+    ax.set_axisbelow(True)
+    from matplotlib.patches import Patch
+    ax.legend(handles=[Patch(color=common.WHO_COL["robot A"], label="robots"),
+                       Patch(color=common.WHO_COL["person"], label="people")], loc="lower right", frameon=False)
+    return to_img(fig)
+
+
 def _routes(route):
     """[(name, weeks [lo, hi] or None, cost [lo, hi] or None, person_h or None)] from route.json, whatever its keys."""
     out = []
@@ -337,6 +397,25 @@ def main():
         cap = "When every part is in hand, by how it is bought"
     run(lambda u: slide_lead(u, hud), cap, "The slowest parts are not the laser: a guard switch (27 wk) and a "
         "temperature relay (19 wk) have stocked swaps (hud.json lead_times)", 10.0)
+    rs = (hud.get("times") or {}).get("robot_shop") or {}
+    if rs.get("total_hand_person_h"):
+        cap = (f"Making the custom parts: {rs['total_hand_person_h']:.0f} person-hours by hand, "
+               f"{rs.get('total_shop_person_h', 0):.0f}-{rs.get('total_shop_person_h_cautious', 0):.0f} with the robot shop")
+        sub = (f"{rs.get('n_parts', '')} parts, {rs.get('setups', '')} setups; the spindle time ({rs.get('cut_h', 0):.0f} h) "
+               "is the same either way; the arms take the setups and flips (hud.json, robot-shop.md)")
+    else:
+        cap, sub = "Making the custom parts: person-hours, by hand against the robot shop", "hud.json times.robot_shop"
+    run(lambda u: slide_shop_hours(u, hud), cap, sub, 10.0)
+    arows = ((hud.get("times") or {}).get("assembly") or {}).get("rows") or []
+    if arows:
+        rh = sum(float(r.get("robot_s") or 0) for r in arows
+                 if (r.get("status") or "") != "machine" and (r.get("actor") or "") != "machine") / 3600.0
+        ph = sum(float(r.get("person_min") or 0) for r in arows) / 60.0
+        cap = f"Assembly: {rh:.1f} robot-hours and {ph:.1f} person-hours over {len(arows)} steps"
+    else:
+        cap = "Assembly: robot-hours and person-hours"
+    run(lambda u: slide_assembly_hours(u, hud), cap, "The arms' time is their recorded, collision-checked motions plus "
+        "tool changes and docking; a person's time is an estimate per step (hud.json times.assembly)", 9.0)
     run(lambda u: slide_routes(u, route), "Time and cost by route: in-house, outsourced, hybrid, robot shop",
         "route.json (the route worker): labour, services and calendar time for each way of making the custom parts", 10.0)
     _, n_p = slide_list(1.0, "person")

@@ -46,6 +46,7 @@ CAT_TITLE = dict(
 )
 # the big items: (key, slot-name match on kit_table, BOM ids, on-screen name)
 BIG = [
+    ("baseplate", "Base plate, process module", ["F4"], "MIC-6 cast plate for both module base plates"),
     ("laser", "Fiber laser source", ["L1"], "Fiber laser, 500 W single-mode (IPG YLR-500)"),
     ("galvo", "2-axis galvo scan head", ["L5"], "2-axis galvo scan head"),
     ("ftheta", "f-theta lens", ["L6"], "F-theta lens"),
@@ -59,6 +60,7 @@ BIG = [
     ("o2", "Trace O2 analyzer", ["G6", "G9"], "Trace O2 analyzer + dew-point sensor"),
     ("blower", "Sealed side-channel blower", ["G4"], "Recirculation blower"),
     ("guardswitch", "Guard-position switch IDEC", ["S2"], "Guard-position switch (IDEC HS6B-12B05)"),
+    ("rackframe", "19 in. rack frame", ["S9"], "12U rack (22 kg), guard frame and panels"),
 ]
 # BOM line -> the kit category its cost is shown under (provisional hud only; X1, the machining, is left out: the
 # robot shop makes those parts in chapters 30-32)
@@ -451,7 +453,7 @@ def _cat_of(key):
     """The kit category a big item is found under on the table (kit_table's slot category)."""
     return dict(laser="optics", galvo="optics", ftheta="optics", collimator="optics", shutter="optics",
                 controller="elec", ups="elec", safety="elec", zeropoint="elec", pump="gas", o2="gas",
-                blower="gas", guardswitch="elec").get(key)
+                blower="gas", guardswitch="elec", rackframe="frame", baseplate="stock").get(key)
 
 
 def _m(v):
