@@ -20,7 +20,8 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 1.5
+   "seconds": 1.5,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M02",
@@ -35,7 +36,8 @@
    "arm": "-",
    "who": "machine shop",
    "why": "Installed right after tapping with a powered insert tool and the tang broken off, as for every insert in the chamber body (render_build chapter 2); a cobot would need a dedicated inserter and tang-break station for 3 inserts.",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M03",
@@ -57,7 +59,8 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 2.6
+   "seconds": 2.6,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M04",
@@ -79,7 +82,8 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 2.5
+   "seconds": 2.5,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M05",
@@ -101,7 +105,8 @@
     -1400.0
    ],
    "n_units": 11,
-   "seconds": 11.2
+   "seconds": 11.2,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M06",
@@ -123,7 +128,8 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 1.7
+   "seconds": 1.7,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M07",
@@ -145,7 +151,8 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 0.9
+   "seconds": 0.9,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M08",
@@ -223,7 +230,8 @@
      "note": ""
     }
    ],
-   "seconds": 11.3
+   "seconds": 11.3,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M09",
@@ -238,7 +246,8 @@
    "arm": "-",
    "who": "person",
    "why": "A felt strip and a split PTFE scraper are wrapped, not pushed; no published robot method for felt.",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M10",
@@ -255,7 +264,8 @@
    "arm": "-",
    "why": "",
    "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 0.1
+   "seconds": 0.1,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M11",
@@ -277,7 +287,8 @@
     -1250.0
    ],
    "n_units": 1,
-   "seconds": 1.1
+   "seconds": 1.1,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M12",
@@ -299,7 +310,8 @@
     -1250.0
    ],
    "method": "ring folded into the loader's slotted tube, pushed through the \u00d815.93 throat, released into the groove",
-   "seconds": 1.1
+   "seconds": 1.1,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M13",
@@ -321,7 +333,8 @@
     -1250.0
    ],
    "n_units": 1,
-   "seconds": 2.7
+   "seconds": 2.7,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M14",
@@ -343,7 +356,8 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 2.4
+   "seconds": 2.4,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M15",
@@ -405,7 +419,8 @@
      "note": ""
     }
    ],
-   "seconds": 3.5
+   "seconds": 3.5,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M16",
@@ -427,7 +442,8 @@
     -1100.0
    ],
    "n_units": 1,
-   "seconds": 2.4
+   "seconds": 2.4,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M17",
@@ -448,7 +464,8 @@
     -1100.0
    ],
    "method": "2-238 stretched 9.4 % over an acetal mandrel (cone + 0.45 mm sleeve over the spigot's top edge), pushed into the groove by a sleeve that stops on the mandrel",
-   "seconds": 15.6
+   "seconds": 15.6,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M18",
@@ -468,7 +485,8 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "mass_kg": null,
-   "seconds": 46.8
+   "seconds": 46.8,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M19",
@@ -490,7 +508,8 @@
     -1250.0
    ],
    "n_units": 1,
-   "seconds": 7.2
+   "seconds": 7.2,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M20",
@@ -616,7 +635,8 @@
      "note": ""
     }
    ],
-   "seconds": 2.2
+   "seconds": 2.2,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M21",
@@ -638,7 +658,8 @@
     -1250.0
    ],
    "n_units": 1,
-   "seconds": 1.3
+   "seconds": 1.3,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M22",
@@ -700,7 +721,8 @@
      "note": ""
     }
    ],
-   "seconds": 13.6
+   "seconds": 13.6,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M23",
@@ -722,7 +744,8 @@
     -1250.0
    ],
    "n_units": 1,
-   "seconds": 2.5
+   "seconds": 2.5,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M24",
@@ -800,7 +823,8 @@
      "note": ""
     }
    ],
-   "seconds": 1.9
+   "seconds": 1.9,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M25",
@@ -815,7 +839,8 @@
    "arm": "-",
    "who": "machine shop",
    "why": "TIG welds at the block's face and at the rod, on the bare rod before chapter 3, away from every O-ring; the inner joints to the feedthrough pins are made before the sleeves are welded. Ask Solid Sealing to confirm the blind-bore weld and the weld access (electrical.md 13.3). The SMPW-K and power plugs go onto the sleeves at the machine, not here.",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M26",
@@ -835,7 +860,8 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "mass_kg": null,
-   "seconds": 4.6
+   "seconds": 4.6,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M27",
@@ -857,7 +883,8 @@
     -1100.0
    ],
    "n_units": 1,
-   "seconds": 2.5
+   "seconds": 2.5,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M28",
@@ -877,7 +904,8 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "mass_kg": null,
-   "seconds": 48.9
+   "seconds": 48.9,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M29",
@@ -899,7 +927,8 @@
     -1400.0
    ],
    "n_units": 1,
-   "seconds": 12.9
+   "seconds": 12.9,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "M30",
@@ -921,7 +950,8 @@
     -1100.0
    ],
    "n_units": 1,
-   "seconds": 1.0
+   "seconds": 1.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "C00a",
@@ -943,7 +973,8 @@
     -350.0
    ],
    "n_units": 1,
-   "seconds": 5.4
+   "seconds": 3.8,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C00b",
@@ -965,7 +996,8 @@
     -350.0
    ],
    "method": "3.53 mm cord laid in by arm B at the midpoints, ends and quarter points, then rolled home by arm A's PTFE wheel (Adebola et al. 2024's binary order), splice at the back-right corner",
-   "seconds": 12.4
+   "seconds": 4.7,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C00c",
@@ -987,7 +1019,8 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "tip_margin": 41.0,
-   "seconds": 10.1
+   "seconds": 5.2,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C00d",
@@ -1304,7 +1337,8 @@
      "note": "upward"
     }
    ],
-   "seconds": 64.0
+   "seconds": 28.9,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C01",
@@ -1326,7 +1360,8 @@
    "arm_clear": 0.0,
    "arm_clear_with": "held:C01 to Trunnion jaws",
    "tip_margin": 23.8,
-   "seconds": 12.1
+   "seconds": 8.1,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C01b",
@@ -1343,7 +1378,8 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "mass_kg": null,
-   "seconds": 0.8
+   "seconds": 0.7,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C02",
@@ -1369,7 +1405,8 @@
     350.0
    ],
    "n_units": 1,
-   "seconds": 1.4
+   "seconds": 0.9,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C03",
@@ -1386,7 +1423,8 @@
    "arm": "-",
    "why": "",
    "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C04",
@@ -1408,11 +1446,12 @@
     350.0
    ],
    "n_units": 1,
-   "seconds": 1.7
+   "seconds": 1.4,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C05",
-   "label": "Six M4 x 12 outlet-plenum screws",
+   "label": "Six M4 x 12 outlet-plenum screws (60 mm bit extension: two sit beside the KF-25 port)",
    "do": "screws",
    "tool": "screwdriver",
    "actor": "A",
@@ -1420,48 +1459,52 @@
    "phase": "chamber_inv",
    "joint": "plenum_out",
    "sweep": "PASS",
-   "arm": "PART",
+   "arm": "PASS",
    "n": 6,
-   "n_ok": 4,
-   "n_drive": 4,
+   "n_ok": 6,
+   "n_drive": 6,
    "arm_clear": 2.2,
    "arm_clear_with": "screwdriver to Cross-flow outlet plenum under the floor (316L, fl",
-   "why": "red #1: screwdriver: A/tool/screwdriver hits Outlet plenum port (KF-25); also no way with nutrunne; red #2: screwdriver: A/tool/screwdriver hits Outlet plenum port (KF-25); also no way with nutrunne",
+   "why": "",
    "docks": [
-    0.0,
     350.0
    ],
    "hex": 3.0,
    "screw_L": 12.0,
    "driver": [
-    "nutrunner_angle",
     "screwdriver"
    ],
    "driver_why": [],
    "per_screw": [
     {
      "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #1",
-     "ok": false,
-     "why": "screwdriver: A/tool/screwdriver hits Outlet plenum port (KF-25); also no way with nutrunner, nutrunner_angle",
+     "ok": true,
+     "why": "",
      "dock": 350.0,
      "roll": 30,
      "withdraw": true,
-     "clear": null,
-     "drive_ok": false,
-     "driver": "nutrunner_angle",
+     "clear": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
      "arm": "A",
      "note": ""
     },
     {
      "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #2",
-     "ok": false,
-     "why": "screwdriver: A/tool/screwdriver hits Outlet plenum port (KF-25); also no way with nutrunner, nutrunner_angle",
+     "ok": true,
+     "why": "",
      "dock": 350.0,
      "roll": 30,
      "withdraw": true,
-     "clear": null,
-     "drive_ok": false,
-     "driver": "nutrunner_angle",
+     "clear": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
      "arm": "A",
      "note": ""
     },
@@ -1469,7 +1512,7 @@
      "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #3",
      "ok": true,
      "why": "",
-     "dock": 0.0,
+     "dock": 350.0,
      "roll": 30,
      "withdraw": true,
      "clear": [
@@ -1485,7 +1528,7 @@
      "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #4",
      "ok": true,
      "why": "",
-     "dock": 0.0,
+     "dock": 350.0,
      "roll": 30,
      "withdraw": true,
      "clear": [
@@ -1530,7 +1573,8 @@
      "note": ""
     }
    ],
-   "seconds": 52.4
+   "seconds": 12.3,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C06",
@@ -1547,7 +1591,8 @@
    "arm": "-",
    "why": "",
    "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C07",
@@ -1569,11 +1614,12 @@
     350.0
    ],
    "n_units": 1,
-   "seconds": 2.1
+   "seconds": 1.4,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C08",
-   "label": "Four M4 x 12 overflow-funnel screws",
+   "label": "Four M4 x 12 overflow-funnel screws (60 mm bit extension: two sit beside the KF-40 stub)",
    "do": "screws",
    "tool": "screwdriver",
    "actor": "A",
@@ -1658,7 +1704,8 @@
      "note": ""
     }
    ],
-   "seconds": 27.0
+   "seconds": 11.8,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C09",
@@ -1680,7 +1727,32 @@
     350.0
    ],
    "n_units": 1,
-   "seconds": 2.4
+   "seconds": 1.1,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+  },
+  {
+   "id": "C09f",
+   "label": "Door hinge knuckles onto the frame's front face, one at a time (shimmed at assembly; screws not drawn)",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "B",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clear": 14.6,
+   "arm_clear_with": "right_finger_tip to Door hinge knuckles on the chamber #1",
+   "why": "released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers",
+   "docks": [
+    0.0,
+    850.0
+   ],
+   "n_units": 4,
+   "seconds": 5.0,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C12",
@@ -1702,7 +1774,8 @@
     350.0
    ],
    "n_units": 1,
-   "seconds": 3.2
+   "seconds": 1.7,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C13",
@@ -1796,7 +1869,8 @@
      "note": ""
     }
    ],
-   "seconds": 18.0
+   "seconds": 8.8,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C09b",
@@ -1818,7 +1892,8 @@
     350.0
    ],
    "n_units": 4,
-   "seconds": 6.3
+   "seconds": 3.5,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C09c",
@@ -1840,7 +1915,8 @@
     350.0
    ],
    "n_units": 2,
-   "seconds": 3.4
+   "seconds": 1.5,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C09d",
@@ -1862,7 +1938,8 @@
     350.0
    ],
    "n_units": 2,
-   "seconds": 3.1
+   "seconds": 1.5,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C09e",
@@ -1877,7 +1954,8 @@
    "arm": "-",
    "who": "person",
    "why": "Small threaded fittings with a tube to follow. The modules have to be open (6 bar) for the clamping pins to enter in C10.",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C10",
@@ -1903,7 +1981,8 @@
     0.0
    ],
    "n_units": 1,
-   "seconds": 36.1
+   "seconds": 19.2,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C11",
@@ -1918,7 +1997,8 @@
    "arm": "-",
    "who": "machine",
    "why": "The cell vents the temporary line. 1 kN holds 4.6x the worst separating load (hot-swap.md 3.2a). The spigot ring is already home: arm B pushed the module in at C10 (132 N running). The captive M6 are gone; the floor keeps their inserts for a hand fallback.",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C13b",
@@ -1940,7 +2020,8 @@
     350.0
    ],
    "n_units": 1,
-   "seconds": 5.7
+   "seconds": 2.9,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C14",
@@ -1962,7 +2043,8 @@
     350.0
    ],
    "n_units": 4,
-   "seconds": 35.0
+   "seconds": 19.4,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "C15",
@@ -2058,7 +2140,24 @@
      "note": "7.4 N m > 5.0 N m"
     }
    ],
-   "seconds": 104.6
+   "seconds": 49.8,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+  },
+  {
+   "id": "C15b",
+   "label": "Overflow-jar sensor on its bracket, and the bracket's two M4 x 10, onto the front-right leg on the bench before C14",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person (bench)",
+   "why": "A leg on a nest is open on every side; on the machine its back face is hemmed in by the frame, the other legs, the Z servo and (upright) the base plate. Not checked here: the bench nest is not modelled.",
+   "seconds": 0.0,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "F01",
@@ -2080,7 +2179,8 @@
    "arm_clear": 0.0,
    "arm_clear_with": "held:F01 to Fixture B (open stand)",
    "tip_margin": 14.9,
-   "seconds": 3.1
+   "seconds": 1.0,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "F02",
@@ -2095,7 +2195,8 @@
    "arm": "-",
    "who": "person",
    "why": "They thread in when the finished process module goes onto the tray (chapter 5); until then Fixture B carries the plate on its ends.",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "F02b",
@@ -2117,7 +2218,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 2.0
+   "seconds": 1.0,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "F05",
@@ -2134,7 +2236,8 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "mass_kg": null,
-   "seconds": 3.7
+   "seconds": 1.4,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "F05b",
@@ -2146,17 +2249,18 @@
    "phase": "upright",
    "joint": null,
    "sweep": "-",
-   "arm": "FAIL",
-   "why": "arm A: A/gr/adapter hits Base plate, process module (MIC-6, 15 mm)",
+   "arm": "PASS",
+   "why": "",
    "docks": [
     "TB",
     "TB"
    ],
-   "mass_kg": 19.53,
+   "mass_kg": 19.63,
    "arm_clear": 117.6,
    "arm_clear_with": "held:F05b to Trunnion stands",
    "tip_margin": 9.0,
-   "seconds": 19.6
+   "seconds": 10.1,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "F06",
@@ -2317,7 +2421,8 @@
      "note": "upward; arm A could not (approach: no clear way in to the hole's mouth (no IK (out of)"
     }
    ],
-   "seconds": 291.0
+   "seconds": 291.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F06b",
@@ -2332,7 +2437,8 @@
    "arm": "-",
    "who": "person",
    "why": "Tube routing (deformable), as the hoses in chapter 5. The modules stay locked while the line is swapped: their springs hold.",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F07",
@@ -2354,7 +2460,8 @@
     1130.0
    ],
    "n_units": 1,
-   "seconds": 6.5
+   "seconds": 2.5,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "F08",
@@ -2369,85 +2476,8 @@
    "arm": "-",
    "who": "person",
    "why": "Its hinged ring has to be held open round both flanges before one push on the lever locks it; nothing on the 2F-85 holds the ring open. An air-released KF clamp would let the robot do it (hot-swap.md).",
-   "seconds": 0.0
-  },
-  {
-   "id": "F09",
-   "label": "Overflow-jar sensor and its bracket, onto the front-right leg's back face",
-   "do": "place",
-   "tool": "gripper",
-   "actor": "A",
-   "holder": null,
-   "phase": "upright",
-   "joint": null,
-   "sweep": "PASS",
-   "arm": "FAIL",
-   "gap": 2.3,
-   "gap_with": "Overflow jar (KF-40 flange on a 2.5 in. 316L cup, 47 mm, ~104 cm3, welded bottom)",
-   "arm_clear": null,
-   "arm_clear_with": null,
-   "why": "arm A: A/upper_arm hits A cabinet at 0 mm along the insertion",
-   "docks": [
-    1570.0
-   ],
-   "n_units": 1,
-   "seconds": 1.0
-  },
-  {
-   "id": "F09b",
-   "label": "Two M4 x 10 jar-sensor bracket screws into the front-right leg",
-   "do": "screws",
-   "tool": "screwdriver",
-   "actor": "A",
-   "holder": null,
-   "phase": "upright",
-   "joint": "jar_sensor",
-   "sweep": "PASS",
-   "arm": "FAIL",
-   "n": 2,
-   "n_ok": 0,
-   "n_drive": 0,
-   "arm_clear": null,
-   "arm_clear_with": null,
-   "why": "-right: screwdriver: A/wrist3 hits Base plate, process module (MIC-6, 15 mm); also no way with nut; -right: screwdriver: A/tool/screwdriver hits Chamber legs #4; also no way with nutrunner, nutrunne",
-   "docks": [
-    1570.0
-   ],
-   "hex": 3.0,
-   "screw_L": 10.0,
-   "driver": [
-    "nutrunner_angle"
-   ],
-   "driver_why": [],
-   "per_screw": [
-    {
-     "screw": "Jar-sensor bracket screws, M4 x 10 316, into the front-right leg #1",
-     "ok": false,
-     "why": "screwdriver: A/wrist3 hits Base plate, process module (MIC-6, 15 mm); also no way with nutrunner, nutrunner_angle",
-     "dock": 1570.0,
-     "roll": 180,
-     "withdraw": true,
-     "clear": null,
-     "drive_ok": false,
-     "driver": "nutrunner_angle",
-     "arm": "A",
-     "note": ""
-    },
-    {
-     "screw": "Jar-sensor bracket screws, M4 x 10 316, into the front-right leg #2",
-     "ok": false,
-     "why": "screwdriver: A/tool/screwdriver hits Chamber legs #4; also no way with nutrunner, nutrunner_angle",
-     "dock": 1570.0,
-     "roll": 180,
-     "withdraw": true,
-     "clear": null,
-     "drive_ok": false,
-     "driver": "nutrunner_angle",
-     "arm": "A",
-     "note": ""
-    }
-   ],
-   "seconds": 38.4
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F11",
@@ -2469,29 +2499,146 @@
     1570.0
    ],
    "n_units": 1,
-   "seconds": 4.2
+   "seconds": 1.6,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
-   "id": "F10",
-   "label": "Lift-out wall liners into the open chamber",
+   "id": "F10a",
+   "label": "Wall liner, back lower left, in through the door opening and onto its wall",
    "do": "place",
-   "tool": "vacuum",
+   "tool": "gripper",
    "actor": "A",
    "holder": null,
    "phase": "upright",
    "joint": null,
-   "sweep": "FAIL",
+   "sweep": "PASS",
    "arm": "FAIL",
-   "gap": null,
-   "gap_with": null,
-   "arm_clear": 2.7,
-   "arm_clear_with": "held:F10:Lift-out wall liner, left to Process chamber body (6061-T6 through-frame from 5",
-   "why": "sweep: Lift-out wall liner, left blocked by Process chamber body (6061-T6 through-frame from 5 after 0.0 mm; arm A: held:F10:Lift-out wall liner, left hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 60 mm along the insertion",
+   "gap": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clear": 0.6,
+   "arm_clear_with": "right_finger to Module M50 handle (6061, screwed under the gland p",
+   "why": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
    "docks": [
     1130.0
    ],
    "n_units": 1,
-   "seconds": 4.1
+   "seconds": 5.6,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+  },
+  {
+   "id": "F10b",
+   "label": "Wall liner, back upper left, in through the door opening and onto its wall",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clear": 2.6,
+   "arm_clear_with": "left_finger to Process chamber body (6061-T6 through-frame from 5",
+   "why": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
+   "docks": [
+    1130.0
+   ],
+   "n_units": 1,
+   "seconds": 5.9,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+  },
+  {
+   "id": "F10c",
+   "label": "Wall liner, left, in through the door opening and onto its wall",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clear": 0.9,
+   "arm_clear_with": "wrist3 to Process chamber body (6061-T6 through-frame from 5",
+   "why": "arm A: A/wrist3 hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 462 mm along the insertion",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "seconds": 7.0,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+  },
+  {
+   "id": "F10d",
+   "label": "Wall liner, back lower right, in through the door opening and onto its wall",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clear": 0.8,
+   "arm_clear_with": "right_finger to Module M50 handle (6061, screwed under the gland p",
+   "why": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
+   "docks": [
+    1570.0
+   ],
+   "n_units": 1,
+   "seconds": 4.9,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+  },
+  {
+   "id": "F10e",
+   "label": "Wall liner, back upper right, in through the door opening and onto its wall",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clear": 2.6,
+   "arm_clear_with": "left_finger to Process chamber body (6061-T6 through-frame from 5",
+   "why": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
+   "docks": [
+    1570.0
+   ],
+   "n_units": 1,
+   "seconds": 6.1,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+  },
+  {
+   "id": "F10f",
+   "label": "Wall liner, right, in through the door opening and onto its wall",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clear": 1.0,
+   "arm_clear_with": "wrist3 to Process chamber body (6061-T6 through-frame from 5",
+   "why": "arm A: A/wrist3 hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 462 mm along the insertion",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "seconds": 6.6,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "F12",
@@ -2506,7 +2653,8 @@
    "arm": "-",
    "who": "person",
    "why": "Threading an M6 head with a fibre attached means winding the fibre with it; the ring itself is a pick-and-place.",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F13",
@@ -2523,7 +2671,8 @@
    "arm": "-",
    "why": "",
    "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 0.1
+   "seconds": 0.1,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F14",
@@ -2545,7 +2694,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 20.8
+   "seconds": 20.8,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "sweep": "PASS",
@@ -2682,7 +2832,8 @@
    "do": "screws",
    "joint": "plenum_in",
    "actor": "B",
-   "holder": "A"
+   "holder": "A",
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F15",
@@ -2696,7 +2847,8 @@
    "sweep": "-",
    "arm": "-",
    "why": "all screws of this joint were already driven (with the part held)",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F16",
@@ -2718,7 +2870,8 @@
     1570.0
    ],
    "n_units": 1,
-   "seconds": 40.5
+   "seconds": 40.5,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "sweep": "PASS",
@@ -2797,7 +2950,8 @@
    "do": "screws",
    "joint": "vac_port",
    "actor": "B",
-   "holder": "A"
+   "holder": "A",
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F17",
@@ -2811,7 +2965,8 @@
    "sweep": "-",
    "arm": "-",
    "why": "all screws of this joint were already driven (with the part held)",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F18",
@@ -2833,7 +2988,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 142.8
+   "seconds": 142.8,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "sweep": "PASS",
@@ -2924,7 +3080,8 @@
    "do": "screws",
    "joint": "rail",
    "actor": "B",
-   "holder": "A"
+   "holder": "A",
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F19",
@@ -2938,7 +3095,8 @@
    "sweep": "-",
    "arm": "-",
    "why": "all screws of this joint were already driven (with the part held)",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F21",
@@ -2960,7 +3118,8 @@
     1570.0
    ],
    "n_units": 1,
-   "seconds": 15.0
+   "seconds": 15.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F22",
@@ -2982,7 +3141,8 @@
     1130.0
    ],
    "n_units": 1,
-   "seconds": 3.9
+   "seconds": 3.9,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F23",
@@ -3004,7 +3164,8 @@
     1570.0
    ],
    "n_units": 1,
-   "seconds": 29.3
+   "seconds": 29.3,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "sweep": "PASS",
@@ -3083,7 +3244,8 @@
    "do": "screws",
    "joint": "bearing_cap",
    "actor": "B",
-   "holder": "A"
+   "holder": "A",
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F24",
@@ -3097,7 +3259,8 @@
    "sweep": "-",
    "arm": "-",
    "why": "all screws of this joint were already driven (with the part held)",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F25",
@@ -3119,7 +3282,8 @@
     1130.0
    ],
    "n_units": 3,
-   "seconds": 9.1
+   "seconds": 9.1,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F26",
@@ -3141,7 +3305,8 @@
     1570.0
    ],
    "n_units": 1,
-   "seconds": 3.4
+   "seconds": 3.4,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F27",
@@ -3197,7 +3362,8 @@
      "note": ""
     }
    ],
-   "seconds": 17.7
+   "seconds": 17.7,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F28",
@@ -3219,7 +3385,8 @@
     1350.0
    ],
    "n_units": 2,
-   "seconds": 12.0
+   "seconds": 12.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F29",
@@ -3241,7 +3408,8 @@
     1350.0
    ],
    "method": "3.53 mm cord laid in by arm B at the midpoints, ends and quarter points, then rolled home by arm A's PTFE wheel (Adebola et al. 2024's binary order), splice at the back-right corner",
-   "seconds": 82.9
+   "seconds": 82.9,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F30",
@@ -3263,7 +3431,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 14.3
+   "seconds": 14.3,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F31",
@@ -3615,7 +3784,8 @@
      "note": ""
     }
    ],
-   "seconds": 93.1
+   "seconds": 93.1,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F32",
@@ -3632,7 +3802,8 @@
    "arm": "-",
    "why": "",
    "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F33",
@@ -3654,7 +3825,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 5.8
+   "seconds": 5.8,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F33b",
@@ -3676,7 +3848,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 5.9
+   "seconds": 5.9,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F34",
@@ -3802,7 +3975,8 @@
      "note": ""
     }
    ],
-   "seconds": 7.4
+   "seconds": 7.4,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F35",
@@ -3824,7 +3998,8 @@
    "arm": "PASS",
    "why": "",
    "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 3.0
+   "seconds": 3.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F36",
@@ -3846,7 +4021,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 4.2
+   "seconds": 4.2,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F37",
@@ -3868,7 +4044,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 5.3
+   "seconds": 5.3,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F37b",
@@ -3890,7 +4067,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 3.5
+   "seconds": 3.5,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F38",
@@ -4016,7 +4194,8 @@
      "note": ""
     }
    ],
-   "seconds": 3.1
+   "seconds": 3.1,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F39",
@@ -4042,7 +4221,8 @@
     1130.0
    ],
    "n_units": 1,
-   "seconds": 9.0
+   "seconds": 9.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F40",
@@ -4057,7 +4237,8 @@
    "arm": "-",
    "who": "robot (custom bit)",
    "why": "Two quarter-turn studs, turned with a slotted bit on the screwdriver; the latch hardware is an envelope in the model (seals.md: no catalogue latch fits).",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F41",
@@ -4079,7 +4260,8 @@
     1130.0
    ],
    "n_units": 1,
-   "seconds": 3.5
+   "seconds": 3.5,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F42",
@@ -4096,7 +4278,8 @@
    "arm": "-",
    "why": "",
    "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F42b",
@@ -4113,7 +4296,8 @@
    "arm": "-",
    "why": "",
    "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F43",
@@ -4135,7 +4319,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 4.7
+   "seconds": 4.7,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F44",
@@ -4231,7 +4416,8 @@
      "note": "screwdriver blocked (A/tool/screwdriver hits Metering base (6061, fluted roller o)"
     }
    ],
-   "seconds": 99.9
+   "seconds": 99.9,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F45",
@@ -4254,7 +4440,8 @@
     1350.0
    ],
    "n_units": 9,
-   "seconds": 76.3
+   "seconds": 76.3,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F46",
@@ -4280,7 +4467,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 125.4
+   "seconds": 125.4,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F47",
@@ -4297,7 +4485,8 @@
    "arm": "-",
    "why": "",
    "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 0.1
+   "seconds": 0.1,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F48",
@@ -4319,7 +4508,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 30.0
+   "seconds": 30.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F48b",
@@ -4342,7 +4532,8 @@
     1570.0
    ],
    "n_units": 5,
-   "seconds": 177.2
+   "seconds": 177.2,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F49",
@@ -4357,11 +4548,12 @@
    "arm": "-",
    "who": "person",
    "why": "Threaded ports need a wrench on a hex and a set torque; a 2F-85 can only spin a plain body.",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F50",
-   "label": "Hinge knuckles on the chamber and the two draw-latch strikes on its side faces",
+   "label": "The two draw-latch strikes on the chamber's side faces (the hinge knuckles went on in C09f)",
    "do": "place",
    "tool": "gripper",
    "actor": "A",
@@ -4369,17 +4561,18 @@
    "phase": "upright",
    "joint": null,
    "sweep": "PASS",
-   "arm": "FAIL",
+   "arm": "PASS",
    "gap": 0.26,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clear": 0.5,
-   "arm_clear_with": "right_finger_tip to Module M50 handle (6061, screwed under the gland p",
-   "why": "arm A: A/gr/right_finger_tip hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 192 mm along the insertion",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "",
    "docks": [
     1130.0
    ],
-   "n_units": 2,
-   "seconds": 165.5
+   "n_units": 1,
+   "seconds": 11.8,
+   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
   },
   {
    "id": "F51",
@@ -4401,7 +4594,8 @@
     1130.0
    ],
    "n_units": 1,
-   "seconds": 158.2
+   "seconds": 158.2,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F52",
@@ -4423,7 +4617,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 5.6
+   "seconds": 5.6,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F03",
@@ -4446,7 +4641,8 @@
     1570.0
    ],
    "n_units": 4,
-   "seconds": 449.5
+   "seconds": 449.5,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "sweep": "PASS",
@@ -4507,7 +4703,8 @@
    "do": "screws",
    "joint": "bridge_base",
    "actor": "A",
-   "holder": "B"
+   "holder": "B",
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "sweep": "PASS",
@@ -4562,7 +4759,8 @@
    "do": "screws",
    "joint": "bridge_base",
    "actor": "A",
-   "holder": "B"
+   "holder": "B",
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "sweep": "PASS",
@@ -4623,7 +4821,8 @@
    "do": "screws",
    "joint": "bridge_base",
    "actor": "A",
-   "holder": "B"
+   "holder": "B",
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "sweep": "PASS",
@@ -4678,7 +4877,8 @@
    "do": "screws",
    "joint": "bridge_base",
    "actor": "A",
-   "holder": "B"
+   "holder": "B",
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F04",
@@ -4692,7 +4892,8 @@
    "sweep": "-",
    "arm": "-",
    "why": "all screws of this joint were already driven (with the part held)",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F53",
@@ -4707,7 +4908,8 @@
    "arm": "-",
    "who": "person",
    "why": "The \u00d890 lens is wider than the 2F-85's 85 mm stroke and threads M85 x 1; a strap wrench by hand (operations.md: lens and ring fitted to the bridge on the bench).",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F54",
@@ -4729,7 +4931,8 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "tip_margin": 12.3,
-   "seconds": 0.7
+   "seconds": 0.7,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F55",
@@ -4890,7 +5093,8 @@
      "note": "7.4 N m > 5.0 N m"
     }
    ],
-   "seconds": 89.3
+   "seconds": 89.3,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F56",
@@ -4912,7 +5116,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 2.7
+   "seconds": 2.7,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F56b",
@@ -4934,7 +5139,8 @@
     1350.0
    ],
    "n_units": 1,
-   "seconds": 0.7
+   "seconds": 0.7,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F57",
@@ -4956,7 +5162,8 @@
     1130.0
    ],
    "n_units": 6,
-   "seconds": 4.6
+   "seconds": 4.6,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F58",
@@ -4971,7 +5178,8 @@
    "arm": "-",
    "who": "person",
    "why": "Armoured fiber, >= 100 mm bend radius: cable routing stays manual.",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "F59",
@@ -4986,7 +5194,8 @@
    "arm": "-",
    "who": "person",
    "why": "T-slot nuts and 1.5 mm panels up to 730 mm wide; its hardware is not drawn (joints.NOT_DRAWN).",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "T01",
@@ -5001,7 +5210,8 @@
    "arm": "-",
    "who": "person + hoist",
    "why": "84 kg is 3.4 times two UR12e payloads; a hoist or lift table.",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "T02",
@@ -5016,7 +5226,8 @@
    "arm": "-",
    "who": "person + lift",
    "why": "the UPS and the laser exceed a UR12e's 12.5 kg; cage nuts and screws are not drawn",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "T03",
@@ -5031,7 +5242,8 @@
    "arm": "-",
    "who": "person + lift",
    "why": "the pump exceeds 12.5 kg; the units' screws are not drawn",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "T04",
@@ -5046,7 +5258,8 @@
    "arm": "-",
    "who": "person",
    "why": "hose and tube routing (deformable, KF wing-nut clamps)",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "T05",
@@ -5061,7 +5274,8 @@
    "arm": "-",
    "who": "person",
    "why": "cable and hose routing",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
    "id": "T06",
@@ -5076,8 +5290,13 @@
    "arm": "-",
    "who": "machine",
    "why": "the seal verification in assembly.md",
-   "seconds": 0.0
+   "seconds": 0.0,
+   "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   }
  ],
- "generated_s": 3035.5
+ "generated_s": 3035.5,
+ "merged_from": [
+  "results.json (run 5)",
+  "results_C_F01_F02_F05_F07_F10_F11_F50.json"
+ ]
 }

@@ -2268,37 +2268,42 @@
   },
   {
    "id": "C05",
-   "label": "Six M4 x 12 outlet-plenum screws",
+   "label": "Six M4 x 12 outlet-plenum screws (60 mm bit extension: two sit beside the KF-25 port)",
    "do": "screws",
    "arm": "A",
    "holder": null,
    "tool": "screwdriver",
    "status": {
     "sweep": "PASS",
-    "arm": "PART"
+    "arm": "PASS"
    },
    "min_gap_mm": null,
    "gap_with": null,
    "arm_clearance_mm": 2.2,
    "arm_clearance_with": "screwdriver to Cross-flow outlet plenum under the floor (316L, fl",
-   "why": "red #1: screwdriver: A/tool/screwdriver hits Outlet plenum port (KF-25); also no way with nutrunne; red #2: screwdriver: A/tool/screwdriver hits Outlet plenum port (KF-25); also no way with nutrunne",
+   "why": "",
    "joint": "plenum_out",
    "pn": null,
    "driver": [
-    "nutrunner_angle",
     "screwdriver"
    ],
    "torque_Nm": 2.2,
    "per_screw": [
     {
      "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #1",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ]
     },
     {
      "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #2",
-     "ok": false,
-     "clearance": null
+     "ok": true,
+     "clearance": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ]
     },
     {
      "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #3",
@@ -2403,7 +2408,7 @@
   },
   {
    "id": "C08",
-   "label": "Four M4 x 12 overflow-funnel screws",
+   "label": "Four M4 x 12 overflow-funnel screws (60 mm bit extension: two sit beside the KF-40 stub)",
    "do": "screws",
    "arm": "A",
    "holder": null,
@@ -2477,6 +2482,38 @@
      0.0,
      0.0,
      -120.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "C09f",
+   "label": "Door hinge knuckles onto the frame's front face, one at a time (shimmed at assembly; screws not drawn)",
+   "do": "place",
+   "arm": "B",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "PASS"
+   },
+   "min_gap_mm": 0.3,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clearance_mm": 14.6,
+   "arm_clearance_with": "right_finger_tip to Door hinge knuckles on the chamber #1",
+   "why": "released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers",
+   "parts": [
+    "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)"
+   ],
+   "waypoints": [
+    [
+     0.0,
+     -80.0,
+     0.0
     ],
     [
      0.0,
@@ -2902,6 +2939,24 @@
    ]
   },
   {
+   "id": "C15b",
+   "label": "Overflow-jar sensor on its bracket, and the bracket's two M4 x 10, onto the front-right leg on the bench before C14",
+   "do": "note",
+   "arm": null,
+   "holder": null,
+   "tool": null,
+   "status": {
+    "sweep": "-",
+    "arm": "-"
+   },
+   "min_gap_mm": null,
+   "gap_with": null,
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "A leg on a nest is open on every side; on the machine its back face is hemmed in by the frame, the other legs, the Z servo and (upright) the base plate. Not checked here: the bench nest is not modelled.",
+   "who": "person (bench)"
+  },
+  {
    "id": "F01",
    "label": "Process base plate onto Fixture B (both arms, one at each end)",
    "do": "dual",
@@ -3013,13 +3068,13 @@
    "tool": null,
    "status": {
     "sweep": "-",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
    "min_gap_mm": null,
    "gap_with": null,
    "arm_clearance_mm": 117.6,
    "arm_clearance_with": "held:F05b to Trunnion stands",
-   "why": "arm A: A/gr/adapter hits Base plate, process module (MIC-6, 15 mm)",
+   "why": "",
    "parts": [
     "(everything in the chamber sub-assembly: chamber body, inserts, outlet plenum, funnel, module, Z stage, legs and their screws)"
    ],
@@ -4048,74 +4103,6 @@
    "who": "person"
   },
   {
-   "id": "F09",
-   "label": "Overflow-jar sensor and its bracket, onto the front-right leg's back face",
-   "do": "place",
-   "arm": "A",
-   "holder": null,
-   "tool": "gripper",
-   "status": {
-    "sweep": "PASS",
-    "arm": "FAIL"
-   },
-   "min_gap_mm": 2.3,
-   "gap_with": "Overflow jar (KF-40 flange on a 2.5 in. 316L cup, 47 mm, ~104 cm3, welded bottom)",
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "arm A: A/upper_arm hits A cabinet at 0 mm along the insertion",
-   "parts": [
-    "Overflow-jar present sensor (inductive M12, PNP)",
-    "Overflow-jar sensor bracket (6061, 6 mm, on the front-right leg)"
-   ],
-   "waypoints": [
-    [
-     120.0,
-     0.0,
-     0.0
-    ],
-    [
-     0.0,
-     0.0,
-     0.0
-    ]
-   ]
-  },
-  {
-   "id": "F09b",
-   "label": "Two M4 x 10 jar-sensor bracket screws into the front-right leg",
-   "do": "screws",
-   "arm": "A",
-   "holder": null,
-   "tool": "screwdriver",
-   "status": {
-    "sweep": "PASS",
-    "arm": "FAIL"
-   },
-   "min_gap_mm": null,
-   "gap_with": null,
-   "arm_clearance_mm": null,
-   "arm_clearance_with": null,
-   "why": "-right: screwdriver: A/wrist3 hits Base plate, process module (MIC-6, 15 mm); also no way with nut; -right: screwdriver: A/tool/screwdriver hits Chamber legs #4; also no way with nutrunner, nutrunne",
-   "joint": "jar_sensor",
-   "pn": null,
-   "driver": [
-    "nutrunner_angle"
-   ],
-   "torque_Nm": 2.2,
-   "per_screw": [
-    {
-     "screw": "Jar-sensor bracket screws, M4 x 10 316, into the front-right leg #1",
-     "ok": false,
-     "clearance": null
-    },
-    {
-     "screw": "Jar-sensor bracket screws, M4 x 10 316, into the front-right leg #2",
-     "ok": false,
-     "clearance": null
-    }
-   ]
-  },
-  {
    "id": "F11",
    "label": "LED bar (small-part vacuum nozzle on its top face)",
    "do": "place",
@@ -4148,34 +4135,291 @@
    ]
   },
   {
-   "id": "F10",
-   "label": "Lift-out wall liners into the open chamber",
+   "id": "F10a",
+   "label": "Wall liner, back lower left, in through the door opening and onto its wall",
    "do": "place",
    "arm": "A",
    "holder": null,
-   "tool": "vacuum",
+   "tool": "gripper",
    "status": {
-    "sweep": "FAIL",
+    "sweep": "PASS",
     "arm": "FAIL"
    },
-   "min_gap_mm": null,
-   "gap_with": null,
-   "arm_clearance_mm": 2.7,
-   "arm_clearance_with": "held:F10:Lift-out wall liner, left to Process chamber body (6061-T6 through-frame from 5",
-   "why": "sweep: Lift-out wall liner, left blocked by Process chamber body (6061-T6 through-frame from 5 after 0.0 mm; arm A: held:F10:Lift-out wall liner, left hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 60 mm along the insertion",
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 0.6,
+   "arm_clearance_with": "right_finger to Module M50 handle (6061, screwed under the gland p",
+   "why": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
+   "parts": [
+    "Lift-out wall liner, back lower left (0.5 mm 316L, behind the ball screw, spring clips)"
+   ],
+   "waypoints": [
+    [
+     26.0,
+     -560.0,
+     0.0
+    ],
+    [
+     26.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -3.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F10b",
+   "label": "Wall liner, back upper left, in through the door opening and onto its wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 2.6,
+   "arm_clearance_with": "left_finger to Process chamber body (6061-T6 through-frame from 5",
+   "why": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
+   "parts": [
+    "Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball screw, spring clips)"
+   ],
+   "waypoints": [
+    [
+     50.0,
+     -560.0,
+     0.0
+    ],
+    [
+     50.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -3.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F10c",
+   "label": "Wall liner, left, in through the door opening and onto its wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 0.9,
+   "arm_clearance_with": "wrist3 to Process chamber body (6061-T6 through-frame from 5",
+   "why": "arm A: A/wrist3 hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 462 mm along the insertion",
    "parts": [
     "Lift-out wall liner, left (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
-    "Lift-out wall liner, right (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
-    "Lift-out wall liner, back upper left (0.5 mm 316L, behind the ball screw, spring clips)",
-    "Lift-out wall liner, back upper right (0.5 mm 316L, behind the ball screw, spring clips)",
-    "Lift-out wall liner, back lower left (0.5 mm 316L, behind the ball screw, spring clips)",
+    "Liner pull tab, left (316L, 2 mm hanger: a web from the left side liner in to a grip plate 44 mm off it, inside the door opening's width; spot-welded)"
+   ],
+   "waypoints": [
+    [
+     35.0,
+     -541.0,
+     -6.0
+    ],
+    [
+     35.0,
+     -21.0,
+     -6.0
+    ],
+    [
+     35.0,
+     -21.0,
+     0.0
+    ],
+    [
+     4.0,
+     -21.0,
+     0.0
+    ],
+    [
+     4.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F10d",
+   "label": "Wall liner, back lower right, in through the door opening and onto its wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 0.8,
+   "arm_clearance_with": "right_finger to Module M50 handle (6061, screwed under the gland p",
+   "why": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
+   "parts": [
     "Lift-out wall liner, back lower right (0.5 mm 316L, behind the ball screw, spring clips)"
    ],
    "waypoints": [
     [
-     -60.0,
+     -25.0,
+     -560.0,
+     0.0
+    ],
+    [
+     -25.0,
+     -40.0,
+     0.0
+    ],
+    [
      0.0,
-     160.0
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -3.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F10e",
+   "label": "Wall liner, back upper right, in through the door opening and onto its wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 2.6,
+   "arm_clearance_with": "left_finger to Process chamber body (6061-T6 through-frame from 5",
+   "why": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
+   "parts": [
+    "Lift-out wall liner, back upper right (0.5 mm 316L, behind the ball screw, spring clips)"
+   ],
+   "waypoints": [
+    [
+     -25.0,
+     -560.0,
+     0.0
+    ],
+    [
+     -25.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -40.0,
+     0.0
+    ],
+    [
+     0.0,
+     -3.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ]
+  },
+  {
+   "id": "F10f",
+   "label": "Wall liner, right, in through the door opening and onto its wall",
+   "do": "place",
+   "arm": "A",
+   "holder": null,
+   "tool": "gripper",
+   "status": {
+    "sweep": "PASS",
+    "arm": "FAIL"
+   },
+   "min_gap_mm": 0.36,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clearance_mm": 1.0,
+   "arm_clearance_with": "wrist3 to Process chamber body (6061-T6 through-frame from 5",
+   "why": "arm A: A/wrist3 hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 462 mm along the insertion",
+   "parts": [
+    "Lift-out wall liner, right (0.5 mm 316L, screw hole slotted to the back edge, spring clips)",
+    "Liner pull tab, right (316L, 2 mm hanger: a web from the right side liner in to a grip plate 44 mm off it, inside the door opening's width; spot-welded)"
+   ],
+   "waypoints": [
+    [
+     -35.0,
+     -541.0,
+     -6.0
+    ],
+    [
+     -35.0,
+     -21.0,
+     -6.0
+    ],
+    [
+     -35.0,
+     -21.0,
+     0.0
+    ],
+    [
+     -4.0,
+     -21.0,
+     0.0
+    ],
+    [
+     -4.0,
+     0.0,
+     0.0
     ],
     [
      0.0,
@@ -5717,22 +5961,21 @@
   },
   {
    "id": "F50",
-   "label": "Hinge knuckles on the chamber and the two draw-latch strikes on its side faces",
+   "label": "The two draw-latch strikes on the chamber's side faces (the hinge knuckles went on in C09f)",
    "do": "place",
    "arm": "A",
    "holder": null,
    "tool": "gripper",
    "status": {
     "sweep": "PASS",
-    "arm": "FAIL"
+    "arm": "PASS"
    },
    "min_gap_mm": 0.26,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clearance_mm": 0.5,
-   "arm_clearance_with": "right_finger_tip to Module M50 handle (6061, screwed under the gland p",
-   "why": "arm A: A/gr/right_finger_tip hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 192 mm along the insertion",
+   "arm_clearance_mm": null,
+   "arm_clearance_with": null,
+   "why": "",
    "parts": [
-    "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
     "Draw-latch strikes on the chamber's side faces (1807A61 strike plates)"
    ],
    "waypoints": [

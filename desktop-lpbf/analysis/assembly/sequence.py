@@ -195,13 +195,21 @@ def steps(module="M50"):
            actor="B", path=[(0, 0, 0), (0, 0, 60)]))
     a(P("C04", "Outlet plenum with its O-ring and KF-25 port onto the floor", ["outlet plenum", "Outlet plenum O-ring", "Outlet plenum port"],
         "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -180)], merge="plenum_out"))
-    a(S("C05", "Six M4 x 12 outlet-plenum screws", "plenum_out", "chamber", "chamber_inv", torque_Nm=2.2))
+    # round 6 (run 6): two of these sit beside the plenum's KF-25 port (moved to its left end in round 5), and two of C08's beside the
+    # funnel's KF-40 stub; a 60 mm bit extension keeps the driver's body above the port
+    a(S("C05", "Six M4 x 12 outlet-plenum screws (60 mm bit extension: two sit beside the KF-25 port)", "plenum_out", "chamber",
+        "chamber_inv", torque_Nm=2.2, long_bit=60.0))
     a(dict(do="seal", id="C06", label="Overflow-funnel O-ring (2-042) into the funnel block's groove, PFPE film", keys=["Overflow funnel O-ring"],
            grp="funnel", phase="chamber_inv", method="ring", ring="overflow_funnel", tool="gripper+caps", actor="B", path=[(0, 0, 0), (0, 0, 60)]))
     a(P("C07", "Overflow funnel block (KF-40 port welded on) onto the floor", ["Overflow funnel block", "Overflow funnel O-ring", "Overflow port"],
         "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -200)], merge="funnel"))
-    a(S("C08", "Four M4 x 12 overflow-funnel screws", "funnel", "chamber", "chamber_inv", torque_Nm=2.2))
+    a(S("C08", "Four M4 x 12 overflow-funnel screws (60 mm bit extension: two sit beside the KF-40 stub)", "funnel", "chamber",
+        "chamber_inv", torque_Nm=2.2, long_bit=60.0))
     a(P("C09", "Module-present sensor", ["Module-present sensor"], "chamber", "chamber_inv", "explode", note="its bracket screws are not drawn"))
+    # round 6 (run 6): the door's hinge knuckles go on here, before the module, one at a time: upright (F50 in run 5) a fingertip met
+    # the module handle's grip block, which stands in front of them. Upside down, the chamber's front faces the back: arm B.
+    a(P("C09f", "Door hinge knuckles onto the frame's front face, one at a time (shimmed at assembly; screws not drawn)",
+        ["Door hinge knuckles on the chamber"], "chamber", "chamber_inv", [(0, 0, 0), (0, -80, 0)], per_solid=True, actor="B"))
     # round 6: the Z flange and its screws now go on before the module and the zero-point clamps (run 2's fix for C12, whose fingers
     # met the module's gland plate; run 5 found them on its back-arc screws, and C13's driver on a zero-point arm). The module's
     # swap path passes 12 mm under the flange (machine z), so it doesn't block C10.
@@ -241,6 +249,13 @@ def steps(module="M50"):
         [(0, 0, 0), (0, 0, -150)], grasp=dict(point=(0.0, 80.0, -170.0), z=UP, x=(1.0, 0.0, 0.0)), note="its screws to the flange are not drawn"))
     a(P("C14", "Four legs onto the floor, one at a time", ["@legs"], "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -120)], per_solid=True))
     a(S("C15", "One M6 x 25 down each leg's Ø11 bore (160 mm bit extension)", "legs", "chamber", "chamber_inv", torque_Nm=7.4, long_bit=165.0))
+    # round 6 (run 6): the jar sensor's bracket bolts to the front-right leg's back face. Upright (F09, F09b in run 5) arm A could not
+    # reach it from the front, and the bracket's M4 were hemmed in by the base plate; upside down (run 6's first pass) arm A's forearm
+    # met the frame and its wrist the legs and the Z servo. So it is fitted to the leg before the leg goes on (C14): a sub-assembly on
+    # the bench, which this check does not model
+    a(N("C15b", "Overflow-jar sensor on its bracket, and the bracket's two M4 x 10, onto the front-right leg on the bench before C14",
+        "person (bench)", "A leg on a nest is open on every side; on the machine its back face is hemmed in by the frame, the other legs, "
+        "the Z servo and (upright) the base plate. Not checked here: the bench nest is not modelled."))
     # =========================================================== chapter 4b: base plate and posts on Fixture B
     a(dict(do="dual", id="F01", label="Process base plate onto Fixture B (both arms, one at each end)", keys=["Base plate, process"],
            grp="machine", phase="upright", path=[(0, 0, 0), (0, 0, 150)],
@@ -258,10 +273,11 @@ def steps(module="M50"):
     a(dict(do="dual", id="F05b", label="Chamber assembly (with the module, zero-point clamps, Z stage and legs) carried upright by both "
            "arms, each holding a leg, from the trunnion onto the base plate", keys=["@chamberset"], grp="machine", phase="upright", frm="chamber_up_T", whole=True, merge="chamber",
            path=[(0, 0, 0), (0, 0, 120)], docks="TB", grip_gap=30.0, lift=320.0,
-           # round 6: each leg held 40 mm lower (machine z -135), below the zero-point modules (z -109 to -89): at -95 arm B's inner
-           # finger on the back-right leg (x 126-156, y 81-111 since round 6; B's grasp now on its centre) ran into the right module
-           grasps={"A": dict(point=(-135.0, -90.0, -135.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0)),
-                   "B": dict(point=(141.0, 96.0, -135.0), z=(0.0, -1.0, 0.0), x=(1.0, 0.0, 0.0))}))
+           # round 6: at z -95 arm B's inner finger on the back-right leg (x 126-156, y 81-111 since round 6) ran into the right
+           # zero-point module (z -109 to -89); at -135 arm A's adapter met the base plate at the end of the carry (run 5). So A keeps
+           # -95 (its front-left leg is clear of the left module), and B holds its leg's centre at -124: pads 2 mm under the module
+           grasps={"A": dict(point=(-135.0, -90.0, -95.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0)),
+                   "B": dict(point=(141.0, 96.0, -124.0), z=(0.0, -1.0, 0.0), x=(1.0, 0.0, 0.0))}))
     a(S("F06", "Eight M6 x 25 base-plate-to-leg screws, from under the plate", "legs_base", "machine", "upright", torque_Nm=7.4))
     a(N("F06b", "Release-air line: Ø4 tube from the valve through a union Y to both zero-point modules' push-in elbows (in place of the "
         "temporary line); the valve's supply comes from the rack's air prep in chapter 5", "person",
@@ -276,11 +292,22 @@ def steps(module="M50"):
     a(N("F08", "KF-40 toggle clamp (MKS 100318805) round the jar's flange, lever to the front", "person",
         "Its hinged ring has to be held open round both flanges before one push on the lever locks it; nothing on the 2F-85 holds "
         "the ring open. An air-released KF clamp would let the robot do it (hot-swap.md)."))
-    a(P("F09", "Overflow-jar sensor and its bracket, onto the front-right leg's back face", ["Overflow-jar present", "Overflow-jar sensor bracket"],
-        "machine", "upright", "explode", actor="A"))
-    a(S("F09b", "Two M4 x 10 jar-sensor bracket screws into the front-right leg", "jar_sensor", "machine", "upright", torque_Nm=2.2))
     a(P("F11", "LED bar (small-part vacuum nozzle on its top face)", ["Layer-light"], "machine", "upright", "explode", tool="nozzle"))
-    a(P("F10", "Lift-out wall liners into the open chamber", ["Lift-out wall liner"], "machine", "upright", "explode", tool="vacuum"))
+    # round 6 (run 6): the six liner pieces go in through the door opening along operations.md M3's ways out, reversed (the hand op A2
+    # does the same): the back halves first, then each side liner (in 6 mm low through the opening, up 6 mm, out to 4 mm from its
+    # wall, 21 mm back, onto the wall). Run 5's straight path down from above was blocked by the frame. The vacuum gripper holds each
+    # piece on its inner face.
+    for k, (sid, name, path) in enumerate((
+            ("F10a", "back lower left", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (26, -40, 0), (26, -560, 0)]),
+            ("F10b", "back upper left", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (50, -40, 0), (50, -560, 0)]),
+            ("F10c", "left", [(0, 0, 0), (4, 0, 0), (4, -21, 0), (35, -21, 0), (35, -21, -6), (35, -541, -6)]),
+            ("F10d", "back lower right", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -560, 0)]),
+            ("F10e", "back upper right", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -560, 0)]),
+            ("F10f", "right", [(0, 0, 0), (-4, 0, 0), (-4, -21, 0), (-35, -21, 0), (-35, -21, -6), (-35, -541, -6)]))):
+        keys = [f"Lift-out wall liner, {name}"] + ([f"Liner pull tab, {name}"] if name in ("left", "right") else [])
+        # the 2F-85, not the vacuum gripper: run 6's first pass took the VGC10 (100 x 100 mm) through the door opening, and it met the
+        # opening's edges and the hinge knuckles below it
+        a(P(sid, f"Wall liner, {name}, in through the door opening and onto its wall", keys, "machine", "upright", path, tool="gripper"))
     a(N("F12", "Through-beam fibre heads with their 2-010 O-rings, threaded into the side walls from outside", "person",
         "Threading an M6 head with a fibre attached means winding the fibre with it; the ring itself is a pick-and-place."))
     a(dict(do="seal", id="F13", label="Inlet-plenum O-ring (2-044) into the plenum's flange groove, PFPE film", keys=["Inlet plenum O-ring"],
@@ -364,8 +391,8 @@ def steps(module="M50"):
         "upright", "explode", per_part=True, note="the retaining ring's and camera's screws are not drawn"))
     a(N("F49", "Pressure transducer and relief valve (SAE-4 O-ring-boss ports)", "person",
         "Threaded ports need a wrench on a hex and a set torque; a 2F-85 can only spin a plain body."))
-    a(P("F50", "Hinge knuckles on the chamber and the two draw-latch strikes on its side faces", ["Door hinge knuckles on the chamber", "Draw-latch strikes"],
-        "machine", "upright", "explode", per_part=True, note="hinge and latch screws are not drawn"))
+    a(P("F50", "The two draw-latch strikes on the chamber's side faces (the hinge knuckles went on in C09f)", ["Draw-latch strikes"],
+        "machine", "upright", "explode", per_part=True, note="latch screws are not drawn"))
     a(P("F51", "Door (cord rolled into its half-dovetail on the bench) brought in, knuckles in line", ["Chamber door", "Door O-ring",
                                                                                                    "Door hinge leaves", "Draw-latch brackets", "Draw latches",
                                                                                                    "Door handle"],
