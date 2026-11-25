@@ -5,12 +5,13 @@ the chamber as fully as possible (high resolution, frame rate and zoom), collect
 pyrometer or other methods, especially for powder spreading, the melt pool, and when cracking happens during solidification.
 
 This note answers from the model as it stands (`cad/lpbf_low.py`, 2026-11-25) and from the literature. Nothing here is bought,
-drawn into the model or reviewed by BYU's Laser Safety Officer. The numbers come from two new scripts:
+drawn into the model or reviewed by BYU's Laser Safety Officer. The numbers come from new scripts:
 - [`analysis/optics/monitoring_views.py`](analysis/optics/monitoring_views.py) checks 453 candidate viewports on the lid, walls and
   door against every part of the model, and checks room for each proposed instrument
   ([`views.md`](analysis/out/monitoring/views.md), [`fits.json`](analysis/out/monitoring/fits.json));
 - [`analysis/optics/monitoring_optics.py`](analysis/optics/monitoring_optics.py) works out resolution, field, depth of field,
   temperature floors and data rates ([`optics.md`](analysis/out/monitoring/optics.md)).
+- [`analysis/optics/render_monitoring.py`](analysis/optics/render_monitoring.py) draws the proposed sensors on the model (§3).
 
 Edison's review of the same questions is in [`edison/monitoring-in-situ/`](edison/monitoring-in-situ/answer.md) (§8).
 
@@ -167,6 +168,13 @@ plate centre. For each position it checks two things:
   latches and so on).
 
 ![Candidate viewports: what each sees of the plate and how long a Ø80 camera fits outside](analysis/out/monitoring/views.png)
+
+![Proposed sensor positions on the current model](analysis/out/monitoring/sensors.png)
+
+![Sight cones to the Ø75 plate: layer camera (blue), left-wall port (orange), steep lid port (purple)](analysis/out/monitoring/sensors-chamber.png)
+
+*The proposed instruments drawn as overlays on the model (guard, optics bridge and posts hidden; chamber see-through), from
+[`render_monitoring.py`](analysis/optics/render_monitoring.py). They are not model parts.*
 
 | Face | Sees all of L75 | Best view | What blocks the rest | Room outside |
 |---|---|---|---|---|
