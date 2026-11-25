@@ -289,6 +289,53 @@ At $100k the re-runs land within the seed-to-seed spread of the stored runs, and
 
 **Independent reviews.** Two Edison Analysis tasks reviewed the benchmark on Oct 5 with the code, the README, all 292 run files and the figure uploaded: [`edison/results/code-review.md`](edison/results/code-review.md) (GP posterior checked against NumPy and BoTorch to 1e-15, fantasy update and broadcasting derived and confirmed, truth wiring and the cost ledger verified on every run; findings listed above) and [`edison/results/analysis-review.md`](edison/results/analysis-review.md) (every table recomputed from the JSON without `analyze.py`; all reproduce at the published precision; the wording changes above come from it). Briefs: [`edison/brief-code.md`](edison/brief-code.md), [`edison/brief-analysis.md`](edison/brief-analysis.md).
 
+## Rechecked from the stored runs (Nov 25, 2026)
+
+### Significance tests and intervals
+
+Recomputed from `results/` with [`checks/summarize_runs.py`](checks/summarize_runs.py); the output is [`checks/headline_check.txt`](checks/headline_check.txt).
+
+| Method (kappa = 1, 20 seeds each) | Best at $100k, % of optimum (mean ± SE) | Spend to reach tiered screening's $100k level (62.7%) | Ratio, 90% bootstrap interval |
+|---|---|---|---|
+| BOFN with powder reuse | 90.0 ± 2.4 | $26.25k | 3.79x (2.2 to 5.9) |
+| pKGFN | 83.8 ± 1.8 | $26.50k | 3.75x (2.0 to 5.7) |
+| Full-chain BOFN | 85.8 ± 4.1 | $38.00k | 2.62x (2.1 to 3.9) |
+| Standard BO | 83.8 ± 2.8 | $46.50k | 2.14x (1.5 to 2.9) |
+| Random designs | 68.4 ± 2.2 | $76.00k | 1.31x (1.0 to 3.4) |
+| Tiered screening | 62.7 ± 2.2 | $99.50k (its own mean curve) | reference |
+
+- **The ratio** is tiered screening's spend to reach its own $100k mean ($99.5k) divided by the spend at which the
+  method's mean curve first reaches that level. The interval resamples seeds within each method (2,000 draws, numpy
+  seed 0), the same estimator as `analyze.speedup`.
+- **Against fixed targets** the ratio moves: BOFN with powder reuse is 2.6x, 4.0x and 3.6x faster than tiered
+  screening to 55%, 60% and 62.5% of the optimum (mean curves).
+- **Matched seeds** (two-sided Wilcoxon signed-rank on per-seed differences, scipy default):
+  - Full-chain BOFN against standard BO, kappa = 1: 76.8% against 63.2% at $50k (ahead on 15 of 20 seeds,
+    p = 0.0073), and 85.8% against 83.8% at $100k (12 of 20, p = 0.45).
+  - BOFN with powder reuse against standard BO, kappa = 1, $100k: 90.0% against 83.8% (14 of 20, p = 0.048, before
+    any correction for multiple comparisons).
+  - BOFN with powder reuse against tiered screening, kappa = 1, $100k: 90.0% against 62.7%, ahead on all 20 seeds
+    (p = 1.9e-6).
+  - When the screen misses nothing (kappa = 0, $100k): BOFN with powder reuse 86.5% against tiered screening's 86.3%
+    on the 8 seeds both ran (p = 0.20); full-chain BOFN 79.2% against 85.1% (12 seeds, p = 0.73); standard BO
+    71.2% against 85.1%, behind (p = 0.021).
+
+### Claims the benchmark doesn't support
+
+- **"BOFN beats standard BO."** Full-chain BOFN leads standard BO at $50k but not at $100k (p = 0.45). BOFN with
+  powder reuse leads at $100k only at p = 0.048, before correcting for multiple comparisons.
+- **"3.8 times less spend" in general.** It holds only when the cheap screen misses a real effect (kappa = 1). When
+  the screen is right (kappa = 0) the methods finish about level, and pKGFN falls behind (57%). The ratio also moves
+  with the target (2.6x to 4.0x above).
+- **That buying part of the chain is the cause.** Full-chain BOFN's interval reaches 3.9x, and tiered screening reuses
+  powder too, so these runs don't isolate why the leaders lead.
+- **A real-world speed-up.** The benchmark is synthetic, noise-free and single-objective, and it scores against a true
+  optimum that no real campaign knows.
+- **That BOFN wins wherever the screen is used.** The byu-vcl digital twin's round 2, with simulated instruments, found
+  BOFN ahead of tiered screening on aluminum (0.65 to 0.69 against 0.34 on that study's own score) but not on copper,
+  where tiered screening scored highest (0.69)
+  ([tables at e3667f8](https://github.com/vertical-cloud-lab/byu-vcl/blob/e3667f8/vertical-lab/out/twin2/fig/tables.md)).
+
 ## Reproduce
 
 ```bash
@@ -302,6 +349,7 @@ BOFN_NO_REC=1 python run_sweep.py --kappas 0.0 0.5 --seeds 0-7 --kinds eifn_reus
 BOFN_NO_REC=1 BOFN_SACQ=32 BOFN_NCAND=10 python run_sweep.py --kappas 1.0 --seeds 0-19 --kinds pkgfn_free
 BOFN_NO_REC=1 BOFN_SACQ=32 BOFN_NCAND=10 python run_sweep.py --kappas 0.0 0.5 --seeds 0-7 --kinds pkgfn_free
 python analyze.py 1.0 0.5 0.0     # tables
+python checks/summarize_runs.py results /tmp/checks && diff /tmp/checks/headline_check.txt checks/headline_check.txt   # significance tests and intervals; no diff output means it matches
 python plot.py 1.0                # figures, including the slide figure and its all-bands variant
 DIAG_ITS=4,12,24,40 BOFN_NO_REC=1 python quality/mc_noise.py 0 1.0 quality/mc_noise_k1_s0.json   # KG noise check
 BOFN_NO_REC=1 BOFN_SACQ=256 python run_sweep.py --kappas 1.0 --seeds 0-7 --kinds pkgfn --out quality/results-hq/sacq256-ncand16
