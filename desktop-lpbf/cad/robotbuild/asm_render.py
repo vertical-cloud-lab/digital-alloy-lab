@@ -413,8 +413,56 @@ def kind_key(e, rep):
     return k
 
 
+# capped mode (ASM_CAP=1, chapter 41: ~1100 events): frames per step at most, shared by weighted duration; the planned moves,
+# drives (after the chapter's first few), tool changes and gripper motions may get none (their end state is applied and their
+# time carried into the next frame drawn), the work itself (insertions, picks, screw run-downs, carries, the turn) keeps a minimum
+CAP = dict(place=20, screws=10, seal=44, flip=22, dual=32, rotate=24, note=12)
+CAP_MIN = dict(cart=3, screw=3, screw_rep=1, move2=10, turn=18, wait=8)
+
+
+def plan_frames_capped(events, scale=1.0):
+    out = {}
+    cur, buf = None, []
+    drives_shown = [0]
+
+    def close_step(sid, do, buf):
+        if not buf:
+            return
+        nscrew = sum(1 for e, kk in buf if e["kind"] == "screw")
+        cap = CAP.get(do, 16) if do != "screws" else min(40, CAP["screws"] + 3 * nscrew)
+        cap = max(6, int(round(cap * scale)))
+        w = [float(e.get("dur", 0.0)) / KW.get(kk, 1.0) for e, kk in buf]
+        W = sum(w) or 1.0
+        for (e, kk), wi in zip(buf, w):
+            d = float(e.get("dur", 0.0))
+            if d <= 0:
+                continue
+            n = int(round(cap * wi / W))
+            n = max(n, CAP_MIN.get(kk, 0))
+            if kk == "drive" and drives_shown[0] < 4:
+                n = max(n, 8)
+                drives_shown[0] += 1
+            out[id(e)] = (n, d / n if n else d)
+    reps = {}
+    for e in events:
+        if e["kind"] == "step":
+            close_step(cur[0] if cur else None, cur[1] if cur else None, buf)
+            cur, buf = (e["id"], e.get("do")), []
+            reps = {}
+            continue
+        if e.get("dur", 0.0) and e["kind"] in ("move", "drive", "grip", "tool", "screw", "turn", "move2", "wait"):
+            r = reps.get(e.get("arm"), 0) if e["kind"] == "screw" else 0
+            if e["kind"] == "screw":
+                reps[e.get("arm")] = r + 1
+            buf.append((e, kind_key(e, r)))
+    close_step(cur[0] if cur else None, cur[1] if cur else None, buf)
+    return out
+
+
 def plan_frames(events, scale=1.0):
     """Frames per event: each step's events are sped up together so the step fits its budget (BUDGET x scale)."""
+    if os.environ.get("ASM_CAP") == "1":
+        return plan_frames_capped(events, scale)
     out = {}
     cur, buf = None, []
 
@@ -501,9 +549,17 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
     tot = dict(n=0)
     snap = {}
 
+    carry = dict(s=0.0, robot=0.0)
+
     def emit(caption, sub="", who=(), proc=1.0 / FPS, add=None, status=None):
         img = rp.shot()
         st = status if status is not None else cur["status"]
+        if carry["s"] > 0.0:            # motions not drawn (capped mode): their real time goes with this frame
+            proc += carry["s"]
+            if carry["robot"] > 0.0:
+                add = dict(add or {})
+                add["robot_h"] = add.get("robot_h", 0.0) + carry["robot"] / 3600.0
+            carry["s"] = carry["robot"] = 0.0
         meta = dict(sub=sub, who=list(who), step=cur["id"], status=st, proc_s=round(proc, 4))
         if add:
             meta["add"] = add
@@ -598,6 +654,20 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
             side = "A"
         who = [f"robot {side}"]
         nf, per = nfr.get(id(e), (0, 1.0 / FPS))
+        if nf == 0 and float(e.get("dur", 0.0)) > 0.0 and k in ("grip", "drive", "move", "screw", "tool"):
+            # not drawn (capped mode): jump to where the motion ends, keep its time for the next frame drawn
+            if k == "grip":
+                rp.set_arm(n, close=e["c1"])
+            elif k == "drive":
+                rp.set_arm(n, x=e["x1"])
+            elif k in ("move", "screw") and e.get("q") is not None and len(e["q"]):
+                rp.set_arm(n, q=np.asarray(e["q"][-1], float), close=e.get("close"))
+            elif k == "tool":
+                rp.st[n]["spec"] = e.get("spec") or {}
+                rp.set_arm(n, tool=e["tool"])
+            carry["s"] += float(e["dur"])
+            carry["robot"] += float(e["dur"])
+            continue
         if k == "put":
             rp.put(e["objs"], e["T"])
         elif k == "take":

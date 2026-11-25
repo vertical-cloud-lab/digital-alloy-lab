@@ -1,0 +1,920 @@
+{
+ "rows": [
+  {
+   "id": "C00",
+   "label": "Overflow funnel: its 2-042 in the block's groove, the block (KF-40 stub welded on) and its four M4 x 12 onto the floor plate's underside, on the bench before C00a",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person (bench)",
+   "why": "operations.md A2.13: with the plate on the bench, face down, all four screws are open from above; on the machine two sit under the KF-40 stub's flange (run 6: 2 of 4). Not checked here: the bench is not modelled.",
+   "person_s": 360.0,
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "C00a",
+   "label": "Floor plate (inserts, the two frame dowels and the overflow funnel already on) onto Fixture P, gland face up, by the vacuum gripper",
+   "do": "place",
+   "tool": "vacuum",
+   "actor": "A",
+   "holder": null,
+   "phase": "chamber_up_P",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": null,
+   "gap_with": null,
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "",
+   "docks": [
+    -350.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (C00a): lift: held:C00a:Chamber floor plate hits long table top",
+   "seconds": 60.2,
+   "compute_s": 60.2
+  },
+  {
+   "id": "C00b",
+   "label": "Floor O-ring cord (3.53 mm, vulcanized splice) rolled into the floor plate's pad gland",
+   "do": "seal",
+   "tool": "roller",
+   "actor": "A",
+   "holder": "B",
+   "phase": "chamber_up_P",
+   "joint": null,
+   "sweep": "-",
+   "arm": "PASS",
+   "why": "",
+   "arm_clear": 1.1,
+   "arm_clear_with": "roller to Chamber floor plate (6061-T6, 20 mm, bolted under ",
+   "docks": [
+    -350.0,
+    -350.0,
+    -350.0
+   ],
+   "method": "3.53 mm cord laid in by arm B at the midpoints, ends and quarter points, then rolled home by arm A's PTFE wheel (Adebola et al. 2024's binary order), splice at the back-right corner",
+   "seconds": 9.7,
+   "compute_s": 9.7
+  },
+  {
+   "id": "C00c",
+   "label": "Frame lowered onto the floor plate's dowels, one arm on each side wall",
+   "do": "dual",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": "chamber_up_P",
+   "joint": null,
+   "approach": "PASS",
+   "sweep": "-",
+   "arm": "PASS",
+   "why": "",
+   "docks": [
+    "P",
+    "P"
+   ],
+   "mass_kg": 4.3,
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "tip_margin": 41.0,
+   "seconds": 37.9,
+   "compute_s": 37.9
+  },
+  {
+   "id": "C00d",
+   "label": "Eighteen M4 x 16 floor-plate screws up through the U-notches into the frame's skirt, from under the plate's edge",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "chamber_up_P",
+   "joint": "floor",
+   "presenter": "17/17",
+   "sweep": "PASS",
+   "arm": "PART",
+   "n": 18,
+   "n_ok": 17,
+   "n_drive": 18,
+   "arm_clear": 2.2,
+   "arm_clear_with": "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under ",
+   "why": "in the: approach: no path in 500 iterations",
+   "docks": [
+    -350.0
+   ],
+   "hex": 3.0,
+   "screw_L": 16.0,
+   "driver": [
+    "nutrunner_angle"
+   ],
+   "driver_why": [
+    "upward"
+   ],
+   "per_screw": [
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #1",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 60,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #2",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #3",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #4",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #5",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #6",
+     "ok": false,
+     "why": "approach: no path in 500 iterations",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": null,
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #7",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #8",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #9",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #10",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #11",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #12",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #13",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #14",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 90,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #15",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 0,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #16",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 0,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #17",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 0,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt #18",
+     "ok": true,
+     "why": "",
+     "dock": -350.0,
+     "roll": 30,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    }
+   ],
+   "seconds": 451.6,
+   "compute_s": 451.6
+  },
+  {
+   "id": "C01",
+   "label": "Chamber (frame + floor plate, 7.4 kg) carried upright by both arms from Fixture P into the trunnion's jaws",
+   "do": "dual",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": "chamber_up_T",
+   "joint": null,
+   "approach": "PASS",
+   "sweep": "-",
+   "arm": "PASS",
+   "why": "",
+   "docks": [
+    "PT",
+    "PT"
+   ],
+   "mass_kg": 8.25,
+   "arm_clear": 0.0,
+   "arm_clear_with": "held:C01 to Trunnion jaws",
+   "tip_margin": 21.4,
+   "seconds": 59.2,
+   "compute_s": 59.2
+  },
+  {
+   "id": "C01b",
+   "label": "The trunnion turns the chamber upside down (180 deg about x), both arms parked",
+   "do": "rotate",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "PASS",
+   "why": "",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "mass_kg": null,
+   "seconds": 2.0,
+   "compute_s": 2.0
+  },
+  {
+   "id": "C02",
+   "label": "Locating dowel and diamond pin into the floor",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": null,
+   "force_pose": {
+    "kind": "dowel",
+    "max_push_N": 152.0
+   },
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.05,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clear": 37.7,
+   "arm_clear_with": "left_finger to Overflow port (KF-40, weld stub to 40 mm)",
+   "why": "",
+   "docks": [
+    350.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 36.5,
+   "compute_s": 36.5
+  },
+  {
+   "id": "C03",
+   "label": "Outlet-plenum O-ring (2-044) into the plenum's flange groove, plenum on a nest, PFPE film",
+   "do": "seal",
+   "tool": "gripper+caps",
+   "actor": "B",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": null,
+   "sweep": "PASS",
+   "gap": 1.68,
+   "gap_with": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
+   "arm": "-",
+   "why": "",
+   "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
+   "seconds": 0.1,
+   "compute_s": 0.1
+  },
+  {
+   "id": "C04",
+   "label": "Outlet plenum with its O-ring and KF-25 port onto the floor",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 1.68,
+   "gap_with": "Outlet plenum O-ring (FKM 75A 2-044, face seal under the floor)",
+   "arm_clear": 2.0,
+   "arm_clear_with": "held:C04:Cross-flow outlet plenum under to Overflow funnel block (316L, bolted, FKM face O-ri",
+   "why": "",
+   "docks": [
+    350.0
+   ],
+   "n_units": 1,
+   "fetch": "-",
+   "fetch_why": "",
+   "seconds": 4.7,
+   "compute_s": 4.7
+  },
+  {
+   "id": "C05",
+   "label": "Six M4 x 12 outlet-plenum screws (60 mm bit extension: two sit beside the KF-25 port)",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": "plenum_out",
+   "presenter": "5/6",
+   "presenter_why": "to the presenter: no path in 200 iterations",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 6,
+   "n_ok": 6,
+   "n_drive": 6,
+   "arm_clear": 2.2,
+   "arm_clear_with": "screwdriver to Cross-flow outlet plenum under the floor (316L, fl",
+   "why": "",
+   "docks": [
+    350.0
+   ],
+   "hex": 3.0,
+   "screw_L": 12.0,
+   "driver": [
+    "screwdriver"
+   ],
+   "driver_why": [],
+   "per_screw": [
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #1",
+     "ok": true,
+     "why": "",
+     "dock": 350.0,
+     "roll": 30,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #2",
+     "ok": true,
+     "why": "",
+     "dock": 350.0,
+     "roll": 30,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #3",
+     "ok": true,
+     "why": "",
+     "dock": 350.0,
+     "roll": 30,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #4",
+     "ok": true,
+     "why": "",
+     "dock": 350.0,
+     "roll": 30,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #5",
+     "ok": true,
+     "why": "",
+     "dock": 350.0,
+     "roll": 30,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Outlet-plenum screws, M4 x 12 316, counterbored #6",
+     "ok": true,
+     "why": "",
+     "dock": 350.0,
+     "roll": 30,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Cross-flow outlet plenum under the floor (316L, fl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    }
+   ],
+   "seconds": 116.7,
+   "compute_s": 116.7
+  },
+  {
+   "id": "C09",
+   "label": "Module-present sensor",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.82,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clear": 0.5,
+   "arm_clear_with": "held:C09:Module-present sensor to Chamber floor plate (6061-T6, 20 mm, bolted under ",
+   "why": "released 30 mm short and pushed home with the closed fingers",
+   "docks": [
+    350.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 13.1,
+   "compute_s": 13.1
+  },
+  {
+   "id": "C09f",
+   "label": "Door hinge knuckles onto the frame's front face, one at a time (shimmed at assembly; screws not drawn)",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "B",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clear": 14.6,
+   "arm_clear_with": "right_finger_tip to Door hinge knuckles on the chamber #1",
+   "why": "released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers",
+   "docks": [
+    0.0,
+    850.0
+   ],
+   "n_units": 4,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 30.8,
+   "compute_s": 30.8
+  },
+  {
+   "id": "C12",
+   "label": "Z mounting flange alone onto the floor (the actuator goes on after the module, its screws now)",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clear": 2.9,
+   "arm_clear_with": "held:C12:Z mounting flange to Locating dowel #1",
+   "why": "released 30 mm short and pushed home with the closed fingers",
+   "docks": [
+    350.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 96.8,
+   "compute_s": 96.8
+  },
+  {
+   "id": "C13",
+   "label": "Four counterbored M5 x 12 Z-flange screws",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": "zmount",
+   "presenter": "4/4",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 4,
+   "n_ok": 4,
+   "n_drive": 4,
+   "arm_clear": 2.6,
+   "arm_clear_with": "screwdriver to Z mounting flange (bolted under the floor)",
+   "why": "",
+   "docks": [
+    350.0
+   ],
+   "hex": 4.0,
+   "screw_L": 12.0,
+   "driver": [
+    "screwdriver"
+   ],
+   "driver_why": [],
+   "per_screw": [
+    {
+     "screw": "Z-flange screws, M5 x 12 316, counterbored #1",
+     "ok": true,
+     "why": "",
+     "dock": 350.0,
+     "roll": 30,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Z-flange screws, M5 x 12 316, counterbored #2",
+     "ok": true,
+     "why": "",
+     "dock": 350.0,
+     "roll": 30,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Z-flange screws, M5 x 12 316, counterbored #3",
+     "ok": true,
+     "why": "",
+     "dock": 350.0,
+     "roll": 30,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Z-flange screws, M5 x 12 316, counterbored #4",
+     "ok": true,
+     "why": "",
+     "dock": 350.0,
+     "roll": 30,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Z mounting flange (bolted under the floor)"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    }
+   ],
+   "seconds": 64.4,
+   "compute_s": 64.4
+  },
+  {
+   "id": "C09b",
+   "label": "Four zero-point posts turned into the floor's M6 inserts by their studs",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "arm_clear": 3.5,
+   "arm_clear_with": "held:C09b:Zero-point posts #3 to Module-present sensor (inductive M12, under the fl",
+   "why": "",
+   "docks": [
+    350.0
+   ],
+   "n_units": 4,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 89.6,
+   "compute_s": 89.6
+  },
+  {
+   "id": "C09c",
+   "label": "Two zero-point module plates (10 mm 6061) onto the posts; their screws into the posts' ends are not drawn",
+   "do": "place",
+   "tool": "vacuum",
+   "actor": "A",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Zero-point posts #1",
+   "arm_clear": 2.1,
+   "arm_clear_with": "held:C09c:Zero-point module plates #2 to Outlet plenum port (KF-25)",
+   "why": "",
+   "docks": [
+    350.0
+   ],
+   "n_units": 2,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 42.8,
+   "compute_s": 42.8
+  },
+  {
+   "id": "C09d",
+   "label": "Two SCHUNK NSE-HT mini 88-20 zero-point modules (\u00d888, 1.0 kg) onto the plates, pin face up: the vacuum gripper on the pin face (\u00d888 is past the 2F-85's stroke)",
+   "do": "place",
+   "tool": "vacuum",
+   "actor": "A",
+   "holder": null,
+   "phase": "chamber_inv",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Zero-point module plates #1",
+   "arm_clear": 7.2,
+   "arm_clear_with": "held:C09d:Zero-point clamping modules #2 to Outlet plenum port (KF-25)",
+   "why": "",
+   "docks": [
+    350.0
+   ],
+   "n_units": 2,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 10.8,
+   "compute_s": 10.8
+  },
+  {
+   "id": "C09e",
+   "label": "M5 push-in elbows into the modules' release ports, and a temporary \u00d84 release-air line from the cell's supply",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person",
+   "why": "Small threaded fittings with a tube to follow. The modules have to be open (6 bar) for the clamping pins to enter in C10.",
+   "person_s": 180.0,
+   "seconds": 0.0,
+   "compute_s": 0.0
+  }
+ ],
+ "generated_s": 1208.6
+}

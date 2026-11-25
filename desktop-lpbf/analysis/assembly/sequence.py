@@ -419,9 +419,10 @@ def steps(module="M50"):
         [(0, 0, 0), (0, 25, 0), (0, 25, 70)]))
     a(P("F45c", "Dosing stepper, its shaft into the coupling", ["Dosing stepper"], "machine", "upright", [(0, 0, 0), (0, 30, 0), (0, 30, 70)],
         note="its screws are not drawn"))
-    a(P("F45d", "Dock rails, load cell, NFC reader, side port blank and docked sensor, from just above", ["Dovetail rails", "Load cell",
-        "NFC reader", "Side reservoir port", "Reservoir-docked sensor"], "machine", "upright", [(0, 0, 0), (0, 0, 70)], per_part=True,
-        note="their screws are not drawn"))
+    # run 9: the load cell carries the dock rails, so it goes first (the rails first blocked it)
+    a(P("F45d", "Load cell, then the dock rails on it, the NFC reader, side port blank and docked sensor, from just above", ["Load cell",
+        "Dovetail rails", "NFC reader", "Side reservoir port", "Reservoir-docked sensor"], "machine", "upright", [(0, 0, 0), (0, 0, 70)],
+        per_part=True, note="their screws are not drawn"))
     a(P("F46", "Reservoir M slid onto the dovetail dock (about 94 N to seat on the dock O-ring)", [f"Reservoir {'M'}"], "machine", "upright",
         [(0, 0, 0), (0, -160, 0)], force="reservoir", grasp=dict(point=(-90.0, 0.0, 255.0), z=DN, x=(1.0, 0.0, 0.0))))
     a(dict(do="seal", id="F47", label="Camera adapter O-ring (2-022), PFPE film", keys=["Camera adapter O-ring"], grp="camad", phase="upright",
