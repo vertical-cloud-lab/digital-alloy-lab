@@ -436,7 +436,7 @@ def chamber_options(rows):
              in_house_h=f"{post_h[0]:g}-{post_h[1]:g} (estimate: CAM 3-4, three setups 4.5, finishing cuts in 316L 2-4, inspect 1); "
                         f"saves {body_h - post_h[1]:.0f}-{body_h - post_h[0]:.0f} h",
              vacuum_o2="more than enough: machined LPBF 316L reaches the 1e-9 mbar.L/s detection limit (Romanescu 2023) and outgasses "
-                       "like wrought 316L (CERN, IPAC'19); 16 mm walls need no HIP (Edison r7); one seal fewer, so permeation drops "
+                       "like wrought 316L (LAL Orsay, IPAC'19); 16 mm walls need no HIP (Edison r7); one seal fewer, so permeation drops "
                        "0.45 ppm O2/h",
              design_changes="add 1-1.5 mm stock on every seal face, bore and datum; stress-relieve on the plate (JLC3DP lists no "
                             "stress relief: ask); door opening's 220 mm top edge and the horizontal bores need supports or "

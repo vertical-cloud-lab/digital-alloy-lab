@@ -59,7 +59,7 @@ ordered, built or quoted by a person; the live quotes are instant web prices rea
   - **Research rigs buy stock vacuum hardware:** a CF spherical octagon, a Parr vessel, or a large vacuum chamber with an
     acrylic box inside.
   - **Diamond Light Source printed** an aluminium vacuum vessel of almost our size: 60 h on an SLM 500HL, £12,350 with
-    machining, in 2017.
+    machining (MEDSI 2018).
   - Our vacuum-purged, machined-plate chamber is the better choice for aluminium, because the vacuum step pulls water out
     of the powder. Edison agrees (r7).
 - **Recommendation: route (c), the hybrid.**
@@ -323,7 +323,7 @@ Each option is priced for one chamber body (frame + floor, or its equivalent). T
 | Option | Cost of the body | Lead time | BYU hours | Vacuum and O₂ | Design changes | Risk | Verdict |
 |---|---|---|---|---|---|---|---|
 | **1. Machined 6061 through-frame + bolted floor (now)** | $3,896 at BYU (stock $2,278 + 24.9 h × $65); JLCCNC floor $83.68, frame manual quote (estimate $400-1,500); a US job shop $4-10k (Edison r5) | 3-4 days on the VF-4 within the queue | 24.9 h, CAM mostly done | designed for 1 mbar and < 1 × 10⁻³ mbar/min; 1-2 ppm O₂ in theory | none | low | **keep** |
-| 2a. LPBF 316L, frame + floor as one body, then machined | $4,826.37 (JLC3DP live, before review) + ~$270 UPS (estimate) + 10-14 h finishing: $5,876 at $65/h | 3-day build + review + 2-4 days UPS: ~1.5-2 weeks | 10-14 h (estimate) | machined LPBF 316L reaches the 1 × 10⁻⁹ mbar·L/s detection limit (Romanescu et al. 2023) and outgasses like wrought (CERN, IPAC'19); no HIP at 16 mm walls (Edison r7); one seal fewer, -0.45 ppm O₂/h | +1-1.5 mm stock on seal faces, bores and datums; stress relief on the plate (JLC3DP lists none: ask); supports or self-supporting shapes at the door opening's 220 mm top edge and the horizontal bores; the floor O-ring and 18 screws go; 21.8 kg instead of 7.4 | medium: ±0.4 % as built (±1.2 mm over 312 mm); a pore opened by facing a land; price subject to review | $1,980 more than machining for 11-15 h less shop time |
+| 2a. LPBF 316L, frame + floor as one body, then machined | $4,826.37 (JLC3DP live, before review) + ~$270 UPS (estimate) + 10-14 h finishing: $5,876 at $65/h | 3-day build + review + 2-4 days UPS: ~1.5-2 weeks | 10-14 h (estimate) | machined LPBF 316L reaches the 1 × 10⁻⁹ mbar·L/s detection limit (Romanescu et al. 2023) and outgasses like wrought (LAL Orsay, IPAC'19); no HIP at 16 mm walls (Edison r7); one seal fewer, -0.45 ppm O₂/h | +1-1.5 mm stock on seal faces, bores and datums; stress relief on the plate (JLC3DP lists none: ask); supports or self-supporting shapes at the door opening's 220 mm top edge and the horizontal bores; the floor O-ring and 18 screws go; 21.8 kg instead of 7.4 | medium: ±0.4 % as built (±1.2 mm over 312 mm); a pore opened by facing a land; price subject to review | $1,980 more than machining for 11-15 h less shop time |
 | 2b. LPBF aluminium (JLC3DP "Aluminum 6061"; AlSi10Mg elsewhere), one body, then machined | $2,916.58 (JLC3DP live) + ~$200 + 8-12 h: $3,767 | ~1.5-2 weeks | 8-12 h (estimate) | an AlSi10Mg cold-atom chamber with a 2.5 mm skin held < 1 × 10⁻¹⁰ mbar (Cooper et al. 2021) | as 2a, at 7.3 kg; confirm the alloy (JLC3DP states 172 W/m·K, 15 % elongation, ≤ 150 °C service) | medium | **fallback**: about the same money as machining, 13-17 h less shop time |
 | 3. DED (wire-arc or laser-wire) 316L walls on a 316L plate, machined all over | $4-12k with machining (helper's estimate); Edison $3-8k + machining | 4-8 weeks (estimate); quote-only vendors | no saving: every face from 0.7-1.8 mm stock, in 316L | porosity 0.1-0.5 % (Edison r7), little vacuum data | near-net walls, stock everywhere | high for one part | no |
 | 4. Welded box from cut plate (316L or 5083), machined after welding | $1.2-3.5k (Edison r7 estimate); SendCutSend cuts 6061 to 0.75 in., 316 to 0.25 in., no 5083; its welding excludes 6061 and is "not gas-tight" | 2-4 weeks + a qualified welder | ~20-33 h: 8-15 h of TIG + the same top, bottom and wall setups (estimate) | fine if helium-tested; Meyer Tool: under 0.5 ft³ with 0.5 in. walls, machining from plate is usually cheapest (ours is 0.23 ft³) | welded corners, stress relief, 6061 HAZ ~110 MPa | 0.5-2 mm distortion (Edison r3), weld porosity | no |
@@ -510,8 +510,8 @@ Re-run: `/tmp/venv/bin/python desktop-lpbf/analysis/route/route_calcs.py` (reads
   - Grinschek et al. 2022, Mater. Des. 223, 111174;
   - Romanescu et al. 2023, via Edison r7;
   - Van Cauwenbergh et al. 2019, via [`vacuum-and-purge.md`](../vacuum-and-purge.md);
-  - CERN 316L tubes, [IPAC'19 WEXXPLS3](https://proceedings.jacow.org/ipac2019/papers/wexxpls3.pdf);
-  - LAL Orsay, [IPAC'17 WEPVA043](https://proceedings.jacow.org/ipac2017/papers/wepva043.pdf);
+  - LAL Orsay's 316L beam tubes, [IPAC'19 WEXXPLS3](https://proceedings.jacow.org/ipac2019/papers/wexxpls3.pdf)
+    (outgassing) and [IPAC'17 WEPVA043](https://proceedings.jacow.org/ipac2017/papers/wepva043.pdf) (helium leaks);
   - Diamond, [MEDSI 2018 TUPH34](https://proceedings.jacow.org/medsi2018/papers/tuph34.pdf);
   - Meyer Tool, via [`route-catalogue-chambers.csv`](route-catalogue-chambers.csv).
 - The data worker's lead times ([`leadtime-lookups.csv`](../analysis/robotbuild_data/leadtime-lookups.csv), compiled into
