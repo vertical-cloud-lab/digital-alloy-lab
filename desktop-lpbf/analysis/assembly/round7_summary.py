@@ -16,8 +16,9 @@ OUT = HERE.parent / "out" / "assembly"
 
 
 def checked(rows):
-    """Steps with a robot check (not notes), sub-rows of held-part screws folded into their step."""
-    return [r for r in rows if r.get("do") != "note" and not r["id"].endswith("h")]
+    """Steps whose arm motion was checked (arm PASS, FAIL, PART or ERROR; notes, unchecked seal placements and the held-part
+    screw sub-rows, which their step already counts, left out)."""
+    return [r for r in rows if str(r.get("arm")) in ("PASS", "FAIL", "PART", "ERROR") and not r["id"].endswith("h")]
 
 
 def ok(r):

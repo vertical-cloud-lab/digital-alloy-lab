@@ -122,8 +122,7 @@ class Rec:
             who = row.get("who") or ""
             s["status"] = "person" if "person" in who else ("machine" if "machine" in who else "robot")
             s["who"] = ["person"] if "person" in who else ["machine"] if "machine" in who else ["robot A"]
-            s["person_s"] = float(row.get("person_s", 0.0) or 0.0)
-            s["t"] += s["person_s"]
+            s["person_s"] = max(s["person_s"], float(row.get("person_s", 0.0) or 0.0))   # the wait event already counted it
         else:
             s["status"] = "pass" if arm in ("PASS", "-") and str(row.get("sweep", "PASS")) in ("PASS", "-", "?") else \
                 ("fail" if arm in ("FAIL", "ERROR", "PART") or str(row.get("sweep")) == "FAIL" else "pass")

@@ -1,0 +1,225 @@
+{
+ "before": {
+  "file": "results.json",
+  "checked": 97,
+  "passed": 77,
+  "screws_ok": 111,
+  "screws": 129
+ },
+ "after": {
+  "file": "results_run9.json",
+  "checked": 108,
+  "passed": 93,
+  "screws_ok": 123,
+  "screws": 129
+ },
+ "fetch": {
+  "steps": 74,
+  "passed": 40,
+  "person": 0,
+  "failed": [
+   {
+    "id": "M04",
+    "why": "pick at the table (M04): lift: no IK at the start"
+   },
+   {
+    "id": "M13",
+    "why": "pick at the table (M13): lift: no IK at the start"
+   },
+   {
+    "id": "C00a",
+    "why": "pick at the table (C00a): lift: no IK at the start"
+   },
+   {
+    "id": "F02b",
+    "why": "pick at the table (F02b): lift: no IK at the start"
+   },
+   {
+    "id": "F10a",
+    "why": "pick at the table (F10a): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F10b",
+    "why": "pick at the table (F10b): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F10d",
+    "why": "pick at the table (F10d): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F16",
+    "why": "pick at the table (F16): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F18",
+    "why": "pick at the table (F18): in to the grasp: left_finger_tip hits Recoater guide rail (15 mm, 260 mm)"
+   },
+   {
+    "id": "F21",
+    "why": "pick at the table (F21): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F22",
+    "why": "pick at the table (F22): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F23",
+    "why": "pick at the table (F23): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F25",
+    "why": "pick at the table (F25): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F25c",
+    "why": "pick at the table (F25c): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F26",
+    "why": "pick at the table (F26): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F39",
+    "why": "pick at the table (F39): in to the grasp: left_finger_tip hits Drawer latches: 2 x quarter-turn latch studs (enve"
+   },
+   {
+    "id": "F41",
+    "why": "pick at the table (F41): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F45",
+    "why": "pick at the table (F45): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F45b",
+    "why": "pick at the table (F45b): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F45c",
+    "why": "pick at the table (F45c): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F48c",
+    "why": "pick at the table (F48c#1): lift: no IK at the start"
+   },
+   {
+    "id": "F50",
+    "why": "pick at the table (F50#1): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F52",
+    "why": "pick at the table (F52): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F52b",
+    "why": "pick at the table (F52b): in to the grasp: no IK at the start"
+   },
+   {
+    "id": "F56b",
+    "why": "pick at the table (F56b): in to the grasp: no IK at the start"
+   }
+  ]
+ },
+ "presenter": {
+  "planned": 117,
+  "driven": 123
+ },
+ "still_failing": [
+  {
+   "id": "C00d",
+   "label": "Eighteen M4 x 16 floor-plate screws up through the U-notches into the frame's skirt, from ",
+   "why": "in the: approach: no path in 500 iterations"
+  },
+  {
+   "id": "F06",
+   "label": "Eight M6 x 25 base-plate-to-leg screws, from under the plate",
+   "why": "316 #1: approach: no clear way in to the hole's mouth (A/upper_arm hits Base plate, process module"
+  },
+  {
+   "id": "F15",
+   "label": "Nine M4 x 16 inlet-plenum screws into the back wall",
+   "why": "316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner"
+  },
+  {
+   "id": "F18",
+   "label": "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assemble",
+   "why": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame from 5.5 "
+  },
+  {
+   "id": "F26",
+   "label": "Blade holder and blade, in through the door opening and up under the recoater arm",
+   "why": "sweep: Blade holder blocked by Process chamber body (6061-T6 through-frame from 5 after 52.0 mm; arm A: held:F26:Blade holder hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 i"
+  },
+  {
+   "id": "F27",
+   "label": "Two M3 x 8 blade screws (100 mm bit extension: run 7's driver met the module and Fixture B",
+   "why": "316 #1: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle; 316 #2: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle"
+  },
+  {
+   "id": "F45",
+   "label": "Roller feedthrough (M8 x 1 nose over its 2-012) into the metering base along its axis",
+   "why": "sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 13.0 mm; arm A: A/upper_arm hits Base plate, process module (MIC-6, 15 mm) at 0 mm along the insertion"
+  },
+  {
+   "id": "F45b",
+   "label": "Roller drive coupling onto the feedthrough's shaft",
+   "why": "arm A: A/upper_arm hits Base plate, process module (MIC-6, 15 mm) at 0 mm along the insertion"
+  },
+  {
+   "id": "F45c",
+   "label": "Dosing stepper, its shaft into the coupling",
+   "why": "arm A: no IK at the start pose at 0 mm along the insertion"
+  },
+  {
+   "id": "F45d",
+   "label": "Dock rails, load cell, NFC reader, side port blank and docked sensor, from just above",
+   "why": "sweep: Load cell blocked by Dovetail rails for the reservoirs (lips pull the p after 0.0 mm; arm A: held:F45d:Load cell hits Dovetail rails for the reservoirs (lips pull the plate onto the dock O-ring"
+  },
+  {
+   "id": "F48b",
+   "label": "Camera window gasket (1 mm FKM flat ring), window and flat ring into the counterbore along",
+   "why": "arm A: A/tool/ringpad hits Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals) at 63 mm along the insertion"
+  },
+  {
+   "id": "F52",
+   "label": "Left hinge pin slid in from the left along the hinge axis, pushed home on its end",
+   "why": "arm A: A/gr/left_finger_tip hits Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears); pushed home instead, but A/gr/left_finger_tip hits Chamber door (6061-T6, 15 mm, drop"
+  },
+  {
+   "id": "F52b",
+   "label": "Right hinge pin slid in from the right along the hinge axis, pushed home on its end",
+   "why": "arm A: A/gr/left_finger_tip hits Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears); pushed home instead, but A/gr/left_finger_tip hits Chamber door (6061-T6, 15 mm, drop"
+  },
+  {
+   "id": "F54",
+   "label": "Optics bridge (13.3 kg, lens and ring under it) onto the four posts: the hoist lifts, both",
+   "why": "no collision-free pair of arm poses at the start of the carry"
+  },
+  {
+   "id": "F57",
+   "label": "Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collimator",
+   "why": "released 12 mm short and pushed home with the closed fingers; arm A: held:F57:Coaxial-monitoring dichroic hits Enclosed beam tubes #1; pushed home instead, but held:F57:Coaxial-monitoring dichroic hit"
+  }
+ ],
+ "fixed": [
+  "F10a",
+  "F10b",
+  "F10d",
+  "F10e",
+  "F14",
+  "F16",
+  "F23",
+  "F25",
+  "F03",
+  "F56b"
+ ],
+ "time": {
+  "robot_h": 2.65,
+  "person_h": 6.37,
+  "elapsed_h": 9.59,
+  "by_chapter": {
+   "module": 0.53,
+   "chamber": 9.06
+  }
+ }
+}
