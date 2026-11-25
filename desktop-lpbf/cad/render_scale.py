@@ -100,24 +100,35 @@ def _rot_between(a, b):
     return np.eye(3) + K + K @ K / (1 + c)
 
 
-def person_pose(arm_out=7.0, arm_fwd=4.0, elbow=12.0, stance=260.0, curl=(14.0, 24.0)):
-    """{bone: rotation about its joint, in the rest frame} for a figure standing with its ankles `stance` mm apart, both
-    upper arms `arm_out` deg out to the side and `arm_fwd` deg forward of hanging straight down, elbows bent `elbow` deg
-    forward, and the four fingers curled curl[0] deg at the knuckles and curl[1] deg at the middle joints (the rest pose,
-    MakeHuman's A-pose, has the arms ~45 deg out, the forearms forward, the fingers straight and the feet ~400 mm apart)."""
+def _pair(v):
+    """A value for both sides, or (left, right)."""
+    return (float(v), float(v)) if np.isscalar(v) else (float(v[0]), float(v[1]))
+
+
+def person_pose(arm_out=7.0, arm_fwd=4.0, elbow=12.0, stance=260.0, curl=(14.0, 24.0), bend=0.0, head_down=0.0):
+    """{bone: rotation about its joint, in the rest frame} for a figure standing with its ankles `stance` mm apart; the
+    trunk bent `bend` deg forward (half at the waist, half at the chest) and the head bowed `head_down` deg more; each
+    upper arm `arm_out` deg out to the side and `arm_fwd` deg forward of hanging straight down (measured from the room's
+    vertical, so bending over leaves the arms hanging), the elbows bent `elbow` deg forward; the four fingers curled
+    curl[0] deg at the knuckles and curl[1] deg at the middle joints. arm_out, arm_fwd and elbow take one value for both
+    arms or a (left, right) pair. The rest pose (MakeHuman's A-pose) has the arms ~45 deg out, the forearms forward,
+    the fingers straight and the ankles ~400 mm apart."""
     H = _human()
     J = lambda b: H["head"][H["bi"][b]].astype(float)                      # noqa: E731
-    pose = {}
-    for S, sg in (("L", 1.0), ("R", -1.0)):
+    ex = np.array([1.0, 0.0, 0.0])                                         # the figure's left: bending forward turns about +x
+    pose = {"spine_low": _rot_axis(ex, bend / 2), "spine_up": _rot_axis(ex, bend / 2),
+            "neck": _rot_axis(ex, 0.4 * head_down), "head": _rot_axis(ex, 0.6 * head_down)}
+    trunk = pose["spine_low"] @ pose["spine_up"]                           # the arms' parent frame
+    outs, fwds, elbows = _pair(arm_out), _pair(arm_fwd), _pair(elbow)
+    for k, (S, sg) in enumerate((("L", 1.0), ("R", -1.0))):
         sh, el, wr = J(f"upperarm.{S}"), J(f"lowerarm.{S}"), J(f"hand.{S}")
-        down = np.array([sg * math.tan(math.radians(arm_out)), -math.tan(math.radians(arm_fwd)), -1.0])
-        Ru = _rot_between(el - sh, down)
+        down = _unit([sg * math.tan(math.radians(outs[k])), -math.tan(math.radians(fwds[k])), -1.0])
+        Ru = _rot_between(el - sh, trunk.T @ down)
         pose[f"upperarm.{S}"] = Ru
-        up_w = Ru @ _unit(el - sh)
-        side = np.cross(up_w, [0.0, -1.0, 0.0])                             # the elbow's hinge, across the arm
+        side = np.cross(down, [0.0, -1.0, 0.0])                             # the elbow's hinge, across the arm
         if np.linalg.norm(side) < 1e-6:
             side = np.array([sg, 0.0, 0.0])
-        pose[f"lowerarm.{S}"] = _rot_between(_unit(wr - el), Ru.T @ (_rot_axis(side, elbow) @ up_w))
+        pose[f"lowerarm.{S}"] = _rot_between(_unit(wr - el), (trunk @ Ru).T @ (_rot_axis(side, elbows[k]) @ down))
         # fingers: curled toward the palm about the knuckle line (index finger's knuckle to the little finger's)
         ax = H["mk"][f"knuckle5.{S}"] - H["mk"][f"knuckle2.{S}"]
         pose[f"fingers.{S}"] = _rot_axis(ax, sg * curl[0])
@@ -152,21 +163,23 @@ def _skin(pose):
     return out
 
 
-def person(at=(0.0, 0.0, 0.0), h=1750.0, facing=(0.0, -1.0, 0.0), pose="stand", **arms):
+def person(at=(0.0, 0.0, 0.0), h=1750.0, facing=(0.0, -1.0, 0.0), pose="stand", colours=None, **kw):
     """[(mesh, colour)]: a 1.75 m man in a long-sleeved T-shirt, jeans and trainers, standing on `at` and facing `facing`
     (xy), scaled to stature `h` (barefoot crown to sole).
 
     pose: "stand" (arms hanging), "reach" (both hands forward at about waist height), or a dict of person_pose()'s
-    arguments; keyword arguments override single values (e.g. elbow=30).
+    arguments; keyword arguments override single values (e.g. elbow=30, bend=25, head_down=20, arm_fwd=(60, 10)).
+    colours: overrides for PERSON_COLOURS by material (e.g. {"shirt": "#e67e22"} to pick one person out).
 
     The third figure: the 2026-11-20 one was a cylinder with a ball on top, the 2026-11-23 one was lofted from ellipses
     and tubes, and both looked wrong ("human looks weird", "the human still looks weird"). This is MakeHuman's anatomical
     base mesh with its CC0 clothes, hair and eyes, shaped, dressed and skinned by human/build_person.py into person.npz,
     and posed here with MakeHuman's skeleton and skin weights."""
     H = _human()
-    kw = dict(POSES[pose]) if isinstance(pose, str) else dict(pose)
-    kw.update(arms)
-    V = _skin(person_pose(**kw))
+    args = dict(POSES[pose]) if isinstance(pose, str) else dict(pose)
+    args.update(kw)
+    V = _skin(person_pose(**args))
+    cols = dict(PERSON_COLOURS, **(colours or {}))
     mats = [str(x) for x in H["mats"]]
     soles = np.unique(H["F"][H["fmat"] == mats.index("sole")])
     V[:, 2] -= V[soles, 2].min()                                          # stand on the soles after the legs moved
@@ -185,7 +198,7 @@ def person(at=(0.0, 0.0, 0.0), h=1750.0, facing=(0.0, -1.0, 0.0), pose="stand", 
         used, inv = np.unique(tri, return_inverse=True)
         m = pv.PolyData(V[used], np.c_[np.full(len(tri), 3), inv.reshape(-1, 3)].ravel())
         out.append((m.compute_normals(auto_orient_normals=False, split_vertices=False, consistent_normals=False),
-                    PERSON_COLOURS[name]))
+                    cols[name]))
     return out
 
 
