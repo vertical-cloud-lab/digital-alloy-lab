@@ -1,0 +1,452 @@
+[
+  {
+    "path": "nsf-resources-text/federal-register-2024-29244-gss.md",
+    "source_pdf": "nsf-resources/federal-register-2024-29244-gss.pdf",
+    "pages": 2,
+    "chars": 13779,
+    "est_tokens": 3444,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/gold-standard-science-implementation-plan-2025.md",
+    "source_pdf": "nsf-resources/gold-standard-science-implementation-plan-2025.pdf",
+    "pages": 6,
+    "chars": 13089,
+    "est_tokens": 3272,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/any-agency/BackgroundandNeedsAssessment.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/any-agency/BackgroundandNeedsAssessment.pdf",
+    "pages": 1,
+    "chars": 3562,
+    "est_tokens": 890,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/any-agency/BeforeYouBegintoWrite.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/any-agency/BeforeYouBegintoWrite.pdf",
+    "pages": 1,
+    "chars": 3001,
+    "est_tokens": 750,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/any-agency/DevelopmentofAbstract.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/any-agency/DevelopmentofAbstract.pdf",
+    "pages": 1,
+    "chars": 3396,
+    "est_tokens": 849,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/any-agency/DevelopmentofOverviewSection.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/any-agency/DevelopmentofOverviewSection.pdf",
+    "pages": 1,
+    "chars": 3378,
+    "est_tokens": 844,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/any-agency/TableofContents.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/any-agency/TableofContents.pdf",
+    "pages": 1,
+    "chars": 1584,
+    "est_tokens": 396,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/any-agency/WritingtheBodyofYourProposal.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/any-agency/WritingtheBodyofYourProposal.pdf",
+    "pages": 1,
+    "chars": 3674,
+    "est_tokens": 918,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/biomedical-publication/Deciding-on-Co-Authors.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/biomedical-publication/Deciding-on-Co-Authors.pdf",
+    "pages": 1,
+    "chars": 2949,
+    "est_tokens": 737,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/biomedical-publication/Deciding-on-a-Journal.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/biomedical-publication/Deciding-on-a-Journal.pdf",
+    "pages": 1,
+    "chars": 3296,
+    "est_tokens": 824,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/biomedical-publication/Review-of-the-Manuscript.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/biomedical-publication/Review-of-the-Manuscript.pdf",
+    "pages": 1,
+    "chars": 3294,
+    "est_tokens": 823,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/biomedical-publication/Table-of-Contents-BP.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/biomedical-publication/Table-of-Contents-BP.pdf",
+    "pages": 2,
+    "chars": 1706,
+    "est_tokens": 426,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/biomedical-publication/The-Discussion.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/biomedical-publication/The-Discussion.pdf",
+    "pages": 1,
+    "chars": 2374,
+    "est_tokens": 593,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/biomedical-publication/The-Introduction.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/biomedical-publication/The-Introduction.pdf",
+    "pages": 1,
+    "chars": 3044,
+    "est_tokens": 761,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/biomedical-publication/What-When-to-Publish.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/biomedical-publication/What-When-to-Publish.pdf",
+    "pages": 1,
+    "chars": 3275,
+    "est_tokens": 818,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nih/Find-Program-Grant-Mechanism-2022.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nih/Find-Program-Grant-Mechanism-2022.pdf",
+    "pages": 1,
+    "chars": 2987,
+    "est_tokens": 746,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nih/Learning-Milestones-Chapter-11.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nih/Learning-Milestones-Chapter-11.pdf",
+    "pages": 2,
+    "chars": 6217,
+    "est_tokens": 1554,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nih/NIH25-Significance-Innovation-Subsections.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nih/NIH25-Significance-Innovation-Subsections.pdf",
+    "pages": 1,
+    "chars": 2724,
+    "est_tokens": 681,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nih/NIH25-Table-of-Contents.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nih/NIH25-Table-of-Contents.pdf",
+    "pages": 2,
+    "chars": 3206,
+    "est_tokens": 801,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nih/Preface-for-website.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nih/Preface-for-website.pdf",
+    "pages": 2,
+    "chars": 6234,
+    "est_tokens": 1558,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nih/Principle-Changes-in-this-Edition.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nih/Principle-Changes-in-this-Edition.pdf",
+    "pages": 1,
+    "chars": 3296,
+    "est_tokens": 824,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nih/Rigor-of-Research-Design.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nih/Rigor-of-Research-Design.pdf",
+    "pages": 1,
+    "chars": 3400,
+    "est_tokens": 850,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nih/Senior-Key-Personnel.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nih/Senior-Key-Personnel.pdf",
+    "pages": 1,
+    "chars": 3173,
+    "est_tokens": 793,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nsf/NSF-Budget-Justification.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nsf/NSF-Budget-Justification.pdf",
+    "pages": 1,
+    "chars": 3225,
+    "est_tokens": 806,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nsf/NSF-Learning-Milestones-for-Chapter-12.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nsf/NSF-Learning-Milestones-for-Chapter-12.pdf",
+    "pages": 2,
+    "chars": 5231,
+    "est_tokens": 1307,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nsf/OverviewTemplateMasterPlanNSF2021.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nsf/OverviewTemplateMasterPlanNSF2021.pdf",
+    "pages": 2,
+    "chars": 2705,
+    "est_tokens": 676,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nsf/Pre-SubmissionReviewNSF2021.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nsf/Pre-SubmissionReviewNSF2021.pdf",
+    "pages": 1,
+    "chars": 2729,
+    "est_tokens": 682,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nsf/Principal-Changes-in-this-Edition.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nsf/Principal-Changes-in-this-Edition.pdf",
+    "pages": 1,
+    "chars": 2254,
+    "est_tokens": 563,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/nsf/Table-of-Contents.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/nsf/Table-of-Contents.pdf",
+    "pages": 1,
+    "chars": 2457,
+    "est_tokens": 614,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/usda-nifa/USDABlueprintforProjectNarrative2021.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/usda-nifa/USDABlueprintforProjectNarrative2021.pdf",
+    "pages": 2,
+    "chars": 2879,
+    "est_tokens": 719,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/usda-nifa/USDABudgetJustification2021.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/usda-nifa/USDABudgetJustification2021.pdf",
+    "pages": 1,
+    "chars": 3491,
+    "est_tokens": 872,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/usda-nifa/USDAFacilitiesandOtherResources2021.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/usda-nifa/USDAFacilitiesandOtherResources2021.pdf",
+    "pages": 2,
+    "chars": 4001,
+    "est_tokens": 1000,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/usda-nifa/USDAPrincipalChanges2021.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/usda-nifa/USDAPrincipalChanges2021.pdf",
+    "pages": 1,
+    "chars": 2062,
+    "est_tokens": 515,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/usda-nifa/USDAScoringandRanking2021.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/usda-nifa/USDAScoringandRanking2021.pdf",
+    "pages": 1,
+    "chars": 3136,
+    "est_tokens": 784,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/usda-nifa/USDASentenceStemsforOverview2021.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/usda-nifa/USDASentenceStemsforOverview2021.pdf",
+    "pages": 1,
+    "chars": 3071,
+    "est_tokens": 767,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/grant-writers-seminars-workshops/usda-nifa/USDATableofContents2021.md",
+    "source_pdf": "nsf-resources/grant-writers-seminars-workshops/usda-nifa/USDATableofContents2021.pdf",
+    "pages": 1,
+    "chars": 2214,
+    "est_tokens": 553,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/ostp-gss-guidance-june-2025.md",
+    "source_pdf": "nsf-resources/ostp-gss-guidance-june-2025.pdf",
+    "pages": 7,
+    "chars": 18826,
+    "est_tokens": 4706,
+    "part_of": "",
+    "chapter_slug": ""
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/00-front-matter.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 101264,
+    "est_tokens": 25316,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "00-front-matter"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/01-chapter-I.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 34423,
+    "est_tokens": 8605,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "01-chapter-I"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/02-chapter-II.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 235297,
+    "est_tokens": 58824,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "02-chapter-II"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/03-chapter-III.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 26469,
+    "est_tokens": 6617,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "03-chapter-III"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/04-chapter-IV.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 15449,
+    "est_tokens": 3862,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "04-chapter-IV"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/05-chapter-V.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 5579,
+    "est_tokens": 1394,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "05-chapter-V"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/06-chapter-VI.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 14634,
+    "est_tokens": 3658,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "06-chapter-VI"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/07-chapter-VII.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 45390,
+    "est_tokens": 11347,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "07-chapter-VII"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/08-chapter-VIII.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 25528,
+    "est_tokens": 6382,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "08-chapter-VIII"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/09-chapter-IX.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 35141,
+    "est_tokens": 8785,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "09-chapter-IX"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/10-chapter-X.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 22978,
+    "est_tokens": 5744,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "10-chapter-X"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/11-chapter-XI.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 92811,
+    "est_tokens": 23202,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "11-chapter-XI"
+  },
+  {
+    "path": "nsf-resources-text/pappg-24-1/12-chapter-XII.md",
+    "source_pdf": "nsf-resources/pappg-24-1.pdf",
+    "pages": 0,
+    "chars": 100929,
+    "est_tokens": 25232,
+    "part_of": "PAPPG 24-1 (NSF 24-1)",
+    "chapter_slug": "12-chapter-XII"
+  }
+]
