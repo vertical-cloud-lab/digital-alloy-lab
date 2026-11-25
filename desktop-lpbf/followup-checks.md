@@ -9,7 +9,132 @@ seal, use Shigley, heat transfer and CalculiX, and say what the machine costs us
 Nothing here has been built, quoted by a shop, or reviewed by BYU's Laser Safety Officer or EHS. Each note below has
 its own sources, assumptions and re-run instructions.
 
-## 0. Round 5 (2026-11-23): what round 4 left undone
+## 0. Round 6 (2026-11-25): everything round 5 left undone
+
+Sterling asked on 2026-11-25 for everything round 5 listed as not done or skipped, and then for the build video to go back on
+YouTube without notifying subscribers. He also asked what the LED bar's trade-offs are and what the collimators cost and why one
+would pick one, said that something automation-friendly sounded appealing for the module clamps, and said to keep only the traced
+BYU Y for now (the model already has only the Y, so it is unchanged).
+
+Eight workers did the items in parallel, each in its own git worktree. Their branches were merged, and the merged model was
+re-checked. Nothing here has been built, quoted by a shop, wired, or reviewed by BYU's LSO, EHS or an electrician.
+
+### What changes what we buy or draw
+
+1. **The build module is held by two zero-point clamps now, not screws** ([`hot-swap.md`](hot-swap.md) §3.2a).
+   - **The clamps:** two SCHUNK NSE-HT mini 88-20 V1 (rated 200 °C, 0.5 kN pull each, locked by springs, opened by 6 bar air) hang
+     pin-face-down from the floor at (100, 40) and (−102, −26). Each sits on a 10 mm 6061 plate on two 16 × 16 posts, with M6 studs
+     into new floor inserts. Each module carries two arms under new flange ears, each with a SCHUNK SPC-HT mini 20 clamping pin.
+     The dowel and diamond pin still locate the module; the clamps only pull it up.
+   - **The air:** one 3/2 normally-closed 24 V valve (SMC VT307) opens both. Air off or power off leaves the module clamped. It is
+     PLC output s4.5, allowed only with the plate below 50 °C, the chamber vented and the Z arm holding the module
+     ([`electrical-io.csv`](electrical-io.csv) M-15).
+   - **What moved to make room** (round 5's "four layout moves"): the Z servo folded to the back of its actuator, (0, 130); the
+     overflow jar and the funnel's outlet moved to the slot's front end (the jar's joint is at (94, −46)); the outlet hose goes round
+     the left clamp (about 0.7 m longer); and the front-right and back-right legs moved.
+   - **The captive M6 and their retainers are gone.** The floor's M6 inserts stay as a hand fallback.
+   - **Robot:** the module swap passes on M50, S25 and L75 (closest 0.5 mm, wrist 1 at 52–55 %, 26.0 s; [`robot-ops.md`](robot-ops.md)).
+     By hand, the swap path S2.4 passes at 0.1 mm.
+   - **Cost:** BOM B3 $5,770–6,380 (the NSE-HT is $2,680 each at MROSupply; the pins have no published price) and B4 $205–260 for the
+     release air.
+   - **Open:** the SPC-HT mini 20 is drawn Ø20 × 14 mm, unconfirmed, because SCHUNK's drawing couldn't be read. The arms are sized
+     for the 0.5 kN pull, so the turbo port is not used. The SMC push-in elbows are rated to 60 °C (stainless KQG2 elbows if the
+     floor's underside runs hotter).
+2. **The funnel can no longer drain the slot's back end by gravity.** With its outlet at the slot's front end, its pocket slopes
+   13°; fine Al powder needs 55–60°. Options are a vibrator, an argon pulse, or a bin the length of the slot. Decide this before the
+   funnel block is machined.
+3. **The overflow jar holds ~104 cm³ (was ~65) and has a robot grip fin**, an I-section like the module's grip block.
+   - **Robot:** the jar job passes on M50, S25 and L75 (MiR at x +400, 2.0 mm, elbow 30.8 %, 22.7 s). Releasing the jar's toggle
+     clamp is not simulated.
+   - **Capacity:** L75 builds taller than about 22 mm fill it, and taking the jar off vents the chamber. So a tall L75 build stops to
+     empty it, or the jar needs a valve above it (not drawn; there is no height for one as drawn).
+4. **The round-5 draw latches pried the door off its seal** ([`seals.md`](seals.md)). At 1.2 kN per latch the door touched the
+   chamber only at its ears' tips, and the squeeze fell to 15.2 % at the top and bottom centres (9.0 % at the gland's worst
+   tolerance). The hinge now holds the door's bottom edge (round pin holes, knuckles shimmed at assembly), and the latches preload
+   ~0.75 kN: 23.6–25.8 % squeeze, 17.3 % at worst tolerance, hinges 1.1 kN each (SF 8.0 on yield).
+5. **Collimator: order IPG's 2.5 mm collimator (96 µm spot)** with the laser ([`optics.md`](optics.md) §9). It is the EOS M 290's
+   spot size, so EOS aluminium settings carry over. A 1 mm focus error changes the spot by 1 % (19 % at 48 µm). In the order:
+   "YLR-500-U3-SM-AC, 5 m fibre, affixed 2.5 mm collimator", with its price, drawing and CW rating, and prices for the 5 mm and a
+   3.2 mm unit.
+6. **LED bar: put it outside the chamber**, lighting the bed through a small new window low in the back wall, left of the gas inlet
+   (8–13° to the bed; [`optics.md`](optics.md) §9). Nothing electrical, hot or outgassing then sits in the argon, and the window is
+   upstream of the gas flow. **Not drawn: it adds a port to the frame's back wall, so it needs Sterling's OK first.**
+7. **Gas flow: keep the upper inlet slot** ([`gas-flow.md`](gas-flow.md) §0). Without it, 9–16 % of the condensate that rises enters
+   the cover slide's recess, against 0.2–0.5 % with it. The outlet's move to the slot's left end barely changes the plate (1.61 m/s
+   mean over Ø75 at 115 L/min). The 200 + 40 L/min fix still puts all of Ø25, Ø50 and Ø75 at ≥ 2.5 m/s. A KF-40 outlet port no
+   longer fits at the left end (its Ø71 clamp needs more than the 67 mm there), so keep KF-25, about 0.25 kPa more at 240 L/min.
+   BOM G4 is now 180–250 L/min at ~2.5–4 kPa.
+8. **The window and cover slide are drawn as the BOM parts** (Edmund 38-990, 9.53 mm; Edmund 36-299, Ø50 × 2 mm): the focus shift is
+   3.58 mm, and the lens sits 0.17 mm higher on 2.83 mm of shims. The galvo riser's bore is now Ø56: the lens nose ran into the Ø40
+   bore (161 mm³), so the upper half of the shim range never existed. M50 builds get a Ø41 field-stop insert.
+9. **The rod end's block is 81 mm wide** (was 72), and the gland plate's six M4 sit on the arc behind it, so a torque screwdriver
+   reaches all six (A1.20, M7.1) on S25, M50 and L75 ([`electrical.md`](electrical.md) §13.3). Solid Sealing prefers its welds on the
+   vacuum side; ours are on the air side ([`seals.md`](seals.md)). Ask them with the blind-bore question.
+10. **A2.36, new from the servo fold, fixed:** the wider bracket that carries the folded servo stood 1.25 mm under the heads of the
+    Z flange's two left M5, so they couldn't come straight down. That pair moved from x −33 to x −37 (the flange is now x −45 to 48),
+    and A2.36 passes again (4 of 4 screws, 2.72 mm). Two of the floor plate's M5 inserts move 4 mm, to (−37, 70) and (−37, 100).
+11. **Machining** ([`machining.md`](machining.md)): the lid's M5 STI holes had a 6.0 mm drill, which leaves nothing for the STI tap;
+    insert and dowel holes now get their own drills. Buy 2.9, 5.2 and 5.8 mm drills and an M6 × 0.75 tap. The hours are 302.3 h with
+    3-axis setups and 287.3 h with a 4th axis, for 57 parts (rounds 4–5: 263.8 / 249.5 h for 48); the rise is the parts added since,
+    including the zero-point posts, plates and arms.
+12. **Two small parts problems from the OEM refinement** ([`oem-parts.md`](oem-parts.md)): the lid's pressure transmitter, on its
+    SAE-4 adapter, ends 1.25 mm under the solid optics bridge, so its lead can't leave upward (a 90° adapter, a side-exit
+    transmitter, or a bore in the bridge); and the HEPA housing needs two KF-25 adapters, two elbows and a stand that BOM G5 doesn't
+    list.
+
+### What was run
+
+| Check | Result | Note |
+|---|---|---|
+| Interference, exact booleans, on the merged model | **0 for M50, S25 and L75**, in 6 static states and 8 motion sweeps each | [`interference.md`](analysis/out/interference.md), [`variants/`](analysis/out/variants/) |
+| Mass | 290.7 kg on the tray (was 289.6). The process module is 94.8 kg and tips at 0.68 g | [`mass.md`](analysis/out/mass.md) |
+| Robot (UR12e on MiR250, byu-vcl PR 318's cell) | **Liners right and left, reservoir and blade cartridge pass on M50** (1.6 / 1.6 / 3.5 / 2.0 mm, elbow 33.7 %). They had never run: the liner tabs sat 15 mm outside the door opening, so they are now hangers inside it. **The jar passes by its grip fin on M50, S25 and L75** (2.0 mm, 30.8 %, 22.7 s), and **the module swap with the zero-point clamps on all three** (0.5 mm, 52–55 % wrist 1, 26.0 s). A bug fixed on the way: the module job dragged the module 3.6 mm sideways in its 40 mm drop, hidden by a soft floor plate | [`robot-ops.md`](robot-ops.md) |
+| Hand operations, all of M50 on the merged model | **98 pass / 1 warn / 24 fail** (round 5: 90 / 2 / 34), and **99 / 1 / 23** after the A2.36 fix (A2 re-run). Newly passing: A1.20, M7.1 (rod end), A2.18 (liners through the door), U4.5, U4.7 (jar), M3 (liners with hangers), S2.4 (swap path with the clamps), M5.3, and 8 steps whose paths were corrected. The 24 left are real and known since round 3 (fixes 5–13 in operations.md: base-plate screws from below, the Z stage and lens order, the funnel screw, the metering base, the camera and lid against the bridge, the window ring under the lens, the recoater servo and dosing stepper boxed in by the bridge), and the forearm-model limit in M10–M11 | [`operations.md`](operations.md) |
+| Hand operations, S25 and L75 (S1–S3, U1, U2, U4, M3, M8) | 20 / 0 / 3 each: only the recoater servo (M8.1–M8.3) fails, as on M50 | [`operations.md`](operations.md) |
+| Door-seal FEA (CalculiX) and latch checks | as drawn in round 5 the latches pry the door off its seal (item 4); fixed: 23.6–25.8 % squeeze, hinges SF 8.0, latch brackets SF 5.7, the brackets' screws' separation factor 6.0 at 1.2 kN. `door_seal_fea.py` now reads the latches, brackets and hinges from the model | [`seals.md`](seals.md) |
+| Seals inventory | the rod end's weld-ins replace the connector (Solid Sealing: < 1e-10 atm cc/s He per part). Permeation 2.19 ppm O₂/h over 27 glands | [`seals.md`](seals.md) |
+| BOM audit | 264 parts from the model's own tags: 125 priced, 3 unpriced, 46 generic, 78 custom, 2 missing, 9 inconsistent | [`completeness-audit.md`](completeness-audit.md) |
+| Two-arm assembly (UR12e pair) | Chapter 3 re-sequenced for the new rod end: the gland plate goes onto the welded rod end, and M16 grips the module body across its Ø56.8 tube (1.73 kg, inside the 2F-85's stroke and 5 kg rating) instead of the 119 mm flange. **Run 5 on the merged model, all chapters (51 min): chapter 3 30 of 30, chapter 4a 18 of 18 checked steps; overall 68 of 85 checked steps and 111 of 135 screws** (round 5: 64 of 80 and 118 of 135). New fails from parts that moved in rounds 5–6: C05 and C08 (the KF ports now on 2 + 2 screws), F05b (carrying the module by its legs: one grip height meets a zero-point module, the other the base plate), F09 and F09b (the jar-sensor bracket on the leg), F10 (the liners' straight path down), F50 (the hinge knuckles against the module's handle) | [`assembly.md`](assembly.md) |
+| CFD (OpenFOAM v2406) on the round-5 outlet | the CFD script still drew the outlet at the right end; it now reads both plenums from the model. As drawn: 1.61 m/s mean over Ø75 (coarse; 1.79 fine), none ≥ 2.5 m/s; 83–84 % drains through the slot's left half; 525 Pa (was 466–473). More condensate passes under the window (22 against 5 % coarse, 14 against 8 % fine). Fix at 200 + 40 L/min: 2.94 m/s coarse, 2.96 fine, all plates ≥ 2.5 m/s | [`gas-flow.md`](gas-flow.md) §0 |
+| Machining: frame setup C, CAMotics, holder check, hours | **setup C programmed** (four walls on the HRT210, one Haas program with A moves). CAMotics ignores the A axis, so each index ran as its own 3-axis program: **0 gouges, 0 rapids through stock** in all eight programs; frame 64.7 min (0.017 cm³ left deeper than 1 mm, at the SAE ports), floor plate 69.2 min. **Holder check: 0 collisions** (holders ≥ 4.0 mm from the stock, tools ≥ 2.76 mm from the fixtures). Floor plate re-posted for the clamp posts. The video's machining chapter now draws the checked fixturing | [`machining.md`](machining.md) |
+| OEM parts | **Edwards nXDS6i** against Edwards' drawing: silhouette IoU 0.867 → 0.923 (five views; no vendor CAD). **3861N11** against McMaster's CAD 0.692 → 0.948, **5169K72** 0.746 → 0.949. IPG 4U and Eaton fronts from the vendors' images (Eaton photo fit 0.956). **Video reconstruction** (COLMAP on Teknic's ClearPath turntable video): 74 of 74 frames, 13,502 points, 0.84 px; 48.7 % of the points within 1 mm of our model and silhouette IoU 0.81, but the reconstruction is out of proportion by 26 % between axes, so it can't check the model to better than a few mm | [`oem-parts.md`](oem-parts.md) |
+| Optics | focus at z +0.004 mm with the BOM window and slide; CalculiX thermal lens within 1–2 % of the hand model; the M50 field stop passes the M50 edge for beam lean k 0.33–0.63 | [`optics.md`](optics.md) §9 |
+| Video | Re-rendered on the merged model (a979f31): 3:24, 1,840 frames. Uploaded as version 3, public, subscribers not notified, 11 chapters: **[youtu.be/54KqThbeVOg](https://youtu.be/54KqThbeVOg)** | [`build-sequence.md`](build-sequence.md) |
+
+### Still not done
+- **Decisions for Sterling** (each blocks a drawing or an order):
+  - the LED bar outside, behind a new back-wall window (item 6);
+  - the upper inlet slot, which needs its own feed (a branch off the blower with a needle valve, and a plenum) and a larger blower
+    (item 7);
+  - how the funnel drains the slot's back end (item 2);
+  - the jar's toggle clamp: a lever the gripper can push, or a powered clamp, so the jar is fully robot-tended;
+  - the door: keep the fixed, shimmed hinge, or redesign the latches to pull inside the bearing;
+  - a gland plate with no screw in front of the rod end (estimated 11–16 kN of preload against at most 0.3 kN from the O-ring);
+  - S25's handle, whose two screws sit over the rod-end block (A1.22 fails on S25): fit it before the rod, or change it.
+- **Not drawn:** the LED window, the upper slot (at z 110–114, below the lid's O-ring groove), a funnel vibrator or pulse, a valve
+  above the jar, the HEPA housing's adapters, elbows and stand in BOM G5, the latch brackets' screws, cable routes, and the
+  release valve's cable in `electrical-bom.csv`.
+- **Robot:** releasing the jar's toggle clamp is not simulated (the job starts with it open). The module job pushes 106–158 N,
+  over the 100 N force mode.
+- **Two-arm assembly:** the new fails listed in the table above. Their state is in [`assembly.md`](assembly.md).
+- **Hand operations:** 23 fails on M50 need the design changes listed since round 3 (fixes 5–13 in [`operations.md`](operations.md):
+  the base plate's screws from below, the Z stage's and the lens's order, a funnel screw, the metering base, the camera and lid
+  against the bridge, the window ring under the lens, the recoater servo and dosing stepper boxed in by the bridge). They were
+  not part of round 5's list and are not drawn. M10–M11 fail on the hand model's straight forearm; check them on a mock-up.
+- **CFD:** the upper slot was not re-run at z 110–114; the slide purge ran at one flow on the coarse mesh only; an outlet at the
+  door end and a lip at the door weren't tried; a KF-40 port's fit isn't interference-checked.
+- **Machining:** taps, STI taps, reamers, spot drills and the SAE port tool aren't programmed. The CAM blank is 5 in. thick against
+  the planned 5.5 in. plate (4–7 min more facing per face). The floor plate's edge-clamp force is unchecked. Ask the shop which
+  rotary it has, which side its motor is on and how its direction is set.
+- **Parts to confirm:** the SPC-HT mini 20's dimensions and price (SCHUNK); the weld-ins' weld side and the 81 mm layout's weld access
+  (Solid Sealing); the IPG front on a photo of the delivered unit; the collimator's price, drawing and CW rating (IPG).
+- **OEM video reconstruction:** it solved (74 of 74 frames), but the reconstruction is out of proportion by 26 % between axes, so
+  it can't check a model to better than a few mm. A second video, or a calibrated turntable, would be needed.
+- **Optics:** an L75 field-stop insert waits on the beam's lean, k, measured with the guide laser. The bridge FEA wasn't re-run for
+  the riser's −16 g.
+- **Not built, quoted by a shop, wired, or reviewed** by BYU's LSO, EHS or an electrician.
+
+## 0a. Round 5 (2026-11-23): what round 4 left undone
 
 Sterling asked on 2026-11-23 for everything round 4 listed as not done:
 - the model changes: the overflow jar, the zero-point clamps, the liners, and the optics and electrical patches;
@@ -132,7 +257,7 @@ Nothing here has been built, quoted by a shop, wired, or reviewed by BYU's LSO, 
 - **BYU Y:** traced from BYU's brand-guide page. The official file needs a BYU sign-in, so check the outline against it. BYU's
   guide also says the main BYU logo should usually appear with the Y.
 
-## 0a. Round 4 (2026-11-22): CAMotics, the unfinished re-runs, outsourcing, electrical, optics and a BOM audit
+## 0b. Round 4 (2026-11-22): CAMotics, the unfinished re-runs, outsourcing, electrical, optics and a BOM audit
 
 Sterling asked on 2026-11-22 for four things:
 - fix the CAMotics install error;
@@ -240,7 +365,7 @@ Nothing here has been built, quoted by a shop, wired, or reviewed by BYU's LSO, 
 - **Unanswered from 2026-11-20:** refining the OEM parts from photos and video, and the VCL and Y logos. That run
   stopped before it pushed anything, and this round didn't take it up.
 
-## 0b. Round 3 (2026-11-20 evening): the machinist's review, the robots, safety, and a full re-run
+## 0c. Round 3 (2026-11-20 evening): the machinist's review, the robots, safety, and a full re-run
 
 Sterling asked for four things on 2026-11-20:
 - the UR12e aligned with byu-vcl PR 318, with whatever tools make each automated job work;
