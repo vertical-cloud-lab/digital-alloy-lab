@@ -492,8 +492,8 @@ def chamber_options(rows):
              vacuum_o2="what flow-purged machines reach: EOS M 290 measured 731 +/- 98 ppm in argon; MySint100 0.1 %; TruPrint 1000 "
                        "<= 3,000 ppm (100 ppm optional); purge-only gloveboxes 0.5 % (Ossila). Flow-purging 11.3 L to 100 ppm "
                        "takes ~86 L if perfectly mixed, 2-3 times that in practice; no water is pulled out of the powder",
-             design_changes="drop the pump and the 1 mbar requirement; argon 100-250 L a purge and 2-5 L/min while building "
-                            "(SLM 125 2 L/min, Aconity < 5 L/min) against ~20 L of back-fill and ~50 sccm now",
+             design_changes="drop the pump and the 1 mbar requirement; argon ~170-260 L a purge (2-3 times the ideal 86 L) and 2-5 L/min while building "
+                            "(SLM 125 2 L/min, Aconity < 5 L/min) against ~34 L of back-fill (3 x 11.3 L) and ~50 sccm now",
              risk="process risk, not build risk: hydrogen porosity in aluminium from powder water (Van Cauwenbergh 2019: "
                   "a vacuum pre-cycle gave 13 +/- 4 ppm H in parts against 45 +/- 11 ppm in the powder)",
              verdict="no for an aluminium-screening machine; it saves ~10 h and the pump"),

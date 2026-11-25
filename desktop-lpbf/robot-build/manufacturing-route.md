@@ -53,7 +53,8 @@ ordered, built or quoted by a person; the live quotes are instant web prices rea
     robot shop. With a used laser, the parts set it.
 - **How others do it.**
   - **Small machines don't pump down.** None of the commercial machines with builds of 150 mm or less publishes a vacuum
-    purge. They flow-purge glovebox-style enclosures to 0.1-0.3 % O₂: MySint100, TruPrint 1000, XM200, MetalONE.
+    purge. They flow-purge glovebox-style enclosures: MySint100 runs at 0.1 % O₂ and TruPrint 1000 at ≤ 0.3 %
+    (100 ppm as an option); XM200 and MetalONE don't publish theirs.
   - **The machines that pump down are larger:** Renishaw AM250/400/500 and 3D Systems' DMP 320/350/500. They sell a
     "vacuum chamber"; no maker publishes how it is built.
   - **Research rigs buy stock vacuum hardware:** a CF spherical octagon, a Parr vessel, or a large vacuum chamber with an
@@ -110,7 +111,7 @@ per part in [`route-hours-by-part.csv`](route-hours-by-part.csv) and by group in
 | + the module body (7.2): spigot, flange, cylinder, weld | 43.5 | 15.1 % |
 
 - **Frame and floor cutting.** Of their 24.9 h, cutting is 7.4 h by dfm.py's conservative rates, 3.3 h at vendor feeds
-  plus 45 min on the waterjet, and 2.2 h in the posted G-code. The G-code figure leaves out the taps, reamers and port tool.
+  (45 min of it on the waterjet), and 2.2 h in the posted G-code. The G-code figure leaves out the taps, reamers and port tool.
 - **Their CAM is mostly done.** FreeCAD posted the programs and CAMotics cut them clean in round 6
   ([`machining.md`](../machining.md)). So most of their 8.5 h of CAM is already spent.
 
@@ -328,7 +329,7 @@ Each option is priced for one chamber body (frame + floor, or its equivalent). T
 | 3. DED (wire-arc or laser-wire) 316L walls on a 316L plate, machined all over | $4-12k with machining (helper's estimate); Edison $3-8k + machining | 4-8 weeks (estimate); quote-only vendors | no saving: every face from 0.7-1.8 mm stock, in 316L | porosity 0.1-0.5 % (Edison r7), little vacuum data | near-net walls, stock everywhere | high for one part | no |
 | 4. Welded box from cut plate (316L or 5083), machined after welding | $1.2-3.5k (Edison r7 estimate); SendCutSend cuts 6061 to 0.75 in., 316 to 0.25 in., no 5083; its welding excludes 6061 and is "not gas-tight" | 2-4 weeks + a qualified welder | ~20-33 h: 8-15 h of TIG + the same top, bottom and wall setups (estimate) | fine if helium-tested; Meyer Tool: under 0.5 ft³ with 0.5 in. walls, machining from plate is usually cheapest (ours is 0.23 ft³) | welded corners, stress relief, 6061 HAZ ~110 MPa | 0.5-2 mm distortion (Edison r3), weld porosity | no |
 | 5. Catalogue vacuum chamber, modified | Ideal Vacuum 6 × 12 × 12 in. short cube kit P109160 $4,150.04 (sale); LACO 12 in. cube with door $5,850; Lesker BX1212S $7,995 | "arrives 2026-12-24"; welded cubes 6-8 weeks | ~15-25 h to re-machine 5 of 6 plates (estimate) | certified, fine | none fits 312 × 222: ~336 × 336 × 184 outside, 11.7 L inside against 6.4 L; every port, slot and the tray layout move | high (redesign) | no |
-| 6. Purge-only enclosure (extrusion or sheet, gaskets) | $500-1,500 (estimate) + machined port plates | 1-2 weeks | ~10-15 h (estimate) | flow-purged machines: 700-3,000 ppm; purge-only gloveboxes 0.5 % (Ossila); 100 ppm takes ~86 L for the 11.3 L loop if perfectly mixed, 2-3 times that in practice; no water is pulled from the powder | drop the pump; 100-250 L a purge + 2-5 L/min building, against ~35 L of back-fill and ~50 sccm now | hydrogen porosity in aluminium | no, for an aluminium-screening machine |
+| 6. Purge-only enclosure (extrusion or sheet, gaskets) | $500-1,500 (estimate) + machined port plates | 1-2 weeks | ~10-15 h (estimate) | flow-purged machines: 700-3,000 ppm; purge-only gloveboxes 0.5 % (Ossila); 100 ppm takes ~86 L for the 11.3 L loop if perfectly mixed, 2-3 times that in practice; no water is pulled from the powder | drop the pump; ~170-260 L a purge (2-3 times the ideal 86 L) + 2-5 L/min building, against ~34 L of back-fill and ~50 sccm now | hydrogen porosity in aluminium | no, for an aluminium-screening machine |
 | 7. Bolted box of six plates, O-ring in every joint | waterjet plates ~$300-600 + machining (estimate) | as 1 | ~28 h (estimate) | 8 three-way O-ring junctions | glands on every edge | medium-high | no |
 | 8. Casting (A356 from a printed sand mould, or investment 316) | $4.5-12k one-off (Edison r7); a printed mould ~€450 (estimate) + pour + machining + $50-200 impregnation | 6-12 weeks; quote-only foundries | as 1 | castings are more porous than plate (Meyer Tool): impregnate and helium-test | draft, casting walls | high for one part | no |
 
@@ -388,7 +389,7 @@ Each option is priced for one chamber body (frame + floor, or its equivalent). T
   Ø50.8 H7 bore at Ra 0.4 µm against a moving piston seal in 316L. A honed tube (CRC SSHT-2000X2250, call for price)
   still needs honing after the flange is welded on, unless the weld moves away from the bore.
 - **The cover-slide drawer's dovetail seal, the doser and the compound-angle camera boss** have no catalogue equivalent.
-- **The swaps save 63.5 h (22 %)** but only touch parts that were already small.
+- **The swaps save 63.5 h (22 %)**, mostly on parts that were already small.
 - **The bigger saving is not making the small parts at all** (route c). Outsourcing a part removes its CAM and setups
   completely, where a swap leaves about an hour of fitting.
 
@@ -408,8 +409,8 @@ Each option is priced for one chamber body (frame + floor, or its equivalent). T
 
 **Why this route:**
 
-- **It removes the part of the 287 h that is per-part overhead on small parts.** For those, CAM and setups are 90 % of the
-  time and the outside price is $13-130 a part.
+- **It removes the part of the 287 h that is per-part overhead.** The 33 parts sent out would take 149 h here, 79 % of it
+  CAM and setups and 19 h of cutting. JLCCNC prices them at $13-209 a piece ($521 for the four bridge posts).
 - **It keeps at BYU the parts whose seal faces and fits we need to control and rework,** and whose CAM (frame, floor) is
   already done.
 - **It is no slower than all in house with two machinists,** and it needs one.
@@ -424,8 +425,8 @@ Each option is priced for one chamber body (frame + floor, or its equivalent). T
    feedthrough spacer, bearing housing, overflow funnel, metering base) at Ra 0.8 µm.
 4. **Check BYU's purchasing.**
    - Can a Chinese instant-quote vendor be paid on a PO?
-   - Are the parts EAR99? They should be: nothing here is controlled.
-   - Is splitting into orders under $3,500 allowed? Most universities forbid it.
+   - Confirm the parts' export classification (JLC's upload pages warn against export-controlled items).
+   - Is splitting into orders under $3,500 allowed? University purchasing rules usually forbid it.
 5. **A machinist's estimate for three parts,** to replace hours.py's CAM and setup allowances (§1).
 6. **Hedges.**
    - JLCCNC's manual quote for the frame. A US fallback for the outsourced parts is $10.2k.
