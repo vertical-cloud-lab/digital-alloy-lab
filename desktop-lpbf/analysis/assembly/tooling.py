@@ -352,7 +352,8 @@ def liner_wand():
 # Ring pad (round 7): the camera window's two FKM flat rings (Ø25.2 / Ø21, 0.75-1 mm) sit in the boss's Ø25.6 counterbore, where
 # the 2F-85's fingertips do not fit (run 7: F48b) and the Ø6 nozzle cup is wider than the 2.1 mm ring. An annular silicone lip
 # (OD 24.6, ID 21.4, 3 mm) on a Ø8 stem under the VGC10's adaptor plate, with a soft centre plug so it also seals on the window.
-RINGPAD = dict(od=24.6, id=21.4, lip=3.0, stem_d=8.0, stem_l=55.0)
+# run 10 (2026-11-25): stem 55 -> 100 mm: in run 9 the VGC10 body met the camera boss 63 mm along the line of sight (F48b)
+RINGPAD = dict(od=24.6, id=21.4, lip=3.0, stem_d=8.0, stem_l=100.0)
 
 
 def ring_pad():
@@ -365,6 +366,27 @@ def ring_pad():
     plug = _cyl(r["id"] / 2 - 0.5, v["h"] + r["stem_l"], v["h"] + r["stem_l"] + r["lip"] - 0.5)
     L = v["h"] + r["stem_l"] + r["lip"]
     return _fuse(body, stem, lip, plug), np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, L], [0, 0, 0, 1]], float)
+
+
+# Pin pusher (run 10, 2026-11-25): the door's two Ø5 x 44 hinge pins go in along the hinge axis, 6 mm in front of the door's front
+# face, where the 2F-85's fingertips holding a pin's end meet the door (run 9: F52, F52b). A Ø4.5 x 60 push rod (smaller than the
+# Ø5.2 reamed knuckle bores, so it can follow the pin to flush) with a Ø4 x 3 NdFeB disc magnet in its tip holds the pin on its
+# axis by its end face; a 12 x 12 bar 150 mm long keeps the changer and wrist outside the door's width. The pins become 17-4 PH
+# (magnetic, and harder than the 304 knuckles, against galling) in place of 316. A Ø4 x 3 N52 disc holds about 3 N on steel at
+# contact; the pin weighs 7 g, and the push home needs a few newtons against the reamed fit (estimate).
+PINROD = dict(plate_d=63.0, plate_t=8.0, bar=12.0, bar_L=150.0, rod_d=4.5, rod_L=60.0, mass=0.30)
+
+
+def pin_pusher():
+    """End effector, mounting frame (z along the rod); TCP at the rod's tip face (the magnet), on the pin's axis."""
+    w = PINROD
+    plate = _cyl(w["plate_d"] / 2, 0.0, w["plate_t"])
+    b = w["bar"] / 2
+    z1 = w["plate_t"] + w["bar_L"]
+    bar = _box(-b, b, -b, b, w["plate_t"], z1)
+    rod = _cyl(w["rod_d"] / 2, z1, z1 + w["rod_L"])
+    L = z1 + w["rod_L"]
+    return _fuse(plate, bar, rod), np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, L], [0, 0, 0, 1]], float)
 
 
 def fixture_P(z_top):
@@ -451,7 +473,7 @@ def export_steps():
     for name, fn in (("spigot_mandrel", spigot_mandrel), ("spigot_pusher", spigot_pusher), ("rod_bullet", rod_bullet),
                      ("ring_loader", ring_loader), ("roller_3p2", lambda: roller(3.2)[0]), ("roller_1p4", lambda: roller(1.4)[0]),
                      ("fixture_C", fixture_C), ("fixture_P", lambda: fixture_P(1000.0)), ("fixture_B", lambda: fixture_B(1000.0)),
-                     ("trunnion_stands", trunnion_stands), ("trunnion_jaws", trunnion_jaws), ("nozzle", lambda: nozzle()[0]),
+                     ("trunnion_stands", trunnion_stands), ("trunnion_jaws", trunnion_jaws), ("nozzle", lambda: nozzle()[0]), ("pin_pusher", lambda: pin_pusher()[0]), ("ring_pad", lambda: ring_pad()[0]),
                      ("nest_stack", nest_stack), ("nest_body_inv", nest_body_inv), ("nest_body_up", nest_body_up),
                      ("ring_caps_left", lambda: ring_caps()["left_finger_tip"]), ("ring_caps_right", lambda: ring_caps()["right_finger_tip"])):
         s = fn()

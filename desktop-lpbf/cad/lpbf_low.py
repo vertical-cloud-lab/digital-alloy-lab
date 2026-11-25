@@ -115,6 +115,7 @@ MAT = {
     "mic6": dict(rho=2650, E=71.0e3, nu=0.33, sy=105.0, su=165.0, fat=None, alpha=23.4e-6, label="MIC-6 cast tooling plate"),
     "ss304": dict(rho=8000, E=193e3, nu=0.29, sy=215.0, su=505.0, fat=None, alpha=17.3e-6, label="304 stainless"),
     "ss316l": dict(rho=7990, E=193e3, nu=0.30, sy=170.0, su=485.0, fat=None, alpha=16.0e-6, label="316L stainless"),
+    "ss174ph": dict(rho=7800, E=197e3, nu=0.27, sy=1000.0, su=1070.0, fat=None, alpha=10.8e-6, label="17-4 PH stainless, H1025 (magnetic)"),
     "steel": dict(rho=7850, E=205e3, nu=0.29, sy=355.0, su=600.0, fat=None, alpha=11.7e-6, label="bearing / alloy steel"),
     "fused_silica": dict(rho=2201, E=72.7e3, nu=0.16, sy=None, su=50.0, fat=None, alpha=0.55e-6, label="UV fused silica"),
     "fkm": dict(rho=1850, label="FKM (Viton) 75A"),
@@ -1137,7 +1138,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
             blocks.append(fuse([box(xa, xb, hy, dy1, zf, hz), cyl(6, (xa, hy, hz), "x", xb - xa)]).cut(cyl(2.6, (xa - 1, hy, hz), "x", xb - xa + 2)))
     add("Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)", comp(blocks), C["ss"], 8, (0, -240, 0),
         mat="ss304", bom="G1", mcm="1151A87", section=True)
-    add("Hinge pins (Ø5, 316)", comp([cyl(2.5, (x - 12.0, hy, hz), "x", 44) for x in hx]), C["steel"], 8, (0, -240, 0), mat="ss316l", bom="G1", section=True)
+    # 17-4 PH (2026-11-25, assembly run 10): magnetic, so the robot's pin pusher holds a pin by its end face on a magnet
+    # (analysis/assembly/tooling.pin_pusher), and harder than the 304 knuckles (316 on 304 galls)
+    add("Hinge pins (Ø5, 17-4 PH)", comp([cyl(2.5, (x - 12.0, hy, hz), "x", 44) for x in hx]), C["steel"], 8, (0, -240, 0), mat="ss174ph", bom="G1",
+        section=True)
     # draw latches (McMaster 1807A61, 800 lb, adjustable grip), mirrored onto the door (operations.md U2.2, 2026-11-23): each latch sits on a
     # bracket bolted to the front face of a door ear and points forward, so its lever is in front of the door at y -207, ahead of the
     # front-right optics post (x 180..240, y -185..-125) that hid the right latch when it was on the chamber's side face. The strike moved

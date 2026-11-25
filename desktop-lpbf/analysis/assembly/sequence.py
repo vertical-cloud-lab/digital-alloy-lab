@@ -345,8 +345,9 @@ def steps(module="M50"):
     a(P("F18", "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assembled on the rail) onto the back wall",
         ["Recoater guide rail", "Recoater carriage (", "Recoater carriage block", "Recoater ball nut", "Recoater arm"], "machine", "upright",
         [(0, 0, 0), (0, 0, 220)], hold_for="rail", actor="B", grasp=dict(point=(-106.0, 72.0, 92.0), z=DN, x=(1.0, 0.0, 0.0), width=44.0)))
-    a(S("F19", "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall", "rail", "machine", "upright", actor="A",
-        torque_Nm=2.2))
+    # run 10: a 60 mm bit extension (run 9: with the roles swapped, arm A's driver met the chamber body on one rail screw)
+    a(S("F19", "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall (60 mm bit extension)", "rail", "machine",
+        "upright", actor="A", torque_Nm=2.2, long_bit=60.0))
     a(P("F21", "Ball screw in through the right wall's bore and turned through the ball nut (30 turns at 10 mm lead) into the left bore",
         ["Recoater ball screw"], "machine", "upright", [(0, 0, 0), (420, 0, 0)],
         inspect="a person turns the screw by hand over its stroke for smoothness (ball circuits, preload: Edison r7 would keep the install manual)"))
@@ -365,12 +366,13 @@ def steps(module="M50"):
     a(P("F25c", "Recoater servo onto the bracket, its shaft into the coupling along +x", ["Recoater servo"], "machine", "upright",
         [(0, 0, 0), (-40, 0, 0), (-40, 0, 120)], note="its screws are not drawn"))
     a(P("F26", "Blade holder and blade, in through the door opening and up under the recoater arm", ["Blade holder", "HSS recoater blade"],
-        "machine", "upright", [(0, 0, 0), (0, -12, 0), (0, -12, 9), (0, -200, 9)],
+        "machine", "upright", [(0, 0, 0), (0, -12, 0), (0, -12, 9), (6, -12, 9), (6, -200, 9)],
         grasp=dict(point=(-106.0, -45.0, 18.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=18.0),
         note="round 7: in 9 mm high over the door opening's sill (run 7's straight path met the frame below the opening), then down "
-             "and 12 mm back onto the arm's dowels"))
-    a(S("F27", "Two M3 x 8 blade screws (100 mm bit extension: run 7's driver met the module and Fixture B)", "blade", "machine",
-        "upright", torque_Nm=1.1, long_bit=100.0))
+             "and 12 mm back onto the arm's dowels; run 10: in 6 mm right of the seat and slid left inside the chamber (run 9: at the "
+             "recoater's park the holder, x -115 to -97, stands 5 mm outside the door opening's |x| < 110)"))
+    a(S("F27", "Two M3 x 8 blade screws by arm B from the back (100 mm bit extension: run 7's driver met the module and Fixture B; "
+        "run 9's arm A met Fixture B)", "blade", "machine", "upright", actor="B", torque_Nm=1.1, long_bit=100.0))
     a(P("F28", "Gas knife and dose chute", ["Gas knife", "Dose chute"], "machine", "upright", "explode", per_part=True,
         note="how they hang from the walls is not drawn"))
     a(dict(do="seal", id="F29", label="Lid O-ring cord (3.53 mm) rolled into the body's top gland: arm A rolls, arm B feeds the cord",
@@ -412,13 +414,14 @@ def steps(module="M50"):
         "machine", "upright", "explode", merge="mbase", moved=True, grasp=dict(point=(-90.0, 0.0, 172.0), z=DN, x=(1.0, 0.0, 0.0))))
     a(S("F44", "Four M4 x 16 metering-base screws (before the roller feedthrough covers two of them)", "dose", "machine", "upright",
         torque_Nm=2.2))
-    a(P("F45", "Roller feedthrough (M8 x 1 nose over its 2-012) into the metering base along its axis", ["Roller shaft:", "Roller feedthrough O-ring"],
-        "machine", "upright", [(0, 0, 0), (0, 12, 0), (0, 12, 70)],
+    # run 10: F45-F45c by arm B from the back (run 9: arm A's upper arm met the base plate, or found no pose, at the lid's back left)
+    a(P("F45", "Roller feedthrough (M8 x 1 nose over its 2-012) into the metering base along its axis (arm B)", ["Roller shaft:", "Roller feedthrough O-ring"],
+        "machine", "upright", [(0, 0, 0), (0, 12, 0), (0, 12, 70)], actor="B",
         note="round 7: threaded, turned in (8 turns) by wrist rotation with regrasps, which a straight sweep does not show"))
-    a(P("F45b", "Roller drive coupling onto the feedthrough's shaft", ["Roller drive coupling"], "machine", "upright",
-        [(0, 0, 0), (0, 25, 0), (0, 25, 70)]))
-    a(P("F45c", "Dosing stepper, its shaft into the coupling", ["Dosing stepper"], "machine", "upright", [(0, 0, 0), (0, 30, 0), (0, 30, 70)],
-        note="its screws are not drawn"))
+    a(P("F45b", "Roller drive coupling onto the feedthrough's shaft (arm B)", ["Roller drive coupling"], "machine", "upright",
+        [(0, 0, 0), (0, 25, 0), (0, 25, 70)], actor="B"))
+    a(P("F45c", "Dosing stepper, its shaft into the coupling (arm B)", ["Dosing stepper"], "machine", "upright", [(0, 0, 0), (0, 30, 0), (0, 30, 70)],
+        actor="B", note="its screws are not drawn"))
     # run 9: the load cell carries the dock rails, so it goes first (the rails first blocked it)
     a(P("F45d", "Load cell, then the dock rails on it, the NFC reader, side port blank and docked sensor, from just above", ["Load cell",
         "Dovetail rails", "NFC reader", "Side reservoir port", "Reservoir-docked sensor"], "machine", "upright", [(0, 0, 0), (0, 0, 70)],
@@ -458,10 +461,13 @@ def steps(module="M50"):
     # Each Ø5 x 44 pin now goes in from its own outer side along the hinge axis, held at its outer end by the fingers across it and
     # pushed home on its end face (the pick-insert-push): the left one from the left (the door drive on that axis goes on after it),
     # the right one from the right
-    a(P("F52", "Left hinge pin slid in from the left along the hinge axis, pushed home on its end", ["Hinge pins #1"], "machine", "upright",
-        [(0, 0, 0), (-60, 0, 0)], grasp=dict(point=(-106.0, -132.0, -12.0), z=(1.0, 0.0, 0.0), x=(0.0, 0.0, 1.0), width=5.0)))
-    a(P("F52b", "Right hinge pin slid in from the right along the hinge axis, pushed home on its end", ["Hinge pins #2"], "machine", "upright",
-        [(0, 0, 0), (60, 0, 0)], grasp=dict(point=(106.0, -132.0, -12.0), z=(-1.0, 0.0, 0.0), x=(0.0, 0.0, 1.0), width=5.0)))
+    # run 10: by the pin pusher (tooling.pin_pusher: a Ø4.5 push rod with a magnet in its tip, the pins 17-4 PH), held on the pin's
+    # axis by its outer end face: run 9's fingertips across a pin's end met the door's front face, 6 mm behind the hinge axis
+    a(P("F52", "Left hinge pin slid in from the left along the hinge axis by the pin pusher (a magnet holds its end)", ["Hinge pins #1"],
+        "machine", "upright", [(0, 0, 0), (-60, 0, 0)], tool="pinrod",
+        grasp=dict(point=(-112.0, -132.0, -12.0), z=(1.0, 0.0, 0.0), x=(0.0, 0.0, 1.0))))
+    a(P("F52b", "Right hinge pin slid in from the right along the hinge axis by the pin pusher", ["Hinge pins #2"], "machine", "upright",
+        [(0, 0, 0), (60, 0, 0)], tool="pinrod", grasp=dict(point=(112.0, -132.0, -12.0), z=(-1.0, 0.0, 0.0), x=(0.0, 0.0, 1.0))))
     a(P("F03", "Optics posts (moved here: they blocked the side-wall parts and the right latch) onto the base plate, one at a time, held by arm B while arm A drives their base screws from below",
         ["@posts"], "machine", "upright", [(0, 0, 0), (0, 0, 200)], actor="B", per_solid=True, hold_for="bridge_base", actor_by_y=True))
     a(S("F04", "Two M6 x 25 up into each post's bottom cap, from under the plate", "bridge_base", "machine", "upright", torque_Nm=7.4))
@@ -480,7 +486,7 @@ def steps(module="M50"):
     a(P("F56b", "basiCube 20 scan head on the riser (3.75 kg: the vacuum gripper on its top)", ["2-axis galvo"], "machine", "upright", [(0, 0, 0), (0, 0, 60)],
         tool="vacuum", grasp=dict(point=(20.35, -6.8, 363.11), z=DN, x=(1.0, 0.0, 0.0)), note="its screws are not drawn"))
     a(P("F57", "Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collimator",
-        ["Enclosed beam tube", "Coaxial-monitoring dichroic", "Fold mirror", "Safety shutter", "Coaxial photodiode chain", "Collimator"], "machine", "upright",
+        ["Coaxial-monitoring dichroic", "Fold mirror", "Safety shutter", "Enclosed beam tube", "Coaxial photodiode chain", "Collimator"], "machine", "upright",
         [(0, 0, 0), (0, 0, 60)], per_solid=True, note="round 7: from 60 mm above, the three beam tubes one at a time (run 7: 340 mm up, no IK; the tubes as one part "
                                                      "107 mm across)"))
     a(N("F57b", "Beam alignment and scan-field calibration (alignment laser, power head, test marks)", "person",

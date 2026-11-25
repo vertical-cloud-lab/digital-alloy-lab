@@ -48,6 +48,9 @@ DS = 3.0                       # mm between frames along a Cartesian path
 JUMP = math.radians(20.0)      # a bigger joint step between frames is a branch flip: not a continuous path
 PLAN_ITERS = int(os.environ.get("ASM_PLAN_ITERS", "1500"))
 SCREW_PLAN_ITERS = int(os.environ.get("ASM_SCREW_PLAN_ITERS", "500"))
+# run 10: more planner iterations where run 9 found no approach for one screw (C00d 17 of 18, F06 7 of 8)
+SCREW_ITERS_STEP = {"C00d": 2000, "F06": 2000}
+CUR_STEP = [""]
 T0 = time.time()
 
 
@@ -197,7 +200,7 @@ class Run:
             a.set_tool("gripper", caps=E.plate_finger_spec())
         elif tool in ("screwdriver", "nutrunner", "nutrunner_angle"):
             a.set_tool(tool, extra_bit=float(long_bit or 0.0), tip_d=tip_d)
-        elif tool in ("vacuum", "nozzle", "roller", "roller_n", "wand", "ringpad"):
+        elif tool in ("vacuum", "nozzle", "roller", "roller_n", "wand", "ringpad", "pinrod"):
             a.set_tool(tool)
         else:
             a.set_tool("gripper")
@@ -288,7 +291,7 @@ def auto_grasp(run, idx, T, d_w, state, tool):
     s = V @ d
     smax = float(s.max())
     ext_d = float(smax - s.min())
-    inset = min(14.0, 0.5 * ext_d) if tool not in ("vacuum", "nozzle", "ringpad", "wand") else 0.0
+    inset = min(14.0, 0.5 * ext_d) if tool not in ("vacuum", "nozzle", "ringpad", "wand", "pinrod") else 0.0
     sl = V[s > smax - max(2 * inset, 3.0)]
     c = 0.5 * (sl.min(0) + sl.max(0))
     c = c - d * (np.dot(c, d) - (smax - inset))
@@ -702,7 +705,8 @@ def drive_screw(run, i, phase, actor, long_bit=None, state=None, torque=None, fo
                                            seeds=[fr["qs"][0]])
                         if fr_in["ok"]:
                             a.place(run.q[actor])
-                            path_q, info = chk.plan(run.q[actor], fr_in["qs"][0], 0.0, allow=allow, iters=SCREW_PLAN_ITERS)
+                            path_q, info = chk.plan(run.q[actor], fr_in["qs"][0], 0.0, allow=allow,
+                                                   iters=SCREW_ITERS_STEP.get(CUR_STEP[0], SCREW_PLAN_ITERS))
                             if path_q is not None:
                                 info = dict(info, via="pre-approach")
                         else:
@@ -806,8 +810,9 @@ def hold_and_drive(run, st, u, holder):
     a = run.arm(holder)
     a.release()                    # the part is in the world now; the closed gripper stays round it
     tq = next((x.get("torque_Nm") for x in SQ.steps() if x.get("joint") == st["hold_for"]), None)
+    lb = next((x.get("long_bit") for x in SQ.steps() if x.get("joint") == st["hold_for"]), None)   # run 10: the joint's bit extension
     sub = dict(id=st["id"] + "h", joint=st["hold_for"], phase=st["phase"], grp=st["grp"], actor=run.other(holder), torque_Nm=tq,
-               holder_busy=True)
+               holder_busy=True, long_bit=lb)
     row = {}
     per = do_screws(run, sub, row, near=(lo, hi), actor=run.other(holder))
     run.sub_rows = getattr(run, "sub_rows", [])
@@ -1410,6 +1415,7 @@ def main(argv):
         row = dict(id=st["id"], label=st["label"], do=st["do"], tool=st.get("tool"), actor=st.get("actor"), holder=st.get("holder"),
                    phase=st.get("phase"), joint=st.get("joint"))
         t = time.time()
+        CUR_STEP[0] = st["id"]
         CM.begin(run, st)
         try:
             {"place": do_place, "screws": do_screws, "seal": do_seal, "flip": do_flip, "dual": do_dual, "note": do_note,

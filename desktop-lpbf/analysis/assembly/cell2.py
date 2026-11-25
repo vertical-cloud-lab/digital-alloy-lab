@@ -90,6 +90,8 @@ def tool_mesh(name, extra_bit=0.0, tip_d=None):
             _TOOL_MESH[key] = TL.mesh("liner_wand")
         elif name == "ringpad":
             _TOOL_MESH[key] = TL.mesh("ring_pad")
+        elif name == "pinrod":
+            _TOOL_MESH[key] = TL.mesh("pin_pusher")
         elif name in ("roller", "roller_n"):
             _TOOL_MESH[key] = TL.mesh("roller", 3.2 if name == "roller" else 1.4)
         else:
@@ -98,7 +100,7 @@ def tool_mesh(name, extra_bit=0.0, tip_d=None):
 
 
 TOOL_MASS = dict(gripper=0.925, screwdriver=TL.SCREWDRIVER["mass"], nutrunner=TL.NUTRUNNER["mass"], nutrunner_angle=TL.NUT_ANGLE["mass"],
-                 vacuum=TL.VAC["mass"], nozzle=TL.VAC["mass"] + 0.05, roller=0.35, wand=TL.WAND["mass"], ringpad=TL.VAC["mass"] + 0.06,
+                 vacuum=TL.VAC["mass"], nozzle=TL.VAC["mass"] + 0.05, roller=0.35, wand=TL.WAND["mass"], ringpad=TL.VAC["mass"] + 0.06, pinrod=TL.PINROD["mass"],
                  roller_n=0.35)
 
 
