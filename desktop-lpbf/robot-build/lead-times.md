@@ -71,7 +71,8 @@ How the numbers were read:
 - **Assembly: 139 checked steps.**
   - **Arms:** about 3.3 h, plus 0.8 h of MiR trips to the long table.
   - **People:** about 13 person-hours, half of it the laser guard and the integration on the tray.
-  - **Steps the arms can't do:** 27 fail or partly fail (26 on reach or collisions, 1 on force: the dowel press) for the arms, and 19 are steps for a person or the shop.
+  - **Steps the arms can't do:** 27 steps fail or partly fail for the arms (26 on reach or collisions, 1 on force:
+    the dowel press), and 19 are steps for a person or the shop.
 
   All of these times are estimates: `results.json`'s "seconds" is the checker's compute time, not how long a step takes
   (§5).
