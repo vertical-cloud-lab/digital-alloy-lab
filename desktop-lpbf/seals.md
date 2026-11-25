@@ -193,9 +193,9 @@ From [`seals.md` (results)](analysis/out/seals/seals.md):
   - HEPA housing 2.3 L;
   - hoses 1.5 L;
   - plenums and blower 1.1 L.
-- **Permeation through every FKM seal adds 2.19 ppm O₂/h and 19.7 ppm H₂O/h**, using Parker's leak-rate approximation, Arrhenius-scaled to
+- **Permeation through every FKM seal adds 2.18 ppm O₂/h and 19.6 ppm H₂O/h**, using Parker's leak-rate approximation, Arrhenius-scaled to
   each seal's temperature, with Sturm's measured Viton permeabilities. 46.5 sccm of Ar 5.0 make-up flow holds 10 ppm O₂ against it, about
-  2.8 L/h. (Re-run 2026-11-25. The rod end's 2-014 left with the connector: 2.20 → 2.19 ppm O₂/h, 27 glands, was 28. The 1.7 ppm and 35 sccm
+  2.8 L/h. (Re-run 2026-11-25. The rod end's 2-014 left with the connector: 2.20 → 2.18 ppm O₂/h on the merged round-6 model, 27 glands, was 28. The 1.7 ppm and 35 sccm
   this line gave until now were from 2026-11-20; the results file has said 2.20 ppm and 46.8 sccm since the 2026-11-21 re-run.)
 - **Wall outgassing is as large as the water's permeation** (unbaked 6061 and FKM after ~1 h, O'Hanlon): ~19 ppm H₂O/h, falling roughly
   as 1/t. ~58 sccm of make-up holds a −40 °C dew point against outgassing and permeation together.
@@ -207,10 +207,10 @@ From [`seals.md` (results)](analysis/out/seals/seals.md):
 
 ## 6. Purge and the powder
 
-- **Pump-down.** The McMaster 4396K21 (3 cfm, 1.42 L/s) through two KF-25 bellows reaches 1 mbar in **~1 min**. BOM line G2 is now the Edwards nXDS6i dry scroll; [`vacuum-and-purge.md`](vacuum-and-purge.md) re-runs the purge with it (1.5 min to 1 mbar with the soft-pump start, ~4 min per cycle) and compares the frame + floor plate with the old block.
+- **Pump-down.** The McMaster 4396K21 (3 cfm, 1.42 L/s) through two KF-25 bellows reaches 1 mbar in **~1 min**. BOM line G2 is now the Edwards nXDS6i dry scroll; [`vacuum-and-purge.md`](vacuum-and-purge.md) re-runs the purge with it (`vacuum_purge.py`: 1.1 min to 1 mbar with the soft-pump start, ~3.6 min per cycle since 2026-11-25; 1.5 min and ~4 min with the old jar's 25 s soft pump) and compares the frame + floor plate with the old block.
 - **Two cycles reach ~1 ppm O₂ in theory**, at the limit of Ar 5.0 purity. Plan three, with a hold at ≤ 1 mbar, to drain the powder's pores and the walls.
-- **Pumping that fast lifts powder.** At atmospheric pressure the pump-down time constant is 8 s. The gas leaving a powder bed then pushes on it with 0.42 × the bed's weight for a 40 mm bed, 0.59 for the L reservoir and **0.95 for the 90 mm overflow jar** (Kozeny–Carman, Klinkenberg slip).
-  - **Throttle the first stage:** a needle-valve bypass ("soft pump") that keeps τ = V/S ≥ 25 s until ~100 mbar. Pump-down grows to ~3 min.
+- **Pumping that fast lifts powder.** At atmospheric pressure the pump-down time constant is 8 s. The gas leaving a powder bed then pushes on it with 0.42 × the bed's weight for a 40 mm bed, **0.59 for the L reservoir** (56 mm) and 0.50 for the overflow jar full to its joint (47 mm since round 6; it was 0.95 for the old 90 mm jar) (Kozeny–Carman, Klinkenberg slip).
+  - **Throttle the first stage:** a needle-valve bypass ("soft pump") that keeps τ = V/S ≥ 16 s until ~100 mbar (≤ 0.72 L/s, Cv ≥ 0.22; the L reservoir sets it since the jar got shorter, 2026-11-25; it was 25 s for the 90 mm jar). With the nXDS6i, `vacuum_purge.py` then gives 1.1 min to 1 mbar.
   - **Throttle the back-fill too**, with a diffuser, so the argon inrush doesn't blow the bed.
 
 ## 7. Acceptance test: rate of rise

@@ -150,6 +150,8 @@ def model_geometry():
     g = {}
     # lid O-ring: drawn 2.65 tall x 3.7 wide (squeezed section); door: 2.8 x 3.2; spigot: 2.6 x 3.0; drawer 1.6 x 1.8
     g["lid_path"] = ring_path(find("Lid O-ring"), 2.65 * 3.7)
+    if hasattr(L, "JAR"):                 # the overflow jar's depth below its KF-40 joint (cup bottom to joint), mm
+        g["jar_depth_mm"] = L.JAR["zj"] - L.JAR["z_bot"]
     # every other gland the model draws is registered in lpbf_low.GLANDS by build(); centre-line length of a loop = its inner
     # wall's perimeter + pi x groove width (offsetting a closed convex curve by w/2 adds pi w)
     GL = {k: dict(v) for k, v in L.GLANDS.items()}
@@ -592,8 +594,11 @@ def main():
                       t_to_1mbar_s=t, tau_at_atm_s=tau_hi, cycles=cyc)
 
     # ---------------- powder beds during pump-down ----------------
+    # the overflow jar full to its KF-40 joint: since 2026-11-25 read from the model (lpbf_low.JAR); it was a 90 mm half nipple
+    # until round 5, and that 90 mm stayed here until round 6
+    hj = g.get("jar_depth_mm", 90.0) / 1000.0
     beds = {"reservoir L (56 mm of powder)": 0.056, "build cylinder, end of build (40 mm)": 0.040,
-            "overflow jar (90 mm)": 0.090, "reservoir M (40 mm)": 0.040}
+            f"overflow jar ({1000 * hj:.0f} mm, full to its joint)": hj, "reservoir M (40 mm)": 0.040}
     lift = {}
     for name, h in beds.items():
         r_atm, dp, w = bed_lift_ratio(h, tau_hi, ATM)
@@ -601,15 +606,16 @@ def main():
         lift[name] = dict(h_mm=1000 * h, dp_over_weight_at_atm=r_atm, dp_over_weight_at_10mbar=r_10, dp_Pa=dp, weight_Pa=w,
                           tau_needed_s_for_0p3=tau_min_for(h, 0.3))
     R["powder_lift"] = dict(tau_s=tau_hi, k_m2=k_kozeny(), beds=lift, u_mf_mm_s=1000 * u_mf())
-    # soft pump: the slowest bed (overflow jar, 90 mm) needs tau >= tau_needed; a metering valve in parallel with the main valve
+    # soft pump: the slowest bed (the deepest: the L reservoir or the jar) needs tau >= tau_needed; a metering valve beside the main valve
     # limits the flow until ~100 mbar. Choked air flow through a valve of flow coefficient Cv (Swagelok gas sizing):
     # q [std L/min] = 6950 Cv P1 [bar] * 0.471 * sqrt(1 / (Gg T1)), Gg = 1, T1 = 293 K
-    tau_need = max(v["tau_needed_s_for_0p3"] for v in lift.values())
+    bed_need = max(lift, key=lambda n: lift[n]["tau_needed_s_for_0p3"])
+    tau_need = lift[bed_need]["tau_needed_s_for_0p3"]
     s_soft = V / tau_need                                   # L/s at ~1 atm
     q_soft = s_soft * 60.0                                  # std L/min at 1 atm
     cv = q_soft / (6950 * 1.013 * 0.471 * math.sqrt(1 / 293.0))
     t_soft = tau_need * math.log(1013 / 100.0)
-    R["soft_pump"] = dict(tau_needed_s=tau_need, S_soft_Ls=s_soft, q_std_L_min=q_soft, Cv=cv, t_to_100mbar_s=t_soft,
+    R["soft_pump"] = dict(bed=bed_need, tau_needed_s=tau_need, S_soft_Ls=s_soft, q_std_L_min=q_soft, Cv=cv, t_to_100mbar_s=t_soft,
                           t_total_to_1mbar_s=t_soft + pu_t_rest(V, s_eff),
                           note="metering valve with Cv >= this in parallel with the KF-25 valve; open the main valve below ~100 mbar. "
                                "Back-fill through the same limit (the flowmeter-regulator 78595A5 set <= 25 L/min) and a sintered diffuser")
@@ -735,7 +741,7 @@ def write_md(R):
     for n, v in pl["beds"].items():
         L.append(f"| {n} | {v['h_mm']:.0f} | {v['dp_over_weight_at_atm']:.2f} | {v['dp_over_weight_at_10mbar']:.2f} | {v['tau_needed_s_for_0p3']:.0f} |")
     sp = R["soft_pump"]
-    L += ["", f"**Soft pump:** the overflow jar needs τ ≥ {sp['tau_needed_s']:.0f} s, i.e. ≤ {sp['S_soft_Ls']:.2f} L/s ({sp['q_std_L_min']:.0f} std L/min) "
+    L += ["", f"**Soft pump:** the deepest bed ({sp.get('bed', 'overflow jar')}) needs τ ≥ {sp['tau_needed_s']:.0f} s, i.e. ≤ {sp['S_soft_Ls']:.2f} L/s ({sp['q_std_L_min']:.0f} std L/min) "
           f"until ~100 mbar: a metering valve of Cv ≥ {sp['Cv']:.2f} beside the main valve. Pump-down then takes ~{sp['t_total_to_1mbar_s'] / 60:.1f} min to 1 mbar. {sp['note']}.", ""]
     ro = R["reservoir_open_path"]
     L += ["", f"Reservoir before the dock seal and lid seal were drawn (open to the room through the powder column): at +20 mbar, **{ro['argon_out_at_20mbar_sccm']:.0f} sccm of argon leaves through the powder** "

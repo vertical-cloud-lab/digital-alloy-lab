@@ -1,6 +1,7 @@
 {
  "geometry": {
   "lid_path": 955.1902574037721,
+  "jar_depth_mm": 47.0,
   "glands_model": {
    "spigot": {
     "kind": "radial",
@@ -380,7 +381,7 @@
   ],
   "window_d": 50.8,
   "v_chamber_L": 6.3839999999999995,
-  "v_filter_L": 2.2816997885533623,
+  "v_filter_L": 2.334069965301108,
   "bore_d": 50.8,
   "stroke": 40.0,
   "res": {
@@ -415,7 +416,7 @@
   "slot_w": 8.0,
   "rod_od": 15.875,
   "area_walls_cm2": 2192.0,
-  "n_parts": 268
+  "n_parts": 276
  },
  "sources": {
   "1": "Parker O-Ring Handbook ORD 5700: Design Chart 4-3 (face glands), Design Table 4-2 (static radial glands), \u00a73.11 vacuum sealing and Table 3-20 (finish), \u00a73.12.1 leak-rate approximation and Fig. 3-11 (Q), Table 3-24 (permeability), Figs. 2-4..2-6 (compression load). https://nfc.arizona.edu/sites/default/files/2022-02/parker_o-ring_handbook.pdf",
@@ -1876,26 +1877,26 @@
   "chamber": 6.3839999999999995,
   "plenums": 0.6,
   "hoses": 1.4971652489763858,
-  "filter": 2.2816997885533623,
+  "filter": 2.334069965301108,
   "blower": 0.5,
-  "total": 11.262865037529748
+  "total": 11.315235214277493
  },
  "budget": {
-  "V_L": 11.262865037529748,
-  "O2_permeation_ppm_per_h": 2.1885489832708194,
-  "H2O_permeation_ppm_per_h": 19.713593305722924,
+  "V_L": 11.315235214277493,
+  "O2_permeation_ppm_per_h": 2.178419746458281,
+  "H2O_permeation_ppm_per_h": 19.622353102032662,
   "area_al_cm2": 4605.28,
   "area_fkm_cm2": 17.5267326447668,
   "q_al_mbarLs": 3.6833029439999996e-05,
   "q_fkm_mbarLs": 2.3363134615474143e-05,
-  "H2O_outgassing_ppm_per_h_1h": 18.621601301387845,
+  "H2O_outgassing_ppm_per_h_1h": 18.53541515209338,
   "powder_H2O_mg": [
    22.5,
    45.0
   ],
   "powder_H2O_ppm_if_released": [
-   2485.528453945685,
-   4971.05690789137
+   2474.02471036637,
+   4948.04942073274
   ]
  },
  "makeup": {
@@ -1909,8 +1910,8 @@
   "S_eff_at_800mbar_Ls": 1.415665903743135,
   "S_eff_at_10mbar_Ls": 1.4012697266261072,
   "S_eff_at_1mbar_Ls": 1.2822350255492507,
-  "t_to_1mbar_s": 55.880979647974875,
-  "tau_at_atm_s": 7.955877871855092,
+  "t_to_1mbar_s": 56.140815557510365,
+  "tau_at_atm_s": 7.9928711882931545,
   "cycles": [
    {
     "cycle": 1,
@@ -1931,38 +1932,38 @@
   ]
  },
  "powder_lift": {
-  "tau_s": 7.955877871855092,
+  "tau_s": 7.9928711882931545,
   "k_m2": 4.011111111111112e-12,
   "beds": {
    "reservoir L (56 mm of powder)": {
     "h_mm": 56.0,
-    "dp_over_weight_at_atm": 0.5938798322443554,
-    "dp_over_weight_at_10mbar": 0.1941551815322676,
-    "dp_Pa": 435.54885589674836,
+    "dp_over_weight_at_atm": 0.5911311848505907,
+    "dp_over_weight_at_10mbar": 0.19325657527435208,
+    "dp_Pa": 433.5330099922099,
     "weight_Pa": 733.3956000000001,
     "tau_needed_s_for_0p3": 15.749451386312936
    },
    "build cylinder, end of build (40 mm)": {
     "h_mm": 40.0,
-    "dp_over_weight_at_atm": 0.4241998801745394,
-    "dp_over_weight_at_10mbar": 0.13868227252304824,
-    "dp_Pa": 222.2188040289532,
+    "dp_over_weight_at_atm": 0.4222365606075647,
+    "dp_over_weight_at_10mbar": 0.1380404109102515,
+    "dp_Pa": 221.1903112205152,
     "weight_Pa": 523.854,
     "tau_needed_s_for_0p3": 11.249608133080667
    },
-   "overflow jar (90 mm)": {
-    "h_mm": 90.0,
-    "dp_over_weight_at_atm": 0.9544497303927139,
-    "dp_over_weight_at_10mbar": 0.31203511317685856,
-    "dp_Pa": 1124.9826953965755,
-    "weight_Pa": 1178.6715,
-    "tau_needed_s_for_0p3": 25.3116182994315
+   "overflow jar (47 mm, full to its joint)": {
+    "h_mm": 47.0,
+    "dp_over_weight_at_atm": 0.4961279587138886,
+    "dp_over_weight_at_10mbar": 0.1621974828195455,
+    "dp_Pa": 305.38087342882386,
+    "weight_Pa": 615.52845,
+    "tau_needed_s_for_0p3": 13.218289556369784
    },
    "reservoir M (40 mm)": {
     "h_mm": 40.0,
-    "dp_over_weight_at_atm": 0.4241998801745394,
-    "dp_over_weight_at_10mbar": 0.13868227252304824,
-    "dp_Pa": 222.2188040289532,
+    "dp_over_weight_at_atm": 0.4222365606075647,
+    "dp_over_weight_at_10mbar": 0.1380404109102515,
+    "dp_Pa": 221.1903112205152,
     "weight_Pa": 523.854,
     "tau_needed_s_for_0p3": 11.249608133080667
    }
@@ -1970,12 +1971,13 @@
   "u_mf_mm_s": 2.799864978666667
  },
  "soft_pump": {
-  "tau_needed_s": 25.3116182994315,
-  "S_soft_Ls": 0.4449681922464322,
-  "q_std_L_min": 26.69809153478593,
-  "Cv": 0.13781575568560098,
-  "t_to_100mbar_s": 58.609085539642564,
-  "t_total_to_1mbar_s": 96.06328327495267,
+  "bed": "reservoir L (56 mm of powder)",
+  "tau_needed_s": 15.749451386312936,
+  "S_soft_Ls": 0.7184526582374164,
+  "q_std_L_min": 43.10715949424499,
+  "Cv": 0.22251949183028885,
+  "t_to_100mbar_s": 36.46787544688871,
+  "t_total_to_1mbar_s": 74.09622806630753,
   "note": "metering valve with Cv >= this in parallel with the KF-25 valve; open the main valve below ~100 mbar. Back-fill through the same limit (the flowmeter-regulator 78595A5 set <= 25 L/min) and a sintered diffuser"
  },
  "reservoir_open_path": {
@@ -1985,10 +1987,10 @@
   "air_in_at_vacuum_sccm": 9430.875690607736
  },
  "rate_of_rise": {
-  "V_L": 11.262865037529748,
+  "V_L": 11.315235214277493,
   "leak_budget_mbarLs": 0.0001,
-  "rise_mbar_per_min_leak": 0.000532724131915547,
-  "rise_mbar_per_min_outgassing": 0.0003206794924109832,
+  "rise_mbar_per_min_leak": 0.0005302585307664871,
+  "rise_mbar_per_min_outgassing": 0.00031919529509834136,
   "note": "isolate at <= 1 mbar after >= 1 h pumping; read a Pirani or capacitance gauge for 10 min"
  }
 }
