@@ -1,23 +1,23 @@
 {
  "bom": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/.claude/worktrees/agent-a2f6c019d9f105e21/desktop-lpbf/bom.csv",
- "parts": 264,
+ "parts": 272,
  "by_status": {
   "real part priced": 125,
   "real part unpriced": 3,
-  "generic": 46,
-  "custom": 78,
+  "generic": 50,
+  "custom": 82,
   "missing from BOM": 2,
   "inconsistent": 9,
   "excluded": 1
  },
  "by_kind": {
-  "custom (machined)": 69,
-  "bought": 133,
+  "custom (machined)": 73,
+  "bought": 138,
   "custom (sheet)": 12,
   "excluded": 1,
-  "fastener": 49
+  "fastener": 48
  },
- "bom_lines": 62,
+ "bom_lines": 64,
  "bom_lines_without_model_part": [
   "L2",
   "C1",
@@ -50,8 +50,8 @@
   "RA7"
  ],
  "bom_total_usd": [
-  70364,
-  154515
+  76339,
+  161155
  ],
  "extra": []
 }

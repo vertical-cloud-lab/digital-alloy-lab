@@ -38,6 +38,7 @@ import seals as S  # noqa: E402  (parker_leak, f_perm, permeability constants)
 ROOT = HERE.parents[1]
 OUT = ROOT / "analysis" / "out" / "seals"
 R0 = json.loads((OUT / "seals.json").read_text())
+TAU_SOFT = float(R0.get("soft_pump", {}).get("tau_needed_s", 25.3))   # seals.py: the deepest powder bed sets it (16 s since the jar got shorter)
 
 ATM_MBAR = 1013.25
 P_OP_MBAR = ATM_MBAR + 20.0             # build: +20 mbar of argon
@@ -171,7 +172,7 @@ def s_eff(p):
     return s * c / (s + c) if s > 0 else 0.0
 
 
-def pump_down(p_to, tau_soft=25.3, p_soft=100.0, q_gas=0.0):
+def pump_down(p_to, tau_soft=TAU_SOFT, p_soft=100.0, q_gas=0.0):
     """Seconds from 1013 mbar to p_to: soft pump (V/S = tau_soft) to p_soft, then the pump through the hoses, against a
     constant gas load q_gas (mbar L/s)."""
     t = tau_soft * math.log(ATM_MBAR / p_soft)
@@ -214,7 +215,7 @@ def purge():
     return dict(S0_Ls=S0, p_ult_mbar=P_ULT, S_eff_Ls={f"{p:g}": s_eff(p) for p in (800, 100, 10, 1, 0.1, 0.05)},
                 pump_down_s=times, base_pressure=rows, cycles=cyc,
                 one_cycle_s=t_cycle, three_cycles_min=3 * t_cycle / 60.0,
-                note="soft pump at V/S = 25 s to 100 mbar (seals.py), then full speed; 2 min hold; back-fill at 25 L/min")
+                note=f"soft pump at V/S = {TAU_SOFT:.0f} s to 100 mbar (seals.py), then full speed; 2 min hold; back-fill at 25 L/min")
 
 
 # ------------------------------------------------------------------ 5. water after the purge
@@ -271,7 +272,7 @@ def write_md(R):
     L += ["", "## 4. Purge with the Edwards nXDS6i dry scroll (BOM G2)", "",
           f"Listed {PU['S0_Ls'] * 3.6:.1f} m³/h peak pumping speed ({PU['S0_Ls']:.2f} L/s), ultimate {PU['p_ult_mbar']} mbar; two KF-25 bellows (1.2 m). "
           "Effective speed at the chamber (L/s): " + ", ".join(f"{k} mbar {v:.2f}" for k, v in PU["S_eff_Ls"].items()) + ".", "",
-          "Pump-down from 1013 mbar with the soft-pump start (V/S = 25 s to 100 mbar), against the walls' outgassing 5 min after closing: "
+          f"Pump-down from 1013 mbar with the soft-pump start (V/S = {TAU_SOFT:.0f} s to 100 mbar), against the walls' outgassing 5 min after closing: "
           + ", ".join(f"{k.replace('to_', '').replace('_mbar_s', ' mbar')}: {v / 60:.1f} min" for k, v in PU["pump_down_s"].items()) + ".", "",
           "| Minutes after closing | Wall + seal outgassing (mbar·L/s) | Base pressure (mbar) |", "|---|---|---|"]
     for r in PU["base_pressure"]:

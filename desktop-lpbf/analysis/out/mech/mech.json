@@ -68,6 +68,62 @@
    "torque_Nm": 0.0441
   },
   "galling": "316 screws in 18-8 helical inserts gall; the lid and window screws sit outside the seal, so use anti-seize there, or silver-plated / Nitronic 60 screws",
+  "door_A": {
+   "label": "hinges float in their slots (z only), latch hooks held on their pull lines at the 25 % position, cord stiffness",
+   "latch_each_N": 383.1129,
+   "latch_rating_N": 3558.4000000000005,
+   "latch_sf": 9.288123683645214,
+   "hinge_each_N": 6.389455e-12,
+   "hinge_pin_shear_MPa": 1.6270613550611616e-13,
+   "squeeze_lost_um": 163.41300000000004,
+   "squeeze_pct": [
+    15.81949438202247,
+    20.885061797752808
+   ],
+   "sf_yield": 10.249336829286632
+  },
+  "door_B": {
+   "label": "as A, with the hinge pins at the ends of their slots (y and z held)",
+   "latch_each_N": 30.12533,
+   "latch_rating_N": 3558.4000000000005,
+   "latch_sf": 118.11986789854254,
+   "hinge_each_N": 650.6195,
+   "hinge_pin_shear_MPa": 16.567889519516385,
+   "squeeze_lost_um": 39.39520000000002,
+   "squeeze_pct": [
+    22.786786516853933,
+    25.067741011235956
+   ],
+   "sf_yield": 12.88955372004329
+  },
+  "door_C": {
+   "label": "round-5 boundary conditions: door alone, the brackets' feet's footprints held in y, hinges y and z, no cord stiffness",
+   "latch_each_N": 208.2646,
+   "latch_rating_N": 3558.4000000000005,
+   "latch_sf": 17.085956998933092,
+   "hinge_each_N": 515.582,
+   "hinge_pin_shear_MPa": 13.129187819072893,
+   "squeeze_lost_um": 34.51650000000001,
+   "squeeze_pct": [
+    23.060870786516855,
+    25.027509775280897
+   ],
+   "sf_yield": 15.039487426013038
+  },
+  "door_D750": {
+   "label": "design: each latch preloaded to 0.75 kN (21 % of its rating), hinges floating, the door's land in contact with the chamber's front face where pulled onto it, cord stiffness",
+   "latch_each_N": 750.0,
+   "latch_rating_N": 3558.4000000000005,
+   "latch_sf": 4.744533333333334,
+   "hinge_each_N": 1.200662e-10,
+   "hinge_pin_shear_MPa": 3.05746067652162e-12,
+   "squeeze_lost_um": 158.35800000000012,
+   "squeeze_pct": [
+    16.10348314606741,
+    22.394112359550558
+   ],
+   "sf_yield": 8.2181042571914
+  },
   "door_D1200": {
    "label": "design: each latch preloaded to 1.20 kN (34 % of its rating), hinges floating, the door's land in contact with the chamber's front face where pulled onto it, cord stiffness",
    "latch_each_N": 1200.0,
@@ -95,6 +151,34 @@
     25.843128349999994
    ],
    "sf_yield": 7.992939119217633
+  },
+  "door_E1200": {
+   "label": "as D at 1.20 kN, but the hinge pins hold the door's bottom edge where its land touches (no float: the hinge set at assembly and locked)",
+   "latch_each_N": 1200.0,
+   "latch_rating_N": 3558.4000000000005,
+   "latch_sf": 2.9653333333333336,
+   "hinge_each_N": 1287.408,
+   "hinge_pin_shear_MPa": 32.78357551616812,
+   "squeeze_lost_um": 27.303600000000095,
+   "squeeze_pct": [
+    23.466089887640447,
+    25.843296455056176
+   ],
+   "sf_yield": 5.214789708686436
+  },
+  "door_F750": {
+   "label": "as E at 0.75 kN, with a 12 x 20 mm rib along the door's top edge on its front face (x \u00b1112)",
+   "latch_each_N": 750.0,
+   "latch_rating_N": 3558.4000000000005,
+   "latch_sf": 4.744533333333334,
+   "hinge_each_N": 1063.9265,
+   "hinge_pin_shear_MPa": 27.0926658498335,
+   "squeeze_lost_um": 19.96710000000007,
+   "squeeze_pct": [
+    23.87825280898876,
+    25.84294361966292
+   ],
+   "sf_yield": 8.052439568876109
   },
   "latch_bracket": {
    "latch_load_N": 1200.0,

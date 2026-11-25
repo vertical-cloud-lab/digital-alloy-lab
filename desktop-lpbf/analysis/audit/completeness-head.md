@@ -7,24 +7,24 @@ Nothing here has been built, quoted by a shop or reviewed by BYU's LSO or EHS.
 
 ## Round 6 (2026-11-25): stale names, and the model's own part list
 
-The audit was re-run on the round-5 model with the round-6 optics merge (bbdf626) and the door-hinge change. The counts table
+The audit was re-run on the merged round-6 model (4e95878, with the zero-point clamps, the refined pump and HEPA housing). The counts table
 below is generated; the "Short answer" and the gap list after it are from 2026-11-22 and were not rewritten.
 - **The part list is now the model's own.** The audit read its parts from `analysis/out/mass.json`, which lags behind renamed and
   new parts until `mass_budget.py` is re-run. It now takes them from the model's tags, re-dumped from the current model
-  (`model_tags.json`, 268 parts; the VLM tray is context and is skipped), with mass and material from `mass.json` where the
-  name matches. That is **264 parts, against 223 on 2026-11-22**: rounds 4 and 5 drew the electrical parts (power boxes, sensors,
+  (`model_tags.json`, 276 parts; the VLM tray is context and is skipped), with mass and material from `mass.json` where the
+  name matches. That is **272 parts, against 223 on 2026-11-22**: rounds 4 to 6 drew the electrical parts (power boxes, sensors,
   E-stops, the Pirani gauge), the six liners, the coaxial monitor's optics, the calibration fixtures and more.
 - **Stale names.** Round 5 replaced the rod end's hermetic connector and its O-ring with seven Solid Sealing weld-ins, and dropped
   the thermal cutoff. The audit still mapped the connector, its O-ring and the cutoff, and its B1 entry took the weld-ins as a
   machined part. They now map to H1 as bought parts, priced in `electrical-bom.csv` E6-01..03. They show as **inconsistent**
   only because bom.csv H1's spec column still says "potted cable exit"; its candidate column lists the weld-ins.
 - **Overflow jar.** Round 5 renamed the jar, its port and its clamp, so three entries matched nothing. They are fixed: the port
-  (5786N25 stub) and the MKS 100318805 toggle clamp are priced, and the jar (a KF-40 flange welded into a 2 in. cup) is custom.
+  (5786N25 stub) and the MKS 100318805 toggle clamp are priced, and the jar (a KF-40 flange welded into a 316L cup, 2.5 in. since round 6) is custom.
 - **Window and cover slide** (the optics worker's merge): drawn as Edmund 38-990 (Ø50.8 × 9.53 mm, L7) and 36-299 (Ø50 × 2 mm, A2),
   and both are now priced. The window was "generic", and the slide was matched to a part number the model no longer uses.
-- **Counts now:** 125 priced, 3 unpriced, 46 generic, 78 custom, 2 missing from the BOM and 9 inconsistent, of 264. The two
-  missing parts are the scan PC (as before) and round 5's recoater sensor posts (tagged E3, which doesn't list them).
-- **Not done.** The 2026-11-22 short answer counted 26 generic parts; most of the 20 new ones are round 5's electrical parts, which
+- **Counts now:** 125 priced, 3 unpriced, 50 generic, 82 custom, 2 missing from the BOM and 9 inconsistent, of 272 (on bbdf626 before
+  the merge: 264 parts, 46 generic, 78 custom). The two missing parts are the scan PC (as before) and round 5's recoater sensor posts (tagged E3, which doesn't list them). The zero-point modules map to B3 (priced in robot-tooling.csv RA10); their pins, valve and air line are generic.
+- **Not done.** The 2026-11-22 short answer counted 26 generic parts; most of the 24 new ones are round 5's electrical parts (and round 6's zero-point pins, valve and air line), which
   have no entries in the audit's map (their part numbers are in `electrical-bom.csv`). The automation parts' tags (RA1-RA7) are
   robot-tooling lines, not bom.csv lines.
 

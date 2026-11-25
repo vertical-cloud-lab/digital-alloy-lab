@@ -70,7 +70,7 @@ Stretch is the ring's ID onto the groove's inner wall (face), the groove root (r
 | Lid | 3.53 mm, 955 mm long, 25 % | 4006 N (4.19 N/mm) | 2.14e+03–9.20e+03 N | 20 × M5: ≥ 48 kN; vacuum 5907 N |
 | Door, before (3.53 mm cord) | 3.53 mm, 662 mm long, 25 % | 2778 N (4.19 N/mm) | 1.48e+03–6.38e+03 N | vacuum 2445 N |
 | Door, now (1.78 mm cord) at 25 % | 1.78 mm, 662 mm long, 25 % | 1401 N (2.11 N/mm) | 882–2.44e+03 N | vacuum 2445 N seats it; at +20 mbar each 1807A61 needs **725 N** of preload (rated 3558 N) if the door were rigid |
-| Door, CalculiX (door_seal_fea.md) | the door bends between its two latches | case D1200: 1.20 kN per latch, squeeze 15.2-22.0 %; case E750: 0.75 kN per latch, squeeze 23.6-25.8 % | – | the latch preload to set is in door_seal_fea.md |
+| Door, CalculiX (door_seal_fea.md) | the door bends between its two latches | case D750: 0.75 kN per latch, squeeze 16.1-22.4 %; case D1200: 1.20 kN per latch, squeeze 15.2-22.0 %; case E750: 0.75 kN per latch, squeeze 23.6-25.8 %; case E1200: 1.20 kN per latch, squeeze 23.5-25.8 % | – | the latch preload to set is in door_seal_fea.md |
 | Door, now, at 15 % | 1.78 mm, 662 mm long, 15 % | 609 N (0.92 N/mm) | – | each latch needs 328 N at +20 mbar |
 | Drawer (2-033 in a half-dovetail) | 1.78 mm, 169 mm long, 25 % | 358 N (2.11 N/mm) | 225–622 N | each of 2 quarter-turn latches needs 180 N; the drawn envelope has no rating yet |
 | Reservoir on the dock (2-040) | 1.78 mm, 240 mm long, 25 % | 508 N (2.11 N/mm) | 320–884 N | 2 deg ramps, mu 0.15: push home 94 N, pull out 58 N, self-locking |
@@ -109,9 +109,9 @@ Arrhenius temperature scaling with E_a = 37 kJ/mol (Parker's He pair; the N₂ p
 | **Total** | | **6.98e-06** | **6.29e-05** |
 
 Gas envelope 11.3 L (chamber 6.4, hoses 1.5, filter housing 2.3, plenums and blower 1.1).
-Permeation alone adds **2.19 ppm O₂/h** and 19.71 ppm H₂O/h with no make-up flow.
+Permeation alone adds **2.18 ppm O₂/h** and 19.62 ppm H₂O/h with no make-up flow.
 Outgassing of 4605 cm² of bare Al and 18 cm² of exposed FKM after ~1 h: 3.68e-05 + 2.34e-05 mbar·L/s, **19 ppm H₂O/h**, falling roughly as 1/t.
-150 g of powder holding 150 ppm (new, Karl Fischer [11]) to 300 ppm water by mass carries 22–45 mg: **2486–4971 ppmv** in the loop if a 200 °C plate drives it off.
+150 g of powder holding 150 ppm (new, Karl Fischer [11]) to 300 ppm water by mass carries 22–45 mg: **2474–4948 ppmv** in the loop if a 200 °C plate drives it off.
 
 Make-up argon to hold the targets at steady state: 46.5 sccm for 10 ppm O₂ against permeation; 58 sccm for a −40 °C dew point against wall and seal outgassing.
 
@@ -142,17 +142,17 @@ Pump 4396K21: 1.42 L/s displacement; through two KF-25 bellows S_eff = 1.42 L/s 
 |---|---|---|---|---|
 | reservoir L (56 mm of powder) | 56 | 0.59 | 0.19 | 16 |
 | build cylinder, end of build (40 mm) | 40 | 0.42 | 0.14 | 11 |
-| overflow jar (90 mm) | 90 | 0.95 | 0.31 | 25 |
+| overflow jar (47 mm, full to its joint) | 47 | 0.50 | 0.16 | 13 |
 | reservoir M (40 mm) | 40 | 0.42 | 0.14 | 11 |
 
-**Soft pump:** the overflow jar needs τ ≥ 25 s, i.e. ≤ 0.44 L/s (27 std L/min) until ~100 mbar: a metering valve of Cv ≥ 0.14 beside the main valve. Pump-down then takes ~1.6 min to 1 mbar. metering valve with Cv >= this in parallel with the KF-25 valve; open the main valve below ~100 mbar. Back-fill through the same limit (the flowmeter-regulator 78595A5 set <= 25 L/min) and a sintered diffuser.
+**Soft pump:** the deepest bed (reservoir L (56 mm of powder)) needs τ ≥ 16 s, i.e. ≤ 0.72 L/s (43 std L/min) until ~100 mbar: a metering valve of Cv ≥ 0.22 beside the main valve. Pump-down then takes ~1.2 min to 1 mbar. metering valve with Cv >= this in parallel with the KF-25 valve; open the main valve below ~100 mbar. Back-fill through the same limit (the flowmeter-regulator 78595A5 set <= 25 L/min) and a sintered diffuser.
 
 
 Reservoir before the dock seal and lid seal were drawn (open to the room through the powder column): at +20 mbar, **299 sccm of argon leaves through the powder** at 8.9 mm/s superficial velocity, against a minimum fluidization velocity of 2.8 mm/s. Pumping down, room air comes in at ~9431 sccm.
 
 ## Rate-of-rise acceptance test
 
-Leak budget 1.00e-04 mbar·L/s in 11.3 L is a rise of 5.33e-04 mbar/min; outgassing after ~1 h adds 3.21e-04 mbar/min. isolate at <= 1 mbar after >= 1 h pumping; read a Pirani or capacitance gauge for 10 min.
+Leak budget 1.00e-04 mbar·L/s in 11.3 L is a rise of 5.30e-04 mbar/min; outgassing after ~1 h adds 3.19e-04 mbar/min. isolate at <= 1 mbar after >= 1 h pumping; read a Pirani or capacitance gauge for 10 min.
 
 ## Sources
 
