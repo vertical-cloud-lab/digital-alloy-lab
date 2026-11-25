@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-25T05:56Z",
+ "generated_utc": "2026-11-25T06:03Z",
  "what": "Cost, lead-time and time numbers for the robot-built desktop LPBF video (issue #260, PR #266, round 7)",
  "how_to_show": "Tour the categories in the order of 'categories'. For each, show hud.new (at spec, all new) against hud.used (the used picks where a sensible listing exists, new elsewhere) and the running totals hud.run_new / hud.run_used; hud.range_new / hud.range_used are the BOM's full low-high ranges. Call out the category's 'items' in order with their hud.new, hud.used, hud.lead_new and hud.lead_used. 'offtable' and 'services' are not on the table: show them as text rows at the end of the tour.",
  "definitions": {
@@ -153,37 +153,37 @@
    "items": [],
    "lead": {
     "new_as_chosen": {
-     "line": "S9",
-     "item": "Rack, guard frame, guard panels and sliding guard door",
+     "line": "R1",
+     "item": "Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters",
      "days": [
       12,
-      22
+      20
      ],
-     "text": "McMaster T-slot and sheet from stock; the 12U rack is not chosen yet",
-     "short": "2-8 d + BYU PO",
-     "source": "leadtime-lookups.csv MCM-shipping + estimate"
+     "text": "McMaster: '98% of items ship from stock, and most orders arrive same or next day'",
+     "short": "same or next day + BYU PO",
+     "source": "leadtime-lookups.csv MCM-shipping (mcmaster.com/info/delivery, 2026-11-25T05:39Z)"
     },
     "new_longest": {
-     "line": "S9",
-     "item": "Rack, guard frame, guard panels and sliding guard door",
+     "line": "R1",
+     "item": "Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters",
      "days": [
       12,
-      22
+      20
      ],
-     "text": "McMaster T-slot and sheet from stock; the 12U rack is not chosen yet",
-     "short": "2-8 d + BYU PO",
-     "source": "leadtime-lookups.csv MCM-shipping + estimate"
+     "text": "McMaster: '98% of items ship from stock, and most orders arrive same or next day'",
+     "short": "same or next day + BYU PO",
+     "source": "leadtime-lookups.csv MCM-shipping (mcmaster.com/info/delivery, 2026-11-25T05:39Z)"
     },
     "used_longest": {
-     "line": "S9",
-     "item": "Rack, guard frame, guard panels and sliding guard door",
+     "line": "R1",
+     "item": "Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters",
      "days": [
       12,
-      22
+      20
      ],
-     "text": "McMaster T-slot and sheet from stock; the 12U rack is not chosen yet",
-     "short": "2-8 d + BYU PO",
-     "source": "leadtime-lookups.csv MCM-shipping + estimate"
+     "text": "McMaster: '98% of items ship from stock, and most orders arrive same or next day'",
+     "short": "same or next day + BYU PO",
+     "source": "leadtime-lookups.csv MCM-shipping (mcmaster.com/info/delivery, 2026-11-25T05:39Z)"
     },
     "unknown": []
    },
@@ -218,9 +218,9 @@
     "run_used": "$5.5k",
     "range_new": "$1.0k-$1.9k",
     "range_used": "$1.0k-$1.9k",
-    "lead_new": "2-3 wk (S9: 2-8 d + BYU PO)",
-    "lead_used": "2-3 wk (S9: 2-8 d + BYU PO)",
-    "lead_new_as_chosen": "2-3 wk (S9: 2-8 d + BYU PO)",
+    "lead_new": "12-20 d (R1: same or next day + BYU PO)",
+    "lead_used": "12-20 d (R1: same or next day + BYU PO)",
+    "lead_new_as_chosen": "12-20 d (R1: same or next day + BYU PO)",
     "lead_unknown": ""
    }
   },
@@ -361,12 +361,12 @@
     11498.29
    ],
    "cheaper": [
-    11846.23,
-    17033.71
+    11789.87,
+    16977.35
    ],
    "both": [
-    6944.32,
-    10002.23
+    6887.96,
+    9945.87
    ],
    "spec_new": 13543.28,
    "spec_used": [
@@ -429,12 +429,12 @@
      26251.42
     ],
     "cheaper": [
-     21865.44,
-     31471.49
+     21809.08,
+     31415.13
     ],
     "both": [
-     16895.71,
-     24344.19
+     16839.35,
+     24287.83
     ],
     "spec_new": 23973.66,
     "spec_used": [
@@ -527,15 +527,15 @@
      "source": "quotes/ipg-ylr-500-u3-sm-ac.md (IPG budgetary quote, 2026-11-18)"
     },
     "used_longest": {
-     "line": "A2",
-     "item": "Cleaning and consumables",
+     "line": "L1",
+     "item": "Fiber laser source",
      "days": [
-      2,
-      11
+      3,
+      8
      ],
-     "text": "McMaster 5572N116 not readable by script (it rides on the McMaster order); Dynabrade 61470 at TA Industrial: 'Est. Lead Time: 6 days'; the Edmund and Cloudray slides are a PCard order",
-     "short": "2-11 d",
-     "source": "leadtime-lookups.csv A2-dynabrade-61470, MCM-shipping"
+     "text": "eBay, US surplus dealer (M6860): ships the same day from El Paso by LTL freight; under $3,500 with freight, so a PCard",
+     "short": "same day + ~1 wk freight",
+     "source": "cost/used-options.csv (2026-11-20); cost-scenarios.md section 4"
     },
     "unknown": [
      "L4",
@@ -553,12 +553,12 @@
      45705.42
     ],
     "cheaper": [
-     31253.23,
-     79466.94
+     31196.87,
+     79410.58
     ],
     "both": [
-     24571.7,
-     43775.24
+     24515.34,
+     43718.88
     ],
     "spec_new": 66676.61,
     "spec_used": [
@@ -575,7 +575,7 @@
     "range_new": "$9.4k-$48.0k",
     "range_used": "$7.7k-$19.5k",
     "lead_new": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
-    "lead_used": "2-11 d (A2: 2-11 d)",
+    "lead_used": "3-8 d (L1: same day + ~1 wk freight)",
     "lead_new_as_chosen": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
     "lead_unknown": "L4 L5 T2"
    }
@@ -689,12 +689,12 @@
      76109.29
     ],
     "cheaper": [
-     52370.43,
-     115809.68
+     52314.07,
+     115753.32
     ],
     "both": [
-     45000.9,
-     73381.32
+     44944.54,
+     73324.96
     ],
     "spec_new": 94531.6,
     "spec_used": [
@@ -793,12 +793,12 @@
      77036.96
     ],
     "cheaper": [
-     52946.11,
-     116652.36
+     52889.75,
+     116596.0
     ],
     "both": [
-     45576.58,
-     74224.0
+     45520.22,
+     74167.64
     ],
     "spec_new": 95192.27,
     "spec_used": [
@@ -898,12 +898,12 @@
      78376.21
     ],
     "cheaper": [
-     53635.36,
-     117991.61
+     53579.0,
+     117935.25
     ],
     "both": [
-     46265.83,
-     75563.25
+     46209.47,
+     75506.89
     ],
     "spec_new": 95881.52,
     "spec_used": [
@@ -947,11 +947,11 @@
     14366.03
    ],
    "cheaper": [
-    10095.08,
+    9957.32,
     12799.31
    ],
    "both": [
-    9089.07,
+    8951.31,
     11793.3
    ],
    "spec_new": 10497.33,
@@ -1016,12 +1016,12 @@
      92742.24
     ],
     "cheaper": [
-     63730.44,
-     130790.92
+     63536.32,
+     130734.56
     ],
     "both": [
-     55354.9,
-     87356.55
+     55160.78,
+     87300.19
     ],
     "spec_new": 106378.85,
     "spec_used": [
@@ -1122,12 +1122,12 @@
      117519.24
     ],
     "cheaper": [
-     72945.44,
-     155567.92
+     72751.32,
+     155511.56
     ],
     "both": [
-     64569.9,
-     112133.55
+     64375.78,
+     112077.19
     ],
     "spec_new": 115593.85,
     "spec_used": [
@@ -2437,7 +2437,7 @@
     "name": "Laser chiller (only for a water-cooled laser)",
     "new": "$0 (air-cooled laser)",
     "used": "buy new",
-    "lead_new": "0-0 d",
+    "lead_new": "not needed (air-cooled laser)",
     "lead_new_days": [
      0,
      0
@@ -3405,7 +3405,7 @@
     "name": "Build modules: welding, boring and honing (3 modules)",
     "new": "$1.5k",
     "used": "buy new",
-    "lead_new": "same or next day + BYU PO",
+    "lead_new": "stock same or next day; honing outside 3-6 wk (estimate) + BYU PO",
     "lead_new_days": [
      12,
      20
@@ -3429,12 +3429,12 @@
     117519.24
    ],
    "cheaper": [
-    72945.44,
-    155567.92
+    72751.32,
+    155511.56
    ],
    "both": [
-    64569.9,
-    112133.55
+    64375.78,
+    112077.19
    ]
   },
   "at_spec": {
@@ -3561,12 +3561,6 @@
     "saving": -3306.93
    },
    {
-    "line": "P1",
-    "key": "P1:4083N11",
-    "base_part": "4083N11",
-    "saving": 137.76
-   },
-   {
     "line": "S2",
     "key": "S2:interlock",
     "base_part": "Omron D4JL-4NFA-C5-NPT (DigiKey)",
@@ -3657,12 +3651,6 @@
     "saving": 69.71
    },
    {
-    "line": "G7",
-    "key": "G7:4518K63",
-    "base_part": "4518K63",
-    "saving": 18.37
-   },
-   {
     "line": "S9",
     "key": "S9:5278N47",
     "base_part": "5278N47",
@@ -3675,46 +3663,16 @@
     "saving": 3.8
    },
    {
-    "line": "G7",
-    "key": "G7:4518K49",
-    "base_part": "4518K49",
-    "saving": 12.26
-   },
-   {
     "line": "C6",
     "key": "C6:69915K54",
     "base_part": "69915K54",
     "saving": 32.9
    },
    {
-    "line": "G7",
-    "key": "G7:5786N23",
-    "base_part": "5786N23",
-    "saving": 6.69
-   },
-   {
-    "line": "G7",
-    "key": "G7:89785K824",
-    "base_part": "89785K824",
-    "saving": 13.68
-   },
-   {
     "line": "C6",
     "key": "C6:7812K54",
     "base_part": "7812K54",
     "saving": 11.06
-   },
-   {
-    "line": "G7",
-    "key": "G7:4518K64",
-    "base_part": "4518K64",
-    "saving": 2.53
-   },
-   {
-    "line": "G7",
-    "key": "G7:5786N25",
-    "base_part": "5786N25",
-    "saving": 2.83
    },
    {
     "line": "G7",
@@ -3991,7 +3949,7 @@
      0,
      0
     ],
-    "short_new": "0-0 d",
+    "short_new": "not needed (air-cooled laser)",
     "used_text": "",
     "used_source": "",
     "days_used": null,
@@ -5283,7 +5241,7 @@
      2,
      6
     ],
-    "short_new": "same or next day + BYU PO",
+    "short_new": "stock same or next day; honing outside 3-6 wk (estimate) + BYU PO",
     "used_text": "",
     "used_source": "",
     "days_used": null,
@@ -5774,14 +5732,6 @@
        ]
       },
       {
-       "line": "L3",
-       "item": "Collimator / beam expander",
-       "wk": [
-        11.9,
-        15.0
-       ]
-      },
-      {
        "line": "L1",
        "item": "Fiber laser source",
        "wk": [
@@ -5811,6 +5761,14 @@
        "wk": [
         3.1,
         4.6
+       ]
+      },
+      {
+       "line": "M3",
+       "item": "Z stage (less servo): integrated actuator under the floor",
+       "wk": [
+        0.6,
+        4.0
        ]
       }
      ],
@@ -5851,17 +5809,9 @@
       11.9,
       15.0
      ],
-     "set_by": "L3",
-     "set_by_item": "Collimator / beam expander",
+     "set_by": "L1",
+     "set_by_item": "Fiber laser source",
      "next": [
-      {
-       "line": "L1",
-       "item": "Fiber laser source",
-       "wk": [
-        11.9,
-        15.0
-       ]
-      },
       {
        "line": "G6",
        "item": "O2 analyzer",
@@ -5901,6 +5851,14 @@
         1.7,
         3.4
        ]
+      },
+      {
+       "line": "S9",
+       "item": "Rack, guard frame, guard panels and sliding guard door",
+       "wk": [
+        1.7,
+        3.1
+       ]
       }
      ],
      "unknown": [
@@ -5924,7 +5882,7 @@
       18.1,
       19.3
      ],
-     "critical_split": "purchases (L3)",
+     "critical_split": "purchases (L1)",
      "critical_all_in_house": "fabrication (all in house)",
      "ready_split_wk": [
       12.9,
@@ -8920,26 +8878,33 @@
      "robot_s": 1584.5,
      "person_min": 133.0,
      "fail": 0,
-     "person_steps": 3
+     "person_steps": 3,
+     "fetch_trips": 5,
+     "fetch_s": 700.0
     },
     "41-assembly-chamber": {
      "steps": 103,
      "robot_s": 6661.6,
      "person_min": 384.0,
      "fail": 26,
-     "person_steps": 11
+     "person_steps": 11,
+     "fetch_trips": 16,
+     "fetch_s": 2240.0
     },
     "50-integration": {
      "steps": 6,
      "robot_s": 3600.0,
      "person_min": 255.0,
      "fail": 0,
-     "person_steps": 5
+     "person_steps": 5,
+     "fetch_trips": 0,
+     "fetch_s": 0.0
     }
    },
    "totals": {
     "steps": 139,
     "robot_h": 3.29,
+    "fetch_h": 0.82,
     "person_h": 12.87,
     "fail_steps": 26,
     "person_steps": 19
@@ -8954,9 +8919,796 @@
     "flip_s": 30.0,
     "dual_s": 60.0,
     "rotate_s": 20.0,
-    "machine_s": 10.0
+    "machine_s": 10.0,
+    "parts_per_trip": 4,
+    "trip_s": 140.0
    },
-   "method": "ESTIMATES, not measurements: results.json's 'seconds' is the checker's compute time. Robot time = 30 s per placement + the insertion path from sequence.json at 10 mm/s, 20 s + 15 s a screw, 90 s an O-ring or cord, 30 s a flip, 60 s a two-arm carry, 15 s a tool change; MiR trips to the long table are not counted. Person minutes per step are listed in build_hud.py (PERSON_MIN), 1 min per screw the arm couldn't drive and 5 min per failed placement."
+   "method": "ESTIMATES, not measurements: results.json's 'seconds' is the checker's compute time. Robot time = 30 s per placement + the insertion path from sequence.json at 10 mm/s, 20 s + 15 s a screw, 90 s an O-ring or cord, 30 s a flip, 60 s a two-arm carry, 15 s a tool change; MiR trips to the long table are counted per chapter (4 parts a trip, 140 s a round trip). Person minutes per step are listed in build_hud.py (PERSON_MIN), 1 min per screw the arm couldn't drive and 5 min per failed placement."
   }
+ },
+ "tour": [
+  {
+   "cat": "stock",
+   "on_table": true,
+   "title": "Stock to machine",
+   "new": "$4.4k",
+   "used": "$4.4k",
+   "run_new": "$4.4k",
+   "run_used": "$4.4k",
+   "range_new": "$4.4k-$5.1k",
+   "range_used": "$4.4k-$5.1k",
+   "lead_new": "12-20 d (F4: same or next day + BYU PO)",
+   "lead_used": "12-20 d (F4: same or next day + BYU PO)",
+   "lead_new_as_chosen": "12-20 d (F4: same or next day + BYU PO)",
+   "lead_unknown": "",
+   "items": [
+    {
+     "id": "F4",
+     "name": "MIC-6 cast plate, 5/8 x 24 x 72 in. (McMaster 86825K49)",
+     "new": "$1.3k",
+     "used": "buy new",
+     "lead_new": "same or next day + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      12,
+      20
+     ]
+    },
+    {
+     "id": "G1",
+     "name": "Chamber stock: 6061-T651 5-1/2 in. frame blank and 1 in. / 3/4 in. plate",
+     "new": "$1.3k",
+     "used": "buy new",
+     "lead_new": "1-7 d",
+     "lead_new_days": [
+      3,
+      12
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      3,
+      12
+     ]
+    }
+   ]
+  },
+  {
+   "cat": "sheet",
+   "on_table": true,
+   "title": "Sheet to cut, bend and TIG-weld",
+   "new": "$1.0k",
+   "used": "$1.0k",
+   "run_new": "$5.5k",
+   "run_used": "$5.5k",
+   "range_new": "$1.0k-$1.9k",
+   "range_used": "$1.0k-$1.9k",
+   "lead_new": "12-20 d (R1: same or next day + BYU PO)",
+   "lead_used": "12-20 d (R1: same or next day + BYU PO)",
+   "lead_new_as_chosen": "12-20 d (R1: same or next day + BYU PO)",
+   "lead_unknown": "",
+   "items": []
+  },
+  {
+   "cat": "motion",
+   "on_table": true,
+   "title": "Motion",
+   "new": "$5.0k",
+   "used": "$4.9k",
+   "run_new": "$10.4k",
+   "run_used": "$10.4k",
+   "range_new": "$5.0k-$7.9k",
+   "range_used": "$4.9k-$7.8k",
+   "lead_new": "1-4 wk (M3: 2 d to 3 wk)",
+   "lead_used": "1-4 wk (M3: 2 d to 3 wk)",
+   "lead_new_as_chosen": "1-4 wk (M3: 2 d to 3 wk)",
+   "lead_unknown": "M1 M4",
+   "items": [
+    {
+     "id": "M1",
+     "name": "Recoater axis: ball screw, rail, Ferrotec feedthrough",
+     "new": "$1.3k",
+     "used": "buy new",
+     "lead_new": "Ferrotec: quote",
+     "lead_new_days": null,
+     "lead_used": "same as new",
+     "lead_used_days": null
+    },
+    {
+     "id": "A3",
+     "name": "Door drive and latch pneumatics (SMC)",
+     "new": "$1.1k",
+     "used": "buy new",
+     "lead_new": "2-10 d",
+     "lead_new_days": [
+      2,
+      10
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      2,
+      10
+     ]
+    },
+    {
+     "id": "M3",
+     "name": "Z actuator (THK KR26, 2 mm lead)",
+     "new": "$923",
+     "used": "buy new",
+     "lead_new": "2 d to 3 wk",
+     "lead_new_days": [
+      4,
+      28
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      4,
+      28
+     ]
+    },
+    {
+     "id": "M2",
+     "name": "2 servos (Teknic ClearPath-SD, NEMA 23)",
+     "new": "$530",
+     "used": "$197",
+     "lead_new": "ships in 3 d",
+     "lead_new_days": [
+      2,
+      10
+     ],
+     "lead_used": "3-8 d (eBay, US)",
+     "lead_used_days": [
+      3,
+      8
+     ]
+    }
+   ]
+  },
+  {
+   "cat": "gas",
+   "on_table": true,
+   "title": "Vacuum and gas",
+   "new": "$13.5k",
+   "used": "$8.4k",
+   "run_new": "$24.0k",
+   "run_used": "$18.8k",
+   "range_new": "$13.5k-$18.7k",
+   "range_used": "$8.4k-$11.5k",
+   "lead_new": "6-9 wk (G6: 6-8 wk)",
+   "lead_used": "2-3 wk (G7: 2-8 d + BYU PO)",
+   "lead_new_as_chosen": "6-9 wk (G6: 6-8 wk)",
+   "lead_unknown": "G4",
+   "items": [
+    {
+     "id": "G2",
+     "name": "Dry scroll vacuum pump (Edwards nXDS6i)",
+     "new": "$6.0k",
+     "used": "$1.3k",
+     "lead_new": "ships same day + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "3-8 d (eBay, US)",
+     "lead_used_days": [
+      3,
+      8
+     ]
+    },
+    {
+     "id": "G7",
+     "name": "Valves, KF fittings, hoses and gauges",
+     "new": "$3.9k",
+     "used": "$3.4k",
+     "lead_new": "2-8 d + BYU PO",
+     "lead_new_days": [
+      12,
+      22
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      12,
+      22
+     ]
+    },
+    {
+     "id": "G9",
+     "name": "Dew-point transmitter (Vaisala DMT143)",
+     "new": "$2.3k",
+     "used": "$166",
+     "lead_new": "2 wk (made to order)",
+     "lead_new_days": [
+      16,
+      19
+     ],
+     "lead_used": "3-8 d (eBay, US)",
+     "lead_used_days": [
+      3,
+      8
+     ]
+    },
+    {
+     "id": "G6",
+     "name": "Trace O2 analyzer (Ntron Microx)",
+     "new": "$2.1k",
+     "used": "$1.0k",
+     "lead_new": "6-8 wk",
+     "lead_new_days": [
+      44,
+      61
+     ],
+     "lead_used": "3-8 d (eBay, US)",
+     "lead_used_days": [
+      3,
+      8
+     ]
+    },
+    {
+     "id": "G4",
+     "name": "Sealed recirculation blower (gas-tight, ~100 L/min)",
+     "new": "$1.5k",
+     "used": "buy new",
+     "lead_new": "quote; no gas-tight part found",
+     "lead_new_days": null,
+     "lead_used": "same as new",
+     "lead_used_days": null
+    }
+   ]
+  },
+  {
+   "cat": "optics",
+   "on_table": true,
+   "title": "Laser and optics",
+   "new": "$42.7k",
+   "used": "$8.4k-$14.1k",
+   "run_new": "$66.7k",
+   "run_used": "$27.2k-$32.9k",
+   "range_new": "$9.4k-$48.0k",
+   "range_used": "$7.7k-$19.5k",
+   "lead_new": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
+   "lead_used": "3-8 d (L1: same day + ~1 wk freight)",
+   "lead_new_as_chosen": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
+   "lead_unknown": "L4 L5 T2",
+   "items": [
+    {
+     "id": "L1",
+     "name": "Fiber laser, 500 W single-mode (IPG YLR-500-U3-SM-AC)",
+     "new": "$23.0k",
+     "used": "$2.5k",
+     "lead_new": "10-12 wk ARO + BYU PO",
+     "lead_new_days": [
+      83,
+      105
+     ],
+     "lead_used": "same day + ~1 wk freight",
+     "lead_used_days": [
+      3,
+      8
+     ]
+    },
+    {
+     "id": "L5",
+     "name": "Galvo scan head (SCANLAB basiCube 20)",
+     "new": "$12.0k",
+     "used": "$1.4k",
+     "lead_new": "quote; no published lead + BYU PO",
+     "lead_new_days": null,
+     "lead_used": "3-8 d (eBay, US)",
+     "lead_used_days": [
+      3,
+      8
+     ]
+    },
+    {
+     "id": "T2",
+     "name": "Melt-pool photodiode chain (Thorlabs)",
+     "new": "$2.1k",
+     "used": "buy new",
+     "lead_new": "PDA36A2: no date shown + BYU PO",
+     "lead_new_days": null,
+     "lead_used": "same as new",
+     "lead_used_days": null
+    },
+    {
+     "id": "L4",
+     "name": "Safety shutter + beam dump (>= 500 W CW)",
+     "new": "$2.0k",
+     "used": "buy new",
+     "lead_new": "quote (no >= 500 W catalogue part)",
+     "lead_new_days": null,
+     "lead_used": "same as new",
+     "lead_used_days": null
+    },
+    {
+     "id": "A2s",
+     "name": "Cover slides, AR-coated (consumables)",
+     "new": "$1.4k",
+     "used": "buy new",
+     "lead_new": "2-11 d",
+     "lead_new_days": [
+      2,
+      11
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      2,
+      11
+     ]
+    },
+    {
+     "id": "L6",
+     "name": "f-theta lens, f = 160 mm (Thorlabs FTH160-1064 + 2 windows)",
+     "new": "$1.3k",
+     "used": "$100",
+     "lead_new": "3-4 wk (overseas stock) + BYU PO",
+     "lead_new_days": [
+      33,
+      47
+     ],
+     "lead_used": "3-8 d (eBay, US)",
+     "lead_used_days": [
+      3,
+      8
+     ]
+    },
+    {
+     "id": "L2",
+     "name": "Laser chiller (only for a water-cooled laser)",
+     "new": "$0 (air-cooled laser)",
+     "used": "buy new",
+     "lead_new": "not needed (air-cooled laser)",
+     "lead_new_days": [
+      0,
+      0
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      0,
+      0
+     ]
+    },
+    {
+     "id": "L3",
+     "name": "Collimator (IPG affixed 2.5 mm, with the laser)",
+     "new": "with the laser (price TBD)",
+     "used": "$495",
+     "lead_new": "with the laser + BYU PO",
+     "lead_new_days": [
+      83,
+      105
+     ],
+     "lead_used": "3-8 d (eBay, US)",
+     "lead_used_days": [
+      3,
+      8
+     ]
+    }
+   ]
+  },
+  {
+   "cat": "elec",
+   "on_table": true,
+   "title": "Electronics, heaters and sensors",
+   "new": "$27.9k",
+   "used": "$22.6k",
+   "run_new": "$94.5k",
+   "run_used": "$49.8k-$55.6k",
+   "range_new": "$21.9k-$37.1k",
+   "range_used": "$21.2k-$30.4k",
+   "lead_new": "3-5 wk (D2: backordered (~3-4 wk))",
+   "lead_used": "2-3 wk (E1: 2-10 d + BYU PO)",
+   "lead_new_as_chosen": "29-30 wk (S2: 27 wk (IDEC HS6B switch) + BYU PO)",
+   "lead_unknown": "C1 H1 B3",
+   "items": [
+    {
+     "id": "B3",
+     "name": "Zero-point clamps (2 x SCHUNK VERO-S NSE-HT mini 88-20)",
+     "new": "$6.4k",
+     "used": "buy new",
+     "lead_new": "modules 1 d (snippet); pins: ask SCHUNK + BYU PO",
+     "lead_new_days": null,
+     "lead_used": "same as new",
+     "lead_used_days": null
+    },
+    {
+     "id": "C1",
+     "name": "Scan card (SCANLAB RTC6)",
+     "new": "$6.1k",
+     "used": "$1.5k",
+     "lead_new": "quote; no published lead + BYU PO",
+     "lead_new_days": null,
+     "lead_used": "3-5 d",
+     "lead_used_days": [
+      3,
+      5
+     ]
+    },
+    {
+     "id": "H1",
+     "name": "Heater stacks, weld-in feedthroughs and thermocouples (3 modules)",
+     "new": "$3.8k",
+     "used": "buy new",
+     "lead_new": "SST weld-ins: no published lead + BYU PO",
+     "lead_new_days": null,
+     "lead_used": "same as new",
+     "lead_used_days": null
+    },
+    {
+     "id": "S1",
+     "name": "Safety controller (Banner XS26-2 + XS16si + XS2so) and contactors",
+     "new": "$2.4k",
+     "used": "buy new",
+     "lead_new": "in stock (1); then 4 wk + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      12,
+      20
+     ]
+    },
+    {
+     "id": "A1",
+     "name": "Step-confirm sensors, NFC and load cell (incl. Omron fibre amplifier)",
+     "new": "$1.5k",
+     "used": "buy new",
+     "lead_new": "in stock (5); then 33 wk + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      12,
+      20
+     ]
+    },
+    {
+     "id": "D2",
+     "name": "UPS, 2U (Eaton 5PX1500RTG2)",
+     "new": "$1.1k",
+     "used": "$450",
+     "lead_new": "backordered (~3-4 wk)",
+     "lead_new_days": [
+      22,
+      32
+     ],
+     "lead_used": "3-8 d (eBay, US)",
+     "lead_used_days": [
+      3,
+      8
+     ]
+    },
+    {
+     "id": "C5",
+     "name": "PLC with thermocouple and 4-20 mA I/O (AutomationDirect Productivity1000)",
+     "new": "$1.1k",
+     "used": "buy new",
+     "lead_new": "in stock, ships same day",
+     "lead_new_days": [
+      2,
+      6
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      2,
+      6
+     ]
+    },
+    {
+     "id": "D1",
+     "name": "Tray dock and umbilicals (HARTING Han-Modular)",
+     "new": "$539",
+     "used": "buy new",
+     "lead_new": "2-6 d + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      12,
+      20
+     ]
+    }
+   ]
+  },
+  {
+   "cat": "seal",
+   "on_table": true,
+   "title": "Seals and fasteners",
+   "new": "$661",
+   "used": "$661",
+   "run_new": "$95.2k",
+   "run_used": "$50.5k-$56.2k",
+   "range_new": "$661-$928",
+   "range_used": "$661-$928",
+   "lead_new": "12-20 d (G8: same or next day + BYU PO)",
+   "lead_used": "12-20 d (G8: same or next day + BYU PO)",
+   "lead_new_as_chosen": "12-20 d (G8: same or next day + BYU PO)",
+   "lead_unknown": "",
+   "items": []
+  },
+  {
+   "cat": "frame",
+   "on_table": true,
+   "title": "Frames",
+   "new": "$689",
+   "used": "$689",
+   "run_new": "$95.9k",
+   "run_used": "$51.2k-$56.9k",
+   "range_new": "$689-$1.3k",
+   "range_used": "$689-$1.3k",
+   "lead_new": "2-3 wk (S9: 2-8 d + BYU PO)",
+   "lead_used": "2-3 wk (S9: 2-8 d + BYU PO)",
+   "lead_new_as_chosen": "2-3 wk (S9: 2-8 d + BYU PO)",
+   "lead_unknown": "",
+   "items": [
+    {
+     "id": "S9",
+     "name": "12U rack, T-slot guard frame and guard panels",
+     "new": "$1.1k",
+     "used": "buy new",
+     "lead_new": "2-8 d + BYU PO",
+     "lead_new_days": [
+      12,
+      22
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      12,
+      22
+     ]
+    }
+   ]
+  },
+  {
+   "cat": "offtable",
+   "on_table": false,
+   "title": "Bought, not on the table",
+   "new": "$10.5k",
+   "used": "$9.5k",
+   "run_new": "$106.4k",
+   "run_used": "$60.7k-$66.4k",
+   "range_new": "$10.5k-$15.4k",
+   "range_used": "$9.5k-$14.4k",
+   "lead_new": "12-20 d (S6: 2-6 d + BYU PO)",
+   "lead_used": "12-20 d (S8: same or next day + BYU PO)",
+   "lead_new_as_chosen": "12-20 d (S6: 2-6 d + BYU PO)",
+   "lead_unknown": "S7 T1",
+   "items": [
+    {
+     "id": "P1",
+     "name": "Powder glovebox (McMaster 4083N14)",
+     "new": "$4.3k",
+     "used": "buy new",
+     "lead_new": "2-6 d + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      12,
+      20
+     ]
+    },
+    {
+     "id": "A2v",
+     "name": "Metal-dust vacuum (McMaster 5572N116, NFPA 484)",
+     "new": "$3.2k",
+     "used": "buy new",
+     "lead_new": "2-11 d",
+     "lead_new_days": [
+      2,
+      11
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      2,
+      11
+     ]
+    },
+    {
+     "id": "T1",
+     "name": "Laser power meter, 500 W (Gentec-EO UP55M head + U-LINK)",
+     "new": "$2.8k",
+     "used": "$1.8k",
+     "lead_new": "contact sales",
+     "lead_new_days": null,
+     "lead_used": "1-3 wk (head from China)",
+     "lead_used_days": [
+      7,
+      20
+     ]
+    },
+    {
+     "id": "S8",
+     "name": "Class D extinguisher, 30 lb (McMaster 6435T23)",
+     "new": "$920",
+     "used": "buy new",
+     "lead_new": "same or next day + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      12,
+      20
+     ]
+    },
+    {
+     "id": "S7",
+     "name": "Room O2-deficiency monitor (Macurco OX-6)",
+     "new": "$663",
+     "used": "buy new",
+     "lead_new": "not read",
+     "lead_new_days": null,
+     "lead_used": "same as new",
+     "lead_used_days": null
+    }
+   ]
+  },
+  {
+   "cat": "services",
+   "on_table": false,
+   "title": "Services",
+   "new": "$9.2k",
+   "used": "$9.2k",
+   "run_new": "$115.6k",
+   "run_used": "$69.9k-$75.6k",
+   "range_new": "$9.2k-$24.8k",
+   "range_used": "$9.2k-$24.8k",
+   "lead_new": "SendCutSend 5-15 d; BYU shop queue 7.6 wk (outsourcing split) to 16.4 wk (all in house); honing loop 3-6 wk (estimate)",
+   "lead_used": "SendCutSend 5-15 d; BYU shop queue 7.6 wk (outsourcing split) to 16.4 wk (all in house); honing loop 3-6 wk (estimate)",
+   "lead_new_as_chosen": "2-4 wk (X1: SendCutSend 5-15 d; shop queue 7.6-16.4 wk + BYU PO)",
+   "lead_unknown": "",
+   "items": [
+    {
+     "id": "X1",
+     "name": "Machining of the custom parts (193-208 shop hours)",
+     "new": "$7.7k",
+     "used": "buy new",
+     "lead_new": "SendCutSend 5-15 d; shop queue 7.6-16.4 wk + BYU PO",
+     "lead_new_days": [
+      17,
+      29
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      17,
+      29
+     ]
+    },
+    {
+     "id": "B1s",
+     "name": "Build modules: welding, boring and honing (3 modules)",
+     "new": "$1.5k",
+     "used": "buy new",
+     "lead_new": "stock same or next day; honing outside 3-6 wk (estimate) + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      12,
+      20
+     ]
+    }
+   ]
+  }
+ ],
+ "headline": {
+  "cost_at_spec": {
+   "new": 115593.85,
+   "used": [
+    69894.44,
+    75620.06
+   ],
+   "saving": [
+    39973.79,
+    45699.41
+   ]
+  },
+  "cost_bom_range": {
+   "new": [
+    76338.69,
+    161154.6
+   ],
+   "used": [
+    67762.16,
+    117519.24
+   ],
+   "cheaper": [
+    72751.32,
+    155511.56
+   ],
+   "both": [
+    64375.78,
+    112077.19
+   ]
+  },
+  "cw_chain": {
+   "new": 44355.0,
+   "used": [
+    5520.32,
+    11245.94
+   ]
+  },
+  "weeks": {
+   "new_as_chosen": {
+    "parts": [
+     28.7,
+     29.7
+    ],
+    "set_by": "S2",
+    "ready": [
+     29.7,
+     30.7
+    ]
+   },
+   "new": {
+    "parts": [
+     11.9,
+     15.0
+    ],
+    "set_by": "L1",
+    "ready_split": [
+     12.9,
+     16.0
+    ],
+    "ready_all_in_house": [
+     19.1,
+     20.3
+    ]
+   },
+   "used": {
+    "parts": [
+     0.6,
+     4.0
+    ],
+    "set_by": "M3",
+    "ready_split": [
+     10.3,
+     11.5
+    ],
+    "ready_all_in_house": [
+     19.1,
+     20.3
+    ]
+   },
+   "saved_by_used_split": [
+    2.6,
+    4.5
+   ],
+   "note": "new = as chosen but with S2's HS6B and H2's K8DT swapped for stocked parts; 'split' = outsourcing.md's recommended make/buy split (152 shop hours at BYU), 'all in house' = 329 h at BYU"
+  },
+  "machining_h": {
+   "with_4th_axis": 287.3,
+   "three_axis": 302.3,
+   "cam": 132.1,
+   "setups_4th": 98.6,
+   "setups_3axis": 113.6,
+   "cutting": 33.2,
+   "deburr_inspect": 23.2,
+   "parts": 57
+  },
+  "assembly": {
+   "steps": 139,
+   "robot_h": 3.29,
+   "mir_fetch_h": 0.82,
+   "person_h": 12.87,
+   "failed_or_partial": 26,
+   "person_or_shop_steps": 19,
+   "basis": "estimates (results.json's seconds are compute time)"
+  },
+  "po_rule": "BYU: purchases of $3,500 or more from one vendor need a purchase order: 'Allow ten days to two weeks PLUS shipping time' (capstone.byu.edu/purchase-orders, read 2026-11-25); under $3,500 a PCard"
  }
 }

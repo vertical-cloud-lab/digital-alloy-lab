@@ -210,7 +210,11 @@ def bom_corpus(line):
             text += " " + r["part number"]
     if line == "FX":
         text += " " + " ".join(r["part_number"] for r in csv.DictReader(open(LPBF / "fasteners.csv")))
-    return text + " 3869K34" if line == "H1" else text  # H1 writes it "3869K35/34"
+    if line == "G7":  # G7's McMaster subtotal is its mcmaster-parts.csv rows, less the 4277T52 and the 4518K73 it replaced
+        text += " " + " ".join(r["part_number"] for r in csv.DictReader(open(LPBF / "mcmaster-parts.csv"))
+                               if r["bom_line"].startswith("G7") and r["part_number"] not in ("4277T52", "4518K73"))
+    # P1's low end is its alternative, McMaster 4083N11 ($1,693.76); H1 writes 3869K34 as "3869K35/34"
+    return text + {"H1": " 3869K34", "P1": " 4083N11"}.get(line, "")
 
 
 def read_cheaper_current():
@@ -514,6 +518,8 @@ PERSON_MIN = {
     "F02": (0, "levelling mounts go on in T01"),
 }
 FAIL_MIN = 5.0          # a failed robot step done by a person instead (estimate), per step; screws: 1 min each
+PARTS_PER_TRIP = 4      # parts a MiR brings from the long table per trip, in a tote (estimate)
+TRIP_S = 2 * (25.0 + 30.0 + 15.0)   # two legs, two dockings, two AprilTag registrations (analysis/shop/timeline.py)
 SHOP_NOTES_MIN = {"M02": (3, "three M3 helical inserts, in the shop after tapping"),
                   "M25": (120, "seven weld-in feedthroughs TIG-welded into the rod end (welder)")}
 
@@ -588,18 +594,26 @@ def assembly_times():
         c["person_min"] = round(c["person_min"] + x["person_min"], 1)
         c["fail"] += x["status"] in ("fail", "part")
         c["person_steps"] += x["status"] in ("person", "shop")
+    # MiR trips to the long table: the parts each chapter places, PARTS_PER_TRIP to a tote, each trip two legs, two
+    # dockings and two registrations (timeline.py's 25 s, 30 s and 15 s: estimates)
+    for ch, c in chapters.items():
+        n = sum(1 for x in rows if x["chapter"] == ch and x["do"] in ("place", "seal", "dual"))
+        c["fetch_trips"] = math.ceil(n / PARTS_PER_TRIP)
+        c["fetch_s"] = c["fetch_trips"] * TRIP_S
     tot = dict(steps=len(rows), robot_h=round(sum(x["robot_s"] for x in rows) / 3600, 2),
+               fetch_h=round(sum(c["fetch_s"] for c in chapters.values()) / 3600, 2),
                person_h=round(sum(x["person_min"] for x in rows) / 60, 2),
                fail_steps=sum(x["status"] in ("fail", "part") for x in rows),
                person_steps=sum(x["status"] in ("person", "shop") for x in rows))
-    return dict(rows=rows, chapters=chapters, totals=tot, assumptions=ASM,
+    return dict(rows=rows, chapters=chapters, totals=tot, assumptions=dict(ASM, parts_per_trip=PARTS_PER_TRIP, trip_s=TRIP_S),
                 method="ESTIMATES, not measurements: results.json's 'seconds' is the checker's compute time. Robot time = "
                        f"{ASM['place_s']:.0f} s per placement + the insertion path from sequence.json at "
                        f"{ASM['insert_mm_s']:.0f} mm/s, {ASM['screw_setup_s']:.0f} s + {ASM['screw_s']:.0f} s a screw, "
                        f"{ASM['seal_s']:.0f} s an O-ring or cord, {ASM['flip_s']:.0f} s a flip, {ASM['dual_s']:.0f} s a "
-                       f"two-arm carry, {ASM['tool_change_s']:.0f} s a tool change; MiR trips to the long table are not "
-                       "counted. Person minutes per step are listed in build_hud.py (PERSON_MIN), 1 min per screw the arm "
-                       f"couldn't drive and {FAIL_MIN:.0f} min per failed placement.")
+                       f"two-arm carry, {ASM['tool_change_s']:.0f} s a tool change; MiR trips to the long table are "
+                       f"counted per chapter ({PARTS_PER_TRIP} parts a trip, {TRIP_S:.0f} s a round trip). Person minutes "
+                       "per step are listed in build_hud.py (PERSON_MIN), 1 min per screw the arm couldn't drive and "
+                       f"{FAIL_MIN:.0f} min per failed placement.")
 
 
 # ------------------------------------------------------------------ main
@@ -703,7 +717,8 @@ def main():
     items.sort(key=lambda x: (order_ix[x["cat"]], -x["new_drawn"], -x["new_high"]))
     for c in cats.values():
         c["items"] = [x["id"] for x in items if x["cat"] == c["cat"]]
-        ls = [leads[ln] for ln in dict.fromkeys(c["lines"])]
+        # a split line's lead time is its main part's (the last split entry), so it counts only in that category
+        ls = [leads[ln] for ln in dict.fromkeys(c["lines"]) if ln not in SPLIT or SPLIT[ln][-1][0] == c["cat"]]
 
         def longest(key, swaps=False):
             best = None
@@ -795,6 +810,36 @@ def main():
                         n_lookup_rows=len(load_lookups())),
     )
     hud["times"] = dict(machining=machining_times(), robot_shop=shop_timeline(), assembly=assembly_times())
+    # the two things the compositor needs first: the tour (display strings only) and the headline numbers
+    by_id = {x["id"]: x for x in items}
+    hud["tour"] = [dict(cat=C["cat"], on_table=C["on_table"], **C["hud"],
+                        items=[dict(id=i, **by_id[i]["hud"]) for i in C["items"]]) for C in cat_list]
+    R = sched["routes"]
+    mt, asm = hud["times"]["machining"]["totals"], hud["times"]["assembly"]["totals"]
+    hud["headline"] = dict(
+        cost_at_spec=dict(new=spec["new"], used=spec["used"], saving=[round(spec["new"] - spec["used"][1], 2),
+                                                                      round(spec["new"] - spec["used"][0], 2)]),
+        cost_bom_range=dict(new=tot["new"], used=tot["used"], cheaper=tot["cheaper"], both=tot["both"]),
+        cw_chain=dict(new=spec["cw_chain_new"], used=spec["cw_chain_used"]),
+        weeks=dict(
+            new_as_chosen=dict(parts=R["new"]["parts_in_hand_wk"], set_by=R["new"]["set_by"], ready=R["new"]["ready_split_wk"]),
+            new=dict(parts=R["new_with_swaps"]["parts_in_hand_wk"], set_by=R["new_with_swaps"]["set_by"],
+                     ready_split=R["new_with_swaps"]["ready_split_wk"],
+                     ready_all_in_house=R["new_with_swaps"]["ready_all_in_house_wk"]),
+            used=dict(parts=R["used"]["parts_in_hand_wk"], set_by=R["used"]["set_by"], ready_split=R["used"]["ready_split_wk"],
+                      ready_all_in_house=R["used"]["ready_all_in_house_wk"]),
+            saved_by_used_split=[round(R["new_with_swaps"]["ready_split_wk"][0] - R["used"]["ready_split_wk"][0], 1),
+                                 round(R["new_with_swaps"]["ready_split_wk"][1] - R["used"]["ready_split_wk"][1], 1)],
+            note="new = as chosen but with S2's HS6B and H2's K8DT swapped for stocked parts; 'split' = outsourcing.md's "
+                 "recommended make/buy split (152 shop hours at BYU), 'all in house' = 329 h at BYU"),
+        machining_h=dict(with_4th_axis=mt["total_h_4th"], three_axis=mt["total_h_3axis"], cam=mt["cam_h"],
+                         setups_4th=mt["setup_h_4th"], setups_3axis=mt["setup_h_3axis"], cutting=mt["run_h"],
+                         deburr_inspect=mt["deburr_inspect_h"], parts=mt["parts"]),
+        assembly=dict(steps=asm["steps"], robot_h=asm["robot_h"], mir_fetch_h=asm["fetch_h"], person_h=asm["person_h"],
+                      failed_or_partial=asm["fail_steps"], person_or_shop_steps=asm["person_steps"],
+                      basis="estimates (results.json's seconds are compute time)"),
+        po_rule="BYU: purchases of $3,500 or more from one vendor need a purchase order: 'Allow ten days to two weeks "
+                "PLUS shipping time' (capstone.byu.edu/purchase-orders, read 2026-11-25); under $3,500 a PCard")
 
     OUT.mkdir(parents=True, exist_ok=True)
     TMP.mkdir(parents=True, exist_ok=True)
@@ -930,6 +975,8 @@ def write_times_csv(times, sched):
         rows.append(dict(section="assembly chapter", id=c, name=f"{v['steps']} steps, {v['fail']} failed or partial, "
                          f"{v['person_steps']} person or shop steps", chapter=c, robot_s=v["robot_s"],
                          person_min=v["person_min"], basis="sum of the assembly rows (estimates)"))
+        rows.append(dict(section="assembly fetch", id=c, name=f"{v['fetch_trips']} MiR trips to the long table",
+                         chapter=c, robot_s=v["fetch_s"], basis="estimate (PARTS_PER_TRIP, TRIP_S in build_hud.py)"))
     for name, r in sched["routes"].items():
         rows.append(dict(section="schedule", id=name, name=f"bought parts in hand {r['parts_in_hand_wk'][0]}-"
                          f"{r['parts_in_hand_wk'][1]} wk (set by {r['set_by']}: {r['set_by_item']}); ready "

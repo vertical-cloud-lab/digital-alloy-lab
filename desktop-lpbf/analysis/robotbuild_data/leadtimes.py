@@ -194,7 +194,8 @@ SHORT = {  # short HUD strings for the new route (the full text is in LT)
     "D2": "backordered (~3-4 wk)", "M3": "2 d to 3 wk", "M1": "Ferrotec: quote", "M4": "Ferrotec: quote",
     "S7": "not read", "X1": "SendCutSend 5-15 d; shop queue 7.6-16.4 wk", "A1": "in stock (5); then 33 wk",
     "S1": "in stock (1); then 4 wk", "G1": "1-7 d", "C5": "in stock, ships same day", "M2": "ships in 3 d",
-    "C3": "ships in 3 d",
+    "C3": "ships in 3 d", "L2": "not needed (air-cooled laser)",
+    "B1": "stock same or next day; honing outside 3-6 wk (estimate)",
 }
 SHORT_USED = {"L1": "same day + ~1 wk freight", "T1": "1-3 wk (head from China)", "C1": "3-5 d"}
 
@@ -240,7 +241,7 @@ def schedule(leads, bom_rows):
     for name, use_used, swaps in (("new", False, False), ("new_with_swaps", False, True), ("used", True, True)):
         worst, unknown = [], []
         for line, r in leads.items():
-            if line == "X1":
+            if line in ("X1", "L3"):  # X1 is the fabrication path; L3 rides on the laser order
                 continue
             if use_used:
                 d = r["days_used_route"]
