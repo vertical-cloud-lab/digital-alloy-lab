@@ -700,8 +700,8 @@ Cases go to `/tmp/plume`; they are not committed. On a shared 4-core runner each
 
 ```bash
 D=desktop-lpbf; M=$D/analysis/monitoring/plume; PY=/tmp/venv/bin/python
-$M/run_cases.sh                                    # p200, p200_lw3, p140, p200_lw1: make_case_plume.py + run_case.sh each
-for c in p200 p200_lw3 p140 p200_lw1; do /tmp/capmem 4 $PY $M/particles.py /tmp/plume/$c; done   # ~5-15 min each
+$M/run_cases.sh                                    # p200, p200_lw3, p140, p200_lw1, p200_lpback: make_case_plume.py + run_case.sh
+for c in p200 p200_lw3 p140 p200_lw1 p200_lpback; do /tmp/capmem 4 $PY $M/particles.py /tmp/plume/$c; done   # ~10-15 min each
 /tmp/capmem 2 $PY $M/spatter.py                    # ~1-2 min
 /tmp/capmem 2 $PY $M/plume_jet.py                  # seconds; reads analysis/out/monitoring/melt/plume_source.json (--source)
 $PY $M/fouling.py && $PY $M/summarize.py           # fouling.json (same --source), summary.md

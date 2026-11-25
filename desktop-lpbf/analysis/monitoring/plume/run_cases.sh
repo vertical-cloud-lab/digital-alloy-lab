@@ -6,6 +6,7 @@
 #   p200_lw3  : the same with 3 L/min of argon across the LW cover slide (started from p200's field)
 #   p140      : 140 + 30 L/min, LW purge off (started from p200's field)
 #   p200_lw1  : 200 + 40 L/min with 1 L/min across the LW slide (started from p200_lw3's field)
+#   p200_lpback: 200 + 40 L/min, LW purge off, the LP port moved to the back-half lid candidate (-40, 60) (from p200's field)
 set -euo pipefail
 HERE=$(cd "$(dirname "$0")" && pwd)
 D=$(cd "$HERE/../../.." && pwd)                 # desktop-lpbf/
@@ -13,7 +14,7 @@ PY=${PY:-/tmp/venv/bin/python}
 C=${C:-/tmp/plume}
 MK="$PY $HERE/make_case_plume.py --cad-dir $D/cad"
 RUN=$D/analysis/cfd/run_case.sh
-CASES=${CASES:-"p200 p200_lw3 p140 p200_lw1"}
+CASES=${CASES:-"p200 p200_lw3 p140 p200_lw1 p200_lpback"}
 for c in $CASES; do
   if [ -f "$C/$c/done" ]; then echo "$c: done already"; continue; fi
   case $c in
@@ -21,6 +22,7 @@ for c in $CASES; do
     p200_lw3) $MK --variant fix --q-lpm 200 --upper-lpm 40 --lw-purge-lpm 3 --iters 400 --out $C/p200_lw3; $RUN $C/p200_lw3 map $C/p200 ;;
     p140)     $MK --variant fix --q-lpm 140 --upper-lpm 30 --iters 500 --out $C/p140;                     $RUN $C/p140 map $C/p200 ;;
     p200_lw1) $MK --variant fix --q-lpm 200 --upper-lpm 40 --lw-purge-lpm 1 --iters 300 --out $C/p200_lw1; $RUN $C/p200_lw1 map $C/p200_lw3 ;;
+    p200_lpback) $MK --variant fix --q-lpm 200 --upper-lpm 40 --lp-centre=-40,60,136 --iters 500 --out $C/p200_lpback; $RUN $C/p200_lpback map $C/p200 ;;
     *) echo "unknown case $c"; exit 1 ;;
   esac
   date -u > "$C/$c/done"

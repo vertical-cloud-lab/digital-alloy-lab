@@ -2,11 +2,13 @@
 in the argon cross-flow, what it condenses into, and how much it dims the beam and the coaxial signal (issue #260;
 monitoring/plume.md §3).
 
-Until worker A's analysis/out/monitoring/melt/plume_source.json exists, the surface temperatures are scenarios (stated below),
-and the vapour pressures come from Clausius-Clapeyron anchored at each element's normal boiling point:
+The source terms come from worker A's melt-pool model, analysis/out/monitoring/melt/plume_source.json (--source): for each of
+its cases the jet is built from its 'wall' exit state (Knight jump at the depression wall) and the condensate from its 'best'
+reading (measured Mg and Zn rates plus the wall reading's Al); results go under 'worker_A'. This script's own scenarios stay as
+a cross-check: surface temperatures stated below, vapour pressures from Clausius-Clapeyron anchored at each element's normal
+boiling point,
     p_i(T) = 1 atm * exp[ (dH_v,i / R) (1/T_b,i - 1/T) ]                  (dH_v at T_b, CRC Handbook of Chemistry and Physics)
-Partial pressures over the alloy are Raoult's law (ideal solution, activity = mole fraction). If plume_source.json is present
-(--source), its surface temperature(s), evaporating area and mass rate replace the scenarios.
+and partial pressures over the alloy from Raoult's law (ideal solution, activity = mole fraction).
 
 Evaporation:
   - below the alloy's boiling point (total vapour pressure < 1 atm): no jet; each element diffuses into the argon boundary

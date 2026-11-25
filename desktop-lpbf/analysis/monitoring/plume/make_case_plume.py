@@ -52,8 +52,9 @@ def crossing(centre, target, coord, value):
     return tuple(c + t * (g - c) for c, g in zip(centre, target))
 
 
-def viewport_boxes(MS, P, lw_depth, lp_depth):
-    """Recess boxes (x0, x1, y0, y1, z0, z1) for the viewports, and where their window / slide face is."""
+def viewport_boxes(MS, P, lw_depth, lp_depth, lp_centre=None):
+    """Recess boxes (x0, x1, y0, y1, z0, z1) for the viewports, and where their window / slide face is. lp_centre overrides
+    monitoring_spec's LP centre (to try another lid candidate)."""
     ix, iy, iz = P["ch_x"] / 2, P["ch_y"] / 2, P["ch_z"]
     wall = P["wall"]
     lid_t = 16.0                                                     # lid z 120..136 (monitoring_spec docstring)
@@ -74,7 +75,7 @@ def viewport_boxes(MS, P, lw_depth, lp_depth):
     out["BW"] = dict(box=(p[0] - s / 2, p[0] + s / 2, iy, iy + wall, p[2] - s / 2, p[2] + s / 2),
                      face_axis=1, face_at=iy + wall, patch="bwWindow", area_mm2=s * s)
     # LP: lid, slide at the bottom of the recess
-    c = V["LP"]["centre"]
+    c = tuple(lp_centre) if lp_centre else V["LP"]["centre"]
     s = V["LP"]["clear_d"] * math.sqrt(math.pi) / 2
     p = crossing(c, tgt, 2, iz + lp_depth / 2)
     out["LP"] = dict(box=(p[0] - s / 2, p[0] + s / 2, p[1] - s / 2, p[1] + s / 2, iz, iz + lp_depth),
@@ -97,7 +98,8 @@ def build(args):
     if args.recoater == "lasing":
         P["x_park"] = P["x_end"]                                      # geometry() places the blade, arm and carriage at x_park
     fluid, solid = MC.geometry(MP, P, args.variant, args.floor_slot_width)
-    vp = viewport_boxes(MS, P, args.lw_depth, args.lp_depth)
+    lpc = [float(v) for v in args.lp_centre.split(",")] if args.lp_centre else None
+    vp = viewport_boxes(MS, P, args.lw_depth, args.lp_depth, lpc)
     for k, v in vp.items():
         fluid[f"viewport {k}"] = v["box"]
     lw = vp["LW"]["box"]
@@ -376,6 +378,8 @@ if __name__ == "__main__":
     ap.add_argument("--lw-depth", type=float, default=4.0, help="LW cover slide's depth below the wall's inner face, mm (assumed)")
     ap.add_argument("--lp-depth", type=float, default=4.0, help="LP cover slide's depth above the lid's inner face, mm (assumed)")
     ap.add_argument("--recoater", choices=("lasing", "park"), default="lasing")
+    ap.add_argument("--lp-centre", default=None, help="x,y,z (mm) of the LP port's centre on the lid's top face, overriding "
+                    "monitoring_spec.py (e.g. -40,60,136, a back-half candidate)")
     ap.add_argument("--cad-dir", default=str(ROOT / "cad"))
     ap.add_argument("--out", required=True)
     build(ap.parse_args())
