@@ -631,7 +631,8 @@ def force_verdicts():
 
 
 def assembly_times():
-    res = json.load(open(LPBF / "analysis" / "out" / "assembly" / "results.json"))["rows"]
+    # ASM_RESULTS: the run to count (round 7: results_run10.json, the run the video's assembly chapters replay)
+    res = json.load(open(os.environ.get("ASM_RESULTS") or (LPBF / "analysis" / "out" / "assembly" / "results.json")))["rows"]
     seq = {s["id"]: s for s in json.load(open(LPBF / "analysis" / "out" / "assembly" / "sequence.json"))["steps"]}
     forces = force_verdicts()
     rows, last_tool = [], None
@@ -684,6 +685,20 @@ def assembly_times():
         rows.append(dict(step=sid, chapter=chapter_of(sid), label=r["label"], do=do, actor=r.get("actor") or who,
                          status=st, robot_s=round(robot_s, 1), person_min=round(person_min, 1),
                          checker_compute_s=r.get("seconds"), force=forces.get(sid, "").strip(" |"), note=why))
+    # ASM_TIMES (round 7, run 10): the recorder's per-step real time (record.py save_summary: the recorded, collision-checked
+    # motions at cobot speeds, MiR drives to the long table included, tool changes and docking at their estimates; persons'
+    # minutes as commit.PERSON_MIN) replaces the per-step estimates above where the step was recorded
+    rec = {}
+    if os.environ.get("ASM_TIMES") and pathlib.Path(os.environ["ASM_TIMES"]).exists():
+        rec = {t["id"]: t for t in json.load(open(os.environ["ASM_TIMES"]))["steps"]}
+        for x in rows:
+            t = rec.get(x["step"])
+            if t is None:
+                continue
+            x["robot_s"] = round(float(t.get("robot_A_s") or 0.0) + float(t.get("robot_B_s") or 0.0), 1)
+            if float(t.get("person_s") or 0.0) > 0.0 or x["status"] not in ("fail", "part"):
+                x["person_min"] = round(float(t.get("person_s") or 0.0) / 60.0, 1) or x["person_min"]
+            x["recorded"] = True
     chapters = {}
     for x in rows:
         c = chapters.setdefault(x["chapter"], dict(steps=0, robot_s=0.0, person_min=0.0, fail=0, person_steps=0))
@@ -695,8 +710,8 @@ def assembly_times():
     # MiR trips to the long table: the parts each chapter places, PARTS_PER_TRIP to a tote, each trip two legs, two
     # dockings and two registrations (timeline.py's 25 s, 30 s and 15 s: estimates)
     for ch, c in chapters.items():
-        n = sum(1 for x in rows if x["chapter"] == ch and x["do"] in ("place", "seal", "dual"))
-        c["fetch_trips"] = math.ceil(n / PARTS_PER_TRIP)
+        n = sum(1 for x in rows if x["chapter"] == ch and x["do"] in ("place", "seal", "dual") and not x.get("recorded"))
+        c["fetch_trips"] = math.ceil(n / PARTS_PER_TRIP)          # recorded steps carry their own drives to the table
         c["fetch_s"] = c["fetch_trips"] * TRIP_S
     tot = dict(steps=len(rows), robot_h=round(sum(x["robot_s"] for x in rows) / 3600, 2),
                fetch_h=round(sum(c["fetch_s"] for c in chapters.values()) / 3600, 2),
@@ -704,6 +719,9 @@ def assembly_times():
                fail_steps=sum(x["status"] in ("fail", "part") for x in rows),
                person_steps=sum(x["status"] in ("person", "shop") for x in rows))
     return dict(rows=rows, chapters=chapters, totals=tot, assumptions=dict(ASM, parts_per_trip=PARTS_PER_TRIP, trip_s=TRIP_S),
+                recorded=(f"{sum(1 for x in rows if x.get('recorded'))} steps' robot and person time from the recorded run "
+                          f"({pathlib.Path(os.environ['ASM_TIMES']).name}: motions at cobot speeds incl. the MiR drives to the "
+                          "table; tool changes, docking and persons' minutes are estimates)") if rec else None,
                 method="ESTIMATES, not measurements: results.json's 'seconds' is the checker's compute time. Robot time = "
                        f"{ASM['place_s']:.0f} s per placement + the insertion path from sequence.json at "
                        f"{ASM['insert_mm_s']:.0f} mm/s, {ASM['screw_setup_s']:.0f} s + {ASM['screw_s']:.0f} s a screw, "

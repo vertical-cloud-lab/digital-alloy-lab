@@ -1,9 +1,10 @@
 """Round 7 summary (issue #260, PR #266): pass/fail before (run 7, results.json) and after (run 9, results_run9.json), the
 fetches from the long table, the screw presenter trips, and the per-step real time (/tmp/robotbuild/traj/run9/assembly.json).
 
-    /tmp/venv/bin/python desktop-lpbf/analysis/assembly/round7_summary.py [before.json] [after.json] [times.json]
+    /tmp/venv/bin/python desktop-lpbf/analysis/assembly/round7_summary.py [before.json] [after.json] [times.json] [out.json]
 
-Writes analysis/out/assembly/round7.json and prints markdown tables for assembly.md.
+Writes analysis/out/assembly/round7.json (or out.json: run 10 against run 9 is round7_run10.json) and prints markdown
+tables for assembly.md.
 """
 from __future__ import annotations
 
@@ -56,7 +57,7 @@ def main(argv):
                            elapsed_h=round(sum(s["seconds"] for s in t["steps"]) / 3600.0, 2),
                            by_chapter={c: round(sum(s["seconds"] for s in t["steps"] if s.get("chapter") == c) / 3600.0, 2)
                                        for c in ("module", "chamber")})
-    (OUT / "round7.json").write_text(json.dumps(out, indent=1))
+    (OUT / (argv[3] if len(argv) > 3 else "round7.json")).write_text(json.dumps(out, indent=1))
     print(json.dumps({k: out[k] for k in ("before", "after", "fetch", "presenter")}, indent=1))
     print("fixed:", out["fixed"])
     for r in out["still_failing"]:
