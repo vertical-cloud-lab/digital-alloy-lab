@@ -278,7 +278,7 @@
    "source": "5-1/2 in. 6061-T651 plate cut to size (Metals Depot lists 5, 5-1/2 and 6 in. plate; McMaster's rolled plate stops at 4 in.)",
    "why_5_5": "5 in. plate is +/-0.130 in. (+/-3.3 mm) thick per OnlineMetals' table, so it can arrive thinner than the 123.9 mm frame",
    "end_tabs": "none since 2026-11-23: F-S1 holds the blank with edge clamps on its x-end faces (toe clamps on 1 in. end tabs were in the face mill's and T2's way), so the 15 in. length can be cut to 13 in.",
-   "cam_blank_mm": "freecad_cam.py and CAMotics cut a 317.5 x 228.6 x 127 box (12.5 x 9 x 5 in.), the frame plus 2.75-3.3 mm a side and 1.55 mm a face; from 5-1/2 in. plate the two face ops take 7.9 mm a face, about 3 more passes each (not programmed)"
+   "cam_blank_mm": "freecad_cam.py and CAMotics cut a 317.5 x 228.6 x 127 box (12.5 x 9 x 5 in.), the frame plus 2.75-3.3 mm a side and 1.55 mm a face; from 5-1/2 in. plate the two face ops take 7.9 mm a face, 2-4 more passes each, roughly 4-7 min a face (not programmed)"
   },
   "core": {
    "volume_cm3": 6241.33,

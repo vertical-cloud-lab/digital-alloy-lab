@@ -137,7 +137,7 @@ Results are in [`holder_check.json`](analysis/out/machining/holder_check.json).
 | frame A | 0 | 4.0 (T2's ER32 nut) | 10 or more |
 | frame C, A0 | 0 | 10 or more (T3 shank 8.9) | 10 or more |
 | frame C, A90 / A270 | 0 | 10 or more | 3.85 (the 1/4 in. end mill's flutes from the plate's edge, cutting the through-beam counterbore 3.5 mm above the frame's bottom) |
-| frame C, A180 | 0 | 10 or more | 6.65 (4.2 mm drill, plenum holes at z 4.5); the 1/4 in. end mill's holder 8.25 (was 2.5 with the 330 x 240 plate) |
+| frame C, A180 | 0 | 10 or more | 6.65 (4.2 mm drill, plenum holes at z 4.5); the 1/4 in. end mill's holder 10 or more (2.5 with the 330 x 240 plate), its flutes 8.25 |
 | floor A | 0 | 4.8 (T9's ER16 nut) | 3.0 (T2's flutes, edge clamp) |
 | floor B | 0 | 10 or more | 2.76 (4.2 mm drill, fixture plate) |
 
@@ -240,14 +240,15 @@ Everything was re-run on the current model: `inventory.py`, then [`dfm.py`](anal
 - **Not programmed:** the spot drills, the taps, the STI taps, the reamers and the SAE port tool. setup_plan.json times
   them, but no G-code drives them, and no simulation has checked them.
 - **Tools the programs use that tooling-bom.csv doesn't list:**
-  - a 2.9 mm drill for the 3 mm pin holes (F2, the 3 mm reamer, is now "buy for this job");
+  - a 2.9 mm drill for the 3 mm pin holes (F2, the 3 mm reamer, is now "buy for this job": the tooling to buy for
+    this job is $3,718.70, was $3,695.03; L7, the dummy-floor plate, is cut to 312 x 222);
   - a 5.2 mm drill and an M6 x 0.75 tap for the through-beam heads;
   - a 5.8 mm drill to go under the 6 mm reamer.
 
   The metric set D16 steps by 0.5 mm, so it has none of these sizes. They are not looked up or priced.
 - **The CAM blank is 5 in. thick** (317.5 x 228.6 x 127 mm, as in rounds 4 and 5). The plan's blank is 5-1/2 in. plate,
-  chosen for its thickness tolerance. From that plate the two face ops take 7.9 mm a face, not 1.55 mm: about 3 more
-  passes and 4 min more each. This is not programmed.
+  chosen for its thickness tolerance. From that plate the two face ops take 7.9 mm a face, not 1.55 mm. That is 2-4 more
+  passes at 1.55-2.7 mm each, about 1.8 min a pass, so roughly 4-7 min more per face. This is not programmed.
 - **Edge clamps on the floor plate** (P-S1) grip only the bottom 7.7 mm of the 1 in. blank under adaptive cuts. Their
   clamping force against the cutting load is still not checked.
 - **Assumed:**
@@ -256,7 +257,7 @@ Everything was re-run on the current model: `inventory.py`, then [`dfm.py`](anal
   - the face mill's body height;
   - the clamps' sizes;
   - the HRT210's platter thickness and which side its motor box is on.
-- **Outside the machining files.** These two still describe the old workholding; neither is mine to change:
+- **Outside the machining files.** These two still describe the old workholding:
   - the build animation's chamber chapter (`cad/render_machining.py`'s built-in plan) shows toe clamps on end tabs
     (F-S1, P-S1) and a centre stud (P-S2);
   - `analysis/shop/shop_checks.py` still quotes the 15 in. blank with tabs.

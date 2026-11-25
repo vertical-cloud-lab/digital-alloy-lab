@@ -488,8 +488,8 @@ def main():
                               end_tabs=("none since 2026-11-23: F-S1 holds the blank with edge clamps on its x-end faces (toe clamps on 1 in. end tabs "
                                         "were in the face mill's and T2's way), so the 15 in. length can be cut to 13 in."),
                               cam_blank_mm=("freecad_cam.py and CAMotics cut a 317.5 x 228.6 x 127 box (12.5 x 9 x 5 in.), the frame plus 2.75-3.3 mm a "
-                                            "side and 1.55 mm a face; from 5-1/2 in. plate the two face ops take 7.9 mm a face, about 3 more passes "
-                                            "each (not programmed)")),
+                                            "side and 1.55 mm a face; from 5-1/2 in. plate the two face ops take 7.9 mm a face, 2-4 more "
+                                            "passes each, roughly 4-7 min a face (not programmed)")),
                    core=dict(volume_cm3=core_cm3, mass_kg=round(core_cm3 * 2.7e-3, 1), route="waterjet (default) / trepan on the mill / contour bandsaw",
                              waterjet_min=[round(x) for x in wj_min]),
                    model_volumes_cm3=fv, setups=frame_setups, run_minutes_on_mill=round(run_f), part_handling="the frame weighs 4.3 kg finished; the blank 39 kg"),
