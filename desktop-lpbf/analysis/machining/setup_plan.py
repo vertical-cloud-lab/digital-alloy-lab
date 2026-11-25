@@ -455,6 +455,16 @@ def main():
                      t_holes(2, 13.5, ["spot", "drill", "tap"]) + t_holes(10, 7.5, ["spot", "drill", "tap"]) + t_holes(4, 9, ["spot", "drill", "tap"]) + t_holes(4, 11, ["spot", "drill", "tap"]),
                      "spot T6; STI drills T8/T9/6.3 mm; STI taps")]),
     ]
+    # joints the floor has that no op above lists (e.g. holes added to the model since this plan was written): one more op
+    # in P-S2, from below like the other under-floor mounts (the side is ASSUMED; freecad_cam.py finds it on the model),
+    # timed as tapped holes 10 mm deep per cut joints.py makes (an upper bound: a stepped hole is two cuts)
+    listed = {c[2:] for su_ in floor_setups for o_ in su_["ops"] for c in o_["cuts"] if c.startswith("J:")}
+    extra = {k: n for k, n in pv["joint_holes"].items() if k not in listed}
+    if extra:
+        ps2 = next(x for x in floor_setups if x["id"] == "P-S2")
+        ps2["ops"].append(op("P-S2-5", "joint holes not listed above: " + ", ".join(f"{k} ({n} cuts)" for k, n in extra.items()),
+                             ["J:" + k for k in extra], "T7", t_holes(sum(extra.values()), 10.0, ["spot", "drill", "tap"]),
+                             "spot T6, tap drill, tap; side and depth ASSUMED (from below, 10 mm)"))
     prog = program_info()
     for su_, names in (("F-S1", ["frame_B"]), ("F-S2", ["frame_A"]), ("F-S3", ["frame_C0", "frame_C90", "frame_C180", "frame_C270"]),
                        ("P-S1", ["floor_A"]), ("P-S2", ["floor_B"])):
