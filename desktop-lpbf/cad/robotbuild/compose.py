@@ -174,8 +174,16 @@ def load_hud():
     return {}
 
 
-def overlay(base, m, clock, frac, ticks, ch_title, ch_alpha, cost_scale, rows):
-    img = base.convert("RGBA")
+STATIC_KEYS = ("caption", "sub", "who", "status", "step", "cost", "chart", "lead", "labels")
+_STATIC = {"key": None, "layer": None}
+
+
+def static_layer(m, cost_scale, rows):
+    """The panels that change only when the frame's metadata does (caption, cost, chart, lead time, labels), drawn
+    once and reused while consecutive frames carry the same values: most frames of a hold or a slow move."""
+    key = json.dumps([m.get(k) for k in STATIC_KEYS], sort_keys=True, default=str)
+    if key == _STATIC["key"]:
+        return _STATIC["layer"]
     lay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(lay, "RGBA")
     P.caption_bar(d, m.get("caption", ""), m.get("sub", ""), m.get("who"), m.get("status", ""), step=m.get("step", ""))
@@ -188,6 +196,14 @@ def overlay(base, m, clock, frac, ticks, ch_title, ch_alpha, cost_scale, rows):
         lr = m["lead"].get("rows") or rows
         P.lead_panel(d, lr, m["lead"].get("highlight"), y0=y)
     P.labels(d, m.get("labels"))
+    _STATIC.update(key=key, layer=lay)
+    return lay
+
+
+def overlay(base, m, clock, frac, ticks, ch_title, ch_alpha, cost_scale, rows):
+    img = base.convert("RGBA")
+    lay = static_layer(m, cost_scale, rows).copy()
+    d = ImageDraw.Draw(lay, "RGBA")
     if not m.get("no_clock"):
         P.clocks(d, clock, speed=float(m.get("proc_s", 1.0 / FPS) or 0.0) * FPS)
     P.chapter_title(d, ch_title, ch_alpha)
@@ -196,12 +212,37 @@ def overlay(base, m, clock, frac, ticks, ch_title, ch_alpha, cost_scale, rows):
     return img.convert("RGB")
 
 
-def encoder(path, crf, maxrate_k):
+_LAST = {"dir": None, "img": None}
+_CARDS = {}
+
+
+def render_frame(task):
+    """One output frame as raw RGB bytes: the chapter's PNG (or the last good one) with the panels over it, or a missing
+    chapter's title card. Runs in the worker processes (each keeps its own panel cache)."""
+    d, i, m, clock, frac, ticks, title, cost_scale, rows, card = task
+    if card is not None:
+        key = card["title"]
+        if key not in _CARDS:
+            _CARDS[key] = P.title_card(card["title"], card["lines"], card["note"]).tobytes()
+        return _CARDS[key]
+    try:
+        base = Image.open(f"{d}/{i:05d}.png").convert("RGB")
+        if base.size != (W, H):
+            base = base.resize((W, H))
+        _LAST.update(dir=d, img=base)
+    except Exception:                                            # noqa: BLE001
+        base = _LAST["img"] if _LAST["img"] is not None and _LAST["dir"] == d else Image.new("RGB", (W, H), "white")
+    t = i / FPS
+    alpha = min(1.0, t / 0.4) if t < TITLE_S - 0.6 else max(0.0, (TITLE_S - t) / 0.6)
+    return overlay(base, m, clock, frac, ticks, title, alpha, cost_scale, rows).tobytes()
+
+
+def encoder(path, crf, maxrate_k, preset="medium", threads=2):
     path.parent.mkdir(parents=True, exist_ok=True)
     return subprocess.Popen(
         ["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
-         "-i", "-", "-an", "-c:v", "libx264", "-preset", "medium", "-crf", str(crf),
-         "-maxrate", f"{maxrate_k}k", "-bufsize", f"{2 * maxrate_k}k", "-pix_fmt", "yuv420p", "-threads", "2",
+         "-i", "-", "-an", "-c:v", "libx264", "-preset", preset, "-crf", str(crf),
+         "-maxrate", f"{maxrate_k}k", "-bufsize", f"{2 * maxrate_k}k", "-pix_fmt", "yuv420p", "-threads", str(threads),
          "-movflags", "+faststart", str(path)], stdin=subprocess.PIPE)
 
 
@@ -224,6 +265,9 @@ def main(argv=None):
     ap.add_argument("--partial", action="store_true", help="also use chapters that are still rendering")
     ap.add_argument("--only", default="", help="comma-separated chapter folders")
     ap.add_argument("--crf", type=int, default=28)
+    ap.add_argument("--preset", default="medium", help="x264 preset")
+    ap.add_argument("--threads", type=int, default=2, help="x264 threads")
+    ap.add_argument("--workers", type=int, default=3, help="processes drawing the panels")
     ap.add_argument("--stills", default="", help="comma-separated chapter:fraction, e.g. 10-parts:0.4,50-integration:0.7")
     ap.add_argument("--no-cards", action="store_true", help="leave missing chapters out instead of a title card")
     a = ap.parse_args(argv)
@@ -255,7 +299,7 @@ def main(argv=None):
     dur = total / FPS
     maxrate = int(min(4000, MAX_MB * 0.92 * 8e3 / max(dur, 1.0)))
     print(f"{len(chapters)} chapters, {total} frames, {dur:.0f} s; crf {a.crf}, maxrate {maxrate} kb/s", flush=True)
-    enc = encoder(out, a.crf, maxrate)
+    enc = encoder(out, a.crf, maxrate, a.preset, a.threads)
     thumbs, stills = [], {}
     want = {}
     for s in a.stills.split(","):
@@ -263,38 +307,39 @@ def main(argv=None):
             c, f = s.split(":")
             want.setdefault(c, []).append(float(f))
     t0 = time.time()
+
+    def tasks():
+        k = 0
+        for ch in chapters:
+            title = ch["meta"][0].get("chapter") or ch["name"]
+            for i, m in enumerate(ch["meta"]):
+                yield (str(ch["dir"]) if ch["dir"] else None, i, m, ch["clock"][i], (k + 1) / total, ticks, title,
+                       cost_scale, rows, ch["card"])
+                k += 1
+
+    import multiprocessing as mp
+    pool = mp.get_context("fork").Pool(max(1, a.workers)) if a.workers > 1 else None
+    it = pool.imap(render_frame, tasks(), chunksize=12) if pool else map(render_frame, tasks())
     k = 0
-    last = None
-    for ci, ch in enumerate(chapters):
+    for ch in chapters:
         n = len(ch["meta"])
-        card = P.title_card(ch["card"]["title"], ch["card"]["lines"], ch["card"]["note"]) if ch["card"] else None
-        pick = {int(n * f) for f in (0.12, 0.38, 0.62, 0.88)} if card is None else {n // 2}   # one thumb for a card
-        title = ch["meta"][0].get("chapter") or ch["name"]
-        for i, m in enumerate(ch["meta"]):
-            if card is not None:
-                base = card
-            else:
-                p = ch["dir"] / f"{i:05d}.png"
-                try:
-                    base = Image.open(p).convert("RGB")
-                    if base.size != (W, H):
-                        base = base.resize((W, H))
-                    last = base
-                except Exception:
-                    base = last if last is not None else Image.new("RGB", (W, H), "white")
-            t = i / FPS
-            alpha = 0.0 if card is not None else (min(1.0, t / 0.4) if t < TITLE_S - 0.6 else max(0.0, (TITLE_S - t) / 0.6))
-            frame = overlay(base, m, ch["clock"][i], (k + 1) / total, ticks, title, alpha, cost_scale, rows) \
-                if card is None else base
-            enc.stdin.write(frame.tobytes())
-            if i in pick:
-                thumbs.append((ch["name"], frame.resize((320, 180), Image.LANCZOS)))
-            for f in want.get(ch["name"], []):
-                if i == min(n - 1, int(n * f)):
-                    stills[f"{ch['name']}-{int(f * 100):02d}"] = frame
+        pick = {int(n * f) for f in (0.12, 0.38, 0.62, 0.88)} if ch["card"] is None else {n // 2}   # one for a card
+        for i in range(n):
+            buf = next(it)
+            enc.stdin.write(buf)
+            if i in pick or any(i == min(n - 1, int(n * f)) for f in want.get(ch["name"], [])):
+                frame = Image.frombytes("RGB", (W, H), buf)
+                if i in pick:
+                    thumbs.append((ch["name"], frame.resize((320, 180), Image.LANCZOS)))
+                for f in want.get(ch["name"], []):
+                    if i == min(n - 1, int(n * f)):
+                        stills[f"{ch['name']}-{int(f * 100):02d}"] = frame
             k += 1
             if k % 600 == 0:
                 print(f"  {k}/{total} frames, {time.time() - t0:.0f} s", flush=True)
+    if pool:
+        pool.close()
+        pool.join()
     enc.stdin.close()
     enc.wait()
     size = out.stat().st_size / 1e6
