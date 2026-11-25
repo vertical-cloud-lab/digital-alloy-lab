@@ -1,0 +1,37 @@
+route,task,kind,start_wd,end_lo_wd,end_hi_wd,note
+a1,stock and tools (BYU PO),order,0,9,14,hud.json: 12-20 calendar days
+a1,"CAM, then setups, cutting, deburr (one person)",make,0,35.9,35.9,287.3 h at 8 h a working day
+a1,"module: weld, bore, hone outside",outside,10,32,55,"honing 3-6 weeks: estimate, no shop publishes one"
+a1,assembly and first leak test,assy,35.9,38.9,60,
+a2,stock and tools (BYU PO),order,0,9,14,hud.json: 12-20 calendar days
+a2,CAM (programmer),cam,0,16.5,16.5,
+a2,"setups, cutting, deburr (operator)",make,9,28.4,33.4,
+a2,"module: weld, bore, hone outside",outside,10,32,55,"honing 3-6 weeks: estimate, no shop publishes one"
+a2,assembly and first leak test,assy,32,35,60,
+a3,stock and tools (BYU PO),order,0,9,14,hud.json: 12-20 calendar days
+a3,"CAM, then setups, cutting, deburr (one person)",make,0,71.8,71.8,287.3 h at 4 h a working day
+a3,"module: weld, bore, hone outside",outside,10,32,55,"honing 3-6 weeks: estimate, no shop publishes one"
+a3,assembly and first leak test,assy,71.8,74.8,76.8,
+b_cn,drawings for every part (engineer),cam,0,6.0,6.0,"estimate: 2 h per seal part, 0.5 h per other"
+b_cn,BYU PO,order,6.0,13.0,16.0,10-14 calendar days
+b_cn,parts made outside,outside,13.0,21.0,26.0,JLCCNC 7 days + UPS 2-4 business days
+b_cn,"module weldment at a specialist, honed",outside,13.0,33.0,56.0,4-8 weeks: estimate
+b_cn,"receive, inspect, assemble, first leak test",assy,33.0,37.0,63.0,
+b_us,drawings for every part (engineer),cam,0,6.0,6.0,"estimate: 2 h per seal part, 0.5 h per other"
+b_us,BYU PO,order,6.0,13.0,16.0,10-14 calendar days
+b_us,parts made outside,outside,13.0,28.0,46.0,SendCutSend 5-15 days; frame at a job shop 3-6 weeks (estimate)
+b_us,"module weldment at a specialist, honed",outside,13.0,33.0,56.0,4-8 weeks: estimate
+b_us,"receive, inspect, assemble, first leak test",assy,33.0,37.0,63.0,
+c_cn,stock and tools (BYU PO),order,0,9,14,
+c_cn,make 12 seal and module parts (one machinist),make,0,15.6,20.6,
+c_cn,"drawings, PO, parts made outside",outside,0,17.0,22.0,
+c_cn,"module: weld, bore, hone outside",outside,10,32,55,
+c_cn,assembly and first leak test,assy,32,35,60,
+c_us,stock and tools (BYU PO),order,0,9,14,
+c_us,make 12 seal and module parts (one machinist),make,0,15.6,20.6,
+c_us,"drawings, PO, parts made outside",outside,0,14.0,24.0,
+c_us,"module: weld, bore, hone outside",outside,10,32,55,
+c_us,assembly and first leak test,assy,32,35,60,
+d,"commission the cell (Edison: 1,230-2,470 person-h)",cam,0,100.0,200.0,"Edison r7 robot-build review, section 5"
+d,cell machining (20 h a day),make,100.0,107.0,207.0,robot-shop.md: about 7 days
+d,assembly and first leak test,assy,107.0,110.0,212.0,
