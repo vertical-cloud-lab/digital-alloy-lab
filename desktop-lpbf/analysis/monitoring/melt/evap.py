@@ -58,6 +58,8 @@ KEYS = {
                 "loss_fraction_per_pass and shift_per_layer_frac per element (see module docstring)",
     "measured": "per element: loss fraction measured in LPBF builds (source), and the mass rate it implies at this case's scan "
                 "rate, m_dot = f w rho h t v (kg/s) and per mm of track (ug/mm): use these for Mg and Zn",
+    "best": "the recommended source: per element the measured rate where one exists (Mg, Zn), else the wall reading; m_dot_kg_s, "
+            "loss_ug_per_mm, g_per_hour_lasing (per hour of beam-on time), vapour_mole_fraction",
     "exit": "Knight jump at the hottest point of each reading: T_surface_K, p_sat_Pa, recoil_Pa (0.54 p_sat), mach, "
             "T_vapour_K, u_m_s, rho_vapour_kg_m3, M_vapour_g_mol, Q_vapour_m3_s (volume flow at the exit state, total)",
 }
@@ -97,13 +99,13 @@ def knight(p_sat, T_s, M_w, p_amb=P_AMB):
     return dict(mach=M, T_v=T_v, rho_v=rho_v, u=u, j=rho_v * u)
 
 
-def T_wall(al, r0):
+def T_wall(al, r0, f_vol=1.0):
     target = (P_AMB + 2 * float(al.sigma(2500.0)) / r0) / 0.54
-    return al.T_boil(target)
+    return al.T_boil(target, f_vol)
 
 
-def reading(al, Ts, dA, v, A_cross, name):
-    J = al.evap_flux(Ts)
+def reading(al, Ts, dA, v, A_cross, name, f_vol=1.0):
+    J = al.evap_flux(Ts, f_vol=f_vol)
     out = dict(m_dot_kg_s={}, loss_ug_per_mm={}, loss_fraction_per_pass={}, shift_per_layer_frac={})
     tot = 0.0
     nmol = {}
@@ -122,8 +124,8 @@ def reading(al, Ts, dA, v, A_cross, name):
     out["loss_ug_per_mm"]["total"] = tot / v * 1e6
     s = sum(nmol.values()) or 1.0
     out["vapour_mole_fraction"] = {el: n / s for el, n in nmol.items()}
-    out["evap_power_W"] = float((al.evap_heat_flux(Ts) * dA).sum())
-    out["area_hot_mm2"] = float(dA[al.p_total(Ts) > P_AMB].sum() * 1e6) if np.ndim(dA) else None
+    out["evap_power_W"] = float((al.evap_heat_flux(Ts, f_vol=f_vol) * dA).sum())
+    out["area_hot_mm2"] = float(dA[al.p_total(Ts, f_vol) > P_AMB].sum() * 1e6) if np.ndim(dA) else None
     return out
 
 
@@ -142,10 +144,11 @@ def case(row):
     A_cross = 2 * float((np.outer(dy, dz) * (Tyz >= al.T_liq)).sum())
     r0 = c["d_spot"] / 2
     v = c["v"]
-    Tb, Tw = al.T_boil(P_AMB), T_wall(al, r0)
+    fv = c.get("f_vol", 1.0)
+    Tb, Tw = al.T_boil(P_AMB, fv), T_wall(al, r0, fv)
     res = dict(tag=c["tag"],
                inputs=dict(alloy=c["alloy"], P_W=c["P"], v_m_s=v, spot_1e2_um=c["d_spot"] * 1e6, A=c["A"], T0_K=c["T0"],
-                           f_M=c["f_M"]),
+                           f_M=c["f_M"], f_vol=fv),
                pool=dict(L_um=row["liquid"]["L"] * 1e6, W_um=row["liquid"]["W"] * 1e6, D_um=row["liquid"]["D"] * 1e6,
                          cross_section_mm2=A_cross * 1e6, T_peak_flat_K=row["T_peak"]),
                T_boil_1atm_K=Tb, T_wall_K=Tw, readings={}, exit={})
@@ -156,9 +159,9 @@ def case(row):
         res["measured"][el] = dict(loss_fraction=f, source=src, m_dot_kg_s=md, loss_ug_per_mm=md / v * 1e6)
     for name, Tcap in (("flat", None), ("wall", Tw), ("boil", Tb)):
         T = Ts if Tcap is None else np.minimum(Ts, Tcap)
-        res["readings"][name] = reading(al, T, dA, v, A_cross, name)
+        res["readings"][name] = reading(al, T, dA, v, A_cross, name, fv)
         Tpk = float(T.max())
-        pp = al.partial_pressures(Tpk)
+        pp = al.partial_pressures(Tpk, fv)
         p_sat = sum(pp.values())
         M_w = sum(pp[el] * PR.M[el] for el in pp) / p_sat
         kn = knight(p_sat, Tpk, M_w)
@@ -166,6 +169,20 @@ def case(row):
         res["exit"][name] = dict(T_surface_K=Tpk, p_sat_Pa=p_sat, recoil_Pa=0.54 * p_sat, mach=kn["mach"], T_vapour_K=kn["T_v"],
                                  u_m_s=kn["u"], rho_vapour_kg_m3=kn["rho_v"], M_vapour_g_mol=M_w * 1e3,
                                  Q_vapour_m3_s=(md / kn["rho_v"]) if kn["rho_v"] > 0 and kn["u"] > 0 else None)
+    best = dict(m_dot_kg_s={}, loss_ug_per_mm={})
+    for el, md in res["readings"]["wall"]["m_dot_kg_s"].items():
+        if el == "total":
+            continue
+        best["m_dot_kg_s"][el] = res["measured"][el]["m_dot_kg_s"] if el in res["measured"] else md
+    tot = sum(best["m_dot_kg_s"].values())
+    best["loss_ug_per_mm"] = {el: md / v * 1e6 for el, md in best["m_dot_kg_s"].items()}
+    best["m_dot_kg_s"]["total"] = tot
+    best["loss_ug_per_mm"]["total"] = tot / v * 1e6
+    best["g_per_hour_lasing"] = tot * 3600 * 1e3
+    nm = {el: md / PR.M[el] for el, md in best["m_dot_kg_s"].items() if el != "total"}
+    sn = sum(nm.values()) or 1.0
+    best["vapour_mole_fraction"] = {el: n / sn for el, n in nm.items()}
+    res["best"] = best
     return res
 
 
@@ -188,6 +205,7 @@ def main():
     for d in out:
         w = d["readings"]["wall"]
         e = d["exit"]["wall"]
+        print(f"best {d['best']['loss_ug_per_mm']['total']:.3f} ug/mm {d['best']['g_per_hour_lasing']:.2f} g/h; ", end="")
         print(f"{d['tag']:34s} Tpk {d['pool']['T_peak_flat_K']:5.0f} Tw {d['T_wall_K']:5.0f} | wall: {w['loss_ug_per_mm']['total']:7.3f} ug/mm "
               f"P_ev {w['evap_power_W']:5.2f} W  shift/layer " + " ".join(f"{k} {v:.2f}" for k, v in w['shift_per_layer_frac'].items()
                                                                            if k in ('Mg', 'Zn', 'Al'))

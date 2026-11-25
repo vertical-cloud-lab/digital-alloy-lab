@@ -52,13 +52,16 @@ def props_table():
 
 def analytic_table(J):
     a = J["analytic"]
-    L = ["| Alloy | Plate (°C) | P (W) | v (m/s) | A (Gan Eq. 6) | Ke | Gan keyhole depth (µm) | ΔH/h_s | Eagar–Tsai L × W × D (µm) | "
-         "Marangoni scale (m/s) | Flow Péclet | Regime by Ke |", "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    L = ["| Alloy | Plate (°C) | P (W) | v (m/s) | A (Gan Eq. 6) | Ke | Gan keyhole depth (µm) | ΔH/h_s | Rosenthal L × W × D (µm) | "
+         "Eagar–Tsai L × W × D (µm) | Marangoni scale (m/s) | Flow Péclet | Regime by Ke |",
+         "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for r in a["table"]:
         if r.get("spot_label"):
             continue
         L.append(f"| {r['alloy']} | {r['T0'] - 273.15:.0f} | {r['P']:.0f} | {r['v']} | {r['A']:.2f} | {r['Ke']:.1f} | "
-                 f"{r['e_keyhole'] * 1e6:.0f} | {r['dH_hs']:.0f} | {r['L'] * 1e6:.0f} × {r['W'] * 1e6:.0f} × {r['D'] * 1e6:.0f} | "
+                 f"{r['e_keyhole'] * 1e6:.0f} | {r['dH_hs']:.0f} | "
+                 f"{r.get('L_R', 0) * 1e6:.0f} × {r.get('W_R', 0) * 1e6:.0f} × {r.get('D_R', 0) * 1e6:.0f} | "
+                 f"{r['L'] * 1e6:.0f} × {r['W'] * 1e6:.0f} × {r['D'] * 1e6:.0f} | "
                  f"{r['u_marangoni']:.0f} | {r['Pe_flow']:.0f} | {r['regime']}{', balling' if r['balling'] else ''} |")
     return L
 
@@ -82,7 +85,7 @@ def bands_table(J):
 
 
 def validation_table(rows, J):
-    L = ["| P (W), v (m/s) | Measured W / D (µm), D/W | Eagar–Tsai, A from Gan: W / D (µm) | Gan: A, Ke, keyhole depth (µm) | "
+    L = ["| P (W), v (m/s) | Measured W / D (µm), D/W | Rosenthal / Eagar–Tsai, A from Gan: W / D (µm) | Gan: A, Ke, keyhole depth (µm) | "
          "3D model, A 0.35: W / D below powder top / D into substrate (µm) | 3D peak T (K) |", "|---|---|---|---|---|---|"]
     for v in J["analytic"]["validation"]:
         tag = f"val_{v['P']:.0f}W_{v['v']:.3f}ms"
@@ -93,7 +96,8 @@ def validation_table(rows, J):
             fv = f"{r['liquid']['W_any'] * 1e6:.0f} / {r['liquid']['D'] * 1e6:.0f} / {r['liquid']['D'] * 1e6 - 30:.0f}"
             pk = f"{r['T_peak']:.0f}"
         L.append(f"| {v['P']}, {v['v']} | {v['W_meas_um']:.0f} / {v['D_meas_um']:.0f}, {v['DW_meas']:.2f} | "
-                 f"{v['W_ET_um']:.0f} / {v['D_ET_um']:.0f} | {v['A']:.2f}, {v['Ke']:.1f}, {v['e_keyhole_um']:.0f} | {fv} | {pk} |")
+                 f"{v.get('W_R_um', 0):.0f} / {v.get('D_R_um', 0):.0f}; {v['W_ET_um']:.0f} / {v['D_ET_um']:.0f} | "
+                 f"{v['A']:.2f}, {v['Ke']:.1f}, {v['e_keyhole_um']:.0f} | {fv} | {pk} |")
     for A in (0.30, 0.40):
         r = rows.get(f"val_300W_0.917ms_A{A:.2f}")
         if r:
@@ -116,7 +120,8 @@ def fv_table(rows, J):
         L.append(f"| {t.replace('ref_', '').replace('map_', '')} | {Lq['L'] * 1e6:.0f} × {Lq['W_any'] * 1e6:.0f} × {Lq['D'] * 1e6:.0f} | "
                  f"{Lq['L'] * 1e6 / 8:.0f} × {Lq['W_any'] * 1e6 / 8:.0f} | {r['T_peak']:.0f} | {r['T_boil_alloy']:.0f} / "
                  f"{f(a.get('T_wall_K'))} | {f(si.get('T_floor_K'))}, {f(si.get('L_um'))} × {f(si.get('W_um'))} | "
-                 f"{f(ig.get('T_floor_K'))}, {f(ig.get('L_um'))} × {f(ig.get('W_um'))} | {f(a.get('photodiode_rel'), 2)} |")
+                 f"{f(ig.get('T_floor_K'))}, {f(ig.get('L_um'))} × {f(ig.get('W_um'))} | {f(a.get('photodiode_rel'), 2)} | "
+                 f"{f(a.get('ratio_T_700_900_K'))} |")
     return L
 
 
@@ -173,17 +178,20 @@ def buildup_table(J):
 
 
 def plume_table(J):
-    L = ["| Case | Vapour, best estimate (µg/mm) | of which Mg / Zn / Al (µg/mm) | Vapour mol % | Evaporation power (W) | "
-         "Exit: Mach, velocity (m/s), T (K) | Recoil at the wall (kPa) | HKL Mg shift per layer (×) | Measured loss (fraction) |",
-         "|---|---|---|---|---|---|---|---|---|"]
+    L = ["| Case | Wall reading, HKL (µg/mm) | of which Mg / Zn / Al (µg/mm) | Best: measured Mg/Zn + HKL Al (µg/mm; g per hour lasing) | "
+         "Best vapour mol % | Evaporation power (W) | Exit: Mach, velocity (m/s), T (K) | Recoil at the wall (kPa) | "
+         "HKL Mg shift per layer (×) | Measured loss (fraction) |",
+         "|---|---|---|---|---|---|---|---|---|---|"]
     for c in J["plume_source"]["cases"]:
         w = c["readings"]["wall"]
         e = c["exit"]["wall"]
         lpm = w["loss_ug_per_mm"]
-        x = ", ".join(f"{k} {100 * v:.0f}" for k, v in w["vapour_mole_fraction"].items() if v > 0.01)
+        b = c["best"]
+        x = ", ".join(f"{k} {100 * v:.0f}" for k, v in b["vapour_mole_fraction"].items() if v > 0.01)
         meas = "; ".join(f"{k} {v['loss_fraction']:.2f}" for k, v in c.get("measured", {}).items()) or "–"
         L.append(f"| {c['tag'].replace('ref_', '').replace('map_', '')} | {lpm['total']:.2f} | {lpm.get('Mg', 0):.2f} / "
-                 f"{lpm.get('Zn', 0):.2f} / {lpm.get('Al', 0):.2f} | {x} | {w['evap_power_W']:.1f} | {e['mach']:.2f}, "
+                 f"{lpm.get('Zn', 0):.2f} / {lpm.get('Al', 0):.2f} | {b['loss_ug_per_mm']['total']:.2f}; {b['g_per_hour_lasing']:.2f} | "
+                 f"{x} | {w['evap_power_W']:.1f} | {e['mach']:.2f}, "
                  f"{e['u_m_s']:.0f}, {e['T_vapour_K']:.0f} | {e['recoil_Pa'] / 1e3:.0f} | "
                  f"{w['shift_per_layer_frac'].get('Mg', float('nan')):.1f} | {meas} |")
     return L

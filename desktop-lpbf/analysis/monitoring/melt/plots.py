@@ -119,7 +119,7 @@ def gr_figure(R):
     fig, ax = plt.subplots(figsize=(6.6, 4.6))
     done = set()
     for t, r in R.items():
-        if not t.startswith(("ref_", "map_")) or "200C" in t:
+        if not t.startswith(("ref_", "map_")) or "200C" in t or (t.startswith("map_7075") and "fvol" not in t):
             continue
         d = np.load(RUNS / f"{t}.npz")
         s = d["sol"]
@@ -169,7 +169,7 @@ def apparent(R):
             continue
         d = np.load(RUNS / f"{t}.npz")
         al = PR.Alloy(r["case"]["alloy"])
-        Tw = EV.T_wall(al, r["case"]["d_spot"] / 2)
+        Tw = EV.T_wall(al, r["case"]["d_spot"] / 2, r["case"].get("f_vol", 1.0))
         Ts = np.minimum(d["Ts"].astype(float), Tw)
         xg, yg = d["xg"], d["yg"]
         dA = (xg[1] - xg[0]) * (yg[1] - yg[0]) * 1e-12
@@ -177,6 +177,13 @@ def apparent(R):
         fov = (X ** 2 + Y ** 2) <= 500.0 ** 2
         sig = float((TR.band(Ts) * fov).sum() * dA)
         o = dict(T_wall_K=Tw, photodiode=sig)
+        # two-colour coaxial channel (700 and 900 nm, grey body): the ratio temperature of the whole 1 mm field
+        l1, l2 = 700e-9, 900e-9
+        S1 = float((planck(l1, Ts) * fov).sum())
+        S2 = float((planck(l2, Ts) * fov).sum())
+        Tg = np.linspace(800.0, 4000.0, 3201)
+        rg = planck(l1, Tg) / planck(l2, Tg)
+        o["ratio_T_700_900_K"] = float(np.interp(S1 / S2, rg, Tg))
         for lam, nm in ((850e-9, "Si_850nm"), (1550e-9, "InGaAs_1550nm")):
             Lmax = planck(lam, Tw)
             for bits in (10, 12):
@@ -217,7 +224,7 @@ if __name__ == "__main__":
     summary_md(R)
     ap = apparent(R)
     for t, o in ap.items():
-        print(f"{t:34s} PD x{o.get('photodiode_rel', float('nan')):.2f}  Tw {o['T_wall_K']:.0f}  " + "  ".join(
+        print(f"{t:34s} PD x{o.get('photodiode_rel', float('nan')):.2f}  Tw {o['T_wall_K']:.0f}  Tratio {o['ratio_T_700_900_K']:.0f}  " + "  ".join(
             f"{k}: >{v['T_floor_K']:.0f}K {v['L_um']:.0f}x{v['W_um']:.0f}" for k, v in o.items() if isinstance(v, dict)))
     surface_figure(R)
     sections_figure(R)

@@ -218,39 +218,40 @@ class Alloy:
     def mu(self, T):
         return 1e-3 * 10.0 ** (-0.7324 + 803.49 / np.asarray(T, float))
 
-    def partial_pressures(self, T):
-        """Raoult's-law partial pressures (Pa) of the volatile elements over the liquid alloy."""
+    def partial_pressures(self, T, f_vol=1.0):
+        """Raoult's-law partial pressures (Pa) of the volatile elements over the liquid alloy. f_vol scales the surface activity of
+        Mg and Zn (1 = bulk composition; < 1 = a surface depleted of them)."""
         out = {}
         for el, xi in self.x.items():
             if el in ("Fe", "Cr"):
                 continue
-            out[el] = xi * p_sat(el, T)
+            out[el] = xi * p_sat(el, T) * (f_vol if el in ("Mg", "Zn") else 1.0)
         return out
 
-    def p_total(self, T):
-        return sum(self.partial_pressures(T).values())
+    def p_total(self, T, f_vol=1.0):
+        return sum(self.partial_pressures(T, f_vol).values())
 
-    def T_boil(self, p=ATM):
+    def T_boil(self, p=ATM, f_vol=1.0):
         """Temperature at which the alloy's total vapour pressure (Raoult) reaches p: its effective boiling point."""
         lo, hi = 800.0, 4000.0
         for _ in range(80):
             mid = 0.5 * (lo + hi)
-            if self.p_total(mid) > p:
+            if self.p_total(mid, f_vol) > p:
                 hi = mid
             else:
                 lo = mid
         return 0.5 * (lo + hi)
 
-    def evap_flux(self, T, beta=0.82):
+    def evap_flux(self, T, beta=0.82, f_vol=1.0):
         """Hertz-Knudsen-Langmuir mass flux of each element (kg/m2 s) with the fraction (1 - beta) recondensing (Anisimov 1968:
         ~18 % return in strong evaporation, so beta = 0.82). An upper bound below the boiling point, where vapour has to diffuse
         out through the argon."""
         T = np.asarray(T, float)
-        pp = self.partial_pressures(T)
+        pp = self.partial_pressures(T, f_vol)
         return {el: beta * p * np.sqrt(M[el] / (2 * math.pi * R_GAS * T)) for el, p in pp.items()}
 
-    def evap_heat_flux(self, T, beta=0.82):
-        J = self.evap_flux(T, beta)
+    def evap_heat_flux(self, T, beta=0.82, f_vol=1.0):
+        J = self.evap_flux(T, beta, f_vol)
         return sum(J[el] / M[el] * L_VAP[el] for el in J)
 
     def recoil_pressure(self, T):

@@ -71,6 +71,7 @@ class Case:
     phi: float = 0.5             # powder packing
     k_powder: float = 0.2        # W/m K
     evap: bool = True
+    f_vol: float = 1.0           # surface activity of Mg and Zn relative to the bulk (evaporation is supply-limited; see evap.py)
     eps: float = 0.2
     h: tuple = (5e-6, 4e-6, 3e-6)   # fine spacing dx, dy, dz
     tag: str = ""
@@ -147,7 +148,7 @@ class Solver:
         def q(T):
             out = c.eps * PR.SIGMA_SB * (T ** 4 - c.T0 ** 4)
             if c.evap:
-                out = out + al.evap_heat_flux(T)
+                out = out + al.evap_heat_flux(T, f_vol=c.f_vol)
             return out
         q0 = q(Ts)
         dq = (q(Ts + 0.5) - q(Ts - 0.5)) / 1.0
@@ -276,7 +277,7 @@ class Solver:
         c, T = self.c, self.T
         q0, _ = self.surf_loss(T[:, :, 0])
         absorbed = 2 * self.Qlaser.sum()
-        evap = 2 * float((self.Atop * (self.al.evap_heat_flux(T[:, :, 0]) if c.evap else 0 * T[:, :, 0])).sum())
+        evap = 2 * float((self.Atop * (self.al.evap_heat_flux(T[:, :, 0], f_vol=c.f_vol) if c.evap else 0 * T[:, :, 0])).sum())
         rad = 2 * float((self.Atop * c.eps * PR.SIGMA_SB * (T[:, :, 0] ** 4 - c.T0 ** 4)).sum())
         A_yz = np.outer(self.dy, self.dz)
         adv_out = 2 * float((self.rho_m[None, :] * c.v * A_yz * (self.h[0] - self.H0)).sum())

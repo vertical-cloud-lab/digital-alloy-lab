@@ -72,7 +72,7 @@ def pool_dims_et(AP, v, rho_c, a, T0, w, T_melt, k=None, n=150):
     # centreline: find the peak and the front/back crossings, growing the window until the back is cold
     span = 8 * w
     while True:
-        xs = np.linspace(-span, 2.5 * w, 400)
+        xs = np.linspace(-span, max(2.5 * w, 0.25 * span), 400)
         Ts = ET(xs, 0 * xs, 0 * xs)
         if Ts[0] < T_melt or span > 0.05:
             break

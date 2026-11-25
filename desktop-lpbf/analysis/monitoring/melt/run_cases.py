@@ -64,6 +64,11 @@ def val_cases():
 
 def map_cases():
     out = []
+    # 7075 also with the surface Mg/Zn activity cut 10x (f_vol 0.1): with the bulk activity, HKL evaporates more Zn than the pool
+    # holds and takes ~13 % of the absorbed power; measured losses (~18 % of the Zn) put it near 0.1
+    for P, v in ((320.0, 1.1), (320.0, 0.6)):
+        out.append(fv3d.Case(alloy="7075", P=P, v=v, A=A_REF, T0=298.15, h=(8e-6, 6e-6, 5e-6), f_vol=0.1,
+                             tag=f"map_7075_{P:.0f}W_{v:.1f}ms_fvol0.1"))
     pts = {"7075": ((320.0, 1.1), (320.0, 0.6), (200.0, 1.1)), "Al": ((320.0, 1.1),),
            "AlSi10Mg": ((200.0, 1.1), (400.0, 1.1)), "6061": ((200.0, 1.1), (400.0, 1.1))}
     for alloy, pv in pts.items():

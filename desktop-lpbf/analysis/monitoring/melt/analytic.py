@@ -50,7 +50,7 @@ COLORS = {"lack of fusion": "#f2a600", "conduction": "#257de0", "transition": "#
           "unstable keyhole": "#6a4ce2"}
 
 
-def point(alloy, P, v, d, T0=298.15, A=None, pool=True):
+def point(alloy, P, v, d, T0=298.15, A=None, pool=True, rosenthal=False):
     al = alloy if isinstance(alloy, PR.Alloy) else PR.Alloy(alloy)
     r0 = d / 2
     mp = al.mean_props(T0)
@@ -73,6 +73,9 @@ def point(alloy, P, v, d, T0=298.15, A=None, pool=True):
         et = MS.pool_dims_et(A_used * P, v, rho * c_eff, k / (rho * c_eff), T0, r0, al.T_liq)
         et_peak = MS.pool_dims_et(A_used * P, v, rho * cp, a, T0, r0, 1e9)       # peak T without latent heat
         out.update(L=et["L"], W=et["W"], D=et["D"], T_peak=et_peak["T_peak"])
+        if rosenthal:
+            ro = MS.pool_dims_et(A_used * P, v, rho * c_eff, k / (rho * c_eff), T0, 0.5e-6, al.T_liq)   # point source
+            out.update(L_R=ro["L"], W_R=ro["W"], D_R=ro["D"])
         D = max(et["D"], e_kh)
         out["D_eff"] = D
         out["LoF"] = bool(et["W"] == 0 or (HATCH / max(et["W"], 1e-9)) ** 2 + (LAYER / max(D, 1e-9)) ** 2 > 1)
@@ -137,8 +140,9 @@ def plot_maps(maps, fname, title):
         if "96" in lab or lab == "AlSi10Mg":
             for P, v, D, W in PATEL:
                 ax.plot(v, P, marker="o", ms=5, mfc="white", mec="#191919", mew=1.0)
-            ax.annotate("AlSi10Mg tracks, 108 um spot\n(Patel & Vlasea): D/W 0.32-0.36", xy=(0.917, 350), xytext=(1.2, 455),
-                        fontsize=7, arrowprops=dict(arrowstyle="-", lw=0.6, color="#191919"))
+            ax.annotate("measured AlSi10Mg tracks, 108 um spot\n(Patel & Vlasea): D/W 0.32-0.36", xy=(0.69, 350), xytext=(0.22, 505),
+                        fontsize=7, va="top", arrowprops=dict(arrowstyle="-", lw=0.6, color="#191919"),
+                        bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="none", alpha=0.8))
         ax.axvspan(V_GALVO, vs.max() + 0.05, color="white", alpha=0.55, lw=0)
         ax.axvline(V_GALVO, color="#191919", lw=1.0)
         ax.text(V_GALVO + 0.03, Ps.max() - 5, "beyond the galvo's\n1.1 m/s", fontsize=7, color="#191919", va="top")
@@ -164,7 +168,7 @@ def table_points():
         for T0c in (25.0, 200.0):
             for P in (200.0, 320.0, 400.0):
                 for v in (0.6, 1.1):
-                    rows.append(point(alloy, P, v, 96e-6, T0c + 273.15))
+                    rows.append(point(alloy, P, v, 96e-6, T0c + 273.15, rosenthal=True))
     for lab, d in SPOTS.items():
         rows.append(point("AlSi10Mg", 320.0, 1.1, d) | {"spot_label": lab})
     return rows
@@ -178,9 +182,10 @@ def validation():
     """Patel & Vlasea's AlSi10Mg single tracks (108 um spot, 30 um layer), via Edison r8-melt-plume: depth / width (um)."""
     out = []
     for P, v, D, W in PATEL:
-        p = point("AlSi10Mg", float(P), v, 108e-6)
+        p = point("AlSi10Mg", float(P), v, 108e-6, rosenthal=True)
         out.append(dict(P=P, v=v, D_meas_um=D, W_meas_um=W, DW_meas=D / W, A=p["A"], Ke=p["Ke"], dH_hs=p["dH_hs"],
-                        W_ET_um=p["W"] * 1e6, D_ET_um=p["D"] * 1e6, e_keyhole_um=p["e_keyhole"] * 1e6, regime=p["regime"]))
+                        W_ET_um=p["W"] * 1e6, D_ET_um=p["D"] * 1e6, W_R_um=p["W_R"] * 1e6, D_R_um=p["D_R"] * 1e6,
+                        e_keyhole_um=p["e_keyhole"] * 1e6, regime=p["regime"]))
     return out
 
 
