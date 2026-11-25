@@ -1,7 +1,7 @@
 """CAM for the process-chamber frame and the chamber floor plate in FreeCAD 1.0's CAM workbench, headless.
 
 What it does
-    Builds one FreeCAD CAM Job per setup (frame A/B/C, floor A/B), with the stock, tool controllers
+    Builds one FreeCAD CAM Job per setup (frame B, A, C0, C90, C180, C270; floor A, B), with the stock, tool controllers
     and operations listed in SETUPS below, recomputes them (FreeCAD's own MillFace, Adaptive,
     Profile, PocketShape, Helix and Drilling ops generate the toolpaths), posts each Job to G-code
     with FreeCAD's `linuxcnc` post, and writes per-operation numbers to
@@ -12,13 +12,18 @@ What it does
         their moves (pecks retract to R and come back at rapid). Tool changes are counted, not timed.
 
 Inputs (/tmp/chamber-cam, or $CHAMBER_CAM_IN): frame.brep, floor.brep (mm, origin at the chamber's
-interior floor centre, +z up). Make them with inventory.py: copy /tmp/mach-work/parts/process_chamber_body_*.brep to frame.brep
-and chamber_floor_plate_*.brep to floor.brep (the committed run used the model of 2026-11-20 22:45 UTC). Blanks are boxes: frame 317.5 x 228.6 x 127 (z -5.45..121.55, the
-274 x 184 core already removed by waterjet before milling); floor 317.5 x 228.6 x 25.4 (z -22.7..2.7).
-Setup B is the part turned 180 deg about the model x axis (bottom up); frame setup C is the frame turned
--90 deg about x (front face up) for the door opening.
+interior floor centre, +z up), and parts.json. Make them with inventory.py: copy its process_chamber_body_*.brep to
+frame.brep, chamber_floor_plate_*.brep to floor.brep, the two .stl files likewise (camotics_sim.py and holder_check.py read
+them), and parts.json as it is (its joint cuts name the insert or pin each hole is for; without it, holes fall back to the
+older drill rule). Blanks are boxes: frame 317.5 x 228.6 x 127 (z -5.45..121.55, the 274 x 184 core already removed by
+waterjet before milling); floor 317.5 x 228.6 x 25.4 (z -22.7..2.7).
+Setup B is the part turned 180 deg about the model x axis (bottom up). Frame setup C (since 2026-11-25) is the four walls on
+an HRT210 rotary, A along machine X and the frame's z: one job per A index (frame_C0 front, C90 left, C180 back, C270
+right), each in the machine frame at that index with work zero on the A axis (ROT_A), joined into one Haas program with
+the A moves, gcode/frame_C_haas.nc (haas_rotary_program: Z to machine home, M11, G00 A, M10 before each index).
 
-Run (FreeCAD 1.0.2, the official conda AppImage, extracted with --appimage-extract):
+Run (FreeCAD 1.0.2, the official conda AppImage FreeCAD_1.0.2-conda-Linux-x86_64-py311.AppImage from the GitHub
+release, sha256 e00be00a...904f61 checked against the release's SHA256 file, extracted with --appimage-extract under /tmp):
     FREECADCMD=/path/to/squashfs-root/usr/bin/freecadcmd python3 desktop-lpbf/analysis/machining/freecad_cam.py
   or directly:
     /path/to/freecadcmd -c "import runpy; runpy.run_path('desktop-lpbf/analysis/machining/freecad_cam.py', run_name='__main__')"
@@ -47,6 +52,12 @@ now runs first, as setup_plan.json's F-S1; floor A cuts the outline only to z -1
 cuts the rest of it with the U-notches. FIXTURES below holds each setup's workholding for that check: frame F-S1 and
 floor P-S1 on low-profile edge clamps under the deepest cut (toe clamps on end tabs were in the face mill's and T2's
 way), floor P-S2 held by a port ID clamp (the centre stud's washer sat on the face P-S2 faces).
+
+2026-11-25: setup C programmed beyond the door opening (wall_ops: the bores and ports helix-milled, the holes drilled with
+their tap or STI drill); the drills for insert and dowel holes chosen by part number (PN_DRILL: the lid's M5 STI holes had
+a 6.0 mm drill, the insert's major diameter, and the dowel holes 6.0 mm with nothing left to ream); the dummy-floor plate
+made flush with the frame (312 x 222; at 330 x 240 it stood 9 mm proud of every wall on the rotary). Checked with
+camotics_sim.py (per A index: CAMotics 1.2.0 ignores A) and holder_check.py.
 """
 import json
 import math
@@ -61,7 +72,7 @@ try:
     HERE = os.path.dirname(os.path.abspath(__file__))
 except NameError:  # exec'd without a file name
     HERE = os.getcwd()
-OUT_JSON = os.path.normpath(os.path.join(HERE, "..", "out", "machining", "freecad_cam.json"))
+OUT_JSON = os.environ.get("FREECAD_CAM_JSON") or os.path.normpath(os.path.join(HERE, "..", "out", "machining", "freecad_cam.json"))
 
 RAPID_MM_MIN = 25400.0  # Haas VF-4 rapid, X/Y/Z (1000 in/min)
 IN = 25.4
@@ -91,8 +102,72 @@ TOOLS = {
     # out (A2's 2-1/2 in. OAL leaves 35.5 mm in the collet): 4.8 mm clear.
     9: dict(name="1/4 in. (6.35 mm) 3-flute carbide end mill (added: 8 mm slot, U-notches)", shape="endmill",
             d=6.35, flutes=3, rpm=8100, ipt=0.0015, length=28.0, edge=19.0),
+    # added for setup C (2026-11-25): the tap drill for the through-beam's M6 x 0.75, a drill for the 3 mm dowel-pin
+    # holes (ream 3 mm H7 after, tooling-bom F2; the reamer is not programmed), and the M5 STI drill (tooling-bom D10)
+    10: dict(name="5.2 mm carbide drill (added: M6 x 0.75 tap drill)", shape="drill", d=5.2, rpm=5000,
+             mm_rev=0.1, length=35.0),
+    11: dict(name="2.9 mm carbide drill (added: 3 mm dowel-pin holes, reamed after)", shape="drill", d=2.9, rpm=5000,
+             mm_rev=0.08, length=25.0),
+    12: dict(name="5.3 mm carbide drill (added: M5 STI drill, tooling-bom D10)", shape="drill", d=5.3, rpm=5000,
+             mm_rev=0.1, length=35.0),
+    # 2026-11-25: the floor's M6 STI holes and the 6 mm dowel holes (reamed after, tooling-bom F1)
+    13: dict(name="6.3 mm carbide drill (added: M6 STI drill, tooling-bom D11)", shape="drill", d=6.3, rpm=5000,
+             mm_rev=0.1, length=40.0),
+    14: dict(name="5.8 mm carbide drill (added: 6 mm dowel holes, reamed after)", shape="drill", d=5.8, rpm=5000,
+             mm_rev=0.1, length=40.0),
 }
 DRILLS = {6: 3.3, 7: 4.2, 5: 5.0, 8: 6.0}
+# Setup C (the walls) drills each hole with its tap or STI drill, by the diameter the model draws at the hole's mouth:
+# 3.0 dowel pin -> 2.9 (ream); 4.0 M4 tapped (or a plain 4 mm passage) -> 3.3; 4.908 M4 STI -> 4.2 (tooling-bom D9 is
+# 4.22); 6.0 M6 x 0.75 -> 5.2; 6.038 M5 STI -> 5.3 (D10). Setups A and B keep the older rule, the largest of DRILLS
+# that fits each step, which drills the lid's M5 STI holes 6.0 then 5.0 mm (the model's two steps): see machining.md.
+TAP_DRILL = {3.0: 11, 4.0: 6, 4.908: 7, 5.0: 5, 6.0: 10, 6.038: 12}
+SAE4_TAP_DRILL = 25.0 / 64 * 25.4   # 9.92 mm, for the SAE-4 ports' 7/16-20 UNF thread (the port tool finishes it)
+# Holes for a helical insert or a dowel pin, found by the part number joints.py cut them for (inventory.py's parts.json,
+# copied next to the .brep files): one drill, the insert's STI drill (tooling-bom D9-D11, per McMaster's insert pages) or
+# the pin's ream-under drill, from the hole's mouth to its bottom. Until 2026-11-25 every step was drilled with the
+# largest drill that fits it, and the model draws an STI hole at the insert's major diameter: the lid's M5 STI holes got
+# a 6.0 mm drill (major 6.04: no thread left for the STI tap) and the 6 mm dowel holes a 6.0 mm drill (no reaming stock).
+PN_DRILL = {"91732A656": 7, "91732A261": 12, "91732A262": 13, "91732A782": 13,   # M4, M5, M6, M6 STI inserts
+            "93600A304": 11, "93600A686": 14}                                   # 3 mm and 6 mm dowel pins
+# A screw joint's hole drawn at the thread's nominal size is tapped (joints.py draws tapped holes at nominal, clearance
+# holes larger): its tap drill, coarse pitch (M4 3.3, M5 4.2, M6 5.0).
+NOMINAL_TAP = {4.0: 6, 5.0: 7, 6.0: 5}
+
+# --- setup C: the four walls on the HRT210 (A axis along machine X) -----------------------------------------------
+# Machine frame at each index, work zero on the A axis: X = the frame's z (its bottom on the platter side), and the wall
+# being cut faces +Z. Rotations model -> machine, as setup_plan.json's F-S3 a_axis.index (A turns the part about +X by
+# the right-hand rule: A 90 brings the left wall up). Check the HRT210's direction parameter when setting up.
+ROT_A = {0: ((0, 0, 1), (-1, 0, 0), (0, -1, 0)),     # front (-y) up
+         90: ((0, 0, 1), (0, 1, 0), (-1, 0, 0)),     # left (-x) up
+         180: ((0, 0, 1), (1, 0, 0), (0, 1, 0)),     # back (+y) up
+         270: ((0, 0, 1), (0, -1, 0), (1, 0, 0))}    # right (+x) up
+WALLS = {0: ("front", 1, -1, 111.0, 95.0), 90: ("left", 0, -1, 156.0, 140.0), 180: ("back", 1, 1, 111.0, 95.0),
+         270: ("right", 0, 1, 156.0, 140.0)}         # name, model axis, outward sign, outer and inner face (setup Z)
+FRAME_OUTLINE = (-156.0, 156.0, -111.0, 111.0, -3.9, 120.0)   # what A and B leave: the stock setup C starts from
+
+
+def rot_matrix(su):
+    """3 x 3 model -> setup rotation (rows: setup x, y, z in model coordinates)"""
+    if "rot" in su:
+        return tuple(tuple(r) for r in su["rot"])
+    a = su.get("rot_x", 180 if su.get("flip") else 0)
+    return {0: ((1, 0, 0), (0, 1, 0), (0, 0, 1)), 180: ((1, 0, 0), (0, -1, 0), (0, 0, -1)),
+            -90: ((1, 0, 0), (0, 0, 1), (0, -1, 0))}[a]
+
+
+def _box_in(rot, box):
+    x0, x1, y0, y1, z0, z1 = box
+    pts = [[sum(rot[i][k] * c[k] for k in range(3)) for i in range(3)]
+           for c in [(x, y, z) for x in (x0, x1) for y in (y0, y1) for z in (z0, z1)]]
+    lo = [min(p[i] for p in pts) for i in range(3)]
+    hi = [max(p[i] for p in pts) for i in range(3)]
+    return lo, hi
+
+
+def _stock_box(rot, box=FRAME_OUTLINE):
+    lo, hi = _box_in(rot, box)
+    return (lo[0], lo[1], lo[2], hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2])
 
 
 def clean_label(s):
@@ -126,7 +201,7 @@ SETUPS = [
         ("Opening from bottom, finish (0.3 mm radial, two 29 mm passes)", "profile_holes", 2, None,
          dict(face="rebate", start=0.0, final=-58.0, step=29.0, extra=0.0)),
         ("Drill 18 M4 tap holes 3.3 mm", "drill", 6, None, dict(holes="bottom_r2.0")),
-        ("Drill 2 dowel holes 6.0 mm", "drill", 8, None, dict(holes="bottom_r3.0")),
+        ("Drill 2 dowel holes 5.8 mm, ream 6 H7 after", "drill", 14, None, dict(holes="bottom_r3.0")),
     ]),
     dict(name="frame_A", part="frame", flip=False, stock=FRAME_BLANK, ops=[
         ("Face top to z 120", "face", 1, None, dict(face="top", start=121.55, final=120.0, step=1.55)),
@@ -138,17 +213,32 @@ SETUPS = [
         ("Opening 280x190 R10 from top, finish (0.3 mm radial, two 31 mm passes)", "profile_holes", 2, None,
          dict(face="top_inner", start=120.0, final=58.0, step=31.0, extra=0.0)),
         ("Lid O-ring gland 4.6 x 2.65", "pocket", 4, None, dict(face="gland", start=120.0, step=0.5)),
-        ("Drill 20 insert holes: 6.0 mm counterbore", "drill", 8, None, dict(holes="top_r3.02")),
-        ("Drill 20 insert holes: 5.0 mm pilot", "drill", 5, None, dict(holes="top_r2.5")),
+        # the M5 STI drill to the bottom of both modelled steps (was 6.0 then 5.0 mm, the steps' own sizes)
+        ("Drill 20 M5 STI insert holes 5.3 mm, 10.5 deep", "drill", 12, None, dict(holes="top_r2.5", start=120.0)),
     ]),
-    # setup C: front face up (part turned -90 deg about x, model -y -> +z); stock = the finished outline
-    # clear_z: the dummy-floor plate (z' to 120) stands 9 mm proud of the front face (111); FreeCAD's default clearance
-    # (stock top + 5 = 116) brought the tool down into it on the first move (holder_check.py)
-    dict(name="frame_C", part="frame", rot_x=-90, stock_box=(-156.0, -3.9, -111.0, 312.0, 123.9, 222.0), clear_z=130.0,
-         ops=[
+    # setup C (F-S3): the four walls in one clamping on the HRT210, one FreeCAD job per A index, each in the machine
+    # frame at that index (ROT_A); stock = the finished outline. Posted per index, then joined into one Haas program
+    # with the A moves (haas_rotary_program). clear_z: the dummy-floor plate stands 9 mm proud of each wall (Z 120 at
+    # front and back, 165 at the sides); FreeCAD's default clearance (stock top + 5) brought the tool down into it on
+    # the first move (holder_check.py, 2026-11-23). "wall" expands into the wall's bores, ports and holes, found on the
+    # model (wall_ops in run_cam). Programmed 2026-11-25; until then setup C cut only the door opening.
+    dict(name="frame_C0", part="frame", rot=ROT_A[0], a_deg=0, rotary="frame_C", stock_box=_stock_box(ROT_A[0]),
+         clear_z=130.0, ops=[
         ("Door opening 220x92 R6.5 through the 16 mm front wall, adaptive", "adaptive_in", 3, None,
          dict(edges="door", start=111.0, final=94.5, step=16.5, stepover=10)),
     ]),
+    dict(name="frame_C90", part="frame", rot=ROT_A[90], a_deg=90, rotary="frame_C", stock_box=_stock_box(ROT_A[90]),
+         clear_z=175.0, ops=[("Left wall: recoater bore, through-beam", "wall", None, None, dict(wall=90))]),
+    dict(name="frame_C180", part="frame", rot=ROT_A[180], a_deg=180, rotary="frame_C",
+         stock_box=_stock_box(ROT_A[180]), clear_z=130.0, ops=[
+        ("Inlet slot 120x8 through the back wall, profile", "profile_holes", 9, None,
+         dict(face="wall_back", start=111.0, final=94.5, step=3.0, extra=0.0)),
+        ("Back wall: argon port, plenum inserts and pins, rail holes", "wall", None, None, dict(wall=180)),
+    ]),
+    dict(name="frame_C270", part="frame", rot=ROT_A[270], a_deg=270, rotary="frame_C",
+         stock_box=_stock_box(ROT_A[270]), clear_z=175.0,
+         ops=[("Right wall: KF-25 and recoater bores, through-beam, O2 port, inserts, pins", "wall", None, None,
+               dict(wall=270))]),
     dict(name="floor_A", part="floor", flip=False, stock=FLOOR_BLANK, ops=[
         ("Face top to z 0", "face", 1, None, dict(face="top", start=2.7, final=0.0, step=2.7)),
         ("Step the 4 mm band round the pad (adaptive outside the pad)", "adaptive_out", 2, None,
@@ -234,20 +324,25 @@ def _fixtures():
                                               else -x_root, y - 20.0, y + 20.0, fb_bot - 1.5 * IN, -63.0))
                        for sx in (-1, 1) for y in (-60.0, 60.0)], []),
         # (setup_plan.json's toe clamps on end tabs, kept for the record: toe_clamps(x_root, fb_top), end_tabs(...))
-        # F-S2: the dummy-floor plate (1 in. MIC-6, 330 x 240) under the frame's skirt face; screws from below
-        "frame_A": (-3.9 - 25.4, [("dummy-floor plate", "box", (-165, 165, -120, 120, -3.9 - 25.4, -3.9))], []),
-        # F-S3: the dummy-floor plate on an HRT210 platter, A along the frame's z (setup y'), A 215.9 above the table
-        # (2-1/2 in. riser). HRT210 from Haas' layout drawing hrt210_10-2020.pdf (Rev 1, 2019-11-11): platter dia. 210,
-        # centre height 152.4, housing 276.4 tall, 124.0 from the platter centre to its side (taken as symmetric),
-        # 177.8 deep; motor box beside it to 466.9 overall (side ASSUMED +x'). Platter taken as 15.9 thick.
-        "frame_C": (-215.9, [
-            ("dummy-floor plate", "box", (-165, 165, hrt_face, -3.9, -120, 120)),
-            ("HRT210 platter", "ycyl", (0.0, 0.0, 105.0, hrt_face - 15.9, hrt_face)),
-            ("HRT210 housing", "box", (-124.0, 124.0, hrt_face - 15.9 - 177.8, hrt_face - 15.9, -152.4, -152.4 + 276.4)),
-            ("HRT210 motor box", "box", (124.0, 124.0 + 342.9 - 124.0, hrt_face - 15.9 - 177.8, hrt_face - 15.9,
-                                         -152.4, -152.4 + 276.4)),
-            ("2-1/2 in. riser", "box", (-124.0, 342.9, hrt_face - 15.9 - 177.8, hrt_face - 15.9, -215.9, -152.4)),
-        ], []),
+        # F-S2: the dummy-floor plate (1 in. MIC-6) under the frame's skirt face; screws from below. 312 x 222, flush with
+        # the frame (was 330 x 240: on the rotary it stood 9 mm proud of every wall, and T9's ER16 holder came within
+        # 2.5 mm of it profiling the back wall's inlet slot, holder_check.py 2026-11-25)
+        "frame_A": (-3.9 - 25.4, [("dummy-floor plate", "box", (-156, 156, -111, 111, -3.9 - 25.4, -3.9))], []),
+        # F-S3, setup C: the dummy-floor plate (1 in. MIC-6, 312 x 222, flush with the frame) on an HRT210 platter, A along machine X and the
+        # frame's z, A 215.9 above the table (2-1/2 in. riser), work zero on the A axis; one entry per index, in that
+        # index's machine frame (ROT_A). The plate turns with the part; the platter is round about A; the housing,
+        # motor box and riser stay put. HRT210 from Haas' layout drawing hrt210_10-2020.pdf (Rev 1, 2019-11-11):
+        # platter dia. 210, centre height 152.4, housing 276.4 tall, 124.0 from the platter centre to its side (taken
+        # as symmetric), 177.8 deep; motor box beside it to 466.9 overall (side ASSUMED -Y). Platter taken as 15.9 thick.
+        **{"frame_C%d" % a: (-215.9, [
+            ("dummy-floor plate", "box", tuple(v for lo_hi in zip(*_box_in(ROT_A[a], (-156, 156, -111, 111, hrt_face,
+                                                                                         -3.9))) for v in lo_hi)),
+            ("HRT210 platter", "xcyl", (0.0, 0.0, 105.0, hrt_face - 15.9, hrt_face)),
+            ("HRT210 housing", "box", (hrt_face - 15.9 - 177.8, hrt_face - 15.9, -124.0, 124.0, -152.4, -152.4 + 276.4)),
+            ("HRT210 motor box", "box", (hrt_face - 15.9 - 177.8, hrt_face - 15.9, -342.9, -124.0, -152.4,
+                                         -152.4 + 276.4)),
+            ("2-1/2 in. riser", "box", (hrt_face - 15.9 - 177.8, hrt_face - 15.9, -342.9, 124.0, -215.9, -152.4)),
+        ], []) for a in ROT_A},
         # P-S1: blank on 1/2 x 1-1/2 in. parallels along x, clear of the port and slots; toe clamps on the end tabs
         # (since holder_check.py: no tabs; low-profile edge clamps, ASSUMED 40 x 40 mm, on the x-end faces under
         # z -15, 3 mm below A's outside passes, which now stop at z -12)
@@ -260,7 +355,7 @@ def _fixtures():
         # with a dia. 104 clamp washer sat on the very face this setup faces: holder_check.py found the face mill and
         # the drills of the holes near the port running into it. Now the port is held from inside: an expanding ID
         # clamp (ASSUMED dia. 94, its top 5 mm under the faced bottom at z 20) pulls the plate onto the fixture plate.
-        "floor_B": (-25.4, [("fixture plate", "box", (-165, 165, -120, 120, -25.4, 0.0)),
+        "floor_B": (-25.4, [("fixture plate", "box", (-156, 156, -111, 111, -25.4, 0.0)),  # the dummy-floor plate
                             ("port ID clamp", "vcyl", (0.0, 0.0, 47.0, 0.0, 15.0))], []),
         # (setup_plan.json's version, for the record: a dia. 104 x 3/8 in. washer and M12 nut on the bottom face)
     }
@@ -338,7 +433,81 @@ def run_cam():
             return [max(zface(s, -4.0, up=True), key=lambda c: c[1].Area)[0]]
         if key == "port":
             return [names[0] for k, names in cyl_groups(s).items() if abs(k[2] - 48.0) < 0.01]
+        if key == "wall_back":  # the back wall's outer face (y = +111): its one non-circular inner wire is the slot
+            return ["Face%d" % (i + 1) for i, f in enumerate(s.Faces) if type(f.Surface).__name__ == "Plane"
+                    and f.normalAt(0, 0).y > 0.999 and abs(f.BoundBox.YMax - bb.YMax) < 0.01]
         raise KeyError(key)
+
+    def wall_ops(part, a_deg):
+        """setup C: the bores, ports and holes of the wall that faces up at index a_deg, from the model: cylinders whose
+        axis is the wall's normal, inside the wall, grouped per hole. Steps over r 4.5 are helix-milled (r >= 8 with
+        T3: the 18 and 25.4 mm bores; else T9: the through-beam's 10.8 counterbore, and the SAE-4 ports to their
+        25/64 in. tap drill), the rest drilled with the tap or STI drill of the step at the hole's mouth (TAP_DRILL),
+        from that step's top to the hole's bottom. Returns [(label, kind, tool, ipt, cfg, face names, meta)]."""
+        s0 = shapes[part]
+        wname, ax, sign, outer, inner = WALLS[a_deg]
+        holes_ = {}
+        for i, f in enumerate(s0.Faces):
+            su_ = f.Surface
+            if type(su_).__name__ != "Cylinder" or abs(abs(su_.Axis[ax]) - 1) > 1e-6:
+                continue
+            lo_, hi_ = (f.BoundBox.XMin, f.BoundBox.XMax) if ax == 0 else (f.BoundBox.YMin, f.BoundBox.YMax)
+            zlo, zhi = sorted((sign * lo_, sign * hi_))
+            if zlo < inner - 0.01 or zhi > outer + 0.01:
+                continue
+            u0, u1, _, _ = f.ParameterRange
+            c = su_.Center
+            loc = (round(c.y if ax == 0 else c.x, 2), round(c.z, 2))
+            st = holes_.setdefault(loc, {}).setdefault((round(su_.Radius, 3), round(zlo, 2), round(zhi, 2)), [[], 0.0])
+            st[0].append("Face%d" % (i + 1))
+            st[1] += u1 - u0
+
+        def air(u, v, z):  # (u, v): the hole's in-wall coordinates; z: setup Z along the normal
+            q = [0.0, 0.0, v]
+            q[ax] = sign * z
+            q[1 - ax] = u
+            return not s0.isInside(FreeCAD.Vector(*q), 1e-4, True)
+
+        helix, drill = {}, {}
+        for loc, steps in holes_.items():
+            steps = sorted(((k, v[0]) for k, v in steps.items() if v[1] > 2 * math.pi - 1e-3), key=lambda kv: -kv[0][2])
+            if not steps:
+                continue
+            bottom = min(k[1] for k, _ in steps)
+            through = all(air(loc[0] + 0.5 * steps[-1][0][0] * math.cos(t), loc[1] + 0.5 * steps[-1][0][0] * math.sin(t),
+                              bottom - 0.05) for t in (0.3, 1.9, 3.5, 5.1))
+            for n, ((r, zlo, zhi), names) in enumerate(steps):
+                if r > 4.5:
+                    t = 3 if r >= 8.0 else 9
+                    if abs(r - 5.555) < 0.01:      # SAE-4 port, 7/16-20: to the tap drill; the port tool does the rest
+                        off, what = r - SAE4_TAP_DRILL / 2, "SAE-4 port to the 25/64 in. tap drill"
+                    elif r >= TOOLS[t]["d"] - 1e-6:  # single helix right at the centre: keep 0.05 mm so it clears it
+                        off, what = 0.05, "bore"
+                    else:
+                        off, what = 0.0, "bore" if r >= 8.0 else "counterbore"
+                    last = n == len(steps) - 1
+                    zf = zlo - 0.5 if (last and through) else zlo
+                    # the first step starts at the wall face: the SAE ports' chamfer cone sits above their thread step
+                    zs = outer if n == 0 else zhi
+                    helix.setdefault((t, round(off, 3), zs, zf, what, 2 * r), []).append(names[0])
+                    continue
+                dkey = min(TAP_DRILL, key=lambda d: abs(d - 2 * r))
+                if abs(dkey - 2 * r) > 0.05:
+                    raise ValueError("no drill for a %.3f mm hole at %s on the %s wall" % (2 * r, loc, wname))
+                drill.setdefault((TAP_DRILL[dkey], zhi, bottom, through, dkey), []).append(names[0])
+                break  # one drill from this step's top to the hole's bottom
+        out = []
+        for (t, off, zs, zf, what, dia), names in sorted(helix.items(), key=lambda kv: (kv[0][0] != 3, -kv[0][2])):
+            out.append(("%s wall: %d x %s %.2f mm, helix, z %.2f..%.2f" % (wname.capitalize(), len(names), what, dia,
+                                                                         zf, zs),
+                        "helix_bore", t, 0.002, dict(start=zs, final=zf, step=1.0, offset=off), names,
+                        dict(holes=len(names), wall=wname)))
+        for (t, zs, zb, through, dkey), names in sorted(drill.items(), key=lambda kv: (kv[0][0], -kv[0][1])):
+            out.append(("%s wall: drill %d x %.1f mm for %.3f mm, z %.2f..%.2f%s" % (
+                wname.capitalize(), len(names), TOOLS[t]["d"], dkey, zb, zs, ", through" if through else ""),
+                "drill", t, None, dict(through=through, start=zs, final=zb), names,
+                dict(holes=len(names), wall=wname, through=through)))
+        return out
 
     def pick_edges(part, key):
         """edge names of the door opening: the inner wire of the frame's outer front face (y = -111)"""
@@ -369,6 +538,30 @@ def run_cam():
     def drill_for(d):
         fits = [(dd, t) for t, dd in DRILLS.items() if dd <= d + 0.05]
         return max(fits)[1] if fits else None
+
+    joints_ = {}
+    pj = os.path.join(IN_DIR, "parts.json")
+    if os.path.exists(pj):  # inventory.py's joint cuts per part: (key, part numbers, bbox)
+        for row in json.load(open(pj))["parts"]:
+            for part_, pre in (("frame", "process_chamber_body"), ("floor", "chamber_floor_plate")):
+                if row["slug"].startswith(pre):
+                    joints_[part_] = [(c["key"], c["pns"], c["bbox"]) for c in row["cuts"]]
+
+    def joint_at(part, x, y, z):
+        """(key, part numbers) of the joint cut at (x, y, z), model frame, or None"""
+        for key, pns, bb in joints_.get(part, []):
+            if bb[0] - 0.05 <= x <= bb[1] + 0.05 and bb[2] - 0.05 <= y <= bb[3] + 0.05 and bb[4] - 0.05 <= z <= bb[5] + 0.05:
+                return key, pns
+        return None
+
+    def joint_drill(part, x, y, z):
+        """the drill for the insert or dowel pin joints.py cut a hole for at (x, y, z), model frame; None if none"""
+        for key, pns, bb in joints_.get(part, []):
+            if bb[0] - 0.05 <= x <= bb[1] + 0.05 and bb[2] - 0.05 <= y <= bb[3] + 0.05 and bb[4] - 0.05 <= z <= bb[5] + 0.05:
+                for pn in pns:
+                    if pn in PN_DRILL:
+                        return PN_DRILL[pn], key, pn
+        return None
 
     tcs_made = {}
 
@@ -412,11 +605,17 @@ def run_cam():
         return [round(f(p[k] for p in pts), 2) for k in "XYZ" for f in (min, max)]
 
     results = []
+    rotary = {}
     for su in SETUPS:
         part, flip = su["part"], su.get("flip", False)
         rot_x = su.get("rot_x", 180 if flip else 0)
         shp = shapes[part].copy()
-        if rot_x:
+        if "rot" in su:  # setup C's A indexes: a general rotation, model -> machine frame at that index
+            r = su["rot"]
+            shp.transformShape(FreeCAD.Matrix(r[0][0], r[0][1], r[0][2], 0, r[1][0], r[1][1], r[1][2], 0,
+                                              r[2][0], r[2][1], r[2][2], 0, 0, 0, 0, 1))
+            rot_x = None
+        elif rot_x:
             shp.rotate(FreeCAD.Vector(0, 0, 0), FreeCAD.Vector(1, 0, 0), rot_x)
         model = doc.addObject("Part::Feature", su["name"] + "_model")
         model.Shape = shp
@@ -497,6 +696,13 @@ def run_cam():
                 op.StartRadius = 48.0 - d / 2
                 op.OffsetExtra = -d / 4
                 op.Direction = "CCW"
+            elif kind == "helix_bore":  # one helix at r - offset - D/2 (FreeCAD 1.0.2's single-helix mode, r <= D)
+                op = doc.addObject("Path::FeaturePython", "Helix")
+                op.Proxy = Path.Op.Helix.ObjectHelix(op, "Helix", job)
+                op.Base = [(base, base_subs)]
+                op.StartRadius = 0.0
+                op.OffsetExtra = cfg.get("offset", 0.0)
+                op.Direction = "CCW"
             elif kind == "drill":
                 op = doc.addObject("Path::FeaturePython", "Drill")
                 op.Proxy = Path.Op.Drilling.ObjectDrilling(op, "Drill", job)
@@ -517,7 +723,8 @@ def run_cam():
                 set_depths(op, cfg["start"], fb, cfg["step"])
             elif kind == "drill":
                 faces = [base.Shape.getElement(n) for n in base_subs]
-                set_depths(op, max(f.BoundBox.ZMax for f in faces), min(f.BoundBox.ZMin for f in faces))
+                set_depths(op, cfg.get("start", max(f.BoundBox.ZMax for f in faces)),
+                           cfg.get("final", min(f.BoundBox.ZMin for f in faces)))
                 op.setExpression("RetractHeight", None)
                 op.RetractHeight = op.StartDepth.Value + 2.0
             else:
@@ -550,8 +757,42 @@ def run_cam():
                     def air(x, y, z):
                         return not s0.isInside(FreeCAD.Vector(x, y, z), 1e-4, True)
 
+                    # insert and dowel holes (PN_DRILL): one drill from the mouth to the bottom of the hole's steps
+                    by_loc, done = {}, set()
+                    for (x, y, r, zmin, zmax), names in g.items():
+                        if r <= 4.5:
+                            by_loc.setdefault((x, y), []).append((r, zmin, zmax, names[0]))
+                    for (x, y), steps in by_loc.items():
+                        steps.sort(key=lambda st: st[1] if kind == "drill_all" else -st[2])
+                        r0, z0_, z1_, n0 = steps[0]
+                        jd = joint_drill(part, x, y, 0.5 * (z0_ + z1_))
+                        if jd is None:
+                            continue
+                        open_ = air(x, y, z0_ - 0.05) if kind == "drill_all" else air(x, y, z1_ + 0.05)
+                        if not open_:
+                            continue
+                        stack = [steps[0]]
+                        for st in steps[1:]:  # contiguous steps, no wider than the one before
+                            prev = stack[-1]
+                            joined = abs(st[1] - prev[2]) < 0.02 if kind == "drill_all" else abs(st[2] - prev[1]) < 0.02
+                            if not joined or st[0] > prev[0] + 1e-6:
+                                break
+                            stack.append(st)
+                        zlo_, zhi_ = min(st[1] for st in stack), max(st[2] for st in stack)
+                        rl = stack[-1][0]
+                        zfar = zhi_ + 0.05 if kind == "drill_all" else zlo_ - 0.05
+                        far_open = all(air(x + 0.9 * rl * math.cos(a), y + 0.9 * rl * math.sin(a), zfar)
+                                       for a in (0.3, 1.9, 3.5, 5.1))
+                        if kind == "drill_top" and far_open:
+                            continue  # through holes are drilled from below (drill_all)
+                        # setup B is the part upside down: its depths are the model's negated
+                        start_, final_ = (-zlo_, -zhi_) if kind == "drill_all" else (zhi_, zlo_)
+                        groups.setdefault(("pn", jd[0], start_, final_, far_open, jd[1]), []).append(stack[-1][3])
+                        done.update((x, y, st[0], st[1], st[2]) for st in stack)
                     for (x, y, r, zmin, zmax), names in g.items():
                         if r > 4.5:  # the 96 mm port (setup A); part-turn arcs are already left out
+                            continue
+                        if (x, y, r, zmin, zmax) in done:
                             continue
                         dt = drill_for(2 * r)
                         if dt is None:
@@ -564,16 +805,35 @@ def run_cam():
                         zfar = zmax + 0.05 if kind == "drill_all" else zmin - 0.05
                         far_open = all(air(x + 0.9 * r * math.cos(a), y + 0.9 * r * math.sin(a), zfar)
                                        for a in (0.3, 1.9, 3.5, 5.1))
+                        jt = joint_at(part, x, y, 0.5 * (zmin + zmax)) if joints_ else None
+                        nominal = next((d for d in NOMINAL_TAP if abs(2 * r - d) < 0.01), None)
+                        if jt is not None and nominal is not None:
+                            dt = NOMINAL_TAP[nominal]  # a screw joint's hole at the thread's nominal size: tapped
+                        elif jt is None and abs(2 * r - 6.0) < 0.01 and not far_open:
+                            # a plain blind 6 mm hole with no joint is a dowel or diamond-pin hole (the floor's FP-07)
+                            dt = 14
                         groups.setdefault((dt, zmin, zmax, far_open), []).append(names[0])
+                    pn_groups = {k: v for k, v in groups.items() if k[0] == "pn"}
+                    groups = {k: v for k, v in groups.items() if k[0] != "pn"}
+                    for (_, dt, s_, f_, far_open, key), names in sorted(pn_groups.items(), key=lambda kv: (kv[0][1], kv[0][2])):
+                        add("Drill %d x %.1f mm for the %s holes, %s, z %.2f..%.2f (setup)%s" % (
+                            len(names), TOOLS[dt]["d"], key, "ream after" if TOOLS[dt]["d"] in (2.9, 5.8) else "STI tap after",
+                            f_, s_, ", through" if far_open else ""),
+                            "drill", dt, None, dict(through=far_open, start=s_, final=f_), names,
+                            dict(holes=len(names), through=far_open, joint=key))
                     # the step nearest the surface the drill enters from goes first: a step below another must
                     # not be drilled before the one above it is open (its R plane would be inside solid stock)
                     order = sorted(groups.items(), key=(lambda kv: (kv[0][1], kv[0][0])) if kind == "drill_all"
                                    else (lambda kv: (-kv[0][2], kv[0][0])))
                     for (dt, zmin, zmax, far_open), names in order:
-                        add("Drill %d x %.1f mm step z %.2f..%.2f (model)%s" % (
-                            len(names), DRILLS[dt], zmin, zmax, ", through" if far_open else ""),
+                        add("Drill %d x %.1f mm step z %.2f..%.2f (model)%s%s" % (
+                            len(names), TOOLS[dt]["d"], zmin, zmax, ", through" if far_open else "",
+                            ", dowel or diamond-pin holes, ream 6 H7 after" if dt == 14 else ""),
                             "drill", dt, None, dict(through=far_open), names,
                             dict(holes=len(names), through=far_open))
+                elif kind == "wall":
+                    for lab2, k2, t2, ipt2, cfg2, names, meta2 in wall_ops(part, cfg["wall"]):
+                        add(lab2, k2, t2, ipt2, cfg2, names, meta2)
                 elif "edges" in cfg:
                     add(label, kind, t, ipt, cfg, pick_edges(part, cfg["edges"]))
                 else:
@@ -602,12 +862,56 @@ def run_cam():
         gcode = linuxcnc_post.export(posted, gpath, "--no-show-editor --precision 3")
         if not gcode:
             gcode = open(gpath).read()
+        if su.get("rotary"):
+            rotary.setdefault(su["rotary"], []).append((su["a_deg"], su["name"], gcode))
         results.append(dict(setup=su["name"], part=part, rot_about_x_deg=rot_x,
+                            rotation_model_to_setup=[list(r) for r in rot_matrix(su)], a_deg=su.get("a_deg"),
+                            rotary=su.get("rotary"),
                             stock_box=su.get("stock") or su.get("stock_box"),
                             gcode=gpath, freecad_job_cycle_time=getattr(job, "CycleTime", None),
                             ops=[m for _, m in ops_meta], _gcode_text=gcode))
         print("setup", su["name"], "job CycleTime", getattr(job, "CycleTime", None), flush=True)
+    for name, indexed in rotary.items():  # one Haas program per rotary setup, with the A moves
+        path = os.path.join(GCODE_DIR, name + "_haas.nc")
+        with open(path, "w") as f:
+            f.write(haas_rotary_program(sorted(indexed)))
+        for r in results:
+            if r.get("rotary") == name:
+                r["haas_program"] = path
+        print("wrote", path, flush=True)
     return FreeCAD.Version(), results
+
+
+# --- setup C: one Haas program with the A moves ---------------------------------------------------------------
+def haas_rotary_program(indexed, number=2660):
+    """Join the per-index LinuxCNC programs [(a_deg, setup name, text)] into one program for a Haas VF-4 with an
+    HRT210 as its A axis (3+1 indexing). Each index's body (its operations, without the post's preamble and postamble)
+    is preceded by: coolant and spindle off, Z to machine home (G53 G0 Z0.: the frame and the dummy-floor plate swing
+    204 mm about A, so no work plane is safe for turning), unclamp (M11), G0 A, clamp (M10). Tool changes become Haas'
+    'T M06'; if the tool is already in the spindle the Haas skips the change. Ends back at A0 with M30."""
+    out = ["%", "O%05d (DESKTOP LPBF CHAMBER FRAME, SETUP C = F-S3, THE FOUR WALLS ON THE HRT210)" % number,
+           "(freecad_cam.py: FreeCAD 1.0.2's linuxcnc post per A index, joined for a Haas with an A axis)",
+           "(G54: X0 at the frame's interior floor plane, 3.9 mm above its bottom face; Y0 Z0 on the A axis)",
+           "(A0 front wall up, A90 left, A180 back, A270 right; A turns the part about +X, right hand)",
+           "(set the HRT210's direction so A90 brings the left wall up; dummy-floor plate on the platter, 2 pins, 18 M4)",
+           "G21", "G17 G40 G49 G80 G90", "G54"]
+    n_changes = 0
+    for a_deg, name, text in indexed:
+        lines = text.splitlines()
+        i0 = next(i for i, ln in enumerate(lines) if ln.startswith("(begin operation"))
+        i1 = next((i for i, ln in enumerate(lines) if ln.startswith("(begin postamble")), len(lines))
+        out += ["(index A%d: %s, %s)" % (a_deg, WALLS[a_deg][0] + " wall up", name), "M09", "M05", "G53 G00 Z0.",
+                "M11", "G00 A%d." % a_deg, "M10"]
+        for ln in lines[i0:i1]:
+            m = re.fullmatch(r"\s*M0?6\s+T(\d+)\s*", ln)
+            if m:
+                out.append("T%d M06" % int(m.group(1)))
+                n_changes += 1
+                continue
+            out.append(ln)
+    out += ["M09", "M05", "G53 G00 Z0.", "M11", "G00 A0.", "M10", "M30", "%"]
+    haas_rotary_program.tool_changes = n_changes
+    return "\n".join(out) + "\n"
 
 
 # --- G-code recount (plain Python) ----------------------------------------------------------------
@@ -715,7 +1019,8 @@ def summarise(version, results):
         tool="FreeCAD %s (%s), CAM workbench, run headless with freecadcmd" % (".".join(version[:3]), version[3]),
         post="linuxcnc (FreeCAD's Path/Post/scripts/linuxcnc_post.py, --precision 3), mm, G-code in "
              + GCODE_DIR,
-        machine="Haas VF-4 (CT40, 8100 rpm, 22.4 kW), 3-axis; rapids 25.4 m/min for the recount",
+        machine="Haas VF-4 (CT40, 8100 rpm, 22.4 kW), 3-axis; setup C 3+1 on an HRT210 (A); rapids 25.4 m/min for "
+                "the recount (A index moves not timed)",
         material="6061-T6",
         tools={("T%d" % t): dict(v, feed_mm_min=round(feed_mm_min(t), 1)) for t, v in TOOLS.items()},
         assumptions=[
@@ -738,8 +1043,13 @@ def summarise(version, results):
             "step nearest the entry face first. Steps whose far end opens at full diameter (through) get "
             "ExtraOffset = Drill Tip; blind steps stop with the drill tip at the model's flat floor, so their "
             "full diameter ends 0.3 x D short.",
-            "Setup C (front face up) programs only the door opening, T3 adaptive through the 16 mm wall "
-            "(the whole 220 x 92 window is cut to chips). Back-wall slot, side bores and ports are not programmed.",
+            "Setup C (F-S3, since 2026-11-25): the four walls on an HRT210, one FreeCAD job per A index in the machine "
+            "frame at that index (A along machine X, work zero on the A axis), joined into one Haas program with the A "
+            "moves (gcode/frame_C_haas.nc). A0 front: the door opening, T3 adaptive through the 16 mm wall. A90 left and "
+            "A270 right: the 18 mm recoater bores and the 25.4 mm KF-25 bore helix-milled with T3; the through-beam's "
+            "10.8 mm counterbore and the SAE-4 O2 port (to its 9.92 mm tap drill) with T9; the holes drilled with their "
+            "tap or STI drill (TAP_DRILL). A180 back: the 120 x 8 inlet slot profiled with T9, the argon SAE-4 port, "
+            "the plenum inserts, pins and rail holes. Taps, STI taps, reamers and the SAE port tool are not programmed.",
         ],
         freecad_notes=[
             "Primary times are the G-code recount (cut_time_min, rapid_time_min). FreeCAD's own estimate "

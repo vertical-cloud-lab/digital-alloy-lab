@@ -35,6 +35,8 @@ def kind(p):
         return "sheet"
     if p.mat in ("al6061", "mic6", "macor") and not p.mcm.startswith(("KF", "9572", "TSLOT", "SHEET")):
         return "stock"
+    if p.mat == "ss316l" and p.mcm.startswith("FA"):  # Solid Sealing's weld-in feedthroughs (FA11631 ...): bought (2026-11-25)
+        return "bought"
     if p.mat == "ss316l" and any(k in n for k in ("Build module", "bottom flange", "Rod end", "Hollow piston rod", "Overflow funnel")):
         return "stock"
     if "Striker" in n:

@@ -8,9 +8,11 @@ script sweeps the whole tool assembly along every move of each setup's posted pr
   * against the in-process stock at that point in the program: the blank (minus the frame's waterjet core) less every
     earlier setup's cuts, less what this setup has cut so far. The flutes cut; anything above them (shank, holder,
     flange, spindle) that meets stock is a collision, and so is a rapid whose flutes go more than 0.5 mm into stock;
-  * against that setup's fixtures (FIXTURES below, from setup_plan.json's fixture notes: end tabs and toe clamps, risers,
-    parallels, the dummy-floor plate, the floor plate's stud and clamp washer, the HRT210 rotary with its riser), which
-    nothing may touch, flutes included;
+  * against that setup's fixtures (freecad_cam.FIXTURES: risers, low-profile edge clamps, parallels, the dummy-floor plate,
+    the floor plate's port ID clamp, and on the rotary the HRT210's platter, housing, motor box and riser), which nothing
+    may touch, flutes included. Frame setup C (since 2026-11-25) is four 3-axis setups, one per A index, each in the
+    machine frame at that index (A along X): the dummy-floor plate turns with the part, the rest of the rotary stays put,
+    and the stock carries over from index to index;
   * against the Haas VF-4's travels (X 1270, Y 508 mm; spindle nose 107-742 mm above the table), with the part centred in
     X and Y travel and the table height set by the fixture stack.
 
@@ -106,6 +108,11 @@ CUTTERS = {
     7: dict(holder="04-0006", loc=None, bom="4.2 mm carbide drill (stub length)"),
     8: dict(holder="04-0006", loc=None, bom="6.0 mm carbide drill (stub length)"),
     9: dict(holder="04-0006", loc=0.75 * IN, oal=2.5 * IN, bom="A2 Lakeshore LC205014, 1/4 x 3/4 LOC x 2-1/2 OAL"),
+    10: dict(holder="04-0006", loc=None, bom="5.2 mm carbide drill (stub length; added 2026-11-25 for setup C)"),
+    11: dict(holder="04-0006", loc=None, bom="2.9 mm carbide drill (stub length; added 2026-11-25 for setup C)"),
+    12: dict(holder="04-0006", loc=None, bom="5.3 mm carbide drill, M5 STI (tooling-bom D10; added 2026-11-25 for setup C)"),
+    13: dict(holder="04-0006", loc=None, bom="6.3 mm carbide drill, M6 STI (tooling-bom D11; added 2026-11-25)"),
+    14: dict(holder="04-0006", loc=None, bom="5.8 mm carbide drill, 6 mm dowel holes before the F1 reamer (added 2026-11-25)"),
 }
 for _t, _spec in FC.TOOLS.items():  # freecad_cam.py's own holder choice wins
     if "holder" in _spec:
@@ -163,6 +170,11 @@ def top_of(kind, p, X, Y):
         dx2 = r * r - (X - cx) ** 2
         m = (dx2 >= 0) & (Y >= y0) & (Y <= y1)
         return np.where(m, cz + np.sqrt(np.maximum(dx2, 0)), -np.inf)
+    if kind == "xcyl":  # cylinder with its axis along x (the rotary's platter about A): (cy, cz, r, x0, x1)
+        cy, cz, r, x0, x1 = p
+        dy2 = r * r - (Y - cy) ** 2
+        m = (dy2 >= 0) & (X >= x0) & (X <= x1)
+        return np.where(m, cz + np.sqrt(np.maximum(dy2, 0)), -np.inf)
     raise ValueError(kind)
 
 
@@ -318,14 +330,8 @@ def setup_grid(part, res, pad):
 
 def top_in_setup(stock, grid, rot):
     """top of the voxel stock per setup column: arrays over setup (x', y') and the setup coordinates of the columns"""
-    cz = grid.c[2]
-    if rot == 0:
-        S, cx, cy, cz_s = stock, grid.c[0], grid.c[1], cz
-    elif rot == 180:  # (x, -y, -z)
-        S, cx, cy, cz_s = stock[:, ::-1, ::-1], grid.c[0], -grid.c[1][::-1], -cz[::-1]
-    else:  # -90: (x, z, -y)
-        S = np.transpose(stock, (0, 2, 1))[:, :, ::-1]
-        cx, cy, cz_s = grid.c[0], grid.c[2], -grid.c[1][::-1]
+    S = CS.setup_view(stock, rot)  # every setup frame is a signed permutation of the part frame
+    cx, cy, cz_s = CS.setup_coords(grid, rot)
     any_ = S.any(axis=2)
     nz = S.shape[2]
     k = nz - 1 - np.argmax(S[:, :, ::-1], axis=2)
@@ -345,16 +351,9 @@ def top_in_setup(stock, grid, rot):
 
 def cut_stock(stock, grid, rot, zc_cols):
     """remove every voxel above the setup's cut z-map (zc over the stock's own columns, setup frame)"""
-    if rot == 0:
-        zs = grid.c[2][None, None, :]
-        stock &= ~(zs - grid.h / 2 >= zc_cols[:, :, None] - 1e-6)
-    elif rot == 180:
-        zc_p = zc_cols[:, ::-1]  # setup y' = -y
-        zs = -grid.c[2][None, None, :]
-        stock &= ~(zs - grid.h / 2 >= zc_p[:, :, None] - 1e-6)
-    else:  # setup (x', y', z') = (x, z, -y); zc over (x', y'=z)
-        zs = -grid.c[1][None, :, None]
-        stock &= ~(zs - grid.h / 2 >= zc_cols[:, None, :] - 1e-6)
+    S = CS.setup_view(stock, rot)  # a view: the in-place update below writes the part-frame array
+    zs = CS.setup_coords(grid, rot)[2][None, None, :]
+    S &= ~(zs - grid.h / 2 >= zc_cols[:, :, None] - 1e-6)
 
 
 def main():
@@ -417,9 +416,7 @@ def main():
             # travels: tool-centre span in X and Y, and gauge line above the table
             xs = np.array([[m["p0"][0], m["p1"][0]] for m in moves]).ravel()
             ys = np.array([[m["p0"][1], m["p1"][1]] for m in moves]).ravel()
-            travel = dict(table_z_setup=table_z)
-            if rot == -90:  # A along machine X: machine X = setup y', machine Y = setup x'
-                xs, ys = ys, xs
+            travel = dict(table_z_setup=table_z)  # every setup frame is the machine's (setup C: A along X)
             travel.update(x_span_mm=round(float(xs.max() - xs.min()), 1), y_span_mm=round(float(ys.max() - ys.min()), 1),
                           x_ok=bool(xs.max() - xs.min() <= VF4["x_travel"]),
                           y_ok=bool(ys.max() - ys.min() <= VF4["y_travel"]))
@@ -449,7 +446,8 @@ def main():
                                                  for p_, d_ in rec["by_part"].items()},
                                         collisions=sum(1 for hh in hits if hh["tool"] == t),
                                         tight=bool(min(rec["stock"]["c"], rec["fixture"]["c"]) < TIGHT))
-            report["setups"][name] = dict(part=part, rot_about_x_deg=rot, moves=len(moves),
+            report["setups"][name] = dict(part=part, rotation_model_to_setup=CS.rot_label(rot), a_deg=su.get("a_deg"),
+                                          moves=len(moves),
                                           fixtures=[dict(name=n, kind=k, params=[round(float(v), 2) for v in p])
                                                     for n, k, p in fx],
                                           end_tabs=tabs, tools=tools, n_collisions=len(hits), collisions=hits[:60],

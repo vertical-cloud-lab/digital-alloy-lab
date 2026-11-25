@@ -32,6 +32,11 @@ CAMotics 1.2.0's limits, and what this script does about them
       depth), so the holes are cut and timed.
     * The tool starts at (0, 0, 0), inside the blank. A "G92 Z1000" after the preamble puts the start 1000 mm above work
       zero; the workpiece is given 1000 mm lower and the result is shifted back.
+    * No A axis: camsim logs an A move as an XYZ move to the same point and goes on cutting as if A were 0 (tested on
+      2026-11-25 with --a-axis-test: a hole programmed after G0 A90 went in from the top face, not a side face). So
+      frame setup C, the four walls on the rotary, is simulated per A index: each index's block is posted as its own
+      program in the machine frame at that index, cut on the blank turned into that frame, and turned back into the
+      part frame (rot_of). The joined Haas program (gcode/frame_C_haas.nc) is those four blocks with the A moves between.
     * Memory: a full frame blank at 0.5 mm runs out of a 3 GB container, so each blank is cut in z slabs (each slab is
       its own CAMotics run; slabs the tool never reaches are not run, they are uncut blank). $CAMOTICS_MEM (default 3g)
       caps the container and $CAMOTICS_SLAB (default 32 mm) sets the slab: 2g with 16 mm slabs ran on 2026-11-23 and
@@ -63,12 +68,13 @@ import freecad_cam as FC  # noqa: E402  (plain-Python parts only: TOOLS, SETUPS,
 IN_DIR = pathlib.Path(os.environ.get("CHAMBER_CAM_IN", "/tmp/chamber-cam"))
 WORK = pathlib.Path(os.environ.get("CAMOTICS_WORK", "/tmp/cam-sim"))
 OUT = HERE.parent / "out" / "machining" / "camotics"
-IMAGE = "camotics:1.2.0"
+IMAGE = os.environ.get("CAMOTICS_IMAGE", "camotics:1.2.0")   # the camotics.Dockerfile build
 SHIFT = 1000.0             # G92 offset: the simulated start point is this far above work zero
 CAMOTICS_RAPID = 10000.0   # mm/min, CAMotics 1.2.0 src/gcode/Move.cpp ("feed = 10000; // TODO FIXME")
 PECK_BACKOFF = 0.254       # mm, LinuxCNC's G83 clearance above the last peck
 SLAB = float(os.environ.get("CAMOTICS_SLAB", "32"))  # mm, z thickness of one CAMotics run (16 fits a 2 GB container)
 DOCKER_MEM = os.environ.get("CAMOTICS_MEM", "3g")      # container memory cap (the shared runner asks for 2g)
+DOCKER_CPUS = os.environ.get("CAMOTICS_CPUS", "1.5")   # container CPU cap (the shared runner, 2026-11-25)
 
 L, W = 317.5, 228.6        # blank in x, y (both parts), centred on the part origin
 BLANK_Z = {"frame": FC.FRAME_BLANK[2:], "floor": FC.FLOOR_BLANK[2:]}
@@ -79,30 +85,43 @@ GRID_HI = {"frame": (159.0, 114.5, 122.0), "floor": (159.0, 114.5, 3.0)}
 
 # --- setup frames ---------------------------------------------------------------------------------
 def rot_of(su):
-    return su.get("rot_x", 180 if su.get("flip") else 0)
+    """the setup's model -> setup rotation, a signed permutation matrix (freecad_cam.rot_matrix): setups A and B turn
+    the part about x (0 or 180 deg); setup C's A indexes (frame_C0 ... frame_C270) are in the machine frame at that
+    index, A along X. CAMotics 1.2.0 cuts in X, Y, Z only (its tool path ignores A), so each index is simulated as its
+    own 3-axis program on the blank turned into that index's frame, and the result is turned back into the part frame."""
+    return np.array(FC.rot_matrix(su), dtype=float)
+
+
+def perm_sign(rot):
+    """setup axis i = sign[i] * part axis perm[i]"""
+    perm = [int(np.argmax(np.abs(rot[i]))) for i in range(3)]
+    return perm, [int(np.sign(rot[i][perm[i]])) for i in range(3)]
+
+
+def setup_view(arr, rot):
+    """a part-frame voxel array seen in the setup frame (a numpy view: writing to it writes the part array)"""
+    perm, sign = perm_sign(rot)
+    v = np.transpose(arr, perm)
+    return v[tuple(slice(None, None, -1) if sg < 0 else slice(None) for sg in sign)]
+
+
+def setup_coords(grid, rot):
+    """voxel centre coordinates along the setup axes of setup_view (ascending)"""
+    perm, sign = perm_sign(rot)
+    return [grid.c[perm[i]] if sign[i] > 0 else -grid.c[perm[i]][::-1] for i in range(3)]
+
+
+def rot_label(rot):
+    return [[int(v) for v in r] for r in np.asarray(rot)]
 
 
 def to_setup(p, rot):
-    """part frame -> setup frame (rotation about x; freecad_cam rotates the part by rot_x degrees)"""
-    x, y, z = p[..., 0], p[..., 1], p[..., 2]
-    if rot == 0:
-        return np.stack([x, y, z], -1)
-    if rot == 180:
-        return np.stack([x, -y, -z], -1)
-    if rot == -90:
-        return np.stack([x, z, -y], -1)
-    raise ValueError(rot)
+    """part frame -> setup frame"""
+    return np.asarray(p, float) @ np.asarray(rot, float).T
 
 
 def to_part(p, rot):
-    x, y, z = p[..., 0], p[..., 1], p[..., 2]
-    if rot == 0:
-        return np.stack([x, y, z], -1)
-    if rot == 180:
-        return np.stack([x, -y, -z], -1)
-    if rot == -90:
-        return np.stack([x, -z, y], -1)
-    raise ValueError(rot)
+    return np.asarray(p, float) @ np.asarray(rot, float)
 
 
 def blank_box_setup(part, rot):
@@ -297,7 +316,8 @@ def run_camsim(su, cam_text, moves, res, threads=2):
                 "files": [f"{name}.ngc"]}
         (d / f"{tag}.camotics").write_text(json.dumps(proj, indent=1))
         t0 = time.time()
-        cmd = ["docker", "run", "--rm", f"--memory={DOCKER_MEM}", f"--memory-swap={DOCKER_MEM}", "-v", f"{d}:/work", IMAGE, "sh", "-c",
+        cmd = ["docker", "run", "--rm", f"--memory={DOCKER_MEM}", f"--memory-swap={DOCKER_MEM}", f"--cpus={DOCKER_CPUS}",
+               "-v", f"{d}:/work", IMAGE, "sh", "-c",
                f"camsim -v --binary --threads {threads} {tag}.camotics {tag}.stl; echo exit=$?; "
                "cat /sys/fs/cgroup/memory.peak 2>/dev/null || true"]
         p = subprocess.run(cmd, capture_output=True, text=True)
@@ -420,13 +440,15 @@ def setup_occupancy(su, sim, grid):
         tris = read_stl(s["stl"])
         tris[..., 2] += SHIFT
         tris = to_part(tris, rot)
-        if rot in (0, 180):  # the slab is a z range in the part frame too
-            zr = sorted(np.array([s["z0"], s["z1"]]) * (1 if rot == 0 else -1))
-            region = grid.box(-1e9, 1e9, -1e9, 1e9, zr[0], zr[1])
-            occ_s = voxelize(tris, grid, zr)
-        else:  # -90: setup z' = -y
-            yr = sorted([-s["z0"], -s["z1"]])
-            region = grid.box(-1e9, 1e9, yr[0], yr[1], -1e9, 1e9)
+        perm, sign = perm_sign(rot)
+        ax = perm[2]  # the part axis along the setup's z; the slab is a range along it
+        rng = sorted([sign[2] * s["z0"], sign[2] * s["z1"]])
+        lims = [[-1e9, 1e9] for _ in range(3)]
+        lims[ax] = rng
+        region = grid.box(*lims[0], *lims[1], *lims[2])
+        if ax == 2:  # the slab is a z range in the part frame too
+            occ_s = voxelize(tris, grid, rng)
+        else:
             occ_s = voxelize(tris, grid) & region
         occ = np.where(region, occ_s, occ)
         del tris, occ_s, region
@@ -449,13 +471,8 @@ def rapid_check(su, moves, stock_part, grid, tol=0.5, rshrink=0.5):
     the lowest tool tip so far in each column). Material counts if it lies more than `tol` above the tool tip and
     more than `tol` below h. Returns the offending moves. Also returns the cut z-map for the plot."""
     rot = rot_of(su)
-    # stock in the setup frame: flips / transposes of the part grid (all rotations are quarter turns about x)
-    if rot == 0:
-        S, cs = stock_part, [grid.c[0], grid.c[1], grid.c[2]]
-    elif rot == 180:
-        S, cs = stock_part[:, ::-1, ::-1], [grid.c[0], -grid.c[1][::-1], -grid.c[2][::-1]]
-    else:  # x' = x, y' = z, z' = -y
-        S, cs = np.transpose(stock_part, (0, 2, 1))[:, :, ::-1], [grid.c[0], grid.c[2], -grid.c[1][::-1]]
+    # stock in the setup frame: a transpose and flips of the part grid (every setup frame is a signed permutation)
+    S, cs = setup_view(stock_part, rot), setup_coords(grid, rot)
     h = grid.h
     nz = S.shape[2]
     C = np.zeros(S.shape[:2] + (nz + 1,), np.int16)
@@ -594,8 +611,77 @@ def render(name, target, final, gouge, left, grid, path, title):
     plt.close(fig)
 
 
+def a_axis_test():
+    """Does camsim simulate an A move? A 6 mm hole 10 mm deep at X10 from the top of a 50 mm cube, then G0 A90, then the
+    same hole at X30. With A simulated, the second hole would enter a side face; if A is ignored it goes in from the top."""
+    d = WORK / "a_axis_test"
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "atest.ngc").write_text("G21 G90 G17\nG92 Z%.1f\nM6 T1\nG0 Z30\nG0 X10 Y0\nG1 Z15 F500\nG0 Z30\nG0 A90\nG0 X30 Y0\n"
+                                 "G1 Z15 F500\nG0 Z30\nM2\n" % SHIFT)
+    (d / "atest.camotics").write_text(json.dumps({
+        "units": "metric", "resolution-mode": "manual", "resolution": 0.5,
+        "tools": {"1": {"units": "metric", "shape": "cylindrical", "length": 30, "diameter": 6, "description": "6 mm"}},
+        "workpiece": {"automatic": False, "margin": 0, "bounds": {"min": [0, -25, -25 - SHIFT], "max": [50, 25, 25 - SHIFT]}},
+        "files": ["atest.ngc"]}))
+    p = subprocess.run(["docker", "run", "--rm", "--memory=1g", f"--cpus={DOCKER_CPUS}", "-v", f"{d}:/work", IMAGE, "sh", "-c",
+                        "cd /work && camsim -v --binary atest.camotics atest.stl"], capture_output=True, text=True)
+    log = [ln for ln in (p.stdout + p.stderr).splitlines() if "atest.ngc:8:" in ln or "Not implemented" in ln]
+    tris = read_stl(str(d / "atest.stl"))
+    tris[..., 2] += SHIFT
+
+    import types
+    G = types.SimpleNamespace(lo=np.array([0.0, -25.0, -25.0]), hi=np.array([50.0, 25.0, 25.0]), h=0.5)  # a 50 mm cube
+    G.n = np.round((G.hi - G.lo) / G.h).astype(int)
+    G.c = [G.lo[k] + (np.arange(G.n[k]) + 0.5) * G.h for k in range(3)]
+    occ = voxelize(tris, G)
+
+    def solid(x, y, z):
+        return bool(occ[tuple(int((v - G.lo[a]) / G.h) for a, v in enumerate((x, y, z)))])
+    res = dict(program=(d / "atest.ngc").read_text().splitlines(), camsim_log_for_the_A_move=log,
+               hole1_top_x10_cut=not solid(10, 0, 20), hole2_top_x30_cut=not solid(30, 0, 20),
+               side_faces_cut=not (solid(30, -22, 0) and solid(30, 22, 0)),
+               removed_cm3=round(float((~occ).sum()) * G.h ** 3 / 1000, 3), two_holes_cm3=round(2 * math.pi * 9 * 10 / 1000, 3))
+    res["a_simulated"] = bool(res["side_faces_cut"] and not res["hole2_top_x30_cut"])
+    res["verdict"] = ("CAMotics 1.2.0 simulates the A axis" if res["a_simulated"] else
+                      "CAMotics 1.2.0 ignores the A axis: the hole after G0 A90 was cut from the top, as at A0")
+    (OUT / "a_axis_test.json").write_text(json.dumps(res, indent=1))
+    print(res["verdict"], flush=True)
+    return res
+
+
+WALLS = [("front wall (y -111..-95), cut at A0", 1, (-111.0, -95.0)), ("back wall (y 95..111), cut at A180", 1, (95.0, 111.0)),
+         ("left wall (x -156..-140), cut at A90", 0, (-156.0, -140.0)), ("right wall (x 140..156), cut at A270", 0, (140.0, 156.0))]
+
+
+def render_walls(tgt, final, grid, path, title):
+    """setup C's work: the material through each wall (mm, summed along the wall's normal over its 16 mm), the model
+    beside the chained CAMotics result, seen from outside the wall"""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    fig, axs = plt.subplots(4, 2, figsize=(13, 11.5))
+    for row, (name, ax, (a0, a1)) in enumerate(WALLS):
+        sel = (grid.c[ax] > a0) & (grid.c[ax] < a1)
+        u = 1 - ax  # the wall's horizontal axis: x on the front and back, y on the sides
+        for col, (arr, lab) in enumerate(((tgt, "model"), (final, "CAMotics, setups chained"))):
+            m = np.compress(sel, arr, axis=ax).sum(axis=ax).astype(float) * grid.h   # over (u, z)
+            ext = [grid.lo[u], grid.hi[u], grid.lo[2], grid.hi[2]]
+            im = axs[row, col].imshow(m.T, origin="lower", extent=ext, cmap="viridis", vmin=0, vmax=a1 - a0, aspect="equal")
+            axs[row, col].set_title(f"{name}: {lab}", fontsize=9)
+            axs[row, col].set_xlabel("xy"[u] + " (mm)")
+            axs[row, col].set_ylabel("z (mm)")
+            if col == 1:
+                fig.colorbar(im, ax=axs[row, col], fraction=0.02, label="material through the wall (mm)")
+    fig.suptitle(title, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(path, dpi=70)
+    plt.close(fig)
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--a-axis-test", action="store_true", help="only check whether camsim simulates an A move")
+    ap.add_argument("--render-walls", action="store_true", help="only redraw camotics_frame_walls.png from $CAMOTICS_WORK")
     ap.add_argument("--res", type=float, default=0.5)
     ap.add_argument("--skip-sim", action="store_true", help="reuse the CAMotics STLs in $CAMOTICS_WORK")
     ap.add_argument("--parts", default="frame,floor")
@@ -603,6 +689,16 @@ def main():
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     WORK.mkdir(parents=True, exist_ok=True)
+    if a.a_axis_test:
+        a_axis_test()
+        return
+    if a.render_walls:
+        z = np.load(WORK / "frame_voxels.npz")
+        shape = tuple(z["shape"])
+        unpack = lambda k: np.unpackbits(z[k])[:int(np.prod(shape))].reshape(shape).astype(bool)  # noqa: E731
+        render_walls(unpack("tgt"), unpack("final"), Grid("frame", a.res), OUT / "camotics_frame_walls.png",
+                     f"frame setup C: the four walls on the rotary, model and CAMotics ({a.res} mm voxels)")
+        return
     fc = json.load(open(HERE.parent / "out" / "machining" / "freecad_cam.json"))
     res_json = WORK / "camotics_runs.json"
     runs = json.load(open(res_json)) if (a.skip_sim and res_json.exists()) else {}
@@ -668,7 +764,7 @@ def main():
                                    full_diameter_short_by_mm=round(max(0.0, tip + point - m["final_depth"]), 2)))
             tot = lambda k: sum(v.get(k, 0) for v in times.values())  # noqa: E731
             report["setups"][name] = dict(
-                part=part, rot_about_x_deg=rot_of(su), moves=len(moves),
+                part=part, rotation_model_to_setup=rot_label(rot_of(su)), a_deg=su.get("a_deg"), moves=len(moves),
                 camotics_runs=sim["slabs"], removed_cm3=round(removed / 1000, 2),
                 gouge_cm3_raw=round(float(gouge_here.sum()) * a.res ** 3 / 1000, 3),
                 rapids_through_stock=sorted(hits, key=lambda h: -h["material_mm3"])[:40],
@@ -731,6 +827,9 @@ def main():
         render(part, tgt, final, gdeep, ldeep, grid, OUT / f"camotics_{part}.png",
                f"{part}: CAMotics 1.2.0 cut of FreeCAD's G-code, setups chained ({a.res} mm voxels); "
                f"deviations deeper than {a.min_depth} mm")
+        if part == "frame":
+            render_walls(tgt, final, grid, OUT / "camotics_frame_walls.png",
+                         f"frame setup C: the four walls on the rotary, model and CAMotics ({a.res} mm voxels)")
         np.savez_compressed(WORK / f"{part}_voxels.npz", tgt=np.packbits(tgt), final=np.packbits(final),
                             shape=np.array(tgt.shape))
         print(part, json.dumps({k: v for k, v in report["parts"][part].items() if k not in ("gouges", "leftovers")}),
