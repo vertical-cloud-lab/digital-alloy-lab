@@ -28,6 +28,216 @@ Nothing here has been built or tried on hardware. The numbers come from the mode
 - the chamber change of [chamber-construction.md](chamber-construction.md): a through-frame and a bolted floor plate with a second 3.53 mm cord;
 - for run 2, two items from this note's patch list: the lid gland's R13 corners and the floor port's lead-in.
 
+## Round 7 (2026-11-25): the build done by the two arms from the long parts table, recorded, and redesigned where it failed
+
+Sterling, 2026-11-25: "we should see the assembly being carried out **by** two UR12e units each on a MiR250 using the full set
+of parts spread across a really long table ... it's fine for the robot to grab and use custom tools as desired (you'll need to
+design, render, and simulate usage of these, though)". Run 7 (round 6) checked each step at its station with the part already
+in the gripper. Round 7 adds where the part comes from, records every committed motion, and redesigns the steps that failed.
+Nothing here has been built or tried on hardware.
+
+### What was added
+
+- **The long parts table** ([`cad/robotbuild/kit_table.py`](cad/robotbuild/kit_table.py)): every item the sequence places (a
+  part, a bought or bench-built sub-assembly, or one piece of a step that places pieces one at a time) and every other part of
+  the model has a slot on the 12 m x 0.9 m table in line with the bench (`common.LONG_TABLE`): 228 slots in eight
+  category zones (stock, sheet, motion, gas, optics, electronics, seals and fasteners, frames) from x 2630 to 13692 mm, in
+  assembly order inside a zone. Each item stands in the orientation it goes on in (upside down for the steps done upside down),
+  so the arm takes it with the grasp it inserts it with; arm A's items on the front half, arm B's on the back, two-arm parts
+  across the middle; >= 50 mm between items for the fingers. Supports: the table top, a kitting nest (a 12 mm plate with a
+  15 mm pocket rim) for items that would not stand, a 45 mm riser (half the item's footprint) under low parts the gripper takes
+  from above (its fingertips reach below the part: run 8's first picks of the heater block and the cartridge heaters hit the
+  table top), small-part trays, and one labelled bin per McMaster number for the screws. The heavy units (UPS 23 kg, laser
+  40 kg, scroll pump 26 kg, rack frame 22 kg, power box 16 kg) and everything people fit in chapter 5 go on nine EUR pallets
+  behind arm B's lane. Machined parts also have their stock blank at the same slot, for the table before machining.
+  Committed layout: [`analysis/out/assembly/kit_slots.json`](analysis/out/assembly/kit_slots.json).
+- **Fetches** ([`analysis/assembly/fetch.py`](analysis/assembly/fetch.py)): for each place step the actor's MiR drives along
+  its lane from the bench to the item's slot (up to ~13 m), the arm is planned from park to 70 mm back from the grasp, comes in on
+  a checked straight line with the fingers open round the item (the item, its nest and the neighbouring items in the world),
+  closes, lifts it 90 mm straight up (checked) and is planned back to park holding it; the MiR drives back to the station dock,
+  the parked arm and the held part swept along the drive against the cell, the table and everything on it (every robot body's
+  swept box against every other body's box, the overlapping pairs checked with FCL every 20 mm). A step that places several
+  pieces (the nine Macor rings, the four legs) fetches its tray once. The station check then runs as before, from park.
+- **A screw presenter on each MiR**: a vibratory rail presenter that holds one screw head-up at a pick-up nest. The OnRobot
+  Screwdriver picks its screw from such a presenter and checks that it picked one
+  ([product page](https://onrobot.com/en/products/onrobot-screwdriver), read 2026-11-25; OnRobot leaves the feeder to the
+  integrator). No vendor or model is chosen: the 250 x 130 x 150 mm envelope is an estimate. Each screw: the driver is planned from the last screw's retreat to the presenter's pick-up
+  nest, down and up 40 mm (checked), and planned on to the next hole. Run 8 first had the presenter on the cabinet top beside
+  the arm base; there it took the elbow's room and four of the first five floor screws (C00d) lost their approach plans. It now
+  hangs on the cabinet's far face beside the tool stand, its top 20 mm under the deck. The presenter trips are reported apart
+  from the station results (117 of the 123 screws driven in run 9 had their presenter trip planned).
+- **Recording** ([`analysis/assembly/record.py`](analysis/assembly/record.py), `ASM_RECORD=<dir>`): every committed motion
+  in order (joint vectors per frame for both arms, gripper closure, tool changes, each MiR's x along its lane, the objects each
+  arm carries and every object's pose, the screws' run-down and torque, the trunnion's turn), one pickle per chapter under
+  `/tmp/robotbuild/traj` (not committed). The planner still tries several docks, rolls and tools per step; only the chosen one
+  is recorded. The video chapters 40 and 41 replay these.
+- **Real time per step** (`/tmp/robotbuild/data/assembly.json` for the video's summary and the cost worker): the motion times
+  come from the recorded paths at cobot speeds, the rest are labelled estimates: joints <= 60 deg/s and the TCP <= 250 mm/s
+  plus 0.4 s to start and stop; insertions 50 mm/s and the last 10 mm at 10 mm/s; screws run down at 300 rpm (pitch x 5 per
+  second) plus 1 s to torque; the gripper 0.8 s; a tool change 8 s (estimate); MiR drives 0.3 m/s^2 and 1 m/s (MiR250
+  datasheet) plus 6 s to dock (estimate); persons' steps by estimate (minutes per step in `commit.PERSON_MIN`).
+  Results.json's old `seconds` field was the checker's compute time, not real time; it is now `compute_s`.
+
+### Pass/fail, before and after
+
+| | Run 7 (round 6, `results.json`) | Run 9 (round 7, `results_run9.json`) |
+|---|---|---|
+| checked steps passed (robot steps, no notes) | 77 of 97 | 93 of 108 |
+| screws driven | 111 of 129 | 123 of 129 |
+| place steps whose part came from the long table on a planned pick and checked drives | not modelled | 40 of 65 (the others: the pick at the table was not planned, listed below; moved sub-assemblies and the hand tools need no fetch) |
+
+Steps were added and split between the runs (F25, F45, F48 and F52 became two to four steps each; F57b is new), so the counts are of different lists; the table below compares step by step.
+
+Still failing in run 9:
+
+| Step | What | Why |
+|---|---|---|
+| C00d | Eighteen M4 x 16 floor-plate screws up through the U-notches into the frame's sk | in the: approach: no path in 500 iterations |
+| F06 | Eight M6 x 25 base-plate-to-leg screws, from under the plate | 316 #1: approach: no clear way in to the hole's mouth (A/upper_arm hits Base plate, process module |
+| F15 | Nine M4 x 16 inlet-plenum screws into the back wall | 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner |
+| F18 | Recoater rail with its carriage, carriage block, ball nut and arm (bought and pr | released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: A/tool/screwdriver hits Process chamber body (6061-T6 through-frame f |
+| F26 | Blade holder and blade, in through the door opening and up under the recoater ar | sweep: Blade holder blocked by Process chamber body (6061-T6 through-frame from 5 after 52.0 mm; arm A: held:F26:Blade holder hits Process chamber body (6061-T6 through-f |
+| F27 | Two M3 x 8 blade screws (100 mm bit extension: run 7's driver met the module and | 316 #1: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle; 316 #2: screwdriver: A/upper_arm hits Fixture B (open stand); also no way  |
+| F45 | Roller feedthrough (M8 x 1 nose over its 2-012) into the metering base along its | sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 13.0 mm; arm A: A/upper_arm hits Base plate, process module (MIC-6, 15 mm) at 0 mm |
+| F45b | Roller drive coupling onto the feedthrough's shaft | arm A: A/upper_arm hits Base plate, process module (MIC-6, 15 mm) at 0 mm along the insertion |
+| F45c | Dosing stepper, its shaft into the coupling | arm A: no IK at the start pose at 0 mm along the insertion |
+| F45d | Dock rails, load cell, NFC reader, side port blank and docked sensor, from just  | sweep: Load cell blocked by Dovetail rails for the reservoirs (lips pull the p after 0.0 mm; arm A: held:F45d:Load cell hits Dovetail rails for the reservoirs (lips pull  |
+| F48b | Camera window gasket (1 mm FKM flat ring), window and flat ring into the counter | arm A: A/tool/ringpad hits Camera viewport adapter + boss (6061; Ø30 bore on the line of sight, Ø20 aperture, Ø1 in. window; FKM seals) at 63 mm along the insertion |
+| F52 | Left hinge pin slid in from the left along the hinge axis, pushed home on its en | arm A: A/gr/left_finger_tip hits Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears); pushed home instead, but A/gr/left_finger_tip hits Cham |
+| F52b | Right hinge pin slid in from the right along the hinge axis, pushed home on its  | arm A: A/gr/left_finger_tip hits Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears); pushed home instead, but A/gr/left_finger_tip hits Cham |
+| F54 | Optics bridge (13.3 kg, lens and ring under it) onto the four posts: the hoist l | no collision-free pair of arm poses at the start of the carry |
+| F57 | Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collim | released 12 mm short and pushed home with the closed fingers; arm A: held:F57:Coaxial-monitoring dichroic hits Enclosed beam tubes #1; pushed home instead, but held:F57:C |
+
+Picks at the table that were not planned (the station steps themselves pass; in the video the part appears in the gripper, with a note):
+
+M04 (lift: no IK at the start); M13 (lift: no IK at the start); C00a (lift: no IK at the start); F02b (lift: no IK at the start); F10a (in to the grasp: no IK at the start); F10b (in to the grasp: no IK at the start); F10d (in to the grasp: no IK at the start); F16 (in to the grasp: no IK at the start); F18 (in to the grasp: left_finger_tip hits Recoater guide rail (15 mm, 260 ); F21 (in to the grasp: no IK at the start); F22 (in to the grasp: no IK at the start); F23 (in to the grasp: no IK at the start); F25 (in to the grasp: no IK at the start); F25c (in to the grasp: no IK at the start); F26 (in to the grasp: no IK at the start); F39 (in to the grasp: left_finger_tip hits Drawer latches: 2 x quarter-turn); F41 (in to the grasp: no IK at the start); F45 (in to the grasp: no IK at the start); F45b (in to the grasp: no IK at the start); F45c (in to the grasp: no IK at the start); F48c (lift: no IK at the start); F50 (in to the grasp: no IK at the start); F52 (in to the grasp: no IK at the start); F52b (in to the grasp: no IK at the start); F56b (in to the grasp: no IK at the start).
+
+
+### Every redesign, tool and re-sequence, and why
+
+| Step | Run 7 (round 6) | Change in round 7 | Kind | Run 9 |
+|---|---|---|---|---|
+| F10a, F10b, F10d, F10e | FAIL: the stock fingers met the module handle and the frame in the door opening | **liner wand** (tooling.liner_wand, new): a 12 x 12 mm bar, 300 mm to two Ø15 bellows cups 50 mm apart on its face; it carries each back half through the door opening by its front face, the wrist outside the chamber; the last leg 250 mm instead of 560. Hanger tabs like the side liners' are not possible: the recoater carriage block passes 2.4 mm in front of the back liners over the whole width | tool | F10a PASS; F10b PASS; F10d PASS; F10e PASS |
+| F14 | FAIL: arm A had no pose behind the back wall; the holding wrist met arm B's driver on screw 7 | the plenum's flange goes onto the two Ø3 dowels in the wall with a transition fit (H7/m6) and hangs there on its own (the dowels engage 4.5 mm before the 2-044 is squeezed), so arm B places it and drives the nine screws; no holding arm | design + re-sequence | F14 PASS |
+| F16 | FAIL: arm B's driver met arm A's wrist on all four screws | hangs on its two Ø3 dowels like the plenum; no holding arm | design + re-sequence | F16 PASS |
+| F23 | FAIL: as F16 | hangs on its two Ø3 dowels; no holding arm | design + re-sequence | F23 PASS |
+| F18 | FAIL: 3 of 4 held-part screws; arm B's upper arm met the base plate | roles swapped: arm B holds the rail from above, arm A drives from inside the chamber (as F19) | re-sequence | F18 FAIL |
+| F25, F25b, F25c | FAIL: the motor bracket, brought in 260 mm along -x, started inside the trunnion's stands | three steps: the standoff; the bracket (a pillar on the base plate) lowered from above; the servo along +x into the coupling | re-sequence | F25 PASS; F25b PASS; F25c PASS |
+| F26 | FAIL: the blade holder met the frame below the door opening (its bottom is 5 mm under the sill) | in 9 mm high over the sill, then down, then 12 mm back onto the arm's dowels; out-leg 200 mm | re-sequence | F26 FAIL |
+| F27 | FAIL: the driver met the module's spigot and the upper arm Fixture B | a 100 mm bit extension keeps the driver above the chamber | tool | F27 FAIL |
+| F45, F45b, F45c, F45d | FAIL: the 300 mm diagonal explode path swept the threaded nose through the base; no IK 300 mm up | four steps along each part's own axis: the feedthrough 12 mm along its axis then up; the coupling and the stepper along y; the dock parts from 70 mm above | re-sequence | F45 FAIL; F45b FAIL; F45c FAIL; F45d FAIL |
+| F48b, F48c | FAIL: the window stack moved straight up, off the tilted line of sight; the fingertips met the boss | along the camera's line of sight; the two 1 mm FKM rings and the window by the **ring pad** (tooling.ring_pad, new: an annular silicone lip OD 24.6 / ID 21.4, since a 2.1 mm ring is narrower than the Ø6 nozzle cup), the retaining ring and the camera by the gripper | tool + re-sequence | F48b FAIL; F48c PASS |
+| F52, F52b | FAIL: both pins slid together, held at one; arm A's upper arm met its cabinet | each pin from its own outer side along the hinge axis, held at its end and pushed home on its end face | re-sequence | F52 FAIL; F52b FAIL |
+| F03 | FAIL: 4 of 8 screws: arm A could not reach the back posts' screws under the plate while arm B held them | per post, the arm on the far side holds it and the near arm drives its two screws from below | re-sequence | F03 PASS |
+| F54 | FAIL: no pair of arm poses 260 mm above the posts | lowered the last 80 mm only, and hoist-assisted (14.3 kg; Edison r7) | re-sequence + lifting aid | F54 FAIL |
+| F56b | FAIL: no IK at the start, 340 mm up | from 60 mm above | re-sequence | F56b PASS |
+| F57 | FAIL: the three beam tubes as one part 107 mm across; no IK 340 mm up | one piece at a time (the tubes split), from 60 mm above | re-sequence | F57 FAIL |
+| F49 | person (threaded SAE-4 ports) | robot: the gripper starts each thread by wrist rotation; the final ~20 N m torque is open (over the nutrunners' 10 N m) | robot (torque open) | F49 PASS |
+
+### Where a person is still needed, and why
+
+| Step | What | Who in round 7 | Why |
+|---|---|---|---|
+| M02 | three M3 helical inserts in the heater block | machine shop | put in right after tapping, with the tang broken off, as every insert in the chamber body; a cobot would need an inserter and a tang-break station for three inserts |
+| M09 | bore seal: aramid felt strip and split PTFE scraper into the head's groove | person | the felt is wrapped and the split scraper sprung over, not pushed; no tool here does that, and no published robot method for felt was found |
+| M12 | two 2-114 rod O-rings through the Ø15.93 throat (ring loader) | robot, then a person checks | the loader is simulated and passes; the grooves are hidden, so a person looks in with a light for a twisted or unseated ring (Edison r7) |
+| M25 | the rod end's seven weld-in feedthroughs and the rod, TIG-welded | machine shop | welds, before chapter 3, away from every O-ring |
+| C00 | overflow funnel (2-042, block, four M4) onto the floor plate's underside, on the bench | person | all four screws are open from above with the plate face down on the bench, so a robot could do it on a nest; that nest is not modelled, so it was not checked |
+| C09e | M5 push-in elbows and a temporary Ø4 release-air line | person | a tube to route; the elbows themselves could be run in by the nutrunner with a socket |
+| C11 | release air off: the zero-point modules lock | machine (the cell's valve) | |
+| C15b | overflow-jar sensor and bracket onto the front-right leg, on the bench | person | a leg on a nest is open on every side, so a robot could do it; the nest is not modelled, so it was not checked |
+| F01, F05b, F54 | base plate 11.8 kg, chamber assembly 19.6 kg, optics bridge 14.3 kg | a person on a hoist, both arms guide | Edison r7: no standard or precedent for two arms on separate MiR250s sharing a load; a rated lifting device above ~10 kg |
+| F02 | levelling mounts | person (chapter 5) | they thread in when the 84 kg module goes onto the tray |
+| F06b | release-air line from the valve to both modules | person | tube routing |
+| F08 | KF-40 toggle clamp round the jar's flange | person | its hinged ring has to be held open round both flanges before one push on the lever; an air-released clamp would let the robot do it, but no product was checked this round |
+| F12 | through-beam fibre heads (M6, with their 2-010) threaded into the side walls | person | the fibre has to be wound with the thread |
+| F21 | ball screw through the nut (30 turns) | robot, then a person checks | simulated and passes; a person turns it by hand over its stroke for smoothness (ball circuits, preload: Edison r7) |
+| F39 | the drawer's 2-033 into its half-dovetail | person on the bench (3 min, estimate) | stretched under the retaining lip; Edison r7 keeps it manual until a robot method is validated |
+| F49 | pressure transducer and relief valve (SAE-4) | robot, final torque open | round 7: the gripper starts each thread by wrist rotation; the ~20 N m SAE-4 torque is over both nutrunners' 10 N m, so a bigger angle-head driver or a person's torque wrench for the last turn |
+| F51 | the door's 1.78 mm cord into its half-dovetail | person on the bench (5 min, estimate) | as F39 |
+| F53 | f-theta lens onto its ring over the shims (M85 x 1) | person | Ø90 is over the 2F-85's 85 mm stroke; the thread can cross on an expensive optic (Edison r7 agrees) |
+| F57b | beam alignment and scan-field calibration | person (new, 90 min estimate) | alignment and calibration need judgment and instruments (Edison r7) |
+| F58 | process fiber to the collimator | person | armoured fiber, >= 100 mm bend radius |
+| F59 | Class 1 laser guard: T-slot frame, panels, door rail, sliding door, guard lock, panel | person | T-slot nuts and 1.5 mm panels up to 730 mm wide; its hardware is not drawn |
+| T01-T05 | the 84 kg module onto the tray; rack units (UPS 23 kg, laser 40 kg); gas module (pump 26 kg); hoses; umbilicals | person + hoist or lift | over a UR12e's 12.5 kg payload, or hoses and cables to route |
+| T06 | leak check | machine | |
+
+**The Edison review of round 7** (`edison/r7-robot-build-review/answer.md`, sections 2-3) would keep a person, at least until
+validated, for: the f-theta lens on its M85 thread (agreed: F53 stays manual), the internal rod-gland O-rings (M12), the
+half-dovetail O-rings (drawer ring, door cord), optics alignment and calibration, and the ball screw. Where the simulation shows
+the robot can do it with a tool (M12's ring loader, F21's ball screw), the robot keeps the step and a person checks it after
+(M12: a light into the throat for a twisted or unseated ring; F21: the screw turned by hand over its stroke). The two
+half-dovetail rings are fitted on the bench by a person (F39, F51), and alignment and calibration are a new person step (F57b).
+On **two arms on separate MiR250s sharing one load** the review finds no standard or precedent and advises a rated lifting device
+above ~10 kg. So the three carries over 10 kg (F01 base plate 11.8 kg, F05b chamber assembly 19.6 kg, F54 optics bridge 14.3 kg)
+are now hoist-assisted: a person runs a small chain hoist on a jib with a lifting bar, and the two arms only guide the part along
+the path that was checked; C00c (4.3 kg) and C01 (8.3 kg) stay two-arm carries.
+
+**Failure modes the cell has to catch** (same review, section 3; none of them is simulated here):
+- cross-threading and galling of the 316 screws in 18-8 inserts: the drivers' torque-angle trace (a screw that reaches torque
+  early, in too small an angle, stops the step for a person); a new screw, not a re-drive;
+- a twisted or rolled O-ring: an image from the D405 on the wrist after each ring, against a reference;
+- a part off its expected pose at the pick or before the insertion: the D405 re-registers on the part or its fiducial, as the
+  tending robot does after each MiR docking (robot-ops.md);
+- a dropped part: the 2F-85 reports an object-detected width after closing; a missing or wrong width stops the step.
+
+### Times
+
+Real-world time from run 9's recording (motions at the speeds above; tool changes, docking, the torque phase and every person's time are estimates):
+
+| Chapter | Elapsed (h) | Arm A busy (h) | Arm B busy (h) | Person (h) |
+|---|---|---|---|---|
+| 3: the build module | 0.53 | 0.47 | 0.01 | 0.06 |
+| 4-5: the chamber, the process module and the tray | 9.06 | 1.87 | 0.30 | 6.31 |
+
+The arms work one at a time in this plan (the planner moves one arm while the other waits), so elapsed time is about the sum. Driving to the table and back is a large share: the parts sit by category, and the electronics and seals are 10-12 m from the bench. Two easy gains, not modelled: kit the next steps' parts onto a tray on the MiR in one trip, and let the idle arm fetch while the other works. Chapter 4-5's person time is mostly chapter 5 and the guard: the rack and gas module with a hoist (T01-T05, 2.75 h), the laser guard (F59, 1 h) and alignment and calibration (F57b, 1.5 h), all estimates. The per-step list is [`analysis/out/assembly/round7_times.json`](analysis/out/assembly/round7_times.json) (also `/tmp/robotbuild/data/assembly.json`, which the video's summary and the cost worker read; the run's `compute_s` is the checker's own time, not the assembly's).
+
+
+### The video chapters
+
+Rendered with [`cad/robotbuild/asm_render.py`](cad/robotbuild/asm_render.py) from the recorded run (frames in `/tmp/robotbuild/frames`, not committed): 40-assembly-module: 1685 frames (2.3 min at 12 fps) from run 9's chapter-3 recording; 41-assembly-chamber: {{N41}} frames ({{M41}} min) from run 9's chapters 4-5, with each redesigned step preceded by two seconds that say what failed in run 7. Real time per frame is in each frame's `proc_s` (motions at real time up to the step's frame budget, then time-lapsed, as the frame's sub-caption says; in chapter 41 the planned moves, most drives and the tool changes of a step are cut and their time carried into the next frame shown). The camera picks, for each motion, the least-occluded of 24 views (12 azimuths x 30/45 deg) by casting rays from the camera to 17 points round the work point against both arms, both MiRs and the fixtures (vtkOBBTree), and holds it through the motion; seal insertions get a 0.38 m close-up. Stills: [pick at the table](analysis/out/assembly/r7_pick_table.png), [MiR drive](analysis/out/assembly/r7_mir_drive.png), [ring loader](analysis/out/assembly/r7_ring_loader.png), [spigot mandrel](analysis/out/assembly/r7_spigot_mandrel.png), [gland-plate screw](analysis/out/assembly/r7_screw_gland.png){{STILLS41}}.
+
+### Open points
+
+**Still failing in run 9, and the next change for each** (none of these was re-run: run 10 was stopped to free memory and CPU
+for the renders):
+- **F15** (6 of 7 screws: the driver met the plenum's KF-25 port on one): a 60 mm bit extension, as C05 (in sequence.py).
+- **F18**: with the roles swapped, arm A's driver now meets the chamber body on one rail screw driven toward the back wall; next:
+  the 60 mm bit extension there too.
+- **F26**: at the recoater's park position the blade holder (x -115 to -97) stands 5 mm outside the door opening's side (|x| <
+  110), so no straight path through the opening exists; next: fit the cartridge with the carriage 10 mm in from park (the ball
+  screw is turned through its coupling before the servo goes on, F25c), or enter 6 mm right and slide left inside.
+- **F27**: with the 100 mm extension, arm A's upper arm meets Fixture B on both blade screws; next: arm B from the back, or drive
+  them with the cartridge on a bench nest before F26 (the blade cartridge is quick-swap anyway).
+- **F45, F45b, F45c**: arm A's upper arm meets the base plate or finds no pose for the roller feedthrough, coupling and stepper at
+  the lid's back left; next: arm B from the back.
+- **F45d**: the dock rails went on before the load cell that carries them; the order is fixed in sequence.py.
+- **F48b**: the ring pad's VGC10 body meets the camera boss 63 mm along the line of sight; next: a 100 mm stem on the pad.
+- **F52, F52b** hinge pins: the fingertips holding a pin's end meet the door's front face, 6 mm behind the hinge axis; next: a
+  push-rod pin tool (a Ø4.5 x 50 mm rod whose magnet holds the pin on its axis, on the inline nutrunner, so the tool's body stays
+  outside the door's width); until then a person slides the two pins in (about 10 s).
+- **F54** optics bridge: still no pair of arm poses at the start of the carry 80 mm above the posts. With the hoist taking the
+  14.3 kg, one arm (or a person) can guide it onto the posts' dowels; next: check one-arm guidance.
+- **F57**: the dichroic cube met beam tube #1, which went in before it; next: the cubes first, then the tubes.
+- **C00d** 17 of 18 and **F06** 7 of 8, as in run 7: one approach plan each not found.
+
+**Other open points**
+- **Picks at the table that were not planned** (listed above): mostly parts gripped sideways at their seat (the liners' wand, the
+  hinge pins, the recoater parts), whose kitted pose put the arm's flange behind its own base, and low parts whose lift found no
+  pose. The last change of round 7 lays every kitted part so that its grasp points down (`kit_table.py`; the arm turns the part
+  on its way to the station); it was not re-run.
+- **Moves back to park that the planner did not find** (`go_park`, e.g. after M04, M19, M26, M28): the run counts them as failed
+  returns and starts the next step from park; the video draws them as straight joint moves labelled NOT PLANNED. Chapter 41 also
+  has 19 places where a recorded motion does not start where the last one ended (a re-plan inside a step): the video cuts there.
+- **F49**: the transducer's and relief valve's ~20 N m SAE-4 torque is over both nutrunners' 10 N m: a bigger angle-head driver
+  or a person's torque wrench for the last turn.
+- **C00 and C15b** (bench sub-assemblies) are robot-feasible on nests that are not modelled; they stay with a person here.
+- **The door drive** (pneumatic rotary actuator on the hinge axis, `automation.py`) is in no step of the sequence; it goes on after
+  the left hinge pin.
+- **Two-arm carries under 10 kg** (C00c 4.3 kg, C01 8.3 kg) stay two-arm, as the Edison review allows; the hoist for the heavier
+  ones is drawn as a hook and chain only, not checked for collisions.
+- The screw presenter's size and place, the risers and nests, the hoist and the speeds behind the times are estimates.
+
 ## Round 6 (2026-11-25): the round-5 rod end, its screws, M16, and a re-run on the round-5 model
 
 Sterling asked on 2026-11-25 for everything round 5 left undone ([followup-checks.md](followup-checks.md) §0). For this note

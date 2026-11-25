@@ -3431,7 +3431,2130 @@
    "fetch_why": "",
    "seconds": 46.1,
    "compute_s": 46.1
+  },
+  {
+   "id": "F29",
+   "label": "Lid O-ring cord (3.53 mm) rolled into the body's top gland: arm A rolls, arm B feeds the cord",
+   "do": "seal",
+   "tool": "roller",
+   "actor": "A",
+   "holder": "B",
+   "phase": "upright",
+   "joint": null,
+   "sweep": "-",
+   "arm": "PASS",
+   "why": "",
+   "arm_clear": 0.9,
+   "arm_clear_with": "roller to Process chamber body (6061-T6 through-frame from 5",
+   "docks": [
+    1570.0,
+    1350.0,
+    1350.0
+   ],
+   "method": "3.53 mm cord laid in by arm B at the midpoints, ends and quarter points, then rolled home by arm A's PTFE wheel (Adebola et al. 2024's binary order), splice at the back-right corner",
+   "seconds": 138.0,
+   "compute_s": 138.0
+  },
+  {
+   "id": "F30",
+   "label": "Lid (inserts in) onto the cord, by the vacuum gripper",
+   "do": "place",
+   "tool": "vacuum",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 24.2,
+   "compute_s": 24.2
+  },
+  {
+   "id": "F31",
+   "label": "Twenty M5 x 25 lid screws, star pattern",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": "lid",
+   "presenter": "20/20",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 20,
+   "n_ok": 20,
+   "n_drive": 20,
+   "arm_clear": 2.6,
+   "arm_clear_with": "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl",
+   "why": "",
+   "docks": [
+    1130.0,
+    1350.0,
+    1570.0
+   ],
+   "hex": 4.0,
+   "screw_L": 25.0,
+   "driver": [
+    "screwdriver"
+   ],
+   "driver_why": [],
+   "per_screw": [
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #1",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #2",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #3",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #4",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #5",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #6",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #7",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #8",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #9",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #10",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #11",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #12",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #13",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #14",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #15",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #16",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #17",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #18",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #19",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Lid screws, M5 x 25 316 socket head #20",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.6,
+      "screwdriver to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    }
+   ],
+   "seconds": 236.0,
+   "compute_s": 236.0
+  },
+  {
+   "id": "F32",
+   "label": "Window-flange O-ring (2-036) into the flange's lower groove, PFPE film",
+   "do": "seal",
+   "tool": "gripper+caps",
+   "actor": "B",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "gap": 1.68,
+   "gap_with": "Window flange (6061, two FKM O-ring grooves)",
+   "arm": "-",
+   "why": "",
+   "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
+   "seconds": 0.1,
+   "compute_s": 0.1
+  },
+  {
+   "id": "F33",
+   "label": "Field stop",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.1,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clear": 0.1,
+   "arm_clear_with": "held:F33:Field-stop aperture, M50 inser to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl",
+   "why": "released 27 mm short and pushed home with the closed fingers",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 7.7,
+   "compute_s": 7.7
+  },
+  {
+   "id": "F33b",
+   "label": "Window flange with its O-ring (\u00d8100: the vacuum gripper)",
+   "do": "place",
+   "tool": "vacuum",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "-",
+   "fetch_why": "",
+   "seconds": 6.6,
+   "compute_s": 6.6
+  },
+  {
+   "id": "F34",
+   "label": "Six counterbored M4 x 16 window-flange screws (torque-controlled)",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": "window",
+   "presenter": "6/6",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 6,
+   "n_ok": 6,
+   "n_drive": 6,
+   "arm_clear": 2.2,
+   "arm_clear_with": "screwdriver to Window flange (6061, two FKM O-ring grooves)",
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "hex": 3.0,
+   "screw_L": 16.0,
+   "driver": [
+    "screwdriver"
+   ],
+   "driver_why": [],
+   "per_screw": [
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #1",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #2",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #3",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #4",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #5",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Window-flange screws, M4 x 16 316 #6",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      2.2,
+      "screwdriver to Window flange (6061, two FKM O-ring grooves)"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    }
+   ],
+   "seconds": 421.8,
+   "compute_s": 421.8
+  },
+  {
+   "id": "F35",
+   "label": "Window O-ring (2-031) into the flange's seat groove",
+   "do": "seal",
+   "tool": "gripper+caps",
+   "actor": "B",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "docks": [
+    1350.0
+   ],
+   "sweep": "PASS",
+   "gap": 1.15,
+   "gap_with": "Window flange (6061, two FKM O-ring grooves)",
+   "arm": "PASS",
+   "why": "",
+   "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
+   "seconds": 7.9,
+   "compute_s": 7.9
+  },
+  {
+   "id": "F36",
+   "label": "\u00d82 in. fused-silica window onto its O-ring",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.2,
+   "gap_with": "Window flange (6061, two FKM O-ring grooves)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "released 27 mm short and pushed home with the closed fingers",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 18.5,
+   "compute_s": 18.5
+  },
+  {
+   "id": "F37",
+   "label": "FKM flat ring",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Window flange (6061, two FKM O-ring grooves)",
+   "arm_clear": 0.3,
+   "arm_clear_with": "held:F37:Window clamp ring, upper to Window flange (6061, two FKM O-ring grooves)",
+   "why": "released 24 mm short and pushed home with the closed fingers",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 19.5,
+   "compute_s": 19.5
+  },
+  {
+   "id": "F37b",
+   "label": "Window retaining ring (\u00d8100: the vacuum gripper)",
+   "do": "place",
+   "tool": "vacuum",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.2,
+   "gap_with": "Window flange (6061, two FKM O-ring grooves)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 11.8,
+   "compute_s": 11.8
+  },
+  {
+   "id": "F38",
+   "label": "Six M3 x 10 retaining-ring screws (torque-controlled: clamp the silica evenly)",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": "window_ring",
+   "presenter": "6/6",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 6,
+   "n_ok": 6,
+   "n_drive": 6,
+   "arm_clear": 1.5,
+   "arm_clear_with": "screwdriver to Window retaining ring (spigot bottoms metal-to-met",
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "hex": 2.5,
+   "screw_L": 10.0,
+   "driver": [
+    "screwdriver"
+   ],
+   "driver_why": [],
+   "per_screw": [
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #1",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #2",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #3",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #4",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #5",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    },
+    {
+     "screw": "Window retaining-ring screws, M3 x 10 316 #6",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      1.5,
+      "screwdriver to Window retaining ring (spigot bottoms metal-to-met"
+     ],
+     "drive_ok": true,
+     "driver": "screwdriver",
+     "arm": "A",
+     "note": ""
+    }
+   ],
+   "seconds": 36.1,
+   "compute_s": 36.1
+  },
+  {
+   "id": "F39",
+   "label": "Cover-slide drawer (2-033 in its half-dovetail, put in on the bench) into the lid's front edge",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "force_pose": {
+    "kind": "drawer",
+    "max_push_N": 1500.0
+   },
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "released 6 mm short and pushed home with the closed fingers",
+   "docks": [
+    1130.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F39): in to the grasp: left_finger_tip hits Drawer latches: 2 x quarter-turn latch studs (enve",
+   "seconds": 23.6,
+   "compute_s": 23.6
+  },
+  {
+   "id": "F40",
+   "label": "Quarter-turn drawer latches",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "robot (custom bit)",
+   "why": "Two quarter-turn studs, turned with a slotted bit on the screwdriver; the latch hardware is an envelope in the model (seals.md: no catalogue latch fits).",
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "F41",
+   "label": "Drawer-closed sensor",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 1.32,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clear": 1.0,
+   "arm_clear_with": "held:F41:Drawer-closed sensor to Chamber lid (6061-T6, 16 mm, cover-slide drawer sl",
+   "why": "released 18 mm short and pushed home with the closed fingers",
+   "docks": [
+    1130.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F41): in to the grasp: no IK at the start",
+   "seconds": 15.7,
+   "compute_s": 15.7
+  },
+  {
+   "id": "F42",
+   "label": "Metering-base O-ring (2-040) on its lid side (groove faces down when fitted: PFPE film)",
+   "do": "seal",
+   "tool": "gripper+caps",
+   "actor": "B",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "gap": 1.68,
+   "gap_with": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+   "arm": "-",
+   "why": "",
+   "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
+   "seconds": 0.1,
+   "compute_s": 0.1
+  },
+  {
+   "id": "F42b",
+   "label": "Metering-base dock-face O-ring (2-040), groove up",
+   "do": "seal",
+   "tool": "gripper+caps",
+   "actor": "B",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "gap": 1.68,
+   "gap_with": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+   "arm": "-",
+   "why": "",
+   "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "F43",
+   "label": "Metering base alone (feedthrough, coupling and stepper not yet on) onto the lid",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clear": 23.2,
+   "arm_clear_with": "held:F43:Metering base to Window retaining ring (spigot bottoms metal-to-met",
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "-",
+   "fetch_why": "",
+   "seconds": 14.8,
+   "compute_s": 14.8
+  },
+  {
+   "id": "F44",
+   "label": "Four M4 x 16 metering-base screws (before the roller feedthrough covers two of them)",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": "dose",
+   "presenter": "0/4",
+   "presenter_why": "presenter to the hole: end pose in collision; presenter to the hole: end pose in collision",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 4,
+   "n_ok": 4,
+   "n_drive": 4,
+   "arm_clear": 0.0,
+   "arm_clear_with": "nutrunner to Metering base (6061, fluted roller over a 100 mm d",
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "hex": 3.0,
+   "screw_L": 16.0,
+   "driver": [
+    "nutrunner"
+   ],
+   "driver_why": [
+    "screwdriver blocked (A/tool/screwdriver hits Metering base (6061, fluted roller o)"
+   ],
+   "per_screw": [
+    {
+     "screw": "Metering-base screws, M4 x 16 316 #1",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      0.0,
+      "nutrunner to Metering base (6061, fluted roller over a 100 mm d"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "screwdriver blocked (A/tool/screwdriver hits Metering base (6061, fluted roller o)"
+    },
+    {
+     "screw": "Metering-base screws, M4 x 16 316 #2",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      0.0,
+      "nutrunner to Metering base (6061, fluted roller over a 100 mm d"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "screwdriver blocked (A/tool/screwdriver hits Metering base (6061, fluted roller o)"
+    },
+    {
+     "screw": "Metering-base screws, M4 x 16 316 #3",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      0.0,
+      "nutrunner to Metering base (6061, fluted roller over a 100 mm d"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "screwdriver blocked (A/tool/screwdriver hits Metering base (6061, fluted roller o)"
+    },
+    {
+     "screw": "Metering-base screws, M4 x 16 316 #4",
+     "ok": true,
+     "why": "",
+     "dock": 1350.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      0.0,
+      "nutrunner to Metering base (6061, fluted roller over a 100 mm d"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "screwdriver blocked (A/tool/screwdriver hits Metering base (6061, fluted roller o)"
+    }
+   ],
+   "seconds": 434.1,
+   "compute_s": 434.1
+  },
+  {
+   "id": "F45",
+   "label": "Roller feedthrough (M8 x 1 nose over its 2-012) into the metering base along its axis",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "FAIL",
+   "arm": "FAIL",
+   "gap": 0.02,
+   "gap_with": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 13.0 mm; arm A: A/upper_arm hits Base plate, process module (MIC-6, 15 mm) at 0 mm along the insertion",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F45): in to the grasp: no IK at the start",
+   "seconds": 2.3,
+   "compute_s": 2.3
+  },
+  {
+   "id": "F45b",
+   "label": "Roller drive coupling onto the feedthrough's shaft",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 3.0,
+   "gap_with": "Roller shaft: magnetic-fluid rotary feedthrough Ferrotec SSL-005-NN in the metering base (M8 x 1 nose; FKM face O-ring)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "arm A: A/upper_arm hits Base plate, process module (MIC-6, 15 mm) at 0 mm along the insertion",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F45b): in to the grasp: no IK at the start",
+   "seconds": 2.3,
+   "compute_s": 2.3
+  },
+  {
+   "id": "F45c",
+   "label": "Dosing stepper, its shaft into the coupling",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 3.0,
+   "gap_with": "Roller drive coupling (5 mm to 5 mm)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "arm A: no IK at the start pose at 0 mm along the insertion",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F45c): in to the grasp: no IK at the start",
+   "seconds": 2.5,
+   "compute_s": 2.5
+  },
+  {
+   "id": "F45d",
+   "label": "Dock rails, load cell, NFC reader, side port blank and docked sensor, from just above",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "FAIL",
+   "arm": "FAIL",
+   "gap": 0.3,
+   "gap_with": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+   "arm_clear": 0.3,
+   "arm_clear_with": "right_finger_tip to Dovetail rails for the reservoirs (lips pull the p",
+   "why": "sweep: Load cell blocked by Dovetail rails for the reservoirs (lips pull the p after 0.0 mm; arm A: held:F45d:Load cell hits Dovetail rails for the reservoirs (lips pull the plate onto the dock O-ring) (3.0 mm deep) at 24 mm along the insertion; sweep: NFC reader antenna blocked by Metering base (6061, fluted roller over a 100 mm d after 1.0 mm; arm A: A/gr/left_finger_tip hits Dovetail rails for ",
+   "docks": [
+    1130.0,
+    1350.0
+   ],
+   "n_units": 5,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 44.0,
+   "compute_s": 44.0
+  },
+  {
+   "id": "F46",
+   "label": "Reservoir M slid onto the dovetail dock (about 94 N to seat on the dock O-ring)",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "force_pose": {
+    "kind": "reservoir",
+    "max_push_N": 188.0
+   },
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 1.1,
+   "gap_with": "Metering base (6061, fluted roller over a 100 mm dose line, two FKM face O-rings)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 81.4,
+   "compute_s": 81.4
+  },
+  {
+   "id": "F47",
+   "label": "Camera adapter O-ring (2-022), PFPE film",
+   "do": "seal",
+   "tool": "gripper+caps",
+   "actor": "B",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "gap": 1.68,
+   "gap_with": "Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals)",
+   "arm": "-",
+   "why": "",
+   "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
+   "seconds": 0.2,
+   "compute_s": 0.2
+  },
+  {
+   "id": "F48",
+   "label": "Camera viewport adapter with its 2-030",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clear": 5.7,
+   "arm_clear_with": "held:F48:Camera viewport adapter + boss to Window flange (6061, two FKM O-ring grooves)",
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "-",
+   "fetch_why": "",
+   "seconds": 13.6,
+   "compute_s": 13.6
+  },
+  {
+   "id": "F48b",
+   "label": "Camera window gasket (1 mm FKM flat ring), window and flat ring into the counterbore along the line of sight (ring pad)",
+   "do": "place",
+   "tool": "ringpad",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 0.1,
+   "gap_with": "Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals)",
+   "arm_clear": 0.1,
+   "arm_clear_with": "held:F48b:Camera window to Camera viewport adapter + boss (6061; \u00d830 bore on ",
+   "why": "arm A: A/tool/ringpad hits Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals) at 63 mm along the insertion",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 3,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 46.6,
+   "compute_s": 46.6
+  },
+  {
+   "id": "F48c",
+   "label": "Camera window retaining ring, then the camera, along the line of sight",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Camera window flat ring (FKM 75A sheet, 1.0 mm, squeezed to 0.75)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "released 21 mm short and pushed home with the closed fingers",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 2,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F48c#1): lift: no IK at the start",
+   "seconds": 24.7,
+   "compute_s": 24.7
+  },
+  {
+   "id": "F49",
+   "label": "Pressure transducer and relief valve into their SAE-4 ports from above (threads started by wrist rotation)",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.05,
+   "gap_with": "Chamber lid (6061-T6, 16 mm, cover-slide drawer slot)",
+   "arm_clear": 19.5,
+   "arm_clear_with": "right_finger_tip to Window retaining ring (spigot bottoms metal-to-met",
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 2,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 115.0,
+   "compute_s": 115.0
+  },
+  {
+   "id": "F50",
+   "label": "The two draw-latch strikes on the chamber's side faces (the hinge knuckles went on in C09f)",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.26,
+   "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
+   "arm_clear": 49.5,
+   "arm_clear_with": "left_finger_tip to Cover-slide drawer (6061, robot pull tab, half-dov",
+   "why": "",
+   "docks": [
+    1130.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F50#1): in to the grasp: no IK at the start",
+   "seconds": 86.3,
+   "compute_s": 86.3
+  },
+  {
+   "id": "F51",
+   "label": "Door (cord rolled into its half-dovetail on the bench) brought in, knuckles in line",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.01,
+   "gap_with": "Door hinge knuckles on the chamber #1",
+   "arm_clear": 0.0,
+   "arm_clear_with": "held:F51:Chamber door to Door hinge knuckles on the chamber #4",
+   "why": "",
+   "docks": [
+    1130.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 121.1,
+   "compute_s": 121.1
+  },
+  {
+   "id": "F52",
+   "label": "Left hinge pin slid in from the left along the hinge axis, pushed home on its end",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 0.1,
+   "gap_with": "Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)",
+   "arm_clear": 0.1,
+   "arm_clear_with": "held:F52:Hinge pins #1 to Door hinge knuckles on the chamber #1",
+   "why": "arm A: A/gr/left_finger_tip hits Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears); pushed home instead, but A/gr/left_finger_tip hits Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears) at 27 mm along the insertion",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F52): in to the grasp: no IK at the start",
+   "seconds": 14.5,
+   "compute_s": 14.5
+  },
+  {
+   "id": "F52b",
+   "label": "Right hinge pin slid in from the right along the hinge axis, pushed home on its end",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 0.1,
+   "gap_with": "Door hinge knuckles on the chamber #4",
+   "arm_clear": 0.1,
+   "arm_clear_with": "held:F52b:Hinge pins #2 to Door hinge knuckles on the chamber #4",
+   "why": "arm A: A/gr/left_finger_tip hits Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears); pushed home instead, but A/gr/left_finger_tip hits Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears) at 27 mm along the insertion",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F52b): in to the grasp: no IK at the start",
+   "seconds": 14.2,
+   "compute_s": 14.2
+  },
+  {
+   "id": "F03",
+   "label": "Optics posts (moved here: they blocked the side-wall parts and the right latch) onto the base plate, one at a time, held by arm B while arm A drives their base screws from below",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "B",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Base plate, process module (MIC-6, 15 mm)",
+   "arm_clear": 2.2,
+   "arm_clear_with": "held:F03:Optics bridge posts #3 to Draw latches on the door's latch brackets, pointin",
+   "why": "",
+   "docks": [
+    1130.0,
+    1570.0
+   ],
+   "n_units": 4,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 781.6,
+   "compute_s": 781.6
+  },
+  {
+   "presenter": "2/2",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 2,
+   "n_ok": 2,
+   "n_drive": 2,
+   "arm_clear": 3.0,
+   "arm_clear_with": "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)",
+   "why": "",
+   "docks": [
+    1130.0
+   ],
+   "hex": 5.0,
+   "screw_L": 25.0,
+   "driver": [
+    "nutrunner_angle"
+   ],
+   "driver_why": [
+    "upward"
+   ],
+   "per_screw": [
+    {
+     "screw": "Optics-post base screws, M6 x 25 316 #1",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Optics-post base screws, M6 x 25 316 #2",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    }
+   ],
+   "id": "F03h",
+   "label": "Optics posts (moved here: they blocked the side-wall parts a: screws of bridge_base driven while arm B holds it",
+   "do": "screws",
+   "joint": "bridge_base",
+   "actor": "A",
+   "holder": "B"
+  },
+  {
+   "presenter": "2/2",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 2,
+   "n_ok": 2,
+   "n_drive": 2,
+   "arm_clear": 3.0,
+   "arm_clear_with": "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)",
+   "why": "",
+   "docks": [
+    1130.0
+   ],
+   "hex": 5.0,
+   "screw_L": 25.0,
+   "driver": [
+    "nutrunner_angle"
+   ],
+   "driver_why": [
+    "upward"
+   ],
+   "per_screw": [
+    {
+     "screw": "Optics-post base screws, M6 x 25 316 #3",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "B",
+     "note": "upward"
+    },
+    {
+     "screw": "Optics-post base screws, M6 x 25 316 #4",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "B",
+     "note": "upward"
+    }
+   ],
+   "id": "F03h",
+   "label": "Optics posts (moved here: they blocked the side-wall parts a: screws of bridge_base driven while arm A holds it",
+   "do": "screws",
+   "joint": "bridge_base",
+   "actor": "B",
+   "holder": "A"
+  },
+  {
+   "presenter": "2/2",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 2,
+   "n_ok": 2,
+   "n_drive": 2,
+   "arm_clear": 3.0,
+   "arm_clear_with": "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)",
+   "why": "",
+   "docks": [
+    1570.0
+   ],
+   "hex": 5.0,
+   "screw_L": 25.0,
+   "driver": [
+    "nutrunner_angle"
+   ],
+   "driver_why": [
+    "upward"
+   ],
+   "per_screw": [
+    {
+     "screw": "Optics-post base screws, M6 x 25 316 #5",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    },
+    {
+     "screw": "Optics-post base screws, M6 x 25 316 #6",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "A",
+     "note": "upward"
+    }
+   ],
+   "id": "F03h",
+   "label": "Optics posts (moved here: they blocked the side-wall parts a: screws of bridge_base driven while arm B holds it",
+   "do": "screws",
+   "joint": "bridge_base",
+   "actor": "A",
+   "holder": "B"
+  },
+  {
+   "presenter": "2/2",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 2,
+   "n_ok": 2,
+   "n_drive": 2,
+   "arm_clear": 1.2,
+   "arm_clear_with": "nutrunner_angle to Fixture B (open stand)",
+   "why": "",
+   "docks": [
+    1570.0
+   ],
+   "hex": 5.0,
+   "screw_L": 25.0,
+   "driver": [
+    "nutrunner_angle"
+   ],
+   "driver_why": [
+    "upward"
+   ],
+   "per_screw": [
+    {
+     "screw": "Optics-post base screws, M6 x 25 316 #7",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      1.2,
+      "nutrunner_angle to Fixture B (open stand)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "B",
+     "note": "upward"
+    },
+    {
+     "screw": "Optics-post base screws, M6 x 25 316 #8",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 300,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner_angle to Base plate, process module (MIC-6, 15 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner_angle",
+     "arm": "B",
+     "note": "upward"
+    }
+   ],
+   "id": "F03h",
+   "label": "Optics posts (moved here: they blocked the side-wall parts a: screws of bridge_base driven while arm A holds it",
+   "do": "screws",
+   "joint": "bridge_base",
+   "actor": "B",
+   "holder": "A"
+  },
+  {
+   "id": "F04",
+   "label": "Two M6 x 25 up into each post's bottom cap, from under the plate",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": "bridge_base",
+   "sweep": "-",
+   "arm": "-",
+   "why": "all screws of this joint were already driven (with the part held)",
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "F53",
+   "label": "f-theta lens threaded into its adapter ring over its 3 mm shim stack, under the bridge (on the bench, bridge upside down)",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person",
+   "why": "The \u00d890 lens is wider than the 2F-85's 85 mm stroke and threads M85 x 1; a strap wrench by hand (operations.md: lens and ring fitted to the bridge on the bench).",
+   "person_s": 600.0,
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "F54",
+   "label": "Optics bridge (13.3 kg, lens and ring under it) onto the four posts: the hoist lifts, both arms guide",
+   "do": "dual",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "approach": "no carry",
+   "sweep": "-",
+   "arm": "FAIL",
+   "why": "no collision-free pair of arm poses at the start of the carry",
+   "docks": [
+    "Br",
+    "Bl"
+   ],
+   "mass_kg": 14.32,
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "tip_margin": 12.3,
+   "seconds": 2.4,
+   "compute_s": 2.4
+  },
+  {
+   "id": "F55",
+   "label": "Eight M6 x 35 bridge screws down into the posts",
+   "do": "screws",
+   "tool": "screwdriver",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": "bridge",
+   "presenter": "8/8",
+   "sweep": "PASS",
+   "arm": "PASS",
+   "n": 8,
+   "n_ok": 8,
+   "n_drive": 8,
+   "arm_clear": 3.0,
+   "arm_clear_with": "nutrunner to Optics bridge (6061, 25 mm)",
+   "why": "",
+   "docks": [
+    1130.0,
+    1570.0
+   ],
+   "hex": 5.0,
+   "screw_L": 35.0,
+   "driver": [
+    "nutrunner"
+   ],
+   "driver_why": [
+    "7.4 N m > 5.0 N m"
+   ],
+   "per_screw": [
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #1",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "7.4 N m > 5.0 N m"
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #2",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "7.4 N m > 5.0 N m"
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #3",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "7.4 N m > 5.0 N m"
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #4",
+     "ok": true,
+     "why": "",
+     "dock": 1130.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "7.4 N m > 5.0 N m"
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #5",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "7.4 N m > 5.0 N m"
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #6",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "7.4 N m > 5.0 N m"
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #7",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "7.4 N m > 5.0 N m"
+    },
+    {
+     "screw": "Optics-bridge screws, M6 x 35 316 #8",
+     "ok": true,
+     "why": "",
+     "dock": 1570.0,
+     "roll": 240,
+     "withdraw": true,
+     "clear": [
+      3.0,
+      "nutrunner to Optics bridge (6061, 25 mm)"
+     ],
+     "drive_ok": true,
+     "driver": "nutrunner",
+     "arm": "A",
+     "note": "7.4 N m > 5.0 N m"
+    }
+   ],
+   "seconds": 413.2,
+   "compute_s": 413.2
+  },
+  {
+   "id": "F56",
+   "label": "Galvo riser plate (155 x 130: the vacuum gripper)",
+   "do": "place",
+   "tool": "vacuum",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Optics bridge (6061, 25 mm)",
+   "arm_clear": 21.2,
+   "arm_clear_with": "held:F56:Galvo riser plate to Reservoir M lid with robot handle (grip plane z = ",
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 10.6,
+   "compute_s": 10.6
+  },
+  {
+   "id": "F56b",
+   "label": "basiCube 20 scan head on the riser (3.75 kg: the vacuum gripper on its top)",
+   "do": "place",
+   "tool": "vacuum",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "PASS",
+   "gap": 0.3,
+   "gap_with": "Galvo riser plate (6061, 5 mm, \u00d856 bore: clears the f-theta's \u00d853 nose over the shim range and the scanned beam)",
+   "arm_clear": null,
+   "arm_clear_with": null,
+   "why": "",
+   "docks": [
+    1350.0
+   ],
+   "n_units": 1,
+   "fetch": "FAIL",
+   "fetch_why": "pick at the table (F56b): in to the grasp: no IK at the start",
+   "seconds": 45.9,
+   "compute_s": 45.9
+  },
+  {
+   "id": "F57",
+   "label": "Beam tubes, dichroic and fold-mirror cubes, shutter, photodiode chain and collimator",
+   "do": "place",
+   "tool": "gripper",
+   "actor": "A",
+   "holder": null,
+   "phase": "upright",
+   "joint": null,
+   "sweep": "PASS",
+   "arm": "FAIL",
+   "gap": 0.0,
+   "gap_with": "2-axis galvo scan head (SCANLAB basiCube 20)",
+   "arm_clear": 0.0,
+   "arm_clear_with": "held:F57:Enclosed beam tubes #1 to 2-axis galvo scan head (SCANLAB basiCube 20)",
+   "why": "released 12 mm short and pushed home with the closed fingers; arm A: held:F57:Coaxial-monitoring dichroic hits Enclosed beam tubes #1; pushed home instead, but held:F57:Coaxial-monitoring dichroic hits Enclosed beam tubes #1 at 33 mm along the insertion; arm A: A/gr/right_finger_tip hits Enclosed beam tubes #3; pushed home instead, but held:F57:Fold mirror hits Enclosed beam tubes #3 at 39 mm alon",
+   "docks": [
+    1130.0,
+    1350.0
+   ],
+   "n_units": 8,
+   "fetch": "PASS",
+   "fetch_why": "",
+   "seconds": 298.3,
+   "compute_s": 298.3
+  },
+  {
+   "id": "F57b",
+   "label": "Beam alignment and scan-field calibration (alignment laser, power head, test marks)",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person",
+   "why": "Optics alignment and calibration need judgment and instruments (Edison r7 review); the robot only placed the parts.",
+   "person_s": 300.0,
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "F58",
+   "label": "Process fiber routed to the collimator",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person",
+   "why": "Armoured fiber, >= 100 mm bend radius: cable routing stays manual.",
+   "person_s": 480.0,
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "F59",
+   "label": "Class 1 laser guard: T-slot frame, panels, door rail, sliding door, guard lock, operator panel",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person",
+   "why": "T-slot nuts and 1.5 mm panels up to 730 mm wide; its hardware is not drawn (joints.NOT_DRAWN).",
+   "person_s": 3600.0,
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "T01",
+   "label": "Process module (84 kg) off Fixture B onto the VLM tray; levelling mounts threaded in",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person + hoist",
+   "why": "84 kg is 3.4 times two UR12e payloads; a hoist or lift table.",
+   "person_s": 900.0,
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "T02",
+   "label": "19 in. rack and its units (UPS 23 kg, laser 40 kg, PC 8 kg, DIN drawer 9 kg)",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person + lift",
+   "why": "the UPS and the laser exceed a UR12e's 12.5 kg; cage nuts and screws are not drawn",
+   "person_s": 2700.0,
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "T03",
+   "label": "Gas module: base plate, scroll pump (26 kg), blower, filter housing, O2 box, argon manifold",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person + lift",
+   "why": "the pump exceeds 12.5 kg; the units' screws are not drawn",
+   "person_s": 2700.0,
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "T04",
+   "label": "KF-25 bellows, vacuum valve, argon and O2 lines, and the zero-point valve's air supply",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person",
+   "why": "hose and tube routing (deformable, KF wing-nut clamps)",
+   "person_s": 2400.0,
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "T05",
+   "label": "Tray dock and umbilicals",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person",
+   "why": "cable and hose routing",
+   "person_s": 1200.0,
+   "seconds": 0.0,
+   "compute_s": 0.0
+  },
+  {
+   "id": "T06",
+   "label": "Leak check: rate of rise from <= 1 mbar, O2 drift at +20 mbar argon",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "machine",
+   "why": "the seal verification in assembly.md",
+   "seconds": 0.0,
+   "compute_s": 0.0
   }
  ],
- "generated_s": 3625.0
+ "generated_s": 7162.7
 }
