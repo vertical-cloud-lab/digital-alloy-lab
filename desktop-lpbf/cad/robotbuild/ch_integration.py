@@ -435,8 +435,8 @@ def main():
             verdict = "pass"
         frame([lerp(c6[0], c7[0], ease(u * 3)), lerp(c6[1], c7[1], ease(u * 3)), (0, 0, 1)],
               f"T06: the leak check, {phase}",
-              "After >= 1 h at <= 1 mbar the valve closes and the Pirani is read for 10 min; pass under 1e-3 mbar/min "
-              "(seals.md section 7). Expected values, not a measurement; then the O2 drift at +20 mbar argon",
+              "After >= 1 h at <= 1 mbar the valve closes; the Pirani must rise < 1e-3 mbar/min over 10 min "
+              "(seals.md section 7). Expected, not measured",
               ["machine"], "T06", status=verdict or "", proc_s=75.0 * 60.0 / n, add=dict(machine_h=75.0 / 60.0 / n),
               chart=dict(title="Chamber pressure, expected", x=ts, y=ps, now=k, ylog=True, xlabel="minutes",
                          ylabel="mbar", xticks=[0, 15, 30, 45, 60, 75], ref=1.0, ref_label="1 mbar",
