@@ -1,14 +1,17 @@
 """Window and cover-slide fouling: how fast each window loses transmission, and how often its slide needs changing
 (issue #260; monitoring/plume.md §4).
 
-Inputs (all from this folder's other scripts; run them first):
+Inputs:
   - particles.json : condensate deposition per unit source on each window (J/S, kg/m2/s per kg/s), purge off and on, and
-                     the share of spatter that lands on each window, per size;
-  - plume_jet.json : not needed for the numbers below, which take the condensate source from measured composition losses.
-Condensate source (metal leaving as vapour), per hour of lasing, from measured Mg and Zn losses (via Edison r8-melt-plume:
-Li 2024 thesis compilation; AlSi10Mg 57 % of its Mg, 6061 17 %, 7075 19 % of its Mg and 3-30 % of its Zn), times the
-deposition rate v x hatch x layer x density at 0.4-1.1 m/s, times 1.5 for the Al that leaves with it (plume_jet.py's keyhole
-vapour is 30-40 mol % Al over AlSi10Mg). These are compositional losses, not measured fume rates: no Al fume rate was found.
+                     the share of spatter that lands on each window, per size (this folder's particles.py);
+  - plume_source.json (--source; default analysis/out/monitoring/melt/plume_source.json, worker A's melt-pool model): the
+                     condensate source. Its 'best' reading is used: the measured Mg and Zn loss rates (Li 2024 via Edison;
+                     Velikajne et al. 2026 for 7075) plus its depression-wall Hertz-Knudsen reading for Al. Nominal = the
+                     320 W, 1.1 m/s case on a 200 C plate.
+Without that file, the source falls back to the composition-only rate: measured Mg and Zn losses (AlSi10Mg 57 % of its Mg,
+6061 17 %, 7075 19 % of its Mg and 3-30 % of its Zn) times the deposition rate v x hatch x layer x density at 0.4-1.1 m/s,
+times a factor for the Al that leaves with them (x1.5 over AlSi10Mg, x1.07 over 6061, x1.0 over 7075). It is kept in the
+output as the lower bound either way. No measured Al fume rate was found.
 
 Optics of a deposit on a fused-silica slide (normal incidence, characteristic-matrix method; Macleod, Thin-Film Optical
 Filters, 4th ed., 2010, ch. 2), with Al from Rakic (1995) and amorphous alumina from Boidin et al. (2016):
@@ -45,7 +48,9 @@ LOSSES = {  # wt % of each element lost (fraction of its content), and content w
     "6061": dict(Mg=(1.0, 0.17)),
     "7075": dict(Mg=(2.5, 0.19), Zn=(5.6, (0.03, 0.30))),
 }
-AL_FACTOR = 1.5                                              # Al leaving with the Mg / Zn (keyhole vapour 30-40 mol % Al)
+# Al leaving with the Mg / Zn, by mass, from plume_jet.py's keyhole-onset vapour (Raoult): AlSi10Mg 31 mol % Al, 6061 6 %,
+# 7075 under 0.1 %
+AL_FACTOR = {"AlSi10Mg": 1.5, "6061": 1.07, "7075": 1.0}
 THRESH = {"laser": ("absorption", 3e-4, "optics.md §2.2: >0.03 % absorbed puts the spot outside +/-10 %"),
           "LW": ("transmission loss", 0.10, "camera: 10 % less light (exposure or gain can make it up)"),
           "LP": ("transmission loss", 0.10, "camera"),
@@ -57,7 +62,8 @@ SIZE_SHARE = {20: 0.35, 35: 0.30, 50: 0.20, 100: 0.10, 150: 0.04, 200: 0.01}   #
 # Nagato 2023: ~1 droplet >= 63 um per 4 smaller)
 
 
-def source_g_per_h():
+def source_composition_only():
+    """Mg and Zn from measured losses, plus the Al that leaves with them by plume_jet.py's Raoult split (the lower bound)."""
     out = {}
     for alloy, el in LOSSES.items():
         lo = hi = 0.0
@@ -66,9 +72,37 @@ def source_g_per_h():
             lo += wt / 100 * f0
             hi += wt / 100 * f1
         rho = 2680.0 if alloy != "7075" else 2810.0
-        rates = [w * v * HATCH * LAYER * rho * 3600 * 1e3 * AL_FACTOR for w, v in ((lo, 0.4), (hi, 1.1))]
+        rates = [w * v * HATCH * LAYER * rho * 3600 * 1e3 * AL_FACTOR[alloy] for w, v in ((lo, 0.4), (hi, 1.1))]
         out[alloy] = dict(loss_wt_pct=(100 * lo, 100 * hi), g_per_h_lasing=rates, nominal=math.sqrt(rates[0] * rates[1]))
     return out
+
+
+def source_g_per_h(path):
+    """The condensate source per alloy, g per hour of lasing. From worker A's melt-pool model when its plume_source.json is
+    there: its 'best' reading (measured Mg and Zn loss rates, and the depression-wall reading for Al), nominal = the 320 W
+    case on a 200 C plate at 1.1 m/s (else any 320 W case), range = every case of that alloy. Else the composition-only rate."""
+    comp = source_composition_only()
+    p = pathlib.Path(path) if path else None
+    if not (p and p.exists()):
+        for v in comp.values():
+            v["reading"] = "composition only (measured Mg/Zn losses + Raoult Al share)"
+        return comp, None
+    src = json.loads(p.read_text())
+    out = {}
+    for alloy in LOSSES:
+        cases = [c for c in src["cases"] if c["inputs"]["alloy"] == alloy and c.get("best", {}).get("g_per_hour_lasing")]
+        if not cases:
+            out[alloy] = dict(comp[alloy], reading="composition only (no worker-A case for this alloy)")
+            continue
+        pick = ([c for c in cases if c["inputs"]["P_W"] == 320 and c["inputs"]["T0_K"] > 400 and c["inputs"]["v_m_s"] == 1.1]
+                or [c for c in cases if c["inputs"]["P_W"] == 320 and c["inputs"]["v_m_s"] == 1.1] or cases)[0]
+        rates = [c["best"]["g_per_hour_lasing"] for c in cases]
+        out[alloy] = dict(nominal=pick["best"]["g_per_hour_lasing"], nominal_case=pick["tag"], g_per_h_lasing=[min(rates), max(rates)],
+                          cases={c["tag"]: c["best"]["g_per_hour_lasing"] for c in cases},
+                          vapour_mole_fraction=pick["best"]["vapour_mole_fraction"],
+                          reading="worker A 'best': measured Mg/Zn rates + 'wall' reading for Al (plume_source.json)",
+                          composition_only=comp[alloy])
+    return out, str(p)
 
 
 def film_rta(n_film, t, lam_um):
@@ -134,8 +168,14 @@ def hours_to(threshold, kind_q, rate_kg_m2_h, lam_um, kind):
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--source", default=str(HERE.parents[1] / "out" / "monitoring" / "melt" / "plume_source.json"),
+                    help="worker A's plume_source.json (its 'best' reading is used); missing = composition-only source")
+    a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
-    res = dict(source=source_g_per_h())
+    src, src_path = source_g_per_h(a.source)
+    res = dict(source=src, source_file=src_path)
     # optics curves
     masses = np.logspace(-8, -2, 61)                         # kg/m2 (1e-8 = 0.01 mg/m2 ... 10 g/m2)
     res["optics_curves"] = {f"{kind}, {lam} um": dict(m_kg_m2=list(masses), loss=[deposit_optics(m, lam, kind)[0] for m in masses],

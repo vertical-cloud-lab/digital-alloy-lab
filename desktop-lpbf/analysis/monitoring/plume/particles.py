@@ -129,7 +129,7 @@ def inside(b, p):
     return (p[:, 0] > b[0]) & (p[:, 0] < b[1]) & (p[:, 1] > b[2]) & (p[:, 1] < b[3]) & (p[:, 2] > b[4]) & (p[:, 2] < b[5])
 
 
-def track_condensate(cs, zr, n_per=600, t_end=8.0, dt=1e-3, seed=11, sc_t=0.7, d_b=0.05e-6):
+def track_condensate(cs, zr, n_per=600, t_end=20.0, dt=1e-3, seed=11, sc_t=0.7, d_b=0.05e-6):
     rng = np.random.default_rng(seed)
     meta = cs.meta
     sl = meta["fluid"]["outlet slot"]
@@ -149,7 +149,10 @@ def track_condensate(cs, zr, n_per=600, t_end=8.0, dt=1e-3, seed=11, sc_t=0.7, d
     entered = {k: np.zeros(n, bool) for k in vps}
     near_win_axis = np.zeros(n, bool)
     Db = d_brownian(d_b) * 1e6                                                   # mm2/s
+    alive_at = {}
     for step in range(int(t_end / dt)):
+        if step * dt in (1.0, 2.0, 4.0, 8.0) or step == int(round(8.0 / dt)):
+            alive_at[f"{step * dt:g} s"] = float(alive.mean())
         ia = np.where(alive)[0]
         if not len(ia):
             break
@@ -174,7 +177,8 @@ def track_condensate(cs, zr, n_per=600, t_end=8.0, dt=1e-3, seed=11, sc_t=0.7, d
         t_out[ia[out]] = (step + 1) * dt
         alive[ia[out]] = False
     res = dict(n=n, release_z_mm=list(zr), t_end_s=t_end, outlet=float((fate == "outlet").mean()),
-               still_in_chamber=float((fate == "chamber").mean()),
+               still_in_chamber=float((fate == "chamber").mean()), still_in_chamber_at=alive_at,
+               out_within_8s=float(np.nansum(t_out <= 8.0) / n),
                median_time_to_outlet_s=float(np.nanmedian(t_out)) if np.isfinite(t_out).any() else None,
                passed_within_30mm_of_window_axis_above_z105=float(near_win_axis.mean()),
                entered_recess={k: float(v.mean()) for k, v in entered.items()},
@@ -278,6 +282,8 @@ def track_spatter(cs, vps, d_um, n_per=500, slow=False, seed=5, dt=5e-5, t_max=2
                         ax, fa = v["face_axis"], v["face_at"]
                         lo = abs(b[2 * ax] - fa) < 1e-6
                         crossed = (pm[j][ax] <= fa + 1.0) if lo else (pm[j][ax] >= fa - 1.0)
+                        if k == "laser" and not (abs(x) < 20.0 and abs(y) < 20.0):
+                            crossed = False                       # the drawer's rim round the Ø46 (40 x 40) opening
                         f = f"{k} window" if crossed else f"{k} recess wall"
                         break
                 if f == "wall or part" and z >= 119.0:
@@ -374,13 +380,14 @@ def figure(name, res):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("cases", nargs="+")
-    ap.add_argument("--n-per", type=int, default=2000)
+    ap.add_argument("--n-per", type=int, default=6000)
     ap.add_argument("--no-spatter", action="store_true")
     ap.add_argument("--no-slow", action="store_true")
+    ap.add_argument("--json", default=None, help="results file (default analysis/out/monitoring/plume/particles.json); cases are "
+                    "merged into it when written, so runs writing the same file in parallel keep each other's cases")
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
-    jpath = OUT / "particles.json"
-    allres = json.loads(jpath.read_text()) if jpath.exists() else {}
+    jpath = pathlib.Path(a.json) if a.json else OUT / "particles.json"
     for path in a.cases:
         cs = PO.Case(path)
         name = pathlib.Path(path).name
@@ -411,6 +418,7 @@ def main():
                     res["spatter"][lab][str(d_um)] = r
                     print(name, lab, d_um, {k: round(v, 4) for k, v in r["fates"].items()}, flush=True)
             figure(name, res)
+        allres = json.loads(jpath.read_text()) if jpath.exists() else {}
         allres[name] = res
         jpath.write_text(json.dumps(allres, indent=1, default=float))
     print("wrote", jpath)

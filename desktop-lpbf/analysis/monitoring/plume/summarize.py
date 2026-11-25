@@ -62,10 +62,11 @@ def main():
                   f"{r['iterations']:.0f} iterations", "",
                   f"Bed: {r['bed']['z3_d75']['mean']:.2f} m/s mean at 3 mm over Ø75 ({r['bed']['z3_d75']['min']:.2f}–{r['bed']['z3_d75']['max']:.2f}); "
                   f"under the laser slide (z 121): {r['window_z121']['mean_speed']:.2f} m/s, Uy {r['window_z121']['mean_uy']:+.2f}.", "",
-                  "| Released | n | Out in 8 s | Median time out (s) | Near the beam axis under the lid | " + " | ".join(f"Entered {w} recess" for w in WIN) + " |",
-                  "|---|---|---|---|---|" + "---|" * len(WIN)]
+                  "| Released | n | Out in 8 s | Out by the end (t_end) | Median time out (s) | Near the beam axis under the lid | " + " | ".join(f"Entered {w} recess" for w in WIN) + " |",
+                  "|---|---|---|---|---|---|" + "---|" * len(WIN)]
             for band, c in r["condensate"].items():
-                L.append(f"| {band} | {c['n']} | {pct(c['outlet'])} | {fmt(c['median_time_to_outlet_s'], 2)} | {pct(c['passed_within_30mm_of_window_axis_above_z105'])} | "
+                L.append(f"| {band} | {c['n']} | {pct(c.get('out_within_8s', c['outlet']))} | {pct(c['outlet'])} ({c.get('t_end_s', 8):g} s) | "
+                         f"{fmt(c['median_time_to_outlet_s'], 2)} | {pct(c['passed_within_30mm_of_window_axis_above_z105'])} | "
                          + " | ".join(pct(c["entered_recess"][w], 2) for w in WIN) + " |")
             L += ["", "Condensate concentration per unit source, C/S (s/m³), next to each window and at other places (in brackets: how many "
                   "tracers visited; the counting noise is ~1/sqrt of it):", "",
@@ -120,8 +121,57 @@ def main():
                 if isinstance(g, dict):
                     L.append(f"| {k} | {cam} | {fmt(g['T_visible_K'], 4)} | {g['glow_ms']:.1f} | {g['glow_path_mm']:.0f} |")
         L.append("")
+    if P and F and F.get("windows"):
+        L += doc_tables(P, F)
     (OUT / "summary.md").write_text("\n".join(L) + "\n")
     print("wrote", OUT / "summary.md")
+
+
+def doc_tables(P, F):
+    """The compact tables monitoring/plume.md quotes, one block per case."""
+    L = ["## Compact tables (as quoted in monitoring/plume.md)", ""]
+    pn = {"laser": "slide", "LW": "lwSlide", "LP": "lpSlide", "LC": "lcWindow", "BW": "bwWindow"}
+    for case, r in P.items():
+        c1, c2 = r["condensate"]["0.5-5 mm"], r["condensate"]["5-20 mm"]
+        L += [f"### {case}", "", "| Released | Out in 8 s | Out in 20 s | Median time out | Near the beam axis under the lid | laser | LW | LP | LC | BW |",
+              "|---|---|---|---|---|---|---|---|---|---|"]
+        for band, c in (("0.5–5 mm", c1), ("5–20 mm", c2)):
+            L.append(f"| {band} | {pct(c.get('out_within_8s', c['outlet']))} | {pct(c['outlet'])} | {fmt(c['median_time_to_outlet_s'], 2)} s | "
+                     f"{pct(c['passed_within_30mm_of_window_axis_above_z105'])} | " + " | ".join(pct(c["entered_recess"][w], 2) for w in WIN) + " |")
+        L += ["", "| Where | 0.5–5 mm | 5–20 mm |", "|---|---|---|"]
+        for k in c1["concentration_per_source"]:
+            a, b = c1["concentration_per_source"][k], c2["concentration_per_source"][k]
+            L.append(f"| {k} | {fmt(a['C_per_S_s_m3'], 2)} ({a.get('n_visited', '?')}) | {fmt(b['C_per_S_s_m3'], 2)} ({b.get('n_visited', '?')}) |")
+        L += ["", "| Window | u* | gas 1 mm off | J/S 0.1 um dT0, low / high (mg/m2/h per g/h) |", "|---|---|---|---|"]
+        for w in WIN:
+            d1 = r["deposition_per_source"]["0.5-5 mm"][w]["0.1 um, dT 0 K"]["J_per_S"]
+            d2 = r["deposition_per_source"]["5-20 mm"][w]["0.1 um, dT 0 K"]["J_per_S"]
+            us = r["u_star"].get(pn[w])
+            gs = r["gas_at_windows"].get(w)
+            L.append(f"| {w} | {fmt(us['u_star_mean'], 2) if us else '-'} | {fmt(gs['mean_speed'], 2) if gs else '-'} | {d1 * 1e3:.2g} / {d2 * 1e3:.2g} |")
+        fw = F["windows"].get(case)
+        if fw:
+            L += ["", "| Window | v_d 0.1 um | mg/m2/h low / high (AlSi10Mg) | 10 K colder | h porous (dense), high | 10 K colder |", "|---|---|---|---|---|---|"]
+            for w in WIN:
+                g = lambda band, size: fw["condensate"].get(f"{w} | {band} | {size} | AlSi10Mg")
+                lo0, hi0, lo10, hi10 = g("0.5-5 mm", "0.1 um, dT 0 K"), g("5-20 mm", "0.1 um, dT 0 K"), g("0.5-5 mm", "0.1 um, dT 10 K"), g("5-20 mm", "0.1 um, dT 10 K")
+                vd = r["deposition_per_source"]["5-20 mm"][w]["0.1 um, dT 0 K"]["v_d"]
+                L.append(f"| {w} | {vd:.2g} | {fmt(lo0['mg_m2_per_h'], 2)} / {fmt(hi0['mg_m2_per_h'], 2)} | {fmt(lo10['mg_m2_per_h'], 2)} / {fmt(hi10['mg_m2_per_h'], 2)} | "
+                         f"{fmt(hi0['hours (porous Al, f 0.1)'], 2)} ({fmt(hi0['hours (dense Al film)'], 2)}) | {fmt(hi10['hours (porous Al, f 0.1)'], 2)} ({fmt(hi10['hours (dense Al film)'], 2)}) |")
+            L += ["", "| Window | Al-like hits/h, mm2/h | Ly hits/h, mm2/h |", "|---|---|---|"]
+            for w in WIN:
+                a = fw["spatter"].get(f"{w} | Al lognormal (median 2.5 m/s)", {})
+                b = fw["spatter"].get(f"{w} | Ly 2017 speeds", {})
+                L.append(f"| {w} | {a.get('hits_per_h_at_100_per_s', 0):.0f} / {a.get('splat_mm2_per_h', 0):.1f} | {b.get('hits_per_h_at_100_per_s', 0):.0f} / {b.get('splat_mm2_per_h', 0):.1f} |")
+        if "spatter" in r:
+            L += ["", "| Speeds | d | laser | LW | LP | plate | floor | outlet | lid | door side |", "|---|---|---|---|---|---|---|---|---|---|"]
+            for lab in SPEEDS:
+                for d, sp in r["spatter"].get(lab, {}).items():
+                    f = sp["fates"]
+                    L.append(f"| {lab} | {d} | " + " | ".join(pct(sp["windows"].get(w, 0.0), 2) for w in ("laser", "LW", "LP"))
+                             + f" | {pct(f.get('plate', 0.0))} | {pct(f.get('floor', 0.0))} | {pct(f.get('outlet slot', 0.0))} | {pct(f.get('lid', 0.0))} | {pct(f.get('wall: door side', 0.0))} |")
+        L.append("")
+    return L
 
 
 if __name__ == "__main__":

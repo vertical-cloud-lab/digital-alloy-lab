@@ -233,6 +233,48 @@ def mie_mec(lam_um, d_m, material="Al", rho=2700.0):
     return dict(ext=float(qe) * k, sca=float(qs) * k, abs=float(qe - qs) * k)
 
 
+def from_worker_a(src, mie):
+    """Worker A's melt-pool source terms (analysis/out/monitoring/melt/plume_source.json): for each case, the jet from its
+    'wall' exit state (Knight jump at the depression wall; 'flat' if the wall reading has no jet), the condensate from its
+    'best' reading (measured Mg and Zn rates plus the wall reading's Al), and the same jet, condensation and attenuation
+    estimates as the scenarios above."""
+    out = {}
+    for c in src["cases"]:
+        alloy = c["inputs"]["alloy"]
+        ex = c["exit"].get("wall") or {}
+        rd_key = "wall"
+        if not ex or not ex.get("u_m_s"):
+            ex, rd_key = (c["exit"].get("flat") or {}), "flat"
+        rd = c["readings"][rd_key]
+        best = c["best"]
+        u, rho = ex.get("u_m_s") or 0.0, ex.get("rho_vapour_kg_m3") or 0.0
+        Q = ex.get("Q_vapour_m3_s") or 0.0
+        area = (rd.get("area_hot_mm2") or 0.0) * 1e-6
+        d_src = math.sqrt(4 * area / math.pi) if area > 0 else 0.7 * SPOT_D
+        mdot_exit = rho * Q
+        ev = dict(T_s=ex.get("T_surface_K"), p_sat_atm=(ex.get("p_sat_Pa") or ATM) / ATM, mach=ex.get("mach") or 0.0, u_jet=u,
+                  T_v=ex.get("T_vapour_K") or ex.get("T_surface_K"), rho_v=rho, M_vapour=(ex.get("M_vapour_g_mol") or 27.0) * 1e-3,
+                  mdot_kg_s=mdot_exit, vapour_mole_fraction=best.get("vapour_mole_fraction") or rd.get("vapour_mole_fraction"))
+        row = dict(alloy=alloy, P_W=c["inputs"]["P_W"], v_m_s=c["inputs"]["v_m_s"], T0_K=c["inputs"]["T0_K"],
+                   reading_for_jet=rd_key, exit=ex, d_src_um=d_src * 1e6, mdot_exit_kg_s=mdot_exit,
+                   condensate_best_g_per_h=best.get("g_per_hour_lasing"), condensate_best_ug_per_mm=(best.get("loss_ug_per_mm") or {}).get("total"))
+        if u > 0 and mdot_exit > 0:
+            row["jet"] = {k: jet_in_crossflow(ev, d_src, U[1]) for k, U in U_CROSS.items()}
+            ps = primary_size(ev, d_src, alloy, T_freeze=650.0 if alloy == "7075" else 900.0)
+            row["primary"] = ps
+            d_eff = ps["d_eff_um"] * 1e-6
+            Lm = row["jet"]["200 L/min (fix200), at 1 / 3 mm"]["L_m_mm"] * 1e-3
+            z0 = max(5 * d_eff, ps["z_freeze_mm"] * 1e-3 * 0.3)
+            sigma_exit = 5 * d_eff * rho * math.log(max(Lm, 2 * z0) / z0)
+            scale = (best.get("m_dot_kg_s") or {}).get("total", mdot_exit) / mdot_exit
+            sigma = sigma_exit * min(1.0, scale)            # what condenses: the 'best' rate, not the wall reading's
+            row["column_kg_m2"] = sigma
+            row["tau"] = {f"{lam:.2f} um, {lab}": sigma * mie[key][f"{lam:.2f} um"]["ext"]
+                          for lam in (0.85, 1.07) for lab, key in (("20 nm primaries", "Al, 20 nm"), ("300 nm compact", "Al, 300 nm"))}
+        out[c["tag"]] = row
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--source", default=str(HERE.parents[1] / "out" / "monitoring" / "melt" / "plume_source.json"))
@@ -306,6 +348,8 @@ def main():
                 f"tau {lam:.2f} um, {lab}": sigma * res["mie_m2_per_kg"][key][f"{lam:.2f} um"]["ext"]
                 for lam in (0.85, 1.07) for lab, key in (("20 nm primaries", "Al, 20 nm"), ("300 nm compact", "Al, 300 nm"))})
     res["plume_column_attenuation"] = att
+    if src and "cases" in src:
+        res["worker_A"] = from_worker_a(src, res["mie_m2_per_kg"])
     # chamber background: well-mixed limit C = mdot / Q over the 120 mm beam path
     res["background_well_mixed"] = {
         f"{alloy}, {name}": dict(C_mg_m3=sc["evaporation"]["mdot_kg_s"] / (240 / 60000) * 1e6,
