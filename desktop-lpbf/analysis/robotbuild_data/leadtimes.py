@@ -194,16 +194,44 @@ SHORT = {  # short HUD strings for the new route (the full text is in LT)
     "D2": "backordered (~3-4 wk)", "M3": "2 d to 3 wk", "M1": "Ferrotec: quote", "M4": "Ferrotec: quote",
     "S7": "not read", "X1": "SendCutSend 5-15 d; shop queue 7.6-16.4 wk", "A1": "in stock (5); then 33 wk",
     "S1": "in stock (1); then 4 wk", "G1": "1-7 d", "C5": "in stock, ships same day", "M2": "ships in 3 d",
-    "C3": "ships in 3 d",
+    "C3": "ships in 3 d", "L2": "not needed (air-cooled laser)",
+    "B1": "stock same or next day; honing outside 3-6 wk (estimate)",
 }
-SHORT_USED = {"L1": "same day + ~1 wk freight", "T1": "1-3 wk (head from China)", "C1": "3-5 d"}
+SHORT_USED = {"L1": "ships same day; ~1 wk freight", "T1": "1-3 wk (head from China)"}
+
+
+def recheck_days():
+    """{line: (days_lo, days_hi, text)} from ebay-recheck.csv: eBay's own delivery window to Provo (84602) for the
+    line's live used pick on 2026-11-25 (the low pick if it is still listed, else the high pick)."""
+    import csv
+    import pathlib
+    f = pathlib.Path(__file__).resolve().parent / "ebay-recheck.csv"
+    out = {}
+    if not f.exists():
+        return out
+    rows = [r for r in csv.DictReader(open(f)) if r["status_2026_11_25"] == "still listed" and r["days_to_provo_low"]
+            and r["pick"]]
+    rows.sort(key=lambda r: 0 if "low" in r["pick"] else 1)
+    for r in rows:
+        line = r["replaces"].split(":")[0]
+        if line not in out:
+            out[line] = (int(r["days_to_provo_low"]), int(r["days_to_provo_high"]),
+                         f"eBay ({r['item_as_listed'][:48]}): '{r['delivery_to_84602_as_listed']}' to Provo, read "
+                         f"{r['fetched_utc']}; {r['returns_as_listed'].rstrip('.')}")
+    return out
+
+
+RECHECK = recheck_days()
 
 
 def lead_rows(bom_rows):
     """{line: row} for every bom.csv line: the new and used routes' text, source and days to BYU."""
     out = {}
     for line, b in bom_rows.items():
-        e = LT.get(line, dict(new=EST(line), used=None))
+        e = dict(LT.get(line, dict(new=EST(line), used=None)))
+        if line in RECHECK and line != "L1" and e.get("used"):  # L1 ships by freight: no date on the listing
+            lo, hi, txt = RECHECK[line]
+            e["used"] = (txt, lo, hi, "none", "analysis/robotbuild_data/ebay-recheck.csv")
         po = bool(e.get("po"))
         po_u = line in PO_USED
         if line in SHORT:
@@ -226,7 +254,7 @@ def lead_rows(bom_rows):
                          days_used_route=(used_days if used_days else
                                           days_to_byu(e["alt"], po_u) if e.get("alt") and line in ("S2", "H2") else
                                           days_to_byu(e["new"], po_u)),
-                         short_used=(SHORT_USED.get(line, f"{used_days[0]}-{used_days[1]} d (eBay, US)") if used_days
+                         short_used=(SHORT_USED.get(line, (f"{used_days[0]} d" if used_days[0] == used_days[1] else f"{used_days[0]}-{used_days[1]} d") + " (used, US)") if used_days
                                      else ("stocked swap" if line in ("S2", "H2") else "same as new")),
                          alt_text=e["alt"][0] if e.get("alt") else "", alt_source=e["alt"][4] if e.get("alt") else "",
                          days_alt=days_to_byu(e["alt"], po) if e.get("alt") else None)
@@ -240,7 +268,7 @@ def schedule(leads, bom_rows):
     for name, use_used, swaps in (("new", False, False), ("new_with_swaps", False, True), ("used", True, True)):
         worst, unknown = [], []
         for line, r in leads.items():
-            if line == "X1":
+            if line in ("X1", "L3"):  # X1 is the fabrication path; L3 rides on the laser order
                 continue
             if use_used:
                 d = r["days_used_route"]

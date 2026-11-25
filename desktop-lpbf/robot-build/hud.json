@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-25T05:56Z",
+ "generated_utc": "2026-11-25T06:27Z",
  "what": "Cost, lead-time and time numbers for the robot-built desktop LPBF video (issue #260, PR #266, round 7)",
  "how_to_show": "Tour the categories in the order of 'categories'. For each, show hud.new (at spec, all new) against hud.used (the used picks where a sensible listing exists, new elsewhere) and the running totals hud.run_new / hud.run_used; hud.range_new / hud.range_used are the BOM's full low-high ranges. Call out the category's 'items' in order with their hud.new, hud.used, hud.lead_new and hud.lead_used. 'offtable' and 'services' are not on the table: show them as text rows at the end of the tour.",
  "definitions": {
@@ -118,7 +118,8 @@
     "lead_used": "12-20 d (F4: same or next day + BYU PO)",
     "lead_new_as_chosen": "12-20 d (F4: same or next day + BYU PO)",
     "lead_unknown": ""
-   }
+   },
+   "source": "bom.csv lines G1 F4 F5 B1 (split by component: B1 tube, 316 bar, rod (fetched $693) and flange plate (~$100, estimate)); no used route; lead times: leadtimes.py from leadtime-lookups.csv (2026-11-25)"
   },
   {
    "cat": "sheet",
@@ -153,37 +154,37 @@
    "items": [],
    "lead": {
     "new_as_chosen": {
-     "line": "S9",
-     "item": "Rack, guard frame, guard panels and sliding guard door",
+     "line": "R1",
+     "item": "Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters",
      "days": [
       12,
-      22
+      20
      ],
-     "text": "McMaster T-slot and sheet from stock; the 12U rack is not chosen yet",
-     "short": "2-8 d + BYU PO",
-     "source": "leadtime-lookups.csv MCM-shipping + estimate"
+     "text": "McMaster: '98% of items ship from stock, and most orders arrive same or next day'",
+     "short": "same or next day + BYU PO",
+     "source": "leadtime-lookups.csv MCM-shipping (mcmaster.com/info/delivery, 2026-11-25T05:39Z)"
     },
     "new_longest": {
-     "line": "S9",
-     "item": "Rack, guard frame, guard panels and sliding guard door",
+     "line": "R1",
+     "item": "Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters",
      "days": [
       12,
-      22
+      20
      ],
-     "text": "McMaster T-slot and sheet from stock; the 12U rack is not chosen yet",
-     "short": "2-8 d + BYU PO",
-     "source": "leadtime-lookups.csv MCM-shipping + estimate"
+     "text": "McMaster: '98% of items ship from stock, and most orders arrive same or next day'",
+     "short": "same or next day + BYU PO",
+     "source": "leadtime-lookups.csv MCM-shipping (mcmaster.com/info/delivery, 2026-11-25T05:39Z)"
     },
     "used_longest": {
-     "line": "S9",
-     "item": "Rack, guard frame, guard panels and sliding guard door",
+     "line": "R1",
+     "item": "Reservoirs S / M / L (38 / 97 / 233 cm3) with shutters",
      "days": [
       12,
-      22
+      20
      ],
-     "text": "McMaster T-slot and sheet from stock; the 12U rack is not chosen yet",
-     "short": "2-8 d + BYU PO",
-     "source": "leadtime-lookups.csv MCM-shipping + estimate"
+     "text": "McMaster: '98% of items ship from stock, and most orders arrive same or next day'",
+     "short": "same or next day + BYU PO",
+     "source": "leadtime-lookups.csv MCM-shipping (mcmaster.com/info/delivery, 2026-11-25T05:39Z)"
     },
     "unknown": []
    },
@@ -218,11 +219,12 @@
     "run_used": "$5.5k",
     "range_new": "$1.0k-$1.9k",
     "range_used": "$1.0k-$1.9k",
-    "lead_new": "2-3 wk (S9: 2-8 d + BYU PO)",
-    "lead_used": "2-3 wk (S9: 2-8 d + BYU PO)",
-    "lead_new_as_chosen": "2-3 wk (S9: 2-8 d + BYU PO)",
+    "lead_new": "12-20 d (R1: same or next day + BYU PO)",
+    "lead_used": "12-20 d (R1: same or next day + BYU PO)",
+    "lead_new_as_chosen": "12-20 d (R1: same or next day + BYU PO)",
     "lead_unknown": ""
-   }
+   },
+   "source": "bom.csv lines S9 R1 A2 (split by component: S9 7 x McMaster 88895K51 5052 sheet, 24 x 24 in., $72.58 each (guard panels, sliding door), A2 lift-out wall liners (McMaster 2317K278 sheet)); no used route; lead times: leadtimes.py from leadtime-lookups.csv (2026-11-25)"
   },
   {
    "cat": "motion",
@@ -337,7 +339,8 @@
     "lead_used": "1-4 wk (M3: 2 d to 3 wk)",
     "lead_new_as_chosen": "1-4 wk (M3: 2 d to 3 wk)",
     "lead_unknown": "M1 M4"
-   }
+   },
+   "source": "bom.csv lines M1 M2 M3 M4 M5 A3; used: cost/used-options.csv picks M2:servo-1 (re-read 2026-11-25, ebay-recheck.csv); lead times: leadtimes.py from leadtime-lookups.csv (2026-11-25)"
   },
   {
    "cat": "gas",
@@ -361,12 +364,12 @@
     11498.29
    ],
    "cheaper": [
-    11846.23,
-    17033.71
+    11789.87,
+    16977.35
    ],
    "both": [
-    6944.32,
-    10002.23
+    6887.96,
+    9945.87
    ],
    "spec_new": 13543.28,
    "spec_used": [
@@ -379,7 +382,8 @@
     "G7",
     "G9",
     "G6",
-    "G4"
+    "G4",
+    "G3"
    ],
    "lead": {
     "new_as_chosen": {
@@ -429,12 +433,12 @@
      26251.42
     ],
     "cheaper": [
-     21865.44,
-     31471.49
+     21809.08,
+     31415.13
     ],
     "both": [
-     16895.71,
-     24344.19
+     16839.35,
+     24287.83
     ],
     "spec_new": 23973.66,
     "spec_used": [
@@ -454,7 +458,8 @@
     "lead_used": "2-3 wk (G7: 2-8 d + BYU PO)",
     "lead_new_as_chosen": "6-9 wk (G6: 6-8 wk)",
     "lead_unknown": "G4"
-   }
+   },
+   "source": "bom.csv lines G2 G3 G4 G5 G6 G7 G9 B4; used: cost/used-options.csv picks G2:dry-scroll G6:analyzer G7:3861N11 G7:pirani G9:dewpoint (re-read 2026-11-25, ebay-recheck.csv); lead times: leadtimes.py from leadtime-lookups.csv (2026-11-25)"
   },
   {
    "cat": "optics",
@@ -476,21 +481,21 @@
     48018.4
    ],
    "used": [
-    7675.99,
-    19454.0
+    8115.99,
+    19394.0
    ],
    "cheaper": [
     9387.79,
     47995.45
    ],
    "both": [
-    7675.99,
-    19431.05
+    8115.99,
+    19371.05
    ],
    "spec_new": 42702.95,
    "spec_used": [
-    8412.93,
-    14138.55
+    8852.93,
+    14078.55
    ],
    "on_table": true,
    "items": [
@@ -527,15 +532,15 @@
      "source": "quotes/ipg-ylr-500-u3-sm-ac.md (IPG budgetary quote, 2026-11-18)"
     },
     "used_longest": {
-     "line": "A2",
-     "item": "Cleaning and consumables",
+     "line": "L1",
+     "item": "Fiber laser source",
      "days": [
-      2,
-      11
+      3,
+      8
      ],
-     "text": "McMaster 5572N116 not readable by script (it rides on the McMaster order); Dynabrade 61470 at TA Industrial: 'Est. Lead Time: 6 days'; the Edmund and Cloudray slides are a PCard order",
-     "short": "2-11 d",
-     "source": "leadtime-lookups.csv A2-dynabrade-61470, MCM-shipping"
+     "text": "eBay, US surplus dealer (M6860): ships the same day from El Paso by LTL freight; under $3,500 with freight, so a PCard",
+     "short": "ships same day; ~1 wk freight",
+     "source": "cost/used-options.csv (2026-11-20); cost-scenarios.md section 4"
     },
     "unknown": [
      "L4",
@@ -549,36 +554,37 @@
      81598.11
     ],
     "used": [
-     26478.93,
-     45705.42
+     26918.93,
+     45645.42
     ],
     "cheaper": [
-     31253.23,
-     79466.94
+     31196.87,
+     79410.58
     ],
     "both": [
-     24571.7,
-     43775.24
+     24955.34,
+     43658.88
     ],
     "spec_new": 66676.61,
     "spec_used": [
-     27215.87,
-     32941.49
+     27655.87,
+     32881.49
     ]
    },
    "hud": {
     "title": "Laser and optics",
     "new": "$42.7k",
-    "used": "$8.4k-$14.1k",
+    "used": "$8.9k-$14.1k",
     "run_new": "$66.7k",
-    "run_used": "$27.2k-$32.9k",
+    "run_used": "$27.7k-$32.9k",
     "range_new": "$9.4k-$48.0k",
-    "range_used": "$7.7k-$19.5k",
+    "range_used": "$8.1k-$19.4k",
     "lead_new": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
-    "lead_used": "2-11 d (A2: 2-11 d)",
+    "lead_used": "3-8 d (L1: ships same day; ~1 wk freight)",
     "lead_new_as_chosen": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
     "lead_unknown": "L4 L5 T2"
-   }
+   },
+   "source": "bom.csv lines L1 L2 L3 L4 L5 L6 L7 S5 T2 A2 (split by component: A2 AR-coated cover slides: Edmund 36-299 x 12 + Cloudray PW02FS50X2 x 10 (consumables)); used: cost/used-options.csv picks L1:laser L3:collimator L5:head L6:lens (re-read 2026-11-25, ebay-recheck.csv); lead times: leadtimes.py from leadtime-lookups.csv (2026-11-25)"
   },
   {
    "cat": "elec",
@@ -637,7 +643,8 @@
     "A1",
     "D2",
     "C5",
-    "D1"
+    "D1",
+    "C2"
    ],
    "lead": {
     "new_as_chosen": {
@@ -685,21 +692,21 @@
      118738.64
     ],
     "used": [
-     47705.92,
-     76109.29
+     48145.92,
+     76049.29
     ],
     "cheaper": [
-     52370.43,
-     115809.68
+     52314.07,
+     115753.32
     ],
     "both": [
-     45000.9,
-     73381.32
+     45384.54,
+     73264.96
     ],
     "spec_new": 94531.6,
     "spec_used": [
-     49838.2,
-     55563.82
+     50278.2,
+     55503.82
     ]
    },
    "hud": {
@@ -707,14 +714,15 @@
     "new": "$27.9k",
     "used": "$22.6k",
     "run_new": "$94.5k",
-    "run_used": "$49.8k-$55.6k",
+    "run_used": "$50.3k-$55.5k",
     "range_new": "$21.9k-$37.1k",
     "range_used": "$21.2k-$30.4k",
     "lead_new": "3-5 wk (D2: backordered (~3-4 wk))",
     "lead_used": "2-3 wk (E1: 2-10 d + BYU PO)",
     "lead_new_as_chosen": "29-30 wk (S2: 27 wk (IDEC HS6B switch) + BYU PO)",
     "lead_unknown": "C1 H1 B3"
-   }
+   },
+   "source": "bom.csv lines C1 C2 C3 C4 C5 C6 M6 S1 S2 S3 S4 H1 H2 H3 B3 A1 D1 D2 E1 E2 E3 E4; used: cost/used-options.csv picks C1:controller D2:ups (re-read 2026-11-25, ebay-recheck.csv); lead times: leadtimes.py from leadtime-lookups.csv (2026-11-25)"
   },
   {
    "cat": "seal",
@@ -789,21 +797,21 @@
      119666.31
     ],
     "used": [
-     48366.59,
-     77036.96
+     48806.59,
+     76976.96
     ],
     "cheaper": [
-     52946.11,
-     116652.36
+     52889.75,
+     116596.0
     ],
     "both": [
-     45576.58,
-     74224.0
+     45960.22,
+     74107.64
     ],
     "spec_new": 95192.27,
     "spec_used": [
-     50498.87,
-     56224.49
+     50938.87,
+     56164.49
     ]
    },
    "hud": {
@@ -811,14 +819,15 @@
     "new": "$661",
     "used": "$661",
     "run_new": "$95.2k",
-    "run_used": "$50.5k-$56.2k",
+    "run_used": "$50.9k-$56.2k",
     "range_new": "$661-$928",
     "range_used": "$661-$928",
     "lead_new": "12-20 d (G8: same or next day + BYU PO)",
     "lead_used": "12-20 d (G8: same or next day + BYU PO)",
     "lead_new_as_chosen": "12-20 d (G8: same or next day + BYU PO)",
     "lead_unknown": ""
-   }
+   },
+   "source": "bom.csv lines G8 B2 FX; no used route; lead times: leadtimes.py from leadtime-lookups.csv (2026-11-25)"
   },
   {
    "cat": "frame",
@@ -894,21 +903,21 @@
      121005.56
     ],
     "used": [
-     49055.84,
-     78376.21
+     49495.84,
+     78316.21
     ],
     "cheaper": [
-     53635.36,
-     117991.61
+     53579.0,
+     117935.25
     ],
     "both": [
-     46265.83,
-     75563.25
+     46649.47,
+     75446.89
     ],
     "spec_new": 95881.52,
     "spec_used": [
-     51188.12,
-     56913.74
+     51628.12,
+     56853.74
     ]
    },
    "hud": {
@@ -916,14 +925,15 @@
     "new": "$689",
     "used": "$689",
     "run_new": "$95.9k",
-    "run_used": "$51.2k-$56.9k",
+    "run_used": "$51.6k-$56.9k",
     "range_new": "$689-$1.3k",
     "range_used": "$689-$1.3k",
     "lead_new": "2-3 wk (S9: 2-8 d + BYU PO)",
     "lead_used": "2-3 wk (S9: 2-8 d + BYU PO)",
     "lead_new_as_chosen": "2-3 wk (S9: 2-8 d + BYU PO)",
     "lead_unknown": ""
-   }
+   },
+   "source": "bom.csv lines S9 F3 (split by component: S9 12U rack ($250-650, estimate), 20 mm T-slot guard frame, brackets, nuts, wheels); no used route; lead times: leadtimes.py from leadtime-lookups.csv (2026-11-25)"
   },
   {
    "cat": "offtable",
@@ -947,11 +957,11 @@
     14366.03
    ],
    "cheaper": [
-    10095.08,
+    9957.32,
     12799.31
    ],
    "both": [
-    9089.07,
+    8951.31,
     11793.3
    ],
    "spec_new": 10497.33,
@@ -1012,21 +1022,21 @@
      136377.6
     ],
     "used": [
-     58547.16,
-     92742.24
+     58987.16,
+     92682.24
     ],
     "cheaper": [
-     63730.44,
-     130790.92
+     63536.32,
+     130734.56
     ],
     "both": [
-     55354.9,
-     87356.55
+     55600.78,
+     87240.19
     ],
     "spec_new": 106378.85,
     "spec_used": [
-     60679.44,
-     66405.06
+     61119.44,
+     66345.06
     ]
    },
    "hud": {
@@ -1034,14 +1044,15 @@
     "new": "$10.5k",
     "used": "$9.5k",
     "run_new": "$106.4k",
-    "run_used": "$60.7k-$66.4k",
+    "run_used": "$61.1k-$66.3k",
     "range_new": "$10.5k-$15.4k",
     "range_used": "$9.5k-$14.4k",
     "lead_new": "12-20 d (S6: 2-6 d + BYU PO)",
     "lead_used": "12-20 d (S8: same or next day + BYU PO)",
     "lead_new_as_chosen": "12-20 d (S6: 2-6 d + BYU PO)",
     "lead_unknown": "S7 T1"
-   }
+   },
+   "source": "bom.csv lines S6 S7 S8 P1 T1 T3 A2 E5 (split by component: A2 metal-dust vacuum, McMaster 5572N116 ($3,189.78)); used: cost/used-options.csv picks T1:power-sensor (re-read 2026-11-25, ebay-recheck.csv); lead times: leadtimes.py from leadtime-lookups.csv (2026-11-25)"
   },
   {
    "cat": "services",
@@ -1118,21 +1129,21 @@
      161154.6
     ],
     "used": [
-     67762.16,
-     117519.24
+     68202.16,
+     117459.24
     ],
     "cheaper": [
-     72945.44,
-     155567.92
+     72751.32,
+     155511.56
     ],
     "both": [
-     64569.9,
-     112133.55
+     64815.78,
+     112017.19
     ],
     "spec_new": 115593.85,
     "spec_used": [
-     69894.44,
-     75620.06
+     70334.44,
+     75560.06
     ]
    },
    "hud": {
@@ -1140,14 +1151,15 @@
     "new": "$9.2k",
     "used": "$9.2k",
     "run_new": "$115.6k",
-    "run_used": "$69.9k-$75.6k",
+    "run_used": "$70.3k-$75.6k",
     "range_new": "$9.2k-$24.8k",
     "range_used": "$9.2k-$24.8k",
     "lead_new": "SendCutSend 5-15 d; BYU shop queue 7.6 wk (outsourcing split) to 16.4 wk (all in house); honing loop 3-6 wk (estimate)",
     "lead_used": "SendCutSend 5-15 d; BYU shop queue 7.6 wk (outsourcing split) to 16.4 wk (all in house); honing loop 3-6 wk (estimate)",
     "lead_new_as_chosen": "2-4 wk (X1: SendCutSend 5-15 d; shop queue 7.6-16.4 wk + BYU PO)",
     "lead_unknown": ""
-   }
+   },
+   "source": "bom.csv lines B1 X1 (split by component: B1 welding, boring, honing and machining of the three modules ($1,507-4,007, estimate)); no used route; lead times: leadtimes.py from leadtime-lookups.csv (2026-11-25)"
   }
  ],
  "items": [
@@ -1187,20 +1199,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "MIC-6 cast plate, 5/8 x 24 x 72 in. (McMaster 86825K49)",
+    "kind": "item",
     "new": "$1.3k",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "same or next day + BYU PO",
     "lead_new_days": [
      12,
      20
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      12,
      20
-    ]
+    ],
+    "callout": "MIC-6 cast plate, 5/8 x 24 x 72 in. (McMaster 86825K49): new $1.3k (catalogue price), same or next day + BYU PO | buy new"
    }
   },
   {
@@ -1239,20 +1256,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Chamber stock: 6061-T651 5-1/2 in. frame blank and 1 in. / 3/4 in. plate",
+    "kind": "bundle",
     "new": "$1.3k",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "1-7 d",
     "lead_new_days": [
      3,
      12
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      3,
      12
-    ]
+    ],
+    "callout": "Chamber stock: 6061-T651 5-1/2 in. frame blank and 1 in. / 3/4 in. plate: new $1.3k (catalogue price), 1-7 d | buy new"
    }
   },
   {
@@ -1285,14 +1307,50 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [
+    {
+     "line": "M1",
+     "key": "M1:6709K12",
+     "replaces": "6709K12",
+     "alt_vendor": "DigiKey (marketplace: Midwest Machine Tool Supply)",
+     "alt_part": "HIWIN HGH-15-CA-Z0-C (DigiKey 4433-HGH-15-CA-Z0-C-ND)",
+     "base_usd": 144.71,
+     "alt_usd": 75.0,
+     "saving": 69.71,
+     "same_spec": "close",
+     "lead_time_note": "In-Stock: 84; will ship in approximately 20 days from Midwest Machine Tool Supply",
+     "url": "https://www.digikey.com/en/products/detail/hiwin/HGH-15-CA-Z0-C/16622864",
+     "fetched_utc": "2026-11-20T14:15Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "M1",
+     "key": "M1:6709K33",
+     "replaces": "6709K33",
+     "alt_vendor": "DigiKey (marketplace: Midwest Machine Tool Supply)",
+     "alt_part": "HIWIN HGR-15-R280-C (DigiKey 4433-HGR-15-R280-C-ND)",
+     "base_usd": 86.8,
+     "alt_usd": 83.0,
+     "saving": 3.8,
+     "same_spec": "yes",
+     "lead_time_note": "In-Stock: 100 (ships in approximately 20 days from Midwest Machine Tool Supply)",
+     "url": "https://www.digikey.com/en/products/detail/midwest-machine-tool-supply/HGR-15-R280-C/16623560",
+     "fetched_utc": "2026-11-20T14:20Z",
+     "source": "cost/cheaper-equivalents.csv"
+    }
+   ],
+   "new_basis": "catalogue + estimate",
    "hud": {
     "name": "Recoater axis: ball screw, rail, Ferrotec feedthrough",
+    "kind": "bundle",
     "new": "$1.3k",
+    "new_basis": "catalogue + estimate",
     "used": "buy new",
     "lead_new": "Ferrotec: quote",
     "lead_new_days": null,
-    "lead_used": "same as new",
-    "lead_used_days": null
+    "lead_used": "buy new",
+    "lead_used_days": null,
+    "callout": "Recoater axis: ball screw, rail, Ferrotec feedthrough: new $1.3k (catalogue + estimate), Ferrotec: quote | buy new"
    }
   },
   {
@@ -1331,20 +1389,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Door drive and latch pneumatics (SMC)",
+    "kind": "bundle",
     "new": "$1.1k",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "2-10 d",
     "lead_new_days": [
      2,
      10
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      2,
      10
-    ]
+    ],
+    "callout": "Door drive and latch pneumatics (SMC): new $1.1k (catalogue price), 2-10 d | buy new"
    }
   },
   {
@@ -1383,20 +1446,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Z actuator (THK KR26, 2 mm lead)",
+    "kind": "item",
     "new": "$923",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "2 d to 3 wk",
     "lead_new_days": [
      4,
      28
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      4,
      28
-    ]
+    ],
+    "callout": "Z actuator (THK KR26, 2 mm lead): new $923 (catalogue price), 2 d to 3 wk | buy new"
    }
   },
   {
@@ -1425,7 +1493,22 @@
      "fetched_utc": "2026-11-20T14:06Z",
      "verdict": "sensible",
      "risks": "ClearPath-SD (step/direction) as the BOM specifies, NEMA 23. Only one SD unit was listed (others are MC models that don't take step/dir); the second servo stays new",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 189.99,
+      "shipping": "US $7.19 USPS Ground Advantage",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Fri Dec 4",
+      "days": [
+       5,
+       9
+      ],
+      "returns": "Seller does not accept returns.",
+      "fetched_utc": "2026-11-25T06:13Z",
+      "notes": "or Best Offer; New - Open box",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [],
@@ -1451,29 +1534,34 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay open box (US)",
+     "text": "eBay (Teknic, CPM-SDSK-2310S-RQN, ClearPath Servo Moto): 'Estimated between Mon Nov 30 and Fri Dec 4' to Provo, read 2026-11-25T06:13Z; Seller does not accept returns",
      "days": [
-      3,
-      8
+      5,
+      9
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "2 servos (Teknic ClearPath-SD, NEMA 23)",
+    "kind": "item",
     "new": "$530",
+    "new_basis": "catalogue price",
     "used": "$197",
     "lead_new": "ships in 3 d",
     "lead_new_days": [
      2,
      10
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "5-9 d (used, US)",
     "lead_used_days": [
-     3,
-     8
-    ]
+     5,
+     9
+    ],
+    "callout": "2 servos (Teknic ClearPath-SD, NEMA 23): new $530 (catalogue price), ships in 3 d | used $197, 5-9 d (used, US)"
    }
   },
   {
@@ -1502,7 +1590,22 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible with checks",
      "risks": "Oil-free; tip seals wear and hours are unknown; small seller",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1149.99,
+      "shipping": "US $134.59 USPS Ground Advantage",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Sat Dec 5",
+      "days": [
+       5,
+       10
+      ],
+      "returns": "Seller does not accept returns.",
+      "fetched_utc": "2026-11-25T06:06Z",
+      "notes": "or Best Offer; returns were 'not stated' on 2026-11-20",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -1521,7 +1624,9 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible (returnable)",
      "risks": "Lab two-stage rotary-vane pump, KF inlet, replaces the McMaster HVAC-type pump (4396K21). Change the oil on arrival; check ultimate pressure with the Pirani; hours unknown",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     },
     {
      "title": "Varian TriScroll 300 Dry Scroll Vacuum Pump MSPLP10665 115/230V",
@@ -1538,7 +1643,9 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible with checks",
      "risks": "Larger scroll pump",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     },
     {
      "title": "BOC Edwards XDS10 Dry Scroll Vacuum Pump - Rebuilt with Only 64hrs",
@@ -1555,7 +1662,9 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible",
      "risks": "Rebuilt, 64 h: the low-risk scroll option",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "risk": "Ask the seller for hours and tip-seal condition; a tip-seal kit may be needed (not priced). The $460.69 Edwards RV3 is an oil-sealed rotary vane (free returns): a budget route, not the dry pump drawn.",
@@ -1580,29 +1689,65 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay, US (Agilent IDP-3)",
+     "text": "eBay (Agilent Technologies IDP3 Dry Scroll Vacuum Pump): 'Estimated between Mon Nov 30 and Sat Dec 5' to Provo, read 2026-11-25T06:06Z; Seller does not accept returns",
      "days": [
-      3,
-      8
+      5,
+      10
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
+   "cheaper_options": [
+    {
+     "line": "G2",
+     "key": "G2:3497N23",
+     "replaces": "3497N23",
+     "alt_vendor": "Kurt J. Lesker (maker's own store)",
+     "alt_part": "MHB-QF-B24",
+     "base_usd": 768.9,
+     "alt_usd": 439.0,
+     "saving": 329.9,
+     "same_spec": "yes",
+     "lead_time_note": "'Ready to Ship' cell blank for this row (other lengths show 4-8 weeks)",
+     "url": "https://www.lesker.com/newweb/flanges/bellows_kf_hydraulicallyformed.cfm?pgid=braided",
+     "fetched_utc": "2026-11-20T14:28Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G2",
+     "key": "G2:3394N12",
+     "replaces": "3394N12",
+     "alt_vendor": "Kurt J. Lesker (maker's own store)",
+     "alt_part": "LDA-KJLC-S-2KF25",
+     "base_usd": 722.41,
+     "alt_usd": 640.0,
+     "saving": 82.41,
+     "same_spec": "close",
+     "lead_time_note": "Estimated delivery 6-7 weeks",
+     "url": "https://www.lesker.com/leak-detectors/hld-helium-filter/part/lda-kjlc-s-2kf25",
+     "fetched_utc": "2026-11-20T14:28Z",
+     "source": "cost/cheaper-equivalents.csv"
+    }
+   ],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Dry scroll vacuum pump (Edwards nXDS6i)",
+    "kind": "item",
     "new": "$6.0k",
+    "new_basis": "catalogue price",
     "used": "$1.3k",
     "lead_new": "ships same day + BYU PO",
     "lead_new_days": [
      12,
      20
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "5-10 d (used, US)",
     "lead_used_days": [
-     3,
-     8
-    ]
+     5,
+     10
+    ],
+    "callout": "Dry scroll vacuum pump (Edwards nXDS6i): new $6.0k (catalogue price), ships same day + BYU PO | used $1.3k, 5-10 d (used, US)"
    }
   },
   {
@@ -1631,7 +1776,9 @@
      "fetched_utc": "2026-11-20T14:07Z",
      "verdict": "sensible",
      "risks": "Active Pirani, 14-30 V DC: check its analog output and cable",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "used_alt": [
@@ -1650,7 +1797,9 @@
      "fetched_utc": "2026-11-20T14:07Z",
      "verdict": "sensible with checks",
      "risks": "Convection Pirani with display, reads to atmosphere; used sensor may be contaminated",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "risk": "The KF-25 hoses (5 x 3497N23 across G2 and G7) are the biggest piece; Kurt J. Lesker's MHB-QF-B24 saves $825 new.",
@@ -1677,9 +1826,239 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [
+    {
+     "line": "G7",
+     "key": "G7:3497N23",
+     "replaces": "3497N23",
+     "alt_vendor": "Kurt J. Lesker (maker's own store)",
+     "alt_part": "MHB-QF-B24",
+     "base_usd": 1153.35,
+     "alt_usd": 658.5,
+     "saving": 494.85,
+     "same_spec": "yes",
+     "lead_time_note": "'Ready to Ship' cell blank for this row (other lengths show 4-8 weeks or 'KJLC will contact you'); KJL notes UPS ships lengths up to 8 ft",
+     "url": "https://www.lesker.com/newweb/flanges/bellows_kf_hydraulicallyformed.cfm?pgid=braided",
+     "fetched_utc": "2026-11-20T14:28Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:8077K237",
+     "replaces": "8077K237",
+     "alt_vendor": "U.S. Solid (maker's own store)",
+     "alt_part": "USS2-00052 (store SKU JFSV00052)",
+     "base_usd": 346.18,
+     "alt_usd": 31.88,
+     "saving": 314.3,
+     "same_spec": "close",
+     "lead_time_note": "950 in stock (US warehouse 450, overseas 500)",
+     "url": "https://ussolid.com/products/u-s-solid-electric-solenoid-valve-1-4-24v-dc-solenoid-valve-brass-body-normally-closed-viton-seal-html",
+     "fetched_utc": "2026-11-20T14:40Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:3861N11",
+     "replaces": "3861N11",
+     "alt_vendor": "ZOT Supply (maker: Dwyer Instruments / DwyerOmega)",
+     "alt_part": "628-00-GH-P1-E1-S1",
+     "base_usd": 358.05,
+     "alt_usd": 157.06,
+     "saving": 200.99,
+     "same_spec": "close",
+     "lead_time_note": "ZOT Supply: 0 in stock, 8 weeks lead time if not in stock",
+     "url": "https://zotsupply.com/Dwyer-628-00-GH-P1-E1-S1",
+     "fetched_utc": "2026-11-20T14:05Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:3861N11",
+     "replaces": "3861N11",
+     "alt_vendor": "Global Test Supply (maker: Dwyer Instruments / DwyerOmega)",
+     "alt_part": "628-00-GH-P1-E4-S1",
+     "base_usd": 358.05,
+     "alt_usd": 185.76,
+     "saving": 172.29,
+     "same_spec": "close",
+     "lead_time_note": "page shows '3 Days 3 to 4 Weeks' (ambiguous)",
+     "url": "https://www.globaltestsupply.com/product/dwyer-628-00-gh-p1-e4-s1-pressure-transmitter-0-15-psia-with-1-0percent-f-s-accuracy-and-general-purpose-housing",
+     "fetched_utc": "2026-11-20T14:05Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:4123K45",
+     "replaces": "4123K45",
+     "alt_vendor": "MROSupply (Dixon Sanitary distributor)",
+     "alt_part": "Dixon BV2CV-100VV-A",
+     "base_usd": 300.8,
+     "alt_usd": 178.08,
+     "saving": 122.72,
+     "same_spec": "yes",
+     "lead_time_note": "not shown (MROSupply says confirm availability after login); free shipping over $100",
+     "url": "https://www.mrosupply.com/hydraulics-and-pneumatics/6048485_bv2cv-100vv-a_dixon-sanitary-fittings/",
+     "fetched_utc": "2026-11-20T14:06Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:5539N26",
+     "replaces": "5539N26",
+     "alt_vendor": "AutomationDirect (ProSense house brand)",
+     "alt_part": "DPTA-20-10",
+     "base_usd": 188.05,
+     "alt_usd": 160.0,
+     "saving": 28.05,
+     "same_spec": "close",
+     "lead_time_note": "Backordered: '80 more, earliest 1/29/2027'",
+     "url": "https://www.automationdirect.com/pn/DPTA-20-10",
+     "fetched_utc": "2026-11-20T14:07Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:4518K72",
+     "replaces": "4518K72",
+     "alt_vendor": "MKS Instruments (HPS) web store",
+     "alt_part": "100312903",
+     "base_usd": 150.37,
+     "alt_usd": 122.98,
+     "saving": 27.39,
+     "same_spec": "yes",
+     "lead_time_note": "In Stock (page); ship time not shown",
+     "url": "https://www.mks.com/p/100312903",
+     "fetched_utc": "2026-11-20T14:01Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:4518K63",
+     "replaces": "4518K63",
+     "alt_vendor": "MKS Instruments (HPS) web store",
+     "alt_part": "100312703",
+     "base_usd": 126.83,
+     "alt_usd": 108.46,
+     "saving": 18.37,
+     "same_spec": "yes",
+     "lead_time_note": "In Stock (page); ship time not shown",
+     "url": "https://www.mks.com/f/iso-kf-ss-viton-centering-rings",
+     "fetched_utc": "2026-11-20T14:01Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:7833K76",
+     "replaces": "7833K76",
+     "alt_vendor": "Global Test Supply (maker: NOSHOK, USA)",
+     "alt_part": "102-FFB",
+     "base_usd": 41.68,
+     "alt_usd": 26.4,
+     "saving": 15.28,
+     "same_spec": "yes",
+     "lead_time_note": "Availability: 2 to 3 weeks",
+     "url": "https://www.globaltestsupply.com/product/noshok-102-ffb-hard-seat-needle-valve-female-female-brass",
+     "fetched_utc": "2026-11-20T14:08Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:89785K824",
+     "replaces": "89785K824",
+     "alt_vendor": "OnlineMetals",
+     "alt_part": "12938 (72 in length)",
+     "base_usd": 27.6,
+     "alt_usd": 13.92,
+     "saving": 13.68,
+     "same_spec": "yes",
+     "lead_time_note": "Ships from OH; stock/ship time not shown",
+     "url": "https://www.onlinemetals.com/en/buy/stainless-steel/0-25-od-x-0-035-wall-x-0-18-id-stainless-round-tube-316-seamless/pid/12938",
+     "fetched_utc": "2026-11-20T14:14Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:5539N26",
+     "replaces": "5539N26",
+     "alt_vendor": "DwyerOmega (maker's own store, Dwyer Instruments)",
+     "alt_part": "616KX-025-108-IN",
+     "base_usd": 188.05,
+     "alt_usd": 174.7,
+     "saving": 13.35,
+     "same_spec": "close",
+     "lead_time_note": "121 in stock; additional stock ships in 5 days",
+     "url": "https://www.dwyeromega.com/en-us/616kx-differential-pressure-transmitters-one-touch-calibration/Series-616KX/p/616KX-025-108-IN",
+     "fetched_utc": "2026-11-20T14:16Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:4518K49",
+     "replaces": "4518K49",
+     "alt_vendor": "MKS Instruments (HPS) web store",
+     "alt_part": "100312303",
+     "base_usd": 84.26,
+     "alt_usd": 72.0,
+     "saving": 12.26,
+     "same_spec": "yes",
+     "lead_time_note": "In Stock (page); ship time not shown",
+     "url": "https://www.mks.com/p/100312303",
+     "fetched_utc": "2026-11-20T14:01Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:5786N23",
+     "replaces": "5786N23",
+     "alt_vendor": "MKS Instruments (HPS) web store",
+     "alt_part": "100310103",
+     "base_usd": 40.95,
+     "alt_usd": 34.26,
+     "saving": 6.69,
+     "same_spec": "yes",
+     "lead_time_note": "1 Week (page)",
+     "url": "https://www.mks.com/f/iso-kf-aluminum-short-weld-stubs",
+     "fetched_utc": "2026-11-20T14:02Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:5786N25",
+     "replaces": "5786N25",
+     "alt_vendor": "MKS Instruments (HPS) web store",
+     "alt_part": "100310105",
+     "base_usd": 17.31,
+     "alt_usd": 14.48,
+     "saving": 2.83,
+     "same_spec": "yes",
+     "lead_time_note": "Availability 'Contact Us' on page (not stocked for immediate order; NW25/NW50 siblings show 1 week)",
+     "url": "https://www.mks.com/f/iso-kf-aluminum-short-weld-stubs",
+     "fetched_utc": "2026-11-20T14:02Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "G7",
+     "key": "G7:4518K64",
+     "replaces": "4518K64",
+     "alt_vendor": "MKS Instruments (HPS) web store",
+     "alt_part": "100312705",
+     "base_usd": 17.36,
+     "alt_usd": 14.83,
+     "saving": 2.53,
+     "same_spec": "yes",
+     "lead_time_note": "In Stock (page); ship time not shown",
+     "url": "https://www.mks.com/f/iso-kf-ss-viton-centering-rings",
+     "fetched_utc": "2026-11-20T14:01Z",
+     "source": "cost/cheaper-equivalents.csv"
+    }
+   ],
+   "new_basis": "catalogue + estimate",
    "hud": {
     "name": "Valves, KF fittings, hoses and gauges",
+    "kind": "bundle",
     "new": "$3.9k",
+    "new_basis": "catalogue + estimate",
     "used": "$3.4k",
     "lead_new": "2-8 d + BYU PO",
     "lead_new_days": [
@@ -1690,7 +2069,8 @@
     "lead_used_days": [
      12,
      22
-    ]
+    ],
+    "callout": "Valves, KF fittings, hoses and gauges: new $3.9k (catalogue + estimate), 2-8 d + BYU PO | used $3.4k, same as new"
    }
   },
   {
@@ -1719,7 +2099,22 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible with checks",
      "risks": "Compressed-air dew-point sensor (ISO 8573 classes 1-6), -100 to +20 C dp. Check output (4-20 mA?), the sensor's accuracy near -60 C dp and its calibration date; budget a recalibration",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 150.0,
+      "shipping": "US $15.99 Standard Shipping",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Thu Dec 3",
+      "days": [
+       5,
+       8
+      ],
+      "returns": "30 days returns. Buyer pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:10Z",
+      "notes": "New - Open box",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -1738,7 +2133,22 @@
      "fetched_utc": "2026-11-20T14:05Z",
      "verdict": "sensible with checks",
      "risks": "Michell Easidew 4-20 mA transmitter, -100 to +20 C dp range class; ask for the calibration certificate",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1100.0,
+      "shipping": "Free USPS Priority Mail",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Fri Dec 4",
+      "days": [
+       5,
+       9
+      ],
+      "returns": "14 days returns. Buyer pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:12Z",
+      "notes": "or Best Offer; refurbished",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "risk": "Check the calibration date; recalibrate if it is old.",
@@ -1763,29 +2173,34 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay, US (Atlas Copco open box or Michell refurbished)",
+     "text": "eBay (Atlas Copco P1624896681 class 1 -6 Dew Point Sen): 'Estimated between Mon Nov 30 and Thu Dec 3' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
      "days": [
-      3,
+      5,
       8
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Dew-point transmitter (Vaisala DMT143)",
+    "kind": "item",
     "new": "$2.3k",
+    "new_basis": "catalogue price",
     "used": "$166",
     "lead_new": "2 wk (made to order)",
     "lead_new_days": [
      16,
      19
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "5-8 d (used, US)",
     "lead_used_days": [
-     3,
+     5,
      8
-    ]
+    ],
+    "callout": "Dew-point transmitter (Vaisala DMT143): new $2.3k (catalogue price), 2 wk (made to order) | used $166, 5-8 d (used, US)"
    }
   },
   {
@@ -1814,7 +2229,22 @@
      "fetched_utc": "2026-11-20T14:04Z",
      "verdict": "sensible with checks",
      "risks": "Check the lowest range reaches 0-10 or 0-100 ppm and the 4-20 mA output; cells age on the shelf",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 650.0,
+      "shipping": "",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Thu Dec 3",
+      "days": [
+       5,
+       8
+      ],
+      "returns": "30 days returns. Buyer pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:10Z",
+      "notes": "or Best Offer",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -1833,7 +2263,22 @@
      "fetched_utc": "2026-11-20T14:04Z",
      "verdict": "sensible with checks (returnable)",
      "risks": "As above; returnable",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 779.0,
+      "shipping": "Free Standard Shipping",
+      "delivery_to_provo": "Estimated between Mon Nov 30 and Sat Dec 5",
+      "days": [
+       5,
+       10
+      ],
+      "returns": "60 days returns. Seller pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:08Z",
+      "notes": "or Best Offer; '1 sold' on the page",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "risk": "A used trace analyzer usually needs a new sensor cell (~$350, estimate) and a check of its lowest range (< 100 ppm).",
@@ -1858,12 +2303,12 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay, US (Alpha Omega Series 3000 or Teledyne 3190) plus a new sensor cell (cell lead not checked)",
+     "text": "eBay (ALPHA OMEGA,SERIES 3000,TRACE OXYGEN ANALYZER): 'Estimated between Mon Nov 30 and Thu Dec 3' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
      "days": [
-      3,
+      5,
       8
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": {
      "text": "SST OXY-FLEX-0-H: 6 in stock at Digi-Key (8 weeks after that); may be a percent-level sensor",
@@ -1874,20 +2319,25 @@
      "source": "leadtime-lookups.csv G6-oxyflex"
     }
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue (Instrumart)",
    "hud": {
     "name": "Trace O2 analyzer (Ntron Microx)",
+    "kind": "item",
     "new": "$2.1k",
+    "new_basis": "catalogue (Instrumart)",
     "used": "$1.0k",
     "lead_new": "6-8 wk",
     "lead_new_days": [
      44,
      61
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "5-8 d (used, US)",
     "lead_used_days": [
-     3,
+     5,
      8
-    ]
+    ],
+    "callout": "Trace O2 analyzer (Ntron Microx): new $2.1k (catalogue (Instrumart)), 6-8 wk | used $1.0k, 5-8 d (used, US)"
    }
   },
   {
@@ -1917,7 +2367,9 @@
      "fetched_utc": "2026-11-20T14:12Z",
      "verdict": "risky: not shown to be gas-tight",
      "risks": "Same class as McMaster 9960K51 (27 cfm, 1/8 hp): ~10x the flow needed, and gas-tightness of the shaft seal is not stated, so argon loss and O2 ingress are unknown",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "risk": "Used regenerative blowers aren't shown to be gas-tight (cost-scenarios.md).",
@@ -1938,14 +2390,92 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "estimate: no part found",
    "hud": {
     "name": "Sealed recirculation blower (gas-tight, ~100 L/min)",
+    "kind": "item",
     "new": "$1.5k",
+    "new_basis": "estimate: no part found",
     "used": "buy new",
     "lead_new": "quote; no gas-tight part found",
     "lead_new_days": null,
-    "lead_used": "same as new",
-    "lead_used_days": null
+    "lead_used": "buy new",
+    "lead_used_days": null,
+    "callout": "Sealed recirculation blower (gas-tight, ~100 L/min): new $1.5k (estimate: no part found), quote; no gas-tight part found | buy new"
+   }
+  },
+  {
+   "id": "G3",
+   "line": "G3",
+   "cat": "gas",
+   "kind": "item",
+   "name": "Argon flowmeter-regulator, 0-70 scfh (McMaster 78595A5)",
+   "new_low": 334.1,
+   "new_high": 334.1,
+   "new_drawn": 334.1,
+   "new_src": "McMaster 78595A5 (bom.csv G3)",
+   "used": [],
+   "used_alt": [],
+   "risk": "The cylinder and its rental are BYU's gas supplier's, not in the BOM.",
+   "used_best": null,
+   "bom_line_new": [
+    334.1,
+    334.1
+   ],
+   "lead": {
+    "new": {
+     "text": "McMaster: '98% of items ship from stock, and most orders arrive same or next day'",
+     "days": [
+      12,
+      20
+     ],
+     "days_vendor": [
+      2,
+      6
+     ],
+     "po": true,
+     "source": "leadtime-lookups.csv MCM-shipping (mcmaster.com/info/delivery, 2026-11-25T05:39Z)",
+     "basis": "vendor statement"
+    },
+    "used": null,
+    "faster_new": null
+   },
+   "cheaper_options": [
+    {
+     "line": "G3",
+     "key": "G3:78595A5",
+     "replaces": "78595A5",
+     "alt_vendor": "Cyberweld (Harris / Lincoln Electric brand)",
+     "alt_part": "Harris 355-2 Ar-580-10 (Harris item 3100211)",
+     "base_usd": 334.1,
+     "alt_usd": 261.6,
+     "saving": 72.5,
+     "same_spec": "yes",
+     "lead_time_note": "not shown (free shipping over $99)",
+     "url": "https://store.cyberweld.com/products/harris-355-2-argon-flowmeter-regulator-w-10-hose-3100211",
+     "fetched_utc": "2026-11-20T14:29Z",
+     "source": "cost/cheaper-equivalents.csv"
+    }
+   ],
+   "new_basis": "catalogue price",
+   "hud": {
+    "name": "Argon flowmeter-regulator, 0-70 scfh (McMaster 78595A5)",
+    "kind": "item",
+    "new": "$334",
+    "new_basis": "catalogue price",
+    "used": "buy new",
+    "lead_new": "same or next day + BYU PO",
+    "lead_new_days": [
+     12,
+     20
+    ],
+    "lead_used": "buy new",
+    "lead_used_days": [
+     12,
+     20
+    ],
+    "callout": "Argon flowmeter-regulator, 0-70 scfh (McMaster 78595A5): new $334 (catalogue price), same or next day + BYU PO | buy new"
    }
   },
   {
@@ -1974,7 +2504,22 @@
      "fetched_utc": "2026-11-20T14:10Z",
      "verdict": "sensible with checks (returnable)",
      "risks": "400 W single-mode, inside the 300-500 W band. Cooling, hours and fibre termination not stated. '-EOS' is an OEM variant built for EOS LPBF machines: give IPG the serial and ask whether it runs stand-alone (interface, interlock input, guide laser) and whether it has back-reflection protection. Test inside the 30 days: power vs set point into a dump, status registers, fibre end",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 2099.99,
+      "shipping": "Freight - Check the item description or Contact the seller for details",
+      "delivery_to_provo": "Varies",
+      "days": [
+       3,
+       8
+      ],
+      "returns": "30 days returns. Seller pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:05Z",
+      "notes": "or Best Offer; days are an LTL-freight estimate (the listing gives no date)",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -1993,7 +2538,22 @@
      "fetched_utc": "2026-11-20T14:09Z",
      "verdict": "risky (no returns), but the closest used match to the quote",
      "risks": "Same power, mode and cooling as the quoted YLR-500-U3-SM-AC, so no chiller. Only power-on tested and no returns: a dead pump diode or fibre is the buyer's loss. Ask for the serial and a power-test video before paying; ask IPG about service on an imported unit",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 4999.9,
+      "shipping": "US $1,953.00 delivery in 2 days",
+      "delivery_to_provo": "Get it by Sat Nov 28",
+      "days": [
+       3,
+       3
+      ],
+      "returns": "Seller does not accept returns.",
+      "fetched_utc": "2026-11-25T06:07Z",
+      "notes": "import: customs and FDA laser-product paperwork not included",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     },
     {
      "title": "IPG LASER YLR-400-SM-EOS SINGLE - MODE FIBER LASER 400W M6861",
@@ -2010,7 +2570,19 @@
      "fetched_utc": "2026-11-20T14:14Z",
      "verdict": "risky: buy only with an IPG repair quote in hand",
      "risks": "The delivery fibre was cut. A single-mode output fibre has to be re-spliced or replaced and re-terminated by IPG; that repair is not quoted, so the $1,300 price is not the price of a working laser",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1299.99,
+      "shipping": "Freight - Check the item description or Contact the seller for details",
+      "delivery_to_provo": "Varies",
+      "days": null,
+      "returns": "30 days returns. Seller pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:05Z",
+      "notes": "2 available; the cut-fibre unit (cost-scenarios.md section 1)",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     },
     {
      "title": "IPG Photonics YLR-400-WC 400W CW Fiber Laser - 1070nm (2019) Accepting Offers (three listed: 2017, 2019, 2017)",
@@ -2027,7 +2599,9 @@
      "fetched_utc": "2026-11-20T14:19Z",
      "verdict": "sensible with checks (returnable) once IPG confirms single-mode from the serial",
      "risks": "New since PR 270. Mode not in the title (IPG names multimode units -MM, so ask). Water-cooled. Returnable, so a fallback if M6860 fails its checks",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "risk": "Try the $2,099.99 YLR-400-SM-EOS (US dealer, 'mint condition, all warranty seals in place', 30-day returns, seller pays return shipping) first, and test it inside the 30 days. The $1,299.99 unit from the same dealer has a cut fibre ('Laser cable was cut'): an IPG repair, not a $1.3k laser. The Korean YLR-500-AC takes no returns. No listing states hours, cooling or back-reflection protection: give IPG the serial number.",
@@ -2061,20 +2635,25 @@
     },
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "IPG quote",
    "hud": {
     "name": "Fiber laser, 500 W single-mode (IPG YLR-500-U3-SM-AC)",
+    "kind": "item",
     "new": "$23.0k",
+    "new_basis": "IPG quote",
     "used": "$2.5k",
     "lead_new": "10-12 wk ARO + BYU PO",
     "lead_new_days": [
      83,
      105
     ],
-    "lead_used": "same day + ~1 wk freight",
+    "lead_used": "ships same day; ~1 wk freight",
     "lead_used_days": [
      3,
      8
-    ]
+    ],
+    "callout": "Fiber laser, 500 W single-mode (IPG YLR-500-U3-SM-AC): new $23.0k (IPG quote), 10-12 wk ARO + BYU PO | used $2.5k, ships same day; ~1 wk freight"
    }
   },
   {
@@ -2103,7 +2682,22 @@
      "fetched_utc": "2026-11-19T19:59Z",
      "verdict": "sensible with checks (warranty)",
      "risks": "XY2-100 head; 1064 nm coating covers 1070 nm; rated to 1500 W per the listing. Needs its own DC supply. Check mirror coatings for burns",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1200.0,
+      "shipping": "Free Standard Shipping On All Domestic Orders",
+      "delivery_to_provo": "not dated",
+      "days": [
+       3,
+       8
+      ],
+      "returns": "(dealer's 30-day warranty per cost/used-options.csv; not re-read)",
+      "fetched_utc": "2026-11-25T06:16Z",
+      "notes": "the URL in cost/used-options.csv is cut short and returns 404; the dealer's search (https://www.nextdayautomation.com/search?q=hurryscan) still lists it at $1,200.00, and also 'Used Scanlab HurryScan 25 Laser ScanHead With Sill Optics 1064nm Lens F=163mm' at $1,500.00; days are a ground-shipping estimate",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -2122,7 +2716,22 @@
      "fetched_utc": "2026-11-20T14:15Z",
      "verdict": "sensible with checks (returnable)",
      "risks": "20 mm, 1080 nm fibre-laser coatings. The seller's spec text (1-2 kW CW) is not SCANLAB's datasheet: confirm the power rating and the interface (intelliSCAN heads may need SL2-100, which the RTC5 does not speak without the right option)",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1500.0,
+      "shipping": "US $27.71 FedEx Ground / FedEx Home Delivery",
+      "delivery_to_provo": "Estimated between Sat Nov 28 and Wed Dec 2",
+      "days": [
+       3,
+       7
+      ],
+      "returns": "30 days returns. Seller pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:06Z",
+      "notes": "or Best Offer; New - Open box",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "risk": "Check the head's protocol (XY2-100 vs SL2-100) against the card, and its mirrors' CW rating at 1070 nm. Used heads need their own DC supply (~$150, estimate).",
@@ -2141,12 +2750,12 @@
      "basis": "quote"
     },
     "used": {
-     "text": "eBay, US dealer (hurrySCAN 25 with a 30-day warranty) or open-box intelliSCAN III 20",
+     "text": "eBay (Used Scanlab hurryScan 25 YAG LASER Scan/Write H): 'not dated' to Provo, read 2026-11-25T06:16Z; (dealer's 30-day warranty per cost/used-options.csv; not re-read)",
      "days": [
       3,
       8
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": {
      "text": "Thorlabs QS20XY-Y1 ($5,893.56): 'Available: Today'",
@@ -2157,17 +2766,22 @@
      "source": "leadtime-lookups.csv L5-QS20XY (thorlabs.com via the lab Pi, 2026-11-25T05:45Z)"
     }
    },
+   "cheaper_options": [],
+   "new_basis": "estimate: SCANLAB not yet asked",
    "hud": {
     "name": "Galvo scan head (SCANLAB basiCube 20)",
+    "kind": "item",
     "new": "$12.0k",
+    "new_basis": "estimate: SCANLAB not yet asked",
     "used": "$1.4k",
     "lead_new": "quote; no published lead + BYU PO",
     "lead_new_days": null,
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "3-8 d (used, US)",
     "lead_used_days": [
      3,
      8
-    ]
+    ],
+    "callout": "Galvo scan head (SCANLAB basiCube 20): new $12.0k (estimate: SCANLAB not yet asked), quote; no published lead + BYU PO | used $1.4k, 3-8 d (used, US)"
    }
   },
   {
@@ -2200,14 +2814,19 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Melt-pool photodiode chain (Thorlabs)",
+    "kind": "bundle",
     "new": "$2.1k",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "PDA36A2: no date shown + BYU PO",
     "lead_new_days": null,
-    "lead_used": "same as new",
-    "lead_used_days": null
+    "lead_used": "buy new",
+    "lead_used_days": null,
+    "callout": "Melt-pool photodiode chain (Thorlabs): new $2.1k (catalogue price), PDA36A2: no date shown + BYU PO | buy new"
    }
   },
   {
@@ -2240,14 +2859,19 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "estimate: quote needed",
    "hud": {
     "name": "Safety shutter + beam dump (>= 500 W CW)",
+    "kind": "item",
     "new": "$2.0k",
+    "new_basis": "estimate: quote needed",
     "used": "buy new",
     "lead_new": "quote (no >= 500 W catalogue part)",
     "lead_new_days": null,
-    "lead_used": "same as new",
-    "lead_used_days": null
+    "lead_used": "buy new",
+    "lead_used_days": null,
+    "callout": "Safety shutter + beam dump (>= 500 W CW): new $2.0k (estimate: quote needed), quote (no >= 500 W catalogue part) | buy new"
    }
   },
   {
@@ -2286,20 +2910,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Cover slides, AR-coated (consumables)",
+    "kind": "bundle",
     "new": "$1.4k",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "2-11 d",
     "lead_new_days": [
      2,
      11
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      2,
      11
-    ]
+    ],
+    "callout": "Cover slides, AR-coated (consumables): new $1.4k (catalogue price), 2-11 d | buy new"
    }
   },
   {
@@ -2313,6 +2942,40 @@
    "new_drawn": 1255.84,
    "new_src": "Thorlabs FTH160-1064 $1,011.78 + 2 x FTHW75-1064 $122.03 (read 2026-11-22, bom.csv L6); high = a Sill lens qualified for 500 W CW ($2,500-6,000, quote)",
    "used": [
+    {
+     "title": "Linos F-Theta Ronar 4401-288-000-20 Lens f=254mm 1064mm",
+     "condition": "Used",
+     "price": 599.99,
+     "shipping": 0.0,
+     "extra": null,
+     "extra_note": "",
+     "total": 539.99,
+     "location": "US",
+     "returns": "free returns (card)",
+     "seller_type": "eBay seller, 100 % positive (36.1K)",
+     "url": "https://www.ebay.com/itm/298724791756",
+     "fetched_utc": "2026-11-20T14:04Z",
+     "verdict": "sensible with checks (returnable)",
+     "risks": "Same lens from a larger seller; still a marking lens",
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 539.99,
+      "shipping": "Free UPS Ground",
+      "delivery_to_provo": "Estimated between Sat Nov 28 and Wed Dec 2",
+      "days": [
+       3,
+       7
+      ],
+      "returns": "30 days returns. Seller pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:11Z",
+      "notes": "or Best Offer; was $599.99 on 2026-11-20; 'Ships today if you order in the next 11 hrs'",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
+    }
+   ],
+   "used_alt": [
     {
      "title": "LINOS F-THETA-RONAR 4401-288-000-20 1064NM F=254MM LENS GERMANY",
      "condition": "Used",
@@ -2328,30 +2991,23 @@
      "fetched_utc": "2026-11-20T14:04Z",
      "verdict": "sensible with checks (returnable)",
      "risks": "Marking lens: no CW rating (same caveat as the BOM's EKSMA and Thorlabs lenses). Inspect for coating burns; check the mount thread fits the head",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
-    }
-   ],
-   "used_alt": [
-    {
-     "title": "Linos F-Theta Ronar 4401-288-000-20 Lens f=254mm 1064mm",
-     "condition": "Used",
-     "price": 599.99,
-     "shipping": 0.0,
-     "extra": null,
-     "extra_note": "",
-     "total": 599.99,
-     "location": "US",
-     "returns": "free returns (card)",
-     "seller_type": "eBay seller, 100 % positive (36.1K)",
-     "url": "https://www.ebay.com/itm/298724791756",
-     "fetched_utc": "2026-11-20T14:04Z",
-     "verdict": "sensible with checks (returnable)",
-     "risks": "Same lens from a larger seller; still a marking lens",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": false,
+     "recheck": {
+      "status": "ended",
+      "price_now": null,
+      "shipping": "",
+      "delivery_to_provo": "",
+      "days": null,
+      "returns": "",
+      "fetched_utc": "2026-11-25T06:10Z",
+      "notes": "'This listing was ended by the seller on Mon, Nov 23 at 4:39 PM because the item is no longer available'; dropped from the used totals here",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "risk": "The used lenses are f = 254 mm marking lenses with no CW rating: the spot grows ~1.6x and the optics bridge moves up. Fine for early tracks; not the drawn lens.",
-   "used_best": 99.99,
+   "used_best": 539.99,
    "bom_line_new": [
     1255.84,
     2500.0
@@ -2372,29 +3028,34 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay, US (LINOS f = 254 mm, free returns)",
+     "text": "eBay (Linos F-Theta Ronar 4401-288-000-20 Lens f=254mm): 'Estimated between Sat Nov 28 and Wed Dec 2' to Provo, read 2026-11-25T06:11Z; 30 days returns. Seller pays for return shipping",
      "days": [
       3,
-      8
+      7
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "f-theta lens, f = 160 mm (Thorlabs FTH160-1064 + 2 windows)",
+    "kind": "item",
     "new": "$1.3k",
-    "used": "$100",
+    "new_basis": "catalogue price",
+    "used": "$540",
     "lead_new": "3-4 wk (overseas stock) + BYU PO",
     "lead_new_days": [
      33,
      47
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "3-7 d (used, US)",
     "lead_used_days": [
      3,
-     8
-    ]
+     7
+    ],
+    "callout": "f-theta lens, f = 160 mm (Thorlabs FTH160-1064 + 2 windows): new $1.3k (catalogue price), 3-4 wk (overseas stock) + BYU PO | used $540, 3-7 d (used, US)"
    }
   },
   {
@@ -2433,20 +3094,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "not needed: the IPG is air-cooled",
    "hud": {
     "name": "Laser chiller (only for a water-cooled laser)",
-    "new": "$0 (air-cooled laser)",
+    "kind": "item",
+    "new": "$0",
+    "new_basis": "not needed: the IPG is air-cooled",
     "used": "buy new",
-    "lead_new": "0-0 d",
+    "lead_new": "not needed (air-cooled laser)",
     "lead_new_days": [
      0,
      0
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      0,
      0
-    ]
+    ],
+    "callout": "Laser chiller (only for a water-cooled laser): new $0 (not needed: the IPG is air-cooled), not needed (air-cooled laser) | buy new"
    }
   },
   {
@@ -2475,7 +3141,22 @@
      "fetched_utc": "2026-11-20T14:04Z",
      "verdict": "sensible with checks",
      "risks": "Beam diameter, power rating and fibre connector not in the card; must match the laser's output termination",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 495.0,
+      "shipping": "Free 2 day delivery",
+      "delivery_to_provo": "Get it by Sat Nov 28",
+      "days": [
+       3,
+       3
+      ],
+      "returns": "30 days returns. Buyer pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:13Z",
+      "notes": "or Best Offer",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [],
@@ -2501,29 +3182,34 @@
      "basis": "quote"
     },
     "used": {
-     "text": "the used laser's own output optics, or the eBay IPG collimator (US)",
+     "text": "eBay (IPG PHOTONICS P30-001277 LASER COLLIMATOR): 'Get it by Sat Nov 28' to Provo, read 2026-11-25T06:13Z; 30 days returns. Buyer pays for return shipping",
      "days": [
       3,
-      8
+      3
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "comes with the laser quote",
    "hud": {
     "name": "Collimator (IPG affixed 2.5 mm, with the laser)",
-    "new": "with the laser (price TBD)",
+    "kind": "item",
+    "new": "TBD",
+    "new_basis": "comes with the laser quote",
     "used": "$495",
     "lead_new": "with the laser + BYU PO",
     "lead_new_days": [
      83,
      105
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "3 d (used, US)",
     "lead_used_days": [
      3,
-     8
-    ]
+     3
+    ],
+    "callout": "Collimator (IPG affixed 2.5 mm, with the laser): new TBD (comes with the laser quote), with the laser + BYU PO | used $495, 3 d (used, US)"
    }
   },
   {
@@ -2556,14 +3242,19 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue + estimate",
    "hud": {
     "name": "Zero-point clamps (2 x SCHUNK VERO-S NSE-HT mini 88-20)",
+    "kind": "item",
     "new": "$6.4k",
+    "new_basis": "catalogue + estimate",
     "used": "buy new",
     "lead_new": "modules 1 d (snippet); pins: ask SCHUNK + BYU PO",
     "lead_new_days": null,
-    "lead_used": "same as new",
-    "lead_used_days": null
+    "lead_used": "buy new",
+    "lead_used_days": null,
+    "callout": "Zero-point clamps (2 x SCHUNK VERO-S NSE-HT mini 88-20): new $6.4k (catalogue + estimate), modules 1 d (snippet); pins: ask SCHUNK + BYU PO | buy new"
    }
   },
   {
@@ -2592,7 +3283,22 @@
      "fetched_utc": "2026-11-20T14:10Z",
      "verdict": "sensible with checks (returnable)",
      "risks": "XY2-100 (and SL2-100 only with the right board option: check). Ask SCANLAB whether a second-hand card can register for the RTC5 DLL and updates. Skywriting and laser delays are RTC5 features",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 1499.99,
+      "shipping": "US $20.56 delivery in 2-4 days",
+      "delivery_to_provo": "Get it between Sat Nov 28 and Tue Dec 1",
+      "days": [
+       3,
+       6
+      ],
+      "returns": "30 days returns. Buyer pays for return shipping.",
+      "fetched_utc": "2026-11-25T06:10Z",
+      "notes": "or Best Offer; '1 sold' on the page (two earlier reads got eBay's error page)",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [
@@ -2611,7 +3317,9 @@
      "fetched_utc": "2026-11-20T14:12Z",
      "verdict": "sensible with checks",
      "risks": "Newer card; small seller",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "risk": "The used card is an RTC5 (PCIe), tested by the seller on an IPG YLR; it needs a Windows PC with a PCIe slot (C2 at its $600 end) and SCANLAB's driver and DLL: ask SCANLAB whether a second-hand card can register.",
@@ -2630,26 +3338,31 @@
      "basis": "quote"
     },
     "used": {
-     "text": "eBay, US (RTC5 PCIe): the listing gave delivery to Provo on Nov 23-25 when read on Nov 20",
+     "text": "eBay (Scanlab RTC5 PCIe Control Card with 3D-Option, 2): 'Get it between Sat Nov 28 and Tue Dec 1' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
      "days": [
       3,
-      5
+      6
      ],
-     "source": "cost-scenarios.md section 4"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "estimate: SCANLAB not yet asked",
    "hud": {
     "name": "Scan card (SCANLAB RTC6)",
+    "kind": "item",
     "new": "$6.1k",
+    "new_basis": "estimate: SCANLAB not yet asked",
     "used": "$1.5k",
     "lead_new": "quote; no published lead + BYU PO",
     "lead_new_days": null,
-    "lead_used": "3-5 d",
+    "lead_used": "3-6 d (used, US)",
     "lead_used_days": [
      3,
-     5
-    ]
+     6
+    ],
+    "callout": "Scan card (SCANLAB RTC6): new $6.1k (estimate: SCANLAB not yet asked), quote; no published lead + BYU PO | used $1.5k, 3-6 d (used, US)"
    }
   },
   {
@@ -2682,14 +3395,65 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [
+    {
+     "line": "H1",
+     "key": "H1:3871K606",
+     "replaces": "3871K606",
+     "alt_vendor": "RSP Supply (Omega distributor)",
+     "alt_part": "Omega TJ36-CASS-040U-6-CC",
+     "base_usd": 1338.03,
+     "alt_usd": 937.35,
+     "saving": 400.68,
+     "same_spec": "close",
+     "lead_time_note": "Page inconsistent: 'Manufacturer delay, call for lead time' and 'usually ships same or next day'",
+     "url": "https://rspsupply.com/p-794143-omega-tj36-cass-040u-6-cc-tc-assembly-tj-cc-fbgls.aspx",
+     "fetched_utc": "2026-11-20T14:12Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "H1",
+     "key": "H1:3869K34",
+     "replaces": "3869K34",
+     "alt_vendor": "DigiKey (Omega)",
+     "alt_part": "Omega SMPW-K-F (DigiKey 5880-SMPW-K-F-ND)",
+     "base_usd": 58.5,
+     "alt_usd": 52.74,
+     "saving": 5.76,
+     "same_spec": "yes",
+     "lead_time_note": "8,412 in stock (DigiKey search page)",
+     "url": "https://www.digikey.com/en/products/result?keywords=SMPW-K-F",
+     "fetched_utc": "2026-11-20T14:19Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "H1",
+     "key": "H1:3869K35",
+     "replaces": "3869K35",
+     "alt_vendor": "DigiKey (Omega)",
+     "alt_part": "Omega SMPW-K-M",
+     "base_usd": 46.89,
+     "alt_usd": 44.37,
+     "saving": 2.52,
+     "same_spec": "yes",
+     "lead_time_note": "4,643 in stock; 5-week factory lead time (DigiKey page)",
+     "url": "https://www.digikey.com/en/products/detail/omega/SMPW-K-M/25638955",
+     "fetched_utc": "2026-11-20T14:20Z",
+     "source": "cost/cheaper-equivalents.csv"
+    }
+   ],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Heater stacks, weld-in feedthroughs and thermocouples (3 modules)",
+    "kind": "bundle",
     "new": "$3.8k",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "SST weld-ins: no published lead + BYU PO",
     "lead_new_days": null,
-    "lead_used": "same as new",
-    "lead_used_days": null
+    "lead_used": "buy new",
+    "lead_used_days": null,
+    "callout": "Heater stacks, weld-in feedthroughs and thermocouples (3 modules): new $3.8k (catalogue price), SST weld-ins: no published lead + BYU PO | buy new"
    }
   },
   {
@@ -2728,20 +3492,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Safety controller (Banner XS26-2 + XS16si + XS2so) and contactors",
+    "kind": "item",
     "new": "$2.4k",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "in stock (1); then 4 wk + BYU PO",
     "lead_new_days": [
      12,
      20
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      12,
      20
-    ]
+    ],
+    "callout": "Safety controller (Banner XS26-2 + XS16si + XS2so) and contactors: new $2.4k (catalogue price), in stock (1); then 4 wk + BYU PO | buy new"
    }
   },
   {
@@ -2780,20 +3549,41 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [
+    {
+     "line": "A1",
+     "key": "A1:fibre-sensor",
+     "replaces": "Omron E32-T61-S + E3NX-FA41 (DigiKey)",
+     "alt_vendor": "MRO Supply (E32-T61-S) + DigiKey (E3NX-FA41 2M)",
+     "alt_part": "Omron E32-T61-S + Omron E3NX-FA41 2M",
+     "base_usd": 900.12,
+     "alt_usd": 830.03,
+     "saving": 70.09,
+     "same_spec": "yes",
+     "lead_time_note": "MRO: stock not shown; DigiKey E3NX-FA41 2M: 5 in stock, 33-week factory lead time; DigiKey E32-T61-S had 1 in stock",
+     "url": "https://www.mrosupply.com/automation/6164011_e32-t61-s_omron/",
+     "fetched_utc": "2026-11-20T14:17Z",
+     "source": "cost/cheaper-equivalents.csv"
+    }
+   ],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Step-confirm sensors, NFC and load cell (incl. Omron fibre amplifier)",
+    "kind": "bundle",
     "new": "$1.5k",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "in stock (5); then 33 wk + BYU PO",
     "lead_new_days": [
      12,
      20
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      12,
      20
-    ]
+    ],
+    "callout": "Step-confirm sensors, NFC and load cell (incl. Omron fibre amplifier): new $1.5k (catalogue price), in stock (5); then 33 wk + BYU PO | buy new"
    }
   },
   {
@@ -2822,7 +3612,22 @@
      "fetched_utc": "2026-11-20T14:12Z",
      "verdict": "sensible (not in the BOM)",
      "risks": "The BOM has no UPS line. If one is added for the supervisor, controls and scan card (not the laser), a refurbished unit with new batteries is a sensible used buy",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": 449.99,
+      "shipping": "Free UPS Ground",
+      "delivery_to_provo": "Estimated between Sat Nov 28 and Wed Dec 2",
+      "days": [
+       3,
+       7
+      ],
+      "returns": "Seller does not accept returns.",
+      "fetched_utc": "2026-11-25T06:12Z",
+      "notes": "refurbished by a UPS refurbisher",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [],
@@ -2848,29 +3653,34 @@
      "basis": "vendor page"
     },
     "used": {
-     "text": "eBay, US UPS refurbisher (APC SMX1500RM2U)",
+     "text": "eBay (APC SmartUPS X 1500VA LCD Rack Tower UPS (SMX150): 'Estimated between Sat Nov 28 and Wed Dec 2' to Provo, read 2026-11-25T06:12Z; Seller does not accept returns",
      "days": [
       3,
-      8
+      7
      ],
-     "source": "cost/used-options.csv"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "UPS, 2U (Eaton 5PX1500RTG2)",
+    "kind": "item",
     "new": "$1.1k",
+    "new_basis": "catalogue price",
     "used": "$450",
     "lead_new": "backordered (~3-4 wk)",
     "lead_new_days": [
      22,
      32
     ],
-    "lead_used": "3-8 d (eBay, US)",
+    "lead_used": "3-7 d (used, US)",
     "lead_used_days": [
      3,
-     8
-    ]
+     7
+    ],
+    "callout": "UPS, 2U (Eaton 5PX1500RTG2): new $1.1k (catalogue price), backordered (~3-4 wk) | used $450, 3-7 d (used, US)"
    }
   },
   {
@@ -2909,20 +3719,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "PLC with thermocouple and 4-20 mA I/O (AutomationDirect Productivity1000)",
+    "kind": "bundle",
     "new": "$1.1k",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "in stock, ships same day",
     "lead_new_days": [
      2,
      6
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      2,
      6
-    ]
+    ],
+    "callout": "PLC with thermocouple and 4-20 mA I/O (AutomationDirect Productivity1000): new $1.1k (catalogue price), in stock, ships same day | buy new"
    }
   },
   {
@@ -2961,20 +3776,82 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue + estimate",
    "hud": {
     "name": "Tray dock and umbilicals (HARTING Han-Modular)",
+    "kind": "bundle",
     "new": "$539",
+    "new_basis": "catalogue + estimate",
     "used": "buy new",
     "lead_new": "2-6 d + BYU PO",
     "lead_new_days": [
      12,
      20
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      12,
      20
-    ]
+    ],
+    "callout": "Tray dock and umbilicals (HARTING Han-Modular): new $539 (catalogue + estimate), 2-6 d + BYU PO | buy new"
+   }
+  },
+  {
+   "id": "C2",
+   "line": "C2",
+   "cat": "elec",
+   "kind": "item",
+   "name": "Supervisor / scan PC (Raspberry Pi 5, or a small industrial PC)",
+   "new_low": 80,
+   "new_high": 600,
+   "new_drawn": 80,
+   "new_src": "bom.csv C2 (estimate): the Pi 5 the model draws in PB2 ($80); a small industrial PC ($600) for the RTC card",
+   "used": [],
+   "used_alt": [],
+   "risk": "The model's 2U 'Scan + laser controller PC' (tagged C1) has no price of its own: C2's $600 end is the nearest; a used RTC5 needs a PCIe slot.",
+   "used_best": null,
+   "bom_line_new": [
+    80.0,
+    600.0
+   ],
+   "lead": {
+    "new": {
+     "text": "Raspberry Pi 5: distributor stock (not checked)",
+     "days": [
+      2,
+      8
+     ],
+     "days_vendor": [
+      2,
+      8
+     ],
+     "po": false,
+     "source": "estimate",
+     "basis": "estimate"
+    },
+    "used": null,
+    "faster_new": null
+   },
+   "cheaper_options": [],
+   "new_basis": "estimate",
+   "hud": {
+    "name": "Supervisor / scan PC (Raspberry Pi 5, or a small industrial PC)",
+    "kind": "item",
+    "new": "$80",
+    "new_basis": "estimate",
+    "used": "buy new",
+    "lead_new": "2-8 d",
+    "lead_new_days": [
+     2,
+     8
+    ],
+    "lead_used": "buy new",
+    "lead_used_days": [
+     2,
+     8
+    ],
+    "callout": "Supervisor / scan PC (Raspberry Pi 5, or a small industrial PC): new $80 (estimate), 2-8 d | buy new"
    }
   },
   {
@@ -3013,20 +3890,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue + estimate",
    "hud": {
     "name": "12U rack, T-slot guard frame and guard panels",
+    "kind": "bundle",
     "new": "$1.1k",
+    "new_basis": "catalogue + estimate",
     "used": "buy new",
     "lead_new": "2-8 d + BYU PO",
     "lead_new_days": [
      12,
      22
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      12,
      22
-    ]
+    ],
+    "callout": "12U rack, T-slot guard frame and guard panels: new $1.1k (catalogue + estimate), 2-8 d + BYU PO | buy new"
    }
   },
   {
@@ -3056,7 +3938,9 @@
      "fetched_utc": "2026-11-20T14:13Z",
      "verdict": "not cheaper",
      "risks": "Used inert gloveboxes ($3,000-7,875) are more capable but not cheaper than the McMaster boxes; purifier condition unknown",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": null
     }
    ],
    "cheaper": "Cleatech 2100-2 with airlock, $2,135 at Lab Supply Network (acrylic; cost/cheaper-equivalents.csv)",
@@ -3084,20 +3968,56 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [
+    {
+     "line": "P1",
+     "key": "P1:4083N14",
+     "replaces": "4083N14",
+     "alt_vendor": "Lab Supply Network (Cleatech)",
+     "alt_part": "Cleatech 2100-2 (clear acrylic, with airlock)",
+     "base_usd": 4305.48,
+     "alt_usd": 2135.0,
+     "saving": 2170.48,
+     "same_spec": "close",
+     "lead_time_note": "Ready to ship within 25 days (page)",
+     "url": "https://www.laboratory-supply.net/?p=39883",
+     "fetched_utc": "2026-11-20T14:12Z",
+     "source": "cost/cheaper-equivalents.csv"
+    },
+    {
+     "line": "P1",
+     "key": "P1:4083N11",
+     "replaces": "4083N11",
+     "alt_vendor": "Lab Supply Network (Cleatech)",
+     "alt_part": "Cleatech 2100-2 (clear acrylic, no airlock)",
+     "base_usd": 1693.76,
+     "alt_usd": 1556.0,
+     "saving": 137.76,
+     "same_spec": "close",
+     "lead_time_note": "Ready to ship within 25 days (page)",
+     "url": "https://www.laboratory-supply.net/?p=39883",
+     "fetched_utc": "2026-11-20T14:12Z",
+     "source": "cost/cheaper-equivalents.csv"
+    }
+   ],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Powder glovebox (McMaster 4083N14)",
+    "kind": "item",
     "new": "$4.3k",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "2-6 d + BYU PO",
     "lead_new_days": [
      12,
      20
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      12,
      20
-    ]
+    ],
+    "callout": "Powder glovebox (McMaster 4083N14): new $4.3k (catalogue price), 2-6 d + BYU PO | buy new"
    }
   },
   {
@@ -3137,20 +4057,41 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [
+    {
+     "line": "A2",
+     "key": "A2:5572N116",
+     "replaces": "5572N116",
+     "alt_vendor": "TA Industrial (Dynabrade distributor)",
+     "alt_part": "Dynabrade 61470",
+     "base_usd": 3189.78,
+     "alt_usd": 2787.53,
+     "saving": 402.25,
+     "same_spec": "close",
+     "lead_time_note": "Est. lead time 6 days (TA Industrial page)",
+     "url": "https://taindustrial.com/itemdetail/DYNAB%2061470",
+     "fetched_utc": "2026-11-20T14:06Z",
+     "source": "cost/cheaper-equivalents.csv"
+    }
+   ],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Metal-dust vacuum (McMaster 5572N116, NFPA 484)",
+    "kind": "item",
     "new": "$3.2k",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "2-11 d",
     "lead_new_days": [
      2,
      11
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      2,
      11
-    ]
+    ],
+    "callout": "Metal-dust vacuum (McMaster 5572N116, NFPA 484): new $3.2k (catalogue price), 2-11 d | buy new"
    }
   },
   {
@@ -3179,7 +4120,22 @@
      "fetched_utc": "2026-11-20T14:18Z",
      "verdict": "sensible with checks",
      "risks": "1.5 kW thermal head covers 500 W (the BOM's low, Thorlabs S322C, stops at 200 W). Calibration certificate will be out of date: send to Ophir",
-     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)"
+     "source": "cost/used-options.csv (eBay, read through the lab Pi on 2026-11-20)",
+     "live": true,
+     "recheck": {
+      "status": "still listed",
+      "price_now": null,
+      "shipping": "US $45.00 eBay SpeedPAK Standard",
+      "delivery_to_provo": "Estimated between Thu Dec 3 and Tue Dec 15",
+      "days": [
+       8,
+       20
+      ],
+      "returns": "Seller does not accept returns.",
+      "fetched_utc": "2026-11-25T06:12Z",
+      "notes": "the head only, still $454.00 or Best Offer; the Nova II meter ($1,279.99, US) was not re-read, so the pick's $1,733.99 stands (price_usd_now left blank)",
+      "source": "analysis/robotbuild_data/ebay-recheck.csv"
+     }
     }
    ],
    "used_alt": [],
@@ -3199,26 +4155,31 @@
      "basis": "quote"
     },
     "used": {
-     "text": "eBay: Ophir L1500W head from China (7-20 days, estimate) + Nova II meter (US)",
+     "text": "eBay (Ophir P/N 774208A, L1500W-LP1-UA-.003-Y Power/En): 'Estimated between Thu Dec 3 and Tue Dec 15' to Provo, read 2026-11-25T06:12Z; Seller does not accept returns",
      "days": [
-      7,
+      8,
       20
      ],
-     "source": "cost/used-options.csv; the China leg is an estimate"
+     "source": "analysis/robotbuild_data/ebay-recheck.csv"
     },
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Laser power meter, 500 W (Gentec-EO UP55M head + U-LINK)",
+    "kind": "item",
     "new": "$2.8k",
+    "new_basis": "catalogue price",
     "used": "$1.8k",
     "lead_new": "contact sales",
     "lead_new_days": null,
     "lead_used": "1-3 wk (head from China)",
     "lead_used_days": [
-     7,
+     8,
      20
-    ]
+    ],
+    "callout": "Laser power meter, 500 W (Gentec-EO UP55M head + U-LINK): new $2.8k (catalogue price), contact sales | used $1.8k, 1-3 wk (head from China)"
    }
   },
   {
@@ -3257,20 +4218,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "catalogue price",
    "hud": {
     "name": "Class D extinguisher, 30 lb (McMaster 6435T23)",
+    "kind": "item",
     "new": "$920",
+    "new_basis": "catalogue price",
     "used": "buy new",
     "lead_new": "same or next day + BYU PO",
     "lead_new_days": [
      12,
      20
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      12,
      20
-    ]
+    ],
+    "callout": "Class D extinguisher, 30 lb (McMaster 6435T23): new $920 (catalogue price), same or next day + BYU PO | buy new"
    }
   },
   {
@@ -3303,14 +4269,19 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "search snippet",
    "hud": {
     "name": "Room O2-deficiency monitor (Macurco OX-6)",
+    "kind": "item",
     "new": "$663",
+    "new_basis": "search snippet",
     "used": "buy new",
     "lead_new": "not read",
     "lead_new_days": null,
-    "lead_used": "same as new",
-    "lead_used_days": null
+    "lead_used": "buy new",
+    "lead_used_days": null,
+    "callout": "Room O2-deficiency monitor (Macurco OX-6): new $663 (search snippet), not read | buy new"
    }
   },
   {
@@ -3349,20 +4320,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "estimate: assumed shop rates",
    "hud": {
     "name": "Machining of the custom parts (193-208 shop hours)",
+    "kind": "bundle",
     "new": "$7.7k",
+    "new_basis": "estimate: assumed shop rates",
     "used": "buy new",
     "lead_new": "SendCutSend 5-15 d; shop queue 7.6-16.4 wk + BYU PO",
     "lead_new_days": [
      17,
      29
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      17,
      29
-    ]
+    ],
+    "callout": "Machining of the custom parts (193-208 shop hours): new $7.7k (estimate: assumed shop rates), SendCutSend 5-15 d; shop queue 7.6-16.4 wk + BYU PO | buy new"
    }
   },
   {
@@ -3401,20 +4377,25 @@
     "used": null,
     "faster_new": null
    },
+   "cheaper_options": [],
+   "new_basis": "estimate",
    "hud": {
     "name": "Build modules: welding, boring and honing (3 modules)",
+    "kind": "bundle",
     "new": "$1.5k",
+    "new_basis": "estimate",
     "used": "buy new",
-    "lead_new": "same or next day + BYU PO",
+    "lead_new": "stock same or next day; honing outside 3-6 wk (estimate) + BYU PO",
     "lead_new_days": [
      12,
      20
     ],
-    "lead_used": "same as new",
+    "lead_used": "buy new",
     "lead_used_days": [
      12,
      20
-    ]
+    ],
+    "callout": "Build modules: welding, boring and honing (3 modules): new $1.5k (estimate), stock same or next day; honing outside 3-6 wk (estimate) + BYU PO | buy new"
    }
   }
  ],
@@ -3425,28 +4406,28 @@
     161154.6
    ],
    "used": [
-    67762.16,
-    117519.24
+    68202.16,
+    117459.24
    ],
    "cheaper": [
-    72945.44,
-    155567.92
+    72751.32,
+    155511.56
    ],
    "both": [
-    64569.9,
-    112133.55
+    64815.78,
+    112017.19
    ]
   },
   "at_spec": {
    "new": 115593.85,
    "used": [
-    69894.44,
-    75620.06
+    70334.44,
+    75560.06
    ],
    "cw_chain_new": 44355.0,
    "cw_chain_used": [
-    5520.32,
-    11245.94
+    5960.32,
+    11185.94
    ]
   },
   "cost_scenarios_py_as_is": {
@@ -3496,8 +4477,8 @@
    },
    {
     "key": "L6:lens",
-    "change": "base 486.0/2500.0 -> 1011.78/2500.0",
-    "why": "L6's low end is now the Thorlabs FTH160-1064 ($1,011.78; its two spare windows stay), not a $486 lens"
+    "change": "low pick dropped: LINOS F-THETA-RONAR 4401-288-000-20 1064NM F=254MM LENS GERM",
+    "why": "ended on 2026-11-25 ('This listing was ended by the seller on Mon, Nov 23 at 4:39 PM because the item is no longer available'; dropped from the used totals here)"
    },
    {
     "key": "G2:4396K21",
@@ -3559,12 +4540,6 @@
     "key": "G6:analyzer",
     "base_part": "Ntron Microx (Instrumart) / SST OXY-FLEX-0-H (DigiKey)",
     "saving": -3306.93
-   },
-   {
-    "line": "P1",
-    "key": "P1:4083N11",
-    "base_part": "4083N11",
-    "saving": 137.76
    },
    {
     "line": "S2",
@@ -3657,12 +4632,6 @@
     "saving": 69.71
    },
    {
-    "line": "G7",
-    "key": "G7:4518K63",
-    "base_part": "4518K63",
-    "saving": 18.37
-   },
-   {
     "line": "S9",
     "key": "S9:5278N47",
     "base_part": "5278N47",
@@ -3675,46 +4644,16 @@
     "saving": 3.8
    },
    {
-    "line": "G7",
-    "key": "G7:4518K49",
-    "base_part": "4518K49",
-    "saving": 12.26
-   },
-   {
     "line": "C6",
     "key": "C6:69915K54",
     "base_part": "69915K54",
     "saving": 32.9
    },
    {
-    "line": "G7",
-    "key": "G7:5786N23",
-    "base_part": "5786N23",
-    "saving": 6.69
-   },
-   {
-    "line": "G7",
-    "key": "G7:89785K824",
-    "base_part": "89785K824",
-    "saving": 13.68
-   },
-   {
     "line": "C6",
     "key": "C6:7812K54",
     "base_part": "7812K54",
     "saving": 11.06
-   },
-   {
-    "line": "G7",
-    "key": "G7:4518K64",
-    "base_part": "4518K64",
-    "saving": 2.53
-   },
-   {
-    "line": "G7",
-    "key": "G7:5786N25",
-    "base_part": "5786N25",
-    "saving": 2.83
    },
    {
     "line": "G7",
@@ -3970,7 +4909,7 @@
      3,
      8
     ],
-    "short_used": "same day + ~1 wk freight",
+    "short_used": "ships same day; ~1 wk freight",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -3991,7 +4930,7 @@
      0,
      0
     ],
-    "short_new": "0-0 d",
+    "short_new": "not needed (air-cooled laser)",
     "used_text": "",
     "used_source": "",
     "days_used": null,
@@ -4021,17 +4960,17 @@
      91
     ],
     "short_new": "with the laser + BYU PO",
-    "used_text": "the used laser's own output optics, or the eBay IPG collimator (US)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (IPG PHOTONICS P30-001277 LASER COLLIMATOR): 'Get it by Sat Nov 28' to Provo, read 2026-11-25T06:13Z; 30 days returns. Buyer pays for return shipping",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
      3,
-     8
+     3
     ],
     "days_used_route": [
      3,
-     8
+     3
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "3 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -4067,8 +5006,8 @@
     "days_new": null,
     "days_new_vendor": null,
     "short_new": "quote; no published lead + BYU PO",
-    "used_text": "eBay, US dealer (hurrySCAN 25 with a 30-day warranty) or open-box intelliSCAN III 20",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (Used Scanlab hurryScan 25 YAG LASER Scan/Write H): 'not dated' to Provo, read 2026-11-25T06:16Z; (dealer's 30-day warranty per cost/used-options.csv; not re-read)",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
      3,
      8
@@ -4077,7 +5016,7 @@
      3,
      8
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "3-8 d (used, US)",
     "alt_text": "Thorlabs QS20XY-Y1 ($5,893.56): 'Available: Today'",
     "alt_source": "leadtime-lookups.csv L5-QS20XY (thorlabs.com via the lab Pi, 2026-11-25T05:45Z)",
     "days_alt": [
@@ -4102,17 +5041,17 @@
      33
     ],
     "short_new": "3-4 wk (overseas stock) + BYU PO",
-    "used_text": "eBay, US (LINOS f = 254 mm, free returns)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (Linos F-Theta Ronar 4401-288-000-20 Lens f=254mm): 'Estimated between Sat Nov 28 and Wed Dec 2' to Provo, read 2026-11-25T06:11Z; 30 days returns. Seller pays for return shipping",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
      3,
-     8
+     7
     ],
     "days_used_route": [
      3,
-     8
+     7
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "3-7 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -4157,17 +5096,17 @@
     "days_new": null,
     "days_new_vendor": null,
     "short_new": "quote; no published lead + BYU PO",
-    "used_text": "eBay, US (RTC5 PCIe): the listing gave delivery to Provo on Nov 23-25 when read on Nov 20",
-    "used_source": "cost-scenarios.md section 4",
+    "used_text": "eBay (Scanlab RTC5 PCIe Control Card with 3D-Option, 2): 'Get it between Sat Nov 28 and Tue Dec 1' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
      3,
-     5
+     6
     ],
     "days_used_route": [
      3,
-     5
+     6
     ],
-    "short_used": "3-5 d",
+    "short_used": "3-6 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -4354,17 +5293,17 @@
      10
     ],
     "short_new": "ships in 3 d",
-    "used_text": "eBay open box (US)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (Teknic, CPM-SDSK-2310S-RQN, ClearPath Servo Moto): 'Estimated between Mon Nov 30 and Fri Dec 4' to Provo, read 2026-11-25T06:13Z; Seller does not accept returns",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
-     3,
-     8
+     5,
+     9
     ],
     "days_used_route": [
-     3,
-     8
+     5,
+     9
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "5-9 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -4522,17 +5461,17 @@
      6
     ],
     "short_new": "ships same day + BYU PO",
-    "used_text": "eBay, US (Agilent IDP-3)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (Agilent Technologies IDP3 Dry Scroll Vacuum Pump): 'Estimated between Mon Nov 30 and Sat Dec 5' to Provo, read 2026-11-25T06:06Z; Seller does not accept returns",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
-     3,
-     8
+     5,
+     10
     ],
     "days_used_route": [
-     3,
-     8
+     5,
+     10
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "5-10 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -4632,17 +5571,17 @@
      61
     ],
     "short_new": "6-8 wk",
-    "used_text": "eBay, US (Alpha Omega Series 3000 or Teledyne 3190) plus a new sensor cell (cell lead not checked)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (ALPHA OMEGA,SERIES 3000,TRACE OXYGEN ANALYZER): 'Estimated between Mon Nov 30 and Thu Dec 3' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
-     3,
+     5,
      8
     ],
     "days_used_route": [
-     3,
+     5,
      8
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "5-8 d (used, US)",
     "alt_text": "SST OXY-FLEX-0-H: 6 in stock at Digi-Key (8 weeks after that); may be a percent-level sensor",
     "alt_source": "leadtime-lookups.csv G6-oxyflex",
     "days_alt": [
@@ -4725,17 +5664,17 @@
      19
     ],
     "short_new": "2 wk (made to order)",
-    "used_text": "eBay, US (Atlas Copco open box or Michell refurbished)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (Atlas Copco P1624896681 class 1 -6 Dew Point Sen): 'Estimated between Mon Nov 30 and Thu Dec 3' to Provo, read 2026-11-25T06:10Z; 30 days returns. Buyer pays for return shipping",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
-     3,
+     5,
      8
     ],
     "days_used_route": [
-     3,
+     5,
      8
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "5-8 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -5122,14 +6061,14 @@
     "days_new": null,
     "days_new_vendor": null,
     "short_new": "contact sales",
-    "used_text": "eBay: Ophir L1500W head from China (7-20 days, estimate) + Nova II meter (US)",
-    "used_source": "cost/used-options.csv; the China leg is an estimate",
+    "used_text": "eBay (Ophir P/N 774208A, L1500W-LP1-UA-.003-Y Power/En): 'Estimated between Thu Dec 3 and Tue Dec 15' to Provo, read 2026-11-25T06:12Z; Seller does not accept returns",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
-     7,
+     8,
      20
     ],
     "days_used_route": [
-     7,
+     8,
      20
     ],
     "short_used": "1-3 wk (head from China)",
@@ -5283,7 +6222,7 @@
      2,
      6
     ],
-    "short_new": "same or next day + BYU PO",
+    "short_new": "stock same or next day; honing outside 3-6 wk (estimate) + BYU PO",
     "used_text": "",
     "used_source": "",
     "days_used": null,
@@ -5536,17 +6475,17 @@
      32
     ],
     "short_new": "backordered (~3-4 wk)",
-    "used_text": "eBay, US UPS refurbisher (APC SMX1500RM2U)",
-    "used_source": "cost/used-options.csv",
+    "used_text": "eBay (APC SmartUPS X 1500VA LCD Rack Tower UPS (SMX150): 'Estimated between Sat Nov 28 and Wed Dec 2' to Provo, read 2026-11-25T06:12Z; Seller does not accept returns",
+    "used_source": "analysis/robotbuild_data/ebay-recheck.csv",
     "days_used": [
      3,
-     8
+     7
     ],
     "days_used_route": [
      3,
-     8
+     7
     ],
-    "short_used": "3-8 d (eBay, US)",
+    "short_used": "3-7 d (used, US)",
     "alt_text": "",
     "alt_source": "",
     "days_alt": null
@@ -5774,14 +6713,6 @@
        ]
       },
       {
-       "line": "L3",
-       "item": "Collimator / beam expander",
-       "wk": [
-        11.9,
-        15.0
-       ]
-      },
-      {
        "line": "L1",
        "item": "Fiber laser source",
        "wk": [
@@ -5811,6 +6742,14 @@
        "wk": [
         3.1,
         4.6
+       ]
+      },
+      {
+       "line": "M3",
+       "item": "Z stage (less servo): integrated actuator under the floor",
+       "wk": [
+        0.6,
+        4.0
        ]
       }
      ],
@@ -5851,17 +6790,9 @@
       11.9,
       15.0
      ],
-     "set_by": "L3",
-     "set_by_item": "Collimator / beam expander",
+     "set_by": "L1",
+     "set_by_item": "Fiber laser source",
      "next": [
-      {
-       "line": "L1",
-       "item": "Fiber laser source",
-       "wk": [
-        11.9,
-        15.0
-       ]
-      },
       {
        "line": "G6",
        "item": "O2 analyzer",
@@ -5901,6 +6832,14 @@
         1.7,
         3.4
        ]
+      },
+      {
+       "line": "S9",
+       "item": "Rack, guard frame, guard panels and sliding guard door",
+       "wk": [
+        1.7,
+        3.1
+       ]
       }
      ],
      "unknown": [
@@ -5924,7 +6863,7 @@
       18.1,
       19.3
      ],
-     "critical_split": "purchases (L3)",
+     "critical_split": "purchases (L1)",
      "critical_all_in_house": "fabrication (all in house)",
      "ready_split_wk": [
       12.9,
@@ -7255,6 +8194,7 @@
      "robot_s": 51.0,
      "person_min": 0.0,
      "checker_compute_s": 1.5,
+     "force": "",
      "note": ""
     },
     {
@@ -7267,6 +8207,7 @@
      "robot_s": 0.0,
      "person_min": 3,
      "checker_compute_s": 0.0,
+     "force": "Installed right after tapping with a powered insert tool and the tang broken off, as for every insert in the chamber body (render_build chapter 2); a cobot would need a dedicated inserter and tang-break station for 3 inserts.",
      "note": "three M3 helical inserts, in the shop after tapping"
     },
     {
@@ -7279,6 +8220,7 @@
      "robot_s": 39.0,
      "person_min": 0.0,
      "checker_compute_s": 2.6,
+     "force": "released 24 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -7291,6 +8233,7 @@
      "robot_s": 40.0,
      "person_min": 0.0,
      "checker_compute_s": 2.5,
+     "force": "released 36 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -7303,6 +8246,7 @@
      "robot_s": 52.0,
      "person_min": 0.0,
      "checker_compute_s": 11.2,
+     "force": "released 9 mm above its seat and let drop over its guide; released 6 mm above its seat and let drop over its guide",
      "note": ""
     },
     {
@@ -7315,6 +8259,7 @@
      "robot_s": 53.0,
      "person_min": 0.0,
      "checker_compute_s": 1.7,
+     "force": "",
      "note": ""
     },
     {
@@ -7327,6 +8272,7 @@
      "robot_s": 49.0,
      "person_min": 0.0,
      "checker_compute_s": 0.9,
+     "force": "",
      "note": ""
     },
     {
@@ -7339,6 +8285,7 @@
      "robot_s": 80.0,
      "person_min": 0.0,
      "checker_compute_s": 11.3,
+     "force": "0.6 N m | 3/3 screws;",
      "note": ""
     },
     {
@@ -7351,6 +8298,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "A felt strip and a split PTFE scraper are wrapped, not pushed; no published robot method for felt.",
      "note": "felt strip and split PTFE scraper wrapped into the head's groove"
     },
     {
@@ -7363,6 +8311,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.1,
+     "force": "",
      "note": ""
     },
     {
@@ -7375,6 +8324,7 @@
      "robot_s": 53.0,
      "person_min": 0.0,
      "checker_compute_s": 1.1,
+     "force": "",
      "note": ""
     },
     {
@@ -7387,6 +8337,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 1.1,
+     "force": "",
      "note": ""
     },
     {
@@ -7399,6 +8350,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 2.7,
+     "force": "needs 35 N (peak 104); arm can push 156 N",
      "note": ""
     },
     {
@@ -7411,6 +8363,7 @@
      "robot_s": 45.0,
      "person_min": 0.0,
      "checker_compute_s": 2.4,
+     "force": "",
      "note": ""
     },
     {
@@ -7423,6 +8376,7 @@
      "robot_s": 65.0,
      "person_min": 0.0,
      "checker_compute_s": 3.5,
+     "force": "1.1 N m | 2/2 screws;",
      "note": ""
     },
     {
@@ -7435,6 +8389,7 @@
      "robot_s": 57.0,
      "person_min": 0.0,
      "checker_compute_s": 2.4,
+     "force": "",
      "note": ""
     },
     {
@@ -7447,6 +8402,7 @@
      "robot_s": 90.0,
      "person_min": 0.0,
      "checker_compute_s": 15.6,
+     "force": "",
      "note": ""
     },
     {
@@ -7459,6 +8415,7 @@
      "robot_s": 30.0,
      "person_min": 0.0,
      "checker_compute_s": 46.8,
+     "force": "",
      "note": ""
     },
     {
@@ -7471,6 +8428,7 @@
      "robot_s": 56.0,
      "person_min": 0.0,
      "checker_compute_s": 7.2,
+     "force": "",
      "note": ""
     },
     {
@@ -7483,6 +8441,7 @@
      "robot_s": 125.0,
      "person_min": 0.0,
      "checker_compute_s": 2.2,
+     "force": "2.2 N m | 6/6 screws;",
      "note": ""
     },
     {
@@ -7495,6 +8454,7 @@
      "robot_s": 50.5,
      "person_min": 0.0,
      "checker_compute_s": 1.3,
+     "force": "",
      "note": ""
     },
     {
@@ -7507,6 +8467,7 @@
      "robot_s": 65.0,
      "person_min": 0.0,
      "checker_compute_s": 13.6,
+     "force": "2.2 N m | 2/2 screws;",
      "note": ""
     },
     {
@@ -7519,6 +8480,7 @@
      "robot_s": 51.0,
      "person_min": 0.0,
      "checker_compute_s": 2.5,
+     "force": "released 24 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -7531,6 +8493,7 @@
      "robot_s": 80.0,
      "person_min": 0.0,
      "checker_compute_s": 1.9,
+     "force": "1.1 N m | 3/3 screws;",
      "note": ""
     },
     {
@@ -7543,6 +8506,7 @@
      "robot_s": 0.0,
      "person_min": 120,
      "checker_compute_s": 0.0,
+     "force": "TIG welds at the block's face and at the rod, on the bare rod before chapter 3, away from every O-ring; the inner joints to the feedthrough pins are made before the sleeves are welded. Ask Solid Sealing to confirm the blind-bore weld and the weld access (elect",
      "note": "seven weld-in feedthroughs TIG-welded into the rod end (welder)"
     },
     {
@@ -7555,6 +8519,7 @@
      "robot_s": 30.0,
      "person_min": 0.0,
      "checker_compute_s": 4.6,
+     "force": "",
      "note": ""
     },
     {
@@ -7567,6 +8532,7 @@
      "robot_s": 51.0,
      "person_min": 0.0,
      "checker_compute_s": 2.5,
+     "force": "needs 10 N; arm can push 164 N | released 18 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -7579,6 +8545,7 @@
      "robot_s": 30.0,
      "person_min": 0.0,
      "checker_compute_s": 48.9,
+     "force": "",
      "note": ""
     },
     {
@@ -7591,6 +8558,7 @@
      "robot_s": 36.0,
      "person_min": 0.0,
      "checker_compute_s": 12.9,
+     "force": "",
      "note": ""
     },
     {
@@ -7603,6 +8571,7 @@
      "robot_s": 36.0,
      "person_min": 0.0,
      "checker_compute_s": 1.0,
+     "force": "",
      "note": ""
     },
     {
@@ -7615,6 +8584,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "operations.md A2.13: with the plate on the bench, face down, all four screws are open from above; on the machine two sit under the KF-40 stub's flange (run 6: 2 of 4). Not checked here: the bench is not modelled.",
      "note": "overflow funnel on the bench: O-ring, block and four M4 screws"
     },
     {
@@ -7627,6 +8597,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 3.9,
+     "force": "",
      "note": ""
     },
     {
@@ -7639,6 +8610,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 4.8,
+     "force": "",
      "note": ""
     },
     {
@@ -7651,6 +8623,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 5.3,
+     "force": "4.3 kg, 2.1 kg per arm | 4.3 kg;",
      "note": ""
     },
     {
@@ -7663,6 +8636,7 @@
      "robot_s": 290.0,
      "person_min": 1.0,
      "checker_compute_s": 29.6,
+     "force": "1.1 N m | 17/18 screws; in the: approach: no path in 500 iterations",
      "note": "1 of 18 screws by a person (1 min each, estimate)"
     },
     {
@@ -7675,6 +8649,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 8.2,
+     "force": "8.25 kg, 4.1 kg per arm | 8.25 kg;",
      "note": ""
     },
     {
@@ -7687,6 +8662,7 @@
      "robot_s": 20.0,
      "person_min": 0.0,
      "checker_compute_s": 0.7,
+     "force": "",
      "note": ""
     },
     {
@@ -7695,11 +8671,12 @@
      "label": "Locating dowel and diamond pin into the floor",
      "do": "place",
      "actor": "A",
-     "status": "pass",
+     "status": "fail",
      "robot_s": 51.0,
-     "person_min": 0.0,
+     "person_min": 5.0,
      "checker_compute_s": 8.5,
-     "note": ""
+     "force": "needs 1644 N; arm can push 149 N | TOO MUCH FORCE for the arm: NO: 16x the F/T range; a UR pushing this hard is past its force limit. Arbor press by a person, or a slip fit (g6) with ;",
+     "note": "needs 1644 N; arm can push 149 N | TOO MUCH FORCE for the arm: NO: 16x the F/T range; a UR pushing this hard is past its force limit. Arbor press by a person, o"
     },
     {
      "step": "C03",
@@ -7711,6 +8688,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "",
      "note": ""
     },
     {
@@ -7723,6 +8701,7 @@
      "robot_s": 63.0,
      "person_min": 0.0,
      "checker_compute_s": 1.5,
+     "force": "",
      "note": ""
     },
     {
@@ -7735,6 +8714,7 @@
      "robot_s": 125.0,
      "person_min": 0.0,
      "checker_compute_s": 13.3,
+     "force": "2.2 N m | 6/6 screws;",
      "note": ""
     },
     {
@@ -7747,6 +8727,7 @@
      "robot_s": 57.0,
      "person_min": 0.0,
      "checker_compute_s": 1.2,
+     "force": "released 30 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -7759,6 +8740,7 @@
      "robot_s": 38.0,
      "person_min": 0.0,
      "checker_compute_s": 5.0,
+     "force": "released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -7771,6 +8753,7 @@
      "robot_s": 45.0,
      "person_min": 0.0,
      "checker_compute_s": 1.7,
+     "force": "released 30 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -7783,6 +8766,7 @@
      "robot_s": 95.0,
      "person_min": 0.0,
      "checker_compute_s": 8.7,
+     "force": "4.2 N m | 4/4 screws;",
      "note": ""
     },
     {
@@ -7795,6 +8779,7 @@
      "robot_s": 53.0,
      "person_min": 0.0,
      "checker_compute_s": 3.4,
+     "force": "",
      "note": ""
     },
     {
@@ -7807,6 +8792,7 @@
      "robot_s": 53.0,
      "person_min": 0.0,
      "checker_compute_s": 1.5,
+     "force": "",
      "note": ""
     },
     {
@@ -7819,6 +8805,7 @@
      "robot_s": 38.0,
      "person_min": 0.0,
      "checker_compute_s": 1.5,
+     "force": "",
      "note": ""
     },
     {
@@ -7831,6 +8818,7 @@
      "robot_s": 0.0,
      "person_min": 5,
      "checker_compute_s": 0.0,
+     "force": "Small threaded fittings with a tube to follow. The modules have to be open (6 bar) for the clamping pins to enter in C10.",
      "note": "M5 push-in elbows and a temporary release-air line"
     },
     {
@@ -7843,6 +8831,7 @@
      "robot_s": 75.8,
      "person_min": 0.0,
      "checker_compute_s": 18.9,
+     "force": "needs 109 N (peak 328); arm can push 132 N | peak beyond the arm: robot starts it on the lead-in chamfer (<= 50 N in force mode) and pushes it home in force mode; the two zero-point modu;",
      "note": ""
     },
     {
@@ -7855,6 +8844,7 @@
      "robot_s": 10.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "The cell vents the temporary line. 1 kN holds 4.6x the worst separating load (hot-swap.md 3.2a). The spigot ring is already home: arm B pushed the module in at C10 (132 N running). The captive M6 are gone; the floor keeps their inserts for a hand fallback.",
      "note": "machine"
     },
     {
@@ -7867,6 +8857,7 @@
      "robot_s": 45.0,
      "person_min": 0.0,
      "checker_compute_s": 2.9,
+     "force": "",
      "note": ""
     },
     {
@@ -7879,6 +8870,7 @@
      "robot_s": 42.0,
      "person_min": 0.0,
      "checker_compute_s": 19.2,
+     "force": "",
      "note": ""
     },
     {
@@ -7891,6 +8883,7 @@
      "robot_s": 95.0,
      "person_min": 0.0,
      "checker_compute_s": 49.2,
+     "force": "7.4 N m | 4/4 screws;",
      "note": ""
     },
     {
@@ -7903,6 +8896,7 @@
      "robot_s": 0.0,
      "person_min": 5,
      "checker_compute_s": 0.0,
+     "force": "A leg on a nest is open on every side; on the machine its back face is hemmed in by the frame, the other legs, the Z servo and (upright) the base plate. Not checked here: the bench nest is not modelled.",
      "note": "overflow-jar sensor and its bracket on the bench"
     },
     {
@@ -7915,6 +8909,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 1.0,
+     "force": "11.79 kg, 5.9 kg per arm | 11.79 kg;",
      "note": ""
     },
     {
@@ -7927,6 +8922,7 @@
      "robot_s": 0.0,
      "person_min": 0,
      "checker_compute_s": 0.0,
+     "force": "They thread in when the finished process module goes onto the tray (chapter 5); until then Fixture B carries the plate on its ends.",
      "note": "levelling mounts go on in T01"
     },
     {
@@ -7939,6 +8935,7 @@
      "robot_s": 57.0,
      "person_min": 0.0,
      "checker_compute_s": 1.0,
+     "force": "",
      "note": ""
     },
     {
@@ -7951,6 +8948,7 @@
      "robot_s": 20.0,
      "person_min": 0.0,
      "checker_compute_s": 1.4,
+     "force": "",
      "note": ""
     },
     {
@@ -7963,6 +8961,7 @@
      "robot_s": 60.0,
      "person_min": 0.0,
      "checker_compute_s": 10.1,
+     "force": "19.62 kg, 9.8 kg per arm | 19.62 kg;",
      "note": ""
     },
     {
@@ -7975,6 +8974,7 @@
      "robot_s": 140.0,
      "person_min": 1.0,
      "checker_compute_s": 291.0,
+     "force": "7.4 N m | 7/8 screws; 316 #1: approach: no clear way in to the hole's mouth (A/upper_arm hits Base plate, process module",
      "note": "1 of 8 screws by a person (1 min each, estimate)"
     },
     {
@@ -7987,6 +8987,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "Tube routing (deformable), as the hoses in chapter 5. The modules stay locked while the line is swapped: their springs hold.",
      "note": "release-air tube routed from the valve to both zero-point modules"
     },
     {
@@ -7999,6 +9000,7 @@
      "robot_s": 71.8,
      "person_min": 0.0,
      "checker_compute_s": 2.4,
+     "force": "",
      "note": ""
     },
     {
@@ -8011,6 +9013,7 @@
      "robot_s": 0.0,
      "person_min": 1,
      "checker_compute_s": 0.0,
+     "force": "Its hinged ring has to be held open round both flanges before one push on the lever locks it; nothing on the 2F-85 holds the ring open. An air-released KF clamp would let the robot do it (hot-swap.md).",
      "note": "KF-40 toggle clamp round the jar's flange"
     },
     {
@@ -8023,6 +9026,7 @@
      "robot_s": 75.0,
      "person_min": 0.0,
      "checker_compute_s": 1.6,
+     "force": "",
      "note": ""
     },
     {
@@ -8035,6 +9039,7 @@
      "robot_s": 103.6,
      "person_min": 5.0,
      "checker_compute_s": 5.6,
+     "force": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
      "note": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of t"
     },
     {
@@ -8047,6 +9052,7 @@
      "robot_s": 91.0,
      "person_min": 5.0,
      "checker_compute_s": 5.9,
+     "force": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
      "note": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along th"
     },
     {
@@ -8059,6 +9065,7 @@
      "robot_s": 103.2,
      "person_min": 0.0,
      "checker_compute_s": 7.5,
+     "force": "",
      "note": ""
     },
     {
@@ -8071,6 +9078,7 @@
      "robot_s": 103.5,
      "person_min": 5.0,
      "checker_compute_s": 4.8,
+     "force": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
      "note": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of t"
     },
     {
@@ -8083,6 +9091,7 @@
      "robot_s": 88.5,
      "person_min": 5.0,
      "checker_compute_s": 6.0,
+     "force": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
      "note": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along th"
     },
     {
@@ -8095,6 +9104,7 @@
      "robot_s": 103.2,
      "person_min": 0.0,
      "checker_compute_s": 17.6,
+     "force": "",
      "note": ""
     },
     {
@@ -8107,6 +9117,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "Threading an M6 head with a fibre attached means winding the fibre with it; the ring itself is a pick-and-place.",
      "note": "through-beam fibre heads threaded into the side walls"
     },
     {
@@ -8119,6 +9130,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.1,
+     "force": "",
      "note": ""
     },
     {
@@ -8131,6 +9143,7 @@
      "robot_s": 63.0,
      "person_min": 5.0,
      "checker_compute_s": 20.8,
+     "force": "arm A: no IK at the start pose at 0 mm along the insertion; held-part screws: 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner",
      "note": "arm A: no IK at the start pose at 0 mm along the insertion; held-part screws: 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no wa"
     },
     {
@@ -8143,6 +9156,7 @@
      "robot_s": 110.0,
      "person_min": 1.0,
      "checker_compute_s": null,
+     "force": "2.2 N m | 6/7 screws; 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner",
      "note": "1 of 7 screws by a person (1 min each, estimate)"
     },
     {
@@ -8155,6 +9169,7 @@
      "robot_s": 15.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "2.2 N m | all screws of this joint were already driven (with the part held)",
      "note": ""
     },
     {
@@ -8167,6 +9182,7 @@
      "robot_s": 63.0,
      "person_min": 5.0,
      "checker_compute_s": 40.5,
+     "force": "released 12 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wri",
      "note": "released 12 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunne"
     },
     {
@@ -8179,6 +9195,7 @@
      "robot_s": 20.0,
      "person_min": 9.0,
      "checker_compute_s": null,
+     "force": "4.2 N m | 0/4 screws; 316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #3: screwdriver: B/tool/screwdriver hits A/w",
      "note": "316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also "
     },
     {
@@ -8191,6 +9208,7 @@
      "robot_s": 15.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "4.2 N m | all screws of this joint were already driven (with the part held)",
      "note": ""
     },
     {
@@ -8203,6 +9221,7 @@
      "robot_s": 67.0,
      "person_min": 5.0,
      "checker_compute_s": 142.8,
+     "force": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with",
      "note": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm);"
     },
     {
@@ -8215,6 +9234,7 @@
      "robot_s": 65.0,
      "person_min": 1.0,
      "checker_compute_s": null,
+     "force": "2.2 N m | 3/4 screws; d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with",
      "note": "1 of 4 screws by a person (1 min each, estimate)"
     },
     {
@@ -8227,6 +9247,7 @@
      "robot_s": 15.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "2.2 N m | all screws of this joint were already driven (with the part held)",
      "note": ""
     },
     {
@@ -8239,6 +9260,7 @@
      "robot_s": 87.0,
      "person_min": 0.0,
      "checker_compute_s": 15.0,
+     "force": "released 33 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8251,6 +9273,7 @@
      "robot_s": 46.0,
      "person_min": 0.0,
      "checker_compute_s": 3.9,
+     "force": "",
      "note": ""
     },
     {
@@ -8263,6 +9286,7 @@
      "robot_s": 46.0,
      "person_min": 5.0,
      "checker_compute_s": 29.3,
+     "force": "released 15 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wri",
      "note": "released 15 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunne"
     },
     {
@@ -8275,6 +9299,7 @@
      "robot_s": 20.0,
      "person_min": 9.0,
      "checker_compute_s": null,
+     "force": "2.2 N m | 0/4 screws; 316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #3: screwdriver: B/tool/screwdriver hits A/w",
      "note": "316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also "
     },
     {
@@ -8287,6 +9312,7 @@
      "robot_s": 15.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "2.2 N m | all screws of this joint were already driven (with the part held)",
      "note": ""
     },
     {
@@ -8299,6 +9325,7 @@
      "robot_s": 65.0,
      "person_min": 5.0,
      "checker_compute_s": 9.1,
+     "force": "arm A: held:F25:Recoater motor bracket hits Trunnion stands at 0 mm along the insertion",
      "note": "arm A: held:F25:Recoater motor bracket hits Trunnion stands at 0 mm along the insertion"
     },
     {
@@ -8311,6 +9338,7 @@
      "robot_s": 56.0,
      "person_min": 5.0,
      "checker_compute_s": 3.4,
+     "force": "sweep: Blade holder blocked by Process chamber body (6061-T6 through-frame from 5 after 43.0 mm; arm A: held:F26:Blade holder hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 90 mm along t",
      "note": "sweep: Blade holder blocked by Process chamber body (6061-T6 through-frame from 5 after 43.0 mm; arm A: held:F26:Blade holder hits Process chamber body (6061-T6"
     },
     {
@@ -8323,6 +9351,7 @@
      "robot_s": 35.0,
      "person_min": 7.0,
      "checker_compute_s": 17.7,
+     "force": "1.1 N m | 0/2 screws; 316 #1: screwdriver: A/tool/screwdriver hits Build module M50: spigot, flange, honed 316L cylinder; 316 #2: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle",
      "note": "316 #1: screwdriver: A/tool/screwdriver hits Build module M50: spigot, flange, honed 316L cylinder; 316 #2: screwdriver: A/upper_arm hits Fixture B (open stand)"
     },
     {
@@ -8335,6 +9364,7 @@
      "robot_s": 65.0,
      "person_min": 0.0,
      "checker_compute_s": 12.0,
+     "force": "",
      "note": ""
     },
     {
@@ -8347,6 +9377,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 82.9,
+     "force": "",
      "note": ""
     },
     {
@@ -8359,6 +9390,7 @@
      "robot_s": 79.0,
      "person_min": 0.0,
      "checker_compute_s": 14.3,
+     "force": "",
      "note": ""
     },
     {
@@ -8371,6 +9403,7 @@
      "robot_s": 335.0,
      "person_min": 0.0,
      "checker_compute_s": 93.1,
+     "force": "4.2 N m | 20/20 screws;",
      "note": ""
     },
     {
@@ -8383,6 +9416,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "",
      "note": ""
     },
     {
@@ -8395,6 +9429,7 @@
      "robot_s": 75.0,
      "person_min": 0.0,
      "checker_compute_s": 5.8,
+     "force": "released 27 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8407,6 +9442,7 @@
      "robot_s": 81.0,
      "person_min": 0.0,
      "checker_compute_s": 5.9,
+     "force": "",
      "note": ""
     },
     {
@@ -8419,6 +9455,7 @@
      "robot_s": 125.0,
      "person_min": 0.0,
      "checker_compute_s": 7.4,
+     "force": "2.2 N m | 6/6 screws;",
      "note": ""
     },
     {
@@ -8431,6 +9468,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 3.0,
+     "force": "",
      "note": ""
     },
     {
@@ -8443,6 +9481,7 @@
      "robot_s": 83.0,
      "person_min": 0.0,
      "checker_compute_s": 4.2,
+     "force": "released 27 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8455,6 +9494,7 @@
      "robot_s": 69.0,
      "person_min": 0.0,
      "checker_compute_s": 5.3,
+     "force": "released 24 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8467,6 +9507,7 @@
      "robot_s": 85.0,
      "person_min": 0.0,
      "checker_compute_s": 3.5,
+     "force": "",
      "note": ""
     },
     {
@@ -8479,6 +9520,7 @@
      "robot_s": 125.0,
      "person_min": 0.0,
      "checker_compute_s": 3.1,
+     "force": "0.8 N m | 6/6 screws;",
      "note": ""
     },
     {
@@ -8491,6 +9533,7 @@
      "robot_s": 65.0,
      "person_min": 0.0,
      "checker_compute_s": 9.0,
+     "force": "needs 50 N (peak 358); arm can push 1500 N | released 6 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8503,6 +9546,7 @@
      "robot_s": 30.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "Two quarter-turn studs, turned with a slotted bit on the screwdriver; the latch hardware is an envelope in the model (seals.md: no catalogue latch fits).",
      "note": "robot (custom bit)"
     },
     {
@@ -8515,6 +9559,7 @@
      "robot_s": 50.0,
      "person_min": 0.0,
      "checker_compute_s": 3.5,
+     "force": "released 18 mm short and pushed home with the closed fingers",
      "note": ""
     },
     {
@@ -8527,6 +9572,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "",
      "note": ""
     },
     {
@@ -8539,6 +9585,7 @@
      "robot_s": 90.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "",
      "note": ""
     },
     {
@@ -8551,6 +9598,7 @@
      "robot_s": 75.0,
      "person_min": 0.0,
      "checker_compute_s": 4.7,
+     "force": "",
      "note": ""
     },
     {
@@ -8563,6 +9611,7 @@
      "robot_s": 95.0,
      "person_min": 0.0,
      "checker_compute_s": 99.9,
+     "force": "2.2 N m | 4/4 screws;",
      "note": ""
     },
     {
@@ -8575,6 +9624,7 @@
      "robot_s": 79.0,
      "person_min": 5.0,
      "checker_compute_s": 76.3,
+     "force": "sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0 mm; arm A: no IK at the start pose at 0 mm along the insertion; sweep: Roller feedthrough O-ring blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0",
      "note": "sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0 mm; arm A: no IK at the start pose at 0 mm along the insertion; swee"
     },
     {
@@ -8587,6 +9637,7 @@
      "robot_s": 46.0,
      "person_min": 0.0,
      "checker_compute_s": 125.4,
+     "force": "needs 94 N; arm can push 191 N",
      "note": ""
     },
     {
@@ -8599,6 +9650,7 @@
      "robot_s": 105.0,
      "person_min": 0.0,
      "checker_compute_s": 0.1,
+     "force": "",
      "note": ""
     },
     {
@@ -8611,6 +9663,7 @@
      "robot_s": 75.0,
      "person_min": 0.0,
      "checker_compute_s": 30.0,
+     "force": "",
      "note": ""
     },
     {
@@ -8623,6 +9676,7 @@
      "robot_s": 63.0,
      "person_min": 5.0,
      "checker_compute_s": 177.2,
+     "force": "sweep: Camera window gasket, under the window blocked by Camera viewport adapter + boss (6061; \u00d830 bore on  after 1.0 mm; arm A: A/gr/right_finger_tip hits Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM se",
      "note": "sweep: Camera window gasket, under the window blocked by Camera viewport adapter + boss (6061; \u00d830 bore on  after 1.0 mm; arm A: A/gr/right_finger_tip hits Came"
     },
     {
@@ -8635,6 +9689,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "Threaded ports need a wrench on a hex and a set torque; a 2F-85 can only spin a plain body.",
      "note": "pressure transducer and relief valve into their SAE-4 ports, with a wrench"
     },
     {
@@ -8647,6 +9702,7 @@
      "robot_s": 54.0,
      "person_min": 0.0,
      "checker_compute_s": 11.6,
+     "force": "",
      "note": ""
     },
     {
@@ -8659,6 +9715,7 @@
      "robot_s": 50.0,
      "person_min": 0.0,
      "checker_compute_s": 158.2,
+     "force": "needs 725 N",
      "note": ""
     },
     {
@@ -8671,6 +9728,7 @@
      "robot_s": 46.0,
      "person_min": 5.0,
      "checker_compute_s": 5.6,
+     "force": "arm A: A/upper_arm hits A cabinet at 0 mm along the insertion",
      "note": "arm A: A/upper_arm hits A cabinet at 0 mm along the insertion"
     },
     {
@@ -8683,6 +9741,7 @@
      "robot_s": 50.0,
      "person_min": 5.0,
      "checker_compute_s": 449.5,
+     "force": "held-part screws: 316 #3: approach: no path in 500 iterations; 316 #4: approach: no path in 500 iterations; held-part screws: 316 #7: approach: no clear way in to the hole's mouth (no IK (out of reach or joint limit)); 316 #8: approach: no clear way in to the",
      "note": "held-part screws: 316 #3: approach: no path in 500 iterations; 316 #4: approach: no path in 500 iterations; held-part screws: 316 #7: approach: no clear way in "
     },
     {
@@ -8695,6 +9754,7 @@
      "robot_s": 50.0,
      "person_min": 0.0,
      "checker_compute_s": null,
+     "force": "7.4 N m | 2/2 screws;",
      "note": ""
     },
     {
@@ -8707,6 +9767,7 @@
      "robot_s": 20.0,
      "person_min": 7.0,
      "checker_compute_s": null,
+     "force": "7.4 N m | 2/2 screws;",
      "note": "316 #3: approach: no path in 500 iterations; 316 #4: approach: no path in 500 iterations"
     },
     {
@@ -8719,6 +9780,7 @@
      "robot_s": 50.0,
      "person_min": 0.0,
      "checker_compute_s": null,
+     "force": "7.4 N m | 2/2 screws;",
      "note": ""
     },
     {
@@ -8731,6 +9793,7 @@
      "robot_s": 20.0,
      "person_min": 7.0,
      "checker_compute_s": null,
+     "force": "7.4 N m | 2/2 screws;",
      "note": "316 #7: approach: no clear way in to the hole's mouth (no IK (out of reach or joint limit)); 316 #8: approach: no clear way in to the hole's mouth (no IK (out o"
     },
     {
@@ -8743,6 +9806,7 @@
      "robot_s": 15.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "7.4 N m | all screws of this joint were already driven (with the part held)",
      "note": ""
     },
     {
@@ -8755,6 +9819,7 @@
      "robot_s": 0.0,
      "person_min": 10,
      "checker_compute_s": 0.0,
+     "force": "The \u00d890 lens is wider than the 2F-85's 85 mm stroke and threads M85 x 1; a strap wrench by hand (operations.md: lens and ring fitted to the bridge on the bench).",
      "note": "f-theta lens threaded into its ring over the shim stack (strap wrench)"
     },
     {
@@ -8767,6 +9832,7 @@
      "robot_s": 60.0,
      "person_min": 5.0,
      "checker_compute_s": 0.7,
+     "force": "14.32 kg, 7.2 kg per arm | 14.32 kg; no collision-free pair of arm poses at the start of the carry",
      "note": "no collision-free pair of arm poses at the start of the carry"
     },
     {
@@ -8779,6 +9845,7 @@
      "robot_s": 140.0,
      "person_min": 0.0,
      "checker_compute_s": 89.3,
+     "force": "7.4 N m | 8/8 screws;",
      "note": ""
     },
     {
@@ -8791,6 +9858,7 @@
      "robot_s": 78.0,
      "person_min": 0.0,
      "checker_compute_s": 2.7,
+     "force": "",
      "note": ""
     },
     {
@@ -8803,6 +9871,7 @@
      "robot_s": 64.0,
      "person_min": 5.0,
      "checker_compute_s": 0.7,
+     "force": "arm A: no IK at the start pose at 0 mm along the insertion",
      "note": "arm A: no IK at the start pose at 0 mm along the insertion"
     },
     {
@@ -8815,6 +9884,7 @@
      "robot_s": 79.0,
      "person_min": 5.0,
      "checker_compute_s": 4.6,
+     "force": "arm A: part 107 mm across at the grasp: wider than the 2F-85's 85 mm stroke; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm",
      "note": "arm A: part 107 mm across at the grasp: wider than the 2F-85's 85 mm stroke; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the sta"
     },
     {
@@ -8827,6 +9897,7 @@
      "robot_s": 0.0,
      "person_min": 15,
      "checker_compute_s": 0.0,
+     "force": "Armoured fiber, >= 100 mm bend radius: cable routing stays manual.",
      "note": "armoured process fiber routed to the collimator"
     },
     {
@@ -8839,6 +9910,7 @@
      "robot_s": 0.0,
      "person_min": 180,
      "checker_compute_s": 0.0,
+     "force": "T-slot nuts and 1.5 mm panels up to 730 mm wide; its hardware is not drawn (joints.NOT_DRAWN).",
      "note": "Class 1 laser guard: T-slot frame, panels, door rail, sliding door, guard lock, operator panel"
     },
     {
@@ -8851,6 +9923,7 @@
      "robot_s": 0.0,
      "person_min": 30,
      "checker_compute_s": 0.0,
+     "force": "84 kg is 3.4 times two UR12e payloads; a hoist or lift table.",
      "note": "process module (84 kg) onto the VLM tray with a hoist; levelling mounts"
     },
     {
@@ -8863,6 +9936,7 @@
      "robot_s": 0.0,
      "person_min": 60,
      "checker_compute_s": 0.0,
+     "force": "the UPS and the laser exceed a UR12e's 12.5 kg; cage nuts and screws are not drawn",
      "note": "rack units: UPS 23 kg, laser 40 kg, PC, DIN drawer (lift)"
     },
     {
@@ -8875,6 +9949,7 @@
      "robot_s": 0.0,
      "person_min": 60,
      "checker_compute_s": 0.0,
+     "force": "the pump exceeds 12.5 kg; the units' screws are not drawn",
      "note": "gas module: pump 26 kg, blower, filter, O2 box, argon manifold (lift)"
     },
     {
@@ -8887,6 +9962,7 @@
      "robot_s": 0.0,
      "person_min": 60,
      "checker_compute_s": 0.0,
+     "force": "hose and tube routing (deformable, KF wing-nut clamps)",
      "note": "KF bellows, vacuum valve, argon and O2 lines, release air"
     },
     {
@@ -8899,6 +9975,7 @@
      "robot_s": 0.0,
      "person_min": 45,
      "checker_compute_s": 0.0,
+     "force": "cable and hose routing",
      "note": "tray dock and umbilicals"
     },
     {
@@ -8911,6 +9988,7 @@
      "robot_s": 3600.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
+     "force": "the seal verification in assembly.md",
      "note": "leak check: rate of rise from <= 1 mbar and O2 drift (estimate 1 h)"
     }
    ],
@@ -8920,28 +9998,35 @@
      "robot_s": 1584.5,
      "person_min": 133.0,
      "fail": 0,
-     "person_steps": 3
+     "person_steps": 3,
+     "fetch_trips": 5,
+     "fetch_s": 700.0
     },
     "41-assembly-chamber": {
      "steps": 103,
      "robot_s": 6661.6,
-     "person_min": 384.0,
-     "fail": 26,
-     "person_steps": 11
+     "person_min": 389.0,
+     "fail": 27,
+     "person_steps": 11,
+     "fetch_trips": 16,
+     "fetch_s": 2240.0
     },
     "50-integration": {
      "steps": 6,
      "robot_s": 3600.0,
      "person_min": 255.0,
      "fail": 0,
-     "person_steps": 5
+     "person_steps": 5,
+     "fetch_trips": 0,
+     "fetch_s": 0.0
     }
    },
    "totals": {
     "steps": 139,
     "robot_h": 3.29,
-    "person_h": 12.87,
-    "fail_steps": 26,
+    "fetch_h": 0.82,
+    "person_h": 12.95,
+    "fail_steps": 27,
     "person_steps": 19
    },
    "assumptions": {
@@ -8954,9 +10039,939 @@
     "flip_s": 30.0,
     "dual_s": 60.0,
     "rotate_s": 20.0,
-    "machine_s": 10.0
+    "machine_s": 10.0,
+    "parts_per_trip": 4,
+    "trip_s": 140.0
    },
-   "method": "ESTIMATES, not measurements: results.json's 'seconds' is the checker's compute time. Robot time = 30 s per placement + the insertion path from sequence.json at 10 mm/s, 20 s + 15 s a screw, 90 s an O-ring or cord, 30 s a flip, 60 s a two-arm carry, 15 s a tool change; MiR trips to the long table are not counted. Person minutes per step are listed in build_hud.py (PERSON_MIN), 1 min per screw the arm couldn't drive and 5 min per failed placement."
+   "method": "ESTIMATES, not measurements: results.json's 'seconds' is the checker's compute time. Robot time = 30 s per placement + the insertion path from sequence.json at 10 mm/s, 20 s + 15 s a screw, 90 s an O-ring or cord, 30 s a flip, 60 s a two-arm carry, 15 s a tool change; MiR trips to the long table are counted per chapter (4 parts a trip, 140 s a round trip). Person minutes per step are listed in build_hud.py (PERSON_MIN), 1 min per screw the arm couldn't drive and 5 min per failed placement."
   }
+ },
+ "tour": [
+  {
+   "cat": "stock",
+   "on_table": true,
+   "title": "Stock to machine",
+   "new": "$4.4k",
+   "used": "$4.4k",
+   "run_new": "$4.4k",
+   "run_used": "$4.4k",
+   "range_new": "$4.4k-$5.1k",
+   "range_used": "$4.4k-$5.1k",
+   "lead_new": "12-20 d (F4: same or next day + BYU PO)",
+   "lead_used": "12-20 d (F4: same or next day + BYU PO)",
+   "lead_new_as_chosen": "12-20 d (F4: same or next day + BYU PO)",
+   "lead_unknown": "",
+   "items": [
+    {
+     "id": "F4",
+     "name": "MIC-6 cast plate, 5/8 x 24 x 72 in. (McMaster 86825K49)",
+     "kind": "item",
+     "new": "$1.3k",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "same or next day + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      12,
+      20
+     ],
+     "callout": "MIC-6 cast plate, 5/8 x 24 x 72 in. (McMaster 86825K49): new $1.3k (catalogue price), same or next day + BYU PO | buy new"
+    },
+    {
+     "id": "G1",
+     "name": "Chamber stock: 6061-T651 5-1/2 in. frame blank and 1 in. / 3/4 in. plate",
+     "kind": "bundle",
+     "new": "$1.3k",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "1-7 d",
+     "lead_new_days": [
+      3,
+      12
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      3,
+      12
+     ],
+     "callout": "Chamber stock: 6061-T651 5-1/2 in. frame blank and 1 in. / 3/4 in. plate: new $1.3k (catalogue price), 1-7 d | buy new"
+    }
+   ]
+  },
+  {
+   "cat": "sheet",
+   "on_table": true,
+   "title": "Sheet to cut, bend and TIG-weld",
+   "new": "$1.0k",
+   "used": "$1.0k",
+   "run_new": "$5.5k",
+   "run_used": "$5.5k",
+   "range_new": "$1.0k-$1.9k",
+   "range_used": "$1.0k-$1.9k",
+   "lead_new": "12-20 d (R1: same or next day + BYU PO)",
+   "lead_used": "12-20 d (R1: same or next day + BYU PO)",
+   "lead_new_as_chosen": "12-20 d (R1: same or next day + BYU PO)",
+   "lead_unknown": "",
+   "items": []
+  },
+  {
+   "cat": "motion",
+   "on_table": true,
+   "title": "Motion",
+   "new": "$5.0k",
+   "used": "$4.9k",
+   "run_new": "$10.4k",
+   "run_used": "$10.4k",
+   "range_new": "$5.0k-$7.9k",
+   "range_used": "$4.9k-$7.8k",
+   "lead_new": "1-4 wk (M3: 2 d to 3 wk)",
+   "lead_used": "1-4 wk (M3: 2 d to 3 wk)",
+   "lead_new_as_chosen": "1-4 wk (M3: 2 d to 3 wk)",
+   "lead_unknown": "M1 M4",
+   "items": [
+    {
+     "id": "M1",
+     "name": "Recoater axis: ball screw, rail, Ferrotec feedthrough",
+     "kind": "bundle",
+     "new": "$1.3k",
+     "new_basis": "catalogue + estimate",
+     "used": "buy new",
+     "lead_new": "Ferrotec: quote",
+     "lead_new_days": null,
+     "lead_used": "buy new",
+     "lead_used_days": null,
+     "callout": "Recoater axis: ball screw, rail, Ferrotec feedthrough: new $1.3k (catalogue + estimate), Ferrotec: quote | buy new"
+    },
+    {
+     "id": "A3",
+     "name": "Door drive and latch pneumatics (SMC)",
+     "kind": "bundle",
+     "new": "$1.1k",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "2-10 d",
+     "lead_new_days": [
+      2,
+      10
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      2,
+      10
+     ],
+     "callout": "Door drive and latch pneumatics (SMC): new $1.1k (catalogue price), 2-10 d | buy new"
+    },
+    {
+     "id": "M3",
+     "name": "Z actuator (THK KR26, 2 mm lead)",
+     "kind": "item",
+     "new": "$923",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "2 d to 3 wk",
+     "lead_new_days": [
+      4,
+      28
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      4,
+      28
+     ],
+     "callout": "Z actuator (THK KR26, 2 mm lead): new $923 (catalogue price), 2 d to 3 wk | buy new"
+    },
+    {
+     "id": "M2",
+     "name": "2 servos (Teknic ClearPath-SD, NEMA 23)",
+     "kind": "item",
+     "new": "$530",
+     "new_basis": "catalogue price",
+     "used": "$197",
+     "lead_new": "ships in 3 d",
+     "lead_new_days": [
+      2,
+      10
+     ],
+     "lead_used": "5-9 d (used, US)",
+     "lead_used_days": [
+      5,
+      9
+     ],
+     "callout": "2 servos (Teknic ClearPath-SD, NEMA 23): new $530 (catalogue price), ships in 3 d | used $197, 5-9 d (used, US)"
+    }
+   ]
+  },
+  {
+   "cat": "gas",
+   "on_table": true,
+   "title": "Vacuum and gas",
+   "new": "$13.5k",
+   "used": "$8.4k",
+   "run_new": "$24.0k",
+   "run_used": "$18.8k",
+   "range_new": "$13.5k-$18.7k",
+   "range_used": "$8.4k-$11.5k",
+   "lead_new": "6-9 wk (G6: 6-8 wk)",
+   "lead_used": "2-3 wk (G7: 2-8 d + BYU PO)",
+   "lead_new_as_chosen": "6-9 wk (G6: 6-8 wk)",
+   "lead_unknown": "G4",
+   "items": [
+    {
+     "id": "G2",
+     "name": "Dry scroll vacuum pump (Edwards nXDS6i)",
+     "kind": "item",
+     "new": "$6.0k",
+     "new_basis": "catalogue price",
+     "used": "$1.3k",
+     "lead_new": "ships same day + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "5-10 d (used, US)",
+     "lead_used_days": [
+      5,
+      10
+     ],
+     "callout": "Dry scroll vacuum pump (Edwards nXDS6i): new $6.0k (catalogue price), ships same day + BYU PO | used $1.3k, 5-10 d (used, US)"
+    },
+    {
+     "id": "G7",
+     "name": "Valves, KF fittings, hoses and gauges",
+     "kind": "bundle",
+     "new": "$3.9k",
+     "new_basis": "catalogue + estimate",
+     "used": "$3.4k",
+     "lead_new": "2-8 d + BYU PO",
+     "lead_new_days": [
+      12,
+      22
+     ],
+     "lead_used": "same as new",
+     "lead_used_days": [
+      12,
+      22
+     ],
+     "callout": "Valves, KF fittings, hoses and gauges: new $3.9k (catalogue + estimate), 2-8 d + BYU PO | used $3.4k, same as new"
+    },
+    {
+     "id": "G9",
+     "name": "Dew-point transmitter (Vaisala DMT143)",
+     "kind": "item",
+     "new": "$2.3k",
+     "new_basis": "catalogue price",
+     "used": "$166",
+     "lead_new": "2 wk (made to order)",
+     "lead_new_days": [
+      16,
+      19
+     ],
+     "lead_used": "5-8 d (used, US)",
+     "lead_used_days": [
+      5,
+      8
+     ],
+     "callout": "Dew-point transmitter (Vaisala DMT143): new $2.3k (catalogue price), 2 wk (made to order) | used $166, 5-8 d (used, US)"
+    },
+    {
+     "id": "G6",
+     "name": "Trace O2 analyzer (Ntron Microx)",
+     "kind": "item",
+     "new": "$2.1k",
+     "new_basis": "catalogue (Instrumart)",
+     "used": "$1.0k",
+     "lead_new": "6-8 wk",
+     "lead_new_days": [
+      44,
+      61
+     ],
+     "lead_used": "5-8 d (used, US)",
+     "lead_used_days": [
+      5,
+      8
+     ],
+     "callout": "Trace O2 analyzer (Ntron Microx): new $2.1k (catalogue (Instrumart)), 6-8 wk | used $1.0k, 5-8 d (used, US)"
+    },
+    {
+     "id": "G4",
+     "name": "Sealed recirculation blower (gas-tight, ~100 L/min)",
+     "kind": "item",
+     "new": "$1.5k",
+     "new_basis": "estimate: no part found",
+     "used": "buy new",
+     "lead_new": "quote; no gas-tight part found",
+     "lead_new_days": null,
+     "lead_used": "buy new",
+     "lead_used_days": null,
+     "callout": "Sealed recirculation blower (gas-tight, ~100 L/min): new $1.5k (estimate: no part found), quote; no gas-tight part found | buy new"
+    },
+    {
+     "id": "G3",
+     "name": "Argon flowmeter-regulator, 0-70 scfh (McMaster 78595A5)",
+     "kind": "item",
+     "new": "$334",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "same or next day + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      12,
+      20
+     ],
+     "callout": "Argon flowmeter-regulator, 0-70 scfh (McMaster 78595A5): new $334 (catalogue price), same or next day + BYU PO | buy new"
+    }
+   ]
+  },
+  {
+   "cat": "optics",
+   "on_table": true,
+   "title": "Laser and optics",
+   "new": "$42.7k",
+   "used": "$8.9k-$14.1k",
+   "run_new": "$66.7k",
+   "run_used": "$27.7k-$32.9k",
+   "range_new": "$9.4k-$48.0k",
+   "range_used": "$8.1k-$19.4k",
+   "lead_new": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
+   "lead_used": "3-8 d (L1: ships same day; ~1 wk freight)",
+   "lead_new_as_chosen": "12-15 wk (L1: 10-12 wk ARO + BYU PO)",
+   "lead_unknown": "L4 L5 T2",
+   "items": [
+    {
+     "id": "L1",
+     "name": "Fiber laser, 500 W single-mode (IPG YLR-500-U3-SM-AC)",
+     "kind": "item",
+     "new": "$23.0k",
+     "new_basis": "IPG quote",
+     "used": "$2.5k",
+     "lead_new": "10-12 wk ARO + BYU PO",
+     "lead_new_days": [
+      83,
+      105
+     ],
+     "lead_used": "ships same day; ~1 wk freight",
+     "lead_used_days": [
+      3,
+      8
+     ],
+     "callout": "Fiber laser, 500 W single-mode (IPG YLR-500-U3-SM-AC): new $23.0k (IPG quote), 10-12 wk ARO + BYU PO | used $2.5k, ships same day; ~1 wk freight"
+    },
+    {
+     "id": "L5",
+     "name": "Galvo scan head (SCANLAB basiCube 20)",
+     "kind": "item",
+     "new": "$12.0k",
+     "new_basis": "estimate: SCANLAB not yet asked",
+     "used": "$1.4k",
+     "lead_new": "quote; no published lead + BYU PO",
+     "lead_new_days": null,
+     "lead_used": "3-8 d (used, US)",
+     "lead_used_days": [
+      3,
+      8
+     ],
+     "callout": "Galvo scan head (SCANLAB basiCube 20): new $12.0k (estimate: SCANLAB not yet asked), quote; no published lead + BYU PO | used $1.4k, 3-8 d (used, US)"
+    },
+    {
+     "id": "T2",
+     "name": "Melt-pool photodiode chain (Thorlabs)",
+     "kind": "bundle",
+     "new": "$2.1k",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "PDA36A2: no date shown + BYU PO",
+     "lead_new_days": null,
+     "lead_used": "buy new",
+     "lead_used_days": null,
+     "callout": "Melt-pool photodiode chain (Thorlabs): new $2.1k (catalogue price), PDA36A2: no date shown + BYU PO | buy new"
+    },
+    {
+     "id": "L4",
+     "name": "Safety shutter + beam dump (>= 500 W CW)",
+     "kind": "item",
+     "new": "$2.0k",
+     "new_basis": "estimate: quote needed",
+     "used": "buy new",
+     "lead_new": "quote (no >= 500 W catalogue part)",
+     "lead_new_days": null,
+     "lead_used": "buy new",
+     "lead_used_days": null,
+     "callout": "Safety shutter + beam dump (>= 500 W CW): new $2.0k (estimate: quote needed), quote (no >= 500 W catalogue part) | buy new"
+    },
+    {
+     "id": "A2s",
+     "name": "Cover slides, AR-coated (consumables)",
+     "kind": "bundle",
+     "new": "$1.4k",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "2-11 d",
+     "lead_new_days": [
+      2,
+      11
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      2,
+      11
+     ],
+     "callout": "Cover slides, AR-coated (consumables): new $1.4k (catalogue price), 2-11 d | buy new"
+    },
+    {
+     "id": "L6",
+     "name": "f-theta lens, f = 160 mm (Thorlabs FTH160-1064 + 2 windows)",
+     "kind": "item",
+     "new": "$1.3k",
+     "new_basis": "catalogue price",
+     "used": "$540",
+     "lead_new": "3-4 wk (overseas stock) + BYU PO",
+     "lead_new_days": [
+      33,
+      47
+     ],
+     "lead_used": "3-7 d (used, US)",
+     "lead_used_days": [
+      3,
+      7
+     ],
+     "callout": "f-theta lens, f = 160 mm (Thorlabs FTH160-1064 + 2 windows): new $1.3k (catalogue price), 3-4 wk (overseas stock) + BYU PO | used $540, 3-7 d (used, US)"
+    },
+    {
+     "id": "L2",
+     "name": "Laser chiller (only for a water-cooled laser)",
+     "kind": "item",
+     "new": "$0",
+     "new_basis": "not needed: the IPG is air-cooled",
+     "used": "buy new",
+     "lead_new": "not needed (air-cooled laser)",
+     "lead_new_days": [
+      0,
+      0
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      0,
+      0
+     ],
+     "callout": "Laser chiller (only for a water-cooled laser): new $0 (not needed: the IPG is air-cooled), not needed (air-cooled laser) | buy new"
+    },
+    {
+     "id": "L3",
+     "name": "Collimator (IPG affixed 2.5 mm, with the laser)",
+     "kind": "item",
+     "new": "TBD",
+     "new_basis": "comes with the laser quote",
+     "used": "$495",
+     "lead_new": "with the laser + BYU PO",
+     "lead_new_days": [
+      83,
+      105
+     ],
+     "lead_used": "3 d (used, US)",
+     "lead_used_days": [
+      3,
+      3
+     ],
+     "callout": "Collimator (IPG affixed 2.5 mm, with the laser): new TBD (comes with the laser quote), with the laser + BYU PO | used $495, 3 d (used, US)"
+    }
+   ]
+  },
+  {
+   "cat": "elec",
+   "on_table": true,
+   "title": "Electronics, heaters and sensors",
+   "new": "$27.9k",
+   "used": "$22.6k",
+   "run_new": "$94.5k",
+   "run_used": "$50.3k-$55.5k",
+   "range_new": "$21.9k-$37.1k",
+   "range_used": "$21.2k-$30.4k",
+   "lead_new": "3-5 wk (D2: backordered (~3-4 wk))",
+   "lead_used": "2-3 wk (E1: 2-10 d + BYU PO)",
+   "lead_new_as_chosen": "29-30 wk (S2: 27 wk (IDEC HS6B switch) + BYU PO)",
+   "lead_unknown": "C1 H1 B3",
+   "items": [
+    {
+     "id": "B3",
+     "name": "Zero-point clamps (2 x SCHUNK VERO-S NSE-HT mini 88-20)",
+     "kind": "item",
+     "new": "$6.4k",
+     "new_basis": "catalogue + estimate",
+     "used": "buy new",
+     "lead_new": "modules 1 d (snippet); pins: ask SCHUNK + BYU PO",
+     "lead_new_days": null,
+     "lead_used": "buy new",
+     "lead_used_days": null,
+     "callout": "Zero-point clamps (2 x SCHUNK VERO-S NSE-HT mini 88-20): new $6.4k (catalogue + estimate), modules 1 d (snippet); pins: ask SCHUNK + BYU PO | buy new"
+    },
+    {
+     "id": "C1",
+     "name": "Scan card (SCANLAB RTC6)",
+     "kind": "item",
+     "new": "$6.1k",
+     "new_basis": "estimate: SCANLAB not yet asked",
+     "used": "$1.5k",
+     "lead_new": "quote; no published lead + BYU PO",
+     "lead_new_days": null,
+     "lead_used": "3-6 d (used, US)",
+     "lead_used_days": [
+      3,
+      6
+     ],
+     "callout": "Scan card (SCANLAB RTC6): new $6.1k (estimate: SCANLAB not yet asked), quote; no published lead + BYU PO | used $1.5k, 3-6 d (used, US)"
+    },
+    {
+     "id": "H1",
+     "name": "Heater stacks, weld-in feedthroughs and thermocouples (3 modules)",
+     "kind": "bundle",
+     "new": "$3.8k",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "SST weld-ins: no published lead + BYU PO",
+     "lead_new_days": null,
+     "lead_used": "buy new",
+     "lead_used_days": null,
+     "callout": "Heater stacks, weld-in feedthroughs and thermocouples (3 modules): new $3.8k (catalogue price), SST weld-ins: no published lead + BYU PO | buy new"
+    },
+    {
+     "id": "S1",
+     "name": "Safety controller (Banner XS26-2 + XS16si + XS2so) and contactors",
+     "kind": "item",
+     "new": "$2.4k",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "in stock (1); then 4 wk + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      12,
+      20
+     ],
+     "callout": "Safety controller (Banner XS26-2 + XS16si + XS2so) and contactors: new $2.4k (catalogue price), in stock (1); then 4 wk + BYU PO | buy new"
+    },
+    {
+     "id": "A1",
+     "name": "Step-confirm sensors, NFC and load cell (incl. Omron fibre amplifier)",
+     "kind": "bundle",
+     "new": "$1.5k",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "in stock (5); then 33 wk + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      12,
+      20
+     ],
+     "callout": "Step-confirm sensors, NFC and load cell (incl. Omron fibre amplifier): new $1.5k (catalogue price), in stock (5); then 33 wk + BYU PO | buy new"
+    },
+    {
+     "id": "D2",
+     "name": "UPS, 2U (Eaton 5PX1500RTG2)",
+     "kind": "item",
+     "new": "$1.1k",
+     "new_basis": "catalogue price",
+     "used": "$450",
+     "lead_new": "backordered (~3-4 wk)",
+     "lead_new_days": [
+      22,
+      32
+     ],
+     "lead_used": "3-7 d (used, US)",
+     "lead_used_days": [
+      3,
+      7
+     ],
+     "callout": "UPS, 2U (Eaton 5PX1500RTG2): new $1.1k (catalogue price), backordered (~3-4 wk) | used $450, 3-7 d (used, US)"
+    },
+    {
+     "id": "C5",
+     "name": "PLC with thermocouple and 4-20 mA I/O (AutomationDirect Productivity1000)",
+     "kind": "bundle",
+     "new": "$1.1k",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "in stock, ships same day",
+     "lead_new_days": [
+      2,
+      6
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      2,
+      6
+     ],
+     "callout": "PLC with thermocouple and 4-20 mA I/O (AutomationDirect Productivity1000): new $1.1k (catalogue price), in stock, ships same day | buy new"
+    },
+    {
+     "id": "D1",
+     "name": "Tray dock and umbilicals (HARTING Han-Modular)",
+     "kind": "bundle",
+     "new": "$539",
+     "new_basis": "catalogue + estimate",
+     "used": "buy new",
+     "lead_new": "2-6 d + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      12,
+      20
+     ],
+     "callout": "Tray dock and umbilicals (HARTING Han-Modular): new $539 (catalogue + estimate), 2-6 d + BYU PO | buy new"
+    },
+    {
+     "id": "C2",
+     "name": "Supervisor / scan PC (Raspberry Pi 5, or a small industrial PC)",
+     "kind": "item",
+     "new": "$80",
+     "new_basis": "estimate",
+     "used": "buy new",
+     "lead_new": "2-8 d",
+     "lead_new_days": [
+      2,
+      8
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      2,
+      8
+     ],
+     "callout": "Supervisor / scan PC (Raspberry Pi 5, or a small industrial PC): new $80 (estimate), 2-8 d | buy new"
+    }
+   ]
+  },
+  {
+   "cat": "seal",
+   "on_table": true,
+   "title": "Seals and fasteners",
+   "new": "$661",
+   "used": "$661",
+   "run_new": "$95.2k",
+   "run_used": "$50.9k-$56.2k",
+   "range_new": "$661-$928",
+   "range_used": "$661-$928",
+   "lead_new": "12-20 d (G8: same or next day + BYU PO)",
+   "lead_used": "12-20 d (G8: same or next day + BYU PO)",
+   "lead_new_as_chosen": "12-20 d (G8: same or next day + BYU PO)",
+   "lead_unknown": "",
+   "items": []
+  },
+  {
+   "cat": "frame",
+   "on_table": true,
+   "title": "Frames",
+   "new": "$689",
+   "used": "$689",
+   "run_new": "$95.9k",
+   "run_used": "$51.6k-$56.9k",
+   "range_new": "$689-$1.3k",
+   "range_used": "$689-$1.3k",
+   "lead_new": "2-3 wk (S9: 2-8 d + BYU PO)",
+   "lead_used": "2-3 wk (S9: 2-8 d + BYU PO)",
+   "lead_new_as_chosen": "2-3 wk (S9: 2-8 d + BYU PO)",
+   "lead_unknown": "",
+   "items": [
+    {
+     "id": "S9",
+     "name": "12U rack, T-slot guard frame and guard panels",
+     "kind": "bundle",
+     "new": "$1.1k",
+     "new_basis": "catalogue + estimate",
+     "used": "buy new",
+     "lead_new": "2-8 d + BYU PO",
+     "lead_new_days": [
+      12,
+      22
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      12,
+      22
+     ],
+     "callout": "12U rack, T-slot guard frame and guard panels: new $1.1k (catalogue + estimate), 2-8 d + BYU PO | buy new"
+    }
+   ]
+  },
+  {
+   "cat": "offtable",
+   "on_table": false,
+   "title": "Bought, not on the table",
+   "new": "$10.5k",
+   "used": "$9.5k",
+   "run_new": "$106.4k",
+   "run_used": "$61.1k-$66.3k",
+   "range_new": "$10.5k-$15.4k",
+   "range_used": "$9.5k-$14.4k",
+   "lead_new": "12-20 d (S6: 2-6 d + BYU PO)",
+   "lead_used": "12-20 d (S8: same or next day + BYU PO)",
+   "lead_new_as_chosen": "12-20 d (S6: 2-6 d + BYU PO)",
+   "lead_unknown": "S7 T1",
+   "items": [
+    {
+     "id": "P1",
+     "name": "Powder glovebox (McMaster 4083N14)",
+     "kind": "item",
+     "new": "$4.3k",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "2-6 d + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      12,
+      20
+     ],
+     "callout": "Powder glovebox (McMaster 4083N14): new $4.3k (catalogue price), 2-6 d + BYU PO | buy new"
+    },
+    {
+     "id": "A2v",
+     "name": "Metal-dust vacuum (McMaster 5572N116, NFPA 484)",
+     "kind": "item",
+     "new": "$3.2k",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "2-11 d",
+     "lead_new_days": [
+      2,
+      11
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      2,
+      11
+     ],
+     "callout": "Metal-dust vacuum (McMaster 5572N116, NFPA 484): new $3.2k (catalogue price), 2-11 d | buy new"
+    },
+    {
+     "id": "T1",
+     "name": "Laser power meter, 500 W (Gentec-EO UP55M head + U-LINK)",
+     "kind": "item",
+     "new": "$2.8k",
+     "new_basis": "catalogue price",
+     "used": "$1.8k",
+     "lead_new": "contact sales",
+     "lead_new_days": null,
+     "lead_used": "1-3 wk (head from China)",
+     "lead_used_days": [
+      8,
+      20
+     ],
+     "callout": "Laser power meter, 500 W (Gentec-EO UP55M head + U-LINK): new $2.8k (catalogue price), contact sales | used $1.8k, 1-3 wk (head from China)"
+    },
+    {
+     "id": "S8",
+     "name": "Class D extinguisher, 30 lb (McMaster 6435T23)",
+     "kind": "item",
+     "new": "$920",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "same or next day + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      12,
+      20
+     ],
+     "callout": "Class D extinguisher, 30 lb (McMaster 6435T23): new $920 (catalogue price), same or next day + BYU PO | buy new"
+    },
+    {
+     "id": "S7",
+     "name": "Room O2-deficiency monitor (Macurco OX-6)",
+     "kind": "item",
+     "new": "$663",
+     "new_basis": "search snippet",
+     "used": "buy new",
+     "lead_new": "not read",
+     "lead_new_days": null,
+     "lead_used": "buy new",
+     "lead_used_days": null,
+     "callout": "Room O2-deficiency monitor (Macurco OX-6): new $663 (search snippet), not read | buy new"
+    }
+   ]
+  },
+  {
+   "cat": "services",
+   "on_table": false,
+   "title": "Services",
+   "new": "$9.2k",
+   "used": "$9.2k",
+   "run_new": "$115.6k",
+   "run_used": "$70.3k-$75.6k",
+   "range_new": "$9.2k-$24.8k",
+   "range_used": "$9.2k-$24.8k",
+   "lead_new": "SendCutSend 5-15 d; BYU shop queue 7.6 wk (outsourcing split) to 16.4 wk (all in house); honing loop 3-6 wk (estimate)",
+   "lead_used": "SendCutSend 5-15 d; BYU shop queue 7.6 wk (outsourcing split) to 16.4 wk (all in house); honing loop 3-6 wk (estimate)",
+   "lead_new_as_chosen": "2-4 wk (X1: SendCutSend 5-15 d; shop queue 7.6-16.4 wk + BYU PO)",
+   "lead_unknown": "",
+   "items": [
+    {
+     "id": "X1",
+     "name": "Machining of the custom parts (193-208 shop hours)",
+     "kind": "bundle",
+     "new": "$7.7k",
+     "new_basis": "estimate: assumed shop rates",
+     "used": "buy new",
+     "lead_new": "SendCutSend 5-15 d; shop queue 7.6-16.4 wk + BYU PO",
+     "lead_new_days": [
+      17,
+      29
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      17,
+      29
+     ],
+     "callout": "Machining of the custom parts (193-208 shop hours): new $7.7k (estimate: assumed shop rates), SendCutSend 5-15 d; shop queue 7.6-16.4 wk + BYU PO | buy new"
+    },
+    {
+     "id": "B1s",
+     "name": "Build modules: welding, boring and honing (3 modules)",
+     "kind": "bundle",
+     "new": "$1.5k",
+     "new_basis": "estimate",
+     "used": "buy new",
+     "lead_new": "stock same or next day; honing outside 3-6 wk (estimate) + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      12,
+      20
+     ],
+     "callout": "Build modules: welding, boring and honing (3 modules): new $1.5k (estimate), stock same or next day; honing outside 3-6 wk (estimate) + BYU PO | buy new"
+    }
+   ]
+  }
+ ],
+ "headline": {
+  "cost_at_spec": {
+   "new": 115593.85,
+   "used": [
+    70334.44,
+    75560.06
+   ],
+   "saving": [
+    40033.79,
+    45259.41
+   ]
+  },
+  "cost_bom_range": {
+   "new": [
+    76338.69,
+    161154.6
+   ],
+   "used": [
+    68202.16,
+    117459.24
+   ],
+   "cheaper": [
+    72751.32,
+    155511.56
+   ],
+   "both": [
+    64815.78,
+    112017.19
+   ]
+  },
+  "cw_chain": {
+   "new": 44355.0,
+   "used": [
+    5960.32,
+    11185.94
+   ]
+  },
+  "weeks": {
+   "new_as_chosen": {
+    "parts": [
+     28.7,
+     29.7
+    ],
+    "set_by": "S2",
+    "ready": [
+     29.7,
+     30.7
+    ]
+   },
+   "new": {
+    "parts": [
+     11.9,
+     15.0
+    ],
+    "set_by": "L1",
+    "ready_split": [
+     12.9,
+     16.0
+    ],
+    "ready_all_in_house": [
+     19.1,
+     20.3
+    ]
+   },
+   "used": {
+    "parts": [
+     0.6,
+     4.0
+    ],
+    "set_by": "M3",
+    "ready_split": [
+     10.3,
+     11.5
+    ],
+    "ready_all_in_house": [
+     19.1,
+     20.3
+    ]
+   },
+   "saved_by_used_split": [
+    2.6,
+    4.5
+   ],
+   "note": "new = as chosen but with S2's HS6B and H2's K8DT swapped for stocked parts; 'split' = outsourcing.md's recommended make/buy split (152 shop hours at BYU), 'all in house' = 329 h at BYU"
+  },
+  "machining_h": {
+   "with_4th_axis": 287.3,
+   "three_axis": 302.3,
+   "cam": 132.1,
+   "setups_4th": 98.6,
+   "setups_3axis": 113.6,
+   "cutting": 33.2,
+   "deburr_inspect": 23.2,
+   "parts": 57
+  },
+  "assembly": {
+   "steps": 139,
+   "robot_h": 3.29,
+   "mir_fetch_h": 0.82,
+   "person_h": 12.95,
+   "failed_or_partial": 27,
+   "person_or_shop_steps": 19,
+   "basis": "estimates (results.json's seconds are compute time)"
+  },
+  "po_rule": "BYU: purchases of $3,500 or more from one vendor need a purchase order: 'Allow ten days to two weeks PLUS shipping time' (capstone.byu.edu/purchase-orders, read 2026-11-25); under $3,500 a PCard"
  }
 }
