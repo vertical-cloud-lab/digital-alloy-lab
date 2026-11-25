@@ -2,7 +2,8 @@
 bracket, the coaxial cage, the lid camera against the optics bridge, the acoustic-emission path, and temperatures at the ports.
 
 Every geometric number is read at run time from cad/monitoring_spec.py, cad/lpbf_low.py, cad/module_params.py, the
-fabrication worker's frame_features.json and monitoring-bom.csv, the module thermal FEA (thermal.json) and fea.json; the
+ports as programmed (analysis/out/monitoring/fab/frame_features.json), monitoring-bom.csv, the module thermal FEA
+(thermal.json) and fea.json; the
 constants that are not in the repo are in mech_inputs.py with their sources. bridge_modal.py (CalculiX) writes
 bridge_modal.json, which check 5 reads if it exists.
 
@@ -29,7 +30,7 @@ MS, MP, P = MI.MS, MI.MP, MI.P
 ROOT = MI.ROOT
 OUT = ROOT / "analysis" / "out" / "monitoring" / "mech"
 sys.path.insert(0, str(ROOT / "analysis" / "monitoring" / "optics"))
-import parts as OPT  # noqa: E402  (the optics worker's camera and lens data)
+import parts as OPT  # noqa: E402  (camera and lens data, analysis/monitoring/optics/parts.py)
 
 G = 9.81
 SIGMA = 5.670374e-8
@@ -351,6 +352,9 @@ def check_bridge():
                        df_pct=[100 * (a / b - 1) for a, b in zip(v["f_hz"], base["f_hz"])], removed_cm3=v["removed_cm3"])
         res.append(row)
     out["rows"] = res
+    sj = OUT / "bridge_sweep.json"
+    if sj.exists():
+        out["sweep"] = json.loads(sj.read_text())["rows"]
     ok = all((r.get("f_hz") or [999])[0] >= 100.0 for r in res)
     out["pass_"] = ok
     return out
@@ -514,15 +518,12 @@ def slide_with_purge(windows, flows_lpm=(1.0, 3.0), T_gas=(25.0, 60.0), T_purge=
 
 
 def check_port_thermal(windows):
-    T_room = 22.0
-    vlm = dict(typical=30.0, busy=(38.0, 43.0), src="heat.md §2: Shuttle air ~30 C in a typical build with Shuttle 1 idling, 38-43 C in "
-                                                     "PR 318's busy case (22 C room)")
+    vlm = dict(typical=VLM_AIR[0], busy=(38.0, VLM_AIR[1]), src="heat.md §2: Shuttle air ~30 C in a typical build with Shuttle 1 idling, "
+                                                                "38-43 C in PR 318's busy case (22 C room)")
     walls = (25.0, 60.0)                                    # thermal.json T_ch: the chamber at 25 C and the hot case at 60 C
-    lw = MS.VIEWPORTS["LW"]
     cam_face = (MS.SIDE_CAMERA["body_mm"][1] * MS.SIDE_CAMERA["body_mm"][2]) * 1e-6
     q_wall = [0.9 * SIGMA * ((w + 273.15) ** 4 - (vlm["busy"][1] + 273.15) ** 4) * 0.3 * cam_face for w in walls]
     slide_worst = max(s["worst"]["dT_centre_rim_K"] for s in windows["slides"])
-    limit = None
     rows = [dict(item="outer windows (LW, BW, LP)", T_C=f"{walls[0]:.0f}-{walls[1]:.0f}", basis="at the wall or lid temperature (thermal.json T_ch cases)",
                  limit="FKM gasket 200 C", ok=True),
             dict(item="inside cover slides", T_C=f"{walls[0]:.0f}-{walls[1] + slide_worst:.1f}",
@@ -573,8 +574,9 @@ def write_md(R):
     L.append("")
     s = R["2"]
     L.append("### 2. Seals and clamps\n")
-    L.append("The fabrication worker's seats bottom the clamp on the wall, with 0.75 mm left for each flat FKM gasket (under the window and "
-             "over it). The squeeze then depends on the sheet and on the window's thickness tolerance, which the two gaskets share:\n")
+    L.append("The seats as programmed ([`fabrication.md`](fabrication.md), `frame_features.py`) bottom the clamp on the wall, with 0.75 mm "
+             "left for each flat FKM gasket (under the window and over it). The squeeze then depends on the sheet and on the window's "
+             "thickness tolerance, which the two gaskets share:\n")
     L.append("| FKM sheet | Squeeze: thinnest / nominal / thickest window | Within 15-35 %? | Most the glass bears (MPa) |")
     L.append("|---|---|---|---:|")
     for f in s["flat_gasket"]:
@@ -643,9 +645,21 @@ def write_md(R):
             L.append(f"\nUncut bridge on the same mesh ({b['modal']['mesh']}): {', '.join(f'{x:.0f}' for x in base['f_hz'])} Hz "
                      f"(fea.py case 6b at hmax 10: {', '.join(f'{x:.0f}' for x in b['fea_case6b_f_hz'])} Hz). Gravity sag at the lens: "
                      + ", ".join(f"{k} {v['gravity']['lens_bore_sag_um']:.1f} µm" for k, v in b["modal"]["variants"].items()) + ".")
+            if b.get("sweep"):
+                L.append("\nWith the lens front moved along the line (the boss's height isn't fixed yet), the camera envelope "
+                         "at the bridge's level, in cm³ (in the reservoir slot / in the plate):\n")
+                sos = sorted({r["standoff_mm"] for r in b["sweep"]})
+                L.append("| LP candidate | " + " | ".join(f"lens front +{s:g} mm" for s in sos) + " |")
+                L.append("|---|" + "---:|" * len(sos))
+                for cand in dict.fromkeys(r["candidate"] for r in b["sweep"]):
+                    rr = {r["standoff_mm"]: r for r in b["sweep"] if r["candidate"] == cand}
+                    L.append(f"| {cand} | " + " | ".join(f"{rr[s]['in_slot_cm3']:.0f} / {rr[s]['in_plate_cm3']:.0f}" for s in sos) + " |")
+                L.append("\nNo standoff keeps a 50 mm lens and a 30 mm camera below the bridge: at the spec's position it always "
+                         "stands in the reservoir slot, at the back-half one it always needs the cut-out. A fold mirror or a shorter "
+                         "lens would.")
             back = next((r for r in b["rows"] if r["candidate"] == "back"), None)
             if back and back.get("f_hz"):
-                L.append(f"\n![Mode 1 of the bridge with the back-half LP cut-out](../analysis/out/monitoring/mech/bridge_fea/bridge_mode1_back.png)")
+                L.append("\n![Mode 1 of the bridge with the back-half LP cut-out](../analysis/out/monitoring/mech/bridge_fea/bridge_mode1_back.png)")
     else:
         L.append(b.get("note", ""))
     L.append("")
@@ -677,6 +691,13 @@ def write_md(R):
              f"contacts, the three Ø8 standoffs carrying {100 * a['standoff_area_fraction']:.1f} % of the block's area, head/rod/end cap).")
     L.append(f"- **Rod end:** at most {a['rod_end_max_C']:.1f} °C with clean gaps, {a['rod_end_powder_gaps_C']:.1f} °C with powder in "
              "them (thermal.json), against ~75 °C for a sensor there; keep its preamp off the rod.")
+    L.append("- **Where the loss is:** in the contacts, not the impedance mismatches. Al/Macor is 0.04 dB as a bonded interface "
+             "(Edison's answer gives 1–2 dB for a 0.13–0.20 reflection coefficient, which is 0.07–0.18 dB); Al/316 is 1 dB. A dry "
+             "point contact at the tip costs 10–34 dB at 100–500 kHz; a greased flat tip under 1 dB. Rod attenuation hardly matters: "
+             "even 5 dB/m, ten times the value assumed here, is 1 dB over the guide.")
+    L.append("- **Drawbar as the guide** (the robot cell's, hot-swap.md): at Ø8 mm its phase velocity drops 4 % at 300 kHz and "
+             "12 % at 500 kHz (Rayleigh-Love, rough past d/λ 0.3): fine to ~200 kHz, smeared above. It also adds the pull stud and "
+             "ball-lock contacts to the path.")
     L.append("")
     t = R["7"]
     L.append("### 7. Temperatures at the ports\n")
@@ -840,7 +861,7 @@ def make_figure(R, path):
     w = [r for r in R["1"]["windows"]]
     names = [r["port"].replace(" (", "\n(") for r in w]
     sf = [r["SF"] if r["SF"] else r["MR_needed_for_SF4_MPa"] / MI.SF_WINDOW * 0 for r in w]
-    bars = ax[1].barh(range(len(w)), [s or 0 for s in sf], color=["#2b6cd2" if r["SF"] else "#bbbbbb" for r in w])
+    ax[1].barh(range(len(w)), [s or 0 for s in sf], color=["#2b6cd2" if r["SF"] else "#bbbbbb" for r in w])
     for i, r in enumerate(w):
         txt = f"SF {r['SF']:.0f}" if r["SF"] else f"N-BK7: needs MR ≥ {r['MR_needed_for_SF4_MPa']:.0f} MPa"
         ax[1].text((r["SF"] or 0) + 0.5, i, txt, va="center", fontsize=7)

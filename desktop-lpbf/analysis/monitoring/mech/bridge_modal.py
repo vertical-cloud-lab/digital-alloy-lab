@@ -22,7 +22,6 @@ from __future__ import annotations
 import argparse
 import dataclasses
 import json
-import math
 import os
 import pathlib
 import sys
@@ -44,9 +43,9 @@ M = F.M
 P = M.P
 
 
-def lp_envelope(centre, clearance=3.0):
+def lp_envelope(centre, clearance=3.0, standoff=None):
     """Camera + lens envelope on the LP sight line: (solid, dict of the numbers used)."""
-    e = MI.lp_camera_envelope(centre)
+    e = MI.lp_camera_envelope(centre, standoff)
     u = cq.Vector(*e["axis_out"])
     p0 = cq.Vector(*e["front_xyz"])
     solid = cq.Solid.makeCylinder(e["radius_mm"] + clearance, e["length_mm"], p0, u)
@@ -68,6 +67,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mesh", default=os.environ.get("FEA_C6_MESH", "12,3,6"))
     ap.add_argument("--only", default="base,spec,back")
+    ap.add_argument("--sweep", action="store_true", help="only the envelope vs lens-front standoff sweep (no FEA): bridge_sweep.json")
     a = ap.parse_args()
     os.environ["FEA_C6_MESH"] = a.mesh
     os.environ["FEA_C6_ONLY"] = "b"
@@ -85,6 +85,19 @@ def main():
     back = [c for c in MS.VIEWPORTS["LP"].get("candidates", []) if c[1] > 0]
     if back:
         cands["back"] = tuple(back[0])
+    if a.sweep:
+        sw = dict(run_utc=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), model_commit=F.model_commit(), rows=[])
+        for tag, c in cands.items():
+            for so in (5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 40.0):
+                env, e = lp_envelope(c, standoff=so)
+                in_slab = env.intersect(slab(zb0, zb1))
+                sw["rows"].append(dict(candidate=tag, centre=c, standoff_mm=so, back_z=e["back_xyz"][2],
+                                       in_bridge_level_cm3=vol(in_slab) / 1e3,
+                                       in_slot_cm3=(vol(in_slab.intersect(slot)) / 1e3) if vol(in_slab) > 0 else 0.0,
+                                       in_plate_cm3=vol(env.intersect(br.shape)) / 1e3))
+                print(sw["rows"][-1])
+        (OUT / "bridge_sweep.json").write_text(json.dumps(sw, indent=1, default=float))
+        return
     res = dict(mesh=a.mesh, run_utc=time.strftime("%Y-%m-%d %H:%M", time.gmtime()), model_commit=F.model_commit(),
                bridge=dict(z=(zb0, zb1), slot_x=(xd - 28, xd + 28), slot_y=(-191, 60)), candidates={}, variants={})
     for tag, c in cands.items():

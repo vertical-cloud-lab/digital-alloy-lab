@@ -1,4 +1,4 @@
-"""Inputs for the monitoring mechanics checks (issue #260, PR 281), read at run time from the model and the other workers' files.
+"""Inputs for the monitoring mechanics checks (issue #260, PR 281), read at run time from the model and the other monitoring files.
 
 Where a number isn't in the repo (a bought part's mass or size, a material constant), it is in ASSUMED below with its source,
 or marked "assumed" when there was none to read. Change those here, not in the checks.
@@ -15,7 +15,7 @@ ROOT = HERE.parents[2]                                   # desktop-lpbf
 REPO = ROOT.parent
 sys.path.insert(0, str(ROOT / "cad"))
 import lpbf_low as LL  # noqa: E402  (imports CadQuery, builds nothing)
-import module_params as MP  # noqa: E402
+import module_params as MP  # noqa: E402,F401  (re-exported: mech_monitoring reads MI.MP)
 import monitoring_spec as MS  # noqa: E402
 
 OUT_DIR = ROOT / "analysis" / "out"
@@ -28,7 +28,7 @@ def jload(rel):
     return json.loads(p.read_text()) if p.exists() else None
 
 
-FRAME_FEATURES = jload("monitoring/fab/frame_features.json")   # the ports as machined (fabrication worker)
+FRAME_FEATURES = jload("monitoring/fab/frame_features.json")   # the ports as programmed (analysis/monitoring/fab/frame_features.py)
 THERMAL = jload("thermal/thermal.json")                         # module thermal FEA (analysis/thermal_module.py)
 FEA = jload("fea/fea.json")                                     # bridge modes (case 6), window (case 7)
 PLUME_FOULING = jload("monitoring/plume/fouling.json")
@@ -117,15 +117,15 @@ ASSUMED = {
 }
 
 
-def lp_camera_envelope(centre):
-    """Steep lid camera on the LP sight line: lens front 15 mm (the side camera's standoff in monitoring_spec) outside the port
-    centre, then the lens and the camera body. Returns the numbers bridge_modal.py and the checks use."""
+def lp_camera_envelope(centre, standoff=None):
+    """Steep lid camera on the LP sight line: lens front `standoff` mm (default: the side camera's 15 mm in monitoring_spec)
+    outside the port centre, then the lens and the camera body. Returns the numbers bridge_modal.py and the checks use."""
     c = [float(x) for x in centre]
     d0 = math.dist(c, MS.TARGET)
     u = [(q - t) / d0 for q, t in zip(c, MS.TARGET)]            # outward along the sight line
     lens = ASSUMED["Kowa LM50JC10M"]
     body = MS.LID_CAMERA["body_mm"]
-    s_front = d0 + MS.SIDE_CAMERA["standoff_mm"]
+    s_front = d0 + (MS.SIDE_CAMERA["standoff_mm"] if standoff is None else standoff)
     length = lens["L"] + body[2]
     radius = max(lens["d"] / 2, math.hypot(body[0], body[1]) / 2)
     front = [t + s_front * k for t, k in zip(MS.TARGET, u)]
