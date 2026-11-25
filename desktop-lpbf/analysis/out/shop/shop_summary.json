@@ -140,17 +140,17 @@
   },
   "lathe_big": {
    "ok": false,
-   "planned_s": 5.3,
-   "frames": 71,
-   "video_s": 5.9,
-   "gripper": "3FG15",
+   "planned_s": 5.4,
+   "frames": 72,
+   "video_s": 6.0,
+   "gripper": "3FG15L",
    "part_kg": 3.66,
    "tightest_transit": null,
    "fine_audit_0p2deg": [],
    "fail": "staging pose outside the machine",
-   "worst_torque_frac": 0.436,
+   "worst_torque_frac": 0.456,
    "tipover_at_worst_torque": {
-    "restoring_Nm": 619.5,
+    "restoring_Nm": 618.0,
     "extra_kg_to_tip": null,
     "edge": "+y",
     "mass_kg": 303.5
@@ -1310,7 +1310,7 @@
    "vise": 10.4,
    "plate": 33.8,
    "lathe": 13.0,
-   "lathe_big": 5.3
+   "lathe_big": 5.4
   },
   "finishing_arm_s": 53.0,
   "person_per_setup_min": 8.0,
@@ -1676,40 +1676,139 @@
   "F-S1 load": {
    "kg": 30.05,
    "frames": 288,
-   "clear_mm": 21.9,
-   "nearest": "vf4/HRT210 motor box",
+   "person_contacts": 0,
+   "person_first": [],
+   "person_min_clear_mm": 0.0,
+   "clear_mm": 40.1,
+   "nearest": "vf4/table",
    "contact": null,
    "samples": 67
   },
   "F-S1 to F-S2 flip": {
    "kg": 22.8,
    "frames": 264,
-   "clear_mm": 23.0,
-   "nearest": "vf4/HRT210 motor box",
+   "person_contacts": 1,
+   "person_first": [
+    [
+     108,
+     "person/glove",
+     "jib/boom"
+    ]
+   ],
+   "person_min_clear_mm": 0.0,
+   "clear_mm": 25.6,
+   "nearest": "vf4/table",
    "contact": null,
    "samples": 62
   },
   "core out": {
    "kg": 13.0,
    "frames": 216,
-   "clear_mm": 0.0,
-   "nearest": "vf4/HRT210 housing",
-   "contact": {
-    "sample": 14,
-    "body": "vf4/HRT210 housing"
-   },
+   "person_contacts": 0,
+   "person_first": [],
+   "person_min_clear_mm": 0.0,
+   "clear_mm": 25.4,
+   "nearest": "vf4/table",
+   "contact": null,
    "samples": 51
   },
   "F-S3 onto the rotary": {
    "kg": 10.0,
    "frames": 216,
-   "clear_mm": 0.0,
-   "nearest": "vf4/HRT210 motor box",
-   "contact": {
-    "sample": 19,
-    "body": "vf4/HRT210 motor box"
-   },
+   "person_contacts": 0,
+   "person_first": [],
+   "person_min_clear_mm": 0.0,
+   "clear_mm": 25.4,
+   "nearest": "vf4/table",
+   "contact": null,
    "samples": 51
+  }
+ },
+ "chapters": {
+  "20-receiving": {
+   "frames": 446,
+   "video_s": 37.2,
+   "real_h": 0.01,
+   "add": {
+    "person_h": 0.004,
+    "robot_h": 0.004
+   },
+   "video_s_by_status": {
+    "-": 7.0,
+    "person": 14.0,
+    "pass": 16.2
+   },
+   "video_s_by_who": {
+    "-": 7.0,
+    "person": 14.0,
+    "robot A": 5.7,
+    "robot B": 10.5
+   }
+  },
+  "30-machining-chamber": {
+   "frames": 2495,
+   "video_s": 207.9,
+   "real_h": 1.89,
+   "add": {
+    "person_h": 0.023,
+    "robot_h": 0.016,
+    "machine_h": 1.852
+   },
+   "video_s_by_status": {
+    "person": 82.0,
+    "pass": 125.4,
+    "-": 0.5
+   },
+   "video_s_by_who": {
+    "person": 82.0,
+    "robot A": 42.7,
+    "machine": 82.7,
+    "-": 0.5
+   }
+  },
+  "31-machining-parts": {
+   "frames": 641,
+   "video_s": 53.4,
+   "real_h": 26.16,
+   "add": {
+    "robot_h": 4.64,
+    "machine_h": 26.153,
+    "person_h": 19.74,
+    "cam_h": 123.6
+   },
+   "video_s_by_status": {
+    "pass": 51.9,
+    "-": 1.5
+   },
+   "video_s_by_who": {
+    "robot A": 33.7,
+    "-": 1.5,
+    "machine": 16.0,
+    "robot B": 22.2
+   }
+  },
+  "32-finishing": {
+   "frames": 925,
+   "video_s": 77.1,
+   "real_h": 1.58,
+   "add": {
+    "person_h": 1.567,
+    "outsourced_d": 10.0,
+    "robot_h": 0.015
+   },
+   "video_s_by_status": {
+    "person": 18.0,
+    "pass": 50.3,
+    "-": 2.0,
+    "fail": 6.7
+   },
+   "video_s_by_who": {
+    "person": 18.0,
+    "outsourced": 4.0,
+    "robot A": 38.1,
+    "-": 2.0,
+    "robot B": 15.0
+   }
   }
  }
 }

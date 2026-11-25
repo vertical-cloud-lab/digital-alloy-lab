@@ -140,10 +140,10 @@ The person is scripted, not planned. Two things were checked with FCL at every t
 
 | Lift | kg | Why a person | Load's closest pass | The person |
 |---|---|---|---|---|
-| the 13 x 9.5 x 5.5 in. blank onto the F-S1 risers | 30.0 | over two arms' 22.4 kg | 21.9 mm, to the HRT210's motor box | no contacts |
-| turning it over onto the dummy-floor plate (F-S2) | 22.8 | over 10 kg; the core is still attached | 23.0 mm | the hands touch the part as it is set down |
-| the freed core out | 13.0 | over 10 kg | in `shop_person.json` | in `shop_person.json` |
-| the frame and its fixture plate onto the HRT210 (F-S3), turned 90° | 10.0 | at 10 kg, and it has to be turned | in `shop_person.json` | in `shop_person.json` |
+| the 13 x 9.5 x 5.5 in. blank onto the F-S1 risers | 30.0 | over two arms' 22.4 kg | 40.1 mm, to the table | no contacts |
+| turning it over onto the dummy-floor plate (F-S2) | 22.8 | over 10 kg; the core is still attached | 25.6 mm | at one sample in 22, a glove touches the jib's boom while the part is up high |
+| the freed core out | 13.0 | over 10 kg | 25.4 mm (the first path, straight across to the pallet, put the core through the HRT210's platter; it now goes straight out through the doors first) | no contacts |
+| the frame and its fixture plate onto the HRT210 (F-S3), turned 90° | 10.0 | at 10 kg, and it has to be turned | 25.4 mm (checked against the VF-4 with its table at the F-S1 position, not at F-S3's) | no contacts |
 
 The person also fits F-S2's 18 M4 screws from below the dummy-floor plate, where no arm reaches. They bolt the plate to
 the platter through the frame's opening, and set and bolt the fixtures.
@@ -214,11 +214,37 @@ time. Cutting is time-lapsed at `setup_plan.json`'s minutes per setup, spread ov
 | Chapter | Shows | Frames | Length |
 |---|---|---|---|
 | `20-receiving` | the shop from above; the person brings in the three heavy crates with a pallet jack; arm A cuts a box's tape; arm B lifts the tray of seals out onto its deck | 446 | 37 s |
-| `30-machining-chamber` | the person loads the 30 kg blank; arm A clamps it; F-S1 cut (time-lapse); arm A unclamps; the person turns it over; F-S2 cut frees the core; the person lifts the core out and sets the frame on the 4th axis; F-S3 indexing 0/90/180/270; arm A loads the floor plate (VGP20); P-S1 cut | as above | about 3.5 min |
+| `30-machining-chamber` | the person loads the 30 kg blank; arm A clamps it; F-S1 cut (time-lapse); arm A unclamps; the person turns it over; F-S2 cut frees the core; the person lifts the core out and sets the frame on the 4th axis; F-S3 indexing 0/90/180/270; arm A loads the floor plate (VGP20); P-S1 cut | 2495 | 3 min 28 s |
 | `31-machining-parts` | arm A, vise part; arm B, saw; arm A, lathe from above; the other parts by motion class | 641 | 53 s |
 | `32-finishing` | TIG by a person; honing sent out; arm A deburrs; arm B washes; the failed granite carry and the person gauging; arm A kits the floor plate onto the long table | 925 | 77 s |
+| **all four** | | **4507** | **6 min 16 s** |
 
-Stills are in [`analysis/out/shop/`](analysis/out/shop/) (`r7_*.png`).
+The per-chapter totals and the hours each chapter's frames add are in `chapters` in
+[`shop_summary.json`](analysis/out/shop/shop_summary.json) (also `/tmp/robotbuild/data/shop.json`, for the summary
+chapter). `31`'s montage adds the other 55 parts' hours, as a time-lapse: 26.2 h of cutting, 4.6 h of arm time, 19.7
+person-hours and 123.6 h of CAM.
+
+![The person sets the 30 kg blank on the F-S1 risers with the vacuum tube lifter on the low jib](analysis/out/shop/r7_person_loads_blank.png)
+![Arm A drives the edge clamps' screws with a nut runner it holds by a fin](analysis/out/shop/r7_arm_clamps.png)
+![F-S1 inside the VF-4: the trepan's lower half and the bottom's ops (time-lapse)](analysis/out/shop/r7_cutting_fs1.png)
+![The person lifts the freed 13 kg core out](analysis/out/shop/r7_person_core.png)
+![F-S3: the frame on the HRT210, indexed](analysis/out/shop/r7_fs3_rotary.png)
+![Arm A sets the floor plate's blank on the parallels with the VGP20](analysis/out/shop/r7_vgp20_floor_plate.png)
+![Arm A loads a slug into the ST-10's chuck from above](analysis/out/shop/r7_lathe_top_down.png)
+![Arm B lays a bar on the S-20A's infeed rollers](analysis/out/shop/r7_saw.png)
+![Arm A deburrs a bracket](analysis/out/shop/r7_deburr.png)
+![Arm A kits the floor plate into its slot on the long table](analysis/out/shop/r7_kit_long_table.png)
+![The person brings in the crates over 22.4 kg with a pallet jack](analysis/out/shop/r7_pallet_jack.png)
+
+**How to rerun:**
+
+1. `shop_chamber_cache.py` (the model's cut states, ~2 min).
+2. `analysis/shop/shop_clips.py` (the plans, ~10 min).
+3. `cad/robotbuild/shop_chapters.py 20 30 31 32` (the frames: ~25 min for chapter 30 alone).
+
+   It needs a 6G cap for `/tmp/capmem`. With 3G and 4.5G, llvmpipe failed to create its first framebuffer, and it
+   sometimes does at 6G too, so retry.
+4. `analysis/shop/shop_summary.py` and `shop_stills.py`.
 
 ### Not done in round 7
 

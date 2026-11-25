@@ -241,6 +241,36 @@ def class_recheck(rows):
     return out
 
 
+def chapter_totals():
+    """Per rendered chapter (meta.jsonl): frames, video seconds, the hours its frames add (common.py's counters), and the
+    seconds of video per status and per who."""
+    out = {}
+    for ch in ("20-receiving", "30-machining-chamber", "31-machining-parts", "32-finishing"):
+        p = pathlib.Path("/tmp/robotbuild/frames") / ch / "meta.jsonl"
+        if not p.exists():
+            continue
+        tot = dict(frames=0, video_s=0.0, real_s=0.0)
+        add, by_status, by_who, steps = {}, {}, {}, []
+        for line in open(p):
+            m = json.loads(line)
+            tot["frames"] += 1
+            tot["video_s"] += 1.0 / FPS
+            tot["real_s"] += m.get("proc_s", 1.0 / FPS)
+            for k, v in (m.get("add") or {}).items():
+                add[k] = add.get(k, 0.0) + v
+            st = m.get("status") or "-"
+            by_status[st] = by_status.get(st, 0.0) + 1.0 / FPS
+            for w_ in m.get("who") or ["-"]:
+                by_who[w_] = by_who.get(w_, 0.0) + 1.0 / FPS
+            if m.get("caption") and (not steps or steps[-1]["caption"] != m["caption"]):
+                steps.append(dict(caption=m["caption"], step=m.get("step"), status=m.get("status"), who=m.get("who")))
+        out[ch] = dict(frames=tot["frames"], video_s=round(tot["video_s"], 1), real_h=round(tot["real_s"] / 3600.0, 2),
+                       add={k: round(v, 3) for k, v in add.items()},
+                       video_s_by_status={k: round(v, 1) for k, v in by_status.items()},
+                       video_s_by_who={k: round(v, 1) for k, v in by_who.items()}, scenes=steps)
+    return out
+
+
 def main():
     names = ["recv_tape", "recv_unbox", "vf4_clamps", "vf4_floor_load", "vf4_vise_part", "lathe_slug", "lathe_big",
              "saw_bar", "deburr", "wash", "measure", "kit"]
@@ -257,8 +287,9 @@ def main():
     pj = OUT / "shop_person.json"
     if pj.exists():
         person = json.loads(pj.read_text())
+    chapters = chapter_totals()
     res = dict(clips=clips, parts=rows, totals=tot, by_class=by_cls, assumptions=assumptions, class_recheck=recheck,
-               person_lifts=person)
+               person_lifts=person, chapters={k: {kk: vv for kk, vv in v.items() if kk != "scenes"} for k, v in chapters.items()})
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "shop_summary.json").write_text(json.dumps(res, indent=1, default=str))
     DATA.mkdir(parents=True, exist_ok=True)
@@ -269,7 +300,8 @@ def main():
     (DATA / "shop.json").write_text(json.dumps(dict(
         note="robot shop (shop worker): per chapter and clip who works, pass/fail and the hours the frames stand for; "
              "per part the machine / robot / person hours (estimates as robot-shop.md round 7 states them)",
-        chapters=frames, clips={k: dict(ok=v.get("ok"), gripper=v.get("gripper"), arm_s=v.get("planned_s"),
+        chapters=chapters, clips_in_chapters=frames,
+        clips={k: dict(ok=v.get("ok"), gripper=v.get("gripper"), arm_s=v.get("planned_s"),
                                          worst_torque_frac=v.get("worst_torque_frac"),
                                          tipover=v.get("tipover_at_worst_torque")) for k, v in clips.items()},
         totals=tot, by_class=by_cls, person_lifts=person), indent=1, default=str))
