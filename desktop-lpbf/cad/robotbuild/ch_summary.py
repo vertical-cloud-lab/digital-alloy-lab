@@ -423,6 +423,22 @@ def _steps(kind):
                 out.append((r.get("id", ""), r.get("label") or r.get("what", ""), r.get("why", "")))
             else:
                 out.append(("", str(r), ""))
+    if kind == "person":                                       # the shop's person lifts (shop.json)
+        for name, r in ((load("shop.json") or {}).get("person_lifts") or {}).items():
+            out.append(("shop", f"Chamber blank at the VF-4: {name}, {float(r.get('kg', 0)):.1f} kg",
+                        "a person with the vacuum lifter on the jib (the shop worker's person lifts)"))
+    if kind == "redesign":                                     # the assembly's failed steps and their round-7 fixes
+        notes = load("asm_fail_notes.json") or {}
+        have = {o[0] for o in out}
+        for sid, note in notes.items():
+            if sid in have:
+                out = [o for o in out if o[0] != sid]
+            what, _, fix = str(note).partition("Round 7:")
+            out.append((sid, "Failed: " + what.strip().rstrip("."), ("Fix: " + fix.strip()) if fix else ""))
+        for chname, clips in ((load("shop.json") or {}).get("chapters") or {}).items():
+            for clip, c in clips.items():
+                if "fail" in (c.get("status") or []):
+                    out.append(("shop", f"{clip} ({chname}): failed for the arm", "shown with its fix in that chapter"))
     if kind == "person":
         for sid, what, why in (("T01", "Process module (84 kg) onto the VLM tray", "3.4 x two UR12e payloads: lift table"),
                                ("T02", "Rack units: UPS 23 kg, laser 40 kg", "over the 12.5 kg payload: lift"),
