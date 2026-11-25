@@ -102,24 +102,26 @@ over the 2F-85's fingertips from a stand on the MiR, and a vacuum wand with a cl
 
 Final run (`ops.py --render`, on the model as built at 23:56 UTC, with the chamber body as a through-frame plus a bolted floor plate). The drawer, blade cartridge and vacuum were re-run at 00:46–01:10 UTC after the last fixes, on the same model. **Rows re-run on 2026-11-22:** the build module on S25, M50 and L75 ([`ops_w3.md`](analysis/out/robot/ops_w3.md), 06:22–06:32 UTC), and the five jobs the MiR does from the rack's side (x −390 to −450: chamber door open, drawer, reservoir, blade, vacuum) on the final model with the 12U rack ([`ops_w3_rack.md`](analysis/out/robot/ops_w3_rack.md), 06:49 UTC). All pass; clearances moved by up to 3.6 mm because the planner found other branches. **Rows re-run on 2026-11-25 (round 6,
 [`ops_r6.md`](analysis/out/robot/ops_r6.md), 01:04–01:19 UTC):** the reservoir, the blade cartridge and the two side liners (new rows).
-They ran on the model as merged after round 5 (4b2232e) plus this round's liner tabs. The bayonet rows are superseded by the 02:00 update above. Each job was tried at up to 12 MiR positions along the opening (and grasp variants); the table gives the first that passes, or the one that got furthest. **Clearance** is the smallest FCL distance from the robot, its tools and what it holds to anything it may not touch. **Torque** is the peak static joint torque against the UR12e's limits (330/330/150/56/56/56 N·m). **Force** is the largest the job applies, against the 100 N force mode. **CoG margin** is how far the MiR250's centre of gravity (base, cabinet, 131 kg ballast, arm, tool and payload) stays inside its wheels at the worst frame; the tip-over forces are in the forces section. **Time** is the arm's own time from the planned paths; add ~5 s for a tag read after docking and ~20 s for each cap change.
+They ran on the model as merged after round 5 (4b2232e) plus this round's liner tabs. **The jar and module rows** are from the merged
+round-6 model (PR branch 4e95878, [`ops_r6b.md`](analysis/out/robot/ops_r6b.md), 02:53–03:21 UTC). On that model every other M50
+job passes too: the rows marked "round 6 model". The S25 and L75 bayonet rows are superseded by the 02:00 update above. Each job was tried at up to 12 MiR positions along the opening (and grasp variants); the table gives the first that passes, or the one that got furthest. **Clearance** is the smallest FCL distance from the robot, its tools and what it holds to anything it may not touch. **Torque** is the peak static joint torque against the UR12e's limits (330/330/150/56/56/56 N·m). **Force** is the largest the job applies, against the 100 N force mode. **CoG margin** is how far the MiR250's centre of gravity (base, cabinet, 131 kg ballast, arm, tool and payload) stays inside its wheels at the worst frame; the tip-over forces are in the forces section. **Time** is the arm's own time from the planned paths; add ~5 s for a tag read after docking and ~20 s for each cap change.
 
 | Job | Module | MiR arm x (mm) | Result | Blocking step, or the first collision | Min clearance (mm), pair | Peak torque | Force (N) / limit | Payload (kg) | CoG margin (mm) | Time (s) |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Guard door open (515 mm) | M50 | 450.0 | **pass** |  | 1.9, right_finger_tip / Guard-locking door switch (Omron D | 32.4 % elbow | 30 / 100 | 0.0 | 200.0 | 8.2 |
-| Guard door close | M50 | 450.0 | **pass** |  | 26.1, left_finger_tip / Guard-door handle for the robot (Ø | 32.8 % elbow | 30 / 100 | 0.0 | 200.0 | 8.5 |
-| Chamber door open (pull to 20 deg, then the drive) | M50 | -450.0 | **pass** |  | 0.9, ur/gr/left_finger_tip / Guard door rail (top + bottom) | 32.6 % elbow | 15 / 100 | 0.0 | 199.0 | 13.4 |
-| Chamber door close (its actuator; robot parked) | M50 | 0.0 | **pass** |  | 21.5, wrist2 / Guard door rail (top + bottom) | 30.8 % elbow | 0 | 0.0 | 206.0 | 3.5 |
-| Build plate out, drawbar | M50 | 450.0 | **pass** |  | 1.3, right_finger_tip / Chamber floor plate (6061-T6, 20 m | 33.7 % elbow | 5 / 100 | 0.053 | 191.0 | 24.7 |
-| Build plate out, bayonet (2 x 30 deg twists) | M50 | 300.0 | **fail** | twist the plate 30 deg (lugs at their slots): held: build plate vs Thermal cutoff M50 (240 C, in series with the heat | 0.0, held: build plate / Thermal cutoff M50 (240 C, in seri | 31.6 % elbow | 5 / 100 | 0.053 | 191.0 | 28.7 |
-| Cover-slide drawer: wings off, drawer out | M50 | -450.0 | **pass** |  | 1.8, ur/gr/left_finger_tip / Drawer-closed sensor (inductive M12, o | 31.7 % elbow | 20 / 100 | 0.0 | 199.0 | 27.5 |
+| Guard door open (515 mm) (round 6 model) | M50 | 450.0 | **pass** |  | 1.9, ur/gr/camera / Guard-position switch IDEC HS6B-12B05 | 31.8 % elbow | 30 / 100 | 0.0 | 200.0 | 8.2 |
+| Guard door close (round 6 model) | M50 | 450.0 | **pass** |  | 26.1, left_finger_tip / Guard-door handle for the robot (Ø | 32.8 % elbow | 30 / 100 | 0.0 | 200.0 | 8.5 |
+| Chamber door open (pull to 20 deg, then the drive) (round 6 model) | M50 | -450.0 | **pass** |  | 2.5, ur/gr/right_finger_tip / Guard-door handle for the robot (Ø | 32.5 % elbow | 15 / 100 | 0.0 | 199.0 | 15.0 |
+| Chamber door close (its actuator; robot parked) (round 6 model) | M50 | 0.0 | **pass** |  | 20.1, wrist2 / Guard door rail (top + bottom) | 30.8 % elbow | 0 | 0.0 | 206.0 | 3.5 |
+| Build plate out, drawbar (round 6 model) | M50 | 450.0 | **pass** |  | 1.3, ur/cap/right_finger_tip / Chamber floor plate (6061-T6, 20 m | 33.7 % elbow | 5 / 100 | 0.053 | 191.0 | 24.7 |
+| Build plate out, bayonet (2 x 30 deg twists) (round 6 model) | M50 | -450.0 | **pass** |  | 0.6, held: build plate / Cartridge heaters M50 (3 x 50 W, 24 V, Ø6 x 22) | 33.7 % elbow | 5 / 100 | 0.053 | 194.0 | 28.6 |
+| Cover-slide drawer: wings off, drawer out (round 6 model) | M50 | -450.0 | **pass** |  | 1.8, ur/gr/left_finger_tip / Drawer-closed sensor (inductive M12, o | 31.7 % elbow | 20 / 100 | 0.0 | 199.0 | 27.5 |
 | Reservoir off the dock and out (round 6: the pull tab at y −84) | M50 | -390.0 | **pass** |  | 3.5, held: reservoir / NFC reader antenna (in the dock's side face) | 33.6 % elbow | 40 / 100 | 0.385 | 202.0 | 23.0 |
 | Blade cartridge out (round 6: off its dowels and ball plungers) | M50 | -450.0 | **pass** |  | 2.0, held: blade cartridge / Recoater ball nut (flange on the +x fa | 33.7 % elbow | 40 / 100 | 0.197 | 199.0 | 22.3 |
 | Right side liner out (round 6: hanger tab) | M50 | -450.0 | **pass** |  | 1.6, held: right side liner + its tab / Chamber door (open, 95°) | 33.7 % elbow | 20 / 100 | 0.07 | 199.0 | 23.6 |
 | Left side liner out (round 6: hanger tab) | M50 | -450.0 | **pass** |  | 1.6, held: left side liner + its tab / Chamber door (open, 95°) | 33.7 % elbow | 20 / 100 | 0.073 | 199.0 | 24.5 |
 | Build module out (round 6: zero-point clamps opened by release air; grip block; lift 66 mm, then out) | M50 | 300.0 | **pass** |  | 0.5, held: build module / Z mounting flange (bolted under the floor) | 53.3 % wrist 1 | 106 out, 158 in / 100 | 3.456 | 188.0 | 26.0 |
 | Overflow jar out (round 6: by its grip fin; toggle clamp off, drop 8 mm, straight out, lift 60 mm) | M50 | 400.0 | **pass** |  | 2.0, held: overflow jar + grip fin / Overflow-jar present sensor | 30.8 % elbow | 10 / 100 | 0.384 | 196.0 | 22.7 |
-| Chamber vacuum, 3 lanes (wand from the MiR cradle) | M50 | -450.0 | **pass** |  | 3.0, wand (ATEX vacuum wand, collar, crevic / Chamber floor plate (6061-T6, 20 mm, b | 35.4 % elbow | 0 | 0.0 | 198.0 | 31.2 |
+| Chamber vacuum, 3 lanes (wand from the MiR cradle) (round 6 model) | M50 | -450.0 | **pass** |  | 3.0, wand (ATEX vacuum wand, collar, crevic / Chamber floor plate (6061-T6, 20 mm, b | 35.4 % elbow | 0 | 0.0 | 198.0 | 31.2 |
 | Build plate out, drawbar | S25 | 450.0 | **pass** |  | 1.0, held: build plate / Thermal cutoff S25 (240 C, in seri | 33.7 % elbow | 5 / 100 | 0.014 | 191.0 | 24.6 |
 | Build plate out, bayonet (2 x 30 deg twists) | S25 | -450.0 | **fail** | twist the plate 30 deg (half): held: build plate vs Thermal cutoff S25 (240 C, in series with the heat | 0.0, held: build plate / Thermal cutoff S25 (240 C, in seri | 33.4 % elbow | 5 / 100 | 0.014 | 195.0 | 29.2 |
 | Build module out (round 6: zero-point clamps; grip block; lift 66 mm, then out) | S25 | 300.0 | **pass** |  | 0.5, held: build module / Z mounting flange (bolted under the floor) | 54.7 % wrist 1 | 106 out, 158 in / 100 | 3.143 | 189.0 | 26.0 |
@@ -163,7 +165,9 @@ Not in the table:
   - the plate fingers' lower blades ride 1.0–1.3 mm over the floor and past the thermal cutoff;
   - the vacuum nozzle runs 3 mm over the floor (by design);
   - each side liner, lowered 6 mm to pass the door opening, slides out 1.6 mm over the open door (round 6; the same path as hand
-    operation M3, whose 88 mm liner has 2 mm above and below in the 92 mm opening).
+    operation M3, whose 88 mm liner has 2 mm above and below in the 92 mm opening);
+  - on the round-6 model the bayonet plate passes 0.6 mm from the M50 cartridge heaters as it twists, and the module 0.5 mm from the
+    Z mounting flange on its own path.
 
   A real program would keep 5–10 mm away from the switch, the floor and the thermal cutoff.
 - **The vacuum misses one strip**: the strip under the dose chute (x < −60 mm, |y| ≤ 50 mm) is out of the level wand's reach. That
@@ -343,6 +347,7 @@ Results: [`ops_r6b.md`](analysis/out/robot/ops_r6b.md), [`ops_r6b.json`](analysi
 | Build module out | S25 | +300 | **pass** | 0.5, the same | 54.7 % wrist 1 | 106 out, 158 in | 3.14 | 189 | 26.0 |
 | Build module out | L75 | +300 | **pass** | 0.5, the same | 52.1 % wrist 1 | 106 out, 158 in | 3.73 | 188 | 26.0 |
 | Liners, reservoir, blade cartridge (re-check) | M50 | as before | **pass**, all four | as before: 1.6, 1.6, 3.5, 2.0 | 33.4–33.7 % elbow | as before | as before | 199 | 22.3–24.5 |
+| Guard door open and close, chamber door open, door actuator, plate by drawbar and by bayonet, drawer, vacuum (re-check, 03:15–03:21 UTC) | M50 | ±450, 0 | **pass**, all eight, each at the first MiR position it tried except the bayonet (−450) | 0.6 (the bayonet plate to the M50 cartridge heaters), 1.3 (drawbar), 1.8 (drawer), 1.9 (guard door: the camera to the guard-position switch), 2.5 (chamber door), 3.0 (vacuum) | 30.8–35.4 % elbow | ≤ 30 | ≤ 0.05 | 191–206 | 3.5–31.2 |
 
 The module is now 3.1–3.7 kg with its zero-point arms and pins (round 5: 2.6–3.2 kg). The jar carries 0.38 kg empty; full of
 AlSi10Mg powder (~115 cm³ at ~1.4 g/cm³ bulk, assumed) it is ~0.55 kg, well inside the 2F-85's 5 kg.
