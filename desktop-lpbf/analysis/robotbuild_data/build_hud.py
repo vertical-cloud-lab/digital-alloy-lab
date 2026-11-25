@@ -339,6 +339,14 @@ def used_row(match):
 
 
 # kind: item = one purchasable unit; bundle = a BOM line of many parts. new_drawn = the part the model draws, new.
+NEW_BASIS = {  # how firm each item's new price is (everything else: a catalogue price read from the vendor's page)
+    "L1": "IPG quote", "L5": "estimate: SCANLAB not yet asked", "C1": "estimate: SCANLAB not yet asked",
+    "L3": "comes with the laser quote", "L2": "not needed: the IPG is air-cooled", "L4": "estimate: quote needed", "G4": "estimate: no part found",
+    "B3": "catalogue + estimate", "M1": "catalogue + estimate", "X1": "estimate: assumed shop rates",
+    "B1s": "estimate", "S9": "catalogue + estimate", "D1": "catalogue + estimate", "G7": "catalogue + estimate",
+    "S7": "search snippet", "G6": "catalogue (Instrumart)",
+}
+
 ITEMS = [
     dict(id="L1", line="L1", cat="optics", kind="item", name="Fiber laser, 500 W single-mode (IPG YLR-500-U3-SM-AC)",
          new_low=3300, new_high=23000, new_drawn=23000,
@@ -783,14 +791,17 @@ def main():
         else:
             used_txt = k(x["used_best"]) if x["used_best"] is not None else "buy new"
         new_txt = (k(it["new_drawn"]) if it["new_drawn"] else
-                   "$0 (air-cooled laser)" if it["line"] == "L2" else "with the laser (price TBD)")
+                   "$0" if it["line"] == "L2" else "TBD")
         # same-spec catalogue alternatives for the item's line (counted rows whose part is still in the line)
         x["cheaper_options"] = [o for o in CHEAPER_ROWS if o["line"] == it["line"] and o["saving"] > 0
                                 and (it["line"] not in SPLIT or o["key"] not in DELTA_CAT or DELTA_CAT[o["key"]] == it["cat"])]
         lead_used = r["short_used"] if used_txt != "buy new" else "buy new"
-        x["hud"] = dict(name=it["name"], new=new_txt, used=used_txt, lead_new=r["short_new"],
-                        lead_new_days=r["days_new"], lead_used=lead_used, lead_used_days=r["days_used_route"],
-                        callout=f"{it['name']}: new {new_txt}, {r['short_new']}"
+        basis = NEW_BASIS.get(it["id"], "catalogue price")
+        x["new_basis"] = basis
+        x["hud"] = dict(name=it["name"], kind=it["kind"], new=new_txt, new_basis=basis, used=used_txt,
+                        lead_new=r["short_new"], lead_new_days=r["days_new"], lead_used=lead_used,
+                        lead_used_days=r["days_used_route"],
+                        callout=f"{it['name']}: new {new_txt} ({basis}), {r['short_new']}"
                                 + (f" | used {used_txt}, {r['short_used']}" if used_txt != "buy new" else " | buy new"))
         items.append(x)
     order_ix = {c: i for i, c in enumerate(ORDER)}
