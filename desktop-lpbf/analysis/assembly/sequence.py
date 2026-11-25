@@ -173,7 +173,15 @@ def steps(module="M50"):
               "Outlet-plenum helical", "Overflow-funnel helical", "Floor-plate dowels", "Zero-point post helical"]
     fr_ins = ["Process chamber body", "Lid screw helical inserts", "Recoater rail helical inserts", "Inlet-plenum helical",
               "Vacuum-port adapter helical", "Bearing-cap helical"]
-    a(P("C00a", "Floor plate (inserts and the two frame dowels already in) onto Fixture P, gland face up, by the vacuum gripper", fp_ins,
+    # round 6 (run 7): the overflow funnel is bolted to the floor plate on the bench first, as the hand op does (operations.md A2.13):
+    # upside down in chapter 4a (C06-C08 until run 6) two of its four M4 sit under the KF-40 stub's flange, where no driver reaches
+    # them. Fixture P's column is cut back to x <= 60 so the funnel and its stub hang beside it.
+    a(N("C00", "Overflow funnel: its 2-042 in the block's groove, the block (KF-40 stub welded on) and its four M4 x 12 onto the floor "
+        "plate's underside, on the bench before C00a", "person (bench)",
+        "operations.md A2.13: with the plate on the bench, face down, all four screws are open from above; on the machine two sit under "
+        "the KF-40 stub's flange (run 6: 2 of 4). Not checked here: the bench is not modelled."))
+    a(P("C00a", "Floor plate (inserts, the two frame dowels and the overflow funnel already on) onto Fixture P, gland face up, by the "
+        "vacuum gripper", fp_ins + ["Overflow funnel block", "Overflow funnel O-ring", "Overflow port"],
         "chamber", "chamber_up_P", [(0, 0, 0), (0, 0, 150)], tool="vacuum", grasp=dict(point=(-105.0, 5.0, 0.0), z=DN, x=(1.0, 0.0, 0.0))))
     a(dict(do="seal", id="C00b", label="Floor O-ring cord (3.53 mm, vulcanized splice) rolled into the floor plate's pad gland",
            keys=["Floor O-ring"], grp="chamber", phase="chamber_up_P", method="roller", ring="floor", tool="roller", actor="A", holder="B"))
@@ -184,7 +192,7 @@ def steps(module="M50"):
         "floor", "chamber", "chamber_up_P", torque_Nm=1.1))
     a(dict(do="dual", id="C01", label="Chamber (frame + floor plate, 7.4 kg) carried upright by both arms from Fixture P into the trunnion's jaws",
            keys=["@chamberset"], grp="chamber", phase="chamber_up_T", frm="chamber_up_P", whole=True, path=[(0, 0, 0), (0, 0, 120)],
-           docks="PT", grip_gap=16.0, lift=150.0,
+           docks="PT", grip_gap=16.0, lift=230.0,      # run 7: 230 (was 150): the funnel's KF-40 stub now hangs 62 mm under the plate
            grasps={"A": dict(point=(-148.0, 60.0, 108.0), z=DN, x=(1.0, 0.0, 0.0)), "B": dict(point=(148.0, 60.0, 108.0), z=DN, x=(1.0, 0.0, 0.0))}))
     a(dict(do="rotate", id="C01b", label="The trunnion turns the chamber upside down (180 deg about x), both arms parked", grp="chamber",
            frm="chamber_up_T", to="chamber_inv"))
@@ -195,15 +203,9 @@ def steps(module="M50"):
            actor="B", path=[(0, 0, 0), (0, 0, 60)]))
     a(P("C04", "Outlet plenum with its O-ring and KF-25 port onto the floor", ["outlet plenum", "Outlet plenum O-ring", "Outlet plenum port"],
         "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -180)], merge="plenum_out"))
-    # round 6 (run 6): two of these sit beside the plenum's KF-25 port (moved to its left end in round 5), and two of C08's beside the
-    # funnel's KF-40 stub; a 60 mm bit extension keeps the driver's body above the port
+    # round 6 (run 6): two of these sit beside the plenum's KF-25 port (moved to its left end in round 5); a 60 mm bit extension keeps
+    # the driver's body above the port. (The funnel, C06-C08 until run 6, now goes on with the floor plate: C00.)
     a(S("C05", "Six M4 x 12 outlet-plenum screws (60 mm bit extension: two sit beside the KF-25 port)", "plenum_out", "chamber",
-        "chamber_inv", torque_Nm=2.2, long_bit=60.0))
-    a(dict(do="seal", id="C06", label="Overflow-funnel O-ring (2-042) into the funnel block's groove, PFPE film", keys=["Overflow funnel O-ring"],
-           grp="funnel", phase="chamber_inv", method="ring", ring="overflow_funnel", tool="gripper+caps", actor="B", path=[(0, 0, 0), (0, 0, 60)]))
-    a(P("C07", "Overflow funnel block (KF-40 port welded on) onto the floor", ["Overflow funnel block", "Overflow funnel O-ring", "Overflow port"],
-        "chamber", "chamber_inv", [(0, 0, 0), (0, 0, -200)], merge="funnel"))
-    a(S("C08", "Four M4 x 12 overflow-funnel screws (60 mm bit extension: two sit beside the KF-40 stub)", "funnel", "chamber",
         "chamber_inv", torque_Nm=2.2, long_bit=60.0))
     a(P("C09", "Module-present sensor", ["Module-present sensor"], "chamber", "chamber_inv", "explode", note="its bracket screws are not drawn"))
     # round 6 (run 6): the door's hinge knuckles go on here, before the module, one at a time: upright (F50 in run 5) a fingertip met
@@ -306,8 +308,16 @@ def steps(module="M50"):
             ("F10f", "right", [(0, 0, 0), (-4, 0, 0), (-4, -21, 0), (-35, -21, 0), (-35, -21, -6), (-35, -541, -6)]))):
         keys = [f"Lift-out wall liner, {name}"] + ([f"Liner pull tab, {name}"] if name in ("left", "right") else [])
         # the 2F-85, not the vacuum gripper: run 6's first pass took the VGC10 (100 x 100 mm) through the door opening, and it met the
-        # opening's edges and the hinge knuckles below it
-        a(P(sid, f"Wall liner, {name}, in through the door opening and onto its wall", keys, "machine", "upright", path, tool="gripper"))
+        # opening's edges and the hinge knuckles below it. Run 7: the side liners as the tending robot takes them out (analysis/robot/
+        # ops.py job_liner): the cranked plate fingers come straight in along +y and close their lips on the hanger tab's 2 mm grip
+        # plate (automation.LINER_TAB: inner face |x| 93.4, grasp at y -76, z 76). The back halves have no tab: the stock fingers.
+        if name in ("left", "right"):
+            s = 1.0 if name == "right" else -1.0
+            a(P(sid, f"Wall liner, {name}, in through the door opening and onto its wall, held by its hanger tab (plate fingers)", keys,
+                "machine", "upright", path, tool="gripper+plate",
+                grasp=dict(point=(s * 94.4, -76.0, 76.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=2.1)))
+        else:
+            a(P(sid, f"Wall liner, {name}, in through the door opening and onto its wall", keys, "machine", "upright", path, tool="gripper"))
     a(N("F12", "Through-beam fibre heads with their 2-010 O-rings, threaded into the side walls from outside", "person",
         "Threading an M6 head with a fibre attached means winding the fibre with it; the ring itself is a pick-and-place."))
     a(dict(do="seal", id="F13", label="Inlet-plenum O-ring (2-044) into the plenum's flange groove, PFPE film", keys=["Inlet plenum O-ring"],

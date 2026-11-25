@@ -329,7 +329,9 @@ def fixture_P(z_top):
     plate's underside (z = -20) on a 240 x 150 column top, the floor z_top below it; the plate's edges, where the 18 floor
     screws go up through U-notches, overhang the column by 36-81 mm so the nutrunner and the wrist hang free under them."""
     zf = -20.0 - z_top
-    col = _box(-120.0, 120.0, -75.0, 75.0, zf + 30.0, -20.0)
+    # round 6 (run 7): the column stops at x 60 (was 120), so the overflow funnel, bolted to the plate on the bench, and its KF-40
+    # stub (x 66.5-122) hang beside it
+    col = _box(-120.0, 60.0, -75.0, 75.0, zf + 30.0, -20.0)
     foot = _box(-220.0, 220.0, -160.0, 160.0, zf, zf + 30.0)
     return _fuse(col, foot)
 

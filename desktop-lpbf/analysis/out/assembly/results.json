@@ -954,8 +954,24 @@
    "run": "run 5 (all chapters, 2026-11-25 03:08-03:58 UTC)"
   },
   {
+   "id": "C00",
+   "label": "Overflow funnel: its 2-042 in the block's groove, the block (KF-40 stub welded on) and its four M4 x 12 onto the floor plate's underside, on the bench before C00a",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person (bench)",
+   "why": "operations.md A2.13: with the plate on the bench, face down, all four screws are open from above; on the machine two sit under the KF-40 stub's flange (run 6: 2 of 4). Not checked here: the bench is not modelled.",
+   "seconds": 0.0,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
+  },
+  {
    "id": "C00a",
-   "label": "Floor plate (inserts and the two frame dowels already in) onto Fixture P, gland face up, by the vacuum gripper",
+   "label": "Floor plate (inserts, the two frame dowels and the overflow funnel already on) onto Fixture P, gland face up, by the vacuum gripper",
    "do": "place",
    "tool": "vacuum",
    "actor": "A",
@@ -973,8 +989,8 @@
     -350.0
    ],
    "n_units": 1,
-   "seconds": 3.8,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 3.9,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C00b",
@@ -996,8 +1012,8 @@
     -350.0
    ],
    "method": "3.53 mm cord laid in by arm B at the midpoints, ends and quarter points, then rolled home by arm A's PTFE wheel (Adebola et al. 2024's binary order), splice at the back-right corner",
-   "seconds": 4.7,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 4.8,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C00c",
@@ -1019,8 +1035,8 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "tip_margin": 41.0,
-   "seconds": 5.2,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 5.3,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C00d",
@@ -1036,8 +1052,8 @@
    "n": 18,
    "n_ok": 17,
    "n_drive": 18,
-   "arm_clear": 1.2,
-   "arm_clear_with": "nutrunner_angle to Fixture P (floor-plate pedestal)",
+   "arm_clear": 2.2,
+   "arm_clear_with": "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under ",
    "why": "in the: approach: no path in 500 iterations",
    "docks": [
     -350.0
@@ -1328,8 +1344,8 @@
      "roll": 30,
      "withdraw": true,
      "clear": [
-      1.2,
-      "nutrunner_angle to Fixture P (floor-plate pedestal)"
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
      ],
      "drive_ok": true,
      "driver": "nutrunner_angle",
@@ -1337,8 +1353,8 @@
      "note": "upward"
     }
    ],
-   "seconds": 28.9,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 29.6,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C01",
@@ -1356,12 +1372,12 @@
     "PT",
     "PT"
    ],
-   "mass_kg": 7.39,
+   "mass_kg": 8.25,
    "arm_clear": 0.0,
    "arm_clear_with": "held:C01 to Trunnion jaws",
-   "tip_margin": 23.8,
-   "seconds": 8.1,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "tip_margin": 21.4,
+   "seconds": 8.2,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C01b",
@@ -1379,7 +1395,7 @@
    "arm_clear_with": null,
    "mass_kg": null,
    "seconds": 0.7,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C02",
@@ -1398,15 +1414,15 @@
    "arm": "PASS",
    "gap": 0.05,
    "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "arm_clear": null,
-   "arm_clear_with": null,
+   "arm_clear": 37.7,
+   "arm_clear_with": "left_finger to Overflow port (KF-40, weld stub to 40 mm)",
    "why": "",
    "docks": [
     350.0
    ],
    "n_units": 1,
-   "seconds": 0.9,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 8.5,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C03",
@@ -1424,7 +1440,7 @@
    "why": "",
    "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
    "seconds": 0.0,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C04",
@@ -1439,15 +1455,15 @@
    "arm": "PASS",
    "gap": 1.68,
    "gap_with": "Outlet plenum O-ring (FKM 75A 2-044, face seal under the floor)",
-   "arm_clear": null,
-   "arm_clear_with": null,
+   "arm_clear": 2.0,
+   "arm_clear_with": "held:C04:Cross-flow outlet plenum under to Overflow funnel block (316L, bolted, FKM face O-ri",
    "why": "",
    "docks": [
     350.0
    ],
    "n_units": 1,
-   "seconds": 1.4,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 1.5,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C05",
@@ -1573,139 +1589,8 @@
      "note": ""
     }
    ],
-   "seconds": 12.3,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
-  },
-  {
-   "id": "C06",
-   "label": "Overflow-funnel O-ring (2-042) into the funnel block's groove, PFPE film",
-   "do": "seal",
-   "tool": "gripper+caps",
-   "actor": "B",
-   "holder": null,
-   "phase": "chamber_inv",
-   "joint": null,
-   "sweep": "PASS",
-   "gap": 1.68,
-   "gap_with": "Overflow funnel block (316L, bolted, FKM face O-ring)",
-   "arm": "-",
-   "why": "",
-   "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 0.0,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
-  },
-  {
-   "id": "C07",
-   "label": "Overflow funnel block (KF-40 port welded on) onto the floor",
-   "do": "place",
-   "tool": "gripper",
-   "actor": "A",
-   "holder": null,
-   "phase": "chamber_inv",
-   "joint": null,
-   "sweep": "PASS",
-   "arm": "PASS",
-   "gap": 1.68,
-   "gap_with": "Overflow funnel O-ring (FKM 75A 2-042, face seal under the floor)",
-   "arm_clear": 5.3,
-   "arm_clear_with": "held:C07:Overflow funnel block to Cross-flow outlet plenum under the floor (316L, fl",
-   "why": "",
-   "docks": [
-    350.0
-   ],
-   "n_units": 1,
-   "seconds": 1.4,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
-  },
-  {
-   "id": "C08",
-   "label": "Four M4 x 12 overflow-funnel screws (60 mm bit extension: two sit beside the KF-40 stub)",
-   "do": "screws",
-   "tool": "screwdriver",
-   "actor": "A",
-   "holder": null,
-   "phase": "chamber_inv",
-   "joint": "funnel",
-   "sweep": "PASS",
-   "arm": "PART",
-   "n": 4,
-   "n_ok": 2,
-   "n_drive": 2,
-   "arm_clear": 0.8,
-   "arm_clear_with": "screwdriver to Overflow funnel block (316L, bolted, FKM face O-ri",
-   "why": "red #3: screwdriver: A/tool/screwdriver hits Overflow port (KF-40, weld stub to 40 mm); also no wa; red #4: screwdriver: A/tool/screwdriver hits Overflow port (KF-40, weld stub to 40 mm); also no wa",
-   "docks": [
-    350.0
-   ],
-   "hex": 3.0,
-   "screw_L": 12.0,
-   "driver": [
-    "nutrunner_angle",
-    "screwdriver"
-   ],
-   "driver_why": [],
-   "per_screw": [
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #1",
-     "ok": true,
-     "why": "",
-     "dock": 350.0,
-     "roll": 30,
-     "withdraw": true,
-     "clear": [
-      0.8,
-      "screwdriver to Overflow funnel block (316L, bolted, FKM face O-ri"
-     ],
-     "drive_ok": true,
-     "driver": "screwdriver",
-     "arm": "A",
-     "note": ""
-    },
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #2",
-     "ok": true,
-     "why": "",
-     "dock": 350.0,
-     "roll": 30,
-     "withdraw": true,
-     "clear": [
-      0.8,
-      "screwdriver to Overflow funnel block (316L, bolted, FKM face O-ri"
-     ],
-     "drive_ok": true,
-     "driver": "screwdriver",
-     "arm": "A",
-     "note": ""
-    },
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #3",
-     "ok": false,
-     "why": "screwdriver: A/tool/screwdriver hits Overflow port (KF-40, weld stub to 40 mm); also no way with nutrunner, nutrunner_angle",
-     "dock": 350.0,
-     "roll": 30,
-     "withdraw": true,
-     "clear": null,
-     "drive_ok": false,
-     "driver": "nutrunner_angle",
-     "arm": "A",
-     "note": ""
-    },
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #4",
-     "ok": false,
-     "why": "screwdriver: A/tool/screwdriver hits Overflow port (KF-40, weld stub to 40 mm); also no way with nutrunner, nutrunner_angle",
-     "dock": 350.0,
-     "roll": 30,
-     "withdraw": true,
-     "clear": null,
-     "drive_ok": false,
-     "driver": "nutrunner_angle",
-     "arm": "A",
-     "note": ""
-    }
-   ],
-   "seconds": 11.8,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 13.3,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C09",
@@ -1727,8 +1612,8 @@
     350.0
    ],
    "n_units": 1,
-   "seconds": 1.1,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 1.2,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C09f",
@@ -1752,7 +1637,7 @@
    ],
    "n_units": 4,
    "seconds": 5.0,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C12",
@@ -1775,7 +1660,7 @@
    ],
    "n_units": 1,
    "seconds": 1.7,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C13",
@@ -1869,8 +1754,8 @@
      "note": ""
     }
    ],
-   "seconds": 8.8,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 8.7,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C09b",
@@ -1892,8 +1777,8 @@
     350.0
    ],
    "n_units": 4,
-   "seconds": 3.5,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 3.4,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C09c",
@@ -1916,7 +1801,7 @@
    ],
    "n_units": 2,
    "seconds": 1.5,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C09d",
@@ -1939,7 +1824,7 @@
    ],
    "n_units": 2,
    "seconds": 1.5,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C09e",
@@ -1955,7 +1840,7 @@
    "who": "person",
    "why": "Small threaded fittings with a tube to follow. The modules have to be open (6 bar) for the clamping pins to enter in C10.",
    "seconds": 0.0,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C10",
@@ -1981,8 +1866,8 @@
     0.0
    ],
    "n_units": 1,
-   "seconds": 19.2,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 18.9,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C11",
@@ -1998,7 +1883,7 @@
    "who": "machine",
    "why": "The cell vents the temporary line. 1 kN holds 4.6x the worst separating load (hot-swap.md 3.2a). The spigot ring is already home: arm B pushed the module in at C10 (132 N running). The captive M6 are gone; the floor keeps their inserts for a hand fallback.",
    "seconds": 0.0,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C13b",
@@ -2021,7 +1906,7 @@
    ],
    "n_units": 1,
    "seconds": 2.9,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C14",
@@ -2043,8 +1928,8 @@
     350.0
    ],
    "n_units": 4,
-   "seconds": 19.4,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 19.2,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C15",
@@ -2140,8 +2025,8 @@
      "note": "7.4 N m > 5.0 N m"
     }
    ],
-   "seconds": 49.8,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 49.2,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "C15b",
@@ -2157,7 +2042,7 @@
    "who": "person (bench)",
    "why": "A leg on a nest is open on every side; on the machine its back face is hemmed in by the frame, the other legs, the Z servo and (upright) the base plate. Not checked here: the bench nest is not modelled.",
    "seconds": 0.0,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F01",
@@ -2180,7 +2065,7 @@
    "arm_clear_with": "held:F01 to Fixture B (open stand)",
    "tip_margin": 14.9,
    "seconds": 1.0,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F02",
@@ -2196,7 +2081,7 @@
    "who": "person",
    "why": "They thread in when the finished process module goes onto the tray (chapter 5); until then Fixture B carries the plate on its ends.",
    "seconds": 0.0,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F02b",
@@ -2219,7 +2104,7 @@
    ],
    "n_units": 1,
    "seconds": 1.0,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F05",
@@ -2237,7 +2122,7 @@
    "arm_clear_with": null,
    "mass_kg": null,
    "seconds": 1.4,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F05b",
@@ -2255,12 +2140,12 @@
     "TB",
     "TB"
    ],
-   "mass_kg": 19.63,
+   "mass_kg": 19.62,
    "arm_clear": 117.6,
    "arm_clear_with": "held:F05b to Trunnion stands",
    "tip_margin": 9.0,
    "seconds": 10.1,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F06",
@@ -2460,8 +2345,8 @@
     1130.0
    ],
    "n_units": 1,
-   "seconds": 2.5,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 2.4,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F08",
@@ -2500,7 +2385,7 @@
    ],
    "n_units": 1,
    "seconds": 1.6,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F10a",
@@ -2523,7 +2408,7 @@
    ],
    "n_units": 1,
    "seconds": 5.6,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F10b",
@@ -2546,30 +2431,30 @@
    ],
    "n_units": 1,
    "seconds": 5.9,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F10c",
-   "label": "Wall liner, left, in through the door opening and onto its wall",
+   "label": "Wall liner, left, in through the door opening and onto its wall, held by its hanger tab (plate fingers)",
    "do": "place",
-   "tool": "gripper",
+   "tool": "gripper+plate",
    "actor": "A",
    "holder": null,
    "phase": "upright",
    "joint": null,
    "sweep": "PASS",
-   "arm": "FAIL",
+   "arm": "PASS",
    "gap": 0.36,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clear": 0.9,
-   "arm_clear_with": "wrist3 to Process chamber body (6061-T6 through-frame from 5",
-   "why": "arm A: A/wrist3 hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 462 mm along the insertion",
+   "arm_clear": 0.1,
+   "arm_clear_with": "held:F10c:Lift-out wall liner, left to Process chamber body (6061-T6 through-frame from 5",
+   "why": "",
    "docks": [
-    1350.0
+    1570.0
    ],
    "n_units": 1,
-   "seconds": 7.0,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 7.5,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F10d",
@@ -2591,8 +2476,8 @@
     1570.0
    ],
    "n_units": 1,
-   "seconds": 4.9,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 4.8,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F10e",
@@ -2614,31 +2499,31 @@
     1570.0
    ],
    "n_units": 1,
-   "seconds": 6.1,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 6.0,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F10f",
-   "label": "Wall liner, right, in through the door opening and onto its wall",
+   "label": "Wall liner, right, in through the door opening and onto its wall, held by its hanger tab (plate fingers)",
    "do": "place",
-   "tool": "gripper",
+   "tool": "gripper+plate",
    "actor": "A",
    "holder": null,
    "phase": "upright",
    "joint": null,
    "sweep": "PASS",
-   "arm": "FAIL",
+   "arm": "PASS",
    "gap": 0.36,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clear": 1.0,
-   "arm_clear_with": "wrist3 to Process chamber body (6061-T6 through-frame from 5",
-   "why": "arm A: A/wrist3 hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 462 mm along the insertion",
+   "arm_clear": 0.1,
+   "arm_clear_with": "held:F10f:Lift-out wall liner, right to Process chamber body (6061-T6 through-frame from 5",
+   "why": "",
    "docks": [
-    1350.0
+    1130.0
    ],
    "n_units": 1,
-   "seconds": 6.6,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 17.6,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F12",
@@ -4571,8 +4456,8 @@
     1130.0
    ],
    "n_units": 1,
-   "seconds": 11.8,
-   "run": "run 6 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:07 UTC)"
+   "seconds": 11.6,
+   "run": "run 7 (chapter 4a and the changed chapter-4b steps, 2026-11-25 04:32 UTC)"
   },
   {
    "id": "F51",

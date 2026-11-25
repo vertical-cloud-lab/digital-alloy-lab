@@ -1,8 +1,23 @@
 {
  "rows": [
   {
+   "id": "C00",
+   "label": "Overflow funnel: its 2-042 in the block's groove, the block (KF-40 stub welded on) and its four M4 x 12 onto the floor plate's underside, on the bench before C00a",
+   "do": "note",
+   "tool": null,
+   "actor": null,
+   "holder": null,
+   "phase": null,
+   "joint": null,
+   "sweep": "-",
+   "arm": "-",
+   "who": "person (bench)",
+   "why": "operations.md A2.13: with the plate on the bench, face down, all four screws are open from above; on the machine two sit under the KF-40 stub's flange (run 6: 2 of 4). Not checked here: the bench is not modelled.",
+   "seconds": 0.0
+  },
+  {
    "id": "C00a",
-   "label": "Floor plate (inserts and the two frame dowels already in) onto Fixture P, gland face up, by the vacuum gripper",
+   "label": "Floor plate (inserts, the two frame dowels and the overflow funnel already on) onto Fixture P, gland face up, by the vacuum gripper",
    "do": "place",
    "tool": "vacuum",
    "actor": "A",
@@ -20,7 +35,7 @@
     -350.0
    ],
    "n_units": 1,
-   "seconds": 3.8
+   "seconds": 3.9
   },
   {
    "id": "C00b",
@@ -42,7 +57,7 @@
     -350.0
    ],
    "method": "3.53 mm cord laid in by arm B at the midpoints, ends and quarter points, then rolled home by arm A's PTFE wheel (Adebola et al. 2024's binary order), splice at the back-right corner",
-   "seconds": 4.7
+   "seconds": 4.8
   },
   {
    "id": "C00c",
@@ -64,7 +79,7 @@
    "arm_clear": null,
    "arm_clear_with": null,
    "tip_margin": 41.0,
-   "seconds": 5.2
+   "seconds": 5.3
   },
   {
    "id": "C00d",
@@ -80,8 +95,8 @@
    "n": 18,
    "n_ok": 17,
    "n_drive": 18,
-   "arm_clear": 1.2,
-   "arm_clear_with": "nutrunner_angle to Fixture P (floor-plate pedestal)",
+   "arm_clear": 2.2,
+   "arm_clear_with": "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under ",
    "why": "in the: approach: no path in 500 iterations",
    "docks": [
     -350.0
@@ -372,8 +387,8 @@
      "roll": 30,
      "withdraw": true,
      "clear": [
-      1.2,
-      "nutrunner_angle to Fixture P (floor-plate pedestal)"
+      2.2,
+      "nutrunner_angle to Chamber floor plate (6061-T6, 20 mm, bolted under "
      ],
      "drive_ok": true,
      "driver": "nutrunner_angle",
@@ -381,7 +396,7 @@
      "note": "upward"
     }
    ],
-   "seconds": 28.9
+   "seconds": 29.6
   },
   {
    "id": "C01",
@@ -399,11 +414,11 @@
     "PT",
     "PT"
    ],
-   "mass_kg": 7.39,
+   "mass_kg": 8.25,
    "arm_clear": 0.0,
    "arm_clear_with": "held:C01 to Trunnion jaws",
-   "tip_margin": 23.8,
-   "seconds": 8.1
+   "tip_margin": 21.4,
+   "seconds": 8.2
   },
   {
    "id": "C01b",
@@ -439,14 +454,14 @@
    "arm": "PASS",
    "gap": 0.05,
    "gap_with": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "arm_clear": null,
-   "arm_clear_with": null,
+   "arm_clear": 37.7,
+   "arm_clear_with": "left_finger to Overflow port (KF-40, weld stub to 40 mm)",
    "why": "",
    "docks": [
     350.0
    ],
    "n_units": 1,
-   "seconds": 0.9
+   "seconds": 8.5
   },
   {
    "id": "C03",
@@ -478,14 +493,14 @@
    "arm": "PASS",
    "gap": 1.68,
    "gap_with": "Outlet plenum O-ring (FKM 75A 2-044, face seal under the floor)",
-   "arm_clear": null,
-   "arm_clear_with": null,
+   "arm_clear": 2.0,
+   "arm_clear_with": "held:C04:Cross-flow outlet plenum under to Overflow funnel block (316L, bolted, FKM face O-ri",
    "why": "",
    "docks": [
     350.0
    ],
    "n_units": 1,
-   "seconds": 1.4
+   "seconds": 1.5
   },
   {
    "id": "C05",
@@ -611,135 +626,7 @@
      "note": ""
     }
    ],
-   "seconds": 12.3
-  },
-  {
-   "id": "C06",
-   "label": "Overflow-funnel O-ring (2-042) into the funnel block's groove, PFPE film",
-   "do": "seal",
-   "tool": "gripper+caps",
-   "actor": "B",
-   "holder": null,
-   "phase": "chamber_inv",
-   "joint": null,
-   "sweep": "PASS",
-   "gap": 1.68,
-   "gap_with": "Overflow funnel block (316L, bolted, FKM face O-ring)",
-   "arm": "-",
-   "why": "",
-   "method": "ring placed into its groove by the 2F-85 with pin caps (internal 2-point grip), then rolled down",
-   "seconds": 0.0
-  },
-  {
-   "id": "C07",
-   "label": "Overflow funnel block (KF-40 port welded on) onto the floor",
-   "do": "place",
-   "tool": "gripper",
-   "actor": "A",
-   "holder": null,
-   "phase": "chamber_inv",
-   "joint": null,
-   "sweep": "PASS",
-   "arm": "PASS",
-   "gap": 1.68,
-   "gap_with": "Overflow funnel O-ring (FKM 75A 2-042, face seal under the floor)",
-   "arm_clear": 5.3,
-   "arm_clear_with": "held:C07:Overflow funnel block to Cross-flow outlet plenum under the floor (316L, fl",
-   "why": "",
-   "docks": [
-    350.0
-   ],
-   "n_units": 1,
-   "seconds": 1.4
-  },
-  {
-   "id": "C08",
-   "label": "Four M4 x 12 overflow-funnel screws (60 mm bit extension: two sit beside the KF-40 stub)",
-   "do": "screws",
-   "tool": "screwdriver",
-   "actor": "A",
-   "holder": null,
-   "phase": "chamber_inv",
-   "joint": "funnel",
-   "sweep": "PASS",
-   "arm": "PART",
-   "n": 4,
-   "n_ok": 2,
-   "n_drive": 2,
-   "arm_clear": 0.8,
-   "arm_clear_with": "screwdriver to Overflow funnel block (316L, bolted, FKM face O-ri",
-   "why": "red #3: screwdriver: A/tool/screwdriver hits Overflow port (KF-40, weld stub to 40 mm); also no wa; red #4: screwdriver: A/tool/screwdriver hits Overflow port (KF-40, weld stub to 40 mm); also no wa",
-   "docks": [
-    350.0
-   ],
-   "hex": 3.0,
-   "screw_L": 12.0,
-   "driver": [
-    "nutrunner_angle",
-    "screwdriver"
-   ],
-   "driver_why": [],
-   "per_screw": [
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #1",
-     "ok": true,
-     "why": "",
-     "dock": 350.0,
-     "roll": 30,
-     "withdraw": true,
-     "clear": [
-      0.8,
-      "screwdriver to Overflow funnel block (316L, bolted, FKM face O-ri"
-     ],
-     "drive_ok": true,
-     "driver": "screwdriver",
-     "arm": "A",
-     "note": ""
-    },
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #2",
-     "ok": true,
-     "why": "",
-     "dock": 350.0,
-     "roll": 30,
-     "withdraw": true,
-     "clear": [
-      0.8,
-      "screwdriver to Overflow funnel block (316L, bolted, FKM face O-ri"
-     ],
-     "drive_ok": true,
-     "driver": "screwdriver",
-     "arm": "A",
-     "note": ""
-    },
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #3",
-     "ok": false,
-     "why": "screwdriver: A/tool/screwdriver hits Overflow port (KF-40, weld stub to 40 mm); also no way with nutrunner, nutrunner_angle",
-     "dock": 350.0,
-     "roll": 30,
-     "withdraw": true,
-     "clear": null,
-     "drive_ok": false,
-     "driver": "nutrunner_angle",
-     "arm": "A",
-     "note": ""
-    },
-    {
-     "screw": "Overflow-funnel screws, M4 x 12 316, counterbored #4",
-     "ok": false,
-     "why": "screwdriver: A/tool/screwdriver hits Overflow port (KF-40, weld stub to 40 mm); also no way with nutrunner, nutrunner_angle",
-     "dock": 350.0,
-     "roll": 30,
-     "withdraw": true,
-     "clear": null,
-     "drive_ok": false,
-     "driver": "nutrunner_angle",
-     "arm": "A",
-     "note": ""
-    }
-   ],
-   "seconds": 11.8
+   "seconds": 13.3
   },
   {
    "id": "C09",
@@ -761,7 +648,7 @@
     350.0
    ],
    "n_units": 1,
-   "seconds": 1.1
+   "seconds": 1.2
   },
   {
    "id": "C09f",
@@ -900,7 +787,7 @@
      "note": ""
     }
    ],
-   "seconds": 8.8
+   "seconds": 8.7
   },
   {
    "id": "C09b",
@@ -922,7 +809,7 @@
     350.0
    ],
    "n_units": 4,
-   "seconds": 3.5
+   "seconds": 3.4
   },
   {
    "id": "C09c",
@@ -1007,7 +894,7 @@
     0.0
    ],
    "n_units": 1,
-   "seconds": 19.2
+   "seconds": 18.9
   },
   {
    "id": "C11",
@@ -1066,7 +953,7 @@
     350.0
    ],
    "n_units": 4,
-   "seconds": 19.4
+   "seconds": 19.2
   },
   {
    "id": "C15",
@@ -1162,7 +1049,7 @@
      "note": "7.4 N m > 5.0 N m"
     }
    ],
-   "seconds": 49.8
+   "seconds": 49.2
   },
   {
    "id": "C15b",
@@ -1271,7 +1158,7 @@
     "TB",
     "TB"
    ],
-   "mass_kg": 19.63,
+   "mass_kg": 19.62,
    "arm_clear": 117.6,
    "arm_clear_with": "held:F05b to Trunnion stands",
    "tip_margin": 9.0,
@@ -1297,7 +1184,7 @@
     1130.0
    ],
    "n_units": 1,
-   "seconds": 2.5
+   "seconds": 2.4
   },
   {
    "id": "F11",
@@ -1367,25 +1254,25 @@
   },
   {
    "id": "F10c",
-   "label": "Wall liner, left, in through the door opening and onto its wall",
+   "label": "Wall liner, left, in through the door opening and onto its wall, held by its hanger tab (plate fingers)",
    "do": "place",
-   "tool": "gripper",
+   "tool": "gripper+plate",
    "actor": "A",
    "holder": null,
    "phase": "upright",
    "joint": null,
    "sweep": "PASS",
-   "arm": "FAIL",
+   "arm": "PASS",
    "gap": 0.36,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clear": 0.9,
-   "arm_clear_with": "wrist3 to Process chamber body (6061-T6 through-frame from 5",
-   "why": "arm A: A/wrist3 hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 462 mm along the insertion",
+   "arm_clear": 0.1,
+   "arm_clear_with": "held:F10c:Lift-out wall liner, left to Process chamber body (6061-T6 through-frame from 5",
+   "why": "",
    "docks": [
-    1350.0
+    1570.0
    ],
    "n_units": 1,
-   "seconds": 7.0
+   "seconds": 7.5
   },
   {
    "id": "F10d",
@@ -1407,7 +1294,7 @@
     1570.0
    ],
    "n_units": 1,
-   "seconds": 4.9
+   "seconds": 4.8
   },
   {
    "id": "F10e",
@@ -1429,29 +1316,29 @@
     1570.0
    ],
    "n_units": 1,
-   "seconds": 6.1
+   "seconds": 6.0
   },
   {
    "id": "F10f",
-   "label": "Wall liner, right, in through the door opening and onto its wall",
+   "label": "Wall liner, right, in through the door opening and onto its wall, held by its hanger tab (plate fingers)",
    "do": "place",
-   "tool": "gripper",
+   "tool": "gripper+plate",
    "actor": "A",
    "holder": null,
    "phase": "upright",
    "joint": null,
    "sweep": "PASS",
-   "arm": "FAIL",
+   "arm": "PASS",
    "gap": 0.36,
    "gap_with": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "arm_clear": 1.0,
-   "arm_clear_with": "wrist3 to Process chamber body (6061-T6 through-frame from 5",
-   "why": "arm A: A/wrist3 hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 462 mm along the insertion",
+   "arm_clear": 0.1,
+   "arm_clear_with": "held:F10f:Lift-out wall liner, right to Process chamber body (6061-T6 through-frame from 5",
+   "why": "",
    "docks": [
-    1350.0
+    1130.0
    ],
    "n_units": 1,
-   "seconds": 6.6
+   "seconds": 17.6
   },
   {
    "id": "F50",
@@ -1473,8 +1360,8 @@
     1130.0
    ],
    "n_units": 1,
-   "seconds": 11.8
+   "seconds": 11.6
   }
  ],
- "generated_s": 286.2
+ "generated_s": 292.3
 }
