@@ -1,0 +1,159 @@
+Organizer persona: I’d take this as a strong scope match, but not as a clean accept in current form.
+
+PERSONA 1 — Organizer review
+- Scope fit: 5/5
+- Novelty: 4/5
+- Methodological rigor: 3/5
+- Clarity: 3/5
+- Presentation appeal: 4/5
+- Recommendation: accept with major revision
+
+Why:
+This is squarely inside the symposium brief. It hits autonomous experimentation, closed-loop optimization, interpretable/cost-aware ML, digital-thread infrastructure, and domain knowledge via CALPHAD. The composition-to-part framing is better than a generic BO abstract because it treats the AM workflow as a staged decision system rather than one monolithic black box. That’s good symposium material.
+
+What keeps it from an easy accept-as-is is evidence and framing. The abstract promises a lot, but several key claims are still at the “we will report” stage, and some terms will be opaque to a broad SDL audience. The methodological hook is real, but the experimental validation reads preliminary and the digital-twin claim is thinner than the rest. If revised to be more concrete about what is already done versus planned, this would be an attractive contributed talk.
+
+PERSONA 2 — AI/ML methodologist review
+What works:
+- The function-network framing is interesting and relevant.
+- Cost heterogeneity across nodes is a real reason not to use plain single-fidelity BO.
+- pKGFN/BOFN signals a nontrivial acquisition design rather than off-the-shelf BO.
+
+What is unclear or under-claimed:
+1. The optimization target is underspecified.
+   You say “jointly optimizing strength, printability, and an embedded USGS-derived mineral-burden objective,” but don’t say whether this is scalarized multi-objective BO, constrained BO, utility optimization, or a Pareto-front setting. An ML audience will want the exact decision problem.
+2. The surrogate structure is too vague.
+   “Each node has its own GP surrogate that forwards posterior beliefs as structured inputs downstream” is suggestive, but not enough. Are downstream node inputs posterior means, samples, distributions, or features derived from upstream beliefs? How is uncertainty propagated? That’s the crux of whether this is a principled BOFN story or just a staged heuristic.
+3. The baseline is too weakly defined.
+   “≥3× sample efficiency over conventional Bayesian optimization” needs a specific comparator. EI? KG? qNEI? Cost-aware EI? Multi-fidelity BO? A methodologist will discount the claim if the baseline is not named.
+4. Synthetic-network benchmarking is necessary but not sufficient.
+   “AM-like synthetic networks” is fine for method development, but the abstract should state what properties of the real pipeline the synthetic benchmarks preserve: cost ratios, observation noise, missingness, nonstationarity, feasibility constraints, delayed feedback, etc.
+5. “Level-3 SDL” is not self-explanatory.
+   Either define the maturity framework in a few words or drop it.
+6. The claim is a bit overcompressed.
+   CALPHAD, atomization, LPBF, hardness, tensile, FAIR digital thread, American Science Cloud, and USGS burden all appear in 2 paragraphs. The result is that the acquisition-method novelty doesn’t get enough room.
+
+Suggested ML-facing tightening:
+- Name the decision problem precisely: constrained or scalarized multi-objective cost-aware BO over a function network.
+- Name the comparator(s).
+- Say how uncertainty is propagated between nodes.
+- Temper the claim if only preliminary real-data calibration exists.
+
+PERSONA 3 — Experimental AM/alloy designer review
+What works:
+- The staged workflow is credible in spirit: CALPHAD → powder route → LPBF → microstructure/mechanics.
+- The cost numbers help. They make the motivation tangible.
+- Focusing on Al–Mn–Cr–Zr / Al–Zr families is better than claiming universal alloy discovery.
+
+What is not yet concrete enough:
+1. The experimental path is still too abstract.
+   “Atomization (rePOWDER / Valimet), LPBF, and the microstructure–hardness–tensile ladder” sounds plausible, but there are no actual processing windows, machine conditions, alloy composition ranges, or measurable printability definitions. For this audience, “printability” is not a self-defining objective.
+2. The data story is thin.
+   “Preliminary CALPHAD + AlSi10Mg LPBF + tensile data calibrating the network surrogates” raises questions. Is AlSi10Mg only a calibration/benchmark alloy, or part of the target composition family? If the target discovery space is Al–Mn–Cr–Zr and Al–Zr, why is the real dataset described with AlSi10Mg? That disconnect is the biggest credibility gap in the current draft.
+3. Powder production reality is not well connected to alloy screening.
+   If the atomization node is central, what variables are measured or predicted there? PSD? morphology? satellite fraction? oxygen pickup? yield? Without naming any of these, the node feels conceptual rather than experimentally anchored.
+4. The downstream property chain is underspecified.
+   Hardness and tensile are named, but not the microstructure modalities. OM/SEM? EBSD? XCT porosity? phase fraction? grain size? A practical AM audience will want at least one or two concrete characterization outputs.
+5. The credibility of closed-loop execution is unclear.
+   Is the loop already autonomous in hardware, or is this currently a decision-support loop with human execution? Either is fine, but the abstract should say which.
+
+Experimental recommendation:
+- Be explicit about what has been physically demonstrated versus what is simulated/benchmarked.
+- Resolve the AlSi10Mg versus target-family mismatch in one sentence.
+- Define “printability” operationally.
+
+PERSONA 4 — Critical-materials / sustainability reviewer
+What works:
+- Bringing mineral burden into alloy design is timely and relevant.
+- Using a USGS-derived metric is a promising way to move beyond vague “sustainable alloy” language.
+
+What is weak for this audience:
+1. The mineral-efficiency objective is named but not quantified.
+   “Embedded USGS-derived mineral-burden objective” is too opaque. Which burden dimensions are included: import reliance, production concentration, co-production risk, price volatility, embodied energy, or something else? If the metric is central, the audience needs one clause explaining it.
+2. Policy relevance is asserted indirectly, not demonstrated.
+   Why are Mn, Cr, and Zr the right criticality comparison set for this audience? Zr may trigger concern, but Mn and Cr need framing in terms of supply-risk or burden tradeoffs, not just composition labels.
+3. No sense of tradeoff magnitude.
+   The abstract should indicate whether the goal is a modest burden reduction at fixed properties or a Pareto tradeoff between burden and performance. Without that, “critical-mineral-lean” reads more like branding than an analyzable objective.
+4. Scope creep risk.
+   In a 250-word abstract, the sustainability story has to be compact and quantitative. Right now it is compact but not quantitative.
+
+SYNTHESIS
+Top 3 must-fix issues
+- Clarify what has already been demonstrated versus what is planned, especially for the real experimental data and closed-loop execution.
+- Define the optimization problem more precisely: objective(s), constraint(s), baseline comparator(s), and how node uncertainty is propagated.
+- Make the experimental validation story internally consistent, especially the AlSi10Mg calibration mention versus the stated Al–Mn–Cr–Zr / Al–Zr discovery space.
+
+Top 3 nice-to-have improvements
+- Replace or define “Level-3 SDL.”
+- Add one short quantitative phrase describing the mineral-burden metric.
+- Shorten the title and remove one layer of jargon so the talk sounds more accessible from the program.
+
+Concrete line/sentence-level rewrite suggestions
+1. Opening sentence
+Current:
+“Self-driving laboratories (SDLs) for additive manufacturing (AM) face a structural challenge that single-step closed loops do not...”
+Suggested:
+“Autonomous alloy discovery for additive manufacturing is a multi-stage decision problem: composition screening, powder production, LPBF processing, and property testing have very different costs, delays, and information value.”
+Why: cleaner, less defensive, more immediately legible.
+
+2. Cost sentence
+Current:
+“...costs that vary by more than two orders of magnitude...”
+Suggested:
+“Across this pipeline, query costs span more than an order of magnitude, from about $300 for ultrasonic atomization experiments to $1–5k per LPBF build, about $2k per ASTM E8 tensile bar, and more for gas atomization.”
+Why: easier to parse; if keeping the numbers, order them logically and consistently.
+
+3. Methods sentence
+Current:
+“We present FLAIME ... and selects experiments using the partial Knowledge Gradient for Function Networks (pKGFN) acquisition function over Bayesian Optimization of Function Networks (BOFN).”
+Suggested:
+“We present FLAIME, a cost-aware self-driving workflow that applies Bayesian optimization over a staged function network, using partial knowledge gradient to decide which pipeline node to query next under a fixed budget.”
+Why: says what it does before acronym pileup.
+
+4. Surrogate sentence
+Current:
+“Each pipeline stage ... is a node with its own GP surrogate that forwards posterior beliefs as structured inputs downstream.”
+Suggested:
+“Each stage is modeled as a Gaussian-process node whose predictive uncertainty is propagated downstream, so cheap upstream measurements can update decisions before committing to expensive LPBF or tensile experiments.”
+Why: this makes the benefit legible.
+
+5. Mineral-burden sentence
+Current:
+“... jointly optimizing strength, printability, and an embedded USGS-derived mineral-burden objective ...”
+Suggested:
+“... jointly optimizing mechanical performance and printability while penalizing compositions with higher USGS-based supply burden.”
+Why: more understandable in one read. If possible, add the specific burden dimensions.
+
+6. Results sentence
+Current:
+“We will report (i) closed-loop benchmarking on AM-like synthetic networks ...”
+Suggested:
+“We show closed-loop benchmarking on AM-inspired synthetic networks with at least 3× higher sample efficiency than [named baseline], and we present preliminary CALPHAD, LPBF, and tensile measurements used to calibrate the network for aluminum alloys.”
+Why: stronger if you can say “we show” only when true. If not yet true, keep future tense but be explicit.
+
+7. AlSi10Mg clarification
+Add a sentence like:
+“AlSi10Mg serves here as an initial calibration alloy and process benchmark; the discovery campaign targets Al–Mn–Cr–Zr and Al–Zr composition families.”
+Why: this resolves the current mismatch.
+
+8. Digital twin claim
+Current:
+“... a digital-thread schema (FAIR, hosted on the American Science Cloud) that exposes per-node GP posteriors ...”
+Suggested:
+“... a FAIR digital-thread data model that stores stage-wise measurements, uncertainty estimates, and acquisition decisions to support replay across labs.”
+Why: sounds more concrete and less platform-branded.
+
+Final word-count recommendation
+- Target 230–260 words.
+- The current body is about 249 words, which is fine, but the density is high. Keep the length roughly the same and spend the saved words from acronym trimming on one sentence that clarifies real-data status and one phrase that defines the mineral-burden metric.
+
+One-line verdict
+- Accept with major revision.
+
+- Discretionary analytical decisions made during the analysis:
+  - Evaluated the abstract strictly against the supplied symposium scope rather than against general AM or AI conference standards.
+  - Used a 1–5 scoring interpretation where 3 indicates adequate but not yet convincing for a broad symposium audience.
+  - Treated undefined terms such as “Level-3 SDL” and “printability” as clarity deficits rather than assuming a field-standard meaning.
+  - Weighted internal consistency of the validation story heavily, especially the mismatch between AlSi10Mg calibration data and the stated target alloy families.
+  - Interpreted “we will report” language as reducing methodological rigor and readiness, even though contributed-talk abstracts can include near-term results.
+  - Focused rewrite suggestions on preserving the core technical claim while reducing acronym density and improving audience accessibility.
