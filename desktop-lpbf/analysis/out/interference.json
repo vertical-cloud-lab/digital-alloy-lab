@@ -4564,7 +4564,7 @@
    "group": "door",
    "at": 79.17,
    "moving": "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)",
-   "other": "Hinge pins (\u00d85, 316)",
+   "other": "Hinge pins (\u00d85, 17-4 PH)",
    "gap_mm": 5.985
   },
   {
@@ -4690,7 +4690,7 @@
    "group": "door",
    "at": 0.0,
    "moving": "Door drive shaft and disc (\u00d86 D-shaft keyed into a 6061 disc screwed to the door's left edge)",
-   "other": "Hinge pins (\u00d85, 316)",
+   "other": "Hinge pins (\u00d85, 17-4 PH)",
    "gap_mm": 12.1
   },
   {
@@ -4893,7 +4893,7 @@
    "group": "door",
    "at": 3.96,
    "moving": "Door O-ring (FKM 75A 1.78 mm cord, vulcanized splice, in a half-dovetail groove)",
-   "other": "Hinge pins (\u00d85, 316)",
+   "other": "Hinge pins (\u00d85, 17-4 PH)",
    "gap_mm": 21.394
   },
   {
@@ -5033,7 +5033,7 @@
    "group": "door",
    "at": 27.71,
    "moving": "Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate on a foot bolted to each ear's front face)",
-   "other": "Hinge pins (\u00d85, 316)",
+   "other": "Hinge pins (\u00d85, 17-4 PH)",
    "gap_mm": 48.231
   },
   {
@@ -5054,7 +5054,7 @@
    "group": "door",
    "at": 27.71,
    "moving": "Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, 3.6 kN rated, preload set to ~0.75 kN)",
-   "other": "Hinge pins (\u00d85, 316)",
+   "other": "Hinge pins (\u00d85, 17-4 PH)",
    "gap_mm": 53.476
   },
   {
@@ -7469,7 +7469,7 @@
    "group": "module",
    "at": 276.0,
    "moving": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
-   "other": "Hinge pins (\u00d85, 316)",
+   "other": "Hinge pins (\u00d85, 17-4 PH)",
    "gap_mm": 21.07
   },
   {
@@ -7560,7 +7560,7 @@
    "group": "module",
    "at": 276.0,
    "moving": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
-   "other": "Hinge pins (\u00d85, 316)",
+   "other": "Hinge pins (\u00d85, 17-4 PH)",
    "gap_mm": 24.519
   },
   {
@@ -8253,7 +8253,7 @@
    "group": "module",
    "at": 276.0,
    "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
-   "other": "Hinge pins (\u00d85, 316)",
+   "other": "Hinge pins (\u00d85, 17-4 PH)",
    "gap_mm": 41.053
   },
   {
@@ -8274,7 +8274,7 @@
    "group": "module",
    "at": 0.0,
    "moving": "Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles)",
-   "other": "Hinge pins (\u00d85, 316)",
+   "other": "Hinge pins (\u00d85, 17-4 PH)",
    "gap_mm": 41.356
   },
   {
@@ -8512,14 +8512,14 @@
    "group": "module",
    "at": 224.25,
    "moving": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
-   "other": "Hinge pins (\u00d85, 316)",
+   "other": "Hinge pins (\u00d85, 17-4 PH)",
    "gap_mm": 50.693
   },
   {
    "group": "module",
    "at": 224.25,
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
-   "other": "Hinge pins (\u00d85, 316)",
+   "other": "Hinge pins (\u00d85, 17-4 PH)",
    "gap_mm": 50.833
   },
   {
@@ -10634,5 +10634,5 @@
    "why": "tube in the valve's push-in port"
   }
  ],
- "runtime_s": 372.9
+ "runtime_s": 1289.2
 }

@@ -288,6 +288,7 @@ def main(argv=None):
     ap.add_argument("--step", type=int, default=1, help="use every Nth frame (a quick check; the clocks still count all)")
     ap.add_argument("--stills", default="", help="comma-separated chapter:fraction, e.g. 10-parts:0.4,50-integration:0.7")
     ap.add_argument("--no-cards", action="store_true", help="leave missing chapters out instead of a title card")
+    ap.add_argument("--max-mb", type=float, default=MAX_MB, help="size cap for the bit-rate limit (MB)")
     a = ap.parse_args(argv)
     only = set(a.only.split(",")) - {""} or None
     out = Path(a.out)
@@ -327,7 +328,7 @@ def main(argv=None):
         total = k
         ticks = [s_ / total for s_ in starts[1:]]
     dur = total / FPS
-    maxrate = int(min(4000, MAX_MB * 0.92 * 8e3 / max(dur, 1.0)))
+    maxrate = int(min(4000, a.max_mb * 0.92 * 8e3 / max(dur, 1.0)))
     print(f"{len(chapters)} chapters, {total} frames, {dur:.0f} s; crf {a.crf}, maxrate {maxrate} kb/s", flush=True)
     enc = encoder(out, a.crf, maxrate, a.preset, a.threads)
     thumbs, stills = [], {}
@@ -405,8 +406,8 @@ def main(argv=None):
     (odir / (out.stem + ".json" if out.stem != "robot-build" else "compose.json")).write_text(
         json.dumps(rep, indent=1) + "\n")
     print(json.dumps(rep["youtube_chapters"], indent=0))
-    if size > MAX_MB:
-        print(f"WARNING: {size:.1f} MB is over {MAX_MB} MB: re-run with a higher --crf", flush=True)
+    if size > a.max_mb:
+        print(f"WARNING: {size:.1f} MB is over {a.max_mb} MB: re-run with a higher --crf", flush=True)
     return 0
 
 
