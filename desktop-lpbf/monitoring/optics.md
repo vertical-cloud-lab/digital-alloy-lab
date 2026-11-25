@@ -458,13 +458,16 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
    cube1, at three galvo angles. It decides:
    - PD-B: 900/40 or the 950/10 fallback;
    - whether 850 nm is usable;
-   - the InGaAs route (a) transmission.
+   - the InGaAs and SWIR camera transmission at 1600–1750 nm.
 2. **Ask Thorlabs for the DMSP1000's tested curve** above 1600 nm on the unit in hand, and the DMSP1180's curve.
-3. **Bench-test the light:** the SOLIS-850C on the DC2200 at 10 µs pulses, measured with a fast photodiode.
-4. **Check the Chronos's lens fit at LW:** 155 mm of body plus ~50 mm of Kowa lens against the 180 mm of room (fits.json).
-5. **Get the Chronos full well and read noise from Kron.** A stand-in from a different Luxima sensor is used here.
-6. **Fit FESH1000s to every camera** (and the layer camera) before any camera sees the laser.
-7. **Put a beam trap on cube1's far port now**, whatever else is bought.
+3. **Ask Allied Vision for the Alvium U-030 VSWIR's EMVA 1288 data** (read noise, full well, dark current warm). Its usable
+   dynamic range decides how far below 1,000 K one frame reaches (§2).
+4. **Bench-test the light:** the SOLIS-850C on the DC2200 at 10 µs pulses, measured with a fast photodiode.
+5. **Check the Chronos's lens fit at LW:** 155 mm of body plus ~50 mm of Kowa lens against the 180 mm of room (fits.json),
+   or worker C's Nikon 50 mm on the F mount.
+6. **Get the Chronos full well and read noise from Kron.** A stand-in from a different Luxima sensor is used here.
+7. **Fit FESH1000s to every camera** (and the layer camera) before any camera sees the laser.
+8. **Put a beam trap on cube1's far port now**, whatever else is bought.
 
 ## 8. Not done / limits
 
