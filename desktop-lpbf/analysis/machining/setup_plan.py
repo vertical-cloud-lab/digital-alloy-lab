@@ -25,10 +25,10 @@ workholding holder_check.py checked (edge clamps, no end tabs; the dummy-floor p
 plate held through its port), and F-S3 as programmed per A index: programmed minutes from the G-code plus an estimate for
 the spot drills, taps, STI taps, reamers and SAE port tools, which are not programmed.
 """
-import os
 from __future__ import annotations
 
 import json
+import os
 import math
 import pathlib
 import sys

@@ -5,6 +5,180 @@ design-for-machining (DFM) rules. It covers what BYU's shops list, what a 3-axis
 cannot reach, and the tools to buy. Nothing here has been quoted by a shop. A BYU machinist reviewed the build animation;
 the first section answers him.
 
+## Round 6 (2026-11-25): setup C programmed, CAMotics and the holder check on the final programs, hours re-run
+
+Sterling asked on 2026-11-25 for everything round 5 left undone. For machining that was three things:
+
+- program the frame's setup C, the four walls on the rotary;
+- run CAMotics on the final programs;
+- regenerate `setup_plan.json` and the hours tables.
+
+All three are done. Nothing here has been run on a machine, quoted, or reviewed by a machinist.
+
+- **Setup C is programmed.**
+  - FreeCAD 1.0.2 programs it as one job per A index, joined into one Haas program with the A moves,
+    [`frame_C_haas.nc`](analysis/out/machining/gcode/frame_C_haas.nc).
+  - It cuts every wall feature the model has: the door opening, the inlet slot, the bores, the SAE ports and the
+    insert, pin, rail and through-beam holes.
+- **CAMotics on all eight final programs:** 0 gouges and 0 rapids through stock.
+  - The frame's leftover deeper than 1 mm falls from 31.8 cm³ in 27 places to 0.017 cm³. All of it is at the two SAE-4
+    ports, where the port tool cuts the thread and the O-ring cone.
+  - The floor plate is clean, apart from its two slugs.
+  - CAMotics 1.2.0 ignores the A axis: a test hole programmed after `G0 A90` went in from the top face. So each index is
+    simulated as its own 3-axis program.
+- **Holder, spindle, fixture and travel check on the final programs:** 0 collisions in all eight setups.
+  - The dummy-floor plate is now flush with the frame, 312 x 222 (was 330 x 240). On the rotary it had stood 9 mm proud of
+    every wall, and the 1/4 in. end mill's ER16 holder came within 2.5 mm of it.
+- **Drills fixed.** Reading the programs, not the checks, found this one: every modelled step was drilled with the largest
+  drill that fits, and the model draws an STI hole at the insert's major diameter.
+  - The lid's 20 M5 STI holes got a 6.0 mm drill. The insert's major is 6.04 mm, so the STI tap would have had nothing
+    left to cut.
+  - Insert and dowel holes now get the drill for their part number.
+
+### Setup C: the four walls on the rotary
+
+The frame sits on the dummy-floor plate on the HRT210's platter, with its z axis along A (machine X). A is 215.9 mm above
+the table, on a 2-1/2 in. riser (setup_plan.json F-S3). [`freecad_cam.py`](analysis/machining/freecad_cam.py) programs
+one FreeCAD job per A index, each in the machine frame at that index:
+
+- X runs along the frame's z;
+- the wall being cut faces +Z;
+- work zero is on the A axis.
+
+The rotations are setup_plan.json's `a_axis.index`. The four jobs are posted, then joined into one Haas program.
+
+| Index | Wall up | What it cuts | Tools | CAMotics (min) |
+|---|---|---|---|---|
+| A0 | front | door opening 220 x 92 R6.5 through the 16 mm wall, adaptive | 1/2 in. end mill | 11.1 |
+| A90 | left | recoater bore Ø18, helix-milled; the through-beam's Ø10.8 x 1.32 O-ring counterbore, helix-milled, and its M6 x 0.75 tap drill through | 1/2 and 1/4 in. end mills; 5.2 mm drill | 0.4 |
+| A180 | back | inlet slot 120 x 8 through, profiled in 3 mm steps; argon SAE-4 port, helix-milled to its 25/64 in. tap drill, and its Ø4 passage; 7 M4 STI plenum holes; 2 Ø3 pin holes; 4 M4 rail holes tapped through | 1/4 in. end mill; 4.2, 3.3 and 2.9 mm drills | 2.4 |
+| A270 | right | KF-25 bore Ø25.4 and recoater bore Ø18, helix-milled; the through-beam as on the left; O₂ SAE-4 port and passage; 4 M5 STI vacuum-adapter holes; 4 M4 STI bearing-cap holes; 4 Ø3 pin holes | 1/2 and 1/4 in. end mills; 5.3, 5.2, 4.2, 3.3 and 2.9 mm drills | 1.6 |
+
+- **How the walls' features are found.** `wall_ops` reads them off the model: cylinders whose axis is the wall's normal,
+  inside the wall, grouped per hole.
+  - Steps wider than 9 mm are helix-milled. The 18 and 25.4 mm bores get the 1/2 in. end mill; the 10.8 mm counterbores
+    and the SAE ports get the 1/4 in.
+  - The rest are drilled with the hole's tap or STI drill, from the step at the hole's mouth to the hole's bottom.
+  - The inlet slot is the one non-circular hole in the back wall's face. It is profiled with the 1/4 in. end mill.
+- **The joined program.** Before each index it:
+  - turns the coolant and spindle off;
+  - sends Z to machine home with `G53 G00 Z0.`. The plate's corners swing 192 mm about A, so no work plane is safe for
+    indexing;
+  - unclamps, indexes and clamps: `M11`, `G00 A90.`, `M10`.
+
+  Tool changes are written `T3 M06`. The program ends back at A0 with M30. The clearance planes are Z 130 at the front
+  and back and Z 175 at the sides, above the plate's edge.
+- **Not programmed:** the spot drills, the M4 and M6 x 0.75 taps, the STI taps, the 3 mm reamer, and the SAE-4 port tool
+  (spot face, O-ring cone, 7/16-20 thread). setup_plan.json times them with its vendor model.
+- **Check at the machine:**
+  - the HRT210's direction parameter: A90 must bring the left wall up;
+  - which side the motor box is on (assumed -Y);
+  - the brake codes for the shop's control.
+
+### CAMotics on the final programs
+
+[`camotics_sim.py`](analysis/machining/camotics_sim.py) cut all eight programs at 0.5 mm, chained in the part frame as
+before. Results are in [`camotics_sim.json`](analysis/out/machining/camotics/camotics_sim.json).
+
+- **The A axis.** CAMotics 1.2.0 logs an A move as an XYZ move to the same point and goes on cutting as if A were 0
+  ([`a_axis_test.json`](analysis/out/machining/camotics/a_axis_test.json): a 6 mm hole programmed after `G0 A90` went
+  in from the top face).
+  - So each index's block, which is the posted per-index program, is cut on the blank turned into that index's machine
+    frame.
+  - The result is turned back into the part frame and chained like any other setup.
+  - The Haas program is those four blocks with the A moves between them.
+- **Docker:** `--memory 3g --cpus 1.5`, 32 mm slabs; about 20 min for all eight on the shared runner.
+
+| Setup | Cut away (cm³) | Rapids through stock | CAMotics (min) | Recount (min) | FreeCAD's estimate (min) |
+|---|---|---|---|---|---|
+| frame B, bottom up | 445.0 | 0 | 7.4 | 7.0 | 11.5 |
+| frame A, top up | 426.3 | 0 | 41.9 | 41.6 | 47.3 |
+| frame C, A0 front (door) | 323.2 | 0 | 11.1 | 10.5 | 15.9 |
+| frame C, A90 left | 4.5 | 0 | 0.4 | 0.4 | 1.6 |
+| frame C, A180 back | 17.7 | 0 | 2.4 | 2.2 | 6.0 |
+| frame C, A270 right | 15.1 | 0 | 1.6 | 1.5 | 6.2 |
+| floor A, top up | 426.6 | 0 | 51.2 | 51.0 | 58.9 |
+| floor B, bottom up | 205.7 | 0 | 17.7 | 17.2 | 25.0 |
+| **frame / floor plate** | | **0** | **64.7 / 68.9** | **63.2 / 68.2** | **88.4 / 84.0** |
+
+| Part | Model (cm³) | Simulated (cm³) | Gouge deeper than 1 mm | Leftover deeper than 1 mm | Deepest leftover | Loose pieces |
+|---|---|---|---|---|---|---|
+| frame | 1584.1 | 1590.0 (+0.37 %) | none (deepest 0.5 mm, voxel noise) | 0.017 cm³ in 48 spots, all at the two SAE-4 ports (round 5: 31.8 cm³ in 27 places) | 1.22 mm | none |
+| floor plate | 1115.8 | 1117.2 (+0.13 %) | none | 0.001 cm³ (single voxels at the port's lower edge) | 1.0 mm | port slug 52.6 cm³, slot core 12.7 cm³; both drop in setup A |
+
+- **What the extra volume is.** Apart from the ports' 0.017 cm³, the 5.9 cm³ on the frame and the 1.4 cm³ on the floor
+  plate lie within 1 mm of the model's surface. They are threads, the STI inserts' thread depth, reaming stock and voxel
+  skins.
+- **The SAE ports' leftover.** It is the O-ring cone (Ø12.89 to Ø11.11 over 1.6 mm) and the thread ring outside the
+  9.92 mm tap drill. The port tool (tooling-bom H1) and the 7/16-20 tap (H3) cut them.
+- **The walls, model beside CAMotics:**
+
+  ![](analysis/out/machining/camotics/camotics_frame_walls.png)
+
+- **Cutting time.** The frame is 64.7 min in CAMotics, up from 59.7 min (2026-11-22, with setup C cutting only the door).
+  Of that, 4.4 min is the walls and 41.9 min is setup A, where the lid gland's 1/8 in. tool alone takes 35 min. The floor
+  plate is 68.9 min, up from 61.2: round 5 moved its outline's bottom 8 mm into floor B, as a 1/4 in. adaptive. None of
+  these counts include acceleration, tool changes or A indexing.
+
+### Holder, spindle, fixture and travel check on the final programs
+
+[`holder_check.py`](analysis/machining/holder_check.py) sweeps the whole tool assembly along every move, as on
+2026-11-23. On the rotary:
+
+- each index is a 3-axis setup in that index's machine frame;
+- the dummy-floor plate turns with the part, while the platter, housing, motor box and riser stay put;
+- the stock carries over from index to index.
+
+Results are in [`holder_check.json`](analysis/out/machining/holder_check.json).
+
+| Setup | Collisions | Tightest holder to stock (mm) | Tightest tool to fixture (mm) |
+|---|---|---|---|
+| frame B | 0 | 4.1 (T2's ER32 nut) | 5.0 (T2's flutes, edge clamp) |
+| frame A | 0 | 4.0 (T2's ER32 nut) | 10 or more |
+| frame C, A0 | 0 | 10 or more (T3 shank 8.9) | 10 or more |
+| frame C, A90 / A270 | 0 | 10 or more | 3.85 (the 1/4 in. end mill's flutes from the plate's edge, cutting the through-beam counterbore 3.5 mm above the frame's bottom) |
+| frame C, A180 | 0 | 10 or more | 6.65 (4.2 mm drill, plenum holes at z 4.5); the 1/4 in. end mill's holder 8.25 (was 2.5 with the 330 x 240 plate) |
+| floor A | 0 | 4.8 (T9's ER16 nut) | 3.0 (T2's flutes, edge clamp) |
+| floor B | 0 | 10 or more | 2.76 (4.2 mm drill, fixture plate) |
+
+- **Travels on the rotary.** The tool-centre span is at most 102 mm along X (the A axis) by 210 mm along Y. The spindle
+  nose stays 393-489 mm above the table, inside the VF-4's 107-742 mm. At Z home every tool tip clears the part and the
+  fixtures by 271 mm or more.
+- **The stock model agrees with CAMotics.** This check's chained stock has 0.45 cm³ that CAMotics' doesn't, and CAMotics'
+  has 0.03 cm³ that it doesn't, out of 1590 cm³ (frame). For the floor plate it is 0.89 and 0.04 cm³ of 1117 cm³.
+
+### Drills for insert and pin holes
+
+Until now `freecad_cam.py` drilled every modelled step with the largest of its 3.3, 4.2, 5.0 and 6.0 mm drills that fits.
+The model draws an STI hole at the insert's major diameter, so CAMotics and the holder check, which compare against the
+model, couldn't see the problem:
+
+- the lid's 20 M5 STI holes and the floor's 4 Z-mount M5 STI holes got 6.0 mm. The M5 insert's major is 6.04 mm;
+- the M6 STI holes (legs, module flange) got 6.0 mm, against the 6.3 mm STI drill;
+- the 6 mm dowel holes got 6.0 mm, leaving nothing for the reamer.
+
+The 2026-11-22 note that the six Ø7.3 steps of the legs and the module flange "need a 7.3 mm drill" was wrong for the same
+reason. They are M6 STI holes, which take the 6.3 mm STI drill and an STI tap.
+
+Each hole is now drilled once, from its mouth to its bottom, with the drill for what goes in it:
+
+| What goes in the hole | Drill | Holes |
+|---|---|---|
+| M4 STI insert (McMaster 91732A656) | 4.2 mm (tooling-bom D9 is 4.22), now to the hole's bottom (the step under the insert had a 3.3 mm drill) | floor: outlet plenum 6, funnel 4; frame walls: plenum 7, bearing cap 4 |
+| M5 STI insert (91732A261) | 5.3 mm (D10) | lid 20, vacuum adapter 4, Z mount 4 |
+| M6 STI inserts (91732A262, 91732A782) | 6.3 mm (D11) | legs 4, module flange 2 |
+| 6 mm dowel pin (93600A686) | 5.8 mm, then the 6 mm reamer (F1) | frame and floor dowels 2 + 2; the floor's module dowel and diamond-pin holes 2 (FP-07, a plain blind 6 mm hole) |
+| 3 mm dowel pin (93600A304) | 2.9 mm, then the 3 mm reamer (F2) | frame walls 6 |
+
+- **Where the rule comes from.** On the floor plate it is the part number joints.py cut each hole for (`PN_DRILL`, from
+  inventory.py's parts.json). On the walls it is the diameter the model draws at the hole's mouth (`TAP_DRILL`). The lid
+  and the frame's dowels are named in their ops.
+- **Tapped holes.** A screw joint's hole drawn at the thread's nominal size is tapped and gets its tap drill (M4 3.3,
+  M5 4.2, M6 5.0). No current hole is one, but the zero-point clamp posts may add some.
+- **Everything else** keeps the old rule.
+- **What it changes.** Re-posting changed only these drill ops. FreeCAD's Adaptive op isn't bit-for-bit repeatable: a
+  re-post moves its paths by about 0.01 mm. So the committed results are from the posted programs that CAMotics cut.
+
 ## Tool holders, spindle, fixtures and travels checked (2026-11-23)
 
 CAMotics models the cutter only. [`holder_check.py`](analysis/machining/holder_check.py) now sweeps the whole tool
@@ -20,7 +194,8 @@ clearances under 2 mm. After the fixes in [`freecad_cam.py`](analysis/machining/
 clean, every holder clears the stock by 4.0 mm or more, and every tool clears the fixtures by 2.7 mm or more.
 
 Frame setup C beyond the door opening is still not programmed, and CAMotics has not been re-run on the final programs
-([below](#still-open-after-this-check)).
+([below](#still-open-after-this-check)). Round 6 did both, and re-ran this check on the final programs
+([above](#round-6-2026-11-25-setup-c-programmed-camotics-and-the-holder-check-on-the-final-programs-hours-re-run)).
 
 ### Method
 
@@ -145,14 +320,15 @@ CAMotics on the pre-fix G-code (re-run today on the current model, in Docker at 
 
 ### Still open after this check
 
-- **CAMotics was not re-run on the final programs.** The run waited 29 min for one of the runner's three shared
+- **CAMotics was not re-run on the final programs.** (Done in round 6: 0 gouges, 0 rapids through stock.) The run waited
+  29 min for one of the runner's three shared
   heavy-job slots, then was stopped by the session's time limit after two slabs. The material check of the final programs is this check's own
   chained stock (above). It agrees with CAMotics' result for the pre-fix programs to within 0.07 cm³ (frame) and 0.89 cm³
   (floor plate). Run `camotics_sim.py` on the new G-code before the shop does.
 - **Edge clamps on 1 in. plate.** The floor plate's P-S1 relies on edge clamps gripping the bottom 7.7 mm of a 1 in.
   blank under adaptive cuts. Check the clamping force against the cutting load (not done).
 - **`setup_plan.json` still describes the old workholding** for F-S1 and P-S1 (toe clamps on end tabs) and P-S2 (stud
-  and washer), and the old floor op split. `freecad_cam.FIXTURES` is the checked version. `setup_plan.py` was not
+  and washer), and the old floor op split (round 6: regenerated with the checked workholding). `freecad_cam.FIXTURES` is the checked version. `setup_plan.py` was not
   re-run, and neither were `hours.py` and the hours tables.
 - **Assumed dimensions:**
   - the spindle nose and head;
@@ -163,7 +339,7 @@ CAMotics on the pre-fix G-code (re-run today on the current model, in Docker at 
 
   No tailstock: the plan uses none.
 - **Frame setup C beyond the door opening** (the walls' slots, ports, bores and through-beam holes) is still not
-  programmed. So the check covers only the door opening on the rotary.
+  programmed. So the check covers only the door opening on the rotary (round 6: programmed and checked).
 - **Not modelled:** coolant lines and probes. Fixtures that sit under the part (risers, pins, screws from below) are
   drawn, but the tool can't reach them.
 
@@ -252,7 +428,8 @@ fixes, is in [`camotics_sim_before_fixes.json`](analysis/out/machining/camotics/
   Setup C programs only the door opening, as before.
 - **The floor plate is clean at this resolution.** One thing sits under the 1 mm threshold: the six Ø7.3 hole steps at
   (±135, ±90) and (±58, 0) are drilled 6.0 mm, the biggest drill in the set, which leaves a 0.65 mm wall. They need a
-  7.3 mm drill or a helical end-mill pass.
+  7.3 mm drill or a helical end-mill pass. (Round 6: wrong. They are M6 STI holes drawn at the insert's major diameter,
+  and take the 6.3 mm STI drill and an STI tap; [drills](#drills-for-insert-and-pin-holes).)
 
 | Floor plate, first run | Floor plate, after the fixes |
 |---|---|

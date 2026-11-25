@@ -508,6 +508,11 @@ def main():
                     only_here_cm3=round(float((mine & ~cam).sum()) * v, 2),
                     only_in_camotics_cm3=round(float((cam & ~mine).sum()) * v, 2))
                 print(part, "stock vs CAMotics", report["stock_vs_camotics"][part], flush=True)
+    if a.parts != "frame,floor" and pathlib.Path(a.out).exists():  # keep the other part's results from an earlier run
+        old = json.loads(pathlib.Path(a.out).read_text())
+        for k in ("setups", "stock_vs_model", "stock_vs_camotics"):
+            for n, v in old.get(k, {}).items():
+                report.setdefault(k, {}).setdefault(n, v)
     pathlib.Path(a.out).write_text(json.dumps(report, indent=1))
     print("wrote", a.out)
 

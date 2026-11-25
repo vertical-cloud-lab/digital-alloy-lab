@@ -13,8 +13,9 @@ on a second FKM face O-ring.**
 
 - The frame's core comes out as one 274 x 184 mm slug, about 17 kg of reusable 6061, cut by waterjet or bandsaw rather than
   milled to chips.
-- The walls are finished from the top and from the bottom, 62 mm each way, with a standard 3/4 in. end mill at 63 mm
-  stick-out (3.3:1). No long, necked or special tool is needed anywhere on the frame or the floor plate.
+- The walls are finished from the top and from the bottom, 62 mm each way, with a standard 3/4 in. end mill at 66 mm
+  stick-out from an ER32 collet chuck (3.5:1; it was 63 mm from a side-lock until the 2026-11-23 holder check). No long,
+  necked or special tool is needed anywhere on the frame or the floor plate.
 - The frame takes three setups on a mill with a 4th axis: bottom up, top up, then the four walls in one clamping on the
   rotary. With 3-axis only it takes six. The floor plate takes two.
 - It keeps every function. The interior stays 280 x 190 x 120 mm, and the lid gland, the 20 M5 lid inserts, the door
@@ -25,9 +26,9 @@ on a second FKM face O-ring.**
 
 | | Before: one block, 120 mm pocket | Now: frame + floor plate |
 |---|---|---|
-| Stock | 13 x 9.5 x 6 in. block, 12.1 L, 32.8 kg | frame 15 x 9.5 x 5.5 in. (incl. 1 in. clamp tabs, sawn off), floor 1 in. plate |
+| Stock | 13 x 9.5 x 6 in. block, 12.1 L, 32.8 kg | frame 15 x 9.5 x 5.5 in. (its 1 in. clamp tabs aren't needed since F-S1 went to edge clamps on 2026-11-23, so 13 in. long will do), floor 1 in. plate |
 | Chips | 9.4 L (78 % of the block) | 2.5 L (frame) + 0.9 L (floor); the 7.0 L core comes out as one slug |
-| Longest tool | 3/4 in. x 6 in. OAL at 112 mm (5.9:1); a 3/8 in. at 125 mm (13:1) for the R5 corners | 3/4 in. x 4 in. OAL at 63 mm (3.3:1) |
+| Longest tool | 3/4 in. x 6 in. OAL at 112 mm (5.9:1); a 3/8 in. at 125 mm (13:1) for the R5 corners | 3/4 in. x 4 in. OAL at 66 mm (3.5:1) |
 | Tool deflection per 100 N, worst feature | 656 µm (3/8 in., R5 corners and coves) | 5.2 µm (3/4 in., walls) |
 | Residual stock, 3-axis with standard tools (voxel simulation) | 29.1 cm³ (3.4 with 6 in. tools) | 1.05 cm³ frame, 0.09 cm³ floor: voxel slivers in the R10 corners and Ø3-4 holes, all of which are cut |
 | Inside vertical corners | R5 | R10 |
@@ -250,15 +251,19 @@ The full plan is in [`analysis/out/machining/setup_plan.json`](analysis/out/mach
 - **Frame:**
   1. Saw the blank. Waterjet the core out from a Ø12 start hole: 35.6 in. of cut at 0.5-2.9 ipm, scaled from WARDJet's
      4 in. aluminium data, so 12-71 min. Or trepan it on the mill from both sides.
-  2. **F-S1, bottom up**, toe clamps on the end tabs: face the bottom; the lower halves of the outside and the opening; the
+  2. **F-S1, bottom up**, on risers with four low-profile edge clamps on the x-end faces (toe clamps on end tabs were in
+     the face mill's way: holder check, 2026-11-23): face the bottom; the lower halves of the outside and the opening; the
      rebate; the 18 M4 holes and 2 dowel holes.
   3. **F-S2, top up**, on a "dummy floor" fixture plate that pins and screws the frame down through its own floor-screw
      holes: face the top; the upper halves; the lid gland; the lid inserts.
   4. **F-S3, the four walls in one clamping** on an HRT210-class rotary, A along the frame's z: the door opening, the
-     slots, bores, ports and inserts. The dummy-floor plate goes on the platter. The frame swings 188 mm about A, more than
-     the HRT210's 152.4 mm centre height, so the rotary needs a 2-1/2 in. riser.
-- **Floor plate:** P-S1 top up (face, pad step, gland, port, slots, dowel and clearance holes), then P-S2 bottom up on two
-  pins and a centre stud through the port (face, outer profile, notches, blind holes).
+     slots, bores, ports and inserts. The dummy-floor plate goes on the platter; it is 312 x 222, flush with the frame
+     (round 6). The frame swings 188 mm about A, more than the HRT210's 152.4 mm centre height, so the rotary needs a
+     2-1/2 in. riser. Since round 6 this setup is programmed: one FreeCAD job per A index, joined into one Haas program
+     with the A moves ([`frame_C_haas.nc`](analysis/out/machining/gcode/frame_C_haas.nc)).
+- **Floor plate:** P-S1 top up on edge clamps (face, pad step, the outline to z -12, gland, port, slots, dowel holes), then
+  P-S2 bottom up on two pins and an expanding clamp in the port (face, the rest of the outline with the notches, blind
+  holes).
 - **Time on the mill** at vendor feeds (Helical, Haas; 60 % efficiency): frame 112 min, floor plate 51 min, plus 12-71 min
   on the waterjet.
 - **FreeCAD 1.0.2's CAM workbench,** run headless, programmed the same features and posted G-code: 60 min of cutting for the

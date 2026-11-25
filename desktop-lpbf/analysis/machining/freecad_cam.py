@@ -27,7 +27,10 @@ release, sha256 e00be00a...904f61 checked against the release's SHA256 file, ext
     FREECADCMD=/path/to/squashfs-root/usr/bin/freecadcmd python3 desktop-lpbf/analysis/machining/freecad_cam.py
   or directly:
     /path/to/freecadcmd -c "import runpy; runpy.run_path('desktop-lpbf/analysis/machining/freecad_cam.py', run_name='__main__')"
-G-code goes to /tmp/chamber-cam/gcode/<setup>.ngc.
+G-code goes to /tmp/chamber-cam/gcode/<setup>.ngc. $FREECAD_CAM_PARTS=floor (or frame) programs only that part's
+setups and keeps the other part's entry in the JSON: FreeCAD's Adaptive op isn't bit-for-bit repeatable (a re-post moves
+its paths by ~0.01 mm), so re-posting a part that was not changed would leave its CAMotics results describing other
+G-code. $FREECAD_CAM_JSON overrides the JSON's path.
 
 Approximations (also written to the JSON): FreeCAD 1.0's Adaptive only knows the stock's bounding
 box, so the inside of the frame opening is cut with Profile passes (rough 2.7 mm + finish 0.3 mm
@@ -385,6 +388,8 @@ def run_cam():
     doc = FreeCAD.newDocument("chamber_cam")
     shapes = {}
     for part in ("frame", "floor"):
+        if not os.path.exists(os.path.join(IN_DIR, part + ".brep")):
+            continue
         s = Part.Shape()
         s.read(os.path.join(IN_DIR, part + ".brep"))
         shapes[part] = s
@@ -606,7 +611,10 @@ def run_cam():
 
     results = []
     rotary = {}
+    only = [p for p in os.environ.get("FREECAD_CAM_PARTS", "").split(",") if p]
     for su in SETUPS:
+        if only and su["part"] not in only:
+            continue
         part, flip = su["part"], su.get("flip", False)
         rot_x = su.get("rot_x", 180 if flip else 0)
         shp = shapes[part].copy()
@@ -1111,6 +1119,11 @@ def main():
         sys.exit(subprocess.call([exe, "-c", code]))
     version, results = run_cam()
     out = summarise(version, results)
+    if os.environ.get("FREECAD_CAM_PARTS") and os.path.exists(OUT_JSON):  # keep the parts not re-posted
+        old = json.load(open(OUT_JSON))
+        for k, v in old.get("parts", {}).items():
+            out["parts"].setdefault(k, v)
+        out["camotics"] = old.get("camotics", out["camotics"])
     os.makedirs(os.path.dirname(OUT_JSON), exist_ok=True)
     with open(OUT_JSON, "w") as f:
         json.dump(out, f, indent=1)
