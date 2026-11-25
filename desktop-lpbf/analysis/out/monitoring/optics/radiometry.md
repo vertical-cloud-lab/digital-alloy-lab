@@ -18,30 +18,30 @@ Fields: own Eagar-Tsai fields (worker A's surface_fields.npz not given).
 | 200 W, 0.4 m/s | PD-B 900/40 (PDA36A2) | Kozjek | 53.1 nA | 0.00796 V, 86 | 0.000796 V, 25 | 0.0796 V, 220 |
 | 200 W, 0.4 m/s | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | pass | 23.1 nA | 0.00347 V, 37 | 0.000347 V, 11 | 0.0347 V, 96 |
 | 200 W, 0.4 m/s | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | Kozjek | 0.5 nA | 7.68e-05 V, 1 | 7.68e-06 V, 0 | 0.000768 V, 2 |
-| 200 W, 0.4 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 9.2 nA | 0.0014 V, 15 | 0.000139 V, 3 | 0.0139 V, 42 |
-| 200 W, 0.4 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 9.2 nA | 0.00139 V, 15 | 0.000138 V, 3 | 0.0138 V, 42 |
-| 200 W, 0.4 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 16.3 nA | 0.00246 V, 27 | 0.000245 V, 5 | 0.0245 V, 74 |
-| 200 W, 0.4 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 16.3 nA | 0.00246 V, 27 | 0.000244 V, 5 | 0.0244 V, 74 |
+| 200 W, 0.4 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 6.0 nA | 0.0009 V, 10 | 8.94e-05 V, 2 | 0.00894 V, 27 |
+| 200 W, 0.4 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 5.9 nA | 0.000898 V, 10 | 8.92e-05 V, 2 | 0.00892 V, 27 |
+| 200 W, 0.4 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 15.0 nA | 0.00227 V, 25 | 0.000225 V, 5 | 0.0225 V, 68 |
+| 200 W, 0.4 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 15.0 nA | 0.00226 V, 25 | 0.000224 V, 5 | 0.0224 V, 68 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | PD-A 700/40 (PDA36A2) | pass | 35.3 nA | 0.0053 V, 57 | 0.00053 V, 16 | 0.053 V, 146 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | PD-A 700/40 (PDA36A2) | Kozjek | 35.2 nA | 0.00528 V, 57 | 0.000528 V, 16 | 0.0528 V, 146 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | PD-B 900/40 (PDA36A2) | pass | 75.5 nA | 0.0113 V, 122 | 0.00113 V, 35 | 0.113 V, 313 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | PD-B 900/40 (PDA36A2) | Kozjek | 75.3 nA | 0.0113 V, 122 | 0.00113 V, 35 | 0.113 V, 312 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | pass | 32.8 nA | 0.00493 V, 53 | 0.000493 V, 15 | 0.0493 V, 136 |
 | 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | Kozjek | 0.7 nA | 0.000109 V, 1 | 1.09e-05 V, 0 | 0.00109 V, 3 |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 12.8 nA | 0.00193 V, 21 | 0.000192 V, 4 | 0.0192 V, 58 |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 12.8 nA | 0.00193 V, 21 | 0.000191 V, 4 | 0.0191 V, 58 |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 22.7 nA | 0.00342 V, 37 | 0.00034 V, 7 | 0.034 V, 103 |
-| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 22.6 nA | 0.00341 V, 37 | 0.000339 V, 7 | 0.0339 V, 102 |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 8.3 nA | 0.00125 V, 14 | 0.000124 V, 3 | 0.0124 V, 37 |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 8.2 nA | 0.00124 V, 14 | 0.000123 V, 3 | 0.0123 V, 37 |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 20.9 nA | 0.00315 V, 34 | 0.000313 V, 7 | 0.0313 V, 94 |
+| 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 20.8 nA | 0.00314 V, 34 | 0.000312 V, 7 | 0.0312 V, 94 |
 | 350 W, 0.8 m/s | PD-A 700/40 (PDA36A2) | pass | 44.7 nA | 0.00671 V, 72 | 0.000671 V, 21 | 0.0671 V, 185 |
 | 350 W, 0.8 m/s | PD-A 700/40 (PDA36A2) | Kozjek | 44.6 nA | 0.00669 V, 72 | 0.000669 V, 21 | 0.0669 V, 185 |
 | 350 W, 0.8 m/s | PD-B 900/40 (PDA36A2) | pass | 95.8 nA | 0.0144 V, 155 | 0.00144 V, 44 | 0.144 V, 397 |
 | 350 W, 0.8 m/s | PD-B 900/40 (PDA36A2) | Kozjek | 95.5 nA | 0.0143 V, 154 | 0.00143 V, 44 | 0.143 V, 396 |
 | 350 W, 0.8 m/s | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | pass | 41.6 nA | 0.00625 V, 67 | 0.000625 V, 19 | 0.0625 V, 173 |
 | 350 W, 0.8 m/s | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | Kozjek | 0.9 nA | 0.000138 V, 1 | 1.38e-05 V, 0 | 0.00138 V, 4 |
-| 350 W, 0.8 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 16.3 nA | 0.00246 V, 27 | 0.000245 V, 5 | 0.0245 V, 74 |
-| 350 W, 0.8 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 16.3 nA | 0.00246 V, 27 | 0.000244 V, 5 | 0.0244 V, 74 |
-| 350 W, 0.8 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 28.9 nA | 0.00436 V, 48 | 0.000433 V, 10 | 0.0433 V, 131 |
-| 350 W, 0.8 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 28.8 nA | 0.00435 V, 48 | 0.000432 V, 9 | 0.0432 V, 130 |
+| 350 W, 0.8 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | pass | 10.5 nA | 0.00159 V, 17 | 0.000158 V, 3 | 0.0158 V, 48 |
+| 350 W, 0.8 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 10.5 nA | 0.00159 V, 17 | 0.000157 V, 3 | 0.0157 V, 47 |
+| 350 W, 0.8 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 26.6 nA | 0.00401 V, 44 | 0.000399 V, 9 | 0.0399 V, 120 |
+| 350 W, 0.8 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 26.5 nA | 0.004 V, 44 | 0.000397 V, 9 | 0.0397 V, 120 |
 
 ## Cameras: peak pixel at 8 um/px (12 mm pupil)
 
@@ -132,10 +132,10 @@ Error at 2000 K for a 5 % emissivity difference, by band pair: 700/900: 43 K; 70
 | PD-B 900/40 (PDA36A2), galvo Kozjek | 1185 K | 1674 K | 1089 K | 1486 K | 1019 K | 1373 K |
 | alt: PD 850/40 behind the 50:50 plate (PDA36A2), galvo pass | 1304 K | 1851 K | 1191 K | 1637 K | 1116 K | 1508 K |
 | alt: PD 850/40 behind the 50:50 plate (PDA36A2), galvo Kozjek | 1841 K | - | 1620 K | 2512 K | 1486 K | 2222 K |
-| InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2), galvo pass | 1008 K | 1868 K | 847 K | 1416 K | 772 K | 1228 K |
-| InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2), galvo Kozjek | 1008 K | 1873 K | 847 K | 1416 K | 772 K | 1228 K |
-| InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2), galvo pass | 992 K | 1717 K | 847 K | 1347 K | 777 K | 1185 K |
-| InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2), galvo Kozjek | 992 K | 1717 K | 847 K | 1347 K | 777 K | 1185 K |
+| InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2), galvo pass | 1062 K | 2045 K | 890 K | 1518 K | 804 K | 1304 K |
+| InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2), galvo Kozjek | 1062 K | 2045 K | 890 K | 1518 K | 804 K | 1304 K |
+| InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2), galvo pass | 1003 K | 1739 K | 852 K | 1363 K | 783 K | 1196 K |
+| InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2), galvo Kozjek | 1003 K | 1739 K | 852 K | 1363 K | 783 K | 1196 K |
 
 ## Plume emission against the pool (field stop Ø1.6 mm)
 

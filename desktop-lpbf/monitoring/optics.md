@@ -30,7 +30,7 @@ Re-run: `python ftheta.py --reuse` (2 min; without `--reuse` it re-optimises the
 2. **The DMSP1000 leaks 0.063 % at 1070 nm (OD 3.2), not "up to 10 %"** (optics.md §4.5), so the branch needs less blocking
    than planned. But the same leak sends 0.3–0.6 W of the *forward* beam (unpolarised 0.063 %, p-polarised 0.125 %) straight
    through cube1, out of its far face. **Put a beam trap on that port.** As drawn it is an open Class 4 stray beam.
-3. **The f-theta's colour is 1.6–2.7 times the singlet estimate.** Three representative designs (§1) put 850 nm 1.7–2.8 mm
+3. **The f-theta's colour is 1.6–3 times the singlet estimate.** Three representative designs (§1) put 850 nm 1.7–2.8 mm
    above the 1070 nm focus (singlet: 1.05 mm), 700 nm 3.2–6.1 mm, and 1550 nm 3.1–3.6 mm below it. Every coaxial channel
    needs its own focus adjustment. Lateral colour is 0.65–1.2 times the singlet's: up to 0.6 mm at 700 nm at the L75 edge.
 4. **Coaxial bands: 700/40 and 900/40 nm for the two-colour pair, 955–990 nm for the camera,** split by dichroics (DMSP950
@@ -40,10 +40,11 @@ Re-run: `python ftheta.py --reuse` (2 min; without `--reuse` it re-optimises the
 5. **Silicon sees only the hot core of an aluminium pool, coaxially.** The IMX296 at 30 µs needs ≥ 1,420 K for SNR 3 in a
    pixel, and the photodiodes ≥ 1,000–1,240 K. The liquidus is 869–925 K. In one exposure the camera shows the hottest
    20–30 % of the liquid, so pool *size* from a silicon camera is an isotherm well above the liquidus.
-6. **An InGaAs channel can go behind the existing DMSP1000.** Its typical transmission rises to 7–27 % at 1650–1700 nm. That
-   is enough to match a notch-dichroic channel at 1550/12 nm: the PDA20CS2 sees solid metal at 770–850 K filling the field
-   stop, at 9–90 kHz. **Don't replace the DMSP1000:** the only 45° notch dichroic found (Semrock NFD01-1064) has no CW rating
-   and doesn't specify 1070 nm.
+6. **An InGaAs channel can go behind the existing DMSP1000.** Its typical transmission rises to 7–27 % at 1650–1700 nm, and
+   the DMSP950 at cube2 reflects that band into the camera arm. That gets 40 % of a notch-dichroic channel's signal at
+   1550/12 nm: the PDA20CS2 sees solid metal at 800–890 K filling the field stop, at 9–90 kHz (the notch route: 780–850 K).
+   **Don't replace the DMSP1000:** the only 45° notch dichroic found (Semrock NFD01-1064) has no CW rating and doesn't
+   specify 1070 nm.
 7. **The guard's viewing panel is transparent at 808–850 nm** (LW1P1/M: OD 0.28–0.33; Thorlabs' raw data). An 808 nm
    illumination laser over 0.5 W would make the machine Class 4 at 808 nm through its window. **Light the side camera with
    LEDs**, or get the LSO's review and a panel that blocks 808 nm first.
@@ -100,7 +101,7 @@ L75 plate uses. They are there to bracket the unknown glass.
 ![Focal shift and lateral colour against wavelength for the three representative f-theta designs](../analysis/out/monitoring/optics/ftheta.png)
 
 What it means:
-- **The singlet underestimated the focal shift 1.6–2.7×.** In an f-theta with a negative first element the positive
+- **The singlet underestimated the focal shift 1.6–3×.** In an f-theta with a negative first element the positive
   elements carry more power, and they sit where the marginal ray is high. Adding N-BK7 positives to an N-SF11 negative didn't
   colour-correct anything, because the negative element is weak.
 - **Refocus each channel.** At the IMX296 with a 75 mm tube lens (m 0.47, m² 0.22) the 955–990 nm band needs 0.1–0.3 mm and a
@@ -119,8 +120,8 @@ What it means:
   grows to 10–65 µm (SF11: 1–12 µm), against a 10.3 µm Airy radius at 950 nm. For the photodiodes the larger pupil still
   adds light (×2.25).
 - **The laser itself, in our geometry:** the tangential focus at 1070 nm sits −0.65 (SF11) to −2.0 mm (FS) off the plate at
-  the L75 edge (SF11+BK7: +0.73 mm). With the 2.5 mm beam (z_R ±6.1 mm) that grows the spot 1–5 % in one axis. The burn test (optics.md §4.2) at
-  the field edges will show it.
+  the L75 edge (SF11+BK7: +0.73 mm). With the 2.5 mm beam (z_R ±6.1 mm) that grows the spot 1–5 % in one axis. The burn
+  test (optics.md §4.2) at the field edges will show it.
 
 ## 2. The coaxial branch
 
@@ -161,21 +162,23 @@ Why these parts:
 
 | Route | Change to the laser path | Band | Photocurrent, 320 W case | Coldest solid seen (field-filling), 40 / 60 dB |
 |---|---|---|---:|---|
-| (a) behind the DMSP1000: a short-pass pick-off (DMSP1180 class) after cube1 + FELH1250 + AC254-100-C + PDA20CS2 | none | 1625–1725 nm (DMSP1000 T 3–30 %, PD responsivity falls past 1650) | 12.8 nA | 847 / 772 K |
-| (b) Semrock NFD01-1064 in place of the DMSP1000 + FBH1550-12 + PDA20CS2 | the 500 W beam reflects off a part with no CW rating | 1544–1556 nm | 22.7 nA | 847 / 777 K |
+| (a) behind the DMSP1000: the DMSP950 reflects it into the camera arm; a fourth cube there (~1180 nm dichroic) + 2 × FELH1250 + AC254-100-C + P500K + PDA20CS2 | none | 1625–1725 nm (DMSP1000 T 3–30 %, DMSP950 R 0.96–0.57, PD responsivity falls past 1650) | 8.3 nA | 890 / 804 K |
+| (b) Semrock NFD01-1064 in place of the DMSP1000, same arm + FBH1550-12 | the 500 W beam reflects off a part with no CW rating | 1544–1556 nm | 20.9 nA | 852 / 783 K |
 
-Route (a) needs no change to the 500 W path and reaches the solidification range of 6061 (855–925 K) and 7075 (750–908 K)
-at 9–90 kHz. Two cautions:
+Route (a) needs no change to the 500 W path. It reaches the solidification range of 6061 (855–925 K) at 9 kHz and its top at
+90 kHz, and the top of 7075's (750–908 K). Three cautions:
 - **Al I 1671.9 and 1675.1 nm fall in its band** (lines.md). Check with a spectrometer on the first builds, or narrow it to
   FBH1650-12.
 - **The DMSP1000's transmission above 1600 nm is typical data, not a spec,** and it varies lot to lot. Check the unit in hand.
+- **The shared FESH1000 must move into the two silicon arms** (it blocks 1550–1650 nm), and the InGaAs arm needs two
+  FELH1250s: with one, the diffuse 1070 nm leak is ~10 % of the pool signal and a cat's-eye return 100 times it.
 
-The coax agent read the same data as "no InGaAs channel behind the DMSP1000"; the radiometry says otherwise, because a 100 nm
-band at 7–27 % carries as much light as a 12 nm band at 90 %.
+Read quickly, the DMSP1000's curve ("still reflecting at 1.6–1.7 µm") rules this route out. The radiometry says otherwise,
+because a 100 nm band at 7–27 % carries 40 % as much light as a 12 nm band at 90 %.
 
 **Cost** ([`optics-parts.csv`](optics-parts.csv)): the baseline branch adds **$3,108** in list prices, plus a beam trap (est.
-$100–200). It drops the planned NF1064-44 ($635.55). Route (a) InGaAs adds ~$1,050 with its own pinhole, plus the unpriced
-pick-off (~$330 if it is a Ø1 in. DMSP-series part).
+$100–200). It drops the planned NF1064-44 ($635.55). Route (a) InGaAs adds ~$1,560 (PDA20CS2, two FELH1250, lens, pinhole, two
+more FESH1000s), plus the unpriced fourth cube (~$600 for a Ø1 in. DMLP/DMSP-series dichroic and its cube).
 
 ## 3. Radiometry, end to end
 
@@ -203,15 +206,15 @@ worktree.
 |---|---:|---:|---:|---|
 | PD-A 700/40 | 35 nA (5.3 mV) | SNR 57 | SNR 146 | no: 10 V needs 70 µA |
 | PD-B 900/40 | 76 nA (11 mV) | SNR 122 | SNR 313 | no |
-| InGaAs (a) 1625–1725 | 13 nA | SNR 21 | SNR 58 | no |
+| InGaAs (a) 1625–1725 | 8.3 nA | SNR 14 | SNR 37 | no |
 | IMX296 peak pixel, 955–990 nm | 1.7 × 10⁸ e⁻/s | 30 µs: 5,050 e⁻, SNR 71 | | full well at 63 µs |
 | Chronos 2.1-HD peak pixel, 955–990 nm, 24 kfps | 2.6 × 10⁸ e⁻/s | 10 µs: 2,620 e⁻, SNR 46 | 40 µs: ~10,500 e⁻ | ~57 µs (stand-in full well) |
 
 - **Gain:** run the PDA36A2s at 30 dB (260 kHz) for tracks and 40 dB (90 kHz) for most work. 20 dB (1 MHz) gives SNR 11–44.
-  None of these saturates. The 10 V output limit is 10³–10⁴ above the signal, so a keyhole spike or a spatter flash won't
-  clip either.
-- **Galvo blocking** changes nothing for the baseline bands (all outside 750–875 nm). It would cut an 850/10 camera 45-fold,
-  to SNR 3 at 10 µs (the "alt" rows in radiometry.md).
+  None of these saturates. The 10 V output limit is 100–2,000 times the pool signal at 40–60 dB, so a keyhole spike or a
+  spatter flash won't clip either.
+- **Galvo blocking** changes nothing for the baseline bands (all outside 750–875 nm). It would cut an 850/10 camera 45-fold:
+  at 30 µs the peak pixel falls from 2,000 e⁻ (SNR 44) to 44 e⁻ (SNR 5) (the "alt" rows in radiometry.md).
 - **Lowest temperature seen** (SNR 3, uniform patch):
 
   | Detector | Coldest liquid in one pixel or 0.05 mm² | Coldest solid filling the Ø1.6 mm field |
@@ -220,7 +223,7 @@ worktree.
   | Chronos at 955–990 nm, 10 / 40 µs | 1,717 / ~1,500 K | – |
   | PD-A 700/40 at 1 MHz / 90 kHz / 9 kHz | 1,937 / 1,744 / 1,620 K | 1,427 / 1,314 / 1,239 K |
   | PD-B 900/40, same gains | 1,669 / 1,486 / 1,373 K | 1,185 / 1,089 / 1,019 K |
-  | InGaAs (a), same gains | 1,868 / 1,416 / 1,228 K | 1,008 / 847 / 772 K |
+  | InGaAs (a), same gains | 2,045 / 1,518 / 1,304 K | 1,062 / 890 / 804 K |
 
   Liquidus: AlSi10Mg 869 K, 6061 925 K, 7075 908 K. Silicon doesn't reach it, coaxially, at any useful rate. The InGaAs route
   is the only one that sees the mushy zone, and only as an average over the field.
@@ -292,8 +295,9 @@ Lambertian):
   - through LW itself with a 50:50 cube: 39 W of LED or 16 W of laser (the cube costs 4× and the 12.9° grazing angle 4.5×).
   - At 2 µs, multiply by five.
 - **Recommendation:** a Thorlabs SOLIS-850C (2.7 W minimum, $1,377.86), pulsed by a DC2200 ($2,593.01), shining through LP
-  (or a second steep port). That is just enough at 10 µs and comfortable at 20–50 µs. BW's raking light is for the layer camera; the side camera can use it at ≥ 50 µs.
-  The AeroDIODE 808 nm 10 W fibre source ($6,490) or a CAVILUX is needed for 1–2 µs, and is Class 4 (§0 item 7).
+  (or a second steep port). That is just enough at 10 µs and comfortable at 20–50 µs. BW's raking light is for the layer
+  camera; the side camera can use it at ≥ 50 µs. The AeroDIODE 808 nm 10 W fibre source ($6,490) or a CAVILUX is needed for
+  1–2 µs, and is Class 4 (§0 item 7).
 - **Unverified:** whether the DC2200 can make clean 10 µs pulses. Its small-signal bandwidth is 250 kHz and no rise time is
   published. Check on the bench.
 - **Self-emission:** the melt pool's own glow in a 10 nm band at 850 nm (ε 0.12, 2,500 K) has about the same radiance as
@@ -322,7 +326,7 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
   volume, which the 1.5 mm guard panels and the OD 7.8 viewing panel already contain (safety.md). Three new items for the LSO:
   1. **808–850 nm illumination lasers are not contained by the viewing panel** (OD 0.28–0.33). LEDs avoid laser
      classification; their eye safety falls under IEC 62471.
-  2. **Every blanked port needs its blank back** before lasing when its camera is off. Or interlock it.
+  2. **Every port needs its blank back** before lasing whenever its camera is removed, or an interlock.
   3. **Never fit an eyepiece or an unfiltered camera** to a viewport (monitoring.md §6).
 - **Specular reflections:** the beam's own specular return leaves within 1–7° of vertical (chief-ray angle k·θ plus the
   ±0.45° cone), so no port sees it. Glints from a curved or keyhole pool can reach the lid ports at 33–36° (bounded above).

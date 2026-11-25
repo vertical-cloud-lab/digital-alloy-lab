@@ -223,10 +223,13 @@ CH = {
     "alt: camera 850/10, 50:50 plate (IMX296)": dict(det="IMX296 mono", band=(850, 10), branch=lambda l: BS_R * filt("850/10") * 0.98 * fesh(l)),
     "alt: camera 700/10, 50:50 plate (IMX296)": dict(det="IMX296 mono", band=(700, 10), branch=lambda l: BS_R * filt("700/10") * 0.98 * fesh(l)),
     "alt: PD 850/40 behind the 50:50 plate (PDA36A2)": dict(det="PDA36A2", band=(850, 40), branch=lambda l: BS_T * interp(PT.DMLP805_T, l) * filt("850/40") * 0.98 * fesh(l)),
+    # InGaAs: in the camera arm after the DMSP950 (which reflects 1300-1750 nm), a ~1180 nm dichroic, two FELH1250 (OD ~10.5 at
+    # 1070 nm: one leaves the diffuse leak at ~10 % of the signal), lens. The shared FESH1000 must then move into the Si arms
+    # (it blocks 1550-1650 nm).
     "InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2)": dict(det="PDA20CS2", band=(1675, 100),
-                                                          branch=lambda l: PT.PICKOFF_1180_R * filt("LP1250") * 0.98),
+                                                          branch=lambda l: dmsp950_r(l) * PT.PICKOFF_1180_R * filt("LP1250") ** 2 * 0.98),
     "InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2)": dict(det="PDA20CS2", band=(1550, 12), ingaas=True,
-                                                                      branch=lambda l: PT.PICKOFF_1180_R * filt("1550/12") * 0.98),
+                                                                      branch=lambda l: dmsp950_r(l) * PT.PICKOFF_1180_R * filt("1550/12") * 0.98),
 }
 
 

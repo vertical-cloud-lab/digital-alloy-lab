@@ -49,7 +49,8 @@ DMSP950_T = [(500, 0.9624), (600, 0.9601), (700, 0.9608), (800, 0.9713), (850, 0
              (930, 0.9085), (940, 0.5788), (950, 0.2565), (960, 0.06334), (970, 0.02313), (980, 0.03065), (1000, 0.01013),
              (1070, 0.02087), (1100, 0.0121)]
 DMSP950_R = [(850, 0.02752), (900, 0.03785), (920, 0.04067), (930, 0.08899), (940, 0.4175), (950, 0.7417), (960, 0.9344),
-             (970, 0.9741), (980, 0.9653), (990, 0.9744), (1000, 0.9871), (1070, 0.9739), (1100, 0.9831)]
+             (970, 0.9741), (980, 0.9653), (990, 0.9744), (1000, 0.9871), (1070, 0.9739), (1100, 0.9831), (1300, 0.9838),
+             (1400, 0.9874), (1500, 0.9826), (1550, 0.9712), (1600, 0.9613), (1650, 0.8057), (1700, 0.5748), (1750, 0.5351)]
 FESH0950_OD = [(850, 0.002266), (900, 0.006687), (920, 0.005463), (930, 0.006446), (940, 0.007964), (950, 0.5297), (960, 5.053),
                (970, 5.336), (1000, 5.364), (1070, 5.105), (1100, 5.256)]
 # NF1064-44 also blocks 520-720 nm (OD 4.2-4.6 there; its data file): it must not sit in front of a 700 nm channel.
@@ -62,9 +63,10 @@ SPLITTER = dict(R=0.5, T=0.5, part="Thorlabs BSW26 50:50 plate (alternative layo
 # $193.82; FBH1550-12 / FBH1600-12 / FBH1650-12 $202.63, same blocking (family spec tables, 06:48-06:49Z). FB series discontinued.
 FILTERS = {"700/40": 0.9, "700/10": 0.9, "900/40": 0.9, "850/40": 0.9, "850/10": 0.9, "950/10": 0.9, "1550/12": 0.9, "LP1250": 0.99}
 FILTER_OD_1070 = 5.0                           # FBH out-of-band blocking (spec: OD > 5)
-# InGaAs pick-off right after cube1 (option a): a 45 deg short-pass dichroic that passes < 1000 nm on to the Si branch and
-# reflects 1200-1750 nm to the InGaAs photodiode (Thorlabs DMSP1180-class; its curve was not read: R 0.95 assumed).
-PICKOFF_1180_R = 0.95
+# InGaAs pick-off (both options): the DMSP950 at cube2 also reflects 1300-1750 nm into the camera arm (R 0.96 at 1600, 0.81 at
+# 1650, 0.57 at 1700 nm; its data file), so a fourth cube in that arm, a 45 deg ~1180 nm dichroic (Thorlabs DMLP/DMSP1180
+# class; its curve was not read: 0.9 assumed), splits 1200-1750 nm to the InGaAs photodiode and 955-990 nm to the camera.
+PICKOFF_1180_R = 0.9
 # Semrock NFD01-1064-25x36 (option b): Tavg > 90 % at 350-1015 and 1140-1600 nm, R > 98 % at 1064 nm only (1070 nm not
 # specified), 45 deg, 1.05 mm fused silica, damage rating 1 J/cm2 at 532 nm (10 ns) only: no CW rating. $774.18 (07:05Z).
 NOTCH_DICHROIC_T = 0.9
@@ -182,13 +184,16 @@ PARTS = [
      4 * 20.43 + 12 * 7.64 + 6 * 16.49 + 2 * 22.8, "list (sum, typical counts)", T_ + "CP33_M", "2026-11-25T07:15-07:19Z", "count to be set from the drawn layout"),
     # options
     ("coax option", "InGaAs channel behind the DMSP1000 (1625-1725 nm leaks through it at 3-30 %): photodiode", "PDA20CS2", "Thorlabs", 0, 676.21,
-     "list", T_ + "PDA20CS2", "2026-11-25T06:51Z", "sees solid metal down to ~770-850 K filling the field stop at 9-90 kHz (radiometry.md)"),
-    ("coax option", "InGaAs channel: 1070 nm blocker (long-pass 1250 nm, OD ~5.2 at 1070, T ~0.99 at 1300-1700)", "FELH1250", "Thorlabs", 0, 169.26,
-     "list", T_ + "FELH1250", "2026-11-25T06:57Z", ""),
-    ("coax option", "InGaAs channel: lens f = 100 mm, 1050-1700 nm AR", "AC254-100-C", "Thorlabs", 0, 120.45, "list", T_ + "AC254-100-C",
-     "2026-11-25T07:09Z", ""),
-    ("coax option", "InGaAs channel: pick-off right after cube1, 45 deg short-pass ~1180 nm (passes the Si bands, reflects 1200-1750 nm)",
-     "DMSP1180 class", "Thorlabs", 0, None, "not priced (Ø1 in. DMSP parts list at $331.76)", "", "", "curve not read: check it reflects 1600-1750 nm"),
+     "list", T_ + "PDA20CS2", "2026-11-25T06:51Z", "sees solid metal down to ~800-890 K filling the field stop at 9-90 kHz (radiometry.md)"),
+    ("coax option", "InGaAs channel: two 1070 nm blockers (long-pass 1250 nm, OD ~5.2 each at 1070, T ~0.99 at 1300-1700)", "FELH1250", "Thorlabs", 0,
+     169.26, "list", T_ + "FELH1250", "2026-11-25T06:57Z", "one alone leaves the diffuse 1070 nm leak at ~10 % of the pool signal, a cat's-eye return at ~100x"),
+    ("coax option", "InGaAs channel: lens f = 100 mm, 1050-1700 nm AR, and a P500K pinhole", "AC254-100-C + P500K", "Thorlabs", 0, 120.45 + 84.12,
+     "list (sum)", T_ + "AC254-100-C", "2026-11-25T07:09Z", ""),
+    ("coax option", "InGaAs channel: fourth cube in the camera arm, a 45 deg ~1180 nm dichroic (the DMSP950 reflects 1300-1750 nm into that arm)",
+     "DMLP1180 / DMSP1180 class + cube", "Thorlabs", 0, None, "not priced (Ø1 in. DMLP/DMSP parts list at $331.76; cube $270.74)", "", "",
+     "curve not read: check it splits 955-990 nm from 1600-1750 nm"),
+    ("coax option", "InGaAs channel: move the shared FESH1000 into the two Si photodiode arms (it blocks 1550-1650 nm)", "FESH1000", "Thorlabs", 0,
+     169.26, "list", T_ + "FESH1000", "2026-11-25T06:57Z", "qty 2 if the InGaAs channel is added"),
     ("coax option", "notch dichroic to replace the DMSP1000 (InGaAs at 1140-1600 nm): NOT recommended", "NFD01-1064-25x36", "Semrock (IDEX)", 0, 774.18,
      "list", "https://www.idex-hs.com/store/product-detail/nfd01_1064_25x36?cat_id=semrock_optical_filters&node=individual_optical_filters",
      "2026-11-25T07:05Z", "no CW rating (1 J/cm2 at 532 nm, 10 ns only); 1070 nm not specified; would carry 500 W at 20 kW/cm2"),
