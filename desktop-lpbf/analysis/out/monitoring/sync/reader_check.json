@@ -1,0 +1,73 @@
+{
+ "layer": 2,
+ "clock_fit": {
+  "a_fit_us": -1234.523,
+  "a_true_us": -1234.567,
+  "b_fit_minus_1_ppm": -73.81,
+  "b_true_minus_1_ppm": -72.99,
+  "rms_us": 0.478,
+  "edges": 120
+ },
+ "variants": {
+  "first edge only, nominal rate, no tracking delay": {
+   "median_um": 257.1,
+   "p95_um": 265.4,
+   "steady_median_um": 260.7,
+   "steady_p95_um": 266.0,
+   "hot_centroid_mm": [
+    -4.251,
+    -1.58
+   ],
+   "hot_centroid_error_um": 39.7,
+   "hot_spread_along_scan_um": 260.6,
+   "n_hot": 331
+  },
+  "clock fit, no tracking delay": {
+   "median_um": 254.4,
+   "p95_um": 255.0,
+   "steady_median_um": 254.9,
+   "steady_p95_um": 255.0,
+   "hot_centroid_mm": [
+    -4.251,
+    -1.581
+   ],
+   "hot_centroid_error_um": 39.5,
+   "hot_spread_along_scan_um": 259.3,
+   "n_hot": 331
+  },
+  "clock fit + pure 250 µs delay": {
+   "median_um": 5.0,
+   "p95_um": 53.4,
+   "steady_median_um": 4.9,
+   "steady_p95_um": 5.0,
+   "hot_centroid_mm": [
+    -4.251,
+    -1.618
+   ],
+   "hot_centroid_error_um": 2.5,
+   "hot_spread_along_scan_um": 67.5,
+   "n_hot": 331
+  },
+  "clock fit + first-order lag (250 µs)": {
+   "median_um": 4.5,
+   "p95_um": 31.5,
+   "steady_median_um": 0.6,
+   "steady_p95_um": 3.7,
+   "hot_centroid_mm": [
+    -4.251,
+    -1.622
+   ],
+   "hot_centroid_error_um": 2.2,
+   "hot_spread_along_scan_um": 66.0,
+   "n_hot": 331
+  }
+ },
+ "dropped_frames_layer3": [
+  17
+ ],
+ "defect_truth_mm": [
+  -4.25,
+  -1.62
+ ],
+ "file_bytes": 1642168
+}
