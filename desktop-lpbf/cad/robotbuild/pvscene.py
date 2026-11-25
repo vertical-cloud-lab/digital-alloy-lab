@@ -25,6 +25,49 @@ import vtk
 FEATURE_ANGLE = 35.0
 
 
+def _wait_for_x(timeout=90.0):
+    """Under load Xvfb can still be starting when xvfb-run hands over, and VTK then falls back to OSMesa (not installed)
+    and the render dies at its first frame (byu-vcl PR 318's scene.py found and fixed this). Wait until the display
+    accepts a connection."""
+    import ctypes
+    import os
+    import time
+    if not os.environ.get("DISPLAY"):
+        return
+    try:
+        x11 = ctypes.cdll.LoadLibrary("libX11.so.6")
+    except OSError:
+        return
+    x11.XOpenDisplay.restype = ctypes.c_void_p
+    t0 = time.time()
+    while time.time() - t0 < timeout:
+        d = x11.XOpenDisplay(None)
+        if d:
+            x11.XCloseDisplay(ctypes.c_void_p(d))
+            return
+        time.sleep(0.5)
+
+
+def plotter(size=None):
+    """common.plotter(), made safe on a loaded runner: wait for the X display, and if VTK still came up without an X
+    window (an OSMesa window while DISPLAY is set), close it and try again (PR 318's _plotter)."""
+    import os
+    import time
+    import common
+    size = size or (common.W, common.H)
+    _wait_for_x()
+    pl = None
+    for attempt in range(40):
+        pl = common.plotter(size)
+        if not os.environ.get("DISPLAY") or pl.render_window.GetClassName() != "vtkOSOpenGLRenderWindow":
+            if attempt:
+                print(f"pvscene: an X window on try {attempt + 1}", flush=True)
+            return pl
+        pl.close()
+        time.sleep(0.5 + 0.25 * min(attempt, 8))
+    return pl
+
+
 def surface_style(shininess: float) -> dict:
     """specular and specular_power for a material's 0-1 shininess (PR 318's curve: paint and cloth close to matte)."""
     s = min(max(float(shininess), 0.0), 1.0)
@@ -34,8 +77,7 @@ def surface_style(shininess: float) -> dict:
 class PVScene:
     def __init__(self, pl: pv.Plotter | None = None, size=None):
         if pl is None:
-            import common
-            pl = common.plotter(size or (common.W, common.H))
+            pl = plotter(size)
         self.pl = pl
         self.actors: dict[str, vtk.vtkActor] = {}
         self.group_of: dict[str, str] = {}

@@ -95,14 +95,16 @@ def weeks(v):
     def one(x):
         if x < 1.0:
             return f"{max(1, round(x * 7))} d"
-        return f"{x:g} wk" if x < 10 else f"{x:.0f} wk"
+        return f"{x:.1f} wk".replace(".0 wk", " wk") if x < 10 else f"{x:.0f} wk"
+    def num(x):
+        return f"{x:.0f}" if x >= 10 or abs(x - round(x)) < 0.05 else f"{x:.1f}"
     if abs(hi - lo) < 1e-6:
         return one(lo)
     if hi < 1.0:
         return f"{max(1, round(lo * 7))}-{max(1, round(hi * 7))} d"
     if lo < 1.0:
         return f"{one(lo)}-{one(hi)}"
-    return f"{lo:g}-{hi:g} wk"
+    return f"{num(lo)}-{num(hi)} wk"
 
 
 def fit(d, text, f, width):
@@ -175,8 +177,17 @@ def caption_bar(d, caption, sub, who, status, chapter_no=None, step=""):
 
 
 # ------------------------------------------------------------------------------------------------ the clocks
-def clocks(d, st, y_bottom=H - 14):
-    """st: dict(t_s, machine_h, robot_h, person_h, cam_h, outsourced_d). Project time in 8 h working days."""
+def speed_text(speed):
+    """How fast the frame's real-world time runs: "real time", or "time-lapse x60" (two significant figures)."""
+    if speed <= 1.5:
+        return "real time"
+    e = 10 ** max(0, math.floor(math.log10(speed)) - 1)
+    return f"time-lapse x{round(speed / e) * e:,.0f}"
+
+
+def clocks(d, st, y_bottom=H - 14, speed=None):
+    """st: dict(t_s, machine_h, robot_h, person_h, cam_h, outsourced_d). Project time in 8 h working days; speed: the
+    frame's real-world seconds per second of video (proc_s x FPS), shown as "real time" or "time-lapse xN"."""
     t_h = st.get("t_s", 0.0) / 3600.0
     day = int(t_h // 8.0) + 1
     into = t_h - 8.0 * (day - 1)
@@ -195,6 +206,13 @@ def clocks(d, st, y_bottom=H - 14):
     d.text((x0 + 10, y0 + 5), f"Day {day}", font=fb, fill=INK)
     dw = d.textlength(f"Day {day}", font=fb)
     d.text((x0 + 18 + dw, y0 + 12), f"+{hh}:{mm:02d} h   (8 h working days)", font=fl, fill=INK2)
+    if speed is not None and speed > 0:
+        t = speed_text(speed)
+        ft = font(10, bold=True)
+        tw = d.textlength(t, font=ft)
+        col = (90, 96, 104) if speed <= 1.5 else (176, 96, 20)
+        d.rounded_rectangle((x0 + w - tw - 14, y0 - 20, x0 + w, y0 - 3), 8, fill=(255, 255, 255, 220), outline=RULE)
+        d.text((x0 + w - tw - 7, y0 - 18), t, font=ft, fill=col)
     for k, (name, v, unit, col) in enumerate(rows):
         cx = x0 + 10 + (k % 2) * 122
         cy = y0 + 32 + (k // 2) * 16
@@ -238,8 +256,8 @@ def cost_panel(d, cost, scale, y0=72):
             _bar(d, bx, y + 2, bw, 13, r[0] / scale, r[1] / scale, col)
             d.text((bx + bw + 6, y), money_range(cost.get(key)), font=f, fill=INK)
         y += 22
-    d.text((x0 + 10, y), "solid: low end, tint: up to the high end; used = eBay and surplus where sensible",
-           font=font(9), fill=INK3)
+    d.text((x0 + 10, y), fit(d, cost.get("foot") or "solid: low end, tint: up to the high end; used = eBay and "
+                             "surplus where sensible", font(9), w - 20), font=font(9), fill=INK3)
     y += 18
     d.line([(x0 + 10, y), (x0 + w - 10, y)], fill=RULE, width=1)
     y += 6
@@ -341,6 +359,78 @@ def lead_panel(d, rows, highlight, y0, max_rows=11, y_max=H - 20):
         tx = bx + bw * t / wmax
         d.line([(tx, y), (tx, y + 3)], fill=INK3, width=1)
         d.text((tx - 4, y + 3), str(t), font=font(9), fill=INK2)
+    return y0 + h
+
+
+# ------------------------------------------------------------------------------------------------ a small line chart
+def chart_panel(d, spec, y0=72, h=250):
+    """A line chart in the right column, drawn up to the frame's point: spec = {"title", "x" (list), "y" (list), "now"
+    (index drawn up to), "ylog" (bool), "xlabel", "ylabel", "xticks", "ref" (a horizontal reference value), "ref_label",
+    "value" (text shown big), "verdict" ("pass" | "fail" | "")}. One series, one axis."""
+    import math as _m
+    x0, w = RIGHT_X, W - RIGHT_X - 12
+    d.rounded_rectangle((x0, y0, x0 + w, y0 + h), 8, fill=PANEL, outline=RULE)
+    d.text((x0 + 10, y0 + 7), spec.get("title", "").upper(), font=font(12, bold=True), fill=INK2)
+    if spec.get("value"):
+        fv = font(18, bold=True)
+        d.text((x0 + 10, y0 + 25), spec["value"], font=fv, fill=INK)
+        if spec.get("verdict") in STATUS:
+            t, col = STATUS[spec["verdict"]]
+            tw = d.textlength(t, font=font(12, bold=True))
+            d.rounded_rectangle((x0 + w - tw - 26, y0 + 27, x0 + w - 10, y0 + 49), 11, fill=rgb(col) + (255,))
+            d.text((x0 + w - tw - 18, y0 + 31), t, font=font(12, bold=True), fill=(255, 255, 255))
+    xs, ys = list(spec.get("x") or []), list(spec.get("y") or [])
+    if len(xs) < 2:
+        return y0 + h
+    now = int(spec.get("now", len(xs) - 1))
+    ylog = bool(spec.get("ylog"))
+    f = (lambda v: _m.log10(max(v, 1e-12))) if ylog else (lambda v: v)
+    fy = [f(v) for v in ys]
+    lo, hi = min(fy), max(fy)
+    if spec.get("ref") is not None:
+        lo, hi = min(lo, f(spec["ref"])), max(hi, f(spec["ref"]))
+    if ylog:
+        lo, hi = _m.floor(lo), _m.ceil(hi)
+    if hi - lo < 1e-9:
+        hi = lo + 1.0
+    px0, px1 = x0 + 58, x0 + w - 14
+    py0, py1 = y0 + 62, y0 + h - 34
+    xmin, xmax = xs[0], xs[-1]
+
+    def X(v):
+        return px0 + (px1 - px0) * (v - xmin) / max(xmax - xmin, 1e-9)
+
+    def Y(v):
+        return py1 - (py1 - py0) * (f(v) - lo) / (hi - lo)
+    ft = font(9)
+    if ylog:                                                      # a gridline and a label every decade
+        for e in range(int(lo), int(hi) + 1):
+            yy = py1 - (py1 - py0) * (e - lo) / (hi - lo)
+            d.line([(px0, yy), (px1, yy)], fill=(225, 229, 234, 255), width=1)
+            d.text((x0 + 8, yy - 6), f"1e{e}" if e not in (0, 1, 2, 3) else str(10 ** e), font=ft, fill=INK2)
+    d.line([(px0, py1), (px1, py1)], fill=INK3, width=1)
+    d.line([(px0, py0), (px0, py1)], fill=INK3, width=1)
+    for t in spec.get("xticks") or []:
+        tx = X(t)
+        d.line([(tx, py1), (tx, py1 + 3)], fill=INK3, width=1)
+        lab = f"{t:g}"
+        d.text((tx - d.textlength(lab, font=ft) / 2, py1 + 4), lab, font=ft, fill=INK2)
+    if spec.get("xlabel"):
+        d.text((px1 - d.textlength(spec["xlabel"], font=ft), py1 + 16), spec["xlabel"], font=ft, fill=INK2)
+    if spec.get("ylabel"):
+        d.text((x0 + 8, py0 - 14), spec["ylabel"], font=ft, fill=INK2)
+    if spec.get("ref") is not None:
+        ry = Y(spec["ref"])
+        for xx in range(int(px0), int(px1), 8):
+            d.line([(xx, ry), (min(xx + 4, px1), ry)], fill=rgb(common.COL["fail"]) + (255,), width=1)
+        if spec.get("ref_label"):
+            d.text((px0 + 4, ry - 13), spec["ref_label"], font=ft, fill=rgb(common.COL["fail"]))
+    pts = [(X(xs[k]), Y(ys[k])) for k in range(min(now + 1, len(xs)))]
+    if len(pts) >= 2:
+        d.line(pts, fill=NEW + (255,), width=2)
+    if pts:
+        cx, cy = pts[-1]
+        d.ellipse((cx - 4, cy - 4, cx + 4, cy + 4), fill=NEW + (255,), outline=(255, 255, 255, 255))
     return y0 + h
 
 
