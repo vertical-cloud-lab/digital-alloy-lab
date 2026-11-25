@@ -264,9 +264,10 @@ The full plan is in [`analysis/out/machining/setup_plan.json`](analysis/out/mach
 - **Floor plate:** P-S1 top up on edge clamps (face, pad step, the outline to z -12, gland, port, slots, dowel holes), then
   P-S2 bottom up on two pins and an expanding clamp in the port (face, the rest of the outline with the notches, blind
   holes).
-- **Time on the mill** at vendor feeds (Helical, Haas; 60 % efficiency): frame 98 min, floor plate 50 min, plus 12-71 min
-  on the waterjet. Round 6 itemised the walls as programmed (27 min, was a 41 min guess) and split the floor's outline
-  between its two setups; the frame was 112 min and the floor plate 51 min before.
+- **Time on the mill** at vendor feeds (Helical, Haas; 60 % efficiency): frame 98 min, floor plate 53 min, plus 12-71 min
+  on the waterjet. Round 6 itemised the walls as programmed (27 min, was a 41 min guess), split the floor's outline
+  between its two setups, and added the zero-point posts' four holes; the frame was 112 min and the floor plate 51 min
+  before.
 - **FreeCAD 1.0.2's CAM workbench,** run headless, programmed the same features and posted G-code: 60 min of cutting for the
   frame and 58 min for the floor plate ([`freecad_cam.json`](analysis/out/machining/freecad_cam.json)). Its O-ring grooves
   used a slow 1/8 in. tool and account for 38 and 35 min of that. FreeCAD didn't time taps, reamers or tool changes.
@@ -280,7 +281,8 @@ The full plan is in [`analysis/out/machining/setup_plan.json`](analysis/out/mach
   - **CAMotics, all eight final programs:** no gouges and no rapids through stock. The frame's leftover deeper than
     1 mm is 0.017 cm³, at the two SAE ports, for the port tool (it was 31.8 cm³ of unprogrammed wall features).
   - **Holder check:** no holder, spindle or fixture collisions.
-  - **Cutting time:** 64.7 min for the frame and 68.9 min for the floor plate.
+  - **Cutting time:** 64.7 min for the frame and 69.2 min for the floor plate (with the zero-point posts' holes, on the
+    merged model of 4e95878; the frame didn't change).
   - **Drills:** the insert and dowel holes now get the STI or ream-under drill for what goes in them. The lid's M5 STI
     holes had a 6.0 mm drill.
   - **Fixture plate:** the dummy-floor plate is cut flush with the frame, 312 x 222.
@@ -299,7 +301,7 @@ The per-part model is [`hours.py`](analysis/machining/hours.py), output
 | Chamber body | CAM | Setups | Run | Deburr + inspect | Total |
 |---|---|---|---|---|---|
 | Before: block, 6 setups | 12.8 h | 7.5 h | 15.5 h (conservative) / 3.5-5 h (vendor feeds) | 1 h | 37 h (25-26 h at vendor feeds) |
-| Now: frame (3 setups with a 4th axis) + floor plate (2) + waterjet | 8.3 h | 7.5 h | 7.2 h / 3.2 h (2.2 h in the programmed G-code, round 6) | 2 h | 25 h (21 h) |
+| Now: frame (3 setups with a 4th axis) + floor plate (2) + waterjet | 8.5 h | 7.5 h | 7.4 h / 3.3 h (2.3 h in the programmed G-code, round 6) | 2 h | 25 h (21 h) |
 
 The machine as a whole is in [`machining.md`](machining.md#hours-for-the-whole-machine).
 

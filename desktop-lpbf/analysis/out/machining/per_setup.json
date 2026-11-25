@@ -29,15 +29,15 @@
   }
  },
  "chamber_floor_plate": {
-  "waste_cm3": 923.5,
+  "waste_cm3": 925.1,
   "setups": {
    "+z": {
     "removable_cm3": 747.0,
     "only_this_setup_cm3": 18.62
    },
    "-z": {
-    "removable_cm3": 712.1,
-    "only_this_setup_cm3": 11.89
+    "removable_cm3": 713.8,
+    "only_this_setup_cm3": 13.52
    },
    "+x": {
     "removable_cm3": 546.8,
@@ -116,26 +116,26 @@
   }
  },
  "build_module_m50_spigot": {
-  "waste_cm3": 1438.6,
+  "waste_cm3": 1432.7,
   "setups": {
    "+z": {
-    "removable_cm3": 1055.2,
-    "only_this_setup_cm3": 0.09
+    "removable_cm3": 1010.3,
+    "only_this_setup_cm3": 0.05
    },
    "-z": {
-    "removable_cm3": 1247.7,
+    "removable_cm3": 1228.0,
     "only_this_setup_cm3": 0.62
    },
    "+x": {
-    "removable_cm3": 989.0,
+    "removable_cm3": 982.9,
     "only_this_setup_cm3": 0.06
    },
    "-x": {
-    "removable_cm3": 989.0,
+    "removable_cm3": 982.8,
     "only_this_setup_cm3": 0.06
    },
    "+y": {
-    "removable_cm3": 1014.5,
+    "removable_cm3": 1003.4,
     "only_this_setup_cm3": 0.06
    },
    "-y": {

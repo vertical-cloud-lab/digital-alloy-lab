@@ -29,6 +29,9 @@ All three are done. Nothing here has been run on a machine, quoted, or reviewed 
 - **Holder, spindle, fixture and travel check on the final programs:** 0 collisions in all eight setups.
   - The dummy-floor plate is now flush with the frame, 312 x 222 (was 330 x 240). On the rotary it had stood 9 mm proud of
     every wall, and the 1/4 in. end mill's ER16 holder came within 2.5 mm of it.
+- **Phase 2, the merged model** (4e95878, with the zero-point clamp posts): the frame is unchanged. The floor plate gains
+  four M6 STI post holes, and three other joints moved. Re-posted, re-simulated and re-checked, it is still clean: 0 gouges, 0
+  rapids through stock, 0 collisions. Hours: 302.3 h with 3-axis setups, 287.3 h with a 4th axis, over 57 parts.
 - **Drills fixed.** Reading the programs, not the checks, found this one: every modelled step was drilled with the largest
   drill that fits, and the model draws an STI hole at the insert's major diameter.
   - The lid's 20 M5 STI holes got a 6.0 mm drill. The insert's major is 6.04 mm, so the STI tap would have had nothing
@@ -181,7 +184,9 @@ Each hole is now drilled once, from its mouth to its bottom, with the drill for 
 
 ### Setup plan and hours, re-run
 
-Everything was re-run on the current model: `inventory.py`, then [`dfm.py`](analysis/machining/dfm.py),
+This is the run on the round-5 model (4b2232e). The committed files are the merged model's, in
+[phase 2](#phase-2-the-floor-plate-on-the-merged-model-with-the-zero-point-clamp-posts) below. Everything was re-run:
+`inventory.py`, then [`dfm.py`](analysis/machining/dfm.py),
 [`setup_plan.py`](analysis/machining/setup_plan.py), [`per_setup.py`](analysis/machining/per_setup.py) and
 [`hours.py`](analysis/machining/hours.py).
 
@@ -233,10 +238,54 @@ Everything was re-run on the current model: `inventory.py`, then [`dfm.py`](anal
 - **"About 1 h of cutting each"** holds: about 65 min for the frame and 69 min for the floor plate. The hours model's
   conservative removal rates give 5.1 and 2.2 h, and setup_plan's vendor feeds give 1.6 and 0.9 h.
 
+### Phase 2: the floor plate on the merged model, with the zero-point clamp posts
+
+The lead merged worker "layout"'s model into the PR branch (4e95878), and this branch merged that. I diffed both parts
+against the round-5 model (4b2232e): boolean differences of the solids, and joints.py's cuts.
+
+- **The frame didn't change:** 0 mm³ either way, same joints. Its programs and checks above stand.
+- **The floor plate changed.** It lost 3.0 cm³ to new or moved holes and got 1.3 cm³ back where holes moved away.
+  - **New:** four M6 STI holes (McMaster 91732A262, drawn Ø7.2 x 9 then Ø6 x 1.5) for the zero-point clamp posts, from
+    below, at (-138, -28), (-80, -45), (64, 40) and (136, 40).
+  - **Moved:** the funnel's two front holes, from y -40 to y -67 (x 79 and 116); two legs, to (141, 96) and (147, -93);
+    one Z-mount hole, to (40, 66).
+  - **Still drawn:** the module flange's two M6 inserts at (±58, 0). This is on purpose: joints.py keeps them as the hand
+    fallback now that the zero-point modules hold the module up (two plain M6 x 16). They are still programmed.
+
+`freecad_cam.py` re-posted the floor plate alone (`FREECAD_CAM_PARTS=floor`; the frame's programs stay as CAMotics cut
+them). Nothing in the program needed changing: the posts' holes are M6 STI by their part number, so they get the 6.3 mm
+STI drill from below, in one new op in floor B. CAMotics and the holder check then re-ran on the floor plate:
+
+| Floor plate | Before (round-5 model) | After (merged model) |
+|---|---|---|
+| Rapids through stock | 0 | **0** |
+| Cutting time, CAMotics (A / B, min) | 51.2 / 17.7 | 51.2 / 18.0 |
+| Model / simulated (cm³) | 1115.8 / 1117.2 | 1114.1 / 1115.9 (+0.16 %) |
+| Gouge deeper than 1 mm | none | **none** |
+| Leftover deeper than 1 mm | 0.001 cm³ | **0.001 cm³** |
+| Loose pieces | port slug 52.6 cm³, slot core 12.7 cm³ | the same |
+| Holder, spindle and fixture collisions | 0 | **0** |
+| Tightest tool to fixture (mm) | 2.76 (4.2 mm drill, fixture plate) | 2.76; the 6.3 mm STI drill 6.5 from the fixture plate |
+
+The setup plan, DFM, per-setup and hours were re-run on the merged model as well ([above](#setup-plan-and-hours-re-run)
+has the round-5 model's run):
+
+- **57 machined parts.** The new ones are the 4 zero-point posts (6061, 16 x 16, M6 studs), the 2 module plates, the 2
+  arms, and the overflow jar's grip fin. Renamed or reshaped: the field-stop insert, the galvo riser plate (now a 56 mm
+  bore), the jar's sensor bracket (on the front-right leg) and the rod end's block.
+- **Hours:** 302.3 h with 3-axis setups, 287.3 h with a 4th axis (137 / 69 setups). That compares with 286.6 / 270.9 h
+  for the round-5 model's 53 parts, and 263.8 / 249.5 h for the 48 parts of rounds 4-5.
+  - The zero-point posts, module plates and arms and the jar's grip fin add 16.3 h.
+  - The jar's sensor bracket is 1.3 h less.
+  - The floor plate's extra holes add 0.5 h.
+  - The committed `setup_plan.json`, `dfm.json`, `per_setup.json` and hours files are this run's.
+- **Chamber body:** 25.4 h. The floor plate's cutting time is 69.3 min programmed and 53 min at vendor feeds. The
+  posts' holes are setup_plan.json's P-S2-5: `setup_plan.py` now adds any floor joint no op lists as an extra op in P-S2.
+  It assumes the holes are drilled from below and times them as tapped (2.2 min).
+
 ### Still open after round 6
 
-- **The zero-point clamp posts.** Worker "layout" may add tapped holes in the floor plate for the posts that hang the two
-  zero-point clamps. They aren't in this model, so the floor-plate program and its checks don't include them yet.
+- **The zero-point clamp posts:** done in [phase 2](#phase-2-the-floor-plate-on-the-merged-model-with-the-zero-point-clamp-posts).
 - **Not programmed:** the spot drills, the taps, the STI taps, the reamers and the SAE port tool. setup_plan.json times
   them, but no G-code drives them, and no simulation has checked them.
 - **Tools the programs use that tooling-bom.csv doesn't list:**
@@ -747,9 +796,10 @@ the best rotary axis with its swing.
 ### Hours for the whole machine
 
 The method and per-part rows are in [`hours.py`](analysis/machining/hours.py) and
-[`hours.csv`](analysis/out/machining/hours.csv). (Round 6 re-ran them on the 53 machined parts of the current model:
-286.6 h 3-axis, 270.9 h with a 4th axis;
-[above](#setup-plan-and-hours-re-run). The table below is the 48-part run of 2026-11-20.)
+[`hours.csv`](analysis/out/machining/hours.csv). (Round 6 re-ran them: 302.3 h with 3-axis setups and 287.3 h with a 4th axis, over
+the 57 machined parts of the merged model of 4e95878;
+[above](#phase-2-the-floor-plate-on-the-merged-model-with-the-zero-point-clamp-posts). The table below is the 48-part run
+of 2026-11-20.)
 
 - **CAM hours are an estimate:** 0.5 h + 0.6 h per setup + 0.015 h per hole, +1 h for lathe-and-mill parts, and +8 h for the
   block's deep pocket. A search found no published rule of thumb.
