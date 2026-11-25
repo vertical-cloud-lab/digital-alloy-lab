@@ -657,7 +657,7 @@
      }
     ]
    },
-   "seconds": 5.2
+   "seconds": 6.5
   },
   "floor_B": {
    "part": "floor",
@@ -679,7 +679,7 @@
     ]
    ],
    "a_deg": null,
-   "moves": 19237,
+   "moves": 19221,
    "fixtures": [
     {
      "name": "fixture plate",
@@ -775,7 +775,7 @@
      "gauge_length_mm": 93.5,
      "min_clearance_to_stock_mm": {
       "c": 0.5,
-      "line": 20606,
+      "line": 20584,
       "op": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
       "part": "flutes",
       "at": [
@@ -790,7 +790,7 @@
      },
      "min_clearance_to_fixtures_mm": {
       "c": 2.76,
-      "line": 20572,
+      "line": 20550,
       "op": "Drill 18 x 4.2 mm step z -12.00..-4.00, model, through",
       "part": "flutes",
       "what": "fixture plate",
@@ -808,11 +808,11 @@
       "flutes": {
        "stock": {
         "c": 0.5,
-        "line": 20606
+        "line": 20584
        },
        "fixture": {
         "c": 2.76,
-        "line": 20572
+        "line": 20550
        }
       }
      },
@@ -868,15 +868,15 @@
      "gauge_length_mm": 98.5,
      "min_clearance_to_stock_mm": {
       "c": 0.5,
-      "line": 20452,
+      "line": 20430,
       "op": "Drill 4 x 5.3 mm for the zmount holes, STI tap after, z 11.00..20.00, setup",
       "part": "flutes",
       "at": [
-       -35.2,
+       -39.2,
        -71.2
       ],
       "tip": [
-       -33.0,
+       -37.0,
        -70.0,
        14.05
       ]
@@ -892,7 +892,7 @@
       "flutes": {
        "stock": {
         "c": 0.5,
-        "line": 20452
+        "line": 20430
        }
       }
      },
@@ -908,7 +908,7 @@
      "gauge_length_mm": 103.5,
      "min_clearance_to_stock_mm": {
       "c": 0.5,
-      "line": 20522,
+      "line": 20500,
       "op": "Drill 2 x 6.3 mm for the module_flange holes, STI tap after, z 6.50..20.00, setup",
       "part": "flutes",
       "at": [
@@ -923,7 +923,7 @@
      },
      "min_clearance_to_fixtures_mm": {
       "c": 6.5,
-      "line": 20520,
+      "line": 20498,
       "op": "Drill 2 x 6.3 mm for the module_flange holes, STI tap after, z 6.50..20.00, setup",
       "part": "flutes",
       "what": "fixture plate",
@@ -941,11 +941,11 @@
       "flutes": {
        "stock": {
         "c": 0.5,
-        "line": 20522
+        "line": 20500
        },
        "fixture": {
         "c": 6.5,
-        "line": 20520
+        "line": 20498
        }
       }
      },
@@ -961,7 +961,7 @@
      "gauge_length_mm": 103.5,
      "min_clearance_to_stock_mm": {
       "c": 0.5,
-      "line": 20548,
+      "line": 20526,
       "op": "Drill 2 x 5.8 mm step z -20.00..-10.00, model, dowel or diamond-pin holes, ream 6 H7 after",
       "part": "flutes",
       "at": [
@@ -976,7 +976,7 @@
      },
      "min_clearance_to_fixtures_mm": {
       "c": 4.35,
-      "line": 20546,
+      "line": 20524,
       "op": "Drill 2 x 5.8 mm step z -20.00..-10.00, model, dowel or diamond-pin holes, ream 6 H7 after",
       "part": "flutes",
       "what": "port ID clamp",
@@ -994,11 +994,11 @@
       "flutes": {
        "stock": {
         "c": 0.5,
-        "line": 20548
+        "line": 20526
        },
        "fixture": {
         "c": 4.35,
-        "line": 20546
+        "line": 20524
        }
       }
      },
@@ -1065,7 +1065,7 @@
      }
     ]
    },
-   "seconds": 19.0
+   "seconds": 36.8
   },
   "frame_B": {
    "part": "frame",

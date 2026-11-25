@@ -1,6 +1,6 @@
 {
  "tool": "FreeCAD 1.0.2 (39319 (Git)), CAM workbench, run headless with freecadcmd",
- "post": "linuxcnc (FreeCAD's Path/Post/scripts/linuxcnc_post.py, --precision 3), mm, G-code in /tmp/machining/p2/cam/gcode",
+ "post": "linuxcnc (FreeCAD's Path/Post/scripts/linuxcnc_post.py, --precision 3), mm, G-code in /tmp/machining/p3/cam/gcode",
  "machine": "Haas VF-4 (CT40, 8100 rpm, 22.4 kW), 3-axis; setup C 3+1 on an HRT210 (A); rapids 25.4 m/min for the recount (A index moves not timed)",
  "material": "6061-T6",
  "tools": {
@@ -189,7 +189,7 @@
    },
    "floor_B": {
     "rapids_through_stock": 0,
-    "camotics_min": 18.0
+    "camotics_min": 17.93
    },
    "frame_B": {
     "rapids_through_stock": 0,
@@ -249,7 +249,7 @@
       -22.7,
       2.7
      ],
-     "gcode": "/tmp/machining/p2/cam/gcode/floor_A.ngc",
+     "gcode": "/tmp/machining/p3/cam/gcode/floor_A.ngc",
      "freecad_job_cycle_time": "00:58:55",
      "ops": [
       {
@@ -514,8 +514,8 @@
       -22.7,
       2.7
      ],
-     "gcode": "/tmp/machining/p2/cam/gcode/floor_B.ngc",
-     "freecad_job_cycle_time": "00:26:28",
+     "gcode": "/tmp/machining/p3/cam/gcode/floor_B.ngc",
+     "freecad_job_cycle_time": "00:26:21",
      "ops": [
       {
        "op": "Face001",
@@ -564,8 +564,8 @@
        "start_depth": 20.0,
        "final_depth": 12.0,
        "step_down": 4.0,
-       "freecad_cycle_time": "00:17:08",
-       "commands": 20316,
+       "freecad_cycle_time": "00:17:01",
+       "commands": 20294,
        "feed_move_bbox": [
         -160.99,
         160.99,
@@ -574,9 +574,9 @@
         12.0,
         16.0
        ],
-       "path_feed_mm": 13056.7,
-       "path_rapid_mm": 2658.0,
-       "cut_time_min": 14.22,
+       "path_feed_mm": 13029.3,
+       "path_rapid_mm": 2630.3,
+       "cut_time_min": 14.16,
        "rapid_time_min": 0.1
       },
       {
@@ -673,7 +673,7 @@
        "freecad_cycle_time": "00:00:31",
        "commands": 15,
        "feed_move_bbox": [
-        -33.0,
+        -37.0,
         40.0,
         -102.0,
         -66.0,
@@ -681,7 +681,7 @@
         11.0
        ],
        "path_feed_mm": 46.0,
-       "path_rapid_mm": 460.6,
+       "path_rapid_mm": 464.6,
        "cut_time_min": 0.09,
        "rapid_time_min": 0.02
       },
@@ -718,7 +718,7 @@
         9.0
        ],
        "path_feed_mm": 54.0,
-       "path_rapid_mm": 1043.9,
+       "path_rapid_mm": 1041.8,
        "cut_time_min": 0.11,
        "rapid_time_min": 0.04
       },
@@ -861,20 +861,20 @@
       }
      ],
      "totals": {
-      "path_feed_mm": 15730.4,
-      "path_rapid_mm": 9571.5,
-      "cut_time_min": 17.04,
+      "path_feed_mm": 15703.0,
+      "path_rapid_mm": 9545.6,
+      "cut_time_min": 16.98,
       "rapid_time_min": 0.38,
-      "total_min": 17.42,
-      "total_hms": "0:17:25",
+      "total_min": 17.36,
+      "total_hms": "0:17:21",
       "tool_changes": 7,
-      "freecad_sum_of_op_cycle_times_min": 26.47
+      "freecad_sum_of_op_cycle_times_min": 26.35
      }
     }
    ],
-   "total_min": 68.45,
-   "freecad_total_min": 85.39,
-   "total_hms": "1:08:27"
+   "total_min": 68.39,
+   "freecad_total_min": 85.27,
+   "total_hms": "1:08:23"
   },
   "frame": {
    "setups": [

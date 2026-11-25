@@ -30,13 +30,13 @@
     {
      "z0": -22.7,
      "z1": 2.7,
-     "stl": "/tmp/machining/p2/sim/floor_A/floor_A_s0.stl",
-     "seconds": 45.8,
+     "stl": "/tmp/machining/p3/sim/floor_A/floor_A_s0.stl",
+     "seconds": 38.9,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-114.75,-1023.25), (159.25,114.75,-996.75)) at 0.5 grid resolution",
-      "Time: 26.61 secs Triangles: 1535392 Triangles/sec: 57691.01",
+      "Time: 22.60 secs Triangles: 1535392 Triangles/sec: 67948.43",
       "Reducing mesh",
-      "Time: 14.66 secs Triangles: 29759 Reduction: 98.06%"
+      "Time: 14.25 secs Triangles: 29759 Reduction: 98.06%"
      ],
      "not_implemented": [],
      "errors": []
@@ -149,18 +149,18 @@
     ]
    ],
    "a_deg": null,
-   "moves": 19237,
+   "moves": 19221,
    "camotics_runs": [
     {
      "z0": -2.7,
      "z1": 22.7,
-     "stl": "/tmp/machining/p2/sim/floor_B/floor_B_s0.stl",
-     "seconds": 36.6,
+     "stl": "/tmp/machining/p3/sim/floor_B/floor_B_s0.stl",
+     "seconds": 35.8,
      "log_tail": [
       "Computing surface bounded by ((-159.25,-114.75,-1003.25), (159.25,114.75,-976.75)) at 0.5 grid resolution",
-      "Time: 17.64 secs Triangles: 1449944 Triangles/sec: 82190.11",
+      "Time: 18.31 secs Triangles: 1449944 Triangles/sec: 79174.54",
       "Reducing mesh",
-      "Time: 15.43 secs Triangles: 25829 Reduction: 98.22%"
+      "Time: 14.61 secs Triangles: 25846 Reduction: 98.22%"
      ],
      "not_implemented": [],
      "errors": []
@@ -171,13 +171,13 @@
    "rapids_through_stock": [],
    "n_rapids_through_stock": 0,
    "time": {
-    "camotics_min": 18.0,
-    "camotics_feed_min": 17.04,
+    "camotics_min": 17.93,
+    "camotics_feed_min": 16.98,
     "camotics_rapid_min": 0.95,
-    "with_vf4_rapids_min": 17.42,
-    "freecad_job_cycle_time": "00:26:28",
-    "freecad_sum_of_ops_min": 26.47,
-    "recount_min": 17.42
+    "with_vf4_rapids_min": 17.36,
+    "freecad_job_cycle_time": "00:26:21",
+    "freecad_sum_of_ops_min": 26.35,
+    "recount_min": 17.36
    },
    "ops": [
     {
@@ -191,10 +191,10 @@
     {
      "label": "Outside below z -12 and the 18 U-notches 8 wide x 8 deep, adaptive outside the outline",
      "tool": 9,
-     "camotics_min": 14.49,
-     "camotics_vf4_rapids_min": 14.33,
-     "freecad_cycle_time": "00:17:08",
-     "recount_min": 14.32
+     "camotics_min": 14.42,
+     "camotics_vf4_rapids_min": 14.27,
+     "freecad_cycle_time": "00:17:01",
+     "recount_min": 14.26
     },
     {
      "label": "Drill 6 x 4.2 mm for the plenum_out holes, STI tap after, z 12.50..20.00, setup",

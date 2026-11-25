@@ -249,6 +249,9 @@ against the round-5 model (4b2232e): boolean differences of the solids, and join
     below, at (-138, -28), (-80, -45), (64, 40) and (136, 40).
   - **Moved:** the funnel's two front holes, from y -40 to y -67 (x 79 and 116); two legs, to (141, 96) and (147, -93);
     one Z-mount hole, to (40, 66).
+  - **Moved again on 4599d9f** (the layout worker's A2.36 fix): two of the Z flange's M5 STI holes, from (-33, 70) and
+    (-33, 100) to (-37, 70) and (-37, 100). Nothing else changed, frame included. The floor plate was re-posted and
+    re-checked on that model; the table gives those results.
   - **Still drawn:** the module flange's two M6 inserts at (±58, 0). This is on purpose: joints.py keeps them as the hand
     fallback now that the zero-point modules hold the module up (two plain M6 x 16). They are still programmed.
 
@@ -259,13 +262,14 @@ STI drill from below, in one new op in floor B. CAMotics and the holder check th
 | Floor plate | Before (round-5 model) | After (merged model) |
 |---|---|---|
 | Rapids through stock | 0 | **0** |
-| Cutting time, CAMotics (A / B, min) | 51.2 / 17.7 | 51.2 / 18.0 |
+| Cutting time, CAMotics (A / B, min) | 51.2 / 17.7 | 51.2 / 17.9 |
 | Model / simulated (cm³) | 1115.8 / 1117.2 | 1114.1 / 1115.9 (+0.16 %) |
 | Gouge deeper than 1 mm | none | **none** |
 | Leftover deeper than 1 mm | 0.001 cm³ | **0.001 cm³** |
 | Loose pieces | port slug 52.6 cm³, slot core 12.7 cm³ | the same |
 | Holder, spindle and fixture collisions | 0 | **0** |
 | Tightest tool to fixture (mm) | 2.76 (4.2 mm drill, fixture plate) | 2.76; the 6.3 mm STI drill 6.5 from the fixture plate |
+| Stock model against CAMotics (cm³ only here / only in CAMotics) | 0.89 / 0.04 | 0.89 / 0.04 |
 
 The setup plan, DFM, per-setup and hours were re-run on the merged model as well ([above](#setup-plan-and-hours-re-run)
 has the round-5 model's run):
