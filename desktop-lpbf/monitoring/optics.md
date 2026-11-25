@@ -127,7 +127,7 @@ What it means:
   The 955–990 nm camera band (35 nm) gives 0.28–0.46 mm: 10–17 µm of blur, under the 32 µm Airy diameter. An FBH950-10 would
   sharpen it, at the cost of about three-quarters of the light.
 - **Lateral colour moves each band's view off the laser spot,** radially, in proportion to the scan radius. The photodiode
-  field stops are therefore Ø1.6 mm on the plate (§2): the pool (0.33–0.50 mm long) plus up to 0.6 mm of offset at 700 nm.
+  field stops are therefore Ø1.6 mm on the plate (§2): the pool (0.25–0.44 mm long on worker A's fields) plus up to 0.6 mm of offset at 700 nm.
   The camera's ROI must allow ≤ 0.13 mm (18 px) of drift at 955–990 nm. Map it against galvo angle, as Hooper did.
 - **Image quality off axis depends on the unknown glass.** At the M50 edge the RMS spot at 950 nm is 5–6 µm for SF11 and
   SF11+BK7, but 24 µm for FS, partly because our galvo sits 27 mm farther from the lens than its design. On axis all three are
@@ -317,10 +317,10 @@ change it by ≤ 18 %. Full tables: [`radiometry.md`](../analysis/out/monitoring
   - **Field stop:** worker A recommends 1.2–1.5 mm (the pool trails up to ~480 µm and turns with the hatch). The P500K's
     1.6 mm is kept because the 700 nm view moves up to 0.6 mm at the L75 edge. A P400K (≈1.3 mm) would do on S25 and M50.
 - **Plume:** vapour line emission is excluded by the band choice. Condensate continuum is not. An optically thin column
-  (Ø0.3 mm over the pool, seen end-on) at 2,700 K adds 4 % (optical depth 0.001), 42 % (0.01) or 4× (0.1) of the pool's
-  signal at 700 and 900 nm, and 4 %, 39 % and 3.9× at 1,550 nm. At Edison's 3,360 K model-plume temperature it is 3–4.5×
-  more. So **the plume worker's optical depth decides whether coaxial pyrometry on aluminium reads the pool or the
-  plume.** The script takes it as a parameter (`plume_tables`).
+  (Ø0.3 mm over the pool, seen end-on) at 2,700 K adds 7–8 % (optical depth 0.001), 73–77 % (0.01) or 7–8× (0.1) of the
+  pool's signal at 700 and 900 nm (worker A's AlSi10Mg pool), and 6 %, 62 % and 6× at 1,550 nm. At Edison's 3,360 K
+  model-plume temperature it is 2–4.5× more. So **the plume worker's optical depth decides whether coaxial pyrometry on
+  aluminium reads the pool or the plume.** The script takes it as a parameter (`plume_tables`).
 - **Calibrate the whole train** with a radiance source in the chamber, as Hooper did (a stabilised lamp in an integrating
   sphere), at several galvo angles. Brandau et al. 2022 saw the coaxial signal fall 36–51 % across the field (via Edison).
 
