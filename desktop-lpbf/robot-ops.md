@@ -258,7 +258,8 @@ door's hinge knuckles, and over the guard's bottom front rail. The robot job (`o
 **Run** on the model as merged after round 5 (4b2232e), M50, each job at up to 7 MiR positions (x −450 to +600):
 `OMP_NUM_THREADS=1 MUJOCO_GL=egl /tmp/capmem 4 xvfb-run -a python analysis/robot/ops.py --jobs liner_right,liner_left,reservoir,blade_cartridge --modules M50 --tag _r6`
 (00:41–00:48 UTC). After the fixes below, the failing jobs were re-run, and then all four with `--render` (01:04–01:19 UTC;
-[`ops_r6.md`](analysis/out/robot/ops_r6.md), [`ops_r6.json`](analysis/out/robot/ops_r6.json)). The cell is unchanged: byu-vcl PR 318
+[`ops_r6.md`](analysis/out/robot/ops_r6.md), [`ops_r6.json`](analysis/out/robot/ops_r6.json)). Their GIFs were rendered again on the
+merged round-6 model (03:22–03:29 UTC), with the same results. The cell is unchanged: byu-vcl PR 318
 round 14 (UR12e = UR10e renamed, MiR250 with the 480 mm cabinet, arm base at 800 mm, parked 240 mm in front of the VLM's face), FCL on
 the meshes, IK branches and RRT-Connect, the 1.5 mm audit and the movers check.
 
