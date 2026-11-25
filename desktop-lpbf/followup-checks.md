@@ -54,7 +54,7 @@ assembly planner with the fixes the first had listed, and composed the video.
    knuckles), arm B from the back for the metering base's coupling and stepper, and more planner iterations for the leg
    screws. **Ten steps still fail**, each with its next change listed: one floor screw, one inlet-plenum screw, the rail's held
    screws, the blade holder and its screws, the roller feedthrough and the dock parts on the metering base, the camera window
-   stack, the optics bridge and the beam line. A person does those in the video.
+   stack, the optics bridge and the beam line. They would fall to a person; the video shows the failed attempts.
 6. **Where a person is needed in the assembly**, among others: the felt bore seal (M09), the two half-dovetail O-rings on the bench (F39,
    F51), the f-theta lens on its M85 thread (F53), alignment and calibration (F57b), the process fiber (F58), the laser guard
    (F59), tube and hose routing, the hoist for the three carries over 10 kg, and checks after the rod-gland O-rings (M12) and the

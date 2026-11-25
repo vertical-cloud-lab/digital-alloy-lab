@@ -36,3 +36,18 @@ the plotter and the frame writer; read its docstring first.
   has 4 cores and 15 GB, and three earlier sessions on this branch were lost to running out of memory.
 - Never commit frames (`/tmp/robotbuild/frames`) or trajectory pickles (`/tmp/robotbuild/traj`); commit scripts,
   summaries (JSON/MD/CSV) and a few stills.
+
+## Rendering the long assembly chapters in slices
+
+`asm_render.py` can draw one slice of a chapter's frames: `ASM_PART=k/n` (by the planned frame count) or `ASM_RANGE=lo:hi`
+with `ASM_RANGE_IDX=k` (explicit global frame numbers) writes frames `lo..hi-1` to `<chapter>.part<k>/`, replaying the rest
+without drawing and without the camera search, and stops after its range. `merge_parts.py <chapter>` joins the slices. Round 7's
+chapter 41 (4,600-4,700 frames) took about 35 min in four slices on the 4-core runner, against well over an hour in one process;
+`best_view`'s ray casts are most of the time.
+
+```
+for i in 0 1 2 3; do ASM_CAP=1 ASM_RANGE=<lo_i>:<hi_i> ASM_RANGE_IDX=$i ASM_TRAJ=/tmp/robotbuild/traj/run10 \
+  xvfb-run -a -s "-screen 0 1920x1080x24" /tmp/capmem 3G /tmp/venv/bin/python asm_render.py chamber \
+  --fail_notes=/tmp/robotbuild/data/asm_fail_notes.json & done; wait
+/tmp/venv/bin/python merge_parts.py 41-assembly-chamber
+```
