@@ -324,8 +324,24 @@ class Replay:
         return self.sc.render()
 
     # ------------------------------------------------------------------------------------------- occlusion-aware views
-    def _occluders(self):
-        """One vtkOBBTree over both arms (links and gripper), both MiRs and the cell's fixtures, as they stand now."""
+    def _table_occ(self, focus):
+        """The parts still on the long table within 1.5 m of a pick's work point (run 10: with only the arms, MiRs and
+        fixtures as occluders, a pick's camera could stand behind the tall parts on the table)."""
+        out = []
+        for i, T in self.T.items():
+            o = self.objs.get(i)
+            if o is None or o.get("V") is None or self.sc.alpha.get(f"o{i}", 1.0) == 0.0:
+                continue
+            V = np.asarray(o["V"], float) @ np.asarray(T)[:3, :3].T + np.asarray(T)[:3, 3]
+            c = V.mean(0)
+            if c[0] < 2400.0 or abs(c[0] - focus[0]) > 1500.0 or np.linalg.norm(c - focus) < 150.0:
+                continue
+            out.append((V, np.asarray(o["F"])))
+        return out
+
+    def _occluders(self, focus=None):
+        """One vtkOBBTree over both arms (links and gripper), both MiRs and the cell's fixtures, as they stand now (and the
+        parts on the long table near a pick there)."""
         import vtk
         vs, fs, n0 = [], [], 0
         for n in ("A", "B"):
@@ -343,7 +359,8 @@ class Replay:
                 n0 += len(v)
         if not hasattr(self, "_static_occ"):
             self._static_occ = [(np.asarray(v, float), np.asarray(f)) for _, (v, f), _ in self._cell_static()]
-        for v, f in self._static_occ:
+        extra = self._table_occ(np.asarray(focus, float)) if focus is not None and float(focus[0]) > 2400.0 else []
+        for v, f in list(self._static_occ) + extra:
             vs.append(v)
             fs.append(f + n0)
             n0 += len(v)
@@ -359,8 +376,8 @@ class Replay:
         """(az, el) of the camera at `dist` from `focus` that sees the most of ~20 points round the work point: 12 azimuths x
         the elevations, rays to each point cast against the arms, tools, MiRs and fixtures (vtkOBBTree)."""
         import vtk
-        tree = self._occluders()
         focus = np.asarray(focus, float)
+        tree = self._occluders(focus)
         pts = [focus]
         for k in range(8):
             a = 2 * math.pi * k / 8
@@ -626,16 +643,19 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
             failed = bool(e.get("failed_run"))
             label = e["label"]
             if failed:
-                label = "[first attempt, round 6 design] " + label
+                label = "[first attempt, earlier design] " + label
             elif e["id"] in fail_steps:
-                label = "[redesigned, round 7] " + label
+                label = "[redesigned] " + label
             cur = dict(id=e["id"], label=label, status=step_status(e["id"], failed), actor=e.get("actor") or "A", do=e.get("do"),
                        t=0.0, failed=failed)
             if not failed and e["id"] in fail_notes:
                 n0 = cur["actor"] if cur["actor"] in ("A", "B") else "A"
                 rp.aim(rp.tcp(n0), "mid", n0)
-                for _ in range(int(FPS * 2.0)):
-                    stop = emit(e["label"], "round 6 (run 7) FAILED here: " + fail_notes[e["id"]][:150], [f"robot {n0}"], status="fail")
+                # the note is "<what failed>. Round 7: <the fix>" (earlier runs: run 7 in round 6, run 9 in round 7)
+                what, _, fix = str(fail_notes[e["id"]]).partition("Round 7:")
+                txt = "FAILED in an earlier run: " + what.strip().rstrip(".") + (". Now: " + fix.strip() if fix else "")
+                for _ in range(int(FPS * 3.0)):
+                    stop = emit(e["label"], txt[:178], [f"robot {n0}"], status="fail")
                     if stop:
                         break
             row = (rows.get(e["id"]) or {}).get("row") or {}
@@ -773,7 +793,9 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
                     foc = view[0] + 0.35 * (tc - view[0]) if np.linalg.norm(tc - view[0]) < 600.0 else tc
                     rp.aim(foc, view[3], side, az=view[1], el=view[2], snap=(f == 0))
                 else:
-                    shot = "mid" if (in_table or e.get("how") == "plan") else "close"
+                    # run 10: a planned (transit) move gets a wider shot, 2.3 m out, so the frame shows where the arm goes
+                    # rather than filling with the arm itself
+                    shot = 2300.0 if e.get("how") == "plan" else ("mid" if in_table else "close")
                     rp.aim(rp.tcp(n), shot, side)
                 if k == "screw":
                     msz = {0.5: 3, 0.7: 4, 0.8: 5, 1.0: 6}.get(round(float(e.get("pitch", 0.7)), 1), "")
