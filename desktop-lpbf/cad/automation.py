@@ -19,7 +19,8 @@ Drawn here (every part tagged "automation"):
   4. wing heads on the cover-slide drawer's two quarter-turn latch studs, so the gripper's fingers drive the wings and the
      wrist turns them 90 deg (no screwdriver, no grip-friction torque);
   5. a grip fin on the front end of the recoater's blade holder (the blade cartridge), for the plate fingers' lips;
-  6. a pull tab on each side wall liner, standing 12 mm off the sheet, for the plate fingers' lips (one part per liner);
+  6. a pull tab on each side wall liner, for the plate fingers' lips (one part per liner): since 2026-11-25 a hanger whose grip plate
+     stands 42 mm in from the sheet, inside the door opening's width (add_liner_tabs);
   7. two AprilTag (tag36h11) plates on the laser guard's front-left post, for the wrist camera's re-registration after each
      MiR250 docking and VLM move (byu-vcl PR 318 docks at AprilTag targets with the same D405 camera).
 """
@@ -100,16 +101,7 @@ def add_features(add, M, module):
         bom="RA5", tags=tag)
 
     # ---------------------------------------------------------------- 6. liner pull tabs
-    # each side liner (0.5 mm 316L at x = +/-(ix - 0.6 .. ix - 0.1), y -70.5..85.5, z 16..104 since 2026-11-23) gets a 2 mm tab on two
-    # 12 mm standoffs near its front top corner: z 88..104, y -70..-46. One part per liner, so each comes out with its own liner
-    # (operations.md M3, robot-ops.md liner jobs)
-    for sx, side in ((-1, "left"), (1, "right")):
-        xl = sx * (ix - 0.6)
-        xs = sx * (ix - 0.6 - 12.0)
-        so_ = [box(min(xl, xs), max(xl, xs), y, y + 4.0, 90.0, 102.0) for y in (-68.0, -52.0)]
-        pl = box(min(xs, xs - sx * 2.0), max(xs, xs - sx * 2.0), -70.0, -46.0, 88.0, 104.0)
-        add(f"Liner pull tab, {side} (316L, 2 mm, 12 mm off the {side} side liner, spot-welded)", fuse(so_ + [pl]), C["ss"], 5, (sx * 60, 0, 160),
-            mat="ss316l", mass_kg=0.01, bom="RA6", tags=tag)
+    add_liner_tabs(add, M)
 
     # ---------------------------------------------------------------- 7. fiducials
     # tag36h11 on 56 x 56 x 2 mm anodised plates on the front face of the guard's front-left post (x -420..-400, y -265), left of the
@@ -117,3 +109,41 @@ def add_features(add, M, module):
     tags_ = [box(-428.0, -372.0, gy0 - 3.5, gy0 - 1.5, z, z + 56.0) for z in (-60.0, 200.0)]
     add("AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-registration)", comp(tags_), C["white"], 12,
         (0, -200, 0), mat="al6061", mass_kg=0.02, bom="RA7", tags=tag)
+
+
+# hanger pull tab of each side liner (2026-11-25, round 6): the grip plate's inner face |x| and its y and z spans; the web's y and z
+# spans (it runs from the liner in to the grip plate); the foot welded to the liner; sheet thickness
+LINER_TAB = dict(x_in=93.4, t=2.0, plate_y=(-88.0, -58.0), plate_z=(70.0, 98.0), web_y=(-70.0, -58.0), web_z=(96.0, 98.0),
+                 foot_z=(86.0, 98.0), grasp=(-76.0, 76.0))
+
+
+def add_liner_tabs(add, M):
+    """A pull tab on each side wall liner, one part per liner, so each comes out with its own liner (operations.md M3, robot-ops.md
+    liner jobs). The liner is 0.5 mm 316L at x = +/-(ix - 0.6 .. ix - 0.1), y -70.5..85.5, z 16..104 (since 2026-11-23).
+
+    Round 6 (2026-11-25): the round-5 tab (a 2 mm plate 12 mm off the liner on two standoffs, x +/-125.4..127.4) could not be taken by
+    the robot. It sat 15 mm outboard of the door opening's side (x +/-110), and its standoffs filled the gap between the tab and the
+    liner where the outer blade has to go. Straight in, the plate fingers' blades cut 3 mm into the opening's side. At the ~40 deg yaw
+    that clears the side, the blade tips run into the liner and the wall.
+
+    It is now a hanger, the same on both sides. A 12 mm web (z 96..98) runs from a foot spot-welded to the liner's front end in to a
+    grip plate at x +/-(93.4..95.4), inside the opening's width (+/-110). The grip plate hangs down to z 70 and reaches forward to
+    y -88, in front of the dose chute (x -96..-84, |y| <= 50, down to z 37), which stands where a left grip plate further back would
+    be. The plate fingers come straight in along +y with their lips on the grip plate at y -76, z 76 (blade tips at y -59, 9 mm in front
+    of the chute; blade tops at z 84.8, under the opening's top at z 100). The outer blade runs in the 44 mm between the grip plate and
+    the liner, 2.6 mm inside the opening's side when open to 10 mm. When the liner slides 21 mm forward the grip plate's front (y -109)
+    enters the door opening below its top, and lowered 6 mm the whole tab passes under it. 316L, 2 mm, about 20 g a side."""
+    P, C = M.P, M.C
+    box, fuse = M.box, M.fuse
+    ix = P["ix"]
+    T = LINER_TAB
+    t = T["t"]
+    for sx, side in ((-1, "left"), (1, "right")):
+        xl = sx * (ix - 0.6)                         # the liner's inner face
+        xg0, xg1 = sx * T["x_in"], sx * (T["x_in"] + t)
+        web = box(min(xl, xg1), max(xl, xg1), *T["web_y"], *T["web_z"])
+        plate = box(min(xg0, xg1), max(xg0, xg1), *T["plate_y"], *T["plate_z"])
+        foot = box(min(xl, xl - sx * t), max(xl, xl - sx * t), *T["web_y"], *T["foot_z"])     # spot-welded to the liner
+        add(f"Liner pull tab, {side} (316L, 2 mm hanger: a web from the {side} side liner in to a grip plate 44 mm off it, inside the door "
+            "opening's width; spot-welded)", fuse([web, plate, foot]), C["ss"], 5, (sx * 60, 0, 160),
+            mat="ss316l", mass_kg=0.02, bom="RA6", tags=("automation",))
