@@ -60,6 +60,7 @@ MID = 20.0                  # half-gap at the centre line between the two arms' 
 PAYLOAD = 12.5              # UR12e payload, kg (UR datasheet)
 BULKY = 500.0               # unplaced items over this go to a pallet (a person fits them)
 NEST_T, RIM_H, RIM_W = 12.0, 15.0, 8.0
+RISER_H = 45.0              # a riser under a low part the gripper takes from above (the fingertips reach 30-40 mm below it)
 TRAY_T, TRAY_WALL, TRAY_H, TRAY_MARGIN = 3.0, 2.0, 18.0, 20.0
 SMALL = 40.0                # parts with every side under this go into a small-part tray compartment
 PALLET = dict(L=1200.0, W=800.0, H=144.0, y0=1250.0, x0=3000.0, gap=300.0)   # EUR pallet 1200 x 800 x 144
@@ -338,6 +339,11 @@ def _footprint(parts, it):
         it["support"] = "nest"
     else:
         it["support"] = "table"
+    # run 8 (round 7): a part the 2F-85 takes from above that stands under 45 mm tall: its fingertips reach below the part,
+    # so it sits on a riser (a column half its footprint, RISER_H tall) that the fingertips pass beside, as the stack nest
+    if (it["support"] in ("table", "tray") and str(it.get("tool", "")).startswith("gripper") and dz < 45.0
+            and it.get("actor") in ("A", "B") and not it.get("seal")):
+        it["support"] = "riser"
     fx = max([dx] + [x["rbb"][1] - x["rbb"][0] for x in blanks])
     fy = max([dy] + [x["rbb"][3] - x["rbb"][2] for x in blanks])
     pad = {"nest": 2 * (RIM_W + 2.0) + 20.0, "tray": 2 * (TRAY_MARGIN + TRAY_WALL)}.get(it["support"], 0.0)
@@ -503,7 +509,7 @@ def layout(parts=None):
             pal = next(p for p in pallets if it["key"] in p["items"])
             z0 = pal["top"]
         else:
-            z0 = TAB["top"] + {"nest": NEST_T, "tray": TRAY_T}.get(it["support"], 0.0)
+            z0 = TAB["top"] + {"nest": NEST_T, "tray": TRAY_T, "riser": RISER_H}.get(it["support"], 0.0)
         c = np.array([(rb[0] + rb[1]) / 2, (rb[2] + rb[3]) / 2, rb[4]])
         T = _Tt((it["cx"] - c[0], it["cy"] - c[1], z0 - c[2])) @ R
         bb = [it["cx"] - (rb[1] - rb[0]) / 2, it["cx"] + (rb[1] - rb[0]) / 2, it["cy"] - (rb[3] - rb[2]) / 2,
@@ -516,6 +522,10 @@ def layout(parts=None):
             stock.append(dict(part=bl["part"], solid=bl["solid"], label=bl["label"], mass_kg=bl["mass_kg"], T=Tb.tolist(),
                               heavy=bl["mass_kg"] > PAYLOAD, color=bl["color"]))
         nest = None
+        if it["support"] == "riser":
+            fx0, fy0 = (rb[1] - rb[0]), (rb[3] - rb[2])
+            wx, wy = max(8.0, 0.45 * fx0), max(8.0, 0.45 * fy0)
+            nest = [it["cx"] - wx / 2, it["cx"] + wx / 2, it["cy"] - wy / 2, it["cy"] + wy / 2, TAB["top"], z0]
         if it["support"] in ("nest", "tray"):
             m = (RIM_W + 2.0 + 10.0) if it["support"] == "nest" else (TRAY_MARGIN + TRAY_WALL)
             fx0, fy0 = (rb[1] - rb[0]), (rb[3] - rb[2])
@@ -598,7 +608,10 @@ def table_meshes():
     out.append(("long table stretchers", pv.merge(rails), common.COL["table_leg"]))
     nests, trays = [], []
     for s in slots():
-        if s["support"] == "nest" and s["nest"]:
+        if s["support"] == "riser" and s["nest"]:
+            n = s["nest"]
+            nests.append(_box(n[0], n[1], n[2], n[3], n[4], n[5]))
+        elif s["support"] == "nest" and s["nest"]:
             n = s["nest"]
             nests.append(_box(n[0], n[1], n[2], n[3], n[4], n[5]))
             ib = s["bbox"]
