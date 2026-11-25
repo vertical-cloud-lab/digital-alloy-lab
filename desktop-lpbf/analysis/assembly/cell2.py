@@ -240,8 +240,8 @@ def mir_bodies(tag, x, side):
     y_face = yc + s * (W / 2 - 30)
     out.append((f"{tag} tool stand", box_mesh(x - 170, x + 170, min(y_face, y_face + s * 170), max(y_face, y_face + s * 170),
                                                H + 40.0, H + Cb - 20.0), "#8a6d3b"))
-    # round 7: the screw presenter (fetch.PRESENTER: a vibratory rail presenter in the OHTAKE NJ / Weber SEV class, 250 x 130 x
-    # 150 mm envelope, an estimate), hung on the cabinet's far face beside the tool stand with its top 20 mm under the deck. Run 8
+    # round 7: the screw presenter (fetch.PRESENTER: a vibratory rail presenter, vendor not chosen, 250 x 130 x 150 mm envelope,
+    # an estimate), hung on the cabinet's far face beside the tool stand with its top 20 mm under the deck. Run 8
     # first had it on the cabinet top, where it took the elbow's room and 4 of the first 5 floor screws (C00d) lost their approach.
     y0p, y1p = (y_face, y_face + s * 130.0)
     out.append((f"{tag} screw presenter", box_mesh(x + 190.0, x + 440.0, min(y0p, y1p), max(y0p, y1p), H + Cb - 170.0, H + Cb - 20.0), "#4a6b8a"))

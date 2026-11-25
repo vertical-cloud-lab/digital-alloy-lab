@@ -269,7 +269,7 @@ class Replay:
         # MiR nor parked arm stands between the camera and the work
         side_az = {"A": 14.0, "B": -14.0, "C": 0.0}       # just past the bench axis, on the side away from the working arm
         if el is None:
-            el = {"wide": 24.0, "mid": 38.0, "close": 46.0}.get(shot, 36.0)
+            el = {"wide": 24.0, "mid": 44.0, "close": 56.0}.get(shot, 40.0)
         fx = float(np.asarray(focus)[0])
         if az is None:
             az = side_az.get(side, 0.0)

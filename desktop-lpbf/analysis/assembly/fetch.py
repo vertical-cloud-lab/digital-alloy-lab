@@ -8,12 +8,13 @@ drives back to the station dock, the parked arm and the held part swept along th
 everything on it (every robot body's swept box against every other body's box, and the overlapping pairs checked with
 FCL every 20 mm). The station planner (run_assembly.arm_place) then takes over from park, holding the part, as before.
 
-Screw presenter (one on each MiR's cabinet top, 300 mm along x from the arm base): drawn as a Weber/Ohtake-class screw
-presenter (vibratory rail feeder: a hopper and a straight rail that presents one screw head-up at a pick-up nest). Its
-envelope (250 x 130 x 150 mm, pick point 150 mm above the cabinet) is an ESTIMATE in the class of the OHTAKE NJ / NSB
-"screw feeders" and Weber's SEV presenters (vendor pages, not a drawing). Each screw: from the previous screw's retreat
-pose the screwdriver is planned to 40 mm above the pick-up nest, goes down 40 mm and back up (checked), and is planned to
-the next hole's approach. These trips are recorded and reported separately: they do not change the station results.
+Screw presenter (one on each MiR, hung on the cabinet's far face beside the tool stand, its top 20 mm under the deck; run 8 first
+had it on the cabinet top, where it took the elbow's room): a vibratory rail presenter, a hopper and a straight rail that presents
+one screw head-up at a pick-up nest, as cobot screwdriving cells use. The OnRobot Screwdriver picks its screw from such a
+presenter and checks "whether a screw was picked" (onrobot.com/en/products/onrobot-screwdriver, read 2026-11-25; OnRobot leaves
+the feeding method to its integrators). No vendor or model is chosen here: the 250 x 130 x 150 mm envelope is an ESTIMATE.
+Each screw: from the previous screw's retreat pose the screwdriver is planned to 40 mm above the pick-up nest, goes down 40 mm
+and back up (checked), and is planned to the next hole's approach. These trips are recorded and reported separately: they do not change the station results.
 """
 from __future__ import annotations
 
@@ -29,7 +30,7 @@ import cell as C  # noqa: E402
 import cell2 as K  # noqa: E402
 from cell import Body, Group, Tm, inv, box_mesh  # noqa: E402
 
-PRESENTER = dict(name="screw presenter (vibratory rail class: OHTAKE NJ/NSB, Weber SEV; envelope estimated)",
+PRESENTER = dict(name="screw presenter (vibratory rail class; vendor not chosen, envelope estimated)",
                  dx=300.0, L=250.0, W=130.0, H=150.0, pick_up=40.0)
 DRIVE_STEP = 20.0
 PICK_BACK, LIFT = 70.0, 90.0

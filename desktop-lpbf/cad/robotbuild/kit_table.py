@@ -81,6 +81,9 @@ SPLIT = ("Chamber legs", "Optics bridge posts", "Macor standoff rings", "Radiati
 
 
 def _hash():
+    import os
+    if os.environ.get("KIT_HASH"):          # replay a recorded run with the layout it was recorded on
+        return os.environ["KIT_HASH"]
     h = hashlib.sha256()
     for f in sorted(CAD.glob("*.py")) + [ASM / "sequence.py", pathlib.Path(__file__)]:
         h.update(f.read_bytes())
@@ -194,8 +197,22 @@ def _items(parts):
         if not mem:
             continue
         R = PHASE_R[st.get("phase", "upright")]
+        # the tool's approach axis in the machine frame: the step's given grasp, or (auto grasp) against the way the part leaves
+        gz = None
+        if st.get("grasp") and do == "place":
+            gz = np.asarray(st["grasp"]["z"], float)
+        elif do == "place" and st.get("path") is not None:
+            pth = st["path"]
+            d = None
+            if pth == "explode":
+                lead = next(((i, s_) for i, s_ in resolve(st.get("keys", [])) if "fastener" not in parts[i].tags), None)
+                d = np.asarray(parts[lead[0]].explode, float) if lead else None
+            elif len(pth) > 1:
+                d = np.asarray(pth[1], float) - np.asarray(pth[0], float)
+            if d is not None and np.linalg.norm(d) > 1e-6:
+                gz = -d / np.linalg.norm(d)
         base = dict(step=st["id"], label=st["label"], tool=st.get("tool", "gripper"), actor=st.get("actor", "A"),
-                    phase=st.get("phase", "upright"), R=R, do=do)
+                    phase=st.get("phase", "upright"), R=R, do=do, gz=gz)
         if do == "seal" or (st["id"] in NOTE_KEYS and all(parts[i].mat == "fkm" for i, _ in mem)):
             base.update(R=None, seal=True)     # laid flat in the seal tray
         if st.get("per_solid"):
@@ -280,6 +297,27 @@ def _footprint(parts, it):
     b = np.array([min(x[0] for x in bbs), max(x[1] for x in bbs), min(x[2] for x in bbs), max(x[3] for x in bbs),
                   min(x[4] for x in bbs), max(x[5] for x in bbs)])
     R = it["R"] if it["R"] is not None else _flat_R(b)
+    # round 7 (run 9): on the table the arm takes every part from above. A part whose tool comes in sideways at its seat (the
+    # liners' wand along +y, a body gripped across its tube from the front) lies turned so that the same grasp points down: the
+    # grasp on the part is the one the insertion uses, the arm turns the part on the way (run 9's liner picks had no IK with the
+    # wand pointing along +y from a slot 300 mm in front of the arm's base)
+    gz = it.get("gz")
+    if gz is not None and it["R"] is not None and it.get("do") == "place":
+        zw = R[:3, :3] @ gz
+        zw = zw / np.linalg.norm(zw)
+        down = np.array([0.0, 0.0, -1.0])
+        c = float(np.dot(zw, down))
+        if c < 0.9:
+            ax = np.cross(zw, down)
+            if np.linalg.norm(ax) < 1e-6:
+                ax = np.array([1.0, 0.0, 0.0])
+            ax = ax / np.linalg.norm(ax)
+            th = math.acos(max(-1.0, min(1.0, c)))
+            K_ = np.array([[0, -ax[2], ax[1]], [ax[2], 0, -ax[0]], [-ax[1], ax[0], 0]])
+            Rf = np.eye(4)
+            Rf[:3, :3] = np.eye(3) + math.sin(th) * K_ + (1 - math.cos(th)) * K_ @ K_
+            R = Rf @ R
+            it["turned"] = True
     long_thin = any(x in parts[it["members"][0][0]].name for x in ("hoses", "Argon line", "O2 sample", "Process fiber",
                                                                   "Chilled-water", "Argon supply", "Pump exhaust",
                                                                   "release-air line"))
