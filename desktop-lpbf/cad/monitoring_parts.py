@@ -191,20 +191,28 @@ def _chronos(parts, add, h, c, d, x_face):
         mat="misc", mass_kg=0.2, bom="M7-02", tags=TAG)
     add(f"Side high-speed camera (Kron Chronos 2.1-HD, {L:.0f} x {W:.0f} x {H:.1f} mm) on the LW sight line", body, C["motor"], 12,
         (-260, 0, 0), mat="misc", mass_kg=sc["mass_kg"], bom="M7-01", tags=TAG)
-    # tilt block under the body's middle (its bottom face is tilted by the sight line's elevation), on a plate on a T-slot post
+    # bracket (analysis/out/monitoring/mech/checks.md §3): a 5/8 in. (15.9 mm) x 80 mm 6061 plate reaching 139 mm from the left wall
+    # to the camera's centre of mass (f1 169 Hz), under the camera's middle; its root is an angle flange bolted to the floor
+    # plate's left edge (z -20..4: under the LW clamp ring, which reaches down to z 5.2). The plate runs at z -15.9..0, below the
+    # frame's skirt, at y -78..2 (the door drive's bracket takes y <= -80), notched round the through-beam's fibre head. A fixed wedge (the sight
+    # line's 12.9 deg, and its 7.3 deg azimuth by turning the camera on it) carries the camera on its 1/4-20 thread.
     tm = t0 + so + lens_l + L / 2
     pm = c + tm * a
-    z_plate = -160.0 + 175.0                                        # post from the base plate's top (z -160) to z 15
-    blk_loc = _local(box(-H / 2 - 80.0, -H / 2, -30.0, 30.0, -40.0, 40.0), pm, a, up)
-    blk = blk_loc.intersect(box(-1e4, 1e4, -1e4, 1e4, z_plate + 10.0, 1e4))
-    plate = box(pm[0] - 40.0, pm[0] + 40.0, pm[1] - 35.0, pm[1] + 35.0, z_plate, z_plate + 10.0)
-    add("Side camera tilt block + plate (6061; sets the camera on the sight line; a ball head or tilt mount in practice)",
-        fuse([blk, plate]), C["alu_dark"], 12, (-200, 0, 0), mat="al6061", bom="M7-08", tags=TAG)
-    post = h.tslot20((pm[0], pm[1], -160.0), "z", z_plate + 160.0)
-    add("Side camera post (20 mm T-slot on the process base plate)", post, C["tslot"], 12, (-200, 0, -100), mat="al6061", bom="M7-08",
-        mcm="TSLOT", tags=TAG)
-    REPORT["chronos"] = dict(lens_front=p_l.round(1).tolist(), body_back=(p_b + L * a).round(1).tolist(), post_xy=pm[:2].round(1).tolist(),
-                             camera_mid=pm.round(1).tolist())
+    x_w = -FF.OUTER["x"]
+    y0b, y1b = -78.0, 2.0                                            # clear of the door drive's bracket on the same face (y <= -80)
+    reach = 139.0
+    plate = box(x_w - reach - 45.0, x_w, y0b, y1b, -15.9, 0.0)
+    root = box(x_w - 15.9, x_w, y0b, y1b, -20.0, 4.0)
+    wedge = _local(box(-H / 2 - 80.0, -H / 2, -30.0, 30.0, -40.0, 40.0), pm, a, up).intersect(box(-1e4, 1e4, y0b, y1b, 0.0, 1e4))
+    fy, fz = FF.FIBRE_HEAD["yz"]                                     # notch round the through-beam's fibre head
+    notch = box(x_w - 25.0, x_w + 0.1, fy - FF.FIBRE_HEAD["flange_r"] - 2.0, fy + FF.FIBRE_HEAD["flange_r"] + 2.0, fz - 8.5, fz + 8.5)
+    add("Side camera bracket (6061, 5/8 in. x 80 mm plate, 139 mm reach, on an angle root bolted to the floor plate's left edge)",
+        fuse([plate, root]).cut(notch), C["alu_dark"], 12, (-200, 0, 0), mat="al6061", bom="M7-08", tags=TAG)
+    add("Side camera wedge (6061, fixed 13 deg; the camera's 1/4-20 thread screws into it)", wedge, C["anod"], 12, (-220, 0, 0),
+        mat="al6061", bom="M7-08", tags=TAG)
+    REPORT["chronos"] = dict(lens_front=p_l.round(1).tolist(), body_back=(p_b + L * a).round(1).tolist(), camera_mid=pm.round(1).tolist(),
+                             bracket=dict(plate="15.9 x 80 x %.0f" % (reach + 45.0), y=(y0b, y1b), z=(-15.9, 0.0), root_z=(-20.0, 4.0),
+                                          com_reach_mm=round(float(x_w - pm[0]), 1)))
 
 
 # ======================================================================================================== BW: back-wall window
@@ -230,7 +238,7 @@ def _bw(parts, add, h):
     gas = comp([rrect(Lw, Ww, 3.8, y_floor, gk).cut(open_), rrect(Lw, Ww, 3.8, y_out - gk, gk).cut(open_)])
     add("BW window gasket and flat ring (2 x FKM 75A sheet, 1.0 mm squeezed to 0.75)", gas, C["black"], 5, (0, 200, 0), mat="fkm",
         bom="M0-06", tags=TAG)
-    add(f"BW light window ({Lw:.1f} x {Ww:.1f} x 3 mm N-BK7 or fused silica, corners chamfered; flat on the back wall)",
+    add(f"BW light window ({Lw:.1f} x {Ww:.1f} x 3 mm UV fused silica, corners chamfered; flat on the back wall)",
         rrect(Lw, Ww, 2.0, y_floor + gk, 3.0), C["glass"], 5, (0, 220, 0), mat="fused_silica", bom="M0-03", opacity=0.45, tags=TAG)
     fr = rrect(st["L"] + 18.0, st["W"] + 22.0, 6.0, y_out, 4.76).cut(cq.Solid.extrudeLinear(
         FF.stadium_face_y(e1, e2, sl["radius"] + 1.0, y_out - 1.0), V(0, 7.0, 0)))
@@ -471,7 +479,8 @@ def _cage(parts, add, h):
 
 
 # ======================================================================================================== AE path
-AE_XY = {"M50": (3.5, 120.0), "L75": (3.5, 120.0)}        # waveguide (r, deg) in the heater block: clear of the TCs and heaters
+AE_XY = {"M50": (3.2, 120.0), "L75": (3.2, 120.0)}        # waveguide (r, deg): through the piston head's Ø10 wire hole, clear of the TCs and heaters
+AE_WG_D = 3.0                                              # Ø3 mm 316 (analysis/out/monitoring/mech/checks.md §6)
 
 
 def _ae(parts, add, h, module):
@@ -487,13 +496,13 @@ def _ae(parts, add, h, module):
         x, y = r * math.cos(math.radians(deg)), r * math.sin(math.radians(deg))
         z_top = z["zb1"] - 4.0                                            # the plate spigot's underside
         z_bot = zc + 9.0 - 3.0                                            # 3 mm into an M2 thread in the rod end's bore floor (striker below)
-        wg = cyl(1.0, (x, y, z_bot), "z", z_top - z_bot)
-        add(f"AE waveguide {module} (Ø2 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed "
+        wg = cyl(AE_WG_D / 2, (x, y, z_bot), "z", z_top - z_bot)
+        add(f"AE waveguide {module} (Ø3 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed "
             f"into the rod end)", wg, C["ss"], 4, (0, 0, 260), mat="ss316l", bom="M4-06", section=True, **pg)
-        hole = cyl(1.25, (x, y, z["zk0"] - 30.0), "z", (z["zb1"] - 4.3) - (z["zk0"] - 30.0) + 0.01)
+        hole = cyl(AE_WG_D / 2 + 0.2, (x, y, z["zk0"] - 30.0), "z", (z["zb1"] - 4.3) - (z["zk0"] - 30.0) + 0.01)
         _cut(parts, f"Heater block {module}", [hole])
         _cut(parts, f"Radiation shields {module}", [hole])
-        _cut(parts, f"Rod end {module}: 316L", [cyl(1.0, (x, y, z_bot - 0.01), "z", 6.0)])
+        _cut(parts, f"Rod end {module}: 316L", [cyl(AE_WG_D / 2, (x, y, z_bot - 0.01), "z", 6.0)])
         REPORT["AE"] = dict(waveguide_xy=(round(x, 2), round(y, 2)), z_top=z_top, z_bottom=z_bot, length=round(z_top - z_bot, 1))
     # sensor on the rod end's back face (+y), at x -26: outside the gas boundary; spring strap screwed to the same face
     yb = RF["back_y"]

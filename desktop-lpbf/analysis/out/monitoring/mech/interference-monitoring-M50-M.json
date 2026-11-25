@@ -7,7 +7,7 @@
   {
    "state": "closed, parked, piston up",
    "pose": {},
-   "pairs_checked": 2165,
+   "pairs_checked": 2168,
    "interferences": []
   },
   {
@@ -16,7 +16,7 @@
     "recoater": 206.0,
     "piston": -42.0
    },
-   "pairs_checked": 2107,
+   "pairs_checked": 2110,
    "interferences": []
   },
   {
@@ -26,7 +26,7 @@
     "gdoor": 515.0,
     "piston": 8.0
    },
-   "pairs_checked": 2172,
+   "pairs_checked": 2175,
    "interferences": []
   },
   {
@@ -37,7 +37,7 @@
     "cartridge": -125.0,
     "drawer": -120.0
    },
-   "pairs_checked": 2134,
+   "pairs_checked": 2137,
    "interferences": []
   },
   {
@@ -47,7 +47,7 @@
     "module": 40.0,
     "gdoor": 515.0
    },
-   "pairs_checked": 2074,
+   "pairs_checked": 2077,
    "interferences": []
   },
   {
@@ -56,7 +56,7 @@
     "_calibration": 1.0,
     "door": 95.0
    },
-   "pairs_checked": 2177,
+   "pairs_checked": 2180,
    "interferences": []
   }
  ],
@@ -595,7 +595,7 @@
    "group": "recoater",
    "at": 94.42,
    "moving": "HSS recoater blade (1.5 mm, wide nose)",
-   "other": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "gap_mm": 14.05
   },
   {
@@ -763,7 +763,7 @@
    "group": "recoater",
    "at": 0.0,
    "moving": "Recoater position magnet (NdFeB \u00d812 x 3, bonded into a pocket in the carriage block's back face)",
-   "other": "BW light window (57.7 x 26.7 x 3 mm N-BK7 or fused silica, corners chamfered; flat on the back wall)",
+   "other": "BW light window (57.7 x 26.7 x 3 mm UV fused silica, corners chamfered; flat on the back wall)",
    "gap_mm": 21.593
   },
   {
@@ -1454,24 +1454,24 @@
   },
   {
    "group": "piston",
+   "at": -14.92,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
+   "gap_mm": 3.233
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
+   "gap_mm": 3.261
+  },
+  {
+   "group": "piston",
    "at": -27.42,
    "moving": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
    "gap_mm": 3.373
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Rod O-rings M50 in the bottom flange (2 x FKM 75A 2-114, dynamic rod glands)",
-   "gap_mm": 3.433
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Module M50 bottom flange: gland plate (316L, bolted to the welded collar; two FKM 2-114 rod glands)",
-   "gap_mm": 3.461
   },
   {
    "group": "piston",
@@ -1930,17 +1930,17 @@
   },
   {
    "group": "piston",
-   "at": -42.0,
-   "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 20.859
+   "at": -39.92,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
+   "gap_mm": 20.674
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Build module M50: spigot, flange, honed 316L cylinder (\u00d850.8 bore, 3 mm wall) and bottom collar, one TIG-welded body",
-   "gap_mm": 20.874
+   "moving": "Cartridge heaters M50 (3 x 50 W, 24 V, \u00d86 x 22)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 20.859
   },
   {
    "group": "piston",
@@ -1986,6 +1986,13 @@
   },
   {
    "group": "piston",
+   "at": -19.08,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
+   "gap_mm": 22.522
+  },
+  {
+   "group": "piston",
    "at": -14.92,
    "moving": "Plate rim wiper M50 (carbon-filled PTFE split ring; keeps powder out of the hot gap)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
@@ -1996,13 +2003,6 @@
    "at": -17.0,
    "moving": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 22.722
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Module M50 gland-plate O-ring (FKM 75A 2-034, face seal on the tube end and collar)",
    "gap_mm": 22.722
   },
   {
@@ -2161,17 +2161,17 @@
   },
   {
    "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
+   "gap_mm": 26.742
+  },
+  {
+   "group": "piston",
    "at": -0.33,
    "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 26.914
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Gland-plate screws M50, M4 x 20 316, into the welded collar (6 x McMaster 92290A168)",
-   "gap_mm": 26.946
   },
   {
    "group": "piston",
@@ -2582,9 +2582,9 @@
   {
    "group": "piston",
    "at": -0.33,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
-   "gap_mm": 40.699
+   "gap_mm": 40.5
   },
   {
    "group": "piston",
@@ -2630,17 +2630,17 @@
   },
   {
    "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 41.902
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Striker disc M50 (416 stainless, on the pot magnet)",
    "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
    "gap_mm": 42.214
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 42.251
   },
   {
    "group": "piston",
@@ -2658,17 +2658,17 @@
   },
   {
    "group": "piston",
+   "at": -2.42,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
+   "gap_mm": 43.246
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Hollow piston rod M50 (5/8 in. x 0.065 in. seamless 316, polished Ra <= 0.2 um where it runs in the rod glands; inert inside; leads run down it)",
    "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
    "gap_mm": 43.379
-  },
-  {
-   "group": "piston",
-   "at": -2.42,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 43.446
   },
   {
    "group": "piston",
@@ -2735,17 +2735,17 @@
   },
   {
    "group": "piston",
+   "at": -12.83,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
+   "gap_mm": 46.755
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
    "gap_mm": 46.921
-  },
-  {
-   "group": "piston",
-   "at": -12.83,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
-   "gap_mm": 47.0
   },
   {
    "group": "piston",
@@ -2785,9 +2785,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
-   "gap_mm": 49.184
+   "gap_mm": 48.965
   },
   {
    "group": "piston",
@@ -2826,10 +2826,10 @@
   },
   {
    "group": "piston",
-   "at": -4.5,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "at": -0.33,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
-   "gap_mm": 51.686
+   "gap_mm": 51.323
   },
   {
    "group": "piston",
@@ -2918,9 +2918,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
-   "gap_mm": 58.267
+   "gap_mm": 57.742
   },
   {
    "group": "piston",
@@ -2932,16 +2932,16 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
-   "gap_mm": 58.997
+   "gap_mm": 58.957
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
-   "gap_mm": 59.381
+   "gap_mm": 58.997
   },
   {
    "group": "piston",
@@ -2988,9 +2988,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",
-   "gap_mm": 63.609
+   "gap_mm": 63.092
   },
   {
    "group": "piston",
@@ -3071,6 +3071,13 @@
   },
   {
    "group": "piston",
+   "at": -4.5,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
+   "gap_mm": 70.28
+  },
+  {
+   "group": "piston",
    "at": -42.0,
    "moving": "Bore seal M50 (aramid felt + carbon-filled PTFE scraper)",
    "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
@@ -3082,13 +3089,6 @@
    "moving": "Z carriage",
    "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
    "gap_mm": 70.616
-  },
-  {
-   "group": "piston",
-   "at": -4.5,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
-   "gap_mm": 70.784
   },
   {
    "group": "piston",
@@ -3429,9 +3429,9 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "gap_mm": 91.167
+   "gap_mm": 90.927
   },
   {
    "group": "piston",
@@ -3464,9 +3464,16 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; face seal in the floor plate's pad)",
-   "gap_mm": 92.83
+   "gap_mm": 92.59
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
+   "gap_mm": 92.944
   },
   {
    "group": "piston",
@@ -3474,13 +3481,6 @@
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
    "gap_mm": 93.207
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Zero-point clamping pins M50 (2 x SCHUNK VERO-S SPC mini 20 class, \u00d820, 14 mm into the module; centring clearance, no alignment)",
-   "gap_mm": 93.371
   },
   {
    "group": "piston",
@@ -3520,16 +3520,16 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 95.887
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 95.603
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
-   "gap_mm": 95.914
+   "moving": "Disc springs under the stack screws M50 (3 x McMaster 9713K54)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 95.887
   },
   {
    "group": "piston",
@@ -3674,9 +3674,16 @@
   {
    "group": "piston",
    "at": -0.33,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
-   "gap_mm": 107.38
+   "gap_mm": 106.652
+  },
+  {
+   "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
+   "gap_mm": 109.086
   },
   {
    "group": "piston",
@@ -3684,13 +3691,6 @@
    "moving": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
    "gap_mm": 109.44
-  },
-  {
-   "group": "piston",
-   "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 109.673
   },
   {
    "group": "piston",
@@ -4037,6 +4037,13 @@
   },
   {
    "group": "piston",
+   "at": -42.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
+   "gap_mm": 137.192
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
@@ -4044,17 +4051,10 @@
   },
   {
    "group": "piston",
-   "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 137.429
-  },
-  {
-   "group": "piston",
    "at": 8.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
-   "gap_mm": 138.507
+   "gap_mm": 138.154
   },
   {
    "group": "piston",
@@ -4115,9 +4115,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 141.38
+   "gap_mm": 141.146
   },
   {
    "group": "piston",
@@ -4206,9 +4206,9 @@
   {
    "group": "piston",
    "at": 8.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",
-   "gap_mm": 152.054
+   "gap_mm": 151.702
   },
   {
    "group": "piston",
@@ -4233,17 +4233,17 @@
   },
   {
    "group": "piston",
+   "at": -25.33,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
+   "gap_mm": 152.889
+  },
+  {
+   "group": "piston",
    "at": 8.0,
    "moving": "Piston head M50 (6061-T6, cool side of the break; Tier B: 316L with a water channel)",
    "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
    "gap_mm": 152.906
-  },
-  {
-   "group": "piston",
-   "at": -25.33,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
-   "gap_mm": 153.121
   },
   {
    "group": "piston",
@@ -4255,9 +4255,9 @@
   {
    "group": "piston",
    "at": -4.5,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
-   "gap_mm": 154.472
+   "gap_mm": 154.239
   },
   {
    "group": "piston",
@@ -4346,9 +4346,9 @@
   {
    "group": "piston",
    "at": 1.75,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
-   "gap_mm": 176.332
+   "gap_mm": 175.852
   },
   {
    "group": "piston",
@@ -4535,16 +4535,16 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
-   "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 190.907
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Guard frame (20 mm T-slot)",
+   "gap_mm": 190.729
   },
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Guard frame (20 mm T-slot)",
-   "gap_mm": 190.969
+   "moving": "Radiation shields M50 (2 x 0.3 mm polished 316, clamped between the Macor rings)",
+   "other": "Laser guard panels (1.5 mm aluminium)",
+   "gap_mm": 190.907
   },
   {
    "group": "piston",
@@ -4787,9 +4787,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 210.969
+   "gap_mm": 210.729
   },
   {
    "group": "piston",
@@ -4808,9 +4808,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 212.473
+   "gap_mm": 211.982
   },
   {
    "group": "piston",
@@ -4864,9 +4864,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 240.9
+   "gap_mm": 240.406
   },
   {
    "group": "piston",
@@ -4948,9 +4948,9 @@
   {
    "group": "piston",
    "at": -42.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 323.07
+   "gap_mm": 322.588
   },
   {
    "group": "piston",
@@ -7000,7 +7000,7 @@
    "group": "zstage",
    "at": 0.0,
    "moving": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
-   "other": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "gap_mm": 6.0
   },
   {
@@ -7040,17 +7040,17 @@
   },
   {
    "group": "zstage",
+   "at": 0.0,
+   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
+   "other": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "gap_mm": 9.992
+  },
+  {
+   "group": "zstage",
    "at": -45.0,
    "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
    "other": "Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)",
    "gap_mm": 10.0
-  },
-  {
-   "group": "zstage",
-   "at": 0.0,
-   "moving": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "other": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "gap_mm": 10.152
   },
   {
    "group": "zstage",
@@ -7720,7 +7720,7 @@
   {
    "group": "module",
    "at": 345.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 9.0
   },
@@ -7790,16 +7790,16 @@
   {
    "group": "module",
    "at": 51.75,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Pot magnet (NdFeB in a steel cup, \u00d825 x 7, 44 lbf, holds the rod's striker)",
    "gap_mm": 11.0
   },
   {
    "group": "module",
    "at": 51.75,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Z lift arm (6061, 12 mm, pot-magnet coupling)",
-   "gap_mm": 11.35
+   "gap_mm": 11.192
   },
   {
    "group": "module",
@@ -8112,7 +8112,7 @@
   {
    "group": "module",
    "at": 138.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Cross-flow outlet plenum under the floor (316L, flat over the module path, bolted flange)",
    "gap_mm": 18.0
   },
@@ -8189,7 +8189,7 @@
   {
    "group": "module",
    "at": 362.25,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Guard door rail (top + bottom)",
    "gap_mm": 21.0
   },
@@ -9028,6 +9028,13 @@
   },
   {
    "group": "module",
+   "at": 34.5,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Base plate, process module (MIC-6, 15 mm)",
+   "gap_mm": 41.902
+  },
+  {
+   "group": "module",
    "at": 327.75,
    "moving": "Handle screws M50, M4 x 10 316 (2 x McMaster 92290A144)",
    "other": "Guard door rail (top + bottom)",
@@ -9042,17 +9049,10 @@
   },
   {
    "group": "module",
-   "at": 34.5,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Base plate, process module (MIC-6, 15 mm)",
-   "gap_mm": 42.251
-  },
-  {
-   "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Chamber floor plate (6061-T6, 20 mm, bolted under the frame; floor O-ring gland, module port, slots)",
-   "gap_mm": 43.446
+   "gap_mm": 43.246
   },
   {
    "group": "module",
@@ -9127,16 +9127,16 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
-   "other": "Module-present sensor (inductive M12, under the floor, sees the module flange)",
-   "gap_mm": 46.78
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
+   "gap_mm": 46.755
   },
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Locating dowel (round, +y) and diamond pin (-y: the same dowel with two flats ground to 2 mm lands across x), \u00d86 x 20 316, pressed into the floor (2 x McMaster 93600A686)",
-   "gap_mm": 47.0
+   "moving": "Zero-point arms M50 (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
+   "other": "Module-present sensor (inductive M12, under the floor, sees the module flange)",
+   "gap_mm": 46.78
   },
   {
    "group": "module",
@@ -9315,17 +9315,17 @@
   },
   {
    "group": "module",
+   "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
+   "gap_mm": 51.323
+  },
+  {
+   "group": "module",
    "at": 224.25,
    "moving": "Heater block M50 (6061-T6, bayonet socket)",
    "other": "Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)",
    "gap_mm": 51.673
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Helical inserts for the module screws, M6 x 12 18-8, in the floor (2 x McMaster 91732A782)",
-   "gap_mm": 51.686
   },
   {
    "group": "module",
@@ -9399,24 +9399,24 @@
   },
   {
    "group": "module",
+   "at": 69.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+   "gap_mm": 54.902
+  },
+  {
+   "group": "module",
+   "at": 69.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
+   "gap_mm": 54.91
+  },
+  {
+   "group": "module",
    "at": 0.0,
    "moving": "Heater-stack screws M50, M3 x 25 316, up through slotted counterbores in the piston head (3 x McMaster 92290A124)",
    "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
    "gap_mm": 55.027
-  },
-  {
-   "group": "module",
-   "at": 69.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: \u00d888 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
-   "gap_mm": 55.251
-  },
-  {
-   "group": "module",
-   "at": 69.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Zero-point module plates (2 x 6061, 10 mm, each on two posts)",
-   "gap_mm": 55.257
   },
   {
    "group": "module",
@@ -9568,6 +9568,13 @@
   {
    "group": "module",
    "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",
+   "gap_mm": 63.092
+  },
+  {
+   "group": "module",
+   "at": 0.0,
    "moving": "Rod end M50 feedthroughs, welded in (3 x Solid Sealing FA11631 Chromel + 3 x FA11632 Alumel single-lead type K, \u00d86.27 x 38 sleeves; 1 x FA10443 4-pin 16 A Cu, \u00d812.62 x 24 sleeve)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
    "gap_mm": 63.129
@@ -9581,17 +9588,10 @@
   },
   {
    "group": "module",
-   "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)",
-   "gap_mm": 63.609
-  },
-  {
-   "group": "module",
    "at": 155.25,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Gas-loop + vacuum hoses (KF-25 SS bellows)",
-   "gap_mm": 63.999
+   "gap_mm": 63.637
   },
   {
    "group": "module",
@@ -9729,6 +9729,13 @@
   {
    "group": "module",
    "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
+   "gap_mm": 70.28
+  },
+  {
+   "group": "module",
+   "at": 0.0,
    "moving": "Heater block M50 (6061-T6, bayonet socket)",
    "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
    "gap_mm": 70.619
@@ -9739,13 +9746,6 @@
    "moving": "AE sensor (wideband, MISTRAS WSa / Vallen VS900-M class; envelope \u00d819 x 16 with a side connector) on the rod end's back face",
    "other": "Zero-point release-air line (\u00d84 tube, valve to a union Y to each module)",
    "gap_mm": 70.657
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Zero-point post helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
-   "gap_mm": 70.784
   },
   {
    "group": "module",
@@ -10149,9 +10149,9 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "gap_mm": 92.04
+   "gap_mm": 91.803
   },
   {
    "group": "module",
@@ -10163,9 +10163,9 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Floor O-ring (FKM 75A, 3.53 mm cord, vulcanized splice, 25 % squeeze; face seal in the floor plate's pad)",
-   "gap_mm": 93.461
+   "gap_mm": 93.223
   },
   {
    "group": "module",
@@ -10225,17 +10225,17 @@
   },
   {
    "group": "module",
+   "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
+   "gap_mm": 95.603
+  },
+  {
+   "group": "module",
    "at": 241.5,
    "moving": "Macor standoff rings M50 (3 standoffs x 3 rings, \u00d88, cut from 8489K75 rod; thermal break)",
    "other": "Guard frame (20 mm T-slot)",
    "gap_mm": 95.67
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)",
-   "gap_mm": 95.914
   },
   {
    "group": "module",
@@ -10401,16 +10401,16 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
-   "other": "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",
-   "gap_mm": 107.31
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
+   "gap_mm": 106.652
   },
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Floor-plate screws, M4 x 16 316, up through U-notches in the plate's edge into tapped holes in the frame's skirt (18 x McMaster 92290A154)",
-   "gap_mm": 107.38
+   "moving": "Spigot O-ring (FKM 75A 2-238, radial seal in the floor port; groove root \u00d890.5 x 4.8)",
+   "other": "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",
+   "gap_mm": 107.31
   },
   {
    "group": "module",
@@ -10562,9 +10562,9 @@
   {
    "group": "module",
    "at": 120.75,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Chamber legs (6061, 30 x 30; the right-hand one 28 x 30, at the side)",
-   "gap_mm": 117.251
+   "gap_mm": 116.902
   },
   {
    "group": "module",
@@ -10576,9 +10576,9 @@
   {
    "group": "module",
    "at": 138.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Base-plate-to-leg screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 118.803
+   "gap_mm": 118.446
   },
   {
    "group": "module",
@@ -10646,9 +10646,9 @@
   {
    "group": "module",
    "at": 138.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Leg-to-floor screws, M6 x 25 316, up each leg's \u00d811 bore (4 x McMaster 92290A330)",
-   "gap_mm": 128.05
+   "gap_mm": 127.712
   },
   {
    "group": "module",
@@ -10793,9 +10793,9 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Plate-height through-beam (M6 threaded fibre heads in the side walls, z +5 mm)",
-   "gap_mm": 139.204
+   "gap_mm": 138.852
   },
   {
    "group": "module",
@@ -10989,6 +10989,13 @@
   {
    "group": "module",
    "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",
+   "gap_mm": 152.217
+  },
+  {
+   "group": "module",
+   "at": 0.0,
    "moving": "Build plate M50 (\u00d850.5 x 10, 6061-T6; bayonet spigot, gripper groove)",
    "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
    "gap_mm": 152.346
@@ -10999,13 +11006,6 @@
    "moving": "Heater block M50 (6061-T6, bayonet socket)",
    "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
    "gap_mm": 152.496
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Fibre-head O-rings (2 x FKM 75A 2-010, face seals)",
-   "gap_mm": 152.569
   },
   {
    "group": "module",
@@ -11024,9 +11024,9 @@
   {
    "group": "module",
    "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Leg helical inserts, M6 x 9 18-8, in the floor (4 x McMaster 91732A262)",
-   "gap_mm": 154.472
+   "gap_mm": 154.239
   },
   {
    "group": "module",
@@ -11317,6 +11317,13 @@
   },
   {
    "group": "module",
+   "at": 0.0,
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
+   "gap_mm": 175.856
+  },
+  {
+   "group": "module",
    "at": 172.5,
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
@@ -11328,13 +11335,6 @@
    "moving": "Type K thermocouples M50 (control, edge, limit; 0.04 in. ungrounded, 316 sheath)",
    "other": "Laser guard panels (1.5 mm aluminium)",
    "gap_mm": 175.993
-  },
-  {
-   "group": "module",
-   "at": 0.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
-   "other": "Floor-plate dowels, \u00d86 x 20 316 (pressed into the plate, slip fit in the frame), front-left and back-right corners (2 x McMaster 93600A686)",
-   "gap_mm": 176.336
   },
   {
    "group": "module",
@@ -11353,16 +11353,16 @@
   {
    "group": "module",
    "at": 172.5,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end caps TIG-welded in)",
-   "gap_mm": 180.75
+   "gap_mm": 180.1
   },
   {
    "group": "module",
    "at": 345.0,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Laser guard panels (1.5 mm aluminium)",
-   "gap_mm": 180.887
+   "gap_mm": 180.227
   },
   {
    "group": "module",
@@ -11451,9 +11451,9 @@
   {
    "group": "module",
    "at": 189.75,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Optics-post base screws, M6 x 25 316 (8 x McMaster 92290A330)",
-   "gap_mm": 205.858
+   "gap_mm": 205.217
   },
   {
    "group": "module",
@@ -11535,9 +11535,9 @@
   {
    "group": "module",
    "at": 241.5,
-   "moving": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "moving": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "other": "Leveling mounts, process module (McMaster 5537T983: \u00d825 base, M8 stem threaded up through the plate)",
-   "gap_mm": 277.564
+   "gap_mm": 276.877
   },
   {
    "group": "module",
@@ -11642,7 +11642,7 @@
   },
   {
    "a": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it)",
-   "b": "BW light window (57.7 x 26.7 x 3 mm N-BK7 or fused silica, corners chamfered; flat on the back wall)",
+   "b": "BW light window (57.7 x 26.7 x 3 mm UV fused silica, corners chamfered; flat on the back wall)",
    "why": "window in its seat"
   },
   {
@@ -11667,7 +11667,7 @@
   },
   {
    "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
-   "b": "AE waveguide M50 (\u00d82 mm 316 rod; tip faced and polished on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
+   "b": "AE waveguide M50 (\u00d83 mm 316 rod; tip domed R >= 25 on the plate's spigot; down the hollow rod; cold end screwed into the rod end)",
    "why": "cold end screwed into the rod end's bore floor"
   },
   {
@@ -11679,11 +11679,6 @@
    "a": "Rod end M50: 316L feedthrough block, rod welded into its top, 81 x 16 mm face to the front",
    "b": "Striker disc M50 (416 stainless, on the pot magnet)",
    "why": "striker screwed to the end cap"
-  },
-  {
-   "a": "Side high-speed camera (Kron Chronos 2.1-HD, 155 x 96 x 67.3 mm) on the LW sight line",
-   "b": "Side camera tilt block + plate (6061; sets the camera on the sight line; a ball head or tilt mount in practice)",
-   "why": "camera screwed to its tilt block"
   },
   {
    "a": "Trace O2 analyzer + dew-point transmitter (panel box)",
@@ -11726,5 +11721,5 @@
    "why": "tube in the valve's push-in port"
   }
  ],
- "runtime_s": 272.9
+ "runtime_s": 246.3
 }

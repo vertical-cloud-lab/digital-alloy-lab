@@ -43,17 +43,18 @@ SEL = [
      "6+ price $41.17 each. Edmund 22-695 (Ø30 x 1, $101; 6-25: $81) is the optical-grade option. Cloudray-type fibre-laser "
      "windows show ~GBP 7.30 each in a search snippet (eBay blocked the tunnel): check size and coating before relying on them. "
      "Measure how often a slide must change before stocking more (monitoring.md §6)", []),
-    ("M0-03", "0", "ports", "BW window: rectangle ~57.7 x 26.7 x 3 mm, borosilicate or fused silica, corners chamfered 2 mm",
+    ("M0-03", "0", "ports", "BW window: rectangle ~57.7 x 26.7 x 3 mm, UV fused silica, corners chamfered 2 mm",
      ("est", 40.0, 120.0, "estimate (custom cut; no catalogue size)", "custom", "glass shop / Edmund custom"), 1, "add", "not drawn",
-     "A light window only (no imaging): 3 mm fused silica has F/S ~16 over the 20.5 mm wide slot at 1 bar; borosilicate wants 3.6 mm "
-     "for F/S 10. The seat is 58 x 27 x 4.5 mm (frame_features.py)", []),
-    ("M0-04", "0", "custom (outsourced)", "LP blanking cap over the lid's Ø37 bore until the steep camera is bought (6061 1/4 in. plate, "
-     "on the boss's face O-ring and screws)", ("custom", 11.44, "SendCutSend instant quote (2 = $9.15, 10 = $7.21 each; arrives Nov 30)",
+     "A light window only (no imaging): fused silica only. Borosilicate would need an abraded strength of 12.5 MPa that nobody "
+     "publishes (monitoring/mechanics.md, Checks §1). The seat is 58 x 27 x 4.5 mm (frame_features.py)", []),
+    ("M0-04", "0", "custom (outsourced)", "LP blanking cap until the steep camera is bought: the adapter boss's Ø40.8 outline and 4 holes "
+     "(6061 1/4 in. plate) on the lid's face O-ring round the Ø24 bore (the quote is for the earlier Ø64 disc)", ("custom", 11.44, "SendCutSend instant quote (2 = $9.15, 10 = $7.21 each; arrives Nov 30)",
                                               SCSQ, "2026-11-25T07:49Z"), 1,
      "outsource", "not drawn", "monitoring_spec: the LP ships blanked; its window and slides come with the steep camera (M7-17, M7-18)", []),
-    ("M0-06", "0", "ports", "FKM sheet 1/32 in. for the windows' flat gaskets and flat rings (LW, BW, LP)",
-     ("est", 20.0, 40.0, "estimate (McMaster FKM sheet, not fetched)", "FKM 75A sheet, 1/32 in.", "McMaster-Carr"), 1, "add", "not drawn",
-     "the layer camera's window uses the same 1 mm flat gasket (lpbf_low.py)", []),
+    ("M0-06", "0", "ports", "FKM sheet 1.0 mm for the windows' flat gaskets and flat rings (LW, BW, LP)",
+     ("est", 20.0, 40.0, "estimate (McMaster FKM sheet, not fetched)", "FKM 75A sheet, 1.0 mm", "McMaster-Carr"), 1, "add", "not drawn",
+     "1.0 mm, not 1/32 in.: the 0.75 mm the seats leave squeezes 1.0 mm sheet 15-35 %, 1/32 in. only -7 to 18 % "
+     "(monitoring/mechanics.md, Checks §2); the layer camera's window uses the same 1 mm flat gasket (lpbf_low.py)", []),
     ("M0-07", "0", "ports", "FKM O-ring for the LP adapter boss's face seal on the lid (AS568-028 priced; size it to the groove)",
      ("p1", "O1-b"), 1, "add", "not drawn", "the layer camera's adapter uses a 2-030 on a groove of ID 42", []),
     ("M0-08", "0", "purge", "Needle valve for the LW slide purge, brass, 1/8 NPT", ("p1", "O2"), 1, "add", "not drawn", "", []),
@@ -187,8 +188,10 @@ SEL = [
     ("M7-06", "7", "side light", "LED driver with pulse mode", ("mo", "MO31"), 1, "add", "not drawn",
      "my reads: an 810 nm mounted LED (M810L5, $304.15) with an LEDD1B ($380.04) costs a sixth of this pair but gives less light", []),
     ("M7-07", "7", "side camera", "Kron BNC extension cable 4 m (trigger to the sync box)", ("p2", "D6"), 1, "add", "not drawn", "", []),
-    ("M7-08", "7", "custom (outsourced)", "LW camera bracket, 6061 plate under a ball head",
-     ("custom", 27.12, "analogue: SendCutSend laser, the Z lift arm, $27.12"), 1, "outsource", "not drawn", "", []),
+    ("M7-08", "7", "custom (outsourced)", "LW camera bracket: 5/8 in. (15.9 mm) x 80 mm 6061 plate on an angle root at the floor plate's "
+     "edge, and a fixed 13 deg wedge (no ball head)",
+     ("custom", 27.12, "analogue: SendCutSend laser, the Z lift arm, $27.12"), 1, "outsource", "drawn (cad/monitoring_parts.py)",
+     "f1 169 Hz at a 139 mm reach (monitoring/mechanics.md, Checks §3); the analogue is a thinner part, so expect more", []),
     ("M7-09", "7", "side camera", "Option: full-frame lens, Nikon F 50 mm f/1.8G (order the Chronos with the F mount)", ("p2", "K8"), 1, "option",
      "not drawn", "a G lens has no aperture ring: check that Kron's F mount sets the aperture, or buy the D version", ["K8-u1"]),
     ("M7-10", "7", "side light", "Option: 808 nm 10 W fibre-coupled source, pulses from 10 us (Class 4: LSO review first)", ("mo", "MO32"), 1,
