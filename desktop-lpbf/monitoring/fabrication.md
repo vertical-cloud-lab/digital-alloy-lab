@@ -161,7 +161,8 @@ plate (the sight line plus ~35 mm, assumed).
 
 ### 2.1 The features
 [`frame_features.py`](../analysis/monitoring/fab/frame_features.py) ([`frame_features.json`](../analysis/out/monitoring/fab/frame_features.json))
-cuts them into the frame as `inventory.py` exports it (the model at c345850). 34.7 cm³ come off; the frame stays 1,548 cm³.
+cuts them into the frame as `inventory.py` exports it (the model at c345850). 34.7 cm³ come off: the frame goes from 1,582.5 to
+1,547.8 cm³.
 
 | Port | Feature | Size | Where (model, mm) | Tool, as programmed |
 |---|---|---|---|---|
@@ -305,7 +306,7 @@ put in a cart.
 | Step | What it buys | New | With used listings | Options, not counted | Lines estimated or quote-only |
 |---|---|---:|---:|---|---|
 | 0. before machining: the ports' parts | LW window (Ø40 × 4, NIR AR) and 6 slides, BW window (custom), FKM sheet, LP face O-ring, purge valve and fittings, the three laser-cut parts (quoted), slide holders, a beam trap for cube 1 (needed now) | $982–1,119 | $982 | - | M0-03, M0-06, M0-12, M0-16 |
-| 1. clock and recorder | PicoScope 4444 + 4 TA271, 6 BNC cables, tees, RTC6 D-sub breakout, isolators, sync box, 4 TB SSD | $2,257–2,457 | $2,001 | - | M1-07, M1-08 |
+| 1. clock and recorder | PicoScope 4444 + 4 TA271, 6 BNC cables, tees, RTC6 D-sub breakout, isolators, sync box, 4 TB SSD | $2,257–2,457 | $2,001 | $9,170 new / $1,800 used (M1-09) | M1-07, M1-08 |
 | 2. spectral check of the scan head | borrowed lamp and spectrometers (not counted) | $0 | $0 | - | - |
 | 3. layer camera tuned | 12 mm f/1.8 lens, 300 mm LED bar for raking light, a second light, switching, a second 1070 nm blocker | $1,302–1,327 | $1,302 | - | M3-05 |
 | 4. acoustic emission | D9215-class sensor and 2/4/6-class preamp (quote: estimated), Molykote 41, pencil leads, SMA-BNC cable, sensor clamp | $1,111–3,211 | $1,095 | $23 new / $23 used (M4-06, M4-07) | M4-01, M4-02, M4-03 |
@@ -355,6 +356,7 @@ put in a cart.
 | Line | New | Cheapest used listing read | Listing | What to check |
 |---|---:|---:|---|---|
 | M1-01 Digitizer: PicoScope 4444, 4 differential inputs, 12/14-bit, 20 MHz, 4 | $1,645 | $1,389 | [317129055097](https://www.ebay.com/itm/317129055097) (2026-11-25T06:54Z): used (Pre-Owned): PicoScope 4444 (used) (Pico 4444) | the D9 adaptors (TA271) and that it ships from abroad |
+| M1-09 Alternative digitizer: NI USB-6366, 8 simultaneous 16-bit inputs at 2  | $9,170 | $1,800 | [307181669592](https://www.ebay.com/itm/307181669592) (2026-11-25T06:56Z): used (Pre-Owned): National Instruments USB-6366 USB X Series Multifunction DAQ 8-Channel (used) (NI USB-6366) | the variant (BNC, screw or mass termination) and the power supply |
 | M4-01 AE sensor, high-temperature broadband (MISTRAS D9215 class; Seleznev 2 | $700–1,800 | $834 | [317770644974](https://www.ebay.com/itm/317770644974) (2026-11-25T06:51Z): new (Brand New): R15CL Acoustic Emission Sensor R15a (listed as new) (R15CL / R15a) | an R15a is resonant at 150 kHz and not rated for heat: fine on the rod end, not under the plate |
 | M4-02 AE preamplifier 20/40/60 dB (MISTRAS 2/4/6 class) | $300–900 | $150 | [127880027110](https://www.ebay.com/itm/127880027110) (2026-11-25T06:54Z): used (Pre-Owned): Mistras IL-LP-WS in-line low-power AE preamplifier 26 dB 65-1100 kHz BNC/SMA (used) (MISTRAS | 28 V phantom power: needs a decoupler (Vallen DCPL2 class) to feed the PicoScope |
 | M7-01 Kron Chronos 2.1-HD, 8 GB, mono (4/3 in. sensor; 24,046 fps at 640 x 9 | $6,800 | $5,000 | [840036095876](https://www.ebay.com/itm/840036095876) (2026-11-25T07:38Z): used (pulled from a working environment; dent on the lens): Kron Technologies CR-21-1.0-32C High Speed Camera  | colour (not mono), 32 GB, lens dented; check the sensor and memory |

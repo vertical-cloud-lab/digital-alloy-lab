@@ -93,6 +93,9 @@ SEL = [
      ("est", 40.0, 90.0, "estimate (not fetched)", "enclosure + BNC bulkheads", "various"), 1, "add (hand-drilled, 2.4 h)", "not drawn", "", []),
     ("M1-08", "1", "storage", "Data storage, 4 TB SSD (a fully instrumented build is 0.1-1 TB raw, monitoring.md §5.3)",
      ("est", 250.0, 400.0, "estimate (not fetched)", "4 TB NVMe/USB SSD", "various"), 1, "add", "not drawn", "", []),
+    ("M1-09", "1", "recorder", "Alternative digitizer: NI USB-6366, 8 simultaneous 16-bit inputs at 2 MS/s each", ("p2", "D3"), 1,
+     "option (alternative to M1-01)", "not drawn", "NI shows a 16-17 week lead time; confirm the BNC variant before ordering",
+     ["D3-u1", "D3-u2"]),
     # ---------------- step 2: spectral check (borrow) -------------------------------------------------------------------
     ("M2-01", "2", "borrow", "Stabilised tungsten-halogen lamp 360-2600 nm (reference price; borrow)", ("p1", "R2"), 0, "borrow", "-", "", []),
     ("M2-02", "2", "borrow", "Compact spectrometer 200-1000 nm (reference price; borrow)", ("p1", "R1-b"), 0, "borrow", "-",
@@ -145,7 +148,7 @@ SEL = [
     ("M5-03", "5", "coaxial", "Photodiode A band: 700 nm, 40 nm FWHM", ("mo", "MO6"), 1, "add", "not drawn", "", []),
     ("M5-04", "5", "coaxial", "Photodiode B band: 900 nm, 40 nm FWHM", ("mo", "MO7"), 1, "add", "not drawn", "", []),
     ("M5-05", "5", "coaxial", "Photodiode B, Si switchable gain (A is the existing optics-bom O15)", ("mo", "MO8"), 1, "add", "not drawn",
-     "my read 2026-11-25T06:4xZ: 0 in US stock, 'Lead Time' (price_lookups_optics.csv P1)", []),
+     "my read 2026-11-25T06:44Z: 0 in US stock, 'Lead Time' (price_lookups_optics.csv P1)", []),
     ("M5-06", "5", "coaxial", "Photodiode lens f = 50 mm achromat (one exists as O18)", ("mo", "MO9"), 1, "add", "not drawn", "", []),
     ("M5-07", "5", "coaxial", "Field stops, 500 um pinholes, one per photodiode", ("mo", "MO10"), 2, "add", "not drawn", "", []),
     ("M5-08", "5", "coaxial", "30 mm cage cube for a round Ø1 in. dichroic (C4W + B4C/M + FFM1): cube 3", ("mo", "MO14"), 1, "add",
