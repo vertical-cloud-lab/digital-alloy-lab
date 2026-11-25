@@ -884,7 +884,65 @@ def job_module(cell: Cell, arm_x=0.0, tilt=0.0, roll=0.0, lift=66.0, **kw):
     return j
 
 
-def job_overflow(cell: Cell, skip_note="", arm_x=100.0, lift=60.0, **kw):
+def grip_block(cell: Cell, name, depth=30.0):
+    """The I-section grip block at the front end of a grip fin (the module's MODULE_GRIP pattern): from the part's own mesh, the web's
+    x span (sectioned at the block's mid-height), the block's z span and front face. Returns (grasp point, web width, (z0, z1))."""
+    import trimesh
+    b, p = cell.sc.machine[name]
+    v = (np.c_[b.v, np.ones(len(b.v))] @ b.M.T)[:, :3]
+    yf = float(v[:, 1].min())
+    blk = v[v[:, 1] <= yf + depth + 0.5]
+    z0, z1 = float(blk[:, 2].min()), float(blk[:, 2].max())
+    zc = (z0 + z1) / 2
+    sec = trimesh.Trimesh(v, b.f, process=False).section(plane_origin=(0, 0, zc), plane_normal=(0, 0, 1))
+    pts = np.asarray(sec.vertices)
+    pts = pts[pts[:, 1] <= yf + depth + 0.5]
+    x0, x1 = float(pts[:, 0].min()), float(pts[:, 0].max())
+    return np.array([(x0 + x1) / 2, yf + depth / 2, zc]), x1 - x0, (z0, z1)
+
+
+def job_overflow(cell: Cell, skip_note="", arm_x=100.0, lift=60.0, roll=0.0, tilt=0.0, **kw):
+    """The overflow jar. Round 6 (2026-11-25): the jar has a grip fin (cad/automation.py, "Overflow jar grip fin": an I-section grip block
+    level with the module's, y -156..-126, z -65..-25, 100 mm to its right), so the gripper takes the fin's web level from the front, as
+    the module job takes the module's grip block, instead of reaching under the chamber for the cup. The toggle clamp comes off first (a
+    machine step, not simulated); the robot lowers the jar 8 mm off the centring ring, slides it straight out until its cup is 10 mm in
+    front of the door's hinge knuckles, lifts it `lift` mm, carries it out over the guard sill and up to the MiR's rack. Without a fin
+    (the round-5 model) it runs the round-5 job, which grips the cup itself (_job_overflow_cup)."""
+    fins = cell.names("Overflow jar", "grip fin")
+    if not fins:
+        return _job_overflow_cup(cell, skip_note=skip_note, arm_x=arm_x, lift=lift)
+    fin = fins[0]
+    jar = [n for n in cell.names("Overflow jar") if n not in fins]
+    held = jar + [fin]
+    j = Job(cell, "overflow_jar", arm_x=arm_x, state0={"gdoor": GT})
+    clamp = cell.names("Overflow clamp")
+    j.machine("toggle clamp off (lever pushed, clamp lifted off forward; not simulated)", 4.0,
+              state_fn=lambda s: (None, {n: C.Tm(None, (0.0, 0.0, -3000.0)) for n in clamp}), n=2)
+    j.sc.set_state(j.state, j.ov)                         # the planner sees the clamp gone too
+    pg, web, (zb0, zb1) = grip_block(cell, fin)
+    a = np.array([0.0, math.cos(math.radians(tilt)), -math.sin(math.radians(tilt))])
+    R = R_of(a, (1, 0, 0)) @ C.rot((0, 0, 1), roll)
+    al = allow_of(*held)
+    j.note = f"grip block web {web:.1f} mm at ({pg[0]:.1f}, {pg[1]:.1f}, {pg[2]:.1f}), z {zb0:.0f}..{zb1:.0f}"
+    j.goto(T_of(R, pg - a * 90), "to the jar's grip fin, in front of the door", close=j.arm.close_for_gap(web + 20.0),
+           then=[(T_of(R, pg), al, None)])
+    j.line(T_of(R, pg), "in level round the fin's web", allow=al)
+    j.grip(web + 0.3, f"close on the {web:.0f} mm web, between the flanges", allow=al)
+    j.attach(held, "overflow jar + grip fin")
+    fixtures = allow_of(*cell.names("Overflow port"), *cell.names("Overflow-jar present"), kind="held")
+    j.line(j.moved((0, 0, -8.0)), "lower 8 mm off the centring ring", allow=al | fixtures, step_mm=1.0, force=(0, 0, -10.0))
+    jb = cell.sc.machine[jar[0]][0].box()
+    kn = cell.sc.machine[cell.name("Door hinge knuckles")][0].box()
+    L = float(jb[1][1] - kn[0][1] + 10.0)
+    j.line(j.moved((0, -L, 0)), f"straight out {L:.0f} mm, under the floor's front edge and the hinge knuckles", allow=al, step_mm=3.0)
+    j.line(j.moved((0, 0, lift)), f"lift {lift:.0f} mm, the cup in front of the hinge knuckles", allow=al, step_mm=3.0)
+    out = float(jb[1][1] - L - (-265.0)) + 30.0           # until the cup's back edge is 30 mm in front of the guard's front face
+    j.line(j.moved((0, -out, 0)), f"out {out:.0f} mm over the guard sill", allow=al, step_mm=3.0)
+    j.line(j.moved((0, -60.0, 60.0)), "up and out (to the MiR's jar rack)", allow=al, fine=False)
+    return j
+
+
+def _job_overflow_cup(cell: Cell, skip_note="", arm_x=100.0, lift=60.0, **kw):
     """The overflow jar (2026-11-23: joint at z -84, a 2 in. cup 45 mm long, the outlet port moved to the plenum's left end and the
     front-right leg to the side, so the jar has a straight lane to the front). The MKS toggle clamp comes off first: one push on its
     lever and the clamp lifts off forward (a machine step here, not simulated). The gripper comes in level from the front, closes on the
@@ -1017,7 +1075,10 @@ VARIANTS["module_swap"] = [dict(arm_x=x, roll=r) for r in (0.0, 180.0) for x in 
 VARIANTS["chamber_door_close"] = [dict(arm_x=x, tilt=t) for t in (-45.0, -30.0, -60.0, 20.0) for x in (-450.0, -300.0, 0.0, 300.0)]
 VARIANTS["plate_bayonet"] = [dict(arm_x=x) for x in (450.0, -450.0, 300.0, -300.0, 600.0)]
 VARIANTS["plate_drawbar"] = [dict(arm_x=x) for x in (450.0, -450.0, 300.0, -300.0, 600.0)]
-VARIANTS["overflow_jar"] = [dict(arm_x=x) for x in (300.0, 450.0, 100.0, -300.0, 550.0, -450.0)]
+# round 5 tried the cup grasp at x 300, 450, 100, -300, 550, -450 (all fail); the grip fin (round 6) is level with the module's grip
+# block and 100 mm to its right, and the module passes from x +300, so the fin job starts at x +400
+VARIANTS["overflow_jar"] = [dict(arm_x=x, roll=r) for r in (0.0, 180.0) for x in (400.0, 300.0, 450.0, 350.0, 500.0, 200.0)]
+VARIANTS_R5 = {"overflow_jar": [dict(arm_x=x) for x in (300.0, 450.0, 100.0, -300.0, 550.0, -450.0)]}
 
 JOBS = {
     "guard_door": job_guard_door,
