@@ -1095,10 +1095,13 @@ low in the back wall, left of the inlet plenum (x ≈ −105, z ≈ 25, under th
     a 3 GB cap. The tightest gaps are unchanged except the slide's own: 2.0 mm to the lid at the drawer's −120 mm (it was
     1.0 mm).
   - **`interference.py S25 S`: 0 in all 6 static states and all 8 sweeps** (1516 s, 3 GB cap), with the same single change in
-    the tightest gaps (the slide to the lid: 1.0 → 2.0 mm). L75 is in the next commit.
-  - The M50 insert only enlarges the stop's bore, so it can't add an interference; the M50 run above was before it.
-  - Not re-run: the bridge FEA (case 6b) and mass. The lens moved 0.17 mm, the riser lost 16 g and the glass and window
-    flange changed by a few grams; nothing else moved.
+    the tightest gaps (the slide to the lid: 1.0 → 2.0 mm).
+  - **`interference.py L75 L`: 0 in all 6 static states and all 8 sweeps** (1232 s), with the same single change.
+  - The M50 run above was before the M50 insert. The insert only enlarges the stop's bore, and an exact check of it and every
+    other changed part against their neighbours (M50 build) found nothing.
+  - **`mass_budget.py`:** −21 g in all (riser −16 g, shims −4 g, window +7 g, M50 insert −4 g). Still 289.6 kg on the tray;
+    the process module is still 91.4 kg and tips at 0.67 g.
+  - Not re-run: the bridge FEA (case 6b). The lens moved 0.17 mm and the riser lost 16 g; nothing else on the bridge moved.
 
 ## Sources
 
