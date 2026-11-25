@@ -74,16 +74,29 @@ P["plate_d"], P["bore_d"], P["plate_t"] = MP.MODULES["M50"]["plate_d"], MP.MODUL
 P["ix"], P["iy"] = P["ch_x"] / 2, P["ch_y"] / 2
 P["cx"], P["cy"] = P["ix"] + P["wall"], P["iy"] + P["wall"]
 P["lid_z0"], P["lid_z1"] = P["ch_z"], P["ch_z"] + P["lid"]
-# focus (optics.md §1.3 and §8): the 8 mm window and the 3 mm cover slide sit in the converging beam and push the focus down
-# by t(1 - 1/n), n = 1.44956 (fused silica at 1070 nm, Malitson). analysis/optics/beam_path.py §C computes the same 3.41 mm
-# and checks this value; the lens is raised by it so the focus lands on the powder (it was 3.41 mm below it)
-P["glass_t"] = 8.0 + 3.0
-P["focus_shift"] = round(P["glass_t"] * (1 - 1 / 1.44956), 2)     # 3.41 mm
-P["lens_shim"] = 3.0          # nominal ring-shim stack between the lens's shoulder and the adapter ring: 0-6 mm = +/-3 mm of focus
-P["lens_ring"] = 13.0         # f-theta adapter ring (was 16): engages 9.5 mm of the lens's ~12.5 mm M85x1 thread at 3 mm of shims
+# focus (optics.md §1.3, §8 and §9.3): the chamber window and the cover slide sit in the converging beam and push the focus down
+# by t(1 - 1/n), n = 1.44956 (fused silica at 1070 nm, Malitson). Since 2026-11-25 they are drawn as the BOM parts: window Edmund
+# 38-990 (Ø50.8 x 9.53 mm, L7) and slide Edmund 36-299 (Ø50.0 x 2.0 mm, A2); they were drawn 8 + 3 mm (shift 3.41 mm).
+# analysis/optics/beam_path.py §C computes the same 3.58 mm and checks this value; the lens is raised by it so the focus lands
+# on the powder
+P["win_t"], P["slide_t"], P["slide_d"] = 9.53, 2.0, 50.0
+P["glass_t"] = P["win_t"] + P["slide_t"]
+P["focus_shift"] = round(P["glass_t"] * (1 - 1 / 1.44956), 2)     # 3.58 mm (was 3.41 with 8 + 3 mm)
+P["z_win0"] = P["lid_z1"] + 20.0 - P["win_t"]   # window bottom 146.47: its top stays at z 156 under the clamp ring (the seat is 1.53 mm deeper)
+P["z_slide0"] = P["lid_z0"] + 7.0               # slide bottom 127.0, on a 1.7 mm seat in the drawer (the Ø50 slide sits in a Ø50.4 pocket)
+# nominal ring-shim stack between the lens's shoulder and the adapter ring: the extra 0.17 mm of focus shift comes out of the stack
+# (3.00 -> 2.83 mm), so the lens rises 0.17 mm and the bridge, galvo and guard stay put; 0-6 mm of shims moves the lens 2.83 mm up
+# (no shims) to 3.17 mm down (6 mm) from nominal
+P["lens_shim"] = round(3.0 - (P["focus_shift"] - 3.41), 2)
+# field stop under the window (z 131-136), one per module (optics.md §9.3): M50 gets an insert with a Ø41 bore, which passes the
+# M50 edge (r 25.4) with < 0.1 % clipped at every k in the drawn range (0.33-0.63, the drawn 2.5 mm beam needs Ø40.3); the
+# fixed Ø36 stop clipped it below k ~ 0.45. S25 keeps Ø36 (it passes S25 at any k). L75 keeps Ø36 until k is measured: an L75
+# insert only helps for k >~ 0.60, where the slide's Ø42.5 clear aperture and the Ø42 bore under the window limit it anyway
+P["field_stop_d"] = {"S25": 36.0, "M50": 41.0, "L75": 36.0}
+P["lens_ring"] = 13.0         # f-theta adapter ring (was 16): engages 9.67 mm of the lens's ~12.5 mm M85x1 thread at 2.83 mm of shims
 P["z_lens0"] = P["lens_wd"] + P["focus_shift"]                      # lens housing bottom (was 182.5)
 P["z_bridge0"] = P["z_lens0"] + 9.2 + P["lens_shim"] + P["lens_ring"]   # 9.2: the lens's output ring below its shoulder
-P["z_bridge1"] = P["z_bridge0"] + 25.0               # 25 mm bridge: FEA put f1 at 79 Hz with 15 mm + 40 mm posts; = z_lens0 + 50.2
+P["z_bridge1"] = P["z_bridge0"] + 25.0               # 25 mm bridge: FEA put f1 at 79 Hz with 15 mm + 40 mm posts; the lens nose (z_lens0 + 50.2) is 0.17 mm above it at 2.83 mm of shims
 # basiCube 20 on a 5 mm riser (was 10): the y mirror is 30 mm above the galvo's mounting face, so it sits 35 mm above the lens
 # nose (was 40); 5 mm is what the Ø18 beam tube needs to pass 4.1 mm over the reservoir lids' grip plane (z 258) in the bridge slot
 P["galvo_riser"] = 5.0
@@ -177,10 +190,28 @@ MOTION = {
                    note="build module drops 22 mm out of the floor port, slides forward under the chamber, lifts over the guard sill and out"),
 }
 MOTION["module"]["hi"] = sum(math.dist(a, b) for a, b in zip(MODULE_PATH[:-1], MODULE_PATH[1:]))
-# chamber legs (x0, x1, y0, y1) under the floor plate: front-left, back-left, right side (moved from the front-right corner,
-# 2026-11-23, so the overflow jar has a lane to the front), back-right
+# chamber legs (x0, x1, y0, y1) under the floor plate: front-left, back-left, front-right, back-right. Round 6 (2026-11-25, hot-swap.md
+# §3.2a): the right-hand zero-point module hangs where round 5's right-side leg stood (x 128-156, y 26-56), so
+#  - the front-right leg is back at the front-right corner, 18 x 36 at x 138-156, y -111..-75: the jar's lane (x <= 125.75) passes
+#    12 mm inside it and the toggle clamp's side links (x <= 135.8) 2.2 mm (joints.py puts its two base screws on its long axis);
+#  - the back-right leg moves 6 mm out to the floor's corner (x 126-156, y 81-111), 4.5 mm from the zero-point module; the outlet hose
+#    now goes round the back-right optics post instead of between it and this leg (section 11).
 LEG_BOXES = [(-P["cx"] + 6, -P["cx"] + 36, -P["cy"] + 6, -P["cy"] + 36), (-P["cx"] + 6, -P["cx"] + 36, P["cy"] - 36, P["cy"] - 6),
-             (128.0, P["cx"], 26.0, 56.0), (P["cx"] - 36, P["cx"] - 6, P["cy"] - 36, P["cy"] - 6)]
+             (138.0, P["cx"], -P["cy"], -P["cy"] + 36), (P["cx"] - 30, P["cx"], P["cy"] - 30, P["cy"])]
+# Overflow jar (round 6, 2026-11-25): its KF-40 joint is at the overflow slot's front end, so a zero-point module fits behind it.
+# x 94 (the slot is x 90-110; the funnel's Ø38 outlet spans x 75-113). The joint plane is 2 mm higher than round 5's (z -82, was -84):
+# the toggle clamp's ring (r 35.5, now reaching x 58.5) passes 2.5 mm under the module flange's tabs (x <= 64, z -70 when dropped) on
+# the module's path, which is why the captive M6 heads under the tabs had to go (joints.py), and its hinge sits 2 mm in front of the
+# zero-point module's plate (y -4) and 0.5 mm above the module (z -89)
+JAR = dict(x=94.0, y=-46.0, zj=-82.0, cup_r=31.75, cup_t=1.65, z_bot=-129.0)
+# Zero-point clamps (hot-swap.md §3.2a): two SCHUNK NSE-HT mini 88-20 V1 (ID 1460874, Ø88 x 20) hang from the floor on a 6061 plate and
+# two posts each, pin face down at z -109; the module's two arms carry the clamping pins up into them. right: behind the jar; left: in
+# front of the left-hand axis, behind the outlet plenum's KF-25 port. The pair's mid-point is (-1, 7), 7 mm from the module's axis.
+# Posts: 16 x 16 6061, one M6 stud each up into a floor insert (the floor-plate hole pattern in hot-swap.md); all four stand outside the
+# paths of the module flange's tabs (x +/-50..64) and of the arms' hangers on the module's way out
+NSE = dict(d=88.0, h=20.0, z0=-109.0, plate_t=10.0, pin_d=20.0, pin_in=14.0, arm_t=8.0,
+           right=(100.0, 40.0), left=(-102.0, -26.0),
+           posts={"right": [(64.0, 40.0), (136.0, 40.0)], "left": [(-80.0, -45.0), (-138.0, -28.0)]}, post_w=16.0)
 DOOR_HINGE = None   # (y, z) of the door hinge axis (parallel to X); set in build()
 _RES = None         # the docked reservoir's screw positions (joints.py)
 GLANDS: dict = {}   # every O-ring gland drawn by build(): analysis/seals/seals.py checks each one (Parker squeeze, fill, stretch)
@@ -485,6 +516,8 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         bp = box(x0, x1, y0, y1, zb0, zb1)
         if mod == "process":     # window for the Z stage: arm, actuator and folded servo hang through it toward the tray
             bp = bp.cut(fuse([rbox(-45, 100, -32, 114, zb0 - 1, zb1 + 1, 8), box(-56, 56, y0 - 1, 0, zb0 - 1, zb1 + 1)]))   # + slot for the module's rod end
+            # round 6 (2026-11-25): the Z servo folds to the back of the actuator (modules_low.ZSERVO), so the window reaches back to y 166
+            bp = bp.cut(rbox(-57.0, 34.0, 96.0, 166.0, zb0 - 1, zb1 + 1, 8))
         add(f"Base plate, {mod} module (MIC-6, 15 mm)", bp, C["alu"], 1, (0, 0, -150), mat="mic6", module=mod, bom="F4")
         feet = []
         for x in (x0 + 30, x1 - 30):
@@ -537,17 +570,29 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     ML.add_zstage(sys.modules[__name__], add, 3)
     zz = ML.zlevels()
     az1 = MP.Z_P_MAX + (zz["zc"] - MP.ARM_T) + 40.0 + 3.0
+    zsx, zsy = ML.ZSERVO["x"], ML.ZSERVO["y"]
     for p_ in parts:         # real Teknic CPM-SDSK-2311S in place of modules_low's generic NEMA 23 (same mount point)
         if p_.name.startswith("Z servo (ClearPath-SD"):
-            p_.shape = place(VP.clearpath_sd_231x(18.0, connector="-y"), (64.0, 80.0, az1), (1, 0, 0), (0, 0, 1))
+            # round 6: behind the actuator, connector block toward -x (local +y on the y-pointing frame), clear of the hose run at y 178
+            p_.shape = place(VP.clearpath_sd_231x(18.0, connector="+y"), (zsx, zsy, az1), (0, 1, 0), (0, 0, 1))
             p_.mass_kg = 0.6
 
     # ===================== 4. Heated build module, overflow =====================
     ML.add_build_module(sys.modules[__name__], add, module, 4)
     ox = (P["ovf_x0"] + P["ovf_x1"]) / 2
     # 316L under the 6061 floor plate: bolted (4 x M4, joints.py) over an FKM face O-ring round the overflow slot, never welded.
-    # Its pocket has the floor slot's R4 corners (machining.md: no sharp internal corners; a 1/4 in. end mill cuts both).
-    fun = box(ox - 22, ox + 22, -59, 59, zf - 22, zf).cut(rbox(P["ovf_x0"], P["ovf_x1"], -52, 52, zf - 11, zf + 1, 4.0)).cut(cyl(19.0, (ox, 0, zf - 23), "z", 13))
+    # Its pocket has the floor slot's R4 corners (machining.md: no sharp internal corners; a 1/4 in. ball or bull-nose end mill cuts both).
+    jx, jy, zj = JAR["x"], JAR["y"], JAR["zj"]
+    # Round 6 (2026-11-25): the outlet is at the slot's front end (JAR), so the block reaches forward to y -73 (2 mm behind the outlet
+    # plenum) with a 3 mm wall left of the outlet (x 72), and its pocket floor slopes from 2 mm deep at the slot's back end down to the
+    # outlet (13 deg: all the 22 mm block allows; fine Al powder needs 55-60 deg, so it will not drain the slot's back by gravity
+    # alone: hot-swap.md §3.2a lists the options). It was a flat 11 mm pocket over a central outlet.
+    fun = fuse([box(ox - 22, ox + 22, -73, 59, zf - 22, zf), box(jx - 22, ox - 22 + 0.01, -73, -20, zf - 22, zf)])
+    ys0, ys1 = -52.0, 52.0
+    yo = jy + 19.0                                                          # outlet's back edge, y -27
+    pocket = (cq.Workplane("YZ").polyline([(ys0, zf + 1), (ys1, zf + 1), (ys1, zf - 2), (yo, zf - 20), (ys0, zf - 20)]).close()
+              .extrude(P["ovf_x1"] - P["ovf_x0"]).edges("|Z").fillet(4.0).val().translate(V(P["ovf_x0"], 0, 0)))
+    fun = fun.cut(pocket).cut(cyl(19.0, (jx, jy, zf - 23), "z", 13))
     hi_f = fit_loop(((P["ovf_x1"] - P["ovf_x0"]) / 2 + 1.5, 53.5), 1.5, 2.5, 0.0)[0]
     fun = fun.cut(ring_loop("z", (ox, 0, 0), hi_f, 2.3, (zf - 1.32, zf + 0.01), 1.5))
     add("Overflow funnel block (316L, bolted, FKM face O-ring)", fun, C["ss"], 4, (0, 0, -200), mat="ss316l", bom="M4", section=True)
@@ -555,20 +600,25 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add(f"Overflow funnel O-ring (FKM 75A {pk[0]}, face seal under the floor)", ring_loop("z", (ox, 0, 0), hi_f, 2.0, (zf - 1.32, zf), 1.5), C["black"], 4, (0, 0, -200), mat="fkm", bom="M4")
     GLANDS["overflow_funnel"] = dict(kind="face", ring=pk[0], cs=1.78, depth=1.32, width=2.3, inner_perimeter=loop_perimeter(hi_f, 1.5), groove_mat="ss", T=50.0,
                                      closure="overflow funnel block (316L) under the floor")
-    # The jar's way out (2026-11-23, robot-ops.md patch request 6, operations.md U4.5/U4.7): the KF-40 joint is 26 mm lower (z -84,
-    # was -58) so the toggle clamp's ring and side links pass 4.5 mm under the module flange's tabs on the module's path; the jar is a
-    # short 2 in. cup (bottom z -129, -137 when dropped 8 mm off the centring ring) so it slides straight out to the front over the guard's
-    # bottom front rail (top z -140); the outlet plenum's KF-25 port moved to the plenum's left end and the front-right leg to the right
-    # side, so nothing stands in its lane (x 72.6 to 127.4) between the jar and the guard door.
-    zj = zf - 22 - 42                                                       # KF-40 joint plane, z -84
-    add("Overflow port (KF-40, weld stub to 42 mm)", place(VP.kf_weld_stub(40, 42), (ox, 0, zj), (1, 0, 0), (0, 0, -1)), C["ss"], 4, (0, 0, -220), mat="ss304", bom="G7", mcm="KF40_WELD", section=True)
-    # jar: a KF-40 flange (6 mm stub) welded into the top of a 2 in. x 0.065 in. 316L tube cup with a welded bottom: ~65 cm3 (was a 90 mm
-    # KF-40 half nipple, ~120 cm3; a wider cup meets the Z servo's corner, a longer one the guard rail on the way out)
-    # the flange's own Ø38.1 neck runs 11 mm down before the cup widens, so the toggle clamp's lower lip (to 9.5 mm under the joint,
-    # r >= 22.5) wraps the flange's back taper clear of the cup
-    jar = fuse([place(VP.kf_weld_stub(40, 11), (ox, 0, zj), (1, 0, 0), (0, 0, 1)), tube(25.4, 16.94, (ox, 0, zj - 12.5), "z", 1.5),
-                tube(25.4, 23.75, (ox, 0, zj - 43.0), "z", 30.5), cyl(25.4, (ox, 0, zj - 45.0), "z", 2.0)])
-    add("Overflow jar (KF-40 flange on a 2 in. 316L cup, 45 mm, ~65 cm3, welded bottom)", jar, C["ss"], 4, (0, 0, -260), mat="ss304", bom="M4", mcm="KF40_NIPPLE", section=True)
+    # The jar's way out (2026-11-23, robot-ops.md patch request 6, operations.md U4.5/U4.7): the toggle clamp's ring and side links pass
+    # under the module flange's tabs on the module's path (3 mm since round 6); the jar's cup ends at z -129 (-137 when dropped 8 mm off
+    # the centring ring) so it slides straight out to the front over the guard's bottom front rail (top z -140); the outlet plenum's KF-25
+    # port sits at the plenum's left end and the right-hand leg at the front-right corner (x >= 128), so nothing stands in its lane
+    # (x 62.25 to 125.75 since round 6) between the jar and the guard door.
+    stub = (zf - 22) - zj                                                   # 36 mm (was 42): the joint is 6 mm higher (JAR)
+    add(f"Overflow port (KF-40, weld stub to {stub:.0f} mm)", place(VP.kf_weld_stub(40, stub), (jx, jy, zj), (1, 0, 0), (0, 0, -1)), C["ss"], 4, (0, 0, -220),
+        mat="ss304", bom="G7", mcm="KF40_WELD", section=True)
+    # jar: a KF-40 flange (11 mm stub) welded into the top of a 316L tube cup with a welded bottom. The flange's own Ø38.1 neck runs 11 mm
+    # down before the cup widens, so the toggle clamp's lower lip (to 9.5 mm under the joint, r >= 22.5) wraps the flange's back taper
+    # clear of the cup. Round 6: a 2.5 in. x 0.065 in. cup (round 5: 2 in., ~65 cm3), down to z -129 as before (dropped 8 mm it still
+    # passes 3 mm over the guard's bottom front rail, and the right-hand zero-point pin passes 6 mm under it on the module's path):
+    # ~104 cm3 with the neck, so L75's ~70 cm3 of overflow per 15 mm of build fills it in ~22 mm of build
+    cr, ct, zb_ = JAR["cup_r"], JAR["cup_t"], JAR["z_bot"]
+    jar = fuse([place(VP.kf_weld_stub(40, 11), (jx, jy, zj), (1, 0, 0), (0, 0, 1)), tube(cr, 16.94, (jx, jy, zj - 12.5), "z", 1.5),
+                tube(cr, cr - ct, (jx, jy, zb_ + 2.0), "z", (zj - 12.5) - (zb_ + 2.0)), cyl(cr, (jx, jy, zb_), "z", 2.0)])
+    JAR["vol_cm3"] = round((math.pi * 16.94 ** 2 * 12.5 + math.pi * (cr - ct) ** 2 * ((zj - 12.5) - (zb_ + 2.0))) / 1000.0, 0)
+    add(f"Overflow jar (KF-40 flange on a 2.5 in. 316L cup, {zj - zb_:.0f} mm, ~{JAR['vol_cm3']:.0f} cm3, welded bottom)", jar, C["ss"], 4, (0, 0, -260),
+        mat="ss304", bom="M4", mcm="KF40_NIPPLE", section=True)
 
     def kf40_toggle_clamp():
         """MKS 100318805 toggle clamp, NW40 (Series 31, aluminium, $23.34; mks.com/p/100318805, read 2026-11-23): A 123.7 (4.87 in.) from
@@ -585,14 +635,67 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         links = box(-44.0, -30.0, -B / 2, B / 2, -5.0, 5.0).cut(cyl(rr, (0, 0, -6), "z", 12))
         lever = box(-(A - 40.0), -ro + 4.0, -8.0, 8.0, -4.0, 4.0)
         return fuse([ring, hinge, links, lever])
-    add("Overflow clamp (KF-40 toggle, MKS 100318805; lever to the front)", place(kf40_toggle_clamp(), (ox, 0, zj), (0, 1, 0), (0, 0, 1)),
+    add("Overflow clamp (KF-40 toggle, MKS 100318805; lever to the front)", place(kf40_toggle_clamp(), (jx, jy, zj), (0, 1, 0), (0, 0, 1)),
         C["alu_dark"], 4, (0, 0, -260), mat="al6061", bom="G7", mcm="KF40_TOGGLE", section=True)
-    # inductive M12 (as before) now 2 mm from the cup's side, low on it (z -121), so the 2F-85's pads (z -111 to -89) pass above it;
-    # its 6 mm bracket bolts to the right-hand leg's front face (2 x M4, joints.py); the foot rises above the sensor (z -113 to -95) at
-    # x >= 144, so a key reaches its screws from the front over the sensor and the gripper's right finger (x <= ~141) clears it
-    add("Overflow-jar present sensor (inductive M12, PNP)", cyl(6.0, (ox + 27.4, 0, zj - 37.0), "x", 30.0), C["blue"], 4, (120, 0, 0), mat="misc", mass_kg=0.02, bom="A1")
-    sb = fuse([box(138.0, 144.0, -10.0, 26.0, zj - 45.0, zj - 29.0), box(144.0, 156.0, 20.0, 26.0, zj - 45.0, zj - 11.0)]).cut(cyl(6.0, (130.0, 0, zj - 37.0), "x", 20.0))
-    add("Overflow-jar sensor bracket (6061, 6 mm, on the right-hand leg)", sb, C["alu"], 4, (120, 0, 0), mat="al6061", bom="A1")
+    # inductive M12, 2 mm from the cup's right side at z -110; since round 6 its 6 mm bracket bolts to the front-right leg's back face (2 x M4,
+    # joints.py), so the sensor sits beside the jar's lane (x <= 125.75), clear of the fin's riser (x <= 125) and the leg (x >= 128)
+    zs_ = JAR["z_sens"] = -110.0
+    xs0 = jx + cr + 2.0
+    add("Overflow-jar present sensor (inductive M12, PNP)", cyl(6.0, (xs0, jy, zs_), "x", 30.0), C["blue"], 4, (120, 0, 0), mat="misc", mass_kg=0.02, bom="A1")
+    yl = LEG_BOXES[2][3]                                                     # the front-right leg's back face, y -75
+    lx0_ = LEG_BOXES[2][0]
+    sb = fuse([box(lx0_, P["cx"], yl, yl + 6.0, zs_ - 12.0, zs_ + 12.0), box(lx0_, lx0_ + 6.0, yl + 6.0, jy + 6.0, zs_ - 8.0, zs_ + 8.0)]).cut(
+        cyl(6.0, (lx0_ - 10.0, jy, zs_), "x", 30.0))
+    add("Overflow-jar sensor bracket (6061, 6 mm, on the front-right leg)", sb, C["alu"], 4, (120, 0, 0), mat="al6061", bom="A1")
+
+    # Zero-point clamps (round 6, 2026-11-25; hot-swap.md §3.2a): two SCHUNK NSE-HT mini 88-20 V1 hang pin-face-down under a 10 mm 6061 plate
+    # each, on two 16 x 16 posts up to M6 inserts in the floor; the module's arms (modules_low.zp_arms) carry the clamping pins up into them.
+    # Right: (100, 33), 3.5 mm behind the jar's cup, 2.5 mm from the back-right leg, its plate cut back to y -4 so the toggle clamp's
+    # hinge (z -84.5 to -71.5) passes 2 mm in front of it; the clamp's ring sits 1.5 mm above the module (z -87.5 vs -89). Left: (-102, -26),
+    # 2.1 mm from the outlet plenum's KF-25 port. The posts stand clear of the module flange's tabs and the arms' hangers on the module's path.
+    N = NSE
+    zn0, zn1 = N["z0"], N["z0"] + N["h"]
+    zp1 = zn1 + N["plate_t"]
+    pw = N["post_w"] / 2
+    nses, plates, posts, fits = [], [], [], []
+    for side in ("right", "left"):
+        nx, ny = N[side]
+        nses.append(cyl(N["d"] / 2, (nx, ny, zn0), "z", N["h"]).cut(cyl(N["pin_d"] / 2 + 0.2, (nx, ny, zn0 - 1.0), "z", N["pin_in"] + 1.5)))
+        pl = [cyl(N["d"] / 2, (nx, ny, zn1), "z", N["plate_t"])]
+        for qx, qy in N["posts"][side]:
+            pl.append(box(qx - pw - 4, qx + pw + 4, qy - pw - 4, qy + pw + 4, zn1, zp1))
+            L_ = math.hypot(qx - nx, qy - ny)
+            ang = math.degrees(math.atan2(qy - ny, qx - nx))
+            pl.append(box(0.0, L_, -pw - 4, pw + 4, zn1, zp1).rotate(V(0, 0, 0), V(0, 0, 1), ang).translate(V(nx, ny, 0)))
+            posts.append(box(qx - pw, qx + pw, qy - pw, qy + pw, zp1, zf))
+        pl = fuse(pl)
+        if side == "right":      # clear of the toggle clamp's hinge (y <= -6) and of the right hanger's path (x <= 49.8)
+            pl = pl.cut(box(-200, 200, -200, -4.0, zn1 - 1, zp1 + 1)).cut(box(-200, 52.0, -200, 200, zn1 - 1, zp1 + 1))
+        else:                    # clear of the left hanger's path (x >= -53.7)
+            pl = pl.cut(box(-56.0, 200, -200, 200, zn1 - 1, zp1 + 1))
+        plates.append(pl)
+        # the release-air port (M5) on the module's back side, a push-in elbow fitting standing 12 mm out of it
+        fits.append(cyl(4.5, (nx, ny + N["d"] / 2, zn0 + 10.0), "y", 12.0))
+    add("Zero-point clamping modules (2 x SCHUNK NSE-HT mini 88-20 V1, ID 1460874: Ø88 x 20, 0.5 kN pull, 2.5 kN turbo, opened by 6 bar, 200 C)",
+        comp(nses), C["steel"], 4, (0, 0, -200), mat="steel", mass_kg=2.0, bom="B3", mcm="SCHUNK 1460874")
+    add("Zero-point module plates (2 x 6061, 10 mm, each on two posts)", comp(plates), C["alu"], 4, (0, 0, -200), mat="al6061", bom="B3")
+    add("Zero-point posts (4 x 6061, 16 x 16, M6 studs into floor inserts)", comp(posts), C["alu_dark"], 4, (0, 0, -200), mat="al6061", bom="B3")
+    # release air: one 3/2 normally-closed 24 V valve (air on opens both modules; with the air off their springs hold the module, so a power
+    # or air cut leaves it clamped) on the base plate behind the left module, a union Y and Ø4 tube to each module's port. The valve's
+    # supply comes from the A3 air prep in the rack (not drawn)
+    vx0, vx1, vy0, vy1, vz1 = -116.0, -96.0, 60.0, 104.0, -128.0
+    add("Zero-point release valve (3/2 NC, 24 V DC, on a single-station sub-base; envelope)", box(vx0, vx1, vy0, vy1, zb1, vz1), C["blue"], 4, (0, 0, -200),
+        mat="misc", mass_kg=0.15, bom="B4")
+    rfit, lfit = N["right"], N["left"]
+    # left: up off the valve and forward to the left module's port; right: up, back over the valve, behind the folded Z servo at y 172
+    # (under the outlet hose, between the recoater sensor posts at x +/-100..120) and forward to the right module's port
+    tubes = [[(-110.0, 70.0, vz1), (-110.0, 70.0, -122.0), (-110.0, 64.0, -114.0), (-106.0, 44.0, -102.0), (lfit[0], lfit[1] + N["d"] / 2 + 20.0, zn0 + 10.0),
+              (lfit[0], lfit[1] + N["d"] / 2 + 12.0, zn0 + 10.0)],
+             [(-102.0, 98.0, vz1), (-102.0, 98.0, -122.0), (-102.0, 106.0, -120.0), (-92.0, 120.0, -130.0), (-90.0, 172.0, -140.0), (88.0, 172.0, -140.0),
+              (90.0, 125.0, -122.0), (rfit[0], rfit[1] + N["d"] / 2 + 20.0, zn0 + 10.0), (rfit[0], rfit[1] + N["d"] / 2 + 12.0, zn0 + 10.0)]]
+    add("Zero-point push-in fittings (2 x M5 elbow on the modules' release ports)", comp(fits), C["steel"], 4, (0, 0, -200), mat="misc", mass_kg=0.02, bom="B4")
+    add("Zero-point release-air line (Ø4 tube, valve to a union Y to each module)", comp([polyline_pipe(t, 2.0, n=6) for t in tubes]), C["blue"], 4,
+        (0, 0, -200), mat="misc", mass_kg=0.03, bom="B4")
 
     # ===================== 5. Chamber body: through-frame + bolted floor plate (FRAME, chamber-construction.md) =====================
     # Each part is its saw-cut blank minus an ordered list of cuts, one per machining operation, which CHAMBER_OPS keeps so that
@@ -843,23 +946,29 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     # window (seals.md item 3): an O-ring sandwich. The window sits on a 2-031 FKM O-ring in a groove in the seat; a 1 mm FKM flat
     # ring on top; the retaining ring's spigot presses that ring to 0.75 mm when the ring bottoms metal-to-metal on the flange, so
     # the squeeze is set by the geometry, not the screw torque. A 2-036 FKM face O-ring seals the flange to the lid.
-    zs = lz1 + 12.0                                        # window seat
-    wf = tube(50, 21, (0, 0, lz1), "z", 22).cut(cyl(25.6, (0, 0, zs), "z", 11))
+    zs = P["z_win0"]                                       # window seat: 146.47 for the 9.53 mm Edmund 38-990 (was lz1 + 12 for 8 mm)
+    wf = tube(50, 21, (0, 0, lz1), "z", 22).cut(cyl(25.6, (0, 0, zs), "z", lz1 + 23.0 - zs))
     wf = wf.cut(tube(22.45 + F["width"], 22.45, (0, 0, zs - F["depth"]), "z", F["depth"] + 0.01))          # lower window O-ring groove (2-031)
     wf = wf.cut(tube(30.8 + F["width"], 30.8, (0, 0, lz1 - 0.01), "z", F["depth"] + 0.01))                 # flange-to-lid face groove (2-036)
     add("Window flange (6061, two FKM O-ring grooves)", wf, C["anod"], 7, (0, 0, 360), mat="al6061", bom="L7", section=True)
-    add("Ø2 in. fused-silica window, 8 mm, AR 1064", cyl(25.4, (0, 0, zs), "z", 8), C["glass"], 7, (0, 0, 380), mat="fused_silica", bom="L7", opacity=0.45, section=True)
+    add("Ø2 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990)", cyl(25.4, (0, 0, zs), "z", P["win_t"]), C["glass"], 7, (0, 0, 380), mat="fused_silica", bom="L7", opacity=0.45, section=True)
     add("Window O-ring, lower (FKM 75A 2-031, under the window)", tube(22.45 + F["width"] - 0.3, 22.45, (0, 0, zs - F["depth"]), "z", F["depth"]), C["black"], 7, (0, 0, 370), mat="fkm", bom="G8", section=True)
-    add("Window clamp ring, upper (FKM 75A sheet, 1.0 mm, squeezed to 0.75)", tube(25.3, 22.2, (0, 0, zs + 8.0), "z", 0.75), C["black"], 7, (0, 0, 390), mat="fkm", bom="G8", section=True)
+    add("Window clamp ring, upper (FKM 75A sheet, 1.0 mm, squeezed to 0.75)", tube(25.3, 22.2, (0, 0, zs + P["win_t"]), "z", 0.75), C["black"], 7, (0, 0, 390), mat="fkm", bom="G8", section=True)
     add("Window-flange O-ring (FKM 75A 2-036, face seal on the lid)", tube(30.8 + F["width"] - 0.3, 30.8, (0, 0, lz1), "z", F["depth"]), C["black"], 7, (0, 0, 350), mat="fkm", bom="G8", section=True)
     GLANDS["window_lower"] = dict(kind="face", ring="2-031", cs=1.78, depth=F["depth"], width=F["width"], groove_id=44.9, groove_mat="al", T=80.0, closure="window on its seat")
     GLANDS["window_flange"] = dict(kind="face", ring="2-036", cs=1.78, depth=F["depth"], width=F["width"], groove_id=61.6, groove_mat="al", T=60.0, closure="window flange on the lid")
-    rrb = fuse([tube(50, 22, (0, 0, lz1 + 22), "z", 5), tube(25.4, 22, (0, 0, zs + 8.75), "z", lz1 + 22 - zs - 8.75)])
+    rrb = fuse([tube(50, 22, (0, 0, lz1 + 22), "z", 5), tube(25.4, 22, (0, 0, zs + P["win_t"] + 0.75), "z", lz1 + 22 - zs - P["win_t"] - 0.75)])
     add("Window retaining ring (spigot bottoms metal-to-metal: squeeze set by geometry)", rrb, C["anod"], 7, (0, 0, 400), mat="al6061", bom="L7", section=True)
-    add("Field-stop aperture (Ø36, passive beam limit)", tube(27.9, 18, (0, 0, dz1), "z", lz1 - dz1), C["black"], 7, (0, 0, 300), mat="al6061", bom="L7", section=True)
+    fs_d = P["field_stop_d"].get(module, 36.0)       # Ø41 insert for M50; S25 and L75 keep the Ø36 stop (P block)
+    fs_name = (f"Field-stop aperture, {module} insert (Ø{fs_d:.0f}, passive beam limit; swapped with the module)" if fs_d != 36.0
+               else "Field-stop aperture (Ø36, passive beam limit)")
+    add(fs_name, tube(27.9, fs_d / 2, (0, 0, dz1), "z", lz1 - dz1), C["black"], 7, (0, 0, 300), mat="al6061", bom="L7", section=True)
     # cover-slide drawer: pulls out of the lid's front edge (a person or the robot through the guard door) without
     # lifting the lid; an FKM O-ring on its front plate seals it against the lid. Only opened at atmosphere.
-    drw = box(-35.5, 35.5, -cy, 33.5, dz0 + 0.3, dz1 - 0.3).cut(cyl(25.6, (0, 0, dz0), "z", 7)).cut(cyl(23.0, (0, 0, dz0 - 1), "z", 8))
+    # the Ø50.0 x 2 mm slide (Edmund 36-299) sits on a 1.7 mm seat in a Ø50.4 pocket (optics-bom O12; the pocket was Ø51.2, cut
+    # through, so the drawn slide had nothing under it); the Ø46 opening under the seat is the "drawer opening" in beam_path.py
+    zsl = P["z_slide0"]
+    drw = box(-35.5, 35.5, -cy, 33.5, dz0 + 0.3, dz1 - 0.3).cut(cyl(25.2, (0, 0, zsl), "z", dz1 - zsl + 1.0)).cut(cyl(23.0, (0, 0, dz0 - 1), "z", 8))
     # front plate widened to x +/-64 for two quarter-turn latches; 1.78 mm FKM ring in a half-dovetail groove round the slot (item 4)
     fp = rbox(-64, 64, -cy - 8, -cy, lz0 - 2, lz1, 3)                   # top at the lid's top: clears the front lid screws' heads
     hd_r = 1.5
@@ -869,7 +978,8 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
         fp = fp.cut(cyl(QT["stud_d"] / 2 + 0.25, (sx * x_qt, -cy - 8.01, lz0 + 8.0), "y", 8.02))
     drw = fuse([drw, fp, box(-20, 20, -cy - 20, -cy - 8, dz0 + 1, dz1 - 1), box(-20, -14, -cy - 20, -cy - 8, lz0 + 1, lz1 - 1), box(14, 20, -cy - 20, -cy - 8, lz0 + 1, lz1 - 1)])
     add("Cover-slide drawer (6061, robot pull tab, half-dovetail seal groove)", drw, C["anod"], 7, (0, -200, 0), group="drawer", mat="al6061", bom="A2", section=True)
-    add("Cover slide (Ø2 in. x 3 mm fused silica, consumable)", cyl(25.4, (0, 0, dz0 + 1.0), "z", 3.0), C["glass"], 7, (0, -200, 0), group="drawer", mat="fused_silica", bom="A2", opacity=0.5, section=True)
+    add("Cover slide (Ø50 x 2 mm fused silica, 1064 nm V-coat, Edmund 36-299; consumable)", cyl(P["slide_d"] / 2, (0, 0, zsl), "z", P["slide_t"]), C["glass"], 7, (0, -200, 0),
+        group="drawer", mat="fused_silica", bom="A2", opacity=0.5, section=True)
     per = loop_perimeter((hd_w / 2, hd_h / 2), hd_r)
     pk = MP.pick_ring(per)
     add(f"Drawer O-ring (FKM 75A {pk[0]} in a half-dovetail groove, seals on the lid's front face)",
@@ -984,7 +1094,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
                 place(box(-19, 19, -19, 19, 0, 8), (cam_base + up * 38).toTuple(), (0, 1, 0), up.toTuple())])
     add("Layer camera (Pi HQ + C-mount lens)", cam, C["black"], 7, (0, 0, 340), mat="misc", mass_kg=0.15, bom="M6")
     # both screw into SAE-4 (7/16-20) O-ring-boss ports in the lid, each sealed by an AS568-904 FKM O-ring in the port's chamfer
-    add("Pressure transducer (7/16-20 SAE-4 O-ring-boss port)", comp([cyl(5.5, (100, 50, lz1 - 9.0), "z", 9.0), cyl(7.9, (100, 50, lz1), "z", 12), cyl(11, (100, 50, lz1 + 12), "z", 52)]), C["ss"], 7, (0, 0, 300), mat="ss316l", bom="G7", mcm="TRANSDUCER")
+    # McMaster 3861N11 on BOM G7's SAE-4 x 1/4 NPT adapter (vendor_parts.transmitter_on_sae4, oem-parts.md round 6): its cable
+    # gland ends at lz1 + 73.75, 1.25 mm under the optics bridge, so its lead has no room to leave upward (open question)
+    add("Pressure transducer (7/16-20 SAE-4 O-ring-boss port; McMaster 3861N11 on an SAE-4 x 1/4 NPT adapter)", VP.transmitter_on_sae4().translate(V(100, 50, lz1)),
+        C["black"], 7, (0, 0, 300), mat="ss316l", mass_kg=0.17, bom="G7", mcm="TRANSDUCER")
     add("Overpressure relief valve (316 SS, FKM seat, +34 mbar; SAE-4 O-ring-boss port)", comp([cyl(5.5, (40, 70, lz1 - 9.0), "z", 9.0), cyl(7.9, (40, 70, lz1), "z", 10), cyl(9, (40, 70, lz1 + 10), "z", 28)]), C["ss"], 7, (0, 0, 300), mat="ss316l", bom="G7", mcm="RELIEF")
     GLANDS["sae4_ports"] = dict(kind="sae", ring="3-904", cs=1.83, n=4, closure="SAE-4 O-ring-boss ports: argon in, O2 sample, transducer, relief valve")
 
@@ -992,10 +1105,10 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     dy1 = -cy
     dy0 = dy1 - 15.0
     # door seal (item 2): 1.78 mm FKM 75A cord (spliced ring) in a half-dovetail groove, Parker depth 1.32, width 2.3; the
-    # groove's centre line is the old 232 x 104 rectangle. Two ears at the top corners carry the draw latches' strikes.
+    # groove's centre line is the old 232 x 104 rectangle. Two ears at mid-height carry the draw latches' brackets (since 2026-11-23).
     LT = LATCH_1807A61
-    zl_c = 54.0                                            # latch centre line at the seal's centroid height: with floating hinges the
-                                                           # latches alone set the squeeze, so they pull the door flat (seals.md)
+    zl_c = 54.0                                            # latch centre line at the seal's centroid height (seals.md); since
+                                                           # 2026-11-25 the hinge holds the bottom edge too (see the hinge below)
     ex_ = LATCH_POS["ear_x"]                               # ears end at x +/-146 (were +/-156): the latch brackets bolt to their front faces
     door = fuse([rbox(-124, 124, dy0, dy1, -6, 114, 6, "|Y")] + [box(124.0, ex_, dy0, dy1, zl_c - 18.0, zl_c + 18.0), box(-ex_, -124.0, dy0, dy1, zl_c - 18.0, zl_c + 18.0)])
     dw_in, dh_in, dr_in = 232.0 - 2.3, 104.0 - 2.3, 4.4
@@ -1009,23 +1122,29 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     DOOR_HINGE = (hy, hz)
     hx = (-100.0, 80.0)
     leaves = []
-    for x in hx:                                           # door leaf + middle knuckle, rotates with the door; the pin hole is a
-        # slot +/-0.6 mm across the door (y) so the door floats onto its seal and the latches, not the hinge, set the squeeze
-        kslot = fuse([cyl(2.6, (x - 1, hy - 0.6, hz), "x", 22), cyl(2.6, (x - 1, hy + 0.6, hz), "x", 22), box(x - 1, x + 21, hy - 0.6, hy + 0.6, hz - 2.6, hz + 2.6)])
+    for x in hx:                                           # door leaf + middle knuckle, rotates with the door
+        # round pin hole (2026-11-25; it was a +/-0.6 mm slot so the door floated and the latches alone set the squeeze). The latches
+        # pull 12 mm outboard of the ears' tips, where the door bears on the chamber, so on their own they pry the door off its seal:
+        # 15 % squeeze at the top and bottom centres with 1.2 kN latches (door_seal_fea.md D1200). With the hinge holding the bottom
+        # edge on its land, 23.6-25.8 % at 0.75 kN (E750). Reamed for a close-fit pin; drawn Ø5.2 like the chamber's knuckles.
+        kslot = cyl(2.6, (x - 1, hy, hz), "x", 22)
         leaves += [box(x, x + 20, dy0 - 3, dy0, hz + 5, 30), cyl(6, (x, hy, hz), "x", 20).cut(kslot)]
-    add("Door hinge leaves + knuckles (304 SS, slotted pin holes: floating hinge)", comp(leaves), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", bom="G1", mcm="1151A87", section=True)
+    add("Door hinge leaves + knuckles (304 SS, round pin holes: the hinge holds the door's bottom edge on its land)", comp(leaves), C["ss"], 8, (0, -240, 0),
+        group="door", mat="ss304", bom="G1", mcm="1151A87", section=True)
     blocks = []
-    for x in hx:                                           # outer knuckles bolted to the chamber's front face
-        for xa, xb in ((x - 12.0, x - 0.5), (x + 20.5, x + 32.0)):
+    for x in hx:                                           # outer knuckles bolted to the chamber's front face, on shims chosen at assembly
+        for xa, xb in ((x - 12.0, x - 0.5), (x + 20.5, x + 32.0)):    # so the shut door's bottom land just touches (the shims are not drawn)
             blocks.append(fuse([box(xa, xb, hy, dy1, zf, hz), cyl(6, (xa, hy, hz), "x", xb - xa)]).cut(cyl(2.6, (xa - 1, hy, hz), "x", xb - xa + 2)))
-    add("Door hinge knuckles on the chamber (304 SS)", comp(blocks), C["ss"], 8, (0, -240, 0), mat="ss304", bom="G1", mcm="1151A87", section=True)
+    add("Door hinge knuckles on the chamber (304 SS, shimmed at assembly so the shut door's land just touches)", comp(blocks), C["ss"], 8, (0, -240, 0),
+        mat="ss304", bom="G1", mcm="1151A87", section=True)
     add("Hinge pins (Ø5, 316)", comp([cyl(2.5, (x - 12.0, hy, hz), "x", 44) for x in hx]), C["steel"], 8, (0, -240, 0), mat="ss316l", bom="G1", section=True)
     # draw latches (McMaster 1807A61, 800 lb, adjustable grip), mirrored onto the door (operations.md U2.2, 2026-11-23): each latch sits on a
     # bracket bolted to the front face of a door ear and points forward, so its lever is in front of the door at y -207, ahead of the
     # front-right optics post (x 180..240, y -185..-125) that hid the right latch when it was on the chamber's side face. The strike moved
     # to the chamber's side face, 35..63 mm behind the latch (the 1807A61's latching distance). The pull is still straight back (+y) on
     # the ears at the seal's centroid height (z 54), one each side of the door's centre line (x +/-158), so the resultant stays at the
-    # seal's centroid; the brackets load the ears' front faces where door_seal_fea.py holds them. Set each to >= 0.4 kN (seals.md).
+    # seal's centroid. Set each to ~0.75 kN and no more (door_seal_fea.md, 2026-11-25): the pull line is 12 mm outboard of the ears' tips,
+    # so extra preload goes into prying the door about them, not into the seal.
     # This also takes the left latch off the chamber's left side face, out of the recoater feedthrough's way to the front (M8.4).
     lb_ = LT["body_L"]
     xb0, xb1 = LATCH_POS["bracket_x"]                      # bracket: 6 mm plate (x 140..146) on an 18 x 6 foot on the ear's front face
@@ -1034,7 +1153,7 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     add("Draw-latch brackets on the door's ears (2 x 6061, 6 mm plate on a foot bolted to each ear's front face)", comp([brk, brk.mirror("YZ")]), C["alu_dark"], 8,
         (0, -240, 0), group="door", mat="al6061", bom="G1", section=True)
     lat_r = box(xb1, xb1 + LT["H"], dy0 - 1.0 - lb_, dy0 - 1.0, zl_c - LT["W"] / 2, zl_c + LT["W"] / 2)
-    add(f"Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, {LT['rating_N'] / 1000:.1f} kN rated, preload set >= 0.4 kN)",
+    add(f"Draw latches on the door's latch brackets, pointing forward (2 x McMaster 1807A61, 304 SS, {LT['rating_N'] / 1000:.1f} kN rated, preload set to ~0.75 kN)",
         comp([lat_r, lat_r.mirror("YZ")]), C["ss"], 8, (0, -240, 0), group="door", mat="ss304", mass_kg=2 * 0.25, bom="G1", mcm="1807A61", section=True)
     ys0_, ys1_ = LATCH_POS["strike_y"]
     strike = [box(cx, cx + 3.0, ys0_, ys1_, zl_c - 14.0, zl_c + 14.0), box(-cx - 3.0, -cx, ys0_, ys1_, zl_c - 14.0, zl_c + 14.0)]
@@ -1058,20 +1177,26 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
     zl0 = P["z_lens0"]
     lens = VP.thorlabs_fth160_1064().translate(V(0, 0, zl0))
     add("f-theta lens, f = 160 mm (Thorlabs FTH160-1064)", lens, C["black"], 9, (0, 0, 300), mat="misc", mass_kg=0.8, bom="L6")
-    # focus (optics.md §8.1): the lens sits 3.41 mm higher than its flange focal length so the window and slide put the focus on
-    # the powder. Its shoulder (z_lens0 + 9.2) bears on a 3 mm stack of ring shims (ID 85.5, OD 105, laser-cut from McMaster
-    # 18-8 shim stock 95055K25 0.5 mm, 95055K19 0.25 mm and 95055K13 0.1 mm: McMaster has no ring shim over 80 mm ID) under a 13 mm adapter ring:
-    # 0-6 mm of shims sets the focus +/-3 mm (burn test, optics.md §4.2); the M85x1 thread engages 6.5-12.5 mm over that range
+    # focus (optics.md §8.1 and §9.3): the lens sits 3.58 mm higher than its flange focal length so the 9.53 mm window and the 2 mm
+    # slide put the focus on the powder. Its shoulder (z_lens0 + 9.2) bears on a 2.83 mm stack of ring shims (ID 85.5, OD 105,
+    # laser-cut from McMaster 18-8 shim stock 95055K25 0.5 mm, 95055K19 0.25 mm and 95055K13 0.1 mm: McMaster has no ring shim over
+    # 80 mm ID; 5 x 0.5 + 1 x 0.25 + 1 x 0.1 = 2.85 mm, 0.02 mm off) under a 13 mm adapter ring: 0-6 mm of shims moves the lens
+    # 2.83 mm up to 3.17 mm down (burn test, optics.md §4.2); the M85x1 thread engages 6.5-12.5 mm over that range (9.67 mm nominal)
     zsh = zl0 + 9.2
-    add("f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; 3 mm nominal stack: 0-6 mm = +/-3 mm of focus)",
+    add(f"f-theta focus shims (85.5 x 105 rings cut from McMaster 95055K25 / K19 / K13 18-8 shim stock; {P['lens_shim']:.2f} mm nominal stack: "
+        f"0-6 mm: lens {P['lens_shim']:.2f} mm up to {6 - P['lens_shim']:.2f} mm down)",
         tube(52.5, 42.75, (0, 0, zsh), "z", P["lens_shim"]), C["steel"], 9, (0, 0, 270), mat="ss304", bom="F5", mcm="95055K25")
     add("f-theta adapter ring (6061, 13 mm, M85x1 internal thread, bolted under the bridge)", tube(55.0, 42.5, (0, 0, zsh + P["lens_shim"]), "z", P["lens_ring"]),
         C["anod"], 9, (0, 0, 280), mat="al6061", bom="F5")
     zg0 = zb1_ + P["galvo_riser"]
     galvo = VP.scanlab_basicube20().translate(V(0, 0, zg0))
     add("2-axis galvo scan head (SCANLAB basiCube 20)", galvo, C["anod"], 9, (0, 0, 340), mat="misc", mass_kg=3.75, bom="L5")
-    rs = box(-57.15, 97.85, -71.75, 58.25, zb1_, zg0).cut(cyl(20, (0, 0, zb1_ - 1), "z", P["galvo_riser"] + 2))
-    add("Galvo riser plate (6061, 5 mm, Ø40 bore for the scanned beam)", rs, C["alu_dark"], 9, (0, 0, 330), mat="al6061", bom="F5")
+    # Ø56 bore (was Ø40, 2026-11-25): the lens's Ø53 nose is flush with the bridge top only at 3 mm of shims; with fewer shims
+    # (2.83 nominal now, 0 at the top of the range) it rises up to 3.0 mm into the riser, so the bore clears the nose by 1.5 mm
+    # radially and the nose stays 2.0 mm under the galvo's base at the top of the range. The scanned beam needs only Ø40
+    rs = box(-57.15, 97.85, -71.75, 58.25, zb1_, zg0).cut(cyl(28, (0, 0, zb1_ - 1), "z", P["galvo_riser"] + 2))
+    add("Galvo riser plate (6061, 5 mm, Ø56 bore: clears the f-theta's Ø53 nose over the shim range and the scanned beam)", rs, C["alu_dark"], 9, (0, 0, 330),
+        mat="al6061", bom="F5")
     # beam line (optics.md §4.5 and §8.4): the collimator lies along x 120 mm behind the galvo's input line; a laser-line mirror
     # folds the beam to -y, through the shutter, onto a 45 deg short-pass dichroic (DMSP1000) that reflects 1070 nm into the
     # galvo. The melt pool's 520-985 nm light comes back de-scanned through the galvo, passes the dichroic and reaches the
@@ -1118,13 +1243,20 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
 
     # ===================== 10. Gas & vacuum module =====================
     g0 = zb1
-    pump = fuse([rbox(560, 980, 40, 290, g0, g0 + 270, 10), cyl(16, (640, 165, g0 + 270), "z", 20), cyl(14, (980, 120, g0 + 60), "x", 25)])
-    add("Dry scroll pump (≤ 0.3 mbar, 6 m3/h class)", pump, C["blue"], 10, (300, 0, 0), mat="misc", mass_kg=26.0, module="gas", bom="G2", mcm="PUMP")
-    add("Pump inlet (KF-25)", place(kf_stub(25, 20), (640, 165, g0 + 290 + 20), (1, 0, 0), (0, 0, 1)), C["ss"], 10, (300, 0, 0), mat="ss304", module="gas", bom="G7", mcm="KF25_WELD")
-    filt = fuse([cyl(55, (470, -40, g0 + 20), "z", 220), cyl(58, (470, -40, g0 + 240), "z", 14), cyl(58, (470, -40, g0 + 20), "z", 14),
-                 box(440, 500, -70, -10, g0, g0 + 20)])
-    add("Sealed cyclone + HEPA housing (316L, valves off for passivation)", filt, C["ss"], 10, (0, -300, 0), mat="ss316l", mass_kg=4.0, module="gas", bom="G5", mcm="FILTER")
-    add("Filter inlet (KF-25)", place(kf_stub(25, 20), (470, -40, g0 + 254 + 20), (1, 0, 0), (0, 0, 1)), C["ss"], 10, (0, -300, 0), mat="ss304", module="gas", bom="G7")
+    # Edwards nXDS6i (BOM G2) from Edwards' dimension drawing (vendor_parts.edwards_nxds6i; oem-parts.md round 6, 2026-11-25): motor
+    # end at x 557, fan end toward +x (989), centre line y 150; NW25 inlet on top at (782, 95), NW25 exhaust on the front side (-y)
+    # at x 904, z g0 + 145. The 420 x 250 x 270 envelope it replaces had its inlet at (640, 165) and its exhaust on the +x end.
+    PUMP_O = (557.0, 150.0, g0)
+    add("Dry scroll pump (Edwards nXDS6i, A73501983: 432 x 282 x 302 mm, NW25 inlet and exhaust)", VP.edwards_nxds6i().translate(V(*PUMP_O)), C["alu"], 10, (300, 0, 0),
+        mat="misc", mass_kg=26.2, module="gas", bom="G2", mcm="PUMP")
+    xpi, ypi = PUMP_O[0] + 225.0, PUMP_O[1] - 55.0
+    add("Pump inlet (KF-25)", place(kf_stub(25, 20), (xpi, ypi, g0 + 285 + 20), (1, 0, 0), (0, 0, 1)), C["ss"], 10, (300, 0, 0), mat="ss304", module="gas", bom="G7", mcm="KF25_WELD")
+    # McMaster 5169K72 HEPA housing on KF-25 adapters and elbows (vendor_parts.filter_train_5169K72; round 6): axis at (470, -40), side
+    # inlet turned to the front; the outlet elbow lands on the unchanged outlet stub below, the inlet stub moves onto the inlet elbow
+    add("Sealed cyclone + HEPA housing (McMaster 5169K72 + 9179K14 HEPA element on KF-25 adapters and elbows; cyclone stage not chosen)",
+        VP.filter_train_5169K72().translate(V(470, -40, g0)), C["anod"], 10, (0, -300, 0), mat="steel", mass_kg=1.5, module="gas", bom="G5", mcm="FILTER")   # 1.5 kg: estimate (no listed weight)
+    fin_ = VP.FILTER_TRAIN_INLET
+    add("Filter inlet (KF-25)", place(kf_stub(25, 20), (470 + fin_[0], -40 + fin_[1], g0 + fin_[2] + 20), (1, 0, 0), (0, 0, 1)), C["ss"], 10, (0, -300, 0), mat="ss304", module="gas", bom="G7")
     add("Filter outlet (KF-25)", place(kf_stub(25, 20), (470 + 55 + 20, -40, g0 + 60), (0, 1, 0), (1, 0, 0)), C["ss"], 10, (0, -300, 0), mat="ss304", module="gas", bom="G7")
     bl = fuse([rbox(600, 800, -240, -60, g0, g0 + 200, 12), cyl(40, (700, -150, g0 + 200), "z", 30)])
     add("Sealed side-channel blower (gas-tight, ~100 L/min)", bl, C["blue"], 10, (0, -300, 0), mat="misc", mass_kg=9.0, module="gas", bom="G4", mcm="BLOWER")
@@ -1169,15 +1301,18 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
                VP.mcm_4123K45("-x").translate(V(cx + 18, 0, 70))])   # McMaster 4123K45
     add("Vacuum isolation valve (McMaster 4123K45 KF-25 manual ball valve)", vv, C["ss"], 11, (220, 0, 0), mat="ss304", bom="G7", mcm="VALVE_KF25")
     hoses = {
-        # from the port at the plenum's left end (2026-11-23): down, back under the left side (under the module's gland plate level,
-        # clear of the Z arm), behind the chamber (12 mm behind the Z servo), then up past the back-right leg to the old route.
-        # The run behind the chamber is at y 166 (was 135), 2 mm behind the recoater sensor posts (y 131-151, electrical_parts.py),
-        # which the y 135 run went through; it jogs back to (150, 135) for the old way up between the back-right leg and optics post
-        "Outlet plenum to filter": [(-86, -90, zf - 45 - 26), (-86, -90, -122), (-86, 166, -132), (150, 166, -132), (150, 135, -132), (175, 95, -90), (300, -60, 20),
-                                    (400, -40, 160), (470, -40, g0 + 294)],
+        # from the port at the plenum's left end (2026-11-23). Round 6 (2026-11-25): the left-hand zero-point module and its arm now stand
+        # where the hose ran back along x -86, and the arm's path out to the front sweeps x -116 to -34 down to z -157, so the hose turns
+        # forward under the plenum (12 mm over that sweep), runs left in front of the front-left leg (6 mm), back outside the left legs
+        # (x -172, 9 mm), behind the chamber at y 178 (5.4 mm behind the folded Z servo), behind the back-right optics post (y 192) and
+        # forward on its right (x 262) to the old route up to the filter; about 0.7 m longer than round 5's
+        "Outlet plenum to filter": [(-86, -90, zf - 45 - 26), (-86, -90, -108), (-86, -124, -110), (-172, -124, -110), (-172, 178, -110), (150, 178, -110),
+                                    (178, 192, -110), (262, 192, -104), (262, 100, -90), (300, -60, 20), (400, -40, 160),
+                                    (470 + fin_[0], -40 + fin_[1], 160), (470 + fin_[0], -40 + fin_[1], g0 + fin_[2] + 40)],   # round 6 (OEM): to the 5169K72's inlet elbow
         "Filter to blower": [(470 + 55 + 40, -40, g0 + 60), (560, -100, g0 + 60), (580 - 20, -150, g0 + 60)],
         "Blower to inlet plenum": [(700, -150, g0 + 270), (650, 20, 150), (420, 205, 100), (250, 205, 60), (110, cy + 78, 30), (0, cy + 32 + 46, 11)],
-        "Vacuum line to pump": [(xpv + 2 * PIR_TEE["A"], 0, 70), (400, 70, 60), (500, 165, 80), (640, 165, g0 + 330)],   # from the Pirani tee (section 10)
+        "Vacuum line to pump": [(xpv + 2 * PIR_TEE["A"], 0, 70), (400, 70, 60), (500, 165, 80), (600, 150, 185), (720, 100, 205), (xpi, ypi, 192),
+                                (xpi, ypi, g0 + 285 + 40)],   # from the Pirani tee (section 10); round 6: over the nXDS6i to its inlet
     }
     add("Gas-loop + vacuum hoses (KF-25 SS bellows)", comp([polyline_pipe(h, 13) for h in hoses.values()]), C["hose"], 11, (0, 0, -160), mat="ss316l", mass_kg=3.0, bom="G7", mcm="HOSE_KF25")
     add("Argon line (1/4 in. 316L)", polyline_pipe([(477, 215, g0 + 82), (477, 215, 140), (300, 100, 130), (150, 100, 105), (100, 100, 100), (100, cy + 0.0, 100)], 3.2), C["argon"], 11, (0, 200, 0), mat="ss316l", bom="G7", mcm="TUBE_SS")
@@ -1228,7 +1363,9 @@ def build(include_tray=True, module="M50", reservoir=None, fasteners=True):
               polyline_pipe([(dx0, 335, Z_TRAY + 95), (900, 335, Z_TRAY + 95), (-660, 335, Z_TRAY + 95), (-720, 300, Z_TRAY + 160)], 7)]
         add("Chilled-water supply + return to the laser", comp(cw), C["water"], 13, (0, 200, 0), mat="misc", mass_kg=1.5, module="tray", bom="D1")
         add("Argon supply from the dock", polyline_pipe([(dx0, 365, Z_TRAY + 115), (700, 360, Z_TRAY + 115), (548, 300, Z_TRAY + 115), (548, 120, g0 + 30), (522, 120, g0 + 30)], 4), C["argon"], 13, (0, 200, 0), mat="ss316l", module="tray", bom="D1")
-        add("Pump exhaust to the dock", polyline_pipe([(1005, 120, g0 + 60), (1060, 200, Z_TRAY + 60), (dx0, 395, Z_TRAY + 60)], 10), C["hose"], 13, (0, 200, 0), mat="misc", mass_kg=0.5, module="tray", bom="D1")
+        # round 6: from the nXDS6i's exhaust on its front side (x 904, y 1, z g0 + 145) round the fan end to the old route
+        add("Pump exhaust to the dock", polyline_pipe([(904, 1, g0 + 145), (904, -25, g0 + 145), (950, -40, g0 + 135), (1035, 0, g0 + 100), (1055, 120, Z_TRAY + 80), (1060, 200, Z_TRAY + 60),
+                                                       (dx0, 395, Z_TRAY + 60)], 10), C["hose"], 13, (0, 200, 0), mat="misc", mass_kg=0.5, module="tray", bom="D1")
 
     # ===================== Fasteners: real McMaster-Carr parts, their holes cut into the parts they join =====================
     if fasteners:

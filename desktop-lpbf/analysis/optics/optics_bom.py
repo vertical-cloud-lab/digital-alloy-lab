@@ -32,14 +32,28 @@ add("O1", "source", "500 W single-mode CW fibre laser, 1070 nm, M2 <= 1.1, QBH o
     "YLR-500-U3-SM-AC", "IPG Photonics", 1, "", "", "quote (see bom.csv L1; not repeated here)", "quotes/ipg-ylr-500-u3-sm-ac.md", "2026-11-18",
     "L1", "keep", "Fiber laser source (YLR-500-U3, 4U) + Process fiber",
     "Ask IPG in writing: back-reflection tolerance and whether a back-reflection alarm output exists (wire it to the safety controller); mode-field diameter; minimum stable power. Fibre minimum bend radius 70 mm (the model draws >= 100 mm)")
-add("O2", "beam delivery", "Collimator: IPG affixed 2.5 mm beam -> 92-96 um at f = 160 mm (z_R +/-6.1 mm); drawn",
-    "2.5 mm affixed collimator (YLR series option)", "IPG Photonics", 1, "", "", "quote", "IPG YLR series datasheet rev 2/26; quotes/ipg-ylr-500-u3-sm-ac.md", "2026-11-23T22:41Z",
-    "L3", "replace (5 mm -> 2.5 mm: no catalogued collimator gives the 3.2 mm beam)", "Collimator (IPG affixed, 2.5 mm beam ...) on V-mount",
-    "Searched 2026-11-23 through BYU's network for a QBH collimator of f 20-25 mm rated >= 500 W CW: none. IPG's shortest standard collimator is 50 mm (D25: 50/60/70/85 mm); Coherent/Optoskand 50-250 mm; Wavelength Opto-Electronic COL-1070-D25-F30 is f = 30 mm (D 3.9-4.5 mm, 57 um; its page also says 50-250 mm, single-mode rating unconfirmed); Sill S1ADX0220-328 is an unhoused f = 20 mm asphere. For ~80 um: O2b; for 75 um: ask IPG or Wavelength for f ~ 23 mm. IPG publishes no drawing of the 2.5 mm unit: the model draws the 5 mm unit's housing. Termination: QBH-compatible (quote) vs HLC-8 (series datasheet): confirm")
+add("O2", "beam delivery", "Collimator: IPG affixed 2.5 mm beam -> 96 um at f = 160 mm (z_R +/-6.1 mm); recommended 2026-11-25 (optics.md §9.1); drawn",
+    "2.5 mm affixed collimator (YLR series option)", "IPG Photonics", 1, "", "", "quote (ask with the laser order: IPG publishes no collimator price)",
+    "IPG YLR series datasheet rev 2/26; quotes/ipg-ylr-500-u3-sm-ac.md", "2026-11-25T00:44Z",
+    "L3", "keep (2026-11-25: recommended, not a fallback)", "Collimator (IPG affixed, 2.5 mm beam ...) on V-mount",
+    "Why (beam_path.md §I): its 96 um spot is the EOS M 290's ~100 um, so EOS Al windows carry over (keyhole number 1.09x EOS's at 350 W, 1.1 m/s); it uses ~320 W at the basiCube 20's 1.1 m/s marking speed without exceeding EOS's keyhole number (the 5 mm unit: ~113 W); +/-2.8 mm depth of focus (a 1 mm focus error +1 %); the smallest fibre-return zone (r < 2.6 mm). Cost: 2.0 kW/cm on every optic, twice the 5 mm's: get CW ratings. Ask IPG: is 2.5 mm standard for the U3 SM unit (the quote lists 5 and 7.5 mm); price, drawing, beam definition and divergence, lens material, coating and CW rating; also price the 5 mm unit and a custom 3.2 mm (f ~ 23 mm, 75 um) one. The model draws the 5 mm unit's housing (no 2.5 mm drawing published). Coherent and Laser Mechanisms list HLC-8 as fitting their QBH receptacles")
 add("O2b", "beam delivery", "Option: 1.2x beam expander after the 2.5 mm collimator -> D 3.0 mm, ~80 um at f = 160 mm", "S6EXK0012-328", "Sill Optics", 0, "", "", "quote",
     "https://www.silloptics.de/fileadmin/user_upload/pdf/Katalog/Laser_Optics_Imaging_Optics_2026_10.03.26_Web_01.pdf", "2026-11-23T22:38Z",
     "L3", "option (needs a CW rating from Sill)", "not drawn",
     "Catalogued for 1030-1080 nm, clear aperture 12 mm in / 26 mm out, 44.7 mm long, M30x1 thread; the catalogue gives no power rating (catalogue PDF sha256 59dcee21...ecf65)")
+add("O2c", "beam delivery", "Option: IPG 5 mm collimator + a 1.5x Galilean expander used backwards (5 -> 3.33 mm) -> 72 um at f = 160 mm", "73-122 (Jenoptik 1.5x, 1064 nm)",
+    "Edmund Optics", 0, 790.00, 790.00, "fetched ($790 at 1-4, $710 at 5+)", "https://www.edmundoptics.com/search/?criteria=73-122", "2026-11-25T01:20Z",
+    "L3", "option (only if no 3.2 mm collimator is offered)", "not drawn",
+    "1030-1080 nm, T 99 %, apertures 16 / 40 mm, 93 mm long, M30x1 / M50x1; CW 5.0 MW/cm2, 5 J/cm2 pulsed: the only expander found with a CW figure. Two more lenses in the 500 W beam (~+0.2 z_R thermal shift each, Faas et al.). No room as drawn: the collimator ends 5 mm from the fold mirror's cube and its strain relief 33 mm inside the guard, so this unit would push it 60 mm through the guard's wall: re-route the beam line")
+add("O2d", "beam delivery", "Option: as O2c with the Sill S6EXK0015-328 1.5x (shorter)", "70-164 (Sill S6EXK0015-328)", "Edmund Optics", 0, 1115.00, 1115.00,
+    "fetched ($1,115 at 1-4)", "https://www.edmundoptics.com/search/?criteria=70-164", "2026-11-25T01:20Z", "L3", "option", "not drawn",
+    "1030-1090 nm, fused silica, 44.7 mm long (it would push the collimator's strain relief 12 mm through the guard's wall as drawn), Ø44 housing, entrance aperture 12 mm, M30x1; 5.0 J/cm2 (1 ns) only: ask Sill for a CW rating. Edmund Vega 12-875 1.5x is $385 (85.8 mm, apertures 8 / 23 mm, pulsed rating only)")
+add("O2e", "beam delivery", "Option: QBH collimator f = 30 mm -> D 4.2 mm, 57 um at f = 160 mm (laser ordered with its QBH-compatible end)", "COL-1070-D25-F30",
+    "Wavelength Opto-Electronic", 0, "", "", "quote (quote form only)", "https://wavelength-oe.com/laser-collimators/", "2026-11-25T00:45Z", "L3", "option", "not drawn",
+    "'< 1000W for 25mm Lens Diameter', 1030-1080 nm, QBH/SMA; single-mode use not stated; no F20 or F25 (next is F41.5). Keyhole number 2.4x EOS's at 350 W: needs ~147 W at 1.1 m/s to match EOS")
+add("O2f", "beam delivery", "Option: custom collimator f ~ 23 mm -> D 3.2 mm, 75 um at f = 160 mm", "custom (IPG 'other diameters on request', or Wavelength)", "IPG Photonics", 0, "", "",
+    "quote", "quotes/ipg-ylr-500-u3-sm-ac.md", "2026-11-25", "L3", "ask with the laser order; take it only if it doesn't delay the laser", "not drawn",
+    "Matches Renishaw (70-80 um), TRUMPF and Aconity (80 um); keyhole number 1.6x EOS's at 350 W, ~221 W at 1.1 m/s to match EOS; +/-1.72 mm depth of focus")
 add("O3", "beam delivery", "Safety shutter, >= 500 W CW at 1070 nm, normally closed, position feedback to the safety controller",
     "industrial fibre-laser shutter", "TBD (quote)", 1, 1500, 2000, "estimate", "", "", "L4", "keep (still no product)",
     "Safety shutter + beam dump (envelope)", "nmLaser LST800-20mm is rated 300 W (with a chiller plate), too low; EOPC, Kentek, LaserMech not priced (fetched 2026-11-22T05:55Z). Make its dump port the power head (O14)")
@@ -68,19 +82,19 @@ add("O8", "scanner", "Alternative: industrial fused-silica f-theta qualified for
 add("O9", "scanner", "Spare protective window for the f-theta (Ø75 x 2 mm)", "FTHW75-1064", "Thorlabs", 2, 122.03, 122.03, "fetched",
     "https://www.thorlabs.com/f-theta-scan-lenses", "2026-11-22T05:36Z", "L6", "add", "inside the lens envelope",
     "N-BK7, not fused silica (absorbs more at 1070 nm: a thermal-lens source at 500 W). A fused-silica Ø75 x 2 mm AR-1064 replacement is worth quoting")
-add("O10", "scanner", "Focus adjustment for the f-theta: 13 mm adapter ring (was 16) + a 3 mm stack of ring shims (ID 85.5, OD 105) cut from 18-8 shim stock: 0-6 mm = +/-3 mm",
+add("O10", "scanner", "Focus adjustment for the f-theta: 13 mm adapter ring (was 16) + a 2.83 mm stack of ring shims (ID 85.5, OD 105; was 3 mm) cut from 18-8 shim stock: 0-6 mm moves the lens 2.83 mm up to 3.17 mm down",
     "95055K25 (0.5 mm) + 95055K19 (0.25 mm) + 95055K13 (0.1 mm), 150 x 1250 mm rolls", "McMaster-Carr", 1, 117.43, 200, "fetched (rolls $48.20 + $36.75 + $32.48) + estimate (cutting the rings)",
-    "https://www.mcmaster.com/95055K25/", "2026-11-23T22:44Z", "F5", "drawn 2026-11-23",
+    "https://www.mcmaster.com/95055K25/", "2026-11-23T22:44Z", "F5", "drawn 2026-11-23; stack 2.83 mm since 2026-11-25",
     "f-theta focus shims (85.5 x 105 rings ...) + f-theta adapter ring (6061, 13 mm ...)",
-    "The lens is drawn 3.41 mm higher (the drawn 8 mm window + 3 mm slide); with the BOM glass (9.53 + 2 mm) the focus wants 0.17 mm more: inside the shims. McMaster has no ring shim over 80 mm ID (metric steel stops at 80 x 100, stainless at 70 x 90), so the rings are cut from stock. Thread engagement 6.5-12.5 mm over the range")
+    "The lens is drawn 3.58 mm higher (the 9.53 mm window + 2 mm slide, drawn since 2026-11-25; it was 3.41 mm for 8 + 3 mm) on 2.83 mm of shims, so the bridge didn't move; 5 x 0.5 + 0.25 + 0.1 = 2.85 mm. The galvo riser's bore is Ø56 (was Ø40) so the lens's Ø53 nose can rise over the range. McMaster has no ring shim over 80 mm ID (metric steel stops at 80 x 100, stainless at 70 x 90), so the rings are cut from stock. Thread engagement 6.5-12.5 mm over the range")
 add("O11", "chamber optics", "Chamber window, fused silica (Corning 7980), Ø50.8 x 9.53 mm, 1064 nm V-coat both faces (Rabs < 0.25 %)", "38-990",
     "Edmund Optics", 1, 295.00, 295.00, "fetched", "https://www.edmundoptics.com/p/508mm-dia-1064nm-10-fused-silica-window/39556/", "2026-11-22T05:53Z",
-    "L7", "replace text (Thorlabs WG41050-C Ø1 in. x 5 mm -> Ø2 in. x 9.53 mm)", "Ø2 in. fused-silica window, 8 mm, AR 1064 (deepen the seat 1.53 mm)",
-    "No CW LIDT listed. Alternative Thorlabs WG42012-C (Ø2 in. x 12 mm, AR 1050-1700 nm, $209.72, CW LIDT 350 W/cm at 1540 nm, certification measurement). If k < ~0.55 a Ø2 in. window clips the L75 edge: Ø3 in. then")
+    "L7", "replace text (Thorlabs WG41050-C Ø1 in. x 5 mm -> Ø2 in. x 9.53 mm)", "Ø2 in. fused-silica window, 9.53 mm, AR 1064 (Edmund 38-990): drawn 2026-11-25, seat 1.53 mm deeper",
+    "Re-checked 2026-11-25T00:50Z: $295, 9.53 +/- 0.20 mm (focus +/-0.06 mm), clear aperture Ø45.72. No CW LIDT listed. Alternative Thorlabs WG42012-C (Ø2 in. x 12 mm, AR 1050-1700 nm, $209.72, CW LIDT 350 W/cm at 1540 nm, certification measurement). If k < ~0.55 a Ø2 in. window clips the L75 edge: Ø3 in. then")
 add("O12", "chamber optics", "Cover slides, fused quartz, Ø50.0 x 2.0 mm, 1064 nm V-coat both faces (Rabs < 0.25 %)", "36-299 (laser debris shield)",
     "Edmund Optics", 12, 103.00, 121.00, "fetched (qty 6-25 tier $103; single $121)", "https://www.edmundoptics.com/p/50mm-dia-1064nm-laser-debris-shield/33156/",
-    "2026-11-22T05:48Z", "A2", "replace Edmund 25-250 (uncoated, 3.37 % per face: 34 W back up the beam)", "Cover slide (Ø2 in. x 3 mm fused silica, consumable)",
-    "Ø50.0 in the Ø51.2 drawer pocket: add a locating ring or bore the pocket Ø50.4. 2 mm instead of 3 mm: focus 0.31 mm higher, redo the shim. 12 = one per build for ~2 weeks. No CW LIDT listed")
+    "2026-11-22T05:48Z", "A2", "replace Edmund 25-250 (uncoated, 3.37 % per face: 34 W back up the beam)", "Cover slide (Ø50 x 2 mm ..., Edmund 36-299): drawn 2026-11-25 on a 1.7 mm seat in a Ø50.4 pocket",
+    "Re-checked 2026-11-25T00:50Z: $121 at 1-5, $103 at 6-25, $92 at 26-49; Ø50.00 +/- 0.1 x 2.00 +0.15/-0.00 mm (focus up to 0.05 mm lower per slide); clear aperture Ø42.5, which limits L75 once a field-stop insert opens the stop (k >~ 0.60, optics.md §9.3). 12 = one per build for ~2 weeks. No CW LIDT listed")
 add("O12b", "chamber optics", "Trial consumable: fibre-laser protective windows, JGS1 fused silica, Ø50 x 2 mm", "PW02FS50X2 (Cloudray HC) / PW02FYZ50X2 (Raytools, '0-6kW')",
     "Cloudray", 10, 12.00, 16.00, "fetched (Shopify product JSON)", "https://www.cloudraylaser.com/products/cloudray-hc-jgs1-fused-silica-fiber-laser-protective-windows",
     "2026-11-22T05:46Z", "A2", "add as a trial", "Cover slide", "Coating and reflectance not stated: measure transmission and reflection at 50 W against an Edmund 36-299 before adopting; if AR-coated as cutting-head windows usually are, ~1/8 the cost per build")
@@ -89,8 +103,9 @@ add("O12c", "chamber optics", "Upgrade: sapphire cover slide (C-axis, AR 1000-11
     "https://www.edmundoptics.com/f/laser-grade-c-axis-sapphire-windows/39685/", "2026-11-22T06:05Z", "A2", "option (only if slides can be cleaned and reused)", "Cover slide",
     "Raises the 'clean enough' limit from ~0.03 % to ~0.3 % absorption (thermal_lens.md). n = 1.77: a 3.18 mm slide shifts focus 1.38 mm")
 add("O13", "chamber optics", "Field-stop inserts, one per module (S25 / M50 / L75), sized from the measured chief-ray angle", "custom 6061, black anodised",
-    "in-house", 3, 15, 40, "estimate", "", "", "F5", "change the drawn part (one fixed Ø36 stop)", "Field-stop aperture (Ø36, passive beam limit)",
-    "At k = 0.3-0.5 the Ø36 stop passes plates only to r 20-27 mm (L75 is 38.1)")
+    "in-house", 3, 15, 40, "estimate", "", "", "F5", "change the drawn part (one fixed Ø36 stop)",
+    "Field-stop aperture, M50 insert (Ø41): drawn in M50 builds 2026-11-25; S25 and L75 builds keep the Ø36 stop",
+    "At k = 0.3-0.5 the Ø36 stop passes plates only to r 20-27 mm (L75 is 38.1). 2026-11-25 (optics.md §9.3): the M50 insert (Ø41, drawn) passes the M50 edge at any k in the drawn 0.33-0.63 with the 2.5 mm beam (Ø42 for a 3.2 mm beam); the L75 one helps only for k >~ 0.60 (the slide's Ø42.5 clear aperture is next): size it after k is measured; S25 keeps the Ø36 stop")
 # ---------------------------------------------------------------- instruments
 add("O14", "instrument", "Thermal power head on the plate (calibration fixture): 500 W continuous, water-cooled, Ø55 mm, H12 absorber (45 kW/cm2), 89 x 89 x 43 mm",
     "UP55M-500W-H12-D0", "Gentec-EO", 1, 1969.00, 1969.00, "fetched", "https://www.gentec-eo.com/products/up55m-500w-h12-d0", "2026-11-23T22:38Z",
@@ -122,8 +137,13 @@ add("O21", "camera", "1070 nm blocking filter for the camera, Ø25 mm short-pass
     169.26, 169.26, "fetched", "https://www.thorlabs.com/hard-coated-edgepass-filters?pn=FESH0950", "2026-11-22T05:44Z", "M6", "add (replaces the drawn 'blocking coating')",
     "Camera window (Ø1 in. x 3 mm fused silica; FESH0950 ...)", "")
 add("O22", "camera", "Scheimpflug wedge, 2.2 deg, between lens and sensor", "custom (aluminium)", "in-house", 1, 10, 30, "estimate", "", "", "M6", "add", "not drawn", "")
-add("O23", "camera", "Second LED bar on the back wall (light across the recoater streaks); vacuum-safe, unpotted", "TBD", "TBD", 1, 20, 60, "estimate", "", "",
-    "M6", "add", "Layer-light LED bar (one drawn, +x wall)", "")
+add("O23", "camera", "LED bar outside the chamber, behind a new window low in the back wall left of the inlet plenum (x ~ -105, z ~ 25): 8-14 deg light across the recoater streaks (optics.md §9.2)",
+    "TBD (12/24 V LED bar)", "TBD", 1, 20, 60, "estimate", "", "", "M6", "replace the in-chamber bar (2026-11-25)",
+    "Layer-light LED bar (drawn inside, on the lid's underside: a placeholder)", "Outside: no feedthrough, no electronics, heat or outgassing in the argon. A 100 um step casts a 16-27 px shadow the camera sees (2-3 px from the lid as drawn); fused metal stays dark (layer_light.md)")
+add("O23b", "camera", "Window for the back-wall light: KF40 viewport (Kodial; fused silica $280), or a Ø1 in. window bolted on like the camera's", "QF40-150-VP",
+    "Kurt J. Lesker", 1, 180.00, 280.00, "fetched (by a research agent; QF40-150-VPQ fused silica $280, in stock)",
+    "https://www.lesker.com/viewports/viewports-kf-flanged-kodial-glass.cfm", "2026-11-25", "M6", "add (a new chamber port and a Ø22 hole in the lower back liner; not drawn)", "not drawn",
+    "A KF40 flange (Ø55) at x -100 overlaps the inlet plenum's flange (x +/-78): put it at x <= -106, or use a Ø1 in. window. If the LSO wants the wall to stay a 1070 nm barrier, use a 950 nm short-pass glass (FESH0950 class)")
 add("O24", "calibration", "Black-anodised 6061 coupons for scan-field grids and Z-scan burns (one sheet, cut)", "TBD (McMaster anodised sheet)", "McMaster-Carr", 1, 40, 120,
     "estimate", "", "", "T3 (new)", "add", "-", "Read the grids with a 2400 dpi flatbed scanner or a measuring microscope")
 add("O25", "calibration", "Glass dot-grid distortion target, 50 x 50 mm, 1.0 mm pitch (layer-camera calibration)", "57-983", "Edmund Optics", 1, 670.00, 670.00, "fetched",

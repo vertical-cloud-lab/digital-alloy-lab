@@ -1,0 +1,103 @@
+{
+ "edwards_nxds6i": {
+  "builder": "edwards_nxds6i",
+  "drawing": "nXDS-6i_10i_15i_20i.pdf",
+  "page": 3,
+  "dpi": 300,
+  "top_row_px_per_mm": 1.3676,
+  "views": {
+   "front (fan end)": {
+    "crop_pt": [
+     82.0,
+     236.0,
+     183.0,
+     343.0
+    ],
+    "mask_px": 125324,
+    "iou": 0.9279,
+    "scale_px_per_mm": 1.3676,
+    "outline_mean_mm": 4.45,
+    "outline_p95_mm": 13.58,
+    "iou_free_scale": 0.9466,
+    "free_scale_vs_drawing": 1.03,
+    "before_iou": 0.8881,
+    "before_outline_mean_mm": 7.61,
+    "before_outline_p95_mm": 21.21
+   },
+   "side (exhaust side)": {
+    "crop_pt": [
+     233.0,
+     236.0,
+     378.0,
+     343.0
+    ],
+    "mask_px": 194607,
+    "iou": 0.9264,
+    "scale_px_per_mm": 1.3676,
+    "outline_mean_mm": 6.02,
+    "outline_p95_mm": 33.89,
+    "iou_free_scale": 0.9276,
+    "free_scale_vs_drawing": 1.0074,
+    "before_iou": 0.8476,
+    "before_outline_mean_mm": 12.58,
+    "before_outline_p95_mm": 46.34
+   },
+   "side (back)": {
+    "crop_pt": [
+     404.0,
+     239.0,
+     551.0,
+     343.0
+    ],
+    "mask_px": 192315,
+    "iou": 0.9268,
+    "scale_px_per_mm": 1.3676,
+    "outline_mean_mm": 5.91,
+    "outline_p95_mm": 32.75,
+    "iou_free_scale": 0.927,
+    "free_scale_vs_drawing": 0.9933,
+    "before_iou": 0.8484,
+    "before_outline_mean_mm": 12.42,
+    "before_outline_p95_mm": 46.21
+   },
+   "rear (motor end)": {
+    "crop_pt": [
+     54.0,
+     423.0,
+     152.0,
+     525.0
+    ],
+    "mask_px": 116303,
+    "iou": 0.9427,
+    "scale_px_per_mm": 1.3676,
+    "outline_mean_mm": 3.42,
+    "outline_p95_mm": 13.16,
+    "iou_free_scale": 0.9444,
+    "free_scale_vs_drawing": 0.9966,
+    "before_iou": 0.8759,
+    "before_outline_mean_mm": 8.41,
+    "before_outline_p95_mm": 26.21
+   },
+   "top": {
+    "crop_pt": [
+     195.0,
+     430.0,
+     338.0,
+     525.0
+    ],
+    "mask_px": 175771,
+    "iou": 0.8922,
+    "scale_px_per_mm": 1.3676,
+    "outline_mean_mm": 11.84,
+    "outline_p95_mm": 63.89,
+    "iou_free_scale": 0.9418,
+    "free_scale_vs_drawing": 0.9539,
+    "before_iou": 0.8757,
+    "before_outline_mean_mm": 10.25,
+    "before_outline_p95_mm": 25.15
+   }
+  },
+  "mean_iou": 0.9232,
+  "mean_before_iou": 0.8671
+ }
+}

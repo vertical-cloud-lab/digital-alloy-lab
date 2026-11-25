@@ -1,6 +1,6 @@
 # Optics BOM totals (`analysis/optics/optics_bom.py`)
 
-39 rows; priced rows with qty > 0 total **$23,863–25,317** (the laser, L1, excluded). Unpriced: O1, O2.
+44 rows; priced rows with qty > 0 total **$24,043–25,597** (the laser, L1, excluded). Unpriced: O1, O2.
 
 | bom.csv line | low (USD) | high (USD) |
 |---|---|---|
@@ -10,7 +10,7 @@
 | L5 | 12,000.00 | 12,000.00 |
 | L6 | 1,255.84 | 1,255.84 |
 | L7 | 295.00 | 295.00 |
-| M6 | 284.26 | 394.26 |
+| M6 | 464.26 | 674.26 |
 | S5 | 411.95 | 411.95 |
 | S6 | 434.94 | 434.94 |
 | T1 | 2,785.00 | 2,785.00 |

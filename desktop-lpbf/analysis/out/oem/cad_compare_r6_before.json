@@ -1,0 +1,154 @@
+[
+ {
+  "key": "mcm_3861N11",
+  "vendor_part": "McMaster 3861N11 (coiled lead dropped)",
+  "call": "mcm_3861N11()",
+  "tess_tol_mm": 0.086,
+  "iou": 0.6923,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 23941.2,
+  "vendor_mm3": 19391.2,
+  "inter_mm3": 17727.3,
+  "dvol_pct": 23.5,
+  "ours_ext": [
+   23.8,
+   27.0,
+   86.3
+  ],
+  "vendor_ext": [
+   27.0,
+   29.0,
+   66.65
+  ],
+  "dext_max_mm": 19.65,
+  "rotation_index": 6,
+  "icp_kept": true,
+  "transform": [
+   [
+    -0.9999,
+    0.0019,
+    0.0103,
+    0.0023
+   ],
+   [
+    0.0103,
+    -0.011,
+    0.9999,
+    -0.1506
+   ],
+   [
+    0.002,
+    0.9999,
+    0.011,
+    24.6428
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 1.909,
+   "rms": 3.057,
+   "p95": 7.576,
+   "max": 11.928
+  },
+  "vendor_to_ours": {
+   "mean": 1.488,
+   "rms": 2.285,
+   "p95": 4.819,
+   "max": 11.74
+  },
+  "sym_mean_mm": 1.699,
+  "sym_p95_mm": 7.576,
+  "hausdorff_mm": 11.928,
+  "vendor_info": {
+   "solids": 5,
+   "non_manifold_solids_dropped": 0,
+   "note": "lead and its stripped wire ends dropped (solids beyond the gland, |y| > 34 mm); round 5 kept the wire ends",
+   "load_s": 18.7,
+   "sha256_16": "b26f3a72c8835a16"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 76.8
+ },
+ {
+  "key": "mcm_5169K72",
+  "vendor_part": "McMaster 5169K72",
+  "call": "mcm_5169K72()",
+  "tess_tol_mm": 0.121,
+  "iou": 0.7455,
+  "iou_method": "manifold3d mesh booleans",
+  "ours_mm3": 652869.8,
+  "vendor_mm3": 499933.4,
+  "inter_mm3": 492361.7,
+  "dvol_pct": 30.6,
+  "ours_ext": [
+   92.1,
+   104.94,
+   121.2
+  ],
+  "vendor_ext": [
+   97.86,
+   104.9,
+   121.27
+  ],
+  "dext_max_mm": 5.76,
+  "rotation_index": 5,
+  "icp_kept": false,
+  "transform": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    -0.0234
+   ],
+   [
+    0.0,
+    0.0,
+    -1.0,
+    0.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    43.6011
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    1.0
+   ]
+  ],
+  "ours_to_vendor": {
+   "mean": 4.207,
+   "rms": 5.376,
+   "p95": 10.868,
+   "max": 13.465
+  },
+  "vendor_to_ours": {
+   "mean": 3.92,
+   "rms": 4.911,
+   "p95": 10.581,
+   "max": 13.887
+  },
+  "sym_mean_mm": 4.063,
+  "sym_p95_mm": 10.868,
+  "hausdorff_mm": 13.887,
+  "vendor_info": {
+   "solids": 7,
+   "non_manifold_solids_dropped": 0,
+   "note": "",
+   "load_s": 19.1,
+   "sha256_16": "b2e98dcf424317b5"
+  },
+  "ours_solids": 1,
+  "ours_nonmanifold_dropped": 0,
+  "wall_s": 59.5
+ }
+]
