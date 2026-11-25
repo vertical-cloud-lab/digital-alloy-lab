@@ -593,7 +593,7 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
             ch.frame(img() if callable(img) else img, caption, **meta)
         tot["n"] += 1
         cur["t"] += proc
-        return max_frames is not None and tot["n"] >= max_frames
+        return (max_frames is not None and tot["n"] >= max_frames) or tot["n"] >= hi     # a slice ends after its range
 
     def step_status(sid, failed_run):
         if failed_run:
@@ -759,7 +759,10 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
             in_table = rp.st[n]["x"] > 2000.0
             seal_cu = cur["do"] in CLOSE_STEPS and e.get("how") == "cart"
             view = None
-            if k == "screw" or e.get("how") == "cart" or seal_cu:
+            # a slice (ASM_PART) that draws none of this motion's frames skips the view search (best_view's rays are most of
+            # the render's time)
+            drawn = not (tot["n"] + nf <= lo or tot["n"] >= hi)
+            if drawn and (k == "screw" or e.get("how") == "cart" or seal_cu):
                 # the least-occluded view of where this motion ends (the screw seated, the part in place, the pick)
                 q_keep = rp.st[n]["q"].copy()
                 rp.st[n]["q"] = Q[-1]

@@ -975,7 +975,9 @@ def main():
                          deburr_inspect=mt["deburr_inspect_h"], parts=mt["parts"]),
         assembly=dict(steps=asm["steps"], robot_h=asm["robot_h"], mir_fetch_h=asm["fetch_h"], person_h=asm["person_h"],
                       failed_or_partial=asm["fail_steps"], person_or_shop_steps=asm["person_steps"],
-                      basis="estimates (results.json's seconds are compute time)"),
+                      basis=("the recorded run's real time (" + os.path.basename(os.environ["ASM_TIMES"]) + "): motions at cobot speeds, "
+                             "tool changes, docking and persons' minutes estimated") if os.environ.get("ASM_TIMES") else
+                            "estimates (results.json's seconds are compute time)"),
         po_rule="BYU: purchases of $3,500 or more from one vendor need a purchase order: 'Allow ten days to two weeks "
                 "PLUS shipping time' (capstone.byu.edu/purchase-orders, read 2026-11-25); under $3,500 a PCard")
 

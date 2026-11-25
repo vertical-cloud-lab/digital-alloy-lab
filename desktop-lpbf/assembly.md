@@ -36,6 +36,53 @@ design, render, and simulate usage of these, though)". Run 7 (round 6) checked e
 in the gripper. Round 7 adds where the part comes from, records every committed motion, and redesigns the steps that failed.
 Nothing here has been built or tried on hardware.
 
+### Run 10 (2026-11-25, 21:19-22:37 UTC): run 9's next fixes, recorded again for the video
+
+Run 9's recording lived in `/tmp` on a runner that is gone, so the video's assembly chapters are rendered from run 10. Run 10
+has the fixes run 9 listed as next (commit 07c972d), the grasp-down kit layout that run 9 never ran with, and the same checks.
+Results: [`results_run10.json`](analysis/out/assembly/results_run10.json); against run 9:
+[`round7_run10.json`](analysis/out/assembly/round7_run10.json); real time per step:
+[`run10_times.json`](analysis/out/assembly/run10_times.json).
+
+| | Run 9 | Run 10 |
+|---|---|---|
+| checked steps passed (robot steps, no notes) | 93 of 108 | **98 of 108** |
+| screws driven | 123 of 129 | **124 of 129** |
+| picks at the long table on a planned path | 40 of 74 | **55 of 74** |
+| screw-presenter trips planned | 117 of 123 | 119 of 124 |
+| planner's compute time | 7,163 s | 4,688 s |
+
+What each change did:
+
+| Step | Run 9 | Change in run 10 | Run 10 |
+|---|---|---|---|
+| F52, F52b | the fingertips holding a hinge pin's end met the door's front face, 6 mm behind the hinge axis | **the pin pusher** (new tool, `tooling.pin_pusher`): a Ø4.5 x 60 mm push rod with a Ø4 x 3 mm magnet in its tip, on a 12 x 12 x 150 mm bar, holds the pin by its end face on its axis; the rod is thinner than the Ø5.2 knuckle bores. The pins become 17-4 PH, which is magnetic and harder than the 304 knuckles (316 on 304 galls) | **PASS**, 0.1 mm |
+| F45b, F45c | arm A's upper arm met the base plate, or found no pose | arm B from the back | **PASS** |
+| F06 | 7 of 8 leg screws: no approach for one in 500 planner iterations | 2,000 iterations for this step | **PASS**, 8 of 8 |
+| C00d | 17 of 18 floor-plate screws | 2,000 iterations | 17 of 18: still no approach |
+| F15 | 6 of 7 inlet-plenum screws: the driver met the plenum's KF-25 port | a 60 mm bit extension | 6 of 7: the same contact |
+| F18 | 3 of 4 held rail screws: arm A's driver met the chamber body | a 60 mm bit extension on the held part's screws | 3 of 4: now arm A's wrist 1 meets the base plate |
+| F26 | the blade holder's own path met the frame (the holder stood 5 mm outside the door opening at the recoater's park) | in 6 mm right of its seat, then slid left inside the chamber | **the part's path now passes**; the arm fails: the right fingertip meets the chamber body 117 mm into the move |
+| F27 | arm A's upper arm met Fixture B on both blade screws | arm B from the back | 0 of 2: arm B's driver meets the overflow funnel block |
+| F45 | the part's path met the metering base; arm A met the base plate | arm B from the back | still FAIL, now on the part itself: after the 12 mm unscrew the roller shaft is still inside the metering base, so going up it meets the base (the part's sweep and arm B's carry both stop there, 3 mm deep). It needs a longer axial leg before the lift |
+| F45d | the dock rails went on before the load cell that carries them | the load cell first | the load cell and rails pass; the NFC reader's antenna now meets the metering base on its path |
+| F48b | the ring pad's body met the camera boss 63 mm along the line of sight | a 100 mm stem on the pad (was 55) | the same contact at the same place, so it is not the VGC10 body; it is at the seat (the pad's lip in the counterbore, or the tool's axis against the tilted bore) and needs a look at the geometry |
+| F57 | the dichroic cube met beam tube #1, placed before it | the cubes first, then the tubes | now tube #1 meets the dichroic: the tubes' ends sit in the cubes' ports, so neither order works from above. The tubes have to slide in along their own axes |
+| F54 | no pair of arm poses at the start of the carry | (none) | the same |
+
+**Picks at the table.** 55 of 74 picks now have a planned path (run 9: 40), mostly from the grasp-down layout. Of the
+10 that fail, a diagnostic re-run of M13 and C00a found **the held part at the table is not the part on the table**:
+- M13's held body carries the PEEK rod bullet, a tool fitted at the station, which sticks 32 mm out of the rod's end, so on
+  the nest the held rod reaches z 839.9 against the table top's 860;
+- C00a's held body carries the overflow funnel that a person fits on the bench in C00, which hangs 62 mm under the plate
+  (z 798), while the table holds the bare plate.
+
+The fix is in `commit.place`: plan the pick with a body of the table item alone and attach the station's extras after
+the pick, and give C00a's sub-assembly a nest that clears the funnel. Not done in this run. The other failed picks: M04 (a
+fingertip meets its riser on the lift), F02b, F18, F36 (a fingertip meets the O₂ sample line), F39 (the drawer-latch studs),
+F45d (a fingertip meets its tray's rim), and F45 and F45b, whose MiR drive is swept into the zero-point release-air line
+lying past the table's edge.
+
 ### What was added
 
 - **The long parts table** ([`cad/robotbuild/kit_table.py`](cad/robotbuild/kit_table.py)): every item the sequence places (a
@@ -183,14 +230,15 @@ the path that was checked; C00c (4.3 kg) and C01 (8.3 kg) stay two-arm carries.
 
 ### Times
 
-Real-world time from run 9's recording (motions at the speeds above; tool changes, docking, the torque phase and every person's time are estimates):
+Real-world time from run 10's recording (run 9's in brackets; motions at the speeds above; tool changes, docking, the torque
+phase and every person's time are estimates):
 
 | Chapter | Elapsed (h) | Arm A busy (h) | Arm B busy (h) | Person (h) |
 |---|---|---|---|---|
-| 3: the build module | 0.53 | 0.47 | 0.01 | 0.06 |
-| 4-5: the chamber, the process module and the tray | 9.06 | 1.87 | 0.30 | 6.31 |
+| 3: the build module | 0.53 (0.53) | 0.47 (0.47) | 0.01 (0.01) | 0.06 (0.06) |
+| 4-5: the chamber, the process module and the tray | 9.17 (9.06) | 2.01 (1.87) | 0.36 (0.30) | 6.31 (6.31) |
 
-The arms work one at a time in this plan (the planner moves one arm while the other waits), so elapsed time is about the sum. Driving to the table and back is a large share: the parts sit by category, and the electronics and seals are 10-12 m from the bench. Two easy gains, not modelled: kit the next steps' parts onto a tray on the MiR in one trip, and let the idle arm fetch while the other works. Chapter 4-5's person time is mostly chapter 5 and the guard: the rack and gas module with a hoist (T01-T05, 2.75 h), the laser guard (F59, 1 h) and alignment and calibration (F57b, 1.5 h), all estimates. The per-step list is [`analysis/out/assembly/round7_times.json`](analysis/out/assembly/round7_times.json) (also `/tmp/robotbuild/data/assembly.json`, which the video's summary and the cost worker read; the run's `compute_s` is the checker's own time, not the assembly's).
+The arms work one at a time in this plan (the planner moves one arm while the other waits), so elapsed time is about the sum. Driving to the table and back is a large share: the parts sit by category, and the electronics and seals are 10-12 m from the bench. Two easy gains, not modelled: kit the next steps' parts onto a tray on the MiR in one trip, and let the idle arm fetch while the other works. Chapter 4-5's person time is mostly chapter 5 and the guard: the rack and gas module with a hoist (T01-T05, 2.75 h), the laser guard (F59, 1 h) and alignment and calibration (F57b, 1.5 h), all estimates. The per-step lists are [`run10_times.json`](analysis/out/assembly/run10_times.json) (run 10) and [`round7_times.json`](analysis/out/assembly/round7_times.json) (run 9) (also `/tmp/robotbuild/data/assembly.json`, which the video's summary and the cost worker read; the run's `compute_s` is the checker's own time, not the assembly's).
 
 
 ### The video chapters
@@ -199,33 +247,37 @@ Rendered with [`cad/robotbuild/asm_render.py`](cad/robotbuild/asm_render.py) fro
 
 ### Open points
 
-**Still failing in run 9, and the next change for each** (none of these was re-run: run 10 was stopped to free memory and CPU
-for the renders):
-- **F15** (6 of 7 screws: the driver met the plenum's KF-25 port on one): a 60 mm bit extension, as C05 (in sequence.py).
-- **F18**: with the roles swapped, arm A's driver now meets the chamber body on one rail screw driven toward the back wall; next:
-  the 60 mm bit extension there too.
-- **F26**: at the recoater's park position the blade holder (x -115 to -97) stands 5 mm outside the door opening's side (|x| <
-  110), so no straight path through the opening exists; next: fit the cartridge with the carriage 10 mm in from park (the ball
-  screw is turned through its coupling before the servo goes on, F25c), or enter 6 mm right and slide left inside.
-- **F27**: with the 100 mm extension, arm A's upper arm meets Fixture B on both blade screws; next: arm B from the back, or drive
-  them with the cartridge on a bench nest before F26 (the blade cartridge is quick-swap anyway).
-- **F45, F45b, F45c**: arm A's upper arm meets the base plate or finds no pose for the roller feedthrough, coupling and stepper at
-  the lid's back left; next: arm B from the back.
-- **F45d**: the dock rails went on before the load cell that carries them; the order is fixed in sequence.py.
-- **F48b**: the ring pad's VGC10 body meets the camera boss 63 mm along the line of sight; next: a 100 mm stem on the pad.
-- **F52, F52b** hinge pins: the fingertips holding a pin's end meet the door's front face, 6 mm behind the hinge axis; next: a
-  push-rod pin tool (a Ø4.5 x 50 mm rod whose magnet holds the pin on its axis, on the inline nutrunner, so the tool's body stays
-  outside the door's width); until then a person slides the two pins in (about 10 s).
+**Still failing in run 10, and the next change for each** (run 10's changes are in the table above; none of these is
+re-run):
+- **F15** (6 of 7 screws: the driver meets the plenum's KF-25 port on one, with or without the 60 mm extension): drive that
+  screw before the port's stub goes on (the stub is welded, so: a shorter stub, or the screw moved 5 mm along the flange).
+- **F18** (3 of 4 held rail screws): with the 60 mm extension arm A's wrist 1 meets the base plate; without it the driver met
+  the chamber body. Try a 30 mm extension between the two, or swap the roles back for that one screw (arm A holds, arm B
+  drives from above the open top).
+- **F26** (blade holder): the part's path passes since run 10; the right fingertip meets the chamber body. Take the holder
+  by its top and bottom faces (fingers along z) or with a narrower fingertip pair, or fit the blade cartridge to the arm on a
+  bench nest and put the whole cartridge in by its fin (robot-ops.md's blade-cartridge job passes that way on the finished
+  machine).
+- **F27** (blade screws): arm B's driver meets the overflow funnel block. Drive them on the bench with the cartridge on a
+  nest before F26 (the cartridge is quick-swap anyway, with dowels and ball plungers).
+- **F45** (roller feedthrough): the part's own path. Unscrew 30-40 mm along the axis before lifting, if the metering base's
+  bore leaves room, or fit the feedthrough before the metering base goes onto the lid.
+- **F45d**: the NFC reader's antenna meets the metering base on its 70 mm drop: bring it in from the side, or fit it before
+  F43.
+- **F48b** (camera window stack): the ring pad meets the camera boss at the seat, not on the way; check the pad's axis
+  against the tilted counterbore (the tool may come in vertical while the part follows the line of sight), and the lip's
+  0.5 mm radial clearance.
+- **F57** (beam line): the tubes' ends sit in the cubes' ports, so the tubes have to slide in along their own axes: each
+  tube into the cube placed before it, then the next cube onto the tube's free end.
 - **F54** optics bridge: still no pair of arm poses at the start of the carry 80 mm above the posts. With the hoist taking the
-  14.3 kg, one arm (or a person) can guide it onto the posts' dowels; next: check one-arm guidance.
-- **F57**: the dichroic cube met beam tube #1, which went in before it; next: the cubes first, then the tubes.
-- **C00d** 17 of 18 and **F06** 7 of 8, as in run 7: one approach plan each not found.
+  14.3 kg, one arm (or a person) can guide it onto the posts' dowels; check one-arm guidance.
+- **C00d** 17 of 18: one screw has no approach even at 2,000 planner iterations; drive it after C01, with the chamber in the
+  trunnion.
 
 **Other open points**
-- **Picks at the table that were not planned** (listed above): mostly parts gripped sideways at their seat (the liners' wand, the
-  hinge pins, the recoater parts), whose kitted pose put the arm's flange behind its own base, and low parts whose lift found no
-  pose. The last change of round 7 lays every kitted part so that its grasp points down (`kit_table.py`; the arm turns the part
-  on its way to the station); it was not re-run.
+- **Picks at the table that were not planned:** run 9 had 25, mostly parts gripped sideways at their seat whose kitted pose put
+  the arm's flange behind its own base. The grasp-down layout (`kit_table.py`: the arm turns the part on its way to the
+  station) brought run 10 to 10, and those are the held-body mismatches and contacts listed under run 10 above.
 - **Moves back to park that the planner did not find** (`go_park`, e.g. after M04, M19, M26, M28): the run counts them as failed
   returns and starts the next step from park; the video draws them as straight joint moves labelled NOT PLANNED. Chapter 41 also
   has 19 places where a recorded motion does not start where the last one ended (a re-plan inside a step): the video cuts there.

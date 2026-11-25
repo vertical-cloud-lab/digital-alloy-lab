@@ -9,6 +9,70 @@ seal, use Shigley, heat transfer and CalculiX, and say what the machine costs us
 Nothing here has been built, quoted by a shop, or reviewed by BYU's Laser Safety Officer or EHS. Each note below has
 its own sources, assumptions and re-run instructions.
 
+## 0. Round 7 (2026-11-25): the machine built by two mobile manipulators, on video, and where the 287 shop hours go
+
+Sterling asked on 2026-11-25 to see two UR12e arms, each on a MiR250, carry out the machining steps and the assembly (screws,
+seals, tightening) from the full set of parts on a long table, with a person only where one is really needed; with accurate
+models of the shop's equipment and custom tools where they help; and with the running cost (new against used), lead times and
+time estimates on screen. He also asked what the 287.3 shop hours mean in labour and days, in house against outsourced, how
+others make chambers like this, and whether to print the chamber. The first run of the round (05:12-09:14 UTC) wrote the
+data, the route study, the equipment models, the planners and the renderers, then ran out of usage credits before the video
+was put together; its frames were lost with its runner. The second run (21:12 UTC on) re-rendered everything, re-ran the
+assembly planner with the fixes the first had listed, and composed the video.
+
+### What it found
+
+1. **The video:** [`robot-build/video.md`](robot-build/video.md), VIDEO_STATS. Every arm motion in it is a collision-checked
+   plan (FCL on meshes, RRT-Connect, byu-vcl PR 318's 1.5 mm audit); a person appears where the plan says one is needed.
+2. **The 287.3 h are not the chamber** ([`robot-build/manufacturing-route.md`](robot-build/manufacturing-route.md)). The frame
+   and floor plate are 24.9 h (8.7 %); CAM is 46 % and setups 34 %, about 3.5 h of overhead per part however small. Printing
+   the chamber (live JLC3DP quotes: $4,826 in 316L, $2,917 in aluminium) saves 11-17 h. What cuts the hours is making fewer
+   parts at BYU:
+
+   | Route (daytime only, 8 h x 5 d) | BYU hours | All-in cost | Weeks, PO to the first leak test |
+   |---|---:|---:|---:|
+   | All in house, one machinist | 291 | $28.7k | 8-12 |
+   | All outsourced, JLCCNC | 72 | $11.1k | 7-13 |
+   | All outsourced, US shops | 72 | $33.2k | 7-13 |
+   | **Hybrid (recommended)** | **134** | **$19.6k** | **7-12** |
+   | Robot shop (Edison's estimate) | 1,430-2,850 | $432-524k with $329k of equipment | 22-42 |
+
+   The module's outside honing (3-6 weeks, unquoted) sets the date in most routes; get that quote first.
+3. **Cost and lead time** ([`robot-build/lead-times.md`](robot-build/lead-times.md)): $115.6k all new at the design's spec
+   against $70.3-75.6k with the used majors, nearly all of it the laser chain ($44.4k new, $6.0-11.2k used). New, the IPG
+   laser sets the schedule (12-15 weeks to arrive) and the machine is ready to assemble at 13-16 weeks; with the majors used, at
+   10-11.5. **Two cheap safety parts in `bom.csv` would set it at about 30 weeks unless swapped:** IDEC's HS6B guard switch (27
+   weeks) and Omron's K8DT relay (out of stock until March 2027).
+4. **The robot shop** ([`robot-shop.md`](robot-shop.md) round 7): every arm motion shown is planned; payload, not reach, is the
+   limit. A person moves every load over about 10 kg (the 30 kg frame blank, its flip, the 13 kg core, the base and bridge
+   plates) with a vacuum tube lifter on a jib, because two arms on separate MiR250s sharing a load has no standard or precedent
+   (Edison r7). Person-hours to make the parts: 137 by hand against 60-78 with the robot shop, not counting the cell's
+   commissioning (Edison: 1,230-2,470 person-hours).
+5. **The assembly by the two arms, run 10** ([`assembly.md`](assembly.md) round 7): **98 of 108 checked steps pass, 124 of 129
+   screws, and 55 of 74 picks at the long table are planned** (run 9: 93, 123, 40). New in run 10: a **pin pusher** for the
+   door's hinge pins (a Ø4.5 push rod with a magnet in its tip; the pins become 17-4 PH, magnetic and harder than the 304
+   knuckles), arm B from the back for the metering base's coupling and stepper, and more planner iterations for the leg
+   screws. **Ten steps still fail**, each with its next change listed: one floor screw, one inlet-plenum screw, the rail's held
+   screws, the blade holder and its screws, the roller feedthrough and the dock parts on the metering base, the camera window
+   stack, the optics bridge and the beam line. A person does those in the video.
+6. **Where a person is needed in the assembly**, among others: the felt bore seal (M09), the two half-dovetail O-rings on the bench (F39,
+   F51), the f-theta lens on its M85 thread (F53), alignment and calibration (F57b), the process fiber (F58), the laser guard
+   (F59), tube and hose routing, the hoist for the three carries over 10 kg, and checks after the rod-gland O-rings (M12) and the
+   ball screw (F21). The shop's: CAM, first-article runs, tool setting, the lifts over 10 kg, gauging the bore and seal faces,
+   deburring the sealing faces, TIG welding and sending the bore out to be honed.
+7. **The custom tools** are in the video (chapter 38) and in [`assembly-tooling.csv`](assembly-tooling.csv), with STEP files in
+   [`analysis/out/assembly/tooling/`](analysis/out/assembly/tooling/): the spigot mandrel and pusher, ring loader, rod bullet,
+   roller, pin caps, nozzle, liner wand, ring pad, pin pusher, bit extensions, the trunnion, Fixtures P and B and the nests.
+
+### Still not done
+- **Run 11:** the next change for each of run 10's ten failing steps is listed in [`assembly.md`](assembly.md); none is run.
+- **The table picks:** the 10 unplanned picks are mismatches between the part on the table and the part the arm holds (M13
+  carries its station-fitted PEEK bullet, C00a the funnel fitted on the bench) or contacts with a riser, a tray rim and a line;
+  the fix in `commit.place` is described there and not made.
+- **The shop:** MiR drives between stations are not animated; the floor plate's turnover between its setups, unloading the
+  lathe and the F-S3 bolt-up are not planned (robot-shop.md).
+- **Not built, quoted by a shop, wired, or reviewed** by BYU's LSO, EHS or an electrician.
+
 ## 0. Round 6 (2026-11-25): everything round 5 left undone
 
 Sterling asked on 2026-11-25 for everything round 5 listed as not done or skipped, and then for the build video to go back on

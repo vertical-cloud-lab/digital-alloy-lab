@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-25T22:37Z",
+ "generated_utc": "2026-11-25T22:43Z",
  "what": "Cost, lead-time and time numbers for the robot-built desktop LPBF video (issue #260, PR #266, round 7)",
  "how_to_show": "Tour the categories in the order of 'categories'. For each, show hud.new (at spec, all new) against hud.used (the used picks where a sensible listing exists, new elsewhere) and the running totals hud.run_new / hud.run_used; hud.range_new / hud.range_used are the BOM's full low-high ranges. Call out the category's 'items' in order with their hud.new, hud.used, hud.lead_new and hud.lead_used. 'offtable' and 'services' are not on the table: show them as text rows at the end of the tour.",
  "definitions": {
@@ -11175,7 +11175,7 @@
    "person_h": 9.16,
    "failed_or_partial": 12,
    "person_or_shop_steps": 19,
-   "basis": "estimates (results.json's seconds are compute time)"
+   "basis": "the recorded run's real time (assembly.json): motions at cobot speeds, tool changes, docking and persons' minutes estimated"
   },
   "po_rule": "BYU: purchases of $3,500 or more from one vendor need a purchase order: 'Allow ten days to two weeks PLUS shipping time' (capstone.byu.edu/purchase-orders, read 2026-11-25); under $3,500 a PCard"
  }
