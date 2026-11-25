@@ -178,6 +178,11 @@ def hours_tables(rows):
     split = dict(one_off_cam=tot["cam"], per_batch_setups=tot["setup"], per_machine_run_deburr=round(tot["run"] + tot["deburr"], 1))
     split.update({k + "_pct": round(100 * v / tot["total"], 1) for k, v in list(split.items())})
     second_machine_later = round(tot["setup"] + tot["run"] + tot["deburr"], 1)
+    # sensitivity: robot-shop.md's "by hand" allowances (35 h of CAM for 48 parts, 20 min a setup), same cutting and deburr
+    n_setups = sum(r["setups"] for r in rows)
+    low = dict(cam=round(35.0 * len(rows) / 48, 1), setup=round(n_setups * 20 / 60, 1), run=tot["run"], deburr=tot["deburr"],
+               setups=n_setups)
+    low["total"] = round(low["cam"] + low["setup"] + low["run"] + low["deburr"], 1)
     two_together = round(tot["total"] + tot["run"] + tot["deburr"], 1)
     return dict(totals=tot, groups=groups, top10=[dict(part=r["part"], group=SHORT[r["group"]], total=r["total"], cam=r["cam"],
                                                        setup=r["setup"], run=r["run"], deburr=r["deburr"]) for r in top],
@@ -192,7 +197,7 @@ def hours_tables(rows):
                 small_parts=dict(n=len(small), h=round(sum(r["total"] for r in small), 1),
                                  cutting_h=round(sum(r["run"] for r in small), 2)),
                 fixed_overhead_h=round(fixed, 1), split=split,
-                second_machine_later_h=second_machine_later, two_machines_together_h=two_together)
+                second_machine_later_h=second_machine_later, two_machines_together_h=two_together, low_allowances=low)
 
 
 def reconcile():
@@ -693,6 +698,7 @@ def main():
                    deburr_inspect=H["totals"]["deburr"], parts=len(rows), chamber=H["chamber"], split=H["split"],
                    fixed_overhead_h=H["fixed_overhead_h"], small_parts=H["small_parts"],
                    second_machine_later_h=H["second_machine_later_h"], two_machines_together_h=H["two_machines_together_h"],
+                   low_allowances=H["low_allowances"],
                    top10=H["top10"], groups=[dict(group=SHORT[g["group"]], h=g["total"], pct=g["share_pct"]) for g in H["groups"]]),
         routes={k: dict(label=v["label"], labour_h=v["labour_h"], labour_usd=v["labour_usd"], outside_usd=v["outside_usd"],
                         materials_usd=v.get("materials_usd"), equipment_usd=v.get("equipment_usd"),
@@ -717,7 +723,7 @@ def main():
           f"deburr {T['deburr']}")
     print("chamber:", H["chamber"])
     print("split:", H["split"], "second machine later", H["second_machine_later_h"], "two together", H["two_machines_together_h"])
-    print("fixed overhead", H["fixed_overhead_h"], "small parts", H["small_parts"])
+    print("fixed overhead", H["fixed_overhead_h"], "small parts", H["small_parts"], "low allowances", H["low_allowances"])
     for g in H["groups"]:
         print(f"  {SHORT[g['group']]:18s} {g['parts']:3d} parts {g['total']:6.1f} h {g['share_pct']:5.1f} %  CAM {g['cam']:5.1f} "
               f"setup {g['setup']:5.1f} run {g['run']:5.1f} deburr {g['deburr']:4.1f}")

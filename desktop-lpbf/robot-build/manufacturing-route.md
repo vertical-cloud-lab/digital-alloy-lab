@@ -13,6 +13,8 @@ ordered, built or quoted by a person; the live quotes are instant web prices rea
   - 46 % of the total is CAM programming (132 h) and 34 % is setups (99 h). Cutting is 33 h (12 %).
   - Each of the 57 parts carries a floor of about 3.5 h of CAM, setups and inspection, however small it is. 25 parts take
     4 h or less each: together 90 h, with 2.7 h of cutting.
+  - Those CAM and setup allowances are estimates. With the smaller ones robot-shop.md used, the same parts come to 121 h.
+    Nobody has timed a part yet.
 - **Printing the chamber would not change that.** JLC3DP priced the frame and floor as one printed body at $4,826.37 in
   316L and $2,916.58 in its SLM aluminium, with a 3-day build (live, before review).
   - Finishing it here would still take 10-14 h, against 24.9 h to machine it. That saves 11-17 h, or 4-6 % of the total.
@@ -144,7 +146,9 @@ The top 10 are 86 h (30 %). The other 47 parts average 4.3 h each.
 | Edison r7 robot-build review, §5 (estimate) | 1 machine | 100-180 h machining; 360-740 h for the whole manual build | an outside estimate of the same job |
 | Edison r7 chamber-route review, §5 (estimate) | 57 | 120-180 h achievable | with CAM templates (35-80 % less programming in the cited thesis), fixture plates and selective outsourcing |
 
-- **The CAM and setup allowances are the uncertain inputs.** They are what separates 137 h from 287 h.
+- **The CAM and setup allowances are the uncertain inputs.** They are what separates 137 h from 287 h. With
+  robot-shop.md's allowances (35 h of CAM per 48 parts, 20 min a setup), the same 57 parts come to 121 h: CAM 41.6,
+  69 setups 23.0, cutting 33.2, deburr and inspection 23.2. Every route's BYU hours scale the same way.
 - **Nobody has timed them.** A BYU machinist's estimate for three representative parts (the frame, a bracket and a lathe
   part) would pin the total down better than any further modelling.
 - **Out of scope here:** the 18 sheet parts (41.5 h if made here; outsourcing.md buys them cut and bent and welds five

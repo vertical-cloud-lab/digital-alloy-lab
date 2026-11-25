@@ -34,6 +34,14 @@
   },
   "second_machine_later_h": 155.0,
   "two_machines_together_h": 343.7,
+  "low_allowances": {
+   "cam": 41.6,
+   "setup": 23.0,
+   "run": 33.2,
+   "deburr": 23.2,
+   "setups": 69,
+   "total": 121.0
+  },
   "top10": [
    {
     "part": "Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor ",
