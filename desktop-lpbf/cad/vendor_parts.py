@@ -644,7 +644,7 @@ def ipg_ylr500_u3(bodies=False):
     carrying one column of operators at x -177.5 (green START Ø29 at z 150.7, red mushroom Ø36 at z 119, key switch Ø29 at
     z 84.2), a light-grey portrait window next to it (x -152.4..-96, z 74..168) and the IPG logo; a dark perforated fan field
     over the right ~45 % whose left edge sweeps down in a curve to a band along the bottom under the operators (drawn as a
-    1 mm recess; the perforation is a colour); black vertical bar handles on both ears. Round 5 drew IPG's 3U style (a
+    1 mm recess; the perforation is a colour); black vertical bar handles on both ears. Round 5 drew the shorter unit's style (a
     slatted grille beside a dark control strip and a touch display), from a family card that does not show the 4U unit.
     bodies=True returns the named bodies (for per-body finishes in cad/oem/render_oem.py); their union is the part."""
     H, W = 176.5, 482.3

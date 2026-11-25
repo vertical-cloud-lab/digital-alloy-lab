@@ -523,6 +523,7 @@ def manifest():
         rows.append(dict(id=pid, part=key, vendor=vendor, url=url, sha256=hashlib.sha256(f.read_bytes()).hexdigest(),
                          px=f"{im.shape[1]}x{im.shape[0]}", fetched_utc=datetime.datetime.fromtimestamp(f.stat().st_mtime, datetime.UTC).strftime("%Y-%m-%dT%H:%MZ"),
                          note=note))
+    rows += [r for k, r in old.items() if k not in PHOTOS]     # rows added by hand (the product videos of video_recon.py)
     with open(HERE / "photo-manifest.csv", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(rows[0]))
         w.writeheader()
