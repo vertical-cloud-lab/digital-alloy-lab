@@ -1,0 +1,20 @@
+{
+ "F10a": "the stock fingers met the module handle in the door opening. Round 7: the liner wand (two suction cups on a 300 mm bar)",
+ "F10b": "the stock fingers met the frame in the door opening. Round 7: the liner wand (no room for a tab: the carriage passes 2.4 mm in front)",
+ "F10d": "the stock fingers met the module handle in the door opening. Round 7: the liner wand",
+ "F10e": "the stock fingers met the frame in the door opening. Round 7: the liner wand",
+ "F14": "arm A had no pose behind the back wall, and its holding wrist met arm B's driver. Round 7: the plenum hangs on its two dowels; arm B places it and drives",
+ "F16": "arm B's driver met arm A's holding wrist on all four screws. Round 7: the adapter hangs on its two dowels; no holding arm",
+ "F23": "arm B's driver met arm A's holding wrist on all four screws. Round 7: the cap hangs on its two dowels; no holding arm",
+ "F18": "arm B's upper arm met the base plate on a held-part screw. Round 7: arm B holds the rail from above, arm A drives from inside",
+ "F25": "the motor bracket, brought in 260 mm along -x, started inside the trunnion's stands. Round 7: the bracket is lowered from above (F25b)",
+ "F26": "the blade holder met the frame under the door opening (its bottom is 5 mm below the sill). Round 7: in 9 mm high, then down and back",
+ "F27": "the driver met the module's spigot and the arm met Fixture B. Round 7: a 100 mm bit extension",
+ "F45": "the 300 mm diagonal path swept the threaded nose through the base; no IK 300 mm up. Round 7: each part along its own axis",
+ "F48b": "the window stack moved straight up, off the tilted line of sight; the fingertips met the boss. Round 7: along the line of sight, by the ring pad",
+ "F52": "both pins slid together and arm A's upper arm met its cabinet. Round 7: each pin from its own side, pushed home on its end",
+ "F03": "arm A could not reach the back posts' screws under the plate. Round 7: the far arm holds each post, the near arm drives",
+ "F54": "no pair of arm poses 260 mm above the posts. Round 7: lowered the last 80 mm, a hoist takes the 14.3 kg",
+ "F56b": "no IK at the start, 340 mm up. Round 7: from 60 mm above",
+ "F57": "the three beam tubes as one part 107 mm across; no IK 340 mm up. Round 7: one piece at a time from 60 mm above"
+}

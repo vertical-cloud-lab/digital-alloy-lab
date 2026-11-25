@@ -105,9 +105,9 @@ class Replay:
         # the pallets' and bins' contents from kit_table's mesh cache (building it here would load the whole model: run
         # `python kit_table.py --meshes` first; without it the pallets and bins are drawn empty)
         if os.environ.get("ASM_KIT_ITEMS", "1") == "1" and list((KT.CACHE).glob(f"kit-meshes-finished-{KT._hash()}.pkl")):
-            sup = {x["key"]: x["support"] for x in KT.slots()}
+            sup = {x["key"]: ("coil" if x.get("coil") else x["support"]) for x in KT.slots()}
             for it in KT.item_meshes():
-                if sup.get(it["key"]) in ("pallet", "bin"):
+                if sup.get(it["key"]) in ("pallet", "bin", "coil"):
                     sc.add(f"kti/{it['key']}/{it['name'][:20]}", it["mesh"], it["color"], group="static", specular=0.25)
         else:
             print("kit item meshes not cached: pallets and bins drawn empty", flush=True)
@@ -119,9 +119,11 @@ class Replay:
                 import cell as C0
                 V, F = C0.decimate(np.asarray(V, float), np.asarray(F, np.int64), MAX_TRI)
             sc.add(f"o{i}", poly(V, F), o["color"], group=f"o{i}", specular=0.3, shown=False)
+        coil_parts = {i for x in KT.slots() if x.get("coil") for i in x["part_indices"]}
         for i, T in scn["table_T"].items():
             self.T[i] = np.asarray(T, float)
-            sc.alpha[f"o{i}"] = 1.0
+            # hoses and lines lie on the table coiled (kit_table draws the coil); the object is their fitted shape
+            sc.alpha[f"o{i}"] = 0.0 if scn["objs"].get(i, {}).get("part") in coil_parts else 1.0
             sc.gmat[f"o{i}"] = self.T[i]
         # ---- arms and MiRs
         self.arm = {"A": K.ArmT("A", K.DOCKS["T"], "front"), "B": K.ArmT("B", K.DOCKS["T"], "back")}
@@ -265,18 +267,31 @@ class Replay:
     def aim(self, focus, shot="mid", side="A", az=None, el=None, snap=False):
         # down the bench's axis from +x, a little to the working arm's side and from above: between the two lanes, so neither
         # MiR nor parked arm stands between the camera and the work
-        side_az = {"A": -28.0, "B": 28.0, "C": 0.0}
+        side_az = {"A": 14.0, "B": -14.0, "C": 0.0}       # just past the bench axis, on the side away from the working arm
         if el is None:
             el = {"wide": 24.0, "mid": 38.0, "close": 46.0}.get(shot, 36.0)
-        a = math.radians(side_az.get(side, -60.0) if az is None else az)
+        fx = float(np.asarray(focus)[0])
+        if az is None:
+            az = side_az.get(side, 0.0)
+            if fx > 2400.0:
+                # at the parts table: from across the table, above it, so the arm reaching over from its lane faces the camera
+                az = {"A": 62.0, "B": -62.0}.get(side, 0.0)
+                el = max(el, 44.0)
+            elif fx < 600.0:
+                # the bench, Fixture P and the trunnion: from the -x end (from +x the trunnion's stands stand in the way)
+                az = 180.0 - az
+                if fx > 0.0:
+                    el = max(el, 50.0)        # the trunnion, over Fixture P
+        a = math.radians(az)
         R = SHOT.get(shot, shot) if isinstance(shot, str) else float(shot)
         e = math.radians(el)
         focus = np.asarray(focus, float)
         pos = focus + R * np.array([math.cos(a) * math.cos(e), math.sin(a) * math.cos(e), math.sin(e)])
-        if self.cam_pos is None or snap:
-            self.cam_pos, self.cam_foc = pos, focus
+        if self.cam_pos is None or snap or np.linalg.norm(focus - self.cam_foc) > 900.0 or \
+                np.linalg.norm(pos - self.cam_pos) > 2500.0:
+            self.cam_pos, self.cam_foc = pos, focus           # a cut, not a pan across the cell
         else:
-            k = 0.18
+            k = 0.3
             self.cam_pos = self.cam_pos * (1 - k) + pos * k
             self.cam_foc = self.cam_foc * (1 - k) + focus * k
 
@@ -363,7 +378,10 @@ def merge_fails(ev, ev_fail, steps):
     return out
 
 
-def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=()):
+def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_notes=None):
+    """fail_notes: {step id: what failed in run 7 (round 6)}: shown (status fail) before the redesigned step is played."""
+    fail_notes = dict(fail_notes or {})
+    fail_steps = tuple(fail_steps) + tuple(k for k in fail_notes if k not in fail_steps)
     rp = Replay(chapter)
     name, title = CHAP[chapter]
     ev = rp.ev
@@ -453,6 +471,13 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=()):
                 label = "[redesigned, round 7] " + label
             cur = dict(id=e["id"], label=label, status=step_status(e["id"], failed), actor=e.get("actor") or "A", do=e.get("do"),
                        t=0.0, failed=failed)
+            if not failed and e["id"] in fail_notes:
+                n0 = cur["actor"] if cur["actor"] in ("A", "B") else "A"
+                rp.aim(rp.tcp(n0), "mid", n0)
+                for _ in range(int(FPS * 2.0)):
+                    stop = emit(e["label"], "round 6 (run 7) FAILED here: " + fail_notes[e["id"]][:150], [f"robot {n0}"], status="fail")
+                    if stop:
+                        break
             row = (rows.get(e["id"]) or {}).get("row") or {}
             if not failed and row.get("fetch") == "FAIL":
                 n0 = cur["actor"] if cur["actor"] in ("A", "B") else "A"
@@ -631,4 +656,5 @@ if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     opt = {a.split("=")[0][2:]: (a.split("=", 1)[1] if "=" in a else "1") for a in sys.argv[1:] if a.startswith("--")}
     run(args[0] if args else "module", max_frames=int(opt["max"]) if "max" in opt else None, scale=float(opt.get("scale", 1.0)),
-        fail_pkl=opt.get("fails"), fail_steps=tuple(x for x in opt.get("fail_steps", "").split(",") if x))
+        fail_pkl=opt.get("fails"), fail_steps=tuple(x for x in opt.get("fail_steps", "").split(",") if x),
+        fail_notes=json.loads(pathlib.Path(opt["fail_notes"]).read_text()) if "fail_notes" in opt else None)
