@@ -365,9 +365,15 @@ def person_lift(w, scn, vf4, name, load_name, load_spec, P_from, P_to, kg, capti
     g_from, g_to = grip_point(P_from), grip_point(P_to)
     lift_z = max(g_from[2], g_to[2]) + 130.0
     door_y = -260.0                                         # in front of the doors, while it swings round
+    inside_from, inside_to = g_from[1] > 0.0, g_to[1] > 0.0
+    if inside_from and inside_to:                           # from fixture to fixture: stay inside, lifted, then across
+        mid = np.array([(g_from[0] + g_to[0]) / 2, min(g_from[1], g_to[1]) - 60.0, lift_z])
+    elif inside_from:                                       # out of the machine: straight out through the doors first
+        mid = np.array([g_from[0], door_y, lift_z])
+    else:                                                   # into the machine: line up in front of the doors, then in
+        mid = np.array([g_to[0], door_y, lift_z])
     keys = [(0.00, g_from + [0, 0, 260.0]), (0.12, g_from), (0.20, g_from), (0.34, np.r_[g_from[:2], lift_z]),
-            (0.58, np.array([g_to[0] - 250.0, door_y, lift_z])), (0.80, np.r_[g_to[:2], lift_z]), (0.90, g_to),
-            (0.95, g_to), (1.00, g_to + [0, 0, 220.0])]
+            (0.58, mid), (0.80, np.r_[g_to[:2], lift_z]), (0.90, g_to), (0.95, g_to), (1.00, g_to + [0, 0, 220.0])]
     hold_s = (0.20, 0.90)
     n = n_frames or int(24 * FPS)
     poses = []
@@ -418,7 +424,7 @@ def person_lift(w, scn, vf4, name, load_name, load_spec, P_from, P_to, kg, capti
         lean = float(np.clip((reach - 470.0) / 10.0, 0.0, 32.0))
         p.set(x=pw[0], y=pw[1], hd=0.0, amp=0.0, hands={"l": tuple(hp + [-95, 0, 0]), "r": tuple(hp + [95, 0, 0])},
               look=tuple(hp + [0, 0, -250]), lean=lean)
-        if W_static is not None and i % 3 == 0:            # the posed person against the machine, the lifter and the load
+        if W_static is not None and i % 12 == 0:           # the posed person against the machine, the lifter and the load
             scn.sc.apply()
             body = [C.Body(f"person/{k}", P_, F_, kind="arm") for k, (P_, F_) in p.posed().items()]
             lifter = []
@@ -693,7 +699,7 @@ def people_stride():
     return SS.people.Person.STRIDE
 
 
-CAM_VF4_ARM = ((1850.0, -1900.0, 2050.0), (-60.0, 250.0, 1050.0))     # right front, ~2 m up, looking down ~22 deg
+CAM_VF4_ARM = ((900.0, -2600.0, 2400.0), (0.0, 300.0, 1050.0))        # front, a little right, ~2.4 m up: the MiR in the foreground, the jib out of the shot
 CAM_VF4_IN = ((560.0, 160.0, 1650.0), (-60.0, 720.0, 1020.0))         # inside the enclosure, for the cutting
 
 
@@ -834,13 +840,29 @@ def chapter_31():
     # the rest of the parts: the machine clock runs through setup_plan's other setups by motion class
     tot = PLAN["totals"]
     n = int(10 * FPS)
-    hours = 287.3
+    # the other 55 parts' hours (shop_summary.json: every part's machine / robot / person hours by motion class, less
+    # the chamber frame and floor plate that chapter 30 shows); the time-lapse spreads them over these frames
+    rest = dict(machine_h=0.0, robot_h=0.0, person_h=0.0, cam_h=0.0)
+    try:
+        sm = json.loads((OUT / "shop_summary.json").read_text())
+        for r in sm["parts"]:
+            if r["part"].startswith(("Process chamber body", "Chamber floor plate")):
+                continue
+            rest["machine_h"] += r["machine_h"]
+            rest["robot_h"] += r["robot_h"]
+            rest["person_h"] += r["person_h"] - (r.get("cam_h") or 0.0)
+            rest["cam_h"] += r.get("cam_h") or 0.0
+    except Exception:  # noqa: BLE001
+        pass
+    span_s = max(rest["machine_h"], 0.1) * 3600.0
     for i in range(n):
         w.frame(scn, orbit([(8000.0, -1500.0, 7800.0), (8200.0, 6000.0, 600.0), (0, 0, 1)], i / n, 10.0),
-                "The other 54 parts, by motion class: each setup reuses its class's planned motion",
-                sub=f"setup_plan.json: {tot.get('setups_with_4th_axis', 67)} setups with the 4th axis; vise, lathe, plate, "
-                    "rotary and saw classes", who=["machine", "robot A", "robot B"], step="all parts", status="pass",
-                proc_s=hours * 3600.0 / n * 0.0 + 1.0 / FPS)
+                "The other 55 parts, by motion class: each setup reuses its class's planned motion",
+                sub=f"{tot.get('setups_with_4th_axis', 67)} setups with the 4th axis (setup_plan.json); time-lapse: "
+                    f"{rest['machine_h']:.0f} h of cutting, {rest['robot_h']:.1f} h of arm time, {rest['person_h']:.0f} "
+                    f"person-hours besides {rest['cam_h']:.0f} h of CAM (shop_summary.json, estimates)",
+                who=["machine", "robot A", "robot B"], step="all parts", status="pass", proc_s=span_s / n,
+                add={k: v / n for k, v in rest.items()})
     return w.close()
 
 
