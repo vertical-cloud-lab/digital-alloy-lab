@@ -301,11 +301,11 @@ def steps(module="M50"):
     # wall, 21 mm back, onto the wall). Run 5's straight path down from above was blocked by the frame. The vacuum gripper holds each
     # piece on its inner face.
     for k, (sid, name, path) in enumerate((
-            ("F10a", "back lower left", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (26, -40, 0), (26, -560, 0)]),
-            ("F10b", "back upper left", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (50, -40, 0), (50, -560, 0)]),
+            ("F10a", "back lower left", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (26, -40, 0), (26, -250, 0)]),
+            ("F10b", "back upper left", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (50, -40, 0), (50, -250, 0)]),
             ("F10c", "left", [(0, 0, 0), (4, 0, 0), (4, -21, 0), (35, -21, 0), (35, -21, -6), (35, -541, -6)]),
-            ("F10d", "back lower right", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -560, 0)]),
-            ("F10e", "back upper right", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -560, 0)]),
+            ("F10d", "back lower right", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -250, 0)]),
+            ("F10e", "back upper right", [(0, 0, 0), (0, -3, 0), (0, -40, 0), (-25, -40, 0), (-25, -250, 0)]),
             ("F10f", "right", [(0, 0, 0), (-4, 0, 0), (-4, -21, 0), (-35, -21, 0), (-35, -21, -6), (-35, -541, -6)]))):
         keys = [f"Lift-out wall liner, {name}"] + ([f"Liner pull tab, {name}"] if name in ("left", "right") else [])
         # the 2F-85, not the vacuum gripper: run 6's first pass took the VGC10 (100 x 100 mm) through the door opening, and it met the
@@ -364,7 +364,7 @@ def steps(module="M50"):
     a(P("F25c", "Recoater servo onto the bracket, its shaft into the coupling along +x", ["Recoater servo"], "machine", "upright",
         [(0, 0, 0), (-40, 0, 0), (-40, 0, 120)], note="its screws are not drawn"))
     a(P("F26", "Blade holder and blade, in through the door opening and up under the recoater arm", ["Blade holder", "HSS recoater blade"],
-        "machine", "upright", [(0, 0, 0), (0, -12, 0), (0, -12, 9), (0, -280, 9)],
+        "machine", "upright", [(0, 0, 0), (0, -12, 0), (0, -12, 9), (0, -200, 9)],
         grasp=dict(point=(-106.0, -45.0, 18.0), z=(0.0, 1.0, 0.0), x=(1.0, 0.0, 0.0), width=18.0),
         note="round 7: in 9 mm high over the door opening's sill (run 7's straight path met the frame below the opening), then down "
              "and 12 mm back onto the arm's dowels"))

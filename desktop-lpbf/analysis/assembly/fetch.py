@@ -36,19 +36,20 @@ PICK_BACK, LIFT = 70.0, 90.0
 
 
 def presenter_box(x_base, side):
-    """World box of the presenter on the MiR of an arm whose base is at x_base."""
+    """World box of the presenter on the MiR of an arm whose base is at x_base (as cell2.mir_bodies draws it: on the
+    cabinet's far face beside the tool stand, its top 20 mm under the deck)."""
     ya = -K.ARM_Y if side == "front" else K.ARM_Y
     s = -1.0 if side == "front" else 1.0
     yc = ya + s * K.ARM_OFF
-    z0 = K.MIR["H"] + K.MIR["cab_h"]
-    p = PRESENTER
-    x0 = x_base + p["dx"] - p["L"] / 2
-    return (x0, x0 + p["L"], yc - p["W"] / 2, yc + p["W"] / 2, z0, z0 + p["H"])
+    y_face = yc + s * (K.MIR["W"] / 2 - 30.0)
+    z1 = K.MIR["H"] + K.MIR["cab_h"] - 20.0
+    y0, y1 = sorted((y_face, y_face + s * 130.0))
+    return (x_base + 190.0, x_base + 440.0, y0, y1, z1 - 150.0, z1)
 
 
 def presenter_pick(x_base, side):
     b = presenter_box(x_base, side)
-    # the pick-up nest at the rail's end nearest the arm, screw head up; the bit comes straight down
+    # the pick-up nest at the rail's end nearest the arm base, screw head up; the bit comes straight down
     return np.array([b[0] + 30.0, 0.5 * (b[2] + b[3]), b[5]])
 
 

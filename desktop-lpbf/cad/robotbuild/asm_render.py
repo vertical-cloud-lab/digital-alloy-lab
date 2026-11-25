@@ -203,12 +203,10 @@ class Replay:
         h = s["held"]
         if h is not None:
             T_tcp = a.tcp(s["q"], s["close"])
+            Tsp = T_tcp @ rot_axis((0, 0, 1), h["spin_deg"]) if h.get("spin_deg") else T_tcp     # a screw turning with the bit
             for i in h["objs"]:
                 if f"o{i}" in sc.actors:
-                    M = T_tcp @ h["off"] @ h.get("pose", {}).get(i, np.eye(4))
-                    if h.get("spin") is not None:
-                        M = M @ h["spin"].get(i, np.eye(4))
-                    sc.gmat[f"o{i}"] = M
+                    sc.gmat[f"o{i}"] = Tsp @ h["off"]
                     sc.alpha[f"o{i}"] = 1.0
 
     def put(self, objs, T):
@@ -480,10 +478,9 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=()):
                 else:
                     q = Q[0]
                 if k == "screw" and rp.st[n]["held"] is not None:
-                    ang = 360.0 * ((f + 1) / nf) * (e["L"] / max(e["pitch"], 0.1))
-                    i0 = rp.st[n]["held"]["objs"][0]
-                    # spin the screw about its own axis (the TCP's z), as the bit turns it
-                    rp.st[n]["held"]["spin"] = None
+                    # the screw turns with the bit as it runs down: one turn per pitch (drawn at most 2 turns a frame)
+                    turns = e["L"] / max(e["pitch"], 0.1)
+                    rp.st[n]["held"]["spin_deg"] = (360.0 * min(turns * (f + 1) / nf, 2.0 * (f + 1))) % 360.0
                 rp.set_arm(n, q=q, close=e.get("close"))
                 if k == "screw":
                     shot = "close"
