@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-25T06:27Z",
+ "generated_utc": "2026-11-25T22:37Z",
  "what": "Cost, lead-time and time numbers for the robot-built desktop LPBF video (issue #260, PR #266, round 7)",
  "how_to_show": "Tour the categories in the order of 'categories'. For each, show hud.new (at spec, all new) against hud.used (the used picks where a sensible listing exists, new elsewhere) and the running totals hud.run_new / hud.run_used; hud.range_new / hud.range_used are the BOM's full low-high ranges. Call out the category's 'items' in order with their hud.new, hud.used, hud.lead_new and hud.lead_used. 'offtable' and 'services' are not on the table: show them as text rows at the end of the tour.",
  "definitions": {
@@ -8191,11 +8191,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 51.0,
+     "robot_s": 56.1,
      "person_min": 0.0,
-     "checker_compute_s": 1.5,
+     "checker_compute_s": 3.6,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M02",
@@ -8208,7 +8209,8 @@
      "person_min": 3,
      "checker_compute_s": 0.0,
      "force": "Installed right after tapping with a powered insert tool and the tang broken off, as for every insert in the chamber body (render_build chapter 2); a cobot would need a dedicated inserter and tang-break station for 3 inserts.",
-     "note": "three M3 helical inserts, in the shop after tapping"
+     "note": "three M3 helical inserts, in the shop after tapping",
+     "recorded": true
     },
     {
      "step": "M03",
@@ -8217,11 +8219,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 39.0,
+     "robot_s": 101.8,
      "person_min": 0.0,
-     "checker_compute_s": 2.6,
+     "checker_compute_s": 7.9,
      "force": "released 24 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M04",
@@ -8230,11 +8233,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 40.0,
+     "robot_s": 19.2,
      "person_min": 0.0,
-     "checker_compute_s": 2.5,
+     "checker_compute_s": 7.3,
      "force": "released 36 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M05",
@@ -8243,11 +8247,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 52.0,
+     "robot_s": 248.6,
      "person_min": 0.0,
-     "checker_compute_s": 11.2,
+     "checker_compute_s": 12.7,
      "force": "released 9 mm above its seat and let drop over its guide; released 6 mm above its seat and let drop over its guide",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M06",
@@ -8256,11 +8261,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 53.0,
+     "robot_s": 69.2,
      "person_min": 0.0,
-     "checker_compute_s": 1.7,
+     "checker_compute_s": 5.6,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M07",
@@ -8269,11 +8275,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 49.0,
+     "robot_s": 88.3,
      "person_min": 0.0,
-     "checker_compute_s": 0.9,
+     "checker_compute_s": 54.3,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M08",
@@ -8282,11 +8289,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 80.0,
+     "robot_s": 95.4,
      "person_min": 0.0,
-     "checker_compute_s": 11.3,
+     "checker_compute_s": 14.8,
      "force": "0.6 N m | 3/3 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M09",
@@ -8296,10 +8304,11 @@
      "actor": "person",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 10,
+     "person_min": 3.0,
      "checker_compute_s": 0.0,
      "force": "A felt strip and a split PTFE scraper are wrapped, not pushed; no published robot method for felt.",
-     "note": "felt strip and split PTFE scraper wrapped into the head's groove"
+     "note": "felt strip and split PTFE scraper wrapped into the head's groove",
+     "recorded": true
     },
     {
      "step": "M10",
@@ -8308,11 +8317,12 @@
      "do": "seal",
      "actor": "B",
      "status": "pass",
-     "robot_s": 105.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
      "checker_compute_s": 0.1,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M11",
@@ -8321,11 +8331,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 53.0,
+     "robot_s": 35.0,
      "person_min": 0.0,
-     "checker_compute_s": 1.1,
+     "checker_compute_s": 1.4,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M12",
@@ -8334,11 +8345,12 @@
      "do": "seal",
      "actor": "A",
      "status": "pass",
-     "robot_s": 105.0,
-     "person_min": 0.0,
-     "checker_compute_s": 1.1,
+     "robot_s": 20.2,
+     "person_min": 0.5,
+     "checker_compute_s": 1.8,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M13",
@@ -8347,11 +8359,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 60.0,
+     "robot_s": 20.9,
      "person_min": 0.0,
-     "checker_compute_s": 2.7,
+     "checker_compute_s": 10.0,
      "force": "needs 35 N (peak 104); arm can push 156 N",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M14",
@@ -8360,11 +8373,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 45.0,
+     "robot_s": 28.3,
      "person_min": 0.0,
-     "checker_compute_s": 2.4,
+     "checker_compute_s": 2.3,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M15",
@@ -8373,11 +8387,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 65.0,
+     "robot_s": 56.5,
      "person_min": 0.0,
-     "checker_compute_s": 3.5,
+     "checker_compute_s": 12.4,
      "force": "1.1 N m | 2/2 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M16",
@@ -8386,11 +8401,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 57.0,
+     "robot_s": 68.2,
      "person_min": 0.0,
-     "checker_compute_s": 2.4,
+     "checker_compute_s": 6.2,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M17",
@@ -8399,11 +8415,12 @@
      "do": "seal",
      "actor": "A",
      "status": "pass",
-     "robot_s": 90.0,
+     "robot_s": 49.4,
      "person_min": 0.0,
-     "checker_compute_s": 15.6,
+     "checker_compute_s": 18.3,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M18",
@@ -8412,11 +8429,12 @@
      "do": "flip",
      "actor": "A",
      "status": "pass",
-     "robot_s": 30.0,
+     "robot_s": 36.2,
      "person_min": 0.0,
-     "checker_compute_s": 46.8,
+     "checker_compute_s": 65.0,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M19",
@@ -8425,11 +8443,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 56.0,
+     "robot_s": 29.0,
      "person_min": 0.0,
-     "checker_compute_s": 7.2,
+     "checker_compute_s": 9.0,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M20",
@@ -8438,11 +8457,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 125.0,
+     "robot_s": 155.0,
      "person_min": 0.0,
-     "checker_compute_s": 2.2,
+     "checker_compute_s": 9.8,
      "force": "2.2 N m | 6/6 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M21",
@@ -8451,11 +8471,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 50.5,
+     "robot_s": 68.5,
      "person_min": 0.0,
-     "checker_compute_s": 1.3,
+     "checker_compute_s": 6.7,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M22",
@@ -8464,11 +8485,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 65.0,
+     "robot_s": 53.1,
      "person_min": 0.0,
-     "checker_compute_s": 13.6,
+     "checker_compute_s": 47.0,
      "force": "2.2 N m | 2/2 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M23",
@@ -8477,11 +8499,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 51.0,
+     "robot_s": 69.9,
      "person_min": 0.0,
-     "checker_compute_s": 2.5,
+     "checker_compute_s": 5.6,
      "force": "released 24 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M24",
@@ -8490,11 +8513,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 80.0,
+     "robot_s": 78.0,
      "person_min": 0.0,
-     "checker_compute_s": 1.9,
+     "checker_compute_s": 3.7,
      "force": "1.1 N m | 3/3 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M25",
@@ -8507,7 +8531,8 @@
      "person_min": 120,
      "checker_compute_s": 0.0,
      "force": "TIG welds at the block's face and at the rod, on the bare rod before chapter 3, away from every O-ring; the inner joints to the feedthrough pins are made before the sleeves are welded. Ask Solid Sealing to confirm the blind-bore weld and the weld access (elect",
-     "note": "seven weld-in feedthroughs TIG-welded into the rod end (welder)"
+     "note": "seven weld-in feedthroughs TIG-welded into the rod end (welder)",
+     "recorded": true
     },
     {
      "step": "M26",
@@ -8516,11 +8541,12 @@
      "do": "flip",
      "actor": "A",
      "status": "pass",
-     "robot_s": 30.0,
+     "robot_s": 39.4,
      "person_min": 0.0,
-     "checker_compute_s": 4.6,
+     "checker_compute_s": 4.3,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M27",
@@ -8529,11 +8555,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 51.0,
+     "robot_s": 62.0,
      "person_min": 0.0,
-     "checker_compute_s": 2.5,
+     "checker_compute_s": 5.5,
      "force": "needs 10 N; arm can push 164 N | released 18 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M28",
@@ -8542,11 +8569,12 @@
      "do": "flip",
      "actor": "A",
      "status": "pass",
-     "robot_s": 30.0,
+     "robot_s": 38.8,
      "person_min": 0.0,
-     "checker_compute_s": 48.9,
+     "checker_compute_s": 53.7,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M29",
@@ -8555,11 +8583,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 36.0,
+     "robot_s": 59.7,
      "person_min": 0.0,
-     "checker_compute_s": 12.9,
+     "checker_compute_s": 29.8,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "M30",
@@ -8568,11 +8597,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 36.0,
+     "robot_s": 60.8,
      "person_min": 0.0,
-     "checker_compute_s": 1.0,
+     "checker_compute_s": 7.9,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C00",
@@ -8582,10 +8612,11 @@
      "actor": "person (bench)",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 10,
+     "person_min": 6.0,
      "checker_compute_s": 0.0,
      "force": "operations.md A2.13: with the plate on the bench, face down, all four screws are open from above; on the machine two sit under the KF-40 stub's flange (run 6: 2 of 4). Not checked here: the bench is not modelled.",
-     "note": "overflow funnel on the bench: O-ring, block and four M4 screws"
+     "note": "overflow funnel on the bench: O-ring, block and four M4 screws",
+     "recorded": true
     },
     {
      "step": "C00a",
@@ -8594,11 +8625,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 60.0,
+     "robot_s": 38.3,
      "person_min": 0.0,
-     "checker_compute_s": 3.9,
+     "checker_compute_s": 23.2,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C00b",
@@ -8607,11 +8639,12 @@
      "do": "seal",
      "actor": "A",
      "status": "pass",
-     "robot_s": 105.0,
+     "robot_s": 88.2,
      "person_min": 0.0,
-     "checker_compute_s": 4.8,
+     "checker_compute_s": 24.0,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C00c",
@@ -8620,11 +8653,12 @@
      "do": "dual",
      "actor": "",
      "status": "pass",
-     "robot_s": 60.0,
-     "person_min": 0.0,
-     "checker_compute_s": 5.3,
+     "robot_s": 57.4,
+     "person_min": 2.0,
+     "checker_compute_s": 84.0,
      "force": "4.3 kg, 2.1 kg per arm | 4.3 kg;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C00d",
@@ -8633,11 +8667,12 @@
      "do": "screws",
      "actor": "A",
      "status": "part",
-     "robot_s": 290.0,
+     "robot_s": 481.2,
      "person_min": 1.0,
-     "checker_compute_s": 29.6,
+     "checker_compute_s": 528.8,
      "force": "1.1 N m | 17/18 screws; in the: approach: no path in 500 iterations",
-     "note": "1 of 18 screws by a person (1 min each, estimate)"
+     "note": "1 of 18 screws by a person (1 min each, estimate)",
+     "recorded": true
     },
     {
      "step": "C01",
@@ -8646,11 +8681,12 @@
      "do": "dual",
      "actor": "",
      "status": "pass",
-     "robot_s": 60.0,
+     "robot_s": 98.3,
      "person_min": 0.0,
-     "checker_compute_s": 8.2,
+     "checker_compute_s": 48.9,
      "force": "8.25 kg, 4.1 kg per arm | 8.25 kg;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C01b",
@@ -8659,11 +8695,12 @@
      "do": "rotate",
      "actor": "",
      "status": "pass",
-     "robot_s": 20.0,
+     "robot_s": 0.8,
      "person_min": 0.0,
-     "checker_compute_s": 0.7,
+     "checker_compute_s": 1.8,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C02",
@@ -8672,11 +8709,12 @@
      "do": "place",
      "actor": "A",
      "status": "fail",
-     "robot_s": 51.0,
+     "robot_s": 75.5,
      "person_min": 5.0,
-     "checker_compute_s": 8.5,
+     "checker_compute_s": 32.8,
      "force": "needs 1644 N; arm can push 149 N | TOO MUCH FORCE for the arm: NO: 16x the F/T range; a UR pushing this hard is past its force limit. Arbor press by a person, or a slip fit (g6) with ;",
-     "note": "needs 1644 N; arm can push 149 N | TOO MUCH FORCE for the arm: NO: 16x the F/T range; a UR pushing this hard is past its force limit. Arbor press by a person, o"
+     "note": "needs 1644 N; arm can push 149 N | TOO MUCH FORCE for the arm: NO: 16x the F/T range; a UR pushing this hard is past its force limit. Arbor press by a person, o",
+     "recorded": true
     },
     {
      "step": "C03",
@@ -8685,11 +8723,12 @@
      "do": "seal",
      "actor": "B",
      "status": "pass",
-     "robot_s": 105.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
-     "checker_compute_s": 0.0,
+     "checker_compute_s": 0.1,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C04",
@@ -8698,11 +8737,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 63.0,
+     "robot_s": 23.4,
      "person_min": 0.0,
-     "checker_compute_s": 1.5,
+     "checker_compute_s": 4.5,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C05",
@@ -8711,11 +8751,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 125.0,
+     "robot_s": 224.7,
      "person_min": 0.0,
-     "checker_compute_s": 13.3,
+     "checker_compute_s": 105.6,
      "force": "2.2 N m | 6/6 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C09",
@@ -8724,11 +8765,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 57.0,
+     "robot_s": 105.8,
      "person_min": 0.0,
-     "checker_compute_s": 1.2,
+     "checker_compute_s": 11.2,
      "force": "released 30 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C09f",
@@ -8737,11 +8779,12 @@
      "do": "place",
      "actor": "B",
      "status": "pass",
-     "robot_s": 38.0,
+     "robot_s": 127.3,
      "person_min": 0.0,
-     "checker_compute_s": 5.0,
+     "checker_compute_s": 18.0,
      "force": "released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers; released 9 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C12",
@@ -8750,11 +8793,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 45.0,
+     "robot_s": 60.3,
      "person_min": 0.0,
-     "checker_compute_s": 1.7,
+     "checker_compute_s": 6.7,
      "force": "released 30 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C13",
@@ -8763,11 +8807,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 95.0,
+     "robot_s": 159.3,
      "person_min": 0.0,
-     "checker_compute_s": 8.7,
+     "checker_compute_s": 50.6,
      "force": "4.2 N m | 4/4 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C09b",
@@ -8776,11 +8821,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 53.0,
+     "robot_s": 126.9,
      "person_min": 0.0,
-     "checker_compute_s": 3.4,
+     "checker_compute_s": 11.1,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C09c",
@@ -8789,11 +8835,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 53.0,
+     "robot_s": 86.0,
      "person_min": 0.0,
-     "checker_compute_s": 1.5,
+     "checker_compute_s": 24.8,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C09d",
@@ -8802,11 +8849,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 38.0,
+     "robot_s": 112.6,
      "person_min": 0.0,
-     "checker_compute_s": 1.5,
+     "checker_compute_s": 6.8,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C09e",
@@ -8816,10 +8864,11 @@
      "actor": "person",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 5,
+     "person_min": 3.0,
      "checker_compute_s": 0.0,
      "force": "Small threaded fittings with a tube to follow. The modules have to be open (6 bar) for the clamping pins to enter in C10.",
-     "note": "M5 push-in elbows and a temporary release-air line"
+     "note": "M5 push-in elbows and a temporary release-air line",
+     "recorded": true
     },
     {
      "step": "C10",
@@ -8828,11 +8877,12 @@
      "do": "place",
      "actor": "B",
      "status": "pass",
-     "robot_s": 75.8,
+     "robot_s": 29.0,
      "person_min": 0.0,
-     "checker_compute_s": 18.9,
+     "checker_compute_s": 36.7,
      "force": "needs 109 N (peak 328); arm can push 132 N | peak beyond the arm: robot starts it on the lead-in chamfer (<= 50 N in force mode) and pushes it home in force mode; the two zero-point modu;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C11",
@@ -8841,11 +8891,12 @@
      "do": "note",
      "actor": "machine",
      "status": "machine",
-     "robot_s": 10.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
      "force": "The cell vents the temporary line. 1 kN holds 4.6x the worst separating load (hot-swap.md 3.2a). The spigot ring is already home: arm B pushed the module in at C10 (132 N running). The captive M6 are gone; the floor keeps their inserts for a hand fallback.",
-     "note": "machine"
+     "note": "machine",
+     "recorded": true
     },
     {
      "step": "C13b",
@@ -8854,11 +8905,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 45.0,
+     "robot_s": 93.8,
      "person_min": 0.0,
-     "checker_compute_s": 2.9,
+     "checker_compute_s": 9.5,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C14",
@@ -8867,11 +8919,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 42.0,
+     "robot_s": 122.1,
      "person_min": 0.0,
-     "checker_compute_s": 19.2,
+     "checker_compute_s": 41.0,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C15",
@@ -8880,11 +8933,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 95.0,
+     "robot_s": 161.7,
      "person_min": 0.0,
-     "checker_compute_s": 49.2,
+     "checker_compute_s": 197.1,
      "force": "7.4 N m | 4/4 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "C15b",
@@ -8894,23 +8948,25 @@
      "actor": "person (bench)",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 5,
+     "person_min": 4.0,
      "checker_compute_s": 0.0,
      "force": "A leg on a nest is open on every side; on the machine its back face is hemmed in by the frame, the other legs, the Z servo and (upright) the base plate. Not checked here: the bench nest is not modelled.",
-     "note": "overflow-jar sensor and its bracket on the bench"
+     "note": "overflow-jar sensor and its bracket on the bench",
+     "recorded": true
     },
     {
      "step": "F01",
      "chapter": "41-assembly-chamber",
-     "label": "Process base plate onto Fixture B (both arms, one at each end)",
+     "label": "Process base plate (11.8 kg) onto Fixture B: the hoist lifts, both arms guide",
      "do": "dual",
      "actor": "",
      "status": "pass",
-     "robot_s": 60.0,
-     "person_min": 0.0,
-     "checker_compute_s": 1.0,
+     "robot_s": 60.3,
+     "person_min": 3.1,
+     "checker_compute_s": 3.2,
      "force": "11.79 kg, 5.9 kg per arm | 11.79 kg;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F02",
@@ -8923,7 +8979,8 @@
      "person_min": 0,
      "checker_compute_s": 0.0,
      "force": "They thread in when the finished process module goes onto the tray (chapter 5); until then Fixture B carries the plate on its ends.",
-     "note": "levelling mounts go on in T01"
+     "note": "levelling mounts go on in T01",
+     "recorded": true
     },
     {
      "step": "F02b",
@@ -8932,11 +8989,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 57.0,
+     "robot_s": 29.9,
      "person_min": 0.0,
-     "checker_compute_s": 1.0,
+     "checker_compute_s": 63.3,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F05",
@@ -8945,24 +9003,26 @@
      "do": "rotate",
      "actor": "",
      "status": "pass",
-     "robot_s": 20.0,
+     "robot_s": 0.8,
      "person_min": 0.0,
-     "checker_compute_s": 1.4,
+     "checker_compute_s": 2.2,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F05b",
      "chapter": "41-assembly-chamber",
-     "label": "Chamber assembly (with the module, zero-point clamps, Z stage and legs) carried upright by both arms, each holding a leg, from the trunnion onto the base plate",
+     "label": "Chamber assembly (19.6 kg, with the module, zero-point clamps, Z stage and legs) from the trunnion onto the base plate: the hoist lifts, both arms guide it by two legs",
      "do": "dual",
      "actor": "",
      "status": "pass",
-     "robot_s": 60.0,
-     "person_min": 0.0,
-     "checker_compute_s": 10.1,
+     "robot_s": 107.8,
+     "person_min": 3.8,
+     "checker_compute_s": 23.7,
      "force": "19.62 kg, 9.8 kg per arm | 19.62 kg;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F06",
@@ -8970,12 +9030,13 @@
      "label": "Eight M6 x 25 base-plate-to-leg screws, from under the plate",
      "do": "screws",
      "actor": "A",
-     "status": "part",
-     "robot_s": 140.0,
-     "person_min": 1.0,
-     "checker_compute_s": 291.0,
+     "status": "pass",
+     "robot_s": 335.3,
+     "person_min": 0.0,
+     "checker_compute_s": 369.8,
      "force": "7.4 N m | 7/8 screws; 316 #1: approach: no clear way in to the hole's mouth (A/upper_arm hits Base plate, process module",
-     "note": "1 of 8 screws by a person (1 min each, estimate)"
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F06b",
@@ -8985,10 +9046,11 @@
      "actor": "person",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 10,
+     "person_min": 5.0,
      "checker_compute_s": 0.0,
      "force": "Tube routing (deformable), as the hoses in chapter 5. The modules stay locked while the line is swapped: their springs hold.",
-     "note": "release-air tube routed from the valve to both zero-point modules"
+     "note": "release-air tube routed from the valve to both zero-point modules",
+     "recorded": true
     },
     {
      "step": "F07",
@@ -8997,11 +9059,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 71.8,
+     "robot_s": 74.6,
      "person_min": 0.0,
-     "checker_compute_s": 2.4,
+     "checker_compute_s": 7.8,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F08",
@@ -9011,10 +9074,11 @@
      "actor": "person",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 1,
+     "person_min": 1.0,
      "checker_compute_s": 0.0,
      "force": "Its hinged ring has to be held open round both flanges before one push on the lever locks it; nothing on the 2F-85 holds the ring open. An air-released KF clamp would let the robot do it (hot-swap.md).",
-     "note": "KF-40 toggle clamp round the jar's flange"
+     "note": "KF-40 toggle clamp round the jar's flange",
+     "recorded": true
     },
     {
      "step": "F11",
@@ -9023,37 +9087,40 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 75.0,
+     "robot_s": 108.9,
      "person_min": 0.0,
-     "checker_compute_s": 1.6,
+     "checker_compute_s": 5.9,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F10a",
      "chapter": "41-assembly-chamber",
-     "label": "Wall liner, back lower left, in through the door opening and onto its wall",
+     "label": "Wall liner, back lower left, in through the door opening and onto its wall (liner wand: two \u00d815 suction cups on its face)",
      "do": "place",
      "actor": "A",
-     "status": "fail",
-     "robot_s": 103.6,
-     "person_min": 5.0,
-     "checker_compute_s": 5.6,
+     "status": "pass",
+     "robot_s": 102.2,
+     "person_min": 0.0,
+     "checker_compute_s": 69.7,
      "force": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
-     "note": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of t"
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F10b",
      "chapter": "41-assembly-chamber",
-     "label": "Wall liner, back upper left, in through the door opening and onto its wall",
+     "label": "Wall liner, back upper left, in through the door opening and onto its wall (liner wand: two \u00d815 suction cups on its face)",
      "do": "place",
      "actor": "A",
-     "status": "fail",
-     "robot_s": 91.0,
-     "person_min": 5.0,
-     "checker_compute_s": 5.9,
+     "status": "pass",
+     "robot_s": 78.8,
+     "person_min": 0.0,
+     "checker_compute_s": 68.0,
      "force": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
-     "note": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along th"
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F10c",
@@ -9062,37 +9129,40 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 103.2,
+     "robot_s": 96.7,
      "person_min": 0.0,
-     "checker_compute_s": 7.5,
+     "checker_compute_s": 52.8,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F10d",
      "chapter": "41-assembly-chamber",
-     "label": "Wall liner, back lower right, in through the door opening and onto its wall",
+     "label": "Wall liner, back lower right, in through the door opening and onto its wall (liner wand: two \u00d815 suction cups on its face)",
      "do": "place",
      "actor": "A",
-     "status": "fail",
-     "robot_s": 103.5,
-     "person_min": 5.0,
-     "checker_compute_s": 4.8,
+     "status": "pass",
+     "robot_s": 74.3,
+     "person_min": 0.0,
+     "checker_compute_s": 17.2,
      "force": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of the door's hinge knuckles) at 354 mm along the insertion",
-     "note": "arm A: A/gr/right_finger hits Module M50 handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y -156 to -126, in front of t"
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F10e",
      "chapter": "41-assembly-chamber",
-     "label": "Wall liner, back upper right, in through the door opening and onto its wall",
+     "label": "Wall liner, back upper right, in through the door opening and onto its wall (liner wand: two \u00d815 suction cups on its face)",
      "do": "place",
      "actor": "A",
-     "status": "fail",
-     "robot_s": 88.5,
-     "person_min": 5.0,
-     "checker_compute_s": 6.0,
+     "status": "pass",
+     "robot_s": 66.5,
+     "person_min": 0.0,
+     "checker_compute_s": 13.3,
      "force": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along the insertion",
-     "note": "arm A: A/gr/left_finger hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 381 mm along th"
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F10f",
@@ -9101,11 +9171,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 103.2,
+     "robot_s": 86.1,
      "person_min": 0.0,
-     "checker_compute_s": 17.6,
+     "checker_compute_s": 75.8,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F12",
@@ -9115,10 +9186,11 @@
      "actor": "person",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 10,
+     "person_min": 6.0,
      "checker_compute_s": 0.0,
      "force": "Threading an M6 head with a fibre attached means winding the fibre with it; the ring itself is a pick-and-place.",
-     "note": "through-beam fibre heads threaded into the side walls"
+     "note": "through-beam fibre heads threaded into the side walls",
+     "recorded": true
     },
     {
      "step": "F13",
@@ -9127,76 +9199,54 @@
      "do": "seal",
      "actor": "B",
      "status": "pass",
-     "robot_s": 105.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
      "checker_compute_s": 0.1,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F14",
      "chapter": "41-assembly-chamber",
-     "label": "Inlet plenum with its O-ring and KF-25 port onto the back wall, held there by arm A",
+     "label": "Inlet plenum with its O-ring and KF-25 port onto the back wall's two dowels by arm B (it hangs there on its own)",
      "do": "place",
-     "actor": "A",
-     "status": "fail",
-     "robot_s": 63.0,
-     "person_min": 5.0,
-     "checker_compute_s": 20.8,
-     "force": "arm A: no IK at the start pose at 0 mm along the insertion; held-part screws: 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner",
-     "note": "arm A: no IK at the start pose at 0 mm along the insertion; held-part screws: 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no wa"
-    },
-    {
-     "step": "F14h",
-     "chapter": "41-assembly-chamber",
-     "label": "Inlet plenum with its O-ring and KF-25 port onto the back wa: screws of plenum_in driven while arm A holds it",
-     "do": "screws",
      "actor": "B",
-     "status": "part",
-     "robot_s": 110.0,
-     "person_min": 1.0,
-     "checker_compute_s": null,
-     "force": "2.2 N m | 6/7 screws; 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner",
-     "note": "1 of 7 screws by a person (1 min each, estimate)"
+     "status": "pass",
+     "robot_s": 39.0,
+     "person_min": 0.0,
+     "checker_compute_s": 4.3,
+     "force": "arm A: no IK at the start pose at 0 mm along the insertion; held-part screws: 316 #7: screwdriver: B/tool/screwdriver hits Inlet plenum port (KF-25); also no way with nutrunner",
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F15",
      "chapter": "41-assembly-chamber",
-     "label": "Nine M4 x 16 inlet-plenum screws into the back wall",
+     "label": "Nine M4 x 16 inlet-plenum screws into the back wall (60 mm bit extension: run 9 met the KF-25 port on one)",
      "do": "screws",
      "actor": "B",
-     "status": "pass",
-     "robot_s": 15.0,
-     "person_min": 0.0,
-     "checker_compute_s": 0.0,
+     "status": "part",
+     "robot_s": 181.2,
+     "person_min": 1.0,
+     "checker_compute_s": 104.0,
      "force": "2.2 N m | all screws of this joint were already driven (with the part held)",
-     "note": ""
+     "note": "1 of 7 screws by a person (1 min each, estimate)",
+     "recorded": true
     },
     {
      "step": "F16",
      "chapter": "41-assembly-chamber",
-     "label": "Vacuum-port adapter (KF-25 stub welded in) with its 2-024 O-ring onto the right wall",
+     "label": "Vacuum-port adapter (KF-25 stub welded in) with its 2-024 O-ring onto the right wall's two dowels (it hangs there)",
      "do": "place",
      "actor": "A",
-     "status": "fail",
-     "robot_s": 63.0,
-     "person_min": 5.0,
-     "checker_compute_s": 40.5,
+     "status": "pass",
+     "robot_s": 85.4,
+     "person_min": 0.0,
+     "checker_compute_s": 8.9,
      "force": "released 12 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wri",
-     "note": "released 12 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunne"
-    },
-    {
-     "step": "F16h",
-     "chapter": "41-assembly-chamber",
-     "label": "Vacuum-port adapter (KF-25 stub welded in) with its 2-024 O-: screws of vac_port driven while arm A holds it",
-     "do": "screws",
-     "actor": "B",
-     "status": "fail",
-     "robot_s": 20.0,
-     "person_min": 9.0,
-     "checker_compute_s": null,
-     "force": "4.2 N m | 0/4 screws; 316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #3: screwdriver: B/tool/screwdriver hits A/w",
-     "note": "316 #1: screwdriver: B/tool/screwdriver hits A/wrist1; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also "
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F17",
@@ -9205,31 +9255,33 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 15.0,
+     "robot_s": 127.5,
      "person_min": 0.0,
-     "checker_compute_s": 0.0,
+     "checker_compute_s": 86.6,
      "force": "4.2 N m | all screws of this joint were already driven (with the part held)",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F18",
      "chapter": "41-assembly-chamber",
      "label": "Recoater rail with its carriage, carriage block, ball nut and arm (bought and pre-assembled on the rail) onto the back wall",
      "do": "place",
-     "actor": "A",
+     "actor": "B",
      "status": "fail",
-     "robot_s": 67.0,
+     "robot_s": 156.1,
      "person_min": 5.0,
-     "checker_compute_s": 142.8,
+     "checker_compute_s": 228.5,
      "force": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm); also no way with",
-     "note": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: B/upper_arm hits Base plate, process module (MIC-6, 15 mm);"
+     "note": "released 24 mm short and pushed home with the closed fingers; held-part screws: d thro: screwdriver: A/wrist1 hits Base plate, process module (MIC-6, 15 mm); al",
+     "recorded": true
     },
     {
      "step": "F18h",
      "chapter": "41-assembly-chamber",
-     "label": "Recoater rail with its carriage, carriage block, ball nut an: screws of rail driven while arm A holds it",
+     "label": "Recoater rail with its carriage, carriage block, ball nut an: screws of rail driven while arm B holds it",
      "do": "screws",
-     "actor": "B",
+     "actor": "A",
      "status": "part",
      "robot_s": 65.0,
      "person_min": 1.0,
@@ -9240,15 +9292,16 @@
     {
      "step": "F19",
      "chapter": "41-assembly-chamber",
-     "label": "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall",
+     "label": "Five M4 x 16 rail screws, driven from inside the chamber toward the back wall (60 mm bit extension)",
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 15.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
      "force": "2.2 N m | all screws of this joint were already driven (with the part held)",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F21",
@@ -9257,11 +9310,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 87.0,
-     "person_min": 0.0,
-     "checker_compute_s": 15.0,
+     "robot_s": 86.7,
+     "person_min": 0.5,
+     "checker_compute_s": 14.3,
      "force": "released 33 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F22",
@@ -9270,37 +9324,26 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 46.0,
+     "robot_s": 60.1,
      "person_min": 0.0,
-     "checker_compute_s": 3.9,
+     "checker_compute_s": 6.8,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F23",
      "chapter": "41-assembly-chamber",
-     "label": "Blind bearing cap and its 2-019 O-ring on the right wall",
+     "label": "Blind bearing cap and its 2-019 O-ring onto the right wall's two dowels (it hangs there; round 7)",
      "do": "place",
      "actor": "A",
-     "status": "fail",
-     "robot_s": 46.0,
-     "person_min": 5.0,
-     "checker_compute_s": 29.3,
+     "status": "pass",
+     "robot_s": 65.8,
+     "person_min": 0.0,
+     "checker_compute_s": 7.9,
      "force": "released 15 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wri",
-     "note": "released 15 mm short and pushed home with the closed fingers; held-part screws: 316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunne"
-    },
-    {
-     "step": "F23h",
-     "chapter": "41-assembly-chamber",
-     "label": "Blind bearing cap and its 2-019 O-ring on the right wall: screws of bearing_cap driven while arm A holds it",
-     "do": "screws",
-     "actor": "B",
-     "status": "fail",
-     "robot_s": 20.0,
-     "person_min": 9.0,
-     "checker_compute_s": null,
-     "force": "2.2 N m | 0/4 screws; 316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #3: screwdriver: B/tool/screwdriver hits A/w",
-     "note": "316 #1: screwdriver: B/tool/screwdriver hits A/wrist2; also no way with nutrunner, nutrunner_angle; 316 #2: screwdriver: B/tool/screwdriver hits A/wrist2; also "
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F24",
@@ -9309,24 +9352,54 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 15.0,
+     "robot_s": 109.8,
      "person_min": 0.0,
-     "checker_compute_s": 0.0,
+     "checker_compute_s": 8.3,
      "force": "2.2 N m | all screws of this joint were already driven (with the part held)",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F25",
      "chapter": "41-assembly-chamber",
-     "label": "Motor standoff, bracket and recoater servo",
+     "label": "Motor standoff onto the left wall's feedthrough",
      "do": "place",
      "actor": "A",
-     "status": "fail",
-     "robot_s": 65.0,
-     "person_min": 5.0,
-     "checker_compute_s": 9.1,
+     "status": "pass",
+     "robot_s": 71.0,
+     "person_min": 0.0,
+     "checker_compute_s": 5.7,
      "force": "arm A: held:F25:Recoater motor bracket hits Trunnion stands at 0 mm along the insertion",
-     "note": "arm A: held:F25:Recoater motor bracket hits Trunnion stands at 0 mm along the insertion"
+     "note": "",
+     "recorded": true
+    },
+    {
+     "step": "F25b",
+     "chapter": "41-assembly-chamber",
+     "label": "Motor bracket lowered onto the base plate from above",
+     "do": "place",
+     "actor": "A",
+     "status": "pass",
+     "robot_s": 64.9,
+     "person_min": 0.0,
+     "checker_compute_s": 36.8,
+     "force": "",
+     "note": "",
+     "recorded": true
+    },
+    {
+     "step": "F25c",
+     "chapter": "41-assembly-chamber",
+     "label": "Recoater servo onto the bracket, its shaft into the coupling along +x",
+     "do": "place",
+     "actor": "A",
+     "status": "pass",
+     "robot_s": 70.9,
+     "person_min": 0.0,
+     "checker_compute_s": 6.4,
+     "force": "",
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F26",
@@ -9335,24 +9408,26 @@
      "do": "place",
      "actor": "A",
      "status": "fail",
-     "robot_s": 56.0,
+     "robot_s": 54.9,
      "person_min": 5.0,
-     "checker_compute_s": 3.4,
+     "checker_compute_s": 6.3,
      "force": "sweep: Blade holder blocked by Process chamber body (6061-T6 through-frame from 5 after 43.0 mm; arm A: held:F26:Blade holder hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 90 mm along t",
-     "note": "sweep: Blade holder blocked by Process chamber body (6061-T6 through-frame from 5 after 43.0 mm; arm A: held:F26:Blade holder hits Process chamber body (6061-T6"
+     "note": "arm A: A/gr/right_finger_tip hits Process chamber body (6061-T6 through-frame from 5.5 in. plate, R10 inside corners; floor plate bolted under it) at 117 mm alo",
+     "recorded": true
     },
     {
      "step": "F27",
      "chapter": "41-assembly-chamber",
-     "label": "Two M3 x 8 blade screws",
+     "label": "Two M3 x 8 blade screws by arm B from the back (100 mm bit extension: run 7's driver met the module and Fixture B; run 9's arm A met Fixture B)",
      "do": "screws",
-     "actor": "A",
+     "actor": "B",
      "status": "fail",
-     "robot_s": 35.0,
+     "robot_s": 16.5,
      "person_min": 7.0,
-     "checker_compute_s": 17.7,
+     "checker_compute_s": 18.6,
      "force": "1.1 N m | 0/2 screws; 316 #1: screwdriver: A/tool/screwdriver hits Build module M50: spigot, flange, honed 316L cylinder; 316 #2: screwdriver: A/upper_arm hits Fixture B (open stand); also no way with nutrunner_angle",
-     "note": "316 #1: screwdriver: A/tool/screwdriver hits Build module M50: spigot, flange, honed 316L cylinder; 316 #2: screwdriver: A/upper_arm hits Fixture B (open stand)"
+     "note": "316 #1: screwdriver: B/tool/screwdriver hits Overflow funnel block (316L, bolted, FKM face O-ring); 316 #2: screwdriver: B/tool/screwdriver hits Overflow funnel",
+     "recorded": true
     },
     {
      "step": "F28",
@@ -9361,11 +9436,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 65.0,
+     "robot_s": 93.5,
      "person_min": 0.0,
-     "checker_compute_s": 12.0,
+     "checker_compute_s": 11.7,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F29",
@@ -9374,11 +9450,12 @@
      "do": "seal",
      "actor": "A",
      "status": "pass",
-     "robot_s": 105.0,
+     "robot_s": 96.9,
      "person_min": 0.0,
-     "checker_compute_s": 82.9,
+     "checker_compute_s": 56.6,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F30",
@@ -9387,11 +9464,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 79.0,
+     "robot_s": 75.9,
      "person_min": 0.0,
-     "checker_compute_s": 14.3,
+     "checker_compute_s": 17.8,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F31",
@@ -9400,11 +9478,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 335.0,
+     "robot_s": 554.6,
      "person_min": 0.0,
-     "checker_compute_s": 93.1,
+     "checker_compute_s": 212.4,
      "force": "4.2 N m | 20/20 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F32",
@@ -9413,11 +9492,12 @@
      "do": "seal",
      "actor": "B",
      "status": "pass",
-     "robot_s": 105.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F33",
@@ -9426,11 +9506,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 75.0,
+     "robot_s": 73.8,
      "person_min": 0.0,
-     "checker_compute_s": 5.8,
+     "checker_compute_s": 6.3,
      "force": "released 27 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F33b",
@@ -9439,11 +9520,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 81.0,
+     "robot_s": 33.2,
      "person_min": 0.0,
-     "checker_compute_s": 5.9,
+     "checker_compute_s": 5.4,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F34",
@@ -9452,11 +9534,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 125.0,
+     "robot_s": 151.0,
      "person_min": 0.0,
-     "checker_compute_s": 7.4,
+     "checker_compute_s": 120.4,
      "force": "2.2 N m | 6/6 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F35",
@@ -9465,11 +9548,12 @@
      "do": "seal",
      "actor": "B",
      "status": "pass",
-     "robot_s": 105.0,
+     "robot_s": 26.3,
      "person_min": 0.0,
-     "checker_compute_s": 3.0,
+     "checker_compute_s": 3.1,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F36",
@@ -9478,11 +9562,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 83.0,
+     "robot_s": 33.5,
      "person_min": 0.0,
-     "checker_compute_s": 4.2,
+     "checker_compute_s": 22.1,
      "force": "released 27 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F37",
@@ -9491,11 +9576,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 69.0,
+     "robot_s": 88.3,
      "person_min": 0.0,
-     "checker_compute_s": 5.3,
+     "checker_compute_s": 33.1,
      "force": "released 24 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F37b",
@@ -9504,11 +9590,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 85.0,
+     "robot_s": 77.1,
      "person_min": 0.0,
-     "checker_compute_s": 3.5,
+     "checker_compute_s": 3.8,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F38",
@@ -9517,11 +9604,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 125.0,
+     "robot_s": 146.6,
      "person_min": 0.0,
-     "checker_compute_s": 3.1,
+     "checker_compute_s": 105.4,
      "force": "0.8 N m | 6/6 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F39",
@@ -9530,11 +9618,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 65.0,
-     "person_min": 0.0,
-     "checker_compute_s": 9.0,
+     "robot_s": 36.4,
+     "person_min": 3.0,
+     "checker_compute_s": 9.3,
      "force": "needs 50 N (peak 358); arm can push 1500 N | released 6 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F40",
@@ -9543,11 +9632,12 @@
      "do": "note",
      "actor": "robot (custom bit)",
      "status": "pass",
-     "robot_s": 30.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
      "force": "Two quarter-turn studs, turned with a slotted bit on the screwdriver; the latch hardware is an envelope in the model (seals.md: no catalogue latch fits).",
-     "note": "robot (custom bit)"
+     "note": "robot (custom bit)",
+     "recorded": true
     },
     {
      "step": "F41",
@@ -9556,11 +9646,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 50.0,
+     "robot_s": 89.1,
      "person_min": 0.0,
-     "checker_compute_s": 3.5,
+     "checker_compute_s": 6.6,
      "force": "released 18 mm short and pushed home with the closed fingers",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F42",
@@ -9569,11 +9660,12 @@
      "do": "seal",
      "actor": "B",
      "status": "pass",
-     "robot_s": 105.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F42b",
@@ -9582,11 +9674,12 @@
      "do": "seal",
      "actor": "B",
      "status": "pass",
-     "robot_s": 90.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F43",
@@ -9595,11 +9688,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 75.0,
+     "robot_s": 33.4,
      "person_min": 0.0,
-     "checker_compute_s": 4.7,
+     "checker_compute_s": 4.2,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F44",
@@ -9608,24 +9702,68 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 95.0,
+     "robot_s": 135.2,
      "person_min": 0.0,
-     "checker_compute_s": 99.9,
+     "checker_compute_s": 180.1,
      "force": "2.2 N m | 4/4 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F45",
      "chapter": "41-assembly-chamber",
-     "label": "Roller feedthrough (threaded M8 x 1 over its 2-012), coupling, stepper, dock rails, load cell, NFC, side port, docked sensor",
+     "label": "Roller feedthrough (M8 x 1 nose over its 2-012) into the metering base along its axis (arm B)",
+     "do": "place",
+     "actor": "B",
+     "status": "fail",
+     "robot_s": 75.2,
+     "person_min": 5.0,
+     "checker_compute_s": 6.3,
+     "force": "sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0 mm; arm A: no IK at the start pose at 0 mm along the insertion; sweep: Roller feedthrough O-ring blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0",
+     "note": "sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 13.0 mm; arm B: held:F45:Roller shaft hits Metering base (6061, fluted r",
+     "recorded": true
+    },
+    {
+     "step": "F45b",
+     "chapter": "41-assembly-chamber",
+     "label": "Roller drive coupling onto the feedthrough's shaft (arm B)",
+     "do": "place",
+     "actor": "B",
+     "status": "pass",
+     "robot_s": 70.8,
+     "person_min": 0.0,
+     "checker_compute_s": 3.3,
+     "force": "",
+     "note": "",
+     "recorded": true
+    },
+    {
+     "step": "F45c",
+     "chapter": "41-assembly-chamber",
+     "label": "Dosing stepper, its shaft into the coupling (arm B)",
+     "do": "place",
+     "actor": "B",
+     "status": "pass",
+     "robot_s": 66.0,
+     "person_min": 0.0,
+     "checker_compute_s": 3.3,
+     "force": "",
+     "note": "",
+     "recorded": true
+    },
+    {
+     "step": "F45d",
+     "chapter": "41-assembly-chamber",
+     "label": "Load cell, then the dock rails on it, the NFC reader, side port blank and docked sensor, from just above",
      "do": "place",
      "actor": "A",
      "status": "fail",
-     "robot_s": 79.0,
+     "robot_s": 164.2,
      "person_min": 5.0,
-     "checker_compute_s": 76.3,
-     "force": "sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0 mm; arm A: no IK at the start pose at 0 mm along the insertion; sweep: Roller feedthrough O-ring blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0",
-     "note": "sweep: Roller shaft blocked by Metering base (6061, fluted roller over a 100 mm d after 0.0 mm; arm A: no IK at the start pose at 0 mm along the insertion; swee"
+     "checker_compute_s": 36.3,
+     "force": "",
+     "note": "released 36 mm short and pushed home with the closed fingers; released 18 mm short and pushed home with the closed fingers; sweep: NFC reader antenna blocked by",
+     "recorded": true
     },
     {
      "step": "F46",
@@ -9634,11 +9772,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 46.0,
+     "robot_s": 68.5,
      "person_min": 0.0,
-     "checker_compute_s": 125.4,
+     "checker_compute_s": 25.7,
      "force": "needs 94 N; arm can push 191 N",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F47",
@@ -9647,11 +9786,12 @@
      "do": "seal",
      "actor": "B",
      "status": "pass",
-     "robot_s": 105.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
-     "checker_compute_s": 0.1,
+     "checker_compute_s": 0.0,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F48",
@@ -9660,37 +9800,54 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 75.0,
+     "robot_s": 23.7,
      "person_min": 0.0,
-     "checker_compute_s": 30.0,
+     "checker_compute_s": 3.5,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F48b",
      "chapter": "41-assembly-chamber",
-     "label": "Camera window gasket (1 mm FKM flat ring), window, flat ring, retaining ring, in that order, then the camera",
+     "label": "Camera window gasket (1 mm FKM flat ring), window and flat ring into the counterbore along the line of sight (ring pad)",
      "do": "place",
      "actor": "A",
      "status": "fail",
-     "robot_s": 63.0,
+     "robot_s": 107.1,
      "person_min": 5.0,
-     "checker_compute_s": 177.2,
+     "checker_compute_s": 8.0,
      "force": "sweep: Camera window gasket, under the window blocked by Camera viewport adapter + boss (6061; \u00d830 bore on  after 1.0 mm; arm A: A/gr/right_finger_tip hits Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM se",
-     "note": "sweep: Camera window gasket, under the window blocked by Camera viewport adapter + boss (6061; \u00d830 bore on  after 1.0 mm; arm A: A/gr/right_finger_tip hits Came"
+     "note": "arm A: A/tool/ringpad hits Camera viewport adapter + boss (6061; \u00d830 bore on the line of sight, \u00d820 aperture, \u00d81 in. window; FKM seals) at 63 mm along the inser",
+     "recorded": true
+    },
+    {
+     "step": "F48c",
+     "chapter": "41-assembly-chamber",
+     "label": "Camera window retaining ring, then the camera, along the line of sight",
+     "do": "place",
+     "actor": "A",
+     "status": "pass",
+     "robot_s": 84.1,
+     "person_min": 0.0,
+     "checker_compute_s": 5.3,
+     "force": "",
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F49",
      "chapter": "41-assembly-chamber",
-     "label": "Pressure transducer and relief valve (SAE-4 O-ring-boss ports)",
-     "do": "note",
-     "actor": "person",
-     "status": "person",
-     "robot_s": 0.0,
-     "person_min": 10,
-     "checker_compute_s": 0.0,
+     "label": "Pressure transducer and relief valve into their SAE-4 ports from above (threads started by wrist rotation)",
+     "do": "place",
+     "actor": "A",
+     "status": "pass",
+     "robot_s": 99.5,
+     "person_min": 0.0,
+     "checker_compute_s": 32.7,
      "force": "Threaded ports need a wrench on a hex and a set torque; a 2F-85 can only spin a plain body.",
-     "note": "pressure transducer and relief valve into their SAE-4 ports, with a wrench"
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F50",
@@ -9699,11 +9856,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 54.0,
+     "robot_s": 89.6,
      "person_min": 0.0,
-     "checker_compute_s": 11.6,
+     "checker_compute_s": 23.4,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F51",
@@ -9712,24 +9870,40 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 50.0,
-     "person_min": 0.0,
-     "checker_compute_s": 158.2,
+     "robot_s": 66.9,
+     "person_min": 5.0,
+     "checker_compute_s": 33.8,
      "force": "needs 725 N",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F52",
      "chapter": "41-assembly-chamber",
-     "label": "Hinge pins slid in along x",
+     "label": "Left hinge pin slid in from the left along the hinge axis by the pin pusher (a magnet holds its end)",
      "do": "place",
      "actor": "A",
-     "status": "fail",
-     "robot_s": 46.0,
-     "person_min": 5.0,
-     "checker_compute_s": 5.6,
+     "status": "pass",
+     "robot_s": 72.0,
+     "person_min": 0.0,
+     "checker_compute_s": 3.0,
      "force": "arm A: A/upper_arm hits A cabinet at 0 mm along the insertion",
-     "note": "arm A: A/upper_arm hits A cabinet at 0 mm along the insertion"
+     "note": "",
+     "recorded": true
+    },
+    {
+     "step": "F52b",
+     "chapter": "41-assembly-chamber",
+     "label": "Right hinge pin slid in from the right along the hinge axis by the pin pusher",
+     "do": "place",
+     "actor": "A",
+     "status": "pass",
+     "robot_s": 62.6,
+     "person_min": 0.0,
+     "checker_compute_s": 2.8,
+     "force": "",
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F03",
@@ -9737,12 +9911,13 @@
      "label": "Optics posts (moved here: they blocked the side-wall parts and the right latch) onto the base plate, one at a time, held by arm B while arm A drives their base screws from below",
      "do": "place",
      "actor": "B",
-     "status": "fail",
-     "robot_s": 50.0,
-     "person_min": 5.0,
-     "checker_compute_s": 449.5,
+     "status": "pass",
+     "robot_s": 394.8,
+     "person_min": 0.0,
+     "checker_compute_s": 228.8,
      "force": "held-part screws: 316 #3: approach: no path in 500 iterations; 316 #4: approach: no path in 500 iterations; held-part screws: 316 #7: approach: no clear way in to the hole's mouth (no IK (out of reach or joint limit)); 316 #8: approach: no clear way in to the",
-     "note": "held-part screws: 316 #3: approach: no path in 500 iterations; 316 #4: approach: no path in 500 iterations; held-part screws: 316 #7: approach: no clear way in "
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F03h",
@@ -9760,15 +9935,15 @@
     {
      "step": "F03h",
      "chapter": "41-assembly-chamber",
-     "label": "Optics posts (moved here: they blocked the side-wall parts a: screws of bridge_base driven while arm B holds it",
+     "label": "Optics posts (moved here: they blocked the side-wall parts a: screws of bridge_base driven while arm A holds it",
      "do": "screws",
-     "actor": "A",
-     "status": "fail",
-     "robot_s": 20.0,
-     "person_min": 7.0,
+     "actor": "B",
+     "status": "pass",
+     "robot_s": 50.0,
+     "person_min": 0.0,
      "checker_compute_s": null,
      "force": "7.4 N m | 2/2 screws;",
-     "note": "316 #3: approach: no path in 500 iterations; 316 #4: approach: no path in 500 iterations"
+     "note": ""
     },
     {
      "step": "F03h",
@@ -9786,15 +9961,15 @@
     {
      "step": "F03h",
      "chapter": "41-assembly-chamber",
-     "label": "Optics posts (moved here: they blocked the side-wall parts a: screws of bridge_base driven while arm B holds it",
+     "label": "Optics posts (moved here: they blocked the side-wall parts a: screws of bridge_base driven while arm A holds it",
      "do": "screws",
-     "actor": "A",
-     "status": "fail",
-     "robot_s": 20.0,
-     "person_min": 7.0,
+     "actor": "B",
+     "status": "pass",
+     "robot_s": 50.0,
+     "person_min": 0.0,
      "checker_compute_s": null,
      "force": "7.4 N m | 2/2 screws;",
-     "note": "316 #7: approach: no clear way in to the hole's mouth (no IK (out of reach or joint limit)); 316 #8: approach: no clear way in to the hole's mouth (no IK (out o"
+     "note": ""
     },
     {
      "step": "F04",
@@ -9803,11 +9978,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 15.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
      "force": "7.4 N m | all screws of this joint were already driven (with the part held)",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F53",
@@ -9817,23 +9993,25 @@
      "actor": "person",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 10,
+     "person_min": 10.0,
      "checker_compute_s": 0.0,
      "force": "The \u00d890 lens is wider than the 2F-85's 85 mm stroke and threads M85 x 1; a strap wrench by hand (operations.md: lens and ring fitted to the bridge on the bench).",
-     "note": "f-theta lens threaded into its ring over the shim stack (strap wrench)"
+     "note": "f-theta lens threaded into its ring over the shim stack (strap wrench)",
+     "recorded": true
     },
     {
      "step": "F54",
      "chapter": "41-assembly-chamber",
-     "label": "Optics bridge (13.3 kg, lens and ring under it) onto the four posts, one arm at each end",
+     "label": "Optics bridge (13.3 kg, lens and ring under it) onto the four posts: the hoist lifts, both arms guide",
      "do": "dual",
      "actor": "",
      "status": "fail",
-     "robot_s": 60.0,
-     "person_min": 5.0,
-     "checker_compute_s": 0.7,
+     "robot_s": 20.9,
+     "person_min": 3.0,
+     "checker_compute_s": 0.8,
      "force": "14.32 kg, 7.2 kg per arm | 14.32 kg; no collision-free pair of arm poses at the start of the carry",
-     "note": "no collision-free pair of arm poses at the start of the carry"
+     "note": "no collision-free pair of arm poses at the start of the carry",
+     "recorded": true
     },
     {
      "step": "F55",
@@ -9842,11 +10020,12 @@
      "do": "screws",
      "actor": "A",
      "status": "pass",
-     "robot_s": 140.0,
+     "robot_s": 256.3,
      "person_min": 0.0,
-     "checker_compute_s": 89.3,
+     "checker_compute_s": 234.9,
      "force": "7.4 N m | 8/8 screws;",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F56",
@@ -9855,11 +10034,12 @@
      "do": "place",
      "actor": "A",
      "status": "pass",
-     "robot_s": 78.0,
+     "robot_s": 74.4,
      "person_min": 0.0,
-     "checker_compute_s": 2.7,
+     "checker_compute_s": 5.9,
      "force": "",
-     "note": ""
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F56b",
@@ -9867,12 +10047,13 @@
      "label": "basiCube 20 scan head on the riser (3.75 kg: the vacuum gripper on its top)",
      "do": "place",
      "actor": "A",
-     "status": "fail",
-     "robot_s": 64.0,
-     "person_min": 5.0,
-     "checker_compute_s": 0.7,
+     "status": "pass",
+     "robot_s": 70.5,
+     "person_min": 0.0,
+     "checker_compute_s": 20.8,
      "force": "arm A: no IK at the start pose at 0 mm along the insertion",
-     "note": "arm A: no IK at the start pose at 0 mm along the insertion"
+     "note": "",
+     "recorded": true
     },
     {
      "step": "F57",
@@ -9881,11 +10062,26 @@
      "do": "place",
      "actor": "A",
      "status": "fail",
-     "robot_s": 79.0,
+     "robot_s": 223.4,
      "person_min": 5.0,
-     "checker_compute_s": 4.6,
+     "checker_compute_s": 168.2,
      "force": "arm A: part 107 mm across at the grasp: wider than the 2F-85's 85 mm stroke; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the start pose at 0 mm along the insertion; arm",
-     "note": "arm A: part 107 mm across at the grasp: wider than the 2F-85's 85 mm stroke; arm A: no IK at the start pose at 0 mm along the insertion; arm A: no IK at the sta"
+     "note": "released 9 mm short and pushed home with the closed fingers; arm A: held:F57:Enclosed beam tubes #1 hits Coaxial-monitoring dichroic (Thorlabs DMSP1000, 45 deg:",
+     "recorded": true
+    },
+    {
+     "step": "F57b",
+     "chapter": "41-assembly-chamber",
+     "label": "Beam alignment and scan-field calibration (alignment laser, power head, test marks)",
+     "do": "note",
+     "actor": "person",
+     "status": "person",
+     "robot_s": 0.0,
+     "person_min": 90.0,
+     "checker_compute_s": 0.0,
+     "force": "",
+     "note": "person step (estimate)",
+     "recorded": true
     },
     {
      "step": "F58",
@@ -9895,10 +10091,11 @@
      "actor": "person",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 15,
+     "person_min": 8.0,
      "checker_compute_s": 0.0,
      "force": "Armoured fiber, >= 100 mm bend radius: cable routing stays manual.",
-     "note": "armoured process fiber routed to the collimator"
+     "note": "armoured process fiber routed to the collimator",
+     "recorded": true
     },
     {
      "step": "F59",
@@ -9908,10 +10105,11 @@
      "actor": "person",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 180,
+     "person_min": 60.0,
      "checker_compute_s": 0.0,
      "force": "T-slot nuts and 1.5 mm panels up to 730 mm wide; its hardware is not drawn (joints.NOT_DRAWN).",
-     "note": "Class 1 laser guard: T-slot frame, panels, door rail, sliding door, guard lock, operator panel"
+     "note": "Class 1 laser guard: T-slot frame, panels, door rail, sliding door, guard lock, operator panel",
+     "recorded": true
     },
     {
      "step": "T01",
@@ -9921,10 +10119,11 @@
      "actor": "person + hoist",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 30,
+     "person_min": 15.0,
      "checker_compute_s": 0.0,
      "force": "84 kg is 3.4 times two UR12e payloads; a hoist or lift table.",
-     "note": "process module (84 kg) onto the VLM tray with a hoist; levelling mounts"
+     "note": "process module (84 kg) onto the VLM tray with a hoist; levelling mounts",
+     "recorded": true
     },
     {
      "step": "T02",
@@ -9934,10 +10133,11 @@
      "actor": "person + lift",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 60,
+     "person_min": 45.0,
      "checker_compute_s": 0.0,
      "force": "the UPS and the laser exceed a UR12e's 12.5 kg; cage nuts and screws are not drawn",
-     "note": "rack units: UPS 23 kg, laser 40 kg, PC, DIN drawer (lift)"
+     "note": "rack units: UPS 23 kg, laser 40 kg, PC, DIN drawer (lift)",
+     "recorded": true
     },
     {
      "step": "T03",
@@ -9947,10 +10147,11 @@
      "actor": "person + lift",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 60,
+     "person_min": 45.0,
      "checker_compute_s": 0.0,
      "force": "the pump exceeds 12.5 kg; the units' screws are not drawn",
-     "note": "gas module: pump 26 kg, blower, filter, O2 box, argon manifold (lift)"
+     "note": "gas module: pump 26 kg, blower, filter, O2 box, argon manifold (lift)",
+     "recorded": true
     },
     {
      "step": "T04",
@@ -9960,10 +10161,11 @@
      "actor": "person",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 60,
+     "person_min": 40.0,
      "checker_compute_s": 0.0,
      "force": "hose and tube routing (deformable, KF wing-nut clamps)",
-     "note": "KF bellows, vacuum valve, argon and O2 lines, release air"
+     "note": "KF bellows, vacuum valve, argon and O2 lines, release air",
+     "recorded": true
     },
     {
      "step": "T05",
@@ -9973,10 +10175,11 @@
      "actor": "person",
      "status": "person",
      "robot_s": 0.0,
-     "person_min": 45,
+     "person_min": 20.0,
      "checker_compute_s": 0.0,
      "force": "cable and hose routing",
-     "note": "tray dock and umbilicals"
+     "note": "tray dock and umbilicals",
+     "recorded": true
     },
     {
      "step": "T06",
@@ -9985,36 +10188,37 @@
      "do": "note",
      "actor": "machine",
      "status": "machine",
-     "robot_s": 3600.0,
+     "robot_s": 0.0,
      "person_min": 0.0,
      "checker_compute_s": 0.0,
      "force": "the seal verification in assembly.md",
-     "note": "leak check: rate of rise from <= 1 mbar and O2 drift (estimate 1 h)"
+     "note": "leak check: rate of rise from <= 1 mbar and O2 drift (estimate 1 h)",
+     "recorded": true
     }
    ],
    "chapters": {
     "40-assembly-module": {
      "steps": 30,
-     "robot_s": 1584.5,
-     "person_min": 133.0,
+     "robot_s": 1707.5,
+     "person_min": 126.5,
      "fail": 0,
      "person_steps": 3,
-     "fetch_trips": 5,
-     "fetch_s": 700.0
+     "fetch_trips": 0,
+     "fetch_s": 0.0
     },
     "41-assembly-chamber": {
-     "steps": 103,
-     "robot_s": 6661.6,
-     "person_min": 389.0,
-     "fail": 27,
+     "steps": 108,
+     "robot_s": 8784.9,
+     "person_min": 258.4,
+     "fail": 12,
      "person_steps": 11,
-     "fetch_trips": 16,
-     "fetch_s": 2240.0
+     "fetch_trips": 0,
+     "fetch_s": 0.0
     },
     "50-integration": {
      "steps": 6,
-     "robot_s": 3600.0,
-     "person_min": 255.0,
+     "robot_s": 0.0,
+     "person_min": 165.0,
      "fail": 0,
      "person_steps": 5,
      "fetch_trips": 0,
@@ -10022,11 +10226,11 @@
     }
    },
    "totals": {
-    "steps": 139,
-    "robot_h": 3.29,
-    "fetch_h": 0.82,
-    "person_h": 12.95,
-    "fail_steps": 27,
+    "steps": 144,
+    "robot_h": 2.91,
+    "fetch_h": 0.0,
+    "person_h": 9.16,
+    "fail_steps": 12,
     "person_steps": 19
    },
    "assumptions": {
@@ -10043,6 +10247,7 @@
     "parts_per_trip": 4,
     "trip_s": 140.0
    },
+   "recorded": "139 steps' robot and person time from the recorded run (assembly.json: motions at cobot speeds incl. the MiR drives to the table; tool changes, docking and persons' minutes are estimates)",
    "method": "ESTIMATES, not measurements: results.json's 'seconds' is the checker's compute time. Robot time = 30 s per placement + the insertion path from sequence.json at 10 mm/s, 20 s + 15 s a screw, 90 s an O-ring or cord, 30 s a flip, 60 s a two-arm carry, 15 s a tool change; MiR trips to the long table are counted per chapter (4 parts a trip, 140 s a round trip). Person minutes per step are listed in build_hud.py (PERSON_MIN), 1 min per screw the arm couldn't drive and 5 min per failed placement."
   }
  },
@@ -10964,11 +11169,11 @@
    "parts": 57
   },
   "assembly": {
-   "steps": 139,
-   "robot_h": 3.29,
-   "mir_fetch_h": 0.82,
-   "person_h": 12.95,
-   "failed_or_partial": 27,
+   "steps": 144,
+   "robot_h": 2.91,
+   "mir_fetch_h": 0.0,
+   "person_h": 9.16,
+   "failed_or_partial": 12,
    "person_or_shop_steps": 19,
    "basis": "estimates (results.json's seconds are compute time)"
   },

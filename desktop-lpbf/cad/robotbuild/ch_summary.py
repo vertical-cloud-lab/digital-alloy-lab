@@ -437,9 +437,11 @@ def _steps(kind):
                 out = [o for o in out if o[0] != sid]
             what, _, fix = str(note).partition("Round 7:")
             out.append((sid, "Failed: " + what.strip().rstrip("."), ("Fix: " + fix.strip()) if fix else ""))
-        for chname, clips in ((load("shop.json") or {}).get("chapters") or {}).items():
+        # the shop worker's summary keeps each chapter's clips in "clips_in_chapters" ("chapters" holds the chapter totals)
+        shop = load("shop.json") or {}
+        for chname, clips in (shop.get("clips_in_chapters") or {}).items():
             for clip, c in clips.items():
-                if "fail" in (c.get("status") or []):
+                if isinstance(c, dict) and "fail" in (c.get("status") or []):
                     out.append(("shop", f"{clip} ({chname}): failed for the arm", "shown with its fix in that chapter"))
     if kind == "person":
         for sid, what, why in (("T01", "Process module (84 kg) onto the VLM tray", "3.4 x two UR12e payloads: lift table"),
