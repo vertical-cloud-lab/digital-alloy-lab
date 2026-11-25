@@ -96,8 +96,10 @@ class Cell:
         self.byname = {p.name: p for p in self.parts}
         self.sc = C.Scene(self.parts, region=REGION, deck=True)
         for nm, (b, p) in list(self.sc.machine.items()):
+            # fits: the zero-point pins (round 6) run in their modules' bores with 0.2 mm radial clearance, which 0.4 mm chords close
             if any(k in nm for k in ("Build plate", "Heater block", "Plate rim wiper", "Build module", "Blade holder", "Recoater arm",
-                                     "Recoater carriage block", "lid with robot handle", "Dovetail rails", "Chamber floor plate")):
+                                     "Recoater carriage block", "lid with robot handle", "Dovetail rails", "Chamber floor plate",
+                                     "Zero-point clamping")):
                 v, f = C.tess(p.shape, 0.05, 0.2)
                 nb = C.Body(nm, v, f, kind="machine", group=p.group, color=p.color, mat=p.mat)
                 nb.place(b.M)
@@ -854,7 +856,9 @@ def job_module(cell: Cell, arm_x=0.0, tilt=0.0, roll=0.0, lift=66.0, **kw):
     R = R_of(a, (1, 0, 0)) @ C.rot((0, 0, 1), roll)
     al = allow_of(*held)
     web = G["web_w"]
-    j.machine("module clamps open; the Z arm drops 45 mm off the rod end", 2.0)
+    # round 6: two SCHUNK NSE-HT mini 88-20 zero-point modules hold the module (no screws). Release air (6 bar) opens both; the Z arm
+    # drops off the rod end. The cell's valve does it: the robot only waits
+    j.machine("release air opens both zero-point clamps; the Z arm drops 45 mm off the rod end", 2.0)
     path = [np.array(q) for q in M.MODULE_PATH]
     k_up = max(i for i, q in enumerate(path) if q[2] > 0.0)          # the last waypoint the model's path rises to (y -190, z +4)
     path = path[:k_up + 1] + [path[k_up] + (0, 0, lift), path[-1] + (0, 0, lift)]
@@ -865,14 +869,14 @@ def job_module(cell: Cell, arm_x=0.0, tilt=0.0, roll=0.0, lift=66.0, **kw):
     j.attach(held, "build module")
     # the module's own fixtures for the first 40 mm: the floor plate's port (since the frame + floor-plate split the port is in the
     # floor plate, not the body), the screw inserts, the module-present sensor 0.3 mm beside the flange tab; the spigot O-ring and the
-    # dowel and diamond pin (a slip fit drawn line on line, so the meshes coincide) and the floor inserts of the two captive screws (drawn
-    # engaged; they stand in for the clamp, released in the first step) are soft, as the seals a part slides over. So is the floor plate,
-    # for this straight 40 mm drop only: the spigot leaves its port (0.1 mm radial fit) and the captive screws' tips, drawn screwed in,
-    # leave their holes (they read 3 mm deep at the first frame); interference.py checks those fits exactly. The floor plate is
-    # tessellated at 0.05 mm (it was 0.4 mm, which put the Ø96 port's chords 0.3 mm into the spigot's 0.1 mm fit)
+    # dowel and diamond pin (a slip fit drawn line on line, so the meshes coincide) are soft, as the seals a part slides over. So is the
+    # floor plate, for this straight 40 mm drop only: the spigot leaves its port (0.1 mm radial fit); interference.py checks those fits
+    # exactly. The floor plate is tessellated at 0.05 mm (it was 0.4 mm, which put the Ø96 port's chords 0.3 mm into the spigot's 0.1 mm
+    # fit). Round 6: the zero-point clamping modules are the module's fixtures for the drop too (their pins leave the bores straight
+    # down, 0.2 mm radial clearance); the round-5 model's captive M6 and their floor inserts are gone (the names match nothing now)
     fixtures = allow_of(*cell.names("Process chamber body"), *cell.names("Chamber floor plate"), *cell.names("helical inserts"),
-                        *cell.names("Helical inserts for the module"), *cell.names("Module-present sensor"), *cell.names("thumb screw"),
-                        *cell.names("Captive M6"), kind="held") | \
+                        *cell.names("Helical inserts for the module"), *cell.names("Module-present sensor"),
+                        *cell.names("Zero-point clamping modules"), kind="held") | \
         frozenset(("soft", n) for n in cell.names("Spigot O-ring") + cell.names("Locating dowel") + cell.names("Helical inserts for the module") +
                   cell.names("Chamber floor plate"))
     for k, (pa, pb) in enumerate(zip(path[:-1], path[1:])):
@@ -1170,7 +1174,7 @@ def render(job: Job, gif_path, png_path=None, size=(480, 360), max_frames=60, st
 
 
 # ------------------------------------------------------------------------------------------------ main
-FOR_MODULES = {"plate_drawbar", "plate_bayonet", "module_swap"}
+FOR_MODULES = {"plate_drawbar", "plate_bayonet", "module_swap", "overflow_jar"}     # the jar: the module's arms and pins differ per module
 
 
 def run_job(cell, name, render_dir=None):
