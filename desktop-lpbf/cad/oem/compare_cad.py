@@ -165,10 +165,13 @@ def vendor_manifold(key, fname, tol):
     shape = vals[0] if len(vals) == 1 else cq.Compound.makeCompound(vals)
     sols = list(shape.Solids())
     note = ""
-    if key == "mcm_3861N11":           # drop the coiled 36 in. lead: the solid that reaches furthest
+    if key == "mcm_3861N11" and os.environ.get("LEAD_RULE", "r6") == "r5":   # round 5: drop the lead solid only
         sols.sort(key=lambda q: -max(q.BoundingBox().xlen, q.BoundingBox().ylen, q.BoundingBox().zlen))
         sols = sols[1:]
         note = "coiled lead solid dropped"
+    elif key == "mcm_3861N11":         # round 6: drop the lead AND its 7 stripped wire ends (every solid beyond the gland,
+        sols = [q for q in sols if max(abs(q.BoundingBox().ymin), abs(q.BoundingBox().ymax)) <= 34.0]   # |y| > 34 mm)
+        note = "lead and its stripped wire ends dropped (solids beyond the gland, |y| > 34 mm); round 5 kept the wire ends"
     U, bad, n = shape_to_manifold(cq.Compound.makeCompound(sols), tol)
     info = dict(solids=n, non_manifold_solids_dropped=bad, note=note, load_s=round(time.time() - t0, 1), sha256_16=h)
     m = U.to_mesh()

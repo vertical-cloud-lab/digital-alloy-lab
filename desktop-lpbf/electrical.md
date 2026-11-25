@@ -64,7 +64,7 @@ drawn in the model ([`io_check.md`](analysis/out/electrical/io_check.md)). The o
    inlet plenum. Then nothing electrical goes into the chamber and FT2 isn't needed. The window port isn't drawn yet.
 10. **The rod-end connector is not real yet.** The drawn LEMO 1B misses the spec (seals.md), and no catalogue part carries 3
     type K pairs plus power. Six single-lead type K weld-ins (Ø6.27 mm sleeves) and one 4-pin 16 A copper weld-in (Ø12.62 mm)
-    do it, but need a rod-end face ~28-30 mm across, not 24 (§6). **Drawn 2026-11-23 (§13.3):** a 72 × 16 mm face in one row, because the rod end cannot grow in height or reach.
+    do it, but need a rod-end face ~28-30 mm across, not 24 (§6). **Drawn 2026-11-23 (§13.3):** a 72 × 16 mm face in one row (81 mm wide since round 6), because the rod end cannot grow in height or reach.
 11. **Missing devices:** home and over-travel sensors on the recoater and Z, a guard-position sensor separate from the lock,
     two more E-stops, a chamber-at-ambient pressure switch, a Pirani gauge port, auto switches on the door actuator (A3's latch
     cylinders carry theirs), an air pressure switch, and a second plate-temperature channel for the door (electrical-io.csv). **Drawn 2026-11-23 (§13.2)** except the LED feedthrough, the chamber-at-ambient switch, the auto switches, the air pressure switch and the second plate channel.
@@ -540,7 +540,7 @@ shows no shadows. The recommendation is a new window low in the back wall, left 
 
 Checks of these parts: see §13.5.
 
-### 13.3 The rod end: a 72 × 16 mm feedthrough face
+### 13.3 The rod end: an 81 × 16 mm feedthrough face (72 mm until round 6)
 
 The rod end is now a 316L block with the rod TIG-welded into its top and **seven weld-in feedthroughs welded at its front (−y)
 face**: Solid Sealing Technology 3 × FA11631 (Chromel) + 3 × FA11632 (Alumel) single-lead type K, Ø6.27 × 38 mm sleeves, and one
@@ -556,13 +556,18 @@ that rail, so nothing may stand more than ~50 mm in front of the rod. A first la
 sleeves standing 35 mm proud) failed both of the last two in the S25 sweep: 120 mm³ into the handle screws at the overtravel and
 320 mm³ into the rail on the way out. So:
 - the power sleeve sits in the middle of the face at zc + 9, 21 mm proud, over a small pocket and a channel into the rod bore;
-- the six type K sleeves sit in one row at zc + 10.5, x = ±12.5, ±21.5 and ±30.5, **26 mm deep in blind bores** with their welds
-  at the face and 12 mm proud; one Ø4 cross-drilling at y +2 joins the bores' ends to the rod bore (its two ends welded shut);
+- the six type K sleeves sit in one row at zc + 10.5, x = ±11.85, ±26.16 and ±34.83 (±12.5, ±21.5, ±30.5 on a 72 mm block until
+  round 6; see the note below), **26 mm deep in blind bores** with their welds at the face and 12 mm proud; one Ø4 cross-drilling at y +2 joins the bores' ends to the rod bore (its two ends welded shut);
 - 2.4-3.1 mm between sleeves and to the face's edges, ≥ 1.9 mm of wall over the striker's pocket.
 
 **Check with Solid Sealing that the single-lead parts can be welded at the face of a blind bore, and the weld access, before
 machining the block.** Everything stays inside the base plate's slot (x ±56), so it passes at the bottom of the stroke and on the
 way out; the plugs (SMPW-K, M12) come off at a module swap.
+
+**Round 6 (2026-11-25): the block is 81 mm wide.** The round-5 block stopped a torque screwdriver reaching 3 of the gland
+plate's 6 M4 screws (hand operations A1.20 and M7.1). The gland plate's screws now sit on the arc behind the block, and the
+type K sleeves spread to x ±11.85, ±26.16 and ±34.83, which leaves an 8 mm gap under the handle's two M4 screws for a straight
+driver. A1.20 and M7.1 pass 6 of 6 on S25, M50 and L75 ([`assembly.md`](assembly.md), [`operations.md`](operations.md)).
 
 ### 13.4 The thermal cutoff: dropped
 

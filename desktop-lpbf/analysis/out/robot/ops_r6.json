@@ -1,0 +1,594 @@
+{
+ "results": [
+  {
+   "job": "liner_right",
+   "module": "M50",
+   "variant": {
+    "arm_x": -450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the door",
+     "ok": true,
+     "why": "",
+     "frames": 124,
+     "secs": 3.08,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 4,
+     "tried": [
+      {
+       "lookahead": "line to [ 94. -76.  76.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      },
+      {
+       "lookahead": "line to [ 94. -76.  76.]: hits MiR250 cap stand (forks for the plate fingers) at s = 0.07"
+      },
+      {
+       "lookahead": "line to [ 94. -76.  76.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      }
+     ]
+    },
+    {
+     "label": "in to the liner's tab, the blades either side of its grip plate",
+     "ok": true,
+     "why": "",
+     "frames": 73,
+     "secs": 7.21,
+     "length_mm": 216.4,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the grip plate",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 2.1
+    },
+    {
+     "label": "4 mm in off the wall (the clips let go)",
+     "ok": true,
+     "why": "",
+     "frames": 4,
+     "secs": 0.13,
+     "length_mm": 4.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "slide 21 mm forward along the wall: the ball screw leaves the slot",
+     "ok": true,
+     "why": "",
+     "frames": 21,
+     "secs": 0.7,
+     "length_mm": 21.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "in to x +/-105, inside the door opening",
+     "ok": true,
+     "why": "",
+     "frames": 16,
+     "secs": 1.03,
+     "length_mm": 31.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "down 6 mm, under the door opening's top",
+     "ok": true,
+     "why": "",
+     "frames": 6,
+     "secs": 0.2,
+     "length_mm": 6.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out through the door",
+     "ok": true,
+     "why": "",
+     "frames": 100,
+     "secs": 10.0,
+     "length_mm": 300.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up clear (to the MiR's rack)",
+     "ok": true,
+     "why": "",
+     "frames": 34,
+     "secs": 0.45,
+     "length_mm": 67.1,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": -450.0,
+   "n_frames": 383,
+   "robot_time_s": 23.6,
+   "max_force_N": 20.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.07,
+   "tool_kg": 1.41,
+   "audit": {
+    "frames": 383,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 1.6,
+    "min_clearance_pair": [
+     "held: right side liner + its tab",
+     "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)"
+    ],
+    "min_clearance_frame": 267,
+    "peak_torque_pct": 33.7,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.0,
+     "cog_mm": [
+      22,
+      26,
+      373
+     ],
+     "cog_margin_mm": 199.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.99
+    },
+    "tip_frame": 195
+   },
+   "plan_s": 55.8,
+   "audit_s": 48.0,
+   "note": "",
+   "gif": "ops_liner_right_M50.gif",
+   "still": "ops_liner_right_M50_tightest.png",
+   "still_frame": 267,
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": -450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "liner_left",
+   "module": "M50",
+   "variant": {
+    "arm_x": -450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the door",
+     "ok": true,
+     "why": "",
+     "frames": 160,
+     "secs": 3.94,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 5,
+     "tried": [
+      {
+       "lookahead": "line to [-94. -76.  76.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      },
+      {
+       "lookahead": "line to [-94. -76.  76.]: hits VLM tray 2450 x 864 mm (context) at s = 0.07"
+      },
+      {
+       "lookahead": "line to [-94. -76.  76.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      }
+     ]
+    },
+    {
+     "label": "in to the liner's tab, the blades either side of its grip plate",
+     "ok": true,
+     "why": "",
+     "frames": 73,
+     "secs": 7.21,
+     "length_mm": 216.4,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the grip plate",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 2.1
+    },
+    {
+     "label": "4 mm in off the wall (the clips let go)",
+     "ok": true,
+     "why": "",
+     "frames": 4,
+     "secs": 0.13,
+     "length_mm": 4.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "slide 21 mm forward along the wall: the ball screw leaves the slot",
+     "ok": true,
+     "why": "",
+     "frames": 21,
+     "secs": 0.7,
+     "length_mm": 21.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "in to x +/-105, inside the door opening",
+     "ok": true,
+     "why": "",
+     "frames": 16,
+     "secs": 1.03,
+     "length_mm": 31.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "down 6 mm, under the door opening's top",
+     "ok": true,
+     "why": "",
+     "frames": 6,
+     "secs": 0.2,
+     "length_mm": 6.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out through the door",
+     "ok": true,
+     "why": "",
+     "frames": 100,
+     "secs": 10.0,
+     "length_mm": 300.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up clear (to the MiR's rack)",
+     "ok": true,
+     "why": "",
+     "frames": 34,
+     "secs": 0.45,
+     "length_mm": 67.1,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": -450.0,
+   "n_frames": 419,
+   "robot_time_s": 24.5,
+   "max_force_N": 20.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.073,
+   "tool_kg": 1.41,
+   "audit": {
+    "frames": 419,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 1.6,
+    "min_clearance_pair": [
+     "held: left side liner + its tab",
+     "Chamber door (6061-T6, 15 mm, drops down; half-dovetail seal groove, latch ears)"
+    ],
+    "min_clearance_frame": 327,
+    "peak_torque_pct": 33.7,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.0,
+     "cog_mm": [
+      14,
+      26,
+      374
+     ],
+     "cog_margin_mm": 199.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.99
+    },
+    "tip_frame": 234
+   },
+   "plan_s": 30.5,
+   "audit_s": 34.9,
+   "note": "",
+   "gif": "ops_liner_left_M50.gif",
+   "still": "ops_liner_left_M50_tightest.png",
+   "still_frame": 327,
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": -450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "reservoir",
+   "module": "M50",
+   "variant": {
+    "arm_x": -390.0,
+    "roll": 0.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the reservoir's pull tab, in front of the bridge slot",
+     "ok": true,
+     "why": "",
+     "frames": 144,
+     "secs": 3.55,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 5,
+     "tried": [
+      {
+       "lookahead": "line to [-90. -84. 252.]: hits VLM front skin under the opening at s = 0.07"
+      },
+      {
+       "lookahead": "line to [-90. -84. 252.]: hits ur/wrist3 at s = 0.07"
+      },
+      {
+       "lookahead": "line to [-90. -84. 252.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      }
+     ]
+    },
+    {
+     "label": "in along the slot, the blades either side of the fin",
+     "ok": true,
+     "why": "",
+     "frames": 73,
+     "secs": 7.22,
+     "length_mm": 216.7,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the fin",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 8.1
+    },
+    {
+     "label": "pull 125 mm off the dock (40 N over the detents)",
+     "ok": true,
+     "why": "",
+     "frames": 42,
+     "secs": 4.17,
+     "length_mm": 125.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "carry it out of the bridge slot and the guard",
+     "ok": true,
+     "why": "",
+     "frames": 52,
+     "secs": 6.83,
+     "length_mm": 205.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "lower it towards the MiR's rack",
+     "ok": true,
+     "why": "",
+     "frames": 34,
+     "secs": 0.45,
+     "length_mm": 67.1,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": -390.0,
+   "n_frames": 350,
+   "robot_time_s": 23.0,
+   "max_force_N": 40.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.385,
+   "tool_kg": 1.38,
+   "audit": {
+    "frames": 350,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 3.5,
+    "min_clearance_pair": [
+     "held: reservoir",
+     "NFC reader antenna (in the dock's side face, reads the tag on the reservoir plate's edge)"
+    ],
+    "min_clearance_frame": 234,
+    "peak_torque_pct": 33.6,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 299.9,
+     "cog_mm": [
+      7,
+      23,
+      378
+     ],
+     "cog_margin_mm": 202.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 2.02
+    },
+    "tip_frame": 207
+   },
+   "plan_s": 87.6,
+   "audit_s": 19.8,
+   "note": "",
+   "gif": "ops_reservoir_M50.gif",
+   "still": "ops_reservoir_M50_tightest.png",
+   "still_frame": 234,
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": -390.0,
+      "roll": 0.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  },
+  {
+   "job": "blade_cartridge",
+   "module": "M50",
+   "variant": {
+    "arm_x": -450.0
+   },
+   "ok": true,
+   "planned_to_end": true,
+   "failed_step": null,
+   "steps": [
+    {
+     "label": "to the door",
+     "ok": true,
+     "why": "",
+     "frames": 132,
+     "secs": 3.25,
+     "branch": 0,
+     "branches": 8,
+     "planned": true,
+     "waypoints": 5,
+     "tried": [
+      {
+       "lookahead": "line to [  0. -71.  22.]: hits MiR250 cabinet (UR control box) at s = 0.07"
+      },
+      {
+       "lookahead": "line to [  0. -71.  22.]: hits VLM front skin under the opening at s = 0.07"
+      },
+      {
+       "lookahead": "line to [   0. -371.   34.]: hits ur/gr/camera at s = 1.00"
+      }
+     ]
+    },
+    {
+     "label": "in over the sill, blades either side of the fin",
+     "ok": true,
+     "why": "",
+     "frames": 73,
+     "secs": 7.22,
+     "length_mm": 216.5,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "close on the fin",
+     "ok": true,
+     "why": "",
+     "frames": 5,
+     "secs": 0.8,
+     "gap_mm": 4.1
+    },
+    {
+     "label": "pull 10 mm out of the arm's pocket (40 N over the plungers, off the dowels)",
+     "ok": true,
+     "why": "",
+     "frames": 10,
+     "secs": 0.33,
+     "length_mm": 10.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "lift 12 mm (the blade's edge over the sill)",
+     "ok": true,
+     "why": "",
+     "frames": 12,
+     "secs": 0.4,
+     "length_mm": 12.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "out through the door",
+     "ok": true,
+     "why": "",
+     "frames": 97,
+     "secs": 9.67,
+     "length_mm": 290.0,
+     "turn_deg": 0.0
+    },
+    {
+     "label": "up clear (to the MiR's tool rack)",
+     "ok": true,
+     "why": "",
+     "frames": 47,
+     "secs": 0.62,
+     "length_mm": 93.0,
+     "turn_deg": 0.0
+    }
+   ],
+   "arm_x": -450.0,
+   "n_frames": 376,
+   "robot_time_s": 22.3,
+   "max_force_N": 40.0,
+   "force_mode_N": 100.0,
+   "payload_kg": 0.197,
+   "tool_kg": 1.41,
+   "audit": {
+    "frames": 376,
+    "frames_in_collision": 0,
+    "frames_movers": 0,
+    "first_bad": [],
+    "bad_frames": [],
+    "min_clearance_mm": 2.0,
+    "min_clearance_pair": [
+     "held: blade cartridge",
+     "Recoater ball nut (flange on the +x face)"
+    ],
+    "min_clearance_frame": 210,
+    "peak_torque_pct": 33.7,
+    "peak_torque_joint": "elbow",
+    "tip": {
+     "mass_kg": 300.0,
+     "cog_mm": [
+      19,
+      26,
+      371
+     ],
+     "cog_margin_mm": 199.0,
+     "force_N": 0.0,
+     "tips_at_N": null,
+     "tips_about": null,
+     "slides_at_N": null,
+     "factor": 1.99
+    },
+    "tip_frame": 198
+   },
+   "plan_s": 41.8,
+   "audit_s": 27.7,
+   "note": "",
+   "gif": "ops_blade_cartridge_M50.gif",
+   "still": "ops_blade_cartridge_M50_tightest.png",
+   "still_frame": 210,
+   "variants_tried": [
+    {
+     "variant": {
+      "arm_x": -450.0
+     },
+     "ok": true,
+     "failed_step": null,
+     "bad_frames": 0
+    }
+   ]
+  }
+ ],
+ "note": "round 6 (2026-11-25), M50, after the liner tab and plunger fixes"
+}

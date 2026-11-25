@@ -29,6 +29,7 @@ import vendor_parts as VP  # noqa: E402
 pv.OFF_SCREEN = True
 OUT = CAD / "img" / "oem"
 BEFORE = pathlib.Path("/tmp/agentE/before_vp/vendor_parts.py")     # git show 0dbb5a3:desktop-lpbf/cad/vendor_parts.py
+BEFORE_R6 = pathlib.Path("/tmp/oem/vendor_parts_before.py")         # round 6: git show 4b2232e:desktop-lpbf/cad/vendor_parts.py
 
 FALLBACK = {   # assumed finishes: (sRGB hex, metallic, roughness)
     "default": ("#8a8f96", 0.0, 0.5),
@@ -37,7 +38,11 @@ FALLBACK = {   # assumed finishes: (sRGB hex, metallic, roughness)
                       "estop": ("#c8231e", 0.0, 0.3), "key_switch": ("#c0c3c7", 1.0, 0.25), "handles": ("#16171a", 0.0, 0.45)},
     "eaton_5px1500rtg2": {"chassis": ("#202226", 0.0, 0.55), "rack_ears": ("#2a2c30", 0.3, 0.5), "bezel": ("#3b3e44", 0.0, 0.5),
                           "badge": ("#d9dadc", 0.8, 0.3), "grille": ("#b9bcc0", 0.8, 0.4), "lcd_module": ("#141518", 0.0, 0.35),
-                          "lcd_screen": ("#5aa0e0", 0.0, 0.1), "led_bar": ("#1e7be0", 0.0, 0.2)},
+                          "lcd_screen": ("#5aa0e0", 0.0, 0.1), "led_bar": ("#1e7be0", 0.0, 0.2), "keys": ("#111017", 0.0, 0.3)},
+    # round 6 (2026-11-25): bodies the photos do not show
+    "edwards_nxds6i": {"feet": ("#1b1c1e", 0.0, 0.8), "fan_guard": ("#3a3d42", 0.0, 0.6)},
+    "filter_train_5169K72": {"stand": ("#b9c0c7", 0.6, 0.5)},
+    "envelope": {"body": ("#8a8f96", 0.0, 0.5)},
 }
 
 
@@ -57,10 +62,20 @@ def hex2rgb(h):
 
 # our body names -> the measured entries of finishes.json (photo-fork names); zones split a one-body part's mesh by cell centre
 ALIAS = {
-    "ipg_ylr500_u3": {"chassis": "chassis side (black)", "front_panel": "front panel, light area (left)",
-                      "fan_grille": "front panel, dark dot-pattern area", "handles": "rack handles (black)"},
-    "eaton_5px1500rtg2": {"grille": "grille (perforated silver bezel, holes included)", "lcd_module": "display module surround (black)",
-                          "lcd_screen": "LCD (lit, blue-white)", "led_bar": "status light bar (blue)", "badge": "Eaton badge"},
+    # round 6: the IPG 4U single-mode front and the Eaton 2000 px front (cad/oem/photo_fit.py, photos ipg_sm_family, eaton_front_2k)
+    "ipg_ylr500_u3": {"chassis": "4U chassis side (black)", "front_panel": "4U front panel, light area", "fan_field": "4U fan field (dark perforated)",
+                      "display": "4U window (light grey)", "handles": "4U handles (black)", "start_button": "4U START (green)",
+                      "estop": "4U mushroom (red)", "fan_grille": "front panel, dark dot-pattern area"},
+    "eaton_5px1500rtg2": {"grille": "grille (perforated silver, holes included)", "lcd_module": "LCD module surround (black)",
+                          "lcd_screen": "LCD (lit)", "led_bar": "LED bar (blue)", "badge": "Eaton badge", "bezel": "bezel frame (dark grey)",
+                          "keys": "keys (dark grey)"},
+    "edwards_nxds6i": {"housing": "housing and fins (painted cast aluminium)", "cowl": "housing and fins (painted cast aluminium)",
+                       "base": "base, side face (painted cast aluminium)", "connector_panel": "connector panel (light grey plate)",
+                       "inlet": "inlet flange, NW25 (stainless)", "exhaust": "exhaust flange, NW25 (stainless)", "lifting_eye": "lifting eye (stainless)"},
+    "transmitter_on_sae4": {"adapter": ("mcm_3861N11", "hex and thread (stainless)"), "hex_and_thread": ("mcm_3861N11", "hex and thread (stainless)"),
+                            "body": ("mcm_3861N11", "body and cable (black)"), "cable_gland": ("mcm_3861N11", "body and cable (black)")},
+    "filter_train_5169K72": {"housing": ("mcm_5169K72", "housing (black)"), "lid": ("mcm_5169K72", "housing (black)"),
+                             "bail_clips": ("mcm_5169K72", "bail clips (steel wire)"), "plumbing": ("mcm_5786N23", "fitting (aluminium)")},
     "clearpath_sd_231x": {"body": "body (black anodised extrusion)", "flange": "flange (machined/cast aluminium front plate)",
                           "fins": "rear housing (die-cast aluminium, fins)", "connectors": "connectors (black plastic)", "shaft": "shaft (ground steel)"},
     "mcm_6627T91": {"body": "housing and end caps (black)", "front": "front face, pilot and shaft (aluminium/steel)"},
@@ -69,8 +84,9 @@ ALIAS = {
     "mcm_4123K45": {"body": "body, end caps, tie bolts (cast 316 stainless)", "flanges": "KF flanges (machined stainless)", "grip": "lever grip (grey vinyl)"},
     "mcm_4518K72": {"body": "clamp (aluminium)"},
     "mcm_5786N25": {"body": ("mcm_5786N23", "fitting (aluminium)")},          # same alloy and finish as the KF-25 fitting
-    "mcm_3861N11": {"body": "body and cable (black)", "hex": "hex and thread (stainless)"},
-    "mcm_5169K72": {"body": "housing (black)"},
+    "mcm_3861N11": {"body": "body and cable (black)", "hex": "hex and thread (stainless)", "hex_and_thread": "hex and thread (stainless)",
+                    "cable_gland": "body and cable (black)"},
+    "mcm_5169K72": {"body": "housing (black)", "housing": "housing (black)", "lid": "housing (black)", "bail_clips": "bail clips (steel wire)"},
 }
 ZONES = {      # key -> f(cell centres Nx3) -> array of zone names (local frames as in vendor_parts)
     "clearpath_sd_231x": lambda c: np.where(c[:, 2] > 0.01, "shaft", np.where(c[:, 2] > -6.05, "flange", np.where(c[:, 1] > 29.6, "connectors",
@@ -78,8 +94,8 @@ ZONES = {      # key -> f(cell centres Nx3) -> array of zone names (local frames
     "mcm_6627T91": lambda c: np.where(c[:, 2] > -0.01, "front", "body"),
     "mcm_6709K12": lambda c: np.where(np.abs(c[:, 0]) > 19.45, "caps", "body"),
     "mcm_4123K45": lambda c: np.where(c[:, 2] > 80.0, "grip", np.where((c[:, 0] < 18.0) | (c[:, 0] > 106.2), "flanges", "body")),
-    "mcm_3861N11": lambda c: np.where(c[:, 2] < 9.0, "hex", "body"),
 }
+ZONES_BEFORE = {"mcm_3861N11": lambda c: np.where(c[:, 2] < 9.0, "hex", "body")}   # round 5's one-body transmitter
 
 
 def finish_for(key, body):
@@ -253,8 +269,90 @@ def logos():
         print("wrote", OUT / f"logo_{key}.png")
 
 
+# --------------------------------------------------------------------------------------------
+# round 6 (2026-11-25): the parts refined in round 6, before (the model's envelope or the builder at 4b2232e) and after
+# --------------------------------------------------------------------------------------------
+def _cylz(r, z0, h, x=0.0, y=0.0):
+    return cq.Solid.makeCylinder(r, h, cq.Vector(x, y, z0), cq.Vector(0, 0, 1))
+
+
+def env_pump():
+    """lpbf_low.py's 'Dry scroll pump' envelope before round 6, in edwards_nxds6i()'s frame (pump placed at (557, 150, z_base1))."""
+    sys.path.insert(0, str(HERE))
+    import drawing_fit
+    return drawing_fit.old_envelope()
+
+
+def env_transducer():
+    """lpbf_low.py's 'Pressure transducer' envelope before round 6, in transmitter_on_sae4()'s frame (z = 0 on the lid)."""
+    return _cylz(5.5, -9.0, 9.0).fuse(_cylz(7.9, 0.0, 12.0)).fuse(_cylz(11.0, 12.0, 52.0)).clean()
+
+
+def env_filter():
+    """lpbf_low.py's 'Sealed cyclone + HEPA housing' envelope before round 6, in filter_train_5169K72()'s frame."""
+    s = _cylz(55.0, 20.0, 220.0).fuse(_cylz(58.0, 240.0, 14.0)).fuse(_cylz(58.0, 20.0, 14.0))
+    return s.fuse(cq.Solid.makeBox(60, 60, 20, cq.Vector(-30, -30, 0))).clean()
+
+
+PARTS_R6 = [   # key, before callable, after callable, label
+    ("edwards_nxds6i", lambda b: env_pump, lambda a: a.edwards_nxds6i, "Edwards nXDS6i dry scroll pump"),
+    ("transmitter_on_sae4", lambda b: env_transducer, lambda a: a.transmitter_on_sae4, "Lid pressure transmitter (3861N11 on SAE-4 adapter)"),
+    ("filter_train_5169K72", lambda b: env_filter, lambda a: a.filter_train_5169K72, "HEPA filter: 5169K72 on KF-25 adapters"),
+    ("mcm_3861N11", lambda b: b.mcm_3861N11, lambda a: a.mcm_3861N11, "McMaster 3861N11 transmitter"),
+    ("mcm_5169K72", lambda b: b.mcm_5169K72, lambda a: a.mcm_5169K72, "McMaster 5169K72 filter housing"),
+    ("ipg_ylr500_u3", lambda b: b.ipg_ylr500_u3, lambda a: a.ipg_ylr500_u3, "IPG YLR-500-U3 (4U)"),
+    ("eaton_5px1500rtg2", lambda b: b.eaton_5px1500rtg2, lambda a: a.eaton_5px1500rtg2, "Eaton 5PX1500RTG2 (2U)"),
+]
+
+
+def parts_r6():
+    OUT.mkdir(parents=True, exist_ok=True)
+    spec = importlib.util.spec_from_file_location("vp_before_r6", BEFORE_R6)
+    before = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(before)
+    tiles, report = [], {}
+    for key, getb, geta, label in PARTS_R6:
+        row = []
+        for tag, fn in (("before", getb(before)), ("after", geta(VP))):
+            shape = fn()
+            c, d = view_for(shape)
+            pl = pv.Plotter(off_screen=True, window_size=(640, 480), lighting="none")
+            pl.set_background("#f4f6f8", top="#d9e0e8")
+            if fn in (env_pump, env_transducer, env_filter):
+                mesh = tess(shape)
+                rgb, m, r, src = finish_for("envelope", "body")
+                pl.add_mesh(mesh, color=rgb, **phong(m, r))
+                used = {"body": "the model's envelope (assumed grey)"}
+            else:
+                if tag == "before" and key in ZONES_BEFORE:
+                    ZONES[key] = ZONES_BEFORE[key]
+                used = add_part(pl, key, fn)
+                ZONES.pop(key, None) if key in ZONES_BEFORE else None
+            pl.add_light(pv.Light(position=tuple(c + np.array([-1.2, -2.0, 1.6]) * d), focal_point=tuple(c), intensity=0.95))
+            pl.add_light(pv.Light(position=tuple(c + np.array([2.0, -0.6, 0.4]) * d), focal_point=tuple(c), intensity=0.35))
+            pl.add_light(pv.Light(position=tuple(c + np.array([0.3, 1.5, 1.0]) * d), focal_point=tuple(c), intensity=0.25))
+            pl.camera.focal_point = tuple(c)
+            pl.camera.position = tuple(c + np.array([-0.9, -1.7, 0.75]) * d * 1.25)
+            pl.camera.up = (0, 0, 1)
+            pl.camera.view_angle = 30
+            pl.add_text(f"{label}: {tag}", position="upper_left", font_size=9, color="#222222")
+            row.append(pl.screenshot(return_img=True))
+            pl.close()
+            report.setdefault(key, {})[tag] = used
+        tiles.append(np.hstack(row))
+    from PIL import Image
+    for i in range(0, len(tiles), 4):
+        grid = np.vstack(tiles[i:i + 4])
+        Image.fromarray(grid).resize((grid.shape[1] * 3 // 4, grid.shape[0] * 3 // 4), Image.LANCZOS).quantize(colors=160).save(
+            OUT / f"before_after_r6_{i // 4 + 1}.png", optimize=True)
+    (OUT / "finish_sources_r6.json").write_text(json.dumps(report, indent=1))
+    print("round-6 parts grid:", len(tiles), "parts")
+
+
 if __name__ == "__main__":
     what = sys.argv[1:] or ["logos", "parts"]
+    if "parts_r6" in what:
+        parts_r6()
     if "parts" in what:
         parts_grid()
     if "logos" in what:

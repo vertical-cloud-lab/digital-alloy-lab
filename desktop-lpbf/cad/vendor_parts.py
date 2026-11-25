@@ -2,8 +2,9 @@
 
 Each builder returns a cq.Shape in the SAME local frame as the generic helper or envelope it replaces. 15 of them are
 now used by lpbf_low.py (integrated 2026-11-20, with the fit changes listed in real-parts.md); swaps() keeps the
-pre-integration swap test (old placements and names) for the record. Built but not yet in the model: mcm_4396K21 and
-mcm_5169K72 (their gas-loop hoses need re-routing) and mcm_3861N11 (the lid port is now SAE-4).
+pre-integration swap test (old placements and names) for the record. Round 6 (2026-11-25, oem-parts.md) adds to the model
+edwards_nxds6i (BOM G2), filter_train_5169K72 (the 5169K72 on KF-25 adapters, BOM G5) and transmitter_on_sae4 (the 3861N11
+on its SAE-4 adapter, BOM G7). Built but not in the model: mcm_4396K21 (the budget pump).
 Dimensions come from the vendor's drawing, listing or datasheet named in SOURCES; where the vendor publishes CAD we
 compare our shape with it by volume and sorted bounding-box extents, the way verify_fasteners.py does. Vendor CAD is
 never committed: it is fetched into /tmp (vendor-cad-manifest.csv records URL, size and sha256).
@@ -97,14 +98,26 @@ SOURCES = {
         dims="KF-25 x KF-25 full-port ball valve: end to end 124.2 (4.89 in.); body 60.45 square (2.38 in.); handle top 91.7 above the axis; lever 138.2 long from the stem (7.89 in. overall). From McMaster's CAD (2026-11-23): 7.5 mm end caps with lobes round 4 x Ø4.8 tie bolts, Ø54.6 centre body, Ø26.6 stem neck flaring to Ø33.8, Ø50 stop plate, lever plate 24 wide rising at 72 deg to a 4.8 thick grip at z 86.9-91.7; bore Ø21.8",
         cad="/tmp/parts-work/vcad/4123K45.STEP", fetched="2026-11-20T14:00Z"),
     "mcm_3861N11": dict(vendor="McMaster-Carr", pn="3861N11", price="$358.05 each", url="https://www.mcmaster.com/3861N11/",
-        dims="1/4 NPT male x 16.5 (0.65 in.); 1.96 in. (49.8) from the thread shoulder to the cable exit; 24 A/F hex (0.94 in.), 27 across corners; 36 in. cable (not drawn beyond a 20 mm stub)",
+        dims="1/4 NPT male x 16.5 (0.65 in.); 1.96 in. (49.8) from the thread shoulder to the cable exit; 36 in. lead (not drawn). From McMaster's CAD (2026-11-25): thread r 5.6-6.9 over 12.7 with a Ø5.4 port, undercut to r 8.7; hex 27 A/F, corners turned to Ø29, 6.5 thick; body Ø24 to 29.8 above the shoulder; cap to the Ø13 gland at 34.7; gland Ø13 to 39.5, Ø10.2 to 50.15",
         cad="/tmp/parts-work/vcad/3861N11.STEP", fetched="2026-11-20T14:00Z"),
     "mcm_5169K72": dict(vendor="McMaster-Carr", pn="5169K72 (+ 9179K14 HEPA element)", price="$107.84 each (element $48.73)", url="https://www.mcmaster.com/5169K72/",
-        dims="housing 3 3/4 in. (95.25) dia x 3 5/8 in. (92.1) high; side inlet boss to 57.4 from the axis; 1/2 NPSC female side inlet, bottom outlet; bracket tabs +/-60.6 (McMaster CAD)",
+        dims="3 3/4 in. dia x 3 5/8 in. high (listing). From McMaster's CAD (2026-11-25): outlet boss Ø27.7 x 14.9 (1/2 NPSC female); can Ø87.9 to z 76.5; side inlet boss Ø25.5 at z 48.8 reaching x 57.4 on a Ø42 pad; lid Ø95 z 76.5..86.5 tapering to Ø76 at z 92.96; two bail clips on +/-y (hinge bracket, latch lever, wire hook over the lid)",
         cad="/tmp/parts-work/vcad/5169K72.STEP", fetched="2026-11-20T14:02Z"),
     "mcm_4396K21": dict(vendor="McMaster-Carr", pn="4396K21", price="$587.53 each", url="https://www.mcmaster.com/4396K21/",
         dims="overall 14 1/2 x 5 5/8 x 12 in. (368.3 x 142.9 x 304.8, to the handle top); layout (motor, pump block, handle, top intake) from the catalogue photo; no CAD offered",
         cad="", fetched="2026-11-20T14:02Z"),
+    "edwards_nxds6i": dict(vendor="Edwards", pn="nXDS6i, A73501983 (standard variant)", price="$5,977.85 (BOM G2)",
+        url="https://cdn.shopify.com/s/files/1/0598/4021/files/nXDS-6i_10i_15i_20i.pdf (page 3: Edwards' dimension drawing); https://global.my.edwardsvacuum.com/en/Catalog/Pumps/Dry-Scroll-Pumps/nXDSi-Scroll-Pumps/nXDS6i/p/A73501983 (26.20 kg, 0.432 m, NW25 in and out)",
+        dims="432 long; 265 over the fins, 282 with the exhaust flange (149 from the centre line); 302 to the lifting eye, 286 to the cowl, 285 to the inlet flange; cowl axis 160 above the feet; NW25 inlet 225 from the motor end, 55 off the centre line; NW25 exhaust on the side, 145 high, 347 from the motor end; feet 189 across, slots on 230 x 120. Section shapes read off the drawing's views (+/-3 mm). Silhouette IoU against the drawing's 5 views: cad/oem/drawing_fit.py",
+        cad="", fetched="2026-11-25T00:42Z"),
+    "sae4_npt_adapter": dict(vendor="(not chosen)", pn="SAE-4 male (7/16-20 O-ring boss) x 1/4 NPT female straight adapter, 316 SS", price="estimate (BOM G7)",
+        url="BOM G7: 'an SAE-4 to 1/4 NPT adapter for the 3861N11 (not found: estimate)'",
+        dims="assumed from typical catalogue adapters: 3/4 in. hex x 17.1, 9.1 stud below the O-ring seat, 26.2 overall, 1/4 NPT female 12 deep; the 3861N11 engages 10 mm",
+        cad="", fetched=""),
+    "filter_train_5169K72": dict(vendor="McMaster-Carr + assumed fittings", pn="5169K72 + 9179K14 on 2 x 1/2 NPT x KF-25 adapters and 2 x KF-25 90 deg elbows, on a 6061 stand",
+        price="see BOM G5 (adapters and elbows not priced)", url="https://www.mcmaster.com/5169K72/",
+        dims="housing as mcm_5169K72, side inlet turned to -y; adapters 20 long; elbows 55 centre to face (assumed); outlet boss 135 above the base plate so the outlet elbow lands on the gas loop's outlet stub (z 60, x +55)",
+        cad="/tmp/oem/vcad/5169K72.STEP", fetched="2026-11-25T00:56Z"),
     "thorlabs_fth160_1064": dict(vendor="Thorlabs", pn="FTH160-1064", price="$1,011.78 (vendor-lookups.csv)", url="https://media.thorlabs.com/globalassets/items/f/ft/fth/fth160-1064/stn012046-e0w.pdf",
         dims="50.2 long; output ring 90 dia x 9.2 (= FFL 191.7 - WD 182.5); nose face 41.0 and cone end 34.8 above the flange (dimensioned); M85x1 thread ~12.5 long and 78 dia step to 29.3 (scaled, not dimensioned); nose 53 dia with a 39 aperture; 0.8 kg; A1 7.5 / A2 12.3 / mirror spacing 20 (Figure 1.3)",
         cad="", fetched="2026-11-20T14:00Z"),
@@ -133,10 +146,10 @@ SOURCES = {
              "The fan-cooled UP55G-600F-HD-D0 is 120 x 120 x 135 mm, 2.75 kg: taller than the 120 mm chamber",
         cad="", fetched="2026-11-23T22:38Z"),
     "ipg_ylr500_u3": dict(vendor="IPG Photonics", pn="YLR-500-U3-SM-AC", price="approx. $23k (quote 2026-11-18)", url="quotes/ipg-ylr-500-u3-sm-ac.md (IPG spec G22-29856 and drawings; PDF not committed)",
-        dims="4U: 176.5 high; 482.3 over the rack ears, 465 body; 506 body deep, 557.2 over the handles; 40 kg. Front (2026-11-23, from IPG's render of a current rack-mount YLR, YLR_Series_Card on cdn.ipgphotonics.com; the U3's own front drawing is not public): control strip x -212..-144 with START (z 138), e-stop (z 88), key switch (z 36); display x -139..-87, z 22..162; slatted fan grille x -62/-14.5..212, z 12..150, 9 deep; 12 x 12 bar handles z 10..166.5 (+/-5 mm, button sizes assumed)",
+        dims="4U: 176.5 high; 482.3 over the rack ears, 465 body; 506 body deep, 557.2 over the handles; 40 kg. Front (2026-11-23, from IPG's render of a current rack-mount YLR, YLR_Series_Card on cdn.ipgphotonics.com; the U3's own front drawing is not public): control strip x -212..-144 with START (z 138), e-stop (z 88), key switch (z 36); display x -139..-87, z 22..162; slatted fan grille x -62/-14.5..212, z 12..150, 9 deep; 12 x 12 bar handles z 10..166.5 (+/-5 mm, button sizes assumed). Front redrawn 2026-11-25 from IPG single-mode family render (YLS_SM_Family_Main, its 4U rack unit): operators at x -177.5 (START z 150.7, mushroom z 119, key z 84.2), window x -152.4..-96 z 74..168, dark perforated fan field over the right ~45 % with a curved left edge and a band along the bottom (+/-6 mm)",
         cad="", fetched="2026-11-23T22:45Z"),
     "eaton_5px1500rtg2": dict(vendor="Eaton", pn="5PX1500RTG2", price="not found", url="https://assets.tripplite.com/product-pdfs/en/5px1500rtg2.pdf",
-        dims="2U, 86.36 high x 436.88 wide x 447.04 deep; 23 kg; rack ears 482.6 (standard 19 in., not stated for this model). Front (2026-11-23, from the datasheet's straight-on photo, 1.04 mm/px): grille x -213.2..115.3, z 4.3..81.2, 1.5 deep; badge x -176.9..-153.8, z 30.2..55.3; LCD module x 120.1..213.2; LCD x 146.4..195.3, z 29.9..66.1; 5 keys at z 19; LED bar z 6..9.5 (+/-2 mm)",
+        dims="2U, 86.36 high x 436.88 wide x 447.04 deep; 23 kg; rack ears 482.6 (standard 19 in., not stated for this model). Front (2026-11-23, from the datasheet's straight-on photo, 1.04 mm/px): grille x -213.2..115.3, z 4.3..81.2, 1.5 deep; badge x -176.9..-153.8, z 30.2..55.3; LCD module x 120.1..213.2; LCD x 146.4..195.3, z 29.9..66.1; 5 keys at z 19; LED bar z 6..9.5 (+/-2 mm). Front re-measured 2026-11-25 on Eaton\'s 2000 px straight-on image (eaton.com 5PX1500RTG2_C, 3.85 px/mm): grille x -207.9..107.0 z 5.8..78.7; badge 31 x 31 at x -187.8..-156.8 z 26.6..57.3; LCD module x 133.6..206.8; LCD x 147.5..187.3 z 35.3..62.6; 5 square keys 13.4 mm at z 9.6..22.8; LED bar z 5.8..8.6 (+/-1 mm)",
         cad="", fetched="2026-11-23T22:40Z"),
 }
 
@@ -328,30 +341,129 @@ def mcm_4123K45(handle="+x"):
     return out.cut(_cyl(10.9, (-1, 0, 0), (1, 0, 0), 126.2))   # full port, open
 
 
-def mcm_3861N11():
-    """McMaster 3861N11 0-15 psia transmitter. Local frame: thread shoulder (hex seat) at z = 0 on the axis, the 1/4 NPT
-    thread below (z -16.5..0, drawn at the 13.7 mm major diameter), body up to the cable exit at z = 49.8, then a 20 mm
-    cable stub (the 36 in. coiled lead is not drawn). Drop-in for the 'Pressure transducer' envelope at (100, 50, lz1)."""
-    thread = _cyl(13.7 / 2, (0, 0, -16.5), (0, 0, 1), 16.5)
-    hexa = cq.Workplane("XY").polygon(6, 27.0).extrude(9.0).val()
-    body = _cyl(11.9, (0, 0, 9.0), (0, 0, 1), 33.0)
-    cap = cq.Solid.makeCone(11.9, 6.0, 7.8, V(0, 0, 42.0), V(0, 0, 1))
-    cable = _cyl(3.0, (0, 0, 49.8), (0, 0, 1), 20.0)
-    return _fuse([thread, hexa, body, cap, cable])
+def mcm_3861N11(bodies=False):
+    """McMaster 3861N11 0-15 psia transmitter. Local frame: the hex's port-side face (the thread shoulder) at z = 0 on the
+    axis, the 1/4 NPT thread below (z -16.5..0), the cable gland ending at z = 50.15 (the listing's 1.96 in. to the cable
+    exit). The 36 in. lead is not drawn. From McMaster's CAD (re-fetched 2026-11-25, sha256 as in cad/oem/cad-manifest.csv):
+    thread r 5.6-6.9 over z -16.5..-4.6 with a Ø5.4 port bore, an undercut flaring to r 8.7 under the hex; hex 27 A/F with
+    its corners turned to Ø29, 6.5 thick; body Ø24 to z 29.8; a cap tapering to the Ø13 gland at z 34.7; gland Ø13 to
+    z 39.5, then Ø10.2 to z 50.15. bodies=True returns the named bodies; their union is the part."""
+    b = {}
+    thread = _revolve([(0, -16.5), (5.6, -16.5), (6.2, -15.9), (6.9, -4.6), (7.4, -3.8), (8.7, -1.5), (8.7, 0.5), (0, 0.5)])
+    hexa = cq.Workplane("XY").polygon(6, 27.0 / math.cos(math.pi / 6)).extrude(6.5).val().rotate(V(0, 0, 0), V(0, 0, 1), 30)
+    b["hex_and_thread"] = _fuse([thread, hexa.intersect(_cyl(14.5, (0, 0, 0), (0, 0, 1), 6.5))]).cut(_cyl(2.7, (0, 0, -17.0), (0, 0, 1), 13.0))
+    b["body"] = _revolve([(0, 6.0), (12.0, 6.0), (12.0, 29.8), (10.4, 31.6), (7.8, 33.3), (6.48, 34.7), (6.48, 39.5), (0, 39.5)])
+    b["cable_gland"] = _cyl(5.08, (0, 0, 39.0), (0, 0, 1), 11.15)
+    return _bodies_or_solid(b, bodies)
+
+
+SAE4_ADAPTER = dict(stud=9.1, hex_af=19.05, hex_h=17.1, npt_depth=12.0, engage=10.0)
+
+
+def sae4_npt_adapter():
+    """Straight adapter, SAE-4 male (7/16-20 UNF O-ring boss) x 1/4 NPT female, 316 SS: BOM G7's 'SAE-4 to 1/4 NPT adapter for
+    the 3861N11 (not found: estimate)'. No catalogue drawing was read: proportions assumed from typical catalogue adapters
+    (3/4 in. hex, 9.1 mm stud below the O-ring seat, 26.2 mm overall, 1/4 NPT female 12 deep). Local frame: the O-ring seat
+    (the hex's bottom face, which lands on the lid) at z = 0, the stud below it."""
+    a = SAE4_ADAPTER
+    stud = _cyl(5.5, (0, 0, -a["stud"]), (0, 0, 1), a["stud"] + 0.5)          # 7/16-20 stud, 0.05 under the port's major radius
+    hexa = cq.Workplane("XY").polygon(6, a["hex_af"] / math.cos(math.pi / 6)).extrude(a["hex_h"]).val()
+    hexa = hexa.intersect(_cyl(10.75, (0, 0, 0), (0, 0, 1), a["hex_h"]))                 # corners turned to Ø21.5
+    return _fuse([stud, hexa]).cut(_cyl(6.7, (0, 0, a["hex_h"] - a["npt_depth"]), (0, 0, 1), a["npt_depth"] + 1.0)).cut(
+        _cyl(2.5, (0, 0, -a["stud"] - 1.0), (0, 0, 1), a["stud"] + a["hex_h"]))
+
+
+def transmitter_on_sae4(bodies=False):
+    """The lid's pressure transmitter as bought: McMaster 3861N11 screwed into the SAE-4 x 1/4 NPT adapter, the adapter in the
+    lid's SAE-4 port. Local frame: the adapter's O-ring seat (the lid's top face) at z = 0, axis vertical. The 3861N11's
+    thread engages 10 mm of the adapter's 12 mm female thread, so its hex sits 6.5 mm above the adapter: shoulder at
+    z = 23.6, gland top at z = 73.75 (the old envelope reached z = 64)."""
+    a = SAE4_ADAPTER
+    zs = a["hex_h"] + (16.5 - a["engage"])
+    t = {k: v.translate(V(0, 0, zs)) for k, v in mcm_3861N11(bodies=True).items()}
+    b = dict(adapter=sae4_npt_adapter(), **t)
+    return _bodies_or_solid(b, bodies)
 
 
 # --------------------------------------------------------------------------------------------
 # Gas module
 # --------------------------------------------------------------------------------------------
-def mcm_5169K72():
-    """McMaster 5169K72 vacuum-rated intake-filter housing (takes the 9179K14 HEPA element), axis vertical.
-    Local frame: axis at x = y = 0, bottom (outlet, 1/2 NPSC female) at z = 0, top at z = 92.1; side inlet boss toward
-    +x; the mounting bracket's two tabs along +/-y. Replaces the 'cyclone + HEPA housing' envelope (no cyclone is chosen)."""
-    can = _revolve([(0, 0), (44.0, 0), (47.6, 4.0), (47.6, 88.1), (44.0, 92.1), (0, 92.1)])
-    boss = _cyl(11.5, (40.0, 0, 46.0), (1, 0, 0), 17.4)
-    tabs = [_box(-13.8, 13.8, sy * 38.3 if sy > 0 else -60.6, 60.6 if sy > 0 else -38.3, 30.0, 34.0) for sy in (-1, 1)]
-    s = _fuse([can, boss] + tabs)
-    return s.cut(_cyl(8.0, (45.0, 0, 46.0), (1, 0, 0), 14.0)).cut(_cyl(8.0, (0, 0, -1.0), (0, 0, 1), 12.0))   # 1/2 NPSC ports
+def mcm_5169K72(bodies=False):
+    """McMaster 5169K72 vacuum-rated intake-filter housing (takes the 9179K14 HEPA element), axis vertical. Local frame: axis
+    at x = y = 0, the bottom of the outlet boss (1/2 NPSC female) at z = 0, the lid's top at z = 92.96; the side inlet boss
+    toward +x; the bail clips on +/-y. From McMaster's CAD (re-fetched 2026-11-25, sha256 as in cad/oem/cad-manifest.csv;
+    it draws the can solid): outlet boss Ø27.7 x 14.9; can Ø87.9 over z 14.9..76.5 with a 2.2 mm bottom chamfer; side inlet
+    boss Ø25.5 at z 48.8 reaching x 57.4, on a Ø42 pad to x 48.5; lid Ø95 over z 76.5..86.5, tapering to Ø76 at the top;
+    two bail clips (hinge block, latch lever, Ø3 wire hook over the lid's edge). bodies=True returns the named bodies."""
+    b = {}
+    can = _revolve([(0, 0), (13.87, 0), (13.87, 14.9), (41.7, 14.9), (43.94, 17.1), (43.94, 76.6), (0, 76.6)])
+    pad = _cyl(21.0, (38.0, 0, 48.8), (1, 0, 0), 10.5)
+    boss = _cyl(12.75, (45.0, 0, 48.8), (1, 0, 0), 12.4)
+    b["housing"] = _fuse([can, pad, boss]).cut(_cyl(10.6, (44.0, 0, 48.8), (1, 0, 0), 14.0)).cut(_cyl(10.6, (0, 0, -1.0), (0, 0, 1), 14.0))
+    b["lid"] = _revolve([(0, 76.5), (47.5, 76.5), (47.5, 86.5), (44.8, 90.1), (38.0, 92.96), (0, 92.96)])
+    clips = []
+    for sy in (-1, 1):
+        y0, y1 = sorted((sy * 42.0, sy * 56.6))
+        clips += [_box(sx * 7.7, sx * 9.2, y0, y1, 44.3, 63.4) if sx > 0 else _box(-9.2, -7.7, y0, y1, 44.3, 63.4) for sx in (-1, 1)]   # hinge bracket
+        y0, y1 = sorted((sy * 56.5, sy * 57.7))
+        clips.append(_box(-6.0, 6.0, y0, y1, 11.2, 58.1))                                     # latch lever
+        for sx in (-1, 1):                                                                   # wire hook over the lid's edge
+            clips.append(_cyl(1.5, (sx * 12.3, sy * 59.0, 45.0), (0, 0, 1), 48.3))
+            clips.append(_cyl(1.5, (sx * 12.3, sy * 59.0, 93.3), (0, -sy, 0), 23.0))
+        clips.append(_cyl(1.5, (-12.3, sy * 59.0, 45.0), (1, 0, 0), 24.6))
+    b["bail_clips"] = _fuse(clips)
+    return _bodies_or_solid(b, bodies)
+
+
+KF25_ELBOW_CF = 55.0          # KF-25 90 deg elbow, centre to face (assumed: no catalogue drawing read)
+
+
+def _kf25_flange(p, d):
+    """ISO-KF 25 flange (OD 40, 5.5 thick, 15 deg back taper drawn as a 2 mm chamfer) with its sealing face at p, facing d."""
+    fl = cq.Workplane("XY").circle(20.0).extrude(-5.5).faces("<Z").chamfer(2.0).val()
+    dv = V(*d).normalized()
+    z = V(0, 0, 1)
+    ax = z.cross(dv)
+    ang = math.degrees(math.acos(max(-1.0, min(1.0, z.dot(dv)))))
+    if ax.Length > 1e-9:
+        fl = fl.rotate(V(0, 0, 0), ax, ang)
+    elif ang > 90:
+        fl = fl.rotate(V(0, 0, 0), V(1, 0, 0), 180)
+    return fl.translate(V(*p))
+
+
+def filter_train_5169K72(bodies=False):
+    """The G5 filter as placed in the gas module (issue #260, round 6): the 5169K72 housing upright with its side inlet turned
+    to -y (toward the front), plumbed with KF-25 parts so that the gas loop's existing outlet stub (pointing +x at z 60 above
+    the base plate, its tube end 55 mm from the housing axis) is unchanged:
+    - outlet: a 1/2 NPT male x KF-25 adapter (20 mm below the boss) and a KF-25 90 deg elbow (centre to face 55, assumed),
+      whose horizontal face lands on the outlet stub;
+    - inlet: the same adapter on the side boss, then an elbow turning up, to the inlet stub (moved over the elbow);
+    - a 6061 stand (a 30 x 15 post on the base plate with a saddle under the can, assumed).
+    Local frame: housing axis at x = y = 0, z = 0 on the gas module's base plate; the outlet boss's bottom at z = 135.
+    bodies=True returns the named bodies (housing parts and the plumbing); their union is the part."""
+    z0 = 60.0 + KF25_ELBOW_CF + 20.0                     # 135: outlet axis at z 60, elbow, 20 mm adapter
+    hb = mcm_5169K72(bodies=True)
+    b = {k: v.rotate(V(0, 0, 0), V(0, 0, 1), -90).translate(V(0, 0, z0)) for k, v in hb.items()}   # side boss +x -> -y
+    cf = KF25_ELBOW_CF
+    # outlet: adapter (Ø25.4 tube, KF face at z0 - 20) and elbow down then +x, its face at x = cf (the outlet stub's tube end)
+    pipes = [_cyl(12.7, (0, 0, z0 - 20.0), (0, 0, 1), 20.5), _kf25_flange((0, 0, z0 - 20.0), (0, 0, -1)),
+             _kf25_flange((0, 0, z0 - 20.0), (0, 0, 1)),
+             _cyl(12.7, (0, 0, 60.0), (0, 0, 1), z0 - 20.0 - 60.0), _cyl(12.7, (0, 0, 60.0), (1, 0, 0), cf), cq.Solid.makeSphere(12.7).translate(V(0, 0, 60.0)),
+             _kf25_flange((cf, 0, 60.0), (1, 0, 0))]
+    # inlet: side boss end at y = -57.4; adapter to y -77.4; elbow centre at y -132.4, turning up to the face at z_in + cf
+    zi = z0 + 48.8
+    yb = -57.4 - 20.0
+    pipes += [_cyl(12.7, (0, -57.0, zi), (0, -1, 0), 20.4), _kf25_flange((0, yb, zi), (0, 1, 0)), _kf25_flange((0, yb, zi), (0, -1, 0)),
+              _cyl(12.7, (0, yb, zi), (0, -1, 0), cf), cq.Solid.makeSphere(12.7).translate(V(0, yb - cf, zi)),
+              _cyl(12.7, (0, yb - cf, zi), (0, 0, 1), cf), _kf25_flange((0, yb - cf, zi + cf), (0, 0, 1))]
+    b["plumbing"] = _fuse(pipes).cut(_cyl(11.1, (0, 0, z0 - 21.0), (0, 0, 1), 22.0))
+    stand = [_box(-15.0, 15.0, 52.0, 67.0, 0.0, z0 + 14.9), _box(-15.0, 15.0, 30.0, 67.0, z0 + 6.0, z0 + 14.9)]   # saddle under the can
+    b["stand"] = _fuse(stand)
+    return _bodies_or_solid(b, bodies)
+
+
+FILTER_TRAIN_INLET = (0.0, -57.4 - 20.0 - KF25_ELBOW_CF, 60.0 + KF25_ELBOW_CF + 20.0 + 48.8 + KF25_ELBOW_CF)   # inlet KF face (local)
 
 
 def mcm_4396K21():
@@ -370,6 +482,58 @@ def mcm_4396K21():
                     _cyl(9.5, (-L / 2 + 150, 0, 205), (0, 0, 1), H - 205 - 9.5)])
     intake = _fuse([_cyl(8.0, (-L / 2 + 95, 30, 205), (0, 0, 1), 40), _cyl(6.0, (-L / 2 + 75, 30, 235), (1, 0, 0), 40)])
     return _fuse([feet, motor, endcap, block, sw, handle, intake])
+
+
+def edwards_nxds6i(bodies=False):
+    """Edwards nXDS6i dry scroll pump (A73501983; the 6i/10i/15i/20i share one body: 'all variants are the same'). From Edwards'
+    dimension drawing as reproduced on page 3 of Provac's nXDS 6i/10i/15i/20i sheet (see SOURCES): 432 long; 265 wide over
+    the fins, 282 with the exhaust flange (149 from the centre line); 302 high to the lifting eye, 286 to the top of the fan
+    cowl, 285 to the inlet flange; fan and cowl axis 160 above the feet; inlet NW25 225 from the motor end and 55 off the
+    centre line; exhaust NW25 on the side, 145 high and 347 from the motor end; rubber feet 189 across; mounting slots on a
+    230 x 120 pattern. Section shapes, the 8 side fins per side, the base and the connector panel are read off the drawing's
+    views at 1.26 px/mm (+/-3 mm); nothing inside the cowl is drawn.
+    Local frame: x from the motor end (x = 0) to the fan end (x = 432); y = 0 on the centre line, with the exhaust, the inlet
+    offset and the connector panel on -y (the drawing's side view looks at the exhaust with the fan end on the right);
+    z = 0 under the feet. bodies=True returns the named bodies (for per-body finishes); their union is the part."""
+    L, zc = 432.0, 160.0
+    b = {}
+    # scroll housing, x 0..305. Its section is round about the cowl axis and widens toward the cowl: half-width 108 at the
+    # motor end to 124 at x 300 in the drawing's plan view (core cone R 102 -> 116, fins 8 proud of it). Side profile from
+    # the side views: motor-end block x 0..65 to z 256, top at z 245, rising from x 235 to the cowl's top at x 305.
+    side = _prism_y([(0, 92.0), (0, 256.0), (65.0, 256.0), (68.0, 245.0), (235.0, 245.0), (305.0, 286.0), (305.0, 92.0)], -150, 150)
+    core = cq.Solid.makeCone(102.0, 116.0, 305.0, V(0, 0, zc), V(1, 0, 0)).intersect(side)
+    fins = []
+    for zk in (103.0, 120.0, 137.0, 155.0, 173.0, 191.0, 210.0, 228.0):                 # side fins, z read off the side views
+        slab = _box(4.0, 303.0, -140.0, 140.0, zk, zk + 3.0).intersect(cq.Solid.makeCone(112.0, 128.0, 305.0, V(0, 0, zc), V(1, 0, 0)))
+        fins.append(slab.cut(_box(3.0, 304.0, -70.0, 70.0, zk - 1.0, zk + 4.0)).intersect(side))
+    shoulder = _prism_y([(232.0, 238.0), (305.0, 286.0), (305.0, 238.0)], -150, 150).intersect(_box(230.0, 306.0, -80.0, 80.0, 230.0, 290.0))
+    eye_boss = _cyl(15.0, (177.0, 0, 238.0), (0, 0, 1), 24.0)                              # boss under the lifting eye
+    b["housing"] = _fuse([core, shoulder, eye_boss] + fins)
+    # fan cowl, x 305..428: R 128 with a ~30 mm end radius (side views); its underside sweeps from the base (x 305, z 6) up to
+    # z 100 at the fan end, as the drawing's side views show
+    prof = [(0, 0), (130.0, 0), (130.0, 90.0), (126.0, 100.0), (118.0, 110.0), (106.0, 118.0), (90.0, 122.0), (0, 123.0)]   # (r, x - 305)
+    cowl = _revolve(prof).rotate(V(0, 0, 0), V(0, 1, 0), 90).translate(V(305.0, 0, zc))
+    cowl = cowl.intersect(_prism_y([(300.0, 0), (312.0, 6.0), (330.0, 14.0), (350.0, 26.0), (372.0, 48.0), (392.0, 74.0), (408.0, 90.0),
+                                    (425.0, 99.0), (440.0, 100.0), (440.0, 286.0), (300.0, 286.0)], -150, 150))
+    cowl = cowl.cut(_cyl(76.0, (L - 8.0, 0, zc), (1, 0, 0), 12.0))                          # fan recess, 4 deep in the end face (x 428)
+    b["cowl"] = cowl.clean()
+    grille = _cyl(76.0, (L - 8.0, 0, zc), (1, 0, 0), 1.5)
+    for r0, r1 in ((14.0, 24.0), (30.0, 40.0), (46.0, 56.0), (62.0, 72.0)):                 # concentric openings of the guard
+        grille = grille.cut(_cyl(r1, (L - 9.0, 0, zc), (1, 0, 0), 4.0).cut(_cyl(r0, (L - 10.0, 0, zc), (1, 0, 0), 6.0)))
+    bars = [_box(L - 8.0, L, -100.0, 100.0, zk, zk + 3.0) for zk in (126.0, 144.0, 162.0, 180.0, 198.0)]   # the guard's horizontal bars,
+    b["fan_guard"] = _fuse([grille, _box(L - 8.0, L - 6.5, -3.0, 3.0, zc - 74.0, zc + 74.0)] + bars)       # 4 proud of the face
+    b["base"] = _rbox(42.0, 300.0, -110.0, 110.0, 8.0, 100.0, 20.0)                   # 220 wide over z 8..100 (front and rear views)
+    b["feet"] = _fuse([_cyl(16.0, (x, sy * 78.5, 0), (0, 0, 1), 8.5) for x in (62.0, 278.0) for sy in (-1, 1)])
+    b["connector_panel"] = _box(101.0, 254.0, -111.5, -109.0, 12.0, 62.0)
+    xi, yi = 225.0, -55.0                                                                  # inlet NW25, flange top z 285
+    b["inlet"] = _fuse([_cyl(17.0, (xi, yi, 230.0), (0, 0, 1), 49.5), _cyl(20.0, (xi, yi, 279.0), (0, 0, 1), 6.0)]).cut(
+        _cyl(12.25, (xi, yi, 236.0), (0, 0, 1), 50.0))
+    xe, ze = 347.0, 145.0                                                                  # exhaust NW25, flange face y -149
+    b["exhaust"] = _fuse([_cyl(15.0, (xe, -100.0, ze), (0, -1, 0), 43.5), _cyl(20.0, (xe, -143.0, ze), (0, -1, 0), 6.0)]).cut(
+        _cyl(12.25, (xe, -110.0, ze), (0, -1, 0), 40.0))
+    ring = _cyl(19.0, (177.0, -4.0, 283.0), (0, 1, 0), 8.0).cut(_cyl(11.0, (177.0, -5.0, 283.0), (0, 1, 0), 10.0))   # eye Ø38, top z 302
+    b["lifting_eye"] = _fuse([ring, _cyl(5.0, (177.0, 0, 240.0), (0, 0, 1), 26.0)])
+    return _bodies_or_solid(b, bodies)
 
 
 # --------------------------------------------------------------------------------------------
@@ -473,30 +637,30 @@ def ipg_ylr500_u3(bodies=False):
     """IPG YLR-500-U3-SM-AC, 4U 19 in. chassis. Local frame: x centred, y = 0 at the rack-ear plane (rear face of the
     front panel), +y into the rack, z = 0 at the chassis bottom. Body 465 x 506 x 176.5, front panel 482.3 wide x 3 thick
     (it carries the ears), two handles to 557.2 - 506 = 51.2 in front of the body (IPG drawing, quotes/ipg-ylr-500-u3-sm-ac.md).
-    Front-panel layout (2026-11-23) from IPG's own render of the rack-mount YLR-U family (YLR_Series_Card, cdn.ipgphotonics.com;
-    the same front as the 4U U3 drawing: fans behind the front panel), read as fractions of the panel width and height:
-    a dark control strip at the left (green START button, red emergency-stop mushroom, key switch, top to bottom), a portrait
-    touch display next to it, and a recessed black fan grille with horizontal slats over the right ~55 %, its left edge slanted;
-    vertical bar handles on both ears. Positions +/-5 mm, button sizes from standard 22 mm operators (assumed).
+    Front (round 6, 2026-11-25) from IPG's own render of its single-mode family (YLS_SM_Family_Main hero image on IPG's
+    'Single-Mode Fiber Lasers' page, cdn.ipgphotonics.com; see cad/oem/photo-manifest.csv), whose 4U rack unit is the
+    single-mode rack laser with 'fans on the front panel' that the U3 drawing describes. Read off the 4U unit's front face
+    as fractions of its width and height (1 px = 2.9 mm, the face seen ~30 deg off-axis: positions +/-6 mm): a light panel
+    carrying one column of operators at x -177.5 (green START Ø29 at z 150.7, red mushroom Ø36 at z 119, key switch Ø29 at
+    z 84.2), a light-grey portrait window next to it (x -152.4..-96, z 74..168) and the IPG logo; a dark perforated fan field
+    over the right ~45 % whose left edge sweeps down in a curve to a band along the bottom under the operators (drawn as a
+    1 mm recess; the perforation is a colour); black vertical bar handles on both ears. Round 5 drew IPG's 3U style (a
+    slatted grille beside a dark control strip and a touch display), from a family card that does not show the 4U unit.
     bodies=True returns the named bodies (for per-body finishes in cad/oem/render_oem.py); their union is the part."""
     H, W = 176.5, 482.3
     b = {}
     b["chassis"] = _box(-232.5, 232.5, 0, 506.0, 0, H)
+    field = [(-1.9, 168.0), (215.0, 168.0), (215.0, 7.0), (-205.0, 7.0), (-205.0, 57.5), (-192.0, 57.5), (-105.6, 61.8), (-71.9, 68.0),
+             (-52.6, 80.1), (-33.3, 112.8), (-14.0, 153.7)]                              # the fan field's outline (x, z)
+    win = (-152.4, -96.0, 74.0, 168.0)
     panel = _box(-W / 2, W / 2, -3.0, 0, 0, H)
-    vent = [(-62.0, 12.0), (212.0, 12.0), (212.0, 150.0), (-14.5, 150.0)]           # slanted left edge, as in the render
-    vent_cut = _prism_y(vent, -3.01, 6.0)
-    strip = _box(-212.0, -144.0, -3.01, -2.5, 8.0, 168.5)                            # control strip, 0.5 mm recess
-    disp = _box(-139.0, -87.0, -3.01, -1.5, 22.0, 162.0)                             # touch display, 1.5 mm recess
-    b["front_panel"] = panel.cut(vent_cut).cut(strip).cut(disp)
-    b["chassis"] = b["chassis"].cut(vent_cut)
-    b["control_strip"] = _box(-212.0, -144.0, -2.5, 0, 8.0, 168.5)
-    b["display"] = _box(-139.0, -87.0, -1.5, 0, 22.0, 162.0)
-    slats = [_box(-70.0, 215.0, -1.0, 6.0, z, z + 3.0) for z in [13.5 + 12.5 * k for k in range(11)]]
-    b["fan_grille"] = _fuse([_prism_y(vent, 4.0, 6.0)] + slats).intersect(_prism_y(vent, -1.0, 6.0))
-    xc = -178.0
-    b["start_button"] = _fuse([_cyl(15.0, (xc, -2.5, 138.0), (0, -1, 0), 3.0), _cyl(11.0, (xc, -5.5, 138.0), (0, -1, 0), 4.0)])
-    b["estop"] = _fuse([_cyl(17.0, (xc, -2.5, 88.0), (0, -1, 0), 8.0), _cyl(20.0, (xc, -10.5, 88.0), (0, -1, 0), 12.0)])
-    b["key_switch"] = _fuse([_cyl(14.0, (xc, -2.5, 36.0), (0, -1, 0), 4.0)]).cut(_box(xc - 1.0, xc + 1.0, -6.6, -4.5, 30.0, 42.0))
+    b["front_panel"] = panel.cut(_prism_y(field, -3.01, 0.01)).cut(_box(win[0], win[1], -3.01, 0.01, win[2], win[3]))
+    b["fan_field"] = _prism_y(field, -2.0, 0.0)                                      # 1 mm recess
+    b["display"] = _box(win[0], win[1], -2.5, 0, win[2], win[3])                       # light-grey window, 0.5 mm recess
+    xc = -177.5
+    b["start_button"] = _fuse([_cyl(14.5, (xc, -2.5, 150.7), (0, -1, 0), 3.5), _cyl(11.0, (xc, -5.5, 150.7), (0, -1, 0), 4.0)])
+    b["estop"] = _fuse([_cyl(14.0, (xc, -2.5, 119.0), (0, -1, 0), 6.0), _cyl(18.0, (xc, -8.0, 119.0), (0, -1, 0), 11.0)])
+    b["key_switch"] = _fuse([_cyl(14.5, (xc, -2.5, 84.2), (0, -1, 0), 4.0)]).cut(_box(xc - 1.0, xc + 1.0, -6.6, -4.5, 78.2, 90.2))
     hd = []
     for sx in (-1, 1):                     # vertical bar handles nearly the panel's height (IPG render), 12 x 12 bars
         xh = sx * (W / 2 - 14.0)
@@ -506,35 +670,35 @@ def ipg_ylr500_u3(bodies=False):
     return _bodies_or_solid(b, bodies)
 
 
-def eaton_5px1500rtg2(bodies=False):
+def eaton_5px1500rtg2(bodies=False, ears=True):
     """Eaton 5PX1500RTG2 2U UPS (datasheet: 86.36 x 436.88 x 447.04, 23 kg). Same frame as ipg_ylr500_u3(): y = 0 at the
     rack-ear plane, the 3 mm front at y -3..0. The 482.6 mm ear width is the 19 in. standard (not stated for this model).
-    Front (2026-11-23) from Eaton's product photo in the datasheet (assets.tripplite.com 5px1500rtg2.pdf, image 3: a
-    straight-on view whose bezel measures 5.05:1, the datasheet's 436.88 / 86.36 = 5.06): a dark-grey frame bezel, a
-    silver perforated grille over its left 75 % with the Eaton badge near its left end, and the black LCD module at the
-    right end (portrait LCD, five buttons, the blue LED status bar along its bottom). The bezel is the full 436.88 width,
-    with the rack ears beside it (they were drawn across the whole front). Positions +/-2 mm (1.04 mm per photo pixel);
-    the perforation is a render texture, not drawn. bodies=True returns the named bodies; their union is the part."""
+    Front (round 6, 2026-11-25) from Eaton's own straight-on product image (eaton.com SKU page, 5PX1500RTG2_C at 2000 x 2000 px:
+    the bezel spans 1680 x 326 px, 3.85 px/mm across and 3.78 px/mm down; round 5 had only the datasheet's 500 px photo):
+    a dark-grey bezel frame round a silver perforated grille (x -207.9..107.0, z 5.8..78.7) with the Eaton badge (31 x 31,
+    x -187.8..-156.8, z 26.6..57.3); a dark slot to x 117.2; the black LCD module (x 133.6..206.8, z 5.8..78.7) with the lit
+    LCD (x 147.5..187.3, z 35.3..62.6), five square keys (13.4 mm, centres x 142.0, 156.8, 170.8, 185.1, 199.6, z 9.6..22.8)
+    and the blue LED bar along its bottom (z 5.8..8.6). Positions +/-1 mm. The perforation (Ø4.1 holes, 6.7 x 7.4 mm
+    staggered pitch) is a colour, not drawn. ears=False leaves the rack ears off (Eaton's photos show the unit without them).
+    bodies=True returns the named bodies; their union is the part."""
     H, Wb = 86.36, 436.88
     b = {}
     b["chassis"] = _box(-Wb / 2, Wb / 2, 0, 447.04, 0, H)
-    b["rack_ears"] = _fuse([_box(-482.6 / 2, -Wb / 2, -3.0, 0, 0, H), _box(Wb / 2, 482.6 / 2, -3.0, 0, 0, H)])
-    xg0, xg1, zg0, zg1 = -213.2, 115.3, 4.3, 81.2                                     # grille window
-    xm0, xm1 = 120.1, 213.2                                                          # LCD module window
-    bez = _box(-Wb / 2, Wb / 2, -3.0, 0, 0, H).cut(_box(xg0, xg1, -3.01, 0.01, zg0, zg1)).cut(_box(xm0, xm1, -3.01, 0.01, 4.0, 82.0))
-    b["bezel"] = bez
-    badge = _box(-176.9, -153.8, -3.0, 0, 30.2, 55.3)
+    if ears:
+        b["rack_ears"] = _fuse([_box(-482.6 / 2, -Wb / 2, -3.0, 0, 0, H), _box(Wb / 2, 482.6 / 2, -3.0, 0, 0, H)])
+    xg0, xg1, zg0, zg1 = -207.9, 107.0, 5.8, 78.7                                     # grille window
+    xm0, xm1 = 133.6, 206.8                                                          # LCD module window
+    bez = _box(-Wb / 2, Wb / 2, -3.0, 0, 0, H).cut(_box(xg0, xg1, -3.01, 0.01, zg0, zg1)).cut(_box(xm0, xm1, -3.01, 0.01, zg0, zg1))
+    b["bezel"] = bez.cut(_box(xg1, 117.2, -3.01, -1.0, zg0, zg1))                       # the dark slot beside the grille, 2 mm deep
+    badge = _box(-187.8, -156.8, -3.5, 0, 26.6, 57.3)                                # 0.5 mm proud of the bezel plane
     b["badge"] = badge
     b["grille"] = _box(xg0, xg1, -1.5, 0, zg0, zg1).cut(badge)
-    scr = _box(146.4, 195.3, -3.01, -2.0, 29.9, 66.1)
-    led = _box(128.0, 208.0, -3.01, -2.6, 6.0, 9.5)
-    btns = [_cyl(3.5, (134.0 + 16.25 * k, -3.01, 19.0), (0, 1, 0), 0.6) for k in range(5)]
-    mod = _box(xm0, xm1, -3.0, 0, 4.0, 82.0).cut(scr).cut(led)
-    for c in btns:
-        mod = mod.cut(c)
-    b["lcd_module"] = mod
-    b["lcd_screen"] = _box(146.4, 195.3, -2.0, 0, 29.9, 66.1)
-    b["led_bar"] = _box(128.0, 208.0, -2.6, 0, 6.0, 9.5)
+    scr = _box(147.5, 187.3, -3.01, -2.0, 35.3, 62.6)
+    led = _box(xm0 + 1.3, xm1 - 0.9, -3.01, -2.6, zg0, 8.6)
+    b["lcd_module"] = _box(xm0, xm1, -3.0, 0, zg0, zg1).cut(scr).cut(led)
+    b["lcd_screen"] = _box(147.5, 187.3, -2.0, 0, 35.3, 62.6)
+    b["led_bar"] = _box(xm0 + 1.3, xm1 - 0.9, -2.6, 0, zg0, 8.6)
+    b["keys"] = _fuse([_box(xk - 6.7, xk + 6.7, -4.0, -2.9, 9.6, 22.8) for xk in (142.0, 156.8, 170.8, 185.1, 199.6)])   # 1 mm proud
     return _bodies_or_solid(b, bodies)
 
 
@@ -661,7 +825,7 @@ GENERIC = [
     ("NFC reader antenna", "env", "Adafruit 364 board: not drawn"),
     ("Load cell", "env", "Laumas ALLUE3: not drawn yet"),
     ("Layer camera", "env", "Raspberry Pi HQ camera + C-mount lens: not drawn yet"),
-    ("Pressure transducer", "env", "McMaster 3861N11 builder exists, not used: the lid port is now SAE-4 (needs a -4 SAE transmitter or adapter)"),
+    ("Pressure transducer", "done", "McMaster 3861N11 on an SAE-4 x 1/4 NPT adapter (transmitter_on_sae4, round 6; the adapter's dimensions are assumed)"),
     ("Overpressure relief valve", "env", "McMaster 4277T52: page needs a set-pressure choice before CAD; not fetched"),
     ("Door hinge leaves", "env", "labelled 1151A87 but drawn as custom knuckles; 1151A87 is a 3 x 3 in. two-leaf hinge (CAD fetched)"),
     ("Door hinge knuckles on the chamber", "env", "as above"),
@@ -676,11 +840,11 @@ GENERIC = [
     ("Coaxial photodiode chain", "env", "Thorlabs PDA36A2 + SM1 tube: envelope assumed"),
     ("Calibration power head", "done", "Gentec-EO UP55M-500W-H12-D0 (89 x 89 x 43, page dimensions)"),
     ("Process fiber", "env", "IPG delivery cable (Ø8.5 per IPG's QBH drawing; drawn Ø10)"),
-    ("Dry scroll pump", "env", "McMaster 4396K21 builder exists, not used yet: the vacuum hose must be re-routed to its flare intake"),
-    ("Pump inlet (KF-25)", "env", "needs a flare-to-NPT adapter + 4518K49 (BOM G2)"),
-    ("Sealed cyclone + HEPA housing", "env", "McMaster 5169K72 builder exists, not used yet: hoses must be re-routed to its 1/2 NPSC ports"),
-    ("Filter inlet (KF-25)", "env", "5169K72 ports are 1/2 NPSC: adapters not chosen"),
-    ("Filter outlet (KF-25)", "env", "as above"),
+    ("Dry scroll pump", "done", "Edwards nXDS6i A73501983 (edwards_nxds6i, round 6, from Edwards' dimension drawing; no CAD is public)"),
+    ("Pump inlet (KF-25)", "done", "McMaster 5786N23-type KF-25 stub on the nXDS6i's NW25 inlet (round 6)"),
+    ("Sealed cyclone + HEPA housing", "done", "McMaster 5169K72 + 9179K14 on KF-25 adapters and elbows (filter_train_5169K72, round 6; adapters, elbows and stand assumed)"),
+    ("Filter inlet (KF-25)", "done", "KF-25 stub on the inlet elbow (round 6)"),
+    ("Filter outlet (KF-25)", "done", "KF-25 stub on the outlet elbow (round 6)"),
     ("Sealed side-channel blower", "env", "no gas-tight blower of this size found (KNF N 630.1.2 SP.9 E is 569 x 296 x 315, 45 kg)"),
     ("Blower inlet", "env", "follows the blower"),
     ("Blower outlet", "env", "follows the blower"),
