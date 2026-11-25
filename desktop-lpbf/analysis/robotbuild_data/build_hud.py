@@ -344,7 +344,7 @@ NEW_BASIS = {  # how firm each item's new price is (everything else: a catalogue
     "L3": "comes with the laser quote", "L2": "not needed: the IPG is air-cooled", "L4": "estimate: quote needed", "G4": "estimate: no part found",
     "B3": "catalogue + estimate", "M1": "catalogue + estimate", "X1": "estimate: assumed shop rates",
     "B1s": "estimate", "S9": "catalogue + estimate", "D1": "catalogue + estimate", "G7": "catalogue + estimate",
-    "S7": "search snippet", "G6": "catalogue (Instrumart)",
+    "S7": "search snippet", "G6": "catalogue (Instrumart)", "C2": "estimate",
 }
 
 ITEMS = [
@@ -532,6 +532,16 @@ ITEMS = [
     dict(id="S8", line="S8", cat="offtable", kind="item", name="Class D extinguisher, 30 lb (McMaster 6435T23)",
          new_low=920.22, new_high=920.22, new_drawn=920.22, new_src="McMaster 6435T23 (bom.csv S8)", used=[], used_alt=[],
          risk="Buy new."),
+    # under $1,000, listed because the brief names them
+    dict(id="C2", line="C2", cat="elec", kind="item", name="Supervisor / scan PC (Raspberry Pi 5, or a small industrial PC)",
+         new_low=80, new_high=600, new_drawn=80,
+         new_src="bom.csv C2 (estimate): the Pi 5 the model draws in PB2 ($80); a small industrial PC ($600) for the RTC "
+                 "card", used=[], used_alt=[],
+         risk="The model's 2U 'Scan + laser controller PC' (tagged C1) has no price of its own: C2's $600 end is the "
+              "nearest; a used RTC5 needs a PCIe slot."),
+    dict(id="G3", line="G3", cat="gas", kind="item", name="Argon flowmeter-regulator, 0-70 scfh (McMaster 78595A5)",
+         new_low=334.10, new_high=334.10, new_drawn=334.10, new_src="McMaster 78595A5 (bom.csv G3)", used=[], used_alt=[],
+         risk="The cylinder and its rental are BYU's gas supplier's, not in the BOM."),
 ]
 
 # ------------------------------------------------------------------ lead times (leadtimes.py beside this script)

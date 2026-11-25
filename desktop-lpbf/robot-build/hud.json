@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-11-25T06:26Z",
+ "generated_utc": "2026-11-25T06:27Z",
  "what": "Cost, lead-time and time numbers for the robot-built desktop LPBF video (issue #260, PR #266, round 7)",
  "how_to_show": "Tour the categories in the order of 'categories'. For each, show hud.new (at spec, all new) against hud.used (the used picks where a sensible listing exists, new elsewhere) and the running totals hud.run_new / hud.run_used; hud.range_new / hud.range_used are the BOM's full low-high ranges. Call out the category's 'items' in order with their hud.new, hud.used, hud.lead_new and hud.lead_used. 'offtable' and 'services' are not on the table: show them as text rows at the end of the tour.",
  "definitions": {
@@ -382,7 +382,8 @@
     "G7",
     "G9",
     "G6",
-    "G4"
+    "G4",
+    "G3"
    ],
    "lead": {
     "new_as_chosen": {
@@ -642,7 +643,8 @@
     "A1",
     "D2",
     "C5",
-    "D1"
+    "D1",
+    "C2"
    ],
    "lead": {
     "new_as_chosen": {
@@ -2404,6 +2406,79 @@
    }
   },
   {
+   "id": "G3",
+   "line": "G3",
+   "cat": "gas",
+   "kind": "item",
+   "name": "Argon flowmeter-regulator, 0-70 scfh (McMaster 78595A5)",
+   "new_low": 334.1,
+   "new_high": 334.1,
+   "new_drawn": 334.1,
+   "new_src": "McMaster 78595A5 (bom.csv G3)",
+   "used": [],
+   "used_alt": [],
+   "risk": "The cylinder and its rental are BYU's gas supplier's, not in the BOM.",
+   "used_best": null,
+   "bom_line_new": [
+    334.1,
+    334.1
+   ],
+   "lead": {
+    "new": {
+     "text": "McMaster: '98% of items ship from stock, and most orders arrive same or next day'",
+     "days": [
+      12,
+      20
+     ],
+     "days_vendor": [
+      2,
+      6
+     ],
+     "po": true,
+     "source": "leadtime-lookups.csv MCM-shipping (mcmaster.com/info/delivery, 2026-11-25T05:39Z)",
+     "basis": "vendor statement"
+    },
+    "used": null,
+    "faster_new": null
+   },
+   "cheaper_options": [
+    {
+     "line": "G3",
+     "key": "G3:78595A5",
+     "replaces": "78595A5",
+     "alt_vendor": "Cyberweld (Harris / Lincoln Electric brand)",
+     "alt_part": "Harris 355-2 Ar-580-10 (Harris item 3100211)",
+     "base_usd": 334.1,
+     "alt_usd": 261.6,
+     "saving": 72.5,
+     "same_spec": "yes",
+     "lead_time_note": "not shown (free shipping over $99)",
+     "url": "https://store.cyberweld.com/products/harris-355-2-argon-flowmeter-regulator-w-10-hose-3100211",
+     "fetched_utc": "2026-11-20T14:29Z",
+     "source": "cost/cheaper-equivalents.csv"
+    }
+   ],
+   "new_basis": "catalogue price",
+   "hud": {
+    "name": "Argon flowmeter-regulator, 0-70 scfh (McMaster 78595A5)",
+    "kind": "item",
+    "new": "$334",
+    "new_basis": "catalogue price",
+    "used": "buy new",
+    "lead_new": "same or next day + BYU PO",
+    "lead_new_days": [
+     12,
+     20
+    ],
+    "lead_used": "buy new",
+    "lead_used_days": [
+     12,
+     20
+    ],
+    "callout": "Argon flowmeter-regulator, 0-70 scfh (McMaster 78595A5): new $334 (catalogue price), same or next day + BYU PO | buy new"
+   }
+  },
+  {
    "id": "L1",
    "line": "L1",
    "cat": "optics",
@@ -3720,6 +3795,63 @@
      20
     ],
     "callout": "Tray dock and umbilicals (HARTING Han-Modular): new $539 (catalogue + estimate), 2-6 d + BYU PO | buy new"
+   }
+  },
+  {
+   "id": "C2",
+   "line": "C2",
+   "cat": "elec",
+   "kind": "item",
+   "name": "Supervisor / scan PC (Raspberry Pi 5, or a small industrial PC)",
+   "new_low": 80,
+   "new_high": 600,
+   "new_drawn": 80,
+   "new_src": "bom.csv C2 (estimate): the Pi 5 the model draws in PB2 ($80); a small industrial PC ($600) for the RTC card",
+   "used": [],
+   "used_alt": [],
+   "risk": "The model's 2U 'Scan + laser controller PC' (tagged C1) has no price of its own: C2's $600 end is the nearest; a used RTC5 needs a PCIe slot.",
+   "used_best": null,
+   "bom_line_new": [
+    80.0,
+    600.0
+   ],
+   "lead": {
+    "new": {
+     "text": "Raspberry Pi 5: distributor stock (not checked)",
+     "days": [
+      2,
+      8
+     ],
+     "days_vendor": [
+      2,
+      8
+     ],
+     "po": false,
+     "source": "estimate",
+     "basis": "estimate"
+    },
+    "used": null,
+    "faster_new": null
+   },
+   "cheaper_options": [],
+   "new_basis": "estimate",
+   "hud": {
+    "name": "Supervisor / scan PC (Raspberry Pi 5, or a small industrial PC)",
+    "kind": "item",
+    "new": "$80",
+    "new_basis": "estimate",
+    "used": "buy new",
+    "lead_new": "2-8 d",
+    "lead_new_days": [
+     2,
+     8
+    ],
+    "lead_used": "buy new",
+    "lead_used_days": [
+     2,
+     8
+    ],
+    "callout": "Supervisor / scan PC (Raspberry Pi 5, or a small industrial PC): new $80 (estimate), 2-8 d | buy new"
    }
   },
   {
@@ -10176,6 +10308,25 @@
      "lead_used": "buy new",
      "lead_used_days": null,
      "callout": "Sealed recirculation blower (gas-tight, ~100 L/min): new $1.5k (estimate: no part found), quote; no gas-tight part found | buy new"
+    },
+    {
+     "id": "G3",
+     "name": "Argon flowmeter-regulator, 0-70 scfh (McMaster 78595A5)",
+     "kind": "item",
+     "new": "$334",
+     "new_basis": "catalogue price",
+     "used": "buy new",
+     "lead_new": "same or next day + BYU PO",
+     "lead_new_days": [
+      12,
+      20
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      12,
+      20
+     ],
+     "callout": "Argon flowmeter-regulator, 0-70 scfh (McMaster 78595A5): new $334 (catalogue price), same or next day + BYU PO | buy new"
     }
    ]
   },
@@ -10484,6 +10635,25 @@
       20
      ],
      "callout": "Tray dock and umbilicals (HARTING Han-Modular): new $539 (catalogue + estimate), 2-6 d + BYU PO | buy new"
+    },
+    {
+     "id": "C2",
+     "name": "Supervisor / scan PC (Raspberry Pi 5, or a small industrial PC)",
+     "kind": "item",
+     "new": "$80",
+     "new_basis": "estimate",
+     "used": "buy new",
+     "lead_new": "2-8 d",
+     "lead_new_days": [
+      2,
+      8
+     ],
+     "lead_used": "buy new",
+     "lead_used_days": [
+      2,
+      8
+     ],
+     "callout": "Supervisor / scan PC (Raspberry Pi 5, or a small industrial PC): new $80 (estimate), 2-8 d | buy new"
     }
    ]
   },

@@ -179,9 +179,14 @@ Safety parts (relays, interlocks, the shutter, eyewear, extinguisher, O₂ monit
 
 ## 4. The expensive items, one by one
 
-Every item over about $1,000 new, plus the servos, is in `hud.json` (`items`) and `costs-leadtimes.csv`. Each item has
-its new price and source, its used listing (title, seller type, condition, returns, location, URL and fetch time;
-sellers aren't named) with the 2026-11-25 re-read, its lead times, and a note on risk. The ones that matter most:
+Every item over about $1,000 new, plus the servos, the supervisor or scan PC and the argon regulator, is in
+`hud.json` (`items`) and `costs-leadtimes.csv`, 37 in all. Each item has:
+- its new price, how firm that price is (quote, catalogue or estimate), and its source;
+- its used listing (title, seller type, condition, returns, location, URL and fetch time; sellers aren't named), with
+  the 2026-11-25 re-read;
+- its lead times, the same-spec cheaper options for its line, and a note on risk.
+
+The ones that matter most:
 
 | Item | New | Used | The used listing | Risk |
 |---|---:|---:|---|---|
