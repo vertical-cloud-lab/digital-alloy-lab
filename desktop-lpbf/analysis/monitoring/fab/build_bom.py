@@ -8,7 +8,8 @@ listings read on eBay the same way, the closest instant quotes already in the re
 Columns follow optics-bom.csv, plus the step (0-8 of monitoring.md §4), extended prices, stock or lead time, and the used
 option. Totals per step: new (low / high) and with the used options taken where a listing exists.
 
-Run: /tmp/venv/bin/python desktop-lpbf/analysis/monitoring/fab/build_bom.py [--p1 CSV] [--p2 CSV]
+Run: /tmp/venv/bin/python desktop-lpbf/analysis/monitoring/fab/build_bom.py [--p1 CSV] [--p2 CSV] [--mo optics-parts.csv]
+     (defaults: the committed lookups and desktop-lpbf/monitoring/optics-parts.csv, the optics worker's file)
 """
 from __future__ import annotations
 
@@ -244,8 +245,9 @@ def num(v):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--p1", default="/tmp/fab-e/prices/p1.csv")
-    ap.add_argument("--p2", default="/tmp/fab-e/prices/p2.csv")
+    # the committed lookups by default; pass fresh lookup files (same columns) to re-price, and they are copied next to the BOM
+    ap.add_argument("--p1", default=str(LOOK["p1"]))
+    ap.add_argument("--p2", default=str(LOOK["p2"]))
     ap.add_argument("--mo", default=str(D / "monitoring" / "optics-parts.csv"),
                     help="the optics worker's coaxial, side and lid camera parts (prices taken from it, not re-read)")
     a = ap.parse_args()
@@ -264,7 +266,7 @@ def main():
     stock["Chronos 2.1-HD"] = stock.get("CR21-1.0-8M-FNL", "in stock; lead time 1-3 business days (Kron store, 2026-11-25T06:58Z)")
     stock["CAM-IMX296RAW (mono)"] = "add to cart shown, stock not stated (inno-maker.com, 2026-11-25)"
     for k, p in (("p1", a.p1), ("p2", a.p2)):  # keep the lookups next to the BOM
-        if pathlib.Path(p).exists():
+        if pathlib.Path(p).exists() and pathlib.Path(p).resolve() != LOOK[k].resolve():
             LOOK[k].write_text(pathlib.Path(p).read_text())
     rows, missing = [], []
     for (rid, step, group, element, s, qty, action, in_model, notes, used_keys) in SEL:

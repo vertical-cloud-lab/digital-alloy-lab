@@ -413,7 +413,7 @@ OMP_NUM_THREADS=1 /tmp/capmem 2 /tmp/venv/bin/python $P/cam_monitoring.py holder
 /tmp/venv/bin/python $P/cam_monitoring.py summary
 /tmp/venv/bin/python $P/hours_monitoring.py
 /tmp/venv/bin/python $P/flat_parts_dxf.py; xvfb-run -a /tmp/venv/bin/python $P/scs_quote.py OUT DXF STEPS...   # see its docstring
-/tmp/venv/bin/python $P/build_bom.py --p1 <optics lookups> --p2 <camera lookups> --mo desktop-lpbf/monitoring/optics-parts.csv
+/tmp/venv/bin/python $P/build_bom.py     # from the committed lookups and desktop-lpbf/monitoring/optics-parts.csv
 ```
 
 ## Sources
