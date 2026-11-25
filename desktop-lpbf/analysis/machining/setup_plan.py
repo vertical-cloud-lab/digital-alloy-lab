@@ -413,6 +413,10 @@ def main():
                      "(T9: M5 STI), 5.2 mm (T15: the through-beam), 4.2 mm (T8: M4 STI), 3.3 mm (T7: the port's passage), 2.9 mm (T17: pins); not programmed: "
                      "spot drills, the taps and STI taps, the port tool T14, the reamer", A=270)]),
     ]
+    # the CAM blank's ring outside the 312 x 222 R8 outline, 8 mm tall: what P-S1-2b (z -4..-12) and P-S2-2 (z -12..-20) each
+    # remove (freecad_cam.FLOOR_BLANK, 317.5 x 228.6: no end tabs since the edge clamps)
+    import freecad_cam as FCAM
+    ring8_cm3 = (FCAM.FLOOR_BLANK[0] * FCAM.FLOOR_BLANK[1] - (312 * 222 - (4 - math.pi) * 8 ** 2)) * 8 / 1000
     floor_setups = [
         dict(id="P-S0", name="saw the blank", machine="bandsaw", fixture="-", face_up="+z", rotation_model_to_machine=rot("+z"),
              ops=[op("P-S0-1", f"saw {FR['floor_blank_in'][0]:g} x {FR['floor_blank_in'][1]:g} in. from 1 in. 6061-T651 (McMaster 89155K165, 12 x 24 in., $267.02)",
@@ -427,7 +431,7 @@ def main():
                   op("P-S1-2", "step the edge band down 4 mm, leaving the 4 mm pad (295.5 x 205.5, R17.75)", ["FP-02"], "T2", t_mill(pv["op_cm3"]["FP-02"], "T2")[0] + 3.0,
                      "HEM, one level"),
                   op("P-S1-2b", "outer profile 312 x 222 R8 from the band (z -4) down to z -12 only; P-S2 cuts the rest", ["FP-01"], "T2",
-                     t_mill(pv["op_cm3"]["FP-01"] * 0.6 * 8 / 20, "T2")[0] + 1.0, "HEM, one level; the edge clamps sit 3 mm below"),
+                     t_mill(ring8_cm3, "T2")[0] + 1.0, "HEM, one level; the edge clamps sit 3 mm below"),
                   op("P-S1-3", "floor O-ring face gland (4.6 x 2.65, 1.5 mm outside the walls)", ["FP-03"], "T4", t_gl * 0.95, "as the lid gland; Ra <= 0.8 um"),
                   op("P-S1-4", "module port Ø96 H7 through", ["FP-04"], "T2", t_mill(pv["op_cm3"]["FP-04"], "T2")[0] + 4.0,
                      "helical trepan through with T2 at radius 48 - D/2, 0.5 mm past the blank, so the slug drops here (programmed); finish to H7 with a "
@@ -444,7 +448,7 @@ def main():
              face_up="-z", rotation_model_to_machine=rot("-z"),
              ops=[op("P-S2-1", "face the bottom to 20.0 mm", ["FP-01"], "T1", t_face(312 * 222 / 100 * 1.3, 2.7)[0], "face mill"),
                   op("P-S2-2", "outer profile 312 x 222 R8 below z -12, the ring of blank outside it, and the 18 U-notches 8 wide x 8 deep, in one adaptive",
-                     ["FP-01", "J:floor"], "T5", t_mill(pv["op_cm3"]["FP-01"] * 0.6 * 8 / 20, "T5")[0] + 18 * 0.4 + 3.0,
+                     ["FP-01", "J:floor"], "T5", t_mill(ring8_cm3, "T5")[0] + 18 * 0.4 + 3.0,
                      "1/4 in. end mill adaptive outside the outline, 4 mm steps (programmed: 14.2 min in the G-code)"),
                   op("P-S2-4", "module-screw M6 STI and dowel / diamond-pin holes; outlet-plenum, funnel and Z-flange inserts (M4/M5 STI); leg inserts (M6 STI)",
                      ["FP-07", "J:module_flange", "J:plenum_out", "J:funnel", "J:zmount", "J:legs"], "T8",
@@ -491,6 +495,8 @@ def main():
                    model_volumes_cm3=fv, setups=frame_setups, run_minutes_on_mill=round(run_f), part_handling="the frame weighs 4.3 kg finished; the blank 39 kg"),
         floor=dict(part=pv["name"], material="6061-T651",
                    blank=dict(size_in=FR["floor_blank_in"], size_mm=[round(x * IN, 1) for x in FR["floor_blank_in"]],
+                              end_tabs=("none since 2026-11-23: P-S1 holds the blank with edge clamps on its x-end faces, so 12.5 x 9 in. "
+                                        "will do (freecad_cam.py and CAMotics cut a 317.5 x 228.6 x 25.4 box)"),
                               source="1 in. 6061-T651 oversized plate 12 x 24 in., McMaster 89155K165, $267.02 (fetched 22:33-22:37 UTC)"),
                    model_volumes_cm3=pv, setups=floor_setups, run_minutes_on_mill=round(run_p)),
     )

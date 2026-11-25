@@ -179,6 +179,102 @@ Each hole is now drilled once, from its mouth to its bottom, with the drill for 
 - **What it changes.** Re-posting changed only these drill ops. FreeCAD's Adaptive op isn't bit-for-bit repeatable: a
   re-post moves its paths by about 0.01 mm. So the committed results are from the posted programs that CAMotics cut.
 
+### Setup plan and hours, re-run
+
+Everything was re-run on the current model: `inventory.py`, then [`dfm.py`](analysis/machining/dfm.py),
+[`setup_plan.py`](analysis/machining/setup_plan.py), [`per_setup.py`](analysis/machining/per_setup.py) and
+[`hours.py`](analysis/machining/hours.py).
+
+- **53 machined parts, up from 48 in the committed tables.**
+  - Rounds 4 and 5 added six: the door's draw-latch brackets, the overflow-jar sensor bracket, the PB1 stand rails, the
+    recoater sensor clamps, the reservoir pull tab and the Z sensor bracket.
+  - The rod end is now a 316L feedthrough block, not an end cap.
+  - The door's robot lift lug is gone.
+  - Nine others were renamed or reshaped.
+- **Two counting errors fixed on the way.**
+  - `inventory.py` counted Solid Sealing's weld-in feedthroughs, which are bought, as a machined part, because their name
+    starts with "Rod end".
+  - `dfm.py` timed every solid of a part as a separate piece. The rod end's block carries eight loose slivers (0-39 mm³)
+    where its wire channel cuts between the feedthrough bores, so it was timed nine times: 8.7 h. It now counts pieces
+    of at least 2 % of the largest. The slivers are a model artifact in `cad/modules_low.py`, left for the model's owner.
+- **[`setup_plan.json`](analysis/out/machining/setup_plan.json).**
+  - **Workholding:** it now describes what the holder check checked: edge clamps and no end tabs (F-S1, P-S1), the flush
+    dummy-floor plate (F-S2, F-S3), and the port's expanding clamp (P-S2).
+  - **Ops:** the floor's outline is split between P-S1 and P-S2. F-S3 is listed per index as programmed.
+  - **`program`:** each frame and floor setup carries the FreeCAD jobs, the G-code recount, CAMotics' time and the
+    rapids-through-stock count.
+  - **Setups:** 130 with 3-axis setups only, 63 with a 4th axis, over 53 parts (was 118 and 58 over 48). hours.py counts
+    65 with a 4th axis, because it fixes the frame at 3 and the floor plate at 2.
+  - **Time on the mill at vendor feeds:** frame 98 min, was 112. The walls are now itemised at 27 min, against a
+    41 min guess. Floor plate 50 min, was 51.
+- **[`per_setup.json`](analysis/out/machining/per_setup.json):** re-run on the current model. The front still has the
+  most that only it can reach (318.9 cm³, the door opening).
+
+| | CAM | Setups | Run | Deburr + inspect | Total |
+|---|---|---|---|---|---|
+| Chamber body: frame (3 setups with a 4th axis) + floor plate (2) + waterjet | 8.3 h | 7.5 h | 7.2 h conservative / 3.2 h vendor feeds / 2.2 h programmed | 2 h | 25.0 h (was 24.8) |
+| All 53 machined parts, 3-axis | 125.6 h | 108.3 h (130 setups) | 30.2 h | 22.2 h | **286.6 h** (48 parts: 263.8) |
+| All 53, with a 4th axis where it helps | 125.6 h | 92.6 h (65 setups) | 30.2 h | 22.2 h | **270.9 h** (48 parts: 249.5) |
+
+- **Why the total rose by 22.8 h (3-axis):**
+  - the six new parts, 22.8 h;
+  - the rod end's block, 6.7 h against the end cap's 6.0;
+  - the legs, +1.0 h;
+  - the module handle, now with a riser, +2.0 h;
+  - the door's lift lug, gone: -3.5 h.
+
+  The door (-1.1 h) and small changes elsewhere make up the rest. Nothing in the method changed.
+- **Programmed run time** (the new `run_h_program` column) is the posted G-code's cutting time in CAMotics with the VF-4's
+  rapids, plus 4.2 s per tool change and 3 s per A index (assumed):
+  - frame 65.1 min: 63.1 min of cutting, 25 tool changes, 5 index moves;
+  - floor plate 69.1 min.
+
+  Taps, reamers and port tools aren't programmed, so these are a floor on the run time.
+- **"About 1 h of cutting each"** holds: about 65 min for the frame and 69 min for the floor plate. The hours model's
+  conservative removal rates give 5.1 and 2.2 h, and setup_plan's vendor feeds give 1.6 and 0.9 h.
+
+### Still open after round 6
+
+- **The zero-point clamp posts.** Worker "layout" may add tapped holes in the floor plate for the posts that hang the two
+  zero-point clamps. They aren't in this model, so the floor-plate program and its checks don't include them yet.
+- **Not programmed:** the spot drills, the taps, the STI taps, the reamers and the SAE port tool. setup_plan.json times
+  them, but no G-code drives them, and no simulation has checked them.
+- **Tools the programs use that tooling-bom.csv doesn't list:**
+  - a 2.9 mm drill for the 3 mm pin holes (F2, the 3 mm reamer, is now "buy for this job");
+  - a 5.2 mm drill and an M6 x 0.75 tap for the through-beam heads;
+  - a 5.8 mm drill to go under the 6 mm reamer.
+
+  The metric set D16 steps by 0.5 mm, so it has none of these sizes. They are not looked up or priced.
+- **The CAM blank is 5 in. thick** (317.5 x 228.6 x 127 mm, as in rounds 4 and 5). The plan's blank is 5-1/2 in. plate,
+  chosen for its thickness tolerance. From that plate the two face ops take 7.9 mm a face, not 1.55 mm: about 3 more
+  passes and 4 min more each. This is not programmed.
+- **Edge clamps on the floor plate** (P-S1) grip only the bottom 7.7 mm of the 1 in. blank under adaptive cuts. Their
+  clamping force against the cutting load is still not checked.
+- **Assumed:**
+  - the spindle nose and head;
+  - each holder's body between its nose and the flange;
+  - the face mill's body height;
+  - the clamps' sizes;
+  - the HRT210's platter thickness and which side its motor box is on.
+- **Outside the machining files.** These two still describe the old workholding; neither is mine to change:
+  - the build animation's chamber chapter (`cad/render_machining.py`'s built-in plan) shows toe clamps on end tabs
+    (F-S1, P-S1) and a centre stud (P-S2);
+  - `analysis/shop/shop_checks.py` still quotes the 15 in. blank with tabs.
+
+  The checked workholding is low-profile edge clamps, the 312 x 222 dummy-floor plate and the port's expanding clamp.
+
+Run, in order (each under `/tmp/capmem 3`, `OMP_NUM_THREADS=1`; the inputs as in `freecad_cam.py`'s docstring, including
+parts.json):
+
+1. `inventory.py --out DIR`, then copy the frame's and floor plate's .brep and .stl and parts.json into `$CHAMBER_CAM_IN`;
+2. `freecad_cam.py` with `FREECADCMD` set to FreeCAD 1.0.2's freecadcmd (about 1 min);
+3. `camotics_sim.py` with `CAMOTICS_IMAGE`, `CAMOTICS_MEM=3g` and `CAMOTICS_CPUS=1.5` (about 20 min);
+4. `holder_check.py` (about 3 min);
+5. `dfm.py --parts DIR`, then `setup_plan.py` and `per_setup.py` with `MACH_PARTS=DIR`, then `hours.py`.
+
+`camotics_sim.py --a-axis-test` repeats the A-axis test. `camotics_sim.py --render-walls` redraws the walls' figure from
+`$CAMOTICS_WORK`.
+
 ## Tool holders, spindle, fixtures and travels checked (2026-11-23)
 
 CAMotics models the cutter only. [`holder_check.py`](analysis/machining/holder_check.py) now sweeps the whole tool
@@ -650,7 +746,9 @@ the best rotary axis with its swing.
 ### Hours for the whole machine
 
 The method and per-part rows are in [`hours.py`](analysis/machining/hours.py) and
-[`hours.csv`](analysis/out/machining/hours.csv).
+[`hours.csv`](analysis/out/machining/hours.csv). (Round 6 re-ran them on the 53 machined parts of the current model:
+286.6 h 3-axis, 270.9 h with a 4th axis;
+[above](#setup-plan-and-hours-re-run). The table below is the 48-part run of 2026-11-20.)
 
 - **CAM hours are an estimate:** 0.5 h + 0.6 h per setup + 0.015 h per hole, +1 h for lathe-and-mill parts, and +8 h for the
   block's deep pocket. A search found no published rule of thumb.
