@@ -53,6 +53,7 @@ EXPECTED = [  # the contract's chapters (README.md), with the title a missing on
     ("30-machining-chamber", "Machining the chamber"),
     ("31-machining-parts", "Machining the other parts"),
     ("32-finishing", "Welding, honing, deburring, washing, measuring"),
+    ("38-tools", "The arms' custom tools and fixtures"),
     ("40-assembly-module", "Assembling the build module"),
     ("41-assembly-chamber", "Assembling the chamber and the process module"),
     ("50-integration", "Onto the VLM tray: rack, gas module, hoses, leak check"),

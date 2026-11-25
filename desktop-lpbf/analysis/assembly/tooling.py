@@ -473,7 +473,7 @@ def export_steps():
     for name, fn in (("spigot_mandrel", spigot_mandrel), ("spigot_pusher", spigot_pusher), ("rod_bullet", rod_bullet),
                      ("ring_loader", ring_loader), ("roller_3p2", lambda: roller(3.2)[0]), ("roller_1p4", lambda: roller(1.4)[0]),
                      ("fixture_C", fixture_C), ("fixture_P", lambda: fixture_P(1000.0)), ("fixture_B", lambda: fixture_B(1000.0)),
-                     ("trunnion_stands", trunnion_stands), ("trunnion_jaws", trunnion_jaws), ("nozzle", lambda: nozzle()[0]), ("pin_pusher", lambda: pin_pusher()[0]), ("ring_pad", lambda: ring_pad()[0]),
+                     ("trunnion_stands", trunnion_stands), ("trunnion_jaws", trunnion_jaws), ("nozzle", lambda: nozzle()[0]), ("pin_pusher", lambda: pin_pusher()[0]), ("ring_pad", lambda: ring_pad()[0]), ("liner_wand", lambda: liner_wand()[0]),
                      ("nest_stack", nest_stack), ("nest_body_inv", nest_body_inv), ("nest_body_up", nest_body_up),
                      ("ring_caps_left", lambda: ring_caps()["left_finger_tip"]), ("ring_caps_right", lambda: ring_caps()["right_finger_tip"])):
         s = fn()

@@ -18,6 +18,7 @@ the plotter and the frame writer; read its docstring first.
 | `30-machining-chamber` | shop | the chamber frame and floor plate: the person loads the 34.7 kg blank with a vacuum lifter; the arms tend the VF-4 and HRT210 through every setup, flip and re-clamp the part; a machine clock runs |
 | `31-machining-parts` | shop | the other machined parts: lathe (top-down loading), vise parts, the saw; time-lapse with the clock |
 | `32-finishing` | shop | TIG welding by a person, honing sent out, deburr, wash, measuring (a person reads the bore gauge), kitting back onto the table |
+| `38-tools` | assembly | the custom tools and fixtures the arms use (tooling.py's meshes, the same ones the planner checks), one at a time on a turntable, with what each is for and its cost ([`ch_tools.py`](ch_tools.py)) |
 | `40-assembly-module` | assembly | the build module, every step by the two arms with their tools, parts fetched from the long table |
 | `41-assembly-chamber` | assembly | the chamber and the process module, the same way; failed steps shown with their redesign or the person who does them |
 | `50-integration` | video | the process module onto the VLM tray (person and hoist), the rack units, hoses, the leak check |
