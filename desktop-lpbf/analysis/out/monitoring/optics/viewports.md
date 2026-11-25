@@ -6,6 +6,15 @@
 | BW | (-125, 111, 25) | 169 | 8.5 deg | on the wall's face | 49.0 deg (49.0) | 25.4 x 3.0 mm | 2.15 / 0.990 mm / 34.6 um | 2.39 mm |
 | LP | (-60, -80, 136) | 169 | 53.7 deg | on the wall's face | 36.3 deg (36.3) | 25.4 x 3.0 mm + 1.0 mm | 1.95 / 0.668 mm / 23.4 um | 2.88 mm |
 
+LP as in cad/monitoring_spec.py now: centre (-60, -80, 136), 53.7 deg; working distances LW 176 mm, LP 197 mm. Every LP candidate the spec lists:
+
+| LP centre | elevation | to plate centre (mm) | WD (mm) | IMX296 + 50 mm: um/px across / along | window tilt if seated on the lid (astigmatism) | 1070 nm diffuse at the window (W/cm2) | into a 12.5 mm pupil (W) | glint bound into the pupil (W) |
+|---|---:|---:|---:|---|---|---:|---:|---:|
+| (-60, -80, 136) (spec) | 53.7 deg | 169 | 197 | 10.1 / 12.6 | 36 deg (0.67 mm) | 0.31 | 0.39 | 1.32 |
+| (-40, 60, 136) | 62.1 deg | 154 | 182 | 9.1 / 10.3 | 28 deg (0.37 mm) | 0.42 | 0.51 | 1.59 |
+| (-20, 80, 136) | 58.8 deg | 159 | 187 | 9.5 / 11.1 | 31 deg (0.48 mm) | 0.38 | 0.46 | 1.49 |
+| (80, 80, 136) | 50.2 deg | 177 | 205 | 10.7 / 13.9 | 40 deg (0.82 mm) | 0.27 | 0.34 | 1.20 |
+
 | camera + lens | port | f/# | WD (mm) | m | um/px across / along the plate | Rayleigh (um) | DOF (mm) | lens focuses at this WD | lens covers the sensor |
 |---|---|---:|---:|---:|---|---:|---:|---|---|
 | Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm | LW | 2.8 | 176 | 0.396 | 25.3 / 113 | 10 | 1.33 | yes | centre crop only |
@@ -130,6 +139,12 @@
 | 10 | 808 nm diode laser, fibre + collimator | LW: through the camera's own port with a 50:50 cube (x 0.25 round trip) | 12.9 deg | 16 |
 | 10 | 808 nm diode laser, fibre + collimator | BW: back-wall window, raking | 8.5 deg | 5.9 |
 | 10 | 808 nm diode laser, fibre + collimator | LP: steep lid port | 53.7 deg | 1.1 |
+| 20 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LW: through the camera's own port with a 50:50 cube (x 0.25 round trip) | 12.9 deg | 19 |
+| 20 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | BW: back-wall window, raking | 8.5 deg | 7.3 |
+| 20 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LP: steep lid port | 53.7 deg | 1.3 |
+| 20 | 808 nm diode laser, fibre + collimator | LW: through the camera's own port with a 50:50 cube (x 0.25 round trip) | 12.9 deg | 7.8 |
+| 20 | 808 nm diode laser, fibre + collimator | BW: back-wall window, raking | 8.5 deg | 2.9 |
+| 20 | 808 nm diode laser, fibre + collimator | LP: steep lid port | 53.7 deg | 0.54 |
 | 2 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LW: through the camera's own port with a 50:50 cube (x 0.25 round trip) | 12.9 deg | 1.9e+02 |
 | 2 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | BW: back-wall window, raking | 8.5 deg | 73 |
 | 2 | pulsed 850 nm LED + FBH850-40 (in band ~0.8) | LP: steep lid port | 53.7 deg | 13 |

@@ -1135,6 +1135,54 @@
    "W_needed": 1.0741246721328546
   },
   {
+   "exposure_us": 20.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "LW",
+   "how": "through the camera's own port with a 50:50 cube (x 0.25 round trip)",
+   "elevation_deg": 12.892660960939805,
+   "W_needed": 19.39201421825616
+  },
+  {
+   "exposure_us": 20.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "BW",
+   "how": "back-wall window, raking",
+   "elevation_deg": 8.50542785605438,
+   "W_needed": 7.313653392497126
+  },
+  {
+   "exposure_us": 20.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "LP",
+   "how": "steep lid port",
+   "elevation_deg": 53.67317404787977,
+   "W_needed": 1.3426558401660684
+  },
+  {
+   "exposure_us": 20.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "LW",
+   "how": "through the camera's own port with a 50:50 cube (x 0.25 round trip)",
+   "elevation_deg": 12.892660960939805,
+   "W_needed": 7.756805687302464
+  },
+  {
+   "exposure_us": 20.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "BW",
+   "how": "back-wall window, raking",
+   "elevation_deg": 8.50542785605438,
+   "W_needed": 2.9254613569988503
+  },
+  {
+   "exposure_us": 20.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "LP",
+   "how": "steep lid port",
+   "elevation_deg": 53.67317404787977,
+   "W_needed": 0.5370623360664273
+  },
+  {
    "exposure_us": 2.0,
    "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
    "port": "LW",
@@ -1181,6 +1229,92 @@
    "how": "steep lid port",
    "elevation_deg": 53.67317404787977,
    "W_needed": 5.370623360664275
+  }
+ ],
+ "lp_candidates": [
+  {
+   "centre": [
+    -60.0,
+    -80.0,
+    136.0
+   ],
+   "is_spec_centre": true,
+   "elevation_deg": 53.67317404787977,
+   "dist_mm": 168.80758276807353,
+   "wd_mm": 196.80758276807353,
+   "um_per_px": [
+    10.129723210997074,
+    12.573338892338707
+   ],
+   "window_tilt_if_on_face_deg": 36.32682595212023,
+   "astig_if_on_face_mm": 0.6678932846154021,
+   "seat_on_axis": false,
+   "diffuse_W_cm2": 0.3149787294676548,
+   "diffuse_W_into_pupil": 0.3865370556768091,
+   "glint_bound_W_into_pupil": 1.3183334930388615
+  },
+  {
+   "centre": [
+    -40.0,
+    60.0,
+    136.0
+   ],
+   "is_spec_centre": false,
+   "elevation_deg": 62.0662068494337,
+   "dist_mm": 153.93505123915085,
+   "wd_mm": 181.93505123915085,
+   "um_per_px": [
+    9.10351853550141,
+    10.304048472198302
+   ],
+   "window_tilt_if_on_face_deg": 27.93379315056631,
+   "astig_if_on_face_mm": 0.3748899657682442,
+   "seat_on_axis": false,
+   "diffuse_W_cm2": 0.41537898259480416,
+   "diffuse_W_into_pupil": 0.509746703193531,
+   "glint_bound_W_into_pupil": 1.5853828164093262
+  },
+  {
+   "centre": [
+    -20.0,
+    80.0,
+    136.0
+   ],
+   "is_spec_centre": false,
+   "elevation_deg": 58.76993022442897,
+   "dist_mm": 159.04716281656835,
+   "wd_mm": 187.04716281656835,
+   "um_per_px": [
+    9.456254234343216,
+    11.058752991503304
+   ],
+   "window_tilt_if_on_face_deg": 31.230069775571028,
+   "astig_if_on_face_mm": 0.47781044980531057,
+   "seat_on_axis": false,
+   "diffuse_W_cm2": 0.37659912024211484,
+   "diffuse_W_into_pupil": 0.46215665214883095,
+   "glint_bound_W_into_pupil": 1.485105598420121
+  },
+  {
+   "centre": [
+    80.0,
+    80.0,
+    136.0
+   ],
+   "is_spec_centre": false,
+   "elevation_deg": 50.24325709493154,
+   "dist_mm": 176.90675509996785,
+   "wd_mm": 204.90675509996785,
+   "um_per_px": [
+    10.688566101897782,
+    13.90352607175183
+   ],
+   "window_tilt_if_on_face_deg": 39.756742905068464,
+   "astig_if_on_face_mm": 0.8185782808622124,
+   "seat_on_axis": false,
+   "diffuse_W_cm2": 0.27366788155894745,
+   "diffuse_W_into_pupil": 0.3358410180582308,
+   "glint_bound_W_into_pupil": 1.2003844330788402
   }
  ],
  "layer_camera_port": {

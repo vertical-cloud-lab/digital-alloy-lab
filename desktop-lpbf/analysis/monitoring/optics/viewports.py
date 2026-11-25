@@ -154,7 +154,7 @@ def main():
     # where the light comes from: power to put E (normal-incidence W/cm2) on the camera's field from a port at elevation e,
     # with a delivery efficiency eta (condenser + window + filter): P = E A / sin(e) / eta
     base = next(c for c in R["cameras"] if c["camera"].startswith("Chronos") and c["lens"].startswith("Kowa") and c["f_number"] == 4.0)
-    for t_us in (10.0, 2.0):
+    for t_us in (10.0, 20.0, 2.0):
         for src, in_band, eta in (("pulsed 850 nm LED + FBH850-40 (in band ~0.8)", 0.8, 0.3), ("808 nm diode laser, fibre + collimator", 1.0, 0.6)):
             E = illumination(base["camera"], 4.0, base["magnification"], 850.0, t_us, 0.5 * PT.CAMS[base["camera"]]["fwc_e"], in_band=in_band)
             for key, how in (("LW", "through the camera's own port with a 50:50 cube (x 0.25 round trip)"), ("BW", "back-wall window, raking"),
@@ -165,6 +165,26 @@ def main():
                                                             W_needed=E * base["field_cm2_roi"] / math.sin(math.radians(e)) / eta * extra))
     for key in ("LW", "LP", "BW"):
         R["laser"].append(laser_at_port(R["ports"][key]))
+    # every LP position the spec lists as a candidate: geometry, the IMX296 + 50 mm view, and the 1070 nm it receives
+    R["lp_candidates"] = []
+    v = MS.VIEWPORTS["LP"]
+    for cen in v.get("candidates", [v["centre"]]):
+        p = np.array(cen, float)
+        ax = np.array(MS.axis_to_target(tuple(cen)))
+        geom = getattr(MS, "LP_GEOM", None)
+        on_axis = bool(geom and "s_top" in geom) or v.get("seat") == "axis"
+        face_tilt = math.degrees(math.acos(abs(float(ax @ np.array(FACE_NORMAL[v["face"]])))))
+        g = dict(key=f"LP at {tuple(round(c) for c in cen)}", centre=list(cen), dist_mm=float(np.linalg.norm(p)),
+                 elevation_deg=MS.elevation_deg(tuple(cen)), clear_d=v["clear_d"], window=v.get("window"), slide=v.get("slide"))
+        wd = g["dist_mm"] + boss("LP") + MS.LID_CAMERA.get("standoff_mm", 28.0)
+        c = camera_case(dict(g, key="LP"), "IMX296 mono", "Kowa LM50JC10M 50 mm", 5.6, wd)
+        lz = laser_at_port(g)
+        t_total = (g["window"]["t"] if g["window"] else 0.0) + (g["slide"]["t"] if g["slide"] else 0.0)
+        R["lp_candidates"].append(dict(centre=list(cen), is_spec_centre=list(cen) == list(v["centre"]), elevation_deg=g["elevation_deg"],
+                                       dist_mm=g["dist_mm"], wd_mm=wd, um_per_px=(c["um_per_px_across"], c["um_per_px_along_plate"]),
+                                       window_tilt_if_on_face_deg=face_tilt, astig_if_on_face_mm=tilted_plate(t_total, face_tilt, na=0.035)["astigmatism_mm"],
+                                       seat_on_axis=on_axis, diffuse_W_cm2=lz["diffuse_W_cm2"], diffuse_W_into_pupil=lz["diffuse_W_into_pupil"],
+                                       glint_bound_W_into_pupil=lz["glint_bound_W_into_pupil"]))
     R["layer_camera_port"] = laser_at_port(dict(key="layer camera (75, -45, 136)", dist_mm=float(np.linalg.norm([75, -45, 136])),
                                                 elevation_deg=math.degrees(math.atan2(136, math.hypot(75, 45))), clear_d=20.0))
     (OUT / "viewports.json").write_text(json.dumps(R, indent=1, default=float) + "\n")
@@ -181,6 +201,15 @@ def write_md(R):
         L.append(f"| {k} | {tuple(round(c) for c in g['centre'])} | {g['dist_mm']:.0f} | {g['elevation_deg']:.1f} deg | {g['seat']} | {g['window_tilt_deg']:.1f} deg ({g['face_tilt_deg']:.1f}) | "
                  f"{g['window']['d']} x {g['window']['t']} mm{(' + ' + str(g['slide']['t']) + ' mm') if g['slide'] else ''} | "
                  f"{p['focus_shift_mm']:.2f} / {p['astigmatism_mm']:.3f} mm / {p['blur_um']:.1f} um | {p['ghost_offset_mm']:.2f} mm |")
+    lp = R["ports"]["LP"]
+    L += ["", f"LP as in cad/monitoring_spec.py now: centre {tuple(round(c) for c in lp['centre'])}, {lp['elevation_deg']:.1f} deg; "
+          f"working distances LW {R['working_distance_mm']['LW']:.0f} mm, LP {R['working_distance_mm']['LP']:.0f} mm. Every LP candidate the spec lists:", "",
+          "| LP centre | elevation | to plate centre (mm) | WD (mm) | IMX296 + 50 mm: um/px across / along | window tilt if seated on the lid (astigmatism) | 1070 nm diffuse at the window (W/cm2) | into a 12.5 mm pupil (W) | glint bound into the pupil (W) |",
+          "|---|---:|---:|---:|---|---|---:|---:|---:|"]
+    for q in R.get("lp_candidates", []):
+        L.append(f"| {tuple(round(c) for c in q['centre'])}{' (spec)' if q['is_spec_centre'] else ''} | {q['elevation_deg']:.1f} deg | {q['dist_mm']:.0f} | {q['wd_mm']:.0f} | "
+                 f"{q['um_per_px'][0]:.1f} / {q['um_per_px'][1]:.1f} | {q['window_tilt_if_on_face_deg']:.0f} deg ({q['astig_if_on_face_mm']:.2f} mm){'; seated square on a boss' if q['seat_on_axis'] else ''} | "
+                 f"{q['diffuse_W_cm2']:.2f} | {q['diffuse_W_into_pupil']:.2f} | {q['glint_bound_W_into_pupil']:.2f} |")
     L += ["", "| camera + lens | port | f/# | WD (mm) | m | um/px across / along the plate | Rayleigh (um) | DOF (mm) | lens focuses at this WD | lens covers the sensor |",
           "|---|---|---:|---:|---:|---|---:|---:|---|---|"]
     for c in R["cameras"]:

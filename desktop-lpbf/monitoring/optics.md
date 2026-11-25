@@ -66,14 +66,17 @@ Re-run: `python ftheta.py --reuse` (2 min; without `--reuse` it re-optimises the
 9. **Every camera needs OD ≥ 8 at 1070 nm; the layer camera has OD 5.1.** 0.1–0.4 W of diffuse 1070 nm reaches a 12.5 mm
    camera pupil at the ports, and a curved pool can glint up to ~1.4 W into the steep ones (§5). A FESH1000 behind each
    bandpass gives OD > 11. Add one ($169.26) behind the layer camera's FESH0950 before filming during lasing.
-10. **Seat each window square to its line of sight.** On the lid's top face the LP window is tilted 36° to the view: 0.67 mm
-    of astigmatism, ~1.5 px of blur at f/5.6. The LW window's 14.8° tilt costs only 5 µm. Worker C's port design (its
-    monitoring_spec, not yet merged) already seats every window on a boss square to the axis, which removes both.
+10. **Seat the LP window square to its line of sight; LW's can lie flat on the wall.** On the lid's top face the LP window
+    would be tilted 28–36° to the view: 0.4–0.7 mm of astigmatism, ~1–1.5 px of blur at f/5.6. Fabrication plans a square boss.
+    The LW window flat on the wall (Edmund 36-983, Ø40 × 4 mm, 14.8° tilt) costs 3–4.4 µm, 0.1–0.2 px.
 11. **Most 50 mm and 75 mm C-mount lenses don't focus at 176–197 mm.** The Kowa LM50JC10M (minimum object distance 100 mm) and
      Edmund's 35 mm #67-716 (165 mm) do. The 75 mm ones need ~15 mm of extension tube.
 12. **By-product for optics.md §1.4: k ≈ 0.48–0.50 as drawn.** All three representative lenses give the same chief-ray ratio
      at the M50 and L75 edges with the galvo mirror 34.8 mm above the nose (0.65–0.67 at Thorlabs' 7.5 mm). That supports
      "L75 is out of reach" (it needs k ≳ 0.60). It is still not a measurement.
+13. **The red guide laser can't be used by eye through the galvo.** The DMSP1000 passes 92–97 % of it straight through to
+    cube1's far port and reflects only 3–8 % toward the galvo (§2). Align, map the field and measure k with the process beam
+    at low power on burn paper or coupons, or with a camera.
 
 ## 1. The f-theta outside 1064 nm
 
@@ -178,6 +181,17 @@ Why these parts:
   With the cat's-eye bound (441 W back into the lens, beam_path.md) the leak is ≤ 3 × 10⁻⁷ of each photodiode's pool signal
   and ≤ 1.3 × 10⁻⁵ of the camera's peak pixel. Diffuse returns are 10⁻¹⁰–10⁻⁹. The 0.27 W the DMSP1000 passes in the
   cat's-eye case lands on the FESH1000, which reflects it.
+
+**The red guide laser doesn't follow the process beam past cube1.** The DMSP1000 reflects only 3–8 % at 630–700 nm (Thorlabs'
+data: 7.9 % at 650 nm, 3.6 % at 680 nm) and passes the rest straight through to the beam trap. The NB1-K14 fold mirror before it
+is a 1064 nm line mirror whose red reflectance isn't published. So of IPG's 0.1–1 mW, perhaps µW to tens of µW reach the plate.
+That is enough for a camera in the dark chamber but too dim to trust by eye. That breaks optics.md §4.4's plan to align
+the galvo and measure k with the guide by eye. Instead:
+- align and map the field with the process beam at its lowest stable power on black-anodised coupons or laser burn paper,
+  reading the marks, or on the VRC2 IR card (optics-bom O26);
+- measure k from burn marks at the field edge at two plate heights (the piston steps 20 mm: k = Δr/(20 mm · θ));
+- or watch the faint red spot with the layer camera, or image a target on the plate through the galvo with the coaxial
+  camera arm (its lateral colour at 955–990 nm is ≤ 0.13 mm and can be mapped).
 
 **InGaAs.** The DMSP950 reflects whatever 1300–1750 nm light the DMSP1000 lets through into the camera arm (R 0.96 at
 1600 nm, 0.57 at 1700 nm). There it can feed either an InGaAs photodiode on a fourth cube, or a SWIR camera in place of the
@@ -321,6 +335,10 @@ change it by ≤ 18 %. Full tables: [`radiometry.md`](../analysis/out/monitoring
   pool's signal at 700 and 900 nm (worker A's AlSi10Mg pool), and 6 %, 62 % and 6× at 1,550 nm. At Edison's 3,360 K
   model-plume temperature it is 2–4.5× more. So **the plume worker's optical depth decides whether coaxial pyrometry on
   aluminium reads the pool or the plume.** The script takes it as a parameter (`plume_tables`).
+- **The plume worker's beam loss as a bound:** it finds the plume costs the beam 0.05–0.2 % at 1070 nm. Taken as the
+  column's absorption at 2,700 K (an upper bound, since part of the loss is scattering), the plume adds 4–15 % to PD-A and
+  PD-B and 3–12 % at 1,550 nm. If it were at 3,360 K it would add 12–68 %. Its spectrum is close to the depression's, so it
+  mostly raises the signal rather than biasing the ratio.
 - **Calibrate the whole train** with a radiance source in the chamber, as Hooper did (a stabilised lamp in an integrating
   sphere), at several galvo angles. Brandau et al. 2022 saw the coaxial signal fall 36–51 % across the field (via Edison).
 
@@ -328,15 +346,27 @@ change it by ≤ 18 %. Full tables: [`radiometry.md`](../analysis/out/monitoring
 
 ## 4. Side camera at LW and steep camera at LP
 
-**Geometry** (monitoring_spec as merged here, `viewports.py`). Worker C's port design, in its worktree and not yet merged,
-changes three things that `viewports.py` reads at run time:
-- each window sits on a boss end face square to its line of sight, so no tilt and no astigmatism;
-- LP moves to (0, −80, 136) at 59.5°;
-- the lens fronts sit 34 mm (LW) and 31 mm (LP) farther out along the axis, for working distances of 210 and 191 mm.
+**Geometry.** `viewports.py` reads the ports, the window seats (a boss square to the axis when the spec draws one) and the
+standoffs from `cad/monitoring_spec.py` at run time. **The tables below assume the spec as merged here: LP at (−60, −80, 136),
+53.7°.** Re-run after the merge.
 
-With C's spec the Chronos + 50 mm at LW gives 32 µm/px across (it was 25). The IMX296 + 50 mm at LP gives 9.7 µm/px. LP's
-1070 nm exposure rises a little: 0.39 W/cm² diffuse at the window, and a 1.5 W glint bound into the pupil. Re-run
-`viewports.py` after the merge; the tables below are for the spec as merged.
+LP is likely to move to the back half of the lid: the plume CFD finds ~50× less condensate there, and it clears the reservoir
+slot. viewports.md tabulates every LP candidate the spec lists:
+
+| LP centre | Elevation | IMX296 + 50 mm, µm/px across / along | 1070 nm diffuse at the window | Glint bound into a 12.5 mm pupil |
+|---|---:|---|---:|---:|
+| (−60, −80, 136), as merged | 53.7° | 10.1 / 12.6 | 0.31 W/cm² | 1.3 W |
+| (−40, 60, 136) | 62.1° | 9.1 / 10.3 | 0.42 W/cm² | 1.6 W |
+| (−20, 80, 136) | 58.8° | 9.5 / 11.1 | 0.38 W/cm² | 1.5 W |
+
+- Either back-half position gives slightly finer pixels and a little more 1070 nm, being steeper and nearer the specular cone.
+  The OD ≥ 8 filters cover both.
+- **Fabrication** cuts ports square to their faces (the 4th axis can't tilt them):
+  - the LP window goes on a separate boss square to its line of sight, so no astigmatism;
+  - the LW window (Edmund 36-983, Ø40 × 4 mm, NIR AR) lies flat on the wall, tilted 14.8° to the view. With a 1 mm slide that
+    is 0.10–0.12 mm of astigmatism, 3–4.4 µm of blur at f/4, or 0.1–0.2 px. That agrees with fabrication's 4–6 µm estimate.
+- **Worker C's port design** puts the lens fronts 34 mm (LW) and 31 mm (LP) out along the axis. That gives working distances of
+  ~210 mm at LW (Chronos + 50 mm: 32 µm/px, against 25 here) and ~190 mm at LP. It moved LP to (0, −80, 136) at 59.5°.
 
 | Port | Centre | To plate centre | Elevation | Window tilt to the view | Window + slide | Astigmatism / blur at NA 0.035 | Ghost offset |
 |---|---|---:|---:|---:|---|---|---:|
@@ -375,15 +405,17 @@ With C's spec the Chronos + 50 mm at LW gives 32 µm/px across (it was 25). The 
 - The IMX296's 29–30 µs minimum exposure makes it a streak camera for spatter. Its job at LP is the slower view: spreading and
   part edges.
 
-**Light for a 10 µs exposure at f/4** (Chronos, 640 × 96 field = 1.8 cm², half full well, powder reflectance 0.5 assumed
-Lambertian):
+**Light for a 10–20 µs exposure at f/4** (the plume worker recommends 10–20 µs; Chronos, 640 × 96 field = 1.8 cm², half full
+well, powder reflectance 0.5 assumed Lambertian):
 - **On the plate:** 0.30 W/cm² from a narrow source; 0.98 W/cm² from an LED behind a 10 nm filter (only ~30 % of its
   30 nm spectrum passes). Use FBH850-40 with an LED.
 - **Source power, by where it shines from** (delivery efficiency 0.3 for an LED, 0.6 for a fibre laser):
   - LP, steep: 2.7 W of LED or 1.1 W of laser;
   - BW, raking at 8.5°: 15 W of LED or 5.9 W of laser;
   - through LW itself with a 50:50 cube: 39 W of LED or 16 W of laser (the cube costs 4× and the 12.9° grazing angle 4.5×).
-  - At 2 µs, multiply by five.
+  - At 20 µs, halve these: 1.3 W of LED from LP, 7.3 W from BW. At 2 µs, multiply by five.
+  - From the back-half LP positions (59–62°), 6–9 % less.
+  - At 10–20 µs, 10 m/s spatter smears 4–8 px (25 µm/px), and 20 m/s smears 8–16 px: streaks that give speed.
 - **Recommendation:** a Thorlabs SOLIS-850C (2.7 W minimum, $1,377.86), pulsed by a DC2200 ($2,593.01), shining through LP
   (or a second steep port). That is just enough at 10 µs and comfortable at 20–50 µs. BW's raking light is for the layer
   camera; the side camera can use it at ≥ 50 µs. The AeroDIODE 808 nm 10 W fibre source ($6,490) or a CAVILUX is needed for
@@ -470,6 +502,7 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
 6. **Get the Chronos full well and read noise from Kron.** A stand-in from a different Luxima sensor is used here.
 7. **Fit FESH1000s to every camera** (and the layer camera) before any camera sees the laser.
 8. **Put a beam trap on cube1's far port now**, whatever else is bought.
+9. **Plan alignment and the k measurement with the process beam at low power**, not the red guide (§2).
 
 ## 8. Not done / limits
 
