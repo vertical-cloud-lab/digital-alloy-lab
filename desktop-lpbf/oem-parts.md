@@ -116,8 +116,21 @@ video, frames and COLMAP workspace stay in `/tmp/oem/video`.
     and the solved orbit's radius varies 20 % where a turntable gives a circle. The large k1 on a render points the same way.
   - The likely cause is the focal length. A 27° view of an object turning about one axis fixes it poorly, and an error in it
     stretches the reconstruction.
-  - **Not run:** re-running the mapper with f held at candidate values, the test for that. It takes about 15 min per run on
-    the shared runner.
+  - **Focal-length test** (`video_recon_fixedf.json`). The mapper was re-run on the same matches with f held and k1 = 0, at
+    1778 px (a 50 mm lens, a common render default), 4010 px (1.5 × the solved f) and 6000 px:
+
+    | f (px) | Per-axis spread | Orbit radius sd | Reprojection (px) | Median silhouette IoU | Within 1 mm |
+    |---|---|---|---|---|---|
+    | 1778 | 35.4 % | 22.1 % | 0.84 | 0.81 | 47.7 % |
+    | 2673 (solved) | 27.5 % | 19.9 % | 0.84 | 0.81 | 49.7 % |
+    | 4010 | 20.0 % | 18.7 % | 0.84 | 0.79 | 48.6 % |
+    | 6000 | 55.6 % | 18.4 % | 0.85 | 0.78 | 17.7 % (its pose fit did not converge) |
+
+    - f changes the distortion but no tested value removes it, and the frames can't tell the values apart: the same
+      reprojection error, about the same IoU.
+    - Something besides f is off, perhaps a camera that also moves or zooms in Teknic's render.
+    - A per-frame focal length (one COLMAP camera per frame) is the next test. It was not run.
+    - So the video checks our model to a few mm, not better.
   - Because the video is a render of Teknic's CAD, this is a second route to the same reference. The STEP comparison (IoU
     0.661) is the better one, and neither says how a delivered motor differs from Teknic's CAD.
 - **Not done:** a NeRF or Gaussian splat. It is not quick on 4 shared CPU cores.

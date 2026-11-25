@@ -1,0 +1,178 @@
+{
+ "date": "2026-11-25",
+ "method": "Focal-length test: the mapper re-run on the same features and matches with f held fixed and k1 = 0     (`colmap mapper ... --Mapper.ba_refine_focal_length 0 --Mapper.ba_refine_extra_params 0`, the database's camera set to     f). Each model given as label:f_px:txt_dir is compared with our model the same way: the first run's silhouette pose is     carried over through a similarity fitted to the 74 camera centres, refitted on the silhouettes (upright, 5 DoF, every     6th view, 150 evaluations), then the per-axis scales, the flange and shaft, the cloud distances (rigid ICP at the     flange scale) and the silhouette IoU over all views. Writes analysis/out/oem/video_recon_fixedf.json.",
+ "runs": {
+  "self-calibrated": {
+   "f_px": 2673.0,
+   "k1": -0.36155,
+   "f_35mm_equiv_mm": 78.8,
+   "registered": 74,
+   "points3D": 13502,
+   "mean_reprojection_error_px": 0.838,
+   "orbit": {
+    "arc_deg": 281.9,
+    "radius_cv_pct": 19.87
+   },
+   "camera_transfer_residual_pct_of_radius": 0.0,
+   "silhouette_refit": {
+    "views": 13,
+    "evaluations": 117,
+    "mean_iou_before": 0.8051,
+    "mean_iou_after": 0.8058
+   },
+   "silhouette_iou_all_views_T220": {
+    "median": 0.8108,
+    "min": 0.7384,
+    "max": 0.8789
+   },
+   "per_axis_scale": {
+    "x": 0.8494,
+    "y": 1.0072,
+    "z": 1.083
+   },
+   "per_axis_spread_pct": 27.5,
+   "flange_width_x_y_mm": [
+    64.31,
+    64.71
+   ],
+   "flange_points": 199,
+   "shaft_d_mm": 11.74,
+   "cloud_to_model_flange_scaled_rigid_icp": {
+    "mean_mm": 1.923,
+    "median_mm": 1.006,
+    "p95_mm": 6.489,
+    "within_0_5mm_pct": 25.5,
+    "within_1mm_pct": 49.7
+   }
+  },
+  "fixed, k1 = 0 (50 mm lens)": {
+   "f_px": 1778.0,
+   "k1": 0.0,
+   "f_35mm_equiv_mm": 52.4,
+   "registered": 74,
+   "points3D": 13875,
+   "mean_reprojection_error_px": 0.844,
+   "orbit": {
+    "arc_deg": 272.8,
+    "radius_cv_pct": 22.13
+   },
+   "camera_transfer_residual_pct_of_radius": 3.5,
+   "silhouette_refit": {
+    "views": 13,
+    "evaluations": 150,
+    "mean_iou_before": 0.4123,
+    "mean_iou_after": 0.7975
+   },
+   "silhouette_iou_all_views_T220": {
+    "median": 0.8086,
+    "min": 0.6861,
+    "max": 0.8854
+   },
+   "per_axis_scale": {
+    "x": 0.8365,
+    "y": 1.0213,
+    "z": 1.1325
+   },
+   "per_axis_spread_pct": 35.4,
+   "flange_width_x_y_mm": [
+    54.79,
+    61.11
+   ],
+   "flange_points": 94,
+   "shaft_d_mm": null,
+   "cloud_to_model_flange_scaled_rigid_icp": {
+    "mean_mm": 2.291,
+    "median_mm": 1.062,
+    "p95_mm": 10.129,
+    "within_0_5mm_pct": 24.6,
+    "within_1mm_pct": 47.7
+   }
+  },
+  "fixed, k1 = 0 (1.5x)": {
+   "f_px": 4010.0,
+   "k1": 0.0,
+   "f_35mm_equiv_mm": 118.1,
+   "registered": 74,
+   "points3D": 12761,
+   "mean_reprojection_error_px": 0.842,
+   "orbit": {
+    "arc_deg": 285.8,
+    "radius_cv_pct": 18.74
+   },
+   "camera_transfer_residual_pct_of_radius": 1.7,
+   "silhouette_refit": {
+    "views": 13,
+    "evaluations": 150,
+    "mean_iou_before": 0.4906,
+    "mean_iou_after": 0.7848
+   },
+   "silhouette_iou_all_views_T220": {
+    "median": 0.7934,
+    "min": 0.689,
+    "max": 0.892
+   },
+   "per_axis_scale": {
+    "x": 0.8511,
+    "y": 1.021,
+    "z": 0.8896
+   },
+   "per_axis_spread_pct": 20.0,
+   "flange_width_x_y_mm": [],
+   "flange_points": 0,
+   "shaft_d_mm": null,
+   "cloud_to_model_flange_scaled_rigid_icp": {
+    "mean_mm": 1.762,
+    "median_mm": 1.028,
+    "p95_mm": 5.713,
+    "within_0_5mm_pct": 24.1,
+    "within_1mm_pct": 48.6
+   },
+   "note": "no cloud points fell in the flange plate's slab at this pose, so the 'flange-scaled' ICP kept the silhouette scale"
+  },
+  "fixed, k1 = 0 (2.25x)": {
+   "f_px": 6000.0,
+   "k1": 0.0,
+   "f_35mm_equiv_mm": 176.8,
+   "registered": 74,
+   "points3D": 12226,
+   "mean_reprojection_error_px": 0.852,
+   "orbit": {
+    "arc_deg": 287.9,
+    "radius_cv_pct": 18.42
+   },
+   "camera_transfer_residual_pct_of_radius": 2.1,
+   "silhouette_refit": {
+    "views": 13,
+    "evaluations": 150,
+    "mean_iou_before": 0.3449,
+    "mean_iou_after": 0.7729
+   },
+   "silhouette_iou_all_views_T220": {
+    "median": 0.7777,
+    "min": 0.7007,
+    "max": 0.8811
+   },
+   "per_axis_scale": {
+    "x": 0.6365,
+    "y": 0.9905,
+    "z": 0.792
+   },
+   "per_axis_spread_pct": 55.6,
+   "flange_width_x_y_mm": [
+    23.67,
+    66.64
+   ],
+   "flange_points": 220,
+   "shaft_d_mm": null,
+   "cloud_to_model_flange_scaled_rigid_icp": {
+    "mean_mm": 7.606,
+    "median_mm": 5.246,
+    "p95_mm": 29.374,
+    "within_0_5mm_pct": 8.8,
+    "within_1mm_pct": 17.7
+   },
+   "note": "the carried-over pose started at a mean IoU of 0.34 and the 150-evaluation refit stopped at 0.77, not converged, so this run's spread, flange and distances are not reliable"
+  }
+ },
+ "conclusion": "**Result:** the focal length changes the distortion but does not remove it, and the frames cannot tell the values apart. The per-axis spread is 35.4 % at f 1778, 27.5 % at the self-calibrated 2673 and 20.0 % at 4010. At 6000 it is 55.6 %, but that pose fit did not converge. The solved orbit's radius sd falls only from 22.1 % to 18.4 % over the whole range. The mean reprojection error is the same for all four (0.84-0.85 px), so this turntable shot does not fix f. Over the first three, the median silhouette IoU over all views barely moves (0.81, 0.81, 0.79), and neither does the share of points within 1 mm (48-50 %). The least distorted run (f 4010) is still 20 % out of proportion, with a camera path far from a circle. Something besides f is off, perhaps a camera that also moves or zooms in Teknic's render. The video can't check our model to better than a few mm."
+}

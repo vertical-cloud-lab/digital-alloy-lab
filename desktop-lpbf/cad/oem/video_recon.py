@@ -630,6 +630,108 @@ def figures(res, X, mesh, imgs, cam, order, Vw, lo, A, hull):
     cv2.imwrite(str(OUT / "video_recon_silhouettes.png"), cv2.resize(grid, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA))
 
 
+def _clean_cloud(pts):
+    from scipy.spatial import cKDTree
+    errs = np.array([p["err"] for p in pts.values()])
+    tracks = np.array([p["track"] for p in pts.values()])
+    P = np.array([p["X"] for p in pts.values()])[(errs < 2.0) & (tracks >= 3)]
+    dk, _ = cKDTree(P).query(P, 9)
+    md = dk[:, 1:].mean(1)
+    return P[md < md.mean() + 2.5 * md.std()], errs
+
+
+def _per_axis(X, Q, qt):
+    D, b = np.ones(3), np.zeros(3)
+    for _ in range(60):
+        d, j = qt.query(X * D + b)
+        k = d <= np.quantile(d, 0.9)
+        for ax_ in range(3):
+            D[ax_], b[ax_] = np.linalg.lstsq(np.c_[X[k, ax_], np.ones(k.sum())], Q[j[k], ax_], rcond=None)[0]
+    return D
+
+
+def fixedf():
+    """Focal-length test: the mapper re-run on the same features and matches with f held fixed and k1 = 0
+    (`colmap mapper ... --Mapper.ba_refine_focal_length 0 --Mapper.ba_refine_extra_params 0`, the database's camera set to
+    f). Each model given as label:f_px:txt_dir is compared with our model the same way: the first run's silhouette pose is
+    carried over through a similarity fitted to the 74 camera centres, refitted on the silhouettes (upright, 5 DoF, every
+    6th view, 150 evaluations), then the per-axis scales, the flange and shaft, the cloud distances (rigid ICP at the
+    flange scale) and the silhouette IoU over all views. Writes analysis/out/oem/video_recon_fixedf.json."""
+    import cv2
+    import trimesh
+    from scipy.spatial import cKDTree
+    w = WORK / "work"
+    _, imgs0, _ = read_model(w / "sparse_txt")
+    a0 = np.load(w / "pose_silhouette.npy")
+    A0 = (a0[0], a0[1:10].reshape(3, 3), a0[10:13])
+    C0 = {im["name"]: -im["R"].T @ im["t"] for im in imgs0.values()}
+    mesh, lo = model_mesh(0.2), model_mesh(0.6)
+    Q = np.asarray(trimesh.sample.sample_surface_even(mesh, 300000, seed=5)[0])
+    qt = cKDTree(Q)
+    Sfit = np.asarray(trimesh.sample.sample_surface_even(lo, 120000, seed=4)[0])
+    out = dict(date="2026-11-25", method=fixedf.__doc__.split("\n\n")[0].replace("\n", " "), runs={})
+    if (OUT / "video_recon_fixedf.json").exists():                    # keep runs analysed in earlier calls
+        out["runs"] = json.loads((OUT / "video_recon_fixedf.json").read_text()).get("runs", {})
+    for arg in sys.argv[2:]:
+        label, fpx, d_ = arg.split(":")
+        cams, imgs, pts = read_model(pathlib.Path(d_))
+        cam = cams[next(iter(cams))]
+        P, errs = _clean_cloud(pts)
+        order = sorted(imgs, key=lambda i: imgs[i]["name"])
+        C = np.array([-imgs[i]["R"].T @ imgs[i]["t"] for i in order])
+        cen = C.mean(0)
+        _, _, Vt = np.linalg.svd(C - cen)
+        rad = np.linalg.norm((C - cen) - np.outer((C - cen) @ Vt[2], Vt[2]), axis=1)
+        ang = np.unwrap(np.arctan2((C - cen) @ Vt[1], (C - cen) @ Vt[0]))
+        Cn = {imgs[i]["name"]: -imgs[i]["R"].T @ imgs[i]["t"] for i in order}
+        names = [n for n in Cn if n in C0]
+        X0c, X1c = np.array([C0[n] for n in names]), np.array([Cn[n] for n in names])
+        sT, RT, tT = umeyama(X0c, X1c)                                 # first run's world -> this run's world
+        resid = np.linalg.norm(sT * X0c @ RT.T + tT - X1c, axis=1)
+        sA, RA, tA = A0
+        A = (sA / sT, RA @ RT.T, tA - (sA / sT) * RA @ RT.T @ tT)
+        mk = {i: cv2.imread(str(w / "masks" / f"{imgs[i]['name'][:-4]}_T{MASK_T_PRIMARY}.png"), 0) for i in order}
+        fit_ids = order[::6]
+        q, i0_, i1_, nfev = fit_silhouettes(lo, A, [(imgs[i]["R"], imgs[i]["t"]) for i in fit_ids], cam, [mk[i] for i in fit_ids],
+                                            maxfev=150, steps=[0, 3, 0, 2.0, 2.0, 2.0, 0.03], S=Sfit, free=(1, 3, 4, 5, 6))
+        c0 = lo.vertices.mean(0)
+        _, Rd = perturb(lo.vertices[:1], q, c0)
+        s_d, t_d = math.exp(q[6]), np.asarray(q[3:6])
+        sS, RS, tS = A[0] / s_d, Rd.T @ A[1], Rd.T @ (A[2] - c0 - t_d) / s_d + c0
+        XS = sS * P @ RS.T + tS
+        D = _per_axis(XS, Q, qt)
+        fl = XS[(XS[:, 2] > -6.0) & (XS[:, 2] < 0.0) & (np.abs(XS[:, 0]) < 40) & (np.abs(XS[:, 1]) < 40)]
+        fw = [float(np.percentile(fl[:, k], 99.5) - np.percentile(fl[:, k], 0.5)) for k in (0, 1)] if len(fl) > 20 else []
+        shp = XS[(XS[:, 2] > 3.0) & (XS[:, 2] < 19.0) & (np.hypot(XS[:, 0], XS[:, 1]) < 8.0)]
+        s_fl = sS * FLANGE_SQ / float(np.mean(fw)) if fw else sS
+        s2, R2, t2, _ = icp(P, qt, Q, s_fl, RS, tS + (sS - s_fl) * (RS @ P.mean(0)), iters=60, keep=0.9, with_scale=False)
+        dd = surf_dist(mesh, s2 * P @ R2.T + t2)
+        Vw = ((lo.vertices - tS) @ RS) / sS
+        ious = []
+        for i in order:
+            v2, _ = project(Vw, imgs[i]["R"], imgs[i]["t"], cam)
+            ious.append(iou(silhouette(v2, lo.faces, (cam["h"], cam["w"])), mk[i]))
+        run = dict(f_px=round(cam["params"][0], 1), k1=round(cam["params"][3], 5) if len(cam["params"]) > 3 else None,
+                   f_35mm_equiv_mm=round(cam["params"][0] * 43.27 / math.hypot(cam["w"], cam["h"]), 1),
+                   registered=len(imgs), points3D=len(pts), mean_reprojection_error_px=round(float(errs.mean()), 3),
+                   orbit=dict(arc_deg=round(float(np.degrees(ang.max() - ang.min())), 1), radius_cv_pct=round(float(rad.std() / rad.mean() * 100), 2)),
+                   camera_transfer_residual_pct_of_radius=round(float(np.median(resid) / rad.mean() * 100), 1),
+                   silhouette_refit=dict(views=len(fit_ids), evaluations=nfev, mean_iou_before=round(i0_, 4), mean_iou_after=round(i1_, 4)),
+                   silhouette_iou_all_views_T220=dict(median=round(float(np.median(ious)), 4), min=round(float(np.min(ious)), 4),
+                                                      max=round(float(np.max(ious)), 4)),
+                   per_axis_scale=dict(x=round(float(D[0]), 4), y=round(float(D[1]), 4), z=round(float(D[2]), 4)),
+                   per_axis_spread_pct=round(float((D.max() / D.min() - 1) * 100), 1),
+                   flange_width_x_y_mm=[round(v, 2) for v in fw], flange_points=int(len(fl)),
+                   shaft_d_mm=round(float(2 * np.median(np.hypot(shp[:, 0], shp[:, 1]))), 2) if len(shp) > 10 else None,
+                   cloud_to_model_flange_scaled_rigid_icp=dict(mean_mm=round(float(dd.mean()), 3), median_mm=round(float(np.median(dd)), 3),
+                                                              p95_mm=round(float(np.percentile(dd, 95)), 3),
+                                                              within_0_5mm_pct=round(float((dd <= 0.5).mean() * 100), 1),
+                                                              within_1mm_pct=round(float((dd <= 1.0).mean() * 100), 1)))
+        out["runs"][label] = run
+        print(label, json.dumps(run), flush=True)
+        (OUT / "video_recon_fixedf.json").write_text(json.dumps(out, indent=1))
+
+
 def aniso():
     """Per-axis scale of the cloud against our model, from the silhouette pose: trimmed ICP that solves a scale and an
     offset for each model axis (x across the flange, y up through the connector block, z along the shaft). A Euclidean
@@ -813,9 +915,39 @@ def report():
     a("- Not done: dense MVS (needs CUDA) and a NeRF or Gaussian splat (not quick on 4 shared CPU cores).")
     a("- [`video_recon_cloud.png`](video_recon_cloud.png): the aligned cloud over our model in three views, coloured by distance,")
     a("  and the solved camera path.")
+    fx = OUT / "video_recon_fixedf.json"
+    if fx.exists():
+        F = json.loads(fx.read_text())
+        a("")
+        a(f"## Focal-length test ({F['date']})")
+        a("")
+        a("To test whether the distortion comes from a mis-solved focal length, the mapper was re-run on the same features and")
+        a("matches with f held fixed and k1 = 0 (a render has no lens distortion). 1778 px is a 50 mm lens on a 36 mm-wide sensor,")
+        a("a common default in 3D render tools; 4010 and 6000 px are 1.5 and 2.25 × the self-calibrated f. Each mapper run took 6.5-9.3 min.")
+        a("Each model was compared with ours the same way: the first")
+        a("run's pose carried over through the camera centres, refitted on the silhouettes (upright, every 6th view), then the per-axis")
+        a("scales, the flange, the distances (rigid ICP at the flange scale) and the IoU over all views.")
+        a("")
+        a("| f (px) | k1 | Registered | Points | Reproj. (px) | Orbit radius sd | Per-axis scales x / y / z | Spread | Flange (mm) | "
+          "Median IoU, all views | Within 1 mm |")
+        a("|---|---|---|---|---|---|---|---|---|---|---|")
+        for lab, ru in F["runs"].items():
+            pa = ru["per_axis_scale"]
+            fwm = " × ".join(f"{v:.1f}" for v in ru["flange_width_x_y_mm"]) if ru["flange_width_x_y_mm"] else "–"
+            a(f"| {ru['f_px']:.0f} ({lab}) | {ru['k1']} | {ru['registered']} | {ru['points3D']:,} | {ru['mean_reprojection_error_px']} | "
+              f"{ru['orbit']['radius_cv_pct']} % | {pa['x']} / {pa['y']} / {pa['z']} | **{ru['per_axis_spread_pct']} %** | {fwm} | "
+              f"{ru['silhouette_iou_all_views_T220']['median']} | {ru['cloud_to_model_flange_scaled_rigid_icp']['within_1mm_pct']} % |")
+        for lab, ru in F["runs"].items():
+            if ru.get("note"):
+                a("")
+                a(f"f {ru['f_px']:.0f}: {ru['note']}.")
+        if F.get("conclusion"):
+            a("")
+            a(F["conclusion"])
     (OUT / "video_recon.md").write_text("\n".join(L) + "\n")
     print("wrote", OUT / "video_recon.md")
 
 
 if __name__ == "__main__":
-    {"fetch": fetch, "frames": frames, "colmap": colmap, "analyze": analyze, "aniso": aniso, "report": report}[sys.argv[1]]()
+    {"fetch": fetch, "frames": frames, "colmap": colmap, "analyze": analyze, "aniso": aniso, "fixedf": fixedf,
+     "report": report}[sys.argv[1]]()

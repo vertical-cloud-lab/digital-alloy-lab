@@ -121,3 +121,25 @@ hull mean 4.37 mm (P95 9.87); chamfer (mean of the two) 4.7 mm.
 - Not done: dense MVS (needs CUDA) and a NeRF or Gaussian splat (not quick on 4 shared CPU cores).
 - [`video_recon_cloud.png`](video_recon_cloud.png): the aligned cloud over our model in three views, coloured by distance,
   and the solved camera path.
+
+## Focal-length test (2026-11-25)
+
+To test whether the distortion comes from a mis-solved focal length, the mapper was re-run on the same features and
+matches with f held fixed and k1 = 0 (a render has no lens distortion). 1778 px is a 50 mm lens on a 36 mm-wide sensor,
+a common default in 3D render tools; 4010 and 6000 px are 1.5 and 2.25 × the self-calibrated f. Each mapper run took 6.5-9.3 min.
+Each model was compared with ours the same way: the first
+run's pose carried over through the camera centres, refitted on the silhouettes (upright, every 6th view), then the per-axis
+scales, the flange, the distances (rigid ICP at the flange scale) and the IoU over all views.
+
+| f (px) | k1 | Registered | Points | Reproj. (px) | Orbit radius sd | Per-axis scales x / y / z | Spread | Flange (mm) | Median IoU, all views | Within 1 mm |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 2673 (self-calibrated) | -0.36155 | 74 | 13,502 | 0.838 | 19.87 % | 0.8494 / 1.0072 / 1.083 | **27.5 %** | 64.3 × 64.7 | 0.8108 | 49.7 % |
+| 1778 (fixed, k1 = 0 (50 mm lens)) | 0.0 | 74 | 13,875 | 0.844 | 22.13 % | 0.8365 / 1.0213 / 1.1325 | **35.4 %** | 54.8 × 61.1 | 0.8086 | 47.7 % |
+| 4010 (fixed, k1 = 0 (1.5x)) | 0.0 | 74 | 12,761 | 0.842 | 18.74 % | 0.8511 / 1.021 / 0.8896 | **20.0 %** | – | 0.7934 | 48.6 % |
+| 6000 (fixed, k1 = 0 (2.25x)) | 0.0 | 74 | 12,226 | 0.852 | 18.42 % | 0.6365 / 0.9905 / 0.792 | **55.6 %** | 23.7 × 66.6 | 0.7777 | 17.7 % |
+
+f 4010: no cloud points fell in the flange plate's slab at this pose, so the 'flange-scaled' ICP kept the silhouette scale.
+
+f 6000: the carried-over pose started at a mean IoU of 0.34 and the 150-evaluation refit stopped at 0.77, not converged, so this run's spread, flange and distances are not reliable.
+
+**Result:** the focal length changes the distortion but does not remove it, and the frames cannot tell the values apart. The per-axis spread is 35.4 % at f 1778, 27.5 % at the self-calibrated 2673 and 20.0 % at 4010. At 6000 it is 55.6 %, but that pose fit did not converge. The solved orbit's radius sd falls only from 22.1 % to 18.4 % over the whole range. The mean reprojection error is the same for all four (0.84-0.85 px), so this turntable shot does not fix f. Over the first three, the median silhouette IoU over all views barely moves (0.81, 0.81, 0.79), and neither does the share of points within 1 mm (48-50 %). The least distorted run (f 4010) is still 20 % out of proportion, with a camera path far from a circle. Something besides f is off, perhaps a camera that also moves or zooms in Teknic's render. The video can't check our model to better than a few mm.
