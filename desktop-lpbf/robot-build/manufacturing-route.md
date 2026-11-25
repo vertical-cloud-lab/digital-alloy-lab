@@ -351,6 +351,10 @@ Each option is priced for one chamber body (frame + floor, or its equivalent). T
 - **It doesn't remove the finishing.** Every O-ring land (Ra ≤ 0.8 µm, 0.025 mm flat), the Ø96 port, the insert holes,
   the KF bore and the door land still need the mill. As-built surfaces are Ra 3.2-12 µm and ±0.4 % (JLC3DP's stated
   spec).
+- **Touching up by hand isn't enough for the seals.** Lapping a 312 mm face flat to 0.025 mm by hand isn't practical,
+  and neither is holding the Ø96 H7 port or the Ø18 recoater bores. The lands and bores need the mill, or a surface
+  grinder for the two big faces. What can be done by hand: tap threads into printed pilot holes, or fit helical inserts
+  in them. That saves some drilling but none of the three setups.
 - **Leak-tightness isn't the risk.** No published AM vacuum part needed HIP. 316L LPBF walls have been gas-tight at
   0.3 mm (Grinschek et al. 2022). As-printed or sawn flange faces leaked at 10⁻⁷ to 10⁻⁵ mbar·L/s until they were
   machined (LAL Orsay, IPAC'17).
@@ -426,6 +430,8 @@ Each option is priced for one chamber body (frame + floor, or its equivalent). T
 - **It keeps at BYU the parts whose seal faces and fits we need to control and rework,** and whose CAM (frame, floor) is
   already done.
 - **It is no slower than all in house with two machinists,** and it needs one.
+- **It holds up if the instant prices don't.** If JLCCNC's review doubled the 33 parts' price, the hybrid would cost
+  about $22.0k. At US prices it is $27.0k (c2). Both are still below all in house ($28.7k).
 
 **Next steps, in order:**
 
