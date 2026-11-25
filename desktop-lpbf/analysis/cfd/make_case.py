@@ -21,6 +21,10 @@ Options: --res coarse|fine, --q-lpm (blower flow through the bed slot), --cad-di
 in the inlet slot and in the outlet slot (porous zones), the under-floor outlet channel widened to 35 mm with a
 KF-40 boot, and a 100 x 4 mm upper slot under the lid (--upper-lpm, default 40 L/min) sweeping under the slide.
 The gas knife is drawn as a body only; its flow is not specified in the model, so it is off in every case.
+The outlet plenum's channel, link and boot and the inlet plenum's cavity are read from lpbf_low.py's own box() expressions
+(since 2026-11-25; the round-5 model moved the boot and its KF-25 port to the plenum's left end, x = -86). --outlet-end
+right|left mirrors the boot and link about x = 0 (right = where the 2026-11-20 runs had them). run_case.sh runs simpleFoam
+on 2 MPI ranks (NP=1 for serial), so the case also gets a decomposeParDict.
 """
 from __future__ import annotations
 
@@ -29,6 +33,7 @@ import importlib.util
 import json
 import math
 import pathlib
+import re
 import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -49,10 +54,34 @@ def load_params(cad_dir: pathlib.Path):
     e = src.index("\n)\n", s)
     body = src[s + len("P = dict("):e]
     P = eval("dict(" + body + ")", {"MP": MP})   # the model's own parameter dict (numbers and MP refs only)
+    P["_cav"] = model_cavities(src, MP, P)
     return MP, P
 
 
-def geometry(MP, P, variant="baseline"):
+def model_cavities(src, MP, P):
+    """The plenum cavities as lpbf_low.py cuts them, read from its own box() expressions, so that a move in the model moves
+    the CFD with it (2026-11-25: the outlet boot had moved to the left end and this script still drew it at the right):
+    the outlet plenum's channel, link and boot (KF-25 port in the boot's bottom, at x = xb_o) and the inlet plenum's
+    cavity and KF-25 bore."""
+    iy, wall, zf = P["ch_y"] / 2, P["wall"], -P["floor"]
+    cy = iy + wall
+    y0o, y1o = MP.OUTLET_Y
+    xb_o = float(re.search(r"^\s*xb_o\s*=\s*([-+0-9.eE]+)", src, re.M).group(1))
+    s = src.index("plo = plo.cut(fuse([")
+    e = src.index("]))", s)
+    boxes = eval(src[s + len("plo = plo.cut(fuse("):e + 1], {"box": lambda *a: tuple(float(v) for v in a),
+                                                             "y0o": y0o, "y1o": y1o, "zf": zf, "xb_o": xb_o})
+    channel = next(b for b in boxes if b[5] > zf)                 # the one open to the floor slot (cut to zf + 1)
+    boot = min(boxes, key=lambda b: b[4])                          # the deep one, with the KF-25 port in its bottom
+    link = next(b for b in boxes if b is not channel and b is not boot)
+    line = next(ln for ln in src.splitlines() if ln.strip().startswith("plen_in = fuse("))
+    cav = [float(eval(a, {"cy": cy})) for a in re.search(r"\.cut\(box\(([^()]*)\)\)", line).group(1).split(",")]
+    m = re.search(r"\.cut\(cyl\(([0-9.]+), \(([^()]*)\), \"y\"", line)
+    return dict(xb_o=xb_o, channel=channel[:5] + (zf,), link=link, boot=boot, inlet_cavity=tuple(cav),
+                inlet_port_r=float(m.group(1)), inlet_port_z=float(eval(m.group(2).split(",")[2], {"cy": cy})))
+
+
+def geometry(MP, P, variant="baseline", floor_slot_w=0.0):
     """Fluid and solid boxes (x0, x1, y0, y1, z0, z1) in mm, with where each number comes from in lpbf_low.py."""
     ix, iy, iz = P["ch_x"] / 2, P["ch_y"] / 2, P["ch_z"]          # 140, 95, 120
     wall, fl = P["wall"], P["floor"]                                 # 16, 20
@@ -62,17 +91,23 @@ def geometry(MP, P, variant="baseline"):
     oy0, oy1 = MP.OUTLET_Y                                           # -94, -86
     zf = -fl                                                         # -20: floor underside
     xp, xd, dh = P["x_park"], P["x_dose"], P["dose_y"]               # -106, -90, 50
+    cav = P["_cav"]
+    pc = cav["inlet_cavity"]                                         # box(-60, 60, cy - 1, cy + 27, 1.5, 25): floor at z 1.5 since round 5
+    s_in = cav["inlet_port_r"] * math.sqrt(math.pi)                  # Ø25.4 bore as a square of the same area (22.5 mm)
+    pz0 = max(pc[4], cav["inlet_port_z"] - s_in / 2)                 # bore centre z 11, kept inside the cavity's height
     fluid = {
         "chamber": (-ix, ix, -iy, iy, 0.0, iz),
         "door recess": (-110.0, 110.0, -cy, -iy, 8.0, 100.0),       # ch.cut(box(-110, 110, -cy-1, -iy+1, 8, 100)); door face at y=-cy
         "inlet slot": (-ih, ih, iy, cy, 4.0, 12.0),                  # ch.cut(box(-INLET_HALF, INLET_HALF, iy-1, cy+1, 4, 12))
-        "inlet plenum": (-60.0, 60.0, cy, cy + 27.0, -3.0, 25.0),    # plen_in cavity box(-60, 60, cy-1, cy+27, -3, 25)
-        # KF-25 port (Ø25.4 bore at z = 11) as a 20 x 25 mm square duct of the same area, 5 mm long
-        "inlet port": (-10.0, 10.0, cy + 27.0, cy + 32.0, 0.0, 25.0),
+        "inlet plenum": (pc[0], pc[1], cy, pc[3], pc[4], pc[5]),     # plen_in cavity, read from the model (x +/-60, to cy+27, z 1.5-25)
+        # KF-25 port (Ø25.4 bore at z = 11) as a 22.5 mm square duct of the same area, 5 mm long
+        "inlet port": (-s_in / 2, s_in / 2, pc[3], pc[3] + 5.0, pz0, pz0 + s_in),
         "outlet slot": (-oh, oh, oy0, oy1, zf, 0.0),                 # ch.cut(box(-OUTLET_HALF, OUTLET_HALF, OUTLET_Y, -fl-1, 1))
-        "outlet channel": (-oh, 72.0, oy0 - 1, oy1 + 1, zf - 13, zf),   # plo cavity box(-63, 72, y0o-1, y1o+1, zf-13, zf+1)
-        "outlet link": (60.0, 80.0, oy0 - 1, oy1 + 1, zf - 13, zf - 3),  # box(60, 80, y0o-1, y1o+1, zf-13, zf-3)
-        "outlet boot": (76.0, 96.0, oy0 - 8, oy1 + 4, zf - 41, zf - 3),  # box(76, 96, y0o-8, y1o+4, zf-41, zf-3); KF-25 below
+        # the plo cavities, read from the model: channel box(-63, 72, y0o-1, y1o+1, zf-13, zf+1); since 2026-11-23 the link
+        # box(xb_o+6, xb_o+26, ...) and the boot box(xb_o-10, xb_o+10, y0o-8, y1o+4, zf-41, zf-3) are at the LEFT end (xb_o = -86)
+        "outlet channel": cav["channel"],
+        "outlet link": cav["link"],
+        "outlet boot": cav["boot"],                                  # KF-25 port below its bottom face (the 'outlet' patch)
         # Ø56 lid bore (z 120-125) and the drawer's Ø46 opening (z 125-126) under the cover slide, as equal-area squares
         "slide recess": (-25.0, 25.0, -25.0, 25.0, iz, iz + 5.0),
         "slide opening": (-20.0, 20.0, -20.0, 20.0, iz + 5.0, iz + 6.0),
@@ -81,10 +116,17 @@ def geometry(MP, P, variant="baseline"):
         # under-floor outlet channel widened from 10 to 35 mm (y -95..-60: clear of the Ø96 module port at y > -48), a
         # 40 x 42 mm boot to a KF-40 port, and a 100 x 4 mm upper slot through the back wall just under the lid that
         # blows along the ceiling under the cover slide toward the door (its own feed; not drawn in the model)
-        fluid["outlet channel"] = (-oh, 80.0, oy0 - 1, -60.0, zf - 13, zf)
-        fluid["outlet link"] = (60.0, 80.0, oy0 - 1, -60.0, zf - 13, zf - 3)
-        fluid["outlet boot"] = (76.0, 116.0, oy0 - 8, -60.0, zf - 41, zf - 3)
+        # The boot stays at the model's end (the left since 2026-11-23) and grows to 40 mm in x away from the slot (it was
+        # x 76-116 at the right end in the 2026-11-20 runs)
+        ch, lk, bt = cav["channel"], cav["link"], cav["boot"]
+        fluid["outlet channel"] = (min(ch[0], lk[0]), max(ch[1], lk[1]), oy0 - 1, -60.0, zf - 13, zf)
+        fluid["outlet link"] = (lk[0], lk[1], oy0 - 1, -60.0, zf - 13, zf - 3)
+        bx = (bt[0], bt[0] + 40.0) if bt[0] > 0 else (bt[1] - 40.0, bt[1])
+        fluid["outlet boot"] = (bx[0], bx[1], oy0 - 8, -60.0, zf - 41, zf - 3)
         fluid["upper slot"] = (-50.0, 50.0, iy, cy, iz - 6.0, iz - 2.0)
+        if floor_slot_w:
+            # gas-flow.md §7 item 2: a wider floor slot (from the door side, y -94, toward the plate), still over the 35 mm channel
+            fluid["outlet slot"] = (-oh, oh, oy0, oy0 + floor_slot_w, zf, 0.0)
     solid = {
         # parked recoater: blade (x xp+9..xp+10.5, z 0.05-18) and holder (x xp-9..xp+9, z 3-34) as one block to the floor
         "blade + holder": (xp - 9.0, xp + 10.0, -dh - 3.0, dh + 3.0, 0.0, 35.0),
@@ -126,7 +168,12 @@ def inside(b, p):
 
 def build(args):
     MP, P = load_params(pathlib.Path(args.cad_dir))
-    fluid, solid = geometry(MP, P, args.variant)
+    cav = P["_cav"]
+    if args.outlet_end != "model" and (cav["boot"][0] < 0) != (args.outlet_end == "left"):
+        # mirror the link and boot about x = 0 (the 2026-11-20 runs had them at x 60-80 and 76-96, the model's old right end)
+        flip = lambda b: (-b[1], -b[0]) + tuple(b[2:])
+        cav.update(link=flip(cav["link"]), boot=flip(cav["boot"]), xb_o=-cav["xb_o"])
+    fluid, solid = geometry(MP, P, args.variant, args.floor_slot_width)
     X, Y, Z = (lines(fluid, solid, a) for a in range(3))
     N = [[max(1, math.ceil((L[i + 1] - L[i]) / spacing(a, 0.5 * (L[i] + L[i + 1]), args.res) - 1e-9)) for i in range(len(L) - 1)]
          for a, L in enumerate((X, Y, Z))]
@@ -178,6 +225,11 @@ def build(args):
         if abs(Z[k + 1] - (P["ch_z"] + 6.0)) < 1e-9:                                       # the cover slide's underside
             patches["slide"].append((v(i, j, k + 1), v(i + 1, j, k + 1), v(i + 1, j + 1, k + 1), v(i, j + 1, k + 1)))
 
+    purge = args.slide_purge_lpm > 0
+    if purge:
+        # gas-flow.md §7 item 6: argon fed into the lid bore above the Ø46 opening leaves the recess downward. Modelled as an
+        # even inflow through the cover slide's underside (the 40 x 40 square standing for the Ø46 opening, z 126)
+        patches["inlet3"] = patches.pop("slide")
     out = pathlib.Path(args.out)
     for d in ("system", "constant", "0"):
         (out / d).mkdir(parents=True, exist_ok=True)
@@ -193,7 +245,7 @@ def build(args):
         for name, faces in patches.items():
             if not faces:
                 continue
-            typ = "patch" if name in ("inlet", "inlet2", "outlet") else "wall"
+            typ = "patch" if name in ("inlet", "inlet2", "inlet3", "outlet") else "wall"
             f.write("    %s\n    {\n        type %s;\n        faces\n        (\n" % (name, typ))
             f.write("".join("            (%d %d %d %d)\n" % fc for fc in faces))
             f.write("        );\n    }\n")
@@ -201,6 +253,7 @@ def build(args):
 
     q = args.q_lpm / 60000.0           # m3/s
     q2 = args.upper_lpm / 60000.0 if args.variant == "fix" else 0.0
+    q3 = args.slide_purge_lpm / 60000.0
     a_port = (port[1] - port[0]) * (port[5] - port[4]) * 1e-6
     k_in = 1.5 * (0.05 * q / a_port) ** 2
     w_in = math.sqrt(k_in) / (0.09 ** 0.25 * 0.07 * 0.0254)
@@ -212,6 +265,7 @@ boundaryField
 {{
     inlet {{ type flowRateInletVelocity; volumetricFlowRate constant {q:.6g}; extrapolateProfile no; value uniform (0 0 0); }}
     inlet2 {{ type flowRateInletVelocity; volumetricFlowRate constant {q2:.6g}; extrapolateProfile no; value uniform (0 0 0); }}
+    inlet3 {{ type flowRateInletVelocity; volumetricFlowRate constant {q3:.6g}; extrapolateProfile no; value uniform (0 0 0); }}
     outlet {{ type inletOutlet; inletValue uniform (0 0 0); value uniform (0 0 0); }}
     "({walls})" {{ type noSlip; }}
 }}
@@ -271,7 +325,7 @@ timeFormat general;
 runTimeModifiable true;
 functions
 {{
-    wallShearStress {{ type wallShearStress; libs (fieldFunctionObjects); patches (floor walls slide); writeControl writeTime; log false; }}
+    wallShearStress {{ type wallShearStress; libs (fieldFunctionObjects); patches (floor walls{'' if purge else ' slide'}); writeControl writeTime; log false; }}
     yPlus {{ type yPlus; libs (fieldFunctionObjects); writeControl writeTime; log false; }}
     pIn {{ type surfaceFieldValue; libs (fieldFunctionObjects); regionType patch; name inlet; operation areaAverage; fields (p); writeFields false; writeControl timeStep; writeInterval 20; log false; }}
     qOut {{ type surfaceFieldValue; libs (fieldFunctionObjects); regionType patch; name outlet; operation sum; fields (phi); writeFields false; writeControl timeStep; writeInterval 20; log false; }}
@@ -293,6 +347,7 @@ interpolationSchemes { default linear; }
 snGradSchemes { default corrected; }
 wallDist { method meshWave; }
 """,
+        "system/decomposeParDict": hdr("dictionary", "decomposeParDict") + "numberOfSubdomains 2;\nmethod scotch;\n",
         "system/fvSolution": hdr("dictionary", "fvSolution") + """solvers
 {
     p { solver GAMG; tolerance 1e-7; relTol 0.05; smoother GaussSeidel; }
@@ -338,9 +393,9 @@ relaxationFactors
     for name, txt in files.items():
         (out / name).write_text(txt)
     (out / "case.foam").write_text("")
-    meta = dict(res=args.res, variant=args.variant, upper_lpm=q2 * 60000.0, q_lpm=args.q_lpm, q_m3s=q, blocks=len(blocks), cells=ncell, lines=dict(x=X, y=Y, z=Z),
+    meta = dict(res=args.res, variant=args.variant, upper_lpm=q2 * 60000.0, slide_purge_lpm=args.slide_purge_lpm, q_lpm=args.q_lpm, q_m3s=q, blocks=len(blocks), cells=ncell, lines=dict(x=X, y=Y, z=Z),
                 n=dict(x=N[0], y=N[1], z=N[2]), fluid=fluid, solid=solid, rho=RHO, mu=MU, nu=NU,
-                slot_v=q / ((2 * MP.INLET_HALF) * 8.0e-6), port_area_m2=a_port,
+                slot_v=q / ((2 * MP.INLET_HALF) * 8.0e-6), port_area_m2=a_port, outlet_boot_x_mm=P["_cav"]["xb_o"],
                 patches={k_: len(v_) for k_, v_ in patches.items()})
     (out / "case_meta.json").write_text(json.dumps(meta, indent=1))
     print(f"{out}: {len(blocks)} blocks, {ncell} cells, Q = {args.q_lpm} L/min, mean slot velocity {meta['slot_v']:.2f} m/s")
@@ -354,6 +409,12 @@ if __name__ == "__main__":
     ap.add_argument("--variant", choices=("baseline", "fix"), default="baseline",
                     help="fix = screens in both slots, wider outlet channel + KF-40 boot, upper window-sweep slot")
     ap.add_argument("--upper-lpm", type=float, default=40.0, help="flow through the upper slot in the 'fix' variant, L/min")
+    ap.add_argument("--floor-slot-width", type=float, default=0.0,
+                    help="fix variant only: the floor slot widened to this many mm in y, from its door-side edge (0 = as drawn, 8 mm)")
+    ap.add_argument("--slide-purge-lpm", type=float, default=0.0,
+                    help="argon blown down out of the cover slide's recess (gas-flow.md §7 item 6), L/min; 0 = the slide is a wall")
+    ap.add_argument("--outlet-end", choices=("model", "left", "right"), default="model",
+                    help="where the outlet boot and its port sit: as in the model (left since 2026-11-23), or mirrored")
     ap.add_argument("--cad-dir", default=str(ROOT / "cad"))
     ap.add_argument("--out", required=True)
     build(ap.parse_args())
