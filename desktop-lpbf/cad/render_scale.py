@@ -5,15 +5,16 @@ apparent from the video"). Every chapter now puts one of these next to the work:
 
   soda can     a US 12 fl oz (355 mL) can: Ø66 x 122 mm (the "211" body; the "202" end is Ø54)
   steel rule   a 300 mm (12 in.) rule, 25 mm wide, ticks every 10 mm, longer every 50 and 100 mm
-  person       a 1750 mm adult (ANSUR II proportions), for the tray and the kit layout
+  person       a 1.75 m man (MakeHuman's CC0 base mesh, clothes and rig, built by human/build_person.py), for the tray
+               and the kit layout
   dims         dimension lines with extension lines, end ticks and a label in mm and inches
 
-The meshes are plain pyvista (the person's sections are interpolated with scipy's PCHIP); colours are neutral so
-nothing reads as a brand.
+The meshes are plain pyvista; colours are neutral so nothing reads as a brand.
 """
 from __future__ import annotations
 
 import math
+import pathlib
 
 import numpy as np
 import pyvista as pv
@@ -55,187 +56,136 @@ def steel_rule(at=(0.0, 0.0, 0.0), axis=(1.0, 0.0, 0.0), L=RULE["L"]):
     return [(base, "#d5d9dd"), (tick.tube(radius=0.45), INK)], labels
 
 
-def _smooth(z, zs, vals):
-    """Shape-preserving cubic (PCHIP) interpolation through (zs, vals) at z: no overshoot between stations."""
-    from scipy.interpolate import PchipInterpolator
-    return PchipInterpolator(zs, vals)(z)
+# ------------------------------------------------------------------ the person
+HUMAN = pathlib.Path(__file__).resolve().parent / "human" / "person.npz"     # built by human/build_person.py
+PERSON_COLOURS = {"skin": "#c49a7e", "shirt": "#4d6d91", "jeans": "#39465a", "shoe": "#2f3237", "sole": "#1d1f22",
+                  "hair": "#3b2c22", "eye_white": "#dcd8d2", "iris": "#3a2a20", "brow": "#33261d"}
+POSES = {   # arm_out / arm_fwd: the upper arm's angle out from vertical to the side / forward (deg); elbow: forearm bend
+    "stand": dict(arm_out=7.0, arm_fwd=4.0, elbow=12.0),          # arms hanging, hands beside the thighs
+    "reach": dict(arm_out=3.0, arm_fwd=24.0, elbow=62.0),         # both hands forward at about waist height
+}
+_HUMAN = {}
 
 
-def _loft(centres, ax_u, ax_v, ra, rb, n_theta=40, cap0=True, cap1=True, p=2.0):
-    """Closed tube through `centres` (k x 3) with elliptical (superelliptical, exponent p) sections of half-axes ra (along
-    ax_u) and rb (along ax_v) at each station; ends closed by fans to the end centres."""
-    centres = np.asarray(centres, float)
-    k = len(centres)
-    th = np.linspace(0, 2 * math.pi, n_theta, endpoint=False)
-    c, s = np.cos(th), np.sin(th)
-    cu = np.sign(c) * np.abs(c) ** (2.0 / p)
-    sv = np.sign(s) * np.abs(s) ** (2.0 / p)
-    pts = []
-    for i in range(k):
-        u, v = np.asarray(ax_u[i], float), np.asarray(ax_v[i], float)
-        ring = centres[i] + np.outer(ra[i] * cu, u) + np.outer(rb[i] * sv, v)
-        pts.append(ring)
-    pts = np.concatenate(pts)
-    faces = []
-    for i in range(k - 1):
-        for j in range(n_theta):
-            a, b = i * n_theta + j, i * n_theta + (j + 1) % n_theta
-            faces += [4, a, b, b + n_theta, a + n_theta]
-    extra = []
-    if cap0:
-        extra.append(centres[0])
-        ic = len(pts)
-        for j in range(n_theta):
-            faces += [3, ic, (j + 1) % n_theta, j]
-    if cap1:
-        extra.append(centres[-1])
-        ic = len(pts) + (1 if cap0 else 0)
-        base = (k - 1) * n_theta
-        for j in range(n_theta):
-            faces += [3, ic, base + j, base + (j + 1) % n_theta]
-    if extra:
-        pts = np.concatenate([pts, np.asarray(extra)])
-    return pv.PolyData(pts, faces=np.asarray(faces)).triangulate().compute_normals(auto_orient_normals=True)
+def _human():
+    """person.npz, loaded once: rest-pose vertices (mm, z up, facing -y, soles on z = 0), triangles and their materials,
+    23 bones (joint, parent) and four skin weights per vertex."""
+    if not _HUMAN:
+        d = np.load(HUMAN)
+        _HUMAN.update({k: d[k] for k in d.files})
+        _HUMAN["bi"] = {str(b): k for k, b in enumerate(_HUMAN["bones"])}
+        _HUMAN["mk"] = {str(n): p.astype(float) for n, p in zip(_HUMAN["mark_names"], _HUMAN["mark_pos"])}
+    return _HUMAN
 
 
-def _limb(p0, p1, radii, n=24):
-    """Tapered round limb from p0 to p1, radii = [(t, r)] along it (t from 0 to 1), with a rounded cap at each end."""
-    p0, p1 = np.asarray(p0, float), np.asarray(p1, float)
-    ax = p1 - p0
-    L = np.linalg.norm(ax)
-    ax /= L
-    ref = np.array([0, 0, 1.0]) if abs(ax[2]) < 0.9 else np.array([1.0, 0, 0])
-    u = np.cross(ax, ref)
-    u /= np.linalg.norm(u)
-    v = np.cross(ax, u)
-    ts_, rs_ = zip(*radii)
-    r0, r1 = rs_[0], rs_[-1]
-    t_in = np.linspace(0, 1, n)
-    r_in = _smooth(t_in, ts_, rs_)
-    cap_n = 6
-    stations, rads = [], []
-    for a in np.linspace(0.12, math.pi / 2, cap_n, endpoint=False):         # start cap, from the tip inward
-        stations.append(p0 - ax * r0 * math.cos(a))
-        rads.append(r0 * math.sin(a))
-    for t, r in zip(t_in, r_in):
-        stations.append(p0 + ax * L * t)
-        rads.append(r)
-    for a in np.linspace(math.pi / 2, 0.12, cap_n + 1)[1:]:                # end cap, outward to the tip
-        stations.append(p1 + ax * r1 * math.cos(a))
-        rads.append(r1 * math.sin(a))
-    k = len(stations)
-    return _loft(stations, [u] * k, [v] * k, rads, rads, n_theta=28)
+def _unit(v):
+    v = np.asarray(v, float)
+    return v / np.linalg.norm(v)
 
 
-def _ellipsoid(c, r, res=32):
-    """Axis-aligned ellipsoid centred on c with semi-axes r."""
-    s = pv.Sphere(radius=1.0, theta_resolution=res, phi_resolution=res)
-    s.points = s.points * np.asarray(r, float) + np.asarray(c, float)
-    return s.compute_normals(auto_orient_normals=True)
+def _rot_axis(axis, deg):
+    a = _unit(axis)
+    t = math.radians(deg)
+    K = np.array([[0, -a[2], a[1]], [a[2], 0, -a[0]], [-a[1], a[0], 0]])
+    return np.eye(3) + math.sin(t) * K + (1 - math.cos(t)) * K @ K
 
 
-def person(at=(0.0, 0.0, 0.0), h=1750.0, facing=(0.0, -1.0, 0.0)):
-    """[(mesh, colour)]: a 1.75 m adult in a shirt and trousers, standing on `at` and facing `facing` (xy).
+def _rot_between(a, b):
+    """The smallest rotation taking direction a to direction b."""
+    a, b = _unit(a), _unit(b)
+    v, c = np.cross(a, b), float(np.dot(a, b))
+    if np.linalg.norm(v) < 1e-9:
+        return np.eye(3)
+    K = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+    return np.eye(3) + K + K @ K / (1 + c)
 
-    Replaced the 2026-11-20 mannequin (a cylinder with a ball on top) on 2026-11-23, after "human looks weird". The body is
-    lofted from superelliptical sections and tapered limbs, with heights and breadths close to the ANSUR II (2012) US Army
-    male means at this stature: shoulder (acromion) 1436 mm, elbow 1100, wrist 850, crotch 836, knee 490; biacromial
-    breadth ~404 (deltoids ~500), chest 350 x 245, hip 345; head 155 wide, 199 long, chin to crown 225; foot 280 long."""
-    s = h / 1750.0
-    # built facing -y with its left side at +x, then turned to `facing`
-    parts = []
 
-    def add(mesh, col):
-        parts.append((mesh, col))
+def person_pose(arm_out=7.0, arm_fwd=4.0, elbow=12.0, stance=260.0, curl=(14.0, 24.0)):
+    """{bone: rotation about its joint, in the rest frame} for a figure standing with its ankles `stance` mm apart, both
+    upper arms `arm_out` deg out to the side and `arm_fwd` deg forward of hanging straight down, elbows bent `elbow` deg
+    forward, and the four fingers curled curl[0] deg at the knuckles and curl[1] deg at the middle joints (the rest pose,
+    MakeHuman's A-pose, has the arms ~45 deg out, the forearms forward, the fingers straight and the feet ~400 mm apart)."""
+    H = _human()
+    J = lambda b: H["head"][H["bi"][b]].astype(float)                      # noqa: E731
+    pose = {}
+    for S, sg in (("L", 1.0), ("R", -1.0)):
+        sh, el, wr = J(f"upperarm.{S}"), J(f"lowerarm.{S}"), J(f"hand.{S}")
+        down = np.array([sg * math.tan(math.radians(arm_out)), -math.tan(math.radians(arm_fwd)), -1.0])
+        Ru = _rot_between(el - sh, down)
+        pose[f"upperarm.{S}"] = Ru
+        up_w = Ru @ _unit(el - sh)
+        side = np.cross(up_w, [0.0, -1.0, 0.0])                             # the elbow's hinge, across the arm
+        if np.linalg.norm(side) < 1e-6:
+            side = np.array([sg, 0.0, 0.0])
+        pose[f"lowerarm.{S}"] = _rot_between(_unit(wr - el), Ru.T @ (_rot_axis(side, elbow) @ up_w))
+        # fingers: curled toward the palm about the knuckle line (index finger's knuckle to the little finger's)
+        ax = H["mk"][f"knuckle5.{S}"] - H["mk"][f"knuckle2.{S}"]
+        pose[f"fingers.{S}"] = _rot_axis(ax, sg * curl[0])
+        pose[f"fingertips.{S}"] = _rot_axis(ax, sg * curl[1])
+        # legs: swing each leg in about the hip so the ankles are `stance` apart, the foot turned back level
+        hip, an = J(f"upperleg.{S}"), J(f"foot.{S}")
+        want = np.array([sg * stance / 2, an[1], an[2]])
+        Rl = _rot_between((an - hip) * [1, 0, 1], (want - hip) * [1, 0, 1])
+        pose[f"upperleg.{S}"] = Rl
+        pose[f"foot.{S}"] = Rl.T
+    return pose
 
-    SHIRT, TROUSERS, SHOES, SKIN, HAIR, BELT = "#5d7fa3", "#3b4350", "#25282d", "#c8a58a", "#3a2f28", "#2b2b2b"
-    ux, uy, uz = np.array([1.0, 0, 0]), np.array([0, 1.0, 0]), np.array([0, 0, 1.0])
-    # ---- torso: lofted superellipses from the crotch to the base of the neck
-    zs = np.array([828, 845, 875, 915, 960, 1010, 1080, 1180, 1270, 1340, 1395, 1430, 1458, 1482, 1496])
-    ha = np.array([40, 105, 160, 172, 166, 156, 146, 154, 166, 174, 176, 160, 118, 78, 60])      # half-breadth (x)
-    hb = np.array([40, 82, 112, 122, 117, 111, 107, 115, 123, 121, 112, 96, 80, 64, 56])         # half-depth (y)
-    yc = np.array([8, 8, 12, 16, 9, 2, -2, -8, -14, -12, -6, 0, 6, 10, 10])                     # centre; + = back
-    z = np.linspace(zs[0], zs[-1], 60)
-    A, B, Y = _smooth(z, zs, ha), _smooth(z, zs, hb), _smooth(z, zs, yc)
-    belt = 1010.0
 
-    def tors(mask, colr):
-        idx = np.where(mask)[0]
-        cen = np.stack([np.zeros(len(idx)), Y[idx], z[idx]], axis=1)
-        add(_loft(cen, [ux] * len(idx), [uy] * len(idx), A[idx], B[idx], n_theta=56, p=2.3), colr)
+def _skin(pose):
+    """Linear-blend skinning: each vertex moved by its four bones' joint rotations (each bone's rotation applied in the
+    rest frame, then its parent's)."""
+    H = _human()
+    nb = len(H["bones"])
+    G = np.zeros((nb, 4, 4))
+    for k in range(nb):                                                  # parents come before their children
+        R = pose.get(str(H["bones"][k]), np.eye(3))
+        L = np.eye(4)
+        L[:3, :3] = R
+        L[:3, 3] = H["head"][k] - R @ H["head"][k]
+        p = int(H["parent"][k])
+        G[k] = G[p] @ L if p >= 0 else L
+    V = H["V"].astype(float)
+    Vh = np.c_[V, np.ones(len(V))]
+    out = np.zeros_like(V)
+    for j in range(4):
+        out += H["sk_w"][:, j, None] * np.einsum("nij,nj->ni", G[H["sk_i"][:, j]][:, :3, :], Vh)
+    return out
 
-    tors(z <= belt + 9.0, TROUSERS)
-    tors(z >= belt - 9.0, SHIRT)
-    zb = np.array([belt - 11, belt + 11])                                                         # belt
-    add(_loft(np.stack([[0, 0], _smooth(zb, zs, yc), zb], axis=1), [ux] * 2, [uy] * 2,
-              _smooth(zb, zs, ha) + 3.0, _smooth(zb, zs, hb) + 3.0, n_theta=56, p=2.3), BELT)
-    # ---- neck and head
-    add(_limb((0, 12, 1460), (0, 8, 1590), [(0, 60), (1, 55)]), SKIN)
-    head_c = np.array([0.0, -6.0, 1640.0])
-    # head: lofted from the chin to the crown, the chin forward of the skull (ANSUR II: head breadth 155, length 199,
-    # chin to crown ~230)
-    hz = np.array([-114, -104, -84, -56, -24, 10, 42, 70, 92, 104, 111])
-    hx = np.array([16, 40, 56, 65, 71, 76, 77, 72, 58, 38, 12])
-    hy = np.array([22, 44, 66, 82, 92, 97, 98, 92, 76, 50, 16])
-    hc = np.array([-36, -30, -20, -10, -4, 0, 2, 4, 6, 6, 6])
-    zz = np.linspace(hz[0], hz[-1], 34)
-    cen = np.stack([np.zeros_like(zz), _smooth(zz, hz, hc), zz], axis=1) + head_c
-    add(_loft(cen, [ux] * len(zz), [uy] * len(zz), _smooth(zz, hz, hx), _smooth(zz, hz, hy), n_theta=48, p=2.1), SKIN)
-    # hair: the same loft 5 mm proud, cut at a hairline that runs from the forehead down to the nape
-    hz2 = np.append(hz[:-1], hz[-1] + 5.0)
-    zz2 = np.linspace(hz2[0], hz2[-1], 60)
-    cen2 = np.stack([np.zeros_like(zz2), _smooth(zz2, hz2, hc + np.r_[0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2]), zz2], axis=1) + head_c
-    hair = _loft(cen2, [ux] * len(zz2), [uy] * len(zz2), _smooth(zz2, hz2, hx + 5.0), _smooth(zz2, hz2, hy + 5.0), n_theta=96, p=2.1)
-    hair = hair.clip(normal=(0, -0.8, -1), origin=head_c + np.array([0, 0, 24]), invert=True)
-    add(hair, HAIR)
-    add(_ellipsoid(head_c + np.array([0, -96, -12]), (10, 14, 20)), SKIN)                       # nose
-    for sg in (-1, 1):
-        add(_ellipsoid(head_c + np.array([sg * 75, 8, -6]), (8, 17, 27)), SKIN)                 # ears
-    # ---- shoulders, arms and hands: relaxed, slightly away from the body, elbows a little bent
-    for sg in (-1, 1):
-        sh = np.array([sg * 188, 6, 1386])                       # shoulder joint
-        el = np.array([sg * 222, 24, 1098])                      # elbow
-        wr = np.array([sg * 232, -12, 848])                      # wrist
-        add(_ellipsoid(sh + np.array([-sg * 16, 0, -14]), (66, 60, 80)), SHIRT)                 # deltoid
-        add(_limb(sh, el, [(0, 52), (0.35, 50), (1, 40)]), SHIRT)
-        add(_limb(el, wr, [(0, 40), (0.3, 41), (0.85, 31), (1, 30)]), SHIRT)
-        add(_limb(wr + np.array([0, 0, 16]), wr + np.array([0, 0, -6]), [(0, 26), (1, 26)]), SKIN)
-        d = (wr - el) / np.linalg.norm(wr - el)
-        add(_ellipsoid(wr + d * 86, (19, 43, 88)), SKIN)                                         # palm and fingers
-        add(_ellipsoid(wr + d * 42 + np.array([-sg * 6, -34, 0]), (12, 12, 32)), SKIN)          # thumb
-    # ---- legs
-    for sg in (-1, 1):
-        hip = np.array([sg * 86, 12, 930])
-        kn = np.array([sg * 94, -2, 492])
-        an = np.array([sg * 102, 16, 84])
-        add(_limb(hip, kn, [(0, 84), (0.2, 82), (0.7, 67), (1, 58)]), TROUSERS)
-        add(_limb(kn, an, [(0, 58), (0.28, 60), (0.62, 50), (1, 44)]), TROUSERS)
-        # shoe, lofted heel to toe, flat sole on the floor, toes turned out ~6 deg
-        ys = np.array([72, 62, 30, -30, -100, -160, -196, -210])
-        wa = np.array([22, 38, 44, 45, 51, 49, 36, 14])
-        hb_ = np.array([30, 44, 50, 46, 38, 32, 25, 12])
-        tw = math.radians(6.0 * sg)
-        cx = sg * 102 + (-ys) * math.sin(tw)
-        cen = np.stack([cx, ys * math.cos(tw), hb_ + 1.0], axis=1)
-        k = len(ys)
-        ush = np.array([math.cos(tw), math.sin(tw), 0.0])
-        add(_loft(cen, [ush] * k, [uz] * k, wa, hb_, n_theta=40, p=2.6), SHOES)
-    # ---- turn from facing -y to `facing`, scale to h, and move to `at`
-    f = np.asarray(facing, float)
+
+def person(at=(0.0, 0.0, 0.0), h=1750.0, facing=(0.0, -1.0, 0.0), pose="stand", **arms):
+    """[(mesh, colour)]: a 1.75 m man in a long-sleeved T-shirt, jeans and trainers, standing on `at` and facing `facing`
+    (xy), scaled to stature `h` (barefoot crown to sole).
+
+    pose: "stand" (arms hanging), "reach" (both hands forward at about waist height), or a dict of person_pose()'s
+    arguments; keyword arguments override single values (e.g. elbow=30).
+
+    The third figure: the 2026-11-20 one was a cylinder with a ball on top, the 2026-11-23 one was lofted from ellipses
+    and tubes, and both looked wrong ("human looks weird", "the human still looks weird"). This is MakeHuman's anatomical
+    base mesh with its CC0 clothes, hair and eyes, shaped, dressed and skinned by human/build_person.py into person.npz,
+    and posed here with MakeHuman's skeleton and skin weights."""
+    H = _human()
+    kw = dict(POSES[pose]) if isinstance(pose, str) else dict(pose)
+    kw.update(arms)
+    V = _skin(person_pose(**kw))
+    mats = [str(x) for x in H["mats"]]
+    soles = np.unique(H["F"][H["fmat"] == mats.index("sole")])
+    V[:, 2] -= V[soles, 2].min()                                          # stand on the soles after the legs moved
+    V *= h / 1750.0
+    f = np.asarray(facing, float).copy()
     f[2] = 0.0
     f /= np.linalg.norm(f)
     ang = math.atan2(f[1], f[0]) - math.atan2(-1.0, 0.0)
     c, s_ = math.cos(ang), math.sin(ang)
-    Rz = np.array([[c, -s_, 0], [s_, c, 0], [0, 0, 1.0]])
-    by_col = {}
-    for mesh, col in parts:                                       # one mesh per colour: 6 actors instead of ~30
-        m = mesh.copy()
-        m.points = (m.points * s) @ Rz.T + np.asarray(at, float)
-        by_col.setdefault(col, []).append(m)
+    V = V @ np.array([[c, -s_, 0], [s_, c, 0], [0, 0, 1.0]]).T + np.asarray(at, float)
     out = []
-    for col, ms in by_col.items():
-        m = ms[0].append_polydata(*ms[1:]) if len(ms) > 1 else ms[0]
-        out.append((m.compute_normals(auto_orient_normals=False, split_vertices=False), col))
+    for k, name in enumerate(mats):
+        tri = H["F"][H["fmat"] == k]
+        if not len(tri):
+            continue
+        used, inv = np.unique(tri, return_inverse=True)
+        m = pv.PolyData(V[used], np.c_[np.full(len(tri), 3), inv.reshape(-1, 3)].ravel())
+        out.append((m.compute_normals(auto_orient_normals=False, split_vertices=False, consistent_normals=False),
+                    PERSON_COLOURS[name]))
     return out
 
 
