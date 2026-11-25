@@ -147,6 +147,11 @@ JOINTS = [
     ("E-stops IDEC", "E-stop enclosure", "operator in its enclosure's 22 mm hole"),
     ("Dock PE contacts", "Tray dock", "contacts in the dock's face plate"),
     ("Rod end", "Rod end", "feedthroughs welded into the rod-end block's bores"),
+    # zero-point clamps (round 6, hot-swap.md §3.2a)
+    ("Zero-point release-air line", "Zero-point push-in fittings", "tube pushed into the module's fitting"),
+    ("Zero-point release-air line", "Zero-point release valve", "tube in the valve's push-in port"),
+    ("Zero-point clamping pins", "Zero-point arms", "pin screwed into its arm"),
+    ("Zero-point clamping pins", "Zero-point clamping modules", "pin in the module's bore (clamped)"),
 ]
 
 ALLOW_HOSE_THROUGH = ("Laser guard panels", "Guard frame")   # hoses pass the guard through bulkheads

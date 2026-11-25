@@ -279,7 +279,8 @@ def catalogue(module="M50"):
               skip=["Build plate", "Plate rim wiper"], minutes=1),
         remove("Plate: turned 60 deg off its bayonet, lifted 20 mm (spigot and lugs over the 8 mm door sill), out through the door",
                ["Build plate", "Plate rim wiper"], [[(0, 0, 0), (0, 0, 20), (0, -520, 20)]], rot=60.0, minutes=2),
-        reach("Fingers on the overflow jar's toggle-clamp lever under the floor (lever end at y -76, z -84)", (100.0, -76.0, -84.0), ((0, -1, 0), (0.6, -0.8, 0)),
+        # round 6 (2026-11-25): the jar's joint is at (94, -46, -82) (lpbf_low.JAR); the lever's end is at y -122, under the jar's grip fin
+        reach("Fingers on the overflow jar's toggle-clamp lever under the floor (lever end at y -122, z -82)", (94.0, -122.0, -82.0), ((0, -1, 0), (0.6, -0.8, 0)),
               skip=["Overflow clamp", "Overflow jar"], minutes=1, hand=PINCH_HAND),
         remove("KF-40 toggle clamp opened (one push on the lever) and taken off by hand", ["Overflow clamp"], [], minutes=1),
         remove("Overflow jar: drop 8 mm off the centring ring, straight out to the front", ["Overflow jar"],
@@ -389,7 +390,8 @@ def catalogue(module="M50"):
         reach("Left through-beam head", (-180.0, 0.0, 5.0), (FRONT, UP, (-1, 0, 0), (0, -0.7, 0.7), (-0.5, -0.85, 0)), skip=["Plate-height through-beam"],
               hand=PINCH_HAND),
         reach("Module-present sensor under the floor", (-55.0, -25.0, -40.0), (FRONT, (0, 0, -1)), skip=["Module-present sensor"], hand=PINCH_HAND),
-        reach("Overflow-jar sensor (its M12 nuts, in front of the bracket)", (150.0, -26.0, -121.0), (FRONT, (1, 0, 0)), skip=["Overflow-jar present"], hand=PINCH_HAND),
+        reach("Overflow-jar sensor (its M12 nuts, right of the bracket on the front-right leg)", (152.0, -46.0, -110.0), (FRONT, (1, 0, 0)), skip=["Overflow-jar present"],
+              hand=PINCH_HAND),
     ]))
     ops.append(dict(id="M11", kind="maintenance", name="Lubricate the recoater rail carriage and ball nut (vacuum grease)", where="tray at the access opening",
                     interval="rule of thumb: every 6 months or ~100 km of travel (~500 builds at 0.2 m per stroke); vendor manual not checked",
