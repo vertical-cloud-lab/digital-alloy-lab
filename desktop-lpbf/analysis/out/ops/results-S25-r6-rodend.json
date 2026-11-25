@@ -1,0 +1,544 @@
+{
+ "module": "S25",
+ "cad": "/home/runner/work/digital-alloy-lab/digital-alloy-lab/.claude/worktrees/agent-ac757f7479bdb3e09/desktop-lpbf/cad",
+ "ops": [
+  {
+   "id": "A1",
+   "kind": "assembly",
+   "name": "Assemble the heated S25 build module (render_build chapter 3)",
+   "where": "bench",
+   "interval": "once per module",
+   "air": false,
+   "minutes": 59,
+   "steps": [
+    {
+     "id": "A1.1",
+     "op": "A1",
+     "step": "Heater block on the bench",
+     "do": "place",
+     "minutes": 1,
+     "note": "",
+     "status": "-",
+     "detail": "placed by hand or welded on; no path check"
+    },
+    {
+     "id": "A1.2",
+     "op": "A1",
+     "step": "Three M3 helical inserts into the block's underside (insert tool, on the bench)",
+     "do": "note",
+     "minutes": 5,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "A1.3",
+     "op": "A1",
+     "step": "Cartridge heaters up into their bores from below",
+     "do": "place",
+     "minutes": 3,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap 0.05 mm to Heater block S25 (6061-T6, bayonet socke)",
+     "clearance": 0.05
+    },
+    {
+     "id": "A1.4",
+     "op": "A1",
+     "step": "Thermocouples and the thermal cutoff from below",
+     "do": "place",
+     "minutes": 4,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap 0.09 mm to Heater block S25 (6061-T6, bayonet socke)",
+     "clearance": 0.09
+    },
+    {
+     "id": "A1.5",
+     "op": "A1",
+     "step": "Macor rings and radiation shields under the block",
+     "do": "place",
+     "minutes": 4,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap 0.3 mm to Heater block S25 (6061-T6, bayonet socke)",
+     "clearance": 0.3
+    },
+    {
+     "id": "A1.6",
+     "op": "A1",
+     "step": "Piston head under the break",
+     "do": "place",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap 0.3 mm to Macor standoff rings S25 (3 standoffs x )",
+     "clearance": 0.3
+    },
+    {
+     "id": "A1.7",
+     "op": "A1",
+     "step": "Disc springs into the head's slotted counterbores",
+     "do": "place",
+     "minutes": 2,
+     "note": "",
+     "status": "?",
+     "detail": "no part matched"
+    },
+    {
+     "id": "A1.8",
+     "op": "A1",
+     "step": "Stack screws up through the head (placed)",
+     "do": "place",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap 0.2 mm to Macor standoff rings S25 (3 standoffs x )",
+     "clearance": 0.2
+    },
+    {
+     "id": "A1.9",
+     "op": "A1",
+     "step": "Stack screws driven from below (disc-spring preload: torque-controlled)",
+     "do": "screws",
+     "minutes": 4,
+     "note": "",
+     "status": "PASS",
+     "detail": "3 screws; 3 reachable with: torque screwdriver + 2 mm bit; torque screwdriver fits 3/3",
+     "clearance": 1.17,
+     "per_screw": [
+      {
+       "screw": "Heater-stack screws S25, M2.5 x 30 316, up through slotted counterbores in the piston head #1",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 1.17,
+       "clear_with": "tool: Piston head S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Heater-stack screws S25, M2.5 x 30 316, up through slotted counterbores in the piston head #2",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 1.21,
+       "clear_with": "tool: Piston head S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Heater-stack screws S25, M2.5 x 30 316, up through slotted counterbores in the piston head #3",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 1.21,
+       "clear_with": "tool: Piston head S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      }
+     ]
+    },
+    {
+     "id": "A1.10",
+     "op": "A1",
+     "step": "Bore seal into its groove",
+     "do": "place",
+     "minutes": 3,
+     "note": "",
+     "status": "-",
+     "detail": "placed by hand or welded on; no path check"
+    },
+    {
+     "id": "A1.11",
+     "op": "A1",
+     "step": "Gland plate with its two rod O-rings (ring loader) and its face O-ring, under the head",
+     "do": "place",
+     "minutes": 4,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap None mm to None)",
+     "clearance": null
+    },
+    {
+     "id": "A1.12",
+     "op": "A1",
+     "step": "Rod with its end cap (welded by the shop on the bare rod), top end up through the gland plate's rings into the head's socket",
+     "do": "place",
+     "minutes": 3,
+     "note": "the rod's top end on the PEEK bullet through the rings",
+     "status": "PASS",
+     "detail": "documented path clear (gap 2.0 mm to Module S25 bottom flange: gland plate (3)",
+     "clearance": 2.0
+    },
+    {
+     "id": "A1.13",
+     "op": "A1",
+     "step": "Rod set screws (radial)",
+     "do": "screws",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "detail": "2 screws; 2 reachable with: torque screwdriver + 2 mm bit",
+     "clearance": 0.87,
+     "per_screw": [
+      {
+       "screw": "Rod set screws S25, M4 cup point 316 #1",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 0.87,
+       "clear_with": "tool: Piston head S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Rod set screws S25, M4 cup point 316 #2",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 0.87,
+       "clear_with": "tool: Piston head S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      }
+     ]
+    },
+    {
+     "id": "A1.14",
+     "op": "A1",
+     "step": "Hermetic connector with its O-ring into the rod end's side boss",
+     "do": "place",
+     "minutes": 3,
+     "note": "",
+     "status": "?",
+     "detail": "no part matched"
+    },
+    {
+     "id": "A1.15",
+     "op": "A1",
+     "step": "Striker disc",
+     "do": "place",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap 0.12 mm to Rod end S25: 316L feedthrough block, rod)",
+     "clearance": 0.12
+    },
+    {
+     "id": "A1.16",
+     "op": "A1",
+     "step": "Three M3 flat-head striker screws from below",
+     "do": "screws",
+     "minutes": 3,
+     "note": "",
+     "status": "PASS",
+     "detail": "3 screws; 3 reachable with: torque screwdriver + 2 mm bit",
+     "clearance": 1.63,
+     "per_screw": [
+      {
+       "screw": "Striker screws S25, M3 x 10 316 flat head #1",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 1.63,
+       "clear_with": "tool: Striker disc S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Striker screws S25, M3 x 10 316 flat head #2",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 1.63,
+       "clear_with": "tool: Striker disc S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Striker screws S25, M3 x 10 316 flat head #3",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 2 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 1.63,
+       "clear_with": "tool: Striker disc S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      }
+     ]
+    },
+    {
+     "id": "A1.17",
+     "op": "A1",
+     "step": "Rim wiper onto the plate, plate onto the bayonet (turned 60 deg)",
+     "do": "place",
+     "minutes": 2,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap 2.0 mm to Heater block S25 (6061-T6, bayonet socke)",
+     "clearance": 2.0
+    },
+    {
+     "id": "A1.18",
+     "op": "A1",
+     "step": "Welded module body on the bench (the stack waits below it)",
+     "do": "place",
+     "minutes": 1,
+     "note": "",
+     "status": "-",
+     "detail": "placed by hand or welded on; no path check"
+    },
+    {
+     "id": "A1.19",
+     "op": "A1",
+     "step": "Stack, rod and gland plate up into the bore from below (lead-in on the bore's bottom edge); gland plate onto the collar",
+     "do": "place",
+     "minutes": 4,
+     "note": "the bore seal and plate must enter the honed bore square",
+     "status": "PASS",
+     "detail": "documented path clear (gap 0.1 mm to Build module S25: spigot, flange, honed )",
+     "clearance": 0.1
+    },
+    {
+     "id": "A1.20",
+     "op": "A1",
+     "step": "Six M4 gland-plate screws from below",
+     "do": "screws",
+     "minutes": 4,
+     "note": "",
+     "status": "PASS",
+     "detail": "6 screws; 6 reachable with: torque screwdriver + 3 mm bit; torque screwdriver fits 6/6",
+     "clearance": 2.5,
+     "per_screw": [
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #1",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 2.5,
+       "clear_with": "tool: Rod end S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #2",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 4.24,
+       "clear_with": "tool: Module S25 bottom flange",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #3",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 4.24,
+       "clear_with": "tool: Module S25 bottom flange",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #4",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 4.24,
+       "clear_with": "tool: Module S25 bottom flange",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #5",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 4.24,
+       "clear_with": "tool: Module S25 bottom flange",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #6",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 2.5,
+       "clear_with": "tool: Rod end S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      }
+     ]
+    },
+    {
+     "id": "A1.21",
+     "op": "A1",
+     "step": "Handle under the gland plate",
+     "do": "place",
+     "minutes": 1,
+     "note": "",
+     "status": "PASS",
+     "detail": "documented path clear (gap 3.41 mm to Module S25 bottom flange: gland plate (3)",
+     "clearance": 3.41
+    },
+    {
+     "id": "A1.22",
+     "op": "A1",
+     "step": "Two M4 handle screws",
+     "do": "screws",
+     "minutes": 2,
+     "note": "",
+     "status": "FAIL",
+     "detail": "2 screws; 0 reachable with: ball-end key 3 mm, tilted up to 25 deg; torque driver blocked by tool: Rod end S25, tool: Rod end S25 feedthroughs, welded in; withdrawal: Rod end S25",
+     "clearance": 0.2,
+     "per_screw": [
+      {
+       "screw": "Handle screws S25, M4 x 10 316 #1",
+       "withdraw_ok": false,
+       "tool": "ball-end key 3 mm, tilted up to 25 deg (Bondhus 10956, 98 x 19)",
+       "arc": 360.0,
+       "clearance": 0.2,
+       "clear_with": "tool: Rod end S25",
+       "torque_ok": false,
+       "torque_blocked_by": [
+        "tool: Rod end S25",
+        "tool: Rod end S25 feedthroughs, welded in"
+       ]
+      },
+      {
+       "screw": "Handle screws S25, M4 x 10 316 #2",
+       "withdraw_ok": false,
+       "tool": "ball-end key 3 mm, tilted up to 25 deg (Bondhus 10956, 98 x 19)",
+       "arc": 360.0,
+       "clearance": 0.2,
+       "clear_with": "tool: Rod end S25",
+       "torque_ok": false,
+       "torque_blocked_by": [
+        "tool: Rod end S25",
+        "tool: Rod end S25 feedthroughs, welded in"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M7",
+   "kind": "maintenance",
+   "name": "Build module on the bench: rod seals, gland O-ring, bore seal, heaters, thermocouples",
+   "where": "bench (module out, see S2)",
+   "interval": "rod and bore seals on wear or powder past the seal; heaters and TCs on failure (P42, P43)",
+   "air": false,
+   "minutes": 83,
+   "steps": [
+    {
+     "id": "M7.1",
+     "op": "M7",
+     "step": "Six M4 gland-plate screws from below",
+     "do": "screws",
+     "minutes": 4,
+     "note": "",
+     "status": "PASS",
+     "detail": "6 screws; 6 reachable with: torque screwdriver + 3 mm bit",
+     "clearance": 2.5,
+     "per_screw": [
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #1",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 2.5,
+       "clear_with": "tool: Rod end S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #2",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 4.24,
+       "clear_with": "tool: Module S25 bottom flange",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #3",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 4.24,
+       "clear_with": "tool: Module S25 bottom flange",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #4",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 4.24,
+       "clear_with": "tool: Module S25 bottom flange",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #5",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 4.24,
+       "clear_with": "tool: Module S25 bottom flange",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      },
+      {
+       "screw": "Gland-plate screws S25, M4 x 20 316, into the welded collar #6",
+       "withdraw_ok": true,
+       "tool": "torque screwdriver + 3 mm bit (Wera 7441 class, 190 mm long)",
+       "arc": 360.0,
+       "clearance": 2.5,
+       "clear_with": "tool: Rod end S25",
+       "torque_ok": true,
+       "torque_blocked_by": []
+      }
+     ]
+    },
+    {
+     "id": "M7.2",
+     "op": "M7",
+     "step": "Gland plate, heater stack, rod and its welded end down out of the bore together (the gland plate rides on the rod)",
+     "do": "remove",
+     "minutes": 4,
+     "note": "",
+     "status": "PASS",
+     "clearance": 0.1,
+     "detail": "free along (0, 0, -260); tightest gap 0.1 mm to Build module S25: spigot, flange, honed 316L cylin"
+    },
+    {
+     "id": "M7.3",
+     "op": "M7",
+     "step": "On the bench: the two rod set screws out of the head, the rod (with its welded end, connector and striker) pulled down out of the head's socket and through the gland plate; the two 2-114s then come out of their grooves. The rod's top end is a plain \u00d815.875 tube end in the gland's \u00d815.93 throat",
+     "do": "note",
+     "minutes": 15,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    },
+    {
+     "id": "M7.4",
+     "op": "M7",
+     "step": "Heaters and thermocouples slide down out of the block once the head is off (3 stack screws); their leads run down the rod to the hermetic connector in the rod end",
+     "do": "note",
+     "minutes": 60,
+     "note": "",
+     "status": "-",
+     "detail": ""
+    }
+   ]
+  }
+ ]
+}
