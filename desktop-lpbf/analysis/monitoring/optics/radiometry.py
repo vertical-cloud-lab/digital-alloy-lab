@@ -472,7 +472,7 @@ def write_md(R):
         L.append(f"| {n} | {c['T_peak_K']:.0f} | {c['liquid_area_mm2']:.3f} | {c['liquid_length_mm']:.2f} x {c['liquid_width_mm']:.2f} |")
     lv = "0.12 at 1 um (literature midpoint)"
     L += ["", "## Photodiodes: photocurrent and SNR (12 mm pupil, field stop Ø%.1f mm on the plate, liquid emissivity %s)" % (PT.FOV_PD_MM, lv), "",
-          "| case | channel | galvo | photocurrent | 40 dB (150 kHz): V, SNR | 20 dB (1 MHz): V, SNR | 60 dB (11 kHz): V, SNR |", "|---|---|---|---:|---|---|---|"]
+          "| case | channel | galvo | photocurrent | 40 dB (90 kHz): V, SNR | 20 dB (1 MHz): V, SNR | 60 dB (9 kHz): V, SNR |", "|---|---|---|---:|---|---|---|"]
     for n, c in R["cases"].items():
         for k, rec in c["channels"].items():
             if "PD" not in k and "InGaAs" not in k:
@@ -482,6 +482,20 @@ def write_md(R):
                 gg = q["gains"]
                 L.append(f"| {n} | {k} | {g} | {q['photocurrent_A'] * 1e9:.1f} nA | {gg[40]['V']:.3g} V, {gg[40]['snr']:.0f}{' SAT' if gg[40]['saturated'] else ''} | "
                          f"{gg[20]['V']:.3g} V, {gg[20]['snr']:.0f} | {gg[60]['V']:.3g} V, {gg[60]['snr']:.0f}{' SAT' if gg[60]['saturated'] else ''} |")
+    # every gain, for the middle case
+    mid = list(R["cases"])[len(R["cases"]) // 2]
+    L += ["", f"### Every gain, {mid} (galvo 'pass'; V into Hi-Z, SNR = photocurrent / (NEP x peak responsivity x sqrt(bandwidth)))", "",
+          "| gain | bandwidth | NEP (pW/rtHz) | " + " | ".join(k for k in R["cases"][mid]["channels"] if "PD" in k or "InGaAs" in k) + " |",
+          "|---|---:|---:|" + "---|" * sum(1 for k in R["cases"][mid]["channels"] if "PD" in k or "InGaAs" in k)]
+    for gdb in sorted(PT.DET["PDA36A2"]["gains"]):
+        cells = []
+        for k, rec in R["cases"][mid]["channels"].items():
+            if "PD" not in k and "InGaAs" not in k:
+                continue
+            gg = rec[f"pass | {lv}"]["gains"][gdb]
+            cells.append(f"{gg['V'] * 1e3:.3g} mV, SNR {gg['snr']:.0f}")
+        G, bw, nep = PT.DET["PDA36A2"]["gains"][gdb]
+        L.append(f"| {gdb} dB | {bw / 1e3:g} kHz | {nep * 1e12:.2f} (Si) | " + " | ".join(cells) + " |")
     L += ["", "## Cameras: peak pixel at 8 um/px (12 mm pupil)", "",
           "| case | channel | galvo | peak e-/s | full well in (us) | 10 us (Chronos only): peak e-, SNR, mm2 at SNR>=3 | 30 us | 100 us | 500 us |", "|---|---|---|---:|---:|---|---|---|---|"]
     for n, c in R["cases"].items():

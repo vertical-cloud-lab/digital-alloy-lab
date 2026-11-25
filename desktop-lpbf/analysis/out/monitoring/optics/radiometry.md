@@ -10,7 +10,7 @@ Fields: own Eagar-Tsai fields (worker A's surface_fields.npz not given).
 
 ## Photodiodes: photocurrent and SNR (12 mm pupil, field stop Ø1.6 mm on the plate, liquid emissivity 0.12 at 1 um (literature midpoint))
 
-| case | channel | galvo | photocurrent | 40 dB (150 kHz): V, SNR | 20 dB (1 MHz): V, SNR | 60 dB (11 kHz): V, SNR |
+| case | channel | galvo | photocurrent | 40 dB (90 kHz): V, SNR | 20 dB (1 MHz): V, SNR | 60 dB (9 kHz): V, SNR |
 |---|---|---|---:|---|---|---|
 | 200 W, 0.4 m/s | PD-A 700/40 (PDA36A2) | pass | 24.7 nA | 0.0037 V, 40 | 0.00037 V, 11 | 0.037 V, 102 |
 | 200 W, 0.4 m/s | PD-A 700/40 (PDA36A2) | Kozjek | 24.6 nA | 0.00369 V, 40 | 0.000369 V, 11 | 0.0369 V, 102 |
@@ -42,6 +42,19 @@ Fields: own Eagar-Tsai fields (worker A's surface_fields.npz not given).
 | 350 W, 0.8 m/s | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | Kozjek | 10.5 nA | 0.00159 V, 17 | 0.000157 V, 3 | 0.0157 V, 47 |
 | 350 W, 0.8 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | pass | 26.6 nA | 0.00401 V, 44 | 0.000399 V, 9 | 0.0399 V, 120 |
 | 350 W, 0.8 m/s | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) | Kozjek | 26.5 nA | 0.004 V, 44 | 0.000397 V, 9 | 0.0397 V, 120 |
+
+### Every gain, 320 W, 1.1 m/s (EOS-equivalent, optics.md 9.1) (galvo 'pass'; V into Hi-Z, SNR = photocurrent / (NEP x peak responsivity x sqrt(bandwidth)))
+
+| gain | bandwidth | NEP (pW/rtHz) | PD-A 700/40 (PDA36A2) | PD-B 900/40 (PDA36A2) | alt: PD 850/40 behind the 50:50 plate (PDA36A2) | InGaAs 1625-1725 behind the DMSP1000 (PDA20CS2) | InGaAs 1550/12, notch dichroic for the DMSP1000 (PDA20CS2) |
+|---|---:|---:|---|---|---|---|---|
+| 0 dB | 12000 kHz | 75.70 (Si) | 0.0533 mV, SNR 0 | 0.114 mV, SNR 0 | 0.0496 mV, SNR 0 | 0.0125 mV, SNR 0 | 0.0315 mV, SNR 0 |
+| 10 dB | 1600 kHz | 5.80 (Si) | 0.168 mV, SNR 8 | 0.359 mV, SNR 16 | 0.156 mV, SNR 7 | 0.0392 mV, SNR 1 | 0.0991 mV, SNR 3 |
+| 20 dB | 1000 kHz | 3.40 (Si) | 0.53 mV, SNR 16 | 1.13 mV, SNR 35 | 0.493 mV, SNR 15 | 0.124 mV, SNR 3 | 0.313 mV, SNR 7 |
+| 30 dB | 260 kHz | 3.40 (Si) | 1.68 mV, SNR 32 | 3.59 mV, SNR 69 | 1.56 mV, SNR 30 | 0.392 mV, SNR 7 | 0.991 mV, SNR 18 |
+| 40 dB | 90 kHz | 3.25 (Si) | 5.3 mV, SNR 57 | 11.3 mV, SNR 122 | 4.93 mV, SNR 53 | 1.25 mV, SNR 14 | 3.15 mV, SNR 34 |
+| 50 dB | 28 kHz | 3.69 (Si) | 16.8 mV, SNR 90 | 35.9 mV, SNR 193 | 15.6 mV, SNR 84 | 3.92 mV, SNR 21 | 9.91 mV, SNR 54 |
+| 60 dB | 9 kHz | 4.00 (Si) | 53 mV, SNR 146 | 113 mV, SNR 313 | 49.3 mV, SNR 136 | 12.4 mV, SNR 37 | 31.3 mV, SNR 94 |
+| 70 dB | 3 kHz | 4.29 (Si) | 168 mV, SNR 237 | 359 mV, SNR 506 | 156 mV, SNR 220 | 39.2 mV, SNR 64 | 99.1 mV, SNR 161 |
 
 ## Cameras: peak pixel at 8 um/px (12 mm pupil)
 

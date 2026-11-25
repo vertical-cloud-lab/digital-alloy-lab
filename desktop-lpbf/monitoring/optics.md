@@ -162,7 +162,7 @@ Why these parts:
 
 | Route | Change to the laser path | Band | Photocurrent, 320 W case | Coldest solid seen (field-filling), 40 / 60 dB |
 |---|---|---|---:|---|
-| (a) behind the DMSP1000: the DMSP950 reflects it into the camera arm; a fourth cube there (~1180 nm dichroic) + 2 × FELH1250 + AC254-100-C + P500K + PDA20CS2 | none | 1625–1725 nm (DMSP1000 T 3–30 %, DMSP950 R 0.96–0.57, PD responsivity falls past 1650) | 8.3 nA | 890 / 804 K |
+| (a) behind the DMSP1000: the DMSP950 reflects it into the camera arm; a fourth cube there (~1180 nm dichroic) + 2 × FELH1250 + AC254-100-C + P1000K + PDA20CS2 | none | 1625–1725 nm (DMSP1000 T 3–30 %, DMSP950 R 0.96–0.57, PD responsivity falls past 1650) | 8.3 nA | 890 / 804 K |
 | (b) Semrock NFD01-1064 in place of the DMSP1000, same arm + FBH1550-12 | the 500 W beam reflects off a part with no CW rating | 1544–1556 nm | 20.9 nA | 852 / 783 K |
 
 Route (a) needs no change to the 500 W path. It reaches the solidification range of 6061 (855–925 K) at 9 kHz and its top at
@@ -212,7 +212,9 @@ worktree.
 
 - **Gain:** run the PDA36A2s at 30 dB (260 kHz) for tracks and 40 dB (90 kHz) for most work. 20 dB (1 MHz) gives SNR 11–44.
   None of these saturates. The 10 V output limit is 100–2,000 times the pool signal at 40–60 dB, so a keyhole spike or a
-  spatter flash won't clip either.
+  spatter flash won't clip either. Every gain is tabulated in radiometry.md.
+- **Small signals:** at 30–40 dB the pool gives only 2–11 mV, on top of the PDA36A2's ±8 mV output offset (12 mV max).
+  Digitise on a ±50–100 mV range and subtract the dark level, read with the shutter closed, at every layer.
 - **Galvo blocking** changes nothing for the baseline bands (all outside 750–875 nm). It would cut an 850/10 camera 45-fold:
   at 30 µs the peak pixel falls from 2,000 e⁻ (SNR 44) to 44 e⁻ (SNR 5) (the "alt" rows in radiometry.md).
 - **Lowest temperature seen** (SNR 3, uniform patch):
@@ -398,9 +400,15 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
   - The DMSP1180-class pick-off and the beam trap are not priced.
 - **Light budget:** Lambertian powder, which grazing angles break. The LED pulse capability is unverified.
 - **Laser at the ports:** reflectance 0.7 and the ±40° glint cone are bounds, not models.
-- **Not drawn:** no CAD. The cube positions are monitoring_spec's. The CAD worker needs:
-  - the camera arm to ~100 mm along −y from cube2;
-  - a beam trap on cube1;
+- **Not drawn:** no CAD, and the arm lengths below were not checked against the model. The cube positions are
+  monitoring_spec's. For the CAD worker (lengths from the cube centre, estimated from the parts' focal lengths, not drawings):
+  - camera arm along −y from cube2: half a cube (21 mm) + FESH1000 (~10) + tube lens (~10) + 75 mm + the board (~20), about
+    140 mm, so y ≈ −165 (the free box runs to −200);
+  - each photodiode arm: 21 + filter (~10) + lens (~10) + 50 + pinhole and PDA36A2 (~25), about 115 mm. PD-B goes along −x in
+    the free box. **PD-A's side arm at cube3 doesn't fit in the box's ±35 mm** (y −60 to 10): fold it with a Ø1 in. mirror,
+    or turn it up (+z) if there is room above z 300;
+  - the InGaAs arm (option): ~165 mm with its f = 100 mm lens. It needs a fold too, sideways from the camera arm;
+  - a beam trap on cube1's −y face, where the forward leak exits;
   - the LP window seat square to its line of sight.
 - **Not reviewed:** no LSO review.
 

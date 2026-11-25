@@ -187,7 +187,7 @@ PARTS = [
      "list", T_ + "PDA20CS2", "2026-11-25T06:51Z", "sees solid metal down to ~800-890 K filling the field stop at 9-90 kHz (radiometry.md)"),
     ("coax option", "InGaAs channel: two 1070 nm blockers (long-pass 1250 nm, OD ~5.2 each at 1070, T ~0.99 at 1300-1700)", "FELH1250", "Thorlabs", 0,
      169.26, "list", T_ + "FELH1250", "2026-11-25T06:57Z", "one alone leaves the diffuse 1070 nm leak at ~10 % of the pool signal, a cat's-eye return at ~100x"),
-    ("coax option", "InGaAs channel: lens f = 100 mm, 1050-1700 nm AR, and a P500K pinhole", "AC254-100-C + P500K", "Thorlabs", 0, 120.45 + 84.12,
+    ("coax option", "InGaAs channel: lens f = 100 mm, 1050-1700 nm AR, and a 1.0 mm pinhole (1.6 mm on the plate)", "AC254-100-C + P1000K", "Thorlabs", 0, 120.45 + 84.12,
      "list (sum)", T_ + "AC254-100-C", "2026-11-25T07:09Z", ""),
     ("coax option", "InGaAs channel: fourth cube in the camera arm, a 45 deg ~1180 nm dichroic (the DMSP950 reflects 1300-1750 nm into that arm)",
      "DMLP1180 / DMSP1180 class + cube", "Thorlabs", 0, None, "not priced (Ø1 in. DMLP/DMSP parts list at $331.76; cube $270.74)", "", "",
