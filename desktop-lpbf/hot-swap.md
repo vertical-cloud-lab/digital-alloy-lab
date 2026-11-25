@@ -307,7 +307,7 @@ Where the model said no, the plan changed; the table gives what was drawn.
   - With the zero-point pair they would only be a third, redundant clamp.
   - The tabs keep their Ø6.8 holes and the floor its two M6 x 12 inserts. With a module's arms unbolted, a person can screw it up with
     two plain M6 x 16 (a hand fallback, e.g. with no air).
-  - **Note for the other checks:** `ops/operations.py` (lines 92, 195, 420, 423), `assembly/sequence.py` (C11),
+  - **Note for the other checks:** `ops/operations.py`'s S2 and A2 now use the release air (round 6). `assembly/sequence.py` (C11),
     `assembly/run_assembly.py`, `render_build.py` and `robot/ops.py` still name the captive screws.
 
 **Robot side:** the module swap no longer needs anything released by hand:
@@ -365,13 +365,15 @@ The robot jobs and the hand operations that name the screws need re-running on t
 - **Shape:** an I-section level with the module's grip block, at y −156 to −126 and z −65 to −25, x 72–128 (100 mm right of the
   module's): a 40 × 30 web between 56 mm flanges.
 - **Mounting:** a riser at x 117–125 beside the clamp's side links carries it, from a tab welded to the cup's front-right.
-- **Clearances:** 3 mm from the module's right-hand arm on its way out, 3 mm from the front-right leg, 8 mm from the module flange's
-  tab path, 5 mm under the door's hinge knuckles.
+- **Clearances:** 3 mm from the module's right-hand arm on its way out, 13 mm from the front-right leg, 8 mm from the module
+  flange's tab path, 5 mm under the door's hinge knuckles.
 - **Robot not re-run:** the robot job needs re-running on it, with the gripper coming in level from the front at z ≈ −45, as for the
   module.
 - **The clamp:** a hand still opens it, reaching the lever's end (94, −122, −82) under the fin's bottom flange.
-- **Emptying:** ~104 cm³ takes L75's ~70 cm³ of overflow per 15 mm of build for ~22 mm of build (round 5: ~14 mm), and an M50 or S25
-  build of any height this machine makes.
+- **Emptying:** ~104 cm³ (was ~65).
+  - **M50 and S25:** a full 40 mm M50 build makes ~80 cm³ at M50's ~30 cm³ per 15 mm, so it fits.
+  - **L75:** at ~70 cm³ per 15 mm, the jar fills after ~22 mm of build (round 5: ~14 mm). Taking the jar off vents the chamber, so a
+    taller L75 build needs a lower dose factor.
 
 **Not solved: the funnel can't drain the slot's back end by gravity.** Round 5 warned about this. A chute steep enough for fine Al
 powder (55–60°) needs ~1.6 mm of drop per mm of run. Powder that falls at the slot's back end (y +52) has 79 mm to run to the
