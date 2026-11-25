@@ -1117,7 +1117,7 @@ def chapter_process(st):
     fly(st, feet + base, nf(10), (0, 0, 250), lambda t: cam(t, 1900, el=30), cap,
         "MIC-6 base plate on four levelling mounts (McMaster 5537T983); their M8 stems thread up into the plate")
     legs = F("Chamber legs")
-    fly(st, legs, nf(8), ex, lambda t: cam(0.6, 1800), cap, "Chamber legs (6061, 30 x 30, each with a Ø11 bore up its middle)")
+    fly(st, legs, nf(8), ex, lambda t: cam(0.6, 1800), cap, "Chamber legs (6061: three 30 x 30, and an 18 x 36 one at the front right beside the jar's lane; each with a bore up its middle)")
     st.caption(cap, "Two M6 x 25 316 screws up through the base plate into each leg")
     drive(st, "legs_base", lambda: (cam(0.6, 1500, el=-20), st.shot()), frames=4, overlap=0.6)
     # the chamber is a through-frame on a bolted floor plate (chamber-construction.md): floor plate first, then its O-ring cord,
@@ -1262,7 +1262,7 @@ def chapter_process(st):
         "Optics bridge posts (60 x 60 x 5 square tube, end caps welded in) on the base plate")
     drive(st, "bridge_base", lambda: (cam(0.5, 1600, az=-30, el=-16, f=(-50, 0, -100)), st.shot()), frames=4, overlap=0.6)
     bridge = F("Optics bridge (")
-    fly(st, bridge, nf(10), ex, lambda t: cam(t, 1700, az=-30, el=30, f=(-50, 0, 120)), cap, "Optics bridge (6061, 25 mm): first mode 133 Hz in the FEA")
+    fly(st, bridge, nf(10), ex, lambda t: cam(t, 1700, az=-30, el=30, f=(-50, 0, 120)), cap, "Optics bridge (6061, 25 mm): first mode 128 Hz in the FEA, with the vendors' optics masses")
     drive(st, "bridge", lambda: (cam(0.5, 1500, az=-30, el=40, f=(-50, 0, 150)), st.shot()), frames=4, overlap=0.6)
     galvo = F("2-axis galvo")
     fly(st, galvo, nf(10), ex, lambda t: cam(t, 1100, az=-25, el=30, f=(-60, 0, 230)), cap, "2-axis galvo scan head on the bridge")
