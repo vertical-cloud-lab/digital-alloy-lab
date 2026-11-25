@@ -92,9 +92,9 @@ hatch; plate at 25 or 200 °C.
 - **Frame rates:** the pool and the depression oscillate at ~3–14 kHz (capillary estimates; Huang et al. measured 2.5–10 kHz in
   an Al alloy). Resolving that takes ≥ 20–30 kfps; freezing it takes ≤ 20 µs exposures. NIST's 10 kfps at 20 µs freezes the
   oscillations but doesn't resolve them.
-- **Plan the photodiode's gain for a ~20× range.** From 200 to 400 W on AlSi10Mg the signal changes 0.25–1.37× (against
-  320 W, 1.1 m/s), 6061 gives ~0.6×, and 7075 gives 0.1× if Zn evaporation holds its surface at ~1,840 K or ~0.7× if the surface
-  is depleted of Zn.
+- **Plan the photodiode's gain for a ~50× range.** Against AlSi10Mg at 320 W and 1.1 m/s: 200–400 W gives 0.25–1.37×, an
+  overhang ~4.4×, 6061 ~0.6×, and 7075 0.1× if Zn evaporation holds its surface at ~1,840 K or ~0.7× if the surface is depleted
+  of Zn.
 - **Mg and Zn set the boiling points** (AlSi10Mg and 6061 boil as Mg-rich vapour, 7075 as Zn-rich vapour at ~1,400 °C), but
   their supply limits how much leaves. The condensate is mostly Al by moles, with ~15–30 % Mg from AlSi10Mg and 6061 and ~60 %
   Zn + Mg from 7075: ~0.2–0.6 g per hour of lasing (§5). Expect Mg- and Zn-bearing condensate on the windows, and composition
@@ -419,7 +419,7 @@ over the scan) goes into its top during the scan; then 8 s of recoat ([`heat.md`
   | 150 µm of powder | 1,185 × 306 × 137 | 1,110 | 28.8 | 4.42 | 0.44 |
   | 400 µm of powder | 1,952 × 337 × 173 | 1,880 | 28.7 | 4.38 | 0.08 |
 
-  The pool runs 4–6× longer, the depression's footprint and the evaporation grow ~6×, and the photodiode reads ~4.4×. On 400 µm
+  The pool runs 4–6× longer, the depression's footprint grows 3.5× (0.003 → 0.011 mm²), evaporation 6× and the photodiode ~4.4×. On 400 µm
   of powder the melted track stays mushy for ~4 ms. An overhang is far outside a 1.5 mm camera field. These runs freeze the
   melted-powder mask after 40 Newton iterations (it otherwise kept growing) and treat the powder as a static bed that doesn't
   sag or ball up, so read them as indicative. Thin walls (heat only down a narrow path) were not run.
