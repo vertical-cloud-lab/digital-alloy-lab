@@ -23,10 +23,12 @@ change without re-rendering any 3-D, and every chapter shares one look:
 - **Caption bar** (top): what is happening, and a second line with the numbers and sources. At its right end, who is
   working (robot A, robot B, person, machine, outsourced, supplier) and the step's result (pass, fail, redesign, person
   needed).
-- **Clocks** (bottom left): project time in 8 h working days, and running machine, robot, person and CAM hours and
-  outsourced days. Each frame carries the real-world time it stands for (`proc_s`: 1/12 s for a robot motion shown in
-  real time, much more in a time-lapse) and what it adds to each counter (`add`); the clocks are the running sums over
-  the whole video. A chapter that sets no `add` is counted from who is working (each robot, person or machine named
+- **Clocks** (bottom left): the running machine, robot, person and CAM hours and outsourced days. Each frame carries
+  the real-world time it stands for (`proc_s`: 1/12 s for a robot motion shown in real time, much more in a time-lapse)
+  and what it adds to each counter (`add`); the clocks are the running sums over the whole video. There is no calendar
+  clock: the frames' summed time is work time, not weeks from the order, which chapter 15 and the summary give from
+  [`manufacturing-route.md`](manufacturing-route.md) (7-12 weeks from the purchase order to the first leak test on the
+  recommended hybrid route). A chapter that sets no `add` is counted from who is working (each robot, person or machine named
   counts the frame's time). A tag over the clocks says how fast the frame runs ("real time", or "time-lapse xN" from
   the frame's `proc_s`). The clocks are hidden where no project time passes (the hall, the parts tour, the estimates
   and the summary).

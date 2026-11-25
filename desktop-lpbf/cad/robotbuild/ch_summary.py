@@ -98,7 +98,9 @@ def slide_clocks(u):
     import compose as CP
     chs = [c for c in CP.scan(partial=True) if c["card"] is None and c["name"] != NAME]
     end = CP.counters(chs) if chs else {}
-    tiles = [("Project time", f"{end.get('t_s', 0) / 3600 / 8:.1f}", "working days of 8 h"),
+    R_ = ((load("route.json") or {}).get("routes") or {})
+    wk = (R_.get("c_cn") or {}).get("weeks_to_leak_test")
+    tiles = [("Calendar", f"{wk[0]:.0f}-{wk[1]:.0f}" if wk else "-", "weeks, PO to first leak test (hybrid)"),
              ("Machine", f"{end.get('machine_h', 0):.1f}", "hours"), ("Robots", f"{end.get('robot_h', 0):.1f}", "hours"),
              ("People", f"{end.get('person_h', 0):.1f}", "hours"), ("CAM", f"{end.get('cam_h', 0):.1f}", "hours"),
              ("Outsourced", f"{end.get('outsourced_d', 0):.1f}", "days")]

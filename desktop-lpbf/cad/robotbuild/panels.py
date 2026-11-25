@@ -186,14 +186,9 @@ def speed_text(speed):
 
 
 def clocks(d, st, y_bottom=H - 14, speed=None):
-    """st: dict(t_s, machine_h, robot_h, person_h, cam_h, outsourced_d). Project time in 8 h working days; speed: the
-    frame's real-world seconds per second of video (proc_s x FPS), shown as "real time" or "time-lapse xN"."""
-    t_h = st.get("t_s", 0.0) / 3600.0
-    day = int(t_h // 8.0) + 1
-    into = t_h - 8.0 * (day - 1)
-    hh, mm = int(into), int(round((into - int(into)) * 60))
-    if mm == 60:
-        hh, mm = hh + 1, 0
+    """st: dict(machine_h, robot_h, person_h, cam_h, outsourced_d): the running totals over the video. speed: the
+    frame's real-world seconds per second of video (proc_s x FPS), shown as "real time" or "time-lapse xN". No calendar
+    is shown here: the frames' summed time is work time, not weeks from the order (those are route.json's, chapter 15)."""
     rows = [("machine", st.get("machine_h", 0.0), "h", common.WHO_COL["machine"]),
             ("robots", st.get("robot_h", 0.0), "h", common.WHO_COL["robot A"]),
             ("people", st.get("person_h", 0.0), "h", common.WHO_COL["person"]),
@@ -203,9 +198,9 @@ def clocks(d, st, y_bottom=H - 14, speed=None):
     w, h = 252, 30 + 16 * 3 + 8
     x0, y0 = 12, y_bottom - h
     d.rounded_rectangle((x0, y0, x0 + w, y0 + h), 8, fill=PANEL, outline=RULE)
-    d.text((x0 + 10, y0 + 5), f"Day {day}", font=fb, fill=INK)
-    dw = d.textlength(f"Day {day}", font=fb)
-    d.text((x0 + 18 + dw, y0 + 12), f"+{hh}:{mm:02d} h   (8 h working days)", font=fl, fill=INK2)
+    ft_ = font(13, bold=True)
+    d.text((x0 + 10, y0 + 7), "SO FAR", font=ft_, fill=INK2)
+    d.text((x0 + 18 + d.textlength("SO FAR", font=ft_), y0 + 10), "the work shown, summed", font=fl, fill=INK3)
     if speed is not None and speed > 0:
         t = speed_text(speed)
         ft = font(10, bold=True)
@@ -217,8 +212,11 @@ def clocks(d, st, y_bottom=H - 14, speed=None):
         cx = x0 + 10 + (k % 2) * 122
         cy = y0 + 32 + (k // 2) * 16
         d.ellipse((cx, cy + 3, cx + 8, cy + 11), fill=rgb(col) + (255,))
-        val = f"{v:.1f}" if v < 100 else f"{v:.0f}"
-        d.text((cx + 12, cy), f"{name} {val} {unit}", font=fm, fill=INK)
+        if unit == "h" and 0 < v < 1.0:                      # under an hour: minutes (a robot move is seconds)
+            txt = f"{name} {v * 60:.0f} min"
+        else:
+            txt = f"{name} {v:.1f} {unit}" if v < 100 else f"{name} {v:.0f} {unit}"
+        d.text((cx + 12, cy), txt, font=fm, fill=INK)
 
 
 # ------------------------------------------------------------------------------------------------ the cost panel
@@ -469,7 +467,11 @@ def chapter_title(d, title, alpha):
     if alpha <= 0.02:
         return
     a = int(255 * alpha)
-    f = font(30, bold=True)
+    size = 30
+    f = font(size, bold=True)
+    while d.textlength(title, font=f) > W - 100 and size > 18:      # long titles shrink to fit the frame
+        size -= 2
+        f = font(size, bold=True)
     tw = d.textlength(title, font=f)
     x0, y0 = 40, H - 168
     d.rectangle((x0 - 14, y0 - 10, x0 + tw + 20, y0 + 46), fill=(20, 32, 64, int(200 * alpha)))
