@@ -121,13 +121,56 @@ def section_C(door):
                window_ring_screws=dict(n=6, size="M3", oring_N=294.0, preload_each_N=294 / 6 * 1.5, torque_Nm=torque(294 / 6 * 1.5, 3)),
                galling="316 screws in 18-8 helical inserts gall; the lid and window screws sit outside the seal, so use anti-seize there, or silver-plated / Nitronic 60 screws")
     if door:
+        pin_area = math.pi / 4 * 5.0 ** 2
         for c in door["cases"]:
-            key = "door_" + str(c["cord"]).replace(".", "p")
-            pin_area = math.pi / 4 * 5.0 ** 2
-            out[key] = dict(latch_each_N=c["latch_load_each_N"], latch_rating_N=800 * LBF, latch_sf=800 * LBF / c["latch_load_each_N"],
-                            hinge_each_N=c["hinge_load_each_N"], hinge_pin_shear_MPa=c["hinge_load_each_N"] / (2 * pin_area),
-                            squeeze_lost_um=c["lost_max_um"])
+            key = "door_" + c.get("case", str(c["cord"]).replace(".", "p"))
+            out[key] = dict(label=c.get("label", ""), latch_each_N=c["latch_load_each_N"], latch_rating_N=800 * LBF,
+                            latch_sf=800 * LBF / c["latch_load_each_N"], hinge_each_N=c["hinge_load_each_N"],
+                            hinge_pin_shear_MPa=c["hinge_load_each_N"] / (2 * pin_area), squeeze_lost_um=c["lost_max_um"],
+                            squeeze_pct=(c.get("squeeze_min_pct"), c.get("squeeze_max_pct")), sf_yield=c.get("sf_yield"))
+        if "geometry" in door:
+            out["latch_bracket"] = latch_bracket(door)
     return out
+
+
+def latch_bracket(door):
+    """The latch's pull reaches the door through a bracket whose foot sits on the ear's front face, while the pull line is outboard of
+    the foot (door_seal_fea.json: positions read from cad/lpbf_low.py). Shigley-style checks of the bracket plate, the foot's screws
+    (not drawn: 2 x M5 A4-70 into the 15 mm ear assumed) and the ear, at the design case's latch load."""
+    G = door["geometry"]
+    L = G["latches"][0]
+    c = max(door["cases"], key=lambda k: k["latch_load_each_N"])       # the highest latch load of the door cases (the top preload)
+    F = c["latch_load_each_N"]
+    bb = L["bracket_bbox"]
+    t = L["plate_t"]                                                   # 6 mm plate
+    x_plate_mid = abs(bb[3] if L["sx"] > 0 else bb[0]) - t / 2         # plate mid-plane |x|
+    x_pull = abs(L["x_pull"])
+    fx0, fx1 = sorted(abs(v) for v in L["foot_x"])
+    fz0, fz1 = L["foot_z"]
+    h_plate = bb[5] - bb[2]                                            # plate height (z)
+    e_plate = x_pull - x_plate_mid
+    M_plate = F * e_plate                                              # N mm, out-of-plane bending of the plate where it meets the foot
+    sig_plate = M_plate / (h_plate * t ** 2 / 6) + F / (h_plate * t)
+    # foot: tips about its outer edge (fx1); the screws at the foot's middle hold the inner part down
+    x_s = (fx0 + fx1) / 2
+    T = F * (x_pull - fx1) / (fx1 - x_s)                               # screw tension (both screws), N
+    C_edge = F + T                                                     # compression at the outer edge, N
+    As, proof, K = 14.2, 450.0, 0.2
+    Fi = 0.75 * As * proof * 0.75                                      # preload, 75 % of proof less 25 % for torque scatter (Shigley 8-31)
+    kb_frac = 0.25                                                     # joint constant C = kb / (kb + km), aluminium members (Shigley Table 8-8 range)
+    n_sep = Fi / ((1 - kb_frac) * T / 2)                               # separation factor per screw (Shigley 8-29)
+    n_load = (0.9 * As * proof - Fi) / (kb_frac * T / 2)               # load factor per screw
+    # ear: cantilever from the door's edge (x 124) to the pull line
+    x_root = 124.0
+    M_ear = F * (x_pull - x_root)
+    t_door = 15.0
+    sig_ear = M_ear / ((fz1 - fz0) * t_door ** 2 / 6)
+    sy = 276.0
+    return dict(latch_load_N=F, pull_line_x=x_pull, plate_mid_x=x_plate_mid, plate_t=t, plate_h=h_plate, e_plate_mm=e_plate,
+                plate_sigma_MPa=sig_plate, plate_sf=sy / sig_plate, foot_x=(fx0, fx1), screw_x=x_s, screw_tension_N=T, edge_compression_N=C_edge,
+                screw_preload_N=Fi, screw_torque_Nm=K * Fi * 5 / 1000, screw_sep_factor=n_sep, screw_load_factor=n_load,
+                ear_moment_Nmm=M_ear, ear_sigma_MPa=sig_ear, ear_sf=sy / sig_ear,
+                note="brackets' screws not drawn: 2 x M5 A4-70 into the ear assumed (6061, >= 8 mm engagement or a helical insert)")
 
 
 def h_nat_vertical(dT, L, T_amb=296.0):
@@ -251,11 +294,23 @@ def main():
          f"Lid: the O-ring needs {C['lid_oring_per_screw_N']:.0f} N per screw and +20 mbar adds {C['lid_overpressure_per_screw_N']:.0f} N. Recommend {C['lid_preload_recommended_N']:.0f} N preload "
          f"({C['lid_torque_Nm']:.1f} N·m, K = 0.2); A4-70's 75 % of proof is {C['lid_preload_max_N']:.0f} N ({C['lid_torque_max_Nm']:.1f} N·m). "
          f"Window ring: 6 × M3 at {C['window_ring_screws']['torque_Nm']:.2f} N·m to a metal stop. {C['galling']}.", ""]
-    for k in ("door_3p53", "door_1p78"):
-        if k in C:
-            d = C[k]
-            L.append(f"- {k.replace('door_', 'Door, ').replace('p', '.')} mm cord: each latch {d['latch_each_N']:.0f} N (rating {d['latch_rating_N']:.0f} N, SF {d['latch_sf']:.1f}); "
-                     f"each hinge {d['hinge_each_N']:.0f} N, Ø5 pin in double shear {d['hinge_pin_shear_MPa']:.0f} MPa; squeeze lost {d['squeeze_lost_um']:.0f} µm")
+    L += ["Door latches and hinges, from the CalculiX door model (`door_seal_fea.md`; 1.78 mm cord at 25 %, +20 mbar):", ""]
+    for k in sorted(x for x in C if x.startswith("door_")):
+        d = C[k]
+        sq = d.get("squeeze_pct") or (None, None)
+        sqt = f"squeeze {sq[0]:.1f}–{sq[1]:.1f} % along the gland, " if sq[0] is not None else ""
+        L.append(f"- case {k.replace('door_', '')} ({d['label']}): each latch {d['latch_each_N']:.0f} N (rating {d['latch_rating_N']:.0f} N, SF {d['latch_sf']:.1f}); "
+                 f"each hinge {d['hinge_each_N']:.0f} N, Ø5 pin in double shear {d['hinge_pin_shear_MPa']:.1f} MPa; {sqt}squeeze lost up to {d['squeeze_lost_um']:.0f} µm"
+                 + (f"; door, ears and brackets SF {d['sf_yield']:.1f} on yield" if d.get("sf_yield") else ""))
+    if "latch_bracket" in C:
+        b = C["latch_bracket"]
+        L += ["", f"Latch brackets at {b['latch_load_N']:.0f} N per latch, the highest latch load of the door cases (the pull line at x ±{b['pull_line_x']:.0f} is "
+              f"{b['e_plate_mm']:.0f} mm outboard of the 6 mm plate's mid-plane and {b['pull_line_x'] - b['foot_x'][1]:.0f} mm outboard of the foot):", "",
+              f"- plate ({b['plate_t']:.0f} × {b['plate_h']:.0f} mm section), out-of-plane bending plus tension: {b['plate_sigma_MPa']:.1f} MPa, SF {b['plate_sf']:.1f} on 6061-T6 yield;",
+              f"- foot: it tips about its outer edge, so the screws (at x ±{b['screw_x']:.0f}) carry {b['screw_tension_N']:.0f} N together and the edge "
+              f"{b['edge_compression_N']:.0f} N. With 2 × M5 A4-70 (assumed; {b['note'].split(': ')[1]}) at {b['screw_preload_N']:.0f} N preload "
+              f"({b['screw_torque_Nm']:.1f} N·m, K = 0.2): separation factor {b['screw_sep_factor']:.1f}, load factor {b['screw_load_factor']:.0f} (Shigley 8-28, 8-29, C = 0.25);",
+              f"- ear as a cantilever from the door's edge to the pull line: {b['ear_moment_Nmm'] / 1000:.1f} N·m, {b['ear_sigma_MPa']:.1f} MPa, SF {b['ear_sf']:.0f}."]
     L += ["", "## D. Chamber warm-up over a 10 h build (lumped; natural convection + radiation + argon loop)", "",
           f"Aluminium shell {D['mass_al_kg']:.1f} kg; laser average {D['P_laser_avg_W']:.0f} W (350 W × 30 % duty), all of it ending as heat in the chamber or module.", "",
           "| Case | Heat in (W) | UA at the end (W/K) | Time constant (min) | Chamber after 10 h (°C) |", "|---|---|---|---|---|"]

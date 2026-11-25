@@ -65,6 +65,14 @@ SOURCES = {
         "45 +/- 11 ppm H, parts 13 +/- 4 ppm; via Edison, desktop-lpbf/edison/followup-sealing-o2/answer.md",
     12: "Pauzon et al. (2021), control of residual oxygen in LPBF (TruPrint 1000): a zirconia lambda probe read +50 ppm where an electrochemical "
         "cell read +700 ppm (H2 cross-sensitivity); leak-plus-outgassing drift ~1.7 ppm O2/min; via Edison",
+    13: "Solid Sealing Technology, General Product Specifications: every hermetic part helium leak-tested, guaranteed < 1e-10 atm cc/s He; "
+        "'weldable feedthroughs are designed to have the adapter welded on the vacuum side of flanges or chambers'. "
+        "https://www.solidsealing.com/img/documents/SST_General_Product_Specifications-406829.pdf (linked from the FA11631 page; read 2026-11-25 "
+        "through the lab Pi). FA11631: 10 V, -269 to 450 C, 3500 psig, weld mount, $44 (https://www.solidsealing.com/products/1851/)",
+    14: "Solid Sealing Technology NS13003, 26482 circular connectors, welding instructions: mating hardware 304 or 316; 'preferred orientation is "
+        "with the weld on the vacuum side'; pulsed TIG 20-25 A, heat sinks on both sides, tack welds, segments of 3-4 s (never over 4 s), inert gas "
+        "on the far side. https://www.solidsealing.com/img/resources/NS13003_887844.pdf (read 2026-11-25; SST lists no sheet for the single-lead "
+        "and 4-pin weld-ins)",
 }
 
 # FKM 75A (Viton A type)
@@ -313,9 +321,11 @@ def main():
              held_by="20 x M5 316 into helical inserts (metal-to-metal)", status="OK", in_model="as before",
              note="cord spliced into a ring: specify a vulcanized (hot) splice or a molded ring, never a glued joint, for vacuum"),
         dict(key="door", seal="Door: 1.78 mm FKM 75A cord (McMaster 96515K123) in a half-dovetail groove, depth 1.32, 2.3 wide at the bottom, 24 deg undercut",
-             held_by="2 x McMaster 1807A61 draw latches (800 lb) on the chamber's side faces pulling strikes on two door ears; floating (slotted) hinge holes",
-             status="CHECK", in_model="groove, cord, ears, strikes, latch bodies, slotted hinge knuckles",
-             note="set each latch to >= the preload in the clamp table; the half-dovetail is overfilled at worst tolerance (gland table); robot: same faces take a pneumatic latch/hold-down clamp (not drawn)"),
+             held_by="2 x McMaster 1807A61 draw latches (800 lb) on 6061 brackets bolted to the door's two ears, pointing forward, pulling strikes on the "
+                     "chamber's side faces (since 2026-11-23); floating (slotted) hinge holes",
+             status="CHECK", in_model="groove, cord, ears, latch brackets, latch bodies, strikes, slotted hinge knuckles",
+             note="set each latch to >= the preload in the clamp table; the half-dovetail is overfilled at worst tolerance (gland table); the brackets' "
+                  "screws are not drawn (mech.md C); robot: a pneumatic clamp would go on the same brackets (not drawn)"),
         dict(key="window", seal="Window: O-ring sandwich, 2-031 FKM under the Ø50.8 x 8 window, 1 mm FKM flat ring over it",
              held_by="retaining ring whose spigot bottoms metal-to-metal on the flange (6 x M3)", status="OK", in_model="seat groove, both rings, stepped retaining ring",
              note="squeeze set by geometry; the flat ring takes the window's thickness tolerance (FKM sheet not yet sourced)"),
@@ -352,9 +362,19 @@ def main():
              status="OK", in_model="groove, ring; plate 14 mm (was 10)", note=""),
         dict(key="rod", seal="Hollow rod through the gland plate: two Parker rod glands, groove Ø20.0, throat Ø15.93 (2-114; S25: 2-110, Ø13.64)", held_by="-",
              status="CHECK", in_model="two grooves, two rings; rod labelled seamless and polished", note="friction counts against the Z coupling (mech.md); measure break-out"),
-        dict(key="rod_end", seal="Rod end: hermetic receptacle on a side boss, 2-014 FKM face O-ring", held_by="panel nut", status="CHECK",
-             in_model="boss, groove, ring, connector envelope (LEMO 1B HGG.1B.310); rod end 24 mm tall (was 14)",
-             note="the LEMO part's published 2 A / 1e-7 mbar L/s misses the spec; KF-16 feedthroughs that meet it (Accu-Glass 9C-K16, MPF A0408-2-QF) need a KF-16 port on the rod end"),
+        # since 2026-11-23 (electrical.md 13.3, modules_low.ROD_FT): no connector and no O-ring at the rod end
+        dict(key="rod_end", seal="Rod end: 316L block, the rod TIG-welded into its top; seven Solid Sealing weld-in feedthroughs TIG-welded at its 72 x 16 mm "
+                                 "front face: 3 x FA11631 (Chromel) + 3 x FA11632 (Alumel) single-lead type K in Ø6.27 x 38 sleeves, 1 x FA10443 4-pin "
+                                 "16 A Cu in a Ø12.62 x 24 sleeve. The six type K sleeves sit 26 mm deep in blind bores joined to the rod bore by one Ø4 "
+                                 "cross-drilling whose two ends are welded shut",
+             held_by="welds (metal, glass-ceramic and welds: no elastomer)", status="CHECK",
+             in_model="block, rod socket, bores, cross-drilling, power pocket and channel, seven sleeves at the catalogue's diameters and lengths",
+             note="SST guarantees < 1e-10 atm cc/s He per part [13], so the seven parts are < 7e-10, far under the 1e-4 mbar L/s budget; the welds "
+                  "(7 sleeves + 2 cross-drilling plugs + the rod) set the real leak rate: helium-test the welded block before the module is assembled. "
+                  "SST designs its weld-ins to be welded on the vacuum side [13, 14]; here the welds are at the block's outer (air) face, so each "
+                  "type K sleeve's annulus in its 26 mm bore is a crevice open to the chamber gas (a slow virtual leak and a moisture trap; "
+                  "~13 mm3 each at 0.05 mm clearance). Ask SST about the blind-bore weld, weld access and the weld side, and follow its pulsed-TIG "
+                  "procedure (heat sinks, segments <= 4 s) [14]"),
         dict(key="gas_loop", seal="Blower, cyclone + HEPA housing, valves, hoses (KF-25 bellows)", held_by="KF clamps", status="CHECK", in_model="unchanged",
              note="the HEPA housing in the BOM (McMaster 5169K72) is 1/2 NPSC threaded and its gas-tightness is not stated; the blower must be specified gas-tight"),
         dict(key="o2_sample", seal="O2 analyser sample loop", held_by="fittings", status="CHECK", in_model="unchanged",
@@ -497,7 +517,10 @@ def main():
         dict(src="2 rotary shafts through elastomer V-rings / lip seals (recoater screw, metering roller)", air_mbarLs=(1e-5, 1e-3),
              fix="magnetic-fluid feedthrough (helium leak < 1e-10 mbar L/s class) or a magnetic coupling through a can (zero leak)"),
         dict(src="rod gland, 2 x 2-114 reciprocating", air_mbarLs=(1e-6, 1e-4), fix="edge-welded bellows over the rod"),
-        dict(src="potted stranded leads at the rod end", air_mbarLs=(1e-5, 1e-2), fix="glass-to-metal hermetic connector or KF feedthrough"),
+        dict(src="rod end: 7 weld-in feedthroughs (SST: each < 1e-10 atm cc/s He [13]) and their welds; the potted stranded leads it replaced "
+                 "were 1e-5 to 1e-2", air_mbarLs=(7e-10, 1e-9),
+             fix="helium-test the welded rod-end block before the module is assembled and accept < 1e-9 mbar L/s (the upper value): the welds, "
+                 "not the parts, set it"),
         dict(src="threaded NPT ports (5-8 joints)", air_mbarLs=(1e-6, 1e-3), fix="O-ring boss / VCR / KF"),
         dict(src="gas-tight side-channel blower, shaft seal", air_mbarLs=(1e-4, 1e-3), fix="hermetic (canned / magnetic-drive) blower"),
     ]
@@ -661,7 +684,14 @@ def write_md(R):
     row("Lid", c["lid_3p53_25"], f"20 × M5: ≥ {c['lid_screws_preload_N'] / 1000:.0f} kN; vacuum {c['lid_vacuum_force_N']:.0f} N")
     row("Door, before (3.53 mm cord)", c["door_3p53_25"], f"vacuum {c['door_vacuum_force_N']:.0f} N")
     row("Door, now (1.78 mm cord) at 25 %", c["door_1p78_25"], f"vacuum {c['door_vacuum_force_N']:.0f} N seats it; at +20 mbar each 1807A61 needs **{c['door_latch_preload_25_N']:.0f} N** "
-        f"of preload (rated {c['latch_rating_N']:.0f} N)")
+        f"of preload (rated {c['latch_rating_N']:.0f} N) if the door were rigid")
+    dj = OUT / "door_seal_fea.json"
+    if dj.exists():                       # the door bends: CalculiX with the latches where they now are (door_seal_fea.py)
+        dc = [x for x in json.loads(dj.read_text()).get("cases", []) if str(x.get("case", "")).startswith(("D", "E"))]
+        if dc:
+            L.append("| Door, CalculiX (door_seal_fea.md) | the door bends between its two latches | " + "; ".join(
+                f"case {x['case']}: {x['latch_load_each_N'] / 1000:.2f} kN per latch, squeeze {x['squeeze_min_pct']:.1f}-{x['squeeze_max_pct']:.1f} %"
+                for x in dc) + " | – | the latch preload to set is in door_seal_fea.md |")
     row("Door, now, at 15 %", c["door_1p78_15"], f"each latch needs {c['door_latch_preload_15_N']:.0f} N at +20 mbar")
     row("Drawer (2-033 in a half-dovetail)", c["drawer_1p78_25"], f"each of 2 quarter-turn latches needs {c['drawer_latch_preload_25_N']:.0f} N; the drawn envelope has no rating yet")
     row("Reservoir on the dock (2-040)", c["dock_1p78_25"], f"2 deg ramps, mu 0.15: push home {c['dock_push_N']:.0f} N, pull out {c['dock_pull_out_N']:.0f} N, "
