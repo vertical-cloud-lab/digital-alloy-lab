@@ -1,0 +1,20 @@
+series,alloy,condition,orientation,yield_MPa,uts_MPa,elongation_pct,source_ref,source,note
+AlSi10Mg as-built,AlSi10Mg,as-built (no heat treatment),vertical,233,466,6.3,[6],EOS process data sheet EOS M 290 30 um,typical; machined; ISO 6892-1
+AlSi10Mg as-built,AlSi10Mg,as-built (no heat treatment),horizontal,270,461,10.2,[6],EOS process data sheet EOS M 290 30 um,typical; machined; ISO 6892-1
+AlSi10Mg as-built,AlSi10Mg,as-built (no heat treatment),horizontal,300,450,8,[8],Nikon SLM Solutions MDS AlSi10Mg SLM 500 30 um,mean; machined (minimum EL 6)
+AlSi10Mg as-built,AlSi10Mg,as-built (no heat treatment),vertical,275,470,5,[8],Nikon SLM Solutions MDS AlSi10Mg SLM 500 30 um,mean; machined (minimum EL 3)
+AlSi10Mg as-built unmachined,AlSi10Mg,as-built (no heat treatment),vertical,265,425,3,[8],Nikon SLM Solutions MDS AlSi10Mg SLM 500 30 um,mean; near-net-shape (as-printed surface) specimen (minimum EL 1)
+AlSi10Mg heat-treated,AlSi10Mg,EOS T6 (530 C 30 min + water quench + 165 C 6 h),vertical,250,310,11,[6],EOS process data sheet EOS M 290 30 um,typical; machined
+AlSi10Mg heat-treated,AlSi10Mg,EOS T6 (530 C 30 min + water quench + 165 C 6 h),horizontal,260,320,11,[6],EOS process data sheet EOS M 290 30 um,typical; machined
+AlSi10Mg heat-treated,AlSi10Mg,stress relief SR1 (285 C 2 h),horizontal,165,280,17,[8],Nikon SLM Solutions MDS AlSi10Mg SLM 500 30 um,mean; machined (minimum EL 15)
+AlSi10Mg heat-treated,AlSi10Mg,stress relief SR1 (285 C 2 h),vertical,165,285,14,[8],Nikon SLM Solutions MDS AlSi10Mg SLM 500 30 um,mean; machined (minimum EL 11)
+Scalmalloy as-built,Scalmalloy (Al-Mg-Sc-Zr),as-built (no heat treatment),horizontal,295,355,23.0,[7],Colibrium Additive M2 Series 5 Al-Mg-Sc 400 W 50 um (RevB 2025-08-21),typical; ASTM E8
+Scalmalloy as-built,Scalmalloy (Al-Mg-Sc-Zr),as-built (no heat treatment),vertical,275,350,22.0,[7],Colibrium Additive M2 Series 5 Al-Mg-Sc 400 W 50 um (RevB 2025-08-21),typical; ASTM E8
+Scalmalloy aged,Scalmalloy (Al-Mg-Sc-Zr),direct age 325 C 4 h,horizontal,475,515,12.0,[7],Colibrium Additive M2 Series 5 Al-Mg-Sc 400 W 50 um (RevB 2025-08-21),typical; ASTM E8
+Scalmalloy aged,Scalmalloy (Al-Mg-Sc-Zr),direct age 325 C 4 h,vertical,465,505,11.5,[7],Colibrium Additive M2 Series 5 Al-Mg-Sc 400 W 50 um (RevB 2025-08-21),typical; ASTM E8
+Scalmalloy aged,Scalmalloy (Al-Mg-Sc-Zr),325 C 4 h air cool (3D Systems calls it SR),horizontal,490,520,15.8,[9],3D Systems Certified Scalmalloy (A) datasheet 2022-02-23 (first block),average; ASTM E8; plastic elongation
+Scalmalloy aged,Scalmalloy (Al-Mg-Sc-Zr),325 C 4 h air cool (3D Systems calls it SR),vertical,490,520,15.8,[9],3D Systems Certified Scalmalloy (A) datasheet 2022-02-23 (first block),average; ASTM E8; plastic elongation
+Scalmalloy aged,Scalmalloy (Al-Mg-Sc-Zr),325 C 4 h air cool (3D Systems calls it SR),horizontal,500,530,14.0,[9],3D Systems Certified Scalmalloy (A) datasheet 2022-02-23 (second block),average; ASTM E8; plastic elongation
+Scalmalloy aged,Scalmalloy (Al-Mg-Sc-Zr),325 C 4 h air cool (3D Systems calls it SR),vertical,490,520,13.1,[9],3D Systems Certified Scalmalloy (A) datasheet 2022-02-23 (second block),average; ASTM E8; plastic elongation
+target,Al-Mn-Cr-Zr family,first-campaign go/no-go gate,any,250,,5,[10],genesis-mission-proposal/flaime-genesis-proposal.tex @0ddc928 L636 and L959,minimum values (YS >= 250 MPa and EL >= 5%)
+target,Al-Zr family,first-campaign go/no-go gate,any,200,,8,[10],genesis-mission-proposal/flaime-genesis-proposal.tex @0ddc928 L637 and L959,minimum values (YS >= 200 MPa and EL >= 8%); proposal also asks for elevated-temperature retention (not plotted)
