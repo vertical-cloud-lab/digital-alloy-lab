@@ -1,0 +1,108 @@
+{
+ "edwards_nxds6i": {
+  "before": {
+   "body": "the model's envelope (assumed grey)"
+  },
+  "after": {
+   "housing": "measured: edwards_nxds6i / housing and fins (painted cast aluminium)",
+   "cowl": "measured: edwards_nxds6i / housing and fins (painted cast aluminium)",
+   "fan_guard": "assumed",
+   "base": "measured: edwards_nxds6i / base, side face (painted cast aluminium)",
+   "feet": "assumed",
+   "connector_panel": "measured: edwards_nxds6i / connector panel (light grey plate)",
+   "inlet": "measured: edwards_nxds6i / inlet flange, NW25 (stainless)",
+   "exhaust": "measured: edwards_nxds6i / exhaust flange, NW25 (stainless)",
+   "lifting_eye": "measured: edwards_nxds6i / lifting eye (stainless)"
+  }
+ },
+ "transmitter_on_sae4": {
+  "before": {
+   "body": "the model's envelope (assumed grey)"
+  },
+  "after": {
+   "adapter": "measured: mcm_3861N11 / hex and thread (stainless)",
+   "hex_and_thread": "measured: mcm_3861N11 / hex and thread (stainless)",
+   "body": "measured: mcm_3861N11 / body and cable (black)",
+   "cable_gland": "measured: mcm_3861N11 / body and cable (black)"
+  }
+ },
+ "filter_train_5169K72": {
+  "before": {
+   "body": "the model's envelope (assumed grey)"
+  },
+  "after": {
+   "housing": "measured: mcm_5169K72 / housing (black)",
+   "lid": "measured: mcm_5169K72 / housing (black)",
+   "bail_clips": "measured: mcm_5169K72 / bail clips (steel wire)",
+   "plumbing": "measured: mcm_5786N23 / fitting (aluminium)",
+   "stand": "assumed"
+  }
+ },
+ "mcm_3861N11": {
+  "before": {
+   "body": "measured: mcm_3861N11 / body and cable (black)",
+   "hex": "measured: mcm_3861N11 / hex and thread (stainless)"
+  },
+  "after": {
+   "hex_and_thread": "measured: mcm_3861N11 / hex and thread (stainless)",
+   "body": "measured: mcm_3861N11 / body and cable (black)",
+   "cable_gland": "measured: mcm_3861N11 / body and cable (black)"
+  }
+ },
+ "mcm_5169K72": {
+  "before": {
+   "body": "measured: mcm_5169K72 / housing (black)"
+  },
+  "after": {
+   "housing": "measured: mcm_5169K72 / housing (black)",
+   "lid": "measured: mcm_5169K72 / housing (black)",
+   "bail_clips": "measured: mcm_5169K72 / bail clips (steel wire)"
+  }
+ },
+ "ipg_ylr500_u3": {
+  "before": {
+   "chassis": "measured: ipg_ylr500_u3 / 4U chassis side (black)",
+   "front_panel": "measured: ipg_ylr500_u3 / 4U front panel, light area",
+   "control_strip": "assumed",
+   "display": "measured: ipg_ylr500_u3 / 4U window (light grey)",
+   "fan_grille": "measured: ipg_ylr500_u3 / front panel, dark dot-pattern area",
+   "start_button": "measured: ipg_ylr500_u3 / 4U START (green)",
+   "estop": "measured: ipg_ylr500_u3 / 4U mushroom (red)",
+   "key_switch": "assumed",
+   "handles": "measured: ipg_ylr500_u3 / 4U handles (black)"
+  },
+  "after": {
+   "chassis": "measured: ipg_ylr500_u3 / 4U chassis side (black)",
+   "front_panel": "measured: ipg_ylr500_u3 / 4U front panel, light area",
+   "fan_field": "measured: ipg_ylr500_u3 / 4U fan field (dark perforated)",
+   "display": "measured: ipg_ylr500_u3 / 4U window (light grey)",
+   "start_button": "measured: ipg_ylr500_u3 / 4U START (green)",
+   "estop": "measured: ipg_ylr500_u3 / 4U mushroom (red)",
+   "key_switch": "assumed",
+   "handles": "measured: ipg_ylr500_u3 / 4U handles (black)"
+  }
+ },
+ "eaton_5px1500rtg2": {
+  "before": {
+   "chassis": "assumed",
+   "rack_ears": "assumed",
+   "bezel": "measured: eaton_5px1500rtg2 / bezel frame (dark grey)",
+   "badge": "measured: eaton_5px1500rtg2 / Eaton badge",
+   "grille": "measured: eaton_5px1500rtg2 / grille (perforated silver, holes included)",
+   "lcd_module": "measured: eaton_5px1500rtg2 / LCD module surround (black)",
+   "lcd_screen": "measured: eaton_5px1500rtg2 / LCD (lit)",
+   "led_bar": "measured: eaton_5px1500rtg2 / LED bar (blue)"
+  },
+  "after": {
+   "chassis": "assumed",
+   "rack_ears": "assumed",
+   "bezel": "measured: eaton_5px1500rtg2 / bezel frame (dark grey)",
+   "badge": "measured: eaton_5px1500rtg2 / Eaton badge",
+   "grille": "measured: eaton_5px1500rtg2 / grille (perforated silver, holes included)",
+   "lcd_module": "measured: eaton_5px1500rtg2 / LCD module surround (black)",
+   "lcd_screen": "measured: eaton_5px1500rtg2 / LCD (lit)",
+   "led_bar": "measured: eaton_5px1500rtg2 / LED bar (blue)",
+   "keys": "measured: eaton_5px1500rtg2 / keys (dark grey)"
+  }
+ }
+}

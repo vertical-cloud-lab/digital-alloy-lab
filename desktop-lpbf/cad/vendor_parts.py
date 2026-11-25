@@ -644,7 +644,7 @@ def ipg_ylr500_u3(bodies=False):
     carrying one column of operators at x -177.5 (green START Ø29 at z 150.7, red mushroom Ø36 at z 119, key switch Ø29 at
     z 84.2), a light-grey portrait window next to it (x -152.4..-96, z 74..168) and the IPG logo; a dark perforated fan field
     over the right ~45 % whose left edge sweeps down in a curve to a band along the bottom under the operators (drawn as a
-    1 mm recess; the perforation is a colour); black vertical bar handles on both ears. Round 5 drew IPG's 3U style (a
+    1 mm recess; the perforation is a colour); black vertical bar handles on both ears. Round 5 drew the shorter unit's style (a
     slatted grille beside a dark control strip and a touch display), from a family card that does not show the 4U unit.
     bodies=True returns the named bodies (for per-body finishes in cad/oem/render_oem.py); their union is the part."""
     H, W = 176.5, 482.3
@@ -769,10 +769,10 @@ def swaps(M):
         "place(VP.kf_weld_stub(40, 16), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, -1))", "5786N25 takes 1.5 in. tube (38.1 OD), not 41.3")
     add(["Overflow clamp (KF-40)"], M.place(kf_wing_clamp(40), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1)),
         "place(VP.kf_wing_clamp(40), (ox, 0, zf - 22 - 16), (1, 0, 0), (0, 0, 1))", "wing nut reaches 53.5 mm from the axis (+x)")
-    add(["Sealed cyclone + HEPA housing (316L, valves off for passivation)"], mcm_5169K72().translate(V(470, -40, g0 + 20)),
+    add(["Sealed cyclone + HEPA housing"], mcm_5169K72().translate(V(470, -40, g0 + 20)),
         "filt = VP.mcm_5169K72().translate(V(470, -40, g0 + 20)) (keep the 20 mm stand; inlet is now the side boss, outlet the bottom)",
         "Ø95 x 92 instead of Ø116 x 254; ports are 1/2 NPSC, so the two KF-25 filter ports move to NPT adapters")
-    add(["Dry scroll pump (≤ 0.3 mbar, 6 m3/h class)"], mcm_4396K21().translate(V(770, 165, g0)),
+    add(["Dry scroll pump"], mcm_4396K21().translate(V(770, 165, g0)),
         "pump = VP.mcm_4396K21().translate(V(770, 165, g0))", "368 x 143 x 305: 15 mm taller than the envelope with its inlet; intake is a flare tee on the pump block, so the KF-25 inlet moves")
     rx0, rx1, ry0 = -990.0, -430.0, -300.0
     zr_laser = M.Z_TRAY + 25.0 + 2 * 44.45

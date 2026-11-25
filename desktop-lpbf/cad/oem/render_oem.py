@@ -343,7 +343,7 @@ def parts_r6():
     from PIL import Image
     for i in range(0, len(tiles), 4):
         grid = np.vstack(tiles[i:i + 4])
-        Image.fromarray(grid).resize((grid.shape[1] * 3 // 4, grid.shape[0] * 3 // 4), Image.LANCZOS).quantize(colors=160).save(
+        Image.fromarray(grid).resize((grid.shape[1] * 3 // 4, grid.shape[0] * 3 // 4), Image.LANCZOS).save(   # not quantized: a 160-colour palette greyed the small operators
             OUT / f"before_after_r6_{i // 4 + 1}.png", optimize=True)
     (OUT / "finish_sources_r6.json").write_text(json.dumps(report, indent=1))
     print("round-6 parts grid:", len(tiles), "parts")
