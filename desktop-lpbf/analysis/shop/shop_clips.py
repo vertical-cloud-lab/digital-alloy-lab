@@ -303,25 +303,34 @@ def clip_lathe_slug():
 
 
 def clip_lathe_big():
-    """The 3FG15 at the lathe: a Ø4.25 in. 316L blank (the build module's spigot flange class, 108 mm, 50 mm long,
-    3.6 kg), past the 2F-85's 85 mm stroke, gripped on its OD from above and set 40 mm into the chuck's jaws."""
-    parts, meta = E.st10(door=1.0, jaw_open=108.0 / 2 - 27.0 + 6.0)
+    """The 3FG15 at the lathe: a Ø4.25 in. 316L blank (108 mm, 50 mm long, 3.6 kg: the spigot flange's class), past the
+    2F-85's 85 mm stroke. It lies in a V-cradle on the deck; the 3FG15 takes it from above across its axis and loads it
+    top-down like P2 (coaxial loading hits the door's jamb), into jaws opened for 108 mm."""
+    parts, meta = E.st10(door=1.0, jaw_open=108.0 / 2 - 27.0 + 6.0, jaw_deg=30.0)   # jaws at 30/150/270: none on top
     st = station("lathe")
     _, ys, zs = meta["chuck_face"]
-    job = Job("ST-10: arm A (3FG15) loads a Ø4.25 in. blank", "lathe", parts, x_mir=150.0 - S.ARM_DX, gripper="3FG15", gap=250.0)
     r_b, L_b = 54.0, 50.0
-    blank = Body("round blank", *S.cyl(r_b, (0, 0, 0), (L_b, 0, 0), n=40), kind="held", color="#b8bec4")
     kg = math.pi * r_b ** 2 * L_b * 8.0e-6
-    T_from = Tm(st.R() @ E.Ry(-90.0), job.deck((110.0, 0.0)))          # standing on its face on the deck, axis up
-    T_to = st.M @ Tm(None, (-15.0, ys, zs))
-    G_from = Tm(C.frame((-1, 0, 0), (0, 1, 0)), (L_b - 12.0, 0.0, 0.0))  # fingers round the OD, 12 mm from the top end
-    c_open, c_grip = job.arm.close_for_gap(2 * r_b + 20.0), job.arm.close_for_gap(2 * r_b)
-    res = pick_place(job, blank, kg, T_from, T_to, G_from, c_open, c_grip, allow_from=["mir0/parts deck"],
-                     allow_to=[f"lathe/chuck jaw {k}" for k in (1, 2, 3)] + ["lathe/chuck (6.5 in.)"],
-                     approach_to=(70.0, 0.0, 0.0), via=(0.0, -450.0, 0.0), release_note="chuck closes; gripper opens", iters=4000)
-    return simple_clip("lathe_big", "lathe", "31-machining-parts", job, "A", "3FG15",
+    for x_arm in (150.0, 250.0, 50.0):
+        job = Job("ST-10: arm A (3FG15) loads a Ø4.25 in. blank from above", "lathe", parts, x_mir=x_arm - S.ARM_DX,
+                  gripper="3FG15L", gap=350.0)
+        blank = Body("round blank", *S.cyl(r_b, (0, 0, 0), (L_b, 0, 0), n=40), kind="held", color="#b8bec4")
+        T_from = Tm(st.R(), job.deck((110.0, 0.0)) + np.array([0, 0, r_b + 15.0]))
+        T_to = st.M @ Tm(None, (5.0, ys, zs))               # 20 mm of it in the jaws (soft jaws for disc work)
+        G = Tm(C.frame((0, 0, -1), (1, 0, 0)), (L_b - 14.0, 0.0, 0.0))   # from above, across the axis, 14 mm from its end:
+                                                                         # the fingers stay clear of the jaws
+        c_open, c_grip = job.arm.close_for_gap(2 * r_b + 20.0), job.arm.close_for_gap(2 * r_b)
+        res = pick_place(job, blank, kg, T_from, T_to, G, c_open, c_grip, allow_from=["mir0/parts deck"],
+                         allow_to=[f"lathe/chuck jaw {k}" for k in (1, 2, 3)] + ["lathe/chuck (6.5 in.)"],
+                         approach_to=(70.0, 0.0, 0.0), via=(0.0, -320.0, 0.0), release_note="chuck closes; gripper opens",
+                         iters=3000)
+        if res is not None and job.plan.ok:
+            break
+        print("lathe_big: no plan with the arm at x", x_arm, job.plan.fail, flush=True)
+    return simple_clip("lathe_big", "lathe", "31-machining-parts", job, "A", "3FG15L",
                        "Arm A, with an OnRobot 3FG15, loads a Ø4.25 in. 316L blank", "108 mm is past the 2F-85's 85 mm "
-                       "stroke; the 3FG15 grips 4-152 mm, 10 kg; FCL with its puck and fingers", "lathe class (3FG15)",
+                       "stroke; 3FG15 (4-152 mm, 10 kg) with our 40 mm longer fingertips, the spindle oriented so no jaw is on top",
+                       "lathe class (3FG15)",
                        objs={"round blank": (T_from, dict(kind="cyl", r=r_b, L=L_b, color="#b8bec4"))},
                        end_objs={"round blank": T_to} if res else None, mach=dict(door=1.0, jaw_open=33.0),
                        extra=dict(part_kg=round(kg, 2)))
@@ -404,27 +413,31 @@ def clip_wash():
 
 
 def clip_measure():
-    """Arm A sets the finished floor plate (3.0 kg) on the granite plate for the person to gauge (VGP20: it is clean and
-    dry after the wash)."""
+    """Arm A sets a machined bracket (the vise class's part, 1.9 kg) on the granite plate for the person to gauge, 2F-85
+    from above. (With the floor plate on the VGP20, RRT-Connect found no carry from three docking positions: the 312 x
+    222 plate and the 264 x 184 gripper have to swing over the plate's front edge from an arm base 114 mm below the
+    granite's top; the person sets the big plates on the granite.)"""
     parts, meta = E.granite_station()
     st = station("measure")
-    job = Job("Measuring: arm A sets the floor plate on the granite", "measure", parts, x_mir=-150.0 - S.ARM_DX,
-              gripper="VGP20")
-    m = state_mesh("floor", 16)
-    plate = part_body("floor plate", m)
-    v = np.asarray(m.points)
-    kg = 3.03
-    T_from = Tm(st.R(), job.deck((110.0, 0.0)) + np.array([0, 0, 30.0 - v[:, 2].min()]))
-    T_to = st.M @ Tm(None, (-20.0, 145.0, meta["top_z"] - v[:, 2].min()))     # the front half; the gauges are behind
-    G = Tm(C.frame((0, 0, -1), (1, 0, 0)), (0.0, 70.0, v[:, 2].max()))       # cups on the top face, beside the port
-    blocks = C.merge([S.box(-150, -110, -90, 90, 0, 30), S.box(110, 150, -90, 90, 0, 30)])
-    job.add_obstacle("deck blocks", S.xf(blocks, Tm(st.R(), job.deck((110.0, 0.0)))))
-    res = pick_place(job, plate, kg, T_from, T_to, G, 0.0, 0.0, allow_from=["mir0/parts deck", "deck blocks"],
-                     allow_to=["measure/granite surface plate"], release_note="vacuum off", grip_note="vacuum on")
-    return simple_clip("measure", "measure", "32-finishing", job, "A", "VGP20", "Arm A sets the floor plate on the granite "
+    W, L, H = 72.0, 150.0, 63.5
+    kg = W * L * H * RHO_AL
+    for x_arm in (-150.0, 150.0):
+        job = Job("Measuring: arm A sets a bracket on the granite", "measure", parts, x_mir=x_arm - S.ARM_DX)
+        part = Body("bracket", *S.box(-W / 2, W / 2, -L / 2, L / 2, 0, H), kind="held", color="#d6dade")
+        T_from = Tm(st.R(), job.deck((110.0, 0.0)))
+        T_to = st.M @ Tm(None, (-60.0, 170.0, meta["top_z"]))
+        G = Tm(C.frame((0, 0, -1), (1, 0, 0)), (0.0, 0.0, H - 20.0))
+        c_open, c_grip = job.arm.close_for_gap(W + 12.0), job.arm.close_for_gap(W)
+        res = pick_place(job, part, kg, T_from, T_to, G, c_open, c_grip, allow_from=["mir0/parts deck"],
+                         allow_to=["measure/granite surface plate"], iters=3000, up_from=420.0, up_to=150.0)
+        if res is not None and job.plan.ok:
+            break
+        print("measure: no plan with the arm at x", x_arm, job.plan.fail, flush=True)
+    return simple_clip("measure", "measure", "32-finishing", job, "A", "2F-85", "Arm A sets a bracket on the granite "
                        "for gauging", "36 x 24 x 4 in. grade A plate at 36 in.; a person reads the bore and height gauges "
-                       "(the arm can't)", "measure class", objs={"floor plate": (T_from, dict(kind="state", part="floor", k=16))},
-                       end_objs={"floor plate": T_to} if res else None, extra=dict(part_kg=kg))
+                       "(the arm can't)", "measure class", objs={"bracket": (T_from, dict(kind="box", b=(-W / 2, W / 2, -L / 2, L / 2, 0, H),
+                                                                                         color="#d6dade"))},
+                       end_objs={"bracket": T_to} if res else None, extra=dict(part_kg=round(kg, 2)))
 
 
 KIT_SLOTS = pathlib.Path("/home/runner/work/digital-alloy-lab/digital-alloy-lab/.claude/worktrees/agent-a0f79a7c83e4b003f/"

@@ -8,6 +8,7 @@ Frames: the shop frame of analysis/shop/shop_cell.py (mm, z up); hall = shop + c
 from __future__ import annotations
 
 import math
+import os
 import pathlib
 import sys
 
@@ -52,6 +53,11 @@ def rgb(c):
     return tuple(c)
 
 
+def _spec_key(spec):
+    """What identifies an object's mesh (arrays left out)."""
+    return tuple((k, str(v)) for k, v in sorted(spec.items()) if k not in ("v", "f"))
+
+
 def vf_mesh(v, f):
     f = np.asarray(f, np.int64)
     return pv.PolyData(np.asarray(v, float), np.c_[np.full(len(f), 3), f].ravel())
@@ -62,6 +68,12 @@ class ShopScene:
 
     def __init__(self, size=(CM.W, CM.H), context=True):
         self.pl = CM.plotter(size)
+        if os.environ.get("SHOP_AA", "fxaa") == "fxaa":   # the shared look's SSAA costs 2.3x the render time; on the
+            try:                                           # shared runner the shop's ~5000 frames use FXAA instead
+                self.pl.disable_anti_aliasing()
+                self.pl.enable_anti_aliasing("fxaa")
+            except Exception:  # noqa: BLE001
+                pass
         self.sc = pvscene.PVScene(self.pl)
         self.sc.add("floor", pv.Plane(center=(8000, 6000, -1), i_size=30000, j_size=20000), CM.FLOOR, specular=0.0)
         self.stations = {}
@@ -133,6 +145,7 @@ class ShopScene:
         sc.add(f"arm{key}/3fg/body", E.cyl((0, 0, 24), (0, 0, 97), 78.0, res=40), "#3c4650", group=f"arm{key}/3fg")
         for k in range(3):
             sc.add(f"arm{key}/3fg/f{k}", E.box(-9, 9, -10, 10, 97, 187), "#9aa3ab", group=f"arm{key}/3fg/f{k}")
+            sc.add(f"arm{key}/3fg/f{k}x", E.box(-9, 9, -10, 10, 187, 227), "#d9b23a", group=f"arm{key}/3fg/f{k}")
         sc.add(f"arm{key}/vgp/body", E.box(-92, 92, -132, 132, 24, 116), "#33373b", group=f"arm{key}/vgp")
         sc.add(f"arm{key}/vgp/cups", E.merge([E.cyl((x, y, 116), (x, y, 136), 18.0, res=20)
                                              for x, y in ((-50, -60), (-50, 60), (50, -60), (50, 60))]), "#1f2326",
@@ -156,12 +169,12 @@ class ShopScene:
 
     def set_tool(self, key, tool):
         sc = self.sc
-        show = dict(gr=tool in ("2F-85", "nut runner", "cutter"), fg=tool == "3FG15", vgp=tool == "VGP20")
+        show = dict(gr=tool in ("2F-85", "nut runner", "cutter"), fg=tool in ("3FG15", "3FG15L"), vgp=tool == "VGP20")
         for n in sc.actors:
             if n.startswith(f"arm{key}/gr/"):
                 sc.alpha[n] = 1.0 if show["gr"] else 0.0
             elif n.startswith(f"arm{key}/3fg"):
-                sc.alpha[n] = 1.0 if show["fg"] else 0.0
+                sc.alpha[n] = 1.0 if show["fg"] and (tool == "3FG15L" or not n.endswith("x")) else 0.0
             elif n.startswith(f"arm{key}/vgp"):
                 sc.alpha[n] = 1.0 if show["vgp"] else 0.0
             elif n.startswith(f"arm{key}/qc"):
@@ -228,10 +241,11 @@ class ShopScene:
             m, c = self.obj_mesh(spec)
             sc.add(g, m, color or c, group=g)
             self.objs[name] = spec
-        elif spec is not None and spec != self.objs[name]:
+        elif spec is not None and spec is not self.objs[name] and _spec_key(spec) != _spec_key(self.objs[name]):
             m, c = self.obj_mesh(spec)
             sc.add(g, m, color or c, group=g)
             self.objs[name] = spec
+        sc.parent.pop(g, None)                 # a world pose: not riding on a machine group any more
         sc.gmat[g] = np.asarray(M, float)
         sc.alpha[g] = 1.0
 

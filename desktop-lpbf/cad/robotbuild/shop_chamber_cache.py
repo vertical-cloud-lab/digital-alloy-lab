@@ -126,6 +126,8 @@ def main():
                 elif key.startswith("J:"):
                     used_j.add(key[2:])
                 label = RM.op_label(RB, "frame", key)
+                if core is None and key in ("FR-03", "FR-04", "FR-05"):   # the opening finish and the rebate skin the walls, not the core
+                    tools = [t.cut(core_box) for t in tools]
             if not tools:
                 continue
             after = state.cut(*tools)

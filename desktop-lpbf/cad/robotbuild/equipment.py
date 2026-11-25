@@ -402,7 +402,7 @@ def _slab(p0, p1, half_w, y0, y1):
     return b.rotate_y(-a, inplace=False).translate((p0[0], 0, p0[1]), inplace=False)
 
 
-def st10(door=1.0, jaw_open=0.0, chuck_d=165.0, p=None):
+def st10(door=1.0, jaw_open=0.0, chuck_d=165.0, p=None, jaw_deg=90.0):
     """The Haas ST-10 in its station frame: PR 318's machine frame (x along the spindle from the headstock end, y from the
     front face in, z up) shifted so that x = 0 is the chuck's face. door: 0 shut .. 1 open (it slides left over the
     white panel). The 6.5 in. chuck (ST-10 page) is on the spindle nose; the turret parks at the right."""
@@ -458,7 +458,7 @@ def st10(door=1.0, jaw_open=0.0, chuck_d=165.0, p=None):
                                   group="spindle")
     jr = 27.0 + jaw_open
     for k in range(3):
-        a = math.radians(90 + 120 * k)
+        a = math.radians(jaw_deg + 120 * k)          # jaw_deg: the spindle oriented (M19) before a load
         u = np.array([0.0, math.cos(a), math.sin(a)])
         jv = box(x_face - 20, x_face + 25, -14, 14, jr, jr + 40)
         R = np.column_stack([[1.0, 0, 0], np.cross(u, [1.0, 0, 0]), u])
@@ -517,18 +517,30 @@ def s20a(head=1.0, vise_open=60.0, bar=None):
 JIB = dict(under_boom=8 * 12 * INCH, span=14 * 12 * INCH, mast_r=110.0, boom_h=200.0)
 
 
-def jib_lifter(yaw=0.0, r=1800.0, hook_z=1200.0, load=None, grip=True):
-    """Gorbel WSJ360-500-8-14 free-standing jib (8 ft under the boom, 14 ft span) with a Schmalz JumboFlex 50 vacuum tube
-    lifter on its trolley. Frame: the mast's foot at the origin. yaw (deg) turns the boom about the mast (0 = along +x);
-    r: trolley radius (mm); hook_z: the suction foot's face (mm above the floor). Returns parts and the foot's pose."""
-    J = JIB
+MACHINE_JIB = dict(under_boom=1700.0, span=2400.0, mast_r=90.0, boom_h=150.0)   # a jib on its own mast beside the VF-4's
+# door, its boom low enough (1700-1850 mm) to swing in under the 1900 mm header, so the tube lifter sets a block on the
+# table from in front (our assumption: the free-standing jib of robot-shop-equipment.csv built to a 1700 mm height; a
+# tube lifter can't come down through the VF-4's roof, and a person can't guide a load lifted over a 2 m enclosure)
+
+
+def jib_lifter(yaw=0.0, r=1800.0, hook_z=1200.0, load=None, grip=True, J=None):
+    """A free-standing jib (Gorbel WSJ360 class; JIB: 8 ft under the boom, 14 ft span; MACHINE_JIB: the low one beside the
+    VF-4) with a Schmalz JumboFlex 50 vacuum tube lifter on its trolley. Frame: the mast's foot at the origin. yaw (deg)
+    turns the boom about the mast (0 = along +x); r: trolley radius (mm); hook_z: the suction foot's face (mm above the
+    floor). Returns parts and the foot's pose."""
+    J = J or JIB
     ub, span = J["under_boom"], J["span"]
     out = {}
+    low = ub < 2000.0
+    mast_top = ub + J["boom_h"] + (450.0 if low else 120.0)
     out["jib base plate"] = Part(box(-450, 450, -450, 450, 0, 40), C["yellow"])
-    out["jib mast"] = Part(cyl((0, 0, 40), (0, 0, ub + J["boom_h"] + 120), J["mast_r"], res=32), C["yellow"])
+    out["jib mast"] = Part(cyl((0, 0, 40), (0, 0, mast_top), J["mast_r"], res=32), C["yellow"])
     Mb = T((0, 0, 0), Rz(yaw))
-    boom = merge([box(0, span, -70, 70, ub, ub + J["boom_h"]), box(-150, 150, -150, 150, ub - 40, ub + J["boom_h"] + 60),
-                  _slab((150, ub - 20), (1100, ub - 650), 30.0, -40, 40).rotate_z(0, inplace=False)])
+    # a knee brace under a tall boom; a tie rod from the mast's top over a low one (nothing hangs into the work zone)
+    brace = (_slab((80, mast_top - 30), (0.6 * span, ub + J["boom_h"] + 5), 14.0, -15, 15) if low else
+             _slab((150, ub - 20), (1100, ub - 650), 30.0, -40, 40))
+    boom = merge([box(0, span, -60, 60, ub, ub + J["boom_h"]), box(-120, 120, -120, 120, ub - 40, ub + J["boom_h"] + 40),
+                  brace])
     out["jib boom (enclosed track)"] = Part(boom, C["yellow"], M=Mb, group="boom")
     out["vacuum blower"] = Part(box(250, 650, -250, 250, 40, 520), "#2f5f8a")
     out["vacuum hose up the mast"] = Part(cyl((300, 0, 520), (300, 0, ub - 100), 40.0), C["rubber"], collide=False)
@@ -769,7 +781,7 @@ def cantilever_rack(bars=True):
 def box_mesh_with_tape(L, W, H, open_flaps=0.0):
     """A shipping box: body, the tape seam along x on top, and the two long top flaps (open_flaps 0 shut .. 1 open,
     folded out to the sides about their hinges on the long edges)."""
-    body = box(-L / 2, L / 2, -W / 2, W / 2, 0, H - 2)
+    body = open_box(-L / 2, L / 2, -W / 2, W / 2, 0, H - 2, 4.0)     # corrugated board, 4 mm
     tape = box(-L / 2 - 1, L / 2 + 1, -24, 24, H - 2, H + 0.5)
     a = 120.0 * open_flaps
     flaps = []

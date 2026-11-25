@@ -100,7 +100,7 @@ class Arm3FG(Arm):
         return 76.0 - c * 74.0 + self.FING[2]
 
     def tcp_mm(self, close=None):
-        return 160.0
+        return 160.0 + (self.FING[1] - 187.0)
 
     def gap_mm(self, close=None):
         return 2 * (self.finger_r(close) - self.FING[2])
@@ -173,9 +173,17 @@ class ArmVGP(Arm):
         return F
 
 
+class Arm3FGLong(Arm3FG):
+    """The 3FG15 with custom fingertips 40 mm longer (ours: the robot may use custom tools), so its 156 mm puck stays
+    above a 3-jaw chuck's jaws while a short disc is pushed into them."""
+    FING = (97.0, 227.0, 9.0, 10.0)
+
+
 def make_arm(name, base, yaw, gripper="2F-85"):
     if gripper == "3FG15":
         return Arm3FG(name, tuple(base), yaw)
+    if gripper == "3FG15L":
+        return Arm3FGLong(name, tuple(base), yaw)
     if gripper == "VGP20":
         return ArmVGP(name, tuple(base), yaw)
     return Arm(name, base=tuple(base), yaw_deg=yaw)
@@ -362,8 +370,9 @@ def pick_place(job, part, kg, T_from, T_to, G, close_open, close_grip, allow_fro
         reasons = []
         q_above = None
         for qv in arm.ik_all(T_via, q_up):
-            if chk.collisions(qv, close_grip, frozenset()):
-                reasons.append("via pose collides")
+            colv = chk.collisions(qv, close_grip, frozenset())
+            if colv:
+                reasons.append(f"via pose collides: {[(a_, b_) for a_, b_, d_ in colv[:2]]}")
                 continue
             q1, i1 = K.cart(chk, arm, K.line(T_via, T_pre), close_grip, frozenset(), qv)
             if q1 is None:
