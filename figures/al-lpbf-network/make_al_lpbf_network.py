@@ -138,7 +138,7 @@ TH_IN = TW_IN * TH / TW
 Y_ROW = 2.63  # centre line of the main row
 X0 = 0.40  # left edge of the first tile
 STEP = 1.66  # tile-to-tile pitch
-T_TW = 1.15  # test tiles
+T_TW = TW_IN  # test tiles, the same size as the main row
 T_TH = T_TW * TH / TW
 
 
@@ -266,7 +266,8 @@ def make_figure():
             "CALPHAD: our Thermo-Calc Scheil calculation for an Al-Cu-Si alloy.", ha="right",
             va="bottom", fontsize=9.5, color="#8C8C8C")
 
-    for ext, kw in (("png", dict(dpi=220)), ("pdf", dict(dpi=400))):
+    # No creation date in the PDF, so a re-run without changes gives the same file
+    for ext, kw in (("png", dict(dpi=220)), ("pdf", dict(dpi=400, metadata={"CreationDate": None}))):
         out = HERE / f"al-lpbf-network.{ext}"
         fig.savefig(out, facecolor="white", **kw)
         print("wrote", out)
