@@ -1,0 +1,1330 @@
+{
+ "sources": {
+  "geometry": "cad/monitoring_spec.py (read at run time)",
+  "parts": "analysis/monitoring/optics/parts.py"
+ },
+ "ports": {
+  "LW": {
+   "centre": [
+    -156.0,
+    -20.0,
+    36.0
+   ],
+   "dist_mm": 161.34435224078965,
+   "elevation_deg": 12.892660960939805,
+   "window_tilt_deg": 14.788169647893747,
+   "face_tilt_deg": 14.788169647893747,
+   "seat": "on the wall's face",
+   "window": {
+    "d": 38.1,
+    "t": 5.0,
+    "mat": "UV fused silica, AR 650-1050 nm"
+   },
+   "slide": {
+    "d": 30.0,
+    "t": 1.0
+   },
+   "key": "LW",
+   "clear_d": 25.0,
+   "plates": {
+    "focus_shift_mm": 2.0113716979883285,
+    "astigmatism_mm": 0.14842910401756954,
+    "blur_um": 5.195018640614935,
+    "boresight_shift_mm": 0.4963891973343187,
+    "ghost_offset_mm": 2.0701750952052977,
+    "reflection_deviation_deg": 29.576339295787495
+   },
+   "plates_if_window_normal_to_view": {
+    "focus_shift_mm": 1.8710284526262528,
+    "astigmatism_mm": 0.0,
+    "blur_um": 0.0,
+    "boresight_shift_mm": 0.0,
+    "ghost_offset_mm": 0.0,
+    "reflection_deviation_deg": 0.0
+   }
+  },
+  "BW": {
+   "centre": [
+    -125.0,
+    111.0,
+    25.0
+   ],
+   "dist_mm": 169.0295832095672,
+   "elevation_deg": 8.50542785605438,
+   "window_tilt_deg": 48.952097366655195,
+   "face_tilt_deg": 48.952097366655195,
+   "seat": "on the wall's face",
+   "window": {
+    "d": 25.4,
+    "t": 3.0,
+    "mat": "N-BK7 or UV fused silica, AR visible"
+   },
+   "slide": null,
+   "key": "BW",
+   "clear_d": 20.0,
+   "plates": {
+    "focus_shift_mm": 2.1531522826739535,
+    "astigmatism_mm": 0.9897253135118241,
+    "blur_um": 34.64038597291385,
+    "boresight_shift_mm": 1.0663480199022946,
+    "ghost_offset_mm": 2.3922688362587534,
+    "reflection_deviation_deg": 97.90419473331039
+   },
+   "plates_if_window_normal_to_view": {
+    "focus_shift_mm": 0.9355142263131264,
+    "astigmatism_mm": 0.0,
+    "blur_um": 0.0,
+    "boresight_shift_mm": 0.0,
+    "ghost_offset_mm": 0.0,
+    "reflection_deviation_deg": 0.0
+   }
+  },
+  "LP": {
+   "centre": [
+    -60.0,
+    -80.0,
+    136.0
+   ],
+   "dist_mm": 168.80758276807353,
+   "elevation_deg": 53.67317404787977,
+   "window_tilt_deg": 36.32682595212023,
+   "face_tilt_deg": 36.32682595212023,
+   "seat": "on the wall's face",
+   "window": {
+    "d": 25.4,
+    "t": 3.0,
+    "mat": "UV fused silica"
+   },
+   "slide": {
+    "d": 25.0,
+    "t": 1.0
+   },
+   "key": "LP",
+   "clear_d": 20.0,
+   "plates": {
+    "focus_shift_mm": 1.9504216529932223,
+    "astigmatism_mm": 0.6678932846154021,
+    "blur_um": 23.376264961539075,
+    "boresight_shift_mm": 0.9308581723999095,
+    "ghost_offset_mm": 2.877407259020325,
+    "reflection_deviation_deg": 72.65365190424046
+   },
+   "plates_if_window_normal_to_view": {
+    "focus_shift_mm": 1.2473523017508352,
+    "astigmatism_mm": 0.0,
+    "blur_um": 0.0,
+    "boresight_shift_mm": 0.0,
+    "ghost_offset_mm": 0.0,
+    "reflection_deviation_deg": 0.0
+   }
+  }
+ },
+ "cameras": [
+  {
+   "port": "LW",
+   "camera": "Chronos 2.1-HD mono",
+   "lens": "Kowa LM50JC10M 50 mm",
+   "f_number": 2.8,
+   "wd_mm": 176.34435224078965,
+   "magnification": 0.3957438469802669,
+   "um_per_px_across": 25.26887044815793,
+   "um_per_px_along_plate": 113.24970928651314,
+   "rayleigh_um": 10.240669223327135,
+   "diffraction_vs_2px": 0.20263409170459512,
+   "dof_mm": 1.3297212378322185,
+   "focus_band_on_plate_mm": 1.3641107671149486,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 100.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 22.0,
+   "covers_full_sensor": false,
+   "roi_px": [
+    640,
+    96
+   ],
+   "roi_field_mm": [
+    16.172077086821076,
+    10.87197209150526
+   ],
+   "field_cm2_roi": 1.7582237074959042
+  },
+  {
+   "port": "LW",
+   "camera": "Chronos 2.1-HD mono",
+   "lens": "Kowa LM50JC10M 50 mm",
+   "f_number": 4.0,
+   "wd_mm": 176.34435224078965,
+   "magnification": 0.3957438469802669,
+   "um_per_px_across": 25.26887044815793,
+   "um_per_px_along_plate": 113.24970928651314,
+   "rayleigh_um": 14.62952746189591,
+   "diffraction_vs_2px": 0.28947727386370736,
+   "dof_mm": 2.1026051422745775,
+   "focus_band_on_plate_mm": 2.156983157044162,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 100.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 22.0,
+   "covers_full_sensor": false,
+   "roi_px": [
+    640,
+    96
+   ],
+   "roi_field_mm": [
+    16.172077086821076,
+    10.87197209150526
+   ],
+   "field_cm2_roi": 1.7582237074959042
+  },
+  {
+   "port": "LW",
+   "camera": "Chronos 2.1-HD mono",
+   "lens": "Kowa LM50JC10M 50 mm",
+   "f_number": 5.6,
+   "wd_mm": 176.34435224078965,
+   "magnification": 0.3957438469802669,
+   "um_per_px_across": 25.26887044815793,
+   "um_per_px_along_plate": 113.24970928651314,
+   "rayleigh_um": 20.48133844665427,
+   "diffraction_vs_2px": 0.40526818340919024,
+   "dof_mm": 3.3225868305443687,
+   "focus_band_on_plate_mm": 3.408516267371064,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 100.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 22.0,
+   "covers_full_sensor": false,
+   "roi_px": [
+    640,
+    96
+   ],
+   "roi_field_mm": [
+    16.172077086821076,
+    10.87197209150526
+   ],
+   "field_cm2_roi": 1.7582237074959042
+  },
+  {
+   "port": "LW",
+   "camera": "Chronos 2.1-HD mono",
+   "lens": "Kowa LM50JC10M 50 mm",
+   "f_number": 8.0,
+   "wd_mm": 176.34435224078965,
+   "magnification": 0.3957438469802669,
+   "um_per_px_across": 25.26887044815793,
+   "um_per_px_along_plate": 113.24970928651314,
+   "rayleigh_um": 29.25905492379182,
+   "diffraction_vs_2px": 0.5789545477274147,
+   "dof_mm": 5.55856611083473,
+   "focus_band_on_plate_mm": 5.702322912335603,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 100.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 22.0,
+   "covers_full_sensor": false,
+   "roi_px": [
+    640,
+    96
+   ],
+   "roi_field_mm": [
+    16.172077086821076,
+    10.87197209150526
+   ],
+   "field_cm2_roi": 1.7582237074959042
+  },
+  {
+   "port": "LW",
+   "camera": "Chronos 2.1-HD mono",
+   "lens": "Kowa LM50JC10M 50 mm",
+   "f_number": 11.0,
+   "wd_mm": 176.34435224078965,
+   "magnification": 0.3957438469802669,
+   "um_per_px_across": 25.26887044815793,
+   "um_per_px_along_plate": 113.24970928651314,
+   "rayleigh_um": 40.23120052021375,
+   "diffraction_vs_2px": 0.7960625031251951,
+   "dof_mm": 9.038676598254751,
+   "focus_band_on_plate_mm": 9.27243674640396,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 100.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 22.0,
+   "covers_full_sensor": false,
+   "roi_px": [
+    640,
+    96
+   ],
+   "roi_field_mm": [
+    16.172077086821076,
+    10.87197209150526
+   ],
+   "field_cm2_roi": 1.7582237074959042
+  },
+  {
+   "port": "LW",
+   "camera": "Chronos 2.1-HD mono",
+   "lens": "Edmund 35 mm C VIS-NIR #67-716",
+   "f_number": 4.0,
+   "wd_mm": 176.34435224078965,
+   "magnification": 0.24762220382442404,
+   "um_per_px_across": 40.38410064022561,
+   "um_per_px_along_plate": 180.99295996177943,
+   "rayleigh_um": 20.89932494556558,
+   "diffraction_vs_2px": 0.2587568450731855,
+   "dof_mm": 4.636521878419868,
+   "focus_band_on_plate_mm": 4.756432578776793,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 165.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 22.0,
+   "covers_full_sensor": false,
+   "roi_px": [
+    640,
+    96
+   ],
+   "roi_field_mm": [
+    25.84582440974439,
+    17.375324156330826
+   ],
+   "field_cm2_roi": 4.490795772069166
+  },
+  {
+   "port": "LW",
+   "camera": "Chronos 2.1-HD mono",
+   "lens": "Edmund 75 mm C VIS-NIR #74-054",
+   "f_number": 5.6,
+   "wd_mm": 176.34435224078965,
+   "magnification": 0.7400511063685459,
+   "um_per_px_across": 13.512580298771953,
+   "um_per_px_along_plate": 60.56051431686157,
+   "rayleigh_um": 13.654225631102845,
+   "diffraction_vs_2px": 0.5052412392451708,
+   "dof_mm": 1.3011446584555553,
+   "focus_band_on_plate_mm": 1.334795134254507,
+   "lens_mod_ok": false,
+   "lens_mod_mm": 500.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 22.0,
+   "covers_full_sensor": false,
+   "roi_px": [
+    640,
+    96
+   ],
+   "roi_field_mm": [
+    8.64805139121405,
+    5.813809374418711
+   ],
+   "field_cm2_roi": 0.5027812224869502
+  },
+  {
+   "port": "LW",
+   "camera": "IMX296 mono",
+   "lens": "Kowa LM50JC10M 50 mm",
+   "f_number": 4.0,
+   "wd_mm": 176.34435224078965,
+   "magnification": 0.3957438469802669,
+   "um_per_px_across": 8.717760304614487,
+   "um_per_px_along_plate": 39.071149703847034,
+   "rayleigh_um": 14.62952746189591,
+   "diffraction_vs_2px": 0.8390645619237893,
+   "dof_mm": 1.168622807193255,
+   "focus_band_on_plate_mm": 1.19884597510622,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 100.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 6.3,
+   "covers_full_sensor": true,
+   "roi_px": [
+    1456,
+    1088
+   ],
+   "roi_field_mm": [
+    12.693059003518693,
+    42.50941087778558
+   ],
+   "field_cm2_roi": 5.395744604765516
+  },
+  {
+   "port": "LP",
+   "camera": "IMX296 mono",
+   "lens": "Kowa LM50JC10M 50 mm",
+   "f_number": 5.6,
+   "wd_mm": 196.80758276807353,
+   "magnification": 0.3405818627161102,
+   "um_per_px_across": 10.129723210997074,
+   "um_per_px_along_plate": 12.573338892338707,
+   "rayleigh_um": 22.85801989301513,
+   "diffraction_vs_2px": 1.128264781618115,
+   "dof_mm": 2.5450921773845723,
+   "focus_band_on_plate_mm": 4.296308583862227,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 100.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 6.3,
+   "covers_full_sensor": true,
+   "roi_px": [
+    1456,
+    1088
+   ],
+   "roi_field_mm": [
+    14.74887699521174,
+    13.679792714864515
+   ],
+   "field_cm2_roi": 2.017615800715304
+  },
+  {
+   "port": "LP",
+   "camera": "IMX296 mono",
+   "lens": "Edmund 35 mm C VIS-NIR #67-716",
+   "f_number": 4.0,
+   "wd_mm": 196.80758276807353,
+   "magnification": 0.21630630283975724,
+   "um_per_px_across": 15.949604587138678,
+   "um_per_px_along_plate": 19.797163209275425,
+   "rayleigh_um": 23.3245100949134,
+   "diffraction_vs_2px": 0.7311939919100453,
+   "dof_mm": 3.155044220481151,
+   "focus_band_on_plate_mm": 5.325953883858039,
+   "lens_mod_ok": true,
+   "lens_mod_mm": 165.0,
+   "image_circle_mm": 11.0,
+   "sensor_diag_mm": 6.3,
+   "covers_full_sensor": true,
+   "roi_px": [
+    1456,
+    1088
+   ],
+   "roi_field_mm": [
+    23.222624278873916,
+    21.53931357169166
+   ],
+   "field_cm2_roi": 5.001993863002451
+  }
+ ],
+ "blur": {
+  "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm at LW": {
+   "1 m/s": {
+    "1 us": 0.03957438469802669,
+    "2 us": 0.07914876939605338,
+    "5 us": 0.19787192349013344,
+    "10 us": 0.3957438469802669,
+    "20 us": 0.7914876939605338,
+    "41 us": 1.6225497726190943
+   },
+   "5 m/s": {
+    "1 us": 0.19787192349013344,
+    "2 us": 0.3957438469802669,
+    "5 us": 0.9893596174506673,
+    "10 us": 1.9787192349013345,
+    "20 us": 3.957438469802669,
+    "41 us": 8.11274886309547
+   },
+   "10 m/s": {
+    "1 us": 0.3957438469802669,
+    "2 us": 0.7914876939605338,
+    "5 us": 1.9787192349013345,
+    "10 us": 3.957438469802669,
+    "20 us": 7.914876939605338,
+    "41 us": 16.22549772619094
+   },
+   "20 m/s": {
+    "1 us": 0.7914876939605338,
+    "2 us": 1.5829753879210675,
+    "5 us": 3.957438469802669,
+    "10 us": 7.914876939605338,
+    "20 us": 15.829753879210676,
+    "41 us": 32.45099545238188
+   }
+  },
+  "Chronos 2.1-HD mono + Edmund 35 mm C VIS-NIR #67-716 at LW": {
+   "1 m/s": {
+    "1 us": 0.024762220382442406,
+    "2 us": 0.04952444076488481,
+    "5 us": 0.12381110191221202,
+    "10 us": 0.24762220382442404,
+    "20 us": 0.4952444076488481,
+    "41 us": 1.0152510356801385
+   },
+   "5 m/s": {
+    "1 us": 0.12381110191221202,
+    "2 us": 0.24762220382442404,
+    "5 us": 0.6190555095610601,
+    "10 us": 1.2381110191221203,
+    "20 us": 2.4762220382442406,
+    "41 us": 5.076255178400693
+   },
+   "10 m/s": {
+    "1 us": 0.24762220382442404,
+    "2 us": 0.4952444076488481,
+    "5 us": 1.2381110191221203,
+    "10 us": 2.4762220382442406,
+    "20 us": 4.952444076488481,
+    "41 us": 10.152510356801386
+   },
+   "20 m/s": {
+    "1 us": 0.4952444076488481,
+    "2 us": 0.9904888152976962,
+    "5 us": 2.4762220382442406,
+    "10 us": 4.952444076488481,
+    "20 us": 9.904888152976962,
+    "41 us": 20.305020713602772
+   }
+  },
+  "Chronos 2.1-HD mono + Edmund 75 mm C VIS-NIR #74-054 at LW": {
+   "1 m/s": {
+    "1 us": 0.07400511063685458,
+    "2 us": 0.14801022127370916,
+    "5 us": 0.37002555318427294,
+    "10 us": 0.7400511063685459,
+    "20 us": 1.4801022127370917,
+    "41 us": 3.034209536111038
+   },
+   "5 m/s": {
+    "1 us": 0.37002555318427294,
+    "2 us": 0.7400511063685459,
+    "5 us": 1.8501277659213646,
+    "10 us": 3.7002555318427293,
+    "20 us": 7.4005110636854585,
+    "41 us": 15.17104768055519
+   },
+   "10 m/s": {
+    "1 us": 0.7400511063685459,
+    "2 us": 1.4801022127370917,
+    "5 us": 3.7002555318427293,
+    "10 us": 7.4005110636854585,
+    "20 us": 14.801022127370917,
+    "41 us": 30.34209536111038
+   },
+   "20 m/s": {
+    "1 us": 1.4801022127370917,
+    "2 us": 2.9602044254741835,
+    "5 us": 7.4005110636854585,
+    "10 us": 14.801022127370917,
+    "20 us": 29.602044254741834,
+    "41 us": 60.68419072222076
+   }
+  },
+  "IMX296 mono + Kowa LM50JC10M 50 mm at LW": {
+   "1 m/s": {
+    "1 us": 0.1147083614435556,
+    "2 us": 0.2294167228871112,
+    "5 us": 0.573541807217778,
+    "10 us": 1.147083614435556,
+    "20 us": 2.294167228871112,
+    "41 us": 4.70304281918578
+   },
+   "5 m/s": {
+    "1 us": 0.573541807217778,
+    "2 us": 1.147083614435556,
+    "5 us": 2.86770903608889,
+    "10 us": 5.73541807217778,
+    "20 us": 11.47083614435556,
+    "41 us": 23.5152140959289
+   },
+   "10 m/s": {
+    "1 us": 1.147083614435556,
+    "2 us": 2.294167228871112,
+    "5 us": 5.73541807217778,
+    "10 us": 11.47083614435556,
+    "20 us": 22.94167228871112,
+    "41 us": 47.0304281918578
+   },
+   "20 m/s": {
+    "1 us": 2.294167228871112,
+    "2 us": 4.588334457742224,
+    "5 us": 11.47083614435556,
+    "10 us": 22.94167228871112,
+    "20 us": 45.88334457742224,
+    "41 us": 94.0608563837156
+   }
+  },
+  "IMX296 mono + Kowa LM50JC10M 50 mm at LP": {
+   "1 m/s": {
+    "1 us": 0.09871938049742324,
+    "2 us": 0.19743876099484647,
+    "5 us": 0.49359690248711613,
+    "10 us": 0.9871938049742323,
+    "20 us": 1.9743876099484645,
+    "41 us": 4.047494600394352
+   },
+   "5 m/s": {
+    "1 us": 0.49359690248711613,
+    "2 us": 0.9871938049742323,
+    "5 us": 2.4679845124355806,
+    "10 us": 4.935969024871161,
+    "20 us": 9.871938049742322,
+    "41 us": 20.23747300197176
+   },
+   "10 m/s": {
+    "1 us": 0.9871938049742323,
+    "2 us": 1.9743876099484645,
+    "5 us": 4.935969024871161,
+    "10 us": 9.871938049742322,
+    "20 us": 19.743876099484645,
+    "41 us": 40.47494600394352
+   },
+   "20 m/s": {
+    "1 us": 1.9743876099484645,
+    "2 us": 3.948775219896929,
+    "5 us": 9.871938049742322,
+    "10 us": 19.743876099484645,
+    "20 us": 39.48775219896929,
+    "41 us": 80.94989200788704
+   }
+  },
+  "IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 at LP": {
+   "1 m/s": {
+    "1 us": 0.06269747908398761,
+    "2 us": 0.12539495816797522,
+    "5 us": 0.31348739541993803,
+    "10 us": 0.6269747908398761,
+    "20 us": 1.2539495816797521,
+    "41 us": 2.570596642443492
+   },
+   "5 m/s": {
+    "1 us": 0.31348739541993803,
+    "2 us": 0.6269747908398761,
+    "5 us": 1.56743697709969,
+    "10 us": 3.13487395419938,
+    "20 us": 6.26974790839876,
+    "41 us": 12.852983212217458
+   },
+   "10 m/s": {
+    "1 us": 0.6269747908398761,
+    "2 us": 1.2539495816797521,
+    "5 us": 3.13487395419938,
+    "10 us": 6.26974790839876,
+    "20 us": 12.53949581679752,
+    "41 us": 25.705966424434916
+   },
+   "20 m/s": {
+    "1 us": 1.2539495816797521,
+    "2 us": 2.5078991633595042,
+    "5 us": 6.26974790839876,
+    "10 us": 12.53949581679752,
+    "20 us": 25.07899163359504,
+    "41 us": 51.41193284886983
+   }
+  }
+ },
+ "illumination": [
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 0.14470210478968243,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.014470210478968244,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 0.4823403492989415,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/2.8 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.04823403492989415,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/4.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 0.2953104179381274,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/4.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.029531041793812746,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/4.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 0.9843680597937582,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/4.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.09843680597937582,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 0.5788084191587297,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.05788084191587298,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 1.929361397195766,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/5.6 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.1929361397195766,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/8.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 1.1812416717525096,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/8.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.11812416717525098,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/8.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 3.9374722391750328,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/8.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.3937472239175033,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 2.233285035657089,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.22332850356570888,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 7.444283452190297,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Kowa LM50JC10M 50 mm f/11.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.7444283452190297,
+   "field_cm2": 1.76,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 0.2359573525915609,
+   "field_cm2": 4.49,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.023595735259156092,
+   "field_cm2": 4.49,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 0.7865245086385365,
+   "field_cm2": 4.49,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.07865245086385365,
+   "field_cm2": 4.49,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Edmund 75 mm C VIS-NIR #74-054 f/5.6 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 0.8995957677437102,
+   "field_cm2": 0.5,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Edmund 75 mm C VIS-NIR #74-054 f/5.6 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.08995957677437101,
+   "field_cm2": 0.5,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Edmund 75 mm C VIS-NIR #74-054 f/5.6 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 2.9986525591457007,
+   "field_cm2": 0.5,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "Chronos 2.1-HD mono + Edmund 75 mm C VIS-NIR #74-054 f/5.6 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.2998652559145701,
+   "field_cm2": 0.5,
+   "roi": [
+    640,
+    96
+   ]
+  },
+  {
+   "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/4.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 1.9724928239254906,
+   "field_cm2": 5.4,
+   "roi": [
+    1456,
+    1088
+   ]
+  },
+  {
+   "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/4.0 at LW",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.1972492823925491,
+   "field_cm2": 5.4,
+   "roi": [
+    1456,
+    1088
+   ]
+  },
+  {
+   "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/4.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 6.574976079751637,
+   "field_cm2": 5.4,
+   "roi": [
+    1456,
+    1088
+   ]
+  },
+  {
+   "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/4.0 at LW",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.6574976079751638,
+   "field_cm2": 5.4,
+   "roi": [
+    1456,
+    1088
+   ]
+  },
+  {
+   "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 3.5665370340739586,
+   "field_cm2": 2.02,
+   "roi": [
+    1456,
+    1088
+   ]
+  },
+  {
+   "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.35665370340739583,
+   "field_cm2": 2.02,
+   "roi": [
+    1456,
+    1088
+   ]
+  },
+  {
+   "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 11.888456780246528,
+   "field_cm2": 2.02,
+   "roi": [
+    1456,
+    1088
+   ]
+  },
+  {
+   "case": "IMX296 mono + Kowa LM50JC10M 50 mm f/5.6 at LP",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 1.1888456780246528,
+   "field_cm2": 2.02,
+   "roi": [
+    1456,
+    1088
+   ]
+  },
+  {
+   "case": "IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 1.4979244250881907,
+   "field_cm2": 5.0,
+   "roi": [
+    1456,
+    1088
+   ]
+  },
+  {
+   "case": "IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP",
+   "source": "diode laser or LED behind a filter as wide as its spectrum",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.14979244250881907,
+   "field_cm2": 5.0,
+   "roi": [
+    1456,
+    1088
+   ]
+  },
+  {
+   "case": "IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 10.0,
+   "W_cm2_on_plate": 4.993081416960636,
+   "field_cm2": 5.0,
+   "roi": [
+    1456,
+    1088
+   ]
+  },
+  {
+   "case": "IMX296 mono + Edmund 35 mm C VIS-NIR #67-716 f/4.0 at LP",
+   "source": "LED (~30-40 nm wide) behind a 10 nm filter",
+   "exposure_us": 100.0,
+   "W_cm2_on_plate": 0.49930814169606363,
+   "field_cm2": 5.0,
+   "roi": [
+    1456,
+    1088
+   ]
+  }
+ ],
+ "laser": [
+  {
+   "port": "LW",
+   "emission_angle_deg": 77.1073390390602,
+   "diffuse_W_cm2": 0.09549032446698272,
+   "diffuse_W_into_window": 0.46873703411621653,
+   "diffuse_W_into_pupil": 0.11718425852905413,
+   "glint_bound_W_cm2": 0.0,
+   "glint_bound_W_into_pupil": 0.0,
+   "in_glint_cone": false
+  },
+  {
+   "port": "LP",
+   "emission_angle_deg": 36.32682595212023,
+   "diffuse_W_cm2": 0.3149787294676548,
+   "diffuse_W_into_window": 0.9895348625326313,
+   "diffuse_W_into_pupil": 0.3865370556768091,
+   "glint_bound_W_cm2": 1.0742747753509867,
+   "glint_bound_W_into_pupil": 1.3183334930388615,
+   "in_glint_cone": true
+  },
+  {
+   "port": "BW",
+   "emission_angle_deg": 81.49457214394562,
+   "diffuse_W_cm2": 0.05767266477897927,
+   "diffuse_W_into_window": 0.18118401998258807,
+   "diffuse_W_into_pupil": 0.07077500780569847,
+   "glint_bound_W_cm2": 0.0,
+   "glint_bound_W_into_pupil": 0.0,
+   "in_glint_cone": false
+  }
+ ],
+ "working_distance_mm": {
+  "LW": 176.34435224078965,
+  "LP": 196.80758276807353
+ },
+ "light_power": [
+  {
+   "exposure_us": 10.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "LW",
+   "how": "through the camera's own port with a 50:50 cube (x 0.25 round trip)",
+   "elevation_deg": 12.892660960939805,
+   "W_needed": 38.78402843651232
+  },
+  {
+   "exposure_us": 10.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "BW",
+   "how": "back-wall window, raking",
+   "elevation_deg": 8.50542785605438,
+   "W_needed": 14.627306784994252
+  },
+  {
+   "exposure_us": 10.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "LP",
+   "how": "steep lid port",
+   "elevation_deg": 53.67317404787977,
+   "W_needed": 2.685311680332137
+  },
+  {
+   "exposure_us": 10.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "LW",
+   "how": "through the camera's own port with a 50:50 cube (x 0.25 round trip)",
+   "elevation_deg": 12.892660960939805,
+   "W_needed": 15.513611374604928
+  },
+  {
+   "exposure_us": 10.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "BW",
+   "how": "back-wall window, raking",
+   "elevation_deg": 8.50542785605438,
+   "W_needed": 5.850922713997701
+  },
+  {
+   "exposure_us": 10.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "LP",
+   "how": "steep lid port",
+   "elevation_deg": 53.67317404787977,
+   "W_needed": 1.0741246721328546
+  },
+  {
+   "exposure_us": 20.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "LW",
+   "how": "through the camera's own port with a 50:50 cube (x 0.25 round trip)",
+   "elevation_deg": 12.892660960939805,
+   "W_needed": 19.39201421825616
+  },
+  {
+   "exposure_us": 20.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "BW",
+   "how": "back-wall window, raking",
+   "elevation_deg": 8.50542785605438,
+   "W_needed": 7.313653392497126
+  },
+  {
+   "exposure_us": 20.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "LP",
+   "how": "steep lid port",
+   "elevation_deg": 53.67317404787977,
+   "W_needed": 1.3426558401660684
+  },
+  {
+   "exposure_us": 20.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "LW",
+   "how": "through the camera's own port with a 50:50 cube (x 0.25 round trip)",
+   "elevation_deg": 12.892660960939805,
+   "W_needed": 7.756805687302464
+  },
+  {
+   "exposure_us": 20.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "BW",
+   "how": "back-wall window, raking",
+   "elevation_deg": 8.50542785605438,
+   "W_needed": 2.9254613569988503
+  },
+  {
+   "exposure_us": 20.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "LP",
+   "how": "steep lid port",
+   "elevation_deg": 53.67317404787977,
+   "W_needed": 0.5370623360664273
+  },
+  {
+   "exposure_us": 2.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "LW",
+   "how": "through the camera's own port with a 50:50 cube (x 0.25 round trip)",
+   "elevation_deg": 12.892660960939805,
+   "W_needed": 193.92014218256162
+  },
+  {
+   "exposure_us": 2.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "BW",
+   "how": "back-wall window, raking",
+   "elevation_deg": 8.50542785605438,
+   "W_needed": 73.13653392497127
+  },
+  {
+   "exposure_us": 2.0,
+   "source": "pulsed 850 nm LED + FBH850-40 (in band ~0.8)",
+   "port": "LP",
+   "how": "steep lid port",
+   "elevation_deg": 53.67317404787977,
+   "W_needed": 13.426558401660687
+  },
+  {
+   "exposure_us": 2.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "LW",
+   "how": "through the camera's own port with a 50:50 cube (x 0.25 round trip)",
+   "elevation_deg": 12.892660960939805,
+   "W_needed": 77.56805687302466
+  },
+  {
+   "exposure_us": 2.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "BW",
+   "how": "back-wall window, raking",
+   "elevation_deg": 8.50542785605438,
+   "W_needed": 29.25461356998851
+  },
+  {
+   "exposure_us": 2.0,
+   "source": "808 nm diode laser, fibre + collimator",
+   "port": "LP",
+   "how": "steep lid port",
+   "elevation_deg": 53.67317404787977,
+   "W_needed": 5.370623360664275
+  }
+ ],
+ "lp_candidates": [
+  {
+   "centre": [
+    -60.0,
+    -80.0,
+    136.0
+   ],
+   "is_spec_centre": true,
+   "elevation_deg": 53.67317404787977,
+   "dist_mm": 168.80758276807353,
+   "wd_mm": 196.80758276807353,
+   "um_per_px": [
+    10.129723210997074,
+    12.573338892338707
+   ],
+   "window_tilt_if_on_face_deg": 36.32682595212023,
+   "astig_if_on_face_mm": 0.6678932846154021,
+   "seat_on_axis": false,
+   "diffuse_W_cm2": 0.3149787294676548,
+   "diffuse_W_into_pupil": 0.3865370556768091,
+   "glint_bound_W_into_pupil": 1.3183334930388615
+  },
+  {
+   "centre": [
+    -40.0,
+    60.0,
+    136.0
+   ],
+   "is_spec_centre": false,
+   "elevation_deg": 62.0662068494337,
+   "dist_mm": 153.93505123915085,
+   "wd_mm": 181.93505123915085,
+   "um_per_px": [
+    9.10351853550141,
+    10.304048472198302
+   ],
+   "window_tilt_if_on_face_deg": 27.93379315056631,
+   "astig_if_on_face_mm": 0.3748899657682442,
+   "seat_on_axis": false,
+   "diffuse_W_cm2": 0.41537898259480416,
+   "diffuse_W_into_pupil": 0.509746703193531,
+   "glint_bound_W_into_pupil": 1.5853828164093262
+  },
+  {
+   "centre": [
+    -20.0,
+    80.0,
+    136.0
+   ],
+   "is_spec_centre": false,
+   "elevation_deg": 58.76993022442897,
+   "dist_mm": 159.04716281656835,
+   "wd_mm": 187.04716281656835,
+   "um_per_px": [
+    9.456254234343216,
+    11.058752991503304
+   ],
+   "window_tilt_if_on_face_deg": 31.230069775571028,
+   "astig_if_on_face_mm": 0.47781044980531057,
+   "seat_on_axis": false,
+   "diffuse_W_cm2": 0.37659912024211484,
+   "diffuse_W_into_pupil": 0.46215665214883095,
+   "glint_bound_W_into_pupil": 1.485105598420121
+  },
+  {
+   "centre": [
+    80.0,
+    80.0,
+    136.0
+   ],
+   "is_spec_centre": false,
+   "elevation_deg": 50.24325709493154,
+   "dist_mm": 176.90675509996785,
+   "wd_mm": 204.90675509996785,
+   "um_per_px": [
+    10.688566101897782,
+    13.90352607175183
+   ],
+   "window_tilt_if_on_face_deg": 39.756742905068464,
+   "astig_if_on_face_mm": 0.8185782808622124,
+   "seat_on_axis": false,
+   "diffuse_W_cm2": 0.27366788155894745,
+   "diffuse_W_into_pupil": 0.3358410180582308,
+   "glint_bound_W_into_pupil": 1.2003844330788402
+  }
+ ],
+ "layer_camera_port": {
+  "port": "layer camera (75, -45, 136)",
+  "emission_angle_deg": 32.745869208081444,
+  "diffuse_W_cm2": 0.35838448056119837,
+  "diffuse_W_into_window": 1.1258980512916548,
+  "diffuse_W_into_pupil": 0.4398039262858027,
+  "glint_bound_W_cm2": 1.170830490262438,
+  "glint_bound_W_into_pupil": 1.4368251823466451,
+  "in_glint_cone": true
+ }
+}
