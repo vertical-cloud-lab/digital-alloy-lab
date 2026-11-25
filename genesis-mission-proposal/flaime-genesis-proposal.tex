@@ -690,8 +690,9 @@ return at least one sample with related metadata (e.g., scan settings).
 This multi-site validation network, combined with FAIR
 data practices, open software, and a path toward adoption by major
 powder manufacturers through composition disclosure and standardization
-engagement, ensures that \flaime{}'s discoveries
-propagate rapidly to the broader AM community.
+engagement (following NIST AM~Bench~\cite{nist_ambench} data-product
+referencing guidance, ASTM~F42, and ISO/TC~261), ensures that \flaime{}'s
+discoveries propagate rapidly to the broader AM community.
 
 % --- 3. Proposed Research and Methods (~1.5 pages) --------------------------
 \section{Proposed Research and Methods}\pagebudget{1.5}
@@ -882,7 +883,10 @@ testing at three temperatures as additional objectives, validating L1$_2$
 stability for DOE thermal applications with similar or greater performance and lower critical mineral usage than the incumbent Al--Zr.
 Authoritative elemental composition verification uses
 ICP-MS (BYU Spectroscopic Facility, Agilent 8900 ICP-MS/MS)
-complementing semi-quantitative SEM/EDS.
+complementing semi-quantitative SEM/EDS.  Where applicable,
+microstructure, melt-pool, and density measurement protocols follow
+NIST AM~Bench~\cite{nist_ambench} reporting conventions to maximize
+cross-lab comparability of \flaime{}-released datasets.
 
 \begin{wrapfigure}{r}{0.36\textwidth}
   \centering
@@ -993,7 +997,12 @@ DFT formation energies from Materials
 Project~\cite{jain_2016_14944683} and AFLOW~\cite{oses_2018_18030503}
 augment surrogate inputs via Matminer~\cite{ward_2018_jcommats}.
 Experimental benchmarks: MMPDS, Knovel (Utah institutional access), and
-the ASM Alloy Center Database.
+the ASM Alloy Center Database.  Open AM benchmark data from NIST
+AM~Bench~\cite{nist_ambench} (in-situ melt-pool, residual stress, and
+microstructure on IN718/316L/Ti-6Al-4V) are used as out-of-distribution
+checks for the AM~Module surrogate and for cross-lab
+measurement-protocol alignment, even though the AM~Bench alloys differ
+from FLAIME's Al targets.
 Supply-risk scoring uses USGS Mineral Commodity
 Summaries~\cite{usgs_mcs_2024} and the DOE Critical Materials
 Assessment~\cite{bauer_2023_1998242} for element-level import-reliance
