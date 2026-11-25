@@ -393,7 +393,8 @@ the LSO.
 
 **Mechanics** ([`mechanics.md`](monitoring/mechanics.md)):
 - **Everything is drawn and fits.** The parts are drawn with `build(monitoring=True)` or `LPBF_MONITORING=1`, off by default.
-  - The first interference run found 14 clashing pairs, all fixed. The final run is clean in every machine state and sweep.
+  - The first interference run found 14 clashing pairs, all fixed. The final runs are clean in every machine state and sweep,
+    with each of the S25, M50 and L75 modules.
   - The machine is still 579.6 mm tall.
   - The default model's checks are unchanged after PB2's move.
 - **Windows:** fused silica has a safety factor of 17–34 at 1 atm. Make the BW window fused silica too.

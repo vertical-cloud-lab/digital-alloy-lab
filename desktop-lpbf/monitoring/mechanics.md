@@ -73,6 +73,9 @@ the waveguide (§4).
 - **Tightest gaps that involve a monitoring part:** the AE sensor passes 1.7 mm under the gland plate's screws at the +8 mm
   plate-exchange overtravel, and sits 2.5 mm above the Z lift arm.
 - **Designed contacts** (a window in its seat, a post on the bridge) are listed in the report's last table.
+- **S25 and L75 too** (re-run on the merged branch, 2026-11-25 22:52–23:02 UTC): no interference in the same six states and
+  eight sweeps, with 28 and 33 designed joints ([`S25`](../analysis/out/monitoring/mech/interference-monitoring-S25-S.md),
+  [`L75`](../analysis/out/monitoring/mech/interference-monitoring-L75-L.md)).
 
 Static clearances, nearest non-monitoring part (FCL distance on 0.2 mm meshes):
 
