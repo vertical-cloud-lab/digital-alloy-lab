@@ -499,7 +499,9 @@ def case_label(cs):
     side = "outlet left" if m.get("outlet_boot_x_mm", 86.0) < 0 else "outlet right"
     up = m.get("upper_lpm", 0.0)
     q = f"{m['q_lpm']:g}" + (f" + {up:g}" if up else "") + " L/min" + (f", slide purge {m['slide_purge_lpm']:g}" if m.get("slide_purge_lpm") else "")
-    return f"{'as drawn' if m.get('variant', 'baseline') == 'baseline' else 'fix'}, {side}, {q}"
+    sl = m["fluid"]["outlet slot"]
+    w = f", {sl[3] - sl[2]:g} mm floor slot" if abs(sl[3] - sl[2] - 8.0) > 0.01 else ""
+    return f"{'as drawn' if m.get('variant', 'baseline') == 'baseline' else 'fix'}, {side}, {q}{w}"
 
 
 def fig_compare(items, title=None):
@@ -515,7 +517,7 @@ def fig_compare(items, title=None):
             continue
         for zz, ls in ((3.0, ls0), (10.0, ":")):
             u = cs("Uy", np.column_stack([np.zeros_like(y), y, np.full_like(y, zz)]))
-            axs[0].plot(y, -u, color=col, ls=ls, lw=1.5, label=f"{lab}, z = {zz:g} mm")
+            axs[0].plot(y, -u, color=col, ls=ls, lw=1.5, label=lab if zz == 3.0 else None)
         u = cs("Uy", np.column_stack([np.zeros_like(z), np.zeros_like(z), z]))
         axs[1].plot(-u, z, color=col, ls=ls0, lw=1.5, label=lab)
         for yy, lw in ((0.0, 1.5), (-30.0, 0.8)):
@@ -527,7 +529,7 @@ def fig_compare(items, title=None):
     axs[0].axvspan(-37.5, 37.5, color="#e8e8e4", zorder=0)
     axs[0].axhline(2.5, color=INK2, lw=0.7, ls="-.")
     axs[0].set_xlim(95, -95)
-    axs[0].set_xlabel("y (mm) along the flow at x = 0 (grey = Ø75 plate); inlet on the left")
+    axs[0].set_xlabel("y (mm) along the flow at x = 0 (grey = Ø75 plate); inlet on the left; z = 3 mm, dotted: z = 10 mm")
     axs[0].set_ylabel("-Uy (m/s)")
     axs[0].legend(fontsize=6, frameon=False)
     axs[1].axvline(0, color=INK2, lw=0.6)
@@ -709,6 +711,7 @@ def main():
         res[name] = dict(case=str(cs.path), cells=cs.ncells, iterations=cs.time, q_lpm=cs.meta["q_lpm"],
                          variant=cs.meta.get("variant", "baseline"), upper_slot_lpm=cs.meta.get("upper_lpm", 0.0), slide_purge_lpm=cs.meta.get("slide_purge_lpm", 0.0),
                          outlet_boot_x_mm=cs.meta.get("outlet_boot_x_mm", 86.0),
+                         floor_slot_mm=float(cs.meta["fluid"]["outlet slot"][3] - cs.meta["fluid"]["outlet slot"][2]),
                          bed=bed_stats(cs), floor_shear_Pa=sh, pressure_Pa=pr,
                          dp_inlet_to_outlet_Pa=pr["inlet port"] - pr["outlet port"],
                          inlet_slot=dict(max=float(uin.max()), min=float(uin.min()), mean=float(uin.mean()),
@@ -743,7 +746,7 @@ def main():
         fig_profiles(cases["fine"], cases["coarse"]).savefig(OUT / f"{a.profiles_name}{sfx}.png", dpi=110)
         plt.close("all")
     if len(cases) > 1 and a.compare_name != "none":
-        cols = (BLUE, ORANGE, AQUA, "#6250d6", INK2)
+        cols = (BLUE, ORANGE, AQUA, "#6250d6", INK2, "#b8336a")
         items = [(cs, f"{name}: {case_label(cs)}", cols[i % len(cols)], "-" if cs.meta.get("outlet_boot_x_mm", 86.0) < 0 else "--")
                  for i, (name, cs) in enumerate(cases.items())]
         fig_compare(items, a.compare_title).savefig(OUT / f"{a.compare_name}{sfx}.png", dpi=110)

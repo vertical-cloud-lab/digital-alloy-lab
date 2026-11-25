@@ -6,21 +6,332 @@ Written 2026-11-20 for [PR #266](https://github.com/vertical-cloud-lab/digital-a
 a margin, and small chambers recirculate".
 This note answers it with OpenFOAM on the chamber of [`cad/lpbf_low.py`](cad/lpbf_low.py). Nothing has been built or measured.
 
-> **Update 2026-11-23 (round 5, A1): the outlet boot and its KF-25 port moved to the plenum's left end (x −100 to −72, port at
-> x = −86).** At the right end, the port and its hose stood in the overflow jar's only lane to the front (robot-ops.md patch
-> request 6). The channel, slot and O-ring are unchanged; the boot is the old one mirrored. The CFD below was not re-run. By symmetry,
-> the channel now drains toward the left end: §2's 85 % of the suction and the slot's 8.1 m/s end are expected at x ≈ −60 instead
-> of +63. That end is next to the recoater's park and dose zone (x < −60), where the old fast end was next to the overflow slot. Re-run
-> `make_case.py` on the current model before relying on §2–4. The §5 fixes (a wider channel and a larger link into the boot) matter
-> more now, since they even out the drain.
+> **Round 6 (2026-11-25): re-run on the round-5 model, with the outlet boot and its KF-25 port at the plenum's left end
+> (x = −86). See [§0](#0-round-6-2026-11-25-re-run-with-the-outlet-at-the-left-end).** §1–§9 below are the 2026-11-20 runs,
+> with the boot at the right end (x = +86), and are kept as they were. Where §0 differs from them, §0 is the current answer.
 
 | File | What it is |
 |---|---|
-| [`analysis/cfd/make_case.py`](analysis/cfd/make_case.py) | writes the OpenFOAM case from the model's dimensions: mesh, boundary conditions, solver settings; `--variant fix` adds the changes tried in §5 |
-| [`analysis/cfd/run_case.sh`](analysis/cfd/run_case.sh) | meshes and solves one case in Docker (`opencfd/openfoam-run:2406`, 3 GB, 1.5 CPUs) |
-| [`analysis/cfd/post.py`](analysis/cfd/post.py) | velocities over the plate, slot distribution, recirculation, bed shear against an entrainment threshold, pressure drop, spatter and condensate tracking, figures |
-| [`analysis/out/cfd/cfd.json`](analysis/out/cfd/cfd.json) | every number below, per case |
-| `analysis/out/cfd/*.png` | the figures shown here |
+| [`analysis/cfd/make_case.py`](analysis/cfd/make_case.py) | writes the OpenFOAM case from the model's dimensions: mesh, boundary conditions, solver settings; `--variant fix` adds the changes tried in §5; since round 6 it reads both plenums' cavities from the model, and `--outlet-end` mirrors the outlet boot |
+| [`analysis/cfd/run_case.sh`](analysis/cfd/run_case.sh) | meshes and solves one case in Docker (`opencfd/openfoam-run:2406`; since round 6 4 GB, 2 CPUs, `simpleFoam` on 2 MPI ranks) |
+| [`analysis/cfd/post.py`](analysis/cfd/post.py) | velocities over the plate, slot distribution, recirculation, bed shear against an entrainment threshold, pressure drop, spatter and condensate tracking, the dose zone (round 6), figures |
+| [`analysis/out/cfd/cfd.json`](analysis/out/cfd/cfd.json) | every number in §1–§9, per case (2026-11-20, outlet at the right end) |
+| [`analysis/out/cfd/cfd_r6.json`](analysis/out/cfd/cfd_r6.json) | every number in §0, per case (round 6, outlet at the left end, and the control) |
+| [`analysis/out/cfd/cfd_summary.md`](analysis/out/cfd/cfd_summary.md) | both side by side: each 2026-11-20 case next to its round-6 re-run |
+| `analysis/out/cfd/*.png` | the figures shown here; `*_r6.png` are round 6's |
+
+## 0. Round 6 (2026-11-25): re-run with the outlet at the left end
+
+Sterling asked on 2026-11-25 for everything round 5 left undone, and this CFD was one item. Round 5 (A1) moved the outlet
+plenum's boot and KF-25 port from the right end of the under-floor channel to the left end. That left the overflow jar a
+lane to the front ([`robot-ops.md`](robot-ops.md) patch request 6). The CFD wasn't re-run then. This section re-runs it
+on the model at commit 4b2232e. Nothing has been built or measured.
+
+### 0.1 Short answer
+
+1. **The outlet move barely changes the flow over the plate. It does send the chamber's upper vortex through the cover
+   slide's recess.**
+   - The comparison is the drawn chamber at 115 L/min on the coarse mesh, against a control run. The control is the
+     same model with the boot mirrored back to the right.
+   - **Over the Ø75 plate at 3 mm:** 1.61 m/s mean (1.27–2.10), against 1.53 (1.16–2.03). None of the plate reaches
+     2.5 m/s, as before.
+   - **The floor slot:** it now drains 84 % of the flow through its left half, next to the dose zone. Before, 84 % went
+     through the right half.
+   - **Under the slide (z = 121 mm):** the gas moves at 0.46 m/s, against 0.11 m/s.
+     - With the outlet at the right, the recess sat between two slow cells.
+     - Now the jet's right part has little suction under it. It climbs the door on the open right side of the chamber
+       and runs back diagonally along the ceiling to the back-left corner, through the recess (z = 115 mm plane in the
+       figures).
+     - The left side doesn't do the same when the outlet is at the right. Most likely that's because the dose chute
+       (z 37–120 mm) and the parked recoater stand there and break up the return flow (read off the planes, not tested).
+   - **Condensate reaches the slide recess about 9× as often, and passes under the window 4–8× as often.**
+     - Of the tracers released 10–30 mm above the plate, 6.2 % enter the slide recess (control: 0.7 %), and 22 % pass
+       under the window (5 %).
+     - Of those released 1–10 mm up, 1.3 % enter the recess (0.1 %, 2 of 1,500 tracers) and 6 % pass under the window
+       (0.8 %).
+   - **Pressure drop:** the chamber's rises from 466 to 526 Pa. The extra loss is where the channel turns into the
+     link. The channel runs 10 mm past the slot's right end but only 1 mm past its left end, so the left link overlaps
+     it by 3 mm, where the right link overlapped it by 12 mm.
+   - **The control run reproduces the 2026-11-20 run:** 466 against 467 Pa, the same 84 % split, and 0.11 against
+     0.16 m/s under the slide. So the changes above come from the move, not from the new scripts.
+   - At 1–3 mm the plate's speeds are 5–10 % higher than on 2026-11-20 in both round-6 runs, so that isn't the outlet.
+     The control differs from the 2026-11-20 run only in the inlet plenum's raised floor (round 5), its re-meshed port,
+     the channel's 1 mm and the 2-rank solve. The plenum is the likely cause: its slot runs 0.94–2.99 m/s along its
+     length, against 1.05–2.82.
+2. **The dose zone sits in the edge of the drawn jet, whichever end drains.**
+   - The bare slot's jet fans out to x ≈ ±100 mm by the door. So the floor where the chute drops fresh powder
+     (x −96…−60) sees 1.4 m/s at 3 mm.
+   - The shear there is 0.04 Pa on average and 0.09 Pa at most. 0.09 Pa is inside the 63 µm pick-up band (§3.4).
+   - The dose falls from the chute's bottom (z = 37 mm) through 1.0 m/s of cross-flow, 1.9 m/s at most.
+   - All of these are the same with the outlet at either end.
+   - With the outlet at the left, more condensate passes below 10 mm over the dose zone: 3.3 / 11.2 % of the two
+     releases, against 1.2 / 6.5 %.
+3. **Spatter:**
+   - 50 µm spatter now goes into the outlet slot more often (22 %, against 9 %), and lands back on the plate less
+     (4 %, against 14 %).
+   - 100–150 µm spatter flies ballistically, as before, with the outlet at either end:
+     - 2 % and 10 % of it hits the slide's footprint;
+     - 1.5–5.5 % lands on the dose zone;
+     - 3.5–8 % hits the dose chute.
+4. **The recommended layout (§5, §7) doesn't care which end drains.** It has perforated plates in both slots and the
+   35 mm channel, with its 40 × 42 mm boot at the left end.
+   - **At 200 + 40 L/min:** 2.94 m/s mean at 3 mm over Ø75 (2.60–3.32), against 2.91 (2.58–3.28) on 2026-11-20. All of
+     Ø25, Ø50 and Ø75 is at ≥ 2.5 m/s. The chamber costs 0.59 kPa, as before.
+   - **At 140 + 30 L/min:** 2.03 m/s (1.77–2.31; was 2.00, 1.75–2.29) and 0.29 kPa.
+   - **The outlet slot:** it draws 54/46 % from its left and right halves (47/53 % before).
+   - **The slide:** 0.0–0.3 % of the condensate enters its recess (2026-11-20: 0.1–1.1 %).
+   - **The dose zone:** the screened jet runs straight, inside |x| ≤ 60 mm, so it leaves the dose zone almost still:
+     0.22–0.25 m/s at 3 mm and 0.1 m/s across the falling dose.
+   - **On the fine mesh** (443k cells, 200 + 40 L/min) it holds:
+     - 2.96 m/s mean at 3 mm over Ø75 (2.60–3.30), all three discs at ≥ 2.5 m/s, and 2.37 m/s at 10 mm.
+     - 0.61 kPa flange to flange. All of these are within 1–4 % of the coarse mesh.
+     - The strip just upstream of the plate sees more shear on the fine mesh: 0.10 Pa mean and 0.13 Pa max (coarse 0.08
+       and 0.10). The max is past the 63 µm threshold's high-cohesion end (0.118 Pa), but the mean is still below the
+       drawn chamber's 0.125 Pa at 115 L/min (§3.4, fine).
+   - **Without the upper slot** (200 L/min; the layout §7 recommends), the plate is the same but the slide isn't:
+     - Over the plate: 2.97 m/s mean at 3 mm (2.64–3.30), all of Ø75 at ≥ 2.5 m/s. The chamber costs 0.47 kPa.
+     - The thick, fast jet partly overshoots the 8 mm floor slot. It climbs the door and comes back along the ceiling
+       at ~1 m/s, through the slide recess: 0.40 m/s toward the back wall at z = 121 mm. 64 % of the gas over the plate
+       above 30 mm flows back toward the inlet (9 % with the upper slot).
+     - **4.2 % and 16 % of the condensate enters the slide recess** (1–10 and 10–30 mm releases), and 11 % and 38 %
+       passes through the beam path under the window.
+     - With the upper slot's 40 L/min sweeping toward the door, the same layout lets in 0.1 % and 0.2 %, with 4 % and
+       12 % under the window.
+     - So §7 item 4 ("don't add an upper slot on its own") was wrong for the fixed layout. §5 compared the upper slot
+       with the drawn chamber at 115 L/min, where the vortex above the thin jet is slow (0.1–0.2 m/s under the slide).
+       The 2026-11-20 runs never had the fixed layout without it.
+   - **With 10 L/min blown down out of the slide recess** (§7 item 6, first simulated here), still without the upper
+     slot:
+     - Recess entry drops about 8×, to 0.8 % and 2.1 %.
+     - The beam path doesn't clear: 9 % and 30 % still pass under the window. The purge only holds the recess.
+     - The gas under the slide slows to 0.10 m/s. The chamber costs 0.50 kPa at 210 L/min in total.
+   - **With the floor slot widened to 20 mm** (§7 item 2), still without the upper slot:
+     - The jet's lower part now turns into the slot: 93 % of the low condensate leaves within 12 s (73 % with the 8 mm
+       slot). The chamber costs 0.34 kPa.
+     - Its upper layers still climb the door at 1–1.5 m/s and come back along the ceiling. So 4.2 % and 15 % of the
+       condensate still enters the slide recess, and 10 % and 35 % passes under the window.
+     - The vortex above a thick 3 m/s jet isn't only the overshoot at the slot: the jet drives it.
+5. **What changes in the recommendation (§7).**
+   - **The flow over the plate holds, with the outlet at either end.** Perforated plates in both slots, the 35 mm
+     channel, and 140–200 L/min through the bed slot (items 1, 2 and 5). The outlet half (the floor-slot screen and the
+     wider channel) matters more now: as drawn, the left-end outlet sends about 9× the condensate into the slide recess.
+   - **Keep the upper slot (item 4 is reversed):** 100 × 4 mm through the back wall, 30–40 L/min, blowing toward the
+     door.
+     - With the screened layout at 200 L/min it is the only option tried that keeps the slide clean: 0.2 % of the
+       risen condensate into the recess, against 16 % without it.
+     - The 10 L/min purge gets 2.1 % and the 20 mm floor slot 15 %.
+     - It needs its own feed from the loop, not drawn: a branch off the blower's outlet with a needle valve, and a
+       plenum behind the back wall above the recoater rail.
+     - Draw it at z 110–114 rather than the CFD's 114–118. At 114–118 it would cut the lid O-ring's gland, which sits in
+       the wall's top face at z 117.35–120, 3.3–7 mm outside the inner face. A 4 mm shift down wasn't re-run.
+   - **Keep the slide purge (item 6) too, as a backup.** Without the upper slot it holds the recess to 2.1 % (16 %
+     without it), for 10 L/min. It wasn't run together with the upper slot.
+   - **Not tried:** an outlet for the upper flow at the door end (item 4's last bullet), or a lip at the door. Either
+     might let the upper slot run lower.
+   - **The KF-40 port doesn't fit at the left end** (below).
+6. **The fix's KF-40 outlet port doesn't fit at the left end pointing down.**
+   - It needs its clamp's Ø71 mm ring (McMaster 4518K73, as drawn in `vendor_parts.py`).
+   - At the boot's y (−102…−60) there are 67 mm between the front-left leg (x −150…−120) and the module's exit lane
+     (x ±53, [`hot-swap.md`](hot-swap.md)).
+   - The KF-25 port that is there now (Ø55 clamp) fits, with 6 mm to the leg.
+   - So either keep a KF-25 port on the bigger boot, or run the boot back past the leg (y > −40) for a KF-40 there.
+   - **Keeping KF-25 costs** ~0.25 kPa more than KF-40 at 240 L/min, in the port and the 1.1 m outlet hose
+     *(estimate: f ≈ 0.06, K ≈ 0.4 a bend)*. The CFD can't tell the two apart: its outlet is the boot's floor.
+   - Running the boot back needs a check against the outlet hose's run (x −86, z −109…−145). It also lands where
+     [`hot-swap.md`](hot-swap.md) §3.2a puts the left zero-point module, (−100, −30) at z −106…−86. So with those
+     clamps, keep KF-25.
+7. **BOM G4's flow goes up by the upper slot's 30–40 L/min.**
+   - **Flow:** G4 asked for 140–200 L/min through the bed slot plus a slide purge. It is now 180–250 L/min in total:
+     140–200 through the bed slot, 30–40 through the upper slot, and ~10 for the purge.
+   - **Pressure:** the chamber costs 0.29–0.59 kPa with the upper slot, as on 2026-11-20 (0.61 kPa on the fine mesh).
+   - **The outlet move** made the outlet hose 1.09 m with 7 bends (was 0.56 m with 5). The whole loop is 2.11 m (was
+     1.58 m), along the hose polylines in `lpbf_low.py`. In KF-25 hose that adds ~0.03 kPa at 115 L/min and ~0.1 kPa
+     at 240 L/min *(estimate, as above)*. The loop's hoses then cost ~0.12 kPa at 115 L/min and ~0.54 kPa at 240 L/min.
+   - **The whole loop at 240 L/min,** re-adding §3.5's estimates: chamber 0.6, hoses 0.5, filter housing 0.9–1.3 and
+     cyclone 0.5–1.5 kPa. That is ~2.5–4 kPa, more than G4's ~1.5–3 kPa. The filter housing's 1/2 NPSC ports and the
+     cyclone are the big terms, and both are estimates.
+   - G4's line in [`bom.csv`](bom.csv) is updated to 180–250 L/min at ~2.5–4 kPa. It is still the largest open
+     purchase: no gas-tight blower of this size has been found ([`real-parts.md`](real-parts.md)).
+
+### 0.2 What changed in the model and the scripts
+
+- **In the model (round 5).**
+  - The boot (20 × 32 × 38 mm) and its KF-25 port moved from x 76…96 (port at x = +86) to x −96…−76 (port at
+    x = −86). The 10 × 10 mm link into the boot moved from x 60…80 to x −80…−60.
+  - The 10 × 13 mm channel (x −63…72), the 124 × 8 mm floor slot and everything in the chamber are unchanged.
+  - The inlet plenum's cavity floor rose from z −3 to z +1.5, 2.5 mm below the slot's lower edge, so the plenum ends on
+    the frame ([`chamber-construction.md`](chamber-construction.md)).
+- **In the scripts.**
+  - **`make_case.py`** had both plenums typed in, with the boot at the right end, so a plain re-run would have
+    repeated the old layout.
+    - It now reads the outlet plenum's channel, link and boot, and the inlet plenum's cavity and KF-25 bore, from
+      `lpbf_low.py`'s own `box()` expressions.
+    - `--outlet-end right` mirrors the boot and link back to the right end (the control run).
+    - In the `fix` variant the boot stays at the model's end and grows 40 mm away from the slot: x −116…−76 (it was
+      x 76…116). That is where the CFD assumes the KF-40 port; item 6 above says it doesn't fit there.
+    - `--floor-slot-width` widens the floor slot in the `fix` variant (the 20 mm case).
+    - `--slide-purge-lpm` turns the cover slide's underside into an inlet blowing down out of the recess.
+  - **`run_case.sh`** runs `simpleFoam` on 2 MPI ranks in 4 GB of Docker memory.
+  - **`post.py`** used to fix its boot pressure probes at x = +86; it now takes the boot's position from the case. It
+    adds:
+    - the speed over the plate's left and right halves;
+    - the shear on the spread strip just upstream of the plate. §5 quoted this, but `cfd.json` didn't keep it;
+    - five dose-zone numbers: the gas over it, the gas across the falling dose, the shear on it, spatter landing on it
+      or hitting the chute, and condensate passing low over it.
+  - **"Dose zone"** here is the floor between the parked blade's face and x = −60: x −96…−60, |y| < 50. The chute
+    drops fresh powder there, at x ≈ −90, from its bottom at z = 37 mm.
+
+### 0.3 What was run
+
+| Case | Mesh | Cells | Iterations | Bed + upper slot flow (L/min) | Outlet boot |
+|---|---|---|---|---|---|
+| `coarse`: as drawn | coarse | 174k | 1,500 | 115 | left (x −86) |
+| `coarse_right`: control, the same model with the boot mirrored back | coarse | 176k | 1,500 | 115 | right (x +86) |
+| `fix140`, `fix200`: §5's layout | coarse | 178k | 700, 800 | 140 + 30, 200 + 40 | left, 40 × 42 |
+| `fix200_noup`: §5's layout without the upper slot (as §7 recommends) | coarse | 178k | 800 | 200 + 0 | left, 40 × 42 |
+| `fix200_purge`: the same with 10 L/min blown down out of the slide recess | coarse | 178k | 800 | 200 + 0 + 10 | left, 40 × 42 |
+| `fix200_wide`: `fix200_noup` with the floor slot widened from 8 to 20 mm (§7 item 2) | coarse | 182k | 800 | 200 + 0 | left, 40 × 42 |
+| `fine`: as drawn | fine | 427k | 600, from `coarse` | 115 | left |
+| `fine_fix200`: §5's layout on the fine mesh | fine | 443k | 600, from `fix200` | 200 + 40 | left, 40 × 42 |
+| `fine_noup`: §5's layout without the upper slot, fine mesh | fine | 443k | 600, from `fix200_noup` | 200 + 0 | left, 40 × 42 |
+
+- **Unchanged from 2026-11-20 (§2):** the solver, schemes, boundary conditions, tracer and spatter settings, and the
+  1,500 / 600 / 700–800 iteration counts.
+- **Run time:** the runner was shared with seven other jobs (load 9–16 on 4 cores). Each coarse case took 9–16 min.
+
+### 0.4 The drawn chamber (coarse mesh, 115 L/min)
+
+| | 2026-11-20, outlet right | Round 6 control: outlet mirrored back to the right | **Round 6: outlet left (as drawn)** |
+|---|---|---|---|
+| Speed at 3 mm over Ø75: mean (min–max), CoV | 1.46 (1.17–1.87), 12 % | 1.53 (1.16–2.03), 15 % | 1.61 (1.27–2.10), 13 % |
+| Speed over Ø75 at 1 / 3 / 10 mm, mean (m/s) | 1.61 / 1.46 / 0.42 | 1.77 / 1.53 / 0.38 | 1.83 / 1.61 / 0.47 |
+| Speed at 10 mm over Ø75: min–max | 0.12–0.58 | 0.08–0.54 | 0.16–0.71 |
+| Share of Ø25 / Ø50 / Ø75 at ≥ 2.5 m/s, 3 mm up | 0 % / 0 % / 0 % | 0 % / 0 % / 0 % | 0 % / 0 % / 0 % |
+| At 3 mm, left / right half of Ø75, mean | – | 1.52 / 1.53 | 1.64 / 1.58 |
+| Inlet slot, slowest / fastest (m/s) | 1.05 / 2.82 | 0.94 / 2.99 | 0.94 / 2.99 |
+| Outlet slot: share drawn by its left / right half; fastest (m/s) | 16 / 84 %; 7.1 | 16 / 84 %; 6.7 | 84 / 16 %; 6.6 |
+| Pressure drop, inlet flange to outlet flange | 467 Pa | 466 Pa | 526 Pa |
+| Bed shear over Ø75, mean / max (Pa) | 0.063 / 0.098 | 0.067 / 0.103 | 0.069 / 0.105 |
+| Bed shear on the strip upstream of the plate, mean / max (Pa) | 0.109 / 0.119 | 0.111 / 0.123 | 0.113 / 0.125 |
+| Highest shear on the floor (Pa), where | 0.29 at x = 64 | 0.22 at x = 64 | 0.17 at x = −62 |
+| Dose zone: gas at 3 / 10 mm, mean (m/s) | – | 1.42 / 1.16 | 1.41 / 1.20 |
+| Dose zone: gas across the falling dose, mean (max) (m/s) | – | 1.04 (1.84) | 1.05 (1.88) |
+| Dose zone: bed shear, mean / max (Pa) | – | 0.042 / 0.088 | 0.043 / 0.087 |
+| Under the slide (z = 121 mm): mean speed, direction | 0.16 m/s toward the back wall | 0.11 m/s toward the back wall | 0.46 m/s toward the back wall |
+| Gas over the plate at z 30–120 mm flowing back toward the inlet | 84 % | 96 % | 91 % |
+| Condensate from 1–10 mm: out within 12 s; near the window; into the slide recess | 98 %; 1.2 %; 0.2 % | 97 %; 0.8 %; 0.1 % | 97 %; 6.0 %; 1.3 % |
+| Condensate from 10–30 mm: out within 12 s; near the window; into the slide recess | 93 %; 5.9 %; 0.9 % | 92 %; 4.9 %; 0.7 % | 89 %; 22.3 %; 6.2 % |
+| Condensate passing below 10 mm over the dose zone, from 1–10 / 10–30 mm | – | 1.2 % / 6.5 % | 3.3 % / 11.2 % |
+| Spatter back on the Ø75 plate, 50 / 100 / 150 µm | 11 / 18 / 7 % | 14 / 16 / 8 % | 4 / 16 / 7 % |
+| Spatter into the outlet slot, 50 µm | 13 % | 9 % | 22 % |
+| Spatter into the slide footprint, 100 / 150 µm | 2 / 10 % | 2 / 10 % | 2 / 10 % |
+| Spatter on the dose zone / on the dose chute, 100 µm | – | 4.3 / 4.3 % | 5.5 / 3.5 % |
+| Spatter on the dose zone / on the dose chute, 150 µm | – | 1.5 / 7.8 % | 2.2 / 7.2 % |
+
+![Outlet left against right](analysis/out/cfd/compare_outlet_r6.png)
+
+*The drawn chamber on the coarse mesh at 115 L/min, outlet at the left end (solid) against the control with the boot
+mirrored back to the right (dashed). Top: along the flow at x = 0, and the vertical profile at the plate centre. Bottom
+left: across the plate at 3 mm; the peach band is the dose zone. Bottom right: the suction along the floor slot now
+peaks at its left end.*
+
+![Planes, outlet left](analysis/out/cfd/planes_coarse_r6.png)
+
+*Outlet at the left end (the triangle marks the port, below the floor). At z = 115 mm one stream crosses the slide
+recess (orange square) from the front-right to the back-left at ~0.5 m/s. With the outlet at the right
+([`planes_coarse_right_r6.png`](analysis/out/cfd/planes_coarse_right_r6.png)) the recess sits between two slow cells.*
+
+![Particles, outlet left](analysis/out/cfd/particles_coarse_r6.png)
+
+### 0.5 The recommended layout (coarse mesh)
+
+Before → after, with the upper slot (as run on 2026-11-20):
+
+| | Fix 140 + 30, 2026-11-20 (outlet right) | **Fix 140 + 30, round 6 (outlet left)** | Fix 200 + 40, 2026-11-20 (outlet right) | **Fix 200 + 40, round 6 (outlet left)** |
+|---|---|---|---|---|
+| Speed at 3 mm over Ø75: mean (min–max), CoV | 2.00 (1.75–2.29), 7 % | 2.03 (1.77–2.31), 7 % | 2.91 (2.58–3.28), 6 % | 2.94 (2.60–3.32), 6 % |
+| Speed over Ø75 at 1 / 3 / 10 mm, mean (m/s) | 1.32 / 2.00 / 1.64 | 1.40 / 2.03 / 1.64 | 2.12 / 2.91 / 2.31 | 2.19 / 2.94 / 2.34 |
+| Speed at 10 mm over Ø75: min–max | 1.51–1.75 | 1.48–1.76 | 2.11–2.52 | 2.15–2.52 |
+| Share of Ø25 / Ø50 / Ø75 at ≥ 2.5 m/s, 3 mm up | 0 % / 0 % / 0 % | 0 % / 0 % / 0 % | 100 % / 100 % / 100 % | 100 % / 100 % / 100 % |
+| At 3 mm, left / right half of Ø75, mean | – | 2.03 / 2.03 | – | 2.94 / 2.95 |
+| Inlet slot, slowest / fastest (m/s) | 1.75 / 2.55 | 1.69 / 2.57 | 2.51 / 3.64 | 2.41 / 3.68 |
+| Outlet slot: share drawn by its left / right half; fastest (m/s) | 47 / 53 %; 3.3 | 54 / 46 %; 3.3 | 47 / 53 %; 4.7 | 54 / 46 %; 4.6 |
+| Pressure drop, inlet flange to outlet flange | 294 Pa | 292 Pa | 589 Pa | 587 Pa |
+| Bed shear over Ø75, mean / max (Pa) | 0.044 / 0.055 | 0.045 / 0.054 | 0.081 / 0.092 | 0.081 / 0.091 |
+| Bed shear on the strip upstream of the plate, mean / max (Pa) | 0.051 / 0.058 | 0.049 / 0.055 | 0.086 / 0.100 | 0.083 / 0.096 |
+| Highest shear on the floor (Pa), where | 0.16 at x = 48 | 0.14 at x = −48 | 0.26 at x = 48 | 0.24 at x = −43 |
+| Dose zone: gas at 3 / 10 mm, mean (m/s) | – | 0.22 / 0.14 | – | 0.25 / 0.18 |
+| Dose zone: gas across the falling dose, mean (max) (m/s) | – | 0.09 (0.18) | – | 0.13 (0.31) |
+| Dose zone: bed shear, mean / max (Pa) | – | 0.006 / 0.034 | – | 0.008 / 0.050 |
+| Under the slide (z = 121 mm): mean speed, direction | 0.29 m/s toward the door | 0.30 m/s toward the door | 0.53 m/s toward the door | 0.29 m/s toward the door |
+| Gas over the plate at z 30–120 mm flowing back toward the inlet | 27 % | 20 % | 23 % | 9 % |
+| Condensate from 1–10 mm: out within 12 s; near the window; into the slide recess | 88 %; 3.2 %; 0.1 % | 90 %; 2.4 %; 0.0 % | 72 %; 3.7 %; 0.1 % | 74 %; 4.3 %; 0.1 % |
+| Condensate from 10–30 mm: out within 12 s; near the window; into the slide recess | 90 %; 12.2 %; 0.5 % | 90 %; 10.5 %; 0.3 % | 82 %; 13.3 %; 1.1 % | 85 %; 11.9 %; 0.2 % |
+| Condensate passing below 10 mm over the dose zone, from 1–10 / 10–30 mm | – | 1.1 % / 7.4 % | – | 3.6 % / 11.5 % |
+| Spatter back on the Ø75 plate, 50 / 100 / 150 µm | 0 / 9 / 6 % | 0 / 5 / 5 % | 0 / 2 / 3 % | 0 / 3 / 2 % |
+| Spatter into the outlet slot, 50 µm | 3 % | 3 % | 2 % | 1 % |
+| Spatter into the slide footprint, 100 / 150 µm | 2 / 10 % | 2 / 10 % | 2 / 10 % | 2 / 9 % |
+| Spatter on the dose zone / on the dose chute, 100 µm | – | 4.2 / 5.3 % | – | 4.2 / 5.5 % |
+| Spatter on the dose zone / on the dose chute, 150 µm | – | 1.0 / 8.0 % | – | 1.0 / 7.5 % |
+
+The slide's options at 200 L/min through the bed slot (round 6, outlet left):
+
+| | Upper slot, 40 L/min (`fix200`) | No upper slot (`fix200_noup`) | No upper slot, 10 L/min slide purge (`fix200_purge`) | No upper slot, 20 mm floor slot (`fix200_wide`) |
+|---|---|---|---|---|
+| Speed at 3 mm over Ø75: mean (min–max), CoV | 2.94 (2.60–3.32), 6 % | 2.97 (2.64–3.30), 6 % | 2.96 (2.64–3.31), 6 % | 2.97 (2.67–3.30), 6 % |
+| Speed over Ø75 at 1 / 3 / 10 mm, mean (m/s) | 2.19 / 2.94 / 2.34 | 2.21 / 2.97 / 2.41 | 2.20 / 2.96 / 2.37 | 2.22 / 2.97 / 2.39 |
+| Speed at 10 mm over Ø75: min–max | 2.15–2.52 | 2.12–2.57 | 2.12–2.54 | 2.13–2.62 |
+| Share of Ø25 / Ø50 / Ø75 at ≥ 2.5 m/s, 3 mm up | 100 % / 100 % / 100 % | 100 % / 100 % / 100 % | 100 % / 100 % / 100 % | 100 % / 100 % / 100 % |
+| At 3 mm, left / right half of Ø75, mean | 2.94 / 2.95 | 2.97 / 2.97 | 2.96 / 2.96 | 2.97 / 2.98 |
+| Inlet slot, slowest / fastest (m/s) | 2.41 / 3.68 | 2.41 / 3.68 | 2.41 / 3.68 | 2.41 / 3.68 |
+| Outlet slot: share drawn by its left / right half; fastest (m/s) | 54 / 46 %; 4.6 | 54 / 46 %; 3.8 | 54 / 46 %; 4.0 | 66 / 34 %; 2.5 |
+| Pressure drop, inlet flange to outlet flange | 587 Pa | 467 Pa | 495 Pa | 335 Pa |
+| Bed shear over Ø75, mean / max (Pa) | 0.081 / 0.091 | 0.082 / 0.091 | 0.082 / 0.091 | 0.082 / 0.090 |
+| Bed shear on the strip upstream of the plate, mean / max (Pa) | 0.083 / 0.096 | 0.082 / 0.096 | 0.082 / 0.095 | 0.083 / 0.096 |
+| Highest shear on the floor (Pa), where | 0.24 at x = −43 | 0.19 at x = −43 | 0.20 at x = −43 | 0.15 at x = −43 |
+| Dose zone: gas at 3 / 10 mm, mean (m/s) | 0.25 / 0.18 | 0.65 / 0.49 | 0.52 / 0.39 | 0.59 / 0.37 |
+| Dose zone: gas across the falling dose, mean (max) (m/s) | 0.13 (0.31) | 0.29 (0.55) | 0.28 (0.48) | 0.28 (0.46) |
+| Dose zone: bed shear, mean / max (Pa) | 0.008 / 0.050 | 0.021 / 0.068 | 0.016 / 0.064 | 0.020 / 0.068 |
+| Under the slide (z = 121 mm): mean speed, direction | 0.29 m/s toward the door | 0.40 m/s toward the back wall | 0.10 m/s toward the back wall | 0.47 m/s toward the back wall |
+| Gas over the plate at z 30–120 mm flowing back toward the inlet | 9 % | 64 % | 70 % | 61 % |
+| Condensate from 1–10 mm: out within 12 s; near the window; into the slide recess | 74 %; 4.3 %; 0.1 % | 73 %; 10.9 %; 4.2 % | 74 %; 8.7 %; 0.8 % | 93 %; 10.3 %; 4.2 % |
+| Condensate from 10–30 mm: out within 12 s; near the window; into the slide recess | 85 %; 11.9 %; 0.2 % | 68 %; 37.7 %; 16.3 % | 77 %; 30.3 %; 2.1 % | 80 %; 34.7 %; 15.1 % |
+| Condensate passing below 10 mm over the dose zone, from 1–10 / 10–30 mm | 3.6 % / 11.5 % | 4.1 % / 14.7 % | 4.9 % / 15.1 % | 5.7 % / 16.7 % |
+| Spatter back on the Ø75 plate, 50 / 100 / 150 µm | 0 / 3 / 2 % | 0 / 5 / 4 % | 0 / 11 / 4 % | 0 / 5 / 3 % |
+| Spatter into the outlet slot, 50 µm | 1 % | 0 % | 0 % | 1 % |
+| Spatter into the slide footprint, 100 / 150 µm | 2 / 9 % | 2 / 10 % | 1 / 10 % | 2 / 10 % |
+| Spatter on the dose zone / on the dose chute, 100 µm | 4.2 / 5.5 % | 2.5 / 4.2 % | 3.2 / 3.8 % | 3.5 / 4.0 % |
+| Spatter on the dose zone / on the dose chute, 150 µm | 1.0 / 7.5 % | 0.5 / 7.5 % | 0.3 / 7.8 % | 0.8 / 7.5 % |
+
+![Variants](analysis/out/cfd/compare_variants_r6.png)
+
+*Coarse mesh, outlet at the left end. The drawn chamber at 115 L/min against §5's layout at 140 + 30 and 200 + 40 L/min,
+and at 200 L/min without the upper slot: plain, with the slide purge, and with a 20 mm floor slot. Top right: without
+the upper slot the gas above 30 mm runs back toward the inlet at up to ~1 m/s, under the slide. With it, the sweep runs
+toward the door. Bottom left: the screened jets stay inside |x| ≤ 60 mm and leave the dose zone (peach) almost still.
+Bottom right: the screen in the floor slot evens out its suction.*
+
+### 0.6 Fine mesh
+
+⟨TABLE-FINE⟩
+
+⟨FINE-TEXT⟩
+
+### 0.7 Not done in this round
+
+- **Not drawn in the model:** the screens, the 35 mm channel, the 40 × 42 mm boot, the upper slot with its plenum and
+  feed, and the slide purge. Nothing in this section changes `lpbf_low.py`.
+- **The KF-40 port's fit** (item 6): the 67 mm gap comes from the model's leg and the module's exit lane, not from an
+  interference run.
+- **The upper slot:** run at 30 and 40 L/min, at z 114–118. It wasn't re-run at z 110–114, where it has to go to clear
+  the lid's O-ring gland, nor at lower flows with the purge.
+- **The slide purge:** one flow (10 L/min), coarse mesh only, blowing evenly through the Ø46 opening.
+- **Not tried:** an outlet for the upper flow at the door end, a lip at the door, or a taller inlet slot (§7 items 2–4).
+- **The channel's left end:** extending it to x −72, as at the right end, should recover most of the drawn chamber's
+  extra 60 Pa. Not run: the fix replaces that channel anyway.
+- **Still as in §8:** isothermal; steady RANS; spatter launch assumed. The upper vortex wanders by ±25 % over the last
+  1,000 iterations (the probe 5 mm under the ceiling: Ux −0.26 to −0.43 m/s), while the bed probes hold within ±3 %. So
+  the slide's numbers are one snapshot of a slowly moving flow.
 
 ## 1. Short answer
 
@@ -108,10 +419,10 @@ z = 0 is the powder plane, +x is the recoat direction, +y points to the back wal
 | Part | As modelled (mm) | From the model |
 |---|---|---|
 | Chamber interior | 280 × 190 × 120 (x −140…140, y −95…95, z 0…120) | `ch_x, ch_y, ch_z` |
-| Inlet plenum | 120 × 27 × 28 box behind the back wall (y 111…138, z −3…25), fed head-on by a KF-25 port at its back (Ø25.4 as 20 × 25) | `plen_in`, inlet port |
+| Inlet plenum | 120 × 27 × 28 box behind the back wall (y 111…138, z −3…25), fed head-on by a KF-25 port at its back (Ø25.4 as 20 × 25). Round 6: the model's cavity is now z 1.5…25 (23.5 mm tall), read from the model, with the port as a 22.5 mm square at z 1.5…24 | `plen_in`, inlet port |
 | Inlet slot | 120 × 8 through the 16 mm back wall, z 4…12 (lower edge 4 mm above the powder) | `INLET_HALF`, `box(..., 4, 12)` |
 | Outlet slot | 124 × 8 in the floor at y −94…−86, 20 mm deep | `OUTLET_HALF`, `OUTLET_Y` |
-| Outlet channel and boot | 10 × 13 mm channel under the floor from x −62 to 72, then a 20 × 20 × 38 boot at x 76…96 to a KF-25 port pointing down | `plo` |
+| Outlet channel and boot | 10 × 13 mm channel under the floor from x −62 to 72, then a 20 × 20 × 38 boot at x 76…96 to a KF-25 port pointing down. Round 6: since round 5 the 10 × 10 link and the boot are at the left end (link x −80…−60, boot x −96…−76, port at x = −86), read from the model; the channel runs x −63…72 | `plo` |
 | Door recess | 220 × 92 × 16 pocket in the front wall (the door's inner face at y −111), z 8…100 | door opening |
 | Slide recess | the lid's Ø56 bore (z 120…125) and the drawer's Ø46 opening (z 125…126) as squares of the same area; the cover slide's underside is z = 126 | lid bore, drawer |
 | In the gas | parked recoater (blade + holder to the floor at x −115…−96, y ±53, z 0…35; arm and carriage block x −128…−84 up to z 100), rail (z 75…90) and Ø12 ball screw (z 35…45, along the whole back wall), dose chute (x −96…−84, y ±50, z 37…120), gas-knife body (x ±32, y −42…−36, z 106…112) | recoater, chute, knife |
@@ -390,6 +701,10 @@ simulated.
 2. **Open up the outlet and even out its suction.**
    - Widen the under-floor channel from 10 to ≥ 35 mm (y −95…−60 stays clear of the Ø96 module port), and make the
      link into the boot the same section. Use a KF-40 port.
+   - *Round 6 (2026-11-25):* the boot is now at the left end, and the CFD gives the same result there (§0). But a KF-40
+     port pointing down doesn't fit at the left end: its clamp is Ø71, and there are 67 mm between the front-left leg
+     and the module's exit lane. Keep KF-25 (~0.25 kPa more at 240 L/min, estimate), or run the boot back past the leg
+     for a KF-40 (§0.1 item 5).
    - Put a perforated plate (K ≈ 15–20) in the floor slot, or take gas out at both ends of the channel.
    - The channel stays 13 mm tall, so it still fits under the module's swap path.
    - Widen the floor slot itself to ~20 mm (y), or put a lip on the door side of it. At 200 L/min the jet partly
@@ -411,6 +726,10 @@ simulated.
    - It is worth another look only with an outlet for it at the door end (in the top of the door or the lid's front
      edge), so that the sweep leaves instead of turning down into the chamber. That is Griggs et al.'s second nozzle
      and the EOS M290's upper inlet, but with somewhere for the gas to go.
+   - *Round 6 (2026-11-25): reversed for the fixed layout (§0.1 items 4–5).* At 200 L/min with the screens and without
+     the upper slot, 16 % of the risen condensate enters the slide recess (0.2 % with it). The thick jet climbs the door
+     and comes back under the slide. The comparison above was with the drawn chamber at 115 L/min, whose vortex is slow.
+     Keep the upper slot at 30–40 L/min, drawn at z 110–114 to clear the lid O-ring's gland.
 5. **Flow rate: 140–200 L/min through the bed slot (2.4–3.5 m/s mean in it), once 1 and 2 are in.**
    - With the screens and the wider outlet, 200 L/min gives ≥ 2.5 m/s at 3 mm over the whole Ø75 plate; 140 L/min
      gives ~2 m/s.
@@ -424,6 +743,10 @@ simulated.
      higher pressure, and neither the vortex nor a sweep can carry condensate into it.
    - The gas-knife body as drawn (14–20 mm below the slide) should become this purge, or its slot should move up into
      the bore at z ≈ 124–125 mm, blowing across the slide face. Either way it needs its own feed and flow.
+   - *Round 6 (2026-11-25): simulated (§0).* 10 L/min blown evenly down through the slide's Ø46 opening (0.1 m/s), in the
+     fixed layout without the upper slot at 200 L/min. It cuts the condensate entering the recess from 16 % to 2.1 %.
+     It doesn't clear the beam path below it: 30 % still passes under the window (38 % without the purge, 12 % with the
+     upper slot). So it backs up the upper slot rather than replacing it.
 7. **Accept that 100–150 µm spatter will hit the slide.** No cross-flow stops it within 120 mm. Keep the slide a
    consumable, map its transmission per build (P12, P13), and consider tilting it 2–3° (P30).
 8. **Measure before the first build.**
@@ -436,6 +759,8 @@ simulated.
    - README §3.4 says ~2 m/s at the plate from a 70 × 8 mm slot.
    - All three should become the operating point chosen here: 140–200 L/min (plus the slide purge) at ~1.5–3 kPa for
      the whole loop, with the fixes. That means a sealed side-channel blower with a flow set point.
+   - *Round 6 (2026-11-25):* with the upper slot kept, G4 now reads 180–250 L/min in total at ~2.5–4 kPa (§0.1 item 7).
+     `budgets.py` and the README's "70 × 8 mm laminar nozzle at 2 m/s" paragraph still aren't updated.
 
 ## 8. What was not modelled or checked
 
@@ -476,6 +801,32 @@ done
 /tmp/capmem 3 /tmp/venv/bin/python $M/post.py --fine /tmp/cfd/fine --coarse /tmp/cfd/coarse --variant /tmp/cfd/fix140 --variant /tmp/cfd/fix200   # ~2 min
 ```
 
-Docker image `opencfd/openfoam-run:2406` (OpenFOAM v2406), run with `--memory=3g --cpus=1.5`. The mesh is written by
+Round 6 (2026-11-25), on the current model. Each case is a separate `run_case.sh` call: run them one at a time on a
+shared runner. `run_case.sh` now runs `simpleFoam` on 2 MPI ranks in 4 GB (`NP=1` for serial):
+
+```bash
+M=desktop-lpbf/analysis/cfd; D=desktop-lpbf/cad; PY=/tmp/venv/bin/python; C=/tmp/cfd-r6
+$PY $M/make_case.py --res coarse --iters 1500 --out $C/coarse --cad-dir $D
+$PY $M/make_case.py --res coarse --iters 1500 --outlet-end right --out $C/coarse_right --cad-dir $D    # control
+$PY $M/make_case.py --res coarse --variant fix --q-lpm 140 --upper-lpm 30 --iters 700 --out $C/fix140 --cad-dir $D
+$PY $M/make_case.py --res coarse --variant fix --q-lpm 200 --upper-lpm 40 --iters 800 --out $C/fix200 --cad-dir $D
+$PY $M/make_case.py --res coarse --variant fix --q-lpm 200 --upper-lpm 0 --iters 800 --out $C/fix200_noup --cad-dir $D
+$PY $M/make_case.py --res coarse --variant fix --q-lpm 200 --upper-lpm 0 --slide-purge-lpm 10 --iters 800 --out $C/fix200_purge --cad-dir $D
+$PY $M/make_case.py --res fine --iters 600 --out $C/fine --cad-dir $D
+$PY $M/make_case.py --res fine --variant fix --q-lpm 200 --upper-lpm 40 --iters 600 --out $C/fine_fix200 --cad-dir $D
+for c in coarse coarse_right fix140 fix200 fix200_noup fix200_purge; do $M/run_case.sh $C/$c; done   # 9-16 min each
+$M/run_case.sh $C/fine map $C/coarse; $M/run_case.sh $C/fine_fix200 map $C/fix200                    # 14-22 min each
+P="/tmp/capmem 3 $PY $M/post.py --tag r6 --merge"                                    # ~2 min a coarse case, ~3 a fine one
+$P --coarse $C/coarse; $P --fine $C/fine
+for c in coarse_right fix140 fix200 fix200_noup fix200_purge fine_fix200; do $P --variant $C/$c; done
+$P --figures-only --coarse $C/coarse --variant $C/coarse_right --compare-name compare_outlet
+$P --figures-only --coarse $C/coarse --variant $C/fix140 --variant $C/fix200 --variant $C/fix200_noup --variant $C/fix200_purge
+$P --figures-only --fine $C/fine --coarse $C/coarse --compare-name none
+$P --figures-only --fine $C/fine_fix200 --coarse $C/fix200 --compare-name none --profiles-name profiles_mesh_check_fix200
+$P --figures-only --coarse $C/coarse --compare-name none --before desktop-lpbf/analysis/out/cfd/cfd.json   # cfd_summary.md
+```
+
+Docker image `opencfd/openfoam-run:2406` (OpenFOAM v2406), run with `--memory=3g --cpus=1.5` on 2026-11-20 and with
+`--memory=4g --cpus=2` and 2 MPI ranks since round 6. The mesh is written by
 `make_case.py` as one blockMesh block per grid cell of a rectilinear grid whose lines fall on every edge of the gas
 volume, so `checkMesh` reports zero non-orthogonality and skewness. Meshes and time directories stay in `/tmp/cfd`.
