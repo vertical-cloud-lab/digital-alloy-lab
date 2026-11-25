@@ -181,11 +181,11 @@ camera, its bracket and photodiode B all stand inside it.
 
 ## Checks
 
-Run 2026-11-25 21:46 UTC by [`mech_monitoring.py`](../analysis/monitoring/mech/mech_monitoring.py) and [`bridge_modal.py`](../analysis/monitoring/mech/bridge_modal.py) (CalculiX); every number is in [`checks.json`](../analysis/out/monitoring/mech/checks.json) and [`bridge_modal.json`](../analysis/out/monitoring/mech/bridge_modal.json).
+Run 2026-11-25 22:55 UTC by [`mech_monitoring.py`](../analysis/monitoring/mech/mech_monitoring.py) and [`bridge_modal.py`](../analysis/monitoring/mech/bridge_modal.py) (CalculiX); every number is in [`checks.json`](../analysis/out/monitoring/mech/checks.json) and [`bridge_modal.json`](../analysis/out/monitoring/mech/bridge_modal.json).
 
 | Check | Result | In one line |
 |---|---|---|
-| 1. Windows and slides | pass | fused silica SF 17-43 at 1 atm (SF 4 wanted); a borosilicate BW window would need an abraded strength of 12.5 MPa, which nobody publishes: make it fused silica. Slides: < 1 K from the plate, spatter well inside fused silica's thermal-shock limit. |
+| 1. Windows and slides | pass | fused silica SF 17-34 at 1 atm (SF 4 wanted); a borosilicate BW window would need an abraded strength of 12.5 MPa, which nobody publishes: make it fused silica. Slides: < 1 K from the plate, spatter well inside fused silica's thermal-shock limit. |
 | 2. Seals and clamps | pass with 1.0 mm FKM | the 0.75 mm the seats leave squeezes 1.0 mm sheet 15-35 %, but the BOM's 1/32 in. sheet only -7 to 18 %: **change M0-06 to 1.0 mm sheet**. Clamp screws at 2 N·m: lift-off margin 3.1 or more. |
 | 3. Side camera bracket | pass | a 0.625 in. (15.9 mm) x 80 mm 6061 plate, 139 mm reach: f1 169 Hz (≥ 150 wanted, 2.5x the blower's 60 Hz), vibration 1.7 µm at the plate against a 25 µm pixel; 1/2 in. gives 121 Hz. A fixed 13° wedge, not a ball head. |
 | 4. Coaxial cage | pass | 1.23 kg added; post every cube and each branch end; drift 1.8 µm/K at the plate; bridge sway 128 -> 124 Hz. |
@@ -199,14 +199,13 @@ Run 2026-11-25 21:46 UTC by [`mech_monitoring.py`](../analysis/monitoring/mech/m
 
 | Window | Glass | Size (mm) | Unsupported span (mm) | Stress at 1 atm (MPa) | SF (MR 52.4) | Thickness for SF 4 (mm) | Centre deflection (µm) |
 |---|---|---|---|---:|---:|---:|---:|
-| LW (spec Ø38.1 x 5) | fused silica | Ø38.1 × 5 | r 15.5 | 1.22 | 43.1 | 1.52 | 0.52 |
 | LW (catalogue 36-983, Ø40 x 4) | fused silica | Ø40 × 4 | r 15.5 | 1.90 | 27.6 | 1.52 | 1.02 |
 | LP (25-245, Ø25.4 x 3) | fused silica | Ø25.4 × 3 | r 10.5 | 1.55 | 33.8 | 1.03 | 0.51 |
 | BW (57.7 x 26.7 x 3) | fused silica | 57.7 × 26.7 × 3 | 51.2 × 20.5 | 3.13 | 16.7 | 1.47 | 1.11 |
 | BW in N-BK7 | N-BK7 | 57.7 × 26.7 × 3 | 51.2 × 20.5 | 3.13 | needs MR ≥ 12.5 | - | 0.99 |
 
 - **LW slide** (Ø30 × 1.5): the hot plate puts at most 14.7 W/m² on it (L75, view factor 0.0123), a 0.400 K rise and 0.0080 MPa. A molten-Al droplet is a 635 K quench against fused silica's thermal-shock parameter of 1101 K.
-- **LP slide** (Ø24.4 × 2): the hot plate puts at most 48.6 W/m² on it (L75, view factor 0.0406), a 0.655 K rise and 0.0131 MPa. A molten-Al droplet is a 635 K quench against fused silica's thermal-shock parameter of 1101 K.
+- **LP slide** (Ø24.4 × 2): the hot plate puts at most 64.1 W/m² on it (L75, view factor 0.0536), a 0.864 K rise and 0.0173 MPa. A molten-Al droplet is a 635 K quench against fused silica's thermal-shock parameter of 1101 K.
 - At +20 mbar every window carries 1/50 of these stresses. Bent at vacuum, each window is a weak meniscus lens with a focal length of 24,753 km or more: no optical effect.
 
 ### 2. Seals and clamps
@@ -314,7 +313,7 @@ Bar velocity 4915 m/s.
 | Item | Temperature (°C) | Basis | Limit |
 |---|---|---|---|
 | outer windows (LW, BW, LP) | 25-60 | at the wall or lid temperature (thermal.json T_ch cases) | FKM gasket 200 C |
-| inside cover slides | 25-60.7 | chamber gas/wall + 0.66 K from the plate's radiation (check 1) | fused silica: none |
+| inside cover slides | 25-60.9 | chamber gas/wall + 0.86 K from the plate's radiation (check 1) | fused silica: none |
 | Chronos body and lens (outside the LW port) | 30 (typical) / 38-43 (busy VLM) | air in the guard = Shuttle air; the 60 C wall adds 0.23 W of radiation to its front face | Kron's operating range not found in the repo (machine-vision cameras: typically 0-40 or 0-45 C) |
 | IMX296 lid camera and coaxial cage | 30-43 | above the lid/bridge, in the guard's air | InnoMaker board: check (Pi GS camera 0-50 C) |
 

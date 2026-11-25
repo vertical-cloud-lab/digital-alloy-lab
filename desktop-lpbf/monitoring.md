@@ -396,7 +396,7 @@ the LSO.
   - The first interference run found 14 clashing pairs, all fixed. The final run is clean in every machine state and sweep.
   - The machine is still 579.6 mm tall.
   - The default model's checks are unchanged after PB2's move.
-- **Windows:** fused silica has a safety factor of 17–43 at 1 atm. Make the BW window fused silica too.
+- **Windows:** fused silica has a safety factor of 17–34 at 1 atm. Make the BW window fused silica too.
 - **Gaskets:** the seats squeeze 1.0 mm FKM 15–35 %, but 1/32 in. sheet only −7 to 18 %, so the BOM takes 1.0 mm.
 - **The Chronos bracket:** a 5/8 in. × 80 mm 6061 plate on a fixed 13° wedge (169 Hz; 1.7 µm of vibration at the plate), not
   a ball head.

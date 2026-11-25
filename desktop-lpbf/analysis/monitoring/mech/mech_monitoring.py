@@ -115,7 +115,9 @@ def check_windows():
     rows = []
     spec = MS.VIEWPORTS
     lw_cat = disc_dims(B["M0-01"]["element"])
-    rows.append(disc_window("LW (spec Ø38.1 x 5)", spec["LW"]["window"]["d"], spec["LW"]["window"]["t"], lw_a))
+    lw_spec = (spec["LW"]["window"]["d"], spec["LW"]["window"]["t"])
+    if lw_spec != tuple(lw_cat):                              # the spec's window, if it still differs from the bought one
+        rows.append(disc_window(f"LW (spec Ø{lw_spec[0]:g} x {lw_spec[1]:g})", lw_spec[0], lw_spec[1], lw_a))
     rows.append(disc_window(f"LW (catalogue 36-983, Ø{lw_cat[0]:g} x {lw_cat[1]:g})", lw_cat[0], lw_cat[1], lw_a))
     lp_cat = disc_dims(B["M7-17"]["element"])
     rows.append(disc_window(f"LP (25-245, Ø{lp_cat[0]:g} x {lp_cat[1]:g})", lp_cat[0], lp_cat[1], lp_a))

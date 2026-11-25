@@ -2,22 +2,6 @@
  "1": {
   "windows": [
    {
-    "port": "LW (spec \u00d838.1 x 5)",
-    "glass": "fused silica",
-    "d_mm": 38.1,
-    "t_mm": 5.0,
-    "unsupported_r_mm": 15.5,
-    "p_MPa": 0.101325,
-    "sigma_MPa": 1.2171665625,
-    "MR_MPa": 52.4,
-    "SF": 43.05080472501067,
-    "t_needed_SF4_mm": 1.5240856115507022,
-    "deflection_um": 0.5230331807402168,
-    "window_focal_m": 75540749.5427074,
-    "MR_needed_for_SF4_MPa": 4.86866625,
-    "pass": true
-   },
-   {
     "port": "LW (catalogue 36-983, \u00d840 x 4)",
     "glass": "fused silica",
     "d_mm": 40.0,
@@ -95,22 +79,6 @@
    }
   ],
   "at_plus_20mbar": [
-   {
-    "port": "LW (spec \u00d838.1 x 5)",
-    "glass": "fused silica",
-    "d_mm": 38.1,
-    "t_mm": 5.0,
-    "unsupported_r_mm": 15.5,
-    "p_MPa": 0.002,
-    "sigma_MPa": 0.024024999999999998,
-    "MR_MPa": 52.4,
-    "SF": 2181.0613943808535,
-    "t_needed_SF4_mm": 0.21412434854827084,
-    "deflection_um": 0.010323872306740029,
-    "window_focal_m": 193889603821.0769,
-    "MR_needed_for_SF4_MPa": 0.09609999999999999,
-    "pass": true
-   },
    {
     "port": "LW (catalogue 36-983, \u00d840 x 4)",
     "glass": "fused silica",
@@ -219,59 +187,59 @@
      {
       "plate": "S25",
       "T_ch": 25.0,
-      "view_factor": 0.004488530136448016,
-      "q_W_m2": 5.3723521482580034,
-      "dT_centre_rim_K": 0.0724294287814059,
-      "sigma_MPa": 0.0014480453549122576
+      "view_factor": 0.0059192602769557925,
+      "q_W_m2": 7.084802752414362,
+      "dT_centre_rim_K": 0.09551648928164434,
+      "sigma_MPa": 0.0019096134119632746
      },
      {
       "plate": "S25",
       "T_ch": 60.0,
-      "view_factor": 0.004488530136448016,
-      "q_W_m2": 4.8103161616906105,
-      "dT_centre_rim_K": 0.06485212477409695,
-      "sigma_MPa": 0.0012965561045461332
+      "view_factor": 0.0059192602769557925,
+      "q_W_m2": 6.3436163977782964,
+      "dT_centre_rim_K": 0.08552390078309072,
+      "sigma_MPa": 0.0017098365864059411
      },
      {
       "plate": "M50",
       "T_ch": 25.0,
-      "view_factor": 0.018025437736956026,
-      "q_W_m2": 21.574768622598537,
-      "dT_centre_rim_K": 0.29086852914742445,
-      "sigma_MPa": 0.0058151890689798836
+      "view_factor": 0.023771090830981532,
+      "q_W_m2": 28.451779760872903,
+      "dT_centre_rim_K": 0.38358359597901465,
+      "sigma_MPa": 0.00766879504261045
      },
      {
       "plate": "M50",
       "T_ch": 60.0,
-      "view_factor": 0.018025437736956026,
-      "q_W_m2": 19.317694619790064,
-      "dT_centre_rim_K": 0.2604389191313001,
-      "sigma_MPa": 0.005206825090732517
+      "view_factor": 0.023771090830981532,
+      "q_W_m2": 25.475257808065795,
+      "dT_centre_rim_K": 0.34345447211526375,
+      "sigma_MPa": 0.006866513533764411
      },
      {
       "plate": "L75",
       "T_ch": 25.0,
-      "view_factor": 0.04061079348258562,
-      "q_W_m2": 48.60733402166337,
-      "dT_centre_rim_K": 0.6553184416471354,
-      "sigma_MPa": 0.013101453944630354
+      "view_factor": 0.05355558487290292,
+      "q_W_m2": 64.10104259004478,
+      "dT_centre_rim_K": 0.8642028241940456,
+      "sigma_MPa": 0.017277574962699455
      },
      {
       "plate": "L75",
       "T_ch": 60.0,
-      "view_factor": 0.04061079348258562,
-      "q_W_m2": 43.52221112253722,
-      "dT_centre_rim_K": 0.5867614043005832,
-      "sigma_MPa": 0.011730827375479409
+      "view_factor": 0.05355558487290292,
+      "q_W_m2": 57.395024124040816,
+      "dT_centre_rim_K": 0.7737930607447676,
+      "sigma_MPa": 0.015470057766939766
      }
     ],
     "worst": {
      "plate": "L75",
      "T_ch": 25.0,
-     "view_factor": 0.04061079348258562,
-     "q_W_m2": 48.60733402166337,
-     "dT_centre_rim_K": 0.6553184416471354,
-     "sigma_MPa": 0.013101453944630354
+     "view_factor": 0.05355558487290292,
+     "q_W_m2": 64.10104259004478,
+     "dT_centre_rim_K": 0.8642028241940456,
+     "sigma_MPa": 0.017277574962699455
     },
     "R_thermal_shock_K": 1100.8128048018007,
     "spatter_quench_K": 634.85,
@@ -646,23 +614,23 @@
   "envelope": {
    "spec": {
     "axis_out": [
-     -0.35543427028651087,
-     -0.47391236038201445,
-     0.8056510126494246
+     -0.2598498501673715,
+     0.3897747752510572,
+     0.883489490569063
     ],
     "front_xyz": [
-     -65.33151405429767,
-     -87.10868540573021,
-     148.08476518974138
+     -43.897747752510575,
+     65.84662162876586,
+     149.25234235853594
     ],
     "back_xyz": [
-     -94.12168994750505,
-     -125.49558659667338,
-     213.34249721434477
+     -64.94558561606766,
+     97.41837842410149,
+     220.81499109463005
     ],
     "length_mm": 81.0,
     "radius_mm": 28.284271247461902,
-    "wd_mm": 183.80758276807353,
+    "wd_mm": 168.93505123915085,
     "src": "lens front at the port centre + 15 mm; Kowa LM50JC10M (assumed \u00d836 x 51) + IMX296 housing 40 x 40 x 30 (spec)"
    }
   },
@@ -5143,8 +5111,8 @@
    },
    {
     "item": "inside cover slides",
-    "T_C": "25-60.7",
-    "basis": "chamber gas/wall + 0.66 K from the plate's radiation (check 1)",
+    "T_C": "25-60.9",
+    "basis": "chamber gas/wall + 0.86 K from the plate's radiation (check 1)",
     "limit": "fused silica: none",
     "ok": true
    },
@@ -5282,5 +5250,5 @@
   "pass_": null,
   "flag": "the busy-VLM air (38-43 C) is at or above a 40 C camera limit; the cameras need the same answer as the laser (heat.md \u00a72: chilled water or a ducted exhaust)"
  },
- "run_utc": "2026-11-25 21:46"
+ "run_utc": "2026-11-25 22:55"
 }
