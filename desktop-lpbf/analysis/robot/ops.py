@@ -838,7 +838,7 @@ def job_blade(cell: Cell, arm_x=0.0, **kw):
     return j
 
 
-def job_module(cell: Cell, arm_x=0.0, tilt=0.0, roll=0.0, lift=66.0, **kw):
+def job_module(cell: Cell, arm_x=0.0, tilt=0.0, roll=0.0, lift=66.0, soft_floor=False, **kw):
     """Release the module (its clamps, see robot-ops.md) and the Z arm, then carry the module by the grip block on its handle along the
     model's own extraction path (MODULE_PATH: down 40, forward under the plenum, up under the hinges, up to +4), lift it `lift` mm clear of
     the chamber floor's front edge, and bring it out over the guard sill. The grip block (MP.MODULE_GRIP, 2026-11-22) is in front of the
@@ -869,22 +869,27 @@ def job_module(cell: Cell, arm_x=0.0, tilt=0.0, roll=0.0, lift=66.0, **kw):
     j.attach(held, "build module")
     # the module's own fixtures for the first 40 mm: the floor plate's port (since the frame + floor-plate split the port is in the
     # floor plate, not the body), the screw inserts, the module-present sensor 0.3 mm beside the flange tab; the spigot O-ring and the
-    # dowel and diamond pin (a slip fit drawn line on line, so the meshes coincide) are soft, as the seals a part slides over. So is the
-    # floor plate, for this straight 40 mm drop only: the spigot leaves its port (0.1 mm radial fit); interference.py checks those fits
-    # exactly. The floor plate is tessellated at 0.05 mm (it was 0.4 mm, which put the Ø96 port's chords 0.3 mm into the spigot's 0.1 mm
-    # fit). Round 6: the zero-point clamping modules are the module's fixtures for the drop too (their pins leave the bores straight
-    # down, 0.2 mm radial clearance); the round-5 model's captive M6 and their floor inserts are gone (the names match nothing now)
+    # dowel and diamond pin (a slip fit drawn line on line, so the meshes coincide) are soft, as the seals a part slides over. The floor
+    # plate was soft too in rounds 4-5 (soft_floor=True restores that); since round 6 it is a fixture under the 1.5 mm rule, as the spigot
+    # leaves its port (0.1 mm radial fit) straight down. The floor plate is tessellated at 0.05 mm (it was 0.4 mm, which put the Ø96
+    # port's chords 0.3 mm into the spigot's 0.1 mm fit). Round 6: the zero-point clamping modules are the module's fixtures for the drop
+    # too (their pins leave the bores straight down, 0.2 mm radial clearance); the round-5 model's captive M6 and their floor inserts are
+    # gone (the names match nothing now)
     fixtures = allow_of(*cell.names("Process chamber body"), *cell.names("Chamber floor plate"), *cell.names("helical inserts"),
                         *cell.names("Helical inserts for the module"), *cell.names("Module-present sensor"),
                         *cell.names("Zero-point clamping modules"), kind="held") | \
         frozenset(("soft", n) for n in cell.names("Spigot O-ring") + cell.names("Locating dowel") + cell.names("Helical inserts for the module") +
-                  cell.names("Chamber floor plate"))
+                  (cell.names("Chamber floor plate") if soft_floor else []))
+    # round 6 (2026-11-25): the path runs from where the pads' centre is once they have closed. Closing from 60 to 40.3 mm moves it
+    # 3.6 mm along the approach, so the old absolute waypoints (from the open-gripper grasp point) dragged the module 3.6 mm sideways
+    # during the 40 mm drop, with its spigot and zero-point pins still in their bores; the soft floor plate hid it until the pins came
+    p0 = j.tcp()[:3, 3].copy()
     for k, (pa, pb) in enumerate(zip(path[:-1], path[1:])):
         F = (0, 0, -158.0) if k == 0 else (0, 0, 0)       # the first 40 mm: the 2-238 O-ring's 132 N plus the module's weight
         lab = "lift clear of the floor's front edge" if k == len(path) - 3 else "out over the guard sill" if k == len(path) - 2 else "module path"
-        j.line(T_of(R, pg + pb), f"{lab} {tuple(int(v) for v in pa)} -> {tuple(int(v) for v in pb)}",
+        j.line(T_of(R, p0 + pb), f"{lab} {tuple(int(v) for v in pa)} -> {tuple(int(v) for v in pb)}",
                allow=(al | fixtures) if k == 0 else al, step_mm=3.0, force=F)
-    j.line(T_of(R, pg + path[-1] + (0, -60, 60)), "up and out (to the MiR's module rack)", allow=al, fine=False)
+    j.line(T_of(R, p0 + path[-1] + (0, -60, 60)), "up and out (to the MiR's module rack)", allow=al, fine=False)
     return j
 
 

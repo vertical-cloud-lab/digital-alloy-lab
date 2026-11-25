@@ -20,7 +20,7 @@ Drawn here (every part tagged "automation"):
      wrist turns them 90 deg (no screwdriver, no grip-friction torque);
   5. a grip fin on the front end of the recoater's blade holder (the blade cartridge), for the plate fingers' lips;
   6. a pull tab on each side wall liner, for the plate fingers' lips (one part per liner): since 2026-11-25 a hanger whose grip plate
-     stands 42 mm in from the sheet, inside the door opening's width (add_liner_tabs);
+     stands 44 mm in from the sheet, inside the door opening's width (add_liner_tabs);
   7. two AprilTag (tag36h11) plates on the laser guard's front-left post, for the wrist camera's re-registration after each
      MiR250 docking and VLM move (byu-vcl PR 318 docks at AprilTag targets with the same D405 camera);
   8. a grip fin on the overflow jar (round 6): an I-section level with the module's grip block, 100 mm to its right.

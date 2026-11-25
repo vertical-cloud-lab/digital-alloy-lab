@@ -9,8 +9,15 @@
 >
 > Both liners and the blade pass from x −450, with 1.6, 1.6 and 2.0 mm closest and 33.7 % elbow. **The overflow jar's round-5
 > failure is explained:** at the cup's height the 2F-85's coupling and the D405's clamp ring reach 3.5 mm below the top of the guard's
-> bottom front rail. The jar job now grips the round-6 grip fin (an I-section like the module's). With the fin's draft geometry
-> injected into the scene it passes from x +400, and it runs on the merged model in phase 2.
+> bottom front rail. The jar job now grips the round-6 grip fin, an I-section like the module's.
+>
+> **On the merged round-6 model (PR branch 4e95878: the jar at the slot's front end with its fin, two SCHUNK NSE-HT zero-point clamps
+> instead of the captive M6), every job passes on M50, and the jar and the module swap also on S25 and L75** ([`ops_r6b.md`](analysis/out/robot/ops_r6b.md)).
+> - **Jar:** from x +400, 2.0 mm, 30.8 % elbow, 22.7 s.
+> - **Module swap:** from x +300, 0.5 mm, 52–55 % wrist 1, 26.0 s, with no screws to turn. That needed a fix to the module job: its path now starts where
+>   the pads' centre is after they close. Before, it dragged the module 3.6 mm sideways during the 40 mm drop, which a soft floor plate had hidden.
+>
+> **Still not simulated:** the jar's toggle clamp coming off.
 >
 > **Update 2026-11-23 (round 5, A1): the overflow jar has a straight way out to the front** (section "Round 5" below). The jar stays
 > under the funnel. Its KF-40 joint is 26 mm lower and it is a 45 mm 2 in. cup on an MKS 100318805 toggle clamp. The outlet plenum's
@@ -52,11 +59,12 @@ outputs, `analysis/robot/robot_ops.py` and `analysis/out/robot/robot_ops_*.json`
 
 ## Short answer
 
-**With what is now drawn, the UR12e on its MiR250 passes byu-vcl PR 318's audit end to end for 13 of its 14 jobs on the M50 machine:
+**With what is now drawn, the UR12e on its MiR250 passes byu-vcl PR 318's audit end to end for all 14 of its jobs on the M50 machine:
 the guard door both ways, opening the chamber door (and closing it with its new actuator), the build plate out by the drawbar path
 and by the bayonet (both also on S25 and L75), the cover-slide drawer, the reservoir, the blade cartridge, cleaning the chamber
-with a vacuum wand, (since 2026-11-22) the build module swap, also on S25 and L75, and (since 2026-11-25) both side liners. Only the
-overflow jar fails on the model as merged after round 5; its grip fin is drawn in round 6 and the job runs on that model in phase 2.** Every frame was
+with a vacuum wand, (since 2026-11-22) the build module swap, and (since 2026-11-25, round 6) both side liners and the overflow jar.
+On the round-6 model the module swap and the jar also pass on S25 and L75. The module is now held by two zero-point clamps that
+release air opens, so the swap needs no screwdriver. The jar's toggle clamp coming off is still not simulated.** Every frame was
 checked: the arm, its tools and what it holds against the whole cell (machine, VLM, MiR, ballast, tool stand), handled parts only
 up to 1.5 mm deep into their own fixtures, and every moving part against everything else. The arm is never the limit: peak static
 torque is about a third of the UR12e's limits (the module's 158 N push takes the elbow to 64 %), and with PR 318's 131 kg ballast
@@ -80,14 +88,15 @@ over the 2F-85's fingertips from a stand on the MiR, and a vacuum wand with a cl
   The robot can still pull it open.
 - **The bayonet plate fails, on a model clash.** Twisting the plate runs its lugs into the thermal cutoff, whose top sits in the
   lugs' channel. The drawbar path passes on S25, M50 and L75, so the drawbar is the way (hot-swap.md agrees).
-- **The build module's motion now passes (2026-11-22); its clamp is still open.** The gripper couldn't reach the old handle under the
-  chamber past the door's hinge knuckles, and the last 140 mm of the path brought the arm too close to its own base. The handle's new
-  grip block sits in front of the knuckles, and the job lifts the module 66 mm before the last 140 mm. The two captive M6 still hold
-  the module, and the robot can't turn them; the zero-point modules that would replace them need the overflow jar moved first
-  (hot-swap.md §3.2a). Until then a person releases the two screws, or swaps the module.
-- **The overflow jar** has a straight way out since round 5, but the gripper can't reach its cup at z −102 past the guard frame and
-  the guard door's handle. It needs a grip fin forward at z ≈ −50, as on the module (round 5); round 6 draws one (phase 2, below).
-  The liners come out since round 6.
+- **The build module swap passes (motion since 2026-11-22, clamps since 2026-11-25).** The gripper couldn't reach the old handle under
+  the chamber past the door's hinge knuckles, and the last 140 mm of the path brought the arm too close to its own base. The handle's
+  grip block sits in front of the knuckles, and the job lifts the module 66 mm before the last 140 mm. Since round 6 two SCHUNK NSE-HT
+  zero-point clamps hold the module instead of the two captive M6, and release air opens them, so no person turns a screw
+  (hot-swap.md §3.2a).
+- **The overflow jar passes since round 6, by its grip fin.** Round 5's cup grasp failed: at z −102 the gripper's coupling and camera
+  clamp don't pass over the guard's bottom rail (section "Round 6"). **Still not simulated:** its MKS toggle clamp coming off (lever
+  pushed, clamp lifted off forward) and going back on. The job starts with the clamp already off. A lever the fingers push, or a
+  pneumatic KF clamp, would close that gap.
 
 ## Results
 
@@ -108,15 +117,17 @@ They ran on the model as merged after round 5 (4b2232e) plus this round's liner 
 | Blade cartridge out (round 6: off its dowels and ball plungers) | M50 | -450.0 | **pass** |  | 2.0, held: blade cartridge / Recoater ball nut (flange on the +x fa | 33.7 % elbow | 40 / 100 | 0.197 | 199.0 | 22.3 |
 | Right side liner out (round 6: hanger tab) | M50 | -450.0 | **pass** |  | 1.6, held: right side liner + its tab / Chamber door (open, 95°) | 33.7 % elbow | 20 / 100 | 0.07 | 199.0 | 23.6 |
 | Left side liner out (round 6: hanger tab) | M50 | -450.0 | **pass** |  | 1.6, held: left side liner + its tab / Chamber door (open, 95°) | 33.7 % elbow | 20 / 100 | 0.073 | 199.0 | 24.5 |
-| Build module out (grip block; lift 66 mm, then out) | M50 | 300.0 | **pass** |  | 0.5, held: build module / Overflow clamp (KF-40) | 55.7 % wrist 1 | 106 out, 158 in / 100 | 2.916 | 190.0 | 26.0 |
-| Overflow jar out (as drawn) | M50 | -350.0 | **fail** | in to the jar: left_finger_tip vs Gas-loop + vacuum hoses (KF-25 SS bellows) | 0.0, base / Guard frame (20 mm T-slot) | 32.8 % elbow | 0 | 0.22 | 191.0 | 24.6 |
+| Build module out (round 6: zero-point clamps opened by release air; grip block; lift 66 mm, then out) | M50 | 300.0 | **pass** |  | 0.5, held: build module / Z mounting flange (bolted under the floor) | 53.3 % wrist 1 | 106 out, 158 in / 100 | 3.456 | 188.0 | 26.0 |
+| Overflow jar out (round 6: by its grip fin; toggle clamp off, drop 8 mm, straight out, lift 60 mm) | M50 | 400.0 | **pass** |  | 2.0, held: overflow jar + grip fin / Overflow-jar present sensor | 30.8 % elbow | 10 / 100 | 0.384 | 196.0 | 22.7 |
 | Chamber vacuum, 3 lanes (wand from the MiR cradle) | M50 | -450.0 | **pass** |  | 3.0, wand (ATEX vacuum wand, collar, crevic / Chamber floor plate (6061-T6, 20 mm, b | 35.4 % elbow | 0 | 0.0 | 198.0 | 31.2 |
 | Build plate out, drawbar | S25 | 450.0 | **pass** |  | 1.0, held: build plate / Thermal cutoff S25 (240 C, in seri | 33.7 % elbow | 5 / 100 | 0.014 | 191.0 | 24.6 |
 | Build plate out, bayonet (2 x 30 deg twists) | S25 | -450.0 | **fail** | twist the plate 30 deg (half): held: build plate vs Thermal cutoff S25 (240 C, in series with the heat | 0.0, held: build plate / Thermal cutoff S25 (240 C, in seri | 33.4 % elbow | 5 / 100 | 0.014 | 195.0 | 29.2 |
-| Build module out (grip block; lift 66 mm, then out) | S25 | 300.0 | **pass** |  | 0.5, held: build module / Overflow clamp (KF-40) | 57.0 % wrist 1 | 106 out, 158 in / 100 | 2.631 | 191.0 | 26.0 |
+| Build module out (round 6: zero-point clamps; grip block; lift 66 mm, then out) | S25 | 300.0 | **pass** |  | 0.5, held: build module / Z mounting flange (bolted under the floor) | 54.7 % wrist 1 | 106 out, 158 in / 100 | 3.143 | 189.0 | 26.0 |
+| Overflow jar out (round 6: by its grip fin) | S25 | 400.0 | **pass** |  | 2.0, held: overflow jar + grip fin / Overflow-jar present sensor | 30.8 % elbow | 10 / 100 | 0.384 | 196.0 | 22.7 |
 | Build plate out, drawbar | L75 | 450.0 | **pass** |  | 1.0, held: build plate / Thermal cutoff L75 (240 C, in seri | 33.7 % elbow | 5 / 100 | 0.12 | 191.0 | 24.9 |
 | Build plate out, bayonet (2 x 30 deg twists) | L75 | -450.0 | **fail** | twist the plate 30 deg (half): held: build plate vs Thermal cutoff L75 (240 C, in series with the heat | 0.0, held: build plate / Thermal cutoff L75 (240 C, in seri | 32.9 % elbow | 5 / 100 | 0.12 | 194.0 | 29.7 |
-| Build module out (grip block; lift 66 mm, then out) | L75 | 300.0 | **pass** |  | 0.5, held: build module / Overflow clamp (KF-40) | 54.5 % wrist 1 | 106 out, 158 in / 100 | 3.192 | 189.0 | 26.0 |
+| Build module out (round 6: zero-point clamps; grip block; lift 66 mm, then out) | L75 | 300.0 | **pass** |  | 0.5, held: build module / Z mounting flange (bolted under the floor) | 52.1 % wrist 1 | 106 out, 158 in / 100 | 3.732 | 188.0 | 26.0 |
+| Overflow jar out (round 6: by its grip fin) | L75 | 400.0 | **pass** |  | 2.0, held: overflow jar + grip fin / Overflow-jar present sensor | 30.8 % elbow | 10 / 100 | 0.384 | 196.0 | 22.7 |
 
 GIFs and stills (`analysis/out/robot/ops_<job>_<module>.gif`, `_tightest.png`: the first collision frame, or else the tightest):
 
@@ -129,7 +140,7 @@ GIFs and stills (`analysis/out/robot/ops_<job>_<module>.gif`, `_tightest.png`: t
 | Cover-slide drawer: wings off, drawer out (M50) | Reservoir off the dock and out (M50) | Blade cartridge out (M50) |
 |---|---|---|
 | ![](analysis/out/robot/ops_drawer_M50.gif) | ![](analysis/out/robot/ops_reservoir_M50.gif) | ![](analysis/out/robot/ops_blade_cartridge_M50.gif) |
-| Build module out (M50) | Overflow jar out (as drawn) (M50) | Chamber vacuum, 3 lanes (wand from the MiR cradle) (M50) |
+| Build module out (M50, round 6: zero-point clamps) | Overflow jar out by its grip fin (M50, round 6) | Chamber vacuum, 3 lanes (wand from the MiR cradle) (M50) |
 |---|---|---|
 | ![](analysis/out/robot/ops_module_swap_M50.gif) | ![](analysis/out/robot/ops_overflow_jar_M50.gif) | ![](analysis/out/robot/ops_vacuum_clean_M50.gif) |
 | Right side liner out (M50, round 6) | Left side liner out (M50, round 6) | The plate fingers on the right liner's hanger tab, seen from inside the chamber |
@@ -311,8 +322,49 @@ the layout work in `cad/automation.py`).
 
 **Test before the merge.** The layout work's draft fin (read 02:00 UTC: a 40 mm web at x 80–120, z −60 to −30, between 56 mm
 flanges, y −156 to −126, on a riser from the cup) was injected into this scene only, around the round-5 jar at (100, 0). It **passes
-on the first variant**, x +400: 0 bad frames, 2.0 mm (the held jar to the jar sensor), 30.8 % elbow, 24.1 s. The run on the merged
-model, with the jar at the slot's front end and the fin drawn, is below once it has run.
+on the first variant**, x +400: 0 bad frames, 2.0 mm (the held jar to the jar sensor), 30.8 % elbow, 24.1 s.
+
+### On the merged round-6 model (PR branch 4e95878; run 02:53–03:15 UTC)
+
+**What the merge brought:**
+- the layout work: the jar's KF-40 joint at the overflow slot's front end (94, −46, z −82), with a 2.5 in. cup and the grip fin;
+- two SCHUNK NSE-HT mini 88-20 zero-point clamps under the floor at (100, 40) and (−102, −26), whose Ø20 pins the module's arms carry
+  (the captive M6 are gone);
+- the legs, the Z servo and the outlet hose moved;
+- the assembly work's rod-end block and the optics work's field-stop insert.
+
+Results: [`ops_r6b.md`](analysis/out/robot/ops_r6b.md), [`ops_r6b.json`](analysis/out/robot/ops_r6b.json); GIFs
+`ops_overflow_jar_<module>.gif` and `ops_module_swap_<module>.gif`.
+
+| Job | Module | MiR arm x (mm) | Result | Min clearance (mm), pair | Peak torque | Force (N) | Payload (kg) | CoG margin (mm) | Time (s) |
+|---|---|---|---|---|---|---|---|---|---|
+| Overflow jar out by its grip fin | M50, S25, L75 | +400 | **pass** on the first variant, all three | 2.0, the held jar to the jar's sensor (2 mm beside the cup) | 30.8 % elbow | 10 (assumed: the centring ring's O-ring) | 0.38 (empty) | 196 | 22.7 |
+| Build module out (release air opens the zero-point clamps) | M50 | +300 | **pass** | 0.5, the module to the Z mounting flange | 53.3 % wrist 1 | 106 out, 158 in | 3.46 | 188 | 26.0 |
+| Build module out | S25 | +300 | **pass** | 0.5, the same | 54.7 % wrist 1 | 106 out, 158 in | 3.14 | 189 | 26.0 |
+| Build module out | L75 | +300 | **pass** | 0.5, the same | 52.1 % wrist 1 | 106 out, 158 in | 3.73 | 188 | 26.0 |
+| Liners, reservoir, blade cartridge (re-check) | M50 | as before | **pass**, all four | as before: 1.6, 1.6, 3.5, 2.0 | 33.4–33.7 % elbow | as before | as before | 199 | 22.3–24.5 |
+
+The module is now 3.1–3.7 kg with its zero-point arms and pins (round 5: 2.6–3.2 kg). The jar carries 0.38 kg empty; full of
+AlSi10Mg powder (~115 cm³ at ~1.4 g/cm³ bulk, assumed) it is ~0.55 kg, well inside the 2F-85's 5 kg.
+
+**The module job needed a fix.**
+- **What failed.** It first ran on a snapshot of the layout work's files (02:24 UTC). The jar passed. The module failed at all 12
+  MiR positions and rolls. The best, x +300, failed on one frame of the drop: the module's zero-point pins read 12 mm "into" their
+  clamping modules.
+- **The cause was in the job, not the model.** The grasp line put the pads' centre on the grip block's centre with the gripper open.
+  Closing from 60 to 40.3 mm moves that centre 3.6 mm along the approach. The path's waypoints were absolute, so over the 40 mm drop
+  the module moved 3.6 mm sideways, with its pins in bores that have 0.2 mm clearance.
+- **Rounds 4 and 5 had the same drift.** A soft floor plate hid it; the round-4 note's captive screws "reading 3 mm deep at the first
+  frame" was probably this drift.
+- **The fix.** The path now runs from the pads' centre after they close (`ops.py`, `job_module`).
+- **A stricter audit as a result.** The floor plate is no longer soft. It is one of the module's fixtures under the 1.5 mm rule, as the
+  spigot leaves its 0.1 mm port straight down. The clamping modules are fixtures for the drop too. Their pins and bores are tessellated
+  at 0.05 mm, because 0.4 mm chords close their 0.2 mm clearance.
+- **The clearance.** The module's 0.5 mm (round 5: 1.0 mm) is now on the model's own path (`MODULE_PATH`), which `interference.py`
+  sweeps exactly.
+
+**Not simulated:** the jar's toggle clamp coming off and going back on. The jar job starts with it off. The jar going back in, and the
+module going back in, use the same poses reversed. The zero-point clamps' pull-in is not simulated.
 
 ## Alignment with byu-vcl PR 318
 
@@ -351,6 +403,7 @@ handle to the guard's panels (6.0 mm at 494 mm of travel).
 | Blade-cartridge grip fin, 4 mm, on the holder's front end | the lips of the plate fingers take it | ours |
 | Liner pull tabs, one part per side liner. Since 2026-11-25 a 2 mm 316L hanger: a 12 mm web (z 96–98) from the liner's front end in to a grip plate at x ±(93.4–95.4), y −88 to −58, z 70–98 (`add_liner_tabs`) | something to hold; the liners come out since 2026-11-23 (patch request 7). Round 5's tab, 12 mm off the liner, sat outboard of the door opening, out of the robot's reach | ours |
 | Two AprilTag plates (tag36h11, 56 mm) on the guard's front-left post | re-registration after each docking and VLM move | ours |
+| Overflow-jar grip fin (round 6, drawn by the layout work): a tab on the cup and a riser up to an I-section, a 40 mm web at x 80–120, z −60 to −30, between 56 mm flanges, at y −156 to −126, level with the module's grip block and 100 mm to its right | the cup itself can't be reached: at its height the gripper's coupling and camera clamp don't pass over the guard's bottom rail | ours, 6061 |
 
 The earlier note's other machine-side needs are resolved like this: the plate's grip groove level with the sill is handled by the
 cranked fingers (no change to the plate height); the drawer's 350 N by the wing cams; the door's 1.4 kN by the latch cylinders.
@@ -414,13 +467,17 @@ docking and VLM move the D405 reads the two tag plates on the guard post, and ev
 | Blade fin (4 mm) | 12 mm | ±4 mm |
 | Plate rim (lips beside it) | plate Ø + 6 mm | ±3 mm sideways; **±0.3 mm vertically** for the 2.4 mm lip in the 3 mm groove |
 | Wand fin (30 mm) | 40 mm | ±5 mm |
+| Module grip block and jar grip fin (40 mm webs between flanges) | 60 mm | ±10 mm sideways; ±4 mm vertically (30 mm web, 22 mm pads) |
+| Liner hanger tabs (2 mm grip plates, round 6) | 10 mm (lips' faces), limited by the door opening's side | ±4 mm |
 
 The plate groove is the tight one. Touch the plate's top face with the lower blades in force mode (5 N) to set z before closing, or
 make the groove and the lips 45° V-shapes (patch request), which centre over ±1.5 mm.
 
 ## Patch requests (parts other sections draw)
 
-1. **Build module joint** (modules_low.py; **still not drawn, 2026-11-23 (round 5)**): the robot can't turn the two captive M6 thumb
+1. **Build module joint** (**drawn 2026-11-25, round 6**, layout work: two SCHUNK NSE-HT mini 88-20 under the floor at (100, 40) and
+   (−102, −26), their Ø20 pins on arms that ride with the module, opened by release air; the robot's module swap passes on S25, M50
+   and L75, section "Round 6"). As it stood in round 5: the robot can't turn the two captive M6 thumb
    screws. The overflow jar now has its lane to the front (request 6), but it has to stay under the funnel at x = 100, and with it
    there the right-hand SCHUNK NSE-HT mini 88-20 has no place: in front of the jar it blocks the lane, behind it is the Z servo
    (x 34.5–93.5, y 27.7–109.5, z −187 to −84). [`hot-swap.md`](hot-swap.md) §3.2a lists the four moves it would take: fold the Z
@@ -448,6 +505,15 @@ make the groove and the lips 45° V-shapes (patch request), which centre over ±
 
    The clamp is an **MKS 100318805** toggle clamp, NW40, aluminium, lever to the front: $23.34 (mks.com, read 2026-11-23). Its A, B and
    C (123.7 × 83.6 × 19.05 mm) are drawn; its ring section is assumed.
+
+   **Round 6 (2026-11-25, layout work):**
+   - the joint moved to the slot's front end, (94, −46, z −82), with a 2.5 in. cup (~115 cm³);
+   - the cup carries a **grip fin**: a tab on the cup and a riser at x 117–125 up to an I-section level with the module's grip block,
+     a 40 mm web at x 80–120, z −60 to −30, between 56 mm flanges, at y −156 to −126;
+   - the front-right leg is back at the front-right corner (x 138–156, y −111 to −75).
+
+   The robot takes the fin from the front, as it takes the module. It passes on S25, M50 and L75 (section "Round 6"). **Open:** the
+   toggle clamp still has to come off before the robot pulls the jar, and that step is not simulated.
 7. **Liners** (section 5; **drawn 2026-11-23**): six parts now. Each side liner has its Ø22 screw hole slotted open to the back
    edge, is 15 mm shorter at the front (y −70.5 to 85.5) and 88 mm tall (z 16–104, was 94, so it passes the 92 mm door opening
    upright). The LED bar hangs from the lid's underside (x 126–134, z 112–120). The back liner is in two bands behind the ball screw
@@ -468,9 +534,13 @@ make the groove and the lips 45° V-shapes (patch request), which centre over ±
 - **Not simulated:** fitting and stripping the caps at the stand (byu-vcl PR 318 doesn't animate it either), MiR docking, the
   install direction of each part (the same poses as removal, reversed), and anything after the part is out (the racks on the MiR).
 - **The robot's own door close fails** (below the results table), so the door needs its actuator.
-- **The overflow jar** needs a grip fin the gripper can reach (round 5). Round 6 draws one, and the job is written for it (section
-  "Round 6"). The liners pass since round 6. The module's motion passes (rounds 4 and 5); round 6's layout work draws its zero-point
-  clamps (hot-swap.md §3.2a), and the module job runs on that model with the jar.
+- **The overflow jar's toggle clamp.** Since round 6 the jar comes out by its grip fin on S25, M50 and L75, and the module swap runs
+  with the zero-point clamps (section "Round 6"). The jar job starts with the MKS toggle clamp already off. A person, or a robot step
+  that is not simulated, has to push its lever and lift it off forward. A powered KF clamp, or a lever the fingers can push and a
+  place to park the clamp, would make the jar fully robot-tended.
+- **The module's forces.** The 106 N pull and 158 N push are still over the 100 N force mode. The zero-point clamps clamp the pins
+  once they are in; they don't do the spigot's 40 mm insertion. Round 4's note stands: position control with a 200 N PFL limit for
+  that part.
 - **Hand operation M3** (the liners) has not been re-run on the hanger tabs.
 - **Dynamics:** only the door is simulated in MuJoCo. The arm moves slowly (60°/s joints, 30–150 mm/s lines), so the static
   torques stand in for the dynamic ones; the module's carry is the heaviest case.
@@ -491,7 +561,11 @@ python analysis/robot/door_mj.py                                                
 OMP_NUM_THREADS=1 MUJOCO_GL=egl /tmp/capmem 3.5 xvfb-run -a python analysis/robot/ops.py --jobs module_swap,reservoir,blade_cartridge --modules M50,S25,L75 --render --tag _w3
 # round 6 (2026-11-25): the liners, the reservoir and the blade (~8 min without --render, ~15 min with it on a loaded runner)
 UR_ARM_CACHE=/tmp/robot/ur_arm_cache CELL_ACM_CACHE=/tmp/robot/cell_acm.json OMP_NUM_THREADS=1 MUJOCO_GL=egl /tmp/capmem 4 xvfb-run -a python analysis/robot/ops.py --jobs liner_right,liner_left,reservoir,blade_cartridge --modules M50 --render --tag _r6
+# round 6 on the merged model: the jar (by its grip fin) and the module swap (zero-point clamps) on all three modules (~25 min)
+UR_ARM_CACHE=/tmp/robot/ur_arm_cache CELL_ACM_CACHE=/tmp/robot/cell_acm.json OMP_NUM_THREADS=1 MUJOCO_GL=egl /tmp/capmem 4 xvfb-run -a python analysis/robot/ops.py --jobs overflow_jar,module_swap --modules M50,S25,L75 --render --tag _r6b
 ```
+The round-6 runs on the merged model were made in one long-lived Python process that keeps the cell between jobs (it calls the same
+`ops.run_variant`, `ops.run_job`, `ops.audit` and `ops.render`), so `ops_r6b.json` lists the jobs in the order they ran.
 
 Each script rebuilds the model from `cad/lpbf_low.py`, so it runs on whatever the model is now. The UR and Robotiq meshes are
 fetched to `/tmp/ur_arm_cache` (pinned commits; never committed) and need `pycollada`.
