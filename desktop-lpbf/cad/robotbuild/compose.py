@@ -62,8 +62,10 @@ TITLE_S = 2.6
 # ------------------------------------------------------------------------------------------------ pass 1: what's there
 def scan(partial=False, only=None):
     names = {n for n, _ in EXPECTED}
-    if common.FRAMES.exists():
-        names |= {p.name for p in common.FRAMES.iterdir() if p.is_dir() and p.name[:2].isdigit()}
+    expected = set(names)
+    if common.FRAMES.exists():                               # other numbered folders: only when finished, never tests
+        names |= {p.name for p in common.FRAMES.iterdir() if p.is_dir() and p.name[:2].isdigit()
+                  and "test" not in p.name.lower() and (p / "done").exists()}
     if only:
         names = {n for n in names if n in only}
     titles = dict(EXPECTED)
@@ -92,6 +94,8 @@ def scan(partial=False, only=None):
             meta = meta[:n]
         if meta:
             chapters.append(dict(name=name, dir=d, meta=meta, done=done, card=None))
+        elif name not in expected:
+            continue
         else:
             state = "still rendering" if d.exists() and any(d.glob("*.png")) else "not rendered"
             t = titles.get(name, name)
