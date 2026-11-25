@@ -17,7 +17,7 @@ from cell import Tm, inv  # noqa: F401
 
 # estimated minutes for the steps a person does (or a machine), for the time line; not measured
 PERSON_MIN = {"M09": 3.0, "C00": 6.0, "C09e": 3.0, "C15b": 4.0, "F02": 0.0, "F06b": 5.0, "F08": 1.0, "F12": 6.0, "F49": 6.0,
-              "F53": 10.0, "F58": 8.0, "F59": 60.0, "T01": 15.0, "T02": 45.0, "T03": 45.0, "T04": 40.0, "T05": 20.0}
+              "F53": 10.0, "F57b": 90.0, "F58": 8.0, "F59": 60.0, "T01": 15.0, "T02": 45.0, "T03": 45.0, "T04": 40.0, "T05": 20.0}
 MACHINE_S = {"C11": 3.0, "T06": 1800.0}
 STAGED = ("F01", "F54", "C00c")        # two-arm parts: a person stages them at the station on a cart (see dual())
 

@@ -38,7 +38,7 @@ import common  # noqa: E402
 import kit_table as KT  # noqa: E402
 
 FPS = common.FPS
-TRAJ = common.TRAJ
+TRAJ = pathlib.Path(os.environ.get("ASM_TRAJ", str(common.TRAJ)))     # the recorded run to replay
 CHAP = {"module": ("40-assembly-module", "Assembly 1: the build module, by two UR12e on MiR250s"),
         "chamber": ("41-assembly-chamber", "Assembly 2: the chamber and the process module, by two UR12e on MiR250s")}
 # time-lapse factors per event kind (real seconds per real second shown); the renderer may raise them to fit the budget
@@ -442,6 +442,15 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=()):
                 label = "[redesigned, round 7] " + label
             cur = dict(id=e["id"], label=label, status=step_status(e["id"], failed), actor=e.get("actor") or "A", do=e.get("do"),
                        t=0.0, failed=failed)
+            row = (rows.get(e["id"]) or {}).get("row") or {}
+            if not failed and row.get("fetch") == "FAIL":
+                n0 = cur["actor"] if cur["actor"] in ("A", "B") else "A"
+                rp.aim(rp.tcp(n0), "mid", n0)
+                for _ in range(int(FPS * 1.2)):
+                    stop = emit(cur["label"], "its pick at the parts table was not planned ("
+                                + (row.get("fetch_why") or "")[:80] + "): the part is shown in the gripper", [f"robot {n0}"])
+                    if stop:
+                        break
             continue
         if k == "step_end":
             if cur["status"] in ("fail",) or e.get("status") == "fail":
