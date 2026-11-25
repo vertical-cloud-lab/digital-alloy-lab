@@ -639,7 +639,8 @@ focus shift disagree by more than 0.01 mm. Vendor facts were fetched through the
 - `beam_path.py` §C: the 8 mm window and the 3 mm slide shift the focus by (8 + 3)(1 − 1/1.44956) = **3.41 mm**. `P["focus_shift"]`
   computes the same number, and the lens's output end moves from z 182.5 to **z 185.91**. As drawn, the focus lands at
   z = −0.001 mm. With the optics BOM's glass (Edmund 38-990, 9.53 mm; Edmund 36-299, 2 mm) the shift is 3.58 mm, so the focus
-  would land 0.17 mm low, which the shims take up.
+  would land 0.17 mm low, which the shims take up. **2026-11-25 (§9.3):** that glass is now drawn; the lens sits 3.58 mm
+  higher on 2.83 mm of shims, and the focus lands at z +0.004 mm.
 - **The shims.** The lens's shoulder bears on a 3 mm stack of rings (ID 85.5, OD 105) under a 13 mm M85×1 adapter ring (it was
   16 mm). Taking shims out or adding them moves the focus ±3 mm, set by the burn test (§4.2). The lens's ~12.5 mm thread
   engages the ring 9.5 mm at the nominal stack, and 6.5–12.5 mm over the range. McMaster sells no ring shim over 80 mm ID:
@@ -734,7 +735,7 @@ bom.csv L3 now says this. The termination question stands: IPG's quote says QBH-
     dump-port head that fits the bridge.
 - **AR-coated cover slides** are already the real parts in bom.csv A2 and optics-bom O12/O12b: 12 × Edmund 36-299 (Ø50 × 2 mm,
   1064 nm V-coat, $103 at 6–25), and 10 × Cloudray PW02FS50X2 to trial. The model still draws the 3 mm slide; the 2 mm one
-  moves the focus 0.31 mm, inside the shims.
+  moves the focus 0.31 mm, inside the shims. (2026-11-25: the 2 mm slide is drawn now, §9.3.)
 
 ### 8.5 Layer camera: a Ø30 bore on the line of sight
 
