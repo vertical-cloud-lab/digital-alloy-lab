@@ -5,12 +5,12 @@
  "layer_m": 3e-05,
  "keys": {
   "tag": "case name (alloy, power, speed, plate temperature)",
-  "inputs": "alloy, P_W, v_m_s, spot_1e2_um, A (absorptivity), T0_K, f_M (Marangoni k factor)",
+  "inputs": "alloy, P_W, v_m_s, spot_1e2_um, A (absorptivity), T0_K, f_M (Marangoni k factor), f_vol (surface activity of Mg and Zn relative to the bulk: 1, or 0.1 for the depleted-surface 7075 runs)",
   "pool": "melt pool from fv3d.py: L/W/D um (liquidus), liquid cross-section mm2, T_peak_flat_K",
-  "T_boil_1atm_K": "alloy's bubble point (Raoult, bulk composition)",
+  "T_boil_1atm_K": "alloy's bubble point at 1 atm (Raoult, with f_vol applied to Mg and Zn)",
   "T_wall_K": "depression-wall temperature: 0.54 p_sat = p_amb + 2 sigma / r0",
   "readings": "per surface reading (flat / wall / boil): m_dot_kg_s per element and total, loss_ug_per_mm per element and total, vapour_mole_fraction, evap_power_W, area_hot_mm2 (where p_sat > p_amb), loss_fraction_per_pass and shift_per_layer_frac per element (see module docstring)",
-  "measured": "per element: loss fraction measured in LPBF builds (source), and the mass rate it implies at this case's scan rate, m_dot = f w rho h t v (kg/s) and per mm of track (ug/mm): use these for Mg and Zn",
+  "measured": "per element: loss fraction measured in LPBF builds (source), and the mass rate it implies at this case's scan rate, m_dot = f w rho h t v (kg/s) and per mm of track (ug/mm): use these for Mg and Zn. The fractions come from builds at other parameters and are applied unchanged at every power and speed",
   "best": "the recommended source: per element the measured rate where one exists (Mg, Zn), else the wall reading; m_dot_kg_s, loss_ug_per_mm, g_per_hour_lasing (per hour of beam-on time), vapour_mole_fraction",
   "exit": "Knight jump at the hottest point of each reading: T_surface_K, p_sat_Pa, recoil_Pa (0.54 p_sat), mach, T_vapour_K, u_m_s, rho_vapour_kg_m3, M_vapour_g_mol, Q_vapour_m3_s (volume flow at the exit state, total)"
  },

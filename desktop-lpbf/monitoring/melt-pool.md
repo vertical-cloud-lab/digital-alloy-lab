@@ -17,6 +17,10 @@ The scripts are in [`analysis/monitoring/melt/`](../analysis/monitoring/melt/) a
 | [`evap.py`](../analysis/monitoring/melt/evap.py) | evaporation, recoil and vapour exit state → [`plume_source.json`](../analysis/out/monitoring/melt/plume_source.json) (§5) |
 | [`plots.py`](../analysis/monitoring/melt/plots.py), [`report.py`](../analysis/monitoring/melt/report.py) | figures; what each camera band, the photodiode and a two-colour channel see; the tables |
 
+**To rerun** (one core, ~1.5 h in all): `analytic.py`; `run_cases.py ref+val+sens+map`; `run_cases.py collect`; `evap.py`;
+`transient.py`; `plots.py`; `report.py`, each under `OMP_NUM_THREADS=1` in `/tmp/venv`. The 3D fields go to `/tmp/melt_runs`
+(not committed); everything the note quotes is in the committed JSON.
+
 **Operating points:** IPG YLR-500 single-mode CW at 1,070 nm; the drawn 96 µm (1/e²) spot, with the 48, 57 and 75 µm options of
 [`optics.md`](../optics.md) §9.1; 100–500 W; 0.2–1.1 m/s (the basiCube 20 marks at up to ~1.1 m/s); 30 µm layers; 0.10 mm
 hatch; plate at 25 or 200 °C.
@@ -39,11 +43,13 @@ hatch; plate at 25 or 200 °C.
      plate; the trailing direction turns with every hatch direction; and the 850 nm view sits 170–250 µm off the beam at the
      field edges (monitoring.md §2.2). Plan a **1.2–1.5 mm** field (150–190 px).
    - **A silicon camera at 850 nm sees only the hot core.** With the depression wall at full scale, a 12-bit sensor reaches
-     down to ~1,170 K: a region ~180 × 180 µm, about half the pool's length. An InGaAs camera at 1,550 nm reaches ~800 K: the
-     whole pool and its mushy tail.
+     down to ~1,170 K: a region ~180 × 180 µm, about half the pool's length. To reach the liquidus (870–925 K) it has to
+     overexpose the core 50–150×. An InGaAs camera at 1,550 nm reaches ~800 K with the core in range: the whole pool and its
+     mushy tail.
 3. **Temperatures a pyrometer must span:** from the plate (25–200 °C) through the mushy zone (477–652 °C, 750–925 K) to the
-   depression wall at ~2,500–2,900 K (2,763 K for AlSi10Mg). The flat-surface model peaks at 3,000–3,600 K; the real surface
-   can't stay much hotter than the wall, because it is pushed down into a depression. Between 750 K and 2,763 K the radiance
+   depression wall at ~2,500–2,900 K (2,763 K for AlSi10Mg; as low as ~1,840 K for 7075 while Zn keeps evaporating). The
+   flat-surface model peaks at 3,000–3,600 K at 320–400 W; the real surface can't stay much hotter than the wall, because it is
+   pushed down into a depression. Between 750 K and 2,763 K the radiance
    changes ~10⁴× at 1.55 µm and ~10⁷× at 0.85 µm.
 4. **Cooling and solidification against bandwidth:** cooling at the liquidus is 0.2–2.6 × 10⁶ K/s (medians), in line with the
    0.8–0.95 × 10⁶ K/s published for the centre of AlSi10Mg pools. The **mushy zone lasts 22–72 µs for AlSi10Mg, 23–72 µs for
@@ -133,7 +139,7 @@ The largest single unknown. Values for Al at ~1,070 nm (via Edison r8-melt-plume
 
 Two models are used:
 - **Scaling laws:** Gan et al.'s Eq. 6, A = 0.7 [1 − exp(−0.6 Ke_m L_d*)], with the flat 0.047 as η_m and 0.15 as a floor. It gives
-  0.25–0.37 for AlSi10Mg at 200–350 W and 0.92 m/s, and 0.5–0.6 at 0.6 m/s.
+  0.25–0.37 for AlSi10Mg at 200–350 W and 0.92 m/s, and 0.4–0.6 at 0.6 m/s.
 - **3D model: A = 0.35, fixed.** It reproduces the measured AlSi10Mg track widths to within −9 to +10 % from 200 to 350 W (§2.1),
   so the reference fields use it.
 
@@ -216,8 +222,8 @@ I paired the 0.688 m/s range ends with 200 and 350 W):
   [Huang et al. 2022](https://doi.org/10.1038/s41467-022-28694-x) (read 2026-11-25) point the same way: in Al7A77, an
   Al-Zn-Mg-Cu alloy, the keyhole transition sat at a normalised enthalpy of ~20 ± 3 against ~8 ± 3 for Ti-6Al-4V.
 - **Cooling rates agree.** Van Cauwenbergh et al. (read 2026-11-25) give 9.5 × 10⁵ K/s at the pool centre and 1.6 × 10⁵ K/s at
-  its boundary from cell spacing, and 8.3 and 4.4 × 10⁵ K/s from their heat-transfer model; Leis et al. 2022
-  ([doi](https://doi.org/10.3390/met12122000), via Edison) calculate up to 1.2–1.75 × 10⁶ K/s over 250–450 W. The 3D model's
+  its boundary from cell spacing, and 8.3 and 4.4 × 10⁵ K/s from their heat-transfer model;
+  [Leis et al. 2022](https://doi.org/10.3390/met12122000) (via Edison) calculate up to 1.2–1.75 × 10⁶ K/s over 250–450 W. The 3D model's
   medians for AlSi10Mg are 0.2–1.2 × 10⁶ K/s (§3.4).
 
 ## 3. The 3D model ([`fv3d.py`](../analysis/monitoring/melt/fv3d.py))
@@ -285,7 +291,8 @@ What the fields say:
   the activity cut 10× the wall is ~2,540 K and the pool 5–8 % bigger. The truth is in between, and the photodiode signal
   moves 7× across that range.
 - **Silicon sees about half the pool; InGaAs sees all of it.** The Si 850 nm view at 12 bits ends at ~1,170 K, 140–220 µm
-  long whatever the pool's length. The InGaAs view reaches ~800 K, the liquidus of every alloy.
+  long whatever the pool's length. Overexposing the core 10× moves the floor to ~1,010 K and 100× to ~890 K, if the sensor
+  doesn't bloom. The InGaAs view reaches ~800 K, below the liquidus of every alloy, without overexposing anything.
 
 ### 3.3 Sensitivity (AlSi10Mg, 320 W, 1.1 m/s, A 0.35, 25 °C)
 
@@ -336,7 +343,7 @@ What the fields say:
   ([Martin et al. 2017](https://doi.org/10.1038/nature23894)). The model's G and R don't change that picture. I did not draw a
   columnar-to-equiaxed line, because I found no Al-specific constants to put on it.
 - **Hot cracking:** cracks open in the last liquid films, and how long they stay open scales with the freezing range.
-  - AlSi10Mg (39 K, ~50 % eutectic that back-fills) spends 22–72 µs in its mushy zone at 1.1 m/s on a 25 °C plate; 6061 (70 K)
+  - AlSi10Mg (39 K, mostly eutectic liquid that back-fills) spends 22–72 µs in its mushy zone at 1.1 m/s on a 25 °C plate; 6061 (70 K)
     23–72 µs; **7075 (158 K) 67–156 µs, 2–3× longer.** At 0.6 m/s 7075's mushy zone lasts up to ~290 µs.
   - The cooling rates are similar across alloys (0.6–2.6 × 10⁶ K/s at 1.1 m/s), so the thermal strain rate is similar. What
     differs is the freezing range and how much eutectic there is to heal a crack, which is why 6061 and 7075 crack and AlSi10Mg
@@ -428,7 +435,8 @@ From each 3D surface field:
 - **Selective loss:** each element's evaporated mass against what one layer supplies (hatch × layer × density × weight fraction).
 - **Measured losses, for calibration:** AlSi10Mg 57 % of its Mg and 6061 17 % (Li 2024 thesis, via Edison); 7075 ~12 % of its Mg
   and ~18 % of its Zn ([Velikajne et al. 2026](https://doi.org/10.3390/ma19050970), via heat.md). The JSON's `best` block uses
-  these for Mg and Zn, and the wall reading for Al.
+  these for Mg and Zn, and the wall reading for Al. The fractions come from builds at other parameters and are applied unchanged
+  at every power and speed.
 
 | Case (320 W, 25 °C, 96 µm) | HKL wall reading (µg/mm): total; Mg / Zn / Al | Best estimate (µg/mm; g per hour of lasing) | Best vapour (mol %) | Evaporation power, wall (W) | Exit: Mach, velocity (m/s), T (K) | HKL Mg asked of each layer (× its Mg) |
 |---|---|---|---|---|---|---|
@@ -447,7 +455,8 @@ From each 3D surface field:
 - **So the vapour is ~0.05–0.25 µg per mm of track, mostly Al,** about 0.2–0.6 g per hour of lasing at 320–400 W. If the surface
   is fully depleted of Mg, the wall is hotter (~2,940 K for pure Al) and the Al vapour ~2–3× higher; the flat reading's upper
   bound is ~1.5 g/h. This is the condensate source for window fouling.
-- **Evaporation takes ~2 % of the absorbed power** (1.3–3 W of 112 W), and 13–14 % for 7075 if its surface kept the bulk Zn.
+- **Evaporation takes ~2 % of the absorbed power** (1.3–3 W of 112–140 W), and 13–14 % for 7075 if its surface kept the bulk
+  Zn.
 - **Exit velocity ~265–480 m/s at Mach 0.43** at the edge of the Knudsen layer (~1,090 m/s, sonic, in the flat reading). Edison's
   sources give 20–300 m/s for the vapour jet and 38–97 m/s for the plume's ascent, so the jet slows within a few hundred µm as it
   mixes with argon. The vapour's volume flow is ~3 × 10⁻⁷ m³/s at room temperature, negligible beside the 140–200 L/min

@@ -38,14 +38,14 @@ def surface_figure(R):
     n = len(tags)
     ncol = 4
     nrow = math.ceil(n / ncol)
-    fig, axs = plt.subplots(nrow, ncol, figsize=(4.0 * ncol, 2.9 * nrow), squeeze=False)
+    fig, axs = plt.subplots(nrow, ncol, figsize=(4.3 * ncol, 3.1 * nrow), squeeze=False)
     for ax, t in zip(axs.ravel(), tags):
         d = np.load(RUNS / f"{t}.npz")
         r = R[t]
         al = PR.Alloy(r["case"]["alloy"])
         X, Y = np.meshgrid(d["xg"], d["yg"], indexing="ij")
         Ts = d["Ts"]
-        m = ax.pcolormesh(X, Y, Ts, cmap="Blues_r" if False else "magma", vmin=r["case"]["T0"], vmax=3400, shading="auto")
+        m = ax.pcolormesh(X, Y, Ts, cmap="magma", vmin=298.0, vmax=3400, shading="auto")
         cs = ax.contour(X, Y, Ts, levels=[al.T_sol, al.T_liq, r["T_boil_alloy"]], colors=["#9c9c9c", "#ffffff", "#00b894"],
                         linewidths=[0.8, 1.0, 1.2])
         # 1 mm coaxial-camera field centred on the beam
@@ -53,9 +53,9 @@ def surface_figure(R):
                                    ls="--"))
         c = r["case"]
         L = r["liquid"]
-        ax.set_title(f"{c['alloy']} {c['P']:.0f} W {c['v']} m/s, plate {c['T0'] - 273.15:.0f} C\n"
-                     f"pool {L['L'] * 1e6:.0f} x {L['W'] * 1e6:.0f} x {L['D'] * 1e6:.0f} um "
-                     f"({L['L'] * 1e6 / CAM_PX:.0f} x {L['W'] * 1e6 / CAM_PX:.0f} px at 8 um/px)", fontsize=8)
+        ax.set_title(f"{c['alloy']}, {c['P']:.0f} W, {c['v']} m/s, plate {c['T0'] - 273.15:.0f} C\n"
+                     f"liquid {L['L'] * 1e6:.0f} x {L['W_any'] * 1e6:.0f} x {L['D'] * 1e6:.0f} um = "
+                     f"{L['L'] * 1e6 / CAM_PX:.0f} x {L['W_any'] * 1e6 / CAM_PX:.0f} px", fontsize=8)
         ax.set_aspect("equal")
         ax.set_xlim(-900, 250)
         ax.set_ylim(-300, 300)
@@ -66,11 +66,11 @@ def surface_figure(R):
         ax.set_xlabel("x (um), beam moving +x", fontsize=8)
     for ax in axs[:, 0]:
         ax.set_ylabel("y (um)", fontsize=8)
-    cb = fig.colorbar(m, ax=axs, shrink=0.6, pad=0.01)
+    cb = fig.colorbar(m, ax=axs, shrink=0.6, pad=0.015)
     cb.set_label("surface temperature (K)", fontsize=8)
-    fig.suptitle("Surface temperature, 96 um spot, A 0.35 (fv3d.py). Contours: solidus (grey), liquidus (white), the alloy's "
-                 "1 atm boiling point (green: inside it the real surface is a vapour depression). Dashed: 1 mm camera field",
-                 fontsize=9)
+    fig.suptitle("Surface temperature, 96 um spot, A 0.35 (fv3d.py). Contours: solidus (grey), liquidus (white), the alloy's 1 atm\n"
+                 "boiling point (green; inside it the real surface is a vapour depression). Dashed: edge of a 1 mm camera field. "
+                 "Pixels at 8 um/px.", fontsize=9)
     fig.savefig(OUT / "surface_fields.png", dpi=110, bbox_inches="tight")
     plt.close(fig)
 
