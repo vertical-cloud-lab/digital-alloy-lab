@@ -77,7 +77,7 @@ PHASE_R = dict(stack_inv=_RY180, body_inv=_RY180, chamber_inv=_RX180, stack_up=n
                chamber_up_P=np.eye(4), chamber_up_T=np.eye(4), upright=np.eye(4))
 SPLIT = ("Chamber legs", "Optics bridge posts", "Macor standoff rings", "Radiation shields", "Zero-point posts",
          "Zero-point module plates", "Zero-point clamping modules", "Zero-point arms", "Zero-point clamping pins",
-         "Door hinge knuckles on the chamber")      # run_assembly.Run.split_parts: one object per solid
+         "Door hinge knuckles on the chamber", "Enclosed beam tubes", "Hinge pins")      # run_assembly.Run.split_parts: one object per solid
 
 
 def _hash():

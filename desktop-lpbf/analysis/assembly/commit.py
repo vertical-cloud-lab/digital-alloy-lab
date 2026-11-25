@@ -81,7 +81,7 @@ def park_if_needed(run, n):
     path, info = run.plan_to(n, park, st["close"])
     R.move(n, path if path is not None else [run.q[n], park], "plan")
     if path is None:
-        R.mark("unplanned", arm=n, what="move to park not planned")
+        R.mark("unplanned", arm=n, note="move to park not planned")
     cl.move_mir(n, x_pl)
     run.q[n] = q_pl
     a.place(q_pl)
@@ -205,7 +205,7 @@ def park(run, n, path):
         R.move(n, path, "plan")
     else:
         R.move(n, [run.q[n], a.park_q()], "plan")
-        R.mark("unplanned", arm=n, what="move to park not planned")
+        R.mark("unplanned", arm=n, note="move to park not planned")
     R.state[n]["q"] = a.park_q()
 
 
@@ -249,7 +249,7 @@ def screw(run, i, actor, best, tool, long_bit, tip_d, torque, L, s_hex, row_acc)
             R.move(actor, best["path"], "plan")
         elif target is not None:
             R.move(actor, [q_from, np.asarray(target, float)], "plan")
-            R.mark("unplanned", arm=actor, what="approach to the screw not planned")
+            R.mark("unplanned", arm=actor, note="approach to the screw not planned")
     if best.get("pre_qs"):
         R.move(actor, best["pre_qs"], "cart")
     d = float(run.sc.FS.CATALOG[run.sc.objs[i]["pn"]].get("d", 4.0))
@@ -298,7 +298,7 @@ def dual(run, st, best, frames, body, idx, gA, gB, cA, cB):
             if path is None:
                 ok_all = False
                 R.move(n, [a.park_q(), q0[n]], "plan", close=0.0)
-                R.mark("unplanned", arm=n, what=f"approach to the carry: {info.get('reason')}")
+                R.mark("unplanned", arm=n, note=f"approach to the carry: {info.get('reason')}")
             else:
                 R.move(n, path, "plan", close=0.0)
             R.grip(n, cA if n == "A" else cB)

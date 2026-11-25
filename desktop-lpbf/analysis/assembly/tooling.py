@@ -324,6 +324,49 @@ def nozzle():
     return _fuse(body, stem, cup), np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, L], [0, 0, 0, 1]], float)
 
 
+# ------------------------------------------------------------------------------------------------ round 7 tools
+# Liner wand (round 7, 2026-11-25): the four back liner halves (0.5 mm 316L, 130 x 24 or 130 x 16 mm, y 94.4-94.9 on the back wall)
+# cannot carry hanger tabs like the side liners: the recoater carriage block (y 53-92, z 25-99) and ball nut sweep the whole width
+# 2.4 mm in front of them, so anything standing forward of the sheet is hit by the carriage. run 7's stock fingers met the module
+# handle and the frame in the door opening. The wand reaches them through the door opening instead: a 12 x 12 mm aluminium bar,
+# 300 mm from its changer plate to the cups, with two Ø15 bellows suction cups (Schmalz / Piab Ø15 bellows class, 1.5 folds) 50 mm
+# apart on a crossbar at its tip, facing along the bar. Vacuum from an ejector on the changer's air pass-through (ATI QC-21: the
+# pneumatic module E6). Two Ø15 cups at -0.6 bar hold ~2 x 10 N: the liner weighs 12 g, its spring clips need a few newtons.
+WAND = dict(plate_d=63.0, plate_t=8.0, bar=12.0, L=300.0, cross=(70.0, 14.0, 8.0), cup_d=15.0, cup_h=8.0, pitch=50.0, mass=0.35)
+
+
+def liner_wand():
+    """End effector, mounting frame (z along the bar); TCP at the cups' faces, between the two cups."""
+    w = WAND
+    plate = _cyl(w["plate_d"] / 2, 0.0, w["plate_t"])
+    b = w["bar"] / 2
+    z1 = w["L"] - w["cup_h"] - w["cross"][2]
+    bar = _box(-b, b, -b, b, w["plate_t"], z1)
+    cx, cy, cz = w["cross"]
+    cross = _box(-cx / 2, cx / 2, -cy / 2, cy / 2, z1, z1 + cz)
+    cups = [_cyl(w["cup_d"] / 2, z1 + cz, w["L"], x=s * w["pitch"] / 2) for s in (-1, 1)]
+    T = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, w["L"]], [0, 0, 0, 1]], float)
+    return _fuse(plate, bar, cross, *cups), T
+
+
+# Ring pad (round 7): the camera window's two FKM flat rings (Ø25.2 / Ø21, 0.75-1 mm) sit in the boss's Ø25.6 counterbore, where
+# the 2F-85's fingertips do not fit (run 7: F48b) and the Ø6 nozzle cup is wider than the 2.1 mm ring. An annular silicone lip
+# (OD 24.6, ID 21.4, 3 mm) on a Ø8 stem under the VGC10's adaptor plate, with a soft centre plug so it also seals on the window.
+RINGPAD = dict(od=24.6, id=21.4, lip=3.0, stem_d=8.0, stem_l=55.0)
+
+
+def ring_pad():
+    v = VAC
+    r = RINGPAD
+    body = _box(-v["w"] / 2, v["w"] / 2, -v["d"] / 2, v["d"] / 2, 0.0, v["h"])
+    stem = _cyl(r["stem_d"] / 2, v["h"], v["h"] + r["stem_l"])
+    lip = _cyl(r["od"] / 2, v["h"] + r["stem_l"], v["h"] + r["stem_l"] + r["lip"]).cut(
+        _cyl(r["id"] / 2, v["h"] + r["stem_l"] - 1, v["h"] + r["stem_l"] + r["lip"] + 1))
+    plug = _cyl(r["id"] / 2 - 0.5, v["h"] + r["stem_l"], v["h"] + r["stem_l"] + r["lip"] - 0.5)
+    L = v["h"] + r["stem_l"] + r["lip"]
+    return _fuse(body, stem, lip, plug), np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, L], [0, 0, 0, 1]], float)
+
+
 def fixture_P(z_top):
     """Pedestal on the floor for the chamber's floor plate (new chamber: frame + bolted floor plate). Machine frame: the
     plate's underside (z = -20) on a 240 x 150 column top, the floor z_top below it; the plate's edges, where the 18 floor
