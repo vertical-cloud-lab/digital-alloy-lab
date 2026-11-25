@@ -1,0 +1,85 @@
+1. (jenzer2019isitpossible pages 4-7): S. Jenzer, M. Alves, S. Bilgen, J. Bonis, F. Brisset, S. Djelali, A. Gonnin, M. Guerrier, D. Grasset, F. Letellier-Cohen, B. Mercier, E. Mistretta, and G. Sattonnay. Is it possible to use additive manufacturing for accelerator uhv beam pipes? Journal of Physics: Conference Series, 1350:012199, Nov 2019. URL: https://doi.org/10.1088/1742-6596/1350/1/012199, doi:10.1088/1742-6596/1350/1/012199. This article has 14 citations.
+
+2. (romanescu2023evaluationofthe pages 1-3): Pascal Romanescu, Daniel Omidvarkarjan, Julian Ferchow, and Mirko Meboldt. Evaluation of the ultra-high vacuum suitability of laser powder bed fusion manufactured stainless steel 316l. Springer Tracts in Additive Manufacturing, pages 407-422, Sep 2023. URL: https://doi.org/10.1007/978-3-031-42983-5\_27, doi:10.1007/978-3-031-42983-5\_27. This article has 3 citations.
+
+3. (romanescu2023evaluationofthe pages 12-15): Pascal Romanescu, Daniel Omidvarkarjan, Julian Ferchow, and Mirko Meboldt. Evaluation of the ultra-high vacuum suitability of laser powder bed fusion manufactured stainless steel 316l. Springer Tracts in Additive Manufacturing, pages 407-422, Sep 2023. URL: https://doi.org/10.1007/978-3-031-42983-5\_27, doi:10.1007/978-3-031-42983-5\_27. This article has 3 citations.
+
+4. (vovrosh2018additivemanufacturingof pages 5-8): Jamie Vovrosh, Georgios Voulazeris, Plamen Petrov, Ji Zou, Youssef Gaber, Laura Benn, David Woolger, Moataz M. Attallah, Vincent Boyer, Kai Bongs, and Michael Holynski. Additive manufacturing of magnetic shielding and ultra-high vacuum flange for cold atom sensors. Scientific Reports, Oct 2017. URL: https://doi.org/10.1038/s41598-018-20352-x, doi:10.1038/s41598-018-20352-x. This article has 95 citations and is from a peer-reviewed journal.
+
+5. (vovrosh2018additivemanufacturingof pages 4-5): Jamie Vovrosh, Georgios Voulazeris, Plamen Petrov, Ji Zou, Youssef Gaber, Laura Benn, David Woolger, Moataz M. Attallah, Vincent Boyer, Kai Bongs, and Michael Holynski. Additive manufacturing of magnetic shielding and ultra-high vacuum flange for cold atom sensors. Scientific Reports, Oct 2017. URL: https://doi.org/10.1038/s41598-018-20352-x, doi:10.1038/s41598-018-20352-x. This article has 95 citations and is from a peer-reviewed journal.
+
+6. (cooper2019additivelymanufacturedultrahigh pages 6-7): N. Cooper, L. A. Coles, S. Everton, R. P. Campion, S. Madkhaly, C. Morley, W. Evans, R. Saint, P. Krüger, F. Oručević, C. Tuck, R. D. Wildman, T. M. Fromhold, and L. Hackermueller. Additively manufactured ultra-high vacuum chamber below $10^-10$ mbar. Text, Jan 2019. URL: https://doi.org/10.48550/arxiv.1903.07708, doi:10.48550/arxiv.1903.07708. This article has 3 citations and is from a peer-reviewed journal.
+
+7. (cooper2019additivelymanufacturedultrahigh pages 1-2): N. Cooper, L. A. Coles, S. Everton, R. P. Campion, S. Madkhaly, C. Morley, W. Evans, R. Saint, P. Krüger, F. Oručević, C. Tuck, R. D. Wildman, T. M. Fromhold, and L. Hackermueller. Additively manufactured ultra-high vacuum chamber below $10^-10$ mbar. Text, Jan 2019. URL: https://doi.org/10.48550/arxiv.1903.07708, doi:10.48550/arxiv.1903.07708. This article has 3 citations and is from a peer-reviewed journal.
+
+8. (cooper2021additivelymanufacturedultrahigh pages 6-7): N. Cooper, L.A. Coles, S. Everton, I. Maskery, R.P. Campion, S. Madkhaly, C. Morley, J. O’Shea, W. Evans, R. Saint, P. Krüger, F. Oručević, C. Tuck, R.D. Wildman, T.M. Fromhold, and L. Hackermüller. Additively manufactured ultra-high vacuum chamber for portable quantum technologies. Additive Manufacturing, 40:101898, Apr 2021. URL: https://doi.org/10.1016/j.addma.2021.101898, doi:10.1016/j.addma.2021.101898. This article has 70 citations and is from a highest quality peer-reviewed journal.
+
+9. (cooper2019additivelymanufacturedultrahigh pages 2-4): N. Cooper, L. A. Coles, S. Everton, R. P. Campion, S. Madkhaly, C. Morley, W. Evans, R. Saint, P. Krüger, F. Oručević, C. Tuck, R. D. Wildman, T. M. Fromhold, and L. Hackermueller. Additively manufactured ultra-high vacuum chamber below $10^-10$ mbar. Text, Jan 2019. URL: https://doi.org/10.48550/arxiv.1903.07708, doi:10.48550/arxiv.1903.07708. This article has 3 citations and is from a peer-reviewed journal.
+
+10. (cooper2021additivelymanufacturedultrahigh pages 2-4): N. Cooper, L.A. Coles, S. Everton, I. Maskery, R.P. Campion, S. Madkhaly, C. Morley, J. O’Shea, W. Evans, R. Saint, P. Krüger, F. Oručević, C. Tuck, R.D. Wildman, T.M. Fromhold, and L. Hackermüller. Additively manufactured ultra-high vacuum chamber for portable quantum technologies. Additive Manufacturing, 40:101898, Apr 2021. URL: https://doi.org/10.1016/j.addma.2021.101898, doi:10.1016/j.addma.2021.101898. This article has 70 citations and is from a highest quality peer-reviewed journal.
+
+11. (grinschek2022gastightmeanszero pages 10-12): Fabian Grinschek, Amal Charles, Ahmed Elkaseer, Christoph Klahn, Steffen G. Scholz, and Roland Dittmeyer. Gas-tight means zero defects - design considerations for thin-walled fluidic devices with overhangs by laser powder bed fusion. Materials &amp; Design, 223:111174, Nov 2022. URL: https://doi.org/10.1016/j.matdes.2022.111174, doi:10.1016/j.matdes.2022.111174. This article has 15 citations and is from a highest quality peer-reviewed journal.
+
+12. (grinschek2022gastightmeanszero pages 7-8): Fabian Grinschek, Amal Charles, Ahmed Elkaseer, Christoph Klahn, Steffen G. Scholz, and Roland Dittmeyer. Gas-tight means zero defects - design considerations for thin-walled fluidic devices with overhangs by laser powder bed fusion. Materials &amp; Design, 223:111174, Nov 2022. URL: https://doi.org/10.1016/j.matdes.2022.111174, doi:10.1016/j.matdes.2022.111174. This article has 15 citations and is from a highest quality peer-reviewed journal.
+
+13. (grinschek2022gastightmeanszero pages 12-13): Fabian Grinschek, Amal Charles, Ahmed Elkaseer, Christoph Klahn, Steffen G. Scholz, and Roland Dittmeyer. Gas-tight means zero defects - design considerations for thin-walled fluidic devices with overhangs by laser powder bed fusion. Materials &amp; Design, 223:111174, Nov 2022. URL: https://doi.org/10.1016/j.matdes.2022.111174, doi:10.1016/j.matdes.2022.111174. This article has 15 citations and is from a highest quality peer-reviewed journal.
+
+14. (ratkus2024evaluationofgreen pages 3-6): A. Ratkus, S. Rarison, C. Garion, H. Kos, S. Gruber, L. Stepien, A. A. Patil, E. Lopez, T. Torims, G. Pikurs, M. Vedani, and V. Lacis. Evaluation of green laser source additive manufacturing technology for accelerator applications with ultra-high vacuum requirements. Journal of Physics: Conference Series, 2687:082046, Jan 2024. URL: https://doi.org/10.1088/1742-6596/2687/8/082046, doi:10.1088/1742-6596/2687/8/082046. This article has 12 citations.
+
+15. (romano2024metaladditivemanufacturing pages 21-23): Tobia Romano, Guntis Pikurs, Andris Ratkus, Toms Torims, Nicolas Delerue, Maurizio Vretenar, Lukas Stepien, Elena López, and Maurizio Vedani. Metal additive manufacturing for particle accelerator applications. Physical Review Accelerators and Beams, May 2024. URL: https://doi.org/10.1103/physrevaccelbeams.27.054801, doi:10.1103/physrevaccelbeams.27.054801. This article has 37 citations.
+
+16. (grinschek2022gastightmeanszero pages 1-2): Fabian Grinschek, Amal Charles, Ahmed Elkaseer, Christoph Klahn, Steffen G. Scholz, and Roland Dittmeyer. Gas-tight means zero defects - design considerations for thin-walled fluidic devices with overhangs by laser powder bed fusion. Materials &amp; Design, 223:111174, Nov 2022. URL: https://doi.org/10.1016/j.matdes.2022.111174, doi:10.1016/j.matdes.2022.111174. This article has 15 citations and is from a highest quality peer-reviewed journal.
+
+17. (romano2024metaladditivemanufacturing pages 8-9): Tobia Romano, Guntis Pikurs, Andris Ratkus, Toms Torims, Nicolas Delerue, Maurizio Vretenar, Lukas Stepien, Elena López, and Maurizio Vedani. Metal additive manufacturing for particle accelerator applications. Physical Review Accelerators and Beams, May 2024. URL: https://doi.org/10.1103/physrevaccelbeams.27.054801, doi:10.1103/physrevaccelbeams.27.054801. This article has 37 citations.
+
+18. (das2019contributionofcellulosic pages 2-3): A. Das, J. A. Muñiz-Lerma, E. R. L. Espiritu, A. Nommeots-Nomm, K. Waters, and M. Brochu. Contribution of cellulosic fibre filter on atmosphere moisture content in laser powder bed fusion additive manufacturing. Scientific Reports, Sep 2019. URL: https://doi.org/10.1038/s41598-019-50238-5, doi:10.1038/s41598-019-50238-5. This article has 5 citations and is from a peer-reviewed journal.
+
+19. (grantham2016opticaldesignand pages 2-4): Steven Grantham, Brandon Lane, Jorge Neira, Sergey Mekhontsev, Mihaela Vlasea, and Leonard Hanssen. Optical design and initial results from nist's ammt/temps facility. SPIE Proceedings, 9738:97380S, May 2016. URL: https://doi.org/10.1117/12.2214246, doi:10.1117/12.2214246. This article has 20 citations.
+
+20. (lane2020processmonitoringdataset pages 1-4): Brandon Lane and Ho Yeung. Process monitoring dataset from the additive manufacturing metrology testbed (ammt): overhang part x4. Journal of Research of the National Institute of Standards and Technology, Sep 2020. URL: https://doi.org/10.6028/jres.125.027, doi:10.6028/jres.125.027. This article has 85 citations and is from a peer-reviewed journal.
+
+21. (pauzon2021tailoredprocessgasesa pages 23-26): CNG Pauzon. Tailored process gases for laser powder bed fusion. Unknown journal, 2021.
+
+22. (pauzon2021tailoredprocessgases pages 26-29): CNG Pauzon. Tailored process gases for laser powder bed fusion. Unknown journal, 2021.
+
+23. (pauzon2021tailoredprocessgasesa pages 26-29): CNG Pauzon. Tailored process gases for laser powder bed fusion. Unknown journal, 2021.
+
+24. (pauzon2021tailoredprocessgases pages 23-26): CNG Pauzon. Tailored process gases for laser powder bed fusion. Unknown journal, 2021.
+
+25. (cauwenbergh2019reducinghydrogenpores pages 4-6): P Van Cauwenbergh. Reducing hydrogen pores and blisters by novel strategies and tailored heat treatments for laser powder bed fusion of alsi7mg0. 6. Unknown journal, 2019.
+
+26. (pauzon2019effectofargon pages 1-2): Camille Pauzon, Eduard Hryha, Pierre Forêt, and Lars Nyborg. Effect of argon and nitrogen atmospheres on the properties of stainless steel 316 l parts produced by laser-powder bed fusion. Materials & Design, Oct 2019. URL: https://doi.org/10.1016/j.matdes.2019.107873, doi:10.1016/j.matdes.2019.107873. This article has 196 citations and is from a highest quality peer-reviewed journal.
+
+27. (mcfalls2018theeffectof pages 31-38): TA McFalls. The effect of hydrogen on gas porosity in laser powder bed fusion of alsi10mg. Unknown journal, 2018.
+
+28. (cauwenbergh2019reducinghydrogenpores pages 1-2): P Van Cauwenbergh. Reducing hydrogen pores and blisters by novel strategies and tailored heat treatments for laser powder bed fusion of alsi7mg0. 6. Unknown journal, 2019.
+
+29. (mcfalls2018theeffectof pages 14-18): TA McFalls. The effect of hydrogen on gas porosity in laser powder bed fusion of alsi10mg. Unknown journal, 2018.
+
+30. (clement2024investigationintothe pages 51-58): Catherine Dolly Clement. Investigation into the effects of heat treatment and nanoparticles on the microstructure and mechanical properties of lpbf'ed alsi10mgalloy. ArXiv, 2024. URL: https://doi.org/10.22215/etd/2024-16239, doi:10.22215/etd/2024-16239. This article has 1 citations.
+
+31. (kramer2026investigationofthe pages 1-2): Steffen Kramer, Victor Lubkowitz, Michael Haas, Johannes Michel, Christoph Spurk, Alexander Olowinsky, Guilherme Abreu Faria, Michael Jarwitz, Thomas Graf, Volker Schulze, and Frederik Zanger. Investigation of the formation and reduction of hydrogen porosity during laser welding of additively manufactured alsi10mg parts. The International Journal of Advanced Manufacturing Technology, 142:6105-6123, Jan 2026. URL: https://doi.org/10.1007/s00170-025-17198-9, doi:10.1007/s00170-025-17198-9. This article has 11 citations.
+
+32. (das2019contributionofcellulosic pages 5-6): A. Das, J. A. Muñiz-Lerma, E. R. L. Espiritu, A. Nommeots-Nomm, K. Waters, and M. Brochu. Contribution of cellulosic fibre filter on atmosphere moisture content in laser powder bed fusion additive manufacturing. Scientific Reports, Sep 2019. URL: https://doi.org/10.1038/s41598-019-50238-5, doi:10.1038/s41598-019-50238-5. This article has 5 citations and is from a peer-reviewed journal.
+
+33. (das2019contributionofcellulosic pages 3-5): A. Das, J. A. Muñiz-Lerma, E. R. L. Espiritu, A. Nommeots-Nomm, K. Waters, and M. Brochu. Contribution of cellulosic fibre filter on atmosphere moisture content in laser powder bed fusion additive manufacturing. Scientific Reports, Sep 2019. URL: https://doi.org/10.1038/s41598-019-50238-5, doi:10.1038/s41598-019-50238-5. This article has 5 citations and is from a peer-reviewed journal.
+
+34. (das2019contributionofcellulosic pages 6-7): A. Das, J. A. Muñiz-Lerma, E. R. L. Espiritu, A. Nommeots-Nomm, K. Waters, and M. Brochu. Contribution of cellulosic fibre filter on atmosphere moisture content in laser powder bed fusion additive manufacturing. Scientific Reports, Sep 2019. URL: https://doi.org/10.1038/s41598-019-50238-5, doi:10.1038/s41598-019-50238-5. This article has 5 citations and is from a peer-reviewed journal.
+
+35. (baroutaji2023theinfluenceof pages 1-2): Ahmad Baroutaji, Arun Arjunan, James Beal, John Robinson, and Julio Coroado. The influence of atmospheric oxygen content on the mechanical properties of selectively laser melted alsi10mg tpms-based lattice. Materials, 16:430, Jan 2023. URL: https://doi.org/10.3390/ma16010430, doi:10.3390/ma16010430. This article has 34 citations.
+
+36. (baroutaji2023theinfluenceof pages 6-8): Ahmad Baroutaji, Arun Arjunan, James Beal, John Robinson, and Julio Coroado. The influence of atmospheric oxygen content on the mechanical properties of selectively laser melted alsi10mg tpms-based lattice. Materials, 16:430, Jan 2023. URL: https://doi.org/10.3390/ma16010430, doi:10.3390/ma16010430. This article has 34 citations.
+
+37. (baroutaji2023theinfluenceof pages 11-12): Ahmad Baroutaji, Arun Arjunan, James Beal, John Robinson, and Julio Coroado. The influence of atmospheric oxygen content on the mechanical properties of selectively laser melted alsi10mg tpms-based lattice. Materials, 16:430, Jan 2023. URL: https://doi.org/10.3390/ma16010430, doi:10.3390/ma16010430. This article has 34 citations.
+
+38. (oliveria2025atemplatebasedmethodology pages 1-6): EA Alves de Oliveria. A template-based methodology for cnc programming and knowledge reuse in small and medium-sized enterprises. Unknown journal, 2025.
+
+39. (oliveria2025atemplatebasedmethodology pages 49-53): EA Alves de Oliveria. A template-based methodology for cnc programming and knowledge reuse in small and medium-sized enterprises. Unknown journal, 2025.
+
+40. (oliveria2025atemplatebasedmethodology pages 53-58): EA Alves de Oliveria. A template-based methodology for cnc programming and knowledge reuse in small and medium-sized enterprises. Unknown journal, 2025.
+
+41. (oliveria2025atemplatebasedmethodology pages 30-35): EA Alves de Oliveria. A template-based methodology for cnc programming and knowledge reuse in small and medium-sized enterprises. Unknown journal, 2025.
+
+42. (oliveria2025atemplatebasedmethodology pages 45-49): EA Alves de Oliveria. A template-based methodology for cnc programming and knowledge reuse in small and medium-sized enterprises. Unknown journal, 2025.
+
+43. (oliveria2025atemplatebasedmethodology pages 26-30): EA Alves de Oliveria. A template-based methodology for cnc programming and knowledge reuse in small and medium-sized enterprises. Unknown journal, 2025.
