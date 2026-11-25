@@ -33,6 +33,7 @@ SRC = {
     "nist": "Lane & Yeung 2020 (J. Res. NIST 125:125027): 100 kHz XYPT commands, 10 kHz coaxial camera, 20 µs exposure",
     "heat": "heat.md: 0.2 s of jumps per layer, 8 s recoat; dense L75 build +51 % time with the dwell (electrical.md §9.1)",
     "mon": "monitoring.md §5.3 and analysis/out/monitoring/optics.md (stream rates)",
+    "ours": "assumed in this note (sync-and-data.md); to measure",
 }
 
 SPEEDS = (0.4, 1.1)      # m/s: the process window's ends (monitoring.md, Edison queries)
@@ -47,21 +48,21 @@ T = [
     ("laser", "LASERON edge after mark start (LaserOnDelay)", 0.0, 0.016, "set in 1/64 µs steps; deterministic", "rtccmp"),
     ("laser", "gate -> light (IPG YLR-U3)", 12.0, 1.0, "<= 12 µs published; jitter assumed", "ipg"),
     ("photodiode", "PDA36A2 at 30 dB (260 kHz): group delay", 1e6 / (2 * math.pi * 260e3), 0.1, "first-order filter", "pda"),
-    ("photodiode", "2.5 m RG-58", 2.5 * 5.1e-3, 0.0, "5.1 ns/m", "pda"),
+    ("photodiode", "2.5 m RG-58", 2.5 * 5.1e-3, 0.0, "5.1 ns/m (velocity factor 0.66)", "ours"),
     ("digitizer", "gate tap 10 kΩ into 17.5 pF: 50 % point of the RC step", 10e3 * 17.5e-12 * 1e6 * math.log(2), 0.02, "RC ln 2, calibrated out", "pico"),
     ("digitizer", "PicoScope at 2 MS/s: sample quantisation", 0.0, 0.5 / math.sqrt(12), "uniform over 0.5 µs", "pico"),
     ("digitizer", "clock vs RTC6, no fit, 30 s layer", 0.0, 100e-6 * 30e6, "±50 ppm each side (RTC6 assumed)", "pico"),
     ("digitizer", "clock vs RTC6, per-layer fit to gate edges", 0.0, 0.5, "bound; synthetic check gives less (reader_check.md)", "pico"),
-    ("AE", "elastic path, plate and stack (10-25 mm at 5-6 km/s)", 3.0, 2.0, "assumed", "zel"),
+    ("AE", "elastic path, plate and stack (10-25 mm at 5-6 km/s)", 3.0, 2.0, "assumed", "ours"),
     ("AE", "elastic path, 150-250 mm waveguide", 39.0, 10.0, "15 µs per 76.5 mm", "zel"),
-    ("AE", "preamp and 50-600 kHz filter", 2.0, 1.0, "assumed", "zel"),
-    ("coaxial camera", "trigger generator (RP2350 PIO, 150 MHz)", 0.05, 0.007, "one clock cycle; assumed", "gs"),
+    ("AE", "preamp and 50-600 kHz filter", 2.0, 1.0, "assumed", "ours"),
+    ("coaxial camera", "trigger generator (RP2350 PIO, 150 MHz)", 0.05, 0.007, "one clock cycle; assumed", "ours"),
     ("coaxial camera", "XTR edge -> exposure start (IMX296)", 15.0, 15.0, "not published: assumed <= one line; measure (§1.5)", "gs"),
     ("coaxial camera", "frame time label = mid-exposure (50 µs exposure)", 25.0, 0.0, "by definition", "gs"),
     ("side camera", "Chronos exposure trigger on TRIG1 (BNC)", 0.0, 0.5, "within 500 ns", "kron"),
-    ("layer camera", "software still after spread / after lasing", 1e5, 5e4, "assumed; the scene is static", "gs"),
-    ("slow channels", "PLC -> Modbus TCP -> Pi timestamp", 2e4, 1e4, "assumed; module filtering not included", "heat"),
-    ("Pi clock", "RTC6 layer-start bit on a Pi GPIO (kernel edge timestamp)", 50.0, 50.0, "assumed", "rtc6"),
+    ("layer camera", "software still after spread / after lasing", 1e5, 5e4, "assumed; the scene is static", "ours"),
+    ("slow channels", "PLC -> Modbus TCP -> Pi timestamp", 2e4, 1e4, "assumed; module filtering not included", "ours"),
+    ("Pi clock", "RTC6 layer-start bit on a Pi GPIO (kernel edge timestamp)", 50.0, 50.0, "assumed", "ours"),
 ]
 
 

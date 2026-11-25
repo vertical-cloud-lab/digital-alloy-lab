@@ -11,7 +11,8 @@
   "zel": "Zelenyak et al. 2015 (Sensors 15:11805), via edison/r8-ae-waveguide: each extra 76.5 mm of waveguide added ~15 µs",
   "nist": "Lane & Yeung 2020 (J. Res. NIST 125:125027): 100 kHz XYPT commands, 10 kHz coaxial camera, 20 µs exposure",
   "heat": "heat.md: 0.2 s of jumps per layer, 8 s recoat; dense L75 build +51 % time with the dwell (electrical.md §9.1)",
-  "mon": "monitoring.md §5.3 and analysis/out/monitoring/optics.md (stream rates)"
+  "mon": "monitoring.md §5.3 and analysis/out/monitoring/optics.md (stream rates)",
+  "ours": "assumed in this note (sync-and-data.md); to measure"
  },
  "timing": [
   {
@@ -79,8 +80,8 @@
    "element": "2.5 m RG-58",
    "latency_us": 0.013,
    "uncertainty_us": 0.0,
-   "basis": "5.1 ns/m",
-   "source": "pda",
+   "basis": "5.1 ns/m (velocity factor 0.66)",
+   "source": "ours",
    "pos_um_at_0.4": 0.0,
    "pos_um_at_1.1": 0.0
   },
@@ -130,7 +131,7 @@
    "latency_us": 3.0,
    "uncertainty_us": 2.0,
    "basis": "assumed",
-   "source": "zel",
+   "source": "ours",
    "pos_um_at_0.4": 0.8,
    "pos_um_at_1.1": 2.2
   },
@@ -150,7 +151,7 @@
    "latency_us": 2.0,
    "uncertainty_us": 1.0,
    "basis": "assumed",
-   "source": "zel",
+   "source": "ours",
    "pos_um_at_0.4": 0.4,
    "pos_um_at_1.1": 1.1
   },
@@ -160,7 +161,7 @@
    "latency_us": 0.05,
    "uncertainty_us": 0.007,
    "basis": "one clock cycle; assumed",
-   "source": "gs",
+   "source": "ours",
    "pos_um_at_0.4": 0.0,
    "pos_um_at_1.1": 0.01
   },
@@ -200,7 +201,7 @@
    "latency_us": 100000.0,
    "uncertainty_us": 50000.0,
    "basis": "assumed; the scene is static",
-   "source": "gs",
+   "source": "ours",
    "pos_um_at_0.4": 20000.0,
    "pos_um_at_1.1": 55000.0
   },
@@ -210,7 +211,7 @@
    "latency_us": 20000.0,
    "uncertainty_us": 10000.0,
    "basis": "assumed; module filtering not included",
-   "source": "heat",
+   "source": "ours",
    "pos_um_at_0.4": 4000.0,
    "pos_um_at_1.1": 11000.0
   },
@@ -220,7 +221,7 @@
    "latency_us": 50.0,
    "uncertainty_us": 50.0,
    "basis": "assumed",
-   "source": "rtc6",
+   "source": "ours",
    "pos_um_at_0.4": 20.0,
    "pos_um_at_1.1": 55.0
   }

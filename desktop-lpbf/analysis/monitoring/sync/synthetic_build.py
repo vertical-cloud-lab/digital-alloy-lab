@@ -155,7 +155,7 @@ def simulate(layer):
     return x, y, dout, laser, tracks, on, off, daq, truth
 
 
-def camera(tracks, truth, layer, drop=None):
+def camera(tracks, truth, layer, t0_pi_ns, drop=None):
     """One frame per trigger; brightness from the true photodiode over the exposure; returns arrays for coax_cam."""
     tf, pd1 = truth["tf"], truth["pd1"]
     trig = []
@@ -175,13 +175,14 @@ def camera(tracks, truth, layer, drop=None):
         img = 1200 * b * np.exp(-((xx - CAM["spot"][0]) ** 2 / 18.0 + (yy - CAM["spot"][1]) ** 2 / 8.0)) + RNG.normal(40, 4, xx.shape)
         frames.append(np.clip(img, 0, 4095).astype(np.uint16))
         rows.append((j, tt + CAL["coax_trigger_to_exposure_us"] + CAM["exposure"] / 2, tr,
-                     int(T0_UTC_NS + (t_exp + CAM["exposure"] + 900.0 + RNG.uniform(0, 200.0)) * 1e3)))
+                     int(t0_pi_ns + (t_exp + CAM["exposure"] + 900.0 + RNG.uniform(0, 200.0)) * 1e3)))   # readout ~0.9 ms (assumed)
     return np.array(frames), rows
 
 
 def write():
     path = OUT / "synthetic_build.h5"
-    f = lh.create(path, build_id="synthetic-20261125-s25", writer="synthetic_build.py", layer_template=False)
+    f = lh.create(path, build_id="synthetic-20261125-s25", writer="synthetic_build.py", layer_template=False,
+                  created_utc="2026-11-25T08:00:00Z")
     f["/build"].attrs.update(start_utc="2026-11-25T08:00:00Z", run_by="synthetic", recipe="screen-AlSi10Mg-300W",
                              scan_file="synthetic.job", alloy="AlSi10Mg", powder_lot="SYN-0001", plate_id="S25-SYN-01",
                              plate_material="6061-T6", module="S25", module_id="S25-1", layer_um=30.0, n_layers=3,
@@ -236,7 +237,7 @@ def write():
         lh.append(g["ae_hits"], hits)
         lh.put(g["ae_snippets"], np.array(snips).reshape(len(snips), 4000) if snips else np.zeros((0, 4000), np.int16),
                fs_Hz=2e6, pre_samples=400, volts_per_count=VPC)
-        frames, rows = camera(tracks, truth, layer, drop=17 if layer == 3 else None)
+        frames, rows = camera(tracks, truth, layer, int(t_utc + 37_000), drop=17 if layer == 3 else None)
         c = g["coax_cam"]
         c.attrs.update(sensor="IMX296 mono (synthetic)", roi=[0, 0, CAM["w"], CAM["h"]], band_nm=[950.0, 10.0], analogue_gain=4.0,
                        trigger_period_us=CAM["period"], trigger_delay_us=CAM["delay"])
@@ -361,7 +362,7 @@ def check(path, truths, fits):
     fit = fits[L]
     clock = dict(a_fit_us=round(fit["a"], 3), a_true_us=round(a_true, 3), b_fit_minus_1_ppm=round((fit["b"] - 1) * 1e6, 2),
                  b_true_minus_1_ppm=round((1 / (1 + DRIFT) - 1) * 1e6, 2), rms_us=round(fit["rms"], 3), edges=fit["n"])
-    drop = B.frames_check("L00003", CAM["period"])
+    drop = B.frames_check("L00003")
     B.f.close()
     out = dict(layer=2, clock_fit=clock, variants=res, dropped_frames_layer3=drop.tolist(),
                defect_truth_mm=[DEFECT["x"], DEFECT["y"]], file_bytes=path.stat().st_size)

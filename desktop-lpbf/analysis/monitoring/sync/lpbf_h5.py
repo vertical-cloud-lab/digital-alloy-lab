@@ -200,14 +200,14 @@ def _mk(f, node, L):
         ds.attrs["units"], ds.attrs["description"] = node["units"], node["desc"]
 
 
-def create(path, build_id="template", writer="lpbf_h5.py", layer_template=True):
+def create(path, build_id="template", writer="lpbf_h5.py", layer_template=True, created_utc=None):
     """A new build file with every non-layer node, and (for the empty schema file) the layer template '_template'."""
     f = h5py.File(path, "w", libver="latest")
     for node in SPEC:
         if "{L}" not in node["path"]:
             _mk(f, node, "")
     f.attrs.update(schema=SCHEMA_NAME, schema_version=SCHEMA_VERSION, build_id=build_id, writer=writer,
-                   created_utc=np.datetime_as_string(np.datetime64("now", "s")) + "Z")
+                   created_utc=created_utc or np.datetime_as_string(np.datetime64("now", "s")) + "Z")
     append(f["/clocks"], CLOCKS)
     if layer_template:
         add_layer(f, "_template")
@@ -277,6 +277,7 @@ def fit_clock(seen_on, seen_off, exp_on, exp_off, tap_us=0.0, tol_us=20.0):
     oe, os_ = np.argsort(e_t), np.argsort(s_t)
     e_t, e_s, s_t, s_s = e_t[oe], e_s[oe], s_t[os_], s_s[os_]
     a, b = e_t[e_s == 1][0] - s_t[s_s == 1][0] * 1e6, 1.0
+    used = None                                                   # (expected times, seen times) of the last good fit
     for n_use in (8, 32, 128, 512, len(e_t)):
         pred = (e_t[:n_use] - a) / b / 1e6                       # where each expected edge should be, in DAQ seconds
         j = np.clip(np.searchsorted(s_t, pred), 1, len(s_t) - 1)
@@ -286,8 +287,11 @@ def fit_clock(seen_on, seen_off, exp_on, exp_off, tap_us=0.0, tol_us=20.0):
             continue
         A = np.c_[np.ones(ok.sum()), s_t[j[ok]] * 1e6]
         (a, b), *_ = np.linalg.lstsq(A, e_t[:n_use][ok], rcond=None)
-    res = e_t[:n_use][ok] - (a + b * s_t[j[ok]] * 1e6)
-    return float(a), float(b), float(np.sqrt(np.mean(res ** 2))), int(ok.sum())
+        used = (e_t[:n_use][ok], s_t[j[ok]])
+    if used is None:
+        raise ValueError("fit_clock: fewer than two gate edges matched")
+    res = used[0] - (a + b * used[1] * 1e6)
+    return float(a), float(b), float(np.sqrt(np.mean(res ** 2))), int(len(res))
 
 
 def model_xy(t_cmd_us, x_cmd, y_cmd, t_query_us, tau_us, model="lag1"):
@@ -298,10 +302,9 @@ def model_xy(t_cmd_us, x_cmd, y_cmd, t_query_us, tau_us, model="lag1"):
     dt = float(t_cmd_us[1] - t_cmd_us[0])
     k = np.exp(-dt / tau_us)
     from scipy.signal import lfilter
-    zi = [k * x_cmd[0]], [k * y_cmd[0]]
-    xa = lfilter([0.0, 1 - k], [1.0, -k], x_cmd, zi=zi[0])[0]       # y[n] = k y[n-1] + (1-k) x[n-1]
-    ya = lfilter([0.0, 1 - k], [1.0, -k], y_cmd, zi=zi[1])[0]
-    xa[0], ya[0] = x_cmd[0], y_cmd[0]
+    # y[n] = k y[n-1] + (1-k) x[n-1]; zi = x[0] starts it at rest on the first commanded point
+    xa = lfilter([0.0, 1 - k], [1.0, -k], x_cmd, zi=[x_cmd[0]])[0]
+    ya = lfilter([0.0, 1 - k], [1.0, -k], y_cmd, zi=[y_cmd[0]])[0]
     return np.interp(t_query_us, t_cmd_us, xa), np.interp(t_query_us, t_cmd_us, ya)
 
 
@@ -363,11 +366,38 @@ class Build:
         return dict(t_us=t_emit, x_mm=x, y_mm=y, lasing=lasing, track=track, layer=int(g.attrs["layer"]),
                     z_mm=float(g.attrs["z_mm"]), value_V=raw * vpc + off)
 
-    def frames_check(self, L, period_us):
-        """Match Pi frame timestamps to the trigger schedule; returns indices of triggers that produced no frame."""
-        c = self.f[f"/layers/{L}/coax_cam"]
-        ti = c["trigger_index"][...]
-        return np.setdiff1d(np.arange(ti.max() + 1 if ti.size else 0), ti)
+    def expected_triggers(self, L):
+        """The generator's schedule (RTC6 µs after t0): for each track with the camera window set, a trigger at
+        t_start + gen_latency + trigger_delay, then every trigger_period while the exposure still ends before t_end."""
+        g, tm = self.f[f"/layers/{L}"], self.timing()
+        c = g["coax_cam"]
+        per, dl = c.attrs["trigger_period_us"], c.attrs["trigger_delay_us"]
+        exp = float(c["exposure_us"][0]) if c["exposure_us"].shape[0] else 0.0
+        out = []
+        for t in g["tracks"][...]:
+            if not t["camera"]:
+                continue
+            tt = t["t_start_us"] + tm["gen_latency_us"] + dl
+            while tt + exp < t["t_end_us"]:
+                out.append(tt)
+                tt += per
+        return np.array(out)
+
+    def frames_check(self, L):
+        """Match each frame's Pi time stamp to the trigger schedule and return the triggers that produced no frame. The offset
+        between the two clocks (readout time, layer-start stamp) is the median over the first frames, which assumes the first
+        five were not dropped; a frame matches a trigger within half the trigger spacing."""
+        g = self.f[f"/layers/{L}"]
+        trig = self.expected_triggers(L)
+        pi = (g["coax_cam/pi_ts_ns"][...].astype(np.int64) - np.int64(g.attrs["t0_pi_ns"])) / 1e3      # µs after t0, Pi clock
+        if not len(trig) or not len(pi):
+            return np.arange(len(trig))
+        off = np.median(pi[:5] - trig[:5])
+        k = np.clip(np.searchsorted(trig, pi - off), 1, len(trig) - 1)
+        k = np.where(np.abs(trig[k - 1] - (pi - off)) < np.abs(trig[k] - (pi - off)), k - 1, k)
+        half = 0.5 * np.min(np.diff(trig)) if len(trig) > 1 else np.inf
+        hit = np.abs(trig[k] - (pi - off)) < half
+        return np.setdiff1d(np.arange(len(trig)), k[hit])
 
 
 def export_nist_style(path, outdir):
@@ -408,7 +438,8 @@ def schema_markdown():
 
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
-    with create(OUT / "schema_empty.h5", build_id="empty-schema", writer="lpbf_h5.py (schema only)") as f:
+    with create(OUT / "schema_empty.h5", build_id="empty-schema", writer="lpbf_h5.py (schema only)",
+                created_utc="2026-11-25T00:00:00Z") as f:   # fixed, so a rerun gives the same file
         pass
     (OUT / "schema.md").write_text(schema_markdown())
     print("wrote", OUT / "schema_empty.h5", (OUT / "schema_empty.h5").stat().st_size, "bytes and schema.md")
