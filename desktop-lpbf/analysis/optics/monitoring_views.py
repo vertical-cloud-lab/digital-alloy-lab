@@ -289,7 +289,12 @@ def fits(parts):
     ]:
         h = hits(box(*b), parts, ())
         out["boxes"].append(dict(what=label, box=list(b), hits=[(n[:60], round(v, 1)) for n, v in h][:5]))
-    for port, face, extra in [((-156.0, -10.0, 50.0), "left wall (-x)", ()), ((-156.0, -30.0, 30.0), "left wall (-x)", ()),
+    out["left_wall_fine"] = []
+    for y in (-30.0, -20.0, -10.0, 0.0):
+        for z in (30.0, 35.0, 40.0, 45.0, 50.0, 55.0):
+            r = evaluate(parts, "left wall (-x)", np.array([-P["cx"], y, z]))
+            out["left_wall_fine"].append({k: r[k] for k in ("port", "elevation_deg", "L75_seen", "M50_seen", "centre_clear_d20", "centre_clear_d40", "L75_blockers")})
+    for port, face, extra in [((-156.0, -20.0, 40.0), "left wall (-x)", ()), ((-156.0, -10.0, 50.0), "left wall (-x)", ()),
                               ((-60.0, -80.0, 136.0), "lid", ("Optics bridge (6061",))]:
         for lens_len in (60, 100):
             out["cameras"].append(lens_and_body(parts, port, face, 30.0, lens_len, 60.0, extra))

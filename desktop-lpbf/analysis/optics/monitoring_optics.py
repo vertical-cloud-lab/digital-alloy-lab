@@ -90,10 +90,10 @@ def offaxis(label, wd_mm, elev_deg, f_mm, px_um, n_px, f_number, lam_um=0.81):
 
 
 R["off_axis"] = [
-    offaxis("left wall (-156, -10, 50), Chronos 2.1-HD, 50 mm lens, full frame", 200.0, 17.6, 50.0, 10.0, (1920, 1080), 4.0),
-    offaxis("left wall, Chronos 2.1-HD, 50 mm lens, 640 x 96 at 24 kfps", 200.0, 17.6, 50.0, 10.0, (640, 96), 4.0),
-    offaxis("left wall, Chronos 2.1-HD, 75 mm lens at f/4 (needs ~110 mm of lens: body room 140-180 mm)", 200.0, 17.6, 75.0, 10.0, (640, 96), 4.0),
-    offaxis("left wall, Pi GS (IMX296), 50 mm C-mount lens, 128 x 96 at ~536 fps", 200.0, 17.6, 50.0, 3.45, (128, 96), 4.0),
+    offaxis("left wall (-156, -20, 40), Chronos 2.1-HD, 50 mm lens, full frame", 195.0, 14.2, 50.0, 10.0, (1920, 1080), 4.0),
+    offaxis("left wall, Chronos 2.1-HD, 50 mm lens, 640 x 96 at 24 kfps", 195.0, 14.2, 50.0, 10.0, (640, 96), 4.0),
+    offaxis("left wall, Chronos 2.1-HD, 75 mm lens at f/4, 640 x 96 at 24 kfps", 195.0, 14.2, 75.0, 10.0, (640, 96), 4.0),
+    offaxis("left wall, Pi GS (IMX296), 50 mm C-mount lens, 128 x 96 at ~536 fps", 195.0, 14.2, 50.0, 3.45, (128, 96), 4.0),
     offaxis("lid (-60, -80, 136) through a bridge cut-out, Pi GS, 50 mm lens, full frame", 215.0, 53.6, 50.0, 3.45, (1456, 1088), 5.6),
     offaxis("for comparison: Infinity K2 DistaMax + CF-1 at 215 mm (1.28x), Chronos: does not fit (0.5 m long)", 215.0, 53.6, 215.0 * 1.28 / 2.28, 10.0, (640, 96), 5.0),
 ]

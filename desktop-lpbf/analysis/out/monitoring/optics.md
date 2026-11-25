@@ -17,10 +17,10 @@
 
 | case | µm/px across / along the view | field across × along (mm) | Rayleigh (µm) | depth of field (mm) | in-focus band on the plate (mm) |
 |---|---|---|---:|---:|---:|
-| left wall (-156, -10, 50), Chronos 2.1-HD, 50 mm lens, full frame | 30.0 / 99.2 | 57.6 × 107.2 | 15.8 | 2.75 | 2.88 |
-| left wall, Chronos 2.1-HD, 50 mm lens, 640 x 96 at 24 kfps | 30.0 / 99.2 | 19.2 × 9.5 | 15.8 | 2.75 | 2.88 |
-| left wall, Chronos 2.1-HD, 75 mm lens at f/4 (needs ~110 mm of lens: body room 140-180 mm) | 16.7 / 55.1 | 10.7 × 5.3 | 10.5 | 1.08 | 1.13 |
-| left wall, Pi GS (IMX296), 50 mm C-mount lens, 128 x 96 at ~536 fps | 10.4 / 34.2 | 1.3 × 3.3 | 15.8 | 1.49 | 1.57 |
+| left wall (-156, -20, 40), Chronos 2.1-HD, 50 mm lens, full frame | 29.0 / 118.2 | 55.7 × 127.7 | 15.4 | 2.6 | 2.68 |
+| left wall, Chronos 2.1-HD, 50 mm lens, 640 x 96 at 24 kfps | 29.0 / 118.2 | 18.6 × 11.3 | 15.4 | 2.6 | 2.68 |
+| left wall, Chronos 2.1-HD, 75 mm lens at f/4, 640 x 96 at 24 kfps | 16.0 / 65.2 | 10.2 × 6.3 | 10.3 | 1.02 | 1.05 |
+| left wall, Pi GS (IMX296), 50 mm C-mount lens, 128 x 96 at ~536 fps | 10.0 / 40.8 | 1.3 × 3.9 | 15.4 | 1.41 | 1.46 |
 | lid (-60, -80, 136) through a bridge cut-out, Pi GS, 50 mm lens, full frame | 11.4 / 14.1 | 16.6 × 15.4 | 23.8 | 2.98 | 5.01 |
 | for comparison: Infinity K2 DistaMax + CF-1 at 215 mm (1.28x), Chronos: does not fit (0.5 m long) | 7.8 / 9.7 | 5.0 × 0.9 | 5.6 | 0.28 | 0.47 |
 

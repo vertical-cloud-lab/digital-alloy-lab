@@ -58,6 +58,44 @@
   {
    "port": [
     -156.0,
+    -20.0,
+    40.0
+   ],
+   "face": "left wall (-x)",
+   "standoff": 15,
+   "lens": "\u00d860 x 60",
+   "lens_clear": true,
+   "lens_hits": [],
+   "body": "\u00d8120",
+   "body_len_free": 180.0,
+   "body_first_hit": [
+    "Laser guard panels (1.5 mm aluminium)"
+   ],
+   "lens_front_to_plate_centre": 177,
+   "skipped": []
+  },
+  {
+   "port": [
+    -156.0,
+    -20.0,
+    40.0
+   ],
+   "face": "left wall (-x)",
+   "standoff": 15,
+   "lens": "\u00d860 x 100",
+   "lens_clear": true,
+   "lens_hits": [],
+   "body": "\u00d8120",
+   "body_len_free": 140.0,
+   "body_first_hit": [
+    "Laser guard panels (1.5 mm aluminium)"
+   ],
+   "lens_front_to_plate_centre": 177,
+   "skipped": []
+  },
+  {
+   "port": [
+    -156.0,
     -10.0,
     50.0
    ],
@@ -91,44 +129,6 @@
     "Laser guard panels (1.5 mm aluminium)"
    ],
    "lens_front_to_plate_centre": 179,
-   "skipped": []
-  },
-  {
-   "port": [
-    -156.0,
-    -30.0,
-    30.0
-   ],
-   "face": "left wall (-x)",
-   "standoff": 15,
-   "lens": "\u00d860 x 60",
-   "lens_clear": true,
-   "lens_hits": [],
-   "body": "\u00d8120",
-   "body_len_free": 120.0,
-   "body_first_hit": [
-    "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end"
-   ],
-   "lens_front_to_plate_centre": 177,
-   "skipped": []
-  },
-  {
-   "port": [
-    -156.0,
-    -30.0,
-    30.0
-   ],
-   "face": "left wall (-x)",
-   "standoff": 15,
-   "lens": "\u00d860 x 100",
-   "lens_clear": true,
-   "lens_hits": [],
-   "body": "\u00d8120",
-   "body_len_free": 80.0,
-   "body_first_hit": [
-    "Optics bridge posts (60 x 60 x 5 square 6061 tube, 10 mm end"
-   ],
-   "lens_front_to_plate_centre": 177,
    "skipped": []
   },
   {
@@ -171,6 +171,344 @@
    "lens_front_to_plate_centre": 197,
    "skipped": [
     "Optics bridge (6061"
+   ]
+  }
+ ],
+ "left_wall_fine": [
+  {
+   "port": [
+    -156.0,
+    -30.0,
+    30.0
+   ],
+   "elevation_deg": 10.6,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": true,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    -30.0,
+    35.0
+   ],
+   "elevation_deg": 12.3,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": true,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    -30.0,
+    40.0
+   ],
+   "elevation_deg": 14.0,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": false,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    -30.0,
+    45.0
+   ],
+   "elevation_deg": 15.7,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
+   ]
+  },
+  {
+   "port": [
+    -156.0,
+    -30.0,
+    50.0
+   ],
+   "elevation_deg": 17.4,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": false,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
+   ]
+  },
+  {
+   "port": [
+    -156.0,
+    -30.0,
+    55.0
+   ],
+   "elevation_deg": 19.0,
+   "L75_seen": 0.647,
+   "M50_seen": 0.765,
+   "centre_clear_d20": false,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
+   ]
+  },
+  {
+   "port": [
+    -156.0,
+    -20.0,
+    30.0
+   ],
+   "elevation_deg": 10.7,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": true,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    -20.0,
+    35.0
+   ],
+   "elevation_deg": 12.4,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": true,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    -20.0,
+    40.0
+   ],
+   "elevation_deg": 14.2,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": false,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    -20.0,
+    45.0
+   ],
+   "elevation_deg": 15.9,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
+   ]
+  },
+  {
+   "port": [
+    -156.0,
+    -20.0,
+    50.0
+   ],
+   "elevation_deg": 17.5,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": false,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
+   ]
+  },
+  {
+   "port": [
+    -156.0,
+    -20.0,
+    55.0
+   ],
+   "elevation_deg": 19.2,
+   "L75_seen": 0.647,
+   "M50_seen": 0.765,
+   "centre_clear_d20": false,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
+   ]
+  },
+  {
+   "port": [
+    -156.0,
+    -10.0,
+    30.0
+   ],
+   "elevation_deg": 10.8,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": true,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    -10.0,
+    35.0
+   ],
+   "elevation_deg": 12.5,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": true,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    -10.0,
+    40.0
+   ],
+   "elevation_deg": 14.2,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": false,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    -10.0,
+    45.0
+   ],
+   "elevation_deg": 16.0,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
+   ]
+  },
+  {
+   "port": [
+    -156.0,
+    -10.0,
+    50.0
+   ],
+   "elevation_deg": 17.6,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": false,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
+   ]
+  },
+  {
+   "port": [
+    -156.0,
+    -10.0,
+    55.0
+   ],
+   "elevation_deg": 19.3,
+   "L75_seen": 0.647,
+   "M50_seen": 0.765,
+   "centre_clear_d20": false,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
+   ]
+  },
+  {
+   "port": [
+    -156.0,
+    0.0,
+    30.0
+   ],
+   "elevation_deg": 10.8,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": false,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    0.0,
+    35.0
+   ],
+   "elevation_deg": 12.5,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": true,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    0.0,
+    40.0
+   ],
+   "elevation_deg": 14.3,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": false,
+   "L75_blockers": []
+  },
+  {
+   "port": [
+    -156.0,
+    0.0,
+    45.0
+   ],
+   "elevation_deg": 16.0,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": true,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
+   ]
+  },
+  {
+   "port": [
+    -156.0,
+    0.0,
+    50.0
+   ],
+   "elevation_deg": 17.7,
+   "L75_seen": 1.0,
+   "M50_seen": 1.0,
+   "centre_clear_d20": false,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
+   ]
+  },
+  {
+   "port": [
+    -156.0,
+    0.0,
+    55.0
+   ],
+   "elevation_deg": 19.3,
+   "L75_seen": 0.647,
+   "M50_seen": 0.765,
+   "centre_clear_d20": false,
+   "centre_clear_d40": false,
+   "L75_blockers": [
+    "Dose chute (316L)"
    ]
   }
  ]
