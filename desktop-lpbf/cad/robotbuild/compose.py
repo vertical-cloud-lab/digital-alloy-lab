@@ -315,12 +315,15 @@ def main(argv=None):
             c, f = s.split(":")
             want.setdefault(c, []).append(float(f))
     t0 = time.time()
+    import threading
+    window = threading.Semaphore(48)                       # at most 48 frames drawn ahead of the encoder (memory)
 
     def tasks():
         k = 0
         for ch in chapters:
             title = ch["meta"][0].get("chapter") or ch["name"]
             for i, m in enumerate(ch["meta"]):
+                window.acquire()
                 yield (str(ch["dir"]) if ch["dir"] else None, i, m, ch["clock"][i], (k + 1) / total, ticks, title,
                        cost_scale, rows, ch["card"])
                 k += 1
@@ -334,6 +337,7 @@ def main(argv=None):
         pick = {int(n * f) for f in (0.12, 0.38, 0.62, 0.88)} if ch["card"] is None else {n // 2}   # one for a card
         for i in range(n):
             buf = next(it)
+            window.release()
             enc.stdin.write(buf)
             if i in pick or any(i == min(n - 1, int(n * f)) for f in want.get(ch["name"], [])):
                 frame = Image.frombytes("RGB", (W, H), buf)
