@@ -618,31 +618,40 @@ def plot(R, fields, luts, lv):
     name, (x, y, T, tl) = next(iter(fields.items()))
     im = ax[0].imshow(T, extent=[x[0] * 1e3, x[-1] * 1e3, y[0] * 1e3, y[-1] * 1e3], origin="lower", cmap="inferno", aspect="equal")
     ax[0].contour(x * 1e3, y * 1e3, T, levels=[tl], colors="c", linewidths=0.8)
+    dep = DEPRESSION.get(name)
+    if dep is not None and dep.any():
+        ax[0].contour(x * 1e3, y * 1e3, dep.astype(float), levels=[0.5], colors="w", linewidths=0.6)
     th = np.linspace(0, 2 * np.pi, 100)
     ax[0].plot(PT.FOV_PD_MM / 2 * np.cos(th), PT.FOV_PD_MM / 2 * np.sin(th), "w--", lw=0.8)
-    ax[0].set_title(f"{name}: surface T (K); cyan = liquidus; dashed = PD field stop", fontsize=9)
+    ax[0].set_title(f"{name}: surface T (K)\ncyan = liquidus; white = depression; dashed = photodiode field stop", fontsize=8.5)
     ax[0].set_xlabel("x (mm), beam at 0 moving +x")
     fig.colorbar(im, ax=ax[0], shrink=0.8)
-    Ts = np.linspace(700, T_BOIL, 300)
+    Ts = np.linspace(700, 2800, 300)
     omega = math.pi * NA_RETURN["12 mm"] ** 2
-    for k, c in (("camera 955-990 (IMX296)", "#d62728"), ("alt: camera 850/10, 50:50 plate (IMX296)", "#ff7f0e"), ("alt: camera 700/10, 50:50 plate (IMX296)", "#1f77b4")):
+    for k, c, lab in (("camera 955-990 (IMX296)", "#d62728", "IMX296, 955-990 nm"),
+                      ("alt: camera 850/10, 50:50 plate (IMX296)", "#ff7f0e", "IMX296, 850/10 (50:50 plate)"),
+                      ("SWIR camera 1600-1750 behind the DMSP1000 (Alvium U-030 VSWIR)", "#16a085", "Alvium VSWIR, 1600-1750 nm")):
         lt = luts[(k, "pass", lv)]
-        s = np.interp(Ts, lt[0], lt[1]) * (8e-6) ** 2 * omega * 100e-6
-        ax[1].semilogy(Ts, s, color=c, label=k.replace(" (IMX296)", "").replace("alt: ", "") + ", liquid, 100 us")
-        lt2 = luts[(k, "Kozjek", lv)]
+        s = np.where(Ts >= T_LIQ, np.interp(Ts, lt[0], lt[1]), np.interp(Ts, lt[0], lt[2])) * (8e-6) ** 2 * omega * 100e-6
+        ax[1].semilogy(Ts, s, color=c, label=lab + ", 100 us")
         if "850/10" in k:
-            ax[1].semilogy(Ts, np.interp(Ts, lt2[0], lt2[1]) * (8e-6) ** 2 * omega * 100e-6, ":", color=c, label="850/10 if the galvo blocks 750-875 nm")
-    d = PT.DET["IMX296 mono"]
-    ax[1].axhline(d["fwc_e"], color="k", lw=0.8)
-    ax[1].text(800, d["fwc_e"] * 1.2, "full well", fontsize=8)
-    ax[1].axhline(12.7, color="0.4", lw=0.8, ls="--")
-    ax[1].text(800, 15, "SNR 3", fontsize=8)
-    ax[1].axvline(T_LIQ, color="c", lw=0.8)
+            lt2 = luts[(k, "Kozjek", lv)]
+            s2 = np.where(Ts >= T_LIQ, np.interp(Ts, lt2[0], lt2[1]), np.interp(Ts, lt2[0], lt2[2])) * (8e-6) ** 2 * omega * 100e-6
+            ax[1].semilogy(Ts, s2, ":", color=c, label="850/10 if the galvo blocks 750-875 nm")
+    for dk, c in (("IMX296 mono", "#d62728"), ("IMX991 (Alvium 1800 U-030 VSWIR)", "#16a085")):
+        d = PT.DET[dk]
+        need, _ = need_e(d)
+        ax[1].axhline(d["fwc_e"], color=c, lw=0.7)
+        ax[1].axhline(need, color=c, lw=0.7, ls="--")
+    ax[1].text(720, 1.3e4, "full wells", fontsize=7)
+    ax[1].text(720, 30, "SNR 3", fontsize=7)
+    ax[1].axvspan(830, 925, color="c", alpha=0.15, lw=0)
+    ax[1].text(835, 2e5, "mushy /\nliquidus", fontsize=7, color="teal")
     ax[1].set_ylim(1e-1, 1e6)
-    ax[1].set_xlabel("uniform temperature (K)")
+    ax[1].set_xlabel("uniform temperature (K); liquid above 869 K, solid below")
     ax[1].set_ylabel("electrons per 8 um pixel in 100 us")
-    ax[1].set_title("IMX296 pixel signal through the coaxial path (liquid eps 0.12 at 1 um)", fontsize=9)
-    ax[1].legend(fontsize=7)
+    ax[1].set_title("Coaxial camera pixel signal (liquid eps 0.12 at 1 um, solid 0.2)", fontsize=9)
+    ax[1].legend(fontsize=7, loc="lower right")
     ax[1].grid(alpha=0.3, which="both")
     fig.tight_layout()
     fig.savefig(OUT / "radiometry.png", dpi=130)
