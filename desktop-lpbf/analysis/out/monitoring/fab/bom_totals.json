@@ -2,9 +2,9 @@
  "steps": {
   "0": {
    "what": "before machining: the ports' parts",
-   "new_low": 735.15,
-   "new_high": 872.15,
-   "with_used": 735.15,
+   "new_low": 982.29,
+   "new_high": 1119.29,
+   "with_used": 982.29,
    "unpriced": [],
    "estimated": [
     "M0-03",
@@ -15,17 +15,15 @@
    "options": [],
    "options_usd": 0,
    "options_used_usd": 0,
-   "cumulative_new_low": 735.15,
-   "cumulative_with_used": 735.15
+   "cumulative_new_low": 982.29,
+   "cumulative_with_used": 982.29
   },
   "1": {
    "what": "clock and recorder",
-   "new_low": 2161.3,
-   "new_high": 2361.3,
-   "with_used": 1905.3,
-   "unpriced": [
-    "M1-02"
-   ],
+   "new_low": 2257.3,
+   "new_high": 2457.3,
+   "with_used": 2001.3,
+   "unpriced": [],
    "estimated": [
     "M1-07",
     "M1-08"
@@ -33,8 +31,8 @@
    "options": [],
    "options_usd": 0,
    "options_used_usd": 0,
-   "cumulative_new_low": 2896.45,
-   "cumulative_with_used": 2640.45
+   "cumulative_new_low": 3239.59,
+   "cumulative_with_used": 2983.59
   },
   "2": {
    "what": "spectral check of the scan head",
@@ -46,14 +44,14 @@
    "options": [],
    "options_usd": 0,
    "options_used_usd": 0,
-   "cumulative_new_low": 2896.45,
-   "cumulative_with_used": 2640.45
+   "cumulative_new_low": 3239.59,
+   "cumulative_with_used": 2983.59
   },
   "3": {
    "what": "layer camera tuned",
-   "new_low": 1132.94,
-   "new_high": 1157.94,
-   "with_used": 1132.94,
+   "new_low": 1302.2,
+   "new_high": 1327.2,
+   "with_used": 1302.2,
    "unpriced": [],
    "estimated": [
     "M3-05"
@@ -61,8 +59,8 @@
    "options": [],
    "options_usd": 0,
    "options_used_usd": 0,
-   "cumulative_new_low": 4029.39,
-   "cumulative_with_used": 3773.39
+   "cumulative_new_low": 4541.79,
+   "cumulative_with_used": 4285.79
   },
   "4": {
    "what": "acoustic emission",
@@ -81,86 +79,87 @@
    ],
    "options_usd": 23.09,
    "options_used_usd": 23.09,
-   "cumulative_new_low": 5139.93,
-   "cumulative_with_used": 4867.93
+   "cumulative_new_low": 5652.33,
+   "cumulative_with_used": 5380.33
   },
   "5": {
    "what": "two-colour coaxial",
-   "new_low": 1910.96,
-   "new_high": 1910.96,
-   "with_used": 1910.96,
+   "new_low": 2179.12,
+   "new_high": 2179.12,
+   "with_used": 2179.12,
    "unpriced": [],
    "estimated": [],
    "options": [],
    "options_usd": 0,
    "options_used_usd": 0,
-   "cumulative_new_low": 7050.89,
-   "cumulative_with_used": 6778.89
+   "cumulative_new_low": 7831.45,
+   "cumulative_with_used": 7559.45
   },
   "6": {
    "what": "coaxial camera",
-   "new_low": 806.93,
-   "new_high": 806.93,
-   "with_used": 806.93,
+   "new_low": 987.05,
+   "new_high": 987.05,
+   "with_used": 987.05,
    "unpriced": [],
    "estimated": [
-    "M6-10"
+    "M6-09"
    ],
    "options": [
     "M6-08"
    ],
    "options_usd": 215.57,
    "options_used_usd": 215.57,
-   "cumulative_new_low": 7857.82,
-   "cumulative_with_used": 7585.82
+   "cumulative_new_low": 8818.5,
+   "cumulative_with_used": 8546.5
   },
   "7": {
    "what": "side high-speed camera (and the steep lid camera)",
-   "new_low": 7219.39,
-   "new_high": 7219.39,
-   "with_used": 6099.39,
-   "unpriced": [
-    "M7-02",
-    "M7-03"
-   ],
+   "new_low": 12117.07,
+   "new_high": 12117.07,
+   "with_used": 10317.07,
+   "unpriced": [],
    "estimated": [],
    "options": [
-    "M7-08",
+    "M7-09",
+    "M7-10",
     "M7-11",
     "M7-12",
     "M7-13",
     "M7-14",
     "M7-15",
-    "M7-16"
+    "M7-16",
+    "M7-17",
+    "M7-18"
    ],
-   "options_usd": 1319.97,
-   "options_used_usd": 1319.97,
-   "cumulative_new_low": 15077.21,
-   "cumulative_with_used": 13685.21
+   "options_usd": 13443.51,
+   "options_used_usd": 13303.46,
+   "cumulative_new_low": 20935.57,
+   "cumulative_with_used": 18863.57
   },
   "8": {
    "what": "cooling through solidification",
-   "new_low": 1935.71,
-   "new_high": 1935.71,
-   "with_used": 1935.71,
+   "new_low": 2160.32,
+   "new_high": 2160.32,
+   "with_used": 2160.32,
    "unpriced": [],
-   "estimated": [],
+   "estimated": [
+    "M8-04"
+   ],
    "options": [
     "M8-06",
-    "M8-07"
+    "M8-07",
+    "M8-08",
+    "M8-09"
    ],
-   "options_usd": 9425.0,
-   "options_used_usd": 1990.0,
-   "cumulative_new_low": 17012.92,
-   "cumulative_with_used": 15620.92
+   "options_usd": 10275.96,
+   "options_used_usd": 3592.96,
+   "cumulative_new_low": 23095.89,
+   "cumulative_with_used": 21023.89
   }
  },
  "missing": [
-  "M1-02",
   "M4-01",
   "M4-02",
-  "M4-03",
-  "M7-02",
-  "M7-03"
+  "M4-03"
  ]
 }

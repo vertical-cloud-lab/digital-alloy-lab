@@ -9,8 +9,10 @@ setups 0.75 h; deburr and inspect 0.25 h, 1 h with a sealing face), applied to:
 Run time: the frame's new features from cam_monitoring.json (FreeCAD recount of the posted G-code, or CAMotics' time with
 the VF-4 rapids when it has run) plus the operations nobody programs (taps, the SAE-4 port tool) at stated minutes; the
 rest are estimates at hours.py's conservative rates (16 cm3/min roughing, 40 cm2/min finishing).
-Outside prices are the closest instant quotes already in the repo (outsourcing-quotes.csv, 2026-11-22: SendCutSend's laser
-and CNC, JLCCNC) for a part of the same kind and size, labelled "analogue"; none of the monitoring parts has been quoted.
+Outside prices: SendCutSend's instant quotes for three of these parts (2026-11-25: the LW clamp ring, the BW clamp frame and
+the LP blanking cap, from flat_parts_dxf.py's DXFs; quotes/sendcutsend_quotes.csv), and for the rest the closest instant
+quote already in the repo (outsourcing-quotes.csv, 2026-11-22: SendCutSend's laser and CNC, OSH Cut, JLCCNC) for a part of the
+same kind and size, labelled "analogue".
 In-house cost uses should_cost.py's $65/h (BYU's shop rate for academic departments).
 
 Run: /tmp/venv/bin/python desktop-lpbf/analysis/monitoring/fab/hours_monitoring.py   (writes hours_monitoring.json/.csv)
@@ -42,6 +44,10 @@ ANALOGUE = {
     "scs_cnc_ring": (257.0, "SendCutSend CNC, 6061: the camera window retaining ring ($257, should_cost.csv)"),
     "osh_liner": (22.85, "OSH Cut, 316 sheet 0.036 in.: a lift-out liner ($22.85)"),
     "jlc_304": (79.18, "JLCCNC, SUS304, ISO 2768-m: the overflow block, a much bigger part ($79.18 without threads; + ~$26 UPS)"),
+    # instant quotes for these parts themselves (2026-11-25, flat_parts_dxf.py's DXFs, quotes/sendcutsend_quotes.csv)
+    "scs_lw_ring": (9.83, "SendCutSend instant quote 2026-11-25, 6061-T6 1/4 in. (2 = $7.86, 10 = $6.68 each; arrives Nov 30)"),
+    "scs_bw_frame": (9.87, "SendCutSend instant quote 2026-11-25, 6061-T6 3/16 in. (2 = $7.89, 10 = $6.18 each; arrives Nov 30)"),
+    "scs_lp_cap": (11.44, "SendCutSend instant quote 2026-11-25, 6061-T6 1/4 in. (2 = $9.15, 10 = $7.21 each; arrives Nov 30)"),
 }
 
 
@@ -119,8 +125,10 @@ def main():
              "heater block, piston head: existing setups", "feature", holes=2, run_min=1.0, deburr_h=0.0, step="4"),
         # --- new parts ------------------------------------------------------------------------------------------------
         part("LW window clamp ring, 6061, Ø56 x 6.35, ID 31, 4 x Ø4.5 on Ø48", "new", "part", n_setups=2, holes=4, lathe=True,
-             run_min=8.0, make_call="outsource (laser-cut plate)", outside="scs_ring",
+             run_min=8.0, make_call="outsource (laser-cut plate)", outside="scs_lw_ring",
              note="a flat ring: cut from 1/4 in. plate it needs no lathe; the plate's own face bottoms on the wall", step="0"),
+        part("LP blanking cap over the lid's Ø37 bore until the steep camera is bought, 6061 1/4 in., Ø64, 4 x Ø4.5", "new", "part",
+             n_setups=1, holes=4, run_min=6.0, make_call="outsource (laser-cut plate)", outside="scs_lp_cap", step="0"),
         part("LW blanking disc in place of the window until the camera is bought (Ø38.1 x 5, 6061)", "new", "part", n_setups=1, lathe=True,
              run_min=5.0, make_call="buy instead", buy_instead="fit the Ø38.1 x 5 window from the start: it costs about what the blank does",
              step="0"),
@@ -131,8 +139,9 @@ def main():
              make_call="outsource (sheet clip with the liner)", outside="osh_liner", step="0"),
         part("LW camera bracket (flat 6061 plate under a ball head or tilt mount; the camera's line is set by the head)", "new", "part",
              n_setups=1, holes=6, run_min=10.0, make_call="outsource (laser-cut plate)", outside="scs_arm", step="7"),
-        part("BW window clamp frame, 6061 3/16 in., ~76 x 46 with a 53 x 22 opening, 3 x Ø4.5", "new", "part", n_setups=1, holes=3,
-             run_min=8.0, make_call="outsource (laser-cut plate)", outside="scs_ring", step="0"),
+        part("BW window clamp frame, 6061 3/16 in., ~76 x 49 with a 53 x 22.5 opening, 3 x Ø4.5", "new", "part", n_setups=1, holes=3,
+             run_min=8.0, make_call="outsource (laser-cut plate)", outside="scs_bw_frame", step="0",
+             note="the quoted outline is a stand-in: it reaches below the frame's bottom edge at one corner and needs fitting"),
         boss_row(),
         part("LP window retaining ring", "new", "part", n_setups=2, holes=1, lathe=True, run_min=2.0, make_call="buy instead",
              buy_instead="Thorlabs SM1 retaining ring or a laser-cut ring (should_cost.py: estimate $10)", outside="scs_cnc_ring", step="7"),

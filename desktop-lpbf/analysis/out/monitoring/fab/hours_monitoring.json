@@ -1,5 +1,5 @@
 {
- "method": "Same rules as analysis/machining/hours.py (CAM 0.5 h + 0.6 h per setup + 0.015 h per hole, +1 h for a lathe-and-mill part;\nsetups 0.75 h; deburr and inspect 0.25 h, 1 h with a sealing face), applied to:\n  * features added to parts that are already made (frame, lid, optics bridge, liners, heater block): no new setup, so only\n    the holes' CAM time, a stated allowance for each new non-circular feature (FEATURE_CAM_H, an estimate: hours.py has no\n    rule for adding to a proven program), the run time, and the inspection of any new sealing face;\n  * the new small parts (clamp rings, adapter boss, nozzle, holders, mounts, waveguide parts).\nRun time: the frame's new features from cam_monitoring.json (FreeCAD recount of the posted G-code, or CAMotics' time with\nthe VF-4 rapids when it has run) plus the operations nobody programs (taps, the SAE-4 port tool) at stated minutes; the\nrest are estimates at hours.py's conservative rates (16 cm3/min roughing, 40 cm2/min finishing).\nOutside prices are the closest instant quotes already in the repo (outsourcing-quotes.csv, 2026-11-22: SendCutSend's laser\nand CNC, JLCCNC) for a part of the same kind and size, labelled \"analogue\"; none of the monitoring parts has been quoted.\nIn-house cost uses should_cost.py's $65/h (BYU's shop rate for academic departments).",
+ "method": "Same rules as analysis/machining/hours.py (CAM 0.5 h + 0.6 h per setup + 0.015 h per hole, +1 h for a lathe-and-mill part;\nsetups 0.75 h; deburr and inspect 0.25 h, 1 h with a sealing face), applied to:\n  * features added to parts that are already made (frame, lid, optics bridge, liners, heater block): no new setup, so only\n    the holes' CAM time, a stated allowance for each new non-circular feature (FEATURE_CAM_H, an estimate: hours.py has no\n    rule for adding to a proven program), the run time, and the inspection of any new sealing face;\n  * the new small parts (clamp rings, adapter boss, nozzle, holders, mounts, waveguide parts).\nRun time: the frame's new features from cam_monitoring.json (FreeCAD recount of the posted G-code, or CAMotics' time with\nthe VF-4 rapids when it has run) plus the operations nobody programs (taps, the SAE-4 port tool) at stated minutes; the\nrest are estimates at hours.py's conservative rates (16 cm3/min roughing, 40 cm2/min finishing).\nOutside prices: SendCutSend's instant quotes for three of these parts (2026-11-25: the LW clamp ring, the BW clamp frame and\nthe LP blanking cap, from flat_parts_dxf.py's DXFs; quotes/sendcutsend_quotes.csv), and for the rest the closest instant\nquote already in the repo (outsourcing-quotes.csv, 2026-11-22: SendCutSend's laser and CNC, OSH Cut, JLCCNC) for a part of the\nsame kind and size, labelled \"analogue\".\nIn-house cost uses should_cost.py's $65/h (BYU's shop rate for academic departments).",
  "summary": {
   "rate_usd_h": 65.0,
   "features_on_existing_parts": {
@@ -7,14 +7,14 @@
    "in_house_usd": 180.0
   },
   "new_parts_all_made_in_house": {
-   "total_h": 46.0,
-   "in_house_usd": 2989.0,
-   "n": 13
+   "total_h": 48.26,
+   "in_house_usd": 3136.0,
+   "n": 14
   },
   "recommended": {
    "in_house_h": 9.83,
-   "outsourced_usd": 517.44,
-   "outsourced_items": 9,
+   "outsourced_usd": 520.56,
+   "outsourced_items": 10,
    "bought_instead": 3,
    "note": "features on the frame, lid, bridge and heater block stay in house (they ride on setups the shop runs anyway); flat parts go to a laser service, the compound-angle boss to SendCutSend CNC, rings and the nozzle are bought"
   },
@@ -173,11 +173,32 @@
    "deburr_inspect_h": 0.25,
    "total_h": 4.64,
    "in_house_usd": 302.0,
-   "outside_usd": 14.01,
-   "outside_basis": "SendCutSend laser, 6061 3/8 in.: the recoater feedthrough spacer ring (a flat ring, ~$14; 10 = $8.96 each)",
+   "outside_usd": 9.83,
+   "outside_basis": "SendCutSend instant quote 2026-11-25, 6061-T6 1/4 in. (2 = $7.86, 10 = $6.68 each; arrives Nov 30)",
    "buy_instead": null,
    "call": "outsource (laser-cut plate)",
    "note": "a flat ring: cut from 1/4 in. plate it needs no lathe; the plate's own face bottoms on the wall"
+  },
+  {
+   "item": "LP blanking cap over the lid's \u00d837 bore until the steep camera is bought, 6061 1/4 in., \u00d864, 4 x \u00d84.5",
+   "step": "0",
+   "where": "new",
+   "kind": "part",
+   "setups": 1,
+   "holes": 4,
+   "lathe": false,
+   "seal": false,
+   "cam_h": 1.16,
+   "setup_h": 0.75,
+   "run_h": 0.1,
+   "deburr_inspect_h": 0.25,
+   "total_h": 2.26,
+   "in_house_usd": 147.0,
+   "outside_usd": 11.44,
+   "outside_basis": "SendCutSend instant quote 2026-11-25, 6061-T6 1/4 in. (2 = $9.15, 10 = $7.21 each; arrives Nov 30)",
+   "buy_instead": null,
+   "call": "outsource (laser-cut plate)",
+   "note": ""
   },
   {
    "item": "LW blanking disc in place of the window until the camera is bought (\u00d838.1 x 5, 6061)",
@@ -264,7 +285,7 @@
    "note": ""
   },
   {
-   "item": "BW window clamp frame, 6061 3/16 in., ~76 x 46 with a 53 x 22 opening, 3 x \u00d84.5",
+   "item": "BW window clamp frame, 6061 3/16 in., ~76 x 49 with a 53 x 22.5 opening, 3 x \u00d84.5",
    "step": "0",
    "where": "new",
    "kind": "part",
@@ -278,11 +299,11 @@
    "deburr_inspect_h": 0.25,
    "total_h": 2.28,
    "in_house_usd": 148.0,
-   "outside_usd": 14.01,
-   "outside_basis": "SendCutSend laser, 6061 3/8 in.: the recoater feedthrough spacer ring (a flat ring, ~$14; 10 = $8.96 each)",
+   "outside_usd": 9.87,
+   "outside_basis": "SendCutSend instant quote 2026-11-25, 6061-T6 3/16 in. (2 = $7.89, 10 = $6.18 each; arrives Nov 30)",
    "buy_instead": null,
    "call": "outsource (laser-cut plate)",
-   "note": ""
+   "note": "the quoted outline is a stand-in: it reaches below the frame's bottom edge at one corner and needs fitting"
   },
   {
    "item": "LP adapter boss (compound angle; window seat on the line of sight; face O-ring on the lid), 6061",
