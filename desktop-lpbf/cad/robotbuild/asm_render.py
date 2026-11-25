@@ -33,7 +33,10 @@ try:
 except ImportError:          # the video worker's people.py / pvscene.py / hall.py before the branches merge
     if _VID:
         sys.path.append(_VID)
-    import pvscene  # noqa: E402
+    try:
+        import pvscene  # noqa: E402
+    except ImportError:      # timing only (plan_frames): no drawing
+        pvscene = None
 import common  # noqa: E402
 import kit_table as KT  # noqa: E402
 
@@ -287,6 +290,8 @@ class Replay:
 KW = dict(drive=10.0, tool=6.0, plan=1.5, cart=1.0, grip=1.0, screw=1.0, screw_rep=4.0, wait=30.0, turn=1.0, move2=1.0)
 # seconds of video a step gets at most (its events are sped up together to fit; never slower than real time)
 BUDGET = dict(place=3.6, screws=4.0, seal=10.0, flip=6.0, dual=6.0, rotate=5.0, note=2.5)
+# minimum frames so each motion still reads on screen
+MIN_FRAMES = dict(grip=2, tool=3, wait=12, drive=4, plan=3, cart=5, screw=6, screw_rep=2, turn=24, move2=16)
 CLOSE_STEPS = ("seal",)
 
 
@@ -318,8 +323,7 @@ def plan_frames(events, scale=1.0):
                 continue
             n = int(round(d * FPS / (KW.get(kk, 1.0) * f)))
             # minimum frames so each motion reads on screen (a drive at least 0.7 s, the work itself at least 0.8 s)
-            n = max(n, {"grip": 4, "tool": 6, "wait": 18, "drive": 8, "plan": 6, "cart": 10, "screw": 8, "screw_rep": 3,
-                        "turn": 30, "move2": 24}.get(kk, 2))
+            n = max(n, MIN_FRAMES.get(kk, 2))
             out[id(e)] = (n, d / n)
     reps = {}
     for e in events:
@@ -366,6 +370,13 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=()):
     if fail_pkl and fail_steps:
         ev_f = pickle.load(open(fail_pkl, "rb"))["events"]
         ev = merge_fails(ev, ev_f, set(fail_steps))
+    # a move the planner could not plan (run_assembly.go_park after a failed plan) is followed by an "unplanned" mark: say so
+    last_move = {}
+    for e in ev:
+        if e["kind"] == "move":
+            last_move[e.get("arm")] = e
+        elif e["kind"] == "mark" and e.get("what") == "unplanned" and e.get("arm") in last_move:
+            last_move[e["arm"]]["unplanned"] = True
     nfr = plan_frames(ev, scale)
     tot_frames = sum(n for n, _ in nfr.values())
     print(f"{name}: {len(ev)} events -> about {tot_frames} frames ({tot_frames / FPS / 60:.1f} min)", flush=True)
@@ -551,6 +562,8 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=()):
                            f"({e['dur']:.0f} s{lapse_txt(per)})")
                 elif in_table and e.get("how") == "cart":
                     sub = "pick at the parts table (checked against the table, its nest and the neighbouring parts)"
+                elif e.get("unplanned"):
+                    sub = "NOT PLANNED: the planner found no path back to park here; drawn as a straight joint move, not checked"
                 elif e.get("how") == "plan":
                     sub = f"planned move, collision-checked{lapse_txt(per)}"
                 else:
