@@ -344,6 +344,78 @@ def lead_panel(d, rows, highlight, y0, max_rows=11, y_max=H - 20):
     return y0 + h
 
 
+# ------------------------------------------------------------------------------------------------ a small line chart
+def chart_panel(d, spec, y0=72, h=250):
+    """A line chart in the right column, drawn up to the frame's point: spec = {"title", "x" (list), "y" (list), "now"
+    (index drawn up to), "ylog" (bool), "xlabel", "ylabel", "xticks", "ref" (a horizontal reference value), "ref_label",
+    "value" (text shown big), "verdict" ("pass" | "fail" | "")}. One series, one axis."""
+    import math as _m
+    x0, w = RIGHT_X, W - RIGHT_X - 12
+    d.rounded_rectangle((x0, y0, x0 + w, y0 + h), 8, fill=PANEL, outline=RULE)
+    d.text((x0 + 10, y0 + 7), spec.get("title", "").upper(), font=font(12, bold=True), fill=INK2)
+    if spec.get("value"):
+        fv = font(18, bold=True)
+        d.text((x0 + 10, y0 + 25), spec["value"], font=fv, fill=INK)
+        if spec.get("verdict") in STATUS:
+            t, col = STATUS[spec["verdict"]]
+            tw = d.textlength(t, font=font(12, bold=True))
+            d.rounded_rectangle((x0 + w - tw - 26, y0 + 27, x0 + w - 10, y0 + 49), 11, fill=rgb(col) + (255,))
+            d.text((x0 + w - tw - 18, y0 + 31), t, font=font(12, bold=True), fill=(255, 255, 255))
+    xs, ys = list(spec.get("x") or []), list(spec.get("y") or [])
+    if len(xs) < 2:
+        return y0 + h
+    now = int(spec.get("now", len(xs) - 1))
+    ylog = bool(spec.get("ylog"))
+    f = (lambda v: _m.log10(max(v, 1e-12))) if ylog else (lambda v: v)
+    fy = [f(v) for v in ys]
+    lo, hi = min(fy), max(fy)
+    if spec.get("ref") is not None:
+        lo, hi = min(lo, f(spec["ref"])), max(hi, f(spec["ref"]))
+    if ylog:
+        lo, hi = _m.floor(lo), _m.ceil(hi)
+    if hi - lo < 1e-9:
+        hi = lo + 1.0
+    px0, px1 = x0 + 58, x0 + w - 14
+    py0, py1 = y0 + 62, y0 + h - 34
+    xmin, xmax = xs[0], xs[-1]
+
+    def X(v):
+        return px0 + (px1 - px0) * (v - xmin) / max(xmax - xmin, 1e-9)
+
+    def Y(v):
+        return py1 - (py1 - py0) * (f(v) - lo) / (hi - lo)
+    ft = font(9)
+    if ylog:                                                      # a gridline and a label every decade
+        for e in range(int(lo), int(hi) + 1):
+            yy = py1 - (py1 - py0) * (e - lo) / (hi - lo)
+            d.line([(px0, yy), (px1, yy)], fill=(225, 229, 234, 255), width=1)
+            d.text((x0 + 8, yy - 6), f"1e{e}" if e not in (0, 1, 2, 3) else str(10 ** e), font=ft, fill=INK2)
+    d.line([(px0, py1), (px1, py1)], fill=INK3, width=1)
+    d.line([(px0, py0), (px0, py1)], fill=INK3, width=1)
+    for t in spec.get("xticks") or []:
+        tx = X(t)
+        d.line([(tx, py1), (tx, py1 + 3)], fill=INK3, width=1)
+        lab = f"{t:g}"
+        d.text((tx - d.textlength(lab, font=ft) / 2, py1 + 4), lab, font=ft, fill=INK2)
+    if spec.get("xlabel"):
+        d.text((px1 - d.textlength(spec["xlabel"], font=ft), py1 + 16), spec["xlabel"], font=ft, fill=INK2)
+    if spec.get("ylabel"):
+        d.text((x0 + 8, py0 - 14), spec["ylabel"], font=ft, fill=INK2)
+    if spec.get("ref") is not None:
+        ry = Y(spec["ref"])
+        for xx in range(int(px0), int(px1), 8):
+            d.line([(xx, ry), (min(xx + 4, px1), ry)], fill=rgb(common.COL["fail"]) + (255,), width=1)
+        if spec.get("ref_label"):
+            d.text((px0 + 4, ry - 13), spec["ref_label"], font=ft, fill=rgb(common.COL["fail"]))
+    pts = [(X(xs[k]), Y(ys[k])) for k in range(min(now + 1, len(xs)))]
+    if len(pts) >= 2:
+        d.line(pts, fill=NEW + (255,), width=2)
+    if pts:
+        cx, cy = pts[-1]
+        d.ellipse((cx - 4, cy - 4, cx + 4, cy + 4), fill=NEW + (255,), outline=(255, 255, 255, 255))
+    return y0 + h
+
+
 # ------------------------------------------------------------------------------------------------ labels, progress, titles
 def labels(d, labs):
     f = font(12)

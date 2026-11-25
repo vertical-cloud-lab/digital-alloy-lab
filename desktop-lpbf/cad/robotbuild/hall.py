@@ -121,13 +121,16 @@ class MirVis:
 
 
 class Hall:
-    def __init__(self, pl=None, kit=True, shop=True, bench=True, robots=True, person=True, size=(common.W, common.H)):
+    def __init__(self, pl=None, kit="stock", shop=True, bench=True, robots=True, person=True, size=(common.W, common.H)):
+        """kit: "stock" (every part as delivered: machined parts as their blanks), "finished", or None (empty table)."""
         self.pl = pl if pl is not None else common.plotter(size)
         self.sc = pvscene.PVScene(self.pl)
         self.kit_items = []                  # kit_table.py's layout (what is on the long table), when loaded
+        self.kt = None
         self.labels3d = {}                   # name -> 3-D point, for screen labels
         self._floor()
-        self._long_table()
+        if not (kit and self.load_kit(kit)):
+            self._long_table()
         if bench:
             self._bench()
         if shop:
@@ -142,8 +145,6 @@ class Hall:
             import people
             self.person = people.Person(self.sc, "op")
             self.person.set(x=LT["x0"] - 450.0, y=-150.0, hd=-90.0, amp=0.0, look=(LT["x0"] + 800.0, -100.0, 900.0))
-        if kit:
-            self.load_kit()
 
     # ------------------------------------------------------------------------------------------- the room
     def _floor(self):
@@ -241,19 +242,24 @@ class Hall:
         self.sc.add("soda can top", top.triangulate(), "#c9ced3", specular=0.8)
 
     # ------------------------------------------------------------------------------------------- the parts
-    def load_kit(self):
-        """Every part on the long table from kit_table.py (the assembly worker's layout), if it is there."""
+    def load_kit(self, mode="stock"):
+        """The long table with every part on it, from kit_table.py (the assembly worker's layout: the table, nests,
+        trays, bins, pallets and every item); False if kit_table can't be loaded."""
+        kt = kit_table()
+        if kt is None:
+            return False
         try:
-            import kit_table
+            ms = kt.meshes(mode=mode)
         except Exception as e:                                  # noqa: BLE001
-            print(f"hall: no kit_table ({e!r}); the long table is empty", flush=True)
-            return []
-        try:
-            self.kit_items = kit_table.add_to(self.sc) if hasattr(kit_table, "add_to") else []
-        except Exception as e:                                  # noqa: BLE001
-            print(f"hall: kit_table failed ({e!r}); the long table is empty", flush=True)
-            self.kit_items = []
-        return self.kit_items
+            print(f"hall: kit_table.meshes failed ({e!r}); the long table is empty", flush=True)
+            return False
+        for k, m in enumerate(ms):
+            nm = f"kit/{m['key']}/{k}"
+            self.sc.add(nm, m["mesh"], m["color"], group="kit", specular=0.3 if m["key"] != "table" else 0.15)
+        self.kit_items = ms
+        self.kt = kt
+        self.labels3d["long table"] = ((LT["x0"] + LT["x1"]) / 2, LT["y0"], LT["top"])
+        return True
 
     # ------------------------------------------------------------------------------------------- labels
     def labels(self, names):
@@ -267,6 +273,20 @@ class Hall:
             if 0 <= x <= common.W and 70 <= y <= common.H - 20:
                 out.append([round(x, 1), round(y, 1), n])
         return out
+
+
+def kit_table():
+    """kit_table.py (the assembly worker's): from this folder, or from $KIT_TABLE_DIR until it is merged here."""
+    import os
+    extra = os.environ.get("KIT_TABLE_DIR")
+    if extra and extra not in sys.path:
+        sys.path.append(extra)
+    try:
+        import kit_table as kt
+        return kt
+    except Exception as e:                                      # noqa: BLE001
+        print(f"hall: no kit_table ({e!r})", flush=True)
+        return None
 
 
 def orbit(focal, dist, az_deg, el_deg):

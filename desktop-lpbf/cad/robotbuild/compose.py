@@ -181,6 +181,8 @@ def overlay(base, m, clock, frac, ticks, ch_title, ch_alpha, cost_scale, rows):
     y = 72
     if m.get("cost"):
         y = P.cost_panel(d, m["cost"], cost_scale) + 8
+    if m.get("chart"):
+        y = P.chart_panel(d, m["chart"], y0=y) + 8
     if m.get("lead"):
         lr = m["lead"].get("rows") or rows
         P.lead_panel(d, lr, m["lead"].get("highlight"), y0=y)
