@@ -565,6 +565,9 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
         k_, n_ = (int(x) for x in part.split("/"))
         lo = int(tot_frames * k_ / n_)
         hi = int(tot_frames * (k_ + 1) / n_) if k_ < n_ - 1 else 10 ** 9
+    if os.environ.get("ASM_RANGE"):            # a quick look at frames lo:hi (written to <name>.range)
+        lo, hi = (int(x) for x in os.environ["ASM_RANGE"].split(":"))
+        part, k_ = "range", os.environ.get("ASM_RANGE_IDX", "range")     # ASM_RANGE_IDX: a slice number for merge_parts.py
     ch = common.Chapter(f"{name}.part{k_}" if part else name, title)
     ch.n = lo
     rows = {}
@@ -611,7 +614,7 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
         return "" if x < 1.3 else f"; x{x:.0f} time-lapse"
 
     stop = False
-    for e in ev:
+    for i_ev, e in enumerate(ev):
         if stop:
             break
         k = e["kind"]
@@ -655,7 +658,7 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
                 what, _, fix = str(fail_notes[e["id"]]).partition("Round 7:")
                 txt = "FAILED in an earlier run: " + what.strip().rstrip(".") + (". Now: " + fix.strip() if fix else "")
                 for _ in range(int(FPS * 3.0)):
-                    stop = emit(e["label"], txt[:178], [f"robot {n0}"], status="fail")
+                    stop = emit(e["label"], txt[:178], [f"robot {n0}"], status="redesign")
                     if stop:
                         break
             row = (rows.get(e["id"]) or {}).get("row") or {}
@@ -750,8 +753,18 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
             Q = e.get("q")
             if Q is None or len(Q) == 0:
                 if k == "screw":
-                    for _ in range(int(FPS * 1.0)):
-                        stop = emit(cur["label"], f"screw not driven: {e.get('why', '')[:90]}", who, status="fail")
+                    # run 10: an arm that can't reach a screw hands it to the other arm (run_assembly.do_screws); the screw is
+                    # only a failure if no later attempt in the step drives it
+                    later = [x for x in ev[i_ev + 1:i_ev + 40] if x.get("step") == e.get("step") and x["kind"] == "screw"
+                             and x.get("obj") == e.get("obj") and x.get("ok")]
+                    if later:
+                        o = later[0].get("arm") or ("B" if n == "A" else "A")
+                        for _ in range(int(FPS * 0.5)):
+                            why_s = str(e.get("why", "")).replace("approach: ", "").split(" (")[0][:70]
+                            stop = emit(cur["label"], f"arm {n} can't reach this screw ({why_s}); arm {o} drives it", who)
+                    else:
+                        for _ in range(int(FPS * 1.0)):
+                            stop = emit(cur["label"], f"screw not driven: {e.get('why', '')[:90]}", who, status="fail")
                 continue
             Q = np.asarray(Q, float)
             d = np.r_[0.0, np.cumsum(np.abs(np.diff(Q, axis=0)).max(axis=1))] if len(Q) > 1 else np.array([0.0])
@@ -798,8 +811,17 @@ def run(chapter, max_frames=None, scale=1.0, fail_pkl=None, fail_steps=(), fail_
                 else:
                     # run 10: a planned (transit) move gets a wider shot, 2.3 m out, so the frame shows where the arm goes
                     # rather than filling with the arm itself
-                    shot = 2300.0 if e.get("how") == "plan" else ("mid" if in_table else "close")
-                    rp.aim(rp.tcp(n), shot, side)
+                    if e.get("how") == "plan":
+                        # run 10 (second pass): transit moves are time-lapsed, so show where the arm goes in the cell from a
+                        # fixed high three-quarter view of the bench (or of the MiR at the table), not a camera chasing the wrist
+                        if in_table:
+                            foc = np.array([rp.st[n]["x"], 0.0, 950.0])
+                            rp.aim(foc, 3000.0, side, az=(-62.0 if side == "A" else 62.0), el=40.0)
+                        else:
+                            fx = float(np.clip(rp.tcp(n)[0], -1100.0, 1100.0))
+                            rp.aim(np.array([fx, 0.0, 1000.0]), 3600.0, side, az=(-58.0 if side == "A" else 58.0), el=36.0)
+                    else:
+                        rp.aim(rp.tcp(n), "mid" if in_table else "close", side)
                 if k == "screw":
                     msz = {0.5: 3, 0.7: 4, 0.8: 5, 1.0: 6}.get(round(float(e.get("pitch", 0.7)), 1), "")
                     sub = (f"{e['tool']}: M{msz} screw runs down {e['L']:.0f} mm and is torqued to {float(e.get('torque') or 0):.1f} N m "
