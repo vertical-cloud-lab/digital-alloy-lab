@@ -97,12 +97,14 @@ is still 581.2 mm above the tray.
 
   `analysis/out/mass.*` has been re-run.
 
-**Not integrated yet:**
-- **Pump 4396K21 and HEPA housing 5169K72:** builders exist, but both need the gas-loop hoses re-routed to their real
-  ports. The pump has a flare intake tee; the housing has 1/2 NPSC side and bottom ports. The envelopes stay for now.
-- **Pressure transducer:** the BOM's 3861N11 has a 1/4 NPT male thread, but the lid port is now a 7/16-20 SAE-4 O-ring
-  boss. Choose a transmitter with a −4 SAE (7/16-20 UNF O-ring boss) port, or add an SAE-4 male × 1/4 NPT female
-  adapter, about 25 mm taller. The envelope stays.
+**Integrated in round 6 (2026-11-25, [`oem-parts.md`](oem-parts.md) round 6):**
+- **Pump:** the Edwards nXDS6i (BOM G2 since 2026-11-22, in place of the 4396K21 this list named), drawn to Edwards'
+  dimension drawing (silhouette IoU 0.923 over five views; Edwards publishes no CAD), with the vacuum hose on its NW25 inlet.
+- **HEPA housing 5169K72:** on two KF-25 adapters and elbows (aligned volume IoU 0.949 against McMaster's CAD). The adapters,
+  elbows and stand are not in BOM G5, and their dimensions are assumed.
+- **Pressure transmitter 3861N11:** on an SAE-4 male × 1/4 NPT female adapter in the lid port (IoU 0.948). Its lead ends
+  1.25 mm under the solid optics bridge, so it can't leave upward: it needs a 90° adapter, a side-exit transmitter or a bore
+  in the bridge (not chosen).
 - **Everything else** listed under "What is still not real" below.
 
 The tables below are the swap test made before the integration. The positions in its "Change" column are the
