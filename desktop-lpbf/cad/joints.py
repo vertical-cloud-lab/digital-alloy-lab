@@ -267,13 +267,12 @@ def add_joints(h, parts, add, module="M50"):
     cap, ret, ins6 = "95966A705", "91065A610", find("insert", 6, 12)
     zfl = zf - MP.FLANGE_T
     items = [((s * MP.SCREW_X, 0.0, zfl), Z) for s in (-1, 1)]
-    cut_parts(parts, f"Build module {module}", [hole((s * MP.SCREW_X, 0, zf), Z, -1.0, 0.0, 8.6) for s in (-1, 1)])   # retainer recess
+    # Round 6 (2026-11-25, hot-swap.md §3.2a): the two SCHUNK NSE-HT zero-point modules pull the module up, so the captive M6 and their
+    # retainers are gone: their knurled heads hung 6 mm under the tabs, in the path of the overflow jar's toggle clamp (now at x 94) on the
+    # module's way out, and a robot can't turn them. The tabs keep their Ø6.8 holes and the floor its two M6 inserts: a person can still
+    # screw a module up with two plain M6 x 16 (hand fallback, e.g. with the release air off and a module's arms removed).
     cut_parts(parts, "Chamber floor plate", [hole(p, n, MP.FLANGE_T - 0.01, MP.FLANGE_T + 12.0, insert_od(ins6)) for p, n in items] +
               [hole(p, n, MP.FLANGE_T + 12.0 - 0.01, MP.FLANGE_T + 13.5, 6.0) for p, n in items])
-    add_fasteners(h, add, "module_flange", "Captive M6 panel screws on the module flange (knurled, 18-8)", cap, items, 4, "B2",
-                  group="module", explode=(0, -320, -60))
-    add_fasteners(h, add, "module_flange", "Captive-screw retainers (18-8)", ret, [((p[0], p[1], zf - 0.5), mZ) for p, n in items], 4, "B2",
-                  group="module", explode=(0, -320, -60))
     add_fasteners(h, add, "module_flange", "Helical inserts for the module screws, M6 x 12 18-8, in the floor", ins6,
                   [((p[0], p[1], zf), Z) for p, n in items], 5, "B2", explode=(0, 0, -40))
     dw = find("dowel", 6, 20)
@@ -504,7 +503,8 @@ def add_joints(h, parts, add, module="M50"):
 
     _KEY[0] = "funnel"
     ox = (P["ovf_x0"] + P["ovf_x1"]) / 2
-    items = [((x, y, zf - 6.0), Z) for x in (ox - 17.0, ox + 17.0) for y in (-40.0, 40.0)]
+    jx_, jy_ = h.JAR["x"], h.JAR["y"]          # round 6: the outlet moved to the slot's front end, so the front pair moved forward
+    items = [((x, y, zf - 6.0), Z) for x, y in ((ox - 17.0, 40.0), (ox + 17.0, 40.0), (jx_ - 15.0, -67.0), (jx_ + 22.0, -67.0))]
     cut_parts(parts, "Overflow funnel block", [hole(p, n, -16.01, 0.0, CBORE[4][0]) for p, n in items] + [hole(p, n, -0.01, 6.01, CLEAR[4]) for p, n in items])
     cut_parts(parts, "Chamber floor plate", [hole(p, n, 6.0, 12.0, insert_od(ins4)) for p, n in items] + [hole(p, n, 11.99, 13.5, 4.0) for p, n in items])
     add_fasteners(h, add, "funnel", "Overflow-funnel screws, M4 x 12 316, counterbored", pn412, items, 4, "M4", explode=(0, 0, -200))
@@ -547,7 +547,8 @@ def add_joints(h, parts, add, module="M50"):
 
     # ---------------- 10. Z mounting flange: 4 x M5 x 12, counterbored, into M5 x 7.5 inserts in the floor ----------------
     _KEY[0] = "zmount"
-    items = [((x, y, zf - 4.5), Z) for x, y in ((-33.0, 70.0), (-33.0, 100.0), (40.0, 102.0), (94.0, 102.0))]
+    # round 6: the flange ends at x 48 (the servo moved behind the actuator), so the screw at (94, 102) moved to (40, 66)
+    items = [((x, y, zf - 4.5), Z) for x, y in ((-33.0, 70.0), (-33.0, 100.0), (40.0, 102.0), (40.0, 66.0))]
     pn512 = find("shcs", 5, 12)
     cut_parts(parts, "Z mounting flange", [hole(p, n, -5.51, 0.0, CBORE[5][0]) for p, n in items] + [hole(p, n, -0.01, 4.51, CLEAR[5]) for p, n in items])
     cut_parts(parts, "Chamber floor plate", [hole(p, n, 4.5, 12.0, insert_od(ins)) for p, n in items] + [hole(p, n, 11.99, 13.5, 5.0) for p, n in items])
@@ -567,8 +568,10 @@ def add_joints(h, parts, add, module="M50"):
             cb_tools += [hole(p, Z, -(zf - 15.0 - zb1) - 0.01, 0.0, 11.0), hole(p, Z, -0.01, 15.01, CLEAR[6])]
             base_tools.append(hole((xc_, yc_, zb0), Z, -0.01, 15.01, 11.0))           # hex-key access to the top screw
             top_ins.append(((xc_, yc_, zf), Z))
-            for sx, sy in ((1, -1), (-1, 1)):
-                q = (xc_ + sx * 8.5, yc_ + sy * 8.5, zb0)
+            # an 18 mm leg (the front-right one since round 6) takes its two base screws on its long axis, 12 mm either side of the bore
+            offs = ((8.5, -8.5), (-8.5, 8.5)) if (lx1 - lx0) >= 24.0 else ((0.0, -12.0), (0.0, 12.0))
+            for ox_, oy_ in offs:
+                q = (xc_ + ox_, yc_ + oy_, zb0)
                 bots.append((q, Z))
                 base_tools.append(hole(q, Z, -0.01, 15.01, CLEAR[6]))
                 leg_taps.append(hole(q, Z, 14.99, 27.0, 6.0))
@@ -582,11 +585,20 @@ def add_joints(h, parts, add, module="M50"):
     # ---------------- 11b. overflow-jar sensor bracket: 2 x M4 x 10 into tapped holes in the right-hand leg's front face (2026-11-23) ----------------
     _KEY[0] = "jar_sensor"
     pn410 = find("shcs", 4, 10)
-    zj_ = zf - 22.0 - 42.0
-    items = [((150.0, 20.0, zj_ + dz), (0.0, 1.0, 0.0)) for dz in (-15.0, -23.0)]       # z -99 and -107: above the sensor (top -115)
+    yl_ = h.LEG_BOXES[2][3] + 6.0                   # round 6: the bracket's foot on the front-right leg's back face (y -75), right of its arm
+    items = [((h.LEG_BOXES[2][0] + 12.0, yl_, h.JAR["z_sens"] + dz), (0.0, -1.0, 0.0)) for dz in (-7.0, 7.0)]
     cut_parts(parts, "Overflow-jar sensor bracket", [hole(p, n, -0.01, 6.01, CLEAR[4]) for p, n in items])
     cut_parts(parts, "Chamber legs", [hole(p, n, 5.99, 12.0, 4.0) for p, n in items])
-    add_fasteners(h, add, "jar_sensor", "Jar-sensor bracket screws, M4 x 10 316, into the right-hand leg", pn410, items, 4, "A1", explode=(120, 0, 0))
+    add_fasteners(h, add, "jar_sensor", "Jar-sensor bracket screws, M4 x 10 316, into the front-right leg", pn410, items, 4, "A1", explode=(120, 0, 0))
+    # ---------------- 11c. zero-point posts: an M6 x 9 insert in the floor for each post's stud (round 6, hot-swap.md §3.2a) ----------------
+    _KEY[0] = "zp_posts"
+    zp = [((x, y, zf), Z) for side in ("right", "left") for x, y in h.NSE["posts"][side]]
+    ins69_ = find("insert", 6, 9)
+    cut_parts(parts, "Chamber floor plate", [hole(p, n, 0.0, 9.0, insert_od(ins69_)) for p, n in zp] + [hole(p, n, 8.99, 10.5, 6.0) for p, n in zp])
+    add_fasteners(h, add, "zp_posts", "Zero-point post helical inserts, M6 x 9 18-8, in the floor", ins69_, zp, 4, "B3", explode=(0, 0, -40))
+    JOINT_NOTES["zp_posts"] = ("Each zero-point post hangs from an M6 stud in a helical insert in the floor plate's underside (blind, 10.5 mm deep, "
+                               "9.5 mm of floor left above it); the module plate is screwed to the posts with countersunk M6 from below, flush, "
+                               "because the clamping module covers the plate's underside.")
     JOINT_NOTES["jar_sensor"] = ("The jar sensor's bracket is set once and left: two plain M4 screws into tapped holes in the 6061 leg, "
                                  "with the sensor's own M12 nuts setting its 2 mm gap to the jar.")
 

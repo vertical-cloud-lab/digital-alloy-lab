@@ -113,6 +113,13 @@ Powder at 30 µm layers, 1.8 dose factor, AlSi10Mg, as in `requirements_budgets.
   `options-mcmaster.csv` is the 2-240 (9464K367), one size too large; swap it for 2-238 in the same FKM family.
 - **Flange and screws.** A Ø100 flange with two tabs (cut from 316 plate: the 4 in. bar is too small for it) pulls up against the
   floor's underside with two captive M6 knurled screws (McMaster 95966A705, 18-8) into stainless helical inserts (91732A782).
+  **Round 6 (2026-11-25): zero-point clamps instead** ([`hot-swap.md`](hot-swap.md) §3.2a).
+  - **Machine side:** two SCHUNK NSE-HT mini 88-20 V1 (ID 1460874) hang from the floor at (100, 40) and (−102, −26).
+  - **Module side:** each module carries two 6061 arms, bolted under two new flange ears at 50° and 135°. Each arm holds a SCHUNK
+    SPC-HT mini 20 pin (ID 1393006) up into a module. The arms are the same for S25, M50 and L75.
+  - **Release:** 6 bar opens both, and springs hold the module with the air off.
+  - **Locating:** the dowel and diamond pin still locate it.
+  - **The captive M6 are removed.** The tabs and the two floor inserts stay as a hand fallback.
 - **Z coupling.** The hollow rod ends in a 416 stainless striker that sits on a pot magnet in the Z arm (McMaster 5679K95: Ø25 × 7 mm,
   44 lbf). The bore centres the piston and the magnet only has to pull it down, so it works as a floating joint with no backlash in
   the pull direction. MuJoCo puts the piston's holding force at 3.4 N against a 196 N magnet.
@@ -129,16 +136,27 @@ Powder at 30 µm layers, 1.8 dose factor, AlSi10Mg, as in `requirements_budgets.
   passes under it, with a deeper boot at the right end for the KF-25 port. At 2 m/s the blower must move ~115 L/min for Ø75
   (requirements-later.md §2).
 - **Overflow** moved to x = 90–110 mm, a 104 mm slot over a KF-40 jar with a 90 mm half nipple (~120 cm³).
+  - **Round 5 (2026-11-23):** a 45 mm, 2 in. cup (~65 cm³) on an MKS toggle clamp, so it slides straight out to the front.
+  - **Round 6 (2026-11-25):** the outlet and jar moved to the slot's front end, (94, −46), so the right-hand zero-point module fits
+    behind it. The joint is at z −82, and the cup is 2.5 in. × 0.065 in. 316L down to z −129: ~104 cm³, ~22 mm of L75 build.
+  - **The jar has a robot grip fin:** an I-section level with the module's grip block, 100 mm right of it.
+  - **Caveat:** the funnel's pocket now slopes only 13° to that outlet, so the slot's back end won't drain by gravity alone
+    ([`hot-swap.md`](hot-swap.md) §3.2a lists the options).
 - **Z stage.** It hangs lower: the heated stack plus the rod's travel (−42 to +8 mm) put the arm 181 mm below the powder plane at
   the bottom of a build. The process module's base plate gets a window for the arm, actuator and folded servo, and a slot to the
-  front edge for the module's rod end. **The machine is still 564 mm tall** (581.2 mm since the real levelling mounts went in, 2026-11-19: [`fasteners.md`](fasteners.md)).
+  front edge for the module's rod end. **Round 6 (2026-11-25):** the servo folds to the back of the actuator.
+  - **Servo:** at (0, 130), connector block to −x, on a 60 mm wide bracket and 2:1 belt housing that runs back to y 160. The base
+    plate's window now reaches y 166.
+  - **Z flange:** narrows to x −40..48.
+  - **Why:** the right-hand zero-point module hangs where the servo was. **The machine is still 564 mm tall** (581.2 mm since the real levelling mounts went in, 2026-11-19: [`fasteners.md`](fasteners.md)).
 
 **Swapping a module** (by hand, between campaigns, with the chamber at atmosphere):
 
 ![Module swap](cad/img/modules/module-swap.gif)
 
 1. Plate out (§4), piston to z_p = 0, a clamp-on collar (McMaster 6435K35) on the rod under the bottom flange.
-2. Undo the two thumb screws. The Z arm drops 45 mm: the magnet lets go, because the collar holds the piston.
+2. Undo the two thumb screws. The Z arm drops 45 mm: the magnet lets go, because the collar holds the piston. (Since round 6: release
+   air on instead of the screws; the zero-point modules open, [`hot-swap.md`](hot-swap.md) §3.2a.)
 3. Lower the module 40 mm so the spigot clears the port and passes under the outlet plenum, slide it 170 mm forward, raise it
    18 mm under the door hinges, 20 mm further forward, 12 mm more, and out over the guard sill. Unplug its M12 power and type K plugs.
 
@@ -236,7 +254,9 @@ Fetched prices for one machine with all three modules and reservoirs (the CSVs l
 | H1 | heater stacks: 10 cartridges, 9 thermocouples and plugs, Macor, shims, cutoffs, M12 power connectors | ~$2,190 |
 | H2 | heater supply, DC SSR, limit controller | $325 |
 | B1 | module cylinders, spigot bar, hollow rods | $693, plus plate for the flanges, welding and honing |
-| B2 | O-rings, captive screws, inserts, pot magnet, striker, collars | $163 |
+| B2 | O-rings, captive screws, inserts, pot magnet, striker, collars | $163 (the captive screws came off in round 6) |
+| B3 | zero-point clamps: 2 × SCHUNK NSE-HT mini 88-20 V1 ($2,680 each), 6 × SPC-HT mini 20 pins (ask SCHUNK), arms, plates, posts (round 6) | $5,360 + pins |
+| B4 | release air: valve, union Y, M5 elbows, FEP tube (round 6) | ~$200 |
 | R1 | reservoir sheet, detents, shutter springs | $73, plus fabrication |
 | A1 | proximity sensors, fibre through-beam, NFC, load cell and ADC | $1,132 |
 | A2 | liner sheet, six cover slides, metal-dust vacuum | $3,857 (the vacuum is $3,190) |

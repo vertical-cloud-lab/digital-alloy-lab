@@ -168,7 +168,7 @@ def catalogue(module="M50"):
         # the chamber is a through-frame on a bolted floor plate (chamber-construction.md): floor plate, its cord, frame, floor screws
         place("Floor plate with its helical inserts and two pressed dowels onto the legs",
               ["Chamber floor plate", "Helical inserts for the module screws", "Z-flange helical inserts", "Leg helical inserts",
-               "Outlet-plenum helical inserts", "Overflow-funnel helical inserts", "Floor-plate dowels"], minutes=5),
+               "Outlet-plenum helical inserts", "Overflow-funnel helical inserts", "Floor-plate dowels", "Zero-point post helical inserts"], minutes=5),
         screws("Leg-to-floor screws, one M6 up each leg's Ø11 bore through the base plate into the floor plate", "legs", 8),
         place("Floor O-ring: 3.53 mm FKM cord, a vulcanized loop, pressed into the pad's face gland", ["Floor O-ring"], minutes=4),
         place("Through-frame lowered over the floor plate's pad onto the two dowels, with its lid-screw inserts",
@@ -215,8 +215,12 @@ def catalogue(module="M50"):
         place("Z stage hung under the floor", ["Z mounting flange", "Z actuator", "Z bracket", "Z servo", "Z carriage", "Z lift arm", "Pot magnet"],
               minutes=6),
         screws("Four counterbored M5 Z-flange screws from below", "zmount", 5),
+        # round 6 (2026-11-25, hot-swap.md 3.2a): the zero-point clamps replace the two captive M6
+        place("Zero-point modules on their plates, posts on studs into the floor; release valve, fittings and air line",
+              ["Zero-point clamping modules", "Zero-point module plates", "Zero-point posts", "Zero-point release", "Zero-point push-in"],
+              path=None, minutes=12),
         dict(do="module", label=f"Build module {module} in along its swap path (Z arm released)", minutes=3),
-        screws("Two captive M6 screws pull the module flange up to the floor", "module_flange", 2, torque=True, pn="95966A705"),
+        note("Release air off: the two zero-point modules pull the module flange up to the floor (round 6; the captive M6 are gone)", 1),
         place("Gas knife and dose chute (hung under the lid line)", ["Gas knife", "Dose chute"], minutes=4),
         place("Lid O-ring cord into the body's gland", ["Lid O-ring"], path=None, minutes=4),
         place("Lid with its inserts", ["Chamber lid", "Window-flange helical", "Metering-base helical"], minutes=2),
@@ -303,7 +307,8 @@ def catalogue(module="M50"):
               skip=["Build plate", "Plate rim wiper"], minutes=1),
         remove("Plate: turned 60 deg off its bayonet, lifted 20 mm (spigot and lugs over the 8 mm door sill), out through the door",
                ["Build plate", "Plate rim wiper"], [[(0, 0, 0), (0, 0, 20), (0, -520, 20)]], rot=60.0, minutes=2),
-        reach("Fingers on the overflow jar's toggle-clamp lever under the floor (lever end at y -76, z -84)", (100.0, -76.0, -84.0), ((0, -1, 0), (0.6, -0.8, 0)),
+        # round 6 (2026-11-25): the jar's joint is at (94, -46, -82) (lpbf_low.JAR); the lever's end is at y -122, under the jar's grip fin
+        reach("Fingers on the overflow jar's toggle-clamp lever under the floor (lever end at y -122, z -82)", (94.0, -122.0, -82.0), ((0, -1, 0), (0.6, -0.8, 0)),
               skip=["Overflow clamp", "Overflow jar"], minutes=1, hand=PINCH_HAND),
         remove("KF-40 toggle clamp opened (one push on the lever) and taken off by hand", ["Overflow clamp"], [], minutes=1),
         remove("Overflow jar: drop 8 mm off the centring ring, straight out to the front", ["Overflow jar"],
@@ -413,7 +418,8 @@ def catalogue(module="M50"):
         reach("Left through-beam head", (-180.0, 0.0, 5.0), (FRONT, UP, (-1, 0, 0), (0, -0.7, 0.7), (-0.5, -0.85, 0)), skip=["Plate-height through-beam"],
               hand=PINCH_HAND),
         reach("Module-present sensor under the floor", (-55.0, -25.0, -40.0), (FRONT, (0, 0, -1)), skip=["Module-present sensor"], hand=PINCH_HAND),
-        reach("Overflow-jar sensor (its M12 nuts, in front of the bracket)", (150.0, -26.0, -121.0), (FRONT, (1, 0, 0)), skip=["Overflow-jar present"], hand=PINCH_HAND),
+        reach("Overflow-jar sensor (its M12 nuts, right of the bracket on the front-right leg)", (152.0, -46.0, -110.0), (FRONT, (1, 0, 0)), skip=["Overflow-jar present"],
+              hand=PINCH_HAND),
     ]))
     ops.append(dict(id="M11", kind="maintenance", name="Lubricate the recoater rail carriage and ball nut (vacuum grease)", where="tray at the access opening",
                     interval="rule of thumb: every 6 months or ~100 km of travel (~500 builds at 0.2 m per stroke); vendor manual not checked",
@@ -441,10 +447,10 @@ def catalogue(module="M50"):
     ops.append(dict(id="S2", kind="swap", name=f"Build module swap ({module})", where="tray at the access opening", interval="between campaigns",
                     state=dict(OPEN, zstage=MP.ZSTAGE_RELEASE), present="all", air=True, steps=[
         note("Cool, vent; Z arm released (drops 45 mm away from the striker)", 2),
-        screws("Two captive M6 screws, from under the chamber", "module_flange", 3, pn="95966A705"),
+        note("Release air on: both zero-point modules open (6 bar); round 6, the captive M6 are gone", 1),
         reach("Hand on the module handle's grip block, in front of the door", (0.0, -141.0, -47.0), (FRONT,), skip=["handle (6061"]),
         dict(do="module", label="Module out along its swap path (drop 40, forward 170, up 18, over the guard sill)", minutes=3),
-        note("New module in (reverse path); captive screws at half torque (hot-swap.md); Z arm up; purge", 20),
+        note("New module in (reverse path) onto the dowels; release air off, the zero-point modules pull it home (hot-swap.md 3.2a); Z arm up; purge", 20),
     ]))
     ops.append(dict(id="S3", kind="swap", name=f"Reservoir swap ({res})", where="tray at the access opening", interval="each alloy",
                     state=OPEN, present="all", air=True, steps=[

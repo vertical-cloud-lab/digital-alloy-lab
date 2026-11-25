@@ -22,7 +22,8 @@ Drawn here (every part tagged "automation"):
   6. a pull tab on each side wall liner, for the plate fingers' lips (one part per liner): since 2026-11-25 a hanger whose grip plate
      stands 42 mm in from the sheet, inside the door opening's width (add_liner_tabs);
   7. two AprilTag (tag36h11) plates on the laser guard's front-left post, for the wrist camera's re-registration after each
-     MiR250 docking and VLM move (byu-vcl PR 318 docks at AprilTag targets with the same D405 camera).
+     MiR250 docking and VLM move (byu-vcl PR 318 docks at AprilTag targets with the same D405 camera);
+  8. a grip fin on the overflow jar (round 6): an I-section level with the module's grip block, 100 mm to its right.
 """
 from __future__ import annotations
 
@@ -110,6 +111,23 @@ def add_features(add, M, module):
     add("AprilTag plates (2 x tag36h11, 56 mm, on the guard's front-left post: wrist-camera re-registration)", comp(tags_), C["white"], 12,
         (0, -200, 0), mat="al6061", mass_kg=0.02, bom="RA7", tags=tag)
 
+    # ---------------------------------------------------------------- 8. overflow-jar grip fin (round 6, 2026-11-25)
+    # robot-ops.md round 5: the gripper could not reach the cup at z -102 (wrist camera vs the guard frame, forearm vs the guard door's
+    # handle, reach), but it does reach the module's grip block at z ~ -47. So the jar gets the same I-section, level with the module's
+    # (y -156..-126) and 100 mm to its right: web 40 x 30 (z -60..-30) between 56 mm flanges (z -65..-60 and -30..-25), on a riser that
+    # comes up beside the toggle clamp's side links (x 117-125, y -104..-96) from a tab welded to the cup's front-right at z -125..-115.
+    # Kept clear of: the module's right-hand zero-point arm on the module's path (x <= 114, 3 mm), the front-right leg (x >= 128, 3 mm),
+    # the module flange's right tab on the module's path (x <= 64, 8 mm), the door hinge knuckles (z >= -20, 5 mm). Named "Overflow jar
+    # ..." so it leaves with the jar (operations.md U4); a hand reaches the clamp lever under its bottom flange.
+    J = M.JAR
+    jx, jy, cr = J["x"], J["y"], J["cup_r"]
+    tab = box(108.0, 125.0, -104.0, -70.0, -125.0, -115.0).cut(cyl(cr, (jx, jy, -130.0), "z", 20.0))
+    riser = box(117.0, 125.0, -104.0, -96.0, -125.0, -56.0)
+    arm = box(117.0, 125.0, -126.0, -96.0, -64.0, -56.0)
+    web = box(80.0, 120.0, -156.0, -126.0, -60.0, -30.0)
+    fl_ = [box(72.0, 128.0, -156.0, -126.0, z0, z0 + 5.0) for z0 in (-65.0, -30.0)]
+    add("Overflow jar grip fin (6061: tab on the cup, riser at x 117-125, I-section grip block at y -156 to -126, z -65 to -25, for the 2F-85)",
+        fuse([tab, riser, arm, web] + fl_), C["anod"], 4, (0, 0, -260), mat="al6061", bom="M4", tags=tag)
 
 # hanger pull tab of each side liner (2026-11-25, round 6): the grip plate's inner face |x| and its y and z spans; the web's y and z
 # spans (it runs from the liner in to the grip plate); the foot welded to the liner; sheet thickness

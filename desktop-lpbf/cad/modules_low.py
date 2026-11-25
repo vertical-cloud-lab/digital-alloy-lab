@@ -74,6 +74,43 @@ def zlevels():
     return dict(zb1=zb1, zb0=zb0, zk0=zk0, zh0=zh0, zc=zc, z_stop=MP.Z_P_MIN - MP.STACK)
 
 
+# Zero-point arms (round 6, 2026-11-25, hot-swap.md §3.2a): the module side of the SCHUNK NSE-HT mini 88-20 pair that lpbf_low hangs under
+# the floor (lpbf_low.NSE). Each arm is a 6061 hanger bolted under an ear of the module flange (at 50 and 135 deg, r 56-68, outside L75's
+# r 53.1 gland plate) and an 8 mm plate under the zero-point module, which carries a clamping pin up into it. The right hanger is at
+# 50 deg so it passes the jar's toggle-clamp side links (x >= 52.2) at 2.4 mm on the module's way out; the left one at 135 deg stays
+# 3.3 mm in front of the Z sensor bracket. The same arms fit S25, M50
+# and L75 (the flange is the same Ø100 on all three). Hangers 12 x 16, so the arm's 28 N m at a 0.5 kN pull bends them to ~73 MPa;
+# the plate (24 wide, 8 thick) sees ~110 MPa: sized for the 0.5 kN pull, not for the 2.5 kN turbo. The plate is 8 mm because the
+# module's path drops it to 3 mm over the base plate; the pin's top then passes 6 mm under the overflow jar.
+ZP_ARM = dict(angles=(50.0, 135.0), ear_r0=45.0, r0=56.0, r1=68.0, w=16.0, plate_w=24.0, pin_r=14.0, link0=4.0)
+
+
+def zp_arms(h, add, lab, step, mg):
+    """The module's two zero-point arms and their clamping pins (lpbf_low.NSE sets where the pins go)."""
+    N, A = h.NSE, ZP_ARM
+    zf = -MP.FLOOR_T
+    za0, za1 = N["z0"] - N["arm_t"], N["z0"]                     # arm plate under the zero-point module's pin face
+    arms, pins = [], []
+    for a, side in zip(A["angles"], ("right", "left")):
+        px, py = N[side]
+        rc = (A["r0"] + A["r1"]) / 2
+        hx, hy = rc * math.cos(math.radians(a)), rc * math.sin(math.radians(a))
+        bar = h.box(A["r0"], A["r1"], -A["w"] / 2, A["w"] / 2, za0, zf - MP.FLANGE_T).rotate(V(0, 0, 0), V(0, 0, 1), a)
+        L = math.hypot(px - hx, py - hy)
+        ang = math.degrees(math.atan2(py - hy, px - hx))
+        # the plate starts 4 mm out from the hanger's centre line, so its inner corner stays clear of L75's gland-plate screw heads
+        link = h.box(A["link0"], L, -A["plate_w"] / 2, A["plate_w"] / 2, za0, za1).rotate(V(0, 0, 0), V(0, 0, 1), ang).translate(V(hx, hy, 0))
+        arm = h.fuse([bar, link, h.cyl(A["pin_r"], (px, py, za0), "z", N["arm_t"])]).cut(h.cyl(4.0, (px, py, za0 - 1), "z", N["arm_t"] + 2))
+        # nothing of the plate inside r 53.5: L75's gland-plate screw heads reach r 51.1 at z -110 (and S25's rod end stays inside r 37)
+        arm = arm.cut(h.cyl(53.5, (0, 0, za0 - 1), "z", N["arm_t"] + 1.0))
+        arms.append(arm)
+        pins.append(h.fuse([h.cyl(N["pin_d"] / 2, (px, py, za1), "z", N["pin_in"]), h.cyl(4.0, (px, py, za0), "z", N["arm_t"])]))
+    add(f"Zero-point arms {lab} (2 x 6061: 12 x 16 hanger under a flange ear at 50 / 135 deg, 8 mm plate under the clamping module)",
+        h.comp(arms), h.C["anod"], step, (0, -320, -60), mat="al6061", bom="B3", **mg)
+    add(f"Zero-point clamping pins {lab} (2 x SCHUNK VERO-S SPC mini 20 class, Ø20, 14 mm into the module; centring clearance, no alignment)",
+        h.comp(pins), h.C["steel"], step, (0, -320, -60), mat="steel", bom="B3", **mg)
+
+
 def add_build_module(h, add, key, step=4):
     m = MP.MODULES[key]
     C = h.C
@@ -96,7 +133,10 @@ def add_build_module(h, add, key, step=4):
     fl = h.fuse([h.cyl(MP.FLANGE_D / 2, (0, 0, zf - MP.FLANGE_T), "z", MP.FLANGE_T),
                  h.rbox(-MP.TAB_X, MP.TAB_X, -12, 12, zf - MP.FLANGE_T, zf, 6)] +
                 [h.cyl(5.5, (0, s * MP.DOWEL_Y, zf - MP.FLANGE_T), "z", MP.FLANGE_T) for s in (-1, 1)] +
-                [h.box(-6.0, 6.0, 0, s * MP.DOWEL_Y, zf - MP.FLANGE_T, zf) if s > 0 else h.box(-6.0, 6.0, s * MP.DOWEL_Y, 0, zf - MP.FLANGE_T, zf) for s in (-1, 1)])
+                [h.box(-6.0, 6.0, 0, s * MP.DOWEL_Y, zf - MP.FLANGE_T, zf) if s > 0 else h.box(-6.0, 6.0, s * MP.DOWEL_Y, 0, zf - MP.FLANGE_T, zf) for s in (-1, 1)] +
+               # two ears at 50 and 135 deg (round 6, hot-swap.md §3.2a) carry the zero-point arms' hangers (zp_arms below)
+               [h.box(ZP_ARM["ear_r0"], ZP_ARM["r1"], -ZP_ARM["w"] / 2, ZP_ARM["w"] / 2, zf - MP.FLANGE_T, zf).rotate(V(0, 0, 0), V(0, 0, 1), a)
+                for a in ZP_ARM["angles"]])
     fl = fl.cut(h.cyl(R, (0, 0, zf - MP.FLANGE_T - 1), "z", MP.FLANGE_T + 2))
     for s in (-1, 1):
         fl = fl.cut(h.cyl(3.4, (s * MP.SCREW_X, 0, zf - MP.FLANGE_T - 1), "z", MP.FLANGE_T + 2))
@@ -158,6 +198,7 @@ def add_build_module(h, add, key, step=4):
                  h.box(-G["flange_w"] / 2, G["flange_w"] / 2, yb0, yb1, zw0 - ft, zw0)])           # bottom flange
     add(f"Module {lab} handle (6061, screwed under the gland plate; riser, arm and I-section robot grip block at y {yb0:.0f} to {yb1:.0f}, "
         f"in front of the door's hinge knuckles)", hd, C["anod"], step, (0, -320, -60), mat="al6061", bom="B1", **mg)
+    zp_arms(h, add, lab, step, mg)
 
     # ---------- plate and heater stack (moves with the piston, leaves with the module) ----------
     zb1, zb0, zk0, zh0, zc = z["zb1"], z["zb0"], z["zk0"], z["zh0"], z["zc"]
@@ -280,6 +321,12 @@ def add_build_module(h, add, key, step=4):
         (0, 0, 110), mat="steel", bom="B2", section=True, **pg)
 
 
+# Z servo position (round 6, 2026-11-25, hot-swap.md §3.2a): folded to the back of the actuator (x 0, y 130), so the right-hand zero-point
+# module can hang where the servo was (x 34-94, y 28-110). Its body hangs through a window in the base plate (lpbf_low section 1) and
+# stays 5.4 mm in front of the outlet hose's run behind the chamber (y 165-191)
+ZSERVO = dict(x=0.0, y=130.0)
+
+
 def add_zstage(h, add, step=3):
     """Folded Z stage hung from the chamber floor, sized for the heated stack. Group 'zstage' follows the piston."""
     C = h.C
@@ -291,13 +338,17 @@ def add_zstage(h, add, step=3):
     car_lo, car_hi = min(MP.Z_P_MIN, MP.ZSTAGE_RELEASE) + a0, MP.Z_P_MAX + a0 + 40.0
     az0, az1 = car_lo - 3.0, car_hi + 3.0
     zg = dict(group="zstage")
-    # 108 (was 100) deep in y so two of its four counterbored M5 screws (joints.py) sit behind the bracket, reachable from below
-    add("Z mounting flange (bolted under the floor)", h.box(-40, 100, 60, 108, zf - 10, zf), C["alu"], step, (0, 120, 0), mat="al6061", bom="M3")
+    sx, sy = ZSERVO["x"], ZSERVO["y"]
+    # 108 (was 100) deep in y so two of its four counterbored M5 screws (joints.py) sit behind the bracket, reachable from below;
+    # x -40..48 since round 6 (was -40..100: it carried the servo at x 64)
+    add("Z mounting flange (bolted under the floor)", h.box(-40, 48, 60, 108, zf - 10, zf), C["alu"], step, (0, 120, 0), mat="al6061", bom="M3")
     add("Z actuator body (KR-class U-rail, 2 mm lead, 100 mm stroke class)", h.box(ax0, ax1, ay0, ay1, az0, az1), C["steel"], step,
         (0, 160, 0), mat="steel", mass_kg=1.4, bom="M3", mcm="ACT_Z")
-    bh = h.box(ax0, 100, ay0 - 4, ay1, az1, zf - 10).cut(h.cyl(19.2, (64.0, 80.0, az1 - 1), "z", 3.0)).cut(h.cyl(5.0, (64.0, 80.0, az1), "z", 25))
+    # the bracket and belt housing run back from the actuator to the servo (2:1 belt, y 80 to y 130), 60 wide, cantilevered 52 mm behind
+    # the flange's back edge
+    bh = h.box(-30.0, 30.0, ay0 - 4, sy + 30.0, az1, zf - 10).cut(h.cyl(19.2, (sx, sy, az1 - 1), "z", 3.0)).cut(h.cyl(5.0, (sx, sy, az1), "z", 25))
     add("Z bracket + fold-back belt housing (2:1)", bh, C["anod"], step, (0, 160, 0), mat="al6061", bom="M3")
-    add("Z servo (ClearPath-SD, NEMA 23, folded)", h.place(h.servo_nema23(100.0, 18.0), (64.0, 80.0, az1), (1, 0, 0), (0, 0, 1)),
+    add("Z servo (ClearPath-SD, NEMA 23, folded)", h.place(h.servo_nema23(100.0, 18.0), (sx, sy, az1), (0, 1, 0), (0, 0, 1)),
         C["motor"], step, (0, 200, 0), mat="misc", mass_kg=1.6, bom="M2")
     add("Z carriage", h.box(-21, 21, 56, ay0, a0, a0 + 40.0), C["steel"], step, (0, 160, 0), mat="steel", bom="M3", **zg)
     arm = h.rbox(-30, 30, -22, 56, a0, zc, 6).cut(h.cyl(12.7, (0, 0, zc - 7.0), "z", 7.1))
