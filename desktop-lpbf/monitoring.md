@@ -303,9 +303,9 @@ and at 200 °C. Seleznev's gas-pump noise needed waveform-based filtering, so re
   argon line and expect to change slides often, as for the laser window. Measure how often before deciding how many to stock.
 
 ## 7. Not done, or open
-- **Not drawn in the model:** the left-wall viewport, the bridge cut-out, the coaxial camera and second detector, the AE mount or
-  waveguide, the digitizer and the sync wiring. Two other runs were changing the model during this one, so this round added only
-  new files.
+- **Drawn since round 2** (§9, `LPBF_MONITORING=1`): the ports, the bridge cut-out, the coaxial cage, the AE waveguide and the
+  digitizer. **Still not drawn:** the trigger generator inside PB2, cables, the purge's argon line, the InGaAs and SWIR options,
+  the guard's monitoring bulkhead and the waveguide's preload ([`mechanics.md`](monitoring/mechanics.md) §1).
 - **In the BOM since round 2:** [`monitoring-bom.csv`](monitoring-bom.csv) itemises steps 0–8, and [`bom.csv`](bom.csv) lines T4
   and T5 carry them (§9). Most prices are list prices or Edison's ranges, not quotes.
 - **Estimates, not measurements:**
@@ -345,7 +345,7 @@ the LSO.
 | [`melt-pool.md`](monitoring/melt-pool.md) | analytic and 3D finite-volume melt-pool models, process maps, track ends, evaporation source terms | the transition regime: a shallow depression in a conduction-shaped track up to ~350 W; the pool is 200–440 × 160–320 µm; the mushy zone lasts 22–156 µs |
 | [`optics.md`](monitoring/optics.md) | the f-theta traced 600–1700 nm, radiometry on the melt-pool fields, the side and lid cameras, light, 1070 nm at the ports, parts with list prices ([`optics-parts.csv`](monitoring/optics-parts.csv)) | new coaxial bands; silicon sees only the hot core, so a SWIR camera for the pool edge; every camera needs OD ≥ 8 at 1070 nm |
 | [`plume.md`](monitoring/plume.md) | CFD with the ports and the LW purge, condensate and spatter tracking, fouling, the plume jet | the bed jet removes the plume; LW is the cleanest window; LP belongs in the back half; spatter sets the laser slide's life |
-| [`mechanics.md`](monitoring/mechanics.md) | the parts drawn in the model, and their loads, seals, mounts and the AE path | the ports, windows, cameras, coaxial cage and AE path as model parts, with their checks |
+| [`mechanics.md`](monitoring/mechanics.md) | every port, window, camera, the coaxial cage, the AE path and the recorder drawn in the model ([`cad/monitoring_parts.py`](cad/monitoring_parts.py), `LPBF_MONITORING=1`); loads, seals, mounts, the bridge's modes in CalculiX, the AE path's temperature and losses | 0 interferences in six machine states and eight sweeps; LP moves to (−40, 60) through a bridge cut-out; 1.0 mm FKM gaskets; the AE waveguide's preload is open |
 | [`fabrication.md`](monitoring/fabrication.md) | the ports in setup C with CAM and CAMotics, small parts made or bought, live prices ([`monitoring-bom.csv`](monitoring-bom.csv)) | ports square to their faces; ~2.8 h on parts made anyway; steps 0–8 $23,096–25,558 |
 | [`sync-and-data.md`](monitoring/sync-and-data.md) | timing budget, channel map ([`monitoring-io.csv`](monitoring-io.csv)), HDF5 layout, a reader checked on a synthetic build | the RTC6 has no analog input; fit the digitizer's clock every layer; correct the 0.25 ms lag |
 
@@ -368,10 +368,12 @@ the LSO.
 **Ports and cameras:**
 - **Cut each port square to its face.** The 4th axis takes out the azimuth, not the elevation.
   - LW: a Ø31 bore at A90, with an Edmund 36-983 window (Ø40 × 4) flat on the wall.
-  - BW: an obround slot at A180, moved up 4 mm to z 29.
-  - LP: a Ø37 bore, with its window on a boss square to the sight line.
-- **Move LP to the back half of the lid**, if the room outside it checks out on the model: at (−40, 60) it collects ~50× less
-  condensate (plume.md §0 item 3).
+  - BW: an obround slot at A180, moved up to z 29.5.
+  - LP: a Ø24 bore on its line of sight, like the layer camera's, with the window on a boss square to it (the lid is tilted
+    to cut it).
+- **LP moves to the back half of the lid, at (−40, 60, 136), 62° steep.** There it collects ~50× less condensate (plume.md §0
+  item 3). At (−60, −80) its camera blocked the reservoirs' way out. The camera passes up through a ~55 × 60 mm cut-out in the
+  optics bridge (first mode −0.1 %, CalculiX), and PB2 moves 12 mm to +x to clear it (mechanics.md §3).
 - **Purge the LW slide.** 1–3 L/min of argon cuts its condensate 13–45×. Keep camera slides at or above the gas temperature
   (thermophoresis).
 - **Light the side camera with pulsed 850 nm LEDs.** The guard's viewing panel is transparent at 808–850 nm, so an 808 nm diode
@@ -389,7 +391,25 @@ the LSO.
 - **A build is 20–720 GB** with features kept.
 - **Align with the process beam at low power, not the red guide beam,** which the DMSP1000 passes straight through.
 
-**Mechanics:** see [`mechanics.md`](monitoring/mechanics.md).
+**Mechanics** ([`mechanics.md`](monitoring/mechanics.md)):
+- **Everything is drawn and fits.** The parts are drawn with `build(monitoring=True)` or `LPBF_MONITORING=1`, off by default.
+  - The first interference run found 14 clashing pairs, all fixed. The final run is clean in every machine state and sweep.
+  - The machine is still 579.6 mm tall.
+  - The default model's checks are unchanged after PB2's move.
+- **Windows:** fused silica has a safety factor of 17–43 at 1 atm. Make the BW window fused silica too.
+- **Gaskets:** the seats squeeze 1.0 mm FKM 15–35 %, but 1/32 in. sheet only −7 to 18 %, so the BOM takes 1.0 mm.
+- **The Chronos bracket:** a 5/8 in. × 80 mm 6061 plate on a fixed 13° wedge (169 Hz; 1.7 µm of vibration at the plate), not
+  a ball head.
+- **The coaxial cage:** 1.23 kg on a post under every cube and branch end; 1.8 µm/K of drift at the plate. The bridge's first
+  mode drops from 128 to ~124 Hz. The old SM1 photodiode chain comes out.
+- **AE:**
+  - A Ø3 mm 316 waveguide is under 60 °C 17–25 mm past the rod's end cap, and loses 3–9 dB against 26–52 dB through the module
+    to the rod end. Use a domed tip, R ≥ 25 mm, at 10–20 N.
+  - **It has no straight way out through the rod end, and nothing holds it on the plate yet** (mechanics.md §4).
+- **Temperatures:**
+  - A room-temperature LW purge keeps the slide up to 30 K colder than the gas, which draws condensate. Warm it (≤ 1.6 W),
+    or take it from the recirculation loop.
+  - The cameras sit in 38–43 °C air, at or above a 40 °C rating.
 
 **Cost:** steps 0–8 come to $23,096–25,558 new, or $21,024 with used listings
 ([`fabrication.md`](monitoring/fabrication.md) §0), against §4's ~$20–38k. [`bom.csv`](bom.csv) carries them as two lines:

@@ -6,6 +6,14 @@ chamber frame and lid, the small custom parts, and the bought parts with prices 
 machinist or BYU's Laser Safety Officer; three flat parts have online instant quotes. The ports are not in the model yet: the scripts cut them into a copy of
 the frame for the CAM checks.
 
+> **Since this note** ([`mechanics.md`](mechanics.md), the same day), the ports are drawn in the model, and three things here
+> are out of date:
+> - **LP** moved to (−40, 60). Its bore is now Ø24 on the line of sight, cut with the lid tilted, not Ø37 normal to the lid,
+>   so the LP rows and hours below are for the old port.
+> - **The LW clamp ring** has a flat and its holes at 60°, so `frame_C90_with_LW.ngc` must be re-posted (no FreeCAD or
+>   CAMotics on that runner).
+> - **The SendCutSend quotes** for the LW ring and the LP cap are for the old outlines.
+
 Scripts (all in [`analysis/monitoring/fab/`](../analysis/monitoring/fab/)):
 - [`frame_features.py`](../analysis/monitoring/fab/frame_features.py) draws the left-wall viewport (LW) and the back-wall light
   window (BW) on the frame, in a form setup C can cut, and checks them against the frame's other holes, corners and liners;

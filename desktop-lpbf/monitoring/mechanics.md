@@ -381,8 +381,9 @@ Bar velocity 4915 m/s.
 
 ## 6. Not done, and limits
 
-- **The default model's checks were not re-run** after PB2's 12 mm move. The monitoring run, which contains every default part,
-  found nothing near PB2.
+- **The default model's checks after PB2's 12 mm move:** `interference.py` re-run on the merged branch (M50, S25 and L75,
+  2026-11-25 22:40–22:52 UTC) gives the same results as before, with 0 interfering pairs and the same gaps; nothing changed but
+  the run time. The renders were not re-made.
 - **The BW clamp frame** is trimmed 1 mm clear of the inlet plenum's flange, which leaves 1.2 mm of metal outside its third
   screw's hole. Move that screw ~3 mm toward −x along the slot when the CAM is re-posted. The quoted DXF outline is the
   untrimmed one.
