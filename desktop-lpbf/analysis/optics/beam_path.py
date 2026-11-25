@@ -540,11 +540,11 @@ L += ["", f"Thin-lens estimate of k (lens at H', z {Z_HP:.1f}; stop at the 2nd m
 L += ["", "k from a thin lens with its front principal plane between the lens body's middle and H' (z 160): " + "; ".join(
     f"{k}: {a:.2f}-{b:.2f}" for k, (a, b) in K_RANGE.items()), "",
     "Clear diameter each lid opening needs to pass the L75 edge (r 38.1 mm) with < 0.1 % clipped (mm):", "",
-    "| Beam | k | " + " | ".join(f"{a[0]} (drawn Ø{a[3]:.0f})" for a in LID_APS) + " |", "|---|---|" + "---|" * len(LID_APS)]
+    "| Beam | k | " + " | ".join(f"{a[0]} (drawn Ø{a[3]:g})" for a in LID_APS) + " |", "|---|---|" + "---|" * len(LID_APS)]
 for r_ in need_d:
     L.append(f"| {r_['D_mm']} mm | {r_['k']} | " + " | ".join(f"{r_[a[0]]:.1f}" for a in LID_APS) + " |")
 L += ["", "Largest plate radius each lid aperture passes with < 0.1 % clipped (mm; plates are 12.7 / 25.4 / 38.1):", "",
-      "| Collimator | k | " + " | ".join(a[0] + f" Ø{a[3]:.0f}" for a in LID_APS) + " | field stop, 50 % reach |",
+      "| Collimator | k | " + " | ".join(a[0] + f" Ø{a[3]:g}" for a in LID_APS) + " | field stop, 50 % reach |",
       "|---|---|" + "---|" * (len(LID_APS) + 1)]
 for a in aps:
     L.append(f"| {a['collimator']} | {a['k']} | " + " | ".join(f"{a[x[0]]:.1f}" for x in LID_APS) +

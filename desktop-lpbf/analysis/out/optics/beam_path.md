@@ -57,7 +57,7 @@ k from a thin lens with its front principal plane between the lens body's middle
 
 Clear diameter each lid opening needs to pass the L75 edge (r 38.1 mm) with < 0.1 % clipped (mm):
 
-| Beam | k | lid bore (drawn Ø56) | drawer opening (drawn Ø46) | cover slide clear aperture (drawn Ø42) | field stop (drawn Ø36) | window flange bore (below window) (drawn Ø42) | window clear aperture (drawn Ø46) | window retaining ring (above window) (drawn Ø44) |
+| Beam | k | lid bore (drawn Ø56) | drawer opening (drawn Ø46) | cover slide clear aperture (drawn Ø42.5) | field stop (drawn Ø36) | window flange bore (below window) (drawn Ø42) | window clear aperture (drawn Ø45.72) | window retaining ring (above window) (drawn Ø44) |
 |---|---|---|---|---|---|---|---|---|
 | 5.0 mm | 0.3 | 64.9 | 64.4 | 64.2 | 63.8 | 63.3 | 62.4 | 61.4 |
 | 5.0 mm | 0.45 | 56.2 | 55.3 | 55.1 | 54.4 | 53.6 | 51.8 | 50.1 |
@@ -68,7 +68,7 @@ Clear diameter each lid opening needs to pass the L75 edge (r 38.1 mm) with < 0.
 
 Largest plate radius each lid aperture passes with < 0.1 % clipped (mm; plates are 12.7 / 25.4 / 38.1):
 
-| Collimator | k | lid bore Ø56 | drawer opening Ø46 | cover slide clear aperture Ø42 | field stop Ø36 | window flange bore (below window) Ø42 | window clear aperture Ø46 | window retaining ring (above window) Ø44 | field stop, 50 % reach |
+| Collimator | k | lid bore Ø56 | drawer opening Ø46 | cover slide clear aperture Ø42.5 | field stop Ø36 | window flange bore (below window) Ø42 | window clear aperture Ø45.72 | window retaining ring (above window) Ø44 | field stop, 50 % reach |
 |---|---|---|---|---|---|---|---|---|---|
 | IPG 2.5 mm (drawn) | 0.3 | 34.3 | 28.1 | 25.9 | 21.8 | 26.0 | 29.1 | 28.5 | 23.9 |
 | IPG 2.5 mm (drawn) | 0.5 | 42.6 | 35.4 | 32.8 | 27.8 | 33.7 | 39.0 | 39.6 | 30.5 |
