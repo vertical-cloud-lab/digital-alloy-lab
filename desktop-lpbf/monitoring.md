@@ -15,6 +15,10 @@ drawn into the model or reviewed by BYU's Laser Safety Officer. The numbers come
 
 Edison's review of the same questions is in [`edison/monitoring-in-situ/`](edison/monitoring-in-situ/answer.md) (§8).
 
+**Round 2 (PR 281, later on 2026-11-25).** Six detailed notes in [`monitoring/`](monitoring/) work this plan out: the melt pool,
+the optics, the plume, the mechanics, the fabrication, and the sync and data. §9 lists what they changed, and §10 is Edison's
+review of the result. Where §0–§7 and §9 differ, §9 is the later word.
+
 ## 0. Short answer
 
 **Yes, two views are already in the design, but neither is high-speed, high-zoom or thermal, and nothing listens for cracks.**
@@ -302,7 +306,8 @@ and at 200 °C. Seleznev's gas-pump noise needed waveform-based filtering, so re
 - **Not drawn in the model:** the left-wall viewport, the bridge cut-out, the coaxial camera and second detector, the AE mount or
   waveguide, the digitizer and the sync wiring. Two other runs were changing the model during this one, so this round added only
   new files.
-- **Not in the BOM:** none of §4 is a BOM line yet. Most prices are list prices or Edison's ranges, not quotes.
+- **In the BOM since round 2:** [`monitoring-bom.csv`](monitoring-bom.csv) itemises steps 0–8, and [`bom.csv`](bom.csv) lines T4
+  and T5 carry them (§9). Most prices are list prices or Edison's ranges, not quotes.
 - **Estimates, not measurements:**
   - the coaxial focus shift and lateral colour treat the f-theta as fused silica; the real lens corrects some of it;
   - the scan head's transmission outside 1064 nm is unknown (§1);
@@ -327,6 +332,69 @@ Where this note differs:
 - **Long-working-distance optics off-axis.** Edison suggests a Navitar or K2-class microscope; §3 finds no room for one inside the
   guard, so close-up melt-pool video here goes coaxial.
 - **The D9215's ~500 °C rating** is Edison's figure, not checked.
+
+## 9. Round 2: the design worked out (PR 281)
+
+Later on 2026-11-25, six workers took §0–§8 further. Each wrote a note in [`monitoring/`](monitoring/) and its scripts in
+`analysis/monitoring/`. All of them read the shared geometry (the ports, windows and instruments) from
+[`cad/monitoring_spec.py`](cad/monitoring_spec.py) at run time. Nothing is bought or measured, and nothing has been reviewed by
+the LSO.
+
+| Note | What it works out | Headline |
+|---|---|---|
+| [`melt-pool.md`](monitoring/melt-pool.md) | analytic and 3D finite-volume melt-pool models, process maps, track ends, evaporation source terms | the transition regime: a shallow depression in a conduction-shaped track up to ~350 W; the pool is 200–440 × 160–320 µm; the mushy zone lasts 22–156 µs |
+| [`optics.md`](monitoring/optics.md) | the f-theta traced 600–1700 nm, radiometry on the melt-pool fields, the side and lid cameras, light, 1070 nm at the ports, parts with list prices ([`optics-parts.csv`](monitoring/optics-parts.csv)) | new coaxial bands; silicon sees only the hot core, so a SWIR camera for the pool edge; every camera needs OD ≥ 8 at 1070 nm |
+| [`plume.md`](monitoring/plume.md) | CFD with the ports and the LW purge, condensate and spatter tracking, fouling, the plume jet | the bed jet removes the plume; LW is the cleanest window; LP belongs in the back half; spatter sets the laser slide's life |
+| [`mechanics.md`](monitoring/mechanics.md) | the parts drawn in the model, and their loads, seals, mounts and the AE path | the ports, windows, cameras, coaxial cage and AE path as model parts, with their checks |
+| [`fabrication.md`](monitoring/fabrication.md) | the ports in setup C with CAM and CAMotics, small parts made or bought, live prices ([`monitoring-bom.csv`](monitoring-bom.csv)) | ports square to their faces; ~2.8 h on parts made anyway; steps 0–8 $23,096–25,558 |
+| [`sync-and-data.md`](monitoring/sync-and-data.md) | timing budget, channel map ([`monitoring-io.csv`](monitoring-io.csv)), HDF5 layout, a reader checked on a synthetic build | the RTC6 has no analog input; fit the digitizer's clock every layer; correct the 0.25 ms lag |
+
+**The coaxial branch:**
+- **New bands.** The two-colour pair moves to 700/40 and 900/40 nm, and the camera to 955–990 nm, in place of §4's 850 nm. A
+  DMSP950 at cube2 and a DMLP805 at cube3 split them. All three stay clear of the 750–875 nm band that 1064 nm scanner coatings
+  block, and of the plume's lines.
+- **The NF1064-44 notch comes out.** It blocks 520–720 nm at OD 4.2–4.6. A FESH1000 takes its place.
+- **Put a beam trap on cube1's far port now.** The DMSP1000 passes 0.3–0.6 W of the forward beam (BOM T2).
+- **Each channel needs its own focus.** The f-theta puts 850 nm 1.7–2.8 mm above the 1070 nm focus (§2.2 estimated 1.05 mm), and
+  lateral colour reaches 0.6 mm at 700 nm at the L75 edge.
+- **The two-colour pair reads the depression:** ~2,570–2,630 K on AlSi10Mg whatever the speed or plate temperature. It is a
+  regime index (§10).
+- **Silicon sees only surface above ~1,170–1,300 K**; the liquidus is 869–925 K. To image the pool edge and the mushy zone, put
+  an Alvium 1800 U-030 VSWIR in the camera arm (route B, $8,059 with its lens and filters). An InGaAs photodiode behind the
+  DMSP1000 (route A) gets an SNR of only 5–7.
+- **A 1.2–1.5 mm coaxial field, not 1 mm.**
+- **Skywriting, or a tuned laser-off delay, before reading amplitudes.** Without it the photodiode rises 19–31 % at track ends.
+
+**Ports and cameras:**
+- **Cut each port square to its face.** The 4th axis takes out the azimuth, not the elevation.
+  - LW: a Ø31 bore at A90, with an Edmund 36-983 window (Ø40 × 4) flat on the wall.
+  - BW: an obround slot at A180, moved up 4 mm to z 29.
+  - LP: a Ø37 bore, with its window on a boss square to the sight line.
+- **Move LP to the back half of the lid**, if the room outside it checks out on the model: at (−40, 60) it collects ~50× less
+  condensate (plume.md §0 item 3).
+- **Purge the LW slide.** 1–3 L/min of argon cuts its condensate 13–45×. Keep camera slides at or above the gas temperature
+  (thermophoresis).
+- **Light the side camera with pulsed 850 nm LEDs.** The guard's viewing panel is transparent at 808–850 nm, so an 808 nm diode
+  laser would take the machine out of Class 1.
+- **Every camera needs OD ≥ 8 at 1070 nm.** The layer camera has OD 5.1: add a FESH1000 before filming during lasing.
+- **The Chronos at LW takes 10–20 µs exposures.** Its 4/3 in. sensor needs the F mount for full frames.
+
+**Clock, wiring and data:**
+- **The digitizer records everything analog.** The RTC6 has no analog input, so the photodiodes, AE and laser gate go to the
+  PicoScope 4444. Its clock is fitted to the gate edges every layer (to 0.04 µs on the synthetic build).
+- **Correct the 0.25 ms tracking lag:** 275 µm at 1.1 m/s.
+- **The cameras are fired by a Pico 2** that an RTC6 bit gates.
+- **The AE preamp needs a decoupler** for its phantom power (Vallen DCPL-24V-V1). Keep the preamp at ≤ 65 °C, on a bracket off the
+  module.
+- **A build is 20–720 GB** with features kept.
+- **Align with the process beam at low power, not the red guide beam,** which the DMSP1000 passes straight through.
+
+**Mechanics:** see [`mechanics.md`](monitoring/mechanics.md).
+
+**Cost:** steps 0–8 come to $23,096–25,558 new, or $21,024 with used listings
+([`fabrication.md`](monitoring/fabrication.md) §0), against §4's ~$20–38k. [`bom.csv`](bom.csv) carries them as two lines:
+- T4: steps 0–6, $8,391–10,853, in the machine's total;
+- T5: steps 7–8, $12,477–20,176, an option outside it.
 
 ## 10. Edison's review of the modelled design
 
