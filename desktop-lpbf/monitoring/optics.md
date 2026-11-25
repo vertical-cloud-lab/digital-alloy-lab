@@ -17,6 +17,7 @@ quotes. The parts list is [`optics-parts.csv`](optics-parts.csv).
 | [`lines.py`](../analysis/monitoring/optics/lines.py) | NIST ASD plume lines against each candidate band | [`lines.md`](../analysis/out/monitoring/optics/lines.md) |
 | [`radiometry.py`](../analysis/monitoring/optics/radiometry.py) | melt pool to detector, end to end; takes worker A's `surface_fields.npz` with `--fields` | [`radiometry.md`](../analysis/out/monitoring/optics/radiometry.md), `.json`, `.png` |
 | [`viewports.py`](../analysis/monitoring/optics/viewports.py) | LW and LP cameras, windows, motion blur, light, 1070 nm at the ports | [`viewports.md`](../analysis/out/monitoring/optics/viewports.md), `.json` |
+| [`branch_figure.py`](../analysis/monitoring/optics/branch_figure.py) | top-view schematic of the coaxial branch | [`branch.png`](../analysis/out/monitoring/optics/branch.png) |
 | [`parts.py`](../analysis/monitoring/optics/parts.py) | every vendor number used, with its source; writes `optics-parts.csv` | [`vendor-files.csv`](../analysis/out/monitoring/optics/vendor-files.csv) (URL and sha256 of each data file; the files stay in /tmp) |
 
 Re-run: `python ftheta.py --reuse` (2 min; without `--reuse` it re-optimises the lenses, ~6 min), then `lines.py`,
@@ -137,6 +138,11 @@ Layout, using `monitoring_spec.COAX` (y −25.25, z 271.11):
 | cube3, x −285 | DMLP805 | reflects 520–790 nm (R 0.99) to photodiode A (side); passes 825–930 nm (T 0.97) to photodiode B (−x) |
 | PD-A | FBH700-40 + AC254-050-B + P500K + PDA36A2 | 680–720 nm; Ø1.6 mm field on the plate |
 | PD-B | FBH900-40 + AC254-050-B + P500K + PDA36A2 | 880–920 nm; Ø1.6 mm field |
+
+![Coaxial branch, top view: cubes at monitoring_spec.COAX's positions, arms and the free boxes from fits.json](../analysis/out/monitoring/optics/branch.png)
+
+*Schematic from [`branch_figure.py`](../analysis/monitoring/optics/branch_figure.py). Arm lengths come from focal lengths, not
+drawn parts.*
 
 Why these parts:
 - **Dichroics instead of a 50:50 plate.** A plate halves every channel. The two dichroics give each channel nearly all of its
@@ -407,10 +413,12 @@ a curved pool's glints spread over ±40° as a bound for the steep ports):
   - camera arm along −y from cube2: half a cube (21 mm) + FESH1000 (~10) + tube lens (~10) + 75 mm + the board (~20), about
     140 mm, so y ≈ −165 (the free box runs to −200);
   - each photodiode arm: 21 + filter (~10) + lens (~10) + 50 + pinhole and PDA36A2 (~25), about 115 mm. PD-B goes along −x in
-    the free box. **PD-A's side arm at cube3 doesn't fit in the box's ±35 mm** (y −60 to 10): fold it with a Ø1 in. mirror,
-    or turn it up (+z) if there is room above z 300;
-  - the InGaAs arm (option): ~165 mm with its f = 100 mm lens. It needs a fold too, sideways from the camera arm;
-  - a beam trap on cube1's −y face, where the forward leak exits;
+    the free box. **PD-A's side arm along −y from cube3 leaves that box** (it spans y −60 to 10). It lands in the box checked
+    for a folded Chronos arm (x −420 to −200, y −170 to −70), so it fits if no Chronos goes there. The 10 mm strip between
+    the two boxes wasn't checked. Otherwise fold it with a Ø1 in. mirror;
+  - the InGaAs arm (option): ~165 mm with its f = 100 mm lens, sideways from the camera arm. The camera's free box is only
+    60 mm wide, so it needs a fold;
+  - a beam trap on cube1's −y face, where the forward leak exits (that space wasn't checked either);
   - the LP window seat square to its line of sight.
 - **Not reviewed:** no LSO review.
 
