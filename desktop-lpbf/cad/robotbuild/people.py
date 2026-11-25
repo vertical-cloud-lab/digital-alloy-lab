@@ -76,7 +76,8 @@ FILES = {
     "default_weights.mhw": ("rigs/default_weights.mhw",
                             "0f3641d651ae3d00ad6b4ccee43142edb109d3bd909d27d9e4139ef1beed8625"),
 }
-MODEL_V = 107                        # bump when the derived model changes (the cached pickle's name); 107: shop clothes
+MODEL_V = 108                        # bump when the derived model changes (the cached pickle's name); 107: shop clothes;
+                                     # 108: shoes as each foot's convex hull (107's showed the toes)
 
 HEIGHT = 1735.0                     # the body, sole to crown, mm; the shoes add ~10 mm and the hair ~5: 1.75 m
 GROUND = 2.0                        # the lowest point of the shoes, mm over the floor (the floor's tape is 1.5 mm)
@@ -300,6 +301,34 @@ def _offset(m: pv.PolyData, mm: float, smooth: int = 0) -> pv.PolyData:
         N = _normals(np.asarray(m.points, float), F, m.n_points)
         m.points = np.asarray(m.points, float) + mm * N
     return m
+
+
+def _shoe_hulls(shoes: pv.PolyData) -> pv.PolyData:
+    """Each shoe as the convex hull of its foot (2026-11-25): offsetting the foot itself, as 107 did, left the toes showing
+    through like a sock. The hull's corners are the foot's own vertices, so they keep their skin weights."""
+    from scipy.spatial import ConvexHull
+    P = np.asarray(shoes.points, float)
+    W = np.asarray(shoes.point_data["W"], np.float32)
+    Ps, Fs, Ws, base = [], [], [], 0
+    for sgn in (1.0, -1.0):
+        idx = np.where(P[:, 0] * sgn > 0.0)[0]
+        if len(idx) < 8:
+            continue
+        h = ConvexHull(P[idx])
+        used = np.unique(h.simplices)
+        remap = -np.ones(len(idx), int)
+        remap[used] = np.arange(len(used))
+        F = remap[h.simplices]
+        Q = P[idx[used]]
+        c = Q.mean(0)
+        n = np.cross(Q[F[:, 1]] - Q[F[:, 0]], Q[F[:, 2]] - Q[F[:, 0]])
+        flip = np.einsum("ij,ij->i", n, Q[F].mean(1) - c) < 0.0       # every face outward
+        F[flip] = F[flip][:, ::-1]
+        Ps.append(Q)
+        Ws.append(W[idx[used]])
+        Fs.append(F + base)
+        base += len(used)
+    return _poly(np.vstack(Ps), np.vstack(Fs), np.vstack(Ws))
 
 
 def _bridge(P: np.ndarray, mask: np.ndarray, sign: float, dz: float = 14.0) -> np.ndarray:
@@ -533,7 +562,7 @@ def _dress(m: dict) -> dict:
     parts = dict(
         skin=skin, hair=hair, brow=_offset(brow, OFFSET["brow"]),
         shirt=_offset(shirt, OFFSET["shirt"]), glove=_offset(glove, OFFSET["glove"]),
-        shoes=_offset(shoes, OFFSET["shoes"], smooth=25), trousers=_offset(trousers, OFFSET["trousers"], smooth=24),
+        shoes=_offset(_shoe_hulls(_offset(shoes, 0.0, smooth=25)), OFFSET["shoes"]), trousers=_offset(trousers, OFFSET["trousers"], smooth=24),
         coat=_offset(coat, OFFSET["coat"], smooth=30), skirt=_offset(skirt, OFFSET["skirt"], smooth=20))
     # eyes: the iris where the eyeball faces forward
     for sd in ("l", "r"):
