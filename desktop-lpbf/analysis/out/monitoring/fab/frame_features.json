@@ -1,0 +1,351 @@
+{
+ "frame": "/tmp/fab-e/parts/process_chamber_body_6061_t6_through_frame_from_5_5_in_plate.brep",
+ "LW": {
+  "port": "LW",
+  "index_deg": 90,
+  "tool_axis": "x (wall normal)",
+  "spec_centre": [
+   -156.0,
+   -20.0,
+   36.0
+  ],
+  "sight_axis": [
+   0.9669,
+   0.124,
+   -0.2231
+  ],
+  "sight_vs_wall_normal_deg": 14.79,
+  "azimuth_deg": 7.31,
+  "elevation_deg": 12.89,
+  "index_that_removes_the_azimuth_deg": 82.69,
+  "bore": {
+   "centre_yz": [
+    -18.97,
+    34.15
+   ],
+   "d": 31.0,
+   "needed_d": 30.47,
+   "through": "x -156.0..-140.0",
+   "note": "normal to the wall; holds the clear \u00d825 cylinder on the sight line across the 16 mm wall"
+  },
+  "seat": {
+   "d": 38.3,
+   "depth": 6.5,
+   "window": {
+    "d": 38.1,
+    "t": 5.0,
+    "mat": "UV fused silica, AR 650-1050 nm"
+   },
+   "gasket_land_mm": 3.55,
+   "note": "concentric with the bore, flat on the wall: 0.75 mm gasket, 5.0 mm window, 0.75 mm flat ring; the clamp ring bottoms on the wall face"
+  },
+  "clamp_ring": {
+   "bolt_circle_d": 48.0,
+   "od": 56.0,
+   "id": 31.0,
+   "screws": "4 x M4 x 0.7, tapped 8 deep (3.3 drill 10 deep)",
+   "holes_yz": [
+    [
+     -2.0,
+     51.12
+    ],
+    [
+     -35.94,
+     51.12
+    ],
+    [
+     -35.94,
+     17.18
+    ],
+    [
+     -2.0,
+     17.18
+    ]
+   ]
+  },
+  "purge_port": {
+   "yz": [
+    -18.97,
+    71.45
+   ],
+   "kind": "SAE-4 (7/16-20 UNF) O-ring boss + \u00d84 passage through"
+  },
+  "liner_hole": {
+   "liner": "Lift-out wall liner, left",
+   "centre_yz": [
+    -17.9,
+    32.23
+   ],
+   "d": 27.0
+  },
+  "sight_at_outer_face": [
+   -156.0,
+   -20.0,
+   36.0
+  ],
+  "sight_at_inner_face": [
+   -140.0,
+   -17.95,
+   32.31
+  ]
+ },
+ "BW": {
+  "port": "BW",
+  "index_deg": 180,
+  "tool_axis": "y (wall normal)",
+  "spec_centre": [
+   -125.0,
+   111.0,
+   25.0
+  ],
+  "centre_used": [
+   -125.0,
+   111.0,
+   29.5
+  ],
+  "z_shift_mm": 4.5,
+  "sight_axis": [
+   0.7364,
+   -0.6539,
+   -0.1738
+  ],
+  "sight_vs_wall_normal_deg": 49.16,
+  "azimuth_deg": -48.39,
+  "elevation_deg": 10.01,
+  "index_that_removes_the_azimuth_deg": 131.61,
+  "slot": {
+   "kind": "obround, normal to the wall, through",
+   "length": 51.22,
+   "width": 20.5,
+   "end_centres_xz": [
+    [
+     -130.69,
+     30.84
+    ],
+    [
+     -101.29,
+     23.9
+    ]
+   ],
+   "radius": 10.25,
+   "long_axis_deg_from_x": -13.28,
+   "round_bore_needed_d": 50.7
+  },
+  "seat": {
+   "L": 58,
+   "W": 27,
+   "corner_r": 4.0,
+   "depth": 4.5,
+   "window": "57.7 x 26.7 x 3.0 mm, corners chamfered 2 mm (rectangular N-BK7 or fused silica)",
+   "x_min": -146.34,
+   "z_min": 7.34,
+   "on_flat_face": true,
+   "clear_of_floor_screws": true
+  },
+  "clamp_frame": {
+   "holes_xz": [
+    [
+     -133.27,
+     49.95
+    ],
+    [
+     -88.5,
+     39.38
+    ],
+    [
+     -82.41,
+     19.45
+    ]
+   ],
+   "screws": "3 x M4 x 0.7, tapped 8 deep"
+  },
+  "liner": {
+   "liner": "Lift-out wall liner, back lower left (z 16..32, x -130.5..-0.5)",
+   "x_range": [
+    -122.4,
+    -90.8
+   ],
+   "z_range": [
+    14.3,
+    36.1
+   ],
+   "what": "the opening spans the band's full height (z 16..32): start the piece at x -90.8 (was -130.5)"
+  },
+  "sight_at_outer_face": [
+   -125.0,
+   111.0,
+   29.5
+  ],
+  "sight_at_inner_face": [
+   -106.98,
+   95.0,
+   25.25
+  ],
+  "as_specified": {
+   "seat": {
+    "L": 57,
+    "W": 27,
+    "corner_r": 4.0,
+    "depth": 4.5,
+    "window": "56.7 x 26.7 x 3.0 mm, corners chamfered 2 mm (rectangular N-BK7 or fused silica)",
+    "x_min": -145.6,
+    "z_min": 4.17,
+    "on_flat_face": true,
+    "clear_of_floor_screws": false
+   },
+   "slot": {
+    "kind": "obround, normal to the wall, through",
+    "length": 50.99,
+    "width": 20.5,
+    "end_centres_xz": [
+     [
+      -130.7,
+      26.14
+     ],
+     [
+      -101.29,
+      20.26
+     ]
+    ],
+    "radius": 10.25,
+    "long_axis_deg_from_x": -11.31,
+    "round_bore_needed_d": 50.5
+   },
+   "elevation_deg": 8.51
+  }
+ },
+ "checks": {
+  "frame_volume_cm3": {
+   "before": 1582.512,
+   "after": 1547.806,
+   "removed": 34.706
+  },
+  "clear_aperture_blocked_mm3": {
+   "LW": 0.0,
+   "BW": 0.0
+  },
+  "gaps_to_existing_features": {
+   "LW bore": {
+    "min_gap_mm": 13.88,
+    "to": "CYLINDER",
+    "at": [
+     -155.3,
+     0.0,
+     5.0
+    ]
+   },
+   "LW window seat": {
+    "min_gap_mm": 9.5,
+    "to": "CYLINDER",
+    "at": [
+     -152.0,
+     -20.0,
+     0.8
+    ]
+   },
+   "LW clamp-ring hole 1 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
+   "LW clamp-ring hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
+   "LW clamp-ring hole 3 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
+   "LW clamp-ring hole 4 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+    "min_gap_mm": 4.95,
+    "to": "CYLINDER",
+    "at": [
+     -155.3,
+     0.0,
+     5.0
+    ]
+   },
+   "LW purge port (SAE-4, 7/16-20, and its \u00d84 passage)": null,
+   "BW slot (obround through the back wall)": {
+    "min_gap_mm": 0.0,
+    "to": "CYLINDER",
+    "at": [
+     -135.0,
+     90.0,
+     60.0
+    ]
+   },
+   "BW window seat (rounded rectangle)": {
+    "min_gap_mm": 2.47,
+    "to": "CYLINDER",
+    "at": [
+     -152.0,
+     107.0,
+     58.0
+    ]
+   },
+   "BW clamp-frame hole 1 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+    "min_gap_mm": 6.05,
+    "to": "CYLINDER",
+    "at": [
+     -135.0,
+     90.0,
+     60.0
+    ]
+   },
+   "BW clamp-frame hole 2 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": null,
+   "BW clamp-frame hole 3 (M4 x 0.7, 8 deep; drawn at 4.0 x 10)": {
+    "min_gap_mm": 7.24,
+    "to": "CYLINDER",
+    "at": [
+     -71.0,
+     108.0,
+     22.0
+    ]
+   }
+  },
+  "bw_shift_search": [
+   {
+    "z_shift": 0.0,
+    "seat_z_min": 4.17,
+    "seat_x_min": -145.6
+   },
+   {
+    "z_shift": 0.5,
+    "seat_z_min": 4.44,
+    "seat_x_min": -146.12
+   },
+   {
+    "z_shift": 1.0,
+    "seat_z_min": 4.8,
+    "seat_x_min": -146.15
+   },
+   {
+    "z_shift": 1.5,
+    "seat_z_min": 5.16,
+    "seat_x_min": -146.18
+   },
+   {
+    "z_shift": 2.0,
+    "seat_z_min": 5.52,
+    "seat_x_min": -146.21
+   },
+   {
+    "z_shift": 2.5,
+    "seat_z_min": 5.89,
+    "seat_x_min": -146.24
+   },
+   {
+    "z_shift": 3.0,
+    "seat_z_min": 6.25,
+    "seat_x_min": -146.26
+   },
+   {
+    "z_shift": 3.5,
+    "seat_z_min": 6.61,
+    "seat_x_min": -146.29
+   },
+   {
+    "z_shift": 4.0,
+    "seat_z_min": 6.98,
+    "seat_x_min": -146.32
+   },
+   {
+    "z_shift": 4.5,
+    "seat_z_min": 7.34,
+    "seat_x_min": -146.34
+   }
+  ]
+ },
+ "method": "cad/monitoring_spec.py puts a left-wall viewport (LW) and a back-wall light window (BW) on lines of sight to the plate\ncentre. Setup C holds the frame on the HRT210 with A along the frame's z (machining.md, setup C). Turning about A brings\nany horizontal direction up to the spindle, so a port's azimuth (its turn about z away from the wall's normal) is free.\nIts elevation (the tilt down toward the plate) is a turn about an axis across A: a 4th axis can't take it out. So this\nscript draws each port so a vertical tool at one A index cuts it, and checks that the optics still get their clear\naperture through the whole wall:\n  * LW, at A90 (the left wall up, as setup C has it): a bore normal to the wall, opened from the clear \u00d825 to the circle\n    that holds the \u00d825 cylinder on the sight line across the 16 mm wall; the window seat, flat gasket and clamp-ring\n    holes concentric with it, flat on the wall; an SAE-4 port and \u00d84 passage for the argon purge. The window then sits at\n    the angle between the sight line and the wall's normal (computed here; the optics cost is in fabrication.md).\n  * BW, at A180 (the back wall up): the sight line is ~49 deg off the back wall's normal, so a round normal bore would\n    have to be ~49 mm across. It is a slot normal to the wall, shaped to the projection of the clear \u00d820 cylinder\n    across the wall (an obround), with a rectangular window seat over it, flat on the wall, and four clamp holes.\n    The A131.6 alternative (the rotary takes out the 49 deg azimuth) is checked in cam_monitoring.py's notes, not cut.\nIt also checks each new cut against the frame's existing holes (wall left between them), the outer R8 corners, the floor\nscrews under the back wall, and the liners (the hole or notch each liner needs)."
+}
