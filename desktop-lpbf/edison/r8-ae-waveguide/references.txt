@@ -1,0 +1,65 @@
+1. (seleznev2022insitudetection pages 2-3): Mikhail Seleznev, Tobias Gustmann, Judith Miriam Friebel, Urs Alexander Peuker, Uta Kühn, Julia Kristin Hufenbach, Horst Biermann, and Anja Weidner. In situ detection of cracks during laser powder bed fusion using acoustic emission monitoring. Additive Manufacturing Letters, 3:100099, Dec 2022. URL: https://doi.org/10.1016/j.addlet.2022.100099, doi:10.1016/j.addlet.2022.100099. This article has 58 citations and is from a peer-reviewed journal.
+
+2. (seleznev2022insitudetection pages 3-5): Mikhail Seleznev, Tobias Gustmann, Judith Miriam Friebel, Urs Alexander Peuker, Uta Kühn, Julia Kristin Hufenbach, Horst Biermann, and Anja Weidner. In situ detection of cracks during laser powder bed fusion using acoustic emission monitoring. Additive Manufacturing Letters, 3:100099, Dec 2022. URL: https://doi.org/10.1016/j.addlet.2022.100099, doi:10.1016/j.addlet.2022.100099. This article has 58 citations and is from a peer-reviewed journal.
+
+3. (seleznev2022insitudetection pages 5-7): Mikhail Seleznev, Tobias Gustmann, Judith Miriam Friebel, Urs Alexander Peuker, Uta Kühn, Julia Kristin Hufenbach, Horst Biermann, and Anja Weidner. In situ detection of cracks during laser powder bed fusion using acoustic emission monitoring. Additive Manufacturing Letters, 3:100099, Dec 2022. URL: https://doi.org/10.1016/j.addlet.2022.100099, doi:10.1016/j.addlet.2022.100099. This article has 58 citations and is from a peer-reviewed journal.
+
+4. (richter2025finedetectionof pages 1-3): Roland Axel Richter, Jamasp Jhabvala, Nicolas Mari, Roland Logé, and Elia Iseli. Fine detection of process state and secondary process emissions in laser powder-bed fusion (lpbf) by dual acoustic sensor acquisition and machine learning. IOP Conference Series: Materials Science and Engineering, 1332(1):012032, Aug 2025. URL: https://doi.org/10.1088/1757-899x/1332/1/012032, doi:10.1088/1757-899x/1332/1/012032. This article has 2 citations.
+
+5. (richter2025finedetectionof pages 3-5): Roland Axel Richter, Jamasp Jhabvala, Nicolas Mari, Roland Logé, and Elia Iseli. Fine detection of process state and secondary process emissions in laser powder-bed fusion (lpbf) by dual acoustic sensor acquisition and machine learning. IOP Conference Series: Materials Science and Engineering, 1332(1):012032, Aug 2025. URL: https://doi.org/10.1088/1757-899x/1332/1/012032, doi:10.1088/1757-899x/1332/1/012032. This article has 2 citations.
+
+6. (richter2025finedetectionof pages 5-7): Roland Axel Richter, Jamasp Jhabvala, Nicolas Mari, Roland Logé, and Elia Iseli. Fine detection of process state and secondary process emissions in laser powder-bed fusion (lpbf) by dual acoustic sensor acquisition and machine learning. IOP Conference Series: Materials Science and Engineering, 1332(1):012032, Aug 2025. URL: https://doi.org/10.1088/1757-899x/1332/1/012032, doi:10.1088/1757-899x/1332/1/012032. This article has 2 citations.
+
+7. (jungert2024acousticemissionmonitoring pages 1-3): Anne Jüngert, Thomas Thenikl, Roman Hofmann, Ludwig Maderner, and Martin Werz. Acoustic emission monitoring of a laser powder bed fusion process. e-Journal of Nondestructive Testing, Oct 2024. URL: https://doi.org/10.58286/30248, doi:10.58286/30248. This article has 5 citations.
+
+8. (jungert2024acousticemissionmonitoring pages 3-8): Anne Jüngert, Thomas Thenikl, Roman Hofmann, Ludwig Maderner, and Martin Werz. Acoustic emission monitoring of a laser powder bed fusion process. e-Journal of Nondestructive Testing, Oct 2024. URL: https://doi.org/10.58286/30248, doi:10.58286/30248. This article has 5 citations.
+
+9. (pandiyan2023optimizinginsitumonitoring pages 3-4): Vigneashwara Pandiyan, Rafał Wróbel, Christian Leinenbach, and Sergey Shevchik. Optimizing in-situ monitoring for laser powder bed fusion process: deciphering acoustic emission and sensor sensitivity with explainable machine learning. Dec 2023. URL: https://doi.org/10.1016/j.jmatprotec.2023.118144, doi:10.1016/j.jmatprotec.2023.118144. This article has 100 citations and is from a domain leading peer-reviewed journal.
+
+10. (pandiyan2023optimizinginsitumonitoring pages 4-5): Vigneashwara Pandiyan, Rafał Wróbel, Christian Leinenbach, and Sergey Shevchik. Optimizing in-situ monitoring for laser powder bed fusion process: deciphering acoustic emission and sensor sensitivity with explainable machine learning. Dec 2023. URL: https://doi.org/10.1016/j.jmatprotec.2023.118144, doi:10.1016/j.jmatprotec.2023.118144. This article has 100 citations and is from a domain leading peer-reviewed journal.
+
+11. (shevchik2018acousticemissionfor pages 5-7): S.A. Shevchik, C. Kenel, C. Leinenbach, and K. Wasmer. Acoustic emission for in situ quality monitoring in additive manufacturing using spectral convolutional neural networks. Additive Manufacturing, 21:598-604, May 2018. URL: https://doi.org/10.1016/j.addma.2017.11.012, doi:10.1016/j.addma.2017.11.012. This article has 636 citations and is from a highest quality peer-reviewed journal.
+
+12. (chang2026areviewof pages 22-23): Wen-Biao Chang, Qi-Fei Zhang, Wei Chen, Yuan Gao, Bin Liu, Zhong-Hua Li, and Chang-Ying Dang. A review of in situ quality monitoring in additive manufacturing using acoustic emission technology. Sensors, 26:438, Jan 2026. URL: https://doi.org/10.3390/s26020438, doi:10.3390/s26020438. This article has 7 citations and is from a peer-reviewed journal.
+
+13. (nobari2026mechanismssensorsand pages 9-11): Sanae Tajalli Nobari, Fabian Hanning, Yongcui Mi, and Joerg Volpp. Mechanisms, sensors, and signals for defect formation and in situ monitoring in metal additive manufacturing. Eng, 7:129, Mar 2026. URL: https://doi.org/10.3390/eng7030129, doi:10.3390/eng7030129. This article has 7 citations.
+
+14. (seleznev2022insitudetection pages 7-7): Mikhail Seleznev, Tobias Gustmann, Judith Miriam Friebel, Urs Alexander Peuker, Uta Kühn, Julia Kristin Hufenbach, Horst Biermann, and Anja Weidner. In situ detection of cracks during laser powder bed fusion using acoustic emission monitoring. Additive Manufacturing Letters, 3:100099, Dec 2022. URL: https://doi.org/10.1016/j.addlet.2022.100099, doi:10.1016/j.addlet.2022.100099. This article has 58 citations and is from a peer-reviewed journal.
+
+15. (xu2024frequencydependentamplitude pages 5-6): Ronghua Xu, Raúl Enrique Beltrán-Gutiérrez, Max Käding, Alexander Lange, Steffen Marx, and Jörn Ostermann. Frequency dependent amplitude response of different couplant materials for mounting piezoelectric sensors. NDT &amp; E International, Jan 2024. URL: https://doi.org/10.1016/j.ndteint.2023.102993, doi:10.1016/j.ndteint.2023.102993. This article has 13 citations and is from a domain leading peer-reviewed journal.
+
+16. (xu2024frequencydependentamplitude pages 6-9): Ronghua Xu, Raúl Enrique Beltrán-Gutiérrez, Max Käding, Alexander Lange, Steffen Marx, and Jörn Ostermann. Frequency dependent amplitude response of different couplant materials for mounting piezoelectric sensors. NDT &amp; E International, Jan 2024. URL: https://doi.org/10.1016/j.ndteint.2023.102993, doi:10.1016/j.ndteint.2023.102993. This article has 13 citations and is from a domain leading peer-reviewed journal.
+
+17. (brunner2021structuralhealthand pages 5-6): Andreas J. Brunner. Structural health and condition monitoring with acoustic emission and guided ultrasonic waves: what about long-term durability of sensors, sensor coupling and measurement chain? Applied Sciences, 11:11648, Dec 2021. URL: https://doi.org/10.3390/app112411648, doi:10.3390/app112411648. This article has 59 citations.
+
+18. (milani2022designandmanufacturinga pages 28-33): MT Milani. Design and manufacturing of an encapsulation for a high-temperature ultrasonic transducer. Unknown journal, 2022.
+
+19. (zakharov2010acousticemissionsignal pages 1-5): D Zakharov, SN Ptichkov, and VV Shemyakin. Acoustic emission signal attenuation in the waveguides used in underwater ae testing. Unknown journal, 2010.
+
+20. (zelenyak2015modelingofacoustic pages 11-15): Andreea-Manuela Zelenyak, Marvin Hamstad, and Markus Sause. Modeling of acoustic emission signal propagation in waveguides. Sensors, 15:11805-11822, May 2015. URL: https://doi.org/10.3390/s150511805, doi:10.3390/s150511805. This article has 88 citations and is from a peer-reviewed journal.
+
+21. (zelenyak2015modelingofacoustic pages 15-18): Andreea-Manuela Zelenyak, Marvin Hamstad, and Markus Sause. Modeling of acoustic emission signal propagation in waveguides. Sensors, 15:11805-11822, May 2015. URL: https://doi.org/10.3390/s150511805, doi:10.3390/s150511805. This article has 88 citations and is from a peer-reviewed journal.
+
+22. (kazys2021hightemperatureultrasonic pages 7-9): Rymantas Kazys and Vaida Vaskeliene. High temperature ultrasonic transducers: a review. Sensors, 21:3200, May 2021. URL: https://doi.org/10.3390/s21093200, doi:10.3390/s21093200. This article has 196 citations and is from a peer-reviewed journal.
+
+23. (kazys2021hightemperatureultrasonic pages 9-11): Rymantas Kazys and Vaida Vaskeliene. High temperature ultrasonic transducers: a review. Sensors, 21:3200, May 2021. URL: https://doi.org/10.3390/s21093200, doi:10.3390/s21093200. This article has 196 citations and is from a peer-reviewed journal.
+
+24. (zelenyak2015modelingofacoustic pages 1-4): Andreea-Manuela Zelenyak, Marvin Hamstad, and Markus Sause. Modeling of acoustic emission signal propagation in waveguides. Sensors, 15:11805-11822, May 2015. URL: https://doi.org/10.3390/s150511805, doi:10.3390/s150511805. This article has 88 citations and is from a peer-reviewed journal.
+
+25. (jolly1994investigationofacoustic pages 6-10): W.D. Jolly. Investigation of acoustic emission coupling techniques. Ndt & E International, 27:219, Jan 1994. URL: https://doi.org/10.1016/0963-8695(94)90557-6, doi:10.1016/0963-8695(94)90557-6. This article has 0 citations and is from a domain leading peer-reviewed journal.
+
+26. (jolly1994investigationofacoustic pages 10-12): W.D. Jolly. Investigation of acoustic emission coupling techniques. Ndt & E International, 27:219, Jan 1994. URL: https://doi.org/10.1016/0963-8695(94)90557-6, doi:10.1016/0963-8695(94)90557-6. This article has 0 citations and is from a domain leading peer-reviewed journal.
+
+27. (shrout1993hightemperaturesensormicrophone pages 148-151): TR Shrout. High temperature sensor/microphone development for active noise control. Unknown journal, 1993.
+
+28. (jolly1994investigationofacoustic pages 1-6): W.D. Jolly. Investigation of acoustic emission coupling techniques. Ndt & E International, 27:219, Jan 1994. URL: https://doi.org/10.1016/0963-8695(94)90557-6, doi:10.1016/0963-8695(94)90557-6. This article has 0 citations and is from a domain leading peer-reviewed journal.
+
+29. (burns2012developmentandcharacterisation pages 170-174): JM Burns. Development and characterisation of a fibre-optic acoustic emission sensor. Unknown journal, 2012.
+
+30. (hinrichs2024analysisofthe pages 1-3): Reemt Hinrichs, Nan Jiang, Raúl Beltrán, Thomas Krause, Max Käding, Alexander Lange, Boso Schmidt, Jörn Ostermann, and Steffen Marx. Analysis of the repeatability of the pencil lead break in comparison to the ball impact and electromagnetic body-noise actuator. e-Journal of Nondestructive Testing, Jun 2024. URL: https://doi.org/10.58286/29911, doi:10.58286/29911. This article has 3 citations.
+
+31. (burns2012developmentandcharacterisation pages 115-120): JM Burns. Development and characterisation of a fibre-optic acoustic emission sensor. Unknown journal, 2012.
+
+32. (chang2026areviewof pages 16-19): Wen-Biao Chang, Qi-Fei Zhang, Wei Chen, Yuan Gao, Bin Liu, Zhong-Hua Li, and Chang-Ying Dang. A review of in situ quality monitoring in additive manufacturing using acoustic emission technology. Sensors, 26:438, Jan 2026. URL: https://doi.org/10.3390/s26020438, doi:10.3390/s26020438. This article has 7 citations and is from a peer-reviewed journal.
+
+33. (nobari2026mechanismssensorsand pages 11-12): Sanae Tajalli Nobari, Fabian Hanning, Yongcui Mi, and Joerg Volpp. Mechanisms, sensors, and signals for defect formation and in situ monitoring in metal additive manufacturing. Eng, 7:129, Mar 2026. URL: https://doi.org/10.3390/eng7030129, doi:10.3390/eng7030129. This article has 7 citations.

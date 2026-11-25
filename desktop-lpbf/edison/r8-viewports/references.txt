@@ -1,0 +1,75 @@
+1. (grasso2017processdefectsand pages 18-20): Marco Grasso and Bianca Maria Colosimo. Process defects and in situ monitoring methods in metal powder bed fusion: a review. Measurement Science and Technology, 28:044005, Feb 2017. URL: https://doi.org/10.1088/1361-6501/aa5c4f, doi:10.1088/1361-6501/aa5c4f. This article has 1253 citations and is from a domain leading peer-reviewed journal.
+
+2. (lafirenza2025developmentofinsitu pages 35-37): M Lafirenza. Development of in-situ optical sensor-based monitoring methodologies for additive manufacturing processes. Unknown journal, 2025.
+
+3. (grasso2017processdefectsand pages 30-33): Marco Grasso and Bianca Maria Colosimo. Process defects and in situ monitoring methods in metal powder bed fusion: a review. Measurement Science and Technology, 28:044005, Feb 2017. URL: https://doi.org/10.1088/1361-6501/aa5c4f, doi:10.1088/1361-6501/aa5c4f. This article has 1253 citations and is from a domain leading peer-reviewed journal.
+
+4. (bidare2017anopenarchitecturemetal pages 2-3): P. Bidare, R.R.J. Maier, R.J. Beck, J.D. Shephard, and A.J. Moore. An open-architecture metal powder bed fusion system for in-situ process measurements. Additive manufacturing, 16:177-185, Aug 2017. URL: https://doi.org/10.1016/j.addma.2017.06.007, doi:10.1016/j.addma.2017.06.007. This article has 138 citations and is from a highest quality peer-reviewed journal.
+
+5. (bidare2018fluidandparticle pages 2-3): Prveen Bidare, I. Bitharas, R. M. Ward, Moataz M. Attallah, and A. Moore. Fluid and particle dynamics in laser powder bed fusion. Acta Materialia, 142:107-120, Jan 2018. URL: https://doi.org/10.1016/j.actamat.2017.09.051, doi:10.1016/j.actamat.2017.09.051. This article has 786 citations and is from a highest quality peer-reviewed journal.
+
+6. (abeyta2024anexperimentalapproach pages 31-37): A Abeyta. An experimental approach for characterizing gas flow in the build chamber of laser powder bed fusion systems utilizing particle image velocimetry. Unknown journal, 2024.
+
+7. (abeyta2024anexperimentalapproach pages 10-17): A Abeyta. An experimental approach for characterizing gas flow in the build chamber of laser powder bed fusion systems utilizing particle image velocimetry. Unknown journal, 2024.
+
+8. (abeyta2024anexperimentalapproach pages 26-31): A Abeyta. An experimental approach for characterizing gas flow in the build chamber of laser powder bed fusion systems utilizing particle image velocimetry. Unknown journal, 2024.
+
+9. (li2022areviewof pages 31-33): Zheng Li, Hao Li, Jie Yin, Yan Li, Zhenguo Nie, Xiangyou Li, Deyong You, Kai Guan, Wei Duan, Longchao Cao, Dengzhi Wang, Linda Ke, Yang Liu, Ping Zhao, Lin Wang, Kunpeng Zhu, Zhengwen Zhang, Liang Gao, and Liang Hao. A review of spatter in laser powder bed fusion additive manufacturing: in situ detection, generation, effects, and countermeasures. Micromachines, 13:1366, Aug 2022. URL: https://doi.org/10.3390/mi13081366, doi:10.3390/mi13081366. This article has 193 citations.
+
+10. (bidare2018fluidandparticle pages 3-4): Prveen Bidare, I. Bitharas, R. M. Ward, Moataz M. Attallah, and A. Moore. Fluid and particle dynamics in laser powder bed fusion. Acta Materialia, 142:107-120, Jan 2018. URL: https://doi.org/10.1016/j.actamat.2017.09.051, doi:10.1016/j.actamat.2017.09.051. This article has 786 citations and is from a highest quality peer-reviewed journal.
+
+11. (bidare2018fluidandparticle pages 4-6): Prveen Bidare, I. Bitharas, R. M. Ward, Moataz M. Attallah, and A. Moore. Fluid and particle dynamics in laser powder bed fusion. Acta Materialia, 142:107-120, Jan 2018. URL: https://doi.org/10.1016/j.actamat.2017.09.051, doi:10.1016/j.actamat.2017.09.051. This article has 786 citations and is from a highest quality peer-reviewed journal.
+
+12. (barrett2019highspeedstereovision pages 70-76): C Barrett. High speed stereovision in situ monitoring of spatter during laser powder bed fusion. Unknown journal, 2019.
+
+13. (barrett2019highspeedstereovision pages 65-70): C Barrett. High speed stereovision in situ monitoring of spatter during laser powder bed fusion. Unknown journal, 2019.
+
+14. (barrett2019highspeedstereovision pages 87-92): C Barrett. High speed stereovision in situ monitoring of spatter during laser powder bed fusion. Unknown journal, 2019.
+
+15. (barrett2019highspeedstereovision pages 92-99): C Barrett. High speed stereovision in situ monitoring of spatter during laser powder bed fusion. Unknown journal, 2019.
+
+16. (thanki2024correlationbetweeninprocess pages 132-138): A Thanki, H Haitjema, and A Witvrouw. Correlation between in-process melt pool monitoring and post process characterization for laser powder bed fusion. Unknown journal, 2024.
+
+17. (thanki2023offaxishighspeedcamerabased pages 15-18): Aditi Thanki, Carlos Jordan, Brian G. Booth, Dries Verhees, Rob Heylen, Mariam Mir, Abdellatif Bey-Temsamani, Wilfried Philips, Ann Witvrouw, and Han Haitjema. Off-axis high-speed camera-based real-time monitoring and simulation study for laser powder bed fusion of 316l stainless steel. The International Journal of Advanced Manufacturing Technology, 125:4909-4924, Feb 2023. URL: https://doi.org/10.1007/s00170-023-11075-z, doi:10.1007/s00170-023-11075-z. This article has 13 citations.
+
+18. (li2022areviewof pages 7-8): Zheng Li, Hao Li, Jie Yin, Yan Li, Zhenguo Nie, Xiangyou Li, Deyong You, Kai Guan, Wei Duan, Longchao Cao, Dengzhi Wang, Linda Ke, Yang Liu, Ping Zhao, Lin Wang, Kunpeng Zhu, Zhengwen Zhang, Liang Gao, and Liang Hao. A review of spatter in laser powder bed fusion additive manufacturing: in situ detection, generation, effects, and countermeasures. Micromachines, 13:1366, Aug 2022. URL: https://doi.org/10.3390/mi13081366, doi:10.3390/mi13081366. This article has 193 citations.
+
+19. (barrett2019highspeedstereovision pages 82-87): C Barrett. High speed stereovision in situ monitoring of spatter during laser powder bed fusion. Unknown journal, 2019.
+
+20. (ahmad2019largescaleselective pages 41-43): Anwar Ahmad. Large scale selective laser melting : study of the effects and removal of spatter by the inert gas flow. ArXiv, Apr 2019. URL: https://doi.org/10.32657/10220/47940, doi:10.32657/10220/47940. This article has 2 citations.
+
+21. (barrett2019highspeedstereovision pages 99-106): C Barrett. High speed stereovision in situ monitoring of spatter during laser powder bed fusion. Unknown journal, 2019.
+
+22. (zhang2023influenceofspattering pages 1-4): Haolin Zhang, Chaitanya Krishna Prasad Vallabh, and Xiayun Zhao. Influence of spattering on in-process layer surface roughness during laser powder bed fusion. Journal of Manufacturing Processes, 104:289-306, Oct 2023. URL: https://doi.org/10.1016/j.jmapro.2023.08.058, doi:10.1016/j.jmapro.2023.08.058. This article has 68 citations and is from a peer-reviewed journal.
+
+23. (robinson1980designofviewing pages 12-17): J. N. Robinson. Design of viewing windows for controlled-atmosphere chambers. ArXiv, Mar 1980. URL: https://doi.org/10.2172/5560951, doi:10.2172/5560951. This article has 1 citations.
+
+24. (robinson1980designofviewing pages 17-22): J. N. Robinson. Design of viewing windows for controlled-atmosphere chambers. ArXiv, Mar 1980. URL: https://doi.org/10.2172/5560951, doi:10.2172/5560951. This article has 1 citations.
+
+25. (ihracska2017optomechanicaldesignfor pages 8-9): Balazs Ihracska, Roy James Crookes, Diogo Montalvão, Mohammad Reza Herfatmanesh, Zhijun Peng, Shahid Imran, and Theodosios Korakianitis. Opto-mechanical design for sight windows under high loads. Materials & Design, 117:430-444, Mar 2017. URL: https://doi.org/10.1016/j.matdes.2016.12.080, doi:10.1016/j.matdes.2016.12.080. This article has 12 citations and is from a highest quality peer-reviewed journal.
+
+26. (robinson1980designofviewing pages 7-12): J. N. Robinson. Design of viewing windows for controlled-atmosphere chambers. ArXiv, Mar 1980. URL: https://doi.org/10.2172/5560951, doi:10.2172/5560951. This article has 1 citations.
+
+27. (ihracska2017optomechanicaldesignfor pages 4-5): Balazs Ihracska, Roy James Crookes, Diogo Montalvão, Mohammad Reza Herfatmanesh, Zhijun Peng, Shahid Imran, and Theodosios Korakianitis. Opto-mechanical design for sight windows under high loads. Materials & Design, 117:430-444, Mar 2017. URL: https://doi.org/10.1016/j.matdes.2016.12.080, doi:10.1016/j.matdes.2016.12.080. This article has 12 citations and is from a highest quality peer-reviewed journal.
+
+28. (weinmeister2023thermallimitsof pages 1-2): Justin Weinmeister and Drew Elliott. Thermal limits of standard vacuum viewports for plasma devices. In ANS 2023 Winter Conference, volume 129 of Winter23, 1138-1141. American Nuclear Society, Jan 2023. URL: https://doi.org/10.13182/t130-42898, doi:10.13182/t130-42898. This article has 0 citations and is from a peer-reviewed journal.
+
+29. (robinson1980designofviewing pages 22-26): J. N. Robinson. Design of viewing windows for controlled-atmosphere chambers. ArXiv, Mar 1980. URL: https://doi.org/10.2172/5560951, doi:10.2172/5560951. This article has 1 citations.
+
+30. (anheier2013summaryofthe pages 11-14): Norman C. Anheier, Hong Qiao, Eric J. Berglin, and Brian K. Hatchell. Summary of the preliminary optical ichmi design study: a preliminary engineering design study for a standpipe viewport. ArXiv, Dec 2013. URL: https://doi.org/10.2172/1114899, doi:10.2172/1114899. This article has 5 citations.
+
+31. (anheier2013summaryofthe pages 9-11): Norman C. Anheier, Hong Qiao, Eric J. Berglin, and Brian K. Hatchell. Summary of the preliminary optical ichmi design study: a preliminary engineering design study for a standpipe viewport. ArXiv, Dec 2013. URL: https://doi.org/10.2172/1114899, doi:10.2172/1114899. This article has 5 citations.
+
+32. (crane2005nonmagneticuhvoptical pages 2-4): S. Crane and C.R. Ekstrom. Nonmagnetic uhv optical viewports. Proceedings of the 2005 IEEE International Frequency Control Symposium and Exposition, 2005., pages 297-300, Aug 2005. URL: https://doi.org/10.1109/freq.2005.1573947, doi:10.1109/freq.2005.1573947. This article has 10 citations.
+
+33. (crane2005nonmagneticuhvoptical pages 1-2): S. Crane and C.R. Ekstrom. Nonmagnetic uhv optical viewports. Proceedings of the 2005 IEEE International Frequency Control Symposium and Exposition, 2005., pages 297-300, Aug 2005. URL: https://doi.org/10.1109/freq.2005.1573947, doi:10.1109/freq.2005.1573947. This article has 10 citations.
+
+34. (weinmeister2023thermallimitsof pages 2-4): Justin Weinmeister and Drew Elliott. Thermal limits of standard vacuum viewports for plasma devices. In ANS 2023 Winter Conference, volume 129 of Winter23, 1138-1141. American Nuclear Society, Jan 2023. URL: https://doi.org/10.13182/t130-42898, doi:10.13182/t130-42898. This article has 0 citations and is from a peer-reviewed journal.
+
+35. (weinmeister2023thermallimitsof pages 4-4): Justin Weinmeister and Drew Elliott. Thermal limits of standard vacuum viewports for plasma devices. In ANS 2023 Winter Conference, volume 129 of Winter23, 1138-1141. American Nuclear Society, Jan 2023. URL: https://doi.org/10.13182/t130-42898, doi:10.13182/t130-42898. This article has 0 citations and is from a peer-reviewed journal.
+
+36. (king2014lasersafetygram pages 14-16): J. J. King. Laser safety gram 0035 advanced radiographic capabilities. ArXiv, Apr 2014. URL: https://doi.org/10.2172/1136137, doi:10.2172/1136137. This article has 0 citations.
+
+37. (king2014lasersafetygram pages 9-12): J. J. King. Laser safety gram 0035 advanced radiographic capabilities. ArXiv, Apr 2014. URL: https://doi.org/10.2172/1136137, doi:10.2172/1136137. This article has 0 citations.
+
+38. (king2014lasersafetygram pages 16-18): J. J. King. Laser safety gram 0035 advanced radiographic capabilities. ArXiv, Apr 2014. URL: https://doi.org/10.2172/1136137, doi:10.2172/1136137. This article has 0 citations.
